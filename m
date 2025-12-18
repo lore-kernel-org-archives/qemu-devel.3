@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D4FD6ACE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 11:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CB9D6ACE6
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 11:24:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWC5f-0001P2-Iq; Thu, 18 Dec 2025 06:22:39 -0500
+	id 1vWC7C-0001nQ-U4; Thu, 18 Dec 2025 06:24:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWC5b-0001NN-3r
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 06:22:35 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWC6y-0001hr-Pj
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 06:24:07 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWC5X-0002pS-Ee
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 06:22:34 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47bdbc90dcaso3744785e9.1
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 03:22:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWC6w-0002xn-3W
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 06:24:00 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47a95efd2ceso4370035e9.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 03:23:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766056947; x=1766661747; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766057036; x=1766661836; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dNVuCOcU0WvPTFGbmqWdJaYC8EnlyUQ6JIDvQH8knzY=;
- b=VXmRODbIDkm798cL/LmkTXXJiVuWwc18Ykg75YvPO1WfYe342mDi+ejm2O7e3Rk5EK
- V9p4OQp+EPTgsvEd1qcOKvI1O0yaMIoP5dOuigQlEqmb30f4B+NL4UqXXDkAQ35BHohm
- Llof1yOCvr71qIvs3FIef/BpxczwN5E/BIMaUuXHhVXVTPL902xF536MtOc7mZx9FHFW
- yxHLPPm5bM39m0ghbXWCj7UZKd6gzKpHmQanQoWfLhWYbpti15NF0MSPB16QVwdUE+EF
- KlzLDs1eQhap2KwekyYh9Qq2TpPmGnCvgiAChEisRZ+PcU0BpnZjt78MJjPgc+fidZvG
- Kl8w==
+ bh=V1bLvIZQXiXM9LxnnKcWu/Yj9UvAis949LkpGaZbtPI=;
+ b=kVsIMiSDL6m4VmpJQzw1RcDQ6rWKtYIN+en2ErakL3sjHsAlVHmiOSIu6Vwe6d6/9m
+ E/HtzDgdhgqS+1fHzwMu+wn1o9YFVVgs+chRKTwKR7vwZJovO6akSP+reweMrkRboOXj
+ LwW/7V7rhbCFCrQIQNmkO2ogSdDXGefeRveZoaRGFfboN9MPrrEW1DF3LxrTN2i/CnrF
+ rmdMqC/6zkFka/XUBqMui2/a0Bu4m/NAVKkgECdi8jCKGLU6aZXPXHludSmlTjWpwxIo
+ g5K4VG4qQWlJ9XmOfsmQthLfOFgoPjAyYyHG/b6pVhLgKlPLE38hjlxgX+k+Eg+whDXg
+ PICA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766056947; x=1766661747;
+ d=1e100.net; s=20230601; t=1766057036; x=1766661836;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dNVuCOcU0WvPTFGbmqWdJaYC8EnlyUQ6JIDvQH8knzY=;
- b=axodMg80SltJh6OvyXA6rPWX1aZo/fzGP6KxmQoq3EhuOzq1Pqb4kEBnG2x9iNvMXH
- uDGX993nxjVciyqYKLyIC9qf+5Or5TLqU3WR1Cgp8EkuBPmpe+XcjcMk9UXwDaJGoova
- BwAFi9uYFAggvJKLWDg1xLTxUp+gD8nWXjvVh8ausz4tX4Vv8CixtkohYIjTrtPUJfxq
- MV6RZ3QTbPllz8yXsTJ/JkLxjX6YBTfXH6OX1yM0LxxIKfT2YPokF2v6Fy8/7axrxkgT
- dpQEb3CH/vVLQ/wpoq5gwkLEEKy6+VrRtzxwAcFr5KTIJXoMtjWFuqAjk+EpuKIxqig3
- IzPw==
-X-Gm-Message-State: AOJu0YzwlX7b/nmBvkteY1fOtTHtc5bBTqUI5oCF6lY/inXJgPLeSGH3
- peAFYUV1mx5efuydAQ3JgWwqYDbXgyVZAQbgqib7v1ygAPxkxKQ9d7h3qIzRajbI5g8=
-X-Gm-Gg: AY/fxX5kqO2wHT5e4Z4B71KrqLFLj4/tr5W0ExKwySFycAj5Ye4YItcIORA0xQL8dEh
- im9DdJZ0MtEaLE6r2E3FmwSW65w1bdSomA0amPqHuau8+E1HjRGvSqux1H7p78qBty4AGYCm2Wh
- FUFXLLlPthU/NniNJ/uut3ItW8e7C/HVA2m5pXbZ8Mbfds+55eoJ7DoAedAhzPzlopU/ijdsOlV
- O3yESWgJq5EyqIs5ju1CSZmsB/YMQUYJmkCr8zS7ELP3iRCPMzpExBgtU9s75xB1xbZSSc98W/9
- CbZr5DvCr3RAwzc+ueBYxbxfZZjsM72v9AyOxjQj70kDjKtYyR4ysqurgPfyqUgeaMbMrw9/D4C
- pbtjBN03NWSx0eNXYYgnN/5MM9mpN+Y+6iupm/rA4LQ2wdZb9jSOHx/laPm3hiYuMvyBsxWTw/l
- 6WAWwrRVqLAxx+/DfQNJ0dVzghyXiM2Pl9L7UgFr2tXcNs14ozPEER8A==
-X-Google-Smtp-Source: AGHT+IHeixqm57kUURBE60Y/aSC37eGIH/Ae6Dy2uYYke1gui4PzzdIFnr4gTma5spaZwJ1sZc9Y8A==
-X-Received: by 2002:a05:600c:1c2a:b0:477:6d96:b3c8 with SMTP id
- 5b1f17b1804b1-47a8f905313mr231606595e9.23.1766056947364; 
- Thu, 18 Dec 2025 03:22:27 -0800 (PST)
+ bh=V1bLvIZQXiXM9LxnnKcWu/Yj9UvAis949LkpGaZbtPI=;
+ b=gQaaoX7jFDfHwE1VqVvD9DnUXTQ7hiyg0tLpmPv+D+JI/qJ7QbVmnn8fwxX8hiLDhl
+ /1dXxOwOG+/180YK4W+sjO3NjitccXUntYyHpsbVxgzxxVdPH2d8IEwI1IG2OC+TUQce
+ lo7WCWw4AOfaX8Aug56YomxnM4HjI/gB864yuQfbifO7KVblN1ocIvvMWjo3QcV8uvSH
+ MANrVX5liGtKxhYXb01sX4R2jdPFMCgt1qfajBlVmwKsuzv373AJVfTKwCPrtU7I2gka
+ YZbd6n291hBOHbxYDBYeJoj+JUDTJ92oRXtR0xHBAnevfBciWx0a+TgfZapH9y7KmjFy
+ FSig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUtk9n7ig/IqemyCXkgDOw5R0GvTAhBd9O74EhenoFfffoS9FUcq1lPnkQFMR/Xfpv+FhC7w7Mu48Tx@nongnu.org
+X-Gm-Message-State: AOJu0YztcHfSItryfvfSPG1GgksEbPTH1M4P5OcazB2uAdYZjOvBIdGj
+ g6ibiXX2jppfAeOCr5TF3H6yjcq86JS9TG+dgNIIp3PK8iKVnP9egFBtBd7z53rxObs=
+X-Gm-Gg: AY/fxX7rdp4KIfMo7THPuNotjCQ8nx/pSbvvs7SwQRk4XUeKYfAntdunK3Ygn27tZqC
+ TYHbk+tU/XpC+WkysAiTvynYu5nkYKwKm6CXw6bUJykORRjUD1/4p+p5OAUh+6V3cJVdrY5RQ99
+ 6+LqGM0X2VXWkRMHwlVltKIPE+2+dG7aPPvROftVlpeFwSvDh0Z8ZP8nIO8kXcHBnXtzmLbq0yy
+ cDdKg+yQQrQVwnNmHeUu/cf5obQ3S3Nhy2VQo0v3XbaYmeY3SiKYZW4xbPZyZNZRdHY3+rcdCmB
+ 1ZyC2aC8FT6/iQ7fJq0YuqvS3Ya8OtxKL0RTDHtDxftOu4KBbhCJWxCw9FwFKq5depTOj0Lc1i9
+ DqKyAdsSe+tDtkmryXsFMK8y33wVxPRVQl9eEbrQDT/6HWg+bAhGLJN/yhYPmWhfS03jzOaF+gc
+ Q+Ac6j0xO3EUzMoGVoKFQVl1Qf4V4wprmXRK8Kp49CfLbKUSdmPBcQiA==
+X-Google-Smtp-Source: AGHT+IEDUDVnoD9to2qjksSK332rjBbkyQbaYf+yX5Q01DIb86Xvl6o03MtSu/ZwN8glXn4AOE2D+A==
+X-Received: by 2002:a05:6000:2087:b0:430:fbad:687a with SMTP id
+ ffacd0b85a97d-430fbad6b51mr16705673f8f.13.1766057036527; 
+ Thu, 18 Dec 2025 03:23:56 -0800 (PST)
 Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43244998c8asm4547267f8f.30.2025.12.18.03.22.26
+ ffacd0b85a97d-4324498fbdfsm4439024f8f.26.2025.12.18.03.23.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Dec 2025 03:22:26 -0800 (PST)
-Message-ID: <7d238d0d-df26-43fd-bfac-a7d94064d486@linaro.org>
-Date: Thu, 18 Dec 2025 12:22:25 +0100
+ Thu, 18 Dec 2025 03:23:55 -0800 (PST)
+Message-ID: <6e850467-490e-4a32-b60f-2c91efb3efa1@linaro.org>
+Date: Thu, 18 Dec 2025 12:23:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 v6 08/13] hw/sparc64/sun4u: Use
- fw_cfg_init_io_nodma()
+Subject: Re: [PATCH] docs/devel: Remove stale comments related to iommufd
+ dirty tracking
 Content-Language: en-US
-To: Zhao Liu <zhao1.liu@intel.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20251203060942.57851-1-philmd@linaro.org>
- <20251203060942.57851-9-philmd@linaro.org> <aTBccn2LIv7puGzR@intel.com>
- <05f92a77-7587-4441-a252-01e4705a6892@linaro.org>
- <c03820b8-7745-4b8e-8e69-a37c872257f8@ilande.co.uk>
- <aUPAysAYqTPAfgzD@intel.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "Liu, Yi L" <yi.l.liu@intel.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>
+References: <20251218065042.639777-1-zhenzhong.duan@intel.com>
+ <80397b14-160b-4a87-a0cf-d828f2974c85@linaro.org>
+ <IA3PR11MB9136FEFC7DD10A5AECEEF40292A8A@IA3PR11MB9136.namprd11.prod.outlook.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aUPAysAYqTPAfgzD@intel.com>
+In-Reply-To: <IA3PR11MB9136FEFC7DD10A5AECEEF40292A8A@IA3PR11MB9136.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,40 +110,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/25 09:52, Zhao Liu wrote:
->>>> I think maybe one reason to use `ebus` is because...
->>>>
->>>>> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>>>> -    memory_region_add_subregion(pci_address_space_io(ebus), BIOS_CFG_IOPORT,
->>>>                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>> ... because the parent region is managed by ebus.
->>>>
->>>> Perhaps we should add another argument: Object *parent?
->>>
->>> I thought about it but don't think so, all instances but this one use
->>> the machine container.
->>>
->>> I'll improve the description.
+On 18/12/25 12:07, Duan, Zhenzhong wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Subject: Re: [PATCH] docs/devel: Remove stale comments related to
+>> iommufd dirty tracking
 >>
->> The reason that the fw_cfg device lives under ebus on sun4u is because the
->> ebus device is effectively a PCI-ISA bridge, and the fw_cfg port is mapped
->> into I/O address space along with other ISA devices. I'm not sure that
->> setting the parent to the machine is the right thing to do here.
+>> On 18/12/25 07:50, Zhenzhong Duan wrote:
+>>> IOMMUFD dirty tracking support had be merged
+>>
+>> [in merge commit dd4bc5f1cfe?]
 > 
-> Thanks Philippe and Mark, IIUC, ebus doesn't have the hotplug use case,
-> so it lives long enough like the sun4u/v machine, therefore replacing
-> the parent object "ebus" with machine is safe.
-> 
-> And it might be better to explicitly set ebus as not supporting hotplug
-> (via dc->hotpluggable = false).
-> 
-> Adding a "parent" argument to the generic interface fw_cfg_init_io_nodma()
-> doesn't seem necessary at the moment, since using the default machine as
-> parent seems enough to meet all current needs in QEMU.
-> 
-> What do you think?
+> Yes, or you want me to add [in merge commit dd4bc5f1cfe] to commit log?
 
-fw_cfg is per guest, and there can only be once instance of it; so IMHO it
-makes sense to use the machine as parent. I should have posted a better
-commit description upfront, sorry.
+Maybe Cédric can directly add that when taking the patch ;)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Thanks,
+
+Phil.
 
