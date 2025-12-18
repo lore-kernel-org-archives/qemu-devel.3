@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44FD4D6ACF5
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 12:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AF0D6ACF5
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 12:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWCs3-00009s-U3; Thu, 18 Dec 2025 07:12:39 -0500
+	id 1vWDCG-00044U-Sv; Thu, 18 Dec 2025 07:33:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWCs2-00009U-Fd
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:12:38 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWDCF-00043u-13
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:33:31 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWCrz-0006Pw-8t
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:12:37 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWDCD-0001vu-58
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:33:30 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id E4BF25BE15;
- Thu, 18 Dec 2025 12:12:30 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C68E35BD18;
+ Thu, 18 Dec 2025 12:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766059951; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zkQKyQus8yDXS/76xhLuFZMwrZEwbEKoz52RMqrJaNI=;
- b=vQrfzXU2F6ZeVqnrVIT1dQhcbspSx9wzH8269PivSVNX1LlQZmQqUQbz8eQ82ByxPlAXTj
- 2aueqhrq7mRVXMKXxctLfBWZKGxls0JqYwB1ge9roBbaOid0IS6r0B0F3HVc3W9ncJeGgR
- J4PGc5u1jZTtBwLJpnJHZX+6FIz7+rA=
+ t=1766061206; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ZFrW/nMhlpNMuSoDmosJkjYMLHFTy66ZMnjAxpF7bfQ=;
+ b=MHyjzylQuVsM0Q6v/42Y5uv2SOj9GKOtRIyS0lmbK5njXOdgk4nACNuYocSBGOMWi+W1YW
+ BI5h1ptXPpcfmcPQa/RfzU7UZo4ZXU/JfQXRpABa2jbHujDslKnxq4IPlbfCKhe3xWUg01
+ XT9FZTi2HN9TeRQni7PLHe+lNBXedxY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766059951;
+ s=susede2_ed25519; t=1766061206;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zkQKyQus8yDXS/76xhLuFZMwrZEwbEKoz52RMqrJaNI=;
- b=ASkH0WiLznJOjyxYmTYLnWsWGF/sOb52/vX6Lx7s2UY0px3qU9j7vEHbHSWqCHlHfmN/1U
- QwRgmal438X/u6BQ==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ZFrW/nMhlpNMuSoDmosJkjYMLHFTy66ZMnjAxpF7bfQ=;
+ b=Y0tDtvBCKWOigV70bL1WcKJ3ywOOgZJKAM8O4GUAV6nsAI9I5ie6/SigrFCEWF0zKPrYMz
+ SiPg8elN06jp9zAQ==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jl5lgzBG;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5nW01hLa
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766059950; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zkQKyQus8yDXS/76xhLuFZMwrZEwbEKoz52RMqrJaNI=;
- b=uRu3IvYg60EIeQnJlKJWkgxlS0LCTA2sWxlVUKuZFHsrazM4sW2CgpIO6p+6m6q46TrEpM
- VxCHKA0VUPi3XEZZBWEjEbZqqVQz5h7vpt4F9FVQgYDtrgSl1uJY6J5EcRpmKXRcZjC3xY
- LsIwF4hb0Ds4tjy0k5jerOwVeNJ4c2E=
+ t=1766061204; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ZFrW/nMhlpNMuSoDmosJkjYMLHFTy66ZMnjAxpF7bfQ=;
+ b=jl5lgzBG4xSZ+wAtPgyPl164XdANi+UIUcne3LReyOxhoxmaOCC/5Y90CYClL37lr8pI1G
+ caw5uwQ3Cf7Qn8OZM5zY09Ex5yKUc8pfYDdFJsPKoZwfyiziC+5JuEoWjZJNd8LXCoYMX5
+ R4uLgeBTvnpf+Ggzy8dou5A9euYfisE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766059950;
+ s=susede2_ed25519; t=1766061204;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zkQKyQus8yDXS/76xhLuFZMwrZEwbEKoz52RMqrJaNI=;
- b=o8jZFEGZSjHCUuv1VNYZeufjDgYhNJP9gtVIeFK69v2pLrqgW1RnfIIMeI1mb1LwThiccp
- Wndjbz8K5+ZUNzBA==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ZFrW/nMhlpNMuSoDmosJkjYMLHFTy66ZMnjAxpF7bfQ=;
+ b=5nW01hLaTNKCj50OrXdSrnEPpgFwvHwb3dwPQOeL6XCubWoTi15EEIZC8b6REqAF/Ts39J
+ UMdrIg42KdkTLGBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5A3393EA63;
- Thu, 18 Dec 2025 12:12:30 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1F1053EA63;
+ Thu, 18 Dec 2025 12:33:22 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 9QHwBq7vQ2lVbwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 18 Dec 2025 12:12:30 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id h54LNZL0Q2kWdAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 18 Dec 2025 12:33:22 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, sgarzare@redhat.com, richard.henderson@linaro.org,
- pbonzini@redhat.com, peterx@redhat.com, david@kernel.org,
- philmd@linaro.org, Chuang Xu <xuchuangxclwt@bytedance.com>
-Subject: Re: [PATCH v4 1/1] migration: merge fragmented clear_dirty ioctls
-In-Reply-To: <20251218114220.83354-1-xuchuangxclwt@bytedance.com>
-References: <20251218114220.83354-1-xuchuangxclwt@bytedance.com>
-Date: Thu, 18 Dec 2025 09:12:27 -0300
-Message-ID: <878qf00z10.fsf@suse.de>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2] tests/functional: Allow tests to be run individually
+Date: Thu, 18 Dec 2025 09:33:20 -0300
+Message-ID: <20251218123320.31347-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.994]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: C68E35BD18
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo, bytedance.com:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[test_pseries.py:url,suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,36 +118,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Chuang Xu" <xuchuangxclwt@bytedance.com> writes:
+The functional tests currently don't allow a single test to be
+selected for execution by dotted name, e.g:
 
-> In our long-term experience in Bytedance, we've found that under
-> the same load, live migration of larger VMs with more devices is
-> often more difficult to converge (requiring a larger downtime limit).
->
-> Through some testing and calculations, we conclude that bitmap sync time
-> affects the calculation of live migration bandwidth.
->
-> When the addresses processed are not aligned, a large number of
-> clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
-> 2048 clear_dirty ioctls from two different memory_listener),
-> which increases the time required for bitmap_sync and makes it
-> more difficult for dirty pages to converge.
->
-> For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and
-> 16 vhost-user-blk(4 queue per blk), the sync time is as high as *73ms*
-> (tested with 10GBps dirty rate, the sync time increases as the dirty
-> page rate increases), Here are each part of the sync time:
->
-> - sync from kvm to ram_list: 2.5ms
-> - vhost_log_sync:3ms
-> - sync aligned memory from ram_list to RAMBlock: 5ms
-> - sync misaligned memory from ram_list to RAMBlock: 61ms
->
-> Attempt to merge those fragmented clear_dirty ioctls, then syncing
-> misaligned memory from ram_list to RAMBlock takes only about 1ms,
-> and the total sync time is only *12ms*.
->
-> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+../tests/functional/ppc64/test_pseries.py PseriesMachine.test_ppc64_linux_boot
+                                          ^
+The issue is that the testcase.py main function passes the test
+module's name as the second argument to unittest.main(), which makes
+it ignore all other positional arguments (presumably because the
+module is already the superset of all tests).
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+After commit cac08383f0 ("tests/functional: expose sys.argv to
+unittest.main"), the situation improves by passing the rest of the
+argv from the command line invocation into unittest.main(), but it
+still doesn't fix the issue. The short form options are now accepted,
+so the -k option could be used to filter for a pattern, which is
+useful, but not the same as listing the test names.
+
+Fix this by passing the test module name via the "module" argument to
+unittest.main() and stop touching argv. The ways of invoking tests are
+now as per unittests documentation (-k still works):
+
+  Examples:
+    test_pseries.py                           - run default set of tests
+    test_pseries.py MyTestSuite               - run suite 'MyTestSuite'
+    test_pseries.py MyTestCase.testSomething  - run MyTestCase.testSomething
+    test_pseries.py MyTestCase                - run all 'test*' test methods in MyTestCase
+
+Note that ever since we've been programatically passing the module
+name to unittest.main(), the usage 'test_pseries.py test_pseries' was
+never valid. It used to "work" just the same as 'test_pseries.py
+foobar' would. After this patch, that usage results in an error.
+
+Also note that testcase.py:main() pertains to running the test module
+that invoked it via QemuSystemTest.main(), i.e. module == __main__. So
+the 'discover' usage of unittest doesn't apply here, the module is
+already discovered because that's where this code was called from to
+begin with. This patch could just as well call unittest.main() instead
+of unittest.main(test_module), but the latter provides nicer error
+messages prefixed with the module name.
+
+Tested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+v2: added docs
+---
+ docs/devel/testing/functional.rst      | 19 +++++++++++++++++--
+ tests/functional/qemu_test/testcase.py |  7 +++----
+ 2 files changed, 20 insertions(+), 6 deletions(-)
+
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index fdeaebaadc..4ccc7c3940 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -52,17 +52,32 @@ the following line will only run the tests for the x86_64 target:
+ 
+   make check-functional-x86_64
+ 
+-To run a single test file without the meson test runner, you can also
++To run the tests from a test file without the meson test runner, you can also
+ execute the file directly by specifying two environment variables first,
+ the PYTHONPATH that has to include the python folder and the tests/functional
+ folder of the source tree, and QEMU_TEST_QEMU_BINARY that has to point
+ to the QEMU binary that should be used for the test. The current working
+-directory should be your build folder. For example::
++directory should be your build folder. Like so::
+ 
+   $ export PYTHONPATH=../python:../tests/functional
+   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
++
++With the above set, run all tests from a test file::
++
+   $ pyvenv/bin/python3 ../tests/functional/test_file.py
+ 
++Run all tests from a test class::
++
++  $ pyvenv/bin/python3 ../tests/functional/test_file.py TestClass
++
++Or a single test::
++
++  $ pyvenv/bin/python3 ../tests/functional/test_file.py TestClass.test_name
++
++Filtering test names also works::
++
++  $ pyvenv/bin/python3 ../tests/functional/test_file.py -k pattern
++
+ The test framework will automatically purge any scratch files created during
+ the tests. If needing to debug a failed test, it is possible to keep these
+ files around on disk by setting ``QEMU_TEST_KEEP_SCRATCH=1`` as an env
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 58f2740100..fa100d9632 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -249,17 +249,16 @@ def main():
+         warnings.simplefilter("default")
+         os.environ["PYTHONWARNINGS"] = "default"
+ 
+-        path = os.path.basename(sys.argv[0])[:-3]
++        test_module = os.path.basename(sys.argv[0])[:-3]
+ 
+         cache = os.environ.get("QEMU_TEST_PRECACHE", None)
+         if cache is not None:
+-            Asset.precache_suites(path, cache)
++            Asset.precache_suites(test_module, cache)
+             return
+ 
+         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                    test_output_log = pycotap.LogMode.LogToError)
+-        res = unittest.main(module = None, testRunner = tr, exit = False,
+-                            argv=[sys.argv[0], path] + sys.argv[1:])
++        res = unittest.main(test_module, testRunner = tr, exit = False)
+         failed = {}
+         for (test, _message) in res.result.errors + res.result.failures:
+             if hasattr(test, "log_filename") and not test.id() in failed:
+-- 
+2.51.0
+
 
