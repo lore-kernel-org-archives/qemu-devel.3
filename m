@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B79D6E2BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 17:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F892D6E2BD
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 17:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWHl1-0000aU-EM; Thu, 18 Dec 2025 12:25:44 -0500
+	id 1vWHtK-0004I9-8H; Thu, 18 Dec 2025 12:34:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWHkw-0000Zn-Ca
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 12:25:39 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWHtG-0004Hg-Lq
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 12:34:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWHku-0001t3-2E
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 12:25:38 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWHtD-0005Er-Mk
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 12:34:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766078734;
+ s=mimecast20190719; t=1766079249;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=K9LqEQZLypetkJDQTTtA+Qnu3qzCMl8/IZ4G/dH9EoI=;
- b=Ja5bjkcqw7MJhVdybaRyzdSBrBlwcstNu6+2lkYClAPtle8yDjHlbo7T9e5XFgpzHYWsS7
- nyNPyyqXqx4rsrkMCg6UIErDCkhvUhnhExvvrR1DJFRzWMHRxXwf80Z957jOLk8UM4mhoI
- 4Vk83j2JNRRCypX3YfiRzvfx3bu1y7A=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kRzBd0QavuuzPtNtj6nv2GwDQqOBM9L/5ufR7nGbRLk=;
+ b=Fa5zJ7EAmnEwM8xnjbsoy6ZSnJMnUmaigjC+yX9D/82bdnj+iZ6OMxT5faIAw7HKx8+zFx
+ sQgV291UBQfjrUeSOnZ738Liq30KuDM040y8IlQudoK8MTRagbxGlcrC2DkRrXLUq1bNFD
+ WbEjaBGLk6wxeOEjGxzO9DtH/5T7FHs=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-ID4UVXSxO-GGDrgCnDlvaQ-1; Thu, 18 Dec 2025 12:25:32 -0500
-X-MC-Unique: ID4UVXSxO-GGDrgCnDlvaQ-1
-X-Mimecast-MFC-AGG-ID: ID4UVXSxO-GGDrgCnDlvaQ_1766078729
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8b6963d1624so200018385a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 09:25:29 -0800 (PST)
+ us-mta-266-E7TYK_ymPHikcpma8UViZw-1; Thu, 18 Dec 2025 12:34:08 -0500
+X-MC-Unique: E7TYK_ymPHikcpma8UViZw-1
+X-Mimecast-MFC-AGG-ID: E7TYK_ymPHikcpma8UViZw_1766079248
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8b2dbd36752so186830185a.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 09:34:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766078729; x=1766683529; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766079248; x=1766684048; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=K9LqEQZLypetkJDQTTtA+Qnu3qzCMl8/IZ4G/dH9EoI=;
- b=KebADqk9vQmpYnbHTvUKvGBSJ3ZAdwWr1Eadw4cAbpLKroFG1tALRWF/w5oGXKpzvo
- fB0YY7qcwz/rXMrFdisk4vGf4PxVEGrgSfjGKxZ7oh5Ik4OnAF9OlDIzSQKljLhWdr/Z
- lDeh6ReQSyF/SZYqtyynnkd6APvhKKESa1OJ1k6ro8IlN6tyKZSfGjKmxqHt1AhNajTf
- uVtS9ZK2CAwb+PJqX3Yy33kkqlwDpnc8e5VfClDxqWaGWtLS4f867Yw8v7WKcgmAlTwg
- ETfEYrBcYC2MLSB986uYD7sV6wwgIqih49OFPeMFCKcEHOtv7gc5HFJIvcfOXHVwzS+t
- NEcw==
+ bh=kRzBd0QavuuzPtNtj6nv2GwDQqOBM9L/5ufR7nGbRLk=;
+ b=cQZJh2vOsDDk6eRtlfP0Gm6YTSqmBFHs13cXiCA1+fS3cq4MniK/XTKYSKEFHNKRys
+ pVoHih3OKQ1drr6TD4HfX+bWt4k8WF5B7x1RlQkeHyy1yjgtKjacKUh/nf4GvYN/Ksel
+ nNXau6dhMTYgbGhD6fUAC2ic49bCtQO+C9xhzp9M0PScQOMWnzYOt5shhdcXRs37V8bS
+ nzTWgdnPKG6rra8Jw76XzuccVT7fj5Nrugza+xCU8P6JPlMvM+638zvxcb5ZcAr8Y6FJ
+ APIp1m1Ig+QSC20cYEF1Yz85kjwCrDMm3bFZFQr1nZ01SXUXi9oUu1siSqmwiz90yAHD
+ HzVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766078729; x=1766683529;
+ d=1e100.net; s=20230601; t=1766079248; x=1766684048;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K9LqEQZLypetkJDQTTtA+Qnu3qzCMl8/IZ4G/dH9EoI=;
- b=RmP11of/Dm/Pm9jdBvpnA06PoKkzCIcmqV2ChP7L+h0u9jtxLzr5LOR/6a6AAj87Jh
- Bw9f6MkwGzp87t7OmhQAk5QNPnW2rgGbOFciUzUOGUD0gWROoa+r4ZGEbq8yf+gAIMg0
- yLkfnYt1xOX8LYVZfG6zOeujwGqSyV1U1BsmOuC82UhW5qXwASrFi6yLa++jF/J+ylFF
- DBrmNR/GWHVVOkGOxiFXW1ETSmbQ9+CfASRypWE9tqwDqG6JZshhh9DKszBXWN5nCq/e
- OGHwS6A3wvrCKMQAd3iI73F7gwcZGWN3FmyObAUtJ+bpn3/eqbXiEZaAaAn9wGk0zvKP
- Sylg==
-X-Gm-Message-State: AOJu0Yxsy28vrl/1HWOyx/1RV0IL835K6Sd6RUi7avQQnjeaRxt0PHDJ
- xK6EGIyVgP02lYCwdsjFhHK0YeN02RKZfuW0/klNXlYTSsPWu6h3nBkeOXgV4OZOdfKWPDHrpIY
- 7gnPJzIgsUoMN2ox3/WmhPFFX1yZWgmAYQMIyLQbdJ5TI6u7i9yt/MjZE
-X-Gm-Gg: AY/fxX44itkvEX3+IXmwyn5/O9uuCCYejq1trBy7TK63tscqK9QoKDsoH4xikgTvA3X
- PhY7bo0chB0SV5fTNJq82OUkGEwvA+QWYqmSzHU38ODpsoJXAOyn4RAhsiEWuKkYRO6nfmUVZJz
- 02H2XSXZb82YxI+7+F5aTU8WBlk+4ELgUYUb3pFXbho8xlMJF7XrFfGnLqbn2Sf+qVlZuvRzIT7
- mrlSKRRKMxL2ZJISYDiicZS/7FnAFmAT/pG/yrUxsZNy8/XEGLIxSjTFuqUVo0c0XZAiLe0raay
- SIVi+OIfW2q2YWv4N/tL8cDsopDLdWv7pKLT7AeVuTNUPvnbstwZMj5Tv/f6iUz93eGxOQh5fLS
- iAEg=
-X-Received: by 2002:a05:620a:1794:b0:892:9838:b16a with SMTP id
- af79cd13be357-8c08fabfeabmr60051785a.59.1766078728989; 
- Thu, 18 Dec 2025 09:25:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHvRgoa2c76zq9SUFQUlM95YTKj44Dz6RPilh2Y4Y5DsRyNwkOJ0KnyFB2aZg6A+TEBmgbk4A==
-X-Received: by 2002:a05:620a:1794:b0:892:9838:b16a with SMTP id
- af79cd13be357-8c08fabfeabmr60047585a.59.1766078728473; 
- Thu, 18 Dec 2025 09:25:28 -0800 (PST)
+ bh=kRzBd0QavuuzPtNtj6nv2GwDQqOBM9L/5ufR7nGbRLk=;
+ b=SWA+wYMfw0f99p614ddyfmtPMxqG7lO6BRvh2gL8ElbmV1k9SmM8fss+fr9QnbM9wO
+ IXAjtHtfrGMuANzpKwGl32KGHfeu0K+ZwYRJDQtzQ/NK4NdbjWFY+YLOFZygfRAEzb1u
+ lzdKla1QETpvpn8XeJPFEbHvgKTyToj0rBAip9JP2YVp0D3eFGGmSd8pb7kB6GfE3Aiq
+ L4ZcjWc1cBc5fUDTKsZj2uTB4hYmDUGW6g7kxcOETGWgdtJYxTepLu+YshARzTJ2VwnZ
+ oxZGTxU3C3VlGlezOCZ3gsqOfEOZjoBXcJJV0tSd+jqIhV3+obT2hUPK5+Jho2JBGeGT
+ mzuA==
+X-Gm-Message-State: AOJu0YzQvj45Ol/7LHUDU99n10mRHsS37Y1FGLQQ0gzyNLVyrq3dKP2T
+ JSp6I/hlFss0YQ7VEiXTAHHL8xu2rTZdz6QvLDnlj3fKk1l5hq2P4zhDs94DtbtQg9R6UfYeMOy
+ t5AYrCtBqd9WBAvDnsAissij6Hs4ujinQGr8w/NLflWM8QWB6qm3pE3b/
+X-Gm-Gg: AY/fxX5m34HZuJW3X+PA0lI65rrn21wuRvLk3P1+gawORu6f3iJ0Ldf4P0uCPEZgaBR
+ dTtlWPmO9ytUAkAueNJh7D/S2nJaaCfNk8J98RMfkHmELUf0/DI4a4Y/FtTxf6f5gcWDSP6aFCw
+ LHelslktOKgiHffN+bKQDj4RYY0ypITwOU48ZHtx2JF9MaIAaZ5G9a5L4vZUq4nZSo9zUqThoiA
+ jTfQXaRb+GdPBNcRC/Mqgi+NKaeKgsxbzKLbFnFRRzSm+WUbziOhLdtomEBkbKlGkU4aZUaSHzV
+ JAh9g8pOy3HFhhFIcm31E8gkakMLaJmq/9fOOUg3eYzAphrVvEU0SgBRlDJL2QQ1wRykE7RJRSe
+ MWE0=
+X-Received: by 2002:a05:622a:610:b0:4ee:5fc:43e5 with SMTP id
+ d75a77b69052e-4f4abcd07cdmr244951cf.12.1766079247626; 
+ Thu, 18 Dec 2025 09:34:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcS8SCFC2aSeJnvfZjBZJ3GYg8vGs3BqCox6mV7BVQ+A60Z9clQShQ94/w/wXrXkcm4aH9YQ==
+X-Received: by 2002:a05:622a:610:b0:4ee:5fc:43e5 with SMTP id
+ d75a77b69052e-4f4abcd07cdmr244371cf.12.1766079247096; 
+ Thu, 18 Dec 2025 09:34:07 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8beeb6e987asm207296185a.22.2025.12.18.09.25.27
+ 6a1803df08f44-88d9a254849sm312566d6.44.2025.12.18.09.34.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Dec 2025 09:25:27 -0800 (PST)
-Date: Thu, 18 Dec 2025 12:25:26 -0500
+ Thu, 18 Dec 2025 09:34:06 -0800 (PST)
+Date: Thu, 18 Dec 2025 12:34:05 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 32/51] tests/qtest/migration: Adapt convergence
- routines to config
-Message-ID: <aUQ5BoCrMXk2SJDC@x1.local>
+Subject: Re: [PATCH v3 30/51] tests/qtest/migration: Add temporary code to
+ toggle usage of config
+Message-ID: <aUQ7DcU5T_GH8G1V@x1.local>
 References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-33-farosas@suse.de>
+ <20251215220041.12657-31-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251215220041.12657-33-farosas@suse.de>
+In-Reply-To: <20251215220041.12657-31-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -118,289 +118,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 07:00:18PM -0300, Fabiano Rosas wrote:
-> Adapt the convergence routines migrate_ensure_[non_]converge to set
-> the convergence parameters in the config dict it instead of using
-> migrate-set-parameters.
+On Mon, Dec 15, 2025 at 07:00:16PM -0300, Fabiano Rosas wrote:
+> The tests are being refactored to pass migration options to QEMU using
+> the new API of passing a JSON object as argument the migration
+> commands instead of using several calls to the
+> migrate_set_capabilities|parameters commands.
 > 
-> Some tests need to change the convergence parameters during the
-> migration. The config object method is specific to configuration prior
-> to starting a migration, so by design it's not suitable to effect
-> migration-runtime changes. The existing routines will be kept for this
-> purpose (renamed with 'ongoing' for clarity).
+> Since multiple tests share common infrastructure (framework.c,
+> migration-utils.c, migration-qmp.c), it's cumbersome to convert tests
+> in small chunks, which would require changes to every common function
+> to accept both the new and old ways.
+> 
+> After some tinkering, an easier way to do this transition is to allow
+> the tests to set a key in the config dict itself telling whether the
+> config is supported. With this, the common functions can be fully
+> altered to support the config object, as long as they check this
+> temporary key and do the right thing.
+> 
+> QEMU doesn't know about this hack, so some code is needed to hide it
+> when issuing QMP commands with the config object.
+> 
+> This will all be removed once tests are fully converted.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  tests/qtest/migration/framework.c     | 10 ++++-----
->  tests/qtest/migration/migration-qmp.c | 32 +++++++++++++++++++++++++--
->  tests/qtest/migration/migration-qmp.h |  6 +++--
->  tests/qtest/migration/misc-tests.c    |  4 ++--
->  tests/qtest/migration/precopy-tests.c | 26 +++++++++-------------
->  5 files changed, 52 insertions(+), 26 deletions(-)
+>  tests/qtest/migration/migration-qmp.h  |  1 -
+>  tests/qtest/migration/migration-util.c |  1 +
+>  tests/qtest/migration/migration-util.h | 34 ++++++++++++++++++++++++++
+>  3 files changed, 35 insertions(+), 1 deletion(-)
 > 
-> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-> index fd15bd832e..df42a8a2c6 100644
-> --- a/tests/qtest/migration/framework.c
-> +++ b/tests/qtest/migration/framework.c
-> @@ -583,7 +583,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
->          args->postcopy_data = args->start_hook(from, to);
->      }
->  
-> -    migrate_ensure_non_converge(from);
-> +    migrate_ensure_non_converge(from, args->start.config);
->      migrate_prepare_for_dirty_mem(from);
->      qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
->                               "  'arguments': { "
-> @@ -872,7 +872,7 @@ int test_precopy_common(MigrateCommon *args)
->      }
->  
->      if (args->live) {
-> -        migrate_ensure_non_converge(from);
-> +        migrate_ensure_non_converge(from, args->start.config);
->          migrate_prepare_for_dirty_mem(from);
->      } else {
->          /*
-> @@ -884,7 +884,7 @@ int test_precopy_common(MigrateCommon *args)
->          if (args->result == MIG_TEST_SUCCEED) {
->              qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
->              wait_for_stop(from, &src_state);
-> -            migrate_ensure_converge(from);
-> +            migrate_ongoing_ensure_converge(from);
->          }
->      }
->  
-> @@ -942,7 +942,7 @@ int test_precopy_common(MigrateCommon *args)
->              }
->              migrate_wait_for_dirty_mem(from, to);
->  
-> -            migrate_ensure_converge(from);
-> +            migrate_ongoing_ensure_converge(from);
->  
->              /*
->               * We do this first, as it has a timeout to stop us
-> @@ -1047,7 +1047,7 @@ void test_file_common(MigrateCommon *args, bool stop_src)
->          data_hook = args->start_hook(from, to);
->      }
->  
-> -    migrate_ensure_converge(from);
-> +    migrate_ensure_converge(from, args->start.config);
->      wait_for_serial("src_serial");
->  
->      if (stop_src) {
-> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-> index 5c46ceb3e6..7fe47a5793 100644
-> --- a/tests/qtest/migration/migration-qmp.c
-> +++ b/tests/qtest/migration/migration-qmp.c
-> @@ -499,20 +499,48 @@ void migrate_set_parameter_bool(QTestState *who, const char *parameter,
->      migrate_check_parameter_bool(who, parameter, value);
->  }
->  
-> -void migrate_ensure_non_converge(QTestState *who)
-> +void migrate_ongoing_ensure_non_converge(QTestState *who)
->  {
->      /* Can't converge with 1ms downtime + 3 mbs bandwidth limit */
->      migrate_set_parameter_int(who, "max-bandwidth", 3 * 1000 * 1000);
->      migrate_set_parameter_int(who, "downtime-limit", 1);
->  }
->  
-> -void migrate_ensure_converge(QTestState *who)
-> +void migrate_ongoing_ensure_converge(QTestState *who)
->  {
->      /* Should converge with 30s downtime + 1 gbs bandwidth limit */
->      migrate_set_parameter_int(who, "max-bandwidth", 1 * 1000 * 1000 * 1000);
->      migrate_set_parameter_int(who, "downtime-limit", 30 * 1000);
->  }
->  
-> +void migrate_ensure_non_converge(QTestState *who, QDict *config)
-> +{
-> +    config = config_load(config);
-> +    if (config) {
-> +        /* Can't converge with 1ms downtime + 3 mbs bandwidth limit */
-> +        qdict_put_int(config, "max-bandwidth", 3 * 1000 * 1000);
-> +        qdict_put_int(config, "downtime-limit", 1);
-> +    } else {
-> +        assert(who);
-> +        migrate_ongoing_ensure_non_converge(who);
-> +    }
-> +    config_put(config);
-> +}
-> +
-> +void migrate_ensure_converge(QTestState *who, QDict *config)
-> +{
-> +    config = config_load(config);
-> +    /* Should converge with 30s downtime + 1 gbs bandwidth limit */
-> +    if (config) {
-> +        qdict_put_int(config, "max-bandwidth", 1 * 1000 * 1000 * 1000);
-> +        qdict_put_int(config, "downtime-limit", 30 * 1000);
-> +    } else {
-> +        assert(who);
-> +        migrate_ongoing_ensure_converge(who);
-> +    }
-> +    config_put(config);
-> +}
-
-It's slightly an overkill to me to have these converge helpers to provide
-two versions.  Also a bit confusing on when should we use which.
-
-After all, parameters touched on convergence must be able to be dynamically
-set..
-
-Can we always stick with the QMP set-parameters for all these?
-
-> +
->  void migrate_pause(QTestState *who)
->  {
->      qtest_qmp_assert_success(who, "{ 'execute': 'migrate-pause' }");
 > diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
-> index 9a36a677ba..e465c69094 100644
+> index 940ffd5950..9a36a677ba 100644
 > --- a/tests/qtest/migration/migration-qmp.h
 > +++ b/tests/qtest/migration/migration-qmp.h
-> @@ -39,8 +39,10 @@ void migrate_set_parameter_strv(QTestState *who, const char *parameter,
->  void migrate_set_parameter_null(QTestState *who, const char *parameter);
->  void migrate_set_parameter_bool(QTestState *who, const char *parameter,
->                                  int value);
-> -void migrate_ensure_non_converge(QTestState *who);
-> -void migrate_ensure_converge(QTestState *who);
-> +void migrate_ongoing_ensure_non_converge(QTestState *who);
-> +void migrate_ongoing_ensure_converge(QTestState *who);
-> +void migrate_ensure_non_converge(QTestState *who, QDict *config);
-> +void migrate_ensure_converge(QTestState *who, QDict *config);
->  void migrate_pause(QTestState *who);
->  void migrate_continue(QTestState *who, const char *state);
->  void migrate_recover(QTestState *who, const char *uri);
-> diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-> index 61bdfda857..0a737cb54f 100644
-> --- a/tests/qtest/migration/misc-tests.c
-> +++ b/tests/qtest/migration/misc-tests.c
-> @@ -68,7 +68,7 @@ static void test_analyze_script(char *name, MigrateCommon *args)
->      file = g_strdup_printf("%s/migfile", tmpfs);
->      uri = g_strdup_printf("exec:cat > %s", file);
->  
-> -    migrate_ensure_converge(from);
-> +    migrate_ensure_converge(from, args->start.config);
->      migrate_qmp(from, to, uri, NULL, "{}");
->      wait_for_migration_complete(from);
->  
-> @@ -102,7 +102,7 @@ static void test_ignore_shared(char *name, MigrateCommon *args)
->          return;
->      }
->  
-> -    migrate_ensure_non_converge(from);
-> +    migrate_ensure_non_converge(from, args->start.config);
->      migrate_prepare_for_dirty_mem(from);
->  
->      /* Wait for the first serial output from the source */
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index ab5789717f..eabbbf39c3 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -374,7 +374,7 @@ static void test_auto_converge(char *name, MigrateCommon *args)
->       * Set the initial parameters so that the migration could not converge
->       * without throttling.
->       */
-> -    migrate_ensure_non_converge(from);
-> +    migrate_ensure_non_converge(from, args->start.config);
->  
->      /* To check remaining size after precopy */
->      migrate_set_capability(from, "pause-before-switchover", true);
-> @@ -427,7 +427,7 @@ static void test_auto_converge(char *name, MigrateCommon *args)
->      g_assert_cmpint(hit, ==, 1);
->  
->      /* Now, when we tested that throttling works, let it converge */
-> -    migrate_ensure_converge(from);
-> +    migrate_ongoing_ensure_converge(from);
->  
->      /*
->       * Wait for pre-switchover status to check last throttle percentage
-> @@ -562,7 +562,7 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
->          return;
->      }
->  
-> -    migrate_ensure_non_converge(from);
-> +    migrate_ensure_non_converge(from, args->start.config);
->      migrate_prepare_for_dirty_mem(from);
->  
->      if (postcopy_ram) {
-> @@ -623,14 +623,12 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
->      /* Start incoming migration from the 1st socket */
->      migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", NULL, "{}");
->  
-> -    migrate_ensure_non_converge(from);
-> +    migrate_ensure_non_converge(from, args->start.config);
->  
->      migrate_qmp(from, to2, NULL, NULL, "{}");
->  
->      migrate_wait_for_dirty_mem(from, to2);
+> @@ -47,5 +47,4 @@ void migrate_recover(QTestState *who, const char *uri);
+>  void migrate_cancel(QTestState *who);
+>  void migrate_postcopy_start(QTestState *from, QTestState *to,
+>                              QTestMigrationState *src_state);
 > -
-> -    migrate_ensure_converge(from);
-> -
-> +    migrate_ongoing_ensure_converge(from);
->      wait_for_stop(from, get_src());
->      qtest_qmp_eventwait(to2, "RESUME");
+>  #endif /* MIGRATION_QMP_H */
+> diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+> index 416dd10ef8..e702f00896 100644
+> --- a/tests/qtest/migration/migration-util.c
+> +++ b/tests/qtest/migration/migration-util.c
+> @@ -255,6 +255,7 @@ static void migration_test_wrapper(const void *data)
 >  
-> @@ -659,7 +657,7 @@ static void test_cancel_src_after_failed(QTestState *from, QTestState *to,
->       */
+>      test->data = g_new0(MigrateCommon, 1);
+>      test->data->start.config = qdict_new();
+> +    qdict_put_bool(test->data->start.config, "use-config", false);
 >  
->      wait_for_serial("src_serial");
-> -    migrate_ensure_converge(from);
-> +    migrate_ensure_converge(from, args->config);
+>      g_test_message("Running /%s%s", qtest_get_arch(), test->name);
+>      test->func(test->name, test->data);
+> diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
+> index e73d69bab0..3c3b5a8777 100644
+> --- a/tests/qtest/migration/migration-util.h
+> +++ b/tests/qtest/migration/migration-util.h
+> @@ -60,4 +60,38 @@ void migration_test_add_suffix(const char *path, const char *suffix,
+>  char *migrate_get_connect_uri(QTestState *who);
+>  void migrate_set_ports(QTestState *to, QList *channel_list);
 >  
->      migrate_qmp(from, to, uri, NULL, "{}");
->  
-> @@ -684,7 +682,7 @@ static void test_cancel_src_after_cancelled(QTestState *from, QTestState *to,
->      migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
->  
->      wait_for_serial("src_serial");
-> -    migrate_ensure_converge(from);
-> +    migrate_ensure_converge(from, args->config);
->  
->      migrate_qmp(from, to, uri, NULL, "{}");
->  
-> @@ -709,7 +707,7 @@ static void test_cancel_src_after_complete(QTestState *from, QTestState *to,
->      migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
->  
->      wait_for_serial("src_serial");
-> -    migrate_ensure_converge(from);
-> +    migrate_ensure_converge(from, args->config);
->  
->      migrate_qmp(from, to, uri, NULL, "{}");
->  
-> @@ -739,7 +737,7 @@ static void test_cancel_src_after_none(QTestState *from, QTestState *to,
->  
->      migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
->  
-> -    migrate_ensure_converge(from);
-> +    migrate_ensure_converge(from, args->config);
->      migrate_qmp(from, to, uri, NULL, "{}");
->  
->      wait_for_migration_complete(from);
-> @@ -759,7 +757,7 @@ static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
->      migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
->  
->      wait_for_serial("src_serial");
-> -    migrate_ensure_converge(from);
-> +    migrate_ensure_converge(from, args->config);
->  
->      migrate_qmp(from, to, uri, NULL, "{}");
->  
-> @@ -1066,9 +1064,6 @@ static void migrate_dirty_limit_wait_showup(QTestState *from,
->      migrate_set_parameter_int(from, "x-vcpu-dirty-limit-period", period);
->      migrate_set_parameter_int(from, "vcpu-dirty-limit", value);
->  
-> -    /* Make sure migrate can't converge */
-> -    migrate_ensure_non_converge(from);
-> -
->      /* To check limit rate after precopy */
->      migrate_set_capability(from, "pause-before-switchover", true);
->  
-> @@ -1128,6 +1123,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
->      }
->  
->      /* Prepare for dirty limit migration and wait src vm show up */
-> +    migrate_ensure_non_converge(from, args->start.config);
->      migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
->  
->      /* Start migrate */
+> +/*
+> + * Scaffolding to allow the framework _common functions and _qmp
+> + * functions to use the config object while some tests are still using
+> + * migrate_set_*. Tests that have been converted will set use-config =
+> + * true on the config dict.
+> + */
+> +static bool has_key;
+> +static bool use_config;
+
+Looks like this is temp measure, so no strong opinions.. said that, it
+looks tricky to have the two globals shared between all the tests, and
+having magic keys in the qdict.
+
+Can we pass in MigrateStart* for config_load() and config_put()?  Then at
+least we can change globals into per-test flags of MigrateStart.
+
+Btw, AFAIU the two helpers should always used in a pair but load() and
+put() do not look like a pair..
+
+If we can have args->use_config as a bool, having tests opt-in config
+setups by setting it, then I wonder if we can do that like:
+
+  if (args->use_config) {
+      // do whatever with args->config...
+  } else {
+      // covered by other migrate-set-parameters QMP commands..
+  }
+
+Do we really need config_put()? I'll keep reading, but please evaluate..
+
+> +static inline QDict *config_load(QDict *config)
+> +{
+> +    if (!config) {
+> +        return NULL;
+> +    }
+> +
+> +    has_key = qdict_haskey(config, "use-config");
+> +    if (has_key) {
+> +        use_config = qdict_get_try_bool(config, "use-config", false);
+> +        qdict_del(config, "use-config");
+> +    }
+> +
+> +    if (use_config) {
+> +        return config;
+> +    }
+> +
+> +    return NULL;
+> +}
+> +
+> +static inline void config_put(QDict *config)
+> +{
+> +    if (config && has_key) {
+> +        qdict_put_bool(config, "use-config", use_config);
+> +    }
+> +}
+> +
+>  #endif /* MIGRATION_UTIL_H */
 > -- 
 > 2.51.0
 > 
