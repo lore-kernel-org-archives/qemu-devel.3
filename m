@@ -4,108 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE9FD6E2DC
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 19:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F03FD6E2DC
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 19:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWJru-0008U2-CW; Thu, 18 Dec 2025 14:40:58 -0500
+	id 1vWJtJ-0000pb-6J; Thu, 18 Dec 2025 14:42:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vWJro-0008Te-22; Thu, 18 Dec 2025 14:40:54 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vWJrh-0008Nf-Dl; Thu, 18 Dec 2025 14:40:48 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BIBJfK4018517;
- Thu, 18 Dec 2025 19:40:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=uCPGvn
- j2OELd1uD/qAByl9yyn/0K2ng93/bgZOnL9c8=; b=HbpYt3KaKB4CZAl5+VW0k9
- 1TaXdsvdELa76aO+6jkKgZvbXmamxpubf9OJZVdleFaD01ySF4lNxOxFhR6/vjnU
- knwAeFZ4QU26R+LCDSDgnromTT/cER8/oPV13azhFePOAjuHV8Qia6x9Px5hR+L6
- 5vRRlKqIAQw7uCipuDw/9RtimWYeKVWT8ym+fzkLPhWCgXAHnqs2QJDIFA5nW4Ha
- vfbDFGXUK7WAwF/kTIf1aGlsS4her3x0UdzkudnfPm0yeGz9oqPiIbovrB86cmro
- WvkeK58u+UyOca/v/+7h2i7dxcmJ5V4tkGnaq92c4q5E4Yz3BAmgTa8c0OlRqp0g
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0yvbmgcb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Dec 2025 19:40:36 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BIJXuJj016368;
- Thu, 18 Dec 2025 19:40:35 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4b4qvr00t8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Dec 2025 19:40:35 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BIJeYi626149378
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 18 Dec 2025 19:40:34 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6F34A58059;
- Thu, 18 Dec 2025 19:40:34 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 527BB5804B;
- Thu, 18 Dec 2025 19:40:33 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.79.187]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 18 Dec 2025 19:40:33 +0000 (GMT)
-Message-ID: <99785a08c0f29f84b9c6e4b971532b43998f7f53.camel@linux.ibm.com>
-Subject: Re: [PATCH] hw/s390x: Un-inline the s390_do_cpu_*() functions
-From: Eric Farman <farman@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, Ilya Leoshkevich	 <iii@linux.ibm.com>, David
- Hildenbrand <david@kernel.org>
-Date: Thu, 18 Dec 2025 14:40:32 -0500
-In-Reply-To: <20251217144238.37610-1-thuth@redhat.com>
-References: <20251217144238.37610-1-thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWJt7-0000lI-LY
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 14:42:18 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWJss-0001Nt-Ha
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 14:42:05 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 5F5DC3369C;
+ Thu, 18 Dec 2025 19:41:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1766086909; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jh9O5Pzgyzk7uG3p0CGl0+vL0prblUoKvR5Agh+K1ys=;
+ b=M2Ub4yRgS3YhbSULiCfqJsr83Q3Ddds53PQaoI57Bn6nX9cjKq274bX9XgIsDi37G9Gdqs
+ IZQ42jzmfj6hRanEyXudZf4gtTrHjV4RIBaC05ulI4E8EYSWIc7caPmwMDzVMtt4I7fTII
+ /6kt1fKwLUvzQ+tTqnnhfjZ8upQeaqs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1766086909;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jh9O5Pzgyzk7uG3p0CGl0+vL0prblUoKvR5Agh+K1ys=;
+ b=GEeCtDe+jHGS11XN3V50+DWKZCpH4Xoy9N+FrmRnUAaLnvnOQer07cZsStYcceEvS9ie3c
+ qrDx8CW0uCuTwCAg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1766086909; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jh9O5Pzgyzk7uG3p0CGl0+vL0prblUoKvR5Agh+K1ys=;
+ b=M2Ub4yRgS3YhbSULiCfqJsr83Q3Ddds53PQaoI57Bn6nX9cjKq274bX9XgIsDi37G9Gdqs
+ IZQ42jzmfj6hRanEyXudZf4gtTrHjV4RIBaC05ulI4E8EYSWIc7caPmwMDzVMtt4I7fTII
+ /6kt1fKwLUvzQ+tTqnnhfjZ8upQeaqs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1766086909;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jh9O5Pzgyzk7uG3p0CGl0+vL0prblUoKvR5Agh+K1ys=;
+ b=GEeCtDe+jHGS11XN3V50+DWKZCpH4Xoy9N+FrmRnUAaLnvnOQer07cZsStYcceEvS9ie3c
+ qrDx8CW0uCuTwCAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D5BF53EA63;
+ Thu, 18 Dec 2025 19:41:48 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Map8I/xYRGkqUgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 18 Dec 2025 19:41:48 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 30/51] tests/qtest/migration: Add temporary code to
+ toggle usage of config
+In-Reply-To: <aUQ7DcU5T_GH8G1V@x1.local>
+References: <20251215220041.12657-1-farosas@suse.de>
+ <20251215220041.12657-31-farosas@suse.de> <aUQ7DcU5T_GH8G1V@x1.local>
+Date: Thu, 18 Dec 2025 16:41:46 -0300
+Message-ID: <875xa31ssl.fsf@suse.de>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=V/JwEOni c=1 sm=1 tr=0 ts=694458b4 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=GnlyYoKnFeKzSITRfPQA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Xq797lwABaMfjegahKw8-pnZJuOROhJe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAyMyBTYWx0ZWRfXw7CulBZq9kHH
- 9NgrK5dPSdNJroedWoWJPQ8C/6RD+RrK8gP0bjAiuWm2VhXjAudVtnaWH4GxA3SxAjhjADJBFK9
- jBul4+TVDddkA/wx/tPilZutDtj9iA6mU3ukSx7lYbbrE0JKYzDkO+pb14s4NmhFNcbW9NFYTUD
- O31fGHB7N9lBSJjXkwDCSisP8BeU0k1QEXPn1/+Ekyj9hCZAqGaRwfLX7EG9l51zsW7RosrPNCy
- 5QyaQiByBqg62GRqifhdCKjVTl+iBQ6BI49QwcRE7KNDkM5AT+C6X3I3VX3MhXyWvDQ7A48C/s9
- VYOiDoHOQHmEMeb+p861/mlLni+VGx5ufNxTYhCkW4K+HNoTP/pS/+Qh7pUDqbmNjscFG5h9inW
- GGXSt2NtNFaxuihURK48GzBZ7ArHAQ==
-X-Proofpoint-ORIG-GUID: Xq797lwABaMfjegahKw8-pnZJuOROhJe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-18_02,2025-12-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130023
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.993]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,21 +117,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-12-17 at 15:42 +0100, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
->=20
-> These functions are only called via their function pointer by using
-> the run_on_cpu() function, so it does not make sense to declare these
-> as "inline" functions. Move the functions from cpu.h to either cpu.c
-> (when they are still used in multiple places), or to s390-virtio-ccw.c
-> (when they are only called from that file).
->=20
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  target/s390x/cpu.h         | 24 +-----------------------
->  hw/s390x/s390-virtio-ccw.c | 19 ++++++++++++++++++-
->  target/s390x/cpu.c         |  5 +++++
->  3 files changed, 24 insertions(+), 24 deletions(-)
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+> On Mon, Dec 15, 2025 at 07:00:16PM -0300, Fabiano Rosas wrote:
+>> The tests are being refactored to pass migration options to QEMU using
+>> the new API of passing a JSON object as argument the migration
+>> commands instead of using several calls to the
+>> migrate_set_capabilities|parameters commands.
+>> 
+>> Since multiple tests share common infrastructure (framework.c,
+>> migration-utils.c, migration-qmp.c), it's cumbersome to convert tests
+>> in small chunks, which would require changes to every common function
+>> to accept both the new and old ways.
+>> 
+>> After some tinkering, an easier way to do this transition is to allow
+>> the tests to set a key in the config dict itself telling whether the
+>> config is supported. With this, the common functions can be fully
+>> altered to support the config object, as long as they check this
+>> temporary key and do the right thing.
+>> 
+>> QEMU doesn't know about this hack, so some code is needed to hide it
+>> when issuing QMP commands with the config object.
+>> 
+>> This will all be removed once tests are fully converted.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  tests/qtest/migration/migration-qmp.h  |  1 -
+>>  tests/qtest/migration/migration-util.c |  1 +
+>>  tests/qtest/migration/migration-util.h | 34 ++++++++++++++++++++++++++
+>>  3 files changed, 35 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
+>> index 940ffd5950..9a36a677ba 100644
+>> --- a/tests/qtest/migration/migration-qmp.h
+>> +++ b/tests/qtest/migration/migration-qmp.h
+>> @@ -47,5 +47,4 @@ void migrate_recover(QTestState *who, const char *uri);
+>>  void migrate_cancel(QTestState *who);
+>>  void migrate_postcopy_start(QTestState *from, QTestState *to,
+>>                              QTestMigrationState *src_state);
+>> -
+>>  #endif /* MIGRATION_QMP_H */
+>> diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+>> index 416dd10ef8..e702f00896 100644
+>> --- a/tests/qtest/migration/migration-util.c
+>> +++ b/tests/qtest/migration/migration-util.c
+>> @@ -255,6 +255,7 @@ static void migration_test_wrapper(const void *data)
+>>  
+>>      test->data = g_new0(MigrateCommon, 1);
+>>      test->data->start.config = qdict_new();
+>> +    qdict_put_bool(test->data->start.config, "use-config", false);
+>>  
+>>      g_test_message("Running /%s%s", qtest_get_arch(), test->name);
+>>      test->func(test->name, test->data);
+>> diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
+>> index e73d69bab0..3c3b5a8777 100644
+>> --- a/tests/qtest/migration/migration-util.h
+>> +++ b/tests/qtest/migration/migration-util.h
+>> @@ -60,4 +60,38 @@ void migration_test_add_suffix(const char *path, const char *suffix,
+>>  char *migrate_get_connect_uri(QTestState *who);
+>>  void migrate_set_ports(QTestState *to, QList *channel_list);
+>>  
+>> +/*
+>> + * Scaffolding to allow the framework _common functions and _qmp
+>> + * functions to use the config object while some tests are still using
+>> + * migrate_set_*. Tests that have been converted will set use-config =
+>> + * true on the config dict.
+>> + */
+>> +static bool has_key;
+>> +static bool use_config;
+>
+> Looks like this is temp measure, so no strong opinions.. said that, it
+> looks tricky to have the two globals shared between all the tests, and
+> having magic keys in the qdict.
+>
+
+It is tricky, but it works. The other options all require "passing
+something" in, which ends up touching good code and causing a mess with
+rebases and the overall clarity of the patches. But let me read about
+your suggestions below...
+
+> Can we pass in MigrateStart* for config_load() and config_put()?  Then at
+> least we can change globals into per-test flags of MigrateStart.
+>
+> Btw, AFAIU the two helpers should always used in a pair but load() and
+> put() do not look like a pair..
+>
+
+My mind went to vcpu_load/vcpu_put from kvm code. =D
+
+> If we can have args->use_config as a bool, having tests opt-in config
+> setups by setting it, then I wonder if we can do that like:
+>
+
+The migrate_qmp commands don't take args. So I'd have to alter their
+signature just for this temporary state. That's why I put the flag in
+the dict itself.
+
+>   if (args->use_config) {
+>       // do whatever with args->config...
+>   } else {
+>       // covered by other migrate-set-parameters QMP commands..
+>   }
+>
+> Do we really need config_put()? I'll keep reading, but please evaluate..
+>
+
+Because of the migrate_incoming_qmp and -incoming calls, we need to take
+the key out of the dict to hide it. Then put it back so the rest of the
+code, e.g. migrate_qmp can use it.
+
+>> +static inline QDict *config_load(QDict *config)
+>> +{
+>> +    if (!config) {
+>> +        return NULL;
+>> +    }
+>> +
+>> +    has_key = qdict_haskey(config, "use-config");
+>> +    if (has_key) {
+>> +        use_config = qdict_get_try_bool(config, "use-config", false);
+>> +        qdict_del(config, "use-config");
+>> +    }
+>> +
+>> +    if (use_config) {
+>> +        return config;
+>> +    }
+>> +
+>> +    return NULL;
+>> +}
+>> +
+>> +static inline void config_put(QDict *config)
+>> +{
+>> +    if (config && has_key) {
+>> +        qdict_put_bool(config, "use-config", use_config);
+>> +    }
+>> +}
+>> +
+>>  #endif /* MIGRATION_UTIL_H */
+>> -- 
+>> 2.51.0
+>> 
 
