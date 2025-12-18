@@ -4,113 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD91D6E2AD
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 15:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A58C1D6D232
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 15:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWGNV-00065h-Il; Thu, 18 Dec 2025 10:57:23 -0500
+	id 1vWGPg-0006Wx-8Z; Thu, 18 Dec 2025 10:59:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefan.weil@weilnetz.de>)
- id 1vWGNT-00065V-Bx
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:57:19 -0500
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefan.weil@weilnetz.de>)
- id 1vWGNR-0007oi-9m
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:57:19 -0500
-Received: from [192.168.178.140] (p5b151e44.dip0.t-ipconnect.de [91.21.30.68])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 790CBDA07A3;
- Thu, 18 Dec 2025 16:57:14 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
- t=1766073434;
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWGPZ-0006Wb-4k
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:59:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWGPX-0007z7-QL
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:59:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766073566;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XusXlGntoiFgg58UGGBWq0cn40/teBYDA3GMVfQYJRU=;
- b=gS7Zcj3xI2qvN2wS4fHMTds1BKSiyvtMQxn1iiq5qkNKxGE8zR0bHtUTO0+6H8X0Fz1zGh
- BrKdHg7/IUtkw5W9h7uOCqIEWkcIK/Y1MVf0LNO7fg6Jyu4kxR5Fl91ods+CMzn+Qfc5gp
- Q30++wFF/xZNLeWy6AvoO06Mv89Uh+c=
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=stefan.weil@weilnetz.de
- smtp.mailfrom=stefan.weil@weilnetz.de
-Message-ID: <97a6f77e-7a86-4bbc-a20a-b1e1c7bdb537@weilnetz.de>
-Date: Thu, 18 Dec 2025 16:57:13 +0100
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FErgdqg0Owcl+68IiMdBX3370S0DESPSKsYk+qF5iLM=;
+ b=R2ciWmNrMHzgcbuiWdl1XwJe2SvkorxO/9/1KOLUR7P90W5g7nPndOobzC7WvDXB2eOFMz
+ 1XykpqkZ5NajlALS1DRidWALhIL8A6cRuj+KS+RQiN09DKrKT5SoozphA+wWxvNUfy8Yfm
+ P7p0+/sFFlQfzcOUnNu2OrbBfvbsAEw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-m70ZaGMIOL-DMHb7eywSVg-1; Thu,
+ 18 Dec 2025 10:59:23 -0500
+X-MC-Unique: m70ZaGMIOL-DMHb7eywSVg-1
+X-Mimecast-MFC-AGG-ID: m70ZaGMIOL-DMHb7eywSVg_1766073561
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC6FA1955DC5; Thu, 18 Dec 2025 15:59:20 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 19A1B1956056; Thu, 18 Dec 2025 15:59:20 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A380F21E6A27; Thu, 18 Dec 2025 16:59:17 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>,  <ira.weiny@intel.com>,
+ <alucerop@amd.com>,  <a.manzanares@samsung.com>,
+ <dongjoo.seo1@samsung.com>,  <mst@redhat.com>,
+ <marcel.apfelbaum@gmail.com>,  <linux-cxl@vger.kernel.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 3/5] hw/cxl: Allow BI by default in Window restrictions
+In-Reply-To: <20251218154832.00000159@huawei.com> (Jonathan Cameron's message
+ of "Thu, 18 Dec 2025 15:48:32 +0000")
+References: <20251103195209.1319917-1-dave@stgolabs.net>
+ <20251103195209.1319917-4-dave@stgolabs.net>
+ <87wm2ki1wm.fsf@pond.sub.org> <20251218154832.00000159@huawei.com>
+Date: Thu, 18 Dec 2025 16:59:17 +0100
+Message-ID: <873457aii2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Report on MAINTAINERS coverage
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-References: <87h5toc61n.fsf@pond.sub.org>
-Autocrypt: addr=stefan.weil@weilnetz.de; keydata=
- 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
-In-Reply-To: <87h5toc61n.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: v2201612906741603
-X-Rspamd-Queue-Id: 790CBDA07A3
-X-Spamd-Bar: ---
-X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[99.99%];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_ZERO(0.00)[0];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[shazbot.org:email,sub.org:email]
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=37.120.169.71;
- envelope-from=stefan.weil@weilnetz.de; helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,50 +88,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <stefan.weil@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 18.12.25 um 13:45 schrieb Markus Armbruster:
-> Back in 2014 (time flies), I posted
-> 
->      Subject: MAINTAINERS leaves too many files uncovered
->      Message-ID: <87mw8rumhb.fsf@blackfin.pond.sub.org>
->      https://lore.kernel.org/qemu-devel/87mw8rumhb.fsf@blackfin.pond.sub.org/
-> 
-> I updated my findings in 2015, 2016 (at commit e00da552a0d), 2018 (at
-> v3.1.0-rc2), and 2023 (at commit 36e9aab3c56, close to v8.2.0).  This is
-> another update, at v10.2.0-rc4.
+Jonathan Cameron <jonathan.cameron@huawei.com> writes:
 
+> On Thu, 18 Dec 2025 10:18:17 +0100
+> Markus Armbruster <armbru@redhat.com> wrote:
+>
+>> Davidlohr Bueso <dave@stgolabs.net> writes:
+>> 
+>> > Update the CFMW restrictions to also permit Back-Invalidate
+>> > flows by default, which is aligned with the no-restrictions
+>> > policy.
+>> >
+>> > While at it, document the 'restrictions=' option.  
+>> 
+>> I'd split the patch.  Up to you.
+> Hi Markus,
+>
+> As you note below the interface hasn't been in any release anyway and
+> is part of the long backlog I'm carrying and slowly getting
+> upstream. Bringing this in from the start with that restrictions
+> control should be fine.
+>
+> However, backwards compatibility does need addressing
+> as this changes the default for things we do create today (with
+> no restrictions).
+>
+> In this particular case, I don't think we care because there are no
+> BI capable devices before this series - so there can't be anything
+> using this feature for the host memory range it describes.
+>
+> As such, the only result is the ACPI table says we have an extra
+> flag set which no one will care about.  Will need to update
+> the ACPI table tests though. I'll check.
+>
+> Migration of CXL topologies is horribly broken currently anyway
+> so that's not a problem here. Given current usecases are strictly
+> software stack verification fixing that isn't a priority (yet).
 
-These two files were contributed by me and most of my initial code is 
-still unmodified, so I could be added as their maintainer:
-
-hw/nvram/eeprom93xx.c
-include/hw/nvram/eeprom93xx.h
-
-I had two contributions to the eeprom93xx.c (one made by Thiemo in my 
-name). Other authors had also two or more contributions:
-
-       2 Author: Alex Williamson <alex@shazbot.org>
-       2 Author: Anthony Liguori <anthony@codemonkey.ws>
-       2 Author: Aurelien Jarno <aurelien@aurel32.net>
-       2 Author: Marc-André Lureau <marcandre.lureau@redhat.com>
-       3 Author: Blue Swirl <blauwirbel@gmail.com>
-       3 Author: Juan Quintela <quintela@trasno.org>
-       3 Author: Paolo Bonzini <pbonzini@redhat.com>
-       5 Author: Markus Armbruster <armbru@redhat.com>
-
-I am not sure about the desired order in MAINTAINERS. Therefore I don't 
-intend to send a patch but would be happy if someone else updates this file.
-
-For the other files which are von covered by MAINTAINERS, the copyright 
-notice might help to find possible maintainers:
-
-grep --no-filename -r -o "Copyright.*" $(cat FILELIST)|sort -i|uniq -ci
-
-Thanks
-Stefan W.
+Good to know.  Work into commit message(s)?
 
 
