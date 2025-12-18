@@ -4,92 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B885FD711C8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 23:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915B1D711CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 23:42:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWNaM-000174-Ts; Thu, 18 Dec 2025 18:39:07 -0500
+	id 1vWNcf-0001lP-Rg; Thu, 18 Dec 2025 18:41:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vWNaL-00016o-62
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 18:39:05 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWNce-0001l3-E9
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 18:41:28 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vWNaI-0007Rl-Qf
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 18:39:04 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b79ea617f55so74867266b.3
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 15:39:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766101141; x=1766705941; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q2HEHuJUo/i2MG8kDnCf84RXxS7jcr6/Oai12kIGuAo=;
- b=UEiPkmmzznOIHfaoBD5BhlWgkHoD7Ymunxh8SN5TQbuQyg6ZOJJMscc95c1V8GXBPs
- s3LdEV8lIJwOo3fhsq5mNMmGfS+nXLjA/vnnZQVaRAxA8usNlI2UuMYSQdYYIL8/cRlA
- kbamqlRlnkb8O6NCXOKLjcFL5+qqGmfy1ctNB3h3WS4QjZT1mOh0rOhIgvh+5WBbAEEX
- ZVskE7uLtAsb0xFtb9uuVDQjmXuO7KyWzdWRpCe/ec2eMMWu7X3VSbWH3pLiYqZyU+rr
- sqP8o0FmiSKiaTxm5AZYRSGL64o9Biglx+oqmDF3elLtPYiXtvMgkm06IhDP6RFxF7LY
- UHkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766101141; x=1766705941;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=q2HEHuJUo/i2MG8kDnCf84RXxS7jcr6/Oai12kIGuAo=;
- b=GqnvzOijdsHXPgejwOxh+SoMfeuvSa2QQrYXqjWqQhJNGrxg97XALckEwKMLOq6tHn
- vfrGHOn0Td0+lllGMAZKgDh5wYlKIHOGUJ35QcatqWRl8SeySMfl+vma30GmDEROPJ3J
- h0u9QP9b4Qv3AwPwZ7MuuRD0CFzrq5eEEntUcn2cOv7K/puSLd8GkTIZTH8F3Z5Afj4E
- TncwOvvE3vThRNB4nXmviSpZD+Ph/TG6dCM4+3d3sQgPDbCg1XwFY6tevyPxe08hLadN
- w15abHjARIGBfZ7oPJI4x2DlR/t+c4nbHy/yF1LM0xq6VaRJZNKMFYAFw1hxu6Z20WnN
- 141A==
-X-Gm-Message-State: AOJu0Yws0z9qAxLkWI+tulW9nV6pj60i3HdPYoGW2Uxc6f9E8db9Fhht
- w9An/cW7O4t+zyyCxvDXLYU/3EVcAUyI9nnxf03sCLUVbqqrZCaSfdaS
-X-Gm-Gg: AY/fxX5BjHhTRg0vPgO1gl77p1Nsy0wTeste3f6OS5MxGTjwVsvWZ/Yh/DzNIbGq+i5
- ASzoZth5pIUDGeGuTGkvN7hOucgxbTuRZtHzR2ztsQre9RGjVmqJ23ybBU6q17+zJMRsHYqHi5c
- 8GLPUR5CJ2IfcBXtCTPLNBMKR9N/WWn5aHBoAbgEY7IBQhamaMnatbVmtqxOxgdfz50pRwx3V7O
- mjYdyiLnbHQaXWcXdtOKkAt8XspRgj9iSmuA7x4iAt51KCkmwNqAJl3eXxfVggSgnndkixMm/X1
- uFPwTybz1fAWrQ0x+v5NPNUraBQieQVm2PFAyAfRD3HOC2YJ36Dmx2Oh3fT1GBxdEGT3GoUeGdO
- enkG23oNDb48R159smhy1P75nPT2c9pn7dm6VeMgeo6sts2k5MLuimiIjDT9PvZSJJoFvo676hH
- PO+t5PqdGIdjhO+rddXviyy1yWbKvtfsY0TkJDZVGkXKoidqpgJFAplbeRTIxwKhugnf+GvQ==
-X-Google-Smtp-Source: AGHT+IHkFJNpW0PFf+Dok3vj2IPew1D3zoWSKIt9MPUK+raSe2BrRgwDww1fVXBe4aRbir+fhUBCpA==
-X-Received: by 2002:a17:907:980a:b0:b76:d880:e70b with SMTP id
- a640c23a62f3a-b80371d5006mr111445866b.55.1766101140728; 
- Thu, 18 Dec 2025 15:39:00 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-077-011-003-230.77.11.pool.telefonica.de. [77.11.3.230])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037f48606sm66028166b.62.2025.12.18.15.39.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Dec 2025 15:39:00 -0800 (PST)
-Date: Thu, 18 Dec 2025 23:38:58 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Pavel Pisa <pisa@fel.cvut.cz>,
- =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>
-CC: qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v1 0/6] hw/arm/sabrelite: Add FlexCAN support
-In-Reply-To: <202512160144.54648.pisa@fel.cvut.cz>
-References: <cover.1765826753.git.matyas.bobek@gmail.com>
- <202512160144.54648.pisa@fel.cvut.cz>
-Message-ID: <4BBA8CE7-A166-4358-B608-B990DF32F55C@gmail.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWNcc-0008Ps-H8
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 18:41:28 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D67365BCFB;
+ Thu, 18 Dec 2025 23:41:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1766101285; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lyd31O1SYUJkoWRbtV1y0APhob8e+n+mKNX1lrYjcQM=;
+ b=nXe+g6iBoql8u609PMfvHvdgW44HlqzR8imQDo/WqguPfMOcakpkYM8JwYc10G+eMTcL5m
+ AtllZ+vyidfOGu4sKc5m0HkzG3OnoSk2jwnTjg6xCFF0wGZAADXjY/RyGA65tvqr0wO9PF
+ JHKicmks4icAU4WSFh2JvWWTSDekd8k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1766101285;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lyd31O1SYUJkoWRbtV1y0APhob8e+n+mKNX1lrYjcQM=;
+ b=RJszfu513PgjayxMogndpDnEATSdtxr08UDFChAoocoSU0zZJ2nxqZlntWNDeHwcPv/qPB
+ PMaW+YPS9ybrf1Ag==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=CRqsSGSk;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oTgALS24
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1766101283; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lyd31O1SYUJkoWRbtV1y0APhob8e+n+mKNX1lrYjcQM=;
+ b=CRqsSGSkQeyawY6btkduHap0KOb840CHJZOOIBrlnqB5JFeYd089cesGsWXX3GpxEcQz/I
+ 9qgUNac+olV0UD1jBQO4kbfQkiYsRoLD6ADnFaNNC67JPb3HoEmGb4PkOIldmXIehcgbWc
+ kMoGU6aDY4bVhfftRFDYIurDLCpIubE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1766101283;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lyd31O1SYUJkoWRbtV1y0APhob8e+n+mKNX1lrYjcQM=;
+ b=oTgALS24fivrRKddVMwXY4YDe+f4qMLhUnk19RPRckNvbEgdHU5O+8/g3QG6mo/2oIW/tv
+ bAIy+i/CVa8i/rBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5B19E3EA63;
+ Thu, 18 Dec 2025 23:41:23 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WmpCCCORRGm2fAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 18 Dec 2025 23:41:23 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 30/51] tests/qtest/migration: Add temporary code to
+ toggle usage of config
+In-Reply-To: <aURq58a8dsZuDbcL@x1.local>
+References: <20251215220041.12657-1-farosas@suse.de>
+ <20251215220041.12657-31-farosas@suse.de> <aUQ7DcU5T_GH8G1V@x1.local>
+ <875xa31ssl.fsf@suse.de> <aURq58a8dsZuDbcL@x1.local>
+Date: Thu, 18 Dec 2025 20:41:20 -0300
+Message-ID: <87tsxnz7bz.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: D67365BCFB
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,206 +127,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
+> On Thu, Dec 18, 2025 at 04:41:46PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Mon, Dec 15, 2025 at 07:00:16PM -0300, Fabiano Rosas wrote:
+>> >> The tests are being refactored to pass migration options to QEMU using
+>> >> the new API of passing a JSON object as argument the migration
+>> >> commands instead of using several calls to the
+>> >> migrate_set_capabilities|parameters commands.
+>> >> 
+>> >> Since multiple tests share common infrastructure (framework.c,
+>> >> migration-utils.c, migration-qmp.c), it's cumbersome to convert tests
+>> >> in small chunks, which would require changes to every common function
+>> >> to accept both the new and old ways.
+>> >> 
+>> >> After some tinkering, an easier way to do this transition is to allow
+>> >> the tests to set a key in the config dict itself telling whether the
+>> >> config is supported. With this, the common functions can be fully
+>> >> altered to support the config object, as long as they check this
+>> >> temporary key and do the right thing.
+>> >> 
+>> >> QEMU doesn't know about this hack, so some code is needed to hide it
+>> >> when issuing QMP commands with the config object.
+>> >> 
+>> >> This will all be removed once tests are fully converted.
+>> >> 
+>> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> >> ---
+>> >>  tests/qtest/migration/migration-qmp.h  |  1 -
+>> >>  tests/qtest/migration/migration-util.c |  1 +
+>> >>  tests/qtest/migration/migration-util.h | 34 ++++++++++++++++++++++++++
+>> >>  3 files changed, 35 insertions(+), 1 deletion(-)
+>> >> 
+>> >> diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
+>> >> index 940ffd5950..9a36a677ba 100644
+>> >> --- a/tests/qtest/migration/migration-qmp.h
+>> >> +++ b/tests/qtest/migration/migration-qmp.h
+>> >> @@ -47,5 +47,4 @@ void migrate_recover(QTestState *who, const char *uri);
+>> >>  void migrate_cancel(QTestState *who);
+>> >>  void migrate_postcopy_start(QTestState *from, QTestState *to,
+>> >>                              QTestMigrationState *src_state);
+>> >> -
+>> >>  #endif /* MIGRATION_QMP_H */
+>> >> diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+>> >> index 416dd10ef8..e702f00896 100644
+>> >> --- a/tests/qtest/migration/migration-util.c
+>> >> +++ b/tests/qtest/migration/migration-util.c
+>> >> @@ -255,6 +255,7 @@ static void migration_test_wrapper(const void *data)
+>> >>  
+>> >>      test->data = g_new0(MigrateCommon, 1);
+>> >>      test->data->start.config = qdict_new();
+>> >> +    qdict_put_bool(test->data->start.config, "use-config", false);
+>> >>  
+>> >>      g_test_message("Running /%s%s", qtest_get_arch(), test->name);
+>> >>      test->func(test->name, test->data);
+>> >> diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
+>> >> index e73d69bab0..3c3b5a8777 100644
+>> >> --- a/tests/qtest/migration/migration-util.h
+>> >> +++ b/tests/qtest/migration/migration-util.h
+>> >> @@ -60,4 +60,38 @@ void migration_test_add_suffix(const char *path, const char *suffix,
+>> >>  char *migrate_get_connect_uri(QTestState *who);
+>> >>  void migrate_set_ports(QTestState *to, QList *channel_list);
+>> >>  
+>> >> +/*
+>> >> + * Scaffolding to allow the framework _common functions and _qmp
+>> >> + * functions to use the config object while some tests are still using
+>> >> + * migrate_set_*. Tests that have been converted will set use-config =
+>> >> + * true on the config dict.
+>> >> + */
+>> >> +static bool has_key;
+>> >> +static bool use_config;
+>> >
+>> > Looks like this is temp measure, so no strong opinions.. said that, it
+>> > looks tricky to have the two globals shared between all the tests, and
+>> > having magic keys in the qdict.
+>> >
+>> 
+>> It is tricky, but it works. The other options all require "passing
+>> something" in, which ends up touching good code and causing a mess with
+>> rebases and the overall clarity of the patches. But let me read about
+>> your suggestions below...
+>> 
+>> > Can we pass in MigrateStart* for config_load() and config_put()?  Then at
+>> > least we can change globals into per-test flags of MigrateStart.
+>> >
+>> > Btw, AFAIU the two helpers should always used in a pair but load() and
+>> > put() do not look like a pair..
+>> >
+>> 
+>> My mind went to vcpu_load/vcpu_put from kvm code. =D
+>
+> Fair enough. :) Personally I'd use load/unload in new codes.
+>
+>> 
+>> > If we can have args->use_config as a bool, having tests opt-in config
+>> > setups by setting it, then I wonder if we can do that like:
+>> >
+>> 
+>> The migrate_qmp commands don't take args. So I'd have to alter their
+>> signature just for this temporary state. That's why I put the flag in
+>> the dict itself.
+>> 
+>> >   if (args->use_config) {
+>> >       // do whatever with args->config...
+>> >   } else {
+>> >       // covered by other migrate-set-parameters QMP commands..
+>> >   }
+>> >
+>> > Do we really need config_put()? I'll keep reading, but please evaluate..
+>> >
+>> 
+>> Because of the migrate_incoming_qmp and -incoming calls, we need to take
+>> the key out of the dict to hide it. Then put it back so the rest of the
+>> code, e.g. migrate_qmp can use it.
+>
+> Can we introduce migrate_qmp_args() wrapper which takes the *args, then
+> only pass in config if args->use_config for migrate_qmp()?
+>
+> I still want to know if we can have better way to do this, so that the
+> qdict should only and always be the real configs to be applied.  That can
+> remove a major confusion I had when reading this series.
+>
 
-Am 16=2E Dezember 2025 00:44:54 UTC schrieb Pavel Pisa <pisa@fel=2Ecvut=2E=
-cz>:
->Dear Matyas Bobek and Bernhard Beschow,
->
->On Monday 15 of December 2025 21:03:09 Maty=C3=A1=C5=A1 Bobek wrote:
->> This series adds emulation of the FlexCAN CAN controller, version 2,
->> found in NXP i=2EMX6 series SoCs=2E The controller is integrated into
->> fsl-imx6 and the Sabrelite ARM board=2E
->
->First, thanks a lot to Matyas Bobek for finding the courage
->and sending the FlexCAN series, finally, after keeping it updated
->log time on his flexcan-series-XXX branches at his personal
->QEMU development repository
->
->  https://gitlab=2Efel=2Ecvut=2Ecz/bobekmat/qemu-flexcan/-/branches
->
->Bernhard Beschow, thanks for expressing interrest in the project=2E
->Your intererst helped Matyas Bobek to collect courage to send=2E
+Ok, I can try harder.
 
-Nice! Yeah, contributing to an OSS project can be intimidating at first=2E=
- But seeing one's work accepted is encuraging which is the real beauty of O=
-SS=2E
+> Another example is, I see that you also reused the qdict keys for storing
+> different tls-creds for client/server, which needs tweak as well before
+> applying.  I wonder if those can be done with config, config_src,
+> config_dst, hence whatever passed into migrate_qmp should be
+> "config+config_src", whilist "config+config_dst" for migrate_incoming_qmp.
+>
 
->I have found that you have invested a lot in the CAN on
->your imx8mp-flexcan and can-cleanup branches, thanks again
->
->  https://github=2Ecom/shentok/qemu/branches
->
->It is shame that long delay in sending of patches has
->lead to some divergence of the effort=2E
->
->I have gone through your changes and would be happy if the
->effort can be joined and integrated into mainline=2E
->
->I would prefer to help Matyas Bobek's series to be updated
->in state that it passes review and then the FlexCAN
->can be moved forward by you and others=2E
->
->In long term, the extension to support FlexCAN3 would
->be very usesfull=2E But that that is work for other thesis,
->GSoC and or company funded project or developers=2E
->I would be happy to provide my knowledge as the time
->allows or look for students, etc=2E
+Hm, but then we'd have these args->config_src and args->config_dst for
+people to misuse. The config reaches migrate_qmp via the _common
+functions:
 
-Well, the imx8mp-flexcan branch is a moving target and currently exists as=
- a proof of concept=2E Once this series is merged, I would like to integrat=
-e this series' FlexCAN functionality into imx8mp, even if the real controll=
-er has more features=2E So this branch just allows me to look into the futu=
-re which helps my review=2E
+test_foobar(args)
+{
+    args->config.multifd = true;
+    args->config.tls_creds = "abc";
+    test_foobar_common(args);
+}
 
->
->As for the series and your (Bernhard Beschow) changes:
+test_foobar_common(args)
+{
+    migrate_start(args);
+    ...
+    migrate_qmp_incoming(args->config);
+    ...
+    migrate_qmp(args->config);
+}
 
-Let's keep the discussion on the list=2E While there is some truth to my b=
-ranches I'd prefer to stick to the review process and only discuss topics r=
-aised here=2E I'll provide my feedback as soon as I find time for it=2E
+It would be weird:
 
-Best regards,
-Bernhard
+test_foobar(args)
+{
+    args->config.multifd = true;
+    args->config_src.tls_creds = "abc";
+    args->config_dst.tls_creds = "def";
+    test_foobar_common(args);
+}
 
+test_foobar_common(args)
+{
+    migrate_start(args);
+    ...
+    migrate_qmp_incoming(args->config, args->config_dst);
+    ...
+    migrate_qmp(args->config, args->config_src);
+}
+
+If there's code that needs to check the config for an option, how does
+it know which of the three to look at?
+
+> IMHO if no way to work it out, one last request is for all special keys we
+> should have somewhere document them explicitly (maybe above the "config"
+> var?). We could also make all special keys to be prefixed with "__" (or
+> something else) so as to be very clear they are special.  We can even
+> assert in a config_load() making sure no special keys after loaded.
 >
->I have seen that you suggest some reordering of some
->functions in the hw/net/can/flexcan=2Ec file=2E If you think
->that it is the better, more readable order for QEMU developers,
->I would suggest and have plea to Matyas Bobek to proceed
->with reorder=2E Same with tracepoints and debug prints
->which could be updated into state that your or others
->follow-up patches would not cause massive code movement
->which complicates tracking and reading of the changes=2E
+> So in general, if there's way to not introduce special keys I'll consider
+> voting for them first..  Said that, please go choose whatever way you
+> finally decide. It can take into account of how easy it is to impl the idea
+> based on your current version, to not make this series drag you too much.
+> Not a big deal, IMHO we can work on top especially with tests.
 >
->On the other hand, I have some arguments against unification
->of memory FlexCAN access function and inlining register accesses
->into them=2E We have already discused with Matyas Bobek that
->for FlexCAN3 and other future changes it would worth to
->separate registers from memory part etc=2E So I would kept
->this separation=2E Making as much as possible of the core
->opaque for its external use is right from my view point
->on the other hand=2E
->
->As for the CAN core changes, again there are some which
->I see as good moves, some cleanup of long term unused original
->structures which have been planned for another integration
->into QEMU before simplification to pass review etc=2E On the other
->hand, I would keep client state without const and with destructors
->etc=2E Again, actual code is somehow usable in its actual form,
->but from the long term perspective, I see the need for
->back-pressure propagation, emulation of the highest priority
->message (the lowest ID) exchange the first, etc=2E and I have some
->plans for that=2E I do not think that CAN emulation is and will
->be some real performance bottleneck in QEMU use for embedded
->systems development so I would like to keep there space
->for future more precise emulation=2E
->
->Same with reset on the chip core level, I think that its
->redundant call does not cause any performance problems,
->but I would be happy if the controller codes are reusable
->for wide scenarios=2E I have written and used LinCAN with
->such controllers at time of ISA bus on PC=2E I would be happy if
->we have mechanism how to map them on SoCs with FPGAs=2E
->Unfortunately this valid and very usesfull feature
->
->(
->for example for our RTEMS effort on Zynq
->  https://docs=2Ertems=2Eorg/docs/main/bsp-howto/can=2Ehtml
->and ideally even on PolarFire (as time allows) where even NuttX
->can be tested and CI run
->  https://github=2Ecom/apache/nuttx/tree/master/drivers/can
->)
->
->hit concrete wall in May, without any suggestion how to
->make that needed use of QEMU for CI acceptable=2E =20
->
->But our SJA1000 code is already used by Espressif in their
->QEMU fork
->  https://github=2Ecom/espressif/qemu/tree/esp-develop/hw/net/can
->so there is more proven use out of PCI based cards=2E CTU CAN FD
->is used mostly on FPGAs but here are MCUs with it so again,
->even if the usability of mainline QEMU for FPGA development
->would stay blocked, there are standard, hopefully non problematic,
->regular machine code initiated uses of the CAN controllers
->which are part of QEMU=2E
->
->So I would be happy if we can thought about that wider use
->to check that it would not be more problematic in future
->if some code is optimized=2E
->
->On the other hand, it is right that even in esp32_twai=2Ec
->case, the integration is based on RESETTABLE_CLASS
->and esp32_twai_reset() calls can_sja_hardware_reset()
->explicitly=2E So can_sja_hardware_reset() during can_sja_init()
->is not strictly necessary=2E
->
->Back to sabrelite FlexCAN support series=2E
->In general I agree with the patch series and I have
->consulted and reviewed it multiple times=2E
->So it can be considered to be approved by me
->that it is functionally OK as well as it respects
->copyright requirements etc=2E I add my
->
->Signed-off-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
->
->As for individual formatting and may be some debug prints,
->I would allow it to go in in its actual form and then reduce
->these latter that we have state with more, may it be even
->abundant, debug in mainline recorded=2E But I expect that
->there could be more request for style and details from
->more experienced QEMU developers=2E
->
->There is one unresolved patch check report about
->DEVICE_NATIVE_ENDIAN
->
->+static const struct MemoryRegionOps flexcan_ops =3D {
->+    =2Eread =3D flexcan_mem_read,
->+    =2Ewrite =3D flexcan_mem_write,
->+    =2Eendianness =3D DEVICE_NATIVE_ENDIAN,
->+    =2Evalid =3D {
->+        =2Emin_access_size =3D 1,
->+        =2Emax_access_size =3D 4,
->+        =2Eunaligned =3D true,
->+        =2Eaccepts =3D flexcan_mem_accepts
->+    },
->+    =2Eimpl =3D {
->+        =2Emin_access_size =3D 4,
->+        =2Emax_access_size =3D 4,
->+        =2Eunaligned =3D false
->+    },
->+};
->
->But I do not know what I can suggest there=2E The device is
->infernally accessed by 32-bits words and should be
->mapped in native format because same core is used
->on little-endian and may it be even bi-endian ARMs[*1]
->and for sure on big-endian PowerPCs=2E We believe that
->native endianness with host is the best option in this
->case=2E Extending =2Evalid=2Emax_access_size to 8 is right
->and probably require for 64-bit targets as I understand
->from your patches=2E
->
->[*1] as I have used bi-endian ARMs they mapped peripherals
->often native way on 32-bit entities=2E So again, fixed
->DEVICE_BIG_ENDIAN or DEVICE_LITTLE_ENDIAN is incorrect
->in such case=2E
->
->Best wishes,
->
->                Pavel
->
->                Pavel Pisa
->    phone:      +420 603531357
->    e-mail:     pisa@cmp=2Efelk=2Ecvut=2Ecz
->    Department of Control Engineering FEE CVUT
->    Karlovo namesti 13, 121 35, Prague 2
->    university: http://control=2Efel=2Ecvut=2Ecz/
->    personal:   http://cmp=2Efelk=2Ecvut=2Ecz/~pisa
->    social:     https://social=2Ekernel=2Eorg/ppisa
->    projects:   https://www=2Eopenhub=2Enet/accounts/ppisa
->    CAN related:http://canbus=2Epages=2Efel=2Ecvut=2Ecz/
->    RISC-V education: https://comparch=2Eedu=2Ecvut=2Ecz/
->    Open Technologies Research Education and Exchange Services
->    https://gitlab=2Efel=2Ecvut=2Ecz/otrees/org/-/wikis/home
+>> 
+>> >> +static inline QDict *config_load(QDict *config)
+>> >> +{
+>> >> +    if (!config) {
+>> >> +        return NULL;
+>> >> +    }
+>> >> +
+>> >> +    has_key = qdict_haskey(config, "use-config");
+>> >> +    if (has_key) {
+>> >> +        use_config = qdict_get_try_bool(config, "use-config", false);
+>> >> +        qdict_del(config, "use-config");
+>> >> +    }
+>> >> +
+>> >> +    if (use_config) {
+>> >> +        return config;
+>> >> +    }
+>> >> +
+>> >> +    return NULL;
+>> >> +}
+>> >> +
+>> >> +static inline void config_put(QDict *config)
+>> >> +{
+>> >> +    if (config && has_key) {
+>> >> +        qdict_put_bool(config, "use-config", use_config);
+>> >> +    }
+>> >> +}
+>> >> +
+>> >>  #endif /* MIGRATION_UTIL_H */
+>> >> -- 
+>> >> 2.51.0
+>> >> 
+>> 
 
