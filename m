@@ -4,105 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23807D6E2DC
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 18:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D89D6E2DD
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 18:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWJ2Q-0001n4-QK; Thu, 18 Dec 2025 13:47:47 -0500
+	id 1vWJDM-0004sO-19; Thu, 18 Dec 2025 13:59:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWJ2O-0001mg-3X
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 13:47:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWJ2M-0003KE-Mt
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 13:47:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766083661;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XgQ8kpxxGJE1hU5csZQaI4pAsfPNdp79D4czIHFZ/sg=;
- b=jFIxq9HGErlubIIGa4GZtSediac9WwvJbfvq65zYc9kEptfZEwuZ5Sa0fvxb2EQtDUo7sG
- 4Y7Nz4R2TP9Xh9M80SugaETApNkCbWs14s1TZlaJ5wprSbMNN9X/dlvfNqm6OUtApn6W1p
- hNEwcuIieR0m/H4U/BNAtmUczNyVGyA=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-308-qKmvtHnzMHyu3KkqKeRupg-1; Thu, 18 Dec 2025 13:47:40 -0500
-X-MC-Unique: qKmvtHnzMHyu3KkqKeRupg-1
-X-Mimecast-MFC-AGG-ID: qKmvtHnzMHyu3KkqKeRupg_1766083660
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-88a2d8b7ea5so12291356d6.0
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 10:47:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vWJCa-0004WO-5U
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 13:58:18 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vWJCS-000866-S3
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 13:58:12 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2a0d0788adaso9210535ad.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 10:58:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766083660; x=1766688460; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XgQ8kpxxGJE1hU5csZQaI4pAsfPNdp79D4czIHFZ/sg=;
- b=lI1zdEyOO19/0CwPpwuHdHehqhZKgY0lmwzaZGZ8cL1Duw1g6QLjoURBw4UetH2Hqo
- MbZMyj5kVHeteuUqEg5+INJ7hnl3Lau4/+TeLoGbEP9s/siBOsmHle7dfsL41YkwmdD0
- vQbKUHBvL69yH2x0qxoGeOZQTIltzvJOCpxw3dedw2Iiun6mp9PIjKNC4YmSiWiiifrG
- 5iWs6B6dTJWxGvjhiHLAHsXK++0w6OG7o+8oUHy2Sa9NWyXVvG+coPqqAtmq0kniSl1l
- 0hB/FACiZbBKN0jCQhAFukLxYZmxXULp7c/xFvDc/VnXMAlyeK9/zzXphk5J1fO8k7F5
- hREw==
+ d=linaro.org; s=google; t=1766084282; x=1766689082; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UR4VBWc6DNMU5FEXIgO5B86S7nSMtq8yuL3goSAcQvo=;
+ b=kqrU7ptIiQtulRdvnHyAfavvz9o3fnFvI/EkWw/fj5SszcO5RBd/whG9c/mqee3gCA
+ XY70coKTOjqAmEw3qtgPmAUFEwFZsnfrCu3P+dSA8rBI6iLWkipi/0nth8EJHlNe1WZK
+ mn9KpbAIWFQaeuIrCihGXLM4dec/SIE8/D/Gr2gVRa66MLlrrfWxvIQQ+oURGyHqfqAi
+ hvZ1IQmJ4Uwt6xQiodPiiSOo6FMFKgvlBCQsjK+0bU9VR+kQscqLcOyJdUaz9+xVp8xM
+ Inho7XKuyAxOI94/qSPHjFThFhUJqliw15NoQ7P5CCQx8KhA2fFKh/JpTrE2vdLlcTF3
+ vAKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766083660; x=1766688460;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XgQ8kpxxGJE1hU5csZQaI4pAsfPNdp79D4czIHFZ/sg=;
- b=Peoz7OMdJzF6yT1rb+zdyIKOnzS/n+mpDAMhsbfGiCRQ5h/Ua9WlCcyehGVD+yVnOP
- /qbcohKgsAPnYGRKuwPdbQMBqXHj8IchI5rkLR1SssnTCJNuVgmEJCi+RlEFSCm5962b
- 5wpMlLbHgXJMmyy4djSao3lCSGiBRFyklyj4+wj6N1DAHdEf9FCGFEfEQZ5HDIjs0DEQ
- 3WLgwjJwCtFaIEjT4TCfIdByAVVYW0AxPzUFP/3OxlcHIyhoCNQwWsZGSqe63MlsaTtN
- vEt6YDLXPeOg6KwifxKpx9pCmnUOY6FhMrAy3XFesKdwPjWZoBCSDmdJ0Ak8I+SMD4HL
- FwGw==
-X-Gm-Message-State: AOJu0YwCBwg6H11JTlqbKqOxy5Ez6p6kZfvWiM/D6/crpOLjbj2CnvlD
- CApFRsAESrtE0hjf81qxsWV31wOyZLNwiQS73BppGnkuRd85qnbLbcZudejEktw0sFpxxD9flfw
- 7/KAagdKSITq5OmoCTuJr0+fIn/sdpdti318LylI+dvAoI46PJKyy3Uxi
-X-Gm-Gg: AY/fxX7q5JUYhRf5aytpO3O7PEf12iW004KkQDW/qYhDyZuzSenAfaQrpLlZNkFqEZp
- F31Y8GAxQWvTlUrHxhmXa2fRO5Iiw214Gadn51BXK4GXjcURURLQnvM6nRaOQyEvvQgqjd927oY
- Ys1YmlhrLFzhQxxaY84cR2WrgyXRPjSnyWUVQkPFxZ/irtqPqOMM9x2Y2tiAbBlyibNK+O5/lrw
- 7nZm8okJ/5S0fGu/4n+5KBdmoNNBvPMbLU6eeltGlAKSEbe1Mu/8EbSrRtPlugV55FB7EYubkJm
- ampDVKV0DHXm1c+TGyBmQjiiw5ai/aOYjEd38i0LVulf6BLDBGlnxT5dzWIsW4orX8E32x7UBK9
- Q3es=
-X-Received: by 2002:a05:622a:4d06:b0:4eb:a3e0:2fef with SMTP id
- d75a77b69052e-4f4abd608a4mr3424131cf.39.1766083659639; 
- Thu, 18 Dec 2025 10:47:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE3Vmn23WdgTq8iguNh2lsK5VWqZgj7zx7X4+l0xEcle/xhupaB5cSpshjeBteJY2xvO+lyTA==
-X-Received: by 2002:a05:622a:4d06:b0:4eb:a3e0:2fef with SMTP id
- d75a77b69052e-4f4abd608a4mr3423871cf.39.1766083659183; 
- Thu, 18 Dec 2025 10:47:39 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4f35fda91c4sm20993591cf.31.2025.12.18.10.47.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Dec 2025 10:47:38 -0800 (PST)
-Date: Thu, 18 Dec 2025 13:47:37 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 34/51] tests/qtest/migration: Use migrate_incoming_qmp
- where possible
-Message-ID: <aURMSVKqFeaqP5c_@x1.local>
-References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-35-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1766084282; x=1766689082;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UR4VBWc6DNMU5FEXIgO5B86S7nSMtq8yuL3goSAcQvo=;
+ b=Q+GDNHwhX1Hfk6EYLiso/tTD/cMXF7gvGfybSg4ybIiWLkF7E9wHtQ3H5pbm69FVrF
+ euYH5Sj9y5Mc9196RdUXqfu01+w5U75fmMoMl4UdnIsMfmdfhpZn1Ja27mYxDTGYi+lE
+ m/wvALpms1jPfyTcJBLxTFvxofbmjngiOR0u/JYUGe7HA+kVSSQPEHF4Rz0oHTTBDR6d
+ AMyMhWN6r9CiCNai3K/wY0pAk/pqZ5i0rD1HwNiRyJ9sKdrgeyhshLjmiApIHOpwell2
+ IQphaQXLu29A1GZ1L2HUZkeOuqPAPphsQH0cM6EvfkGI+DvmZsl/QqOE0Lv6/TtswG2o
+ L3PQ==
+X-Gm-Message-State: AOJu0Yy7Wk2h4G82Q+wr6haNfVc4PhLyhJkXebcGNOKUs9bIULMy7c1K
+ 88dAp7h0mRHmaVfejtTUxe4nxYZFWLP6f12m32Vu+Non3JgQ+x+SSwuU5lXbI4M2CiaDqSAAau+
+ zaQ/rECI=
+X-Gm-Gg: AY/fxX50UD/OwmcytNEbxn+NUsnPIlTe63gL2qcsXwkO+Jg+BdvMKYaHOG2478TNJAR
+ 33mudgTdaV3bYXh7QOygc82LfdYNmkUPxr5AkElNX4adYhQdpYrNiKWGS7i9TpVHRDNqU8pq4fO
+ zlJK3xe/WaBjARFeFONg6aNYFtily49HDQU3a3GSimF4p9nF3Os/OxUhGst+3MfAJhapJIRuoJ0
+ mZ8dNlfFboFYfgmVRPCZ5dITtVH41vwH47Yx2yIPznjZSlAHZ43CApfnrYG5/GdqLHr7TH4JC5s
+ 9ej2rhyj93RxG3TENTLAepb7u7n9gqWaz5Kwmx1PD+nmfSdjyBiFt7LwBDXsZB/9WJhOWaeANgp
+ 2Ko86YZtG6HRq2EnZTDe1aTLEOWr5myZFaXy8foCm5bCzEtDFg/0ohrdZiqKq4/KBT2gWjrhfI6
+ IdVRzRnpEioHOzB0IyAefP0qdhvqLzKw==
+X-Google-Smtp-Source: AGHT+IGVoR5bxa3uzCOZA1NzcpxQLJraqjq5DFM75hGK4+QysLWXRdJAxj/5hovgBZ+8b4iFiuZZ7g==
+X-Received: by 2002:a17:903:2f82:b0:2a1:10f7:9717 with SMTP id
+ d9443c01a7336-2a2f2c4cea2mr2317145ad.58.1766084282325; 
+ Thu, 18 Dec 2025 10:58:02 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.245])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a2f3d5d20dsm128565ad.67.2025.12.18.10.58.01
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Dec 2025 10:58:01 -0800 (PST)
+Message-ID: <4d5ac5e0-c0d1-486b-bac0-4c50c0d0cbc0@linaro.org>
+Date: Fri, 19 Dec 2025 05:57:57 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251215220041.12657-35-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] hw/char/serial: Let compiler pick serial_mm_ops[]
+ array length
+To: qemu-devel@nongnu.org
+References: <20251218181812.58363-1-philmd@linaro.org>
+ <20251218181812.58363-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251218181812.58363-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,15 +106,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 07:00:20PM -0300, Fabiano Rosas wrote:
-> Always use the proper function for starting the incoming migration,
-> there's no need to call QMP directly from the tests.
+On 12/19/25 05:18, Philippe Mathieu-Daudé wrote:
+> No need to enforce the MemoryRegionOps array length.
+> We index by device_endian enum, the compiler will easily
+> pick the correct length. Besides, this allow further
+> adjustments in the device_endian enum itself.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   hw/char/serial-mm.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
--- 
-Peter Xu
-
+r~
 
