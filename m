@@ -4,105 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601CBD6ACF5
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 12:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F81FD6ACF1
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 12:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWDEu-0004nJ-PO; Thu, 18 Dec 2025 07:36:16 -0500
+	id 1vWDO2-0006cH-Kf; Thu, 18 Dec 2025 07:45:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vWDEp-0004n1-8I
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:36:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWDNy-0006bl-H6
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:45:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1vWDEf-0002RE-Np
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:36:04 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWDNu-0004Ye-K6
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:45:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766061358;
+ s=mimecast20190719; t=1766061930;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8LJEI7hBcJPsKIGs0FW8nMdtFnVkJuNdMnip0SyuyT8=;
- b=Ewuq6hXPGFTMwGbwUhg+c4S80L007BJ4YIRHIhcy9Dp3BjVRxZ6KfzxevEUyGNXVdzyMeJ
- Q0UsCxxZYgohYLADGJSlxpGpCI8TiwXCdoXnfuwdpBZXJU0z9sF9f8QL+uT084R+XNycfq
- PhqxkCacE57FPuoPeTvBw+4JGGod2QM=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-CDuVA9xANRK5nUBjoKX4NA-1; Thu, 18 Dec 2025 07:35:56 -0500
-X-MC-Unique: CDuVA9xANRK5nUBjoKX4NA-1
-X-Mimecast-MFC-AGG-ID: CDuVA9xANRK5nUBjoKX4NA_1766061356
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8b259f0da04so131717385a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 04:35:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766061356; x=1766666156; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8LJEI7hBcJPsKIGs0FW8nMdtFnVkJuNdMnip0SyuyT8=;
- b=jhaUdWh88pRRObguP3kA2dv31r5Q2GWvii1ejTQgelZbvAR3CVMS/CQBgT+3lmcz4E
- OR1QTVXF3KWOn+dLGCodpKXHeGPS6bSp1PXXWT9gZAjB/j5ZfJUIDSpKEg4jdho7dUzS
- FtaIbMgtEQ930TGve+Q/pgYSLhlN9VUjFjgs0M0E+vvia5v27TI1M/R1EDLi1M4/A5Mp
- xVbxxpeDw/8aIq0/XuUBXSwW9XYJtAtAGrgyLzhFjMfXd1LTphuewfozKVaFAlpSvvsG
- w3MXPtFHaR/rCQn37aUP0zPCXDcddNIafIDH/lPeXP3Cf409VzjlIxedC0ncyetmiKuX
- woMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766061356; x=1766666156;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8LJEI7hBcJPsKIGs0FW8nMdtFnVkJuNdMnip0SyuyT8=;
- b=NvfRiFfv4yXdPozCGPQ7jpDtzi0JdZjWITS/7KAdAmQTNs53voSjxUUsO8qJOR6C/N
- tvVcIGmwhOqZCog1x/eoDVq1fWq897qmibvvR+KEVQvtmZIYOWRegeThnt+u+ExJ8e+x
- FsLZqVsKy1Qxemrg9Ns/S6D2X5mcrSISP3Q5gHYbR040Pw4baElcvzwjSFx1k2aTBMYk
- feaTq4oNSALG9qZy3WqTg0C9PNMebbA4xvGVTBlf2APpUatC/MrKiUbVN3qEZdzVmdSL
- Rnswa0omiiIqqHjjfbk99qErlRDveRA2czPet5og+BrHvoAWecPBMWqE0RKdbxrxFrsG
- cBdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZ0OHEADpZlLbueCQf76k1YtfFe1GqbCLnSdmRz8qAecmLIS+Yxt0NKVUKn8UNK2GfKL6FZI4EU9Jk@nongnu.org
-X-Gm-Message-State: AOJu0Yz0rehsSYpg6EfbcuZ/G6yhHMeZXvAErZyykJzUjdiPJEbkG9XF
- PTaXTnfidfL1FDCzxj1CNEDfs2lgntKIzRAA0xhf/GJ/dt+MxiktA4MEoC9C4gBCZot8pw/VILy
- E+vgJCbckoYdy6vKYrFdR1+5TXX9iny02FQl0RumU7HYRE6g6v90MOi8XORdU6P/e1IxjN4QrnU
- 9LfaQx4sK7Xp91M7toDzaqJxpUxddu0HM=
-X-Gm-Gg: AY/fxX7TtmqAZamZtG9l+0mEElQh2fX6JTRWQSh8vJwD1a0dhzIOZKXjv5e8J6y8rfm
- hA0DQ3/L3etyC+KJS1ozauOfGImXl8BcDsHJKK0RpAvSYz0BGbJVr7YhLvTSVYkND8nCd3JRMFC
- wqlv1Yiijxv6JNPenwVJJbOVR1sYpR8+vrUAhmQSBlW3jR5IZkXnmi0pQOAfC1Rt+atOE=
-X-Received: by 2002:a05:620a:6919:b0:8b2:5cdd:6a16 with SMTP id
- af79cd13be357-8bb3b3708d5mr2929783085a.82.1766061355895; 
- Thu, 18 Dec 2025 04:35:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHpxFhGoLTghMC+VClOhPC8jMRIpVdUHIyRBMkyOji8G/nfSeqCFXAa/rBK/Oq82OvKZ0wz0sCNUfcmYNstw2Y=
-X-Received: by 2002:a05:620a:6919:b0:8b2:5cdd:6a16 with SMTP id
- af79cd13be357-8bb3b3708d5mr2929779985a.82.1766061355467; Thu, 18 Dec 2025
- 04:35:55 -0800 (PST)
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=BpHWr68Py/stOPrBW9EYz0zfxUhZB7mg03z3ogaRdrw=;
+ b=az5HHcO2LTbVd7V8+yAVutYRtraIKHWOFKBJWOAijN8KqAzLFly23arF2/gy2SwXIhkKsK
+ 7rSVn1YWosTx9Qb5cYxhYAJgtTOgoktb0qXvKTKeaCN7HiVyh6Bsd53veWfPX7X7FLUJHW
+ kTaO0RB0kJvPHczJ6zKLIY9nSIy0wFA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-cvYrUkO2PRy2bInSwUiKeQ-1; Thu,
+ 18 Dec 2025 07:45:28 -0500
+X-MC-Unique: cvYrUkO2PRy2bInSwUiKeQ-1
+X-Mimecast-MFC-AGG-ID: cvYrUkO2PRy2bInSwUiKeQ_1766061927
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2CF618005AE
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 12:45:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 323FB1956056
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 12:45:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9A98C21E6A27; Thu, 18 Dec 2025 13:45:24 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: Report on MAINTAINERS coverage
+Date: Thu, 18 Dec 2025 13:45:24 +0100
+Message-ID: <87h5toc61n.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20251218085446.462827-1-phind.uet@gmail.com>
- <20251218085446.462827-2-phind.uet@gmail.com>
-In-Reply-To: <20251218085446.462827-2-phind.uet@gmail.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Thu, 18 Dec 2025 14:35:44 +0200
-X-Gm-Features: AQt7F2q4o5B25uhX_oWQBW9fat5qEtkM0Nr8aYVEcXQ9mIhtZ6QKAhGqX5MMIc4
-Message-ID: <CAPMcbCqCkqSyhpGvSYAQLR-cT0+_imh=3o5mXfCiR1j+74264A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] qga/vss-win32: Fix ConvertStringToBSTR
- redefinition with newer MinGW
-To: phind.uet@gmail.com
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000be9b8206463933da"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,166 +81,1230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000be9b8206463933da
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Back in 2014 (time flies), I posted
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+    Subject: MAINTAINERS leaves too many files uncovered
+    Message-ID: <87mw8rumhb.fsf@blackfin.pond.sub.org>
+    https://lore.kernel.org/qemu-devel/87mw8rumhb.fsf@blackfin.pond.sub.org/
 
-On Thu, Dec 18, 2025 at 10:55=E2=80=AFAM <phind.uet@gmail.com> wrote:
+I updated my findings in 2015, 2016 (at commit e00da552a0d), 2018 (at
+v3.1.0-rc2), and 2023 (at commit 36e9aab3c56, close to v8.2.0).  This is
+another update, at v10.2.0-rc4.
 
-> From: Nguyen Dinh Phi <phind.uet@gmail.com>
->
-> Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the
-> _com_util namespace via <comutil.h>. This causes a redefinition
-> error when building qemu-ga on Windows with these toolchains.
->
-> Add a meson check to detect whether ConvertStringToBSTR is already
-> available, and conditionally compile our fallback implementation
-> only when the system does not provide one.
->
-> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  meson.build               | 12 ++++++++++++
->  qga/vss-win32/install.cpp |  2 ++
->  2 files changed, 14 insertions(+)
->
-> diff --git a/meson.build b/meson.build
-> index c5710a6a47..5a0f407d6f 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3299,6 +3299,18 @@ endif
->  # Detect host pointer size for the target configuration loop.
->  host_long_bits =3D cc.sizeof('void *') * 8
->
-> +# Detect if ConvertStringToBSTR has been defined in _com_util namespace
-> +if host_os =3D=3D 'windows'
-> +  has_convert_string_to_bstr =3D cxx.links('''
-> +    #include <comutil.h>
-> +    int main() {
-> +        BSTR b =3D _com_util::ConvertStringToBSTR("test");
-> +        return b ? 0 : 1;
-> +    }
-> +  ''')
-> +  config_host_data.set('CONFIG_CONVERT_STRING_TO_BSTR',
-> has_convert_string_to_bstr)
-> +endif
-> +
->  ########################
->  # Target configuration #
->  ########################
-> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-> index 7b25d9098b..5b7a8e9bc5 100644
-> --- a/qga/vss-win32/install.cpp
-> +++ b/qga/vss-win32/install.cpp
-> @@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)
->
->
->  /* Support function to convert ASCII string into BSTR (used in _bstr_t) =
-*/
-> +#ifndef CONFIG_CONVERT_STRING_TO_BSTR
->  namespace _com_util
->  {
->      BSTR WINAPI ConvertStringToBSTR(const char *ascii) {
-> @@ -566,6 +567,7 @@ namespace _com_util
->          return bstr;
->      }
->  }
-> +#endif
->
->  /* Stop QGA VSS provider service using Winsvc API  */
->  STDAPI StopService(void)
-> --
-> 2.43.0
->
->
+Unsurprisingly, the number of files in the tree
 
---000000000000be9b8206463933da
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+    $ git-ls-files | wc -l
 
-<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
-v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
-il_attr">On Thu, Dec 18, 2025 at 10:55=E2=80=AFAM &lt;<a href=3D"mailto:phi=
-nd.uet@gmail.com">phind.uet@gmail.com</a>&gt; wrote:<br></div><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex">From: Nguyen Dinh Phi &lt;<a href=3D"m=
-ailto:phind.uet@gmail.com" target=3D"_blank">phind.uet@gmail.com</a>&gt;<br=
->
-<br>
-Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the<br>
-_com_util namespace via &lt;comutil.h&gt;. This causes a redefinition<br>
-error when building qemu-ga on Windows with these toolchains.<br>
-<br>
-Add a meson check to detect whether ConvertStringToBSTR is already<br>
-available, and conditionally compile our fallback implementation<br>
-only when the system does not provide one.<br>
-<br>
-Signed-off-by: Nguyen Dinh Phi &lt;<a href=3D"mailto:phind.uet@gmail.com" t=
-arget=3D"_blank">phind.uet@gmail.com</a>&gt;<br>
-Suggested-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linar=
-o.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
----<br>
-=C2=A0meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 1=
-2 ++++++++++++<br>
-=C2=A0qga/vss-win32/install.cpp |=C2=A0 2 ++<br>
-=C2=A02 files changed, 14 insertions(+)<br>
-<br>
-diff --git a/meson.build b/meson.build<br>
-index c5710a6a47..5a0f407d6f 100644<br>
---- a/meson.build<br>
-+++ b/meson.build<br>
-@@ -3299,6 +3299,18 @@ endif<br>
-=C2=A0# Detect host pointer size for the target configuration loop.<br>
-=C2=A0host_long_bits =3D cc.sizeof(&#39;void *&#39;) * 8<br>
-<br>
-+# Detect if ConvertStringToBSTR has been defined in _com_util namespace<br=
->
-+if host_os =3D=3D &#39;windows&#39;<br>
-+=C2=A0 has_convert_string_to_bstr =3D cxx.links(&#39;&#39;&#39;<br>
-+=C2=A0 =C2=A0 #include &lt;comutil.h&gt;<br>
-+=C2=A0 =C2=A0 int main() {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 BSTR b =3D _com_util::ConvertStringToBSTR(&quo=
-t;test&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return b ? 0 : 1;<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 &#39;&#39;&#39;)<br>
-+=C2=A0 config_host_data.set(&#39;CONFIG_CONVERT_STRING_TO_BSTR&#39;, has_c=
-onvert_string_to_bstr)<br>
-+endif<br>
-+<br>
-=C2=A0########################<br>
-=C2=A0# Target configuration #<br>
-=C2=A0########################<br>
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
-index 7b25d9098b..5b7a8e9bc5 100644<br>
---- a/qga/vss-win32/install.cpp<br>
-+++ b/qga/vss-win32/install.cpp<br>
-@@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)<br>
-<br>
-<br>
-=C2=A0/* Support function to convert ASCII string into BSTR (used in _bstr_=
-t) */<br>
-+#ifndef CONFIG_CONVERT_STRING_TO_BSTR<br>
-=C2=A0namespace _com_util<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0BSTR WINAPI ConvertStringToBSTR(const char *ascii) {<br=
->
-@@ -566,6 +567,7 @@ namespace _com_util<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return bstr;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0}<br>
-+#endif<br>
-<br>
-=C2=A0/* Stop QGA VSS provider service using Winsvc API=C2=A0 */<br>
-=C2=A0STDAPI StopService(void)<br>
--- <br>
-2.43.0<br>
-<br>
-</blockquote></div>
+grows over time:
 
---000000000000be9b8206463933da--
+    year  2014   2015   2016   2018   2023   2025
+    #     3746   4387   4921   6461   9788  10921
+
+Looks exponential to me, doubling every seven years or so.
+
+The number of .c files has grown more slowly:
+
+    year  2014   2015   2016   2018   2023   2025
+    #     1836   1945   2132   2633   3588   3920
+            49%    44%    43%    40%    37%    36%
+
+The number of .c files not covered by MAINTAINERS
+
+    $ for i in `git-ls-files`; do [ "`scripts/get_maintainer.pl -f --no-git-fallback $i | grep -v '^qemu-devel@nongnu\.org'`" ] || echo $i; done >unmaintained-files
+    $ grep -c '\.c$' unmaintained-files
+
+went down a lot after my first post, but has since flatlined:
+
+    year  2014   2015   2016   2018   2023   2025
+    #     1066    461    402    259    246    244
+
+We're still adding unmaintained .c files (despite checkpatch.pl
+warning), but only a few:
+
+    $ git-diff --diff-filter=A --name-only v9.2.0 v10.2.0-rc4 | grep '\.c$' | join unmaintained-files -
+    accel/stubs/mshv-stub.c
+    hw/misc/max78000_aes.c
+    hw/misc/max78000_gcr.c
+    hw/misc/max78000_icc.c
+    hw/misc/max78000_trng.c
+    hw/misc/pvpanic-mmio.c
+    hw/virtio/iothread-vq-mapping.c
+    system/exit-with-parent.c
+    system/globals-target.c
+    util/event.c
+    util/s390x_pci_mmio.c
+
+
+Currently unmaintained files by extension, with a long tail that doesn't
+add up to anything interesting omitted:
+
+                #files                percent
+    ext     unmaintained  total     unmaintained
+    h               269    2731         10%
+    c               244    3920          6%
+    rst             111     313         35%
+    <none>           92     760         12%
+    build            87     287         30%
+    mak              39      99         39%
+    inc              29     187         16%
+    wrap             23      23        100%
+    bin              19      30         63%
+    cocci            14      25         64%
+    rom              14      15         93%
+    txt              11      35         40%
+
+Observations:
+
+1. More unmaintained .h than .c.  Suggests sloppy accounting in
+   MAINTAINERS.  Low-hanging fruit?  The difference has shrunk some.
+
+2. The number of unmaintained .rst and .txt suggests we're less
+   interested in maintaining documentation.
+
+3. The number of unmaintained .build and .mak suggests we're less
+   interested in maintaining the build system.
+
+
+Where are the remaining unmaintained files now?  Top-scoring
+directories, files in sub-directories not counted:
+
+    $ sed 's,/[^/]*$,/,;s,^[^/]*$,./,' unmaintained-files | sort | uniq -c | sort -nr
+
+      # directory
+     86 include/qemu/
+     57 hw/usb/
+     54 util/
+     48 tests/unit/
+     42 pc-bios/
+     35 pc-bios/keymaps/
+     34 docs/system/
+     28 docs/devel/
+     26 ./
+     24 subprojects/
+     24 include/exec/
+     23 roms/
+     21 scripts/
+     21 configs/targets/
+     17 hw/display/
+     17 hw/core/
+     16 scripts/coccinelle/
+     16 include/system/
+     16 hw/misc/
+     14 tests/multiboot/
+     13 include/hw/
+     13 docs/
+     12 system/
+     12 po/
+     11 pc-bios/optionrom/
+
+hw/usb/ is due to USB being orphaned in MAINTAINERS.  The remainder are
+all pretty much unchanged since last time, less a few that improved
+enough to fall off this list.
+
+
+Which unmaintained files are we still changing?  Unmaintained files
+sorted by number of commits in the past year (since v9.2.0):
+
+    $ for i in `cat unmaintained-files`; do echo -n "$i "; git-rev-list v9.2.0.. $i | wc -l; done | awk '{ printf "%7d %s\n", $2, $1 }' | sort -rn
+
+    274 MAINTAINERS
+    107 tests/functional/meson.build
+     34 docs/devel/rust.rst
+     32 qemu-options.hx
+     27 docs/about/removed-features.rst
+     20 scripts/checkpatch.pl
+     19 hw/core/loader.c
+     19 VERSION
+     15 docs/system/arm/emulation.rst
+     12 include/system/mshv_int.h
+     11 hw/usb/hcd-uhci.c
+     10 tests/unit/test-bdrv-drain.c
+     10 include/qemu/osdep.h
+     10 include/exec/poison.h
+     10 hw/misc/trace-events
+     10 hw/misc/meson.build
+     10 docs/about/build-platforms.rst
+    [475 more with fewer than 10 changes]
+
+Several of these we clearly need to cover in MAINTAINERS.
+
+
+Full list of unmaintained files:
+
+.b4-config
+.dir-locals.el
+.editorconfig
+.exrc
+.gdbinit
+.git-blame-ignore-revs
+.gitattributes
+.gitignore
+.gitlab/issue_templates/bug.md
+.gitlab/issue_templates/feature_request.md
+.gitmodules
+.gitpublish
+.mailmap
+.patchew.yml
+.readthedocs.yml
+COPYING
+COPYING.LIB
+LICENSE
+MAINTAINERS
+README.rst
+VERSION
+accel/meson.build
+accel/stubs/meson.build
+accel/stubs/mshv-stub.c
+accel/stubs/xen-stub.c
+audio/spiceaudio.c
+backends/confidential-guest-support.c
+backends/dbus-vmstate1.xml
+backends/meson.build
+backends/trace-events
+backends/trace.h
+clippy.toml
+configs/devices/aarch64-softmmu/default.mak
+configs/devices/aarch64-softmmu/minimal.mak
+configs/devices/alpha-softmmu/default.mak
+configs/devices/arm-softmmu/default.mak
+configs/devices/m68k-softmmu/default.mak
+configs/devices/microblaze-softmmu/default.mak
+configs/devices/microblazeel-softmmu/default.mak
+configs/devices/or1k-softmmu/default.mak
+configs/devices/ppc-softmmu/default.mak
+configs/devices/ppc64-softmmu/default.mak
+configs/devices/riscv32-softmmu/default.mak
+configs/devices/riscv64-softmmu/default.mak
+configs/devices/rx-softmmu/default.mak
+configs/devices/sh4-softmmu/default.mak
+configs/devices/sh4eb-softmmu/default.mak
+configs/devices/sparc-softmmu/default.mak
+configs/devices/sparc64-softmmu/default.mak
+configs/devices/tricore-softmmu/default.mak
+configs/devices/x86_64-softmmu/default.mak
+configs/meson/windows.txt
+configs/targets/aarch64-softmmu.mak
+configs/targets/alpha-softmmu.mak
+configs/targets/arm-softmmu.mak
+configs/targets/avr-softmmu.mak
+configs/targets/hppa-softmmu.mak
+configs/targets/m68k-softmmu.mak
+configs/targets/meson.build
+configs/targets/microblaze-softmmu.mak
+configs/targets/microblazeel-softmmu.mak
+configs/targets/or1k-softmmu.mak
+configs/targets/ppc-softmmu.mak
+configs/targets/ppc64-softmmu.mak
+configs/targets/rx-softmmu.mak
+configs/targets/s390x-softmmu.mak
+configs/targets/sh4-softmmu.mak
+configs/targets/sh4eb-softmmu.mak
+configs/targets/sparc-softmmu.mak
+configs/targets/sparc64-softmmu.mak
+configs/targets/tricore-softmmu.mak
+configs/targets/xtensa-softmmu.mak
+configs/targets/xtensaeb-softmmu.mak
+contrib/ivshmem-client/ivshmem-client.c
+contrib/ivshmem-client/ivshmem-client.h
+contrib/ivshmem-client/main.c
+contrib/ivshmem-client/meson.build
+contrib/ivshmem-server/ivshmem-server.c
+contrib/ivshmem-server/ivshmem-server.h
+contrib/ivshmem-server/main.c
+contrib/ivshmem-server/meson.build
+contrib/systemd/qemu-pr-helper.service
+contrib/systemd/qemu-pr-helper.socket
+contrib/systemd/qemu-vmsr-helper.service
+contrib/systemd/qemu-vmsr-helper.socket
+contrib/vmapple/uuid.sh
+disas/capstone.c
+disas/disas-common.c
+disas/disas-host.c
+disas/disas-internal.h
+disas/disas-mon.c
+disas/disas-target.c
+disas/meson.build
+disas/objdump.c
+docs/about/build-platforms.rst
+docs/about/emulation.rst
+docs/about/index.rst
+docs/about/license.rst
+docs/about/removed-features.rst
+docs/bypass-iommu.txt
+docs/config/ich9-ehci-uhci.cfg
+docs/config/mach-virt-graphical.cfg
+docs/config/mach-virt-serial.cfg
+docs/config/q35-emulated.cfg
+docs/config/q35-virtio-graphical.cfg
+docs/config/q35-virtio-serial.cfg
+docs/defs.rst.inc
+docs/devel/atomics.rst
+docs/devel/bitops.rst
+docs/devel/block-coroutine-wrapper.rst
+docs/devel/code-provenance.rst
+docs/devel/control-flow-integrity.rst
+docs/devel/crypto.rst
+docs/devel/index-api.rst
+docs/devel/index-build.rst
+docs/devel/index-internals.rst
+docs/devel/index-process.rst
+docs/devel/index-tcg.rst
+docs/devel/index.rst
+docs/devel/loads-stores.rst
+docs/devel/maintainers.rst
+docs/devel/memory.rst
+docs/devel/modules.rst
+docs/devel/multi-thread-tcg.rst
+docs/devel/multiple-iothreads.rst
+docs/devel/pci.rst
+docs/devel/qdev-api.rst
+docs/devel/qom-api.rst
+docs/devel/reset.rst
+docs/devel/rust.rst
+docs/devel/secure-coding-practices.rst
+docs/devel/stable-process.rst
+docs/devel/testing/index.rst
+docs/devel/uefi-vars.rst
+docs/devel/writing-monitor-commands.rst
+docs/devel/zoned-storage.rst
+docs/image-fuzzer.txt
+docs/index.rst
+docs/interop/barrier.rst
+docs/interop/index.rst
+docs/interop/live-block-operations.rst
+docs/interop/pr-helper.rst
+docs/interop/vhost-vdpa.rst
+docs/interop/vnc-ledstate-pseudo-encoding.rst
+docs/memory-hotplug.txt
+docs/meson.build
+docs/multi-thread-compression.txt
+docs/multiseat.txt
+docs/qcow2-cache.txt
+docs/qemupciserial.inf
+docs/rdma.txt
+docs/specs/acpi_erst.rst
+docs/specs/aspeed-intc.rst
+docs/specs/index.rst
+docs/specs/ivshmem-spec.rst
+docs/specs/pvpanic.rst
+docs/specs/rapl-msr.rst
+docs/specs/riscv-aia.rst
+docs/specs/sev-guest-firmware.rst
+docs/specs/spdm.rst
+docs/sphinx-static/custom.js
+docs/sphinx-static/theme_overrides.css
+docs/spice-port-fqdn.txt
+docs/spin/aio_notify.promela
+docs/spin/aio_notify_accept.promela
+docs/spin/aio_notify_bug.promela
+docs/spin/tcg-exclusive.promela
+docs/spin/win32-qemu-event.promela
+docs/system/arm/b-l475e-iot01a.rst
+docs/system/arm/emulation.rst
+docs/system/arm/max78000.rst
+docs/system/authz.rst
+docs/system/barrier.rst
+docs/system/bootindex.rst
+docs/system/confidential-guest-support.rst
+docs/system/cpu-hotplug.rst
+docs/system/device-emulation.rst
+docs/system/device-url-syntax.rst.inc
+docs/system/devices/ccid.rst
+docs/system/devices/cxl.rst
+docs/system/devices/emmc.rst
+docs/system/devices/ivshmem.rst
+docs/system/devices/keyboard.rst
+docs/system/devices/net.rst
+docs/system/devices/usb-u2f.rst
+docs/system/devices/usb.rst
+docs/system/devices/virtio/index.rst
+docs/system/devices/virtio/vhost-user-contrib.rst
+docs/system/devices/virtio/vhost-user.rst
+docs/system/devices/virtio/virtio-gpu.rst
+docs/system/devices/virtio/virtio-pmem.rst
+docs/system/devices/virtio/virtio-snd.rst
+docs/system/i386/hyperv.rst
+docs/system/i386/kvm-pv.rst
+docs/system/i386/pc.rst
+docs/system/i386/tdx.rst
+docs/system/i386/xen.rst
+docs/system/images.rst
+docs/system/index.rst
+docs/system/introduction.rst
+docs/system/invocation.rst
+docs/system/keys.rst
+docs/system/keys.rst.inc
+docs/system/linuxboot.rst
+docs/system/managed-startup.rst
+docs/system/monitor.rst
+docs/system/mux-chardev.rst
+docs/system/mux-chardev.rst.inc
+docs/system/openrisc/emulation.rst
+docs/system/openrisc/virt.rst
+docs/system/pr-manager.rst
+docs/system/qemu-block-drivers.rst
+docs/system/qemu-block-drivers.rst.inc
+docs/system/qemu-cpu-models.rst
+docs/system/qemu-manpage.rst
+docs/system/riscv/virt.rst
+docs/system/secrets.rst
+docs/system/security.rst
+docs/system/target-loongarch.rst
+docs/system/target-m68k.rst
+docs/system/target-openrisc.rst
+docs/system/target-sparc.rst
+docs/system/target-sparc64.rst
+docs/system/target-xtensa.rst
+docs/system/targets.rst
+docs/system/tls.rst
+docs/system/vnc-security.rst
+docs/tools/index.rst
+docs/tools/qemu-pr-helper.rst
+docs/tools/qemu-vmsr-helper.rst
+docs/user/index.rst
+docs/user/main.rst
+docs/xbzrle.txt
+event-loop-base.c
+host/include/aarch64/host/atomic128-cas.h.inc
+host/include/aarch64/host/atomic128-ldst.h.inc
+host/include/aarch64/host/bufferiszero.c.inc
+host/include/aarch64/host/load-extract-al16-al8.h.inc
+host/include/aarch64/host/store-insert-al16.h.inc
+host/include/generic/host/atomic128-cas.h.inc
+host/include/generic/host/atomic128-ldst.h.inc
+host/include/generic/host/bufferiszero.c.inc
+host/include/generic/host/load-extract-al16-al8.h.inc
+host/include/generic/host/store-insert-al16.h.inc
+host/include/i386/host/bufferiszero.c.inc
+host/include/loongarch64/host/atomic128-ldst.h.inc
+host/include/loongarch64/host/bufferiszero.c.inc
+host/include/loongarch64/host/load-extract-al16-al8.h.inc
+host/include/loongarch64/host/store-insert-al16.h.inc
+host/include/x86_64/host/atomic128-ldst.h.inc
+host/include/x86_64/host/bufferiszero.c.inc
+host/include/x86_64/host/load-extract-al16-al8.h.inc
+hw/core/fw-path-provider.c
+hw/core/gpio.c
+hw/core/guest-loader.h
+hw/core/hotplug.c
+hw/core/irq.c
+hw/core/loader.c
+hw/core/machine-hmp-cmds.c
+hw/core/meson.build
+hw/core/nmi.c
+hw/core/or-irq.c
+hw/core/platform-bus.c
+hw/core/ptimer.c
+hw/core/split-irq.c
+hw/core/sysbus-fdt.c
+hw/core/trace-events
+hw/core/trace.h
+hw/core/vm-change-state-handler.c
+hw/cpu/core.c
+hw/cpu/meson.build
+hw/display/acpi-vga-stub.c
+hw/display/acpi-vga.c
+hw/display/ati.c
+hw/display/ati_2d.c
+hw/display/ati_dbg.c
+hw/display/ati_int.h
+hw/display/ati_regs.h
+hw/display/framebuffer.c
+hw/display/framebuffer.h
+hw/display/i2c-ddc.c
+hw/display/meson.build
+hw/display/qxl-logger.c
+hw/display/qxl-render.c
+hw/display/qxl.c
+hw/display/qxl.h
+hw/display/trace-events
+hw/display/trace.h
+hw/dma/meson.build
+hw/dma/soc_dma.c
+hw/dma/trace-events
+hw/dma/trace.h
+hw/gpio/gpio_key.c
+hw/gpio/gpio_pwr.c
+hw/gpio/meson.build
+hw/gpio/pcf8574.c
+hw/gpio/trace-events
+hw/gpio/trace.h
+hw/hyperv/hyperv.c
+hw/hyperv/hyperv_testdev.c
+hw/hyperv/meson.build
+hw/hyperv/syndbg.c
+hw/hyperv/trace-events
+hw/hyperv/trace.h
+hw/i2c/bitbang_i2c.c
+hw/i2c/meson.build
+hw/i2c/trace-events
+hw/i2c/trace.h
+hw/input/hid.c
+hw/input/meson.build
+hw/input/ps2.c
+hw/input/trace-events
+hw/input/trace.h
+hw/intc/intc.c
+hw/intc/meson.build
+hw/intc/trace-events
+hw/intc/trace.h
+hw/intc/vgic_common.h
+hw/isa/isa-bus.c
+hw/isa/meson.build
+hw/isa/trace-events
+hw/isa/trace.h
+hw/m68k/meson.build
+hw/mem/cxl_type3_stubs.c
+hw/mem/meson.build
+hw/mem/trace-events
+hw/mem/trace.h
+hw/meson.build
+hw/misc/applesmc.c
+hw/misc/auxbus.c
+hw/misc/axp2xx.c
+hw/misc/i2c-echo.c
+hw/misc/ivshmem-pci.c
+hw/misc/max78000_aes.c
+hw/misc/max78000_gcr.c
+hw/misc/max78000_icc.c
+hw/misc/max78000_trng.c
+hw/misc/meson.build
+hw/misc/pvpanic-isa.c
+hw/misc/pvpanic-mmio.c
+hw/misc/pvpanic-pci.c
+hw/misc/pvpanic.c
+hw/misc/trace-events
+hw/misc/trace.h
+hw/nvram/eeprom93xx.c
+hw/nvram/eeprom_at24c.c
+hw/nvram/meson.build
+hw/nvram/trace-events
+hw/nvram/trace.h
+hw/pci-host/gpex-acpi.c
+hw/pci-host/gpex.c
+hw/pci-host/meson.build
+hw/pci-host/trace-events
+hw/pci-host/trace.h
+hw/remote/meson.build
+hw/remote/trace-events
+hw/remote/trace.h
+hw/remote/vfio-user-obj-stub.c
+hw/rtc/ds1338.c
+hw/rtc/m48t59-internal.h
+hw/rtc/m48t59.c
+hw/rtc/meson.build
+hw/rtc/trace-events
+hw/rtc/trace.h
+hw/sd/meson.build
+hw/sd/trace-events
+hw/sd/trace.h
+hw/timer/meson.build
+hw/timer/pxa2xx_timer.c
+hw/timer/trace-events
+hw/timer/trace.h
+hw/usb/bus-stub.c
+hw/usb/bus.c
+hw/usb/ccid-card-emulated.c
+hw/usb/ccid-card-passthru.c
+hw/usb/ccid.h
+hw/usb/chipidea.c
+hw/usb/combined-packet.c
+hw/usb/core.c
+hw/usb/desc-msos.c
+hw/usb/desc.c
+hw/usb/desc.h
+hw/usb/dev-audio.c
+hw/usb/dev-hid.c
+hw/usb/dev-hub.c
+hw/usb/dev-mtp.c
+hw/usb/dev-network.c
+hw/usb/dev-smartcard-reader.c
+hw/usb/dev-storage-bot.c
+hw/usb/dev-storage-classic.c
+hw/usb/dev-storage.c
+hw/usb/dev-uas.c
+hw/usb/dev-wacom.c
+hw/usb/hcd-dwc2.c
+hw/usb/hcd-dwc2.h
+hw/usb/hcd-dwc3.c
+hw/usb/hcd-ehci-pci.c
+hw/usb/hcd-ehci-sysbus.c
+hw/usb/hcd-ehci.c
+hw/usb/hcd-ehci.h
+hw/usb/hcd-ohci-pci.c
+hw/usb/hcd-ohci-sysbus.c
+hw/usb/hcd-ohci.c
+hw/usb/hcd-ohci.h
+hw/usb/hcd-uhci.c
+hw/usb/hcd-uhci.h
+hw/usb/hcd-xhci-nec.c
+hw/usb/hcd-xhci-pci.c
+hw/usb/hcd-xhci-pci.h
+hw/usb/hcd-xhci-sysbus.c
+hw/usb/hcd-xhci-sysbus.h
+hw/usb/hcd-xhci.c
+hw/usb/hcd-xhci.h
+hw/usb/host-libusb.c
+hw/usb/libhw.c
+hw/usb/meson.build
+hw/usb/pcap.c
+hw/usb/quirks-ftdi-ids.h
+hw/usb/quirks-pl2303-ids.h
+hw/usb/quirks.c
+hw/usb/quirks.h
+hw/usb/redirect.c
+hw/usb/trace-events
+hw/usb/trace.h
+hw/usb/u2f-emulated.c
+hw/usb/u2f-passthru.c
+hw/usb/u2f.c
+hw/usb/u2f.h
+hw/virtio/iothread-vq-mapping.c
+hw/virtio/meson.build
+hw/virtio/trace.h
+hw/virtio/vdpa-dev-pci.c
+hw/virtio/vdpa-dev.c
+hw/watchdog/meson.build
+hw/watchdog/trace-events
+hw/watchdog/trace.h
+hw/watchdog/watchdog.c
+include/disas/capstone.h
+include/disas/dis-asm.h
+include/disas/disas.h
+include/elf.h
+include/exec/abi_ptr.h
+include/exec/breakpoint.h
+include/exec/hwaddr.h
+include/exec/icount.h
+include/exec/log.h
+include/exec/memattrs.h
+include/exec/memopidx.h
+include/exec/memory_ldst.h.inc
+include/exec/memory_ldst_cached.h.inc
+include/exec/memory_ldst_phys.h.inc
+include/exec/mmap-lock.h
+include/exec/mmu-access-type.h
+include/exec/page-vary.h
+include/exec/plugin-gen.h
+include/exec/poison.h
+include/exec/ramlist.h
+include/exec/target_page.h
+include/exec/tlb-common.h
+include/exec/tlb-flags.h
+include/exec/translation-block.h
+include/exec/translator.h
+include/exec/tswap.h
+include/exec/vaddr.h
+include/exec/watchpoint.h
+include/glib-compat.h
+include/hw/arm/boot.h
+include/hw/arm/bsa.h
+include/hw/arm/fdt.h
+include/hw/arm/linux-boot-if.h
+include/hw/arm/machines-qom.h
+include/hw/arm/max78000_soc.h
+include/hw/arm/soc_dma.h
+include/hw/block/block.h
+include/hw/core/split-irq.h
+include/hw/core/sysbus-fdt.h
+include/hw/core/sysemu-cpu-ops.h
+include/hw/cpu/core.h
+include/hw/display/dm163.h
+include/hw/display/i2c-ddc.h
+include/hw/elf_ops.h.inc
+include/hw/fw-path-provider.h
+include/hw/gpio/pcf8574.h
+include/hw/hotplug.h
+include/hw/hw.h
+include/hw/hyperv/hyperv-proto.h
+include/hw/hyperv/hyperv.h
+include/hw/i2c/bitbang_i2c.h
+include/hw/i2c/pnv_i2c_regs.h
+include/hw/input/hid.h
+include/hw/input/ps2.h
+include/hw/intc/intc.h
+include/hw/intc/kvm_irqcount.h
+include/hw/intc/riscv_aclint.h
+include/hw/intc/riscv_aplic.h
+include/hw/intc/riscv_imsic.h
+include/hw/ipack/ipack.h
+include/hw/irq.h
+include/hw/isa/isa.h
+include/hw/loader-fit.h
+include/hw/loader.h
+include/hw/loongarch/boot.h
+include/hw/mem/sparse-mem.h
+include/hw/misc/auxbus.h
+include/hw/misc/ivshmem.h
+include/hw/misc/max78000_aes.h
+include/hw/misc/max78000_gcr.h
+include/hw/misc/max78000_icc.h
+include/hw/misc/max78000_trng.h
+include/hw/misc/pvpanic.h
+include/hw/nmi.h
+include/hw/nvram/eeprom93xx.h
+include/hw/nvram/eeprom_at24c.h
+include/hw/nvram/fw_cfg_acpi.h
+include/hw/or-irq.h
+include/hw/pci-bridge/cxl_upstream_port.h
+include/hw/pci-bridge/pci_expander_bridge.h
+include/hw/pci-bridge/xio3130_downstream.h
+include/hw/pci-host/gpex.h
+include/hw/pci-host/ls7a.h
+include/hw/platform-bus.h
+include/hw/ptimer.h
+include/hw/sd/cadence_sdhci.h
+include/hw/sysbus.h
+include/hw/timer/cadence_ttc.h
+include/hw/usb.h
+include/hw/usb/chipidea.h
+include/hw/usb/dwc2-regs.h
+include/hw/usb/ehci-regs.h
+include/hw/usb/hcd-dwc3.h
+include/hw/usb/hid.h
+include/hw/usb/msd.h
+include/hw/usb/uhci-regs.h
+include/hw/usb/xhci.h
+include/libdecnumber/dconfig.h
+include/libdecnumber/decContext.h
+include/libdecnumber/decDPD.h
+include/libdecnumber/decNumber.h
+include/libdecnumber/decNumberLocal.h
+include/libdecnumber/dpd/decimal128.h
+include/libdecnumber/dpd/decimal128Local.h
+include/libdecnumber/dpd/decimal32.h
+include/libdecnumber/dpd/decimal64.h
+include/monitor/hmp.h
+include/monitor/monitor.h
+include/monitor/qmp-helpers.h
+include/qemu-io.h
+include/qemu-main.h
+include/qemu/async-teardown.h
+include/qemu/atomic.h
+include/qemu/atomic128.h
+include/qemu/base64.h
+include/qemu/bcd.h
+include/qemu/bitmap.h
+include/qemu/bitops.h
+include/qemu/bswap.h
+include/qemu/cacheflush.h
+include/qemu/cacheinfo.h
+include/qemu/compiler.h
+include/qemu/config-file.h
+include/qemu/cpu-float.h
+include/qemu/cpuid.h
+include/qemu/crc-ccitt.h
+include/qemu/crc32c.h
+include/qemu/ctype.h
+include/qemu/cutils.h
+include/qemu/datadir.h
+include/qemu/drm.h
+include/qemu/envlist.h
+include/qemu/event_notifier.h
+include/qemu/exit-with-parent.h
+include/qemu/fifo32.h
+include/qemu/fifo8.h
+include/qemu/futex.h
+include/qemu/guest-random.h
+include/qemu/help-texts.h
+include/qemu/help_option.h
+include/qemu/host-pci-mmio.h
+include/qemu/host-utils.h
+include/qemu/hw-version.h
+include/qemu/id.h
+include/qemu/int128.h
+include/qemu/interval-tree.h
+include/qemu/iov.h
+include/qemu/jhash.h
+include/qemu/keyval.h
+include/qemu/lockable.h
+include/qemu/log-for-trace.h
+include/qemu/log.h
+include/qemu/madvise.h
+include/qemu/memalign.h
+include/qemu/memfd.h
+include/qemu/mmap-alloc.h
+include/qemu/module.h
+include/qemu/mprotect.h
+include/qemu/notify.h
+include/qemu/nvdimm-utils.h
+include/qemu/option_int.h
+include/qemu/osdep.h
+include/qemu/path.h
+include/qemu/plugin-event.h
+include/qemu/plugin-memory.h
+include/qemu/plugin.h
+include/qemu/pmem.h
+include/qemu/processor.h
+include/qemu/progress_meter.h
+include/qemu/qdist.h
+include/qemu/qemu-plugin.h
+include/qemu/qemu-progress.h
+include/qemu/qht.h
+include/qemu/qsp.h
+include/qemu/qtree.h
+include/qemu/queue.h
+include/qemu/range.h
+include/qemu/ratelimit.h
+include/qemu/readline.h
+include/qemu/reserved-region.h
+include/qemu/s390x_pci_mmio.h
+include/qemu/selfmap.h
+include/qemu/seqlock.h
+include/qemu/stats64.h
+include/qemu/sys_membarrier.h
+include/qemu/systemd.h
+include/qemu/thread-context.h
+include/qemu/thread.h
+include/qemu/timed-average.h
+include/qemu/timer.h
+include/qemu/tsan.h
+include/qemu/typedefs.h
+include/qemu/unicode.h
+include/qemu/units.h
+include/qemu/vfio-helpers.h
+include/qemu/xattr.h
+include/qemu/xxhash.h
+include/system/address-spaces.h
+include/system/arch_init.h
+include/system/blockdev.h
+include/system/confidential-guest-support.h
+include/system/cpu-throttle.h
+include/system/cpu-timers-internal.h
+include/system/cpu-timers.h
+include/system/dma.h
+include/system/event-loop-base.h
+include/system/hw_accel.h
+include/system/iothread.h
+include/system/mshv_int.h
+include/system/rtc.h
+include/system/stats.h
+include/system/system.h
+include/system/watchdog.h
+iothread.c
+libdecnumber/decContext.c
+libdecnumber/decNumber.c
+libdecnumber/dpd/decimal128.c
+libdecnumber/dpd/decimal32.c
+libdecnumber/dpd/decimal64.c
+libdecnumber/meson.build
+module-common.c
+monitor/fds.c
+monitor/meson.build
+monitor/qemu-config-qmp.c
+monitor/trace-events
+monitor/trace.h
+pc-bios/QEMU,cgthree.bin
+pc-bios/QEMU,tcx.bin
+pc-bios/README
+pc-bios/bios-256k.bin
+pc-bios/bios.bin
+pc-bios/descriptors/meson.build
+pc-bios/dtb/bamboo.dtb
+pc-bios/dtb/bamboo.dts
+pc-bios/dtb/meson.build
+pc-bios/dtb/petalogix-ml605.dtb
+pc-bios/dtb/petalogix-ml605.dts
+pc-bios/dtb/petalogix-s3adsp1800.dtb
+pc-bios/dtb/petalogix-s3adsp1800.dts
+pc-bios/efi-e1000.rom
+pc-bios/efi-e1000e.rom
+pc-bios/efi-eepro100.rom
+pc-bios/efi-ne2k_pci.rom
+pc-bios/efi-pcnet.rom
+pc-bios/efi-rtl8139.rom
+pc-bios/efi-virtio.rom
+pc-bios/hppa-firmware64.img
+pc-bios/keymaps/ar
+pc-bios/keymaps/bepo
+pc-bios/keymaps/cz
+pc-bios/keymaps/da
+pc-bios/keymaps/de
+pc-bios/keymaps/de-ch
+pc-bios/keymaps/en-gb
+pc-bios/keymaps/en-us
+pc-bios/keymaps/es
+pc-bios/keymaps/et
+pc-bios/keymaps/fi
+pc-bios/keymaps/fo
+pc-bios/keymaps/fr
+pc-bios/keymaps/fr-be
+pc-bios/keymaps/fr-ca
+pc-bios/keymaps/fr-ch
+pc-bios/keymaps/hr
+pc-bios/keymaps/hu
+pc-bios/keymaps/is
+pc-bios/keymaps/it
+pc-bios/keymaps/ja
+pc-bios/keymaps/lt
+pc-bios/keymaps/lv
+pc-bios/keymaps/meson.build
+pc-bios/keymaps/mk
+pc-bios/keymaps/nl
+pc-bios/keymaps/no
+pc-bios/keymaps/pl
+pc-bios/keymaps/pt
+pc-bios/keymaps/pt-br
+pc-bios/keymaps/ru
+pc-bios/keymaps/sl
+pc-bios/keymaps/sv
+pc-bios/keymaps/th
+pc-bios/keymaps/tr
+pc-bios/kvmvapic.bin
+pc-bios/linuxboot.bin
+pc-bios/linuxboot_dma.bin
+pc-bios/meson.build
+pc-bios/multiboot.bin
+pc-bios/multiboot_dma.bin
+pc-bios/openbios-ppc
+pc-bios/optionrom/Makefile
+pc-bios/optionrom/flat.lds
+pc-bios/optionrom/linuxboot.S
+pc-bios/optionrom/linuxboot_dma.c
+pc-bios/optionrom/multiboot.S
+pc-bios/optionrom/multiboot_dma.S
+pc-bios/optionrom/optionrom.h
+pc-bios/optionrom/optrom.h
+pc-bios/optionrom/optrom_fw_cfg.h
+pc-bios/optionrom/pvh.S
+pc-bios/optionrom/pvh_main.c
+pc-bios/palcode-clipper
+pc-bios/pvh.bin
+pc-bios/pxe-e1000.rom
+pc-bios/pxe-eepro100.rom
+pc-bios/pxe-ne2k_pci.rom
+pc-bios/pxe-pcnet.rom
+pc-bios/pxe-rtl8139.rom
+pc-bios/pxe-virtio.rom
+pc-bios/qboot.rom
+pc-bios/qemu-nsis.bmp
+pc-bios/qemu-nsis.ico
+pc-bios/qemu.rsrc
+pc-bios/qemu_logo.svg
+pc-bios/u-boot-sam460.bin
+pc-bios/vgabios-ati.bin
+pc-bios/vgabios-bochs-display.bin
+pc-bios/vgabios-cirrus.bin
+pc-bios/vgabios-qxl.bin
+pc-bios/vgabios-ramfb.bin
+pc-bios/vgabios-stdvga.bin
+pc-bios/vgabios-virtio.bin
+pc-bios/vgabios.bin
+po/LINGUAS
+po/POTFILES
+po/bg.po
+po/de_DE.po
+po/fr_FR.po
+po/hu.po
+po/it.po
+po/meson.build
+po/sv.po
+po/tr.po
+po/uk.po
+po/zh_CN.po
+qemu-keymap.c
+qemu-options.hx
+roms/Makefile
+roms/QemuMacDrivers
+roms/SLOF
+roms/config.seabios-128k
+roms/config.seabios-256k
+roms/config.seabios-microvm
+roms/config.vga-ati
+roms/config.vga-bochs-display
+roms/config.vga-cirrus
+roms/config.vga-isavga
+roms/config.vga-qxl
+roms/config.vga-ramfb
+roms/config.vga-stdvga
+roms/config.vga-virtio
+roms/configure-seabios.sh
+roms/ipxe
+roms/openbios
+roms/opensbi
+roms/qboot
+roms/qemu-palcode
+roms/seabios
+roms/skiboot
+roms/u-boot
+scripts/analyze-inclusions
+scripts/checkpatch.pl
+scripts/clean-header-guards.pl
+scripts/clean-includes
+scripts/cleanup-trace-events.pl
+scripts/cocci-macro-file.h
+scripts/coccinelle/cpu-reset.cocci
+scripts/coccinelle/cpu_restore_state.cocci
+scripts/coccinelle/device-reset.cocci
+scripts/coccinelle/exec_rw_const.cocci
+scripts/coccinelle/inplace-byteswaps.cocci
+scripts/coccinelle/overflow_muldiv64.cocci
+scripts/coccinelle/remove_muldiv64.cocci
+scripts/coccinelle/reset-type.cocci
+scripts/coccinelle/return_directly.cocci
+scripts/coccinelle/round.cocci
+scripts/coccinelle/simplify_muldiv64.cocci
+scripts/coccinelle/swap_muldiv64.cocci
+scripts/coccinelle/tcg_gen_extract.cocci
+scripts/coccinelle/timer-del-timer-free.cocci
+scripts/coccinelle/typecast.cocci
+scripts/coccinelle/use-g_new-etc.cocci
+scripts/device-crash-test
+scripts/disas-objdump.pl
+scripts/extract-vsssdk-headers
+scripts/fix-multiline-comments.sh
+scripts/get_maintainer.pl
+scripts/git.orderfile
+scripts/hxtool
+scripts/make-config-poison.sh
+scripts/make-release
+scripts/meson.build
+scripts/mkemmc.sh
+scripts/modules/module_block.py
+scripts/qemu-version.sh
+scripts/qemugdb/__init__.py
+scripts/qemugdb/coroutine.py
+scripts/qemugdb/mtree.py
+scripts/qemugdb/tcg.py
+scripts/qemugdb/timers.py
+scripts/refresh-pxe-roms.sh
+scripts/rust-to-clang-target-test.sh
+scripts/rust-to-clang-target.sh
+stats/meson.build
+stats/stats-hmp-cmds.c
+stats/stats-qmp-cmds.c
+subprojects/.gitignore
+subprojects/anyhow-1-rs.wrap
+subprojects/arbitrary-int-1-rs.wrap
+subprojects/attrs-0.2-rs.wrap
+subprojects/berkeley-softfloat-3.wrap
+subprojects/berkeley-testfloat-3.wrap
+subprojects/bilge-0.2-rs.wrap
+subprojects/bilge-impl-0.2-rs.wrap
+subprojects/dtc.wrap
+subprojects/either-1-rs.wrap
+subprojects/foreign-0.3-rs.wrap
+subprojects/glib-sys-0.21-rs.wrap
+subprojects/itertools-0.11-rs.wrap
+subprojects/keycodemapdb.wrap
+subprojects/libblkio.wrap
+subprojects/libc-0.2-rs.wrap
+subprojects/libvfio-user.wrap
+subprojects/packagefiles/anyhow-1-rs/meson.build
+subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+subprojects/packagefiles/attrs-0.2-rs/meson.build
+subprojects/packagefiles/berkeley-softfloat-3/meson.build
+subprojects/packagefiles/berkeley-softfloat-3/meson_options.txt
+subprojects/packagefiles/berkeley-testfloat-3/meson.build
+subprojects/packagefiles/berkeley-testfloat-3/meson_options.txt
+subprojects/packagefiles/bilge-0.2-rs/meson.build
+subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+subprojects/packagefiles/either-1-rs/meson.build
+subprojects/packagefiles/foreign-0.3-rs/meson.build
+subprojects/packagefiles/glib-sys-0.21-rs/meson.build
+subprojects/packagefiles/itertools-0.11-rs/meson.build
+subprojects/packagefiles/libc-0.2-rs/meson.build
+subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+subprojects/packagefiles/proc-macro2-1-rs/meson.build
+subprojects/packagefiles/quote-1-rs/meson.build
+subprojects/packagefiles/syn-2-rs/meson.build
+subprojects/packagefiles/unicode-ident-1-rs/meson.build
+subprojects/proc-macro-error-1-rs.wrap
+subprojects/proc-macro-error-attr-1-rs.wrap
+subprojects/proc-macro2-1-rs.wrap
+subprojects/quote-1-rs.wrap
+subprojects/slirp.wrap
+subprojects/syn-2-rs.wrap
+subprojects/unicode-ident-1-rs.wrap
+system/arch_init.c
+system/async-teardown.c
+system/datadir.c
+system/device_tree-stub.c
+system/exit-with-parent.c
+system/globals-target.c
+system/globals.c
+system/memory_ldst.c.inc
+system/meson.build
+system/rtc.c
+system/trace-events
+system/trace.h
+target/i386/trace-events
+target/meson.build
+tests/bench/atomic64-bench.c
+tests/bench/atomic_add-bench.c
+tests/bench/bufferiszero-bench.c
+tests/bench/meson.build
+tests/bench/qht-bench.c
+tests/bench/qtree-bench.c
+tests/bench/test_akcipher_keys.c.inc
+tests/data/smbios/type11_blob
+tests/data/smbios/type11_blob.legacy
+tests/dbus-vmstate-daemon.sh
+tests/functional/aarch64/meson.build
+tests/functional/acpi-bits/bits-config/bits-cfg.txt
+tests/functional/acpi-bits/bits-tests/smbios.py2
+tests/functional/acpi-bits/bits-tests/smilatency.py2
+tests/functional/acpi-bits/bits-tests/testacpi.py2
+tests/functional/acpi-bits/bits-tests/testcpuid.py2
+tests/functional/arm/meson.build
+tests/functional/arm/test_max78000fthr.py
+tests/functional/generic/meson.build
+tests/functional/loongarch64/meson.build
+tests/functional/m68k/meson.build
+tests/functional/meson.build
+tests/functional/microblaze/meson.build
+tests/functional/microblazeel/meson.build
+tests/functional/mips/meson.build
+tests/functional/mips64/meson.build
+tests/functional/mips64el/meson.build
+tests/functional/mipsel/meson.build
+tests/functional/or1k/meson.build
+tests/functional/ppc/meson.build
+tests/functional/ppc64/meson.build
+tests/functional/rx/meson.build
+tests/functional/sh4/meson.build
+tests/functional/sh4eb/meson.build
+tests/functional/sparc/meson.build
+tests/functional/sparc64/meson.build
+tests/functional/xtensa/meson.build
+tests/guest-debug/run-test.py
+tests/guest-debug/test_gdbstub.py
+tests/include/meson.build
+tests/keys/README
+tests/keys/id_rsa
+tests/keys/id_rsa.pub
+tests/keys/vagrant
+tests/keys/vagrant.pub
+tests/meson.build
+tests/multiboot/Makefile
+tests/multiboot/aout_kludge.S
+tests/multiboot/aout_kludge.out
+tests/multiboot/libc.c
+tests/multiboot/libc.h
+tests/multiboot/link.ld
+tests/multiboot/mmap.c
+tests/multiboot/mmap.out
+tests/multiboot/module.txt
+tests/multiboot/modules.c
+tests/multiboot/modules.out
+tests/multiboot/multiboot.h
+tests/multiboot/run_test.sh
+tests/multiboot/start.S
+tests/perf/block/qcow2/convert-blockstatus
+tests/tcg/README
+tests/tcg/aarch64_be/Makefile.target
+tests/tcg/aarch64_be/hello.c
+tests/tcg/minilib/Makefile.target
+tests/tcg/minilib/minilib.h
+tests/tcg/minilib/printf.c
+tests/test-qht-par.c
+tests/tsan/ignore.tsan
+tests/tsan/suppressions.tsan
+tests/unit/io-channel-helpers.c
+tests/unit/io-channel-helpers.h
+tests/unit/iothread.c
+tests/unit/iothread.h
+tests/unit/meson.build
+tests/unit/ptimer-test-stubs.c
+tests/unit/ptimer-test.c
+tests/unit/ptimer-test.h
+tests/unit/socket-helpers.c
+tests/unit/socket-helpers.h
+tests/unit/test-aio-multithread.c
+tests/unit/test-aio.c
+tests/unit/test-base64.c
+tests/unit/test-bdrv-drain.c
+tests/unit/test-bdrv-graph-mod.c
+tests/unit/test-bitcnt.c
+tests/unit/test-bitmap.c
+tests/unit/test-bitops.c
+tests/unit/test-block-backend.c
+tests/unit/test-block-iothread.c
+tests/unit/test-blockjob-txn.c
+tests/unit/test-blockjob.c
+tests/unit/test-bufferiszero.c
+tests/unit/test-char.c
+tests/unit/test-cutils.c
+tests/unit/test-div128.c
+tests/unit/test-error-report.c
+tests/unit/test-fifo.c
+tests/unit/test-image-locking.c
+tests/unit/test-int128.c
+tests/unit/test-interval-tree.c
+tests/unit/test-iov.c
+tests/unit/test-logging.c
+tests/unit/test-mul64.c
+tests/unit/test-nested-aio-poll.c
+tests/unit/test-qdist.c
+tests/unit/test-qgraph.c
+tests/unit/test-qht.c
+tests/unit/test-qtree.c
+tests/unit/test-resv-mem.c
+tests/unit/test-shift128.c
+tests/unit/test-thread-pool.c
+tests/unit/test-timed-average.c
+tests/unit/test-util-sockets.c
+tests/unit/test-vmstate.c
+tests/unit/test-write-threshold.c
+tests/unit/test-xbzrle.c
+tests/unit/test-xs-node.c
+tests/vhost-user-bridge.c
+tools/meson.build
+util/aiocb.c
+util/atomic64.c
+util/base64.c
+util/bitmap.c
+util/bitops.c
+util/block-helpers.c
+util/block-helpers.h
+util/bufferiszero.c
+util/compatfd.c
+util/crc-ccitt.c
+util/crc32c.c
+util/cutils.c
+util/envlist.c
+util/event.c
+util/fifo8.c
+util/getauxval.c
+util/guest-random.c
+util/hexdump.c
+util/host-utils.c
+util/id.c
+util/int128.c
+util/interval-tree.c
+util/iov.c
+util/log.c
+util/memalign.c
+util/memfd.c
+util/meson.build
+util/mmap-alloc.c
+util/module.c
+util/notify.c
+util/nvdimm-utils.c
+util/osdep.c
+util/path.c
+util/qdist.c
+util/qemu-co-timeout.c
+util/qemu-config.c
+util/qemu-thread-common.h
+util/qht.c
+util/qsp.c
+util/qtree.c
+util/range.c
+util/readline.c
+util/reserved-region.c
+util/s390x_pci_mmio.c
+util/selfmap.c
+util/stats64.c
+util/sys_membarrier.c
+util/systemd.c
+util/thread-context.c
+util/thread-pool.c
+util/timed-average.c
+util/trace-events
+util/trace.h
+util/unicode.c
+version.rc
 
 
