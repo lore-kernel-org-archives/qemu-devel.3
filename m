@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5851FD68BE2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 06:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEBD0D68BDD
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 06:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vW7qu-0003oz-J6; Thu, 18 Dec 2025 01:51:08 -0500
+	id 1vW7tY-0004Mn-W1; Thu, 18 Dec 2025 01:53:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vW7qo-0003oe-Dr
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 01:51:05 -0500
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vW7tQ-0004M7-Sq; Thu, 18 Dec 2025 01:53:46 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vW7qj-0008SD-3p
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 01:50:58 -0500
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vW7tO-0000VH-Eo; Thu, 18 Dec 2025 01:53:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1766040657; x=1797576657;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=YqDwYRN4o6NV1SBhp1kDiX44vbCeEfv3x8WuuIFdaro=;
- b=ULO72o4LqZMIHNtg4KrYwYieu5IVQsWm7T+eVBFtl7oBE71sjS9kACg0
- ZK+qUo9HZ3M9wQY4wWl+2VTxE1h1MmpmhO0naNeRscMcGaFDsL/ll6fca
- /oJusANbBBGHGFcVC0/KfIn//BfL0eDs3pBa9/TMhrWP6kLAVlYO1QXA1
- 67DIioYbLfYBt/iucoVjuJyoLfzR+lJcEd0jbYOXgquae8oD1wmZ+To8p
- YX5aP8Wpyqkpyms2WAsa2krvnNY9JZjB7rrOqzJqAbFZVLqX5xwWTzsOV
- MVofugEDQhkFB9YK/Fe6LN3iDpLYod94usMlExACjmoGPIiZNgkyGMn5c A==;
-X-CSE-ConnectionGUID: WkZf/SWtRl+YxC+Bf3bM5A==
-X-CSE-MsgGUID: WjQhtLuOS9K6/0Wz0czPnQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11645"; a="79358576"
-X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; d="scan'208";a="79358576"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2025 22:50:53 -0800
-X-CSE-ConnectionGUID: FLuDGYQiRoSKnmgoFdwb0w==
-X-CSE-MsgGUID: z6b3q+zeTSCr54Prg4YUOA==
+ t=1766040823; x=1797576823;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=kq3EVTX+V7OSI2RRTAJqg+Ct87axTPOW5J2fHbppAdo=;
+ b=j+HdnQsY/MAdcTwPPftTulUGY9ZqeRWgcyAdRP3oOatSWozJyMnPIVcx
+ 1et/jF7ZlGcot7tRTalMYuLX4JxYBjMS30ZGOxQ+NJ2W/w0SNdaphJbBR
+ Pi2ffIDXcQcED5RHYuNP3LH29uFfhxTdvl3aOB02gJc3fdzIrmsBYKoiG
+ 3LAiTdwo5Q+nXOpqxgPMo0cMq2gYl2/ftFlZ/XFfQk6xn0xQEb/ZpO+Tx
+ uYrSOC8UdhEETNgB9xOyH9x6RpWIkDJHsClPK+oRerj+zE/v73IFk2HiJ
+ t9Uvpi64d1EpVOUuSQ7xZRn8TCJi2wTzHAO566LWRJZrFh4XaNKzoaAtR Q==;
+X-CSE-ConnectionGUID: W/MmKfjYSGWOE0XnXGnugA==
+X-CSE-MsgGUID: qTLOD4RUS4m6QHfcJ/AAUQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11645"; a="78701873"
+X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; d="scan'208";a="78701873"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Dec 2025 22:53:37 -0800
+X-CSE-ConnectionGUID: XnySzBGtQR+8ujzT9hsMWg==
+X-CSE-MsgGUID: SMUevTuQTAOQbkOC+5eb8g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; d="scan'208";a="203024903"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2025 22:50:51 -0800
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com,
- yi.l.liu@intel.com, joao.m.martins@oracle.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH] docs/devel: Remove stale comments related to iommufd dirty
- tracking
-Date: Thu, 18 Dec 2025 01:50:42 -0500
-Message-ID: <20251218065042.639777-1-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.1
+X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; d="scan'208";a="229201491"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa002.jf.intel.com with ESMTP; 17 Dec 2025 22:53:35 -0800
+Date: Thu, 18 Dec 2025 15:18:25 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+	marcandre.lureau@redhat.com
+Subject: Re: [PATCH 07/11] meson: let Meson handle mixed-language linking of
+ Rust and C objects
+Message-ID: <aUOqwYjUHwrDWvM3@intel.com>
+References: <20251215075000.335043-1-pbonzini@redhat.com>
+ <20251215075000.335043-8-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251215075000.335043-8-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -83,38 +83,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IOMMUFD dirty tracking support had be merged, the stale comments could
-be dropped.
+On Mon, Dec 15, 2025 at 08:49:56AM +0100, Paolo Bonzini wrote:
+> Date: Mon, 15 Dec 2025 08:49:56 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 07/11] meson: let Meson handle mixed-language linking of
+>  Rust and C objects
+> X-Mailer: git-send-email 2.52.0
+> 
+> With the bump to Meson 1.10.0, C objects can be passed to rust targets.
+> This way, the Rust libstd will be added by rustc itself in its final
+> linker invocation.  Use that to eliminate the staticlib and allow
+> dynamic linking with libstd (also introduced by Meson 1.9.0, but not
+> for staticlib crates due to lack of support in rustc).
+> 
+> The main() function is still provided by C, which is possible by
+> declaring the main source file of the Rust executable (which is
+> still created by scripts/rust/rust_root_crate.sh) as #![no_main].
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  meson.build                     | 19 ++++++++-----------
+>  scripts/rust/rust_root_crate.sh |  1 +
+>  2 files changed, 9 insertions(+), 11 deletions(-)
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- docs/devel/vfio-iommufd.rst | 12 ------------
- 1 file changed, 12 deletions(-)
-
-diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
-index 3d1c11f175..b37098e1b6 100644
---- a/docs/devel/vfio-iommufd.rst
-+++ b/docs/devel/vfio-iommufd.rst
-@@ -127,18 +127,6 @@ Supports x86, ARM and s390x currently.
- Caveats
- =======
- 
--Dirty page sync
-----------------
--
--Dirty page sync with iommufd backend is unsupported yet, live migration is
--disabled by default. But it can be force enabled like below, low efficient
--though.
--
--.. code-block:: bash
--
--    -object iommufd,id=iommufd0
--    -device vfio-pci,host=0000:02:00.0,iommufd=iommufd0,enable-migration=on
--
- P2P DMA
- -------
- 
--- 
-2.47.1
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
