@@ -4,98 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF64D68BE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 13:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDDDD6ACFE
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 13:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWE6R-0002a0-RV; Thu, 18 Dec 2025 08:31:35 -0500
+	id 1vWE8P-0003Fx-Tn; Thu, 18 Dec 2025 08:33:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vWE6P-0002Z3-MY
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 08:31:33 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vWE6N-00060B-VA
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 08:31:33 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2a0bae9aca3so8743905ad.3
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 05:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766064690; x=1766669490; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+wZ3OFIFwDhWAvFVRe/6gGrrEOCyGvi30WTWWhtxl/E=;
- b=On6TqE/sX5ohJ9TvzF1l8q402QrnaxYVclkp8Fvv8asINCg6R4oYOTQWRUDnNOSIIn
- gIx3mvTf2BF5wBWfz6KKgXVUOl3l0W4sSEs4qetyiIxfq5jKb2bAwOmvV298G7nUhMOi
- 5zPqiqU67peVgI51i5CQ9EokronUxCAOjaGrAzecreEd13Lbld616h89zfVRIsc7Z4v7
- ybDGnV9EqjUTxJRIHLRrmaPX+7TdooAkb59Nuutq/AWXW84wl5z94ybdkuPzlhiMvHEC
- 8TS3cz38VSbM68rj+XOlpT7DsdBV9K64zQOFOX96hcRGVvpIfBN3RpLSGR9xmHFa5a7H
- j1EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766064690; x=1766669490;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+wZ3OFIFwDhWAvFVRe/6gGrrEOCyGvi30WTWWhtxl/E=;
- b=ZfOpAH+WZTmEQSkbLbARp3tOcJYmHk5vwOpPKV5DQMJ9aCrbuDgpEJ9yy0aW1MpaZ1
- bhmgHC4fzNgMnGe2TEchsCFDvBXBvSOpVwV6OcFO8oJXcMGvo0TZTYpYQWfzCij+Was6
- o0A5vuixiLTKtFLkFapkkNfvISjiJDWcd4sv7M49DSvsRnKw8dzvHNxkQDyb3UYb8N/v
- GrK0aWVf9rR8IzdkVbuIHFz0FPMLSEsWcymSuwrPjA2iz23gUkd475vqieqPxpQXbDdz
- Fzp4zr1x0Lh15kwgwRt7S2R0LkpvL3PF2lDDOxE/NDmBReyRxCnUg6h7gaz/FBEM7WnU
- izyQ==
-X-Gm-Message-State: AOJu0YyfEV7Ok++Gfly6E4hkV+ms0KSqHCl6XL/wyAvcnAujDcI/Sq1b
- E+F6vdq49FYlB9A7+QqVrR3wRTNhgIEzEhY08fAJD75DU3x2WYppz6FDqpDUVyYFxNY=
-X-Gm-Gg: AY/fxX7WCmZDMiN36PAEOI8DvE1CRZFgu9uI3LWVYC1rKAR0VQb012yK082jj4ubUKa
- ZuyREFvL63ceNExLpHNa6KZWNQtzc3A1Rzcq7QhZz3syBfgWERYsy9KK4t2VWP9F1MAlk3CEKSz
- W2LF/EYW2zOLT1QSHCoIPAgyOOQ8wDD8OrBpWJVlScKuM2A4fsvaPENHie7aNt5jXQxWpo8I2kU
- 2V3wvXmb9YQ2XwKrbw5Ov5ksRNl/OSI2IoXDqLGy5FBZPZtoNt0YgwoVmphy4VfuUWt62iq/s9Z
- ERVMJ53oEiVCh86usm4Czsm3hRJdUst0XgpYYc3lNea9FVPjGaHVBSfmoWQV6YIJ4Je+v8aacU3
- jszU6Hiow4QkPeUs+T+KUK71+JhBqQdDgKv4gE4HTgQRqz8IM3/8A49UemsYyTUlTbZiGJU80eE
- jnyeTfHU0C12nV8+C16uBAuA==
-X-Google-Smtp-Source: AGHT+IHh/0S1XrknQmgrMdoy9uj7NBQ82STDKLS0jCzvTVDK8bRNSSF//8txDxX5K3a2evLwsxwH9w==
-X-Received: by 2002:a17:903:3884:b0:29f:e787:2b9b with SMTP id
- d9443c01a7336-29fe7872d28mr201437395ad.41.1766064690043; 
- Thu, 18 Dec 2025 05:31:30 -0800 (PST)
-Received: from [192.168.0.102] ([191.8.216.160])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2d087c839sm26155815ad.9.2025.12.18.05.31.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Dec 2025 05:31:28 -0800 (PST)
-Message-ID: <be2e8028-6d30-4b7e-8a51-af00af15e2ff@linaro.org>
-Date: Thu, 18 Dec 2025 10:31:22 -0300
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1vWE8N-0003FC-SL
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 08:33:35 -0500
+Received: from mail-southcentralusazon11011039.outbound.protection.outlook.com
+ ([40.93.194.39] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1vWE8L-0006PQ-TR
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 08:33:35 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xKARYS70tpI5kBF/c2Ii3lsQVmmUoSz7u0wfzyMU9eon6Yf79u8KsIz9tm4ER9ccgSHQhZoj+hUVGsrOLGzC31XNGNCAMQBYZt5Ad3vtClewXsakXRUuMQHCf9ZGhSXPL4nHTvVE4jRtKNYCD16XArC1X0bOjqTD745/FiYxPv8rbHzVjKnD7rGaxE5EPB7N0Mx/WmImiGQDvljG6RcUmg2tvhzhB8AfLFpohXHY2C1WZqqnfK4Cnjs2l0wgGuyMFhPfQ9n+BNoBE0HECX0qS04wMl49rWiXfMySaiVQYkBr/PNeVKdbeS+LhbydsnN3FE45lfcgSadprXB2Ef0w+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mK0Bgke43ryObP7uZd5aU1McM0lsKWnvaz/ZjI01hR8=;
+ b=r/ME3wuXslTQbalRk77WDK8BEJ+EGHnVQTlLJ+iYIax425lgrIWzWHYJHwJy60Ty3J0dG6HrzlbOVgmLSr5oOagLnxGOKoNM09TBPItgFHb1pQJXc3i4FhQmHd4OY9v6TOrRUrA2dI1mnGUeTCXDdTdZRsuB3uTJgCsp64vXGCvRLh++W3NeHlmqM4s1oP5QJfUAnmMLGQBybyZcBZ8vTMmJFhansG05uyFsMe35ABYzyzCRIl8ZFgjllHSYOloI9pEZfyUW07+/pBdLf9oHFIDT9Deaz7q1HAfMr/5oj5Uk+ju+Y1OOVTUwJJURMSNplC75gqv8uIv+ZMJhi88W2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mK0Bgke43ryObP7uZd5aU1McM0lsKWnvaz/ZjI01hR8=;
+ b=llvi/z1fmcImOg2Gq1H7jVT6Y5Gm4qM9vUWm+e0h8uJTTevFIP8Z3oY3C+dMknBU5vOeF+UP5BJwrn0dpVqiE8RJvKC8IOLzVsD2H3mzhXwRVB3dtE1XKwQmaOAc6g1zP1Hg2OwPS1ho0DoRm7okpuwayiydWH6EkrXVkDyefqc=
+Received: from SA0PR11CA0127.namprd11.prod.outlook.com (2603:10b6:806:131::12)
+ by LV8PR12MB9183.namprd12.prod.outlook.com (2603:10b6:408:193::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.6; Thu, 18 Dec
+ 2025 13:28:25 +0000
+Received: from SA2PEPF0000150A.namprd04.prod.outlook.com
+ (2603:10b6:806:131:cafe::cb) by SA0PR11CA0127.outlook.office365.com
+ (2603:10b6:806:131::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9434.7 via Frontend Transport; Thu,
+ 18 Dec 2025 13:28:22 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SA2PEPF0000150A.mail.protection.outlook.com (10.167.242.42) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9434.6 via Frontend Transport; Thu, 18 Dec 2025 13:28:23 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 18 Dec
+ 2025 07:28:22 -0600
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] target/arm: Add a _MAX sentinel to ARMASIdx enum
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org, 
- alex.bennee@linaro.org, peter.maydell@linaro.org,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-References: <20251217212018.93320-1-gustavo.romero@linaro.org>
- <20251217212018.93320-3-gustavo.romero@linaro.org>
- <cb5eca6e-23c1-4134-9145-7030bc10b649@linaro.org>
- <CAAjaMXbsH_EimcS7SDMYaicrWKt2OYCUUapy4Uab1kfVO-x7jg@mail.gmail.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <CAAjaMXbsH_EimcS7SDMYaicrWKt2OYCUUapy4Uab1kfVO-x7jg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 10.2.0-rc4 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Richard Henderson <richard.henderson@linaro.org>
+Date: Thu, 18 Dec 2025 07:28:05 -0600
+Message-ID: <176606448528.3817911.3342486802813319897@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF0000150A:EE_|LV8PR12MB9183:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3e4563bd-3f50-4abd-7f9d-08de3e39518a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|1800799024|36860700013|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?V24wWEtIWTRqZC94bitRTjJCY3B3ZjNkVnhYdGg3RlhBUHNyUzBpVER0ODZY?=
+ =?utf-8?B?aTlrS3AyQnZGYS9jak1RUlBacUQyN3czdHYzVjdTd0h0eld1aHU3eWozaDND?=
+ =?utf-8?B?MTEwN0F3dWZqV3c4dE1aSWFjVkJjaFl5S3pkVDNJUGI3cy90OUMzclRPdEdi?=
+ =?utf-8?B?UlNRdFhtS0lCSWJ4bElqMlNVeVQxZFE1T0JuTVNLZWt2M2htZWJEYmV5VmxG?=
+ =?utf-8?B?Mk1TV3F5Yi8rN1ZuWmUyenhhbTNzVzE1aVFOaEpLTWhPd3ZiSUJXTXlYelNG?=
+ =?utf-8?B?NDcrTXJsOGtwZGZ0NUt6Y3p2NXNvUEttbktmNlVjSDIvVU82L0hOWDhrWFdi?=
+ =?utf-8?B?aDVja3FhZ0JyVDFSSUtvTVdBeU0zdWVNQXBVYzVSNUp1aTRKMk45UFpOcDU1?=
+ =?utf-8?B?NmJXR2JWR1hBVTdaM05NVGtqbHJ2aFJkZFJBL3FibTBrWlNjQ3o2Wi9jd1Zy?=
+ =?utf-8?B?Nzc4cy93WEtZZlRhazZwMXJ3cURqRUIxT28zK01PYTEybmZibkh1eUdIem44?=
+ =?utf-8?B?NjFpMXBqRG4zWGwrb1V6N2I0WWFyelE2NXA5MDJxZTAwN2RsdE5ueEdKc3Z3?=
+ =?utf-8?B?dUR2OFE5d1J5b3orWVpnYWN0bmJGZi9GSjUvNG5vTE9KT3E0bVo1QjNYQkkz?=
+ =?utf-8?B?TVRTVnBHSk9CRVhPOVZTSWFJS2x4Mm83TWVwRkNlSnplVm95MVVLSkhoSXdO?=
+ =?utf-8?B?M3ovSTczbERUaWRyV1JwRWxOUXNnRGtaTnVtaHk1czVCN0xvaHVnRWhPV0J4?=
+ =?utf-8?B?MTdDYlV0ZXU0alNOUTZoUDJPRGhucFpnQ1ltOTJscUlNcG1VMFRYU2drZWxX?=
+ =?utf-8?B?NXg1MmJzWitabkdMZ241eU1sMUhPRk5ZSHpMTDYwa284eWpuRmxFSHk4VGxq?=
+ =?utf-8?B?cFRpdnh0UFlSdW5FQk5KMnZqQzVGZG1namN0cmhrZTcwNDg4M3h6STJNLytZ?=
+ =?utf-8?B?UTJucTJNRzlveXhtQzhqUW51N3JpTGswQUMvQitqV3dUQWh4MjZhM094TWR5?=
+ =?utf-8?B?WUxQSUtwbElkYkJKRUFFWnB2T0gvVy9IMnNqKzlJUy9WQ2VXVEFWeGhoNjE4?=
+ =?utf-8?B?QmQ5cnNzcmNSWG03RzNHQUc2TGNyNEdTWnlhRWlDWWVCbVN1dWFNdjg3blpB?=
+ =?utf-8?B?VXVpdWhBbUJ0VWg3VUF4b0hwRDdNaVFOb1NHRFlCcXgwMnhiSUs0SWpud3Fw?=
+ =?utf-8?B?UXEzZ3lhYzNuVkRCWmJRYXdXNkZsQWdCcnllRlFLdU41ZTBxVFJRYmdYeVpk?=
+ =?utf-8?B?Z1ZMTzh6TloraDc1YWl4Q2V1TDQyUXVPRlU1UzcxaVVWMk9BM3ExUEZ1eDVi?=
+ =?utf-8?B?aHQwcUI5S3dWT3ZiN0dXMFY2N3dVNGRmeG9zNWpiREl1dUwvTjBPRTVISlBO?=
+ =?utf-8?B?VTljTU5LVVZhN016OHZYNllhbzdSSnROcVNpL1UwRnpWUld4RVltdll2aEpD?=
+ =?utf-8?B?QVhiblRMeHpFT216RGxHTG13NStBUTNPdGI4UGxJTng3MVc5OUE1RzNocGJh?=
+ =?utf-8?B?cndtcExHcnFVT05ycUlzTXFoVy83dGVNTDQ4UHRyTVNBWUdYblFmb1g5aU4v?=
+ =?utf-8?B?WFFvcHBEMkNiREp4cUhFTTB1alVCMk9Va3BVdUhhRW1seG1pSjJXODB0MjBV?=
+ =?utf-8?B?UmR1ejNnRUJNWU1iMnVqUndmL2JOWVRaTWZRTW12cDJlT0gwYURWK0RZb01L?=
+ =?utf-8?B?THNEWDNPUW4zN1dCbWpURGVRUE9BSHJ3MjlNNW56bkpRaTN0SHB0akJDaDVB?=
+ =?utf-8?B?ZGFvbWllN2NETkN6bGlJK2lKSFR5c203dDI3eHd6UzEvRnFldlBTNlVMNHcz?=
+ =?utf-8?B?dFVkQVFqbUNrWmkzNVVSZVRzc3RqM0l0STRsdVJQN3lZUDdPYWJFcFZrR1NP?=
+ =?utf-8?B?dWcxZFc5N040SDI0WGZIRmRaWE5sSDFWM1RkSmFOYzlBYWxpUWF6czZ4OWxD?=
+ =?utf-8?B?dUhQRldibm5LdjV5Z0t2dUhvem00eU9vOTJNK1A5VkZsWlgyOTlsclptNFNN?=
+ =?utf-8?B?Q3BUWGdNMGVMd2J4WHJCdkRCQm1vUTZkek9GNU11MzNWQmFiaXE3dlFlVXRa?=
+ =?utf-8?Q?8uOOMR?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2025 13:28:23.4673 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e4563bd-3f50-4abd-7f9d-08de3e39518a
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF0000150A.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9183
+Received-SPF: permerror client-ip=40.93.194.39;
+ envelope-from=Michael.Roth@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,129 +156,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil and Manos,
+Hello,
 
-On 12/18/25 10:00, Manos Pitsidianakis wrote:
-> On Thu, Dec 18, 2025 at 9:21 AM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> Hi Gustavo,
->>
->> On 17/12/25 22:20, Gustavo Romero wrote:
->>> Add a sentinel to the ARMASIdx enum so it can be used when the total
->>> number of address spaces is required.
->>>
->>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->>> ---
->>>    target/arm/cpu.h | 1 +
->>>    1 file changed, 1 insertion(+)
->>>
->>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
->>> index 39f2b2e54d..00f5af0fcd 100644
->>> --- a/target/arm/cpu.h
->>> +++ b/target/arm/cpu.h
->>> @@ -2336,6 +2336,7 @@ typedef enum ARMASIdx {
->>>        ARMASIdx_S = 1,
->>>        ARMASIdx_TagNS = 2,
->>>        ARMASIdx_TagS = 3,
->>> +    ARMASIdx_MAX
->>
-> 
-> My two cents:
-> 
-> Here, "ARMASIdx_MAX" should be equal to the last variant, 3. So to get
-> the total count, it would be ARMASIdx_MAX + 1.
-> And it should be called "ARMASIdx_COUNT". Max is the last variant.
+On behalf of the QEMU Team, I'd like to announce the availability of the
+fifth release candidate for the QEMU 10.2 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
-That makes total sense to me. Thanks, I'll update it in v3.
+  http://download.qemu.org/qemu-10.2.0-rc4.tar.xz
+  http://download.qemu.org/qemu-10.2.0-rc4.tar.xz.sig
 
+You can help improve the quality of the QEMU 10.2 release by testing this
+release and reporting bugs using our GitLab issue tracker:
 
->> The problem with including this in the enum is this confuses static
->> analyzers:
->>
->> warning: enumeration value 'ARMASIdx_MAX' not handled in switch [-Wswitch]
->>
+  https://gitlab.com/qemu-project/qemu/-/milestones/17
 
-hmm I guess I missed it because my test pipeline didn't check for it?
+The release plan, as well a documented known issues for release
+candidates, are available at:
 
-I've used QEMU_CI=2 to test the series. But I guess one needs access
-to a pipeline with Coverity enabled? How can we test for warnings like
-it in the CI?
+  http://wiki.qemu.org/Planning/10.2
 
+Please add entries to the ChangeLog for the 10.2 release below:
 
-> If we add a "MAX" instead of "COUNT" variant, then the value of the
-> MAX variant would be handled in switch cases.  The following
-> definition does not emit a warning with -Wswitch:
-> 
-> typedef enum ARMASIdx {
->    ARMASIdx_NS = 0,
->    ARMASIdx_S = 1,
->    ARMASIdx_TagNS = 2,
->    ARMASIdx_TagS = 3,
->    ARMASIdx_MAX = ARMASIdx_TagS,
-> #define ARMASIdx_COUNT (ARMASIdx_MAX + 1)
-> } ARMASIdx;
-> 
-> int main() {
->    ARMASIdx t = ARMASIdx_S;
->    switch (t) {
->    case ARMASIdx_NS:
->      break;
->    case ARMASIdx_S:
->      break;
->    case ARMASIdx_TagNS:
->      break;
->    case ARMASIdx_TagS:
->      break;
->    }
->    printf("Last = %d Count = %d\n", ARMASIdx_MAX, ARMASIdx_COUNT);
-> }
-> 
-> Outputs:
-> 
-> "Last = 3 Count = 4"
+  http://wiki.qemu.org/ChangeLog/10.2
 
-Nice :)
+Thank you to everyone involved!
 
+Changes since rc3:
 
-Cheers,
-Gustavo
-
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> 
->> To avoid that we /define/ it manually instead:
->>
->> #define ARMASIdx_MAX 4
->>
->>>    } ARMASIdx;
->>
->> Usually the definition is within the enum declaration, and we name
->> it ${enum}_COUNT:
->>
->>       typedef enum ARMASIdx {
->>           ARMASIdx_NS = 0,
->>           ARMASIdx_S = 1,
->>           ARMASIdx_TagNS = 2,
->>           ARMASIdx_TagS = 3,
->>       #define ARMASIdx_COUNT 4
->>       } ARMASIdx;
->>
->> Unfortunately this didn't work well with QAPI, so we could never enable
->> -Wswitch globally:
->> https://lore.kernel.org/qemu-devel/20230315112811.22355-1-philmd@linaro.org/
->>
->> Today I'm not sure what is the best style anymore, so just take
->> my comments are historical 2 cents.
->>
->> Regards,
->>
->> Phil.
->>
-
+bb7fc1543f: Update version for v10.2.0-rc4 release (Richard Henderson)
+00829ae384: qdev: fix error handling in set_uint64_checkmask (Zesen Liu)
+d7e1df7699: gdbstub: Fix const qualifier build errors with recent glibc (C=
+=C3=A9dric Le Goater)
+dfe87815ba: monitor: Fix const qualifier build errors with recent glibc (C=
+=C3=A9dric Le Goater)
+e37a0d514a: tests/vhost-user-bridge.c: Fix const qualifier build errors wit=
+h recent glibc (C=C3=A9dric Le Goater)
+2f5c96d534: i386: Fix const qualifier build errors with recent glibc (C=C3=
+=A9dric Le Goater)
+307bc43095: block: Fix BDS use after free during shutdown (Kevin Wolf)
+b002acacc1: Revert "nvme: Fix coroutine waking" (Hanna Czenczek)
+ab0065e36a: tests/qemu-iotests: Fix check for existing file in _require_dis=
+k_usage() (Thomas Huth)
 
