@@ -4,108 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5BED6D237
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 15:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F91D6D237
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 15:40:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWG03-0007vT-AU; Thu, 18 Dec 2025 10:33:08 -0500
+	id 1vWG6N-0000yv-94; Thu, 18 Dec 2025 10:39:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWFzy-0007v1-Np
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:33:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWG6K-0000ye-TU
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:39:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWFzs-0002bb-UZ
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:33:00 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWG6J-0003pk-BN
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:39:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766071973;
+ s=mimecast20190719; t=1766072373;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CGWJLaRvWq6Mg8HQOe/YpJmUw0spu3OQSWNTUePXraw=;
- b=Ko+54MfHrZYHTQvkfFj2daW7yOt9tu8i1VMPuS/NRAnImGRRLEu4Pkury2f72Wwe4+lxdz
- 3ssoQzU98a/Qlz8/lOoYsGRfGPGTs8Hn7+ft7FNLvMWVP5wz0x70Cy3+aq2edoJPWsXS02
- vfE475DQbfl99ceZ4HG0X0ZJMHy82SU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=I/OeVd6fdUWqnCYvBeyMfaKW5ukTSQw1GKS8WSZIE74=;
+ b=S9efwa7h/9Mb4pqiNZHgDiHN/BkCfeTwF9+2Pdq4untoFiZU2oQzhXk8eJEOQQSfpUEeVx
+ CDmu5LDsDFDB782uxrZYYbIRHAUKvtPZAzTAWkRffkIk/QwqkxgMrUxQT6LK+lT3QlxGij
+ uIRIHhmAHJlblyc6bL68qM/kbkmU2pA=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-110-tFhIDZs-NFCbZZlhikSsDw-1; Thu, 18 Dec 2025 10:32:51 -0500
-X-MC-Unique: tFhIDZs-NFCbZZlhikSsDw-1
-X-Mimecast-MFC-AGG-ID: tFhIDZs-NFCbZZlhikSsDw_1766071971
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8888447ffebso19437756d6.1
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 07:32:51 -0800 (PST)
+ us-mta-645-xfo9-Fq2OEW584ObI4bBkg-1; Thu, 18 Dec 2025 10:39:32 -0500
+X-MC-Unique: xfo9-Fq2OEW584ObI4bBkg-1
+X-Mimecast-MFC-AGG-ID: xfo9-Fq2OEW584ObI4bBkg_1766072372
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-88a344b86f7so25013296d6.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 07:39:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766071971; x=1766676771; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766072372; x=1766677172; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CGWJLaRvWq6Mg8HQOe/YpJmUw0spu3OQSWNTUePXraw=;
- b=dS5rIh61U+JoyiDlmU5XOVvDo2TVVQHzC+6GR+L2OfZumWZflbTyMqizErywmKL0pk
- Zy7c/ycqWJFPuxUGjBX+t4DMKo5oJcV7Do0rcRLGUbrBWmnZ7VhSrLn5qVXKyr25L87H
- 7YHMsaiQChKazYn7Po9QrQL6QDG/iQEIHtj2wyyGGdl3doHjk082B2ym62X4PoMMOoS+
- 3BhEAg8TEcns2o+Mzg91F4oMXN/znqodR0vY8SJw2qhu3pxaSiBALohtgnCqtZfSjys+
- WYfwy82tbl7iiRO3ZlZW96DDZECHcQLxbW41IYFC38e2wtIXtm3QyranQn7NMqstVmlo
- BM9Q==
+ bh=I/OeVd6fdUWqnCYvBeyMfaKW5ukTSQw1GKS8WSZIE74=;
+ b=ZaXrq2EMoXwhaaQxj1B4zmDM/6gly+MRsXsp7s3HYf4yZva0BqJ10gp8oGr+xKYYV5
+ HcrQAp9BxcvMRQoaXPG1IJeSx3WQ6AHEttz1gV2tH2UQZARye8STVFBcvc21tLyYVvln
+ k+t0uM0H/59C0FW46mX5kBndD+/B/3WnCfvr8Aa6SDFBZGqBb8QrOKhO6l4AtV9FOAMN
+ PFD2S+HKheU/5FZhsv9gpjuKi0NktwH5cNhmxjdmf7jlTUeXf73Asbd6sFrPWfVI/tgw
+ PbJyN4F5Rf2ZEinzQ/Bgj9WMYryWaOy7KPsdP6LZxzkBxKAhtPtNwMIMOq64Z3riQuv5
+ 52qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766071971; x=1766676771;
+ d=1e100.net; s=20230601; t=1766072372; x=1766677172;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CGWJLaRvWq6Mg8HQOe/YpJmUw0spu3OQSWNTUePXraw=;
- b=e9eYZ5b0PGHsEDxt9JDUFg3BjF1Et/th6Usr8lEuTgqjCVrmM/F/juz0BFBvzBgUW6
- OVsZxYcCUNSOIZBzi2BfkhqSIyRXujR0FS4l93NzlCqWX1yJd2spgga4TXHeXfNOCAE/
- yG3ZqWk6JdKOCNZL6tYdCCuXxeIcuediCY9citxzvTVXbJezmFe0ZY/+fvoPdGuZabWO
- WNkji/MOkZOprSpAOvwiXmB60pepkhTZ2LWFlm6V/yH0+EUU7iqWcDW5AnSqvxNe8BbI
- KOgqWl8B4E9wXYVpQAVHALQjg0MiabVu7WySI2c5JykxieJOiYIZceUanwcrt8rP/J0u
- VFeA==
-X-Gm-Message-State: AOJu0YzCcEVQ3euYyexj5Qq48P12FMrajx6SK4xvQkf8hMKdHrJh3xGP
- eEaO23g28ym13UYcyltWDFqBtFxOYSLWe0o7InNPEQpqs1cxOSoZokqZ5/LpCdJyIEVd1XyUHdc
- rFVMikle+A2Bs82yxqNYYlQVgXxroltCXOAn0/E4h3YyaTOskVAC7e7lS
-X-Gm-Gg: AY/fxX6B9ahjnIWD2F3GJ0eUZN39ilKKrGYy5IkYoRCOd9Nvx3fWS2CD5/avnrVYEnx
- X+l5jv/tDcvJQLLvLhlnlmtImMQR87ls+iOp/3WfXZK0KkA1I19rlVeF5UrHtQY/BvzAzvUPZWf
- OjljQ6gDvVM9IDvE3kyF6AlsMGf5AH71xyuEM0FbG2rq8baPgmGv5HX5By4ljzrmxRyriu3Jw8T
- BZo2MeJ2xafUmZnehcifBYFgz9cB3ZFRTaB+1lZvpv0VLTl/wPDRI1wDKTMUs1gwVg29GDJFUqk
- Acyo+LVwyevBr69mWrWtaTPIzzJ8I1KdOSlE9lB7gwqkC0RF2nBOCz2nFKzEnnY8H/NC4dczx4Q
- DFDQ=
-X-Received: by 2002:a05:6214:5003:b0:880:45ad:3db3 with SMTP id
- 6a1803df08f44-8887e16b3bdmr341785486d6.51.1766071970718; 
- Thu, 18 Dec 2025 07:32:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE597p4z+i+Xj3uQon/KO//kc9qyjgnVRPzlHqa+FUGJqg8eGOrmlT5JckQpMT4P5cR0LzYZg==
-X-Received: by 2002:a05:6214:5003:b0:880:45ad:3db3 with SMTP id
- 6a1803df08f44-8887e16b3bdmr341784586d6.51.1766071969983; 
- Thu, 18 Dec 2025 07:32:49 -0800 (PST)
+ bh=I/OeVd6fdUWqnCYvBeyMfaKW5ukTSQw1GKS8WSZIE74=;
+ b=UOCxa9i7dgSXEPhE9g6be5FXiunUJGaHroYpbf1TnSZbxeKPmuY0jDse3XfA3E2fjG
+ 1Zgds+6ZjbADT4xyKXGixeVnRzHx1HyLXIJ9nqqvEPSafI1J5tK26my0ytT+QjmJvzdX
+ wnDeVNSGlS2Qlj7LfVhb1WDaTawtzsKV1LK3ufcuzQbQ//j6QRVXY8c66X9sFdVdzqzb
+ m5ASRLxeyDduRXIU6WpffTzoETTMbmkcA0V7K1s12zy4vqglIZoEsXtoHA+gfrxtyEQ7
+ IQvE9FqIOdXo2oCbeTglWEZc6jlgopAxeJnaa5UaafefDjY+EurBnrBP52SKQ7/tWu+E
+ 158w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8X8xt0HyGNIExKL9QBY3D9MY7YA5QGX7WKExiSLIOTTs7dvFBiS28/Nw+hVDW+ZbMOJg0ckeCWZ+X@nongnu.org
+X-Gm-Message-State: AOJu0YwjRxFE3MKyR1ltaIuy/bksqyARD9Z1m9xQaSciCRmcJLEi2xJr
+ aUJZHZGCcBKTJ5t0PChdx0KFR555ecsvzSHvjLMOPVE2KjuU4bs3cJJd6E+8RnZZKNB4MdE0zEP
+ tl5Xj/QM+P5pkezJFubPQVEcYJpd8da7UVq+O8EuXBjBFvdpHbRWuSBYH
+X-Gm-Gg: AY/fxX4q5ZSuNQnNrJX0tUUzL0p+9yyKKmGa3IGFhuMN6OSK0AsF8tPxwX1FXGcrLTn
+ gKDjXDZpCsEKk6jtruW5NbAnYoAkMogo/9Cb9l+9+6Sgi/chXGzWQDY432Zff8hoR0mHisOwEED
+ VKq6YiyhPmEsQa+QSPU8GsOQsc62OYeacsz5LUk5tIb3ceDEfArPASNxZHAxYgWJsIzr42AeKEF
+ e7fueFVhACmTtdEGps7FaiyZT10yweA3CXS70PtcJs/SwvJ0L332BbqFwbkhtTKqLFZKOGsFVL7
+ iMWkp+cvgJEyG68pIrqq17e3xROfhrXHRrETJsuj8JanZ4q2p4Y/4FZJ85pWsicADh46Y18UE0O
+ BOu4=
+X-Received: by 2002:a0c:ed42:0:b0:888:8096:a09c with SMTP id
+ 6a1803df08f44-8888096a4f6mr249288636d6.62.1766072371784; 
+ Thu, 18 Dec 2025 07:39:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEeZ8xNWHEcYAb3tLO+EqqaYazPHnNKaclHDNFuMXIqpkG39i81sXL+3EeHGUr5giPxrHUMtQ==
+X-Received: by 2002:a0c:ed42:0:b0:888:8096:a09c with SMTP id
+ 6a1803df08f44-8888096a4f6mr249288086d6.62.1766072371150; 
+ Thu, 18 Dec 2025 07:39:31 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-88c6166ff89sm19611996d6.53.2025.12.18.07.32.48
+ 6a1803df08f44-88c6089aecesm21501466d6.32.2025.12.18.07.39.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Dec 2025 07:32:49 -0800 (PST)
-Date: Thu, 18 Dec 2025 10:32:48 -0500
+ Thu, 18 Dec 2025 07:39:30 -0800 (PST)
+Date: Thu, 18 Dec 2025 10:39:29 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Chuang Xu <xuchuangxclwt@bytedance.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, mst@redhat.com,
- sgarzare@redhat.com, richard.henderson@linaro.org,
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org,
+ mst@redhat.com, sgarzare@redhat.com, richard.henderson@linaro.org,
  pbonzini@redhat.com, david@kernel.org, philmd@linaro.org
-Subject: Re: [PATCH v3 1/1] migration: merge fragmented clear_dirty ioctls
-Message-ID: <aUQeoNveybyICXjD@x1.local>
-References: <20251216080001.64579-1-xuchuangxclwt@bytedance.com>
- <877bum36ed.fsf@suse.de> <aUGIPj1JNpd8HZ-V@x1.local>
- <29bc82b4-99c3-4275-b4a8-cfc400f0e44d@bytedance.com>
- <aUKuWISfpQeld_AF@x1.local>
- <65dc5a3d-fe3f-48d9-b7e8-c04346308fa8@bytedance.com>
- <aULFP1kbeT2yceiV@x1.local>
- <82ca276d-831d-4e19-96e2-d88a7f94a430@bytedance.com>
+Subject: Re: [PATCH v4 1/1] migration: merge fragmented clear_dirty ioctls
+Message-ID: <aUQgMf4kMvdWdc5M@x1.local>
+References: <20251218114220.83354-1-xuchuangxclwt@bytedance.com>
+ <878qf00z10.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <82ca276d-831d-4e19-96e2-d88a7f94a430@bytedance.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <878qf00z10.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,93 +120,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 18, 2025 at 05:20:19PM +0800, Chuang Xu wrote:
-> On 17/12/2025 22:59, Peter Xu wrote:
-> > Right, it will, because any time used for sync has the vCPUs running, so
-> > that will contributes to the total dirtied pages, hence partly increase D,
-> > as you pointed out.
+On Thu, Dec 18, 2025 at 09:12:27AM -0300, Fabiano Rosas wrote:
+> "Chuang Xu" <xuchuangxclwt@bytedance.com> writes:
+> 
+> > In our long-term experience in Bytedance, we've found that under
+> > the same load, live migration of larger VMs with more devices is
+> > often more difficult to converge (requiring a larger downtime limit).
 > >
-> > But my point is, if you _really_ have R=B all right, you should e.g. on a
-> > 10Gbps NIC seeing R~=10Gbps.  If R is not wire speed, it means the R is not
-> > really correctly measured..
-> 
-> In my experience, the bandwidth of live migration usually doesn't reach
-> the nic's bandwidth limit (my test environment's nic bandwidth limit is 200Gbps).
-> This could be due to various reasons: for example, the live migration main thread's
-> ability to search for dirty pages may have reached a bottleneck;
-> the nic's interrupt binding range might limit the softirq's processing capacity;
-> there might be too few multifd threads; or there might be overhead in synchronizing
-> between the live migration main thread and the multifd thread.
-
-Exactly, especially when you have 200Gbps NICs.
-
-I hope I have some of those for testing too!  I don't, so I can't provide
-really useful input..  My vague memory (I got some chance using a 100Gbps
-NIC, if I recall correctly) is that main thread will bottleneck already
-there, where I should have (maybe?) 8 multifd threads.
-
-I just never knew whether we need to scale it out yet so far, normally
-100G/200G setup only happens with direct attached, not a major use case for
-cluster setup?  Or maybe I am outdated?
-
-If that'll be a major use case at some point, and if main thread is the
-bottleneck distributing things, then we need to scale it out.  I think it's
-doable.
-
-> 
+> > Through some testing and calculations, we conclude that bitmap sync time
+> > affects the calculation of live migration bandwidth.
 > >
-> > I think it's likely impossible to measure the correct R so that it'll equal
-> > to B, however IMHO we can still think about something that makes the R
-> > getting much closer to B, then when normally y is a constant (default
-> > 300ms, for example) it'll start to converge where it used to not be able to.
-> 
-> Yes, there are always various factors that can cause measurement errors.
-> We can only try to make the calculated value as close as possible to the actual value.
-> 
-> > E.g. QEMU can currently report R as low as 10Mbps even if on 10Gbps, IMHO
-> > it'll be much better and start solving a lot of such problems if it can
-> > start to report at least a few Gbps based on all kinds of methods
-> > (e.g. excluding sync, as you experimented), then even if it's not reporting
-> > 10Gbps it'll help.
+> > When the addresses processed are not aligned, a large number of
+> > clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
+> > 2048 clear_dirty ioctls from two different memory_listener),
+> > which increases the time required for bitmap_sync and makes it
+> > more difficult for dirty pages to converge.
 > >
-> After I applied these optimizations, typically the bandwidth statistics
-> from QEMU and the real-time nic bandwidth monitored by atop are close.
+> > For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and
+> > 16 vhost-user-blk(4 queue per blk), the sync time is as high as *73ms*
+> > (tested with 10GBps dirty rate, the sync time increases as the dirty
+> > page rate increases), Here are each part of the sync time:
+> >
+> > - sync from kvm to ram_list: 2.5ms
+> > - vhost_log_sync:3ms
+> > - sync aligned memory from ram_list to RAMBlock: 5ms
+> > - sync misaligned memory from ram_list to RAMBlock: 61ms
+> >
+> > Attempt to merge those fragmented clear_dirty ioctls, then syncing
+> > misaligned memory from ram_list to RAMBlock takes only about 1ms,
+> > and the total sync time is only *12ms*.
+> >
+> > Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
 > 
-> Those extremely low bandwidth(but consistent with atop monitoring) is usually
-> caused by zero pages or dirty pages with extremely high compression rates.
-> In these cases, QEMU uses very little nic bandwidth to transmit a large number
-> of dirty pages, but the bandwidth is only calculated based on the actual
-> amount of data transmitted.
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
-Yes.  That's a major issue in QEMU, zero page / compressed page / ... not
-only affects how QEMU "measures" the mbps, but also affects how QEMU
-decides when to converge: here I'm not talking about the bw difference
-causing "bw * downtime_limit" [A] too small.  I'm talking about the other
-side of equation where we used [A] to compare with "remain_dirty_pages *
-psize" [B].  In reality, [B] isn't accurate either when zero page /
-compressed page / ... is used..
+Side note: I plan to fold a var, hence a fixup to be squashed:
 
-Maybe.. the switchover decision shouldn't be MBps as unit, but "number of
-pages".  It'll remove most of those effects at least, but that needs some
-more considerations..
+diff --git a/migration/ram.c b/migration/ram.c
+index 27ffa13763..c403fd73a6 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -992,10 +992,8 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+             memory_region_clear_dirty_bitmap(rb->mr, start, length);
+         }
+     } else {
+-        ram_addr_t offset = rb->offset;
+-
+         num_dirty = physical_memory_test_and_clear_dirty(
+-                        start + offset,
++                        start + rb->offset,
+                         length,
+                         DIRTY_MEMORY_MIGRATION,
+                         dest);
 
-> 
-> If we want to use the actual number of dirty pages transmitted to calculate
-> bandwidth, we face another risk: if the dirty pages transmitted before the
-> downtime have a high compression ratio, and the dirty pages to be transmitted
-> after the downtime have a low compression ratio, then the downtime will far
-> exceed expectations.
-
-... like what you mentioned here will also be an issue if we switch to use
-n_pages to do the math. :)
-
-> 
-> This may have strayed a bit, but just providing some potentially useful information
-> from my perspective.
-
-Not really; patch alone is good, I appreciate the discussions.
-
-Thanks,
+Queued, thanks!
 
 -- 
 Peter Xu
