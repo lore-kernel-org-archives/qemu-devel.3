@@ -4,69 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E4AD6D234
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 15:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5BED6D237
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 15:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWFsR-0006OJ-5P; Thu, 18 Dec 2025 10:25:15 -0500
+	id 1vWG03-0007vT-AU; Thu, 18 Dec 2025 10:33:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWFsP-0006O6-IL
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:25:13 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWFzy-0007v1-Np
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:33:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWFsN-0001Hi-KB
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:25:13 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWFzs-0002bb-UZ
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 10:33:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766071509;
+ s=mimecast20190719; t=1766071973;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CkZdLhvGKYJIQ9mQ52zBj/lUTmPMNVXFh8itxvsx6h8=;
- b=cpBPdTOqILpLA5+yQoVgUEsN2J2KfaTbU2pH2rQKDrbYOzX5Hfc1R/SLq1z2UD2BPvLr8X
- 5R4al+NAasXz5xr9MJQAAHwAUrE/6QY4hOTMFyC9v1arNSLvfhs8hPXB2mPjDql5LNBRPf
- qaPTilbrFcHdFiBoQnw6SNhwqYEajb8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-Sz_ah9tGN8yyR_uuzEnC8Q-1; Thu,
- 18 Dec 2025 10:25:07 -0500
-X-MC-Unique: Sz_ah9tGN8yyR_uuzEnC8Q-1
-X-Mimecast-MFC-AGG-ID: Sz_ah9tGN8yyR_uuzEnC8Q_1766071505
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F815180062B
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 15:25:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE603180049F
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 15:25:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1095321E6A27; Thu, 18 Dec 2025 16:25:02 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: Report on MAINTAINERS coverage
-In-Reply-To: <288b1dae-68c5-4b48-ab08-62a7b08245ea@redhat.com> (Thomas Huth's
- message of "Thu, 18 Dec 2025 15:06:00 +0100")
-References: <87h5toc61n.fsf@pond.sub.org> <aUP5znRDyuBlpGvW@redhat.com>
- <871pkrdi6w.fsf@pond.sub.org> <aUQGWes2pCSWTDfe@redhat.com>
- <288b1dae-68c5-4b48-ab08-62a7b08245ea@redhat.com>
-Date: Thu, 18 Dec 2025 16:25:02 +0100
-Message-ID: <87sed7ak35.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=CGWJLaRvWq6Mg8HQOe/YpJmUw0spu3OQSWNTUePXraw=;
+ b=Ko+54MfHrZYHTQvkfFj2daW7yOt9tu8i1VMPuS/NRAnImGRRLEu4Pkury2f72Wwe4+lxdz
+ 3ssoQzU98a/Qlz8/lOoYsGRfGPGTs8Hn7+ft7FNLvMWVP5wz0x70Cy3+aq2edoJPWsXS02
+ vfE475DQbfl99ceZ4HG0X0ZJMHy82SU=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-110-tFhIDZs-NFCbZZlhikSsDw-1; Thu, 18 Dec 2025 10:32:51 -0500
+X-MC-Unique: tFhIDZs-NFCbZZlhikSsDw-1
+X-Mimecast-MFC-AGG-ID: tFhIDZs-NFCbZZlhikSsDw_1766071971
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8888447ffebso19437756d6.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 07:32:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1766071971; x=1766676771; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=CGWJLaRvWq6Mg8HQOe/YpJmUw0spu3OQSWNTUePXraw=;
+ b=dS5rIh61U+JoyiDlmU5XOVvDo2TVVQHzC+6GR+L2OfZumWZflbTyMqizErywmKL0pk
+ Zy7c/ycqWJFPuxUGjBX+t4DMKo5oJcV7Do0rcRLGUbrBWmnZ7VhSrLn5qVXKyr25L87H
+ 7YHMsaiQChKazYn7Po9QrQL6QDG/iQEIHtj2wyyGGdl3doHjk082B2ym62X4PoMMOoS+
+ 3BhEAg8TEcns2o+Mzg91F4oMXN/znqodR0vY8SJw2qhu3pxaSiBALohtgnCqtZfSjys+
+ WYfwy82tbl7iiRO3ZlZW96DDZECHcQLxbW41IYFC38e2wtIXtm3QyranQn7NMqstVmlo
+ BM9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766071971; x=1766676771;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CGWJLaRvWq6Mg8HQOe/YpJmUw0spu3OQSWNTUePXraw=;
+ b=e9eYZ5b0PGHsEDxt9JDUFg3BjF1Et/th6Usr8lEuTgqjCVrmM/F/juz0BFBvzBgUW6
+ OVsZxYcCUNSOIZBzi2BfkhqSIyRXujR0FS4l93NzlCqWX1yJd2spgga4TXHeXfNOCAE/
+ yG3ZqWk6JdKOCNZL6tYdCCuXxeIcuediCY9citxzvTVXbJezmFe0ZY/+fvoPdGuZabWO
+ WNkji/MOkZOprSpAOvwiXmB60pepkhTZ2LWFlm6V/yH0+EUU7iqWcDW5AnSqvxNe8BbI
+ KOgqWl8B4E9wXYVpQAVHALQjg0MiabVu7WySI2c5JykxieJOiYIZceUanwcrt8rP/J0u
+ VFeA==
+X-Gm-Message-State: AOJu0YzCcEVQ3euYyexj5Qq48P12FMrajx6SK4xvQkf8hMKdHrJh3xGP
+ eEaO23g28ym13UYcyltWDFqBtFxOYSLWe0o7InNPEQpqs1cxOSoZokqZ5/LpCdJyIEVd1XyUHdc
+ rFVMikle+A2Bs82yxqNYYlQVgXxroltCXOAn0/E4h3YyaTOskVAC7e7lS
+X-Gm-Gg: AY/fxX6B9ahjnIWD2F3GJ0eUZN39ilKKrGYy5IkYoRCOd9Nvx3fWS2CD5/avnrVYEnx
+ X+l5jv/tDcvJQLLvLhlnlmtImMQR87ls+iOp/3WfXZK0KkA1I19rlVeF5UrHtQY/BvzAzvUPZWf
+ OjljQ6gDvVM9IDvE3kyF6AlsMGf5AH71xyuEM0FbG2rq8baPgmGv5HX5By4ljzrmxRyriu3Jw8T
+ BZo2MeJ2xafUmZnehcifBYFgz9cB3ZFRTaB+1lZvpv0VLTl/wPDRI1wDKTMUs1gwVg29GDJFUqk
+ Acyo+LVwyevBr69mWrWtaTPIzzJ8I1KdOSlE9lB7gwqkC0RF2nBOCz2nFKzEnnY8H/NC4dczx4Q
+ DFDQ=
+X-Received: by 2002:a05:6214:5003:b0:880:45ad:3db3 with SMTP id
+ 6a1803df08f44-8887e16b3bdmr341785486d6.51.1766071970718; 
+ Thu, 18 Dec 2025 07:32:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE597p4z+i+Xj3uQon/KO//kc9qyjgnVRPzlHqa+FUGJqg8eGOrmlT5JckQpMT4P5cR0LzYZg==
+X-Received: by 2002:a05:6214:5003:b0:880:45ad:3db3 with SMTP id
+ 6a1803df08f44-8887e16b3bdmr341784586d6.51.1766071969983; 
+ Thu, 18 Dec 2025 07:32:49 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88c6166ff89sm19611996d6.53.2025.12.18.07.32.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Dec 2025 07:32:49 -0800 (PST)
+Date: Thu, 18 Dec 2025 10:32:48 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Chuang Xu <xuchuangxclwt@bytedance.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, mst@redhat.com,
+ sgarzare@redhat.com, richard.henderson@linaro.org,
+ pbonzini@redhat.com, david@kernel.org, philmd@linaro.org
+Subject: Re: [PATCH v3 1/1] migration: merge fragmented clear_dirty ioctls
+Message-ID: <aUQeoNveybyICXjD@x1.local>
+References: <20251216080001.64579-1-xuchuangxclwt@bytedance.com>
+ <877bum36ed.fsf@suse.de> <aUGIPj1JNpd8HZ-V@x1.local>
+ <29bc82b4-99c3-4275-b4a8-cfc400f0e44d@bytedance.com>
+ <aUKuWISfpQeld_AF@x1.local>
+ <65dc5a3d-fe3f-48d9-b7e8-c04346308fa8@bytedance.com>
+ <aULFP1kbeT2yceiV@x1.local>
+ <82ca276d-831d-4e19-96e2-d88a7f94a430@bytedance.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+In-Reply-To: <82ca276d-831d-4e19-96e2-d88a7f94a430@bytedance.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,175 +123,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On Thu, Dec 18, 2025 at 05:20:19PM +0800, Chuang Xu wrote:
+> On 17/12/2025 22:59, Peter Xu wrote:
+> > Right, it will, because any time used for sync has the vCPUs running, so
+> > that will contributes to the total dirtied pages, hence partly increase D,
+> > as you pointed out.
+> >
+> > But my point is, if you _really_ have R=B all right, you should e.g. on a
+> > 10Gbps NIC seeing R~=10Gbps.  If R is not wire speed, it means the R is not
+> > really correctly measured..
+> 
+> In my experience, the bandwidth of live migration usually doesn't reach
+> the nic's bandwidth limit (my test environment's nic bandwidth limit is 200Gbps).
+> This could be due to various reasons: for example, the live migration main thread's
+> ability to search for dirty pages may have reached a bottleneck;
+> the nic's interrupt binding range might limit the softirq's processing capacity;
+> there might be too few multifd threads; or there might be overhead in synchronizing
+> between the live migration main thread and the multifd thread.
 
-> On 18/12/2025 14.49, Daniel P. Berrang=C3=A9 wrote:
->> On Thu, Dec 18, 2025 at 02:37:43PM +0100, Markus Armbruster wrote:
->>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>>
->>>> On Thu, Dec 18, 2025 at 01:45:24PM +0100, Markus Armbruster wrote:
->>>>> Which unmaintained files are we still changing?  Unmaintained files
->>>>> sorted by number of commits in the past year (since v9.2.0):
->>>>>
->>>>>      $ for i in `cat unmaintained-files`; do echo -n "$i "; git-rev-l=
-ist v9.2.0.. $i | wc -l; done | awk '{ printf "%7d %s\n", $2, $1 }' | sort =
--rn
->>>>>
->>>>>      107 tests/functional/meson.build
->>>>
->>>> Opps, that's a mistake. It should of course be under the
->>>> general maint heading "Functional testing framework"
->>>
->>> Thanks!  I can patch that.
->>>
->>> What about the other uncovered files in tests/functional/?
->>=20
->>> tests/functional/aarch64/meson.build
->>=20
->> [snip many more]
->>=20
->> I'd wildcard   tests/functional/*/meson.build under the
->> general maint.
->
-> Either that, or make sure the the architecture maintainers own the whole=
-=20
-> tests/functional/<arch> folders.
+Exactly, especially when you have 200Gbps NICs.
 
-The former is easy.  Regarding the latter...
+I hope I have some of those for testing too!  I don't, so I can't provide
+really useful input..  My vague memory (I got some chance using a 100Gbps
+NIC, if I recall correctly) is that main thread will bottleneck already
+there, where I should have (maybe?) 8 multifd threads.
 
-The MAINTAINERS section we use to cover an architecture is often less
-than obvious.
+I just never knew whether we need to scale it out yet so far, normally
+100G/200G setup only happens with direct attached, not a major use case for
+cluster setup?  Or maybe I am outdated?
 
-meson.build under tests/functional/ covered so far:
+If that'll be a major use case at some point, and if main thread is the
+bottleneck distributing things, then we need to scale it out.  I think it's
+doable.
 
-    tests/functional/alpha/meson.build      Alpha TCG CPUs
-    tests/functional/avr/meson.build        AVR TCG CPUs
-    tests/functional/hppa/meson.build       HP B160L, HP C3700
-    tests/functional/i386/meson.build       X86 general architecture support
-    tests/functional/riscv32/meson.build    RISC-V TCG CPUs
-    tests/functional/riscv64/meson.build    RISC-V TCG CPUs
-    tests/functional/s390x/meson.build      S390 Virtio-ccw
-    tests/functional/x86_64/meson.build     X86 general architecture support
+> 
+> >
+> > I think it's likely impossible to measure the correct R so that it'll equal
+> > to B, however IMHO we can still think about something that makes the R
+> > getting much closer to B, then when normally y is a constant (default
+> > 300ms, for example) it'll start to converge where it used to not be able to.
+> 
+> Yes, there are always various factors that can cause measurement errors.
+> We can only try to make the calculated value as close as possible to the actual value.
+> 
+> > E.g. QEMU can currently report R as low as 10Mbps even if on 10Gbps, IMHO
+> > it'll be much better and start solving a lot of such problems if it can
+> > start to report at least a few Gbps based on all kinds of methods
+> > (e.g. excluding sync, as you experimented), then even if it's not reporting
+> > 10Gbps it'll help.
+> >
+> After I applied these optimizations, typically the bandwidth statistics
+> from QEMU and the real-time nic bandwidth monitored by atop are close.
+> 
+> Those extremely low bandwidth(but consistent with atop monitoring) is usually
+> caused by zero pages or dirty pages with extremely high compression rates.
+> In these cases, QEMU uses very little nic bandwidth to transmit a large number
+> of dirty pages, but the bandwidth is only calculated based on the actual
+> amount of data transmitted.
 
-We have "$ARCH general architecture support" (obvious enough), "$ARCH
-TCG CPUs" (meh), and even machine sections that happen to be the only
-one of this architecture in MAINTAINERS (meh^2).
+Yes.  That's a major issue in QEMU, zero page / compressed page / ... not
+only affects how QEMU "measures" the mbps, but also affects how QEMU
+decides when to converge: here I'm not talking about the bw difference
+causing "bw * downtime_limit" [A] too small.  I'm talking about the other
+side of equation where we used [A] to compare with "remain_dirty_pages *
+psize" [B].  In reality, [B] isn't accurate either when zero page /
+compressed page / ... is used..
 
-Thomas, should tests/functional/s390x/meson.build move to "S390 general
-architecture support"?
+Maybe.. the switchover decision shouldn't be MBps as unit, but "number of
+pages".  It'll remove most of those effects at least, but that needs some
+more considerations..
 
-Not covered:
+> 
+> If we want to use the actual number of dirty pages transmitted to calculate
+> bandwidth, we face another risk: if the dirty pages transmitted before the
+> downtime have a high compression ratio, and the dirty pages to be transmitted
+> after the downtime have a low compression ratio, then the downtime will far
+> exceed expectations.
 
-    tests/functional/aarch64/meson.build
-    tests/functional/arm/meson.build
+... like what you mentioned here will also be an issue if we switch to use
+n_pages to do the math. :)
 
-        There is no ARM general architecture support section.  Add these
-        to ARM TCG CPUs?
+> 
+> This may have strayed a bit, but just providing some potentially useful information
+> from my perspective.
 
-    tests/functional/generic/meson.build
+Not really; patch alone is good, I appreciate the discussions.
 
-        Functional testing framework?
+Thanks,
 
-    tests/functional/loongarch64/meson.build
-
-        LoongArch TCG CPUs?
-
-    tests/functional/m68k/meson.build
-
-        M68K TCG CPUs?
-
-    tests/functional/meson.build
-
-        Functional testing framework, as discussed above.
-
-    tests/functional/microblaze/meson.build
-    tests/functional/microblazeel/meson.build
-
-        MicroBlaze TCG CPUs?
-
-    tests/functional/mips/meson.build
-    tests/functional/mips64/meson.build
-    tests/functional/mips64el/meson.build
-    tests/functional/mipsel/meson.build
-
-        We have MIPS general architecture support.  I guess we can add
-        them there.
-
-    tests/functional/or1k/meson.build
-
-        OpenRISC TCG CPUs?
-
-    tests/functional/ppc/meson.build
-    tests/functional/ppc64/meson.build
-
-        PowerPC TCG CPUs?
-
-    tests/functional/rx/meson.build
-
-        RENESAS RX CPUs?
-
-    tests/functional/sh4/meson.build
-    tests/functional/sh4eb/meson.build
-
-        SH4 TCG CPUs?
-
-    tests/functional/sparc/meson.build
-    tests/functional/sparc64/meson.build
-
-        SPARC TCG CPUs?
-
-    tests/functional/xtensa/meson.build
-
-        Xtensa TCG CPUs?
-
->>> tests/functional/acpi-bits/bits-config/bits-cfg.txt
->>> tests/functional/acpi-bits/bits-tests/smbios.py2
->>> tests/functional/acpi-bits/bits-tests/smilatency.py2
->>> tests/functional/acpi-bits/bits-tests/testacpi.py2
->>> tests/functional/acpi-bits/bits-tests/testcpuid.py2
->>=20
->> I expected those to already be covered by:
->>=20
->>    ACPI/FUNCTIONAL/BIOSBITS
->>    M: Ani Sinha <anisinha@redhat.com>
->>    M: Michael S. Tsirkin <mst@redhat.com>
->>    S: Supported
->>    F: tests/functional/acpi-bits/*
->>    F: tests/functional/x86_64/test_acpi_bits.py
->>    F: docs/devel/testing/acpi-bits.rst
->>=20
->> but I guess tests/functional/acpi-bits/*  doesn't recurse
->> into subdirs ?
->
-> I think we simply have to drop the "*" at the end here.
-
-Yes, that does the trick.
-
->>> tests/functional/arm/test_max78000fthr.py
->>=20
->> Added by Thomas but not sure what maintainers category it should go
->> under.
->
-> No, I just moved the file around. This belongs to the "max78000fthr" arm=
-=20
-> machine - we need a complete new entry in MAINTAINERS for that one if I g=
-et=20
-> this right.
-
-Which files?  My best guess based on git history:
-
-    docs/system/arm/max78000.rst
-    hw/misc/max78000_aes.c
-    hw/misc/max78000_gcr.c
-    hw/misc/max78000_icc.c
-    hw/misc/max78000_trng.c
-    include/hw/arm/max78000_soc.h
-    include/hw/misc/max78000_aes.h
-    include/hw/misc/max78000_gcr.h
-    include/hw/misc/max78000_icc.h
-    include/hw/misc/max78000_trng.h
-    tests/functional/arm/test_max78000fthr.py
-
-All by Jackson Donaldson <jackson88044@gmail.com>.
+-- 
+Peter Xu
 
 
