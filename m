@@ -4,97 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CB9D6ACE6
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 11:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 513DDD6ACE9
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 11:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWC7C-0001nQ-U4; Thu, 18 Dec 2025 06:24:17 -0500
+	id 1vWCPP-0007Y2-1d; Thu, 18 Dec 2025 06:43:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWC6y-0001hr-Pj
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 06:24:07 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1vWCPJ-0007XX-Kj
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 06:42:57 -0500
+Received: from sg-1-100.ptr.blmpb.com ([118.26.132.100])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWC6w-0002xn-3W
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 06:24:00 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47a95efd2ceso4370035e9.2
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 03:23:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766057036; x=1766661836; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=V1bLvIZQXiXM9LxnnKcWu/Yj9UvAis949LkpGaZbtPI=;
- b=kVsIMiSDL6m4VmpJQzw1RcDQ6rWKtYIN+en2ErakL3sjHsAlVHmiOSIu6Vwe6d6/9m
- E/HtzDgdhgqS+1fHzwMu+wn1o9YFVVgs+chRKTwKR7vwZJovO6akSP+reweMrkRboOXj
- LwW/7V7rhbCFCrQIQNmkO2ogSdDXGefeRveZoaRGFfboN9MPrrEW1DF3LxrTN2i/CnrF
- rmdMqC/6zkFka/XUBqMui2/a0Bu4m/NAVKkgECdi8jCKGLU6aZXPXHludSmlTjWpwxIo
- g5K4VG4qQWlJ9XmOfsmQthLfOFgoPjAyYyHG/b6pVhLgKlPLE38hjlxgX+k+Eg+whDXg
- PICA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766057036; x=1766661836;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=V1bLvIZQXiXM9LxnnKcWu/Yj9UvAis949LkpGaZbtPI=;
- b=gQaaoX7jFDfHwE1VqVvD9DnUXTQ7hiyg0tLpmPv+D+JI/qJ7QbVmnn8fwxX8hiLDhl
- /1dXxOwOG+/180YK4W+sjO3NjitccXUntYyHpsbVxgzxxVdPH2d8IEwI1IG2OC+TUQce
- lo7WCWw4AOfaX8Aug56YomxnM4HjI/gB864yuQfbifO7KVblN1ocIvvMWjo3QcV8uvSH
- MANrVX5liGtKxhYXb01sX4R2jdPFMCgt1qfajBlVmwKsuzv373AJVfTKwCPrtU7I2gka
- YZbd6n291hBOHbxYDBYeJoj+JUDTJ92oRXtR0xHBAnevfBciWx0a+TgfZapH9y7KmjFy
- FSig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtk9n7ig/IqemyCXkgDOw5R0GvTAhBd9O74EhenoFfffoS9FUcq1lPnkQFMR/Xfpv+FhC7w7Mu48Tx@nongnu.org
-X-Gm-Message-State: AOJu0YztcHfSItryfvfSPG1GgksEbPTH1M4P5OcazB2uAdYZjOvBIdGj
- g6ibiXX2jppfAeOCr5TF3H6yjcq86JS9TG+dgNIIp3PK8iKVnP9egFBtBd7z53rxObs=
-X-Gm-Gg: AY/fxX7rdp4KIfMo7THPuNotjCQ8nx/pSbvvs7SwQRk4XUeKYfAntdunK3Ygn27tZqC
- TYHbk+tU/XpC+WkysAiTvynYu5nkYKwKm6CXw6bUJykORRjUD1/4p+p5OAUh+6V3cJVdrY5RQ99
- 6+LqGM0X2VXWkRMHwlVltKIPE+2+dG7aPPvROftVlpeFwSvDh0Z8ZP8nIO8kXcHBnXtzmLbq0yy
- cDdKg+yQQrQVwnNmHeUu/cf5obQ3S3Nhy2VQo0v3XbaYmeY3SiKYZW4xbPZyZNZRdHY3+rcdCmB
- 1ZyC2aC8FT6/iQ7fJq0YuqvS3Ya8OtxKL0RTDHtDxftOu4KBbhCJWxCw9FwFKq5depTOj0Lc1i9
- DqKyAdsSe+tDtkmryXsFMK8y33wVxPRVQl9eEbrQDT/6HWg+bAhGLJN/yhYPmWhfS03jzOaF+gc
- Q+Ac6j0xO3EUzMoGVoKFQVl1Qf4V4wprmXRK8Kp49CfLbKUSdmPBcQiA==
-X-Google-Smtp-Source: AGHT+IEDUDVnoD9to2qjksSK332rjBbkyQbaYf+yX5Q01DIb86Xvl6o03MtSu/ZwN8glXn4AOE2D+A==
-X-Received: by 2002:a05:6000:2087:b0:430:fbad:687a with SMTP id
- ffacd0b85a97d-430fbad6b51mr16705673f8f.13.1766057036527; 
- Thu, 18 Dec 2025 03:23:56 -0800 (PST)
-Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324498fbdfsm4439024f8f.26.2025.12.18.03.23.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Dec 2025 03:23:55 -0800 (PST)
-Message-ID: <6e850467-490e-4a32-b60f-2c91efb3efa1@linaro.org>
-Date: Thu, 18 Dec 2025 12:23:54 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/devel: Remove stale comments related to iommufd
- dirty tracking
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>
-References: <20251218065042.639777-1-zhenzhong.duan@intel.com>
- <80397b14-160b-4a87-a0cf-d828f2974c85@linaro.org>
- <IA3PR11MB9136FEFC7DD10A5AECEEF40292A8A@IA3PR11MB9136.namprd11.prod.outlook.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <IA3PR11MB9136FEFC7DD10A5AECEEF40292A8A@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1vWCPE-0004lZ-HT
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 06:42:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1766058158; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=J5mKkUBtv8a8/xY6KKJfWmeSnigv8jFWve4fS68Uk3A=;
+ b=f7DSPKCCWm+IBdU05QBzSflEcmvril2YmAaZeoO4VYglzFaDTjSWuFBfXsVVKncU9i4Smn
+ CRHP17OUOYbybnzSB9cHFwtusX6KHiomUjc1gJ5eV+JAQ+NWHybn6P/mkdYsnQnyVP7+1j
+ gmZ2wgAGeh4AMm/t+kwY/AjEECZe/wGnPS8Ia7fdB76npl9zE9Zu7hdAHP6Ko1nd74BRuu
+ Xcb8WclxypHyAzbdZpONo5AhCWolNCwfrybPiLFHAnjpXMsoXcLquxqh2QPmX9bKUGmdgT
+ HPK6konb1t/DpfLkIwbvZLMc4mZlmQIOnr9z3Tloy5pQaz67fLiJiFh3d+a0LQ==
+X-Original-From: Chuang Xu <xuchuangxclwt@bytedance.com>
+Subject: [PATCH v4 1/1] migration: merge fragmented clear_dirty ioctls
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+Cc: <mst@redhat.com>, <sgarzare@redhat.com>, <richard.henderson@linaro.org>, 
+ <pbonzini@redhat.com>, <peterx@redhat.com>, <david@kernel.org>, 
+ <philmd@linaro.org>, <farosas@suse.de>, 
+ "Chuang Xu" <xuchuangxclwt@bytedance.com>
+Message-Id: <20251218114220.83354-1-xuchuangxclwt@bytedance.com>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+To: <qemu-devel@nongnu.org>
+Date: Thu, 18 Dec 2025 19:42:20 +0800
+X-Lms-Return-Path: <lba+26943e8ad+0dce90+nongnu.org+xuchuangxclwt@bytedance.com>
+From: "Chuang Xu" <xuchuangxclwt@bytedance.com>
+Received-SPF: pass client-ip=118.26.132.100;
+ envelope-from=xuchuangxclwt@bytedance.com; helo=sg-1-100.ptr.blmpb.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,26 +70,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/25 12:07, Duan, Zhenzhong wrote:
-> 
-> 
->> -----Original Message-----
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: Re: [PATCH] docs/devel: Remove stale comments related to
->> iommufd dirty tracking
->>
->> On 18/12/25 07:50, Zhenzhong Duan wrote:
->>> IOMMUFD dirty tracking support had be merged
->>
->> [in merge commit dd4bc5f1cfe?]
-> 
-> Yes, or you want me to add [in merge commit dd4bc5f1cfe] to commit log?
+In our long-term experience in Bytedance, we've found that under
+the same load, live migration of larger VMs with more devices is
+often more difficult to converge (requiring a larger downtime limit).
 
-Maybe Cédric can directly add that when taking the patch ;)
+Through some testing and calculations, we conclude that bitmap sync time
+affects the calculation of live migration bandwidth.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+When the addresses processed are not aligned, a large number of
+clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
+2048 clear_dirty ioctls from two different memory_listener),
+which increases the time required for bitmap_sync and makes it
+more difficult for dirty pages to converge.
 
-Thanks,
+For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and
+16 vhost-user-blk(4 queue per blk), the sync time is as high as *73ms*
+(tested with 10GBps dirty rate, the sync time increases as the dirty
+page rate increases), Here are each part of the sync time:
 
-Phil.
+- sync from kvm to ram_list: 2.5ms
+- vhost_log_sync:3ms
+- sync aligned memory from ram_list to RAMBlock: 5ms
+- sync misaligned memory from ram_list to RAMBlock: 61ms
+
+Attempt to merge those fragmented clear_dirty ioctls, then syncing
+misaligned memory from ram_list to RAMBlock takes only about 1ms,
+and the total sync time is only *12ms*.
+
+Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+---
+ accel/tcg/cputlb.c       |  5 +++--
+ include/system/physmem.h |  7 +++---
+ migration/ram.c          | 17 +++++---------
+ system/memory.c          |  2 +-
+ system/physmem.c         | 48 +++++++++++++++++++++++++++-------------
+ 5 files changed, 46 insertions(+), 33 deletions(-)
+
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index fd1606c856..c8827c8b0d 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -857,8 +857,9 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+ void tlb_protect_code(ram_addr_t ram_addr)
+ {
+     physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
+-                                             TARGET_PAGE_SIZE,
+-                                             DIRTY_MEMORY_CODE);
++                                         TARGET_PAGE_SIZE,
++                                         DIRTY_MEMORY_CODE,
++                                         NULL);
+ }
+ 
+ /* update the TLB so that writes in physical page 'phys_addr' are no longer
+diff --git a/include/system/physmem.h b/include/system/physmem.h
+index 879f6eae38..a59724ef10 100644
+--- a/include/system/physmem.h
++++ b/include/system/physmem.h
+@@ -39,9 +39,10 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+ 
+ void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
+ 
+-bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+-                                          ram_addr_t length,
+-                                          unsigned client);
++uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
++                                              ram_addr_t length,
++                                              unsigned client,
++                                              unsigned long *bmap);
+ 
+ DirtyBitmapSnapshot *
+ physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
+diff --git a/migration/ram.c b/migration/ram.c
+index 29f016cb25..a03c9874a2 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -942,7 +942,6 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+                                                   ram_addr_t start,
+                                                   ram_addr_t length)
+ {
+-    ram_addr_t addr;
+     unsigned long word = BIT_WORD((start + rb->offset) >> TARGET_PAGE_BITS);
+     uint64_t num_dirty = 0;
+     unsigned long *dest = rb->bmap;
+@@ -996,17 +995,11 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+     } else {
+         ram_addr_t offset = rb->offset;
+ 
+-        for (addr = 0; addr < length; addr += TARGET_PAGE_SIZE) {
+-            if (physical_memory_test_and_clear_dirty(
+-                        start + addr + offset,
+-                        TARGET_PAGE_SIZE,
+-                        DIRTY_MEMORY_MIGRATION)) {
+-                long k = (start + addr) >> TARGET_PAGE_BITS;
+-                if (!test_and_set_bit(k, dest)) {
+-                    num_dirty++;
+-                }
+-            }
+-        }
++        num_dirty = physical_memory_test_and_clear_dirty(
++                        start + offset,
++                        length,
++                        DIRTY_MEMORY_MIGRATION,
++                        dest);
+     }
+ 
+     return num_dirty;
+diff --git a/system/memory.c b/system/memory.c
+index 8b84661ae3..666364392d 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2424,7 +2424,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
+ {
+     assert(mr->ram_block);
+     physical_memory_test_and_clear_dirty(
+-        memory_region_get_ram_addr(mr) + addr, size, client);
++        memory_region_get_ram_addr(mr) + addr, size, client, NULL);
+ }
+ 
+ int memory_region_get_fd(MemoryRegion *mr)
+diff --git a/system/physmem.c b/system/physmem.c
+index c9869e4049..26bf30af17 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1089,19 +1089,30 @@ void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
+     }
+ }
+ 
+-/* Note: start and end must be within the same ram block.  */
+-bool physical_memory_test_and_clear_dirty(ram_addr_t start,
++/*
++ * Note: start and end must be within the same ram block.
++ *
++ * @bmap usage:
++ * - When @bmap is provided, set bits for dirty pages, but
++ *   only count those pages if the bit wasn't already set in @bmap.
++ * - When @bmap is NULL, count all dirty pages in the range.
++ *
++ * @return:
++ * - Number of dirty guest pages found within [start, start + length).
++ */
++uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
+                                               ram_addr_t length,
+-                                              unsigned client)
++                                              unsigned client,
++                                              unsigned long *bmap)
+ {
+     DirtyMemoryBlocks *blocks;
+     unsigned long end, page, start_page;
+-    bool dirty = false;
++    uint64_t num_dirty = 0;
+     RAMBlock *ramblock;
+     uint64_t mr_offset, mr_size;
+ 
+     if (length == 0) {
+-        return false;
++        return 0;
+     }
+ 
+     end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
+@@ -1118,12 +1129,19 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+         while (page < end) {
+             unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
+             unsigned long offset = page % DIRTY_MEMORY_BLOCK_SIZE;
+-            unsigned long num = MIN(end - page,
+-                                    DIRTY_MEMORY_BLOCK_SIZE - offset);
+ 
+-            dirty |= bitmap_test_and_clear_atomic(blocks->blocks[idx],
+-                                                  offset, num);
+-            page += num;
++            if (bitmap_test_and_clear_atomic(blocks->blocks[idx], offset, 1)) {
++                if (bmap) {
++                    unsigned long k = page - (ramblock->offset >> TARGET_PAGE_BITS);
++                    if (!test_and_set_bit(k, bmap)) {
++                        num_dirty++;
++                    }
++                } else {
++                    num_dirty++;
++                }
++            }
++
++            page++;
+         }
+ 
+         mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
+@@ -1131,18 +1149,18 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+         memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
+     }
+ 
+-    if (dirty) {
++    if (num_dirty) {
+         physical_memory_dirty_bits_cleared(start, length);
+     }
+ 
+-    return dirty;
++    return num_dirty;
+ }
+ 
+ static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
+ {
+-    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
+-    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
+-    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
++    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION, NULL);
++    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA, NULL);
++    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE, NULL);
+ }
+ 
+ DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
+-- 
+2.39.3 (Apple Git-146)
 
