@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1063FD6E2D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 18:20:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D4F2D6E2CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 18:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWIb1-0006YA-Ig; Thu, 18 Dec 2025 13:19:28 -0500
+	id 1vWIb0-0006WL-Fb; Thu, 18 Dec 2025 13:19:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWIaW-0006PD-72
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 13:19:03 -0500
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWIaP-0006P1-J6
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 13:19:01 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWIaQ-00031P-S1
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 13:18:55 -0500
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-477b5e0323bso11461425e9.0
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 10:18:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWIaJ-00030E-OQ
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 13:18:46 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47aa03d3326so6014575e9.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 10:18:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766081924; x=1766686724; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766081916; x=1766686716; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Bvj1AJund8BJzCKIAsZJhSHjk28uN32H7UcwVRZ2KTY=;
- b=v33p0i4VKUWoTrO5d25jBdmpuJ/6wkvkpqkZpouGO52lZpi6RRDN3mPlsMxjhehcu5
- JXv+3BTR6qsS3Q+YXKOGNtY85jciKbHGbdYJEfTg8GqiJl9aGBpfc3wKj5GwlbKOnsvw
- FoDUOE/N2gD+lkMsquR279yJiloaNjZ0eOio5poMBokTxvtzUQCU9/ZW2AwZD2sFh+SX
- MTmaaRLVZCi3zHg2dE6ug+5TSEFJX71Nfb6H2cUDqjbkm9ptrv62S9oamIo+p/49OpV2
- vdhSDaKE52miIfGdOI5HhaUU/xYTBIBLpSkc+rfIyKf9wlF3inXo1kRB5Aze5DXGc10/
- HDuA==
+ bh=ek0ZqoV7lcVrfafX0nJ7A9JZOJmPGubRBeO+HIeHC5Q=;
+ b=ptCwowZOyQLojZP2vZ8h6hKy4P6jhHsp35Q1ANQ2V113B7Oi9cSPjBoD15rYSy0V6q
+ DfyZIq7G9QC5F1SmxE0NE5pV8sP5JWstpHABig1ltMSfrkzaHOC48shSgQxtmGFSeWVs
+ FIhTKFU6HHPDqoj2+eKqTsEna2EJGdw4VI9hE1cUB+U/SYC8x1g8GN5Mnqx3G5xGYV8j
+ CTFwjAeK6rDVhhkBaU9AtDgWoh0rpXA8CTk1tNWWgETeCkwxHjRlm2MEwK35fIjebsWv
+ 7RNczGAQFHFOEhttB3UP9TVjZXiwIQP7BQHKEScIsXFO8jrVwRX1WN4PAiUxHjS/S/2R
+ VMfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766081924; x=1766686724;
+ d=1e100.net; s=20230601; t=1766081916; x=1766686716;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Bvj1AJund8BJzCKIAsZJhSHjk28uN32H7UcwVRZ2KTY=;
- b=L2jr9pIPaBo0RrdctX6l/bkjcOAdMPwnyrR4vyCXqTMfAWpC5UUDE59/SvuRAxw9C8
- s2HQR3mgViZlGXt+c9G+ZqCnOq88T66zBVzkSQlgc3SZwdl6vuwe0KhylRPFM49O9esz
- gRt1n8eEbl61+fDBHYSDF9sSP9ZhP7Gu7ut9yoM3sLf5WVxG2/vlgx/9oFntx/FnO+6Q
- 1WxPeEQlSYA0wY6VsyKwqol+2K2YMFXdVIMRsqNfrKfxE0GmWTj2oJpb/S4/399ddLcU
- 9vpSnZNdz2zfQ5IaM7T4WueUAaHL7mibTw5S2uBTSaUmSCCA1CEQSSOFuLPNPSR0UAZm
- o/3w==
-X-Gm-Message-State: AOJu0YyPnrhAvEU/VltJ2buKOQk6wNUKoVWAxE2BU7AhBk4MnZrgJnDS
- EPjVM7A0chFoxY6nBplyxTUE/kUY00YkOrxDLz4VqSl1D0HDplQ4jK9EKo/beb6dRWnTLFfKB00
- cM6h+Kvo=
-X-Gm-Gg: AY/fxX6lcUHf9sawhAzGZz9/CylolwCvyWi58HiaAbs9yT5hcDrmTu6D2klH6XbYS5J
- vWZonrk5nvT57R5whWxW196/wNybPa7d8HL6qLBO763flPIKl2/pKSwyYidAkglP6xH5ZJk2Zzo
- 9ALNL+/htnyHD3epOZ6XiemzPBW0NsYHNEZIIWH3kQL8fMFLv+Rf9q6m449a7u4nX1HrXYCtSAi
- SAb01vL0JnlL+NkE6vcYG9aqhmBKf8KE/hL5WWSo6a/JvZCp5IvyB1YcAMDHNEiS9zWJZo7SAiF
- KeGe8qg/kUkxLXCZ5nFZxx91JuaF1WcAkkGoqmFJfZ0Lg0oIgkA3CKw5Zl077PBP8J207wsuT4T
- s8XRxyXuY4ibENdCEcUkZa4WIZWUmuk1fMTs4u7254P+bUBwbnsghvKtziJRlBLJfD1OCU24XWP
- 29iUnz7dXW65PPGu1LjDx2UetwOhNPcjA9P50+jwEKo+AFBwlWr1a517YzRFmD
-X-Google-Smtp-Source: AGHT+IHHuTTKYx9RGCYajCMCUuN820Kiap/GpFsIBYAXwUF34Sg0U5YEuJQg4DCduJdHoGUzZRCizQ==
-X-Received: by 2002:a05:6000:250d:b0:430:fa12:3b6e with SMTP id
- ffacd0b85a97d-432448bf55emr4584653f8f.24.1766081924100; 
- Thu, 18 Dec 2025 10:18:44 -0800 (PST)
+ bh=ek0ZqoV7lcVrfafX0nJ7A9JZOJmPGubRBeO+HIeHC5Q=;
+ b=pjmWey81CJC+fGjf978eSl9sK3wP2iYPaWH8leXSQku+lauCYHvric3mdeYCth+QRv
+ 9n8PPm5UAQ8ulYezra+hcz2wsrjQxaH+NLCg2U63EupxqFOTAqLSpOkLYqMX2/ZfhGWk
+ CDtRRzVZp3+b7vpLAr+sHvXGH45igCSydkQRI+UoqMddfID+4y6JfDqezfazWe0jnjda
+ CKFT25b4sO3rLzpKRHbUP2yExBlGVeAbvrqB3m+A3j6LoXdtOIATtY51BBUMBn8qc7vU
+ kszQ2T0fAxJsNXmAdLpJleeEVcn3PnHkfCRlQdGhzZRaInfcqRhcjAYy5ejghXmIj6S2
+ Rz9g==
+X-Gm-Message-State: AOJu0YxvLKYi/jNiv5UfAMkRKqgJeHsu7GhoVkkYQjwAu1VaGdZd52uM
+ HxUiZZWj23yV87XrVIEkXbLCz7CDGPb9iTTII0/WhA0TnYmpa2PUHX9/XsY2U97zkkIv5X0FzO2
+ 8lbrV1js=
+X-Gm-Gg: AY/fxX5v6qBR2kxWRyA18df0VeqZh9koiq/8C3pYq0tzqIqsOM7kZ4P+2qfbE6Wu9D8
+ PQ2N8ctVOG5hPOXMXI0jUV0FhP5RLax3EPF+Lgk6S5iEx7L9KARnl/wnG5sAaCyk0EXAaTJUIVW
+ +JnKjw5QO6Ly0FkATa5A77VzEXu+/13Wh1dl00ry+MDt3SjQtYbfA9kdPaVulJktB04xxvrnlj3
+ kyrXdy1NhLoUF/ZNdRAWPk6nPddB9INHIERw5K3np9yBDnwnKeT7IDGBJtZFYaOH2uiJSDm02yM
+ CyCg86/lHxM8xBpcwf00hX9RW3qk4EI9xE1YyqalAiymY6mOx7Z08uNVSBoYpoMVvc9mRLZ3AIr
+ kTTdGSo9C5Xc1j7MjvC6IBYvtloxO6iXxlMeODH1GhUAf+nBJPidyGdw/XDyee+8JpeHohxuFG5
+ 0dDDzjL/HWBkv7hwPxccaTZHSLFASAwlcjIU/4rht6lifmyXgXzcUc9OvBahZY
+X-Google-Smtp-Source: AGHT+IG3rBj8MLgy5ArgGS6tuUNGiYQve0lqqiTO86Ek4KJMvYwdpNN/K3yJIGq4tWTBYEXioVJH2g==
+X-Received: by 2002:a05:600c:8208:b0:46e:33b2:c8da with SMTP id
+ 5b1f17b1804b1-47d1958d960mr769485e9.32.1766081916568; 
+ Thu, 18 Dec 2025 10:18:36 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eaa08efsm199771f8f.29.2025.12.18.10.18.42
+ 5b1f17b1804b1-47be279c5f8sm52622545e9.9.2025.12.18.10.18.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Dec 2025 10:18:42 -0800 (PST)
+ Thu, 18 Dec 2025 10:18:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -73,17 +73,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  qemu-rust@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/6] hw/timer/hpet: Mark implementation as being little-endian
-Date: Thu, 18 Dec 2025 19:18:09 +0100
-Message-ID: <20251218181812.58363-5-philmd@linaro.org>
+Subject: [PATCH 3/6] hw/display/ati: Access host memory as little-endian
+Date: Thu, 18 Dec 2025 19:18:08 +0100
+Message-ID: <20251218181812.58363-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251218181812.58363-1-philmd@linaro.org>
 References: <20251218181812.58363-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,44 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HPET component is only built / used by X86 targets, which
-are only built in little endianness. Thus we only ever built
-as little endian, never testing the big-endian possibility of
-the DEVICE_NATIVE_ENDIAN definition. Simplify by only keeping
-the little endian variant.
+ati_2d.c is part of the ATI_VGA component, being built with
+the hw/display/ati.c file. Commit 339534d4025 ("ati-vga: Fix
+indexed access to video memory") made access to host memory
+using little-endian order. Assume the same order is used for
+the 2D component.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/timer/hpet.c                  | 2 +-
- rust/hw/timer/hpet/src/device.rs | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/display/ati_2d.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 1acba4fa9db..bfad626d5e1 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -648,7 +648,7 @@ static const MemoryRegionOps hpet_ram_ops = {
-         .min_access_size = 4,
-         .max_access_size = 8,
-     },
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- static void hpet_reset(DeviceState *d)
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 3564aa79c6e..4f4be84115e 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -708,7 +708,7 @@ unsafe fn init(mut this: ParentInit<Self>) {
-             MemoryRegionOpsBuilder::<HPETState>::new()
-                 .read(&HPETState::read)
-                 .write(&HPETState::write)
--                .native_endian()
-+                .little_endian()
-                 .valid_sizes(4, 8)
-                 .impl_sizes(4, 8)
-                 .build();
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 309bb5ccb6c..72fde6b8008 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -221,7 +221,7 @@ void ati_2d_blt(ATIVGAState *s)
+             for (y = 0; y < s->regs.dst_height; y++) {
+                 i = dst_x * bypp + (dst_y + y) * dst_pitch;
+                 for (x = 0; x < s->regs.dst_width; x++, i += bypp) {
+-                    stn_he_p(&dst_bits[i], bypp, filler);
++                    stn_le_p(&dst_bits[i], bypp, filler);
+                 }
+             }
+         }
 -- 
 2.52.0
 
