@@ -4,90 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB76D711C8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 21:43:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B3CFD711C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 21:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWLmD-0001Vc-UG; Thu, 18 Dec 2025 16:43:13 -0500
+	id 1vWLnA-0001gC-9K; Thu, 18 Dec 2025 16:44:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWLmC-0001VD-44
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 16:43:12 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWLmA-0004ay-GE
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 16:43:11 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-4777771ed1aso8626135e9.2
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 13:43:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWLn8-0001fx-Lt
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 16:44:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWLn7-0004vV-3S
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 16:44:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766094246;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=f8xFRBmCh2b32DjnoF4eP1jVpA5v6BIE3zd26rP+7YI=;
+ b=C72I1kEDC39VuNVuJ/2wT4SZdgR5bwei+gLjngI+BHeE/UQschgEcweURN6nJIDBz+JgrI
+ fZ/rkih6UXt41O8XWIfJFZ4lGWngOCnqaEATuf4IoFmZjE2yOaMV+wYUXZ4H/hjX2ii2B2
+ a5otVAYY2L2/K/A1/SlU5eM6W133r80=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-9gPMDXKUNxafayFOsAQpDA-1; Thu, 18 Dec 2025 16:43:26 -0500
+X-MC-Unique: 9gPMDXKUNxafayFOsAQpDA-1
+X-Mimecast-MFC-AGG-ID: 9gPMDXKUNxafayFOsAQpDA_1766094200
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-88888397482so29092476d6.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 13:43:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766094189; x=1766698989; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Dv6+54i5o9W7fEBlVIR7xgeqZTrtUt7SWeNnerBEFxM=;
- b=nxLI2SOM1xltg6ve/q6/EyLDQDsmqYJI1/ITNMxFI5IxqMjJAQDBtjxYHZgSq+P+O0
- T2fnzOvDUc7iRfF4q+Qw7oQZLZyJ4ZIov1Ik5UsntNEXGgyWpOecXb0JsZgHDtp2Xtix
- W8wRX0m3sx26yB6kzjEGLX+xeqLV1YoClANW28LXirn6utE1V9CuOJdxJBH9yqgOdUqQ
- BpkL2kvREk1/Lkdgtq3SrR83qvNfadCNiWkqiHYkwgtTkLDqfZilzduMus0D9yRI+9ke
- vUb2Drs+o1UwrkE288X+0ujCeF4yO5dej6RkDUNWQMKxdb8jHcm3asR6luUdApTqcoNP
- n11w==
+ d=redhat.com; s=google; t=1766094198; x=1766698998; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=f8xFRBmCh2b32DjnoF4eP1jVpA5v6BIE3zd26rP+7YI=;
+ b=KZkdIgwDC1JDZMUCThgvZH3k2MEVs1jAZL5YJ6s6w9ZzOTS2zH/Lo9KCCtjAncNa8L
+ 2uQV25TrrVs/50enYX/c+XWuPwxAzxa0AxMcaJrVyg+456eEiRn/fv9LLCLmwdfhp84U
+ bg8S9rj+DEQnKv8ZpuHMnly6ZG2Uqj+OBWGbHKFAPJ1m2Ukt0XWxZAVpSgdoasK38ft9
+ Kh7+Rl5QSUOdeJ/yMCKlWpsrQD1GaLoerG0VNEfSM+Uxq4vwahfeUEdEIvuXjk1H5I5x
+ DcR/y6Qf9m5i4PiKkIHumePiUNaZ5fVEBBPlUDmdSU+dY0BQLgzS+HhJFZL6Irkx8IuT
+ Es9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766094189; x=1766698989;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Dv6+54i5o9W7fEBlVIR7xgeqZTrtUt7SWeNnerBEFxM=;
- b=qhVQ8RrvtYeFxyLfBaDVNUwRGHqW4GEyXe0nok0PH13CXm9BxbihdIebiXcbkr+KNx
- ftDQkw3NYvPbJ49XXPWkBj/j2+Xys3CMzBMaCGeoUtGJ78fg5zVzkiB7QPVhIUMfL5ne
- Q7KK9WF9yg9//84e/FmrjM76+udFXAINNXTTT+zL8GvSNHYiQvnbLmShwgzayrx1wlfB
- YPovrOJKcn3+0vreAhNY8COpzWoguto9sMLi3sRCx5cuOm+Cf4qXkz5nv5njBiYM4EpR
- HGewYnYdKCzV73CiB5+6XX7VeUuLsfy+hj9Gfuw7gY47RlPwFksnAymi94fEuJCq0TqR
- AE1A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUlnFV5GZLrVUNZuJIF03SViJvtBoT9SAZd5uLyV4iYnzPGiUL2C7P0+ubQLnu87RxofQ+te6fa1l1m@nongnu.org
-X-Gm-Message-State: AOJu0Yyu9WsPw774P+hUGOXgiT5wNX455hux+Ef+MBPCsaZfNwv9Na/g
- 4NH26kxfMaYXVVkTJ0f8vJh1IWcVl/3uijoS0n/8TOx0mvaVClXebcaAN2yGZE/4wGM=
-X-Gm-Gg: AY/fxX4zQvgDBV1MtnlZzpP+AAEzgObrLKu9v9xKBBaZ1DV+Hu6ORkPnXeJrwvMoBIZ
- jKB/HuNqsg9ZVJiu8XU4FNBPfKy5cX2Bvbl2Q+zyzow2JPeI5xWk1LIvypeH2XoAH3MA6ernwZQ
- TyfTdi/OzU8ySMBhXbXrTWURtBx3Q8/0SItTbhEG1SsOO0Q0Svr2VncfQu7q/vX6emotXEpO8WI
- f+UW2ZXFoCqZjXo6swzfGZHr0Iodkxxy2hifkPKO3b4GFn+TGrW/BuarcxK4RrwfIsWTtvtPwM6
- ajDGXIKaSJSc8NXmpANy5SrFnAmhZvEGsMDq+pLkJKM9u7YIqDAdu8PpQcFY9pocEsd+8twz+M5
- P2e9tNksb+be3V/WfnDdsjVzVT5wbnBSohsz17aLi4xc29JRVeeP6PcbyoSJfwxODvIy9xe50y1
- x2HmqCIBqwTVQNcFJZl8J8OWpJstg8hHK9E/phhD5XgahftrFowVCD6fT+pe+r
-X-Google-Smtp-Source: AGHT+IHFg0qyqXlh//InsWVKBNF8SuSLH0wvq2KvmaFVtMgjMSHteCf/DVOE74UXCv1H4hQirC2Cvw==
-X-Received: by 2002:a05:600c:628d:b0:477:89d5:fdb2 with SMTP id
- 5b1f17b1804b1-47d1954a11dmr5879945e9.14.1766094188773; 
- Thu, 18 Dec 2025 13:43:08 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3acdb87sm20961785e9.16.2025.12.18.13.43.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Dec 2025 13:43:08 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Jackson Donaldson <jcksn@duck.com>,
-	qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] hw/arm: Re-enable the MAX78000FTHR machine in
- qemu-system-arm/aarch64
-Date: Thu, 18 Dec 2025 22:43:06 +0100
-Message-ID: <20251218214306.63667-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+ d=1e100.net; s=20230601; t=1766094198; x=1766698998;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=f8xFRBmCh2b32DjnoF4eP1jVpA5v6BIE3zd26rP+7YI=;
+ b=DlP+IO+IEjbB+FazG7/AyUoiNsn8XUGT8blGG9f2q5tMP2XyHf4uNu9D3Z2Pr0M3xc
+ xrirtQbaz1WhyGK+5P2oj4QeOWvL5YyMwkgmvWHMg5xcLs/ET0F04VIKC9Yrnm+yF/Ye
+ hz8UgrcS1rX45SVBlUrBKI1CG2xZH7xdlO+T42SVPOfWDrO59tMqK+bysCYA99soiwrx
+ VRNHemG6PagVuk6MMUSEZ4XI88Y0ZP5FuS2a+YnxQO1DfAFFcmQIU3JGBCuQqJylyURS
+ zvfMVREGGTfBxHtAsHPavEQPTp16NKi5fv8lV4D2gxbAUhOU2IQcNfKoVlrybFRrwBoj
+ Z7/A==
+X-Gm-Message-State: AOJu0YzRyxo4misrPHzOO7ujuCIyyk9vxqNToqWMOv3wP5X43BukJzZJ
+ KSR5CiFQSapZG+bYvfz8OCtJlrmHRmHT3AucQJupL1gEOm61Hf3uEx8Vf43GtVFkNY50ylATbZj
+ z8CFwUYZUdIFL0Pj5KcunSCKzAgyV8TPneGmPo/s0l2avaAwDIJBWfo8JbovIk7Ng
+X-Gm-Gg: AY/fxX68Gg0GTrR1XuDMnxYMmquvOngVtX4D7R17f76MgSMW99I82WUdAdjiQ/J75y3
+ aC8sf5XGbC9aGD4B0KaXOo2Om1PEJSfTfavjtO8rUptMyFUZope46k5/OoRF4QAlXhfp8MeH3WR
+ I7keE7oVQzu8RX75qloyLU8AUx44R/UkBirKegGJ390anHIKrtNfBcmuKEqlfFA5d3uqoV2G+iA
+ k2Hmaxo8XogkA6E0QHDLz7N7aTw11QCFodpjOuphKh5pLPe0sAA2xJ/KihlK2sT8vyIxHf3A3B5
+ gVvWW8Hg9KpKZfTh3ed+w1qRqC1O5dyKPi+sstdDwTmkDx7rQKNvP194FNS+ZBT6S1yCZ1LpJaA
+ WxrQ=
+X-Received: by 2002:a05:6214:c6e:b0:77b:2925:a85b with SMTP id
+ 6a1803df08f44-88d83793335mr21507876d6.44.1766094198556; 
+ Thu, 18 Dec 2025 13:43:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHv5RCuc1aO+B55o2YuZfX0Vexx9d/eOiPlkD7Cn/oMHgXjoq7rnikG3szpV9lWVyuINPuJJQ==
+X-Received: by 2002:a05:6214:c6e:b0:77b:2925:a85b with SMTP id
+ 6a1803df08f44-88d83793335mr21507556d6.44.1766094198159; 
+ Thu, 18 Dec 2025 13:43:18 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88d969fed73sm4923656d6.15.2025.12.18.13.43.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Dec 2025 13:43:17 -0800 (PST)
+Date: Thu, 18 Dec 2025 16:43:16 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 37/51] tests/qtest/migration: Add new hook with data
+Message-ID: <aUR1dMVRQ_9rVx75@x1.local>
+References: <20251215220041.12657-1-farosas@suse.de>
+ <20251215220041.12657-38-farosas@suse.de>
+ <aURQgjrsVhlfu8kr@x1.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aURQgjrsVhlfu8kr@x1.local>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,41 +118,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unfortunately while rebasing the series registering the
-ARM/Aarch64 machine interfaces and getting it merged as
-commit 38c5ab40031 ("hw/arm: Filter machine types for
-qemu-system-arm/aarch64 binaries") we missed the recent
-addition of the MAX78000FTHR machine in commit 51eb283dd0e.
-Correct that.
+On Thu, Dec 18, 2025 at 02:05:38PM -0500, Peter Xu wrote:
+> On Mon, Dec 15, 2025 at 07:00:23PM -0300, Fabiano Rosas wrote:
+> > Add a new start hook that takes an opaque pointer so the tests can
+> > stop having to nest hook calls.
+> 
+> I saw that this hook is also removed after the whole series applied.. maybe
+> it should be mentioned here.
 
-Reported-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3248
-Fixes: 38c5ab40031 ("hw/arm: Filter machine types for single binary")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/max78000fthr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I guess I read the wrong tree just now... both hooks will be present.
 
-diff --git a/hw/arm/max78000fthr.c b/hw/arm/max78000fthr.c
-index c4f6b5b1b04..ccef85e456f 100644
---- a/hw/arm/max78000fthr.c
-+++ b/hw/arm/max78000fthr.c
-@@ -12,6 +12,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/qdev-clock.h"
- #include "qemu/error-report.h"
-+#include "hw/arm/machines-qom.h"
- #include "hw/arm/max78000_soc.h"
- #include "hw/arm/boot.h"
- 
-@@ -47,4 +48,4 @@ static void max78000_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--DEFINE_MACHINE("max78000fthr", max78000_machine_init)
-+DEFINE_MACHINE_ARM("max78000fthr", max78000_machine_init)
+Then IMHO we could have one patch merge them, because start_hook() ones can
+ignore the opaque..  Then we can rename start_hook_full() back to
+start_hook() (or... just add the opaque since the start into start_hook?).
+
 -- 
-2.52.0
+Peter Xu
 
 
