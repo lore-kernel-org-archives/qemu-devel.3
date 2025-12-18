@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC96D68BDD
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 07:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11217D68BE3
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 07:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vW81b-00061k-CL; Thu, 18 Dec 2025 02:02:11 -0500
+	id 1vW859-0006uq-TU; Thu, 18 Dec 2025 02:05:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vW81Y-00061G-FM; Thu, 18 Dec 2025 02:02:08 -0500
-Received: from mgamail.intel.com ([192.198.163.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vW81W-0005Ua-Ny; Thu, 18 Dec 2025 02:02:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1766041327; x=1797577327;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=SVgM/n1v4fzCKsePS0J3ggBaXEGDmRcBzlKaAToDQEk=;
- b=C1CQaCYFwwl899G0eqBn7oXtRVdyuvqlBJtRbQaEStu7jsCDooS7sqmG
- PHGcdH1a1vLtpFU/0iWV69cAJ9lZSEesHNj0IMNkEYv9UTQXVKM0rGtkX
- /l2O86sb1i0J1bRMUBj5u0VkEMqNARuAOIv2wh8U6wX0qHWtJQ24rMke2
- YC0Kz1cLVXtPelYN/cMu1FIS4MOr+CvVY+JHvXpGI1G/9Tm9mi0WowpYs
- gEttlnMg+0u9ofJ/EuSADJtQYzSqiRw9wwKL+oPjlTY0MxXfj3d5gJsKM
- i9+EyZRvmBY2g+o5NQLYYWvicoRbXKsXolYiU7W2uzarDVkYGCa1Jd3bm w==;
-X-CSE-ConnectionGUID: UDhoMSTaThWiXBQ1pzr1Fw==
-X-CSE-MsgGUID: HVIQKW8FThO8kzJYKN3cCQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11645"; a="66985008"
-X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; d="scan'208";a="66985008"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2025 23:02:03 -0800
-X-CSE-ConnectionGUID: 0SOkLFsIRGixo+JhvcoTfg==
-X-CSE-MsgGUID: Gtsie+lBTvCsnmsxYn6+OQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,156,1763452800"; d="scan'208";a="235918890"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 17 Dec 2025 23:02:00 -0800
-Date: Thu, 18 Dec 2025 15:26:50 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@kernel.org>, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH 01/14] target/i386: Remove x86_stl_phys_notdirty() leftover
-Message-ID: <aUOsuvGfQbA61n26@intel.com>
-References: <20251217143150.94463-1-philmd@linaro.org>
- <20251217143150.94463-2-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vW855-0006uS-4P
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 02:05:47 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vW853-0000tZ-Mw
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 02:05:46 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4779aa4f928so2913895e9.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 23:05:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766041543; x=1766646343; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mrlebsBcUbAORySaEmHXTsxN4ZJUy1eehxvocP1mJ98=;
+ b=uhDwrtYDQDTMoNyRo1GNnM37+Ypu/rVl8ndgF0ZQ0xSlyLMhOhxkEDOa3ivTBzPwl9
+ 39Qkq0bWNHcf6s9sjxLPPHYwDpUnMu7jWV8tTRUjHnNOX4knE1Zz0D0iwOUcE+ioeCI2
+ XjcJT7FDEpbkG3Vlqx5ru2N7WGhvGGPuKWvqWF54s/l1sxyNbF3VrrBtB+JoeV9ZyMZt
+ lgErxMfQoqNtKxjdb+A90nvGCTNntlpvtGy0kh3ZxkhXzovFl/kSKW8qzoJTQAbbDbo9
+ xPEEqts2kMmGX+v2RKrg8xxT9glM3Ne9XZbNNmcYX6wtNwvk3MHXWzhdYlXWu4nSrHXE
+ akFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766041543; x=1766646343;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mrlebsBcUbAORySaEmHXTsxN4ZJUy1eehxvocP1mJ98=;
+ b=ton0vYxCqS4vEnlhhXae2mfHLsT1EdhECF6Axza/tWPjcUuA7VdzM1mi5oowffFBkg
+ i6tyZXScDlkap2WT4uRuLq0FfAOjz43js0slcDq1CqpL4V0SyyxQjD4nlva4imoGMeeQ
+ BCGwjtcPfOJswTFxNUsc9VniJrueoolYUrCoe9EqXzh7FYFOUMUnVA6sDPK05YuA/Qry
+ PbHn156ivSQoubn/ABQVkZolceti+lB+DyVT27MhAEhCHstyClOAHsYrI1Z2c3/v2A8G
+ XPudL4o5xBRAfw4uiXau6gtErf8WNXSzgh7zBkKvETjNSt5sTqZyFt5eYFzJh/rYMutw
+ j8RA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZoXMsvutgwrqGfj3WUkVi7KQBPtAV8hpluLn2V/42QmtPzetS23k4sg+0vAx10s0P2iMCCgiDmdzV@nongnu.org
+X-Gm-Message-State: AOJu0YxtQahJcZ+psAvENqVFf3JFMqfaK5w6ADloFW9kzit+vffNBjCv
+ me4XNgCSkbU2g16T0o6t31yjufZWFuVe10B0mlbpVpS+iswkupaWGCB94qHtKjquBHA=
+X-Gm-Gg: AY/fxX6mak+njwf9VkkI9uWqKTDfBgaZdppxW1kMbtZvhpRRgzx8gTgvipqfMo/R8oI
+ iO390dBc5sDd5+dBOefdeBdAXKupkpcDwoXtt2I3eC2iaORl4XWEXVBHq3+d28SVAwXHhOLHDTw
+ 0wqOqwbnYagEGmDNd7nuq/t0EcIEXUBwq801+Qnek1NQezz2pPVfdJe6lw8z7eBVLqw0weKZ60V
+ elHwqxD0ByE7ruSCjDLr3R3O5F8P4PU7g4/bFhCfjfwIpumcrEQ5fX0kRGh3FvCuYA66lOV8BZt
+ LqhpUPHTVJwnEgqrZ5waHXV2XBwsZxfLvGivn2nzd0nupE47lnccsIupv0YQH2eo+XAEa0qR3v+
+ QXkml1E48WLIFCkPxmrLkkaoHWxbEXxn6XdsKgDZYH0KYkOkncxA0kb2Js9AYL6E8zHVr+c4mCp
+ i5VzxLcu/0lZVpok/z/CK+gOpyUkgoa/VBvIySSaYY6awt87SWzUfRnniYECL2p/eR
+X-Google-Smtp-Source: AGHT+IG+zo7K/BGm+h9JFGiJxNx0VhgJxss3Oh7avV8ynwi39GXZaGnJI7Y+/TA9nZjCWSBen+utLQ==
+X-Received: by 2002:a05:6000:1244:b0:42f:bad7:af76 with SMTP id
+ ffacd0b85a97d-42fbad7b0c9mr20763155f8f.15.1766041543257; 
+ Wed, 17 Dec 2025 23:05:43 -0800 (PST)
+Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43244934cd4sm3278938f8f.7.2025.12.17.23.05.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Dec 2025 23:05:42 -0800 (PST)
+Message-ID: <bd0f3903-a2c2-47b5-be21-004efbe37c43@linaro.org>
+Date: Thu, 18 Dec 2025 08:05:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: update my email
+Content-Language: en-US
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+References: <20251217191726.194767-1-daniel.barboza@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251217191726.194767-1-daniel.barboza@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251217143150.94463-2-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,21 +105,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 17, 2025 at 03:31:37PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Wed, 17 Dec 2025 15:31:37 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH 01/14] target/i386: Remove x86_stl_phys_notdirty() leftover
-> X-Mailer: git-send-email 2.52.0
+On 17/12/25 20:17, Daniel Henrique Barboza wrote:
+> Also add myself as a "RISC-V TCG target" reviewer.
 > 
-> Last use of x86_stl_phys_notdirty() was removed in commit 4a1e9d4d11c
-> ("target/i386: Use atomic operations for pte updates"), let's remove.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > ---
->  target/i386/cpu.h    |  1 -
->  target/i386/helper.c | 10 ----------
->  2 files changed, 11 deletions(-)
+>   MAINTAINERS | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
 
 
