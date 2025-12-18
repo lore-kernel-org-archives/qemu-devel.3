@@ -4,112 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF66D711CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 23:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B885FD711C8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 23:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWNQF-0007yK-LS; Thu, 18 Dec 2025 18:28:39 -0500
+	id 1vWNaM-000174-Ts; Thu, 18 Dec 2025 18:39:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWNQE-0007xM-6I
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 18:28:38 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vWNaL-00016o-62
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 18:39:05 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWNQB-0001jf-S2
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 18:28:37 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id DC24A33758;
- Thu, 18 Dec 2025 23:28:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766100512; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IPvBd1fzGmwHgaxxwmAr/u4fjdY5qAq7wQwUwmB3UQY=;
- b=p0+2RQaDGQMX65GRQHpXll/NaZg29CI4YF8IAQtfTE9EHdGPKuOF7mTdVE3ay8oTxnpbKH
- meIP/jTnkHoiSeYKptCBIR2FAyqa0oQpVMOCet+PGjo+cpQZqUn5GcE98WlBIL7g/wqiGZ
- ygIIXdwaAf2igm8V6laaQYY3b+VAOqM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766100512;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IPvBd1fzGmwHgaxxwmAr/u4fjdY5qAq7wQwUwmB3UQY=;
- b=/ubdYVpMrCA7GuqrL+pfudSZaiguWWK6fqa3gCwzllJbtaoVgDv6CnRBaHM5LMAkvSf4TO
- wNDT6aFJd8wYXdCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=NcGfw33J;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="HW/AjeRQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766100511; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IPvBd1fzGmwHgaxxwmAr/u4fjdY5qAq7wQwUwmB3UQY=;
- b=NcGfw33JxW9PHy/fo9uVP/pZ/8zZpzN2H39d8Ilf/DxV0d8UyOTvACN27pKgco5Kh8PXIQ
- qe7G502N89qCqKhL9pyjVQagnPgo6DCIfQFcrng8ftvSkIwEywuCWUQvMBkmGOZVHatvif
- dXLaUIqg1zJErA4HObCtwrHUxwjckNY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766100511;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IPvBd1fzGmwHgaxxwmAr/u4fjdY5qAq7wQwUwmB3UQY=;
- b=HW/AjeRQqO4NbPt+XEwcihzndMcFIfJS7eHqqZloAi1h6uC5dgB5I/owRm8z2aH4F7Zg5k
- Uhla+NSQ8Jhj5FDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5DF583EA63;
- Thu, 18 Dec 2025 23:28:31 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ZoYWCR+ORGlAegAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 18 Dec 2025 23:28:31 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 32/51] tests/qtest/migration: Adapt convergence
- routines to config
-In-Reply-To: <aURtVveE88n31AN_@x1.local>
-References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-33-farosas@suse.de> <aUQ5BoCrMXk2SJDC@x1.local>
- <8734571sik.fsf@suse.de> <aURtVveE88n31AN_@x1.local>
-Date: Thu, 18 Dec 2025 20:28:28 -0300
-Message-ID: <87wm2jz7xf.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vWNaI-0007Rl-Qf
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 18:39:04 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b79ea617f55so74867266b.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 15:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1766101141; x=1766705941; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q2HEHuJUo/i2MG8kDnCf84RXxS7jcr6/Oai12kIGuAo=;
+ b=UEiPkmmzznOIHfaoBD5BhlWgkHoD7Ymunxh8SN5TQbuQyg6ZOJJMscc95c1V8GXBPs
+ s3LdEV8lIJwOo3fhsq5mNMmGfS+nXLjA/vnnZQVaRAxA8usNlI2UuMYSQdYYIL8/cRlA
+ kbamqlRlnkb8O6NCXOKLjcFL5+qqGmfy1ctNB3h3WS4QjZT1mOh0rOhIgvh+5WBbAEEX
+ ZVskE7uLtAsb0xFtb9uuVDQjmXuO7KyWzdWRpCe/ec2eMMWu7X3VSbWH3pLiYqZyU+rr
+ sqP8o0FmiSKiaTxm5AZYRSGL64o9Biglx+oqmDF3elLtPYiXtvMgkm06IhDP6RFxF7LY
+ UHkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766101141; x=1766705941;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=q2HEHuJUo/i2MG8kDnCf84RXxS7jcr6/Oai12kIGuAo=;
+ b=GqnvzOijdsHXPgejwOxh+SoMfeuvSa2QQrYXqjWqQhJNGrxg97XALckEwKMLOq6tHn
+ vfrGHOn0Td0+lllGMAZKgDh5wYlKIHOGUJ35QcatqWRl8SeySMfl+vma30GmDEROPJ3J
+ h0u9QP9b4Qv3AwPwZ7MuuRD0CFzrq5eEEntUcn2cOv7K/puSLd8GkTIZTH8F3Z5Afj4E
+ TncwOvvE3vThRNB4nXmviSpZD+Ph/TG6dCM4+3d3sQgPDbCg1XwFY6tevyPxe08hLadN
+ w15abHjARIGBfZ7oPJI4x2DlR/t+c4nbHy/yF1LM0xq6VaRJZNKMFYAFw1hxu6Z20WnN
+ 141A==
+X-Gm-Message-State: AOJu0Yws0z9qAxLkWI+tulW9nV6pj60i3HdPYoGW2Uxc6f9E8db9Fhht
+ w9An/cW7O4t+zyyCxvDXLYU/3EVcAUyI9nnxf03sCLUVbqqrZCaSfdaS
+X-Gm-Gg: AY/fxX5BjHhTRg0vPgO1gl77p1Nsy0wTeste3f6OS5MxGTjwVsvWZ/Yh/DzNIbGq+i5
+ ASzoZth5pIUDGeGuTGkvN7hOucgxbTuRZtHzR2ztsQre9RGjVmqJ23ybBU6q17+zJMRsHYqHi5c
+ 8GLPUR5CJ2IfcBXtCTPLNBMKR9N/WWn5aHBoAbgEY7IBQhamaMnatbVmtqxOxgdfz50pRwx3V7O
+ mjYdyiLnbHQaXWcXdtOKkAt8XspRgj9iSmuA7x4iAt51KCkmwNqAJl3eXxfVggSgnndkixMm/X1
+ uFPwTybz1fAWrQ0x+v5NPNUraBQieQVm2PFAyAfRD3HOC2YJ36Dmx2Oh3fT1GBxdEGT3GoUeGdO
+ enkG23oNDb48R159smhy1P75nPT2c9pn7dm6VeMgeo6sts2k5MLuimiIjDT9PvZSJJoFvo676hH
+ PO+t5PqdGIdjhO+rddXviyy1yWbKvtfsY0TkJDZVGkXKoidqpgJFAplbeRTIxwKhugnf+GvQ==
+X-Google-Smtp-Source: AGHT+IHkFJNpW0PFf+Dok3vj2IPew1D3zoWSKIt9MPUK+raSe2BrRgwDww1fVXBe4aRbir+fhUBCpA==
+X-Received: by 2002:a17:907:980a:b0:b76:d880:e70b with SMTP id
+ a640c23a62f3a-b80371d5006mr111445866b.55.1766101140728; 
+ Thu, 18 Dec 2025 15:39:00 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-077-011-003-230.77.11.pool.telefonica.de. [77.11.3.230])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8037f48606sm66028166b.62.2025.12.18.15.39.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Dec 2025 15:39:00 -0800 (PST)
+Date: Thu, 18 Dec 2025 23:38:58 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Pavel Pisa <pisa@fel.cvut.cz>,
+ =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>
+CC: qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v1 0/6] hw/arm/sabrelite: Add FlexCAN support
+In-Reply-To: <202512160144.54648.pisa@fel.cvut.cz>
+References: <cover.1765826753.git.matyas.bobek@gmail.com>
+ <202512160144.54648.pisa@fel.cvut.cz>
+Message-ID: <4BBA8CE7-A166-4358-B608-B990DF32F55C@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: DC24A33758
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,227 +106,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> On Thu, Dec 18, 2025 at 04:47:47PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Mon, Dec 15, 2025 at 07:00:18PM -0300, Fabiano Rosas wrote:
->> >> Adapt the convergence routines migrate_ensure_[non_]converge to set
->> >> the convergence parameters in the config dict it instead of using
->> >> migrate-set-parameters.
->> >> 
->> >> Some tests need to change the convergence parameters during the
->> >> migration. The config object method is specific to configuration prior
->> >> to starting a migration, so by design it's not suitable to effect
->> >> migration-runtime changes. The existing routines will be kept for this
->> >> purpose (renamed with 'ongoing' for clarity).
->> >> 
->> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> >> ---
->> >>  tests/qtest/migration/framework.c     | 10 ++++-----
->> >>  tests/qtest/migration/migration-qmp.c | 32 +++++++++++++++++++++++++--
->> >>  tests/qtest/migration/migration-qmp.h |  6 +++--
->> >>  tests/qtest/migration/misc-tests.c    |  4 ++--
->> >>  tests/qtest/migration/precopy-tests.c | 26 +++++++++-------------
->> >>  5 files changed, 52 insertions(+), 26 deletions(-)
->> >> 
->> >> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
->> >> index fd15bd832e..df42a8a2c6 100644
->> >> --- a/tests/qtest/migration/framework.c
->> >> +++ b/tests/qtest/migration/framework.c
->> >> @@ -583,7 +583,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
->> >>          args->postcopy_data = args->start_hook(from, to);
->> >>      }
->> >>  
->> >> -    migrate_ensure_non_converge(from);
->> >> +    migrate_ensure_non_converge(from, args->start.config);
->> >>      migrate_prepare_for_dirty_mem(from);
->> >>      qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
->> >>                               "  'arguments': { "
->> >> @@ -872,7 +872,7 @@ int test_precopy_common(MigrateCommon *args)
->> >>      }
->> >>  
->> >>      if (args->live) {
->> >> -        migrate_ensure_non_converge(from);
->> >> +        migrate_ensure_non_converge(from, args->start.config);
->> >>          migrate_prepare_for_dirty_mem(from);
->> >>      } else {
->> >>          /*
->> >> @@ -884,7 +884,7 @@ int test_precopy_common(MigrateCommon *args)
->> >>          if (args->result == MIG_TEST_SUCCEED) {
->> >>              qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
->> >>              wait_for_stop(from, &src_state);
->> >> -            migrate_ensure_converge(from);
->> >> +            migrate_ongoing_ensure_converge(from);
->> >>          }
->> >>      }
->> >>  
->> >> @@ -942,7 +942,7 @@ int test_precopy_common(MigrateCommon *args)
->> >>              }
->> >>              migrate_wait_for_dirty_mem(from, to);
->> >>  
->> >> -            migrate_ensure_converge(from);
->> >> +            migrate_ongoing_ensure_converge(from);
->> >>  
->> >>              /*
->> >>               * We do this first, as it has a timeout to stop us
->> >> @@ -1047,7 +1047,7 @@ void test_file_common(MigrateCommon *args, bool stop_src)
->> >>          data_hook = args->start_hook(from, to);
->> >>      }
->> >>  
->> >> -    migrate_ensure_converge(from);
->> >> +    migrate_ensure_converge(from, args->start.config);
->> >>      wait_for_serial("src_serial");
->> >>  
->> >>      if (stop_src) {
->> >> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
->> >> index 5c46ceb3e6..7fe47a5793 100644
->> >> --- a/tests/qtest/migration/migration-qmp.c
->> >> +++ b/tests/qtest/migration/migration-qmp.c
->> >> @@ -499,20 +499,48 @@ void migrate_set_parameter_bool(QTestState *who, const char *parameter,
->> >>      migrate_check_parameter_bool(who, parameter, value);
->> >>  }
->> >>  
->> >> -void migrate_ensure_non_converge(QTestState *who)
->> >> +void migrate_ongoing_ensure_non_converge(QTestState *who)
->> >>  {
->> >>      /* Can't converge with 1ms downtime + 3 mbs bandwidth limit */
->> >>      migrate_set_parameter_int(who, "max-bandwidth", 3 * 1000 * 1000);
->> >>      migrate_set_parameter_int(who, "downtime-limit", 1);
->> >>  }
->> >>  
->> >> -void migrate_ensure_converge(QTestState *who)
->> >> +void migrate_ongoing_ensure_converge(QTestState *who)
->> >>  {
->> >>      /* Should converge with 30s downtime + 1 gbs bandwidth limit */
->> >>      migrate_set_parameter_int(who, "max-bandwidth", 1 * 1000 * 1000 * 1000);
->> >>      migrate_set_parameter_int(who, "downtime-limit", 30 * 1000);
->> >>  }
->> >>  
->> >> +void migrate_ensure_non_converge(QTestState *who, QDict *config)
->> >> +{
->> >> +    config = config_load(config);
->> >> +    if (config) {
->> >> +        /* Can't converge with 1ms downtime + 3 mbs bandwidth limit */
->> >> +        qdict_put_int(config, "max-bandwidth", 3 * 1000 * 1000);
->> >> +        qdict_put_int(config, "downtime-limit", 1);
->> >> +    } else {
->> >> +        assert(who);
->> >> +        migrate_ongoing_ensure_non_converge(who);
->> >> +    }
->> >> +    config_put(config);
->> >> +}
->> >> +
->> >> +void migrate_ensure_converge(QTestState *who, QDict *config)
->> >> +{
->> >> +    config = config_load(config);
->> >> +    /* Should converge with 30s downtime + 1 gbs bandwidth limit */
->> >> +    if (config) {
->> >> +        qdict_put_int(config, "max-bandwidth", 1 * 1000 * 1000 * 1000);
->> >> +        qdict_put_int(config, "downtime-limit", 30 * 1000);
->> >> +    } else {
->> >> +        assert(who);
->> >> +        migrate_ongoing_ensure_converge(who);
->> >> +    }
->> >> +    config_put(config);
->> >> +}
->> >
->> > It's slightly an overkill to me to have these converge helpers to provide
->> > two versions.  Also a bit confusing on when should we use which.
->> >
->> > After all, parameters touched on convergence must be able to be dynamically
->> > set..
->> >
->> > Can we always stick with the QMP set-parameters for all these?
->> >
->> 
->> Well, QEMU ignores anything set with migrate-set-parameters once it sees
->> the config, so we'd need to change that in the code.
->> 
->> Thinking about the design of "config", I think the point was to never
->> configure a migration via migrate-set-parameters. Always pass the config
->> to the migration commands.
->> 
->> These options are special in that they make sense both before and after
->> starting the migration, so it's indeed confusing. I don't know what the
->> best approach is.
+
+Am 16=2E Dezember 2025 00:44:54 UTC schrieb Pavel Pisa <pisa@fel=2Ecvut=2E=
+cz>:
+>Dear Matyas Bobek and Bernhard Beschow,
 >
-> Hmm, now I start to question whether this is a good idea.  That's about
-> this patch of the series:
+>On Monday 15 of December 2025 21:03:09 Maty=C3=A1=C5=A1 Bobek wrote:
+>> This series adds emulation of the FlexCAN CAN controller, version 2,
+>> found in NXP i=2EMX6 series SoCs=2E The controller is integrated into
+>> fsl-imx6 and the Sabrelite ARM board=2E
 >
->     migration: Allow migrate commands to provide the migration config
->     
->     Allow the migrate and migrate_incoming commands to pass the migration
->     configuration options all at once, dispensing the use of
->     migrate-set-parameters and migrate-set-capabilities.
->     
->     The motivation of this is to simplify the interface with the
->     management layer and avoid the usage of several command invocations to
->     configure a migration. It also avoids stale parameters from a previous
->     migration to influence the current migration.
+>First, thanks a lot to Matyas Bobek for finding the courage
+>and sending the FlexCAN series, finally, after keeping it updated
+>log time on his flexcan-series-XXX branches at his personal
+>QEMU development repository
 >
-> Logically speaking, if mgmt worries about a stale parameter leftover, the
-> mgmt should always overwrite it in the config of this QMP migrate command..
-> Now I don't see a real benefit that we need to ignore global setups.
+>  https://gitlab=2Efel=2Ecvut=2Ecz/bobekmat/qemu-flexcan/-/branches
 >
-> A mgmt should simply query all parameters when QEMU just started up, then
-> keep it, then whatever user changes should be applied on top,  Then when
-> any QMP migrate happens, it should always set all parameters.. no matter
-> what is the global.
+>Bernhard Beschow, thanks for expressing interrest in the project=2E
+>Your intererst helped Matyas Bobek to collect courage to send=2E
+
+Nice! Yeah, contributing to an OSS project can be intimidating at first=2E=
+ But seeing one's work accepted is encuraging which is the real beauty of O=
+SS=2E
+
+>I have found that you have invested a lot in the CAN on
+>your imx8mp-flexcan and can-cleanup branches, thanks again
 >
-
-We can decide that QEMU will not force the mgmt app to do that work and
-will provide an API that doesn't require setting all parameters. I don't
-see an argument here.
-
-> The problem is exactly here, that when some parameters can be dynamically
-> changed like max-bw, if it was set and throttled 10Gbps dynamically,
-> migration failed, someone re-started the migration expecting the 10Gbps was
-> still applied when QMP migrate didn't set max-bw this time, but it didn't
-> work like that.
+>  https://github=2Ecom/shentok/qemu/branches
 >
+>It is shame that long delay in sending of patches has
+>lead to some divergence of the effort=2E
+>
+>I have gone through your changes and would be happy if the
+>effort can be joined and integrated into mainline=2E
+>
+>I would prefer to help Matyas Bobek's series to be updated
+>in state that it passes review and then the FlexCAN
+>can be moved forward by you and others=2E
+>
+>In long term, the extension to support FlexCAN3 would
+>be very usesfull=2E But that that is work for other thesis,
+>GSoC and or company funded project or developers=2E
+>I would be happy to provide my knowledge as the time
+>allows or look for students, etc=2E
 
-We need to think about what the QMP API exposes.
+Well, the imx8mp-flexcan branch is a moving target and currently exists as=
+ a proof of concept=2E Once this series is merged, I would like to integrat=
+e this series' FlexCAN functionality into imx8mp, even if the real controll=
+er has more features=2E So this branch just allows me to look into the futu=
+re which helps my review=2E
 
-If we expose an API that says: QMP_MIGRATE might use a value that was
-set using MIGRATE-SET-PARAMETERS 6 months ago because QEMU uses global
-state, that's an API usability issue.
+>
+>As for the series and your (Bernhard Beschow) changes:
 
-If we expose an API that says: QMP_MIGRATE runs the migration with
-whatever arguments were passed to it via CONFIG, that sounds like
-something sensible.
+Let's keep the discussion on the list=2E While there is some truth to my b=
+ranches I'd prefer to stick to the review process and only discuss topics r=
+aised here=2E I'll provide my feedback as soon as I find time for it=2E
 
-I don't think the API consumers would be surprised if we allow
-MIGRATE-SET-PARAMETERS to change runtime values for a migration and on
-the next migration that value is no longer the same.
+Best regards,
+Bernhard
 
-> Do you think we should make "config" of migrate / migrate_incoming taking
-> global setting as base, rather than initial_params?  I hope we don't
-> introduce something for nobody at last, but only to make our lives slightly
-> harder. :(
-
-One calls a function and it uses the arguments passed to it, that's
-it. New migration, new arguments. As you said, mgmt could just hold the
-dynamic parameter that their user changed and pass that along with the
-config for the new migration.
-
-But I don't think we fleshed out the usage regarding the dynamic
-parameters yet. There might be other issues that I'm overlooking. Maybe
-we'd need a whole new command with slightly different semantics from
-migrate-set-parameters that adjusts the dynamic options while migration
-is running, I'm not sure.
-
----
-side note:
-
-If you think the whole endevour of passing a config to qmp_migrate
-is a bad idea, please speak up. If mgmt code will require the amount of
-churn I had to do for our test suite, maybe it's not worth the effort
-after all.
-
-My opinion is that, in general, the "config" changes are going in a good
-direction. I worry slightly about what the cost would be for the users
-to adhere to it. Migration has been quirky for a looong time, you make
-it less quirky people will find it strange =)
+>
+>I have seen that you suggest some reordering of some
+>functions in the hw/net/can/flexcan=2Ec file=2E If you think
+>that it is the better, more readable order for QEMU developers,
+>I would suggest and have plea to Matyas Bobek to proceed
+>with reorder=2E Same with tracepoints and debug prints
+>which could be updated into state that your or others
+>follow-up patches would not cause massive code movement
+>which complicates tracking and reading of the changes=2E
+>
+>On the other hand, I have some arguments against unification
+>of memory FlexCAN access function and inlining register accesses
+>into them=2E We have already discused with Matyas Bobek that
+>for FlexCAN3 and other future changes it would worth to
+>separate registers from memory part etc=2E So I would kept
+>this separation=2E Making as much as possible of the core
+>opaque for its external use is right from my view point
+>on the other hand=2E
+>
+>As for the CAN core changes, again there are some which
+>I see as good moves, some cleanup of long term unused original
+>structures which have been planned for another integration
+>into QEMU before simplification to pass review etc=2E On the other
+>hand, I would keep client state without const and with destructors
+>etc=2E Again, actual code is somehow usable in its actual form,
+>but from the long term perspective, I see the need for
+>back-pressure propagation, emulation of the highest priority
+>message (the lowest ID) exchange the first, etc=2E and I have some
+>plans for that=2E I do not think that CAN emulation is and will
+>be some real performance bottleneck in QEMU use for embedded
+>systems development so I would like to keep there space
+>for future more precise emulation=2E
+>
+>Same with reset on the chip core level, I think that its
+>redundant call does not cause any performance problems,
+>but I would be happy if the controller codes are reusable
+>for wide scenarios=2E I have written and used LinCAN with
+>such controllers at time of ISA bus on PC=2E I would be happy if
+>we have mechanism how to map them on SoCs with FPGAs=2E
+>Unfortunately this valid and very usesfull feature
+>
+>(
+>for example for our RTEMS effort on Zynq
+>  https://docs=2Ertems=2Eorg/docs/main/bsp-howto/can=2Ehtml
+>and ideally even on PolarFire (as time allows) where even NuttX
+>can be tested and CI run
+>  https://github=2Ecom/apache/nuttx/tree/master/drivers/can
+>)
+>
+>hit concrete wall in May, without any suggestion how to
+>make that needed use of QEMU for CI acceptable=2E =20
+>
+>But our SJA1000 code is already used by Espressif in their
+>QEMU fork
+>  https://github=2Ecom/espressif/qemu/tree/esp-develop/hw/net/can
+>so there is more proven use out of PCI based cards=2E CTU CAN FD
+>is used mostly on FPGAs but here are MCUs with it so again,
+>even if the usability of mainline QEMU for FPGA development
+>would stay blocked, there are standard, hopefully non problematic,
+>regular machine code initiated uses of the CAN controllers
+>which are part of QEMU=2E
+>
+>So I would be happy if we can thought about that wider use
+>to check that it would not be more problematic in future
+>if some code is optimized=2E
+>
+>On the other hand, it is right that even in esp32_twai=2Ec
+>case, the integration is based on RESETTABLE_CLASS
+>and esp32_twai_reset() calls can_sja_hardware_reset()
+>explicitly=2E So can_sja_hardware_reset() during can_sja_init()
+>is not strictly necessary=2E
+>
+>Back to sabrelite FlexCAN support series=2E
+>In general I agree with the patch series and I have
+>consulted and reviewed it multiple times=2E
+>So it can be considered to be approved by me
+>that it is functionally OK as well as it respects
+>copyright requirements etc=2E I add my
+>
+>Signed-off-by: Pavel Pisa <pisa@fel=2Ecvut=2Ecz>
+>
+>As for individual formatting and may be some debug prints,
+>I would allow it to go in in its actual form and then reduce
+>these latter that we have state with more, may it be even
+>abundant, debug in mainline recorded=2E But I expect that
+>there could be more request for style and details from
+>more experienced QEMU developers=2E
+>
+>There is one unresolved patch check report about
+>DEVICE_NATIVE_ENDIAN
+>
+>+static const struct MemoryRegionOps flexcan_ops =3D {
+>+    =2Eread =3D flexcan_mem_read,
+>+    =2Ewrite =3D flexcan_mem_write,
+>+    =2Eendianness =3D DEVICE_NATIVE_ENDIAN,
+>+    =2Evalid =3D {
+>+        =2Emin_access_size =3D 1,
+>+        =2Emax_access_size =3D 4,
+>+        =2Eunaligned =3D true,
+>+        =2Eaccepts =3D flexcan_mem_accepts
+>+    },
+>+    =2Eimpl =3D {
+>+        =2Emin_access_size =3D 4,
+>+        =2Emax_access_size =3D 4,
+>+        =2Eunaligned =3D false
+>+    },
+>+};
+>
+>But I do not know what I can suggest there=2E The device is
+>infernally accessed by 32-bits words and should be
+>mapped in native format because same core is used
+>on little-endian and may it be even bi-endian ARMs[*1]
+>and for sure on big-endian PowerPCs=2E We believe that
+>native endianness with host is the best option in this
+>case=2E Extending =2Evalid=2Emax_access_size to 8 is right
+>and probably require for 64-bit targets as I understand
+>from your patches=2E
+>
+>[*1] as I have used bi-endian ARMs they mapped peripherals
+>often native way on 32-bit entities=2E So again, fixed
+>DEVICE_BIG_ENDIAN or DEVICE_LITTLE_ENDIAN is incorrect
+>in such case=2E
+>
+>Best wishes,
+>
+>                Pavel
+>
+>                Pavel Pisa
+>    phone:      +420 603531357
+>    e-mail:     pisa@cmp=2Efelk=2Ecvut=2Ecz
+>    Department of Control Engineering FEE CVUT
+>    Karlovo namesti 13, 121 35, Prague 2
+>    university: http://control=2Efel=2Ecvut=2Ecz/
+>    personal:   http://cmp=2Efelk=2Ecvut=2Ecz/~pisa
+>    social:     https://social=2Ekernel=2Eorg/ppisa
+>    projects:   https://www=2Eopenhub=2Enet/accounts/ppisa
+>    CAN related:http://canbus=2Epages=2Efel=2Ecvut=2Ecz/
+>    RISC-V education: https://comparch=2Eedu=2Ecvut=2Ecz/
+>    Open Technologies Research Education and Exchange Services
+>    https://gitlab=2Efel=2Ecvut=2Ecz/otrees/org/-/wikis/home
 
