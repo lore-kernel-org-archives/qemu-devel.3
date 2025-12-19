@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D3EE6689C
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 22:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E500E66891
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 22:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWiub-0001kg-2L; Fri, 19 Dec 2025 17:25:25 -0500
+	id 1vWiua-0001jz-6j; Fri, 19 Dec 2025 17:25:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vWiuR-0001h1-JG
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 17:25:16 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1vWiuO-0001gR-SI
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 17:25:14 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vWiuP-0004zt-HZ
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 17:25:15 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-64b7a38f07eso2786835a12.0
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 14:25:13 -0800 (PST)
+ id 1vWiuM-0004yX-6v
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 17:25:11 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-649e28dccadso3352052a12.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 14:25:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766183112; x=1766787912; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1766183108; x=1766787908; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CdRLm5zMkoDQZ5YxMVTuMYcF0Rw/N9qJIqQIdpP+JoM=;
- b=RFlEJvV9GRtn4DBinPrxojjn7Ftyst3IEmDf0zvFyCxvaVVfY74xmjTDodbWVhMNGs
- 9AyFcn8hOPj7GmJiDZSYLaOuD7gl0qJSxRjlT41mxn/rdnnr+/kjqPQczuB0LKYNGEfl
- pKePNU05TbBNjCMaP7C7lDtBeBFJlVWeCikRxB3hscSXaE6KdcIbSQDp2XIeRuN360J6
- HeFW+vppHgzeAIbBnpFfqUHrwqNuT4GNRm+dLC9+G7Cthutr2JvXXz9GZYR7hbE/DtId
- E4uhWUBui/AaTe9LJPtWfqXydtLjOlK0BXALCeWsdG8drSL6zydS0oza9aFMNH0jDpSu
- 1gLw==
+ bh=PsjIGYpY3rtNIwVVB461L5eAVGLk+UOcl2XZVc+t3W0=;
+ b=VNQzSfzJiaS5bFI6t4gLQ1I+5Q4iFkMwMmzWDlnx9WoR65/LWfmOvWHvX6MRxHUPW4
+ hhkhYM6snKf/sv1rvzjUSnHoEMg3wuQ90KpyBvdWQXvhcVWi/rC0Ej0JPR7s0EyBKSe9
+ h8siXadGA+NBZvakgQwcHXtlg/00fJxkv1wZiZxTXK2p00+oN+Ko7pwrURZhsB33Cep0
+ ihht1z4Fa71T5TSDJx269p9jqd8MElo4jpvxiAwAH8/iS4HB1mn8oy1KcOQeTCXyu4Da
+ 85rUqxPm9uKMLmULpfx/fiIde6ksHKwioHNU0Ny1T5Gvc/Gbzdjc0BcATlX7nhukgfsg
+ 0JoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766183112; x=1766787912;
+ d=1e100.net; s=20230601; t=1766183108; x=1766787908;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CdRLm5zMkoDQZ5YxMVTuMYcF0Rw/N9qJIqQIdpP+JoM=;
- b=NQeBv0yYiRiRen22Ex8uCY848MgqSORMVPUC5XgKZSsGncAoWDDbXQ/4Cy1UvBEIQd
- tPS/FBst5rov968yb3acmGlw7Lwv+FiofDUFTayiXTYu5Pz7gQPGliKNRfNTokXkJQ74
- IK3sV+XIb9V6/61vOSlRUQZfqU3s3PyMe7yL4bU2d3K0qnpgGdonsCSGksr6dJi1EN0q
- po66uMzHTbSKgbsew9e9dJRYmf4h7objwG6hED5xdSv9tPKuvwVLmAXGe4j4AupcBav1
- u4Oq2gYsT3BMuNtDISQHAJUqsGa1WV2S9VzYbiBtSNgfZCTzXcbcuDCCSM/p6Qi+vhyI
- cvAg==
-X-Gm-Message-State: AOJu0YxabtSqNmWg+08pjlFBUZO/v6eCnjcE1w/jylXUD4lREW1graM3
- pTawITgQeOBzIf92ZVAPDCoywbvsXMQlhTqHFde11g8Sh1Jd5PZb+yTaXO6kyRGp
-X-Gm-Gg: AY/fxX6QCG4BMVPT12WOTLezUgYDtBXQd6TcEjYs60FqeXuHh53Z+ZeZE5kBFNZR4uG
- B7KYai3u/z6kJQ8102Ag9s3WWjKiloxWmWZLZbYeUjGvSVa7TJUz4dVAP0QoZizvxCQ12nF23d0
- iozFzgFtzu+bC5Crdw3jEFqxcrAcy7xfyTcHWtWmnq+mGwLE/8QK1XPbvjjowPgGrfxxMUJ7V1j
- hM2hZPfJVj1CB8gnvTOLz0JFFuhWIxXqbbSgFFDFkhGb1ryN2sFLdhwuiIDnh9uT4bIB+FVa63L
- gQzd6A+nCrPV9+UXLxdHSHU/+Q47Wjg5VZ/9SEnRuoMhgoHcFJnwkhTOnD9m82gof8Pi8sk9WPw
- A3V9UN063tzmTpei6vUokz+RNuyfnyBPepyuBQtjQAK1TwXTsS2uCFNwapTKLxvMzEFgYPiOuUg
- 8Se/DFaTe/pTHO6HCBVUTlnAQRbZloHv5s+UUQAQDtKlhMJothUWpCk5mcKufm+w==
-X-Google-Smtp-Source: AGHT+IHr0AmTgpAnzoj0Q9cG/4FZY8tcc0Y9PnzO3WK3MfPQDbIeV0ejj5Eb2eji2Sz/4N+0y+daKg==
-X-Received: by 2002:a05:6402:1ec8:b0:647:5518:8c35 with SMTP id
- 4fb4d7f45d1cf-64b8ea60f47mr4189440a12.6.1766183111682; 
- Fri, 19 Dec 2025 14:25:11 -0800 (PST)
+ bh=PsjIGYpY3rtNIwVVB461L5eAVGLk+UOcl2XZVc+t3W0=;
+ b=liocKc0Ph7uvNzefnHK8OyA95vxBKN1eenGh24sLIE/UCVd6d9PLjFOmhkXmgVDAJ4
+ /mO9ykhpBCP0LqvJFJdz7vxlSQmwmeGy0EyAbjChmJkNXrYmXVYD/La/XIjxl8UHNYOW
+ OnPOYtJCIaw7RXAc6KdrjBjxhL9A2LV6fQ7zmjgLZAB2N/HxN6USdYa8I3V76ntpqJM8
+ kIjYgjuSSgTi3U8eVy94kSwRsjtgj3qOgCbOF7QtY48vIWDRB6zdCp+cIOsGkaESuNDD
+ n9Te5YetlAAFaEVDMeCFKBMiGyr1i1XlJwCTQD72mo3fhokQeSRqiI4CE0mfVXMsUjzm
+ zHsQ==
+X-Gm-Message-State: AOJu0YxJ91F/oxHdgsBAuHBQLMEqFjnBAXmLzKqkx9DEwdPvjC+0q7gO
+ Dvz3I5Bj5RsI/97BWX/yjp11Bivy41veLJffXItZ+B3TfOFWhWYMC0npBejKoX52
+X-Gm-Gg: AY/fxX5tKnRocj71BVWZw/PHfEHw17sMDpBgyapivsIqvmAS9cGDQCDGVj6RUvLRbko
+ jQylhJf2RUzBXqQiVXIOtAF5BYL0Y594HhgKzDlSItzQmFznc3+IiYmZjOy0CIz3Owygrtt1zUv
+ SIwnDN2th3r7sgJOqn/sbiJ8/XuyFyBw4BiZk6f3H9BgITgp3kxAx4G2iy7Ste35qFaHJGVNx9i
+ w74qcDukz0huH9pbti2Fnk/EWpkRxxymfnyrWakb45qnijPVFFGmd8V7tBw1AWK6EMCmKfY1dde
+ luV9FtaIrX1DQb2LX9kEUpkcr/V0o6ZDDE7Et+0gXeCjm9CLESfslMjJljX7SMiHJHt5za6wIrH
+ CZZqee/14AQArsI7LOZSCd7thDvu/Hpj1Q/a+VNkw7qJzZ5BrXuzE6na/OzVVqhl8EFhIti4d71
+ flRKnY5wAdsPJ0ewkmval+SuEL54mWy7SlyGQg2xtc8ajxYvSg7vUcgFpHwinG5Q==
+X-Google-Smtp-Source: AGHT+IFENmk4HCzm/JILXlQmeTX33uH9eqgTDu0gRXkbRZJlMfnhZ6jnNKRPZxXdz5KhTbh1D6GOPA==
+X-Received: by 2002:a05:6402:1ecf:b0:649:cb90:2858 with SMTP id
+ 4fb4d7f45d1cf-64b8ecaf225mr4636069a12.28.1766183108219; 
+ Fri, 19 Dec 2025 14:25:08 -0800 (PST)
 Received: from thinkpad-t470s.. (93-138-210-222.adsl.net.t-com.hr.
  [93.138.210.222]) by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-64b91599605sm3237440a12.23.2025.12.19.14.25.09
+ 4fb4d7f45d1cf-64b91599605sm3237440a12.23.2025.12.19.14.25.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Dec 2025 14:25:10 -0800 (PST)
+ Fri, 19 Dec 2025 14:25:07 -0800 (PST)
 From: ruslichenko.r@gmail.com
 X-Google-Original-From: ruslan_ruslichenko@epam.com
 To: qemu-devel@nongnu.org
 Cc: ruslan_ruslichenko@epam.com, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>,
  Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
-Subject: [RFC PATCH 3/6] hw/arm/virt: create smmu for sysbus
-Date: Fri, 19 Dec 2025 23:24:36 +0100
-Message-ID: <20251219222439.2497195-4-ruslan_ruslichenko@epam.com>
+Subject: [RFC PATCH 2/6] hw/arm/smmu-common: add integration with simple bus
+Date: Fri, 19 Dec 2025 23:24:35 +0100
+Message-ID: <20251219222439.2497195-3-ruslan_ruslichenko@epam.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251219222439.2497195-1-ruslan_ruslichenko@epam.com>
 References: <20251219222439.2497195-1-ruslan_ruslichenko@epam.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,195 +105,294 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>
 
-Create new smmu device for sysbus.
-Add memory region for SMMU to memory map.
+Until now SMMU could only be created for PCIe bus.
+
+This patch adds support to assotiate SMMU with simple
+bus in case SMMU created with type: 'generic-primary-bus'.
+
+The 'primary-bus' is now renamed to 'pci-primary-bus'
+to avoid confusion.
 
 Signed-off-by: Mirsad Ostrakovic <mirsad_ostrakovic@epam.com>
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/arm/virt-acpi-build.c |  4 +-
- hw/arm/virt.c            | 84 +++++++++++++++++++++++++++++++++-------
- include/hw/arm/virt.h    |  4 +-
- 3 files changed, 75 insertions(+), 17 deletions(-)
+ hw/arm/smmu-common.c         | 69 ++++++++++++++++++++++++++++++------
+ hw/arm/virt.c                |  2 +-
+ hw/core/bus.c                | 13 +++++++
+ include/hw/arm/smmu-common.h | 22 +++++++++---
+ include/hw/qdev-core.h       | 12 +++++++
+ 5 files changed, 103 insertions(+), 15 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 200e2a1da7..2d7e2e2725 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -334,8 +334,8 @@ static int populate_smmuv3_legacy_dev(GArray *sdev_blob)
-      */
-     g_array_sort(sdev.rc_smmu_idmaps, iort_idmap_compare);
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 62a7612184..52ef49d7f6 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -25,6 +25,7 @@
+ #include "qapi/error.h"
+ #include "qemu/jhash.h"
+ #include "qemu/module.h"
++#include "hw/qdev-core.h"
  
--    sdev.base = vms->memmap[VIRT_SMMU].base;
--    sdev.irq = vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
-+    sdev.base = vms->memmap[VIRT_SMMU_PCIE].base;
-+    sdev.irq = vms->irqmap[VIRT_SMMU_PCIE] + ARM_SPI_BASE;
-     g_array_append_val(sdev_blob, sdev);
-     return sdev.rc_smmu_idmaps->len;
- }
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index d9d7b982b3..ad609bc651 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -187,13 +187,14 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
-     [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
-     [VIRT_UART1] =              { 0x09040000, 0x00001000 },
--    [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
--    [VIRT_PCDIMM_ACPI] =        { 0x09070000, MEMORY_HOTPLUG_IO_LEN },
--    [VIRT_ACPI_GED] =           { 0x09080000, ACPI_GED_EVT_SEL_LEN },
--    [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
--    [VIRT_PVTIME] =             { 0x090a0000, 0x00010000 },
--    [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
--    [VIRT_ACPI_PCIHP] =         { 0x090c0000, ACPI_PCIHP_SIZE },
-+    [VIRT_SMMU_PCIE] =          { 0x09050000, SMMU_IO_LEN },
-+    [VIRT_SMMU_SYSBUS] =        { 0x09070000, SMMU_IO_LEN },
-+    [VIRT_PCDIMM_ACPI] =        { 0x09090000, MEMORY_HOTPLUG_IO_LEN },
-+    [VIRT_ACPI_GED] =           { 0x090a0000, ACPI_GED_EVT_SEL_LEN },
-+    [VIRT_NVDIMM_ACPI] =        { 0x090b0000, NVDIMM_ACPI_IO_LEN},
-+    [VIRT_PVTIME] =             { 0x090c0000, 0x00010000 },
-+    [VIRT_SECURE_GPIO] =        { 0x090d0000, 0x00001000 },
-+    [VIRT_ACPI_PCIHP] =         { 0x090e0000, ACPI_PCIHP_SIZE },
-     [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
-     /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
-     [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
-@@ -247,7 +248,8 @@ static const int a15irqmap[] = {
-     [VIRT_ACPI_GED] = 9,
-     [VIRT_MMIO] = 16, /* ...to 16 + NUM_VIRTIO_TRANSPORTS - 1 */
-     [VIRT_GIC_V2M] = 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
--    [VIRT_SMMU] = 74,    /* ...to 74 + NUM_SMMU_IRQS - 1 */
-+    [VIRT_SMMU_PCIE] = 74, /* ...to 74 + NUM_SMMU_IRQS - 1 */
-+    [VIRT_SMMU_SYSBUS] = 78, /* ...to 78 + NUM_SMMU_IRQS - 1 */
-     [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 */
- };
- 
-@@ -1514,14 +1516,14 @@ static void create_smmuv3_dev_dtb(VirtMachineState *vms,
-                            0x0, vms->iommu_phandle, 0x0, 0x10000);
+ #include "qemu/error-report.h"
+ #include "hw/arm/smmu-common.h"
+@@ -824,7 +825,7 @@ SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t addr,
+ /**
+  * The bus number is used for lookup when SID based invalidation occurs.
+  * In that case we lazily populate the SMMUPciBus array from the bus hash
+- * table. At the time the SMMUPciBus is created (smmu_find_add_as), the bus
++ * table. At the time the SMMUPciBus is created (pci_smmu_find_add_as), the bus
+  * numbers may not be always initialized yet.
+  */
+ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
+@@ -847,7 +848,7 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
+     return NULL;
  }
  
--static void create_smmu(const VirtMachineState *vms,
-+static void create_smmu_pcie(const VirtMachineState *vms,
-                         PCIBus *bus)
+-static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
++static AddressSpace *pci_smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
  {
-     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
--    int irq =  vms->irqmap[VIRT_SMMU];
-+    int irq =  vms->irqmap[VIRT_SMMU_PCIE];
-     int i;
--    hwaddr base = vms->memmap[VIRT_SMMU].base;
--    hwaddr size = vms->memmap[VIRT_SMMU].size;
-+    hwaddr base = vms->memmap[VIRT_SMMU_PCIE].base;
-+    hwaddr size = vms->memmap[VIRT_SMMU_PCIE].size;
-     DeviceState *dev;
+     SMMUState *s = opaque;
+     SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
+@@ -870,6 +871,7 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+         sdev->smmu = s;
+         sdev->bus = bus;
+         sdev->devfn = devfn;
++        sdev->pcie_device = true;
  
-     if (vms->iommu != VIRT_IOMMU_SMMUV3 || !vms->iommu_phandle) {
-@@ -1533,7 +1535,7 @@ static void create_smmu(const VirtMachineState *vms,
-     if (!vmc->no_nested_smmu) {
-         object_property_set_str(OBJECT(dev), "stage", "nested", &error_fatal);
-     }
--    object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
-+    object_property_set_link(OBJECT(dev), "pci-primary-bus", OBJECT(bus),
-                              &error_abort);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
-@@ -1544,6 +1546,58 @@ static void create_smmu(const VirtMachineState *vms,
-     create_smmuv3_dt_bindings(vms, base, size, irq);
+         memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
+                                  s->mrtypename,
+@@ -883,8 +885,48 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+     return &sdev->as;
  }
  
-+static void create_smmu_sysbus(VirtMachineState *vms)
+-static const PCIIOMMUOps smmu_ops = {
+-    .get_address_space = smmu_find_add_as,
++static AddressSpace *bus_smmu_find_add_as(BusState *bus, void *opaque, int devid)
 +{
-+    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
-+    char *node;
-+    const char compat[] = "arm,smmu-v3";
-+    int irq =  vms->irqmap[VIRT_SMMU_SYSBUS];
-+    int i;
-+    hwaddr base = vms->memmap[VIRT_SMMU_SYSBUS].base;
-+    hwaddr size = vms->memmap[VIRT_SMMU_SYSBUS].size;
-+    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
-+    DeviceState *dev;
-+    MachineState *ms = MACHINE(vms);
++    SMMUState *s = opaque;
++    SMMUBus *sbus = g_hash_table_lookup(s->smmu_bus_by_busptr, bus);
++    SMMUDevice *sdev;
++    static unsigned int index;
 +
-+    vms->sysbus_iommu_phandle = qemu_fdt_alloc_phandle(ms->fdt);
-+
-+    dev = qdev_new(TYPE_ARM_SMMUV3);
-+
-+    if (!vmc->no_nested_smmu) {
-+        object_property_set_str(OBJECT(dev), "stage", "nested", &error_fatal);
-+    }
-+    object_property_set_link(OBJECT(dev), "generic-primary-bus", 
-+                             OBJECT(sysbus_get_default()), &error_abort);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
-+    for (i = 0; i < NUM_SMMU_IRQS; i++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
-+                           qdev_get_gpio_in(vms->gic, irq + i));
++    if (!sbus) {
++        sbus = g_malloc0(sizeof(SMMUBus) +
++                         sizeof(SMMUDevice *) * SMMU_DEVID_MAX);
++        sbus->bus = bus;
++        g_hash_table_insert(s->smmu_bus_by_busptr, bus, sbus);
 +    }
 +
-+    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
-+    qemu_fdt_add_subnode(ms->fdt, node);
-+    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
-+    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
++    sdev = sbus->pbdev[devid];
++    if (!sdev) {
++        char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devid, index++);
 +
-+    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
-+            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
++        sdev = sbus->pbdev[devid] = g_new0(SMMUDevice, 1);
 +
-+    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
-+                     sizeof(irq_names));
++        sdev->smmu = s;
++        sdev->bus = bus;
++        sdev->devfn = devid;
 +
-+    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
++        memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
++                                 s->mrtypename,
++                                 OBJECT(s), name, UINT64_MAX);
++        address_space_init(&sdev->as,
++                           MEMORY_REGION(&sdev->iommu), name);
++        trace_smmu_add_mr(name);
++        g_free(name);
++    }
 +
-+    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
-+
-+    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->sysbus_iommu_phandle);
-+
-+    g_free(node);
++    return &sdev->as;
 +}
 +
- static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
- {
-     const char compat[] = "virtio,pci-iommu\0pci1af4,1057";
-@@ -1692,7 +1746,7 @@ static void create_pcie(VirtMachineState *vms)
- 
-         switch (vms->iommu) {
-         case VIRT_IOMMU_SMMUV3:
--            create_smmu(vms, vms->bus);
-+            create_smmu_pcie(vms, vms->bus);
-             if (!vms->default_bus_bypass_iommu) {
-                 qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
-                                        0x0, vms->iommu_phandle, 0x0, 0x10000);
-@@ -2509,6 +2563,8 @@ static void machvirt_init(MachineState *machine)
-     create_pcie(vms);
-     create_cxl_host_reg_region(vms);
- 
-+    create_smmu_sysbus(vms);
++static const PCIIOMMUOps pci_smmu_ops = {
++    .get_address_space = pci_smmu_find_add_as,
++};
 +
-     if (aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
-         vms->acpi_dev = create_acpi_ged(vms);
-         vms->generic_error_notifier.notify = virt_generic_error_req;
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index c77a33f6df..00b276ecf0 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -63,7 +63,8 @@ enum {
-     VIRT_GIC_VCPU,
-     VIRT_GIC_ITS,
-     VIRT_GIC_REDIST,
--    VIRT_SMMU,
-+    VIRT_SMMU_PCIE,
-+    VIRT_SMMU_SYSBUS,
-     VIRT_UART0,
-     VIRT_MMIO,
-     VIRT_RTC,
-@@ -168,6 +169,7 @@ struct VirtMachineState {
-     uint32_t gic_phandle;
-     uint32_t msi_phandle;
-     uint32_t iommu_phandle;
-+    uint32_t sysbus_iommu_phandle;
-     int psci_conduit;
-     hwaddr highest_gpa;
-     DeviceState *gic;
++static const BusIOMMUOps bus_smmu_ops = {
++    .get_address_space = bus_smmu_find_add_as,
+ };
+ 
+ SMMUDevice *smmu_find_sdev(SMMUState *s, uint32_t sid)
+@@ -926,7 +968,7 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+ {
+     SMMUState *s = ARM_SMMU(dev);
+     SMMUBaseClass *sbc = ARM_SMMU_GET_CLASS(dev);
+-    PCIBus *pci_bus = s->primary_bus;
++    PCIBus *pci_bus = s->pci_primary_bus;
+     Error *local_err = NULL;
+ 
+     sbc->parent_realize(dev, &local_err);
+@@ -939,6 +981,11 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+                                      g_free, g_free);
+     s->smmu_pcibus_by_busptr = g_hash_table_new(NULL, NULL);
+ 
++    if (s->generic_primary_bus ) {
++        bus_setup_iommu(s->generic_primary_bus, &bus_smmu_ops, s);
++        return;
++    }
++
+     if (!pci_bus) {
+         error_setg(errp, "SMMU is not attached to any PCI bus!");
+         return;
+@@ -962,10 +1009,10 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+             }
+         }
+ 
+-        if (s->smmu_per_bus) {
+-            pci_setup_iommu_per_bus(pci_bus, &smmu_ops, s);
++        if (s->pci_smmu_per_bus) {
++            pci_setup_iommu_per_bus(pci_bus, &pci_smmu_ops, s);
+         } else {
+-            pci_setup_iommu(pci_bus, &smmu_ops, s);
++            pci_setup_iommu(pci_bus, &pci_smmu_ops, s);
+         }
+         return;
+     }
+@@ -991,9 +1038,11 @@ static void smmu_base_reset_exit(Object *obj, ResetType type)
+ 
+ static const Property smmu_dev_properties[] = {
+     DEFINE_PROP_UINT8("bus_num", SMMUState, bus_num, 0),
+-    DEFINE_PROP_BOOL("smmu_per_bus", SMMUState, smmu_per_bus, false),
+-    DEFINE_PROP_LINK("primary-bus", SMMUState, primary_bus,
++    DEFINE_PROP_BOOL("pci_smmu_per_bus", SMMUState, pci_smmu_per_bus, false),
++    DEFINE_PROP_LINK("pci-primary-bus", SMMUState, pci_primary_bus,
+                      TYPE_PCI_BUS, PCIBus *),
++    DEFINE_PROP_LINK("generic-primary-bus", SMMUState, generic_primary_bus,
++                     TYPE_BUS, BusState *),
+ };
+ 
+ static void smmu_base_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 25fb2bab56..d9d7b982b3 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3050,7 +3050,7 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+                        "iommu=smmuv3" : "virtio-iommu");
+         } else if (vms->iommu == VIRT_IOMMU_NONE) {
+             /* The new SMMUv3 device is specific to the PCI bus */
+-            object_property_set_bool(OBJECT(dev), "smmu_per_bus", true, NULL);
++            object_property_set_bool(OBJECT(dev), "pci_smmu_per_bus", true, NULL);
+         }
+     }
+ }
+diff --git a/hw/core/bus.c b/hw/core/bus.c
+index bddfc22d38..6d1483fdbd 100644
+--- a/hw/core/bus.c
++++ b/hw/core/bus.c
+@@ -80,6 +80,19 @@ bool bus_is_in_reset(BusState *bus)
+     return resettable_is_in_reset(OBJECT(bus));
+ }
+ 
++void bus_setup_iommu(BusState *bus, const BusIOMMUOps *ops, void *opaque)
++{
++    /*
++     * If called, bus_setup_iommu() should provide a minimum set of
++     * useful callbacks for the bus.
++     */
++    assert(ops);
++    assert(ops->get_address_space);
++
++    bus->iommu_ops = ops;
++    bus->iommu_opaque = opaque;
++}
++
+ static ResettableState *bus_get_reset_state(Object *obj)
+ {
+     BusState *bus = BUS(obj);
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index 80d0fecfde..670ae46930 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -27,6 +27,8 @@
+ #define SMMU_PCI_DEVFN_MAX                  256
+ #define SMMU_PCI_DEVFN(sid)                 (sid & 0xFF)
+ 
++#define SMMU_DEVID_MAX                      256
++
+ /* VMSAv8-64 Translation constants and functions */
+ #define VMSA_LEVELS                         4
+ #define VMSA_MAX_S2_CONCAT                  16
+@@ -120,12 +122,13 @@ typedef struct SMMUTransCfg {
+ 
+ typedef struct SMMUDevice {
+     void               *smmu;
+-    PCIBus             *bus;
++    void               *bus;
+     int                devfn;
+     IOMMUMemoryRegion  iommu;
+     AddressSpace       as;
+     uint32_t           cfg_cache_hits;
+     uint32_t           cfg_cache_misses;
++    bool               pcie_device;
+     QLIST_ENTRY(SMMUDevice) next;
+ } SMMUDevice;
+ 
+@@ -134,6 +137,11 @@ typedef struct SMMUPciBus {
+     SMMUDevice   *pbdev[]; /* Parent array is sparse, so dynamically alloc */
+ } SMMUPciBus;
+ 
++typedef struct SMMUBus {
++    BusState     *bus;
++    SMMUDevice   *pbdev[]; /* Parent array is sparse, so dynamically alloc */
++} SMMUBus;
++
+ typedef struct SMMUIOTLBKey {
+     uint64_t iova;
+     int asid;
+@@ -154,14 +162,16 @@ struct SMMUState {
+     MemoryRegion iomem;
+ 
+     GHashTable *smmu_pcibus_by_busptr;
++    GHashTable *smmu_bus_by_busptr;
+     GHashTable *configs; /* cache for configuration data */
+     GHashTable *iotlb;
+     SMMUPciBus *smmu_pcibus_by_bus_num[SMMU_PCI_BUS_MAX];
+     PCIBus *pci_bus;
+     QLIST_HEAD(, SMMUDevice) devices_with_notifiers;
+     uint8_t bus_num;
+-    PCIBus *primary_bus;
+-    bool smmu_per_bus; /* SMMU is specific to the primary_bus */
++    PCIBus *pci_primary_bus;
++    bool pci_smmu_per_bus; /* SMMU is specific to the pci_primary_bus */
++    BusState *generic_primary_bus;
+ };
+ 
+ struct SMMUBaseClass {
+@@ -183,7 +193,11 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
+ /* Return the stream ID of an SMMU device */
+ static inline uint16_t smmu_get_sid(SMMUDevice *sdev)
+ {
+-    return PCI_BUILD_BDF(pci_bus_num(sdev->bus), sdev->devfn);
++    if (sdev->pcie_device) {
++        return PCI_BUILD_BDF(pci_bus_num(sdev->bus), sdev->devfn);
++    } else {
++        return sdev->devfn;
++    }
+ }
+ 
+ /**
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index e3862279da..2092450b90 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -954,6 +954,18 @@ bool device_is_in_reset(DeviceState *dev);
+  */
+ bool bus_is_in_reset(BusState *bus);
+ 
++/**
++ * bus_setup_iommu() - Set up IOMMU operations for a bus
++ * @bus: the bus to configure
++ * @ops: IOMMU operations structure containing callback functions
++ * @opaque: opaque data passed to IOMMU operation callbacks
++ *
++ * Configure IOMMU operations for the specified bus. The ops structure
++ * must contain at least the get_address_space callback. The opaque
++ * parameter is passed through to the operation callbacks.
++ */
++void bus_setup_iommu(BusState *bus, const BusIOMMUOps *ops, void *opaque);
++
+ /* This should go away once we get rid of the NULL bus hack */
+ BusState *sysbus_get_default(void);
+ 
 -- 
 2.43.0
 
