@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ECECD7495A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 06:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37980D74962
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 07:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWTuR-0004Gk-Fl; Fri, 19 Dec 2025 01:24:15 -0500
+	id 1vWUXd-0003nb-5O; Fri, 19 Dec 2025 02:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajaygargnsit@gmail.com>)
- id 1vWTuQ-0004Gc-0N
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 01:24:14 -0500
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from
+ <3B_lEaQYKCl4UQ7EJVCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--yubinz.bounces.google.com>)
+ id 1vWUXc-0003mw-6k
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 02:04:44 -0500
+Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajaygargnsit@gmail.com>)
- id 1vWTuO-0007er-HK
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 01:24:13 -0500
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-59583505988so1997105e87.1
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 22:24:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from
+ <3B_lEaQYKCl4UQ7EJVCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--yubinz.bounces.google.com>)
+ id 1vWUXZ-0001VV-Q6
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 02:04:43 -0500
+Received: by mail-pg1-x549.google.com with SMTP id
+ 41be03b00d2f7-b471737e673so1793668a12.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 23:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766125450; x=1766730250; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XAWQOPHI+WBur9sUSKJakJodjiC8otpU2/f3VX456fU=;
- b=aP+4IlMoR6dLckU9s1EIIJ9IL/N4kkpaEijpnrKsUUujjTF8cArRuxHg71wX3JfXRy
- kWCl9Gmz1P8QbZNvZ5gtiHjAbd2VV0US85DIqvlwYDGa3DGqBC/1DU7GOOIRJh7LSzt1
- gcO4tE42GnoUAezaWvzwLeKheIEhlGF+0Zk4PjmeSuBNHARviPc74kuxOgq7rE01O9NE
- JmvCZ9vAPipTQ0AuoQMoRXihW9ofK+f64inR68SQ0V2Ade615mg5kVoc7oCLgwYiMQoM
- Ck3PcbFHQPPo0hpUrd/yltpqU6P0BpUXT1u2ngfYfEXGnhfaKbUoVDCCVIiilIoPLpuF
- Ah4A==
+ d=google.com; s=20230601; t=1766127880; x=1766732680; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=sqKbf5U+iN45idWXbzLIXCddBm8t7wMPDL3fykwBIz0=;
+ b=zPdgy7LyFlv4S0OwSzVC6QMne4Yr6WhHrPLCYiT0R0APYSW1QHkDVq5kIPZDzxNQac
+ UKhOw4twwUroFRj0tpkKFfk6caxTmxgsoHp0PS70DU4Rt0Se+AYtb1xn+QwOW2Wvzob1
+ ENk7U+pejjijaltVLNAFSXR/5cbC672dGPLscemSGo63pCwwcNswr3j2UD4C0Nkc45K/
+ RY2UdEb0kn1Y8mqAwPMz1/aIX5cMCHC+9JqxBBa3XMB8EaKUoZ0BNtVESzxy0YUqynmI
+ QwxwXTGV4Cpw+w+9sngHnOJlvJ2yVoVEGe/cL+EJOFurxm/6+f2SUpEvW8pS/e3TlwKQ
+ /9tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766125450; x=1766730250;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XAWQOPHI+WBur9sUSKJakJodjiC8otpU2/f3VX456fU=;
- b=KQAfXFPjBpwW9a+YNjel5pRYHb2P8nVcfSvPm7mWhZtlS326EaSAsISiSBoROtuPvC
- W27iuZAF0GN7QcNgQinMBKwgIqEr+tiY8Y60Ou+oYjYvCZxHsmpAIFJ5qsny+92FErz0
- 3C+pE+8NFSgMcgyS4d9gCAOM9QKDiGvqjKtkwv4V3bm6tVFKw6w+yomvKX5qiv9A9aXc
- yjUs8hu891p27NvjY2nRiSZBZrGxi6Xl9WYX6FPLiXwJUcDdBYDBxONwEDnOCqZL5VUF
- fKZTBqPgyFI8MsZv3s01ryciteHX7TOYaiqdBrP0iS+MInqq/rRsdLAhGXQXbpYh4Kae
- pnGg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9pjyu3F5IJLO7a8KqmdgRczT0USccpOyq+MzUkdcE7O4Yr1Cm/AdSmSElt0wyMo3fiKlBI3/N+lOX@nongnu.org
-X-Gm-Message-State: AOJu0YxwZOw+CF1K4RBHz8TxwEzO6WmEVCfkSVRfJaCADwVzTa69YdC5
- TnkyEadK8texFrkMlh5pL5sle1kegFcpbQDD82S3esysmXT+7Y3UtGQSVJJc7N5mG450rrrx5ok
- 6oeqo8c8xjPAP67PkRqgVxC4+jVgPmHI=
-X-Gm-Gg: AY/fxX5RVaKr4wi3eOXJJBPQtJn1gP6MEq4odPh97unKNsBX6e51oUex5fNO1DtoRYa
- bZbXQriF8Qu+fpuq1hiMlNlwAAHuN/a66+bbk/rU7bi2ACio5f3R05KkVTlyEdkhEyN44/Oi4Ju
- u8XqKbUmX3+05kdOW3TpCa1MXw7zuIAnl4Eyfrm3t2cA/wyE/vDmBmeE3fjU4wiv7ZwLvm41qLj
- kj/BCnMReRSFLAkvqKeLtCQL3HYjJLjlxTwQHyAE06akHqKD1fu7Y86y+Bk5xNa6OYAgyjxjQ==
-X-Google-Smtp-Source: AGHT+IG39OQjwLBbQlGXdvI2kB58X2CZX464R4UmGvJTXolSZNqYm3iCf7S8/7Js0XD64zjpGJhfemP/i60fFr7ibO4=
-X-Received: by 2002:a05:6512:2256:b0:598:e2a1:acda with SMTP id
- 2adb3069b0e04-59a124ebdf6mr1891409e87.10.1766125449509; Thu, 18 Dec 2025
- 22:24:09 -0800 (PST)
-MIME-Version: 1.0
-References: <CAHP4M8Uy7HLiKjnMCdNG+QG+0cizN82c_G87AuzDL6qDCBG5vg@mail.gmail.com>
- <20251215045203.13d96d09.alex@shazbot.org>
- <CAHP4M8WeHz-3VbzKb_54C5UuWW-jtqvE=X37CSssUa5gti41GQ@mail.gmail.com>
-In-Reply-To: <CAHP4M8WeHz-3VbzKb_54C5UuWW-jtqvE=X37CSssUa5gti41GQ@mail.gmail.com>
-From: Ajay Garg <ajaygargnsit@gmail.com>
-Date: Fri, 19 Dec 2025 11:53:56 +0530
-X-Gm-Features: AQt7F2q1nf4Dstbm1IzyittrsqPG3RefuBbQcL9mL7jcHlLZu1idSosVvvP5p2s
-Message-ID: <CAHP4M8X=e+dP-T_if5eA=gccdbxkkObYvcrwA3qUBONKWW3W_w@mail.gmail.com>
-Subject: Re: A lingering doubt on PCI-MMIO region of PCI-passthrough-device
-To: Alex Williamson <alex@shazbot.org>, QEMU Developers <qemu-devel@nongnu.org>
-Cc: iommu@lists.linux-foundation.org, linux-pci@vger.kernel.org, 
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=ajaygargnsit@gmail.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1766127880; x=1766732680;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sqKbf5U+iN45idWXbzLIXCddBm8t7wMPDL3fykwBIz0=;
+ b=tvE1J47M+RCsdNc3rgMAhT9pX04095SAQ2+C0YDIA5x7HR5P3nmK8sA+ka1+VxsUDa
+ zXEcmvlmFlHjUspxwTFCezL0PcFYMgbZW2I0+KdEil3aF4nGK9KuX9Oc99ZSJhD991GL
+ qNwHYahes+9kXuDlxdxLnHDjbxEbrBbJyO0uwXfDD2nqsRxVjakOgaM/gVjfHhRyF5v/
+ ftnQ6P705e7HG6XrmU2x4RVmERWxhs4eVhyDuWhf7s7/ymS1N8ZWfCk8xD/5hVoLK2rJ
+ dRvAXK9JPIXv3AGbq4M9jTqIxvuEBW91mta34ILIolGRnoTMYnZZIEsT6mUXSpwctdM9
+ 7/NA==
+X-Gm-Message-State: AOJu0YzJ3vMs6VwO7F4CT23gULz7nfJ1rlw01mtA3ExFqEoDujXSgKP6
+ sOHv0F4r68dQEIRvW6bvtuBsgDAeAmzROXte7QmftwT9xhalorRktadMCiQR9AfPIUz3fk+VHWO
+ sOio3EnLUNRDJy6u2/vvdHOyUeKUDP8W/obL8HIh6Tcr2asjF3WtKmidApm55d+XIMUhMD2SQsc
+ CffDzBNEDFoF6nH4sd725Gf1k11fxdD8niguw=
+X-Google-Smtp-Source: AGHT+IF0xNoL+3yHdLaSkDB2AQcxYdNYa3wwLc+W6CHeQL0u7vSvn+ToCF1Z9dW1BsMKoYN5wrLjvRG8Gzs=
+X-Received: from dlah7.prod.google.com ([2002:a05:701b:2607:b0:11d:cd2a:4c1b])
+ (user=yubinz job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:7022:1a83:b0:11f:1500:4e9a
+ with SMTP id a92af1059eb24-121722e03e0mr2604461c88.32.1766127879707; Thu, 18
+ Dec 2025 23:04:39 -0800 (PST)
+Date: Fri, 19 Dec 2025 07:04:14 +0000
+In-Reply-To: <20251219-aspeed-sgpio-v5-0-fd5593178144@google.com>
+Mime-Version: 1.0
+References: <20251219-aspeed-sgpio-v5-0-fd5593178144@google.com>
+X-Mailer: b4 0.14.2
+Message-ID: <20251219-aspeed-sgpio-v5-1-fd5593178144@google.com>
+Subject: [PATCH v5 1/6] hw/gpio/aspeed_sgpio: Add basic device model for
+ Aspeed SGPIO
+From: Yubin Zou <yubinz@google.com>
+To: qemu-devel@nongnu.org
+Cc: "=?utf-8?q?C=C3=A9dric_Le_Goater?=" <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>, 
+ Nabih Estefan <nabihestefan@google.com>, qemu-arm@nongnu.org, 
+ Yubin Zou <yubinz@google.com>
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
+ envelope-from=3B_lEaQYKCl4UQ7EJVCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--yubinz.bounces.google.com;
+ helo=mail-pg1-x549.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,49 +103,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex.
-Kindly help if the steps listed in the previous email are correct.
+This initial implementation includes the basic device structure,
+memory-mapped register definitions, and read/write handlers for the
+SGPIO control registers.
 
-(Have added qemu mailing-list too, as it might be a qemu thing too as
-virtual-pci is in picture).
+Signed-off-by: Yubin Zou <yubinz@google.com>
+---
+ include/hw/gpio/aspeed_sgpio.h |  66 +++++++++++++++++++
+ hw/gpio/aspeed_sgpio.c         | 145 +++++++++++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build            |   1 +
+ 3 files changed, 212 insertions(+)
 
-On Mon, Dec 15, 2025 at 9:20=E2=80=AFAM Ajay Garg <ajaygargnsit@gmail.com> =
-wrote:
->
-> Thanks Alex.
->
-> So does something like the following happen :
->
-> i)
-> During bootup, guest starts pci-enumeration as usual.
->
-> ii)
-> Upon discovering the "passthrough-device", guest carves the physical
-> MMIO regions (as usual) in the guest's physical-address-space, and
-> starts-to/attempts to program the BARs with the
-> guest-physical-base-addresses carved out.
->
-> iii)
-> These attempts to program the BARs (lying in the
-> "passthrough-device"'s config-space), are intercepted by the
-> hypervisor instead (causing a VM-exit in the interim).
->
-> iv)
-> The hypervisor uses the above info to update the EPT, to ensure GPA =3D>
-> HPA conversions go fine when the guest tries to access the PCI-MMIO
-> regions later (once gurst is fully booted up). Also, the hypervisor
-> marks the operation as success (without "really" re-programming the
-> BARs).
->
-> v)
-> The VM-entry is called, and the guest resumes with the "impression"
-> that the BARs have been "programmed by guest".
->
-> Is the above sequencing correct at a bird's view level?
->
->
-> Once again, many thanks for the help !
->
-> Thanks and Regards,
-> Ajay
+diff --git a/include/hw/gpio/aspeed_sgpio.h b/include/hw/gpio/aspeed_sgpio.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..60279a597c722f94fba406d60cb30a52ef9544bc
+--- /dev/null
++++ b/include/hw/gpio/aspeed_sgpio.h
+@@ -0,0 +1,66 @@
++/*
++ * ASPEED Serial GPIO Controller
++ *
++ * Copyright 2025 Google LLC.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef ASPEED_SGPIO_H
++#define ASPEED_SGPIO_H
++
++#include "hw/sysbus.h"
++#include "qom/object.h"
++#include "hw/registerfields.h"
++
++#define TYPE_ASPEED_SGPIO "aspeed.sgpio"
++OBJECT_DECLARE_TYPE(AspeedSGPIOState, AspeedSGPIOClass, ASPEED_SGPIO)
++
++#define ASPEED_SGPIO_MAX_PIN_PAIR 256
++#define ASPEED_SGPIO_MAX_INT 8
++
++/* AST2700 SGPIO Register Address Offsets */
++REG32(SGPIO_INT_STATUS_0, 0x40)
++REG32(SGPIO_INT_STATUS_1, 0x44)
++REG32(SGPIO_INT_STATUS_2, 0x48)
++REG32(SGPIO_INT_STATUS_3, 0x4C)
++REG32(SGPIO_INT_STATUS_4, 0x50)
++REG32(SGPIO_INT_STATUS_5, 0x54)
++REG32(SGPIO_INT_STATUS_6, 0x58)
++REG32(SGPIO_INT_STATUS_7, 0x5C)
++/* AST2700 SGPIO_0 - SGPIO_255 Control Register */
++REG32(SGPIO_0_CONTROL, 0x80)
++    SHARED_FIELD(SGPIO_SERIAL_OUT_VAL, 0, 1)
++    SHARED_FIELD(SGPIO_PARALLEL_OUT_VAL, 1, 1)
++    SHARED_FIELD(SGPIO_INT_EN, 2, 1)
++    SHARED_FIELD(SGPIO_INT_TYPE, 3, 3)
++    SHARED_FIELD(SGPIO_RESET_POLARITY, 6, 1)
++    SHARED_FIELD(SGPIO_RESERVED_1, 7, 2)
++    SHARED_FIELD(SGPIO_INPUT_MASK, 9, 1)
++    SHARED_FIELD(SGPIO_PARALLEL_EN, 10, 1)
++    SHARED_FIELD(SGPIO_PARALLEL_IN_MODE, 11, 1)
++    SHARED_FIELD(SGPIO_INT_STATUS, 12, 1)
++    SHARED_FIELD(SGPIO_SERIAL_IN_VAL, 13, 1)
++    SHARED_FIELD(SGPIO_PARALLEL_IN_VAL, 14, 1)
++    SHARED_FIELD(SGPIO_RESERVED_2, 15, 12)
++    SHARED_FIELD(SGPIO_WRITE_PROTECT, 31, 1)
++REG32(SGPIO_255_CONTROL, 0x47C)
++
++struct AspeedSGPIOClass {
++    SysBusDeviceClass parent_class;
++    uint32_t nr_sgpio_pin_pairs;
++    uint64_t mem_size;
++    const MemoryRegionOps *reg_ops;
++};
++
++struct AspeedSGPIOState {
++    /* <private> */
++    SysBusDevice parent;
++
++    /*< public >*/
++    MemoryRegion iomem;
++    qemu_irq irq;
++    uint32_t ctrl_regs[ASPEED_SGPIO_MAX_PIN_PAIR];
++    uint32_t int_regs[ASPEED_SGPIO_MAX_INT];
++};
++
++#endif /* ASPEED_SGPIO_H */
+diff --git a/hw/gpio/aspeed_sgpio.c b/hw/gpio/aspeed_sgpio.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..167a72c41e96c67bd1867a19e2b1706f5bd074e4
+--- /dev/null
++++ b/hw/gpio/aspeed_sgpio.c
+@@ -0,0 +1,145 @@
++/*
++ * ASPEED Serial GPIO Controller
++ *
++ * Copyright 2025 Google LLC.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/host-utils.h"
++#include "qemu/log.h"
++#include "qemu/error-report.h"
++#include "qapi/error.h"
++#include "qapi/visitor.h"
++#include "hw/qdev-properties.h"
++#include "hw/gpio/aspeed_sgpio.h"
++
++static uint64_t aspeed_sgpio_2700_read_control_reg(AspeedSGPIOState *s,
++                                uint32_t reg)
++{
++    AspeedSGPIOClass *agc = ASPEED_SGPIO_GET_CLASS(s);
++    uint32_t idx = reg - R_SGPIO_0_CONTROL;
++    if (idx >= agc->nr_sgpio_pin_pairs) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: pin index: %d, out of bounds\n",
++                      __func__, idx);
++        return 0;
++    }
++    return s->ctrl_regs[idx];
++}
++
++static void aspeed_sgpio_2700_write_control_reg(AspeedSGPIOState *s,
++                                uint32_t reg, uint64_t data)
++{
++    AspeedSGPIOClass *agc = ASPEED_SGPIO_GET_CLASS(s);
++    uint32_t idx = reg - R_SGPIO_0_CONTROL;
++    if (idx >= agc->nr_sgpio_pin_pairs) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: pin index: %d, out of bounds\n",
++                      __func__, idx);
++        return;
++    }
++    s->ctrl_regs[idx] = data;
++}
++
++static uint64_t aspeed_sgpio_2700_read(void *opaque, hwaddr offset,
++                                uint32_t size)
++{
++    AspeedSGPIOState *s = ASPEED_SGPIO(opaque);
++    uint64_t value = 0;
++    uint64_t reg;
++
++    reg = offset >> 2;
++
++    switch (reg) {
++    case R_SGPIO_0_CONTROL ... R_SGPIO_255_CONTROL:
++        value = aspeed_sgpio_2700_read_control_reg(s, reg);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: no getter for offset 0x%"
++                      HWADDR_PRIx"\n", __func__, offset);
++        return 0;
++    }
++
++    return value;
++}
++
++static void aspeed_sgpio_2700_write(void *opaque, hwaddr offset, uint64_t data,
++                                uint32_t size)
++{
++    AspeedSGPIOState *s = ASPEED_SGPIO(opaque);
++    uint64_t reg;
++
++    reg = offset >> 2;
++
++    switch (reg) {
++    case R_SGPIO_0_CONTROL ... R_SGPIO_255_CONTROL:
++        aspeed_sgpio_2700_write_control_reg(s, reg, data);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: no setter for offset 0x%"
++                      HWADDR_PRIx"\n", __func__, offset);
++        return;
++    }
++}
++
++static const MemoryRegionOps aspeed_sgpio_2700_ops = {
++    .read       = aspeed_sgpio_2700_read,
++    .write      = aspeed_sgpio_2700_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
++};
++
++static void aspeed_sgpio_realize(DeviceState *dev, Error **errp)
++{
++    AspeedSGPIOState *s = ASPEED_SGPIO(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    AspeedSGPIOClass *agc = ASPEED_SGPIO_GET_CLASS(s);
++
++    /* Interrupt parent line */
++    sysbus_init_irq(sbd, &s->irq);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), agc->reg_ops, s,
++                          TYPE_ASPEED_SGPIO, agc->mem_size);
++
++    sysbus_init_mmio(sbd, &s->iomem);
++}
++
++static void aspeed_sgpio_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = aspeed_sgpio_realize;
++    dc->desc = "Aspeed SGPIO Controller";
++}
++
++static void aspeed_sgpio_2700_class_init(ObjectClass *klass, const void *data)
++{
++    AspeedSGPIOClass *agc = ASPEED_SGPIO_CLASS(klass);
++    agc->nr_sgpio_pin_pairs = ASPEED_SGPIO_MAX_PIN_PAIR;
++    agc->mem_size = 0x1000;
++    agc->reg_ops = &aspeed_sgpio_2700_ops;
++}
++
++static const TypeInfo aspeed_sgpio_info = {
++    .name           = TYPE_ASPEED_SGPIO,
++    .parent         = TYPE_SYS_BUS_DEVICE,
++    .instance_size  = sizeof(AspeedSGPIOState),
++    .class_size     = sizeof(AspeedSGPIOClass),
++    .class_init     = aspeed_sgpio_class_init,
++    .abstract       = true,
++};
++
++static const TypeInfo aspeed_sgpio_ast2700_info = {
++    .name           = TYPE_ASPEED_SGPIO "-ast2700",
++    .parent         = TYPE_ASPEED_SGPIO,
++    .class_init     = aspeed_sgpio_2700_class_init,
++};
++
++static void aspeed_sgpio_register_types(void)
++{
++    type_register_static(&aspeed_sgpio_info);
++    type_register_static(&aspeed_sgpio_ast2700_info);
++}
++
++type_init(aspeed_sgpio_register_types);
+diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
+index 74840619c01bf4d9a02c058c434c3ec9d2a55bee..6a67ee958faace69ffd3fe08e8ade31ced0faf7e 100644
+--- a/hw/gpio/meson.build
++++ b/hw/gpio/meson.build
+@@ -16,5 +16,6 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+ ))
+ system_ss.add(when: 'CONFIG_STM32L4X5_SOC', if_true: files('stm32l4x5_gpio.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
++system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
+ system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
+
+-- 
+2.52.0.351.gbe84eed79e-goog
+
 
