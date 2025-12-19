@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FA9D7879F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 17:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E5FD7879F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 17:02:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdqo-0006w1-30; Fri, 19 Dec 2025 12:01:11 -0500
+	id 1vWdsE-0000ha-Do; Fri, 19 Dec 2025 12:02:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdqI-0006p8-In
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 12:00:54 -0500
-Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWds4-0000Th-H4
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 12:02:28 -0500
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdqF-0005xP-UG
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 12:00:37 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.249.221])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dXv1D4RpDz5yVc;
- Fri, 19 Dec 2025 17:00:32 +0000 (UTC)
-Received: from kaod.org (37.59.142.112) by DAG3EX1.mxp5.local (172.16.2.21)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWds2-0006aO-IY
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 12:02:28 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.99])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dXv3L6vqDz5xWK;
+ Fri, 19 Dec 2025 17:02:22 +0000 (UTC)
+Received: from kaod.org (37.59.142.99) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 19 Dec
- 2025 18:00:31 +0100
+ 2025 18:02:22 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-112S006159f4e62-3776-43f7-92a6-cd0f202b2448,
+ (GARM-99G0036755084e-cd64-428f-b7cd-007a6ed98ac4,
  13AF5B8175AA3308F51DC8C03696883D036152F7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <d21521e6-3480-47bf-8f42-94263a2bb778@kaod.org>
-Date: Fri, 19 Dec 2025 18:00:25 +0100
+Message-ID: <b00e6dc6-25f0-4589-af35-164b34711738@kaod.org>
+Date: Fri, 19 Dec 2025 18:02:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 04/18] hw/arm/aspeed: Add AST1700 LTPI expander
- device model
+Subject: Re: [SPAM] [PATCH v3 05/18] hw/arm/aspeed: Integrate AST1700 device
+ into AST27X0
 To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -43,7 +43,7 @@ To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>
 References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
- <20251208074436.1871180-5-kane_chen@aspeedtech.com>
+ <20251208074436.1871180-6-kane_chen@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,33 +88,33 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251208074436.1871180-5-kane_chen@aspeedtech.com>
+In-Reply-To: <20251208074436.1871180-6-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.112]
-X-ClientProxiedBy: DAG7EX2.mxp5.local (172.16.2.62) To DAG3EX1.mxp5.local
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.99]
+X-ClientProxiedBy: DAG6EX2.mxp5.local (172.16.2.52) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: 21e3e032-1e87-4296-8208-d97002b06a39
-X-Ovh-Tracer-Id: 9561142009283972018
+X-Ovh-Tracer-GUID: 8d2724ad-9fac-4e26-8d85-55123a3860e6
+X-Ovh-Tracer-Id: 9592104258328366002
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFoSOFGXpaS3yJcBK5bAAyljIu1s3Z/lfCx0CEyweADxTp9dA6tGAFl9hubw3SjyoeLB3mSUO+98OsPIG7ZCJKGtIdHsVlJTeZxJZUBfLGttWXL94WDeAxqaCXWm9satK227gPr1/zuj6K+V6VdNY0plGat5d+IrrowdLFGQy2rBq3hoCwVYcs2va0pMbWXW8sNbbCzCJae/vK2BjsM/c4BJYKHQNFLp9r3CJwZcP6pe7zN7Gi/iHs01FmzmzzNJfuRX8AN4U3+/+GXDo3jYLvBxsTW2/x15IWPKvlI6MK6hPJ/uztLkiGvxWcNJceQaZhxrB1X0h+XgWW5balDI7dhKxN/mUeZO6IMPTAq+p95+a4t46e5NtPxMH+B370Us7dW/pXOpGgaOvIi06ukBGIPXkFnECll/3yyapTFOrbal8Ohie1RB4fed2zNpxA16najyOdeIcp3iP5QOZhLECLgfnV6+QH1MVCjs3dFJNKMY4n2SLs50JsqjNOOHqcWYzvunMntZwxtExAnxogoFpjnTu3nWY9oO4WdxnYB7rF7OX7fjNbEcy1Ezr0P8o8mRwaxu8s4hJhX7BrWl9e+pakBryMlgVDHkplP9dXQIhP/OhSYh55pD4WRu7c76zuadxZtYnnylHzTmMJu2s0fteOnWXLDA9VdtbyVX2CpUvjt+g
-DKIM-Signature: a=rsa-sha256; bh=MTAv27IAKjRJ3xAGS1q5ugWjij6xX9tkzK3TjvME/MY=; 
+X-VR-SPAMCAUSE: dmFkZTF7gcRlt4W2UXsFfQx02ow3vzLxYFbPVXiAUNKAYeMUlMTsybz9zOUb5HE9UX0L+vRf854Uxndv6MKGcdtvHaiURuKHmSZRQ2bguVxRlVlQ4b9uNcAs8rHfNBGBYrP/rXmZscDXIkGzJxExI9XpF/IpNzx7iAhlWaKfLiff5tydMw7EyaMrNr0ZSXEKd6HAvVot43Dbs6plyUVB5Bzv4Ha3cZsz4TiVHe4zIBxNQKUIn2YXkEE3+vr2G9MPR+N3M6le/VTozUJhVL3XzJ1/Su+jGKT+rtVebqdWhYSV2FV/wcEvm29TN4iZC8E3gXApa3nc6HG8QkEHe+Zob584V/j3Lv+wZYg6MOX6wHREHGxiwio4EOQjG9RmNicFE9KkfL+K17WK/QpUGhYyoKAGeclY6JXDquW5wvfE2n54wnnuioahSezVZjl43LrjxgvcnReJ2C6ys6l66W4B0MEZAx4+AeoFRGGpjiWPh9F7NzBxJaDmjM+kJfHuQByCpL8Od3/qP6KiFOZt3ATmyu1H6ZoJyJ/lysoO9vw4mt/PrvZ8UlYopv5GGKXRsAd5fNlQvgNDVB4v3iQGN82iLjJwNvBv5eHUjUhFkTzISNh1Qsoc1r3cDL+lgCT+gPJCYR9kjpz4gEFFbKZdhP0gUjynYxZfPwhor9tzzGluA33vhbDxAA
+DKIM-Signature: a=rsa-sha256; bh=pNYYP6K9m9tA8irOmGgGgn9oDO5jKaTY3IV1ZEwn92A=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1766163632; v=1;
- b=QbiMSuw8SDn1ynG2Uc1WSYPbNU447bxLxTiJbDGLXVKMFxRtjUPtKvRetnBKNAYQbHjHg9Sw
- buq4OWHSwU2zatOSyqHUjPU02OM+1RHIlqWSTafAgGjz1b522knVByaiMbL5GnNgUwn1jNG4Tq4
- 9qe6BtYgHvecHOCdOA7svnWkzQZZN8lJxsG3iKvOr6sOKhPAfKDG+OPRaOnbcGIQyUrNaYdGA1j
- jJn99IanEkLqWxyAATJxE3KZ94hj8uvnm5KkmM/Se8wraaT89dJbbaqfOVASpNYkebmI9QoC6RM
- eVabcR1o1W1hXnQnNehoWi+zSnRU+aHfQXk7lQuFE9KKw==
-Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
- helo=smtpout4.mo529.mail-out.ovh.net
+ t=1766163743; v=1;
+ b=uVUhiH6zLXykwL+d9G3XLYOF/+G0jh79x7vXo0KrJM/kLrfRjP5v0GMAIEg2vUL8m4V34b6N
+ wtFuZe99ZocCovkTEf4ofwivBhVtq5f7Kr7JASYwtcZ4PtBI7uZBHADUgUb9WIGBffVUmSeBdkp
+ hyQDu3OpFXK7IzXsUlntlbzRQ/BCYKCnYX8dMvAsrCWxbnxkxZ71MfIngJWCiRJRywkxDZI2uSn
+ FrmZLM6pk1fLwYJ6Vxmr3M9PBcrt1nsR7kQExRC5M83lfaYTRYWQYNypTMN8vs2+q+A58vSd7Lj
+ d4uC3rwO1WQbZ6HOgD8fY8SXHeKFpgfZvH7H7Zes7X7CQ==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -135,135 +135,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 12/8/25 08:44, Kane Chen wrote:
 > From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> Introduce a minimal QEMU device model for the ASPEED AST1700, an
-> MCU-less I/O expander used in the LTPI topology defined by the
-> DC-SCM 2.0 specification (see figure 2):
-> https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
+> Connect the AST1700 device as a child of the AST27X0 model to reflect
+> its role in DC-SCM 2.0 LTPI-based architectures. This patch wires
+> the AST1700 device into the platform without introducing functional
+> peripherals.
 > 
-> This initial implementation includes:
-> 
-> * Definition of aspeed.ast1700 as a SysBusDevice
-> 
-> * Setup of a basic memory region to reserve I/O space for future
->    peripheral modeling
-> 
-> This stub establishes the foundation for LTPI-related device emulation,
-> without implementing any functional peripherals at this stage.
+> This forms the base for LTPI expander emulation in QEMU using
+> AST27X0 as the host controller.
 > 
 > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > ---
->   include/hw/arm/aspeed_ast1700.h | 23 ++++++++++++++++
->   hw/arm/aspeed_ast1700.c         | 48 +++++++++++++++++++++++++++++++++
->   hw/arm/meson.build              |  1 +
->   3 files changed, 72 insertions(+)
->   create mode 100644 include/hw/arm/aspeed_ast1700.h
->   create mode 100644 hw/arm/aspeed_ast1700.c
-> 
-> diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
-> new file mode 100644
-> index 0000000000..2a95ebfe89
-> --- /dev/null
-> +++ b/include/hw/arm/aspeed_ast1700.h
-> @@ -0,0 +1,23 @@
-> +/*
-> + * ASPEED AST1700 IO Expander
-> + *
-> + * Copyright (C) 2025 ASPEED Technology Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef ASPEED_AST1700_H
-> +#define ASPEED_AST1700_H
-> +
-> +#include "hw/sysbus.h"
-> +
-> +#define TYPE_ASPEED_AST1700 "aspeed.ast1700"
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(AspeedAST1700SoCState, ASPEED_AST1700)
-> +
-> +struct AspeedAST1700SoCState {
-> +    SysBusDevice parent_obj;
-> +
-> +    MemoryRegion iomem;
-> +};
-> +
-> +#endif /* ASPEED_AST1700_H */
-> diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
-> new file mode 100644
-> index 0000000000..f564b9b242
-> --- /dev/null
-> +++ b/hw/arm/aspeed_ast1700.c
-> @@ -0,0 +1,48 @@
-> +/*
-> + * ASPEED AST1700 IO Expander
-> + *
-> + * Copyright (C) 2025 ASPEED Technology Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/boards.h"
-> +#include "hw/qdev-core.h"
-> +#include "qom/object.h"
-> +#include "hw/arm/aspeed_ast1700.h"
-> +
-> +#define AST2700_SOC_LTPI_SIZE        0x01000000
-> +
-> +static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
-> +{
-> +    AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +
-> +    /* Occupy memory space for all controllers in AST1700 */
-> +    memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
-> +                       AST2700_SOC_LTPI_SIZE);
-> +    sysbus_init_mmio(sbd, &s->iomem);
-> +}
-> +
-> +static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->realize = aspeed_ast1700_realize;
-> +}
-> +
-> +static const TypeInfo aspeed_ast1700_info = {
-> +    .name          = TYPE_ASPEED_AST1700,
-> +    .parent        = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(AspeedAST1700SoCState),
-> +    .class_init    = aspeed_ast1700_class_init,
-> +    .abstract      = false,
-
-You can drop the .abstract assignment.
+>   include/hw/arm/aspeed_soc.h |  7 +++++--
+>   hw/arm/aspeed_ast27x0.c     | 26 ++++++++++++++++++--------
+>   2 files changed, 23 insertions(+), 10 deletions(-)
 
 
-> +};
-> +
-> +static void aspeed_ast1700_register_types(void)
-> +{
-> +    type_register_static(&aspeed_ast1700_info);
-> +}
-> +
-> +type_init(aspeed_ast1700_register_types);
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index aeaf654790..ee26a05dc9 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -42,6 +42,7 @@ arm_common_ss.add(when: 'CONFIG_FSL_IMX31', if_true: files('fsl-imx31.c', 'kzm.c
->   arm_common_ss.add(when: 'CONFIG_FSL_IMX6', if_true: files('fsl-imx6.c'))
->   arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
->     'aspeed.c',
-> +  'aspeed_ast1700.c',
-
-This should be under TARGET_AARCH64 ? right ?
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
->     'aspeed_soc_common.c',
->     'aspeed_ast2400.c',
->     'aspeed_ast2400_palmetto.c',
 
 
