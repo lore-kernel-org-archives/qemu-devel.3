@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F81E66880
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A95D7879C
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdTO-0003XR-36; Fri, 19 Dec 2025 11:36:58 -0500
+	id 1vWdTk-0003ae-IM; Fri, 19 Dec 2025 11:37:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdTM-0003XA-UD
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:36:56 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdTj-0003aJ-3T
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:37:19 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdTL-0000Nn-9I
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:36:56 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47775fb6c56so14703985e9.1
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:36:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdTh-0000Q3-Ki
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:37:18 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-477a2ab455fso19209135e9.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:37:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766162213; x=1766767013; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Idoopkne2XoD7/e2z+6W5PLbLmqN2coild025VrEoYo=;
- b=KM/0FkQZZYCyZnJOo6Zty+MlqRF8+kD7q8Z2somCSHCF6GmEP5Ge/aYZ8h4/A2G9rs
- 26tSkuEUDihy996GXC5XBv1WDBJwhIIJ8du/b9hUU7SAPC0Cx3r/W/Z9wIItq7ytOUmL
- pjZz+O24mflLGOGYevVj1jn5g5yqloLe4BSRfID2aodJiYTDzAsbh5MKebOenXtRhr3h
- Yewg45ZjTTuEvPjxjyMdeY7PWLC3XGwdBMM6fCmBNTnJ6gejv9r+nja7mqrJMesfwt8i
- c26f3vOIIVuHqNCHLOElPhu6TVooRysSt+SdJospWq+YmYrxvDCEb7n0lnFhhKex7PJv
- 67+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766162213; x=1766767013;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1766162233; x=1766767033; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Idoopkne2XoD7/e2z+6W5PLbLmqN2coild025VrEoYo=;
- b=KX2VNRJnLCvDwSrKLkOV5EesZPeDVwk53zoW3cIFRpnAfvEG4ZnWefYvnn+awD4Vgb
- I5NEv4bhsmv2XabQCOUjoCm5THtx8fWbTwydrBBn4qTXwm/Lp/FEN+ITX4FFqDUG3SmA
- gnlme6A8fr56JNX/Us6q0sE7gnK44mQh7b5PXaMgflM6ILn5Z8aVZva2LXWXo3WpawTu
- wsbaOOz9YzSJgjFxQEvpIqKJoEaJwNxYnnlWWZxbofCUrqZ/HpkxOdrOFoxiONPhgoQu
- v9ChcFDsH4aPFVZH5VlRjVVsbAZ84ION/gq6iRnoDF1QRLJTVrC+vG4cM5jrVEJELJSa
- 2qgA==
-X-Gm-Message-State: AOJu0Yz4XV//1ThwZ2nC4J0U5wacKdN0a94ny4FraToRgIfMTSZ1JKcG
- REkcjCEKVWWf6vXP35LEbvD7a4GhoCZloPobeoMfjZO+NZ+DXUdyTFV/Kdk3Fh43712l4nWHmBP
- m4hUvWRU=
-X-Gm-Gg: AY/fxX7eaij/80cr2VVj44A9kKuNA7QxZ0++TA6wlTHeubidhK9WpDObLS4LUTsQpk1
- tlzQzPBXXb8wC9CzZl/gXprls60eJzcJgM+FACrG8mQY8q8svv86BQWra5FpHLYTvz/WJ5gDp+4
- 4Rl8Yvweq+/NVi24XMTfxkpWrG5LF9vaqABWSd4bZ/1TwCM0+WcKEU28RGlhT8HAoJf7Mls8EHi
- HsVst+EqZ+8mxOUl5kkC2F+YcCJrnB6iEl7MdTjc/xXGhtaeAdRCspnamEAqCAdTidEVYSx9plx
- q/vTmR2qWosBZfgxw8M0vaGLpxLnDCx21S8akGC2axm/rajhWgIMRLhiPDyrzp7wPDpG9rOXbzZ
- +eJZ0/0mlsf42bL6uHVIWW8hOXpLjUW3FJZ+halcKDtYaGrtxSpwZekRs++i5pURxT5Zu+CdBts
- BJykEAK2+EHg0+zqV/EL/C+/mSd2gnX/9LRq2Cw/Bj8RXevOw/TU35Rb4EpM7m
-X-Google-Smtp-Source: AGHT+IEkxnTJcJ9oAUxuC6v68WLP5ktyzJwu7Ct9ZyyhuJMNnqjisS7YudX611Di/S7IBEnVqKhAxw==
-X-Received: by 2002:a05:600d:108:20b0:477:9986:5e6b with SMTP id
- 5b1f17b1804b1-47d1c038664mr20285055e9.28.1766162212543; 
- Fri, 19 Dec 2025 08:36:52 -0800 (PST)
+ bh=TY+NKK5QrerogI70RsrGnC20hTX4QQeP/jfJOPR/wec=;
+ b=gvBv1xrY0QScZkc1faTe2pgbKFN4CQvDaXMgStLmVLkzBAwuVWfNlPMGIXLubvw11S
+ DOxKKQQyjxPRyJ+pDx8U+CUWEBlsVKCNs6jOPdBmxWPGcYnHsFemdsvZ42Sv7BOKsWN+
+ XLOf3vVQchS9RqTMZdpcbRtxYV9HdijRRM4g4gi6EA9xhpddsM2V01DlS0kd52cmKyAw
+ N5GwGZjWvtqdhH5o6fg+zHUAbnHncDyxIknEn6/2EBoSQNzC04LyUVvFIqhK5ESa65m7
+ 748nrZ9p0oWGBLeeKJV+CLqj3qAN7KVFEn9Bs9CrfkbUmPVBQ/Ej0ifjrvhRzshX/ggU
+ WwiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766162233; x=1766767033;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TY+NKK5QrerogI70RsrGnC20hTX4QQeP/jfJOPR/wec=;
+ b=YhxGc1gJIkStwRmxSgZwDdTPW2QQHWj1kTqTEl2YEYozh7MR5nlhyiNoTSnrUDfWBk
+ g6tYKUIY0khC1VpzXmBlFO3ge7qgkwwQ6LjDgdYPYDS3Xl9AmP34K5n8BhL6zzP+SpG5
+ jJ8Be1YXihtWKH/NHq1QfGMaKYabRznKXZEgnByTkgRK+Cdt8cKiGqpzrl2CfYCTgk0s
+ 2HeMfXr+jDuLVHESR5+Lt7/7mezlchPyC5cQccYIR4EAj1N35uugq4KgBm+wo8gmUFHl
+ HU2mGceUFhN9FYG8eeYjumGutaIMM0yd1VKGZN1O4xG9K9bxZyReVx1NafBmSi9dO+h3
+ ypcg==
+X-Gm-Message-State: AOJu0YycZ5VcfZHjAYqSa0UOgLwZ/6tEj3WIspm0DHEzrUkosed2kWGq
+ PRKi1q5gMCJRm95YsUwUYJ3VYNemo2/PS39n1umItieiPtZZz1nk/nqasWgmaNA/FE32pdvl1iv
+ ik13RR8g=
+X-Gm-Gg: AY/fxX6IfCSCFsYLgwfsHXLfGIq8XBjeqdWNQCTxPgD8h3UF6rvs5ee0JlfZ1bJU31V
+ io9xgULUN2HYH4/UKHXC0M7a1Yfp9WlPIyzk1LP1FAr1mN/bMEkhB7EEEoGa244yMPcwFwtz8BI
+ HVmuTIeYJmgKvneyOg5g+g6iZIaOsllvfFvFNMwKJ9BS/nU6kn+TOrPnY5D5Cu2rkRn1E0pIcGN
+ RyP2MCrX5fOzY8YuEupwPepvbU6Lci8Ze+exmWLjgiNVv2zz+WO8K6X7jp00T1Quw7u8nDaqKHr
+ h0DEQBEYROFiEr6h5zs446xpFjen48MM3XdtbHjP5/TC2UOixIvVHlsCw4nNRN19BmbztjSG8i8
+ di5PYc1TWuk930z5i6onK/GB21SG7O3gp9T9adLtnQrLoL18ufBoanlJwslP1dYXxqcJ0qEgOuG
+ b+B6LvZ5KJgOgNOZaXz2J3B+m9Yje3Yv1NrHohj72AOFqPybimlGyATJiReDKd
+X-Google-Smtp-Source: AGHT+IEcLPlqf7J+bzderohbYPYsunZArQQqGrvtwE2ok8qIrAqefFxt3a1S3zG4+zC2SyUPD1VOIA==
+X-Received: by 2002:a05:600c:c08a:b0:46e:1abc:1811 with SMTP id
+ 5b1f17b1804b1-47d197f67edmr24265185e9.27.1766162233572; 
+ Fri, 19 Dec 2025 08:37:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193cbe58sm50901345e9.9.2025.12.19.08.36.51
+ 5b1f17b1804b1-47d1936d220sm53976365e9.8.2025.12.19.08.37.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Dec 2025 08:36:51 -0800 (PST)
+ Fri, 19 Dec 2025 08:37:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
@@ -73,15 +74,18 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/9] target/sparc: Stop using the legacy native-endian APIs
-Date: Fri, 19 Dec 2025 17:36:40 +0100
-Message-ID: <20251219163650.74303-1-philmd@linaro.org>
+Subject: [PATCH v2 3/9] target/sparc: Use address_space_ld/st[n]_be() in
+ ld/st_asi helpers
+Date: Fri, 19 Dec 2025 17:36:43 +0100
+Message-ID: <20251219163650.74303-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251219163650.74303-1-philmd@linaro.org>
+References: <20251219163650.74303-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,39 +108,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SPARC is always big-endian, so use the '_be' suffix to
-select the big-endian variant of the load/store helper.
+Do not open-code address_space_{ld,st}n(), use it passing
+the access size as argument. Directly expand to the big-endian
+variant (with the '_be' suffix) since we only build the SPARC
+targets as big-endian.
 
-Simplify gdbstub using ldn(TARGET_LONG_BITS...).
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/sparc/ldst_helper.c | 42 ++++----------------------------------
+ 1 file changed, 4 insertions(+), 38 deletions(-)
 
-Based-on: <20251219161953.72724-1-philmd@linaro.org> and more.
-
-Philippe Mathieu-Daudé (9):
-  hw/sparc: Use explicit big-endian LD/ST API
-  target/sparc: Replace MO_TE -> MO_BE
-  target/sparc: Use address_space_ld/st[n]_be() in ld/st_asi helpers
-  target/sparc: Use explicit big-endian LD/ST API
-  target/sparc: Use big-endian variant of cpu_ld/st_data*()
-  target/sparc: Inline translator_ldl()
-  target/sparc: Inline cpu_ldl_code() call in cpu_do_interrupt()
-  target/sparc: Simplify gdbstub sparc_cpu_gdb_write_register()
-  configs/targets: Forbid SPARC to use legacy native endianness APIs
-
- configs/targets/sparc-linux-user.mak       |  1 -
- configs/targets/sparc-softmmu.mak          |  1 -
- configs/targets/sparc32plus-linux-user.mak |  1 -
- configs/targets/sparc64-linux-user.mak     |  1 -
- configs/targets/sparc64-softmmu.mak        |  1 -
- hw/sparc/leon3.c                           | 42 +++++++-------
- hw/sparc/sun4m.c                           |  6 +-
- hw/sparc64/sun4u.c                         |  6 +-
- target/sparc/gdbstub.c                     | 12 +---
- target/sparc/int32_helper.c                |  4 +-
- target/sparc/ldst_helper.c                 | 66 ++++++----------------
- target/sparc/mmu_helper.c                  | 32 ++++++-----
- target/sparc/translate.c                   | 60 ++++++++++----------
- 13 files changed, 95 insertions(+), 138 deletions(-)
-
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index a87a0b3eee0..e9139814c26 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -701,25 +701,8 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
+         MemTxResult result;
+         hwaddr access_addr = (hwaddr)addr | ((hwaddr)(asi & 0xf) << 32);
+ 
+-        switch (size) {
+-        case 1:
+-            ret = address_space_ldub(cs->as, access_addr,
+-                                     MEMTXATTRS_UNSPECIFIED, &result);
+-            break;
+-        case 2:
+-            ret = address_space_lduw(cs->as, access_addr,
+-                                     MEMTXATTRS_UNSPECIFIED, &result);
+-            break;
+-        default:
+-        case 4:
+-            ret = address_space_ldl(cs->as, access_addr,
+-                                    MEMTXATTRS_UNSPECIFIED, &result);
+-            break;
+-        case 8:
+-            ret = address_space_ldq(cs->as, access_addr,
+-                                    MEMTXATTRS_UNSPECIFIED, &result);
+-            break;
+-        }
++        ret = address_space_ldn_be(cs->as, access_addr, size,
++                                   MEMTXATTRS_UNSPECIFIED, &result);
+ 
+         if (result != MEMTX_OK) {
+             sparc_raise_mmu_fault(cs, access_addr, false, false, false,
+@@ -1066,25 +1049,8 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+             MemTxResult result;
+             hwaddr access_addr = (hwaddr)addr | ((hwaddr)(asi & 0xf) << 32);
+ 
+-            switch (size) {
+-            case 1:
+-                address_space_stb(cs->as, access_addr, val,
+-                                  MEMTXATTRS_UNSPECIFIED, &result);
+-                break;
+-            case 2:
+-                address_space_stw(cs->as, access_addr, val,
+-                                  MEMTXATTRS_UNSPECIFIED, &result);
+-                break;
+-            case 4:
+-            default:
+-                address_space_stl(cs->as, access_addr, val,
+-                                  MEMTXATTRS_UNSPECIFIED, &result);
+-                break;
+-            case 8:
+-                address_space_stq(cs->as, access_addr, val,
+-                                  MEMTXATTRS_UNSPECIFIED, &result);
+-                break;
+-            }
++            address_space_stn_be(cs->as, access_addr, val, size,
++                                 MEMTXATTRS_UNSPECIFIED, &result);
+             if (result != MEMTX_OK) {
+                 sparc_raise_mmu_fault(cs, access_addr, true, false, false,
+                                       size, GETPC());
 -- 
 2.52.0
 
