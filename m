@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F43D78770
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 19:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE11D78770
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 19:09:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWfqp-0000hg-Li; Fri, 19 Dec 2025 14:09:19 -0500
+	id 1vWfr1-0000lO-1H; Fri, 19 Dec 2025 14:09:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vWfqU-0000aB-9O
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 14:08:59 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ id 1vWfqZ-0000ct-Bo
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 14:09:03 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vWfqR-0006nz-MY
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 14:08:58 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-47bdbc90dcaso14659985e9.1
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 11:08:55 -0800 (PST)
+ id 1vWfqX-0006rC-DY
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 14:09:03 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42fbc305552so1602263f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 11:09:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766171334; x=1766776134; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766171339; x=1766776139; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IXQ0JVIP0porfp6WIA5UdBF+RCWCKfVXfAFfgt7VfmE=;
- b=v7UefhSY9E48jM0jLjci2eOy3je2CNFw0qkLH0Uqp2xEspeU0ErWis1Svhub2ty8hz
- FcccUfnw4eUTF+/+KhiOSnOnLmhujkSf+cG2967vtICHjHYqMr/8JDga78sy/HnzYCrF
- THtTiWZLN4h4P9Qoi3r2tqf0xL3yuGn3qzRF/NB/wBRwr5911cvMDyCt4pBIRmu3WUwb
- 7ZmdTZ1r4vIcrAgFcAPjzul3EHpW+8VTl0jnVn6vM3hTLQmQzhEDzP0HDV0zVeGXBD/s
- LIEe9sb8mHg4KQFpfGaG9GlhrV17vevcdV57pCXKIODodR6uj7D3TW1MM7gkV8tfC6Xm
- V/GA==
+ bh=TNnO369o5RyODW40YP5PUoZ8MigxvrSBu+tgeyebTyU=;
+ b=uCi57RPHJaxATgectNUY9mGSninUKVMOW9uk3FYTOxOIPMQMdacNUn3XujAgg4cQwm
+ NjFVuV1/i/LIkmNbZSaU/Wg4RWsRZmF9Ws1BhjcnZBWQnMbBqeOaFuagLaGiYvrV7CC1
+ kepTCh2TD7xzpsDrq5nxYxL6jHdq8zFVM6a76v1jkJbwuRLTeJaG6bK3IVXBo0dtFsWk
+ DvsNQfDTKANOxZDqIhzPJ/zulogjDb2RRc7KQUJ0hgkYxWsSshm6Ha4MsqLYlATSw1du
+ J0tgYvHJTHt0Hd8LT40Mqp+qI6QaBpCZXXH54bQYUmltHXm3WusOilGE6TuF8nNKrIRg
+ oGWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766171334; x=1766776134;
+ d=1e100.net; s=20230601; t=1766171339; x=1766776139;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=IXQ0JVIP0porfp6WIA5UdBF+RCWCKfVXfAFfgt7VfmE=;
- b=QCUOMk30ZGwu6mNDVSpJuCDBlsLFg48AI4asDbfzxnu8A3Uip5Q9v/da/ZRkrjrddL
- ASEmgzQJ/PaksJZTVd1ILonBOJ9SyFC8L06Y96JPzarBpN2NtlgUi231v4Ji7uYeAPRG
- H1dV38sk6uGgRHTkgPm49tFrT9fNv7n4VjfWgFP9tVHoLfEjzGjpsd1Xmhm3cmVbi+fR
- mnA2VN3efgD57CtH6O9agVDgjybBJ4sDIKuknUeuiLRGxY/jZr/VWFgqf6jR98pEt7Se
- HcSqbdxsJZyUfR8cgD7uWVDqjpacmbmBY2NUnX0LFefXIi6y5fzLrjk8bMxKT8uOhI1G
- bRHQ==
-X-Gm-Message-State: AOJu0YwGIAXfgh8SEzuKr6nndSpftv6KtGngu+GEj083vHGSzaA5++9v
- mnFSeUDU8KG7eLyX7wxI8maaLpQNAe5vfZL/4hOms0dC6LKSinNKj3qV9mluPWGb1t4=
-X-Gm-Gg: AY/fxX5SAiTfR+MhJFwJxDfqNWbaaWrfpnyXH/UpX56tA4eD1AWA50G5orU59iXdrU9
- M8MVk1yY/GGXYswxhNaALNrfSSMYGnh7dZKJ4qPh3F0HKSKGqj7OMtBVpTv2yEgrnHHYnLDeTxm
- 7ygDddp5MkQe/CWcY/ABVNtZGgKv62ap5NjWvfo2dUKkTKa5FYvxpsi96xB0PbOlMIbg+MXQXuC
- yJWcQqRrwwtzRZYQdnDGTq0DqyDdI3/xftKbfZBIhbsX9SRh4cLs5sG8REkmfNJSBfiZgI+cVqg
- wSig6fh3+nNNGVcJKAVbvtyJflA3vyMkwFt0XRcVZKdu/6Q8+nyM1veSqddbYnVaFAWy1vz9lKh
- 9mIbXnCLNUwtT7KLPLB29oKizumB5B0kD+X3NEtE1MTQ/x+q6bOknyuTAETy1OxYefUxx7KQ42g
- zepOgNLN+bHH499HJQuKPeNQ==
-X-Google-Smtp-Source: AGHT+IFdC0OTekt9ybDbjjAAwIH+3y/8vTzQi7VuvlPdeGli9BRRlgtAH6wvFt2VPfAiMl8LcWGr1w==
-X-Received: by 2002:a05:600c:4595:b0:477:a1a2:d829 with SMTP id
- 5b1f17b1804b1-47d1953ead3mr33912265e9.13.1766171334131; 
- Fri, 19 Dec 2025 11:08:54 -0800 (PST)
+ bh=TNnO369o5RyODW40YP5PUoZ8MigxvrSBu+tgeyebTyU=;
+ b=Cvi0oRrYSfq0NTVpjyHGrPdTfBPNQDtuEWEonwegaW8nCqQCXbFASPUc2UYtRA+CE6
+ +hKenmwlHthLT/hKRIJnkV9zSbcX9HFaUrogr+NmjQYjCuPmcXNE46k8ud+AYQML/ZZq
+ PQuoNwVY0x3ZAV4TL7EZUivjXQFP8Ymb5QuBUk4vPRrQ2cHVXWZwa2ofrKGRFNf9OO+7
+ VYBKyx0vT+bh/C+W414a9W5J9oRqvFfGE4P5NgVswXyJsgBOXmTtf4UQ7nmZ8VnUfAMP
+ REh4KQDPxNIzFzcKIqhjNZzDmfhV9wwxXWRjl4jx3w5Z4aTgGDkob4B0k9WifVQc7LCp
+ rOrA==
+X-Gm-Message-State: AOJu0YyggXWMKVjDXCknfU6Mm8xAalydEfD19uJ1zKe/PflBto/s6uVV
+ evN/2tsPUsM1FHt/wUzrhWJPpR7ZScYQ7Xjot9RUE5HLa3EU9fReYNkpPz0yFx+hB9E=
+X-Gm-Gg: AY/fxX46EylDrHaYdo0ax575LUGG311AgaVVOgrMj0D1TE2hYPMprgVkTJ0t8q0ImF4
+ 88x/8CqgfUCCDfpZLQ6rkNNIQk9+Um1bEqtR1UDDkxCwSmayDGflagFtmXdH/K+48GvHB5oD70e
+ qfkCQczvmAiHQcl0SdTVX/8d0uVgi8ukIEyNV2o+9BFNmUcyYNulgikqzz6XXm4IYaN4xDIl3Bu
+ EOR5fZx+QgejIXXcHi35zcpgiFbBXpFfc8asODBVV+Z0eGgbcjblNqC+cPnBeAMNmbmXsePh4IX
+ +iftj0mPTuR1u+r5Yk1r3+cWZ4Pp8Z5QbcfzG6Diqjn//mGnVymXwMMA+PXiAWuIcY5DUqtn5/M
+ VDZJa8wLMDNA9FN3jZlUT3Gvurxhfju0xAPJAt2zFnqMCY7+qKvRvfrjD/kEGTiO04xeX+1vXJk
+ BGPKy/8bSqMmc=
+X-Google-Smtp-Source: AGHT+IE/djsvq7V5yPEwmnhCaYtBAJh0llME81JdJRIYDw/vscbT8puxC23HWIyG+lk4mLByaL1eLw==
+X-Received: by 2002:a05:6000:178c:b0:430:f41f:bd5a with SMTP id
+ ffacd0b85a97d-4324e709017mr4626110f8f.57.1766171338905; 
+ Fri, 19 Dec 2025 11:08:58 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3b3a80dsm42226405e9.7.2025.12.19.11.08.50
+ ffacd0b85a97d-4324ea2278dsm6612935f8f.18.2025.12.19.11.08.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Dec 2025 11:08:53 -0800 (PST)
+ Fri, 19 Dec 2025 11:08:57 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3A4805FE66;
- Fri, 19 Dec 2025 19:08:50 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 2298E601D0;
+ Fri, 19 Dec 2025 19:08:51 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -82,20 +82,19 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Mark Burton <mburton@qti.qualcomm.com>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alex Bradbury <asb@igalia.com>, qemu-stable@nongnu.org
-Subject: [RFC PATCH 04/12] docs/about/emulation: Add documentation for
- hotblocks plugin arguments
-Date: Fri, 19 Dec 2025 19:08:41 +0000
-Message-ID: <20251219190849.238323-5-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [RFC PATCH 12/12] target/arm: allow gdb to read ARM_CP_NORAW regs
+ (!upstream)
+Date: Fri, 19 Dec 2025 19:08:49 +0000
+Message-ID: <20251219190849.238323-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251219190849.238323-1-alex.bennee@linaro.org>
 References: <20251219190849.238323-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x344.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,40 +117,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+Before this we suppress all ARM_CP_NORAW registers being listed under
+GDB. This includes useful registers like CurrentEL which gets tagged
+as ARM_CP_NO_RAW because it is one of the ARM_CP_SPECIAL_MASK
+registers. These are registers TCG can directly compute because we
+have the information at compile time but until now with no readfn.
 
-Currently just 'inline'.
+Add a .readfn to return the CurrentEL and then loosen the restrictions
+in arm_register_sysreg_for_feature to allow ARM_CP_NORAW registers to
+be read if there is a readfn available.
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <60f1ad20663f7e5c6cb00dd83fe0f1f5aa6ca4de.1764716538.git.asb@igalia.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: qemu-stable@nongnu.org
----
- docs/about/emulation.rst | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Message-ID: <20250507165840.401623-1-alex.bennee@linaro.org>
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 4a7d1f41780..543efc4d7dc 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -463,6 +463,16 @@ Example::
-   0x000000004002b0, 1, 4, 66087
-   ...
+---
+vRFC
+  - this is a useful debugging aid but a bit haphazard for
+    up-streaming. See thread comments for details.
+---
+ target/arm/gdbstub.c |  6 +++++-
+ target/arm/helper.c  | 15 ++++++++++++++-
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
+index 8865f27089d..205bab811da 100644
+--- a/target/arm/gdbstub.c
++++ b/target/arm/gdbstub.c
+@@ -292,7 +292,11 @@ static void arm_register_sysreg_for_feature(gpointer key, gpointer value,
+     CPUARMState *env = &cpu->env;
+     DynamicGDBFeatureInfo *dyn_feature = &cpu->dyn_sysreg_feature;
  
-+Behaviour can be tweaked with the following arguments:
-+
-+.. list-table:: Hot Blocks plugin arguments
-+  :widths: 20 80
-+  :header-rows: 1
-+
-+  * - Option
-+    - Description
-+  * - inline=true|false
-+    - Use faster inline addition of a single counter.
+-    if (!(ri->type & (ARM_CP_NO_RAW | ARM_CP_NO_GDB))) {
++    if (!(ri->type & ARM_CP_NO_GDB)) {
++        /* skip ARM_CP_NO_RAW if there are no helper functions */
++        if ((ri->type & ARM_CP_NO_RAW) && !ri->readfn) {
++            return;
++        }
+         if (arm_feature(env, ARM_FEATURE_AARCH64)) {
+             if (ri->state == ARM_CP_STATE_AA64) {
+                 arm_gen_one_feature_sysreg(&param->builder, dyn_feature,
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 27ebc6f29b8..1fbc45263d5 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3529,6 +3529,17 @@ static void ic_ivau_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ }
+ #endif
  
- Hot Pages
- .........
++/*
++ * Normally the current_el is known at translation time and we can
++ * emit the result directly in TCG code. However this helper exists
++ * only so we can also expose CURRENTEL to gdb.
++ */
++static uint64_t aa64_currentel_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    int el = arm_current_el(env);
++    return el;
++}
++
+ static const ARMCPRegInfo v8_cp_reginfo[] = {
+     /*
+      * Minimal set of EL0-visible registers. This will need to be expanded
+@@ -3567,7 +3578,9 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
+     },
+     { .name = "CURRENTEL", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 0, .opc2 = 2, .crn = 4, .crm = 2,
+-      .access = PL1_R, .type = ARM_CP_CURRENTEL },
++      .access = PL1_R, .type = ARM_CP_CURRENTEL,
++      .readfn = aa64_currentel_read
++    },
+     /*
+      * Instruction cache ops. All of these except `IC IVAU` NOP because we
+      * don't emulate caches.
 -- 
 2.47.3
 
