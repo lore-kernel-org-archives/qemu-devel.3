@@ -4,160 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8671D7879C
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152B5D7497F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdNl-0002LG-8K; Fri, 19 Dec 2025 11:31:09 -0500
+	id 1vWdTX-0003Yo-7R; Fri, 19 Dec 2025 11:37:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vWdNg-0002Kw-Ui
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:31:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vWdNd-00080c-EP
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:31:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766161858;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xGTD/g5VFIzqhVI/xe/BuA8Ye56bTqcTfptsl4HHXnw=;
- b=M/mlTdk7hSbYPm9Stf2F5EG5XM6TVgourMqfLQ8YKUaP/8zuU4ljKlZJqIVXL2mKC89X0C
- unjNAAmklX4naHoXAYjBI34GWhP+sZLNpS7tD7m7LewprzlE5wvMuC3NSb9PnVvbwqL92L
- FfxRiiEemg6xAJB6qSw1obKfmEyNFFQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-DxXZtmE4MJeJ6Hc5X0LKiA-1; Fri, 19 Dec 2025 11:30:57 -0500
-X-MC-Unique: DxXZtmE4MJeJ6Hc5X0LKiA-1
-X-Mimecast-MFC-AGG-ID: DxXZtmE4MJeJ6Hc5X0LKiA_1766161856
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4779b432aecso10083595e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:30:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdTU-0003YF-7b
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:37:04 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdTS-0000OX-KV
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:37:03 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4779aa4f928so18789055e9.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:37:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766161856; x=1766766656; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=xGTD/g5VFIzqhVI/xe/BuA8Ye56bTqcTfptsl4HHXnw=;
- b=grHBJ13/5qKV35O+9H3NxxuJEWvKp+0X1NwwEViQDwvSNJLXMs8nSCi1/yonUs10cH
- QIx6ufVqap58aV5bc0oHgF7mLX/625UDgibGtOiy3X2XeZDLBEXOLO3S1Rv8U2YDTOmz
- +qZVRtWJ7DD8ZoWEIytU3q8gyE9t7zWltptUynf/pllweTzFmZey8hUCoheRbO9VKXFN
- aGewM1a/LK4D1V4GcfmrT/62vKoK3gXb4+HCh+9BpJkLOY1frdgmgrQCHMR7c2SCUkCX
- K8Xinq1+TwFuv92VqxP499mjDKecO9gs16ulaGpARXEEKQL2JJ91Cog52zi/mjgAGGsX
- UAlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766161856; x=1766766656;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1766162219; x=1766767019; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xGTD/g5VFIzqhVI/xe/BuA8Ye56bTqcTfptsl4HHXnw=;
- b=uyOlNRmBXuLleGWA3+Jj+OGE6r/CQWg7wMsD7aYkXnHWblDmJ/viL17x0nj4SzWkmJ
- uvj6eFEealwYvOd4eq4uMjK4zzkXRs//fPN02uEy5X4I7Sge3RW+wsNrACsi4oqFbcfK
- 4hc97BZeYct3VO8LT8Qy6d+r5YXwmAyD1fJSgrfHf3W+A58P8PaC+A1+pu+okcpnJnQg
- Q0Tiau/PoEd/Hb1hDETmbGOx3PQ3ba0l76NClMdrwg0vktaqMo+wYMN4Kr8Zz/84rNCZ
- /g67+8WBE9gfmCKkj8ffzobmc3FjiNG5xBR0JU4885S0XSTOUWy63fd5uVcEskM7fXHG
- pHkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQ0bZJoHAYzJeJYZY1BTHO4SHJl6t2PL/B01YidsYJdl05m/Rlmwr38bECrIv/W/ZhMz9EBpzY/Q/h@nongnu.org
-X-Gm-Message-State: AOJu0YwA7VOIUxjg7J/YOXaU/+txDXk2BrYk2fQ46UwoGwNcY7grMKDd
- YnOPZ8AWcMOry7ZQWLZLOwLcNpT3liGP9HwYCKwIzqS/sIMaoW6Xt2eb7p9mQeMWf0G7Yt0Ok5p
- 2tXm6tmZ71WQ2KCI6Cu+p1+w3W+pvvy3BdLB6rduOqeeU+2DVZ+qSzORg
-X-Gm-Gg: AY/fxX41tnJtb77Zrpno2T5K/cNj+ROR3i11hbtSI6IY+Kfk8LRARHcRIPUncmVQUEE
- pckbQv7s7Rmwy6UqnuHoTINFTAHaTXKCaioYaMeWMMb7vCbUhMcwtnCqUt7rdRfV8PM1HKQTdrg
- FcIs/nclipQUdVA6MJ1BsVzIkYmEtKYWAppJyi95VKbSKi8QpFwkYbJjL9SSgQieuIDPUexeMCU
- AcaiHpM9hIWVcIWdrkIb8LrpXPtqRHdnZFavQBdtkNXK7Oxga76ddeQHSNJMDjCN5G5cSyN8qyQ
- QdES28q7/bfpQNIvvzpgak6EnK6qK4QDIsZV0n/AjoHvUdwN5rbGKdLfOCaYau9MFRAbiZL5PVI
- SRP972VaeANOnIklQxYQib68E8aoQZN1KSeQYViyb9avnuOuz
-X-Received: by 2002:a05:600c:1d1d:b0:47a:94fc:d057 with SMTP id
- 5b1f17b1804b1-47d19538d98mr31350475e9.2.1766161856017; 
- Fri, 19 Dec 2025 08:30:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFrLqIeUhPmb3nqJujk9tChPtpsWHuTe0IsZAUKflrpI8mkOhSUa8I6McB+pK5xBbHGXjWepA==
-X-Received: by 2002:a05:600c:1d1d:b0:47a:94fc:d057 with SMTP id
- 5b1f17b1804b1-47d19538d98mr31350255e9.2.1766161855570; 
- Fri, 19 Dec 2025 08:30:55 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eaa2bdfsm5869097f8f.32.2025.12.19.08.30.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Dec 2025 08:30:55 -0800 (PST)
-Message-ID: <970d3a1a-408f-4bf3-b6da-784f8e6bd66a@redhat.com>
-Date: Fri, 19 Dec 2025 17:30:54 +0100
+ bh=9A1gr5CJUaSQgBXQcHovtENYxaFT/E0t2tXqegO2h5o=;
+ b=O6jPT5kgvehHU5ayCeMO3BVV1/S8HmV769ujK4hZy5//ver7ont1KItVmUIre50Zlh
+ tJvQW9paC+0s5y6ywGimzRuXye5fbaTQJcopE1G5Hjw4WUn9ACbF1ihLdFT/ivCBjJL4
+ 7HwaQy1JdWFVidh2YA3+87xLHO/fWgizPTXQQf8mjUOqVER4QmHIeDms9BerBwhaiYdq
+ TncNbfXApoxh7vFValaSHfuu+2oF6zIFEpi9GhUZM1ccQ8EulhvOclrrtQtBPUl1DmcX
+ pBrbpvHfsPra/wjnUGyJlQHI+ngp8BopOGawg0Fm7tnCP7Bf687wui8cJb7D3ZAg5eIz
+ E0Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766162219; x=1766767019;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9A1gr5CJUaSQgBXQcHovtENYxaFT/E0t2tXqegO2h5o=;
+ b=lVyox+f9o84mEEuDKkLx+MYUzQZMfzLEvKigLzk7wV4wXloZHb17wyBbX10Tu144KP
+ kLctULn5J9JDiHnNjEINr4xbz0Et1Rp66cgWiwPCH0eQNc2FC5MiYzv2eR6T07IQ5IF6
+ 35emukjjh9yDGFb1tseQLGgYwvgT7dWFI8Ksq8meDJEsFkMw8NkNPLN9C+k8nOT+kaVq
+ ho9NJGVYWDOs9s5VxPVVEsulMiIb1BiAyB7dp93H21ICi4Sb+xnFjvEado/CeJjjPxhc
+ qaqBAi2QuuIuaMML5oF0k9xHG2RhEoNAeTJ2u8lZm6CMNuQBHWMNdkJR71p7yVpZnE09
+ JJ3Q==
+X-Gm-Message-State: AOJu0Yy7fofpsEk9AZdeXpEgfa6gEhVwfsg8W3iK489hugxin+e5QvDB
+ U2hDzTQWAtxEGvMwiHfyVRrbaPfx4/vIkoJRGz6Pe2lqxihbRA5Dqa+PDFuR1tpCzP1HdAqrTMs
+ TkWeEqyg=
+X-Gm-Gg: AY/fxX6zrtJdsG+oFgZjfev7VeY3NzzYSpq8j//bxmG6JhoYcHzj0hsHlqsoccfuKed
+ O8xqIpMdOtO48p0ZX72p0B/feaBfhY5zcK7OU5oXrDKDd5+nzNJ0QcGU+MrbRNHBcVH1NsasS88
+ KI3XK0L7aWPfSTOPY2D3IFZrRdGgDUa4q3UqQoNW2tSjQoAxiHlchvBVpzHJiBrTof0LivcpBIj
+ ORlpQao/99T18aO4Gt/wGQvuG+BqotY1aBZ2ijsFK8tEsQveObu1UYV5EN+8MgfF1ox4gbFFflE
+ UB/f8KutRSVhgGRmbJNmMynOSTbrgwqJbgG87OubHtmIXA0KvMtgZeR/fAdjob3LmaiLGJYf3nU
+ Mb8y0hS9WUTj9mqFQhhVD7XjuGNNxVBFCAQhtN66ZvA9V54SchibirJB3nHjJCyGH4MZSv1fKzK
+ PJY506BhC717b9OI4Zn8gpflgcQiimombaTkkP0E/LDUG42zdloFZL5IQXFh0j
+X-Google-Smtp-Source: AGHT+IHqfPjEiCUzly+R6Ir7twXbDm4Ht/xvz7hKR8Sd7YghV0bPZiuSrvkWK6dc79ozNsMX7BAjpQ==
+X-Received: by 2002:a05:600c:1d1d:b0:477:9eb8:97d2 with SMTP id
+ 5b1f17b1804b1-47d1953b8acmr34176285e9.8.1766162219499; 
+ Fri, 19 Dec 2025 08:36:59 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d19362345sm50113335e9.6.2025.12.19.08.36.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 19 Dec 2025 08:36:58 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 1/9] hw/sparc: Use explicit big-endian LD/ST API
+Date: Fri, 19 Dec 2025 17:36:41 +0100
+Message-ID: <20251219163650.74303-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251219163650.74303-1-philmd@linaro.org>
+References: <20251219163650.74303-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] util/vfio-helper: Fix endianess when enabling Bus
- Master
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, thuth@redhat.com, stefanha@redhat.com,
- kwolf@redhat.com, fam@euphon.net, alex@shazbot.org
-References: <20251217184253.1520-1-alifm@linux.ibm.com>
- <4d7e4040-349e-4772-bdf9-43d4f8a6f771@redhat.com>
- <0c3e13e1-0aeb-47f9-9c44-5af8f3f47055@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <0c3e13e1-0aeb-47f9-9c44-5af8f3f47055@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -173,52 +107,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/19/25 17:21, Philippe Mathieu-Daudé wrote:
-> On 19/12/25 15:51, Cédric Le Goater wrote:
->> Hello,
->>
->> On 12/17/25 19:42, Farhan Ali wrote:
->>> The VFIO pread/pwrite functions use little-endian data format.
->>> When enabling the Bus Master bit, the value must be correctly converted
->>> from the CPU's native endianess to little-endian format.
->>
->> How did you find the issue ?
-> 
-> I presumed using VFIO on s390x hosts...
+The SPARC architecture uses big endianness. Directly use
+the big-endian LD/ST API.
 
-yes. I have been using a nvme drive for over 2y in an s390x VM and never
-saw any issue.
+Mechanical change running:
 
-C.
+  $ for a in uw w l q; do \
+      sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
+        $(git grep -wlE '(ld|st)u?[wlq]_p' hw/sparc*/);
+    done
 
-> 
->>
->> Thanks,
->>
->> C.
->>
->>
->>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
->>> ---
->>>   util/vfio-helpers.c | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/util/vfio-helpers.c b/util/vfio-helpers.c
->>> index fdff042ab4..3c8284284f 100644
->>> --- a/util/vfio-helpers.c
->>> +++ b/util/vfio-helpers.c
->>> @@ -443,7 +443,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
->>>       if (ret) {
->>>           goto fail;
->>>       }
->>> -    pci_cmd |= PCI_COMMAND_MASTER;
->>> +    pci_cmd = cpu_to_le16(le16_to_cpu(pci_cmd) | PCI_COMMAND_MASTER);
->>>       ret = qemu_vfio_pci_write_config(s, &pci_cmd, sizeof(pci_cmd), PCI_COMMAND);
->>>       if (ret) {
->>>           goto fail;
->>
->>
->>
-> 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Chigot Clément <chigot@adacore.com>
+---
+ hw/sparc/leon3.c   | 42 +++++++++++++++++++++---------------------
+ hw/sparc/sun4m.c   |  6 +++---
+ hw/sparc64/sun4u.c |  6 +++---
+ 3 files changed, 27 insertions(+), 27 deletions(-)
+
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index 631c6113b5c..0414e9df573 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -78,21 +78,21 @@ typedef struct ResetData {
+ 
+ static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
+ {
+-    stl_p(code++, 0x82100000); /* mov %g0, %g1                */
+-    stl_p(code++, 0x84100000); /* mov %g0, %g2                */
+-    stl_p(code++, 0x03000000 +
++    stl_be_p(code++, 0x82100000); /* mov %g0, %g1             */
++    stl_be_p(code++, 0x84100000); /* mov %g0, %g2             */
++    stl_be_p(code++, 0x03000000 +
+       extract32(addr, 10, 22));
+                                /* sethi %hi(addr), %g1        */
+-    stl_p(code++, 0x82106000 +
++    stl_be_p(code++, 0x82106000 +
+       extract32(addr, 0, 10));
+                                /* or %g1, addr, %g1           */
+-    stl_p(code++, 0x05000000 +
++    stl_be_p(code++, 0x05000000 +
+       extract32(val, 10, 22));
+                                /* sethi %hi(val), %g2         */
+-    stl_p(code++, 0x8410a000 +
++    stl_be_p(code++, 0x8410a000 +
+       extract32(val, 0, 10));
+                                /* or %g2, val, %g2            */
+-    stl_p(code++, 0xc4204000); /* st %g2, [ %g1 ]             */
++    stl_be_p(code++, 0xc4204000); /* st %g2, [ %g1 ]          */
+ 
+     return code;
+ }
+@@ -112,13 +112,13 @@ static void write_bootloader(void *ptr, hwaddr kernel_addr)
+ 
+     /* If we are running on a secondary CPU, jump directly to the kernel.  */
+ 
+-    stl_p(p++, 0x85444000); /* rd %asr17, %g2      */
+-    stl_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
+-    stl_p(p++, 0x80908000); /* tst  %g2            */
++    stl_be_p(p++, 0x85444000); /* rd %asr17, %g2      */
++    stl_be_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
++    stl_be_p(p++, 0x80908000); /* tst  %g2            */
+     /* Filled below.  */
+     sec_cpu_branch_p = p;
+-    stl_p(p++, 0x0BADC0DE); /* bne xxx             */
+-    stl_p(p++, 0x01000000); /* nop */
++    stl_be_p(p++, 0x0BADC0DE); /* bne xxx             */
++    stl_be_p(p++, 0x01000000); /* nop */
+ 
+     /* Initialize the UARTs                                        */
+     /* *UART_CONTROL = UART_RECEIVE_ENABLE | UART_TRANSMIT_ENABLE; */
+@@ -133,17 +133,17 @@ static void write_bootloader(void *ptr, hwaddr kernel_addr)
+     p = gen_store_u32(p, 0x80000318, 3);
+ 
+     /* Now, the relative branch above can be computed.  */
+-    stl_p(sec_cpu_branch_p, 0x12800000
+-          + (p - sec_cpu_branch_p));
++    stl_be_p(sec_cpu_branch_p, 0x12800000
++             + (p - sec_cpu_branch_p));
+ 
+     /* JUMP to the entry point                                     */
+-    stl_p(p++, 0x82100000); /* mov %g0, %g1 */
+-    stl_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
+-                            /* sethi %hi(kernel_addr), %g1 */
+-    stl_p(p++, 0x82106000 + extract32(kernel_addr, 0, 10));
+-                            /* or kernel_addr, %g1 */
+-    stl_p(p++, 0x81c04000); /* jmp  %g1 */
+-    stl_p(p++, 0x01000000); /* nop */
++    stl_be_p(p++, 0x82100000); /* mov %g0, %g1 */
++    stl_be_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
++                               /* sethi %hi(kernel_addr), %g1 */
++    stl_be_p(p++, 0x82106000 + extract32(kernel_addr, 0, 10));
++                               /* or kernel_addr, %g1 */
++    stl_be_p(p++, 0x81c04000); /* jmp  %g1 */
++    stl_be_p(p++, 0x01000000); /* nop */
+ }
+ 
+ static void leon3_cpu_reset(void *opaque)
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index 53d7ae08ae9..52ca9586001 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -268,9 +268,9 @@ static unsigned long sun4m_load_kernel(const char *kernel_filename,
+         if (*initrd_size > 0) {
+             for (i = 0; i < 64 * TARGET_PAGE_SIZE; i += TARGET_PAGE_SIZE) {
+                 ptr = rom_ptr(KERNEL_LOAD_ADDR + i, 24);
+-                if (ptr && ldl_p(ptr) == 0x48647253) { /* HdrS */
+-                    stl_p(ptr + 16, INITRD_LOAD_ADDR);
+-                    stl_p(ptr + 20, *initrd_size);
++                if (ptr && ldl_be_p(ptr) == 0x48647253) { /* HdrS */
++                    stl_be_p(ptr + 16, INITRD_LOAD_ADDR);
++                    stl_be_p(ptr + 20, *initrd_size);
+                     break;
+                 }
+             }
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index 82c3e7c855b..e83c82fc9ae 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -206,9 +206,9 @@ static uint64_t sun4u_load_kernel(const char *kernel_filename,
+         if (*initrd_size > 0) {
+             for (i = 0; i < 64 * TARGET_PAGE_SIZE; i += TARGET_PAGE_SIZE) {
+                 ptr = rom_ptr(*kernel_addr + i, 32);
+-                if (ptr && ldl_p(ptr + 8) == 0x48647253) { /* HdrS */
+-                    stl_p(ptr + 24, *initrd_addr + *kernel_addr);
+-                    stl_p(ptr + 28, *initrd_size);
++                if (ptr && ldl_be_p(ptr + 8) == 0x48647253) { /* HdrS */
++                    stl_be_p(ptr + 24, *initrd_addr + *kernel_addr);
++                    stl_be_p(ptr + 28, *initrd_size);
+                     break;
+                 }
+             }
+-- 
+2.52.0
 
 
