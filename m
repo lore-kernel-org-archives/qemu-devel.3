@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34227D7497F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53D1DD7497F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdUQ-00049e-Rg; Fri, 19 Dec 2025 11:38:02 -0500
+	id 1vWdTw-0003bv-Gn; Fri, 19 Dec 2025 11:37:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vWdUG-0003nf-OX; Fri, 19 Dec 2025 11:37:55 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vWdUD-0000Wf-Kq; Fri, 19 Dec 2025 11:37:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=LyWKVr8B8dmK057lFIEaA7TomUAuORPw4LkU84UqZv0=; b=f4mssKbhSYxPIUFGPTg7ljLu5s
- vknbVKez509O1OxL5358hnUgMdwebU+XRosrvUMMwkLEk/k/LG/Uc3HLA/oPZ7MJKcQW4JFJ2YD0o
- JyTd8vGwctt9S23bFc+wFEe+uz3cUgRV25ttaBurM3lEwO7VhphOFa8UseMPPkyOyvoT2BxLlmGQx
- iMUbTVyRcToXusxTKFMe1C5tgPra2WYh1HrdTg81wfdJhyXYhLL7KVB2YQqN/mkFmMIeN+tctcfGw
- ZeHfT/2obUQ5bzVC2tajQ4DN7Nmove2/efA30XauBVBR+FkCIA1qam25G4MfuqL4MUO+j5YAVyXgb
- rn4ZGznFNooBjQiFU8qeqtyiFqAXP4u0BgtzvL9OuJ+Hz7ErVPSniX4ZUcshTiu0B9ysVSayag51K
- 1n9iMdIDrVnW3cvBqGu2zE2Q8H+raixrbITBeJ8TeKw9bNNlosgFWihq/FIA4ytqvNnXOUK6DEklk
- VmqXLuJvZifipEvZXUD+Imu0XDAdhYhfd9qIo0LXLElUkckjk4t4c/ilcbMSBn4TVHnBsl9jUUIAs
- lO16HZbuhttMCetWKQqCHwy7/vYJo2bezqzAHS5FVZtTBsRPp80GtS5bLKHrK3SlkscH/AlN9qYIF
- HbiNo2p2X3/9+89xSl0MSeXDjwUyDACBM9Y/GVMD4=;
-Received: from [217.155.175.48] (helo=[10.8.0.10])
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vWdRc-0009mx-4M; Fri, 19 Dec 2025 16:35:08 +0000
-Message-ID: <a07a15ce-3d18-4bb5-8e63-9576907e1f1c@ilande.co.uk>
-Date: Fri, 19 Dec 2025 16:37:38 +0000
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdTu-0003bm-UG
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:37:30 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdTt-0000S0-Fk
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:37:30 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-42fbbc3df8fso988955f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:37:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766162248; x=1766767048; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pCt5072MT4D8iFZ64nwix4KP4RCAdARcnrd2MW5vRvU=;
+ b=pyPwbp/MMQkae5gT66xnaS3voGopHr3RQ2EMwB2fllYlsP136rj2LJfq/KtGCtKICo
+ 952gwZ93k2R4XiQxPHPm7koNP+e/9PmfSkSZyn6bIC9CUA8Gf4l3RhfbrgWVth0YGOpg
+ kqAIKyPxXhit9sKss0u2MSC2eYpf1tw64gtH8ixv+q1rQmZWEzR075lar1yjN9Ug2EGx
+ XUOQtGM8OJGjicL3il7GvX/5vD07c98SGfCWofluF5YFiEuSIZgeGomM6onHiFX1TaJU
+ nm/KSc5y6UnQZ2xB2uJAq2A05O5NUH2j3d5p3npdUtbEQ2+7dqxSCjB22RMXDUyCogQz
+ 7BIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766162248; x=1766767048;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pCt5072MT4D8iFZ64nwix4KP4RCAdARcnrd2MW5vRvU=;
+ b=B/cSCIvt2PDWQvUQofGhEVlI7odds14cha+Nwc6K/B7VA4KUH7MTnp1T/C8S3a7sTt
+ wGVJqIeSJ6Ay+5onE+6AxQOxenjY3YKOA3LnoyeLMYP/aRoJ3zsHkeO5JncD1pNTGr1z
+ LS14vTXjGqCBAO/4RuC/tHWBhm9ZN5hpvJZA6lCgt+Y/7Zd0YKkMQDfjCSNzT52/cJrC
+ FGNZmNWsYmkEGtgIKoFLT+rxRP5JIMvDFc6gyIaJFSsCRTRo4HyrDkZUUAm7M3BbOI2A
+ YLE/S0q3r1YTcZvxFHsqrsvrJoryUZ4XNE+5B7NMIJOdJjRRop+jo3kSPUR7A5jYwef3
+ BL2A==
+X-Gm-Message-State: AOJu0YxbSpFm/nSgk7Jfia2A5raoCRBmbFuPOup1uARxNW/0e3RueTlV
+ t0JzlUwbvQnwUQTVtmyRRALhCsXq3T3GZefA70JLt8vP8zppapeFzpjfgXzXD24abO72Oo4TmvU
+ JvRCGMKU=
+X-Gm-Gg: AY/fxX7tZIQMqdeh/no0v7KlBi3c4KF9jmdUSpg+hnF3or2dO/m5/j6n8pvHvO4bcMg
+ mzP7rEKXxV9jj1m8bit94DxI+gA7aEh76CbFUaFTWwTRJQD6D5K1rrKiLj0kMqqUCWbQB1i2FiT
+ 4FtJ4Y3aQWIUe2ABcrdrocxkfZGPKVHefOKdHETJI6U7B47ACsM2FyOnkRPEsIn8/Fy5PO0s5jF
+ qKQYwk2B6oVhkdBoEVHUmxr4iMSZSVXMitXR7UT06xj/dhlNMpl6R13jyyQ6kH1nz8bxx4VEp/b
+ UkFwDDFC4vGXRiLMdqB8Exmek4kqBC9J041USgb7rR6PY5mjCyRn6IAYD4TWIhIX1rUsAuiEJWK
+ LnKDMxReG+/oHnMVAafImpvNk1mZVM/GGgwx5y73Qi0E+ykIj8M2yg4kKfzxN3LZ75egZCnsidS
+ J4yxLCZuSQZ+WH6MuMDL8IX2zX+YQwqPxJfmLO7GO1m0gktdzqYfLl25iKm7Op
+X-Google-Smtp-Source: AGHT+IH2/KwdCJjnVZ8WS/K+hnlCRy1ArMX7mZub37twLzNoXbZGIMlwCZKZP+cFSvUmc8YNGpMrvg==
+X-Received: by 2002:a05:6000:24c9:b0:430:fc63:8d3 with SMTP id
+ ffacd0b85a97d-4324e4fe005mr3763347f8f.30.1766162247653; 
+ Fri, 19 Dec 2025 08:37:27 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324ea1b1bdsm5622615f8f.8.2025.12.19.08.37.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 19 Dec 2025 08:37:26 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 5/9] target/sparc: Use big-endian variant of
+ cpu_ld/st_data*()
+Date: Fri, 19 Dec 2025 17:36:45 +0100
+Message-ID: <20251219163650.74303-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251219163650.74303-1-philmd@linaro.org>
+References: <20251219163650.74303-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20251203060942.57851-1-philmd@linaro.org>
- <20251203060942.57851-9-philmd@linaro.org> <aTBccn2LIv7puGzR@intel.com>
- <05f92a77-7587-4441-a252-01e4705a6892@linaro.org>
- <c03820b8-7745-4b8e-8e69-a37c872257f8@ilande.co.uk>
- <aUPAysAYqTPAfgzD@intel.com>
- <7d238d0d-df26-43fd-bfac-a7d94064d486@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <7d238d0d-df26-43fd-bfac-a7d94064d486@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 217.155.175.48
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH-for-11.0 v6 08/13] hw/sparc64/sun4u: Use
- fw_cfg_init_io_nodma()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,55 +108,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/2025 11:22, Philippe Mathieu-Daudé wrote:
+We only build the SPARC targets using big endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the big
+endian declarations. Use the explicit big-endian variants.
 
-> On 18/12/25 09:52, Zhao Liu wrote:
->>>>> I think maybe one reason to use `ebus` is because...
->>>>>
->>>>>> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>>>>> -    memory_region_add_subregion(pci_address_space_io(ebus), BIOS_CFG_IOPORT,
->>>>>                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>>> ... because the parent region is managed by ebus.
->>>>>
->>>>> Perhaps we should add another argument: Object *parent?
->>>>
->>>> I thought about it but don't think so, all instances but this one use
->>>> the machine container.
->>>>
->>>> I'll improve the description.
->>>
->>> The reason that the fw_cfg device lives under ebus on sun4u is because the
->>> ebus device is effectively a PCI-ISA bridge, and the fw_cfg port is mapped
->>> into I/O address space along with other ISA devices. I'm not sure that
->>> setting the parent to the machine is the right thing to do here.
->>
->> Thanks Philippe and Mark, IIUC, ebus doesn't have the hotplug use case,
->> so it lives long enough like the sun4u/v machine, therefore replacing
->> the parent object "ebus" with machine is safe.
->>
->> And it might be better to explicitly set ebus as not supporting hotplug
->> (via dc->hotpluggable = false).
->>
->> Adding a "parent" argument to the generic interface fw_cfg_init_io_nodma()
->> doesn't seem necessary at the moment, since using the default machine as
->> parent seems enough to meet all current needs in QEMU.
->>
->> What do you think?
-> 
-> fw_cfg is per guest, and there can only be once instance of it; so IMHO it
-> makes sense to use the machine as parent. I should have posted a better
-> commit description upfront, sorry.
+Mechanical change running:
 
-That's true, but the I/O is mapped to the ISA bus and so if the ISA bus does not 
-exist, it is impossible to access the device even if it exists on the machine.
+  $ tgt=sparc; \
+    end=be; \
+    for op in data mmuidx_ra; do \
+      for ac in uw sw l q; do \
+        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+      for ac in w l q; do \
+        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+    done
 
-Following on from this: at some point should we not be aiming for a qdev bus to have 
-its devices as QOM children? Assigning fw_cfg directly to the machine would also be 
-wrong in this scenario.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/sparc/ldst_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-
-ATB,
-
-Mark.
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index 043711f11dc..d879ce4e262 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -1194,13 +1194,13 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
+             ret = cpu_ldub_data(env, addr);
+             break;
+         case 2:
+-            ret = cpu_lduw_data(env, addr);
++            ret = cpu_lduw_be_data(env, addr);
+             break;
+         case 4:
+-            ret = cpu_ldl_data(env, addr);
++            ret = cpu_ldl_be_data(env, addr);
+             break;
+         case 8:
+-            ret = cpu_ldq_data(env, addr);
++            ret = cpu_ldq_be_data(env, addr);
+             break;
+         default:
+             g_assert_not_reached();
+-- 
+2.52.0
 
 
