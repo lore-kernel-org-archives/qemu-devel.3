@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA8AD78770
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:20:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C83D78770
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:20:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdDY-0006Jh-JO; Fri, 19 Dec 2025 11:20:36 -0500
+	id 1vWdDQ-0006A8-SS; Fri, 19 Dec 2025 11:20:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdDS-0006CM-M8
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:20:30 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdDJ-00060h-MZ
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:20:21 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdDO-0005y9-Si
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:20:29 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-42e2e77f519so1400827f8f.2
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:20:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdDH-0005xA-LD
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:20:21 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4775ae77516so18278395e9.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:20:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766161225; x=1766766025; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766161218; x=1766766018; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XcMU1k1986zvYwyLzb//gpQrHqBilxoxS5xhcinB0TY=;
- b=CD0ja8/hI3AGrIeosiNlCCaFaRreh/qt2mjrgjN3txu3veh3ePoLQ1epAhg+FRukpr
- fxBOBZXxBgUqKrxr2dVd950JzKa+Snosd4z/mDaPWGrjlkwdVZCewzJFzc0wiDWj8C08
- ywfr44Nmzg5v/tBwihLBxvMoCkehb9/V4FViQjbOvQbDtHMcrFXNOCAARMRQJxUGcYg0
- AZiex5GqCUwWYhAUopAzAeQ1p77ffrzdvgm5u/b4WZY+hX0mqLRUmOsefrFIcax9B7vO
- 5JzHGrq6GLZExXlUP9y5vL0VVaajqUHU9oxYKOE3OTcj7h5ULuoDrYXZqJTkJllbUh7Y
- iE5w==
+ bh=LEvDE3B5Gu5UNxZmrWuHR20YlbHMtfAkLmTQrUNsEUM=;
+ b=yzZXBiaIhq/PIimvcZNeV8sMMorGg/MVHNTW7Hwifqxq9m6hzjUw36TQ8QiJhj2paa
+ Ukhrl8W5VgpsqOrz3q6LiJIjtw5pWkKLdeqvZryigM5jS3MsGwsn2sPrp9otjkAzSraU
+ S7APCrz03LYLK2ZkTcqts5xqzsI+I/eJrW+W+dl2kBAn+LD9dVGqcjFwo+nDgbk7he9G
+ dQ1JMI4tur3G7TZMKmrmUEgaiRkPRG4CSrEP9rUuZV/KNzXhpyqFfkgI6GgeRmcvxnKF
+ V8QzYwL4qw0u9RRY4Ov4aJ7JTKUaBAAJ+8e18pGCpRTadzud5QDssozvibpIVaWVMzNa
+ xvdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766161225; x=1766766025;
+ d=1e100.net; s=20230601; t=1766161218; x=1766766018;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XcMU1k1986zvYwyLzb//gpQrHqBilxoxS5xhcinB0TY=;
- b=vs74NvZr3xatLHFoTlapUaGHrZxHMl2UmQ1aILHiS5HVo4Ns7K7xYxz5Vp8mchQzk6
- +P9/1SW4KQ6QOB3v8jCGs2ZTHndZNK+LVqayp5Fd0/H5KKkWoHnO15UWf7ivAIRg+WXe
- +zwlIzTSi4+3IcP7/djf1LYCuXdiUe5P7n1vAVUIDGgdptK1h2ID/HBi6FAAZtANcACE
- iHkChhoPRxiuToBXFukTFSz6qp1i+rhpyHavUYdH3WQ2lifqMPKKdm7/o1U8aqG2tXY0
- lwKXaD6Fthhe9vAMeqIDGxCVyO1V92LQp92GBrMYRTNtf1wjbthA/fxc1Texf5TsGsU3
- 3NbA==
-X-Gm-Message-State: AOJu0Yz/tE8Q7s9OvtiZC193vgw0KWYZX+7h6ojU+O6PBzGw3jQpCvTC
- WJ9uM3lbqF75WCqyZ2io0Hznx6aBhHaw8NGO4j/rTfcyFeOX5Q+fa9pFsukIJCmtaoqrv5E7oY0
- F/0li8Sc=
-X-Gm-Gg: AY/fxX6Accyy/sXU+syNCBCcwjYUReWcnXCTX6zVjZgRpZBohnhtQWZyPH/1nLvzbdA
- kbtfqEZYlVaA0n0Xwlw+yLCeUYNEh5RHKhUCqbzApQkzz/g01K6g72212dkLL+ziBlcSaVn/UzW
- dNbgL2NyrlO6qeV0yCq7z3D1Uuh9Ax/tVasPBzC6GUqD2+5tG9td9sqiVxdoAiexlj8O6A37b7p
- pCDgVmRf1J6SqTet8Ggw0x+5q2wWyNXI3uRZpGB7lpnA93WY6cnHy1N/K/NaywtujFk3G1rQ8mM
- 8mxLZZCcCl1JG6/YZXVgih2eJSjh4/BBq99Q1ltAfK1nqsywTZ4dkarYvls1WOHZuiNg7drwXHE
- zc4y6Ty8SiPz/PUq6S7ZKKQsnWABaSEcjQUlwszol55KWNIhUrjtMseCs7FVZKceqMJydPZ3y+e
- 0v/NsyDU/vpVuH9cZ6biiA7pa/OBWW0UTmV6+M8d+DkfK9lSrJ9Zhjymj5C1Gk
-X-Google-Smtp-Source: AGHT+IE+7QpyqkemrCjz7smCR4u5qB4Ydg7lXsIxsqGHh2+8bsGJSXuuUyFsH4gzHDfikghW5P6RoA==
-X-Received: by 2002:a05:6000:200f:b0:431:8f8:7f2e with SMTP id
- ffacd0b85a97d-4324e50615emr4172277f8f.33.1766161224872; 
- Fri, 19 Dec 2025 08:20:24 -0800 (PST)
+ bh=LEvDE3B5Gu5UNxZmrWuHR20YlbHMtfAkLmTQrUNsEUM=;
+ b=vmwbP4pPNtHXKe85Kd6RaaTtcWmB/9PCwBNgX+dMyAaurCreu8/Qv9ZZ1iGgqG6gCI
+ 3L2WBckEWLw6E07yHe64sFYtCryFbfgrSyRY6Zbh8SBIc42MxnNX87kJ52DwU9m2Fl0C
+ SZ0B5ixlZvd74k/p+pcXK5sEadgzd9lV0aM9/rxWojABJj5RkPwlrZBY6YnUEk8UkRIU
+ GkiZcZXMz7vjivW6lsguY9AOvjZjnbHr6lsxEBVufD3LHlr7Q/PI+jU4OOk4xaGbtMSX
+ QiV0CIX0QgR9ncvFphM1NcZjM040JQLGixNRxK/C0hFYHOuQFGCinSzHMyzX11y1uRJz
+ rbKw==
+X-Gm-Message-State: AOJu0Yw6lrsxg4P9W+C0et868LZW676QszwvlwpHPezD2klvjvQQgvPw
+ 4CWHA2jU+7/h0CqkiCDahDmH1xmc/UV66PYA5DXLsm4nEKmz4RpY4QCyAccLjn1jYGKYsxXgrje
+ aY4OfVVc=
+X-Gm-Gg: AY/fxX50NcmBEDyaBb5SgidxNzOtIZij08/lleybggv1G7UQhlcLk0dxZvf/yDiAGdB
+ VyHR9EhibNmxtdAVBrEwpYUODlGcboxO3QjDeM6EVBRiYyNRin08VR0F6otsqoCkhlw547yx6LH
+ 3ou9eudPeIrtKEtACtk0OMWWVmAfdiDrfKQNFRsUPjLyQ3Rw2KvA/sDqFI2CTnp44Czl/ApfBCi
+ I8NV3ntZIxruAcqYQbMV6TJaoo3esc9CIhqh1Vqt6+qFlpqIj6lyI2+ySy5eIS8TK6vsdeZv89q
+ BOmaqx4CpbA4c/6dsmVokDMq1xTpeQvCB5nQztx0Fmh02TrOjQ3IaVaib7huK7kvv7uDhrrt3Xa
+ C/ORw+SV/fu4E+0fKvVndNTk09GNlQJFbGTELiLadX3ddER8mXvdlknZtysdDwdm8hbqAjDV4mG
+ 56fYh9rx758UJx9VeuZ3A1BJQ5GfEuuu7Shm4l4ontzTN6XYw0aI9s2/yVteit
+X-Google-Smtp-Source: AGHT+IH6+FhWDAiyt15vIG+85wrVo/LPfB8xxODpVr5Or0G80hpeRmqcdVLaH2w91oN8VAIldk9TOg==
+X-Received: by 2002:a05:600c:8718:b0:45d:f83b:96aa with SMTP id
+ 5b1f17b1804b1-47d1956eba9mr27156495e9.7.1766161217777; 
+ Fri, 19 Dec 2025 08:20:17 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1af2bsm5989466f8f.1.2025.12.19.08.20.23
+ 5b1f17b1804b1-47d193cba81sm50153235e9.10.2025.12.19.08.20.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Dec 2025 08:20:24 -0800 (PST)
+ Fri, 19 Dec 2025 08:20:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -73,18 +73,18 @@ Cc: Peter Xu <peterx@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 04/24] system/physmem: Use explicit endianness in
- subpage_ops::read/write()
-Date: Fri, 19 Dec 2025 17:19:31 +0100
-Message-ID: <20251219161953.72724-5-philmd@linaro.org>
+Subject: [PATCH v2 03/24] system/physmem: Convert DEBUG_SUBPAGE printf() to
+ trace events
+Date: Fri, 19 Dec 2025 17:19:30 +0100
+Message-ID: <20251219161953.72724-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251219161953.72724-1-philmd@linaro.org>
 References: <20251219161953.72724-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,132 +107,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the ldn_p/stn_p() calls by their explicit endianness
-variants. Duplicate the MemoryRegionOps, replacing the single
-DEVICE_NATIVE_ENDIAN entry by a pair of LITTLE and BIG ones.
-Select the proper MemoryRegionOps in subpage_init().
+Defining DEBUG_SUBPAGE allows to use raw printf() statements to
+print information about some events; convert these to tracepoints.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- system/physmem.c | 76 +++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 59 insertions(+), 17 deletions(-)
+ system/physmem.c    | 29 ++++++-----------------------
+ system/trace-events |  6 ++++++
+ 2 files changed, 12 insertions(+), 23 deletions(-)
 
 diff --git a/system/physmem.c b/system/physmem.c
-index 7e914ecf648..9fe84679cac 100644
+index 1292f49095f..7e914ecf648 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -2894,8 +2894,8 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
- static bool flatview_access_valid(FlatView *fv, hwaddr addr, hwaddr len,
-                                   bool is_write, MemTxAttrs attrs);
+@@ -91,8 +91,6 @@
  
--static MemTxResult subpage_read(void *opaque, hwaddr addr, uint64_t *data,
--                                unsigned len, MemTxAttrs attrs)
-+static MemTxResult subpage_read_le(void *opaque, hwaddr addr, uint64_t *data,
-+                                   unsigned len, MemTxAttrs attrs)
- {
-     subpage_t *subpage = opaque;
+ #include "memory-internal.h"
+ 
+-//#define DEBUG_SUBPAGE
+-
+ /* ram_list is read under rcu_read_lock()/rcu_read_unlock().  Writes
+  * are protected by the ramlist lock.
+  */
+@@ -2903,10 +2901,7 @@ static MemTxResult subpage_read(void *opaque, hwaddr addr, uint64_t *data,
      uint8_t buf[8];
-@@ -2906,18 +2906,49 @@ static MemTxResult subpage_read(void *opaque, hwaddr addr, uint64_t *data,
+     MemTxResult res;
+ 
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: subpage %p len %u addr " HWADDR_FMT_plx "\n", __func__,
+-           subpage, len, addr);
+-#endif
++    trace_subpage_read(subpage, len, addr);
+     res = flatview_read(subpage->fv, addr + subpage->base, attrs, buf, len);
      if (res) {
          return res;
-     }
--    *data = ldn_p(buf, len);
-+    *data = ldn_le_p(buf, len);
-     return MEMTX_OK;
- }
- 
--static MemTxResult subpage_write(void *opaque, hwaddr addr,
--                                 uint64_t value, unsigned len, MemTxAttrs attrs)
-+static MemTxResult subpage_read_be(void *opaque, hwaddr addr, uint64_t *data,
-+                                   unsigned len, MemTxAttrs attrs)
-+{
-+    subpage_t *subpage = opaque;
-+    uint8_t buf[8];
-+    MemTxResult res;
-+
-+    trace_subpage_read(subpage, len, addr);
-+    res = flatview_read(subpage->fv, addr + subpage->base, attrs, buf, len);
-+    if (res) {
-+        return res;
-+    }
-+    *data = ldn_be_p(buf, len);
-+    return MEMTX_OK;
-+}
-+
-+static MemTxResult subpage_write_le(void *opaque, hwaddr addr,
-+                                    uint64_t value, unsigned len,
-+                                    MemTxAttrs attrs)
- {
+@@ -2921,11 +2916,7 @@ static MemTxResult subpage_write(void *opaque, hwaddr addr,
      subpage_t *subpage = opaque;
      uint8_t buf[8];
  
-     trace_subpage_write(subpage, len, addr, value);
--    stn_p(buf, len, value);
-+    stn_le_p(buf, len, value);
-+
-+    return flatview_write(subpage->fv, addr + subpage->base, attrs, buf, len);
-+}
-+
-+static MemTxResult subpage_write_be(void *opaque, hwaddr addr,
-+                                    uint64_t value, unsigned len,
-+                                    MemTxAttrs attrs)
-+{
-+    subpage_t *subpage = opaque;
-+    uint8_t buf[8];
-+
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: subpage %p len %u addr " HWADDR_FMT_plx
+-           " value %"PRIx64"\n",
+-           __func__, subpage, len, addr, value);
+-#endif
 +    trace_subpage_write(subpage, len, addr, value);
-+    stn_be_p(buf, len, value);
-+
+     stn_p(buf, len, value);
      return flatview_write(subpage->fv, addr + subpage->base, attrs, buf, len);
  }
+@@ -2935,10 +2926,8 @@ static bool subpage_accepts(void *opaque, hwaddr addr,
+                             MemTxAttrs attrs)
+ {
+     subpage_t *subpage = opaque;
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: subpage %p %c len %u addr " HWADDR_FMT_plx "\n",
+-           __func__, subpage, is_write ? 'w' : 'r', len, addr);
+-#endif
++
++    trace_subpage_accepts(subpage, is_write ? 'w' : 'r', len, addr);
  
-@@ -2933,15 +2964,26 @@ static bool subpage_accepts(void *opaque, hwaddr addr,
+     return flatview_access_valid(subpage->fv, addr + subpage->base,
                                   len, is_write, attrs);
- }
- 
--static const MemoryRegionOps subpage_ops = {
--    .read_with_attrs = subpage_read,
--    .write_with_attrs = subpage_write,
--    .impl.min_access_size = 1,
--    .impl.max_access_size = 8,
--    .valid.min_access_size = 1,
--    .valid.max_access_size = 8,
--    .valid.accepts = subpage_accepts,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+static const MemoryRegionOps subpage_ops[2] = {
-+    [0 ... 1] = {
-+        .impl = {
-+            .min_access_size = 1,
-+            .max_access_size = 8,
-+        },
-+        .valid = {
-+            .min_access_size = 1,
-+            .max_access_size = 8,
-+            .accepts = subpage_accepts,
-+        },
-+    },
-+
-+    [0].endianness = DEVICE_LITTLE_ENDIAN,
-+    [0].read_with_attrs = subpage_read_le,
-+    [0].write_with_attrs = subpage_write_le,
-+
-+    [1].endianness = DEVICE_BIG_ENDIAN,
-+    [1].read_with_attrs = subpage_read_be,
-+    [1].write_with_attrs = subpage_write_be,
- };
- 
- static int subpage_register(subpage_t *mmio, uint32_t start, uint32_t end,
-@@ -2969,8 +3011,8 @@ static subpage_t *subpage_init(FlatView *fv, hwaddr base)
-     mmio = g_malloc0(sizeof(subpage_t) + TARGET_PAGE_SIZE * sizeof(uint16_t));
-     mmio->fv = fv;
-     mmio->base = base;
--    memory_region_init_io(&mmio->iomem, NULL, &subpage_ops, mmio,
--                          NULL, TARGET_PAGE_SIZE);
-+    memory_region_init_io(&mmio->iomem, NULL, &subpage_ops[target_big_endian()],
-+                          mmio, NULL, TARGET_PAGE_SIZE);
+@@ -2964,10 +2953,7 @@ static int subpage_register(subpage_t *mmio, uint32_t start, uint32_t end,
+         return -1;
+     idx = SUBPAGE_IDX(start);
+     eidx = SUBPAGE_IDX(end);
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: %p start %08x end %08x idx %08x eidx %08x section %d\n",
+-           __func__, mmio, start, end, idx, eidx, section);
+-#endif
++    trace_subpage_register(mmio, start, end, idx, eidx, section);
+     for (; idx <= eidx; idx++) {
+         mmio->sub_section[idx] = section;
+     }
+@@ -2986,10 +2972,7 @@ static subpage_t *subpage_init(FlatView *fv, hwaddr base)
+     memory_region_init_io(&mmio->iomem, NULL, &subpage_ops, mmio,
+                           NULL, TARGET_PAGE_SIZE);
      mmio->iomem.subpage = true;
-     trace_subpage_init(mmio, base, TARGET_PAGE_SIZE);
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: %p base " HWADDR_FMT_plx " len %08x\n", __func__,
+-           mmio, base, TARGET_PAGE_SIZE);
+-#endif
++    trace_subpage_init(mmio, base, TARGET_PAGE_SIZE);
+ 
+     return mmio;
+ }
+diff --git a/system/trace-events b/system/trace-events
+index 82856e44f2e..6d29a823f04 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -35,6 +35,12 @@ find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_
+ ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
+ qemu_ram_alloc_shared(const char *name, size_t size, size_t max_size, int fd, void *host) "%s size %zu max_size %zu fd %d host %p"
+ 
++subpage_register(void *subpage, uint32_t start, uint32_t end, int idx, int eidx, uint16_t section) "subpage %p start 0x%08x end 0x%08x idx 0x%08x eidx 0x%08x section %u"
++subpage_init(void *subpage, uint64_t base, uint64_t len) "subpage %p base 0x%08" PRIx64 " len 0x%08" PRIx64
++subpage_accepts(void *subpage, char access, unsigned len, uint64_t addr) "subpage %p %c len %u addr 0x%" PRIx64
++subpage_read(void *subpage, unsigned len, uint64_t addr) "subpage %p len %u addr 0x%" PRIx64
++subpage_write(void *subpage, unsigned len, uint64_t addr, uint64_t value) "subpage %p len %u addr 0x%" PRIx64 " value 0x%" PRIx64
++
+ # cpus.c
+ vm_stop_flush_all(int ret) "ret %d"
  
 -- 
 2.52.0
