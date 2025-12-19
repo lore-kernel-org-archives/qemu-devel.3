@@ -4,68 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8314D711D6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 08:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A118DD74969
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 09:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWWJO-0001HZ-Mw; Fri, 19 Dec 2025 03:58:10 -0500
+	id 1vWWLs-0002TU-0q; Fri, 19 Dec 2025 04:00:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWWJN-0001HE-P0
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 03:58:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWWJM-0008Ba-Ev
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 03:58:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766134686;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=d2qtbAo6P+Po789j0SQ6E3kO6KydzO8YqnTYgAeI0jU=;
- b=PIWTAf5kftLfI63d8Bc3kfpbGJyf6ONd3+KFC4P6gXJhKeO3IxBf5SbebksFyyG0jXEDgg
- 90NQofUwTr3zXhWds5S8wUlfsbDiJOMtVQfgVP5nc2utZqOdNkoJOYZaV7Ji0RkyNxy0oU
- gDSyJv6PlisB/IzQ9K2Jble9+GDOfeM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-dh7D__OlOtm7Y4jD3fPItA-1; Fri,
- 19 Dec 2025 03:57:58 -0500
-X-MC-Unique: dh7D__OlOtm7Y4jD3fPItA-1
-X-Mimecast-MFC-AGG-ID: dh7D__OlOtm7Y4jD3fPItA_1766134673
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B8561956088; Fri, 19 Dec 2025 08:57:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF88D30001A2; Fri, 19 Dec 2025 08:57:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 917C721E6A27; Fri, 19 Dec 2025 09:57:50 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Jackson Donaldson <jackson88044@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Subject: Machine max78000fthr not compiled in?
-Date: Fri, 19 Dec 2025 09:57:50 +0100
-Message-ID: <875xa27ss1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWWLh-0002Sl-8Z
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 04:00:33 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWWLf-0000IV-KW
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 04:00:33 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-477632d9326so9351035e9.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 01:00:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766134830; x=1766739630; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iw8PYEkc2WSyzh1Yluz9dfu9Sd9QbaIlPFYP+JPcuCk=;
+ b=ArvHUJmY8g5Qod2e3NTSxxn3tpnB3eKqqEB0AAkOf1SVvIK/icSHwVYeKvPJiuxVyr
+ A3LJfEjQU1Ex9wd3YGaSJJtrc5NDS+q4n1PV//j/UdIiwreIhGn47i3E/mva9Zzo6trd
+ 7Mg7xENHKfqN2jmcYLadq4DezyvYjB8rj7ivdv78dcaOUGDZ1108dch2apLjlS0C4sja
+ zsUr/DsvCN+Wb88bdD3PvjxzLwdWoi3G1JhsPFoy8FQdXKlZQlxOdvA538KdwXelxbI0
+ HpcSEW2cJMQdC7VqsJpHBOoX4OUmqqhFnAZHcjyxoCTsQF0nl8sPu6sSKMjFKE2tyI6G
+ q9mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766134830; x=1766739630;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iw8PYEkc2WSyzh1Yluz9dfu9Sd9QbaIlPFYP+JPcuCk=;
+ b=wbiZxP+Mj+fKY2o9HdTaYqMaGGkdcpUwpmOY5J6M7PHNFn1hsAh6fcgoYmSJobxutd
+ j+mgRXSFnGk2qT41BbjvTxNBoVsU8w+wPJKXxNBjReDPo1YYE8fplLI8zDEShg30MXEZ
+ NJ/cBVRSLbFyARdcF+CHYwu8dq8xi30kB0lizNj1Aqn1KVaXOFEhiPAJjDXr3KkJle53
+ DwMwQhhEbrBDAlaaVsVaUJNwgouZO34DmOBGWLI5ODmqGYA1dz+YUbwTk4WB1QZ23zyD
+ ODrfcnqwSd0OHFE0kv7CgxvDop+dk8x8ERjoko/KSck0mHt0C0hpoyHmNqZ7QYdj0199
+ fbeQ==
+X-Gm-Message-State: AOJu0YynjHnikATK8LBibM5CsNkspttK3A4RisYkA2CL74WXEqGoKIoi
+ 6Y75BcQhtiqjyi1HjuLTmFQnoxsraUM/zSTxMkB5mbvp3yYCmZRSECgp2D6mjxUMvrY=
+X-Gm-Gg: AY/fxX4eNuJcMscgC5dUSQnz/aOqa2lkT4hhob/k8kJCHHJPU9N2Io/yn0FliJeyk72
+ wF+lSt+LPkajYSnbkbSsAL2cuz/4SLk0frW87ygGYsCVWug+d9Nsu3R0zR0ReJYUdMO38xRQG+3
+ lDMJ+obA/AeBtcvL3uhXZgwIwqKapoF6RECW1GWea2qJ8r06G7m5UI45AVms6UMf3xDjpR8K7gq
+ GNV6BN+QrnOuqH93raPgUg9NNAP3/Cn8ya2rUWjwe0RdZez7PzlRWylrI37ntWGiZQcxbqlP2lc
+ Qn64f9z9azTK34zhR7nnmw0mJPFvSDZu1aR5nGJBcFQyznSkuK2fpn61+GawnNOWjH+za+YmrPB
+ fHUmfqb9qwH2a1uG7Y/JBfc0dO8mEY4gcrhYCUvQ1YXJQU40Tg3qPvEwWULBjqSJrYXRu+7Okqi
+ CubW5pPLjwWlRa0BglRdNcJoyYpgt3rEhBw8x8Q/DJHKzj/3b0JFpChQ==
+X-Google-Smtp-Source: AGHT+IFRVSgdezUCKQozNx3Hfty7cZX9Jwxzz0Gqp3IwTeqDfNg+128s+G0UbRMVnTB5XARfeQXLiQ==
+X-Received: by 2002:a05:600c:1d1d:b0:477:9c73:267f with SMTP id
+ 5b1f17b1804b1-47d195aa4bfmr20399925e9.33.1766134829266; 
+ Fri, 19 Dec 2025 01:00:29 -0800 (PST)
+Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47be3acdb87sm30562125e9.16.2025.12.19.01.00.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Dec 2025 01:00:28 -0800 (PST)
+Message-ID: <19c5ae56-35ba-42fe-a330-fec28aad6999@linaro.org>
+Date: Fri, 19 Dec 2025 10:00:27 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Machine max78000fthr not compiled in?
+To: Markus Armbruster <armbru@redhat.com>,
+ Jackson Donaldson <jackson88044@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <875xa27ss1.fsf@pond.sub.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <875xa27ss1.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,15 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-docs/system/arm/max78000.rst advises to use
+On 19/12/25 09:57, Markus Armbruster wrote:
+> docs/system/arm/max78000.rst advises to use
+> 
+>    $ qemu-system-arm -machine max78000fthr -kernel max78000.bin -device loader,file=max78000.bin,addr=0x10000000
+> 
+> My locally built qemu-system-arm rejects this with
+> 
+>      qemu-system-arm: unsupported machine type: "max78000fthr"
+>      Use -machine help to list supported machines
+> 
+> What's going wrong here?
 
-  $ qemu-system-arm -machine max78000fthr -kernel max78000.bin -device loader,file=max78000.bin,addr=0x10000000
+See the fix:
 
-My locally built qemu-system-arm rejects this with
-
-    qemu-system-arm: unsupported machine type: "max78000fthr"
-    Use -machine help to list supported machines
-
-What's going wrong here?
-
+https://lore.kernel.org/qemu-devel/20251218214306.63667-1-philmd@linaro.org/
 
