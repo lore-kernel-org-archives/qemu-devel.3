@@ -4,42 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C276D78770
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFCA3D7497F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdbe-0001SM-1O; Fri, 19 Dec 2025 11:45:30 -0500
+	id 1vWdba-0001Qt-L5; Fri, 19 Dec 2025 11:45:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdbS-0001Og-V3
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:45:19 -0500
-Received: from 4.mo548.mail-out.ovh.net ([188.165.42.229])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vWdbQ-0001L6-Ao; Fri, 19 Dec 2025 11:45:17 -0500
+Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdbQ-00023h-VZ
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:45:18 -0500
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vWdbN-00023f-W0; Fri, 19 Dec 2025 11:45:16 -0500
 Received: from mxplan5.mail.ovh.net (unknown [10.110.0.171])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dXtgR4b36z5xTn;
- Fri, 19 Dec 2025 16:45:07 +0000 (UTC)
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dXtgP5B92z5w1c;
+ Fri, 19 Dec 2025 16:45:05 +0000 (UTC)
 Received: from kaod.org (37.59.142.113) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 19 Dec
- 2025 17:45:05 +0100
+ 2025 17:45:04 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-113S007c62588af-500d-4ccd-b0c9-6cbe07855e82,
+ (GARM-113S0074fb417e3-955a-4214-a165-351b0e6e5bd7,
  13AF5B8175AA3308F51DC8C03696883D036152F7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <b1a3dced-6757-47b3-9ca2-50669c32a5b6@kaod.org>
-Date: Fri, 19 Dec 2025 17:45:04 +0100
+Message-ID: <68041580-c434-45ec-bdd3-b20f7c4fed43@kaod.org>
+Date: Fri, 19 Dec 2025 17:45:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/11] hw/arm/aspeed: catalina: add eeproms images
-To: Patrick Williams <patrick@stwcx.xyz>, <qemu-devel@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, <qemu-arm@nongnu.org>
-References: <20251217-catalina-eeproms-v1-0-dc7b276efd57@stwcx.xyz>
+Subject: Re: [SPAM] [PATCH v2 00/12] hw/arm/aspeed: Add AST1060 SoC and EVB
+ support
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, Kevin
+ Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, "open list:ASPEED
+ BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
+References: <20251112030553.291734-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,27 +88,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251217-catalina-eeproms-v1-0-dc7b276efd57@stwcx.xyz>
+In-Reply-To: <20251112030553.291734-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [37.59.142.113]
 X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: fe5fc284-3a03-4b29-a7c4-a88cf418ecf8
-X-Ovh-Tracer-Id: 9300214707669076783
+X-Ovh-Tracer-GUID: ecdb76dd-8a19-4b23-95b4-1dff68397a78
+X-Ovh-Tracer-Id: 9299933231506295614
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTETJr33RvjRyhNTZtJeo0YtF3QxSg9qvVmWEf+5xmnLV4GFtfTyPV16O3SfOJZ7VEYws/H9YqWf0kfYc3Yz2hM2HaEnX13TuK86adX+rpzZUKPqY+4w9GNdu9uHgx34pBx7o1dAPE2s4dXlEdDoSPY18dnCeTfB+jGVk3SlS+n8pQz1KkMFAEzhTPdQ2BQjXCsKs59rg6TuNHXaGEiycJXTNDohF85m/bTqFMr7C65F9JF8va5BlCgrBkIqJVoJiPrHwsVTXUHGhCg6dt8HVIseVhwnHmuL5BTjS4ZlEnDOv188hvY5tFOwSvZjxCG8k+DkO6mOOjNdjlWu+1Mi38VBBqYFvFW2vZEGTR9FjjLBdvyixj4dTRcpff66423BRfLv60x4kT8s+vnZks+9ANEB6zEAqw/kqKFJyDY0N74hlu6YdFtwWmOok+bzZqrJ0dIi69x1FDRyMN1h+bEFM2/s2zF4Eu06IaXTeJbw7NtcT/zJfSG9MpBMdh+pOurScZZ/KFF/rcqwEX+XThcG8q9vmkVLaQWzsrlqQZq+3OreDeFjwfWqy3DJh9whv9djsTMe2rxyTXLX836pHxuBFDIzMh0rjDlbBIH1j6L4Un3c+3F7lkLat2kPfxnwrSuvfbuzTx4BM1r5Oc9ItoSuGkCNPz8wxs8mPLSp8q0z6/Thrg
-DKIM-Signature: a=rsa-sha256; bh=PU5uzUPoqgp/NFmgsVWgjTEtaMYoQ41hjg808QleiKM=; 
+X-VR-SPAMCAUSE: dmFkZTFObtiDUkSl+Op618lcoGwzIaJkiIExq90CcZ+FvNr2XymBYIhsqCPflsizVwTVbOGwf5ObuRc4j+r3t+E8Xyr5tHiNkOnBaRIsxLtlx5GSOB6BHGRex9je2DppBxOYppaCjUvpv8EWhCaCsMkCL9Ralh2GndiP+quHScwyfinFXfkYHJQmfmc1g6tR3tGstP0IvQCWjfMTZ0tZwpGbLsBkp4UZZaT8zb28h8Oz8hu3IRLLeCRJ5CoZW4mpsAKKukQNUTIuTlHZDkEzlrNyICIGfWww9ZyXoZa0PgQeV5oEbUlmruTmnLL4KkXvVHD7ltOSxHgd1Mf1ZIlpU2hN506ik4/LexWXXWxvIIeddm5C4AA4v0N9QkQslcQP+NwyGmsxqScTeIEr0Gvgu4PzTzX76hBRRsO+THEme3lY6uvt0IxE8NbfALN5ooT4pMo9fYdEQIlonIZjGFJEJSzfk0JJ4xRW+Lk5wJ2aV7O4KKY8ASqFRZQRfMA9GRvkUqzqA4DIx9x7ax8WfkugrzGefUi+1kXsiRIgUs0iVaKrg0i4y4pBy1kOYx8Os3Ajfj6wdVSgfFyKlqmh+dGIWS10PI7GX8uHtQnOOEvrbzWUUM6MfChrl0BmABjeEnwnL3A6aoV/MyZfyX8ouSqAmZ8KYey/wZ+kGID1lYXCSkpIQE/D2w
+DKIM-Signature: a=rsa-sha256; bh=BQEaoPeic6Zn3kVCdEkLXGiT1snUl+zVVzwMZ99eNyY=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
  t=1766162707; v=1;
- b=vIhmdAu11hSz36o3o7XLpTlciejIWvowRupJdgS6rLo3HE1Jmu9C68R7p5TmPwRiWyxSnaHM
- leoDrobD7xO6bbMGBKx8Pl0JniPegY8MpMpSIs7YcrXzjxFbCBkD4YobDc6lO6kKY9pVsYEfYpX
- yjYDW4qutP9vgXaG+VFtVvp80tl36NDjavebafBP/QnzSeNpZiANfg8382QRozx6PlcrNmzhhvk
- 2qn6aVCLrLkTWrm3UQa9zTn8jZbfMiRvi4BhxDcChNuHFbTEtwKpL3QOhfV7+mbaKXANy6sac3R
- AGX6ITGUAbHfJ5Q2JcvcmiK59VHd0nxIdBOQY4BUukH8A==
-Received-SPF: pass client-ip=188.165.42.229; envelope-from=clg@kaod.org;
- helo=4.mo548.mail-out.ovh.net
+ b=AA2Hrue/ORRGvpjXkgcFoyVzK3Wxc6Dj8vkdye/z7xR4Jkx9HNvV2PAL2bZzar28liuY8xCb
+ NCe/n8/pC+BhIMgbszZX9k3qPgHifcAg9/yXroeG/PZrnNLvf+mXNJnbyogZwECD8XZgSdZu6iA
+ nT+UoaaJ2uqTtdjGwlFd207DYpNTOc7GD+IvqMUXcmSsymIFRcpziA0zOgvTkYqBpFXhHejVcFJ
+ jm5jlnEHgrdrHOY0L+DjaiQqtSI0siBUZ/2E9EQlbZyHd+7PHlkW6Rbz+DLXXurYhmwPRsRm+LO
+ EapZjQrm85Gh1wrx4tC8ZNMBmvoeCxWq/IB8Dun0dFvPg==
+Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
+ helo=2.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,7 +116,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,69 +132,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/17/25 20:11, Patrick Williams wrote:
-> Since Catalina is a server, made up of a number of FRUs, there are
-> a number of EEPROMs that would contain IPMI-format FRU data.  On
-> OpenBMC, these EEPROMs are parsed by `entity-manager` to determine
-> which devices are physically present in the server (and which variants
-> of those devices).
+On 11/12/25 04:05, Jamin Lin wrote:
+> v1:
+>    1. Add SFDP table for Winbond W25Q02JVM flash
+>    2. Add AST1060 SoC and EVB support
+>    3. Fix missing SPI IRQ connection causing DMA interrupt failure
+>    4. Fix the revision ID cannot be set in the SOC layer for AST2600 and AST1030
 > 
-> Add EEPROM images for every FRU in the Catalina server.  There is a
-> utility `frugen` which can take a JSON representation of the IPMI
-> fields and generate a binary image from that.  Use this to create
-> sanitized EEPROM images for every FRU and add the rom-init calls to
-> the appropriate locations in the Catalina model.  I left the JSON
-> source as comments along-side each EEPROM image so they can be updated
-> or recreated as necessary.
+> v2:
+>    1. Fix review issue.
+>    2. Use "Platform Root of Trust" instead of "PFR"
 > 
-> Tested by loading the latest version of OpenBMC's Catalina image and
-> confirming the FRUs are detected appropriately by entity-manager.
+> Jamin Lin (12):
+>    hw/arm/aspeed: Fix missing SPI IRQ connection causing DMA interrupt
+>      failure
+>    hw/block/m25p80: Add SFDP table for Winbond W25Q02JVM flash
+>    hw/misc/aspeed_scu: Fix the revision ID cannot be set in the SOC layer
+>      for AST2600 and AST1030
+>    hhw/misc/aspeed_scu: Add AST1060 A2 silicon revision definition
+>    hw/arm/aspeed_ast10x0: Add common init function for AST10x0 SoCs
+>    hw/arm/aspeed_ast10x0: Add common realize function for AST10x0 SoCs
+>    hw/arm/aspeed_ast10x0: Pass SoC name to common init for AST10x0 family
+>      reuse
+>    hw/arm/aspeed_ast10x0: Add AST1060 SoC support
+>    hw/arm/aspeed_ast10x0_evb: Add AST1060 EVB machine support
+>    tests/functional/arm/test_aspeed_ast1060: Add functional tests for
+>      Aspeed AST1060 SoC
+>    docs/system/arm/aspeed: Update Aspeed and 2700 family boards list
+>    docs/system/arm/aspeed: Update Aspeed MiniBMC section to include
+>      AST1060 processor
 > 
-> ```
-> root@catalina:~# busctl tree xyz.openbmc_project.EntityManager | grep "board/[^/]*$"
->            |- /xyz/openbmc_project/inventory/system/board/BMC_Storage_Module
->            |- /xyz/openbmc_project/inventory/system/board/Catalina_FIO
->            |- /xyz/openbmc_project/inventory/system/board/Catalina_HDD_Carrier
->            |- /xyz/openbmc_project/inventory/system/board/Catalina_HDD_NVMe
->            |- /xyz/openbmc_project/inventory/system/board/Catalina_OSFP_Carrier
->            |- /xyz/openbmc_project/inventory/system/board/Catalina_PDB
->            |- /xyz/openbmc_project/inventory/system/board/Catalina_SCM
->            |- /xyz/openbmc_project/inventory/system/board/NVIDIA_Cable_Cartridge_0
->            |- /xyz/openbmc_project/inventory/system/board/NVIDIA_Cable_Cartridge_2
->            |- /xyz/openbmc_project/inventory/system/board/NVIDIA_GB200_0
->            |- /xyz/openbmc_project/inventory/system/board/NVIDIA_GB200_1
->            |- /xyz/openbmc_project/inventory/system/board/NVIDIA_GB200_IO_Board_29
->            |- /xyz/openbmc_project/inventory/system/board/NVIDIA_GB200_IO_Board_41
->            |- /xyz/openbmc_project/inventory/system/board/NVIDIA_HMC
->            |- /xyz/openbmc_project/inventory/system/board/OCP_CX7_NIC_10
->            `- /xyz/openbmc_project/inventory/system/board/OCP_CX7_NIC_15
-> ```
+>   docs/system/arm/aspeed.rst                  |  27 +--
+>   hw/block/m25p80_sfdp.h                      |   1 +
+>   include/hw/misc/aspeed_scu.h                |   1 +
+>   hw/arm/aspeed_ast10x0.c                     | 209 +++++++++++++-------
+>   hw/arm/aspeed_ast10x0_evb.c                 |  23 +++
+>   hw/arm/aspeed_ast2600.c                     |   2 +
+>   hw/arm/aspeed_ast27x0.c                     |   2 +
+>   hw/block/m25p80.c                           |   2 +
+>   hw/block/m25p80_sfdp.c                      |  36 ++++
+>   hw/misc/aspeed_scu.c                        |   5 +-
+>   tests/functional/arm/meson.build            |   1 +
+>   tests/functional/arm/test_aspeed_ast1060.py |  52 +++++
+>   12 files changed, 278 insertions(+), 83 deletions(-)
+>   create mode 100644 tests/functional/arm/test_aspeed_ast1060.py
 > 
-> This result matches the expected results when running the image on a
-> physical Catalina device.
-> 
-> Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
-> ---
-> Patrick Williams (11):
->        hw/arm/aspeed: catalina: add BSM FRU EEPROM
->        hw/arm/aspeed: catalina: add DC-SCM FRU EEPROM
->        hw/arm/aspeed: catalina: add PDB FRU EEPROM
->        hw/arm/aspeed: catalina: add OSFP FRU EEPROM
->        hw/arm/aspeed: catalina: add FIO FRU EEPROM
->        hw/arm/aspeed: catalina: add HDD FRU EEPROM
->        hw/arm/aspeed: catalina: add GB200 FRU EEPROM
->        hw/arm/aspeed: catalina: add GB200-IO FRU EEPROM
->        hw/arm/aspeed: catalina: add HMC FRU EEPROM
->        hw/arm/aspeed: catalina: add NIC FRU EEPROM
->        hw/arm/aspeed: catalina: add Cable Cartridge FRU EEPROM
-> 
->   hw/arm/aspeed_ast2600_catalina.c | 473 +++++++++++++++++++++++++++++++++++++--
->   1 file changed, 457 insertions(+), 16 deletions(-)
-> ---
-> base-commit: 7154e4df40468012fccb6687ecd2b288c56a4a2d
-> change-id: 20251217-catalina-eeproms-255d80036991
-> 
-> Best regards,
 
 Applied to aspeed-next.
 
