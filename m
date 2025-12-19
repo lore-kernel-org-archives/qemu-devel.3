@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C308DD7879C
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA8AD78770
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:20:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdCz-0005pn-Co; Fri, 19 Dec 2025 11:20:01 -0500
+	id 1vWdDY-0006Jh-JO; Fri, 19 Dec 2025 11:20:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdCy-0005pB-Al
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:20:00 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdDS-0006CM-M8
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:20:30 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdCw-0005i4-6Z
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:19:59 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47796a837c7so14700805e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:19:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdDO-0005y9-Si
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:20:29 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-42e2e77f519so1400827f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:20:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766161196; x=1766765996; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=V7ACHFvuX/8sW66cXL3ukkJ8Tx6VRQ3+OAZ8npieBSY=;
- b=w3ge7FAUSSGijxEtTuAojLdf6NcK7VMVwXbXbSv/163Irwn3qx/O2BQ3HQQSlwPjbO
- zJyFH3ANhuW6E1CjUOxXMEGwnPVVrRxKoI9Eg409vJhuUTRhhkP9XKrex6dXL8V0W8RO
- VH4bZYq6pjE6F7LKZVQa3LT3LFzqBWyYKb1Jqe5FTOl6F2PA6vboUc8hNqXWerSp+plA
- YbRASqhJbarwQaT/udqHawaDnuiJv8S1FFjseVpV86FGB6EhLrjbh3157nujcYCNLtA2
- rtwZ+TRIeLumMhYVutX6rvxwNKHrXwWkD1gIeivFMSeqFbLlpFopcPqArrY6Bbu+LX08
- 3mZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766161196; x=1766765996;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1766161225; x=1766766025; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V7ACHFvuX/8sW66cXL3ukkJ8Tx6VRQ3+OAZ8npieBSY=;
- b=ojpI+DMfhVblFtnDcVEpWB/fPcn60CnvVuUUypJmIcSCXALcxVWPuuGiy1YzV+HJlc
- LHWHcOa0uEEFOp/R+GI42kJmPf1peieMyDYFIZpybysqeUt144W79vfKWwjQL7c9MM2J
- QajJB7niy93uEhkbIS0orNYSx+/7bmEpfeycOYf0gqh16EWX5EzRlAOvUyFNSBAwoV8B
- mOJmrnjAVa2JWcIIaUKYsClIFng8UHpRpgUdBQi/Lb5I3h9rcP7rUpSd6gYW3LC/bQlQ
- +DK0fZ3h53Gn645ipQe6SAAlcflEYzr3Epba+nXl+COsZyIQ/NrX/w/o7OfA8e/nQ/CB
- aRXw==
-X-Gm-Message-State: AOJu0YwvGHFm9uzid0YXFEUxHpqRpi6V1p01rtGNZC+QL0k9y8jxlhJv
- JzBJEqt0WnZC+8XQcM3oho/tVy+o8zAAKOD1hb8qrgQ/Fp+THYhFwjWjZVmIO18NGqaFvgB1VOT
- kAwzS8wY=
-X-Gm-Gg: AY/fxX7lJvoBzBGTak/EwzK0JJNF68UFtaNYbEOn6QIfvYxPnvs/hiT8ocBZJFZiWP1
- CwHuiPjWm7yLar+ILgfj7R2p7prZzIbFkVLqBsmqn13QNDa7SqxUVRKYpqgCo2hQXWnHmGes3lI
- alSOG7KY48q3Z+5gM7uE9GJ6GMk2La51c0GlTVJgDkAlYEjxE5XHth+hGp2KHyZgdRMPeByEQAH
- MKvoX8G0tyzs3wT39xrcDJQoqt0O8hWJPYigHjGKDP0ft+4SriI3+8Qm3IKWaRTF9tCVP6cGjBh
- YooeGJ6uV7WVXEH+N05fOTI9DNXTEFyMXv5/rIwTzBocjwjJCMkPLHwejwC5xDSSdjTKImZZuyv
- z0USaW3DPDDWHwuopqdhvE4gN3PSFr7AjwHEoyHs4KEn1+r1hA2Cw/i5w+GHjQvOij03GvGyWWK
- Ge8uM2My6O0AOArBBYaXYGyilfVC7ZMbhw6WQOEXIYC5Ml7uQLXXAEBbbmn8Xh
-X-Google-Smtp-Source: AGHT+IGjVL3TpOhWAM6CXEmFiQjV6RSo9fRs0VulsaqD59GYoDa+FY5Ky06EQEMtYpJ2ZH/ISRpejg==
-X-Received: by 2002:a05:600c:474d:b0:477:97ca:b727 with SMTP id
- 5b1f17b1804b1-47d1957d7e6mr31391745e9.19.1766161196059; 
- Fri, 19 Dec 2025 08:19:56 -0800 (PST)
+ bh=XcMU1k1986zvYwyLzb//gpQrHqBilxoxS5xhcinB0TY=;
+ b=CD0ja8/hI3AGrIeosiNlCCaFaRreh/qt2mjrgjN3txu3veh3ePoLQ1epAhg+FRukpr
+ fxBOBZXxBgUqKrxr2dVd950JzKa+Snosd4z/mDaPWGrjlkwdVZCewzJFzc0wiDWj8C08
+ ywfr44Nmzg5v/tBwihLBxvMoCkehb9/V4FViQjbOvQbDtHMcrFXNOCAARMRQJxUGcYg0
+ AZiex5GqCUwWYhAUopAzAeQ1p77ffrzdvgm5u/b4WZY+hX0mqLRUmOsefrFIcax9B7vO
+ 5JzHGrq6GLZExXlUP9y5vL0VVaajqUHU9oxYKOE3OTcj7h5ULuoDrYXZqJTkJllbUh7Y
+ iE5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766161225; x=1766766025;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XcMU1k1986zvYwyLzb//gpQrHqBilxoxS5xhcinB0TY=;
+ b=vs74NvZr3xatLHFoTlapUaGHrZxHMl2UmQ1aILHiS5HVo4Ns7K7xYxz5Vp8mchQzk6
+ +P9/1SW4KQ6QOB3v8jCGs2ZTHndZNK+LVqayp5Fd0/H5KKkWoHnO15UWf7ivAIRg+WXe
+ +zwlIzTSi4+3IcP7/djf1LYCuXdiUe5P7n1vAVUIDGgdptK1h2ID/HBi6FAAZtANcACE
+ iHkChhoPRxiuToBXFukTFSz6qp1i+rhpyHavUYdH3WQ2lifqMPKKdm7/o1U8aqG2tXY0
+ lwKXaD6Fthhe9vAMeqIDGxCVyO1V92LQp92GBrMYRTNtf1wjbthA/fxc1Texf5TsGsU3
+ 3NbA==
+X-Gm-Message-State: AOJu0Yz/tE8Q7s9OvtiZC193vgw0KWYZX+7h6ojU+O6PBzGw3jQpCvTC
+ WJ9uM3lbqF75WCqyZ2io0Hznx6aBhHaw8NGO4j/rTfcyFeOX5Q+fa9pFsukIJCmtaoqrv5E7oY0
+ F/0li8Sc=
+X-Gm-Gg: AY/fxX6Accyy/sXU+syNCBCcwjYUReWcnXCTX6zVjZgRpZBohnhtQWZyPH/1nLvzbdA
+ kbtfqEZYlVaA0n0Xwlw+yLCeUYNEh5RHKhUCqbzApQkzz/g01K6g72212dkLL+ziBlcSaVn/UzW
+ dNbgL2NyrlO6qeV0yCq7z3D1Uuh9Ax/tVasPBzC6GUqD2+5tG9td9sqiVxdoAiexlj8O6A37b7p
+ pCDgVmRf1J6SqTet8Ggw0x+5q2wWyNXI3uRZpGB7lpnA93WY6cnHy1N/K/NaywtujFk3G1rQ8mM
+ 8mxLZZCcCl1JG6/YZXVgih2eJSjh4/BBq99Q1ltAfK1nqsywTZ4dkarYvls1WOHZuiNg7drwXHE
+ zc4y6Ty8SiPz/PUq6S7ZKKQsnWABaSEcjQUlwszol55KWNIhUrjtMseCs7FVZKceqMJydPZ3y+e
+ 0v/NsyDU/vpVuH9cZ6biiA7pa/OBWW0UTmV6+M8d+DkfK9lSrJ9Zhjymj5C1Gk
+X-Google-Smtp-Source: AGHT+IE+7QpyqkemrCjz7smCR4u5qB4Ydg7lXsIxsqGHh2+8bsGJSXuuUyFsH4gzHDfikghW5P6RoA==
+X-Received: by 2002:a05:6000:200f:b0:431:8f8:7f2e with SMTP id
+ ffacd0b85a97d-4324e50615emr4172277f8f.33.1766161224872; 
+ Fri, 19 Dec 2025 08:20:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eab33f5sm5901519f8f.41.2025.12.19.08.19.54
+ ffacd0b85a97d-4324ea1af2bsm5989466f8f.1.2025.12.19.08.20.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Dec 2025 08:19:55 -0800 (PST)
+ Fri, 19 Dec 2025 08:20:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -72,16 +73,18 @@ Cc: Peter Xu <peterx@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 00/24] system/memory: Clean ups around address_space_ldst()
- endian variants
-Date: Fri, 19 Dec 2025 17:19:27 +0100
-Message-ID: <20251219161953.72724-1-philmd@linaro.org>
+Subject: [PATCH v2 04/24] system/physmem: Use explicit endianness in
+ subpage_ops::read/write()
+Date: Fri, 19 Dec 2025 17:19:31 +0100
+Message-ID: <20251219161953.72724-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251219161953.72724-1-philmd@linaro.org>
+References: <20251219161953.72724-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,164 +107,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Replace the ldn_p/stn_p() calls by their explicit endianness
+variants. Duplicate the MemoryRegionOps, replacing the single
+DEVICE_NATIVE_ENDIAN entry by a pair of LITTLE and BIG ones.
+Select the proper MemoryRegionOps in subpage_init().
 
-(The motivation is the single-binary project).
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ system/physmem.c | 76 +++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 59 insertions(+), 17 deletions(-)
 
-This series is preliminary on unifying endianness for the
-single binary. The goal is to have a clean API ready for
-harder refactor.
-
-First part, we remove the _notdirty() and leul_to_cpu() helpers,
-then we prepare the subpage_ops[] MemoryRegionOps to handle
-distinct endianness in the same binary, and finally we add
-a pair of ldn()/stn() variants to directly infer the access
-size and endianness from a MemOp argument.
-
-Second part we let all targets set the
-TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition, then restrict
-our headers to only expose legacy "native" endian declarations
-when this definition exists.
-This will allow us to gradually clean the repository,
-eventually removing the legacy API.
-
-Please review,
-
-Phil.
-
-Philippe Mathieu-Daudé (24):
-  system/memory: Remove address_space_stl_notdirty and stl_phys_notdirty
-  system/physmem: Inline and remove leul_to_cpu()
-  system/physmem: Convert DEBUG_SUBPAGE printf() to trace events
-  system/physmem: Use explicit endianness in subpage_ops::read/write()
-  system/memory: Split MemoryRegionCache API to 'memory_cached.h'
-  system/memory: Move *ldst* headers from exec/ to system/ namespace
-  system/memory: Inline address_space_stq_internal()
-  system/memory: Define address_space_ldst[W] endian variants via
-    template
-  system/memory: Define address_space_ldst[L] endian variants via
-    template
-  system/memory: Define address_space_ldst[Q] endian variants via
-    template
-  system/memory: Factor address_space_ldst[M]_internal() helper out
-  system/memory: Pass device_endian argument as MemOp bit
-  system/memory: Directly call address_space_ldst[M]_internal() helper
-  system/memory: Introduce LD/ST helpers with @n suffix (variable size)
-  system/memory: Use explicit endianness in ram_device::read/write()
-  configs/targets: Introduce TARGET_USE_LEGACY_NATIVE_ENDIAN_API
-  system/memory: Restrict legacy ld/st_phys() 'native-endian' API
-  system/memory: Restrict legacy ld/st_he() 'native-endian' API
-  system/memory: Restrict legacy address_space_ldst() 'native-endian'
-    API
-  system/memory: Restrict legacy cpu_ld/st() 'native-endian' API
-  system/memory: Restrict legacy translator_ld() 'native-endian' API
-  system/memory: Restrict legacy tswap() 'native-endian' API
-  system/memory: Restrict legacy MO_TE 'native-endian' definitions
-  system/memory: Restrict legacy DEVICE_NATIVE_ENDIAN definition
-
- MAINTAINERS                                   |   4 +
- docs/devel/loads-stores.rst                   |  10 +-
- configs/targets/aarch64-bsd-user.mak          |   1 +
- configs/targets/aarch64-linux-user.mak        |   1 +
- configs/targets/aarch64-softmmu.mak           |   1 +
- configs/targets/aarch64_be-linux-user.mak     |   1 +
- configs/targets/alpha-linux-user.mak          |   1 +
- configs/targets/alpha-softmmu.mak             |   1 +
- configs/targets/arm-bsd-user.mak              |   1 +
- configs/targets/arm-linux-user.mak            |   1 +
- configs/targets/arm-softmmu.mak               |   1 +
- configs/targets/armeb-linux-user.mak          |   1 +
- configs/targets/avr-softmmu.mak               |   1 +
- configs/targets/hexagon-linux-user.mak        |   1 +
- configs/targets/hppa-linux-user.mak           |   1 +
- configs/targets/hppa-softmmu.mak              |   1 +
- configs/targets/i386-bsd-user.mak             |   1 +
- configs/targets/i386-linux-user.mak           |   1 +
- configs/targets/i386-softmmu.mak              |   1 +
- configs/targets/loongarch64-linux-user.mak    |   1 +
- configs/targets/loongarch64-softmmu.mak       |   1 +
- configs/targets/m68k-linux-user.mak           |   1 +
- configs/targets/m68k-softmmu.mak              |   1 +
- configs/targets/microblaze-linux-user.mak     |   1 +
- configs/targets/microblaze-softmmu.mak        |   1 +
- configs/targets/microblazeel-linux-user.mak   |   1 +
- configs/targets/microblazeel-softmmu.mak      |   1 +
- configs/targets/mips-linux-user.mak           |   1 +
- configs/targets/mips-softmmu.mak              |   1 +
- configs/targets/mips64-linux-user.mak         |   1 +
- configs/targets/mips64-softmmu.mak            |   1 +
- configs/targets/mips64el-linux-user.mak       |   1 +
- configs/targets/mips64el-softmmu.mak          |   1 +
- configs/targets/mipsel-linux-user.mak         |   1 +
- configs/targets/mipsel-softmmu.mak            |   1 +
- configs/targets/mipsn32-linux-user.mak        |   1 +
- configs/targets/mipsn32el-linux-user.mak      |   1 +
- configs/targets/or1k-linux-user.mak           |   1 +
- configs/targets/or1k-softmmu.mak              |   1 +
- configs/targets/ppc-linux-user.mak            |   1 +
- configs/targets/ppc-softmmu.mak               |   1 +
- configs/targets/ppc64-linux-user.mak          |   1 +
- configs/targets/ppc64-softmmu.mak             |   1 +
- configs/targets/ppc64le-linux-user.mak        |   1 +
- configs/targets/riscv32-linux-user.mak        |   1 +
- configs/targets/riscv32-softmmu.mak           |   1 +
- configs/targets/riscv64-bsd-user.mak          |   1 +
- configs/targets/riscv64-linux-user.mak        |   1 +
- configs/targets/riscv64-softmmu.mak           |   1 +
- configs/targets/rx-softmmu.mak                |   1 +
- configs/targets/s390x-linux-user.mak          |   1 +
- configs/targets/s390x-softmmu.mak             |   1 +
- configs/targets/sh4-linux-user.mak            |   1 +
- configs/targets/sh4-softmmu.mak               |   1 +
- configs/targets/sh4eb-linux-user.mak          |   1 +
- configs/targets/sh4eb-softmmu.mak             |   1 +
- configs/targets/sparc-linux-user.mak          |   1 +
- configs/targets/sparc-softmmu.mak             |   1 +
- configs/targets/sparc32plus-linux-user.mak    |   1 +
- configs/targets/sparc64-linux-user.mak        |   1 +
- configs/targets/sparc64-softmmu.mak           |   1 +
- configs/targets/tricore-softmmu.mak           |   1 +
- configs/targets/x86_64-bsd-user.mak           |   1 +
- configs/targets/x86_64-linux-user.mak         |   1 +
- configs/targets/x86_64-softmmu.mak            |   1 +
- configs/targets/xtensa-linux-user.mak         |   1 +
- configs/targets/xtensa-softmmu.mak            |   1 +
- configs/targets/xtensaeb-linux-user.mak       |   1 +
- configs/targets/xtensaeb-softmmu.mak          |   1 +
- include/accel/tcg/cpu-ldst.h                  |   2 +
- include/exec/cpu-common.h                     |   2 +
- include/exec/memop.h                          |   4 +
- include/exec/translator.h                     |   2 +-
- include/exec/tswap.h                          |   2 +
- include/hw/virtio/virtio-access.h             |   1 +
- include/qemu/bswap.h                          |  16 +-
- include/system/memory.h                       | 195 +------
- include/system/memory_cached.h                | 209 ++++++++
- system/memory-internal.h                      |   2 +
- include/exec/memory_ldst.h.inc                |  67 ---
- include/exec/memory_ldst_phys.h.inc           | 144 ------
- include/system/memory_ldst.h.inc              |  41 ++
- .../{exec => system}/memory_ldst_cached.h.inc |   0
- include/system/memory_ldst_endian.h.inc       |  37 ++
- include/system/memory_ldst_phys.h.inc         |  47 ++
- include/system/memory_ldst_phys_endian.h.inc  |  57 ++
- system/memory.c                               |  68 ++-
- system/physmem.c                              | 111 ++--
- system/memory_ldst.c.inc                      | 488 ++----------------
- system/memory_ldst_endian.c.inc               |  84 +++
- scripts/make-config-poison.sh                 |   1 +
- system/trace-events                           |   6 +
- 92 files changed, 744 insertions(+), 923 deletions(-)
- create mode 100644 include/system/memory_cached.h
- delete mode 100644 include/exec/memory_ldst.h.inc
- delete mode 100644 include/exec/memory_ldst_phys.h.inc
- create mode 100644 include/system/memory_ldst.h.inc
- rename include/{exec => system}/memory_ldst_cached.h.inc (100%)
- create mode 100644 include/system/memory_ldst_endian.h.inc
- create mode 100644 include/system/memory_ldst_phys.h.inc
- create mode 100644 include/system/memory_ldst_phys_endian.h.inc
- create mode 100644 system/memory_ldst_endian.c.inc
-
+diff --git a/system/physmem.c b/system/physmem.c
+index 7e914ecf648..9fe84679cac 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2894,8 +2894,8 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
+ static bool flatview_access_valid(FlatView *fv, hwaddr addr, hwaddr len,
+                                   bool is_write, MemTxAttrs attrs);
+ 
+-static MemTxResult subpage_read(void *opaque, hwaddr addr, uint64_t *data,
+-                                unsigned len, MemTxAttrs attrs)
++static MemTxResult subpage_read_le(void *opaque, hwaddr addr, uint64_t *data,
++                                   unsigned len, MemTxAttrs attrs)
+ {
+     subpage_t *subpage = opaque;
+     uint8_t buf[8];
+@@ -2906,18 +2906,49 @@ static MemTxResult subpage_read(void *opaque, hwaddr addr, uint64_t *data,
+     if (res) {
+         return res;
+     }
+-    *data = ldn_p(buf, len);
++    *data = ldn_le_p(buf, len);
+     return MEMTX_OK;
+ }
+ 
+-static MemTxResult subpage_write(void *opaque, hwaddr addr,
+-                                 uint64_t value, unsigned len, MemTxAttrs attrs)
++static MemTxResult subpage_read_be(void *opaque, hwaddr addr, uint64_t *data,
++                                   unsigned len, MemTxAttrs attrs)
++{
++    subpage_t *subpage = opaque;
++    uint8_t buf[8];
++    MemTxResult res;
++
++    trace_subpage_read(subpage, len, addr);
++    res = flatview_read(subpage->fv, addr + subpage->base, attrs, buf, len);
++    if (res) {
++        return res;
++    }
++    *data = ldn_be_p(buf, len);
++    return MEMTX_OK;
++}
++
++static MemTxResult subpage_write_le(void *opaque, hwaddr addr,
++                                    uint64_t value, unsigned len,
++                                    MemTxAttrs attrs)
+ {
+     subpage_t *subpage = opaque;
+     uint8_t buf[8];
+ 
+     trace_subpage_write(subpage, len, addr, value);
+-    stn_p(buf, len, value);
++    stn_le_p(buf, len, value);
++
++    return flatview_write(subpage->fv, addr + subpage->base, attrs, buf, len);
++}
++
++static MemTxResult subpage_write_be(void *opaque, hwaddr addr,
++                                    uint64_t value, unsigned len,
++                                    MemTxAttrs attrs)
++{
++    subpage_t *subpage = opaque;
++    uint8_t buf[8];
++
++    trace_subpage_write(subpage, len, addr, value);
++    stn_be_p(buf, len, value);
++
+     return flatview_write(subpage->fv, addr + subpage->base, attrs, buf, len);
+ }
+ 
+@@ -2933,15 +2964,26 @@ static bool subpage_accepts(void *opaque, hwaddr addr,
+                                  len, is_write, attrs);
+ }
+ 
+-static const MemoryRegionOps subpage_ops = {
+-    .read_with_attrs = subpage_read,
+-    .write_with_attrs = subpage_write,
+-    .impl.min_access_size = 1,
+-    .impl.max_access_size = 8,
+-    .valid.min_access_size = 1,
+-    .valid.max_access_size = 8,
+-    .valid.accepts = subpage_accepts,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++static const MemoryRegionOps subpage_ops[2] = {
++    [0 ... 1] = {
++        .impl = {
++            .min_access_size = 1,
++            .max_access_size = 8,
++        },
++        .valid = {
++            .min_access_size = 1,
++            .max_access_size = 8,
++            .accepts = subpage_accepts,
++        },
++    },
++
++    [0].endianness = DEVICE_LITTLE_ENDIAN,
++    [0].read_with_attrs = subpage_read_le,
++    [0].write_with_attrs = subpage_write_le,
++
++    [1].endianness = DEVICE_BIG_ENDIAN,
++    [1].read_with_attrs = subpage_read_be,
++    [1].write_with_attrs = subpage_write_be,
+ };
+ 
+ static int subpage_register(subpage_t *mmio, uint32_t start, uint32_t end,
+@@ -2969,8 +3011,8 @@ static subpage_t *subpage_init(FlatView *fv, hwaddr base)
+     mmio = g_malloc0(sizeof(subpage_t) + TARGET_PAGE_SIZE * sizeof(uint16_t));
+     mmio->fv = fv;
+     mmio->base = base;
+-    memory_region_init_io(&mmio->iomem, NULL, &subpage_ops, mmio,
+-                          NULL, TARGET_PAGE_SIZE);
++    memory_region_init_io(&mmio->iomem, NULL, &subpage_ops[target_big_endian()],
++                          mmio, NULL, TARGET_PAGE_SIZE);
+     mmio->iomem.subpage = true;
+     trace_subpage_init(mmio, base, TARGET_PAGE_SIZE);
+ 
 -- 
 2.52.0
 
