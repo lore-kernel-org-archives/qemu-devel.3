@@ -4,105 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1947E66882
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 19:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E185FE66884
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 21:01:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWfrN-0001br-9F; Fri, 19 Dec 2025 14:09:53 -0500
+	id 1vWha7-0001r9-RA; Fri, 19 Dec 2025 16:00:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vWfqX-0000ci-N6
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 14:09:03 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
+ id 1vWha1-0001nY-Iw
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 16:00:05 -0500
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vWfqU-0006pR-Ck
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 14:09:00 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-477770019e4so18527585e9.3
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 11:08:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
+ id 1vWhZy-0005Ky-L2
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 16:00:04 -0500
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-3e37ad3d95aso1585177fac.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 13:00:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766171337; x=1766776137; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Z1Ho9A/XPHpaG24XQJMf5tV6Yy1l2byzrQqypIVDpzA=;
- b=G+FnhMtzS3RMtfv/TdimH1hYI4sg4UbXLJxoG60Yi7MUk07gXQKu665zMKi9PNFvlf
- i/VZzOsdz0T3kGa44FD8PTreMz4QCtmljC8nvjpTJWZpmpb6y/hQ70I9+yWtGMtmLheK
- Pwtsp3lXF4msGxl2GIgTW3qK3a2e/4BLEm5Xznw9BuZ7KD5+bQJradqm+Qd21gHLCJ61
- juj2R9nArj91yb0nk9h39cGaDMWHepSrJl+eXpx5oI9/8GncUe648mBlkUkaGAERIIEs
- c6RaIHjSLqlxGrZPo6DMxtZD4XWXNUMa5SM0NCnYAKGEZqk5/8F0MQhTDRsLTvVpgG05
- 42pA==
+ d=gmail.com; s=20230601; t=1766178000; x=1766782800; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=QllVLyfEum5ZRYt5XWIi8BBO11zIKKjfdLb7eic4MUI=;
+ b=nAeVFOPs2v9gPk+q89sa/0cuse5PF+0lsfGxW7KEJeD6u7qQCqwu0RwPx1i73Msrd0
+ pu+FNNTwNcNAcmI+tZYeMRQN1fgrA9os6XDsCmdRN46uJmpLB/dDQIxc3MpKM5gWcBbB
+ 5n7ZuJbq1zQdPIELyaTcxkM/VjoXgilDr0hY7ZWJHmSFILzEKALWDH9Y5SywBMFLUPoE
+ CBNIS6jBdEp/NZCgydzzcvvTSF5TksSZiZ5LEst42LrD6DG7AMOrF30sI4cFVkAiems8
+ 7MMlKu+Xi/saClZzn+PuMBNBeti3gbYCTGWc/WsCot87yZrvcyDZBCsuJn2j1CdjZ3AO
+ w0gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766171337; x=1766776137;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Z1Ho9A/XPHpaG24XQJMf5tV6Yy1l2byzrQqypIVDpzA=;
- b=QH00x8UDbwDstEyHtJuSc7e0jAXIezfzv0akJ9jWczalxD2rgTH35T0RlEHRFEQz4P
- OsYAg4A2fboevHprPrczbBaQZM2LAoUAfa48OwGYSeEGXCUct8qa11H6tEVSvZTSDHjX
- LtV+BYhKbkKOJ6LO+49XI6U/LXnd9aS51psVIkMRlO2Jz2P2LkY6FMQmBQTSZSSujIIq
- WFUWj8Y44m2Clmmd9zhx6JjrjkIaKDbmMEmlKdWAn0z16a+s968vSa+KVM9/tWE6gNBr
- 644aacV6SCiqXOWX7yeT5r/TgnrRMYdG7/H23EAQ/aaezBirMROPX7q9VYtecng0i8cg
- rq9w==
-X-Gm-Message-State: AOJu0YxQjNNFnPw0hYKIagQI8pppb2K5SWDZq/EM8s6nWLIp2ameUm4V
- rNJrjhbyQftZs7KjbkVuTmTUmxEr/YcKnyrXtVDRS8ZnAUlPwViWc7gvesLlJSy8SAg=
-X-Gm-Gg: AY/fxX7q6wEet3CitMT1ohy8s6Rr9pptJNcHfPaiN/VoWYaiULtapthWQdakc80ZSoF
- Wj5wDOE1G63tXDNQS8wuVVESzDuCargf4p8zBXCxrwglDsEPBH/oCOCiI4VCNtvfyf/NGaRflrc
- tgbBiPzhnEEgaOY8w7k1dzHFNfsEn/zWL4H1++XKnpKgHCsuWxYFX6CKF4Jb57zLsopbG2b7P72
- wt7u5ar3cUCLGkuGJBJJ2yknnBAP1nZnGMkuCpL/YwOuM7XbH35mmOQMhVp3relPq+jfJWpuBNE
- xrX/eFEpilHpxzBUXvmgWesKeQ9+20mexBhzxyITsSfOiYJoyNMgz69vqb8f678pbVI/m2UTn1O
- nmlIKdSkNvseh4nAkyVcM1ByEmU1qXTeUfz7utCXUulLEsnt+mCBQ4zHH4GcU4WoKn+PMrSbh9c
- EuUYByg0V62zs=
-X-Google-Smtp-Source: AGHT+IEiRuseyh0saS2WdyWQSI+3lEZVjidRsb7ooPV+14p4ymxQyBFa4fsZZF3Ealju2FknUZz8Fw==
-X-Received: by 2002:a05:600c:1d1d:b0:477:9eb8:97d2 with SMTP id
- 5b1f17b1804b1-47d1953b8acmr38452675e9.8.1766171335660; 
- Fri, 19 Dec 2025 11:08:55 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be2723d19sm123428605e9.2.2025.12.19.11.08.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Dec 2025 11:08:53 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 518AD5FE99;
- Fri, 19 Dec 2025 19:08:50 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alwalid Salama <asalama@qti.qualcomm.com>, qemu-arm@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Mark Burton <mburton@qti.qualcomm.com>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alex Bradbury <asb@igalia.com>
-Subject: [RFC PATCH 05/12] contrib/plugins/hotblocks: Allow limit to be set as
- a command line argument
-Date: Fri, 19 Dec 2025 19:08:42 +0000
-Message-ID: <20251219190849.238323-6-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251219190849.238323-1-alex.bennee@linaro.org>
-References: <20251219190849.238323-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1766178000; x=1766782800;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QllVLyfEum5ZRYt5XWIi8BBO11zIKKjfdLb7eic4MUI=;
+ b=Jtg9oNOgRLca44IAoKCYYiz/2g00G6BYvshIHMYzV/fMp8Kd8C8MmQEwBIz2R2MrIq
+ RVzJ81xlOgKG8R281stVZgxct9+dTrvAat6v1C3TGCup1I1zXL6v3WwvaGMRO1PV7TE3
+ 8AB8XL+gcbgqK3Wj5aHJh4FQ5q1YosV3KEpxYKQYX+hjYNoKnX2JigK/mpyh3SPn9Fxk
+ 9UVSmZ9avhjhD3byqzJdFgUa4O3YYbkxTITR1yHI4n+A/gnlcxwsIBdVKOaLO0Mj+dJ0
+ zrCA53T3UNNuanalEAOtR11FtCbe83VIKEC3oPmXlLoS/OkIeA6EPhuZHZwOAOLBk57B
+ mwkQ==
+X-Gm-Message-State: AOJu0YzT7yMH85hk4/ii/e+SyL0AO2gIvaLgM1x5Upq/OUhAIlfmU4vu
+ ZFgLvlPibR8ISTPSfpV0T3pqVtf1gjokFQbHXh/UuiRtw9hv8KPGGiDGeDwXoZtNdJ63N9ZbBza
+ czrzuiKMeSW3JRWVpaqUouehLsqeGf5o=
+X-Gm-Gg: AY/fxX7u7ebNTEW0b/n85K7Zp3BZLPMj9NbEpeRB6iktNVMoFpuWZpIDLh/A06Z4dMT
+ Ql7vgbgEzedOePBaDjmU7Geg9bnDVy7vnDEKExaW4C4NPti0LbOIqqN4NIAKAHIRGhHPw1n7C0g
+ wlFK3Pzdto1oxYOIn82Nm0U8n5EM+tx7DUNf6fPXI664Rh5xoriiVuDFMJupF5AUJCOZ8k0i1+b
+ BNnijB4cU8zvwTHCOPwZVE4XHW3DjNzSM/wdaK9Sz54EbePSMp0j1C8Nu1/RPiHhspbV4bjdUBm
+ wD5oBPDCYnoeWw+jerCwcOyripmwyaSJi1SWqWgl
+X-Google-Smtp-Source: AGHT+IG2f+svwskhLEM0CEvCJ04JzpJe4tIYTpzTg8+N7bugVoMkBvKoq8ACOlhLcnL/z6cXXMs0jZCDon+U0KXDuvI=
+X-Received: by 2002:a4a:e1c9:0:b0:65c:fb86:8a94 with SMTP id
+ 006d021491bc7-65d0eaa2672mr1472544eaf.36.1766178000466; Fri, 19 Dec 2025
+ 13:00:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <87ike27ucd.fsf@pond.sub.org>
+In-Reply-To: <87ike27ucd.fsf@pond.sub.org>
+From: Jackson Donaldson <jackson88044@gmail.com>
+Date: Fri, 19 Dec 2025 15:59:49 -0500
+X-Gm-Features: AQt7F2qtuMEWiFwXhJ87faAMAZxmY6YisGC1kB0OYA0-zts0kVKUBHGdUQrRyTM
+Message-ID: <CAMyd1rQ6CLN2FPic=4pNpZtcw46io2xftkBDSLfd8V9S+Jyu0A@mail.gmail.com>
+Subject: Re: MAX78000 machine needs a maintainer
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000053f8720646545cea"
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=jackson88044@gmail.com; helo=mail-oa1-x33.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,64 +94,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+--00000000000053f8720646545cea
+Content-Type: text/plain; charset="UTF-8"
 
-Also add documentation for this argument. This allows the default of 20
-to be overridden, and is helpful for using the hotblocks plugin for
-analysis scripts that require collecting data on a larger number of
-blocks (e.g. setting limit=0 to dump information on all blocks).
+Hello,
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <bf04947f9a694a4d3adf5f0775dbb8d5013fd8c9.1764716538.git.asb@igalia.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/about/emulation.rst    |  2 ++
- contrib/plugins/hotblocks.c | 10 +++++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+> You added the MAX78000FTHR machine in the v10.1 development cycle.
+> Would you be willing to serve as its maintainer?
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 543efc4d7dc..e8793b0f9ce 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -473,6 +473,8 @@ Behaviour can be tweaked with the following arguments:
-     - Description
-   * - inline=true|false
-     - Use faster inline addition of a single counter.
-+  * - limit=N
-+    - The number of blocks to be printed. (Default: N = 20, use 0 for no limit).
- 
- Hot Pages
- .........
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index 40d8dae1cd3..8ecf0339974 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -84,7 +84,8 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     if (sorted_counts) {
-         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
- 
--        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-+        for (i = 0, it = sorted_counts; (limit == 0 || i < limit) && it;
-+             i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
-             g_string_append_printf(
-                 report, "0x%016"PRIx64", %d, %ld, %"PRIu64"\n",
-@@ -170,6 +171,13 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
-                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-                 return -1;
-             }
-+        } else if (g_strcmp0(tokens[0], "limit") == 0) {
-+            char *endptr = NULL;
-+            limit = g_ascii_strtoull(tokens[1], &endptr, 10);
-+            if (endptr == tokens[1] || *endptr != '\0') {
-+                fprintf(stderr, "unsigned integer parsing failed: %s\n", opt);
-+                return -1;
-+            }
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
--- 
-2.47.3
+I don't think I'm a good choice for a maintainer. I no longer have access
+to a physical MAX78000FTHR to verify against, since submitting those
+patches I have joined a company with a restrictive IP agreement, and I'm
+fairly low on time in which I could contribute.
 
+- Jackson Donaldson
+
+--00000000000053f8720646545cea
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"auto"><div>Hello,<div dir=3D"auto"><br></div><=
+div dir=3D"auto">&gt; You added the MAX78000FTHR machine in the v10.1 devel=
+opment cycle.<br>&gt; Would you be willing to serve as its maintainer?</div=
+><div dir=3D"auto"><br></div><div dir=3D"auto">I don&#39;t think I&#39;m a =
+good choice for a maintainer. I no longer have access to a physical MAX7800=
+0FTHR to verify against, since submitting those patches I have joined a com=
+pany with a restrictive IP agreement, and I&#39;m fairly low on time in whi=
+ch I could contribute.</div><div dir=3D"auto"><br></div><div>- Jackson Dona=
+ldson</div></div></div>
+</div>
+
+--00000000000053f8720646545cea--
 
