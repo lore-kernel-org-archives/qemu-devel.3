@@ -4,106 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC12D7878C
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B027DD78794
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWcti-0001c1-By; Fri, 19 Dec 2025 11:00:07 -0500
+	id 1vWd53-0003Jd-4e; Fri, 19 Dec 2025 11:11:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWctf-0001YO-47
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:00:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from
+ <bT.jegqzs1agqdnj80=r7yuam1tkpbc=7h5r03to7ynf44@em483429.getutm.app>)
+ id 1vWd50-0003JJ-Sr
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:11:47 -0500
+Received: from a2i327.smtp2go.com ([103.47.205.71])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWctd-0001Qn-73
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:00:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766159999;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cBEQyTp/fMgIfZ3EEcRf1zJohu1FgDb1/+3ChxWDsKU=;
- b=BfVWSfHajCG/7NyLpqNMcdcZu/1sKPEwI0YWlj7FJjpfSGJC2yLtWTp3g0iV6lyeQBP6TW
- Eghwnyf0LPPiIgUWVlaNcIf3gVtHkKT0EO69+rKyTbIn3y360AM18vfDiclfWmwfYUcBgh
- oDaGLwR3mpIADjh0btAXsy6TUDUrhFA=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-279-eGF80f5TNbij5GZM4DglNQ-1; Fri, 19 Dec 2025 10:59:58 -0500
-X-MC-Unique: eGF80f5TNbij5GZM4DglNQ-1
-X-Mimecast-MFC-AGG-ID: eGF80f5TNbij5GZM4DglNQ_1766159998
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8bc4493d315so490011685a.1
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 07:59:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766159998; x=1766764798; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=cBEQyTp/fMgIfZ3EEcRf1zJohu1FgDb1/+3ChxWDsKU=;
- b=G6lMWgCHUH/AhCnRxTKTwQsGfQ8+6eyTmDw5Sn/YhcLBfMYm/Uiglj5xhnxXfOKZsE
- bm1PrDSYHP5PRn8Fo18BLgu1GGLKfBBsuoHD07incJy9kbSuW9fa2EzXM1alhoweII/R
- AUgKY9/H8g/zS/whkaZJ35oeGMvQzpIMZpo+FjX2RaXjKIRIUhOhGRrNWwtfRcmJZLbn
- UgWteeoJv2hshCIJFIbhvwoR4Oa/V8NUikrvuksgfNI30cWqsgvtchoTfwh1jdanMBo4
- s4PV1h5SWy+wiSMrPE7nkW1mRHMNe3Fidp9IE5Leh/TAP7FGicrkPbj1ZDZtAjNg1Aff
- 3dWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766159998; x=1766764798;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cBEQyTp/fMgIfZ3EEcRf1zJohu1FgDb1/+3ChxWDsKU=;
- b=WstN8+6usjtZJGqxJUer6aZpcHe1/puJHyuEgzUurOaGXOJENJN5ghyn16wD5DPRgv
- wu6fMD3JRhPqdZLBigtj+OMjRZ5ZX9+10R/XO3aZXPk1KgbC5OKbJ/PByM7FA59DVtTh
- GRsYpURFxxm5KIvMqKY+1qOywMEYmbIgeWHbsUDCEV0uXsjZcNQhY553AadxamNW+gVl
- pv2g9ovSIRY1aiWcHEoe+h+7ieCz5sE44eshksEo97rtOkvYdbu+c0iO3ZSZNFHoE/Bw
- q/9KU+FjRfcDaQm/k49zmlbUyFz4lEPQJDbkk/uddlTPdu3b9q6B3fzCaYJ+/qg80hVw
- p7Yg==
-X-Gm-Message-State: AOJu0YxSoqGWdIPpPP5dzeRaFl2IE6Luiikq4yrdHSnJDfd3qX4GYEN7
- FHqcWbbAuf8H+qNycEyQNFL7ToFV/qBgm/MSBghNEte9bkOCaYARb49AbOo97xJ2OPjGubIZyrV
- emnd9L6/mHvlm1NZgmnT+KT2AzpwnRGTQpjbi57C9KDkZs+zA9kGcFweM
-X-Gm-Gg: AY/fxX7gc25UfFxLGcYnBlNshIjmctPlwsyZ3cG3P7ckUSPLyh6RiZhnXgiz1lXIWNr
- HWDkob68+NU3v7Vn3tyhWvPeRx3MrKMw0uIAIgljB1gI7Nf5Vmrwp5Rtmd/JaLTjf/Nx0cFiv0V
- a1Mr9hTHs6XKpafeNDJgNPBVDClYJQe6sOvhVyxd8EU2YK4dgIRFHIUVSKwrSBfcgumQ7jxWkHM
- W1q61IzhigzeJltTcS6MV4aFjCXexi5+XhbUVffqAmHnFCyQmhHOVHo78dA12oT+fkBKqHfj2lV
- 6NOf0htBiVnsMPFFALJZYqob/QN0zAVv+387ScJKw0fc8lkJHssteUGFZY3MH2frsBCgjf9gE7y
- y5wk=
-X-Received: by 2002:a05:620a:46a3:b0:8be:88e0:4722 with SMTP id
- af79cd13be357-8c08fa9f446mr508200785a.55.1766159997564; 
- Fri, 19 Dec 2025 07:59:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQPU+ZvnCFucJCbyG72BjoHohOymUAlLJ971TvwLV8BnyZKHtC/zJ/ALLL7s7FMGSOibYJfw==
-X-Received: by 2002:a05:620a:46a3:b0:8be:88e0:4722 with SMTP id
- af79cd13be357-8c08fa9f446mr508196285a.55.1766159997031; 
- Fri, 19 Dec 2025 07:59:57 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c0968935b5sm211448685a.19.2025.12.19.07.59.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Dec 2025 07:59:56 -0800 (PST)
-Date: Fri, 19 Dec 2025 10:59:55 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 44/51] tests/qtest/migration: Convert TLS PSK tests to
- use config
-Message-ID: <aUV2e2-yGw1clMMl@x1.local>
-References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-45-farosas@suse.de>
- <aUR8u53VV3ezfFE0@x1.local> <87zf7fza1v.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from
+ <bT.jegqzs1agqdnj80=r7yuam1tkpbc=7h5r03to7ynf44@em483429.getutm.app>)
+ id 1vWd4q-0003nI-48
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:11:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=smtpservice.net; s=mad0l0.a1-4.dyn; x=1766161580; h=Feedback-ID:
+ X-Smtpcorp-Track:To:Subject:Message-ID:Date:From:Reply-To:Sender:
+ List-Unsubscribe:List-Unsubscribe-Post;
+ bh=17A7t+d3kUrI/x9e9rRGsC2ts/HYx5LSN4keImN6zAc=; b=sbFuIPirkuOcfGu56n6fbMqC4I
+ 7JE14RPeEJlYXs54tRd2wkKEB/IeLq2hxjAltDX2brV814fRQwPFOof4fEmjz5XezHrXUic5l9IVf
+ knXMcPWfsdMnZk1MvqBWLIRDGqFcBqQ1f8zOehOgIN/T+1Zz4QrZS0apYuR8VtmtU06h5DcRzb8qx
+ /T4CovYsu9ngnJtaSB8BvF6TKSXFutrWqnhP+yu+n6BAzkJQTqnowZjM3t3G6+4YCY44BM0Eyd7nJ
+ oUhHED+TYlTwDhp0m/4vNUM0G2M/QewWXYK0VLwesFSOTKCWtHi0/RrVEFX2V61anlSgVx4cJnCp7
+ 5gzbnU5g==;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
+ i=@getutm.app; q=dns/txt; s=s483429; t=1766160680; h=from : subject :
+ to : message-id : date;
+ bh=17A7t+d3kUrI/x9e9rRGsC2ts/HYx5LSN4keImN6zAc=;
+ b=iksGyYC62Jw18shMTArZjgBLwm8pgmesx9+HwTqbJ5txQeinWHmAyXOIi0efCSUObW4mi
+ bakRCmNUgVJ+enS2DmaDfIoNICpxwwFNjC/GPKSJKtjAMQxo55KWP9pawunU+nKaXaGjoXH
+ Z40ZP0g9Zl25rG4w9btlcb++NaduauJ6hCnpvWrE6bD+q3ekcqkrfaAyjgTzMDIpcq1lG29
+ ycS1+YThmgkj5Y9wPK2MUAz2yaog2GCg9p8wcBYxj7AznnwZy0bQtU1FBnCTtd7FSrgsI0Z
+ N9syAU9nbJCkT/K8mgcajNOiwI8zM1sxM7hK+xNS8qLfSO6Emn6MP0ffoa3w==
+Received: from [10.172.234.246] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+ (Exim 4.94.2-S2G) (envelope-from <j@getutm.app>) id 1vWd4Y-pH9RI0-8g
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 16:11:18 +0000
+Received: from [10.159.238.187] (helo=mail-ej1-f49.google.com)
+ by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
+ (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
+ id 1vWd4X-AIkwcC8pD66-Ea6V for qemu-devel@nongnu.org;
+ Fri, 19 Dec 2025 16:11:17 +0000
+Received: by mail-ej1-f49.google.com with SMTP id
+ a640c23a62f3a-b7697e8b01aso352892766b.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:11:17 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmNZBdtrkOkzNK70VOvC8s5Vrbl0LeDNCeSwi0aMVD4RhjeIJny141aD29HpDXmk+LOrWmg34CO/g6@nongnu.org
+X-Gm-Message-State: AOJu0YwF26ciFngbxKr2hIsI/rFv21fksPy/1jdkSEX3eH9T4xfrndl/
+ y2ihP4W9g7bWiieicAynE8prezjlrm8OG9FqZthQ3mqBaJxgPMurAgsVka5OfdhxehTehw6AhO0
+ oqWhy3BY3MPfmEbG5h2QR6g4o791/u3g=
+X-Google-Smtp-Source: AGHT+IF7bPIy9tUCNcYfpFcPE63p7eyRfzQ0yxFTylXCA495xMO6D9sWDJPitPCf0DuD9k637Q2zZmVHFe0TJbUZmKQ=
+X-Received: by 2002:a17:907:c0f:b0:b73:8798:3c00 with SMTP id
+ a640c23a62f3a-b8036ebbbdcmr289824366b.3.1766160675647; Fri, 19 Dec 2025
+ 08:11:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87zf7fza1v.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20251203040754.94487-1-j@getutm.app>
+ <20251203040754.94487-2-j@getutm.app>
+ <3a401334-700f-4b11-b006-a93470d38a66@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <3a401334-700f-4b11-b006-a93470d38a66@rsg.ci.i.u-tokyo.ac.jp>
+From: Joelle van Dyne <j@getutm.app>
+Date: Fri, 19 Dec 2025 08:11:04 -0800
+X-Gmail-Original-Message-ID: <CA+E+eSBOEzzb-aO2B_yWtJeoK4QGvjf=pB555+GGE2U0OH=vbw@mail.gmail.com>
+X-Gm-Features: AQt7F2oVN0AI0Xkle-7V__r6USmH0JlL_EKr7eXdrBNVjjeeqoeS5KCGEEvndcw
+Message-ID: <CA+E+eSBOEzzb-aO2B_yWtJeoK4QGvjf=pB555+GGE2U0OH=vbw@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/7] egl-helpers: store handle to native device
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Smtpcorp-Track: 1fbb-YFmhVzr.RBnaJkJuSLj0.vhZVEwoYw06
+Feedback-ID: 483429m:483429abrvJvs:483429sWxEtmuJYa
+X-Report-Abuse: Please forward a copy of this message, including all headers, 
+ to <abuse-report@smtp2go.com>
+Received-SPF: pass client-ip=103.47.205.71;
+ envelope-from=bT.jegqzs1agqdnj80=r7yuam1tkpbc=7h5r03to7ynf44@em483429.getutm.app;
+ helo=a2i327.smtp2go.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,143 +112,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 18, 2025 at 07:42:36PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Mon, Dec 15, 2025 at 07:00:30PM -0300, Fabiano Rosas wrote:
-> >> Replace calls to migrate_set_parameters and the usage of args.caps
-> >> with the new config object API.
-> >> 
-> >> The multifd tests are now the same as the "precopy" tests, only
-> >> setting some multifd options, so reuse the precopy code.
-> >> 
-> >> Temporarily, set the use-config key to enable the new method.
-> >> 
-> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> ---
-> >>  tests/qtest/migration/tls-tests.c | 72 +++++++++----------------------
-> >>  1 file changed, 20 insertions(+), 52 deletions(-)
-> >> 
-> >> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-> >> index abd6bf9281..68304a7af3 100644
-> >> --- a/tests/qtest/migration/tls-tests.c
-> >> +++ b/tests/qtest/migration/tls-tests.c
-> >> @@ -73,9 +73,6 @@ static void *migrate_hook_start_tls_psk_common(QTestState *from,
-> >>                               "                 'dir': %s } }",
-> >>                               args->mismatch ? workdiralt : workdir);
-> >>  
-> >> -    migrate_set_parameter_str(from, "tls-creds", "tlscredspsk0");
-> >> -    migrate_set_parameter_str(to, "tls-creds", "tlscredspsk0");
-> >> -
-> >>      return NULL;
-> >>  }
-> >>  
-> >> @@ -121,6 +118,11 @@ static void test_precopy_tls_psk_common(MigrateCommon *args,
-> >>  {
-> >>      TestMigrateTLSPSKData *data = g_new0(TestMigrateTLSPSKData, 1);
-> >>  
-> >> +    /* temporary */
-> >> +    qdict_put_bool(args->start.config, "use-config", true);
-> >> +
-> >> +    qdict_put_str(args->start.config, "tls-creds", "tlscredspsk0");
-> >> +
-> >>      migrate_tls_psk_init(args, test_args, data);
-> >>      test_precopy_common(args);
-> >>      migrate_tls_psk_cleanup(data);
-> >> @@ -497,18 +499,11 @@ static void test_precopy_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
-> >>      test_precopy_tls_psk_common(args, &tls_psk_mismatch);
-> >>  }
-> >>  
-> >> -static void *migrate_hook_start_no_tls(QTestState *from, QTestState *to)
-> >> -{
-> >> -    migrate_set_parameter_null(from, "tls-creds");
-> >> -    migrate_set_parameter_null(to, "tls-creds");
-> >> -
-> >> -    return NULL;
-> >> -}
-> >> -
-> >>  static void test_precopy_tcp_no_tls(char *name, MigrateCommon *args)
-> >>  {
-> >>      args->listen_uri = "tcp:127.0.0.1:0";
-> >> -    args->start_hook = migrate_hook_start_no_tls;
-> >> +
-> >> +    qdict_put_null(args->start.config, "tls-creds");
-> >>  
-> >>      test_precopy_common(args);
-> >>  }
-> >> @@ -614,29 +609,7 @@ static void test_precopy_tcp_tls_x509_reject_anon_client(char *name,
-> >>  
-> >>      test_precopy_tls_x509_common(args, &tls_x509_reject_anon_client);
-> >>  }
-> >> -#endif /* CONFIG_TASN1 */
-> >>  
-> >> -static void *
-> >> -migrate_hook_start_multifd_tcp_tls_psk_match(QTestState *from,
-> >> -                                             QTestState *to)
-> >> -{
-> >> -    migrate_set_parameter_str(from, "multifd-compression", "none");
-> >> -    migrate_set_parameter_str(to, "multifd-compression", "none");
-> >> -
-> >> -    return migrate_hook_start_tls_psk_common(from, to, &tls_psk_match);
-> >> -}
-> >> -
-> >> -static void *
-> >> -migrate_hook_start_multifd_tcp_tls_psk_mismatch(QTestState *from,
-> >> -                                                QTestState *to)
-> >> -{
-> >> -    migrate_set_parameter_str(from, "multifd-compression", "none");
-> >> -    migrate_set_parameter_str(to, "multifd-compression", "none");
-> >> -
-> >> -    return migrate_hook_start_tls_psk_common(from, to, &tls_psk_mismatch);
-> >> -}
-> >> -
-> >> -#ifdef CONFIG_TASN1
-> >>  static void *
-> >>  migrate_hook_start_multifd_tls_x509_default_host(QTestState *from,
-> >>                                                   QTestState *to)
-> >> @@ -694,39 +667,34 @@ migrate_hook_start_multifd_tls_x509_reject_anon_client(QTestState *from,
-> >>  
-> >>  static void test_multifd_tcp_tls_psk_match(char *name, MigrateCommon *args)
-> >>  {
-> >> -    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
-> >> -    args->listen_uri = "tcp:127.0.0.1:0";
-> >> -
-> >>      args->start.incoming_defer = true;
-> >> -    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-> >>  
-> >> -    test_precopy_tls_psk_common(args, &tls_psk_match);
-> >> +    qdict_put_str(args->start.config, "multifd-compression", "none");
-> >> +    qdict_put_bool(args->start.config, "multifd", true);
-> >> +
-> >> +    test_precopy_tcp_tls_psk_match(name, args);
-> >>  }
-> >>  
-> >>  static void test_multifd_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
-> >>  {
-> >> -    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_mismatch;
-> >> -    args->result = MIG_TEST_FAIL;
-> >> -    args->listen_uri = "tcp:127.0.0.1:0";
-> >> -
-> >> -    args->start.hide_stderr = true;
-> >>      args->start.incoming_defer = true;
-> >> -    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-> >>  
-> >> -    test_precopy_tls_psk_common(args, &tls_psk_mismatch);
-> >> +    qdict_put_str(args->start.config, "multifd-compression", "none");
+On Wed, Dec 3, 2025 at 10:31=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2025/12/03 13:07, Joelle van Dyne wrote:
+> > Make way for other platforms by making the variable more general. Also =
+we
+> > will be using the device in the future so let's save the pointer in the
+> > global instead of just a boolean flag.
 > >
-> > Why do we need to start set multifd-compression=none all the time
-> > (including all below tests)?  Isn't that the default anyway?
+> > Signed-off-by: Joelle van Dyne <j@getutm.app>
+> > ---
+> >   include/ui/egl-helpers.h      | 2 +-
+> >   hw/display/virtio-gpu-virgl.c | 2 +-
+> >   ui/egl-helpers.c              | 4 ++--
+> >   3 files changed, 4 insertions(+), 4 deletions(-)
 > >
-> 
-> Because patch 43 removed the hook.
-> 
-> I haven't thought about it being default, I guess I can just remove it
-> then.
+> > diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
+> > index acf993fcf5..c239d32317 100644
+> > --- a/include/ui/egl-helpers.h
+> > +++ b/include/ui/egl-helpers.h
+> > @@ -12,7 +12,7 @@
+> >   extern EGLDisplay *qemu_egl_display;
+> >   extern EGLConfig qemu_egl_config;
+> >   extern DisplayGLMode qemu_egl_mode;
+> > -extern bool qemu_egl_angle_d3d;
+> > +extern void *qemu_egl_angle_native_device;
+>
+> I guess ANGLE will not be relevant for Metal and leaving it will be
+> misleading.
+What is your suggestion? This is just to remove "D3D" from the
+variable name. If you want to remove "ANGLE" from the variable name as
+well, it may be misleading because this variable is only used with an
+ANGLE EGL backend.
 
-Ah yes, you removed the start_hook which used to do it, I got tricked..  It
-looks all fine.
-
--- 
-Peter Xu
-
+>
+> Regards,
+> Akihiko Odaki
+>
+> >
+> >   typedef struct egl_fb {
+> >       int width;
+> > diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virg=
+l.c
+> > index 07f6355ad6..20c856c04e 100644
+> > --- a/hw/display/virtio-gpu-virgl.c
+> > +++ b/hw/display/virtio-gpu-virgl.c
+> > @@ -1152,7 +1152,7 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+> >       }
+> >   #endif
+> >   #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+> > -    if (qemu_egl_angle_d3d) {
+> > +    if (qemu_egl_angle_native_device) {
+> >           flags |=3D VIRGL_RENDERER_D3D11_SHARE_TEXTURE;
+> >       }
+> >   #endif
+> > diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+> > index e3f2872cc1..57bcf99498 100644
+> > --- a/ui/egl-helpers.c
+> > +++ b/ui/egl-helpers.c
+> > @@ -28,7 +28,7 @@
+> >   EGLDisplay *qemu_egl_display;
+> >   EGLConfig qemu_egl_config;
+> >   DisplayGLMode qemu_egl_mode;
+> > -bool qemu_egl_angle_d3d;
+> > +void *qemu_egl_angle_native_device;
+> >
+> >   /* ------------------------------------------------------------------=
+ */
+> >
+> > @@ -651,7 +651,7 @@ int qemu_egl_init_dpy_win32(EGLNativeDisplayType dp=
+y, DisplayGLMode mode)
+> >           }
+> >
+> >           trace_egl_init_d3d11_device(device);
+> > -        qemu_egl_angle_d3d =3D device !=3D NULL;
+> > +        qemu_egl_angle_native_device =3D d3d11_device;
+> >       }
+> >   #endif
+> >
+>
 
