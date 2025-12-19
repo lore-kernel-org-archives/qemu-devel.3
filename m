@@ -4,157 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5894D74969
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C56D74971
 	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 09:39:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWWwL-0003Rk-L6; Fri, 19 Dec 2025 04:38:25 -0500
+	id 1vWWwh-0003Yl-9N; Fri, 19 Dec 2025 04:38:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vWWwK-0003RW-He
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 04:38:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vWWwf-0003YH-FU; Fri, 19 Dec 2025 04:38:45 -0500
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vWWwI-0002Vb-TA
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 04:38:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766137102;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Avink2tMPjpbdCDWU1EbkTNExSGwx7k9UAdsPnFW6Zs=;
- b=W7kYua8kSX5+iluFEUmmRKJfBNjaI6hmPEEk3myAWMT2bIQE6DFTklojk7pNtGzbLrF020
- RCL7O4fXtvrE2ADABSZIroUfe+c2cgLiT0YSBUMkfrZpefCgGffgZ6uatsj66KRyEJesAj
- Bq+hWohQutgJCARrykAethAQaxmvh/8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-wiEqWJRAOL2zlSPArVUasg-1; Fri, 19 Dec 2025 04:38:16 -0500
-X-MC-Unique: wiEqWJRAOL2zlSPArVUasg-1
-X-Mimecast-MFC-AGG-ID: wiEqWJRAOL2zlSPArVUasg_1766137096
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-432488a0ce8so1047157f8f.2
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 01:38:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766137095; x=1766741895; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Avink2tMPjpbdCDWU1EbkTNExSGwx7k9UAdsPnFW6Zs=;
- b=RlFm9x4CAqv7ZOJ//MC5nL/vxKIwgt+3BLF+9QMUtmRgs2Jp3s3j640gDyHrNz29Ca
- 7UXZDDN0dVZ4pANA/NsBPx7PApjvaTLyi9S0R8XdPMDwOiE1ztemZBUi+MklzYu2IBIP
- JSWprelRTQyvL2+1H27SGnM1BxVpDroacv9I1c/yMuuRbUWg3NFofW8YK6yffcH83u88
- iQAXl2Xb7mjK6DGxvcGC7HHDwRG5UstWBc+u0q/WvEdnmr3U6WZFr7jXA1NNIS5Upl40
- hxJ0d7IdtIF/a3Fn2UNG/f0lbrAQeodbq3xgUgMO6xz7HO54x0PnWq+JiT2IysT7WXNR
- Q4AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766137095; x=1766741895;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Avink2tMPjpbdCDWU1EbkTNExSGwx7k9UAdsPnFW6Zs=;
- b=KOLY8su6kfqcRBnliRlL3LHDgvlTZUfsb1KQEUNiAcqlWyRn0hjqhwyQ+1E21PlvnK
- BYc109OPlT01di+9LEUy85vpZfv9cRVVnL4V1jbdnIKEhE/EsdHAURnExlmmD4hTQ2x+
- RJM0QWRHoBHHztBjII360DebI/wOMUfgb55EMr2lFWMuINnKwL6Nd/brpuK+JmNlkMix
- FbnR23ymYwK1WGUbiWJl1qkRzcDRdFp5o86Tnvr+RAi8VW9I0ImhU8M3uzZfgUP0AjJD
- 7fusS4K7j2EHA+930TvcHSTus8FXcg98PJ8jmJLnKI7eg3j7hapvFzNZJxgSyUpU2kJe
- UsMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVFJA8lzl47ODNXaHY/0g3QoMUwL6UIf4EKBkX31amHYi+3BgrUHen8L8vDrgxspJ0QDUzEAR45RgG2@nongnu.org
-X-Gm-Message-State: AOJu0Yy1u8Y+bpR95CcXYMXDfYAQw2H2C4jFePuPv41t3g+Ka43PMfEQ
- 728kPwSgwhGZqdhU0rNBWLazeTsopVDun3LwagPF+ZurUqi4QKm3tHT07VhxO9o/fmRZexqSBSG
- PayofvZrzM+cMZjnchsW1V618tLlWPg3WiBgHKn3/zCUGd4JINplTLKOG
-X-Gm-Gg: AY/fxX6KJw8PJmAGxeX01WcUIxZH733xbjB9QjTj2Q6RiC6dDSV+OU5O4lQ/fYeZJu8
- gUAIbB9hfx6bRDOMzdHLtAgUQ5zaXf1yP6o2Irj6IkJDPAS7AEBI4b3aaMoP8fZB6LlNn1nMYEv
- rnFHm3LdvaJJ5ync6rN0psBr74MlXVbdDtH8oRFSw2rJBg5Biqb6uLfe1NGJ8McHpUE+ItoO2pg
- fHqQ/iRry2q/PHs07K293tRV2XTmH9Q/ZJU7vU0v9lso2rx6PRmv0PIdpnSkG98tdDu8FgUwySl
- a0jX+GL3kZJFi0iZBoxA/pTDiEyCLIdOKXoLGXU3IhsuDMPcZxg1u86zW2QoSio5R/t5yY7TN6J
- jpasPw/M=
-X-Received: by 2002:a05:6000:1a8e:b0:430:fdfc:7dd3 with SMTP id
- ffacd0b85a97d-4324e50d781mr2435644f8f.50.1766137095648; 
- Fri, 19 Dec 2025 01:38:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlP0Bp5D32dZdvlwWP74n6vsF4dpQ6mCV6U3jc5oy4mUDNuFggCNJ3OtTv4vq4DDeCvAHhcQ==
-X-Received: by 2002:a05:6000:1a8e:b0:430:fdfc:7dd3 with SMTP id
- ffacd0b85a97d-4324e50d781mr2435622f8f.50.1766137095267; 
- Fri, 19 Dec 2025 01:38:15 -0800 (PST)
-Received: from [192.168.0.5] ([47.64.112.241])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1b36fsm3915867f8f.5.2025.12.19.01.38.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Dec 2025 01:38:14 -0800 (PST)
-Message-ID: <0da41936-484d-4ea0-ae69-a0d98c66c16a@redhat.com>
-Date: Fri, 19 Dec 2025 10:38:13 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vWWwd-0002Xp-7o; Fri, 19 Dec 2025 04:38:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1766137123; x=1797673123;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=KVFQ0A6mbzNkl+wieuvJgQdu1PktaJ9dx70U0/Upqm4=;
+ b=fHeyzLRfat5B2JLv8pqQ4LK44Nu8zewX0VtsEwY3gul+Ou+a1BoQDoWZ
+ KWR4J6VWlcuWZz4zwTshadbh4ztxbATkdsC1bLBVHs1dJNzS/sB1aUV4D
+ bhqb6AZ5mllWUKPdSxdVGyDdM9n6kCTL2b/7N0ZJfpBTfr/h4Q9HIMNw0
+ OdGVBlNME0YiqGCtrsfbM4AFeD/fzuS5udmNfwpGQE7f9HF5hetJMJ3yV
+ DtAy+iBYW7nTZGmvJQyvRGw2RLdpBnPBnfP7il6abE9vwPIJjvnb8Blqq
+ YUJH09MhpSZMMWKDOwJx4JKq099g3WP6audkh1SReMkp9GCSbmrf7eFl8 A==;
+X-CSE-ConnectionGUID: OZXetpTDRJq15fLJuRCfkA==
+X-CSE-MsgGUID: G/lWIUSNRHq2aapsWahV6Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11646"; a="79217975"
+X-IronPort-AV: E=Sophos;i="6.21,159,1763452800"; d="scan'208";a="79217975"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Dec 2025 01:38:40 -0800
+X-CSE-ConnectionGUID: I7xDcwuhSgOyqV8oCyor1Q==
+X-CSE-MsgGUID: YS2rNL8qTZOYyK5coe2Xuw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,159,1763452800"; d="scan'208";a="198832686"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 19 Dec 2025 01:38:37 -0800
+Date: Fri, 19 Dec 2025 18:03:27 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: Re: [PATCH-for-11.0 v6 08/13] hw/sparc64/sun4u: Use
+ fw_cfg_init_io_nodma()
+Message-ID: <aUUi7zLIrFnaZY5h@intel.com>
+References: <20251203060942.57851-1-philmd@linaro.org>
+ <20251203060942.57851-9-philmd@linaro.org>
+ <aTBccn2LIv7puGzR@intel.com>
+ <05f92a77-7587-4441-a252-01e4705a6892@linaro.org>
+ <c03820b8-7745-4b8e-8e69-a37c872257f8@ilande.co.uk>
+ <aUPAysAYqTPAfgzD@intel.com>
+ <83c9ed5a-8b1b-4b80-91f3-8690b2c64019@ilande.co.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: Re-enable the MAX78000FTHR machine in
- qemu-system-arm/aarch64
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jackson Donaldson <jcksn@duck.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20251218214306.63667-1-philmd@linaro.org>
- <a8a2eec0-f458-40e6-bfcc-d51be9333799@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <a8a2eec0-f458-40e6-bfcc-d51be9333799@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <83c9ed5a-8b1b-4b80-91f3-8690b2c64019@ilande.co.uk>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,27 +91,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/2025 10.02, Philippe Mathieu-Daudé wrote:
-> On 18/12/25 22:43, Philippe Mathieu-Daudé wrote:
->> Unfortunately while rebasing the series registering the
->> ARM/Aarch64 machine interfaces and getting it merged as
->> commit 38c5ab40031 ("hw/arm: Filter machine types for
->> qemu-system-arm/aarch64 binaries") we missed the recent
->> addition of the MAX78000FTHR machine in commit 51eb283dd0e.
->> Correct that.
->>
->> Reported-by: Thomas Huth <thuth@redhat.com>
->> Tested-by: Thomas Huth <thuth@redhat.com>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3248
+> > > The reason that the fw_cfg device lives under ebus on sun4u is because the
+> > > ebus device is effectively a PCI-ISA bridge, and the fw_cfg port is mapped
+> > > into I/O address space along with other ISA devices. I'm not sure that
+> > > setting the parent to the machine is the right thing to do here.
+> > 
+> > Thanks Philippe and Mark, IIUC, ebus doesn't have the hotplug use case,
+> > so it lives long enough like the sun4u/v machine, therefore replacing
+> > the parent object "ebus" with machine is safe.
 > 
-> We have a functional test for this machine
-> (tests/functional/arm/test_max78000fthr.py)
-> so I don't understand how we missed this.
+> It's safe, but it still doesn't make sense for sun4u/v because there is no
+> machine-level I/O address space as per x86. It really does exist as a
+> separate legacy bus under a PCI bridge.
 
-The functional tests are skipped if a machine is not available in the 
-binary, otherwise the test would fail if you'd configure your QEMU with less 
-machines.
+I tend to agree with Philippe's perspective - since it's per-Guest,
+setting the parent as machine seems appropriate.
 
-  Thomas
+> That's correct, ebus does not support hotplug.
+> 
+> > Adding a "parent" argument to the generic interface fw_cfg_init_io_nodma()
+> > doesn't seem necessary at the moment, since using the default machine as
+> > parent seems enough to meet all current needs in QEMU.
+> > 
+> > What do you think?
+> 
+> My preference would be add to add the parent argument as it's easy to do,
+> and doesn't attempt to enforce x86-type constraints on other architectures.
+
+I think it's not a x86-specific issue. The parent parameter's role is
+lifecycle management - if we allowed custom parents, we'd have to
+account for various complications that could result from early parent
+destruction, so it's not much easy IMO.
+
+Thanks,
+Zhao
 
 
