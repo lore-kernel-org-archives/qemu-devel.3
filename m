@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50B7D7879F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DE7D78770
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdlV-00053y-S1; Fri, 19 Dec 2025 11:55:41 -0500
+	id 1vWdnS-000635-VM; Fri, 19 Dec 2025 11:57:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdlT-000529-Q6
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:55:39 -0500
-Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdnR-00062g-EQ
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:57:41 -0500
+Received: from 9.mo552.mail-out.ovh.net ([87.98.180.222])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdlR-0004kr-GY
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:55:39 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.198])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dXtvT1SWWz5w7Q;
- Fri, 19 Dec 2025 16:55:32 +0000 (UTC)
-Received: from kaod.org (37.59.142.106) by DAG3EX1.mxp5.local (172.16.2.21)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdnP-0004zA-I0
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:57:41 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.78])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dXtxs0Mlvz5yWq;
+ Fri, 19 Dec 2025 16:57:37 +0000 (UTC)
+Received: from kaod.org (37.59.142.99) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 19 Dec
- 2025 17:55:31 +0100
+ 2025 17:57:36 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-106R006f0cef5b0-0220-49dd-b5b8-336c9a55a40c,
+ (GARM-99G003a439b075-0992-4bf2-8b27-625121347a16,
  13AF5B8175AA3308F51DC8C03696883D036152F7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <3568b574-fa02-48e4-b2f7-2adaac7d23ee@kaod.org>
-Date: Fri, 19 Dec 2025 17:55:31 +0100
+Message-ID: <5372c8e5-3aef-41da-ad57-be244351fec4@kaod.org>
+Date: Fri, 19 Dec 2025 17:57:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 02/18] hw/arm/aspeed: Attach LTPI controller to
- AST27X0 platform
+Subject: Re: [SPAM] [PATCH v3 03/18] hw/misc: Add basic Aspeed PWM model
 To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -43,7 +42,7 @@ To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>
 References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
- <20251208074436.1871180-3-kane_chen@aspeedtech.com>
+ <20251208074436.1871180-4-kane_chen@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,35 +87,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251208074436.1871180-3-kane_chen@aspeedtech.com>
+In-Reply-To: <20251208074436.1871180-4-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.106]
-X-ClientProxiedBy: DAG7EX2.mxp5.local (172.16.2.62) To DAG3EX1.mxp5.local
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.99]
+X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: d921134a-5288-4841-b308-7a5c0eb5b634
-X-Ovh-Tracer-Id: 9476699517747235762
+X-Ovh-Tracer-GUID: 9ca63d2a-a91c-47bd-907c-22aa8d30c9b0
+X-Ovh-Tracer-Id: 9511602413436439474
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF3dtx6Dd/W0IADjkab6FUhbR23yB0BYrBHYw38OmqoF+9YeqO505aXooqr4/16UBrFsMQHia37GpvDFyFkIA1XH7rrqCZWmQ+hVNKC5AxfqR78m7ID/64PGvQ4/5C3mKn+YRZYytdOi4Le9YqHx05yhD1ppmyWXj2dUUGxFuXr/Jq1y4TUXFxL2mq9Dx/LtU0OhGNGPh0cFCSd9fua6JSS8XKxILcvyASvIy4ZcJNQob6pp9ZK2jz2jrKR9sXGh5gVoc1991vpdKiuYAANWrSF778sTWNZytfpuo8jgFmzx5lv5hKr5Cuo3k8hZvg6oMLP/XusHCjjCpDubm2UIfrUsGtTTlrwoiOqilqBiWIHtdlkV5dWZdEsdn7+3p4qPD0vOZ8hxKKdqhu7/5I6Pb+W/EtXv3xEti2P63xqDrl74IA7mdPo4FGQpCrzzYgnkNkbs73xAJxVYzjGzKJu563dPSw4b4e7Ut7oYHyVORPCBeogHKMZMr86EwcAWnpkAe3wGMvq3kDNz5gstwDAEIUaik5XBGGu3BENJpkW924Ic4j1HYkr92Nx2dyvvOM+S1plRIT1QVRuPgJsamuG+d/hBPhGI4K9rTiIto//oYCbrJaJuNAQWf+BpuhJp3krzjJofycATPI2sy9bHvuYsHl57RVdKnlGeTp0jN9x8WjxnA
-DKIM-Signature: a=rsa-sha256; bh=kKyV58rHjPXFr5dCmUb8yhlmNK4uYMKaGJDQV4o4p3Y=; 
+X-VR-SPAMCAUSE: dmFkZTFzQTMDqd7zqxY08PK+GjYCDilcYc053prcv0hSmx6Mwn3LOrkhv7WTCuk09snRTTumG6UJax/nkxq4wJB2A7KrYg7UlJs5uFIrOmCGNpZHZIbr4Vlog8klT3dxvE54jgW0d6dx3Mr4geZ2CT2GimWxk7P4vIt6571Qz0lKPziguYP3KtcSnEElHKmzT/C5ElkiTVrGhDD/G4uFwVSFrMOunqPK7XkUh90HR4Dz5B3vAf3fqfryRb9gtfYZ9wffNkqU7VViWQsWwZzELuMTYUaHm7XBTDTISOUtMejyM/3vN5iHaqRIpivzxYi1q+91PJxWaR2MK4dUToO/taaT7iaiZNb1yF/qK3GXYloExM4spWlaOk0YTS2Y/2y25seKhUo55rM+iiY7uF/+hzVlnwjk0159NUUR2M1Ft9gepL+16xik8fQrqFVl4D7jqFSyD1p/7VhMddn01fQb3R9na0bHDQTQJeVYBKp36Y0xXeyopDKxc8HdjFSxUkFqsbzTW18/W/IqtLY+OymYd+tnn4EFpdMLsoP4yonDGJj/aFwa3bneEy8iB0JOYxnFLidvT4DLh9+4OZtvcmDo6JPPCfS874NSTt9mxj/VTh2oPdcAy7WGbYzG+MZijcJQk5RF3SZQ4K8BPLOfxlHo+TS9fU/IGE4YhvF/rXCXsIznOSEYKA
+DKIM-Signature: a=rsa-sha256; bh=UttQ/gO+i0ah+4hMJts5nJeLgE6ieeDyK3hdcoHik+8=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1766163334; v=1;
- b=AL/7EJl3CrbVW4VYxSshqTQWB3ugOkyOiTOG6jk/tcyrPSDT+fJDudwtvia4CmsXGAksI/gg
- 6LwrBgGBa4mprkM14aU6sL3zNh55V/s9W7pwuRPDGlIHufektzW6aR2IXejhVV7m4RCbGBKKgq/
- 609Nxhdi0F8Dra2WWIWZXUbBu1SUQgomFscE8RbJMjWPMdDuk94CzU/LBTdpf1fnb63RCegxrpD
- zLCNkWTJ21h+jprhcuFNs8gH9BpVYXVkmAsZ5i/E/EAjN0GsbCbyzELMTMzLxV0/Azt007/MsL4
- 5+RksHqCRMjE8Il7MudS9CSKuMnm84F4l+KsEco3EvszA==
-Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
- helo=smtpout4.mo529.mail-out.ovh.net
+ t=1766163457; v=1;
+ b=GqVChkLtmMwL/mVPOi4k+ol3lJOTFohHBgKSjbD3HeLCly7NhbqVBAB8C2X6S21w4mlIfQBP
+ xxRfwGr6bXhvhcVeTuJgVNSA6Xwjzh1DsdbWj5Un+hKea9Gh/7pnil1/RQHauiip9eCa4hWvoBg
+ +P3dhhQ6YT1uIvTm6UgOydgs3z2UJrh18ifZ9Kwui2kiVqJeCpQ7o+4o4jcAx32gTZ/04vvqBLN
+ X+VKVY2yYlxzCSNUR883X/8uzKJeeci3sRwhwGEd5ktA0BYucqQCOL/5Ac2s7hb+yzyGU6wErAy
+ d4uTwXgxs9UyTQMj7C/6QXbOClaKR7AxpQAEPb5sLBAFg==
+Received-SPF: pass client-ip=87.98.180.222; envelope-from=clg@kaod.org;
+ helo=9.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,107 +133,243 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/8/25 08:44, Kane Chen wrote:
 > From: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> 
-> Connect the LTPI controller device (representing the AST1700 I/O
-> expander) to the AST27X0 SoC model. This patch sets up the memory
-> mapping and device registration according to the AST2700 SoC design,
-> where the LTPI controller is exposed at fixed MMIO regions.
-> 
-> This change only handles device instantiation and integration,
-> without implementing the controller's internal logic.
+
+Please keep the original Author name.
+
+> Add an initial PWM model for Aspeed SoCs, including device state,
+> register definitions, and basic initialization as a sysbus device.
 > 
 > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Also keep his S-o-b and add yours too.
 
+
+
+Thanks,
+
+C.
 
 > ---
->   include/hw/arm/aspeed_soc.h |  5 +++++
->   hw/arm/aspeed_ast27x0.c     | 21 +++++++++++++++++++++
->   2 files changed, 26 insertions(+)
+>   include/hw/arm/aspeed_soc.h  |   3 +-
+>   include/hw/misc/aspeed_pwm.h |  31 +++++++++
+>   hw/misc/aspeed_pwm.c         | 121 +++++++++++++++++++++++++++++++++++
+>   hw/misc/meson.build          |   1 +
+>   hw/misc/trace-events         |   4 ++
+>   5 files changed, 159 insertions(+), 1 deletion(-)
+>   create mode 100644 include/hw/misc/aspeed_pwm.h
+>   create mode 100644 hw/misc/aspeed_pwm.c
 > 
 > diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index 18ff961a38..bca10c387b 100644
+> index bca10c387b..5b0680f319 100644
 > --- a/include/hw/arm/aspeed_soc.h
 > +++ b/include/hw/arm/aspeed_soc.h
-> @@ -43,6 +43,7 @@
->   #include "hw/fsi/aspeed_apb2opb.h"
->   #include "hw/char/serial-mm.h"
->   #include "hw/intc/arm_gicv3.h"
-> +#include "hw/misc/aspeed_ltpi.h"
->   
->   #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
->   
-> @@ -55,6 +56,7 @@
->   #define ASPEED_UARTS_NUM 13
->   #define ASPEED_JTAG_NUM  2
->   #define ASPEED_PCIE_NUM  3
-> +#define ASPEED_IOEXP_NUM 2
->   
->   struct AspeedSoCState {
->       DeviceState parent;
-> @@ -112,6 +114,7 @@ struct AspeedSoCState {
+> @@ -28,6 +28,7 @@
+>   #include "hw/misc/aspeed_hace.h"
+>   #include "hw/misc/aspeed_sbc.h"
+>   #include "hw/misc/aspeed_sli.h"
+> +#include "hw/misc/aspeed_pwm.h"
+>   #include "hw/watchdog/wdt_aspeed.h"
+>   #include "hw/net/ftgmac100.h"
+>   #include "target/arm/cpu.h"
+> @@ -108,7 +109,7 @@ struct AspeedSoCState {
+>       UnimplementedDeviceState video;
+>       UnimplementedDeviceState emmc_boot_controller;
+>       UnimplementedDeviceState dpmcu;
+> -    UnimplementedDeviceState pwm;
+> +    AspeedPWMState pwm;
+>       UnimplementedDeviceState espi;
+>       UnimplementedDeviceState udc;
 >       UnimplementedDeviceState ltpi;
->       UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
->       AspeedAPB2OPBState fsi[2];
-> +    AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
->   };
->   
->   #define TYPE_ASPEED_SOC "aspeed-soc"
-> @@ -279,6 +282,8 @@ enum {
->       ASPEED_GIC_REDIST,
->       ASPEED_DEV_IPC0,
->       ASPEED_DEV_IPC1,
-> +    ASPEED_DEV_LTPI_CTRL1,
-> +    ASPEED_DEV_LTPI_CTRL2,
->   };
->   
->   const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 70be3871bb..341b53189b 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -88,6 +88,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
->       [ASPEED_DEV_UART10]    =  0x14C33900,
->       [ASPEED_DEV_UART11]    =  0x14C33A00,
->       [ASPEED_DEV_UART12]    =  0x14C33B00,
-> +    [ASPEED_DEV_LTPI_CTRL1] =  0x14C34000,
-> +    [ASPEED_DEV_LTPI_CTRL2] =  0x14C35000,
->       [ASPEED_DEV_WDT]       =  0x14C37000,
->       [ASPEED_DEV_LTPI]      =  0x30000000,
->       [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
-> @@ -556,6 +558,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
->           object_property_set_int(OBJECT(&s->pcie[i]), "id", i, &error_abort);
->       }
->   
-> +    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
-> +        object_initialize_child(obj, "ltpi-ctrl[*]",
-> +                                &s->ltpi_ctrl[i], TYPE_ASPEED_LTPI);
+> diff --git a/include/hw/misc/aspeed_pwm.h b/include/hw/misc/aspeed_pwm.h
+> new file mode 100644
+> index 0000000000..13dc3ea45b
+> --- /dev/null
+> +++ b/include/hw/misc/aspeed_pwm.h
+> @@ -0,0 +1,31 @@
+> +/*
+> + * ASPEED PWM Controller
+> + *
+> + * Copyright (C) 2017-2021 IBM Corp.
+> + *
+> + * This code is licensed under the GPL version 2 or later.  See
+> + * the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef ASPEED_PWM_H
+> +#define ASPEED_PWM_H
+> +
+> +#include "hw/sysbus.h"
+> +
+> +#define TYPE_ASPEED_PWM "aspeed.pwm"
+> +#define ASPEED_PWM(obj) OBJECT_CHECK(AspeedPWMState, (obj), TYPE_ASPEED_PWM)
+> +
+> +#define ASPEED_PWM_NR_REGS (0x10C >> 2)
+> +
+> +typedef struct AspeedPWMState {
+> +    /* <private> */
+> +    SysBusDevice parent;
+> +
+> +    /*< public >*/
+> +    MemoryRegion iomem;
+> +    qemu_irq irq;
+> +
+> +    uint32_t regs[ASPEED_PWM_NR_REGS];
+> +} AspeedPWMState;
+> +
+> +#endif /* _ASPEED_PWM_H_ */
+> diff --git a/hw/misc/aspeed_pwm.c b/hw/misc/aspeed_pwm.c
+> new file mode 100644
+> index 0000000000..de209274af
+> --- /dev/null
+> +++ b/hw/misc/aspeed_pwm.c
+> @@ -0,0 +1,121 @@
+> +/*
+> + * ASPEED PWM Controller
+> + *
+> + * Copyright (C) 2017-2021 IBM Corp.
+> + *
+> + * This code is licensed under the GPL version 2 or later.  See
+> + * the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "qemu/error-report.h"
+> +#include "hw/misc/aspeed_pwm.h"
+> +#include "qapi/error.h"
+> +#include "migration/vmstate.h"
+> +
+> +#include "trace.h"
+> +
+> +static uint64_t aspeed_pwm_read(void *opaque, hwaddr addr,
+> +                                     unsigned int size)
+> +{
+> +    AspeedPWMState *s = ASPEED_PWM(opaque);
+> +    uint64_t val = 0;
+> +
+> +    addr >>= 2;
+> +
+> +    if (addr >= ASPEED_PWM_NR_REGS) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
+> +                      __func__, addr << 2);
+> +    } else {
+> +        val = s->regs[addr];
 > +    }
 > +
->       object_initialize_child(obj, "dpmcu", &s->dpmcu,
->                               TYPE_UNIMPLEMENTED_DEVICE);
->       object_initialize_child(obj, "ltpi", &s->ltpi,
-> @@ -1047,6 +1054,20 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->           return;
->       }
->   
-> +    /* LTPI controller */
-> +    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
-> +        AspeedLTPIState *ltpi_ctrl;
-> +        hwaddr ltpi_base;
+> +    trace_aspeed_pwm_read(addr << 2, val);
 > +
-> +        ltpi_ctrl = ASPEED_LTPI(&s->ltpi_ctrl[i]);
-> +        ltpi_base = sc->memmap[ASPEED_DEV_LTPI_CTRL1 + i];
+> +    return val;
+> +}
 > +
-> +        if (!sysbus_realize(SYS_BUS_DEVICE(ltpi_ctrl), errp)) {
-> +            return;
-> +        }
-> +        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(ltpi_ctrl), 0, ltpi_base);
+> +static void aspeed_pwm_write(void *opaque, hwaddr addr, uint64_t data,
+> +                              unsigned int size)
+> +{
+> +    AspeedPWMState *s = ASPEED_PWM(opaque);
+> +
+> +    trace_aspeed_pwm_write(addr, data);
+> +
+> +    addr >>= 2;
+> +
+> +    if (addr >= ASPEED_PWM_NR_REGS) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
+> +                      __func__, addr << 2);
+> +        return;
 > +    }
 > +
->       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
->                                     "aspeed.dpmcu",
->                                     sc->memmap[ASPEED_DEV_DPMCU],
+> +    s->regs[addr] = data;
+> +}
+> +
+> +static const MemoryRegionOps aspeed_pwm_ops = {
+> +    .read = aspeed_pwm_read,
+> +    .write = aspeed_pwm_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 1,
+> +        .max_access_size = 4,
+> +    },
+> +};
+> +
+> +static void aspeed_pwm_reset(DeviceState *dev)
+> +{
+> +    struct AspeedPWMState *s = ASPEED_PWM(dev);
+> +
+> +    memset(s->regs, 0, sizeof(s->regs));
+> +}
+> +
+> +static void aspeed_pwm_realize(DeviceState *dev, Error **errp)
+> +{
+> +    AspeedPWMState *s = ASPEED_PWM(dev);
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +
+> +    sysbus_init_irq(sbd, &s->irq);
+> +
+> +    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_pwm_ops, s,
+> +            TYPE_ASPEED_PWM, 0x1000);
+> +
+> +    sysbus_init_mmio(sbd, &s->iomem);
+> +}
+> +
+> +static const VMStateDescription vmstate_aspeed_pwm = {
+> +    .name = TYPE_ASPEED_PWM,
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .fields = (VMStateField[]) {
+> +        VMSTATE_UINT32_ARRAY(regs, AspeedPWMState, ASPEED_PWM_NR_REGS),
+> +        VMSTATE_END_OF_LIST(),
+> +    }
+> +};
+> +
+> +static void aspeed_pwm_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    dc->realize = aspeed_pwm_realize;
+> +    device_class_set_legacy_reset(dc, aspeed_pwm_reset);
+> +    dc->desc = "Aspeed PWM Controller";
+> +    dc->vmsd = &vmstate_aspeed_pwm;
+> +}
+> +
+> +static const TypeInfo aspeed_pwm_info = {
+> +    .name = TYPE_ASPEED_PWM,
+> +    .parent = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(AspeedPWMState),
+> +    .class_init = aspeed_pwm_class_init,
+> +};
+> +
+> +static void aspeed_pwm_register_types(void)
+> +{
+> +    type_register_static(&aspeed_pwm_info);
+> +}
+> +
+> +type_init(aspeed_pwm_register_types);
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index 45b16e7797..7afe1d0009 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -137,6 +137,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+>     'aspeed_i3c.c',
+>     'aspeed_lpc.c',
+>     'aspeed_ltpi.c',
+> +  'aspeed_pwm.c',
+>     'aspeed_scu.c',
+>     'aspeed_sbc.c',
+>     'aspeed_sdmc.c',
+> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+> index eeb9243898..f7870babba 100644
+> --- a/hw/misc/trace-events
+> +++ b/hw/misc/trace-events
+> @@ -299,6 +299,10 @@ aspeed_i3c_write(uint64_t offset, uint64_t data) "I3C write: offset 0x%" PRIx64
+>   aspeed_i3c_device_read(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64
+>   aspeed_i3c_device_write(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64
+>   
+> +# aspeed_pwm.c
+> +aspeed_pwm_read(uint64_t offset, uint64_t data) "read: offset 0x%" PRIx64 " data 0x%" PRIx64
+> +aspeed_pwm_write(uint64_t offset, uint64_t data) "write: offset 0x%" PRIx64 " data 0x%" PRIx64
+> +
+>   # aspeed_sdmc.c
+>   aspeed_sdmc_write(uint64_t reg, uint64_t data) "reg @0x%" PRIx64 " data: 0x%" PRIx64
+>   aspeed_sdmc_read(uint64_t reg, uint64_t data) "reg @0x%" PRIx64 " data: 0x%" PRIx64
 
 
