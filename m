@@ -4,93 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC789D78771
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 13:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD11D78784
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 14:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWaSn-0002HF-J3; Fri, 19 Dec 2025 08:24:09 -0500
+	id 1vWbKq-0004qv-M5; Fri, 19 Dec 2025 09:20:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWaSl-0002Gu-UH
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 08:24:07 -0500
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWaSk-0006ST-CK
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 08:24:07 -0500
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-4775ae5684fso6860815e9.1
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 05:24:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766150645; x=1766755445; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=T8oZhgC5TPS6KAZ43zGu6mquJSM0U/DmvWidEawgPK4=;
- b=EoQkZvVGZWhw+2SMJwL7fPeKlIHAYU2yNvifoqxp3zssZxf5cfk+MR8NIsgmvyXpod
- /sC/JRBpNjTHYfYnfcZvaYEFkh8DKffoAdUHC8dQN2PCkTfX6UYeNzBi4gteR07uy79B
- jtAKSNUU99TYZSE1yOJt9AxNBPwPAZQ82vM7e4209KuH6jfJVn48Ja65TRqdZzuReLCP
- LG4cT5saRyd/SIgv+8FcpNJAVG8+RsIbAHKYkf2iNeZCCYiK3BrOqUqAmedofu0EANgw
- RbwDtJengqsEjIQPsVGRUT4qZw84LHPHns66aKyNmWJs3+cO0MibhpXlbN7t6iSc3FNM
- Q0cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766150645; x=1766755445;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=T8oZhgC5TPS6KAZ43zGu6mquJSM0U/DmvWidEawgPK4=;
- b=uaNHTUfH74Uq8bhNVo8m8Wr4+VTIM5XauO1qghKAzBdqgoLziUuNpBh/mMo6Ww7SlV
- gvlR9V/7lwfuo/xtgSg3vjnxxiZuFGMm3thdL+7w9/QH4qylGP7aS4W8I8o9ieYH/NSh
- cSPTc0jatCcv80Y3Qgf3xFb9AfiIEUKB7LKg1dm/sWNWnhTWDQeQsT77FcPYzCwLKzGE
- BWctMruTrK+Mic7Wne0seymhIFB1ePBAmc06Y5r5/2DurQUljCZpzd72JbXBIxFQ2EHr
- nvWzkPa7E+fRATmI5jFmVCMM6auCEkO+7ZRpLQN7rKo4o/m2eWXVZ/BMwrqFcQphihdz
- fkUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2w7j8QT+TUkvSPZFDqP5NH1PAYmpkqC6XKmHv2UPgQGCYsQ5ZtLM8f0Tys5TCPZI65bAcjYz7xHDa@nongnu.org
-X-Gm-Message-State: AOJu0Yzi8uq+xHZ8mHTRBtiZqixyoQ/y9NTUHt7XDEctJi+qvs1SD3uz
- R6D9CKlezJBHkcv/HAWbz5ox31ZBbgLwgzVmeJDXarhlrklTMDy4TG5BHEiCsxORFq8=
-X-Gm-Gg: AY/fxX5I4YE34LWA24cbi9W0oWsRgmy4250Tp8MvnM/jffeUiXwRMtSo+S3IeVhsGPF
- YbbecTbcRpOL5yRmoSK/VPSmCeg2lgMJxRkzsIhNLQR+fUfNsI8LV3X78D7Fbasjt9eeMOJ/AWW
- h+Vt+r1UbRlNeZFEwW2OdEh3T9DWbVtwsCFh9VMMDnF1kgU+624A+Now56HdLy1lPWeku/9UgC/
- 9ocwe5gHGk+IS3rRCt9p5EgkQhZ2gUHkIrbxXFIZu9lX0Wj8jMRDkZ6Ex0ZQPfKVyGcP8rI2ixM
- 8FLyZ7JuaTo4Xg2VoIAeZpymTl2uia/KCbbpA150ydXLD/yX4qnSqEgTv+v3tFfvW+YcKvhAp6N
- ScczNIMS94Kx+k5cTTvcWAZvQ47Wf3PyxF8qr/F7SuQiDW/CfqEUQCDHyPhvxsOn2VnV+mUuRqu
- Po3A6iIHNNisotmAS6Rl5wvkAS2o9ARGYo6O0W1Bnsj+/l+02RjlUsow==
-X-Google-Smtp-Source: AGHT+IHf47bf29taIY+tBiBHdtVv/R/K3iN8qgDJYUZSMxuMucIH+2ZCgfaQIRq3ak21EECCPsQilA==
-X-Received: by 2002:a05:600c:8718:b0:471:9da:5248 with SMTP id
- 5b1f17b1804b1-47d19593864mr24087135e9.26.1766150644615; 
- Fri, 19 Dec 2025 05:24:04 -0800 (PST)
-Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be273e4d5sm99326225e9.6.2025.12.19.05.24.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Dec 2025 05:24:04 -0800 (PST)
-Message-ID: <fa6211c1-c811-470b-b63a-d21e57d044f5@linaro.org>
-Date: Fri, 19 Dec 2025 14:24:03 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWbKm-0004qP-Tb
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 09:19:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vWbKl-0001Hx-4i
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 09:19:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766153993;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=P+zrN7EQ78ZVrsf4aJs2XNjuilafTaDWXiN2cF7m+lk=;
+ b=BhfVJEcn4P5+I3qRH/xc8p+lyEzODDnnmGmFkaFL+BcYjXmfcd4wuC9HcJk3BlVqZ2YoC0
+ A+bATPXo0qtBUoJyK0GPVJJqH0QZREPQ+cyLLMbDTG2wPzM3aUIrj73RdaLNx2wnp2qxwy
+ rTZSjXHrCccCgjx76Q/RUNawvxjbxPU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-kjyqsvz3MTSawZHEUY4SFQ-1; Fri,
+ 19 Dec 2025 09:19:49 -0500
+X-MC-Unique: kjyqsvz3MTSawZHEUY4SFQ-1
+X-Mimecast-MFC-AGG-ID: kjyqsvz3MTSawZHEUY4SFQ_1766153988
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5369B1800642; Fri, 19 Dec 2025 14:19:48 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A3577180049F; Fri, 19 Dec 2025 14:19:47 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 491A621E6A27; Fri, 19 Dec 2025 15:19:45 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Jackson Donaldson <jcksn@duck.com>,  qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,  Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>,  Thomas Huth <thuth@redhat.com>
 Subject: Re: [PATCH] hw/arm: Re-enable the MAX78000FTHR machine in
  qemu-system-arm/aarch64
-To: Jackson Donaldson <jcksn@duck.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>
+In-Reply-To: <fa6211c1-c811-470b-b63a-d21e57d044f5@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 19 Dec 2025 14:24:03
+ +0100")
 References: <20251218214306.63667-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251218214306.63667-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
+ <fa6211c1-c811-470b-b63a-d21e57d044f5@linaro.org>
+Date: Fri, 19 Dec 2025 15:19:45 +0100
+Message-ID: <878qey4kqm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,23 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/25 22:43, Philippe Mathieu-Daudé wrote:
-> Unfortunately while rebasing the series registering the
-> ARM/Aarch64 machine interfaces and getting it merged as
-> commit 38c5ab40031 ("hw/arm: Filter machine types for
-> qemu-system-arm/aarch64 binaries") we missed the recent
-> addition of the MAX78000FTHR machine in commit 51eb283dd0e.
-> Correct that.
-> 
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Tested-by: Thomas Huth <thuth@redhat.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3248
-> Fixes: 38c5ab40031 ("hw/arm: Filter machine types for single binary")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/arm/max78000fthr.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Per https://lore.kernel.org/qemu-devel/87ms3e6a79.fsf@pond.sub.org/:
-Tested-by: Markus Armbruster <armbru@redhat.com>
+> On 18/12/25 22:43, Philippe Mathieu-Daud=C3=A9 wrote:
+>> Unfortunately while rebasing the series registering the
+>> ARM/Aarch64 machine interfaces and getting it merged as
+>> commit 38c5ab40031 ("hw/arm: Filter machine types for
+>> qemu-system-arm/aarch64 binaries") we missed the recent
+>> addition of the MAX78000FTHR machine in commit 51eb283dd0e.
+>> Correct that.
+>>=20
+>> Reported-by: Thomas Huth <thuth@redhat.com>
+>> Tested-by: Thomas Huth <thuth@redhat.com>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3248
+>> Fixes: 38c5ab40031 ("hw/arm: Filter machine types for single binary")
+>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> ---
+>>   hw/arm/max78000fthr.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> Per https://lore.kernel.org/qemu-devel/87ms3e6a79.fsf@pond.sub.org/:
+> Tested-by: Markus Armbruster <armbru@redhat.com>
+
+Fair :)
+
 
