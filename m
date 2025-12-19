@@ -4,98 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D966D7879C
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8671D7879C
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:31:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdJT-00010b-J6; Fri, 19 Dec 2025 11:26:43 -0500
+	id 1vWdNl-0002LG-8K; Fri, 19 Dec 2025 11:31:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bT.7seeznroe9afik2=govm03c0ocew=up44ekbbue5gx3@em483429.getutm.app>)
- id 1vWdJN-0000z7-NQ
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:26:39 -0500
-Received: from a2i327.smtp2go.com ([103.47.205.71])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vWdNg-0002Kw-Ui
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:31:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bT.7seeznroe9afik2=govm03c0ocew=up44ekbbue5gx3@em483429.getutm.app>)
- id 1vWdJK-00077c-BB
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:26:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=smtpservice.net; s=mad0l0.a1-4.dyn; x=1766162480; h=Feedback-ID:
- X-Smtpcorp-Track:To:Subject:Message-ID:Date:From:Reply-To:Sender:
- List-Unsubscribe:List-Unsubscribe-Post;
- bh=0iAgP76114TWP1wJsjnkaGa+MOAmMzE8OSgdVnces4c=; b=JdE6ERlrKaFs6p4J9LIRRLcAgW
- n36UQgAz4wsBo+/000Q2C1DzUmlqGEe6Wwiu5smNMRFbds0hte9YnwYazw2a5lvuCb1yjaTS46goW
- Um4mLil2RjEPXf6y5A7E354dIbEOHN9x8R/bbKkV/R2++AUWf0aElAId44PxULgBhHFFIbYT24RAY
- xZ/a2tB2/a0JNnGLL2nrRzYPgfYaQGTaxkiheGCi7tousMO14jQGgQv9p8anzb0f1d7LYx6jdV79d
- r42zerGGeXWrWpozZw4PU8ve6+aBcpQgow9zO8iH/21iH+0X/qAdG0WhAKDgpf9HDstUE9UPCu61B
- Wu66vCcg==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
- i=@getutm.app; q=dns/txt; s=s483429; t=1766161580; h=from : subject :
- to : message-id : date;
- bh=0iAgP76114TWP1wJsjnkaGa+MOAmMzE8OSgdVnces4c=;
- b=eCnFGb1hPRveIrcIlvly60lVlbjlWeL5rdstYX8cPVqAbhQ/Em987JVCpWEuwW+HmLU9j
- EqsPVXMDofZdtm6i6YagbKOhz2vR6g3qW68A0b51KsZpRJ16u26BR4ObDR10p9iA1vzODYB
- oiOd1j7y0BC+jG/CQ6f1qtsnhUoD2qPyGVankyKUWCPbgjq8IeiAqryW34Ca9s7OIzf48Cp
- Vnz0m02bxgrbwr3qFM40G9cWlGbFCXo1eDuiy0ywc+p877vipAS6PVcm73VTtECvOO/EXUG
- 97xWATnUrERJt138O0BsroM6kb7MKDYBzNQDvbTZ+L7ItM2/Fl6wrLvFcekA==
-Received: from [10.45.56.87] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.94.2-S2G) (envelope-from <j@getutm.app>) id 1vWdJ5-pH9PgS-Ar
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 16:26:19 +0000
-Received: from [10.159.238.187] (helo=mail-ej1-f49.google.com)
- by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
- (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
- id 1vWdJ4-FnQW0hPwths-ekOo for qemu-devel@nongnu.org;
- Fri, 19 Dec 2025 16:26:18 +0000
-Received: by mail-ej1-f49.google.com with SMTP id
- a640c23a62f3a-b735487129fso348263566b.0
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:26:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vWdNd-00080c-EP
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:31:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766161858;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=xGTD/g5VFIzqhVI/xe/BuA8Ye56bTqcTfptsl4HHXnw=;
+ b=M/mlTdk7hSbYPm9Stf2F5EG5XM6TVgourMqfLQ8YKUaP/8zuU4ljKlZJqIVXL2mKC89X0C
+ unjNAAmklX4naHoXAYjBI34GWhP+sZLNpS7tD7m7LewprzlE5wvMuC3NSb9PnVvbwqL92L
+ FfxRiiEemg6xAJB6qSw1obKfmEyNFFQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-DxXZtmE4MJeJ6Hc5X0LKiA-1; Fri, 19 Dec 2025 11:30:57 -0500
+X-MC-Unique: DxXZtmE4MJeJ6Hc5X0LKiA-1
+X-Mimecast-MFC-AGG-ID: DxXZtmE4MJeJ6Hc5X0LKiA_1766161856
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4779b432aecso10083595e9.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:30:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1766161856; x=1766766656; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=xGTD/g5VFIzqhVI/xe/BuA8Ye56bTqcTfptsl4HHXnw=;
+ b=grHBJ13/5qKV35O+9H3NxxuJEWvKp+0X1NwwEViQDwvSNJLXMs8nSCi1/yonUs10cH
+ QIx6ufVqap58aV5bc0oHgF7mLX/625UDgibGtOiy3X2XeZDLBEXOLO3S1Rv8U2YDTOmz
+ +qZVRtWJ7DD8ZoWEIytU3q8gyE9t7zWltptUynf/pllweTzFmZey8hUCoheRbO9VKXFN
+ aGewM1a/LK4D1V4GcfmrT/62vKoK3gXb4+HCh+9BpJkLOY1frdgmgrQCHMR7c2SCUkCX
+ K8Xinq1+TwFuv92VqxP499mjDKecO9gs16ulaGpARXEEKQL2JJ91Cog52zi/mjgAGGsX
+ UAlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766161856; x=1766766656;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xGTD/g5VFIzqhVI/xe/BuA8Ye56bTqcTfptsl4HHXnw=;
+ b=uyOlNRmBXuLleGWA3+Jj+OGE6r/CQWg7wMsD7aYkXnHWblDmJ/viL17x0nj4SzWkmJ
+ uvj6eFEealwYvOd4eq4uMjK4zzkXRs//fPN02uEy5X4I7Sge3RW+wsNrACsi4oqFbcfK
+ 4hc97BZeYct3VO8LT8Qy6d+r5YXwmAyD1fJSgrfHf3W+A58P8PaC+A1+pu+okcpnJnQg
+ Q0Tiau/PoEd/Hb1hDETmbGOx3PQ3ba0l76NClMdrwg0vktaqMo+wYMN4Kr8Zz/84rNCZ
+ /g67+8WBE9gfmCKkj8ffzobmc3FjiNG5xBR0JU4885S0XSTOUWy63fd5uVcEskM7fXHG
+ pHkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSD7BdhDuoC5nJFj4z5VfxRQtjsCVvhd7CvgX9JC7Y5Ce5/ZibeDZKPxExroJqHtgoF2MOfji0EGJe@nongnu.org
-X-Gm-Message-State: AOJu0YxDsvntwmkunH4OPxqhN1VCFs/X00+x+VJAtjtDgiPe5QIOktfU
- gfreEwMELwSqj97Li6O/MmIE0gO47wMvruj8XNtU0tHv8nxiz0+tfvTqSgYNH/7N0MuDfCGusQy
- S/U0gbs4/opLbAAMHXIzJoRf9LsJuYkI=
-X-Google-Smtp-Source: AGHT+IF3JZWo3RE4eNBFaW1jH0SR0xI87x9xN+DugaAPcss7oXjS3RDOzopRJMn9oj3LyBgBiGBqZcnIPqg5n+tkMd8=
-X-Received: by 2002:a17:906:eecb:b0:b80:b7f:aa27 with SMTP id
- a640c23a62f3a-b803722e390mr326369966b.63.1766161576791; Fri, 19 Dec 2025
- 08:26:16 -0800 (PST)
+ AJvYcCWQ0bZJoHAYzJeJYZY1BTHO4SHJl6t2PL/B01YidsYJdl05m/Rlmwr38bECrIv/W/ZhMz9EBpzY/Q/h@nongnu.org
+X-Gm-Message-State: AOJu0YwA7VOIUxjg7J/YOXaU/+txDXk2BrYk2fQ46UwoGwNcY7grMKDd
+ YnOPZ8AWcMOry7ZQWLZLOwLcNpT3liGP9HwYCKwIzqS/sIMaoW6Xt2eb7p9mQeMWf0G7Yt0Ok5p
+ 2tXm6tmZ71WQ2KCI6Cu+p1+w3W+pvvy3BdLB6rduOqeeU+2DVZ+qSzORg
+X-Gm-Gg: AY/fxX41tnJtb77Zrpno2T5K/cNj+ROR3i11hbtSI6IY+Kfk8LRARHcRIPUncmVQUEE
+ pckbQv7s7Rmwy6UqnuHoTINFTAHaTXKCaioYaMeWMMb7vCbUhMcwtnCqUt7rdRfV8PM1HKQTdrg
+ FcIs/nclipQUdVA6MJ1BsVzIkYmEtKYWAppJyi95VKbSKi8QpFwkYbJjL9SSgQieuIDPUexeMCU
+ AcaiHpM9hIWVcIWdrkIb8LrpXPtqRHdnZFavQBdtkNXK7Oxga76ddeQHSNJMDjCN5G5cSyN8qyQ
+ QdES28q7/bfpQNIvvzpgak6EnK6qK4QDIsZV0n/AjoHvUdwN5rbGKdLfOCaYau9MFRAbiZL5PVI
+ SRP972VaeANOnIklQxYQib68E8aoQZN1KSeQYViyb9avnuOuz
+X-Received: by 2002:a05:600c:1d1d:b0:47a:94fc:d057 with SMTP id
+ 5b1f17b1804b1-47d19538d98mr31350475e9.2.1766161856017; 
+ Fri, 19 Dec 2025 08:30:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrLqIeUhPmb3nqJujk9tChPtpsWHuTe0IsZAUKflrpI8mkOhSUa8I6McB+pK5xBbHGXjWepA==
+X-Received: by 2002:a05:600c:1d1d:b0:47a:94fc:d057 with SMTP id
+ 5b1f17b1804b1-47d19538d98mr31350255e9.2.1766161855570; 
+ Fri, 19 Dec 2025 08:30:55 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324eaa2bdfsm5869097f8f.32.2025.12.19.08.30.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Dec 2025 08:30:55 -0800 (PST)
+Message-ID: <970d3a1a-408f-4bf3-b6da-784f8e6bd66a@redhat.com>
+Date: Fri, 19 Dec 2025 17:30:54 +0100
 MIME-Version: 1.0
-References: <20251203040754.94487-1-j@getutm.app>
- <20251203040754.94487-5-j@getutm.app>
- <32a0ad66-5c42-4d98-8c5d-0a601e31b76a@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <32a0ad66-5c42-4d98-8c5d-0a601e31b76a@rsg.ci.i.u-tokyo.ac.jp>
-From: Joelle van Dyne <j@getutm.app>
-Date: Fri, 19 Dec 2025 08:26:05 -0800
-X-Gmail-Original-Message-ID: <CA+E+eSDgi-5sJmMk8=PWYOXdoJSAXURUD35y+2sHxJWWH0GtWA@mail.gmail.com>
-X-Gm-Features: AQt7F2qNv6cmZsb-w6dJwW6dFKfm2V0EqzERSSlwA5RBbmsoIl0J08f1UWEvtGg
-Message-ID: <CA+E+eSDgi-5sJmMk8=PWYOXdoJSAXURUD35y+2sHxJWWH0GtWA@mail.gmail.com>
-Subject: Re: [PATCH RFC 4/7] virtio-gpu-virgl: update virglrenderer defines
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Smtpcorp-Track: Ht1ZrVHXmk1y.CCNR2kL9ROOe.uEWmVwOFykg
-Feedback-ID: 483429m:483429abrvJvs:483429sZ9a1YeZfx
-X-Report-Abuse: Please forward a copy of this message, including all headers, 
- to <abuse-report@smtp2go.com>
-Received-SPF: pass client-ip=103.47.205.71;
- envelope-from=bT.7seeznroe9afik2=govm03c0ocew=up44ekbbue5gx3@em483429.getutm.app;
- helo=a2i327.smtp2go.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] util/vfio-helper: Fix endianess when enabling Bus
+ Master
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, thuth@redhat.com, stefanha@redhat.com,
+ kwolf@redhat.com, fam@euphon.net, alex@shazbot.org
+References: <20251217184253.1520-1-alifm@linux.ibm.com>
+ <4d7e4040-349e-4772-bdf9-43d4f8a6f771@redhat.com>
+ <0c3e13e1-0aeb-47f9-9c44-5af8f3f47055@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <0c3e13e1-0aeb-47f9-9c44-5af8f3f47055@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,107 +173,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 3, 2025 at 11:13=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2025/12/03 13:07, Joelle van Dyne wrote:
-> > In order to support additional native texture types, we need to update =
-the
-> > defines in virglrenderer. The changes are backwards compatible and so
-> > builds should work with either the new version or the old version.
-> >
-> > Signed-off-by: Joelle van Dyne <j@getutm.app>
-> > ---
-> >   hw/display/virtio-gpu-virgl.c | 28 +++++++++++++++++++++++++---
-> >   1 file changed, 25 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virg=
-l.c
-> > index d0e6ad4b17..36c670f988 100644
-> > --- a/hw/display/virtio-gpu-virgl.c
-> > +++ b/hw/display/virtio-gpu-virgl.c
-> > @@ -24,6 +24,8 @@
-> >
-> >   #include <virglrenderer.h>
-> >
-> > +#define SUPPORTED_VIRGL_INFO_EXT_VERSION (1)
->
-> This naming is a bit confusing because version 0 is also supported.
->
-> > +
-> >   struct virtio_gpu_virgl_resource {
-> >       struct virtio_gpu_simple_resource base;
-> >       MemoryRegion *mr;
-> > @@ -441,12 +443,30 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-> >           memset(&ext, 0, sizeof(ext));
-> >           ret =3D virgl_renderer_resource_get_info_ext(ss.resource_id, =
-&ext);
-> >           info =3D ext.base;
-> > +        /* fallback to older version */
-> >           native =3D (ScanoutTextureNative){
-> >               .type =3D ext.d3d_tex2d ? SCANOUT_TEXTURE_NATIVE_TYPE_D3D=
- :
-> >                                       SCANOUT_TEXTURE_NATIVE_TYPE_NONE,
-> >               .u.d3d_tex2d =3D ext.d3d_tex2d,
-> >           };
-> > -#else
-> > +#if VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION >=3D SUPPORTED_VIRGL_INFO=
-_EXT_VERSION
-> > +        if (ext.version >=3D VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION)=
- {
-> > +            switch (ext.native_type) {
-> > +            case VIRGL_NATIVE_HANDLE_NONE:
-> > +            case VIRGL_NATIVE_HANDLE_D3D_TEX2D: {
-> > +                /* already handled above */
-> > +                break;
-> > +            }
-> > +            default: {
-> > +                qemu_log_mask(LOG_GUEST_ERROR,
-> > +                            "%s: unsupported native texture type %d\n"=
-,
-> > +                            __func__, ext.native_type);
->
-> It is not an error condition; the d3d_tex2d field is an optional hint
-> that allows zero-copy inter-process sharing and the tex_id field is used
-> if it is missing or inter-process sharing is unnecessary. It should be
-> fine to dismiss the native handle unless the semantic changes.
-When VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION >=3D 1, the semantic
-changed to always have a ext.native_type. In case of missing
-d3d_tex2d, ext.native_type will be VIRGL_NATIVE_HANDLE_NONE. The
-default case is if virglrenderer introduces a new native type that is
-unknown at the time QEMU is built. This is why the struct version is
-bumped.
+On 12/19/25 17:21, Philippe Mathieu-Daudé wrote:
+> On 19/12/25 15:51, Cédric Le Goater wrote:
+>> Hello,
+>>
+>> On 12/17/25 19:42, Farhan Ali wrote:
+>>> The VFIO pread/pwrite functions use little-endian data format.
+>>> When enabling the Bus Master bit, the value must be correctly converted
+>>> from the CPU's native endianess to little-endian format.
+>>
+>> How did you find the issue ?
+> 
+> I presumed using VFIO on s390x hosts...
 
->
-> Regards,
-> Akihiko Odaki
->
-> > +                break;
-> > +            }
-> > +            }
-> > +        }
-> > +#endif
-> > +#else /* VIRGL_VERSION_MAJOR < 1 */
-> >           memset(&info, 0, sizeof(info));
-> >           ret =3D virgl_renderer_resource_get_info(ss.resource_id, &inf=
-o);
-> >   #endif
-> > @@ -1169,11 +1189,13 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-> >           virtio_gpu_3d_cbs.get_egl_display =3D virgl_get_egl_display;
-> >       }
-> >   #endif
-> > -#ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
-> >       if (qemu_egl_angle_native_device) {
-> > +#if defined(VIRGL_RENDERER_NATIVE_SHARE_TEXTURE)
-> > +        flags |=3D VIRGL_RENDERER_NATIVE_SHARE_TEXTURE;
-> > +#elif defined(VIRGL_RENDERER_D3D11_SHARE_TEXTURE) && defined(WIN32)
-> >           flags |=3D VIRGL_RENDERER_D3D11_SHARE_TEXTURE;
-> > -    }
-> >   #endif
-> > +    }
-> >   #if VIRGL_VERSION_MAJOR >=3D 1
-> >       if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-> >           flags |=3D VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVE=
-R;
->
+yes. I have been using a nvme drive for over 2y in an s390x VM and never
+saw any issue.
+
+C.
+
+> 
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+>>> ---
+>>>   util/vfio-helpers.c | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/util/vfio-helpers.c b/util/vfio-helpers.c
+>>> index fdff042ab4..3c8284284f 100644
+>>> --- a/util/vfio-helpers.c
+>>> +++ b/util/vfio-helpers.c
+>>> @@ -443,7 +443,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
+>>>       if (ret) {
+>>>           goto fail;
+>>>       }
+>>> -    pci_cmd |= PCI_COMMAND_MASTER;
+>>> +    pci_cmd = cpu_to_le16(le16_to_cpu(pci_cmd) | PCI_COMMAND_MASTER);
+>>>       ret = qemu_vfio_pci_write_config(s, &pci_cmd, sizeof(pci_cmd), PCI_COMMAND);
+>>>       if (ret) {
+>>>           goto fail;
+>>
+>>
+>>
+> 
+
 
