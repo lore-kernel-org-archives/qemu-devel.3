@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80075D78770
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50B7D7879F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdbm-0001Ts-Nj; Fri, 19 Dec 2025 11:45:38 -0500
+	id 1vWdlV-00053y-S1; Fri, 19 Dec 2025 11:55:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdbb-0001RW-6B
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:45:27 -0500
-Received: from 10.mo552.mail-out.ovh.net ([87.98.187.244])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdlT-000529-Q6
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:55:39 -0500
+Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdbZ-00025f-7h
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:45:26 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.158])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dXtgh3H1Rz5x8x;
- Fri, 19 Dec 2025 16:45:20 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG3EX1.mxp5.local (172.16.2.21)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vWdlR-0004kr-GY
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:55:39 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.198])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dXtvT1SWWz5w7Q;
+ Fri, 19 Dec 2025 16:55:32 +0000 (UTC)
+Received: from kaod.org (37.59.142.106) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 19 Dec
- 2025 17:45:19 +0100
+ 2025 17:55:31 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-105G006f7628f75-cf3e-4ef4-934c-44610e89775c,
+ (GARM-106R006f0cef5b0-0220-49dd-b5b8-336c9a55a40c,
  13AF5B8175AA3308F51DC8C03696883D036152F7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <d7c18b54-3d53-4204-8dc1-3c1bc4fe4cb4@kaod.org>
-Date: Fri, 19 Dec 2025 17:45:18 +0100
+Message-ID: <3568b574-fa02-48e4-b2f7-2adaac7d23ee@kaod.org>
+Date: Fri, 19 Dec 2025 17:55:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/6] hw/gpio/aspeed_sgpio: Add Aspeed Serial GPIO
- (SGPIO) controller model
-To: Yubin Zou <yubinz@google.com>, <qemu-devel@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Kane-Chen-AS <kane_chen@aspeedtech.com>, Nabih Estefan
- <nabihestefan@google.com>, <qemu-arm@nongnu.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20251219-aspeed-sgpio-v5-0-fd5593178144@google.com>
+Subject: Re: [SPAM] [PATCH v3 02/18] hw/arm/aspeed: Attach LTPI controller to
+ AST27X0 platform
+To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>
+References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
+ <20251208074436.1871180-3-kane_chen@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,35 +88,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251219-aspeed-sgpio-v5-0-fd5593178144@google.com>
+In-Reply-To: <20251208074436.1871180-3-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG3EX1.mxp5.local
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG7EX2.mxp5.local (172.16.2.62) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: d097085f-bbbc-4dca-8399-cdc900165e2e
-X-Ovh-Tracer-Id: 9304436832663931777
+X-Ovh-Tracer-GUID: d921134a-5288-4841-b308-7a5c0eb5b634
+X-Ovh-Tracer-Id: 9476699517747235762
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFgoksgUP8+ymXtERTAqiaijetLKzgDiqYu1iPQB9Ru7iWmD9TYoc8mFB6XH5ZL32qPYEIoO3Iaz/fOqYZcGIvOuVfIkh/5kYvxDFA0uINmfJ6FmqvtD9ygJhIUzz6gw7/giaV5Vk0daKudaRADXjeNPuG/XAvrVVw6maLEfEEwXaF9Lh4ykXX3BVJHS5bXklnq3ABw7MxrCkb/2KXk+BAhDFHp4mu3GJO6cIjNxt6SkkdqX6LYxnMlxsRdDb4RDgeYGmlowZh1zqqCrfJtZgrIMquTWOzLgJl0rPZhSJGyDlEbUly0+NvgjcFZD1baA71sS9ceiZdZ+akOEnMyJDMHp0I1M3T8hDlUoxfMcA3TmRyXSzYx68NuVJvBPMX2OFEBTcjX7YZqRvdOfiTEOkdssxrOVfeGAy4+Q3MOGlZZvN+jMt2K7bGpTVgC+SKy9Y3/eRUfo8qAiuG4CZYXklZ0z1dm0gTr2h6b3d+B7ohOOdJI8nKsl+Z24wt6dMXY/ky1OwExW40tlOO6nuQk3/vT5T4fyYQIBNNfNnoZ6NOKX3rvHCWLGpmWYu36QtqL+sV7Z+DJablmh8V5RhQmstVQ3BFglbu+Ur6wY4RN/OTUmsmlPMTu/queqRyuGX9cbqEVF2vBfjthOQaHEsOxzRuis/F45HC4p65TxXZ4N6kPZw
-DKIM-Signature: a=rsa-sha256; bh=z0g3H2Upviv+uTWy8jS8O4FeUGQp8YAm/pxa3/ZIAcI=; 
+X-VR-SPAMCAUSE: dmFkZTF3dtx6Dd/W0IADjkab6FUhbR23yB0BYrBHYw38OmqoF+9YeqO505aXooqr4/16UBrFsMQHia37GpvDFyFkIA1XH7rrqCZWmQ+hVNKC5AxfqR78m7ID/64PGvQ4/5C3mKn+YRZYytdOi4Le9YqHx05yhD1ppmyWXj2dUUGxFuXr/Jq1y4TUXFxL2mq9Dx/LtU0OhGNGPh0cFCSd9fua6JSS8XKxILcvyASvIy4ZcJNQob6pp9ZK2jz2jrKR9sXGh5gVoc1991vpdKiuYAANWrSF778sTWNZytfpuo8jgFmzx5lv5hKr5Cuo3k8hZvg6oMLP/XusHCjjCpDubm2UIfrUsGtTTlrwoiOqilqBiWIHtdlkV5dWZdEsdn7+3p4qPD0vOZ8hxKKdqhu7/5I6Pb+W/EtXv3xEti2P63xqDrl74IA7mdPo4FGQpCrzzYgnkNkbs73xAJxVYzjGzKJu563dPSw4b4e7Ut7oYHyVORPCBeogHKMZMr86EwcAWnpkAe3wGMvq3kDNz5gstwDAEIUaik5XBGGu3BENJpkW924Ic4j1HYkr92Nx2dyvvOM+S1plRIT1QVRuPgJsamuG+d/hBPhGI4K9rTiIto//oYCbrJaJuNAQWf+BpuhJp3krzjJofycATPI2sy9bHvuYsHl57RVdKnlGeTp0jN9x8WjxnA
+DKIM-Signature: a=rsa-sha256; bh=kKyV58rHjPXFr5dCmUb8yhlmNK4uYMKaGJDQV4o4p3Y=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1766162722; v=1;
- b=IZ0l4EJ8fuJGBZiVDhnEkfnB7vbKXEA+t327mkX6n46VrdoF+Y0m7rQybgitZRTzDd9Qciv6
- o7J7uY6JKvrAp/0v+uegA86luddpwdq+18DezkaUiZ2K1CJ+ZZ8+8rvHdB+twD7a7NrgkNuazkP
- RiXSMgUYccW7biHvN/Ild2Wd/SDqaBCV4mHByQIugeB2AlbdVpsRO2YQ3WDH70Vo6HvmLSFJACM
- aN7hx9SEIuFEu3ZbMn6V4j/vh49m39a2uXYVbuDKvJqAafw6uz7Rmn9uPPagFDvrWeYwltCmj4I
- 15rVg1GYjoZyhfJq+Ra6KYamqEjTJ2j7DgIapjPAna7MQ==
-Received-SPF: pass client-ip=87.98.187.244; envelope-from=clg@kaod.org;
- helo=10.mo552.mail-out.ovh.net
+ t=1766163334; v=1;
+ b=AL/7EJl3CrbVW4VYxSshqTQWB3ugOkyOiTOG6jk/tcyrPSDT+fJDudwtvia4CmsXGAksI/gg
+ 6LwrBgGBa4mprkM14aU6sL3zNh55V/s9W7pwuRPDGlIHufektzW6aR2IXejhVV7m4RCbGBKKgq/
+ 609Nxhdi0F8Dra2WWIWZXUbBu1SUQgomFscE8RbJMjWPMdDuk94CzU/LBTdpf1fnb63RCegxrpD
+ zLCNkWTJ21h+jprhcuFNs8gH9BpVYXVkmAsZ5i/E/EAjN0GsbCbyzELMTMzLxV0/Azt007/MsL4
+ 5+RksHqCRMjE8Il7MudS9CSKuMnm84F4l+KsEco3EvszA==
+Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,92 +132,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/19/25 08:04, Yubin Zou wrote:
-> This series introduces a model for the Aspeed Serial GPIO (SGPIO) controller,
-> commonly found on Aspeed SoCs such as the AST2700. The SGPIO peripheral
-> provides a large number of GPIO pins that can be controlled and monitored
-> serially.
+On 12/8/25 08:44, Kane Chen wrote:
+> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> Improvement to QEMU:
-> These patches enhance QEMU's hardware emulation capabilities for platforms
-> using Aspeed SoCs, particularly for BMC simulations. By modeling the SGPIO
-> controller, QEMU can more accurately represent the hardware, allowing for
-> better development and testing of firmware and software that relies on these
-> GPIOs for various functions like sensor monitoring, presence detect, and
-> system control signals.
+> Connect the LTPI controller device (representing the AST1700 I/O
+> expander) to the AST27X0 SoC model. This patch sets up the memory
+> mapping and device registration according to the AST2700 SoC design,
+> where the LTPI controller is exposed at fixed MMIO regions.
 > 
-> Impact (Before/After):
+> This change only handles device instantiation and integration,
+> without implementing the controller's internal logic.
 > 
-> Before:
-> QEMU lacked a model for the Aspeed SGPIO controller. Any guest software
-> attempting to interact with the SGPIO register space would find no device.
-> Firmware features depending on SGPIO pin states or interrupts could not be
-> tested in QEMU.
-> 
-> After:
-> QEMU emulates the Aspeed SGPIO controller on supported machines (e.g.,
-> ast2700-evb).
-> - Guest firmware can configure SGPIO pins, set output values, and read input
->    values through the memory-mapped registers.
-> - External entities (like test scripts or other QEMU components) can interact
->    with the pins via QOM properties (e.g., to simulate external signal changes).
->    Path example: /machine/soc/sgpio[0]/sgpio0
-> - The model generates interrupts based on input pin transitions, according to
->    the configured mode (level/edge), enabling testing of interrupt handlers.
-> 
-> Signed-off-by: Yubin Zou <yubinz@google.com>
-> ---
-> Changes in v5:
-> - Fix logging, typo and indentation in 1/6.
-> - Fix typo and empty line in 3/6.
-> - Fix duplicate definition in 6/6.
-> - Link to v4: https://lore.kernel.org/qemu-devel/20251217-aspeed-sgpio-v4-0-28bbb8dcab30@google.com
-> 
-> Changes in v4:
-> - Fix indentation issue, replace SysBusDevice by SysBusDeviceClass,
->    remove unused function in 1/6.
-> - Fix g_autofree usage in 2/6.
-> - Switch to use  %03d in unit test, remove unused headers in 6/6.
-> - Link to v3: https://lore.kernel.org/qemu-devel/20251210-aspeed-sgpio-v3-0-eb8b0cf3dd51@google.com
-> 
-> Changes in v3:
-> - Fix commit message typo and address several review feedback in
->    commit 2/6.
-> - Switch to use g_autofree and drop g_free.
-> - Use "%03d" instead of "%d".
-> - Link to v2: https://lore.kernel.org/qemu-devel/20251209-aspeed-sgpio-v2-0-976e5f5790c2@google.com
-> 
-> Changes in v2:
-> Split the v1 into smaller commits and reorder it for better review:
-> - Link to v1: https://lore.kernel.org/qemu-devel/20251106-aspeed-sgpio-v1-0-b026093716fa@google.com
-> 
-> ---
-> Yubin Zou (6):
->        hw/gpio/aspeed_sgpio: Add basic device model for Aspeed SGPIO
->        hw/gpio/aspeed_sgpio: Add QOM property accessors for SGPIO pins
->        hw/gpio/aspeed_sgpio: Implement SGPIO interrupt handling
->        hw/arm/aspeed_soc: Update Aspeed SoC to support two SGPIO controllers
->        hw/arm/aspeed_ast27x0: Wire SGPIO controller to AST2700 SoC
->        test/qtest: Add Unit test for Aspeed SGPIO
-> 
->   include/hw/arm/aspeed_soc.h      |   8 +-
->   include/hw/gpio/aspeed_sgpio.h   |  68 ++++++++
->   hw/arm/aspeed_ast10x0.c          |   6 +-
->   hw/arm/aspeed_ast27x0.c          |  26 +++
->   hw/gpio/aspeed_sgpio.c           | 346 +++++++++++++++++++++++++++++++++++++++
->   tests/qtest/ast2700-sgpio-test.c | 165 +++++++++++++++++++
->   hw/gpio/meson.build              |   1 +
->   tests/qtest/meson.build          |   1 +
->   8 files changed, 616 insertions(+), 5 deletions(-)
-> ---
-> base-commit: 917ac07f9aef579b9538a81d45f45850aba42906
-> change-id: 20251105-aspeed-sgpio-1d49de6cea66
-> 
-> Best regards,
+> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Applied to aspeed-next.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Thanks,
 
-C.
+> ---
+>   include/hw/arm/aspeed_soc.h |  5 +++++
+>   hw/arm/aspeed_ast27x0.c     | 21 +++++++++++++++++++++
+>   2 files changed, 26 insertions(+)
+> 
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 18ff961a38..bca10c387b 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -43,6 +43,7 @@
+>   #include "hw/fsi/aspeed_apb2opb.h"
+>   #include "hw/char/serial-mm.h"
+>   #include "hw/intc/arm_gicv3.h"
+> +#include "hw/misc/aspeed_ltpi.h"
+>   
+>   #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+>   
+> @@ -55,6 +56,7 @@
+>   #define ASPEED_UARTS_NUM 13
+>   #define ASPEED_JTAG_NUM  2
+>   #define ASPEED_PCIE_NUM  3
+> +#define ASPEED_IOEXP_NUM 2
+>   
+>   struct AspeedSoCState {
+>       DeviceState parent;
+> @@ -112,6 +114,7 @@ struct AspeedSoCState {
+>       UnimplementedDeviceState ltpi;
+>       UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+>       AspeedAPB2OPBState fsi[2];
+> +    AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
+>   };
+>   
+>   #define TYPE_ASPEED_SOC "aspeed-soc"
+> @@ -279,6 +282,8 @@ enum {
+>       ASPEED_GIC_REDIST,
+>       ASPEED_DEV_IPC0,
+>       ASPEED_DEV_IPC1,
+> +    ASPEED_DEV_LTPI_CTRL1,
+> +    ASPEED_DEV_LTPI_CTRL2,
+>   };
+>   
+>   const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 70be3871bb..341b53189b 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -88,6 +88,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>       [ASPEED_DEV_UART10]    =  0x14C33900,
+>       [ASPEED_DEV_UART11]    =  0x14C33A00,
+>       [ASPEED_DEV_UART12]    =  0x14C33B00,
+> +    [ASPEED_DEV_LTPI_CTRL1] =  0x14C34000,
+> +    [ASPEED_DEV_LTPI_CTRL2] =  0x14C35000,
+>       [ASPEED_DEV_WDT]       =  0x14C37000,
+>       [ASPEED_DEV_LTPI]      =  0x30000000,
+>       [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
+> @@ -556,6 +558,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
+>           object_property_set_int(OBJECT(&s->pcie[i]), "id", i, &error_abort);
+>       }
+>   
+> +    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
+> +        object_initialize_child(obj, "ltpi-ctrl[*]",
+> +                                &s->ltpi_ctrl[i], TYPE_ASPEED_LTPI);
+> +    }
+> +
+>       object_initialize_child(obj, "dpmcu", &s->dpmcu,
+>                               TYPE_UNIMPLEMENTED_DEVICE);
+>       object_initialize_child(obj, "ltpi", &s->ltpi,
+> @@ -1047,6 +1054,20 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> +    /* LTPI controller */
+> +    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
+> +        AspeedLTPIState *ltpi_ctrl;
+> +        hwaddr ltpi_base;
+> +
+> +        ltpi_ctrl = ASPEED_LTPI(&s->ltpi_ctrl[i]);
+> +        ltpi_base = sc->memmap[ASPEED_DEV_LTPI_CTRL1 + i];
+> +
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(ltpi_ctrl), errp)) {
+> +            return;
+> +        }
+> +        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(ltpi_ctrl), 0, ltpi_base);
+> +    }
+> +
+>       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+>                                     "aspeed.dpmcu",
+>                                     sc->memmap[ASPEED_DEV_DPMCU],
+
 
