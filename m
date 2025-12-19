@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2DCE66882
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 18:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3B4D7879F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 18:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWfCP-0006yX-UT; Fri, 19 Dec 2025 13:27:33 -0500
+	id 1vWfC5-0006vG-4t; Fri, 19 Dec 2025 13:27:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWfCM-0006xs-78
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 13:27:30 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWfC2-0006uu-5A
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 13:27:10 -0500
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWfCK-0005Yd-Pg
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 13:27:29 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWfC0-0005Ub-KS
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 13:27:09 -0500
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-477632b0621so12887245e9.2
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 10:27:28 -0800 (PST)
+ 5b1f17b1804b1-47a95efd2ceso17768005e9.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 10:27:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766168847; x=1766773647; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vpVBRqx1qfeVuk9oF+fByqxYh3BOioTsbTesg1hLqvQ=;
- b=Fezy74WgAUIe1S4J5pWXbS9Wayzpt6BwhlO5eZ5XTjbUIjRBR5s47hkzQawO4bHWAW
- OGEbdb+sDtNfJWnx+2tvEPUEEFyXQWcJ5HZPTi3MPcHvDiVvK/4tq0OD5xo1KbxnLOUs
- hujOiirgreIfCeTWxIqYLIm2UsVkkXNr6tqoOMmF2G+uwoGpKUUmrtP1prR0+JghQ5rA
- kYcdLbtteG8csvn+j3VjQrCl16y1IKdeFHrCaDvUleTCNW/aQTvDjpyT8Jf5ezGpbZNR
- TCwmxxzT61i37FFf/hZRlOiIl+mhnnQpNxbqzbcMWtNN9k236ZKjs1LQWibYSmuei4vc
- xNVA==
+ d=linaro.org; s=google; t=1766168827; x=1766773627; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=L9GiWOmfyMyj5ciUSgqFfyjuX4l2YQUMTA4v3u2DnUw=;
+ b=Dd60tmh+hK1WEIO9X0jzGa9zb0kNRaJA4hCq6ti3PdGLuDX1485+6ozMAeWFS1gEpS
+ H+Bc36+GF7c2/1jMUUErMLDVkrdGwrQO+HxfSLAQHdqTipDNbStJ9+s5C1zwJahcJnA8
+ EBOQPVxu4CpJig+5CGOwUasaDe2Y3s67SGWsd9zdbdhxREhnxKMkdIJSAk9Xe6S3lfsg
+ GYPej6hyAvxiTMih1EC+hqao3OVnvS7N1r6bDEuteU+Wtilr2TmBUrMqic0cvaa3hudh
+ iKF/1skPKUcOe2Hu2htqZ17iEzcMrP5JQpldwJ+aeaD9C1euM+HgqogxJJVR5YPeo/y+
+ 6rcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766168847; x=1766773647;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vpVBRqx1qfeVuk9oF+fByqxYh3BOioTsbTesg1hLqvQ=;
- b=edm2zP/hdtXILLkF+IUjTzp68Sg/jZ7DjFlGy5DX2ia4NembUtj0xhUPAI1+fR5Nwr
- n0581xTyQUuTOy2kJgd4Do7F2zcvPvInMdPAFDTZP1vWM5ldGVY7AGKtv2xFz/lBEF5v
- iqNUNpnq6Yg16Sh0P+cLTiAKWsy0P4FUuXKSQd+HZy/oetg2FS4N0Hm/7A9xqpkYfktd
- 7uSqe3FJkz6PDFSzc6dmfohkz4Ht2YtBa6LkUmWGSxx6QJrs1x6q+tkz44xQrjkYyLHx
- 4qaCDkm3UeMCisnObJyeEol51ye2Nc9sFHbZ9OYZLHBo96wA1CBirHlAwRws9sNbjATI
- eV4Q==
-X-Gm-Message-State: AOJu0YxVnK8lZHoLDKaWTEger6jFe/RTF/YVdQ3YJsnLCJGllnQy7ohj
- OrYdjju1mEyeTogJ8jLXQkJyEsMN1wYTlOC6we7csAarqRzKHq5n4KZGxJrhz9yPU2B3DgLS9B9
- SDZ7RXXw=
-X-Gm-Gg: AY/fxX4G5e43cWnwYA2kiGowhF74Qrpjt7XdUOxXxU9JCTLNtsk6/a5eawWgZlPuHis
- KZiz3giMdR3dp28tv9VU0JDOC2dtZvlJ+HQiigvruQhhJsVM05xk8HshB/7Y3pKnbhBGE3hmwg+
- 8odiK+Uf/Olx3GAA37LRX5Xc+Bp5oZmU0k8DTqBmKiKGqCbN0Y6jgNHArsVSXiCaRFmMTnHVrfy
- ZCRvjzU59DRxeKkqMYEpGh62XQsB9JpDbZo6aQj03r6ti/EbaLFlMzcnVqac58fS604CyEPbMuk
- VYSGNxX09FC31/uxt216gN2dGYuoBSjQquITLlxJ0gHKuAmQcmHON5XQT1QHVtJKy7Nsaynuh70
- zIY3WrgdpRja2W1zccgieFEDgcZIh9PKK2WLmHJj08yZA+U7tq7ojHW5apsLbGgsSomGZPxJ/te
- LMG+9n6OVOA9jwvmWirG8F7q/IEWhQXoDNkoQNR5nHbXZQj7IwbsSNYIUIR0Nl
-X-Google-Smtp-Source: AGHT+IEQWdP9GdAiJAm9FG351lPBWqIMY5CIVsmGG3kZCQkBzeyyYgE4CSyK+r5aOXxnATuAAOQF8Q==
-X-Received: by 2002:a05:600c:820e:b0:479:1a0a:ebbe with SMTP id
- 5b1f17b1804b1-47d19578ca7mr39385405e9.14.1766168846997; 
- Fri, 19 Dec 2025 10:27:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1766168827; x=1766773627;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L9GiWOmfyMyj5ciUSgqFfyjuX4l2YQUMTA4v3u2DnUw=;
+ b=f50ssQoz2w2pP8Jlf9NT/QwW0MwMxGWgbLq+vgiBOF4Qj0+AXzIg+GBwBWAVV0qkL8
+ /AubfIZFVvgvwdV6x2vg/tVbmwngcMblZcaPrQB5+r9m+n9hFTsvOhdix+oQB24B7GAj
+ m6UwQuevLOGprAdWGO3VTIpCk/RbWis+WGwwbLzhmEGhkc1eEvcADzEbZCCKQmdyDU09
+ LHfjAU7nbE3zuqCV6fK4oYceb5XjRsUokYuxPVECNuiAOX/UyUgfrndPaWgDFBgdzPSa
+ WujoQyMjE/8z1i3+hVUW+463T0HtVwTvZ9BSLhJB4Z7BhHctuDfFggh+dp76sPT6EIls
+ Kz3Q==
+X-Gm-Message-State: AOJu0YxbfVk7VXnQAxtBuRPRbbwg1ZBaahbyJ4M9bd/D6Lb2M3AkhDAt
+ 0pzoE5n8YKV1mDNr21FWU2IeK3bMNE+Uo5U84GCUhkpQBAxjUwlPcmo9WT+Wpf9VyDNMMbhIbAh
+ QA/RZLa0=
+X-Gm-Gg: AY/fxX7gfVfVfrzpt4dL202i1xZtHiYUb+w7GT+cp1v9VqFHCqsUqOPTRMU/cPvr6oY
+ +x2hs6xgwxeuxzzl5GcfgqcSSZsKlWdpZBL0a37FXssAcS8rQUfFT8HXorV4hkUBPFKMq60rpp7
+ w8ZpaGvlE5dPDw7mLl1rS4T03HVVPs90dmeFbITHVzydUSSUHg1961FrF9pSGKJe3tk552liJcH
+ ADW2j9mLUxRdqZF9yGJNdlm0iB2moYYCGaZ8aqPd+b+YUSF5iPLyNUmf1GKTGjgQT7JdUtHR2jD
+ 2L8DxhtXD0gpjqaTmNIi5VfRPfID2u82t+h5vuNAjXoi/Z19vunp/MAnLn05ALnxts9rKdae7SN
+ jE8oIf8bbFpS4z2kGkbzAetj3w6H4oh8dXjY8H6aFsZ/9juhVgpvsc1rG75xYpVeg526bN9ed0g
+ agPCHsG+TFZVgF6AxdAp8NbTdFtl9RqKDpNE9rtl3iSMKD3LWkIK1nR37MFYYK+nV1hGZzUis=
+X-Google-Smtp-Source: AGHT+IEqzlF4651WH8TDQ+UI2HzmBKNYlU2FMDPhzcD8SeijsOe1YEQEdo0l5tAs8khViogG4udQlA==
+X-Received: by 2002:a05:600c:1d1d:b0:477:9c73:267f with SMTP id
+ 5b1f17b1804b1-47d195aa4bfmr42191985e9.33.1766168826443; 
+ Fri, 19 Dec 2025 10:27:06 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193d5372sm58428445e9.14.2025.12.19.10.27.26
+ 5b1f17b1804b1-47be3a0fb9asm42124425e9.2.2025.12.19.10.27.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Dec 2025 10:27:26 -0800 (PST)
+ Fri, 19 Dec 2025 10:27:05 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -71,15 +70,12 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Stafford Horne <shorne@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/3] configs/targets: Forbid OpenRISC to use legacy native
- endianness APIs
-Date: Fri, 19 Dec 2025 19:27:04 +0100
-Message-ID: <20251219182704.95564-4-philmd@linaro.org>
+Subject: [PATCH 0/3] target/openrisc: Stop using the legacy native-endian APIs
+Date: Fri, 19 Dec 2025 19:27:01 +0100
+Message-ID: <20251219182704.95564-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251219182704.95564-1-philmd@linaro.org>
-References: <20251219182704.95564-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::331;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
@@ -105,35 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All OpenRISC-related binaries are buildable without a single
-use of the legacy "native endian" API. Unset the transitional
-TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
-further uses of the legacy API.
+OpenRISC is always big-endian, making the conversion easy.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
+Besides a lot of preliminary cleanup are already merged:
+
+. 5b67dbf1dc3 target/openrisc: Replace target_ulong -> uint32_t
+. 500708331e3 target/openrisc: Inline tcg_gen_trunc_i64_tl()
+. 4f6c60683f2 target/openrisc: Replace MO_TE -> MO_BE
+. 73cd283e58d target/openrisc: Introduce mo_endian() helper
+. 2f737e19a4d target/openrisc: Conceal MO_TE within do_store()
+. 22c36c0a20c target/openrisc: Conceal MO_TE within do_load()
+. ef797ac0025 target/openrisc: Explode MO_TExx -> MO_TE | MO_xx
+. 81e2fb236b7 target/openrisc: Remove 'TARGET_LONG_BITS != 32' dead code
+. 9dc4862dc4a target/openrisc: Use vaddr type for $pc jumps
+. 2367c94cbb1 target/openrisc: Remove target_ulong use in raise_mmu_exception()
+. 1843e89bec5 target/openrisc: Remove unused cpu_openrisc_map_address_*() handlers
+. a3c4facd395 target/openrisc: Do not use target_ulong for @mr in MTSPR helper
+. 2795bc52af4 target/openrisc: Replace VMSTATE_UINTTL() -> VMSTATE_UINT32()
+
+Philippe Mathieu-Daudé (3):
+  target/openrisc: Use explicit big-endian LD/ST API
+  target/openrisc: Inline translator_ldl()
+  configs/targets: Forbid OpenRISC to use legacy native endianness APIs
+
  configs/targets/or1k-linux-user.mak | 1 -
  configs/targets/or1k-softmmu.mak    | 1 -
- 2 files changed, 2 deletions(-)
+ target/openrisc/gdbstub.c           | 2 +-
+ target/openrisc/translate.c         | 3 ++-
+ 4 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/configs/targets/or1k-linux-user.mak b/configs/targets/or1k-linux-user.mak
-index 4cc6f2a6616..810567a98f9 100644
---- a/configs/targets/or1k-linux-user.mak
-+++ b/configs/targets/or1k-linux-user.mak
-@@ -3,4 +3,3 @@ TARGET_BIG_ENDIAN=y
- TARGET_SYSTBL_ABI=common,32,or1k,time32,stat64,rlimit,renameat
- TARGET_SYSTBL=syscall.tbl
- TARGET_LONG_BITS=32
--TARGET_USE_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-softmmu.mak
-index 5a8eb66cbc5..0e47d9878b0 100644
---- a/configs/targets/or1k-softmmu.mak
-+++ b/configs/targets/or1k-softmmu.mak
-@@ -3,4 +3,3 @@ TARGET_BIG_ENDIAN=y
- # needed by boot.c and all boards
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=32
--TARGET_USE_LEGACY_NATIVE_ENDIAN_API=y
 -- 
 2.52.0
 
