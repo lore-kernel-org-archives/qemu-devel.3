@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00807D7879C
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36543D7879C
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdEb-0000ZR-V5; Fri, 19 Dec 2025 11:21:42 -0500
+	id 1vWdEk-0000uk-Th; Fri, 19 Dec 2025 11:21:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdEM-0008Nw-3p
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:21:31 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdEc-0000er-Dz
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:21:42 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdEK-00065v-3R
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:21:25 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso20177945e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:21:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdEZ-00069Y-V0
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:21:42 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42e2e3c0dccso1224935f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:21:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766161282; x=1766766082; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766161297; x=1766766097; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UFVhD8dczJbMkx90KKbndfFREu2le89IhK/CmXUoOhk=;
- b=YGqGKDJiFElxx1Ee34QGS+q3NX2RcqwPfCk3eqNr9HX4sF6S+MNDRmzsbecQeQTx5h
- 49S/d0+2LUG9vtKBA/asTQRpsp2YQfCPGoENw4L2+GRFl2EywYXLvM46A69oATJqdDe/
- XmMA52WU9N/VvHQMJ6ilmrmOzMTai0Ct5If7byzq9FVsivNlc+wdnnBfUQUyTJgnonXx
- I8ktk25/m1V5BKPDCzQ5uljeZD8NBPbJLvI9P5IPvzjbcdqeJW1UJ4wIu5OAy6Tj+ZEP
- 00fSxdRSvZ+MLAJN7Rk4aduYVHDbImsiKJUe0qurA7+FTLy4PfV2qi4b0iFPPK9vDPAS
- fyzA==
+ bh=iFEGCZtzOscJWwxvEWIUNx2AGQ/JK9CrfOIEXq9Elt4=;
+ b=pJhVK45RqwhgOrSx7JsAEjxD1Wza3Eg/ZqMsMYNBavuVDkmZ/3ufy1xA7KxlRM1yeY
+ flxswDFMwkkEWctBsm+oUeNUAls4380RU6vQ+rmKAoE5KMCoR3nhTvj9T3jkpNl/0+B6
+ UJgIAO7XZz3aPo9CzGOPTJ1ZUCiBYL/UdjMVw2rAlGse2c7ypauPOjnoPSbcu8gX+pgs
+ bdWe9d0V3j8MB1JvlkO01Pw5zhuYU2++Z30ZMNWgb+NEbhCyCpf8KfYnQiKWqrAaDUga
+ VEjHoW2ixUjdfmAampgcwL90itXztcYZ83xyM1FV9dv5cxrxjxFhXsMxmlkmd9GGN0TU
+ H/nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766161282; x=1766766082;
+ d=1e100.net; s=20230601; t=1766161297; x=1766766097;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UFVhD8dczJbMkx90KKbndfFREu2le89IhK/CmXUoOhk=;
- b=Shap/abBAL2z0O4GoYFn7eU5OoRz9xvE9ko8eQvqbT4UzjLFT9vVjHOUoKOg4kcVbk
- ye96NFF8xvQ2CIgwBklG1md+d9/fXb7Eqsc1BA1qSoJQCMOUk8V2EodwbKidUGUHA4OR
- wcJIfC+zXP9/vm3XWvBliYcOO7VZRN9z4oh//jzCIo3xDvWVsu2+irZtJWarQGB+buTQ
- TPtdX7cEbCuyDs+6v61aUOfY36dGMd/4CnXy78qzdT9oBn5XgUdTNdrhle+Q814qvxkh
- T+M5LDg9Zc1vA4orG6dBjJSQQTlhGxgFbx1DchInDAKVAunS3f2/ZUofFt2db3x3+WYk
- qWIA==
-X-Gm-Message-State: AOJu0Yy2BgrbHv2PfNvOD6q882IoaX8tDA2aEC4q0u8Sog9pBI0vrKVX
- dy3HbiyI8LqhhMEs/ufL+dFm6bQcit+6L4Qlrh2kV5FXT4KQ7Su8X5JciY4/LUOFibKptZdOQ83
- bwN1ktFxLGA==
-X-Gm-Gg: AY/fxX4WmN+OjAcPYcAn9t/x3Q7AaZ5+XMAB0wq/snQdf/RWEBB0l8pUzN2BqVmQGYY
- oY9SffC58fybYIqdUD5M/MxyIn6GzkXOoD2UKdPpi836Kh2m/xzdWgLiFRcTHOmfptIz3+M7zUw
- IZ2KmzM8G5NX/ebHO4YNLdLUH6/50Xs5LB2anU5yaMxMeANf4Wlr2fFX2iIIagY4B6ACu//qwoO
- ZLBWx1mUCznMvlKBB7h3/tUyzzRETCcIkqTssRb0MVYD9dufHgkto9E49axcJhXNxi+6aiZ+n0R
- ua+HPCwOzw77Tb1uXZcg0B3C9fKkojjj4BbjtgU8MtUKrmdpr/f/EfkDwZMV0E/+xhhuZzgH6jS
- yru7VNKXVTGT3l8bfC722kBUBBthzsVha/r5pPMQG8r0PetOpLypCVA6YLfz60mQidhdSd6Ad7p
- uV2IVXUy8IrKkM3acJqX0p1wuHsjKoBfFJ6FyfYKu4x5KAVq70YKMv8KTNGW5y
-X-Google-Smtp-Source: AGHT+IFInvATHQk8OIVGXuZdZzuDvoU8kdb3BZAceJGzHXH8e9qRWxSmEg92s6evfXkodD8PmujgSw==
-X-Received: by 2002:a05:600c:198d:b0:46e:35a0:3587 with SMTP id
- 5b1f17b1804b1-47d195a06a0mr31651375e9.27.1766161281999; 
- Fri, 19 Dec 2025 08:21:21 -0800 (PST)
+ bh=iFEGCZtzOscJWwxvEWIUNx2AGQ/JK9CrfOIEXq9Elt4=;
+ b=H8VxMdwcLZl4VQoFzjnOOXw8GoDqqicjk9bwqQnWrGamjhvFj21trkyHbFvE8mJe7z
+ Oxx58lSv0k4BkkmG9bayqiMmWLZuFBaB5rpIGZxOo5OCJ3nnB/w3+k8IIM0aODUrWnry
+ dAyKd8HWXtBnoA1LIDctLTETMNyCRLAxoF+bSGtI1Z9sZpxvyLIofLvPTtyHv6NeRSUt
+ KdvUXhJ+RAKqKG2cF5n9y0iDIehs8VXoj7r6nN+5j/hsNg1HpF5UdKdwSQI6NaWafuYC
+ YryF69Gpf4dwgoiq2ccufDCazck1t9iT0VijdGWAtGVEwQLCyViWdTOrTacQGV0S9Ldi
+ lp3Q==
+X-Gm-Message-State: AOJu0YwWXOV1Jd2+wb7vRMCpS8xWqVQAWH/Rh5R50do8PP1EpoooOgnH
+ AnVpQCIieTlnfqN1HZKKTQYwnoLPd0/mdOSby31T5Qvw+4CeOBEuFeNoDiZBI9ce4VTnm1w+ywP
+ 6cDG9A9Q=
+X-Gm-Gg: AY/fxX6LOlnZ35Q2Qa6ndlymWh4KonezFaCB10hfVN+DUk+2OE+RUnTXhuRnyFN0KY7
+ c9GvCC1++3mv+ht14iW2MuUShcF2Os45NRo3YhHNpkbio1hI5F+DCtUugMQ/Tnky3Zcw5O2Ufqu
+ aAeL1amxrJ7J6yYA8kyI5WPfwIlUaM5V08cMvPqTy6OStbtqRckL2aTiFWafaEd9BkmmyEK0YJw
+ Kny5sm2CfBS60H0H7lyJ0S0QKBA4jYhXy6lebIrkP614pQHPI0Ro6mm9lpq3jDrnyzowbC3244q
+ M9yoGPuC955N0PkyKUAwrDI+G+CFkBe+2XMj7FzApT98vs857taJsAaxNV+oLHWuyz1eoqabwvp
+ ljiOqaNreBSvCHCVicQUGBXGDvGBTNPvirTD6BS3L+Xr4DG1Ei92F+LtILVTiFMqWhPeEJWqhmZ
+ sRAi/XAe90mK2Is3Lf842DcKxAPhu5N7FOMts/M5zJPyPdUlN1+L/kom3+CFuP
+X-Google-Smtp-Source: AGHT+IEFlcSD8N8MtPEev7k4tYzWGEyjxYs/GjRCd6fVHm3DRgObRQ0aQmVmygLM/V/3tvnmjDtR+w==
+X-Received: by 2002:a05:6000:2886:b0:42f:dbbc:5103 with SMTP id
+ ffacd0b85a97d-4324e4fda18mr4030083f8f.35.1766161296620; 
+ Fri, 19 Dec 2025 08:21:36 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3a33c1csm42897205e9.1.2025.12.19.08.21.20
+ ffacd0b85a97d-4324eab2721sm5752327f8f.39.2025.12.19.08.21.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Dec 2025 08:21:21 -0800 (PST)
+ Fri, 19 Dec 2025 08:21:36 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -73,18 +73,18 @@ Cc: Peter Xu <peterx@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 12/24] system/memory: Pass device_endian argument as MemOp
- bit
-Date: Fri, 19 Dec 2025 17:19:39 +0100
-Message-ID: <20251219161953.72724-13-philmd@linaro.org>
+Subject: [PATCH v2 14/24] system/memory: Introduce LD/ST helpers with @n
+ suffix (variable size)
+Date: Fri, 19 Dec 2025 17:19:41 +0100
+Message-ID: <20251219161953.72724-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251219161953.72724-1-philmd@linaro.org>
 References: <20251219161953.72724-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,267 +107,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the MemOp argument to hold both the access size and
-its endianness.
+Introduce load/store helpers taking an unsigned size argument.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- system/memory_ldst.c.inc        | 86 ++++++++++++---------------------
- system/memory_ldst_endian.c.inc | 26 +++++-----
- 2 files changed, 44 insertions(+), 68 deletions(-)
+ docs/devel/loads-stores.rst             | 10 ++++++----
+ include/system/memory_ldst_endian.h.inc |  4 ++++
+ system/memory_ldst_endian.c.inc         | 14 ++++++++++++++
+ 3 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
-index 39b3930bf50..5c8299e0cdc 100644
---- a/system/memory_ldst.c.inc
-+++ b/system/memory_ldst.c.inc
-@@ -24,8 +24,7 @@ static inline
- uint64_t glue(address_space_ldm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
-                                                   hwaddr addr,
-                                                   MemTxAttrs attrs,
--                                                  MemTxResult *result,
--                                                  enum device_endian endian)
-+                                                  MemTxResult *result)
- {
-     const unsigned size = memop_size(mop);
-     uint8_t *ptr;
-@@ -42,22 +41,15 @@ uint64_t glue(address_space_ldm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
-         release_lock |= prepare_mmio_access(mr);
+diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
+index c906c6509ee..8db6285538e 100644
+--- a/docs/devel/loads-stores.rst
++++ b/docs/devel/loads-stores.rst
+@@ -375,6 +375,7 @@ succeeded using a MemTxResult return code.
+  - ``w`` : 16 bits
+  - ``l`` : 32 bits
+  - ``q`` : 64 bits
++ - ``n`` : size in bytes
  
-         /* I/O case */
--        r = memory_region_dispatch_read(mr, addr1, &val,
--                                        mop | devend_memop(endian), attrs);
-+        r = memory_region_dispatch_read(mr, addr1, &val, mop, attrs);
-     } else {
-         /* RAM case */
-         fuzz_dma_read_cb(addr, size, mr);
-         ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
--        switch (endian) {
--        case DEVICE_LITTLE_ENDIAN:
-+        if ((mop & MO_BSWAP) == MO_LE) {
-             val = ldn_le_p(ptr, size);
--            break;
--        case DEVICE_BIG_ENDIAN:
-+        } else {
-             val = ldn_be_p(ptr, size);
--            break;
--        default:
--            val = ldn_p(ptr, size);
--            break;
-         }
-         r = MEMTX_OK;
-     }
-@@ -73,37 +65,33 @@ uint64_t glue(address_space_ldm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
+ ``endian``
+  - ``le`` : little endian
+@@ -384,8 +385,8 @@ The ``_{endian}`` suffix is omitted for byte accesses.
  
- /* warning: addr must be aligned */
- static inline uint32_t glue(address_space_ldl_internal, SUFFIX)(ARG1_DECL,
--    hwaddr addr, MemTxAttrs attrs, MemTxResult *result,
--    enum device_endian endian)
-+    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
- {
--    return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_32, addr,
--                                                    attrs, result, endian);
-+    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_32, addr,
-+                                                    attrs, result);
- }
+ Regexes for git grep:
+  - ``\<address_space_\(read\|write\|rw\)\>``
+- - ``\<address_space_ldu\?[bwql]\(_[lb]e\)\?\>``
+- - ``\<address_space_st[bwql]\(_[lb]e\)\?\>``
++ - ``\<address_space_ldu\?[bwlqn]\(_[lb]e\)\?\>``
++ - ``\<address_space_st[bwlqn]\(_[lb]e\)\?\>``
  
- /* warning: addr must be aligned */
- static inline uint64_t glue(address_space_ldq_internal, SUFFIX)(ARG1_DECL,
--    hwaddr addr, MemTxAttrs attrs, MemTxResult *result,
--    enum device_endian endian)
-+    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
- {
--    return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_64, addr,
--                                                    attrs, result, endian);
-+    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_64, addr,
-+                                                    attrs, result);
- }
+ ``address_space_write_rom``
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -431,6 +432,7 @@ device doing the access has no way to report such an error.
+  - ``w`` : 16 bits
+  - ``l`` : 32 bits
+  - ``q`` : 64 bits
++ - ``n`` : size in bytes
  
- uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL, hwaddr addr,
-                                          MemTxAttrs attrs, MemTxResult *result)
- {
-     return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_8, addr,
--                                                    attrs, result,
--                                                    DEVICE_NATIVE_ENDIAN);
-+                                                    attrs, result);
- }
+ ``endian``
+  - ``le`` : little endian
+@@ -439,8 +441,8 @@ device doing the access has no way to report such an error.
+ The ``_{endian}_`` infix is omitted for byte accesses.
  
- /* warning: addr must be aligned */
- static inline uint16_t glue(address_space_lduw_internal, SUFFIX)(ARG1_DECL,
--    hwaddr addr, MemTxAttrs attrs, MemTxResult *result,
--    enum device_endian endian)
-+    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
- {
--    return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_16, addr,
--                                                    attrs, result, endian);
-+    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_16, addr,
-+                                                    attrs, result);
- }
+ Regexes for git grep:
+- - ``\<ldu\?[bwlq]\(_[bl]e\)\?_phys\>``
+- - ``\<st[bwlq]\(_[bl]e\)\?_phys\>``
++ - ``\<ldu\?[bwlqn]\(_[bl]e\)\?_phys\>``
++ - ``\<st[bwlqn]\(_[bl]e\)\?_phys\>``
  
- /* warning: addr must be aligned */
-@@ -111,8 +99,7 @@ static inline
- void glue(address_space_stm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
-                                               hwaddr addr, uint64_t val,
-                                               MemTxAttrs attrs,
--                                              MemTxResult *result,
--                                              enum device_endian endian)
-+                                              MemTxResult *result)
- {
-     const unsigned size = memop_size(mop);
-     uint8_t *ptr;
-@@ -126,21 +113,14 @@ void glue(address_space_stm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
-     mr = TRANSLATE(addr, &addr1, &l, true, attrs);
-     if (l < size || !memory_access_is_direct(mr, true, attrs)) {
-         release_lock |= prepare_mmio_access(mr);
--        r = memory_region_dispatch_write(mr, addr1, val,
--                                         mop | devend_memop(endian), attrs);
-+        r = memory_region_dispatch_write(mr, addr1, val, mop, attrs);
-     } else {
-         /* RAM case */
-         ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
--        switch (endian) {
--        case DEVICE_LITTLE_ENDIAN:
-+        if ((mop & MO_BSWAP) == MO_LE) {
-             stn_le_p(ptr, size, val);
--            break;
--        case DEVICE_BIG_ENDIAN:
-+        } else {
-             stn_be_p(ptr, size, val);
--            break;
--        default:
--            stn_p(ptr, size, val);
--            break;
-         }
-         invalidate_and_set_dirty(mr, addr1, size);
-         r = MEMTX_OK;
-@@ -156,48 +136,44 @@ void glue(address_space_stm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
+ ``cpu_physical_memory_*``
+ ~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/include/system/memory_ldst_endian.h.inc b/include/system/memory_ldst_endian.h.inc
+index ec86e42afbc..cf3b23bb5aa 100644
+--- a/include/system/memory_ldst_endian.h.inc
++++ b/include/system/memory_ldst_endian.h.inc
+@@ -20,12 +20,16 @@ uint32_t ADDRESS_SPACE_LD(l)(ARG1_DECL, hwaddr addr,
+                              MemTxAttrs attrs, MemTxResult *result);
+ uint64_t ADDRESS_SPACE_LD(q)(ARG1_DECL, hwaddr addr,
+                              MemTxAttrs attrs, MemTxResult *result);
++uint64_t ADDRESS_SPACE_LD(n)(ARG1_DECL, unsigned size, hwaddr addr,
++                             MemTxAttrs attrs, MemTxResult *result);
+ void ADDRESS_SPACE_ST(w)(ARG1_DECL, hwaddr addr, uint16_t val,
+                          MemTxAttrs attrs, MemTxResult *result);
+ void ADDRESS_SPACE_ST(l)(ARG1_DECL, hwaddr addr, uint32_t val,
+                          MemTxAttrs attrs, MemTxResult *result);
+ void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr, uint64_t val,
+                          MemTxAttrs attrs, MemTxResult *result);
++void ADDRESS_SPACE_ST(n)(ARG1_DECL, unsigned size, hwaddr addr, uint64_t val,
++                         MemTxAttrs attrs, MemTxResult *result);
  
- /* warning: addr must be aligned */
- static inline void glue(address_space_stl_internal, SUFFIX)(ARG1_DECL,
--    hwaddr addr, uint32_t val, MemTxAttrs attrs,
--    MemTxResult *result, enum device_endian endian)
-+    MemOp mop, hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result)
- {
--    glue(address_space_stm_internal, SUFFIX)(ARG1, MO_32, addr, val,
--                                             attrs, result, endian);
-+    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_32, addr, val,
-+                                             attrs, result);
- }
- 
- void glue(address_space_stb, SUFFIX)(ARG1_DECL, hwaddr addr, uint8_t val,
-                                      MemTxAttrs attrs, MemTxResult *result)
- {
-     glue(address_space_stm_internal, SUFFIX)(ARG1, MO_8, addr, val,
--                                             attrs, result,
--                                             DEVICE_NATIVE_ENDIAN);
-+                                             attrs, result);
- }
- 
- /* warning: addr must be aligned */
- static inline void glue(address_space_stw_internal, SUFFIX)(ARG1_DECL,
--    hwaddr addr, uint16_t val, MemTxAttrs attrs,
--    MemTxResult *result, enum device_endian endian)
-+    MemOp mop, hwaddr addr, uint16_t val, MemTxAttrs attrs, MemTxResult *result)
- {
--    glue(address_space_stm_internal, SUFFIX)(ARG1, MO_16, addr, val,
--                                             attrs, result, endian);
-+    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_16, addr, val,
-+                                             attrs, result);
- }
- 
- static inline void glue(address_space_stq_internal, SUFFIX)(ARG1_DECL,
--    hwaddr addr, uint64_t val, MemTxAttrs attrs,
--    MemTxResult *result, enum device_endian endian)
-+    MemOp mop, hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult *result)
- {
--    glue(address_space_stm_internal, SUFFIX)(ARG1, MO_64, addr, val,
--                                             attrs, result, endian);
-+    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_64, addr, val,
-+                                             attrs, result);
- }
- 
- #define ENDIANNESS
--#define DEVICE_ENDIANNESS       DEVICE_NATIVE_ENDIAN
-+#define MO_ENDIAN               (target_big_endian() ? MO_BE : MO_LE)
- #include "memory_ldst_endian.c.inc"
- 
- #define ENDIANNESS              _le
--#define DEVICE_ENDIANNESS       DEVICE_LITTLE_ENDIAN
-+#define MO_ENDIAN               MO_LE
- #include "memory_ldst_endian.c.inc"
- 
- #define ENDIANNESS              _be
--#define DEVICE_ENDIANNESS       DEVICE_BIG_ENDIAN
-+#define MO_ENDIAN               MO_BE
- #include "memory_ldst_endian.c.inc"
- 
- #undef ARG1_DECL
+ #undef ADDRESS_SPACE_LD
+ #undef ADDRESS_SPACE_ST
 diff --git a/system/memory_ldst_endian.c.inc b/system/memory_ldst_endian.c.inc
-index 16d686b50f7..29100c02f80 100644
+index 7078666dcfc..2eb95951c10 100644
 --- a/system/memory_ldst_endian.c.inc
 +++ b/system/memory_ldst_endian.c.inc
-@@ -22,43 +22,43 @@
- uint16_t ADDRESS_SPACE_LD(uw)(ARG1_DECL, hwaddr addr,
-                               MemTxAttrs attrs, MemTxResult *result)
- {
--    return ADDRESS_SPACE_LD_INTERNAL(uw)(ARG1, addr, attrs, result,
--                                         DEVICE_ENDIANNESS);
-+    return ADDRESS_SPACE_LD_INTERNAL(uw)(ARG1, MO_ENDIAN,
-+                                        addr, attrs, result);
+@@ -40,6 +40,13 @@ uint64_t ADDRESS_SPACE_LD(q)(ARG1_DECL, hwaddr addr,
+                                         addr, attrs, result);
  }
  
- uint32_t ADDRESS_SPACE_LD(l)(ARG1_DECL, hwaddr addr,
-                              MemTxAttrs attrs, MemTxResult *result)
- {
--    return ADDRESS_SPACE_LD_INTERNAL(l)(ARG1, addr, attrs, result,
--                                        DEVICE_ENDIANNESS);
-+    return ADDRESS_SPACE_LD_INTERNAL(l)(ARG1, MO_ENDIAN,
++uint64_t ADDRESS_SPACE_LD(n)(ARG1_DECL, unsigned size, hwaddr addr,
++                             MemTxAttrs attrs, MemTxResult *result)
++{
++    return ADDRESS_SPACE_LD_INTERNAL(m)(ARG1, MO_ENDIAN | size_memop(size),
 +                                        addr, attrs, result);
- }
- 
- uint64_t ADDRESS_SPACE_LD(q)(ARG1_DECL, hwaddr addr,
-                              MemTxAttrs attrs, MemTxResult *result)
- {
--    return ADDRESS_SPACE_LD_INTERNAL(q)(ARG1, addr, attrs, result,
--                                        DEVICE_ENDIANNESS);
-+    return ADDRESS_SPACE_LD_INTERNAL(q)(ARG1, MO_ENDIAN,
-+                                        addr, attrs, result);
- }
- 
++}
++
  void ADDRESS_SPACE_ST(w)(ARG1_DECL, hwaddr addr, uint16_t val,
                           MemTxAttrs attrs, MemTxResult *result)
  {
--    ADDRESS_SPACE_ST_INTERNAL(w)(ARG1, addr, val, attrs, result,
--                                 DEVICE_ENDIANNESS);
-+    ADDRESS_SPACE_ST_INTERNAL(w)(ARG1, MO_ENDIAN,
-+                                 addr, val, attrs, result);
+@@ -61,6 +68,13 @@ void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr, uint64_t val,
+                                  addr, val, attrs, result);
  }
  
- void ADDRESS_SPACE_ST(l)(ARG1_DECL, hwaddr addr, uint32_t val,
-                          MemTxAttrs attrs, MemTxResult *result)
- {
--    ADDRESS_SPACE_ST_INTERNAL(l)(ARG1, addr, val, attrs, result,
--                                 DEVICE_ENDIANNESS);
-+    ADDRESS_SPACE_ST_INTERNAL(l)(ARG1, MO_ENDIAN,
++void ADDRESS_SPACE_ST(n)(ARG1_DECL, unsigned size, hwaddr addr, uint64_t val,
++                         MemTxAttrs attrs, MemTxResult *result)
++{
++    ADDRESS_SPACE_ST_INTERNAL(m)(ARG1, MO_ENDIAN | size_memop(size),
 +                                 addr, val, attrs, result);
- }
- 
- void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr, uint64_t val,
-                          MemTxAttrs attrs, MemTxResult *result)
- {
--    ADDRESS_SPACE_ST_INTERNAL(q)(ARG1, addr, val, attrs, result,
--                                 DEVICE_ENDIANNESS);
-+    ADDRESS_SPACE_ST_INTERNAL(q)(ARG1, MO_ENDIAN,
-+                                 addr, val, attrs, result);
- }
- 
++}
++
  #undef ADDRESS_SPACE_LD
-@@ -67,4 +67,4 @@ void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr, uint64_t val,
- #undef ADDRESS_SPACE_ST_INTERNAL
- 
- #undef ENDIANNESS
--#undef DEVICE_ENDIANNESS
-+#undef MO_ENDIAN
+ #undef ADDRESS_SPACE_LD_INTERNAL
+ #undef ADDRESS_SPACE_ST
 -- 
 2.52.0
 
