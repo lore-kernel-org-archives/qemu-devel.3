@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF3C8D78770
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:22:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78401D7879C
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 16:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWdF0-000266-Se; Fri, 19 Dec 2025 11:22:06 -0500
+	id 1vWdFN-0003mR-IS; Fri, 19 Dec 2025 11:22:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdEw-0001YJ-MA
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:22:02 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdFC-0003cN-4H
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:22:18 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdEu-0006KW-VC
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:22:02 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-47a95efd2ceso16779335e9.2
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:22:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWdF9-0006N9-2h
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 11:22:16 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4779cb0a33fso20187655e9.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 08:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766161319; x=1766766119; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766161333; x=1766766133; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MlZbLtyKD5Kx9RMvXZxS+ZYE1ejEy5zG7BP8ve/1sWc=;
- b=RHEQn0G9re8U7QSYgT2D6xtKIJ43OH/WKN+PPu1fMc0TfciC/uEJam/BnKx8jTWRHV
- 1bdo7KBqgwPKOBpMfjPcJBPT+L+N/Cl4KEP/g1Ea5OdD+jPqn5pJ0vvm1fVhIeprYE9V
- pES10jhnHrNXSoUKikeu/IIpkr1zr88UfIgQ8RR6CKEO76Mp2qmYvrYqcMcuZFbTdD0Z
- BNjpTcpDMEBzrz7ZB5zSi/4QaA+HZnxV9Elsudg+++wVIKInLZKUFUwb4Ce3nJ6Qx113
- /56X23ngN+kSNgaaAwZwu7Mo+fuG2dRzfyMD3H0lUklDnn5TCnhY1tkrZRNbqb7QzQnv
- 7xzg==
+ bh=34i2N7BdKj/8NGyrgpN6X684Am9U/Qza8t05wZ+ve08=;
+ b=Hq6Pz9HmGRL9UDZd+nKxT+ShzROAPaR2y+7E8RbI67EvxfjLFtZLhvMSmLJ45OAyoX
+ kqYbeLER7FouO+rF2SynL1W6nHGQupsqa5w2y5U+aOycuIS3PIYWclCI1VDrlcghOXN8
+ gf9BvhPlvg3U1vxvtWuO7JhFp8X5n3e7DT8+R4i/oPAnpziUoCpoQS/1GZK5eFtprd9P
+ 8Gh8fMus6cv4hmGCiPQ3wrIvts1OxPl4assiEPybKzdEgkiP85mPl1JsmL69TQOoVkpg
+ RO8SspW4BjPK0HAAG+jMSdom7iZTxFEi8QjmEa0n8RtsN4wIpHRqph17mwFBMlglZU3g
+ 2Mjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766161319; x=1766766119;
+ d=1e100.net; s=20230601; t=1766161333; x=1766766133;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MlZbLtyKD5Kx9RMvXZxS+ZYE1ejEy5zG7BP8ve/1sWc=;
- b=cZxeuXbrcuS0iq0/yKD8MsdXGEbpUL+h9/2bHIjvb9xuPxgJrTobyT1YKBDr+AEwyM
- 1e+zml0HER9S39QpiEDzDdqCQhDu6ECAQfBqVsGebKtr3nOb9bvUugEbEmIqhH91f533
- GIvUmgCe6OTCdJd1g2jr9rcRLeT39QKMGOe0FPie7e4c0cVUu1O8kEfAcqLOOamjlv+L
- r8Ig0VVaZ9LYwV9bzf+ohfrUgs5jgvVhQ4YYWGMSTo6QxGPH0bWOvtfw0ws1NVwG89Y/
- tTzW21RIuZkNX3Dpw6bpAtD8bVBEDgRQd2h78iZP8RC3D5dX95W/No+U/e5JTQmFFO6w
- 2Hiw==
-X-Gm-Message-State: AOJu0YwGmTTLxM69m7UYLX2oFm/JsowayuLTgHZcRwbeQblJNVH4SP3Q
- xXoPyRvI8/jtKMDWf165s05EGcc6D3Uunxm/eq7HgQaexTAVmC6IrreCiuZSKi2ClEAHn4663ad
- J6PRTXrY=
-X-Gm-Gg: AY/fxX7wlnkiPjLVmUJelwih/NgNmhIJiEQrSS6ifbRRsfN0Y/GfYojQjM8Z2s1QnmQ
- +yTCBAdNQ+DPmPx68OYOV6nUicRezfwJ3mYDFt2DWY/6JDPNT+NANagO6SEz3q/EtILhyI+wb0O
- W6PWgOeIRkTixQW4d4I6GGPwwNWV7eNBTqerUoWZ84ptFY+4AbOaZEdVGj0YFjcvoikW/jh4m73
- b/nhsA6N4N4vo3FDTxvsix7J0K40s9acuOoe/gLcmS00gC/taeafdWuEvCH4zjj7ctEViW6SPuW
- VImTD25Htv+mguLTLK2kpl9ti2oGASXUuly8xTHUumS+F2xzxqVGsEm8z0BTU+Yi4fE+B6Ch0gR
- U9/RyI8b623vETE8YgsEvDgDhFD+LMr257AzkH+FKaXHNRH02R8hh44gYohhY7uVH8YsWpljFnl
- 2kN3jAeX0dWr5CBVIVvb42II6Sc6U253i4NSa42Da7jwivrUo11kTDSCWqAcL+
-X-Google-Smtp-Source: AGHT+IEBVHrywafE04qHREF0ebxc38+U4M5dEdUoOXn78hGsX4y+BaiAoqGTB1eT/bJSeGbxgfLntg==
-X-Received: by 2002:a05:600c:8107:b0:477:c478:46d7 with SMTP id
- 5b1f17b1804b1-47d19595f00mr32397115e9.22.1766161319064; 
- Fri, 19 Dec 2025 08:21:59 -0800 (PST)
+ bh=34i2N7BdKj/8NGyrgpN6X684Am9U/Qza8t05wZ+ve08=;
+ b=PkU7CQnD5jk1PQfLQNNbk6A3/pRU6z2vU+QmVrxhJhFmhMF8M0WfveN24mOQ5MNd3Y
+ WrAUmtTjp+zEaSuVxwp48DF6IG7tnF2jkAROb3WnQbnOYn8N/B3UYDDLcWUMKXFc8oLX
+ 7VrJ7JbFhU9C7wQYU7hO+kfLu51o61K07I9QwJxeLw3B6JqJCPyzdsFkNJV7IClAK+2B
+ tW3uR/NsGG6BpCoQgqnU6ZtKBVFdKZSW7gQtavZELEHMgKwnGLZfUwHoLPT4e3woDMap
+ 1KHfE7h0ySS//9iuf60A2KhDYZ1UL5d9Wa8kiLppmQGhBqS7JdoSodQAMXtJOuZF/mCW
+ osag==
+X-Gm-Message-State: AOJu0YyyB5TkeAzycAfMpLVml1sWRiCtPhnMhXeF4HhW/zO6XFXF2clo
+ WYFxwi+xIOIzxCymtNzXsjwGq7F31LbiwAYWKAhggcZjRpJ8MJBNa2JnGix1+ebmREQ++5VOTfb
+ gUf4q2Uk=
+X-Gm-Gg: AY/fxX40D8fZ8oi9CVC3hVRTrmGVdfKSxCNQf/LrUcTRcklV9SL7+W8/VpfEVKf8c0l
+ E04+pEvpGX5RziJeSBpJbu8E9IGjhwJKVAO2Kwl+2mFLsjRg7dkwtQyF9Ml340TlLZk7NI9co+A
+ 3FytM2wt90fbuA288pTsuKgUJb6mKMjZyuT3RYBngROIwzsnm9pICUk5VSh6vnvY4C2FoaXcUy1
+ HjKoB00cdKlqQn66OmKkUiMaX3u8iELZURhRgAbXAy4FE94+ZbIkH+0/Yf2TC5NdhSPUjtHUmlg
+ QtKOQNrSqM4GAZWJynpr4AtZk5xY7+akpr7+ouO3R1pGDIkhq2JWPTUNWV0QzH4jaq0Q3EI5V/d
+ XGN2BBBirHevibG9DcX0Mus6hErQr9Y7+cJTrVCAZk5CO8H8QYEWP4GHM2ex6LKEbk7Yyv/d5Q7
+ hLfSnTbFrhQdOiRGDcfQ84m+EvmCDK+NoJ5K6iZ+mnzBo9VQMfM8sHocIhwpzD
+X-Google-Smtp-Source: AGHT+IEPJi+DidT23MeG+AK6jJuehEnpn18LDKQTOoDHDaZBLgmEwoeQnE9PfnmUlIlvWHlPUk8BwQ==
+X-Received: by 2002:a05:600c:8b8c:b0:477:af07:dd1c with SMTP id
+ 5b1f17b1804b1-47d195aaf01mr31960925e9.35.1766161333129; 
+ Fri, 19 Dec 2025 08:22:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193cbc0bsm50099865e9.11.2025.12.19.08.21.57
+ ffacd0b85a97d-4324ea2278dsm5814202f8f.18.2025.12.19.08.22.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Dec 2025 08:21:58 -0800 (PST)
+ Fri, 19 Dec 2025 08:22:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -73,18 +73,18 @@ Cc: Peter Xu <peterx@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 17/24] system/memory: Restrict legacy ld/st_phys()
+Subject: [PATCH v2 19/24] system/memory: Restrict legacy address_space_ldst()
  'native-endian' API
-Date: Fri, 19 Dec 2025 17:19:44 +0100
-Message-ID: <20251219161953.72724-18-philmd@linaro.org>
+Date: Fri, 19 Dec 2025 17:19:46 +0100
+Message-ID: <20251219161953.72724-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251219161953.72724-1-philmd@linaro.org>
 References: <20251219161953.72724-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,24 +116,57 @@ API anymore.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/system/memory_ldst_phys.h.inc | 2 ++
- 1 file changed, 2 insertions(+)
+ include/system/memory_cached.h   | 2 ++
+ include/system/memory_ldst.h.inc | 2 ++
+ system/memory_ldst.c.inc         | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/include/system/memory_ldst_phys.h.inc b/include/system/memory_ldst_phys.h.inc
-index f4c91dc7a91..e0da6d19a5b 100644
---- a/include/system/memory_ldst_phys.h.inc
-+++ b/include/system/memory_ldst_phys.h.inc
-@@ -31,8 +31,10 @@ static inline void glue(stb_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint8_t val)
-                                     MEMTXATTRS_UNSPECIFIED, NULL);
+diff --git a/include/system/memory_cached.h b/include/system/memory_cached.h
+index 587e8a1453a..65ea60df8fa 100644
+--- a/include/system/memory_cached.h
++++ b/include/system/memory_cached.h
+@@ -77,8 +77,10 @@ static inline void address_space_stb_cached(MemoryRegionCache *cache,
+     }
  }
  
 +#ifdef TARGET_USE_LEGACY_NATIVE_ENDIAN_API
  #define ENDIANNESS
- #include "system/memory_ldst_phys_endian.h.inc"
+ #include "system/memory_ldst_cached.h.inc"
++#endif
+ 
+ #define ENDIANNESS   _le
+ #include "system/memory_ldst_cached.h.inc"
+diff --git a/include/system/memory_ldst.h.inc b/include/system/memory_ldst.h.inc
+index dd1fb482eac..8ff6e563310 100644
+--- a/include/system/memory_ldst.h.inc
++++ b/include/system/memory_ldst.h.inc
+@@ -25,8 +25,10 @@ uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL,
+ void glue(address_space_stb, SUFFIX)(ARG1_DECL,
+           hwaddr addr, uint8_t val, MemTxAttrs attrs, MemTxResult *result);
+ 
++#ifdef TARGET_USE_LEGACY_NATIVE_ENDIAN_API
+ #define ENDIANNESS
+ #include "system/memory_ldst_endian.h.inc"
 +#endif /* TARGET_USE_LEGACY_NATIVE_ENDIAN_API */
  
- #define ENDIANNESS  _le
- #include "system/memory_ldst_phys_endian.h.inc"
+ #define ENDIANNESS              _le
+ #include "system/memory_ldst_endian.h.inc"
+diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
+index 20a2784e234..5c8afb26c7c 100644
+--- a/system/memory_ldst.c.inc
++++ b/system/memory_ldst.c.inc
+@@ -117,9 +117,11 @@ void glue(address_space_stb, SUFFIX)(ARG1_DECL, hwaddr addr, uint8_t val,
+                                              attrs, result);
+ }
+ 
++#ifdef TARGET_USE_LEGACY_NATIVE_ENDIAN_API
+ #define ENDIANNESS
+ #define MO_ENDIAN               (target_big_endian() ? MO_BE : MO_LE)
+ #include "memory_ldst_endian.c.inc"
++#endif /* TARGET_USE_LEGACY_NATIVE_ENDIAN_API */
+ 
+ #define ENDIANNESS              _le
+ #define MO_ENDIAN               MO_LE
 -- 
 2.52.0
 
