@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E3D4D711CA
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 04:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF350D74951
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Dec 2025 04:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWS6l-0001uc-1d; Thu, 18 Dec 2025 23:28:52 -0500
+	id 1vWS8W-0002eM-PT; Thu, 18 Dec 2025 23:30:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWS6i-0001tQ-8U
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 23:28:48 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWS8U-0002de-22
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 23:30:38 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWS6g-0005Ik-Jv
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 23:28:48 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4777771ed1aso9799275e9.2
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 20:28:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWS8S-0006cP-Lw
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 23:30:37 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-477770019e4so11081805e9.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 20:30:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766118525; x=1766723325; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766118635; x=1766723435; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=svposOKBgnzfELy1cdjGmGbJ58Ovq46Q3Jj55N7SiRM=;
- b=kmKRKoXw65A8/7xPNEDCyuJxGUBpFGloXvoq8IrvNlWjpbQ9HjIaivcmQkzOydivnq
- DRzTFPcrXj5CZhWaEF0phpeEi0q2EMnNIJGXqaMyezz86dUKD9FCfb4iiQntEnx+dN8L
- vkIDsS98NNOt8hWVQKKCfrxu2u8OpRi2HACL0Jz+EkSLoOJQtt8AgK1GOdJeaolYu8Rb
- PHss8mYh/4G5DAGdBjWlsiXQ4LaM2nfTYYGqZS9cOis2sQbXXrOm5aKsnoE1jMvAu4Yb
- m/StYIHCdw6GD7qHTZ7PJokgWF4KBcQvGybzSkKeIZBfb5k/rMvgi2oPbrS7wlXbhRQ4
- 6T4w==
+ bh=uOGkQKJDPEXf6PFJaeFStUO7lI6JNOsbak9cvPTy+Jk=;
+ b=qEDkO2xzoDI5n+lm6cahyMTiV7I7Nc56pbfGnN3COoysYp3q2wIcNGgLkTiT/FVbpy
+ OD9H4EAGDlxWmf6Oyck+n2u8rWiXnfxHC/OTDGQ+cKpVS3up5ymRRFDU3joZabVNvdgq
+ Wpl6qfhY9VwqzOptEHmFmj9SvaOUy/0bmxkocK1CuQoV4GYujFQFGL6+O+PvdwQF2tU/
+ AChtEFDhVBp5ITYagAIGKL1Qp5Rndo3+5RDaYByI8WNnYKrL1yPtCnv3u4k5hyqIxQA6
+ jNRhES+9u9gVgfmSLLYqJ/nqVbiMhYEYIULZr5fFFAyBcY2A14078UOeFzzoAen74s7B
+ L0+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766118525; x=1766723325;
+ d=1e100.net; s=20230601; t=1766118635; x=1766723435;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=svposOKBgnzfELy1cdjGmGbJ58Ovq46Q3Jj55N7SiRM=;
- b=ugyrC6g1IXIaewR/CAwchKH+U0d1yLAnyevrENJ/eTF7uq+IkiYa3tNQEfw0S0f0cg
- xNguYkNPe+3l+LylbJP2o9tfnDk1BrGbri9G0A7WRzbv4Sh0I4gn3GgJLxnwAsQ6rysO
- 3tHcFdSGrJOYF8yEftuDFq/KQPVTk4tWdIN5l+7Y++nx2dgbK5iPv0x1krGic5pUfdcV
- 0qZpdQXOodfjT4d3Zo/9XGphXMZVuhJQQqGMnN0fWAthLB1yiXfEXMiu0H9+BVNa8IDA
- bhu2nK27X1kIxF5Y+/pcq15QJfyeWHWWhVwuvq2AgG0YSWEEw7BnRuJuf9LYlW0BzENB
- V7Eg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1r/kvF907RYM/IeccLNHt6qhvG6JtinPKvKfK/sw6ywnle6eanVhnqsKSM609EWDyLTYc5vhPZP6i@nongnu.org
-X-Gm-Message-State: AOJu0YyUNhn7Yj06ibQpagkR8a+Z/7Oiape8PrGc9wh2UgiV4L+y9OT/
- 9qk2HWJ/BqFsO2FvsaFSsxwy3nKBKc35SpDfheNYIpSRz/mkeOLXZ6vH2nFqFw8OwXM/K1mzSRZ
- 5nscPB1M=
-X-Gm-Gg: AY/fxX4MhCTAPFSLeC+8pIHHCn1SRrGrh7naSyFl1bIFXZESQpZpGL6ImS2CBdcpiLB
- SP2ryibM3S+G/ToBOyAvyCbM51wTQ9R6Y6A5nfJdl3DfBAiFR+jE3y5tacPXeGZ5VK0RxyRk+OG
- yc60V38kGRlEJDeA4buUhYsWuurfix95MBEKM8gO4gX4dNrVja3vFhrg9Lk7aYD2wFDJlaDJHGW
- tHj/DzTmNnDvTiditzpyt5uDTGjKtnBcS8aRHZghSc/2rQSTulnjg1hULlB8uoE1E3j59oPi0wV
- 0gJAJlgIlvHtMNeidpHL5cLDMTHHxs9CC3z9pFNVWp6o5CZBlMTuz9a1T+nNw2mbiZ90FJ6XGUW
- Q21OVArvtUrhidvwGmSCr7/NgeQVMCJyJ5GKBCZ7Y9ixKfWVXr8wqgZgoSWUq5IUZS8sXVhNWZ+
- VUGnhEhVB+oxYJOOEjYqNaqBl8/Tpf2Ord2C7b9WLGOCuOdAx3O6sOoQ==
-X-Google-Smtp-Source: AGHT+IGvIlRKWC95m/TcGBkdzbaCM71DaXe510/9FD4kP3iiVHXD4ULbJdSy0YF9W8JeIv4vTrHJGw==
-X-Received: by 2002:a05:600c:35d1:b0:479:2f95:5179 with SMTP id
- 5b1f17b1804b1-47d1954a165mr12960325e9.15.1766118524876; 
- Thu, 18 Dec 2025 20:28:44 -0800 (PST)
+ bh=uOGkQKJDPEXf6PFJaeFStUO7lI6JNOsbak9cvPTy+Jk=;
+ b=hx5pa3+5rn3nH/KYOHB3AVW4+jB0RyEl+At81/G2F2J3S18vBmLHzXkgZSbCKhVLNp
+ 9Sp+wlRM/Qde3I9lQW3gz+gsvMU5STasTc52+fyhQXCU0fR9ZNtAlFkUGPSKSYylW4FJ
+ UkCCjXO0yOsaQJSh1TJ4Aagq5XVT6IW0nQgaDHAhDqxqFJVD6hdOj6tBdUmrAA+s0Gli
+ B5dJuchuuYZdt7uGKqy7v46aditZPlmpFZxNw3n1fItYo/WUnOsUOS8X/23Z9hFDUw3G
+ leUF0fLXngjGOhppcE8agSHLJvWEUQ8gga2BDiTHi3TscvfMn34oRCH839XBcUYfnlUK
+ 74Dg==
+X-Gm-Message-State: AOJu0YyylE55O6gdTZo9khtrAvMCsQQQe7L6hmA+l53/GUqhMXN/Wi2W
+ TmQgCXqEYmWmc/oVtfayYG9YVQEUXXIV5FOgk4z2ECFTzH8TR8dxJFdtKcVK3vKvfeLMOJJOqDj
+ NvekOwR4=
+X-Gm-Gg: AY/fxX7K2IdiFzccYSztF3t8p3oehjGJmgK981PUNrVU2H6gm8bv8KmXmCw6JjdcUaU
+ /2k0qHTATwSl1GSURcBAdDqivJPkFXIp3DpFaZAS4YN7KoYSEniwH9eDdMT+qKoqKg+X3eJBygt
+ T/B7VvIVJl68VW8W0utffa70z/ygidfY7c1rCFkY1M8PeLwdUu+YaM17p8rn1sI9dUawTS5alJX
+ hR9SrKgAC+sQ2En/b6bnnJ4gukrwLcdRA7TPd/pnewj836DlHKXqNWA745vogMJGUgqVZ86cjUG
+ LTBLVXJli4z6fOk8EpFbSHN1wbqaw0Dd7bphkUvZ/5eb1XduyyR1EHnUbWckQpzgTKzeKMQ7pYD
+ 6mS8ySx+rd2rs/+YDTeCSOo7f30GLizlS5KzdD4FB0iRgUxJ22QPOtHrWTDx4nRxLVXuih5p4ma
+ gu76c9apNsBjOtbOwTRP/NaNBnnLMGZ2S7n0B6xoKuWSllVf6c+Fh+Rw==
+X-Google-Smtp-Source: AGHT+IGxfe7r4aQJXeK30iBUwp82V+jfQpYHuo8s2+oUBRFXl7C78vu7xcXBgLucLb//Zldp1x4qLA==
+X-Received: by 2002:a05:600c:8287:b0:477:76bf:e1fb with SMTP id
+ 5b1f17b1804b1-47d1955578bmr12473905e9.16.1766118635110; 
+ Thu, 18 Dec 2025 20:30:35 -0800 (PST)
 Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eaa4749sm2519390f8f.37.2025.12.18.20.28.43
+ 5b1f17b1804b1-47be395d9cfsm28260575e9.0.2025.12.18.20.30.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Dec 2025 20:28:44 -0800 (PST)
-Message-ID: <5837fdc7-f74f-4677-ad90-84c2ac52f970@linaro.org>
-Date: Fri, 19 Dec 2025 05:28:43 +0100
+ Thu, 18 Dec 2025 20:30:34 -0800 (PST)
+Message-ID: <0a55b26f-5c84-4bf9-9193-85dc40f91293@linaro.org>
+Date: Fri, 19 Dec 2025 05:30:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: Remove unnecessary zlib include from
- qemu-file.h
+Subject: Re: [PATCH] MAINTAINERS: Add configs/targets/s390x-softmmu.mak to the
+ S390 general section
 Content-Language: en-US
-To: Chad Jablonski <chad@jablonski.xyz>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com
-References: <20251219014512.387773-1-chad@jablonski.xyz>
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20251218194714.174897-1-thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251219014512.387773-1-chad@jablonski.xyz>
+In-Reply-To: <20251218194714.174897-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +103,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/25 02:45, Chad Jablonski wrote:
-> Commit 70eb5fde05 removed zlib from the libmigration dependencies but
-> missed removing the zlib include from the header file. zlib doesn't
-> appear to be used anywhere in qemu-file.h. This is fine in most
-> environments where zlib is nearly always in the default include path but
-> breaks the build when it isn't (NixOS for example).
+On 18/12/25 20:47, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> Fixes: 70eb5fde05 ("migration: remove unnecessary zlib dependency")
-> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+> Make sure that configs/targets/s390x-softmmu.mak is covered by
+> MAINTAINERS - the "S390 general architecture support" section seems
+> to be a good place for this.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   migration/qemu-file.h | 1 -
->   1 file changed, 1 deletion(-)
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
