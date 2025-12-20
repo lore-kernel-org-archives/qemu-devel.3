@@ -4,84 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6D5E668B4
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Dec 2025 14:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84EFE668B8
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Dec 2025 16:04:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWyJC-0005j0-Hf; Sat, 20 Dec 2025 09:51:50 -0500
+	id 1vWzR3-0001s7-V3; Sat, 20 Dec 2025 11:04:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1vWyJA-0005iO-8r
- for qemu-devel@nongnu.org; Sat, 20 Dec 2025 09:51:48 -0500
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ (Exim 4.90_1) (envelope-from <guodong@riscstar.com>)
+ id 1vWonC-00055X-Je
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 23:42:10 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1vWyJ8-0004f2-QD
- for qemu-devel@nongnu.org; Sat, 20 Dec 2025 09:51:48 -0500
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-4507605e19aso1741861b6e.2
- for <qemu-devel@nongnu.org>; Sat, 20 Dec 2025 06:51:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <guodong@riscstar.com>)
+ id 1vWonA-0003id-GO
+ for qemu-devel@nongnu.org; Fri, 19 Dec 2025 23:42:10 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7b80fed1505so2622283b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 20:42:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766242305; x=1766847105; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=T5u18xbeTgr335iXaFkYWNpW8fyie7mGSXz+0RaVF6E=;
- b=aIo0sPN9yh/gn0m/Z+Tej2gMzPrTOnrpM2cO/oQI+wkkcbLVWzFLTZkHgaze3VflyU
- qTRFhCOZ12Qm9j0uXLQY4di/6w+pOuCQTRD8FW8wkg+aXAAj/S7gZX6YlSXr8Ct3KvOf
- 2ECQumx1o5LMVDYy4CkcJW3PQQe0KCGlyTVT1J1uZdqpgHRp+V4P2WzGonJLjgdb86on
- I8rC7ZY50ye+8eoCym/GgypLLBRR1O7zq4D0iS7KKAEATq1U2A2wb8aiiPD1aTGubQSp
- D4h7OOwgyyUoZmcviKl+ulsV7vnH8Ys2cAUijQn6LTE+vQucVNqQim53jhNIjaadmU/K
- oskA==
+ d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766205726; x=1766810526;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=k6b46huaaVKN8mknPD7v5SyJ09/0QNYrXwXxhdCaQH4=;
+ b=WkDe/4SqMGrQuOad6vUV7AlHfPri8GQiE6JkTZtpEYOUFYe70p5HXonm4T+66XaipT
+ xWwWU4TBSQQ4Elu90ssxteVnpAGaZWwqHYyD/LUQdqu4POrJ3pw/DMAiq4OGqZmcBgeJ
+ ldcOhhifzSb+GKiCFaGli76uisF4VfWXwWg1q/p16vChLzaZvy7LZOXFwZZ5/aK3G/aM
+ NO3MKmKunthqVlqrrvcH8Hq8DD/lq9J8zQ0XsqH3bmYUerIxWsDNuTVmfEIW7fyGJ6iE
+ bpvRWXFheAOubf0vzVmFsifo4sqW0ZTUsCaSSrADQ+flwTgx2JoS0+8hu+D25caSGOZM
+ 64+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766242305; x=1766847105;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1766205726; x=1766810526;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T5u18xbeTgr335iXaFkYWNpW8fyie7mGSXz+0RaVF6E=;
- b=Ry9BtL0QuWCh1OHkhqhyNh3s3Xq9kmm9noY6vn1+PWW2c0527EG5+OweMcnCIOhY/o
- 71W/vfmY2Tr4+JXDrproXFgV02hRrT/JFiayB/ythGTmTbzYVCBPLBsF4bufjEZi8nKM
- Hnf/njiZzEczI/N8Ak/b7xtVC1j7OXbzNwAd8v7uD6XKwWbP4ouqofyS+eTLbEIqB+aT
- w6BlXf9hT/ICBfCRNoZoJbbvdTsZSPhkBo3S5htuzADQpMBjYEp95AyrbMbs3LWL1JUx
- Hpc3a8fxXp9LlPjo0uHJelrn6ysLBsgPEA4g6cLidYWE1JsVjkeGS/MYLq1vAZF0rG7J
- QyRw==
-X-Gm-Message-State: AOJu0YyQfhSZmKz5iUceYYGlK2veR0uCWfECL/2bHmp1DAgsgZq2y/B+
- Xe9xI0VLdTnOsH6Qux4QFmsnuTN36TTBoVZhG8DbVDyAuleOEXCGTdFpqRBpWm0JGHujC98bOiv
- 5GsHCIl+gyayz84K5FJMo7sZChbQfvBA=
-X-Gm-Gg: AY/fxX4fah7hSH4FS3ze1Cu82JDLzMzoCnISLcZbrnQRGcP1Si1PIz1SS3W3tYJx0CC
- JbfwWQ9zZw9KCmy7qq0/QFgv0aOOPYnliaCKRo8KSzFGPn2m34WQxqXUYg2+zTReAP4vG6CM1SM
- PvJi/W0/901zMmJg4nyXGLT+Sj3MZWnhFYDPd/GC7RW5BuRo2IeLpmlvEE8/9YSaE32fku6b4Ow
- uvSZRKaxKbd2mgM9rDa725mVqfG5k/chk3mYfVWsx+ccQMySALp+OdHVFFgXJ5Kv6LApU6sx/vw
- SOVrOciybg2tGqPQ2rpul/WnUgtV
-X-Google-Smtp-Source: AGHT+IEtiH2+MGB2j5VKQP7tvnCfIkOySrqNHKk81Ein3natHTxbpyqfJ4OZvyiS+yaOgQd5hMp50bMex6qQ2+gBeks=
-X-Received: by 2002:a05:6820:658c:b0:659:9a49:8f63 with SMTP id
- 006d021491bc7-65d0ea9a76dmr1700863eaf.40.1766242305162; Sat, 20 Dec 2025
- 06:51:45 -0800 (PST)
+ bh=k6b46huaaVKN8mknPD7v5SyJ09/0QNYrXwXxhdCaQH4=;
+ b=Y01YY4BGiLDjYSGZ0+LnAcns5a5Qx7UL6QSIhg075tK0maUpOIgyXgZDlZfyDn7gDU
+ +IOA8Wi7fnSmMm+UcwBZbLweCdtFK+Y2h25ewBjHjjideVMX/wsi7cMihq27IGJndIgX
+ jQoC7TADtkOuZg0PhPF4jbunporgemk9RoZar3mFWONbKl/WVYWv7xGyUuqXEUJVvBsV
+ nB82srBaKAgc84monxODU/8BgyelWKi0ImXxOOOh9N+kjA8WHMlTVJJC6y50Hz1J6Saw
+ IZsBOsHLFWHwjsxZ/WcR2guuriqAOyevLASz/imn5B0C3XRtmX5fiHAE576e0Du40kTW
+ hyXg==
+X-Gm-Message-State: AOJu0YxtoBzJoho4/+p5asI62rK5Kv+drIEFGYhKlJ2opZVpHnDuv+lV
+ nQPBva99qe8BWmvjo2NGG41p6s5n8CWSQjL348NJBUFnA3h5DK0N1IChcvKkJkc7m3E=
+X-Gm-Gg: AY/fxX7j00hMiQSwAHrNOy6+eHHbr6Ionj03sjhkNtnMn6T0fFBxO0zlhv20dFOm+On
+ Z06FB0jAPHRSfDt+pLO8gzSvC9gLo2Zrg69zYNV1eac0CvIo7Mpx0J8/+EaBNHzybfpK/xvvxwI
+ R/6Kw1fstR6h6IuqYceg1Ck2qYFOHx9YJ4/AyGfBMgftDckyavsufM5F7xPs1KRG21UN7T3QIR5
+ I0WzeG0hJX3gUonPit5K/eDX/1Ey6B7UiczzBkwQHlrf7gsn+3SvayMwLXrIdiE+2Y5NXStA/dW
+ p+H111tHnC2BIPMNr1uDIxLHPbHFxf0F20o8kgUdzMByNFB5GpyUs11VluG6QuIU6axl+HYcBEz
+ fgBZrVDqZGPQPGkFPCuQrgcSATwiXid/C+sxt4eczdiZJGdd8vYVY4zFgFajnNiQCttN07GwD/W
+ iCX0UgEphyblABDYh5IhZJ7bOFOxtJceY=
+X-Google-Smtp-Source: AGHT+IHWzevY/YyjSknJjnUqud1XFnpQf8O8YQJ2cv88pbTyynWm1r/nuGdXMlMcff7SR6DF/a4vQA==
+X-Received: by 2002:a05:6a00:4197:b0:7e8:4398:b357 with SMTP id
+ d2e1a72fcca58-7ff66079e35mr4806674b3a.42.1766205726191; 
+ Fri, 19 Dec 2025 20:42:06 -0800 (PST)
+Received: from [127.0.1.1] ([2a12:a305:4::302f])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7ff7b423b9asm3901686b3a.28.2025.12.19.20.42.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Dec 2025 20:42:05 -0800 (PST)
+From: Guodong Xu <guodong@riscstar.com>
+Date: Sat, 20 Dec 2025 12:39:32 +0800
+Subject: [PATCH] target/riscv: put sha and shcounterenw in alphabetical order
 MIME-Version: 1.0
-References: <87ike27ucd.fsf@pond.sub.org>
- <CAMyd1rQ6CLN2FPic=4pNpZtcw46io2xftkBDSLfd8V9S+Jyu0A@mail.gmail.com>
- <878qex3ac7.fsf@pond.sub.org>
-In-Reply-To: <878qex3ac7.fsf@pond.sub.org>
-From: Jackson Donaldson <jackson88044@gmail.com>
-Date: Sat, 20 Dec 2025 09:51:34 -0500
-X-Gm-Features: AQt7F2oObooRwahswLNDL-Yvu5u5nuy50z9KGrNHMUPYcJzWPRA_Nw7tVxvmHRQ
-Message-ID: <CAMyd1rR9HLwn-fzWfgqu=ZdtOq_Ae6Den-0oCmZpXAjxbup87A@mail.gmail.com>
-Subject: Re: MAX78000 machine needs a maintainer
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000002fc08e06466355c6"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
- envelope-from=jackson88044@gmail.com; helo=mail-oi1-x234.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251220-sha-v1-1-56b1b8b6ef79@riscstar.com>
+X-B4-Tracking: v=1; b=H4sIAIMoRmkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1NDIyMD3eKMRF1LszTD5FTDNGNjY3MloMqCotS0zAqwKdGxtbUAk7EqCVU
+ AAAA=
+X-Change-ID: 20251220-sha-96f1ce1f3337
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
+ qemu-riscv@nongnu.org, Guodong Xu <guodong@riscstar.com>
+X-Mailer: b4 0.14.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=guodong@riscstar.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 20 Dec 2025 11:03:59 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,23 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002fc08e06466355c6
-Content-Type: text/plain; charset="UTF-8"
+Ordering rule 3 preceding the isa_edata_arr[] array requires alphabetical
+ordering of standard supervisor-level extensions.
 
->  Out of curiosity, what was your motivation to add the machine?
+The sha extension needs to be placed before shcounterenw. This change also
+corrects the riscv,isa string generated for cpus which includes them,
+such as rva23s64.
 
-I wrote the implementation for my university team in the 2025 MITRE
-embedded capture the flag challenge
+Verified by
+  qemu-system-riscv64 \
+    -machine virt,acpi=off \
+    -cpu rva23s64 \
+    ...
 
---0000000000002fc08e06466355c6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+/proc/device-tree/cpus/cpu@0 # cat riscv,isa
 
-<div dir=3D"ltr"><div dir=3D"ltr">&gt;=C2=A0
-Out of curiosity, what was your motivation to add the machine?</div><div di=
-r=3D"ltr"><br></div><div>I wrote the implementation for my university team =
-in the 2025 MITRE embedded capture the flag challenge</div><br><div class=
-=3D"gmail_quote gmail_quote_container"><br></div></div>
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+---
+ target/riscv/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---0000000000002fc08e06466355c6--
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 73d4280d7c84a9d4c7cecd3e067d312adc13b035..e24f32978f645d71d149e0f06c31ce848876f636 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -190,8 +190,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+     ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
+-    ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
++    ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+
+---
+base-commit: bb7fc1543fa45bebe7eded8115f25441a9fee76e
+change-id: 20251220-sha-96f1ce1f3337
+
+Best regards,
+-- 
+Guodong Xu <guodong@riscstar.com>
+
 
