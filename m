@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6100E668B4
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Dec 2025 17:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FDD3E668B4
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Dec 2025 18:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vX11Y-0005Oa-Oq; Sat, 20 Dec 2025 12:45:48 -0500
+	id 1vX1l3-0000BG-Jj; Sat, 20 Dec 2025 13:32:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vX11U-0005OI-1u; Sat, 20 Dec 2025 12:45:44 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vX11R-0004mP-Mw; Sat, 20 Dec 2025 12:45:43 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 740631771FF;
- Sat, 20 Dec 2025 20:45:00 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BAFEF339CF4;
- Sat, 20 Dec 2025 20:45:25 +0300 (MSK)
-Message-ID: <fee3939c-078a-4e87-99fc-5ce970f37e4d@tls.msk.ru>
-Date: Sat, 20 Dec 2025 20:45:25 +0300
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1vX1l2-0000An-An
+ for qemu-devel@nongnu.org; Sat, 20 Dec 2025 13:32:48 -0500
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1vX1l0-0004rJ-81
+ for qemu-devel@nongnu.org; Sat, 20 Dec 2025 13:32:47 -0500
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-7b8bbf16b71so2833671b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Dec 2025 10:32:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1766255564; x=1766860364; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=J+n2ZughT0zSXLJwccGy2g9RlwSfQF3EDe+y7l4Pz2g=;
+ b=bJK4G38fOen80XqCWBaqoPEZKxvJZxYmk0JRVs89tkwkxxIHkDroVLfD2YfAA9l+Op
+ NKThgkH4zkeuw/7p5h9LXPb38mBJBi2VIhYlIziofTa9ulajEug2rF29qeP684QAkUdO
+ IUmjl7zsyvhlvTvYpYhKyMZRxx3oY9AXPtRz7vmnER7lUJfWd/J4fBWpWacQDSQJyW2H
+ MYTX4EcRRG5soPilYyX/wsCpIBHZAUmWpWNZ38qBSDocjyM7qu1X0WcMb3ZDMf8xqiDW
+ 3fIOSTWgiZ6GTR9s2QWydNK+lNnvvd0p/9eokD8iwzhAKlKo1s+LiQQelTPGDTbKqqwi
+ mG6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766255564; x=1766860364;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J+n2ZughT0zSXLJwccGy2g9RlwSfQF3EDe+y7l4Pz2g=;
+ b=GU+vzXVKoQNIJLhaQ0N10Pm5fkmf4kt2+X04XHlgsR7Xkals7jOv5BajyG3mM2Oy7l
+ 7Dd2pyu38TVLx9LuNMoSn7iwHqM1QdD68JxbhDTIyKLNlvuFfYn36kQCPKj2eQR2xHp4
+ 8+8nbePWR9GCjuqbR6eN73MxiOcI7jYJTayP+B+cqdHvQlAIo2oYfy4VVCKiKlbUdHGh
+ G0xwcCD4beUmMxNHl1O5WLowGgONUWh7kFAeAYXhfFPSnoumsJxp9Ywbes8w6hRcAtOw
+ ubu+62rvQnkXoTxHICuL21gwTT/815JOklKWlhB6w5OkgrF/AcLlZ6sWx4RNFQlrm6zH
+ TlfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnQyhmga62KpdjfIWdyLSBh87D2KDTNOXuSDXA/9BzdxfQzZhTJS6iqtwZR2DPFyGg4NHGs4TrLWav@nongnu.org
+X-Gm-Message-State: AOJu0Yz18Wn5+HsDvHxFObWRf/v2QcOcGCpHd7fnU2IdK2yta1l3krpo
+ LB7DN1sffQ3tx0cnXsUDPYufVpY2TDxEeDV7ZBT9eNdXDjXAQknOtm+2
+X-Gm-Gg: AY/fxX67GmlXwPEy9H7K6joOgftUaktALLD8IiwUIaqizfMz7Bkfub1YI27Mk3R7Noi
+ wIQrF+IKehUpeYI9+gZsIvUl2HOOrSMTTg83G4k1z2PC2ABEO5SliWhIm4i2sLrB/Rc0E469psP
+ I2l6Z/M931W9fRvH/0CZK6EiNHMdI+Y7Juz4j6HfsQIZrH2cOiA11uXxfE/OKX/qWqL9igdv2XQ
+ +ufYbxyocCeTudLt8025NZ4hS2QbMdMErMAU/ZchcebjVfE0Y/Es/zfCVrO+OEk3F2kpAFUi9bc
+ ZQnJtGtjlbJwAMtcJXl6VqOxgeWM+7s+Sp8PZFIyuftnAKoBlvACIr8IScQEEvyB6lu7Twq7mCU
+ Kc6VcxJkVOi11QokY+/O3nzsmRX34CqlHmM+En+53ve9ARD9JyYOP9LW/xtw90jd+OO6/Aem755
+ Tjouo4kFp4KAj9lbTRAzGcxOLMQArD5g==
+X-Google-Smtp-Source: AGHT+IGQ9GgmxoVGLLOoDPyrfxrtrFd/ajR4Lt78VvCwvf/69zzktUQQOEXqObPmHC/D6J0tVZwiew==
+X-Received: by 2002:a05:6a21:99a2:b0:350:26ed:769b with SMTP id
+ adf61e73a8af0-376a9de5688mr6799461637.44.1766255563984; 
+ Sat, 20 Dec 2025 10:32:43 -0800 (PST)
+Received: from fedora.. ([118.151.210.82]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c1e7ca0baf3sm5366268a12.34.2025.12.20.10.32.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 20 Dec 2025 10:32:42 -0800 (PST)
+From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+To: deller@gmx.de, richard.henderson@linaro.org, qemu-devel@nongnu.org,
+ mark.cave-ayland@ilande.co.uk, sarkarsoumyajyoti23@gmail.com
+Cc: Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Subject: [PATCH] [hw/scsi] Adding NetBSD Support for NCR710 SCSI Controller
+Date: Sun, 21 Dec 2025 00:02:35 +0530
+Message-ID: <20251220183235.186628-1-soumyajyotisarkar23@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/virtio/virtio-crypto: verify asym request size
-To: zhenwei pi <zhenwei.pi@linux.dev>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, arei.gonglei@huawei.com, nakamurajames123@gmail.com,
- qemu-security@nongnu.org, mcascell@redhat.com
-References: <20251214090939.408436-1-zhenwei.pi@linux.dev>
- <20251214090939.408436-2-zhenwei.pi@linux.dev>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251214090939.408436-2-zhenwei.pi@linux.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x443.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,55 +102,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/14/25 12:09, zhenwei pi wrote:
-> The total lenght of request is limited by cryptodev config, verify it
-> to avoid unexpected request from guest.
-> 
-> Fixes: 0e660a6f90a ("crypto: Introduce RSA algorithm")
-> Reported-by: AM 이재영 <nakamurajames123@gmail.com>
-> Signed-off-by: zhenwei pi <zhenwei.pi@linux.dev>
-> ---
->   hw/virtio/virtio-crypto.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-> index 517f2089c5..94dbf9d92d 100644
-> --- a/hw/virtio/virtio-crypto.c
-> +++ b/hw/virtio/virtio-crypto.c
-> @@ -767,11 +767,18 @@ virtio_crypto_handle_asym_req(VirtIOCrypto *vcrypto,
->       uint32_t len;
->       uint8_t *src = NULL;
->       uint8_t *dst = NULL;
-> +    uint64_t max_len;
->   
->       asym_op_info = g_new0(CryptoDevBackendAsymOpInfo, 1);
->       src_len = ldl_le_p(&req->para.src_data_len);
->       dst_len = ldl_le_p(&req->para.dst_data_len);
->   
-> +    max_len = src_len + dst_len;
+Before when NetBSD was booting it hanged in the device initialization
+due to memory corruption, check below for error:
 
-I believe this can be overflown when calculating the sum, while
-both args are uint32_t.
+[   1.0000000] lpt1 at gsc0 hpa 0xf0102000 path 2/0/6 irq 7
+SeaBIOS: Start PDC32 proc PDC_SOFT_POWER(23) option 1 result=0xfcc600 ARG3=0x1  ARG4=0xa63790 ARG5=0x1004280 ARG6=0x73cf48 ARG7=0x0
+[   1.0000080] scsibus0: waiting 2 seconds for devices to settle...
+(hanged here).
 
-       max_len = (uint64_t)src_len + dst_len;
+Fixed applied in this patch:
+- Fixed use after free in ncr710_command_complete() done by clearning
+  hba_private.
+- Added null checks in ncr710_request_free() &
+  ncr710_request_cancelled().
+- Corrected scripts endianess handling
+- Improved device selection and lun scanning
+- Fix interrupt and register handling
 
-might be better.  This is what's used in other places in this
-file too.
+Finally NetBSD now successfully boots with NCR710 SCSI Controller.
 
-I wonder if modern compilers can warn about such overflow
-possibilities, and what's the better way to write such
-expressions.  Something like
+Reported-by: Helge Deller<deller@gmx.de>
+Signed-off-by: Soumyajyotii Ssarkar<soumyajyotisarkar23@gmail.com>
+---
+ hw/scsi/ncr53c710.c | 94 +++++++++++++++++++++++++++++++++------------
+ 1 file changed, 70 insertions(+), 24 deletions(-)
 
-    max_len = src_len; max_len += dst_len
+diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
+index 47a6983491..808b4ebd53 100644
+--- a/hw/scsi/ncr53c710.c
++++ b/hw/scsi/ncr53c710.c
+@@ -593,7 +593,7 @@ static void ncr710_update_irq(NCR710State *s)
+ {
+     int level = 0;
+ 
+-    if (s->dstat) {
++    if (s->dstat & ~NCR710_DSTAT_DFE) {
+         if (s->dstat & s->dien) {
+             level = 1;
+         }
+@@ -718,7 +718,9 @@ static void ncr710_do_dma(NCR710State *s, int out)
+     if (s->current->dma_len == 0) {
+         s->current->dma_buf = NULL;
+         s->current->pending = 0;
++        s->waiting = NCR710_WAIT_DMA;
+         scsi_req_continue(s->current->req);
++        return;
+     } else {
+         s->current->dma_buf += count;
+         s->waiting = NCR710_WAIT_NONE;
+@@ -737,6 +739,12 @@ static void ncr710_add_msg_byte(NCR710State *s, uint8_t data)
+ 
+ static void ncr710_request_free(NCR710State *s, NCR710Request *p)
+ {
++    if (!p) {
++        return;
++    }
++    if (p->req && p->req->hba_private == p) {
++        p->req->hba_private = NULL;
++    }
+     if (p == s->current) {
+         s->current = NULL;
+     }
+@@ -747,8 +755,11 @@ void ncr710_request_cancelled(SCSIRequest *req)
+ {
+     NCR710State *s = ncr710_from_scsi_bus(req->bus);
+     NCR710Request *p = (NCR710Request *)req->hba_private;
+-    req->hba_private = NULL;
+-    ncr710_request_free(s, p);
++    if (p) {
++        req->hba_private = NULL;
++        p->req = NULL;
++        ncr710_request_free(s, p);
++    }
+     scsi_req_unref(req);
+ }
+ 
+@@ -789,7 +800,14 @@ void ncr710_command_complete(SCSIRequest *req, size_t resid)
+ 
+     ncr710_set_phase(s, PHASE_ST);
+ 
+-    if (req->hba_private == s->current) {
++    if (p) {
++        if (p == s->current) {
++            req->hba_private = NULL;
++            p->req = NULL;
++        } else {
++            req->hba_private = NULL;
++            ncr710_request_free(s, p);
++        }
+         scsi_req_unref(req);
+     }
+ 
+@@ -980,6 +998,7 @@ static void ncr710_do_status(NCR710State *s)
+     ncr710_set_phase(s, PHASE_MI);
+     s->msg_action = NCR710_MSG_ACTION_DISCONNECT;
+     ncr710_add_msg_byte(s, 0); /* COMMAND COMPLETE */
++    s->command_complete = NCR710_CMD_COMPLETE;
+ }
+ 
+ static void ncr710_do_msgin(NCR710State *s)
+@@ -1024,7 +1043,7 @@ static void ncr710_do_msgin(NCR710State *s)
+         ncr710_set_phase(s, PHASE_CO);
+         break;
+     case NCR710_MSG_ACTION_DISCONNECT:
+-        ncr710_disconnect(s);
++        s->sstat2 &= ~PHASE_MASK;
+         break;
+     case NCR710_MSG_ACTION_DATA_OUT:
+         ncr710_set_phase(s, PHASE_DO);
+@@ -1338,8 +1357,8 @@ again:
+             offset = sextract32(addr, 0, 24);
+             ncr710_dma_read(s, s->dsa + offset, buf, 8);
+             /* byte count is stored in bits 0:23 only */
+-            s->dbc = cpu_to_le32(buf[0]) & 0xffffff;
+-            addr = cpu_to_le32(buf[1]);
++            s->dbc = be32_to_cpu(buf[0]) & 0xffffff;
++            addr = be32_to_cpu(buf[1]);
+         }
+         /* Check phase match for block move instructions */
+         if ((s->sstat2 & PHASE_MASK) != ((insn >> 24) & 7)) {
+@@ -1404,8 +1423,29 @@ again:
+                         s->dsp = s->dnad;
+                         break;
+                     }
+-                } else if (!scsi_device_find(&s->bus, 0, idbitstonum(id), 0)) {
++                }
++                bool device_exists = false;
++                if (insn & (1 << 24)) {
++                    for (int lun = 0; lun < 8; lun++) {
++                        SCSIDevice *dev = scsi_device_find(&s->bus, 0,
++                                                           idbitstonum(id),
++                                                           lun);
++                        if (dev) {
++                            device_exists = true;
++                            break;
++                        }
++                    }
++                } else {
++                    SCSIDevice *dev = scsi_device_find(&s->bus, 0,
++                                                       idbitstonum(id), 0);
++                    device_exists = dev != NULL;
++                }
++
++                if (!device_exists) {
+                     ncr710_bad_selection(s, id);
++                    if (!(insn & (1 << 24)) && addr != 0) {
++                        s->dsp = addr;
++                    }
+                     break;
+                 } else {
+                     /*
+@@ -1425,13 +1465,10 @@ again:
+                 }
+                 break;
+             case 1: /* Disconnect */
+-
+                 if (s->command_complete != NCR710_CMD_PENDING) {
+                     s->scntl1 &= ~NCR710_SCNTL1_CON;
+                     s->istat &= ~NCR710_ISTAT_CON;
+-                    if (s->waiting == NCR710_WAIT_RESELECT) {
+-                        s->waiting = NCR710_WAIT_NONE;
+-                    }
++                    s->waiting = NCR710_WAIT_NONE;
+                 } else {
+                     if (s->current) {
+                         s->current->resume_offset = s->dsp;
+@@ -1770,7 +1807,6 @@ static uint8_t ncr710_reg_readb(NCR710State *s, int offset)
+         }
+         s->dstat = 0;  /* Clear all DMA interrupt status bits */
+         s->dstat |= NCR710_DSTAT_DFE;
+-        s->istat &= ~NCR710_ISTAT_DIP;
+         ncr710_update_irq(s);
+ 
+         if (s->waiting == NCR710_WAIT_RESELECT && s->current &&
+@@ -1796,7 +1832,7 @@ static uint8_t ncr710_reg_readb(NCR710State *s, int offset)
+         return ret;
+     case NCR710_SSTAT0_REG: /* SSTAT0 */
+         ret = s->sstat0;
+-        if (s->sstat0 != 0 && !(s->sstat0 & NCR710_SSTAT0_STO)) {
++        if (s->sstat0 != 0) {
+             s->sstat0 = 0;
+             s->istat &= ~NCR710_ISTAT_SIP;
+             ncr710_update_irq(s);
+@@ -1809,14 +1845,7 @@ static uint8_t ncr710_reg_readb(NCR710State *s, int offset)
+         ret = s->sstat0;
+         break;
+     case NCR710_SSTAT2_REG: /* SSTAT2 */
+-        ret = s->dstat;
+-
+-        if (s->dstat & NCR710_DSTAT_SIR) {
+-            /* SIR bit processing */
+-        }
+-        s->dstat = 0;
+-        s->istat &= ~NCR710_ISTAT_DIP;
+-        ncr710_update_irq(s);
++        ret = s->sstat2;
+         break;
+         CASE_GET_REG32(dsa, NCR710_DSA_REG)
+         break;
+@@ -1887,7 +1916,6 @@ static uint8_t ncr710_reg_readb(NCR710State *s, int offset)
+         if (s->dsps == GOOD_STATUS_AFTER_STATUS &&
+             (s->dstat & NCR710_DSTAT_SIR)) {
+             s->dstat &= ~NCR710_DSTAT_SIR;
+-            s->istat &= ~NCR710_ISTAT_DIP;
+             ncr710_update_irq(s);
+         }
+         break;
+@@ -2049,7 +2077,21 @@ static void ncr710_reg_writeb(NCR710State *s, int offset, uint8_t val)
+         /* Linux writes to these readonly registers on startup */
+         return;
+ 
+-    CASE_SET_REG32(dsa, NCR710_DSA_REG)
++    case NCR710_DSA_REG:
++        s->dsa &= 0xffffff00;
++        s->dsa |= val;
++        break;
++    case NCR710_DSA_REG + 1:
++        s->dsa &= 0xffff00ff;
++        s->dsa |= val << 8;
++        break;
++    case NCR710_DSA_REG + 2:
++        s->dsa &= 0xff00ffff;
++        s->dsa |= val << 16;
++        break;
++    case NCR710_DSA_REG + 3:
++        s->dsa &= 0x00ffffff;
++        s->dsa |= val << 24;
+         break;
+ 
+     case NCR710_CTEST0_REG: /* CTEST0 */
+@@ -2118,7 +2160,11 @@ static void ncr710_reg_writeb(NCR710State *s, int offset, uint8_t val)
+         if (val & 0x04) {
+             ncr710_scsi_fifo_init(&s->scsi_fifo);
+             s->dstat |= NCR710_DSTAT_DFE;
++            s->ctest1 = 0xFF; /* FMT - FIFO empty, all status bits set */
++        } else if (s->ctest8 & 0x04) {
++            s->ctest1 = 0x00;
+         }
++        s->ctest8 = val;
+         break;
+     case NCR710_LCRC_REG: /* LCRC */
+         s->lcrc = val;
+-- 
+2.49.0
 
-maybe? :)
-
-> +    if (unlikely(max_len > vcrypto->conf.max_size)) {
-> +        virtio_error(vdev, "virtio-crypto asym too big length");
-
-"virtio-crypto asym request is too large" ?
-
-Thanks,
-
-/mjt
 
