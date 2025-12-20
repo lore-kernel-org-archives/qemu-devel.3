@@ -4,97 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84EFE668B8
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Dec 2025 16:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6100E668B4
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Dec 2025 17:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWzR3-0001s7-V3; Sat, 20 Dec 2025 11:04:01 -0500
+	id 1vX11Y-0005Oa-Oq; Sat, 20 Dec 2025 12:45:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guodong@riscstar.com>)
- id 1vWonC-00055X-Je
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 23:42:10 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <guodong@riscstar.com>)
- id 1vWonA-0003id-GO
- for qemu-devel@nongnu.org; Fri, 19 Dec 2025 23:42:10 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7b80fed1505so2622283b3a.3
- for <qemu-devel@nongnu.org>; Fri, 19 Dec 2025 20:42:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766205726; x=1766810526;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=k6b46huaaVKN8mknPD7v5SyJ09/0QNYrXwXxhdCaQH4=;
- b=WkDe/4SqMGrQuOad6vUV7AlHfPri8GQiE6JkTZtpEYOUFYe70p5HXonm4T+66XaipT
- xWwWU4TBSQQ4Elu90ssxteVnpAGaZWwqHYyD/LUQdqu4POrJ3pw/DMAiq4OGqZmcBgeJ
- ldcOhhifzSb+GKiCFaGli76uisF4VfWXwWg1q/p16vChLzaZvy7LZOXFwZZ5/aK3G/aM
- NO3MKmKunthqVlqrrvcH8Hq8DD/lq9J8zQ0XsqH3bmYUerIxWsDNuTVmfEIW7fyGJ6iE
- bpvRWXFheAOubf0vzVmFsifo4sqW0ZTUsCaSSrADQ+flwTgx2JoS0+8hu+D25caSGOZM
- 64+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766205726; x=1766810526;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k6b46huaaVKN8mknPD7v5SyJ09/0QNYrXwXxhdCaQH4=;
- b=Y01YY4BGiLDjYSGZ0+LnAcns5a5Qx7UL6QSIhg075tK0maUpOIgyXgZDlZfyDn7gDU
- +IOA8Wi7fnSmMm+UcwBZbLweCdtFK+Y2h25ewBjHjjideVMX/wsi7cMihq27IGJndIgX
- jQoC7TADtkOuZg0PhPF4jbunporgemk9RoZar3mFWONbKl/WVYWv7xGyUuqXEUJVvBsV
- nB82srBaKAgc84monxODU/8BgyelWKi0ImXxOOOh9N+kjA8WHMlTVJJC6y50Hz1J6Saw
- IZsBOsHLFWHwjsxZ/WcR2guuriqAOyevLASz/imn5B0C3XRtmX5fiHAE576e0Du40kTW
- hyXg==
-X-Gm-Message-State: AOJu0YxtoBzJoho4/+p5asI62rK5Kv+drIEFGYhKlJ2opZVpHnDuv+lV
- nQPBva99qe8BWmvjo2NGG41p6s5n8CWSQjL348NJBUFnA3h5DK0N1IChcvKkJkc7m3E=
-X-Gm-Gg: AY/fxX7j00hMiQSwAHrNOy6+eHHbr6Ionj03sjhkNtnMn6T0fFBxO0zlhv20dFOm+On
- Z06FB0jAPHRSfDt+pLO8gzSvC9gLo2Zrg69zYNV1eac0CvIo7Mpx0J8/+EaBNHzybfpK/xvvxwI
- R/6Kw1fstR6h6IuqYceg1Ck2qYFOHx9YJ4/AyGfBMgftDckyavsufM5F7xPs1KRG21UN7T3QIR5
- I0WzeG0hJX3gUonPit5K/eDX/1Ey6B7UiczzBkwQHlrf7gsn+3SvayMwLXrIdiE+2Y5NXStA/dW
- p+H111tHnC2BIPMNr1uDIxLHPbHFxf0F20o8kgUdzMByNFB5GpyUs11VluG6QuIU6axl+HYcBEz
- fgBZrVDqZGPQPGkFPCuQrgcSATwiXid/C+sxt4eczdiZJGdd8vYVY4zFgFajnNiQCttN07GwD/W
- iCX0UgEphyblABDYh5IhZJ7bOFOxtJceY=
-X-Google-Smtp-Source: AGHT+IHWzevY/YyjSknJjnUqud1XFnpQf8O8YQJ2cv88pbTyynWm1r/nuGdXMlMcff7SR6DF/a4vQA==
-X-Received: by 2002:a05:6a00:4197:b0:7e8:4398:b357 with SMTP id
- d2e1a72fcca58-7ff66079e35mr4806674b3a.42.1766205726191; 
- Fri, 19 Dec 2025 20:42:06 -0800 (PST)
-Received: from [127.0.1.1] ([2a12:a305:4::302f])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7b423b9asm3901686b3a.28.2025.12.19.20.42.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Dec 2025 20:42:05 -0800 (PST)
-From: Guodong Xu <guodong@riscstar.com>
-Date: Sat, 20 Dec 2025 12:39:32 +0800
-Subject: [PATCH] target/riscv: put sha and shcounterenw in alphabetical order
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vX11U-0005OI-1u; Sat, 20 Dec 2025 12:45:44 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vX11R-0004mP-Mw; Sat, 20 Dec 2025 12:45:43 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 740631771FF;
+ Sat, 20 Dec 2025 20:45:00 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id BAFEF339CF4;
+ Sat, 20 Dec 2025 20:45:25 +0300 (MSK)
+Message-ID: <fee3939c-078a-4e87-99fc-5ce970f37e4d@tls.msk.ru>
+Date: Sat, 20 Dec 2025 20:45:25 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251220-sha-v1-1-56b1b8b6ef79@riscstar.com>
-X-B4-Tracking: v=1; b=H4sIAIMoRmkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1NDIyMD3eKMRF1LszTD5FTDNGNjY3MloMqCotS0zAqwKdGxtbUAk7EqCVU
- AAAA=
-X-Change-ID: 20251220-sha-96f1ce1f3337
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
- qemu-riscv@nongnu.org, Guodong Xu <guodong@riscstar.com>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=guodong@riscstar.com; helo=mail-pf1-x434.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/virtio/virtio-crypto: verify asym request size
+To: zhenwei pi <zhenwei.pi@linux.dev>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, arei.gonglei@huawei.com, nakamurajames123@gmail.com,
+ qemu-security@nongnu.org, mcascell@redhat.com
+References: <20251214090939.408436-1-zhenwei.pi@linux.dev>
+ <20251214090939.408436-2-zhenwei.pi@linux.dev>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251214090939.408436-2-zhenwei.pi@linux.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 20 Dec 2025 11:03:59 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,47 +105,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ordering rule 3 preceding the isa_edata_arr[] array requires alphabetical
-ordering of standard supervisor-level extensions.
+On 12/14/25 12:09, zhenwei pi wrote:
+> The total lenght of request is limited by cryptodev config, verify it
+> to avoid unexpected request from guest.
+> 
+> Fixes: 0e660a6f90a ("crypto: Introduce RSA algorithm")
+> Reported-by: AM 이재영 <nakamurajames123@gmail.com>
+> Signed-off-by: zhenwei pi <zhenwei.pi@linux.dev>
+> ---
+>   hw/virtio/virtio-crypto.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
+> index 517f2089c5..94dbf9d92d 100644
+> --- a/hw/virtio/virtio-crypto.c
+> +++ b/hw/virtio/virtio-crypto.c
+> @@ -767,11 +767,18 @@ virtio_crypto_handle_asym_req(VirtIOCrypto *vcrypto,
+>       uint32_t len;
+>       uint8_t *src = NULL;
+>       uint8_t *dst = NULL;
+> +    uint64_t max_len;
+>   
+>       asym_op_info = g_new0(CryptoDevBackendAsymOpInfo, 1);
+>       src_len = ldl_le_p(&req->para.src_data_len);
+>       dst_len = ldl_le_p(&req->para.dst_data_len);
+>   
+> +    max_len = src_len + dst_len;
 
-The sha extension needs to be placed before shcounterenw. This change also
-corrects the riscv,isa string generated for cpus which includes them,
-such as rva23s64.
+I believe this can be overflown when calculating the sum, while
+both args are uint32_t.
 
-Verified by
-  qemu-system-riscv64 \
-    -machine virt,acpi=off \
-    -cpu rva23s64 \
-    ...
+       max_len = (uint64_t)src_len + dst_len;
 
-/proc/device-tree/cpus/cpu@0 # cat riscv,isa
+might be better.  This is what's used in other places in this
+file too.
 
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
----
- target/riscv/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I wonder if modern compilers can warn about such overflow
+possibilities, and what's the better way to write such
+expressions.  Something like
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 73d4280d7c84a9d4c7cecd3e067d312adc13b035..e24f32978f645d71d149e0f06c31ce848876f636 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -190,8 +190,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
-     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
-     ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
--    ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
-+    ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+    max_len = src_len; max_len += dst_len
 
----
-base-commit: bb7fc1543fa45bebe7eded8115f25441a9fee76e
-change-id: 20251220-sha-96f1ce1f3337
+maybe? :)
 
-Best regards,
--- 
-Guodong Xu <guodong@riscstar.com>
+> +    if (unlikely(max_len > vcrypto->conf.max_size)) {
+> +        virtio_error(vdev, "virtio-crypto asym too big length");
 
+"virtio-crypto asym request is too large" ?
+
+Thanks,
+
+/mjt
 
