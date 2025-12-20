@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FAE5D78797
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Dec 2025 13:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D07E668B4
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Dec 2025 14:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWwxW-0003p9-R0; Sat, 20 Dec 2025 08:25:23 -0500
+	id 1vWxYJ-0002qr-81; Sat, 20 Dec 2025 09:03:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajaygargnsit@gmail.com>)
- id 1vWwxP-0003o4-1Q
- for qemu-devel@nongnu.org; Sat, 20 Dec 2025 08:25:15 -0500
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vWxY2-0002pf-Fk
+ for qemu-devel@nongnu.org; Sat, 20 Dec 2025 09:03:09 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajaygargnsit@gmail.com>)
- id 1vWwxL-0001NY-0h
- for qemu-devel@nongnu.org; Sat, 20 Dec 2025 08:25:14 -0500
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-37bbb36c990so31043851fa.0
- for <qemu-devel@nongnu.org>; Sat, 20 Dec 2025 05:25:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vWxY0-0005xb-Qd
+ for qemu-devel@nongnu.org; Sat, 20 Dec 2025 09:03:06 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-477a1c28778so29655805e9.3
+ for <qemu-devel@nongnu.org>; Sat, 20 Dec 2025 06:03:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766237109; x=1766841909; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1766239382; x=1766844182; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3b0M4fusp4M8TwC+3lvPsPvDRWyNz+WF92fODAY27og=;
- b=dJTBpr5AI/71fHoSQoV5F2968Xc/wtryEdJqmO1Vt4rUy9u5CJTYqugd6c3bnZdFW/
- 8eTomm5HcHNp7j5FtZJZ2TzcFGQGDBTaS040imGoaFvvZJu1Pyf4B0SNSOHWiEiOFyeM
- EVjFvlO5mIYHgeUu6CsTXj2fQdGmucmurjAnUNCnisjpL7Y80kvGBI/dzYAWh48OXLmQ
- oRfr6J9qBWnm9MeOAYzbru++8R+Dv4TJTkEgsqg+yT9QCBjL/2XY0fBdjyq22LE8Rdvb
- b0/Z/eYUD3tL1KH9F3nD6qp69FvqjCA7bv2oSRso959aJYOjuFQAiRNPBlO2ahfC/yDU
- 8FMQ==
+ bh=Yla0ysvd/srx1Ud0V48VoFCIDJGbJqPuC+Hw2Gd9euk=;
+ b=cLa3u8F5C0896BpGvJnDRPP7jbOh4FcF1iK9XacjMxVizvGqZ+dBeUsOfVtR4eSDSC
+ ShfKqphxl7zs96vbQaftJgq83GGTpYLDx8bKESHbCXwlbHK1ADrkRSxPcZZ+9eUPWHep
+ 8V48+edVos35kUn9kqq/7F2TnNAHDGerRLyttpdoELEdjSPP/WWdGTzVSI6HJYMcxv4x
+ RyJCiZAQe2DYTcu0LhwHAWTVhyQTpVGP85BdG2jCHSgS0Oxgz8bX3sRJZqYwdZ/jbAsY
+ Jw1FiTLsa/fxg3MV9VM0HEUGODBHZS5s+BJCXArELKFzpWZv4IkA91i3XsJk61DeD7EW
+ W3pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766237109; x=1766841909;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3b0M4fusp4M8TwC+3lvPsPvDRWyNz+WF92fODAY27og=;
- b=Z2MyJrJhx9Xo6YFHnyigbIZDsnNRHESo+Yk2sx9dqOon6wdUAdJ24KM/gULNbmBVxO
- Kfi4UuNuGRydTb1t3WNRrrA1v4dQXKEv2+VCleTj1n7AnzmIY0h0nl+/WWmdLfKOWxY4
- c85/A0KLH4gw/UDvYviJQHZ4MCWzaMbKzlKRUlA4BZj+HR9UWyj1iHOaeMPIpNb12Odc
- oPqtSw/lpFV71X9eatPMWsNlbB8cDMHP4SMYWB57Hz2peqdkbcjBSnUvDMcxsljMTJy9
- 3zwtlHkOnPjo2C1J4LTbbOnEiQoHmunKOM78p1s8DtFo/8e3ULa9pGNlT85qyn5FlyDM
- kLTw==
-X-Gm-Message-State: AOJu0YwrGxmA44AjP3oqkNZWBUndP5JidcN0m8fWWf6UNpgEl10pLE4E
- huM9UWMsU8LV6bj5IT/UHIBay9/xu2uiO2SMmt6IQA5+O305Y50BX8DqstrI8QRm+8Mz7tM2hEK
- f1Sl8sqRck5XrpT/3TmYHuAd5nuIDtd8=
-X-Gm-Gg: AY/fxX4RAvjpH6N5Np/0d2bb+/Xp4Xqt0nXnYnjxS6D6RUvLvUpnAW3OG6z/R1/K9Pa
- VAOKInTSvamW/Lvvj7/nS6K+eLfDlhTfXTq6mxNJGG5u6Z8n1jq6OdQE1de9VKJTVokm8pmgV+e
- cY9HIvop3CyfYHUYems/WrrNQnUIrh+Kpu5Czn771V6ecyjwTIgYCfSQqax1RIvPuP8BGFKWTsY
- mDiqto9Nkty7yVZDdAZTy+lQuk6PSzfFhibR8GVwDmYYZqTMYhgjNHm6QUKfuAjPFDJzle5zOuz
- DTpTFcs=
-X-Google-Smtp-Source: AGHT+IGPcvp6fW/TUruAB977dCAs0N1AZzF3yRbKDGcbSmIfEy45oEg5nlHbJP3YYyMlqgMPqEvRU6R52LtRcG3Csv4=
-X-Received: by 2002:a05:651c:1542:b0:37e:6dd5:2e3b with SMTP id
- 38308e7fff4ca-381207761eamr22258141fa.5.1766237108703; Sat, 20 Dec 2025
- 05:25:08 -0800 (PST)
+ d=1e100.net; s=20230601; t=1766239382; x=1766844182;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Yla0ysvd/srx1Ud0V48VoFCIDJGbJqPuC+Hw2Gd9euk=;
+ b=vKdPRn8qC5PlW4DIDdiyc/YydNQYERJ7/UG5fXANWMTnctE29qb6Ma0yYgp8AL+NPX
+ KPc98pQcjvvXGcynPQ67ICmRnPqIT2DAYaI8G6PtPcmHAb0wk3eYNfnUxH77r378xvya
+ C2VEfLroafH3Lvhz7eTcQgpZfDt1/HB9O9YyEYeJX4gASniO7E4oQQi0SkbXC8h+vxBS
+ njzgnCIYiJzxGI9URjSJyVEtEVa9aiwV2e7bGK/0y6Ar2v5ESIdDjY8z4QUJ6C1uE22b
+ yWvxNjoclncTCKr+GZYsFBwoUGQrjV5cbGjGf5tMSdR5gYxMK+ifVbrdtbyzfDgvoMIZ
+ RQFA==
+X-Gm-Message-State: AOJu0Yz+Oi3JOJfL1UqKYYUYSBgQJjZzgXW2mEd3wUlyWGJC3Ir/3Cwg
+ ffSioX5wIBG7/1CKy40Rk0AvVkLTm/+m7kT/UpfeLKKIXC92o2a4eGexPM5uPEJslZ7QQ20AlYf
+ pPF6e
+X-Gm-Gg: AY/fxX6u2l1ug66kjfaWf2iw2Q5Kz6m+LWjltHl5DsTuFysC5WKQdVVGcxJg10+V8rW
+ kJcvnF5LdB0lv4S090Gkx6KE5qGIbHw96TcS1F9HRiJiQCHeN7Ht0pY6g4AeciWB3tC7MV5Gokk
+ qBrzYPLD8QBCX3Gy8rI2Ro0YlIV19SsiDPugj6W8xVrraZi0SQghNOpwZ2ZqhgJ6jb1qrdBysRz
+ AVqREPJU1hjQ76EYDmLl/i4R92kn1sAJwZSZSgnlGeZXjRcKpgJ4pMDXGBjZ0KEfeq2MdyPHEEv
+ /mPm1hx+bxbJswfGRljweEcc1ontbNGN5J+sMLsy2iwNIKCxOJz/WWdTW5hUnbh/n50MuGzeQup
+ yC/5CwVpI61BSY5q6brkqKfCJ7vFnyQElPsQkanimYiM1gZKaBuavBpiW1DIDSh8IX60GBwsoba
+ X5lEI0maWI0IThOOLj3fXC3w==
+X-Google-Smtp-Source: AGHT+IGuDN732bxKbR+AzbQwdfa3rU3z6EW6HiWf/8ubl/i5+OKaYNnkz6ZmxHKpjL+6fv7qVGpekg==
+X-Received: by 2002:a05:600c:3b05:b0:477:6e02:54a5 with SMTP id
+ 5b1f17b1804b1-47d19594d77mr55879445e9.18.1766239382526; 
+ Sat, 20 Dec 2025 06:03:02 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324eab33f5sm10973493f8f.41.2025.12.20.06.03.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 20 Dec 2025 06:03:01 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D2F515F7C2;
+ Sat, 20 Dec 2025 14:03:00 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Bin Guo <guobin@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,  berrange@redhat.com,
+ philmd@linaro.org
+Subject: Re: [PATCH] meson: Optimize summary_info about directories
+In-Reply-To: <20251219230456.37178-1-guobin@linux.alibaba.com> (Bin Guo's
+ message of "Sat, 20 Dec 2025 07:04:55 +0800")
+References: <20251219230456.37178-1-guobin@linux.alibaba.com>
+User-Agent: mu4e 1.12.14; emacs 30.1
+Date: Sat, 20 Dec 2025 14:03:00 +0000
+Message-ID: <87cy49z1wr.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <CAHP4M8Uy7HLiKjnMCdNG+QG+0cizN82c_G87AuzDL6qDCBG5vg@mail.gmail.com>
- <20251215045203.13d96d09.alex@shazbot.org>
- <CAHP4M8WeHz-3VbzKb_54C5UuWW-jtqvE=X37CSssUa5gti41GQ@mail.gmail.com>
- <CAHP4M8X=e+dP-T_if5eA=gccdbxkkObYvcrwA3qUBONKWW3W_w@mail.gmail.com>
- <20251219170637.2c161b7b.alex@shazbot.org>
- <CAHP4M8Ud_tm+SPmZtnSi1--zf=MTsbvSqDYdAfPdAXUj+Ormkg@mail.gmail.com>
-In-Reply-To: <CAHP4M8Ud_tm+SPmZtnSi1--zf=MTsbvSqDYdAfPdAXUj+Ormkg@mail.gmail.com>
-From: Ajay Garg <ajaygargnsit@gmail.com>
-Date: Sat, 20 Dec 2025 18:54:56 +0530
-X-Gm-Features: AQt7F2ozfyOfOGjyPn74d-8hfCl7Xro1Z8pjLNJPv5fWJeElxisiOGYPXqkXKTY
-Message-ID: <CAHP4M8WZULK3t8-hTSB7ANsUohyBD1tLqdPE+FgeR2h6-yfsww@mail.gmail.com>
-Subject: Re: A lingering doubt on PCI-MMIO region of PCI-passthrough-device
-To: Alex Williamson <alex@shazbot.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, iommu@lists.linux-foundation.org, 
- linux-pci@vger.kernel.org, 
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=ajaygargnsit@gmail.com; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,157 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Is guest-acpi-mcfg/mmconfig tables the answer to my last question? :)
+Bin Guo <guobin@linux.alibaba.com> writes:
 
-i.e. qemu-bios setting up acpi mcfg / mmconfig addresses, which are
-backed by mmap'ed pci-config-space mappings on the host (while also
-setting up ept-mappings for pci-config-space too)?
+> Clear summary_info first, otherwise there will be redundant output
+> about build environment.
+>
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-On Sat, Dec 20, 2025 at 6:22=E2=80=AFPM Ajay Garg <ajaygargnsit@gmail.com> =
-wrote:
+> ---
+>  meson.build | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> Thanks Alex.
->
-> I was/am aware of GPA-ranges backed by mmap'ed HVA-ranges.
-> On further thought, I think I have all the missing pieces (except one,
-> as mentioned at last in current email).
->
-> I'll list the steps below :
->
-> a)
-> There are three stages :
->
->    * pre-configuration by host/qemu.
->    * guest-vm bios.
->    * guest-vm kernel.
->
-> b)
-> Host procures following memory-slots (amongst others) via mmap :
->
->   * guest-ram
->   * pci-config-space       : via vfio's ioctls' help.
->   * pci-bar-mmio-space : via vfio's ioctls' help.
->
-> For the above memory-slots,
->
-> *
-> guest-ram physical-address is known (0), so ept-mappings for guest-ram
-> are set up even before guest-vm begins to boot up.
->
-> *
-> there is no concept of guest-physical-address for pci-config-space.
->
-> *
-> pci-bar-mmio-space physical address is not known yet, so ept-mappings
-> for pci-bar-mmio-space are not set up (yet).
->
-> c)
-> qemu starts the guest, and guest-vm-bios runs next.
->
-> This bios is "owned by qemu", and is "definitely different" from the
-> host-bios (qemu is an altogether different "hardware"). qemu-bios and
-> host-bios handle pci bus/enumeration "completely differently".
->
-> When the pci-enumeration runs during this guest-vm-bios stage, it
-> accesses the pci-device config-space (backed on the host by mmap'ed
-> mappings). Note that guest-kernel is still not in picture.
->
-> "OBVIOUSLY", all accesses (reads/writes) to pci-config space go to the
-> pci-config-space memory-slot (handled purely by qemu-bios code).
->
-> Once the guest-vm bios carves out guest-physical-addresses for the
-> pci-device-bars, it programs the bars by writing to bars-offsets in
-> the pci-config-space. qemu detects this, and does the following :
->
->    * does not relay the actual-writes to physical bars on the host.
->    * since the bar-guest-physical-addresses are now known, so now the
-> missing ept-mappings
->      for pci-bar-mmio-space are now set up.
->
-> d)
-> Finally, guest-kernel takes over, and
->
->    * all accesses to ram go through vanilla two-stages translation.
->    * all accesses to pci-bars-mmio go through vanilla two-stages translat=
-ion.
->
->
-> Requests :
->
-> i)
-> Alex / QEMU-experts : kindly correct me if I am wrong :) till now.
->
-> ii)
-> Once kernel boots up, how are accesses to pci-config-space handled? Is
-> again qemu-bios involved in pci-config-space accesses after
-> guest-kernel has booted up?
->
->
-> Once again, many thanks to everyone for their time and help.
->
-> Thanks and Regards,
-> Ajay
->
->
-> On Sat, Dec 20, 2025 at 5:36=E2=80=AFAM Alex Williamson <alex@shazbot.org=
-> wrote:
-> >
-> > On Fri, 19 Dec 2025 11:53:56 +0530
-> > Ajay Garg <ajaygargnsit@gmail.com> wrote:
-> >
-> > > Hi Alex.
-> > > Kindly help if the steps listed in the previous email are correct.
-> > >
-> > > (Have added qemu mailing-list too, as it might be a qemu thing too as
-> > > virtual-pci is in picture).
-> > >
-> > > On Mon, Dec 15, 2025 at 9:20=E2=80=AFAM Ajay Garg <ajaygargnsit@gmail=
-.com> wrote:
-> > > >
-> > > > Thanks Alex.
-> > > >
-> > > > So does something like the following happen :
-> > > >
-> > > > i)
-> > > > During bootup, guest starts pci-enumeration as usual.
-> > > >
-> > > > ii)
-> > > > Upon discovering the "passthrough-device", guest carves the physica=
-l
-> > > > MMIO regions (as usual) in the guest's physical-address-space, and
-> > > > starts-to/attempts to program the BARs with the
-> > > > guest-physical-base-addresses carved out.
-> > > >
-> > > > iii)
-> > > > These attempts to program the BARs (lying in the
-> > > > "passthrough-device"'s config-space), are intercepted by the
-> > > > hypervisor instead (causing a VM-exit in the interim).
-> > > >
-> > > > iv)
-> > > > The hypervisor uses the above info to update the EPT, to ensure GPA=
- =3D>
-> > > > HPA conversions go fine when the guest tries to access the PCI-MMIO
-> > > > regions later (once gurst is fully booted up). Also, the hypervisor
-> > > > marks the operation as success (without "really" re-programming the
-> > > > BARs).
-> > > >
-> > > > v)
-> > > > The VM-entry is called, and the guest resumes with the "impression"
-> > > > that the BARs have been "programmed by guest".
-> > > >
-> > > > Is the above sequencing correct at a bird's view level?
-> >
-> > It's not far off.  The key is simply that we can create a host virtual
-> > mapping to the device BARs, ie. an mmap.  The guest enumerates emulated
-> > BARs, they're only used for sizing and locating the BARs in the guest
-> > physical address space.  When the guest BAR is programmed and memory
-> > enabled, the address space in QEMU is populated at the BAR indicated
-> > GPA using the mmap backing.  KVM memory slots are used to fill the
-> > mappings in the vCPU.  The same BAR mmap is also used to provide DMA
-> > mapping of the BAR through the IOMMU in the legacy type1 IOMMU backend
-> > case.  Barring a vIOMMU, the IOMMU IOVA space is the guest physical
-> > address space.  Thanks,
-> >
-> > Alex
+> diff --git a/meson.build b/meson.build
+> index d9293294d8..73aa535d10 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -4634,6 +4634,7 @@ summary_info +=3D {'Download dependencies': get_opt=
+ion('wrap_mode') !=3D 'nodownload
+>  summary(summary_info, bool_yn: true, section: 'Build environment')
+>=20=20
+>  # Directories
+> +summary_info =3D {}
+>  summary_info +=3D {'Install prefix':    get_option('prefix')}
+>  summary_info +=3D {'BIOS directory':    qemu_datadir}
+>  pathsep =3D host_os =3D=3D 'windows' ? ';' : ':'
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
