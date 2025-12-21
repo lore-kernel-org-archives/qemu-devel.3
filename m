@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA47DE66886
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379B9E66886
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKJv-0004ib-Fr; Sun, 21 Dec 2025 09:22:03 -0500
+	id 1vXKJt-0004Xh-OR; Sun, 21 Dec 2025 09:22:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKJU-0003fD-P1
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:36 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKJ6-0003LU-4S
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:17 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKJQ-0000jN-7e
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:36 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKJ4-0000hd-K1
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=5Peh03QySBNfkwz8iiPWltK4cB9vV/x1+Lk9JHpw06A=; b=i5PqFbK+BygYrXQ
- SS5zhV4WUENTIu+Yinds4NbmnSzChx0BmoOtzUHOjgmfoHn57WsnZVPNwcVu7+Uz/N714Lv21HQym
- ZcioAqQpi4j0+Q7ccQsCj/PDmEBB0b6Tl+j5NyZ3Gx9cRFbWEglEQ+x38YODFFCcDOG1G0xx26nTl
- cI=;
-Date: Sun, 21 Dec 2025 15:23:16 +0100
-Subject: [PATCH v2 12/14] target/riscv: Stub out kvm functions
+ List-Help; bh=9V+zSRmfapyIIdsQiy/9w4+DSrY3i+wfbXF4IxIKDGQ=; b=vBbOqFwXv/2AxyP
+ 3NjfN7TZXiJI6HVZZoO92elsynfl4QWoEIsIkUlJEWrabvB/DqDBwTHptvpr+taHyBEzBd6pt2A57
+ /F9bM2Dk9NOoEaXkcy3ltWKIYK7Tffb3Ja2Jt8DmEu01Oy99BrAvRZ1dQcwgXTgRMGKDXRNORzkqH
+ ao=;
+Date: Sun, 21 Dec 2025 15:23:14 +0100
+Subject: [PATCH v2 10/14] target/riscv: Move riscv_pmu_read_ctr() to
+ internal csr.h header
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251221-hw-riscv-cpu-int-v2-12-eb49d72c5b2f@rev.ng>
+Message-Id: <20251221-hw-riscv-cpu-int-v2-10-eb49d72c5b2f@rev.ng>
 References: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
 In-Reply-To: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
 To: qemu-devel@nongnu.org
@@ -65,52 +66,54 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Functions used externally by hw/riscv are stubbed out for non-kvm
-configurations, allowing a single compilation of hw/riscv.
+The function depends on target_ulong and is via the pmu.h header exposed
+to hw/riscv, this function is only used internally in pmu.c and csr.c,
+so move it to the internal csr.h header.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/kvm/kvm-stub.c  | 23 +++++++++++++++++++++++
- target/riscv/kvm/meson.build |  1 +
- 2 files changed, 24 insertions(+)
+ target/riscv/csr.h | 3 +++
+ target/riscv/pmu.h | 2 --
+ target/riscv/pmu.c | 1 +
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/kvm/kvm-stub.c b/target/riscv/kvm/kvm-stub.c
-new file mode 100644
-index 0000000000..64e39c96d8
---- /dev/null
-+++ b/target/riscv/kvm/kvm-stub.c
-@@ -0,0 +1,23 @@
-+/*
-+ * QEMU RISCV specific KVM stubs
-+ *
-+ *  Copyright (c) rev.ng Labs Srl.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "target/riscv/kvm/kvm_riscv.h"
-+
-+void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-+                          uint64_t aia_irq_num, uint64_t aia_msi_num,
-+                          uint64_t aplic_base, uint64_t imsic_base,
-+                          uint64_t guest_num)
-+{
-+    g_assert_not_reached();
-+}
-+
-+uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/target/riscv/kvm/meson.build b/target/riscv/kvm/meson.build
-index 7e92415091..d3f395f431 100644
---- a/target/riscv/kvm/meson.build
-+++ b/target/riscv/kvm/meson.build
-@@ -1 +1,2 @@
-+riscv_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
- riscv_ss.add(when: 'CONFIG_KVM', if_true: files('kvm-cpu.c'))
+diff --git a/target/riscv/csr.h b/target/riscv/csr.h
+index 3752a0ef43..e6a6f2e85f 100644
+--- a/target/riscv/csr.h
++++ b/target/riscv/csr.h
+@@ -90,4 +90,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+                        target_ulong val);
+ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
+ 
++/* PMU CSRs */
++RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
++                                  bool upper_half, uint32_t ctr_idx);
+ #endif /* RISCV_CSR_H */
+diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
+index 3853d0e262..ca40cfeed6 100644
+--- a/target/riscv/pmu.h
++++ b/target/riscv/pmu.h
+@@ -36,7 +36,5 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+                           uint32_t ctr_idx);
+ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
+                                  bool new_virt);
+-RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+-                                  bool upper_half, uint32_t ctr_idx);
+ 
+ #endif /* RISCV_PMU_H */
+diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+index 708f2ec7aa..9701c8cba6 100644
+--- a/target/riscv/pmu.c
++++ b/target/riscv/pmu.c
+@@ -22,6 +22,7 @@
+ #include "qemu/timer.h"
+ #include "cpu.h"
+ #include "pmu.h"
++#include "target/riscv/csr.h"
+ #include "exec/icount.h"
+ #include "system/device_tree.h"
+ 
 
 -- 
 2.51.0
