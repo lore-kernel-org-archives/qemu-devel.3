@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA96E66886
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3594E66886
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:21:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKJJ-0003LB-9h; Sun, 21 Dec 2025 09:21:30 -0500
+	id 1vXKJS-0003VZ-1K; Sun, 21 Dec 2025 09:21:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIZ-0002uS-0R
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:20:41 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIx-0003Ff-1d
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:07 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIX-0000Zk-7a
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:20:38 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIu-0000da-Th
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=8097dukWnvTT3/VxU0zUohkkc4v9T/kFeA1Gcj/Pgvg=; b=rZhq7pJHk2iT6zL
- dAImlSzyH/pmN8zBFBoMhGKmblp6sIhEw/yoPMFS9IydmA1p3uk/ze+rkGqnyOXN8fmzJUOdB4FbE
- m+d4RnfPKvxMyQ7PG9udXgqfLP+tHUGzVSwvUjGQfB8K0QwuXczfd40DCoJb9Yxp7EXCbDTbgccTz
- kA=;
-Date: Sun, 21 Dec 2025 15:23:07 +0100
-Subject: [PATCH v2 03/14] hw/riscv: Filter machine types for
- qemu-system-riscv32/64 binaries
+ List-Help; bh=y5j9o9DZeXk+MlQUoUTC22j4617/r2LDymh+t/2Dljs=; b=O+n+s9ecKUZ3zIy
+ OVTakJCB+GPBtE39QgJtifh8a3AvPPKAvWBMns/iM/FeriyXw2PAARhN+nqS35Pmu+GzzA6ZU+kHm
+ TX8UDJEBh9Zhu4SUaxLVHHu1d2j8PgtnHqJUy3eZ6GTNd5c+erg6Ak+EmhlI9gpXfY4UTqZ5iwTsG
+ dU=;
+Date: Sun, 21 Dec 2025 15:23:12 +0100
+Subject: [PATCH v2 08/14] target/riscv: Remove ifdefs in cpu.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251221-hw-riscv-cpu-int-v2-3-eb49d72c5b2f@rev.ng>
+Message-Id: <20251221-hw-riscv-cpu-int-v2-8-eb49d72c5b2f@rev.ng>
 References: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
 In-Reply-To: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
 To: qemu-devel@nongnu.org
@@ -66,202 +65,119 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register machines able to run in qemu-system-riscv32,
-qemu-system-riscv64, or both.
+KVM fields of CPURISCVState are now always exposed as CONFIG_KVM cannot
+be used in common code.
+
+riscv_cpu_mxl() is changed to return CPURISCVState::misa_mxl
+unconditionally, as use of target_riscv64() would result in an extra
+load and compare with TargetInfo::target_arch.  We might as well just
+perform a single load.  Likewise, for cpu_recompute_xl(),
+cpu_address_xl(), and riscv_cpu_sxl(), we opt for returning the
+corresponding CPURISCVState field with ifdefs for system mode adding
+extra conditions.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- hw/riscv/microblaze-v-generic.c | 3 ++-
- hw/riscv/microchip_pfsoc.c      | 2 ++
- hw/riscv/opentitan.c            | 2 ++
- hw/riscv/shakti_c.c             | 2 ++
- hw/riscv/sifive_e.c             | 2 ++
- hw/riscv/sifive_u.c             | 2 ++
- hw/riscv/spike.c                | 2 ++
- hw/riscv/virt.c                 | 3 +++
- hw/riscv/xiangshan_kmh.c        | 2 ++
- 9 files changed, 19 insertions(+), 1 deletion(-)
+ target/riscv/cpu.h | 36 ++++++++----------------------------
+ 1 file changed, 8 insertions(+), 28 deletions(-)
 
-diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
-index e863c50cbc..0df276f9fb 100644
---- a/hw/riscv/microblaze-v-generic.c
-+++ b/hw/riscv/microblaze-v-generic.c
-@@ -25,6 +25,7 @@
- #include "system/address-spaces.h"
- #include "hw/char/xilinx_uartlite.h"
- #include "hw/misc/unimp.h"
-+#include "hw/riscv/machines-qom.h"
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index da2bc554d3..946665d9ed 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -497,14 +497,12 @@ struct CPUArchState {
+     hwaddr kernel_addr;
+     hwaddr fdt_addr;
  
- #define LMB_BRAM_SIZE (128 * KiB)
- #define MEMORY_BASEADDR 0x80000000
-@@ -186,4 +187,4 @@ static void mb_v_generic_machine_init(MachineClass *mc)
-     mc->default_cpus = 1;
+-#ifdef CONFIG_KVM
+     /* kvm timer */
+     bool kvm_timer_dirty;
+     uint64_t kvm_timer_time;
+     uint64_t kvm_timer_compare;
+     uint64_t kvm_timer_state;
+     uint64_t kvm_timer_frequency;
+-#endif /* CONFIG_KVM */
+ 
+     /* RNMI */
+     uint64_t mnscratch;
+@@ -703,14 +701,10 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
+ FIELD(TB_FLAGS, PM_PMM, 29, 2)
+ FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
+ 
+-#ifdef TARGET_RISCV32
+-#define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+-#else
+ static inline RISCVMXL riscv_cpu_mxl(CPURISCVState *env)
+ {
+     return env->misa_mxl;
+ }
+-#endif
+ #define riscv_cpu_mxl_bits(env) (1UL << (4 + riscv_cpu_mxl(env)))
+ 
+ static inline const RISCVCPUConfig *riscv_cpu_cfg(CPURISCVState *env)
+@@ -754,9 +748,6 @@ static inline RISCVMXL cpu_get_xl(CPURISCVState *env, privilege_mode_t mode)
+ }
+ #endif
+ 
+-#if defined(TARGET_RISCV32)
+-#define cpu_recompute_xl(env)  ((void)(env), MXL_RV32)
+-#else
+ static inline RISCVMXL cpu_recompute_xl(CPURISCVState *env)
+ {
+ #if !defined(CONFIG_USER_ONLY)
+@@ -765,43 +756,32 @@ static inline RISCVMXL cpu_recompute_xl(CPURISCVState *env)
+     return env->misa_mxl;
+ #endif
+ }
+-#endif
+ 
+-#if defined(TARGET_RISCV32)
+-#define cpu_address_xl(env)  ((void)(env), MXL_RV32)
+-#else
+ static inline RISCVMXL cpu_address_xl(CPURISCVState *env)
+ {
+-#ifdef CONFIG_USER_ONLY
+-    return env->xl;
+-#else
+-    int mode = cpu_address_mode(env);
+-
+-    return cpu_get_xl(env, mode);
++#ifndef CONFIG_USER_ONLY
++    if (target_riscv64()) {
++        int mode = cpu_address_mode(env);
++        return cpu_get_xl(env, mode);
++    }
+ #endif
++    return env->xl;
+ }
+-#endif
+ 
+ static inline int riscv_cpu_xlen(CPURISCVState *env)
+ {
+     return 16 << env->xl;
  }
  
--DEFINE_MACHINE("amd-microblaze-v-generic", mb_v_generic_machine_init)
-+DEFINE_MACHINE_RISCV32_64("amd-microblaze-v-generic", mb_v_generic_machine_init)
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index bc4f409c19..51b53121c5 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -49,6 +49,7 @@
- #include "hw/misc/unimp.h"
- #include "hw/riscv/boot.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "hw/riscv/machines-qom.h"
- #include "hw/riscv/microchip_pfsoc.h"
- #include "hw/intc/riscv_aclint.h"
- #include "hw/intc/sifive_plic.h"
-@@ -748,6 +749,7 @@ static const TypeInfo microchip_icicle_kit_machine_typeinfo = {
-     .class_init = microchip_icicle_kit_machine_class_init,
-     .instance_init = microchip_icicle_kit_machine_instance_init,
-     .instance_size = sizeof(MicrochipIcicleKitState),
-+    .interfaces = riscv64_machine_interfaces,
- };
- 
- static void microchip_icicle_kit_machine_init_register_types(void)
-diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
-index d369a8a7dc..e8c6829365 100644
---- a/hw/riscv/opentitan.c
-+++ b/hw/riscv/opentitan.c
-@@ -26,6 +26,7 @@
- #include "hw/boards.h"
- #include "hw/misc/unimp.h"
- #include "hw/riscv/boot.h"
-+#include "hw/riscv/machines-qom.h"
- #include "qemu/units.h"
- #include "system/system.h"
- #include "system/address-spaces.h"
-@@ -335,6 +336,7 @@ static const TypeInfo open_titan_types[] = {
-         .parent         = TYPE_MACHINE,
-         .instance_size  = sizeof(OpenTitanState),
-         .class_init     = opentitan_machine_class_init,
-+        .interfaces     = riscv32_machine_interfaces,
+-#ifdef TARGET_RISCV32
+-#define riscv_cpu_sxl(env)  ((void)(env), MXL_RV32)
+-#else
+ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *env)
+ {
+-#ifdef CONFIG_USER_ONLY
+-    return env->misa_mxl;
+-#else
++#ifndef CONFIG_USER_ONLY
+     if (env->misa_mxl != MXL_RV32) {
+         return get_field(env->mstatus, MSTATUS64_SXL);
      }
- };
+ #endif
+-    return MXL_RV32;
++    return env->misa_mxl;
+ }
+-#endif
  
-diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
-index 3e7f441172..d4cf72de3e 100644
---- a/hw/riscv/shakti_c.c
-+++ b/hw/riscv/shakti_c.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "hw/boards.h"
- #include "hw/riscv/shakti_c.h"
-+#include "hw/riscv/machines-qom.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "hw/intc/sifive_plic.h"
-@@ -92,6 +93,7 @@ static const TypeInfo shakti_c_machine_type_info = {
-     .class_init = shakti_c_machine_class_init,
-     .instance_init = shakti_c_machine_instance_init,
-     .instance_size = sizeof(ShaktiCMachineState),
-+    .interfaces = riscv64_machine_interfaces,
- };
- 
- static void shakti_c_machine_type_info_register(void)
-diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
-index 7baed1958e..7ed419cf69 100644
---- a/hw/riscv/sifive_e.c
-+++ b/hw/riscv/sifive_e.c
-@@ -40,6 +40,7 @@
- #include "hw/riscv/riscv_hart.h"
- #include "hw/riscv/sifive_e.h"
- #include "hw/riscv/boot.h"
-+#include "hw/riscv/machines-qom.h"
- #include "hw/char/sifive_uart.h"
- #include "hw/intc/riscv_aclint.h"
- #include "hw/intc/sifive_plic.h"
-@@ -167,6 +168,7 @@ static const TypeInfo sifive_e_machine_typeinfo = {
-     .class_init = sifive_e_machine_class_init,
-     .instance_init = sifive_e_machine_instance_init,
-     .instance_size = sizeof(SiFiveEState),
-+    .interfaces = riscv32_64_machine_interfaces,
- };
- 
- static void sifive_e_machine_init_register_types(void)
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 2d27e925e8..2ff2059bb9 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -51,6 +51,7 @@
- #include "hw/riscv/riscv_hart.h"
- #include "hw/riscv/sifive_u.h"
- #include "hw/riscv/boot.h"
-+#include "hw/riscv/machines-qom.h"
- #include "hw/char/sifive_uart.h"
- #include "hw/intc/riscv_aclint.h"
- #include "hw/intc/sifive_plic.h"
-@@ -742,6 +743,7 @@ static const TypeInfo sifive_u_machine_typeinfo = {
-     .class_init = sifive_u_machine_class_init,
-     .instance_init = sifive_u_machine_instance_init,
-     .instance_size = sizeof(SiFiveUState),
-+    .interfaces = riscv32_64_machine_interfaces,
- };
- 
- static void sifive_u_machine_init_register_types(void)
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index ce190f6c62..69eb3dfc24 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -33,6 +33,7 @@
- #include "hw/riscv/spike.h"
- #include "hw/riscv/boot.h"
- #include "hw/riscv/numa.h"
-+#include "hw/riscv/machines-qom.h"
- #include "hw/char/riscv_htif.h"
- #include "hw/intc/riscv_aclint.h"
- #include "chardev/char.h"
-@@ -374,6 +375,7 @@ static const TypeInfo spike_machine_typeinfo = {
-     .class_init = spike_machine_class_init,
-     .instance_init = spike_machine_instance_init,
-     .instance_size = sizeof(SpikeState),
-+    .interfaces = riscv32_64_machine_interfaces,
- };
- 
- static void spike_machine_init_register_types(void)
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index aa4dd91325..f42fffb223 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -36,6 +36,7 @@
- #include "hw/riscv/riscv-iommu-bits.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/boot.h"
-+#include "hw/riscv/machines-qom.h"
- #include "hw/riscv/numa.h"
- #include "kvm/kvm_riscv.h"
- #include "hw/firmware/smbios.h"
-@@ -1989,6 +1990,8 @@ static const TypeInfo virt_machine_typeinfo = {
-     .instance_size = sizeof(RISCVVirtState),
-     .interfaces = (const InterfaceInfo[]) {
-          { TYPE_HOTPLUG_HANDLER },
-+         { TYPE_TARGET_RISCV32_MACHINE },
-+         { TYPE_TARGET_RISCV64_MACHINE },
-          { }
-     },
- };
-diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
-index a95fd6174f..4d7e191098 100644
---- a/hw/riscv/xiangshan_kmh.c
-+++ b/hw/riscv/xiangshan_kmh.c
-@@ -41,6 +41,7 @@
- #include "hw/riscv/boot.h"
- #include "hw/riscv/xiangshan_kmh.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "hw/riscv/machines-qom.h"
- #include "system/system.h"
- 
- static const MemMapEntry xiangshan_kmh_memmap[] = {
-@@ -211,6 +212,7 @@ static const TypeInfo xiangshan_kmh_machine_info = {
-     .parent = TYPE_MACHINE,
-     .instance_size = sizeof(XiangshanKmhState),
-     .class_init = xiangshan_kmh_machine_class_init,
-+    .interfaces = riscv64_machine_interfaces,
- };
- 
- static void xiangshan_kmh_machine_register_types(void)
+ static inline bool riscv_cpu_allow_16bit_insn(const RISCVCPUConfig *cfg,
+                                               uint32_t priv_ver,
 
 -- 
 2.51.0
