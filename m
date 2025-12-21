@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98B4E66886
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 470EEE67482
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKJV-0003j8-S5; Sun, 21 Dec 2025 09:21:38 -0500
+	id 1vXKJW-0003lF-2Q; Sun, 21 Dec 2025 09:21:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIk-00035E-7K
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:01 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKJH-0003OP-Gu
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:30 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIi-0000au-3X
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:20:49 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKJF-0000it-CM
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=nTi4GpPHVXwHlFatLSgUmXvOzveNAWJZ5/pH3pOSRVE=; b=mkE7/3zofZumH66
- 70K2NOiy/2kqmUVnOuJsNyMmxbMpJ4AQSY3Deod9RTyieee7N5Ngf6DE1fctSmAWcm3HTzhkHV3Ea
- 3rLI+S9hfCiz07Fhr6ZlEZQcmP+1w5ZVHpjeY9/NMG69S/tjWm1TIAP4x1XetoNOTDlxIYrzbZ2W+
- RU=;
-Date: Sun, 21 Dec 2025 15:23:09 +0100
-Subject: [PATCH v2 05/14] configs/target: Implement per-binary TargetInfo
- structure for riscv
+ List-Help; bh=ssTL4ubJcwFZJiRGJR5Z2TJ9pBIHK+aEJDr5Ee4U/v4=; b=VDg1jQJ+wInkCp3
+ yHuMNQlA4Mb23ZOJPTNT2YNcIS/0ZA5bwpFrk5Rw0jkf3pQZgIAG2fVD+7FxWkNVbJ0LhGVrLUfCp
+ zKROvwz6dovs48nIKJfcyDz2pTyo8H552WOp+WDO5HG0QgXUKYg01BJovs9UwRcuEP2knNn74L7w3
+ KM=;
+Date: Sun, 21 Dec 2025 15:23:15 +0100
+Subject: [PATCH v2 11/14] target/riscv: Make pmu.h target-agnostic
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251221-hw-riscv-cpu-int-v2-5-eb49d72c5b2f@rev.ng>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20251221-hw-riscv-cpu-int-v2-11-eb49d72c5b2f@rev.ng>
 References: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
 In-Reply-To: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
 To: qemu-devel@nongnu.org
@@ -66,91 +65,60 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Defines TargetInfo for 32- and 64-bit riscv binaries.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- configs/targets/riscv32-softmmu.c | 26 ++++++++++++++++++++++++++
- configs/targets/riscv64-softmmu.c | 26 ++++++++++++++++++++++++++
- configs/targets/meson.build       |  1 +
- 3 files changed, 53 insertions(+)
+ target/riscv/pmu.h | 2 +-
+ target/riscv/pmu.c | 8 +++++---
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/configs/targets/riscv32-softmmu.c b/configs/targets/riscv32-softmmu.c
-new file mode 100644
-index 0000000000..897c93594b
---- /dev/null
-+++ b/configs/targets/riscv32-softmmu.c
-@@ -0,0 +1,26 @@
-+/*
-+ * QEMU binary/target API (qemu-system-riscv32)
-+ *
-+ *  Copyright (c) rev.ng Labs Srl.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/target-info-impl.h"
-+#include "hw/riscv/machines-qom.h"
-+#include "target/riscv/cpu-qom.h"
-+
-+static const TargetInfo target_info_riscv32_system = {
-+    .target_name = "riscv32",
-+    .target_arch = SYS_EMU_TARGET_RISCV32,
-+    .long_bits = 32,
-+    .cpu_type = TYPE_RISCV_CPU,
-+    .machine_typename = TYPE_TARGET_RISCV32_MACHINE,
-+    .endianness = ENDIAN_MODE_LITTLE,
-+};
-+
-+const TargetInfo *target_info(void)
-+{
-+    return &target_info_riscv32_system;
-+}
-diff --git a/configs/targets/riscv64-softmmu.c b/configs/targets/riscv64-softmmu.c
-new file mode 100644
-index 0000000000..d2e4520d76
---- /dev/null
-+++ b/configs/targets/riscv64-softmmu.c
-@@ -0,0 +1,26 @@
-+/*
-+ * QEMU binary/target API (qemu-system-riscv64)
-+ *
-+ *  Copyright (c) rev.ng Labs Srl.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/target-info-impl.h"
-+#include "hw/riscv/machines-qom.h"
-+#include "target/riscv/cpu-qom.h"
-+
-+static const TargetInfo target_info_riscv64_system = {
-+    .target_name = "riscv64",
-+    .target_arch = SYS_EMU_TARGET_RISCV64,
-+    .long_bits = 64,
-+    .cpu_type = TYPE_RISCV_CPU,
-+    .machine_typename = TYPE_TARGET_RISCV64_MACHINE,
-+    .endianness = ENDIAN_MODE_LITTLE,
-+};
-+
-+const TargetInfo *target_info(void)
-+{
-+    return &target_info_riscv64_system;
-+}
-diff --git a/configs/targets/meson.build b/configs/targets/meson.build
-index cca2514eb5..2ab4d27eaf 100644
---- a/configs/targets/meson.build
-+++ b/configs/targets/meson.build
-@@ -1,5 +1,6 @@
- foreach target : [
-       'arm-softmmu', 'aarch64-softmmu',
-+      'riscv32-softmmu', 'riscv64-softmmu'
-   ]
-   config_target_info += {target : files(target + '.c')}
- endforeach
+diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
+index ca40cfeed6..273d8f3f94 100644
+--- a/target/riscv/pmu.h
++++ b/target/riscv/pmu.h
+@@ -34,7 +34,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
+ void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+                           uint32_t ctr_idx);
+-void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
++void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
+                                  bool new_virt);
+ 
+ #endif /* RISCV_PMU_H */
+diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+index 9701c8cba6..d818c2f8f6 100644
+--- a/target/riscv/pmu.c
++++ b/target/riscv/pmu.c
+@@ -115,7 +115,8 @@ static bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
+  *  new priv and new virt values are passed in as arguments.
+  */
+ static void riscv_pmu_icount_update_priv(CPURISCVState *env,
+-                                         target_ulong newpriv, bool new_virt)
++                                         privilege_mode_t newpriv,
++                                         bool new_virt)
+ {
+     uint64_t *snapshot_prev, *snapshot_new;
+     uint64_t current_icount;
+@@ -155,7 +156,8 @@ static void riscv_pmu_icount_update_priv(CPURISCVState *env,
+ }
+ 
+ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
+-                                        target_ulong newpriv, bool new_virt)
++                                        privilege_mode_t newpriv,
++                                        bool new_virt)
+ {
+     uint64_t *snapshot_prev, *snapshot_new;
+     uint64_t current_ticks;
+@@ -190,7 +192,7 @@ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
+     counter_arr[env->priv] += delta;
+ }
+ 
+-void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
++void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
+                                  bool new_virt)
+ {
+     riscv_pmu_cycle_update_priv(env, newpriv, new_virt);
 
 -- 
 2.51.0
