@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1292DE66886
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2811E67482
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:41:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKM7-0001T2-3Q; Sun, 21 Dec 2025 09:24:19 -0500
+	id 1vXKcX-0007aO-QG; Sun, 21 Dec 2025 09:41:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vXKLY-0001IZ-Ki
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:48 -0500
-Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
+ (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
+ id 1vXKcM-0007UW-OD
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:41:08 -0500
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vXKLX-0001JP-6a
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:44 -0500
-Received: by mail-pf1-x444.google.com with SMTP id
- d2e1a72fcca58-7fbbb84f034so2390688b3a.0
- for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 06:23:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
+ id 1vXKcJ-0007Lw-4h
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:41:05 -0500
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7c6da42fbd4so1613901a34.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 06:41:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766327021; x=1766931821; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XdPuLFFZ3D4mmgZaO7d+HZBZoL5op64qzVNSL0sChe4=;
- b=CBISeN9A9j5z91qrwGP4+j/5+NF520twVOkjpR16f2PRQoy1oz29ozKreQHajlIlBR
- 9ci5pzcVonqr1muFXAP9H0AqhrfO3grYP/cKnhz8jXDSqxL34gAHucRRV7p+iL8mUyxh
- hsbnYIGjYbvHfjRVMktdDH7n8Br5yTnq036CemldiahB/XR5q6EsguwMg9YQ5ovqQA08
- V6WMGcXQuVkbfkexAhkXPz7/ToroWbZz/MJ+3CosnJ3WffoMe9+W55OQy0FjqPVylcvT
- MGKFoI+2AnnSZINxDUUb/qBrPq4Kv1IN7QZaTvn5lYVLTOccNnfJix6x7kNgbAkMZhLX
- OgQA==
+ d=gmail.com; s=20230601; t=1766328061; x=1766932861; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jCNfRTUuxHny5w058jtRaDTaVSrfSJaYpdXiovAvXzY=;
+ b=GN9x6G60lVuY4Ai0Lxbvrgmspe+aG5fty5Ftp4zvgrvE+2zVs0kv2c2DVSgdGeNzEm
+ 9aN8JMvF3B2r3PxBEWHI+cN9P0eHIL9UXL6ak/3X4xkhkhq0XHUTngSjDEJ9qEvm2zud
+ VjWA+a22UqpsMrJN2Gfr+BITmzRHo4jx9vpjgduLGgE6sqHCk7O8UYuI15I+oVPWnHwe
+ bup1wRlCvG7+TjtYA4BbMjXgSpyFOo9uznB8PSMP+hoV1767TC3eKo+587Vfj9Cmme39
+ J5TRTRb6zI7x4xBZHb3iilMD0LC4BxrvL3ySfb3AItz4lwkpb3METF0jc8P4A2Eg5UsY
+ n/7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766327021; x=1766931821;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XdPuLFFZ3D4mmgZaO7d+HZBZoL5op64qzVNSL0sChe4=;
- b=iCOjMONayg1lPippgZ9wT/g0Xe0m6DA4qSeBx/YFx8ySf6Inb/e8WOTyEbsJjF+anI
- u9quB5Nn76qXFpdw3dkYBIjrm+5IJZfcjQ83zOFJDmS4TARwf78zGnykWpx6ugwQnrFG
- oVoFcdQJaGEyDCkjvMFbjGzbWD+h4mo5QEAUREdM4SMxrWK+rswQasw1iaI4iYxoCJlE
- zTb2r7ybig+acltsLmy4HhQkGf3HY5N1qd0mDi5ornM2wbriWV+BPg/83A5PbEqQskVW
- 4wOEwxMlRa/1symgEwi7iO6hlSNo7h8jnBuPbi3659K1X5HuLN4PXtzi9oKQvESs4HiE
- AGgw==
-X-Gm-Message-State: AOJu0Yyi4x5ukJlO7jCIwK7Ejt3IHx5jfyB+wfn9KIpARJ97qHZLVhj9
- 8E1IKO9Z+I8qNCMG7A+1/TsLoNm7SEBq5BnqQXlhLqkcjCGMkJ75bb0jXz0h0qWU2+k=
-X-Gm-Gg: AY/fxX7kQN18scyyMQmuRF4r+N5/VVMBKWYuTuDSDzfHSKwgEH78SIWoQga3NuuNAED
- CpGUotmGWeiL5CdU0rUH3oXwzAXq1eEIXO3dJJsV44eFaxkstzXZ/eWiDnfV8Viv+81jf+F6EFm
- UlRh8b/wpOPpB6nV/7M++oV1uW05ltaQkaD9uhcbH5XyUlhgzBaENgxhtTgdbtZlFTgjX3XlWhH
- 61tUbllhZCJUv371AYyYqypB5T/hu3t4JmV5IOag+ELcBRSW9yi/2iBT4E8nk0wtuC6c2dlfGxK
- C4hneJ9n18rWMzrrek+UBE9Vs+fT2Hs4KtpS3/32f9x1hmfO6/b6RaACh0aPno8cvplR0NgqTrB
- vzr6MfpSFMD3COj3p0LS+P2ZOf9ojaktpFqavpy6DRfvG9WwyJ4bH4XY1apgwvVluQy5ZyEShgf
- dt8y09H3raH6jCDxI4z48=
-X-Google-Smtp-Source: AGHT+IG28diYGF80RZ0QtpeanFRL2g6gItmMNsqtmbusPT3zdERd0iLHnEsiU7RtEdteUkFqcFVx+Q==
-X-Received: by 2002:a05:6a00:1ca2:b0:7e8:4471:8e2 with SMTP id
- d2e1a72fcca58-7ff66f569e7mr7616635b3a.67.1766327021542; 
- Sun, 21 Dec 2025 06:23:41 -0800 (PST)
-Received: from fedora.. ([118.151.210.82]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7e48f258sm7590449b3a.47.2025.12.21.06.23.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Dec 2025 06:23:41 -0800 (PST)
-From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-To: qemu-devel@nongnu.org, deller@gmx.de, sarkarsoumyajyoti23@gmail.com,
- mark.cave-ayland@ilande.co.uk, richard.henderson@linaro.org
-Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH 06/10] scsi:ncr710:Mark command complete in status phase and
- fix disconnect
-Date: Sun, 21 Dec 2025 19:53:13 +0530
-Message-ID: <20251221142317.266293-7-soumyajyotisarkar23@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20251221142317.266293-1-soumyajyotisarkar23@gmail.com>
-References: <20251221142317.266293-1-soumyajyotisarkar23@gmail.com>
+ d=1e100.net; s=20230601; t=1766328061; x=1766932861;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jCNfRTUuxHny5w058jtRaDTaVSrfSJaYpdXiovAvXzY=;
+ b=ef+SKGo8FWQyJIiVN1vTc0S+7k3QEhp0pDIj90TfBHoemd1VaX2/o4+bicBJHFlqyw
+ MUs7PBnnW32fIF9I9uuPSXCiWfpOUlqoH1cCVEMFqBh7quYjMS7Zq4sT8/FA3NfN7z7l
+ uoBnyfrwyWmQXLfdRQ/I2dbQTo3Ml41UOX+mVheqZXh8bzqJaNoXXCGlZNVz2SwPzDCj
+ 5rZdya7RTpkzH5IrAzzd2/zNbufhKz8X6XQZcYvmCeC0iFk7SdhVmvPQ9CtF6Qb09R7U
+ qAUEMuRJrrSVQn9fVL+71S/An//BnX/A4pPxbVFq0exudNaoIRayQ0GPf9m5DixqZIOr
+ tk+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRem51e/XBVXG61zik0ac1GMwOjPzvB4ZJfzCbPydvh7DA8m2uFl8hPabvb3Z5i3DaJLG3YPsVjMXz@nongnu.org
+X-Gm-Message-State: AOJu0YySQCUWTsoqJxVw6U7q7Oi1amvaiyAJBbt/jXlOvCqrRaGbfj/i
+ Gg3F6U1vNytmigOp2tvCEx729IO+ocBrAfVCfv+fJtceZBE0V8LiMTafdBz+OsHPweMguAMXwat
+ PhAChr2+b0X8GzjCwvc4VttlKJOrKWnA=
+X-Gm-Gg: AY/fxX5HHCZNvH5Ia5EP95i3KDtylaQVWpJw24zBGE/CXoYsB9CTw7TpbPHxIyr5iRK
+ knQLI4zpkhw5X6W5pDr37cVQI/B1VIbDAmJ1yR9czF9eD0ZqjvOJPuX6LbPYW9JVk/26rgKcfDk
+ J+pfAGdioUtuEypKKaYaKzayYoSf5g/IxbeoAzGItP0ms4LWTcYeHF149adozST2UNTu/DyugcZ
+ HytvQihZxbthXJNcFJQij7m1OKIYdbWQ2p663mlI3+kEFVqdzZkZK0n65eYPy2VDsXXfXGvBk+J
+ elwh3aO2NhCc3cIkvFmKdUmihc9ReQ==
+X-Google-Smtp-Source: AGHT+IEwvYsSqk6LTPzonllM9kXKN3Ewokmi0uuxl5j8H8AfcEr7gpjGAIoqYU3uSub78Nm/7+3L6dfpmDNNbofvqC8=
+X-Received: by 2002:a05:6820:2224:b0:659:9a49:8e45 with SMTP id
+ 006d021491bc7-65d0e9b6056mr3920550eaf.21.1766328061154; Sun, 21 Dec 2025
+ 06:41:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x444.google.com
+References: <87ike27ucd.fsf@pond.sub.org>
+ <CAMyd1rQ6CLN2FPic=4pNpZtcw46io2xftkBDSLfd8V9S+Jyu0A@mail.gmail.com>
+ <878qex3ac7.fsf@pond.sub.org>
+ <CAMyd1rR9HLwn-fzWfgqu=ZdtOq_Ae6Den-0oCmZpXAjxbup87A@mail.gmail.com>
+ <8e9cc465-fc3a-4665-b754-6d5e20bc3651@linaro.org>
+In-Reply-To: <8e9cc465-fc3a-4665-b754-6d5e20bc3651@linaro.org>
+From: Jackson Donaldson <jackson88044@gmail.com>
+Date: Sun, 21 Dec 2025 09:40:49 -0500
+X-Gm-Features: AQt7F2pCQ90zvu9NIx4_5sVnLmA4PObCQca92-a4xgIZnzHNiqazeUgDEidyefg
+Message-ID: <CAMyd1rSG9FuSVYFHZpSwyN+CBi_HFYBUAiOqAXh35bZaiNQtsw@mail.gmail.com>
+Subject: Re: MAX78000 machine needs a maintainer
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000a45a710646774c79"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=jackson88044@gmail.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,36 +101,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set command_complete flag after status_phase and use_phase_clearing,
-instead of full disconnect during message processing
+--000000000000a45a710646774c79
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Soumyajyotii Ssarkar<soumyajyotisarkar23@gmail.com>
----
- hw/scsi/ncr53c710.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> My understanding of Markus question is not why you implemented this
+> machine, but why you decided to contribute it, if you are not going
+> to maintain it, because then this is more burden for other maintainers.
 
-diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 4b42fab754..3d7318c12e 100644
---- a/hw/scsi/ncr53c710.c
-+++ b/hw/scsi/ncr53c710.c
-@@ -997,6 +997,7 @@ static void ncr710_do_status(NCR710State *s)
-     ncr710_set_phase(s, PHASE_MI);
-     s->msg_action = NCR710_MSG_ACTION_DISCONNECT;
-     ncr710_add_msg_byte(s, 0); /* COMMAND COMPLETE */
-+    s->command_complete = NCR710_CMD_COMPLETE;
- }
- 
- static void ncr710_do_msgin(NCR710State *s)
-@@ -1041,7 +1042,7 @@ static void ncr710_do_msgin(NCR710State *s)
-         ncr710_set_phase(s, PHASE_CO);
-         break;
-     case NCR710_MSG_ACTION_DISCONNECT:
--        ncr710_disconnect(s);
-+        s->sstat2 &= ~PHASE_MASK;
-         break;
-     case NCR710_MSG_ACTION_DATA_OUT:
-         ncr710_set_phase(s, PHASE_DO);
--- 
-2.49.0
+I decided to contribute it in the hopes that it would be useful to someone
+in the future? It did not occur to me that contributing code came with any
+kind of implicit promise of maintenance.
 
+If doing so created more of a burden for you and the other maintainers then
+I'm sorry about that; I really appreciate all the work you do.
+
+--000000000000a45a710646774c79
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">&gt; My understanding of Markus question =
+is not why you implemented this<br>&gt; machine, but why you decided to con=
+tribute it, if you are not going<br>&gt; to maintain it, because then this =
+is more burden for other maintainers.
+
+<br></div><div dir=3D"ltr"><br></div><div dir=3D"ltr">I decided to contribu=
+te it in the hopes that it would be useful to someone in the future? It did=
+ not occur to me that contributing code came with any kind of implicit prom=
+ise of maintenance.</div><div dir=3D"ltr">=C2=A0</div>If doing so created m=
+ore of a burden for you and the other maintainers then I&#39;m sorry about =
+that; I really appreciate all the work you do.<div class=3D"gmail_quote gma=
+il_quote_container"><br></div></div>
+
+--000000000000a45a710646774c79--
 
