@@ -4,89 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2811E67482
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B35BE66886
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:45:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKcX-0007aO-QG; Sun, 21 Dec 2025 09:41:17 -0500
+	id 1vXKgi-0008Sm-9A; Sun, 21 Dec 2025 09:45:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1vXKcM-0007UW-OD
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:41:08 -0500
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1vXKcJ-0007Lw-4h
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:41:05 -0500
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-7c6da42fbd4so1613901a34.1
- for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 06:41:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766328061; x=1766932861; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jCNfRTUuxHny5w058jtRaDTaVSrfSJaYpdXiovAvXzY=;
- b=GN9x6G60lVuY4Ai0Lxbvrgmspe+aG5fty5Ftp4zvgrvE+2zVs0kv2c2DVSgdGeNzEm
- 9aN8JMvF3B2r3PxBEWHI+cN9P0eHIL9UXL6ak/3X4xkhkhq0XHUTngSjDEJ9qEvm2zud
- VjWA+a22UqpsMrJN2Gfr+BITmzRHo4jx9vpjgduLGgE6sqHCk7O8UYuI15I+oVPWnHwe
- bup1wRlCvG7+TjtYA4BbMjXgSpyFOo9uznB8PSMP+hoV1767TC3eKo+587Vfj9Cmme39
- J5TRTRb6zI7x4xBZHb3iilMD0LC4BxrvL3ySfb3AItz4lwkpb3METF0jc8P4A2Eg5UsY
- n/7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766328061; x=1766932861;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jCNfRTUuxHny5w058jtRaDTaVSrfSJaYpdXiovAvXzY=;
- b=ef+SKGo8FWQyJIiVN1vTc0S+7k3QEhp0pDIj90TfBHoemd1VaX2/o4+bicBJHFlqyw
- MUs7PBnnW32fIF9I9uuPSXCiWfpOUlqoH1cCVEMFqBh7quYjMS7Zq4sT8/FA3NfN7z7l
- uoBnyfrwyWmQXLfdRQ/I2dbQTo3Ml41UOX+mVheqZXh8bzqJaNoXXCGlZNVz2SwPzDCj
- 5rZdya7RTpkzH5IrAzzd2/zNbufhKz8X6XQZcYvmCeC0iFk7SdhVmvPQ9CtF6Qb09R7U
- qAUEMuRJrrSVQn9fVL+71S/An//BnX/A4pPxbVFq0exudNaoIRayQ0GPf9m5DixqZIOr
- tk+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRem51e/XBVXG61zik0ac1GMwOjPzvB4ZJfzCbPydvh7DA8m2uFl8hPabvb3Z5i3DaJLG3YPsVjMXz@nongnu.org
-X-Gm-Message-State: AOJu0YySQCUWTsoqJxVw6U7q7Oi1amvaiyAJBbt/jXlOvCqrRaGbfj/i
- Gg3F6U1vNytmigOp2tvCEx729IO+ocBrAfVCfv+fJtceZBE0V8LiMTafdBz+OsHPweMguAMXwat
- PhAChr2+b0X8GzjCwvc4VttlKJOrKWnA=
-X-Gm-Gg: AY/fxX5HHCZNvH5Ia5EP95i3KDtylaQVWpJw24zBGE/CXoYsB9CTw7TpbPHxIyr5iRK
- knQLI4zpkhw5X6W5pDr37cVQI/B1VIbDAmJ1yR9czF9eD0ZqjvOJPuX6LbPYW9JVk/26rgKcfDk
- J+pfAGdioUtuEypKKaYaKzayYoSf5g/IxbeoAzGItP0ms4LWTcYeHF149adozST2UNTu/DyugcZ
- HytvQihZxbthXJNcFJQij7m1OKIYdbWQ2p663mlI3+kEFVqdzZkZK0n65eYPy2VDsXXfXGvBk+J
- elwh3aO2NhCc3cIkvFmKdUmihc9ReQ==
-X-Google-Smtp-Source: AGHT+IEwvYsSqk6LTPzonllM9kXKN3Ewokmi0uuxl5j8H8AfcEr7gpjGAIoqYU3uSub78Nm/7+3L6dfpmDNNbofvqC8=
-X-Received: by 2002:a05:6820:2224:b0:659:9a49:8e45 with SMTP id
- 006d021491bc7-65d0e9b6056mr3920550eaf.21.1766328061154; Sun, 21 Dec 2025
- 06:41:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <me@ziyao.cc>) id 1vXISV-0005l5-Uf
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 07:22:48 -0500
+Received: from mail5.out.flockmail.com ([54.161.96.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <me@ziyao.cc>) id 1vXISU-000246-Ed
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 07:22:47 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by smtp-out.flockmail.com (Postfix) with ESMTP id 4dZ0ld2R1Yz9rvw;
+ Sun, 21 Dec 2025 12:22:37 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256; bh=CeXYzpoV/HzQju2FXCn/V36fb1ZHeTurbLcdmmx23+I=; 
+ c=relaxed/relaxed; d=ziyao.cc;
+ h=subject:date:message-id:mime-version:cc:from:to:from:to:cc:subject:date:message-id:in-reply-to:reply-to:references;
+ q=dns/txt; s=titan1; t=1766319757; v=1;
+ b=DDFN0AqjO+Q95cAN2Cj5XlNsM3nkW7gmM8vOpwk49PODy2Tsaez4T0drinhst8nGUiQC9Wxn
+ T+hB5fqr7P4UiHyi2M5AjDQAdQl/T54MNQUQRVd1dOqBxwEJBXxB3B4RIEHf1dk2Tz/t1/Pekf2
+ 3Pny5tablCmuDAcQdRywQ7b8=
+Received: from ketchup (unknown [117.171.66.90])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by smtp-out.flockmail.com (Postfix) with ESMTPSA id 4dZ0lZ5N1gz9rvR;
+ Sun, 21 Dec 2025 12:22:34 +0000 (UTC)
+Feedback-ID: :me@ziyao.cc:ziyao.cc:flockmailId
+From: Yao Zi <me@ziyao.cc>
+To: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: qemu-devel@nongnu.org,
+	Yao Zi <me@ziyao.cc>
+Subject: [PATCH] hw/loongarch/virt: Permit bytes/half access to IOCSR
+Date: Sun, 21 Dec 2025 12:22:06 +0000
+Message-ID: <20251221122205.56463-2-me@ziyao.cc>
+X-Mailer: git-send-email 2.51.2
 MIME-Version: 1.0
-References: <87ike27ucd.fsf@pond.sub.org>
- <CAMyd1rQ6CLN2FPic=4pNpZtcw46io2xftkBDSLfd8V9S+Jyu0A@mail.gmail.com>
- <878qex3ac7.fsf@pond.sub.org>
- <CAMyd1rR9HLwn-fzWfgqu=ZdtOq_Ae6Den-0oCmZpXAjxbup87A@mail.gmail.com>
- <8e9cc465-fc3a-4665-b754-6d5e20bc3651@linaro.org>
-In-Reply-To: <8e9cc465-fc3a-4665-b754-6d5e20bc3651@linaro.org>
-From: Jackson Donaldson <jackson88044@gmail.com>
-Date: Sun, 21 Dec 2025 09:40:49 -0500
-X-Gm-Features: AQt7F2pCQ90zvu9NIx4_5sVnLmA4PObCQca92-a4xgIZnzHNiqazeUgDEidyefg
-Message-ID: <CAMyd1rSG9FuSVYFHZpSwyN+CBi_HFYBUAiOqAXh35bZaiNQtsw@mail.gmail.com>
-Subject: Re: MAX78000 machine needs a maintainer
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000a45a710646774c79"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=jackson88044@gmail.com; helo=mail-ot1-x32d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-F-Verdict: SPFVALID
+X-Titan-Src-Out: 1766319757193826375.21635.9107412786983697637@prod-use1-smtp-out1003.
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=a8/K9VSF c=1 sm=1 tr=0 ts=6947e68d
+ a=rBp+3XZz9uO5KTvnfbZ58A==:117 a=rBp+3XZz9uO5KTvnfbZ58A==:17
+ a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10 a=CEWIc4RMnpUA:10
+ a=aVE23oPOqu3myQbryVkA:9 a=3z85VNIBY5UIEeAh_hcH:22
+ a=NWVoK91CQySWRX1oVYDe:22
+Received-SPF: pass client-ip=54.161.96.10; envelope-from=me@ziyao.cc;
+ helo=mail5.out.flockmail.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 21 Dec 2025 09:45:02 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,36 +79,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a45a710646774c79
-Content-Type: text/plain; charset="UTF-8"
+IOCSRs could be accessed in any sizes from 1 to 8 bytes as long as the
+address is aligned, regardless whether through MMIO or iocsr{rd,wr}
+instructions. Lower min_access_size to 1 byte for IOCSR memory region to
+match real-hardware behavior.
 
-> My understanding of Markus question is not why you implemented this
-> machine, but why you decided to contribute it, if you are not going
-> to maintain it, because then this is more burden for other maintainers.
+Fixes: f84a2aacf5d1 ("target/loongarch: Add LoongArch IOCSR instruction")
+Signed-off-by: Yao Zi <me@ziyao.cc>
+---
+ hw/loongarch/virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I decided to contribute it in the hopes that it would be useful to someone
-in the future? It did not occur to me that contributing code came with any
-kind of implicit promise of maintenance.
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 49434ad1828b..5cc57e9b5aa7 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -692,7 +692,7 @@ static const MemoryRegionOps virt_iocsr_misc_ops = {
+     .write_with_attrs = virt_iocsr_misc_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+-        .min_access_size = 4,
++        .min_access_size = 1,
+         .max_access_size = 8,
+     },
+     .impl = {
+-- 
+2.51.2
 
-If doing so created more of a burden for you and the other maintainers then
-I'm sorry about that; I really appreciate all the work you do.
-
---000000000000a45a710646774c79
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">&gt; My understanding of Markus question =
-is not why you implemented this<br>&gt; machine, but why you decided to con=
-tribute it, if you are not going<br>&gt; to maintain it, because then this =
-is more burden for other maintainers.
-
-<br></div><div dir=3D"ltr"><br></div><div dir=3D"ltr">I decided to contribu=
-te it in the hopes that it would be useful to someone in the future? It did=
- not occur to me that contributing code came with any kind of implicit prom=
-ise of maintenance.</div><div dir=3D"ltr">=C2=A0</div>If doing so created m=
-ore of a burden for you and the other maintainers then I&#39;m sorry about =
-that; I really appreciate all the work you do.<div class=3D"gmail_quote gma=
-il_quote_container"><br></div></div>
-
---000000000000a45a710646774c79--
 
