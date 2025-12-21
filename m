@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3594E66886
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8189E67482
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKJS-0003VZ-1K; Sun, 21 Dec 2025 09:21:34 -0500
+	id 1vXKJU-0003aZ-0Q; Sun, 21 Dec 2025 09:21:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIx-0003Ff-1d
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:07 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKId-0002w5-Pb
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:20:50 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIu-0000da-Th
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:02 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIc-0000aA-Av
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:20:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=y5j9o9DZeXk+MlQUoUTC22j4617/r2LDymh+t/2Dljs=; b=O+n+s9ecKUZ3zIy
- OVTakJCB+GPBtE39QgJtifh8a3AvPPKAvWBMns/iM/FeriyXw2PAARhN+nqS35Pmu+GzzA6ZU+kHm
- TX8UDJEBh9Zhu4SUaxLVHHu1d2j8PgtnHqJUy3eZ6GTNd5c+erg6Ak+EmhlI9gpXfY4UTqZ5iwTsG
- dU=;
-Date: Sun, 21 Dec 2025 15:23:12 +0100
-Subject: [PATCH v2 08/14] target/riscv: Remove ifdefs in cpu.h
+ List-Help; bh=OjzAigogEAv0CrfjDAeEcEi2p6Uk8nGYiUhFSHcR+rE=; b=DJdmIkiP6Xlc622
+ kBMg7VwOz505bDajtJWg42rfTdOJp6Bt2qLyr0TvlsbEA1HaY4Cxa3ccy2hDcqR+qm3NJoQxmzBGu
+ HCu+M7EbwOltaNKuBV2/ir/1oM2jA7c4/mBOB/kZix4hqxWFpgZAd+0FntGOC6W46oIQVC0cd3z++
+ Hs=;
+Date: Sun, 21 Dec 2025 15:23:08 +0100
+Subject: [PATCH v2 04/14] hw/core: Add riscv[32|64] to "none" machine
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251221-hw-riscv-cpu-int-v2-8-eb49d72c5b2f@rev.ng>
+Message-Id: <20251221-hw-riscv-cpu-int-v2-4-eb49d72c5b2f@rev.ng>
 References: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
 In-Reply-To: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
 To: qemu-devel@nongnu.org
@@ -65,119 +65,31 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM fields of CPURISCVState are now always exposed as CONFIG_KVM cannot
-be used in common code.
-
-riscv_cpu_mxl() is changed to return CPURISCVState::misa_mxl
-unconditionally, as use of target_riscv64() would result in an extra
-load and compare with TargetInfo::target_arch.  We might as well just
-perform a single load.  Likewise, for cpu_recompute_xl(),
-cpu_address_xl(), and riscv_cpu_sxl(), we opt for returning the
-corresponding CPURISCVState field with ifdefs for system mode adding
-extra conditions.
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.h | 36 ++++++++----------------------------
- 1 file changed, 8 insertions(+), 28 deletions(-)
+ hw/core/null-machine.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index da2bc554d3..946665d9ed 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -497,14 +497,12 @@ struct CPUArchState {
-     hwaddr kernel_addr;
-     hwaddr fdt_addr;
+diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
+index 67b769bd3e..77e4ed60e6 100644
+--- a/hw/core/null-machine.c
++++ b/hw/core/null-machine.c
+@@ -17,6 +17,7 @@
+ #include "system/address-spaces.h"
+ #include "hw/core/cpu.h"
+ #include "hw/arm/machines-qom.h"
++#include "hw/riscv/machines-qom.h"
  
--#ifdef CONFIG_KVM
-     /* kvm timer */
-     bool kvm_timer_dirty;
-     uint64_t kvm_timer_time;
-     uint64_t kvm_timer_compare;
-     uint64_t kvm_timer_state;
-     uint64_t kvm_timer_frequency;
--#endif /* CONFIG_KVM */
- 
-     /* RNMI */
-     uint64_t mnscratch;
-@@ -703,14 +701,10 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
- FIELD(TB_FLAGS, PM_PMM, 29, 2)
- FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
- 
--#ifdef TARGET_RISCV32
--#define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
--#else
- static inline RISCVMXL riscv_cpu_mxl(CPURISCVState *env)
+ static void machine_none_init(MachineState *mch)
  {
-     return env->misa_mxl;
- }
--#endif
- #define riscv_cpu_mxl_bits(env) (1UL << (4 + riscv_cpu_mxl(env)))
- 
- static inline const RISCVCPUConfig *riscv_cpu_cfg(CPURISCVState *env)
-@@ -754,9 +748,6 @@ static inline RISCVMXL cpu_get_xl(CPURISCVState *env, privilege_mode_t mode)
- }
- #endif
- 
--#if defined(TARGET_RISCV32)
--#define cpu_recompute_xl(env)  ((void)(env), MXL_RV32)
--#else
- static inline RISCVMXL cpu_recompute_xl(CPURISCVState *env)
- {
- #if !defined(CONFIG_USER_ONLY)
-@@ -765,43 +756,32 @@ static inline RISCVMXL cpu_recompute_xl(CPURISCVState *env)
-     return env->misa_mxl;
- #endif
- }
--#endif
- 
--#if defined(TARGET_RISCV32)
--#define cpu_address_xl(env)  ((void)(env), MXL_RV32)
--#else
- static inline RISCVMXL cpu_address_xl(CPURISCVState *env)
- {
--#ifdef CONFIG_USER_ONLY
--    return env->xl;
--#else
--    int mode = cpu_address_mode(env);
--
--    return cpu_get_xl(env, mode);
-+#ifndef CONFIG_USER_ONLY
-+    if (target_riscv64()) {
-+        int mode = cpu_address_mode(env);
-+        return cpu_get_xl(env, mode);
-+    }
- #endif
-+    return env->xl;
- }
--#endif
- 
- static inline int riscv_cpu_xlen(CPURISCVState *env)
- {
-     return 16 << env->xl;
- }
- 
--#ifdef TARGET_RISCV32
--#define riscv_cpu_sxl(env)  ((void)(env), MXL_RV32)
--#else
- static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *env)
- {
--#ifdef CONFIG_USER_ONLY
--    return env->misa_mxl;
--#else
-+#ifndef CONFIG_USER_ONLY
-     if (env->misa_mxl != MXL_RV32) {
-         return get_field(env->mstatus, MSTATUS64_SXL);
-     }
- #endif
--    return MXL_RV32;
-+    return env->misa_mxl;
- }
--#endif
- 
- static inline bool riscv_cpu_allow_16bit_insn(const RISCVCPUConfig *cfg,
-                                               uint32_t priv_ver,
+@@ -59,4 +60,6 @@ static void machine_none_machine_init(MachineClass *mc)
+ DEFINE_MACHINE_WITH_INTERFACES("none", machine_none_machine_init,
+                                { TYPE_TARGET_AARCH64_MACHINE },
+                                { TYPE_TARGET_ARM_MACHINE },
++                               { TYPE_TARGET_RISCV32_MACHINE },
++                               { TYPE_TARGET_RISCV64_MACHINE },
+                                { })
 
 -- 
 2.51.0
