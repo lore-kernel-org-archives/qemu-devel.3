@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E56E67482
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B991E66886
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKLJ-0000xk-0T; Sun, 21 Dec 2025 09:23:29 -0500
+	id 1vXKLO-00015R-6U; Sun, 21 Dec 2025 09:23:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vXKLG-0000xC-Lj
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:26 -0500
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
+ id 1vXKLM-00014o-Cc
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:32 -0500
+Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vXKLF-0001Gk-5m
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:26 -0500
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-7b7828bf7bcso3546966b3a.2
- for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 06:23:24 -0800 (PST)
+ id 1vXKLK-0001HW-Sr
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:32 -0500
+Received: by mail-pf1-x444.google.com with SMTP id
+ d2e1a72fcca58-7d26a7e5639so3714969b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 06:23:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766327003; x=1766931803; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=snW/lAJsvlro2YKDHOq0YZuf450DL4XwjF1IdhKt2ME=;
- b=U8SL4ZDsc+AdxmbqXsBtkZKafJeHghB8aH+wFqe9zZoml0+YvLD6+nGZHIFZ1cnYAD
- +HbLpqSSziuLNFdTWkU6chKpGFiMJ66jBeqHjFcX2IxX0hbLN5HJFxL+mXCvehDaN/FX
- ylfmoKdyi3gzNEzmm+7X6GvUbuWDDBMqziE6fm9QqrkHjirj0H+nQJ58YeltCYNHmk7C
- zNbK/1UKV5BCGQ//jQoXPC/2FUho3ibUab1zzRI/wlNTYdUzHBTYX2gDgoNooKTH86TR
- y+nXHN9AwZkd9eZjmfmzXOE4WgqNzo8XIyyy8g5G//9KoYpPCAYXf65VdJyFPAh8qTsl
- eHMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766327003; x=1766931803;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1766327009; x=1766931809; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=snW/lAJsvlro2YKDHOq0YZuf450DL4XwjF1IdhKt2ME=;
- b=fWjdrSpzSLsuEvPdYISBdA2xzlFLZnAzcMwdaRFfKnLdcgvjnTlqf/ySFOHQR6m+b0
- ukS/BpOFGljovXUwBn08OqNakbT9SkbfIB4axj6kuYzUozCeYgNMswQmgXgqNGjQbcrP
- 9M2DqnMJUZXx24ZXf27HbM+6rNWjjuLQMgze4DOGT9o3bLg+VulX9XWrAq1NBbOWgxxl
- ZSpisFQcbnBAot0hddcNj4B6WVe0CxitE8fK7P3lSECvkp4I4G0eABJCu5Ssn19L00aM
- SpbkTpsx7CNZ+qM8kd8lkrtQm8QHhi24+X1rO+ngf8P3gzOstDorSmkO2luOVUedkyjd
- BHtw==
-X-Gm-Message-State: AOJu0YyQ225SM9JV9GoBztMeTgMbgRbHVbdbmNa04MceguYP6wX2fpFB
- U3syr3+z9ZVDIDFS7qZPyKRepe5V8+Z6z2IeMR7z3j+1tAfhNGFDaGqY9uspXp0y+sQ=
-X-Gm-Gg: AY/fxX6zIBXdx8GDZgSaQ4SgBDG2zzgO07keurQjvtMub7kw/FXRnBksVFhITdckuai
- HMBl2BQrV1X8c4TWN/uHl2UzI7hMOe60Ja7+pxVWvGR+AaYDWEsd05j8SdciP+oRr0IicWa/vCw
- i2tpoxUgOG9N5w15qRFVtbTwUOZY9UNB+yJH0+yv+mu99Y/D2GsQLUsbQGeLtUDDrY9UrDSpQAt
- nhEIW3xNyMRm/NDPgLuJDw74Z0Wl3EOQpJRqCpdsNI5430+1m2B4U4Zc7p+lZvTy/IneKTc4EfL
- DIj57G60YxDYMgK1G9KlEK7G7pmEZeE/mvU+HDm3jZl/v52DCY6NXyLQsvF0Y1cChBMrdA3ks8N
- y7coBBFB8IkP7IGiIAe+ML6U1sbvA6SA9hCpayVIq3FCMTLWV4NZbpid5Uao0aIJKTaVVLhSB6e
- a2gilpKKuFubkSLhC2A+pCA/rMwv7RkA==
-X-Google-Smtp-Source: AGHT+IFSvu6rw+SEcO7SftsuFxTzkACt5CrEtn2hkvre946TzkZbYNI27oBY5lWkqu7XuomSyVhfdQ==
-X-Received: by 2002:a05:6a00:4091:b0:7e8:4398:b365 with SMTP id
- d2e1a72fcca58-7ff6666fb6dmr8038243b3a.56.1766327003160; 
- Sun, 21 Dec 2025 06:23:23 -0800 (PST)
+ bh=/eB1+81UReGK+nNy3DtIGogDj+pIktgWVFbWnsrHTFk=;
+ b=OpJDWjI+WK9dgrfYkizVtcPg1MmFMdvauTysG3up6Y20NgESdG4ldz8SyD+KThQ/HB
+ PbK3iBu/bw7UP39aFHm6q9XeTvAAbKFO/kkq764/j56cSxBiVEeUVhKWEAXZw7OmkO6w
+ 51dS3MEufOA49KfSW75rB5JRqMSSksV9hgAwHidLMfPO7GyCRcceNBP60nYai0MB4fDt
+ m9XcMAwSXjooeke7gG4zQIqHmZhrWvMMA0lgRlY/VBUSA2lKnQg75Vhmry+AP9qqwsc6
+ xfYqMQeeA4wS6pyAoCUhA8yZ0UqnkbViHOYShy+HbDz0SqWoWEQVtc/ftSaTxCeQkjUF
+ CsZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766327009; x=1766931809;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/eB1+81UReGK+nNy3DtIGogDj+pIktgWVFbWnsrHTFk=;
+ b=o8d7IyePiniLrgmJskg25p+8L9NbmC5dbQlU/O1N19sr2OcPSDcIL4S+N7W9Wv4LgS
+ 9smn1cTcwsZWlawqzc1qAkavIAwhkI/kIFjEcDs3Oz1UcI0DkWs05GAEVCq86HkHHMiA
+ pFJy+GaLH1bTdHyd1dvIfP084ApYddtjvAaUTFMy9wSkeSj4BypDcZxnqc9YbiR5wPwa
+ fL41wWLPfgjIYzj+jm8zEWToVzmtHrsG+gotOlUP4rtd0kgnx0OMpWnPaXDJ/ywzMCH/
+ iTbhNsYZhwAnY3Ckoyee0cQEpUTHCAZY3uA3iPTxDXSUUDaTZ3m7cEXN/L8JVqGFsRbC
+ qsUg==
+X-Gm-Message-State: AOJu0Yzs92NvmkDUgdNn+LoF7+bU3fnCOH5mThECtL6PXYSqYYVFRcbU
+ qb8urGrspHqc+5h3UShW7AFAs9B8Z0Fug6bdw3OMaUjxRNyM1gwcM5bM0h4I0MhN7O0=
+X-Gm-Gg: AY/fxX46EceYzDLgLTK7xxYSHlHOlppyYOkzwK4e6CmayxCqVT2AMGBWpeTBv1CsX1F
+ hxr+tgUK8H/KL7TIJhaqjIUgQr021LO5vtyrGJ2saIVpaZL/mdabG8vBR2151O67Zk6//QWJ8+e
+ UQWDVDosVmX+DISWvcJ6r9xtbp79f+h5aQq1qao5BizrkrENyEbXEFQjIiYiDArP7LogLVvbDtc
+ cdgTVZs/WOrs0geKsHDvTAJOp970XGFZRsD45t0RhSXVBXpCbzFYtaSsM0vRk9RI9nJDo3qSt1l
+ HAf8y0eaLDzIqLrCjmvYzwbcifQKwo9RPxEDvc8hHP4n2XMaMA7YJErYWgttz6x6WgRXYQsStFY
+ em7mgQVfCZXCtsvibz0bnAgy9h4gkHos1JnOuiQ+Awdnezfh5+mPcmnAFHPaKlsrRPTj7Z4wjaP
+ oPwtOLZN/Rs96QdVHU0cs=
+X-Google-Smtp-Source: AGHT+IHIJ4YvEiBn5LmDpQm+AqLliIJwtyflmTS9qRehiboqFUAiYm+zk5NG05kSd0rWPOEIpW2RYA==
+X-Received: by 2002:a05:6a00:b60c:b0:7e8:450c:61ba with SMTP id
+ d2e1a72fcca58-7ff6607e4a5mr8823881b3a.42.1766327008973; 
+ Sun, 21 Dec 2025 06:23:28 -0800 (PST)
 Received: from fedora.. ([118.151.210.82]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7e48f258sm7590449b3a.47.2025.12.21.06.23.20
+ d2e1a72fcca58-7ff7e48f258sm7590449b3a.47.2025.12.21.06.23.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Dec 2025 06:23:22 -0800 (PST)
+ Sun, 21 Dec 2025 06:23:28 -0800 (PST)
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 To: qemu-devel@nongnu.org, deller@gmx.de, sarkarsoumyajyoti23@gmail.com,
  mark.cave-ayland@ilande.co.uk, richard.henderson@linaro.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH 00/10] HP-PARISC NCR710 SCSI Controller NetBSD issues
-Date: Sun, 21 Dec 2025 19:53:07 +0530
-Message-ID: <20251221142317.266293-1-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH 02/10] scsi:ncr710: Fix use after free in command_complete
+Date: Sun, 21 Dec 2025 19:53:09 +0530
+Message-ID: <20251221142317.266293-3-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.49.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20251221142317.266293-1-soumyajyotisarkar23@gmail.com>
+References: <20251221142317.266293-1-soumyajyotisarkar23@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x441.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x444.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,42 +101,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In this patch series we fix NetBSD's issues raised in our
-NCR710 SCSI Controller for the PA-RISC Machines.
+Add proper hba_private pointer cleanup in ncr710_command_complete.
+This prevents use after free errors from occuring.
 
-The changes address multiple issues in the NCR710 emulation
-that currently prevent proper operation under NetBSD such as:
-- DMA flow control
-- Interrupt handling
-- Command completion
-- Device state management
+This was causing memory corruption in NetBSD device initialization
+when commands complete and the request structures were freed while
+still being referenced.
 
-The changes have been tested on PARISC 715 machine running NetBSD.
+Signed-off-by: Soumyajyotii Ssarkar<soumyajyotisarkar23@gmail.com>
+---
+ hw/scsi/ncr53c710.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-I would appreciate review and feedback from the maintainers and the community
-and would be happy follow up with revision.
-
-I would be delighted if we could get this series merged for the upcoming
-release of QEMU.
-
-Thank you,
-Soumyajyotii Ssarkar
-
-Soumyajyotii Ssarkar (10):
-  scsi:ncr710: Add null pointer checks
-  scsi:ncr710: Fix use after free in command_complete
-  scsi:ncr710: Fix interrupt related register handing
-  scsi:ncr710: Fix DMA State machine and flow control
-  scsi:ncr710: Fix table indirect addressing endianness
-  scsi:ncr710:Mark command complete in status phase and fix disconnect
-  scsi:ncr53c710: Add LUN scanning
-  scsi:ncr710: Simplify disconnect handling
-  scsi:ncr710: Fix DSA register
-  scsi:ncr710: Fix CTEST FIFO status
-
- hw/scsi/ncr53c710.c | 93 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 70 insertions(+), 23 deletions(-)
-
+diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
+index bab2ea7210..ac1ca4cef8 100644
+--- a/hw/scsi/ncr53c710.c
++++ b/hw/scsi/ncr53c710.c
+@@ -798,7 +798,13 @@ void ncr710_command_complete(SCSIRequest *req, size_t resid)
+ 
+     ncr710_set_phase(s, PHASE_ST);
+ 
+-    if (req->hba_private == s->current) {
++    if (p) {
++        req->hba_private = NULL;
++        if (p == s->current) {
++            p->req = NULL;
++        } else {
++            ncr710_request_free(s, p);
++        }
+         scsi_req_unref(req);
+     }
+ 
 -- 
 2.49.0
 
