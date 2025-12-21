@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF14E67482
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288F9E6748D
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKM9-0001pY-DL; Sun, 21 Dec 2025 09:24:21 -0500
+	id 1vXKLn-0001In-Nd; Sun, 21 Dec 2025 09:24:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vXKLi-0001LH-CX
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:58 -0500
-Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
+ id 1vXKLV-0001DZ-Uk
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:42 -0500
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1vXKLg-0001Lj-Bs
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:53 -0500
-Received: by mail-pf1-x442.google.com with SMTP id
- d2e1a72fcca58-7f0db5700b2so2926011b3a.0
- for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 06:23:51 -0800 (PST)
+ id 1vXKLU-0001JB-DC
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:41 -0500
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-7bab7c997eeso3647736b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 06:23:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766327030; x=1766931830; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1766327019; x=1766931819; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0L51uaKTVgxyKMIF4vldQB1dPrYARBcQxc3sUNPphHw=;
- b=eX/KbLvfS2VDdxqiwi2+U9cYWvhZ+uW4cXrftu83xrg3CYJ9eWkmsjqD8PeAXWFG+N
- kUL89+85TXvoHKrKo8cKB/iYLVCOebSBAswpxw36Du+qujaEAhQ3591kyqiRa1OwKiBJ
- 5vl8aW1e1XMwG2ABMkyAP9dxjh/bAFXeU+s7DH/qhwvsMp2kMC3Es7FtHwCIbH8VKFZ2
- NM6HlRG1BtW/OURgA5misTgXCi+TOwBdn6SbYJ6ZbHShyKImEM0iBgTcf4KLv5jVwjPD
- bnoVRsszmHlrO0miMxjHjTsr+kzyLuc4ff7D7lhAB7jr3Ne6md2HJa1MPqQEand19UA8
- EumQ==
+ bh=BDk7QJZD5gFp77T+M8deaWWFziy7QSSXS87FreId1bQ=;
+ b=Cvfvxn+u66vdlpBi6nVD7q7/RLt4GJHzr6+R+H0kM/8J7mqNrUN0VwEt05HXZ8OIxD
+ xyFjj338eEyZGpT8dNgHr2oycLZKG3T4OsCGhcgYZ7vRpuru3Vc4Lk7+V+3h3ksWq8rt
+ l4esM07R3qSZjoq9rc09lPoq/frewsEF0UtYWO6MYMB6Kcl3MOhCl9fxtreqX+dwmomU
+ 1zc7qFU+81yqwBnQM5qv289Mdyafj2fjBvXHbd4TTy1NDea0OsVG62MEzF1QDFyUudBH
+ DU/pzws0z5XysonvKM4OXogg1pCsaPjzCLIoDD6fJfPoyE7U+7nnBcdSjbUVx144NH6F
+ IBFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766327030; x=1766931830;
+ d=1e100.net; s=20230601; t=1766327019; x=1766931819;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0L51uaKTVgxyKMIF4vldQB1dPrYARBcQxc3sUNPphHw=;
- b=TGjuteJVcR98T5Qqd9jTctSUXKBSgEuRmTSRFnm9QzqelhUbMF2chukypgW6cykHmb
- reqK8FikxKpY7ZuHBpDBhNQhAqfkfboKQYaDW8ROkXusg6//g4q2/47xZlhJ6NGvyRrU
- 6t45+YfCwV1Sc3dZrUd0dXPH0DlRZVdwFAmgOQgAW79DfgSVDBuZv5n8FuSo71EQAU/C
- V3l7zGz8pWvBoJc8r3AHeg39jTz2pNOzoX7x0AbIcG2VYASYxJOM/bkWEmsvhuo6GX6Q
- OmoxeJe4Af6t/AINFF0w/R/0HTwPvvuQqfAPzapaYwXuMdGqR92H8DH9XgMdpTZhsWvw
- eevw==
-X-Gm-Message-State: AOJu0YzRBHBhIrqUJgBb3HG+AZp8Bv/gquJGxK1bWot87AyIM9JGctmr
- 7L90JjT/WsdGACzTfbEL+SFLQALp4khm4ESy2bzXO8e0EDjjHrKIQB5R6RvxbgxGtV4=
-X-Gm-Gg: AY/fxX7SLNiou/z51E//ygcVFroj1Yebqz6thlVbAL4cpzgofEyPTTehu6x6auSzUq1
- ZuP0IVFROl0NeNkmONvxrwD6jPUf7IOFMlUbZWw+pSI52V9zl9tw9PvHIaodmx0uJE2a7IXTAu6
- EHlI+Z+f3RP/c/IE4+R3zh6yrjVDKDYEyg1KuJRgpe4tf11ph2wuFbsAmeNtu6iJoq3+4wTrP7K
- WNSC3S+yxR9fcHhSCYSQa/nGPX2fInWYVMwxEG25EuhAvQBAvGlS6DNa93zmwa6IiKhnaevPccg
- D0xpT9tTCpAjz6iuymNKEWTgwu6HQx4U/gt8xod9txYVu6cPtIV0WiFcuKKZHqMLEQsyliha2n9
- 68eJFuqzyog4y/AOsv6RwLfWCCMMeVhl//C3dg9P1JfRpZZhHivAM/a5nRPaZlFd+CW3oB8XTmX
- +yWnr1fQhTEpiOLf626g4=
-X-Google-Smtp-Source: AGHT+IEiLRToAUJMCSGTEtKUnhhjPHenbVqSZ+B/6+bNpjDbZ9IJHVMCRTVNFQNEqa1kfMsAUPp3HQ==
-X-Received: by 2002:a05:6a00:451a:b0:7fc:da5:f85c with SMTP id
- d2e1a72fcca58-7ff6607b30dmr7547030b3a.38.1766327030412; 
- Sun, 21 Dec 2025 06:23:50 -0800 (PST)
+ bh=BDk7QJZD5gFp77T+M8deaWWFziy7QSSXS87FreId1bQ=;
+ b=wfUU9p7N/y5Tv3FpB1zZCuD3CSD1AlwudxNJkwvMHsRM85oJTUCwEd1xsLXuPlR6EC
+ b01MMnymmMTcto5UlGZJeaxrz7sZJxnSYxgcah4Xi1LTEpIEWxc2YVWbwMa9uJB4Ik5C
+ nTvu6slu+XqvzbwIi1jIEA2+Dwv4aBitcFzrlZztDzFxCWSsmVAyaGxkkzaN+NU9KV/K
+ ReXVUpPlvTOOopZQ+jS2MsJWvk0jP39BUN2Dz6R0P+/gX0Uq56ADAlGTn0RKPrlvSiSh
+ joJzO/JrETYByyHvWHdXosVdB4XjuqVCPou3PuKPuYJ6mtTtGx1EABoKnUVktDcXDzio
+ AwOA==
+X-Gm-Message-State: AOJu0YxkB7ejhVA1YCuXyuxzUFrNgsaXQ7wAfzpM3JpIol+eI+fK2D84
+ wsS6wR6rosbjgFkfTXmgAsoqctdWfiZActii+AMkVdT8qQF3jvjkNfWA813YSpj8uo8=
+X-Gm-Gg: AY/fxX6uwswiLNJpUb0TeFXNgA4zckYFnT0V20zk1k/fdn2C0jMk4ekV46opfd+Ksfi
+ 4Zf95Wktc4BGolGGZyWur9jmgYrybLVJXwv54qEeMuTtMRRj0OMnRzKz8FYfiKHY8f4fAIvs2ks
+ eZzHeX+bzV2CosHjdDBj+QJDLcgW9PB2mKmEO7va3XkdZRZfXzF+bbTFa68fqzctZitqJ/rcqKb
+ JExcR6x4oxVPggDK/fcEnKXWxUZMFFF38Ke90pB6b+iEmNPzMtOo79PCJtiLXyRsNU6zuvRW+0f
+ llYvCFNSL50s+w6NckVvtVpBFHHJRYhSut9+1DRQ9m8z5Z3Fmj/GOzNqlIANSgC+nvrSShbqdqA
+ WQXR/Jp7IpdyTmWD19p1PU5MgimG6FHtKkq8GcA6NZRtIVs+rO+UOq3P3jB3inzH8qCnaxUU4Xc
+ /EMb/NRVGYrAOmLq14zic=
+X-Google-Smtp-Source: AGHT+IHi37o07xVQdlhwAZ97OE06AN+pUUUbXSjS8/8yQeyvN53L8W7DQ/DLI8mulNfNXvty8kwsPQ==
+X-Received: by 2002:a05:6a00:8017:b0:7e8:4471:ae68 with SMTP id
+ d2e1a72fcca58-7ff67966c94mr6390727b3a.52.1766327018641; 
+ Sun, 21 Dec 2025 06:23:38 -0800 (PST)
 Received: from fedora.. ([118.151.210.82]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7e48f258sm7590449b3a.47.2025.12.21.06.23.47
+ d2e1a72fcca58-7ff7e48f258sm7590449b3a.47.2025.12.21.06.23.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Dec 2025 06:23:49 -0800 (PST)
+ Sun, 21 Dec 2025 06:23:38 -0800 (PST)
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 To: qemu-devel@nongnu.org, deller@gmx.de, sarkarsoumyajyoti23@gmail.com,
  mark.cave-ayland@ilande.co.uk, richard.henderson@linaro.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH 09/10] scsi:ncr710: Fix DSA register
-Date: Sun, 21 Dec 2025 19:53:16 +0530
-Message-ID: <20251221142317.266293-10-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH 05/10] scsi:ncr710: Fix table indirect addressing endianness
+Date: Sun, 21 Dec 2025 19:53:12 +0530
+Message-ID: <20251221142317.266293-6-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20251221142317.266293-1-soumyajyotisarkar23@gmail.com>
 References: <20251221142317.266293-1-soumyajyotisarkar23@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x442.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x443.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,41 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement byte wise write handling for DSA register instead of using
-the macro, as NetBSD driver accesses it byte by byte
+Correct the endianness conversion for table indirect addressing
+Now we use be32_to_cpu() instead of cpu_to_le32()
+
+This fix descriptor table parsing when using indirect
+addressing modes in SCRIPTS
 
 Signed-off-by: Soumyajyotii Ssarkar<soumyajyotisarkar23@gmail.com>
 ---
- hw/scsi/ncr53c710.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ hw/scsi/ncr53c710.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index dd453991e0..0ea1fc43a3 100644
+index e17d1f3fb8..4b42fab754 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -2078,7 +2078,21 @@ static void ncr710_reg_writeb(NCR710State *s, int offset, uint8_t val)
-         /* Linux writes to these readonly registers on startup */
-         return;
- 
--    CASE_SET_REG32(dsa, NCR710_DSA_REG)
-+    case NCR710_DSA_REG:
-+        s->dsa &= 0xffffff00;
-+        s->dsa |= val;
-+        break;
-+    case NCR710_DSA_REG + 1:
-+        s->dsa &= 0xffff00ff;
-+        s->dsa |= val << 8;
-+        break;
-+    case NCR710_DSA_REG + 2:
-+        s->dsa &= 0xff00ffff;
-+        s->dsa |= val << 16;
-+        break;
-+    case NCR710_DSA_REG + 3:
-+        s->dsa &= 0x00ffffff;
-+        s->dsa |= val << 24;
-         break;
- 
-     case NCR710_CTEST0_REG: /* CTEST0 */
+@@ -1355,8 +1355,8 @@ again:
+             offset = sextract32(addr, 0, 24);
+             ncr710_dma_read(s, s->dsa + offset, buf, 8);
+             /* byte count is stored in bits 0:23 only */
+-            s->dbc = cpu_to_le32(buf[0]) & 0xffffff;
+-            addr = cpu_to_le32(buf[1]);
++            s->dbc = be32_to_cpu(buf[0]) & 0xffffff;
++            addr = be32_to_cpu(buf[1]);
+         }
+         /* Check phase match for block move instructions */
+         if ((s->sstat2 & PHASE_MASK) != ((insn >> 24) & 7)) {
 -- 
 2.49.0
 
