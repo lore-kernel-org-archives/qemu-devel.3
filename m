@@ -4,50 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81501E67482
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E56E67482
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKJj-0004A8-Sb; Sun, 21 Dec 2025 09:21:55 -0500
+	id 1vXKLJ-0000xk-0T; Sun, 21 Dec 2025 09:23:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIu-0003Ej-96
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:04 -0500
-Received: from rev.ng ([94.130.142.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vXKIs-0000cg-MY
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:21:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Yuqz5F8k2afpuMuB2VmoqlA/DV3peZ8kzfMWUl+iSUk=; b=EyWb6kiREgPewz7
- SExfhmoaSklvlf7EDCc17BN1K/m0ccSQvYFAAKQFaRguK1KGG/U9T+mKqIHZ4bhVQkIpoP3EiR3sR
- UdNeapUQcAdNUrVZYcs15zR+G6jjtaAUYekniAj7MRBYL45izKzTtbtJVjwhsqD+qkSDikjnM4Ieo
- 4g=;
-Date: Sun, 21 Dec 2025 15:23:11 +0100
-Subject: [PATCH v2 07/14] target/riscv: Replace TYPE_RISCV_CPU_BASE
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1vXKLG-0000xC-Lj
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:26 -0500
+Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1vXKLF-0001Gk-5m
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 09:23:26 -0500
+Received: by mail-pf1-x441.google.com with SMTP id
+ d2e1a72fcca58-7b7828bf7bcso3546966b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 06:23:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1766327003; x=1766931803; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=snW/lAJsvlro2YKDHOq0YZuf450DL4XwjF1IdhKt2ME=;
+ b=U8SL4ZDsc+AdxmbqXsBtkZKafJeHghB8aH+wFqe9zZoml0+YvLD6+nGZHIFZ1cnYAD
+ +HbLpqSSziuLNFdTWkU6chKpGFiMJ66jBeqHjFcX2IxX0hbLN5HJFxL+mXCvehDaN/FX
+ ylfmoKdyi3gzNEzmm+7X6GvUbuWDDBMqziE6fm9QqrkHjirj0H+nQJ58YeltCYNHmk7C
+ zNbK/1UKV5BCGQ//jQoXPC/2FUho3ibUab1zzRI/wlNTYdUzHBTYX2gDgoNooKTH86TR
+ y+nXHN9AwZkd9eZjmfmzXOE4WgqNzo8XIyyy8g5G//9KoYpPCAYXf65VdJyFPAh8qTsl
+ eHMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766327003; x=1766931803;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=snW/lAJsvlro2YKDHOq0YZuf450DL4XwjF1IdhKt2ME=;
+ b=fWjdrSpzSLsuEvPdYISBdA2xzlFLZnAzcMwdaRFfKnLdcgvjnTlqf/ySFOHQR6m+b0
+ ukS/BpOFGljovXUwBn08OqNakbT9SkbfIB4axj6kuYzUozCeYgNMswQmgXgqNGjQbcrP
+ 9M2DqnMJUZXx24ZXf27HbM+6rNWjjuLQMgze4DOGT9o3bLg+VulX9XWrAq1NBbOWgxxl
+ ZSpisFQcbnBAot0hddcNj4B6WVe0CxitE8fK7P3lSECvkp4I4G0eABJCu5Ssn19L00aM
+ SpbkTpsx7CNZ+qM8kd8lkrtQm8QHhi24+X1rO+ngf8P3gzOstDorSmkO2luOVUedkyjd
+ BHtw==
+X-Gm-Message-State: AOJu0YyQ225SM9JV9GoBztMeTgMbgRbHVbdbmNa04MceguYP6wX2fpFB
+ U3syr3+z9ZVDIDFS7qZPyKRepe5V8+Z6z2IeMR7z3j+1tAfhNGFDaGqY9uspXp0y+sQ=
+X-Gm-Gg: AY/fxX6zIBXdx8GDZgSaQ4SgBDG2zzgO07keurQjvtMub7kw/FXRnBksVFhITdckuai
+ HMBl2BQrV1X8c4TWN/uHl2UzI7hMOe60Ja7+pxVWvGR+AaYDWEsd05j8SdciP+oRr0IicWa/vCw
+ i2tpoxUgOG9N5w15qRFVtbTwUOZY9UNB+yJH0+yv+mu99Y/D2GsQLUsbQGeLtUDDrY9UrDSpQAt
+ nhEIW3xNyMRm/NDPgLuJDw74Z0Wl3EOQpJRqCpdsNI5430+1m2B4U4Zc7p+lZvTy/IneKTc4EfL
+ DIj57G60YxDYMgK1G9KlEK7G7pmEZeE/mvU+HDm3jZl/v52DCY6NXyLQsvF0Y1cChBMrdA3ks8N
+ y7coBBFB8IkP7IGiIAe+ML6U1sbvA6SA9hCpayVIq3FCMTLWV4NZbpid5Uao0aIJKTaVVLhSB6e
+ a2gilpKKuFubkSLhC2A+pCA/rMwv7RkA==
+X-Google-Smtp-Source: AGHT+IFSvu6rw+SEcO7SftsuFxTzkACt5CrEtn2hkvre946TzkZbYNI27oBY5lWkqu7XuomSyVhfdQ==
+X-Received: by 2002:a05:6a00:4091:b0:7e8:4398:b365 with SMTP id
+ d2e1a72fcca58-7ff6666fb6dmr8038243b3a.56.1766327003160; 
+ Sun, 21 Dec 2025 06:23:23 -0800 (PST)
+Received: from fedora.. ([118.151.210.82]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7ff7e48f258sm7590449b3a.47.2025.12.21.06.23.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 21 Dec 2025 06:23:22 -0800 (PST)
+From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+To: qemu-devel@nongnu.org, deller@gmx.de, sarkarsoumyajyoti23@gmail.com,
+ mark.cave-ayland@ilande.co.uk, richard.henderson@linaro.org
+Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Subject: [PATCH 00/10] HP-PARISC NCR710 SCSI Controller NetBSD issues
+Date: Sun, 21 Dec 2025 19:53:07 +0530
+Message-ID: <20251221142317.266293-1-soumyajyotisarkar23@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251221-hw-riscv-cpu-int-v2-7-eb49d72c5b2f@rev.ng>
-References: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
-In-Reply-To: <20251221-hw-riscv-cpu-int-v2-0-eb49d72c5b2f@rev.ng>
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, philmd@linaro.org, 
- pierrick.bouvier@linaro.org, palmer@dabbelt.com, alistair.francis@wdc.com
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pf1-x441.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,127 +96,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TYPE_RISCV_CPU_BASE is used only to initialize the correct default
-machine for 3 machines. Replace it with a runtime check.
+In this patch series we fix NetBSD's issues raised in our
+NCR710 SCSI Controller for the PA-RISC Machines.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
- include/hw/riscv/virt.h         | 11 +++++++++++
- target/riscv/cpu.h              |  6 ------
- hw/riscv/microblaze-v-generic.c |  3 ++-
- hw/riscv/spike.c                |  3 ++-
- hw/riscv/virt.c                 |  2 +-
- 5 files changed, 16 insertions(+), 9 deletions(-)
+The changes address multiple issues in the NCR710 emulation
+that currently prevent proper operation under NetBSD such as:
+- DMA flow control
+- Interrupt handling
+- Command completion
+- Device state management
 
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 7b4c2c8b7d..3a17641078 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -19,6 +19,7 @@
- #ifndef HW_RISCV_VIRT_H
- #define HW_RISCV_VIRT_H
- 
-+#include "qemu/target-info.h"
- #include "hw/boards.h"
- #include "hw/riscv/riscv_hart.h"
- #include "hw/sysbus.h"
-@@ -137,6 +138,16 @@ bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
- void virt_acpi_setup(RISCVVirtState *vms);
- uint32_t imsic_num_bits(uint32_t count);
- 
-+static inline const char *virt_default_cpu_type(void)
-+{
-+    if (target_riscv64()) {
-+        return TYPE_RISCV_CPU_BASE64;
-+    } else {
-+        return TYPE_RISCV_CPU_BASE32;
-+    }
-+}
-+
-+
- /*
-  * The virt machine physical address space used by some of the devices
-  * namely ACLINT, PLIC, APLIC, and IMSIC depend on number of Sockets,
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 616406f07f..da2bc554d3 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -39,12 +39,6 @@ typedef struct CPUArchState CPURISCVState;
- 
- #define CPU_RESOLVING_TYPE TYPE_RISCV_CPU
- 
--#if defined(TARGET_RISCV32)
--# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE32
--#elif defined(TARGET_RISCV64)
--# define TYPE_RISCV_CPU_BASE            TYPE_RISCV_CPU_BASE64
--#endif
--
- /*
-  * b0: Whether a instruction always raise a store AMO or not.
-  */
-diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
-index 0df276f9fb..0222ff0c06 100644
---- a/hw/riscv/microblaze-v-generic.c
-+++ b/hw/riscv/microblaze-v-generic.c
-@@ -26,6 +26,7 @@
- #include "hw/char/xilinx_uartlite.h"
- #include "hw/misc/unimp.h"
- #include "hw/riscv/machines-qom.h"
-+#include "hw/riscv/virt.h"
- 
- #define LMB_BRAM_SIZE (128 * KiB)
- #define MEMORY_BASEADDR 0x80000000
-@@ -183,7 +184,7 @@ static void mb_v_generic_machine_init(MachineClass *mc)
-     mc->init = mb_v_generic_init;
-     mc->min_cpus = 1;
-     mc->max_cpus = 1;
--    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-+    mc->default_cpu_type = virt_default_cpu_type();
-     mc->default_cpus = 1;
- }
- 
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index 69eb3dfc24..7d1a642a78 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -34,6 +34,7 @@
- #include "hw/riscv/boot.h"
- #include "hw/riscv/numa.h"
- #include "hw/riscv/machines-qom.h"
-+#include "hw/riscv/virt.h"
- #include "hw/char/riscv_htif.h"
- #include "hw/intc/riscv_aclint.h"
- #include "chardev/char.h"
-@@ -351,7 +352,7 @@ static void spike_machine_class_init(ObjectClass *oc, const void *data)
-     mc->init = spike_board_init;
-     mc->max_cpus = SPIKE_CPUS_MAX;
-     mc->is_default = true;
--    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-+    mc->default_cpu_type = virt_default_cpu_type();
-     mc->possible_cpu_arch_ids = riscv_numa_possible_cpu_arch_ids;
-     mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
-     mc->get_default_cpu_node_id = riscv_numa_get_default_cpu_node_id;
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index f42fffb223..6f6164e05d 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1922,7 +1922,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "RISC-V VirtIO board";
-     mc->init = virt_machine_init;
-     mc->max_cpus = VIRT_CPUS_MAX;
--    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-+    mc->default_cpu_type = virt_default_cpu_type();
-     mc->block_default_type = IF_VIRTIO;
-     mc->no_cdrom = 1;
-     mc->pci_allow_0_address = true;
+The changes have been tested on PARISC 715 machine running NetBSD.
+
+I would appreciate review and feedback from the maintainers and the community
+and would be happy follow up with revision.
+
+I would be delighted if we could get this series merged for the upcoming
+release of QEMU.
+
+Thank you,
+Soumyajyotii Ssarkar
+
+Soumyajyotii Ssarkar (10):
+  scsi:ncr710: Add null pointer checks
+  scsi:ncr710: Fix use after free in command_complete
+  scsi:ncr710: Fix interrupt related register handing
+  scsi:ncr710: Fix DMA State machine and flow control
+  scsi:ncr710: Fix table indirect addressing endianness
+  scsi:ncr710:Mark command complete in status phase and fix disconnect
+  scsi:ncr53c710: Add LUN scanning
+  scsi:ncr710: Simplify disconnect handling
+  scsi:ncr710: Fix DSA register
+  scsi:ncr710: Fix CTEST FIFO status
+
+ hw/scsi/ncr53c710.c | 93 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 70 insertions(+), 23 deletions(-)
 
 -- 
-2.51.0
+2.49.0
 
 
