@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83570E67482
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4390E66886
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Dec 2025 14:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXKgV-0008IM-6z; Sun, 21 Dec 2025 09:45:28 -0500
+	id 1vXKgk-0008Uk-58; Sun, 21 Dec 2025 09:45:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <buenocalvachejoel@gmail.com>)
- id 1vXH4P-0007Or-OB
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 05:53:49 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <buenocalvachejoel@gmail.com>)
- id 1vXH4O-0002nC-Ak
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 05:53:49 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47a9567bcd9so2577215e9.2
- for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 02:53:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766314426; x=1766919226; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gFNfnwGU97xGHPfd21mpBWZF7bSVs2VdgP/4QhHxwu4=;
- b=ixgnoYfN3pkdkHCqAC14ubVcxAwGAy3vyEPCJok8cxTyhHrMjxOp9/oPPiI07Ztl3c
- CDCaI1jc7crhYQJV89484HEcr0H+mXQ7/f1mMKAoaq+VlPSNxIJyuaWMAhATRfAdQYoO
- vP0tzxfXlve4JY+d4cUAu6ovUuXUSoPtAeA7vm2D9RwDfMIxEANzoDPRAwoWmtVtkwLt
- jklfwxbHmFW9bcijDmSP1g3yPbcDjfCaEv5SJysMEGAs2akRU1BlW+VOnUlGtqpKBLOo
- C6gQQb3vpEQPWe7T8VyLMyykjFr8/H82BVPStopiEwhh8rlCLSdsNy9eaJjvEggscoaO
- bz9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766314426; x=1766919226;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gFNfnwGU97xGHPfd21mpBWZF7bSVs2VdgP/4QhHxwu4=;
- b=Yx2lO/JupZcnyzmGLnKeCDeH/MSP5YJGXuLHZl69fNljFcegl+ttuEd934u1cPYbiD
- YQ6OG7f2o0XHsNVjXEWnittpp2Fopyp5WtOt63p4gah0Eh7ZGm2sw4ZH3oX2dOSgzvlm
- 3alHRhtbDO6UO7n6pt1Cl5/rYTv8s+tX8M7g15Q8nIQPPYacvjpHOqjgPxlg3wabFNL0
- qiQqP8NpXOEvVy/vTUr5wUa0lof6S80SY/z5UFMV9uuKaSFmiJA/u8sA5mKEroKy8D4m
- KqOvngsbRiFbHgXC/PCmxiKBT6E4h/joqOs2SW1Ik55sY3Pk82fa9DgzvE7po+qbxi6R
- /+pA==
-X-Gm-Message-State: AOJu0YxkXXpb6cOqLUkW7qIcfkDIsFaGffhZRA0qaQqXiOIjZjm//Clw
- MVX3vZZAn16rJWgNFdWuBeZWYfOvQcW5xlrGjsxw1waeevJQRzRWHrxOB3V4+IIc
-X-Gm-Gg: AY/fxX5oUSDOUAD5gBCaG16nqP3lG7jsfbX8QDydM1+iFFsC5Jwikc3HBcLXlC1XLFj
- krq0CA6RxT6YmjV4zwOnIU6b7VOVT7iv4PmItBFk2rmdGOeCCc8cHeacPtYbu5+4rXA9PCjtxYH
- 9IqM4d/q9oxAraoqaO3LNzLOwR5d7swQ1NW5q5+Kx4K4TzgnJ53QwAsZrNZBfiNRvRqQIVwNXBk
- OURjZLmsEpPmynvk/AF3ZH5YMAa1CMGJYKE0jndwjbraIL63g2BuScuCIjqKFvGFvKmGAG85hwi
- vamtDIjYbCm8r0nNwaKioIw25x1trdHS6tCy8vS4g/csrxETCuSELwrY05CBSjhQuPwpAK/uS8x
- aEDFV8c+YlFoSfmfvwhfJ6vq++C2TG05eVrw/ZKkS2cMwpaIhr4S0r6r5Q5fJxCdOJV/N4JdXJT
- z7257Mi6Plhj8+hRpGrUQWq5k=
-X-Google-Smtp-Source: AGHT+IHLz6CeEF07ibBuiRm1GJspg2vB3lxTSSBT8EeQqtmV+P1qLw/31CgS4737ol8YkzVw5q+wlQ==
-X-Received: by 2002:a05:6000:1867:b0:42b:55a1:214d with SMTP id
- ffacd0b85a97d-4324e4bf4c4mr5220329f8f.1.1766314425492; 
- Sun, 21 Dec 2025 02:53:45 -0800 (PST)
-Received: from LT-1H84393QV6 ([79.117.168.132])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eaa2bdfsm15879557f8f.32.2025.12.21.02.53.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Dec 2025 02:53:45 -0800 (PST)
-From: Joel Bueno <buenocalvachejoel@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Joel Bueno <buenocalvachejoel@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH] hw/block/m25p80: Fix Winbond Fast Read dummy cycles
-Date: Sun, 21 Dec 2025 11:53:39 +0100
-Message-ID: <20251221105340.2699327-1-buenocalvachejoel@gmail.com>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <me@ziyao.cc>) id 1vXIVb-000678-Pp
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 07:25:59 -0500
+Received: from mail90.out.titan.email ([209.209.25.243])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <me@ziyao.cc>) id 1vXIVV-0002eI-3a
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 07:25:54 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by smtp-out.flockmail.com (Postfix) with ESMTP id 4dZ0qL14Rfz9rw1;
+ Sun, 21 Dec 2025 12:25:50 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256; bh=iTN5dMOrifzbia4Ch2o7mKlW8qudrJgZQ0ZwkJO7TV0=; 
+ c=relaxed/relaxed; d=ziyao.cc;
+ h=from:subject:message-id:date:mime-version:to:cc:from:to:cc:subject:date:message-id:in-reply-to:reply-to:references;
+ q=dns/txt; s=titan1; t=1766319950; v=1;
+ b=H++cY+pjIkNJnP7F2a+Z+fvvXLen5YNHmn6KEvMz78hI9rD99FhB1G01xP360HAT8WlATC2F
+ 8IoddGWGMxlx3gAWrSSYDQHQnv4XcJHJ2w7HIiIsAfmthHSqOe9Ovqmt2x4eDmStYSz8FDP7Zwk
+ kCd6ItLM5jxN5KdVOIV4v/2Q=
+Received: from ketchup (unknown [117.171.66.90])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by smtp-out.flockmail.com (Postfix) with ESMTPSA id 4dZ0qJ1r6Tz9rvR;
+ Sun, 21 Dec 2025 12:25:48 +0000 (UTC)
+Feedback-ID: :me@ziyao.cc:ziyao.cc:flockmailId
+From: Yao Zi <me@ziyao.cc>
+To: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: qemu-devel@nongnu.org,
+	Yao Zi <me@ziyao.cc>
+Subject: [PATCH] hw/loongarch/virt: Don't abort on access to unimplemented
+ IOCSR
+Date: Sun, 21 Dec 2025 12:25:12 +0000
+Message-ID: <20251221122511.56544-2-me@ziyao.cc>
+X-Mailer: git-send-email 2.51.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=buenocalvachejoel@gmail.com; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-F-Verdict: SPFVALID
+X-Titan-Src-Out: 1766319950000112861.21635.7776584213408663727@prod-use1-smtp-out1003.
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=a8/K9VSF c=1 sm=1 tr=0 ts=6947e74e
+ a=rBp+3XZz9uO5KTvnfbZ58A==:117 a=rBp+3XZz9uO5KTvnfbZ58A==:17
+ a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10 a=CEWIc4RMnpUA:10
+ a=x6NrL3YJSzhxXpqj1ScA:9 a=3z85VNIBY5UIEeAh_hcH:22
+ a=NWVoK91CQySWRX1oVYDe:22
+Received-SPF: pass client-ip=209.209.25.243; envelope-from=me@ziyao.cc;
+ helo=mail90.out.titan.email
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Sun, 21 Dec 2025 09:45:02 -0500
@@ -101,36 +80,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Fast Read (0Bh) instruction requires 8 dummy clock cycles
-according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).
-However, the current code adds 8 to needed_bytes, which represents
-bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI
-communication (1 bit per clock edge), this results in 64 dummy
-clock cycles instead of 8.
+Reading/writing unimplemented IOCSR on real LoongArch hardware doesn't
+trigger any exceptions, instead, reading always results in zero and
+writing is simply ignored.
 
-Change the Winbond case to add 1 byte (8 clocks) instead of 8 bytes
-(64 clocks), matching the existing implementation for SST flash and
-the datasheet specifications.
+Real-world applications, like memtest86plus, depend on the behavior to
+run. However, since commit f2e61edb2946 ("hw/loongarch/virt: Use
+MemTxAttrs interface for misc ops") which adds a call to
+g_assert_not_reached() in the path of handling unimplemented IOCSRs,
+QEMU would abort in the case.
 
-Signed-off-by: Joel Bueno <buenocalvachejoel@gmail.com>
+Replace the assertion with qemu_log_mask(LOG_UNIMP, ...), so these
+applications could run. It's still possible to examine unimplemented
+IOCSR access through "-d unimp" command line arguments.
+
+Fixes: f2e61edb2946 ("hw/loongarch/virt: Use MemTxAttrs interface for misc ops")
+Signed-off-by: Yao Zi <me@ziyao.cc>
 ---
- hw/block/m25p80.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/loongarch/virt.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index a5336d92ff..21c2118b33 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)
-         s->needed_bytes += 1;
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 49434ad1828b..8d7da5fac550 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -46,6 +46,7 @@
+ #include "hw/block/flash.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "qemu/error-report.h"
++#include "qemu/log.h"
+ #include "kvm/kvm_loongarch.h"
+ 
+ static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
+@@ -622,7 +623,9 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
+                           features, attrs, NULL);
          break;
-     case MAN_WINBOND:
--        s->needed_bytes += 8;
-+        s->needed_bytes += 1;
+     default:
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        break;
+     }
+ 
+     return MEMTX_OK;
+@@ -680,7 +683,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         }
          break;
-     case MAN_NUMONYX:
-         s->needed_bytes += numonyx_extract_cfg_num_dummies(s);
+     default:
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        break;
+     }
+ 
+     *data = ret;
 -- 
-2.51.0
+2.51.2
 
 
