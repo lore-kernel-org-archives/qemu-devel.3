@@ -4,67 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70AD6D68BD5
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 03:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7186E67496
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 03:51:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXWaA-0005iz-IV; Sun, 21 Dec 2025 22:27:38 -0500
+	id 1vXWvu-0000UV-HF; Sun, 21 Dec 2025 22:50:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vXWa7-0005iP-TM
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 22:27:35 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vXWvo-0000Tl-62; Sun, 21 Dec 2025 22:50:00 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vXWa5-0000bE-EK
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 22:27:35 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Dx+8KXukhp_sUBAA--.5321S3;
- Mon, 22 Dec 2025 11:27:19 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxfcKOukhp4y8DAA--.7182S3;
- Mon, 22 Dec 2025 11:27:13 +0800 (CST)
-Subject: Re: [PATCH] hw/loongarch/virt: Permit bytes/half access to IOCSR
-To: Yao Zi <me@ziyao.cc>, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: qemu-devel@nongnu.org
-References: <20251221122205.56463-2-me@ziyao.cc>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <ad1e33d6-8568-e050-f7d8-eb656a4af729@loongson.cn>
-Date: Mon, 22 Dec 2025 11:24:38 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vXWvl-0004gy-2Y; Sun, 21 Dec 2025 22:49:59 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAX+CTZv0hp7ZfuAQ--.59544S2;
+ Mon, 22 Dec 2025 11:49:45 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwB30O3Nv0hpQr4NAA--.25887S2;
+ Mon, 22 Dec 2025 11:49:40 +0800 (CST)
+Message-ID: <8a97dd61-bbb5-4992-a486-5f89d7403d77@phytium.com.cn>
+Date: Mon, 22 Dec 2025 11:49:33 +0800
 MIME-Version: 1.0
-In-Reply-To: <20251221122205.56463-2-me@ziyao.cc>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+User-Agent: Mozilla Thunderbird
+To: 13824125580@163.com
+Subject: Is there any manuals or page to show how to setup a nest translation
+ environment with stage1 and stage2 page tables on intel-iommu ?
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxfcKOukhp4y8DAA--.7182S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ZF1UZF1DXr48GF47GFW8KrX_yoW8Xw4fpr
- yDuwnYkrW8Kr9rXas0ga43XF15CrZrGr42gay29rWUurn3Xr1YvFWYv3s09FZ7Zr97ZF1q
- vr1kW34fXF48ZwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UE-erU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.354,
+X-CM-TRANSID: AQAAfwB30O3Nv0hpQr4NAA--.25887S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQALBWlHAyMBKQABso
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxuryDCry7Xr1UAF45WF4kZwb_yoW5uF13pF
+ ZIkFyagrWDJr48W34kZw1UZw1IqrWkJ343Cr1DGrs8GFs09a42yFWSkryYya4SvFZ3AF10
+ va90qryDW345A3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,57 +69,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi zlcao,
+
+> Hi guys:
+>     I want to learn about how Intel IOMMU second-level translation 
+> works. Does anyone have any materials or pages on this topic, such as 
+> WIP repositories, operational guides, etc.? Thanks!
+> BRs
+> zlcao.
 
 
-On 2025/12/21 下午8:22, Yao Zi wrote:
-> IOCSRs could be accessed in any sizes from 1 to 8 bytes as long as the
-> address is aligned, regardless whether through MMIO or iocsr{rd,wr}
-> instructions. Lower min_access_size to 1 byte for IOCSR memory region to
-> match real-hardware behavior.
-Hi Yao,
-
-What is the detailed problem you encountered? Or just look through code 
-and think that it should be so.
-
-IOCSR supports 1/2/4/8 byte access like MMIO, however here is IOCSR MISC 
-device rather than IOCSR bus emulation. What is the usage and scenery to 
-read IOCSR MISC device with one byte?
-
-It is similar with other device emulation with MMIO, such as e1000e with 
-4 bytes aligned rather than any byte:
-static const MemoryRegionOps mmio_ops = {
-     .read = e1000e_mmio_read,
-     .write = e1000e_mmio_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-     },
-};
+ From my experience, the best approach to learn this is to setup a 
+nested virtualization environment, find the senario that can trigger 
+second-level translation, and then trace all Intel IOMMU events or use 
+gdb to trace line by line in hw/i386/intel_iommu.c. Also you may need to 
+get Intel IOMMU spec and find the related chapter which describes 
+second-level translation.
 
 
-Regards
-Bibo Mao
-> 
-> Fixes: f84a2aacf5d1 ("target/loongarch: Add LoongArch IOCSR instruction")
-> Signed-off-by: Yao Zi <me@ziyao.cc>
-> ---
->   hw/loongarch/virt.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 49434ad1828b..5cc57e9b5aa7 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -692,7 +692,7 @@ static const MemoryRegionOps virt_iocsr_misc_ops = {
->       .write_with_attrs = virt_iocsr_misc_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
->       .valid = {
-> -        .min_access_size = 4,
-> +        .min_access_size = 1,
->           .max_access_size = 8,
->       },
->       .impl = {
-> 
+I worked in SMMU these days and had the same problem with you and found 
+that setup a nested virtualization environment then passthrough a PCIe 
+device from TCG Host VM into KVM Guest VM could be a good way to debug 
+IOMMU implementation. This link [1] show how it works in Arm SMMU.
+
+[1] 
+https://lore.kernel.org/qemu-devel/20250806151134.365755-1-tangtao1634@phytium.com.cn/
+
+
+......
+
+Non-Secure Regression: To ensure that existing functionality remains
+intact, I ran a nested virtualization test. A TCG guest was created on
+the host, with iommu=smmuv3 and with an emulated PCIe NVMe device assigned.
+Command line of TCG VM is below:
+
+qemu-system-aarch64 \
+-machine virt,virtualization=on,gic-version=3,iommu=smmuv3 \
+-cpu max -smp 1 -m 4080M \
+-accel tcg,thread=single,tb-size=512 \
+-kernel Image \
+-append 'nokaslr root=/dev/vda rw rootfstype=ext4 iommu.passthrough=on' \
+-device pcie-root-port,bus=pcie.0,id=rp0,addr=0x4.0,chassis=1,port=0x10 \
+-device pcie-root-port,bus=pcie.0,id=rp1,addr=0x5.0,chassis=2,port=0x11 \
+-drive if=none,file=u2204fs.img.qcow2,format=qcow2,id=hd0 \
+-device virtio-blk-device,drive=hd0 \
+-qmp unix:/tmp/qmp-sock12,server=on,wait=off \
+-netdev user,id=eth0,hostfwd=tcp::10022-:22,hostfwd=tcp::59922-:5922 \
+-device virtio-net-device,netdev=eth0 \
+-drive if=none,file=nvme.img,format=raw,id=nvme0 \
+-device nvme,drive=nvme0,serial=deadbeef \
+-d unimp,guest_errors -trace events=smmu-events.txt -D qemu.log -nographic
+
+Inside this TCG VM, a KVM guest was launched, and the same NVMe device was
+re-assigned to it via VFIO.
+Command line of KVM VM inside TCG VM is below:
+
+sudo qemu-system-aarch64  \
+-enable-kvm  -m 1024  -cpu host  -M virt \
+-machine virt,gic-version=3 \
+-cpu max -append "nokaslr" -smp 1 \
+-monitor stdio \
+-kernel 5.15.Image \
+-initrd rootfs.cpio.gz \
+-display vnc=:22,id=primary \
+-device vfio-pci,host=00:01.0
+
+The KVM guest was able to perform I/O on the device
+correctly, confirming that the non-secure path is not broken.
+
+......
+
+
+
+I'm not familiar with Intel IOMMU so I'm not enable to help with the 
+right options that apply PCIe passthroughing on Intel IOMMU.
+
+
+BTW, I have submitted a patch series introducing iommu-testdev [2] , 
+which allows testing IOMMU functionality purely with QTest, without 
+setting up a complex software stack. Once you have a clear understanding 
+of the second-level translation, you are very welcome to share your 
+findings and help improve the Intel IOMMU implementation in iommu-testdev.
+
+
+[2] 
+https://lore.kernel.org/qemu-devel/20251206155203.3015881-1-tangtao1634@phytium.com.cn/
+
+
+Regards,
+
+Tao
 
 
