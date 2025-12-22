@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A09A3E674B1
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 13:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72866E674B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 13:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXgAr-0006b0-0M; Mon, 22 Dec 2025 08:42:09 -0500
+	id 1vXgBR-0007CM-2M; Mon, 22 Dec 2025 08:42:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vXgAS-0006XY-5Q
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 08:41:50 -0500
+ id 1vXgAz-0006jE-Kx
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 08:42:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vXgAQ-00024L-Em
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 08:41:43 -0500
+ id 1vXgAv-00028f-Pe
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 08:42:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766410901;
+ s=mimecast20190719; t=1766410931;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AlYuv+N8Sk1Bdw3CPvZ6CTb/wzS5+E093ErOEg1FCcA=;
- b=GlLdM8VHBsAj9lJHsZ257KExIB+1vDnoQQGUlmPDEOmig6krk0haVXeV1+G9yTHID9Mh4a
- F2yeyB6WJNw7mMRObngeCEZN/TfOxcRwkNwcE63BaV3kjkHrCy6WLRq7e3fr+1Kd13zvRa
- VaSBBqEMyawJlGbUAQ4bokOSol+nafE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=789HQl1GYgQt3Sh9E3K1v/lvhPaBFUTWz8dohRCMmZs=;
+ b=YW+vsCo603W72yD31eYw5JAdmvyt243GWMjK2J+ed73WTCC3yaLmWnQdQf9ey/MHQIUkNv
+ 7UN2VW9ordWrUmdvwwJH2VMaJLbLfNxenLc/ucVojY0o7dEo1CLOV301mvPT43SzZP2xji
+ yvgz//9ORKiXbC+ci8TbUeUzJ+NPIsI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-sWI8-9WmMoiVyEDIIaxb7A-1; Mon,
- 22 Dec 2025 08:41:40 -0500
-X-MC-Unique: sWI8-9WmMoiVyEDIIaxb7A-1
-X-Mimecast-MFC-AGG-ID: sWI8-9WmMoiVyEDIIaxb7A_1766410898
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-JsNlK-FHP4y81ev2PjBhlg-1; Mon,
+ 22 Dec 2025 08:42:07 -0500
+X-MC-Unique: JsNlK-FHP4y81ev2PjBhlg-1
+X-Mimecast-MFC-AGG-ID: JsNlK-FHP4y81ev2PjBhlg_1766410926
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC5551956088; Mon, 22 Dec 2025 13:41:38 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A14441956050; Mon, 22 Dec 2025 13:42:06 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.45.224.58])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 38D3B19560AB; Mon, 22 Dec 2025 13:41:33 +0000 (UTC)
+ id AAB4A19560AB; Mon, 22 Dec 2025 13:42:02 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
  maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com,
  gshan@redhat.com, ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org,
  pbonzini@redhat.com
-Subject: [PATCH v4 04/10] target/arm/machine: Allow extra regs in the incoming
- stream
-Date: Mon, 22 Dec 2025 14:40:01 +0100
-Message-ID: <20251222134110.3649287-5-eric.auger@redhat.com>
+Subject: [PATCH v4 10/10] hw/arm/virt: [DO NOT UPSTREAM] Enforce compatibility
+ with older kernels
+Date: Mon, 22 Dec 2025 14:40:07 +0100
+Message-ID: <20251222134110.3649287-11-eric.auger@redhat.com>
 In-Reply-To: <20251222134110.3649287-1-eric.auger@redhat.com>
 References: <20251222134110.3649287-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
@@ -72,7 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,168 +87,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Newer kernels may revoke exposure of KVM regs to userspace. This can
-happen when one notices that some registers were unconditionnally
-exposed whether they shall be conditionnally exposed for example.
+This is an example on how to use the new CPU options. This catters to
+distributions who want machines to be migratable (forward and backward)
+accross different host kernel versions in case KVM registers exposed
+to qemu vary accross kernels. This patch is not meant to be upstreamed
+as it is really kernel dependent. The goal is to illustrate how this
+would be used.
 
-An example of such situation is: TCR2_EL1, PIRE0_EL1,  PIR_EL1.
-Associated kernel commits were:
-0fcb4eea5345  KVM: arm64: Hide TCR2_EL1 from userspace when disabled for guests
-a68cddbe47ef  KVM: arm64: Hide S1PIE registers from userspace when disabled for guests
+In this example, For 10_1 machines types and older we apply the following
+host kernel related compats:
 
-Those commits were actual fixes but the cons is that is breaks forward
-migration on some HW. Indeed when migrating from an old kernel that
-does not feature those commits to a more recent one, destination
-qemu detects there are more KVM regs in the input migration stream than
-exposed by the destination host and the migration fails with:
-"failed to load cpu:cpreg_vmstate_array_len"
+1) Make sure the KVM_REG_ARM_VENDOR_HYP_BMAP_2 exposed from v6.15 onwards
+   is ignored/hidden.
+2) Make sure TCR_EL1, PIRE0_EL1, PIR_EL1 are always seen by qemu
+   although not exposed by KVM. They were unconditionnally exposed before
+   v6.13 while from v6.13 they are only exposed if supported by the guest.
 
-This patchs adds the capability to define an array of register indexes
-that may exist in the migration incoming stream but may be not
-exposed by KVM on the destination.
-
-We provision for extra space in cpreg_vmstate_* arrays during the preload
-phase to allow the state to be saved without overflow, in case the
-registers only are in the inbound data.
-
-On postload we make sure to ignore them when analyzing potential
-mismatch between registers. The actual cpreg array is never altered
-meaning those registers are never accessed nor saved.
-
-The array will be populated with a dedicated array property.
+This will allow 10_1 machines types and older machines to migrate
+forward and backward from old downstream kernels that do not feature
+those changes to newer kernels (>= v6.15).
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-
 ---
+ hw/arm/virt.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-v2 -> v3:
-- add a missing_as_expected trace point
-
-v1 -> v2:
-- get rid of the enforced/fake terminology
-- remove the useless array of fake regs. Only the number of missing
-  regs is needed
-
-RFC -> v1:
-- improve comment in target/arm/cpu.h (Connie)
----
- target/arm/cpu.h        | 22 ++++++++++++++++++++++
- target/arm/machine.c    | 30 +++++++++++++++++++++---------
- target/arm/trace-events |  1 +
- 3 files changed, 44 insertions(+), 9 deletions(-)
-
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index dcbdeaa742..9f0aa02fe7 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1053,6 +1053,15 @@ struct ArchCPU {
-     uint64_t *hidden_regs;
-     uint32_t nr_hidden_regs;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 00948887a2..bb89f3a53f 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -109,6 +109,23 @@ static GlobalProperty arm_virt_compat_10_2[] = {
+ static const size_t arm_virt_compat_10_2_len =
+     G_N_ELEMENTS(arm_virt_compat_10_2);
  
-+    /*
-+     * Registers that are likely to be part of the migration
-+     * incoming stream but not exposed on destination. If
-+     * their indexes are stored in this array, it is OK to
-+     * ignore those registers in the inbound data.
-+     */
-+    uint64_t *mig_safe_missing_regs;
-+    uint32_t nr_mig_safe_missing_regs;
++/*
++ * if a 10_1 machine type or older is used:
++ * 1) make sure TCR_EL1, PIRE0_EL1, PIR_EL1 are enforced, even if they are not
++ *    exposed by the kernel
++ * 2) hide KVM_REG_ARM_VENDOR_HYP_BMAP_2
++ */
++static GlobalProperty arm_virt_kernel_compat_10_1[] = {
++    /* KVM_REG_ARM_VENDOR_HYP_BMAP_2 */
++    { TYPE_ARM_CPU, "x-mig-hidden-regs", "0x6030000000160003" },
++    /* TCR_EL1, PIRE0_EL1, PIR_EL1 */
++    { TYPE_ARM_CPU, "x-mig-safe-missing-regs",
++      "0x603000000013c103, 0x603000000013c512, 0x603000000013c513" },
++};
++static const size_t arm_virt_kernel_compat_10_1_len =
++    G_N_ELEMENTS(arm_virt_kernel_compat_10_1);
 +
-     /* Uniprocessor system with MP extensions */
-     bool mp_is_up;
- 
-@@ -1204,6 +1213,19 @@ arm_cpu_hidden_reg(ARMCPU *cpu, uint64_t regidx)
-     return false;
++
+ /*
+  * This cannot be called from the virt_machine_class_init() because
+  * TYPE_VIRT_MACHINE is abstract and mc->compat_props g_ptr_array_new()
+@@ -3554,6 +3571,8 @@ static void virt_machine_10_1_options(MachineClass *mc)
+     virt_machine_10_2_options(mc);
+     mc->smbios_memory_device_size = 2047 * TiB;
+     compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
++    compat_props_add(mc->compat_props,
++                     arm_virt_kernel_compat_10_1, arm_virt_kernel_compat_10_1_len);
  }
+ DEFINE_VIRT_MACHINE(10, 1)
  
-+
-+static inline bool
-+arm_cpu_safe_missing_reg(ARMCPU *cpu, uint64_t regidx)
-+{
-+    for (int i = 0; i < cpu->nr_mig_safe_missing_regs; i++) {
-+        if (regidx == cpu->mig_safe_missing_regs[i]) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+
- /* Callback functions for the generic timer's timers. */
- void arm_gt_ptimer_cb(void *opaque);
- void arm_gt_vtimer_cb(void *opaque);
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index f06a920aba..98851afc61 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -991,7 +991,8 @@ static int cpu_pre_load(void *opaque)
- {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
--    int arraylen = cpu->cpreg_vmstate_array_len + MAX_CPREG_VMSTATE_ANOMALIES;
-+    int arraylen = cpu->cpreg_vmstate_array_len +
-+                   cpu->nr_mig_safe_missing_regs + MAX_CPREG_VMSTATE_ANOMALIES;
- 
-     cpu->cpreg_vmstate_indexes = g_renew(uint64_t, cpu->cpreg_vmstate_indexes,
-                                          arraylen);
-@@ -1058,6 +1059,10 @@ static int cpu_post_load(void *opaque, int version_id)
-      * entries with the right slots in our own values array.
-      */
- 
-+    /*
-+     * at this point cpu->cpreg_vmstate_array_len was migrated with the
-+     * actual length saved on source
-+     */
-     trace_cpu_post_load_len(cpu->cpreg_array_len, cpu->cpreg_vmstate_array_len);
-     for (; i < cpu->cpreg_array_len && v < cpu->cpreg_vmstate_array_len;) {
-         trace_cpu_post_load(i, v , cpu->cpreg_indexes[i]);
-@@ -1072,10 +1077,15 @@ static int cpu_post_load(void *opaque, int version_id)
-         }
-         if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
-             /* register in their list but not ours: those will fail migration */
--            trace_cpu_post_load_unexpected(v, cpu->cpreg_vmstate_indexes[v], i);
--            if (k < MAX_CPREG_VMSTATE_ANOMALIES) {
--                cpu->cpreg_vmstate_unexpected_indexes[k++] =
--                    cpu->cpreg_vmstate_indexes[v];
-+            if (!arm_cpu_safe_missing_reg(cpu, cpu->cpreg_vmstate_indexes[v])) {
-+                trace_cpu_post_load_unexpected(v, cpu->cpreg_vmstate_indexes[v], i);
-+                if (k < MAX_CPREG_VMSTATE_ANOMALIES) {
-+                    cpu->cpreg_vmstate_unexpected_indexes[k++] =
-+                        cpu->cpreg_vmstate_indexes[v];
-+                }
-+            } else {
-+                trace_cpu_post_load_missing_as_expected(v, cpu->cpreg_vmstate_indexes[v],
-+                                                        i);
-             }
-             v++;
-             continue;
-@@ -1101,10 +1111,12 @@ static int cpu_post_load(void *opaque, int version_id)
-      * still regs in the input stream, continue parsing the vmstate array
-      */
-     for ( ; v < cpu->cpreg_vmstate_array_len; v++) {
--        if (k < MAX_CPREG_VMSTATE_ANOMALIES) {
--            trace_cpu_post_load_unexpected(v, cpu->cpreg_vmstate_indexes[v], i);
--            cpu->cpreg_vmstate_unexpected_indexes[k++] =
--                cpu->cpreg_vmstate_indexes[v];
-+        if (!arm_cpu_safe_missing_reg(cpu, cpu->cpreg_vmstate_indexes[v])) {
-+            if (k < MAX_CPREG_VMSTATE_ANOMALIES) {
-+                trace_cpu_post_load_unexpected(v, cpu->cpreg_vmstate_indexes[v], i);
-+                cpu->cpreg_vmstate_unexpected_indexes[k++] =
-+                    cpu->cpreg_vmstate_indexes[v];
-+            }
-         }
-     }
- 
-diff --git a/target/arm/trace-events b/target/arm/trace-events
-index 20f4b4f2cd..2e22012c69 100644
---- a/target/arm/trace-events
-+++ b/target/arm/trace-events
-@@ -35,3 +35,4 @@ cpu_post_load_len(int cpreg_array_len, int cpreg_vmstate_array_len) "cpreg_array
- cpu_post_load(int i, int v, uint64_t regidx) "i=%d v=%d regidx=0x%"PRIx64
- cpu_post_load_missing(int i, uint64_t regidx, int v) "missing register in input stream: i=%d index=0x%"PRIx64" (v=%d)"
- cpu_post_load_unexpected(int v, uint64_t regidx, int i) "unexpected register in input stream: v=%d index=0x%"PRIx64" (i=%d)"
-+cpu_post_load_missing_as_expected(int v, uint64_t regidx, int i) "register missing as expected in input stream: v=%d index=0x%"PRIx64" (i=%d)"
 -- 
 2.52.0
 
