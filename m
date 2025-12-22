@@ -4,152 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20A5E67495
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 17:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E9A6E67810
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 18:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXjIk-00085d-7A; Mon, 22 Dec 2025 12:02:30 -0500
+	id 1vXkWK-0008V2-8p; Mon, 22 Dec 2025 13:20:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vXjHo-0007ds-8R
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 12:01:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1vXkWI-0008Ua-NG
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 13:20:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vXjHl-0005Qx-Uk
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 12:01:31 -0500
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1vXkWG-0000qh-8T
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 13:20:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766422886;
+ s=mimecast20190719; t=1766427629;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ALIGATKrzI5pnjC+gVMvURVoLNH7RTAfk+IJuULXVbA=;
- b=PXsyamzTd+80GF0Az+bmsWEKez9s4Ts2g6p4fsNOa8f5NIsd7rBDuCsRQf7nUt/Yolsl3D
- hmil8/YnVeSTqYCLIMNW6rHcXcDc0yqYWcwepSjHBP5chimvdrsQcYbVOPj5eR73p+m7EY
- uHc8GNFRhdJsHn9dOfpFQ80/Fcdk284=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=ie4CaBMN/pBl+1WaLJYjH/pc2vw/kZ+A2hYiCSdUimY=;
+ b=fTG9t0A3f80IsofCv7lMGp1l39p2t3yIHCq31P74mG93zesHKQFyWGAM+L1aYnrWQw0zl9
+ V+wQkxrECZsH9Xflfo5XdFPCoivw+u+U6kSMS1999l49gVxgHo3vJ5aNmlT0bZ9Uv6250J
+ +WS0jmLhRb6qLDqDye9OVKkmThO/l0M=
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
+ [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-EE-AtwAZNTuxKZkAgDqyXg-1; Mon, 22 Dec 2025 12:01:24 -0500
-X-MC-Unique: EE-AtwAZNTuxKZkAgDqyXg-1
-X-Mimecast-MFC-AGG-ID: EE-AtwAZNTuxKZkAgDqyXg_1766422883
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477a0ddd1d4so39999165e9.0
- for <qemu-devel@nongnu.org>; Mon, 22 Dec 2025 09:01:24 -0800 (PST)
+ us-mta-661-XnrpA7M_Oau7JygBJ2dvgQ-1; Mon, 22 Dec 2025 13:20:26 -0500
+X-MC-Unique: XnrpA7M_Oau7JygBJ2dvgQ-1
+X-Mimecast-MFC-AGG-ID: XnrpA7M_Oau7JygBJ2dvgQ_1766427626
+Received: by mail-yx1-f71.google.com with SMTP id
+ 956f58d0204a3-64651279fbdso6479929d50.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Dec 2025 10:20:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766422883; x=1767027683; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ALIGATKrzI5pnjC+gVMvURVoLNH7RTAfk+IJuULXVbA=;
- b=ps8mclLkonVspX5vaL7MZQgHpkGhwGf+RXNbYGQHFI+w8KVt/kz9G6OdknrqgzbwaI
- EWUFFCrPJwnTsyr8AA37PdnlbJnqkvVC5NA4pubk40/RW7hGBWVAn8Kv3CkLhSMSeDWf
- mhWXK9BEmjIkOU65cBwEmgjk/oH0racvaKxEpWxsaYKAiKmkPLpudteQgCgKlIngB2IT
- y/U9xTUJRIwd/XVCFx4wG7eCumil2+TjDTict2yMklDjeG1UgpHM6gG0l/Hw+jyQMCr8
- xOMWvQTXAvP8e2WNjc+qlJlZEvNhlt6vL5IM5XVmGNwXKNAqvdBHoWyF3s0LR2o6MG7I
- urgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766422883; x=1767027683;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1766427626; x=1767032426; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ALIGATKrzI5pnjC+gVMvURVoLNH7RTAfk+IJuULXVbA=;
- b=G6a0077bHX4VVHVvUJPzNlOM8Bc7PtddUXcXb8oBn/BpCusF4u6OCzb4Om4z0yT+Fh
- CLqDcunCatiZfkhpLVz+jcTAfbPLBLe1fnfEumJYvHsx8Ch+i4BoF/kBe+XdaZS/5quq
- L9KWYEIlG89/BncU1StLfQpFgVqUU/Kluj1c7G3w7NIcvhGrk+OHKTcbu1UQQCfvD/3i
- CB98XaxvEab2FnJ+yLnt75YAyx6owNnyAXzFm5aOtCPUeCMqEcbixQAUt4p+3s06JzQ4
- hmRlRxvSvxgPFgwUQ/Tde+1J2I4b01JXNN2d2hJWZ7FBUEZPPWYmxb/ZczSIl71O7vxU
- rTIA==
+ bh=ie4CaBMN/pBl+1WaLJYjH/pc2vw/kZ+A2hYiCSdUimY=;
+ b=c7Imwg+hKST0JgYI+apIxK4BKkTqHl2F3s6gJt7rvnfM1iaO8o0P+AM+5rsG4b0lwx
+ m6QBaX3aVo2/m5mlFw1Vas2GMQtsAIxJ84QgwUSDZhxdXvkjzcK7liz/yFghMOi6CyjV
+ aVqFuLPbnBUtcG8KUylOaEKiLhOTSrryzjLzxLf6suhasRUMhfjrqL/xHCE5wi3im/pu
+ WTgR+8M3fxyw+8G0emdfnEG9oUMmHO3FO8MUy5kIHrNeB2fdegreHgbbOb53dOBqMW6b
+ 99GIkTIs/fo8W1c6BhnB6q11LM5SKoYhzf/XEmiKIY0X+ioeBZt5XmgG10NnVHfIwf+3
+ RDcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766427626; x=1767032426;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ie4CaBMN/pBl+1WaLJYjH/pc2vw/kZ+A2hYiCSdUimY=;
+ b=ZOozyCdhM0O/1ia4xUN38F9S3w0SGHwL8wAsa7WE9sSNcQkc9FqtGVwxq8fLvsIgci
+ iCWZsuab01bKpUWJULIBL7qaGtRvB33SRV86h/XvjiIFPYotdqzVcOjPjn45pHuoRDwL
+ vqfV7e5VREekL+fXmjoTE9aQUhHO34+w79b69fXeuRBKemf3aKoDKT4KHC0A0tYat0nT
+ f5XLPS4lVw0XkqzQzS9uSqbsb4EHbkJ2UcL8FToqToJTtIOgAvqBpeXGb6LzQ1r0j7sl
+ p5GIAiBA9zn4548cRaFdfq9TA6DbSJGZfEDm0w0KJfIJ2beLqgRuhUj0LG55AcAJzdUe
+ UkZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbpNowqHZwUPknMyTYXF8BEhIEmFoN7ffFW4BflylQZVdxSWCJmAF6TVjt3wckOL1utWqgb3aAAfKR@nongnu.org
-X-Gm-Message-State: AOJu0Yw9LDmoc15BT+j4iz3IwhiXJMV1uG4wgdn36Vld2tAkD64bd0xr
- YV31aTlLzuxlGgtEtqesVbFqr2pHr+Y4HbUEfyeYpPnl0gUge3T1p+Wav4pSA4efs6VW25K9Txm
- TStI/2sOVE+ynAiVWmbP4PAIm9vlCvLQBpm5P/Ewwl1+4H9VFnqEudSc3
-X-Gm-Gg: AY/fxX6viM/X64QAIoJuaLS0mEQf13my9M5RZW2VGO+aqJfkCHVTJ/1Sk8gQRSf8Eb0
- TxCWgtaFJvgHupB7N97LkZ0EeMoWQadaWvUR87LhUqKf8jRbUl4I5zJ/etT8qgRjvCKidgguR0a
- oZ4WEo9hehw3bFIC5J+qH08E1jI5w/UOWr+jpZAY8Z6DmFmw6Hpe6wa00iTGRakKa+LDgKkLCbI
- hjRh4Eu+Jz0Yxtdh8qRMeCOPCWQu+7d44QTMKRTpJwl+5Esr4fK0Jo+xHo3c6oirc4rlLkpE/vV
- ov9KmYCALhnzAuh85De4T+4diGaxg/9lp/uwFOzWz55xjPMvJJ+o3TLcp+w8C20Pj3DjtEXreHp
- c7PTzy+azq8CruoZ1WniOvsjAFXl0WwPAWiWLZYM12kjY60xMuaUOWXx5Axtym/Li1BuSar/ZKM
- tJ6PxIz3bwncpACZg=
-X-Received: by 2002:a05:6000:22c8:b0:431:104:6db2 with SMTP id
- ffacd0b85a97d-4324e4c7440mr13084575f8f.3.1766422882702; 
- Mon, 22 Dec 2025 09:01:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEdm7rE8eBD9ODnhSO63+XZoUxSlcMdA4MvMEpUKGYw+rdqO9kMrUKYrEXfygoEMl+CatQyjQ==
-X-Received: by 2002:a05:6000:22c8:b0:431:104:6db2 with SMTP id
- ffacd0b85a97d-4324e4c7440mr13084415f8f.3.1766422880775; 
- Mon, 22 Dec 2025 09:01:20 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.145.106])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-4324e9ba877sm22684770f8f.0.2025.12.22.09.01.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Dec 2025 09:01:20 -0800 (PST)
-Message-ID: <1bf91b9f-19ce-4bdb-a403-e4fdd2cd943a@redhat.com>
-Date: Mon, 22 Dec 2025 18:01:13 +0100
+ AJvYcCWssD4GRMPj/6gAS724u5VU/VtzdUbc9qs5VWWVTR52JeJovnW5UUX/vZYbvJbBGlGr2PU9otpAe4X9@nongnu.org
+X-Gm-Message-State: AOJu0YxHtGGMYPdY7uwxTsL/TQhSmrv66pSRC21nv9gtjDOki7ZaWc4B
+ 5tBQMbyUx8o9c/uA6tyxM/cMb+iikWoNPZEH/sFk9y04W0Jx4OXppIDmwwpwpkFK+MEhTuBCUDt
+ 3m3iIYOj7qRPBFmtk3gaFhcJnbHaLidHKYY196AtILot/OJD8kWFajXjNGT5l+drSJD86CrSiMn
+ S4rswqPE/n7f3B4P/KnvgnHZ3d/BTcz5I=
+X-Gm-Gg: AY/fxX4gwnVGEL8nqN1QpfQPNmHEUmP6YCko29mT4it2V/lJHIas1EZTQe+shhegfzc
+ 8mB5WZJXdMCrwXWd2igfHvy1E3/kmxUwp1FgLBuUelU5OFPiF6+bJIGFf2Zp/jGwFY29ByxgxAo
+ Y8rYq0R+oM6hYx/OF2xLFDFi7WohvZZFI5Ij7+ovK3LdWjBeWHXGL1hlKikz188L31+w==
+X-Received: by 2002:a05:690e:1881:b0:646:7da0:3a96 with SMTP id
+ 956f58d0204a3-6467da03affmr4513490d50.50.1766427625855; 
+ Mon, 22 Dec 2025 10:20:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IElQmOISD9xzmwmY3+4Elxur5Gq2+7SukhGVvJ0xtRgg5f89UTF9OHSaJ/4k8Fe2QA322TDc/KdFtx+9031VXI=
+X-Received: by 2002:a05:690e:1881:b0:646:7da0:3a96 with SMTP id
+ 956f58d0204a3-6467da03affmr4513459d50.50.1766427625354; Mon, 22 Dec 2025
+ 10:20:25 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] run: introduce a script for running devel commands
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20251222113859.182395-1-berrange@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20251222113859.182395-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+References: <20251216015522.6540-1-wafer@jaguarmicro.com>
+ <CAJaqyWcsVpE-CoHu_1V=9vhvSkgsSqY1QBq2OWitOvVPggVqpg@mail.gmail.com>
+ <PUZPR06MB47136C0227E2506CCC34AAA4A2B4A@PUZPR06MB4713.apcprd06.prod.outlook.com>
+In-Reply-To: <PUZPR06MB47136C0227E2506CCC34AAA4A2B4A@PUZPR06MB4713.apcprd06.prod.outlook.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 22 Dec 2025 19:19:49 +0100
+X-Gm-Features: AQt7F2oPdavnhCdscmH1i6Koe9Vtqv1GiZep1KrgyCXY1YWa5DPXEUV0ib6QAHE
+Message-ID: <CAJaqyWdb41Xzpq1z9Bikxsa63+QwPdScVZRE7B3UsdjNE+=sZA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] vdpa: implement a statically allocated buffer for
+ SVQ
+To: Wafer <wafer@jaguarmicro.com>
+Cc: "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "leiyang@redhat.com" <leiyang@redhat.com>, 
+ "sgarzare@redhat.com" <sgarzare@redhat.com>,
+ Angus Chen <angus.chen@jaguarmicro.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,197 +125,425 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/22/25 12:38, Daniel P. Berrangé wrote:
-> Various aspects of the development workflow are complicated by the need
-> to set env variables ahead of time, or use specific paths. Meson
-> provides a 'devenv' command that can be used to launch a command with a
-> number of appropriate project specific environment variables preset.
-> 
-> By default it will modify $PATH to point to any build directory that
-> contains a binary built by the project.
-> 
-> This further augments that to replicate the venv 'activate' script:
-> 
->   * Add $BUILD_DIR/pyvenv/bin to $PATH
->   * Set VIRTUAL_ENV to $BUILD_DIR/pyvenv
-> 
-> And then makes functional tests more easily executable
-> 
->   * Add $SRC_DIR/tests/functional and $SRC_DIR/python to $PYTHONPATH
-> 
-> To see the benefits of this consider this command:
-> 
->    $ source ./build/pyvenv/bin/activate
->    $ ./scripts/qmp/qmp-shell-wrap ./build/qemu-system-x86_64
-> 
-> which is now simplified to
-> 
->    $ ./build/run ./scripts/qmp/qmp-shell-wrap qemu-system-x86_64 [args..]
-> 
-> This avoids the need repeat './build' several times and avoids polluting
-> the current terminal's environment and/or avoids errors from forgetting
-> to source the venv settings.
-> 
-> As another example running functional tests
-> 
->    $ export PYTHONPATH=./python:./tests/functional
->    $ export QEMU_TEST_QEMU_BINARY=./build/qemu-system-x86_64
->    $ build/pyvenv/bin/python3 ./tests/functional/x86_64/test_virtio_version.py
-> 
-> which is now simplified to
-> 
->    $ export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
->    $ ./build/run ./tests/functional/x86_64/test_virtio_version.py
-> 
-> This usefulness of this will be further enhanced with the pending
-> removal of the QEMU python APIs from git, as that will require the use
-> of the python venv in even more scenarios that today.
-> 
-> The 'run' script does not let 'meson devenv' directly launch the command
-> to be run because it always requires $BUILD_DIR as the current working
-> directory. It is desired that 'run' script always honour the current
-> working directory of the terminal that invokes is. Thus the '--dump'
-> flag is used to export the devenv variables into the 'run' script's
-> shell.
-> 
-> This takes the liberty to assign 'run.in' to the "Build system" section
-> in the MAINTAINERS file, given that it leverages meson's 'devenv'
-> feature.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
-> 
-> Changed in v2:
-> 
->   * Switch to use meson's  "devenv" framework
->   * Fix some typos
-> 
->   MAINTAINERS                       |  1 +
->   docs/devel/build-system.rst       | 12 ++++++++++++
->   docs/devel/testing/functional.rst | 17 ++++++++---------
->   meson.build                       | 16 ++++++++++++++--
->   run.in                            |  6 ++++++
->   5 files changed, 41 insertions(+), 11 deletions(-)
->   create mode 100644 run.in
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 63e9ba521b..f21b2927a8 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4479,6 +4479,7 @@ R: Philippe Mathieu-Daudé <philmd@linaro.org>
->   S: Maintained
->   F: meson.build
->   F: meson_options.txt
-> +F: run.in
->   F: scripts/check_sparse.py
->   F: scripts/symlink-install-tree.py
->   
-> diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-> index 6204aa6a72..b9797a374c 100644
-> --- a/docs/devel/build-system.rst
-> +++ b/docs/devel/build-system.rst
-> @@ -515,6 +515,18 @@ generates ``Makefile`` from ``Makefile.in``.
->   
->   Built by configure:
->   
-> +``run``
-> +  Used to run commands / scripts from the git checkout. Sets ``$PATH``
-> +  to point to locally built binaries, and activates the python venv
-> +  before running the requested command. Pass the command to run as
-> +  args, for example::
-> +
-> +    $ ./build/run ./script/qmp/qmp-shell-wrap qemu-system-x86_64
-> +
-> +  will use the ``python3`` binary and site-packages from the local
-> +  venv to run ``qmp-shell-wrap`` and spawn the QEMU emulator from
-> +  the build directory.
-> +
->   ``config-host.mak``
->     When configure has determined the characteristics of the build host it
->     will write the paths to various tools to this file, for use in ``Makefile``
-> diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-> index fdeaebaadc..1978f96eba 100644
-> --- a/docs/devel/testing/functional.rst
-> +++ b/docs/devel/testing/functional.rst
-> @@ -53,15 +53,14 @@ the following line will only run the tests for the x86_64 target:
->     make check-functional-x86_64
->   
->   To run a single test file without the meson test runner, you can also
-> -execute the file directly by specifying two environment variables first,
-> -the PYTHONPATH that has to include the python folder and the tests/functional
-> -folder of the source tree, and QEMU_TEST_QEMU_BINARY that has to point
-> -to the QEMU binary that should be used for the test. The current working
-> -directory should be your build folder. For example::
-> -
-> -  $ export PYTHONPATH=../python:../tests/functional
-> -  $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
-> -  $ pyvenv/bin/python3 ../tests/functional/test_file.py
-> +execute the file directly by specifying the name of the emulator target
-> +binary as an env variable.
-> +
-> +Assuming the current working directory is the top level source checkout
-> +and the build directory is './build'::
-> +
-> +  $ export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
-> +  $ ./build/run tests/functional/x86_64/test_virtio_version.py
->   
->   The test framework will automatically purge any scratch files created during
->   the tests. If needing to debug a failed test, it is possible to keep these
-> diff --git a/meson.build b/meson.build
-> index d9293294d8..320fecf372 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3,8 +3,6 @@ project('qemu', ['c'], meson_version: '>=1.5.0',
->                             'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
->           version: files('VERSION'))
->   
-> -meson.add_devenv({ 'MESON_BUILD_ROOT' : meson.project_build_root() })
-> -
->   add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true,
->                  env: ['RUST_BACKTRACE=1'])
->   add_test_setup('slow', exclude_suites: ['thorough'],
-> @@ -3507,6 +3505,20 @@ endif
->   config_host_h = configure_file(output: 'config-host.h', configuration: config_host_data)
->   genh += config_host_h
->   
-> +devenv = environment()
-> +devenv.set('MESON_BUILD_ROOT', meson.project_build_root())
-> +devenv.set('VIRTUAL_ENV', meson.project_build_root() / 'pyvenv')
-> +devenv.prepend('PATH', meson.project_build_root() / 'pyvenv'/ 'bin')
-> +devenv.prepend('PYTHONPATH', meson.current_source_dir() / 'tests' / 'functional')
-> +devenv.prepend('PYTHONPATH', meson.current_source_dir() / 'python')
-> +meson.add_devenv(devenv)
-> +
-> +run_config = configuration_data({'build_dir': meson.current_build_dir()})
-> +run = configure_file(input: 'run.in',
-> +                     output: 'run',
-> +                     configuration: run_config)
-> +run_command('chmod', 'a+x', meson.current_build_dir() / 'run', check: true)
-> +
->   hxtool = find_program('scripts/hxtool')
->   shaderinclude = find_program('scripts/shaderinclude.py')
->   qapi_gen = find_program('scripts/qapi-gen.py')
-> diff --git a/run.in b/run.in
-> new file mode 100644
-> index 0000000000..cf4821311d
-> --- /dev/null
-> +++ b/run.in
-> @@ -0,0 +1,6 @@
-> +#!/bin/bash
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +eval $(meson devenv -C @build_dir@ --dump --dump-format export)
+On Mon, Dec 22, 2025 at 6:10=E2=80=AFAM Wafer <wafer@jaguarmicro.com> wrote=
+:
+>
+>
+>
+> > -----Original Message-----
+> > From: Eugenio Perez Martin <eperezma@redhat.com>
+> > Sent: 2025=E5=B9=B412=E6=9C=8819=E6=97=A5 16:12
+> > To: Wafer <wafer@jaguarmicro.com>
+> > Cc: mst@redhat.com; jasowang@redhat.com; qemu-devel@nongnu.org;
+> > leiyang@redhat.com; sgarzare@redhat.com; Angus Chen
+> > <angus.chen@jaguarmicro.com>
+> > Subject: Re: [PATCH v3 2/4] vdpa: implement a statically allocated buff=
+er for
+> > SVQ
+> >
+> > External Mail: This email originated from OUTSIDE of the organization!
+> > Do not click links, open attachments or provide ANY information unless =
+you
+> > recognize the sender and know the content is safe.
+> >
+> >
+> > On Tue, Dec 16, 2025 at 2:55=E2=80=AFAM Wafer Xie <wafer@jaguarmicro.co=
+m> wrote:
+> > >
+> > > From: wafer Xie <wafer@jaguarmicro.com>
+> > >
+> > > allocated and initialized when creating the vhost-vdpa device, and
+> > > release the indirect buffer when vhost-vdpa is stopped.
+> > >
+> > > Signed-off-by: wafer Xie <wafer@jaguarmicro.com>
+> > > ---
+> > >  hw/virtio/vhost-shadow-virtqueue.c |  25 +++++
+> > >  hw/virtio/vhost-vdpa.c             | 163 +++++++++++++++++++++++++++=
++-
+> > >  2 files changed, 187 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/hw/virtio/vhost-shadow-virtqueue.c
+> > > b/hw/virtio/vhost-shadow-virtqueue.c
+> > > index 2481d49345..85eff1d841 100644
+> > > --- a/hw/virtio/vhost-shadow-virtqueue.c
+> > > +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > > @@ -708,6 +708,25 @@ void vhost_svq_start(VhostShadowVirtqueue
+> > *svq, VirtIODevice *vdev,
+> > >      for (unsigned i =3D 0; i < svq->vring.num - 1; i++) {
+> > >          svq->desc_next[i] =3D i + 1;
+> > >      }
+> > > +
+> > > +    /* Initialize indirect descriptor state */
+> > > +    svq->indirect_enabled =3D false;
+> > > +    svq->current_indirect_buf =3D -1;
+> > > +    for (int i =3D 0; i < SVQ_NUM_INDIRECT_BUFS; i++) {
+> > > +        svq->indirect_bufs[i].desc =3D NULL;
+> > > +        svq->indirect_bufs[i].iova =3D 0;
+> > > +        svq->indirect_bufs[i].size =3D 0;
+> > > +        svq->indirect_bufs[i].state =3D SVQ_INDIRECT_BUF_FREED;
+> > > +        svq->indirect_bufs[i].num_descs =3D 0;
+> > > +        svq->indirect_bufs[i].freed_descs =3D 0;
+> > > +        svq->indirect_bufs[i].freeing_descs =3D 0;
+> > > +        svq->indirect_bufs[i].freed_head =3D 0;
+> > > +    }
+> > > +
+> > > +    /* Initialize desc_state indirect_buf_idx to -1 */
+> > > +    for (unsigned i =3D 0; i < svq->vring.num; i++) {
+> > > +        svq->desc_state[i].indirect_buf_idx =3D -1;
+> > > +    }
+> > >  }
+> > >
+> > >  /**
+> > > @@ -748,6 +767,10 @@ void vhost_svq_stop(VhostShadowVirtqueue *svq)
+> > >      munmap(svq->vring.desc, vhost_svq_driver_area_size(svq));
+> > >      munmap(svq->vring.used, vhost_svq_device_area_size(svq));
+> > >      event_notifier_set_handler(&svq->hdev_call, NULL);
+> > > +
+> > > +    /* Reset indirect descriptor state (memory is freed by vhost-vdp=
+a) */
+> > > +    svq->indirect_enabled =3D false;
+> > > +    svq->current_indirect_buf =3D -1;
+> > >  }
+> > >
+> > >  /**
+> > > @@ -765,6 +788,8 @@ VhostShadowVirtqueue *vhost_svq_new(const
+> > VhostShadowVirtqueueOps *ops,
+> > >      event_notifier_init_fd(&svq->svq_kick, VHOST_FILE_UNBIND);
+> > >      svq->ops =3D ops;
+> > >      svq->ops_opaque =3D ops_opaque;
+> > > +    svq->indirect_enabled =3D false;
+> > > +    svq->current_indirect_buf =3D -1;
+> > >      return svq;
+> > >  }
+> > >
+> > > diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c index
+> > > 7061b6e1a3..816868d153 100644
+> > > --- a/hw/virtio/vhost-vdpa.c
+> > > +++ b/hw/virtio/vhost-vdpa.c
+> > > @@ -584,6 +584,155 @@ static int vhost_vdpa_get_dev_features(struct
+> > vhost_dev *dev,
+> > >      return ret;
+> > >  }
+> > >
+> > > +/**
+> > > + * Allocate a single indirect descriptor buffer for SVQ
+> > > + *
+> > > + * @v: vhost_vdpa instance
+> > > + * @num_descs: Number of descriptors (should be vring.num)
+> > > + * @buf: Output buffer structure to fill
+> > > + *
+> > > + * Returns true on success, false on failure.
+> > > + */
+> > > +static bool vhost_vdpa_alloc_indirect_buf(struct vhost_vdpa *v,
+> > > +                                           uint16_t num_descs,
+> > > +                                           SVQIndirectDescBuf *buf) =
+{
+> > > +    size_t desc_size =3D sizeof(vring_desc_t) * num_descs;
+> > > +    size_t alloc_size =3D ROUND_UP(desc_size,
+> > qemu_real_host_page_size());
+> > > +    DMAMap needle =3D {
+> > > +        .size =3D alloc_size - 1,
+> > > +        .perm =3D IOMMU_RO,
+> > > +    };
+> > > +    vring_desc_t *indirect_desc;
+> > > +    int r;
+> > > +
+> > > +    /* Allocate memory for indirect descriptors */
+> > > +    indirect_desc =3D mmap(NULL, alloc_size, PROT_READ | PROT_WRITE,
+> > > +                         MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+> > > +    if (indirect_desc =3D=3D MAP_FAILED) {
+> > > +        error_report("Cannot allocate indirect descriptor buffer");
+> > > +        return false;
+> > > +    }
+> > > +
+> > > +    /* Allocate IOVA for the indirect descriptor buffer */
+> > > +    r =3D vhost_iova_tree_map_alloc(v->shared->iova_tree, &needle,
+> > > +                                  (hwaddr)(uintptr_t)indirect_desc);
+> > > +    if (unlikely(r !=3D IOVA_OK)) {
+> > > +        error_report("Cannot allocate iova for indirect descriptors =
+(%d)", r);
+> > > +        munmap(indirect_desc, alloc_size);
+> > > +        return false;
+> > > +    }
+> > > +
+> > > +    /* Map to device */
+> > > +    r =3D vhost_vdpa_dma_map(v->shared, v->address_space_id,
+> > needle.iova,
+> > > +                           alloc_size, indirect_desc, true);
+> > > +    if (unlikely(r !=3D 0)) {
+> > > +        error_report("Cannot map indirect descriptors to device: %s =
+(%d)",
+> > > +                     g_strerror(-r), -r);
+> > > +        vhost_iova_tree_remove(v->shared->iova_tree, needle);
+> > > +        munmap(indirect_desc, alloc_size);
+> > > +        return false;
+> > > +    }
+> > > +
+> > > +    buf->desc =3D indirect_desc;
+> > > +    buf->iova =3D needle.iova;
+> > > +    buf->size =3D alloc_size;
+> > > +    buf->state =3D SVQ_INDIRECT_BUF_FREED;
+> > > +    buf->num_descs =3D num_descs;
+> > > +    buf->freed_descs =3D num_descs;  /* All descriptors are free ini=
+tially */
+> > > +    buf->freeing_descs =3D 0;
+> > > +    buf->freed_head =3D 0;
+> > > +
+> > > +    return true;
+> > > +}
+> > > +
+> > > +/**
+> > > + * Free a single indirect descriptor buffer
+> > > + *
+> > > + * @v: vhost_vdpa instance
+> > > + * @buf: Buffer to free
+> > > + */
+> > > +static void vhost_vdpa_free_indirect_buf(struct vhost_vdpa *v,
+> > > +                                          SVQIndirectDescBuf *buf) {
+> > > +    DMAMap needle;
+> > > +    const DMAMap *result;
+> > > +    int r;
+> > > +
+> > > +    if (!buf->desc) {
+> > > +        return;
+> > > +    }
+> > > +
+> > > +    needle =3D (DMAMap) {
+> > > +        .translated_addr =3D (uint64_t)(uintptr_t)buf->desc,
+> > > +    };
+> > > +    result =3D vhost_iova_tree_find_iova(v->shared->iova_tree,
+> > > + &needle);
+> > > +
+> > > +    if (result) {
+> > > +        r =3D vhost_vdpa_dma_unmap(v->shared, v->address_space_id,
+> > > +                                 result->iova, buf->size);
+> > > +        if (unlikely(r !=3D 0)) {
+> > > +            error_report("Cannot unmap indirect descriptors: %s (%d)=
+",
+> > > +                         g_strerror(-r), -r);
+> > > +        }
+> > > +
+> > > +        vhost_iova_tree_remove(v->shared->iova_tree, *result);
+> > > +    }
+> > > +
+> > > +    munmap(buf->desc, buf->size);
+> > > +    buf->desc =3D NULL;
+> > > +    buf->iova =3D 0;
+> > > +    buf->size =3D 0;
+> > > +}
+> > > +
+> > > +/**
+> > > + * Initialize indirect descriptor buffers for a single SVQ
+> > > + *
+> > > + * @v: vhost_vdpa instance
+> > > + * @svq: Shadow virtqueue to initialize
+> > > + *
+> > > + * Returns true on success, false on failure.
+> > > + */
+> > > +static bool vhost_vdpa_svq_init_indirect(struct vhost_vdpa *v,
+> > > +                                          VhostShadowVirtqueue *svq)
+> > > +{
+> > > +    if (!svq->vring.num) {
+> > > +        return true;
+> > > +    }
+> > > +
+> > > +    /* Allocate indirect descriptor buffers for this SVQ */
+> > > +    for (int j =3D 0; j < SVQ_NUM_INDIRECT_BUFS; j++) {
+> > > +        if (!vhost_vdpa_alloc_indirect_buf(v, svq->vring.num * 4,
+> > > +                                           &svq->indirect_bufs[j])) =
+{
+> >
+> > Why not allocate a single array of size "SVQ_NUM_INDIRECT_BUFS *
+> > svq->vring.num * 4"? It should help management and maybe even
+> > performance as memory accesses are more predictable.
+> >
+>
+> We cannot assume or rely on the device to populate the used ring in the s=
+ame order as the available ring.
+> With a single large array, this may introduce holes, which makes managing=
+ freed descriptors difficult.
+> In addition, the virtio specification requires indirect descriptor addres=
+ses to be contiguous, which further complicates management with a single ar=
+ray.
+>
 
-This should use @build_dir@/pyvenv/bin/meson, because the system meson 
-is not necessarily able to read the devenv setup from meson's 
-pickle-format dumps.
+Actually you made me review the QEMU's virtqueue_pop and vhost code
+and it does not agree with the standard, so thanks for that :). As you
+correctly point out, the standard says:
 
-And while at it, we can also change it to use -w "$PWD" instead:
+The first descriptor is located at the start of the indirect
+descriptor table, additional indirect descriptors come immediately
+afterwards. The VIRTQ_DESC_F_WRITE flags bit is the only valid flag
+for descriptors in the indirect table. Others are reserved and are
+ignored by the device. Buffer ID is also reserved and is ignored by
+the device.
 
-exec @build_dir@/pyvenv/bin/meson devenv -C @build_dir@ -w "$PWD" "$@"
+But in the do {} while after the "/* Collect all the descriptors */"
+comments in the virtqueue_pop it follows the _F_NEXT field and
+desc->next, as it is transversing a descriptor chain, and it should
+ignore them if it is processing the indirect table. I think that
+should be fixed, but maybe we can break some driver? Not Linux's one
+for sure. Jason, MST, what do you think? If we should fix the device's
+code, would you like to submit a patch, Wafer?
 
-I'll do this and apply the patch, thanks!
+Now regarding the patch. We need the indirect descriptors to be
+contiguous in memory, but my point is that having many different
+tables makes it harder to manage. A good first step would be to just
+allocate a buffer of that size and then divide it into
+svq->indirect_bufs[i].
 
-Paolo
+Instead of:
+svq->indirect_buf[0].iova =3D mmap(size) && vhost_dma_map(...) ...
+svq->indirect_buf[1].iova =3D mmap(size) && vhost_dma_map(...) ...
+
+At least:
+buf =3D mmap(size*2) && vhost_dma_map(...) ...
+svq->indirect_buf[0].iova =3D buf
+svq->indirect_buf[1].iova =3D buf + size
+
+So the translation tree etc is smaller, QEMU need to do less ioctls,
+less memory transactions, etc.
+
+Even with that, we're losing opportunities of finding contiguous free
+descriptors with many SVQIndirectDescBuf instead of a bigger single
+one able to reuse the free holes. Let's say the SVQIndirectDescBuf are
+4 descriptor length for simplicity. Now the driver makes available one
+buffer that spans 3 descriptors (step 1), another one that spans three
+descriptors (step 2), and another buffer than spans two descriptors
+(step 3).
+
+In this series the SVQ places the first indirect table in the first
+SVQIndirectDescBuf, the second table at the second SVQIndirectDescBuf,
+and then the third one must resort to chained descriptors. If we make
+just one big buffer of size 8, all of them fits in the indirect table,
+we just need to mark it as free.
+
+Actually, as long as the device does not mark as used one descriptor,
+we lose the all the SVQIndirectDescBuf from the time buf->freed_head
+reaches the end.
+
+Some ideas for that:
+* Reuse IOVATree to handle the indirect table. It already do the
+linear search on it, but the allocation and free may hurt performance.
+Still, it should be able to find contiguous buffers if any.
+* Use it in a circular way but store some data in desc_state so we can
+coalesce the free entries. I can expand on that if needed.
+
+If we still find that this approach still works better, I think we
+should have many SVQIndirectDescBuf of queue length, which is the
+maximum indirect table length. We can handle them as a free / used
+stack, so looking for a free entry would be cheaper. What do you think
+about that?
+
+> > > +            /* Cleanup already allocated buffers */
+> > > +            for (int k =3D 0; k < j; k++) {
+> > > +                vhost_vdpa_free_indirect_buf(v, &svq->indirect_bufs[=
+k]);
+> > > +            }
+> > > +            return false;
+> > > +        }
+> > > +    }
+> > > +
+> > > +    svq->indirect_enabled =3D true;
+> > > +    svq->current_indirect_buf =3D 0;
+> > > +    return true;
+> > > +}
+> > > +
+> > > +/**
+> > > + * Cleanup indirect descriptor buffers for a single SVQ
+> > > + *
+> > > + * @v: vhost_vdpa instance
+> > > + * @svq: Shadow virtqueue to cleanup
+> > > + */
+> > > +static void vhost_vdpa_svq_cleanup_indirect(struct vhost_vdpa *v,
+> > > +                                             VhostShadowVirtqueue
+> > > +*svq) {
+> > > +    for (int j =3D 0; j < SVQ_NUM_INDIRECT_BUFS; j++) {
+> > > +        vhost_vdpa_free_indirect_buf(v, &svq->indirect_bufs[j]);
+> > > +    }
+> > > +    svq->indirect_enabled =3D false;
+> > > +    svq->current_indirect_buf =3D -1;
+> > > +}
+> > > +
+> > >  static void vhost_vdpa_init_svq(struct vhost_dev *hdev, struct
+> > > vhost_vdpa *v)  {
+> > >      g_autoptr(GPtrArray) shadow_vqs =3D NULL; @@ -791,8 +940,11 @@
+> > > static void vhost_vdpa_svq_cleanup(struct vhost_dev *dev)
+> > >      size_t idx;
+> > >
+> > >      for (idx =3D 0; idx < v->shadow_vqs->len; ++idx) {
+> > > -        vhost_svq_stop(g_ptr_array_index(v->shadow_vqs, idx));
+> > > +        VhostShadowVirtqueue *svq =3D g_ptr_array_index(v->shadow_vq=
+s,
+> > idx);
+> > > +        vhost_vdpa_svq_cleanup_indirect(v, svq);
+> >
+> > All usages of vhost_vdpa_svq_cleanup_indirect go with vhost_svq_stop.
+> > We can call vhost_vdpa_svq_cleanup_indirect from vhost_svq_stop or even
+> > embed it.
+> >
+>
+> Thank you for the suggestion. I will modify this in the next version of t=
+he patch.
+>
+> However, I have one question: in hw/virtio/vhost-vdpa.c:vhost_vdpa_svq_cl=
+eanup,
+> why does it only call vhost_svq_stop(svq) without calling vhost_vdpa_svq_=
+unmap_rings(dev, svq)?
+>
+
+We could call it, but the device is about to be totally destroyed,
+either because it has been deleted from QEMU or because QEMU itself is
+shutting down. The only action QEMU can do afterwards is to close the
+descriptor, so the device should clean the maps anyway. But maybe I'm
+missing something here.
+
+> >
+> > > +        vhost_svq_stop(svq);
+> > >      }
+> > > +
+> > >      g_ptr_array_free(v->shadow_vqs, true);  }
+> > >
+> > > @@ -1299,6 +1451,13 @@ static bool vhost_vdpa_svqs_start(struct
+> > vhost_dev *dev)
+> > >              error_setg_errno(&err, -r, "Cannot set device address");
+> > >              goto err_set_addr;
+> > >          }
+> > > +
+> > > +        /* Initialize indirect descriptor buffers for this SVQ */
+> > > +        if (!vhost_vdpa_svq_init_indirect(v, svq)) {
+> > > +            /* Non-fatal: will fallback to chain mode */
+> > > +            warn_report("Cannot initialize indirect descriptor for S=
+VQ %u",
+> > > +                virtio_get_queue_index(vq));
+> > > +        }
+> > >      }
+> > >
+> > >      return true;
+> > > @@ -1313,6 +1472,7 @@ err:
+> > >      error_reportf_err(err, "Cannot setup SVQ %u: ", i);
+> > >      for (unsigned j =3D 0; j < i; ++j) {
+> > >          VhostShadowVirtqueue *svq =3D g_ptr_array_index(v->shadow_vq=
+s,
+> > > j);
+> > > +        vhost_vdpa_svq_cleanup_indirect(v, svq);
+> > >          vhost_vdpa_svq_unmap_rings(dev, svq);
+> > >          vhost_svq_stop(svq);
+> > >      }
+> > > @@ -1331,6 +1491,7 @@ static void vhost_vdpa_svqs_stop(struct
+> > vhost_dev *dev)
+> > >      for (unsigned i =3D 0; i < v->shadow_vqs->len; ++i) {
+> > >          VhostShadowVirtqueue *svq =3D g_ptr_array_index(v->shadow_vq=
+s,
+> > > i);
+> > >
+> > > +        vhost_vdpa_svq_cleanup_indirect(v, svq);
+> > >          vhost_svq_stop(svq);
+> > >          vhost_vdpa_svq_unmap_rings(dev, svq);
+> > >
+> > > --
+> > > 2.48.1
+> > >
+>
 
 
