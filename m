@@ -4,74 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692DEE674B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 13:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D14D711D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 13:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXgBQ-00077V-HI; Mon, 22 Dec 2025 08:42:44 -0500
+	id 1vXgHA-0003gz-1n; Mon, 22 Dec 2025 08:48:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vXgAk-0006Zl-Ch
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 08:42:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <prvs=444aa8e31=graf@amazon.de>)
+ id 1vXgH7-0003gM-Ig
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 08:48:38 -0500
+Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.1.125])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vXgAi-00027Z-S8
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 08:42:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766410920;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+LI59C/+4p8rnaXuChaanXEkK0s0AMUXxZXENA7KnK0=;
- b=ikgpk3d5DcN3fhJTmDjP0B5zjc/7SNVMecjPTBEVyB4SrnL8FfqOHtOo+6ri4/Dl5u4qaY
- B2cwazciKNkaWBFdTax9URx4+bfDHF8CAndszFvVzPlHdfbiP8aiDaJo7Bw8hxhK6b9HMd
- 8j0LlT56/SCWKC8ekuSOswlkfywvc5E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-nnEYi8H4PFS-J-Kk4u83Ww-1; Mon,
- 22 Dec 2025 08:41:59 -0500
-X-MC-Unique: nnEYi8H4PFS-J-Kk4u83Ww-1
-X-Mimecast-MFC-AGG-ID: nnEYi8H4PFS-J-Kk4u83Ww_1766410917
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BFB5018001D7; Mon, 22 Dec 2025 13:41:57 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.45.224.58])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 347B719560AB; Mon, 22 Dec 2025 13:41:52 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
- maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com,
- gshan@redhat.com, ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: [PATCH v4 08/10] hw/arm/virt: Declare AArch32 DBGDTRTX as safe to
- ignore in incoming stream
-Date: Mon, 22 Dec 2025 14:40:05 +0100
-Message-ID: <20251222134110.3649287-9-eric.auger@redhat.com>
-In-Reply-To: <20251222134110.3649287-1-eric.auger@redhat.com>
-References: <20251222134110.3649287-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <prvs=444aa8e31=graf@amazon.de>)
+ id 1vXgH5-00031z-Ql
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 08:48:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+ t=1766411315; x=1797947315;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=A9x0FhXMgTfUpxe2qk4L/H9Llq0G6N34cpFNbCgOc58=;
+ b=YyuA8wkcSDxV8cQiSeEZRfw3BE64I40p4Pi690KysST6QQhph6RT6yjw
+ 9nrIGPbSzeHtLrayyNu7VhZw+wGNG+2iUVtPzYzLCL+o+rkN028hFhy+A
+ vs0jjj4ch62iIDJzdvQgvXDW8qC8FLu0s8D0LDtSbTcxERufMfenisuJG
+ bQ6XHN8y3KQJcb/wS8klyWX1N9Xa8qcok6g9vHcJ1jVVPv5QoRRLOahxk
+ It6uJ+G2bWCV8/tF00EnRBMh6wMq6HZjkH2EKwz9FEUZoS4PGALFy86Dw
+ /m1FKIKjjcGYv0jAQCTe2asw6JNcvPcF7FbnyXidf6MWlb+PlpNy/XEAm g==;
+X-CSE-ConnectionGUID: fA+3g7z+SsalgedHfGbTvg==
+X-CSE-MsgGUID: uy6Mds2oRBCt/auXL9XkAA==
+X-IronPort-AV: E=Sophos;i="6.21,168,1763424000"; 
+   d="scan'208";a="9566175"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Dec 2025 13:48:29 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:9115]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.18.136:2525]
+ with esmtp (Farcaster)
+ id 849393d8-4a6d-4921-9499-d87ad9507609; Mon, 22 Dec 2025 13:48:28 +0000 (UTC)
+X-Farcaster-Flow-ID: 849393d8-4a6d-4921-9499-d87ad9507609
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
+ Mon, 22 Dec 2025 13:48:28 +0000
+Received: from [0.0.0.0] (172.19.99.218) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35; Mon, 22 Dec 2025
+ 13:48:27 +0000
+Message-ID: <1bb44ecd-9d1c-47e0-8ed1-3ce40530bac5@amazon.com>
+Date: Mon, 22 Dec 2025 14:48:24 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 02/41] hw/misc/pvpanic: Add MMIO interface
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>, Phil Dennis-Jordan <phil@philjordan.eu>
+CC: Akihiko Odaki <akihiko.odaki@daynix.com>, Thomas Huth <thuth@redhat.com>
+References: <20250305012157.96463-1-philmd@linaro.org>
+ <20250305012157.96463-3-philmd@linaro.org>
+ <fd3ee75b-c1ef-44e8-999e-0f7adf8529e7@linaro.org>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <fd3ee75b-c1ef-44e8-999e-0f7adf8529e7@linaro.org>
+X-Originating-IP: [172.19.99.218]
+X-ClientProxiedBy: EX19D044UWB004.ant.amazon.com (10.13.139.134) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=44.246.1.125;
+ envelope-from=prvs=444aa8e31=graf@amazon.de;
+ helo=pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,53 +100,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the new infrastructure in place it is now feasible to teach
-qemu that it is safe to ignore a sysreg in the incoming migration
-stream. So with the plan to revert commit 4f2b82f60431 ("target/arm:
-Reinstate bogus AArch32 DBGDTRTX register for migration compat) from
-qemu 11 onwards, let's add a compat in 10.2 machine options stating
-that this reg is safe to ignore. from 11.0 onwards we will not need
-that register anymore.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-
----
-
-v3 -> v4:
-- add a comment related to DBGDTRTX (Connie)
----
- hw/arm/virt.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ec0af8e6e7..00948887a2 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -100,6 +100,15 @@ static GlobalProperty arm_virt_compat_defaults[] = {
- static const size_t arm_virt_compat_defaults_len =
-     G_N_ELEMENTS(arm_virt_compat_defaults);
- 
-+/* Register erronously exposed on 10.2 and earlier */
-+#define DBGDTRTX 0x40200000200e0298
-+
-+static GlobalProperty arm_virt_compat_10_2[] = {
-+    { TYPE_ARM_CPU, "x-mig-safe-missing-regs", stringify(DBGDTRTX)},
-+};
-+static const size_t arm_virt_compat_10_2_len =
-+    G_N_ELEMENTS(arm_virt_compat_10_2);
-+
- /*
-  * This cannot be called from the virt_machine_class_init() because
-  * TYPE_VIRT_MACHINE is abstract and mc->compat_props g_ptr_array_new()
-@@ -3536,6 +3545,7 @@ type_init(machvirt_machine_init);
- 
- static void virt_machine_10_2_options(MachineClass *mc)
- {
-+    compat_props_add(mc->compat_props, arm_virt_compat_10_2, arm_virt_compat_10_2_len);
- }
- DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
- 
--- 
-2.52.0
+Ck9uIDIyLjEyLjI1IDEwOjI4LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToKPiBIaSBB
+bGV4LCBQaGlsLAo+Cj4gT24gNS8zLzI1IDAyOjIxLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3
+cm90ZToKPj4gRnJvbTogQWxleGFuZGVyIEdyYWYgPGdyYWZAYW1hem9uLmNvbT4KPj4KPj4gSW4g
+YWRkaXRpb24gdG8gdGhlIElTQSBhbmQgUENJIHZhcmlhbnRzIG9mIHB2cGFuaWMsIGxldCdzIGFk
+ZCBhbiBNTUlPCj4+IHBsYXRmb3JtIGRldmljZSB0aGF0IHdlIGNhbiB1c2UgaW4gZW1iZWRkZWQg
+YXJtIGVudmlyb25tZW50cy4KPgo+IFdlIG5lZ2xlY3RlZCB0byBzcGVjaWZ5IHRoZSBlbmRpYW5u
+ZXNzIG9mIHRoaXMgZGV2aWNlLiBBcyBvdGhlcgo+IHZhcmlhbnRlcyBhcmUgbGl0dGxlLWVuZGlh
+biBhbmQgSSBwcmVzdW1lIHRoZSAiZW1iZWRkZWQgYXJtIiBpcwo+IGFsc28gdXNpbmcgbGl0dGxl
+IGVuZGlhbm5lc3MsIGlzIGl0IHNhZmUgdG8gZGVjbGFyZSBpdCBhbHNvIGluCj4gbGl0dGxlIGVu
+ZGlhbiBvcmRlciwgZm9sbG93aW5nIHRoZSBQQ0lfREVWSUNFX0lEX1JFREhBVF9QVlBBTklDCj4g
+ZGVmaW5pdGlvbj8KCgpZZXMsIG5vIGNvbmNlcm5zIHdpdGggZXhwb3NpbmcgaXQgYXMgbGl0dGxl
+IGVuZGlhbi4KCkFsZXgKCgoKCgpBbWF6b24gV2ViIFNlcnZpY2VzIERldmVsb3BtZW50IENlbnRl
+ciBHZXJtYW55IEdtYkgKVGFtYXJhLURhbnotU3RyLiAxMwoxMDI0MyBCZXJsaW4KR2VzY2hhZWZ0
+c2Z1ZWhydW5nOiBDaHJpc3RvZiBIZWxsbWlzLCBBbmRyZWFzIFN0aWVnZXIKRWluZ2V0cmFnZW4g
+YW0gQW10c2dlcmljaHQgQ2hhcmxvdHRlbmJ1cmcgdW50ZXIgSFJCIDI1Nzc2NCBCClNpdHo6IEJl
+cmxpbgpVc3QtSUQ6IERFIDM2NSA1MzggNTk3Cg==
 
 
