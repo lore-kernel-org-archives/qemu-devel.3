@@ -4,71 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE23E6748D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 11:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C50E6749B
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 11:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXeFz-0007hk-NY; Mon, 22 Dec 2025 06:39:19 -0500
+	id 1vXeP3-00013O-6z; Mon, 22 Dec 2025 06:48:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vXeFr-0007h7-NN
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 06:39:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vXeP1-00012s-EZ
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 06:48:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vXeFo-0007wY-RS
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 06:39:10 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vXeOz-0000qZ-9b
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 06:48:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766403545;
+ s=mimecast20190719; t=1766404115;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=9MbtQKOF4vdSKZInoD1mkY/LrvFiJKFQfC51oh5teXc=;
- b=gONDxzg2QgV5c5nRpo24zWqGN1OFXE0y5CaXLcWqn97C/qH4YgUU8SlbbbM14XDy3ze0d3
- /LNGFuKxRrGBushM3bdDw3+LnGZGj/4qCfni/VaivM03FTL8Zy6EO17/U44XLGup7oH5aq
- NuTyfFz6mz9VSffC4z2Dou9wu0cMpsA=
+ bh=5iYbn/0XxocowR0oOgYABsE7jXSB7pI6TxEI3yNlBJQ=;
+ b=fFO1jqT2Z/bsVczZ2pPyLoeI9/9gKWpaMOk8Z/8cWBtrkVS/P96WwgDtv+jUC7CnAfi2Vf
+ mHQdaYSisznePVyGNspTBTTUXP/Hi9FvVwhnyAJNcirZxI7WDfbphQQOtxBWIukl5pTYee
+ HdlSuxUkfKiAt7upSeY+sVyuSVE3Krk=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-kslgK61KPxyLKGxhTW-GiQ-1; Mon,
- 22 Dec 2025 06:39:04 -0500
-X-MC-Unique: kslgK61KPxyLKGxhTW-GiQ-1
-X-Mimecast-MFC-AGG-ID: kslgK61KPxyLKGxhTW-GiQ_1766403543
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-LywDk2s9N5qbDl16YcnP_g-1; Mon,
+ 22 Dec 2025 06:48:32 -0500
+X-MC-Unique: LywDk2s9N5qbDl16YcnP_g-1
+X-Mimecast-MFC-AGG-ID: LywDk2s9N5qbDl16YcnP_g_1766404111
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10CFD1956088; Mon, 22 Dec 2025 11:39:03 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.75])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9A0DE19560AB; Mon, 22 Dec 2025 11:39:00 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ id C3E4A1956095; Mon, 22 Dec 2025 11:48:30 +0000 (UTC)
+Received: from kaapi.redhat.com (unknown [10.74.80.71])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3DDE180049F; Mon, 22 Dec 2025 11:48:27 +0000 (UTC)
+From: Prasad Pandit <ppandit@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] run: introduce a script for running devel commands
-Date: Mon, 22 Dec 2025 11:38:59 +0000
-Message-ID: <20251222113859.182395-1-berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
+Date: Mon, 22 Dec 2025 17:18:22 +0530
+Message-ID: <20251222114822.327623-1-ppandit@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,187 +81,304 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Various aspects of the development workflow are complicated by the need
-to set env variables ahead of time, or use specific paths. Meson
-provides a 'devenv' command that can be used to launch a command with a
-number of appropriate project specific environment variables preset.
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-By default it will modify $PATH to point to any build directory that
-contains a binary built by the project.
+When migration connection is broken, the QEMU and libvirtd(8)
+process on the source side receive TCP connection reset
+notification. QEMU sets the migration status to FAILED and
+proceeds to migration_cleanup(). Meanwhile, Libvirtd(8) sends
+a QMP command to migrate_set_capabilities().
 
-This further augments that to replicate the venv 'activate' script:
+The migration_cleanup() and qmp_migrate_set_capabilities()
+calls race with each other. When the latter is invoked first,
+since the migration is not running (FAILED), migration
+capabilities are reset to false, so during migration_cleanup()
+the QEMU process crashes with assertion failure.
 
- * Add $BUILD_DIR/pyvenv/bin to $PATH
- * Set VIRTUAL_ENV to $BUILD_DIR/pyvenv
+  Stack trace of thread 255014:
+   #0  __pthread_kill_implementation (libc.so.6 + 0x822e8)
+   #1  raise (libc.so.6 + 0x3a73c)
+   #2  abort (libc.so.6 + 0x27034)
+   #3  __assert_fail_base (libc.so.6 + 0x34090)
+   #4  __assert_fail (libc.so.6 + 0x34100)
+   #5  yank_unregister_instance (qemu-kvm + 0x8b8280)
+   #6  migrate_fd_cleanup (qemu-kvm + 0x3c6308)
+   #7  migration_bh_dispatch_bh (qemu-kvm + 0x3c2144)
+   #8  aio_bh_poll (qemu-kvm + 0x8ba358)
+   #9  aio_dispatch (qemu-kvm + 0x8a0ab4)
+   #10 aio_ctx_dispatch (qemu-kvm + 0x8bb180)
 
-And then makes functional tests more easily executable
+Introduce a new migration status FAILING and use it as an
+interim status when an error occurs. Once migration_cleanup()
+is done, it sets the migration status to FAILED. This helps
+to avoid the above race condition and ensuing failure.
 
- * Add $SRC_DIR/tests/functional and $SRC_DIR/python to $PYTHONPATH
+Interim status FAILING is set wherever the execution moves
+towards migration_cleanup() directly OR via:
 
-To see the benefits of this consider this command:
+  migration_iteration_finish  bg_migration_iteration_finish
+  -> migration_bh_schedule    -> migration_bh_schedule
+   -> migration_cleanup_bh     -> migration_cleanup_bh
+    -> migration_cleanup        -> migration_cleanup
+     -> FAILED                   -> FAILED
 
-  $ source ./build/pyvenv/bin/activate
-  $ ./scripts/qmp/qmp-shell-wrap ./build/qemu-system-x86_64
+The migration status finally moves to FAILED and reports an
+appropriate error to the user.
 
-which is now simplified to
-
-  $ ./build/run ./scripts/qmp/qmp-shell-wrap qemu-system-x86_64 [args..]
-
-This avoids the need repeat './build' several times and avoids polluting
-the current terminal's environment and/or avoids errors from forgetting
-to source the venv settings.
-
-As another example running functional tests
-
-  $ export PYTHONPATH=./python:./tests/functional
-  $ export QEMU_TEST_QEMU_BINARY=./build/qemu-system-x86_64
-  $ build/pyvenv/bin/python3 ./tests/functional/x86_64/test_virtio_version.py
-
-which is now simplified to
-
-  $ export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
-  $ ./build/run ./tests/functional/x86_64/test_virtio_version.py
-
-This usefulness of this will be further enhanced with the pending
-removal of the QEMU python APIs from git, as that will require the use
-of the python venv in even more scenarios that today.
-
-The 'run' script does not let 'meson devenv' directly launch the command
-to be run because it always requires $BUILD_DIR as the current working
-directory. It is desired that 'run' script always honour the current
-working directory of the terminal that invokes is. Thus the '--dump'
-flag is used to export the devenv variables into the 'run' script's
-shell.
-
-This takes the liberty to assign 'run.in' to the "Build system" section
-in the MAINTAINERS file, given that it leverages meson's 'devenv'
-feature.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 ---
+ migration/migration.c                 | 33 +++++++++++++++------------
+ migration/multifd.c                   |  4 ++--
+ qapi/migration.json                   |  8 ++++---
+ tests/qtest/migration/migration-qmp.c |  3 ++-
+ tests/qtest/migration/precopy-tests.c |  5 ++--
+ 5 files changed, 31 insertions(+), 22 deletions(-)
 
-Changed in v2:
-
- * Switch to use meson's  "devenv" framework
- * Fix some typos
-
- MAINTAINERS                       |  1 +
- docs/devel/build-system.rst       | 12 ++++++++++++
- docs/devel/testing/functional.rst | 17 ++++++++---------
- meson.build                       | 16 ++++++++++++++--
- run.in                            |  6 ++++++
- 5 files changed, 41 insertions(+), 11 deletions(-)
- create mode 100644 run.in
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 63e9ba521b..f21b2927a8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4479,6 +4479,7 @@ R: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Maintained
- F: meson.build
- F: meson_options.txt
-+F: run.in
- F: scripts/check_sparse.py
- F: scripts/symlink-install-tree.py
+diff --git a/migration/migration.c b/migration/migration.c
+index b316ee01ab..5c32bc8fe5 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1216,6 +1216,7 @@ bool migration_is_running(void)
+     case MIGRATION_STATUS_DEVICE:
+     case MIGRATION_STATUS_WAIT_UNPLUG:
+     case MIGRATION_STATUS_CANCELLING:
++    case MIGRATION_STATUS_FAILING:
+     case MIGRATION_STATUS_COLO:
+         return true;
+     default:
+@@ -1351,6 +1352,7 @@ static void fill_source_migration_info(MigrationInfo *info)
+         break;
+     case MIGRATION_STATUS_ACTIVE:
+     case MIGRATION_STATUS_CANCELLING:
++    case MIGRATION_STATUS_FAILING:
+     case MIGRATION_STATUS_POSTCOPY_DEVICE:
+     case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+     case MIGRATION_STATUS_PRE_SWITCHOVER:
+@@ -1409,6 +1411,7 @@ static void fill_destination_migration_info(MigrationInfo *info)
+     case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+     case MIGRATION_STATUS_POSTCOPY_PAUSED:
+     case MIGRATION_STATUS_POSTCOPY_RECOVER:
++    case MIGRATION_STATUS_FAILING:
+     case MIGRATION_STATUS_FAILED:
+     case MIGRATION_STATUS_COLO:
+         info->has_status = true;
+@@ -1531,6 +1534,9 @@ static void migration_cleanup(MigrationState *s)
+     if (s->state == MIGRATION_STATUS_CANCELLING) {
+         migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
+                           MIGRATION_STATUS_CANCELLED);
++    } else if (s->state == MIGRATION_STATUS_FAILING) {
++        migrate_set_state(&s->state, MIGRATION_STATUS_FAILING,
++                          MIGRATION_STATUS_FAILED);
+     }
  
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index 6204aa6a72..b9797a374c 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -515,6 +515,18 @@ generates ``Makefile`` from ``Makefile.in``.
+     if (s->error) {
+@@ -1584,7 +1590,7 @@ static void migration_connect_set_error(MigrationState *s, const Error *error)
  
- Built by configure:
+     switch (current) {
+     case MIGRATION_STATUS_SETUP:
+-        next = MIGRATION_STATUS_FAILED;
++        next = MIGRATION_STATUS_FAILING;
+         break;
+     case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+         /* Never fail a postcopy migration; switch back to PAUSED instead */
+@@ -1728,6 +1734,7 @@ bool migration_has_failed(MigrationState *s)
+ {
+     return (s->state == MIGRATION_STATUS_CANCELLING ||
+             s->state == MIGRATION_STATUS_CANCELLED ||
++            s->state == MIGRATION_STATUS_FAILING ||
+             s->state == MIGRATION_STATUS_FAILED);
+ }
  
-+``run``
-+  Used to run commands / scripts from the git checkout. Sets ``$PATH``
-+  to point to locally built binaries, and activates the python venv
-+  before running the requested command. Pass the command to run as
-+  args, for example::
-+
-+    $ ./build/run ./script/qmp/qmp-shell-wrap qemu-system-x86_64
-+
-+  will use the ``python3`` binary and site-packages from the local
-+  venv to run ``qmp-shell-wrap`` and spawn the QEMU emulator from
-+  the build directory.
-+
- ``config-host.mak``
-   When configure has determined the characteristics of the build host it
-   will write the paths to various tools to this file, for use in ``Makefile``
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index fdeaebaadc..1978f96eba 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -53,15 +53,14 @@ the following line will only run the tests for the x86_64 target:
-   make check-functional-x86_64
+@@ -2744,7 +2751,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+         if (postcopy_preempt_establish_channel(ms)) {
+             if (ms->state != MIGRATION_STATUS_CANCELLING) {
+                 migrate_set_state(&ms->state, ms->state,
+-                                  MIGRATION_STATUS_FAILED);
++                                  MIGRATION_STATUS_FAILING);
+             }
+             error_setg(errp, "%s: Failed to establish preempt channel",
+                        __func__);
+@@ -2907,7 +2914,7 @@ fail_closefb:
+     qemu_fclose(fb);
+ fail:
+     if (ms->state != MIGRATION_STATUS_CANCELLING) {
+-        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
++        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILING);
+     }
+     migration_block_activate(NULL);
+     migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+@@ -3102,7 +3109,7 @@ fail:
+     }
  
- To run a single test file without the meson test runner, you can also
--execute the file directly by specifying two environment variables first,
--the PYTHONPATH that has to include the python folder and the tests/functional
--folder of the source tree, and QEMU_TEST_QEMU_BINARY that has to point
--to the QEMU binary that should be used for the test. The current working
--directory should be your build folder. For example::
--
--  $ export PYTHONPATH=../python:../tests/functional
--  $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
--  $ pyvenv/bin/python3 ../tests/functional/test_file.py
-+execute the file directly by specifying the name of the emulator target
-+binary as an env variable.
-+
-+Assuming the current working directory is the top level source checkout
-+and the build directory is './build'::
-+
-+  $ export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
-+  $ ./build/run tests/functional/x86_64/test_virtio_version.py
+     if (s->state != MIGRATION_STATUS_CANCELLING) {
+-        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
++        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILING);
+     }
+ }
  
- The test framework will automatically purge any scratch files created during
- the tests. If needing to debug a failed test, it is possible to keep these
-diff --git a/meson.build b/meson.build
-index d9293294d8..320fecf372 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3,8 +3,6 @@ project('qemu', ['c'], meson_version: '>=1.5.0',
-                           'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
-         version: files('VERSION'))
+@@ -3139,7 +3146,7 @@ static void bg_migration_completion(MigrationState *s)
  
--meson.add_devenv({ 'MESON_BUILD_ROOT' : meson.project_build_root() })
--
- add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true,
-                env: ['RUST_BACKTRACE=1'])
- add_test_setup('slow', exclude_suites: ['thorough'],
-@@ -3507,6 +3505,20 @@ endif
- config_host_h = configure_file(output: 'config-host.h', configuration: config_host_data)
- genh += config_host_h
+ fail:
+     migrate_set_state(&s->state, current_active_state,
+-                      MIGRATION_STATUS_FAILED);
++                      MIGRATION_STATUS_FAILING);
+ }
  
-+devenv = environment()
-+devenv.set('MESON_BUILD_ROOT', meson.project_build_root())
-+devenv.set('VIRTUAL_ENV', meson.project_build_root() / 'pyvenv')
-+devenv.prepend('PATH', meson.project_build_root() / 'pyvenv'/ 'bin')
-+devenv.prepend('PYTHONPATH', meson.current_source_dir() / 'tests' / 'functional')
-+devenv.prepend('PYTHONPATH', meson.current_source_dir() / 'python')
-+meson.add_devenv(devenv)
-+
-+run_config = configuration_data({'build_dir': meson.current_build_dir()})
-+run = configure_file(input: 'run.in',
-+                     output: 'run',
-+                     configuration: run_config)
-+run_command('chmod', 'a+x', meson.current_build_dir() / 'run', check: true)
-+
- hxtool = find_program('scripts/hxtool')
- shaderinclude = find_program('scripts/shaderinclude.py')
- qapi_gen = find_program('scripts/qapi-gen.py')
-diff --git a/run.in b/run.in
-new file mode 100644
-index 0000000000..cf4821311d
---- /dev/null
-+++ b/run.in
-@@ -0,0 +1,6 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+eval $(meson devenv -C @build_dir@ --dump --dump-format export)
-+
-+exec "$@"
+ typedef enum MigThrError {
+@@ -3341,7 +3348,7 @@ static MigThrError migration_detect_error(MigrationState *s)
+          * For precopy (or postcopy with error outside IO, or before dest
+          * starts), we fail with no time.
+          */
+-        migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILED);
++        migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILING);
+         trace_migration_thread_file_err();
+ 
+         /* Time to stop the migration, now. */
+@@ -3572,7 +3579,7 @@ static void migration_iteration_finish(MigrationState *s)
+         migrate_start_colo_process(s);
+         s->vm_old_state = RUN_STATE_RUNNING;
+         /* Fallthrough */
+-    case MIGRATION_STATUS_FAILED:
++    case MIGRATION_STATUS_FAILING:
+     case MIGRATION_STATUS_CANCELLED:
+     case MIGRATION_STATUS_CANCELLING:
+         if (!migration_block_activate(&local_err)) {
+@@ -3631,7 +3638,7 @@ static void bg_migration_iteration_finish(MigrationState *s)
+     switch (s->state) {
+     case MIGRATION_STATUS_COMPLETED:
+     case MIGRATION_STATUS_ACTIVE:
+-    case MIGRATION_STATUS_FAILED:
++    case MIGRATION_STATUS_FAILING:
+     case MIGRATION_STATUS_CANCELLED:
+     case MIGRATION_STATUS_CANCELLING:
+         break;
+@@ -3821,7 +3828,7 @@ static void *migration_thread(void *opaque)
+         migrate_set_error(s, local_err);
+         error_free(local_err);
+         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+-                          MIGRATION_STATUS_FAILED);
++                          MIGRATION_STATUS_FAILING);
+         goto out;
+     }
+ 
+@@ -3945,8 +3952,6 @@ static void *bg_migration_thread(void *opaque)
+     if (ret) {
+         migrate_set_error(s, local_err);
+         error_free(local_err);
+-        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+-                          MIGRATION_STATUS_FAILED);
+         goto fail_setup;
+     }
+ 
+@@ -4008,12 +4013,12 @@ static void *bg_migration_thread(void *opaque)
+ 
+ fail:
+     if (early_fail) {
+-        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+-                MIGRATION_STATUS_FAILED);
+         bql_unlock();
+     }
+ 
+ fail_setup:
++    migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
++                        MIGRATION_STATUS_FAILING);
+     bg_migration_iteration_finish(s);
+ 
+     qemu_fclose(fb);
+@@ -4128,7 +4133,7 @@ void migration_connect(MigrationState *s, Error *error_in)
+ fail:
+     migrate_set_error(s, local_err);
+     if (s->state != MIGRATION_STATUS_CANCELLING) {
+-        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
++        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILING);
+     }
+     error_report_err(local_err);
+     migration_cleanup(s);
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 3203dc98e1..970633474e 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -434,7 +434,7 @@ static void multifd_send_set_error(Error *err)
+             s->state == MIGRATION_STATUS_DEVICE ||
+             s->state == MIGRATION_STATUS_ACTIVE) {
+             migrate_set_state(&s->state, s->state,
+-                              MIGRATION_STATUS_FAILED);
++                              MIGRATION_STATUS_FAILING);
+         }
+     }
+ }
+@@ -1001,7 +1001,7 @@ bool multifd_send_setup(void)
+ 
+ err:
+     migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+-                      MIGRATION_STATUS_FAILED);
++                      MIGRATION_STATUS_FAILING);
+     return false;
+ }
+ 
+diff --git a/qapi/migration.json b/qapi/migration.json
+index cf023bd29d..85f4961781 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -158,7 +158,9 @@
+ #
+ # @completed: migration is finished.
+ #
+-# @failed: some error occurred during migration process.
++# @failing: error occurred during migration, clean-up underway.
++#
++# @failed: error occurred during migration, clean-up done.
+ #
+ # @colo: VM is in the process of fault tolerance, VM can not get into
+ #     this state unless colo capability is enabled for migration.
+@@ -181,8 +183,8 @@
+   'data': [ 'none', 'setup', 'cancelling', 'cancelled',
+             'active', 'postcopy-device', 'postcopy-active',
+             'postcopy-paused', 'postcopy-recover-setup',
+-            'postcopy-recover', 'completed', 'failed', 'colo',
+-            'pre-switchover', 'device', 'wait-unplug' ] }
++            'postcopy-recover', 'completed', 'failing', 'failed',
++            'colo', 'pre-switchover', 'device', 'wait-unplug' ] }
+ 
+ ##
+ # @VfioStats:
+diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
+index c803fcee9d..ceb40efd56 100644
+--- a/tests/qtest/migration/migration-qmp.c
++++ b/tests/qtest/migration/migration-qmp.c
+@@ -241,7 +241,8 @@ void wait_for_migration_fail(QTestState *from, bool allow_active)
+     do {
+         status = migrate_query_status(from);
+         bool result = !strcmp(status, "setup") || !strcmp(status, "failed") ||
+-            (allow_active && !strcmp(status, "active"));
++            (allow_active && !strcmp(status, "active")) ||
++            !strcmp(status, "failing");
+         if (!result) {
+             fprintf(stderr, "%s: unexpected status status=%s allow_active=%d\n",
+                     __func__, status, allow_active);
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index 57ca623de5..a04442df96 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -807,7 +807,8 @@ static void test_cancel_src_after_status(void *opaque)
+     } else if (g_str_equal(phase, "completed")) {
+         test_cancel_src_after_complete(from, to, uri, phase);
+ 
+-    } else if (g_str_equal(phase, "failed")) {
++    } else if (g_str_equal(phase, "failing") ||
++               g_str_equal(phase, "failed")) {
+         test_cancel_src_after_failed(from, to, uri, phase);
+ 
+     } else if (g_str_equal(phase, "none")) {
+@@ -1316,7 +1317,7 @@ void migration_test_add_precopy(MigrationTestEnv *env)
+     }
+ 
+     /* ensure new status don't go unnoticed */
+-    assert(MIGRATION_STATUS__MAX == 16);
++    assert(MIGRATION_STATUS__MAX == 17);
+ 
+     for (int i = MIGRATION_STATUS_NONE; i < MIGRATION_STATUS__MAX; i++) {
+         switch (i) {
 -- 
 2.52.0
 
