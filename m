@@ -4,144 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C6CDE674B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 19:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9F9E67815
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 19:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXljU-0006ep-89; Mon, 22 Dec 2025 14:38:16 -0500
+	id 1vXlsc-0008M0-R7; Mon, 22 Dec 2025 14:47:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vXljO-0006e9-R8; Mon, 22 Dec 2025 14:38:10 -0500
-Received: from mail-westusazlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vXljN-0002Ke-Ba; Mon, 22 Dec 2025 14:38:10 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YYnUopcU765+CIm8dwJ+sa3DlbI8+kn0oejugSdiCXsNdUeWnEhH3VWO0ElaPzSlfeiKJONJq2Ev3caeuw8P0Au75ha5mkBbxmmoh0dfJSRTHWDwu0nn5qwcAXISoPvl5lzQizC8by0LciewrTJqccvWGpCi2vwGcgBjUNx1LJib3Ay5f7yXevnHxE8e35TehXokt7SMixHavBqBngj5g2xbg23LQhrYY/1HJDj3sseIkepWf+4SEd8MBA290ouVs781GppVhEj7M5PbvVEFwb5dy/MDsKSrDX8HE3fAStBWSqs84S3r89zw9pNENvbLJi/eYI+JbwXnUysmsBiCGQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V7dfb/tmjK/iiQQPea8ocuXsejUE09aD13J8zWTWE0o=;
- b=mG/tXIHBGV9BtsRdu+Tdd4fAF1HFYoykAow23wxLrI8y1pN2RaT74ppHC1SdwF9UbkC7rHSLt41VVC7y1XCevyasL6Wc2Ou/YEckjAscai538Ebhn+Vof2zYEz51kbO2YtKE2a0hK3akJBY4LlHDKMhvPsxWYVXaxup2+ercjGRvkvQsWRyO8Ua4Wh3RizrzqiFFXRSEKyfHWRL5sCn5NzWzzeUkig5JLwhMdBM524T+ahvcMMdMDMYb+nAV+Qg5LDAY5f+a5yj2fBgUqE9YUTwRI9yv/EO20c5z6V/PuQM4H1FR/Bqwg1b7Kcyb4tx/Z/Qxvzw3v3gDeUlXrWeWww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V7dfb/tmjK/iiQQPea8ocuXsejUE09aD13J8zWTWE0o=;
- b=t4qMZuV28fg1YZFsZw5/cxplH7Dn/UOU7jEwQK2ILfn+dsQ1upbgRcN0WEacC2A+Cb0GKBcb0DRvSqeCy6c5SZ4fISyoi/Iy+aLO0MI1r7NzYTh5+8LQ5lmHHvxnF1l5BOWgsiK0C9zpOgT7i3vXm1NFrEU0VFVHfRbx6l3UUNfOPORh2qUcJrPaL/BxamK7rsLCCcGuI08sWG+CoqoEnZnsq/oPtisPvbtMgeGuazFc9mTdv35eLJSG2IIbD4SiJeMNbX+CBmg1GLgttrDv+urB9Uv2AH6pFm6iEjz4xyyhoDn40k4MzBoiembY+zvJpuz53OZ3y861L/6g+LrwNg==
-Received: from CH2PR07CA0036.namprd07.prod.outlook.com (2603:10b6:610:20::49)
- by SN7PR12MB6689.namprd12.prod.outlook.com (2603:10b6:806:273::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.6; Mon, 22 Dec
- 2025 19:38:01 +0000
-Received: from DS2PEPF00003445.namprd04.prod.outlook.com
- (2603:10b6:610:20:cafe::4e) by CH2PR07CA0036.outlook.office365.com
- (2603:10b6:610:20::49) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9434.11 via Frontend Transport; Mon,
- 22 Dec 2025 19:38:03 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- DS2PEPF00003445.mail.protection.outlook.com (10.167.17.72) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9456.9 via Frontend Transport; Mon, 22 Dec 2025 19:38:00 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 22 Dec
- 2025 11:37:48 -0800
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Mon, 22 Dec 2025 11:37:47 -0800
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
- (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 22 Dec 2025 11:37:47 -0800
-Date: Mon, 22 Dec 2025 11:37:45 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <alex@shazbot.org>, <clg@redhat.com>, <cohuck@redhat.com>, <mst@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <jgg@nvidia.com>,
- <kjaju@nvidia.com>
-Subject: Re: [PATCH 0/3] vfio: Add DMABUF support for PCI BAR regions
-Message-ID: <aUmeCbgQLPK/bKQK@Asurada-Nvidia>
-References: <20251222135357.143339-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vXlsa-0008LX-OW
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:47:40 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vXlsZ-0004ag-0L
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:47:40 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2a099233e8dso37495805ad.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Dec 2025 11:47:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766432856; x=1767037656; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GYV0aVpU4rrQzfRHRMr5FT+FlJ9gDMOP85DbxKb2qHs=;
+ b=ZQGlEMqQo5EmAlcMVm1gwS1Z8jX14t4R/i5YIAdaHYB45bk/DIQf5YfgPyqcPYxLXj
+ +iCwYc+MPmoJUB15VbX1t5d4kkwBdHoeks3RsKMqBxG0OWAqrPmjoIiYyCjVdkSbD2Hw
+ Voqx9ohtPfTTuZdMejjjUHe7rHdBhIeKKIXmCXUHfA4550/i8/Ka7Eb+RbTUUsR1WwS/
+ r6xdLZkblKn/ANMYQVZKGWUMGwrwujYQ0Nvp12ncuhGm7aUMFg+PFfinfMZlB9Zw6hvk
+ oxQ676VhJgzEVNroea/Oersnqtfvq24nOSrgQZjJphc4bQ2OCaGnTCEgQL4ca3NCLLm0
+ hNzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766432856; x=1767037656;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GYV0aVpU4rrQzfRHRMr5FT+FlJ9gDMOP85DbxKb2qHs=;
+ b=gRPdJ/UK0EoAmDpq5ARgmKyEp0bfh2uDln2/irYvSjwghw/LJzgN6fnmCc+kH0ndPD
+ m/AgYdHrFf9Xeg4riMvjM+ZqteDkzxT/20aWIYicJtwdqaPp+yjE+MohBT3RBFzsNB1M
+ 03Xz/LLg6ijEp9qAM8QThpttHjxegumsTGYFCj4bed5WsE3JPqftKwNVuxgDVR0uOl1u
+ dptUlOrNxbB/wG755E+iHChCl4izHZxtHYUWhwXMshs4Xfr1/ZoM4IazGpYKGXnaR/w+
+ aknNsVrKDKCle4NkBIBCZbYZeJTXN2AcqvFizwnGvwqWx+oR+5OwEIZAzn08iWXsqnm3
+ nPbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSXyiA6LXjijrrsLJppZ4yssKZK2r7ZodnQemQonzDjVQBjbcSgQlHB/jVnuatcYWPWzt7y7igyDVu@nongnu.org
+X-Gm-Message-State: AOJu0YzXrp9yibHDhildWnxUcmZ4RPnG2Q8G7dIjQHLEvvUt1UnS72Iy
+ TJRNSUiKZu4aCUQ1Y6epf6WsDaHaP0TvzqPKXJYPaI2pdtBxOqXpaDvBnej4hYBMTDM=
+X-Gm-Gg: AY/fxX6IjCBYQvmNQJ/OYVFVyjonhNTEZbtivf0sK1Wrgc2cnU0dcPRV/nnI2iSglfy
+ 0yX1v6miqJtjIoQbiJMWQtGIB/G58iUxfsQzKpt+5JxXlHxkao8gU9F5L8HBPZncAwZQiteCqSN
+ yjR+MgO8HuQny3+4tSXHsE0zs71KpurFGUpfNmfh45JwjiO8oR1Yo0bipHuTtdIqRR4UFpXqo8Y
+ 82tBHhIFcrfo54JefivoRh6ulcktxKic4qPGkWGc/jCO6QrcGK0DZqB5O9MC29IAdv6ShmI9OC8
+ +qOx0hTY+J+cUDtbawjC85YpR8IRaHkHi5s6TZ+5JjbJ71u5cRIvXiqjRbqJ16PG3t4iW1kIAOf
+ gMQXjoJzzmfquQksebc7ZYfAn2N0XL76w1AZhdkJtaPtHP8og+rZ0Vl1yOMx4Y1Gstc0ztrGOvf
+ wBaZRxzL5eE0fdsAvwknA657PYVKk4y63LmGMIo6WdNfLOdl3pY6Du3oo=
+X-Google-Smtp-Source: AGHT+IHEOSoV+Bp/Ivm0QKN288n/13JhHQnOQGCpK1v9mBdZBSxz/D4xjuxdwPgcrrmaPXEvTtk/PA==
+X-Received: by 2002:a17:903:4b4b:b0:2a0:c852:5f9f with SMTP id
+ d9443c01a7336-2a2f220552fmr131430745ad.7.1766432856260; 
+ Mon, 22 Dec 2025 11:47:36 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a2f3d77359sm105820585ad.95.2025.12.22.11.47.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Dec 2025 11:47:35 -0800 (PST)
+Message-ID: <7c8fdad5-90b7-4077-86c6-7b68eb8fddb2@linaro.org>
+Date: Mon, 22 Dec 2025 11:47:34 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20251222135357.143339-1-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF00003445:EE_|SN7PR12MB6689:EE_
-X-MS-Office365-Filtering-Correlation-Id: f37ba970-30b8-498a-20d1-08de41919dc3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|36860700013|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?ZS9R0IYKnWzyoeuUnZ4HDe8gzcDFKe7YKiLnEv67pSnoz9hw1yL2j7QoMmhH?=
- =?us-ascii?Q?Ve8+/pWZvdKafjaHkQolr233MlOb5pKc/khE0fjZpdFO6ru16T+Aao85bU8L?=
- =?us-ascii?Q?HnrFGlFEy1jeMwsmIcGahqZFS28fLrohHiCqooQhFUMipIIZhJl9vqFcx5cu?=
- =?us-ascii?Q?CAla1BqpzxVh/2stL63iGmMeQCEx8OuKFeeVv1037nqmX39Vqmwn3uZXTyHG?=
- =?us-ascii?Q?1+BgdyjFMkMK7cir/DEWsFYr1ZbMaxlJ4sRraoFyfohq8ymZ7qoG6XqsHWjv?=
- =?us-ascii?Q?Kj/5P4KsApQlGErWS6qYh8nh7n/PRchr2k0NXWhMuPL3MUx8f3JrfPlqygMX?=
- =?us-ascii?Q?bfYxE2xkKBPUMzfF1PH5nQb2bUpodZhHzs+NNUWuaF8PlTAdF9a1gyC1PYoV?=
- =?us-ascii?Q?U0L76E0bOSN8FAWbw/d/OBpk46iUNcYs7yRkjJ6GSmzpr60U9o1aHRtdal5w?=
- =?us-ascii?Q?jE/IuCXnwAf33eviLOBpJDcDkpwYUXditBazih/lvmSnPr3fwoH7HAcQXT2g?=
- =?us-ascii?Q?MlDSDL6KT4Si2FaxVLxmc4Vj6eHjSryzGtPilKKZmUEFcu+ehDNqdrTWetbP?=
- =?us-ascii?Q?k/UXGRlXDfjIYa5fRUnWkIWE9qFV+Wmkk1n5VOlsGZfRDlkr8OsoEJut+Ss1?=
- =?us-ascii?Q?8WVn6M4SRbOoHlc69wQdmVEWZIGGw6vm/nhbeAhHTMLvlEdwgH+JfSRU4qfE?=
- =?us-ascii?Q?riPFcrCa0dYYJQuTd0P4MWtJTJ/soAg7ppwsW3Zr1WWU+zwBmNxkzB4M3rh9?=
- =?us-ascii?Q?rylaXzQe92mf7j/tMeZSXkchbAQ7/xUpWNJbRpuP/Ggw7jDm6Y8BKFy+vNMb?=
- =?us-ascii?Q?ie5ulp9JA/jd7tITCfOG3OFVYsbIY35/yHvmnHsskjONJU5BXYbiIX/Faxj0?=
- =?us-ascii?Q?unVo7JnvJ7sY02JSJMWKna6bIwB83zn/MGyqYrGmHtQ1hBH79QrXPoFo52Mc?=
- =?us-ascii?Q?PB1hDJjol04mwgHlD09JrIy4rUP+7BHyicxYEgTxH5H9SThv5+RmOMfSO4k1?=
- =?us-ascii?Q?i03G0dyYw5qoL5AXtZsI6luChpRmKskGhcbOLDDvxhi+BgwuEwFuNxwbkBs2?=
- =?us-ascii?Q?WSOMx8Wg5S9eyMWt0clQwHV5SDodnACia4MVEOSEWy65FYvKBH9pMmPEkb79?=
- =?us-ascii?Q?pYu/3meC9k2LuBKAXPmWNIa/g0XZXIFBETvhrqS1c2G0G6pbWOs3iNu+oGwy?=
- =?us-ascii?Q?qmGspRsk6s7b/Gg/vpby6rSNv2mVafliHV0NGsw7HPIT5xMOVP9W13iKsYLC?=
- =?us-ascii?Q?uwrr4GQHdx2RvbtDd7i9o8bPgymCsjyni6PON6fnbKefvv5jBw9HvXhHayxL?=
- =?us-ascii?Q?fjEOr47DcFefXJSOnQNiFaPWn4j6O+c5KiEPKHWZ0xsTs21V4no9Hz2k5+hW?=
- =?us-ascii?Q?6y4TSvYKkCZ2mEg8Karcew6R/m9oOmvx7Yco7jncaUNIsR+PEBWkgR7gPA5Z?=
- =?us-ascii?Q?ggqjaZNWUZRGk+/63DpX8rc3oLfjQ6L7MgY61Hs5NZm+WYnlLHNXx1q2P/w+?=
- =?us-ascii?Q?qjNJ39Jpo0hCfYuKfUumUkSWeuDbqk1pdry8uN8j1LZjKwWUVLnoD99h4tPf?=
- =?us-ascii?Q?nvLlCQHRpCo4LdCdLIE=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(36860700013)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Dec 2025 19:38:00.4766 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f37ba970-30b8-498a-20d1-08de41919dc3
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF00003445.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6689
-Received-SPF: softfail client-ip=2a01:111:f403:c001::2;
- envelope-from=nicolinc@nvidia.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 06/12] plugins: shorten aggressively long name
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alwalid Salama <asalama@qti.qualcomm.com>, qemu-arm@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Mark Burton
+ <mburton@qti.qualcomm.com>, Laurent Vivier <laurent@vivier.eu>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20251219190849.238323-1-alex.bennee@linaro.org>
+ <20251219190849.238323-7-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20251219190849.238323-7-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,17 +118,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 22, 2025 at 01:53:54PM +0000, Shameer Kolothum wrote:
-> Linux now provides a VFIO dmabuf exporter to expose PCI BAR memory for P2P
-> use cases. This adds support for vfio devices to create a dmabuf for
-> each mapped BAR region.
+On 12/19/25 11:08 AM, Alex Bennée wrote:
+> The old name comes in at a 51 characters, contains at least one
+> redundant token and exec is arguably implied by inline as all inline
+> operations occur when instructions are executing.
 > 
-> Requires linux-headers update to 6.19-rc1(patch #1). That update
-> introduces a virtio-net build issue, which is addressed by patch #2.
+> By putting the name on a substantial diet we can reduce it by 15% and
+> gain valuable white-space in the process.
 > 
-> The dmabuf support was sanity tested on an NVIDIA grace paltform.
-> 
-> Please take a look and let me know.
- 
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   include/qemu/qemu-plugin.h    |  4 ++--
+>   contrib/plugins/cflow.c       | 22 +++++++++++-----------
+>   contrib/plugins/howvec.c      |  2 +-
+>   contrib/plugins/stoptrigger.c | 10 ++++++----
+>   plugins/api.c                 |  2 +-
+>   tests/tcg/plugins/discons.c   | 18 +++++++++---------
+>   tests/tcg/plugins/inline.c    |  6 +++---
+>   tests/tcg/plugins/insn.c      |  5 +++--
+>   8 files changed, 36 insertions(+), 33 deletions(-)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
