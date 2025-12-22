@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9F9E67815
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 19:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4BDE6781F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 19:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXlsc-0008M0-R7; Mon, 22 Dec 2025 14:47:42 -0500
+	id 1vXlu4-0000UA-Jx; Mon, 22 Dec 2025 14:49:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vXlsa-0008LX-OW
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:47:40 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1vXlu3-0000TT-2Y
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:49:11 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vXlsZ-0004ag-0L
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:47:40 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2a099233e8dso37495805ad.3
- for <qemu-devel@nongnu.org>; Mon, 22 Dec 2025 11:47:37 -0800 (PST)
+ id 1vXlu1-0004sH-Mc
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:49:10 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-34c27d14559so3404144a91.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Dec 2025 11:49:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766432856; x=1767037656; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766432947; x=1767037747; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GYV0aVpU4rrQzfRHRMr5FT+FlJ9gDMOP85DbxKb2qHs=;
- b=ZQGlEMqQo5EmAlcMVm1gwS1Z8jX14t4R/i5YIAdaHYB45bk/DIQf5YfgPyqcPYxLXj
- +iCwYc+MPmoJUB15VbX1t5d4kkwBdHoeks3RsKMqBxG0OWAqrPmjoIiYyCjVdkSbD2Hw
- Voqx9ohtPfTTuZdMejjjUHe7rHdBhIeKKIXmCXUHfA4550/i8/Ka7Eb+RbTUUsR1WwS/
- r6xdLZkblKn/ANMYQVZKGWUMGwrwujYQ0Nvp12ncuhGm7aUMFg+PFfinfMZlB9Zw6hvk
- oxQ676VhJgzEVNroea/Oersnqtfvq24nOSrgQZjJphc4bQ2OCaGnTCEgQL4ca3NCLLm0
- hNzQ==
+ bh=4RDqC2s5Rf7CR4RPBV2y3Y9+CGFfykEDEtuoCILmXic=;
+ b=sxEPE6+esXhaBRBnO7bVTqw5LKp99AVKiY44fV4/sD0Mjayx2BzuhtVjcXo+5RzpDV
+ 7BQpAoE23TGa7fch69KWUDn6yfsnBpvK8wYdUB4zLLc0lsQtzPIMpGUTvCvejSWN7ZuT
+ xj1l8gGek0Y113de4oqFdlr2RQCUhWnvlvKbkJZww4UKXj5+GFknUikrnBppCQ/KQJBb
+ ZvIh84fs0YAdOcDqjGi7PJQfuUAAIl/O99p5gK5UcDASPHQV2K+bEmgR4zOkk8e0oAh9
+ elukddrTptFIAWAMQeszB3byKoH/xcMJwD255sVs/aVXNX9O6dyWYW877lSk8pwJmSYd
+ gNLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766432856; x=1767037656;
+ d=1e100.net; s=20230601; t=1766432947; x=1767037747;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GYV0aVpU4rrQzfRHRMr5FT+FlJ9gDMOP85DbxKb2qHs=;
- b=gRPdJ/UK0EoAmDpq5ARgmKyEp0bfh2uDln2/irYvSjwghw/LJzgN6fnmCc+kH0ndPD
- m/AgYdHrFf9Xeg4riMvjM+ZqteDkzxT/20aWIYicJtwdqaPp+yjE+MohBT3RBFzsNB1M
- 03Xz/LLg6ijEp9qAM8QThpttHjxegumsTGYFCj4bed5WsE3JPqftKwNVuxgDVR0uOl1u
- dptUlOrNxbB/wG755E+iHChCl4izHZxtHYUWhwXMshs4Xfr1/ZoM4IazGpYKGXnaR/w+
- aknNsVrKDKCle4NkBIBCZbYZeJTXN2AcqvFizwnGvwqWx+oR+5OwEIZAzn08iWXsqnm3
- nPbw==
+ bh=4RDqC2s5Rf7CR4RPBV2y3Y9+CGFfykEDEtuoCILmXic=;
+ b=bglaS0JVvWM+V2jjJltD8yUJs60PNl8M2DcKe2v/lLec8hXbnVp51eVLgo8SgWIAW7
+ qwng4XguiTZMOfdNJgg6wJtfVRak8gaXcYyOZSChL+RbhTba5YN7FKrP6UIxiyZyQs66
+ oKyG+yYgCLQ0jjCqPN7hxtCU6fxTU8uDObrjqDGBt3bsYS32yuGRzRxAzqI7t0rUETRp
+ 8euG7ECwBZ4xXiWOpQLpzmvaq3uX2fFGDIrcJ6XGEniATpZ6d/kV1pWgR/HmRqiy1Qo3
+ gsIG/NQlh8wTKNL5Ks5WO7razeANpDCOIszFOM4NlSfGW/lvhyx3isIC4zOIZ0tfOnsD
+ jCzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSXyiA6LXjijrrsLJppZ4yssKZK2r7ZodnQemQonzDjVQBjbcSgQlHB/jVnuatcYWPWzt7y7igyDVu@nongnu.org
-X-Gm-Message-State: AOJu0YzXrp9yibHDhildWnxUcmZ4RPnG2Q8G7dIjQHLEvvUt1UnS72Iy
- TJRNSUiKZu4aCUQ1Y6epf6WsDaHaP0TvzqPKXJYPaI2pdtBxOqXpaDvBnej4hYBMTDM=
-X-Gm-Gg: AY/fxX6IjCBYQvmNQJ/OYVFVyjonhNTEZbtivf0sK1Wrgc2cnU0dcPRV/nnI2iSglfy
- 0yX1v6miqJtjIoQbiJMWQtGIB/G58iUxfsQzKpt+5JxXlHxkao8gU9F5L8HBPZncAwZQiteCqSN
- yjR+MgO8HuQny3+4tSXHsE0zs71KpurFGUpfNmfh45JwjiO8oR1Yo0bipHuTtdIqRR4UFpXqo8Y
- 82tBHhIFcrfo54JefivoRh6ulcktxKic4qPGkWGc/jCO6QrcGK0DZqB5O9MC29IAdv6ShmI9OC8
- +qOx0hTY+J+cUDtbawjC85YpR8IRaHkHi5s6TZ+5JjbJ71u5cRIvXiqjRbqJ16PG3t4iW1kIAOf
- gMQXjoJzzmfquQksebc7ZYfAn2N0XL76w1AZhdkJtaPtHP8og+rZ0Vl1yOMx4Y1Gstc0ztrGOvf
- wBaZRxzL5eE0fdsAvwknA657PYVKk4y63LmGMIo6WdNfLOdl3pY6Du3oo=
-X-Google-Smtp-Source: AGHT+IHEOSoV+Bp/Ivm0QKN288n/13JhHQnOQGCpK1v9mBdZBSxz/D4xjuxdwPgcrrmaPXEvTtk/PA==
-X-Received: by 2002:a17:903:4b4b:b0:2a0:c852:5f9f with SMTP id
- d9443c01a7336-2a2f220552fmr131430745ad.7.1766432856260; 
- Mon, 22 Dec 2025 11:47:36 -0800 (PST)
+ AJvYcCWolxe2UDf0qP+8PKp8a0tic0evST+b4VJDNziuk9YWCQre9VQZJunqd6e5OI4Go+GS8aAfa2mFrhDR@nongnu.org
+X-Gm-Message-State: AOJu0YxgMU1x4Rvwh2R31g3KHPK1V/als6Zobu3nKxN76aYpX8TaL5XE
+ +71vIZtqPGF+jnAsc1tu0XQrTj/HT4FXhq/ldAZCE49NcREsCCjTyIYAFTAeEEUuU9U=
+X-Gm-Gg: AY/fxX7WEcsrYX/UDBXiQLad7z5WH8LMkyJ9yQDTWxNp1RifrQI6fijUcUaaZ2AodK1
+ XJ6AzOFulUsLW9Zo4h7aa2ptT3bjPzRvlLeDDW14LSoPeiovwLSLlT5x9+9f3M8Evv0OHvBxCaA
+ 2k4BIlpX+z1NDntkAbLqfGXfPT92Z3oAh2OULfQCPUZ+J5QL6q0UVa40za8x15yCfsWvhc3RJjE
+ 2Z6zSrOsHNNPEzMQ2cvJWtPqZgnAumUn59yhJTbEV7FaVdqS/kExPf/EeYcl9Y2UgCQ8uIz/xbe
+ mA8L5im4gFw6ZRtyUd1Qxl4m1M8UVzkDFbAGxmeSel/21XO8vE9x8DA/aU9nj83JmlDAniGPAi3
+ sOxoIgEx/P3P3KfprIbakvKcJnJYmvNj8Mjl8sddMXW2q+VkZMNlwwnDCw0zNNaiH5auEA5WA9b
+ In3oWeDpzsJN7al1oIHQ+iASjSlZWVpoNo5QKGBRVf7dxNbiyeuqab5Fc=
+X-Google-Smtp-Source: AGHT+IHeK/OpXJbJiRVUu5y0Ij/X8x4UHsFQcuPvEpk4f7EGOJCSDOZug8PzwsZnEcpcLo4tkR285w==
+X-Received: by 2002:a17:90b:2246:b0:34c:2db6:57a7 with SMTP id
+ 98e67ed59e1d1-34e921131b8mr10360572a91.8.1766432947390; 
+ Mon, 22 Dec 2025 11:49:07 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3d77359sm105820585ad.95.2025.12.22.11.47.34
+ 98e67ed59e1d1-34e921b1666sm10660841a91.7.2025.12.22.11.49.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Dec 2025 11:47:35 -0800 (PST)
-Message-ID: <7c8fdad5-90b7-4077-86c6-7b68eb8fddb2@linaro.org>
-Date: Mon, 22 Dec 2025 11:47:34 -0800
+ Mon, 22 Dec 2025 11:49:06 -0800 (PST)
+Message-ID: <3b55fef2-4f8a-4b4a-877a-737ce39a86af@linaro.org>
+Date: Mon, 22 Dec 2025 11:49:06 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 06/12] plugins: shorten aggressively long name
+Subject: Re: [RFC PATCH 10/12] target/arm: defer creation of gdb register
+ until machine created
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
@@ -89,13 +90,13 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
  <mburton@qti.qualcomm.com>, Laurent Vivier <laurent@vivier.eu>,
  Alexandre Iooss <erdnaxe@crans.org>
 References: <20251219190849.238323-1-alex.bennee@linaro.org>
- <20251219190849.238323-7-alex.bennee@linaro.org>
+ <20251219190849.238323-11-alex.bennee@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251219190849.238323-7-alex.bennee@linaro.org>
+In-Reply-To: <20251219190849.238323-11-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,24 +120,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/19/25 11:08 AM, Alex Bennée wrote:
-> The old name comes in at a 51 characters, contains at least one
-> redundant token and exec is arguably implied by inline as all inline
-> operations occur when instructions are executing.
-> 
-> By putting the name on a substantial diet we can reduce it by 15% and
-> gain valuable white-space in the process.
+> When running machine emulation we may create additional cp_regs for
+> things like the GIC interface. To include them for gdbstub and plugins
+> defer the creation until the machine is finalized.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   include/qemu/qemu-plugin.h    |  4 ++--
->   contrib/plugins/cflow.c       | 22 +++++++++++-----------
->   contrib/plugins/howvec.c      |  2 +-
->   contrib/plugins/stoptrigger.c | 10 ++++++----
->   plugins/api.c                 |  2 +-
->   tests/tcg/plugins/discons.c   | 18 +++++++++---------
->   tests/tcg/plugins/inline.c    |  6 +++---
->   tests/tcg/plugins/insn.c      |  5 +++--
->   8 files changed, 36 insertions(+), 33 deletions(-)
+>   target/arm/cpu.c | 33 +++++++++++++++++++++++++++++++++
+>   1 file changed, 33 insertions(+)
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
