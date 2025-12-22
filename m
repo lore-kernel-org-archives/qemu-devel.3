@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6747FE69162
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 19:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE38E69162
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 19:50:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXluP-0000YS-HN; Mon, 22 Dec 2025 14:49:33 -0500
+	id 1vXlvA-0001DX-Q6; Mon, 22 Dec 2025 14:50:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vXluL-0000Vn-7n
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:49:29 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1vXlv2-0000zo-SB
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:50:15 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vXluJ-0004v4-Px
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:49:28 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7f1243792f2so2968561b3a.1
- for <qemu-devel@nongnu.org>; Mon, 22 Dec 2025 11:49:27 -0800 (PST)
+ id 1vXlv0-00059X-BH
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 14:50:12 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a0c09bb78cso31112215ad.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Dec 2025 11:50:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766432966; x=1767037766; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766433009; x=1767037809; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OUByJqppgHmu8mlgHK3WFtMhphoa+2LsZHl9xNgNfPM=;
- b=XE7G7+/fftJVULnRfFBnJXu3v6ewDYL/q1WO4E1bW/bsSVybrTISBAf+yp0VKdL/PN
- hfahOmPkew/hPTpbiX/WKhSPKgnOzeHjFcXb7XsIdlCPHGdZ9nPZ1z/9EFPNDOI1+p25
- aLWPTsh9uyn1nDVy+TWh9h2lWdsgkUNYg+Nk2rgTN8NrM+D9ZpILbL5GWhGddl72YLjz
- vFpEA03EjTJPCfA+K0i/fhCNOO6Pqp45NLpYGw9VvMkOyq8AhOYxqxlk7+ARU7DHJjyx
- sn8rIjKPKJhRBrczYyQfJcWT/UVktO+ohECX5sPBSxj8F5te+P8gNaJQ53jKE5fJSAtR
- bxag==
+ bh=lVtj7846LWfHJvjhe/F50ghadIUiDzYIHRzOQgWOr9I=;
+ b=LUrimcA7LWCUI3AgGh2hP98cMYfcwSfJ/gC5w24/+BrVlEZyeY/hMb/oNikKruW086
+ cVhIroHsCsR2h642+/Oyzzdb3r0PNgA2QU6ajyHbRBTXhLdy06uCTDb8SknxszX1tTZE
+ 3art3paQfhBCTwEHntsBPqBQn0owXIX36IDZU09r2u3TzPC7i07VN+S0LbL+KveIJG79
+ S998xHc5ocozc2bj1G2cehmrXCqN7xv8UP9uFE0qBkXndHYwWM/YZ1tc9Y4QLvjkJ+Qy
+ h4O38E2qa5aE9N69XZBggAe290kWEGH5PSqBs5HU0TjUipEKmPh5y9H8+zD9QeufbRHL
+ wl9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766432966; x=1767037766;
+ d=1e100.net; s=20230601; t=1766433009; x=1767037809;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=OUByJqppgHmu8mlgHK3WFtMhphoa+2LsZHl9xNgNfPM=;
- b=LxLYV7JWmPegirhH2rXEcsvPn10Dj93Ck6Wu6lfGx3lJrKnYeOusCiyfejnHXTbLqk
- gVERBnRafExgW0xD8sWLpHLK45ujpmQgmXgRaTn5JSPTeg/wPoe8hFm0DmZLfySlj/u0
- I5/O1MjRDjnfnS9pAYNShTLiBde7IKjk1amZJLy7K1tHQrGbJ89h4aREHwjfuSB/f0Ga
- RiiyXDaCx0uE8C9K2QufhOVf+snet9AMSZuxj8jyzgdp5fiuxmKIG+1YT5Zhd96j+U+A
- SCpGQ2sRwTAlWgyFdqxj9QyK5pUOsnwcig9XgXvnYCki4yk0NWlpHsGB1gNaEzBgAl/0
- RSag==
+ bh=lVtj7846LWfHJvjhe/F50ghadIUiDzYIHRzOQgWOr9I=;
+ b=uJth3W1i/gW2OKbsT33hI/iCeOYJ9DViRKPfRzLcAncpW+joo6adUx14Ceh3vuSjwn
+ 7PTQnTHPyIL8XLxIgFYB+iz6iOvZHH2LwsWGGp7EkT5pU7By70MjjPh2gpnMzRh65TX+
+ Y+aKHPixXd8r5zCzI6ExwaIpyttfUfz+UyGdlr3boz0KXpwJUBKPQDt7FKzb9vGIvsqq
+ nwNz+XAWYzhVbWBZOuZ46HtD9Y+hewfKmviYN8yYIRq5Vw+HyiZch4j223hAry2vsMdj
+ wRm7K2IZSOe6RbWOT7wj/A1VXRJhLSd4eZz7V8qtaxBoVeVkRNYw7YEbnGgLQHZofm29
+ 8ZQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeeCUK285ycAR6p3PBlG2y3ZPbxGAuPJfmy/fTe0/a6bXTTF/ScvYPD9NTKuErBHyQ3Rlh53ek+0SU@nongnu.org
-X-Gm-Message-State: AOJu0YzD7E39P3zEngMhXo5AG2sANcr9hqpyjoqNjOfHfzk3UQYHjpi3
- yLuYonNz4VU7PoHyhfHEw5n4Im/SQf+lovYjnxt3Jac180IasEGl5EO32a7hlJGuqlY=
-X-Gm-Gg: AY/fxX6KfUbVXOffmaNPSy+VZw6MkmiuSWB16Nowy1G7y6UfDuWvfnDbn6qO6eY/2VG
- GmsT4yLjFrCEeT0g0eA5yPrNol4sSvnhdtMxKb5STPJSoH9LGm4IEZUt/ii57djAeSiEz5+aLVD
- MIz4xmwBVF7/o6SjGOyGO7s6QLnnSWuvR1qYIkSn0g1V54ukhNWgSAfdwNFPWDoYa2baKwOfhDh
- 76Cj3t+iTWZFXxn2qUQHPOXKRAKFjwfG/g9WPKOKtVzvynVA6pYrK/1QgMcH2nYU8oVpkN5nqbp
- SL04pNZHCvYi3MPZ5Nxqmk5HebfhszBCMm9+kC/cdYSwxPZj508q+IVh4kXu3OMDlsJSaFf0mIR
- mSeids5VTQOZrvuk/wiSqVkqRRCQ4FRRGH+Ia/iQ/h7VYPpIWVJmtPyCWBY18wAil6A19dG5hCc
- RQIzSqyWWbyNvh0S78uuDx0BYeN2YNpjvGP/w23l6AL7g/c+stVxPZwxE=
-X-Google-Smtp-Source: AGHT+IHWFaCz1KZu5HFruL5RmR9v9Ex37XIzjVV8H6ceK5eaVIL5OKCl/z2d9reLLUVr8cjgkUMoYA==
-X-Received: by 2002:a05:6a00:4192:b0:7e8:43f5:bd40 with SMTP id
- d2e1a72fcca58-7ff66d5ff50mr10547360b3a.44.1766432966307; 
- Mon, 22 Dec 2025 11:49:26 -0800 (PST)
+ AJvYcCWK3ZmDwXWLLE6kIpBctOquqcOWf9CzqlNRdOQ88rS6ilCTwDylw58jvqxMpcAyMPP54h5NtsmD927H@nongnu.org
+X-Gm-Message-State: AOJu0YxVKNoRYfXthqaaRBOs46VwIo5yE5OsxTf6+sOakeZ6FzDMBvSV
+ 1ZFAWgpt5y70GWZo+tYV5NhG++M2WtUOTmo7W94f1DGErOSax9VTT2NHPUnEpMgveSI=
+X-Gm-Gg: AY/fxX6DFVTVntgSTrT3dbEXBmi4giljmn8KjDrKhBykIGjdrJDrhMxcEP/cPA83eza
+ OfbRraol4LTDJ/rbKJuDnjkQG96s9UKsTGoFtFhj4XBWm2XIaHpcoB6pyO1P4GTu4oQ4RITNbU+
+ eQNvYHj4/OgSI44gC5HN98aPCyWTAIrsL4kG22PWHBXfdFegf5rkuYmSmWGdRzCpDBu7tR0mD4U
+ iU2LYcFk3LPWx57VQavY8E62vqHRcSFCtK/N4/IVSpfmRUhxY7vAAAgLCLN26QBI3DIyMpt9F+h
+ 7tS+cS1oniuj0RycYdou2QeNw5BU30oCatEfLBA1LIwoj9ZBoJ+FGVXDvr8tdjvsIhTjrFWvk9F
+ OXF0QTfL3gi98B/g1WuP80qYGj7LyKc9tDLHtTvvSO88J4wd2z2mjKmjf5LfXl3uKDoEmsQuwyf
+ AAQcCQk44pDLZczWrHqavd2y+QWq3KqPZZA5u+qCPOCHTv5/0YKw3k6J0=
+X-Google-Smtp-Source: AGHT+IE5/dJ64aTh9IUvA2M1WBf4TiOAuMmo3X0uR4UJAfBwftZw970P9VtqOYq0HE8eWyxVzNCP4g==
+X-Received: by 2002:a17:902:f707:b0:2a0:a05d:d4a2 with SMTP id
+ d9443c01a7336-2a2cab4fd97mr139238375ad.23.1766433008536; 
+ Mon, 22 Dec 2025 11:50:08 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7e197f9asm11085974b3a.43.2025.12.22.11.49.25
+ d9443c01a7336-2a2f3d4d36esm106106605ad.63.2025.12.22.11.50.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Dec 2025 11:49:25 -0800 (PST)
-Message-ID: <31960503-659e-4e40-b30c-9d74d4fd77d2@linaro.org>
-Date: Mon, 22 Dec 2025 11:49:24 -0800
+ Mon, 22 Dec 2025 11:50:08 -0800 (PST)
+Message-ID: <b38eaff9-98a0-4ff2-8c18-2290a3c917e1@linaro.org>
+Date: Mon, 22 Dec 2025 11:50:06 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 11/12] contrib/plugins: add systrace plugin for
- tracking exceptions and irqs
+Subject: Re: [RFC PATCH 12/12] target/arm: allow gdb to read ARM_CP_NORAW regs
+ (!upstream)
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
@@ -90,13 +90,13 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
  <mburton@qti.qualcomm.com>, Laurent Vivier <laurent@vivier.eu>,
  Alexandre Iooss <erdnaxe@crans.org>
 References: <20251219190849.238323-1-alex.bennee@linaro.org>
- <20251219190849.238323-12-alex.bennee@linaro.org>
+ <20251219190849.238323-13-alex.bennee@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251219190849.238323-12-alex.bennee@linaro.org>
+In-Reply-To: <20251219190849.238323-13-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,25 +120,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/19/25 11:08 AM, Alex Bennée wrote:
-> I'm hunting for lost IRQs and want to trace what various registers are
-> being set to when IRQs happen. This combines the discontinuity
-> tracking API with register value tracking to do so.
+> Before this we suppress all ARM_CP_NORAW registers being listed under
+> GDB. This includes useful registers like CurrentEL which gets tagged
+> as ARM_CP_NO_RAW because it is one of the ARM_CP_SPECIAL_MASK
+> registers. These are registers TCG can directly compute because we
+> have the information at compile time but until now with no readfn.
 > 
-> It supports:
-> 
->    tracksw - to keep track of the last thing that wrote to a register
->    show_frompc - show the line executing before the discontinuity
-> 
-> As we might not have disassembly for the nominal last pc for an async
-> IRQ we also track the pc of the last executed instruction in a block
-> and use that as a fallback.
+> Add a .readfn to return the CurrentEL and then loosen the restrictions
+> in arm_register_sysreg_for_feature to allow ARM_CP_NORAW registers to
+> be read if there is a readfn available.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Message-ID: <20250507165840.401623-1-alex.bennee@linaro.org>
+> 
 > ---
->   contrib/plugins/systrace.c  | 572 ++++++++++++++++++++++++++++++++++++
->   contrib/plugins/meson.build |   2 +-
->   2 files changed, 573 insertions(+), 1 deletion(-)
->   create mode 100644 contrib/plugins/systrace.c
+> vRFC
+>    - this is a useful debugging aid but a bit haphazard for
+>      up-streaming. See thread comments for details.
+> ---
+>   target/arm/gdbstub.c |  6 +++++-
+>   target/arm/helper.c  | 15 ++++++++++++++-
+>   2 files changed, 19 insertions(+), 2 deletions(-)
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
