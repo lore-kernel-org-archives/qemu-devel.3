@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C700DE677E2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 15:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A2F5E677E9
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 15:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXhbd-0000mB-Uu; Mon, 22 Dec 2025 10:13:54 -0500
+	id 1vXhvS-0005Uf-41; Mon, 22 Dec 2025 10:34:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bT.xz2j7lfh1i4qzc4=r4kuv71agyj8=wvwtwcires3uuy@em483429.getutm.app>)
- id 1vXhbZ-0000lb-Ac
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 10:13:49 -0500
-Received: from a2i327.smtp2go.com ([103.47.205.71])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bT.xz2j7lfh1i4qzc4=r4kuv71agyj8=wvwtwcires3uuy@em483429.getutm.app>)
- id 1vXhbU-0005pS-Uv
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 10:13:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=smtpservice.net; s=mad0l0.a1-4.dyn; x=1766417311; h=Feedback-ID:
- X-Smtpcorp-Track:Message-ID:Date:Subject:To:From:Reply-To:Sender:
- List-Unsubscribe:List-Unsubscribe-Post;
- bh=1fQHjIB/Rg9sfRlGk3msWMuLmJ76rJ7TGiIaoIDiq3A=; b=EcmKSEyNC9jnvr17PYRJ/SXM2O
- 6ZqXhojaX+5SNxr3UZvDVnIvwqds0MU7W1R0CNryhfehoqI9EOAO5vhorYHVjg4CYICdTX6bzdQDc
- qyerNFHByZrhDnYy8xbBP/FGNUDO1DUpNAo3R1xEkywGyp8WIsaysct+78XSdizuWhKAGcoLlNKNh
- Kx8KEwLssANxyBeVwcw13ZJepfZ72ZZFDeIqf2xIhdng9J//u7sIE5lQA+m1mMiQ38PmqpG4qwl1h
- nAd1mxAqoMQOVMrt5RADGz0/Di7htZSh75hK8OlIE9Kj7jSJ9lYgjdrzhIT9Rqy+RYnbBL9L8H6kK
- 5LncIYqQ==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
- i=@getutm.app; q=dns/txt; s=s483429; t=1766416411; h=from : subject :
- to : message-id : date;
- bh=1fQHjIB/Rg9sfRlGk3msWMuLmJ76rJ7TGiIaoIDiq3A=;
- b=GI0zhWmBC4/0vcUFnIqri1hFh/xdJya4B4VVpkAcB0O2eNnym3aj6H+kwkyUmP7v0D0N1
- IBbBwlOr4bCv5wdDZ9/yFd9eWXewK+20UvXnxZ4uLseZ2OZvQA2IQvb7rqLrOqf6B2Y1d6f
- bpLLcfcbL0hrsnBJXCG1d3Gh9BM0niC7SaV3sgtS1vOFIvBISzcjR7zr3yjMjVJFgFehrVE
- CzStCqJe7wMQxoGTkjbcNmgUVMyx5Ixt631/4x+GRauHwR/p2wBFHGWoMQu3x4ft6HkrRi6
- 88aCmNyt63ir9YGEeWutUuK+TZJK7D9wvaooPNVBWBqDWe80d0AiBInppIKg==
-Received: from [10.173.255.233] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.94.2-S2G) (envelope-from <j@getutm.app>)
- id 1vXhbC-pH9SJy-4d; Mon, 22 Dec 2025 15:13:26 +0000
-Received: from [10.159.238.187] (helo=localhost.localdomain)
- by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA512__CHACHA20_POLY1305:256)
- (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
- id 1vXhbB-FnQW0hPzNOZ-1gIU; Mon, 22 Dec 2025 15:13:25 +0000
-From: Joelle van Dyne <j@getutm.app>
-To: qemu-devel@nongnu.org
-Cc: Joelle van Dyne <j@getutm.app>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vXhvP-0005UM-VI
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 10:34:19 -0500
+Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vXhvN-0002wO-Hj
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 10:34:19 -0500
+Received: by mail-qv1-xf34.google.com with SMTP id
+ 6a1803df08f44-888bd3bd639so50751576d6.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Dec 2025 07:34:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1766417655; x=1767022455; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3qN34Fe461jrVkd5+G33zyOeiWoHMrltBsXW39NmJC8=;
+ b=GpmYFFDqe4xAGAoPxMfojPrdiWNjMdaIL0lluykboJ8CfTe5CwOgDm2s3tGPzkFG9F
+ jGCOoA3L1Uf357njVXFtYWoEISAscZuvEagLQj5emVS/TSwYvP92Xgcy8VpSUlDkN2VI
+ Lj4cl+wkw+oYZMdr4vfucla/ImFaDTXkoov0wlX7P0yjQ/bGQp55AWj5izH/YSdEbKzp
+ sYXjPmUbL1rsM5bRfPEhnEzw9BEIXQaS6QCEc4y6uiUxni08wJ80A7bh4yeDUHXc+Mtj
+ PSjDSfV0rl4wMVhpuIdV4tbUrhBy5Tvbg5x6bW1FPjRsQEIh1+mVldCiVguvLr+5omcs
+ od5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766417655; x=1767022455;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3qN34Fe461jrVkd5+G33zyOeiWoHMrltBsXW39NmJC8=;
+ b=SOVmWU/qxXSxaYCdXvR37yLPPa84R1PwTKUG0AEdxmnD/gHeZuCy5reapPSDK+ksnM
+ Y/m4oELPzVMNgpKVFizrJcUG31dPRas8navFIrpxJny+vkSGvV5ct0/e8MhoJRuOXThK
+ BbwIbUg2hzZdAl/9DJhbkUgZIkIcr9BAG62/nuQXasWDUtetl7tBQAOJLCESu0JSVrWc
+ Ttiw10RQktPgJjOACLMed31O5Oj+tHLL0/dV2Eu0iAJ7dfyXZSv/2fpaoQ+g0aWMk1HS
+ p+4N5qWbjjvtv0UNCKxZ3wAwavQo6+y2veDnC5s3pVmAsf85aQZW9VPBGxJqpmFvzrQE
+ uWHQ==
+X-Gm-Message-State: AOJu0Yw4z8UQvbodMI4LGTN99/1zHbM/JC23smaAt28mdGn1/345w6v2
+ rqhQXMB25/vKUp9HKosZsaeLHIynmGpUsZYB1PLjSmkD4hZ2sSmVqdPNQqqOjacA8tU/ajhqELp
+ iBhl+khjvFY1TTihsLp/zm2URgcJ9284=
+X-Gm-Gg: AY/fxX595wK8ZjLb6mb6NKTkIEq372XAKyi8oP+73LBKJ8cnkKiAUctbWJh0pdjycVd
+ h26hikbSjOw2+jve5Voi9Hlc+YaTEk4ogzAYXm48TwgrowLThHXdBvHQX8eFKiZWi9MCEtuW8Rw
+ 2EXg8wiWYVVCugzrhIQpg9g90Dnga3X6eUU/mfI1+7A0XTZvdwyvBZCPzkX36+SAgdWzpZza/67
+ 7kcAKAq1m8uZj2a/9WFWg5044VPS2IJe3Z6ZsUbtZQKPn6f1mEmZ7Xm2ouPGYDqknnmJAxuicQK
+ T49X+hM8bSJCTaXiUritRgCMKJc=
+X-Google-Smtp-Source: AGHT+IEuYByg8J0bv2+u3YUlYycRuM910YQcjonezjWNRa8PDLP7mMEsZc7WyfcLzvvT4BQ+5b1rS9xH6FgMdUFpavA=
+X-Received: by 2002:a05:6214:2f90:b0:880:5589:54cd with SMTP id
+ 6a1803df08f44-88d833b7eccmr158879426d6.19.1766417655156; Mon, 22 Dec 2025
+ 07:34:15 -0800 (PST)
+MIME-Version: 1.0
+References: <20251222151259.3965-1-j@getutm.app>
+In-Reply-To: <20251222151259.3965-1-j@getutm.app>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 22 Dec 2025 19:34:03 +0400
+X-Gm-Features: AQt7F2p9V2Ddm0w6MexWeLs2bKQtvG7Mul-755VNLhBgla4wMX4x4qJna7pDCbg
+Message-ID: <CAJ+F1CJBjM+s0vgCj1T3tFib6SQOV-RJEcrEpCLv==K2UCRLpg@mail.gmail.com>
+Subject: Re: [PATCH] virrtio-gpu-virgl: correct parent for blob memory region
+To: Joelle van Dyne <j@getutm.app>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH] virrtio-gpu-virgl: correct parent for blob memory region
-Date: Mon, 22 Dec 2025 07:12:59 -0800
-Message-ID: <20251222151259.3965-1-j@getutm.app>
-X-Mailer: git-send-email 2.50.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Smtpcorp-Track: UJjV3YlGGqx8.zWENYiR-gfg0.-JJG0AdR_YV
-Feedback-ID: 483429m:483429abrvJvs:483429siIlUfZLxO
-X-Report-Abuse: Please forward a copy of this message, including all headers, 
- to <abuse-report@smtp2go.com>
-Received-SPF: pass client-ip=103.47.205.71;
- envelope-from=bT.xz2j7lfh1i4qzc4=r4kuv71agyj8=wvwtwcires3uuy@em483429.getutm.app;
- helo=a2i327.smtp2go.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,37 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When `owner` == `mr`, `object_unparent` will crash:
+Hi
 
-object_unparent(mr) ->
-object_property_del_child(mr, mr) ->
-object_finalize_child_property(mr, name, mr) ->
-object_unref(mr) ->
-object_finalize(mr) ->
-object_property_del_all(mr) ->
-object_finalize_child_property(mr, name, mr) ->
-object_unref(mr) ->
-fail on g_assert(obj->ref > 0)
+On Mon, Dec 22, 2025 at 7:15=E2=80=AFPM Joelle van Dyne <j@getutm.app> wrot=
+e:
+>
+> When `owner` =3D=3D `mr`, `object_unparent` will crash:
+>
+> object_unparent(mr) ->
+> object_property_del_child(mr, mr) ->
+> object_finalize_child_property(mr, name, mr) ->
+> object_unref(mr) ->
+> object_finalize(mr) ->
+> object_property_del_all(mr) ->
+> object_finalize_child_property(mr, name, mr) ->
+> object_unref(mr) ->
+> fail on g_assert(obj->ref > 0)
+>
+> Signed-off-by: Joelle van Dyne <j@getutm.app>
 
-Signed-off-by: Joelle van Dyne <j@getutm.app>
----
- hw/display/virtio-gpu-virgl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Fixes: commit 7c092f17 ("virtio-gpu: Handle resource blob commands")
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 18404be5892..4109ff7932a 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -123,7 +123,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     vmr->g = g;
- 
-     mr = &vmr->mr;
--    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
-+    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
-     memory_region_add_subregion(&b->hostmem, offset, mr);
-     memory_region_set_enabled(mr, true);
- 
--- 
-2.50.1 (Apple Git-155)
+I'd suggest an assert for this case in memory_region_do_init(), as
+that seems undesired.
 
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+> ---
+>  hw/display/virtio-gpu-virgl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
+c
+> index 18404be5892..4109ff7932a 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -123,7 +123,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>      vmr->g =3D g;
+>
+>      mr =3D &vmr->mr;
+> -    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+> +    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
+>      memory_region_add_subregion(&b->hostmem, offset, mr);
+>      memory_region_set_enabled(mr, true);
+>
+> --
+> 2.50.1 (Apple Git-155)
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
