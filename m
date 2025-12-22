@@ -4,68 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC267D711D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 06:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD10E6748D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 07:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXZNq-0001YP-9c; Mon, 22 Dec 2025 01:27:06 -0500
+	id 1vXa66-0000Jf-8k; Mon, 22 Dec 2025 02:12:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vXZNm-0001Xs-JL
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 01:27:03 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vXZNj-0004MY-91
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 01:27:02 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxfcOp5EhpatYBAA--.6223S3;
- Mon, 22 Dec 2025 14:26:49 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxfcKm5EhpqUEDAA--.7336S3;
- Mon, 22 Dec 2025 14:26:49 +0800 (CST)
-Subject: Re: [PATCH] hw/loongarch/virt: Don't abort on access to unimplemented
- IOCSR
-To: Yao Zi <me@ziyao.cc>, Song Gao <gaosong@loongson.cn>,
+ (Exim 4.90_1) (envelope-from <me@ziyao.cc>) id 1vXa62-0000IW-Us
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 02:12:46 -0500
+Received: from mail102.out.titan.email ([52.45.239.238])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <me@ziyao.cc>) id 1vXa61-0005ua-AA
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 02:12:46 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by smtp-out.flockmail.com (Postfix) with ESMTP id 4dZTqb0cLGz2xBT;
+ Mon, 22 Dec 2025 07:12:43 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256; bh=mIu+82rc0SeKYeum1ykQmkwpZp0Mog4V9mAAiX7G9Dg=; 
+ c=relaxed/relaxed; d=ziyao.cc;
+ h=references:mime-version:to:in-reply-to:subject:date:from:cc:message-id:from:to:cc:subject:date:message-id:in-reply-to:references:reply-to;
+ q=dns/txt; s=titan1; t=1766387563; v=1;
+ b=P8uGhV7AWtk5/2lxk6ZXMX3kv6dHgMUFvkhlKt67EODscIN3morwGRt9OfGXbkUdoQ4IhwxE
+ AUuPbHmVjDXBHrEpFK6iV6qyBO7FP1VIImFClosUMF+PfanVXiOiuOVAG3pWD/pts0NDmyJnNSi
+ yUGu+oLATYGcmL8ppGiYaSNI=
+Received: from pie (unknown [117.171.66.90])
+ by smtp-out.flockmail.com (Postfix) with ESMTPA id 4dZTqY0Xtrz2xC2;
+ Mon, 22 Dec 2025 07:12:40 +0000 (UTC)
+Date: Mon, 22 Dec 2025 07:12:33 +0000
+Feedback-ID: :me@ziyao.cc:ziyao.cc:flockmailId
+From: Yao Zi <me@ziyao.cc>
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
 Cc: qemu-devel@nongnu.org
-References: <20251221122511.56544-2-me@ziyao.cc>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <7c793846-c681-3cd4-598c-bb92a1f225f6@loongson.cn>
-Date: Mon, 22 Dec 2025 14:24:14 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Subject: Re: [PATCH] hw/loongarch/virt: Permit bytes/half access to IOCSR
+Message-ID: <aUju2fhuuF5rs96H@pie>
+References: <20251221122205.56463-2-me@ziyao.cc>
+ <ad1e33d6-8568-e050-f7d8-eb656a4af729@loongson.cn>
 MIME-Version: 1.0
-In-Reply-To: <20251221122511.56544-2-me@ziyao.cc>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxfcKm5EhpqUEDAA--.7336S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJFy3tr15uryxtw43CrWUKFX_yoW5GFyUpF
- Z8Cr98Cr48J347ua9Yya9rXr1j9wn3XrWjga4fK3y8CrWDWFnYkr10k3sIvFy8ArW8tw1F
- qryjgw1jqa4DuagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtx
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.354,
+In-Reply-To: <ad1e33d6-8568-e050-f7d8-eb656a4af729@loongson.cn>
+X-F-Verdict: SPFVALID
+X-Titan-Src-Out: 1766387562942027233.27573.846644460579412895@prod-use1-smtp-out1001.
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=a8/K9VSF c=1 sm=1 tr=0 ts=6948ef6a
+ a=rBp+3XZz9uO5KTvnfbZ58A==:117 a=rBp+3XZz9uO5KTvnfbZ58A==:17
+ a=IkcTkHD0fZMA:10 a=MKtGQD3n3ToA:10 a=CEWIc4RMnpUA:10
+ a=zdZPbV0uByiNToNf1MEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3z85VNIBY5UIEeAh_hcH:22 a=NWVoK91CQySWRX1oVYDe:22
+Received-SPF: pass client-ip=52.45.239.238; envelope-from=me@ziyao.cc;
+ helo=mail102.out.titan.email
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,78 +79,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/12/21 下午8:25, Yao Zi wrote:
-> Reading/writing unimplemented IOCSR on real LoongArch hardware doesn't
-> trigger any exceptions, instead, reading always results in zero and
-> writing is simply ignored.
- From my memories, I have communicated with HW guys about IOCSR. They 
-said that IOCSR is different with CPUCFG, the undocumented IOCSR 
-registers may be used by UEFI BIOS or other firmwares. So we cannot 
-suppose reading always results in zero and writing is simply ignored.
-
-However g_assert_not_reached() is actually too serious here, QEMU should 
-not crash anyway.
+On Mon, Dec 22, 2025 at 11:24:38AM +0800, Bibo Mao wrote:
 > 
-> Real-world applications, like memtest86plus, depend on the behavior to
-> run. However, since commit f2e61edb2946 ("hw/loongarch/virt: Use
-> MemTxAttrs interface for misc ops") which adds a call to
-> g_assert_not_reached() in the path of handling unimplemented IOCSRs,
-> QEMU would abort in the case.
 > 
-> Replace the assertion with qemu_log_mask(LOG_UNIMP, ...), so these
-> applications could run. It's still possible to examine unimplemented
-> IOCSR access through "-d unimp" command line arguments.
+> On 2025/12/21 下午8:22, Yao Zi wrote:
+> > IOCSRs could be accessed in any sizes from 1 to 8 bytes as long as the
+> > address is aligned, regardless whether through MMIO or iocsr{rd,wr}
+> > instructions. Lower min_access_size to 1 byte for IOCSR memory region to
+> > match real-hardware behavior.
+> Hi Yao,
 > 
-> Fixes: f2e61edb2946 ("hw/loongarch/virt: Use MemTxAttrs interface for misc ops")
-> Signed-off-by: Yao Zi <me@ziyao.cc>
-> ---
->   hw/loongarch/virt.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 49434ad1828b..8d7da5fac550 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -46,6 +46,7 @@
->   #include "hw/block/flash.h"
->   #include "hw/virtio/virtio-iommu.h"
->   #include "qemu/error-report.h"
-> +#include "qemu/log.h"
->   #include "kvm/kvm_loongarch.h"
->   
->   static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
-> @@ -622,7 +623,9 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
->                             features, attrs, NULL);
->           break;
->       default:
-> -        g_assert_not_reached();
-> +        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
-> +                      __func__, addr);
-> +        break;
->       }
-IOCSR address VERSION_REG/VENDOR_REG/CPUNAME_REG is read-only rather 
-than unimplemented, the others are unimplemented.
+> What is the detailed problem you encountered? Or just look through code and
+> think that it should be so.
 
-The others look good to me.
+I don't think there's a real use-case for this. However, without the
+patch, the behavior of iocsrrd.b differs between real hardware and QEMU,
+you could try this diff with Linux kernel for comparing.
 
-Regards
-Bibo Mao
->   
->       return MEMTX_OK;
-> @@ -680,7 +683,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
->           }
->           break;
->       default:
-> -        g_assert_not_reached();
-> +        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
-> +                      __func__, addr);
-> +        break;
-Replacing g_assert_not_reached() with with qemu_log_mask() is ok for me.
->       }
->   
->       *data = ret;
+diff --git a/arch/loongarch/kernel/setup.c b/arch/loongarch/kernel/setup.c
+index 25a87378e48e..679e311ac654 100644
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -621,3 +621,13 @@ void __init setup_arch(char **cmdline_p)
+ 	kasan_init();
+ #endif
+ }
++
++static int __init read_iocsr(void)
++{
++	pr_info("%s: iocsrrd_b(0x10) = 0x%x\n", __func__,
++		__iocsrrd_b(0x10));
++
++	return 0;
++}
++
++late_initcall(read_iocsr);
+
+On QEMU, the error raised by address_space_ldub is silently ignored by
+helper_iocsrrd_b(), and thus __iocsrrd_b(0x10) results in zero, while on
+real hardware it doesn't.
+
+Ignoring the error returned by address_space_{ld,st}* in helper_iocsr*
+could cause more behaviors inconsistent with real LoongArch hardware.
+But in the case shown in the diff that a single byte is read from iocsr,
+the access shouldn't fail at all, which this patch tries to fix.
+
+Regards,
+Yao Zi
+
+> IOCSR supports 1/2/4/8 byte access like MMIO, however here is IOCSR MISC
+> device rather than IOCSR bus emulation. What is the usage and scenery to
+> read IOCSR MISC device with one byte?
 > 
-
+> It is similar with other device emulation with MMIO, such as e1000e with 4
+> bytes aligned rather than any byte:
+> static const MemoryRegionOps mmio_ops = {
+>     .read = e1000e_mmio_read,
+>     .write = e1000e_mmio_write,
+>     .endianness = DEVICE_LITTLE_ENDIAN,
+>     .impl = {
+>         .min_access_size = 4,
+>         .max_access_size = 4,
+>     },
+> };
+> 
+> 
+> Regards
+> Bibo Mao
 
