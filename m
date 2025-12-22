@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63042E674AB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62FFBE674AA
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 12:46:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXfIq-0006R2-Mv; Mon, 22 Dec 2025 07:46:21 -0500
+	id 1vXfIv-0006Sq-N0; Mon, 22 Dec 2025 07:46:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vXfIR-0006J7-DA; Mon, 22 Dec 2025 07:45:55 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ id 1vXfIR-0006J8-Dx; Mon, 22 Dec 2025 07:45:56 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vXfIO-00073u-5z; Mon, 22 Dec 2025 07:45:54 -0500
+ id 1vXfIO-00073N-Af; Mon, 22 Dec 2025 07:45:55 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBnbZl7PUlpvOwsBA--.117S2;
- Mon, 22 Dec 2025 20:45:47 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAHDpp2PUlpX+wsBA--.149S2;
+ Mon, 22 Dec 2025 20:45:42 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwBXr+xyPUlpieINAA--.25982S8;
- Mon, 22 Dec 2025 20:45:45 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwBXr+xyPUlpieINAA--.25982S3;
+ Mon, 22 Dec 2025 20:45:39 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
@@ -37,34 +37,32 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Mostafa Saleh <smostafa@google.com>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v7 5/7] hw/arm/smmuv3-common: Add STE/CD set helpers for
- repeated field setup
-Date: Mon, 22 Dec 2025 20:45:15 +0800
-Message-Id: <20251222124517.3948679-6-tangtao1634@phytium.com.cn>
+Subject: [RFC v7 0/7] hw/misc: Introduce a generalized IOMMU test framework
+Date: Mon, 22 Dec 2025 20:45:10 +0800
+Message-Id: <20251222124517.3948679-1-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251222124517.3948679-1-tangtao1634@phytium.com.cn>
-References: <20251222124517.3948679-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwBXr+xyPUlpieINAA--.25982S8
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAMBWlIVJoHawAAsL
+X-CM-TRANSID: AQAAfwBXr+xyPUlpieINAA--.25982S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAMBWlIVJoHZQAAsF
 Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxuF43Cr4kJrWkWry3ZrWxCrg_yoWrtF4Dpr
- yxAryDXw17CF12kw1fJF4UKFsxZrn2q34DGryxKrsrC3ZxJrn7WFZ7KFWrJFyUuanYqFy0
- krsIgrWUWa9rCrUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW3XF1DWFyxWF45Xw15AF1fWFg_yoWDJw4fpa
+ 93G3sxKF48JF1fArn3Aw40vFy5ta1kJa17Zr17Gw1Fv398Ary8tr45KFyrKFyDJrWkZF47
+ Za18tF1Uur4FvrJanT9S1TB71UUUUjUqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
+Received-SPF: pass client-ip=209.97.181.73;
  envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,111 +78,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change introduces STE_SET_* and CD_SET_* helpers to centralize and
-simplify repeated field setting logic.
+This is v7 of the IOMMU test framework. Compared to v6, v7 splits the
+smmuv3-common.h work into smaller patches, adds MAINTAINERS entries for
+iommu-testdev and the qos-smmuv3 helpers, updates the DMA test pattern to
+0x12345678, and switches the qtest PCI enumeration to qpci_device_foreach().
 
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
----
- include/hw/arm/smmuv3-common.h | 79 ++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+I plan to invest long-term in maintaining iommu-testdev and qos-smmuv3, so
+I added two entries in MAINTAINERS. This is my first time touching the
+MAINTAINERS file; I read docs/devel/maintainers.rst and made changes
+accordingly, but I am still unsure if this follows the expected rules.
+Feedback is welcome: should we add additional maintainer(s) for these
+entries?
 
-diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
-index 7f7dd02221..0c6c162288 100644
---- a/include/hw/arm/smmuv3-common.h
-+++ b/include/hw/arm/smmuv3-common.h
-@@ -100,6 +100,37 @@ REG32(STE_7, 28)
- #define STE_CFG_ABORT(config)      (!(config & 0x4))
- #define STE_CFG_BYPASS(config)     (config == 0x4)
- 
-+/* Update STE fields */
-+#define STE_SET_VALID(ste, v)                                                 \
-+    ((ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, VALID, (v)))
-+#define STE_SET_CONFIG(ste, v)                                                \
-+    ((ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, CONFIG, (v)))
-+
-+#define STE_SET_CTXPTR(ste, v) do {                                           \
-+    (ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, CTXPTR_LO, (v) >> 6);  \
-+    (ste)->word[1] = FIELD_DP32((ste)->word[1], STE_1, CTXPTR_HI, (v) >> 32); \
-+} while (0)
-+#define STE_SET_S2T0SZ(ste, v)                                                \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2T0SZ, (v)))
-+#define STE_SET_S2SL0(ste, v)                                                 \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2SL0, (v)))
-+#define STE_SET_S2TG(ste, v)                                                  \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2TG, (v)))
-+#define STE_SET_S2PS(ste, v)                                                  \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2PS, (v)))
-+#define STE_SET_S2AA64(ste, v)                                                \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2AA64, (v)))
-+#define STE_SET_S2ENDI(ste, v)                                                \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2ENDI, (v)))
-+#define STE_SET_S2AFFD(ste, v)                                                \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2AFFD, (v)))
-+#define STE_SET_S2S(ste, v)                                                   \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2S, (v)))
-+#define STE_SET_S2TTB(ste, v) do {                                            \
-+    (ste)->word[6] = FIELD_DP32((ste)->word[6], STE_6, S2TTB_LO, (v) >> 4);   \
-+    (ste)->word[7] = FIELD_DP32((ste)->word[7], STE_7, S2TTB_HI, (v) >> 32);  \
-+} while (0)
-+
- /* CD fields */
- 
- REG32(CD_0, 0)
-@@ -169,6 +200,54 @@ REG32(CD_5, 20)
-              (((uint64_t)FIELD_EX32((x)->word[3], CD_3, TTB0_HI) << 32) | \
-               ((uint64_t)FIELD_EX32((x)->word[2], CD_2, TTB0_LO) << 4)))
- 
-+/* Update CD fields */
-+#define CD_SET_VALID(cd, v)                                                   \
-+    ((cd)->word[0] = FIELD_DP32((cd)->word[0], CD_0, VALID, (v)))
-+#define CD_SET_ASID(cd, v)                                                    \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, ASID, (v)))
-+#define CD_SET_TTB(cd, sel, v) do {                                           \
-+    if (sel) {                                                                \
-+        (cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, TTB1_LO, (v) >> 4);   \
-+        (cd)->word[5] = FIELD_DP32((cd)->word[5], CD_5, TTB1_HI, (v) >> 32);  \
-+    } else {                                                                  \
-+        (cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, TTB0_LO, (v) >> 4);   \
-+        (cd)->word[3] = FIELD_DP32((cd)->word[3], CD_3, TTB0_HI, (v) >> 32);  \
-+    }                                                                         \
-+} while (0)
-+
-+#define CD_SET_TSZ(cd, sel, v)                                                \
-+    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, TSZ1, (v)) :     \
-+                             FIELD_DP32((cd)->word[0], CD_0, TSZ0, (v)))
-+#define CD_SET_TG(cd, sel, v)                                                 \
-+    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, TG1, (v)) :      \
-+                             FIELD_DP32((cd)->word[0], CD_0, TG0, (v)))
-+#define CD_SET_EPD(cd, sel, v)                                                \
-+    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, EPD1, (v)) :     \
-+                             FIELD_DP32((cd)->word[0], CD_0, EPD0, (v)))
-+#define CD_SET_ENDI(cd, v)                                                    \
-+    ((cd)->word[0] = FIELD_DP32((cd)->word[0], CD_0, ENDI, (v)))
-+#define CD_SET_IPS(cd, v)                                                     \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, IPS, (v)))
-+#define CD_SET_AFFD(cd, v)                                                    \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, AFFD, (v)))
-+#define CD_SET_TBI(cd, v)                                                     \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, TBI, (v)))
-+#define CD_SET_HD(cd, v)                                                      \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, HD, (v)))
-+#define CD_SET_HA(cd, v)                                                      \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, HA, (v)))
-+#define CD_SET_S(cd, v)                                                       \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, S, (v)))
-+#define CD_SET_R(cd, v)                                                       \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, R, (v)))
-+#define CD_SET_A(cd, v)                                                       \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, A, (v)))
-+#define CD_SET_AARCH64(cd, v)                                                 \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, AARCH64, (v)))
-+#define CD_SET_NSCFG(cd, sel, v)                                              \
-+    ((sel) ? ((cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, NSCFG1, (v))) : \
-+             ((cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, NSCFG0, (v))))
-+
- /* MMIO Registers */
- 
- REG32(IDR0,                0x0)
+Also, qos-smmuv3 currently contains a large amount of page-table building
+code. If there is a better splitting strategy, I am happy to rework it.
+
+Motivation
+----------
+
+Currently, thoroughly testing IOMMU emulation (e.g., ARM SMMUv3) requires
+a significant software stack. We need to boot a full guest operating
+system (like Linux) with the appropriate drivers (e.g., IOMMUFD) and rely
+on firmware (e.g., ACPI with IORT tables or Hafnium) to correctly
+configure the IOMMU and orchestrate DMA from a peripheral device.
+
+This dependency on a complex software stack presents several challenges:
+
+* High Barrier to Entry: Writing targeted tests for specific IOMMU
+    features (like fault handling, specific translation regimes, etc.)
+    becomes cumbersome.
+
+* Difficult to Debug: It's hard to distinguish whether a bug originates
+    from the IOMMU emulation itself, the guest driver, the firmware
+    tables, or the guest kernel's configuration.
+
+* Slow Iteration: The need to boot a full guest OS slows down the
+    development and testing cycle.
+
+The primary goal of this work is to create a lightweight, self-contained
+testing environment that allows us to exercise the IOMMU's core logic
+directly at the qtest level, removing the need for any guest-side software.
+
+Our Approach: A Dedicated Test Framework
+-----------------------------------------
+
+To achieve this, we introduce three main components:
+
+* A minimal hardware device: iommu-testdev
+* A reusable IOMMU helper library: libqos/qos-smmuv3
+* A comprehensive qtest suite: iommu-smmuv3-test
+
+The iommu-testdev is intentionally not a conformant, general-purpose PCIe
+or platform device. It is a purpose-built, highly simplified "DMA engine"
+designed to be analogous to a minimal PCIe Root Complex that bypasses the
+full, realistic topology (Host Bridges, Switches, Endpoints) to provide a
+direct, programmable path for a DMA request to reach the IOMMU. Its sole
+purpose is to trigger a DMA transaction when its registers are written to,
+making it perfectly suited for direct control from a test environment like
+qtest.
+
+The Qtest Framework
+-------------------
+
+The new qtest (iommu-smmuv3-test.c) serves as the "bare-metal driver"
+for both the IOMMU and the iommu-testdev. It leverages the libqos helper
+library to manually perform all the setup that would typically be handled
+by the guest kernel and firmware, but in a completely controlled and
+predictable manner:
+
+1.  IOMMU Configuration: It directly initializes the SMMU's registers to a
+    known state using helper functions from qos-smmuv3.
+
+2.  Translation Structure Setup: It uses the libqos library to construct
+    the necessary translation structures in memory, including Stream Table
+    Entries (STEs), Context Descriptors (CDs), and Page Tables (PTEs).
+
+3.  DMA Trigger: It programs the iommu-testdev to initiate a DMA operation
+    targeting a specific IOVA with configurable attributes.
+
+4.  Verification: It waits for the transaction to complete and verifies
+    that the memory was accessed correctly after address translation by
+    the IOMMU.
+
+This framework provides a solid and extensible foundation for validating
+the IOMMU's core translation paths. The current test suite covers:
+
+- Stage 1 only translation (VA -> PA via CD page tables)
+- Stage 2 only translation (IPA -> PA via STE S2 tables)
+- Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
+
+The infrastructure is designed to be extended to support additional
+security spaces and IOMMU features.
+
+
+Testing:
+--------
+QTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
+  ./build/tests/qtest/iommu-smmuv3-test --tap -k
+
+
+If you want to check coverage report, please follow instructions below
+which are shared by Pierrick in previous review [1]
+
+# install gcovr if not already installed, `sudo apt install gcovr`
+# on ubuntu for example
+$ export CFLAGS="--coverage"
+$ ./configure --target-list=aarch64-softmmu
+$ ninja -C build
+$ QTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
+  ./build/tests/qtest/iommu-smmuv3-test
+$ rm -rf build/coverage_html
+$ mkdir build/coverage_html
+$ gcovr \
+      --gcov-ignore-parse-errors suspicious_hits.warn \
+      --gcov-ignore-parse-errors negative_hits.warn \
+      --merge-mode-functions=separate \
+      --html-details build/coverage_html/index.html \
+      --filter 'hw/arm/smmu*'
+# check the version of gcovr if meeting some unsupported options error.
+# Upgrading to 8.4 version may resolve the error.
+$ gcovr --version
+$ pip install --user --upgrade gcovr
+$ echo file://$(pwd)/build/coverage_html/index.html
+# open this in browser by clicking on your terminal
+
+[1] https://lore.kernel.org/qemu-devel/a361b46f-2173-4c98-a5d3-6b4d2ac004af@linaro.org/
+
+
+Major Changes from v6 to v7:
+-----------------------------
+  - Split the smmuv3-common.h work into smaller patches
+    (registerfields conversion, NSCFG bits, helper setters)
+  - Add MAINTAINERS entries for iommu-testdev and qos-smmuv3 helpers
+  - Tighten documentation wording and update the DMA test pattern value
+  - Simplify qtest PCI device discovery and rename QSMMU_IOVA constant
+  - This series is also saved in github repo [4]
+
+[4] https://github.com/hnusdr/qemu/tree/iommu-testdev-v7-community
+
+
+Major Changes from v5 to v6:
+-----------------------------
+  - Split batch testing into individual test cases per translation mode
+  - Removed cleanup functions and related codes or comments
+  - Improved error handling with explicit assertions
+  - Add coverage build and test instructions shared by Pierrick
+  - Keep Reviewed-by and Tested-by from Pierrick's review
+  - This series is also saved in github repo [2]
+
+[2] https://github.com/hnusdr/qemu/tree/iommu-testdev-v6-community
+
+
+Major Changes from v4 to v5:
+-----------------------------
+ - Remove a duplicated patch that was accidentally included in v4.
+
+
+Major Changes from v3 to v4:
+-----------------------------
+
+1. Added shared smmuv3-common.h so both the device and libqos consume the same
+   STE/CD/register definitions as Alex suggested [3]
+2. Slimmed iommu-testdev down to a pure DMA trigger with a tighter MMIO
+   contract (new doorbell helper, simplified attributes/errors).
+3. Updated `qos-smmuv3` and the qtest so they include the common header,
+   honor per-test expected results, and rely solely on the streamlined device
+   interface.
+4. Compacted changes of v2 to v3.
+
+[3] https://lore.kernel.org/qemu-devel/87zf8jk244.fsf@draig.linaro.org/
+
+
+Major Changes from v2 to v3:
+-----------------------------
+
+1. Generalization/Renaming: rebranded `smmu-testdev` → `iommu-testdev` (code,
+   headers, docs) to reflect the broadened scope.
+2. Separation of concerns: iommu-testdev is now a pure DMA trigger; all
+   SMMUv3-specific setup (STE/CD/page tables, multi-mode support, space offsets)
+   lives in `qos-smmuv3.{c,h}` and is consumed by the new qtest.
+3. Improved modularity & coverage: the stacked design (device + helper + qtest)
+   made it straightforward to add S1/S2/Nested tests, a cleaner config system,
+   and clearer validation logic.
+4. Code/documentation quality: added tracepoints, better error handling/naming,
+   and refreshed `docs/specs/iommu-testdev.rst` with the new layout.
+
+Future Work
+-----------
+
+The current implementation focuses on basic translation path validation
+in the Non-Secure address space. Future extensions could include:
+
+* Multi-space testing (Secure, Root, Realm) for SMMUv3
+* Support for other IOMMU types (Intel VT-d, AMD-Vi, RISC-V IOMMU)
+
+Tao Tang (7):
+  hw/arm/smmuv3: Extract common definitions to smmuv3-common.h
+  hw/arm/smmuv3-common: Define STE/CD fields via registerfields
+  hw/misc: Introduce iommu-testdev for bare-metal IOMMU testing
+  hw/arm/smmuv3-common: Add NSCFG bit definition for CD
+  hw/arm/smmuv3-common: Add STE/CD set helpers for repeated field setup
+  tests/qtest/libqos: Add SMMUv3 helper library
+  tests/qtest: Add SMMUv3 bare-metal test using iommu-testdev
+
+ MAINTAINERS                     |  13 +
+ docs/specs/index.rst            |   1 +
+ docs/specs/iommu-testdev.rst    | 112 ++++++
+ hw/arm/smmuv3-internal.h        | 255 +------------
+ hw/misc/Kconfig                 |   5 +
+ hw/misc/iommu-testdev.c         | 271 ++++++++++++++
+ hw/misc/meson.build             |   1 +
+ hw/misc/trace-events            |  10 +
+ include/hw/arm/smmuv3-common.h  | 423 +++++++++++++++++++++
+ include/hw/misc/iommu-testdev.h |  68 ++++
+ tests/qtest/iommu-smmuv3-test.c | 121 ++++++
+ tests/qtest/libqos/meson.build  |   3 +
+ tests/qtest/libqos/qos-smmuv3.c | 632 ++++++++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-smmuv3.h | 256 +++++++++++++
+ tests/qtest/meson.build         |   1 +
+ 15 files changed, 1918 insertions(+), 254 deletions(-)
+ create mode 100644 docs/specs/iommu-testdev.rst
+ create mode 100644 hw/misc/iommu-testdev.c
+ create mode 100644 include/hw/arm/smmuv3-common.h
+ create mode 100644 include/hw/misc/iommu-testdev.h
+ create mode 100644 tests/qtest/iommu-smmuv3-test.c
+ create mode 100644 tests/qtest/libqos/qos-smmuv3.c
+ create mode 100644 tests/qtest/libqos/qos-smmuv3.h
+
 -- 
 2.34.1
 
