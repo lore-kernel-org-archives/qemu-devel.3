@@ -4,60 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19578E674B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 15:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C700DE677E2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 15:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXhVe-0007Zv-3w; Mon, 22 Dec 2025 10:07:42 -0500
+	id 1vXhbd-0000mB-Uu; Mon, 22 Dec 2025 10:13:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vXhVa-0007Yv-Ig; Mon, 22 Dec 2025 10:07:38 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vXhVX-0004SE-Le; Mon, 22 Dec 2025 10:07:38 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAnLyewXklp6Dv1AQ--.33152S2;
- Mon, 22 Dec 2025 23:07:28 +0800 (CST)
-Received: from [192.168.31.152] (unknown [222.244.182.241])
- by mail (Coremail) with SMTP id AQAAfwAXcO2pXklp7+cNAA--.26115S2;
- Mon, 22 Dec 2025 23:07:27 +0800 (CST)
-Message-ID: <0a788e5b-43d2-40a3-8798-2a4755ef44a4@phytium.com.cn>
-Date: Mon, 22 Dec 2025 23:07:17 +0800
+ (Exim 4.90_1) (envelope-from
+ <bT.xz2j7lfh1i4qzc4=r4kuv71agyj8=wvwtwcires3uuy@em483429.getutm.app>)
+ id 1vXhbZ-0000lb-Ac
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 10:13:49 -0500
+Received: from a2i327.smtp2go.com ([103.47.205.71])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <bT.xz2j7lfh1i4qzc4=r4kuv71agyj8=wvwtwcires3uuy@em483429.getutm.app>)
+ id 1vXhbU-0005pS-Uv
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 10:13:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=smtpservice.net; s=mad0l0.a1-4.dyn; x=1766417311; h=Feedback-ID:
+ X-Smtpcorp-Track:Message-ID:Date:Subject:To:From:Reply-To:Sender:
+ List-Unsubscribe:List-Unsubscribe-Post;
+ bh=1fQHjIB/Rg9sfRlGk3msWMuLmJ76rJ7TGiIaoIDiq3A=; b=EcmKSEyNC9jnvr17PYRJ/SXM2O
+ 6ZqXhojaX+5SNxr3UZvDVnIvwqds0MU7W1R0CNryhfehoqI9EOAO5vhorYHVjg4CYICdTX6bzdQDc
+ qyerNFHByZrhDnYy8xbBP/FGNUDO1DUpNAo3R1xEkywGyp8WIsaysct+78XSdizuWhKAGcoLlNKNh
+ Kx8KEwLssANxyBeVwcw13ZJepfZ72ZZFDeIqf2xIhdng9J//u7sIE5lQA+m1mMiQ38PmqpG4qwl1h
+ nAd1mxAqoMQOVMrt5RADGz0/Di7htZSh75hK8OlIE9Kj7jSJ9lYgjdrzhIT9Rqy+RYnbBL9L8H6kK
+ 5LncIYqQ==;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
+ i=@getutm.app; q=dns/txt; s=s483429; t=1766416411; h=from : subject :
+ to : message-id : date;
+ bh=1fQHjIB/Rg9sfRlGk3msWMuLmJ76rJ7TGiIaoIDiq3A=;
+ b=GI0zhWmBC4/0vcUFnIqri1hFh/xdJya4B4VVpkAcB0O2eNnym3aj6H+kwkyUmP7v0D0N1
+ IBbBwlOr4bCv5wdDZ9/yFd9eWXewK+20UvXnxZ4uLseZ2OZvQA2IQvb7rqLrOqf6B2Y1d6f
+ bpLLcfcbL0hrsnBJXCG1d3Gh9BM0niC7SaV3sgtS1vOFIvBISzcjR7zr3yjMjVJFgFehrVE
+ CzStCqJe7wMQxoGTkjbcNmgUVMyx5Ixt631/4x+GRauHwR/p2wBFHGWoMQu3x4ft6HkrRi6
+ 88aCmNyt63ir9YGEeWutUuK+TZJK7D9wvaooPNVBWBqDWe80d0AiBInppIKg==
+Received: from [10.173.255.233] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+ (Exim 4.94.2-S2G) (envelope-from <j@getutm.app>)
+ id 1vXhbC-pH9SJy-4d; Mon, 22 Dec 2025 15:13:26 +0000
+Received: from [10.159.238.187] (helo=localhost.localdomain)
+ by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA512__CHACHA20_POLY1305:256)
+ (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
+ id 1vXhbB-FnQW0hPzNOZ-1gIU; Mon, 22 Dec 2025 15:13:25 +0000
+From: Joelle van Dyne <j@getutm.app>
+To: qemu-devel@nongnu.org
+Cc: Joelle van Dyne <j@getutm.app>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH] virrtio-gpu-virgl: correct parent for blob memory region
+Date: Mon, 22 Dec 2025 07:12:59 -0800
+Message-ID: <20251222151259.3965-1-j@getutm.app>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Is there any manuals or page to show how to setup a nest
- translation environment with stage1 and stage2 page tables on intel-iommu ?
-To: tugouxp <13824125580@163.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <8a97dd61-bbb5-4992-a486-5f89d7403d77@phytium.com.cn>
- <52617849.7d02.19b44b18191.Coremail.13824125580@163.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <52617849.7d02.19b44b18191.Coremail.13824125580@163.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAXcO2pXklp7+cNAA--.26115S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAMBWlIVJoHxQAAsl
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3AF4ktr1UKF1UAryfCrWfKrg_yoW7tF1UpF
- WYyFySgr4Dtr4xCw1vvw1UZryIvr4kJ39xXrn5Wwn5Gan09ry2yFyIkr1YkFyS9Fs5Wr10
- y3yDtr9rWw15AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Smtpcorp-Track: UJjV3YlGGqx8.zWENYiR-gfg0.-JJG0AdR_YV
+Feedback-ID: 483429m:483429abrvJvs:483429siIlUfZLxO
+X-Report-Abuse: Please forward a copy of this message, including all headers, 
+ to <abuse-report@smtp2go.com>
+Received-SPF: pass client-ip=103.47.205.71;
+ envelope-from=bT.xz2j7lfh1i4qzc4=r4kuv71agyj8=wvwtwcires3uuy@em483429.getutm.app;
+ helo=a2i327.smtp2go.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,155 +93,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi tugouxp,
+When `owner` == `mr`, `object_unparent` will crash:
 
-On 2025/12/22 14:14, tugouxp wrote:
-> Hi Tao:
->     Thanks for your answer!
->
->      So your environment involves simulating an AARCH64 VM OS on an X86 host, and then within that simulated AARCH64 VM, you've installed another KVM aarch64 VM? Essentially, it's an environment with two nested aarch64 VMs running on an x86 host? I can hardly believe it — that's a genius idea! I'm quite concerned about its performance, though. Will it be very slow and laggy?
+object_unparent(mr) ->
+object_property_del_child(mr, mr) ->
+object_finalize_child_property(mr, name, mr) ->
+object_unref(mr) ->
+object_finalize(mr) ->
+object_property_del_all(mr) ->
+object_finalize_child_property(mr, name, mr) ->
+object_unref(mr) ->
+fail on g_assert(obj->ref > 0)
 
-Yes, a virtualization-capable aarch64 TCG VM can be set up using 
--machine virt,virtualization=on regardless of the host architecture, 
-including on an x86 host, thanks to QEMU’s TCG cross-architecture 
-dynamic translation mechanism. TCG emulates the guest CPU and system 
-well enough that the guest OS sees and can exercise ARM virtualization 
-extensions (EL2 and Stage-2), so from the guest kernel’s perspective the 
-machine does genuinely have virtualization support enabled. This makes 
-setting up a KVM VM inside this TCG guest reasonable.
+Signed-off-by: Joelle van Dyne <j@getutm.app>
+---
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In fact, the Linux kernel and the qemu-system-* binaries running inside 
-the TCG host VM are the same binaries you would run on a physical 
-machine — there is no modification or special build for this TCG 
-environment. Of course, performance will be slower than on real 
-hardware, as TCG interprets and translates guest instructions in 
-software rather than executing them directly on physical virtualization 
-extensions; however, for workloads that are not heavily I/O-intensive, 
-simple tests work fine. For example, I passed through a PCIe NVMe device 
-to the nested VM, mounted it, and was able to read and write files on it 
-just like on real hardware.
-
-
-I'm sure it is doable to do this on aarch64. But I'm not sure how it is 
-on x86_64/i386. I did a cursory search of the code and found it seems to 
-be unsupported to setup a TCG VM with virtualization-capability enabled 
-on x86_64/i386. But I'm not familiar with this so we may need an x86 
-specialist to help with this.
-
-
-> By the way, isn't the KVM （because you use --enale-kvm in the nested aarch64 vm) in the aarch64 VM also emulated? After all, KVM can only be used on the same ISA architecture.
->
-They are all emulated and all aarch64 machine.
-
-
-Regards,
-
-Tao
-
->
->
-> BRs
->
-> zlcao.
->
->
->
->
->
->
->
->
->
->
-> At 2025-12-22 11:49:33, "Tao Tang" <tangtao1634@phytium.com.cn> wrote:
->> Hi zlcao,
->>
->>> Hi guys:
->>>      I want to learn about how Intel IOMMU second-level translation
->>> works. Does anyone have any materials or pages on this topic, such as
->>> WIP repositories, operational guides, etc.? Thanks!
->>> BRs
->>> zlcao.
->>
->>  From my experience, the best approach to learn this is to setup a
->> nested virtualization environment, find the senario that can trigger
->> second-level translation, and then trace all Intel IOMMU events or use
->> gdb to trace line by line in hw/i386/intel_iommu.c. Also you may need to
->> get Intel IOMMU spec and find the related chapter which describes
->> second-level translation.
->>
->>
->> I worked in SMMU these days and had the same problem with you and found
->> that setup a nested virtualization environment then passthrough a PCIe
->> device from TCG Host VM into KVM Guest VM could be a good way to debug
->> IOMMU implementation. This link [1] show how it works in Arm SMMU.
->>
->> [1]
->> https://lore.kernel.org/qemu-devel/20250806151134.365755-1-tangtao1634@phytium.com.cn/
->>
->>
->> ......
->>
->> Non-Secure Regression: To ensure that existing functionality remains
->> intact, I ran a nested virtualization test. A TCG guest was created on
->> the host, with iommu=smmuv3 and with an emulated PCIe NVMe device assigned.
->> Command line of TCG VM is below:
->>
->> qemu-system-aarch64 \
->> -machine virt,virtualization=on,gic-version=3,iommu=smmuv3 \
->> -cpu max -smp 1 -m 4080M \
->> -accel tcg,thread=single,tb-size=512 \
->> -kernel Image \
->> -append 'nokaslr root=/dev/vda rw rootfstype=ext4 iommu.passthrough=on' \
->> -device pcie-root-port,bus=pcie.0,id=rp0,addr=0x4.0,chassis=1,port=0x10 \
->> -device pcie-root-port,bus=pcie.0,id=rp1,addr=0x5.0,chassis=2,port=0x11 \
->> -drive if=none,file=u2204fs.img.qcow2,format=qcow2,id=hd0 \
->> -device virtio-blk-device,drive=hd0 \
->> -qmp unix:/tmp/qmp-sock12,server=on,wait=off \
->> -netdev user,id=eth0,hostfwd=tcp::10022-:22,hostfwd=tcp::59922-:5922 \
->> -device virtio-net-device,netdev=eth0 \
->> -drive if=none,file=nvme.img,format=raw,id=nvme0 \
->> -device nvme,drive=nvme0,serial=deadbeef \
->> -d unimp,guest_errors -trace events=smmu-events.txt -D qemu.log -nographic
->>
->> Inside this TCG VM, a KVM guest was launched, and the same NVMe device was
->> re-assigned to it via VFIO.
->> Command line of KVM VM inside TCG VM is below:
->>
->> sudo qemu-system-aarch64  \
->> -enable-kvm  -m 1024  -cpu host  -M virt \
->> -machine virt,gic-version=3 \
->> -cpu max -append "nokaslr" -smp 1 \
->> -monitor stdio \
->> -kernel 5.15.Image \
->> -initrd rootfs.cpio.gz \
->> -display vnc=:22,id=primary \
->> -device vfio-pci,host=00:01.0
->>
->> The KVM guest was able to perform I/O on the device
->> correctly, confirming that the non-secure path is not broken.
->>
->> ......
->>
->>
->>
->> I'm not familiar with Intel IOMMU so I'm not enable to help with the
->> right options that apply PCIe passthroughing on Intel IOMMU.
->>
->>
->> BTW, I have submitted a patch series introducing iommu-testdev [2] ,
->> which allows testing IOMMU functionality purely with QTest, without
->> setting up a complex software stack. Once you have a clear understanding
->> of the second-level translation, you are very welcome to share your
->> findings and help improve the Intel IOMMU implementation in iommu-testdev.
->>
->>
->> [2]
->> https://lore.kernel.org/qemu-devel/20251206155203.3015881-1-tangtao1634@phytium.com.cn/
->>
->>
->> Regards,
->>
->> Tao
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 18404be5892..4109ff7932a 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -123,7 +123,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     vmr->g = g;
+ 
+     mr = &vmr->mr;
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
+ 
+-- 
+2.50.1 (Apple Git-155)
 
 
