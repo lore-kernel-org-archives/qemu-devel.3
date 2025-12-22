@@ -4,100 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D00DE6B272
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 11:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C93E6F079
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 11:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY0PH-0003bX-EE; Tue, 23 Dec 2025 06:18:23 -0500
+	id 1vY0cz-0006b3-4V; Tue, 23 Dec 2025 06:32:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vY0PB-0003a2-6B
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 06:18:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <chalapathi.v@inux.ibm.com>)
+ id 1vY0cw-0006Z9-5K; Tue, 23 Dec 2025 06:32:30 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vY0P9-0002lO-C4
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 06:18:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766488693;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1JYnpgPBaJRiVeyTd2Kg/nue1JcmuXDwX31okD4swp4=;
- b=e9+gCFG4/mmHppStN9lOpNbZ06dPTFQ0GWxTdxFv+XV977p/5JPSYDeu0J0bpmu0Z5XbOJ
- xe9bkioZ8DyllV93fYnriO1Huo8eA3ya0XYv6eytKwgHexS396g4Cq6c4fNFhTaNc1dZHc
- KMR5iozDMndvdPefs9Mpc6jkWNk8S2U=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-90-vQhQ2WN0Njy_maTgELTByA-1; Tue, 23 Dec 2025 06:18:12 -0500
-X-MC-Unique: vQhQ2WN0Njy_maTgELTByA-1
-X-Mimecast-MFC-AGG-ID: vQhQ2WN0Njy_maTgELTByA_1766488691
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4779b3749a8so35490455e9.1
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 03:18:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766488691; x=1767093491; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1JYnpgPBaJRiVeyTd2Kg/nue1JcmuXDwX31okD4swp4=;
- b=T8ehqjc1ZsIE62BReW3x/K1KIeF0UtyzmPYOkI5YYPTTtN/xLUDLWa3GgbEf/AcaHv
- JBg2b8mutUFiZ4ddQ0Lu6ejBieZZV1lzG6bRcST2n15gp7rMm8BsKyuiL2/mDUeBRzXu
- 34yrwLGW57t4L/qIAAUtAimr0Zt3Yy2frkOw7ItKrCr7JAzV7OWE5dLXZLAqkUZHu0Ep
- L1HRgB8IW9rFrcI0p8OwRlm/ZDYsYKLq/1HI/yhq2L24ehzKbGxS8aAV3+1bIpnvuQh0
- q2MfJuFLRregmYfeCUtHFkzDAZmNHARfItNpWoJrYgoRd6YWZyRBJD3DVTnteB6lYIsR
- 6gVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766488691; x=1767093491;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1JYnpgPBaJRiVeyTd2Kg/nue1JcmuXDwX31okD4swp4=;
- b=AjNIpxfHd9YGgMgbg65ynz1tfl9UW3GOaJx0ZpUs7WWO5GBBxj4ZzRXLWxYoH9qLqz
- nAep2bHlyoxa3rNliQD9JAqGlS15y7daRuZQ5xi+UEZW1wGjyJcLj9QRDlPylSEvtoUc
- iJxVzTP3mDeQxsH/0oux2x8xWBSe7ttq1ELQBhvy94+6ay41Oq3xLp1R0dhfpL9CM3X1
- vdUZ00dToKPEazYdlXU6nDLKg2O/ZeCMCo1S4K3s2v+fay3R0Ld9aXctvyggKjtFPQsv
- dae3Jk5fj7Fe3KBAsVxhax6Xoh7neE931yNzXRLmb9oxyOMEFM/saN9vTR7MFRBB5oBD
- xYjw==
-X-Gm-Message-State: AOJu0Yy6ATlUE8sOMHQHEvQA9T2lZWlqLh2RtFQp4bFKkJe7gLyk2CNb
- /jQbIcpop3p7sD6h6vrp1C7lBKrmQpEy9LHSaDNzJBeYu83wPMuPrCq4q4Xh/nOZwelzeRswUrj
- 3uvHnYsgMh4RwG+4cEZIXrP9V1x+CsvCWHKcmOGHepkU39+jK18gVIFuOngHLPmV2YPuYyd4OAM
- RrlUuo9Do4t0ROc5UY4/YLEaDTNb8kXmo=
-X-Gm-Gg: AY/fxX58Bc0I8un0TCZTzWQBjXgg1uvPrT5Zj+qRObt4xDctXaB+WKSGVw+pTq/saJP
- 4h/Tllat+n454X6fE2HaVDR8572RtpGMUJHMqMvgLGYiclFkoIuV1pn4bnRxQ4vTNcLRpYPDDAN
- qmUrATp31sK9YiSUXCvJuZ8NF8MhtRYvWIJOFR/bQC2OOjDC46cS1vz8mnSa38ZKI3mcWI
-X-Received: by 2002:a05:600c:4e0d:b0:47b:df60:8a14 with SMTP id
- 5b1f17b1804b1-47d195495d4mr138877225e9.9.1766488690915; 
- Tue, 23 Dec 2025 03:18:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF9TY5uWP/Cc6PbXavmdUqCI+9VY4mxSGHM4Znu24xSKWrpg38pix5ypVok8aBLtXH1uIy5bTOnBoXiJJBsBxo=
-X-Received: by 2002:a05:600c:4e0d:b0:47b:df60:8a14 with SMTP id
- 5b1f17b1804b1-47d195495d4mr138877005e9.9.1766488690503; Tue, 23 Dec 2025
- 03:18:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chalapathi.v@inux.ibm.com>)
+ id 1vY0cu-0007yd-6u; Tue, 23 Dec 2025 06:32:29 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BLFDgFw002075;
+ Mon, 22 Dec 2025 10:49:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=2llqzcLOYjqdFWe97uYRTT115akg4L
+ rHbSsmK9rhXf8=; b=Sp9rRCu6rr076dbEWhJOz3Q1tDL7LszvZZ4yXd+IsRBrJT
+ jjX25CDxnx1FUaya+THgTGcX5c6Z+apEpDfZ/cNa/rCoCugvnAA6F2KTccmPdprw
+ NwECikPU0AFRJcLZnXs62fizP19QN2yJI8JG4Zysc8+FMmsGNbxLgPERBSs8+SmH
+ o/0MMzChdqpsRwjG71yizHAVj4NQpMWoB2Wck/S7MF+4IvwLlIKtpKgUXjvM01mw
+ ZLflfgMY9sjdR/S4arHBfQqsh+bV/eC1E1egGfXihyTvJ3jGhuVnwsoHtPvWW7WV
+ /tRL91OxlMEXvkmokZEDErSinZ//pxKc+Ov7Qv+A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b5kh47j79-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Dec 2025 10:49:07 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BMAh5MN024153;
+ Mon, 22 Dec 2025 10:49:07 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b5kh47j76-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Dec 2025 10:49:06 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BM9dcSt005285;
+ Mon, 22 Dec 2025 10:49:05 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4b67mjwhws-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Dec 2025 10:49:05 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5BMAn46G17367624
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Dec 2025 10:49:04 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 878AD58059;
+ Mon, 22 Dec 2025 10:49:04 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E0D2058057;
+ Mon, 22 Dec 2025 10:49:01 +0000 (GMT)
+Received: from [9.43.97.98] (unknown [9.43.97.98])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Dec 2025 10:49:01 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------kzndGBMiBHth53GLTE29Op05"
+Message-ID: <03780c5c-a0d6-43c6-acbb-48543d954e83@inux.ibm.com>
+Date: Mon, 22 Dec 2025 16:19:00 +0530
 MIME-Version: 1.0
-References: <20251222114822.327623-1-ppandit@redhat.com>
- <87h5tilhcq.fsf@suse.de>
-In-Reply-To: <87h5tilhcq.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 23 Dec 2025 16:47:53 +0530
-X-Gm-Features: AQt7F2oXqKEpNPkYMtIeTneUV1asezl-1-VkXLMehy92l6KhPukZZbm-HvnG2Ec
-Message-ID: <CAE8KmOweak15R4Ji6F50b_za67q=un_GDSEMGCRTYeQKod7zQA@mail.gmail.com>
-Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] ppc/pnv: Add OCC FLAG registers
+To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, chalapathi.v@linux.ibm.com
+References: <20251218200353.301866-1-calebs@linux.ibm.com>
+ <20251218200353.301866-5-calebs@linux.ibm.com>
+Content-Language: en-US
+From: Chalapathi V <chalapathi.v@inux.ibm.com>
+In-Reply-To: <20251218200353.301866-5-calebs@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=bulBxUai c=1 sm=1 tr=0 ts=69492223 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=r77TgQKjGQsHNAKrUKIA:9
+ a=VnNF1IyMAAAA:8 a=gJvJ13wZk_tzsm1i31wA:9 a=lqcHg5cX4UMA:10 a=QEXdDO2ut3YA:10
+ a=C6aVSkDANSdmHkZ1WT0A:9 a=_W_S_7VecoQA:10
+X-Proofpoint-ORIG-GUID: mEq__4130UnqXHniFseVDznJl3XSZ53O
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDA5OCBTYWx0ZWRfXwVrU053zAViJ
+ AY9AVmxTYyDsxGBf2IJcgwuAYd2R1BmH6QlK7SCs6RBem6+fTuJmOA4jbjPVj3COt1OamT2XsYu
+ +kN0tl01dQPAsPrgqyQYOBldfyujITIbDcwfJE1aF6nl8ympiMvzEPKUso/HhY9+Ee88jsxR/ba
+ G0WPkwZv/eL9YHZRGUfKciKGHKn2bVl6bu65i3JRX06+d/OX/5Yd2QRLy2P0WXPQQ2ho0pO1Ou4
+ bKuTtPapxEAAdnMsxnL9Ef7ezXaXr8HFr6EyalyeVtEL99mYcTjESFU4cEkFmjQaS+te727aa4p
+ 0x0eHX3bm/6TCswsx7BAkIz7sc6/YpTpNR+3i3KgevW4LmTBvEwelKhGbZ9hsPYL9CGq3Ixap6J
+ sOXTRRJabxG2FxT6vFsS3TWn4jfpgh67hcfKuS49GpWQs16HqMOjldbJOCpG5LI6BDwJUp04Gwa
+ 3FFwzGGpgQqrK+bR14Q==
+X-Proofpoint-GUID: rDh7DlklemHnQ8DMs8BDDTNQpnQWLh_h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-21_05,2025-12-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 suspectscore=0 clxscore=1034 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 bulkscore=0 phishscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
+ definitions=main-2512220098
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=chalapathi.v@inux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,103 +129,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Fabiano,
+This is a multi-part message in MIME format.
+--------------kzndGBMiBHth53GLTE29Op05
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-* Thanks so much for the quick comments.
+Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com 
+<mailto:milesg@linux.ibm.com>
 
-On Mon, 22 Dec 2025 at 20:00, Fabiano Rosas <farosas@suse.de> wrote:
-> This doesn't look like it's caused by set-capabilities. Seems like:
-> Please clarify, there might be some other bug lurking around, such as a
-> locking issue with qemu_file_lock or even the BQL.
+
+On 19/12/25 1:33 am, Caleb Schlossin wrote:
+> OCCFLG are scratch registers that can be shared with OCC firmware.
+> Log reads and writes to the registers as a reminder when we run
+> into more OCC code.
 >
-> Also, if possible provide an upstream backtrace, or at least mention the
-> code path based on upstream code. It's ok to keep the downstream
-> backtrace, but point that out in the commit message.
-
-* Right, migrate_fd_cleanup was renamed to migration_cleanup() in
-    -> https://gitlab.com/qemu-project/qemu/-/commit/4bbadfc55e6ec608df75911b4360e6e995daa28c
-===
-libvirtd(8) 19:03:07.260+0000: 396587: error :
-qemuMigrationJobCheckStatus:2056 : operation failed: job 'migration
-out' failed: Unable to write to socket: Connection reset by peer
-libvirtd(8) 19:03:07.261+0000: 396587: info : qemuMonitorSend:836 :
-QEMU_MONITOR_SEND_MSG: mon=0xffffa000e010
-msg={"execute":"migrate-set-capabilities","arguments":
-
-
-qemu-system-aarch64:initiating migration
-qemu-system-aarch64: migrate_fd_cleanup: to_dst_file: 1: 0xaaaaccce0110
-qemu-system-aarch64: migrate_fd_cleanup: before multifd_send_shutdown:
-0   <== multifd disabled
-qemu-system-aarch64: migrate_fd_cleanup: to_dst_file: 2: (nil)
-qemu-system-aarch64: Unable to write to socket: Connection reset by peer
-qemu-system-aarch64: ../util/yank.c:107: yank_unregister_instance:
-Assertion `QLIST_EMPTY(&entry->yankfns)' failed.
-qemu-system-aarch64:shutting down, reason=crashed
-===
-* As seen above, when connection is reset
-     1) libvirtd(8) sends the migrate-set-capabilities command to QEMU
-to reset the migration options to false(0). This leads to resetting of
-s->capabilities[MIGRATION_CAPABILITY_MULTIFD]  to false.
-     2) When migration_cleanup (earlier migrate_fd_cleanup) is called
-after above reset
-          migration_cleanup
-           -> multifd_send_shutdown
-            -> if (!migrate_multifd()) {
-                     return;   <== returns because _CAPABILITY_MULTIFD
-is reset to false(0).
-                }
-         when _CAPABILITY_MULTIFD is reset to false,
-multifd_send_shutdown() returns without really doing its multifd
-cleanup, ie. multifd objects still stay alive, are not freed.
-
-* And that leads to the said assert(3) failure in
-     migration_cleanup()
-     {
-         ...
-         multifd_send_shutdown()  <== does not cleanup
-         ...
-         yank_unregister_instance(MIGRATION_YANK_INSTANCE);   <==
-assert(3) failure
-     }
-
-> I'm fine with the general idea:
+> Add RW, WO_CLEAR and WO_OR SCOM Type enums in pnv_occ.c
 >
-> i) FAILED and CANCELLED are terminal states. It makes sense to not have
-> work happen after they're set.
+> Signed-off-by: Chalapathi V<chalapathi.v@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin<calebs@linux.ibm.com>
+> ---
+>   hw/ppc/pnv_occ.c         | 55 +++++++++++++++++++++++++++++++++++++---
+>   include/hw/ppc/pnv_occ.h |  4 +++
+>   2 files changed, 56 insertions(+), 3 deletions(-)
 >
-> ii) Using an intermediate state, assuming locking/atomic are correct is
-> a suitable fix for the issue.
->
-> iii) Using a FAILING status seems appropriate.
->
-> However,
->
-> It would be great if we could stop exposing implementation details via
-> QAPI. Does the user really need to see events for CANCELLING and
-> FAILING?
+> diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+> index 24b789c191..e605ae0fbc 100644
+> --- a/hw/ppc/pnv_occ.c
+> +++ b/hw/ppc/pnv_occ.c
+> @@ -195,6 +195,49 @@ static const TypeInfo pnv_occ_power8_type_info = {
+>   #define P9_OCB_OCI_OCCMISC_CLEAR        0x6081
+>   #define P9_OCB_OCI_OCCMISC_OR           0x6082
+>   
+> +/* OCC scratch registers for flag setting */
+> +#define P9_OCCFLG0                      0x60ac
+> +#define P9_OCCFLG7_OR                   0x60c3
+> +
+> +enum ScomType {
+> +    SCOM_TYPE_RW          = 0,
+> +    SCOM_TYPE_WO_CLEAR    = 1,
+> +    SCOM_TYPE_WO_OR       = 2,
+> +};
+> +
+> +static void rw_occ_flag_regs(PnvOCC *occ, uint32_t offset, bool read,
+> +        uint64_t *val)
+> +{
+> +    int flag_num;
+> +    int flag_type;
+> +
+> +    /*
+> +     * Each OCCFLG register has SCOM0 - RW, SCOM1 - WO_CLEAR, SCOM2 - WO_OR
+> +     * hence devide by 3 to get flag index and mod 3 to get SCOM type.
+> +     */
+> +    flag_num = (offset - P9_OCCFLG0) / 3;
+> +    flag_type = (offset - P9_OCCFLG0) % 3;
+> +
+> +    if (read) {
+> +        if (flag_type) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "OCC: Write only register: Ox%"
+> +                      PRIx32 "\n", offset);
+> +            return;
+> +        }
+> +        *val = occ->occflags[flag_num];
+> +    } else {
+> +        switch (flag_type) {
+> +        case SCOM_TYPE_RW:
+> +            occ->occflags[flag_num] = *val;
+> +            break;
+> +        case SCOM_TYPE_WO_CLEAR:
+> +            occ->occflags[flag_num] &= ~(*val);
+> +            break;
+> +        case SCOM_TYPE_WO_OR:
+> +            occ->occflags[flag_num] |= *val;
+> +        }
+> +    }
+> +}
+>   
+>   static uint64_t pnv_occ_power9_xscom_read(void *opaque, hwaddr addr,
+>                                             unsigned size)
+> @@ -207,8 +250,11 @@ static uint64_t pnv_occ_power9_xscom_read(void *opaque, hwaddr addr,
+>       case P9_OCB_OCI_OCCMISC:
+>           val = occ->occmisc;
+>           break;
+> +    case P9_OCCFLG0 ... P9_OCCFLG7_OR:
+> +        rw_occ_flag_regs(occ, offset, 1, &val);
+> +        break;
+>       default:
+> -        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register: Ox%"
+> +        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register read: Ox%"
+>                         HWADDR_PRIx "\n", addr >> 3);
+>       }
+>       return val;
+> @@ -229,9 +275,12 @@ static void pnv_occ_power9_xscom_write(void *opaque, hwaddr addr,
+>           break;
+>       case P9_OCB_OCI_OCCMISC:
+>           pnv_occ_set_misc(occ, val);
+> -       break;
+> +        break;
+> +    case P9_OCCFLG0 ... P9_OCCFLG7_OR:
+> +        rw_occ_flag_regs(occ, offset, 0, &val);
+> +        break;
+>       default:
+> -        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register: Ox%"
+> +        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register write: Ox%"
+>                         HWADDR_PRIx "\n", addr >> 3);
+>       }
+>   }
+> diff --git a/include/hw/ppc/pnv_occ.h b/include/hw/ppc/pnv_occ.h
+> index 013ea2e53e..8c9f1416eb 100644
+> --- a/include/hw/ppc/pnv_occ.h
+> +++ b/include/hw/ppc/pnv_occ.h
+> @@ -47,6 +47,10 @@ struct PnvOCC {
+>       /* OCC Misc interrupt */
+>       uint64_t occmisc;
+>   
+> +    /* OCC Flags */
+> +#define NR_FLAG_REGS 8
+> +    uint32_t occflags[NR_FLAG_REGS];
+> +
+>       qemu_irq psi_irq;
+>   
+>       /* OCCs operate on regions of HOMER memory */
+--------------kzndGBMiBHth53GLTE29Op05
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-* Not really; libvirtd(8)/user only needs to know about the success OR
-failure and appropriate reasons.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>
+    </p>
+    <p style="margin:0in;font-family:Calibri;font-size:11.0pt"
+      lang="en-US">Reviewed-by:
+      Chalapathi V <a href="mailto:milesg@linux.ibm.com">&lt;chalapathi.v@linux.ibm.com</a></p>
+    <p style="margin:0in;font-family:Calibri;font-size:11.0pt"
+      lang="en-US"><br>
+    </p>
+    <div class="moz-cite-prefix">On 19/12/25 1:33 am, Caleb Schlossin
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20251218200353.301866-5-calebs@linux.ibm.com">
+      <pre wrap="" class="moz-quote-pre">OCCFLG are scratch registers that can be shared with OCC firmware.
+Log reads and writes to the registers as a reminder when we run
+into more OCC code.
 
-> This is a good example where having MigrationStatus makes the code more
-> complicated. This could be exiting=true, running=false, etc. It
-> shouldn't matter why this routine failed.
+Add RW, WO_CLEAR and WO_OR SCOM Type enums in pnv_occ.c
 
-* True, it is rather complicated. Though currently we have 17-18
-migration states defined, going by the functions
-migration_is_running(), migration_is_active(), and
-migration_has_failed(), migration process really has only 3-4 states:
-      0 -> stopped (non-active, not-started-yet)
-      1 -> running/active (sending-receive migration data)
-      2 -> paused/active (not-running, not-send-recv-migration-data)
-      3 -> stopped/failed/completed (non-active, not-running)
-Other interim states of initiating/setting connections OR
-cancelling/failing etc. could be tracked differently.
-
-
-Thank you.
+Signed-off-by: Chalapathi V <a class="moz-txt-link-rfc2396E" href="mailto:chalapathi.v@linux.ibm.com">&lt;chalapathi.v@linux.ibm.com&gt;</a>
+Signed-off-by: Caleb Schlossin <a class="moz-txt-link-rfc2396E" href="mailto:calebs@linux.ibm.com">&lt;calebs@linux.ibm.com&gt;</a>
 ---
-  - Prasad
+ hw/ppc/pnv_occ.c         | 55 +++++++++++++++++++++++++++++++++++++---
+ include/hw/ppc/pnv_occ.h |  4 +++
+ 2 files changed, 56 insertions(+), 3 deletions(-)
+
+diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+index 24b789c191..e605ae0fbc 100644
+--- a/hw/ppc/pnv_occ.c
++++ b/hw/ppc/pnv_occ.c
+@@ -195,6 +195,49 @@ static const TypeInfo pnv_occ_power8_type_info = {
+ #define P9_OCB_OCI_OCCMISC_CLEAR        0x6081
+ #define P9_OCB_OCI_OCCMISC_OR           0x6082
+ 
++/* OCC scratch registers for flag setting */
++#define P9_OCCFLG0                      0x60ac
++#define P9_OCCFLG7_OR                   0x60c3
++
++enum ScomType {
++    SCOM_TYPE_RW          = 0,
++    SCOM_TYPE_WO_CLEAR    = 1,
++    SCOM_TYPE_WO_OR       = 2,
++};
++
++static void rw_occ_flag_regs(PnvOCC *occ, uint32_t offset, bool read,
++        uint64_t *val)
++{
++    int flag_num;
++    int flag_type;
++
++    /*
++     * Each OCCFLG register has SCOM0 - RW, SCOM1 - WO_CLEAR, SCOM2 - WO_OR
++     * hence devide by 3 to get flag index and mod 3 to get SCOM type.
++     */
++    flag_num = (offset - P9_OCCFLG0) / 3;
++    flag_type = (offset - P9_OCCFLG0) % 3;
++
++    if (read) {
++        if (flag_type) {
++            qemu_log_mask(LOG_GUEST_ERROR, "OCC: Write only register: Ox%"
++                      PRIx32 "\n", offset);
++            return;
++        }
++        *val = occ-&gt;occflags[flag_num];
++    } else {
++        switch (flag_type) {
++        case SCOM_TYPE_RW:
++            occ-&gt;occflags[flag_num] = *val;
++            break;
++        case SCOM_TYPE_WO_CLEAR:
++            occ-&gt;occflags[flag_num] &amp;= ~(*val);
++            break;
++        case SCOM_TYPE_WO_OR:
++            occ-&gt;occflags[flag_num] |= *val;
++        }
++    }
++}
+ 
+ static uint64_t pnv_occ_power9_xscom_read(void *opaque, hwaddr addr,
+                                           unsigned size)
+@@ -207,8 +250,11 @@ static uint64_t pnv_occ_power9_xscom_read(void *opaque, hwaddr addr,
+     case P9_OCB_OCI_OCCMISC:
+         val = occ-&gt;occmisc;
+         break;
++    case P9_OCCFLG0 ... P9_OCCFLG7_OR:
++        rw_occ_flag_regs(occ, offset, 1, &amp;val);
++        break;
+     default:
+-        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register: Ox%"
++        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register read: Ox%"
+                       HWADDR_PRIx "\n", addr &gt;&gt; 3);
+     }
+     return val;
+@@ -229,9 +275,12 @@ static void pnv_occ_power9_xscom_write(void *opaque, hwaddr addr,
+         break;
+     case P9_OCB_OCI_OCCMISC:
+         pnv_occ_set_misc(occ, val);
+-       break;
++        break;
++    case P9_OCCFLG0 ... P9_OCCFLG7_OR:
++        rw_occ_flag_regs(occ, offset, 0, &amp;val);
++        break;
+     default:
+-        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register: Ox%"
++        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register write: Ox%"
+                       HWADDR_PRIx "\n", addr &gt;&gt; 3);
+     }
+ }
+diff --git a/include/hw/ppc/pnv_occ.h b/include/hw/ppc/pnv_occ.h
+index 013ea2e53e..8c9f1416eb 100644
+--- a/include/hw/ppc/pnv_occ.h
++++ b/include/hw/ppc/pnv_occ.h
+@@ -47,6 +47,10 @@ struct PnvOCC {
+     /* OCC Misc interrupt */
+     uint64_t occmisc;
+ 
++    /* OCC Flags */
++#define NR_FLAG_REGS 8
++    uint32_t occflags[NR_FLAG_REGS];
++
+     qemu_irq psi_irq;
+ 
+     /* OCCs operate on regions of HOMER memory */
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------kzndGBMiBHth53GLTE29Op05--
 
 
