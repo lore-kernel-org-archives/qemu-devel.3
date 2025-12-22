@@ -4,83 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B433D68BD5
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 00:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB539E66886
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 01:30:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXTl6-0002fN-6v; Sun, 21 Dec 2025 19:26:44 -0500
+	id 1vXUkh-0006UT-SP; Sun, 21 Dec 2025 20:30:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wsh@wshooper.org>) id 1vXTl4-0002f0-GZ
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 19:26:42 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wsh@wshooper.org>) id 1vXTl2-0006DY-2W
- for qemu-devel@nongnu.org; Sun, 21 Dec 2025 19:26:42 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2a1388cdac3so32528855ad.0
- for <qemu-devel@nongnu.org>; Sun, 21 Dec 2025 16:26:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=wshooper-org.20230601.gappssmtp.com; s=20230601; t=1766363197; x=1766967997;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wPFozKCncDNUt5yqQ9xVflSZmQj97msFWltVE6dMWps=;
- b=sT0M37VX3e0Zu+TtRGtRQZDDdeSij5bpL+X1S2hRzs3653kRQwzfUv+/Vi/A36WIEF
- 4QylUidLhF3VP0zZ6gkb3DkP3dLjgIQhdMwKbF4jNqjUVXwwJ/A92pwEKJS48n3SDiRS
- 5lb9/1KY3gLRs1ZQlVzrb1kgxC52qnRMtXAoHYZqQ3vRQRCU3fCOVWcYXz6GkaXKq8Hc
- RrnldI4ADO23fGKbK2SPE3d98ExE0C6JNXovae3tVsWlyD6qP6Hq6aZunvvLVTIqejRM
- /gwppjxKY9ZC80LdMv9cXd4Qd4ZwCS9GK6m4gdPhlzPsCEC61JW5hmpfYgIg+OselkxI
- Bb1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766363197; x=1766967997;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wPFozKCncDNUt5yqQ9xVflSZmQj97msFWltVE6dMWps=;
- b=e59fEBaVh3yMB2Az/FnAQh0RTqcrtHLEGnDQc/7zlEf7aJINsm0sB1M3/DKzaSRuGq
- vWtJnfETygbVkn+dFXJ0PvCJnq1S7pVGoHMvKaxPiLm778CvCPfH1tCCFx3ZDq3BB3m2
- wxspJTHJOhVM885zG6eTHzuGsCK5vA6kFlt40Zxrw37XazaIhDiUBy2pRYoreerd1jo8
- utFLBYgeDNa5UKrgDnA017uJpEB3Q6nU5hZdNNP1uV3id+CiBOHIXPVUDxX8qpIsSxZs
- wa1u7RpOUJVFjwYJrTjB9QOfkGIpG7QP5hgXv5e3DBaWFuMGz0RgzJTdPknF9eHB+kPm
- FJYA==
-X-Gm-Message-State: AOJu0YzfHqvgqJnSCyooWxE9AaRzg/YxKOrHtI/n4Ocbz3PbdEPGaAwj
- ZtQTz+M8Ocp7Ow4RGZn9/eMa2FjE/9EUngPx+WQ6XbvrOyoeP7VaOnmP+lgS36g2cQUa1oHsvkM
- jyuMEffs=
-X-Gm-Gg: AY/fxX4GIXcLEecV3MuJyMbf6ADgKVWKZbfVM3TxMvPPkFXBHMoI5URLgGVwSKyRA+x
- +1jmukMe8L23X7hi6x3wfYNSpJ7gqolro7Fqqaltjoc0qegb525jZQFZvfcUsFIgRYARCYomOko
- rkrEkpkQJZVpbJHR3tvmmA4BmUYwCgVXtulTv8ioF6edd2lEkTgCFrqpDJesibwvPDKsi6qCnUx
- MG9M4fAQgc0lupkNlaZHZB8516vfQkz7o3DcVqkw3UBZEUzmI7ZhwPRIBdEA2ks25f6enZH65OS
- AjcyZlzfllE5sHgvZCRCl8iSHyc7xP2X/pb6iYlSmTJXm5tLuJrjPi0ps6sEAcRoRBT3N1lbVvj
- dBNGduGQ8kg/HOWxbsgf9yQElD8hd7cINXBun4NcXYNQXz3LB7fJuIrQSuM6dni4ZSMFmkhRd2+
- ksbaNMbYftvYwR8KYxZyl//inTCkYDQLCQUIF6lKGS3J/iBvbGTxnIdJBu12iPrFVF9M9H4p+pr
- mcjMQ==
-X-Google-Smtp-Source: AGHT+IFnGvj7YaB1EEYvVPWt5IBazRvgHa8yTjMP5llY/5IEQmzLrOzOHB1bznttyVLsV8SzBn+iNA==
-X-Received: by 2002:a05:7022:688c:b0:11e:395:7dfc with SMTP id
- a92af1059eb24-121722e7dffmr8634606c88.28.1766363196947; 
- Sun, 21 Dec 2025 16:26:36 -0800 (PST)
-Received: from localhost.localdomain (syn-076-081-243-074.biz.spectrum.com.
- [76.81.243.74]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1217254cd77sm38332110c88.14.2025.12.21.16.26.36
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 21 Dec 2025 16:26:36 -0800 (PST)
-From: William Hooper <wsh@wshooper.org>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v1] target/m68k: Improve CHK and CHK2; implement CMP2
-Date: Sun, 21 Dec 2025 16:26:34 -0800
-Message-ID: <20251222002634.61480-1-wsh@wshooper.org>
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1vXUkc-0006Sa-VX
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 20:30:20 -0500
+Received: from canpmsgout10.his.huawei.com ([113.46.200.225])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1vXUkY-0001Fw-9t
+ for qemu-devel@nongnu.org; Sun, 21 Dec 2025 20:30:18 -0500
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=h7znasO4yFWClX/qSLjoSRZg9q7K66lwZwj2OF1ATkI=;
+ b=MGlWcrbEqndKg0t69D1zJ+RUJB81amVjolcIoxvrPdcKrrA5hZ0pmxSxvuIomplAIa8lIRzTN
+ aBI3nenOzrh+xehqJu3Ajrwq23mtXBW/tjVX8kTQNKCwkLFWxZPCiJLvTrYb73ZFAfnQ62Uk8iC
+ 81asUgWzL9nL1VIOMDiEynQ=
+Received: from mail.maildlp.com (unknown [172.19.163.15])
+ by canpmsgout10.his.huawei.com (SkyGuard) with ESMTPS id 4dZL8X22krz1K968;
+ Mon, 22 Dec 2025 09:26:52 +0800 (CST)
+Received: from kwepemf500016.china.huawei.com (unknown [7.202.181.3])
+ by mail.maildlp.com (Postfix) with ESMTPS id B7A8D40539;
+ Mon, 22 Dec 2025 09:29:55 +0800 (CST)
+Received: from dggpemf200006.china.huawei.com (7.185.36.61) by
+ kwepemf500016.china.huawei.com (7.202.181.3) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 22 Dec 2025 09:29:55 +0800
+Received: from dggpemf200006.china.huawei.com ([7.185.36.61]) by
+ dggpemf200006.china.huawei.com ([7.185.36.61]) with mapi id 15.02.1544.011;
+ Mon, 22 Dec 2025 09:29:55 +0800
+From: "Gonglei (Arei)" <arei.gonglei@huawei.com>
+To: zhenwei pi <zhenwei.pi@linux.dev>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "mst@redhat.com" <mst@redhat.com>, "mcascell@redhat.com"
+ <mcascell@redhat.com>, "nakamurajames123@gmail.com"
+ <nakamurajames123@gmail.com>, zhenwei pi <pizhenwei@tensorfer.com>
+Subject: RE: [PATCH v2 2/2] cryptodev-builtin: Limit the maximum size
+Thread-Topic: [PATCH v2 2/2] cryptodev-builtin: Limit the maximum size
+Thread-Index: AQHcciOr+4OFtEYdmEKfeveyGFwwarUs39pQ
+Date: Mon, 22 Dec 2025 01:29:54 +0000
+Message-ID: <60bb168c3ffb4eaba31c7699750c9625@huawei.com>
+References: <20251221024321.143196-1-zhenwei.pi@linux.dev>
+ <20251221024321.143196-3-zhenwei.pi@linux.dev>
+In-Reply-To: <20251221024321.143196-3-zhenwei.pi@linux.dev>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.174.54.122]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::632;
- envelope-from=wsh@wshooper.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=113.46.200.225;
+ envelope-from=arei.gonglei@huawei.com; helo=canpmsgout10.his.huawei.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,322 +85,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some CHK2 (Check Register Against Bounds) instructions, such as opcode
-02FA, cause spurious illegal instruction exceptions, despite being valid
-on Motorola MC68020 and later processors and used in existing software.
-
-With this patch, QEMU:
-
-- Translates CHK2 and CMP2 (Compare Register Against Bounds)
-  instructions [1] having any valid size or effective address. CHK2 and
-  CMP2 use the same opcodes but differ in bit 11 of the extension word.
-  (BITREV or BYTEREV instructions for ColdFire family processors [2],
-  which use similar opcodes, are not captured, however.)
-
-- Implements CMP2, which "is identical to CHK2 except that it sets
-  condition codes rather than taking an exception" [1].
-
-- Populates the correct "logical address of the instruction following
-  the instruction that caused the trap" [3] in the exception stack frame
-  for CHK and CHK2 exceptions, according to the number of words in the
-  instruction, including extension words, rather than default lengths.
-
-An existing test for CHK2 is enabled, and tests are added for CHK, CHK2,
-and CMP2.
-
-References:
-[1] Motorola M68000 Family Programmer's Reference Manual (M68000PM/AD),
-    Rev. 1, 1992, pages 4-72 to 4-73 and 4-82 to 4-83.
-[2] Freescale Semiconductor, ColdFire Family Programmer's Reference Manual
-    (CFPRM), Rev. 3, 2005, pages 4-19 and 4-26.
-[3] Motorola M68040 User's Manual (M68040UM/AD), 1993, page 8-8.
-
-Signed-off-by: William Hooper <wsh@wshooper.org>
----
- target/m68k/helper.h    |   5 +-
- target/m68k/op_helper.c |  16 ++++--
- target/m68k/translate.c |  31 ++++++++----
- tests/tcg/m68k/trap.c   | 105 ++++++++++++++++++++++++++++++++++++++--
- 4 files changed, 137 insertions(+), 20 deletions(-)
-
-diff --git a/target/m68k/helper.h b/target/m68k/helper.h
-index 95aa5e53bb..0bda8f8152 100644
---- a/target/m68k/helper.h
-+++ b/target/m68k/helper.h
-@@ -123,8 +123,9 @@ DEF_HELPER_FLAGS_4(bfclr_mem, TCG_CALL_NO_WG, i32, env, i32, s32, i32)
- DEF_HELPER_FLAGS_4(bfset_mem, TCG_CALL_NO_WG, i32, env, i32, s32, i32)
- DEF_HELPER_FLAGS_4(bfffo_mem, TCG_CALL_NO_WG, i64, env, i32, s32, i32)
- 
--DEF_HELPER_3(chk, void, env, s32, s32)
--DEF_HELPER_4(chk2, void, env, s32, s32, s32)
-+DEF_HELPER_4(chk, void, env, s32, s32, int)
-+DEF_HELPER_5(chk2, void, env, s32, s32, s32, int)
-+DEF_HELPER_4(cmp2, void, env, s32, s32, s32)
- 
- #if !defined(CONFIG_USER_ONLY)
- DEF_HELPER_3(ptest, void, env, i32, i32)
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index e9c20a8e03..1fa1b0b33b 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -1090,7 +1090,7 @@ uint64_t HELPER(bfffo_mem)(CPUM68KState *env, uint32_t addr,
-     return n | ffo;
- }
- 
--void HELPER(chk)(CPUM68KState *env, int32_t val, int32_t ub)
-+void HELPER(chk)(CPUM68KState *env, int32_t val, int32_t ub, int ilen)
- {
-     /*
-      * From the specs:
-@@ -1106,11 +1106,12 @@ void HELPER(chk)(CPUM68KState *env, int32_t val, int32_t ub)
-     env->cc_c = 0 <= ub ? val < 0 || val > ub : val > ub && val < 0;
- 
-     if (val < 0 || val > ub) {
--        raise_exception_format2(env, EXCP_CHK, 2, GETPC());
-+        raise_exception_format2(env, EXCP_CHK, ilen, GETPC());
-     }
- }
- 
--void HELPER(chk2)(CPUM68KState *env, int32_t val, int32_t lb, int32_t ub)
-+void HELPER(chk2)(CPUM68KState *env, int32_t val, int32_t lb, int32_t ub,
-+                  int ilen)
- {
-     /*
-      * From the specs:
-@@ -1127,6 +1128,13 @@ void HELPER(chk2)(CPUM68KState *env, int32_t val, int32_t lb, int32_t ub)
-     env->cc_c = lb <= ub ? val < lb || val > ub : val > ub && val < lb;
- 
-     if (env->cc_c) {
--        raise_exception_format2(env, EXCP_CHK, 4, GETPC());
-+        raise_exception_format2(env, EXCP_CHK, ilen, GETPC());
-     }
- }
-+
-+void HELPER(cmp2)(CPUM68KState *env, int32_t val, int32_t lb, int32_t ub)
-+{
-+    /* Identical to CHK2 (above) but doesn't raise an exception */
-+    env->cc_z = val != lb && val != ub;
-+    env->cc_c = lb <= ub ? val < lb || val > ub : val > ub && val < lb;
-+}
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index eb1ba15074..cc289b5105 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -4237,7 +4237,7 @@ DISAS_INSN(ff1)
- 
- DISAS_INSN(chk)
- {
--    TCGv src, reg;
-+    TCGv src, reg, ilen;
-     int opsize;
- 
-     switch ((insn >> 7) & 3) {
-@@ -4258,13 +4258,14 @@ DISAS_INSN(chk)
-     reg = gen_extend(s, DREG(insn, 9), opsize, 1);
- 
-     gen_flush_flags(s);
--    gen_helper_chk(tcg_env, reg, src);
-+    ilen = tcg_constant_i32(s->pc - s->base.pc_next);
-+    gen_helper_chk(tcg_env, reg, src, ilen);
- }
- 
- DISAS_INSN(chk2)
- {
-     uint16_t ext;
--    TCGv addr1, addr2, bound1, bound2, reg;
-+    TCGv addr1, addr2, bound1, bound2, reg, ilen;
-     int opsize;
- 
-     switch ((insn >> 9) & 3) {
-@@ -4283,10 +4284,6 @@ DISAS_INSN(chk2)
-     }
- 
-     ext = read_im16(env, s);
--    if ((ext & 0x0800) == 0) {
--        gen_exception(s, s->base.pc_next, EXCP_ILLEGAL);
--        return;
--    }
- 
-     addr1 = gen_lea(env, s, insn, OS_UNSIZED);
-     addr2 = tcg_temp_new();
-@@ -4303,7 +4300,12 @@ DISAS_INSN(chk2)
-     }
- 
-     gen_flush_flags(s);
--    gen_helper_chk2(tcg_env, reg, bound1, bound2);
-+    if ((ext & 0x0800) == 0) {
-+        gen_helper_cmp2(tcg_env, reg, bound1, bound2);
-+    } else {
-+        ilen = tcg_constant_i32(s->pc - s->base.pc_next);
-+        gen_helper_chk2(tcg_env, reg, bound1, bound2, ilen);
-+    }
- }
- 
- static void m68k_copy_line(TCGv dst, TCGv src, int index)
-@@ -5770,8 +5772,11 @@ void register_m68k_insns (CPUM68KState *env)
-     BASE(undef,     0000, 0000);
-     INSN(arith_im,  0080, fff8, CF_ISA_A);
-     INSN(arith_im,  0000, ff00, M68K);
--    INSN(chk2,      00c0, f9c0, CHK2);
-     INSN(bitrev,    00c0, fff8, CF_ISA_APLUSC);
-+    INSN(chk2,      00d0, fff8, CHK2);
-+    INSN(chk2,      00e8, fff8, CHK2);
-+    INSN(chk2,      00f0, fff8, CHK2);
-+    INSN(chk2,      00f8, fffc, CHK2);
-     BASE(bitop_reg, 0100, f1c0);
-     BASE(bitop_reg, 0140, f1c0);
-     BASE(bitop_reg, 0180, f1c0);
-@@ -5781,12 +5786,20 @@ void register_m68k_insns (CPUM68KState *env)
-     INSN(arith_im,  0200, ff00, M68K);
-     INSN(undef,     02c0, ffc0, M68K);
-     INSN(byterev,   02c0, fff8, CF_ISA_APLUSC);
-+    INSN(chk2,      02d0, fff8, CHK2);
-+    INSN(chk2,      02e8, fff8, CHK2);
-+    INSN(chk2,      02f0, fff8, CHK2);
-+    INSN(chk2,      02f8, fffc, CHK2);
-     INSN(arith_im,  0480, fff8, CF_ISA_A);
-     INSN(arith_im,  0400, ff00, M68K);
-     INSN(undef,     04c0, ffc0, M68K);
-     INSN(arith_im,  0600, ff00, M68K);
-     INSN(undef,     06c0, ffc0, M68K);
-     INSN(ff1,       04c0, fff8, CF_ISA_APLUSC);
-+    INSN(chk2,      04d0, fff8, CHK2);
-+    INSN(chk2,      04e8, fff8, CHK2);
-+    INSN(chk2,      04f0, fff8, CHK2);
-+    INSN(chk2,      04f8, fffc, CHK2);
-     INSN(arith_im,  0680, fff8, CF_ISA_A);
-     INSN(arith_im,  0c00, ff38, CF_ISA_A);
-     INSN(arith_im,  0c00, ff00, M68K);
-diff --git a/tests/tcg/m68k/trap.c b/tests/tcg/m68k/trap.c
-index 96cac18d4d..a1378021b1 100644
---- a/tests/tcg/m68k/trap.c
-+++ b/tests/tcg/m68k/trap.c
-@@ -33,6 +33,7 @@ static void sig_handler(int sig, siginfo_t *si, void *puc)
-     "move.l #0f, (%[ad])\n\tmove.l #1f, (%[pc])\n" S "\n1:\n"
- 
- #define CHECK_SIG   do { assert(got_signal); got_signal = 0; } while (0)
-+#define OUT_CZ      "\n\tscs %0\n\tseq %1" : [c] "=r"(c), [z] "=r"(z) :
- 
- int main(int argc, char **argv)
- {
-@@ -41,6 +42,73 @@ int main(int argc, char **argv)
-         .sa_flags = SA_SIGINFO
-     };
-     int t0, t1;
-+    char bbounds[2] = { 0, 2 };
-+    short wbounds[2] = { 0, 2 };
-+    int lbounds[2] = { 0, 2 };
-+    static int sbounds[2] = { 0, 2 };
-+    void *intermediate;
-+    char c, z;
-+
-+    /*
-+     * Tests for CMP2, which sets the condition code register just as
-+     * CHK2 does but doesn't raise out-of-bounds exceptions:
-+     */
-+    asm volatile("cmp2.b %2, %3" OUT_CZ "m"(bbounds), "d"(-1));
-+    assert(c && !z);
-+    asm volatile("cmp2.b %2, %3" OUT_CZ "m"(bbounds), "d"(0));
-+    assert(!c && z);
-+    asm volatile("cmp2.b %2, %3" OUT_CZ "m"(bbounds), "d"(1));
-+    assert(!c && !z);
-+    asm volatile("cmp2.b %2, %3" OUT_CZ "m"(bbounds), "d"(2));
-+    assert(!c && z);
-+    asm volatile("cmp2.b %2, %3" OUT_CZ "m"(bbounds), "d"(3));
-+    assert(c && !z);
-+    asm volatile("cmp2.w %2, %3" OUT_CZ "m"(wbounds), "d"(-1));
-+    assert(c && !z);
-+    asm volatile("cmp2.w %2, %3" OUT_CZ "m"(wbounds), "d"(0));
-+    assert(!c && z);
-+    asm volatile("cmp2.w %2, %3" OUT_CZ "m"(wbounds), "d"(1));
-+    assert(!c && !z);
-+    asm volatile("cmp2.w %2, %3" OUT_CZ "m"(wbounds), "d"(2));
-+    assert(!c && z);
-+    asm volatile("cmp2.w %2, %3" OUT_CZ "m"(wbounds), "d"(3));
-+    assert(c && !z);
-+    asm volatile("cmp2.l %2, %3" OUT_CZ "m"(lbounds), "d"(-1));
-+    assert(c && !z);
-+    asm volatile("cmp2.l %2, %3" OUT_CZ "m"(lbounds), "d"(0));
-+    assert(!c && z);
-+    asm volatile("cmp2.l %2, %3" OUT_CZ "m"(lbounds), "d"(1));
-+    assert(!c && !z);
-+    asm volatile("cmp2.l %2, %3" OUT_CZ "m"(lbounds), "d"(2));
-+    assert(!c && z);
-+    asm volatile("cmp2.l %2, %3" OUT_CZ "m"(lbounds), "d"(3));
-+    assert(c && !z);
-+
-+    /*
-+     * CHK2 shouldn't raise out-of-bounds exceptions, either, when the
-+     * register value is within bounds:
-+     */
-+    asm volatile("chk2.b %2, %3" OUT_CZ "m"(bbounds), "d"(0));
-+    assert(!c && z);
-+    asm volatile("chk2.w %2, %3" OUT_CZ "m"(wbounds), "d"(0));
-+    assert(!c && z);
-+    asm volatile("chk2.l %2, %3" OUT_CZ "m"(lbounds), "d"(0));
-+    assert(!c && z);
-+
-+    /* Address register indirect addressing (without displacement) */
-+    asm volatile("chk2.l %2, %3" OUT_CZ "Q"(lbounds), "d"(2));
-+    assert(!c && z);
-+
-+    /* Absolute long addressing */
-+    asm volatile("chk2.l %2, %3" OUT_CZ "m"(sbounds), "d"(2));
-+    assert(!c && z);
-+
-+    /* Memory indirect preindexed addressing */
-+    intermediate = (void *)lbounds - 0x0D0D0D0D;
-+    asm volatile("chk2.l %2@(0xBDBDBDBD,%3:l:4)@(0x0D0D0D0D), %4" OUT_CZ
-+                 "a"((void *)&intermediate - 0xBDBDBDBD - 0xEEEE * 4),
-+                 "r"(0xEEEE), "d"(2));
-+    assert(!c && z);
- 
-     sigaction(SIGILL, &act, NULL);
-     sigaction(SIGTRAP, &act, NULL);
-@@ -51,13 +119,40 @@ int main(int argc, char **argv)
-     asm volatile(FMT2_STR("0:\tchk %0, %1") : : "d"(0), "d"(-1), FMT_INS);
-     CHECK_SIG;
- 
--#if 0
--    /* FIXME: chk2 not correctly translated. */
--    int bounds[2] = { 0, 1 };
-+    /*
-+     * The extension word here should be counted when computing the
-+     * address of the next instruction in the exception stack frame
-+     */
-+    asm volatile(FMT2_STR("0:\tchk %0, %1")
-+                 : : "m"(lbounds), "d"(-1), FMT_INS);
-+    CHECK_SIG;
-+
-+    asm volatile(FMT2_STR("0:\tchk2.b %0, %1")
-+                 : : "m"(bbounds), "d"(3), FMT_INS);
-+    CHECK_SIG;
-+
-+    asm volatile(FMT2_STR("0:\tchk2.w %0, %1")
-+                 : : "m"(wbounds), "d"(3), FMT_INS);
-+    CHECK_SIG;
-+
-     asm volatile(FMT2_STR("0:\tchk2.l %0, %1")
--                 : : "m"(bounds), "d"(2), FMT_INS);
-+                 : : "m"(lbounds), "d"(3), FMT_INS);
-+    CHECK_SIG;
-+
-+    /* Absolute long addressing */
-+    asm volatile(FMT2_STR("0:\tchk2.l %0, %1")
-+                 : : "m"(sbounds), "d"(3), FMT_INS);
-+    CHECK_SIG;
-+
-+    /*
-+     * Memory indirect preindexed addressing; also, the six extension
-+     * words here should be counted when computing the address of the
-+     * next instruction in the exception stack frame
-+     */
-+    asm volatile(FMT2_STR("0:\tchk2.l %0@(0xBDBDBDBD,%1:l:4)@(0x0D0D0D0D), %2")
-+                 : : "a"((void *)&intermediate - 0xBDBDBDBD - 0xEEEE * 4),
-+                 "r"(0xEEEE), "d"(3), FMT_INS);
-     CHECK_SIG;
--#endif
- 
-     asm volatile(FMT2_STR("cmp.l %0, %1\n0:\ttrapv")
-                  : : "d"(INT_MIN), "d"(1), FMT_INS);
+SGksDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogemhlbndlaSBwaSA8
+emhlbndlaS5waUBsaW51eC5kZXY+DQo+IFNlbnQ6IFN1bmRheSwgRGVjZW1iZXIgMjEsIDIwMjUg
+MTA6NDMgQU0NCj4gVG86IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZw0KPiBDYzogbXN0QHJlZGhhdC5j
+b207IEdvbmdsZWkgKEFyZWkpIDxhcmVpLmdvbmdsZWlAaHVhd2VpLmNvbT47DQo+IG1jYXNjZWxs
+QHJlZGhhdC5jb207IG5ha2FtdXJhamFtZXMxMjNAZ21haWwuY29tOyB6aGVud2VpIHBpDQo+IDxw
+aXpoZW53ZWlAdGVuc29yZmVyLmNvbT47IHpoZW53ZWkgcGkgPHpoZW53ZWkucGlAbGludXguZGV2
+Pg0KPiBTdWJqZWN0OiBbUEFUQ0ggdjIgMi8yXSBjcnlwdG9kZXYtYnVpbHRpbjogTGltaXQgdGhl
+IG1heGltdW0gc2l6ZQ0KPiANCj4gRnJvbTogemhlbndlaSBwaSA8cGl6aGVud2VpQHRlbnNvcmZl
+ci5jb20+DQo+IA0KPiBUaGlzIGJhY2tlbmQgZHJpdmVyIGlzIHVzZWQgZm9yIGRlbW9uc3RyYXRp
+b24gcHVycG9zZXMgb25seSwgdW5saW1pdGVkIHNpemUgbGVhZHMNCj4gUUVNVSBPT00uDQo+IA0K
+PiBGaXhlczogQ1ZFLTIwMjUtMTQ4NzYNCg0KQWN0dWFsbHksIEkgZG9uJ3QgdGhpbmsgdGhpcyBm
+aXggaGFzIGFueXRoaW5nIHRvIGRvIHdpdGggdGhlIENWRS4gWW91IGNhbiBjb25zaWRlciBpdCBh
+biBpbXByb3ZlbWVudC4NCg0KPiBGaXhlczogMTY1M2E1ZjNmYzcgKCJjcnlwdG9kZXY6IGludHJv
+ZHVjZSBhIG5ldyBjcnlwdG9kZXYgYmFja2VuZCIpDQo+IFJlcG9ydGVkLWJ5OiDsnbTsnqzsmIEg
+PG5ha2FtdXJhamFtZXMxMjNAZ21haWwuY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiB6aGVud2VpIHBp
+IDx6aGVud2VpLnBpQGxpbnV4LmRldj4NCj4gLS0tDQo+ICBiYWNrZW5kcy9jcnlwdG9kZXYtYnVp
+bHRpbi5jIHwgOSArKystLS0tLS0NCj4gIDEgZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKyks
+IDYgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvYmFja2VuZHMvY3J5cHRvZGV2LWJ1
+aWx0aW4uYyBiL2JhY2tlbmRzL2NyeXB0b2Rldi1idWlsdGluLmMgaW5kZXgNCj4gMDQxNGMwMWUw
+Ni4uNTVhM2ZiZDI3YiAxMDA2NDQNCj4gLS0tIGEvYmFja2VuZHMvY3J5cHRvZGV2LWJ1aWx0aW4u
+Yw0KPiArKysgYi9iYWNrZW5kcy9jcnlwdG9kZXYtYnVpbHRpbi5jDQo+IEBAIC01Myw2ICs1Myw4
+IEBAIHR5cGVkZWYgc3RydWN0IENyeXB0b0RldkJhY2tlbmRCdWlsdGluU2Vzc2lvbiB7DQo+IA0K
+PiAgI2RlZmluZSBDUllQVE9ERVZfQlVJVExJTl9NQVhfQVVUSF9LRVlfTEVOICAgIDUxMg0KPiAg
+I2RlZmluZSBDUllQVE9ERVZfQlVJVExJTl9NQVhfQ0lQSEVSX0tFWV9MRU4gIDY0DQo+ICsvKiBk
+ZW1vbnN0cmF0aW9uIHB1cnBvc2VzIG9ubHksIHVzZSBhIGxpbWl0ZWQgc2l6ZSB0byBhdm9pZCBR
+RU1VIE9PTSAqLw0KPiArI2RlZmluZSBDUllQVE9ERVZfQlVJVExJTl9NQVhfUkVRVUVTVF9TSVpF
+ICAoMTAyNCAqIDEwMjQpDQo+IA0KPiAgc3RydWN0IENyeXB0b0RldkJhY2tlbmRCdWlsdGluIHsN
+Cj4gICAgICBDcnlwdG9EZXZCYWNrZW5kIHBhcmVudF9vYmo7DQo+IEBAIC05OCwxMiArMTAwLDcg
+QEAgc3RhdGljIHZvaWQgY3J5cHRvZGV2X2J1aWx0aW5faW5pdCgNCj4gICAgICAgICAgICAgICAg
+ICAgICAgICAgICAxdSA8PA0KPiBRQ1JZUFRPREVWX0JBQ0tFTkRfU0VSVklDRV9UWVBFX01BQzsN
+Cj4gICAgICBiYWNrZW5kLT5jb25mLmNpcGhlcl9hbGdvX2wgPSAxdSA8PCBWSVJUSU9fQ1JZUFRP
+X0NJUEhFUl9BRVNfQ0JDOw0KPiAgICAgIGJhY2tlbmQtPmNvbmYuaGFzaF9hbGdvID0gMXUgPDwg
+VklSVElPX0NSWVBUT19IQVNIX1NIQTE7DQo+IC0gICAgLyoNCj4gLSAgICAgKiBTZXQgdGhlIE1h
+eGltdW0gbGVuZ3RoIG9mIGNyeXB0byByZXF1ZXN0Lg0KPiAtICAgICAqIFdoeSB0aGlzIHZhbHVl
+PyBKdXN0IGF2b2lkIHRvIG92ZXJmbG93IHdoZW4NCj4gLSAgICAgKiBtZW1vcnkgYWxsb2NhdGlv
+biBmb3IgZWFjaCBjcnlwdG8gcmVxdWVzdC4NCj4gLSAgICAgKi8NCj4gLSAgICBiYWNrZW5kLT5j
+b25mLm1heF9zaXplID0gTE9OR19NQVggLSBzaXplb2YoQ3J5cHRvRGV2QmFja2VuZE9wSW5mbyk7
+DQo+ICsgICAgYmFja2VuZC0+Y29uZi5tYXhfc2l6ZSA9IENSWVBUT0RFVl9CVUlUTElOX01BWF9S
+RVFVRVNUX1NJWkU7DQo+ICAgICAgYmFja2VuZC0+Y29uZi5tYXhfY2lwaGVyX2tleV9sZW4gPQ0K
+PiBDUllQVE9ERVZfQlVJVExJTl9NQVhfQ0lQSEVSX0tFWV9MRU47DQo+ICAgICAgYmFja2VuZC0+
+Y29uZi5tYXhfYXV0aF9rZXlfbGVuID0NCj4gQ1JZUFRPREVWX0JVSVRMSU5fTUFYX0FVVEhfS0VZ
+X0xFTjsNCj4gICAgICBjcnlwdG9kZXZfYnVpbHRpbl9pbml0X2FrY2lwaGVyKGJhY2tlbmQpOw0K
+PiAtLQ0KPiAyLjQzLjANCg0K
 
