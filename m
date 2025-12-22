@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9739AD711D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 10:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE23E6748D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Dec 2025 11:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXcr6-0003qQ-Eo; Mon, 22 Dec 2025 05:09:32 -0500
+	id 1vXeFz-0007hk-NY; Mon, 22 Dec 2025 06:39:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vXcqt-0003ny-Ap
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 05:09:21 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vXcqq-0005RT-Iu
- for qemu-devel@nongnu.org; Mon, 22 Dec 2025 05:09:19 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxHvDDGElph+oBAA--.6695S3;
- Mon, 22 Dec 2025 18:09:07 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxjcLBGElpz1sDAA--.7509S3;
- Mon, 22 Dec 2025 18:09:07 +0800 (CST)
-Subject: Re: [PATCH 1/1] target/loongarch: Fix some exception need't update
- CSR_BADV
-To: gaosong <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20251117075042.1831667-1-gaosong@loongson.cn>
- <dceb9402-e84b-f40b-20fe-58b474b526e5@loongson.cn>
- <11575e6d-a542-9f81-2e3d-909c13447796@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <94f79cab-7026-fd17-9eaf-ab2f1882190c@loongson.cn>
-Date: Mon, 22 Dec 2025 18:06:32 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vXeFr-0007h7-NN
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 06:39:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vXeFo-0007wY-RS
+ for qemu-devel@nongnu.org; Mon, 22 Dec 2025 06:39:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766403545;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9MbtQKOF4vdSKZInoD1mkY/LrvFiJKFQfC51oh5teXc=;
+ b=gONDxzg2QgV5c5nRpo24zWqGN1OFXE0y5CaXLcWqn97C/qH4YgUU8SlbbbM14XDy3ze0d3
+ /LNGFuKxRrGBushM3bdDw3+LnGZGj/4qCfni/VaivM03FTL8Zy6EO17/U44XLGup7oH5aq
+ NuTyfFz6mz9VSffC4z2Dou9wu0cMpsA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-kslgK61KPxyLKGxhTW-GiQ-1; Mon,
+ 22 Dec 2025 06:39:04 -0500
+X-MC-Unique: kslgK61KPxyLKGxhTW-GiQ-1
+X-Mimecast-MFC-AGG-ID: kslgK61KPxyLKGxhTW-GiQ_1766403543
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10CFD1956088; Mon, 22 Dec 2025 11:39:03 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.75])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9A0DE19560AB; Mon, 22 Dec 2025 11:39:00 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] run: introduce a script for running devel commands
+Date: Mon, 22 Dec 2025 11:38:59 +0000
+Message-ID: <20251222113859.182395-1-berrange@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <11575e6d-a542-9f81-2e3d-909c13447796@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxjcLBGElpz1sDAA--.7509S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWr17AFyxurykJF13WFyUJwc_yoW5ZF1xpF
- n2kay5JryrKw1kJryxJw4UXryUWr4UAa1UJr1Yqa48JF4Iyr1jgr40qr4qgr17Xr48J3yU
- ZF43t3y3ZF45JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU8PCzJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.354,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,99 +86,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Various aspects of the development workflow are complicated by the need
+to set env variables ahead of time, or use specific paths. Meson
+provides a 'devenv' command that can be used to launch a command with a
+number of appropriate project specific environment variables preset.
 
+By default it will modify $PATH to point to any build directory that
+contains a binary built by the project.
 
-On 2025/12/22 下午5:57, gaosong wrote:
-> 在 2025/11/17 下午6:29, Bibo Mao 写道:
->>
->>
->> On 2025/11/17 下午3:50, Song Gao wrote:
->>> According to Volume 1 Manual 7.4.8, certain exceptions require 
->>> setting CSR_BADV,
->>> but the code does not match.this patch correct it. and the exception 
->>> PIL,PIS,PIF,
->>> PME,PNR, PNX, PPI already update on raise_mmu_exception(),these are 
->>> need't update.
->>>
->>> Signed-off-by: Song Gao <gaosong@loongson.cn>
->>> ---
->>>   target/loongarch/tcg/tcg_cpu.c | 24 +++++++++++++-----------
->>>   1 file changed, 13 insertions(+), 11 deletions(-)
->>>
->>> diff --git a/target/loongarch/tcg/tcg_cpu.c 
->>> b/target/loongarch/tcg/tcg_cpu.c
->>> index 9d077c56d9..7f94c183c4 100644
->>> --- a/target/loongarch/tcg/tcg_cpu.c
->>> +++ b/target/loongarch/tcg/tcg_cpu.c
->>> @@ -109,10 +109,22 @@ static void loongarch_cpu_do_interrupt(CPUState 
->>> *cs)
->>>           }
->>>           QEMU_FALLTHROUGH;
->>>       case EXCCODE_PIF:
->>> -    case EXCCODE_ADEF:
->>>           cause = cs->exception_index;
->>>           update_badinstr = 0;
->>>           break;
->>> +    case EXCCODE_ADEF:
->>> +        update_badinstr = 0;
->>> +        QEMU_FALLTHROUGH;
->>> +    case EXCCODE_BCE:
->>> +    case EXCCODE_ADEM:
->>> +        env->CSR_BADV = env->pc;
->>> +        QEMU_FALLTHROUGH;
->> With EXCCODE_BCE exception, CSR_BADV comes from its pc. However with 
->> EXCCODE_ADEM exception, CSR_BADV should not come from its pc value.
->>
-> how  about  update the BADV  on loongarch_cpu_do_transaction_failed()
-> 
-> --- a/target/loongarch/tcg/tcg_cpu.c
-> +++ b/target/loongarch/tcg/tcg_cpu.c
-> @@ -225,6 +225,7 @@ static void 
-> loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
->   {
->       CPULoongArchState *env = cpu_env(cs);
-> 
-> +    env->CSR_BADV = addr;
->       if (access_type == MMU_INST_FETCH) {
->           do_raise_exception(env, EXCCODE_ADEF, retaddr);
->       } else {
-> 
-This should work fine.
+This further augments that to replicate the venv 'activate' script:
 
-Regards
-Bibo Mao
-> Thanks.
-> Song Gao.
->> Regards
->> Bibo Mao
->>> +    case EXCCODE_PNR:
->>> +    case EXCCODE_PNX:
->>> +    case EXCCODE_PPI:
->>> +    case EXCCODE_PIL:
->>> +    case EXCCODE_PIS:
->>> +    case EXCCODE_PME:
->>>       case EXCCODE_SYS:
->>>       case EXCCODE_BRK:
->>>       case EXCCODE_INE:
->>> @@ -121,16 +133,6 @@ static void loongarch_cpu_do_interrupt(CPUState 
->>> *cs)
->>>       case EXCCODE_FPE:
->>>       case EXCCODE_SXD:
->>>       case EXCCODE_ASXD:
->>> -        env->CSR_BADV = env->pc;
->>> -        QEMU_FALLTHROUGH;
->>> -    case EXCCODE_BCE:
->>> -    case EXCCODE_ADEM:
->>> -    case EXCCODE_PIL:
->>> -    case EXCCODE_PIS:
->>> -    case EXCCODE_PME:
->>> -    case EXCCODE_PNR:
->>> -    case EXCCODE_PNX:
->>> -    case EXCCODE_PPI:
->>>           cause = cs->exception_index;
->>>           break;
->>>       default:
->>>
->>
+ * Add $BUILD_DIR/pyvenv/bin to $PATH
+ * Set VIRTUAL_ENV to $BUILD_DIR/pyvenv
+
+And then makes functional tests more easily executable
+
+ * Add $SRC_DIR/tests/functional and $SRC_DIR/python to $PYTHONPATH
+
+To see the benefits of this consider this command:
+
+  $ source ./build/pyvenv/bin/activate
+  $ ./scripts/qmp/qmp-shell-wrap ./build/qemu-system-x86_64
+
+which is now simplified to
+
+  $ ./build/run ./scripts/qmp/qmp-shell-wrap qemu-system-x86_64 [args..]
+
+This avoids the need repeat './build' several times and avoids polluting
+the current terminal's environment and/or avoids errors from forgetting
+to source the venv settings.
+
+As another example running functional tests
+
+  $ export PYTHONPATH=./python:./tests/functional
+  $ export QEMU_TEST_QEMU_BINARY=./build/qemu-system-x86_64
+  $ build/pyvenv/bin/python3 ./tests/functional/x86_64/test_virtio_version.py
+
+which is now simplified to
+
+  $ export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
+  $ ./build/run ./tests/functional/x86_64/test_virtio_version.py
+
+This usefulness of this will be further enhanced with the pending
+removal of the QEMU python APIs from git, as that will require the use
+of the python venv in even more scenarios that today.
+
+The 'run' script does not let 'meson devenv' directly launch the command
+to be run because it always requires $BUILD_DIR as the current working
+directory. It is desired that 'run' script always honour the current
+working directory of the terminal that invokes is. Thus the '--dump'
+flag is used to export the devenv variables into the 'run' script's
+shell.
+
+This takes the liberty to assign 'run.in' to the "Build system" section
+in the MAINTAINERS file, given that it leverages meson's 'devenv'
+feature.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+
+Changed in v2:
+
+ * Switch to use meson's  "devenv" framework
+ * Fix some typos
+
+ MAINTAINERS                       |  1 +
+ docs/devel/build-system.rst       | 12 ++++++++++++
+ docs/devel/testing/functional.rst | 17 ++++++++---------
+ meson.build                       | 16 ++++++++++++++--
+ run.in                            |  6 ++++++
+ 5 files changed, 41 insertions(+), 11 deletions(-)
+ create mode 100644 run.in
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 63e9ba521b..f21b2927a8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4479,6 +4479,7 @@ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
+ F: meson.build
+ F: meson_options.txt
++F: run.in
+ F: scripts/check_sparse.py
+ F: scripts/symlink-install-tree.py
+ 
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index 6204aa6a72..b9797a374c 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -515,6 +515,18 @@ generates ``Makefile`` from ``Makefile.in``.
+ 
+ Built by configure:
+ 
++``run``
++  Used to run commands / scripts from the git checkout. Sets ``$PATH``
++  to point to locally built binaries, and activates the python venv
++  before running the requested command. Pass the command to run as
++  args, for example::
++
++    $ ./build/run ./script/qmp/qmp-shell-wrap qemu-system-x86_64
++
++  will use the ``python3`` binary and site-packages from the local
++  venv to run ``qmp-shell-wrap`` and spawn the QEMU emulator from
++  the build directory.
++
+ ``config-host.mak``
+   When configure has determined the characteristics of the build host it
+   will write the paths to various tools to this file, for use in ``Makefile``
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index fdeaebaadc..1978f96eba 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -53,15 +53,14 @@ the following line will only run the tests for the x86_64 target:
+   make check-functional-x86_64
+ 
+ To run a single test file without the meson test runner, you can also
+-execute the file directly by specifying two environment variables first,
+-the PYTHONPATH that has to include the python folder and the tests/functional
+-folder of the source tree, and QEMU_TEST_QEMU_BINARY that has to point
+-to the QEMU binary that should be used for the test. The current working
+-directory should be your build folder. For example::
+-
+-  $ export PYTHONPATH=../python:../tests/functional
+-  $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
+-  $ pyvenv/bin/python3 ../tests/functional/test_file.py
++execute the file directly by specifying the name of the emulator target
++binary as an env variable.
++
++Assuming the current working directory is the top level source checkout
++and the build directory is './build'::
++
++  $ export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
++  $ ./build/run tests/functional/x86_64/test_virtio_version.py
+ 
+ The test framework will automatically purge any scratch files created during
+ the tests. If needing to debug a failed test, it is possible to keep these
+diff --git a/meson.build b/meson.build
+index d9293294d8..320fecf372 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3,8 +3,6 @@ project('qemu', ['c'], meson_version: '>=1.5.0',
+                           'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
+         version: files('VERSION'))
+ 
+-meson.add_devenv({ 'MESON_BUILD_ROOT' : meson.project_build_root() })
+-
+ add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true,
+                env: ['RUST_BACKTRACE=1'])
+ add_test_setup('slow', exclude_suites: ['thorough'],
+@@ -3507,6 +3505,20 @@ endif
+ config_host_h = configure_file(output: 'config-host.h', configuration: config_host_data)
+ genh += config_host_h
+ 
++devenv = environment()
++devenv.set('MESON_BUILD_ROOT', meson.project_build_root())
++devenv.set('VIRTUAL_ENV', meson.project_build_root() / 'pyvenv')
++devenv.prepend('PATH', meson.project_build_root() / 'pyvenv'/ 'bin')
++devenv.prepend('PYTHONPATH', meson.current_source_dir() / 'tests' / 'functional')
++devenv.prepend('PYTHONPATH', meson.current_source_dir() / 'python')
++meson.add_devenv(devenv)
++
++run_config = configuration_data({'build_dir': meson.current_build_dir()})
++run = configure_file(input: 'run.in',
++                     output: 'run',
++                     configuration: run_config)
++run_command('chmod', 'a+x', meson.current_build_dir() / 'run', check: true)
++
+ hxtool = find_program('scripts/hxtool')
+ shaderinclude = find_program('scripts/shaderinclude.py')
+ qapi_gen = find_program('scripts/qapi-gen.py')
+diff --git a/run.in b/run.in
+new file mode 100644
+index 0000000000..cf4821311d
+--- /dev/null
++++ b/run.in
+@@ -0,0 +1,6 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++eval $(meson devenv -C @build_dir@ --dump --dump-format export)
++
++exec "$@"
+-- 
+2.52.0
 
 
