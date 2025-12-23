@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4F5E6F090
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 801CBE6F097
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:34:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY3Q0-0002YB-Rm; Tue, 23 Dec 2025 09:31:21 -0500
+	id 1vY3PX-0001Eo-CE; Tue, 23 Dec 2025 09:30:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3PB-00016d-Gx
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:34 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3P1-00013L-GQ
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3P6-0003lq-Vz
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:26 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Oy-0003il-Jz
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766500224;
+ s=mimecast20190719; t=1766500215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PDO3NcZzsYCTKOGAKAbVb7PIZgkmuIZqHwaZxYA+h1s=;
- b=AytWHmypg78vCtvwJzWSDynYAPA9LSpTJy2vkt37SRufVfr88U/mXPINKmbJviZSW4Kwm/
- qs4hYxrFaYaj9D11SQdwbjJ4MwZyk1ls2CdmimwVc83r+1Ctdg9U589P9CtYlKmFmSQOgi
- vdx5VbBTRTMWl2uZnwycXlK9RAxv6uE=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bfCJmm4Dm8wFO89mns7yUaE2hgJsbzVj37K2Drizgrg=;
+ b=Rmd6hy7iLEL9L71XX4t5EtJ34xSC3DydqI1XKI5sjTGRO4KJ43+8eJ5eFZFOpR//mJ5iRX
+ nY+Emhof5F6eFc3QncCpUut2FDDmd4+YgWW4mlitHhGJXJS7PjnvGvo7PgU7AJ6I9Sbf8W
+ 4taiCvXsojo37o6Tc96cu0xOD3cvg58=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-124-nXJa46XaN0ecuDLn3tXzmw-1; Tue, 23 Dec 2025 09:30:23 -0500
-X-MC-Unique: nXJa46XaN0ecuDLn3tXzmw-1
-X-Mimecast-MFC-AGG-ID: nXJa46XaN0ecuDLn3tXzmw_1766500221
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-88a25a341ebso115189516d6.0
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:22 -0800 (PST)
+ us-mta-642-RKQAjzZ1OEiX08wQq68NiA-1; Tue, 23 Dec 2025 09:30:14 -0500
+X-MC-Unique: RKQAjzZ1OEiX08wQq68NiA-1
+X-Mimecast-MFC-AGG-ID: RKQAjzZ1OEiX08wQq68NiA_1766500213
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8b2194e266aso161327285a.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766500221; x=1767105021; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766500213; x=1767105013; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PDO3NcZzsYCTKOGAKAbVb7PIZgkmuIZqHwaZxYA+h1s=;
- b=ZZKWdkdGwyedWY0y2Nsvkdu6CZ+JCM5Fj1PLye5r7OpS9pzSlHB5epi359xakkfZzQ
- mayo/029MSdJT3GjfhrFg1wVVr+BZwcBOkd1eI7XzGIbLTYfXP/g2XCQM/f4jJH2BGc8
- FE+XUSjYzqj7xa+yxK1k1jZoBhmEvHZ6YpVStxQwLQYxTgCSzLsivfM/+I5Y8rAG8c2G
- X5TgKmKbEDBpPh2BrXyeShtVjznuMG8MJuGFSrUv29JfmcN4oDi3i/VLuuJua4pYVZC0
- QFBKWzqhlF8PAAAwsb8cu12MrYquzbDS68wMkeoJF/cUBCJmHI2/7usTmpEByoahS4eW
- W+wA==
+ bh=bfCJmm4Dm8wFO89mns7yUaE2hgJsbzVj37K2Drizgrg=;
+ b=nBbX/qWBHoYw5Ghxun7bc0bRDk87wzz2kSFLLDVKFBJgoxCIMuxbyuh8Cu8/h8IIja
+ ryFdvYeML6RwG1fguXV/tpDax1hB2EjbTVv3XWRtSdknLN18P5MO2jEr+yEthWc3C/n2
+ DWnTRQmAYuNZla3GOaMb8StXtnE/4nOAE7Onht9K3wH0sS9g3F1bNtEm0zkL8nuthk2s
+ Q5ebCJo+jhby8t3aFMdyKvXc5WjiDsRyNEnVYC4OqCF3Na/d6owArGEpGgvqGTrEy+19
+ OW2FDb/9SpXk/mkRNBlAmMH3WA/b+wQYTNq1mpGkfoqek1jWht7VvP+6brwE3W9u8gJr
+ uulg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766500221; x=1767105021;
+ d=1e100.net; s=20230601; t=1766500213; x=1767105013;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PDO3NcZzsYCTKOGAKAbVb7PIZgkmuIZqHwaZxYA+h1s=;
- b=goJcx9uL8ZR9EKGulfDhI/bP71qQi5ett2vJvc66AlMr/68BeAcBhnPQh7DxE7z84S
- oB79tu0aV7hhu25p/NKqDuei81/YLDFTbqSQx4mid/r0gz0HH8G9YO2VDs/rNzeDA6xQ
- ZqJljX4+CpyzZbZRhyJzfebH8cjs80RdPbx1+8YklOAQ5SDgFqaVOqPMyiGewObA5wxj
- 14xfGkR2zsuURn5yjXZ6JH4+9y/He6lb6+itM9490Nkv8KHvzsRjrtp2bHrwUdE7+4Xd
- by+0ADWp1dEXa8//ir9MeAYqdJumKxtTG1hJ27v/gtxMJtSJwrvAcP4yV463hKLNIGYW
- uWXQ==
-X-Gm-Message-State: AOJu0Yzm7pF78zzsb4GpofhGcrf0MKoco3n23Nl84p+8ZfCuW+QFIvTP
- A+3ijkm82QgzY7mGV9t75e/KxvscYeou384u/re1aJbQFVmjzJglgsMZ1JDQ1JBVeoiVj/8sfBi
- /aHZCYLI8XFX2vTvxa6VvybJMTulQQj6T+vF1th3pS6j9+avwwyewhCX9zqDpZ0fbMe+ixtbSWM
- vFo7e00mO9KeFTr5OSr/CxhW91w7K4FazX3KxiMg==
-X-Gm-Gg: AY/fxX60TtoQHmWSjQgGxoILSEpb5pGeVQBisFpAG9p1plRrqVL1V23Ex5LJySYwHh+
- OYI5VGSniwrQt6JUnNEeEcfDwOGM+9oPNm6c1PAGmNr0LQEVDM/9L+EchNWsMCXRIH//qdnm2pt
- WIHPtQWAAeuzMNxehFX6qRfcp6qNBGsc0pOE9bBaeSDqlYq3aiVWWwDda9nq1R53pUk20fuMmK/
- Sj2dXUL3TYJwEn1X3xVHC9Fo4dB8y+hZZSSpmObOxto0iPbb1cCvrVMuhM4xSc7phlmOkEfFr6c
- o7C/5cBVwVkALixNDXuHJ010JyfvFr2+B2/Tb9M6dOLzVVxRp5TOifFuR04US/cWgK/iWg4oD22
- 1G6Q=
-X-Received: by 2002:a05:6214:2cd6:b0:888:1f18:79fe with SMTP id
- 6a1803df08f44-88d87606914mr176024346d6.45.1766500220661; 
- Tue, 23 Dec 2025 06:30:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFDQAZB/6GNZM+a4YsVdVTxWP8qxuLGDuzKKRE5fNglzZByS1KZP1L2mpGhcSBqFLw63uY4lA==
-X-Received: by 2002:a05:6214:2cd6:b0:888:1f18:79fe with SMTP id
- 6a1803df08f44-88d87606914mr176023556d6.45.1766500219944; 
- Tue, 23 Dec 2025 06:30:19 -0800 (PST)
+ bh=bfCJmm4Dm8wFO89mns7yUaE2hgJsbzVj37K2Drizgrg=;
+ b=YDG5NLo4d+xcHx/gDmN0rgfjaAjhosSQ4FlgmlI6WNNHaCX0Euwq4Y1qADnB1uUUc1
+ ozgcr7oOg0wrcON6mR+aDV3KdUX8wJjDHwDPTJOXkl7Cmdt3oNkZl0kHKgwREIMTHL5W
+ wHI5tFLVdCbmbq0MPTUcmRnYh0Lvexr0w2zM0XL+g9Tg8//+hk5zYCKG1OG0Zs11nV+y
+ rFG7zVMsQzblvXi9ECieb15le+RW3uF1X4B1pNdlh9xm2aQ2ISjJqEg+0/UCEOdWIJqh
+ 8keQph3hv+w693hsDPMNcGp5UnsMQsx+qmxzIVyUVJv80x21djJcF7kozXaPSLE4d4eF
+ hcHg==
+X-Gm-Message-State: AOJu0YyQdJfQOqhnwpWgXNGnxfRsRaaz3vppucOPtxsz5JOxl/h0MPqb
+ tHTTKUvdmQPkHNFksEHdRtq7I/UKZDu2rTZoIBHd36IJD10HxwzY1QCB9KRJgBXbO7h4wRknC67
+ GQPx71UssktQB10kUgKNdX32ITGxSlxa5HfMo3Ve8qMBPoU/BZO9kQXJiAG/2Id0twSg2p8sonI
+ p5LQPXxUZfnJLP2zMIevLuDO1mP8BuAc+FxjMzuA==
+X-Gm-Gg: AY/fxX4SAtT2XjQP9FykvR4CW58kXBRpJarrGgKQIDjDVEpa+E6xMhEdSbYiHKWklFP
+ 90LlKmYKHdVwuBpBvdzv8K6y33aAIqBeAI0SOsujVWneXsvxia5mIaMUIMfllxAkcO5k8tBU/Lg
+ lXgZ/UUtMAbYHk7P9+UFHYtAKLpeezdHoA9nkxDML/F4O9/sW+glXAzOM+0+df9QF18AbhdUWbM
+ YAukEcyxU/T4kRvRA8rKOd+ww1vH/GVsYd06PexlvMvXQ+j4JePurJ+Dg++OZtQUetgPAFUhyi0
+ rRQlrHqvGl8szrmAzxw5H/eXgoWUArvYW2u1tMAF2AuMGpx6NSo4a+O3x/uOgpqWpKpOT8bM7DX
+ AVgQ=
+X-Received: by 2002:a05:620a:1999:b0:8b2:6b9e:5383 with SMTP id
+ af79cd13be357-8c0906fc98amr2253300185a.85.1766500212871; 
+ Tue, 23 Dec 2025 06:30:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHdFn6wJ4gpkztUBl0Xabf/70KnCMV094a3701B8u0wX3N4KKg0ePQu4s+YpuFoarBQBZEOfQ==
+X-Received: by 2002:a05:620a:1999:b0:8b2:6b9e:5383 with SMTP id
+ af79cd13be357-8c0906fc98amr2253289685a.85.1766500212220; 
+ Tue, 23 Dec 2025 06:30:12 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.19
+ af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 06:30:19 -0800 (PST)
+ Tue, 23 Dec 2025 06:30:11 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 15/31] migration: Fix leak of block_bitmap_mapping
-Date: Tue, 23 Dec 2025 09:29:43 -0500
-Message-ID: <20251223142959.1460293-16-peterx@redhat.com>
+Subject: [PULL 08/31] migration: Make migration_connect_set_error() own the
+ error
+Date: Tue, 23 Dec 2025 09:29:36 -0500
+Message-ID: <20251223142959.1460293-9-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251223142959.1460293-1-peterx@redhat.com>
 References: <20251223142959.1460293-1-peterx@redhat.com>
@@ -119,48 +120,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Make migration_connect_set_error() take ownership of the error always.
+Paving way for making migrate_set_error() to take ownership.
 
-Caught by inspection, but ASAN also reports:
+When at it, renaming it to migration_connect_error_propagate(), following
+Error API, to imply the Error object ownership transition.
 
-Direct leak of 16 byte(s) in 1 object(s) allocated from:
- #0 in malloc
- #1 in g_malloc
- #2 in g_memdup
- #3 in qapi_clone_start_struct ../qapi/qapi-clone-visitor.c:40:12
- #4 in qapi_clone_start_list ../qapi/qapi-clone-visitor.c:59:12
- #5 in visit_start_list ../qapi/qapi-visit-core.c:80:10
- #6 in visit_type_BitmapMigrationNodeAliasList qapi/qapi-visit-migration.c:639:10
- #7 in migrate_params_apply ../migration/options.c:1407:13
- #8 in qmp_migrate_set_parameters ../migration/options.c:1463:5
- #9 in qmp_marshal_migrate_set_parameters qapi/qapi-commands-migration.c:214:5
- #10 in do_qmp_dispatch_bh ../qapi/qmp-dispatch.c:128:5
-
-Note that this is entirely harmless because the migration object which
-contains the MigrationParameters structure is kept until the QEMU
-process exits.
+NOTE: this patch also makes migration_connect() to take ownership of the
+Error passed in.
 
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20251215220041.12657-2-farosas@suse.de
+Link: https://lore.kernel.org/r/20251201194510.1121221-5-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 1 +
- 1 file changed, 1 insertion(+)
+ migration/channel.c   | 1 -
+ migration/migration.c | 9 +++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/migration/channel.c b/migration/channel.c
+index 462cc183e1..92435fa7f7 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -95,7 +95,6 @@ void migration_channel_connect(MigrationState *s,
+         }
+     }
+     migration_connect(s, error);
+-    error_free(error);
+ }
+ 
+ 
 diff --git a/migration/migration.c b/migration/migration.c
-index d55fde222a..1ff728b6a2 100644
+index b316ee01ab..0ff8b31a88 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -4139,6 +4139,7 @@ static void migration_instance_finalize(Object *obj)
- {
-     MigrationState *ms = MIGRATION_OBJ(obj);
+@@ -1575,7 +1575,7 @@ static void migrate_error_free(MigrationState *s)
+     }
+ }
  
-+    qapi_free_BitmapMigrationNodeAliasList(ms->parameters.block_bitmap_mapping);
-     qemu_mutex_destroy(&ms->error_mutex);
-     qemu_mutex_destroy(&ms->qemu_file_lock);
-     qemu_sem_destroy(&ms->wait_unplug_sem);
+-static void migration_connect_set_error(MigrationState *s, const Error *error)
++static void migration_connect_error_propagate(MigrationState *s, Error *error)
+ {
+     MigrationStatus current = s->state;
+     MigrationStatus next;
+@@ -1602,6 +1602,7 @@ static void migration_connect_set_error(MigrationState *s, const Error *error)
+ 
+     migrate_set_state(&s->state, current, next);
+     migrate_set_error(s, error);
++    error_free(error);
+ }
+ 
+ void migration_cancel(void)
+@@ -2292,7 +2293,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+ 
+ out:
+     if (local_err) {
+-        migration_connect_set_error(s, local_err);
++        migration_connect_error_propagate(s, error_copy(local_err));
+         error_propagate(errp, local_err);
+     }
+ }
+@@ -2337,7 +2338,7 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
+         if (!resume_requested) {
+             yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+         }
+-        migration_connect_set_error(s, local_err);
++        migration_connect_error_propagate(s, error_copy(local_err));
+         error_propagate(errp, local_err);
+         return;
+     }
+@@ -4039,7 +4040,7 @@ void migration_connect(MigrationState *s, Error *error_in)
+ 
+     s->expected_downtime = migrate_downtime_limit();
+     if (error_in) {
+-        migration_connect_set_error(s, error_in);
++        migration_connect_error_propagate(s, error_in);
+         if (resume) {
+             /*
+              * Don't do cleanup for resume if channel is invalid, but only dump
 -- 
 2.50.1
 
