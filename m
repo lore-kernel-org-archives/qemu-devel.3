@@ -4,107 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 801CBE6F097
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0395E6F096
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY3PX-0001Eo-CE; Tue, 23 Dec 2025 09:30:59 -0500
+	id 1vY3Qn-0005h1-0i; Tue, 23 Dec 2025 09:32:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3P1-00013L-GQ
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Oy-0003il-Jz
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766500215;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bfCJmm4Dm8wFO89mns7yUaE2hgJsbzVj37K2Drizgrg=;
- b=Rmd6hy7iLEL9L71XX4t5EtJ34xSC3DydqI1XKI5sjTGRO4KJ43+8eJ5eFZFOpR//mJ5iRX
- nY+Emhof5F6eFc3QncCpUut2FDDmd4+YgWW4mlitHhGJXJS7PjnvGvo7PgU7AJ6I9Sbf8W
- 4taiCvXsojo37o6Tc96cu0xOD3cvg58=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-RKQAjzZ1OEiX08wQq68NiA-1; Tue, 23 Dec 2025 09:30:14 -0500
-X-MC-Unique: RKQAjzZ1OEiX08wQq68NiA-1
-X-Mimecast-MFC-AGG-ID: RKQAjzZ1OEiX08wQq68NiA_1766500213
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8b2194e266aso161327285a.3
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1vY3QS-00043l-Jn
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:31:48 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1vY3QQ-0004Si-RD
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:31:48 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b7633027cb2so916691766b.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:31:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766500213; x=1767105013; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bfCJmm4Dm8wFO89mns7yUaE2hgJsbzVj37K2Drizgrg=;
- b=nBbX/qWBHoYw5Ghxun7bc0bRDk87wzz2kSFLLDVKFBJgoxCIMuxbyuh8Cu8/h8IIja
- ryFdvYeML6RwG1fguXV/tpDax1hB2EjbTVv3XWRtSdknLN18P5MO2jEr+yEthWc3C/n2
- DWnTRQmAYuNZla3GOaMb8StXtnE/4nOAE7Onht9K3wH0sS9g3F1bNtEm0zkL8nuthk2s
- Q5ebCJo+jhby8t3aFMdyKvXc5WjiDsRyNEnVYC4OqCF3Na/d6owArGEpGgvqGTrEy+19
- OW2FDb/9SpXk/mkRNBlAmMH3WA/b+wQYTNq1mpGkfoqek1jWht7VvP+6brwE3W9u8gJr
- uulg==
+ d=gmail.com; s=20230601; t=1766500304; x=1767105104; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=3DItcK8vKiv8QiqSu6wmFdrVmLMlyV3PGhxL9NoOut0=;
+ b=MxF9pOkJ+78XQoKcM5zHW1+2HKHVYm22QcybieiCVYIth2FFmStFK/wSUX2g8qU3+x
+ N+W0kH+HtPGw4JvasBBZbORlg4YY2tcboAveA2HJ4/p3wDjrmEri08NXVABJqdipCeex
+ VESc/KsLFLFP8/ox1t3oMhD/RHbhJs5DlyLZPrOVLCzHuC1Os0ivltEL+3YadGVh6zCj
+ SZwX7/7ALQFqOsPUlx9U/eyMxEMPUFz+6A8ssRCJcEKzyhCbJrah3tCxrNl3uJc5CLCL
+ 8jsh0ekFJ4OrsugvITaA6XE5uDk9nsqX9kcE8E8xOcaMyEPq6Mkii8jkFLgCpyNvFAoR
+ gaqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766500213; x=1767105013;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bfCJmm4Dm8wFO89mns7yUaE2hgJsbzVj37K2Drizgrg=;
- b=YDG5NLo4d+xcHx/gDmN0rgfjaAjhosSQ4FlgmlI6WNNHaCX0Euwq4Y1qADnB1uUUc1
- ozgcr7oOg0wrcON6mR+aDV3KdUX8wJjDHwDPTJOXkl7Cmdt3oNkZl0kHKgwREIMTHL5W
- wHI5tFLVdCbmbq0MPTUcmRnYh0Lvexr0w2zM0XL+g9Tg8//+hk5zYCKG1OG0Zs11nV+y
- rFG7zVMsQzblvXi9ECieb15le+RW3uF1X4B1pNdlh9xm2aQ2ISjJqEg+0/UCEOdWIJqh
- 8keQph3hv+w693hsDPMNcGp5UnsMQsx+qmxzIVyUVJv80x21djJcF7kozXaPSLE4d4eF
- hcHg==
-X-Gm-Message-State: AOJu0YyQdJfQOqhnwpWgXNGnxfRsRaaz3vppucOPtxsz5JOxl/h0MPqb
- tHTTKUvdmQPkHNFksEHdRtq7I/UKZDu2rTZoIBHd36IJD10HxwzY1QCB9KRJgBXbO7h4wRknC67
- GQPx71UssktQB10kUgKNdX32ITGxSlxa5HfMo3Ve8qMBPoU/BZO9kQXJiAG/2Id0twSg2p8sonI
- p5LQPXxUZfnJLP2zMIevLuDO1mP8BuAc+FxjMzuA==
-X-Gm-Gg: AY/fxX4SAtT2XjQP9FykvR4CW58kXBRpJarrGgKQIDjDVEpa+E6xMhEdSbYiHKWklFP
- 90LlKmYKHdVwuBpBvdzv8K6y33aAIqBeAI0SOsujVWneXsvxia5mIaMUIMfllxAkcO5k8tBU/Lg
- lXgZ/UUtMAbYHk7P9+UFHYtAKLpeezdHoA9nkxDML/F4O9/sW+glXAzOM+0+df9QF18AbhdUWbM
- YAukEcyxU/T4kRvRA8rKOd+ww1vH/GVsYd06PexlvMvXQ+j4JePurJ+Dg++OZtQUetgPAFUhyi0
- rRQlrHqvGl8szrmAzxw5H/eXgoWUArvYW2u1tMAF2AuMGpx6NSo4a+O3x/uOgpqWpKpOT8bM7DX
- AVgQ=
-X-Received: by 2002:a05:620a:1999:b0:8b2:6b9e:5383 with SMTP id
- af79cd13be357-8c0906fc98amr2253300185a.85.1766500212871; 
- Tue, 23 Dec 2025 06:30:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHdFn6wJ4gpkztUBl0Xabf/70KnCMV094a3701B8u0wX3N4KKg0ePQu4s+YpuFoarBQBZEOfQ==
-X-Received: by 2002:a05:620a:1999:b0:8b2:6b9e:5383 with SMTP id
- af79cd13be357-8c0906fc98amr2253289685a.85.1766500212220; 
- Tue, 23 Dec 2025 06:30:12 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.11
+ d=1e100.net; s=20230601; t=1766500304; x=1767105104;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3DItcK8vKiv8QiqSu6wmFdrVmLMlyV3PGhxL9NoOut0=;
+ b=Xv3xrry0gl/9q3LaAcaq4GBwB+xlFIgkIzP6tHt+XHGfsiFyRPJggk90oAFh6EsnOA
+ wz+hsw7OO698rK5yUbshqelmc5yh626qn51hw0ELlpudAfzBDUOZXJwnpdwvqVp9csyY
+ HcwL0JyBavXx9NqCqTM3RwhZwqNHpMQweos3jTy1yxg/G7ZfZJufYbWeEwHQoVutPrRO
+ aAq6OYOyH7CD8mGAJWgcWDzOZUKS/SZheZFp3sVMF8bpwmW1LY609rdoqHtr1W7oS9GW
+ rZeP2ZWxXRguWOjvhqWJYbZt0eLU4QISYOomZKoy7lts6rKgFCsRriVb0YRBzg4ugvKq
+ FVcg==
+X-Gm-Message-State: AOJu0YznHDz9COKVsRtGZvxusbKJK8kle3oPX6clDjVnGEF31j37KctT
+ uAPdA/bu9cRdPDgoFp6wzHDxG1pCnQRBgC9PmlKDt/hQySqYv18TgtIZ
+X-Gm-Gg: AY/fxX5cOCOkpO4WIoI9PknvhyB5mDPiJVpuAppgwLuQgt7Zb+A6cmKa2keEc51AD0a
+ bnE/Kf7StWE+BiypXd3HMdim1o51T4Mza1e1DkUbvUrkBvuS/0ikCpUYUXW2LeMXFdg1Ou3KmHO
+ m7BlnjUGllUyuqxqEW44KHW9jSXVwgYsngpgVqO+vw/t1f1Rq/Q3+LlPjTiXOskSg5z7EpaztS5
+ Etj735lFR+DOWGzlF79AUAmYqt+DM4ivwB01P/u5Esy8+CbmMN5JsW15oNJAy6mcmJZO6L86Wqs
+ 6diAYJ7HwtVhXDgM+fc+H3ScOkbL3p0S4KLMat9AtwDw88GPE3sMIjC6mITpvLcrxreA3Fb6kiL
+ rqLVMSU+f3IUyQrXxc0QRwYewC1SnT244hJYYSiCgVPERDk4PC1nj1SMF/ho7pQWfq8pWbMPiSM
+ svs8gRwBW2y0zZTqSMbmKAFBe9E8CHDJmZZ56JAMztFHyzQk+UNvAQecvak4LHyaX4riGDT7QT6
+ f8=
+X-Google-Smtp-Source: AGHT+IGudY7XMFOE+8l7Ey/kZKNqxQa2pmhT6AUouvCRKSnj/f01GDdF/B1Xnf32l+939Du2wY+2Jw==
+X-Received: by 2002:a17:907:1c0a:b0:b80:2828:47dd with SMTP id
+ a640c23a62f3a-b803725b07amr1664719666b.63.1766500304280; 
+ Tue, 23 Dec 2025 06:31:44 -0800 (PST)
+Received: from osama (ipservice-092-208-101-212.092.208.pools.vodafone-ip.de.
+ [92.208.101.212]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b80426fc164sm1279965666b.30.2025.12.23.06.31.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 06:30:11 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 08/31] migration: Make migration_connect_set_error() own the
- error
-Date: Tue, 23 Dec 2025 09:29:36 -0500
-Message-ID: <20251223142959.1460293-9-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251223142959.1460293-1-peterx@redhat.com>
-References: <20251223142959.1460293-1-peterx@redhat.com>
+ Tue, 23 Dec 2025 06:31:43 -0800 (PST)
+Date: Tue, 23 Dec 2025 15:31:11 +0100
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Subject: Re: [PATCH] hw/core: remove duplicate include
+Message-ID: <aUqnr9n_IvFq_zcD@osama>
+References: <20251126210832.34011-1-osama.abdelkader@gmail.com>
+ <0d6a818e-1007-4e98-8504-b5e88a30b51f@linaro.org>
+ <417ec469-91e3-4025-941e-f1587f5ebb15@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <417ec469-91e3-4025-941e-f1587f5ebb15@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=osama.abdelkader@gmail.com; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,84 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make migration_connect_set_error() take ownership of the error always.
-Paving way for making migrate_set_error() to take ownership.
+On Tue, Dec 23, 2025 at 02:57:34PM +0100, Philippe Mathieu-Daudé wrote:
+> Hi Osama,
+> 
+> On 23/12/25 14:51, Philippe Mathieu-Daudé wrote:
+> > On 26/11/25 22:08, Osama Abdelkader wrote:
+> > > qemu/target-info.h is included twice.
+> > > ---
+> > >   system/vl.c | 1 -
+> > >   1 file changed, 1 deletion(-)
+> > 
+> > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > 
+> > 
+> > And queued, thanks!
+> 
+> Actually we can not take this because the patch is missing your
+> "signed-off" tag, see:
+> https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emails-must-include-a-signed-off-by-line
+> 
+> Replying with "Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>"
+> would fix this :)
+> 
+> Regards,
+> 
+> Phil.
 
-When at it, renaming it to migration_connect_error_propagate(), following
-Error API, to imply the Error object ownership transition.
+Hi Philippe,
 
-NOTE: this patch also makes migration_connect() to take ownership of the
-Error passed in.
+Thank you, and have a good day :)
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Link: https://lore.kernel.org/r/20251201194510.1121221-5-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/channel.c   | 1 -
- migration/migration.c | 9 +++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-diff --git a/migration/channel.c b/migration/channel.c
-index 462cc183e1..92435fa7f7 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -95,7 +95,6 @@ void migration_channel_connect(MigrationState *s,
-         }
-     }
-     migration_connect(s, error);
--    error_free(error);
- }
- 
- 
-diff --git a/migration/migration.c b/migration/migration.c
-index b316ee01ab..0ff8b31a88 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1575,7 +1575,7 @@ static void migrate_error_free(MigrationState *s)
-     }
- }
- 
--static void migration_connect_set_error(MigrationState *s, const Error *error)
-+static void migration_connect_error_propagate(MigrationState *s, Error *error)
- {
-     MigrationStatus current = s->state;
-     MigrationStatus next;
-@@ -1602,6 +1602,7 @@ static void migration_connect_set_error(MigrationState *s, const Error *error)
- 
-     migrate_set_state(&s->state, current, next);
-     migrate_set_error(s, error);
-+    error_free(error);
- }
- 
- void migration_cancel(void)
-@@ -2292,7 +2293,7 @@ void qmp_migrate(const char *uri, bool has_channels,
- 
- out:
-     if (local_err) {
--        migration_connect_set_error(s, local_err);
-+        migration_connect_error_propagate(s, error_copy(local_err));
-         error_propagate(errp, local_err);
-     }
- }
-@@ -2337,7 +2338,7 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
-         if (!resume_requested) {
-             yank_unregister_instance(MIGRATION_YANK_INSTANCE);
-         }
--        migration_connect_set_error(s, local_err);
-+        migration_connect_error_propagate(s, error_copy(local_err));
-         error_propagate(errp, local_err);
-         return;
-     }
-@@ -4039,7 +4040,7 @@ void migration_connect(MigrationState *s, Error *error_in)
- 
-     s->expected_downtime = migrate_downtime_limit();
-     if (error_in) {
--        migration_connect_set_error(s, error_in);
-+        migration_connect_error_propagate(s, error_in);
-         if (resume) {
-             /*
-              * Don't do cleanup for resume if channel is invalid, but only dump
--- 
-2.50.1
-
+Best regards,
+Osama
 
