@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45DF0E6FE20
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3013E6FE20
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY4ev-0008VE-RD; Tue, 23 Dec 2025 10:50:49 -0500
+	id 1vY4f6-00006W-Cp; Tue, 23 Dec 2025 10:51:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4es-0008Tf-Bq
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:47 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4ex-0008Vr-PE
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:52 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4er-0005PD-0Y
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:46 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4ev-0005QX-9B
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:51 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id DF6976013A;
- Tue, 23 Dec 2025 15:50:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1E6C113D0;
- Tue, 23 Dec 2025 15:50:41 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 3C767412ED;
+ Tue, 23 Dec 2025 15:50:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F952C113D0;
+ Tue, 23 Dec 2025 15:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1766505043;
- bh=6Hs5Xpfju4NFUCsUbYBJkDYqwqK5L0Tna0ewspw/aEo=;
+ s=k20201202; t=1766505048;
+ bh=sCLFamuuDl92TRhJeTQHcwK22XOZ3l6BNKExuSaT7Zo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=RTABkSpBuXeH4L/WWeiOw5z2wUA+S3MwZ79I9+YoGcV0PY6U7SXU1ikB0JbvoiRq/
- cBp3B9LuK6z9aYxMN2mBYJvTEK1zf6Corx5mgG3RGJLJptVGgziKSXXwdIkfi7qVQp
- 1rYTXudju/ADsceIO0WF9of8/5hB3JSGacOR4Wxi1/Nm6w/jsZlTNOFw4t31UOEaiY
- SACeeXrRCqMPn0C5/Mcrf3/ckhz3KvQiNBCHyRiZaVPscpZ6R9sRtXciQQyeoJ8ecB
- yi16cl34mlUAcJ6DmhdRpG/MhftOHc4BWBm65Rij18xC8xr9txs/eCinztw4CmsPSj
- 6opRtCfo/PmsQ==
+ b=A/1fhgtrQkMdAbv+W0CSUE2BiAKtUA57+xpPd5rvFf8Kkh+kA14Of1Fuyx4J9txkq
+ /FIrDOH/OwSWUzm5E6VQ5p8L+IUqZelT4y4sOxeqRs0Qurv6p4HYnxHicGB4j12IOK
+ oMhrkH6xEO4KsvQ/VN7ObvhrkaOLtYQ26IABlA6z3ZqVCZE+xalLfUMovJEY2n0T/O
+ eY0FqkYuozE+jhZkmdAQJi95EI7Y9LPki/E/fpn9ucBKfQBMQpaR8XT38jaz3e6L8K
+ d9Ju+3SoMi6P2C9PQP/fmELHFdSQG150no5QEUXzTC48tAWM8P3/Y/EzoXwtkKydq9
+ Z4cKjtYwVmnCg==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
@@ -41,21 +41,22 @@ Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Fam Zheng <fam@euphon.net>
-Subject: [PULL 03/12] scsi: ncr710: Fix use after free in command_complete
-Date: Tue, 23 Dec 2025 16:50:22 +0100
-Message-ID: <20251223155031.7110-4-deller@kernel.org>
+Subject: [PULL 05/12] scsi: ncr710: Fix DMA State machine and flow control
+Date: Tue, 23 Dec 2025 16:50:24 +0100
+Message-ID: <20251223155031.7110-6-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251223155031.7110-1-deller@kernel.org>
 References: <20251223155031.7110-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,39 +75,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
-Add proper hba_private pointer cleanup in ncr710_command_complete.
-This prevents use after free errors from occuring.
-
-This was causing memory corruption in NetBSD device initialization
-when commands complete and the request structures were freed while
-still being referenced.
+Set waiting state and return after scsi_req_continue() to prevent
+re entrancy when DMA transfer completes.
 
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/ncr53c710.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ hw/scsi/ncr53c710.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index bab2ea7210..ac1ca4cef8 100644
+index 0b7734a129..e17d1f3fb8 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -798,7 +798,13 @@ void ncr710_command_complete(SCSIRequest *req, size_t resid)
- 
-     ncr710_set_phase(s, PHASE_ST);
- 
--    if (req->hba_private == s->current) {
-+    if (p) {
-+        req->hba_private = NULL;
-+        if (p == s->current) {
-+            p->req = NULL;
-+        } else {
-+            ncr710_request_free(s, p);
-+        }
-         scsi_req_unref(req);
-     }
- 
+@@ -718,7 +718,9 @@ static void ncr710_do_dma(NCR710State *s, int out)
+     if (s->current->dma_len == 0) {
+         s->current->dma_buf = NULL;
+         s->current->pending = 0;
++        s->waiting = NCR710_WAIT_DMA;
+         scsi_req_continue(s->current->req);
++        return;
+     } else {
+         s->current->dma_buf += count;
+         s->waiting = NCR710_WAIT_NONE;
 -- 
 2.52.0
 
