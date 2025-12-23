@@ -4,117 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C414E6F084
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 11:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D00DE6B272
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 11:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY0I4-0001jc-Hd; Tue, 23 Dec 2025 06:10:56 -0500
+	id 1vY0PH-0003bX-EE; Tue, 23 Dec 2025 06:18:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vY0I2-0001jF-D0; Tue, 23 Dec 2025 06:10:54 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vY0PB-0003a2-6B
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 06:18:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vY0I0-0000i5-Fo; Tue, 23 Dec 2025 06:10:54 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BMClGjb002030;
- Mon, 22 Dec 2025 18:19:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=T/KvmA
- /FPAr1FPX6v5vOrhg4f/dukDPVCEjLmEwlTIc=; b=hUU2CP1JYeTHI1da8ypZbF
- xf0IJM8NxzDYZArknhviTSnZHubxLzK5s9MQD+2B4QJCWdmUVmitTg5baID5QORh
- T3vuFwl/mHoqZEJHmUufTnhNXiLP2F1H8J4FLLcSuGpQrdDGFi7jo2aWLPiEq0JP
- IEMa9st4R5+nHT6+9G+14NCnMVi3FKs14x6E9F3qPX+2FG31trSWn2lBh8ScBuNW
- gkT0qfFpFdsS0KadlreQ0Lh+prCSHDqBXQyOFY9Z0l9RqjheDIFNEuHCgKIVO8vR
- bM6EuOTLhWe/vx//L76JlrIytFx+1w8SX5t6YugZSW5cL4jRzq5tfPeChNGXUNqg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b5kh49hfc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Dec 2025 18:19:29 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BMGIGne004200;
- Mon, 22 Dec 2025 18:19:28 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4b674mqgmp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Dec 2025 18:19:28 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BMIJSJL40632832
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Dec 2025 18:19:28 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0158058054;
- Mon, 22 Dec 2025 18:19:28 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D87E558052;
- Mon, 22 Dec 2025 18:19:26 +0000 (GMT)
-Received: from [9.61.250.126] (unknown [9.61.250.126])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 22 Dec 2025 18:19:26 +0000 (GMT)
-Message-ID: <b485a60c-11f0-4747-8295-8eb98c88b86a@linux.ibm.com>
-Date: Mon, 22 Dec 2025 10:19:26 -0800
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vY0P9-0002lO-C4
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 06:18:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766488693;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1JYnpgPBaJRiVeyTd2Kg/nue1JcmuXDwX31okD4swp4=;
+ b=e9+gCFG4/mmHppStN9lOpNbZ06dPTFQ0GWxTdxFv+XV977p/5JPSYDeu0J0bpmu0Z5XbOJ
+ xe9bkioZ8DyllV93fYnriO1Huo8eA3ya0XYv6eytKwgHexS396g4Cq6c4fNFhTaNc1dZHc
+ KMR5iozDMndvdPefs9Mpc6jkWNk8S2U=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-90-vQhQ2WN0Njy_maTgELTByA-1; Tue, 23 Dec 2025 06:18:12 -0500
+X-MC-Unique: vQhQ2WN0Njy_maTgELTByA-1
+X-Mimecast-MFC-AGG-ID: vQhQ2WN0Njy_maTgELTByA_1766488691
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4779b3749a8so35490455e9.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 03:18:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1766488691; x=1767093491; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1JYnpgPBaJRiVeyTd2Kg/nue1JcmuXDwX31okD4swp4=;
+ b=T8ehqjc1ZsIE62BReW3x/K1KIeF0UtyzmPYOkI5YYPTTtN/xLUDLWa3GgbEf/AcaHv
+ JBg2b8mutUFiZ4ddQ0Lu6ejBieZZV1lzG6bRcST2n15gp7rMm8BsKyuiL2/mDUeBRzXu
+ 34yrwLGW57t4L/qIAAUtAimr0Zt3Yy2frkOw7ItKrCr7JAzV7OWE5dLXZLAqkUZHu0Ep
+ L1HRgB8IW9rFrcI0p8OwRlm/ZDYsYKLq/1HI/yhq2L24ehzKbGxS8aAV3+1bIpnvuQh0
+ q2MfJuFLRregmYfeCUtHFkzDAZmNHARfItNpWoJrYgoRd6YWZyRBJD3DVTnteB6lYIsR
+ 6gVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766488691; x=1767093491;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1JYnpgPBaJRiVeyTd2Kg/nue1JcmuXDwX31okD4swp4=;
+ b=AjNIpxfHd9YGgMgbg65ynz1tfl9UW3GOaJx0ZpUs7WWO5GBBxj4ZzRXLWxYoH9qLqz
+ nAep2bHlyoxa3rNliQD9JAqGlS15y7daRuZQ5xi+UEZW1wGjyJcLj9QRDlPylSEvtoUc
+ iJxVzTP3mDeQxsH/0oux2x8xWBSe7ttq1ELQBhvy94+6ay41Oq3xLp1R0dhfpL9CM3X1
+ vdUZ00dToKPEazYdlXU6nDLKg2O/ZeCMCo1S4K3s2v+fay3R0Ld9aXctvyggKjtFPQsv
+ dae3Jk5fj7Fe3KBAsVxhax6Xoh7neE931yNzXRLmb9oxyOMEFM/saN9vTR7MFRBB5oBD
+ xYjw==
+X-Gm-Message-State: AOJu0Yy6ATlUE8sOMHQHEvQA9T2lZWlqLh2RtFQp4bFKkJe7gLyk2CNb
+ /jQbIcpop3p7sD6h6vrp1C7lBKrmQpEy9LHSaDNzJBeYu83wPMuPrCq4q4Xh/nOZwelzeRswUrj
+ 3uvHnYsgMh4RwG+4cEZIXrP9V1x+CsvCWHKcmOGHepkU39+jK18gVIFuOngHLPmV2YPuYyd4OAM
+ RrlUuo9Do4t0ROc5UY4/YLEaDTNb8kXmo=
+X-Gm-Gg: AY/fxX58Bc0I8un0TCZTzWQBjXgg1uvPrT5Zj+qRObt4xDctXaB+WKSGVw+pTq/saJP
+ 4h/Tllat+n454X6fE2HaVDR8572RtpGMUJHMqMvgLGYiclFkoIuV1pn4bnRxQ4vTNcLRpYPDDAN
+ qmUrATp31sK9YiSUXCvJuZ8NF8MhtRYvWIJOFR/bQC2OOjDC46cS1vz8mnSa38ZKI3mcWI
+X-Received: by 2002:a05:600c:4e0d:b0:47b:df60:8a14 with SMTP id
+ 5b1f17b1804b1-47d195495d4mr138877225e9.9.1766488690915; 
+ Tue, 23 Dec 2025 03:18:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF9TY5uWP/Cc6PbXavmdUqCI+9VY4mxSGHM4Znu24xSKWrpg38pix5ypVok8aBLtXH1uIy5bTOnBoXiJJBsBxo=
+X-Received: by 2002:a05:600c:4e0d:b0:47b:df60:8a14 with SMTP id
+ 5b1f17b1804b1-47d195495d4mr138877005e9.9.1766488690503; Tue, 23 Dec 2025
+ 03:18:10 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] util/vfio-helper: Fix endianess when enabling Bus
- Master
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, thuth@redhat.com, stefanha@redhat.com,
- kwolf@redhat.com, fam@euphon.net, alex@shazbot.org
-References: <20251217184253.1520-1-alifm@linux.ibm.com>
- <4d7e4040-349e-4772-bdf9-43d4f8a6f771@redhat.com>
- <0c3e13e1-0aeb-47f9-9c44-5af8f3f47055@linaro.org>
- <970d3a1a-408f-4bf3-b6da-784f8e6bd66a@redhat.com>
- <f23ec136-5b6f-45b2-a6f1-1668e58a4030@linux.ibm.com>
- <e219df64-1712-4ace-8358-d825de26fc1a@redhat.com>
- <9e07d4e0-c407-448c-ac5c-10d153a1a11a@linaro.org>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <9e07d4e0-c407-448c-ac5c-10d153a1a11a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=bulBxUai c=1 sm=1 tr=0 ts=69498bb1 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=4Iy7-pb0WIcoN9B4EIwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: bgpJ9-u3pAKzCGF5uknfXHvm61gzqP2f
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDE2OCBTYWx0ZWRfX2loAbqciew/E
- baOWncaqSB+NDkuUp3EjYgsyjK33oXGCexSDaDjQhAc3ABTcruK04zforONP7FkAE0mXyDiEqwW
- AretVh69z87ATIfS9OVJpntaMeAISUCo3fo3ZSz0f5WPsgglcyyVZAR/X8Iq/JKEgV3gdmiGW8L
- MBlANZhMeoGbTwScM41Yr08bH1IWrAxRXteQnUlBLRCFYwW0g1eI7eiMNbeDtXcf53WN2QkrLDS
- 9W/NogDH4CxB8Dw9aLNpvICiBrWyYMjN1XFOcpx7sX/oiby3Ftz9CV+s1A8eolHnQsLNqP3f1gh
- uAzBfCE+gpCvIXK3tSRZKoYmgMm9hi1WYOZIPlAczLZFalLmCpZpvFI04RxbO/U/iQOXO+DcixH
- wAbmxqrwHlkm1mqGoSd5mz2mydcOIlMhgp2/nCLABhGgy/VTqOfOJErgUV5/qJORDYfHbGuW6oZ
- NhjzJZTdSy2I9bkopvA==
-X-Proofpoint-GUID: bgpJ9-u3pAKzCGF5uknfXHvm61gzqP2f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-22_02,2025-12-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 spamscore=0 malwarescore=0 bulkscore=0 phishscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
- definitions=main-2512220168
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20251222114822.327623-1-ppandit@redhat.com>
+ <87h5tilhcq.fsf@suse.de>
+In-Reply-To: <87h5tilhcq.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 23 Dec 2025 16:47:53 +0530
+X-Gm-Features: AQt7F2oXqKEpNPkYMtIeTneUV1asezl-1-VkXLMehy92l6KhPukZZbm-HvnG2Ec
+Message-ID: <CAE8KmOweak15R4Ji6F50b_za67q=un_GDSEMGCRTYeQKod7zQA@mail.gmail.com>
+Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,74 +113,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Fabiano,
 
-On 12/22/2025 12:35 AM, Philippe Mathieu-Daudé wrote:
-> On 22/12/25 09:17, Cédric Le Goater wrote:
->> Hello Farhan,
->>
->> On 12/19/25 18:30, Farhan Ali wrote:
->>>
->>> On 12/19/2025 8:30 AM, Cédric Le Goater wrote:
->>>> On 12/19/25 17:21, Philippe Mathieu-Daudé wrote:
->>>>> On 19/12/25 15:51, Cédric Le Goater wrote:
->>>>>> Hello,
->>>>>>
->>>>>> On 12/17/25 19:42, Farhan Ali wrote:
->>>>>>> The VFIO pread/pwrite functions use little-endian data format.
->>>>>>> When enabling the Bus Master bit, the value must be correctly 
->>>>>>> converted
->>>>>>> from the CPU's native endianess to little-endian format.
->>>>>>
->>>>>> How did you find the issue ?
->>>>>
->>>>> I presumed using VFIO on s390x hosts...
->>>>
->>>> yes. I have been using a nvme drive for over 2y in an s390x VM and 
->>>> never
->>>> saw any issue.
->>>>
->>>> C.
->>>>
->>> Hi Cedric,
->>>
->>> I have recently been experimenting with QEMU NVMe userspace driver 
->>> and PCI instructions from userspace [1]. On some of our test systems 
->>> I noticed the driver being hung. After some investigation we 
->>> realized it was due to this issue.
->>
->> Do you think you could provide a test case for it ?
+* Thanks so much for the quick comments.
 
-@Cedric,
-
-Just wanted to understand what you had in mind here? The test case would 
-use VFIO and would need an NVMe device, looking through QEMU testcases I 
-couldn't find an example of using VFIO. If there are examples or other 
-frameworks that is used to test this could you point me to them?
-
-
->>
->> Also, I think the LE conversion should be done in routines
->> qemu_vfio_pci_read_config() and qemu_vfio_pci_write_config().
+On Mon, 22 Dec 2025 at 20:00, Fabiano Rosas <farosas@suse.de> wrote:
+> This doesn't look like it's caused by set-capabilities. Seems like:
+> Please clarify, there might be some other bug lurking around, such as a
+> locking issue with qemu_file_lock or even the BQL.
 >
-> These config routines take a void buffer, so have no clue of endianness
-> size.
+> Also, if possible provide an upstream backtrace, or at least mention the
+> code path based on upstream code. It's ok to keep the downstream
+> backtrace, but point that out in the commit message.
 
-Yup, exactly.
+* Right, migrate_fd_cleanup was renamed to migration_cleanup() in
+    -> https://gitlab.com/qemu-project/qemu/-/commit/4bbadfc55e6ec608df75911b4360e6e995daa28c
+===
+libvirtd(8) 19:03:07.260+0000: 396587: error :
+qemuMigrationJobCheckStatus:2056 : operation failed: job 'migration
+out' failed: Unable to write to socket: Connection reset by peer
+libvirtd(8) 19:03:07.261+0000: 396587: info : qemuMonitorSend:836 :
+QEMU_MONITOR_SEND_MSG: mon=0xffffa000e010
+msg={"execute":"migrate-set-capabilities","arguments":
 
+
+qemu-system-aarch64:initiating migration
+qemu-system-aarch64: migrate_fd_cleanup: to_dst_file: 1: 0xaaaaccce0110
+qemu-system-aarch64: migrate_fd_cleanup: before multifd_send_shutdown:
+0   <== multifd disabled
+qemu-system-aarch64: migrate_fd_cleanup: to_dst_file: 2: (nil)
+qemu-system-aarch64: Unable to write to socket: Connection reset by peer
+qemu-system-aarch64: ../util/yank.c:107: yank_unregister_instance:
+Assertion `QLIST_EMPTY(&entry->yankfns)' failed.
+qemu-system-aarch64:shutting down, reason=crashed
+===
+* As seen above, when connection is reset
+     1) libvirtd(8) sends the migrate-set-capabilities command to QEMU
+to reset the migration options to false(0). This leads to resetting of
+s->capabilities[MIGRATION_CAPABILITY_MULTIFD]  to false.
+     2) When migration_cleanup (earlier migrate_fd_cleanup) is called
+after above reset
+          migration_cleanup
+           -> multifd_send_shutdown
+            -> if (!migrate_multifd()) {
+                     return;   <== returns because _CAPABILITY_MULTIFD
+is reset to false(0).
+                }
+         when _CAPABILITY_MULTIFD is reset to false,
+multifd_send_shutdown() returns without really doing its multifd
+cleanup, ie. multifd objects still stay alive, are not freed.
+
+* And that leads to the said assert(3) failure in
+     migration_cleanup()
+     {
+         ...
+         multifd_send_shutdown()  <== does not cleanup
+         ...
+         yank_unregister_instance(MIGRATION_YANK_INSTANCE);   <==
+assert(3) failure
+     }
+
+> I'm fine with the general idea:
 >
-> Maybe we want intermediary qemu_vfio_pci_ld16_config() and
-> qemu_vfio_pci_st16_config() helpers?
+> i) FAILED and CANCELLED are terminal states. It makes sense to not have
+> work happen after they're set.
 >
-I did think of adding in additional helper functions. But 
-since qemu_vfio_pci_read_config()/qemu_vfio_pci_write_config() is only 
-called in this one place, wasn't sure if it made sense in adding them.
+> ii) Using an intermediate state, assuming locking/atomic are correct is
+> a suitable fix for the issue.
+>
+> iii) Using a FAILING status seems appropriate.
+>
+> However,
+>
+> It would be great if we could stop exposing implementation details via
+> QAPI. Does the user really need to see events for CANCELLING and
+> FAILING?
 
-Another approach I thought of was limiting reads/writes to 32 bit 
-similar to vfio_pci_write_config()/vfio_pci_read_config() does today. 
-Can we do this here as well?
+* Not really; libvirtd(8)/user only needs to know about the success OR
+failure and appropriate reasons.
 
-Thanks
+> This is a good example where having MigrationStatus makes the code more
+> complicated. This could be exiting=true, running=false, etc. It
+> shouldn't matter why this routine failed.
 
-Farhan
+* True, it is rather complicated. Though currently we have 17-18
+migration states defined, going by the functions
+migration_is_running(), migration_is_active(), and
+migration_has_failed(), migration process really has only 3-4 states:
+      0 -> stopped (non-active, not-started-yet)
+      1 -> running/active (sending-receive migration data)
+      2 -> paused/active (not-running, not-send-recv-migration-data)
+      3 -> stopped/failed/completed (non-active, not-running)
+Other interim states of initiating/setting connections OR
+cancelling/failing etc. could be tracked differently.
+
+
+Thank you.
+---
+  - Prasad
 
 
