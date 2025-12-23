@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C313DE6F09F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A00C6E6FE21
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:52:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY4fS-0000KJ-Gq; Tue, 23 Dec 2025 10:51:22 -0500
+	id 1vY4fU-0000PD-JY; Tue, 23 Dec 2025 10:51:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4fC-00008R-Oi
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4fC-00008Q-O2
  for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:51:08 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4fB-0005Us-9E
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4fB-0005UD-8S
  for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:51:06 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 17C3860143;
- Tue, 23 Dec 2025 15:51:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048CAC116C6;
+ by sea.source.kernel.org (Postfix) with ESMTP id A886D40DD0;
  Tue, 23 Dec 2025 15:51:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD523C113D0;
+ Tue, 23 Dec 2025 15:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1766505063;
- bh=DjWpiI5N5cWwn+jQ86+vd53iDYlr5d2zwhULpb1iG0s=;
+ s=k20201202; t=1766505061;
+ bh=CSOduKJZsEP2Kp7t2StaP9LitgZ64zGhAlx63dao0n0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=T9VAMNRCrTRNlbJ1XWGaiqHrQKfI3D4OsBvQZorj9eQyECChHpUgN1fXmv7Q9V9kl
- Nyv8z4/QRZRmyemdZPK5AOxGhTs58b1d9ZJqsjOkvpxecOzFIC+Dcbgz3SF0+gZcS1
- r0JH0pOAXRFHB6P2gzaxa0v6WDMq4iuuCN2hfr9h0+8k4bdWY3q2od0ay1YDfdg2/v
- G7i3zBKvnQaF6g737HSZuP/nn+KBmwuDkMke0gTGIIsCskevuDpA+/xFbFdSqt7ezj
- ejdxJqU69Hn3rCxkqDBTNjrheINDtHPj1Rmwf6V+M9bDNwL3xx7qy1tJ9mXzWoJlos
- aT7RCJh+iuVJA==
+ b=kfu3Cuyz1BkI3bkgrz1MpnzmaJpXUEEdq3wp6ERpeBeUhvhSIYSmsz57FjKoUeMgx
+ 3ndfd/uWM6m459Yll/fATQqeE16bMGZja2sQLCrqo/EywDrAP6mtzbiBubjL4jOR9S
+ 74DNf4GZrJXyj25jRfUPVsuarQ7B/b8KQ3WBhwSzbSdqA/TmmqVpP4cORTVAyjQ6PJ
+ 0DmubIAoJgjiktn5BSfsh0DhBR/j1xoml0Fz/vVuIIq55FsEapXv4BQb2rKWE1eHom
+ OVbWkQ2h/pitBaXkZUrfkOWuf+jBQ/61lrvbKiaccVZvssLvk++FWZlrFbmBUhqE8e
+ LfU0gp1Q8rfyg==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
@@ -41,23 +41,21 @@ Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Fam Zheng <fam@euphon.net>
-Subject: [PULL 12/12] target/hppa: add 64 bit support to gdbstub
-Date: Tue, 23 Dec 2025 16:50:31 +0100
-Message-ID: <20251223155031.7110-13-deller@kernel.org>
+Subject: [PULL 11/12] scsi: ncr710: Fix CTEST FIFO status
+Date: Tue, 23 Dec 2025 16:50:30 +0100
+Message-ID: <20251223155031.7110-12-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251223155031.7110-1-deller@kernel.org>
 References: <20251223155031.7110-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,120 +72,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sven Schnelle <svens@stackframe.org>
+From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Update CTEST1 FIFO status when CTEST8 is written, setting to 0xFF when
+FIFO is flushed, otherwise clear to 0x00.
+
+Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Tested-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- target/hppa/gdbstub.c | 62 ++++++++++++++++++++++++++++---------------
- 1 file changed, 41 insertions(+), 21 deletions(-)
+ hw/scsi/ncr53c710.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
-index 0daa52f7af..777f4a48b9 100644
---- a/target/hppa/gdbstub.c
-+++ b/target/hppa/gdbstub.c
-@@ -21,16 +21,25 @@
- #include "cpu.h"
- #include "gdbstub/helpers.h"
- 
--/*
-- * GDB 15 only supports PA1.0 via the remote protocol, and ignores
-- * any provided xml.  Which means that any attempt to provide more
-- * data results in "Remote 'g' packet reply is too long".
-- */
-+static int hppa_num_regs(CPUHPPAState *env)
-+{
-+    return hppa_is_pa20(env) ? 96 : 128;
-+}
-+
-+static int hppa_reg_size(CPUHPPAState *env)
-+{
-+    return hppa_is_pa20(env) ? 8 : 4;
-+}
- 
- int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    CPUHPPAState *env = cpu_env(cs);
--    uint32_t val;
-+    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = &cpu->env;
-+    target_ulong val;
-+
-+    if (n >= hppa_num_regs(env)) {
-+        return 0;
-+    }
- 
-     switch (n) {
-     case 0:
-@@ -133,24 +142,35 @@ int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-         val = env->cr[30];
-         break;
-     case 64 ... 127:
--        val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
--        break;
--    default:
--        if (n < 128) {
--            val = 0;
-+        if (hppa_is_pa20(env)) {
-+            val = env->fr[n - 64];
-         } else {
--            return 0;
-+            val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
+diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
+index 0ea1fc43a3..cdc365478c 100644
+--- a/hw/scsi/ncr53c710.c
++++ b/hw/scsi/ncr53c710.c
+@@ -2161,7 +2161,11 @@ static void ncr710_reg_writeb(NCR710State *s, int offset, uint8_t val)
+         if (val & 0x04) {
+             ncr710_scsi_fifo_init(&s->scsi_fifo);
+             s->dstat |= NCR710_DSTAT_DFE;
++            s->ctest1 = 0xFF;
++        } else if (s->ctest8 & 0x04) {
++            s->ctest1 = 0x00;
          }
++        s->ctest8 = val;
          break;
-+    default:
-+        val = 0;
-+        break;
-     }
- 
--    return gdb_get_reg32(mem_buf, val);
-+    if (hppa_is_pa20(env)) {
-+        return gdb_get_reg64(mem_buf, val);
-+    } else {
-+        return gdb_get_reg32(mem_buf, val);
-+    }
- }
- 
- int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    CPUHPPAState *env = cpu_env(cs);
--    uint32_t val = ldl_p(mem_buf);
-+    HPPACPU *cpu = HPPA_CPU(cs);
-+    CPUHPPAState *env = &cpu->env;
-+    target_ulong val;
-+
-+    if (n >= hppa_num_regs(env)) {
-+        return 0;
-+    }
-+
-+    val = ldn_p(mem_buf, hppa_reg_size(env));
- 
-     switch (n) {
-     case 0:
-@@ -267,16 +287,16 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-         cpu_hppa_loaded_fr0(env);
-         break;
-     case 65 ... 127:
--        {
-+        if (hppa_is_pa20(env)) {
-+            env->fr[n - 64] = val;
-+        } else {
-             uint64_t *fr = &env->fr[(n - 64) / 2];
-             *fr = deposit64(*fr, (n & 1 ? 0 : 32), 32, val);
-         }
-         break;
-     default:
--        if (n >= 128) {
--            return 0;
--        }
-         break;
-     }
--    return 4;
-+
-+    return hppa_reg_size(env);
- }
+     case NCR710_LCRC_REG: /* LCRC */
+         s->lcrc = val;
 -- 
 2.52.0
 
