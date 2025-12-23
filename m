@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD36E6F090
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826F6E6F096
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY3Ow-00010V-3y; Tue, 23 Dec 2025 09:30:14 -0500
+	id 1vY3Ow-00010T-3i; Tue, 23 Dec 2025 09:30:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Oq-0000wj-Go
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Op-0000wJ-HC
  for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Oo-0003es-MJ
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:08 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3On-0003Wm-ID
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766500206;
+ s=mimecast20190719; t=1766500204;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jb1DUlJQ4GnVRgU92F0kkwFwuzusrXZvVQZu8EFnPos=;
- b=fWU9YobwqO6QyZQcrYpc30R2GoK8XiZD+Y5deo91jsFVZadYLdlId6t/9jvV5/hLL+f4sE
- Lf8eqRsBXvgKs9WDI+uPnkcBvBhP6OHLhHkCa9hXZtyiuALGN9H7zFin2oYU1+V/Hv3xCq
- pGlhl04pXyFjOvbvEWCyXJBCi0cyE+w=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jRBZxUkNbyZU2DM7GgNiGFqqFhV4axwRoHUxVDDi2m0=;
+ b=H0MHypPPrZTXS6ZayZi5ab2tD49pnGK2ES6aGLv+GookeXfFVl1hxkxpqzW6i80+5JYIJE
+ hABnAHRA1+j+OJ33WCux3xF0oYd6Kz0vTdIcj/gRAad5Nz7Me3njU1yomrILXg9DRkdlfh
+ k6celxYF1JHb3IW2vMV97QQx879zAzY=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-7xJv2OJNNlOmoPkyeTTX3A-1; Tue, 23 Dec 2025 09:30:04 -0500
-X-MC-Unique: 7xJv2OJNNlOmoPkyeTTX3A-1
-X-Mimecast-MFC-AGG-ID: 7xJv2OJNNlOmoPkyeTTX3A_1766500204
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8b1d8f56e24so1259095285a.2
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:04 -0800 (PST)
+ us-mta-10-1MMeeHN8NN63cz_HKfpYcg-1; Tue, 23 Dec 2025 09:30:02 -0500
+X-MC-Unique: 1MMeeHN8NN63cz_HKfpYcg-1
+X-Mimecast-MFC-AGG-ID: 1MMeeHN8NN63cz_HKfpYcg_1766500202
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8b22d590227so628642085a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766500204; x=1767105004; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jb1DUlJQ4GnVRgU92F0kkwFwuzusrXZvVQZu8EFnPos=;
- b=tn/gz5ce2nntUSgXaR788+4zPcHhcKrxcms2nfYJMyi5P0rFE/I3r/oLZJk5VDnRl/
- o+MBRzANzdwD6FAeIUy0PxklpKU1naS+CsIM+o2e1Oa4PLIFHGq+PYTDxXOI36fWIqbD
- 7RjeznKO11Uxgolt/m/SQCQnx3+i8zOrbnLY3wOzh6/YXew9IgRN87HQPw9EYg2E20iP
- lrwtLsIjGVyI1LdbbW2VsgPGCRw532zo2zdJZF0UpG6Iz7aip3/TcDWLSKTbv+8n5GNz
- NsgE1cqPxYgQjs+4rC6Qdcv2Z/xJaoCREGwI23NJGIVf6ENC0hbefxgOEQ8MNde4Oial
- lXgQ==
+ d=redhat.com; s=google; t=1766500202; x=1767105002; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jRBZxUkNbyZU2DM7GgNiGFqqFhV4axwRoHUxVDDi2m0=;
+ b=s4Oos9GEBMGehSGMkrPMaHMaCyhxiI29YKnJOuqjtEr0WvYF9CpDDhbnf3G6lRuRt+
+ 9LhkxOPJnnwPFbt1Asa3OIA+iLUtKaNlCtiG5vBMSpk9hof3YQ4qbdnYTRYGbMYhvOnJ
+ bgF7qi2TPIkNWBR97jSJIV3kBzp2DHhAD9dNeH/dPmgpQ7fJjxAf6131/EHwFIRv6S8j
+ hW5laoEJAsNqPlCWdPfThDzSVn8bnLEbMBiXDWGbGp6+2GHTpRMsbgmVUSxRT/SMLr4c
+ aU7iJd41Y3cK0s41n4oZbgjwGTAZVlNyaJoYhGMEIfhPZnyg/Q8P3RNqToZ5Zpi6x3Om
+ Snfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766500204; x=1767105004;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jb1DUlJQ4GnVRgU92F0kkwFwuzusrXZvVQZu8EFnPos=;
- b=egA4aEFZ1DVuqzFX6Ziyd71KCyK9MwoPHu57vv1Mz7t9pfPwSA2aUh8ag4znmu9XQh
- KQ+Wli/iHG+ntKDkbkccVKelbPppSlvnUVbcoD+6W5Jzu2pyfj26tsqKi8584qMbrz/n
- J4CVQpXNCMmztLBx9hjHye5J8Nhm2vLyizOYUOsDSd/ZAR7Sn5RmRwDgQ7CA8HTC7oxS
- wf2OvGx2/JKWVQ9kLxNsyqoFDIZxsShQdS3YMt23HqZIE51/4x9TYGLb+3thDX3cKILJ
- 3CAgOOazyRK4ZRbIVn6mgIxxBpEa0V00aZK0FIKjegPdI0huMOIDrzUu5oVnsTa+3xfH
- K56g==
-X-Gm-Message-State: AOJu0YzKTzH01ZoZ/T3VpNo1rbiEcBZLmfdinE7UToezX6C2CS+3gqfY
- 73VA/UUcVhER5qFKC6Xdpq0aZYWMuX6Ow1TvyZ3LiDCdyRckKSioqEqKLOv4qwsU9DR2H00c/qr
- 1c8Z1hArtIgY1mi8TIkilmymt0bQwkZzLLy7+vFrestI19+eeVtOd0FiAywfa73j7tMVgTYaVMT
- 8VxBWSeLaHrEIxwCR09MFE0GCD+TFWz6p/InFIOA==
-X-Gm-Gg: AY/fxX5wOvhxSP9TuiaXbtlucbg0c45tjJDnO/lWzMQIag6Gx9B3oK2xp+GWUBY2X3A
- F5m7KzfuGsIKLPSZU0dFB13hwLFoNWvQU+pEcMPzPwlCoDE5LPhyfTZ8DsXZhRsDj9mH+7CKt8W
- wCaP9UNB0HTNleL2tIGu1+eeeaI9tdeoJAiDKwm5ZZ80psbzJ5QfdcZxKrDS5LSvPIEeJd2Efa3
- wb8s9xCDCHKBoZANsbw9le0rydH174TlIjwbV4en3RxpkRaeTsWGrzjm0kdinK4tDLQ1Mfo66Fx
- gRgu9VOjokGZO+Nsp/yt7iLBKiF94c0pnh5ad03OyBSzzOg4J31ySTXv2z1B/l4F8p1RUhaCLEO
- 6EbE=
-X-Received: by 2002:a05:620a:4626:b0:8bb:9f02:489e with SMTP id
- af79cd13be357-8c08fac0621mr2252342985a.74.1766500203545; 
- Tue, 23 Dec 2025 06:30:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlY3WGyuGEN0JcEoitTu8cUBQeAHdLH0s8twOu8NBJn0aFFmrJeDm+/j3O+eJ+Pd+QVgpviQ==
-X-Received: by 2002:a05:620a:4626:b0:8bb:9f02:489e with SMTP id
- af79cd13be357-8c08fac0621mr2252337885a.74.1766500202980; 
- Tue, 23 Dec 2025 06:30:02 -0800 (PST)
+ d=1e100.net; s=20230601; t=1766500202; x=1767105002;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jRBZxUkNbyZU2DM7GgNiGFqqFhV4axwRoHUxVDDi2m0=;
+ b=psAAGSqxy8kqpq5wbBkXStaP9pbfIq8mVeQj4laLzbQhzQbKl2v7nxY5ZPo2f8HGsH
+ OMxjBe/2CPs/21bm75595RnTLgKB52uxweYu3p3cE3fT4KKkIjQvBqjBCavLILLR3JlM
+ 4V2Kw21lYUXrbzSdCse3f74uhEDC6D5bNevU8Z+zNXLy9wcSBLmLhTbDLuH9JBp0LD9U
+ fhyPrneddKJs0afSm3YttPAb7T1DyaA4oUvzZk3OgXEmmgoGB35qXNTZ+hXYsyFyXahi
+ DjIODNSEz8na0ThSSLhq4SxGLWe1pkCYhz+tIh11kMcC4vdW9uZ7z0OGoCVhiYEmlfQl
+ Wrlw==
+X-Gm-Message-State: AOJu0Yxj3Zk5OuFVaYj9eUAf/hilN0m7j0dUSzsTX+kY0g3qKEBdI4qL
+ C8wO7mH5WgPJTwiTd4RqSAHMSRPEPCq2VKOUJVlYuil0y5VFIKOwKvywFR4PY3tVF2/AkzMAOA/
+ dS54vlSlfYj4oAE+pYTLL0jeAHdY3MuKThUweexL28An6Oeaoc2xH6EbNPSs9gu9TzJzErhl6fI
+ z4CmjL8ULXtG7dwu/QK+P0tpAEFy27c3mIngrOhw==
+X-Gm-Gg: AY/fxX5mIq7MaI288lPgX1BIUBDkb+SiQ57NwvQUkvQ6Qcs8GkgS7C1+wB6ZE3wwZdl
+ Siq0w8P+5kgPKzIN6ezZWEF2ulrfbWVr6UzuN8/nGveYMay+SvXJQOIdvT6DXagjT+UeOW7jUvS
+ JoQxufKhkW8rV4+8JNaEVB+acuNjwLiDZEKeau1iqIb+HO9fcPunK8xdjutZAWipIHrMsJ2yuza
+ UEUVwbrqHB2NhmC46DCqnzI8BvfMs+1ygDLKqfiMXYCZqpaxNhAODxOH+EthB/l7owFCexUjNyg
+ ntAIj/fQM81UDA2OySPiaHIGISBk4Us4dMzvOU4maglAoQREWqWS0yLuGHElnMmI2rHpp2AQlpm
+ 08/k=
+X-Received: by 2002:a05:620a:1a0d:b0:8bb:a675:aa61 with SMTP id
+ af79cd13be357-8c09002798dmr2073940885a.79.1766500201961; 
+ Tue, 23 Dec 2025 06:30:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFEvhmed4LdmWgmZTmPga4Sjr1M5U6Po/tmuTyd/AudNHjKznqR0T/CN3RfhajV8fw5ohsBJw==
+X-Received: by 2002:a05:620a:1a0d:b0:8bb:a675:aa61 with SMTP id
+ af79cd13be357-8c09002798dmr2073935785a.79.1766500201239; 
+ Tue, 23 Dec 2025 06:30:01 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.01
+ af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 06:30:02 -0800 (PST)
+ Tue, 23 Dec 2025 06:30:00 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Pawel Zmarzly <pzmarzly0@gmail.com>
-Subject: [PULL 01/31] migration: fix parsing snapshots with x-ignore-shared
- flag
-Date: Tue, 23 Dec 2025 09:29:29 -0500
-Message-ID: <20251223142959.1460293-2-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PULL 00/31] Next patches
+Date: Tue, 23 Dec 2025 09:29:28 -0500
+Message-ID: <20251223142959.1460293-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251223142959.1460293-1-peterx@redhat.com>
-References: <20251223142959.1460293-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,107 +116,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pawel Zmarzly <pzmarzly0@gmail.com>
+The following changes since commit 8dd5bceb2f9cc58481e9d22355a8d998220896de:
 
-Snapshots made with mapped-ram and x-ignore-shared flags are
-not parsed properly.
+  Open 11.0 development tree (2025-12-23 14:45:38 +1100)
 
-The ignore-shared feature adds and extra field in the stream, which
-needs to be consumed on the destination side. Even though mapped-ram has
-a fixed header format, the ignore-shared is part of the "generic" stream
-infomation so the mapped-ram code is currently skipping that be64 read
-which incorrectly offsets every subsequent read from the stream.
+are available in the Git repository at:
 
-The current ignore-shared handling can simply be moved earlier in the code
-to encompass mapped-ram as well since the ignore-shared doubleword is the
-first one read when parsing the ramblock section of the stream.
+  https://gitlab.com/peterx/qemu.git tags/next-pull-request
 
-Co-authored-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20251126121233.542473-1-pzmarzly0@gmail.com
-[peterx: enhance commit log per fabiano]
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/ram.c                    | 21 +++++++++++----------
- tests/qtest/migration/file-tests.c | 18 ++++++++++++++++++
- 2 files changed, 29 insertions(+), 10 deletions(-)
+for you to fetch changes up to bcb411a005fdf39b76e99c14f3618c7b70f7774d:
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 29f016cb25..7d024b88b5 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4205,6 +4205,17 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
- 
-     assert(block);
- 
-+    if (migrate_ignore_shared()) {
-+        hwaddr addr = qemu_get_be64(f);
-+        if (migrate_ram_is_ignored(block) &&
-+            block->mr->addr != addr) {
-+            error_report("Mismatched GPAs for block %s "
-+                         "%" PRId64 "!= %" PRId64, block->idstr,
-+                         (uint64_t)addr, (uint64_t)block->mr->addr);
-+            return -EINVAL;
-+        }
-+    }
-+
-     if (migrate_mapped_ram()) {
-         parse_ramblock_mapped_ram(f, block, length, &local_err);
-         if (local_err) {
-@@ -4244,16 +4255,6 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
-             return -EINVAL;
-         }
-     }
--    if (migrate_ignore_shared()) {
--        hwaddr addr = qemu_get_be64(f);
--        if (migrate_ram_is_ignored(block) &&
--            block->mr->addr != addr) {
--            error_report("Mismatched GPAs for block %s "
--                         "%" PRId64 "!= %" PRId64, block->idstr,
--                         (uint64_t)addr, (uint64_t)block->mr->addr);
--            return -EINVAL;
--        }
--    }
-     ret = rdma_block_notification_handle(f, block->idstr);
-     if (ret < 0) {
-         qemu_file_set_error(f, ret);
-diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
-index 4d78ce0855..c196a703ff 100644
---- a/tests/qtest/migration/file-tests.c
-+++ b/tests/qtest/migration/file-tests.c
-@@ -303,6 +303,22 @@ static void migration_test_add_file_smoke(MigrationTestEnv *env)
-                        test_multifd_file_mapped_ram_dio);
- }
- 
-+static void test_precopy_file_mapped_ram_ignore_shared(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-+                                           FILE_TEST_FILENAME);
-+    MigrateCommon args = {
-+        .connect_uri = uri,
-+        .listen_uri = "defer",
-+        .start = {
-+            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
-+            .caps[MIGRATION_CAPABILITY_X_IGNORE_SHARED] = true,
-+        },
-+    };
-+
-+    test_file_common(&args, true);
-+}
-+
- void migration_test_add_file(MigrationTestEnv *env)
- {
-     tmpfs = env->tmpfs;
-@@ -329,6 +345,8 @@ void migration_test_add_file(MigrationTestEnv *env)
- 
-     migration_test_add("/migration/multifd/file/mapped-ram",
-                        test_multifd_file_mapped_ram);
-+    migration_test_add("/migration/multifd/file/mapped-ram/ignore-shared",
-+                       test_precopy_file_mapped_ram_ignore_shared);
-     migration_test_add("/migration/multifd/file/mapped-ram/live",
-                        test_multifd_file_mapped_ram_live);
- 
+  MAINTAINERS: remove David from "Memory API" section (2025-12-23 09:27:02 -0500)
+
+----------------------------------------------------------------
+memory + migration pull
+
+- Pawel's misc fixes to mapped-ram when x-ignore-share is enabled
+- Peter's series to cleanup migration error reporting
+- Peter's added debug property for x-ignore-shared
+- Part of Fabiano's series on unify capabilities and parameters
+- Chuang's log_clear optimization on unaligned ramblocks
+- Maintainer file update from Ben (CPR++) and David (MemoryAPI-)
+
+----------------------------------------------------------------
+
+Ben Chaney (1):
+  MAINTAINERS: Update reviewers for CPR
+
+Chuang Xu (1):
+  migration: merge fragmented clear_dirty ioctls
+
+David Hildenbrand (Red Hat) (1):
+  MAINTAINERS: remove David from "Memory API" section
+
+Fabiano Rosas (15):
+  migration: Fix leak of block_bitmap_mapping
+  migration: Fix leak of cpr_exec_command
+  migration: Add a qdev property for StrOrNull
+  tests/qtest/migration: Add a NULL parameters test for TLS
+  migration: Normalize tls arguments
+  migration: Remove MigrateSetParameters
+  qapi/migration: Don't document MigrationParameter
+  migration: Run a post update routine after setting parameters
+  migration: Add a flag to track block-bitmap-mapping input
+  migration: Remove checks for s->parameters has_* fields
+  migration: Do away with usage of QERR_INVALID_PARAMETER_VALUE
+  migration: Extract code to mark all parameters as present
+  migration: Use QAPI_CLONE_MEMBERS in query_migrate_parameters
+  tests/qtest/migration: Pass MigrateCommon into test functions
+  tests/qtest/migration: Pass MigrateStart into cancel tests
+
+Markus Armbruster (1):
+  error: Poison g_autoptr(Error) to prevent its use
+
+Pawel Zmarzly (4):
+  migration: fix parsing snapshots with x-ignore-shared flag
+  migration: Fix writing mapped_ram + ignore_shared snapshots
+  scripts/analyze-migration: Rename RAM_SAVE_FLAG_COMPRESS to
+    RAM_SAVE_FLAG_ZERO
+  scripts/analyze-migration: Support mapped-ram snapshot format
+
+Peter Xu (8):
+  migration: Use explicit error_free() instead of g_autoptr
+  Revert "error: define g_autoptr() cleanup function for the Error type"
+  migration: Make migration_connect_set_error() own the error
+  migration: Make multifd_send_set_error() own the error
+  migration: Make multifd_recv_terminate_threads() own the error
+  migration: Replace migrate_set_error() with migrate_error_propagate()
+  migration: Use error_propagate() in migrate_error_propagate()
+  migration/options: Add x-ignore-shared
+
+ MAINTAINERS                               |   3 +-
+ qapi/migration.json                       | 395 +---------------
+ qapi/pragma.json                          |   1 +
+ include/qapi/error.h                      |  20 +-
+ include/system/physmem.h                  |   7 +-
+ migration/migration.h                     |   9 +-
+ migration/options.h                       |   1 +
+ tests/qtest/migration/migration-qmp.h     |   1 +
+ tests/qtest/migration/migration-util.h    |   8 +-
+ accel/tcg/cputlb.c                        |   5 +-
+ migration/channel.c                       |   1 -
+ migration/cpr-exec.c                      |   5 +-
+ migration/migration-hmp-cmds.c            |  13 +-
+ migration/migration.c                     |  59 ++-
+ migration/multifd-device-state.c          |   6 +-
+ migration/multifd.c                       |  30 +-
+ migration/options.c                       | 525 ++++++++++++----------
+ migration/page_cache.c                    |   6 +-
+ migration/postcopy-ram.c                  |   5 +-
+ migration/ram.c                           | 102 +++--
+ migration/savevm.c                        |  18 +-
+ migration/tls.c                           |   2 +-
+ system/memory.c                           |   2 +-
+ system/physmem.c                          |  48 +-
+ tests/qtest/migration/compression-tests.c | 131 +++---
+ tests/qtest/migration/cpr-tests.c         |  75 ++--
+ tests/qtest/migration/file-tests.c        | 202 ++++-----
+ tests/qtest/migration/migration-qmp.c     |   9 +
+ tests/qtest/migration/migration-util.c    |  26 +-
+ tests/qtest/migration/misc-tests.c        | 112 ++---
+ tests/qtest/migration/postcopy-tests.c    |  82 ++--
+ tests/qtest/migration/precopy-tests.c     | 373 +++++++--------
+ tests/qtest/migration/tls-tests.c         | 499 ++++++++++----------
+ scripts/analyze-migration.py              |  72 ++-
+ 34 files changed, 1282 insertions(+), 1571 deletions(-)
+
 -- 
 2.50.1
 
