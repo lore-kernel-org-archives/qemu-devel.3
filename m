@@ -4,112 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0BEE748F7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 21:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0173AE74900
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 22:12:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYAJY-0006GE-LR; Tue, 23 Dec 2025 16:53:09 -0500
+	id 1vYAbk-0002rA-DO; Tue, 23 Dec 2025 17:11:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vYAJN-0006F9-3z
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 16:52:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>) id 1vYAbj-0002qi-Im
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 17:11:55 -0500
+Received: from fhigh-b1-smtp.messagingengine.com ([202.12.124.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vYAJL-0008ID-Pb
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 16:52:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766526773;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u547TcdkTveH8UcxNeSFqP27P9eZkQZdciclgSu+rd4=;
- b=Wtou3mVFqizRB7K0157fU0gWJNkSUUAgIu+h/HLMGN5+aIjH921mVn89377UipxeSsK9nU
- fgrYU/+SLfbUAto8ILj2il55YBDbans2IH+acrU811zKdjbi93fTVmP5hs7i+m/jv7xOK9
- dm8374ebqc6LyzgFnCrchY8RPDvZqc4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-ojlVbTNBMhiz51Ao7RM0Tg-1; Tue, 23 Dec 2025 16:52:50 -0500
-X-MC-Unique: ojlVbTNBMhiz51Ao7RM0Tg-1
-X-Mimecast-MFC-AGG-ID: ojlVbTNBMhiz51Ao7RM0Tg_1766526769
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-430f8866932so4146938f8f.1
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 13:52:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766526769; x=1767131569; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=u547TcdkTveH8UcxNeSFqP27P9eZkQZdciclgSu+rd4=;
- b=SQnAthtmS07sRea6KicoHIztCTZ/lJaSrZrxOjzOeQK35iD8Q/ADkC9DbXUFLQzP/U
- sAqVAGevvvKgv6/keXMCvaVxTqkGLhj5jooIcD4aaRzaJZNrx+ReFll72hfuPL6YWT4E
- S/5gUoCuJEN6jSl1Rbw9dU4k25EhCLCXMZ6bU53f7Vz9t54F2PGQ3+CBaLAZ8iVXexfu
- 5fIlD8Wyt7xsUmBtsAd4GqCjga+Q7SMpnHaV01v9+jTC3EA/hQ5dQ4/wsOgy/wHkvQW9
- XuvGrRODN8qk/SgnmP1Bx9t1E7Tzjl3bpO+mFqhXebCN3OjrIKEcOybrbWvFC8Ko/1mW
- BBvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766526769; x=1767131569;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u547TcdkTveH8UcxNeSFqP27P9eZkQZdciclgSu+rd4=;
- b=lD15q/RbHdwmKUmt8WC5uRVtiARTmbhzd4lxhiUWZGHLEIl8Q0DugdAQ5ctSxvtXIt
- /R0J7haoW1z+CAmkGyqcCL/hkKn9GxIfyYFbBIirFK6pSCTJHI+w2ugg+RmQwo/c9Qa+
- uF0CE1TpwDxogR+qrMS2VFBiyUhUOMTA/df0d21drm0be8xwxlNKL/N3y8te1p+sHzvF
- iUteGzWMiA4OuZJdSbucLWjyjIeuWPxZZOIsE5UYHMupNilkcjRGQYGP1ITQE1SNVV+v
- 3cz/EFCP0Vk9T9T7n0rDgwBqCRaA9PYvm5/G/0ZiVhxooPk5Ob163P4rshn/Ipzvc59l
- BZZA==
-X-Gm-Message-State: AOJu0Yzupz9FGXzDpmzzxvMi2fihFiZdFyfq5XDDZQgQs06D4UCajONV
- RN+FTisFk+fT5wbY27jQP9XQgaiNt2BKo1TsudKT/4wQq3A5I55tgB6K3HG0pU7V/qu3lMbUbhK
- iX9RXh0JZIg6jH/U/JKwmwYuZQBTWuEhCtO9NLUy4VpKCnspxCqj3CLHJ
-X-Gm-Gg: AY/fxX7nVeLsYReV2eP1AyjFhBLitIy2d6nigiByv3I2wBP5naw12Co7RpkArGOLVGH
- 2LdK49PH9WtFVpWIqTL1t+wq9hp0+afjbJ1WDrohE9C6ZxkLN2bTNFs7yOTto3mBHvC/R0eOqzI
- A6aCvBjCjcK9icPkWge/9scq53CEJHoP+DfWtR8k0nKmS4zxajPLjiiqnSdSZpKPtMKbm0+wCV6
- PXkSSxTCMQxQxrOsDbzRDEHqQuLX+2TUhrOP3a0Z+5OCq4qhhCQT+jWd3TkCMGdbUltVZY3XhKU
- aBzKdaiu+odRgAuqE3Sp0K9clMnx5YQFMcf9pTjGt91yDV3HMFjd2R0KzIB1g+sj+d536IMGnv2
- NNdZ/Q+oPC0IdPPmtlLCQND2wa8Jq3Mb1Pw==
-X-Received: by 2002:a05:6000:4202:b0:430:f5ed:83fc with SMTP id
- ffacd0b85a97d-4324e4c7127mr19145616f8f.11.1766526769076; 
- Tue, 23 Dec 2025 13:52:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/eM6UG6mS9OXbmj1K7TVf8i4iBV9YcKi44JVUZ7vE0lJ9WQGtgougu7R0pEaDEw9wcsyhLw==
-X-Received: by 2002:a05:6000:4202:b0:430:f5ed:83fc with SMTP id
- ffacd0b85a97d-4324e4c7127mr19145608f8f.11.1766526768657; 
- Tue, 23 Dec 2025 13:52:48 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-31-118.inter.net.il. [80.230.31.118])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1aee5sm30694419f8f.4.2025.12.23.13.52.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 13:52:48 -0800 (PST)
-Date: Tue, 23 Dec 2025 16:52:45 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Jason Wang <jasowang@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH] hw/pci: Use correct bus aperture for device container size
-Message-ID: <20251223165236-mutt-send-email-mst@kernel.org>
-References: <20251124114754.79831-1-philmd@linaro.org>
- <3d5a30fd-fb49-42a1-ba1e-e2c4bfc58f83@linaro.org>
+ (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>) id 1vYAbg-0000aR-T1
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 17:11:54 -0500
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 19EEC7A0112;
+ Tue, 23 Dec 2025 17:11:50 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-01.internal (MEProxy); Tue, 23 Dec 2025 17:11:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm3; t=1766527909; x=1766614309; bh=eBkvmrnhQv
+ xN06kDe/pPmb7sXtJ43MGpYNvRd10Oiao=; b=iAgEaiHg48wRaZWoesf/5knGdm
+ QHCX2AgDVj+wz53Po4Pu/e5RiCxrjJCyj+xw63+r2tSuMB7zb24ic2DqGt2ZMV1c
+ PC9XS2By9aYoDTgwEQ2AngIcfIQS8NMSRvyJ9atprXKSCWZam/0DzkZYd2CmYj5I
+ /KkKzCmNRla/uL7f2rbgWFz0gCZ6lDJZvHH3YQOxlIn+G/kkvaI8DjMS3Q11oGLb
+ zJsUGfpnKbvUlaCUHdrLYBq+UbeXGTma66pXBfa+qhu9Agk8JMJE9BWQLxSTJK67
+ O44EMq9F/4UrbtRBcgZSJ0J+IjJ8uNeKpVOHzyV38pdyHG5BGjXFrpWVClbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1766527909; x=1766614309; bh=eBkvmrnhQvxN06kDe/pPmb7sXtJ43MGpYNv
+ Rd10Oiao=; b=YQtSyQLlyjw0EoAVT6iwtTdDxHg3bidOuo9k3W+g0w35oNKdLYu
+ gPYcKt++Vq+PnWaLBdCCDCn+40VSrghO74HOGX9y7nnj20+bt7cmS/WKNuX87j1b
+ rIwvGj+9LGr+LBOG0D04TvqbyR4pnG7XFQ/p8tsEQsN4AewPcHkmTCrRtzVeZkgA
+ SbhjdX8udzfLVqYS/yEZTpbMu5NIPw2OICm7rRntCl0YExLQsUCdJnSwRVczov3W
+ 71uXjKaEmVC9ZTAGspy+ptMWq1FUEGSkMKaAmXvY+hTXUGq8ZOik0WGFlwlAQHI6
+ a/CIvQYc6SSDdZONCT+/nA73M5xb3LKVAdQ==
+X-ME-Sender: <xms:pRNLac5or0DBfwIRjV1df87FQShTEY5OknbhlJrN1Rh3goxCdCt3qw>
+ <xme:pRNLaZUBV7MaUcZZN1m0Bs4NyCU44CZDDFbbAQwOpLsa0Nk_kzUrvKnJx7cL8aYrH
+ rrd2Y2eA4F8h7NVHg2bbT_79IkO1aS8Ll_XVTmYKti-ltJjjTFe>
+X-ME-Received: <xmr:pRNLae-dvrpe4pYlPlWmHS8_7l10ABcO_sJXMrhTBWa2KPjHuu2cPLZqfOM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeitdelkecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
+ cuvffnffculdefhedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtuden
+ ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
+ gtgidrgiihiieqnecuggftrfgrthhtvghrnhepgfekgfdvveegueekvdeggedtvdejveeg
+ tdffvdefieduhfetledvgfdvudduffejnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+ enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
+ rhhitghksehsthiftgigrdighiiipdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
+ hpohhuthdprhgtphhtthhopegtlhhgsehrvgguhhgrthdrtghomhdprhgtphhtthhopehq
+ vghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepthhhuhhthhesrh
+ gvughhrghtrdgtohhmpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdp
+ rhgtphhtthhopegvthgrnhhouhhssehnvhhiughirgdrtghomh
+X-ME-Proxy: <xmx:pRNLaVnfjrqOzmVgd6Js4ku1tqMzn-JSQNVnlAq942Px94D4bHmo-g>
+ <xmx:pRNLacWhnYI11PMtIyTGVBjqUhCKv1naWz71WoFRXSXPD4QS4XOndg>
+ <xmx:pRNLaSEJsrlc9PeXhmDKPiU5b2v07hLxNJZkq_YpEBeocGC9ZbH8zQ>
+ <xmx:pRNLaQdGg0LpRzlxEhw65klKFi3ShKtg8-lGr6ZmKFpe6NyAxWGI8g>
+ <xmx:pRNLaSAyENxR5aVT0QUzR-qt3BgY-UroBOuH_IoTkMjtI3ugwZmUftZ6>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Dec 2025 17:11:49 -0500 (EST)
+Date: Tue, 23 Dec 2025 17:11:48 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Ed Tanous <etanous@nvidia.com>
+Subject: Re: [PATCH] tests/functional: Fix URL of gb200nvl-bmc image
+Message-ID: <aUsTpG0EGPh29pUL@heinlein>
+References: <20251222073351.166720-1-clg@redhat.com>
+ <100505ae-4d33-4bd4-800b-6ab21b99738a@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="a6IdNjDPsXD+WBgv"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3d5a30fd-fb49-42a1-ba1e-e2c4bfc58f83@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <100505ae-4d33-4bd4-800b-6ab21b99738a@redhat.com>
+Received-SPF: pass client-ip=202.12.124.152; envelope-from=patrick@stwcx.xyz;
+ helo=fhigh-b1-smtp.messagingengine.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,36 +111,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 23, 2025 at 02:52:20PM +0100, Philippe Mathieu-Daudé wrote:
-> ping?
+
+--a6IdNjDPsXD+WBgv
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Dec 22, 2025 at 01:52:19PM +0100, C=E9dric Le Goater wrote:
+> On 12/22/25 08:33, C=E9dric Le Goater wrote:
+> >       ASSET_GB200_FLASH =3D Asset(
+> > -        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/m=
+aster/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348=
+=2Estatic.mtd.xz',
+> > +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/m=
+aster/images/gb200nvl-bmc/openbmc-20250702182348/obmc-phosphor-image-gb200n=
+vl-obmc-20250702182348.static.mtd.xz',
+> >           'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db=
+0dbc')
+
+Should we make these commits or tags rather than `master`?  Right now it
+seems only Catalina uses a permalink where as all the others appear to
+use `master` references.
+
+functional/arm/test_aspeed_catalina.py
+14:        'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef8124=
+5b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina=
+-20250619123021.static.mtd.xz',
 
 
-picked it up.
+--=20
+Patrick Williams
 
-> On 24/11/25 12:47, Philippe Mathieu-Daudé wrote:
-> > Before commit 3716d5902d7 ("pci: introduce a bus master container")
-> > device view of the bus address space was correctly sized to the
-> > bus aperture, but then it always used a 64-bit aperture. Restore
-> > the previous behavior, so devices on 32-bit PCI only see 32-bit
-> > address space.
-> > 
-> > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > ---
-> >   hw/pci/pci.c | 3 ++-
-> >   1 file changed, 2 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> > index b1eba348e06..64f33b9de04 100644
-> > --- a/hw/pci/pci.c
-> > +++ b/hw/pci/pci.c
-> > @@ -1375,7 +1375,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
-> >       pstrcpy(pci_dev->name, sizeof(pci_dev->name), name);
-> >       memory_region_init(&pci_dev->bus_master_container_region, OBJECT(pci_dev),
-> > -                       "bus master container", UINT64_MAX);
-> > +                       "bus master container",
-> > +                       memory_region_size(bus->address_space_mem));
-> >       address_space_init(&pci_dev->bus_master_as,
-> >                          &pci_dev->bus_master_container_region, pci_dev->name);
-> >       pci_dev->bus_master_as.max_bounce_buffer_size =
+--a6IdNjDPsXD+WBgv
+Content-Type: application/pgp-signature; name=signature.asc
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmlLE6IACgkQqwNHzC0A
+wRmssQ//WcrnZbksSpSC1L0xx/4/0wcb24d2TbC9QuFwv67XEVtmpgZEjd2TLk0L
+jfhTsmCbUuG6bpBdcxYI76jP7Wy5PVfLhQ0gESWLPUIVEKPJ8//+3efoQORwv4TZ
++c56brHjFR5/aiqr9wu1+pRZMfXg1LjOczR3rD0XxUeiWoJQSHUHGhO7r1k2f89h
+ZB3QZQka+Xisg1nnu9KdeR3D6Uk5wVIr8zsTt+OqmKGYwvdrGc0lhx2SGVCtpi5f
+zSjBCXxRKqLBVBrZuLyqohhn73e5UQ08SjIsIOs8s1C740zgN0dzlSljoTkVkGOK
+tnwgGqd7PcKAUy0I6UyxTku83XJG6P6w7byhuHWSo5yUFxpgdAbn2QXPrZEqsO7v
+kpncPCUCgKV1l59JtysT39ZVP48P2hjX9ezM6/pnSVwWXN+D2NzO0cEiW3AX2M/5
+FOrCS9QGByx9MInpx2YWxC0Qx/PMrnwh2tSY1dYWToWhzpv/tw4tONJr/6mqZ+Pr
+jJhInArrnVEwG6fDvHnQdW/osz7cDgN4PL5OQgFPn7Un6Wn3PyEaj96BxGsTcjJz
+ziXQUm3bcn+ebn/yVoqpM5rxGmpvzVAer7aJR7gLJr3QgHx2X5/VIPvcbgfleWcb
+7K7mdMje1AtqJ7YVD5+6z0oj31IoHaZnEF95MUuleK1JH03e9mo=
+=a3gI
+-----END PGP SIGNATURE-----
+
+--a6IdNjDPsXD+WBgv--
 
