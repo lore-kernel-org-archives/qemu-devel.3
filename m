@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FCDBE6F095
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6454E6F090
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY3Q0-0002Wa-DH; Tue, 23 Dec 2025 09:31:20 -0500
+	id 1vY3Pr-0001iS-Gl; Tue, 23 Dec 2025 09:31:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3P6-00016E-Bk
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:32 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Ow-00010u-44
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3P3-0003kF-9f
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:23 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Ou-0003hJ-2z
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766500220;
+ s=mimecast20190719; t=1766500211;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JehPj5TZr+uKMtkS/2KpWg/wrctBO/xMsTh7F8UK8JU=;
- b=bZ2PIlay9YvNKesL8JE6tDV09T46vjGXeqlQfBUV8w1GnwUcwzZeoGe+mYmEcYoTXyVj4l
- NAL3d+9dRYGkv9RuHRyeHIJAWPVtqSeHJRAMN9H5pVJDH+xomWJ9NNJzyDjvwFctwY9AXH
- 85t6j9rzK4RMac3wdTXkbWO8KajG/Ck=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TTDOiW/Wq0+UwfLB6nQCcn38uaqN2wIwa/NSTff1+GA=;
+ b=IeJnGcnYBuDuiayGjSKK26CoFRszMF0O3blDJamF6HKD8T10je0hXeCCa93P/EqYu+P+N5
+ N3aPSZ9JcODM4uIryt3VeeNsh09UAmEWh4bQU2GlKTjWsFLpHe1Ezio/Q4kfFtJN/kU7X4
+ JVgiXrPEjOVn6ZpX1mq+XF9jUIQxP0w=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-HCiS7govM1WKncJNfzHjbQ-1; Tue, 23 Dec 2025 09:30:12 -0500
-X-MC-Unique: HCiS7govM1WKncJNfzHjbQ-1
-X-Mimecast-MFC-AGG-ID: HCiS7govM1WKncJNfzHjbQ_1766500212
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-88a2cc5b548so135124726d6.0
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:12 -0800 (PST)
+ us-mta-76-XSmmCwDXMA2eE8Q2D4O1Tg-1; Tue, 23 Dec 2025 09:30:09 -0500
+X-MC-Unique: XSmmCwDXMA2eE8Q2D4O1Tg-1
+X-Mimecast-MFC-AGG-ID: XSmmCwDXMA2eE8Q2D4O1Tg_1766500209
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8b2e19c8558so154710785a.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766500212; x=1767105012; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766500209; x=1767105009; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JehPj5TZr+uKMtkS/2KpWg/wrctBO/xMsTh7F8UK8JU=;
- b=L+dZNoP4YavFZZByRTEy/WVfFvgRVyZHuH3IoYpLUef92pVDvaMTlSp5ZBrTxmGSKS
- BFAkx15rIiPaYphY0J9BYdVFAjunT4/+LgjNXaPaFHmBzIA3obq74yEEANX1izp4wVmh
- 94ta/N5PIaHvdzDkZhzssB+kwr3SrsCC4UGIb0chMniIZuk1pbrRf5XdBpGrgTlXSe+Q
- wKHG1ZZfDnamJ0nYZAkq/fa1lCFkwpFFevOxJ4+lXPDmyf1MrJNBz16x/QZGqltqMqjX
- DQ+f0Dn4VYmNtPkbbSVKt2lcDRnIQHAl2VV+fAF4bQjuriUjLSWo3SkzFb4UohDZIdex
- Emxw==
+ bh=TTDOiW/Wq0+UwfLB6nQCcn38uaqN2wIwa/NSTff1+GA=;
+ b=GDh3X7YCCSeTk5i60x9pB8KOQ6kcG2HX5+elUyo7ku/a9Il0ym7MTnF1CWnhnevH7B
+ Oa1xXQs82ug+dcg8SChnf06Zik5t08G5CjEdKF5YHDnlF70P4oP+ZmtfEgAdrAUqUFT6
+ OWrZKHjQQfbOuOgnWt9Fd1tYBfO/OHvIn7bGAqlf1El8EkoGa6hIeLh25tBR30dHg3xX
+ FyJv8oJiZGdbRqb4VKzQ4htD9NcSz6DGuCxlkCEkNy5UIXxVj6k63zEYFHfFlGNd8K5k
+ grucCpYXzZb/zK8FnxKCg0e5nrESKQS8iR4wgd2KjhF7pR4RYdkJ02TThbOXo4aPpA+z
+ WRMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766500212; x=1767105012;
+ d=1e100.net; s=20230601; t=1766500209; x=1767105009;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JehPj5TZr+uKMtkS/2KpWg/wrctBO/xMsTh7F8UK8JU=;
- b=EQFLlpTdBFPTFXaQMd7aeG0RqZTHHAHnk0sw/jySkaHXmBhrddlKj6e6FJEcvs1gTP
- 3Kx56rmmI7i2vk2wDAIfjgQYjj/E3O9a3syhEj9Fd3Y9d4tFM8bYBsGPklphooYZB/7/
- gwU/lUlFTwbnVOKjp11/3mTWRKg56r4SV3jyj8CT7tCdvHBtEsbTIvZv8rXojuAMXaqi
- c3JI2YkeMusy4RvO805gCYbEzDT7vRzWb+anrRFG6Xe7nBfMpgk/OfrKIIzgw1YRGMBD
- kXU6vyc2XsXSHvNXgHmcIaNYyM9gYpMHvhfs4GuTK/zBwLwQIFF273ADEpSUdh6ELE7o
- AWHg==
-X-Gm-Message-State: AOJu0YwRP6SfJ5OEZvVQWD6I8Zw2yGGVMQfH/qSf/q7z+J/0qvJWUdZR
- IwK04YBNak1cXtBzcUpzzxoU7uBK6IV71H2jh7OYmamYuL/YR8x/C3uRXDB2UX1dR8iQSH7Ia3Q
- +b/uwerNPUE23VfOlbYJrCtk0k8Gu4wKwqJKjOfUTu2FAnYk1Iar/GO7SYRjEGmxsO8bocXGTSp
- AY02onYQYBNDV8nsbppLOMi2h79z/SFyTWRny4XA==
-X-Gm-Gg: AY/fxX6FGf2d1oHl8XCQcMZWDJhavEFyS4ZXG/HYsCKmaE9UecPAOuACwDmc/4MRhI6
- dIfqI9Yxmuv05KRIYLSHO5ByOy5gJBkHnVBowANIocTsHJFdel1DrNzZDVPDTe1ORujSYFPK7pb
- w47icYQnNBet9XPKP8xPWi3BaFmYkBrS3109bcpJhPXdbdPAVzHkrzqouUEtRKxtKzZ5ehX+Ctm
- tYBVZCDFRSnqVnvJfDuhiorDSQ6toysKT8aoCKYIbXj9F9IHnY1ZpQumLGQNPLCdseYcTthP0bG
- MSGW6rLnz8reEKGrQKPOkdZljD38oRXjtj4rOduA8qbcdVaZI3vPm5wHnOWQSi0zE9cNMs4yGLL
- Rn2Y=
-X-Received: by 2002:a0c:cd91:0:b0:88f:ce0b:a008 with SMTP id
- 6a1803df08f44-88fce0ba2dbmr93961016d6.3.1766500211748; 
- Tue, 23 Dec 2025 06:30:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH5ewQLS2t/3mdlpDnEEO3m7bTVgNdkSOJdCFVBTHu9OTrNNWEitDHiFqFBxvf7BkSoW1Pj8w==
-X-Received: by 2002:a0c:cd91:0:b0:88f:ce0b:a008 with SMTP id
- 6a1803df08f44-88fce0ba2dbmr93960276d6.3.1766500211198; 
- Tue, 23 Dec 2025 06:30:11 -0800 (PST)
+ bh=TTDOiW/Wq0+UwfLB6nQCcn38uaqN2wIwa/NSTff1+GA=;
+ b=nurzGzYhGdMAhxbFHm56+vcTnFyXoP0MXcNi8lfE2V4rdeTe07LXrgeiUsrmqAh54s
+ 4KzackgTZOWSn9Ia+RaSzoDNukcMI6aK6Ryr66c9Zt+C0LhfrqFHtOUqHj+lzHqQeiLp
+ 9/mfR8ltWGdY+RFM/YqHm+x7Lpa4ixt8wA5D9arCs9Pzg4DbA3/9gEJQK0JFTOOMuWli
+ TM4qWHrXUbA9f1DHFFNAL6yXfc9c5T2jTnxX0r8+b8PTOFIdhHMCn5mgwixZaeuj0DG0
+ KGpLdjGxLe4LZ6n0aAXcmPTTdEqnGroasPYr/ENUlxzW6ghEaazlUR8TjaS/sMNIiF6d
+ jLoA==
+X-Gm-Message-State: AOJu0Yy87x7BnEd6p2e18Bi18yJwnwLi9dfEvgGfIkQaB0voxYYCtipi
+ za/QrgP+w6ixIoSAXodvFBGMI/g3vlKSO+jCsHR1EnclcHiIKa0mS68wTi8QiRobt9jJFLvuw9X
+ ZkTs+CcrdfMqQtK1lummP513g6AnpuC+SK+k9eX3aFEe2Zdv/0AJGQ1v508ux0J8Sfvtpiv//sZ
+ dt9iZOIG+PQagwX2/fT8aezXrBiaEhNwq3wtuGuQ==
+X-Gm-Gg: AY/fxX6pUqjGCwfY8pUhJzcjPWlvOKW6KjaoxjGqpPYTDRqj3f6cMZ8LS35HGpqLARK
+ dq8Duxfc1YMcojo5RRBYjovoyn12/dJKg0Dwx2HWOmGylkpybHu7V4k++eDuk0bItkrHN+FOPYy
+ IH0cjbAlo+d6sSzV1mIucd9J1Xt44i9AGUEAcBZFc/VChViAO5zq4gcsu03PNTqzMQQhop2FpFP
+ VcVbhe1/OISLnuQg0n0dfPRMXqgIfqdaWX4ZK/mC/JYiWjWzc5+C4/d+EAAlaJ3Vf9Nju9Mdow8
+ W6buPyL1BvfWpK9knVB6qgFq59NKEcqUxQ3r5+y5gFvRWEiCtbtmPZoBe2ylWbimnVOMNgsdB6i
+ A+LE=
+X-Received: by 2002:a05:620a:294a:b0:8b3:c8ee:7240 with SMTP id
+ af79cd13be357-8c08fc00b94mr2500177685a.5.1766500208979; 
+ Tue, 23 Dec 2025 06:30:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFzV/VTqm5/++H2CUARLN9+xV4/hHr9kAxP1KKfkimPuz1hf0BDyCf+QmHJSiyn639yJivm+w==
+X-Received: by 2002:a05:620a:294a:b0:8b3:c8ee:7240 with SMTP id
+ af79cd13be357-8c08fc00b94mr2500165785a.5.1766500208081; 
+ Tue, 23 Dec 2025 06:30:08 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.09
+ af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 06:30:10 -0800 (PST)
+ Tue, 23 Dec 2025 06:30:07 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 07/31] error: Poison g_autoptr(Error) to prevent its use
-Date: Tue, 23 Dec 2025 09:29:35 -0500
-Message-ID: <20251223142959.1460293-8-peterx@redhat.com>
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 05/31] migration: Use explicit error_free() instead of g_autoptr
+Date: Tue, 23 Dec 2025 09:29:33 -0500
+Message-ID: <20251223142959.1460293-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251223142959.1460293-1-peterx@redhat.com>
 References: <20251223142959.1460293-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -122,52 +119,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Markus Armbruster <armbru@redhat.com>
+There're only two use cases of g_autoptr to free Error objects in migration
+code paths.
 
-The previous commit reverted support for g_autoptr(Error).  This one
-should stop it from coming back.
+Due to the nature of how Error should be used (normally ownership will be
+passed over to Error APIs, like error_report_err), auto-free functions may
+be error prone on its own.  The auto cleanup function was merged without
+proper review, as pointed out by Dan and Markus:
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/r/20251201194510.1121221-4-peterx@redhat.com
+https://lore.kernel.org/r/aSWSLMi6ZhTCS_p2@redhat.com
+
+Remove the two use cases so that we can remove the auto cleanup function,
+hence suggest to not use auto frees for Errors.
+
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/r/20251201194510.1121221-2-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/qapi/error.h | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ migration/multifd-device-state.c | 3 ++-
+ migration/savevm.c               | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/qapi/error.h b/include/qapi/error.h
-index f3ce4a4a2d..2356b84bb3 100644
---- a/include/qapi/error.h
-+++ b/include/qapi/error.h
-@@ -437,6 +437,26 @@ Error *error_copy(const Error *err);
-  */
- void error_free(Error *err);
+diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
+index fce64f00b0..db3239fef5 100644
+--- a/migration/multifd-device-state.c
++++ b/migration/multifd-device-state.c
+@@ -140,7 +140,7 @@ static void multifd_device_state_save_thread_data_free(void *opaque)
+ static int multifd_device_state_save_thread(void *opaque)
+ {
+     SaveCompletePrecopyThreadData *data = opaque;
+-    g_autoptr(Error) local_err = NULL;
++    Error *local_err = NULL;
  
-+/*
-+ * Poison g_autoptr(Error) to prevent its use.
-+ *
-+ * Functions that report or propagate an error take ownership of the
-+ * Error object.  Explicit error_free() is needed when you handle an
-+ * error in some other way.  This is rare.
-+ *
-+ * g_autoptr(Error) would call error_free() automatically on return.
-+ * To avoid a double-free, we'd have to manually clear the pointer
-+ * every time we propagate or report.
-+ *
-+ * Thus, g_autoptr(Error) would make the rare case easier to get right
-+ * (less prone to leaks), and the common case easier to get wrong
-+ * (more prone to double-free).
-+ */
-+extern void
-+__attribute__((error("Do not use g_autoptr() to declare Error * variables")))
-+error_free_poisoned(Error *err);
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(Error, error_free_poisoned)
-+
- /*
-  * Convenience function to assert that *@errp is set, then silently free it.
-  */
+     if (!data->hdlr(data, &local_err)) {
+         MigrationState *s = migrate_get_current();
+@@ -159,6 +159,7 @@ static int multifd_device_state_save_thread(void *opaque)
+          * return we end setting is purely arbitrary.
+          */
+         migrate_set_error(s, local_err);
++        error_free(local_err);
+     }
+ 
+     return 0;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 62cc2ce25c..638e9b364f 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2823,7 +2823,7 @@ static int qemu_loadvm_load_thread(void *thread_opaque)
+ {
+     struct LoadThreadData *data = thread_opaque;
+     MigrationIncomingState *mis = migration_incoming_get_current();
+-    g_autoptr(Error) local_err = NULL;
++    Error *local_err = NULL;
+ 
+     if (!data->function(data->opaque, &mis->load_threads_abort, &local_err)) {
+         MigrationState *s = migrate_get_current();
+@@ -2841,6 +2841,7 @@ static int qemu_loadvm_load_thread(void *thread_opaque)
+          * return we end setting is purely arbitrary.
+          */
+         migrate_set_error(s, local_err);
++        error_free(local_err);
+     }
+ 
+     return 0;
 -- 
 2.50.1
 
