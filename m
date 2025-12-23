@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31055E6FE23
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 17:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D015E6FE23
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 17:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY69N-0007h4-0k; Tue, 23 Dec 2025 12:26:21 -0500
+	id 1vY69I-0007fU-LM; Tue, 23 Dec 2025 12:26:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vY69K-0007gH-MS
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 12:26:18 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1vY69H-0007et-SV
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 12:26:15 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vY69J-0002Mt-3p
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 12:26:18 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b73a9592fb8so983538866b.1
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 09:26:16 -0800 (PST)
+ id 1vY69G-0002MJ-Go
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 12:26:15 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b734fcbf1e3so1023073966b.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 09:26:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766510775; x=1767115575; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7Rde5OrYxFRDd6W+VT1CBE62Mao2oxteoXB4bZ+nSYo=;
- b=gQWaU5wt5la06lze3FXytbEDemn/dAtYbULFwjNbqEQOKyE7BR0dZwX2NlY4ij/a8r
- lAqSfyZxm8uXSYPUow9CDJZDykHTtldj7pQ72lsnd7b3cdKmO3hJcERTOSk5nhQj2ZpW
- PFnZGZCC3EAO5foDUTDMOqiIg0HMt1v0iW4lsH1rJuEjdO2p4Bq/rBuVxJt/DCfni0wC
- d9FoAE8yKJuy/GiMPDNMHl3tfdHPNWTNuYb/iS9w3nIIX9FrhwFhOhdaIt/0iL3JN2sb
- ruyz7urY9lJaFNsxabA4egn6iCwfNmbc3HhJziNrk/kE51VOaR4dG0E47D9L/r3b65xS
- b0lQ==
+ d=gmail.com; s=20230601; t=1766510772; x=1767115572; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jdSrQ7BPT4/es4jfLjmE9LTAbNbt7LmG3QP22/iV3Ms=;
+ b=Xk81r6VUNeATPHjmk4tBle6dgKS558BwuKbgzazCkje392/q0fWXvKJZvvogp3CnNO
+ 3dqK0NfeBnMzDfIuDYMkzSB0ZsSk56N1sN9zlpbfeyUvjvfV0KS5YPCQH1gay7AYEHQT
+ 0JR1PmkN7ETqgz5yoZv94np5rqRCOvLHZpc89SUNz2q1Fnx7e1YawHL7DAmRRxnPBhS3
+ IbolJinEjd2SO/s406vVn1fjr7/wcKM399U2PMhOWr67QNpkTwiIDLbLym1oSAvTzHXy
+ edCl/CplUqc1IdAI1Juhr5CfkNiRnNi+a7S+mxkltmtjz1+C67Bv3uksnV42tbpfgfWH
+ M9eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766510775; x=1767115575;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7Rde5OrYxFRDd6W+VT1CBE62Mao2oxteoXB4bZ+nSYo=;
- b=j2lviMced60tj2XPEhGCRv0J/N7uSPwcWqwbBAOmX3PajnOSrhKsNCGLUYNikA3DPs
- rv8n9yXTZGRyKXjLs6+kIYpScIwFydV0bfkd82SteYGMXUY6v5iu9Dnuxt+TSd9EozXe
- +w5caiCiOhKHmshF0lMinX7CqckjiKsBaYWn9RaFGwL5KBlAChVFcme3vXL74Ugm1aUw
- ao79f9TnE1tbQFTlFL5jx+KqTXHGH4k10sjrhQLapfGJrChZ/BswDhjZmtyLWoDVez/r
- XnTydRONMw+mGJYYcXUiKuUMXVTQfs0xziPx9trIGPJA3yIvoPMHI5NDZiEiby1n+p8m
- toxw==
-X-Gm-Message-State: AOJu0YzC6UdwKiJUwWwpnnnUVbtSc8vjTBwOWPEhFCsaKbXH+LHxhD9o
- oh4nCo0P3e0P+qNWLLhzN9PtV63vQhJ6uVSOzjDSQM+r8u6ZjPlwDxpZ9xWBbc6f
-X-Gm-Gg: AY/fxX7K8QAaqa865lDy2zjKFnEiTNIB2wT0mxEgTvjgnHtWBneext6iUPNXHQKPxfw
- h5itmnU262lhmScY/DvKH1yOwuHwhU/n8YrIxGE45oF844/goL7eyCW8VeQN71PUiQoIFgiOQrp
- 8BGvH4OlSbyHuMq0r+iDdRVsffYcdoHOBpig6iVovHiHuoaHGQi5y/FknSwfC1+ZBG0+FB4yo+R
- HzOYdQzJPE8YSErEewzIHPkcYCBkseg3FdRno7TwUYFx/QR8LZ4lKkprTp4S1jpL+NAzHQoae4x
- lFUh5FBxo5PxNlmoLeuhGQWYxMyBM+cXiXu4eE2EKgTtafPKyMdyrFkTFvdBuvyWT8ufGmqffT/
- fL4y0zDAKQDzMXECEmEBWdSpjJMVzxz8FIt/ZQaJp5NgbJLOC9BkUEimPipYQb012k8FCGrUjwM
- oBB/GAl8ZVSHrkD5qMxZvZgz8NRA==
-X-Google-Smtp-Source: AGHT+IEc+4C28275WdpB5ngzcklTO8pv7V1QS34W4HVm55M2gqr/SZryga/RYh8vIrbj8U0vm8muZQ==
-X-Received: by 2002:a17:907:7708:b0:b72:671:b2a5 with SMTP id
- a640c23a62f3a-b8020400974mr1494134666b.3.1766510775508; 
- Tue, 23 Dec 2025 09:26:15 -0800 (PST)
+ d=1e100.net; s=20230601; t=1766510772; x=1767115572;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jdSrQ7BPT4/es4jfLjmE9LTAbNbt7LmG3QP22/iV3Ms=;
+ b=Aj/doLyeCrpMEGsJu0mxMzp27XNdDosZqy+1dP+svFDbVvVSaOiZPcxSehhcAnNqNS
+ XpyLmk37l54iqyuEGyV8rvaSk3Iib3pgzhW6IsYRphv21KIPELByRBejXBzvZF1ugouN
+ Iq0PGp4M73vydjTZslVRM9mJmIEfgsMu1LW1XgPeG3E8kdggq+/HvhzOWv1hVA61pz01
+ rdEHsq4DHshD+dAXliRV7OCnl4PJTEB2m6et/dgGZXw0rPL1nT15cJGrGRLaravLVDaz
+ wTI6wnPrABBgg8HZaDynzQIGAkZcGENAjaMJa6YFP0civLPK/LN9Bn+fVNSHUEIFawji
+ yeIQ==
+X-Gm-Message-State: AOJu0Ywu4Ewj0e0bLXE/9UiHxDLHtKisYKBRRMWqKMDjNgMXWPbRaQyJ
+ BwCxiM52/g8OFB6Fj3wdzpCmAFeKdF42OHxvQJhXo7oP/yPhMdlbM5FaGOHHdRD7
+X-Gm-Gg: AY/fxX7pVpOwnS7v0axbWs5QMgXzit7t471mLU9EQ5ZM9GlCyfqUozEQiZ3BF3mZsUf
+ Xeen5p8+ID+saL7ZKe8+g3wT7akRfRVBvuqE9beEpXftBlM76nOrhd+2jl2Rs9utOcfVzjH8YTi
+ y8d5LYFgWXBhyZYQ6L0hpTFu3XCYPkhi2qkkMqag+So4v5gN86V5fj8ADijHNx963tKSxKy3cn4
+ nc3s3mEzfGPMs305CJc1oB6kmiLsaIWDT3hwczr6x2cR0A+4Db20T1xQv4oB8iqLDO/f894FNq2
+ 9KBiO1D+6UY4Ah5gpnua+rkxsFECmAnI8HYQEZBxhhj25w4BnqbbtXLIlUzjEhD/+iWtVXd9jJn
+ qkipS8uxe1W4Hjz1s5zPWUxbNBZnjk00QQ75ypJhb4lqdgTFIz1DyInTx74C3hEPWT2BZSxQsWi
+ dOTM2vyylgjBFisTqRcL7Hi10GIJ2LoqnCEbHB
+X-Google-Smtp-Source: AGHT+IFqJISXNjzTIDcq2qSqkrYDNITkcB/1L60n+yWQdPxBc3oTpwfCrxbfMQOE3b2115plKdM+sw==
+X-Received: by 2002:a17:907:9406:b0:b73:9792:919b with SMTP id
+ a640c23a62f3a-b8036f0a57bmr1551955166b.13.1766510771928; 
+ Tue, 23 Dec 2025 09:26:11 -0800 (PST)
 Received: from tuf-gaming ([82.78.167.169]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037a5c4dfsm1465822666b.14.2025.12.23.09.26.14
+ a640c23a62f3a-b8037a5c4dfsm1465822666b.14.2025.12.23.09.26.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 09:26:14 -0800 (PST)
+ Tue, 23 Dec 2025 09:26:11 -0800 (PST)
 From: =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?=
  <jean.christian.cirstea@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
  =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?= <jean.christian.cirstea@gmail.com>
-Subject: [PATCH 1/1] linux-user: allow null `pathname` for statx()/fstatat()
-Date: Tue, 23 Dec 2025 19:25:48 +0200
-Message-ID: <20251223172548.1847032-2-jean.christian.cirstea@gmail.com>
+Subject: [PATCH 0/1] linux-user: allow null `pathname` for statx()/fstatat()
+Date: Tue, 23 Dec 2025 19:25:47 +0200
+Message-ID: <20251223172548.1847032-1-jean.christian.cirstea@gmail.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251223172548.1847032-1-jean.christian.cirstea@gmail.com>
-References: <20251223172548.1847032-1-jean.christian.cirstea@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=jean.christian.cirstea@gmail.com; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=jean.christian.cirstea@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,27 +99,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since Linux 6.11, the path argument may be NULL.
+Since Linux 6.11, statx() and fstatat() syscalls accept a null `pathname`. Before
+this patch, qemu-*-linux-user failed with EFAULT when `pathname` was specified
+as NULL, even for Linux kernel hosts > 6.10. This patch fixes this issue by
+checking whether `arg2` is 0. If so, don't return EFAULT, but instead perform
+the appropiate syscall and let the host's kernel handle null `pathname`.
 
-Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
----
+Jean-Christian CÎRSTEA (1):
+  linux-user: allow null `pathname` for statx()/fstatat()
+
  linux-user/syscall.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 2060e561a2..e1b61f6dc5 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -12142,7 +12142,8 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             int flags = arg3;
- 
-             p = lock_user_string(arg2);
--            if (p == NULL) {
-+            /* Since Linux 6.11, the path argument may be NULL */
-+            if (arg2 != 0 && p == NULL) {
-                 return -TARGET_EFAULT;
-             }
- #if defined(__NR_statx)
 -- 
 2.51.0
 
