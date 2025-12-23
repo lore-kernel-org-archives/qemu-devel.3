@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9D95E6F08F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 13:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B55AE6F092
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 13:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY2oR-0000kA-IS; Tue, 23 Dec 2025 08:52:31 -0500
+	id 1vY2tY-0003Zx-Ej; Tue, 23 Dec 2025 08:57:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vY2oM-0000gK-JU
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 08:52:29 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vY2tP-0003Tk-Hi
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 08:57:40 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vY2oL-0001rh-0R
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 08:52:26 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4777771ed1aso34946795e9.2
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 05:52:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vY2tN-0003Ra-VT
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 08:57:39 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-477b5e0323bso30644865e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 05:57:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766497941; x=1767102741; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1766498256; x=1767103056; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=u7wWlYmrAgO8bdyvhnML4oxM6/37y8Frcf8ePZRcyKI=;
- b=seBAGXVYhaksUzdb1A0G3EMARZoJayEcS5NHcjCV4eD5rsbISvHuHFaJo/ltAq05EG
- RLYJoBkI5HErlBwMPOtobnbNXEu9l/ABpRkQ1BvVDKzEGg16Pa9xNutR8/mKoOQNbRha
- /wL0VLOaiteMcfh8117qUOLJztnRGnmsZuapEoCrr7dM2yawoRvmXfnpK9Pb5AoLWP04
- pAeSSocHw8PBT4hlxzyJdjZxUaVX6kIA26y6b3Eu0Uy/Cnl62EYw7b2G64Hdsa0rWtBE
- hMBxF5MnWPGlkXVS3L7mkQaxoZtuHSe2L5b5coAlRSfYcUY/EhhViq/NVi1lvLR6EPxW
- poAQ==
+ bh=0zv0VoXQw0uynzKEYuj8FiOWleU24kANb4bceU8fZX8=;
+ b=OPbobBwZnNhsFeCNtmlh8UqFpQ/EKkYduJ2YVOc9lsmvi6Y3rxY9uvoJEHm/oVa/Ad
+ FkQREx907JohN7t2rptCrUn0DXClWPHYOwlL5UQ+jUFof9TpYSHd05U4FDaZ4kE1NZ3z
+ 21sZnPjJoxBwOUUXLWvXQjcZcG66YOPt4O4Nkz/DBbUwZh/D1ueEC8WHDOaAgx7ZtL9I
+ EZXTP5REh1u5yVbRjQyYCnjlog47bOseP15R5L1TahCQOsB0wmsMcPB1ZA9TIP9eiopF
+ io+wD5ud+BUYpDSRVbizHDhzgwtxo/pgpDI7Iv+507tYBkzFuCjW/fDESkS71rFoSSp+
+ eVbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766497941; x=1767102741;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1766498256; x=1767103056;
+ h=content-transfer-encoding:in-reply-to:references:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=u7wWlYmrAgO8bdyvhnML4oxM6/37y8Frcf8ePZRcyKI=;
- b=LexrXr4yxoyt0ZKWt20BYY5z6qLxJcg3f9TfJsxyG4KdOZqrul8vDpbCMSmwyBevD4
- zKtLrcoSAWRjWI3ThriB2n6asaUPaXH59i1JrG83q5YRywKX4bWdE4M1GW7Ireu1PiyB
- S1uszv9PZgQ7YZXDaJPrkj1wPEaXzCn5D8NvrhU2K3+R4Eka3o+FHrXenYEDTa18GbgF
- YbeiaGrd8OtaWZCAM6Reyi8zJpARscJodusiVXRPvpWqp2viW447Dw6dQ7rPp2cG9at6
- EwzzmrooGGhgew3k8BPE4Ge3ign6zHQ0ZVRy+Rx08CHjh8KAc7222XL8YKFtDmAWyNN2
- rdgA==
-X-Gm-Message-State: AOJu0YyHQIzympsmh5hohdM/DDQtW1FY4eZZjKfpzV/zwnHKEzCgefNi
- ukouTRX+dAOnqTvxXWcpSH1zpy7A8d284Z01DifDoEnq7YfxQsOlTg37HFgjRWqJwBlZ2bKnOub
- syB0RZxY=
-X-Gm-Gg: AY/fxX7YbAn2c8yHEssNKOOPznfPEW0FdcDosWXABPmxrsowdLfIuMpikVVNNRQ1UOq
- iZQWn/U67SSq/TZ9ZYaFy8kl4QLUtfvGVWbYNXaztCSKzCxZHVQd7ovpA7ZjUe3NvyXX1qqBdj4
- TtWvDeAADxAUSEhoQ9lL3lKEOPohYuCYCI0Rjk3nFOK8NRHOS479oAPhVPsQ80ZNncG/CuwVm/y
- kh8YfdoIrUtPXIoGS8FzxcYHF4Hu9V6vlA87pf10Au8pTtSYiFPzm9snoB+wK414C14ryIjXdfk
- e2GOHdVrFmQqSi8fq5Tiltvxa9Eo6Sn7UwV2ehKN0BrDJ8mCrZ4TsCGQILuMEL2bQUIAev8ZtbQ
- cDn8w36l5hjGSzR1V4rpl/nDSRjbFZ9GBuQTDj3hvmGR+9l8LHfpjiGoAbCZ74bx40n/Lw6/z0S
- Q+nEn/kotU11XzQJOSdrlpTmE1CsuLzIpc25OcIOsdNLFYQhDRRjlkIg==
-X-Google-Smtp-Source: AGHT+IHY3b9w9/ffeZ+kRSrOgmP0cO1xsu23FCA/h21rxre0kJLpxgdQCz5l6p51Qr2qlyLo6/dLLA==
-X-Received: by 2002:a05:600c:6299:b0:477:73e9:dbe7 with SMTP id
- 5b1f17b1804b1-47d1959ae49mr161903205e9.35.1766497941432; 
- Tue, 23 Dec 2025 05:52:21 -0800 (PST)
+ bh=0zv0VoXQw0uynzKEYuj8FiOWleU24kANb4bceU8fZX8=;
+ b=occKqfpFzmhRzpW9Yrvjy8qPWNT5UYLEgRGnrRe3xv65PqOJcvb381IUEe/N738djk
+ gt+a2A+GqfFElWzuPgBpuybMBs27bw0Aab5Cm+VJ0WOwm2CrsTzzz4vNoMAa4dxIpbqI
+ e6NKZ+VwsevzIe0oOzfZJ88J8whgpnnM1RHf6dzHZZlTGTayTBdrS99OaFuOZsPEhf8Z
+ q7rd4FQBxvTXOjSL9N4xT26PWsU/5V4Brb3EKoXwupnZthYspWOn3WWgQyc2vMjcPwZs
+ BX/jMRZ36ETEb95US2pt4JsjflXkCinWwqh/Db1GwuTrl43PWJzzESXarHJ57dwsLnCg
+ ibyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/YfHH26SuD+qUzgR+bCiTHjGKUeeU7DnmJxaXwgr6lqyYHO8iq0r3xy0LUHBAAV+UfImQYwBHH+g3@nongnu.org
+X-Gm-Message-State: AOJu0YxHOXPZcMRBYvcptPTvlWywXJD/iT+HnnGGaJU4SWIJAdlEy56d
+ EZTBM6D53QMW3+2C3P9nZt/e5jwJP0tUqxSZrJZ3yTFx4O0qxLHS+J61hBqWP0WurAs=
+X-Gm-Gg: AY/fxX5RhsIsjfBVdCqd0mp7jqcjq8W09FnPgncgbA+jhGoPjy3Yx5RyT/HCxI0LKE/
+ fq7Bu/h1JmTFSrh19EFOk3RB8E2M10PwmSlAGhWnoJqY8qWSychXn5Gi4DQYcY6eTI5PqShXAoJ
+ gLvkkGIv0+MmRGYFAa3crCwNg3wsG4az0ioSWCbE2HmUxYhPmH0EME0D533QUPPHUaWRC4YSQho
+ vBos7JOZJxiLzgxQ7WA+TyTuIiZ5YpBUinvoibQMsBSEtn5LoNf1mio91g44HaoYHAmkJ9sZyO3
+ WWJuEfNTVIY7Cqd5RUhwQGd1L1g1DXLeswCbB/hPYKR1NWlV1xslvrwoG7+C8I1F45ec3oc2XOK
+ FZqimNueMVyB4zfwVgCXetCa6H0I5HB+6c11J5vMDZ1FDgH/b9ApYsYtL3bbSFTAxBxD+2220l1
+ elgaJqqgVafeQf3McOi9vtvqMeKba4F0omdDSKhCS68KpZXaInwodisA==
+X-Google-Smtp-Source: AGHT+IGDcscRup1A7RVk8570BcZZ1hRpyqwCBafJrzBFSK+qFgNDNp6nf6WgS0eY7YafLeAGJ7PPig==
+X-Received: by 2002:a05:600c:5489:b0:46e:59bd:f7e2 with SMTP id
+ 5b1f17b1804b1-47d18bd5651mr148920495e9.11.1766498256109; 
+ Tue, 23 Dec 2025 05:57:36 -0800 (PST)
 Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be26a81b6sm300752415e9.0.2025.12.23.05.52.20
+ 5b1f17b1804b1-47d19352306sm237822675e9.5.2025.12.23.05.57.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Dec 2025 05:52:20 -0800 (PST)
-Message-ID: <3d5a30fd-fb49-42a1-ba1e-e2c4bfc58f83@linaro.org>
-Date: Tue, 23 Dec 2025 14:52:20 +0100
+ Tue, 23 Dec 2025 05:57:35 -0800 (PST)
+Message-ID: <417ec469-91e3-4025-941e-f1587f5ebb15@linaro.org>
+Date: Tue, 23 Dec 2025 14:57:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/pci: Use correct bus aperture for device container size
+Subject: Re: [PATCH] hw/core: remove duplicate include
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Jason Wang <jasowang@redhat.com>, Gustavo Romero
- <gustavo.romero@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20251124114754.79831-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251124114754.79831-1-philmd@linaro.org>
+To: Osama Abdelkader <osama.abdelkader@gmail.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com
+References: <20251126210832.34011-1-osama.abdelkader@gmail.com>
+ <0d6a818e-1007-4e98-8504-b5e88a30b51f@linaro.org>
+In-Reply-To: <0d6a818e-1007-4e98-8504-b5e88a30b51f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,33 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping?
+Hi Osama,
 
-On 24/11/25 12:47, Philippe Mathieu-Daudé wrote:
-> Before commit 3716d5902d7 ("pci: introduce a bus master container")
-> device view of the bus address space was correctly sized to the
-> bus aperture, but then it always used a 64-bit aperture. Restore
-> the previous behavior, so devices on 32-bit PCI only see 32-bit
-> address space.
+On 23/12/25 14:51, Philippe Mathieu-Daudé wrote:
+> On 26/11/25 22:08, Osama Abdelkader wrote:
+>> qemu/target-info.h is included twice.
+>> ---
+>>   system/vl.c | 1 -
+>>   1 file changed, 1 deletion(-)
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/pci/pci.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index b1eba348e06..64f33b9de04 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -1375,7 +1375,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
->       pstrcpy(pci_dev->name, sizeof(pci_dev->name), name);
->   
->       memory_region_init(&pci_dev->bus_master_container_region, OBJECT(pci_dev),
-> -                       "bus master container", UINT64_MAX);
-> +                       "bus master container",
-> +                       memory_region_size(bus->address_space_mem));
->       address_space_init(&pci_dev->bus_master_as,
->                          &pci_dev->bus_master_container_region, pci_dev->name);
->       pci_dev->bus_master_as.max_bounce_buffer_size =
+> 
+> And queued, thanks!
 
+Actually we can not take this because the patch is missing your
+"signed-off" tag, see:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emails-must-include-a-signed-off-by-line
+
+Replying with "Signed-off-by: Osama Abdelkader 
+<osama.abdelkader@gmail.com>" would fix this :)
+
+Regards,
+
+Phil.
 
