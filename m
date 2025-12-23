@@ -4,106 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FAD5E6F095
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7968E6F09D
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY4Ln-0004id-3x; Tue, 23 Dec 2025 10:31:03 -0500
+	id 1vY4R6-0005ha-CS; Tue, 23 Dec 2025 10:36:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY4Ll-0004hw-8H
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:31:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY4LY-0002xy-If
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:30:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766503845;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vY4R4-0005hO-Ff
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:36:30 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vY4R2-0005bw-5s
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:36:30 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 179A933694;
+ Tue, 23 Dec 2025 15:36:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1766504184; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=suBSkovoXZOajNcU7GUZLrwcjQyAzyn1he1k3SpPDDQ=;
- b=g+w3QE+SU6OjoVI+E7EUB+Pdw4gWgAzOzEx52bOfon8DRqlOWgjKymz3vpA6dDycq4GcH3
- 5U/Xt6v3g12YVQV0YKp/fuMBRkvBlY/bDATobEqKFCBodpmy9d0hLqtaQpSisk4ozmQxmp
- tW4ysh2W0RGlEw3uRwSh8ZeETiYSq8o=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-338-EfY1XUHbOb-ZeWTzIzg9og-1; Tue, 23 Dec 2025 10:30:43 -0500
-X-MC-Unique: EfY1XUHbOb-ZeWTzIzg9og-1
-X-Mimecast-MFC-AGG-ID: EfY1XUHbOb-ZeWTzIzg9og_1766503842
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8b6963d1624so1233095185a.0
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 07:30:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766503842; x=1767108642; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=suBSkovoXZOajNcU7GUZLrwcjQyAzyn1he1k3SpPDDQ=;
- b=ozrO6eeBZo+eBOPpDs3Oc4aWDW1U7ukT3gWABGjDvvbXHNABqbkyfcPKY/dItZS3Un
- cRH+sNgFTEQUKKCuS0Tpv6IzpUzRfGHJ1xcm7mXvsgLxY4uyFhPtacJgIyIARuG42K3M
- /Pu+s/SK/6AJENu7mYaFhdjzrnqHUf1KQMqDbhl5tApRCTVkItGwquCkcEgNDv38UtT9
- rcGezay7s8dL/KLVH3NngKR3m1hz7nPJx9sqU6k5Ns0C1+K3q/LcOxfkUmBIu6FoTvBB
- HvHhgG51ftnUru9fWBwPgW66T9TSuorB4IIxFoo6wat0JpbrKP4ePS4gPOSu7K8hT+V1
- J4pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766503842; x=1767108642;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=suBSkovoXZOajNcU7GUZLrwcjQyAzyn1he1k3SpPDDQ=;
- b=bRfvIAwi4D5Sh2KJHXCeBygRY5NwkGKhJV1cNmeaClZYHH/HukUtrBUMX3onQA6ALv
- 4aeBmek5nGVyQeUPxcXy3NIIoT14jXmZUetBIandU4prGhYuYmUK5baNQp3x2SPSYUeB
- NOjxkNT4XtIOlzW73VaEFJc+Fr/mtoCUEcvRmM6aKCgaZ8X3ZE4to9lXdzMfVe4hyETK
- 9YPxQJEkPMu4mOxiWcHmOIiRvNLkeMw7XpvNoCN5PATqy9krugEHmz/YGZ6I6wDUoAKI
- XV2Tx1NZVGkX1MmX7zWqs9H/NbGgF5/fBS6s8HfcddjeLedRRc4Z72lIBp1i8x5U9Yi0
- V3mA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3ehSTiX8WeOOdc+SRg6k+m5NdWN3PADbmNdVH4PXhpkO9X+jy3yFtURNmE3UslV05uJsT8OA/UZj3@nongnu.org
-X-Gm-Message-State: AOJu0YyCPcAFw365aCCPyp0/WS+JfCYMks8u3pihAga/u5O7xraWIJWn
- sVwKXsrehJhO89no2KjgoqrlNY2MwdXIDvvfgkjueVEP7EL5igF+fhwvvhW6bM8+hPqlobBifli
- qNaOvm+ukQS7C8mq9SgM4OBTDyY3ueSliOdiM5i2Luq/H8V4NE5FND87j
-X-Gm-Gg: AY/fxX6hst8nXJsPjK6L1fo2fyUj2UP6jWE4lDPaex70En/M1pVVsc0PEMxGRfUduhj
- ZPkrpxz9uTO3YSTxhrJ8TVODm6Zj12MyLVRZRyct7xtb0QzCB8fJ6UTRsC/Qy/gGFxxNe7ci+NJ
- RKlB/JeYOcRXnxKy7jB6cTp+Zn1GAqD9lj2B/f1oMq5H7sJPOIdAywHKM7gKVPoZ5ECVkegKQPb
- VCHJVEroBjFNyuTya6Xj9yQxvVf7zJ1N9d4QFYcY1ES9HleRByBjcmVerSZ1xQ8OEgrW71l+zzU
- cMkC1dLnIsQOveaJzi0PQ74w582xbAK9EgYrj+rPHaNVxuCOHDGQQgV63KmyrDuDfFgEdTCoDfX
- czKg=
-X-Received: by 2002:a05:620a:172b:b0:8b2:e3c1:24c3 with SMTP id
- af79cd13be357-8c08fac0b9emr2403292185a.64.1766503842323; 
- Tue, 23 Dec 2025 07:30:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHD16vVj3b1eB+R/et7k6weJxQfxyNqwY0kIGnM4h6Fb8NoWGd5YQPUsH9Rwfpb4HVSD8AU5w==
-X-Received: by 2002:a05:620a:172b:b0:8b2:e3c1:24c3 with SMTP id
- af79cd13be357-8c08fac0b9emr2403282785a.64.1766503841617; 
- Tue, 23 Dec 2025 07:30:41 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c0970f5fdasm1113664285a.35.2025.12.23.07.30.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 07:30:41 -0800 (PST)
-Date: Tue, 23 Dec 2025 10:30:40 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
- Prasad Pandit <pjp@fedoraproject.org>
+ bh=VGzWKJT2R5twOhsSMTT5Eh0HYFFv+3zwlfX5K6uuvqQ=;
+ b=QNBAYy8hI3tohrnsLlHXhcw+5sHQ8S5y0qvkHyrIaEtQ/afb0bKfmWe8AgskdIUQnd+rhr
+ rv2b5gksOlo6qUCdkxlSJmFyu+h4ObKMh9zgYnk2b40pQYlCyBEFoKZtUzUUb8PntQbQI5
+ slN1zFGMwTU/IOYmU0b/iEjEqhE32hM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1766504184;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VGzWKJT2R5twOhsSMTT5Eh0HYFFv+3zwlfX5K6uuvqQ=;
+ b=J+xNqhYjL3cnlmn1Sn9+sGK53fhFLq/nytlcrD1E4bG5ZDaT60DfNrT4tWfnrEKffIgv70
+ Oag4WD1bH+mP7rBA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=afL8cBiH;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ILnteHBz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1766504183; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VGzWKJT2R5twOhsSMTT5Eh0HYFFv+3zwlfX5K6uuvqQ=;
+ b=afL8cBiHrYT1TgdNHcSNT+5ssjD9GyM2hO3mBq+9x22mrMemyNfqyXe2p9uVVZncUhm9fJ
+ MPTv4SK2+DAQcWykbRbtqUyg1i/j7XHC4/gbarO6Z2D7fOGJHX/RI9yBDI2ogg9I/hxypx
+ 777WJ5SdqhYwd9hzSOv8frk3+LAL+tg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1766504183;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VGzWKJT2R5twOhsSMTT5Eh0HYFFv+3zwlfX5K6uuvqQ=;
+ b=ILnteHBz2SsDoROeJZYQNQ2E6SRoNz0CFMFm7L9W4JJEOGPoH3nb1WEzqzVFpdvyowSQ1E
+ 7+eShoPfjyuEG8BA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 898333EA63;
+ Tue, 23 Dec 2025 15:36:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id hw0xE/a2SmniBAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 23 Dec 2025 15:36:22 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, Prasad Pandit <pjp@fedoraproject.org>
 Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
-Message-ID: <aUq1oA73W9rAdCgG@x1.local>
+In-Reply-To: <aUqyfkOtXwl6cy9A@x1.local>
 References: <20251222114822.327623-1-ppandit@redhat.com>
- <87h5tilhcq.fsf@suse.de>
+ <aUqyfkOtXwl6cy9A@x1.local>
+Date: Tue, 23 Dec 2025 12:36:19 -0300
+Message-ID: <87a4z9ky6k.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87h5tilhcq.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[fedoraproject.org:email,suse.de:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 179A933694
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,86 +122,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 22, 2025 at 11:29:57AM -0300, Fabiano Rosas wrote:
-> I'm fine with the general idea:
-> 
-> i) FAILED and CANCELLED are terminal states. It makes sense to not have
-> work happen after they're set.
-> 
-> ii) Using an intermediate state, assuming locking/atomic are correct is
-> a suitable fix for the issue.
-> 
-> iii) Using a FAILING status seems appropriate.
-> 
-> However,
-> 
-> It would be great if we could stop exposing implementation details via
-> QAPI. Does the user really need to see events for CANCELLING and
-> FAILING?
-> 
-> It would probably be easier if we kept MigrationStatus as QAPI only and
-> used a separate mechanism to track the internal states.
-> 
-> That said, we could merge this as is to fix the bug and think about that
-> later.
+Peter Xu <peterx@redhat.com> writes:
 
-This bug looks to be there for a long time, IMHO we don't need to rush
-fixing it if we risk adding a new status and revert it quickly...  Let's
-discuss it here, and it's a valid question indeed.
+> On Mon, Dec 22, 2025 at 05:18:22PM +0530, Prasad Pandit wrote:
+>> From: Prasad Pandit <pjp@fedoraproject.org>
+>> 
+>> When migration connection is broken, the QEMU and libvirtd(8)
+>> process on the source side receive TCP connection reset
+>> notification. QEMU sets the migration status to FAILED and
+>> proceeds to migration_cleanup(). Meanwhile, Libvirtd(8) sends
+>> a QMP command to migrate_set_capabilities().
+>> 
+>> The migration_cleanup() and qmp_migrate_set_capabilities()
+>> calls race with each other. When the latter is invoked first,
+>> since the migration is not running (FAILED), migration
+>> capabilities are reset to false, so during migration_cleanup()
+>> the QEMU process crashes with assertion failure.
+>> 
+>>   Stack trace of thread 255014:
+>>    #0  __pthread_kill_implementation (libc.so.6 + 0x822e8)
+>>    #1  raise (libc.so.6 + 0x3a73c)
+>>    #2  abort (libc.so.6 + 0x27034)
+>>    #3  __assert_fail_base (libc.so.6 + 0x34090)
+>>    #4  __assert_fail (libc.so.6 + 0x34100)
+>>    #5  yank_unregister_instance (qemu-kvm + 0x8b8280)
+>>    #6  migrate_fd_cleanup (qemu-kvm + 0x3c6308)
+>>    #7  migration_bh_dispatch_bh (qemu-kvm + 0x3c2144)
+>>    #8  aio_bh_poll (qemu-kvm + 0x8ba358)
+>>    #9  aio_dispatch (qemu-kvm + 0x8a0ab4)
+>>    #10 aio_ctx_dispatch (qemu-kvm + 0x8bb180)
+>> 
+>> Introduce a new migration status FAILING and use it as an
+>> interim status when an error occurs. Once migration_cleanup()
+>> is done, it sets the migration status to FAILED. This helps
+>> to avoid the above race condition and ensuing failure.
+>> 
+>> Interim status FAILING is set wherever the execution moves
+>> towards migration_cleanup() directly OR via:
+>> 
+>>   migration_iteration_finish  bg_migration_iteration_finish
+>>   -> migration_bh_schedule    -> migration_bh_schedule
+>>    -> migration_cleanup_bh     -> migration_cleanup_bh
+>>     -> migration_cleanup        -> migration_cleanup
+>>      -> FAILED                   -> FAILED
+>> 
+>> The migration status finally moves to FAILED and reports an
+>> appropriate error to the user.
+>
+> I raised a request while I was discussing with you internally, I didn't see
+> this, I will request again:
+>
+> Would you please list where you decided to switch from FAILED -> FAILING,
+> and where you decided not, with justifications for each of them?
+>
+> Let me give a detailed example in this patch, please see below.
+>
+>> 
+>> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+>> ---
+>>  migration/migration.c                 | 33 +++++++++++++++------------
+>>  migration/multifd.c                   |  4 ++--
+>>  qapi/migration.json                   |  8 ++++---
+>>  tests/qtest/migration/migration-qmp.c |  3 ++-
+>>  tests/qtest/migration/precopy-tests.c |  5 ++--
+>>  5 files changed, 31 insertions(+), 22 deletions(-)
+>> 
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index b316ee01ab..5c32bc8fe5 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -1216,6 +1216,7 @@ bool migration_is_running(void)
+>>      case MIGRATION_STATUS_DEVICE:
+>>      case MIGRATION_STATUS_WAIT_UNPLUG:
+>>      case MIGRATION_STATUS_CANCELLING:
+>> +    case MIGRATION_STATUS_FAILING:
+>>      case MIGRATION_STATUS_COLO:
+>>          return true;
+>>      default:
+>> @@ -1351,6 +1352,7 @@ static void fill_source_migration_info(MigrationInfo *info)
+>>          break;
+>>      case MIGRATION_STATUS_ACTIVE:
+>>      case MIGRATION_STATUS_CANCELLING:
+>> +    case MIGRATION_STATUS_FAILING:
+>>      case MIGRATION_STATUS_POSTCOPY_DEVICE:
+>>      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+>>      case MIGRATION_STATUS_PRE_SWITCHOVER:
+>> @@ -1409,6 +1411,7 @@ static void fill_destination_migration_info(MigrationInfo *info)
+>>      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+>>      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+>>      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+>> +    case MIGRATION_STATUS_FAILING:
+>>      case MIGRATION_STATUS_FAILED:
+>>      case MIGRATION_STATUS_COLO:
+>>          info->has_status = true;
+>> @@ -1531,6 +1534,9 @@ static void migration_cleanup(MigrationState *s)
+>>      if (s->state == MIGRATION_STATUS_CANCELLING) {
+>>          migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
+>>                            MIGRATION_STATUS_CANCELLED);
+>> +    } else if (s->state == MIGRATION_STATUS_FAILING) {
+>> +        migrate_set_state(&s->state, MIGRATION_STATUS_FAILING,
+>> +                          MIGRATION_STATUS_FAILED);
+>>      }
+>>  
+>>      if (s->error) {
+>> @@ -1584,7 +1590,7 @@ static void migration_connect_set_error(MigrationState *s, const Error *error)
+>>  
+>>      switch (current) {
+>>      case MIGRATION_STATUS_SETUP:
+>> -        next = MIGRATION_STATUS_FAILED;
+>> +        next = MIGRATION_STATUS_FAILING;
+>
+> This is the first real change that we'll switch to FAILING when
+> migration_connect_set_error() is invoked and migration failed.
+>
+> Please justify why setting FAILING is correct here.
+>
+> This function is invoked in three callers:
+>
+> qmp_migrate[2302]              migration_connect_set_error(s, local_err);
+> qmp_migrate_finish[2347]       migration_connect_set_error(s, local_err);
+> migration_connect[4047]        migration_connect_set_error(s, error_in);
+>
+> At least from the initial two callers, I don't see migration_cleanup()
+> invoked after setting FAILING.  Could this cause migration to get into
+> FAILING status forever without finally move to FAILED?
+>
 
-One thing good about exposing such status via QAPI is, it can help us
-diagnose issues by seeing CANCELLING / FAILING even looking at
-query-migrate results (as normally when bug happens we can't see the
-internal status..), so that we know either it's explicitly cancelled, or
-something went wrong.
+Good point, I'm working on some cleanups to connection code and one
+change I did there is to add a migration_cleanup() call into
+migration_connect_error_propagate().
 
-If it's a completely hidden / internal status, we may see ACTIVE even if
-something wrong happened..
+1) branch WIP:
+https://gitlab.com/farosas/qemu/-/commits/migration-connect-cleanup
 
-My current hope is any mgmt should normally by default ignore new migration
-states..  If that's always achieved, it looks to me adding FAILING directly
-into migration status would still have some benefits on debugging.
+2) the patch:
+---
+From 1f9eeb898f3a5efba7c183e351fa36a5471fd0b2 Mon Sep 17 00:00:00 2001
+From: Fabiano Rosas <farosas@suse.de>
+Date: Thu, 18 Dec 2025 10:54:46 -0300
+Subject: [PATCH] migration: Fold migration_cleanup into
+ migration_connect_error_propagate
 
-[...]
+The code path from qmp_migrate() until the migration thread starts is
+a little twisty due to the async nature of some routines. One issue is
+that the async functions cannot return errors to their callers and
+must instead call forward into migration_channel_connect() and pass
+the error as input.
 
-> > @@ -2907,7 +2914,7 @@ fail_closefb:
-> >      qemu_fclose(fb);
-> >  fail:
-> >      if (ms->state != MIGRATION_STATUS_CANCELLING) {
-> > -        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
-> > +        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILING);
-> >      }
-> 
-> This is a good example where having MigrationStatus makes the code more
-> complicated. This could be exiting=true, running=false, etc. It
-> shouldn't matter why this routine failed. If we reach
-> migration_cleanup() and, at the very end, state is CANCELLING, then we
-> know the cancel command has caused this and set the state to
-> CANCELLED. If the state was something else, then it's unintended and we
-> set FAILED.
+Ideally we'd have a function that just receives the error as input and
+handles it. However, currently migration_channel_connect() has a code
+path that moves forward into migration_connect(), also passing the
+error as input, only for migration_connect() to then check that an
+error happened and call migration_cleanup().
 
-If it'll be an internal status, we'll still need to identify if someone
-already have cancelled it, right?
+Clean this up:
 
-Assuming we introduce stop_reason flag, making it:
+1) Make migration_connect_error_propagate() be the function that
+handles the error and call it at the point the error happens in the
+async code. (this is all migration code, there's no layering
+violation)
 
-enum {
-    MIG_STOP_REASON_CANCEL,
-    MIG_STOP_REASON_FAIL,
-} MigrationStopReason;
+2) Stop checking for an incoming error in migration_connect(), that
+function should be only reached when everything that came before
+succeeded.
 
-Then we can switch to CANCELLED / FAILED when cleanup from those reasons.
+3) Fold migration_cleanup() into migration_connect_error_propagate()
+so the cleanup happens at the moment the error is detected and not
+several calls down the stack.
 
-Then here, logically we also need logic like:
+4) To address the quirk that during postcopy recovery there should be
+no cleanup, move that check into migration_cleanup() and return early
+if doing resume.
 
-    if (stop_reason != MIG_STOP_REASON_CANCEL) {
-        stop_reason = MIG_STOP_REASON_FAIL;
-    }
+Notable functional changes:
 
-Because we want to make sure when the user already triggered cancel, it
-won't show FAILED but only show CANCELLED at last?
+i) Assumes a larger window for what it means to be "in resume"
+   before: from qmp_migrate until migration_connect
+   after: from qmp_migration until the state transition into
+          MIGRATION_STATUS_POSTCOPY_RECOVER
 
+ii) After an error, MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP changes to
+    MIGRATION_STATUS_POSTCOPY_PAUSED.
+
+    This is already the case when migration_connect_error_propagate()
+    was used, but not when migration_connect() receives
+    error_in. Seems like a pre-existing bug actually.
+
+iii) If the socket_start_outgoing_migration function *returns* an
+     error, now migration_cleanup() is called. Previously, cleanup
+     only happened when the error was *passed* forward, i.e. only
+     after the async call.
+
+iv) If cpr_state_save() fails, now migration_cleanup() is called.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/migration.c | 35 ++++++++++++++++++-----------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index 4b1afcab24..52c1a97e46 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1481,6 +1481,14 @@ static void migration_cleanup(MigrationState *s)
+     MigrationEventType type;
+     QEMUFile *tmp = NULL;
+ 
++    /*
++     * Don't do cleanup if we're waiting for another connection from
++     * the user.
++     */
++    if (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP) {
++        return;
++    }
++
+     trace_migration_cleanup();
+ 
+     migration_cleanup_json_writer(s);
+@@ -1585,6 +1593,14 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
+     case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+         /* Never fail a postcopy migration; switch back to PAUSED instead */
+         next = MIGRATION_STATUS_POSTCOPY_PAUSED;
++
++        /*
++         * Give HMP user a hint on what failed.  It's normally done in
++         * migration_cleanup(), but call it here explicitly because we
++         * don't do cleanup when waiting for postcopy recover.
++         */
++        error_report_err(error_copy(error));
++
+         break;
+     default:
+         /*
+@@ -1598,6 +1614,7 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
+ 
+     migrate_set_state(&s->state, current, next);
+     migrate_error_propagate(s, error);
++    migration_cleanup(s);
+ }
+ 
+ void migration_cancel(void)
+@@ -2326,12 +2343,8 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
+     }
+ 
+     if (local_err) {
+-        if (!resume_requested) {
+-            yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+-        }
+-        migration_connect_error_propagate(s, error_copy(local_err));
++        migration_connect_error_propagate(s, local_err);
+         error_propagate(errp, local_err);
+-        return;
+     }
+ }
+ 
+@@ -4026,18 +4039,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+     s->expected_downtime = migrate_downtime_limit();
+     if (error_in) {
+         migration_connect_error_propagate(s, error_in);
+-        if (resume) {
+-            /*
+-             * Don't do cleanup for resume if channel is invalid, but only dump
+-             * the error.  We wait for another channel connect from the user.
+-             * The error_report still gives HMP user a hint on what failed.
+-             * It's normally done in migration_cleanup(), but call it here
+-             * explicitly.
+-             */
+-            error_report_err(error_copy(s->error));
+-        } else {
+-            migration_cleanup(s);
+-        }
+         return;
+     }
+ 
 -- 
-Peter Xu
-
 
