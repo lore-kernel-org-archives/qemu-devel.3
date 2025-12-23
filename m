@@ -4,63 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5959E6F079
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 10:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F18EE6F082
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 10:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vXzDZ-0001fT-NJ; Tue, 23 Dec 2025 05:02:13 -0500
+	id 1vXzaa-0005eV-J7; Tue, 23 Dec 2025 05:26:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vXzDV-0001ev-Mn
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 05:02:09 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vXzDS-00073Z-Np
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 05:02:08 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 029C44174F;
- Tue, 23 Dec 2025 10:02:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF63C113D0;
- Tue, 23 Dec 2025 10:02:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1766484123;
- bh=x9tjIlg3VX+f69EOUsnLTmF/yAHIyPV7HKv8MP5SXNA=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=PjINTrh0Unl/bKzyGWmhOt4s6mb1ehI8/fuqA2jQW4GijFkCly+m2q4VclX49exak
- t8q5AFYTszhy4Wde3djyh9Yq7uOb1C8HbYNcVXLmZZRM//GpZR2h2h0nS3IttzwoUr
- V7uVCU5sa0HfnpRV5EDFxsnxfFt69r7PttnBR4ZXZNPjgKa6O6VLPbqaYPihC1qZpp
- y5Wxy8y89zxXa8xx9+qaWKXf/qBNSFFccinBtS2B1jzZF5KGtObzGhjdOpMO85hkat
- X380rEz3hjQPtfyRs5/dCCfB5IIH3LnIxzUoIybUxk8gTsFFTV3EUD1SQ/d+12h9zn
- EFmdo84irBHOQ==
-Message-ID: <586a3535-ffa1-4d13-8bb5-c1b922a90a43@kernel.org>
-Date: Tue, 23 Dec 2025 11:01:58 +0100
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vXzaX-0005e3-7R
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 05:25:57 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vXzaV-0001Or-Q5
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 05:25:56 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-34c27d14559so3857583a91.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 02:25:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1766485554; x=1767090354; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QDCxx6NDtAwpvWyiilDOnh/wGCIkqTuPNgAK4XZWLvA=;
+ b=DDUhmA4bkVjrVF6knRGRMQ20Abbf3Mw0begmeRD1SE/vKeDjcDUkOBq4KDBmrk7TWe
+ Tf87vtC5sbTymT/7yb076nPhmSLWnGXVCmnmdkz2NV4cFHg94I/eZfpgP2hXPod/MA+e
+ qGTpZJgZmBz9LLAtI+5mxM8Kjdh/AHOe8RwyzF4jO/GREyHpN/0tblYtA0vwH2zawq8t
+ H0xvEmYCYsjTmqEiHM+iEo4jdOjc0zqzJvO8vI7aH2SSN7ZpGnBMHO49kbLh3aKnN6gD
+ XpbC31B7D4tlRhtPHiX/x/igI2/3w8crBR/+BWZAD389uYwR3A5Th7nbrvCuM/ADNtwg
+ 1KBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766485554; x=1767090354;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QDCxx6NDtAwpvWyiilDOnh/wGCIkqTuPNgAK4XZWLvA=;
+ b=arIioRu6Qelg8wML8uC24LesqLFkHGhtXki4la2ZZO8S4iIh3+h9rcAV63b4aK0Y+h
+ 8HMrP1sXnbXD8R0j6CwuSic04HSR7Sy4n4DiFK8KuJZV6qbA92iznAMyOGNKwX+nisqL
+ gnKDrCeeFmBAnquGFB3m2KkxpGfAvJ/LoCbmH+C9QUdoVh4v9f+ENhxh6/LBf9opt3c+
+ I5dfT1FQQflgB5AeUcqIas3ouS40RO6hi7+OJayK0M/3aIq3PKYTm3ftVC9kWO0Ip9Jg
+ CDBumFwKb1Q6h0EUAEFZHcPUY5/VIKUV/9f9w7YZ1hSfWgRf1FVsKnkn2ExMEI1gDVNd
+ A28w==
+X-Gm-Message-State: AOJu0YxkKtTJRTPLTIcAczHYJoMVeOrWh/+fukAWmqImSP/7ONgeGnT/
+ hIjKmDgxB2ANuRlIxflZnpC3Tqt9xHelMbfpbQh9GENjZwvqYdTkLwvRNHzxOnJMVplePpjp8Vc
+ 10hJgY3O2mstFjNy4eUMtOUfPwl1dOSOiHeyRCticduin6nXB1YbtxChJlDIMufwfUZTOB+hif3
+ kM2nWlqucCjan+JVjvVaCRNkXPRu9e/bwVHte/wm5l8N8=
+X-Gm-Gg: AY/fxX60Hsj9VtVhCWOQu3MtK7RXBw2oydJlCqiXtfAKzRwa/blnUAgoNkN8rShDyHJ
+ 5iUDrvzn2N8GFd0C+Uojo7VqX5IIBNpyLZXawcSfHgDvtJwm2ceSM6INbb9L/IXTmV1oZM+EvrR
+ 0DpYOZz9lXU166KpTO90X/euJxWkE1DZZIcn/w28GacBrAQMEQnDQDNFEGoKscqz4GhkgAU0xeB
+ 3e0RCqOEGeG/vGm9dcAUocABD74zdTQDf2+GT8TnYXVP74pqGW/Z6HN2c+jocK7GeMTnDQh7uk1
+ N7N1GbCaK032ZsdkWSODyB6M5D6sDEwSNHk+4uyEwX3YIEL2mAzuMRU9MCBDk32W3b+f8j8P4M5
+ 7m6B3CCpN172HiWj06n2vQqx8LPQOurUG1VnEyMGljI7s9p7h2d0mpp1qg9oBXamTnIkL2VDjsr
+ vfRsILJChOU3KI3m3oxGSeEhqwzUJOBPM+hNL7/uOffObmEQLo1Q==
+X-Google-Smtp-Source: AGHT+IE6oUrMIYO/whVjpays1JmUG7g7sluWk76HAMGB5UwKdClbUMlLiW9s34JlyCsadOI54917xA==
+X-Received: by 2002:a17:90b:548c:b0:341:124f:474f with SMTP id
+ 98e67ed59e1d1-34e921e8a0fmr10036038a91.32.1766485553571; 
+ Tue, 23 Dec 2025 02:25:53 -0800 (PST)
+Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c1e7bc69728sm12092834a12.19.2025.12.23.02.25.51
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 23 Dec 2025 02:25:53 -0800 (PST)
+From: Jay Chang <jay.chang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH] target/riscv: Align pmp size to pmp-granularity
+Date: Tue, 23 Dec 2025 18:25:47 +0800
+Message-ID: <20251223102547.13337-1-jay.chang@sifive.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/1] numa: add 'spm' option for Specific Purpose Memory
-To: Jonathan Cameron <jonathan.cameron@huawei.com>,
- fanhuang <FangSheng.Huang@amd.com>
-Cc: qemu-devel@nongnu.org, imammedo@redhat.com, Zhigang.Luo@amd.com,
- Lianjie.Shi@amd.com, Alistair Popple <apopple@nvidia.com>,
- "Bhardwaj, Rajneesh" <Rajneesh.Bhardwaj@amd.com>,
- Paul Blinzer <Paul.Blinzer@amd.com>, dan.j.williams@intel.com
-References: <20251209093841.2250527-1-FangSheng.Huang@amd.com>
- <20251209093841.2250527-2-FangSheng.Huang@amd.com>
- <20251223095605.0000065d@huawei.com>
-From: "David Hildenbrand (Red Hat)" <david@kernel.org>
-Content-Language: en-US
-In-Reply-To: <20251223095605.0000065d@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=david@kernel.org;
- helo=sea.source.kernel.org
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=jay.chang@sifive.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,117 +105,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/23/25 10:56, Jonathan Cameron via wrote:
-> On Tue, 9 Dec 2025 17:38:41 +0800
-> fanhuang <FangSheng.Huang@amd.com> wrote:
-> 
->> This patch adds support for Specific Purpose Memory (SPM) through the
->> NUMA node configuration. When 'spm=on' is specified for a NUMA node,
->> the memory region will be reported to the guest as soft reserved,
->> allowing device drivers to manage it separately from normal system RAM.
->>
->> Note: This option is only supported on x86 platforms. Using spm=on
->> on non-x86 machines will result in an error.
->>
->> Usage:
->>    -numa node,nodeid=0,memdev=m1,spm=on
->>
->> Signed-off-by: fanhuang <FangSheng.Huang@amd.com>
-> 
-> Given the discussions at LPC around how to present GPU/HBM memory and
-> suggestions that reserved might be a better choice. I wonder if this
-> patch should provide that option as well?  Or maybe as a potential follow
-> up. The fun their is that you also need to arrange for DSDT entries to
-> tie the region to the driver that actually wants it.
-> 
-> Anyhow that session reminded me of what SPM was designed for
-> (you don't want to know how long it took to come up with the name)
-> and it is a little more subtle than the description in here suggests.
-> 
-> The x86 specific code looks fine to me but I'm more or less totally
-> unfamiliar with that, so need review from others.
-> 
-> +CC a few folk from that discussion. I wasn't there in person and
-> it sounded like the discussion moved to the hallway so it may
-> have come to a totally different conclusion!
-> 
-> https://lpc.events/event/19/contributions/2064/ has links to slides
-> and youtube video.
-> 
->> diff --git a/qapi/machine.json b/qapi/machine.json
->> index 907cb25f75..cbb19da35c 100644
->> --- a/qapi/machine.json
->> +++ b/qapi/machine.json
->> @@ -500,6 +500,12 @@
->>   # @memdev: memory backend object.  If specified for one node, it must
->>   #     be specified for all nodes.
->>   #
->> +# @spm: if true, mark the memory region of this node as Specific
->> +#     Purpose Memory (SPM).  The memory will be reported to the
->> +#     guest as soft reserved, allowing device drivers to manage it
->> +#     separately from normal system RAM.  Currently only supported
->> +#     on x86.  (default: false, since 10.0)
-> 
-> As below. This needs to say something about letting the guest know
-> that it might want to let a driver manage it separately from normal
-> system RAM.
-> 
->> +#
->>   # @initiator: defined in ACPI 6.3 Chapter 5.2.27.3 Table 5-145, points
->>   #     to the nodeid which has the memory controller responsible for
->>   #     this NUMA node.  This field provides additional information as
->> @@ -514,6 +520,7 @@
->>      '*cpus':   ['uint16'],
->>      '*mem':    'size',
->>      '*memdev': 'str',
->> +   '*spm':    'bool',
->>      '*initiator': 'uint16' }}
->>   
->>   ##
->> diff --git a/qemu-options.hx b/qemu-options.hx
->> index fca2b7bc74..ffcd1f47cf 100644
->> --- a/qemu-options.hx
->> +++ b/qemu-options.hx
->> @@ -431,7 +431,7 @@ ERST
->>   
->>   DEF("numa", HAS_ARG, QEMU_OPTION_numa,
->>       "-numa node[,mem=size][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node]\n"
->> -    "-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node]\n"
->> +    "-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node][,spm=on|off]\n"
->>       "-numa dist,src=source,dst=destination,val=distance\n"
->>       "-numa cpu,node-id=node[,socket-id=x][,core-id=y][,thread-id=z]\n"
->>       "-numa hmat-lb,initiator=node,target=node,hierarchy=memory|first-level|second-level|third-level,data-type=access-latency|read-latency|write-latency[,latency=lat][,bandwidth=bw]\n"
->> @@ -440,7 +440,7 @@ DEF("numa", HAS_ARG, QEMU_OPTION_numa,
->>   SRST
->>   ``-numa node[,mem=size][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator]``
->>     \
->> -``-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator]``
->> +``-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator][,spm=on|off]``
->>     \
->>   ``-numa dist,src=source,dst=destination,val=distance``
->>     \
->> @@ -508,6 +508,13 @@ SRST
->>       largest bandwidth) to this NUMA node. Note that this option can be
->>       set only when the machine property 'hmat' is set to 'on'.
->>   
->> +    '\ ``spm``\ ' option marks the memory region of this NUMA node as
->> +    Specific Purpose Memory (SPM). When enabled, the memory will be
->> +    reported to the guest as soft reserved, allowing device drivers to
->> +    manage it separately from normal system RAM. This is useful for
->> +    device-specific memory that should not be used as general purpose
->> +    memory. This option is only supported on x86 platforms.
-> 
-> This wants tweaking.  As came up at the LPC discussion, SPM is for
-> memory that 'might' be used as general purpose memory if the policy of the
-> guest is to do so - as Alistair pointed out at LPC, people don't actually
-> do that very often, but none the less that's why this type exists. It is
-> a strong hint to the guest that it needs to apply a policy choice to
-> what happens to this memory.
+When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
+value is smaller than the PMP granularity, it automatically aligned
+to the PMP granularity.
 
-Just curious, it's the same on real hardware, right?
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+---
+ target/riscv/pmp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 3ef62d26ad..01b337f529 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -167,11 +167,12 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+             uint8_t a_field = pmp_get_a_field(val);
+             /*
+              * When granularity g >= 1 (i.e., granularity > 4 bytes),
+-             * the NA4 (Naturally Aligned 4-byte) mode is not selectable
++             * the NA4 (Naturally Aligned 4-byte) mode is not selectable.
++             * In this case, an NA4 setting is reinterpreted as a NAPOT mode.
+              */
+             if ((riscv_cpu_cfg(env)->pmp_granularity >
+                 MIN_RISCV_PMP_GRANULARITY) && (a_field == PMP_AMATCH_NA4)) {
+-                    return false;
++                    val |= PMP_AMATCH;
+             }
+             env->pmp_state.pmp[pmp_index].cfg_reg = val;
+             pmp_update_rule_addr(env, pmp_index);
+@@ -251,6 +252,11 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+         break;
+ 
+     case PMP_AMATCH_NAPOT:
++        /* Align to pmp_granularity */
++        if (g >= 2) {
++            this_addr |= ((1ULL << (g - 1ULL)) - 1ULL);
++        }
++
+         pmp_decode_napot(this_addr, &sa, &ea);
+         break;
+ 
 -- 
-Cheers
+2.48.1
 
-David
 
