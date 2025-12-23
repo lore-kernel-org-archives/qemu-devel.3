@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C90E6FE21
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A0CE6F09F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY4fN-0000Hx-4p; Tue, 23 Dec 2025 10:51:17 -0500
+	id 1vY4fO-0000I1-R2; Tue, 23 Dec 2025 10:51:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4f6-00006r-C0
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4f4-00006V-T8
  for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:51:00 -0500
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4f4-0005Sv-Kp
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:59 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4ez-0005S8-Ds
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:54 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 5B6E760142;
- Tue, 23 Dec 2025 15:50:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4703EC113D0;
- Tue, 23 Dec 2025 15:50:55 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id D74F16013F;
+ Tue, 23 Dec 2025 15:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5060C113D0;
+ Tue, 23 Dec 2025 15:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1766505057;
- bh=YSbao9+pz5e5p18/9pn0mAzTdqVYmjVKQthvY8JC8YA=;
+ s=k20201202; t=1766505052;
+ bh=5FzNu8IeWuDtcit4v9ou0ulH/u3t1RfgDbfDB9+rASc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nzjQ6MPPTz7gxqoNFD/d21/WtDzZBx7cqbpk9QuiG/djmZHLFTjAdeANsqAfE2Sg/
- gGJjrH4077adJfzJB/plyHpCfgpnwtTZbWAjtebZYnEL+U6qfBPCkhOx8lM6AVKl1j
- /SmIWqedjLZQa7gUILG5rV2lDZ2ILOLKS3J66oFWjDxVaDD+HSBpuHbjB9bKbnWBTD
- Tce22KVHx6bTvJf1yY51SRiaT8aAU/uQpa7OplSeTpPm2ZQCoIuH2IEH8DacvFGv6P
- qXuHV1ERimq3qTRr06e4GqG4MP6jCHxpt6k6FFuJIOOEY0Q/FghL2cKzCn0LG47Igc
- B0sHaIpqq4rRg==
+ b=HAXAyakDGwmnVezmTgohrgtlijB0M2+GWORl3r+cEKrWWIIZ08lPkMlFkBoTijYPw
+ 4dI0ixhjpsGnJMxdAe/1SiMpHpC+ekkmTaKTS9oub7g7Bo38vQNK8z6aLuO8R0nt6F
+ d7AXtz0CtV7XMBZ/k0Fx8i2XMW0lLRhpjt+HAuFPKXasJCi/DadWJfZc6clK8cpn/J
+ qAc6aSSIncYVeKlppphLivAd/sQmrUM9tvI72BCBUDL1raeBjOCqPG6pkCig7DE6F4
+ F+O2tAGJCfGfPr42sGhdi9uJKIfZ186RniJnmiECil1bCCmGKTfATb0u4DlY+qFZQL
+ rtMUDj0i9FBgw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
@@ -41,9 +41,10 @@ Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Fam Zheng <fam@euphon.net>
-Subject: [PULL 09/12] scsi: ncr710: Simplify disconnect handling
-Date: Tue, 23 Dec 2025 16:50:28 +0100
-Message-ID: <20251223155031.7110-10-deller@kernel.org>
+Subject: [PULL 07/12] scsi: ncr710: Mark command complete in status phase and
+ fix disconnect
+Date: Tue, 23 Dec 2025 16:50:26 +0100
+Message-ID: <20251223155031.7110-8-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251223155031.7110-1-deller@kernel.org>
 References: <20251223155031.7110-1-deller@kernel.org>
@@ -74,31 +75,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
-Simplify disconnect instruction by unconditionally clearing waiting
-statements when command completes.
+Set command_complete flag after status_phase and use_phase_clearing,
+instead of full disconnect during message processing.
 
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Tested-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/ncr53c710.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ hw/scsi/ncr53c710.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 277aa2c3d3..dd453991e0 100644
+index 4b42fab754..3d7318c12e 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -1469,9 +1469,7 @@ again:
-                 if (s->command_complete != NCR710_CMD_PENDING) {
-                     s->scntl1 &= ~NCR710_SCNTL1_CON;
-                     s->istat &= ~NCR710_ISTAT_CON;
--                    if (s->waiting == NCR710_WAIT_RESELECT) {
--                        s->waiting = NCR710_WAIT_NONE;
--                    }
-+                    s->waiting = NCR710_WAIT_NONE;
-                 } else {
-                     if (s->current) {
-                         s->current->resume_offset = s->dsp;
+@@ -997,6 +997,7 @@ static void ncr710_do_status(NCR710State *s)
+     ncr710_set_phase(s, PHASE_MI);
+     s->msg_action = NCR710_MSG_ACTION_DISCONNECT;
+     ncr710_add_msg_byte(s, 0); /* COMMAND COMPLETE */
++    s->command_complete = NCR710_CMD_COMPLETE;
+ }
+ 
+ static void ncr710_do_msgin(NCR710State *s)
+@@ -1041,7 +1042,7 @@ static void ncr710_do_msgin(NCR710State *s)
+         ncr710_set_phase(s, PHASE_CO);
+         break;
+     case NCR710_MSG_ACTION_DISCONNECT:
+-        ncr710_disconnect(s);
++        s->sstat2 &= ~PHASE_MASK;
+         break;
+     case NCR710_MSG_ACTION_DATA_OUT:
+         ncr710_set_phase(s, PHASE_DO);
 -- 
 2.52.0
 
