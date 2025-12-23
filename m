@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D87FE6F09F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45DF0E6FE20
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY4ey-0008Vq-S1; Tue, 23 Dec 2025 10:50:52 -0500
+	id 1vY4ev-0008VE-RD; Tue, 23 Dec 2025 10:50:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4ev-0008V5-7H
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:49 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4es-0008Tf-Bq
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:47 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4es-0005Q5-RM
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:48 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4er-0005PD-0Y
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:46 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 283046013B;
- Tue, 23 Dec 2025 15:50:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12795C113D0;
+ by tor.source.kernel.org (Postfix) with ESMTP id DF6976013A;
  Tue, 23 Dec 2025 15:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1E6C113D0;
+ Tue, 23 Dec 2025 15:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1766505045;
- bh=/kho4iJSwPdyrQjonMXqdwVBKPpnh7EN0GcAHb9z6aI=;
+ s=k20201202; t=1766505043;
+ bh=6Hs5Xpfju4NFUCsUbYBJkDYqwqK5L0Tna0ewspw/aEo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=o0m/bdrarmHuXizlgihQAx2Mha0dqhNWJYeXzfLUmwWvPaPFknUGLOAUorSdP6ZTN
- PQB2PP44jqq7P1D+mS/ShTJJS+0SSQXyAazr4ou1ylSWhsVgP8CeV3+rxtQO6vx2VI
- awcyOefayfEQDSBTsRlc7APReBLd9eBH8SdkUXepLfMDFPR1X/t3iTkLKNFXK9puzE
- rxlTVInpH3WvKvABBWKDDPwitfirkkJV6x/ubABtBnKAyC+GARsSJi889goHaOKlax
- l1E1dx1HWDH5wDXsePT1W2IjamCUK08dAOSMv2WX3oHk5QVI731sxHZxxUcZcMASPm
- ESctC3cmkgBpQ==
+ b=RTABkSpBuXeH4L/WWeiOw5z2wUA+S3MwZ79I9+YoGcV0PY6U7SXU1ikB0JbvoiRq/
+ cBp3B9LuK6z9aYxMN2mBYJvTEK1zf6Corx5mgG3RGJLJptVGgziKSXXwdIkfi7qVQp
+ 1rYTXudju/ADsceIO0WF9of8/5hB3JSGacOR4Wxi1/Nm6w/jsZlTNOFw4t31UOEaiY
+ SACeeXrRCqMPn0C5/Mcrf3/ckhz3KvQiNBCHyRiZaVPscpZ6R9sRtXciQQyeoJ8ecB
+ yi16cl34mlUAcJ6DmhdRpG/MhftOHc4BWBm65Rij18xC8xr9txs/eCinztw4CmsPSj
+ 6opRtCfo/PmsQ==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
@@ -41,22 +41,21 @@ Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Fam Zheng <fam@euphon.net>
-Subject: [PULL 04/12] scsi: ncr710: Fix interrupt related register handing
-Date: Tue, 23 Dec 2025 16:50:23 +0100
-Message-ID: <20251223155031.7110-5-deller@kernel.org>
+Subject: [PULL 03/12] scsi: ncr710: Fix use after free in command_complete
+Date: Tue, 23 Dec 2025 16:50:22 +0100
+Message-ID: <20251223155031.7110-4-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251223155031.7110-1-deller@kernel.org>
 References: <20251223155031.7110-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,76 +74,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
-These fixes ensure proper interrupt signaling and status
-register behavior during SCSI operations:
-- Mask DFE bit in ncr710_update_irq()
-- Remove manual ISTAT_DIP clearing, let ncr710_update_irq()
-  handle it consistently
-- Fix SSTAT0 read to clear unconditionally when non zero
-- Fix SSTAT2 read was returning DSTAT instead
-- Preserve DFE status bit when clearing DSTAT
+Add proper hba_private pointer cleanup in ncr710_command_complete.
+This prevents use after free errors from occuring.
+
+This was causing memory corruption in NetBSD device initialization
+when commands complete and the request structures were freed while
+still being referenced.
 
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Tested-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/ncr53c710.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ hw/scsi/ncr53c710.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index ac1ca4cef8..0b7734a129 100644
+index bab2ea7210..ac1ca4cef8 100644
 --- a/hw/scsi/ncr53c710.c
 +++ b/hw/scsi/ncr53c710.c
-@@ -593,7 +593,7 @@ static void ncr710_update_irq(NCR710State *s)
- {
-     int level = 0;
+@@ -798,7 +798,13 @@ void ncr710_command_complete(SCSIRequest *req, size_t resid)
  
--    if (s->dstat) {
-+    if (s->dstat & ~NCR710_DSTAT_DFE) {
-         if (s->dstat & s->dien) {
-             level = 1;
-         }
-@@ -1785,7 +1785,6 @@ static uint8_t ncr710_reg_readb(NCR710State *s, int offset)
-         }
-         s->dstat = 0;  /* Clear all DMA interrupt status bits */
-         s->dstat |= NCR710_DSTAT_DFE;
--        s->istat &= ~NCR710_ISTAT_DIP;
-         ncr710_update_irq(s);
+     ncr710_set_phase(s, PHASE_ST);
  
-         if (s->waiting == NCR710_WAIT_RESELECT && s->current &&
-@@ -1811,7 +1810,7 @@ static uint8_t ncr710_reg_readb(NCR710State *s, int offset)
-         return ret;
-     case NCR710_SSTAT0_REG: /* SSTAT0 */
-         ret = s->sstat0;
--        if (s->sstat0 != 0 && !(s->sstat0 & NCR710_SSTAT0_STO)) {
-+        if (s->sstat0 != 0) {
-             s->sstat0 = 0;
-             s->istat &= ~NCR710_ISTAT_SIP;
-             ncr710_update_irq(s);
-@@ -1824,14 +1823,7 @@ static uint8_t ncr710_reg_readb(NCR710State *s, int offset)
-         ret = s->sstat0;
-         break;
-     case NCR710_SSTAT2_REG: /* SSTAT2 */
--        ret = s->dstat;
--
--        if (s->dstat & NCR710_DSTAT_SIR) {
--            /* SIR bit processing */
--        }
--        s->dstat = 0;
--        s->istat &= ~NCR710_ISTAT_DIP;
--        ncr710_update_irq(s);
-+        ret = s->sstat2;
-         break;
-         CASE_GET_REG32(dsa, NCR710_DSA_REG)
-         break;
-@@ -1902,7 +1894,6 @@ static uint8_t ncr710_reg_readb(NCR710State *s, int offset)
-         if (s->dsps == GOOD_STATUS_AFTER_STATUS &&
-             (s->dstat & NCR710_DSTAT_SIR)) {
-             s->dstat &= ~NCR710_DSTAT_SIR;
--            s->istat &= ~NCR710_ISTAT_DIP;
-             ncr710_update_irq(s);
-         }
-         break;
+-    if (req->hba_private == s->current) {
++    if (p) {
++        req->hba_private = NULL;
++        if (p == s->current) {
++            p->req = NULL;
++        } else {
++            ncr710_request_free(s, p);
++        }
+         scsi_req_unref(req);
+     }
+ 
 -- 
 2.52.0
 
