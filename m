@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D015E6FE23
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 17:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC7DAE6FE23
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 18:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY69I-0007fU-LM; Tue, 23 Dec 2025 12:26:16 -0500
+	id 1vY7Ji-0003pS-CH; Tue, 23 Dec 2025 13:41:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vY69H-0007et-SV
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 12:26:15 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vY69G-0002MJ-Go
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 12:26:15 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b734fcbf1e3so1023073966b.3
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 09:26:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766510772; x=1767115572; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jdSrQ7BPT4/es4jfLjmE9LTAbNbt7LmG3QP22/iV3Ms=;
- b=Xk81r6VUNeATPHjmk4tBle6dgKS558BwuKbgzazCkje392/q0fWXvKJZvvogp3CnNO
- 3dqK0NfeBnMzDfIuDYMkzSB0ZsSk56N1sN9zlpbfeyUvjvfV0KS5YPCQH1gay7AYEHQT
- 0JR1PmkN7ETqgz5yoZv94np5rqRCOvLHZpc89SUNz2q1Fnx7e1YawHL7DAmRRxnPBhS3
- IbolJinEjd2SO/s406vVn1fjr7/wcKM399U2PMhOWr67QNpkTwiIDLbLym1oSAvTzHXy
- edCl/CplUqc1IdAI1Juhr5CfkNiRnNi+a7S+mxkltmtjz1+C67Bv3uksnV42tbpfgfWH
- M9eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766510772; x=1767115572;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jdSrQ7BPT4/es4jfLjmE9LTAbNbt7LmG3QP22/iV3Ms=;
- b=Aj/doLyeCrpMEGsJu0mxMzp27XNdDosZqy+1dP+svFDbVvVSaOiZPcxSehhcAnNqNS
- XpyLmk37l54iqyuEGyV8rvaSk3Iib3pgzhW6IsYRphv21KIPELByRBejXBzvZF1ugouN
- Iq0PGp4M73vydjTZslVRM9mJmIEfgsMu1LW1XgPeG3E8kdggq+/HvhzOWv1hVA61pz01
- rdEHsq4DHshD+dAXliRV7OCnl4PJTEB2m6et/dgGZXw0rPL1nT15cJGrGRLaravLVDaz
- wTI6wnPrABBgg8HZaDynzQIGAkZcGENAjaMJa6YFP0civLPK/LN9Bn+fVNSHUEIFawji
- yeIQ==
-X-Gm-Message-State: AOJu0Ywu4Ewj0e0bLXE/9UiHxDLHtKisYKBRRMWqKMDjNgMXWPbRaQyJ
- BwCxiM52/g8OFB6Fj3wdzpCmAFeKdF42OHxvQJhXo7oP/yPhMdlbM5FaGOHHdRD7
-X-Gm-Gg: AY/fxX7pVpOwnS7v0axbWs5QMgXzit7t471mLU9EQ5ZM9GlCyfqUozEQiZ3BF3mZsUf
- Xeen5p8+ID+saL7ZKe8+g3wT7akRfRVBvuqE9beEpXftBlM76nOrhd+2jl2Rs9utOcfVzjH8YTi
- y8d5LYFgWXBhyZYQ6L0hpTFu3XCYPkhi2qkkMqag+So4v5gN86V5fj8ADijHNx963tKSxKy3cn4
- nc3s3mEzfGPMs305CJc1oB6kmiLsaIWDT3hwczr6x2cR0A+4Db20T1xQv4oB8iqLDO/f894FNq2
- 9KBiO1D+6UY4Ah5gpnua+rkxsFECmAnI8HYQEZBxhhj25w4BnqbbtXLIlUzjEhD/+iWtVXd9jJn
- qkipS8uxe1W4Hjz1s5zPWUxbNBZnjk00QQ75ypJhb4lqdgTFIz1DyInTx74C3hEPWT2BZSxQsWi
- dOTM2vyylgjBFisTqRcL7Hi10GIJ2LoqnCEbHB
-X-Google-Smtp-Source: AGHT+IFqJISXNjzTIDcq2qSqkrYDNITkcB/1L60n+yWQdPxBc3oTpwfCrxbfMQOE3b2115plKdM+sw==
-X-Received: by 2002:a17:907:9406:b0:b73:9792:919b with SMTP id
- a640c23a62f3a-b8036f0a57bmr1551955166b.13.1766510771928; 
- Tue, 23 Dec 2025 09:26:11 -0800 (PST)
-Received: from tuf-gaming ([82.78.167.169]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037a5c4dfsm1465822666b.14.2025.12.23.09.26.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 09:26:11 -0800 (PST)
-From: =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?=
- <jean.christian.cirstea@gmail.com>
+ (Exim 4.90_1) (envelope-from
+ <bT.avcz3212g2ez0v6=kq7azdnbl7w1=aw3ze8kahxz6mf@em483429.getutm.app>)
+ id 1vY7JV-0003ow-GQ
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 13:40:54 -0500
+Received: from a2i327.smtp2go.com ([103.47.205.71])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <bT.avcz3212g2ez0v6=kq7azdnbl7w1=aw3ze8kahxz6mf@em483429.getutm.app>)
+ id 1vY7JT-0004DQ-Fp
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 13:40:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=smtpservice.net; s=mad0l0.a1-4.dyn; x=1766516142; h=Feedback-ID:
+ X-Smtpcorp-Track:Message-ID:Date:Subject:To:From:Reply-To:Sender:
+ List-Unsubscribe:List-Unsubscribe-Post;
+ bh=4BY0VZOet5vd6KSlhhmDdLMHab3R98aFPuZ5N2Log9w=; b=gRr494BbZaPtDk0HsJKxjD2eJ8
+ tjjVU+yNKN5A6kd+T1+YaX/h+G8IcxVYDnLodqySmOtRXHFFr/YFj1Mmrd7AaukqPpV1F7zafXlz6
+ ta6TVMBm/UWl3/ZhCDZAOo/uKfrgU9uNXmLo5gmuwBuMU/Iy6whTTkG4ZCTI3f0xSakSSvo73SSAk
+ l8rNhI1dvPBww9LWpfVznfodrX+ZoYvHiC86j8cBGzRw040813PFx7IvUtMgWKR4t/+kzXnIi3wHX
+ RTYJvg2QSCycAZtHtUqAo5FX5LGzkOVF1cvWrvgNa/3ggUgEdIpT6w3ueCILlvEZUIt3DITlkzAqT
+ uEwSIeNQ==;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
+ i=@getutm.app; q=dns/txt; s=s483429; t=1766515242; h=from : subject :
+ to : message-id : date;
+ bh=4BY0VZOet5vd6KSlhhmDdLMHab3R98aFPuZ5N2Log9w=;
+ b=E9ljRwhiIdj4OjLuK/sGBJ1k55GXY8/k6ZhB5bScgxDl5dAH/kmKIsp1Yws9XLU2yXg94
+ iGIXQdXkvdpNBW7tCpuwANwbuSg3WtLQe8v5QKrXOa+zEcp1Zvw54+7JnatszjQugCTghC4
+ HNiJqpfAoQcxQT7/Y+ny9xoTTietlzKsN2ULz6kgQ7+jg5flgROo9z9ygsZ/cAgFxiWVC+r
+ Id1Ckd8fuDViVmk+XAK4VfZYyxKZlqCCMpb6hAAW3ql0VvOmAn6Q2lWTUwn9QdDmANKJBuO
+ b1YdOdjZZifFG/DZQgoSQQi27m065P6lVpWy0DbhpZzFyKuf+Gl759am6Vlg==
+Received: from [10.45.79.114] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+ (Exim 4.94.2-S2G) (envelope-from <j@getutm.app>)
+ id 1vY7JE-pH9N2I-Mb; Tue, 23 Dec 2025 18:40:36 +0000
+Received: from [10.159.238.187] (helo=localhost.localdomain)
+ by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA512__CHACHA20_POLY1305:256)
+ (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
+ id 1vY7JC-FnQW0hPnEd1-NKBb; Tue, 23 Dec 2025 18:40:35 +0000
+From: Joelle van Dyne <j@getutm.app>
 To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu,
- =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?= <jean.christian.cirstea@gmail.com>
-Subject: [PATCH 0/1] linux-user: allow null `pathname` for statx()/fstatat()
-Date: Tue, 23 Dec 2025 19:25:47 +0200
-Message-ID: <20251223172548.1847032-1-jean.christian.cirstea@gmail.com>
-X-Mailer: git-send-email 2.51.0
+Cc: Joelle van Dyne <j@getutm.app>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2] virtio-gpu-virgl: correct parent for blob memory region
+Date: Tue, 23 Dec 2025 10:40:23 -0800
+Message-ID: <20251223184023.1913-1-j@getutm.app>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=jean.christian.cirstea@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Smtpcorp-Track: li8Tt7G8UIy_.Ru0QzrBkZFJT.N4WANw_bNOl
+Feedback-ID: 483429m:483429abrvJvs:483429sV2aZ3aji2
+X-Report-Abuse: Please forward a copy of this message, including all headers, 
+ to <abuse-report@smtp2go.com>
+Received-SPF: pass client-ip=103.47.205.71;
+ envelope-from=bT.avcz3212g2ez0v6=kq7azdnbl7w1=aw3ze8kahxz6mf@em483429.getutm.app;
+ helo=a2i327.smtp2go.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,19 +93,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since Linux 6.11, statx() and fstatat() syscalls accept a null `pathname`. Before
-this patch, qemu-*-linux-user failed with EFAULT when `pathname` was specified
-as NULL, even for Linux kernel hosts > 6.10. This patch fixes this issue by
-checking whether `arg2` is 0. If so, don't return EFAULT, but instead perform
-the appropiate syscall and let the host's kernel handle null `pathname`.
+When `owner` == `mr`, `object_unparent` will crash:
 
-Jean-Christian CÎRSTEA (1):
-  linux-user: allow null `pathname` for statx()/fstatat()
+object_unparent(mr) ->
+object_property_del_child(mr, mr) ->
+object_finalize_child_property(mr, name, mr) ->
+object_unref(mr) ->
+object_finalize(mr) ->
+object_property_del_all(mr) ->
+object_finalize_child_property(mr, name, mr) ->
+object_unref(mr) ->
+fail on g_assert(obj->ref > 0)
 
- linux-user/syscall.c | 3 ++-
+However, passing a different `owner` to `memory_region_init` is not
+enough. `memory_region_ref` has an optimization where it takes a ref
+only on the owner. It specifically warns against calling unparent on
+the memory region. So we initialize the memory region first and then
+patch in the owner with itself.
+
+Signed-off-by: Joelle van Dyne <j@getutm.app>
+---
+ hw/display/virtio-gpu-virgl.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 18404be5892..70e0aff0ca3 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -123,7 +123,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     vmr->g = g;
+ 
+     mr = &vmr->mr;
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
++    mr->owner = OBJECT(mr);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
+ 
 -- 
-2.51.0
+2.50.1 (Apple Git-155)
 
 
