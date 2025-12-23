@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0173AE74900
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 22:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE7EE748FC
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 22:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYAbk-0002rA-DO; Tue, 23 Dec 2025 17:11:56 -0500
+	id 1vYAqb-0005a2-V2; Tue, 23 Dec 2025 17:27:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>) id 1vYAbj-0002qi-Im
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 17:11:55 -0500
-Received: from fhigh-b1-smtp.messagingengine.com ([202.12.124.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <patrick@stwcx.xyz>) id 1vYAbg-0000aR-T1
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 17:11:54 -0500
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 19EEC7A0112;
- Tue, 23 Dec 2025 17:11:50 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Tue, 23 Dec 2025 17:11:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm3; t=1766527909; x=1766614309; bh=eBkvmrnhQv
- xN06kDe/pPmb7sXtJ43MGpYNvRd10Oiao=; b=iAgEaiHg48wRaZWoesf/5knGdm
- QHCX2AgDVj+wz53Po4Pu/e5RiCxrjJCyj+xw63+r2tSuMB7zb24ic2DqGt2ZMV1c
- PC9XS2By9aYoDTgwEQ2AngIcfIQS8NMSRvyJ9atprXKSCWZam/0DzkZYd2CmYj5I
- /KkKzCmNRla/uL7f2rbgWFz0gCZ6lDJZvHH3YQOxlIn+G/kkvaI8DjMS3Q11oGLb
- zJsUGfpnKbvUlaCUHdrLYBq+UbeXGTma66pXBfa+qhu9Agk8JMJE9BWQLxSTJK67
- O44EMq9F/4UrbtRBcgZSJ0J+IjJ8uNeKpVOHzyV38pdyHG5BGjXFrpWVClbw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1766527909; x=1766614309; bh=eBkvmrnhQvxN06kDe/pPmb7sXtJ43MGpYNv
- Rd10Oiao=; b=YQtSyQLlyjw0EoAVT6iwtTdDxHg3bidOuo9k3W+g0w35oNKdLYu
- gPYcKt++Vq+PnWaLBdCCDCn+40VSrghO74HOGX9y7nnj20+bt7cmS/WKNuX87j1b
- rIwvGj+9LGr+LBOG0D04TvqbyR4pnG7XFQ/p8tsEQsN4AewPcHkmTCrRtzVeZkgA
- SbhjdX8udzfLVqYS/yEZTpbMu5NIPw2OICm7rRntCl0YExLQsUCdJnSwRVczov3W
- 71uXjKaEmVC9ZTAGspy+ptMWq1FUEGSkMKaAmXvY+hTXUGq8ZOik0WGFlwlAQHI6
- a/CIvQYc6SSDdZONCT+/nA73M5xb3LKVAdQ==
-X-ME-Sender: <xms:pRNLac5or0DBfwIRjV1df87FQShTEY5OknbhlJrN1Rh3goxCdCt3qw>
- <xme:pRNLaZUBV7MaUcZZN1m0Bs4NyCU44CZDDFbbAQwOpLsa0Nk_kzUrvKnJx7cL8aYrH
- rrd2Y2eA4F8h7NVHg2bbT_79IkO1aS8Ll_XVTmYKti-ltJjjTFe>
-X-ME-Received: <xmr:pRNLae-dvrpe4pYlPlWmHS8_7l10ABcO_sJXMrhTBWa2KPjHuu2cPLZqfOM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeitdelkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
- cuvffnffculdefhedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtuden
- ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
- gtgidrgiihiieqnecuggftrfgrthhtvghrnhepgfekgfdvveegueekvdeggedtvdejveeg
- tdffvdefieduhfetledvgfdvudduffejnecuffhomhgrihhnpehgihhthhhusgdrtghomh
- enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
- rhhitghksehsthiftgigrdighiiipdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
- hpohhuthdprhgtphhtthhopegtlhhgsehrvgguhhgrthdrtghomhdprhgtphhtthhopehq
- vghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepthhhuhhthhesrh
- gvughhrghtrdgtohhmpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdp
- rhgtphhtthhopegvthgrnhhouhhssehnvhhiughirgdrtghomh
-X-ME-Proxy: <xmx:pRNLaVnfjrqOzmVgd6Js4ku1tqMzn-JSQNVnlAq942Px94D4bHmo-g>
- <xmx:pRNLacWhnYI11PMtIyTGVBjqUhCKv1naWz71WoFRXSXPD4QS4XOndg>
- <xmx:pRNLaSEJsrlc9PeXhmDKPiU5b2v07hLxNJZkq_YpEBeocGC9ZbH8zQ>
- <xmx:pRNLaQdGg0LpRzlxEhw65klKFi3ShKtg8-lGr6ZmKFpe6NyAxWGI8g>
- <xmx:pRNLaSAyENxR5aVT0QUzR-qt3BgY-UroBOuH_IoTkMjtI3ugwZmUftZ6>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Dec 2025 17:11:49 -0500 (EST)
-Date: Tue, 23 Dec 2025 17:11:48 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Ed Tanous <etanous@nvidia.com>
-Subject: Re: [PATCH] tests/functional: Fix URL of gb200nvl-bmc image
-Message-ID: <aUsTpG0EGPh29pUL@heinlein>
-References: <20251222073351.166720-1-clg@redhat.com>
- <100505ae-4d33-4bd4-800b-6ab21b99738a@redhat.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vYAqZ-0005ZJ-9R
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 17:27:15 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vYAqX-0007OL-UT
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 17:27:15 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-29f0f875bc5so78630355ad.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 14:27:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766528832; x=1767133632; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IwRSR0ZKIOyzQJTFyNymlZJZGKDFvR8rJCkk+W5rX+c=;
+ b=MxnvKsyQauqR+iWnkGMmoNtYi032jUKgkhAvNvIaq0L1ymf5CiUqCgxVTSLxalQl8T
+ 0P41vl6NYH7KMbCKqKYn1IdWiQwRxC0ZlPBh7zYOE+lcm/zR1rqw1n/P+eRi3Kk5DjU4
+ dZU0TX9ztKutVU25XnKf75bzd6wzE08l2oin1OAip2Wk7KOCAIZ1jvmyuMnlz7ETuEEh
+ kZrPCZ02Q7Rd2gqowIddeF9UGa7F19skr17l6wSI18hVCbMZ8O2MTOyFl4LSqOXuuYPE
+ ErCqv0jwDt/YNH8XjgyGJ+hhLtEGDWMbdOeyZh2qbWilJBpx111kPnsw1oVdk2EwQ0Ow
+ WMDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766528832; x=1767133632;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IwRSR0ZKIOyzQJTFyNymlZJZGKDFvR8rJCkk+W5rX+c=;
+ b=NCQfL7jTh0QoHD2X3HCA8LNmFInWFn2qLgZN+oo0cUZ0ZVAWVs5Xra9ib/W9lH6GPR
+ gdZjCRoxrJR53+DNJnNxGDyJcanhf4wDaih7x3ji2NC68DXiYaIbBEH+6VusDbsHm2ch
+ YSRicesaRsFABQHnvVGSHk9STw7pgsLX5iJ7ajBdDqEeHXxX/2Mx+ZwI5vmhiAHg+Pwc
+ t90sE+KRoAfk6gi7W5IZQmjjynQ6A1bRkMASlASLC439arw9zf2O8OVB/qdqb6/Trxx1
+ Uxs2ZOfF+vkjOez4RYAi7SLUInFluoQYkqrogb5HkAG4yiD+lQ2xL/BH9az508kfOT95
+ qSNg==
+X-Gm-Message-State: AOJu0Yw9ip3YcqGczUzZLGXB/b7wsJdw3H8r2oOZX0OEaMW5aAxW9pYD
+ LmN6E6gaNnynPrqbtb+03d8uA9mFxTJtliIkXFSdYl2W+lpHbXaAMswbZmzYNp66E7w5t+zXnYj
+ hO2tn
+X-Gm-Gg: AY/fxX5cicQOAyFixWmP5YLf8PwG2fQbLLyE+5sCKADHFgHT2I9fHSbHpiDNBAp+9V4
+ i7s5jzrIQNhDzk2WJQKBUL7Dl7klMo3Er+SFH73UiB2cvG2ukUqbSyM83UvRzyC3rkyqhEzALOI
+ dcN/AcUlSoIM/aiAGliiG4rc31vDP3c6C0+6upxFlnvmxaEsazBeVwwvqYER09FI+Q3zZSOGwKB
+ zWd1PwXLivA3LkBimUqjTn/qhZxWZeo3bH3ZcyRb6QW37CLO4v41jpeY3P6sf554qQMhbJj6HAV
+ hqE3qSSHqCM/vEwL31tPQZBVTSiwluBYxI+NBSuH+j3Sy1ykxdAlp+3/bEEWSVXWOm5s4nv0Q3x
+ phCDMXnv9GboNxTSUNuWgGQMdb3sjDGkMxb23mdAnQwOYWAqOeEapYFyK9yQxv4/8WvfRv7br7y
+ Xqn4BuxD4rbWtjHzB5OVWFg+UQOwQ=
+X-Google-Smtp-Source: AGHT+IEO3lREqjy9+6Sn4w54oXKPFg3D7NA3MwlquGvj/YDBBtmHGmNjCGxSBI+6U73zaB4/h7cXtw==
+X-Received: by 2002:a05:7022:799:b0:119:e56b:957e with SMTP id
+ a92af1059eb24-121722ac244mr22058709c88.3.1766528832235; 
+ Tue, 23 Dec 2025 14:27:12 -0800 (PST)
+Received: from gromero0.. ([179.93.129.179]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1217243bbe3sm62803123c88.0.2025.12.23.14.27.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Dec 2025 14:27:12 -0800 (PST)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, philmd@linaro.org, peter.maydell@linaro.org
+Cc: gustavo.romero@linaro.org
+Subject: [PATCH v3 3/4] target/arm: Add a _MAX sentinel to ARMASIdx enum
+Date: Tue, 23 Dec 2025 19:26:48 -0300
+Message-Id: <20251223222649.187935-4-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251223222649.187935-1-gustavo.romero@linaro.org>
+References: <20251223222649.187935-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="a6IdNjDPsXD+WBgv"
-Content-Disposition: inline
-In-Reply-To: <100505ae-4d33-4bd4-800b-6ab21b99738a@redhat.com>
-Received-SPF: pass client-ip=202.12.124.152; envelope-from=patrick@stwcx.xyz;
- helo=fhigh-b1-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,56 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add a sentinel to the ARMASIdx enum so it can be used when the total
+number of address spaces is required.
 
---a6IdNjDPsXD+WBgv
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+---
+ target/arm/cpu.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-On Mon, Dec 22, 2025 at 01:52:19PM +0100, C=E9dric Le Goater wrote:
-> On 12/22/25 08:33, C=E9dric Le Goater wrote:
-> >       ASSET_GB200_FLASH =3D Asset(
-> > -        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/m=
-aster/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348=
-=2Estatic.mtd.xz',
-> > +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/m=
-aster/images/gb200nvl-bmc/openbmc-20250702182348/obmc-phosphor-image-gb200n=
-vl-obmc-20250702182348.static.mtd.xz',
-> >           'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db=
-0dbc')
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 39f2b2e54d..718d140712 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2336,6 +2336,8 @@ typedef enum ARMASIdx {
+     ARMASIdx_S = 1,
+     ARMASIdx_TagNS = 2,
+     ARMASIdx_TagS = 3,
++    ARMASIdx_MAX = ARMASIdx_TagS
++#define ARMASIdx_COUNT (ARMASIdx_MAX + 1)
+ } ARMASIdx;
+ 
+ static inline ARMMMUIdx arm_space_to_phys(ARMSecuritySpace space)
+-- 
+2.34.1
 
-Should we make these commits or tags rather than `master`?  Right now it
-seems only Catalina uses a permalink where as all the others appear to
-use `master` references.
-
-functional/arm/test_aspeed_catalina.py
-14:        'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef8124=
-5b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina=
--20250619123021.static.mtd.xz',
-
-
---=20
-Patrick Williams
-
---a6IdNjDPsXD+WBgv
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmlLE6IACgkQqwNHzC0A
-wRmssQ//WcrnZbksSpSC1L0xx/4/0wcb24d2TbC9QuFwv67XEVtmpgZEjd2TLk0L
-jfhTsmCbUuG6bpBdcxYI76jP7Wy5PVfLhQ0gESWLPUIVEKPJ8//+3efoQORwv4TZ
-+c56brHjFR5/aiqr9wu1+pRZMfXg1LjOczR3rD0XxUeiWoJQSHUHGhO7r1k2f89h
-ZB3QZQka+Xisg1nnu9KdeR3D6Uk5wVIr8zsTt+OqmKGYwvdrGc0lhx2SGVCtpi5f
-zSjBCXxRKqLBVBrZuLyqohhn73e5UQ08SjIsIOs8s1C740zgN0dzlSljoTkVkGOK
-tnwgGqd7PcKAUy0I6UyxTku83XJG6P6w7byhuHWSo5yUFxpgdAbn2QXPrZEqsO7v
-kpncPCUCgKV1l59JtysT39ZVP48P2hjX9ezM6/pnSVwWXN+D2NzO0cEiW3AX2M/5
-FOrCS9QGByx9MInpx2YWxC0Qx/PMrnwh2tSY1dYWToWhzpv/tw4tONJr/6mqZ+Pr
-jJhInArrnVEwG6fDvHnQdW/osz7cDgN4PL5OQgFPn7Un6Wn3PyEaj96BxGsTcjJz
-ziXQUm3bcn+ebn/yVoqpM5rxGmpvzVAer7aJR7gLJr3QgHx2X5/VIPvcbgfleWcb
-7K7mdMje1AtqJ7YVD5+6z0oj31IoHaZnEF95MUuleK1JH03e9mo=
-=a3gI
------END PGP SIGNATURE-----
-
---a6IdNjDPsXD+WBgv--
 
