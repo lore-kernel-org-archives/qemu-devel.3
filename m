@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56ED5E6F095
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1053CE6F090
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY3Q7-0002qV-HT; Tue, 23 Dec 2025 09:31:27 -0500
+	id 1vY3Pu-00024w-Qa; Tue, 23 Dec 2025 09:31:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3PB-00016f-MO
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:34 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3P2-000156-VU
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3P8-0003lw-02
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:28 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3P0-0003jc-T4
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766500224;
+ s=mimecast20190719; t=1766500218;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6TWzMHm7Js1si41Vstj0CSEhsHDy04wZuQci0sb4Jyc=;
- b=XGIXeMrNhL5xEtMtFx4cciXR8u5KtQ5G9y2G2J+DWF3tfgScL54aQ8MeVxBQ6h0tDBvzYr
- VHy9uCKuKmfAcUbQDqN5jQYcz5Fjf2bkMtwKfmoOKZAy0ccKObT30zEM42B3djUSD7uDdc
- fiDkL1rO4BRMAef7wGW1TPwBNYzxyGM=
+ bh=cEFBdIohS4062D+O/J++uj/ToEv6MawI3RRAwg3mQ+g=;
+ b=ce3dK+rUXqYi3sUAj8KJ7zGAdZT39mNMPjIvKBAs1UXleqiOwttNNl0E6jKLdeB8atv71d
+ rDUdDLfg/M5WxLjKYmQqA27DJ2upsjLiKBYXWr1ccPIZJ5jN2TIlajG9hr+7Y6YOOVLUYH
+ ApXionGBNEbO0Q/ECWUIsLYVaiTuyjk=
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-zAgFMv7gNJuDSL_sQjE27w-1; Tue, 23 Dec 2025 09:30:22 -0500
-X-MC-Unique: zAgFMv7gNJuDSL_sQjE27w-1
-X-Mimecast-MFC-AGG-ID: zAgFMv7gNJuDSL_sQjE27w_1766500222
+ us-mta-542-abAEsoRcMpWc9fTLno0Yyw-1; Tue, 23 Dec 2025 09:30:16 -0500
+X-MC-Unique: abAEsoRcMpWc9fTLno0Yyw-1
+X-Mimecast-MFC-AGG-ID: abAEsoRcMpWc9fTLno0Yyw_1766500216
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8b2e9b2608dso1038241185a.3
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:22 -0800 (PST)
+ af79cd13be357-8b22d590227so628686085a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766500222; x=1767105022; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766500215; x=1767105015; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6TWzMHm7Js1si41Vstj0CSEhsHDy04wZuQci0sb4Jyc=;
- b=eTlak3Q1r48gE8qPpJ/yIZAbA2hDqb1DbFa7h3rxKOus1OXPvW/6CuMBIIuctaUxVh
- 4hL6TdKI4Cq877c2A4sCoOozrd46X5TlJPkeordXpSJ7rV5nnwLl5oB3fLo5MDQpIG1D
- VfNt4/bhF//qgTH2de90u3dvhiOtQkdIDvJ3y5v65O3ZLIbMlnQ1ZifehG75mGgqtZ2Q
- W13L5EB2j3LuvIoZkIu5IkyP1jQSGf3U3Il7+ox31LUV66yBGKZarfdHbUe5eEz1geXU
- 0D9iJMUb4M2OhHMkiDN/6hrWHv2ZrJ8NwJJ0GjfpGtoazH6W7PkKJlGpTpi3LVfqRphq
- iZSQ==
+ bh=cEFBdIohS4062D+O/J++uj/ToEv6MawI3RRAwg3mQ+g=;
+ b=seUqBs90/ZmFgY2bzSQpLvAXH++1PXZtT5uxKQQLrmmQtYQHpTVzdwMCIfD8uGwGeJ
+ md/9sTUlgSt0PkpCsa7UpusLVXWj5my5DUIabY21yqY7ZXvM9D89R5MDyy1vwd1R0lV+
+ /eE3PiGNlkcVzhX0SxTHy++O7LMx9Q1iLRDfZx9DNrNvh1Q0t5acdlwXy3h90Q7mRnM4
+ ImOTMGbE2Z053uI+VE0b0fSvFUbl1n+Pams3fLyYAqgj4fYJYVfRABJPwM585TXmsDVr
+ HAjTMLbEAI4LfYLyhSRPMBgZH5tWbLghtbgdcyXOqZXrtllv9LYVjnnRY3RemR6SZAKK
+ P5/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766500222; x=1767105022;
+ d=1e100.net; s=20230601; t=1766500215; x=1767105015;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6TWzMHm7Js1si41Vstj0CSEhsHDy04wZuQci0sb4Jyc=;
- b=dywPnW7osmo/lZ7MtJA2gfAW5zu4yLPrdVTntLUhU4c9U9Go6x7jyhRxj73+Az80r6
- VbEwowUluwos/osKmb1CSmxlCnxkvoGN1MIG+uq12M7JuN0zubijmhobAdsHLbaJJoWm
- DOgMF3I+2tWo6tOmXl2fDmkzn9ujXBc/Rd2uiiuMxgqyvxH5mYCQKyWnmdIXuCuLt/xF
- Nxw/NKD5ZShhnzqWZMbSIceGE30owiFJFQoJiCJRulGPcj+0pJQRO1bQzgIIaH4EuVm5
- ohBVZrP8rBRlTZOa8qu2do+Bd9EabGfNJCJtpNKfhGiaHpQCHIO7Y8Gyhdw/HufUUquw
- Bk5w==
-X-Gm-Message-State: AOJu0YyPXXA5AiUS7FjhklzYt9OCHJWYnNQFZPe3arEfny8LYYLY3dyC
- taRRUN7RZeEr+UFmylQZWmq0PjvZ7uqSEH70ii0bFBB24/qvT5oeu4vf8Z9kH1FaYQpcyieQzd2
- ml1UZgzGc+mpiA6kBfhhvGVC5zENxLgQ192uiH9gG0rZtVv/K5gu1lb0YPIj2LccRgRyYVK9fPd
- dUD6pbyTWhvjP+GaTrq+ZZftX8U08nCsDoEiJOGw==
-X-Gm-Gg: AY/fxX4tlOKGabYjE5ZsKVuOPjJUNB5o7ZPBKntGyTdtUCdE2E22kQ2rikwmZwmzjNA
- jvGI0YB4Lxe87L3Lx0C8wAlvsVoXXVXK+T7v00a9jZjl5eY5/b6jd0XEizXQfmX9UNUZau3GdtE
- 5ZIvBDLbL/6+m8HqbHXMZRvcyEZBZMQbF0nmzwLX7GMRsStwOWQXnGDpqA3ZFtAPfWzwCV/ksic
- 7gYvaFdym+kez//WaDAHsoT4Ada521zXAnSAsV/7UYNjqnjOVW95gYGi2fsU5H0T1yvqgsRIvHv
- RWEz2r6ORdIQdtJALSFh7i7aYoY2m0/CPP39/JZuAlpiYVIIwgxu2jAdRXRXIDOUSW+XxwjWRvA
- 3MCs=
-X-Received: by 2002:a05:620a:44c5:b0:8a4:e7f6:bf57 with SMTP id
- af79cd13be357-8c08fbc6b6dmr2378858985a.5.1766500221614; 
- Tue, 23 Dec 2025 06:30:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlDe02Y0jcMIIq0n2zKXgm1VazNKIAt1tPzrBCJWHZBoBaRzcP6Ze83uNqgL1U6tajKyNn2w==
-X-Received: by 2002:a05:620a:44c5:b0:8a4:e7f6:bf57 with SMTP id
- af79cd13be357-8c08fbc6b6dmr2378849485a.5.1766500220926; 
- Tue, 23 Dec 2025 06:30:20 -0800 (PST)
+ bh=cEFBdIohS4062D+O/J++uj/ToEv6MawI3RRAwg3mQ+g=;
+ b=stkSkfNyrL/SiL3b3CLniNKpSzyKFLTv0Z9MlDopMYzhhpT6PDYGwlQXlK6GXc+KwI
+ 2Ot6Pd/NiUJ4U2wpwvoFR0q72KuRDsGdoYeXNQhR7rD5x/je5sjbtwvemwEQ6oOf8++w
+ 6hIg9AGKIrAqKNZ2zH+niHv6tDK/N72kh0XhfjHIsESUwCjMbKdh5Whti53TyYveYaE0
+ UWtxB1RFC5f22YoDorfAQW+RTcO9jk1pjtAKoax8ROlDTZGPLhvkY/yR65pKx2cpv4Dp
+ PH4Ee6IrAg4//xWoimWo4uYkdpzfydMl9JiY+Ae8rlRPIPfsVokSO4uaScmo9oTLeB2A
+ 4isw==
+X-Gm-Message-State: AOJu0Yx8JdoFX4r6Eae4n9uByEwgfL2mHxtpyME8Ao2wbD6tfRNV/S2W
+ k+TLXl19I+5xzWO3qBbgw5X5NeMDBHVdXAsNbGgNrEAvTAa9YOoKQ+56hYcCA8olqjDjcOJJ7CY
+ r8xZZdbbSAYNnNzI4vy+JcgVAkPz7Tp7UWso+eFcVgmZ43c/j/DT9tkLQ2jucFGmaIAaLbESdhP
+ LP7MchA37FBK5o9Dtuwu3HYcvAJ7FJE0T/Bae3Kw==
+X-Gm-Gg: AY/fxX7kfBddmPeXdETDtKanLHSguw0e7SCcCYweQNWYYyigmzBR3P46o6OC1pGNg/h
+ 1o4sHlylGZYuKg8nV2HZaY0ir5JWYkG2z8a1uf32L5ewnN1DNnzl0PrgFdcc9zkMegSZ6IFb4Er
+ +4Axbk0d0NhLc6fAZvwfiTud7xBx4Neb4hT4tTy86LKJBBJTHwbOhAbGX0Kk5Pk6nYvLVEDLbTy
+ w4BI9kpHm1JZQsJCKyCDwNwrRBpEZDQzstl80a9L/PjnpvlW55y1+c41bT7w5vEc6TrfewUiZQR
+ USiM9eW5ehBcbnuOFIbtaN4wjKW/B4+0PPWubu9zV49Ux6dArb+F+AbvyYSJ8/X46BJBiiXRXM1
+ 9KF4=
+X-Received: by 2002:a05:620a:4149:b0:8b2:4b6:22d4 with SMTP id
+ af79cd13be357-8c09002816emr2306246785a.84.1766500215194; 
+ Tue, 23 Dec 2025 06:30:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH9zCst7YcBgDo7sAKqu/hFO3OAETyOpzVWg+oqVNLEzBIzmVXoSV5ED7/pGRXdXoknLsrupA==
+X-Received: by 2002:a05:620a:4149:b0:8b2:4b6:22d4 with SMTP id
+ af79cd13be357-8c09002816emr2306234285a.84.1766500214441; 
+ Tue, 23 Dec 2025 06:30:14 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.20
+ af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Dec 2025 06:30:20 -0800 (PST)
+ Tue, 23 Dec 2025 06:30:13 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 16/31] migration: Fix leak of cpr_exec_command
-Date: Tue, 23 Dec 2025 09:29:44 -0500
-Message-ID: <20251223142959.1460293-17-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 10/31] migration: Make multifd_recv_terminate_threads() own the
+ error
+Date: Tue, 23 Dec 2025 09:29:38 -0500
+Message-ID: <20251223142959.1460293-11-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251223142959.1460293-1-peterx@redhat.com>
 References: <20251223142959.1460293-1-peterx@redhat.com>
@@ -119,28 +120,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Make multifd_recv_terminate_threads() take ownership of the error always.
+Paving way for making migrate_set_error() to take ownership.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20251215220041.12657-3-farosas@suse.de
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/r/20251201194510.1121221-7-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 1 +
- 1 file changed, 1 insertion(+)
+ migration/multifd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 1ff728b6a2..f1378c3bf4 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -4140,6 +4140,7 @@ static void migration_instance_finalize(Object *obj)
-     MigrationState *ms = MIGRATION_OBJ(obj);
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 651ea3d14b..52e4d25857 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1068,6 +1068,7 @@ static void multifd_recv_terminate_threads(Error *err)
+     if (err) {
+         MigrationState *s = migrate_get_current();
+         migrate_set_error(s, err);
++        error_free(err);
+         if (s->state == MIGRATION_STATUS_SETUP ||
+             s->state == MIGRATION_STATUS_ACTIVE) {
+             migrate_set_state(&s->state, s->state,
+@@ -1434,7 +1435,6 @@ static void *multifd_recv_thread(void *opaque)
  
-     qapi_free_BitmapMigrationNodeAliasList(ms->parameters.block_bitmap_mapping);
-+    qapi_free_strList(ms->parameters.cpr_exec_command);
-     qemu_mutex_destroy(&ms->error_mutex);
-     qemu_mutex_destroy(&ms->qemu_file_lock);
-     qemu_sem_destroy(&ms->wait_unplug_sem);
+     if (local_err) {
+         multifd_recv_terminate_threads(local_err);
+-        error_free(local_err);
+     }
+ 
+     rcu_unregister_thread();
+@@ -1535,7 +1535,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+     if (use_packets) {
+         id = multifd_recv_initial_packet(ioc, &local_err);
+         if (id < 0) {
+-            multifd_recv_terminate_threads(local_err);
++            multifd_recv_terminate_threads(error_copy(local_err));
+             error_propagate_prepend(errp, local_err,
+                                     "failed to receive packet"
+                                     " via multifd channel %d: ",
+@@ -1551,7 +1551,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+     if (p->c != NULL) {
+         error_setg(&local_err, "multifd: received id '%d' already setup'",
+                    id);
+-        multifd_recv_terminate_threads(local_err);
++        multifd_recv_terminate_threads(error_copy(local_err));
+         error_propagate(errp, local_err);
+         return;
+     }
 -- 
 2.50.1
 
