@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A0CE6F09F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C313DE6F09F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 15:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY4fO-0000I1-R2; Tue, 23 Dec 2025 10:51:19 -0500
+	id 1vY4fS-0000KJ-Gq; Tue, 23 Dec 2025 10:51:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4f4-00006V-T8
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:51:00 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4fC-00008R-Oi
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:51:08 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4ez-0005S8-Ds
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:50:54 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vY4fB-0005Us-9E
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 10:51:06 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id D74F16013F;
- Tue, 23 Dec 2025 15:50:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5060C113D0;
- Tue, 23 Dec 2025 15:50:50 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 17C3860143;
+ Tue, 23 Dec 2025 15:51:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048CAC116C6;
+ Tue, 23 Dec 2025 15:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1766505052;
- bh=5FzNu8IeWuDtcit4v9ou0ulH/u3t1RfgDbfDB9+rASc=;
+ s=k20201202; t=1766505063;
+ bh=DjWpiI5N5cWwn+jQ86+vd53iDYlr5d2zwhULpb1iG0s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=HAXAyakDGwmnVezmTgohrgtlijB0M2+GWORl3r+cEKrWWIIZ08lPkMlFkBoTijYPw
- 4dI0ixhjpsGnJMxdAe/1SiMpHpC+ekkmTaKTS9oub7g7Bo38vQNK8z6aLuO8R0nt6F
- d7AXtz0CtV7XMBZ/k0Fx8i2XMW0lLRhpjt+HAuFPKXasJCi/DadWJfZc6clK8cpn/J
- qAc6aSSIncYVeKlppphLivAd/sQmrUM9tvI72BCBUDL1raeBjOCqPG6pkCig7DE6F4
- F+O2tAGJCfGfPr42sGhdi9uJKIfZ186RniJnmiECil1bCCmGKTfATb0u4DlY+qFZQL
- rtMUDj0i9FBgw==
+ b=T9VAMNRCrTRNlbJ1XWGaiqHrQKfI3D4OsBvQZorj9eQyECChHpUgN1fXmv7Q9V9kl
+ Nyv8z4/QRZRmyemdZPK5AOxGhTs58b1d9ZJqsjOkvpxecOzFIC+Dcbgz3SF0+gZcS1
+ r0JH0pOAXRFHB6P2gzaxa0v6WDMq4iuuCN2hfr9h0+8k4bdWY3q2od0ay1YDfdg2/v
+ G7i3zBKvnQaF6g737HSZuP/nn+KBmwuDkMke0gTGIIsCskevuDpA+/xFbFdSqt7ezj
+ ejdxJqU69Hn3rCxkqDBTNjrheINDtHPj1Rmwf6V+M9bDNwL3xx7qy1tJ9mXzWoJlos
+ aT7RCJh+iuVJA==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
@@ -41,22 +41,23 @@ Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Fam Zheng <fam@euphon.net>
-Subject: [PULL 07/12] scsi: ncr710: Mark command complete in status phase and
- fix disconnect
-Date: Tue, 23 Dec 2025 16:50:26 +0100
-Message-ID: <20251223155031.7110-8-deller@kernel.org>
+Subject: [PULL 12/12] target/hppa: add 64 bit support to gdbstub
+Date: Tue, 23 Dec 2025 16:50:31 +0100
+Message-ID: <20251223155031.7110-13-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251223155031.7110-1-deller@kernel.org>
 References: <20251223155031.7110-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,40 +74,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+From: Sven Schnelle <svens@stackframe.org>
 
-Set command_complete flag after status_phase and use_phase_clearing,
-instead of full disconnect during message processing.
-
-Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
 Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/scsi/ncr53c710.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/hppa/gdbstub.c | 62 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 41 insertions(+), 21 deletions(-)
 
-diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
-index 4b42fab754..3d7318c12e 100644
---- a/hw/scsi/ncr53c710.c
-+++ b/hw/scsi/ncr53c710.c
-@@ -997,6 +997,7 @@ static void ncr710_do_status(NCR710State *s)
-     ncr710_set_phase(s, PHASE_MI);
-     s->msg_action = NCR710_MSG_ACTION_DISCONNECT;
-     ncr710_add_msg_byte(s, 0); /* COMMAND COMPLETE */
-+    s->command_complete = NCR710_CMD_COMPLETE;
+diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
+index 0daa52f7af..777f4a48b9 100644
+--- a/target/hppa/gdbstub.c
++++ b/target/hppa/gdbstub.c
+@@ -21,16 +21,25 @@
+ #include "cpu.h"
+ #include "gdbstub/helpers.h"
+ 
+-/*
+- * GDB 15 only supports PA1.0 via the remote protocol, and ignores
+- * any provided xml.  Which means that any attempt to provide more
+- * data results in "Remote 'g' packet reply is too long".
+- */
++static int hppa_num_regs(CPUHPPAState *env)
++{
++    return hppa_is_pa20(env) ? 96 : 128;
++}
++
++static int hppa_reg_size(CPUHPPAState *env)
++{
++    return hppa_is_pa20(env) ? 8 : 4;
++}
+ 
+ int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ {
+-    CPUHPPAState *env = cpu_env(cs);
+-    uint32_t val;
++    HPPACPU *cpu = HPPA_CPU(cs);
++    CPUHPPAState *env = &cpu->env;
++    target_ulong val;
++
++    if (n >= hppa_num_regs(env)) {
++        return 0;
++    }
+ 
+     switch (n) {
+     case 0:
+@@ -133,24 +142,35 @@ int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+         val = env->cr[30];
+         break;
+     case 64 ... 127:
+-        val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
+-        break;
+-    default:
+-        if (n < 128) {
+-            val = 0;
++        if (hppa_is_pa20(env)) {
++            val = env->fr[n - 64];
+         } else {
+-            return 0;
++            val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
+         }
+         break;
++    default:
++        val = 0;
++        break;
+     }
+ 
+-    return gdb_get_reg32(mem_buf, val);
++    if (hppa_is_pa20(env)) {
++        return gdb_get_reg64(mem_buf, val);
++    } else {
++        return gdb_get_reg32(mem_buf, val);
++    }
  }
  
- static void ncr710_do_msgin(NCR710State *s)
-@@ -1041,7 +1042,7 @@ static void ncr710_do_msgin(NCR710State *s)
-         ncr710_set_phase(s, PHASE_CO);
+ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+-    CPUHPPAState *env = cpu_env(cs);
+-    uint32_t val = ldl_p(mem_buf);
++    HPPACPU *cpu = HPPA_CPU(cs);
++    CPUHPPAState *env = &cpu->env;
++    target_ulong val;
++
++    if (n >= hppa_num_regs(env)) {
++        return 0;
++    }
++
++    val = ldn_p(mem_buf, hppa_reg_size(env));
+ 
+     switch (n) {
+     case 0:
+@@ -267,16 +287,16 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         cpu_hppa_loaded_fr0(env);
          break;
-     case NCR710_MSG_ACTION_DISCONNECT:
--        ncr710_disconnect(s);
-+        s->sstat2 &= ~PHASE_MASK;
+     case 65 ... 127:
+-        {
++        if (hppa_is_pa20(env)) {
++            env->fr[n - 64] = val;
++        } else {
+             uint64_t *fr = &env->fr[(n - 64) / 2];
+             *fr = deposit64(*fr, (n & 1 ? 0 : 32), 32, val);
+         }
          break;
-     case NCR710_MSG_ACTION_DATA_OUT:
-         ncr710_set_phase(s, PHASE_DO);
+     default:
+-        if (n >= 128) {
+-            return 0;
+-        }
+         break;
+     }
+-    return 4;
++
++    return hppa_reg_size(env);
+ }
 -- 
 2.52.0
 
