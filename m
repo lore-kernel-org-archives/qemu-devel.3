@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBC3E6F095
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80CDE6F095
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:31:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY3P3-00015O-Pp; Tue, 23 Dec 2025 09:30:23 -0500
+	id 1vY3P1-00013E-Gu; Tue, 23 Dec 2025 09:30:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Oy-00011f-SC
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:18 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Os-0000zu-C2
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Ou-0003hV-OJ
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:14 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Oq-0003g7-Jn
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:30:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766500212;
+ s=mimecast20190719; t=1766500208;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FJCxXjvbHoSTcTF3F7Cydt9isGH5zYxpLXCy6vGUHCo=;
- b=KQWm6EXku88ALOaQHYZ8FY5JzW6CkrRrZGPokZZCCv7OUynbu0MvIYl8PIURpDTy0Zw2lp
- fO2x1t/QcQBNYMEWMAChYqcbb0yrlFID7XhKBhylm3RTw670AQlbEj6w6cQfH/+68EOBjk
- rC/tDOzTMvdwZoXEAfuAsmtsQWzCnc4=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=m6hpb97ha9BDKzmXV2BV/SXg6Ol4/zd6/rmqQsh2gSY=;
+ b=ccXm9zcm7JvRVKBLVnWaYbysQWRbMGM7uBLwk5mV7Znwfk4RO97vjapTWcQCpAZJYVvafH
+ AYVyUIVl+e6QPTGrshiXRp4J8J+JVY8pWJZad2ZIyG603if7U+XkZLoI+2fMo8dAvt78WZ
+ 0VUDDinOTWawGRqMDoc0I6DfWRJhZpI=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-JZooz3inNwyT0FTSHU8vgA-1; Tue, 23 Dec 2025 09:30:09 -0500
-X-MC-Unique: JZooz3inNwyT0FTSHU8vgA-1
-X-Mimecast-MFC-AGG-ID: JZooz3inNwyT0FTSHU8vgA_1766500207
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8b2e41884a0so1308652985a.1
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:09 -0800 (PST)
+ us-mta-318-ige9DswiNJ-j0qibMweIDg-1; Tue, 23 Dec 2025 09:30:06 -0500
+X-MC-Unique: ige9DswiNJ-j0qibMweIDg-1
+X-Mimecast-MFC-AGG-ID: ige9DswiNJ-j0qibMweIDg_1766500206
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8b2e235d4d2so1801884785a.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:30:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766500207; x=1767105007; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766500206; x=1767105006; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FJCxXjvbHoSTcTF3F7Cydt9isGH5zYxpLXCy6vGUHCo=;
- b=NtYnVkX4mGjl+oE8DHLacC7qm7qt0yownLVoMHM/r4O31TaRIog64RU3gsnxX0o5jY
- jEqKFyOF9CN/L88E7RZMrwtpRtwMzAW8jEpH8lNzhoTp3wa0pbcV0caL/+MrnOnKjEF4
- nQWBxZ3ZsoXp3H2ZcwEbFiL/IbuEPDNenTIzCw9qlV0atohFbc2ec5VjSvaHu0JyQ7Td
- u1K7okLoDXuxZRTIsXWU1Bolg6gPitlJ3kDYn5ajBNjbPMis0L/qk2O9/iZsxo0f6dIr
- HiSq2O4FZkE+YbXlIhYpLHQ9oH2qhoIezUMc5rptoRA41QI5O6U016y39/TF1iScKE+Y
- ne/A==
+ bh=m6hpb97ha9BDKzmXV2BV/SXg6Ol4/zd6/rmqQsh2gSY=;
+ b=bHvLaNIrePeU47tlxfqam243hAgEde+VodImsyK4r0HISqRH77r9Uw7lGyQVz+Cfsy
+ gcw+DMFigFvX7ExOE6lOkWk/FvhuIOaXxV01kIG55OsPyIGE1g8qMtD2sFCXeZ+9G+sF
+ 28DIFoq22HOzWEFHQDWbYC6FZd5S99DSJ2eeyZLQsu3Iv+7ST1tKWT4R8HUStvpybGT1
+ Fe4dBVBGO33DCBg74fm/gDGGNutwU82WkkbNkaAwd0TtJjrg3jyRTHGedcMSvt0ViNU4
+ 1+NpmmIR8SJ2Z0o5DOdFRqLnvWOTOwn4/xJ8qymzhSSERUIfQpDjPhW6XxlZ/fJ4Du6H
+ FovA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766500207; x=1767105007;
+ d=1e100.net; s=20230601; t=1766500206; x=1767105006;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FJCxXjvbHoSTcTF3F7Cydt9isGH5zYxpLXCy6vGUHCo=;
- b=PWwcjv8Z5M4TdwN5b+cls5yRELGmgyml8XniHQ4r7Mb8fclR2PNBdmDY7jwAHMmwF1
- gPLyccBmALtaeYla/aXq9NP064A8MUSjJ9CbLRH53zOGmacWtjGSwI/XrDcRvOj4DGC8
- BFJYxFYDRWLElGmrBjtjeajukqUyDXIkDl+amBlQMFr2GCKEgJUWJcZH/AjVJS4otYA0
- 0CzJJfzFb9V8RJafUQ4GCFaLKGvkpFQu04HxmzM4bKjUHHK1zY8PUUjoTHiVKJla1iHt
- SDOnqD6xnExeXrAJ32GhTZEGe7wtJwaNpRuYPp1poqCQdPCVOwet8t/UVxtBrhB3aKeH
- bEoQ==
-X-Gm-Message-State: AOJu0YxQ4sTkemHG+wE2EtixGuXNbJNb7Mif9ZzA4LDELi3dSbgs8HWd
- Q7CpIp83CJfwgH95uQdQFfugVyZAqajf+ZnKBpldjXWoGYImVHxyR3sdejppwhpaiCec0epCDFF
- 1seQEJ7zVkX2692qk/a/ZgH0TUERyDB9yzldgARxjXkpsSadM1TqTwx55+COmSacwmMYITzRbpu
- bC/Yth8FTpp58hfBMnfLKWlBXuATt0tMCTdqQWOA==
-X-Gm-Gg: AY/fxX7UO5RW/8rmFZPr9p3Ho8ZxWFSsRfYjNR2SDT6mz2wG4zkhFk/QOjRJV5MXet7
- oMlJMPuaNuea0Vq6WBSrI8KVD5cXkmON/58PsaYWsu/yX/2XosvOVYW+NEMdZ6MJdOYOYXwQYFw
- Qs1m7e5QLHGuS/n/kBgBWqbiup3l6u4epj/le4L+oinx05dLosZP73QZZ9td67Hb23rZO1XRs5W
- 5hDU81mf5Ms0LB0+sXpOlTYXN3NUEybp8R3jBKEY8Y1GwOEhi1YTjO5V7JL9uerCKDYiizc3j35
- VXG9dogo1HW/efTyVUKkdkossb5pq9TEa/FiSrKKHzj9M7f0YfITcbraml3FSrEMrz/AZQLITwr
- L42I=
-X-Received: by 2002:a05:620a:1a0c:b0:8b1:d2f7:9586 with SMTP id
- af79cd13be357-8c08fd041c2mr2235942685a.64.1766500206756; 
- Tue, 23 Dec 2025 06:30:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFqkHqlu72dGz634+VKDjEnLMdTmYCEkAmDtAx6ikSCtQamyuNJQ3PEbStrQNd1XgeM3ltMLw==
-X-Received: by 2002:a05:620a:1a0c:b0:8b1:d2f7:9586 with SMTP id
- af79cd13be357-8c08fd041c2mr2235934785a.64.1766500206032; 
- Tue, 23 Dec 2025 06:30:06 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=m6hpb97ha9BDKzmXV2BV/SXg6Ol4/zd6/rmqQsh2gSY=;
+ b=QT1ZSKre5EGE6pQ7S2NKBX8S3TPMkiM0/rboSOGtAgwGtgiYKkRH+EHfYiZ8LH99Xw
+ 2+OzeRGwZBzF+cVC47yBjV0rV7jt1gjQO+6vt55D7fBN85e4xU9Hm84z5g0a2DCOGvEU
+ OroEe83mur3qBltLfCKKxTBjfScEjrn9f98nafZ0YGP3i2T7vix8ev03jdoTUEdpdK0j
+ iPlIgsDGBI+ykcn4eHB6msZHAwr/HxsUfuztMZKPVLyzbLEDxQvKvjexyY9TJH98Csc3
+ UnjWVHmfAIpaZTZWDsw/WcXjChImIzOPRtRiRFu8DzHkeloLsDvS//CH4eAz0LDMs3r2
+ XIig==
+X-Gm-Message-State: AOJu0YyszYpl5r4pSvF49VdFQbwOCxdF2gDCRGKFW8eRowhhsW0NzLno
+ VFTxXezWPGyCMwEK0Ff/nBE3ofozm3Ao2lUcSB16Wn3/CD3gxqL6FaBeIzZ4qqrSR44wchYhgtX
+ 0i7ziB/LhCxNDFtAS2M06qeFCSteXDpff/o7j0upJ1ofrdJ1aYNhvIIq8WAYrwEiPnDEhSRY3lg
+ KDn93UCllcj18xmFbgEO29FzVTTMgVDaPu6MK1eg==
+X-Gm-Gg: AY/fxX7d6hQ+6ZcypO/iUCb/MVlEVtQhWaKGLocWD0Z9TBFpHgcrMiKrioQcQfSfmRE
+ NnIiWTNWbFaXTBhiJsGciiqQIY23HkHlLHrAA7/+KAXOS9WY3XbI99UMgpICQQxqMFTVzYwpeaJ
+ CQasODZ6AkqqdjggPZcbBNQ/v+DeVz0/NEgh/fKOWMam5LGm9OnLesDmPVy3XHCOGF2pZpV7Qwf
+ cRC0Hns9bz41Nhx8y87AYZ5tGKEf9LUsXns21DoJv2rFTL4vO6coXnL8pR2Bj0kaaQJ3URmrWjB
+ OQasquID2QyL+VThsSCenWmgDSGqJokL6CUw17zVGlqsMJX1xMxz1r4DQWN8qtwS8ALdPGxtNyR
+ N4iM=
+X-Received: by 2002:a05:620a:44d1:b0:8b4:ebbe:ae04 with SMTP id
+ af79cd13be357-8c08f68238emr2309097485a.35.1766500205662; 
  Tue, 23 Dec 2025 06:30:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH1gyPA+Dqwxf1Sx8Ygw0cLwU0/W0AG5oyAxN+ibQHFwcJF8x0oRhXtvsHvurC761SYGg3x9Q==
+X-Received: by 2002:a05:620a:44d1:b0:8b4:ebbe:ae04 with SMTP id
+ af79cd13be357-8c08f68238emr2309092885a.35.1766500204977; 
+ Tue, 23 Dec 2025 06:30:04 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c096787536sm1096163285a.4.2025.12.23.06.30.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Dec 2025 06:30:04 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Pawel Zmarzly <pzmarzly0@gmail.com>
-Subject: [PULL 03/31] scripts/analyze-migration: Rename RAM_SAVE_FLAG_COMPRESS
- to RAM_SAVE_FLAG_ZERO
-Date: Tue, 23 Dec 2025 09:29:31 -0500
-Message-ID: <20251223142959.1460293-4-peterx@redhat.com>
+Subject: [PULL 02/31] migration: Fix writing mapped_ram + ignore_shared
+ snapshots
+Date: Tue, 23 Dec 2025 09:29:30 -0500
+Message-ID: <20251223142959.1460293-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251223142959.1460293-1-peterx@redhat.com>
 References: <20251223142959.1460293-1-peterx@redhat.com>
@@ -122,56 +122,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pawel Zmarzly <pzmarzly0@gmail.com>
 
-It has been renamed on the C side a few years ago. In modern QEMU versions,
-fill_byte must be zero. Updating the Python script to make grepping and
-understanding the code easier.
+Currently if you set these flags and have any shared memory object, saving
+a snapshot will fail with:
+
+    Failed to write bitmap to file: Unable to write to file: Bad address
+
+We need to skip writing RAMBlocks that are backed by shared objects.
+
+Also, we should mark these RAMBlocks as skipped, so the snapshot format stays
+readable to tools that later don't know QEMU's command line (for example
+scripts/analyze-migration.py). I used bitmap_offset=0 pages_offset=0 for this.
+
+This minor change to snapshot format should be safe, as offset=0 should not
+have ever been possible.
 
 Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
-Link: https://lore.kernel.org/r/20251125173007.245607-1-pzmarzly0@gmail.com
-[peterx: fix over-long line]
+Link: https://lore.kernel.org/r/20251126154734.940066-1-pzmarzly0@gmail.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- scripts/analyze-migration.py | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ migration/ram.c | 53 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 35 insertions(+), 18 deletions(-)
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index 67631ac43e..a12ea9fc8f 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -107,7 +107,7 @@ def close(self):
-         self.file.close()
+diff --git a/migration/ram.c b/migration/ram.c
+index 7d024b88b5..117957da91 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3042,28 +3042,37 @@ static void mapped_ram_setup_ramblock(QEMUFile *file, RAMBlock *block)
+     header = g_new0(MappedRamHeader, 1);
+     header_size = sizeof(MappedRamHeader);
  
- class RamSection(object):
--    RAM_SAVE_FLAG_COMPRESS = 0x02
-+    RAM_SAVE_FLAG_ZERO     = 0x02
-     RAM_SAVE_FLAG_MEM_SIZE = 0x04
-     RAM_SAVE_FLAG_PAGE     = 0x08
-     RAM_SAVE_FLAG_EOS      = 0x10
-@@ -172,19 +172,16 @@ def read(self):
-                         mr_addr = self.file.read64()
-                 flags &= ~self.RAM_SAVE_FLAG_MEM_SIZE
+-    num_pages = block->used_length >> TARGET_PAGE_BITS;
+-    bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+-
+-    /*
+-     * Save the file offsets of where the bitmap and the pages should
+-     * go as they are written at the end of migration and during the
+-     * iterative phase, respectively.
+-     */
+-    block->bitmap_offset = qemu_get_offset(file) + header_size;
+-    block->pages_offset = ROUND_UP(block->bitmap_offset +
+-                                   bitmap_size,
+-                                   MAPPED_RAM_FILE_OFFSET_ALIGNMENT);
+-
+     header->version = cpu_to_be32(MAPPED_RAM_HDR_VERSION);
+     header->page_size = cpu_to_be64(TARGET_PAGE_SIZE);
+-    header->bitmap_offset = cpu_to_be64(block->bitmap_offset);
+-    header->pages_offset = cpu_to_be64(block->pages_offset);
++
++    if (migrate_ram_is_ignored(block)) {
++        header->bitmap_offset = 0;
++        header->pages_offset = 0;
++    } else {
++        num_pages = block->used_length >> TARGET_PAGE_BITS;
++        bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
++
++        /*
++         * Save the file offsets of where the bitmap and the pages should
++         * go as they are written at the end of migration and during the
++         * iterative phase, respectively.
++         */
++        block->bitmap_offset = qemu_get_offset(file) + header_size;
++        block->pages_offset = ROUND_UP(block->bitmap_offset +
++                                       bitmap_size,
++                                       MAPPED_RAM_FILE_OFFSET_ALIGNMENT);
++
++        header->bitmap_offset = cpu_to_be64(block->bitmap_offset);
++        header->pages_offset = cpu_to_be64(block->pages_offset);
++    }
  
--            if flags & self.RAM_SAVE_FLAG_COMPRESS:
-+            if flags & self.RAM_SAVE_FLAG_ZERO:
-                 if flags & self.RAM_SAVE_FLAG_CONTINUE:
-                     flags &= ~self.RAM_SAVE_FLAG_CONTINUE
-                 else:
-                     self.name = self.file.readstr()
--                fill_char = self.file.read8()
--                # The page in question is filled with fill_char now
--                if self.write_memory and fill_char != 0:
--                    self.files[self.name].seek(addr, os.SEEK_SET)
--                    self.files[self.name].write(chr(fill_char) * self.TARGET_PAGE_SIZE)
-+                _fill_char = self.file.read8()
-                 if self.dump_memory:
--                    self.memory['%s (0x%016x)' % (self.name, addr)] = 'Filled with 0x%02x' % fill_char
--                flags &= ~self.RAM_SAVE_FLAG_COMPRESS
-+                    self.memory['%s (0x%016x)' %
-+                                (self.name, addr)] = 'Filled with 0x00'
-+                flags &= ~self.RAM_SAVE_FLAG_ZERO
-             elif flags & self.RAM_SAVE_FLAG_PAGE:
-                 if flags & self.RAM_SAVE_FLAG_CONTINUE:
-                     flags &= ~self.RAM_SAVE_FLAG_CONTINUE
+     qemu_put_buffer(file, (uint8_t *) header, header_size);
+ 
+-    /* prepare offset for next ramblock */
+-    qemu_set_offset(file, block->pages_offset + block->used_length, SEEK_SET);
++    if (!migrate_ram_is_ignored(block)) {
++        /* leave space for block data */
++        qemu_set_offset(file, block->pages_offset + block->used_length,
++                        SEEK_SET);
++    }
+ }
+ 
+ static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
+@@ -3146,7 +3155,6 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+             if (migrate_ignore_shared()) {
+                 qemu_put_be64(f, block->mr->addr);
+             }
+-
+             if (migrate_mapped_ram()) {
+                 mapped_ram_setup_ramblock(f, block);
+             }
+@@ -3217,6 +3225,10 @@ static void ram_save_file_bmap(QEMUFile *f)
+     RAMBlock *block;
+ 
+     RAMBLOCK_FOREACH_MIGRATABLE(block) {
++        if (migrate_ram_is_ignored(block)) {
++            continue;
++        }
++
+         long num_pages = block->used_length >> TARGET_PAGE_BITS;
+         long bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+ 
+@@ -4162,6 +4174,11 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+         return;
+     }
+ 
++    if (migrate_ignore_shared() &&
++        header.bitmap_offset == 0 && header.pages_offset == 0) {
++        return;
++    }
++
+     block->pages_offset = header.pages_offset;
+ 
+     /*
 -- 
 2.50.1
 
