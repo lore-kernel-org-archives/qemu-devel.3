@@ -4,70 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC970E6F093
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B98E6F093
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 14:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vY3K1-000668-0H; Tue, 23 Dec 2025 09:25:09 -0500
+	id 1vY3Ly-0007W8-4C; Tue, 23 Dec 2025 09:27:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vY3Jr-00064J-MJ
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:25:03 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Lt-0007O9-HL
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:27:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vY3Jp-0001J7-Bp
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:24:59 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vY3Lr-0002jP-BR
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 09:27:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766499883;
+ s=mimecast20190719; t=1766500019;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bUtB8EDzfz0urX/plB0MRggkC7CeBvyngYHMBVwZCwY=;
- b=VjdcBDwEtomqdi+ltmYiTYeiCYUR53KPV64jd55Tnhx1yEwjmZA9Fz36fU9zU59uX9FoUp
- sr7jfQNnTjwNJMOGjXkUTsZlhcAfIhjkFone0b3l0AXWGiNsJmRqOxAbpn+54OUT9WUlYB
- 3EwzzAQ0swumo2uYn0ybUvoY5Byk/eA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-NxXXnhsFN6OIYCG101uDMw-1; Tue,
- 23 Dec 2025 09:24:41 -0500
-X-MC-Unique: NxXXnhsFN6OIYCG101uDMw-1
-X-Mimecast-MFC-AGG-ID: NxXXnhsFN6OIYCG101uDMw_1766499880
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CA66195F156; Tue, 23 Dec 2025 14:24:40 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.162])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADAC8180049F; Tue, 23 Dec 2025 14:24:38 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, gshan@redhat.com, ddutile@redhat.com,
- peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [PATCH v4 03/10] target/arm/cpu: Allow registers to be hidden
-In-Reply-To: <20251222134110.3649287-4-eric.auger@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20251222134110.3649287-1-eric.auger@redhat.com>
- <20251222134110.3649287-4-eric.auger@redhat.com>
-User-Agent: Notmuch/0.39 (https://notmuchmail.org)
-Date: Tue, 23 Dec 2025 15:24:35 +0100
-Message-ID: <87fr91p97g.fsf@redhat.com>
+ bh=RysFgWZ63j+OzSKgZM8x7jgxZu/q/KbdEYXZQuSGHlg=;
+ b=TBDzCFBYIaaqLfwg6IsmfO3bfM34cmd9mSWejtVE0IpoeU9cUx21LxjOh00mkDK7cqlljO
+ Zdrbj9VQ+y+oK8Iyo0XlYqjmripVBdRAbbqvg5NB/CMEAt7MBl0UOPaouS0sVOPx/drnLQ
+ A1x+DqxZizCJn1JfcWGu3xkL2X0W2+s=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-331-XBxmPNg3NheLSLzlJtciCw-1; Tue, 23 Dec 2025 09:26:57 -0500
+X-MC-Unique: XBxmPNg3NheLSLzlJtciCw-1
+X-Mimecast-MFC-AGG-ID: XBxmPNg3NheLSLzlJtciCw_1766500017
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8b234bae2a7so1192638785a.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 06:26:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1766500017; x=1767104817; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=RysFgWZ63j+OzSKgZM8x7jgxZu/q/KbdEYXZQuSGHlg=;
+ b=bMlE4WwfA0XnBnXPvJrbW0+WAmbLDrGhDikjAgQI97Gq2rBdaHmButWf1+N8JORfjl
+ oALmkT7MeNfZnUXjMvkVk6DXYkdwQtWNkWUxD9jBAyXOlY9kwcv1oY5bon/uD6FPRm0/
+ SrVGKx/DDv++oo/zs/osiEUFa0+/oaI1XMQelCCj40ttMH1PVPDE2gnpsQ8tJqGNZrgb
+ mOkbH7/2NOWhjjh0cgbrINXD6ExKxc43KYkTXGh7/L9vZ1oNe7J4DPAYgcipHHJYVGih
+ i+VxDX2l5MK+Y0/d4/AvNWDg9QJ/vh0peKrrjtH1wYlGrtFyKFo3+gfshT7j2Q7Bh0V3
+ 2BfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766500017; x=1767104817;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RysFgWZ63j+OzSKgZM8x7jgxZu/q/KbdEYXZQuSGHlg=;
+ b=Paj92La33Oo7cYmhI5/FFlvNKPUZ962EeY+yUuczr/YlDoLlyCs6w/DtNdkqOlrHYV
+ bgU5kCR0jhQonEd9DaBfwziXkYbGYgFYbylMBeXmKO7iQ/PoBYkr1X507ah3n09LvOcZ
+ z+xJdIf3u57Z2g0e3VfdyFLWoWiZVtQ0CMy74sqPb8VdbxldLq2z5ZPExrOCnA6DLE3w
+ nhVzXAst9Rqv8UDTHFushnf9CKTlIAa66FNWAzZtcJE1SOq8smHVonME/dfb8XJSuAyW
+ OKISlP7neSySH3Vw0jyjIPmCGaHunFDwxBqzMxzAy+iL1cPpIZeK5VruCjZwLZG8cO4c
+ 1khg==
+X-Gm-Message-State: AOJu0YwsZr5IKxKD25BdxRd1YFwgRA7Lr8ss96j0kiIwAx4ss5sJ3cj2
+ lLANhbdkdYRfl8v7nrmqjIAw/VIYdWQzyOyDbUTthrM0B8qLOihhtF3sMpQ5UyqdyrktvLuxNR3
+ LgFIewNe8qlf15zPONZN9k1xdDZwvveM7D17ffVpFMaelHECLf0BGq1br
+X-Gm-Gg: AY/fxX79Y8H4wcdutQVj6xOehJbdFfFWDoZ+pGdZjG6RqphesI9tHkgr9Tq6EMUTytM
+ +36nrTQ2fxcga/fcyXKqabFdkmmqzn6YVAZcV2lgPSxwlmPiPk/yoTG2C5czX+hyhIAdngOsoqd
+ Vp7hq1F+gbujrb+GbgAZ1AEt301PDLQCWlGO2NQBN2b2tapF+4UZXxFcOwGd0VB/dLopQAbR+H0
+ gNvcZYxJTEuR0lkl9R8UoFEo4N1sjPpGf4YT7MRwnyB7rHNStSlfbt8+4baDCZF/AG+EoZ/Jd/M
+ EIUdPEX7T7xg6n9zcUErZ8RsLQzRNlktF1FDau+pDn5XzfRMg9ycNYzaK5/UrSm+T8p/hJLymjX
+ l8ls=
+X-Received: by 2002:a05:620a:1720:b0:89f:5541:b5f5 with SMTP id
+ af79cd13be357-8c08f65120bmr2352342685a.17.1766500017113; 
+ Tue, 23 Dec 2025 06:26:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFjC4lnHCNtRkgBS1087c8s7W14JdaChXh8BRuR9tFI/0tSHTx3bRHyyIdGR88lbeaDiWq1A==
+X-Received: by 2002:a05:620a:1720:b0:89f:5541:b5f5 with SMTP id
+ af79cd13be357-8c08f65120bmr2352338285a.17.1766500016638; 
+ Tue, 23 Dec 2025 06:26:56 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c0968913f5sm1083644885a.18.2025.12.23.06.26.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Dec 2025 06:26:56 -0800 (PST)
+Date: Tue, 23 Dec 2025 09:26:55 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "David Hildenbrand (Red Hat)" <david@kernel.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v1] MAINTAINERS: remove David from "Memory API" section
+Message-ID: <aUqmr2tucbBrnrEq@x1.local>
+References: <20251222141438.409218-1-david@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251222141438.409218-1-david@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -92,71 +119,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 22 2025, Eric Auger <eric.auger@redhat.com> wrote:
+On Mon, Dec 22, 2025 at 03:14:38PM +0100, David Hildenbrand (Red Hat) wrote:
+> I don't have a lot of capacity to do any maintanance (or even review) of
+> "Memory API" lately, so remove myself. Fortunately we still do have two
+> other maintainers and one reviewer :)
+> 
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+> Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
 
-> More recent kernels sometimes expose new registers in an
-> unconditionnal manner. This situation breaks backward migration
-> as qemu notices there are more registers in the input stream
-> than supported on the destination host. This leads to a
-> "failed to load cpu:cpreg_vmstate_array_len" error.
->
-> A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
-> pseudo FW register in v6.16 by commit C0000e58c74e (=E2=80=9CKVM: arm64:
-> Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2=E2=80=9D). Trying to do backward
-> migration from a host kernel that features the commit to a destination
-> host that doesn't, fail with above error.
->
-> Currently QEMU is not using that feature so ignoring this latter
-> is not a problem. An easy way to fix the migration issue is to teach
-> qemu we don't care about that register and we can simply ignore it
-> when syncing its state during migration.
->
-> This patch introduces an array of such hidden registers. Soon it will
-> be settable through an array property.
->
-> If hidden, the register is moved out of the array of cpreg which is
-> built in kvm_arm_init_cpreg_list(). That way their state won't be
-> synced.
->
-> To extend that functionality to TCG, do the same in add_cpreg_to_list()
-> and count_cpreg().
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Reviewed-by: Sebastian Ott <sebott@redhat.com>
->
-> ---
->
-> v1 -> v2:
-> - Move the property in a separate patch
-> - improve the commit msg
-> - change the trace point to just print info in
->   kvm_arm_init_cpreg_list()
-> - improve comment in cpu.h (Connie)
->
-> target/arm/helper: Skip hidden registers
->
-> In case a cpreg is hidden, skip it when initialing the cpreg
-> list.
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->
-> ---
->
-> v2 -> v3:
-> - use kvm_regidx
+Thanks for all the previous work, David.  Queued.
 
-This looks a bit odd after squashing the patches, maybe edit the patch
-description?
-
-Otherwise,
-
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-
-> ---
->  target/arm/cpu.h        | 20 ++++++++++++++++++++
->  target/arm/helper.c     | 12 +++++++++++-
->  target/arm/kvm.c        | 12 +++++++++++-
->  target/arm/trace-events |  2 ++
->  4 files changed, 44 insertions(+), 2 deletions(-)
+-- 
+Peter Xu
 
 
