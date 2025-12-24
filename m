@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F421E776C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96D6E7545C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:03:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYRJ7-0006kS-3R; Wed, 24 Dec 2025 11:01:49 -0500
+	id 1vYRJ5-0006ii-5C; Wed, 24 Dec 2025 11:01:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRJ0-0006eY-EB
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:01:44 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRIe-0006an-BB
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:01:38 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRIu-0006Ru-9b
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:01:41 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b7277324054so978763766b.0
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:01:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRIZ-0006Lw-BX
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:01:18 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b7cee045187so1079213766b.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:01:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766592093; x=1767196893; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766592070; x=1767196870; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DTI6luMu/GoW8moMtBb4PmT7PmqiDrNPT7xR87KpTns=;
- b=rqoYZ7SlaETRQSof+G6LGyc4u7dUGhDAxOq0bl/IeUYCl8/Jdm1Ui33wWMO1PoZp6K
- FcBOWfbtexmmVsnp8FZuQOAQ0Gq31Fukb5trtcveuDTfPgeoAQFEi8RucJxWUdBmZsd/
- r2Hx5EtG6waiVOS0VrdEL8dZVn6JnBcEWr+fj9WpPqqOdhOdGKEAeVgOKoburc+V962N
- m1MFRmXgryHgemD5eg6IA6JkP10VBv0NOOIa0bSi4P8Mpl5Fx4N9N4NTInroN+ZtDQEo
- 8/f4Jv+l8IbDI2I0EsGkq9aOLF2BgEJpAgnaBF4zdrsCrwFmk12wT57X5IhTSSZ1wYT1
- 56+A==
+ bh=y7LlkqUnSiDvgUOMZirWuDEM7gLUdON5nHRETaU0k+Y=;
+ b=HLgqlOBmkLLhc6sppzY4+cvIkx8U2n2GILkaaUMCXs36JxSyngg1PZcY1p2s+NHgiO
+ LRAEp5YA0nSTEeljrt6bA1RVf6hvzeOCwRU/Iv6grsWXbgZVPRawKAM2nUIOD72YlY58
+ mQc/Hh/G01pQBfcBsoJK6KYcj+r1/20sYNIac0mivALNj+fz5kKka+Pdas6ovh6SVrGl
+ SzMbv6oHt//M9W/iluZsfPjlx+LjztLmdQiGkn1oYyCC985UoBqgfjc91LARgIdAIHVz
+ ekc/AOsOejsnIaiEDQb1bfZ/w2X+xXGQF2Dm48hsF3H2Av3aeiycBLeYJBtBM6ozMY7b
+ QUXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766592093; x=1767196893;
+ d=1e100.net; s=20230601; t=1766592070; x=1767196870;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DTI6luMu/GoW8moMtBb4PmT7PmqiDrNPT7xR87KpTns=;
- b=H1tPqIuH7Tqsh8QobtopfZQim4cFD/jWXX90r4i3Z7fvZHVrQsU8aeBkQ7QGARunSq
- DhhZExwQIDGJE5Jpp8xAmKASAdApRiNEjYCExRy8phAwhd8Q/Dj0/j7TrcLuRTjbTbLs
- 2OHYjfuM1e+PMAg/46xKIi9h9RInhtNoT/X0IMfIODpOHk4MwF94KZ0/Klmf4ykNKt3c
- bMYP17epb8REtB6hsd13rHgq5SvtKs2j2QZq6bqm4teZC8jg4f94QlRCOw9FNWQXRPvb
- yv/x7LmR2pOhSZeoRyuvHBy4ayNOAuXOvjxoYBbBIUcNgeJruPYngF66mRTsqU/6FxwU
- xVEw==
-X-Gm-Message-State: AOJu0YyKW3sYPbQ+vcb3NAFso3lakHIGjR//nRb2Wj8X3HE7z6WQGaCe
- 3kmEYf4BELu5fc9EvvMUskrHEONbNPUlpoISm1mdFB2x1yWtAZA18seS8pc4jEyMeI54KM6SCev
- by7PC4W4=
-X-Gm-Gg: AY/fxX6GlsCOuJanGvUcPyPj/Gl2ot2ntUsk5dDUL5VpmYZdNl3tnVznX/KVwcSvPXl
- nI7oR/urcElW29ZdbRAGlZsWkdlzjj2E7v2Zgy7Lt61MZsPP/EYz5OBL1PqH3UHLZXbYWKcwpEY
- x4CdT35M9SDVsqLFdE42+/O3Fk+7nYOYsWWeDazsuwz6psqyMf94fqeAsbWwvieFK3g4Zczbv+T
- LcIjrIJu9pyPu/yLVBkkdBED7S4UbwsLG/21u49WPjhdQZ5mTIAT7WkHOgE0+l2hFS9ivmTjVb9
- weIdulOkmA5LTUKKtKleNgOe7Czo/BSCddl95yMdqX8MZFmJ3HKrZf9OOSA5oNZ6tC9jV/iK1Sm
- BS7bb1SDS7bUaiEdmRf/0FvpHgRX4CDAjOy/hd1ZwxUi0eeUa5Ki6puGoKDFBagdUkfGWJJv04M
- 5ULDbHpKZhxYX0xfhknqOzcJoIEMMaBhAFK5PPTkK/BYMsSbnj0SLtWK0=
-X-Google-Smtp-Source: AGHT+IGSLzLhCvqEQm4B2ZOpM4WJ5t1Fze/9IEYqjvatj7Jtdr2wK6XAkqu6aRImnQ9U4d6Av+hsIw==
-X-Received: by 2002:a17:907:3fa8:b0:b7a:1b3:5e52 with SMTP id
- a640c23a62f3a-b8036f60918mr1802560866b.17.1766592093275; 
- Wed, 24 Dec 2025 08:01:33 -0800 (PST)
+ bh=y7LlkqUnSiDvgUOMZirWuDEM7gLUdON5nHRETaU0k+Y=;
+ b=MvOVAGsgvayHFRrycM/upQ2/YsljQvdE2+HqYsWxwWD031BzhjX/xh9lF+03EOtR23
+ r596ABNSd1d3p6vhaO1+FI424GPLCRGBIDRDFUeWrcJWl5bega9TISjzxBM4u5RC/+YD
+ wNctbWNpPowMA7SmWyp8exxmXVdpvW+4RF6vjRaYWtJH3x0lYqWHA3v4+tWJd0+/zhMr
+ kPyEM42N9JQeYSz/k3zxWfD3Qz//rzQUbhxytxanWYgk5iZ/CiCHvyQiOel4BiDLLFfC
+ 0GjRDg85Hn7Wn3dbnSyDZ8OaI7TZuD1pdwLIzkKKrJmGFPTn6d1cBx7vBmRgOFqkmXLW
+ /9tg==
+X-Gm-Message-State: AOJu0YxM4ComnT1C7VxUyUfW1XLhh5HG2GKHu0k12D9yEeaXQiSISfCA
+ Lqj347KnUa4WqwrbuSrAThY+L6DITQvXDcgKZYj2jVC2O+WQ8Y2PtDcvIniRB60AcSP7cflYRRs
+ fDIJjSnU=
+X-Gm-Gg: AY/fxX7Yv/Amz+WQwmP6okme9qz1QivS9LYonYs+/b8Ezv8f3GFIUI4Ox1/itmh6F59
+ wuKSRusDs2NLjFu3b4dc1EANknXg9MWO6r6uPy5ERpnGdfFaWrtyOj7g/oMXGpIIKLQ8ovo6cDd
+ sTgwSEaWNRiiXLT9ZRcc7ERqdiChQQj06uO6WSRUfS6QCcH1UKo7vc/2Pa51zeypZD4n1Ou6uaz
+ HEBwok02fyhNApkE1sYfHvyfxLqDAwaJRijA24r5TLpz8OXrjVW6rkjqAcc5id6rIvzf7BJQ/K9
+ 28I6a0Hj6dNzpO+TxrWwkSYnoE6t5KBqps61R1chk7M7dIZ0AkmGlFp3pygzz9HKxcTlVayT5rn
+ bp/iG2Zaxzt4TX3tc+l5OHKSl6uOpWp+5SMyhWjBeFgZ5hybmO2OcZI9iqwN3APz8CL5cUIdsNT
+ uy1eZF5krn5GNhPeAUgXPsXHdh0qNT0v0buIyXO/9nMLelJ9Jy4ny+5AQ=
+X-Google-Smtp-Source: AGHT+IHDW+02wxJfJV4idVw0Baj3VFK3rcdn1mUbF5kHj7M5lMaoXVEIqxKPeC/Ai8Q0o/88v1mnkw==
+X-Received: by 2002:a17:907:948a:b0:b79:ea1b:f13d with SMTP id
+ a640c23a62f3a-b80355b7986mr2380994666b.2.1766592070246; 
+ Wed, 24 Dec 2025 08:01:10 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8044f4acdbsm1651790466b.22.2025.12.24.08.01.31
+ a640c23a62f3a-b8037ad83dasm1857633966b.25.2025.12.24.08.01.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:01:32 -0800 (PST)
+ Wed, 24 Dec 2025 08:01:09 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -72,18 +72,18 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 6/6] target/alpha: Replace legacy ld_phys() ->
- address_space_ld()
-Date: Wed, 24 Dec 2025 17:00:39 +0100
-Message-ID: <20251224160040.88612-7-philmd@linaro.org>
+Subject: [PATCH 3/6] target/alpha: Inline cpu_ldl_code() call in
+ do_unaligned_access()
+Date: Wed, 24 Dec 2025 17:00:36 +0100
+Message-ID: <20251224160040.88612-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224160040.88612-1-philmd@linaro.org>
 References: <20251224160040.88612-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,109 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer the address_space_ld/st API over the legacy ld_phys()
-because it allow checking for bus access fault.
+In preparation of removing the cpu_ldl_code wrapper, inline it.
+Use the return address argument.
 
-Since we removed the last legacy uses of the legacy ldst_phys()
-API, set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable to
-hide the legacy API to alpha binaries, avoiding further API uses
-to creep in.
+Since Alpha instructions are always stored in little-endian
+order, replace MO_TE -> MO_LE.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- configs/targets/alpha-linux-user.mak |  1 +
- configs/targets/alpha-softmmu.mak    |  1 +
- target/alpha/helper.c                | 29 ++++++++++++++++------------
- 3 files changed, 19 insertions(+), 12 deletions(-)
+ target/alpha/mem_helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/configs/targets/alpha-linux-user.mak b/configs/targets/alpha-linux-user.mak
-index ee505e16ef4..2f1312f0362 100644
---- a/configs/targets/alpha-linux-user.mak
-+++ b/configs/targets/alpha-linux-user.mak
-@@ -4,3 +4,4 @@ TARGET_SYSTBL=syscall.tbl
- TARGET_LONG_BITS=64
- TARGET_XML_FILES= gdb-xml/alpha-core.xml
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/alpha-softmmu.mak b/configs/targets/alpha-softmmu.mak
-index 22fbbf0cb08..5c6af0eafc1 100644
---- a/configs/targets/alpha-softmmu.mak
-+++ b/configs/targets/alpha-softmmu.mak
-@@ -2,3 +2,4 @@ TARGET_ARCH=alpha
- TARGET_LONG_BITS=64
- TARGET_XML_FILES= gdb-xml/alpha-core.xml
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 80542cb0665..126a53c829b 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
-@@ -169,6 +169,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
-                                 int prot_need, int mmu_idx,
-                                 target_ulong *pphys, int *pprot)
+diff --git a/target/alpha/mem_helper.c b/target/alpha/mem_helper.c
+index 2113fe33ae2..572ea9cb418 100644
+--- a/target/alpha/mem_helper.c
++++ b/target/alpha/mem_helper.c
+@@ -24,13 +24,15 @@
+ 
+ static void do_unaligned_access(CPUAlphaState *env, vaddr addr, uintptr_t retaddr)
  {
-+    const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-     CPUState *cs = env_cpu(env);
-     target_long saddr = addr;
-     target_ulong phys = 0;
-@@ -176,6 +177,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
-     target_ulong pt, index;
-     int prot = 0;
-     int ret = MM_K_ACV;
-+    MemTxResult txres;
++    CPUState *cs = env_cpu(env);
++    MemOpIdx oi = make_memop_idx(MO_LEUL, cpu_mmu_index(cs, true));
+     uint64_t pc;
+     uint32_t insn;
  
-     /* Handle physical accesses.  */
-     if (mmu_idx == MMU_PHYS_IDX) {
-@@ -214,18 +216,13 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+     cpu_restore_state(env_cpu(env), retaddr);
  
-     pt = env->ptbr;
+     pc = env->pc;
+-    insn = cpu_ldl_code(env, pc);
++    insn = cpu_ldl_code_mmu(env, pc, oi, retaddr);
  
--    /*
--     * TODO: rather than using ldq_phys_le() to read the page table we should
--     * use address_space_ldq() so that we can handle the case when
--     * the page table read gives a bus fault, rather than ignoring it.
--     * For the existing code the zero data that ldq_phys_le will return for
--     * an access to invalid memory will result in our treating the page
--     * table as invalid, which may even be the right behaviour.
--     */
--
-     /* L1 page table read.  */
-     index = (addr >> (TARGET_PAGE_BITS + 20)) & 0x3ff;
--    L1pte = ldq_phys_le(cs->as, pt + index * 8);
-+    L1pte = address_space_ldq_le(cs->as, pt + index * 8, attrs, &txres);
-+    if (txres != MEMTX_OK) {
-+        /* bus fault */
-+        goto exit;
-+    }
- 
-     if (unlikely((L1pte & PTE_VALID) == 0)) {
-         ret = MM_K_TNV;
-@@ -238,7 +235,11 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
- 
-     /* L2 page table read.  */
-     index = (addr >> (TARGET_PAGE_BITS + 10)) & 0x3ff;
--    L2pte = ldq_phys_le(cs->as, pt + index * 8);
-+    L2pte = address_space_ldq_le(cs->as, pt + index * 8, attrs, &txres);
-+    if (txres != MEMTX_OK) {
-+        /* bus fault */
-+        goto exit;
-+    }
- 
-     if (unlikely((L2pte & PTE_VALID) == 0)) {
-         ret = MM_K_TNV;
-@@ -251,7 +252,11 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
- 
-     /* L3 page table read.  */
-     index = (addr >> TARGET_PAGE_BITS) & 0x3ff;
--    L3pte = ldq_phys_le(cs->as, pt + index * 8);
-+    L3pte = address_space_ldq_le(cs->as, pt + index * 8, attrs, &txres);
-+    if (txres != MEMTX_OK) {
-+        /* bus fault */
-+        goto exit;
-+    }
- 
-     phys = L3pte >> 32 << TARGET_PAGE_BITS;
-     if (unlikely((L3pte & PTE_VALID) == 0)) {
+     env->trap_arg0 = addr;
+     env->trap_arg1 = insn >> 26;                /* opcode */
 -- 
 2.52.0
 
