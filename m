@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4337E7545C
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE245E7545C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQhG-0000XG-1R; Wed, 24 Dec 2025 10:22:42 -0500
+	id 1vYQhO-0000YH-GL; Wed, 24 Dec 2025 10:22:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQh0-0000Wi-UK
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:29 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQhF-0000XM-D9
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:41 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQgz-0004Z6-AJ
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:26 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-64d30dc4ed7so6047574a12.0
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:22:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQhB-0004by-57
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:39 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-64b9d01e473so7531659a12.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:22:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589743; x=1767194543; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589754; x=1767194554; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hkVIzod7Jlt9VwHGoLmEeZpRAVX+tz7dmFt8d4zgWHg=;
- b=RQN6DnewFJNGfyf4temC/2rz5Ry+mCgRKmdNBN83TG2q64oEj83xNIP4HZdw6BfIVr
- HeG9M5YiL+If0hebFZIz8A4gg+JX76TM6YZnpKD36MazeBwzk4uxqIwq2PumqQkEqCbU
- z9rXvn5a3yITxEegOtLZKWucoG2qh9GVqhzFzmKYQYVCDuSEcfb/xZ5SVZ7y/ylP+VWt
- Y6/1+UZAShTfXhxaKxxKDiezWslTBBf46f88stKV5D1SJQByxqwzuXU1N8gTHJ0nLDnj
- bSQWmSFgNIptQo3Iozka8qCELY0ZEheE0epGTNA8BLypQ2GSs90RkbHnIlDgbu7Ydh9t
- tyYA==
+ bh=LEvDE3B5Gu5UNxZmrWuHR20YlbHMtfAkLmTQrUNsEUM=;
+ b=H09mEchkLf3EQAik4W3Ct38ubp6JKMK89lgYtNfQ2JcTuw3rFWZ1EaR0pYT/2gT3GK
+ XpYJ0lhFTe9rYEB4JG/p/vOZ2WI6Llocbeq8qdNuJWgiCV+HkPGyIEFciRrEryuRRa7N
+ 2K88UsHefbBglRY2L8dl/7SZCHsg9jrl/ceJrImYMKas/WRoiYC7dRKaXFEOpMkBLSZl
+ m1/Y8aghJhngl5JeRRLLaqU9agBDtcWL7KV0BYlHHUxGTtFhkfoyHN0k00WbGr5jPHHf
+ pxrjlnBhHnQkI6q14sW80XO1Cr/Pv2irThcDHtNhlURG7D7YEYOOi94FPz37w6qQ6+B8
+ p/0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589743; x=1767194543;
+ d=1e100.net; s=20230601; t=1766589754; x=1767194554;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hkVIzod7Jlt9VwHGoLmEeZpRAVX+tz7dmFt8d4zgWHg=;
- b=XF5fmcuPDaT3CQxa+wH350kPGyS75lJPms+l1MH0KmRMvUMqvG3oy99cRcgKuKXZWA
- fkhXRVFhAaywoJyeE0KXi7t6OWrLg63OKMrmPGw8Cx7btALAnr2N06eVMOoiSbIE8Z6D
- DuJeivrJWvk6SOO2bRFcO4KFsLFGvK7JMPi4eUQBXoNMxVYlVhJIsDpsrw+3NM+oDNeu
- AckXbxFAJieb/K64h8TvuQ5aYW+94uGt0ONoISfEUyuz6CpXXJKPYlGTa8cauhP+eOdQ
- vlzF6ZDueb4XY6IXXmW5wbtAa4kLM9ECFTgh6uvcwtYzssUr6tBuuE/wNvbcbch/LRqT
- V2EQ==
-X-Gm-Message-State: AOJu0YxQOw6EI36RkF+u53vJ9YaHdNvVRchGcZ0ayke/5Jhr53qzd1Il
- 3Jb28QQFZgsk8JEKyWsUyx7Gq3IFpU4qRP9Z4NNDodt0QqubtKfqJMn1rFGuu9brsuhbTuqkkG2
- xyvei9sw=
-X-Gm-Gg: AY/fxX7HgmK8hdb8JVeCugxYiWivU38V0G62xWfSl1yYyu22ONQA8m1HMMue6l0v2RP
- K5PGkMt0EZSeTX6uMbMD385xJnyVC6k2E8PtiAeFxAbBZ13A46hxDB8I0qKROjVgpezRHK211lo
- vvdemedCZgZcJDHU/oH2Y9CYoBseiJhs2rBR4mjbWlVAUUJoffgKxTY3uGxjIF+3XJNwsjKH4jS
- fac/eSFdRLgHK15+UZlGHoBsr6QUUIN7gA6QmyAglJXhwoOaR0VSiGc8D5wlXzXsDqFMt7esH8Z
- FyI9o+h2xmmnCTPoTY0lDnWMT0OtZV0wDa5TTzKiYlRqsec8KX21QBGfcslwxOTlzw6o5GysnBf
- W7T+voO7fOVAEvF2BTIh0fhsr4ck4jiY8CZXGqPTJSI+lhxz+TKw/hl4pfpsMa3Up0RtEhiykuY
- RTxBu8lM1CQxk+Z274trRb9oeKWJMXcd+AkrqEFAn3g9BYuObDLDXahDJorxvM
-X-Google-Smtp-Source: AGHT+IFCFP/Ws3smhbQ3ehynm4pyGDC9i8FAOml6nKbdNtopSP407NTKck6KGvaBY0p+NtUgYyY6jw==
-X-Received: by 2002:a17:907:e109:b0:b80:4030:1eca with SMTP id
- a640c23a62f3a-b804030298fmr1323500966b.2.1766589743301; 
- Wed, 24 Dec 2025 07:22:23 -0800 (PST)
+ bh=LEvDE3B5Gu5UNxZmrWuHR20YlbHMtfAkLmTQrUNsEUM=;
+ b=cWjLedBQpXGk6S5FizjYN6pIbRTyr/bP/+lz2KitsNqvGtzTN0I7JEbI7M1+NB/w3H
+ G/97HAKznJaqSTdnEJ7Yuje09syqO3oCpQEMtAZ8Ind0RQNDXXGdPgTT6mLKyLnGR4Ta
+ yq5Z5acge7krkn1trLZM9rHeMoHfz3hl6nlW5qr5jGGVCkvnTlAVElVUfjSHD1ZfD2D4
+ juDJ+vmwxZerKn68L+QmrUe1FzMvCF4yEil9BmijapSJSbbcbRDAvX0hDrE7aEQoExmX
+ HQ0yrU3gr/pReXMOr0eWmurU+hZa7yF6tBGn0U6lv7qWlRK2Tm3FhixBmSBi0WJNGqmL
+ R1Ag==
+X-Gm-Message-State: AOJu0Yx6EoAcLPHhVog4G/DR2R1E0NhHfZqAT6a3PUASTLDYQKRG77Ui
+ xF4eHZipykgyd4RQ+7cJzEhB74xPERwtJEapm/3LBmI/QNQ6dp5Az9/7Z5BPIiJmPNFvbesRUyw
+ +mgPZjWk=
+X-Gm-Gg: AY/fxX6W7fkEX/kM4zYr6LIbJps2u7p99g7607A2pu0dZl5ll7jL4XQUOrU4XmzM4Mo
+ Sev+/iXTKKSfVbV1DPP9kP3FbSip2nKB5/YNOW40rgRY83reLHxW2xPLl1IsVtxV/i/SBo8xjLw
+ MQdUPp7EzJsnEO+M+Joq8NvWc2kURylHLJMeNRuxIuHH2kUUsVT6JB0tKAysF9dSuiPzUaX9IYW
+ orz9Mi/EXl8B3Bc78d6QzeD2SK2jN5KGN/vNdJpNbcbHsnm1mg0tVtduUdtGMopsZ2Mynmg/str
+ OgjgGsffR3jIAGaNfeGNdqzoac0wO/PD5qrX0z+NulAebp5ve3yivnHWkZpj6DarBKiDUmpKIW2
+ khn5RHl4oueLpWpDo/j1lV6lTbF8C8mcrEsX+dw/DvySh5vHz6sT4HZqBKtCEGAMlUcO4ATYVwU
+ 72ev+T0+kWco8SJrDhUl+VrkK8IhcCW4u+q9UUgp/7S835IUaChUCiNaj8jLEN
+X-Google-Smtp-Source: AGHT+IEZoqs0gLoI6WtdXWdfXWitTGn2kquDWsWYeNr3VeeWGtxi+ZBccX9rcVtfLpqt7YOtlCb99g==
+X-Received: by 2002:a05:6402:1ecf:b0:64d:3550:4bb6 with SMTP id
+ 4fb4d7f45d1cf-64d35504e3dmr11787489a12.33.1766589753771; 
+ Wed, 24 Dec 2025 07:22:33 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037ae2de9sm1833760166b.26.2025.12.24.07.22.19
+ 4fb4d7f45d1cf-64b90f53c51sm17340147a12.3.2025.12.24.07.22.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:22:22 -0800 (PST)
+ Wed, 24 Dec 2025 07:22:33 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -74,17 +74,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH v3 01/25] system/physmem: Inline and remove leul_to_cpu()
-Date: Wed, 24 Dec 2025 16:21:44 +0100
-Message-ID: <20251224152210.87880-2-philmd@linaro.org>
+Subject: [PATCH v3 02/25] system/physmem: Convert DEBUG_SUBPAGE printf() to
+ trace events
+Date: Wed, 24 Dec 2025 16:21:45 +0100
+Message-ID: <20251224152210.87880-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224152210.87880-1-philmd@linaro.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,64 +108,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-leul_to_cpu() is only used within physmem.c: inline it
-and remove.
-Since @bitmap is of 'unsigned long' type, use its size
-with ldn_le_p() instead of using HOST_LONG_BITS.
+Defining DEBUG_SUBPAGE allows to use raw printf() statements to
+print information about some events; convert these to tracepoints.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/bswap.h | 11 -----------
- system/physmem.c     |  5 +++--
- 2 files changed, 3 insertions(+), 13 deletions(-)
+ system/physmem.c    | 29 ++++++-----------------------
+ system/trace-events |  6 ++++++
+ 2 files changed, 12 insertions(+), 23 deletions(-)
 
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-index 39ba64046a6..65a1b3634f4 100644
---- a/include/qemu/bswap.h
-+++ b/include/qemu/bswap.h
-@@ -375,17 +375,6 @@ static inline void stq_be_p(void *ptr, uint64_t v)
-     stq_he_p(ptr, be_bswap(v, 64));
- }
- 
--static inline unsigned long leul_to_cpu(unsigned long v)
--{
--#if HOST_LONG_BITS == 32
--    return le_bswap(v, 32);
--#elif HOST_LONG_BITS == 64
--    return le_bswap(v, 64);
--#else
--# error Unknown sizeof long
--#endif
--}
--
- /* Store v to p as a sz byte value in host order */
- #define DO_STN_LDN_P(END) \
-     static inline void stn_## END ## _p(void *ptr, int sz, uint64_t v)  \
 diff --git a/system/physmem.c b/system/physmem.c
-index c9869e4049f..1292f49095f 100644
+index 1292f49095f..7e914ecf648 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -1254,7 +1254,8 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+@@ -91,8 +91,6 @@
  
-             for (k = 0; k < nr; k++) {
-                 if (bitmap[k]) {
--                    unsigned long temp = leul_to_cpu(bitmap[k]);
-+                    unsigned long temp = ldn_le_p(&bitmap[k],
-+                                                  sizeof(bitmap[k]));
+ #include "memory-internal.h"
  
-                     nbits = ctpopl(temp);
-                     qatomic_or(&blocks[DIRTY_MEMORY_VGA][idx][offset], temp);
-@@ -1301,7 +1302,7 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
-          */
-         for (i = 0; i < len; i++) {
-             if (bitmap[i] != 0) {
--                c = leul_to_cpu(bitmap[i]);
-+                c = ldn_le_p(&bitmap[i], sizeof(bitmap[i]));
-                 nbits = ctpopl(c);
-                 if (unlikely(global_dirty_tracking & GLOBAL_DIRTY_DIRTY_RATE)) {
-                     total_dirty_pages += nbits;
+-//#define DEBUG_SUBPAGE
+-
+ /* ram_list is read under rcu_read_lock()/rcu_read_unlock().  Writes
+  * are protected by the ramlist lock.
+  */
+@@ -2903,10 +2901,7 @@ static MemTxResult subpage_read(void *opaque, hwaddr addr, uint64_t *data,
+     uint8_t buf[8];
+     MemTxResult res;
+ 
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: subpage %p len %u addr " HWADDR_FMT_plx "\n", __func__,
+-           subpage, len, addr);
+-#endif
++    trace_subpage_read(subpage, len, addr);
+     res = flatview_read(subpage->fv, addr + subpage->base, attrs, buf, len);
+     if (res) {
+         return res;
+@@ -2921,11 +2916,7 @@ static MemTxResult subpage_write(void *opaque, hwaddr addr,
+     subpage_t *subpage = opaque;
+     uint8_t buf[8];
+ 
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: subpage %p len %u addr " HWADDR_FMT_plx
+-           " value %"PRIx64"\n",
+-           __func__, subpage, len, addr, value);
+-#endif
++    trace_subpage_write(subpage, len, addr, value);
+     stn_p(buf, len, value);
+     return flatview_write(subpage->fv, addr + subpage->base, attrs, buf, len);
+ }
+@@ -2935,10 +2926,8 @@ static bool subpage_accepts(void *opaque, hwaddr addr,
+                             MemTxAttrs attrs)
+ {
+     subpage_t *subpage = opaque;
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: subpage %p %c len %u addr " HWADDR_FMT_plx "\n",
+-           __func__, subpage, is_write ? 'w' : 'r', len, addr);
+-#endif
++
++    trace_subpage_accepts(subpage, is_write ? 'w' : 'r', len, addr);
+ 
+     return flatview_access_valid(subpage->fv, addr + subpage->base,
+                                  len, is_write, attrs);
+@@ -2964,10 +2953,7 @@ static int subpage_register(subpage_t *mmio, uint32_t start, uint32_t end,
+         return -1;
+     idx = SUBPAGE_IDX(start);
+     eidx = SUBPAGE_IDX(end);
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: %p start %08x end %08x idx %08x eidx %08x section %d\n",
+-           __func__, mmio, start, end, idx, eidx, section);
+-#endif
++    trace_subpage_register(mmio, start, end, idx, eidx, section);
+     for (; idx <= eidx; idx++) {
+         mmio->sub_section[idx] = section;
+     }
+@@ -2986,10 +2972,7 @@ static subpage_t *subpage_init(FlatView *fv, hwaddr base)
+     memory_region_init_io(&mmio->iomem, NULL, &subpage_ops, mmio,
+                           NULL, TARGET_PAGE_SIZE);
+     mmio->iomem.subpage = true;
+-#if defined(DEBUG_SUBPAGE)
+-    printf("%s: %p base " HWADDR_FMT_plx " len %08x\n", __func__,
+-           mmio, base, TARGET_PAGE_SIZE);
+-#endif
++    trace_subpage_init(mmio, base, TARGET_PAGE_SIZE);
+ 
+     return mmio;
+ }
+diff --git a/system/trace-events b/system/trace-events
+index 82856e44f2e..6d29a823f04 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -35,6 +35,12 @@ find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_
+ ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
+ qemu_ram_alloc_shared(const char *name, size_t size, size_t max_size, int fd, void *host) "%s size %zu max_size %zu fd %d host %p"
+ 
++subpage_register(void *subpage, uint32_t start, uint32_t end, int idx, int eidx, uint16_t section) "subpage %p start 0x%08x end 0x%08x idx 0x%08x eidx 0x%08x section %u"
++subpage_init(void *subpage, uint64_t base, uint64_t len) "subpage %p base 0x%08" PRIx64 " len 0x%08" PRIx64
++subpage_accepts(void *subpage, char access, unsigned len, uint64_t addr) "subpage %p %c len %u addr 0x%" PRIx64
++subpage_read(void *subpage, unsigned len, uint64_t addr) "subpage %p len %u addr 0x%" PRIx64
++subpage_write(void *subpage, unsigned len, uint64_t addr, uint64_t value) "subpage %p len %u addr 0x%" PRIx64 " value 0x%" PRIx64
++
+ # cpus.c
+ vm_stop_flush_all(int ret) "ret %d"
+ 
 -- 
 2.52.0
 
