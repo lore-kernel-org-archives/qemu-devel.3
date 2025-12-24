@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83494E77361
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:16:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150DFE7545C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQaG-0002ib-2W; Wed, 24 Dec 2025 10:15:28 -0500
+	id 1vYQak-0003pE-1C; Wed, 24 Dec 2025 10:15:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZU-0002P9-8i
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:47 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZc-0002Pp-HS
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:53 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZQ-00032j-5h
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:38 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-64b4b35c812so8195403a12.0
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:14:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZZ-00033x-4E
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:46 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-64bea6c5819so6260199a12.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:14:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589273; x=1767194073; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589283; x=1767194083; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6czcg4YEy9kYV7FGDATJvxic4KWfkb63MhDB1kPUCEg=;
- b=syySrKazDNfLc2fR/wkjT9y/YOqKD8A47xANkpgS3U0ShZ/9cVK+VEAu9WqJBKIzqd
- 3N5xGOr918zQCKJiD3re3V4sPXHZLsDqhkNyyHk6wmFK2I3yt1Tp0AeOKRa/U0v78E4N
- OUKprpe+IWBdx9J/cNJCC0dhKnqDagv/i+FZVT+G1pP7Fu19sIRtlMA+Z5ylJo8u9DS3
- MekdJueCLXGVLH4MY6WMlPgaRz5m20mGNwz2obVmcGSBm4XeS1qrBVt44OMcx3V4aidd
- bPW+MGrqPAUH0gewNZgmrpSsqQbeORe8oMPU55XoZn6DvJ4MtaK3PKrpzRfy/zZsHt2x
- 1MSg==
+ bh=B1b6x18riFiHnFkkcqn+CtPN4j8BBN9191Tesnu/1k0=;
+ b=spiv030viaOWA6OU7NT5FMY9cfOHxzGiyYsqM6HS/MrDgkUyKWHVm9HxVodg0m2Xm1
+ Z6zJOTKboOmT01s+izUb7CmXi+1rCeBiy2pfnVt/soR43I+sES+O0oEYcgug5aDZMK35
+ DHVvVSzj6YE0ImVwI5Di3bQQLC/6KNIJyRloMxCEAMioTyN9/kr3DsT2Ry4XvKIr5O1k
+ S+o9VYR+bl0MFlb0QAvqNDESYS4Mqnqmtm7+X7n695cuLCYjs/aY/y1TUlk/A7fQGdZJ
+ qddpJXTcq9WrMDd7Ke+6N3bfdVkPOjaeEeZJGMsE+88QEkj5EsBUv6l/vDzF7GVRAT3l
+ 9YZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589273; x=1767194073;
+ d=1e100.net; s=20230601; t=1766589283; x=1767194083;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6czcg4YEy9kYV7FGDATJvxic4KWfkb63MhDB1kPUCEg=;
- b=ZLVcerVY0xdDyIBT8GKxocN13oKsZkFxN/8fxkrQ7Rpl6gZQlPBLu42IGPqeVOjY59
- VZt5/EiNZzTp0EJ8QBLn/CKroqHKlZw1nL8FWUZUodisv0LQmxkFOYiCfrwnN9uTtnU+
- EqoDb6Bv5adu8jyKYm6G+t3mZ26kIt19Y1fycnOT4+bsthOkN2hy8dz/Y77751j5OsSo
- Y06M7F6p/kwBeY9Kq4V8iZOQhgTnFZdONN9VAnAgW6NHEFM/L+LDFVR07mZcMmHq1iqT
- ZC5vl9Z9rlHXZGWHAFwpphlooiEVIS2sE03erhGQtDj0abd7vqvNT4yfw22t9NK/0rLu
- gC4A==
-X-Gm-Message-State: AOJu0YzOaIEg+wKCSqnXmExg4mWD3lssC1c3LnSGrbRIkYtwld/Dfvpd
- MaavDOMmSAgSUrXLZmZUf55kOamKNYo7fbp5KoQ7fYFrmT+0ubNlmE5YhUFcQbOXnSQxUxvzgwx
- wzLm1grs=
-X-Gm-Gg: AY/fxX5uI04pj+khsLaLOE41exhh5KdLkBy6+MRbmAVZ7XfbagQ3Sn37oWGHMdz9Fwb
- gz2io/V1J0WJtS9I3rA/JqB5eXCMu4uETfLTbFrrt3VFrUdp65r9PY5Fsv2hByx4jd5K4CoP4ZZ
- GQzchsBoJZuD8X5X3sBa5niJnpvFqNpinY49BWaOakOMvanBVFyObJo+B+2rUoGhK2Xz/yOwtAS
- CbBU9v54uySrs0kQ9Xog+4hlmkaVP2cPjmPyJQrEaOT+3YBM4AC4U+pbtv7jLGicLmRFHGpmiAu
- YhClXMkOrIIHHqyMPkrBSm0CO18gAIXul2awqUJetvUNqUeoWbMgqCODS7M5YaiQ5L0Yji7LFDJ
- 7tO4oNWvhUIgqr5RM33RTbrBVsXqWPcG0Qi2v/U/Pb2MbLQ8EMXVnrOz9QOHzBVzOpqoJBKvi8N
- YCFFn7ArkElUt0BQP4cGjXhN7iOZYgydh+3DbQQeDSeW3QFIX6dDlzZJw=
-X-Google-Smtp-Source: AGHT+IEZ6623R2+01ciEXyPbiMtLcHJfs6LH1TiIh6bn+03hNr67fwVO3Fd1S7EXbLpmsJkizry3ig==
-X-Received: by 2002:a17:907:6eac:b0:b80:333e:faf6 with SMTP id
- a640c23a62f3a-b8036f0d7b7mr1994176166b.14.1766589273357; 
- Wed, 24 Dec 2025 07:14:33 -0800 (PST)
+ bh=B1b6x18riFiHnFkkcqn+CtPN4j8BBN9191Tesnu/1k0=;
+ b=YkrRZsn8Lgsbwn7Y+e6t1aLwxStuc88JY2JmOVBv+9m68heWBQwtbrjA5UNmWr3TN4
+ IfFILyum0EqNFpv1lDsvPg3Hih8SD9lhOUl+ubKcgA6NS/HXbC72Nu+iclSWy9dGssen
+ RgvjB4ciFAxEq6anaITLIOMNKBzkTvkj6+Jf70xjKT3pqOoE7bjOeS/buZZWwWcMJ9w2
+ lOwZgYZ0PG4k8bLVY43TkGZpPVigUZIbfOf8d19G0AOab0ct/XFE3d9+AxZobg/vxJdB
+ kL83/FKx3iy9j/VEOrZld+BcowjAcMJiYuyrYtlIQzBhgP0oC4ztrQIE308fYc53t3N+
+ w0xw==
+X-Gm-Message-State: AOJu0Yxw6d2zODMHC+SO3caVF2YLKvtBkhrZ+QlBgqmeKXQrwRu7sFmT
+ AuKwF6l9V8x5RCApirSaIXQQdYcCvBXuQqGqvREgtQOSvIZ1c8K4tdFxePechE3Q1bu+6Y3co0B
+ BLCPn/qE=
+X-Gm-Gg: AY/fxX7lQOQEqbqFb91t4EafEPcFBLutTHwEt7rfL9C1ggP3JhGuTxzcw8iuFxVJut/
+ tBCD0Q8a9TXKxpW/YEVtqssm8mUrsvT+tl7EkjnxhvefBT/o/HYAtfUIneGXF9+eY8xhR546FkL
+ 47GWhHBCTBA3NtcNa3QCh0vSsi0LF+j22OBZu2lzd0zfdwPik0t23FeV6apIuqbNj/mtVXrnV68
+ 0wFhqMmb610t7IZfOKfi2kgSmlW1qOtt2K8J+kHD8mBuekwB2e5qbjmMHzuZ4osNARYUKUxpgFA
+ 69lJ4Zh6ZR7rpS7CMYXkAcfRDdT20ATxToGYvUra8duJTpPBBE2hA30PLY95Of5qAMEJqPFIFe6
+ /rjfgJ87K19nmKtk+mII1rJMtiT2kDfR36moYOqruWiY/pWIa/R5VawiWmtW9KOAw6KcD8wc/Zn
+ O+GrlZfNWncIHFAR9mcFSDqq44eQUSpIJHHy3idgTBkKh0YsA67b4OwDU=
+X-Google-Smtp-Source: AGHT+IGTA1F9pGUvnOxUvBAxEuM5CajhpP2d4b0KJNCfBuEsjq+HRDLQvm8HHAx9wQXKy+k4QHriRw==
+X-Received: by 2002:a17:906:c109:b0:b80:325d:99e2 with SMTP id
+ a640c23a62f3a-b803705ddb6mr1961657066b.33.1766589283089; 
+ Wed, 24 Dec 2025 07:14:43 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-64b9159a6d0sm17137152a12.28.2025.12.24.07.14.28
+ a640c23a62f3a-b8080e2177csm782017566b.68.2025.12.24.07.14.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:14:32 -0800 (PST)
+ Wed, 24 Dec 2025 07:14:42 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -85,25 +85,25 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 3/9] hw/arm: Avoid address_space_stl_notdirty() when
- generating bootloader
-Date: Wed, 24 Dec 2025 16:13:44 +0100
-Message-ID: <20251224151351.86733-4-philmd@linaro.org>
+Subject: [PATCH 4/9] system/memory: Remove address_space_stl_notdirty and
+ stl_phys_notdirty
+Date: Wed, 24 Dec 2025 16:13:45 +0100
+Message-ID: <20251224151351.86733-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224151351.86733-1-philmd@linaro.org>
 References: <20251224151351.86733-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,68 +119,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using the '-kernel' command line option, a bootloader is
-emitted, calling address_space_stl_notdirty().
+stl_phys_notdirty() was added in commit 8df1cd076cc ("physical memory
+access functions") as a (premature?) optimisation for the CODE path.
+Meanwhile 20 years passed, we might never have understood / used it
+properly; the code evolved and now the recommended way to access the
+CODE path is via the cpu_ld/st_mmu*() API.
 
-The _notdirty() variant is supposed to /not/ mark the updated
-CODE page as dirty, to not re-translate it. However this code
-is only used with the '-kernel' CLI option after the machine
-is created and /before/ the vCPUs run, and *only* during the
-first (cold) reset; not during following (hot) resets. The
-optimisation is totally not justified, since we haven't
-translated any guest code yet.
-Replace by the normal address_space_stl() helper.
+Remove both address_space_stl_notdirty() and stl_phys_notdirty()
+leftovers.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/arm/aspeed.c | 4 ++--
- hw/arm/boot.c   | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ include/system/memory.h        |  6 ------
+ include/exec/memory_ldst.h.inc |  2 --
+ system/memory_ldst.c.inc       | 39 ----------------------------------
+ 3 files changed, 47 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 3a5071a3841..e3cd1519a81 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -77,8 +77,8 @@ static void aspeed_reset_secondary(ARMCPU *cpu,
-     CPUState *cs = CPU(cpu);
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 3bd5ffa5e0d..e69171de05a 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2850,12 +2850,6 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+ #define ARG1_DECL    AddressSpace *as
+ #include "exec/memory_ldst.h.inc"
  
-     /* info->smp_bootreg_addr */
--    address_space_stl_notdirty(as, AST_SMP_MBOX_FIELD_GOSIGN, 0,
+-static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val)
+-{
+-    address_space_stl_notdirty(as, addr, val,
 -                               MEMTXATTRS_UNSPECIFIED, NULL);
-+    address_space_stl(as, AST_SMP_MBOX_FIELD_GOSIGN, 0,
-+                         MEMTXATTRS_UNSPECIFIED, NULL);
-     cpu_set_pc(cs, info->smp_loader_start);
+-}
+-
+ #define SUFFIX
+ #define ARG1         as
+ #define ARG1_DECL    AddressSpace *as
+diff --git a/include/exec/memory_ldst.h.inc b/include/exec/memory_ldst.h.inc
+index 7270235c600..173164fee3a 100644
+--- a/include/exec/memory_ldst.h.inc
++++ b/include/exec/memory_ldst.h.inc
+@@ -25,8 +25,6 @@ uint32_t glue(address_space_ldl, SUFFIX)(ARG1_DECL,
+     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+ uint64_t glue(address_space_ldq, SUFFIX)(ARG1_DECL,
+     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+-void glue(address_space_stl_notdirty, SUFFIX)(ARG1_DECL,
+-    hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stw, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint16_t val, MemTxAttrs attrs, MemTxResult *result);
+ void glue(address_space_stl, SUFFIX)(ARG1_DECL,
+diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
+index 333da209d1a..b45bfecd137 100644
+--- a/system/memory_ldst.c.inc
++++ b/system/memory_ldst.c.inc
+@@ -261,45 +261,6 @@ uint16_t glue(address_space_lduw_be, SUFFIX)(ARG1_DECL,
+                                        DEVICE_BIG_ENDIAN);
  }
  
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index b91660208f5..de22b8adf56 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -266,8 +266,8 @@ static void default_reset_secondary(ARMCPU *cpu,
-     AddressSpace *as = arm_boot_address_space(cpu, info);
-     CPUState *cs = CPU(cpu);
- 
--    address_space_stl_notdirty(as, info->smp_bootreg_addr,
--                               0, MEMTXATTRS_UNSPECIFIED, NULL);
-+    address_space_stl(as, info->smp_bootreg_addr,
-+                         0, MEMTXATTRS_UNSPECIFIED, NULL);
-     cpu_set_pc(cs, info->smp_loader_start);
- }
- 
-@@ -277,8 +277,8 @@ static inline bool have_dtb(const struct arm_boot_info *info)
- }
- 
- #define WRITE_WORD(p, value) do { \
--    address_space_stl_notdirty(as, p, value, \
--                               MEMTXATTRS_UNSPECIFIED, NULL);  \
-+    address_space_stl(as, p, value, \
-+                         MEMTXATTRS_UNSPECIFIED, NULL);  \
-     p += 4;                       \
- } while (0)
- 
+-/* warning: addr must be aligned. The ram page is not masked as dirty
+-   and the code inside is not invalidated. It is useful if the dirty
+-   bits are used to track modified PTEs */
+-void glue(address_space_stl_notdirty, SUFFIX)(ARG1_DECL,
+-    hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result)
+-{
+-    uint8_t *ptr;
+-    MemoryRegion *mr;
+-    hwaddr l = 4;
+-    hwaddr addr1;
+-    MemTxResult r;
+-    uint8_t dirty_log_mask;
+-    bool release_lock = false;
+-
+-    RCU_READ_LOCK();
+-    mr = TRANSLATE(addr, &addr1, &l, true, attrs);
+-    if (l < 4 || !memory_access_is_direct(mr, true, attrs)) {
+-        release_lock |= prepare_mmio_access(mr);
+-
+-        r = memory_region_dispatch_write(mr, addr1, val, MO_32, attrs);
+-    } else {
+-        ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
+-        stl_p(ptr, val);
+-
+-        dirty_log_mask = memory_region_get_dirty_log_mask(mr);
+-        dirty_log_mask &= ~(1 << DIRTY_MEMORY_CODE);
+-        physical_memory_set_dirty_range(memory_region_get_ram_addr(mr) + addr,
+-                                            4, dirty_log_mask);
+-        r = MEMTX_OK;
+-    }
+-    if (result) {
+-        *result = r;
+-    }
+-    if (release_lock) {
+-        bql_unlock();
+-    }
+-    RCU_READ_UNLOCK();
+-}
+-
+ /* warning: addr must be aligned */
+ static inline void glue(address_space_stl_internal, SUFFIX)(ARG1_DECL,
+     hwaddr addr, uint32_t val, MemTxAttrs attrs,
 -- 
 2.52.0
 
