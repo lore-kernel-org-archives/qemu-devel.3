@@ -4,101 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C2C9E75424
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 07:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFFCE75423
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 08:23:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYJkF-00021y-Qc; Wed, 24 Dec 2025 02:57:19 -0500
+	id 1vYK8m-0007v2-8q; Wed, 24 Dec 2025 03:22:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bT.fjyexl7n5it28i0=pg1qg0xgqeu1=tq7o9ddt3qqokw@em483429.getutm.app>)
- id 1vYJkD-00020k-EQ
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 02:57:17 -0500
-Received: from a2i327.smtp2go.com ([103.47.205.71])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vYK8i-0007uj-Io
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 03:22:36 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bT.fjyexl7n5it28i0=pg1qg0xgqeu1=tq7o9ddt3qqokw@em483429.getutm.app>)
- id 1vYJkB-0006vV-SR
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 02:57:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=smtpservice.net; s=mad0l0.a1-4.dyn; x=1766563921; h=Feedback-ID:
- X-Smtpcorp-Track:To:Subject:Message-ID:Date:From:Reply-To:Sender:
- List-Unsubscribe:List-Unsubscribe-Post;
- bh=1eiikYYLad7ERGAgOiDl1Hrsu+GDiQoXB4vBMrhFhPo=; b=V2uvzXRJ/VjsyR3c8xJp+lFzhi
- /m7QcxOvcmxLyW095rI8IMKhIr+vOSpnqvPZKUm5SigjI4wcOh277OfQg+u5TG5ixIyMrq9TrXH9W
- lIMwA0s44tPMEPBwRaWDlEaQ+dx0Z7+8NdDWI/MESYwcDnqXr7w7z+fzaP182KYNCA1XDQvDT3k6C
- 2a+ZneojtLJIyMoK2TswelLaXPZ8nycZP7+OWJrisStyIXbdhhCvTWzM9C9gxUn4QQFDYXwTswOz/
- bSZ2FCMlO5hckcLuNEQcVzg7fwiZBSOnAbO6YJFpi9TWwPT6Ldy9bAVUBM0eIUo+bHrTJsPHCFs7c
- Uxz6Db6g==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
- i=@getutm.app; q=dns/txt; s=s483429; t=1766563021; h=from : subject :
- to : message-id : date;
- bh=1eiikYYLad7ERGAgOiDl1Hrsu+GDiQoXB4vBMrhFhPo=;
- b=myZ8b8mOUtOASBJ2CAhP3z1dFnBNe4x2P2FHTmKZSBO9XOGw5Y2GaGQ+OI62ymP7UpAgI
- ISgNRorDW0Tf7ncfSv0+ZH2U4x3nTc87e3spqgIyipgS7bHXSQ5dFWGmRCZUb63k1+sCyVB
- EM5+NW3vojvL/im3IHAqkrYjCRCF5OuBleGqQwMaynOHmPLFZPzo0F/1Mb06bsFay1+30ZZ
- 84MrZSMZf94zq2qnSImM3Pzy25qg2ZcPtYme3NmR3swijvXTNcGIWet82oZlXzYGmy3mXKw
- dEEocUH3IukxxerhF5etETBXngFw8jXzfJcj8d9RcBEAIPSUPDwatLxHUBjw==
-Received: from [10.173.255.233] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.94.2-S2G) (envelope-from <j@getutm.app>) id 1vYJjw-pH9U74-Aa
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 07:57:00 +0000
-Received: from [10.159.238.187] (helo=mail-ej1-f46.google.com)
- by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
- (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
- id 1vYJjv-FnQW0hPtzfp-40Gt for qemu-devel@nongnu.org;
- Wed, 24 Dec 2025 07:56:59 +0000
-Received: by mail-ej1-f46.google.com with SMTP id
- a640c23a62f3a-b7355f6ef12so1070382066b.3
- for <qemu-devel@nongnu.org>; Tue, 23 Dec 2025 23:56:59 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUym9wXZ0+1vZ/U+/5OJ0epeWvIwq1gJkeSCVR5DW3upL6CU/DfTwDqkPcPuCMDHOM7TNCMeEWxDpRV@nongnu.org
-X-Gm-Message-State: AOJu0YyoBCdRcGhEqjFacRD0uFS0USfkEVFBirjaO4r0Jnok2qJaPGUb
- ZFqRTXfT6jYI+3MKpA/D1K6Cyd0FzMESbVZ3IW6/+k1Du1IqNKwSfYw1xE91A06v1uwbd6tez7X
- /tTagIK1ZwhBIa8zBPuMdw9vCs+YFINw=
-X-Google-Smtp-Source: AGHT+IG1MrvJzEm9HRi6d1L2wRdKmyVtIK7BgvZAMq6EE+HjreBqH4ecW3jpnUKW9GdPxa0GNuO/Rb6p9u6pOypuCDw=
-X-Received: by 2002:a17:906:23e9:b0:b80:6ddc:83f8 with SMTP id
- a640c23a62f3a-b806ddc8a5emr753238166b.32.1766563019102; Tue, 23 Dec 2025
- 23:56:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vYK8Y-0004MN-Hf
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 03:22:36 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BO8KqN8038964
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 24 Dec 2025 17:22:11 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=XNlg0d8DsCstghgL5HzcbKGRYVYFs5tPct9NhC7zFAQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1766564531; v=1;
+ b=GWj06L0+1mJ8kuiZrPJqDoQcgmwPnvrLD8ikUHTh6NmgkPzoQYPDvj5A3CvlluUX
+ dqbdMJfBEBqjcqApHIrQSqXUMIO4ieBkiTDTVY4MaPO3tJYYTQqHz6k5oOAtLVOY
+ IzbCH2FHKQqU4HWXxLM/pPbEyvRmwAp2v0f8yStBkN2YLxdA+9ZebDSCg+/6kQx8
+ y6ap1NnzRs/EwAYFFpXU3vL8RQ2ia4Gc9tyRAwYRYpBsbkrhbOkFL51M7B7IfPU6
+ syi0QbYDS6jOTXBuuk172cp9xsgKPDtZtmj7SLRjjWindvj5kWv+Cjmgn3xNzYCH
+ KIZDQbPu1L6q+YDSn+YD9A==
+Message-ID: <a4e9815c-8641-4250-9bf4-ec13fa49e1ee@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 24 Dec 2025 17:20:52 +0900
 MIME-Version: 1.0
-References: <20251203040754.94487-1-j@getutm.app>
- <20251203040754.94487-4-j@getutm.app>
- <a3f3b84a-451d-4b41-8f32-fa96ed8a608f@rsg.ci.i.u-tokyo.ac.jp>
- <CA+E+eSB7rV9dvrB+1=wFyAgCQt89Ez8U3fxgyWvbb5QfOJTMkA@mail.gmail.com>
- <f26efe44-0ed6-4cc7-9ca1-729a9fdad83e@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <f26efe44-0ed6-4cc7-9ca1-729a9fdad83e@rsg.ci.i.u-tokyo.ac.jp>
-From: Joelle van Dyne <j@getutm.app>
-Date: Tue, 23 Dec 2025 23:56:47 -0800
-X-Gmail-Original-Message-ID: <CA+E+eSDh7Q-_+FgRvCs6B5SGCwEgk8siqupVbR=wCUtVJxOiGg@mail.gmail.com>
-X-Gm-Features: AQt7F2qgl_PepIze7so3EkQhWrE7C2Dh7kLQHSNp9KvCb-ICZRUvQbzoUzdlTbg
-Message-ID: <CA+E+eSDh7Q-_+FgRvCs6B5SGCwEgk8siqupVbR=wCUtVJxOiGg@mail.gmail.com>
-Subject: Re: [PATCH RFC 3/7] console: rename `d3d_tex2d` to `native`
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/7] egl-helpers: store handle to native device
+To: Joelle van Dyne <j@getutm.app>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Smtpcorp-Track: 3XAwYsX4IzEd.SfX1ZogyCXiE.6Y1uzwCiNU2
-Feedback-ID: 483429m:483429abrvJvs:483429sSQBnn4Ium
-X-Report-Abuse: Please forward a copy of this message, including all headers, 
- to <abuse-report@smtp2go.com>
-Received-SPF: pass client-ip=103.47.205.71;
- envelope-from=bT.fjyexl7n5it28i0=pg1qg0xgqeu1=tq7o9ddt3qqokw@em483429.getutm.app;
- helo=a2i327.smtp2go.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20251203040754.94487-1-j@getutm.app>
+ <20251203040754.94487-2-j@getutm.app>
+ <3a401334-700f-4b11-b006-a93470d38a66@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+E+eSBOEzzb-aO2B_yWtJeoK4QGvjf=pB555+GGE2U0OH=vbw@mail.gmail.com>
+ <f246dcbd-2a13-46e8-97cb-d6959d8115dc@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+E+eSCJ8y8RnGe99kFVSLbex_jE71z74+pF4aom-LMbjXgzPQ@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <CA+E+eSCJ8y8RnGe99kFVSLbex_jE71z74+pF4aom-LMbjXgzPQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,80 +81,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 23, 2025 at 10:29=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2025/12/20 1:16, Joelle van Dyne wrote:
-> > On Wed, Dec 3, 2025 at 10:41=E2=80=AFPM Akihiko Odaki
-> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> >>
-> >> On 2025/12/03 13:07, Joelle van Dyne wrote:
-> >>> In order to support native texture scanout beyond D3D, we make this m=
-ore
-> >>> generic allowing for multiple native texture handle types.
-> >>>
-> >>> Signed-off-by: Joelle van Dyne <j@getutm.app>
-> >>> ---
-> >>>    include/ui/console.h          | 22 +++++++++++++++++++---
-> >>>    include/ui/gtk.h              |  4 ++--
-> >>>    include/ui/sdl2.h             |  2 +-
-> >>>    hw/display/virtio-gpu-virgl.c | 10 +++++++---
-> >>>    ui/console.c                  |  8 ++++----
-> >>>    ui/dbus-console.c             |  2 +-
-> >>>    ui/dbus-listener.c            |  8 ++++----
-> >>>    ui/egl-headless.c             |  2 +-
-> >>>    ui/gtk-egl.c                  |  2 +-
-> >>>    ui/gtk-gl-area.c              |  2 +-
-> >>>    ui/sdl2-gl.c                  |  2 +-
-> >>>    ui/spice-display.c            |  2 +-
-> >>>    12 files changed, 43 insertions(+), 23 deletions(-)
-> >>>
-> >>> diff --git a/include/ui/console.h b/include/ui/console.h
-> >>> index 98feaa58bd..25e45295d4 100644
-> >>> --- a/include/ui/console.h
-> >>> +++ b/include/ui/console.h
-> >>> @@ -131,6 +131,22 @@ struct QemuConsoleClass {
-> >>>        ObjectClass parent_class;
-> >>>    };
-> >>>
-> >>> +typedef enum ScanoutTextureNativeType {
-> >>> +    SCANOUT_TEXTURE_NATIVE_TYPE_NONE,
-> >>> +    SCANOUT_TEXTURE_NATIVE_TYPE_D3D,
-> >>> +} ScanoutTextureNativeType;
-> >>> +
-> >>> +typedef struct ScanoutTextureNative {
-> >>> +    ScanoutTextureNativeType type;
-> >>> +    union {
-> >>> +        void *d3d_tex2d;
-> >>> +    } u;> +} ScanoutTextureNative;
-> >>
-> >> Instead, I suggest:
-> >>
-> >> typedef struct ScanoutTextureNative {
-> >>       ScanoutTextureNativeType type;
-> >>       void *handle;
-> >> } ScanoutTextureNative;
-> >>
-> >> ...to align with the definition of struct
-> >> virgl_renderer_resource_info_ext and
-> >> virgl_renderer_create_handle_for_scanout(), which do not add a field f=
-or
-> >> each type (except the one for the backward compatibility).
-> > I've updated virglrenderer to use a union as well. Since we are
-> > passing ScanoutTextureNative around byval and it can grow with
-> > additional platform support, I think it would be better to keep it as
-> > a union.
->
-> I don't think using a union for virglrenderer is a good idea because
-> adding another member to the union can change its size and cause an ABI
-> breakage. Sticking to void * is the safest choice. We rely on void * to
-> represent platform-specific types anyway so there is practically no type
-> safetey here, unfortunately.
-That's fair, we can use a struct in virglrenderer. However, in QEMU if
-we are passing byval and a struct (once increased in size) could lead
-to needless copying.
+On 2025/12/24 16:54, Joelle van Dyne wrote:
+> On Tue, Dec 23, 2025 at 10:23 PM Akihiko Odaki
+> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>
+>> On 2025/12/20 1:11, Joelle van Dyne wrote:
+>>> On Wed, Dec 3, 2025 at 10:31 PM Akihiko Odaki
+>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>>>
+>>>> On 2025/12/03 13:07, Joelle van Dyne wrote:
+>>>>> Make way for other platforms by making the variable more general. Also we
+>>>>> will be using the device in the future so let's save the pointer in the
+>>>>> global instead of just a boolean flag.
+>>>>>
+>>>>> Signed-off-by: Joelle van Dyne <j@getutm.app>
+>>>>> ---
+>>>>>     include/ui/egl-helpers.h      | 2 +-
+>>>>>     hw/display/virtio-gpu-virgl.c | 2 +-
+>>>>>     ui/egl-helpers.c              | 4 ++--
+>>>>>     3 files changed, 4 insertions(+), 4 deletions(-)
+>>>>>
+>>>>> diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
+>>>>> index acf993fcf5..c239d32317 100644
+>>>>> --- a/include/ui/egl-helpers.h
+>>>>> +++ b/include/ui/egl-helpers.h
+>>>>> @@ -12,7 +12,7 @@
+>>>>>     extern EGLDisplay *qemu_egl_display;
+>>>>>     extern EGLConfig qemu_egl_config;
+>>>>>     extern DisplayGLMode qemu_egl_mode;
+>>>>> -extern bool qemu_egl_angle_d3d;
+>>>>> +extern void *qemu_egl_angle_native_device;
+>>>>
+>>>> I guess ANGLE will not be relevant for Metal and leaving it will be
+>>>> misleading.
+>>> What is your suggestion? This is just to remove "D3D" from the
+>>> variable name. If you want to remove "ANGLE" from the variable name as
+>>> well, it may be misleading because this variable is only used with an
+>>> ANGLE EGL backend.
+>> Looking the usage of the variable in your tree, I realized this variable
+>> may not be necessary for this at all.
+>>
+>> There are two use cases:
+>>
+>> 1. To determine if VIRGL_RENDERER_NATIVE_SHARE_TEXTURE needs to be set.
+>> 2. To pass the device used by ANGLE to Cocoa.
+>>
+>> Regarding 1, virglrenderer can simply pass MTLTexture whenever the EGL
+>> context is backed with Metal and Venus is in use.
+>>
+>> Although your code is modeled after the code dealing with Direct3D
+>> handles, the functionality of your code is quite a different from it.
+>>
+>> Direct3D handles are used to "share" texture with other processes in a
+>> zero-copy manner. It is an optional hint; dbus can fall back to use
+>> OpenGL textures if they are missing, and the other displays just don't care.
+>>
+>> On the other hand, MTLTexture plays an essential role in your scenario.
+>> There are no corresponding OpenGL texture so no fallback happens.
+> That's a good point, but there's two uses of MTLTexture: one as a
+> direct parallel to D3D handles (vrend allocate a texture backed by
+> MTLTexture; returns it in info_ext along with a tex_id) and one
+> returned as part of the new API
+> (virgl_renderer_create_handle_for_scanout) which does not have an
+> associated tex_id.
 
->
-> Regards,
-> Akihiko Odaki
+Thanks for clarification. I think the point I mentioned below still 
+holds; virglrenderer does not have any code that can be skipped for 
+MTLTexture with the absence of VIRGL_RENDERER_NATIVE_SHARE_TEXTURE.
+
+> 
+>>
+>> The difference shows that the VIRGL_RENDERER_NATIVE_SHARE_TEXTURE flag
+>> is useful when dealing with Direct3D handles but not with MTLTexture.
+>> The absence of flag tells virglrenderer that we do not need Direct3D
+>> handle (because the dbus display is not used), and allows it to skip
+>> some code to convert OpenGL textures to Direct3D handles).
+>>
+>> On the other hand, not passing MTLTexture in your scenario does not make
+>> sense because it prevents the scanout at all. virglrenderer does not
+>> have any code that can be skipped when the flag is absent. virglrenderer
+>> can simply pass MTLTexture in your scenario.
+>>
+>> 2 implicitly lets ANGLE choose a device, but this can be suboptimal.
+>> Ideally, Cocoa should instead choose a device because it knows what
+>> device displays the window. Cocoa should pass the device it chose to ANGLE.
+>>
+>> To demonstrate the point, I updated my tree to use ANGLE's Metal
+>> renderer for OpenGL and to pass the device from Cocoa to ANGLE:
+>> https://github.com/akihikodaki/v/commit/8f191a7d2c225fa601c22a783c24c81a3fda47fa
+>>
+>> By the way, I had to make a few modifications to ANGLE, Epoxy, and
+>> virglrenderer to fix glitches when hosting glmark2 and Firefox on GNOME.
+>> You can also find them with the above URL if you are interested.
+> Thank you, we picked up a couple of your changes in the UTM branch
+> already. Do you have plans to upstream those changes? And also, what
+> are your plans for upstreaming the Cocoa GL backend changes for QEMU?
+
+It depends on changes.
+
+I intend to upstream the Cocoa change and the following virlgrenderer 
+changes once the libepoxy change to enable ANGLE is merged, which is 
+blocking forever... They are useless without the libepoxy change:
+https://github.com/akihikodaki/virglrenderer/commit/6dfbc7e61a72347485c09a171c8c6c0908e12a2a
+https://github.com/akihikodaki/virglrenderer/commit/b12bda2fd272b0ffd0a9b95a021e4a13e947749b
+
+I intend to upstream all two changes for ANGLE:
+https://github.com/akihikodaki/angle/commits/v/
+
+The other changes are already submitted to the upstream if I don't miss 
+anything.
+
+Regards,
+Akihiko Odaki
 
