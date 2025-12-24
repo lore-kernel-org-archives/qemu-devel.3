@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 056F1E776C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A47BE776C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYRJ6-0006kD-IB; Wed, 24 Dec 2025 11:01:48 -0500
+	id 1vYRJ3-0006h9-MZ; Wed, 24 Dec 2025 11:01:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRIq-0006bo-CN
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:01:42 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRIP-0006Tt-F4
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:01:17 -0500
 Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRIm-0006PJ-54
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:01:31 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRIM-0006AM-Vl
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:01:04 -0500
 Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-64baaa754c6so6032683a12.3
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:01:26 -0800 (PST)
+ 4fb4d7f45d1cf-64b5ed53d0aso8683494a12.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:01:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766592085; x=1767196885; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766592061; x=1767196861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TxI8NcLb0sSwsafe727o0TmJhll8M8GoPEr1FiUnEX8=;
- b=LTS9QXKbrzGD/vrtQ9fSYr1vWvKck4NWjft9u/W4mRWaqH1DWAx5qMgTRHYaH0z5DT
- QUfQbMWVDeC27/TsSoFg8c+Q0Azi1yGOT3bwC3x/zBYreAlcrZlHOjmH8DZA9h/SLY2/
- IpzMjLCujFYj9flG5bopsgZJTdspiDT9dHU29oZC5gTCNfvDGsJ7He4OrQNPjEFS7pgN
- SikaxPSLmzSam/SOOTOOy45QRZ9edLjQUDCkJGQIuf0bcmlL+m8EiIA7p+oXtIMRyLDS
- ImRmYQ/gsjdAzssoHUKZoKdC1kS3xXtY09moNgKPtB1Z9FPnntBgU3oFLdVsGTlb9GGE
- pY9w==
+ bh=XXKguHOd+ctmSd1zEyzRjZGeIuzMCy1ZsflVpDcJ4q8=;
+ b=RJhF2VG3jqqkmFiQAuYMOrMQF5skP+CloAC14HW0/0qk3GnqvZ5/AeiRL58L0Lgxih
+ f8Ot1rapdhaYQJITDO+tVWWIe5QGDHQyAYuBNCPTjDkAGzih/W5TbmkcJ+85Yo9MZNNJ
+ Mz+NA4e/449S+jPm4SdbFuKroGSDfYN/wpxRc5AIHcIQ4mWEcpTz0rpqYk9o8+Zk9cBO
+ q8M/a/ZxiHxlpVAmFLAdR/BywZyt3GYeEyKQrQP/ypIiH/5ciby8TA+2Iv3iWRWB6WBr
+ 2nGyfX0Y7x1dp70RwF/kh1K7LYx4xQERrnOlXdG77YbLhhq7KGUF1wO/dZji25vDb+88
+ 3y+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766592085; x=1767196885;
+ d=1e100.net; s=20230601; t=1766592061; x=1767196861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TxI8NcLb0sSwsafe727o0TmJhll8M8GoPEr1FiUnEX8=;
- b=hcj4Yi1cOU9MJaQCjz/UEJ7atg06WTakKZgVFy9rsWKDYlDoWu8is1jbJeWclqzspm
- Mz2qNPJmnhLI8WAC3UoL3nhNR8+hl8ItmAhbyIl6AcgPd/0dbB1bL566/6oSbVT2hGoo
- LQNx+Q8BwRg0uH/uxFoYrcWkghNTpFGqUHyVjSasz+kl7kC8dttmD+1keKmqmwt07CIQ
- cU3cgSXrhACC4GLZbCNGZGpmAsc0XemU63HWzl4ZbQ8vINRRh0JFYED9cgeMVr0CgrcY
- r4NybBuMTXno09o39vpD3ZC4PJqSH7NKnqS9kPTPVDImEzDQGsW/Knuw8THzI9Nx4YBq
- UqaA==
-X-Gm-Message-State: AOJu0YzcSCN4EBIrEUKEzOUJsHXQ0oSdHoQo5mnHSZ40O/dIyOeevSKJ
- 5U1H/OkBdEfbIFO6rpvoguyKv21apC4hrrkSo7GE9CHODqJJVxFoIWPaItVHp8FDi4daCkWUmcl
- RHE1t7XM=
-X-Gm-Gg: AY/fxX5inPLcarMkbZ7ToxuqonGGGCk+btQEPV2cBRaTXPiaYDlzUZJWqwFcc9rG+80
- ZaN1J1ef4rvxxSvaKVHL+3yPvGC6TuNKzwub64Vk2gneVggR1wulhalrc6p9Z2GVwRcwEoyiK56
- HJA41ndFzeESz92gyQeGDDme5+NBIh415pjCzdVIWSgK6mVSgsZxKU2ppz48ECqDuifOLouGjQ1
- XT5DMePDs1W928+ag231/0hNec8jBD0AZNs4ElvkwF7T9tQIJyNT5Gv7nebW4B5xwrfLD6du2eZ
- 25lJ8wYoAMVylVhh62JP3eb0Hbq1n635B8tvUjKp9tt3BkTLH6WbyJwkUOPoOyiEVNddN2LlNq1
- OePSTufEKqQMYxbPgqjBNsAU0Qz6EeASXJw7jvTDxUqrxy0ARQ/3F86MIG0XIMx7DbXidhV7p1H
- 8jbm1YiCQwRReMV3ARb/UtRQPBGME2jdLJQJGsHe6OARItCs9AkUVfrjY=
-X-Google-Smtp-Source: AGHT+IFDUL+mV85KvrDCMgc+KDm5xr1c3eDL2UvFVYkaapVLk1TTszgNj9lEoLkv/juu2Co4FpQg9Q==
-X-Received: by 2002:a17:907:970a:b0:b79:e887:e1b3 with SMTP id
- a640c23a62f3a-b803727bec3mr2082044066b.57.1766592085463; 
- Wed, 24 Dec 2025 08:01:25 -0800 (PST)
+ bh=XXKguHOd+ctmSd1zEyzRjZGeIuzMCy1ZsflVpDcJ4q8=;
+ b=Ssq7e78H47CGG4PKpZGZM1GcvXezfzFuSUpa1wkOSSMt/nOFqX5ApFaAiYdXYcrKQ9
+ /fGBq4Ffi5s6xc4JoaibUcXLMgXrb+pyPUpo1NdK/Y9J6aieFJ4gDglK7XpHJgvVO42m
+ bnN8fGV9xnlQy7FQ5PXYF7dm39C59O74GLMAcB8lCXrkQLPmiwrRzO4cZ7BSp9nELthw
+ 2Sai6GRRqFlHc/Jj4UCWjcx6N5MUjx0bQiQFsXQZYvcSPB4T+rVvHXaTMomb4vvCy1eZ
+ HJBNXjyAc2wz2HHxV3snW5el2CC1UZB1sVz4m+tiNRqXnd7dR580xQ34v0ABJ6J2Mr8E
+ XX7w==
+X-Gm-Message-State: AOJu0YxHuYT8WwGzY/pmwsXq3zkO3+h1WrJcxlAYFrnldp/S4hYSK+AJ
+ EXZdpJ8CQNWREKR+2hGfifVUSVJQjalJLCPz3oD07TZVtdr/JzaJRx5OI4WPukEoWKJpnT1OH+R
+ x6jocQk4=
+X-Gm-Gg: AY/fxX6Yvs/fgq23IhLt+VVsikE+WNuxfEMTM7uKMJqVrpMH4NS+qGsco1m9LC41goI
+ FtNMPNZTdQk4eWCydRwAsx67kdHOHpfrlzxZoKU/bHthZSVOyBCw4UsKBiLq0Lp9ea822/q/J2L
+ lUugRihWFfbmyY/3B4EMqUUPFiHYE6FAC02xiUffnNwH9Suy7Gp2tEIuQWn9fJ7v3UPlVnbPWhA
+ 2qKlRVqvVTC7nmqjKavtE22iOh8knHzxUIxKa3s5bfVu2ud2Ba60VNmAuVrh6FRqk8FJNYZmfdX
+ 4/cF+iFHRhCv2eTm12urAh9Jy2rEKCQmPi02e7HNHmSD+NJSWxJ9cufBMmUVKRlZeVc2q6DcDaD
+ 6HKlhxLu/jl3EBtVKKPPDhgCZfnwjVBUXICdDLg9snTsL43j5JPVWFL2lM6mQXUjAPWt/jk6qJo
+ yVD1jUWHSjZ89/Lmuk/vjupap9z+kvJCgZFOpXZWf9JBdD66KvEI3mq04=
+X-Google-Smtp-Source: AGHT+IEoNYQuJKch0T4HelQjnVNjp99xZFdzxgUUNfst+116Tm888TGCKRCRE422C1d9F31i7z5KRQ==
+X-Received: by 2002:a17:907:720f:b0:b73:8639:cd96 with SMTP id
+ a640c23a62f3a-b8036f3a367mr1837345466b.24.1766592060522; 
+ Wed, 24 Dec 2025 08:01:00 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b80426fc164sm1657353466b.30.2025.12.24.08.01.24
+ a640c23a62f3a-b8037ad806asm1801266466b.23.2025.12.24.08.00.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:01:25 -0800 (PST)
+ Wed, 24 Dec 2025 08:01:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -72,10 +72,9 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/6] configs/targets: Forbid Alpha to use legacy native
- endianness APIs
-Date: Wed, 24 Dec 2025 17:00:38 +0100
-Message-ID: <20251224160040.88612-6-philmd@linaro.org>
+Subject: [PATCH 2/6] target/alpha: Use explicit little-endian LD/ST API
+Date: Wed, 24 Dec 2025 17:00:35 +0100
+Message-ID: <20251224160040.88612-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224160040.88612-1-philmd@linaro.org>
 References: <20251224160040.88612-1-philmd@linaro.org>
@@ -106,35 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All Alpha-related binaries are buildable without a single use
-of the legacy "native endian" API. Unset the transitional
-TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
-further uses of the legacy API.
+The Alpha architecture uses little endianness. Directly
+use the little-endian LD/ST API.
+
+Mechanical change running:
+
+  $ for a in uw w l q; do \
+      sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
+        $(git grep -wlE '(ld|st)u?[wlq]_p' target/alpha/);
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- configs/targets/alpha-linux-user.mak | 1 +
- configs/targets/alpha-softmmu.mak    | 1 +
- 2 files changed, 2 insertions(+)
+ target/alpha/helper.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/configs/targets/alpha-linux-user.mak b/configs/targets/alpha-linux-user.mak
-index aa25766236e..ee505e16ef4 100644
---- a/configs/targets/alpha-linux-user.mak
-+++ b/configs/targets/alpha-linux-user.mak
-@@ -3,3 +3,4 @@ TARGET_SYSTBL_ABI=common
- TARGET_SYSTBL=syscall.tbl
- TARGET_LONG_BITS=64
- TARGET_XML_FILES= gdb-xml/alpha-core.xml
-+TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/alpha-softmmu.mak b/configs/targets/alpha-softmmu.mak
-index e31f059a52d..22fbbf0cb08 100644
---- a/configs/targets/alpha-softmmu.mak
-+++ b/configs/targets/alpha-softmmu.mak
-@@ -1,3 +1,4 @@
- TARGET_ARCH=alpha
- TARGET_LONG_BITS=64
- TARGET_XML_FILES= gdb-xml/alpha-core.xml
-+TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/target/alpha/helper.c b/target/alpha/helper.c
+index a9af52a928f..80542cb0665 100644
+--- a/target/alpha/helper.c
++++ b/target/alpha/helper.c
+@@ -214,17 +214,18 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+ 
+     pt = env->ptbr;
+ 
+-    /* TODO: rather than using ldq_phys() to read the page table we should
++    /*
++     * TODO: rather than using ldq_phys_le() to read the page table we should
+      * use address_space_ldq() so that we can handle the case when
+      * the page table read gives a bus fault, rather than ignoring it.
+-     * For the existing code the zero data that ldq_phys will return for
++     * For the existing code the zero data that ldq_phys_le will return for
+      * an access to invalid memory will result in our treating the page
+      * table as invalid, which may even be the right behaviour.
+      */
+ 
+     /* L1 page table read.  */
+     index = (addr >> (TARGET_PAGE_BITS + 20)) & 0x3ff;
+-    L1pte = ldq_phys(cs->as, pt + index*8);
++    L1pte = ldq_phys_le(cs->as, pt + index * 8);
+ 
+     if (unlikely((L1pte & PTE_VALID) == 0)) {
+         ret = MM_K_TNV;
+@@ -237,7 +238,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+ 
+     /* L2 page table read.  */
+     index = (addr >> (TARGET_PAGE_BITS + 10)) & 0x3ff;
+-    L2pte = ldq_phys(cs->as, pt + index*8);
++    L2pte = ldq_phys_le(cs->as, pt + index * 8);
+ 
+     if (unlikely((L2pte & PTE_VALID) == 0)) {
+         ret = MM_K_TNV;
+@@ -250,7 +251,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+ 
+     /* L3 page table read.  */
+     index = (addr >> TARGET_PAGE_BITS) & 0x3ff;
+-    L3pte = ldq_phys(cs->as, pt + index*8);
++    L3pte = ldq_phys_le(cs->as, pt + index * 8);
+ 
+     phys = L3pte >> 32 << TARGET_PAGE_BITS;
+     if (unlikely((L3pte & PTE_VALID) == 0)) {
 -- 
 2.52.0
 
