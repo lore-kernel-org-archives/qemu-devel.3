@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 603B9E776C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5902E776C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYRhy-0007gH-Ni; Wed, 24 Dec 2025 11:27:32 -0500
+	id 1vYRi5-0007iC-KN; Wed, 24 Dec 2025 11:27:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRhi-0007c2-Uh
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:27:18 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRhu-0007fg-KF
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:27:26 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRhg-0003hj-Rx
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:27:14 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4779aa4f928so59299765e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:27:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRhs-0003mn-MS
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:27:26 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-42fb4eeb482so3109085f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:27:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766593631; x=1767198431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766593641; x=1767198441; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2pPXI/RNd4YhskZ4GDGLaQPSNUsmTt2IQzm/8dEFuWw=;
- b=BWS+mlk5Hv7fXgcd5i5vtL7xJoJFzpjsocFYLt9BSetp7j53tyuCrbzZ0gvN0aKPOU
- NhHDfytr+MYrbmB3qj1Vr17ci4w619428xtInb7NMq6X7oTHSEFHSS1wdyWp06oewk28
- o348ueu2bVat5kTAWlH+DIm7Ub4anWX1rZcR/jSOQSdnNlnMsZ4tfAj5xq+gyvb6/COz
- dG4AMUQ0CvEtEQdXVJEwl6Q57KdASJ34wu/x/M3KDRg7nMpDRjXM2jyfsFjN9kgJs5aS
- MHaV+ys/VcuyUsdxbBQGt96yK2KRUYNosvqR2njc1zymXWXm/bxwru/5zEL7zp6mceOQ
- eAdQ==
+ bh=0c/mySe6v1ckZ2Oupf+IHYume+MJC9Oj74k6isdDL0g=;
+ b=FtvVNZ8vRu7Tf6NCdbnVI8tzE4ut+XEFD+slvrw+0W2FAReZJlq2s2MKsjQXajRQwe
+ cKiJJdnbc1lR40ZJNfYqLLQS03mTlGlSWmVfHneFaQNrbYE3sJ428k0D4Qaww1RYOTdi
+ VGJyylZzDV51T89gic7H6tXC8YLVN8XdxU5ppiadUTZdw50jBQtKxbEXIymBmfD6vAO1
+ W7o3ajap4Ps13nIcjFHQ9dz5zCvvug38wlv9F8zNw6+bYAmZs+mKe7OSJD5SwvdjeX8U
+ Q1cHqQFIjlyCiEwCVKMrCzgqF+1euHaV16k5n/sBksNcukYT/xTGIDRIlIv+KUAUsS54
+ 9z/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766593631; x=1767198431;
+ d=1e100.net; s=20230601; t=1766593641; x=1767198441;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2pPXI/RNd4YhskZ4GDGLaQPSNUsmTt2IQzm/8dEFuWw=;
- b=THTrBeTnYH5onWOQLF+02oDG4cs5p5evkEqhEV5AGfrh1ebohBWW4GYGXX7PehAoy2
- O3jN34WVrozNO4lVlee3fy3bu06WDeTHjgk1XVB1itORVB/qQNVxYx9ZLRfHfpRE+ixo
- 9IMHXyJ7m2kq+4npF7X62x7vymJuy51+8lN+xPxjJGGXh2f56D8pXbGNdHUnbXdc6o6x
- uKODCWsoFdbIlhUpUIkTfcegCuK/vJ+rM7Zgwqfr3tzASYQYm9cQ4ed3g2zJzePlZ9jr
- pZ5xPCBDx6MHDWBnOB9f7UvZVRnBwU9uJ1zhVdDrJ2mjuPqOMb0zMngMsrhlCG4b9Yer
- xicA==
-X-Gm-Message-State: AOJu0Yw8iKP3tzdTtUhutjvj3rCi539sMi4SP7aHG48dHnYLCa9ceNVp
- XW+pxG/u3abQkbmpW0z3K7xlAqaQoipZHS2V+qF0cZqBlN9fOpyfyVCtac8g2vqjkc2qaJbn+pe
- LNSeai4Q=
-X-Gm-Gg: AY/fxX7qlLr5B8UiqzG91ReFP24sZ9nYzFWx1XN2jF8jwO8MyGWw/O4Lzl6m1+JVguD
- jmrokO4uWFPu3DCDmpj7hvVJScaAh3IYHA6RJaiKVB4llfzrst0q+QLk+KgEMOtda798X8+gUHg
- 9C5BK/6YRD2pKoX1JRE26n9bkeCm81ROwS01JZhKYIZFHA4vRuyt1gWZjSZy1Jq7HOk1JufkIvY
- jVRiuyEsLZ4Aix9VWsfUISvHJYT+TC5Xk+Vr7qEPfTGP+RBTcK/lykk5Ejs/JiQ3ytIk1V9wCG5
- fUu7eGPeaJf0l125DU6Kh5XoMiUAuGT7Py6+n9evQVl/+EDCDo3/syJcTMnch+Co/ySXiD7ubjz
- hriKdlr0cBXko3y+I/9LmO5mbYcB9i4XyepQR+2Fp+03EKHK4sMTllT1LHqy7yPfl/1+WSereB9
- FhsuqOWljjgxtXKgPOpo35Mg+LS7SissgmxSqq9Yx7yH2PxS1E+u2PyM0=
-X-Google-Smtp-Source: AGHT+IFnwlGS2129abSIWPoc79ckkJLCBd7dyngQyqsSK3gGAloQICKu95WSgRUb5PkAYYdCT5qs2w==
-X-Received: by 2002:a05:600c:310c:b0:476:4efc:8ed4 with SMTP id
- 5b1f17b1804b1-47d19549f9bmr162683145e9.11.1766593630914; 
- Wed, 24 Dec 2025 08:27:10 -0800 (PST)
+ bh=0c/mySe6v1ckZ2Oupf+IHYume+MJC9Oj74k6isdDL0g=;
+ b=dmIaIQt/yHd8b4zsgtkTbfRlwf8I5I/ym+GTcnvzSMIbb597icH5B4NF6AK7wlsc05
+ tRh/GH1AQsd9TYHLUDm7lbLzFQ9D17nHeiSj/ctAKdjq1CynCrXbynGSXuAaQUaSq2UP
+ J88E+d87HMGDYOnllS/QH4vJiirCBvRfpqA2EX12o01//2CMURcx9DJlf8HEO+Ndhpam
+ eN0weeVdywhF5uuKEqCcao7LzRWfnzmazzYj6IHkCI22isYOq33kUWYyak6U/YNliAd/
+ opw7+nabGuezVRcRD5GpC3Zy5iPbEGrcQ6Hwsfsi4UcYi8TTsCCus2h80bvQeKXMf+eF
+ UNtw==
+X-Gm-Message-State: AOJu0YzD8+FX9jn287PPsnXFEKhb43TRt34oJY1FQudkkHHZvA9NSVbu
+ v40g+S5fSIdRjxito5sx/mB3Lou6HTQl+ohfT1l4Qaumg+DdRB8ktJOH0IYyCbokzEwmWgC/Ixh
+ oMPcvKA0=
+X-Gm-Gg: AY/fxX53FpRz3Tt1bXGJL3/MTRYMk1R0MeNFl7DifDm3dC+Kcz0PhiCwEz2UdHteTwz
+ M3I78eaTLrmZkowHNUPLe1U7wQWmax8wvFOoDt1irqd66MZqesiISJI6g2JTq4isesZqWiG2ZtG
+ ljDzjP9RiPq6+27cGUjAHHxBMAVmHA7+giNzFPxpMy/5Z8Ce4qvStRBHvIiLWI4GAWFKQLh7MQ4
+ 1mf50cNM8TS7Vdi89+Y7jueR+Exl+F9xCDgXmBqlE0HB9ixBlPHNtgJh4HXA0KlE31LpnMcQbYx
+ vJ+BZW0/WMwApfUdI6doaao95gzHMBJPOESqkDVNzu+CNI2qpfEH7nb0wnsIkad+Ql0+WUpKB3p
+ yxQOtJsLOam5rTaRw+Jxk7jAZzpIYtsHBuh1wo2wHFJvYSOQmc82e+euK54nmx4KX6IgcBNC3Bx
+ vSVTm+Hu+P9YE6XTwF2j4wPpud4INPjH0JNcFOB9gDlo1HoAUxNtRVCcmvFddsPhaCFQ==
+X-Google-Smtp-Source: AGHT+IGiE4oKKUNR2ofAJgPK//pcRQI3YJTXXrCwOyrQcTxF7UH9qNND30a8fNJuP85/hOGEn5paag==
+X-Received: by 2002:a05:6000:220c:b0:430:fd60:940f with SMTP id
+ ffacd0b85a97d-4324e4c9627mr21155343f8f.14.1766593641108; 
+ Wed, 24 Dec 2025 08:27:21 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eab2c4fsm35443256f8f.42.2025.12.24.08.27.09
+ ffacd0b85a97d-43264613923sm18740820f8f.26.2025.12.24.08.27.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:27:10 -0800 (PST)
+ Wed, 24 Dec 2025 08:27:20 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -76,17 +76,17 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Frederic Konrad <konrad.frederic@yahoo.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 3/9] target/sparc: Replace MO_TE -> MO_BE
-Date: Wed, 24 Dec 2025 17:26:35 +0100
-Message-ID: <20251224162642.90857-4-philmd@linaro.org>
+Subject: [PATCH v3 4/9] target/sparc: Use explicit big-endian LD/ST API
+Date: Wed, 24 Dec 2025 17:26:36 +0100
+Message-ID: <20251224162642.90857-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224162642.90857-1-philmd@linaro.org>
 References: <20251224162642.90857-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,264 +109,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the SPARC targets using big endianness order,
-therefore the MO_TE definitions expand to the big endian
-one. Use the latter which is more explicit.
+The SPARC architecture uses big endianness. Directly use
+the big-endian LD/ST API.
 
 Mechanical change running:
 
-  $ sed -i -e s/MO_TE/MO_BE/ \
-        $(git grep -wl MO_TE target/sparc/)
+  $ for a in uw w l q; do \
+      sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
+        $(git grep -wlE '(ld|st)u?[wlq]_p' target/sparc/);
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sparc/ldst_helper.c |  6 ++--
- target/sparc/translate.c   | 58 +++++++++++++++++++-------------------
- 2 files changed, 32 insertions(+), 32 deletions(-)
+ target/sparc/ldst_helper.c | 36 ++++++++++++++++++------------------
+ target/sparc/mmu_helper.c  | 32 +++++++++++++++++---------------
+ 2 files changed, 35 insertions(+), 33 deletions(-)
 
 diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-index 2c63eb9e036..a87a0b3eee0 100644
+index a87a0b3eee0..9892c8f61c6 100644
 --- a/target/sparc/ldst_helper.c
 +++ b/target/sparc/ldst_helper.c
-@@ -1169,7 +1169,7 @@ uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi)
-         break;
-     case MO_16:
-         ret = cpu_ldw_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
-+        if ((mop & MO_BSWAP) != MO_BE) {
-             ret = bswap16(ret);
-         }
-         if (mop & MO_SIGN) {
-@@ -1178,7 +1178,7 @@ uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi)
-         break;
-     case MO_32:
-         ret = cpu_ldl_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
-+        if ((mop & MO_BSWAP) != MO_BE) {
-             ret = bswap32(ret);
-         }
-         if (mop & MO_SIGN) {
-@@ -1187,7 +1187,7 @@ uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi)
-         break;
-     case MO_64:
-         ret = cpu_ldq_code_mmu(env, addr, oi, ra);
--        if ((mop & MO_BSWAP) != MO_TE) {
-+        if ((mop & MO_BSWAP) != MO_BE) {
-             ret = bswap64(ret);
-         }
-         break;
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index d6b599b71fe..23079697f52 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -1764,7 +1764,7 @@ static DisasASI resolve_asi(DisasContext *dc, int asi, MemOp memop)
-         case ASI_FL16_SL:
-         case ASI_FL16_P:
-         case ASI_FL16_PL:
--            memop = MO_TEUW;
-+            memop = MO_BEUW;
-             type = GET_ASI_SHORT;
+@@ -707,17 +707,17 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
+                                      MEMTXATTRS_UNSPECIFIED, &result);
+             break;
+         case 2:
+-            ret = address_space_lduw(cs->as, access_addr,
+-                                     MEMTXATTRS_UNSPECIFIED, &result);
++            ret = address_space_lduw_be(cs->as, access_addr,
++                                        MEMTXATTRS_UNSPECIFIED, &result);
+             break;
+         default:
+         case 4:
+-            ret = address_space_ldl(cs->as, access_addr,
+-                                    MEMTXATTRS_UNSPECIFIED, &result);
++            ret = address_space_ldl_be(cs->as, access_addr,
++                                       MEMTXATTRS_UNSPECIFIED, &result);
+             break;
+         case 8:
+-            ret = address_space_ldq(cs->as, access_addr,
+-                                    MEMTXATTRS_UNSPECIFIED, &result);
++            ret = address_space_ldq_be(cs->as, access_addr,
++                                       MEMTXATTRS_UNSPECIFIED, &result);
              break;
          }
-@@ -2215,7 +2215,7 @@ static void gen_ldda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
-              * byte swapped.  We perform one 128-bit LE load, so must swap
-              * the order of the writebacks.
-              */
--            if ((mop & MO_BSWAP) == MO_TE) {
-+            if ((mop & MO_BSWAP) == MO_BE) {
-                 tcg_gen_extr_i128_i64(lo, hi, t);
-             } else {
-                 tcg_gen_extr_i128_i64(hi, lo, t);
-@@ -2235,7 +2235,7 @@ static void gen_ldda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
-             /* Note that LE ldda acts as if each 32-bit register
-                result is byte swapped.  Having just performed one
-                64-bit bswap, we need now to swap the writebacks.  */
--            if ((da->memop & MO_BSWAP) == MO_TE) {
-+            if ((da->memop & MO_BSWAP) == MO_BE) {
-                 tcg_gen_extr_i64_tl(lo, hi, tmp);
-             } else {
-                 tcg_gen_extr_i64_tl(hi, lo, tmp);
-@@ -2252,7 +2252,7 @@ static void gen_ldda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
-             gen_helper_ld_code(tmp, tcg_env, addr, tcg_constant_i32(oi));
  
-             /* See above.  */
--            if ((da->memop & MO_BSWAP) == MO_TE) {
-+            if ((da->memop & MO_BSWAP) == MO_BE) {
-                 tcg_gen_extr_i64_tl(lo, hi, tmp);
-             } else {
-                 tcg_gen_extr_i64_tl(hi, lo, tmp);
-@@ -2277,7 +2277,7 @@ static void gen_ldda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
-             gen_helper_ld_asi(tmp, tcg_env, addr, r_asi, r_mop);
+@@ -878,10 +878,10 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+                 MemTxResult result;
+                 hwaddr access_addr = (env->mxccregs[0] & 0xffffffffULL) + 8 * i;
  
-             /* See above.  */
--            if ((da->memop & MO_BSWAP) == MO_TE) {
-+            if ((da->memop & MO_BSWAP) == MO_BE) {
-                 tcg_gen_extr_i64_tl(lo, hi, tmp);
-             } else {
-                 tcg_gen_extr_i64_tl(hi, lo, tmp);
-@@ -2310,7 +2310,7 @@ static void gen_stda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
-              * byte swapped.  We perform one 128-bit LE store, so must swap
-              * the order of the construction.
-              */
--            if ((mop & MO_BSWAP) == MO_TE) {
-+            if ((mop & MO_BSWAP) == MO_BE) {
-                 tcg_gen_concat_i64_i128(t, lo, hi);
-             } else {
-                 tcg_gen_concat_i64_i128(t, hi, lo);
-@@ -2329,7 +2329,7 @@ static void gen_stda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
-             /* Note that LE stda acts as if each 32-bit register result is
-                byte swapped.  We will perform one 64-bit LE store, so now
-                we must swap the order of the construction.  */
--            if ((da->memop & MO_BSWAP) == MO_TE) {
-+            if ((da->memop & MO_BSWAP) == MO_BE) {
-                 tcg_gen_concat_tl_i64(t64, lo, hi);
-             } else {
-                 tcg_gen_concat_tl_i64(t64, hi, lo);
-@@ -2345,7 +2345,7 @@ static void gen_stda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
-          * See comments for GET_ASI_COPY above.
-          */
-         {
--            MemOp mop = MO_TE | MO_128 | MO_ATOM_IFALIGN_PAIR;
-+            MemOp mop = MO_BE | MO_128 | MO_ATOM_IFALIGN_PAIR;
-             TCGv_i64 t8 = tcg_temp_new_i64();
-             TCGv_i128 t16 = tcg_temp_new_i128();
-             TCGv daddr = tcg_temp_new();
-@@ -2368,7 +2368,7 @@ static void gen_stda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
-             TCGv_i64 t64 = tcg_temp_new_i64();
+-                env->mxccdata[i] = address_space_ldq(cs->as,
+-                                                     access_addr,
+-                                                     MEMTXATTRS_UNSPECIFIED,
+-                                                     &result);
++                env->mxccdata[i] = address_space_ldq_be(cs->as,
++                                                        access_addr,
++                                                        MEMTXATTRS_UNSPECIFIED,
++                                                        &result);
+                 if (result != MEMTX_OK) {
+                     /* TODO: investigate whether this is the right behaviour */
+                     sparc_raise_mmu_fault(cs, access_addr, false, false,
+@@ -906,8 +906,8 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+                 MemTxResult result;
+                 hwaddr access_addr = (env->mxccregs[1] & 0xffffffffULL) + 8 * i;
  
-             /* See above.  */
--            if ((da->memop & MO_BSWAP) == MO_TE) {
-+            if ((da->memop & MO_BSWAP) == MO_BE) {
-                 tcg_gen_concat_tl_i64(t64, lo, hi);
-             } else {
-                 tcg_gen_concat_tl_i64(t64, hi, lo);
-@@ -4428,13 +4428,13 @@ static bool do_ld_gpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp mop)
-     return advance_pc(dc);
- }
+-                address_space_stq(cs->as, access_addr, env->mxccdata[i],
+-                                  MEMTXATTRS_UNSPECIFIED, &result);
++                address_space_stq_be(cs->as, access_addr, env->mxccdata[i],
++                                     MEMTXATTRS_UNSPECIFIED, &result);
  
--TRANS(LDUW, ALL, do_ld_gpr, a, MO_TEUL)
-+TRANS(LDUW, ALL, do_ld_gpr, a, MO_BEUL)
- TRANS(LDUB, ALL, do_ld_gpr, a, MO_UB)
--TRANS(LDUH, ALL, do_ld_gpr, a, MO_TEUW)
-+TRANS(LDUH, ALL, do_ld_gpr, a, MO_BEUW)
- TRANS(LDSB, ALL, do_ld_gpr, a, MO_SB)
--TRANS(LDSH, ALL, do_ld_gpr, a, MO_TESW)
--TRANS(LDSW, 64, do_ld_gpr, a, MO_TESL)
--TRANS(LDX, 64, do_ld_gpr, a, MO_TEUQ)
-+TRANS(LDSH, ALL, do_ld_gpr, a, MO_BESW)
-+TRANS(LDSW, 64, do_ld_gpr, a, MO_BESL)
-+TRANS(LDX, 64, do_ld_gpr, a, MO_BEUQ)
- 
- static bool do_st_gpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp mop)
- {
-@@ -4451,10 +4451,10 @@ static bool do_st_gpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp mop)
-     return advance_pc(dc);
- }
- 
--TRANS(STW, ALL, do_st_gpr, a, MO_TEUL)
-+TRANS(STW, ALL, do_st_gpr, a, MO_BEUL)
- TRANS(STB, ALL, do_st_gpr, a, MO_UB)
--TRANS(STH, ALL, do_st_gpr, a, MO_TEUW)
--TRANS(STX, 64, do_st_gpr, a, MO_TEUQ)
-+TRANS(STH, ALL, do_st_gpr, a, MO_BEUW)
-+TRANS(STX, 64, do_st_gpr, a, MO_BEUQ)
- 
- static bool trans_LDD(DisasContext *dc, arg_r_r_ri_asi *a)
- {
-@@ -4468,7 +4468,7 @@ static bool trans_LDD(DisasContext *dc, arg_r_r_ri_asi *a)
-     if (addr == NULL) {
-         return false;
+                 if (result != MEMTX_OK) {
+                     /* TODO: investigate whether this is the right behaviour */
+@@ -1072,17 +1072,17 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+                                   MEMTXATTRS_UNSPECIFIED, &result);
+                 break;
+             case 2:
+-                address_space_stw(cs->as, access_addr, val,
+-                                  MEMTXATTRS_UNSPECIFIED, &result);
++                address_space_stw_be(cs->as, access_addr, val,
++                                     MEMTXATTRS_UNSPECIFIED, &result);
+                 break;
+             case 4:
+             default:
+-                address_space_stl(cs->as, access_addr, val,
+-                                  MEMTXATTRS_UNSPECIFIED, &result);
++                address_space_stl_be(cs->as, access_addr, val,
++                                     MEMTXATTRS_UNSPECIFIED, &result);
+                 break;
+             case 8:
+-                address_space_stq(cs->as, access_addr, val,
+-                                  MEMTXATTRS_UNSPECIFIED, &result);
++                address_space_stq_be(cs->as, access_addr, val,
++                                     MEMTXATTRS_UNSPECIFIED, &result);
+                 break;
+             }
+             if (result != MEMTX_OK) {
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 46bf500ea83..5a58239d65e 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -102,7 +102,8 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+     /* SPARC reference MMU table walk: Context table->L1->L2->PTE */
+     /* Context base + context number */
+     pde_ptr = (env->mmuregs[1] << 4) + (env->mmuregs[2] << 2);
+-    pde = address_space_ldl(cs->as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &result);
++    pde = address_space_ldl_be(cs->as, pde_ptr,
++                               MEMTXATTRS_UNSPECIFIED, &result);
+     if (result != MEMTX_OK) {
+         return 4 << 2; /* Translation fault, L = 0 */
      }
--    da = resolve_asi(dc, a->asi, MO_TEUQ);
-+    da = resolve_asi(dc, a->asi, MO_BEUQ);
-     gen_ldda_asi(dc, &da, addr, a->rd);
-     return advance_pc(dc);
- }
-@@ -4485,7 +4485,7 @@ static bool trans_STD(DisasContext *dc, arg_r_r_ri_asi *a)
-     if (addr == NULL) {
-         return false;
-     }
--    da = resolve_asi(dc, a->asi, MO_TEUQ);
-+    da = resolve_asi(dc, a->asi, MO_BEUQ);
-     gen_stda_asi(dc, &da, addr, a->rd);
-     return advance_pc(dc);
- }
-@@ -4516,7 +4516,7 @@ static bool trans_SWAP(DisasContext *dc, arg_r_r_ri_asi *a)
-     if (addr == NULL) {
-         return false;
-     }
--    da = resolve_asi(dc, a->asi, MO_TEUL);
-+    da = resolve_asi(dc, a->asi, MO_BEUL);
- 
-     dst = gen_dest_gpr(dc, a->rd);
-     src = gen_load_gpr(dc, a->rd);
-@@ -4544,8 +4544,8 @@ static bool do_casa(DisasContext *dc, arg_r_r_ri_asi *a, MemOp mop)
-     return advance_pc(dc);
- }
- 
--TRANS(CASA, CASA, do_casa, a, MO_TEUL)
--TRANS(CASXA, 64, do_casa, a, MO_TEUQ)
-+TRANS(CASA, CASA, do_casa, a, MO_BEUL)
-+TRANS(CASXA, 64, do_casa, a, MO_BEUQ)
- 
- static bool do_ld_fpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp sz)
- {
-@@ -4561,7 +4561,7 @@ static bool do_ld_fpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp sz)
-     if (sz == MO_128 && gen_trap_float128(dc)) {
-         return true;
-     }
--    da = resolve_asi(dc, a->asi, MO_TE | sz);
-+    da = resolve_asi(dc, a->asi, MO_BE | sz);
-     gen_ldf_asi(dc, &da, sz, addr, a->rd);
-     gen_update_fprs_dirty(dc, a->rd);
-     return advance_pc(dc);
-@@ -4590,7 +4590,7 @@ static bool do_st_fpr(DisasContext *dc, arg_r_r_ri_asi *a, MemOp sz)
-     if (sz == MO_128 && gen_trap_float128(dc)) {
-         return true;
-     }
--    da = resolve_asi(dc, a->asi, MO_TE | sz);
-+    da = resolve_asi(dc, a->asi, MO_BE | sz);
-     gen_stf_asi(dc, &da, sz, addr, a->rd);
-     return advance_pc(dc);
- }
-@@ -4629,7 +4629,7 @@ static bool trans_STDFQ(DisasContext *dc, arg_STDFQ *a)
-     /* Store the single element from the queue. */
-     TCGv_i64 fq = tcg_temp_new_i64();
-     tcg_gen_ld_i64(fq, tcg_env, offsetof(CPUSPARCState, fq.d));
--    tcg_gen_qemu_st_i64(fq, addr, dc->mem_idx, MO_TEUQ | MO_ALIGN_4);
-+    tcg_gen_qemu_st_i64(fq, addr, dc->mem_idx, MO_BEUQ | MO_ALIGN_4);
- 
-     /* Mark the queue empty, transitioning to fp_execute state. */
-     tcg_gen_st_i32(tcg_constant_i32(0), tcg_env,
-@@ -4655,7 +4655,7 @@ static bool trans_LDFSR(DisasContext *dc, arg_r_r_ri *a)
+@@ -117,8 +118,8 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+         return 4 << 2;
+     case 1: /* L0 PDE */
+         pde_ptr = ((address >> 22) & ~3) + ((pde & ~3) << 4);
+-        pde = address_space_ldl(cs->as, pde_ptr,
+-                                MEMTXATTRS_UNSPECIFIED, &result);
++        pde = address_space_ldl_be(cs->as, pde_ptr,
++                                   MEMTXATTRS_UNSPECIFIED, &result);
+         if (result != MEMTX_OK) {
+             return (1 << 8) | (4 << 2); /* Translation fault, L = 1 */
+         }
+@@ -131,8 +132,8 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+             return (1 << 8) | (4 << 2);
+         case 1: /* L1 PDE */
+             pde_ptr = ((address & 0xfc0000) >> 16) + ((pde & ~3) << 4);
+-            pde = address_space_ldl(cs->as, pde_ptr,
+-                                    MEMTXATTRS_UNSPECIFIED, &result);
++            pde = address_space_ldl_be(cs->as, pde_ptr,
++                                       MEMTXATTRS_UNSPECIFIED, &result);
+             if (result != MEMTX_OK) {
+                 return (2 << 8) | (4 << 2); /* Translation fault, L = 2 */
+             }
+@@ -145,8 +146,8 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+                 return (2 << 8) | (4 << 2);
+             case 1: /* L2 PDE */
+                 pde_ptr = ((address & 0x3f000) >> 10) + ((pde & ~3) << 4);
+-                pde = address_space_ldl(cs->as, pde_ptr,
+-                                        MEMTXATTRS_UNSPECIFIED, &result);
++                pde = address_space_ldl_be(cs->as, pde_ptr,
++                                           MEMTXATTRS_UNSPECIFIED, &result);
+                 if (result != MEMTX_OK) {
+                     return (3 << 8) | (4 << 2); /* Translation fault, L = 3 */
+                 }
+@@ -189,7 +190,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
+         if (is_dirty) {
+             pde |= PG_MODIFIED_MASK;
+         }
+-        stl_phys(cs->as, pde_ptr, pde);
++        stl_be_phys(cs->as, pde_ptr, pde);
      }
  
-     tmp = tcg_temp_new_i32();
--    tcg_gen_qemu_ld_i32(tmp, addr, dc->mem_idx, MO_TEUL | MO_ALIGN);
-+    tcg_gen_qemu_ld_i32(tmp, addr, dc->mem_idx, MO_BEUL | MO_ALIGN);
- 
-     tcg_gen_extract_i32(cpu_fcc[0], tmp, FSR_FCC0_SHIFT, 2);
-     /* LDFSR does not change FCC[1-3]. */
-@@ -4679,7 +4679,7 @@ static bool do_ldxfsr(DisasContext *dc, arg_r_r_ri *a, bool entire)
+     /* the page can be put in the TLB */
+@@ -276,7 +277,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+     /* Context base + context number */
+     pde_ptr = (hwaddr)(env->mmuregs[1] << 4) +
+         (env->mmuregs[2] << 2);
+-    pde = address_space_ldl(cs->as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &result);
++    pde = address_space_ldl_be(cs->as, pde_ptr,
++                               MEMTXATTRS_UNSPECIFIED, &result);
+     if (result != MEMTX_OK) {
+         return 0;
      }
- 
-     t64 = tcg_temp_new_i64();
--    tcg_gen_qemu_ld_i64(t64, addr, dc->mem_idx, MO_TEUQ | MO_ALIGN);
-+    tcg_gen_qemu_ld_i64(t64, addr, dc->mem_idx, MO_BEUQ | MO_ALIGN);
- 
-     lo = tcg_temp_new_i32();
-     hi = cpu_fcc[3];
-@@ -4722,8 +4722,8 @@ static bool do_stfsr(DisasContext *dc, arg_r_r_ri *a, MemOp mop)
-     return advance_pc(dc);
- }
- 
--TRANS(STFSR, ALL, do_stfsr, a, MO_TEUL)
--TRANS(STXFSR, 64, do_stfsr, a, MO_TEUQ)
-+TRANS(STFSR, ALL, do_stfsr, a, MO_BEUL)
-+TRANS(STXFSR, 64, do_stfsr, a, MO_BEUQ)
- 
- static bool do_fc(DisasContext *dc, int rd, int32_t c)
- {
+@@ -292,8 +294,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+             return pde;
+         }
+         pde_ptr = ((address >> 22) & ~3) + ((pde & ~3) << 4);
+-        pde = address_space_ldl(cs->as, pde_ptr,
+-                                MEMTXATTRS_UNSPECIFIED, &result);
++        pde = address_space_ldl_be(cs->as, pde_ptr,
++                                   MEMTXATTRS_UNSPECIFIED, &result);
+         if (result != MEMTX_OK) {
+             return 0;
+         }
+@@ -310,8 +312,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+                 return pde;
+             }
+             pde_ptr = ((address & 0xfc0000) >> 16) + ((pde & ~3) << 4);
+-            pde = address_space_ldl(cs->as, pde_ptr,
+-                                    MEMTXATTRS_UNSPECIFIED, &result);
++            pde = address_space_ldl_be(cs->as, pde_ptr,
++                                       MEMTXATTRS_UNSPECIFIED, &result);
+             if (result != MEMTX_OK) {
+                 return 0;
+             }
+@@ -328,8 +330,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+                     return pde;
+                 }
+                 pde_ptr = ((address & 0x3f000) >> 10) + ((pde & ~3) << 4);
+-                pde = address_space_ldl(cs->as, pde_ptr,
+-                                        MEMTXATTRS_UNSPECIFIED, &result);
++                pde = address_space_ldl_be(cs->as, pde_ptr,
++                                           MEMTXATTRS_UNSPECIFIED, &result);
+                 if (result != MEMTX_OK) {
+                     return 0;
+                 }
 -- 
 2.52.0
 
