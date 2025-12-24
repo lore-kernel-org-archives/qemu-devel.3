@@ -4,97 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A75E75448
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 11:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 982C9E74916
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 11:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYMzP-0006iL-EY; Wed, 24 Dec 2025 06:25:11 -0500
+	id 1vYN2F-0007uX-Qu; Wed, 24 Dec 2025 06:28:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vYMzM-0006i2-2k
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 06:25:08 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vYN2E-0007uG-BE
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 06:28:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vYMzK-0000gJ-BQ
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 06:25:07 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vYN2C-0001GY-PH
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 06:28:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766575505;
+ s=mimecast20190719; t=1766575683;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SUquDkfqeE9wbnLT4HJuq866sRB0NKo/tK8aWQmE63Q=;
- b=HOb03WomJtjHiLcYCuwxoHJNcPjM/hLSt+Vg7MbqhpxhshWIzviRimWuibIsUZyOgp8T5b
- QgJV4s70g6dSs3yVHymvGFMwAPgPIzhY3nWa/pjm92IVSPlyv3eeocYFtdQ/GUdnzchMlD
- 16yoeq8RrRKmKlfS6+kruEKyUOwHgTI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PZ6zn7R3wkNHiXaSnws4jtl1POCE4Crp3iF9ihMOQO0=;
+ b=A3Q93gqIc7U5EkDr47Qozaquz2nevqnImbiiOQHgXBkwMGC3G+KbBDLbEdU/oFj9EeexB3
+ lRFI2oDnhMWRUSjjf2wQbS7UZVRBCg+ZzhTyQQUUFt7rFjBzvod0E7Qwu0z2CeBehBUJfB
+ iCckCvHPJTit2lvn/H/i+EHR3fBEKPk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-MIqy0FIOPI6sgagKoObSTQ-1; Wed, 24 Dec 2025 06:25:03 -0500
-X-MC-Unique: MIqy0FIOPI6sgagKoObSTQ-1
-X-Mimecast-MFC-AGG-ID: MIqy0FIOPI6sgagKoObSTQ_1766575502
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47910af0c8bso38478145e9.2
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 03:25:03 -0800 (PST)
+ us-mta-117-sFPLuurjMoCSeCQGrj2v1A-1; Wed, 24 Dec 2025 06:28:02 -0500
+X-MC-Unique: sFPLuurjMoCSeCQGrj2v1A-1
+X-Mimecast-MFC-AGG-ID: sFPLuurjMoCSeCQGrj2v1A_1766575681
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4779b3749a8so41419445e9.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 03:28:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766575502; x=1767180302; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766575681; x=1767180481; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=SUquDkfqeE9wbnLT4HJuq866sRB0NKo/tK8aWQmE63Q=;
- b=gAPgOveXS4es4HAtL9yCp8p0eBkLJBF3EMJcEl3k4690ed9OviNzKP2+WpMpJ7Slon
- C9jFF8u0TSSG1ZI3mfHSXx8LzNWSehL9lRvL0avrR0nd4j+ouNN1GGP5HeZOwxakl/gz
- P8qQ2LmEjKs25QNIXi12bQE/UCRWRdnpR5xdFcpUhNHXqfNyxz7mAw4eEcAFJww6w3Wi
- kV0ebcuW/JrdUaSJE6vCiScLOqRSs29GJMwi/+Sklh6u+ZObpWsZizCG2/2oafjHg16n
- Hd9peGXei3ZdilNwJF+s7aSdC5rAODrXvwjmGTBw8hQKFxS6bo7IEs4vJShwPzodxXTh
- n+cQ==
+ bh=PZ6zn7R3wkNHiXaSnws4jtl1POCE4Crp3iF9ihMOQO0=;
+ b=TABLQatLlg9wprz72X9sw++4q/vxQhtAE2caUePc9zWmd336CFPR6yNEnMrIW3u/au
+ RrKLz/MMwxJlma7/tAw3sTVpJYIpCjWaesWtMSubqupOTb4UT4+Rh4YpUPUrn0D4ZFbU
+ ZxnOYPPHClLhNH/VqILlwt1pt2IggerRI9McrAieE7lsnEr26YYQFyGDtF9iUWv0yDZz
+ XZlC44Ael67NIbBPtQUmqagYKa0hOgbBTqN1eERB3goOzudYKReFdIoOPAzNteGNqS7i
+ igPF2ztf5rtoVsFXTNHNIwIDhnx+/VyMX/Omq8nNMDrydYJ5fnZZUuDpmfmo4MXb9Azz
+ MtYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766575502; x=1767180302;
+ d=1e100.net; s=20230601; t=1766575681; x=1767180481;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SUquDkfqeE9wbnLT4HJuq866sRB0NKo/tK8aWQmE63Q=;
- b=nlrM5fmtrJavaUXJeOa4JjufBU1uBge/F6klXCDHDhnZeB0KXTspIAfJVhGrNpfRux
- 0gHyTR3CWdkDSp3nozk72zGS1N/a586m3wWIRuq616W+w+FBEaMIsl8P8c4yqzEsi0Xw
- SK7tfOas8s0gOrZMep/ECXgvuupE91oFpinPu3SjDyzAJ7dPZ23TvTPq0HYLGvZMtOwt
- Hk4Sl0nfUU+HYIfADOwULTLGN/J8wjAKA3utWhlhN4jPxSU0/tBvSI0QHXE38xU4NCEv
- 1aZ9/JcGDDLcOOlItPzG+o4MZURWr/RJOPuF3kscx5NXgx1dl/NjIG/bAjV48axAKKa9
- zyhQ==
-X-Gm-Message-State: AOJu0Yw4+GLh+qeJhZWIuwDvVp/SterdAW3kTY9S4nS8DcOrtZLewEYT
- uOsLh57nGWO+MWEspdZCiSleJQmnpVlOvRjU58MAOA3un5s+WvZDSzhWFDFZY4z9GY82smTvkBA
- I2OVFNV2/4lHVUlLgNREBo4or5dGpMohXLnjYPXKZM1SGLwgAhn/hOw7O
-X-Gm-Gg: AY/fxX4fCCZGUiFMAKcTEhEgFruZnAEBQepLlCMjbXOgY+pqaefp5c1ScKoKA46RpUC
- XCx2TbFfu/zhArMZESFJmflrFN49UsSpCzXanCKXSGiDvYviClxb9sbGA/3RMl6+GTyP2FN0JtE
- WKhp7Ti+l6pKhtv2aml7BPSHPb2krm+9Vu5yu5tpnTOXIbgMNCFGUXrXLspe1KCRq0euOV/L5l7
- +BKqGvPRLiVJj1P7X5eNxXD6ODgKH3Yx+xHIr3CBkHYtuU7UlkodT/pCQNalU1eCTbnC8OguNca
- bWfH9b3ndNM1jAPl06Fl08tSRMIfbNkRBl50PZD5LTiVmwxtg2v9rQ94fM4+QKYsqClxWFSgXEL
- e5E1RiqNMS6gtSB4pOKHiWuZUciEhkuIfMlD/MFIroiLmYA==
-X-Received: by 2002:a05:600c:1d1d:b0:477:9eb8:97d2 with SMTP id
- 5b1f17b1804b1-47d1953b8acmr163189365e9.8.1766575502298; 
- Wed, 24 Dec 2025 03:25:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFAs7683m4OKFC2YJl+RPLAei8hSOgOGfrHjzrOpsBIUWUZqk8WJWPtMkvoN+Ht8SNnbNT4fA==
-X-Received: by 2002:a05:600c:1d1d:b0:477:9eb8:97d2 with SMTP id
- 5b1f17b1804b1-47d1953b8acmr163189165e9.8.1766575501884; 
- Wed, 24 Dec 2025 03:25:01 -0800 (PST)
+ bh=PZ6zn7R3wkNHiXaSnws4jtl1POCE4Crp3iF9ihMOQO0=;
+ b=ECtZxeN30p4K41JCTv7m9ZCN5PLXwcy96mas2ECYBPX6L/JiPoknIE+ISXUlhSnR6J
+ 6Eig+YAn2WOgIppU7Qsvqr5YAVjDqQcwckZBDwARGnoEs7NYspTUo/HsUjGC1VWQcoBq
+ nrfbXS8vGcZK6HW3gC6CmtAQDwI4XY5/F4u1z3y1UMpensUFJsoOC49VRCrGTd0KYXSz
+ eyZviel+xrlkSD8ry9KU7LdgUpUDcz8Im1cLE8Dm1M5be9O+K3TaGH8BrYFTaQzVDqp5
+ 4ftbE38b93svc7USRZ8oegKG/BoZS86p/EAkVB8FZsRNYqPbkFC857XfI/nNJuH/MquZ
+ q+6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIyKRVzgK7i1POLcDQvb0ESSN6e3kQ2tXFRJz74ygLY+32gxGuFnGm5Yi19R6pmgZ9TZR6/SDN1AaV@nongnu.org
+X-Gm-Message-State: AOJu0Yxhe4AnTdHUlLyMIgvGxWqgLhpJV2H+tQz4H16b07hfn+CY8QkT
+ 8py0jZLkjoAVfRAOfYQTiLZHLahzJDblwALG0rHVjHewcgJUtxDUEZb4EnVCxXfx8xGUh5dH/qc
+ sUGKarGfOlOUhiJSsoQjS7faomXCLnUwS+QYq36XMMqhdjIuDbxNodrVp
+X-Gm-Gg: AY/fxX5j6QYQjCVGdtYF5cFf07Qz/At3aRilnuD2cb9tMX9UaB9hwZckR4dspKTCN7S
+ 7b1B7BTFtAeHzwCB2+GBPfuH68Z/eh6U3BeFw7MY97u1T+TvP+grXlucO/sH2fvfwLwqXhJ1eUz
+ Qr2eYBVl25hdDBpTKSDlarRV78IgClOFQB/oC9LX4+GgnM8u/Hzg6BFDsF7MRn6lafOdXyKGGMT
+ fzZYoNZhGIwgAGJC4yU0ivCtw2tEGHc6H0omMaCsDqsEKhr/xWn+GsjYObZNELrUJgltI9VRJ0q
+ pBDJ/QSDr1XQaHk5RUbk1+J2yhXwigcQZgzduQl68QNzRATxQ0rDoWKxNRUij+8jKkhXY5fASsq
+ Gl2X7sXA8YryAiShnYzng8ZBgMKaZG3cYsDvfXmiGKC0b6A==
+X-Received: by 2002:a05:600c:470e:b0:46e:506b:20c5 with SMTP id
+ 5b1f17b1804b1-47d19589469mr172088185e9.26.1766575680755; 
+ Wed, 24 Dec 2025 03:28:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGTd+8MJOWofRB0LqSyuU5kysEmhtxmNxhdusjwGuZO5pFHGEc2jZBVXtO3TYDN3sGZd7B8ZQ==
+X-Received: by 2002:a05:600c:470e:b0:46e:506b:20c5 with SMTP id
+ 5b1f17b1804b1-47d19589469mr172087895e9.26.1766575680352; 
+ Wed, 24 Dec 2025 03:28:00 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:165:d60:107a:63db:9521:6057?
  ([2a01:e0a:165:d60:107a:63db:9521:6057])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3acdb87sm133831645e9.16.2025.12.24.03.25.00
+ 5b1f17b1804b1-47d193e329asm291537125e9.15.2025.12.24.03.27.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Dec 2025 03:25:01 -0800 (PST)
-Message-ID: <d65e8cb7-7370-434f-89f2-d35bbfede01a@redhat.com>
-Date: Wed, 24 Dec 2025 12:25:00 +0100
+ Wed, 24 Dec 2025 03:27:59 -0800 (PST)
+Message-ID: <b97c1b53-4f57-4b98-b1a9-c8c7b5367f87@redhat.com>
+Date: Wed, 24 Dec 2025 12:27:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] tests/functional: Fix URL of gb200nvl-bmc image
-To: Patrick Williams <patrick@stwcx.xyz>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ed Tanous <etanous@nvidia.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Ed Tanous <etanous@nvidia.com>,
+ Patrick Williams <patrick@stwcx.xyz>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20251222073351.166720-1-clg@redhat.com>
- <100505ae-4d33-4bd4-800b-6ab21b99738a@redhat.com> <aUsTpG0EGPh29pUL@heinlein>
+ <100505ae-4d33-4bd4-800b-6ab21b99738a@redhat.com>
+ <589ced7e-0ad5-45cc-984a-102552cc8b5e@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -140,7 +146,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aUsTpG0EGPh29pUL@heinlein>
+In-Reply-To: <589ced7e-0ad5-45cc-984a-102552cc8b5e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -168,32 +174,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/23/25 23:11, Patrick Williams wrote:
-> On Mon, Dec 22, 2025 at 01:52:19PM +0100, Cédric Le Goater wrote:
+On 12/24/25 11:51, Philippe Mathieu-Daudé wrote:
+> On 22/12/25 13:52, Cédric Le Goater wrote:
 >> On 12/22/25 08:33, Cédric Le Goater wrote:
->>>        ASSET_GB200_FLASH = Asset(
->>> -        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
->>> +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-bmc/openbmc-20250702182348/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
->>>            'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db0dbc')
+>>> Commit [1] moved the FW image of the gb200nvl-bmc machine and broke
+>>> the associated functional test. Fix that.
+>>>
+>>> [1] https://github.com/legoater/qemu-aspeed-boot/ commit/52451b2472eeb40aa97e131aeea327e9d4a8a78a
+>>>
+>>> Cc: Ed Tanous <etanous@nvidia.com>
+>>> Cc: Patrick Williams <patrick@stwcx.xyz>
+>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>> ---
+>>>   tests/functional/arm/test_aspeed_gb200nvl_bmc.py | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/tests/functional/arm/test_aspeed_gb200nvl_bmc.py b/tests/ functional/arm/test_aspeed_gb200nvl_bmc.py
+>>> index 8e8e3f05c1b2..e5f2dce0f569 100755
+>>> --- a/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
+>>> +++ b/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
+>>> @@ -11,7 +11,7 @@
+>>>   class GB200Machine(AspeedTest):
+>>>       ASSET_GB200_FLASH = Asset(
+>>> -        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/ master/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl- obmc-20250702182348.static.mtd.xz',
+>>> +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/ master/images/gb200nvl-bmc/openbmc-20250702182348/obmc-phosphor-image- gb200nvl-obmc-20250702182348.static.mtd.xz',
+>>> 'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db0dbc')
+>>>       def test_arm_aspeed_gb200_openbmc(self):
+>>
+>> Applied to aspeed-next.
 > 
-> Should we make these commits or tags rather than `master`?  Right now it
-> seems only Catalina uses a permalink where as all the others appear to
-> use `master` references.
+> Thanks, this is part of the 2 build failures blocking current pull
+> requests (other one being
+> https://lore.kernel.org/qemu-devel/20251224085714.83169-1-philmd@linaro.org/).
 
-
-The main objective is to be able to add new images without breaking existing
-tests. As long as there is some version number in the fw image file, I don't
-think it matters much. I would opt for master.
-
-Thanks,
+Thanks, I was going to send an aspeed PR yesterday and then, I saw
+the tests failing because of the missing v5.0.0 machines.
 
 C.
 
-
-> 
-> functional/arm/test_aspeed_catalina.py
-> 14:        'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef81245b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina-20250619123021.static.mtd.xz',
-> 
-> 
+> If we really want to consider our CI as source of truth (and blocking
+> when not green), then please consider applying it directly on master
+> as a build fix (maintainers Cc'ed).
 
 
