@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD5EE77361
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81680E7545C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQk3-00065T-66; Wed, 24 Dec 2025 10:25:35 -0500
+	id 1vYQkR-0007yG-Ru; Wed, 24 Dec 2025 10:25:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQjy-0005eO-3G
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:30 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQkP-0007ki-FP
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:57 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQjw-0005Ax-It
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:29 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b7a72874af1so1037432266b.3
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:25:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQk3-0005Bf-Sf
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:57 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-64b8e5d1611so7292261a12.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:25:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589925; x=1767194725; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589934; x=1767194734; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D7tE0kUMhdBqFLhbKfrJibgQATMsXG5ZR21KHojJdYE=;
- b=N801J7LyrW+IVMe0ehUcSpQbRHGlVVisSRKe4gkKZrPKddfRggHRzs2Ss103R4+UEI
- 2DWXb8/siXml87nLGNHiI2Re8ASoDeaNn7icLVGDNGVeSxq+nuyjm8E3jJWmXVpcTjCu
- gz5HIRQc1vD4dgdmPijhjVIOAh8rlybLNWE85zTw8paH0PjXjKXRW7gTO9ECIfXJDaOj
- tIb0wKkCXPimLZMnHwQUr0KLyYtGQBp38wpLfhynGCcY3eneOieVkP6AlaZ5niuNQVeV
- eP/5EDitRwqT1J5jCB7Ekfzgjaal4CjcRq7v7KP9QjltIRNvJu3r3NqEZUMbBa+3XK8T
- GOXQ==
+ bh=rHOVluu9kB0fVsABBF3cJLWm84ZoSOynpEXEKwuisGo=;
+ b=VSYF1D8VFLoVpij2uN3yTn0PoTvo7XAnfmvRZcETT6FhuvV0+g1r9DCzhhC3pBbsPl
+ dLFCXpqU2gEgpWzx6dDYNXGLjPP3qnaE31lTkTXK3X3j/ydZBEtRxraZiq58yI3dvooa
+ z6F3irBbl/Tz26TTT/B3xo/uJYWdRuXTOP75ptQJwXukpUslP291Ydrv2c6a7Qm5UXLi
+ 0CY2TTqCt+S4q1h7LIjFSIIiLc1fQpF9IGfrAvcc6OXP89ho6QcUrJGhypImPVXh5a5V
+ aJesJpkaExVUaTqwF86d2PkiMyNBZp7TB6Uq50F5HpfazFV8HfyLrX1C/FvE+PwkKS2L
+ +DcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589925; x=1767194725;
+ d=1e100.net; s=20230601; t=1766589934; x=1767194734;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=D7tE0kUMhdBqFLhbKfrJibgQATMsXG5ZR21KHojJdYE=;
- b=PMzcB7Cwjng4QVkUxjnBSZp/09XtCwtG0ZSCkVsLIWlHqULk1BfWv6BtdgL58rslsJ
- 0N5PqgWQHgQC0Mqj9d8YsEzX/6roNKrMhbYMbueQvk4oS/GmrnHgmn6fj19Mm80HY/I9
- YpCjt1lgireC13t+TksQgt436UaNj/hPOGN9ZBSnKMDLTBgRm353MkoJOsjMhCKBxC3N
- k3Rj997uLPAADBsJrLCIX9bt4pmXUO6GQwR5RKNrFjIWA7LisS6Rg1PM1FqMrAdl9kHx
- 81SsN/+Wq3efTXaan45d9L3eN4RddaFuWrnx97Tfm6+s1gU7DSFDI/6WI9jYEG66qxRR
- vGFw==
-X-Gm-Message-State: AOJu0YzeetL0m1rleD6ziiYa+xCgBWYF2iKLIDA2QVwk3siulXjveq8+
- ZLQVXss3vMyLTlDadvfeLpWOdTdBXY3BY4RNLaHTwS8zP0NGJijv6uMnLPD/r23KjS43UooYmqY
- r0n+ekO0=
-X-Gm-Gg: AY/fxX5SgfEA1hKglxWb++3qQ91O+QD0QXZYTrNsz1UbqEtBouQjr6XwISgNPSbhc87
- Ze2W5Saj+IRbZXvwM8EJCEHnZ93WHVl5Er+cespPtkUvZ2ywAgClkyXtAA4yA1LPSHHcClsiw0W
- AaX+UE6tAtXxh9Ho6vPDWs5HOk+b+VID/8D64o/v26I+yggPr2L6ZzQXHaClu8OKkBELclaQMwE
- kZlBu0U6lruzO1rhutzXPu0iwiVygVeP6YfO2P3VOQ0+6l8E/KdwLtR4XRd1jK/3pQaPqMqE9xT
- IAHvvfgl2mraqQV4cEmGJhjrfQXIrDs2AreuqD5u3j9U/CfLT12BbQNHt3ROXxGdUhTrejNKHcS
- mb63fgdJICXpvI44OqjO5cGQvZjSXk9HbSIdLGCifMUxRIBvHn6547Vh/hnYBWeGqvllPqCIKOw
- jWsAuMEjjnlJwV8as05G9mAez5sSxoVT7XF4BP2bEPIXRbbuehMyL+KhWcBSSHHdBuEA==
-X-Google-Smtp-Source: AGHT+IH/YZO/ZzZMHSLASKGHQF/sn5WdX5DbbnGdufWHLO3HjhOifNymbSwLRJY44D1XZN9Sid2B/A==
-X-Received: by 2002:a17:907:6094:b0:b73:9368:ad5e with SMTP id
- a640c23a62f3a-b8037051288mr1893766666b.34.1766589924977; 
- Wed, 24 Dec 2025 07:25:24 -0800 (PST)
+ bh=rHOVluu9kB0fVsABBF3cJLWm84ZoSOynpEXEKwuisGo=;
+ b=r5rENd9AG1eKDHrgEnPDoqmJa0g2lxzCmrq0pxTQNEp9FC1g/yPTp5n3a9HkULT9rb
+ eg4hwVggIWMCp+dT5fp0WvTrcLWE82P9OwioLP1m8wJIOLgo78Fno16xndNCoqVUlxlF
+ b6rLh0tLDAVRZfrP8mw5h/ytMrMvPZm+H/MEKEhysP1LKJrShb4jEaXKhUE55XsmGuhB
+ niZrX+l5djPsXkQlQ1LH8mSycHOHID+beMLCeLVZVzZxkCe0j/RjQ0sLhlmaGljZ5T6/
+ XJF8/ljGy6Q4qxEdtQDXunluLaOO72PCW4bIIyd4lOLzcAAMsiZzBeDGmWjjQObPv092
+ /mBQ==
+X-Gm-Message-State: AOJu0YzVaoVtgz9WqSmiES62YFIR5C1CsPdbuhqdONthhfoyDE685HWE
+ xDyrwNV9h9WcoOEYeoL1V68K2tSldquiw+edvTKCuc49ftwEye9pGVg3O55tAKvr1xxZHS12RA6
+ jg0yfFQI=
+X-Gm-Gg: AY/fxX5UomlJ3F/1+EcmnmzYCHqil1Hw95wpo71fd3yryDNBFbtu+aM8DFOhM78R9Wc
+ SRjn5jYe4/4xKZlZSWrji0au1GC9aB2evd/9rJYTZH2M/WbxjNKSb5jHN0HFDanWrLE5AJnrTNM
+ ImDrAGXwxqXUKayu+9VXQBYvF7wyO6z60tmrZjOkxJFcVQ5OVfae7GzLBO6Wa3E/bFW+0bvlaJC
+ cdQ7/4Odjo3LdOYsgzDVssUcxUhAvoX2yi4Tvgs8yxoH6CiFCObzhQlE6EY9PnCttjm9lSog1vo
+ L+9oL56WJNvJOXOXaYvT/al+6UPLOZxW8O8VA42gtO0aNYXwmskNjObVfxMSNeZm6erPiIfzQG1
+ R3wf6YIPYL4nOifsqdeQrkUXp6HAHGjm+tHEYQxoIEoE2P6ILsQ43ghoWRaSoD8IVUYcbs3T2UM
+ 21czIhvrVMgo9XE2zbi6W3Vpzfqj9wwMytd2ibY/QNRgrbg5iV4tG9n3Y=
+X-Google-Smtp-Source: AGHT+IFmSjHTpcIezrUwuMTY1I1Uo3+p9B7kn5YPyAoTTTJVwxlfon9CwCYKgZB+1cUuZ6o58HyRtQ==
+X-Received: by 2002:a17:906:7315:b0:b73:398c:c5a7 with SMTP id
+ a640c23a62f3a-b80371a7253mr1830677166b.41.1766589933937; 
+ Wed, 24 Dec 2025 07:25:33 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037f51a74sm1824118766b.63.2025.12.24.07.25.22
+ a640c23a62f3a-b8037ddffd2sm1702183166b.33.2025.12.24.07.25.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:25:24 -0800 (PST)
+ Wed, 24 Dec 2025 07:25:33 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,19 +72,20 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 20/25] system: Allow restricting the legacy tswap()
- 'native-endian' API
-Date: Wed, 24 Dec 2025 16:22:03 +0100
-Message-ID: <20251224152210.87880-21-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@kernel.org>
+Subject: [PATCH v3 21/25] system: Allow restricting the legacy MO_TE*
+ 'native-endian' definitions
+Date: Wed, 24 Dec 2025 16:22:04 +0100
+Message-ID: <20251224152210.87880-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224152210.87880-1-philmd@linaro.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,7 +108,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guard the native endian APIs we want to remove by surrounding
+Guard the native endian definitions we want to remove by surrounding
 them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
 
 Once a target gets cleaned we'll set the definition in the
@@ -116,29 +117,43 @@ API anymore.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/tswap.h | 3 +++
- 1 file changed, 3 insertions(+)
+ include/exec/memop.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 72219e2c431..9e94fa0021c 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -21,6 +21,8 @@
- #define target_needs_bswap()  (HOST_BIG_ENDIAN != target_big_endian())
- #endif /* COMPILING_PER_TARGET */
- 
-+#if defined(CONFIG_USER_ONLY) \
-+    || !defined(TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API)
- static inline uint16_t tswap16(uint16_t s)
- {
-     if (target_needs_bswap()) {
-@@ -68,5 +70,6 @@ static inline void tswap64s(uint64_t *s)
-         *s = bswap64(*s);
-     }
- }
+diff --git a/include/exec/memop.h b/include/exec/memop.h
+index 799b5b42218..4aaa6a0ab02 100644
+--- a/include/exec/memop.h
++++ b/include/exec/memop.h
+@@ -36,11 +36,13 @@ typedef enum MemOp {
+     MO_BE    = MO_BSWAP,
+ #endif
+ #ifdef COMPILING_PER_TARGET
++#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
+ #if TARGET_BIG_ENDIAN
+     MO_TE    = MO_BE,
+ #else
+     MO_TE    = MO_LE,
+ #endif
 +#endif
+ #endif
  
- #endif  /* TSWAP_H */
+     /*
+@@ -150,6 +152,7 @@ typedef enum MemOp {
+     MO_BESQ  = MO_BE | MO_SQ,
+ 
+ #ifdef COMPILING_PER_TARGET
++#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
+     MO_TEUW  = MO_TE | MO_UW,
+     MO_TEUL  = MO_TE | MO_UL,
+     MO_TEUQ  = MO_TE | MO_UQ,
+@@ -157,6 +160,7 @@ typedef enum MemOp {
+     MO_TESW  = MO_TE | MO_SW,
+     MO_TESL  = MO_TE | MO_SL,
+     MO_TESQ  = MO_TE | MO_SQ,
++#endif
+ #endif
+ 
+     MO_SSIZE = MO_SIZE | MO_SIGN,
 -- 
 2.52.0
 
