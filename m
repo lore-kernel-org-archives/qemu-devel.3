@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0472DE776F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 19:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD4AE776F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 19:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYU8C-00024d-5N; Wed, 24 Dec 2025 14:02:44 -0500
+	id 1vYUAk-0002u1-9l; Wed, 24 Dec 2025 14:05:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYU8A-00024C-Db
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:02:42 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1vYUAi-0002tT-DS
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:05:20 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYU88-0003jz-FV
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:02:42 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b7ffa421f1bso1229727166b.0
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 11:02:39 -0800 (PST)
+ id 1vYUAg-000490-Do
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:05:20 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b734fcbf1e3so1232229666b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 11:05:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766602958; x=1767207758; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766603116; x=1767207916; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ef+FuyNNamUO0dRYQj6L/qYxkfhgwJJe9wxGcjCTN4g=;
- b=MY2H/ohuwpfK9xTdRuukEclmAvBRJEPowFYcN8UeoWCxr1EoGfEfX2e7Tj58VFOASo
- uLlNcod7cbkgqL0E5ghMFGEAEIlL2p6ARfYNcxM2JkhwF1DWA9kidyf1uyrrMonLiQ+i
- +x92xLt3fP6++Dh6Hol7Z6FZyiXwdmz2r7sg7oy6x7twFT5ZyiXaoPA/75PU2EihfIP0
- 2uVPYABs6hUy5r0zGUomzAm57Xj8gIJbC0xoZFxMw//N1O9e++f1xsxpLjOUwROgi8n7
- brxBluavrtHmYhMt9NDfOSXj+CPPpG83tnn1dzV9xKJsygoL46Fbk+1DdP+zFZsyODg4
- npSg==
+ bh=/3LrPdmwZQ2IQevPWFlsOlCRpY6OrwN7Txb/bOm3K54=;
+ b=azz0G0hOoxwkoGcQVc80bzJxgPXAxbmSDKZ899hsMl+zqf/m2BynYBmPkUCNudHaGg
+ x9Wv5Hr8Bgq5pJozJSd1002FjuGeYI337/5qI8ia1Ro8svI7ucV4FQTwd180nouPfRFR
+ SCicoL/3Gk6+hwK9xcLacENKzwhqZnBWp1wtlm/17E/PmTONHni2yr9KAG+6YeZ08XMo
+ o7lwVGs2anuaJKeeY1FHoMoCwLs4GFNj5854zUZ7cpF3zC7DdtlY0wiaOwryU8n7MVvh
+ QfETjeO/+Pu7zvkmXil2zqeEUpqQrppviRHim9kR5CoRVbEoQ1nZpDG41F6A8EuaZXBT
+ xqJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766602958; x=1767207758;
+ d=1e100.net; s=20230601; t=1766603116; x=1767207916;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ef+FuyNNamUO0dRYQj6L/qYxkfhgwJJe9wxGcjCTN4g=;
- b=A1JugzHSAFZb8z2CBcKKXw0pqHkt8LEBsE1M5JRAKeFbEE3R8kG69V9WYUqEX5lU1S
- 8PvkH0agv2U5ELwPA+rfH+ydmAZYNHuBzP8uAUmbpnPESETfxWo0adJoG8uy2ltaj8dV
- PekUmahPbVRTx6v/QpgFimR7y5n4HmDnWAVjsONdvxy2EeF2i3khZ1wnai9prLxeqhRn
- MGaAFqipmlJog6olredptF7R1QaS6RcqXthE8Uxyky79aY/QgugBpASn1MKvalNefmyc
- LE1gmC2auIbxgwcRCq/zDYINjhpDoVebLYXzNHZB5jeuyzro7ju33vZMKq/LBOFCbQmW
- pdzA==
-X-Gm-Message-State: AOJu0Ywx1toszyK+/fR1efKGrdQeTRILpf9LzINvK/cK87PmGPvwvgea
- EkAUr+8I+Vo06wn88aEstCH/2X+cUhmU6nlbJpU9oXOgR98+NuDLGSJpZXZnpGl8eF4GJi5sIb8
- mch1QZwjaQJ8fAZJ38WeJwKI38Dj7JrvxC/fhQNj6Qw==
-X-Gm-Gg: AY/fxX7AZGYB3N/M9QEPt6+df/BnzrVS2F7GkepI8iLPR80ETlpA5TQlVp+onYF+vEP
- BuZKikQrVPd5oWOMOUFxQ02PpY6Z4cD5OMbL9M6ITGfLrPrH0ZZ77BrSdBLH5C4xHm4lfVQa0CK
- fRSNZyhpegTx5Uqoig0JPLKUa+eJ92rNy1vYMgUd7+G+k2ngUci9rUwhl99UK8hFKYGRTPEVP1w
- 4BIJwFClw6LxJd+ViKZEFMJLW6YUBJiVUOKy2p+13gO17POl+6B7dgbBzzFLAUMpvMxuk8=
-X-Google-Smtp-Source: AGHT+IH4zDc6YZwervhsWvcLZ8QY7wSmC7Y/nUBZw566KunpQZcH1nRQmZ6jpMnlpGXvDRHw1DJcmN8Xs5uIJBqQmgk=
-X-Received: by 2002:a17:907:8688:b0:b80:456d:bd99 with SMTP id
- a640c23a62f3a-b80456dc544mr1804062966b.19.1766602958190; Wed, 24 Dec 2025
- 11:02:38 -0800 (PST)
+ bh=/3LrPdmwZQ2IQevPWFlsOlCRpY6OrwN7Txb/bOm3K54=;
+ b=s6aQltExJnPxeK/HnzHcZ6Ax7vZZqx74FI09freztxx8bijHIcrLwqpqNI8N813T13
+ htBuyre/I9MJB3BW3jsQM1kwmpxQwK9ZRnl8tfrRHNYgzqBknEFyUIdlpfB9maXXkx/f
+ kP2QM7egeksf+s2slIB31TgVSpRc90sSft53wA/IQppPQ5LcxhNLNF/Kab2U54U89fsH
+ 0J/Ag7uY/bv8x4olfhTPOBDkrIxm/eoYoHr93Z9iGDiS44+vIvFr8Wf52WX1CpBQlJpw
+ saKSfHrP/4RBfO0I6GnQoDGrd0uzvCIa6gbHdEBMu+eLaVjpIzCbZrgmZ8fJoJZF4i1q
+ zYag==
+X-Gm-Message-State: AOJu0YxfoUBaO16yMU/S5N1R1BEmHZbh1rcYFvQdnqZl80Nb5HG0D27G
+ zz85ZE0KTUed+pzYN0d5Y6Scy/DF9HPrxj7Q0Ip9yC1m/RJ07ApCYn30w2tez+jCIC9h5BngAPM
+ o2yIYR0p1SvgUVXNu8pzZVbSOXH62cu3Ys81Hn1gYnw==
+X-Gm-Gg: AY/fxX6lEDW7xwO5K5zGSJVgr5kNF7ChJU5w/9obELWT7w+yKsyuK+hu9acRKqFzQNw
+ Y0XWMBotB8I2AeuWmF2ZuI7u9k+5Tg4XMQ+cxz3rHeu9MapJ3b3y4XMbtG49BSSd18045C6fDnL
+ BU+t/7vdA3MMt2ZewKSvOdJIb4dCrflJhDUDKfySdsi8LdHVO5XprN5a0mK2QaK4a+wrl/RNjLp
+ dBbwI6vFRNrsSYO6iaBkX9+RgeZ85rmp1NTw/RSHZPzlKfBCeNwvBHqxUnkG0UyugvrB/0=
+X-Google-Smtp-Source: AGHT+IHTEM0Fp5x822N93qOeIGDe0if+eL5WTlA6J1GbAReP86/8dbkdVK/1xPKRPqc5paGXKZKZSzFfHXVX3s1PRCk=
+X-Received: by 2002:a17:907:9447:b0:b71:df18:9fb6 with SMTP id
+ a640c23a62f3a-b8036f5bb39mr1976463066b.26.1766603115785; Wed, 24 Dec 2025
+ 11:05:15 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-3-philmd@linaro.org>
-In-Reply-To: <20251224152210.87880-3-philmd@linaro.org>
+ <20251224152210.87880-6-philmd@linaro.org>
+In-Reply-To: <20251224152210.87880-6-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 24 Dec 2025 21:02:12 +0200
-X-Gm-Features: AQt7F2ruccuonUS4_QZBePYQ5ZNheMPkPF9USOlloHzDzve5lJ1vyqNMrcVuexg
-Message-ID: <CAAjaMXak2pQRVi=XFu2e1OMj1EzvpZtCnHH8Es3bHO4GWa0gxg@mail.gmail.com>
-Subject: Re: [PATCH v3 02/25] system/physmem: Convert DEBUG_SUBPAGE printf()
- to trace events
+Date: Wed, 24 Dec 2025 21:04:49 +0200
+X-Gm-Features: AQt7F2rTDphEmD9a-S-zSYImdklqI_N3fsH068SLhL_mFEzC5oh4Ju5BmUEA7hc
+Message-ID: <CAAjaMXb3SZJswpMMVq_oN6Ow5XYMpHY1srHAbYiRgMx6AyjjaA@mail.gmail.com>
+Subject: Re: [PATCH v3 05/25] system/memory: Move *ldst* headers from exec/ to
+ system/ namespace
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu <peterx@redhat.com>, 
@@ -75,8 +75,8 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  David Hildenbrand <david@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,132 +99,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 24, 2025 at 5:22=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Wed, Dec 24, 2025 at 5:23=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Defining DEBUG_SUBPAGE allows to use raw printf() statements to
-> print information about some events; convert these to tracepoints.
+> Keep all system memory APIs under the system/ namespace.
 >
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
->  system/physmem.c    | 29 ++++++-----------------------
->  system/trace-events |  6 ++++++
->  2 files changed, 12 insertions(+), 23 deletions(-)
+>  MAINTAINERS                                       |  1 +
+>  include/system/memory.h                           |  4 ++--
+>  include/system/memory_cached.h                    | 10 +++++-----
+>  include/{exec =3D> system}/memory_ldst.h.inc        |  0
+>  include/{exec =3D> system}/memory_ldst_cached.h.inc |  0
+>  include/{exec =3D> system}/memory_ldst_phys.h.inc   |  0
+>  6 files changed, 8 insertions(+), 7 deletions(-)
+>  rename include/{exec =3D> system}/memory_ldst.h.inc (100%)
+>  rename include/{exec =3D> system}/memory_ldst_cached.h.inc (100%)
+>  rename include/{exec =3D> system}/memory_ldst_phys.h.inc (100%)
 >
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 1292f49095f..7e914ecf648 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -91,8 +91,6 @@
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index c299b84d418..f984891ac2b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3255,6 +3255,7 @@ S: Supported
+>  F: include/system/ioport.h
+>  F: include/exec/memop.h
+>  F: include/system/memory.h
+> +F: include/system/memory_ldst*
+>  F: include/system/memory_cached.h
+>  F: include/system/physmem.h
+>  F: include/system/ram_addr.h
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index 692c2f67dd3..2a966397931 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -2848,13 +2848,13 @@ MemTxResult address_space_write_rom(AddressSpace =
+*as, hwaddr addr,
+>  #define SUFFIX
+>  #define ARG1         as
+>  #define ARG1_DECL    AddressSpace *as
+> -#include "exec/memory_ldst.h.inc"
+> +#include "system/memory_ldst.h.inc"
 >
->  #include "memory-internal.h"
+>  #ifndef TARGET_NOT_USING_LEGACY_LDST_PHYS_API
+>  #define SUFFIX
+>  #define ARG1         as
+>  #define ARG1_DECL    AddressSpace *as
+> -#include "exec/memory_ldst_phys.h.inc"
+> +#include "system/memory_ldst_phys.h.inc"
+>  #endif
 >
-> -//#define DEBUG_SUBPAGE
-> -
->  /* ram_list is read under rcu_read_lock()/rcu_read_unlock().  Writes
->   * are protected by the ramlist lock.
->   */
-> @@ -2903,10 +2901,7 @@ static MemTxResult subpage_read(void *opaque, hwad=
-dr addr, uint64_t *data,
->      uint8_t buf[8];
->      MemTxResult res;
+>  void address_space_flush_icache_range(AddressSpace *as, hwaddr addr, hwa=
+ddr len);
+> diff --git a/include/system/memory_cached.h b/include/system/memory_cache=
+d.h
+> index 1a07774b6ad..587e8a1453a 100644
+> --- a/include/system/memory_cached.h
+> +++ b/include/system/memory_cached.h
+> @@ -52,7 +52,7 @@ struct MemoryRegionCache {
+>  #define SUFFIX       _cached_slow
+>  #define ARG1         cache
+>  #define ARG1_DECL    MemoryRegionCache *cache
+> -#include "exec/memory_ldst.h.inc"
+> +#include "system/memory_ldst.h.inc"
 >
-> -#if defined(DEBUG_SUBPAGE)
-> -    printf("%s: subpage %p len %u addr " HWADDR_FMT_plx "\n", __func__,
-> -           subpage, len, addr);
-> -#endif
-> +    trace_subpage_read(subpage, len, addr);
->      res =3D flatview_read(subpage->fv, addr + subpage->base, attrs, buf,=
- len);
->      if (res) {
->          return res;
-> @@ -2921,11 +2916,7 @@ static MemTxResult subpage_write(void *opaque, hwa=
-ddr addr,
->      subpage_t *subpage =3D opaque;
->      uint8_t buf[8];
->
-> -#if defined(DEBUG_SUBPAGE)
-> -    printf("%s: subpage %p len %u addr " HWADDR_FMT_plx
-> -           " value %"PRIx64"\n",
-> -           __func__, subpage, len, addr, value);
-> -#endif
-> +    trace_subpage_write(subpage, len, addr, value);
->      stn_p(buf, len, value);
->      return flatview_write(subpage->fv, addr + subpage->base, attrs, buf,=
- len);
+>  /* Inline fast path for direct RAM access.  */
+>  static inline uint8_t address_space_ldub_cached(MemoryRegionCache *cache=
+,
+> @@ -78,18 +78,18 @@ static inline void address_space_stb_cached(MemoryReg=
+ionCache *cache,
 >  }
-> @@ -2935,10 +2926,8 @@ static bool subpage_accepts(void *opaque, hwaddr a=
-ddr,
->                              MemTxAttrs attrs)
->  {
->      subpage_t *subpage =3D opaque;
-> -#if defined(DEBUG_SUBPAGE)
-> -    printf("%s: subpage %p %c len %u addr " HWADDR_FMT_plx "\n",
-> -           __func__, subpage, is_write ? 'w' : 'r', len, addr);
-> -#endif
-> +
-> +    trace_subpage_accepts(subpage, is_write ? 'w' : 'r', len, addr);
 >
->      return flatview_access_valid(subpage->fv, addr + subpage->base,
->                                   len, is_write, attrs);
-> @@ -2964,10 +2953,7 @@ static int subpage_register(subpage_t *mmio, uint3=
-2_t start, uint32_t end,
->          return -1;
->      idx =3D SUBPAGE_IDX(start);
->      eidx =3D SUBPAGE_IDX(end);
-> -#if defined(DEBUG_SUBPAGE)
-> -    printf("%s: %p start %08x end %08x idx %08x eidx %08x section %d\n",
-> -           __func__, mmio, start, end, idx, eidx, section);
-> -#endif
-> +    trace_subpage_register(mmio, start, end, idx, eidx, section);
->      for (; idx <=3D eidx; idx++) {
->          mmio->sub_section[idx] =3D section;
->      }
-> @@ -2986,10 +2972,7 @@ static subpage_t *subpage_init(FlatView *fv, hwadd=
-r base)
->      memory_region_init_io(&mmio->iomem, NULL, &subpage_ops, mmio,
->                            NULL, TARGET_PAGE_SIZE);
->      mmio->iomem.subpage =3D true;
-> -#if defined(DEBUG_SUBPAGE)
-> -    printf("%s: %p base " HWADDR_FMT_plx " len %08x\n", __func__,
-> -           mmio, base, TARGET_PAGE_SIZE);
-> -#endif
-> +    trace_subpage_init(mmio, base, TARGET_PAGE_SIZE);
+>  #define ENDIANNESS
+> -#include "exec/memory_ldst_cached.h.inc"
+> +#include "system/memory_ldst_cached.h.inc"
 >
->      return mmio;
->  }
-> diff --git a/system/trace-events b/system/trace-events
-> index 82856e44f2e..6d29a823f04 100644
-> --- a/system/trace-events
-> +++ b/system/trace-events
-> @@ -35,6 +35,12 @@ find_ram_offset_loop(uint64_t size, uint64_t candidate=
-, uint64_t offset, uint64_
->  ram_block_discard_range(const char *rbname, void *hva, size_t length, bo=
-ol need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d =
-fallocate: %d ret: %d"
->  qemu_ram_alloc_shared(const char *name, size_t size, size_t max_size, in=
-t fd, void *host) "%s size %zu max_size %zu fd %d host %p"
+>  #define ENDIANNESS   _le
+> -#include "exec/memory_ldst_cached.h.inc"
+> +#include "system/memory_ldst_cached.h.inc"
 >
-> +subpage_register(void *subpage, uint32_t start, uint32_t end, int idx, i=
-nt eidx, uint16_t section) "subpage %p start 0x%08x end 0x%08x idx 0x%08x e=
-idx 0x%08x section %u"
-> +subpage_init(void *subpage, uint64_t base, uint64_t len) "subpage %p bas=
-e 0x%08" PRIx64 " len 0x%08" PRIx64
-> +subpage_accepts(void *subpage, char access, unsigned len, uint64_t addr)=
- "subpage %p %c len %u addr 0x%" PRIx64
-> +subpage_read(void *subpage, unsigned len, uint64_t addr) "subpage %p len=
- %u addr 0x%" PRIx64
-> +subpage_write(void *subpage, unsigned len, uint64_t addr, uint64_t value=
-) "subpage %p len %u addr 0x%" PRIx64 " value 0x%" PRIx64
-> +
->  # cpus.c
->  vm_stop_flush_all(int ret) "ret %d"
+>  #define ENDIANNESS   _be
+> -#include "exec/memory_ldst_cached.h.inc"
+> +#include "system/memory_ldst_cached.h.inc"
 >
+>  #define SUFFIX       _cached
+>  #define ARG1         cache
+>  #define ARG1_DECL    MemoryRegionCache *cache
+> -#include "exec/memory_ldst_phys.h.inc"
+> +#include "system/memory_ldst_phys.h.inc"
+>
+>  /**
+>   * address_space_cache_init: prepare for repeated access to a physical
+> diff --git a/include/exec/memory_ldst.h.inc b/include/system/memory_ldst.=
+h.inc
+> similarity index 100%
+> rename from include/exec/memory_ldst.h.inc
+> rename to include/system/memory_ldst.h.inc
+> diff --git a/include/exec/memory_ldst_cached.h.inc b/include/system/memor=
+y_ldst_cached.h.inc
+> similarity index 100%
+> rename from include/exec/memory_ldst_cached.h.inc
+> rename to include/system/memory_ldst_cached.h.inc
+> diff --git a/include/exec/memory_ldst_phys.h.inc b/include/system/memory_=
+ldst_phys.h.inc
+> similarity index 100%
+> rename from include/exec/memory_ldst_phys.h.inc
+> rename to include/system/memory_ldst_phys.h.inc
 > --
 > 2.52.0
 >
