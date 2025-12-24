@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C68E7545C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B89E776C2
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:15:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQZn-0002Q4-QD; Wed, 24 Dec 2025 10:15:00 -0500
+	id 1vYQZ5-00027r-Db; Wed, 24 Dec 2025 10:14:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZF-0002Fx-R7
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:25 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZ4-00026m-KY
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:14 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZD-0002zh-A2
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:25 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b734fcbf1e3so1199710966b.3
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:14:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZ1-0002yr-SH
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:14 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b736d883ac4so1047707566b.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:14:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589261; x=1767194061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589250; x=1767194050; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PUlYIf5k+X4CyTKiZX3SNJm39SXnRKIc/98ptlkBn0w=;
- b=FnpR1hK3FFLjgyuU3N4vKKD2CY7hC/8oj+TNtarHlySSz6lY+mkGaY6u8u8tk9VKpz
- LCLPRfnD4SbU0RFD4gRYHRoAQcpw1pLNZDUxyJWdKce42hAb4T4IhJHUVflQTUm5nnXc
- BA1/4+Qt9Vs4KO28sIlt1CRrQKCLuivDTL9lbE/Yb2fnzlMrH9NpR79AEbNF8WE7ePTt
- RoNxgElAw1LXjuc2eyDs2bTt1hfl3IzKg7SNsqgtJSqx5f0uD8qnuKp8pLFAQ6cLlder
- htwy7wEGRU5liBKBkPuRv3BlZtEfyu/Jc/wu8lgTxMiZOYHAC/jAcOuH1VAJ7W9JSq96
- /T6w==
+ bh=NQzy0dLdaSF6COAicvlR6PVbfYgMujeHrja50VAAj50=;
+ b=E2S9SEcbko9BJUpsp/TgaPlG6jiKDpHND7Qh77WGbLTp3CyovdwK91AJ+Acx622J43
+ 3M8muqsSLUpNAO7d9N6aKaXoMXElYJKEDKCWzO3f0WZnXg9hLFw3kYRrXaVW/1Ql+BRJ
+ 8m0t71fCc8TNfW6U1ksDkv1iLNFSUgT0GOYvbeFjsN/1ScGkDqcfpBfq6K3MU9HfQiGS
+ Y7/oWh9YV9ijt33x73qe2hNjMaaUo+/xl+nO9dQy3rdF227tQvfhz+GZjWGJ/yySNB18
+ fOAAUAR8E28VBfabjF9IhB6VmlICQmH12muBTNhZOUtuUg8Y0iKlDdrKXLYy31aR2TaA
+ kqBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589261; x=1767194061;
+ d=1e100.net; s=20230601; t=1766589250; x=1767194050;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PUlYIf5k+X4CyTKiZX3SNJm39SXnRKIc/98ptlkBn0w=;
- b=iqD5alaux7/eY9ho0ngn+Z9sths++kbQzVCDWx5Xfbedb6QdEUYNrW8m6V7Fsy5LpP
- xGiF1xTJTuliIrZNBu7FQ9a55ihFE3iZOalssIl1ctjY4GDx7GQb8FmIWiLxVvMq1rmH
- 6LLCUQkc2D87zXFGT6stZqd+LbHGkd1fKj78mTRGeXCCr3/v3/B1JqInu9Or3dBH9Rfp
- POAQChxzCIiDYpjYibzqzcfv15Vq3bZzxy3nTnz4bHp11ce956/oRAoMirANnh6VIpNX
- zKLwdextbmArDETNTiOrD/5+8yDC7idWpbF5c82qHo/ZK6y2hY1V/hLedZNDqA79JnFv
- 3j+g==
-X-Gm-Message-State: AOJu0Yz7wXdqH79uw6IwMLDiW31FEWOv22yX3cum5FeRPaOwOYxgoH7T
- 4k+EBWgOrVvV+DUKg1k/rabtJAoqPnq1Im8YtXi5Lq1TersnvrupgGdWldL05pWUcWTGHUk90xM
- lzgySXZA=
-X-Gm-Gg: AY/fxX63GAjJ5ETp5Mdxb2L2G8dsdAYEudOSNlQUXBmScdbcAOD0V5VcqR9a1dIGvGV
- yVje9jIjxZT+OjKvJnh2bGYkk23QzjYphHNc8VSY+xbQ6t5Od+6vBItoIXpdhM75whT3GJDA05S
- Y+8mJ35v5ieqG6qoZ2mviZACfaZHuAUh8Bi+tHa0EFqZJdLJZXCX2cjevcufJz+qYkVeL7vqu+v
- WIfCjJgt2NC+8pjAPH2WAch5krMLHrtBzZxDthsxr5Rv12yhPx9DZluG25g4VhQTU7p3OwqVCJH
- W/39jccURrJcHWeIkaMdxPW8BzlO+D5KPVfInUuSY9Ps0du/0lkxSro0MewnoY/mdbvHvK64A9s
- qtbOilX/40iBNJ/Epu54Glnl2D2wU8gkh63b0KVwoKDTUcMgRuve4YbbBtNuHVZaNA4wMT7uCXJ
- PVdnLzNlwwwRUpRCCAz5NxR9SEUgJsf7YiSS3VpydO69FMqyiyrziUb2g=
-X-Google-Smtp-Source: AGHT+IFJmD60AxObGis4plUd9Q3nrU64xRwX5np768HyiWRbAhvEUFWXoneSECV77wSX9GJelPYf5Q==
-X-Received: by 2002:a17:906:d553:b0:b83:1433:78de with SMTP id
- a640c23a62f3a-b8314337b09mr217048166b.12.1766589261418; 
- Wed, 24 Dec 2025 07:14:21 -0800 (PST)
+ bh=NQzy0dLdaSF6COAicvlR6PVbfYgMujeHrja50VAAj50=;
+ b=NkkGwCfvy+UKSJGZAfyXrt+Abj8w+XyfcTNTCmeO74pGMzP24XdaJHZJKktt4wn7m0
+ P2P/NY9P/ghHEOkgbElPpRoSYdmjpgGe/wq3t706Fesby/VPT0nzT3fdCOL3E5Kwpvz3
+ PFOvX92ut55OENgMXjbVUD+nzZR19g3wmv2j/AA1rok+8WJEVeZHphmnYWkIupstxSA7
+ KjQmJwdvAFfZXkcW3H2k2rpapaOajuJaplI5era7NsgyaGBktHU9Lvwo1TYBDR50sA0e
+ Epwazet1qojWlOTl/Z4b1O+b86evOrWKiPNb25EnktTi/ntS2RBPGQITS+lFRzWnNb4R
+ GibA==
+X-Gm-Message-State: AOJu0Yykh05hmCh6bwPSUbY0cH6qAi13SAS0dw1dPVBDqxZIiaH2J/a9
+ 6EwQ3gvuVdi7VPXqQcBOyRpRrvU3VeMMvq0rNOFgHfPYg9bKyBBHCRyQWf2+kG0fLb+7y2Wd6bW
+ Jdx34i5s=
+X-Gm-Gg: AY/fxX5WDpOb5w+hRXgr3rJgF4Zc999uMghfX+aXltqE2fkGtJzOpwmtkudT9j+e7D+
+ OUKhz+XXs492KWH+wfH+AJRalK0azHTRBTDfKyojGQrPMnIEw6FFvVdL9SPU3lvIxCl+jRq+h84
+ AbyPdA13EKL7g5iTTz7glIEnQ237xTYkwAe2i5Gs3WfWrooauEk1KrLdTEWc0ii0NpUvaDdjmPl
+ QMhswH/6tHaGqHV+el6SvS2Mfd6UkmKhTKNoz4q2JDl+/Gz+5YnR5cqk1Q+h74P496ApOV/8k4O
+ DVGM3b+snq8JXeTdeW2fH6y4bpzEj4EVkCuKOK8q00DMLrfoR6b8ajfzmBO5VdhrXnahR47JWBw
+ KtMoVMGw3chRkzC0xa+AMCikj6Taf2C7uY8VNoBZ/UVPpvXhonD45TytIUrsH1uUH8g8cUD/rmU
+ OPbIftiC6FQwe+TOdWEn/LhDH4RiZ18AnhbiWjrAJXmzv7/VbqzVMK2bo=
+X-Google-Smtp-Source: AGHT+IG1MXjRhMLVLkvNGpMS1CpLHWaxCRCtClGiZg8AGngYKI/lUOhGKo86qATzFu0tPR4tqcpw1g==
+X-Received: by 2002:a17:906:30c1:b0:b80:4101:c99 with SMTP id
+ a640c23a62f3a-b8041010d71mr1260480566b.21.1766589249356; 
+ Wed, 24 Dec 2025 07:14:09 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037a614acsm1801230466b.3.2025.12.24.07.14.16
+ a640c23a62f3a-b8037f09149sm1772261266b.47.2025.12.24.07.14.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:14:20 -0800 (PST)
+ Wed, 24 Dec 2025 07:14:08 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -85,17 +85,17 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 2/9] target/sparc: Update MMU page table using stl_phys()
-Date: Wed, 24 Dec 2025 16:13:43 +0100
-Message-ID: <20251224151351.86733-3-philmd@linaro.org>
+Subject: [PATCH 1/9] target/i386: Remove x86_stl_phys_notdirty() leftover
+Date: Wed, 24 Dec 2025 16:13:42 +0100
+Message-ID: <20251224151351.86733-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224151351.86733-1-philmd@linaro.org>
 References: <20251224151351.86733-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,30 +118,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-stl_phys_notdirty() is supposed to do an optimized CODE
-path store. Here we update the page table via the DATA
-path, so can use the normal stl_phys() helper.
+Last use of x86_stl_phys_notdirty() was removed in commit 4a1e9d4d11c
+("target/i386: Use atomic operations for pte updates"), let's remove.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/sparc/mmu_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/cpu.h    |  1 -
+ target/i386/helper.c | 10 ----------
+ 2 files changed, 11 deletions(-)
 
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 217580a4d8c..46bf500ea83 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -189,7 +189,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
-         if (is_dirty) {
-             pde |= PG_MODIFIED_MASK;
-         }
--        stl_phys_notdirty(cs->as, pde_ptr, pde);
-+        stl_phys(cs->as, pde_ptr, pde);
-     }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index cee1f692a1c..4c0579a5678 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2623,7 +2623,6 @@ uint32_t x86_lduw_phys(CPUState *cs, hwaddr addr);
+ uint32_t x86_ldl_phys(CPUState *cs, hwaddr addr);
+ uint64_t x86_ldq_phys(CPUState *cs, hwaddr addr);
+ void x86_stb_phys(CPUState *cs, hwaddr addr, uint8_t val);
+-void x86_stl_phys_notdirty(CPUState *cs, hwaddr addr, uint32_t val);
+ void x86_stw_phys(CPUState *cs, hwaddr addr, uint32_t val);
+ void x86_stl_phys(CPUState *cs, hwaddr addr, uint32_t val);
+ void x86_stq_phys(CPUState *cs, hwaddr addr, uint64_t val);
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 72b2e195a31..d14f14e0d4d 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -690,16 +690,6 @@ void x86_stb_phys(CPUState *cs, hwaddr addr, uint8_t val)
+     address_space_stb(as, addr, val, attrs, NULL);
+ }
  
-     /* the page can be put in the TLB */
+-void x86_stl_phys_notdirty(CPUState *cs, hwaddr addr, uint32_t val)
+-{
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
+-    AddressSpace *as = cpu_addressspace(cs, attrs);
+-
+-    address_space_stl_notdirty(as, addr, val, attrs, NULL);
+-}
+-
+ void x86_stw_phys(CPUState *cs, hwaddr addr, uint32_t val)
+ {
+     X86CPU *cpu = X86_CPU(cs);
 -- 
 2.52.0
 
