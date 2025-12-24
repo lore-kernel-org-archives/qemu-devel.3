@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C0AE776C3
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F345E77361
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:16:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQan-0004Es-JA; Wed, 24 Dec 2025 10:16:01 -0500
+	id 1vYQae-0003TA-O9; Wed, 24 Dec 2025 10:15:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQaO-000396-Ng
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:15:38 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZn-0002Ul-H5
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:59 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQaM-0003MA-V4
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:15:36 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-477632d9326so36770915e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:15:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQZl-00035A-2b
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:59 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-42fb2314eb0so4447863f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:14:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589332; x=1767194132; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589295; x=1767194095; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2STsbh54189qE+1o4laR9gYQuE676566ttls3ZWds+w=;
- b=C2i+Lu1/lY2l8ogeiQpxwXpWNImyZL5KyamCnrfqss6OcAfRGD/uaYMeFMzjPkFTIL
- 0XybxnQ4by1IgNOB3dAzqrK0ZLVKd97OejqAFDoa6W9hlCYGwIKng1oL1lEyUcALyC88
- yaAbP7pav/6nUKfWgGA+EgyKiUIwQQl+5Z4ThyaRo1+rWekHLo1sf+yyVuJDqZsCQECl
- CJN8+BBwnQRIqA0+pYny+4V0QhQmbYO13rDSEoOJD5b/mJO0j1G9x3taaRngumuoWcBg
- KEvhYpiX9YYwY7eFhg6lXjE8Rie0F9xBUSRnm9UVG4VwUhEH70X6iGBRssX0ysMMFFb9
- TC7Q==
+ bh=qSSsRmh/IQkwpJa4M1tD2tu2lq9WIQnOoGphHntAkAQ=;
+ b=WJ21aNVgDuJSSp3q7jCAHeYA1Er2OP3ix0rNLaORUL7TaWq9DHmYCXYCNVE2Fn51Lm
+ 7qYvlo3dpfjg9n3SfX8jHqsO7L4zKASc8I+n/oLRXgd9Rld8caIargmZYkx+AignFmBF
+ 4bUYRXWvpjjTMuBgRmDDW6zQw9GiBkSc5cc1tt49jlfGC9ZrotDFpah4r97v5naWxYw2
+ Icg10AQpybSyVMgOJgq25lClJEPzd8vyxEwJAm3l6Jh5dKs12uTQsNHdEQCbLn1OLNVb
+ 2bzyfUs04iYSS/NZHEB7egNnwPJtJHs6zrffXaDnh5a5OGffIR89gJF/19PgGqJABt+v
+ bPBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589332; x=1767194132;
+ d=1e100.net; s=20230601; t=1766589295; x=1767194095;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2STsbh54189qE+1o4laR9gYQuE676566ttls3ZWds+w=;
- b=ew2Pd/bCuimsHumMz0s3DVryR0mUkuOc7TtqPWv4Rf+zbPWnCbsDAwzlkTSVglmyNG
- /dACJ+JakR0cupnOoQL3vDBbJZrX/AYj0LemtmQm+Q7f0ZJU3PuB0OujLOttYl4EoS2Q
- 9v+zwzaRLCKlRI2iS45ijwQ6bVrK7Ie5xhldu+VwDcI7YFNK1PQPUuDgPkqv3WFTi2Kk
- X+Ur1fIxGpjac3jmUOAK4GFVQlouimKD1l4fkAzmzdtqIyynr82voz4luqZwbZ7pY95g
- mP5sh3PN7aN7937J5BRfWeEjW3EQNlfwT2/zBszimxyf2X7CGJFDosnMDamvJOj7MeCE
- Mt8Q==
-X-Gm-Message-State: AOJu0Yx541PZkfAS9olwbq7iXuxAuVAEh+wlVY4eF59lT/2PB6f6u6X2
- LZMmiC4+FC53eYAGK1u/EyYjlNp07ooXG7CQ2u/HjAffDTdJmMU8iahMoqXsR/cCpIKMC4W/KcE
- DA5cGokM=
-X-Gm-Gg: AY/fxX5vB3h1GpRmeNvK9EYrBSEjZK/uvZb1UDtl6oDusSSAQKuOIKYHGEqWTaJGoZF
- fq8pZCcxHttnbqSbb5NRZJ+nSl3y5jRMeebbQzCcdCWhvdiMJ+QmxOoz62GyXxgvFh7xeESXKUU
- 7jdWZwwPFF0JS8RP6OqnMqlJHtvkJNuFPzE2ans9mo4syWTzbtc3z+oTO3gGZGMHSdAzwreIM/I
- eUGAhdwjyM1SP88tEIkwPBb6oh1KEWq7UsKVOgQgBldHL4VOa2yOKwdPbQ1aESM1PuBuTgCddzL
- R8xoed4XznnXGwg9/NslWmEFRP+QZ00NnUQUlt6PAk3u6w/m8JNh8Sffj2JmBI8yephlA90PzF9
- 2iFiFy9EY+uaEEqQn6w7A8whxVAyv5bkc+/JfD7P0Fe2NAznvlGmvs1p3iN5Uu8Di1agGazXNcA
- hEz/MdKkxU4YiIKqb/jRD2CCBP+PF9Hv3bRIy37gRivLczhzv7bzODZvw=
-X-Google-Smtp-Source: AGHT+IEvgoodsu6aqePYO/wwRACAfiF8+aQZuVYdSTZPgyXTech4Vmn7J/UyE82A49aABPsyHEOu8Q==
-X-Received: by 2002:a05:600c:3b0e:b0:477:b0b9:3129 with SMTP id
- 5b1f17b1804b1-47d1955b7d1mr180064125e9.3.1766589332150; 
- Wed, 24 Dec 2025 07:15:32 -0800 (PST)
+ bh=qSSsRmh/IQkwpJa4M1tD2tu2lq9WIQnOoGphHntAkAQ=;
+ b=cfG3fv4bVfEDPuCOyMiS5DX/vgMhRL7+2V96uAu5htliZeFE8OGjx/GdEXudD5dzLd
+ eov/xW2e7qZf6Vl5IoqP+dYUADGJLu3oLfa3V93UQBNQMxrka0u7gILzy8EHF5zkEARu
+ hf3d/ton5mL+6O8Ldr4R+uLljdCSjQMrqfxdxz2m/JfLAWNDYfNoJQvXbWLCXTP3UWmT
+ ZVuLnLswdvPj6kdtIFiglaZvB/NoBvGcIcwAqz2qANisvWxpL7YyKiFAfdCcYJZ0kQBQ
+ v5YYGKJpnYK7adfuyLC3PNs3vRtuJRM5wnZO2ScupRzBtz2FqLYgNEg2tqCbz13Zxg/O
+ tvAQ==
+X-Gm-Message-State: AOJu0Yyt5iyKrWSRKiZbA86m0v2ysL/W86Hde0kXfLYdf1w9EK85gu6o
+ VAt18BHj65EmUQVjlcUaz+dpfAOKx+OpKWD4mhx7yESzvAHZDD/TDfTXxcUGEqhHDZc5t7cRZF3
+ zZ8bO8/Q=
+X-Gm-Gg: AY/fxX4f2ydw60aH5/cvLDINuGQeAfYLIFQw+TDhjQP7/Pb6YjIXM2FGkdSiC0VRENt
+ oTr+V3Pana7OyTIHLRO1F1f+a8Nsi4dRKOCglvb30bY22slWp3I73UqbhuNbbbfXkKcbI15MHUS
+ 4zF8edi5dcfQ6KaOBhYfGaNbDhHHtQggl3waYi+Ja03Lj0sLfJyFWu/UIRvXdju/8o3mS41M8Wb
+ JYCk350jb7ZbId5wCChkC76qJLlYIcQ+AfLnkbM1ZR/CseSD6ZKq3khU7gKhX3jI32bbPh5VxPm
+ 7/AIX5eyEDayfxH3Kwjvrkx17LF6dC7p4WKFC+kDIYVFBxT9dD3Sjhm9JfHcHNU3LgzpSWBHPXc
+ 65vt15jXnjKEWPbhQiXfeWVWv4iNPjI4WcIJE0+/tpUWkVPEFO8Sp0vL/PXPcwsOCgTV6fmt1ET
+ u4EVPnXkGZAcBqE8B++EYVIsa/B2M4HifLH1BorccUdD01pz29+p9qax4=
+X-Google-Smtp-Source: AGHT+IH/1qWHjLejlt1atDrHHy69+lHW4Qc4qS7vIzk9OOR+3COYvxQGXxooLC/KYi/aV2P/u2q0/A==
+X-Received: by 2002:a05:6000:22c8:b0:42f:f627:3a90 with SMTP id
+ ffacd0b85a97d-4324e4fd938mr21508015f8f.32.1766589294877; 
+ Wed, 24 Dec 2025 07:14:54 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3a33c1csm152422545e9.1.2025.12.24.07.15.29
+ ffacd0b85a97d-4324ea1b1b1sm34391670f8f.3.2025.12.24.07.14.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:15:31 -0800 (PST)
+ Wed, 24 Dec 2025 07:14:54 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -84,25 +84,25 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 9/9] configs/targets: Mark targets not using legacy
- ldst_phys() API
-Date: Wed, 24 Dec 2025 16:13:50 +0100
-Message-ID: <20251224151351.86733-10-philmd@linaro.org>
+Subject: [PATCH 5/9] system/memory: Allow restricting legacy ldst_phys() API
+ usage
+Date: Wed, 24 Dec 2025 16:13:46 +0100
+Message-ID: <20251224151351.86733-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224151351.86733-1-philmd@linaro.org>
 References: <20251224151351.86733-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,133 +118,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These targets were only using the legacy ldst_phys() API
-via the virtio load/store helpers, which got cleaned up.
+Commit 500131154d6 ("exec.c: Add new address_space_ld*/st*
+functions") added a new API to fix a shortcoming of the
+ld/st*_phys() API, which does blind bus access, not reporting
+failure (and it also allow to provide transaction attributes).
 
-Mark them not using the legacy ldst_phys() API to avoid
-further use, allowing to eventually remove it.
+Later commit 42874d3a8c6 ("Switch non-CPU callers from ld/st*_phys
+to address_space_ld/st*") automatically converted the legacy uses
+to the new API, not precising transaction attributes
+(MEMTXATTRS_UNSPECIFIED) and ignoring the transation result (passing
+NULL pointer as MemTxResult).
 
+While this is a faithful replacement, without any logical change,
+we later realized better is to not use MEMTXATTRS_UNSPECIFIED or
+NULL MemTxResult, and adapt each call site on a pair basis, looking
+at the device model datasheet to do the correct behavior (which is
+unlikely to ignore transaction failures).
+
+Since this is quite some work, we defer that to device model
+maintainers. Meanwhile we introduce a definition, to allow a
+target which removed all legacy API call to prohibit further
+legacy API uses, named "TARGET_NOT_USING_LEGACY_LDST_PHYS_API".
+
+Since all targets should be able to check this definition, we
+take care to not poison it.
+
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- configs/targets/mips-softmmu.mak     | 1 +
- configs/targets/mips64-softmmu.mak   | 1 +
- configs/targets/mips64el-softmmu.mak | 1 +
- configs/targets/mipsel-softmmu.mak   | 1 +
- configs/targets/or1k-softmmu.mak     | 1 +
- configs/targets/riscv32-softmmu.mak  | 1 +
- configs/targets/riscv64-softmmu.mak  | 1 +
- configs/targets/sh4-softmmu.mak      | 1 +
- configs/targets/sh4eb-softmmu.mak    | 1 +
- configs/targets/sparc64-softmmu.mak  | 1 +
- configs/targets/xtensa-softmmu.mak   | 1 +
- configs/targets/xtensaeb-softmmu.mak | 1 +
- 12 files changed, 12 insertions(+)
+ include/system/memory.h       | 2 ++
+ scripts/make-config-poison.sh | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/configs/targets/mips-softmmu.mak b/configs/targets/mips-softmmu.mak
-index c9588066b8d..95397af9442 100644
---- a/configs/targets/mips-softmmu.mak
-+++ b/configs/targets/mips-softmmu.mak
-@@ -1,3 +1,4 @@
- TARGET_ARCH=mips
- TARGET_BIG_ENDIAN=y
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/mips64-softmmu.mak b/configs/targets/mips64-softmmu.mak
-index 7202655fcac..f9cc41b9ed4 100644
---- a/configs/targets/mips64-softmmu.mak
-+++ b/configs/targets/mips64-softmmu.mak
-@@ -2,3 +2,4 @@ TARGET_ARCH=mips64
- TARGET_BASE_ARCH=mips
- TARGET_BIG_ENDIAN=y
- TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/mips64el-softmmu.mak b/configs/targets/mips64el-softmmu.mak
-index 3ebeadb29ea..4e7dedc5f30 100644
---- a/configs/targets/mips64el-softmmu.mak
-+++ b/configs/targets/mips64el-softmmu.mak
-@@ -1,3 +1,4 @@
- TARGET_ARCH=mips64
- TARGET_BASE_ARCH=mips
- TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/mipsel-softmmu.mak b/configs/targets/mipsel-softmmu.mak
-index 90e09bdc3e5..b0fba8a9d0a 100644
---- a/configs/targets/mipsel-softmmu.mak
-+++ b/configs/targets/mipsel-softmmu.mak
-@@ -1,2 +1,3 @@
- TARGET_ARCH=mips
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-softmmu.mak
-index 0e47d9878b0..89f81b75bf7 100644
---- a/configs/targets/or1k-softmmu.mak
-+++ b/configs/targets/or1k-softmmu.mak
-@@ -3,3 +3,4 @@ TARGET_BIG_ENDIAN=y
- # needed by boot.c and all boards
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/riscv32-softmmu.mak b/configs/targets/riscv32-softmmu.mak
-index db55275b868..7476e596082 100644
---- a/configs/targets/riscv32-softmmu.mak
-+++ b/configs/targets/riscv32-softmmu.mak
-@@ -4,3 +4,4 @@ TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xm
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
-index 2bdd4a62cd2..f836f08c5b9 100644
---- a/configs/targets/riscv64-softmmu.mak
-+++ b/configs/targets/riscv64-softmmu.mak
-@@ -5,3 +5,4 @@ TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xm
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/sh4-softmmu.mak b/configs/targets/sh4-softmmu.mak
-index 787d349b501..e0b51f8108d 100644
---- a/configs/targets/sh4-softmmu.mak
-+++ b/configs/targets/sh4-softmmu.mak
-@@ -1,2 +1,3 @@
- TARGET_ARCH=sh4
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/sh4eb-softmmu.mak b/configs/targets/sh4eb-softmmu.mak
-index cdea2c61c58..7850dac8191 100644
---- a/configs/targets/sh4eb-softmmu.mak
-+++ b/configs/targets/sh4eb-softmmu.mak
-@@ -1,3 +1,4 @@
- TARGET_ARCH=sh4
- TARGET_BIG_ENDIAN=y
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
-index d9d51d21e59..8ee6d057682 100644
---- a/configs/targets/sparc64-softmmu.mak
-+++ b/configs/targets/sparc64-softmmu.mak
-@@ -3,3 +3,4 @@ TARGET_BASE_ARCH=sparc
- TARGET_BIG_ENDIAN=y
- TARGET_XML_FILES=gdb-xml/sparc64-core.xml
- TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/xtensa-softmmu.mak b/configs/targets/xtensa-softmmu.mak
-index 2a9797338a6..6aad751e2ba 100644
---- a/configs/targets/xtensa-softmmu.mak
-+++ b/configs/targets/xtensa-softmmu.mak
-@@ -1,2 +1,3 @@
- TARGET_ARCH=xtensa
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/xtensaeb-softmmu.mak b/configs/targets/xtensaeb-softmmu.mak
-index 5204729af8b..537407e11ae 100644
---- a/configs/targets/xtensaeb-softmmu.mak
-+++ b/configs/targets/xtensaeb-softmmu.mak
-@@ -1,3 +1,4 @@
- TARGET_ARCH=xtensa
- TARGET_BIG_ENDIAN=y
- TARGET_LONG_BITS=32
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/include/system/memory.h b/include/system/memory.h
+index e69171de05a..d5c248f1794 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2850,10 +2850,12 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+ #define ARG1_DECL    AddressSpace *as
+ #include "exec/memory_ldst.h.inc"
+ 
++#ifndef TARGET_NOT_USING_LEGACY_LDST_PHYS_API
+ #define SUFFIX
+ #define ARG1         as
+ #define ARG1_DECL    AddressSpace *as
+ #include "exec/memory_ldst_phys.h.inc"
++#endif
+ 
+ struct MemoryRegionCache {
+     uint8_t *ptr;
+diff --git a/scripts/make-config-poison.sh b/scripts/make-config-poison.sh
+index 2b36907e239..937357b3531 100755
+--- a/scripts/make-config-poison.sh
++++ b/scripts/make-config-poison.sh
+@@ -10,6 +10,7 @@ exec sed -n \
+   -e' /CONFIG_TCG/d' \
+   -e '/CONFIG_USER_ONLY/d' \
+   -e '/CONFIG_SOFTMMU/d' \
++  -e '/TARGET_NOT_USING_LEGACY_LDST_PHYS_API/d' \
+   -e '/^#define / {' \
+   -e    's///' \
+   -e    's/ .*//' \
 -- 
 2.52.0
 
