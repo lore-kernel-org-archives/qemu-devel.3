@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B574FE77361
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F064E776C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYRcF-0001Y2-6e; Wed, 24 Dec 2025 11:21:36 -0500
+	id 1vYRba-0000mV-84; Wed, 24 Dec 2025 11:20:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRcA-0001TE-P5
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:21:32 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRbY-0000lJ-7n
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:20:52 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRc8-0002fO-J8
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:21:30 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-477ba2c1ca2so61815245e9.2
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:21:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRbW-0002bs-EP
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:20:51 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-430f9ffd4e8so3345891f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:20:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766593287; x=1767198087; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766593248; x=1767198048; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BQFPRjUrrXt2sSJ1PtyDeGafuwwfm9FL+376XlDkJuw=;
- b=Ae3YlTSbToUQJiWiyaGyHQMjKIaz+CL7k0sW+0n9C0iYzSlgn6FXb9qhbK3a79vaF6
- fK2LUMjpZWyfMfgR8L0MGQ24k9IbfnvrMAnQlKKaO72HbMwdCj3P8tmdUN5MjIMFYSix
- dT9HlpKAQ38vjVPO05CGGKd2+gzod66as87pI9u9O/MXXqsYcAH+1aiUXIKtWITOmx7d
- IaMEWEOnK99KjYq7lXGZPJDEh18wblslyuKAglKRGwuCJ8pk9kz4iEA0GyOeFU7grIvF
- qdejOuG0rePscHnws7fRRn9eiB4BgWrCnv9RiU1oB4K6brR93BMqfd/yKLK2uKo/GZCJ
- ttcw==
+ bh=T/E7zKSmXhQyk+2Ne8DdJL65mcRus4X680Pp4lcYenM=;
+ b=Nv2WFyDC+osYITLTAsDDmT5tIeYW4flFjf6avJ82XE4UQpqsmbCnEm10kh8P9uh5+W
+ Hgwb6sz2KjrzcZySGvO5N+fs5Szxjx5tCejxVWFjHKboo4Lvo2n51V27LlU1NGYIIDGo
+ 68lP5S0cPh8sNA0XRzigdN0tqGP+jzkonWu0jcEADCOqdOl4ilgE4XBBoCtGgGLp+zQ0
+ sOJcv/UyCYDA9D3tt9ZwGIostdyWaDoQF6ZTW+PFUz66nBkgZrBVPYbfbEFcIiwDmjMd
+ WTa6KgJAUv6G6f4Avzr7YxXW4XMMiS9N5//33Uu9NP9lOoGi0m6WCFoQUmvYpOAJpz13
+ HLnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766593287; x=1767198087;
+ d=1e100.net; s=20230601; t=1766593248; x=1767198048;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BQFPRjUrrXt2sSJ1PtyDeGafuwwfm9FL+376XlDkJuw=;
- b=GF7qMtrpjcHQPy2MWKD1UWkI/OMBGRorG3X9qV7hWlxQdj1bNgXkCXkLI100vXyTMQ
- /iB56JtQgBMcQxOqNN5NZf8aMKDEkOz2nggPMOle45FssWKclvnZNl2iFYGTe3/mcbQU
- hgpWL1Rc/RdzmI8fxdyJgtqqinyudUA45R2nl8ulMEJtDRnXq8KDhgf/tP8F3B50UEFZ
- T9qsCUrk56P2blWk3WaKPBe5UbTM6WOZqnlR+xMNneV/+O8m6QEh4GmuVdK4k3VjNDAg
- DV3fZMqyGvKZJF9P4xaZn3N6GfnJSAb+f5X55YWp2yRYLLBwWzA4ESc+BeBqFjWIqDJd
- 4fDw==
-X-Gm-Message-State: AOJu0YxZ+H0I3sqxMbtxx1BtD7cXHQ7AQDBzDszAlv7JdH9+SnCPqGpO
- ZHWlDrKZ0KYQKvN546/n24BkxpO6izRt/DMbXrnclMx7rj5AfXMzhxHZf/+JE5OULnTroQHI5Zi
- GoytRAaM=
-X-Gm-Gg: AY/fxX6zaLItwVFGdbg8a4Nm2wXCEMKKk5GpkjROcAnCxXnuDRJ37ciP5OFvdgZ10Ju
- u3/Pif4IMyp0xtSJFrQfX3blJdXWftaWy0mtI9VLc/BWpzQVFLAHukBmxMvqiByRh7ENXDGAz93
- I0KOvyyrcoTEryMJyAvTuB1+l6bG4Dir72JN9CV+PWMCynYg4y1wmrl7t2Xbo/6PQMW8rn+Ubps
- ptj1synUH3Zz1iMCpDJ6n/NILebayH2C5yVNbMH2eGy4WjyL4gELPBd9of5UVSThwRxAsSv9RQD
- TxrPLgnSb/p8PZ07yuzcTlTtlZM575gNpkUXPJNge+WZUN7lg9QumCfimzZm1XHK+pZ8Ih+uV0C
- WoatJK89mrnaYxR4hvYspWca3l5k9EYDKaZlJUn0WNql/IZoomuXBFYk+tX/67JgcTl7cfPJYsP
- 28JBzvpnK2JTq5lHZdMWU2tgy7rlZcmmONicq4kgwAZjpZmEfZMEQkn9K41lEnTY53aQ==
-X-Google-Smtp-Source: AGHT+IGq7EHofwN4kLvCqn7kz/ULBsFCWQoopp9Y4j4B7btKx3NhCprWVW/OUXloMFLIwXBoW0yXoA==
-X-Received: by 2002:a05:600c:470e:b0:477:9cdb:e32e with SMTP id
- 5b1f17b1804b1-47d19549856mr191292255e9.9.1766593286602; 
- Wed, 24 Dec 2025 08:21:26 -0800 (PST)
+ bh=T/E7zKSmXhQyk+2Ne8DdJL65mcRus4X680Pp4lcYenM=;
+ b=d8kgM9JyriIkyR2gxCnkSDoKVWD3AnASzRPWrSBrI0iWOU13F5vVT9+RxoTfIGUTfa
+ 4xfAgg7osB/u/YaAaVRpt1Zs8tugTM/MwcovC0BHdfb5QSq+OjAV9vmb6fCFEnL2rqHW
+ fQ8xpGqGjCWTtivfH/xoieumGymmz4OCISbTIrElrRpHDaBMezekR8ad+sBi9/4cpu1w
+ nCoKg9gD1Ak78wwA6r1Vhe4pDbRyW83T37v3Vhko6j91c9Ky4Qlzmav0z26TCRfGSa2x
+ hXAHDU/38p7PoQTdtW2rW4vHO0kaHTFOSyCbcKxsgZIQzGEiqOlRNT3N3gMMHd2jewxI
+ Icbw==
+X-Gm-Message-State: AOJu0Yxh5wbPPPi3HDQyzK+qL2IwAOhc8TU0W4DNh07OHtCN+SZysFdL
+ eObcdzr/wyYc4cQKlzOYqHOhh0cCFopLfadq616YiurSibPwTqW1OD04bXbHl4FUEyR1rynAT78
+ 1s0F79Kw=
+X-Gm-Gg: AY/fxX5LOxdCNTAMngvocNa9uAH4mg0AkOeBrPvG5krlf2wYKzN1qja73m+86vGMN0X
+ 6ZCAqPOZ3kRrEu4DvNbKXNiD7f8vWUIvh+ndJhr3BRLXAeaqvMrbw13JDi7uYyxcBPXO0JE+btr
+ fRVp0Yjcje+3x6xJ9diC0yisgwYwHuY3J66RbqDcH9nM/rk2/BfMpo/sMlZ1tUsPi7nLOySQTa5
+ QXKUFcPgRqgTI9SF6CSlO7dkPT7g8bHaJvS0O4iwjKO71ryA+0viCIKYbiDaqz1LthgUs+syx9Y
+ lcbIEQfHvrLSnsc9pD99QOvLm1UYu3mZGFJKjSMohhBE3qInZfkkrkENh28c8AR6KaBsSdK5rJj
+ rutl1AuNR+/EqDfGdM50i6JWk0cLhCTPI//2NrBYm6MPdlIgWCDg7E/nY9ZAJTcSgcPcFaEvygH
+ 4gRgedqSfCHoXShbshf0RhUKCz1eOmZGPb9bQZzncJYCS0wP2Dxl6+pEI=
+X-Google-Smtp-Source: AGHT+IFs63YUPZm0AokKvRsiAGTIeCOgPaBGbVLnJWCFGC3nXMOsfTQU0VXKXhLRRXtPeVLDDFGBkw==
+X-Received: by 2002:a5d:64e9:0:b0:431:382:f141 with SMTP id
+ ffacd0b85a97d-4324e3f5da3mr24781895f8f.12.1766593248490; 
+ Wed, 24 Dec 2025 08:20:48 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3a7b687sm147648155e9.6.2025.12.24.08.21.23
+ ffacd0b85a97d-4324e9ba877sm34576607f8f.0.2025.12.24.08.20.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:21:26 -0800 (PST)
+ Wed, 24 Dec 2025 08:20:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
@@ -79,18 +79,17 @@ Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>, Anton Johansson <anjo@rev.ng>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/8] target/s390x: Inline cpu_ld{uw,
- l}_code() calls in EX opcode helper
-Date: Wed, 24 Dec 2025 17:20:32 +0100
-Message-ID: <20251224162036.90404-6-philmd@linaro.org>
+Subject: [PATCH 1/8] hw/s390x: Use explicit big-endian LD/ST API
+Date: Wed, 24 Dec 2025 17:20:28 +0100
+Message-ID: <20251224162036.90404-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224162036.90404-1-philmd@linaro.org>
 References: <20251224162036.90404-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,55 +112,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the cpu_lduw_code() and cpu_ldl_code()
-wrappers, inline them.
+The S390x architecture uses big endianness. Directly use
+the big-endian LD/ST API.
 
-Since S390x instructions are always stored in big-endian order,
-replace MO_TE -> MO_BE.
+Mechanical change running:
+
+  $ for a in uw w l q; do \
+      sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
+        $(git grep -wlE '(ld|st)u?[wlq]_p' hw/s390x/);
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/tcg/mem_helper.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ hw/s390x/css.c          | 24 +++++++++++-------------
+ hw/s390x/s390-pci-bus.c |  4 ++--
+ hw/s390x/virtio-ccw.c   | 24 ++++++++++++------------
+ 3 files changed, 25 insertions(+), 27 deletions(-)
 
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index 507eb7feac7..ce9ced8275f 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -2430,15 +2430,18 @@ uint64_t HELPER(lra)(CPUS390XState *env, uint64_t r1, uint64_t addr)
- */
- void HELPER(ex)(CPUS390XState *env, uint32_t ilen, uint64_t r1, uint64_t addr)
- {
-+    CPUState *cs = env_cpu(env);
-     uint64_t insn;
-     uint8_t opc;
-+    MemOpIdx oi;
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 53444f68288..4bc2253c182 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -1582,27 +1582,25 @@ static void css_update_chnmon(SubchDev *sch)
+         /* Format 1, per-subchannel area. */
+         uint32_t count;
  
-     /* EXECUTE targets must be at even addresses.  */
-     if (addr & 1) {
-         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
+-        count = address_space_ldl(&address_space_memory,
+-                                  sch->curr_status.mba,
+-                                  MEMTXATTRS_UNSPECIFIED,
+-                                  NULL);
++        count = address_space_ldl_be(&address_space_memory,
++                                     sch->curr_status.mba,
++                                     MEMTXATTRS_UNSPECIFIED, NULL);
+         count++;
+-        address_space_stl(&address_space_memory, sch->curr_status.mba, count,
+-                          MEMTXATTRS_UNSPECIFIED, NULL);
++        address_space_stl_be(&address_space_memory, sch->curr_status.mba, count,
++                             MEMTXATTRS_UNSPECIFIED, NULL);
+     } else {
+         /* Format 0, global area. */
+         uint32_t offset;
+         uint16_t count;
+ 
+         offset = sch->curr_status.pmcw.mbi << 5;
+-        count = address_space_lduw(&address_space_memory,
+-                                   channel_subsys.chnmon_area + offset,
+-                                   MEMTXATTRS_UNSPECIFIED,
+-                                   NULL);
++        count = address_space_lduw_be(&address_space_memory,
++                                      channel_subsys.chnmon_area + offset,
++                                      MEMTXATTRS_UNSPECIFIED, NULL);
+         count++;
+-        address_space_stw(&address_space_memory,
+-                          channel_subsys.chnmon_area + offset, count,
+-                          MEMTXATTRS_UNSPECIFIED, NULL);
++        address_space_stw_be(&address_space_memory,
++                             channel_subsys.chnmon_area + offset, count,
++                             MEMTXATTRS_UNSPECIFIED, NULL);
      }
+ }
  
--    insn = cpu_lduw_code(env, addr);
-+    oi = make_memop_idx(MO_BEUW, cpu_mmu_index(cs, true));
-+    insn = cpu_ldw_code_mmu(env, addr, oi, 0);
-     opc = insn >> 8;
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index 52820894fa1..aeeed82955a 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -461,8 +461,8 @@ static uint64_t table_translate(S390IOTLBEntry *entry, uint64_t to, int8_t ett,
+     uint16_t err = 0;
  
-     /* Or in the contents of R1[56:63].  */
-@@ -2450,10 +2453,11 @@ void HELPER(ex)(CPUS390XState *env, uint32_t ilen, uint64_t r1, uint64_t addr)
-     case 2:
-         break;
-     case 4:
--        insn |= (uint64_t)cpu_lduw_code(env, addr + 2) << 32;
-+        insn |= (uint64_t)cpu_ldw_code_mmu(env, addr + 2, oi, 0) << 32;
-         break;
-     case 6:
--        insn |= (uint64_t)(uint32_t)cpu_ldl_code(env, addr + 2) << 16;
-+        oi = make_memop_idx(MO_BEUL, cpu_mmu_index(cs, true));
-+        insn |= (uint64_t)(uint32_t)cpu_ldl_code_mmu(env, addr + 2, oi, 0) << 16;
-         break;
-     default:
-         g_assert_not_reached();
+     tx = get_table_index(entry->iova, ett);
+-    te = address_space_ldq(&address_space_memory, to + tx * sizeof(uint64_t),
+-                           MEMTXATTRS_UNSPECIFIED, NULL);
++    te = address_space_ldq_be(&address_space_memory, to + tx * sizeof(uint64_t),
++                              MEMTXATTRS_UNSPECIFIED, NULL);
+ 
+     if (!te) {
+         err = ERR_EVENT_INVALTE;
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index 4a3ffb84f8f..9dd838c61e4 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -889,26 +889,26 @@ static void virtio_ccw_notify(DeviceState *d, uint16_t vector)
+             }
+         } else {
+             assert(vector < NR_CLASSIC_INDICATOR_BITS);
+-            indicators = address_space_ldq(&address_space_memory,
+-                                           dev->indicators->addr,
+-                                           MEMTXATTRS_UNSPECIFIED,
+-                                           NULL);
++            indicators = address_space_ldq_be(&address_space_memory,
++                                              dev->indicators->addr,
++                                              MEMTXATTRS_UNSPECIFIED,
++                                              NULL);
+             indicators |= 1ULL << vector;
+-            address_space_stq(&address_space_memory, dev->indicators->addr,
+-                              indicators, MEMTXATTRS_UNSPECIFIED, NULL);
++            address_space_stq_be(&address_space_memory, dev->indicators->addr,
++                                 indicators, MEMTXATTRS_UNSPECIFIED, NULL);
+             css_conditional_io_interrupt(sch);
+         }
+     } else {
+         if (!dev->indicators2) {
+             return;
+         }
+-        indicators = address_space_ldq(&address_space_memory,
+-                                       dev->indicators2->addr,
+-                                       MEMTXATTRS_UNSPECIFIED,
+-                                       NULL);
++        indicators = address_space_ldq_be(&address_space_memory,
++                                          dev->indicators2->addr,
++                                          MEMTXATTRS_UNSPECIFIED,
++                                          NULL);
+         indicators |= 1ULL;
+-        address_space_stq(&address_space_memory, dev->indicators2->addr,
+-                          indicators, MEMTXATTRS_UNSPECIFIED, NULL);
++        address_space_stq_be(&address_space_memory, dev->indicators2->addr,
++                             indicators, MEMTXATTRS_UNSPECIFIED, NULL);
+         css_conditional_io_interrupt(sch);
+     }
+ }
 -- 
 2.52.0
 
