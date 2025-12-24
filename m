@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDF4E7544F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 18:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0472DE776F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 19:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYTkK-0001jI-MT; Wed, 24 Dec 2025 13:38:04 -0500
+	id 1vYU8C-00024d-5N; Wed, 24 Dec 2025 14:02:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYTk5-0001ZX-U8
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 13:37:50 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1vYU8A-00024C-Db
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:02:42 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYTk2-0004qY-8T
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 13:37:49 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b735e278fa1so1081194066b.0
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 10:37:45 -0800 (PST)
+ id 1vYU88-0003jz-FV
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:02:42 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b7ffa421f1bso1229727166b.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 11:02:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766601464; x=1767206264; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766602958; x=1767207758; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JWkVdt27nVyShdZ50B07UJ5etLSAz32Ld8eCMPSHMio=;
- b=UVSyomBnNFbLh7zPPeghLGcie4v200tUnKSWsUpWL2cn456YAlic4BkTvi+tBys6ky
- QG8C/itf9RNc9bVnf9oRurWoO6Qk7aj2GT4iCZQYaawxMNa2wV9hAmFE8/K8xccNd19T
- bViDmA0+XrFJOsvQFcTl6J+d4UdhaxAFRCMg+tb0LVLNEN143VP7ifqzcFDona6lFIQ9
- M0wt5Pqg3XlJZjSSDDr+/a3Qso/aGwVJ/cx4OCXl3IbCXC1qFc5IQW8YyumjbI0+Y+bP
- MiPUQX6SNTm9h4ULoRbZuwdryvaaFHKWngGvWx6M8mchWXHjC4RkQsdR63tktzmQx6Fs
- y0KQ==
+ bh=Ef+FuyNNamUO0dRYQj6L/qYxkfhgwJJe9wxGcjCTN4g=;
+ b=MY2H/ohuwpfK9xTdRuukEclmAvBRJEPowFYcN8UeoWCxr1EoGfEfX2e7Tj58VFOASo
+ uLlNcod7cbkgqL0E5ghMFGEAEIlL2p6ARfYNcxM2JkhwF1DWA9kidyf1uyrrMonLiQ+i
+ +x92xLt3fP6++Dh6Hol7Z6FZyiXwdmz2r7sg7oy6x7twFT5ZyiXaoPA/75PU2EihfIP0
+ 2uVPYABs6hUy5r0zGUomzAm57Xj8gIJbC0xoZFxMw//N1O9e++f1xsxpLjOUwROgi8n7
+ brxBluavrtHmYhMt9NDfOSXj+CPPpG83tnn1dzV9xKJsygoL46Fbk+1DdP+zFZsyODg4
+ npSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766601464; x=1767206264;
+ d=1e100.net; s=20230601; t=1766602958; x=1767207758;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JWkVdt27nVyShdZ50B07UJ5etLSAz32Ld8eCMPSHMio=;
- b=wCDkvOHKn8sS8hbNyFToFGEJDj7sQkobS4ZnT/UTxpP1N7Wbr/bHmM6M2/S4bcOz7t
- dmpxTahwy0rq+pqDAvvTYANowRbZZRJH7o5sSHYKbFPhSiC1f73KgljbMDH7n5sz7KRp
- EmknHexUtzDE9Wl7jxpp/WCudEslS6S+2+n7cMCjHB1zeyd4IZwPTZiYE9eFRbOoT3QS
- rglP6egM23N0+dKAT7uHX8rShd+r8Sfr+UYFQJlX7Uec6FasbNLCXX2a65FFPs25HcGl
- RVh/uuQFv0KwAyHGRtg8SdYTv/XUxKqb8CzUzxHOquiARNXsZn6i8VObNV6zhkTVnpgE
- dMCg==
-X-Gm-Message-State: AOJu0YwMZ1OrPXcFu+UuqZ/+jFsp9P0Ss702EFOGowEANeacyQ00s0cv
- IU7HqcpJE3IT3mMrobaPCDuZiZuT6jXnuscDJf0c7sW1AWYnfhawbP9OZrJo4WthDKgssmJYbUh
- 0d3cVMnfu0BjseW1RY7cUf8zCbEhEdbXv44WEui+uXw==
-X-Gm-Gg: AY/fxX6bFqTWBXDeKa6iHTsw91HnJHchB+AyuHR8WQvGR6QjI3OhZzC9ZX8CR9KjqIc
- 5O923aeu+ATuD6/QKnP1kuEbzRL8qz+RoN0mRoki6Nllh6Rd6PddWzZoLyKN9xgODsxKcq5flOl
- VYmzlXHK9UTDmjPTPJdVk410jPCaRZ9xRJ2rIyUHzuEJEJXFui4ev/dg3zS0Pu6V4bbRXD6bsF0
- G4IpInGQRwm1TvHARM4TBvsy8uKtEGDRT/1YH6xXlQKrrNCDXJiPZp5A1atYBLHHOqM440=
-X-Google-Smtp-Source: AGHT+IHncGsfHzoZ+DObaqMprM/Chy754T8dYyUt74eH/x0x010eyKO8a2CzSzSuMJWcpoIzdtYzvhYwUDUfQdYIc0I=
-X-Received: by 2002:a17:906:209a:b0:b80:5aef:c30f with SMTP id
- a640c23a62f3a-b805aefc453mr1005782766b.44.1766601464040; Wed, 24 Dec 2025
- 10:37:44 -0800 (PST)
+ bh=Ef+FuyNNamUO0dRYQj6L/qYxkfhgwJJe9wxGcjCTN4g=;
+ b=A1JugzHSAFZb8z2CBcKKXw0pqHkt8LEBsE1M5JRAKeFbEE3R8kG69V9WYUqEX5lU1S
+ 8PvkH0agv2U5ELwPA+rfH+ydmAZYNHuBzP8uAUmbpnPESETfxWo0adJoG8uy2ltaj8dV
+ PekUmahPbVRTx6v/QpgFimR7y5n4HmDnWAVjsONdvxy2EeF2i3khZ1wnai9prLxeqhRn
+ MGaAFqipmlJog6olredptF7R1QaS6RcqXthE8Uxyky79aY/QgugBpASn1MKvalNefmyc
+ LE1gmC2auIbxgwcRCq/zDYINjhpDoVebLYXzNHZB5jeuyzro7ju33vZMKq/LBOFCbQmW
+ pdzA==
+X-Gm-Message-State: AOJu0Ywx1toszyK+/fR1efKGrdQeTRILpf9LzINvK/cK87PmGPvwvgea
+ EkAUr+8I+Vo06wn88aEstCH/2X+cUhmU6nlbJpU9oXOgR98+NuDLGSJpZXZnpGl8eF4GJi5sIb8
+ mch1QZwjaQJ8fAZJ38WeJwKI38Dj7JrvxC/fhQNj6Qw==
+X-Gm-Gg: AY/fxX7AZGYB3N/M9QEPt6+df/BnzrVS2F7GkepI8iLPR80ETlpA5TQlVp+onYF+vEP
+ BuZKikQrVPd5oWOMOUFxQ02PpY6Z4cD5OMbL9M6ITGfLrPrH0ZZ77BrSdBLH5C4xHm4lfVQa0CK
+ fRSNZyhpegTx5Uqoig0JPLKUa+eJ92rNy1vYMgUd7+G+k2ngUci9rUwhl99UK8hFKYGRTPEVP1w
+ 4BIJwFClw6LxJd+ViKZEFMJLW6YUBJiVUOKy2p+13gO17POl+6B7dgbBzzFLAUMpvMxuk8=
+X-Google-Smtp-Source: AGHT+IH4zDc6YZwervhsWvcLZ8QY7wSmC7Y/nUBZw566KunpQZcH1nRQmZ6jpMnlpGXvDRHw1DJcmN8Xs5uIJBqQmgk=
+X-Received: by 2002:a17:907:8688:b0:b80:456d:bd99 with SMTP id
+ a640c23a62f3a-b80456dc544mr1804062966b.19.1766602958190; Wed, 24 Dec 2025
+ 11:02:38 -0800 (PST)
 MIME-Version: 1.0
-References: <20251224151351.86733-1-philmd@linaro.org>
- <20251224151351.86733-9-philmd@linaro.org>
-In-Reply-To: <20251224151351.86733-9-philmd@linaro.org>
+References: <20251224152210.87880-1-philmd@linaro.org>
+ <20251224152210.87880-3-philmd@linaro.org>
+In-Reply-To: <20251224152210.87880-3-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 24 Dec 2025 20:37:18 +0200
-X-Gm-Features: AQt7F2oX57Ld59PIX_s4TWSvF2wPFN_Vb8awqAT1PYQPJUNJie7WAxAQR4F69Uk
-Message-ID: <CAAjaMXbBD+qU1tv3OMTxgAsCHUPpWYgaqRYV8WHHjV=n11xvTQ@mail.gmail.com>
-Subject: Re: [PATCH 8/9] hw/virtio: Reduce virtio_lduw/stw_phys_cached() scope
+Date: Wed, 24 Dec 2025 21:02:12 +0200
+X-Gm-Features: AQt7F2ruccuonUS4_QZBePYQ5ZNheMPkPF9USOlloHzDzve5lJ1vyqNMrcVuexg
+Message-ID: <CAAjaMXak2pQRVi=XFu2e1OMj1EzvpZtCnHH8Es3bHO4GWa0gxg@mail.gmail.com>
+Subject: Re: [PATCH v3 02/25] system/physmem: Convert DEBUG_SUBPAGE printf()
+ to trace events
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
- qemu-arm@nongnu.org, 
- Peter Xu <peterx@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Weiwei Li <liwei1518@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>, 
- David Hildenbrand <david@kernel.org>, qemu-riscv@nongnu.org, 
- Steven Lee <steven_lee@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Troy Lee <leetroy@gmail.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Artyom Tarasenko <atar4qemu@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu <peterx@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, Anton Johansson <anjo@rev.ng>,
+ David Hildenbrand <david@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,90 +99,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 24, 2025 at 5:15=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Wed, Dec 24, 2025 at 5:22=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> virtio_lduw_phys_cached() and virtio_stw_phys_cached() are
-> only used within hw/virtio/virtio.c: reduce their scope by
-> moving their definitions there.
+> Defining DEBUG_SUBPAGE allows to use raw printf() statements to
+> print information about some events; convert these to tracepoints.
 >
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
->  include/hw/virtio/virtio-access.h | 21 ---------------------
->  hw/virtio/virtio.c                | 21 +++++++++++++++++++++
->  2 files changed, 21 insertions(+), 21 deletions(-)
+>  system/physmem.c    | 29 ++++++-----------------------
+>  system/trace-events |  6 ++++++
+>  2 files changed, 12 insertions(+), 23 deletions(-)
 >
-> diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio=
--access.h
-> index c866769cad8..5b5fff5295e 100644
-> --- a/include/hw/virtio/virtio-access.h
-> +++ b/include/hw/virtio/virtio-access.h
-> @@ -102,27 +102,6 @@ static inline uint16_t virtio_tswap16(VirtIODevice *=
-vdev, uint16_t s)
->  #endif
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 1292f49095f..7e914ecf648 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -91,8 +91,6 @@
+>
+>  #include "memory-internal.h"
+>
+> -//#define DEBUG_SUBPAGE
+> -
+>  /* ram_list is read under rcu_read_lock()/rcu_read_unlock().  Writes
+>   * are protected by the ramlist lock.
+>   */
+> @@ -2903,10 +2901,7 @@ static MemTxResult subpage_read(void *opaque, hwad=
+dr addr, uint64_t *data,
+>      uint8_t buf[8];
+>      MemTxResult res;
+>
+> -#if defined(DEBUG_SUBPAGE)
+> -    printf("%s: subpage %p len %u addr " HWADDR_FMT_plx "\n", __func__,
+> -           subpage, len, addr);
+> -#endif
+> +    trace_subpage_read(subpage, len, addr);
+>      res =3D flatview_read(subpage->fv, addr + subpage->base, attrs, buf,=
+ len);
+>      if (res) {
+>          return res;
+> @@ -2921,11 +2916,7 @@ static MemTxResult subpage_write(void *opaque, hwa=
+ddr addr,
+>      subpage_t *subpage =3D opaque;
+>      uint8_t buf[8];
+>
+> -#if defined(DEBUG_SUBPAGE)
+> -    printf("%s: subpage %p len %u addr " HWADDR_FMT_plx
+> -           " value %"PRIx64"\n",
+> -           __func__, subpage, len, addr, value);
+> -#endif
+> +    trace_subpage_write(subpage, len, addr, value);
+>      stn_p(buf, len, value);
+>      return flatview_write(subpage->fv, addr + subpage->base, attrs, buf,=
+ len);
 >  }
->
-> -static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
-> -                                               MemoryRegionCache *cache,
-> -                                               hwaddr pa)
-> -{
-> -    if (virtio_access_is_big_endian(vdev)) {
-> -        return lduw_be_phys_cached(cache, pa);
-> -    }
-> -    return lduw_le_phys_cached(cache, pa);
-> -}
-> -
-> -static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
-> -                                          MemoryRegionCache *cache,
-> -                                          hwaddr pa, uint16_t value)
-> -{
-> -    if (virtio_access_is_big_endian(vdev)) {
-> -        stw_be_phys_cached(cache, pa, value);
-> -    } else {
-> -        stw_le_phys_cached(cache, pa, value);
-> -    }
-> -}
-> -
->  static inline void virtio_tswap16s(VirtIODevice *vdev, uint16_t *s)
+> @@ -2935,10 +2926,8 @@ static bool subpage_accepts(void *opaque, hwaddr a=
+ddr,
+>                              MemTxAttrs attrs)
 >  {
->      *s =3D virtio_tswap16(vdev, *s);
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 257cda506a4..fba9d347d17 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -216,6 +216,27 @@ static void virtio_check_indirect_feature(VirtIODevi=
-ce *vdev)
+>      subpage_t *subpage =3D opaque;
+> -#if defined(DEBUG_SUBPAGE)
+> -    printf("%s: subpage %p %c len %u addr " HWADDR_FMT_plx "\n",
+> -           __func__, subpage, is_write ? 'w' : 'r', len, addr);
+> -#endif
+> +
+> +    trace_subpage_accepts(subpage, is_write ? 'w' : 'r', len, addr);
+>
+>      return flatview_access_valid(subpage->fv, addr + subpage->base,
+>                                   len, is_write, attrs);
+> @@ -2964,10 +2953,7 @@ static int subpage_register(subpage_t *mmio, uint3=
+2_t start, uint32_t end,
+>          return -1;
+>      idx =3D SUBPAGE_IDX(start);
+>      eidx =3D SUBPAGE_IDX(end);
+> -#if defined(DEBUG_SUBPAGE)
+> -    printf("%s: %p start %08x end %08x idx %08x eidx %08x section %d\n",
+> -           __func__, mmio, start, end, idx, eidx, section);
+> -#endif
+> +    trace_subpage_register(mmio, start, end, idx, eidx, section);
+>      for (; idx <=3D eidx; idx++) {
+>          mmio->sub_section[idx] =3D section;
 >      }
->  }
+> @@ -2986,10 +2972,7 @@ static subpage_t *subpage_init(FlatView *fv, hwadd=
+r base)
+>      memory_region_init_io(&mmio->iomem, NULL, &subpage_ops, mmio,
+>                            NULL, TARGET_PAGE_SIZE);
+>      mmio->iomem.subpage =3D true;
+> -#if defined(DEBUG_SUBPAGE)
+> -    printf("%s: %p base " HWADDR_FMT_plx " len %08x\n", __func__,
+> -           mmio, base, TARGET_PAGE_SIZE);
+> -#endif
+> +    trace_subpage_init(mmio, base, TARGET_PAGE_SIZE);
 >
-> +static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
-> +                                               MemoryRegionCache *cache,
-> +                                               hwaddr pa)
-> +{
-> +    if (virtio_access_is_big_endian(vdev)) {
-> +        return lduw_be_phys_cached(cache, pa);
-> +    }
-> +    return lduw_le_phys_cached(cache, pa);
-> +}
+>      return mmio;
+>  }
+> diff --git a/system/trace-events b/system/trace-events
+> index 82856e44f2e..6d29a823f04 100644
+> --- a/system/trace-events
+> +++ b/system/trace-events
+> @@ -35,6 +35,12 @@ find_ram_offset_loop(uint64_t size, uint64_t candidate=
+, uint64_t offset, uint64_
+>  ram_block_discard_range(const char *rbname, void *hva, size_t length, bo=
+ol need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d =
+fallocate: %d ret: %d"
+>  qemu_ram_alloc_shared(const char *name, size_t size, size_t max_size, in=
+t fd, void *host) "%s size %zu max_size %zu fd %d host %p"
+>
+> +subpage_register(void *subpage, uint32_t start, uint32_t end, int idx, i=
+nt eidx, uint16_t section) "subpage %p start 0x%08x end 0x%08x idx 0x%08x e=
+idx 0x%08x section %u"
+> +subpage_init(void *subpage, uint64_t base, uint64_t len) "subpage %p bas=
+e 0x%08" PRIx64 " len 0x%08" PRIx64
+> +subpage_accepts(void *subpage, char access, unsigned len, uint64_t addr)=
+ "subpage %p %c len %u addr 0x%" PRIx64
+> +subpage_read(void *subpage, unsigned len, uint64_t addr) "subpage %p len=
+ %u addr 0x%" PRIx64
+> +subpage_write(void *subpage, unsigned len, uint64_t addr, uint64_t value=
+) "subpage %p len %u addr 0x%" PRIx64 " value 0x%" PRIx64
 > +
-> +static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
-> +                                          MemoryRegionCache *cache,
-> +                                          hwaddr pa, uint16_t value)
-> +{
-> +    if (virtio_access_is_big_endian(vdev)) {
-> +        stw_be_phys_cached(cache, pa, value);
-> +    } else {
-> +        stw_le_phys_cached(cache, pa, value);
-> +    }
-> +}
-> +
->  /* Called within call_rcu().  */
->  static void virtio_free_region_cache(VRingMemoryRegionCaches *caches)
->  {
+>  # cpus.c
+>  vm_stop_flush_all(int ret) "ret %d"
+>
 > --
 > 2.52.0
 >
