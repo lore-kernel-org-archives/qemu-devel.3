@@ -4,62 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC725E7490E
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 05:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7AB9E74917
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 05:22:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYHDh-00031C-AC; Wed, 24 Dec 2025 00:15:34 -0500
+	id 1vYHK9-0004Qa-2m; Wed, 24 Dec 2025 00:22:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vYHDa-00030a-9A
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 00:15:26 -0500
+ id 1vYHK7-0004QC-15
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 00:22:11 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vYHDX-0002Ru-H3
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 00:15:25 -0500
+ id 1vYHK5-0004Ho-3O
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 00:22:10 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BO5Eusm058727
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BO5LpZL061278
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 24 Dec 2025 14:14:59 +0900 (JST)
+ Wed, 24 Dec 2025 14:21:52 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=wDeW8KAdBrndN9oBcQDK2UWvHXeQHm9yq827i36JioY=; 
+DKIM-Signature: a=rsa-sha256; bh=pgWoODZaTEd8qZ+JhOu6YjAzj9ca1N4uvQb6ApdJtdo=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1766553299; v=1;
- b=hqOIcltI008m+0Mv/RP1bY6fintejAWz4wS/v2ayeYRUuDlXy9JmV6zUzd+D4DK/
- lb6n2dEs1kabHpmIcsl9i4YotlIijHvSZ/k2V89/vApLZtic6YYYYg0YCYRyVut3
- uwC8MoWH5PLnWXbDHDtsX+7zShpuZqKdf9DQmK4mOU177+hVNo2tkR6Rg9s/Q67I
- hZzyu//QgVPTA7j0czA6fmlwi7g10HbyG74n68XLaFMbQVzAKroihzAxiCrPx38y
- J/w6mov3+tsmDQPhnybubf60I+XT66DpdyeQx9OEDEzrvlJw5LzEoWjpk3/EuCTA
- +zuNBcVbMCb7LelqRqFejg==
-Message-ID: <3e509893-91f6-47a1-8a1b-b077ed0a88dd@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 24 Dec 2025 14:14:56 +0900
+ s=rs20250326; t=1766553712; v=1;
+ b=PMKxD9xnuWQoRdiP9Zq1tYoiJlU90Mo7zapvC64wHsPR7jabzcZeVOX4+Fti0jyr
+ g1/LH5hW7Yl00w40nn+sVySDfOvPCRM3UYgFHaEOz3Ouf77MA6VSpQuReX1D4AjY
+ FYbc6YOF6MqGjVt8lhCud3PU4VpvTMNJ2ydIvtebbcNl3GgVefUhXHEUkyhjjSBG
+ 9rOrAt2CLDEE/mbU1SLh5EDM2cucLtNM9ZFXyOOqnod0FJ7tdrvhQhN5MNnr4E6Y
+ cx6Tupyk+rHP141SdIpOlZ73joVAArfSL8NWeW7g+pOIinJaBTiTkiuCHcz/C8o2
+ vHV4M5K9V/ztDv19zaNVGg==
+Message-ID: <3a1bf99d-e011-4589-b7e9-662107befdc1@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 24 Dec 2025 14:21:51 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest: Do not use versioned pc-q35-5.0 machine
- anymore
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Fabiano Rosas
- <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Laurent Vivier <lvivier@redhat.com>,
- Bandan Das <bsd@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20251223211142.80417-1-philmd@linaro.org>
+Subject: Re: [PATCH 0/6] Implement memory_region_new_* functions
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, philmd@linaro.org
+References: <cover.1766525089.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251223211142.80417-1-philmd@linaro.org>
+In-Reply-To: <cover.1766525089.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -84,21 +74,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/24 6:11, Philippe Mathieu-Daudé wrote:
-> As of QEMU v10.2.0, the v5.0.0 machines are not usable anymore.
-> 
-> Use the latest x86 q35 machine instead, otherwise we get:
-> 
->    $ qemu-system-x86_64 -M pc-q35-5.0
->    qemu-system-x86_64: unsupported machine type: "pc-q35-5.0"
->    Use -machine help to list supported machines
-> 
-> See commit a35f8577a07 ("include/hw: add macros for deprecation
-> & removal of versioned machines") and f59ee044067 ("include/hw/boards:
-> cope with dev/rc versions in deprecation checks") for explanation
-> on automatically removed versioned machines.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 2025/12/24 6:49, BALATON Zoltan wrote:
+> Our documentation says that memory regions are automatically freed
+> when the owner dies and the reference counting to do this is also
+> implemented. However this relies on the QOM free funtion that can only
+> be set by creating objects with object_new but memory API only
+> provides constructors that call object_initialize which clears the
+> free function that prevents QOM to manage the memory region lifetime.
+> Implement corresponding memory_region_new_* functions that do the same
+> as the memory_region_init_* functions but create the memory region
+> with object_new so the lifetime can be automatically managed by QOM as
+> documented.
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+The documentation explains the existing functions so the discrepancy 
+between them you see should be fixed by updating them, not adding new ones.
+
+Regards,
+Akihiko Odaki
 
