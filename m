@@ -4,131 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 235EDE748FC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Dec 2025 22:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5684DE74904
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYBKN-0004wk-Sb; Tue, 23 Dec 2025 17:58:03 -0500
+	id 1vYDtd-0001Er-9j; Tue, 23 Dec 2025 20:42:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vYBKM-0004wK-2i
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 17:58:02 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vYBKK-0006Tw-Ge
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 17:58:01 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id F3C42339EE;
- Tue, 23 Dec 2025 22:57:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766530677; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UPCyItE7te9obeQYOhIGjgKDpXQH9AkkD5hJHqbolmc=;
- b=aIdGHEexDnHLidEHxsyhbssllxjbTpsLsx29AerKh3fj6rLJ1wC33sXIZ3LmuicT4yOFz+
- /vRqKLIGBEhOwF0NVNDp4Hy+Ahd4uXkwRNL1I9X1BjiXGCPdKiqVJaVT0xUxZGVeKdWtQD
- JEMlkWs38Z7n92/qoTYyRRJGeDBUWig=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766530677;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UPCyItE7te9obeQYOhIGjgKDpXQH9AkkD5hJHqbolmc=;
- b=JLEgXweTjBZN/Got2JkXkG0hEFB+UO65eU3jtaMjUeeaQOZn4zkUph6rmBJ4VZZypUqHI0
- bbV/MtKF6U8BO3Ag==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MNSQNjzD;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=itH+55+R
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766530676; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UPCyItE7te9obeQYOhIGjgKDpXQH9AkkD5hJHqbolmc=;
- b=MNSQNjzDcsk4jGyQa2fc0du/eMOqPXSzBV/Pj0guj0nEx4W89iXaJwMR7jcXi5Jz1qat63
- 3+UXSHQLCYMzUXLUub/vxLbn8src3gR1gkC6optcLQ875XPraFC354vYAvlgPCxwdrLMJH
- EA1/1L5Oq4W8wy+pPGnaywROHSHiFi0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766530676;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UPCyItE7te9obeQYOhIGjgKDpXQH9AkkD5hJHqbolmc=;
- b=itH+55+R0BN1ZB29Pm/6XLKyLeYtADsI2WwvvaCix5iHUU0FwdlkwBGeA77j/phDNrWqmA
- DVuz6REZzdE2jgBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 71DCA3EA63;
- Tue, 23 Dec 2025 22:57:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 32uYDXMeS2lGVQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 23 Dec 2025 22:57:55 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>, Stefan
- Hajnoczi <stefanha@redhat.com>, Darren Kenny <darren.kenny@oracle.com>,
- Richard Henderson <richard.henderson@linaro.org>, Thomas Huth
- <thuth@redhat.com>, Alexander Bulekov <alxndr@bu.edu>, Qiuhao Li
- <Qiuhao.Li@outlook.com>, Laurent Vivier <lvivier@redhat.com>, Bandan Das
- <bsd@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Akihiko
- Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] tests/qtest: Do not use versioned pc-q35-5.0 machine
- anymore
-In-Reply-To: <20251223211142.80417-1-philmd@linaro.org>
-References: <20251223211142.80417-1-philmd@linaro.org>
-Date: Tue, 23 Dec 2025 19:57:52 -0300
-Message-ID: <874ipglsb3.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1vYDtX-0001E0-FB; Tue, 23 Dec 2025 20:42:31 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1vYDtV-0004bE-0X; Tue, 23 Dec 2025 20:42:31 -0500
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 24 Dec
+ 2025 09:42:04 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Wed, 24 Dec 2025 09:42:04 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <nabihestefan@google.com>, Kane-Chen-AS
+ <kane_chen@aspeedtech.com>
+Subject: [PATCH v4 00/19] hw/arm/aspeed: AST1700 LTPI support and device
+ hookups
+Date: Wed, 24 Dec 2025 09:41:39 +0800
+Message-ID: <20251224014203.756264-1-kane_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: F3C42339EE
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com,outlook.com];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[16];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FREEMAIL_CC(0.00)[linaro.org,redhat.com,gmail.com,oracle.com,bu.edu,outlook.com,rsg.ci.i.u-tokyo.ac.jp];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_TWO(0.00)[2];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- TAGGED_RCPT(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, suse.de:mid, suse.de:dkim,
- suse.de:email, imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,61 +61,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
+From:  Kane Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-> As of QEMU v10.2.0, the v5.0.0 machines are not usable anymore.
->
-> Use the latest x86 q35 machine instead, otherwise we get:
->
->   $ qemu-system-x86_64 -M pc-q35-5.0
->   qemu-system-x86_64: unsupported machine type: "pc-q35-5.0"
->   Use -machine help to list supported machines
->
-> See commit a35f8577a07 ("include/hw: add macros for deprecation
-> & removal of versioned machines") and f59ee044067 ("include/hw/boards:
-> cope with dev/rc versions in deprecation checks") for explanation
-> on automatically removed versioned machines.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> Since all builds are blocked, could we apply as build-fix on master?
-> ---
->  tests/qtest/fuzz-e1000e-test.c | 2 +-
->  tests/qtest/lpc-ich9-test.c    | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/tests/qtest/fuzz-e1000e-test.c b/tests/qtest/fuzz-e1000e-tes=
-t.c
-> index 5052883fb6a..61f0553e9be 100644
-> --- a/tests/qtest/fuzz-e1000e-test.c
-> +++ b/tests/qtest/fuzz-e1000e-test.c
-> @@ -17,7 +17,7 @@ static void test_lp1879531_eth_get_rss_ex_dst_addr(void)
->  {
->      QTestState *s;
->=20=20
-> -    s =3D qtest_init("-nographic -monitor none -serial none -M pc-q35-5.=
-0");
-> +    s =3D qtest_init("-nographic -monitor none -serial none -M pc-q35");
->=20=20
->      qtest_outl(s, 0xcf8, 0x80001010);
->      qtest_outl(s, 0xcfc, 0xe1020000);
-> diff --git a/tests/qtest/lpc-ich9-test.c b/tests/qtest/lpc-ich9-test.c
-> index 8ac95b89f72..535099226ca 100644
-> --- a/tests/qtest/lpc-ich9-test.c
-> +++ b/tests/qtest/lpc-ich9-test.c
-> @@ -15,7 +15,7 @@ static void test_lp1878642_pci_bus_get_irq_level_assert=
-(void)
->  {
->      QTestState *s;
->=20=20
-> -    s =3D qtest_init("-M pc-q35-5.0 "
-> +    s =3D qtest_init("-M pc-q35 "
->                     "-nographic -monitor none -serial none");
->=20=20
->      qtest_outl(s, 0xcf8, 0x8000f840); /* PMBASE */
+Hi all,
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
+2.0 specification (see Figure 2):
+https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
+
+LTPI provides a protocol and physical interface for tunneling various
+low-speed signals between the Host Processor Module (HPM) and the
+Satellite Controller Module (SCM). In Figure 2 of the specification,
+the AST27x0 SoC (left) integrates two LTPI controllers, allowing it to
+connect to up to two AST1700 boards. On the other side, the AST1700
+consolidates HPM FPGA functions and multiple peripheral interfaces
+(GPIO, UART, I2C, I3C, etc.) onto a single board.
+
+Because the AST1700 exposes additional I/O interfaces (GPIO, I2C, I3C,
+and others), it acts as an I/O expander. Once connected over LTPI,
+the AST27x0 can control additional downstream devices through this link.
+
+This patch series is based on the SGPIO changes:
+https://patchwork.kernel.org/project/qemu-devel/patch/20251219-aspeed-sgpio-v5-1-fd5593178144@google.com/
+
+It introduces a basic LTPI controller model and wires it into the
+AST27x0 SoC. The series also adds the AST1700-specific LTPI expander
+device and incrementally connects common peripherals on the AST1700
+model. For the I3C block, which may cause kernel crashes, its MMIO
+region is modeled as an unimplemented device to reserve address space
+and make the missing functionality explicit, ensuring stable guest
+probing.
+
+In the official release images, the AST1700 functions are not included
+by default. To test the AST1700-related functionality, please include
+the following DTS files for probing:
+https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi0.dtsi
+https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi1.dtsi
+
+After including these DTS files in the BMC image, you can verify LTPI
+functionality using the following scenarios:
+
+1. In U-Boot:
+   Run the ltpi command to trigger the LTPI connection and display the
+   current connection status.
+2. In BMC Linux:
+   Run i2cdetect -y <16-38> to scan and test the I2C buses exposed by
+   the AST1700.
+
+Any feedback or suggestions are appreciated!
+
+Kane
+
+---
+
+ChangeLog
+---------
+v4:
+- Add missing Signed-off-by
+- Fix checkpatch.pl warnings
+- Refine code structure
+- Enable AST1700 support only after all devices are ready
+
+v3:
+- Add PWM model
+- Integrate the SGPIO model
+- Fix I2C test case failure
+- Refine code structure
+
+v2:
+- Separate the AST1700 model into a standalone implementation
+- Refine the mechanism for assigning the AST1700 board number
+
+v1:
+- Initial version
+---
+
+Kane-Chen-AS (19):
+  hw/misc: Add LTPI controller
+  hw/arm/aspeed: Attach LTPI controller to AST27X0 platform
+  hw/misc: Add basic Aspeed PWM model
+  hw/arm/aspeed: Add AST1700 LTPI expander device model
+  hw/arm/aspeed: Integrate AST1700 device into AST27X0
+  hw/arm/aspeed: Integrate interrupt controller for AST1700
+  hw/arm/aspeed: Attach LTPI controller to AST1700 model
+  hw/arm/aspeed: Attach UART device to AST1700 model
+  hw/arm/aspeed: Attach SRAM device to AST1700 model
+  hw/arm/aspeed: Attach SPI device to AST1700 model
+  hw/arm/aspeed: Attach ADC device to AST1700 model
+  hw/arm/aspeed: Attach SCU device to AST1700 model
+  hw/arm/aspeed: Attach GPIO device to AST1700 model
+  hw/arm/aspeed: attach I2C device to AST1700 model
+  hw/arm/aspeed: Attach WDT device to AST1700 model
+  hw/arm/aspeed: Attach PWM device to AST1700 model
+  hw/arm/aspeed: Attach SGPIOM device to AST1700 model
+  hw/arm/aspeed: Model AST1700 I3C block as unimplemented device
+  hw/arm/aspeed: Enable AST1700 IO expander support
+
+ include/hw/arm/aspeed_ast1700.h |  53 +++++++
+ include/hw/arm/aspeed_soc.h     |  25 ++-
+ include/hw/i2c/aspeed_i2c.h     |   1 +
+ include/hw/intc/aspeed_intc.h   |   2 +
+ include/hw/misc/aspeed_ltpi.h   |  33 ++++
+ include/hw/misc/aspeed_pwm.h    |  31 ++++
+ hw/arm/aspeed_ast1700.c         | 268 ++++++++++++++++++++++++++++++++
+ hw/arm/aspeed_ast27x0.c         | 165 ++++++++++++++++++--
+ hw/i2c/aspeed_i2c.c             |  19 ++-
+ hw/intc/aspeed_intc.c           |  60 +++++++
+ hw/misc/aspeed_ltpi.c           | 193 +++++++++++++++++++++++
+ hw/misc/aspeed_pwm.c            | 121 ++++++++++++++
+ hw/arm/meson.build              |   1 +
+ hw/misc/meson.build             |   2 +
+ hw/misc/trace-events            |   4 +
+ 15 files changed, 959 insertions(+), 19 deletions(-)
+ create mode 100644 include/hw/arm/aspeed_ast1700.h
+ create mode 100644 include/hw/misc/aspeed_ltpi.h
+ create mode 100644 include/hw/misc/aspeed_pwm.h
+ create mode 100644 hw/arm/aspeed_ast1700.c
+ create mode 100644 hw/misc/aspeed_ltpi.c
+ create mode 100644 hw/misc/aspeed_pwm.c
+
+-- 
+2.43.0
+
 
