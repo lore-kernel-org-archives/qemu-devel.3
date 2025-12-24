@@ -4,104 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6160CE77361
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF89E77361
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:23:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQal-00041h-DU; Wed, 24 Dec 2025 10:15:59 -0500
+	id 1vYQhD-0000X4-9T; Wed, 24 Dec 2025 10:22:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQaK-00035K-3v
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:15:33 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQgr-0000WO-Nj
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:24 -0500
+Received: from mail-ej1-x643.google.com ([2a00:1450:4864:20::643])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQaE-0003KJ-4H
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:15:29 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47d3ffb0f44so2328095e9.3
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:15:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQgp-0004WZ-B9
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:17 -0500
+Received: by mail-ej1-x643.google.com with SMTP id
+ a640c23a62f3a-b7355f6ef12so1140854266b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589323; x=1767194123; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gD8JU2pmVND43MkkfvpIdwWKILzGxGYkTplC6Rgxmp8=;
- b=CHg5V5NirHhInzglecSmX9OI0yQOe/AHl1E54yBE/wVD/9O7nYzX74X9K6xOx8fCg8
- IPxlDzx1W2GKPKpdgVS0LqqiAyVoqGsubba49bdTblsYoPC70bUBxZyf0aS9Fw4/o/Uy
- 7hUFTk4jm3ef/01TRwtNgRHSpjSqlJqNs7vaiisQKkS31bjHML8EmRUId5/utUSN2Kpm
- ZL4wwUNnckNyR5FpwEVzpxRQSYE+/loX37pW6xxHbHMzCi+E21xXBLZlqeGPxsItTP0Z
- bDfFnT7KFnmfR9hjqO2jsj2aYNhdUiW0IiohVJRavt6vRvtr5evSq41C6w9+tmiT6x0P
- 05aA==
+ d=linaro.org; s=google; t=1766589733; x=1767194533; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YEJPLbPQNi2y5azifXlQaNiuaq+WMAxGeRbxn3Sx/FU=;
+ b=nUl7nwFJ9HoP+b6ugi1eg6ChKf7ZEk5sQ7QzQhn/3A0pjj+6xb3xblbLCN2Gj55RwJ
+ xbtNxk1PYXyEMXN7zkac5cp8mIAjkSSBOd8rWBoQZgb8qJI2fI2kf5oGoMjfB4x58Jw+
+ LURwxQSfWWt8i1ePaAiTUlFr0XSgAYt+wuyI3l/gyhR1AMrjB25EdGlwb07gmTHCa93+
+ Rj86ql3bhZxnmm+R4T1J5wshaCDgJeySGirwfvAj0ps19GTpCsoA9rFB+IDL7YoD1tvJ
+ LdEM0ra0BbftX1dA10qaiq1FcpgNlsk0eUhKA2cSH/0taanw8rfHjChXT6YzseWAyoXj
+ C+OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589323; x=1767194123;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gD8JU2pmVND43MkkfvpIdwWKILzGxGYkTplC6Rgxmp8=;
- b=SYtlQ9+/BOdJkqsVRInaEhk7b4C6DZ0vmVSSUs5EN4jeVsml4jRU5733CqvwK2JOPF
- /eC65D4XV9uYK5eMl2fIj2O8RQnJKXNMAXFnaIiV2NnLqguHfGJLGXfgLYiL2bMzF0I6
- 1XMLTtMQrjTsusBJ8Q0J9MJlmEVCEADe9VVoI0cGqsV0bKBQGIFozSIYO9vgc6PE6o5m
- tj9knN9I/DJ+XQUhkjKQS5wkqNVnsqLvVfA0WTc7RD/NJD4ySv7auaIYfUaoeJ4XC18U
- CqSzlQHvkFmmUCgiqBib5uOY+NWgAa1HrKFYzvGua+lsGuaw0qpd6pcxnV0w7l36FfJY
- AlaQ==
-X-Gm-Message-State: AOJu0Yygcw//TA7QW6cnQMJY1nxtrkW3y1EecE+6RVganbSYQyMru5/t
- TMyWESuro9f9mpIUy8Tk7qhSAnFuiElPeyCFAWhgxwvKwnb/r6p5Zlrjkqs58s0X+284oEfOqT4
- TyGr94ic=
-X-Gm-Gg: AY/fxX4EnCDyRztUtRbkm2IOpIlaaL9AvbwqaAgLS3+BCtw8BzOwEd+rmNjEvsjiv/q
- YJ/AVg08ZhdvMOxYPbfQ+c63EGDkGHh92Wxnfl4NsxJoaXMrzxVQm9e0Qh+4/DIAOtqCO+eJnJa
- bANTrNTOYOt+4S7+4gvW75YJyZf++ySRIUbrzrdYSAfjbVhcAW6dNo8QPVALeTezqt9pJh+htQJ
- 5yXgSsm5Edz0FdFbE+6mZU+si6KL1p47ee1cXm1fif2ETR1dER9sbnwWoe8GbMQIqhz1luvNMKz
- e06iz+xmaUgj9TI5gD4gIZPXiTIC1XB+jToAzHrF5lNX1Y3OYQqoF1rsSsaI+sdIxeAX7PXxaOK
- 4KviS1Ceb/Im3d24PlTDk5MEp3929lsRuTAz9kvgTL9oqB9ziOXlC0aO+yZR2JAJSxVmtA5H6Vn
- 2CFrtvC5URdKmEoB4e9xehyB6Hmsfgq1NEPjLWZQM2zDrlgsCN0wpFF2moEXV6VTTAtg==
-X-Google-Smtp-Source: AGHT+IED5NTiworPy9fGAYaEAYlWnUKoxV7J9qyYBS1cQtso4club+7XuXaQ+qeAhLJvb9Xr4Cvcjg==
-X-Received: by 2002:a05:600c:c091:b0:477:7b9a:bb07 with SMTP id
- 5b1f17b1804b1-47d195a98d5mr153341105e9.35.1766589322759; 
- Wed, 24 Dec 2025 07:15:22 -0800 (PST)
+ d=1e100.net; s=20230601; t=1766589733; x=1767194533;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YEJPLbPQNi2y5azifXlQaNiuaq+WMAxGeRbxn3Sx/FU=;
+ b=i/jBPItDOiJB/hAXc1BX8M8/02xAv8cn+yo15/MQz5LflpB6H2MuN+uT/1nxCmAmNF
+ AkHMYwMS6L7qDYy5ms6OqSB9YgnskBLyi5M1XZborlyTh1DBCh0lTuwT+zGUIajo88KP
+ IPaB9Ac4uTq4de3zNR9thz1sQYWCbUmOrHJQnkDVDevh1r9R3DOQrwmBNGwAp5NHEQbm
+ uUS3FjGp3CWwkCPuwZ8RLHrk4GUKkZTKbNjL91eFVyVL8Y9yyEL8Fib9RT/wgWrOuN/l
+ aECiEkD0IVi6hR7AN25YapdczDrCbwr1EINprHnuBccI9b4A44n+Qxpn7e2gVY4a/XYW
+ Z6rA==
+X-Gm-Message-State: AOJu0Yx4GVsBEia+Dz+p9qi+QVf0NyDtPO2WBun3JxQQKYGNSc0xCd0Q
+ JlillT8lxdAmkLHixi1/kJYUb1PBDmxzcUC3NePao4DFprXaMZEqTqst59O7/RHBjbBVMOZGKbk
+ bv7qIhWo=
+X-Gm-Gg: AY/fxX49GZNpvRqs0L91ZTI+vUq+RzSrrrbkBWuLZ3OgPeCQOV8rfOJXzOwUmo9Hoe0
+ Q39ZWDDmhMq/ztshfaLDKjvr9FQVFste5wEfECXx3cZlUvZJhDOXKhctEnFhJO3IYLKpAF7oEZ9
+ nRiohleKBIYMg13D7GIHAa9lBfpfML+99yZRcg5b73TqM8+TD6Gqy7/dL4dkNcg+ZldfMsyG23w
+ 6PtEjBr4/TEGF0ddWAu70M0ddYLkpX8cbKGame/wmAligV5wu+m4NC88zJ7b2fSj02DENlEt52V
+ o5m38DMmMg9MpiWjX24+zQglh0V0j++eUccPITFygdG0r6RuurzBKiN50jE4cuYve/kqVu6S8Z5
+ 4zzS5XWBZynNSs/tTPKDdveYe6NfaJKAPO7TsMfUytrSTcgSXtBo6/7zEp/S+q6z30Q9fjb/lnz
+ e24jBXo6zeekiGZ0eb0lewyIxBgwBLwWTv62t6jcsu0Y3pRNFdFReylmPZe5TH
+X-Google-Smtp-Source: AGHT+IFufpbcq5X2Tg/JDQt+6hHbW40mOzV8fiWZz2hZfy8ozKmYje75dAS7rE2CSI4rlzUL3O0IVg==
+X-Received: by 2002:a17:907:2d94:b0:b73:7a44:b4d5 with SMTP id
+ a640c23a62f3a-b8037051a07mr1836523166b.41.1766589732816; 
+ Wed, 24 Dec 2025 07:22:12 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193d4e91sm291574785e9.13.2025.12.24.07.15.20
+ a640c23a62f3a-b8037a6050dsm1812448966b.9.2025.12.24.07.22.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:15:22 -0800 (PST)
+ Wed, 24 Dec 2025 07:22:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-arm@nongnu.org,
- Peter Xu <peterx@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Weiwei Li <liwei1518@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>,
- qemu-riscv@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Troy Lee <leetroy@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Zhao Liu <zhao1.liu@intel.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>,
+ Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 8/9] hw/virtio: Reduce virtio_lduw/stw_phys_cached() scope
-Date: Wed, 24 Dec 2025 16:13:49 +0100
-Message-ID: <20251224151351.86733-9-philmd@linaro.org>
+Subject: [PATCH v3 00/25] system/memory: Clean ups around address_space_ldst()
+ endian variants
+Date: Wed, 24 Dec 2025 16:21:43 +0100
+Message-ID: <20251224152210.87880-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251224151351.86733-1-philmd@linaro.org>
-References: <20251224151351.86733-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::643;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x643.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,80 +104,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_lduw_phys_cached() and virtio_stw_phys_cached() are
-only used within hw/virtio/virtio.c: reduce their scope by
-moving their definitions there.
+Since v2:
+- Changed opt-out to opt-in approach (Pierrick)
+- Split big patches in smaller ones
+- Mark ioport little-endian
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/virtio/virtio-access.h | 21 ---------------------
- hw/virtio/virtio.c                | 21 +++++++++++++++++++++
- 2 files changed, 21 insertions(+), 21 deletions(-)
+tag: https://gitlab.com/philmd/qemu/-/tags/sysmem_ldst_endian-v3
+CI: https://gitlab.com/philmd/qemu/-/pipelines/2231223066
 
-diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
-index c866769cad8..5b5fff5295e 100644
---- a/include/hw/virtio/virtio-access.h
-+++ b/include/hw/virtio/virtio-access.h
-@@ -102,27 +102,6 @@ static inline uint16_t virtio_tswap16(VirtIODevice *vdev, uint16_t s)
- #endif
- }
- 
--static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
--                                               MemoryRegionCache *cache,
--                                               hwaddr pa)
--{
--    if (virtio_access_is_big_endian(vdev)) {
--        return lduw_be_phys_cached(cache, pa);
--    }
--    return lduw_le_phys_cached(cache, pa);
--}
--
--static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
--                                          MemoryRegionCache *cache,
--                                          hwaddr pa, uint16_t value)
--{
--    if (virtio_access_is_big_endian(vdev)) {
--        stw_be_phys_cached(cache, pa, value);
--    } else {
--        stw_le_phys_cached(cache, pa, value);
--    }
--}
--
- static inline void virtio_tswap16s(VirtIODevice *vdev, uint16_t *s)
- {
-     *s = virtio_tswap16(vdev, *s);
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 257cda506a4..fba9d347d17 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -216,6 +216,27 @@ static void virtio_check_indirect_feature(VirtIODevice *vdev)
-     }
- }
- 
-+static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
-+                                               MemoryRegionCache *cache,
-+                                               hwaddr pa)
-+{
-+    if (virtio_access_is_big_endian(vdev)) {
-+        return lduw_be_phys_cached(cache, pa);
-+    }
-+    return lduw_le_phys_cached(cache, pa);
-+}
-+
-+static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
-+                                          MemoryRegionCache *cache,
-+                                          hwaddr pa, uint16_t value)
-+{
-+    if (virtio_access_is_big_endian(vdev)) {
-+        stw_be_phys_cached(cache, pa, value);
-+    } else {
-+        stw_le_phys_cached(cache, pa, value);
-+    }
-+}
-+
- /* Called within call_rcu().  */
- static void virtio_free_region_cache(VRingMemoryRegionCaches *caches)
- {
+Philippe Mathieu-Daudé (25):
+  system/physmem: Inline and remove leul_to_cpu()
+  system/physmem: Convert DEBUG_SUBPAGE printf() to trace events
+  system/physmem: Use explicit endianness in subpage_ops::read/write()
+  system/memory: Split MemoryRegionCache API to 'memory_cached.h'
+  system/memory: Move *ldst* headers from exec/ to system/ namespace
+  system/memory: Inline address_space_stq_internal()
+  system/memory: Define address_space_ldst[W] endian variants via
+    template
+  system/memory: Define address_space_ldst[L] endian variants via
+    template
+  system/memory: Define address_space_ldst[Q] endian variants via
+    template
+  system/memory: Factor address_space_ldst[M]_internal() helper out
+  system/memory: Pass device_endian argument as MemOp bit
+  system/memory: Directly call address_space_ldst[M]_internal() helper
+  system/memory: Introduce LD/ST helpers with @n suffix (variable size)
+  system/memory: Use explicit endianness in ram_device::read/write()
+  system: Allow restricting the legacy ld/st_phys() 'native-endian' API
+  system: Allow restricting the legacy ld/st_he() 'native-endian' API
+  system: Allow restricting legacy address_space_ldst() native-endian
+    API
+  system: Allow restricting the legacy cpu_ld/st() 'native-endian' API
+  system: Allow restricting the legacy translator_ld() 'native-endian'
+    API
+  system: Allow restricting the legacy tswap() 'native-endian' API
+  system: Allow restricting the legacy MO_TE* 'native-endian'
+    definitions
+  system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition
+  tests/qtest: Remove unnecessary 'qemu/bswap.h' include
+  system/ioport: Declare x86-specific I/O port in little-endian order
+  system/ioport: Do not open-code address_space_ld/st_le() methods
+
+ MAINTAINERS                                   |   4 +
+ docs/devel/loads-stores.rst                   |  10 +-
+ include/accel/tcg/cpu-ldst.h                  |   2 +
+ include/exec/cpu-common.h                     |   2 +
+ include/exec/memop.h                          |   4 +
+ include/exec/translator.h                     |   5 +-
+ include/exec/tswap.h                          |   3 +
+ include/hw/virtio/virtio-access.h             |   1 +
+ include/qemu/bswap.h                          |  16 +-
+ include/system/memory.h                       | 189 +-------
+ include/system/memory_cached.h                | 209 ++++++++
+ system/memory-internal.h                      |   2 +
+ tests/qtest/pnv-xive2-common.h                |   1 -
+ include/exec/memory_ldst.h.inc                |  65 ---
+ include/exec/memory_ldst_phys.h.inc           | 144 ------
+ include/system/memory_ldst.h.inc              |  41 ++
+ .../{exec => system}/memory_ldst_cached.h.inc |   0
+ include/system/memory_ldst_endian.h.inc       |  37 ++
+ include/system/memory_ldst_phys.h.inc         |  47 ++
+ include/system/memory_ldst_phys_endian.h.inc  |  57 +++
+ system/ioport.c                               |  34 +-
+ system/memory.c                               |  68 ++-
+ system/physmem.c                              | 111 +++--
+ tests/qtest/aspeed_smc-test.c                 |   1 -
+ tests/qtest/ast2700-smc-test.c                |   1 -
+ tests/qtest/endianness-test.c                 |  10 +-
+ tests/qtest/libqos/fw_cfg.c                   |   1 -
+ tests/qtest/libqos/i2c-omap.c                 |   1 -
+ tests/qtest/libqtest.c                        |  13 +-
+ tests/qtest/pnv-spi-seeprom-test.c            |   1 -
+ tests/qtest/vmcoreinfo-test.c                 |   1 -
+ system/memory_ldst.c.inc                      | 449 ++----------------
+ system/memory_ldst_endian.c.inc               |  84 ++++
+ scripts/make-config-poison.sh                 |   1 +
+ system/trace-events                           |   6 +
+ 35 files changed, 708 insertions(+), 913 deletions(-)
+ create mode 100644 include/system/memory_cached.h
+ delete mode 100644 include/exec/memory_ldst.h.inc
+ delete mode 100644 include/exec/memory_ldst_phys.h.inc
+ create mode 100644 include/system/memory_ldst.h.inc
+ rename include/{exec => system}/memory_ldst_cached.h.inc (100%)
+ create mode 100644 include/system/memory_ldst_endian.h.inc
+ create mode 100644 include/system/memory_ldst_phys.h.inc
+ create mode 100644 include/system/memory_ldst_phys_endian.h.inc
+ create mode 100644 system/memory_ldst_endian.c.inc
+
 -- 
 2.52.0
 
