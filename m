@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12285E776C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062EDE77361
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYRWJ-0002IO-1w; Wed, 24 Dec 2025 11:15:27 -0500
+	id 1vYRWS-0002M2-Qw; Wed, 24 Dec 2025 11:15:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRVy-0002Dy-QX
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:15:09 -0500
-Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRWO-0002Kk-HP
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:15:32 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRVw-0001Gs-Or
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:15:06 -0500
-Received: by mail-wr1-x441.google.com with SMTP id
- ffacd0b85a97d-42fb5810d39so3217796f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:15:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRWM-0001XR-VX
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:15:32 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-47798ded6fcso32669175e9.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:15:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766592901; x=1767197701; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nVCfRdBdeH6qM5hKowFQ+CO0ZL9O+v5VwkCKX8eNtcs=;
- b=bZxxG6lfZAOcXoXncrmvFfbWPR2PuXeqUKMzGUG0qmDGAYWHLWJjN+I3ZMZCtXcH+b
- 7D4gyNr7pLQL5DvODlbncJjfG6gE5a5VObTiACsIR8HiEf4/2aL/42YdSmXBDgbF+htN
- kX7ZaGStM47v8CGt+AplCbKVFCiU1SCjqd25M2yTywlwtVCxC9IU0ERalmR+zFfZpDvJ
- nSlMBPQ/oem8Kf66qCzkorq7KQwOPQTWlw2hbCSjoBRuPcO55AMAv9ImeNUnoMhcrtk7
- lcXSe4HuO7w7V4ixcZy8xSzO2qMtSTZfzDxpCxoAOdF1p4t6RqSgtG5Bh/QFHYRdKHYu
- QZGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766592901; x=1767197701;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1766592928; x=1767197728; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nVCfRdBdeH6qM5hKowFQ+CO0ZL9O+v5VwkCKX8eNtcs=;
- b=AwTBLssxtZrqoGcnI2Hg/6FLdjyrVSZb2an+7qbv4b2HXSvFcZ+KqX16kd/17WG+ki
- 82zhXFIZXmF8JSMm9XYvHdkpAyI1PMnAnhtAGZgUnD/bIlThpakbUnc61PzSn5TLp/J5
- 0S0qn919/Z+bOqI5PUP40tGWkpkAqEezuyMgQ3t5XfJa1W7uRWGkguJCxhXJ21ol9ppL
- 4TrMM4NqAUsH0aFS13vgIgxaJBQK+MYRihbAA5A3E1aydYldPapNQ1NrSwvtOuCOjxOC
- VzUrRKOfgH6AgpTR2PPdEapdb1QYROG+c2u6VLASWq1rIteeCNXLyOSeIkTUxlBiJEP7
- xHMA==
-X-Gm-Message-State: AOJu0Ywax2PG5GOnGhEpVtpTNzqWeM7qiS/pjbzx3bTJo1gvMzA5W3b1
- SvISwq1Y6H1Ej0Ff/gF2biPE9H9ShCW+ay4NGQGxbkd2/D+UToMmr7warKX1Dxq5VzzmSFW9MkW
- 2LUlVuIw=
-X-Gm-Gg: AY/fxX7uRoopjaPqj/BT7s+x8kPCoZx+Bn8Z/G/umiSsNz1LZWCBaHhh6hcrx905D8n
- FNvkw/5U3T1PRxDg6jxYKweIoj6W7GQ0Oo1WD0TPhgpTKUfooUPrzejXXMuvi9v2X68zqJnvOPo
- gcRLQuMbgsUb3EGjJw7ObDqVtSatKUTKpFtkN+Jv0dzVE2v8m0FWlirD103YSNZujeVMFtS+qVP
- ivYWw49eOIXSEMOxgRLwm3IiPH6FXNdyKnZzg/9/OfhnS3+DcNmmRp5Jeo/tZnuSpQmCQ23YEoy
- DMHnPEL+OhbTl7n3ZCseGucuO4H4gedsR4tx94ODsbCt/OCzkT0J54re0XDJu8S3lSZo6sIypB7
- mBhnTsRBGPEkMlOqfzvVWbxfz5WtgadgeFp4flgU8uUNjWBexLRdGYhzFCLXxdQGMB7jyAhnq3b
- GaOJu+wgX2VKnO8QrQ/d/rkV5kyV7mvMw0Rk2HGikAV05sK5qtn8fmbS0ryp/dc/HcDw==
-X-Google-Smtp-Source: AGHT+IEwroF7v+zQQi4cW3FKtP659BnlEjnaJZ9x12eWEHP6HHFEYW2zRy32sbQYJTTnXFvH0jP6pw==
-X-Received: by 2002:a05:6000:2504:b0:431:5ca:c1b7 with SMTP id
- ffacd0b85a97d-4324e4cbcc1mr21725423f8f.23.1766592901056; 
- Wed, 24 Dec 2025 08:15:01 -0800 (PST)
+ bh=lgXG5IcwywLgUhxBZeRWbfWC7uBhw0QUE1k8VCd0sto=;
+ b=Pd5XwUP1KQj5+1F6AUwJ0rH2BgtPJ9MqNNdczU0g4PtaCFht1yV5wFSJL/+3KxvzXS
+ NDRSTYyFMv5nd/3iZbjQF67Caks5RUrLamqwZHeHOXraC+ru5TNRTWVCqXJfhWxIRR+a
+ zroOs2h2w9+jXrYwCbZ8SGovBo4RcmipAA4zP1PU4WMnZ/FHJU6EX5DLLrzkfPoJW1r0
+ i9Aw2I8eLOOjISzlxJgfGnMH6hxg3xLfz3w/NdTXqlAD2uEgNGcOeSfhfrhrP9s5hN6a
+ nwKxYN8RJyipCoGNgnuAHAygE3nqpbILP0q0tPLASUY8B7S29fKFNMfwKHOojwUaeYc6
+ /1WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766592928; x=1767197728;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lgXG5IcwywLgUhxBZeRWbfWC7uBhw0QUE1k8VCd0sto=;
+ b=VyvmXRXfnoLioCtNvfP48PH6YI8SFxEQOBx1/kEakpcVuK9eVkLQG0API6c0SZ2dmq
+ bTdCy64p58hnn9naK4Nqo7WzLL1ZQfz/XAVayr5Xy+a48YVK6kEw2dDv08HsssdFQtMg
+ 3rtVxdXd2V0oMMKVoZFuVS6ntTufqtrCLMA0E9xPE+Aw2W+pqCzzmiKPdlkUGUsDBbyv
+ AoMdd3VLVatDRfefYUa5wl5IUkjJz3RDDvEQg9pTAvCAIc2DKufFhtw3Pnqbt7QK4fil
+ UWzLGxFc8q8k+7D5ixc1Pip1kiDrkwGb+i6HVHORT/KyBGZqXi5RfkhyptLeaX6m0x7l
+ 02UQ==
+X-Gm-Message-State: AOJu0YyKOsZ7Y1a9cYlSdaHw9jKmwuYpzpOs8FyCqZIZI7GX3roqasCW
+ HAI/zbSDXypUB4FVfmckaciky0CI/PgkNd63UA6YKRkeDOfhuhVzN1XtfUKbDXibkXBog3WuHnI
+ vBn/oj20=
+X-Gm-Gg: AY/fxX5hPMXaDC0XxFxrqropqJDc3uZMB3WqZ4l560xv74ssucjpyyND/zpptQOXq2K
+ CHw3qN1e/L6bYyzxxLeo5ymoqqcgObsmYrCP+sB4nR36/3qQsepIavFtlvHe3/AhI7/7tp2vjtD
+ pPbWVa5cgfIoJFDYssGcbVq8KtPcP7Rfbnmk+bdKPFwwoqu0YZSmmAomIunRSDOv3pPCCuTNBOS
+ LeKOnMndwk9GtDWegfV+Af6FdW5A+eciGqN9WLmw5hlcqcrOu6OXRT/WYl8dIR2ZVok6cyo02ld
+ paa8ghpCKxUy9OkMx34+rqCS4suVdv4d+XUkMRu9gNEDBdO6HuAqFgCRBpfdOSbc13J7iJm+kMD
+ o8OaZR1z8dUix9Y7duUL//yxWZqm+QhT0HVXLnxeiXKaS6Yjbl6c5f7N/yDJoqANITXMZ9bL7OC
+ 6ALIe02kUJ8S0NOiOiPNXH8I0WUp8HsMzZFcsnfUNACMUAATgiB/1Jmqs=
+X-Google-Smtp-Source: AGHT+IG70Y/OxHxa4zEGWlEYuXVOFdgVqgchVKXTUXmr3OaY5Pi7GN79Z7183psQmF/HztyNqa0TWw==
+X-Received: by 2002:a05:600c:4e8e:b0:477:b0b8:4dd0 with SMTP id
+ 5b1f17b1804b1-47d1957b120mr189640545e9.17.1766592927961; 
+ Wed, 24 Dec 2025 08:15:27 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eab257asm35618470f8f.38.2025.12.24.08.14.58
+ 5b1f17b1804b1-47be27b28a7sm357146525e9.12.2025.12.24.08.15.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:15:00 -0800 (PST)
+ Wed, 24 Dec 2025 08:15:27 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
@@ -71,15 +72,17 @@ Cc: Bibo Mao <maobibo@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/8] target/loongarch: Use explicit little-endian LD/ST API
-Date: Wed, 24 Dec 2025 17:14:48 +0100
-Message-ID: <20251224161456.89707-1-philmd@linaro.org>
+Subject: [PATCH 3/8] target/loongarch: Use hwaddr type for physical addresses
+Date: Wed, 24 Dec 2025 17:14:51 +0100
+Message-ID: <20251224161456.89707-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251224161456.89707-1-philmd@linaro.org>
+References: <20251224161456.89707-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::441;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LoongArch is little-endian. Use the explicit 'little'
-endianness instead of the 'native' one.
-Remove some target_ulong uses. Forbid further uses of
-legacy APIs.
+Replace variables used with get_physical_address(), which
+expect a physical addresses, by the 'hwaddr' type, instead
+of the 'target_ulong' one.
 
-tag: https://gitlab.com/philmd/qemu/-/tags/endian_loongarch-v1
-CI: https://gitlab.com/philmd/qemu/-/pipelines/2231223066
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/loongarch/cpu_helper.c     | 2 +-
+ target/loongarch/tcg/tlb_helper.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Philippe Mathieu-Daudé (8):
-  hw/loongarch: Use explicit little-endian LD/ST API
-  target/loongarch: Replace target_ulong -> uint64_t for DMW and
-    TLBRBADV
-  target/loongarch: Use hwaddr type for physical addresses
-  target/loongarch: Replace MO_TE -> MO_LE
-  target/loongarch: Inline cpu_ldl_code() call in cpu_do_interrupt()
-  target/loongarch: Use explicit little-endian LD/ST API
-  target/loongarch: Inline translator_ldl()
-  configs/targets: Forbid LoongArch to use legacy native endianness APIs
-
- configs/targets/loongarch64-linux-user.mak    |  1 +
- configs/targets/loongarch64-softmmu.mak       |  1 +
- hw/loongarch/virt.c                           | 18 ++---
- target/loongarch/cpu_helper.c                 | 12 +--
- target/loongarch/tcg/iocsr_helper.c           | 24 +++---
- target/loongarch/tcg/tcg_cpu.c                |  4 +-
- target/loongarch/tcg/tlb_helper.c             | 10 ++-
- target/loongarch/tcg/translate.c              |  3 +-
- .../tcg/insn_trans/trans_atomic.c.inc         | 80 +++++++++----------
- .../tcg/insn_trans/trans_fmemory.c.inc        | 32 ++++----
- .../tcg/insn_trans/trans_memory.c.inc         | 64 +++++++--------
- .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 ++--
- 12 files changed, 136 insertions(+), 129 deletions(-)
-
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 4864f4d6d87..2b27274f64e 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -146,7 +146,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+                      int access_type, int mmu_idx, int debug)
+ {
+     CPUState *cs = env_cpu(env);
+-    target_ulong index = 0, phys = 0;
++    hwaddr index = 0, phys = 0;
+     uint64_t dir_base, dir_width;
+     uint64_t base, pte;
+     int level;
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 873a0a1b0c4..aab89b9be19 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -691,7 +691,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+ {
+     CPUState *cs = env_cpu(env);
+     uint64_t badvaddr;
+-    target_ulong index, phys;
++    hwaddr index, phys;
+     uint64_t dir_base, dir_width;
+ 
+     if (unlikely((level == 0) || (level > 4))) {
+@@ -726,7 +726,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+                   uint32_t mem_idx)
+ {
+     CPUState *cs = env_cpu(env);
+-    target_ulong phys, tmp0, ptindex, ptoffset0, ptoffset1;
++    hwaddr phys, tmp0, ptindex, ptoffset0, ptoffset1;
+     uint64_t badv;
+     uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+     uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
 -- 
 2.52.0
 
