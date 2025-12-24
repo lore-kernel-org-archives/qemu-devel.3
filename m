@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4BAE7545F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 14:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE18E77361
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 14:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYPok-0003bA-OO; Wed, 24 Dec 2025 09:26:22 -0500
+	id 1vYPpd-0003p7-Uf; Wed, 24 Dec 2025 09:27:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYPoJ-0003Ta-Nq
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 09:26:01 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1vYPoa-0003VZ-FO
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 09:26:17 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYPoD-0006J1-H7
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 09:25:54 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-64daeb28c56so2450167a12.2
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 06:25:48 -0800 (PST)
+ id 1vYPoT-0006Kv-Mt
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 09:26:08 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b728a43e410so1102036766b.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 06:26:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766586347; x=1767191147; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766586364; x=1767191164; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+p61ZJTEpWEtFw1xTacv9g1rqNFEZG18s4o5mFFKLsc=;
- b=PGJIkX5pN3nQllQkQoIzMVcB02gI0os4yYC50cdOIOAeX0k9nJ1VOGRjMDQTwF7xVG
- joXRHFATubhCo6HoocONxyadm1AzHfIyxUfzaiAeP/Kudseq9obiskdRUDWOt5G6iqwG
- TnfHQ8Ep7NnLAVQYULcEV3uiyIeDV9ycFonGyOiE7hwYc7aBuot7WFWuXgLwwcjmeNmU
- YT2BpcHRqq2gfJTBZ19q7Cy21nQo8mqKE9kJaPR9P+cAs5V62G8b6JzATXmlrIcz5eMJ
- mgON1/b2+4T0REJI4IFnSG31lt0buvc26ITqpnA9+h0XCuO+HPnZrbDiximCdm/fdxQU
- lLXg==
+ bh=A372ZdRxGvYCj4eLyeuk2dNu7PCYAJNxfaa506SwjbQ=;
+ b=ZQc2AJzAxSjTU5CFQc/BGANA7Ylgl7o9xGutqBb7Hgsxzowp7VzKf581nMG5ZYdL9Q
+ 2nQhBSR/E0u7lLCIgHMWAtl+hFuj7DHkNocnvlc2HhHUfVXp7JZanSzVYgC6ULq85vxv
+ po2qHloUioTWcTfSoQp9D7GvUkJ7dky0Efsdu2uhtz4F6lXQlB+4Yh+vvPERreoKJykw
+ zjYJ1WrKeghb+CkCymHdP/gDnGNF035JBPFCWqvPqzu3+PzMkQKnSzKfO1j9rsPoDMTx
+ yRhkj7OJ3aZBRt0GhLG3ysJLfXdkZ60V3p3NyBViOsR0WjyzH7svMBdy5kt6F1vvEO9b
+ j/KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766586347; x=1767191147;
+ d=1e100.net; s=20230601; t=1766586364; x=1767191164;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+p61ZJTEpWEtFw1xTacv9g1rqNFEZG18s4o5mFFKLsc=;
- b=TMh5xht9JU2yEhj/9XOnvwq50eTLmyJ63rQalnCV7+bhKtCX4D1yKVxH9LCDQgx8yz
- 8oCLAfiki6sMnvMSTJmWp9fMXeXNAo49mIl3KbTen7Ug5saE+EJ0AqZWLRvZdR9LLvCb
- meZD/iVaCMTSA4vuX88DGdPTat74pkSMjEHWv1dJei329rwI2xUVJavUSzfbiJCxVj0/
- 4oQEk5oQqzvnr1lxc4pFyi4b/srOF8CFXA7y6SfbQ2EMth128ffboGLM9sK8oe9Bh1sy
- tNSpvr0hbVz5buO7EIqV2AGZSOWxxAXlhSVC5D3LluUrmk7m5QeAr4Hin7Xj3nZHKeyf
- 6afA==
-X-Gm-Message-State: AOJu0Yx9ang4oNSTZ37YpLTZYC4s0C4nhK01LavVbyEEF9FMjJ6yRDkz
- CpEHleLKhieux7Dk9jyfJfR9e5UPAJIZZ0a/75ZfZ+Sk/aYQFG+HNzTyZveuVubj9r+SV2K9ePW
- UBZ3it2UCgitOEy4qI5hCQ+cfjeD7DGmGIAzX8LJaCw==
-X-Gm-Gg: AY/fxX5fJbDSPeU51eAgi2mdjqlTAkvsOYMxsiB3UYiauODJaa0rQ/oO4TCL4jZBMlI
- pNJ4D9jkCAqieb17jk1AlyIjRHOxQcY+iVGa72/AcpXxK2JBhNpkgnvt8m5Gly/dge9KOK7WTjU
- v/MNnS03mM1ilB7wAtZY4s16EPNWIgz3pXgf9xNDIr6/MKWE4oK2CXOV6VeGLtFbX6Uv2Irv+4P
- 4rkTmsqntIpvaD9lOBBT2QeaXBQsodtOkSELZbt22yPKSFjk9nou4uvmmzHQ0oR1o93zFY=
-X-Google-Smtp-Source: AGHT+IFcbymrjsLO8CryqpgQ4SSzsT+ScTYUq2i2xSJdECtbCdUJYQ4j7Uo8f5agTgcG238o8czbrgKsYAmVuKrutM8=
-X-Received: by 2002:a17:907:7f1c:b0:b83:976:50f9 with SMTP id
- a640c23a62f3a-b83097652a7mr246330966b.61.1766586347121; Wed, 24 Dec 2025
- 06:25:47 -0800 (PST)
+ bh=A372ZdRxGvYCj4eLyeuk2dNu7PCYAJNxfaa506SwjbQ=;
+ b=xAgirM4+qzSg6TmYHPK2RaHUgR0lhuNELZ0oksNFBT4XQWUIeg0fjCw5VwmwCNORrQ
+ xs8DrP5AMWlvnNr034CBNNL2gRoRVR1hHaKBorlwMa8Cltm5Ja7XMyUs+F4x8LPW49/x
+ eR+oUZsFhALw+mce4AmtmM6RTONCGma7TY3jJFzAS2HyWLCxRanSt/HzXT1dsdYS7IzE
+ cki4XS48QA3fLURpPA66Nr4cu6Hqmu1m7WxYmKHlw97UUleJpibpLU6sM0LOGy7FU2dJ
+ q1+PBNhnWs2ECMV5vntIAs19ugEh64Kd25obI/U/Db2W8HwwfZg2rspHYDgU0mq57vZq
+ FgwA==
+X-Gm-Message-State: AOJu0YwH6IlthF25Qo4rdPMJ+uBpHyjWoLxUGPjSIXQJjy4qce7yB8/8
+ FvOUbkMkTTxWL4/R46srCvlzJEaiCPeVEETwnT7ER+OZuBWutVt2KA8L6DQvQ0yj4cCRVlv3TSH
+ D1yHNvOtJZnwwcqPsXiTmHQQwAgqJozbmqL6ser0B9A==
+X-Gm-Gg: AY/fxX6ijIPiT4uF6z9JlYFUOkNfrICMfZx1j6yzdoG9VSm5EoFgoLdKNfEVpGZiAj1
+ VRfapfYDusRUzqosWcetJR8o/tWRf0av3F+NPCAMDP/TFD9iO6esDV2Wm1YT2oh8B75mj6KfzFp
+ Slot4KpxQyeb/sQFWHmlXAqgE3UVUXTd7K/DgHTUvgSNT3j3Wh/whNme5UvZGWvBrl0jy64cd3z
+ q5gHBXxPAPqKaHffFKj29XnnrSVOX8qvJAcJKOG2p/MyrSpXYopyZUsuKM1QWNZUXRJ3hk=
+X-Google-Smtp-Source: AGHT+IHN1AN67Pz+zD7Jpd4dklo7bAm7KW+3LcjnhS09W90R6ohBEvbQ85seWLRV4mIOFsAahr/jysodY/a0jnDXbpY=
+X-Received: by 2002:a17:906:c145:b0:b79:f984:1557 with SMTP id
+ a640c23a62f3a-b8037180307mr1894445366b.46.1766586363567; Wed, 24 Dec 2025
+ 06:26:03 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224134644.85582-1-philmd@linaro.org>
- <20251224134644.85582-7-philmd@linaro.org>
-In-Reply-To: <20251224134644.85582-7-philmd@linaro.org>
+ <20251224134644.85582-8-philmd@linaro.org>
+In-Reply-To: <20251224134644.85582-8-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 24 Dec 2025 16:25:21 +0200
-X-Gm-Features: AQt7F2qSewb8AHj-_6egGrk9J0eIkFxytZwrSHAZnM1GKT8lnuvpPseS6gzLd1s
-Message-ID: <CAAjaMXbheBrj7cqUrFa7ja7WSZxZYMZpbu5KdGuHYMNui4Z_Dw@mail.gmail.com>
-Subject: Re: [PATCH v2 6/8] hw/char/pl011: Mark implementation as being
- little-endian
+Date: Wed, 24 Dec 2025 16:25:37 +0200
+X-Gm-Features: AQt7F2p0MVL9vho_iDpnT9577RMEKAoVCeoNLltHU_qLfFiQ39NNbHXXPh9IZdc
+Message-ID: <CAAjaMXZiYtyc1ucfs5hqxwqVFNNE-ebJeQvd4KZfZwdrBTegXg@mail.gmail.com>
+Subject: Re: [PATCH v2 7/8] rust/system: Stop exposing bogus
+ DEVICE_NATIVE_ENDIAN symbol
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
  qemu-rust@nongnu.org, 
@@ -80,8 +80,8 @@ Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,53 +107,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Dec 24, 2025 at 3:47=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> The PL011 component is only built / used by ARM targets, which
-> are only built in little endianness. Thus we only ever built
-> as little endian, never testing the big-endian possibility of
-> the DEVICE_NATIVE_ENDIAN definition. Simplify by only keeping
-> the little endian variant.
+> We want to remove the bogus DEVICE_NATIVE_ENDIAN definition
+> (by only having it explicit, either big or little one). Stop
+> exposing it to rust devices to avoid it spreading further.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
 
-FWIW
-
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  hw/char/pl011.c                  | 2 +-
->  rust/hw/char/pl011/src/device.rs | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+>  rust/system/src/memory.rs | 6 ------
+>  1 file changed, 6 deletions(-)
 >
-> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> index 01335d9437d..97cd9bd4c54 100644
-> --- a/hw/char/pl011.c
-> +++ b/hw/char/pl011.c
-> @@ -538,7 +538,7 @@ static void pl011_clock_update(void *opaque, ClockEve=
-nt event)
->  static const MemoryRegionOps pl011_ops =3D {
->      .read =3D pl011_read,
->      .write =3D pl011_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .impl.min_access_size =3D 4,
->      .impl.max_access_size =3D 4,
->  };
-> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/de=
-vice.rs
-> index 04155dabe1a..a6227a99f30 100644
-> --- a/rust/hw/char/pl011/src/device.rs
-> +++ b/rust/hw/char/pl011/src/device.rs
-> @@ -495,7 +495,7 @@ unsafe fn init(mut this: ParentInit<Self>) {
->          static PL011_OPS: MemoryRegionOps<PL011State> =3D MemoryRegionOp=
-sBuilder::<PL011State>::new()
->              .read(&PL011State::read)
->              .write(&PL011State::write)
-> -            .native_endian()
-> +            .little_endian()
->              .impl_sizes(4, 4)
->              .build();
+> diff --git a/rust/system/src/memory.rs b/rust/system/src/memory.rs
+> index 4b3316bf767..4e06c16a0b5 100644
+> --- a/rust/system/src/memory.rs
+> +++ b/rust/system/src/memory.rs
+> @@ -78,12 +78,6 @@ pub const fn little_endian(mut self) -> Self {
+>          self
+>      }
 >
+> -    #[must_use]
+> -    pub const fn native_endian(mut self) -> Self {
+> -        self.0.endianness =3D device_endian::DEVICE_NATIVE_ENDIAN;
+> -        self
+> -    }
+> -
+>      #[must_use]
+>      pub const fn valid_sizes(mut self, min: u32, max: u32) -> Self {
+>          self.0.valid.min_access_size =3D min;
 > --
 > 2.52.0
 >
