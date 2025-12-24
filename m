@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029B4E75446
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 09:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CEBE75446
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 09:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYLMB-0001AG-6x; Wed, 24 Dec 2025 04:40:35 -0500
+	id 1vYLQ9-0001tc-OH; Wed, 24 Dec 2025 04:44:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vYLM9-00019d-Gt
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 04:40:33 -0500
+ id 1vYLQ8-0001tT-M6
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 04:44:40 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vYLM7-0007iy-QE
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 04:40:33 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1vYLQ6-00083D-Tw
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 04:44:40 -0500
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxqsIMtUtpObcCAA--.8451S3;
- Wed, 24 Dec 2025 17:40:28 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxKMIDtktpfLcCAA--.8557S3;
+ Wed, 24 Dec 2025 17:44:35 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxquAJtUtp7jYEAA--.12666S3;
- Wed, 24 Dec 2025 17:40:28 +0800 (CST)
-Subject: Re: [PATCH v2 2/3] target/loongarch: Fix exception BCE missing update
- CSR_BADV
+ by front1 (Coremail) with SMTP id qMiowJCxGOAAtktpKTcEAA--.12721S3;
+ Wed, 24 Dec 2025 17:44:34 +0800 (CST)
+Subject: Re: [PATCH v2 3/3] target/loongarch: Fix exception ADEF/ADEM missing
+ update CSR_BADV
 To: Song Gao <gaosong@loongson.cn>
 Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
 References: <20251224031929.2371837-1-gaosong@loongson.cn>
- <20251224031929.2371837-3-gaosong@loongson.cn>
+ <20251224031929.2371837-4-gaosong@loongson.cn>
 From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <a87e15a0-ceb2-fa22-818b-1fc3aa7dfabf@loongson.cn>
-Date: Wed, 24 Dec 2025 17:37:56 +0800
+Message-ID: <06436084-251e-a233-490d-7944ed0f8f41@loongson.cn>
+Date: Wed, 24 Dec 2025 17:42:02 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20251224031929.2371837-3-gaosong@loongson.cn>
+In-Reply-To: <20251224031929.2371837-4-gaosong@loongson.cn>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxquAJtUtp7jYEAA--.12666S3
+X-CM-TRANSID: qMiowJCxGOAAtktpKTcEAA--.12721S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWrKw45Gr13Kw1ktF17GryfuFX_yoWDZFg_ZF
- 4I9F1jgrWqqw1jqF4j9r98Jr1Fqw4xKFs0yF90vF4rJa98Xws5J3yqkwn8CFWF9FWvqF13
- ua9rXrya9w109osvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7Mmh
- UUUUU
+X-Coremail-Antispam: 1Uk129KBj93XoW7tFWDtr47KryDJw45KryrKrX_yoW8Jw1rpF
+ 97ua4jya4rtrZ8A3yxJ390qF1Durs5Cw4Ig3W2qa4fKr1Sqry0gr1kt3yqqF47Xay5G3y7
+ ZFnavrW3XayUWagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1Li
+ SJUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -32
@@ -86,36 +86,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 2025/12/24 上午11:19, Song Gao wrote:
-> Exception BCE need update CSR_BADV, and the value is env->pc.
+> Exception ADEM/ADEF need update CSR_BADV, ADEF value from env->pc,
+> ADEM value from the virtual address.
 > 
 > Signed-off-by: Song Gao <gaosong@loongson.cn>
 > ---
->   target/loongarch/tcg/tcg_cpu.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+>   target/loongarch/tcg/tcg_cpu.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 > 
 > diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-> index ab247e82ec..c05a06eeb5 100644
+> index c05a06eeb5..53e0970797 100644
 > --- a/target/loongarch/tcg/tcg_cpu.c
 > +++ b/target/loongarch/tcg/tcg_cpu.c
-> @@ -113,6 +113,9 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+> @@ -109,10 +109,12 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>           }
+>           QEMU_FALLTHROUGH;
+>       case EXCCODE_PIF:
+> -    case EXCCODE_ADEF:
 >           cause = cs->exception_index;
 >           update_badinstr = 0;
 >           break;
-> +    case EXCCODE_BCE:
-> +        env->CSR_BADV = env->pc;
+> +    case EXCCODE_ADEF:
+> +        update_badinstr = 0;
 > +        QEMU_FALLTHROUGH;
->       case EXCCODE_SYS:
->       case EXCCODE_BRK:
->       case EXCCODE_INE:
-> @@ -121,7 +124,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
->       case EXCCODE_FPE:
->       case EXCCODE_SXD:
->       case EXCCODE_ASXD:
-> -    case EXCCODE_BCE:
->       case EXCCODE_ADEM:
->       case EXCCODE_PIL:
->       case EXCCODE_PIS:
+I think this modification is unnecessary. CSR_BADV is already set with 
+exception EXCCODE_ADEF/EXCCODE_ADEM.
+
+Regards
+Bibo Mao
+>       case EXCCODE_BCE:
+>           env->CSR_BADV = env->pc;
+>           QEMU_FALLTHROUGH;
+> @@ -225,6 +227,7 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+>   {
+>       CPULoongArchState *env = cpu_env(cs);
+>   
+> +    env->CSR_BADV = addr;
+>       if (access_type == MMU_INST_FETCH) {
+>           do_raise_exception(env, EXCCODE_ADEF, retaddr);
+>       } else {
 > 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
