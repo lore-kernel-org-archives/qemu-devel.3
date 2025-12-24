@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D6EE776C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9474E776C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYRiU-00087f-VL; Wed, 24 Dec 2025 11:28:03 -0500
+	id 1vYRiV-0008AH-5d; Wed, 24 Dec 2025 11:28:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRiA-0007rB-Ec
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:27:44 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRiI-0007yq-17
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:27:52 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRi8-0003rl-8l
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:27:41 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4779a4fc95aso34083865e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:27:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRiG-0003sE-Bm
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:27:49 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4779cb0a33fso61596085e9.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:27:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766593658; x=1767198458; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766593666; x=1767198466; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gvU8IjxyyWGbnt0TpIestxRQYownf9I7RuEDkGDxUZg=;
- b=VWLTRGPF1F3IxoTQS/yTb/DaG23BpmN6rRpl40sywGh+pbTzVaiuYZU49I64EI2ZSt
- nXyMGo/MxEhmNW+7bptYEtXiv65Bi7RBN84g2CQErIxczxM0QlAy0xwR+F9f/sh/waMD
- GMg+bsUTn4kc44x0iTrqjV0UxYh+ZSyRFUKSgN0SNkUnRk+jeRmCUcMH9ilRvLXd6NSN
- far49RWoqRumM8UwroPR0fjGTg9wqdj2VAc4jdLN6kQx+O6jeayqtAMzM7oPSK2PUEyX
- KhqpmCMmBTYnuP1aGIpyTi1faG9epZ/r6RAmL4Ui7NZSczYGCU3rUc3IimiEy0mRhNaz
- E8fA==
+ bh=LTDf6gXgcB1jO6b/88BcaLI6db2PR4zQsgUSxotS1SE=;
+ b=pICJk4fiRRWlL3jdHZmbDsLvuFO3SR4VI93CKBaWusOGePk6wpQGeRxv7v+wdoPTo8
+ 4NOvmCeNzxgG5BED7C4eJtihmimP1rBe0zbaHQdkEIuQDxDmpFpBHWT56gmTcSSo+KTV
+ InLhkK95XOQloKwtUsk8GaYQAtaYysW4RlhOqmlGtvmiTA1RR0ifYHynkUb7auphzONa
+ 6TNrT5ssFnjPNl9aM2NXcg88SIJM1/3V5EBvF6K2hRv6S7/O/YyRGa/gkkCI6EDLabga
+ LLk6X1unxmtgo6KSz7uemeLUEm1h5tD2GBeeM73GMBu3m1s8fHrwjoOzO4+mt1e/WutC
+ O9aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766593658; x=1767198458;
+ d=1e100.net; s=20230601; t=1766593666; x=1767198466;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gvU8IjxyyWGbnt0TpIestxRQYownf9I7RuEDkGDxUZg=;
- b=h69/TSpB9nja4J41uWMHfY+178QAfOsyyf5GI64TUd8H/G1r5fKwbmtHdaIcP25x7e
- dWNQq6XJqsxR0w2eqPwjEU/IxRF0jSXn1WmM3yBVwDrPVoVE49JMXyG+pUVSNG4m6+It
- ekzntml6Jo2a0f59RFt//6mvIMUGBbJ7YptVws5maOKq/q8KHDELcSQSp9G0PIkoR5qH
- 5G6Whq2vAjK4m7Qfpx/A5LquYkEYCrp4mwiK+D7QuCkm4wAyqBLNNIJ6ABCfsYD5hqlx
- sfsNUEEGSxbpFJtNqJwXEJ07aOz+U6nZv8Jdl06rPz3fh9ujRuEZJ20UbAq+rudaz9OW
- 48zQ==
-X-Gm-Message-State: AOJu0Yyi4wEUvr8ymA6P7QsE0xprXBTFXFS9/ESx0N254hAj2Kv84vcM
- RdVrVIe3CRryGmOkDnAXVV/ur9ICz7bXYN+nIUUrtj8KHheK8tw0TeoJS2qd+5PVf7+keJ9mw89
- DTbIrCvs=
-X-Gm-Gg: AY/fxX5fk/XDershhVvweJym71WnBW4u/eGrrm7zzj1IEgc21utcf4dN88nVy8Si+jR
- h8faAUKgfpXifl/cdln/6KLbLWRa+5xD3J3E/7whWAZ1zbpHdWDio3FLvevBfA3sdpaWr5mPd2I
- AfGUdXjzPtwM2wmBXQFgiMktajfUgQRtTEpr288Rb4Tv/9vHNp7jdTCKLsysI99eC1ZSko+bOS8
- PBqC4ERHl9DFpXWwWkjmb/wmAsUeR6JaJ3/rGTK57JSkVUWzCPLtP44rpERX7f3Eezhqy/zvvpx
- zhGOvYjDX6RZafaEHBjVsvLopFhRyxvaYmz263gGXS/r0i904u0oF2jNdVVMm2xjDLxvqioUbHu
- VXbomVIzOEzJQgok/p7fODMlSg4iybq54FvVmua2+kfLPHYEoPBvy5QZekOVShoOr4nvkdKEhdt
- Ig2G5laBDYM3zBx/bU6DSlYQo00rPV/ypG1l1hgIxPrPBn+ZZZ5KThaaCH0QswhRvpcQ==
-X-Google-Smtp-Source: AGHT+IECKB1ju5vRf8EIl9TPv74aO46F5xD1OsJDy/pGRLFl1q0bYl1GELU12gJA3D4CGaPDDxHUnA==
-X-Received: by 2002:a05:600c:5489:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-47d18bd5651mr186427835e9.11.1766593658117; 
- Wed, 24 Dec 2025 08:27:38 -0800 (PST)
+ bh=LTDf6gXgcB1jO6b/88BcaLI6db2PR4zQsgUSxotS1SE=;
+ b=sBRP//JU/VRe8n/v4T0dt/UtlLXGbAhLIAiq+HMDMUTX5RuXX++15RwiO+ORvzJ0aj
+ WRf5MFCyQl1kbf9x4jvpOcfpGFd6S25WLRF+gVK/WcV13BnFR/IQXSNZ6y0arwTByvDQ
+ 2yLWAVQWaSvnqDIxb3QZDNfqLZNShzU3onNW9ufNycLnbztlT62NLYYTzEpUjw0Zm6+6
+ 7hnN+9ui569vtMINSb02/fex4lv53n7MvaReaWVbLxxxgXSgWGBxB62CDhVkgllW2qIa
+ y47A1GVCFyMnmB4fcls4WwGucAwzo5exNXJbmpjVsvtZjHS9iCXW39ZF6hocN6qmKzSx
+ 6SWg==
+X-Gm-Message-State: AOJu0Yw0ESsc2Kj+b2xK2cSZrT8gNKP/qVYWMKzKBYWtYfOKnHLTqQBq
+ 86/lV8DzaVqKeHJffWvXzX3VJ/CrR3y0LTR833BpCDq9Ysck4TyZ/q2mZBzet5KsZDyHoCKH9IH
+ YCbNJN/4=
+X-Gm-Gg: AY/fxX7c9tfnzIlo1FICxxQrzAmawhPoOy5mBMdBb8VA/cIyBQ6dXGd+lVbgLobnFPk
+ nSUrH3rjHD12e6KJPTT/XByNdYKhmf2a5SPVy0G+RZ9IUzZ7Blt7l9lETNRJQHP7tWsSy+F3Uju
+ r3AWdxe4RUCfph1PMyGVfLtpZaIzZd0/QSr8j318Pys6zmyNY6uULcZtAaG4/x9hrk9OMjnSZ1j
+ 9TDSFzCYn0pL0GHwDq7UwSamO0Yi1twXsfWqn+Z9DU2NV4NyDo6vIwkHt760OrQoITcM6aKqk/o
+ U4aTHomBDNBLZNwcrRMGv2SAzw1cIQYOg2rVQFMXAB4c3wO60GSAIbaX0IgOyoa2vNH8aZ1BaNs
+ O3WlFTPF+okEB1Ye1eF8g48LUfpZglntwr8iw72ULG3iIhdYJbdA38JA2hH8tFlrN5PsqNsAx6S
+ hzrQL1uGCCPDPkfc+Wpt1l2W111qbJtb4GugAECIvRJym4RATm1np1NQwMrAfgB4V7IA==
+X-Google-Smtp-Source: AGHT+IGM4yy3qjYhYGpBjQgkWRJGO4Ed5v9u0Y/nYnfYihIxsR+2/oMa/4SiyS6Uwh9P8aTt2//6+A==
+X-Received: by 2002:a5d:5d08:0:b0:42b:55a1:2158 with SMTP id
+ ffacd0b85a97d-4324e4c9e43mr16959078f8f.17.1766593666250; 
+ Wed, 24 Dec 2025 08:27:46 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193d4e91sm294125295e9.13.2025.12.24.08.27.35
+ ffacd0b85a97d-4324ea82f6asm35931384f8f.27.2025.12.24.08.27.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:27:37 -0800 (PST)
+ Wed, 24 Dec 2025 08:27:45 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -76,17 +76,18 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Frederic Konrad <konrad.frederic@yahoo.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 6/9] target/sparc: Inline translator_ldl()
-Date: Wed, 24 Dec 2025 17:26:38 +0100
-Message-ID: <20251224162642.90857-7-philmd@linaro.org>
+Subject: [PATCH v3 7/9] target/sparc: Inline cpu_ldl_code() call in
+ cpu_do_interrupt()
+Date: Wed, 24 Dec 2025 17:26:39 +0100
+Message-ID: <20251224162642.90857-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224162642.90857-1-philmd@linaro.org>
 References: <20251224162642.90857-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,35 +110,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-translator_ldl() is defined in "exec/translator.h" as:
+In preparation of removing the cpu_ldl_code wrapper, inline it.
 
-  198 static inline uint32_t
-  199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
-  200 {
-  201     return translator_ldl_end(env, db, pc, MO_TE);
-  202 }
-
-Directly use the inlined form, expanding MO_TE -> MO_BE
-since we only build the SPARC targets as big-endian.
+Since SPARC instructions are always stored in big-endian order,
+replace MO_TE -> MO_BE.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sparc/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/sparc/int32_helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 23079697f52..57b50ff8b9a 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -5743,7 +5743,7 @@ static void sparc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-     DisasContext *dc = container_of(dcbase, DisasContext, base);
-     unsigned int insn;
- 
--    insn = translator_ldl(cpu_env(cs), &dc->base, dc->pc);
-+    insn = translator_ldl_end(cpu_env(cs), &dc->base, dc->pc, MO_BE);
-     dc->base.pc_next += 4;
- 
-     if (!decode(dc, insn)) {
+diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+index b29f693a6bf..d6bb3fa1e54 100644
+--- a/target/sparc/int32_helper.c
++++ b/target/sparc/int32_helper.c
+@@ -149,9 +149,11 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+          * mimic delayed trap delivery as if by the subsequent insn.
+          */
+         if (!env->fsr_qne) {
++            MemOpIdx oi = make_memop_idx(MO_BEUL, cpu_mmu_index(cs, true));
++
+             env->fsr_qne = FSR_QNE;
+             env->fq.s.addr = env->pc;
+-            env->fq.s.insn = cpu_ldl_code(env, env->pc);
++            env->fq.s.insn = cpu_ldl_code_mmu(env, env->pc, oi, 0);
+         }
+         env->pc = env->npc;
+         env->npc = env->npc + 4;
 -- 
 2.52.0
 
