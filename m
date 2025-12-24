@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE684E748FC
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83726E74905
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYDtq-0001Jh-CZ; Tue, 23 Dec 2025 20:42:50 -0500
+	id 1vYDto-0001IS-ON; Tue, 23 Dec 2025 20:42:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vYDtl-0001H8-Fo; Tue, 23 Dec 2025 20:42:46 -0500
+ id 1vYDtf-0001FF-6m; Tue, 23 Dec 2025 20:42:40 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vYDtj-00058k-EP; Tue, 23 Dec 2025 20:42:44 -0500
+ id 1vYDtc-00058k-JB; Tue, 23 Dec 2025 20:42:37 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 24 Dec
@@ -32,16 +32,18 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <nabihestefan@google.com>, Kane-Chen-AS
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v4 04/19] hw/arm/aspeed: Add AST1700 LTPI expander device model
-Date: Wed, 24 Dec 2025 09:41:43 +0800
-Message-ID: <20251224014203.756264-5-kane_chen@aspeedtech.com>
+ <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v4 02/19] hw/arm/aspeed: Attach LTPI controller to AST27X0
+ platform
+Date: Wed, 24 Dec 2025 09:41:41 +0800
+Message-ID: <20251224014203.756264-3-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251224014203.756264-1-kane_chen@aspeedtech.com>
 References: <20251224014203.756264-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -69,124 +71,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Introduce a minimal QEMU device model for the ASPEED AST1700, an
-MCU-less I/O expander used in the LTPI topology defined by the
-DC-SCM 2.0 specification (see figure 2):
-https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
+Connect the LTPI controller device (representing the AST1700 I/O
+expander) to the AST27X0 SoC model. This patch sets up the memory
+mapping and device registration according to the AST2700 SoC design,
+where the LTPI controller is exposed at fixed MMIO regions.
 
-This initial implementation includes:
-
-* Definition of aspeed.ast1700 as a SysBusDevice
-
-* Setup of a basic memory region to reserve I/O space for future
-  peripheral modeling
-
-This stub establishes the foundation for LTPI-related device emulation,
-without implementing any functional peripherals at this stage.
+This change only handles device instantiation and integration,
+without implementing the controller's internal logic.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/aspeed_ast1700.h | 23 ++++++++++++++++
- hw/arm/aspeed_ast1700.c         | 47 +++++++++++++++++++++++++++++++++
- hw/arm/meson.build              |  1 +
- 3 files changed, 71 insertions(+)
- create mode 100644 include/hw/arm/aspeed_ast1700.h
- create mode 100644 hw/arm/aspeed_ast1700.c
+ include/hw/arm/aspeed_soc.h |  5 +++++
+ hw/arm/aspeed_ast27x0.c     | 21 +++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
-new file mode 100644
-index 0000000000..2a95ebfe89
---- /dev/null
-+++ b/include/hw/arm/aspeed_ast1700.h
-@@ -0,0 +1,23 @@
-+/*
-+ * ASPEED AST1700 IO Expander
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ASPEED_AST1700_H
-+#define ASPEED_AST1700_H
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 18ff961a38..bca10c387b 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -43,6 +43,7 @@
+ #include "hw/fsi/aspeed_apb2opb.h"
+ #include "hw/char/serial-mm.h"
+ #include "hw/intc/arm_gicv3.h"
++#include "hw/misc/aspeed_ltpi.h"
+ 
+ #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+ 
+@@ -55,6 +56,7 @@
+ #define ASPEED_UARTS_NUM 13
+ #define ASPEED_JTAG_NUM  2
+ #define ASPEED_PCIE_NUM  3
++#define ASPEED_IOEXP_NUM 2
+ 
+ struct AspeedSoCState {
+     DeviceState parent;
+@@ -112,6 +114,7 @@ struct AspeedSoCState {
+     UnimplementedDeviceState ltpi;
+     UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+     AspeedAPB2OPBState fsi[2];
++    AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
+ };
+ 
+ #define TYPE_ASPEED_SOC "aspeed-soc"
+@@ -279,6 +282,8 @@ enum {
+     ASPEED_GIC_REDIST,
+     ASPEED_DEV_IPC0,
+     ASPEED_DEV_IPC1,
++    ASPEED_DEV_LTPI_CTRL1,
++    ASPEED_DEV_LTPI_CTRL2,
+ };
+ 
+ const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 70be3871bb..341b53189b 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -88,6 +88,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_UART10]    =  0x14C33900,
+     [ASPEED_DEV_UART11]    =  0x14C33A00,
+     [ASPEED_DEV_UART12]    =  0x14C33B00,
++    [ASPEED_DEV_LTPI_CTRL1] =  0x14C34000,
++    [ASPEED_DEV_LTPI_CTRL2] =  0x14C35000,
+     [ASPEED_DEV_WDT]       =  0x14C37000,
+     [ASPEED_DEV_LTPI]      =  0x30000000,
+     [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
+@@ -556,6 +558,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
+         object_property_set_int(OBJECT(&s->pcie[i]), "id", i, &error_abort);
+     }
+ 
++    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
++        object_initialize_child(obj, "ltpi-ctrl[*]",
++                                &s->ltpi_ctrl[i], TYPE_ASPEED_LTPI);
++    }
 +
-+#include "hw/sysbus.h"
+     object_initialize_child(obj, "dpmcu", &s->dpmcu,
+                             TYPE_UNIMPLEMENTED_DEVICE);
+     object_initialize_child(obj, "ltpi", &s->ltpi,
+@@ -1047,6 +1054,20 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    /* LTPI controller */
++    for (i = 0; i < ASPEED_IOEXP_NUM; i++) {
++        AspeedLTPIState *ltpi_ctrl;
++        hwaddr ltpi_base;
 +
-+#define TYPE_ASPEED_AST1700 "aspeed.ast1700"
++        ltpi_ctrl = ASPEED_LTPI(&s->ltpi_ctrl[i]);
++        ltpi_base = sc->memmap[ASPEED_DEV_LTPI_CTRL1 + i];
 +
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedAST1700SoCState, ASPEED_AST1700)
++        if (!sysbus_realize(SYS_BUS_DEVICE(ltpi_ctrl), errp)) {
++            return;
++        }
++        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(ltpi_ctrl), 0, ltpi_base);
++    }
 +
-+struct AspeedAST1700SoCState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+};
-+
-+#endif /* ASPEED_AST1700_H */
-diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
-new file mode 100644
-index 0000000000..bb6ca2ce9e
---- /dev/null
-+++ b/hw/arm/aspeed_ast1700.c
-@@ -0,0 +1,47 @@
-+/*
-+ * ASPEED AST1700 IO Expander
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/boards.h"
-+#include "hw/qdev-core.h"
-+#include "qom/object.h"
-+#include "hw/arm/aspeed_ast1700.h"
-+
-+#define AST2700_SOC_LTPI_SIZE        0x01000000
-+
-+static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    /* Occupy memory space for all controllers in AST1700 */
-+    memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
-+                       AST2700_SOC_LTPI_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+}
-+
-+static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = aspeed_ast1700_realize;
-+}
-+
-+static const TypeInfo aspeed_ast1700_info = {
-+    .name          = TYPE_ASPEED_AST1700,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedAST1700SoCState),
-+    .class_init    = aspeed_ast1700_class_init,
-+};
-+
-+static void aspeed_ast1700_register_types(void)
-+{
-+    type_register_static(&aspeed_ast1700_info);
-+}
-+
-+type_init(aspeed_ast1700_register_types);
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index aeaf654790..175942263d 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -70,6 +70,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast10x0_evb.c',
-   'fby35.c'))
- arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-+  'aspeed_ast1700.c',
-   'aspeed_ast27x0.c',
-   'aspeed_ast27x0_evb.c',
-   'aspeed_ast27x0-fc.c',
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+                                   "aspeed.dpmcu",
+                                   sc->memmap[ASPEED_DEV_DPMCU],
 -- 
 2.43.0
 
