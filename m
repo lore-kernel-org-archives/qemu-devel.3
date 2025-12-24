@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE47FE7545C
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AE9E7545C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYRL6-0000uL-RL; Wed, 24 Dec 2025 11:03:52 -0500
+	id 1vYRLM-0002oJ-Bg; Wed, 24 Dec 2025 11:04:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRL5-0000jv-4k
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:03:51 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRLK-0002iG-Q5
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:04:06 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRL3-0006pv-CL
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:03:50 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b728a43e410so1114990566b.1
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:03:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRLI-0006z6-Sc
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:04:06 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b7a6e56193cso993375466b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:04:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766592227; x=1767197027; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766592243; x=1767197043; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HmxQ9WEy0hVu6WpWDaVL5nWcD5VfHXcTym/HYUrgzEE=;
- b=blXQgQlxu6AhwrUllxznwo9ZV2hoScwo5ZooUuEK6SibdF2kXZVRnnUPRLizQtyHvS
- 7t8ZKnvuWCLT6/rFhGfLKFG2w6MC6Qq/W8BekukpOrJSf101H73cEqwuvgdSp2zeVJnf
- n29okdQ0L6UQLp/kq/YBjekRf5x/caBkwZqYnaFohmWmi4cTGHgY837N6yQXn04ZtA5P
- 08FMoHqxLDVQs6cyVnu4C9RVrZRyC8yKoEjpd9L329y3e8qoW+mO3TX6xNojZCU8oH/I
- NUEWhykg78bjeI1B/ccZxQszJ3qLJQzbTAFIts8ydEhLgmux4aUjJFs86LQLLzAaxPxO
- 0k0A==
+ bh=z9eWKXFyC8Z6JuLmxA6QqxDs8eZFIhgPCVC+BmGyXEM=;
+ b=yhoxI9AAOJrNkRCMrBqXUe3HM7M5zV6qXdUt5okbZQ80GdVz2cChKsuN8fPVRbgw6D
+ xBapkVj6TIURDqR8CuJsDfERGBx1hUUWWrtGb2egaHfj2pzAPNB7ENjSWOez+RBPcYf2
+ 2gw60+DjGRX/nCtOZ6fv4b5S64t8RjV8D1z98GIB/N6Sg9MVnphGy1jU78V9O29pEYyW
+ Bw3vZPubHj0BYfQLXmnnFw9kkCRRpwfURC8pRkx/tnhksgYmokMZdggHxXaoxOuDSWTX
+ 4VhhlgIcQURuI/Tp2sleFUjlhIO0lxm5XKM90mbheUQBqGCiK2wfEjHwFg8bWMROTymX
+ Spwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766592227; x=1767197027;
+ d=1e100.net; s=20230601; t=1766592243; x=1767197043;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HmxQ9WEy0hVu6WpWDaVL5nWcD5VfHXcTym/HYUrgzEE=;
- b=GJjMO0nHVxCO9YRtkDqspBdPK45Lg62wx/V73lNB5WO2SMXrav7dN6YN0SyU0vHi16
- cDRiFmLsqTmQwhV0ARwEiEniriaI2oAgI/yYL1BMcsb2rzXT+L5OUuOwAE2D/6Z5Y/bu
- /t9LdtuM4IeERmkmPiktqXPkO2pVIg3x5W0IJ2vEz1VP2HBEKbj7/NNXMRuZAOs2nhOd
- gNMJoIZsMpUz1vJljrZHKEVpbTx90u9UUeiUmyYRrV27W5Cidb/ooHpRmWQRsvrGRDn6
- ms4eJranhtnEnzErE8+TtWl+WruKUNxzWHPOknMMJ7XYbciNqLDtPBqbQZfqnxtK/8Ok
- VMSA==
-X-Gm-Message-State: AOJu0YxT+0wbveaviBokcnjJOstSfDUvqeZw8iKOeJf4tmTiEOl8viVD
- RM5VmVbT+Cw4FReJuLmtD/xB0EfyolXc8FxEucZpWvYds+h2sziPDt/z4qVoH+XbeLxFU2b8392
- m17RARFg=
-X-Gm-Gg: AY/fxX7nI2qGgHNYS3wG5ND/UIbdEJkKff4B2ap/LLVV2rxsedJ+nOubS1AE/CqN2Uo
- aAXSI3+keHP+Kw17Sml3Rhf/3yCXScSJelMzldFX91xbTnrbS1vHNM2bG3gktsXPL8y+5GnpysF
- RSGNcWzdo3I8to06DR7Rz+foeLXkLKlWhHt78bAn8y35XcFMw2Bd/dbXw+iS8KZAnVmFG9VxPHE
- z2Vp1gCoUV2/aviLkConv/FeSGSVnTCentQO+6JSg/fbx2Ar3AhruSEmJjKJWQZCa3vaU3HLCDU
- IfhxfLA1K9sPVryfBR5DYcmxpeKtp0K/kKKfgv5GID145CvCCP0EE70HkxoFlLUKjb8ksdysM+O
- O5VTXZVmP3ZiO2tFvG7F/xN9KcMQakO2hnn4BjgfYy7wOVuxgZD8SWRlcU547uRk6NhN/4BDDvU
- ZippeeR2juGG6OD6/NSXhcLBWBuLbD0YWNfAS2RT6Mmjb5QRW2toqEcd8=
-X-Google-Smtp-Source: AGHT+IFVx1bIu0hxdZGdlz/62B69A0WZXCjxG9nnq3/6xns+rC1uf84YmpQa84zDIYzYDktTNxBthw==
-X-Received: by 2002:a17:907:6094:b0:b72:8489:7e65 with SMTP id
- a640c23a62f3a-b80370537fdmr1964417366b.31.1766592227361; 
- Wed, 24 Dec 2025 08:03:47 -0800 (PST)
+ bh=z9eWKXFyC8Z6JuLmxA6QqxDs8eZFIhgPCVC+BmGyXEM=;
+ b=qCAnsNiA41gM0sUwxlkcVfEeEYuUofPEwJkiHOnvzwedAQTYc3P+QOKec0nxiGjbBG
+ fJZrCi2FJJ7DyfPJVnDahsntHxBVvUHgubluDGRN4/4CBjD68NopYdNfnEmrM99bE2VX
+ i3lSuoXhojsk3YU0sUEykOhXItwVOYweP/Qmxldml5vr4tmvz70g1TIISQIh6gpMy3Q+
+ 25VMeq+bQjUT6WRaJqRUak60fIW6jtYp1sSdWyhIaCsO/ChzNKMyrlZOLxAfiQtwIuEd
+ 8C+4X+2sovY0koiPLGq3T8Qq31AnYKPGKq7+KtOt0mQH98dvfLh/Rav03pi8GaEI7n8X
+ eFqQ==
+X-Gm-Message-State: AOJu0YzW/LuhWWuF0rd2ly+gyEm5kFc6iHq3KpPbCEqxKL598DH7rF8J
+ u5bYmrPrj+CjkciZLVavonitvdmCi2uVoli3KpsFwTpMe1k73tYhfEahnci7jZsPqitDrUaAdG4
+ JB847asM=
+X-Gm-Gg: AY/fxX5uO0TScZUqy/or+91GBcs8fu7nTRKSxJrInje/IM5B0ygV3pqxU7xpO+6uQn0
+ a0WQrZiKh1N5j/cypbwvWKzYzATIV8hgjt5QMk940icc4kDGrZzRJqDDRmqyaqFTfno2T/0cdwd
+ iytfdbJHMT1QRUwtKYAj+ft60N0jR+ED5/ZyDIXdQlJ7vvRqfDEChKivEZjaqk4vClh4f3Fzn8I
+ Sx7SsT29Ez2qeHkwXxMwtN5P88/GyOTRyDVu96+kA+Xn4CHacX3ARyzDO9yCMIPfD1HPJI9p1Xp
+ XAuT66VeMZO+CTCRMScUMw6CnLwq/t26kN2MFiamjHarHSOwhHzCxDjJRmKpQ+1UOu0Vhp4RRuo
+ SKpXFh9MnRuI2NcedqTd6Q/kV+K39QTzJAUB7jI/fOjwkdReuDwsqk08mtz4F4ixv7eV7E7XCO5
+ ccifHUxvJZDJB4wueEMyGz9Y9o34plrCNUdt+eWv1zz3TIiNd5lVmX5WA=
+X-Google-Smtp-Source: AGHT+IFzeCX3q+4OHoG32ga2liHAjm/V1RFXHeNod4/8J2fm8rqy3TLYZNJ0msmosSm045UMgeNiUQ==
+X-Received: by 2002:a17:907:3c87:b0:b76:3476:a83c with SMTP id
+ a640c23a62f3a-b80371d7dcbmr2019059466b.40.1766592242814; 
+ Wed, 24 Dec 2025 08:04:02 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037a61595sm1831503266b.8.2025.12.24.08.03.45
+ a640c23a62f3a-b8037f089fesm1794837366b.46.2025.12.24.08.04.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:03:46 -0800 (PST)
+ Wed, 24 Dec 2025 08:04:02 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
@@ -72,17 +72,18 @@ Cc: Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Michael Rolnik <mrolnik@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/3] hw/avr: Mark AVR-specific peripherals as little-endian
-Date: Wed, 24 Dec 2025 17:03:33 +0100
-Message-ID: <20251224160335.88861-2-philmd@linaro.org>
+Subject: [PATCH 3/3] configs/targets: Forbid AVR to use legacy native
+ endianness API
+Date: Wed, 24 Dec 2025 17:03:35 +0100
+Message-ID: <20251224160335.88861-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224160335.88861-1-philmd@linaro.org>
 References: <20251224160335.88861-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,97 +106,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These devices are only used by the AVR target, which is only
-built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
-definition expand to DEVICE_LITTLE_ENDIAN (besides, the
-DEVICE_BIG_ENDIAN case isn't tested). Simplify directly
-using DEVICE_LITTLE_ENDIAN.
+The qemu-system-avr binary is buildable without a single use
+of the legacy "native endian" API. Unset the transitional
+TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
+further uses of the legacy API.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/avr_usart.c    | 2 +-
- hw/misc/avr_power.c    | 2 +-
- hw/timer/avr_timer16.c | 6 +++---
- target/avr/helper.c    | 4 ++--
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ configs/targets/avr-softmmu.mak | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/char/avr_usart.c b/hw/char/avr_usart.c
-index fae15217e9f..5510dd3f487 100644
---- a/hw/char/avr_usart.c
-+++ b/hw/char/avr_usart.c
-@@ -255,7 +255,7 @@ static void avr_usart_write(void *opaque, hwaddr addr, uint64_t value,
- static const MemoryRegionOps avr_usart_ops = {
-     .read = avr_usart_read,
-     .write = avr_usart_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {.min_access_size = 1, .max_access_size = 1}
- };
- 
-diff --git a/hw/misc/avr_power.c b/hw/misc/avr_power.c
-index 411f016c997..d8e0d918519 100644
---- a/hw/misc/avr_power.c
-+++ b/hw/misc/avr_power.c
-@@ -69,7 +69,7 @@ static void avr_mask_write(void *opaque, hwaddr offset,
- static const MemoryRegionOps avr_mask_ops = {
-     .read = avr_mask_read,
-     .write = avr_mask_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {
-         .max_access_size = 1,
-     },
-diff --git a/hw/timer/avr_timer16.c b/hw/timer/avr_timer16.c
-index 012d8290018..110bcd58163 100644
---- a/hw/timer/avr_timer16.c
-+++ b/hw/timer/avr_timer16.c
-@@ -524,21 +524,21 @@ static void avr_timer16_ifr_write(void *opaque, hwaddr offset,
- static const MemoryRegionOps avr_timer16_ops = {
-     .read = avr_timer16_read,
-     .write = avr_timer16_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {.max_access_size = 1}
- };
- 
- static const MemoryRegionOps avr_timer16_imsk_ops = {
-     .read = avr_timer16_imsk_read,
-     .write = avr_timer16_imsk_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {.max_access_size = 1}
- };
- 
- static const MemoryRegionOps avr_timer16_ifr_ops = {
-     .read = avr_timer16_ifr_read,
-     .write = avr_timer16_ifr_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {.max_access_size = 1}
- };
- 
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index 365c8c60e19..9ee0a558ea7 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -256,7 +256,7 @@ static void avr_cpu_trap_write(void *opaque, hwaddr addr,
- const MemoryRegionOps avr_cpu_reg1 = {
-     .read = avr_cpu_reg1_read,
-     .write = avr_cpu_trap_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .valid.min_access_size = 1,
-     .valid.max_access_size = 1,
- };
-@@ -264,7 +264,7 @@ const MemoryRegionOps avr_cpu_reg1 = {
- const MemoryRegionOps avr_cpu_reg2 = {
-     .read = avr_cpu_reg2_read,
-     .write = avr_cpu_trap_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .valid.min_access_size = 1,
-     .valid.max_access_size = 1,
- };
+diff --git a/configs/targets/avr-softmmu.mak b/configs/targets/avr-softmmu.mak
+index baf20fb7f2f..154f58448ae 100644
+--- a/configs/targets/avr-softmmu.mak
++++ b/configs/targets/avr-softmmu.mak
+@@ -2,3 +2,4 @@ TARGET_ARCH=avr
+ TARGET_XML_FILES= gdb-xml/avr-cpu.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
 -- 
 2.52.0
 
