@@ -4,95 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90F8E776C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4119DE776C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:37:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQsI-0005zd-V9; Wed, 24 Dec 2025 10:34:08 -0500
+	id 1vYQvW-00075m-PP; Wed, 24 Dec 2025 10:37:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vYQsB-0005yk-Hr
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:34:00 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vYQul-00072B-Vw
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:36:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vYQs9-00075v-HK
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:33:59 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vYQui-0007fW-CA
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:36:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766590434;
+ s=mimecast20190719; t=1766590595;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=myEQTM9EAlKPT67BQ43n1thKyGeS70j9nVYWeKtmnDs=;
- b=RDqEmvwv3tm4JGwdSB3mixm7r9RCGSuBbdAMPIaxGvySJk3OLex3NsIUPFz8LUvSJEWyr9
- BniaDVa7Eish3bLBI2/0VwJGUteM5EDAT1WVZhFFK0DjST9MfsI5VZpc5/Ajh0guOHhuKn
- vl5M1oBZpukD2hoH8BG89xbE3nnuEY8=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xoR3JM9hywUgWNEAzCeZbWDsQXh9ro37T4fJLNkTV5Y=;
+ b=BTB69dMdhWqVgljJYSbZe6kHYo4Zm6b9F3LNsdRQAJ11ErWKpuAeabCNaY+xcCz2GOzUdk
+ MEzloNIfq7+SNejp5f2vcW0rqEn+QF/Rfr+467YSw20kHi+TMgRPjnil5qxw1zet/LbITq
+ hevppyAN6emBG/G1o8TUty5jEd7/z30=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-JOJhFbLWNz6LulG9y84Blg-1; Wed, 24 Dec 2025 10:33:51 -0500
-X-MC-Unique: JOJhFbLWNz6LulG9y84Blg-1
-X-Mimecast-MFC-AGG-ID: JOJhFbLWNz6LulG9y84Blg_1766590430
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4edad69b4e8so126899751cf.1
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:33:51 -0800 (PST)
+ us-mta-325-2UGdBA7YMISWS_NsOP4ZPQ-1; Wed, 24 Dec 2025 10:36:31 -0500
+X-MC-Unique: 2UGdBA7YMISWS_NsOP4ZPQ-1
+X-Mimecast-MFC-AGG-ID: 2UGdBA7YMISWS_NsOP4ZPQ_1766590591
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4edad69b4e8so126929841cf.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:36:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766590430; x=1767195230; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766590591; x=1767195391; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=myEQTM9EAlKPT67BQ43n1thKyGeS70j9nVYWeKtmnDs=;
- b=RhpVdkttKCZzvlHZE1Iq3tDTw3dGPPO6xuocm3u/+kxD1t4KwWVKdaAZ5PO80UK4fR
- aYH49EggTAdyBYxwIqkiLi+oRufmqsf5I/Hf4gSr1Z+mubK3mZT2xcsAsAusBvP28V00
- mGhmUkbqfhs82ktrp4wjgzcQfb9Ux0HRafwaPeMz+gZAnHNZ7FJccNmhP+vFKr2wVL4X
- EpLU79NeudmkA4cqLWtukTr+cTEC8ndToWkbzMgQh9cmIrf7GaC6gCeA1KiKpq3mYTWk
- 0qvqz4ZlzADQyUBKk8NyYaPWYhIk6dmU2GbetNNlJfq19Y22SIFivfzwGeqUxmY3l0/O
- bX5A==
+ bh=xoR3JM9hywUgWNEAzCeZbWDsQXh9ro37T4fJLNkTV5Y=;
+ b=Rc8ckWvVifEKJ9Cw+rL05oOCrMNnd0pg9/Fd0xYPKwWjc91tLutOqHGiJkfuOdzajt
+ XhFktQOyyaODP3qxw9lnz48mTbkU2OgyEPyIPHO+5q/yM7EYSrAMB/uz1W7NWB3ty9n4
+ IBMFemPAxSu1BGvT7TNEA3PJFhFgU94b6/91soqnavMh6gAKi8KezHK1+nzPQ88/z3QV
+ MjE3jsrA1lA/PNZs6S23opmjWYdp0yqCJCSM9Ux9w7KR5wpwrRYPTvzSIv4RyOiONrZv
+ 9W42awqVcRqdFRj6280S+ErYwZSjR3STQ8cFaQjdxuh4n0Q9iT479t+pV4byvbZeYsFa
+ fOgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766590430; x=1767195230;
+ d=1e100.net; s=20230601; t=1766590591; x=1767195391;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=myEQTM9EAlKPT67BQ43n1thKyGeS70j9nVYWeKtmnDs=;
- b=enXUb97E7YRGnFs0a+PRzkWop+uIrhoPfZ3Uq5d4rUofqPVqOtoS23GK3OYwHDY3lS
- 8HPR/b9eJr/nrTundh6XcyjDyI7GxEZlPcFzENqMzTVfC8UNRM0xp3E5U62MoQAzlsBT
- ZHE9MryM4IOzmdAUIQiCT3s2zR2hTjNO633KB6lCUpB+0yykWXjEymkRKqwNNDH28lFz
- oqiWfuKod17GUfmE4idlMiEDGaHniKqhIHCj3mLgPuaDh271T5Mk1vHsIEpTX7gjh1sv
- Codsb0+FeDyX/BBC7s7v3A+RDClWDLwyQXh6sWAiv/k5xhxEFJxyKEMyQiA+oTAX9pig
- g34g==
-X-Gm-Message-State: AOJu0YyhOj01LjphPRBW6GNRO8mviKeCvadiqa+nmI/M5GRjdfrlc43X
- FZIm9SqAw7gf9ulLsmAapCoNRTa5JYIQkaqQmH4+UfLsHzXED3M+2RAUqKmwaQdXvO97KOOHr1Y
- GiaGqareNSaCXax0HyKKHkZcIePDP8wMAq70MU2P3angnuXYJrZRcGWWq
-X-Gm-Gg: AY/fxX7Jcciab00lClUaDZ5rtWc49EOi3Z2Ku4Wto29P9TJ+QZo/ReQBOons2oG9lNN
- SCWl0RRTafwtMSkYXmnotMNfjRw9jsRKht76j88AGM3WtSBj0kOtsx48wIOkMwG8Jn561TzTurn
- bayKZeGSdNXYAj4GQ8XQrTVCO3+VAGwxiBqdgFBc0qpNwkoZpXtMyT3CoPSRK7U7mlfVL4QFkee
- NEimPezWoQgYXnTIV7lbtRQZAwpy+2W8mO4OIs46rxD+V+fBC6IQ7HGdrdS5DPF86d9qvTJJZ46
- D18oTpn86ul4rpeBn7W1uh0mTxnyS6GmZAsgTtenL+FlCfFAmfIAXfgFujDEg+euVgs7vkEHu7H
- 0YQQ=
-X-Received: by 2002:ac8:5a0d:0:b0:4f0:22fb:6c14 with SMTP id
- d75a77b69052e-4f4aadb042cmr226797421cf.32.1766590430425; 
- Wed, 24 Dec 2025 07:33:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmmOUjuTDZkzT397MQvDGoY9pTQt38/prS90Jm+i5TlHHe5oXkFjDOAk8J6DTLWKRrjwUiGA==
-X-Received: by 2002:ac8:5a0d:0:b0:4f0:22fb:6c14 with SMTP id
- d75a77b69052e-4f4aadb042cmr226797221cf.32.1766590430040; 
- Wed, 24 Dec 2025 07:33:50 -0800 (PST)
+ bh=xoR3JM9hywUgWNEAzCeZbWDsQXh9ro37T4fJLNkTV5Y=;
+ b=UuZPkGg7McGKk7WFeac/koL/dS8MTgZ3nHgaFfDANWG5jb38RK+IqLT/IIYwUp2od2
+ ELQsEEbB5dF+EBQrXqksSh+ua43wNoHJ0qQLfMe9J+q1mYm2xyCMftnKxgf2BcbnTLOr
+ bhcIsSy6poZYBxGU5XFT+tzlQn/fG20P750K8ncUR5cBLoJLsjl85V05npvgIY1qmpD7
+ wOM17gzjvZsFMT29kg4SXYJaGx+L4PIpJEElZpqB11GtjEofym+ZUPv7QY+q8mulH7q+
+ WERXCGdR8EaKjr1GG2WW0Dh8HO8YZPWfBMTqJzcH81Ao8rik6e6/79QFJgrY15UJ02S0
+ Okpw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhSlrmTdYaBWRPme/MMRNUoKW9+BVQanuRNPE/oO78hEzwcxF4b3UwURAhxpuSPrbA2UzSAhDcmyiI@nongnu.org
+X-Gm-Message-State: AOJu0YxL2LiJS3aoJ2Cj+EAhR0o1/zT0JwE63u2wBJPHqTD0uPxRzL33
+ Fsrnmmfh4qh9iE1i/L/b3r4NVOxvxIlSUxU/nnILDmHovkJNFtxss4MNbGb8xO8WE7b4Kuy6EDf
+ hNagUChvw0tQw4PFeXmQ0zAMOelPHTckJ4VKOh7rN/xtIf0nZ552+XdmM
+X-Gm-Gg: AY/fxX57bvORjDcEjDvDH0za5YaUQfRZRazp2F1WNcybgD1q+huWpBJIiokX9ACK5b1
+ Yahjx7KqYULS+sj38NjnXDeUkb38kfP2xJ5H/iDGOu0fLc7iwyct0nSo0aAd0Upnqm6yipryh35
+ 2foqpycs938hvZYY88RDiG0TImhMUNqA0CzMhZzE9ZOsHoTXoZXLquqhx2bTXrU00BD+PcXJ5+L
+ hrzptuh4KsHspmpGf9DerivcRyVz/NzRChm2TqP+xeqXLLXh7Bhjc+sCAb0/71GkKQ6fF4i6TCF
+ LSb7wHVfQqO3crJTS+7ESv4iDS+KWW1+RLLqfC+LP7b8zc7IrYKYRpLKHGMatLeDxMGEc8ZJL1I
+ rzYY=
+X-Received: by 2002:a05:622a:411b:b0:4f0:31bd:2aaa with SMTP id
+ d75a77b69052e-4f4aac5db91mr291484041cf.4.1766590591326; 
+ Wed, 24 Dec 2025 07:36:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEtHpcbE/SDDgcOrEMELG55Zz/p0ER7K6NCN9h7+miBYtWhgdNDU5P9aQDjkupQhVbIbmz6tQ==
+X-Received: by 2002:a05:622a:411b:b0:4f0:31bd:2aaa with SMTP id
+ d75a77b69052e-4f4aac5db91mr291483771cf.4.1766590590925; 
+ Wed, 24 Dec 2025 07:36:30 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4f4c46e4aabsm81159981cf.16.2025.12.24.07.33.49
+ d75a77b69052e-4f4d5f042a7sm54515841cf.27.2025.12.24.07.36.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Dec 2025 07:33:49 -0800 (PST)
-Date: Wed, 24 Dec 2025 10:33:48 -0500
+ Wed, 24 Dec 2025 07:36:30 -0800 (PST)
+Date: Wed, 24 Dec 2025 10:36:29 -0500
 From: Peter Xu <peterx@redhat.com>
 To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, philmd@linaro.org
-Subject: Re: [PATCH 2/6] memory: Factor out common ram region initialization
-Message-ID: <aUwH3O5fgklYuwOh@x1.local>
+Subject: Re: [PATCH 0/6] Implement memory_region_new_* functions
+Message-ID: <aUwIfYGUXSMOeVUg@x1.local>
 References: <cover.1766525089.git.balaton@eik.bme.hu>
- <c648e425d67ec3a7ebf51e40c2d149beb553569c.1766525089.git.balaton@eik.bme.hu>
+ <3a1bf99d-e011-4589-b7e9-662107befdc1@rsg.ci.i.u-tokyo.ac.jp>
+ <a9a43db6-1a1f-58f1-39c8-06213e9e610e@eik.bme.hu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c648e425d67ec3a7ebf51e40c2d149beb553569c.1766525089.git.balaton@eik.bme.hu>
+In-Reply-To: <a9a43db6-1a1f-58f1-39c8-06213e9e610e@eik.bme.hu>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -118,42 +121,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 23, 2025 at 10:49:58PM +0100, BALATON Zoltan wrote:
-> -bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
-> -                                      Object *owner,
-> -                                      const char *name,
-> -                                      uint64_t size,
-> -                                      Error **errp)
-> -{
-> -    return memory_region_init_ram_flags_nomigrate(mr, owner, name,
-> -                                                  size, 0, errp);
-> -}
-> -
-> -bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
-> -                                            Object *owner,
-> -                                            const char *name,
-> -                                            uint64_t size,
-> -                                            uint32_t ram_flags,
-> -                                            Error **errp)
-> +static bool memory_region_do_init_ram(MemoryRegion *mr,
-> +                                      Error *err, Error **errp)
->  {
-> -    Error *err = NULL;
-> -    memory_region_init(mr, owner, name, size);
->      mr->ram = true;
->      mr->terminates = true;
->      mr->destructor = memory_region_destructor_ram;
-> -    mr->ram_block = qemu_ram_alloc(size, ram_flags, mr, &err);
+On Wed, Dec 24, 2025 at 02:47:20PM +0100, BALATON Zoltan wrote:
+> On Wed, 24 Dec 2025, Akihiko Odaki wrote:
+> > On 2025/12/24 6:49, BALATON Zoltan wrote:
+> > > Our documentation says that memory regions are automatically freed
+> > > when the owner dies and the reference counting to do this is also
+> > > implemented. However this relies on the QOM free funtion that can only
+> > > be set by creating objects with object_new but memory API only
+> > > provides constructors that call object_initialize which clears the
+> > > free function that prevents QOM to manage the memory region lifetime.
+> > > Implement corresponding memory_region_new_* functions that do the same
+> > > as the memory_region_init_* functions but create the memory region
+> > > with object_new so the lifetime can be automatically managed by QOM as
+> > > documented.
+> > 
+> > The documentation explains the existing functions so the discrepancy
+> > between them you see should be fixed by updating them, not adding new
+> > ones.
+> 
+> Do you mean replacing memory_region_init_* with these memory_region_new_*
+> functions? The memory_region_init_* is still useful for embedded memory
+> regions that are managed by some other way which is also mentioned in the
+> documentation as an alternative so I think both of them are useful for
+> different cases. If you mean we need to update docs to refer to
+> memory_region_new instead of memory_region_init at some places then I think
+> you're right, the docs may also need to be updated or clarified.
 
-If this is moved out, the err below will never be set.  Maybe this helper
-then doesn't need errp at all.
+To me, it's less convincing to add new APIs without a solid user.
 
->      if (err) {
->          mr->size = int128_zero();
->          object_unparent(OBJECT(mr));
-> @@ -1611,6 +1594,25 @@ bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
->      return true;
->  }
+IMHO we can go either (1) leave patch 6 for later, making this series a
+cleanup first, or, (2) add users for every new functions introduced, so at
+least we know why each of the new functions are introduced and necessary.
+
+Thanks,
 
 -- 
 Peter Xu
