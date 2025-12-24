@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF89E77361
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4337E7545C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQhD-0000X4-9T; Wed, 24 Dec 2025 10:22:41 -0500
+	id 1vYQhG-0000XG-1R; Wed, 24 Dec 2025 10:22:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQgr-0000WO-Nj
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:24 -0500
-Received: from mail-ej1-x643.google.com ([2a00:1450:4864:20::643])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQh0-0000Wi-UK
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:29 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQgp-0004WZ-B9
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:17 -0500
-Received: by mail-ej1-x643.google.com with SMTP id
- a640c23a62f3a-b7355f6ef12so1140854266b.3
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:22:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQgz-0004Z6-AJ
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:22:26 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-64d30dc4ed7so6047574a12.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:22:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589733; x=1767194533; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YEJPLbPQNi2y5azifXlQaNiuaq+WMAxGeRbxn3Sx/FU=;
- b=nUl7nwFJ9HoP+b6ugi1eg6ChKf7ZEk5sQ7QzQhn/3A0pjj+6xb3xblbLCN2Gj55RwJ
- xbtNxk1PYXyEMXN7zkac5cp8mIAjkSSBOd8rWBoQZgb8qJI2fI2kf5oGoMjfB4x58Jw+
- LURwxQSfWWt8i1ePaAiTUlFr0XSgAYt+wuyI3l/gyhR1AMrjB25EdGlwb07gmTHCa93+
- Rj86ql3bhZxnmm+R4T1J5wshaCDgJeySGirwfvAj0ps19GTpCsoA9rFB+IDL7YoD1tvJ
- LdEM0ra0BbftX1dA10qaiq1FcpgNlsk0eUhKA2cSH/0taanw8rfHjChXT6YzseWAyoXj
- C+OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589733; x=1767194533;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1766589743; x=1767194543; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YEJPLbPQNi2y5azifXlQaNiuaq+WMAxGeRbxn3Sx/FU=;
- b=i/jBPItDOiJB/hAXc1BX8M8/02xAv8cn+yo15/MQz5LflpB6H2MuN+uT/1nxCmAmNF
- AkHMYwMS6L7qDYy5ms6OqSB9YgnskBLyi5M1XZborlyTh1DBCh0lTuwT+zGUIajo88KP
- IPaB9Ac4uTq4de3zNR9thz1sQYWCbUmOrHJQnkDVDevh1r9R3DOQrwmBNGwAp5NHEQbm
- uUS3FjGp3CWwkCPuwZ8RLHrk4GUKkZTKbNjL91eFVyVL8Y9yyEL8Fib9RT/wgWrOuN/l
- aECiEkD0IVi6hR7AN25YapdczDrCbwr1EINprHnuBccI9b4A44n+Qxpn7e2gVY4a/XYW
- Z6rA==
-X-Gm-Message-State: AOJu0Yx4GVsBEia+Dz+p9qi+QVf0NyDtPO2WBun3JxQQKYGNSc0xCd0Q
- JlillT8lxdAmkLHixi1/kJYUb1PBDmxzcUC3NePao4DFprXaMZEqTqst59O7/RHBjbBVMOZGKbk
- bv7qIhWo=
-X-Gm-Gg: AY/fxX49GZNpvRqs0L91ZTI+vUq+RzSrrrbkBWuLZ3OgPeCQOV8rfOJXzOwUmo9Hoe0
- Q39ZWDDmhMq/ztshfaLDKjvr9FQVFste5wEfECXx3cZlUvZJhDOXKhctEnFhJO3IYLKpAF7oEZ9
- nRiohleKBIYMg13D7GIHAa9lBfpfML+99yZRcg5b73TqM8+TD6Gqy7/dL4dkNcg+ZldfMsyG23w
- 6PtEjBr4/TEGF0ddWAu70M0ddYLkpX8cbKGame/wmAligV5wu+m4NC88zJ7b2fSj02DENlEt52V
- o5m38DMmMg9MpiWjX24+zQglh0V0j++eUccPITFygdG0r6RuurzBKiN50jE4cuYve/kqVu6S8Z5
- 4zzS5XWBZynNSs/tTPKDdveYe6NfaJKAPO7TsMfUytrSTcgSXtBo6/7zEp/S+q6z30Q9fjb/lnz
- e24jBXo6zeekiGZ0eb0lewyIxBgwBLwWTv62t6jcsu0Y3pRNFdFReylmPZe5TH
-X-Google-Smtp-Source: AGHT+IFufpbcq5X2Tg/JDQt+6hHbW40mOzV8fiWZz2hZfy8ozKmYje75dAS7rE2CSI4rlzUL3O0IVg==
-X-Received: by 2002:a17:907:2d94:b0:b73:7a44:b4d5 with SMTP id
- a640c23a62f3a-b8037051a07mr1836523166b.41.1766589732816; 
- Wed, 24 Dec 2025 07:22:12 -0800 (PST)
+ bh=hkVIzod7Jlt9VwHGoLmEeZpRAVX+tz7dmFt8d4zgWHg=;
+ b=RQN6DnewFJNGfyf4temC/2rz5Ry+mCgRKmdNBN83TG2q64oEj83xNIP4HZdw6BfIVr
+ HeG9M5YiL+If0hebFZIz8A4gg+JX76TM6YZnpKD36MazeBwzk4uxqIwq2PumqQkEqCbU
+ z9rXvn5a3yITxEegOtLZKWucoG2qh9GVqhzFzmKYQYVCDuSEcfb/xZ5SVZ7y/ylP+VWt
+ Y6/1+UZAShTfXhxaKxxKDiezWslTBBf46f88stKV5D1SJQByxqwzuXU1N8gTHJ0nLDnj
+ bSQWmSFgNIptQo3Iozka8qCELY0ZEheE0epGTNA8BLypQ2GSs90RkbHnIlDgbu7Ydh9t
+ tyYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766589743; x=1767194543;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hkVIzod7Jlt9VwHGoLmEeZpRAVX+tz7dmFt8d4zgWHg=;
+ b=XF5fmcuPDaT3CQxa+wH350kPGyS75lJPms+l1MH0KmRMvUMqvG3oy99cRcgKuKXZWA
+ fkhXRVFhAaywoJyeE0KXi7t6OWrLg63OKMrmPGw8Cx7btALAnr2N06eVMOoiSbIE8Z6D
+ DuJeivrJWvk6SOO2bRFcO4KFsLFGvK7JMPi4eUQBXoNMxVYlVhJIsDpsrw+3NM+oDNeu
+ AckXbxFAJieb/K64h8TvuQ5aYW+94uGt0ONoISfEUyuz6CpXXJKPYlGTa8cauhP+eOdQ
+ vlzF6ZDueb4XY6IXXmW5wbtAa4kLM9ECFTgh6uvcwtYzssUr6tBuuE/wNvbcbch/LRqT
+ V2EQ==
+X-Gm-Message-State: AOJu0YxQOw6EI36RkF+u53vJ9YaHdNvVRchGcZ0ayke/5Jhr53qzd1Il
+ 3Jb28QQFZgsk8JEKyWsUyx7Gq3IFpU4qRP9Z4NNDodt0QqubtKfqJMn1rFGuu9brsuhbTuqkkG2
+ xyvei9sw=
+X-Gm-Gg: AY/fxX7HgmK8hdb8JVeCugxYiWivU38V0G62xWfSl1yYyu22ONQA8m1HMMue6l0v2RP
+ K5PGkMt0EZSeTX6uMbMD385xJnyVC6k2E8PtiAeFxAbBZ13A46hxDB8I0qKROjVgpezRHK211lo
+ vvdemedCZgZcJDHU/oH2Y9CYoBseiJhs2rBR4mjbWlVAUUJoffgKxTY3uGxjIF+3XJNwsjKH4jS
+ fac/eSFdRLgHK15+UZlGHoBsr6QUUIN7gA6QmyAglJXhwoOaR0VSiGc8D5wlXzXsDqFMt7esH8Z
+ FyI9o+h2xmmnCTPoTY0lDnWMT0OtZV0wDa5TTzKiYlRqsec8KX21QBGfcslwxOTlzw6o5GysnBf
+ W7T+voO7fOVAEvF2BTIh0fhsr4ck4jiY8CZXGqPTJSI+lhxz+TKw/hl4pfpsMa3Up0RtEhiykuY
+ RTxBu8lM1CQxk+Z274trRb9oeKWJMXcd+AkrqEFAn3g9BYuObDLDXahDJorxvM
+X-Google-Smtp-Source: AGHT+IFCFP/Ws3smhbQ3ehynm4pyGDC9i8FAOml6nKbdNtopSP407NTKck6KGvaBY0p+NtUgYyY6jw==
+X-Received: by 2002:a17:907:e109:b0:b80:4030:1eca with SMTP id
+ a640c23a62f3a-b804030298fmr1323500966b.2.1766589743301; 
+ Wed, 24 Dec 2025 07:22:23 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037a6050dsm1812448966b.9.2025.12.24.07.22.11
+ a640c23a62f3a-b8037ae2de9sm1833760166b.26.2025.12.24.07.22.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:22:12 -0800 (PST)
+ Wed, 24 Dec 2025 07:22:22 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,17 +72,19 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 00/25] system/memory: Clean ups around address_space_ldst()
- endian variants
-Date: Wed, 24 Dec 2025 16:21:43 +0100
-Message-ID: <20251224152210.87880-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@kernel.org>
+Subject: [PATCH v3 01/25] system/physmem: Inline and remove leul_to_cpu()
+Date: Wed, 24 Dec 2025 16:21:44 +0100
+Message-ID: <20251224152210.87880-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251224152210.87880-1-philmd@linaro.org>
+References: <20251224152210.87880-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::643;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x643.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,93 +107,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v2:
-- Changed opt-out to opt-in approach (Pierrick)
-- Split big patches in smaller ones
-- Mark ioport little-endian
+leul_to_cpu() is only used within physmem.c: inline it
+and remove.
+Since @bitmap is of 'unsigned long' type, use its size
+with ldn_le_p() instead of using HOST_LONG_BITS.
 
-tag: https://gitlab.com/philmd/qemu/-/tags/sysmem_ldst_endian-v3
-CI: https://gitlab.com/philmd/qemu/-/pipelines/2231223066
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/qemu/bswap.h | 11 -----------
+ system/physmem.c     |  5 +++--
+ 2 files changed, 3 insertions(+), 13 deletions(-)
 
-Philippe Mathieu-Daudé (25):
-  system/physmem: Inline and remove leul_to_cpu()
-  system/physmem: Convert DEBUG_SUBPAGE printf() to trace events
-  system/physmem: Use explicit endianness in subpage_ops::read/write()
-  system/memory: Split MemoryRegionCache API to 'memory_cached.h'
-  system/memory: Move *ldst* headers from exec/ to system/ namespace
-  system/memory: Inline address_space_stq_internal()
-  system/memory: Define address_space_ldst[W] endian variants via
-    template
-  system/memory: Define address_space_ldst[L] endian variants via
-    template
-  system/memory: Define address_space_ldst[Q] endian variants via
-    template
-  system/memory: Factor address_space_ldst[M]_internal() helper out
-  system/memory: Pass device_endian argument as MemOp bit
-  system/memory: Directly call address_space_ldst[M]_internal() helper
-  system/memory: Introduce LD/ST helpers with @n suffix (variable size)
-  system/memory: Use explicit endianness in ram_device::read/write()
-  system: Allow restricting the legacy ld/st_phys() 'native-endian' API
-  system: Allow restricting the legacy ld/st_he() 'native-endian' API
-  system: Allow restricting legacy address_space_ldst() native-endian
-    API
-  system: Allow restricting the legacy cpu_ld/st() 'native-endian' API
-  system: Allow restricting the legacy translator_ld() 'native-endian'
-    API
-  system: Allow restricting the legacy tswap() 'native-endian' API
-  system: Allow restricting the legacy MO_TE* 'native-endian'
-    definitions
-  system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition
-  tests/qtest: Remove unnecessary 'qemu/bswap.h' include
-  system/ioport: Declare x86-specific I/O port in little-endian order
-  system/ioport: Do not open-code address_space_ld/st_le() methods
-
- MAINTAINERS                                   |   4 +
- docs/devel/loads-stores.rst                   |  10 +-
- include/accel/tcg/cpu-ldst.h                  |   2 +
- include/exec/cpu-common.h                     |   2 +
- include/exec/memop.h                          |   4 +
- include/exec/translator.h                     |   5 +-
- include/exec/tswap.h                          |   3 +
- include/hw/virtio/virtio-access.h             |   1 +
- include/qemu/bswap.h                          |  16 +-
- include/system/memory.h                       | 189 +-------
- include/system/memory_cached.h                | 209 ++++++++
- system/memory-internal.h                      |   2 +
- tests/qtest/pnv-xive2-common.h                |   1 -
- include/exec/memory_ldst.h.inc                |  65 ---
- include/exec/memory_ldst_phys.h.inc           | 144 ------
- include/system/memory_ldst.h.inc              |  41 ++
- .../{exec => system}/memory_ldst_cached.h.inc |   0
- include/system/memory_ldst_endian.h.inc       |  37 ++
- include/system/memory_ldst_phys.h.inc         |  47 ++
- include/system/memory_ldst_phys_endian.h.inc  |  57 +++
- system/ioport.c                               |  34 +-
- system/memory.c                               |  68 ++-
- system/physmem.c                              | 111 +++--
- tests/qtest/aspeed_smc-test.c                 |   1 -
- tests/qtest/ast2700-smc-test.c                |   1 -
- tests/qtest/endianness-test.c                 |  10 +-
- tests/qtest/libqos/fw_cfg.c                   |   1 -
- tests/qtest/libqos/i2c-omap.c                 |   1 -
- tests/qtest/libqtest.c                        |  13 +-
- tests/qtest/pnv-spi-seeprom-test.c            |   1 -
- tests/qtest/vmcoreinfo-test.c                 |   1 -
- system/memory_ldst.c.inc                      | 449 ++----------------
- system/memory_ldst_endian.c.inc               |  84 ++++
- scripts/make-config-poison.sh                 |   1 +
- system/trace-events                           |   6 +
- 35 files changed, 708 insertions(+), 913 deletions(-)
- create mode 100644 include/system/memory_cached.h
- delete mode 100644 include/exec/memory_ldst.h.inc
- delete mode 100644 include/exec/memory_ldst_phys.h.inc
- create mode 100644 include/system/memory_ldst.h.inc
- rename include/{exec => system}/memory_ldst_cached.h.inc (100%)
- create mode 100644 include/system/memory_ldst_endian.h.inc
- create mode 100644 include/system/memory_ldst_phys.h.inc
- create mode 100644 include/system/memory_ldst_phys_endian.h.inc
- create mode 100644 system/memory_ldst_endian.c.inc
-
+diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+index 39ba64046a6..65a1b3634f4 100644
+--- a/include/qemu/bswap.h
++++ b/include/qemu/bswap.h
+@@ -375,17 +375,6 @@ static inline void stq_be_p(void *ptr, uint64_t v)
+     stq_he_p(ptr, be_bswap(v, 64));
+ }
+ 
+-static inline unsigned long leul_to_cpu(unsigned long v)
+-{
+-#if HOST_LONG_BITS == 32
+-    return le_bswap(v, 32);
+-#elif HOST_LONG_BITS == 64
+-    return le_bswap(v, 64);
+-#else
+-# error Unknown sizeof long
+-#endif
+-}
+-
+ /* Store v to p as a sz byte value in host order */
+ #define DO_STN_LDN_P(END) \
+     static inline void stn_## END ## _p(void *ptr, int sz, uint64_t v)  \
+diff --git a/system/physmem.c b/system/physmem.c
+index c9869e4049f..1292f49095f 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1254,7 +1254,8 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+ 
+             for (k = 0; k < nr; k++) {
+                 if (bitmap[k]) {
+-                    unsigned long temp = leul_to_cpu(bitmap[k]);
++                    unsigned long temp = ldn_le_p(&bitmap[k],
++                                                  sizeof(bitmap[k]));
+ 
+                     nbits = ctpopl(temp);
+                     qatomic_or(&blocks[DIRTY_MEMORY_VGA][idx][offset], temp);
+@@ -1301,7 +1302,7 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+          */
+         for (i = 0; i < len; i++) {
+             if (bitmap[i] != 0) {
+-                c = leul_to_cpu(bitmap[i]);
++                c = ldn_le_p(&bitmap[i], sizeof(bitmap[i]));
+                 nbits = ctpopl(c);
+                 if (unlikely(global_dirty_tracking & GLOBAL_DIRTY_DIRTY_RATE)) {
+                     total_dirty_pages += nbits;
 -- 
 2.52.0
 
