@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD546E748FC
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B00E748FC
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:43:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYDu0-0001LN-WE; Tue, 23 Dec 2025 20:43:01 -0500
+	id 1vYDuC-0001Yt-Tr; Tue, 23 Dec 2025 20:43:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vYDti-0001G5-Un; Tue, 23 Dec 2025 20:42:44 -0500
+ id 1vYDu4-0001MM-5L; Tue, 23 Dec 2025 20:43:04 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vYDtg-00058k-MF; Tue, 23 Dec 2025 20:42:42 -0500
+ id 1vYDu2-00058k-Id; Tue, 23 Dec 2025 20:43:03 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 24 Dec
- 2025 09:42:05 +0800
+ 2025 09:42:07 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 24 Dec 2025 09:42:05 +0800
+ Transport; Wed, 24 Dec 2025 09:42:07 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -32,10 +32,11 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <nabihestefan@google.com>, Kane-Chen-AS
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v4 03/19] hw/misc: Add basic Aspeed PWM model
-Date: Wed, 24 Dec 2025 09:41:42 +0800
-Message-ID: <20251224014203.756264-4-kane_chen@aspeedtech.com>
+ <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v4 09/19] hw/arm/aspeed: Attach SRAM device to AST1700 model
+Date: Wed, 24 Dec 2025 09:41:48 +0800
+Message-ID: <20251224014203.756264-10-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251224014203.756264-1-kane_chen@aspeedtech.com>
 References: <20251224014203.756264-1-kane_chen@aspeedtech.com>
@@ -69,240 +70,105 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Add an initial PWM model for Aspeed SoCs, including device state,
-register definitions, and basic initialization as a sysbus device.
+Map the SRAM device to AST1700 model
 
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/aspeed_soc.h  |   3 +-
- include/hw/misc/aspeed_pwm.h |  31 +++++++++
- hw/misc/aspeed_pwm.c         | 121 +++++++++++++++++++++++++++++++++++
- hw/misc/meson.build          |   1 +
- hw/misc/trace-events         |   4 ++
- 5 files changed, 159 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/misc/aspeed_pwm.h
- create mode 100644 hw/misc/aspeed_pwm.c
+ include/hw/arm/aspeed_ast1700.h |  2 ++
+ hw/arm/aspeed_ast1700.c         | 18 ++++++++++++++++++
+ hw/arm/aspeed_ast27x0.c         |  1 +
+ 3 files changed, 21 insertions(+)
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index bca10c387b..7b08cca908 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -28,6 +28,7 @@
- #include "hw/misc/aspeed_hace.h"
- #include "hw/misc/aspeed_sbc.h"
- #include "hw/misc/aspeed_sli.h"
-+#include "hw/misc/aspeed_pwm.h"
- #include "hw/watchdog/wdt_aspeed.h"
- #include "hw/net/ftgmac100.h"
- #include "target/arm/cpu.h"
-@@ -88,6 +89,7 @@ struct AspeedSoCState {
-     MemoryRegion secsram;
-     UnimplementedDeviceState sbc_unimplemented;
-     AspeedSDMCState sdmc;
-+    AspeedPWMState pwm;
-     AspeedWDTState wdt[ASPEED_WDTS_NUM];
-     FTGMAC100State ftgmac100[ASPEED_MACS_NUM];
-     AspeedMiiState mii[ASPEED_MACS_NUM];
-@@ -108,7 +110,6 @@ struct AspeedSoCState {
-     UnimplementedDeviceState video;
-     UnimplementedDeviceState emmc_boot_controller;
-     UnimplementedDeviceState dpmcu;
--    UnimplementedDeviceState pwm;
-     UnimplementedDeviceState espi;
-     UnimplementedDeviceState udc;
-     UnimplementedDeviceState ltpi;
-diff --git a/include/hw/misc/aspeed_pwm.h b/include/hw/misc/aspeed_pwm.h
-new file mode 100644
-index 0000000000..13dc3ea45b
---- /dev/null
-+++ b/include/hw/misc/aspeed_pwm.h
-@@ -0,0 +1,31 @@
-+/*
-+ * ASPEED PWM Controller
-+ *
-+ * Copyright (C) 2017-2021 IBM Corp.
-+ *
-+ * This code is licensed under the GPL version 2 or later.  See
-+ * the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef ASPEED_PWM_H
-+#define ASPEED_PWM_H
-+
-+#include "hw/sysbus.h"
-+
-+#define TYPE_ASPEED_PWM "aspeed.pwm"
-+#define ASPEED_PWM(obj) OBJECT_CHECK(AspeedPWMState, (obj), TYPE_ASPEED_PWM)
-+
-+#define ASPEED_PWM_NR_REGS (0x10C >> 2)
-+
-+typedef struct AspeedPWMState {
-+    /* <private> */
-+    SysBusDevice parent;
-+
-+    /*< public >*/
-+    MemoryRegion iomem;
-+    qemu_irq irq;
-+
-+    uint32_t regs[ASPEED_PWM_NR_REGS];
-+} AspeedPWMState;
-+
-+#endif /* _ASPEED_PWM_H_ */
-diff --git a/hw/misc/aspeed_pwm.c b/hw/misc/aspeed_pwm.c
-new file mode 100644
-index 0000000000..de209274af
---- /dev/null
-+++ b/hw/misc/aspeed_pwm.c
-@@ -0,0 +1,121 @@
-+/*
-+ * ASPEED PWM Controller
-+ *
-+ * Copyright (C) 2017-2021 IBM Corp.
-+ *
-+ * This code is licensed under the GPL version 2 or later.  See
-+ * the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/error-report.h"
-+#include "hw/misc/aspeed_pwm.h"
-+#include "qapi/error.h"
-+#include "migration/vmstate.h"
-+
-+#include "trace.h"
-+
-+static uint64_t aspeed_pwm_read(void *opaque, hwaddr addr,
-+                                     unsigned int size)
-+{
-+    AspeedPWMState *s = ASPEED_PWM(opaque);
-+    uint64_t val = 0;
-+
-+    addr >>= 2;
-+
-+    if (addr >= ASPEED_PWM_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr << 2);
-+    } else {
-+        val = s->regs[addr];
-+    }
-+
-+    trace_aspeed_pwm_read(addr << 2, val);
-+
-+    return val;
-+}
-+
-+static void aspeed_pwm_write(void *opaque, hwaddr addr, uint64_t data,
-+                              unsigned int size)
-+{
-+    AspeedPWMState *s = ASPEED_PWM(opaque);
-+
-+    trace_aspeed_pwm_write(addr, data);
-+
-+    addr >>= 2;
-+
-+    if (addr >= ASPEED_PWM_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr << 2);
-+        return;
-+    }
-+
-+    s->regs[addr] = data;
-+}
-+
-+static const MemoryRegionOps aspeed_pwm_ops = {
-+    .read = aspeed_pwm_read,
-+    .write = aspeed_pwm_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void aspeed_pwm_reset(DeviceState *dev)
-+{
-+    struct AspeedPWMState *s = ASPEED_PWM(dev);
-+
-+    memset(s->regs, 0, sizeof(s->regs));
-+}
-+
-+static void aspeed_pwm_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedPWMState *s = ASPEED_PWM(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    sysbus_init_irq(sbd, &s->irq);
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_pwm_ops, s,
-+            TYPE_ASPEED_PWM, 0x1000);
-+
-+    sysbus_init_mmio(sbd, &s->iomem);
-+}
-+
-+static const VMStateDescription vmstate_aspeed_pwm = {
-+    .name = TYPE_ASPEED_PWM,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, AspeedPWMState, ASPEED_PWM_NR_REGS),
-+        VMSTATE_END_OF_LIST(),
-+    }
-+};
-+
-+static void aspeed_pwm_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = aspeed_pwm_realize;
-+    device_class_set_legacy_reset(dc, aspeed_pwm_reset);
-+    dc->desc = "Aspeed PWM Controller";
-+    dc->vmsd = &vmstate_aspeed_pwm;
-+}
-+
-+static const TypeInfo aspeed_pwm_info = {
-+    .name = TYPE_ASPEED_PWM,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedPWMState),
-+    .class_init = aspeed_pwm_class_init,
-+};
-+
-+static void aspeed_pwm_register_types(void)
-+{
-+    type_register_static(&aspeed_pwm_info);
-+}
-+
-+type_init(aspeed_pwm_register_types);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 45b16e7797..7afe1d0009 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -137,6 +137,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_i3c.c',
-   'aspeed_lpc.c',
-   'aspeed_ltpi.c',
-+  'aspeed_pwm.c',
-   'aspeed_scu.c',
-   'aspeed_sbc.c',
-   'aspeed_sdmc.c',
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index eeb9243898..f7870babba 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -299,6 +299,10 @@ aspeed_i3c_write(uint64_t offset, uint64_t data) "I3C write: offset 0x%" PRIx64
- aspeed_i3c_device_read(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64
- aspeed_i3c_device_write(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64
+diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
+index a0d6b3ae44..23588f7a81 100644
+--- a/include/hw/arm/aspeed_ast1700.h
++++ b/include/hw/arm/aspeed_ast1700.h
+@@ -20,9 +20,11 @@ struct AspeedAST1700SoCState {
+     SysBusDevice parent_obj;
  
-+# aspeed_pwm.c
-+aspeed_pwm_read(uint64_t offset, uint64_t data) "read: offset 0x%" PRIx64 " data 0x%" PRIx64
-+aspeed_pwm_write(uint64_t offset, uint64_t data) "write: offset 0x%" PRIx64 " data 0x%" PRIx64
+     MemoryRegion iomem;
++    uint8_t board_idx;
+ 
+     AspeedLTPIState ltpi;
+     SerialMM uart;
++    MemoryRegion sram;
+ };
+ 
+ #endif /* ASPEED_AST1700_H */
+diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
+index f444582795..cb07d94054 100644
+--- a/hw/arm/aspeed_ast1700.c
++++ b/hw/arm/aspeed_ast1700.c
+@@ -14,13 +14,16 @@
+ #include "hw/arm/aspeed_ast1700.h"
+ 
+ #define AST2700_SOC_LTPI_SIZE        0x01000000
++#define AST1700_SOC_SRAM_SIZE        0x00040000
+ 
+ enum {
++    ASPEED_AST1700_DEV_SRAM,
+     ASPEED_AST1700_DEV_UART12,
+     ASPEED_AST1700_DEV_LTPI_CTRL,
+ };
+ 
+ static const hwaddr aspeed_ast1700_io_memmap[] = {
++    [ASPEED_AST1700_DEV_SRAM]      =  0x00BC0000,
+     [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+     [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
+ };
+@@ -29,12 +32,21 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+ {
+     AspeedAST1700SoCState *s = ASPEED_AST1700(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    char dev_name[32];
+ 
+     /* Occupy memory space for all controllers in AST1700 */
+     memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
+                        AST2700_SOC_LTPI_SIZE);
+     sysbus_init_mmio(sbd, &s->iomem);
+ 
++    /* SRAM */
++    snprintf(dev_name, sizeof(dev_name), "aspeed.ioexp-sram.%d", s->board_idx);
++    memory_region_init_ram(&s->sram, OBJECT(s), dev_name,
++                           AST1700_SOC_SRAM_SIZE, errp);
++    memory_region_add_subregion(&s->iomem,
++                            aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SRAM],
++                            &s->sram);
 +
- # aspeed_sdmc.c
- aspeed_sdmc_write(uint64_t reg, uint64_t data) "reg @0x%" PRIx64 " data: 0x%" PRIx64
- aspeed_sdmc_read(uint64_t reg, uint64_t data) "reg @0x%" PRIx64 " data: 0x%" PRIx64
+     /* UART */
+     qdev_prop_set_uint8(DEVICE(&s->uart), "regshift", 2);
+     qdev_prop_set_uint32(DEVICE(&s->uart), "baudbase", 38400);
+@@ -69,11 +81,17 @@ static void aspeed_ast1700_instance_init(Object *obj)
+ 
+     return;
+ }
++
++static const Property aspeed_ast1700_props[] = {
++    DEFINE_PROP_UINT8("board-idx", AspeedAST1700SoCState, board_idx, 0),
++};
++
+ static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->realize = aspeed_ast1700_realize;
++    device_class_set_props(dc, aspeed_ast1700_props);
+ }
+ 
+ static const TypeInfo aspeed_ast1700_info = {
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 678d4eb6d9..f2418e0e45 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -1096,6 +1096,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+ 
+     /* IO Expander */
+     for (i = 0; i < sc->ioexp_num; i++) {
++        qdev_prop_set_uint8(DEVICE(&s->ioexp[i]), "board-idx", i);
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioexp[i]), errp)) {
+             return;
+         }
 -- 
 2.43.0
 
