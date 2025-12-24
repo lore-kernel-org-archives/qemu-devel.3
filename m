@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10506E7545C
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC0DE77361
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQjP-0004sW-PT; Wed, 24 Dec 2025 10:24:57 -0500
+	id 1vYQjq-0005N2-An; Wed, 24 Dec 2025 10:25:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQj9-0004ZD-0T
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:24:45 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQjV-0004zt-SX
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:03 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQj4-0004nC-9g
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:24:36 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-64b4f730a02so9769927a12.0
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:24:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQjU-0004vw-5B
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:01 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-64b7a38f07eso7575779a12.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:24:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589870; x=1767194670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589898; x=1767194698; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I6HMTxxs6Ve5Sks2R1l9RktCbKwSNfSiUvebbKXSoPQ=;
- b=Lw8IQ/pRcmKQLYge8+Yz7w0r8nHsMoWoDcrAOtmyJSRETW61udmd+11Y5zYTCkFA94
- Es0K/JQUBb3v6ig6jRK8Vw1RugmKAU3kYgdpZNbqcmyK4TIX6A5spjmPEZKjTPGBRBwL
- GsiCj+hLEdkdksAIXOkP07tRJWkHY3kVYtuqeQKCWsG2II2PlMgoF+SPCdLSVKa1Hw+s
- QKoQJx9zkXprH8luaQTSuATJpOOB4aVyZZCyd3FQQ3ObqUvxiWXe1s3OPpYSB5nuKI4Z
- 1Dz9e0hxo8/I8zT8LgYhDYFx/1CnpVR83qsCiRrJZFheTdwVrmQE5jfgzrWExEfTHGCX
- QUKw==
+ bh=ZCJ1tlPjLJjE+wtGLHdyiDA4PF+BOmUksuMCTAUXTnc=;
+ b=qeQJ4DcIciJMW8URZJ3P3cSYBMRtGPsQlCfgXzWk5RqJwOk9S79PsnV3Zf74fcVT5T
+ KMdvbxFmLdlWct2lXH9hAH3ZF1Xp4mGsgjsWcapZvK3noHEDSMTq9+EqYCW7cOQ76HGO
+ OnMagEwneYb3CV53G2nSB4+lVCcqt9HqMnVFntojQTK16x3bbsNb4ryAX/QX1rIEnQHy
+ sIqGg8VnLMMHuD92P8A2gmy01O6toJO1pKR2LAw4fbqMRFIQAg6o5iEHM93eIEWatZXg
+ TykfNEIy6qKwUBBplQg9BIh1BzIGlYoEeM6lMtdpPtA8J4azGLDydwx65mtA8t3MI+4o
+ Zp9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589870; x=1767194670;
+ d=1e100.net; s=20230601; t=1766589898; x=1767194698;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=I6HMTxxs6Ve5Sks2R1l9RktCbKwSNfSiUvebbKXSoPQ=;
- b=OptES95VH+Gad5Bw4URrhWLemkmNL4Ue5Lz9CZFWEnyoaNhatoqzyApotdlr5IHN1s
- DIlH3uZggQog+06Ie71F0A1fKPH+Vwv7McCrEYCdREmx6AE/+aXrPphjrRdYX1jG+zv0
- DClM8srBZnSiVJnOLRrYEYB78APZy97JY3NW6OjEnFyjFQUKzhvdK04ignS1NF/8vkoh
- BPgw33VuiltoaaIDvQnLjFjXsY8n69E3kMjPXT1uEjYVDuncO0UM91/A2E4nbz3j74AU
- Xcw15zgAZXFPcmyqMbkHg/xBNPC+gjCmxgxlaBMCGH+yF03ux1x4lFLGptn8DlEykTdT
- liew==
-X-Gm-Message-State: AOJu0YydtsVXT9XP+uw8siVjOQVLx6KaQC9jmGNL0A8BshTdB/KdWnJd
- Eomp4DKMrj7yOt+gP4my09qlW7fWra95iF7TP74mPQMTui8fod+p2cyPP7+WVQcXiEzCVqjeN+k
- edx85u58=
-X-Gm-Gg: AY/fxX45MhWEAaTS2EJRy2E39qaLSuBIfBnLKmIQEMAR8R65o6rrCAvLFmgo46tqf9y
- ZArjLXr5Xwdq3HGRY5l0A2j+WzEX4vXvSuSDOuT/wC8TXM5Ge8gqowaXnLm0Ls2WuPA9KvNaT7E
- pzIOi/dHILE9Cs+1vq4R6Dy1vrKvP1X+kOZiUS/w7hGPcKgI71TzFB+htGannM1vl3FQIw/01KT
- 4yp5ktQZIhhcY6JbavDPUgQTIaIWbPY9zIe6Mq0cCoPQAai4HpAp2kNmSaoGv9Q2ybPc68oPsyU
- kXgCm6QJ1aFrv5ukIhKReuBl2M8sShypLmvMqXUUwZvR8+rGG9eJCJjp5VYHdUBjdaXVFnwouC7
- FlNnROnDuhzN0nZ5Toqx4eYHcusbAr3Eom6I/hWZZRcKXYhRNGSyQdLtNvPdM0I/4RHhdCz453c
- Fy5vRxeoVN0CqTk53YhAdKVakuP4f/5TKVb/TtNyi1JXAgIYGB2K23tAA=
-X-Google-Smtp-Source: AGHT+IHykvB/+tVzUX2j/nsmsWYciJgYvbhQSmiDYoaGzTUaeOfEnMinypkoyN9q7gjm8BukjHS7aw==
-X-Received: by 2002:a05:6402:2356:b0:64d:4f75:aa28 with SMTP id
- 4fb4d7f45d1cf-64d4f75adb0mr11287635a12.18.1766589870379; 
- Wed, 24 Dec 2025 07:24:30 -0800 (PST)
+ bh=ZCJ1tlPjLJjE+wtGLHdyiDA4PF+BOmUksuMCTAUXTnc=;
+ b=qtLSSbA0DJyBQdgTWna2r0yXbKKnf5/Iwf326h3SVmyTmRSVB6c6SSVMZgaTL/SOJ4
+ GpFRniFZbKpBy/6jObrBDhf/xPJaiZ3pCXL5k9D29b3cEN6knsz8g3G3Z8RMJ7I3VpLS
+ uRc1eKdrQqZ53aycSL+xlGMUjDLs+dyrP8u+K3qZFPMHZqs9gbW7djOqYYXPgdzF2gHZ
+ XQXzkrO4gV3hhHLDaDVxrTKrYNRKTQGLyKiBeasP5W65joIUwU9RhnCzahEvqPLC8qtU
+ vZSYVda+CK9i4fxvsA6GM8je08+DoMXmQjXwjCS4G1Q2Es8qd2BDNGBt/5O8ev0GoKrK
+ Lt6Q==
+X-Gm-Message-State: AOJu0YwzjaPysl6fgoIR2eZKKXOI/Y4OYHWmX4AgOBOpnbRv5eeJy7QP
+ c5XChFWcC3MeGvPFhp89qK8iJl1nhABKD/qOFMLrq/GtB1okdP10VdWffFr/7B11Xcc8b3dUkIo
+ ufXn6xRM=
+X-Gm-Gg: AY/fxX6tPPk8d/bTwJxXKh/57D5ZgURr744zDKD8PbjsNfCl95iMf7UE8VueOmjc/n/
+ F56az//lyVMglcLSb2TmlMGcorYzIlJNf4QHi87r9sNDszTp60vjUbJ24pbP+QVq6lrutMkWLEh
+ ar8K0f/dIVzoaiv2axa98GJExDMVICi0SjPj68RDEdMVS7Shnvur9Cpbzsx1Na846H4OiEb118K
+ GqaWPD66cY67cbo8qh74DODWOJWqCo1vkavSXXMs2eOx8DGdnJXOT7Jh8CSjR7KDuOz+Dg4O2/s
+ p0KblUyJ1oheTjXCeKl81CVrZRDCHJqqqigJTEqESbGi2kI9+uWxDTqbIQKLF22bZ9xzxqb2rEP
+ tcbXqIUuWw+im7bVWJPc1ngmqnSSP6MIiFoC7aQNBmEswfsA7MyrUae05tuiYunASajljZ0BmyQ
+ Uo8nhyyhPjwhqQc26wi4kR3uLl/2/An6WESWkumXaG4qT3BuXdImBAklU=
+X-Google-Smtp-Source: AGHT+IGW37h7sre+BEeKMCinxx2coFEHl3FtLiSSgdBxgAXA7jhZhxO5qvEs7XTgMWe4xL8KT1ATwQ==
+X-Received: by 2002:a05:6402:510d:b0:64b:7eba:39ed with SMTP id
+ 4fb4d7f45d1cf-64b8eb618f5mr16551561a12.13.1766589898409; 
+ Wed, 24 Dec 2025 07:24:58 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-64b91056726sm16630876a12.10.2025.12.24.07.24.28
+ 4fb4d7f45d1cf-64b91494ce2sm16989986a12.17.2025.12.24.07.24.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:24:29 -0800 (PST)
+ Wed, 24 Dec 2025 07:24:57 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -74,18 +74,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH v3 14/25] system/memory: Use explicit endianness in
- ram_device::read/write()
-Date: Wed, 24 Dec 2025 16:21:57 +0100
-Message-ID: <20251224152210.87880-15-philmd@linaro.org>
+Subject: [PATCH v3 17/25] system: Allow restricting legacy
+ address_space_ldst() native-endian API
+Date: Wed, 24 Dec 2025 16:22:00 +0100
+Message-ID: <20251224152210.87880-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224152210.87880-1-philmd@linaro.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,118 +108,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the ldn_he_p/stn_he_p() calls by their explicit endianness
-variants. Duplicate the MemoryRegionOps, using one entry for BIG
-and another for LITTLE endianness. Select the proper MemoryRegionOps
-in memory_region_init_ram_device_ptr().
+Guard the native endian APIs we want to remove by surrounding
+them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
+
+Once a target gets cleaned we'll set the definition in the
+target config, then the target won't be able to use the legacy
+API anymore.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- system/memory.c | 68 ++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 48 insertions(+), 20 deletions(-)
+ include/system/memory_cached.h   | 2 ++
+ include/system/memory_ldst.h.inc | 2 ++
+ system/memory_ldst.c.inc         | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/system/memory.c b/system/memory.c
-index 8b84661ae36..5bcdeaf0bee 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1361,41 +1361,69 @@ const MemoryRegionOps unassigned_mem_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--static uint64_t memory_region_ram_device_read(void *opaque,
--                                              hwaddr addr, unsigned size)
-+static uint64_t memory_region_ram_device_read_le(void *opaque,
-+                                                 hwaddr addr, unsigned size)
- {
-     MemoryRegion *mr = opaque;
--    uint64_t data = ldn_he_p(mr->ram_block->host + addr, size);
-+    uint64_t data = ldn_le_p(mr->ram_block->host + addr, size);
- 
-     trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
- 
-     return data;
+diff --git a/include/system/memory_cached.h b/include/system/memory_cached.h
+index 587e8a1453a..e46658400d9 100644
+--- a/include/system/memory_cached.h
++++ b/include/system/memory_cached.h
+@@ -77,8 +77,10 @@ static inline void address_space_stb_cached(MemoryRegionCache *cache,
+     }
  }
  
--static void memory_region_ram_device_write(void *opaque, hwaddr addr,
--                                           uint64_t data, unsigned size)
-+static uint64_t memory_region_ram_device_read_be(void *opaque,
-+                                                 hwaddr addr, unsigned size)
-+{
-+    MemoryRegion *mr = opaque;
-+    uint64_t data = ldn_be_p(mr->ram_block->host + addr, size);
-+
-+    trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
-+
-+    return data;
-+}
-+
-+static void memory_region_ram_device_write_le(void *opaque, hwaddr addr,
-+                                              uint64_t data, unsigned size)
- {
-     MemoryRegion *mr = opaque;
++#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
+ #define ENDIANNESS
+ #include "system/memory_ldst_cached.h.inc"
++#endif
  
-     trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
+ #define ENDIANNESS   _le
+ #include "system/memory_ldst_cached.h.inc"
+diff --git a/include/system/memory_ldst.h.inc b/include/system/memory_ldst.h.inc
+index dd1fb482eac..896550bdd65 100644
+--- a/include/system/memory_ldst.h.inc
++++ b/include/system/memory_ldst.h.inc
+@@ -25,8 +25,10 @@ uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL,
+ void glue(address_space_stb, SUFFIX)(ARG1_DECL,
+           hwaddr addr, uint8_t val, MemTxAttrs attrs, MemTxResult *result);
  
--    stn_he_p(mr->ram_block->host + addr, size, data);
-+    stn_le_p(mr->ram_block->host + addr, size, data);
++#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
+ #define ENDIANNESS
+ #include "system/memory_ldst_endian.h.inc"
++#endif /* TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API */
+ 
+ #define ENDIANNESS              _le
+ #include "system/memory_ldst_endian.h.inc"
+diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
+index 20a2784e234..e4b76d26dd9 100644
+--- a/system/memory_ldst.c.inc
++++ b/system/memory_ldst.c.inc
+@@ -117,9 +117,11 @@ void glue(address_space_stb, SUFFIX)(ARG1_DECL, hwaddr addr, uint8_t val,
+                                              attrs, result);
  }
  
--static const MemoryRegionOps ram_device_mem_ops = {
--    .read = memory_region_ram_device_read,
--    .write = memory_region_ram_device_write,
--    .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
--    .valid = {
--        .min_access_size = 1,
--        .max_access_size = 8,
--        .unaligned = true,
--    },
--    .impl = {
--        .min_access_size = 1,
--        .max_access_size = 8,
--        .unaligned = true,
-+static void memory_region_ram_device_write_be(void *opaque, hwaddr addr,
-+                                              uint64_t data, unsigned size)
-+{
-+    MemoryRegion *mr = opaque;
-+
-+    trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
-+
-+    stn_be_p(mr->ram_block->host + addr, size, data);
-+}
-+
-+static const MemoryRegionOps ram_device_mem_ops[2] = {
-+    [0 ... 1] = {
-+        .valid = {
-+            .min_access_size = 1,
-+            .max_access_size = 8,
-+            .unaligned = true,
-+        },
-+        .impl = {
-+            .min_access_size = 1,
-+            .max_access_size = 8,
-+            .unaligned = true,
-+        },
-     },
-+
-+    [0].endianness = DEVICE_LITTLE_ENDIAN,
-+    [0].read = memory_region_ram_device_read_le,
-+    [0].write = memory_region_ram_device_write_le,
-+
-+    [1].endianness = DEVICE_BIG_ENDIAN,
-+    [1].read = memory_region_ram_device_read_be,
-+    [1].write = memory_region_ram_device_write_be,
- };
++#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
+ #define ENDIANNESS
+ #define MO_ENDIAN               (target_big_endian() ? MO_BE : MO_LE)
+ #include "memory_ldst_endian.c.inc"
++#endif /* TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API */
  
- bool memory_region_access_valid(MemoryRegion *mr,
-@@ -1712,7 +1740,7 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr,
-     mr->ram = true;
-     mr->terminates = true;
-     mr->ram_device = true;
--    mr->ops = &ram_device_mem_ops;
-+    mr->ops = &ram_device_mem_ops[HOST_BIG_ENDIAN];
-     mr->opaque = mr;
-     mr->destructor = memory_region_destructor_ram;
- 
+ #define ENDIANNESS              _le
+ #define MO_ENDIAN               MO_LE
 -- 
 2.52.0
 
