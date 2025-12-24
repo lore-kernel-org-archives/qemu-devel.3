@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE18E77361
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 14:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D325EE77361
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYPpd-0003p7-Uf; Wed, 24 Dec 2025 09:27:21 -0500
+	id 1vYQYx-000252-HV; Wed, 24 Dec 2025 10:14:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYPoa-0003VZ-FO
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 09:26:17 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQYs-000246-9u
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:03 -0500
+Received: from mail-ej1-x642.google.com ([2a00:1450:4864:20::642])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYPoT-0006Kv-Mt
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 09:26:08 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b728a43e410so1102036766b.1
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 06:26:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQYq-0002y4-4Z
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:14:02 -0500
+Received: by mail-ej1-x642.google.com with SMTP id
+ a640c23a62f3a-b83122f9d78so76569466b.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:13:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766586364; x=1767191164; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A372ZdRxGvYCj4eLyeuk2dNu7PCYAJNxfaa506SwjbQ=;
- b=ZQc2AJzAxSjTU5CFQc/BGANA7Ylgl7o9xGutqBb7Hgsxzowp7VzKf581nMG5ZYdL9Q
- 2nQhBSR/E0u7lLCIgHMWAtl+hFuj7DHkNocnvlc2HhHUfVXp7JZanSzVYgC6ULq85vxv
- po2qHloUioTWcTfSoQp9D7GvUkJ7dky0Efsdu2uhtz4F6lXQlB+4Yh+vvPERreoKJykw
- zjYJ1WrKeghb+CkCymHdP/gDnGNF035JBPFCWqvPqzu3+PzMkQKnSzKfO1j9rsPoDMTx
- yRhkj7OJ3aZBRt0GhLG3ysJLfXdkZ60V3p3NyBViOsR0WjyzH7svMBdy5kt6F1vvEO9b
- j/KQ==
+ d=linaro.org; s=google; t=1766589238; x=1767194038; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kz8kL+YclKcnBgSBGG2+Kbv6UCLSfkrnEN6ow1rTYic=;
+ b=bEBLEDWQKR1UAK+dC49TKbTGgFvgxKCIGX2kHsm2P/MeBL6BtIXsueHcPu6dOhCPBz
+ aJ5rb0GEV/iTlPuPTHwzpFboGDVEVssUJZhFQYjQLFYSkJQnElarWhag9uJdPpUkQ699
+ G/ZNtfIV8NrsUz9o9KPBHDwsC7vAAKzQRKW7lwqgt2KcHFysm61mDiAEHnT+gg6UrLu7
+ eSrEQDbrXJK4Wy/hfiu1uvBR173+dajjPTycc6QnANOIuQvxpoYmi6kTHpGoiv7DK1RG
+ MRWGNLz7s9r4zlXOklt3xkgzT8tg8K2DWeeD1GmFjWEHDzjabHR9oldlL0Yrr7twqm7B
+ tpZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766586364; x=1767191164;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=A372ZdRxGvYCj4eLyeuk2dNu7PCYAJNxfaa506SwjbQ=;
- b=xAgirM4+qzSg6TmYHPK2RaHUgR0lhuNELZ0oksNFBT4XQWUIeg0fjCw5VwmwCNORrQ
- xs8DrP5AMWlvnNr034CBNNL2gRoRVR1hHaKBorlwMa8Cltm5Ja7XMyUs+F4x8LPW49/x
- eR+oUZsFhALw+mce4AmtmM6RTONCGma7TY3jJFzAS2HyWLCxRanSt/HzXT1dsdYS7IzE
- cki4XS48QA3fLURpPA66Nr4cu6Hqmu1m7WxYmKHlw97UUleJpibpLU6sM0LOGy7FU2dJ
- q1+PBNhnWs2ECMV5vntIAs19ugEh64Kd25obI/U/Db2W8HwwfZg2rspHYDgU0mq57vZq
- FgwA==
-X-Gm-Message-State: AOJu0YwH6IlthF25Qo4rdPMJ+uBpHyjWoLxUGPjSIXQJjy4qce7yB8/8
- FvOUbkMkTTxWL4/R46srCvlzJEaiCPeVEETwnT7ER+OZuBWutVt2KA8L6DQvQ0yj4cCRVlv3TSH
- D1yHNvOtJZnwwcqPsXiTmHQQwAgqJozbmqL6ser0B9A==
-X-Gm-Gg: AY/fxX6ijIPiT4uF6z9JlYFUOkNfrICMfZx1j6yzdoG9VSm5EoFgoLdKNfEVpGZiAj1
- VRfapfYDusRUzqosWcetJR8o/tWRf0av3F+NPCAMDP/TFD9iO6esDV2Wm1YT2oh8B75mj6KfzFp
- Slot4KpxQyeb/sQFWHmlXAqgE3UVUXTd7K/DgHTUvgSNT3j3Wh/whNme5UvZGWvBrl0jy64cd3z
- q5gHBXxPAPqKaHffFKj29XnnrSVOX8qvJAcJKOG2p/MyrSpXYopyZUsuKM1QWNZUXRJ3hk=
-X-Google-Smtp-Source: AGHT+IHN1AN67Pz+zD7Jpd4dklo7bAm7KW+3LcjnhS09W90R6ohBEvbQ85seWLRV4mIOFsAahr/jysodY/a0jnDXbpY=
-X-Received: by 2002:a17:906:c145:b0:b79:f984:1557 with SMTP id
- a640c23a62f3a-b8037180307mr1894445366b.46.1766586363567; Wed, 24 Dec 2025
- 06:26:03 -0800 (PST)
-MIME-Version: 1.0
-References: <20251224134644.85582-1-philmd@linaro.org>
- <20251224134644.85582-8-philmd@linaro.org>
-In-Reply-To: <20251224134644.85582-8-philmd@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 24 Dec 2025 16:25:37 +0200
-X-Gm-Features: AQt7F2p0MVL9vho_iDpnT9577RMEKAoVCeoNLltHU_qLfFiQ39NNbHXXPh9IZdc
-Message-ID: <CAAjaMXZiYtyc1ucfs5hqxwqVFNNE-ebJeQvd4KZfZwdrBTegXg@mail.gmail.com>
-Subject: Re: [PATCH v2 7/8] rust/system: Stop exposing bogus
- DEVICE_NATIVE_ENDIAN symbol
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- qemu-rust@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, Anton Johansson <anjo@rev.ng>, 
- Max Filippov <jcmvbkbc@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ d=1e100.net; s=20230601; t=1766589238; x=1767194038;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kz8kL+YclKcnBgSBGG2+Kbv6UCLSfkrnEN6ow1rTYic=;
+ b=cO6AMYa+cCHNUGwDFC7CSmHbKMqdduV6CZJKJKOpulzr/EtyushPfb0myLdVBadgIB
+ JXrfV3w8/r3/9NN5NtxLp1chQg4r2h2EazpD7CBhYs7ncpmNTOCvXqSS+C0M/5EG1+Jr
+ yzZ9EOZ3h75+18S3mOk+608VaQUo0tVBrxbacovZpDjEPu4b5JG6GiJsxLs4pItepnry
+ 4JnTZxdayKvPiFCJdr5JQ/YGnQQUHMuDSNKdR0LxOS6BFOYyMUMR9VI34Q9NHm98g3wU
+ jUtIzJLoXi8cqBEbR/bVsXip6AIimAJUxLZG3SG6exVnRQuHz604wWBcekWbLFnuujoF
+ Y6NA==
+X-Gm-Message-State: AOJu0YwXg4P/8hovF11EwQs8odfIx5zVqaDcYJt3q+s8njQdr6jeKMys
+ VkNVjC83sIpht4OoP+1/bcljSgt+7i9wfKGvkNv2OnwB/N1eURGw8HGFoUi/7cQMgitZoj/yqA8
+ noAxdrVw=
+X-Gm-Gg: AY/fxX58GxiMjQExsFx/NiZ1sJ//KYkXhVknCDGHh2NMtAXtA7QRY7TM0WB1qVnQcf/
+ ftMrbp0+1MZfXiHQh90c9diQl2djjGWVR45kUm9eCVSJ9Is/bszshQBlZXSMqyFNabXk3CVGrjQ
+ 5Y3gFi/OCgspbGXyrAhAKln+2fglwuLIgxMOTYYVjY9h23gtiDScV0fwrugjQwXD/bdki3huUIy
+ gnXHgwwq+nYTd5XY5M+gcpWonwuP5zIuE3VO5yAsjIXQXtCA1CjvTsRZXxu7o9OEr7jQKPGlJY8
+ DImFTzqv102V1IdkqRzALnsb/zbGxVtfyoJwo/SWgNc5qoeuu/bkluzrza5LCHDATX6H68HRkDj
+ s92gfonnbY325eTfWHwaXqtKPSGq3ZvfiRcnuuaYn5EBPs7pTQEKL2fjc/bPci6voIlsuhMeSH3
+ QbfX7i8+sbLJx/O8SxGhbGKYp38WfN2Nvn05iC+CesZDTaglVYnntH+1A=
+X-Google-Smtp-Source: AGHT+IGrvXVa+/0ANINlFhDNU0yeNFGdHXSXsM/pi0xthrHpY4vGX7TNUZ/VSt9qUvd/W6+b8m2/xA==
+X-Received: by 2002:a17:907:3e8c:b0:b73:7fc8:a9c9 with SMTP id
+ a640c23a62f3a-b8036f5a99emr1669580066b.29.1766589237807; 
+ Wed, 24 Dec 2025 07:13:57 -0800 (PST)
+Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
+ [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-64b916b3b35sm17373819a12.30.2025.12.24.07.13.53
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 24 Dec 2025 07:13:57 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-arm@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Weiwei Li <liwei1518@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>, 
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x630.google.com
+ Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>,
+ qemu-riscv@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Troy Lee <leetroy@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Alistair Francis <alistair.francis@wdc.com>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/9] system/memory: Mark ld/st_phys() API as legacy
+Date: Wed, 24 Dec 2025 16:13:41 +0100
+Message-ID: <20251224151351.86733-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::642;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x642.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,40 +114,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 24, 2025 at 3:47=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> We want to remove the bogus DEVICE_NATIVE_ENDIAN definition
-> (by only having it explicit, either big or little one). Stop
-> exposing it to rust devices to avoid it spreading further.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+When using the ld/st_phys() API, when an access fail,
+no error is reported. Because if that we introduced
+the address_space_ld/st() API 10 years ago. There are
+few uses of the ld/st_phys() API left in the code base,
+time to mark it as legacy.
+Allow targets to opt-out for the legacy API, by setting
+the TARGET_NOT_USING_LEGACY_LDST_PHYS_API definition.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+First drop the _notdirty() variant, mark some targets
+clean of the legacy API, then rework virtio core layer
+a bit in order to clean more targets.
 
->  rust/system/src/memory.rs | 6 ------
->  1 file changed, 6 deletions(-)
->
-> diff --git a/rust/system/src/memory.rs b/rust/system/src/memory.rs
-> index 4b3316bf767..4e06c16a0b5 100644
-> --- a/rust/system/src/memory.rs
-> +++ b/rust/system/src/memory.rs
-> @@ -78,12 +78,6 @@ pub const fn little_endian(mut self) -> Self {
->          self
->      }
->
-> -    #[must_use]
-> -    pub const fn native_endian(mut self) -> Self {
-> -        self.0.endianness =3D device_endian::DEVICE_NATIVE_ENDIAN;
-> -        self
-> -    }
-> -
->      #[must_use]
->      pub const fn valid_sizes(mut self, min: u32, max: u32) -> Self {
->          self.0.valid.min_access_size =3D min;
-> --
-> 2.52.0
->
+Targets left missing conversion:
+
+ $ fgrep -L TARGET_NOT_USING_LEGACY_LDST_PHYS_API configs/targets/*softmmu*mak
+ configs/targets/aarch64-softmmu.mak
+ configs/targets/alpha-softmmu.mak
+ configs/targets/arm-softmmu.mak
+ configs/targets/hppa-softmmu.mak
+ configs/targets/i386-softmmu.mak
+ configs/targets/loongarch64-softmmu.mak
+ configs/targets/m68k-softmmu.mak
+ configs/targets/ppc-softmmu.mak
+ configs/targets/ppc64-softmmu.mak
+ configs/targets/s390x-softmmu.mak
+ configs/targets/sparc-softmmu.mak
+ configs/targets/x86_64-softmmu.mak
+
+tag: https://gitlab.com/philmd/qemu/-/tags/legacy_ldst_phys-v1
+CI: https://gitlab.com/philmd/qemu/-/pipelines/2231223066
+
+Philippe Mathieu-Daudé (9):
+  target/i386: Remove x86_stl_phys_notdirty() leftover
+  target/sparc: Update MMU page table using stl_phys()
+  hw/arm: Avoid address_space_stl_notdirty() when generating bootloader
+  system/memory: Remove address_space_stl_notdirty and stl_phys_notdirty
+  system/memory: Allow restricting legacy ldst_phys() API usage
+  configs/targets: Mark targets not using legacy ldst_phys() API
+  hw/virtio: Remove unused ldst_phys() helpers
+  hw/virtio: Reduce virtio_lduw/stw_phys_cached() scope
+  configs/targets: Mark targets not using legacy ldst_phys() API
+
+ configs/targets/avr-softmmu.mak          |   1 +
+ configs/targets/microblaze-softmmu.mak   |   1 +
+ configs/targets/microblazeel-softmmu.mak |   1 +
+ configs/targets/mips-softmmu.mak         |   1 +
+ configs/targets/mips64-softmmu.mak       |   1 +
+ configs/targets/mips64el-softmmu.mak     |   1 +
+ configs/targets/mipsel-softmmu.mak       |   1 +
+ configs/targets/or1k-softmmu.mak         |   1 +
+ configs/targets/riscv32-softmmu.mak      |   1 +
+ configs/targets/riscv64-softmmu.mak      |   1 +
+ configs/targets/rx-softmmu.mak           |   1 +
+ configs/targets/sh4-softmmu.mak          |   1 +
+ configs/targets/sh4eb-softmmu.mak        |   1 +
+ configs/targets/sparc64-softmmu.mak      |   1 +
+ configs/targets/tricore-softmmu.mak      |   1 +
+ configs/targets/xtensa-softmmu.mak       |   1 +
+ configs/targets/xtensaeb-softmmu.mak     |   1 +
+ include/hw/virtio/virtio-access.h        | 106 -----------------------
+ include/system/memory.h                  |   8 +-
+ target/i386/cpu.h                        |   1 -
+ include/exec/memory_ldst.h.inc           |   2 -
+ hw/arm/aspeed.c                          |   4 +-
+ hw/arm/boot.c                            |   8 +-
+ hw/virtio/virtio.c                       |  21 +++++
+ target/i386/helper.c                     |  10 ---
+ target/sparc/mmu_helper.c                |   2 +-
+ system/memory_ldst.c.inc                 |  39 ---------
+ scripts/make-config-poison.sh            |   1 +
+ 28 files changed, 48 insertions(+), 171 deletions(-)
+
+-- 
+2.52.0
+
 
