@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2251E776C1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD5EE77361
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQkJ-0007Dn-5v; Wed, 24 Dec 2025 10:25:51 -0500
+	id 1vYQk3-00065T-66; Wed, 24 Dec 2025 10:25:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQkH-00070o-4r
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:49 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQjy-0005eO-3G
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:30 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQkF-0005CG-EA
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:48 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-64b8e5d1611so7292388a12.3
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:25:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQjw-0005Ax-It
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:25:29 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b7a72874af1so1037432266b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:25:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589943; x=1767194743; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589925; x=1767194725; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vQGh0l206MdToCjytCGMmdsOnEQoIAlyoUIlLQmPYxQ=;
- b=E9EoGnj7N2ly7x+UjZlDmOVccd5xSVpnGboCFBSWiVFkvzFeUI8PyJltBSaMoMWl32
- e/wh3OqYlf3EUUxSou11zJ2h5WJb7POyTkobTDeDRTRV4rr8gPreCCbji5wScHLcJe5R
- JbnOJkz8WMw1UKE7TzPfWr4HbboWd4K9n6W9Q0Lx5OV5VJpY40XbEEofw7N/CjsFXv1r
- qVZGpJsIDnpI9aVBVGM07GostGf3fLJ3DyQCjHkRsqO67i+2dtOD+CAguu8hZMdCrg1O
- fGutfI603UtT97F5cnxmqei0NdFf2s3gHfq1uhO2zUOm+V8UWVhImOR0wsEreK4GBOxX
- SlAQ==
+ bh=D7tE0kUMhdBqFLhbKfrJibgQATMsXG5ZR21KHojJdYE=;
+ b=N801J7LyrW+IVMe0ehUcSpQbRHGlVVisSRKe4gkKZrPKddfRggHRzs2Ss103R4+UEI
+ 2DWXb8/siXml87nLGNHiI2Re8ASoDeaNn7icLVGDNGVeSxq+nuyjm8E3jJWmXVpcTjCu
+ gz5HIRQc1vD4dgdmPijhjVIOAh8rlybLNWE85zTw8paH0PjXjKXRW7gTO9ECIfXJDaOj
+ tIb0wKkCXPimLZMnHwQUr0KLyYtGQBp38wpLfhynGCcY3eneOieVkP6AlaZ5niuNQVeV
+ eP/5EDitRwqT1J5jCB7Ekfzgjaal4CjcRq7v7KP9QjltIRNvJu3r3NqEZUMbBa+3XK8T
+ GOXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589943; x=1767194743;
+ d=1e100.net; s=20230601; t=1766589925; x=1767194725;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vQGh0l206MdToCjytCGMmdsOnEQoIAlyoUIlLQmPYxQ=;
- b=ARRKRI8S7KJiOKl4bdJEAjgCditDBB4GMRs0MgdLRhPBnpS5B9DZEHIrrlx7AQ202a
- BuVxXc+EOtuk9HgL8RsRC8w2fRC4TgvTqDQ05GrpT58k+uajfb2hOk0Js07icNZ7dShq
- 6uW69x5p+Cnm86B5hufI6/UWP6TaclBOw2u9N2CXqfbO7pWvZAwofBHaxQ6aVcJzbLy0
- 3LOkri2Ye2v+7ttX/8uodYWkrvpgMjOndWoHv1ATvJBu4eTspgjZSokUqWaonLpqu404
- bMkZX2DzlsPgZO84AeUQIOHR79Hdi7aN2AuNHagzIsJs3QVSCUHmwf6Vpe+Bp2ZWPt0m
- onBw==
-X-Gm-Message-State: AOJu0YydgSs1J2WteJyy7K1Q8LFeNUJyui2rVRN4UQQyLc96WuP9y9s8
- DFtdWSjy//YmaAawMfURxliNH/6jKtO5AVLrBIrIWlX38JL+194OvglfJJvM9DtTkTePBfnFgkz
- 7aP2I4Rg=
-X-Gm-Gg: AY/fxX42MmB1WRw8qPeSe+QyaEwPS2ZEowBY0O40M6X7Bi4kzF997zYyEzPcX0hzXSJ
- jpPgLH+wjJ7xMSE7gzQF7+Zyojds+KV13/mPabIIJVs8QYnh+X7T3tPdFotVZC0/FAs1RjL/VHU
- HkAodSberUP8ooRKlK88EFybDHs3yR8KQvGfD4sfY26YtZyZmn5YBWrtW0qxiVRibwDZucuHSC1
- 88B5MD8Apkx2Jly1eKZVUHwXtKROpxMoSHKiz2WyluEimWLzuKPfODWCPPFnQnzXvX7Fu9+pB5c
- glYbYmCdq7jUO9a4pr/HMux4PPZpHYPsl1962+jNbo+T4QaMsEQc494gEVmCFWpD/2hKAUjeiby
- cR19O16jV1JmVzKUoJwmv5RRqrEzg9mCwp4TYoN88WUU8eL5z+hE0DyTuYX9vCpH2VoPDleXFG8
- 5oSQhb15Da2kD8D8WZv1VtbPHuxqTUl2yvqfUaNZarq7LywiDL5wrMmoU=
-X-Google-Smtp-Source: AGHT+IHmC4PIhEocvAh29+V51V8ZadpUapvjzKheUN9zYAad4COpDKYPq8P0Q2HxSt24xF4yadrmUA==
-X-Received: by 2002:a17:907:c1b:b0:b6d:67b0:ca0b with SMTP id
- a640c23a62f3a-b803725c920mr1896452666b.61.1766589943409; 
- Wed, 24 Dec 2025 07:25:43 -0800 (PST)
+ bh=D7tE0kUMhdBqFLhbKfrJibgQATMsXG5ZR21KHojJdYE=;
+ b=PMzcB7Cwjng4QVkUxjnBSZp/09XtCwtG0ZSCkVsLIWlHqULk1BfWv6BtdgL58rslsJ
+ 0N5PqgWQHgQC0Mqj9d8YsEzX/6roNKrMhbYMbueQvk4oS/GmrnHgmn6fj19Mm80HY/I9
+ YpCjt1lgireC13t+TksQgt436UaNj/hPOGN9ZBSnKMDLTBgRm353MkoJOsjMhCKBxC3N
+ k3Rj997uLPAADBsJrLCIX9bt4pmXUO6GQwR5RKNrFjIWA7LisS6Rg1PM1FqMrAdl9kHx
+ 81SsN/+Wq3efTXaan45d9L3eN4RddaFuWrnx97Tfm6+s1gU7DSFDI/6WI9jYEG66qxRR
+ vGFw==
+X-Gm-Message-State: AOJu0YzeetL0m1rleD6ziiYa+xCgBWYF2iKLIDA2QVwk3siulXjveq8+
+ ZLQVXss3vMyLTlDadvfeLpWOdTdBXY3BY4RNLaHTwS8zP0NGJijv6uMnLPD/r23KjS43UooYmqY
+ r0n+ekO0=
+X-Gm-Gg: AY/fxX5SgfEA1hKglxWb++3qQ91O+QD0QXZYTrNsz1UbqEtBouQjr6XwISgNPSbhc87
+ Ze2W5Saj+IRbZXvwM8EJCEHnZ93WHVl5Er+cespPtkUvZ2ywAgClkyXtAA4yA1LPSHHcClsiw0W
+ AaX+UE6tAtXxh9Ho6vPDWs5HOk+b+VID/8D64o/v26I+yggPr2L6ZzQXHaClu8OKkBELclaQMwE
+ kZlBu0U6lruzO1rhutzXPu0iwiVygVeP6YfO2P3VOQ0+6l8E/KdwLtR4XRd1jK/3pQaPqMqE9xT
+ IAHvvfgl2mraqQV4cEmGJhjrfQXIrDs2AreuqD5u3j9U/CfLT12BbQNHt3ROXxGdUhTrejNKHcS
+ mb63fgdJICXpvI44OqjO5cGQvZjSXk9HbSIdLGCifMUxRIBvHn6547Vh/hnYBWeGqvllPqCIKOw
+ jWsAuMEjjnlJwV8as05G9mAez5sSxoVT7XF4BP2bEPIXRbbuehMyL+KhWcBSSHHdBuEA==
+X-Google-Smtp-Source: AGHT+IH/YZO/ZzZMHSLASKGHQF/sn5WdX5DbbnGdufWHLO3HjhOifNymbSwLRJY44D1XZN9Sid2B/A==
+X-Received: by 2002:a17:907:6094:b0:b73:9368:ad5e with SMTP id
+ a640c23a62f3a-b8037051288mr1893766666b.34.1766589924977; 
+ Wed, 24 Dec 2025 07:25:24 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037de1421sm1821135066b.41.2025.12.24.07.25.41
+ a640c23a62f3a-b8037f51a74sm1824118766b.63.2025.12.24.07.25.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:25:42 -0800 (PST)
+ Wed, 24 Dec 2025 07:25:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,20 +72,19 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@kernel.org>
-Subject: [PATCH v3 22/25] system: Allow restricting the legacy
- DEVICE_NATIVE_ENDIAN definition
-Date: Wed, 24 Dec 2025 16:22:05 +0100
-Message-ID: <20251224152210.87880-23-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 20/25] system: Allow restricting the legacy tswap()
+ 'native-endian' API
+Date: Wed, 24 Dec 2025 16:22:03 +0100
+Message-ID: <20251224152210.87880-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224152210.87880-1-philmd@linaro.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,48 +107,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guard the native endian definition we want to remove by surrounding
-it with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
+Guard the native endian APIs we want to remove by surrounding
+them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
 
-Once a target gets cleaned we'll set the definition in the target
-config, then the target won't be able to use the legacy API anymore.
+Once a target gets cleaned we'll set the definition in the
+target config, then the target won't be able to use the legacy
+API anymore.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/cpu-common.h | 2 ++
- system/memory-internal.h  | 2 ++
- 2 files changed, 4 insertions(+)
+ include/exec/tswap.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index e0be4ee2b8f..f4961a20911 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -39,7 +39,9 @@ void tcg_iommu_init_notifier_list(CPUState *cpu);
- void tcg_iommu_free_notifier_list(CPUState *cpu);
+diff --git a/include/exec/tswap.h b/include/exec/tswap.h
+index 72219e2c431..9e94fa0021c 100644
+--- a/include/exec/tswap.h
++++ b/include/exec/tswap.h
+@@ -21,6 +21,8 @@
+ #define target_needs_bswap()  (HOST_BIG_ENDIAN != target_big_endian())
+ #endif /* COMPILING_PER_TARGET */
  
- enum device_endian {
-+#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
-     DEVICE_NATIVE_ENDIAN,
-+#endif
-     DEVICE_BIG_ENDIAN,
-     DEVICE_LITTLE_ENDIAN,
- };
-diff --git a/system/memory-internal.h b/system/memory-internal.h
-index 46f758fa7e4..5f0524756eb 100644
---- a/system/memory-internal.h
-+++ b/system/memory-internal.h
-@@ -41,9 +41,11 @@ void mtree_print_dispatch(struct AddressSpaceDispatch *d,
- /* returns true if end is big endian. */
- static inline bool devend_big_endian(enum device_endian end)
++#if defined(CONFIG_USER_ONLY) \
++    || !defined(TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API)
+ static inline uint16_t tswap16(uint16_t s)
  {
-+#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
-     if (end == DEVICE_NATIVE_ENDIAN) {
-         return target_big_endian();
+     if (target_needs_bswap()) {
+@@ -68,5 +70,6 @@ static inline void tswap64s(uint64_t *s)
+         *s = bswap64(*s);
      }
-+#endif
-     return end == DEVICE_BIG_ENDIAN;
  }
++#endif
  
+ #endif  /* TSWAP_H */
 -- 
 2.52.0
 
