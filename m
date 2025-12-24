@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5965CE7545C
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BE6E77361
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQi4-00017N-NJ; Wed, 24 Dec 2025 10:23:32 -0500
+	id 1vYQi3-0000vg-8b; Wed, 24 Dec 2025 10:23:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQhp-0000nG-SF
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:23:22 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQhg-0000hk-MN
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:23:14 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQhn-0004fy-Ru
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:23:17 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b7636c96b9aso1068835166b.2
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:23:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQhe-0004fC-Pc
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:23:08 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-64b8e5d1611so7289558a12.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:23:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589794; x=1767194594; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589785; x=1767194585; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U+LBKH6mpM3QJZ+LjMWVH1Zu0cPNjKfwSazzmUt2kNQ=;
- b=DNWPD7idFlGek8f7I9B3L15SDSVcJDMTniWqSey03mU/fhI+SWf9AeXjK27eWLQTiP
- 9hYstKGQKt3dF6EVhfpdL3blyQfJRsfypi47gT2o91m3dbQPOGGre3Q5Ak7jAhKemok2
- BMIieY3wVWzdhAP78uieLneyJhzAkubSrGyemRFiVKxSuPBf3i6BeAX5Y2/bzw8n/The
- EGk2+FQwgQsrutiztQSZJx7qW3Pjo07SffegmUqve10kVU4L42n0aHVO1SAjRboUQz6q
- 839cnvQ/REDp6kjbZBELh3jpnmyDWiiv62zNAMYkuBisovMWnxhJwZ6+DkhvlxsVHYV9
- ddAg==
+ bh=yZ4NHo11hORfjfHpM+Tb3zuMw053OzsR0ZO7fwiMYhU=;
+ b=UaiauIxfc75HdcScVi0CiRICEHNSEmiXWj0dPMCp8bowSg0VhpfsqO9vnneaNLB3jO
+ MCK0XOTTVvBVDKRdY7gGzWVHVPp6STpWnwruD4GrMfyI2pmwelTMzcWMo2jpbdYYYdRb
+ x7jIdPV3le4xUeGQABjYyC4NkHMZDWdANXi7Abmxp0bSf1gI8NfUEIy8TPk+YRItKaWy
+ tYVTREnqwL1XVkWay8lGM96y7FXDlxAzEb3jw6p0fm3o9IYZJSRAcLkgojS8MoM4mtcb
+ kK9tFX2FO2L6TuLkO1ZoOBm9vU8AkMY3OniGxIDTxU3GErXkjZhkyu2dEk+V4Q8al6oh
+ cdGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589794; x=1767194594;
+ d=1e100.net; s=20230601; t=1766589785; x=1767194585;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=U+LBKH6mpM3QJZ+LjMWVH1Zu0cPNjKfwSazzmUt2kNQ=;
- b=C0w/KhFfG82YddeDoHoRRYjv882d5w/iKB6J4x/Y4Ity2mPv35HxrHKeYidk/L1WiW
- upOIeHwPjOPps+c7eR8FSHqYrMehKR9PbP11aDyTfZqh129cPcn3AUBgVD9zwIdNGmHU
- ihfuTQXT42OugcytF5FOIdS8ph1sutE0yBbiBpldR2NhdR/CqEzVCjr7tF1p6jxgDvoI
- P96+/Xi2l9uiKWJTGJ1+HDsCJ9IaRIlcKHcl7VujS0p8gtOgnTMb/ukLyr5eCHkuOhGO
- sRtoCuFoZkSGybH+tPbmeFgmQkFgkh5YcsTNcOhLDP/8NLCH54IWQgy80GnGbAvLtV8N
- bpnQ==
-X-Gm-Message-State: AOJu0YwdALoj1hMzh64aOp2zqNAiLh46w3kuv0/UPrOVMXdUMkN4L8zF
- rCX8yWtyZ41ACtQXUXl+SzWXR94haTBt91h9yzmjz/VDShQxSVGiRDBWnBz3v0EAzC3U7UmiK/V
- d1DisMs8=
-X-Gm-Gg: AY/fxX6UgHds8HSOZy99f/QQAjvwsi+AE+6em304vfjwiCqOuNkhbu+BRCbNsveEykk
- zEOyXkXn25SaVCkeRer7UeKBQx+JsXY5yTspmVperu3GAldtEYNjLe3QouHofmUGsJKAy7JZrfy
- 5KY+vP5100NwUmnOmJc9ocOgFT2YWon67B0CRPEvsOKihNp4mkwd+VlYSSDbqo5ku2r3l5r4+ka
- kquCcn3LF863JVobm+nCQgWRrArZxR6QfQoOdhcMQKR8anfhl4O4YW6x87J8YJoW2R+JeTLq9xf
- cc9qkHS2aTRG9LUZyfWmyk7CSxd1qq1uau/G8IrBkac7SRXz9qJU2eqVKPRqLhHip88ixooKfn4
- cs14zgXhWnzsVRwsWOB9dBMBoznZX+i5aVZcb8PZlSbjoshK1TsT6NQCP4cc4K2NPQzq/l9bgol
- 7seGM8/ayGxtsfOQIfIBvOCHU2x7HkE8aMeiZg17psELiFQPTSiSxqyMsaltUw
-X-Google-Smtp-Source: AGHT+IER9qDMge+R9LicmrUcgrJ1Lid1gEk94rX0A6fw0cJSU3LVrO23WghTKJRQcWA34vS5/U+wrA==
-X-Received: by 2002:a17:907:1c17:b0:b76:da45:e3d6 with SMTP id
- a640c23a62f3a-b8036f60c66mr1862916066b.16.1766589794059; 
- Wed, 24 Dec 2025 07:23:14 -0800 (PST)
+ bh=yZ4NHo11hORfjfHpM+Tb3zuMw053OzsR0ZO7fwiMYhU=;
+ b=OnvqfCxyL9XjmRc9hU5oVDlEV4qW+N5Plj2aIM5g8A7r4zJY07S2ABSZ0ez/NMIH+5
+ 6+4+t2NRo2GGfiC5nqZ6OdhCoBnpcPuAPiNIf2H+rwHRBP/FbU1OXql/0QZwaqWkRIix
+ K306LQUAaT3md7PxzyYfddlq3trfhkAtXQCdSmdHzlq8sgMXJrU0nnxlKmMEcVnXhaoP
+ OPKeuXGnp5UWMBCKmWgwZcu8ei36Ycv0eb0a0pQLW0R30YnO4apkboAh+MmGt9PqQ5nc
+ gdwA4bTkYct7FCLoMshbCBMAgDzREyWeQ9x8yBRBPzc1ePF5C5V38DIEU9ZQw6CfLxgo
+ eXfw==
+X-Gm-Message-State: AOJu0YwqbOEbB0bhjY5oyjm4BZhJgkNjK0ICWQjiEJ18FSjeOG9h8Vd+
+ 20O9Iw26DcAyuYZifSx51grY4nlobZ1aIJg4L4Gi1Dz2knuVa059TLYeQivju7MKKXK2XaqnVkp
+ 5tOAQUdY=
+X-Gm-Gg: AY/fxX4tBlgE9Ryaq6AM7s2sHTtQG7/TMwuELCeEL/ni5esNe5xhI5QVCgU4yLx0k6k
+ nKWmSsvOZudljBLePVwZgrp01K7Q9kVR+kqSd94JF/CvCvWzrloRAprN1d6j3HfBvOQIbRoyDR1
+ zg8NwvqZ+QULaFHZdco0a0PiLl+1romK4XxJFvbsItJXWiADaq5KKioMbJW3zYE6LWDpl1UGK40
+ 5I2xx7fGHxSRuJ0OSpxTH33M/8fev74NWRxvIZ3eKzIWc2aAaxBt81DED1MMEOLuUFrVfVMTYJa
+ 51/Wq2g9lU1+HsWZS3JoeusnoZtt+WdrY6uY3+9HYLBNU6WtxqhYcrdhwZItsp2NoA5t9G1PUpn
+ nFh18d6SlVQ474kUGFVSHNShY6Fd7K/Lr7tXCmw1qzlUfZaKdPjDSeeY+RtP7KzdLdUkM2kMVNh
+ 255aXCK/st/yLm/xk04EWaa2VZzB2jD8D8DcTQO/i5YzwQqYlYyKlBKMnzqdr2
+X-Google-Smtp-Source: AGHT+IHt8HPdQPBS6hkqRrwj3NvpubshnbCXw2byM+U5UpUOAMX+KQ75NdG7YVZYVANQ2IgwwdnqTQ==
+X-Received: by 2002:a17:907:1c1d:b0:b70:fd2f:6a46 with SMTP id
+ a640c23a62f3a-b8036f625fbmr1807246666b.20.1766589784950; 
+ Wed, 24 Dec 2025 07:23:04 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037a614b7sm1809241266b.1.2025.12.24.07.23.12
+ a640c23a62f3a-b8037f51a74sm1823604366b.63.2025.12.24.07.23.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:23:13 -0800 (PST)
+ Wed, 24 Dec 2025 07:23:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -74,17 +74,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH v3 06/25] system/memory: Inline address_space_stq_internal()
-Date: Wed, 24 Dec 2025 16:21:49 +0100
-Message-ID: <20251224152210.87880-7-philmd@linaro.org>
+Subject: [PATCH v3 05/25] system/memory: Move *ldst* headers from exec/ to
+ system/ namespace
+Date: Wed, 24 Dec 2025 16:21:48 +0100
+Message-ID: <20251224152210.87880-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224152210.87880-1-philmd@linaro.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,30 +108,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As its name suggests, address_space_stq_internal() is an
-internal method which can be inlined like all the other
-ones in this file.
+Keep all system memory APIs under the system/ namespace.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- system/memory_ldst.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS                                       |  1 +
+ include/system/memory.h                           |  4 ++--
+ include/system/memory_cached.h                    | 10 +++++-----
+ include/{exec => system}/memory_ldst.h.inc        |  0
+ include/{exec => system}/memory_ldst_cached.h.inc |  0
+ include/{exec => system}/memory_ldst_phys.h.inc   |  0
+ 6 files changed, 8 insertions(+), 7 deletions(-)
+ rename include/{exec => system}/memory_ldst.h.inc (100%)
+ rename include/{exec => system}/memory_ldst_cached.h.inc (100%)
+ rename include/{exec => system}/memory_ldst_phys.h.inc (100%)
 
-diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
-index b45bfecd137..d5776678edf 100644
---- a/system/memory_ldst.c.inc
-+++ b/system/memory_ldst.c.inc
-@@ -422,7 +422,7 @@ void glue(address_space_stw_be, SUFFIX)(ARG1_DECL,
-                                DEVICE_BIG_ENDIAN);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c299b84d418..f984891ac2b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3255,6 +3255,7 @@ S: Supported
+ F: include/system/ioport.h
+ F: include/exec/memop.h
+ F: include/system/memory.h
++F: include/system/memory_ldst*
+ F: include/system/memory_cached.h
+ F: include/system/physmem.h
+ F: include/system/ram_addr.h
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 692c2f67dd3..2a966397931 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2848,13 +2848,13 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+ #define SUFFIX
+ #define ARG1         as
+ #define ARG1_DECL    AddressSpace *as
+-#include "exec/memory_ldst.h.inc"
++#include "system/memory_ldst.h.inc"
+ 
+ #ifndef TARGET_NOT_USING_LEGACY_LDST_PHYS_API
+ #define SUFFIX
+ #define ARG1         as
+ #define ARG1_DECL    AddressSpace *as
+-#include "exec/memory_ldst_phys.h.inc"
++#include "system/memory_ldst_phys.h.inc"
+ #endif
+ 
+ void address_space_flush_icache_range(AddressSpace *as, hwaddr addr, hwaddr len);
+diff --git a/include/system/memory_cached.h b/include/system/memory_cached.h
+index 1a07774b6ad..587e8a1453a 100644
+--- a/include/system/memory_cached.h
++++ b/include/system/memory_cached.h
+@@ -52,7 +52,7 @@ struct MemoryRegionCache {
+ #define SUFFIX       _cached_slow
+ #define ARG1         cache
+ #define ARG1_DECL    MemoryRegionCache *cache
+-#include "exec/memory_ldst.h.inc"
++#include "system/memory_ldst.h.inc"
+ 
+ /* Inline fast path for direct RAM access.  */
+ static inline uint8_t address_space_ldub_cached(MemoryRegionCache *cache,
+@@ -78,18 +78,18 @@ static inline void address_space_stb_cached(MemoryRegionCache *cache,
  }
  
--static void glue(address_space_stq_internal, SUFFIX)(ARG1_DECL,
-+static inline void glue(address_space_stq_internal, SUFFIX)(ARG1_DECL,
-     hwaddr addr, uint64_t val, MemTxAttrs attrs,
-     MemTxResult *result, enum device_endian endian)
- {
+ #define ENDIANNESS
+-#include "exec/memory_ldst_cached.h.inc"
++#include "system/memory_ldst_cached.h.inc"
+ 
+ #define ENDIANNESS   _le
+-#include "exec/memory_ldst_cached.h.inc"
++#include "system/memory_ldst_cached.h.inc"
+ 
+ #define ENDIANNESS   _be
+-#include "exec/memory_ldst_cached.h.inc"
++#include "system/memory_ldst_cached.h.inc"
+ 
+ #define SUFFIX       _cached
+ #define ARG1         cache
+ #define ARG1_DECL    MemoryRegionCache *cache
+-#include "exec/memory_ldst_phys.h.inc"
++#include "system/memory_ldst_phys.h.inc"
+ 
+ /**
+  * address_space_cache_init: prepare for repeated access to a physical
+diff --git a/include/exec/memory_ldst.h.inc b/include/system/memory_ldst.h.inc
+similarity index 100%
+rename from include/exec/memory_ldst.h.inc
+rename to include/system/memory_ldst.h.inc
+diff --git a/include/exec/memory_ldst_cached.h.inc b/include/system/memory_ldst_cached.h.inc
+similarity index 100%
+rename from include/exec/memory_ldst_cached.h.inc
+rename to include/system/memory_ldst_cached.h.inc
+diff --git a/include/exec/memory_ldst_phys.h.inc b/include/system/memory_ldst_phys.h.inc
+similarity index 100%
+rename from include/exec/memory_ldst_phys.h.inc
+rename to include/system/memory_ldst_phys.h.inc
 -- 
 2.52.0
 
