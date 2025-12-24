@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578B0E7490C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB8DE7490B
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 03:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYFnL-000689-OM; Tue, 23 Dec 2025 22:44:15 -0500
+	id 1vYFnN-00068z-A1; Tue, 23 Dec 2025 22:44:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vYFnJ-00067q-Tk
- for qemu-devel@nongnu.org; Tue, 23 Dec 2025 22:44:13 -0500
+ id 1vYFnK-00067u-3f
+ for qemu-devel@nongnu.org; Tue, 23 Dec 2025 22:44:14 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vYFnH-0006gX-8z
+ (envelope-from <gaosong@loongson.cn>) id 1vYFnH-0006ga-Cm
  for qemu-devel@nongnu.org; Tue, 23 Dec 2025 22:44:13 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxOMKBYUtpQqYCAA--.8349S3;
- Wed, 24 Dec 2025 11:44:01 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx_8ODYUtpSKYCAA--.8948S3;
+ Wed, 24 Dec 2025 11:44:03 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxquCBYUtpgR4EAA--.12420S2;
- Wed, 24 Dec 2025 11:44:01 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxquCBYUtpgR4EAA--.12420S4;
+ Wed, 24 Dec 2025 11:44:02 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v2 0/3] Fix some exception missing update CSR_BADV
-Date: Wed, 24 Dec 2025 11:19:26 +0800
-Message-Id: <20251224031929.2371837-1-gaosong@loongson.cn>
+Subject: [PATCH v2 2/3] target/loongarch: Fix exception BCE missing update
+ CSR_BADV
+Date: Wed, 24 Dec 2025 11:19:28 +0800
+Message-Id: <20251224031929.2371837-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20251224031929.2371837-1-gaosong@loongson.cn>
+References: <20251224031929.2371837-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxquCBYUtpgR4EAA--.12420S2
+X-CM-TRANSID: qMiowJDxquCBYUtpgR4EAA--.12420S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,24 +67,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Exception BCE need update CSR_BADV, and the value is env->pc.
 
-This series fix some exception missing update CSR_BADV, such as
-ADEF/ADEM/BCE. and some exceptions are needn' update CSR_BADV.
-Exception BCE and ADEF CSR_BADV from env->pc. Exception ADEM CSR_BADV 
-from virtual address.
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/tcg/tcg_cpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Thanks.
-Song Gao
-
-Song Gao (3):
-  target/loongach: Fix some exception need't upadate CSR_BADV
-  target/loongarch: Fix exception BCE missing update CSR_BADV
-  target/loongarch: Fix exception ADEF/ADEM missing update CSR_BADV
-
- target/loongarch/tcg/tcg_cpu.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index ab247e82ec..c05a06eeb5 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -113,6 +113,9 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+         cause = cs->exception_index;
+         update_badinstr = 0;
+         break;
++    case EXCCODE_BCE:
++        env->CSR_BADV = env->pc;
++        QEMU_FALLTHROUGH;
+     case EXCCODE_SYS:
+     case EXCCODE_BRK:
+     case EXCCODE_INE:
+@@ -121,7 +124,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     case EXCCODE_FPE:
+     case EXCCODE_SXD:
+     case EXCCODE_ASXD:
+-    case EXCCODE_BCE:
+     case EXCCODE_ADEM:
+     case EXCCODE_PIL:
+     case EXCCODE_PIS:
 -- 
 2.41.0
 
