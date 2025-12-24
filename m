@@ -4,88 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD41E78487
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 20:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6197E78498
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 22:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYVC8-0004ud-QD; Wed, 24 Dec 2025 15:10:53 -0500
+	id 1vYXPV-0003de-A6; Wed, 24 Dec 2025 17:32:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vYVC7-0004uD-6W
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 15:10:51 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1vYXPN-0003dG-9l
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 17:32:43 -0500
+Received: from mail-southcentralusazon11011054.outbound.protection.outlook.com
+ ([40.93.194.54] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vYVC4-0007J0-Tl
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 15:10:50 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 34447178985;
- Wed, 24 Dec 2025 23:10:04 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 152753402F7;
- Wed, 24 Dec 2025 23:10:37 +0300 (MSK)
-Message-ID: <bc5f4a5b-02fe-4cbc-8718-a294f9d3b078@tls.msk.ru>
-Date: Wed, 24 Dec 2025 23:10:37 +0300
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1vYXPK-0004RW-6D
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 17:32:40 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pwRzDWXho9v3b+0jDCzTaRLf5YyQIm5YgKJANmxSFbmPjqUKeQmkPYSAGFSZENmHHi7M7AYbCf4kICGc4CQxnmaW8Eztur/Ua79mSX+hl2F4PlJb/7ppl5/FAwuZRU0Scg11hoSszEPlPfbl3tPe0NrwQ6ae0Dgak306S2KIAi16E32z0HE5u4MLNuIdt2Ch5SgNDqH2mq1KP8mbBaUI/BrEnJ0yx8sbDc7+aR5niNXpdZc3IMVo+rtYeXvAEAvgnCSi53swnFFmlBdfTc6mUjRgRbX2wVV5HzneJKgiopwuJ5L+tnKmt3qZBEtBRoUO6rPHgVP6eKPwV13G5cDS9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MtPlViDl2oWBAUVKbxCPWIsDm/sCAWZUE4A7p2LVRZ8=;
+ b=FCwUi60dIJrC4UHx+q2SWxCJQSFceceLvFpPJtRKi6Ba/ALrGBsWUc7aVohVHKJ00xDpB2mfU1kHyxPmnnfHzgMyVHFclezON/LWRuYg24A5wqtSO0vEruhDLVlQd6W/NQO+TqkipV+mOunG+I8sdRqW53JRkm87r+CcOHzUUlKjW6Swn/41zcRcQNwFCKVlTJhO+9Ju2SWyp1RhQSSp8Bq801xByF5xEMwJOom3qAgEJRt8sXFIQ79ix9WHfNbpv8o/e6n4M4j2Nws9stuFNoWCynUzJLYDH0TEzNSMe1BXhcg1Lu5UiR2MJhBVyZG/Vi9sQPpwM7cDbVxZ0lmDXg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MtPlViDl2oWBAUVKbxCPWIsDm/sCAWZUE4A7p2LVRZ8=;
+ b=ABAkmMGIYaG/iLLVXuvDZ6Nm1C0sHAc4vo3uxEs3Y71t0cA4NYeY5Of7Ht9toPKZR6ZNyF9l6q/QFnTZ5FJI8rXwQy5ukmv2mz2cr46WJK2okbK5PJmggTmhip7rFxYeiAZMd0BXkskRx3csT6qvOEGFMs/WGRkBrTDkfL3riqA=
+Received: from MN2PR14CA0012.namprd14.prod.outlook.com (2603:10b6:208:23e::17)
+ by PH0PR12MB7790.namprd12.prod.outlook.com (2603:10b6:510:289::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.11; Wed, 24 Dec
+ 2025 22:27:25 +0000
+Received: from BL6PEPF0001AB72.namprd02.prod.outlook.com
+ (2603:10b6:208:23e:cafe::72) by MN2PR14CA0012.outlook.office365.com
+ (2603:10b6:208:23e::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9456.11 via Frontend Transport; Wed,
+ 24 Dec 2025 22:27:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL6PEPF0001AB72.mail.protection.outlook.com (10.167.242.165) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9456.9 via Frontend Transport; Wed, 24 Dec 2025 22:27:24 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 24 Dec
+ 2025 16:27:23 -0600
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: QEMU Development <qemu-devel@nongnu.org>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: u-boot-sam460ex: can't be built in 10.2 if libfdt-dev is installed
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 10.2.0 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Richard Henderson <richard.henderson@linaro.org>
+Date: Wed, 24 Dec 2025 16:27:09 -0600
+Message-ID: <176661522950.44264.17249319357025962085@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB72:EE_|PH0PR12MB7790:EE_
+X-MS-Office365-Filtering-Correlation-Id: 569292f5-349e-40cc-941d-08de433b9cad
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|82310400026|1800799024|376014|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?WkE2WXZ6dzZXNm0vd1NWT1ltUzdBVzNDanJoMjFTMGNYeEllT3pGRUpXdVIr?=
+ =?utf-8?B?Q0phZmRwSFV5eUhhakFMZEVOdE1zMFNqWElmd1lCeTd2elRwRk9oM2ZXRFB1?=
+ =?utf-8?B?RTZ3YkZXbE5qY2hheTI0U3BWZG5XVitNZmRlVmE2Q2pvam50RTJHdVFoM3Nz?=
+ =?utf-8?B?TWQ4Rm41R1BpZjhNVzZsWVhHM1JjUlJhbVRGcDZVWis5Y3loU3pkTW1GaSty?=
+ =?utf-8?B?aEVlQ2kraUZDZUFmRm1aQ3pMSG9BQ1NwNEVWZGtvUDdaMmFFWWxveHBjY0hI?=
+ =?utf-8?B?SFc4bC8raXd3N2V3UkFPV0JJL0FCYkdZbE92RWZzaDNLZS9xbHNMS0NGN1lj?=
+ =?utf-8?B?MHM0QVNKVWY4K1l6STgrTnk4cnI0QkhYNHRlUWF6eDZLNkNOM2UrOThyVk1O?=
+ =?utf-8?B?NFc5UmVqMjFQRjYrdHJteFVCaEpIZnlYZSt0OHZoZ0cxQWx4cnMyd3NtT25J?=
+ =?utf-8?B?T1hmOXY0MTlrMVY1bkVZd1J3NDJkRHExRE55Y3plYkNnZDdvV3RGZjMzZmhn?=
+ =?utf-8?B?dUtaSkd5dkxrK2d0Y0IwQzhlRFlWNVBJYllJYWNyYjk0YTI5c1ErcEJRQmo4?=
+ =?utf-8?B?d2M2SjkzSTNBV1pLSFArVE9CL0d0QXordkNkNlJFVlB1cmdCNVJhQWtMd0hK?=
+ =?utf-8?B?eW1iamlBMG9TMG04MGdlMW5HOVg4eXhxVjEyQmFGQnF1NFRpMU80eFAwbDI0?=
+ =?utf-8?B?M0xYVlpQejZ6a3VTeVBrUXB5N0lRTS9mVEJHdkxwR20rSENLNmVSekg1Z3lT?=
+ =?utf-8?B?TkZtUTVhYmVaM0E5UkorWXpna1Z1NjVrUnRpS2FFN0g0MjBEVUkwYjRhemc4?=
+ =?utf-8?B?WUZYdUNQeEYyWW1kV09Vc04zUjhZSkpsTFpyVSs4d2VjdUY3VUJqc2RsendJ?=
+ =?utf-8?B?NFZKUFhjZ1EyWkJLSHdjSGhTUUdjU1Avb2VIWlQyUVl6elMvTCt0dHgwZ0xH?=
+ =?utf-8?B?aEwyQzJxdUgwcHRLcjkwaTBubVBpVWhKbVBxS0RxSmRSSG4va3p5MUlPd3Z5?=
+ =?utf-8?B?VXdWSXJXY1hpMlo0dFhFRVFIRHBKcTFvWUsydnpHb21kN3BOU2h4Z3N4Y2hj?=
+ =?utf-8?B?cVAyaGZTZ3FXVS80M1d6RVVCODlHYXVKRWxWbGNneDY2WDJrU1c3SU05aHZS?=
+ =?utf-8?B?dmdaTXpqemtPTEtqTEdrLzB2aVFpRXdPaHFuU1FtYjlpZ3ZQRTByQnZ1eDZ1?=
+ =?utf-8?B?dW9Jbkw3WXZCVXhrSTRrd1BjN2VJRHhtSWdpejcySjNNdC94dDJ0ZlJZOXQ5?=
+ =?utf-8?B?elZOSWNpdTRvT3pSMjRtVWNjcUsySWhrV1ZmRU4zOVpFeXJuUjJ1bm5YR1pQ?=
+ =?utf-8?B?c2ZaVkJ1VVdqWk5KZmc4REp5UTBkeDBOeG8vby9MNzYyRWxMeGI5cVAxN1A4?=
+ =?utf-8?B?a3hodE5ka3ZOU3pXcU9nMkNUdHhxbzlaTFI4TG9NdnJ3UzVWdkYyNnB1dlhV?=
+ =?utf-8?B?akJWS2Iza0cramlkSkFBNmRsU0JEdXNLb2ZVaDN3bk5PSXl4S3Z3UGQ3MHdM?=
+ =?utf-8?B?OFArelowVUg2YXliT2FCSkw0aUxFZS9oTWVkajAyNVBiYy9LeWNnc3ZncDF5?=
+ =?utf-8?B?TDArWDhvZUYyejBiUUQ4ckFMcG9vWVB4a0RJaGJGeDZsQlYzTUtrcGdkU2hU?=
+ =?utf-8?B?eHJteXZaRDVrd2t4eWh6ZG9Hc0gxYVhlMWwzTll3MXROc0U0d0wwTTRMaTRN?=
+ =?utf-8?B?dWErNERnSVZ5Kzd5dk5GckhzTnkrKzZIdFJFdEI4amFLdyszTStTK05USDV1?=
+ =?utf-8?B?WEZCZlA4RkhMOWs3ZVVMd2NHeWluY3JIOFIxcnRxa2RMZnBkeERiRkl2N0w5?=
+ =?utf-8?B?L3QxS1NLQ0FGckJUdGlxcWNBWVAvM1FXaG0xSXVYaWdUU1ZUem54ek9ZM1Nq?=
+ =?utf-8?B?VllBd3NqWm9Jd0FRS2U4c2M0Z1U1Y2RvdzlEeWFxWjdMaVA1OWZ1dkZ1bXBY?=
+ =?utf-8?B?d0hRa3RXbm4ycEswdkRVRDlUTUtVVjVhbVFNK3VYNFBiYjZRNWZHWUlvaFN3?=
+ =?utf-8?Q?Ay2y6k7ch6Vnu4OXXsF3g6n5mdpVd0=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Dec 2025 22:27:24.3502 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 569292f5-349e-40cc-941d-08de433b9cad
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB72.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7790
+Received-SPF: permerror client-ip=40.93.194.54;
+ envelope-from=Michael.Roth@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,79 +155,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If <libfdt.h> is installed on the system, u-boot-sam460ex gives
-the following build errors:
+Hello and happy holidays,
 
-gcc -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer -idirafter 
-/build/pkg/build/b/u-boot-sam460ex/include -idirafter /build/pkg
-/build/b/u-boot-sam460ex/include2 -idirafter 
-/build/pkg/build/b/u-boot-sam460ex/include -I 
-/build/pkg/build/b/u-boot-sam460ex/lib/
-libfdt -I /build/pkg/build/b/u-boot-sam460ex/tools 
--DTEXT_BASE=0xFFF80000 -DUSE_HOSTCC -D__KERNEL_STRICT_NAMES   -o 
-default_image.
-o default_image.c -c
-In file included from roms/u-boot-sam460ex/include/image.h:55,
-                  from default_image.c:31:
-/usr/include/libfdt.h:122:21: error: redefinition of ‘fdt_offset_ptr_w’
-   122 | static inline void *fdt_offset_ptr_w(void *fdt, int offset, int 
-checklen)
-       |                     ^~~~~~~~~~~~~~~~
-In file included from fdt_host.h:25,
-                  from mkimage.h:35,
-                  from default_image.c:30:
-../include/libfdt.h:126:21: note: previous definition of 
-‘fdt_offset_ptr_w’ with type ‘void *(void *, int,  int)’
-   126 | static inline void *fdt_offset_ptr_w(void *fdt, int offset, int 
-checklen)
-       |                     ^~~~~~~~~~~~~~~~
-/usr/include/libfdt.h:266:1: error: redefinition of ‘fdt_set_magic’
-   266 | fdt_set_hdr_(magic);
-       | ^~~~~~~~~~~~
-../include/libfdt.h:157:28: note: previous definition of ‘fdt_set_magic’ 
-with type ‘void(void *, uint32_t)’ {aka ‘void(v
-oid *, unsigned int)’}
+On behalf of the QEMU Team, I'd like to announce the availability of
+the QEMU 10.2.0 release. This release contains 2300+ commits from 188
+authors.
 
-etc.
+You can grab the tarball from our download page here:
 
-This is because roms/u-boot-sam460ex/tools/fdt_host.h includes the
-local ../include/fdt.h &Co.  While the rest of the headers include
-<fdt.h> &Co.  And in version of u-boot-sam460ex in 10.2 has the
-following difference compared to 10.1:
+  https://www.qemu.org/download/#source
 
-diff -u -r qemu-10.1.0/roms/u-boot-sam460ex/tools/Makefile 
-qemu-10.2.0/roms/u-boot-sam460ex/tools/Mak>
---- qemu-10.1.3/roms/u-boot-sam460ex/tools/Makefile
-+++ qemu-10.2.0/roms/u-boot-sam460ex/tools/Makefile
-@@ -133,9 +133,9 @@
-  # Use native tools and options
-  # Define __KERNEL_STRICT_NAMES to prevent typedef overlaps
-  #
--HOSTCPPFLAGS = -isystem $(SRCTREE)/include \
--               -isystem $(OBJTREE)/include2 \
--               -isystem $(OBJTREE)/include \
-+HOSTCPPFLAGS = -idirafter $(SRCTREE)/include \
-+               -idirafter $(OBJTREE)/include2 \
-+               -idirafter $(OBJTREE)/include \
-                 -I $(SRCTREE)/lib/libfdt \
-                 -I $(SRCTREE)/tools \
-                 -DTEXT_BASE=$(TEXT_BASE) -DUSE_HOSTCC \
+The full list of changes are available at:
 
-So in 10.1 and before, local include dir was preferred to
-the system include dir, while now local include dir is checked
-*after* the system one.  So when including <libfdt.h>, the
-system include is found first.
+  https://wiki.qemu.org/ChangeLog/10.2
 
-I don't know why -isystem was changed to -idirafter.
+Highlights include:
 
-For now, in order to make it buildable, I copied
-include/*fdt*.h to lib/libfdt/ so the local headers are
-picked up instead of the system ones, just like in qemu 10.1.
+ * 9pfs shared filesystem support for FreeBSD hosts
+ * Live update support via new 'cpr-exec' migration mode, allowing
+   reduced resource usage when updating VMs, and potential for re-using
+   existing state/connections throughout update
+ * Performance improvements via switching to io_uring for QEMU's main
+   loop
+ * Lots of fixes/improvements for user-mode emulation
 
-But this needs to be addressed upstream, I'd say - either
-in u-boot-sam460ex (where the bug is), or in qemu.
+ * ARM: support for CPU features FEAT_SCTLR2, FEAT_TCR2, FEAT_CSSC,
+   FEAT_LSE128, FEAT_ATS1A, FEAT_RME_GPC2, FEAT_AIE, FEAT_MEC, and FEAT_GCS
+ * ARM: support for new 'amd-versal2-virt' board model, and improvements
+   to existing 'AST2600'/'AST2700'/'AST1030' and 'xlnx-zynqmp' boards
+ * HPPA: Emulation support for an HP 715/64 workstation
+ * HPPA: Emulation support for NCR 53c710 SCSI controller and HP LASI
+   multi-I/O chip (developed by Google Summer of Code contributor
+   Soumyajyotii Ssarkar)
+ * PowerPC: Support for PowerNV11 and PPE42 CPU/machines
+ * PowerPC: FADUMP support for pSeries
+ * RISC-V: Numerous emulation fixes/improvements for various components
+ * s390x: virtio-pci performance improvements via irqfd=20
 
-Thanks,
+ * and lots more...
 
-/mjt
+Thank you to everyone involved!
 
