@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B175CE77361
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10506E7545C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 15:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYQjO-0004iS-AT; Wed, 24 Dec 2025 10:24:54 -0500
+	id 1vYQjP-0004sW-PT; Wed, 24 Dec 2025 10:24:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQj7-0004Vw-MK
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:24:42 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQj9-0004ZD-0T
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:24:45 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQj3-0004mk-5g
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:24:35 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-64dfb22c7e4so485815a12.1
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:24:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYQj4-0004nC-9g
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 10:24:36 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-64b4f730a02so9769927a12.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 07:24:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766589860; x=1767194660; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766589870; x=1767194670; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h2LnS2EF/L1vH6qECRnOQ+5+8ETp4HemmgUEoFWxgks=;
- b=AJ6oq5K/rACD8bB/6Ji8M4+FlU1yC0y9K906Ty7TP1805xY6fp3gUZsyk7Z7BolOpG
- WApbUR/2da3JqQhM0PfO/aoEyyp5ynLVhZ3cMsGn6oxDEgWuCivqOctRrHdP2WaDkc2i
- AkLtfby7+75usXkj+tUQXqgWc31IfACpsLBUaRB3kADvn/xvxpwWa6PiqVZjFdcTa+NI
- B79w3Cv5ljon+99i/dvEFbZPHIY78usTp49iCvrVNxzI9tAEym/BVhn9H2D0sEowHibX
- uYCESrBLmPXBi+Ew8ul4B74unq/nJr9ECzgMWffSpehuHyIWCjIy3zFSuegTNEsEtS/J
- agEw==
+ bh=I6HMTxxs6Ve5Sks2R1l9RktCbKwSNfSiUvebbKXSoPQ=;
+ b=Lw8IQ/pRcmKQLYge8+Yz7w0r8nHsMoWoDcrAOtmyJSRETW61udmd+11Y5zYTCkFA94
+ Es0K/JQUBb3v6ig6jRK8Vw1RugmKAU3kYgdpZNbqcmyK4TIX6A5spjmPEZKjTPGBRBwL
+ GsiCj+hLEdkdksAIXOkP07tRJWkHY3kVYtuqeQKCWsG2II2PlMgoF+SPCdLSVKa1Hw+s
+ QKoQJx9zkXprH8luaQTSuATJpOOB4aVyZZCyd3FQQ3ObqUvxiWXe1s3OPpYSB5nuKI4Z
+ 1Dz9e0hxo8/I8zT8LgYhDYFx/1CnpVR83qsCiRrJZFheTdwVrmQE5jfgzrWExEfTHGCX
+ QUKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766589860; x=1767194660;
+ d=1e100.net; s=20230601; t=1766589870; x=1767194670;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=h2LnS2EF/L1vH6qECRnOQ+5+8ETp4HemmgUEoFWxgks=;
- b=OQGPeuB1T3TXLTkaFdh8aUIPrer7Jk4xC/TI7DwVJvlcLDzoUOTOPNs8sOxVKGvli1
- 5M4flhjlVT/nz4mSrrZGjJ1ZmLQ534vrZ/cjmtibyUyA3kuqC0/RlId+tWRReaOgXgVl
- w4xpnikWBzG566H4yspkX7UpQskhsk1Hy+d9+KpwCoImINyBn4mGQ8AhZB+dFXennNV4
- 21/BLzf73QTN1U/vk94ST75T9uRGf3enHTN3vLNj5uZd0sPR/RejFx37DsRjkqfCOeb4
- NRLF+sRs2Jfc/5CpYle8pCMyLoX8Eph50YoU7AgCN7HsU31RtiINLvxhSvVHIOcKBg/b
- Tj8g==
-X-Gm-Message-State: AOJu0YwHesc3ut9ffIm5Sbh0YDvDpR/ddiI65hLLBACq2w6jryho9Kd+
- gyJ6GyfBJme/BiwNjBxBhh0N7EoITisCivcpP04pmyOZqwbBsnKPgdnm23ct2KFOsR9fV1svn07
- JMc/O5qA=
-X-Gm-Gg: AY/fxX5lIsNhlfT1w1neNaKQFv1raAHEhFljrbpdobU2Kir47nlXLNpNOIeovRtZa0k
- 4dlPzFeZfE5vCkb6zqAQzPOLri1Flmn3UmhkgIbdsmdecr/hCKfPjNKhxbtzxgb/UtswBopnyco
- fLt9fNoRfCNgE4ZHpLv2Qasnt9ZyEWwls337++uyvduZ7fdMSd8eHIo8+iyhBHSKaAxCHR8mBXK
- LU2CTR0PtvpHPbt9NbsjA9ARkPNeXKzI9VxLpK+LhT5a7H7i76g7JMJLFfV9x3kZEFNgku8P5fa
- xbA/3bmXIKtjl3d+wC4coC6XrXcKPxbMuyTotvaz9ek1X8TPUJiALZ6Ij+9v4fGGGBJQrtmKZts
- KnyYSGH9LV3XieBuN9sIWeC7zJsxV0FYCjk0jkT5k4TClnssK1f2inhEZzok/+YxCOOGxS8Dzxw
- PTCy8Wc+wHc55fvu1kU8885aIvyIdi4h4dZPlr6c7x66ncVGMSJVixJRE=
-X-Google-Smtp-Source: AGHT+IEI8eg8MI8pK6JYyCHj3z4uX+yX1iCBv97wIPioNu1mszYKQNcY+4XwW6Dshrd7JfSJNP4yGw==
-X-Received: by 2002:a17:906:31c4:b0:b80:4060:8a6a with SMTP id
- a640c23a62f3a-b804060955emr1375279766b.25.1766589859887; 
- Wed, 24 Dec 2025 07:24:19 -0800 (PST)
+ bh=I6HMTxxs6Ve5Sks2R1l9RktCbKwSNfSiUvebbKXSoPQ=;
+ b=OptES95VH+Gad5Bw4URrhWLemkmNL4Ue5Lz9CZFWEnyoaNhatoqzyApotdlr5IHN1s
+ DIlH3uZggQog+06Ie71F0A1fKPH+Vwv7McCrEYCdREmx6AE/+aXrPphjrRdYX1jG+zv0
+ DClM8srBZnSiVJnOLRrYEYB78APZy97JY3NW6OjEnFyjFQUKzhvdK04ignS1NF/8vkoh
+ BPgw33VuiltoaaIDvQnLjFjXsY8n69E3kMjPXT1uEjYVDuncO0UM91/A2E4nbz3j74AU
+ Xcw15zgAZXFPcmyqMbkHg/xBNPC+gjCmxgxlaBMCGH+yF03ux1x4lFLGptn8DlEykTdT
+ liew==
+X-Gm-Message-State: AOJu0YydtsVXT9XP+uw8siVjOQVLx6KaQC9jmGNL0A8BshTdB/KdWnJd
+ Eomp4DKMrj7yOt+gP4my09qlW7fWra95iF7TP74mPQMTui8fod+p2cyPP7+WVQcXiEzCVqjeN+k
+ edx85u58=
+X-Gm-Gg: AY/fxX45MhWEAaTS2EJRy2E39qaLSuBIfBnLKmIQEMAR8R65o6rrCAvLFmgo46tqf9y
+ ZArjLXr5Xwdq3HGRY5l0A2j+WzEX4vXvSuSDOuT/wC8TXM5Ge8gqowaXnLm0Ls2WuPA9KvNaT7E
+ pzIOi/dHILE9Cs+1vq4R6Dy1vrKvP1X+kOZiUS/w7hGPcKgI71TzFB+htGannM1vl3FQIw/01KT
+ 4yp5ktQZIhhcY6JbavDPUgQTIaIWbPY9zIe6Mq0cCoPQAai4HpAp2kNmSaoGv9Q2ybPc68oPsyU
+ kXgCm6QJ1aFrv5ukIhKReuBl2M8sShypLmvMqXUUwZvR8+rGG9eJCJjp5VYHdUBjdaXVFnwouC7
+ FlNnROnDuhzN0nZ5Toqx4eYHcusbAr3Eom6I/hWZZRcKXYhRNGSyQdLtNvPdM0I/4RHhdCz453c
+ Fy5vRxeoVN0CqTk53YhAdKVakuP4f/5TKVb/TtNyi1JXAgIYGB2K23tAA=
+X-Google-Smtp-Source: AGHT+IHykvB/+tVzUX2j/nsmsWYciJgYvbhQSmiDYoaGzTUaeOfEnMinypkoyN9q7gjm8BukjHS7aw==
+X-Received: by 2002:a05:6402:2356:b0:64d:4f75:aa28 with SMTP id
+ 4fb4d7f45d1cf-64d4f75adb0mr11287635a12.18.1766589870379; 
+ Wed, 24 Dec 2025 07:24:30 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037ab86cesm1796008866b.19.2025.12.24.07.24.16
+ 4fb4d7f45d1cf-64b91056726sm16630876a12.10.2025.12.24.07.24.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 07:24:19 -0800 (PST)
+ Wed, 24 Dec 2025 07:24:29 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -74,18 +74,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH v3 13/25] system/memory: Introduce LD/ST helpers with @n
- suffix (variable size)
-Date: Wed, 24 Dec 2025 16:21:56 +0100
-Message-ID: <20251224152210.87880-14-philmd@linaro.org>
+Subject: [PATCH v3 14/25] system/memory: Use explicit endianness in
+ ram_device::read/write()
+Date: Wed, 24 Dec 2025 16:21:57 +0100
+Message-ID: <20251224152210.87880-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224152210.87880-1-philmd@linaro.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,110 +108,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce load/store helpers taking an unsigned size argument.
+Replace the ldn_he_p/stn_he_p() calls by their explicit endianness
+variants. Duplicate the MemoryRegionOps, using one entry for BIG
+and another for LITTLE endianness. Select the proper MemoryRegionOps
+in memory_region_init_ram_device_ptr().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- docs/devel/loads-stores.rst             | 10 ++++++----
- include/system/memory_ldst_endian.h.inc |  4 ++++
- system/memory_ldst_endian.c.inc         | 14 ++++++++++++++
- 3 files changed, 24 insertions(+), 4 deletions(-)
+ system/memory.c | 68 ++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 48 insertions(+), 20 deletions(-)
 
-diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
-index c906c6509ee..8db6285538e 100644
---- a/docs/devel/loads-stores.rst
-+++ b/docs/devel/loads-stores.rst
-@@ -375,6 +375,7 @@ succeeded using a MemTxResult return code.
-  - ``w`` : 16 bits
-  - ``l`` : 32 bits
-  - ``q`` : 64 bits
-+ - ``n`` : size in bytes
+diff --git a/system/memory.c b/system/memory.c
+index 8b84661ae36..5bcdeaf0bee 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1361,41 +1361,69 @@ const MemoryRegionOps unassigned_mem_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
  
- ``endian``
-  - ``le`` : little endian
-@@ -384,8 +385,8 @@ The ``_{endian}`` suffix is omitted for byte accesses.
- 
- Regexes for git grep:
-  - ``\<address_space_\(read\|write\|rw\)\>``
-- - ``\<address_space_ldu\?[bwql]\(_[lb]e\)\?\>``
-- - ``\<address_space_st[bwql]\(_[lb]e\)\?\>``
-+ - ``\<address_space_ldu\?[bwlqn]\(_[lb]e\)\?\>``
-+ - ``\<address_space_st[bwlqn]\(_[lb]e\)\?\>``
- 
- ``address_space_write_rom``
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -431,6 +432,7 @@ device doing the access has no way to report such an error.
-  - ``w`` : 16 bits
-  - ``l`` : 32 bits
-  - ``q`` : 64 bits
-+ - ``n`` : size in bytes
- 
- ``endian``
-  - ``le`` : little endian
-@@ -439,8 +441,8 @@ device doing the access has no way to report such an error.
- The ``_{endian}_`` infix is omitted for byte accesses.
- 
- Regexes for git grep:
-- - ``\<ldu\?[bwlq]\(_[bl]e\)\?_phys\>``
-- - ``\<st[bwlq]\(_[bl]e\)\?_phys\>``
-+ - ``\<ldu\?[bwlqn]\(_[bl]e\)\?_phys\>``
-+ - ``\<st[bwlqn]\(_[bl]e\)\?_phys\>``
- 
- ``cpu_physical_memory_*``
- ~~~~~~~~~~~~~~~~~~~~~~~~~
-diff --git a/include/system/memory_ldst_endian.h.inc b/include/system/memory_ldst_endian.h.inc
-index f5b6b496be5..77850f1a18d 100644
---- a/include/system/memory_ldst_endian.h.inc
-+++ b/include/system/memory_ldst_endian.h.inc
-@@ -20,12 +20,16 @@ uint32_t ADDRESS_SPACE_LD(l)(ARG1_DECL, hwaddr addr,
-                              MemTxAttrs attrs, MemTxResult *result);
- uint64_t ADDRESS_SPACE_LD(q)(ARG1_DECL, hwaddr addr,
-                              MemTxAttrs attrs, MemTxResult *result);
-+uint64_t ADDRESS_SPACE_LD(n)(ARG1_DECL, unsigned size, hwaddr addr,
-+                             MemTxAttrs attrs, MemTxResult *result);
- void ADDRESS_SPACE_ST(w)(ARG1_DECL, hwaddr addr, uint16_t val,
-                          MemTxAttrs attrs, MemTxResult *result);
- void ADDRESS_SPACE_ST(l)(ARG1_DECL, hwaddr addr, uint32_t val,
-                          MemTxAttrs attrs, MemTxResult *result);
- void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr, uint64_t val,
-                          MemTxAttrs attrs, MemTxResult *result);
-+void ADDRESS_SPACE_ST(n)(ARG1_DECL, unsigned size, hwaddr addr, uint64_t val,
-+                         MemTxAttrs attrs, MemTxResult *result);
- 
- #undef ADDRESS_SPACE_LD
- #undef ADDRESS_SPACE_ST
-diff --git a/system/memory_ldst_endian.c.inc b/system/memory_ldst_endian.c.inc
-index fb933de11f8..4ff050027f5 100644
---- a/system/memory_ldst_endian.c.inc
-+++ b/system/memory_ldst_endian.c.inc
-@@ -40,6 +40,13 @@ uint64_t ADDRESS_SPACE_LD(q)(ARG1_DECL, hwaddr addr,
-                                         addr, attrs, result);
- }
- 
-+uint64_t ADDRESS_SPACE_LD(n)(ARG1_DECL, unsigned size, hwaddr addr,
-+                             MemTxAttrs attrs, MemTxResult *result)
-+{
-+    return ADDRESS_SPACE_LD_INTERNAL(m)(ARG1, MO_ENDIAN | size_memop(size),
-+                                        addr, attrs, result);
-+}
-+
- void ADDRESS_SPACE_ST(w)(ARG1_DECL, hwaddr addr, uint16_t val,
-                          MemTxAttrs attrs, MemTxResult *result)
+-static uint64_t memory_region_ram_device_read(void *opaque,
+-                                              hwaddr addr, unsigned size)
++static uint64_t memory_region_ram_device_read_le(void *opaque,
++                                                 hwaddr addr, unsigned size)
  {
-@@ -61,6 +68,13 @@ void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr, uint64_t val,
-                                  addr, val, attrs, result);
+     MemoryRegion *mr = opaque;
+-    uint64_t data = ldn_he_p(mr->ram_block->host + addr, size);
++    uint64_t data = ldn_le_p(mr->ram_block->host + addr, size);
+ 
+     trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
+ 
+     return data;
  }
  
-+void ADDRESS_SPACE_ST(n)(ARG1_DECL, unsigned size, hwaddr addr, uint64_t val,
-+                         MemTxAttrs attrs, MemTxResult *result)
+-static void memory_region_ram_device_write(void *opaque, hwaddr addr,
+-                                           uint64_t data, unsigned size)
++static uint64_t memory_region_ram_device_read_be(void *opaque,
++                                                 hwaddr addr, unsigned size)
 +{
-+    ADDRESS_SPACE_ST_INTERNAL(m)(ARG1, MO_ENDIAN | size_memop(size),
-+                                 addr, val, attrs, result);
++    MemoryRegion *mr = opaque;
++    uint64_t data = ldn_be_p(mr->ram_block->host + addr, size);
++
++    trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
++
++    return data;
 +}
 +
- #undef ADDRESS_SPACE_LD
- #undef ADDRESS_SPACE_LD_INTERNAL
- #undef ADDRESS_SPACE_ST
++static void memory_region_ram_device_write_le(void *opaque, hwaddr addr,
++                                              uint64_t data, unsigned size)
+ {
+     MemoryRegion *mr = opaque;
+ 
+     trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
+ 
+-    stn_he_p(mr->ram_block->host + addr, size, data);
++    stn_le_p(mr->ram_block->host + addr, size, data);
+ }
+ 
+-static const MemoryRegionOps ram_device_mem_ops = {
+-    .read = memory_region_ram_device_read,
+-    .write = memory_region_ram_device_write,
+-    .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 1,
+-        .max_access_size = 8,
+-        .unaligned = true,
+-    },
+-    .impl = {
+-        .min_access_size = 1,
+-        .max_access_size = 8,
+-        .unaligned = true,
++static void memory_region_ram_device_write_be(void *opaque, hwaddr addr,
++                                              uint64_t data, unsigned size)
++{
++    MemoryRegion *mr = opaque;
++
++    trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
++
++    stn_be_p(mr->ram_block->host + addr, size, data);
++}
++
++static const MemoryRegionOps ram_device_mem_ops[2] = {
++    [0 ... 1] = {
++        .valid = {
++            .min_access_size = 1,
++            .max_access_size = 8,
++            .unaligned = true,
++        },
++        .impl = {
++            .min_access_size = 1,
++            .max_access_size = 8,
++            .unaligned = true,
++        },
+     },
++
++    [0].endianness = DEVICE_LITTLE_ENDIAN,
++    [0].read = memory_region_ram_device_read_le,
++    [0].write = memory_region_ram_device_write_le,
++
++    [1].endianness = DEVICE_BIG_ENDIAN,
++    [1].read = memory_region_ram_device_read_be,
++    [1].write = memory_region_ram_device_write_be,
+ };
+ 
+ bool memory_region_access_valid(MemoryRegion *mr,
+@@ -1712,7 +1740,7 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr,
+     mr->ram = true;
+     mr->terminates = true;
+     mr->ram_device = true;
+-    mr->ops = &ram_device_mem_ops;
++    mr->ops = &ram_device_mem_ops[HOST_BIG_ENDIAN];
+     mr->opaque = mr;
+     mr->destructor = memory_region_destructor_ram;
+ 
 -- 
 2.52.0
 
