@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BD0E7545C
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0E4E7545C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYROo-0004th-VF; Wed, 24 Dec 2025 11:07:42 -0500
+	id 1vYRQt-0006uR-Bs; Wed, 24 Dec 2025 11:09:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYROd-0004ro-QV
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:07:33 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRQs-0006tD-5C
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:09:50 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYROb-0007uT-Ph
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:07:31 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-42e2ba54a6fso2656098f8f.3
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:07:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRQq-0008R9-Bp
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:09:49 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-4775895d69cso25925485e9.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:09:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766592448; x=1767197248; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gBtqVF9aU011XQ+13ZQmCZYCeHcb9NebZ4I9xBYMCpE=;
- b=KsnI7JRetYmKosWCNoCOGWgoI1rppdET0UUN9jRiujDM9NmE3/kGr2cvRjXCDYy6JE
- GHmYvlktBYQAAgvzBwMLOUaYA9hY8wQSyLN5AgoznQhQmb/sLkE9j/5YWgO8rzgnPlXc
- uZZSV9jM4/iNVgtQai+s/t5drVJrig+pQ//JZiHT+whkSwZlCSd3I+TsiEOfUH6YtZ8J
- hwECt9sUN6rxP63e1YahXKoMHGQzTM7+tvH4v/q6EHCYS65eJZniGN7zw8PeuqgSQ3ag
- OIBz9Gz9fHDa28Em7Gi5itO6dVmBIabf8AgjlNKE1ouW4HFwTZMBKE5Mf5cN4xHIHsFg
- KUJA==
+ d=linaro.org; s=google; t=1766592586; x=1767197386; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3ue69dF4y+RRw9SNMPWHQQ6jENvoAh9E9CAJY5WT63U=;
+ b=waFGGVwrM0whuH2+HKe1nH7KuIIn1yY+ZzNLIaPhWSZbqIaPEzyOZkz8LIebg6lH/6
+ MX0E+XNAKZvh17m6EV6p1r9cpqF+PirwB8MiEjljW4CliXwQnJSpsT1DfXjra6MYKKh/
+ fiop+SuB6MWl2UL7iLi+gzmE0FJPSrKz4bc3SMZDGsRZ115ej0K94whIuv0/C36GDrCO
+ tp6FwhjRJpQnL1MoHbDhKOeTu+jCEJKEeK4WyAMnfwqKkAKjRbs2dyIyzEHLKX/A4ZLG
+ P/xtxUqZ7I9lVWHz9V976y2tDBCByLJALO7ZU2Y6oe6FxU4wp+G7TN2ZSfJFsuJALwvR
+ dSzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766592448; x=1767197248;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gBtqVF9aU011XQ+13ZQmCZYCeHcb9NebZ4I9xBYMCpE=;
- b=jzDrGnYRtIKBYfnX4/03NLnOvSeDomG7b4CLXm45wJQ3Jzfgi3xQPFLje8rwQLv1Mw
- uqT/geN8PBdmLhAAwNYo2Uh12OeiOAXbzxtAnZbukjOq9uw69RxTi/l/8deNjIS/FiXx
- dmM7ZForzjpeZihxXntE8DUiGmDwf+g1X4JkjK8U2avx5b6D8BzP5Jtf6dzqww7MWBhs
- ccpgmK01U3cwVIeoYDMyPpHO9o8fXl6RwmWv1ICXDE52pDa5jzNc5TLfcz9cjt/0GOpB
- IXYT90zxR5rLUi5bjO83M2qxNThDrJXRdo2ePJaq/79sfYmzLNteu62En8jrBkeZnwS/
- 7DfA==
-X-Gm-Message-State: AOJu0YwPMYb3r7cn06E3nmjnMkputn/PBiPzKH+Bhs7PTrNUAthZ+zeD
- 0uxQSW8ogOfDMDm0lBW7pb6sPZRHefeHiqtyByEAvni6qIAmfskCyqq0KnldwGlDFfgpIB7Bsha
- DPoKt17k=
-X-Gm-Gg: AY/fxX4a66EysE2u5Cmmiy0Qfi228X4Uy0thXEmO7nVjhBwrmmz5xk0x1M8E07WfEgn
- 3FT0rsOS76zFcwcm5K4n5TwiqJtbtg8xO1GVSpFhWOHNX6DhfhfFEIiIPyFlJwJUl2po94z9xzn
- 1+Nlce9JyOkdDGlz9jgVlFrqg7NLop5CNoLW6zKaEYlu6zHaTUijZ1i2X2KHXWMMsSyns1wYjnp
- ik3tUaso+Jrar8RVPiZiwu0OF9SL2zWqth9CUJe5XyAjZQ2BeJKuKNlJCQuTj3X2XU6lJO7Pz19
- 8mbbrifJ/DIeQEUogHqPqIEiRLrQQ63Cn7ViN2Ud++SuHSvX09g5YJ3wE6hflVI5LzIvhkjzwe6
- Yg67I+/nfbFz2KT8pMCVHEY5TcAv6ORFye93LAmb7xc4TvW1LT0ANYoG5uX9MwmjZK36xx+J09E
- LjYcFl/i6F5sveLqPEqTChM8t6obS53ZRzLBG+euI/9euqm2DnB0Jj3De3c2qyQ/bhAQ==
-X-Google-Smtp-Source: AGHT+IG8Dezet4T6sN5vB51hGAqoCeOAnFGSLBTzVUo7I54cqNqeDqNnkxwznKhySCC/iL0OILS8nA==
-X-Received: by 2002:a05:6000:26c3:b0:430:ff41:5c87 with SMTP id
- ffacd0b85a97d-4324e701157mr19535999f8f.60.1766592447930; 
- Wed, 24 Dec 2025 08:07:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1766592586; x=1767197386;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3ue69dF4y+RRw9SNMPWHQQ6jENvoAh9E9CAJY5WT63U=;
+ b=nzT3kpxRI/fcZfFFdEGJY41xd+uJhH7ByB8S/Sw491TLrGUb5I1HE/Qw8piBx7L1Lg
+ 9YQ4h3M+hEXEZSILNdWiyMTmebJXExrR6l2Tm4la6jKJyZUUUlqo24qlw3Allf/reEil
+ p57ev4rYoyKwx5xzSbbK4hrzZDgkXWTjw9nqthymfmpRFgcV4bzPsI7ovUu66TUnvA5d
+ LWH+1JemX2PMOxy3QhN9p0IgrL5DjlJIHApaFZ2GiI/7guIlvT2JGImayaLFdTnyhP9E
+ v/ECU3NIji0Ph52yRYrvgHb0cChsjHRIgoMxRRRl4Ly+R5yQfv1w8R/9HC1D5X31frN9
+ ztsw==
+X-Gm-Message-State: AOJu0YzlBkEwL86gDDRxCHmTlxXPTcD4BOGleHY1BvW3fom+torJQogk
+ YUbTM3yGCaGtFisPbVxXTOpXn2zzk7ixphRd2E1/LmRP7Tum0PHSGoajK9CY1K9HsAdMlVRwiuR
+ ZHzaFoAA=
+X-Gm-Gg: AY/fxX6+ZwBHDj54RLHbtbHfqfExYHEcmcb3IN10WphzhDmadJoWOPacRNmxTTgCY64
+ 8pXJL+eCm1wF12G6hMT+v0FZQt5ZBMOf8dpHrd5rimXN8/GKVQwt4K+xrec5OS88eBDesurj9aK
+ IbIJYWCFFbeQ40KvbXZUyQKnWDHli5kSxM0qTXXtAvJtrV8kqgL37HCmw6lEmkk13sRA7eKEnmQ
+ eE8dBoV7wbVqeHxieLz8H3j0BTqnE3JCKe4uQoW09J2iVTBk5HMVE+vt7ryoKRGnAciUvp5vfHF
+ 03y4KwYHaChFWMKeRh+5Ll0uNeKgfvPMfrhKzlgZ2uyNqierF4yRRTvmuUlT2AFFd5CQJo/EK4F
+ md5uaz0FQy/mdi+uRZ2ip2PiUmPL9CKcd+Y3M2e7Tcg+W8p65ipmgiUR3FR7wGKD9PMiE5Be/6V
+ XqKYrBOQK1iEr7eRBNNIJgYCHOLgHmpxN2c65xMX8Ft3HJAC6jqf3CmXLKjTp4PVYzsw==
+X-Google-Smtp-Source: AGHT+IGN8Ngu3D6HunKhSilas3BYZD/0Ga6DsN1Sb1lo5HbRmvPxDta24sUu5zMBcvNFYzjeqkhLXg==
+X-Received: by 2002:a05:600c:828d:b0:477:73cc:82c2 with SMTP id
+ 5b1f17b1804b1-47d1954a14dmr182169025e9.9.1766592586375; 
+ Wed, 24 Dec 2025 08:09:46 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eab2ebfsm34569577f8f.40.2025.12.24.08.07.26
+ 5b1f17b1804b1-47d193d4f09sm305834235e9.12.2025.12.24.08.09.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:07:27 -0800 (PST)
+ Wed, 24 Dec 2025 08:09:45 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Anton Johansson <anjo@rev.ng>,
- Laurent Vivier <laurent@vivier.eu>,
+Cc: Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 2/3] target/hexagon: Use little-endian variant of
- cpu_ld/st_data*()
-Date: Wed, 24 Dec 2025 17:07:07 +0100
-Message-ID: <20251224160708.89085-3-philmd@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/4] target/hppa: Use explicit big-endian LD/ST API
+Date: Wed, 24 Dec 2025 17:09:38 +0100
+Message-ID: <20251224160942.89386-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251224160708.89085-1-philmd@linaro.org>
-References: <20251224160708.89085-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,71 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the Hexagon target using little endianness order,
-therefore the cpu_ld/st_data*() definitions expand to the little
-endian declarations. Use the explicit little-endian variants.
+PA-RISC is big-endian. Use the explicit 'big'
+endianness instead of the 'native' one.
+Forbid further uses of legacy APIs.
 
-Mechanical change running:
+tag: https://gitlab.com/philmd/qemu/-/tags/endian_hppa-v1
+CI: https://gitlab.com/philmd/qemu/-/pipelines/2231223066
 
-  $ tgt=hexagon; \
-    end=le; \
-    for op in data mmuidx_ra; do \
-      for ac in uw sw l q; do \
-        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
-                  $(git grep -l cpu_ target/${tgt}/); \
-      done;
-      for ac in w l q; do \
-        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
-                  $(git grep -l cpu_ target/${tgt}/); \
-      done;
-    done
+Philippe Mathieu-Daudé (4):
+  target/hppa: Use big-endian variant of cpu_ld/st_data*()
+  target/hppa: Use explicit big-endian LD/ST API
+  target/hppa: Inline translator_ldl()
+  configs/targets: Forbid HPPA to use legacy native endianness APIs
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hexagon/macros.h    | 6 +++---
- target/hexagon/op_helper.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ configs/targets/hppa-linux-user.mak |  1 +
+ configs/targets/hppa-softmmu.mak    |  1 +
+ target/hppa/gdbstub.c               |  2 +-
+ target/hppa/int_helper.c            |  2 +-
+ target/hppa/op_helper.c             | 44 ++++++++++++++---------------
+ target/hppa/translate.c             |  3 +-
+ 6 files changed, 28 insertions(+), 25 deletions(-)
 
-diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
-index 088e5961ab7..6c2862a2320 100644
---- a/target/hexagon/macros.h
-+++ b/target/hexagon/macros.h
-@@ -519,9 +519,9 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
- #define fLOAD(NUM, SIZE, SIGN, EA, DST) MEM_LOAD##SIZE##SIGN(DST, EA)
- #else
- #define MEM_LOAD1 cpu_ldub_data_ra
--#define MEM_LOAD2 cpu_lduw_data_ra
--#define MEM_LOAD4 cpu_ldl_data_ra
--#define MEM_LOAD8 cpu_ldq_data_ra
-+#define MEM_LOAD2 cpu_lduw_le_data_ra
-+#define MEM_LOAD4 cpu_ldl_le_data_ra
-+#define MEM_LOAD8 cpu_ldq_le_data_ra
- 
- #define fLOAD(NUM, SIZE, SIGN, EA, DST) \
-     do { \
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index e2e80ca7efa..08db1e9c56b 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -77,13 +77,13 @@ static void commit_store(CPUHexagonState *env, int slot_num, uintptr_t ra)
-         cpu_stb_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
-         break;
-     case 2:
--        cpu_stw_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
-+        cpu_stw_le_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
-         break;
-     case 4:
--        cpu_stl_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
-+        cpu_stl_le_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
-         break;
-     case 8:
--        cpu_stq_data_ra(env, va, env->mem_log_stores[slot_num].data64, ra);
-+        cpu_stq_le_data_ra(env, va, env->mem_log_stores[slot_num].data64, ra);
-         break;
-     default:
-         g_assert_not_reached();
 -- 
 2.52.0
 
