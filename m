@@ -4,68 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFFCE75423
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 08:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25D2E7491E
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 08:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYK8m-0007v2-8q; Wed, 24 Dec 2025 03:22:42 -0500
+	id 1vYKgN-0006XR-NW; Wed, 24 Dec 2025 03:57:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vYK8i-0007uj-Io
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 03:22:36 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vYK8Y-0004MN-Hf
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 03:22:36 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BO8KqN8038964
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 24 Dec 2025 17:22:11 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=XNlg0d8DsCstghgL5HzcbKGRYVYFs5tPct9NhC7zFAQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1766564531; v=1;
- b=GWj06L0+1mJ8kuiZrPJqDoQcgmwPnvrLD8ikUHTh6NmgkPzoQYPDvj5A3CvlluUX
- dqbdMJfBEBqjcqApHIrQSqXUMIO4ieBkiTDTVY4MaPO3tJYYTQqHz6k5oOAtLVOY
- IzbCH2FHKQqU4HWXxLM/pPbEyvRmwAp2v0f8yStBkN2YLxdA+9ZebDSCg+/6kQx8
- y6ap1NnzRs/EwAYFFpXU3vL8RQ2ia4Gc9tyRAwYRYpBsbkrhbOkFL51M7B7IfPU6
- syi0QbYDS6jOTXBuuk172cp9xsgKPDtZtmj7SLRjjWindvj5kWv+Cjmgn3xNzYCH
- KIZDQbPu1L6q+YDSn+YD9A==
-Message-ID: <a4e9815c-8641-4250-9bf4-ec13fa49e1ee@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 24 Dec 2025 17:20:52 +0900
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYKgL-0006Wz-VP
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 03:57:21 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYKgK-0007SR-77
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 03:57:21 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-477ba2c1ca2so58367915e9.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 00:57:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766566637; x=1767171437; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6bMhLdj6U31m1U4WkUe+4rIkOUeCEhnJeHcGB1IQ6U0=;
+ b=ttvvaDTaPmwbeghHgOPG4ygJ/cyyhz6M7XEo24CSPalK3a7aGZPNXVfBHMuhaHOp3n
+ 2OWJceRxp9iVS/afLyU5D3yHiT6pi44cdAecdGsw7fLUhaROiqj2mvHkRt+ODYxYPwsg
+ F1Cjm3qXD9supfVvhiJw2+LPBQlsHhdRZwK7ROUCYbscUMTQ3oVAanutHGFy0kPP87kQ
+ i9kfL3wuw/VKIX2VPgcDxfzgLVfE5tso87E4MTnC9RvEZERdxq6OI4YosTw/+mTPw64H
+ t8CyR117jhFA4Iduv3XTMP+XgzFo5ViR61zLeF1CX8EOH4PKwSL9MWKleKgT9QIj8aT7
+ ALNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766566637; x=1767171437;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6bMhLdj6U31m1U4WkUe+4rIkOUeCEhnJeHcGB1IQ6U0=;
+ b=Rltx6d5G5I/kYLgue1IRnVbTtUMDJM9XD1XLbtz44Yxh8OrVDBNG1h4vgypGSJa1Hi
+ uK+ONIWSwMKcMKXZjCJNEskJSvrISwnZ7lnQjX1GUJ6Fy8H26Gc0YGhwoQGiBk1lfMeQ
+ AiZcamIp4LzU+zjW8Bpp6vEsLc8+HBDT0bz51hGQzIDKH8A1WDR03js9DGWDGuDWuKr7
+ Hab/P2MQNkw66e1+uLXDrZ2pR2koPateV2n4Ha4eBrM4khEHud5MsjDzPux91+x4whYv
+ VvSnTGq2UCOWUejQi6X4pEn8P2scM8pmq5b9P1hPvGwBaW3/q8aHxD0tGiz8/diD7W+2
+ 7UoA==
+X-Gm-Message-State: AOJu0YyBr2HB7Qh6FxXaSl0uzl9lwW5G1ZWteipxBKJVbUbnNBrmoxQ0
+ SAzJ758UNYVP1BSUWsAMOl3gRNZknSOaM3vF/qRWP2nfojg3lgdJ4EDXi6PwHkPJIiFUi17iS6R
+ 3w2rFptU=
+X-Gm-Gg: AY/fxX7fST5b+Qz9r3qqijIrpobbCOuCDlLfqlTLyAuxt3Cv9QeU6PmtcN1Omp/Z9ng
+ 5iQCSlGZR1S4cSvnp1dG98ZxaMImnxX+D/fcucA+/piZY3JNq8u+mcCEU2gtTEg4osU5sH+XuQl
+ IQ39N68ttKa+AtEv1yRIJqCtSXt3/xqN5SpLKa5sgf1EIU3/9g8GEJdKVBs4Y5j9qGgwUTAd/Bc
+ hb/ufgT68igs+ETyOIv9L2sLpz+2tp4l8Rr2S+YkFajskBobOE5OPrFJp1gswl+EVKoOLjr/VQa
+ PJsvqBXJYhS48cCfpTHeMtYBJoAjXQKwhAkYXoizWb0zMAWHlBj/+4b9jZImRsuHdS39JKbswHc
+ 4+qg1LGjlFvcuL2a/ViC0IRpL29fQHVhkEqnKdShEHm0Eqk05FW+pTxLrDcGTOQVs/W89w1BcCJ
+ iJ6lFqVK+lRVegwRScBQTESyJUkAhyJX6uGrTN3DbA0nz15dIzHeoO/MlDnu6u
+X-Google-Smtp-Source: AGHT+IGri8KiB9YlEqurIukj7pjdk0eRyHvIQjamt6PTav+dfVJReDxdZFfbthlCaFsp0jPhWSQyvQ==
+X-Received: by 2002:a05:6000:4308:b0:431:808:2d56 with SMTP id
+ ffacd0b85a97d-4324e4c730cmr17038174f8f.1.1766566637410; 
+ Wed, 24 Dec 2025 00:57:17 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324eab257asm33438945f8f.38.2025.12.24.00.57.16
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 24 Dec 2025 00:57:16 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>, Alexander Bulekov <alxndr@bu.edu>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Qiuhao Li <Qiuhao.Li@outlook.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Bandan Das <bsd@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] tests/qtest: Do not use versioned pc-q35-5.0 machine
+ anymore
+Date: Wed, 24 Dec 2025 09:57:14 +0100
+Message-ID: <20251224085714.83169-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/7] egl-helpers: store handle to native device
-To: Joelle van Dyne <j@getutm.app>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20251203040754.94487-1-j@getutm.app>
- <20251203040754.94487-2-j@getutm.app>
- <3a401334-700f-4b11-b006-a93470d38a66@rsg.ci.i.u-tokyo.ac.jp>
- <CA+E+eSBOEzzb-aO2B_yWtJeoK4QGvjf=pB555+GGE2U0OH=vbw@mail.gmail.com>
- <f246dcbd-2a13-46e8-97cb-d6959d8115dc@rsg.ci.i.u-tokyo.ac.jp>
- <CA+E+eSCJ8y8RnGe99kFVSLbex_jE71z74+pF4aom-LMbjXgzPQ@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CA+E+eSCJ8y8RnGe99kFVSLbex_jE71z74+pF4aom-LMbjXgzPQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,116 +109,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/24 16:54, Joelle van Dyne wrote:
-> On Tue, Dec 23, 2025 at 10:23 PM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2025/12/20 1:11, Joelle van Dyne wrote:
->>> On Wed, Dec 3, 2025 at 10:31 PM Akihiko Odaki
->>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>>>
->>>> On 2025/12/03 13:07, Joelle van Dyne wrote:
->>>>> Make way for other platforms by making the variable more general. Also we
->>>>> will be using the device in the future so let's save the pointer in the
->>>>> global instead of just a boolean flag.
->>>>>
->>>>> Signed-off-by: Joelle van Dyne <j@getutm.app>
->>>>> ---
->>>>>     include/ui/egl-helpers.h      | 2 +-
->>>>>     hw/display/virtio-gpu-virgl.c | 2 +-
->>>>>     ui/egl-helpers.c              | 4 ++--
->>>>>     3 files changed, 4 insertions(+), 4 deletions(-)
->>>>>
->>>>> diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
->>>>> index acf993fcf5..c239d32317 100644
->>>>> --- a/include/ui/egl-helpers.h
->>>>> +++ b/include/ui/egl-helpers.h
->>>>> @@ -12,7 +12,7 @@
->>>>>     extern EGLDisplay *qemu_egl_display;
->>>>>     extern EGLConfig qemu_egl_config;
->>>>>     extern DisplayGLMode qemu_egl_mode;
->>>>> -extern bool qemu_egl_angle_d3d;
->>>>> +extern void *qemu_egl_angle_native_device;
->>>>
->>>> I guess ANGLE will not be relevant for Metal and leaving it will be
->>>> misleading.
->>> What is your suggestion? This is just to remove "D3D" from the
->>> variable name. If you want to remove "ANGLE" from the variable name as
->>> well, it may be misleading because this variable is only used with an
->>> ANGLE EGL backend.
->> Looking the usage of the variable in your tree, I realized this variable
->> may not be necessary for this at all.
->>
->> There are two use cases:
->>
->> 1. To determine if VIRGL_RENDERER_NATIVE_SHARE_TEXTURE needs to be set.
->> 2. To pass the device used by ANGLE to Cocoa.
->>
->> Regarding 1, virglrenderer can simply pass MTLTexture whenever the EGL
->> context is backed with Metal and Venus is in use.
->>
->> Although your code is modeled after the code dealing with Direct3D
->> handles, the functionality of your code is quite a different from it.
->>
->> Direct3D handles are used to "share" texture with other processes in a
->> zero-copy manner. It is an optional hint; dbus can fall back to use
->> OpenGL textures if they are missing, and the other displays just don't care.
->>
->> On the other hand, MTLTexture plays an essential role in your scenario.
->> There are no corresponding OpenGL texture so no fallback happens.
-> That's a good point, but there's two uses of MTLTexture: one as a
-> direct parallel to D3D handles (vrend allocate a texture backed by
-> MTLTexture; returns it in info_ext along with a tex_id) and one
-> returned as part of the new API
-> (virgl_renderer_create_handle_for_scanout) which does not have an
-> associated tex_id.
+As of QEMU v10.2.0, the v5.0.0 machines are not usable anymore.
 
-Thanks for clarification. I think the point I mentioned below still 
-holds; virglrenderer does not have any code that can be skipped for 
-MTLTexture with the absence of VIRGL_RENDERER_NATIVE_SHARE_TEXTURE.
+Use the latest x86 q35 machine instead, otherwise we get:
 
-> 
->>
->> The difference shows that the VIRGL_RENDERER_NATIVE_SHARE_TEXTURE flag
->> is useful when dealing with Direct3D handles but not with MTLTexture.
->> The absence of flag tells virglrenderer that we do not need Direct3D
->> handle (because the dbus display is not used), and allows it to skip
->> some code to convert OpenGL textures to Direct3D handles).
->>
->> On the other hand, not passing MTLTexture in your scenario does not make
->> sense because it prevents the scanout at all. virglrenderer does not
->> have any code that can be skipped when the flag is absent. virglrenderer
->> can simply pass MTLTexture in your scenario.
->>
->> 2 implicitly lets ANGLE choose a device, but this can be suboptimal.
->> Ideally, Cocoa should instead choose a device because it knows what
->> device displays the window. Cocoa should pass the device it chose to ANGLE.
->>
->> To demonstrate the point, I updated my tree to use ANGLE's Metal
->> renderer for OpenGL and to pass the device from Cocoa to ANGLE:
->> https://github.com/akihikodaki/v/commit/8f191a7d2c225fa601c22a783c24c81a3fda47fa
->>
->> By the way, I had to make a few modifications to ANGLE, Epoxy, and
->> virglrenderer to fix glitches when hosting glmark2 and Firefox on GNOME.
->> You can also find them with the above URL if you are interested.
-> Thank you, we picked up a couple of your changes in the UTM branch
-> already. Do you have plans to upstream those changes? And also, what
-> are your plans for upstreaming the Cocoa GL backend changes for QEMU?
+  $ qemu-system-x86_64 -M pc-q35-5.0
+  qemu-system-x86_64: unsupported machine type: "pc-q35-5.0"
+  Use -machine help to list supported machines
 
-It depends on changes.
+See commit a35f8577a07 ("include/hw: add macros for deprecation
+& removal of versioned machines") and f59ee044067 ("include/hw/boards:
+cope with dev/rc versions in deprecation checks") for explanation
+on automatically removed versioned machines.
 
-I intend to upstream the Cocoa change and the following virlgrenderer 
-changes once the libepoxy change to enable ANGLE is merged, which is 
-blocking forever... They are useless without the libepoxy change:
-https://github.com/akihikodaki/virglrenderer/commit/6dfbc7e61a72347485c09a171c8c6c0908e12a2a
-https://github.com/akihikodaki/virglrenderer/commit/b12bda2fd272b0ffd0a9b95a021e4a13e947749b
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Since all builds are blocked, could we apply as build-fix on master?
 
-I intend to upstream all two changes for ANGLE:
-https://github.com/akihikodaki/angle/commits/v/
+v2: pc-q35 -> q35
+---
+ tests/qtest/fuzz-e1000e-test.c | 2 +-
+ tests/qtest/lpc-ich9-test.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-The other changes are already submitted to the upstream if I don't miss 
-anything.
+diff --git a/tests/qtest/fuzz-e1000e-test.c b/tests/qtest/fuzz-e1000e-test.c
+index 5052883fb6a..b66a2e2313b 100644
+--- a/tests/qtest/fuzz-e1000e-test.c
++++ b/tests/qtest/fuzz-e1000e-test.c
+@@ -17,7 +17,7 @@ static void test_lp1879531_eth_get_rss_ex_dst_addr(void)
+ {
+     QTestState *s;
+ 
+-    s = qtest_init("-nographic -monitor none -serial none -M pc-q35-5.0");
++    s = qtest_init("-nographic -monitor none -serial none -M q35");
+ 
+     qtest_outl(s, 0xcf8, 0x80001010);
+     qtest_outl(s, 0xcfc, 0xe1020000);
+diff --git a/tests/qtest/lpc-ich9-test.c b/tests/qtest/lpc-ich9-test.c
+index 8ac95b89f72..460d459c701 100644
+--- a/tests/qtest/lpc-ich9-test.c
++++ b/tests/qtest/lpc-ich9-test.c
+@@ -15,7 +15,7 @@ static void test_lp1878642_pci_bus_get_irq_level_assert(void)
+ {
+     QTestState *s;
+ 
+-    s = qtest_init("-M pc-q35-5.0 "
++    s = qtest_init("-M q35 "
+                    "-nographic -monitor none -serial none");
+ 
+     qtest_outl(s, 0xcf8, 0x8000f840); /* PMBASE */
+-- 
+2.52.0
 
-Regards,
-Akihiko Odaki
 
