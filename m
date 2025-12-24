@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92FF6E748FC
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7903E74900
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYDuj-000267-SE; Tue, 23 Dec 2025 20:43:45 -0500
+	id 1vYDuE-0001cN-07; Tue, 23 Dec 2025 20:43:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vYDug-00022s-I0; Tue, 23 Dec 2025 20:43:43 -0500
+ id 1vYDu1-0001Lc-IW; Tue, 23 Dec 2025 20:43:02 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vYDuf-0006HF-7R; Tue, 23 Dec 2025 20:43:42 -0500
+ id 1vYDu0-00058k-12; Tue, 23 Dec 2025 20:43:01 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 24 Dec
- 2025 09:42:10 +0800
+ 2025 09:42:07 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 24 Dec 2025 09:42:10 +0800
+ Transport; Wed, 24 Dec 2025 09:42:07 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -34,9 +34,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <troy_lee@aspeedtech.com>, <nabihestefan@google.com>, Kane-Chen-AS
  <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@redhat.com>
-Subject: [PATCH v4 16/19] hw/arm/aspeed: Attach PWM device to AST1700 model
-Date: Wed, 24 Dec 2025 09:41:55 +0800
-Message-ID: <20251224014203.756264-17-kane_chen@aspeedtech.com>
+Subject: [PATCH v4 08/19] hw/arm/aspeed: Attach UART device to AST1700 model
+Date: Wed, 24 Dec 2025 09:41:47 +0800
+Message-ID: <20251224014203.756264-9-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251224014203.756264-1-kane_chen@aspeedtech.com>
 References: <20251224014203.756264-1-kane_chen@aspeedtech.com>
@@ -70,76 +70,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Connect the PWM device to AST1700 model.
+Connect the UART controller to the AST1700 model by mapping its MMIO
+region.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
  include/hw/arm/aspeed_ast1700.h |  2 ++
- hw/arm/aspeed_ast1700.c         | 13 +++++++++++++
- 2 files changed, 15 insertions(+)
+ hw/arm/aspeed_ast1700.c         | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+)
 
 diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
-index f43c0c5475..7292719dc2 100644
+index b9ee4952d0..a0d6b3ae44 100644
 --- a/include/hw/arm/aspeed_ast1700.h
 +++ b/include/hw/arm/aspeed_ast1700.h
-@@ -14,6 +14,7 @@
- #include "hw/gpio/aspeed_gpio.h"
- #include "hw/i2c/aspeed_i2c.h"
+@@ -10,6 +10,7 @@
+ 
+ #include "hw/sysbus.h"
  #include "hw/misc/aspeed_ltpi.h"
-+#include "hw/misc/aspeed_pwm.h"
- #include "hw/ssi/aspeed_smc.h"
- #include "hw/watchdog/wdt_aspeed.h"
- #include "hw/char/serial-mm.h"
-@@ -39,6 +40,7 @@ struct AspeedAST1700SoCState {
-     AspeedSCUState scu;
-     AspeedGPIOState gpio;
-     AspeedI2CState i2c;
-+    AspeedPWMState pwm;
-     AspeedWDTState wdt[AST1700_WDT_NUM];
++#include "hw/char/serial-mm.h"
+ 
+ #define TYPE_ASPEED_AST1700 "aspeed.ast1700"
+ 
+@@ -21,6 +22,7 @@ struct AspeedAST1700SoCState {
+     MemoryRegion iomem;
+ 
+     AspeedLTPIState ltpi;
++    SerialMM uart;
  };
  
+ #endif /* ASPEED_AST1700_H */
 diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
-index 9fb84dd159..5a2552aa25 100644
+index eeb586102f..f444582795 100644
 --- a/hw/arm/aspeed_ast1700.c
 +++ b/hw/arm/aspeed_ast1700.c
-@@ -18,6 +18,7 @@
+@@ -10,15 +10,18 @@
+ #include "hw/boards.h"
+ #include "hw/qdev-core.h"
+ #include "qom/object.h"
++#include "hw/qdev-properties.h"
+ #include "hw/arm/aspeed_ast1700.h"
+ 
+ #define AST2700_SOC_LTPI_SIZE        0x01000000
  
  enum {
-     ASPEED_AST1700_DEV_SPI0,
-+    ASPEED_AST1700_DEV_PWM,
-     ASPEED_AST1700_DEV_SRAM,
-     ASPEED_AST1700_DEV_ADC,
-     ASPEED_AST1700_DEV_SCU,
-@@ -31,6 +32,7 @@ enum {
++    ASPEED_AST1700_DEV_UART12,
+     ASPEED_AST1700_DEV_LTPI_CTRL,
+ };
  
  static const hwaddr aspeed_ast1700_io_memmap[] = {
-     [ASPEED_AST1700_DEV_SPI0]      =  0x00030000,
-+    [ASPEED_AST1700_DEV_PWM]       =  0x000C0000,
-     [ASPEED_AST1700_DEV_SRAM]      =  0x00BC0000,
-     [ASPEED_AST1700_DEV_ADC]       =  0x00C00000,
-     [ASPEED_AST1700_DEV_SCU]       =  0x00C02000,
-@@ -124,6 +126,14 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
-                         aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_I2C],
-                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c), 0));
++    [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+     [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
+ };
  
-+    /* PWM */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pwm), errp)) {
+@@ -32,6 +35,17 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+                        AST2700_SOC_LTPI_SIZE);
+     sysbus_init_mmio(sbd, &s->iomem);
+ 
++    /* UART */
++    qdev_prop_set_uint8(DEVICE(&s->uart), "regshift", 2);
++    qdev_prop_set_uint32(DEVICE(&s->uart), "baudbase", 38400);
++    qdev_prop_set_uint8(DEVICE(&s->uart), "endianness", DEVICE_LITTLE_ENDIAN);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart), errp)) {
 +        return;
 +    }
 +    memory_region_add_subregion(&s->iomem,
-+                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_PWM],
-+                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->pwm), 0));
++                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12],
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart), 0));
 +
      /* LTPI controller */
      if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
          return;
-@@ -177,6 +187,9 @@ static void aspeed_ast1700_instance_init(Object *obj)
-     object_initialize_child(obj, "ioexp-i2c[*]", &s->i2c,
-                             "aspeed.i2c-ast2700");
+@@ -45,6 +59,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
+ {
+     AspeedAST1700SoCState *s = ASPEED_AST1700(obj);
  
-+    /* PWM */
-+    object_initialize_child(obj, "pwm", &s->pwm, TYPE_ASPEED_PWM);
++    /* UART */
++    object_initialize_child(obj, "uart[*]", &s->uart,
++                            TYPE_SERIAL_MM);
 +
      /* LTPI controller */
      object_initialize_child(obj, "ltpi-ctrl",
