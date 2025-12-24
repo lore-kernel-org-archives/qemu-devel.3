@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD4AE776F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 19:05:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8C4E776F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 19:12:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYUAk-0002u1-9l; Wed, 24 Dec 2025 14:05:22 -0500
+	id 1vYUHF-0005yq-RO; Wed, 24 Dec 2025 14:12:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYUAi-0002tT-DS
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:05:20 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1vYUH9-0005v2-Ey
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:12:00 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vYUAg-000490-Do
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:05:20 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-b734fcbf1e3so1232229666b.3
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 11:05:17 -0800 (PST)
+ id 1vYUH7-00050H-KX
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 14:11:59 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b736ffc531fso1114788966b.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 11:11:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766603116; x=1767207916; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766603516; x=1767208316; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/3LrPdmwZQ2IQevPWFlsOlCRpY6OrwN7Txb/bOm3K54=;
- b=azz0G0hOoxwkoGcQVc80bzJxgPXAxbmSDKZ899hsMl+zqf/m2BynYBmPkUCNudHaGg
- x9Wv5Hr8Bgq5pJozJSd1002FjuGeYI337/5qI8ia1Ro8svI7ucV4FQTwd180nouPfRFR
- SCicoL/3Gk6+hwK9xcLacENKzwhqZnBWp1wtlm/17E/PmTONHni2yr9KAG+6YeZ08XMo
- o7lwVGs2anuaJKeeY1FHoMoCwLs4GFNj5854zUZ7cpF3zC7DdtlY0wiaOwryU8n7MVvh
- QfETjeO/+Pu7zvkmXil2zqeEUpqQrppviRHim9kR5CoRVbEoQ1nZpDG41F6A8EuaZXBT
- xqJw==
+ bh=1XDb1Wp0lG59V9lOrnUBHFw63Nuxp58NkxLNLgbiusk=;
+ b=FyM1sP5ItFluq0w0iEpvu1DgIgw84kCPu32juaRIjXN22qBDkEjJn/HdydXo7L0irw
+ C2uKS+IeipZhhmP8ZJSr/pezui6hWqqD2hqRfdb/ikNvF0n784ZNm1/gsz8l7oJBCy8T
+ MYW+Iisuz14oZmRQR/+aatzUlpTXtvdboQVmv16zDgnA8SqhyENYrboNWJJHbL7dkoz+
+ PXtRR2jMCKmT2eLLtVJUYzfIYnNC1JE2FfYNrzEqTgWF3d9mX+ZWkxyDZz7VkiNqL8Vj
+ E/A7s0yfETpcMFE+VKzHARBAQ0G1mG0IfO63w09U9p1hYZ924ER70Pj/0S78m9DFSEOO
+ LkAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766603116; x=1767207916;
+ d=1e100.net; s=20230601; t=1766603516; x=1767208316;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/3LrPdmwZQ2IQevPWFlsOlCRpY6OrwN7Txb/bOm3K54=;
- b=s6aQltExJnPxeK/HnzHcZ6Ax7vZZqx74FI09freztxx8bijHIcrLwqpqNI8N813T13
- htBuyre/I9MJB3BW3jsQM1kwmpxQwK9ZRnl8tfrRHNYgzqBknEFyUIdlpfB9maXXkx/f
- kP2QM7egeksf+s2slIB31TgVSpRc90sSft53wA/IQppPQ5LcxhNLNF/Kab2U54U89fsH
- 0J/Ag7uY/bv8x4olfhTPOBDkrIxm/eoYoHr93Z9iGDiS44+vIvFr8Wf52WX1CpBQlJpw
- saKSfHrP/4RBfO0I6GnQoDGrd0uzvCIa6gbHdEBMu+eLaVjpIzCbZrgmZ8fJoJZF4i1q
- zYag==
-X-Gm-Message-State: AOJu0YxfoUBaO16yMU/S5N1R1BEmHZbh1rcYFvQdnqZl80Nb5HG0D27G
- zz85ZE0KTUed+pzYN0d5Y6Scy/DF9HPrxj7Q0Ip9yC1m/RJ07ApCYn30w2tez+jCIC9h5BngAPM
- o2yIYR0p1SvgUVXNu8pzZVbSOXH62cu3Ys81Hn1gYnw==
-X-Gm-Gg: AY/fxX6lEDW7xwO5K5zGSJVgr5kNF7ChJU5w/9obELWT7w+yKsyuK+hu9acRKqFzQNw
- Y0XWMBotB8I2AeuWmF2ZuI7u9k+5Tg4XMQ+cxz3rHeu9MapJ3b3y4XMbtG49BSSd18045C6fDnL
- BU+t/7vdA3MMt2ZewKSvOdJIb4dCrflJhDUDKfySdsi8LdHVO5XprN5a0mK2QaK4a+wrl/RNjLp
- dBbwI6vFRNrsSYO6iaBkX9+RgeZ85rmp1NTw/RSHZPzlKfBCeNwvBHqxUnkG0UyugvrB/0=
-X-Google-Smtp-Source: AGHT+IHTEM0Fp5x822N93qOeIGDe0if+eL5WTlA6J1GbAReP86/8dbkdVK/1xPKRPqc5paGXKZKZSzFfHXVX3s1PRCk=
-X-Received: by 2002:a17:907:9447:b0:b71:df18:9fb6 with SMTP id
- a640c23a62f3a-b8036f5bb39mr1976463066b.26.1766603115785; Wed, 24 Dec 2025
- 11:05:15 -0800 (PST)
+ bh=1XDb1Wp0lG59V9lOrnUBHFw63Nuxp58NkxLNLgbiusk=;
+ b=YraR4VbcoZf2TVmeGd5UchbKMYeo+4aNxWXQlj5kcNDfFMBGTIUQnjvMYaKFm55eYM
+ 0Q4yE7eNSj2SlKLJd14AcX1RX0AX/bGj3tyj04Y0EYsHESFy9nDJJSRWkiZTmblm6Cle
+ EHzzsnsRMjJPWn+sQpsvD7WD5D5Ce4xnFe2mb8MiFKST2YdCLuBtcAtMb3D8WkxE0Y1W
+ sbelJSPQniVyBzj+aSbXLUqs48Xiq2Wg/jNxkZiJkwGVLncWgNa5i48vhRmwII/QcCND
+ xQg4Yoop7Jhoe5XdJIjcMhAODPr4USWc9P5e7nsJ2zU08f62WDyqhHHT14bfPhWP0b96
+ 5srg==
+X-Gm-Message-State: AOJu0YxToLWfLt0r+p1KWC+lqsNpeYiqeXl3UN0M8H5aDTwHnVTsxfnA
+ i1vGBlA0vJJAmJMRo7Cdjx6dgZDdfGANcvMA2QXUhmtTxBCvSeaq/RCAYCtXPmEzqtFg1ttywv/
+ MqVhmtBPe/Y4AJWMA4R4lBMK53B36nGE0uGfajxA/ZebXbW3k9Klc13k=
+X-Gm-Gg: AY/fxX6ZKrLA5tKI61B3CXRkAvtS/nu+w9czq3QbKe4s+ccI0sj85xm3qkJumVH+FMN
+ IZGWd2Jr8OnHYxcFHJgCQ0SJc6mhy43JPvtIc9mRnK8JB5jY49JrTKW5Hf7fkRUJaC7Oa9dWGKd
+ QfFYJtk5xWuale4IMgTthCBehWMdGVPiBX5BvogR3a1lta1zxZlVS1XxEc/U+8qVTAbAv/6BN44
+ RFd3HJeVpqRo+8ozQ1RXf2GBEUc7Uzw4JJ7pK5oTlwf0AqwW+EQN+36EVgK87ViGKdREyc=
+X-Google-Smtp-Source: AGHT+IGdXWU8/LTowcdfFy2QbVs1YyYRCAmmWi9T3KELlpSFIl+RXAoZ3jFj+Q86p3+D9Ioo/7d/ngwKQm//W48yeQ4=
+X-Received: by 2002:a17:907:9719:b0:b7a:2ba7:197f with SMTP id
+ a640c23a62f3a-b803719e302mr2001448366b.52.1766603515761; Wed, 24 Dec 2025
+ 11:11:55 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-6-philmd@linaro.org>
-In-Reply-To: <20251224152210.87880-6-philmd@linaro.org>
+ <20251224152210.87880-24-philmd@linaro.org>
+In-Reply-To: <20251224152210.87880-24-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 24 Dec 2025 21:04:49 +0200
-X-Gm-Features: AQt7F2rTDphEmD9a-S-zSYImdklqI_N3fsH068SLhL_mFEzC5oh4Ju5BmUEA7hc
-Message-ID: <CAAjaMXb3SZJswpMMVq_oN6Ow5XYMpHY1srHAbYiRgMx6AyjjaA@mail.gmail.com>
-Subject: Re: [PATCH v3 05/25] system/memory: Move *ldst* headers from exec/ to
- system/ namespace
+Date: Wed, 24 Dec 2025 21:11:29 +0200
+X-Gm-Features: AQt7F2q1XIFi__QIuAxR7EV4Ptn3VVP0-xCo3xBkYsjFROc1drLmCinQz3K3IQw
+Message-ID: <CAAjaMXZuWTJcv6wkApr=USKx83imE64FT_L6__wQhECTc8NxHQ@mail.gmail.com>
+Subject: Re: [PATCH v3 23/25] tests/qtest: Remove unnecessary 'qemu/bswap.h'
+ include
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu <peterx@redhat.com>, 
  Richard Henderson <richard.henderson@linaro.org>, Anton Johansson <anjo@rev.ng>,
- David Hildenbrand <david@kernel.org>
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,116 +109,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 24, 2025 at 5:23=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Wed, Dec 24, 2025 at 5:25=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Keep all system memory APIs under the system/ namespace.
+> None of these files use API declared in "qemu/bswap.h",
+> remove the unnecessary inclusion.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-
->  MAINTAINERS                                       |  1 +
->  include/system/memory.h                           |  4 ++--
->  include/system/memory_cached.h                    | 10 +++++-----
->  include/{exec =3D> system}/memory_ldst.h.inc        |  0
->  include/{exec =3D> system}/memory_ldst_cached.h.inc |  0
->  include/{exec =3D> system}/memory_ldst_phys.h.inc   |  0
->  6 files changed, 8 insertions(+), 7 deletions(-)
->  rename include/{exec =3D> system}/memory_ldst.h.inc (100%)
->  rename include/{exec =3D> system}/memory_ldst_cached.h.inc (100%)
->  rename include/{exec =3D> system}/memory_ldst_phys.h.inc (100%)
+>  tests/qtest/pnv-xive2-common.h     | 1 -
+>  tests/qtest/aspeed_smc-test.c      | 1 -
+>  tests/qtest/ast2700-smc-test.c     | 1 -
+>  tests/qtest/libqos/fw_cfg.c        | 1 -
+>  tests/qtest/libqos/i2c-omap.c      | 1 -
+>  tests/qtest/pnv-spi-seeprom-test.c | 1 -
+>  tests/qtest/vmcoreinfo-test.c      | 1 -
+>  7 files changed, 7 deletions(-)
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index c299b84d418..f984891ac2b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3255,6 +3255,7 @@ S: Supported
->  F: include/system/ioport.h
->  F: include/exec/memop.h
->  F: include/system/memory.h
-> +F: include/system/memory_ldst*
->  F: include/system/memory_cached.h
->  F: include/system/physmem.h
->  F: include/system/ram_addr.h
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 692c2f67dd3..2a966397931 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -2848,13 +2848,13 @@ MemTxResult address_space_write_rom(AddressSpace =
-*as, hwaddr addr,
->  #define SUFFIX
->  #define ARG1         as
->  #define ARG1_DECL    AddressSpace *as
-> -#include "exec/memory_ldst.h.inc"
-> +#include "system/memory_ldst.h.inc"
+> diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-commo=
+n.h
+> index 2077c05ebc7..3b842274243 100644
+> --- a/tests/qtest/pnv-xive2-common.h
+> +++ b/tests/qtest/pnv-xive2-common.h
+> @@ -15,7 +15,6 @@
+>  #define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(b=
+s))
+>  #define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
+>                                   PPC_BIT32(bs))
+> -#include "qemu/bswap.h"
+>  #include "hw/intc/pnv_xive2_regs.h"
+>  #include "hw/ppc/xive_regs.h"
+>  #include "hw/ppc/xive2_regs.h"
+> diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.=
+c
+> index 50a87e62500..39af1df0ed7 100644
+> --- a/tests/qtest/aspeed_smc-test.c
+> +++ b/tests/qtest/aspeed_smc-test.c
+> @@ -24,7 +24,6 @@
+>   */
 >
->  #ifndef TARGET_NOT_USING_LEGACY_LDST_PHYS_API
->  #define SUFFIX
->  #define ARG1         as
->  #define ARG1_DECL    AddressSpace *as
-> -#include "exec/memory_ldst_phys.h.inc"
-> +#include "system/memory_ldst_phys.h.inc"
->  #endif
+>  #include "qemu/osdep.h"
+> -#include "qemu/bswap.h"
+>  #include "libqtest-single.h"
+>  #include "qemu/bitops.h"
+>  #include "aspeed-smc-utils.h"
+> diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-tes=
+t.c
+> index 62d538d8a3a..33fc47230ee 100644
+> --- a/tests/qtest/ast2700-smc-test.c
+> +++ b/tests/qtest/ast2700-smc-test.c
+> @@ -7,7 +7,6 @@
+>   */
 >
->  void address_space_flush_icache_range(AddressSpace *as, hwaddr addr, hwa=
-ddr len);
-> diff --git a/include/system/memory_cached.h b/include/system/memory_cache=
-d.h
-> index 1a07774b6ad..587e8a1453a 100644
-> --- a/include/system/memory_cached.h
-> +++ b/include/system/memory_cached.h
-> @@ -52,7 +52,7 @@ struct MemoryRegionCache {
->  #define SUFFIX       _cached_slow
->  #define ARG1         cache
->  #define ARG1_DECL    MemoryRegionCache *cache
-> -#include "exec/memory_ldst.h.inc"
-> +#include "system/memory_ldst.h.inc"
+>  #include "qemu/osdep.h"
+> -#include "qemu/bswap.h"
+>  #include "libqtest-single.h"
+>  #include "qemu/bitops.h"
+>  #include "aspeed-smc-utils.h"
+> diff --git a/tests/qtest/libqos/fw_cfg.c b/tests/qtest/libqos/fw_cfg.c
+> index 0ab3959171b..8611f648c14 100644
+> --- a/tests/qtest/libqos/fw_cfg.c
+> +++ b/tests/qtest/libqos/fw_cfg.c
+> @@ -17,7 +17,6 @@
+>  #include "malloc-pc.h"
+>  #include "libqos-malloc.h"
+>  #include "../libqtest.h"
+> -#include "qemu/bswap.h"
+>  #include "hw/nvram/fw_cfg.h"
 >
->  /* Inline fast path for direct RAM access.  */
->  static inline uint8_t address_space_ldub_cached(MemoryRegionCache *cache=
-,
-> @@ -78,18 +78,18 @@ static inline void address_space_stb_cached(MemoryReg=
-ionCache *cache,
->  }
+>  void qfw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
+> diff --git a/tests/qtest/libqos/i2c-omap.c b/tests/qtest/libqos/i2c-omap.=
+c
+> index 6f98f54820b..71f70c64f85 100644
+> --- a/tests/qtest/libqos/i2c-omap.c
+> +++ b/tests/qtest/libqos/i2c-omap.c
+> @@ -10,7 +10,6 @@
+>  #include "i2c.h"
 >
->  #define ENDIANNESS
-> -#include "exec/memory_ldst_cached.h.inc"
-> +#include "system/memory_ldst_cached.h.inc"
 >
->  #define ENDIANNESS   _le
-> -#include "exec/memory_ldst_cached.h.inc"
-> +#include "system/memory_ldst_cached.h.inc"
+> -#include "qemu/bswap.h"
+>  #include "../libqtest.h"
 >
->  #define ENDIANNESS   _be
-> -#include "exec/memory_ldst_cached.h.inc"
-> +#include "system/memory_ldst_cached.h.inc"
+>  enum OMAPI2CRegisters {
+> diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-see=
+prom-test.c
+> index 8033261758b..44e0b92730b 100644
+> --- a/tests/qtest/pnv-spi-seeprom-test.c
+> +++ b/tests/qtest/pnv-spi-seeprom-test.c
+> @@ -7,7 +7,6 @@
+>   */
+>  #include "qemu/osdep.h"
+>  #include "libqtest.h"
+> -#include "qemu/bswap.h"
+>  #include "hw/ssi/pnv_spi_regs.h"
+>  #include "pnv-xscom.h"
 >
->  #define SUFFIX       _cached
->  #define ARG1         cache
->  #define ARG1_DECL    MemoryRegionCache *cache
-> -#include "exec/memory_ldst_phys.h.inc"
-> +#include "system/memory_ldst_phys.h.inc"
+> diff --git a/tests/qtest/vmcoreinfo-test.c b/tests/qtest/vmcoreinfo-test.=
+c
+> index dcf3b5ae058..0110dcceffa 100644
+> --- a/tests/qtest/vmcoreinfo-test.c
+> +++ b/tests/qtest/vmcoreinfo-test.c
+> @@ -16,7 +16,6 @@
+>  #include "libqtest.h"
+>  #include "standard-headers/linux/qemu_fw_cfg.h"
+>  #include "libqos/fw_cfg.h"
+> -#include "qemu/bswap.h"
+>  #include "hw/misc/vmcoreinfo.h"
 >
->  /**
->   * address_space_cache_init: prepare for repeated access to a physical
-> diff --git a/include/exec/memory_ldst.h.inc b/include/system/memory_ldst.=
-h.inc
-> similarity index 100%
-> rename from include/exec/memory_ldst.h.inc
-> rename to include/system/memory_ldst.h.inc
-> diff --git a/include/exec/memory_ldst_cached.h.inc b/include/system/memor=
-y_ldst_cached.h.inc
-> similarity index 100%
-> rename from include/exec/memory_ldst_cached.h.inc
-> rename to include/system/memory_ldst_cached.h.inc
-> diff --git a/include/exec/memory_ldst_phys.h.inc b/include/system/memory_=
-ldst_phys.h.inc
-> similarity index 100%
-> rename from include/exec/memory_ldst_phys.h.inc
-> rename to include/system/memory_ldst_phys.h.inc
+>  static void test_vmcoreinfo_write_basic(void)
 > --
 > 2.52.0
 >
