@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD90EE748FC
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42345E74904
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 01:43:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYDu0-0001LC-4f; Tue, 23 Dec 2025 20:43:00 -0500
+	id 1vYDu5-0001MR-VF; Tue, 23 Dec 2025 20:43:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vYDtn-0001IT-RK; Tue, 23 Dec 2025 20:42:48 -0500
+ id 1vYDtr-0001Jt-2i; Tue, 23 Dec 2025 20:42:52 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vYDtm-00058k-7t; Tue, 23 Dec 2025 20:42:47 -0500
+ id 1vYDtp-00058k-8i; Tue, 23 Dec 2025 20:42:50 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 24 Dec
@@ -32,17 +32,17 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <nabihestefan@google.com>, Kane-Chen-AS
- <kane_chen@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v4 05/19] hw/arm/aspeed: Integrate AST1700 device into AST27X0
-Date: Wed, 24 Dec 2025 09:41:44 +0800
-Message-ID: <20251224014203.756264-6-kane_chen@aspeedtech.com>
+ <kane_chen@aspeedtech.com>
+Subject: [PATCH v4 06/19] hw/arm/aspeed: Integrate interrupt controller for
+ AST1700
+Date: Wed, 24 Dec 2025 09:41:45 +0800
+Message-ID: <20251224014203.756264-7-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251224014203.756264-1-kane_chen@aspeedtech.com>
 References: <20251224014203.756264-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -70,146 +70,212 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Connect the AST1700 device as a child of the AST27X0 model to reflect
-its role in DC-SCM 2.0 LTPI-based architectures. This patch wires
-the AST1700 device into the platform without introducing functional
-peripherals.
+Connect the AST1700 interrupt lines to the GIC in AST27X0, enabling
+the propagation of AST1700-originated interrupts to the host SoC.
 
-This forms the base for LTPI expander emulation in QEMU using
-AST27X0 as the host controller.
-
-Note: ioexp_num is set to 0 at this stage. Once all related devices
-and interrupts are fully implemented, ioexp_num will be updated to
-its expected value. This ensures the machine remains functional at
-every commit and avoids potential compiler or build issues.
+This patch does not implement interrupt sources in AST1700 itself,
+only the wiring into AST27X0.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/aspeed_soc.h |  7 +++++--
- hw/arm/aspeed_ast27x0.c     | 26 ++++++++++++++++++--------
- 2 files changed, 23 insertions(+), 10 deletions(-)
+ include/hw/arm/aspeed_soc.h   |  6 +++-
+ include/hw/intc/aspeed_intc.h |  2 ++
+ hw/arm/aspeed_ast27x0.c       | 37 +++++++++++++++++++++
+ hw/intc/aspeed_intc.c         | 60 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 104 insertions(+), 1 deletion(-)
 
 diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 7b08cca908..f19bab3457 100644
+index f19bab3457..b051d0eb3a 100644
 --- a/include/hw/arm/aspeed_soc.h
 +++ b/include/hw/arm/aspeed_soc.h
-@@ -45,6 +45,7 @@
- #include "hw/char/serial-mm.h"
- #include "hw/intc/arm_gicv3.h"
- #include "hw/misc/aspeed_ltpi.h"
-+#include "hw/arm/aspeed_ast1700.h"
+@@ -58,6 +58,7 @@
+ #define ASPEED_UARTS_NUM 13
+ #define ASPEED_JTAG_NUM  2
+ #define ASPEED_PCIE_NUM  3
++#define ASPEED_INTC_NUM  2
+ #define ASPEED_IOEXP_NUM 2
  
- #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+ struct AspeedSoCState {
+@@ -146,7 +147,8 @@ struct Aspeed27x0SoCState {
+     AspeedSoCState parent;
  
-@@ -112,10 +113,10 @@ struct AspeedSoCState {
-     UnimplementedDeviceState dpmcu;
-     UnimplementedDeviceState espi;
-     UnimplementedDeviceState udc;
--    UnimplementedDeviceState ltpi;
-     UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
-     AspeedAPB2OPBState fsi[2];
-     AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
-+    AspeedAST1700SoCState ioexp[ASPEED_IOEXP_NUM];
+     ARMCPU cpu[ASPEED_CPUS_NUM];
+-    AspeedINTCState intc[2];
++    AspeedINTCState intc[ASPEED_INTC_NUM];
++    AspeedINTCState intcioexp[ASPEED_IOEXP_NUM];
+     GICv3State gic;
+     MemoryRegion dram_empty;
  };
- 
- #define TYPE_ASPEED_SOC "aspeed-soc"
-@@ -178,6 +179,7 @@ struct AspeedSoCClass {
-     int macs_num;
-     int uarts_num;
-     int uarts_base;
-+    int ioexp_num;
-     const int *irqmap;
-     const hwaddr *memmap;
-     uint32_t num_cpus;
-@@ -190,7 +192,6 @@ enum {
-     ASPEED_DEV_IOMEM,
-     ASPEED_DEV_IOMEM0,
-     ASPEED_DEV_IOMEM1,
--    ASPEED_DEV_LTPI,
-     ASPEED_DEV_UART0,
-     ASPEED_DEV_UART1,
-     ASPEED_DEV_UART2,
-@@ -285,6 +286,8 @@ enum {
-     ASPEED_DEV_IPC1,
-     ASPEED_DEV_LTPI_CTRL1,
+@@ -288,6 +290,8 @@ enum {
      ASPEED_DEV_LTPI_CTRL2,
-+    ASPEED_DEV_LTPI_IO0,
-+    ASPEED_DEV_LTPI_IO1,
+     ASPEED_DEV_LTPI_IO0,
+     ASPEED_DEV_LTPI_IO1,
++    ASPEED_DEV_IOEXP0_INTCIO,
++    ASPEED_DEV_IOEXP1_INTCIO,
  };
  
  const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
+diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+index 51288384a5..4565bbab84 100644
+--- a/include/hw/intc/aspeed_intc.h
++++ b/include/hw/intc/aspeed_intc.h
+@@ -15,6 +15,8 @@
+ #define TYPE_ASPEED_INTC "aspeed.intc"
+ #define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"
+ #define TYPE_ASPEED_2700_INTCIO TYPE_ASPEED_INTC "io-ast2700"
++#define TYPE_ASPEED_2700_INTCIOEXP1 TYPE_ASPEED_INTC "ast2700-ioexp1"
++#define TYPE_ASPEED_2700_INTCIOEXP2 TYPE_ASPEED_INTC "ast2700-ioexp2"
+ #define TYPE_ASPEED_2700SSP_INTC TYPE_ASPEED_INTC "-ast2700ssp"
+ #define TYPE_ASPEED_2700SSP_INTCIO TYPE_ASPEED_INTC "io-ast2700ssp"
+ #define TYPE_ASPEED_2700TSP_INTC TYPE_ASPEED_INTC "-ast2700tsp"
 diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 341b53189b..de39a3e7eb 100644
+index de39a3e7eb..678d4eb6d9 100644
 --- a/hw/arm/aspeed_ast27x0.c
 +++ b/hw/arm/aspeed_ast27x0.c
-@@ -26,7 +26,6 @@
- #define AST2700_SOC_IO_SIZE          0x00FE0000
- #define AST2700_SOC_IOMEM_SIZE       0x01000000
- #define AST2700_SOC_DPMCU_SIZE       0x00040000
--#define AST2700_SOC_LTPI_SIZE        0x01000000
- 
- static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_VBOOTROM]  =  0x00000000,
-@@ -91,7 +90,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_LTPI_CTRL1] =  0x14C34000,
+@@ -91,7 +91,9 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
      [ASPEED_DEV_LTPI_CTRL2] =  0x14C35000,
      [ASPEED_DEV_WDT]       =  0x14C37000,
--    [ASPEED_DEV_LTPI]      =  0x30000000,
-+    [ASPEED_DEV_LTPI_IO0]  =  0x30000000,
-+    [ASPEED_DEV_LTPI_IO1]  =  0x50000000,
+     [ASPEED_DEV_LTPI_IO0]  =  0x30000000,
++    [ASPEED_DEV_IOEXP0_INTCIO] = 0x30C18000,
+     [ASPEED_DEV_LTPI_IO1]  =  0x50000000,
++    [ASPEED_DEV_IOEXP1_INTCIO] = 0x50C18000,
      [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
      [ASPEED_DEV_PCIE_MMIO1] = 0x80000000,
      [ASPEED_DEV_PCIE_MMIO2] = 0xA0000000,
-@@ -563,10 +563,14 @@ static void aspeed_soc_ast2700_init(Object *obj)
-                                 &s->ltpi_ctrl[i], TYPE_ASPEED_LTPI);
-     }
+@@ -511,6 +513,10 @@ static void aspeed_soc_ast2700_init(Object *obj)
+     object_initialize_child(obj, "intc", &a->intc[0], TYPE_ASPEED_2700_INTC);
+     object_initialize_child(obj, "intcio", &a->intc[1],
+                             TYPE_ASPEED_2700_INTCIO);
++    object_initialize_child(obj, "intcioexp0", &a->intcioexp[0],
++                            TYPE_ASPEED_2700_INTCIOEXP1);
++    object_initialize_child(obj, "intcioexp1", &a->intcioexp[1],
++                            TYPE_ASPEED_2700_INTCIOEXP2);
  
-+    for (i = 0; i < sc->ioexp_num; i++) {
-+        /* AST1700 IOEXP */
-+        object_initialize_child(obj, "ioexp[*]", &s->ioexp[i],
-+                                TYPE_ASPEED_AST1700);
+     snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
+     object_initialize_child(obj, "adc", &s->adc, typename);
+@@ -755,6 +761,22 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intc[1]), 0,
+                     sc->memmap[ASPEED_DEV_INTCIO]);
+ 
++    /* INTCIOEXP0 */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intcioexp[0]), errp)) {
++        return;
 +    }
 +
-     object_initialize_child(obj, "dpmcu", &s->dpmcu,
-                             TYPE_UNIMPLEMENTED_DEVICE);
--    object_initialize_child(obj, "ltpi", &s->ltpi,
--                            TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "iomem", &s->iomem,
-                             TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "iomem0", &s->iomem0,
-@@ -1068,14 +1072,19 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(ltpi_ctrl), 0, ltpi_base);
-     }
- 
-+    /* IO Expander */
-+    for (i = 0; i < sc->ioexp_num; i++) {
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioexp[i]), errp)) {
-+            return;
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intcioexp[0]), 0,
++                    sc->memmap[ASPEED_DEV_IOEXP0_INTCIO]);
++
++    /* INTCIOEXP1 */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intcioexp[1]), errp)) {
++        return;
++    }
++
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&a->intcioexp[1]), 0,
++                    sc->memmap[ASPEED_DEV_IOEXP1_INTCIO]);
++
+     /* irq sources -> orgates -> INTC */
+     for (i = 0; i < ic->num_inpins; i++) {
+         qdev_connect_gpio_out(DEVICE(&a->intc[0].orgates[i]), 0,
+@@ -1079,6 +1101,21 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+         }
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->ioexp[i]), 0,
+                         sc->memmap[ASPEED_DEV_LTPI_IO0 + i]);
++
++        icio = ASPEED_INTC_GET_CLASS(&a->intcioexp[i]);
++        /* INTC_IOEXP internal: orgate[i] -> input[i] */
++        for (int j = 0; j < icio->num_inpins; j++) {
++            irq = qdev_get_gpio_in(DEVICE(&a->intcioexp[i]), j);
++            qdev_connect_gpio_out(DEVICE(&a->intcioexp[i].orgates[j]), 0,
++                                  irq);
 +        }
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->ioexp[i]), 0,
-+                        sc->memmap[ASPEED_DEV_LTPI_IO0 + i]);
-+    }
 +
++        /* INTC_IOEXP output[i] -> INTC0.orgate[0].input[i] */
++        for (int j = 0; j < icio->num_outpins; j++) {
++            irq = qdev_get_gpio_in(DEVICE(&a->intc[0].orgates[0]), j);
++            sysbus_connect_irq(SYS_BUS_DEVICE(&a->intcioexp[i]), j,
++                               irq);
++        }
+     }
+ 
      aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
-                                   "aspeed.dpmcu",
-                                   sc->memmap[ASPEED_DEV_DPMCU],
-                                   AST2700_SOC_DPMCU_SIZE);
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->ltpi),
--                                  "aspeed.ltpi",
--                                  sc->memmap[ASPEED_DEV_LTPI],
--                                  AST2700_SOC_LTPI_SIZE);
-     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),
-                                   "aspeed.io",
-                                   sc->memmap[ASPEED_DEV_IOMEM],
-@@ -1143,6 +1152,7 @@ static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, const void *data)
-     sc->macs_num     = 3;
-     sc->uarts_num    = 13;
-     sc->num_cpus     = 4;
-+    sc->ioexp_num    = 0;
-     sc->uarts_base   = ASPEED_DEV_UART0;
-     sc->irqmap       = aspeed_soc_ast2700a1_irqmap;
-     sc->memmap       = aspeed_soc_ast2700_memmap;
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 5cd786dee6..a04005ee7c 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -924,6 +924,64 @@ static const TypeInfo aspeed_2700_intc_info = {
+     .class_init = aspeed_2700_intc_class_init,
+ };
+ 
++static AspeedINTCIRQ aspeed_2700_intcioexp2_irqs[ASPEED_INTC_MAX_INPINS] = {
++    {0, 8, 1, R_GICINT192_EN, R_GICINT192_STATUS},
++    {1, 9, 1, R_GICINT193_EN, R_GICINT193_STATUS},
++};
++
++static void aspeed_2700_intcioexp2_class_init(ObjectClass *klass,
++                                              const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 IOEXP2 INTC Controller";
++    aic->num_lines = 32;
++    aic->num_inpins = 2;
++    aic->num_outpins = 10;
++    aic->mem_size = 0x400;
++    aic->nr_regs = 0x58 >> 2;
++    aic->reg_offset = 0x100;
++    aic->reg_ops = &aspeed_intcio_ops;
++    aic->irq_table = aspeed_2700_intcioexp2_irqs;
++    aic->irq_table_count = ARRAY_SIZE(aspeed_2700_intcioexp2_irqs);
++}
++
++static const TypeInfo aspeed_2700_intcioexp2_info = {
++    .name = TYPE_ASPEED_2700_INTCIOEXP2,
++    .parent = TYPE_ASPEED_INTC,
++    .class_init = aspeed_2700_intcioexp2_class_init,
++};
++
++static AspeedINTCIRQ aspeed_2700_intcioexp1_irqs[ASPEED_INTC_MAX_INPINS] = {
++    {0, 6, 1, R_GICINT192_EN, R_GICINT192_STATUS},
++    {1, 7, 1, R_GICINT193_EN, R_GICINT193_STATUS},
++};
++
++static void aspeed_2700_intcioexp1_class_init(ObjectClass *klass,
++                                              const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 IOEXP1 INTC Controller";
++    aic->num_lines = 32;
++    aic->num_inpins = 2;
++    aic->num_outpins = 10;
++    aic->mem_size = 0x400;
++    aic->nr_regs = 0x58 >> 2;
++    aic->reg_offset = 0x100;
++    aic->reg_ops = &aspeed_intcio_ops;
++    aic->irq_table = aspeed_2700_intcioexp1_irqs;
++    aic->irq_table_count = ARRAY_SIZE(aspeed_2700_intcioexp1_irqs);
++}
++
++static const TypeInfo aspeed_2700_intcioexp1_info = {
++    .name = TYPE_ASPEED_2700_INTCIOEXP1,
++    .parent = TYPE_ASPEED_INTC,
++    .class_init = aspeed_2700_intcioexp1_class_init,
++};
++
+ static AspeedINTCIRQ aspeed_2700_intcio_irqs[ASPEED_INTC_MAX_INPINS] = {
+     {0, 0, 1, R_GICINT192_EN, R_GICINT192_STATUS},
+     {1, 1, 1, R_GICINT193_EN, R_GICINT193_STATUS},
+@@ -1099,6 +1157,8 @@ static void aspeed_intc_register_types(void)
+     type_register_static(&aspeed_intc_info);
+     type_register_static(&aspeed_2700_intc_info);
+     type_register_static(&aspeed_2700_intcio_info);
++    type_register_static(&aspeed_2700_intcioexp1_info);
++    type_register_static(&aspeed_2700_intcioexp2_info);
+     type_register_static(&aspeed_2700ssp_intc_info);
+     type_register_static(&aspeed_2700ssp_intcio_info);
+     type_register_static(&aspeed_2700tsp_intc_info);
 -- 
 2.43.0
 
