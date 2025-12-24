@@ -4,107 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9394EE74916
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 11:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A75E75448
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 11:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYMvr-0005ji-Jg; Wed, 24 Dec 2025 06:21:32 -0500
+	id 1vYMzP-0006iL-EY; Wed, 24 Dec 2025 06:25:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vYMvq-0005jW-0M
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 06:21:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vYMzM-0006i2-2k
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 06:25:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vYMvo-0007xj-4L
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 06:21:29 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vYMzK-0000gJ-BQ
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 06:25:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766575285;
+ s=mimecast20190719; t=1766575505;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FoJrvKNvXSjo3hL0j+4DD+vxUI2nQYAH4ZvRIuDbNzg=;
- b=AHUuk2RjgaM9RK8T/dUhbFXbCkRGv4uWL+FJewv36qWWbuo2YJJV8JZHwQlWoE6KRjNVpT
- v615HfTIVeCC8I2tPPuB3VJ8Ni5Yg4BkWaLiR+ZQ2bMIP0P+Ap7nV47lWLUBG3Xe6NSBDl
- 59tpRKQqI122w7NksZEdw1gI3L8n1cY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SUquDkfqeE9wbnLT4HJuq866sRB0NKo/tK8aWQmE63Q=;
+ b=HOb03WomJtjHiLcYCuwxoHJNcPjM/hLSt+Vg7MbqhpxhshWIzviRimWuibIsUZyOgp8T5b
+ QgJV4s70g6dSs3yVHymvGFMwAPgPIzhY3nWa/pjm92IVSPlyv3eeocYFtdQ/GUdnzchMlD
+ 16yoeq8RrRKmKlfS6+kruEKyUOwHgTI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-Mj-3zV27M6eL6mIp7zfCCw-1; Wed, 24 Dec 2025 06:21:23 -0500
-X-MC-Unique: Mj-3zV27M6eL6mIp7zfCCw-1
-X-Mimecast-MFC-AGG-ID: Mj-3zV27M6eL6mIp7zfCCw_1766575282
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-432488a0ce8so4856593f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 03:21:23 -0800 (PST)
+ us-mta-653-MIqy0FIOPI6sgagKoObSTQ-1; Wed, 24 Dec 2025 06:25:03 -0500
+X-MC-Unique: MIqy0FIOPI6sgagKoObSTQ-1
+X-Mimecast-MFC-AGG-ID: MIqy0FIOPI6sgagKoObSTQ_1766575502
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47910af0c8bso38478145e9.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 03:25:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766575282; x=1767180082; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766575502; x=1767180302; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=FoJrvKNvXSjo3hL0j+4DD+vxUI2nQYAH4ZvRIuDbNzg=;
- b=TL/ol/iLSiKLTLWkH5DY9ufFsdcVmIO5pLYigC3o1YbQVGme2WerFysfsc+JX0h9Kg
- dqHnsURCsQIO8662BWt2sQ8M84/hU6u826tjBHw8VDqXeUQEIL7zuFaPkQnHQpchgJzS
- AX7HYsf4+G4dzChjv1lP5Xnj0VRhvdPLnTTkMqWFh6HJRob+/+ZUH/ydUAGwGYrbLHgB
- k6VKxer0sbNP7xVLPDE+Waouz1lD5E913ea3GjKanzoULd/RhDeWZOAnYJKdOkdnFacp
- LtdvwED+wtq1WckSerdeyJZmByE2+4EvRHo17pWovkSWDXkmxc/sX+MpXVbWeN0xmHT0
- ogFg==
+ bh=SUquDkfqeE9wbnLT4HJuq866sRB0NKo/tK8aWQmE63Q=;
+ b=gAPgOveXS4es4HAtL9yCp8p0eBkLJBF3EMJcEl3k4690ed9OviNzKP2+WpMpJ7Slon
+ C9jFF8u0TSSG1ZI3mfHSXx8LzNWSehL9lRvL0avrR0nd4j+ouNN1GGP5HeZOwxakl/gz
+ P8qQ2LmEjKs25QNIXi12bQE/UCRWRdnpR5xdFcpUhNHXqfNyxz7mAw4eEcAFJww6w3Wi
+ kV0ebcuW/JrdUaSJE6vCiScLOqRSs29GJMwi/+Sklh6u+ZObpWsZizCG2/2oafjHg16n
+ Hd9peGXei3ZdilNwJF+s7aSdC5rAODrXvwjmGTBw8hQKFxS6bo7IEs4vJShwPzodxXTh
+ n+cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766575282; x=1767180082;
+ d=1e100.net; s=20230601; t=1766575502; x=1767180302;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FoJrvKNvXSjo3hL0j+4DD+vxUI2nQYAH4ZvRIuDbNzg=;
- b=dcehl6cOtkZhbnbOjMBJnFXG3HyF28vPFmFtQZPg5JCb8sqT7WLWKbuZRxJQjvBAW2
- B6WftMatki8RFtwPs4wNJUkFGy5qvxqHwy8veX1zDjaOSwRo+tRdpFKEMUkxYkqqqjyV
- uo1XmBAt/kjVq7TPx77F3hoaHp8qzf3CvIyCMxbIa/+MALgZO4bNjMtuPiKvrA4Mng21
- KIZmqgS6Ut5/MHmCIDApMv5JJQZ2fd67XugsvMj1at1ciE5n8J2idwBFWXvA6VQajvI5
- QtwMKtnL7XkSmodQOIPEhGSa5BQHdb3uO9Z1rYdcSAyO/jyRTkX/FhBMVYnMYlyzhLVC
- nczQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/3hYucbbPYl4b6BPo7FvKvPdoSHYqdlzbGipBfgXsj77Y7i1AmlMVOqZV9i480dw9ZjhCkFnvKzNa@nongnu.org
-X-Gm-Message-State: AOJu0Yzyb9426xdzZuPIsq67FETo+IACwHYYOQmoUKfJ4dZrR8lz8l4c
- 8bVoyiwconmqM45rxz2yUHRrNuhnHHU9hCtmMMJQ8+sFJnVd2OO4OgT8epv9/NneuhFC4SwQp1B
- lJ3vq5Ory8M9CBGV0YU1itn/q8DDh8KwowllzMZhERAkywSTfCnRvO2Ay
-X-Gm-Gg: AY/fxX5qFZAkEQPnfmDMYki95YHC1ehlbFgZ4MbMSsxp9fIc7feqBIHy1JYKgYWYiKT
- nsL0gB711D4L6UpcD6QZlQKqmUIT50VDVgv9rYlIw5GWWX11AhuybefWHMgIlSQFClWGFqMdewB
- /ldmpjkPyofe3QsUF73fEEouFJzZLeNFm7vEPO7lnMF3AkGRcZK3USrx0azz41JFg7k7eN5i3/i
- RH9jE73Bj6/voahey3Ip+Y1s2/oaXWkLSDJCOG8d7IraFXAXyYxWEwQQNb97hZXGH/EUAc0yqR7
- Agvf4+Zry6TEU65kY0lTOIIB59G6qBlDqNs5TOrJ2XEBUxr4Xm3cAG4ssAQjIIly/wN7ITmdzCN
- Y9f2E+3OGga5Mph7j15+aYWwYLXX6YKi+ZAfZVxZ9GL/bqg==
-X-Received: by 2002:a05:600c:848d:b0:479:3a87:208f with SMTP id
- 5b1f17b1804b1-47d38848706mr48614535e9.36.1766575282422; 
- Wed, 24 Dec 2025 03:21:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGvbG2ME5d8jpX+DavdgrlaxZHCnAr+/U1ZKxnHKQlip71/vWyU8K8ocBREK/GjHZP2EJUYVA==
-X-Received: by 2002:a05:600c:848d:b0:479:3a87:208f with SMTP id
- 5b1f17b1804b1-47d38848706mr48614335e9.36.1766575282024; 
- Wed, 24 Dec 2025 03:21:22 -0800 (PST)
+ bh=SUquDkfqeE9wbnLT4HJuq866sRB0NKo/tK8aWQmE63Q=;
+ b=nlrM5fmtrJavaUXJeOa4JjufBU1uBge/F6klXCDHDhnZeB0KXTspIAfJVhGrNpfRux
+ 0gHyTR3CWdkDSp3nozk72zGS1N/a586m3wWIRuq616W+w+FBEaMIsl8P8c4yqzEsi0Xw
+ SK7tfOas8s0gOrZMep/ECXgvuupE91oFpinPu3SjDyzAJ7dPZ23TvTPq0HYLGvZMtOwt
+ Hk4Sl0nfUU+HYIfADOwULTLGN/J8wjAKA3utWhlhN4jPxSU0/tBvSI0QHXE38xU4NCEv
+ 1aZ9/JcGDDLcOOlItPzG+o4MZURWr/RJOPuF3kscx5NXgx1dl/NjIG/bAjV48axAKKa9
+ zyhQ==
+X-Gm-Message-State: AOJu0Yw4+GLh+qeJhZWIuwDvVp/SterdAW3kTY9S4nS8DcOrtZLewEYT
+ uOsLh57nGWO+MWEspdZCiSleJQmnpVlOvRjU58MAOA3un5s+WvZDSzhWFDFZY4z9GY82smTvkBA
+ I2OVFNV2/4lHVUlLgNREBo4or5dGpMohXLnjYPXKZM1SGLwgAhn/hOw7O
+X-Gm-Gg: AY/fxX4fCCZGUiFMAKcTEhEgFruZnAEBQepLlCMjbXOgY+pqaefp5c1ScKoKA46RpUC
+ XCx2TbFfu/zhArMZESFJmflrFN49UsSpCzXanCKXSGiDvYviClxb9sbGA/3RMl6+GTyP2FN0JtE
+ WKhp7Ti+l6pKhtv2aml7BPSHPb2krm+9Vu5yu5tpnTOXIbgMNCFGUXrXLspe1KCRq0euOV/L5l7
+ +BKqGvPRLiVJj1P7X5eNxXD6ODgKH3Yx+xHIr3CBkHYtuU7UlkodT/pCQNalU1eCTbnC8OguNca
+ bWfH9b3ndNM1jAPl06Fl08tSRMIfbNkRBl50PZD5LTiVmwxtg2v9rQ94fM4+QKYsqClxWFSgXEL
+ e5E1RiqNMS6gtSB4pOKHiWuZUciEhkuIfMlD/MFIroiLmYA==
+X-Received: by 2002:a05:600c:1d1d:b0:477:9eb8:97d2 with SMTP id
+ 5b1f17b1804b1-47d1953b8acmr163189365e9.8.1766575502298; 
+ Wed, 24 Dec 2025 03:25:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFAs7683m4OKFC2YJl+RPLAei8hSOgOGfrHjzrOpsBIUWUZqk8WJWPtMkvoN+Ht8SNnbNT4fA==
+X-Received: by 2002:a05:600c:1d1d:b0:477:9eb8:97d2 with SMTP id
+ 5b1f17b1804b1-47d1953b8acmr163189165e9.8.1766575501884; 
+ Wed, 24 Dec 2025 03:25:01 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:165:d60:107a:63db:9521:6057?
  ([2a01:e0a:165:d60:107a:63db:9521:6057])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be273f147sm351425235e9.7.2025.12.24.03.21.21
+ 5b1f17b1804b1-47be3acdb87sm133831645e9.16.2025.12.24.03.25.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Dec 2025 03:21:21 -0800 (PST)
-Message-ID: <dc8b4613-46ba-406a-aeb3-24542df48e77@redhat.com>
-Date: Wed, 24 Dec 2025 12:21:20 +0100
+ Wed, 24 Dec 2025 03:25:01 -0800 (PST)
+Message-ID: <d65e8cb7-7370-434f-89f2-d35bbfede01a@redhat.com>
+Date: Wed, 24 Dec 2025 12:25:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/vfio/region: Create dmabuf for PCI BAR per region
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "alex@shazbot.org" <alex@shazbot.org>, "cohuck@redhat.com"
- <cohuck@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>,
- "mochs@nvidia.com" <mochs@nvidia.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
- "kjaju@nvidia.com" <kjaju@nvidia.com>
-References: <20251222135357.143339-1-skolothumtho@nvidia.com>
- <20251222135357.143339-4-skolothumtho@nvidia.com>
- <CH3PR11MB717754BE949E8270DC18A8F0F8B5A@CH3PR11MB7177.namprd11.prod.outlook.com>
+Subject: Re: [PATCH] tests/functional: Fix URL of gb200nvl-bmc image
+To: Patrick Williams <patrick@stwcx.xyz>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ed Tanous <etanous@nvidia.com>
+References: <20251222073351.166720-1-clg@redhat.com>
+ <100505ae-4d33-4bd4-800b-6ab21b99738a@redhat.com> <aUsTpG0EGPh29pUL@heinlein>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -150,17 +140,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CH3PR11MB717754BE949E8270DC18A8F0F8B5A@CH3PR11MB7177.namprd11.prod.outlook.com>
+In-Reply-To: <aUsTpG0EGPh29pUL@heinlein>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -178,68 +168,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Vivek,
-
-On 12/23/25 21:43, Kasireddy, Vivek wrote:
-> Hi Shameer, Cedric,
+On 12/23/25 23:11, Patrick Williams wrote:
+> On Mon, Dec 22, 2025 at 01:52:19PM +0100, Cédric Le Goater wrote:
+>> On 12/22/25 08:33, Cédric Le Goater wrote:
+>>>        ASSET_GB200_FLASH = Asset(
+>>> -        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
+>>> +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-bmc/openbmc-20250702182348/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
+>>>            'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db0dbc')
 > 
->> Subject: [PATCH 3/3] hw/vfio/region: Create dmabuf for PCI BAR per region
->>
->> From: Nicolin Chen <nicolinc@nvidia.com>
->>
->> Linux now provides a VFIO dmabuf exporter to expose PCI BAR memory for
->> P2P
->> use cases. Create a dmabuf for each mapped BAR region after the mmap is
->> set
->> up, and store the returned fd in the region's RAMBlock. This allows QEMU
->> to
->> pass the fd to dma_map_file(), enabling iommufd to import the dmabuf and
->> map
->> the BAR correctly in the host IOMMU page table.
->>
->> If the kernel lacks support or dmabuf setup fails, QEMU skips the setup
->> and continues with normal mmap handling.
->>
->> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
->> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
->> ---
->>   hw/vfio/region.c     | 57
->> +++++++++++++++++++++++++++++++++++++++++++-
->>   hw/vfio/trace-events |  1 +
->>   2 files changed, 57 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
->> index b165ab0b93..6949f6779c 100644
->> --- a/hw/vfio/region.c
->> +++ b/hw/vfio/region.c
->> @@ -29,6 +29,7 @@
->>   #include "qemu/error-report.h"
->>   #include "qemu/units.h"
->>   #include "monitor/monitor.h"
->> +#include "system/ramblock.h"
->>   #include "vfio-helpers.h"
->>
->>   /*
->> @@ -238,13 +239,52 @@ static void vfio_subregion_unmap(VFIORegion
->> *region, int index)
->>       region->mmaps[index].mmap = NULL;
->>   }
->>
->> +static int vfio_region_create_dma_buf(VFIORegion *region)
-> Would it make sense to consolidate this implementation with the one from my
-> series: https://lore.kernel.org/qemu-devel/20251122064936.2948632-7-vivek.kasireddy@intel.com/
-> so that it is a bit more generic and can also be invoked from outside of VFIO?
+> Should we make these commits or tags rather than `master`?  Right now it
+> seems only Catalina uses a permalink where as all the others appear to
+> use `master` references.
 
-I would prefer to start by the generic dmabuf support in VFIO, as
-it covers multiple use cases. Then, we can look at virtio-gpu.
 
-> Or, is it ok to have two dmabuf implementations: one that is internal to VFIO
-> and takes a VFIORegion as input like this one and another one that takes a
-> VFIODevice and iovec as input and can be invoked externally?
-May be this approach can be revisited a bit ? I haven't looked yet.
+The main objective is to be able to add new images without breaking existing
+tests. As long as there is some version number in the fw image file, I don't
+think it matters much. I would opt for master.
 
 Thanks,
 
 C.
+
+
+> 
+> functional/arm/test_aspeed_catalina.py
+> 14:        'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef81245b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina-20250619123021.static.mtd.xz',
+> 
+> 
 
 
