@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0D8E776EA
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3775E776F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Dec 2025 16:33:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYRo2-00063r-LV; Wed, 24 Dec 2025 11:33:46 -0500
+	id 1vYRo9-0006cL-Tt; Wed, 24 Dec 2025 11:33:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRnz-0005uD-5Z
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:33:44 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRo7-0006QY-LC
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:33:51 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRnx-0005Ey-JV
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:33:42 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-b7cee045187so1082913366b.0
- for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:33:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vYRo6-0005Fc-5R
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 11:33:51 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b734fcbf1e3so1212816966b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Dec 2025 08:33:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766594020; x=1767198820; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766594028; x=1767198828; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lt+Fg023OLYF+/KqTx4JdKGYP6O1+WjADomLnTSZdzY=;
- b=f4DevuiOON/pjQ3jg3VpF48Ymd4QM7UCpF3I6y6HR19zX0DHraSDcIai/XbjYax+tf
- ueBY/J2xhmWu1Oy/vpZbeW2vIYehxkXWAsTPTdF08voy3LIY/iW2oNESO6pXxfE/ixwW
- GOuZGqFpcvEO2cLuoM08R6s4HStyxgXwwckZiUrWuJoszmZOZmLK1h4PStcLMV9RqU/O
- wN+cJ9QFXLqtLDb7YreRWlO2PY860XpY/KfCQljBFbj4Shbl59nCu693WhzFQyL5ymBP
- WYeZJIXmRT/ho+KKUCD3lsgAq6BrmmgKY4wHDgFY8/8DMn1NgmmasYI98WXUahRRpC9H
- 6lmw==
+ bh=iY7+zV3iWK1Z4mcNAheWEHw0L7bIxeyVXz+QVK68RTQ=;
+ b=czBfQLVFlTcKb/WPYhG7nXSxoCr0bTpLK9TWZpFksxL9wKs6Sqy3rUcXbYOpD90aIg
+ zFL6RRxHoipp1RUpXSRSYmlcE5NLvytmYdxVoE9H32F15IjGMkreSdlroIASXItnLesx
+ Kh/d36YN4S7t805MPWSIDNg+FD5a8bsK4yujAE81dlW8qoxk5POTHiiKSGlJ+zpxz857
+ V0gk8C/BEkHwY/BuP5KwXM9bB76ADaokvUeC1wqucZf6jMw83eRKJbC3cZKqSIjESZyl
+ yrfIXxrWk8t+G/IEnKvL3x5bvGvTFXkQEoxVh/53rl8EWRjYto9Z/DCII87LUjFWjjN1
+ QeZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766594020; x=1767198820;
+ d=1e100.net; s=20230601; t=1766594028; x=1767198828;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lt+Fg023OLYF+/KqTx4JdKGYP6O1+WjADomLnTSZdzY=;
- b=Shscb+15s05d+woeruXvsrFYPSm6R5rRuGZWxgJP/ljPaxGVspn5WYJMaIp8LtAitF
- Uc+1SUSzw5RpfswDI1uN/Oo2LwMK0fIL+AZGk6eFwnMKIWsf3uk0dX8/XmH14aXxm+0A
- D/Nmg/w0gLJfdHP3O4P6zSGiomMsaIh1TWmDJoBK6zC5j3TKKiWRL2c5QpPRLSKoU43K
- CnRrmarvCYsgWutyIv0jkE5n6k3NduvQhCOXnG3dgeZDYYf7dmJ2lPrbngCc7D1quedg
- zkcqp6CV/BnraUo66EXROzOnAesDapxv28TjO9nAJXRjFkhi+GqOHVpo/UyWe0B5QXez
- Tc4A==
-X-Gm-Message-State: AOJu0YxaPjsigoSkfJOsla0N+vmYV9IZ5CFRESyc2OTNZ9i7JSK9R7+V
- y6oqJhHX3y5B8HKFC01a3MhuzRyJ+fxLwSH9gxPi73HdtZpwSBVb7HMUyYeSrG8rQ/irLcywh/x
- 3eP2AXds=
-X-Gm-Gg: AY/fxX65sFy+lZrwzGEYF3b0+9zUu7fGysGXHt+uYaifg1xxtg8uZ5M7y1Ugh7l+21m
- gfSYscCYfdydFS16rALaBTaFfnsFCgivSfPgbAPhMj9J1vgxOyf7sZ4HzMrVXo0dT5r+Ca6sUKG
- AUVYrSeh9H2nn2h6TnauCvxd+EdcPBWOBy6iLOlTAQlkKQUvlTgIboRNjVn2fKOLUandq1Now+k
- Gka9zCTav6gwd2ot1kS4cDUBuhP/4Nid2r/BxMLPahQaWewUyEhpVlK9K9HSeS9HpuH4myjZh3y
- 2K/5yzw70pBrYexPIRQF+t3/RQCKarIkGXOFbuJ4BBGaGORkJOqbzhKN7eMWYgeaOXDNs9//ICA
- IKz6tTOz0uuSadXCiGdOY0o6AynFElo+81ZB2toG2z187IjS6xIerMTrbV+zBGlQXb5VDVaTdwG
- kdgKYXIJeymF5RdlRrDefPzw6Sk5t2nb1uvDINRIB880SNkVNUdz484k+kIMd5rxFL2w==
-X-Google-Smtp-Source: AGHT+IGG85eTOhJaVuEu0LlGs8s5dFygOzjEfuOvVGh9YxaOBjxjQMkDsqIfH5y4e7rWmGGSvPfXYw==
-X-Received: by 2002:a17:906:318c:b0:b80:499:8a80 with SMTP id
- a640c23a62f3a-b802058ea0dmr1695967566b.20.1766594019673; 
- Wed, 24 Dec 2025 08:33:39 -0800 (PST)
+ bh=iY7+zV3iWK1Z4mcNAheWEHw0L7bIxeyVXz+QVK68RTQ=;
+ b=QEdVPPMKIQILf/J2j8QLXeoUtaCZuCZhtaZvmAaeLYZsQ0+aOAjrT94BPd/zerkqLJ
+ CPtVLD/tIQWsRCS/+HI6RsSF9qWalNDiyN8TP5exbthKHbQZih9UvC318CUn34sqjjM6
+ AkNUchXKfabNuPgzz8j6PUZMZFSETVLM5EWjHGlJL2L/wjJ/HdLvmWxEVlkx0sNtlRrR
+ GPD54DNiSwevsg7n7rnqCO9dt4uPoz/NiM8htKvyi/DdnxM6hBtblJArO/kstYwykT+R
+ uHC9+1q7MWlyPUP+RHevTWkxwzlJZ+oRX8O2hf9rjt8wMlgqtAtyGkZJHL9QoF0UZYYb
+ MOfQ==
+X-Gm-Message-State: AOJu0YxY8N/HulI1+4oqLo73X4qxK1CAzIXeSjFDb4m3L9xfV3tW4cPN
+ D9ec7jsf+EUP6oUG7eBc2APHFPP67XRvL6VBo/0WdHOHaEyz+jf968LKajDciv+MPHb5z5bsLqZ
+ kiNuzQ4Q=
+X-Gm-Gg: AY/fxX5/aLWD5vz+sEC2Wr1G6ovLQd2Cq7QSW63/L/lENqzl34tXFg5s5db6wIyOp38
+ r9Rn6OMXZGFanyStBvQytwSndw3RWfNnsUvZZxpZ0EKVxPPxTr2HGS3C5XRbioNo8vkpXKbtXrp
+ DPLwTsYNv/pigm5LUr/WTyVbf4gRlqZyUJNXJZ4Ur+VpmZupOELbIX6PynOR2kajarNe1F2hSlV
+ ktdXhb1k3Egz3KUEXm7fj9/2dnaM8U0eo+Oxb1DOBi2kAUhtwqpfXik4rlH5+Tx9OIJv8vpwPsE
+ BlWSHnJxlFmhCFdpoeSICDQbbdPi8ipFpVirwOWuPNBj3YWtUGOLeRIZ33KxfOHVyQCSlo7pODx
+ IpD229kcFfOwPy/GNFJVFSj+1LZ1IMChJnzeIneEgv04eUZCxVhL4XOSJ0lba5kIjFVS3Z78eIT
+ AtfQyaZzb8A/cq0Ss7R5qOFldHTyM2LtYzuY7aYo5jOJx5gaadbUp8tgQ=
+X-Google-Smtp-Source: AGHT+IE4HcdeWEaNxJoYpeoiC7fMmTqfxA6b0HWDUHG8xxfQ8MxdZHI4nc0aWmsTK9lDq1BX/8fsnw==
+X-Received: by 2002:a17:907:8686:b0:b76:8163:f1f8 with SMTP id
+ a640c23a62f3a-b80371d6725mr1932052866b.53.1766594027872; 
+ Wed, 24 Dec 2025 08:33:47 -0800 (PST)
 Received: from localhost.localdomain (188.171.88.92.rev.sfr.net.
  [92.88.171.188]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8037a5c4dfsm1802764466b.14.2025.12.24.08.33.38
+ a640c23a62f3a-b8037ae2dbesm1864832066b.29.2025.12.24.08.33.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Dec 2025 08:33:39 -0800 (PST)
+ Wed, 24 Dec 2025 08:33:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -71,17 +71,18 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/4] target/rx: Inline translator_lduw() and translator_ldl()
-Date: Wed, 24 Dec 2025 17:33:03 +0100
-Message-ID: <20251224163304.91384-4-philmd@linaro.org>
+Subject: [PATCH 4/4] configs/targets: Forbid Renesas RX to use legacy native
+ endianness API
+Date: Wed, 24 Dec 2025 17:33:04 +0100
+Message-ID: <20251224163304.91384-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224163304.91384-1-philmd@linaro.org>
 References: <20251224163304.91384-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,63 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-translator_lduw() and translator_ldl() are defined in
-"exec/translator.h" as:
+The qemu-system-rx binary is buildable without a single use
+of the legacy "native endian" API. Unset the transitional
+TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
+further uses of the legacy API.
 
-  192 static inline uint16_t
-  193 translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
-  194 {
-  195     return translator_lduw_end(env, db, pc, MO_TE);
-  196 }
+Preliminary commits allowing this final change:
 
-  198 static inline uint32_t
-  199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
-  200 {
-  201     return translator_ldl_end(env, db, pc, MO_TE);
-  202 }
-
-Directly use the inlined form, expanding MO_TE -> MO_LE
-since we only build the Renesas RX target as little-endian.
+ . 0f4af4e2672 target/rx: Use MemOp type in gen_ld[u]() and gen_st()
+ . 2062fa663c0 target/rx: Propagate DisasContext to generated helpers
+ . 8b71fd6ffec target/rx: Propagate DisasContext to push() / pop()
+ . 363fff6d1b1 target/rx: Propagate DisasContext to gen_ld[u]() and gen_st()
+ . cb8e4556d58 target/rx: Factor mo_endian() helper out
+ . f9903a8a23e target/rx: Replace MO_TE -> MO_LE
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/rx/translate.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ configs/targets/rx-softmmu.mak | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/rx/translate.c b/target/rx/translate.c
-index ef865f14bf5..d2f73221952 100644
---- a/target/rx/translate.c
-+++ b/target/rx/translate.c
-@@ -101,16 +101,16 @@ static uint32_t li(DisasContext *ctx, int sz)
-         return (int8_t)translator_ldub(env, &ctx->base, addr);
-     case 2:
-         ctx->base.pc_next += 2;
--        return (int16_t)translator_lduw(env, &ctx->base, addr);
-+        return (int16_t) translator_lduw_end(env, &ctx->base, addr, MO_LE);
-     case 3:
-         ctx->base.pc_next += 3;
-         tmp = (int8_t)translator_ldub(env, &ctx->base, addr + 2);
-         tmp <<= 16;
--        tmp |= translator_lduw(env, &ctx->base, addr);
-+        tmp |= translator_lduw_end(env, &ctx->base, addr, MO_LE);
-         return tmp;
-     case 0:
-         ctx->base.pc_next += 4;
--        return translator_ldl(env, &ctx->base, addr);
-+        return translator_ldl_end(env, &ctx->base, addr, MO_LE);
-     default:
-         g_assert_not_reached();
-     }
-@@ -206,7 +206,8 @@ static TCGv_i32 rx_index_addr(DisasContext *ctx, TCGv_i32 mem,
-         ctx->base.pc_next += 1;
-         return mem;
-     case 2:
--        dsp = translator_lduw(ctx->env, &ctx->base, ctx->base.pc_next) << size;
-+        dsp = translator_lduw_end(ctx->env, &ctx->base, ctx->base.pc_next,
-+                                  MO_LE) << size;
-         tcg_gen_addi_i32(mem, cpu_regs[reg], dsp);
-         ctx->base.pc_next += 2;
-         return mem;
+diff --git a/configs/targets/rx-softmmu.mak b/configs/targets/rx-softmmu.mak
+index 3a90f1b9977..281a165873a 100644
+--- a/configs/targets/rx-softmmu.mak
++++ b/configs/targets/rx-softmmu.mak
+@@ -4,3 +4,4 @@ TARGET_XML_FILES= gdb-xml/rx-core.xml
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
 -- 
 2.52.0
 
