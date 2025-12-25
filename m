@@ -4,51 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77118E78498
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 00:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293ACE776FC
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 00:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYZOt-00069r-5p; Wed, 24 Dec 2025 19:40:19 -0500
+	id 1vYZbb-0000EN-QM; Wed, 24 Dec 2025 19:53:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vYZOq-00068n-UF
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 19:40:16 -0500
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vYZbW-0000Ds-FU
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 19:53:22 -0500
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vYZOk-0006bZ-JO
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 19:40:16 -0500
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vYZbT-0008No-VV
+ for qemu-devel@nongnu.org; Wed, 24 Dec 2025 19:53:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=3DiUshcxOurNrO/X0nEGqOTynTWZlY3hzScUZK9itfc=; b=El59RsVOc3IgwoC6
- +jxHBvF1YpC0XeZX4MN4QR/7bKAsWB/B2n7mIGrCm7tSKQK13VLptPc/d1vXAeQCzCG/xgHwOcme7
- hVukW6uMK63/4CSKYM5x80R1LPYDhe9ZRrqU+Gpelb6NDgQ/tNY3xOFacUtbVgofUorUOhcUqbp1K
- pACGR7ZZh00wgn/yWvNueAf5NPMIMTWRrY99+fwZAoS7HYlKqoCu/n04Fq9Rkr0cwtg8/a3QmfJOD
- 1fqXMMUEGznDt4SkUIQemhn7F6xQOVqX+K/Pt+FYFIfpsiAwT97FTpDM3j9TKK5qGJASVMhBT2kgi
- 2vPwyRgFAWDrFScMvQ==;
+ :Subject; bh=30Y07OcjGBogwL93Zit92osnomxgi2nRkb2Wl5mHk6Q=; b=WYql1a5TZ/xdEYBS
+ aoXGIvikzPAfY88qcBz63HAZ4cpr1RWSjdBCnFyRMrJPxkI6+QnfTow+iYxFvSWWr6k2g1pjcDHSH
+ pbgiJ8F71JRlQeBUSrMScLz/vKTImFrTP1pQntIoFn0r5RC/ap1AWOZw5kbFgVo/tpxWicbDSbTjB
+ LJZK5CJ3P9tM/MNq+rIRoT+lRym0N/enLXEuJI0FI5kJGbINp2fK/3IPbjDIPUZBghHS85zMi31N8
+ vDsL6xVLvYac9yEjH+dkxYbUZWSlEZHvSO6nVMndF2BxxZ/NbhjK5WQ2vtWJXQhb5E77DN5/3CJhY
+ 5HRASVKby4eOHnnH3Q==;
 Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vYZOd-0000000BFj4-0KC7;
- Thu, 25 Dec 2025 00:40:03 +0000
-Date: Thu, 25 Dec 2025 00:40:03 +0000
+ (envelope-from <dg@treblig.org>) id 1vYZbR-0000000BFkY-0SFC;
+ Thu, 25 Dec 2025 00:53:17 +0000
+Date: Thu, 25 Dec 2025 00:53:17 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: Re: [PATCH 5/6] monitor/hmp: Fix coding style in hmp-cmds-target.c
-Message-ID: <aUyH4-r1cCT2bMAh@gallifrey>
+Subject: Re: [PATCH 6/6] monitor/hmp: Merge hmp-cmds-target.c within hmp-cmds.c
+Message-ID: <aUyK_Qcb8-czgmXO@gallifrey>
 References: <20251224133949.85136-1-philmd@linaro.org>
- <20251224133949.85136-6-philmd@linaro.org>
+ <20251224133949.85136-7-philmd@linaro.org>
+ <CAAjaMXauqeKDJ84LowukGMHcDy+kyB8Y_pDoBCr_kSNyguSRPA@mail.gmail.com>
+ <e36cb7e3-799e-4a3c-89c6-4b5242f57344@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251224133949.85136-6-philmd@linaro.org>
+In-Reply-To: <e36cb7e3-799e-4a3c-89c6-4b5242f57344@linaro.org>
 X-Chocolate: 70 percent or better cocoa solids preferably
 X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 00:39:56 up 59 days, 16 min,  3 users,  load average: 0.00, 0.00,
+X-Uptime: 00:49:52 up 59 days, 26 min,  3 users,  load average: 0.00, 0.00,
  0.00
 User-Agent: Mutt/2.2.13 (2024-03-09)
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
@@ -74,140 +77,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Philippe Mathieu-Daud� (philmd@linaro.org) wrote:
-> Previous to moving code contained in hmp-cmds-target.c,
-> fix the coding style. Otherwise the checkpatch.pl script
-> would report:
+* Philippe Mathieu-Daudé (philmd@linaro.org) wrote:
+> On 24/12/25 15:24, Manos Pitsidianakis wrote:
+> > On Wed, Dec 24, 2025 at 3:40 PM Philippe Mathieu-Daudé
+> > <philmd@linaro.org> wrote:
+> > > 
+> > > hmp-cmds-target.c is no more target specific, move its code
+> > > in hmp-cmds.c, which is built once for all system binaries.
+> > > 
+> > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > > ---
+> > >   monitor/hmp-cmds-target.c | 383 --------------------------------------
+> > >   monitor/hmp-cmds.c        | 354 +++++++++++++++++++++++++++++++++++
+> > >   monitor/meson.build       |   2 +-
+> > >   3 files changed, 355 insertions(+), 384 deletions(-)
+> > >   delete mode 100644 monitor/hmp-cmds-target.c
+> 
+> 
+> > > diff --git a/monitor/meson.build b/monitor/meson.build
+> > > index a71523a1ce8..763fcaba6c5 100644
+> > > --- a/monitor/meson.build
+> > > +++ b/monitor/meson.build
+> > > @@ -9,4 +9,4 @@ system_ss.add(files(
+> > >   system_ss.add([spice_headers, files('qmp-cmds.c')])
+> > > 
+> > >   specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+> > > -               if_true: [files( 'hmp-cmds-target.c', 'hmp-target.c'), spice])
+> > > +  if_true: [files('hmp-target.c'), spice])
+> > 
+> > Nit: Indentation?
+> 
+> We usually don't use tabs in meson.build files, and indent as 2 spaces,
+> but I couldn't find any documented style enforcement :/
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Looking at ui/meson.build and audio/meson.build, it looks like if_true: on
+separate lines are generally aligned with the (
+(ish....)
 
+Dave
+
+> Paolo, Marc-André, any preference?
 > 
->   ERROR: space required before the open parenthesis '('
->   #134: FILE: monitor/hmp-cmds-target.c:152:
->   +    switch(format) {
+> > 
+> > Otherwise
+> > 
+> > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > 
->   ERROR: braces {} are necessary for all arms of this statement
->   #154: FILE: monitor/hmp-cmds-target.c:172:
->   +        if (l > line_size)
->   [...]
-> 
->   ERROR: space required before the open parenthesis '('
->   #172: FILE: monitor/hmp-cmds-target.c:190:
->   +            switch(wsize) {
-> 
->   ERROR: space required before the open parenthesis '('
->   #188: FILE: monitor/hmp-cmds-target.c:206:
->   +            switch(format) {
-> 
->   ERROR: Don't use '#' flag of printf format ('%#') in format strings, use '0x' prefix instead
->   #190: FILE: monitor/hmp-cmds-target.c:208:
->   +                monitor_printf(mon, "%#*" PRIo64, max_digits, v);
-> 
->   WARNING: line over 80 characters
->   #240: FILE: monitor/hmp-cmds-target.c:258:
->   +        error_setg(errp, "No memory is mapped at address 0x%" HWADDR_PRIx, addr);
-> 
->   WARNING: line over 80 characters
->   #245: FILE: monitor/hmp-cmds-target.c:263:
->   +        error_setg(errp, "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
-> 
->   ERROR: Don't use '#' flag of printf format ('%#') in format strings, use '0x' prefix instead
->   #297: FILE: monitor/hmp-cmds-target.c:315:
->   +        monitor_printf(mon, "gpa: %#" HWADDR_PRIx "\n",
-> 
->   WARNING: line over 80 characters
->   #329: FILE: monitor/hmp-cmds-target.c:347:
->   +    ret = ((pinfo & 0x007fffffffffffffull) * pagesize) | (addr & (pagesize - 1));
-> 
-> Signed-off-by: Philippe Mathieu-Daud� <philmd@linaro.org>
-> ---
->  monitor/hmp-cmds-target.c | 22 +++++++++++++---------
->  1 file changed, 13 insertions(+), 9 deletions(-)
-> 
-> diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
-> index efab133cf2f..48c21559156 100644
-> --- a/monitor/hmp-cmds-target.c
-> +++ b/monitor/hmp-cmds-target.c
-> @@ -149,7 +149,7 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
->      }
->      max_digits = 0;
->  
-> -    switch(format) {
-> +    switch (format) {
->      case 'o':
->          max_digits = DIV_ROUND_UP(wsize * 8, 3);
->          break;
-> @@ -169,8 +169,9 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
->      while (len > 0) {
->          monitor_printf(mon, "%0*" PRIx64 ":", addr_width, addr);
->          l = len;
-> -        if (l > line_size)
-> +        if (l > line_size) {
->              l = line_size;
-> +        }
->          if (is_physical) {
->              AddressSpace *as = cs ? cs->as : &address_space_memory;
->              MemTxResult r = address_space_read(as, addr,
-> @@ -187,7 +188,7 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
->          }
->          i = 0;
->          while (i < l) {
-> -            switch(wsize) {
-> +            switch (wsize) {
->              default:
->              case 1:
->                  v = ldub_p(buf + i);
-> @@ -203,9 +204,9 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
->                  break;
->              }
->              monitor_printf(mon, " ");
-> -            switch(format) {
-> +            switch (format) {
->              case 'o':
-> -                monitor_printf(mon, "%#*" PRIo64, max_digits, v);
-> +                monitor_printf(mon, "0%*" PRIo64, max_digits, v);
->                  break;
->              case 'x':
->                  monitor_printf(mon, "0x%0*" PRIx64, max_digits, v);
-> @@ -255,12 +256,14 @@ void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
->                                                   addr, size);
->  
->      if (!mrs.mr) {
-> -        error_setg(errp, "No memory is mapped at address 0x%" HWADDR_PRIx, addr);
-> +        error_setg(errp,
-> +                   "No memory is mapped at address 0x%" HWADDR_PRIx, addr);
->          return NULL;
->      }
->  
->      if (!memory_region_is_ram(mrs.mr) && !memory_region_is_romd(mrs.mr)) {
-> -        error_setg(errp, "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
-> +        error_setg(errp,
-> +                   "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
->          memory_region_unref(mrs.mr);
->          return NULL;
->      }
-> @@ -312,7 +315,7 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict)
->      if (gpa == -1) {
->          monitor_printf(mon, "Unmapped\n");
->      } else {
-> -        monitor_printf(mon, "gpa: %#" HWADDR_PRIx "\n",
-> +        monitor_printf(mon, "gpa: 0x%" HWADDR_PRIx "\n",
->                         gpa + (addr & ~TARGET_PAGE_MASK));
->      }
->  }
-> @@ -344,7 +347,8 @@ static uint64_t vtop(void *ptr, Error **errp)
->          error_setg(errp, "Page not present");
->          goto out;
->      }
-> -    ret = ((pinfo & 0x007fffffffffffffull) * pagesize) | (addr & (pagesize - 1));
-> +    ret = (pinfo & 0x007fffffffffffffull) * pagesize;
-> +    ret |= addr & (pagesize - 1);
->  
->  out:
->      close(fd);
-> -- 
-> 2.52.0
-> 
+> Thanks!
 -- 
  -----Open up your eyes, open up your mind, open up your code -------   
 / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
