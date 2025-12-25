@@ -4,64 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EDD7E7AD40
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 05:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95121E784A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 06:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYdoq-0008Dt-I8; Thu, 25 Dec 2025 00:23:25 -0500
+	id 1vYeqr-00041D-Ng; Thu, 25 Dec 2025 01:29:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vYdom-0008Df-38
- for qemu-devel@nongnu.org; Thu, 25 Dec 2025 00:23:20 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vYeqq-00040y-En
+ for qemu-devel@nongnu.org; Thu, 25 Dec 2025 01:29:32 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vYdoj-0004jb-6Y
- for qemu-devel@nongnu.org; Thu, 25 Dec 2025 00:23:19 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BP5MmsR073809
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 25 Dec 2025 14:22:49 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=dTtdQ0Z4QFQFtLQoZZjjwWAx4ER+P6KWUhJKreKKqLg=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1766640169; v=1;
- b=gf9+qJkODZPm5Y9LOmxPRkIFIfLHrzll5tHhiIiZzcSEF7PrrbQDiF/kVlcrrj+A
- ehpPr8A9XxVtFXZBaUt1dRRK8oTixTvASd19W7scalqnzuisZC1VxeneqLiR76AD
- b/FXGAMTp9w1EQyPIp9LtV8PY/B1tRKiRL0kr3tVZgr+6St7II3DSgNg2cxwHx7b
- 7umjQrbDDDqhRrp/5wy6sAegl2N6Fw3u7ucuVvafGYk+G8O2SCIWCuj3bhkhIO2I
- WyDAInIe2S+lRUekpM58QpY0MlyejF9Au5aHNV2v+aq44fmH6LEtRa3aLrvFxEsk
- f2+GBmSZuUJZJIMgVTw2yA==
-Message-ID: <752be088-91bb-4d51-8dc8-a1147d19ea90@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 25 Dec 2025 14:22:48 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vYeqo-0001rv-6l
+ for qemu-devel@nongnu.org; Thu, 25 Dec 2025 01:29:32 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 00A94178B37;
+ Thu, 25 Dec 2025 09:28:51 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8F13B340636;
+ Thu, 25 Dec 2025 09:29:25 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: "Ilya Leoshkevich" <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 0/2] gdbstub: re-do unlinking of unix socket before bind
+Date: Thu, 25 Dec 2025 09:29:17 +0300
+Message-ID: <20251225062919.685146-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] Implement memory_region_new_* functions
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, philmd@linaro.org
-References: <cover.1766525089.git.balaton@eik.bme.hu>
- <3a1bf99d-e011-4589-b7e9-662107befdc1@rsg.ci.i.u-tokyo.ac.jp>
- <a9a43db6-1a1f-58f1-39c8-06213e9e610e@eik.bme.hu>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <a9a43db6-1a1f-58f1-39c8-06213e9e610e@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,45 +58,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/24 22:47, BALATON Zoltan wrote:
-> On Wed, 24 Dec 2025, Akihiko Odaki wrote:
->> On 2025/12/24 6:49, BALATON Zoltan wrote:
->>> Our documentation says that memory regions are automatically freed
->>> when the owner dies and the reference counting to do this is also
->>> implemented. However this relies on the QOM free funtion that can only
->>> be set by creating objects with object_new but memory API only
->>> provides constructors that call object_initialize which clears the
->>> free function that prevents QOM to manage the memory region lifetime.
->>> Implement corresponding memory_region_new_* functions that do the same
->>> as the memory_region_init_* functions but create the memory region
->>> with object_new so the lifetime can be automatically managed by QOM as
->>> documented.
->>
->> The documentation explains the existing functions so the discrepancy 
->> between them you see should be fixed by updating them, not adding new 
->> ones.
-> 
-> Do you mean replacing memory_region_init_* with these 
-> memory_region_new_* functions? The memory_region_init_* is still useful 
-> for embedded memory regions that are managed by some other way which is 
-> also mentioned in the documentation as an alternative so I think both of 
-> them are useful for different cases. If you mean we need to update docs 
-> to refer to memory_region_new instead of memory_region_init at some 
-> places then I think you're right, the docs may also need to be updated 
-> or clarified.
+Prior discussion is at
+https://lore.kernel.org/qemu-devel/ee091002-a552-49fe-ae5e-8916937dba15@tls.msk.ru/
 
-I'd like to see a correspondence between the stated problem and the 
-solution. If the intention is to solve the mismatched documentation and 
-implementation, I think there are only two possible options:
+In short: when adding unlink() before bind() for unix socket
+in gdbstub/user.c, a previous patch introduced dependency of
+linux-user binaries on qemu-sockets.c, which is more problematic
+for usually-static binaries.  The monitor_get_fd stub which were
+also needed is another example why this might not be the right
+approach.
 
-1) Update the documentation and/or the implementation.
-2) Delete them.
+This patchset reverts the previous commit (with fixes for current
+code), and adds just a single unlink() to the original code which
+handled unix sockets directly.
 
-But this patch series does neither of them. Replacing 
-memory_region_init_* with memory_region_new_* does solve as it will do 
-2) in the process. An alternative solution that implements 1) or 2) is 
-necessary if it's not ideal.
+Michael Tokarev (2):
+  Revert "gdbstub: Try unlinking the unix socket before binding"
+  gdbstub: unlink the unix socket before bind()
 
-Regards,
-Akihiko Odaki
+ gdbstub/user.c    | 30 +++++++++++++++++++++++++++---
+ stubs/meson.build |  2 --
+ util/meson.build  |  2 --
+ 3 files changed, 27 insertions(+), 7 deletions(-)
+
+-- 
+2.47.3
+
 
