@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD41E784BD
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 03:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4C9E784BD
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 03:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYbyK-0002rw-2a; Wed, 24 Dec 2025 22:25:04 -0500
+	id 1vYbyp-00037F-Iq; Wed, 24 Dec 2025 22:25:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vYbyI-0002qv-Dr; Wed, 24 Dec 2025 22:25:02 -0500
-Received: from mgamail.intel.com ([198.175.65.16])
+ id 1vYbyn-00035b-8f; Wed, 24 Dec 2025 22:25:33 -0500
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vYbyF-0006Lk-QU; Wed, 24 Dec 2025 22:25:02 -0500
+ id 1vYbyl-0006Zu-O5; Wed, 24 Dec 2025 22:25:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1766633100; x=1798169100;
+ t=1766633131; x=1798169131;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=iD6gf1fOpbn3EsLCUQ3ZiOGMijTZzv6KZ/dDuT8xccA=;
- b=UdxtiqkRkQo3icCdEtBdMJIRmwHHUUadSi7q7UMgedraRxNXRTr4T3TS
- DtN6B3Xj5ca1ig81V4Mwb+O3DD/gWofnDffBJtgys1/IgtMihI5trR+sR
- LGAzE/AezymYhz9cW3riYD8cvT5lW4/xUw4Lb+e6Z4bZKhaOr7W9KW6lI
- AQcwVLzzYtqodFJSPY9Es97OZpZTeGRTQ7qiHNj1IgcyeUuo6IBlu7twW
- ASl9iim6qM0msyCeZVIZ6gIZ+DSgJ/Yu1vFbfrVxNXsXtNWax2wEunDPF
- a29KglERy2okBxKVwRm6mNZn39CqYpBx+WfRB3xZenHis4dG9MxJlH5lH w==;
-X-CSE-ConnectionGUID: vVetLhcZSF2Kwj/XCrS0/g==
-X-CSE-MsgGUID: DkxZSEE4SgOn6ZPeEVBrkA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="68609230"
-X-IronPort-AV: E=Sophos;i="6.21,175,1763452800"; d="scan'208";a="68609230"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Dec 2025 19:24:54 -0800
-X-CSE-ConnectionGUID: o5WG9iVSSbClKdZtLwd2Mg==
-X-CSE-MsgGUID: JV37ixU4ScitSqEayNyWoA==
+ bh=lijBvsmzxGL2JaaTmYWAd44U+kSEL27/9OtnwbhHEDs=;
+ b=L37CfvQs5MwksH41mosCJiiHcYcJwgHshgtIAKXl0JVfpgJUPsSRP6O7
+ 4Clfe7VAN0Fss6Tsn/AIWNR6tUksANXc1Jnqp7lSDdmhbrEsOnRjfTzJQ
+ Ph0GuIOXvGCFyGE9XG2F/oeIXGB6Y2PVOBjqiSwFTDgGRl3cmNHPG4HS8
+ s8OU/eukpID7dP3bCD/DVbhAfzlkaIYron0obTLtFuBEhq7gj2m59zHWm
+ iy6g70xZx4vetzDqA72MKq0+NpTcq3XAPB3N7qP47Q/S14guS/tAJcrS8
+ PtSuUhYgn5P9QQlT3Vx5QTWF3MzDTggNfwJHJoMIa83SqnTGNYKKg9F3/ Q==;
+X-CSE-ConnectionGUID: AfTtmqmmQxKyOlKY00GfPw==
+X-CSE-MsgGUID: XqZeYFoPQj2+UZMmWbuzwg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="79813890"
+X-IronPort-AV: E=Sophos;i="6.21,175,1763452800"; d="scan'208";a="79813890"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Dec 2025 19:25:28 -0800
+X-CSE-ConnectionGUID: OOIG6iesTNqovIcAMwbeUA==
+X-CSE-MsgGUID: Hg6KjziwTx68PGaRi97wOg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,175,1763452800"; d="scan'208";a="199890956"
+X-IronPort-AV: E=Sophos;i="6.21,175,1763452800"; d="scan'208";a="200112049"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 24 Dec 2025 19:24:50 -0800
-Date: Thu, 25 Dec 2025 11:49:43 +0800
+ by orviesa007.jf.intel.com with ESMTP; 24 Dec 2025 19:25:25 -0800
+Date: Thu, 25 Dec 2025 11:50:18 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
@@ -57,17 +57,17 @@ Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v2 5/8] hw/timer/hpet: Mark implementation as being
+Subject: Re: [PATCH v2 6/8] hw/char/pl011: Mark implementation as being
  little-endian
-Message-ID: <aUy0V0bAjbU1Br1k@intel.com>
+Message-ID: <aUy0epfWLWPMZOk/@intel.com>
 References: <20251224134644.85582-1-philmd@linaro.org>
- <20251224134644.85582-6-philmd@linaro.org>
+ <20251224134644.85582-7-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251224134644.85582-6-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20251224134644.85582-7-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -92,14 +92,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 24, 2025 at 02:46:41PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Wed, 24 Dec 2025 14:46:41 +0100
+On Wed, Dec 24, 2025 at 02:46:42PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Wed, 24 Dec 2025 14:46:42 +0100
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v2 5/8] hw/timer/hpet: Mark implementation as being
+> Subject: [PATCH v2 6/8] hw/char/pl011: Mark implementation as being
 >  little-endian
 > X-Mailer: git-send-email 2.52.0
 > 
-> The HPET component is only built / used by X86 targets, which
+> The PL011 component is only built / used by ARM targets, which
 > are only built in little endianness. Thus we only ever built
 > as little endian, never testing the big-endian possibility of
 > the DEVICE_NATIVE_ENDIAN definition. Simplify by only keeping
@@ -108,8 +108,8 @@ On Wed, Dec 24, 2025 at 02:46:41PM +0100, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  hw/timer/hpet.c                  | 2 +-
->  rust/hw/timer/hpet/src/device.rs | 2 +-
+>  hw/char/pl011.c                  | 2 +-
+>  rust/hw/char/pl011/src/device.rs | 2 +-
 >  2 files changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
