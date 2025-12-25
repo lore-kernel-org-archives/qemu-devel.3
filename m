@@ -4,54 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F7EE784BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 04:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EDD7E7AD40
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 05:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYcja-0004O5-Mr; Wed, 24 Dec 2025 23:13:55 -0500
+	id 1vYdoq-0008Dt-I8; Thu, 25 Dec 2025 00:23:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vYcHj-0000H2-HF; Wed, 24 Dec 2025 22:45:07 -0500
-Received: from mail-a.sr.ht ([46.23.81.152])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vYdom-0008Df-38
+ for qemu-devel@nongnu.org; Thu, 25 Dec 2025 00:23:20 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vYcHh-0002R7-5g; Wed, 24 Dec 2025 22:45:07 -0500
-DKIM-Signature: a=rsa-sha256; bh=R5SE7ijkLWVtoR1GyJ0BYJJbbZJ8IL73XPO+lp/c9C0=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:To:Cc; 
- q=dns/txt; s=20240113; t=1766634301; v=1;
- b=HGHwLfcmJEsCE0y1riVbwZfxAd3dA8pUwN+kG5Ea3TM+rRdQ/vgxdIUDTwTDvCYCHxsCdBul
- uN6zVFw7nxwiqhjbfSkFjDgSvnFH5tFURXXjhWpY3Ig8LjaWGTHpR8DJmxDmlLcxS66jlDpL2n2
- 2qr7RY0t0Z/DLqW19tkQ+/S9UtYOFrdcVz43VDH3B7qPOt4KfhyespcMi5rHSt7sYTaSbzDAL8O
- HvjjzCohCN2XykFalwlP1HhuR9NgiYHQDECc4KgDaBEmetceuVt7+w8mwrCZ+wit9m0Sh5GT089
- inPQxwY6+Ivfppv5kcdKAww92FYc2v9a4hkiQ+HXybP5g==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id EBD6224690;
- Thu, 25 Dec 2025 03:45:00 +0000 (UTC)
-From: ~emckean <emckean@git.sr.ht>
-Date: Wed, 24 Dec 2025 22:28:18 -0500
-Subject: [PATCH qemu] hw/arm/max78000: Fix num-irq to match hardware
- specification
-Message-ID: <176663430090.23028.16926971585326050904-0@git.sr.ht>
-X-Mailer: git.sr.ht
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vYdoj-0004jb-6Y
+ for qemu-devel@nongnu.org; Thu, 25 Dec 2025 00:23:19 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BP5MmsR073809
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 25 Dec 2025 14:22:49 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=dTtdQ0Z4QFQFtLQoZZjjwWAx4ER+P6KWUhJKreKKqLg=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1766640169; v=1;
+ b=gf9+qJkODZPm5Y9LOmxPRkIFIfLHrzll5tHhiIiZzcSEF7PrrbQDiF/kVlcrrj+A
+ ehpPr8A9XxVtFXZBaUt1dRRK8oTixTvASd19W7scalqnzuisZC1VxeneqLiR76AD
+ b/FXGAMTp9w1EQyPIp9LtV8PY/B1tRKiRL0kr3tVZgr+6St7II3DSgNg2cxwHx7b
+ 7umjQrbDDDqhRrp/5wy6sAegl2N6Fw3u7ucuVvafGYk+G8O2SCIWCuj3bhkhIO2I
+ WyDAInIe2S+lRUekpM58QpY0MlyejF9Au5aHNV2v+aq44fmH6LEtRa3aLrvFxEsk
+ f2+GBmSZuUJZJIMgVTw2yA==
+Message-ID: <752be088-91bb-4d51-8dc8-a1147d19ea90@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 25 Dec 2025 14:22:48 +0900
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FORGED_REPLYTO=2.095,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] Implement memory_region_new_* functions
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, philmd@linaro.org
+References: <cover.1766525089.git.balaton@eik.bme.hu>
+ <3a1bf99d-e011-4589-b7e9-662107befdc1@rsg.ci.i.u-tokyo.ac.jp>
+ <a9a43db6-1a1f-58f1-39c8-06213e9e610e@eik.bme.hu>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <a9a43db6-1a1f-58f1-39c8-06213e9e610e@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 24 Dec 2025 23:13:52 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,42 +74,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~emckean <emckean@protonmail.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ethan McKean <emckean@protonmail.com>
+On 2025/12/24 22:47, BALATON Zoltan wrote:
+> On Wed, 24 Dec 2025, Akihiko Odaki wrote:
+>> On 2025/12/24 6:49, BALATON Zoltan wrote:
+>>> Our documentation says that memory regions are automatically freed
+>>> when the owner dies and the reference counting to do this is also
+>>> implemented. However this relies on the QOM free funtion that can only
+>>> be set by creating objects with object_new but memory API only
+>>> provides constructors that call object_initialize which clears the
+>>> free function that prevents QOM to manage the memory region lifetime.
+>>> Implement corresponding memory_region_new_* functions that do the same
+>>> as the memory_region_init_* functions but create the memory region
+>>> with object_new so the lifetime can be automatically managed by QOM as
+>>> documented.
+>>
+>> The documentation explains the existing functions so the discrepancy 
+>> between them you see should be fixed by updating them, not adding new 
+>> ones.
+> 
+> Do you mean replacing memory_region_init_* with these 
+> memory_region_new_* functions? The memory_region_init_* is still useful 
+> for embedded memory regions that are managed by some other way which is 
+> also mentioned in the documentation as an alternative so I think both of 
+> them are useful for different cases. If you mean we need to update docs 
+> to refer to memory_region_new instead of memory_region_init at some 
+> places then I think you're right, the docs may also need to be updated 
+> or clarified.
 
-The MAX78000 user guide Section 5.2 and Table 5-1 specify 119 interrupt
-entries. The previous value of 120 was based on a misreading of the
-table which spans three pages, with entries 0-104 on pages 102-103 and
-the remaining entries 105-118 on page 104.
+I'd like to see a correspondence between the stated problem and the 
+solution. If the intention is to solve the mismatched documentation and 
+implementation, I think there are only two possible options:
 
-Signed-off-by: Ethan McKean <emckean@protonmail.com>
----
- hw/arm/max78000_soc.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+1) Update the documentation and/or the implementation.
+2) Delete them.
 
-diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
-index 7f1856f5ba..1e2f66428d 100644
---- a/hw/arm/max78000_soc.c
-+++ b/hw/arm/max78000_soc.c
-@@ -88,13 +88,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Err=
-or **errp)
-=20
-     armv7m =3D DEVICE(&s->armv7m);
-=20
--    /*
--     * The MAX78000 user guide's Interrupt Vector Table section
--     * suggests that there are 120 IRQs in the text, while only listing
--     * 104 in table 5-1. Implement the more generous of the two.
--     * This has not been tested in hardware.
--     */
--    qdev_prop_set_uint32(armv7m, "num-irq", 120);
-+    qdev_prop_set_uint32(armv7m, "num-irq", 119);
-     qdev_prop_set_uint8(armv7m, "num-prio-bits", 3);
-     qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m4"));
-     qdev_prop_set_bit(armv7m, "enable-bitband", true);
---=20
-2.49.1
+But this patch series does neither of them. Replacing 
+memory_region_init_* with memory_region_new_* does solve as it will do 
+2) in the process. An alternative solution that implements 1) or 2) is 
+necessary if it's not ideal.
+
+Regards,
+Akihiko Odaki
 
