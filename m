@@ -4,85 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A69B9E7AD42
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 10:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A607BE7AD45
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 10:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYiYy-0004iz-D3; Thu, 25 Dec 2025 05:27:20 -0500
+	id 1vYitE-00081A-4R; Thu, 25 Dec 2025 05:48:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vYiYw-0004i6-GW
- for qemu-devel@nongnu.org; Thu, 25 Dec 2025 05:27:18 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vYiYu-00051O-4X
- for qemu-devel@nongnu.org; Thu, 25 Dec 2025 05:27:18 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b7a02592efaso975619566b.1
- for <qemu-devel@nongnu.org>; Thu, 25 Dec 2025 02:27:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766658433; x=1767263233; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yDe9eMVN1fKi7Q/iyHYrVj8/ySf3l14AB41Q+XQkkuw=;
- b=fz95V40jfsouEAw8U185PvSCIZ7+225XTHEYuK6W5W5qa6t8j9aZQhNG0NReCcWbz3
- 514r9eDUYpdx2Ghr3ezcrJNEvkgyJd2w0Fv9ecnt8TcX1HoTKgIK7b9ToKohvrcWrW3j
- XqaYKq1zQJwqjrJSquyGlEBHL6P6oDdOP7S3eLdnB8nxZTt+bXyuX4XXxPx2kJ/shuYc
- ZqagUDGpoYYVHjP53b26jo9gKKfqyviPKmFhpq5BBFNEDNWR/7JL8Vto45HYVaCAfalU
- odn8ESc7SFlBlPIc7ac0Ee7NkAUe/GiBW8XJWv6oVYXHu0mM4LmGbR8FkdtnTQY47d0h
- AJ0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766658433; x=1767263233;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yDe9eMVN1fKi7Q/iyHYrVj8/ySf3l14AB41Q+XQkkuw=;
- b=Br786az/wz40hiOYzDsvbgw6aHwPgT7CJafOgJ37SXG+WUj3iiYt1go9W0LKESXGrQ
- JCz3cCJvSX72FeoZbO2VHZp8Y/l6hNUD/gwE3Of8YNml6XTY/QLrEuhu4lPmgT5dHnQh
- 5Z00DTvmeK1HX5VxzpzouUFTw3+v/UJHmlbroOB/QkkyYW5cOTejuEjZIJyqmJ+7JJkR
- 9zAQdLsP27pZVYYowRazJYsRSnEoAS1U5VGle8E/+Jdz/UhPmdQLNsOLeQnanhebg8LK
- RFpugBpNVQ+0BJSVhcJrNr2iM/7q3N7biKlZu8GnlV7zz3Jt23nmWqDdrfLCNQGtEXul
- rcOA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtlKgs27OXKUxBNm1+NlcmHbykwq+aDN48/hGj+xtHASw6jP25M2jQ2c8frmOD3nK0kKhCsOjp32Z7@nongnu.org
-X-Gm-Message-State: AOJu0YwwxmRz/1Y0+AlIE7JoOlz7Un6TsN+PYZMQyQig0oqtX/3HOx6n
- IUwvjY8DVxkb2RYx3jipz/JnDMkhQduLltLcjNYctz0beVZ4wqPULODfDzZFzOY+vN717AhBV51
- knKq9m9Sd5Mw3MRyEeNZui8c3W/hh/4Y=
-X-Gm-Gg: AY/fxX7PNTGUgl58NdVAuzrqWoKrfx1SNVIk8uaysQeQiEx843ngDu/9XzVVgkCycnx
- wXIS7kQFsn+hcq1OX+FG2LT7oPQ/R8AZ1Ssk7Q/ChRk9iMy2mtIbqNz4zbcde/p42iGZtBuIvkX
- zotOTVuCmbcna/CfGVBFagPnPz1koG0PYz6LMxZbuCAFpUedGqXKZVDgNJST59CqaQ07pQCbWOZ
- Fwl/wkAKg8s2ncmkZhJZZyTIH9teMKZgNUsBpfjR3ch4AJ010/Q4vATKN6YjjLlQwrH3HHR
-X-Google-Smtp-Source: AGHT+IE6MIt9Crf4uFb9SsL0mplFpaLIV/KfK+m84t5SIp5eiaNifC4TGk5tsi/6DLhp3erQaDECSZ1wEA/Ly3WUdQQ=
-X-Received: by 2002:a17:907:6e8e:b0:b73:b0eb:16f5 with SMTP id
- a640c23a62f3a-b8037152abcmr1803096266b.31.1766658433025; Thu, 25 Dec 2025
- 02:27:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vYitD-00080x-5A
+ for qemu-devel@nongnu.org; Thu, 25 Dec 2025 05:48:15 -0500
+Received: from mout.kundenserver.de ([212.227.126.187])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vYitB-00082j-9j
+ for qemu-devel@nongnu.org; Thu, 25 Dec 2025 05:48:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
+ s=s1-ionos; t=1766659689; x=1767264489; i=laurent@vivier.eu;
+ bh=X6oDH0+I8x0l2Kz52vuijDR11tVUUPDTM3WDUjcFS70=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=ccfi80DVIGlICmbBI9ZABoLR6mbAP8ALBmPSTTV5ATTO/itdPkcVVQUiRD4XrzpN
+ i5V9tZss5/miMd1+r4kvXi1ioQb07ahUiXeiImERSb4Jb2jm3M+aqxOdoVxzO27W9
+ HFE4w0koqDPURzcaH8773MFJ0AwU7t+bybRwmlih79NmxHYTk2FF9yYesnZMTprH7
+ jMrX2kzmimksFdVPqdp8BkeBKgRb39afVcPr9SZXSk8x92+ALGh6WFyXdrJXwLn9P
+ z2r1yd+jegOjAkzmiHqfY/rVzq1147py4/ZDds9aHV8EBB6Mu3JM/2sQsbuLS0Ak3
+ lp/xMRfcITNGODT+Dw==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue009 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1MxmBi-1vsABb2Jhu-0147Xf; Thu, 25 Dec 2025 11:48:09 +0100
+Message-ID: <6891a229-4c12-40a4-9ca7-0b41e3f438f5@vivier.eu>
+Date: Thu, 25 Dec 2025 11:48:08 +0100
 MIME-Version: 1.0
-References: <20251225072442.36012-1-jasowang@redhat.com>
- <20251225072442.36012-2-jasowang@redhat.com>
-In-Reply-To: <20251225072442.36012-2-jasowang@redhat.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 25 Dec 2025 18:26:32 +0800
-X-Gm-Features: AQt7F2oMwZMhp2uvMvsdRXXO0dnU3nVve5Zu9uXROr1DJlwJAadKW71tshE_EsE
-Message-ID: <CAK3tnvJQCV3YFMB-YWwE5aRmAt6dVepVssKSu+1c7fy8FbUP7A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] tests/qtest: add test for filter-buffer interval
- change
-To: Jason Wang <jasowang@redhat.com>
-Cc: lizhijian@fujitsu.com, qemu-devel@nongnu.org, lulu@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] linux-user: allow null `pathname` for
+ statx()/fstatat()
+To: =?UTF-8?Q?Jean-Christian_C=C3=8ERSTEA?=
+ <jean.christian.cirstea@gmail.com>, qemu-devel@nongnu.org
+References: <20251223172548.1847032-1-jean.christian.cirstea@gmail.com>
+ <20251223172548.1847032-2-jean.christian.cirstea@gmail.com>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20251223172548.1847032-2-jean.christian.cirstea@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x635.google.com
+X-Provags-ID: V03:K1:KoBln+acBJfJchAclbyuA2nXWAI1WMIvOHMdwwPyGC9/4xtI4B6
+ 5keJivNVxc++YujwK97g66g4ZY7X58Dpi1Yaia2Aod8U5aYObDChiKRdW8T/fUszPuicGWL
+ Uxs0T22ICpIekdmZg1Mnn2bixqgP33VRp3txxjgLNOxDRbvNGyPxK7RjZmSToa/aI6Or8vS
+ BjC8Yuw14HUoYTiUYe9/Q==
+UI-OutboundReport: notjunk:1;M01:P0:5RqNjDxOE1U=;Qy+zbKlBpZ6PJReoInqCIx7U98z
+ CZ4g5cbE6toCOJCvYkpcdnt5hcg4iWk+gjNHhTmfzCQZWSHA/mmdhHx+ko1MKOMPN6ZeMjp8b
+ 7B+VrDodLG1+eTySI2OnS36dKsiIIp51tfh5D6HtqHYg8nthz+K8CrQNcc1cP7CNm5fk5QODF
+ hcNEav3nnJVyJm5qNUszBzjCEHeqflmtZeguhsQX6+Hr9M4RcG1HXQFjGzlkTK4Ykgmytv3wN
+ TBd7O2ZFwZ4bssL2iOoi+n2t2V6lfc8EpNSJPn7RigpPgwkvdVuPQ0N6N/eE0yVad2pc0BcCT
+ yNrVBdNIuv2NVN1gudbrSScB9cMU6zdA/PN6PWvtttONukspIa5ZBzumKCTqDDplyUqbLm3EV
+ kqQAJ2kGVDmWgaFByAxZ/0ygVTLwMzXP0lCa1qmJZL+r958mkGiP2QiIvcXefPtyd589PXs+7
+ typbCxtfZQKAJcYqRGnHdGTi2/a+20UrZI4gKALgyT3kSZ/feoqAazJhwpUoEr7KTawbswVEN
+ Y4/oefpo3iFtnxD+LHtFn2VpgYk0Abn2ZJO8jzpsJ6HMPjU/69V9TI6/voK+h/AqkuSNO7jjn
+ Z+GMGiKU0rk4qxJYmDjFN58b8jplZ/RcdxijCUs0uqvKwjSpWZlGladicQI69NG2n8hCMCQQF
+ quk+Vdlw2tEMUhu9xcz6vk/E9ly7/KT7jGxHzW3glhS3QFif+Wdp71RPp2husZ7qz56IkBYCm
+ VvkcG6YZyXIBdRPesZVrhdkJ5R/5nPfv/2CIMYLkOuT/+S2wR4j9yESC9LL/s4VR/9QeOrn62
+ 5DAZxctOMMBEilOaB8NH3EI/NzwA3Mr0OH675xo1k42kX7aHnVCNeJW4YFc+PMrzgQ21gEpkK
+ VUpNTVFrUHJ+k/M9eXGiY92Y+L5F3+YLJttG9IseDHHcajt1WVMMGLu5ZprDgbKVYWbFpGCFu
+ ps2PUDUMbkPUl7TWdHbeVdXpOOB0OTIyCs6We8hoNlvLKBGxOrP+t6CCtQgOB/odl8869ltY6
+ hv/JIaD04v2QpnJQ0WvBZaoJ3S5msdTXOwQaOplefVHKdZBJjJuJ1naRnNFUHRMJURfO8hvvx
+ NUEZBTx/b+9fRnEz9/e8hB2Igdr2896Z//vfs3QGbmZyv+oAxw6KyHFbYWTNjZ7AVWww5Qp9V
+ LpdQKax/UC3uYXfR5FihLi9W2KaT38OF+BLKhJJZ5zZlA8CARczgfJ0cT+VUVxPl4Px7ZCtMu
+ KVnZ6ZNRqrAdmPy1PKBZEOfgxETsDTsqAYyL8ntAXS79PDX3JkPVFDE7ePqzp/dWoVBzUtyxn
+ 0i9hvcVKDzjxXjRCRDclkeQkwIal2NRQ5uylZbFN3Zw5G3Icnsr6rAac8VRbrpfh/2SPtcvtt
+ SzjeuXAXhXa+QeJUEHBWi0yoszJHCepKZLgZ/yRhRd9+7M2MKRdKODRFp/HZB+dNoZj64h/X2
+ TYhuxYeLxgukiAChDL8BWwzntvx1xZnBy7yt8ZFx9KsgEX3qUZ7uVO2rLO0WF7zNeUeOrDG5P
+ 2fHmvWZlfqnjPWYefbCmsz4V14o2Lcs2bM0csGmrAS6OfAnFnS9ZzCXkRq3H0mABqRgIc+Mqb
+ vDQouX+9x96wzSo50IG64Xb7kg7I3WylhCCPnxvdY8p/R19iKqVZg76+nxyvv98yhc8WauErM
+ bFyjOw5nreLqn83ZPOnpGVuW4XWVwzbTVcHNGtoIJWUBOy9/XP/JJLj/9WfZPHwLR7DzzeZFg
+ 8LOdnzd1r1XLfnk+9L1GugsmnKGBdNam73QBwdi8zSL3Qq8c1dOdoyBvJoqQ0XkHYHUj3A9Of
+ azI5
+Received-SPF: pass client-ip=212.227.126.187; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,264 +149,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 25, 2025 at 3:24=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
-ote:
->
-> Add test_change_interval_timer to verify that modifying the 'interval'
-> property of filter-buffer at runtime takes effect immediately.
->
-> The test uses socket backend and filter-redirector to verify timer behavi=
-or:
-> - Creates filter-buffer with a very long interval (1000 seconds)
-> - Sends a packet which gets buffered
-> - Advances virtual clock by 1 second, verifies packet is still buffered
-> - Changes interval to 1ms via qom-set (timer should be rescheduled)
-> - Advances virtual clock by 2ms, verifies packet is now released
-> - This proves the timer was rescheduled immediately when interval changed
->
-> The test uses filter-redirector to observe when packets are released
-> by filter-buffer, providing end-to-end verification of the timer
-> rescheduling behavior.
+Le 23/12/2025 =C3=A0 18:25, Jean-Christian C=C3=8ERSTEA a =C3=A9crit=C2=A0=
+:
+> Since Linux 6.11, the path argument may be NULL.
 
-If user try to simulate network latency by filter-buffer, the accuracy
-of time is important.
-Do we need add some note about the first buffered packet time not
-equel to dynamic
-changed time (default interval time - new qmp cmd effected time +
-changed time ?).
+Put there the message from the cover letter. You don't need a cover letter=
+ with a 1 patch series and=20
+the cover letter doesn't appear in the log.yes
 
-Another issue is what level of stable accuracy the QEMU filter-buffer
-can be achieved in actual testing?
-Maybe need to tell user recommended test range?
-
-Thanks
-Chen
-
->
-> Signed-off-by: Jason Wang <jasowang@redhat.com>
+>=20
+> Signed-off-by: Jean-Christian C=C3=8ERSTEA <jean.christian.cirstea@gmail=
+.com>
 > ---
->  tests/qtest/meson.build          |   1 +
->  tests/qtest/test-filter-buffer.c | 169 +++++++++++++++++++++++++++++++
->  tests/qtest/test-netfilter.c     |   3 +
->  3 files changed, 173 insertions(+)
->  create mode 100644 tests/qtest/test-filter-buffer.c
->
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 669d07c06b..ffa85ba984 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -46,6 +46,7 @@ qtests_cxl =3D \
->  #        for the availability of the default NICs in the tests
->  qtests_filter =3D \
->    (get_option('default_devices') and slirp.found() ? ['test-netfilter'] =
-: []) + \
-> +  (get_option('default_devices') and host_os !=3D 'windows' ? ['test-fil=
-ter-buffer'] : []) + \
->    (get_option('default_devices') and host_os !=3D 'windows' ? ['test-fil=
-ter-mirror'] : []) + \
->    (get_option('default_devices') and host_os !=3D 'windows' ? ['test-fil=
-ter-redirector'] : [])
->
-> diff --git a/tests/qtest/test-filter-buffer.c b/tests/qtest/test-filter-b=
-uffer.c
-> new file mode 100644
-> index 0000000000..441cbb975c
-> --- /dev/null
-> +++ b/tests/qtest/test-filter-buffer.c
-> @@ -0,0 +1,169 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * QTest testcase for filter-buffer
-> + *
-> + * Copyright (c) 2025 Red Hat, Inc.
-> + * Author: Jason Wang <jasowang@redhat.com>
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +#include "qobject/qdict.h"
-> +#include "qemu/iov.h"
-> +#include "qemu/sockets.h"
-> +
-> +/*
-> + * Test that changing interval at runtime affects packet release timing.
-> + *
-> + * Traffic flow with filter-buffer and filter-redirector:
-> + *
-> + * test side                        | qemu side
-> + *                                  |
-> + * +--------+                       | +---------+
-> + * |  send  +------------------------>| backend |
-> + * | sock[0]|                       | +----+----+
-> + * +--------+                       |      |
-> + *                                  | +----v----+
-> + *                                  | |  fbuf0  | filter-buffer (queue=
-=3Dtx)
-> + *                                  | +----+----+
-> + *                                  |      |
-> + *                                  | +----v----+  +----------+
-> + *                                  | |   rd0   +->| chardev0 |
-> + *                                  | +---------+  +----+-----+
-> + *                                  |                   |
-> + * +--------+                       |                   |
-> + * |  recv  |<--------------------------------------+
-> + * |  sock  |                       |
-> + * +--------+                       |
-> + *
-> + * The test verifies that when interval is changed via qom-set, the time=
-r
-> + * is rescheduled immediately, causing buffered packets to be released
-> + * at the new interval rather than waiting for the old interval to elaps=
-e.
-> + */
-> +static void test_change_interval_timer(void)
-> +{
-> +    QTestState *qts;
-> +    QDict *response;
-> +    int backend_sock[2], recv_sock;
-> +    int ret;
-> +    char send_buf[] =3D "Hello filter-buffer!";
-> +    char recv_buf[128];
-> +    char sock_path[] =3D "filter-buffer-test.XXXXXX";
-> +    uint32_t size =3D sizeof(send_buf);
-> +    uint32_t len;
-> +
-> +    size =3D htonl(size);
-> +
-> +    ret =3D socketpair(PF_UNIX, SOCK_STREAM, 0, backend_sock);
-> +    g_assert_cmpint(ret, !=3D, -1);
-> +
-> +    ret =3D mkstemp(sock_path);
-> +    g_assert_cmpint(ret, !=3D, -1);
-> +
-> +    /*
-> +     * Start QEMU with:
-> +     * - socket backend connected to our socketpair
-> +     * - filter-buffer with a very long interval (1000 seconds)
-> +     * - filter-redirector to send released packets to a chardev socket
-> +     *
-> +     * queue=3Dtx intercepts packets going from backend to the guest,
-> +     * i.e., data we send from the test side.
-> +     */
-> +    qts =3D qtest_initf(
-> +        "-nic socket,id=3Dqtest-bn0,fd=3D%d "
-> +        "-chardev socket,id=3Dchardev0,path=3D%s,server=3Don,wait=3Doff =
-"
-> +        "-object filter-buffer,id=3Dfbuf0,netdev=3Dqtest-bn0,"
-> +        "queue=3Dtx,interval=3D1000000000 "
-> +        "-object filter-redirector,id=3Drd0,netdev=3Dqtest-bn0,"
-> +        "queue=3Dtx,outdev=3Dchardev0",
-> +        backend_sock[1], sock_path);
-> +
-> +    /* Connect to the chardev socket to receive redirected packets */
-> +    recv_sock =3D unix_connect(sock_path, NULL);
-> +    g_assert_cmpint(recv_sock, !=3D, -1);
-> +
-> +    /* Send a QMP command to ensure chardev connection is established */
-> +    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
-> +
-> +    /*
-> +     * Send a packet from the test side.
-> +     * It should be buffered by filter-buffer.
-> +     */
-> +    struct iovec iov[] =3D {
-> +        {
-> +            .iov_base =3D &size,
-> +            .iov_len =3D sizeof(size),
-> +        }, {
-> +            .iov_base =3D send_buf,
-> +            .iov_len =3D sizeof(send_buf),
-> +        },
-> +    };
-> +
-> +    ret =3D iov_send(backend_sock[0], iov, 2, 0, sizeof(size) + sizeof(s=
-end_buf));
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf) + sizeof(size));
-> +
-> +    /*
-> +     * Advance virtual clock by 1 second (1,000,000,000 ns).
-> +     * This is much less than the 1000 second interval, so the packet
-> +     * should still be buffered.
-> +     */
-> +    qtest_clock_step(qts, 1000000000LL);
-> +
-> +    /* Try to receive with non-blocking - should fail (packet still buff=
-ered) */
-> +    ret =3D recv(recv_sock, recv_buf, sizeof(recv_buf), MSG_DONTWAIT);
-> +    g_assert_cmpint(ret, =3D=3D, -1);
-> +    g_assert(errno =3D=3D EAGAIN || errno =3D=3D EWOULDBLOCK);
-> +
-> +    /*
-> +     * Now change the interval to 1000 us (1ms) via qom-set.
-> +     * This should reschedule the timer to fire in 1ms from now.
-> +     */
-> +    response =3D qtest_qmp(qts,
-> +                         "{'execute': 'qom-set',"
-> +                         " 'arguments': {"
-> +                         "   'path': 'fbuf0',"
-> +                         "   'property': 'interval',"
-> +                         "   'value': 1000"
-> +                         "}}");
-> +    g_assert(response);
-> +    g_assert(!qdict_haskey(response, "error"));
-> +    qobject_unref(response);
-> +
-> +    /*
-> +     * Advance virtual clock by 2ms (2,000,000 ns).
-> +     * This exceeds the new 1ms interval, so the timer should fire
-> +     * and release the buffered packet.
-> +     *
-> +     * If the interval change didn't take effect immediately, we would
-> +     * still be waiting for the original 1000 second interval to elapse,
-> +     * and the packet would not be released.
-> +     */
-> +    qtest_clock_step(qts, 2000000LL);
-> +
-> +    /*
-> +     * Now we should be able to receive the packet through the redirecto=
-r.
-> +     * The packet was released by filter-buffer and sent to filter-redir=
-ector,
-> +     * which forwarded it to the chardev socket.
-> +     */
-> +    ret =3D recv(recv_sock, &len, sizeof(len), 0);
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(len));
-> +    len =3D ntohl(len);
-> +    g_assert_cmpint(len, =3D=3D, sizeof(send_buf));
-> +
-> +    ret =3D recv(recv_sock, recv_buf, len, 0);
-> +    g_assert_cmpint(ret, =3D=3D, len);
-> +    g_assert_cmpstr(recv_buf, =3D=3D, send_buf);
-> +
-> +    close(recv_sock);
-> +    close(backend_sock[0]);
-> +    unlink(sock_path);
-> +    qtest_quit(qts);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +    qtest_add_func("/netfilter/change_interval_timer",
-> +                   test_change_interval_timer);
-> +    return g_test_run();
-> +}
-> diff --git a/tests/qtest/test-netfilter.c b/tests/qtest/test-netfilter.c
-> index 326d4bd85f..b7271055d6 100644
-> --- a/tests/qtest/test-netfilter.c
-> +++ b/tests/qtest/test-netfilter.c
-> @@ -10,7 +10,10 @@
->
->  #include "qemu/osdep.h"
->  #include "libqtest-single.h"
-> +#include "libqtest.h"
->  #include "qobject/qdict.h"
-> +#include "qemu/iov.h"
-> +#include "qemu/sockets.h"
->
->  /* add a netfilter to a netdev and then remove it */
->  static void add_one_netfilter(void)
-> --
-> 2.34.1
->
+>   linux-user/syscall.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 2060e561a2..e1b61f6dc5 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -12142,7 +12142,8 @@ static abi_long do_syscall1(CPUArchState *cpu_en=
+v, int num, abi_long arg1,
+>               int flags =3D arg3;
+>  =20
+>               p =3D lock_user_string(arg2);
+> -            if (p =3D=3D NULL) {
+> +            /* Since Linux 6.11, the path argument may be NULL */
+> +            if (arg2 !=3D 0 && p =3D=3D NULL) {
+>                   return -TARGET_EFAULT;
+>               }
+>   #if defined(__NR_statx)
+
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+
+
 
