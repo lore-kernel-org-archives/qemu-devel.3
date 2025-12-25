@@ -4,41 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D90E784B5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 01:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 172D9E784B7
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 01:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYaLs-0000le-4m; Wed, 24 Dec 2025 20:41:16 -0500
+	id 1vYaLs-0000lN-0v; Wed, 24 Dec 2025 20:41:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vYaLp-0000kz-Tk
+ id 1vYaLp-0000kx-Sw
  for qemu-devel@nongnu.org; Wed, 24 Dec 2025 20:41:13 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vYaLl-0001Nc-Ug
+ (envelope-from <maobibo@loongson.cn>) id 1vYaLl-0001Nh-Uy
  for qemu-devel@nongnu.org; Wed, 24 Dec 2025 20:41:13 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxPMMvlkxp4foCAA--.9213S3;
+ by gateway (Coremail) with SMTP id _____8DxOMIvlkxp3_oCAA--.9361S3;
  Thu, 25 Dec 2025 09:41:03 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBxLMIulkxpM4kEAA--.11030S3;
+ by front1 (Coremail) with SMTP id qMiowJBxLMIulkxpM4kEAA--.11030S2;
  Thu, 25 Dec 2025 09:41:03 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 1/2] hw/loongarch/virt: Define virt machine type with
- type_init()
-Date: Thu, 25 Dec 2025 09:41:01 +0800
-Message-Id: <20251225014102.2666365-2-maobibo@loongson.cn>
+Subject: [PATCH v2 0/2] hw/loongarch/virt: Add versioned machine type support
+Date: Thu, 25 Dec 2025 09:41:00 +0800
+Message-Id: <20251225014102.2666365-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20251225014102.2666365-1-maobibo@loongson.cn>
-References: <20251225014102.2666365-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxLMIulkxpM4kEAA--.11030S3
+X-CM-TRANSID: qMiowJBxLMIulkxpM4kEAA--.11030S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,53 +63,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define virt machine with function type_init(), so that qemu versioned
-virt machine can be added in later with similar method.
+Now la464 CPU type feature is basically finished, versioned machine type
+is added here for compatibility support in future.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/loongarch/virt.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+v1 ... v2:
+  1. Change version machine from 10.2 to 11.0
+---
+Bibo Mao (2):
+  hw/loongarch/virt: Define virt machine type with type_init()
+  hw/loongarch/virt: Define versioned virt machine
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 49434ad182..ed406e3410 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -1371,18 +1371,21 @@ static void virt_class_init(ObjectClass *oc, const void *data)
-                                           "The string may be up to 8 bytes in size");
- }
- 
--static const TypeInfo virt_machine_types[] = {
--    {
--        .name           = TYPE_LOONGARCH_VIRT_MACHINE,
--        .parent         = TYPE_MACHINE,
--        .instance_size  = sizeof(LoongArchVirtMachineState),
--        .class_init     = virt_class_init,
--        .instance_init  = virt_initfn,
--        .interfaces = (const InterfaceInfo[]) {
--         { TYPE_HOTPLUG_HANDLER },
--         { }
--        },
--    }
-+static const TypeInfo virt_machine_info = {
-+    .name           = TYPE_LOONGARCH_VIRT_MACHINE,
-+    .parent         = TYPE_MACHINE,
-+    .instance_size  = sizeof(LoongArchVirtMachineState),
-+    .class_init     = virt_class_init,
-+    .instance_init  = virt_initfn,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_HOTPLUG_HANDLER },
-+        { }
-+    },
- };
- 
--DEFINE_TYPES(virt_machine_types)
-+static void machvirt_machine_init(void)
-+{
-+    type_register_static(&virt_machine_info);
-+}
-+
-+type_init(machvirt_machine_init);
+ hw/loongarch/virt.c | 66 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 53 insertions(+), 13 deletions(-)
+
+
+base-commit: 8dd5bceb2f9cc58481e9d22355a8d998220896de
 -- 
 2.39.3
 
