@@ -4,71 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF3DCE784BD
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 02:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD41E784BD
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Dec 2025 03:25:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vYbMF-00057s-9N; Wed, 24 Dec 2025 21:45:43 -0500
+	id 1vYbyK-0002rw-2a; Wed, 24 Dec 2025 22:25:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vYbM8-00056B-QO
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 21:45:36 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vYbM4-0007U3-Vf
- for qemu-devel@nongnu.org; Wed, 24 Dec 2025 21:45:35 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxjsNIpUxpwAIDAA--.10225S3;
- Thu, 25 Dec 2025 10:45:28 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJDx6+BFpUxpNo4EAA--.13624S3;
- Thu, 25 Dec 2025 10:45:27 +0800 (CST)
-Subject: Re: [PATCH v2 3/3] target/loongarch: Fix exception ADEF/ADEM missing
- update CSR_BADV
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20251224031929.2371837-1-gaosong@loongson.cn>
- <20251224031929.2371837-4-gaosong@loongson.cn>
- <06436084-251e-a233-490d-7944ed0f8f41@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <3f7e15e7-84a7-6ccb-2216-d6556533c28a@loongson.cn>
-Date: Thu, 25 Dec 2025 10:46:03 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vYbyI-0002qv-Dr; Wed, 24 Dec 2025 22:25:02 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vYbyF-0006Lk-QU; Wed, 24 Dec 2025 22:25:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1766633100; x=1798169100;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=iD6gf1fOpbn3EsLCUQ3ZiOGMijTZzv6KZ/dDuT8xccA=;
+ b=UdxtiqkRkQo3icCdEtBdMJIRmwHHUUadSi7q7UMgedraRxNXRTr4T3TS
+ DtN6B3Xj5ca1ig81V4Mwb+O3DD/gWofnDffBJtgys1/IgtMihI5trR+sR
+ LGAzE/AezymYhz9cW3riYD8cvT5lW4/xUw4Lb+e6Z4bZKhaOr7W9KW6lI
+ AQcwVLzzYtqodFJSPY9Es97OZpZTeGRTQ7qiHNj1IgcyeUuo6IBlu7twW
+ ASl9iim6qM0msyCeZVIZ6gIZ+DSgJ/Yu1vFbfrVxNXsXtNWax2wEunDPF
+ a29KglERy2okBxKVwRm6mNZn39CqYpBx+WfRB3xZenHis4dG9MxJlH5lH w==;
+X-CSE-ConnectionGUID: vVetLhcZSF2Kwj/XCrS0/g==
+X-CSE-MsgGUID: DkxZSEE4SgOn6ZPeEVBrkA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="68609230"
+X-IronPort-AV: E=Sophos;i="6.21,175,1763452800"; d="scan'208";a="68609230"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Dec 2025 19:24:54 -0800
+X-CSE-ConnectionGUID: o5WG9iVSSbClKdZtLwd2Mg==
+X-CSE-MsgGUID: JV37ixU4ScitSqEayNyWoA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,175,1763452800"; d="scan'208";a="199890956"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa009.jf.intel.com with ESMTP; 24 Dec 2025 19:24:50 -0800
+Date: Thu, 25 Dec 2025 11:49:43 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ qemu-rust@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Max Filippov <jcmvbkbc@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 5/8] hw/timer/hpet: Mark implementation as being
+ little-endian
+Message-ID: <aUy0V0bAjbU1Br1k@intel.com>
+References: <20251224134644.85582-1-philmd@linaro.org>
+ <20251224134644.85582-6-philmd@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <06436084-251e-a233-490d-7944ed0f8f41@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJDx6+BFpUxpNo4EAA--.13624S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tr18JFyrCFy7ZF18CrykWFX_yoW8AF17pr
- 97Ca4UJryFyr1kJw1xJw4UJFyUWr1UJw1UGr1Uta48Gr45Jry0qr40q3yqgr17Jw4rJw17
- Zr1UJr17ZFW7JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-e5UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.053,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20251224134644.85582-6-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,55 +92,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/12/24 下午5:42, Bibo Mao 写道:
->
->
-> On 2025/12/24 上午11:19, Song Gao wrote:
->> Exception ADEM/ADEF need update CSR_BADV, ADEF value from env->pc,
->> ADEM value from the virtual address.
->>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   target/loongarch/tcg/tcg_cpu.c | 5 ++++-
->>   1 file changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/loongarch/tcg/tcg_cpu.c 
->> b/target/loongarch/tcg/tcg_cpu.c
->> index c05a06eeb5..53e0970797 100644
->> --- a/target/loongarch/tcg/tcg_cpu.c
->> +++ b/target/loongarch/tcg/tcg_cpu.c
->> @@ -109,10 +109,12 @@ static void loongarch_cpu_do_interrupt(CPUState 
->> *cs)
->>           }
->>           QEMU_FALLTHROUGH;
->>       case EXCCODE_PIF:
->> -    case EXCCODE_ADEF:
->>           cause = cs->exception_index;
->>           update_badinstr = 0;
->>           break;
->> +    case EXCCODE_ADEF:
->> +        update_badinstr = 0;
->> +        QEMU_FALLTHROUGH;
-> I think this modification is unnecessary. CSR_BADV is already set with 
-> exception EXCCODE_ADEF/EXCCODE_ADEM.
->
-I will drop this.
+On Wed, Dec 24, 2025 at 02:46:41PM +0100, Philippe Mathieu-Daud� wrote:
+> Date: Wed, 24 Dec 2025 14:46:41 +0100
+> From: Philippe Mathieu-Daud� <philmd@linaro.org>
+> Subject: [PATCH v2 5/8] hw/timer/hpet: Mark implementation as being
+>  little-endian
+> X-Mailer: git-send-email 2.52.0
+> 
+> The HPET component is only built / used by X86 targets, which
+> are only built in little endianness. Thus we only ever built
+> as little endian, never testing the big-endian possibility of
+> the DEVICE_NATIVE_ENDIAN definition. Simplify by only keeping
+> the little endian variant.
+> 
+> Signed-off-by: Philippe Mathieu-Daud� <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  hw/timer/hpet.c                  | 2 +-
+>  rust/hw/timer/hpet/src/device.rs | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-Thanks.
-Song Gao
-> Regards
-> Bibo Mao
->>       case EXCCODE_BCE:
->>           env->CSR_BADV = env->pc;
->>           QEMU_FALLTHROUGH;
->> @@ -225,6 +227,7 @@ static void 
->> loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
->>   {
->>       CPULoongArchState *env = cpu_env(cs);
->>   +    env->CSR_BADV = addr;
->>       if (access_type == MMU_INST_FETCH) {
->>           do_raise_exception(env, EXCCODE_ADEF, retaddr);
->>       } else {
->>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
