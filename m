@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A7AE8FDA7
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 11:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5BFE8FDA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 11:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZ62l-0004Nx-2r; Fri, 26 Dec 2025 06:31:39 -0500
+	id 1vZ645-0005R3-1k; Fri, 26 Dec 2025 06:33:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ62g-0004Ng-B4
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:31:37 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ643-0005QS-Pp
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:32:59 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ62L-0001yD-OC
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:31:16 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-477b5e0323bso40303245e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 03:31:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ642-00023G-86
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:32:59 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-42fb2314f52so3999027f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 03:32:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766748671; x=1767353471; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1766748777; x=1767353577; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zaC8E/02I4AMJN2PwnFJsoa19sLuEKguCJQvCsJwGD0=;
- b=Ra8wy92vajTCn8NwTv55A29XaidQS9Eo8L8xwKT7+8R2AVY6L2jGRXEMY61Jp+86kk
- BM2Nik4Oyx6Lp9Pl7TW/Mk2TVL/SFDhgGtwaNCgiyJM0wKslfzLci6wBBNV7ZROTgV2f
- AJv3zc0imCaqnFhY6RA5yFg/NGSTgee5lJ8HbEHERcM2333KhA4NIPpJDTAK97+6TJph
- tlLTgDjTVZCkUKmKGjNEkGVVsxStT2mTouOTOGBtjfIBZYdMLQqJl3h1hG30Nkp4x69v
- Pu/hA9Ce4hb9LfEhqQ4tC/OV4iyVqsX10mrNiWC9xEPYWG/nNdYDUsQK6iSV11A7d8rQ
- O0Vw==
+ bh=BZHBXK4X23LOfjikstAJWMHoGRgVA2k2Qi1r6MxO49o=;
+ b=C8LUsfYB+Z8pbpJwYndh0miPkD6dRN2K7VDUj9HYDcyGaBiCzfIatjxndGChBAskyH
+ iwInOTi1CuDeBdTSU5SfJ+2Kd5m40T/MltOJxo8L3eGJbpvOG+cTI13o2GUPX4BMwkZz
+ x5tEQNOITE+kyZdCHpLfShFGNP2+M1KMEAtll6I0Qn+yv7s6FWQoG3AglSke3V8tir9M
+ cE4hIdCLzdn7j8VT8RR3/UGjY4c7aXfRvcM8ytLkGtGS3OafSnOmNrqhPXXsboDLpiA1
+ JNLEJdIQElSmV7gtnmNx2l3/x/6pN16yY5t1wRd83lJ8wLZC2KdNmUWaPBgygX3Buw5e
+ FTAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766748671; x=1767353471;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1766748777; x=1767353577;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zaC8E/02I4AMJN2PwnFJsoa19sLuEKguCJQvCsJwGD0=;
- b=eeOFqUp5wGLpj/cLolpa6N2MYOTvCdZjWMFCLxWgxm5TMlvwiH7no2MRqRQvAR+2Yy
- v19h82hMluGO80lIEOnKXmP9CK/iYkYaXysLvgyDIuSfn0h+xiB8RLkoRFX4KqpQffOU
- v6EHaiKRhk2dGr4mlIiC15einhdXIIanBOGg13FCipy8IbvNr4PvV0gEuZkIPMO/xPlN
- +dCydr8qHK2pyLhdum5vsvkzCqkszzUg4Gjmq0mtf7LkyYxBvGykSRRlT9yEZpvIPpua
- tVbQ+SQXS0cHqgDwimLWkDAnQsXWYhy5EfX+G7G974gLyKcVxdAEaM6umHgdFVT4wdaC
- g/qw==
+ bh=BZHBXK4X23LOfjikstAJWMHoGRgVA2k2Qi1r6MxO49o=;
+ b=Ab+tf3RFPiaCpE7qaxEqyfHOSVxHRH09uxdqyfn2o0HoAEKXIDhKbN4zjH22tdghoi
+ esCcPSUUH7jfV7Yg124JiilEgruZHpovH2DNt/YROPTPQidu+2jdOW+4RTeYh8o5XSpg
+ RU6V8jg1Qi3QXDukcueNG4PUev9hbvBcc1H+HebulK7CFfYoL4Sko1MrpTUcYNsoFXV9
+ ZHuNOVJ0Pz1bUVcppvRa23h0bStnVOW2HNC4IA9xW+vCsuB0yAMfpKYBQJN92cgViJyg
+ +wdzV0ZAbkdNQeA5gzS9npYR6brBlJFCZDu4gAfRZP56+uZ4JaFVTChVhvUPcYqb9S63
+ d7tQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpPcJnaNa+ZWSziFX+tz1X+a8aKLmyHqmEtyA8a6wivRYe/dqQSpDfM5K+Pv5ssMpUgX9CkTriD+p6@nongnu.org
-X-Gm-Message-State: AOJu0YyKjWrfzOKvGJkfsYlyGZDFRDHaJ/mJgYJ0tiC8P/wNlDaqz0L1
- 3V8350R5LFoyFTbYX2n6JrJNuJF3F96/Fc5LC+cFDZ9/gJ/NO8+U8Qghz1Sv0Uu/Kxo=
-X-Gm-Gg: AY/fxX7PbwS0x1G98iUS+NWWsGJyX0Zk4aGkrGMqXzhW0j/d7/1QYAX8t1Cpo57slQC
- OOiNnGBsZcaChFY2Jh/JC0HCuKVKu8oRTUe39qa4ngJfcnq7GRJtgWbmIbCV9bFP7lQg3DmUr4p
- x7fU/PYe1NxBZYqPEGaZN+27xmyDPf+p6NMZtkx9hriLYR7wbU+YM7DbakMiECIMip2wWOWTrSY
- gzXIw6fJR7A7rthuulSmqpJI8KqK1jLTCPiHIKuLLGoP6e/wccjGQe+/OYfhmJI6aavs+SwTI8x
- mEpd+UAU/NKlplnGpJRZIrY9CnJF3SPw+PNMtdAHMhIO9htyoAiPdcqGwfHqzyM/XPY/9Qv+J2u
- 8OwMDqzm2ApYhsQWtA/IX+KXySFOMQVvNuktFH3o7k/T+Tzpp+4N3nuUiBwW4tPv8ICVVh+RH5C
- qCuwdGmOWlE4gMNxJhS/tCwia11hghQ+PH66ITm3sslQlxwrx7YZOqBI6DWN1ecQ==
-X-Google-Smtp-Source: AGHT+IGmALyOvBNag9TqNMgn1V9xwABCBuf09gwFJpHmjNNDJIu5m+epK+m7gj0Id0VP0WLrPGNMQA==
-X-Received: by 2002:a5d:5f46:0:b0:425:86da:325f with SMTP id
- ffacd0b85a97d-4324e4379aemr27859344f8f.27.1766748671245; 
- Fri, 26 Dec 2025 03:31:11 -0800 (PST)
+ AJvYcCVIxioUdtwrIhHA//oQ8fWYHN2ciO8d2K+jWrCI5QEb3kgFhEm+WuUIj5Dt1RguCTUDgBUSrKrvZWpA@nongnu.org
+X-Gm-Message-State: AOJu0YyDxVDSn0msTmkkEaCFYUy2F3BghC5KHvw6oPspG3vDQIkrXo9k
+ SRjXO/ho96KQzhiHLf24SoTbiF4sWxUIfOBo47dSLqZb76NvhJOsPdX8HNTySxYt/5s=
+X-Gm-Gg: AY/fxX5fYUJF1n6QZa6JHqa4TpMABPHBXhFzcGxNgCGzGOPmXthouuMKA0LIMuOtWxB
+ rAgXVj5jpfB4XmjHvJy/W+a2KN+Pt++pyONP3KpEvk9CMwqXAbah826A2L6YTGheXkrpsl8ca6G
+ Sj1TlQtjIajyVYGX9oqFSX78+zCpGlWyGrL4C+7sCNSjTRBUWcKgFgBRo76y+oRvaWk0lSych0o
+ ZhNkDwNmBWlMUQAguTIg/aCs18+aTrF0WWwF35JHMUho/p9SqvU1cyY1AqcJrCBoZwgAUvG6m5j
+ u7T2UDmgDa7p/ZLOqfTPY3tgNwT9iO7l8rfQytJ4mYIt+stlFw9pmRyjqJXjYWVPslChIw4V+JB
+ IiP1U0Hcpfy6JoagMaBiRVp0MEsvAz6Vhh8Wf1wz4RwQ6lhYIIqWXfsI5GmGIoE+lwJKjk33Nf3
+ 6XlCDm1ZTnF1qPWUzr0HzF6IY7YLAJ43gMW/xT0UYNoodLj3BMcKP0C7toeqCXWg==
+X-Google-Smtp-Source: AGHT+IE3VcyFnoqKSzexugaZxTMNtVX4ifQu/ix258gpLU0EkrO2TWIXnc0c0hTJXy1Z0AKqjdEW5A==
+X-Received: by 2002:a05:6000:4029:b0:429:cbba:b246 with SMTP id
+ ffacd0b85a97d-4324e45d729mr24232036f8f.0.1766748776651; 
+ Fri, 26 Dec 2025 03:32:56 -0800 (PST)
 Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
  [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eab257asm45711077f8f.38.2025.12.26.03.31.10
+ ffacd0b85a97d-43277b82a58sm11620143f8f.6.2025.12.26.03.32.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Dec 2025 03:31:10 -0800 (PST)
-Message-ID: <fdb62b59-00bc-42ef-980c-a388b1791ed0@linaro.org>
-Date: Fri, 26 Dec 2025 12:31:09 +0100
+ Fri, 26 Dec 2025 03:32:56 -0800 (PST)
+Message-ID: <9d5614ad-f334-4e58-83ac-bd2afd5352b6@linaro.org>
+Date: Fri, 26 Dec 2025 12:32:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] memory: Factor out more common ram region
- initialization
+Subject: Re: [PATCH 5/6] memory: Add internal memory_region_register_ram
+ function
+Content-Language: en-US
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki
  <odaki@rsg.ci.i.u-tokyo.ac.jp>, Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
 References: <cover.1766525089.git.balaton@eik.bme.hu>
- <6a6918fb8b1e1f207485ea25fd8bc9161fe5c32b.1766525089.git.balaton@eik.bme.hu>
-Content-Language: en-US
+ <cb3aaafb264b8f85f57549019163ac1728583d1a.1766525089.git.balaton@eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <6a6918fb8b1e1f207485ea25fd8bc9161fe5c32b.1766525089.git.balaton@eik.bme.hu>
+In-Reply-To: <cb3aaafb264b8f85f57549019163ac1728583d1a.1766525089.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,14 +107,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/12/25 22:49, BALATON Zoltan wrote:
-> Introduce internal memory_region_do_init_ram_ptr() function to remove
-> duplicated code from different memory_region_init_ram_*ptr functions.
+On 23/12/25 22:50, BALATON Zoltan wrote:
+> Factor out common operation from memory_region_init_{ram,rom}
+> functions to register the region for migration. This avoids
+> duplicating the long comment in several functions.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   system/memory.c | 17 ++++++++++-------
->   1 file changed, 10 insertions(+), 7 deletions(-)
+>   system/memory.c | 75 +++++++++++++------------------------------------
+>   1 file changed, 20 insertions(+), 55 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
