@@ -4,107 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC59E8FDBA
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 21:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6532E8FDB9
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 21:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZFDz-0001GE-Sg; Fri, 26 Dec 2025 16:19:51 -0500
+	id 1vZFEB-0001KU-8n; Fri, 26 Dec 2025 16:20:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vZFDo-0001DJ-4k
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 16:19:44 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vZFEA-0001Jz-Jw
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 16:20:02 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vZFDm-0003Up-M1
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 16:19:39 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vZFE8-0003mV-Fa
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 16:20:02 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 39FB45BCC4;
- Fri, 26 Dec 2025 21:19:37 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 3A2D7336AB;
+ Fri, 26 Dec 2025 21:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766783977; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1766783995; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ws1VQpTNPQlwQt5+bAweu+kVb8iQHqA8cUAIMBvExFA=;
- b=DFk4Z+0hRrkH9QghGsYJjkYLTqVZ+VTlKKpnqJvgNJ0vgaOaDhBXDl0mnJQy6tAv+5tTSC
- 5q8ciCCyUHRZAnbBfpF2/+eJ+6R7OKHf3sRat5HUyCCA8sjCsL6ZEuuJ+mjy0EeCc4No+q
- xlRO6oiLm2OYLiZg1WSRfkBk8UhcnZw=
+ bh=4BzbGqFwFOK2ajQx/33sVvImDxmocIbV7q3s/xH1rJI=;
+ b=LMzODdlNg0VfOcP2/TRu6FSYIZNSHB6bZlvZ07Kz9CZkjIOZkFGnwtqtI22OzYAGHNJdB2
+ U+zBCpSCLtYJ/5hMDuZIbVzm3AQVbC7+QALj4cL5Jb7cK7RxllTBNJ1STgxGpxWEgNa+CA
+ XTZvgVe5XLyhR/sdc3PuTCZ98W0qTY0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766783977;
+ s=susede2_ed25519; t=1766783995;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ws1VQpTNPQlwQt5+bAweu+kVb8iQHqA8cUAIMBvExFA=;
- b=OqcEYMYX7vK4KXyY9rtwrM+hAXoprjAozNuAl6CFoSUsvtAvU/1Bnl+CMW29BJ+BwKqKqV
- LhFJxM+qhVKue/DA==
-Authentication-Results: smtp-out2.suse.de;
+ bh=4BzbGqFwFOK2ajQx/33sVvImDxmocIbV7q3s/xH1rJI=;
+ b=ECkITQoABLbGdPtl93YjSe3s4dg/CYXJzbaul4+VUs+4TsanumN5jD21L/bmUx5Rgj0YSx
+ FLLHAa8+PSk/kADg==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766783977; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1766783995; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ws1VQpTNPQlwQt5+bAweu+kVb8iQHqA8cUAIMBvExFA=;
- b=DFk4Z+0hRrkH9QghGsYJjkYLTqVZ+VTlKKpnqJvgNJ0vgaOaDhBXDl0mnJQy6tAv+5tTSC
- 5q8ciCCyUHRZAnbBfpF2/+eJ+6R7OKHf3sRat5HUyCCA8sjCsL6ZEuuJ+mjy0EeCc4No+q
- xlRO6oiLm2OYLiZg1WSRfkBk8UhcnZw=
+ bh=4BzbGqFwFOK2ajQx/33sVvImDxmocIbV7q3s/xH1rJI=;
+ b=LMzODdlNg0VfOcP2/TRu6FSYIZNSHB6bZlvZ07Kz9CZkjIOZkFGnwtqtI22OzYAGHNJdB2
+ U+zBCpSCLtYJ/5hMDuZIbVzm3AQVbC7+QALj4cL5Jb7cK7RxllTBNJ1STgxGpxWEgNa+CA
+ XTZvgVe5XLyhR/sdc3PuTCZ98W0qTY0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766783977;
+ s=susede2_ed25519; t=1766783995;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ws1VQpTNPQlwQt5+bAweu+kVb8iQHqA8cUAIMBvExFA=;
- b=OqcEYMYX7vK4KXyY9rtwrM+hAXoprjAozNuAl6CFoSUsvtAvU/1Bnl+CMW29BJ+BwKqKqV
- LhFJxM+qhVKue/DA==
+ bh=4BzbGqFwFOK2ajQx/33sVvImDxmocIbV7q3s/xH1rJI=;
+ b=ECkITQoABLbGdPtl93YjSe3s4dg/CYXJzbaul4+VUs+4TsanumN5jD21L/bmUx5Rgj0YSx
+ FLLHAa8+PSk/kADg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2FF143EA63;
- Fri, 26 Dec 2025 21:19:35 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E71F73EA63;
+ Fri, 26 Dec 2025 21:19:53 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2F1QOOf7TmnwJwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 26 Dec 2025 21:19:35 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WFlNKfn7TmnwJwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 26 Dec 2025 21:19:53 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com
-Subject: [RFC PATCH 02/25] migration: Fix state change at
- migration_channel_process_incoming
-Date: Fri, 26 Dec 2025 18:19:04 -0300
-Message-ID: <20251226211930.27565-3-farosas@suse.de>
+Cc: peterx@redhat.com,
+	Li Zhijian <lizhijian@fujitsu.com>
+Subject: [RFC PATCH 13/25] migration: Handle error in the early async paths
+Date: Fri, 26 Dec 2025 18:19:15 -0300
+Message-ID: <20251226211930.27565-14-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251226211930.27565-1-farosas@suse.de>
 References: <20251226211930.27565-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.977];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.987];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_NONE(0.00)[];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,29 +117,327 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the incoming migration fails during the channel connection phase,
-the state transition to FAILED is currently being done in the
-MigrationState->state, but the MigrationIncomingState->state is the
-one that should be used.
+Simplify migration_channel_connect() and migration_connect() to not
+take an error as input. Move the error handling into the paths that
+generate the error.
+
+To achive this, call migration_connect_error_propagate() from socket.c
+and tls.c, which are the async paths.
+
+For the sync paths, the handling is done as normal by returning all
+the way to qmp_migrate_finish(), except that now the sync paths don't
+pass the error forward into migration_connect() anymore.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/channel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ migration/channel.c    | 46 +++++++++++++++++-------------------------
+ migration/channel.h    |  4 +---
+ migration/exec.c       |  2 +-
+ migration/fd.c         |  2 +-
+ migration/file.c       |  2 +-
+ migration/migration.c  | 11 ++--------
+ migration/migration.h  |  3 ++-
+ migration/rdma.c       |  2 +-
+ migration/socket.c     | 17 ++++++++--------
+ migration/tls.c        | 19 ++++++++---------
+ migration/tls.h        |  4 +---
+ migration/trace-events |  2 +-
+ 12 files changed, 49 insertions(+), 65 deletions(-)
 
 diff --git a/migration/channel.c b/migration/channel.c
-index 92435fa7f7..4768c71455 100644
+index ba14f66d85..7243b99108 100644
 --- a/migration/channel.c
 +++ b/migration/channel.c
-@@ -48,7 +48,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+@@ -60,38 +60,30 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+  *
+  * @s: Current migration state
+  * @ioc: Channel to which we are connecting
+- * @error: Error indicating failure to connect, free'd here
+  */
+-void migration_channel_connect(MigrationState *s,
+-                               QIOChannel *ioc,
+-                               Error *error)
++void migration_channel_connect(MigrationState *s, QIOChannel *ioc)
+ {
+-    trace_migration_set_outgoing_channel(
+-        ioc, object_get_typename(OBJECT(ioc)), error);
++    trace_migration_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)));
  
-     if (local_err) {
-         error_report_err(local_err);
--        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-+        migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
-         if (mis->exit_on_error) {
-             exit(EXIT_FAILURE);
-         }
+-    if (!error) {
+-        if (migrate_channel_requires_tls_upgrade(ioc)) {
+-            migration_tls_channel_connect(s, ioc, &error);
++    if (migrate_channel_requires_tls_upgrade(ioc)) {
++        migration_tls_channel_connect(s, ioc);
+ 
+-            if (!error) {
+-                /* tls_channel_connect will call back to this
+-                 * function after the TLS handshake,
+-                 * so we mustn't call migration_connect until then
+-                 */
+-
+-                return;
+-            }
+-        } else {
+-            QEMUFile *f = qemu_file_new_output(ioc);
+-
+-            migration_ioc_register_yank(ioc);
+-
+-            qemu_mutex_lock(&s->qemu_file_lock);
+-            s->to_dst_file = f;
+-            qemu_mutex_unlock(&s->qemu_file_lock);
+-        }
++        /*
++         * async: the above will call back to this function after
++         * the TLS handshake is successfully completed.
++         */
++        return;
+     }
+-    migration_connect(s, error);
++
++    QEMUFile *f = qemu_file_new_output(ioc);
++
++    migration_ioc_register_yank(ioc);
++
++    qemu_mutex_lock(&s->qemu_file_lock);
++    s->to_dst_file = f;
++    qemu_mutex_unlock(&s->qemu_file_lock);
++
++    migration_connect(s);
+ }
+ 
+ 
+diff --git a/migration/channel.h b/migration/channel.h
+index 2215091323..ccfeaaef18 100644
+--- a/migration/channel.h
++++ b/migration/channel.h
+@@ -20,9 +20,7 @@
+ 
+ void migration_channel_process_incoming(QIOChannel *ioc);
+ 
+-void migration_channel_connect(MigrationState *s,
+-                               QIOChannel *ioc,
+-                               Error *error_in);
++void migration_channel_connect(MigrationState *s, QIOChannel *ioc);
+ 
+ int migration_channel_read_peek(QIOChannel *ioc,
+                                 const char *buf,
+diff --git a/migration/exec.c b/migration/exec.c
+index 78fe0fff13..d83a07435a 100644
+--- a/migration/exec.c
++++ b/migration/exec.c
+@@ -55,7 +55,7 @@ void exec_start_outgoing_migration(MigrationState *s, strList *command,
+     }
+ 
+     qio_channel_set_name(ioc, "migration-exec-outgoing");
+-    migration_channel_connect(s, ioc, NULL);
++    migration_channel_connect(s, ioc);
+     object_unref(OBJECT(ioc));
+ }
+ 
+diff --git a/migration/fd.c b/migration/fd.c
+index c956b260a4..0144a70742 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -70,7 +70,7 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
+     }
+ 
+     qio_channel_set_name(ioc, "migration-fd-outgoing");
+-    migration_channel_connect(s, ioc, NULL);
++    migration_channel_connect(s, ioc);
+     object_unref(OBJECT(ioc));
+ }
+ 
+diff --git a/migration/file.c b/migration/file.c
+index c490f2b219..7bb9c1c79f 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -122,7 +122,7 @@ void file_start_outgoing_migration(MigrationState *s,
+         return;
+     }
+     qio_channel_set_name(ioc, "migration-file-outgoing");
+-    migration_channel_connect(s, ioc, NULL);
++    migration_channel_connect(s, ioc);
+ }
+ 
+ static gboolean file_accept_incoming_migration(QIOChannel *ioc,
+diff --git a/migration/migration.c b/migration/migration.c
+index a66b2d7aaf..5c6c76f110 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1572,7 +1572,7 @@ static void migrate_error_free(MigrationState *s)
+     }
+ }
+ 
+-static void migration_connect_error_propagate(MigrationState *s, Error *error)
++void migration_connect_error_propagate(MigrationState *s, Error *error)
+ {
+     MigrationStatus current = s->state;
+     MigrationStatus next = MIGRATION_STATUS_NONE;
+@@ -4033,7 +4033,7 @@ fail_setup:
+     return NULL;
+ }
+ 
+-void migration_connect(MigrationState *s, Error *error_in)
++void migration_connect(MigrationState *s)
+ {
+     Error *local_err = NULL;
+     uint64_t rate_limit;
+@@ -4041,13 +4041,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+     int ret;
+ 
+     s->expected_downtime = migrate_downtime_limit();
+-    if (error_in) {
+-        migration_connect_error_propagate(s, error_in);
+-        if (s->error) {
+-            error_report_err(error_copy(s->error));
+-        }
+-        return;
+-    }
+ 
+     if (resume) {
+         /* This is a resumed migration */
+diff --git a/migration/migration.h b/migration/migration.h
+index 4d42e8f9a7..f340cd518d 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -532,10 +532,11 @@ void migration_incoming_process(void);
+ 
+ bool  migration_has_all_channels(void);
+ 
++void migration_connect_error_propagate(MigrationState *s, Error *error);
+ void migrate_error_propagate(MigrationState *s, Error *error);
+ bool migrate_has_error(MigrationState *s);
+ 
+-void migration_connect(MigrationState *s, Error *error_in);
++void migration_connect(MigrationState *s);
+ 
+ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+                              Error **errp);
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 337b415889..596a1aba0b 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -3997,7 +3997,7 @@ void rdma_start_outgoing_migration(void *opaque,
+ 
+     s->to_dst_file = rdma_new_output(rdma);
+     s->rdma_migration = true;
+-    migration_connect(s, NULL);
++    migration_connect(s);
+     return;
+ return_path_err:
+     qemu_rdma_cleanup(rdma);
+diff --git a/migration/socket.c b/migration/socket.c
+index 426f363b99..298bac30cc 100644
+--- a/migration/socket.c
++++ b/migration/socket.c
+@@ -59,24 +59,25 @@ static void socket_outgoing_migration(QIOTask *task,
+                                       gpointer opaque)
+ {
+     struct SocketConnectData *data = opaque;
+-    QIOChannel *sioc = QIO_CHANNEL(qio_task_get_source(task));
++    g_autoptr(QIOChannel) sioc = QIO_CHANNEL(qio_task_get_source(task));
+     Error *err = NULL;
+ 
+     if (qio_task_propagate_error(task, &err)) {
+-        trace_migration_socket_outgoing_error(error_get_pretty(err));
+-           goto out;
++        goto err;
+     }
+ 
+-    trace_migration_socket_outgoing_connected();
+-
+     if (migrate_zero_copy_send() &&
+         !qio_channel_has_feature(sioc, QIO_CHANNEL_FEATURE_WRITE_ZERO_COPY)) {
+         error_setg(&err, "Zero copy send feature not detected in host kernel");
++        goto err;
+     }
+ 
+-out:
+-    migration_channel_connect(data->s, sioc, err);
+-    object_unref(OBJECT(sioc));
++    trace_migration_socket_outgoing_connected();
++    migration_channel_connect(data->s, sioc);
++    return;
++err:
++    trace_migration_socket_outgoing_error(error_get_pretty(err));
++    migration_connect_error_propagate(data->s, err);
+ }
+ 
+ void socket_start_outgoing_migration(MigrationState *s,
+diff --git a/migration/tls.c b/migration/tls.c
+index 82f58cbc78..a54e8e6e14 100644
+--- a/migration/tls.c
++++ b/migration/tls.c
+@@ -104,16 +104,17 @@ static void migration_tls_outgoing_handshake(QIOTask *task,
+                                              gpointer opaque)
+ {
+     MigrationState *s = opaque;
+-    QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
++    g_autoptr(QIOChannel) ioc = QIO_CHANNEL(qio_task_get_source(task));
+     Error *err = NULL;
+ 
+     if (qio_task_propagate_error(task, &err)) {
+         trace_migration_tls_outgoing_handshake_error(error_get_pretty(err));
+-    } else {
+-        trace_migration_tls_outgoing_handshake_complete();
++        migration_connect_error_propagate(s, err);
++        return;
+     }
+-    migration_channel_connect(s, ioc, err);
+-    object_unref(OBJECT(ioc));
++
++    trace_migration_tls_outgoing_handshake_complete();
++    migration_channel_connect(s, ioc);
+ }
+ 
+ QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+@@ -129,14 +130,14 @@ QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+     return qio_channel_tls_new_client(ioc, creds, migrate_tls_hostname(), errp);
+ }
+ 
+-void migration_tls_channel_connect(MigrationState *s,
+-                                   QIOChannel *ioc,
+-                                   Error **errp)
++void migration_tls_channel_connect(MigrationState *s, QIOChannel *ioc)
+ {
+     QIOChannelTLS *tioc;
++    Error *local_err = NULL;
+ 
+-    tioc = migration_tls_client_create(ioc, errp);
++    tioc = migration_tls_client_create(ioc, &local_err);
+     if (!tioc) {
++        migration_connect_error_propagate(s, local_err);
+         return;
+     }
+ 
+diff --git a/migration/tls.h b/migration/tls.h
+index 7cd9c76013..7399c42edf 100644
+--- a/migration/tls.h
++++ b/migration/tls.h
+@@ -29,9 +29,7 @@ void migration_tls_channel_process_incoming(QIOChannel *ioc, Error **errp);
+ QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+                                            Error **errp);
+ 
+-void migration_tls_channel_connect(MigrationState *s,
+-                                   QIOChannel *ioc,
+-                                   Error **errp);
++void migration_tls_channel_connect(MigrationState *s, QIOChannel *ioc);
+ void migration_tls_channel_end(QIOChannel *ioc, Error **errp);
+ /* Whether the QIO channel requires further TLS handshake? */
+ bool migrate_channel_requires_tls_upgrade(QIOChannel *ioc);
+diff --git a/migration/trace-events b/migration/trace-events
+index da8f909cac..cbf10d0b63 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -204,7 +204,7 @@ migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma)
+ 
+ # channel.c
+ migration_set_incoming_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
+-migration_set_outgoing_channel(void *ioc, const char *ioctype, void *err)  "ioc=%p ioctype=%s err=%p"
++migration_set_outgoing_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
+ 
+ # global_state.c
+ migrate_state_too_big(void) ""
 -- 
 2.51.0
 
