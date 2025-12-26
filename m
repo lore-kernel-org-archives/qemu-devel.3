@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C57EE8FDA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 16:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C19E8FDAE
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 16:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZAZM-0002sE-Vx; Fri, 26 Dec 2025 11:21:38 -0500
+	id 1vZB2N-0001r9-8p; Fri, 26 Dec 2025 11:51:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZAZG-0002rl-HW
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 11:21:31 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vZB2K-0001qp-UV
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 11:51:32 -0500
+Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZAZF-0000k2-33
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 11:21:30 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47775fb6cb4so43846545e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 08:21:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vZB2J-0007yd-Ir
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 11:51:32 -0500
+Received: by mail-pf1-x442.google.com with SMTP id
+ d2e1a72fcca58-7b8e49d8b35so9053499b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 08:51:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766766087; x=1767370887; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1cCJOKIEYSbO0/Y44S5VuT7d7zzBKEBq9Hl5ClNUtR0=;
- b=r7dlR+ry6MOXR7TZXmLnntZVT/FoLm7FbwgT6unCCX1FPUVdmZSU7Lxpm37xc9lYX8
- G1DZiUBlw6u9w6Smw5sdUDuSfAfwuIZmCOq1SQV6W3CiLBBwNS5Xs9R0IL/Ho2AsnMFB
- Uv0f+kt9fp2oAAS3u4KFnYKki9Y91nO+UsUQq773dsb0i+yIlPpwJ3PohKvCRM+RyoV+
- e2jYU6M7jayDtr3cvxWWPVepJQUU2BRKcAMH17fMnAEmCytI8sRd2lha5Rpb9c3VqNqO
- TOzgE9lLu2ERH4VmdoL+a8JWm+g1j79z0hDNJnWr1aNkcgeVhCTvk2jtuQPRVYbmpGyH
- E+9g==
+ d=gmail.com; s=20230601; t=1766767889; x=1767372689; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vZwiqJ7sTM7no+pp18nB52qbLhqqZihvbYGHPTEUmy8=;
+ b=k8hGbrLDI4qGSsLZJhjEbxQHiZ0F+Xdys0e3hb2v6TgPI7fOnu/TssRPMpWOMmayDJ
+ 0h/CNkddMYSpRXIzvKGnftpvES78FB7oRizFm2WpnUacNGeBjLRbPa+o9iNj3HZNSTEN
+ sy8H9EbqP91i1Ip2tVfeWTdVtMZehP6IwKqoiNMszAaJAFutClPOgCxFAQ7U3f24qRDb
+ dCBS0/HVh+nRNfcH7qhl20F3ad8UZUf9TygGirmN7Oo+KYRGnvzokXvYm5/ee0WExv9B
+ lLqkB87RcREYiD5OsgZKIS2ZYqHEIIi96fs2S8pkzfcFdeyKSuCr2k/tu31m4trp1n/5
+ TqhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766766087; x=1767370887;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1cCJOKIEYSbO0/Y44S5VuT7d7zzBKEBq9Hl5ClNUtR0=;
- b=acrAz0lFyii8BLPFAMrdsrLZNouhT405CNcjZE2q2Xg4kQAxYfBfDZW60AZ+2gMm6g
- 4H1ZoD8BhT105FNQ5iUezqBlHnt+UfA6Bf7scbfRGe3o1St4eXDFMzEtfVEq3wymZrIZ
- fOGnUwRgquMOjPRBMVZC6rpX8ExxS06ZeCkLOYeHPnfxWO83YSBnznRCFwtxLWWtmUhK
- JR0BEjKuUm0hLKCQFQWSz1abrcJKjgMQkhzcOGGPnz6nCI2ZXBaMPUDckrHF3Ln0bRBT
- UM/3RQ70lQMqDfUI10/U2IQHRxRHrk5pNfnXgZv7fYvtKuhdPzdHvlR6x5j35YngRnEV
- H2gw==
-X-Gm-Message-State: AOJu0YxkHyA0UR6RPIJx0VUCQWSoQf4Dv4uDteqBhrCh1vY9g7nbKZEv
- QrA0M9GEcBZU4HYBV0id71OO1XFc/6pOr6hRoxqUvLyisN6Wcsx8nu8hbkCUfiMeYFo=
-X-Gm-Gg: AY/fxX6SmTKlZJwz00Aikp68uEsub/Aoh4PN+rXDu9Rdt72ZHlFGUc/O9kSvKovZhUD
- PVwpriOb4BG+e5n5Wamueq8w69Tv90YgFfNp0bHwR6RoUG1Qr+nLw4cZlDPrYk05zf4oQY/Wp//
- 3l9OugHm5Rdmj7G3yCeJtRFoEOzlotI8LMHLaW2YyzazddRtzTBaLylvMcgRr1b0P8tO5e8B15n
- nc3pNShcAUm6vuKsmkiu8M2mrtlADlqSXrLZt8iOnzYezBrzyBRbv51w+zJs2ZW/PrCmbVR3dNH
- mNldRrgviLa11FC0RWmhDtt3de1frDWaCRUKzxPDHzlxTTc9bDlSdQKmu55CgmXXrp//H10Tu4f
- XRWCKsLyHOmqbAR5rZKRVXNbY0FH4bpCVpC6WTFej1Jrk7qIIWZFRr4q4q/cw++d5Vx7v4PQp6x
- xsaJ3nJOApV5ea+gDi0bRhxWnaGUU4s3iesaFk8bTT2dy7yLzCUzFIorxPjNARnByz4MH6aO+k
-X-Google-Smtp-Source: AGHT+IHsld3KdywM1Y9ZVuk1CEaORTKByEXFWt/nti91dT6/8XYwin/gF3sGGJHdDz7dqhOfj67wUA==
-X-Received: by 2002:a05:600c:1c28:b0:45d:dc85:c009 with SMTP id
- 5b1f17b1804b1-47d1954586amr247567895e9.10.1766766087542; 
- Fri, 26 Dec 2025 08:21:27 -0800 (PST)
-Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
- [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be273f147sm459683975e9.7.2025.12.26.08.21.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Dec 2025 08:21:27 -0800 (PST)
-Message-ID: <132ef8e0-0fa0-494a-905f-788c11a2b7a0@linaro.org>
-Date: Fri, 26 Dec 2025 17:21:26 +0100
+ d=1e100.net; s=20230601; t=1766767889; x=1767372689;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vZwiqJ7sTM7no+pp18nB52qbLhqqZihvbYGHPTEUmy8=;
+ b=nyWWePTDE1QrDdMjmrIz0QTS8IixvUztt+7GBoTJebSAQbvL1O8EajKVYPm08p6wxi
+ 7bGbbr37hW6AL3p7z5KgLnBgfSKWTVQiRXDyMe4MHUrQ96LA92274xk8cX2SnbqKVLWP
+ lAqCR5vSgeqqPNCDEDapPZuvavS2kLgHbJrk8nBA0YmEJKgbnn0k0oFHHHpyBlarxjJX
+ UTAr+yU3X1fE+XG6Drd1aj/bGoGiKhMelFegcx1qLe/Q0VnCKX+pUK9csABDqJkNh+pC
+ OQtWgLJwPFheHjZ0s5SEQ1HKTY7O34j3P8X4fevrdbHKFKlocif61hHCQ6tJusYw1DVH
+ k69g==
+X-Gm-Message-State: AOJu0Yzrf+xfx8X9T8ZapqrPlom3CAkVHtcFopjWkWz37Lat3p5Qdohv
+ zbsbSh/MhC0l4OgFlwIjQSwaQnPTSH465e3FWUI558Ilz3UPyT5Csaav
+X-Gm-Gg: AY/fxX64clIZFxb1TBSSJOtsfZM0ZCMvuRsdkkYZSyZqdcAjlophs9WdzaATZQASwSU
+ pekfNzdVGCCn7O9bv8gBq4Xy++6fNGtLx7nlsWVl5eEECZI4ldmAsz+2claMWJdytdCakhtvmCH
+ XViAQUi6vqK5oXzFzyS8knCjQxMCd4B0jWlTgLPVvbO1yAVok9SN9LF4dQ3SsHQbl9rZEXAjkha
+ CFl0BRXsv2FkfQGobdkZmBvQ5EC4nnvvIGO4Aow64R4dYY8wQvxG4/0w8xW2lU+3IZdbIktjBtg
+ gmiVK7GNNe8zzuVZ+3WKhTaE77UTU4CETv7uEK5D/3jVSz8Yicqn5TOWZlHKrajZ7cud+5RX+my
+ eDsoqmj7Y/ZDaEOwl8XC/dUc3SVGvDZl6r3jC+CLLq7evJwIS4zwSwI2hkbCXFO+h52cac7+2XJ
+ O0AhX6sjlAno2coSpoq9w9XJNMxzBTuQ==
+X-Google-Smtp-Source: AGHT+IFBhpHrgvnHclq6wvNvMxPiCM99uHaXxfd0Ys1kULNBsOfIlQ3IhoRUq+pQT+tKos+fU2pOIg==
+X-Received: by 2002:a05:6a00:a88f:b0:7aa:a2a8:980f with SMTP id
+ d2e1a72fcca58-7ff657a3c1bmr22310103b3a.20.1766767889381; 
+ Fri, 26 Dec 2025 08:51:29 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([114.88.97.170])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7ff7e48f300sm22522225b3a.54.2025.12.26.08.51.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Dec 2025 08:51:28 -0800 (PST)
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: richard.henderson@linaro.org,
+	pbonzini@redhat.com
+Cc: qemu-devel@nongnu.org, hust-os-kernel-patches@googlegroups.com,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [RFC PATCH v1 0/3] tcg: add tcg_gen_print helper
+Date: Sat, 27 Dec 2025 00:51:18 +0800
+Message-ID: <cover.1766767299.git.chao.liu.zevorn@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1] target/i386/gdbstub: Replace ldtul_p() -> ldq_p()
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250325154528.93845-1-philmd@linaro.org>
- <87zfh8119v.fsf@draig.linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87zfh8119v.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pf1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,17 +101,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi,
 
-On 26/3/25 12:26, Alex Bennée wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->> When TARGET_LONG_BITS == 64, ldtul_p() expand to ldq_p().
->> Directly use the expanded form for clarity.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Queued to gdbsub/next, thanks.
-> <snip>
-> 
+This series adds a printf-style helper for TCG to simplify debugging TB
+translations.
 
-This patch got never merged, is there an issue with it?
+The first patch implements tcg_gen_print plus the runtime support code that
+formats the arguments when the helper is invoked.
+
+The second patch updates scripts/checkpatch.pl to warn if a patch still
+contains tcg_gen_print() so that developers do not accidentally merge
+debug prints.
+
+The final patch documents the helper in docs/devel/tcg-ops.rst.
+
+Usage:
+
+```
+    tcg_gen_print("const value = 0x%lx\n"
+                  TCG_PRINT_ARG_I64, tcg_constant_i64(0xdead),
+                  TCG_PRINT_ARG_END);
+```
+
+P.S. I think this debugging feature will be well-received. :)
+
+Finally, happy new year to all ~
+
+Thank,
+Chao
+
+Chao Liu (3):
+  tcg: add tcg_gen_print helper
+  scripts: warn on tcg_gen_print usage to the checkpatch.pl
+  docs: add documentation for the tcg_gen_print helper to tcg-ops
+
+ accel/tcg/tcg-runtime.c     | 187 ++++++++++++++++++++++++++++++++++++
+ accel/tcg/tcg-runtime.h     |   1 +
+ docs/devel/tcg-ops.rst      |  33 +++++++
+ include/tcg/tcg-op-common.h |   2 +
+ include/tcg/tcg-print.h     |  45 +++++++++
+ scripts/checkpatch.pl       |   5 +
+ tcg/tcg-op.c                |  89 +++++++++++++++++
+ 7 files changed, 362 insertions(+)
+ create mode 100644 include/tcg/tcg-print.h
+
+--
+2.52.0
+
 
