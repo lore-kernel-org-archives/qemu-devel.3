@@ -4,65 +4,188 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67885E8FDA0
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 08:03:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 810E9E8FDA0
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 08:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZ2nH-000070-9r; Fri, 26 Dec 2025 03:03:27 -0500
+	id 1vZ2pd-0002LS-Sg; Fri, 26 Dec 2025 03:05:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vZ2mm-0008TX-7w
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 03:02:57 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1vZ2pb-0002Ko-Tw
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 03:05:51 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vZ2mg-0005DY-Sk
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 03:02:55 -0500
+ id 1vZ2pY-0005h5-LH
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 03:05:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1766736171; x=1798272171;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Yv9n9nBxZOXkuulFbpph1Y2JDKGxurFmxcngXr6yCf0=;
- b=c0VCKhwzM+ItrlpWBs6+Ie/hbba4nIoxQQcIguaykFVEdWvu7B5zirKg
- 0Xt8HA1S9rm9WXYfZKrfbloP4kipFobkT57kQwHZobzC7JVm0bdqrfOQq
- DlAos0EVYXoiPyie9ubWOP7vkVjw5p1dINVlPoE4PSWz7L14rxSlUggfE
- fRl/xTg+MMO5tf3HpZ5+xZ39f4BOpDaWqdvuP6Fs+/8154COnrd08PFRq
- pnkLDgZGfXDk9fRMrKPuPZL6kOmeW9um2bwEPmx53CbmoHJ+aOKORI6ma
- A4QC4oScmS533ekYMGHXv0Mt4XKm/dv4Ad7Fe14DxvBYqSQ4DXTtrCXb/ A==;
-X-CSE-ConnectionGUID: 9v/VUUh8RCuydcpqFn/xaA==
-X-CSE-MsgGUID: 2ohJpW1+Q4uS/+24P3/nSQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="68392839"
-X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; d="scan'208";a="68392839"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Dec 2025 00:02:51 -0800
-X-CSE-ConnectionGUID: +jzyKitFThCCGd90qjDApA==
-X-CSE-MsgGUID: 4m6Jl5FCTvKg7spKKUmZhw==
+ t=1766736349; x=1798272349;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=ILm5d75gq7FwjuUnLmP2ll3M7IFXJL58IKhr1SP6KhE=;
+ b=XB5i1d8Vmt5sEnbA9c+guLOaj20EQgY0D/4xniw9Q1+lk6PTj8HiGb/U
+ MRKr3p3gEwYLZVvqi21vDCuQ/rbaGbQJlZPT0Hlf+T8q0pFuuI8v7J3T1
+ y5eOx4RTnSqj3DXqUOingrokBzjIfi3u9ZPpbX/aOgTtjBni4B/q1/P5W
+ U/AJCn2DoRa1On58S0aIUUIQ/qqxZABqWACZRMrp7bkSfjcYkSCafus/z
+ glUMdo0mk6ZAqeOxg8izOaKZMoa7uhQV0cegDWjsCD25U3/TfQAhNtjP1
+ GWvqhhekpD86qM6IpGNcm8SlUr2TPRu3NLe/cTXaELpKuKWPxBXzjrfvb Q==;
+X-CSE-ConnectionGUID: V6INf88ZR1CzC1pzu7Tjfw==
+X-CSE-MsgGUID: TqwMSbAFTAGKuYuXDXQRcw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="71082156"
+X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; d="scan'208";a="71082156"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Dec 2025 00:05:46 -0800
+X-CSE-ConnectionGUID: 8LYKnyZ+TTqyWru+HnruTA==
+X-CSE-MsgGUID: Py185BgrRK6eheLuuiaoOg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; d="scan'208";a="204846813"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Dec 2025 00:02:46 -0800
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v9 3/4] vfio/listener: Bypass readonly region for dirty
- tracking
-Date: Fri, 26 Dec 2025 03:02:25 -0500
-Message-ID: <20251226080227.1167993-4-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20251226080227.1167993-1-zhenzhong.duan@intel.com>
-References: <20251226080227.1167993-1-zhenzhong.duan@intel.com>
+X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; d="scan'208";a="200094522"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Dec 2025 00:05:47 -0800
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Fri, 26 Dec 2025 00:05:45 -0800
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29 via Frontend Transport; Fri, 26 Dec 2025 00:05:45 -0800
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.66) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Fri, 26 Dec 2025 00:05:45 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KA12ShqaYMi7Llz51gZ/kRXWcpgJ1KF3euwUb8ORTml+rXiVdA5cvVgcJpODbEk4Gb+VKrb0koPJW4zaIg+2/rOOc85qu5XuASIgiFwA4im2qmnFgrsNcOL5tNdFwR9vzBAsvfEvWomspf/GJcjRj6s5fbs0uV5OOi58Fo8hvyJAoYqaoJZyD7f2K2T2zTsW8kTHwKX0rX1/eMs4npDSi5F/TDGMbS+/FfVtsYZpoWOErfF4yW933fG6YVhs9M4r0GvKuVXvo408Ropl0PVXrvv/YMsXebBTaSVPKgPCgJ+1fpxpaoc/Ca9vv1I6isj3FgYbV36IoA0mC+x5PXAfTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WcZFhU9YMbEqoH32LujIOgu8eRJ0nxNjsIm+SOv8dQE=;
+ b=dkjLdClqbeZAuz6mMAxRQ8Hgb64ZNDVR0j6WKDowyqvxt1+jbZxxyN/f8GA9OxuIE2scuTTjoyfyYDc6in+aFrKNE4MbEV6RHt29AmBYhmaUJAm3iVdUEPRDedmT0UGA+5UY3jrOvXHBqCEWbzGbZVDv1VPa6xttR0S4OGE/KeBKwyxs2OBfpGCtmg/BuRxK/2il2aWS6H9hhUuM78qaPBKE7y357nw+j5oy00iOkTQ3qNqX48Zt2QDABmfXtpJU7Rd3vc8ChDUxg/DuArSrbol8gPte6HqCIiFsvoYCyrdH8o03J7tv269NYc4VXZLM6s+cmZ/XGrkoVrxNUd5O7w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by CH3PR11MB8381.namprd11.prod.outlook.com (2603:10b6:610:17b::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.11; Fri, 26 Dec
+ 2025 08:05:44 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9456.008; Fri, 26 Dec 2025
+ 08:05:44 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex@shazbot.org" <alex@shazbot.org>, "mst@redhat.com" <mst@redhat.com>, 
+ "jasowang@redhat.com" <jasowang@redhat.com>, "Liu, Yi L"
+ <yi.l.liu@intel.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "avihaih@nvidia.com" <avihaih@nvidia.com>, "Hao, 
+ Xudong" <xudong.hao@intel.com>, "Cabiddu, Giovanni"
+ <giovanni.cabiddu@intel.com>, Rohith S R <rohith.s.r@intel.com>, "Gross,
+ Mark" <mark.gross@intel.com>, "Van De Ven, Arjan"
+ <arjan.van.de.ven@intel.com>
+Subject: RE: [PATCH v6 0/9] vfio: relax the vIOMMU check
+Thread-Topic: [PATCH v6 0/9] vfio: relax the vIOMMU check
+Thread-Index: AQHcb+dem0RbSnC2M0maML1A0NE5KrUpJ84AgAp0c8A=
+Date: Fri, 26 Dec 2025 08:05:43 +0000
+Message-ID: <IA3PR11MB9136E6B463CC8D03979F73CC92B0A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20251218062643.624796-1-zhenzhong.duan@intel.com>
+ <6b359b40-2bad-4cfe-9cf5-4d8319bd3cd5@redhat.com>
+In-Reply-To: <6b359b40-2bad-4cfe-9cf5-4d8319bd3cd5@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CH3PR11MB8381:EE_
+x-ms-office365-filtering-correlation-id: 72a7f2a8-ca12-4633-6a59-08de445591a8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?6YFX1dtDF6cXCBPF4t8kYiYNtXgKL/zFDeXJywmU5Yf3+UaRAfgMaN3UFk?=
+ =?iso-8859-1?Q?BFvj96FOMQbnU2GETltw5SMI4fxyB2qMskObatLg1CHpr4GKnrXgewiXM5?=
+ =?iso-8859-1?Q?R+6WyS7c8ySU9Ad9ATAM9he+Kp57vwMcd/f6Bb/VG8+YPVZq1V4CTCY86S?=
+ =?iso-8859-1?Q?voNRgfzbn6vKC24H28kfP3eQ/uyKrdSWGqybqmo3diBkaoo7VXhDZfEMBl?=
+ =?iso-8859-1?Q?Dvc5eP4eFSr3pxV+pMguW9xseEsNaSG7Zg5PedDHhA8zP0GMGr1nTd4mpO?=
+ =?iso-8859-1?Q?gl3k98BtkYC4qGLVrh0vGsJlcD70NqXZjx5i48vU1Yh0amIVLGhv09xMgw?=
+ =?iso-8859-1?Q?XBMGGZqb47O1fYV6gVXMoKAYf5HEDvtx31PMfnR6BStR0eei8YAnRGK+hC?=
+ =?iso-8859-1?Q?RALKZN/VFGHqTBiujr5lahCt7sjWlw0fO88tlha80/wihYFH3dZVc1abBc?=
+ =?iso-8859-1?Q?q8e/J2FstNkUwIjOYz7YicH3+vq/yl8VtwLd3DkpLrQqml/U9caSsd3PN2?=
+ =?iso-8859-1?Q?MozFzcfMBKvWVy6r2ZLxdAIAMQVwejDd7T89bDyVAL3ifhWAsU3Ya4vgV+?=
+ =?iso-8859-1?Q?FSRU39asMRfToiz+nzoxNVr8xpug9a1jpJl/6CGqBtXYUAyPGVt/Y2VxlP?=
+ =?iso-8859-1?Q?xss35Yh3PRe6xUXv8Wn/79KZqzjBmau1NGN3hJDYKvqHVum7Ykm+ZAPfxC?=
+ =?iso-8859-1?Q?kFfIq4msQTRi2PefsyfKIRob08ohTp6Y3wvU0qBmNThsMw03jgGg550yug?=
+ =?iso-8859-1?Q?s5UjzKWLbFpQU6OVxgcQ5/pW/eHn6tiwtblE4UwYbHF38/kaV+2nIXBNPP?=
+ =?iso-8859-1?Q?UYau/J940thuuudF1aaYt9qbOQ3rr6z0l2/8ukh/Pya82+PvKca4+75dzj?=
+ =?iso-8859-1?Q?jKIBCfMahjW74FEyutgaaQMtltpDZ113QDphz59m1t/0RKMRm7iQxAuRy0?=
+ =?iso-8859-1?Q?UgvX5lc9vVHlvd1i/zPxG6Qr57PjvfmR9kPkDE8RuwTjPzS0kB6fWv1vAE?=
+ =?iso-8859-1?Q?zkqKyvz9D9d6k+IM6uIEyDtdsVV2/jhqIqsiTIAZqlOy10oKltYKZCwC4N?=
+ =?iso-8859-1?Q?buriR3KvCjp7X3LTZ8OVZQQBVRNX+2dL9hhMAloGpCUrKhxkUBP0S+XWEf?=
+ =?iso-8859-1?Q?8df1JMZziNUl0cPhZZGQNQiaCa/KdCrONQIBLrPZgiVlT0GYedecUCWEgK?=
+ =?iso-8859-1?Q?00Vv2vON/CKkdAOU4h0h0SVe3dI7K6mBFYRD+qh5wAmA2URMxxd8lvJSrB?=
+ =?iso-8859-1?Q?MU3/t5do7vvmNQZnFuynsonMyqw8s8W2Me4cfvGTj4hVRIZUr9+J5IycRo?=
+ =?iso-8859-1?Q?w98p0g5dkYu5l8LquNFQBJAZtMcDlUJz2FJkwyhnsFzIY3Y1DTiNOZ5DW0?=
+ =?iso-8859-1?Q?VnTUaMiGfuyaTWZXXbVgT3B6Jqy26X6LB+5a/CgIBDLUERb5eafFXQMCXE?=
+ =?iso-8859-1?Q?p6oJzdbEV8Mh79K8K697oBFw1wrIxky07VUgHEysZ1mhQ5NVpfd8D35GUR?=
+ =?iso-8859-1?Q?1RHsLEA9edSRBCZ8wIqE1OINU4oqUCq9yS//RIR+hjPbIWWHJ++PcMAPne?=
+ =?iso-8859-1?Q?FcUn3nU7IosX+9sx1rZpyrCG7BCi?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rZJ4JqWQqZHdHyT55fSDmoy7jGQhLGhrM0mLZv8Esm8ZmnnaLyRI71YS2M?=
+ =?iso-8859-1?Q?BueepkVhPz/F1uxHIJdBgHl+XHB3uHZDtaUxGXNbY7CH6K/7NpVmuFTJd5?=
+ =?iso-8859-1?Q?Ver4Eszf1YYH9ANnXPaaWOoGTuCy3II9oezmkeLUIxoxl+9N85t6/HJ4Rj?=
+ =?iso-8859-1?Q?tZkM/f26Eq6ptOQV/uw2wUVJvGhA9tZxAiCSaQHx/4/d2+4bMVOwGfM0qH?=
+ =?iso-8859-1?Q?Vx4z/qWDx5reUxoFjpbYxI1THiY7Ljsl2B+PB3yTcx2Z6HEh0RnxGlm33c?=
+ =?iso-8859-1?Q?y/rFb9Qm6eX/sfv9LxEXOANt+ccxOnqpNK3KpJepLgAnaqjvd2w5w48XGS?=
+ =?iso-8859-1?Q?payPceYxYbOZugJEe5sF0UaEzm4OzakUolQ5twgy+0xOf809KfEhZipdrs?=
+ =?iso-8859-1?Q?ZlWbMWyjBhgdbEySLg5CK/59U3WUljl4ENOAs5jwS6AUJTv0Dq8cm4aA1p?=
+ =?iso-8859-1?Q?r3mQary6a5dt1LFsqhUy5Wh6nhg7b99o364lbu+M3K8WodTXt6eyCy5lwK?=
+ =?iso-8859-1?Q?Yk6LpZ/jtDu2xLPlsM/RqfdY6oAhcFHZgolWpTCjWQSi7g3DwcwBjAtZ6H?=
+ =?iso-8859-1?Q?aOT3VV+W3HPq3+ByYt+nkaQR2ffecJVt+RRRUExdamgOGKEv+uX8Y2m5vE?=
+ =?iso-8859-1?Q?H+DfeG2OrmdqlML+qJjGUuMRRqexqLYmmI9Kp5vkRiT/XYg88pfvHf7oxe?=
+ =?iso-8859-1?Q?zVNZIoQ3t7HHAbdOOw4j62ERGhuqMgFuU8EeXQm4inZSnktupDc8lO+fNw?=
+ =?iso-8859-1?Q?6wAbTWxH6MHbRxzTZMLIPMVLNDf1gzaWcFt7sDnruUYyk0kcDvRxj8cEyH?=
+ =?iso-8859-1?Q?dl056A08w5N96DOdr3hR4/+SJXE1v1EgbPtYGwgwe/a/LJmgoJ2qjImx/u?=
+ =?iso-8859-1?Q?2/sHhvHz5Lz5pYWwrJCwqw4EpJLIFtGqva2cKXyE9zGSoG2cs6vdHOwJqx?=
+ =?iso-8859-1?Q?C8CtTRmBeuvX3gRgC3tJfx9le9dSCy1Yv45WV8SEWckEatWEvs0P9FDZW7?=
+ =?iso-8859-1?Q?RRLJb374g3bWWzvo+4ooqcj9z8dulQGTNPVOYZmMuTwlzQ5MqhN0hftPlp?=
+ =?iso-8859-1?Q?jU2TB7QyFP/pVMUxO0MW1vIfj6MLd/c5PxF9lFq9Xwj0EJka9B9JiXYxxD?=
+ =?iso-8859-1?Q?hzlbtxAwbs8HL9++5N/KgE7aNIknF/DArTqNn7FTFcgAEP3rezujgrpv8x?=
+ =?iso-8859-1?Q?3cxKc1lcp3/H2KdfEHOvJkHIndugO2ITqRYklnML77usO80CmvL/6F0qN7?=
+ =?iso-8859-1?Q?a7+ILimQeKN3iVRwPGfqRMSAVk4fnW58fkg/tw2U5Rxvmz3uIFPFkttodJ?=
+ =?iso-8859-1?Q?umRJnDdDgGkmVrEl1K2vgjwT63us57Ul5WTBQASbdSw4GEbw6GVfQW395/?=
+ =?iso-8859-1?Q?YVBkGrFlG1t4TX15t47sQ03fChqgZPUBq1zAucdIaZb3ETSGq6ogWIJUNh?=
+ =?iso-8859-1?Q?nUPwejnH1dZGkdGZObKA8iEwE5wd6hjOx2u6XcgCUyklIcZpw+yATq805d?=
+ =?iso-8859-1?Q?J81SnyCFT+I03CwU4HwTQx+//hG3qrgQxb+bACJEYMnGEbJg26KlYUOwNe?=
+ =?iso-8859-1?Q?/zob1l1afsCg0s4TW/YM6DQqalaVfdGmZGIsuqP8zad+5Z4yRhqneK++d1?=
+ =?iso-8859-1?Q?LmKGUdSi3FFdYTR4Up4QdpmGMHcNiHUMlXqztzjO0aR+kOTKrSErTyIG4G?=
+ =?iso-8859-1?Q?9pqOs783JBX93jYlkAI54EYzbr+Ano1zDRwE/UJijYTGrGNl0Uv6dTLYUD?=
+ =?iso-8859-1?Q?NfbUuPHEhMSfd2Cyg4MB6kWs9jxxsvN9pJWDhe+r/kIfH7qko2JWnLY6nF?=
+ =?iso-8859-1?Q?Xco7K7TOsQ=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.19;
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72a7f2a8-ca12-4633-6a59-08de445591a8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Dec 2025 08:05:43.9606 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 44A6iJ8q6FeRiwZx3oSoqAb+8KR0GJQ9dTE67ZN9SrcAoyC6ED4hRoPLo34HoovcwPr02+V2wc+Ap0VvtH9H+QYQQCbbBRbnTdO99Yjc5uI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8381
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.13;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -87,148 +210,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When doing dirty tracking or calculating dirty tracking range, readonly
-regions can be bypassed, because corresponding DMA mappings are readonly
-and never become dirty.
+Hi C=E9dric,
 
-This can optimize dirty tracking a bit for passthrough device.
+>-----Original Message-----
+>From: C=E9dric Le Goater <clg@redhat.com>
+>Subject: Re: [PATCH v6 0/9] vfio: relax the vIOMMU check
+>
+>Zhenzhong,
+>
+>On 12/18/25 07:26, Zhenzhong Duan wrote:
+>> Hi
+>>
+>> This series relax the vIOMMU check and allows live migration with vIOMMU
+>> without VFs using device dirty tracking. It's rewritten based on first 4
+>> patches of [1] from Joao.
+>>
+>> Currently what block us is the lack of dirty bitmap query with iommufd
+>> before unmap. By adding that query and handle some corner case we can
+>> relax the check.
+>>
+>> Based on vfio-next branch:
+>>
+>> patch1-2: add dirty bitmap query with iommufd
+>> patch3:   a ranaming cleanup
+>> patch4-5: unmap_bitmap optimization
+>> patch6-7: fixes to avoid losing dirty pages
+>> patch8:   add a blocker if VM memory is really quite large for
+>unmap_bitmap
+>> patch9:   relax vIOMMU check
+>>
+>> Qemu code can be found at [2], it's based on vfio-next + base nesting se=
+ries.
+>>
+>> We tested VM live migration (running QAT workload in VM) with QAT device
+>> passthrough, below matrix configs with guest config 'iommu=3Dpt' and
+>'iommu=3Dnopt':
+>> 1.Scalable mode vIOMMU + IOMMUFD cdev mode
+>> 2.Scalable mode vIOMMU + legacy VFIO mode
+>> 3.legacy mode vIOMMU + IOMMUFD cdev mode
+>> 4.legacy mode vIOMMU + legacy VFIO mode
+>>
+>> The QAT workload is a user level app that utilizes VFIO to control QAT
+>device.
+>
+>
+>FYI,
+>
+>There is a conflict with :
+>
+>   [PATCH v9 00/19] intel_iommu: Enable first stage translation for
+>passthrough device
+>
+>which one should come first ?
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/vfio/listener.c   | 48 ++++++++++++++++++++++++++++++++++----------
- hw/vfio/trace-events |  1 +
- 2 files changed, 38 insertions(+), 11 deletions(-)
+The order is as below following your suggestion at [1]:
 
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index 35675e0ed7..ee3ed52428 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -76,8 +76,13 @@ static bool vfio_log_sync_needed(const VFIOContainer *bcontainer)
-     return true;
- }
- 
--static bool vfio_listener_skipped_section(MemoryRegionSection *section)
-+static bool vfio_listener_skipped_section(MemoryRegionSection *section,
-+                                          bool bypass_ro)
- {
-+    if (bypass_ro && section->readonly) {
-+        return true;
-+    }
-+
-     return (!memory_region_is_ram(section->mr) &&
-             !memory_region_is_iommu(section->mr)) ||
-            memory_region_is_protected(section->mr) ||
-@@ -368,9 +373,9 @@ static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
- }
- 
- static bool vfio_listener_valid_section(MemoryRegionSection *section,
--                                        const char *name)
-+                                        bool bypass_ro, const char *name)
- {
--    if (vfio_listener_skipped_section(section)) {
-+    if (vfio_listener_skipped_section(section, bypass_ro)) {
-         trace_vfio_listener_region_skip(name,
-                 section->offset_within_address_space,
-                 section->offset_within_address_space +
-@@ -497,7 +502,7 @@ void vfio_container_region_add(VFIOContainer *bcontainer,
-     int ret;
-     Error *err = NULL;
- 
--    if (!vfio_listener_valid_section(section, "region_add")) {
-+    if (!vfio_listener_valid_section(section, false, "region_add")) {
-         return;
-     }
- 
-@@ -663,7 +668,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
-     int ret;
-     bool try_unmap = true;
- 
--    if (!vfio_listener_valid_section(section, "region_del")) {
-+    if (!vfio_listener_valid_section(section, false, "region_del")) {
-         return;
-     }
- 
-@@ -722,9 +727,10 @@ static void vfio_listener_region_del(MemoryListener *listener,
-         }
- 
-         /*
--         * Fake an IOTLB entry for identity mapping which is needed by dirty
--         * tracking when switch out of PT domain. In fact, in unmap_bitmap,
--         * only translated_addr field is used to set dirty bitmap.
-+         * Fake an IOTLB entry for writable identity mapping which is needed
-+         * by dirty tracking when switch out of PT domain. In fact, in
-+         * unmap_bitmap, only translated_addr field is used to set dirty
-+         * bitmap.
-          *
-          * Note: When switch into PT domain from DMA domain, the whole IOMMU
-          * MR is deleted without iotlb, before that happen, we depend on
-@@ -733,7 +739,8 @@ static void vfio_listener_region_del(MemoryListener *listener,
-          * it is triggered during switching to block domain because vtd does
-          * not support direct switching from DMA to PT domain.
-          */
--        if (global_dirty_tracking && memory_region_is_ram(section->mr)) {
-+        if (global_dirty_tracking && memory_region_is_ram(section->mr) &&
-+            !section->readonly) {
-             entry.iova = iova;
-             entry.translated_addr = iova;
-             iotlb = &entry;
-@@ -841,7 +848,8 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
-         container_of(listener, VFIODirtyRangesListener, listener);
-     hwaddr iova, end;
- 
--    if (!vfio_listener_valid_section(section, "tracking_update") ||
-+    /* Bypass readonly section as it never becomes dirty */
-+    if (!vfio_listener_valid_section(section, true, "tracking_update") ||
-         !vfio_get_section_iova_range(dirty->bcontainer, section,
-                                      &iova, &end, NULL)) {
-         return;
-@@ -1100,6 +1108,19 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
-     if (!mr) {
-         goto out_unlock;
-     }
-+
-+    /*
-+     * The mapping is readonly when either it's a readonly mapping in guest
-+     * or mapped target is readonly, bypass it for dirty tracking as it
-+     * never becomes dirty.
-+     */
-+    if (!(iotlb->perm & IOMMU_WO) || mr->readonly) {
-+        trace_vfio_iommu_map_dirty_notify_skip_ro(iova,
-+                                                  iova + iotlb->addr_mask);
-+        rcu_read_unlock();
-+        return;
-+    }
-+
-     translated_addr = memory_region_get_ram_addr(mr) + xlat;
- 
-     ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
-@@ -1235,7 +1256,12 @@ static void vfio_listener_log_sync(MemoryListener *listener,
-     int ret;
-     Error *local_err = NULL;
- 
--    if (vfio_listener_skipped_section(section)) {
-+    /*
-+     * Bypass readonly section as it never becomes dirty, iommu memory section
-+     * is RW and never bypassed. The readonly mappings in iommu MR are bypassed
-+     * in vfio_iommu_map_dirty_notify().
-+     */
-+    if (vfio_listener_skipped_section(section, true)) {
-         return;
-     }
- 
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 3c62bab764..180e3d526b 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -103,6 +103,7 @@ vfio_listener_region_del(uint64_t start, uint64_t end) "region_del 0x%"PRIx64" -
- vfio_device_dirty_tracking_update(uint64_t start, uint64_t end, uint64_t min, uint64_t max) "section 0x%"PRIx64" - 0x%"PRIx64" -> update [0x%"PRIx64" - 0x%"PRIx64"]"
- vfio_device_dirty_tracking_start(int nr_ranges, uint64_t min32, uint64_t max32, uint64_t min64, uint64_t max64, uint64_t minpci, uint64_t maxpci) "nr_ranges %d 32:[0x%"PRIx64" - 0x%"PRIx64"], 64:[0x%"PRIx64" - 0x%"PRIx64"], pci64:[0x%"PRIx64" - 0x%"PRIx64"]"
- vfio_iommu_map_dirty_notify(uint64_t iova_start, uint64_t iova_end) "iommu dirty @ 0x%"PRIx64" - 0x%"PRIx64
-+vfio_iommu_map_dirty_notify_skip_ro(uint64_t iova_start, uint64_t iova_end) "iommu dirty @ 0x%"PRIx64" - 0x%"PRIx64
- 
- # container.c
- vfio_container_query_dirty_bitmap(uint64_t iova, uint64_t size, uint64_t backend_flag, uint64_t bitmap_size, uint64_t translated_addr, uint64_t dirty_pages) "iova=0x%"PRIx64" size=0x%"PRIx64" backend_flag=0x%"PRIx64" bitmap_size=0x%"PRIx64" gpa=0x%"PRIx64" dirty_pages=%"PRIu64
--- 
-2.47.1
+[PATCH v9 00/19] intel_iommu: Enable first stage translation for passthroug=
+h device
+[PATCH v6 0/9] vfio: relax the vIOMMU check
+[PATCH v9 0/4] Implement ERRATA_772415 quirk for VTD
 
+[1] https://lore.kernel.org/qemu-devel/bbc8412b-25c3-4c95-9fde-a1c9c29b54ce=
+@redhat.com/
+
+Thanks
+Zhenzhong
 
