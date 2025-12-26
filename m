@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DEBEE8FDBE
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 21:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC50E8FDBA
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 22:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZFkS-0002tm-5P; Fri, 26 Dec 2025 16:53:24 -0500
+	id 1vZGYj-0003om-AT; Fri, 26 Dec 2025 17:45:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vZFkQ-0002tH-1C
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 16:53:22 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZGYf-0003nb-2t
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 17:45:19 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vZFkO-0001q1-HN
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 16:53:21 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2a0833b5aeeso101569255ad.1
- for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 13:53:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZGYd-000572-DT
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 17:45:16 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4775ae77516so72069175e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 14:45:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766785998; x=1767390798; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wu9p1omgNkyltOVs7Gu6sa48lMbFXukYjvdOA+PYK7c=;
- b=NgDBwbr50Rq52f3uNummxuglz9AvBDf16LAYfLKUqdN6ZqYwBHJlmE282Xya1ot8vB
- MXMPLIYxx+pi6wTpDi7bEy+cgOs4MIyU1NeNjzGb9r11qQowPIHJAWW8JUYIpgEN9jt/
- sEig0tHdR4CtOjtF9G7qfEF8l19oOUH2Jvzf/5wpjEdnG+8eT7+ez7qU7hYhn1ixBaVk
- TnmiCe98JgEmQUkrM8NT+QttjZJme5osWumPjjK4b2PPMb7r4ec7wEpAiCrCok8efrF5
- oWsCDYzMWi+rg9lOb2qfczLOj7FY99FjU6Bfcyz/vTDMMJ22I0C7vHqYwdn4CYJbkAEw
- z2Aw==
+ d=linaro.org; s=google; t=1766789113; x=1767393913; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+1ZrpH1Qd4eaaZUqwHF2Qx8uvchxCk6mcwGTUh6GbcU=;
+ b=WdHjdST1FXHl7IXAC1ucz8GJ5R34r8bsU8E0j7RBmBsxCdO8TvWHTcWRpwFHAvTtnH
+ c0nW67eCa/yiwqzrNnPUDffDtmuSG3Ijgv521N5L3SHDAkRy1YzhAoHtXyNdEef7IRP3
+ ZjRMu3KPu5t5p17W4JWz6YSTylv1+LMR32oPoCJ4akz9VjnL+1+eJndQ6rk802WmX4iF
+ /KKZ6R9wD9a2cyyae4//vZYmUii3HO7BcwHiysDz1wzi8ITG1kse0lIDoY0yoj946ayd
+ WT8LzSNztX7oHHHpiOr6RV4MBn+UdqO3umoqukMc5YzTsYcSV92W2EcS0KiwqCH25kzu
+ qM/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766785998; x=1767390798;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1766789113; x=1767393913;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wu9p1omgNkyltOVs7Gu6sa48lMbFXukYjvdOA+PYK7c=;
- b=MCIZMf8Hv4H1SYRYl54SyoYttgXFhXc/hEI10MdhpfLlaW3GWKtiev1pxiw+FP/xjw
- bNQB25LiMWjq0uoBHSbF/4M4lXfZXXlcTGTg3+RwXEnICuZKYwu73XbkIs5cZq0L+FA4
- sP/tYT/xaX6OoBjn7aheUpTNWBW4Wl58k8OQqrET9T34U94QwnJlfbiZm1BcTehkeDOz
- RqnBE7CvzDkS/N/fZ18Y6e2hl2213kFzHsnVhDZBnpMSVGW2KmkbQUE/QwvzgMVVKW6/
- RdZvI4qIFud/4Iy7+ZslwIGwNZs6tANKOD9/AQK3td2X4Vo685Jn5lqz+cfxNLJvP9x0
- xgug==
-X-Gm-Message-State: AOJu0YzAsNAFQutUQ26PSppLgxKCbxBHvwxOJitafR/lRNsZrHz76XX5
- tVDfZbJCVro2e4KZMrVZLf++d4QPNqEut1+Z+UwjIQxkQ7WHUsYnJW2iRwd3aF8CmWRHwr4KaMo
- 6dOqDXwI=
-X-Gm-Gg: AY/fxX7//XvBiH9Azk1re16nskSjNrI1ueiNdZ3XnZeaP/UkETp4lU3fymL29p3+dHz
- I1ekJky/skekOOJ5OTCYbxW+vXzkCyeGWZ4y6nBtXP0xjLUIjiwQKjiyWb+H0MCHYX2qs5ioBaz
- yZdc7kk+eN7sMy37sqISIEvAZGHgz9x7NBAT3/VPAKkzVQKNCMt213klNy3PyO5VrywUcmmn/IK
- qxuM5pgweINOrwYREa7vWjvWeGvcek/kFeyTHh08jheQufsGhtPaTTJx0DYvFjdliNPP8r1drdN
- IxmY85LYQ3hA09OHWxCxA5ZNv8XQfY76toZr9S0wl/GNOJkdTPTdudjNGVtAhrP84aREU3OPXm7
- FmiGzqScvXO+fjNwWBixEWg5GeW8mBudBzfQwoqig58lmiuDqA1qavuDLs7z2jKfaBS5znV+tT1
- OjUog9mNyls2UHhymeJEQuN4C1CwnLwj/1onGSlyWQnIwwD3vPXdATYjlZW/A19KUYzRH/E8nj
-X-Google-Smtp-Source: AGHT+IFeof7hfWo7/LDacNEKKMdwX7bO3adFSeBz7Bsp5fb7QxW3ziBqBfkqByOLETyPvAZYJtwe4g==
-X-Received: by 2002:a17:902:d507:b0:2a0:b06d:1585 with SMTP id
- d9443c01a7336-2a2f2836801mr269583305ad.34.1766785998450; 
- Fri, 26 Dec 2025 13:53:18 -0800 (PST)
-Received: from ?IPV6:2001:8003:c017:b900:974c:a93e:48b7:5aed?
- ([2001:8003:c017:b900:974c:a93e:48b7:5aed])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3d5d407sm211266305ad.72.2025.12.26.13.53.17
- for <qemu-devel@nongnu.org>
+ bh=+1ZrpH1Qd4eaaZUqwHF2Qx8uvchxCk6mcwGTUh6GbcU=;
+ b=a6C7W6x1sfcopkEFk3nhjiR9idTMVARgLpQjjcVp9tq4axl2D7Egvg18LGrMURJ6kP
+ wi0iMr4dmpQZIHTQcPRblelsa3EMrheqP+50KqzunFsd9Xym5yWTQcT1vrWYkgMtJ9YW
+ 5q7xeByRJhRwOZrXOQewsHD0RYwdxwGuoUr1JQOmFib+/SKa+SEopasdZJ0KVygfdRId
+ EZhqvxbbss6w+rxIWAOOjZZICipGDYgfI08cx0uvfvphzNOaRI8yP6fS9a0n8M8WpTeI
+ 2ExQpgBNnzqmaO3JcIAkmhhCARG/DxUHBGRYFDMa8JHBwaK4QtPW1w8Pv28yIQ+XCLYN
+ fRSg==
+X-Gm-Message-State: AOJu0YyE53wwJo3G8zukRjRexNqylQcRmGvQ/Cu9klH8zBHk440uizBi
+ X59kOoSKlfDOlXVtWH9Vup5Dr8yJ2EY5GnVQn8WZ1PeTVUeSGT+o+pi6q115+oCdbU0=
+X-Gm-Gg: AY/fxX6a0tRJ5mRyydMg5Io1s9XkBxlKMSb4gvkY0tSG/xYETzc+j1TnexENEV12W1i
+ LFO/PAmGvkdJLrz36eGDq/GUFlzWqohF+VofWYCEx9jkbQMHtH+DajpxWfRPISa290PlTCdruBf
+ fo71X+DecFLCBhV36nMdxER3kCt+Z0pkOjjnSl2JbAUJT6wgGP9pBTrsxHTVh+Za2IMoFLACiiX
+ 8VY+9bKkgo1jTnWXl/49M3K8M5pOpkDija0DS44fNgVst9XGasnRTpOcQ4JHvRE8mpNhgbC54vZ
+ qx+dSepOiDENTRxpuIpJ9C19+dqoRhUs9lbLsaxW2RuXjy6P2Fx4DyS7o9aRceZ6LXcgcQw8b0/
+ sCQ5n9upYyzcBfmv5LjJ+2wJdT74j+hXTnQ/fNhwD8GryddKQ665pOEy1ZHFP1X7K0XaMnwkcOi
+ iz1O6sCdaA17NCxmqiE7rRwUQftzmEwuSi84hORLma2qXqiFNvAh/4/Bj/VaCnx44C40qwP4AU
+X-Google-Smtp-Source: AGHT+IGdYt2ecIcHs8+aoYjOXznpt9W5u3YM1q3S96kC+Pj+r6zfKZ4hyNYcAHLoH52Z2e5hWfq6yg==
+X-Received: by 2002:a05:600c:4e42:b0:47b:de05:aa28 with SMTP id
+ 5b1f17b1804b1-47d1956eb65mr212684195e9.2.1766789112605; 
+ Fri, 26 Dec 2025 14:45:12 -0800 (PST)
+Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
+ [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47be279c637sm444421425e9.11.2025.12.26.14.45.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Dec 2025 13:53:18 -0800 (PST)
-Message-ID: <631ab629-6dbc-42da-ac71-6d8f9480cb63@linaro.org>
-Date: Sat, 27 Dec 2025 08:53:13 +1100
+ Fri, 26 Dec 2025 14:45:12 -0800 (PST)
+Message-ID: <1c56c2d4-d472-4ec7-b3f2-22c7b4e935fb@linaro.org>
+Date: Fri, 26 Dec 2025 23:45:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: add support for MAP_32BIT
-To: qemu-devel@nongnu.org
-References: <20251226203147.1964597-1-jean.christian.cirstea@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC v8 1/7] hw/arm/smmuv3: Extract common definitions to
+ smmuv3-common.h
+To: Tao Tang <tangtao1634@phytium.com.cn>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20251224034647.2596434-1-tangtao1634@phytium.com.cn>
+ <20251224034647.2596434-2-tangtao1634@phytium.com.cn>
 Content-Language: en-US
-In-Reply-To: <20251226203147.1964597-1-jean.christian.cirstea@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251224034647.2596434-2-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,28 +112,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/27/25 07:31, Jean-Christian CÎRSTEA wrote:
-> x86_64 defines MAP_32BIT which forces `mmap()` to return a 32-bit
-> address. This commit adds support for this flag if supported by the
-> host.
+On 24/12/25 04:46, Tao Tang wrote:
+> Move register definitions, command enums, and Stream Table Entry (STE) /
+> Context Descriptor (CD) structure definitions from the internal header
+> hw/arm/smmuv3-internal.h to a new common header
+> include/hw/arm/smmuv3-common.h.
 > 
-> Signed-off-by: Jean-Christian CÎRSTEA<jean.christian.cirstea@gmail.com>
+> This allows other components, such as generic SMMUv3 tests or test devices,
+> to utilize these definitions without including the specific SMMUv3 device
+> internal state.
+> 
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   include/user/abitypes.h         |  2 ++
->   include/user/thunk.h            |  3 ++
->   linux-user/strace.c             | 26 ++++++++++++++++-
->   linux-user/strace.list          |  4 +--
->   linux-user/syscall.c            | 50 ++++++++++++++++-----------------
->   linux-user/x86_64/target_mman.h |  3 ++
->   6 files changed, 59 insertions(+), 29 deletions(-)
-
-You can't just pass along MAP_32BIT to the host, even if it does support it.  You need to 
-take guest_base into account, which may well place the low 4GB of the guest space well 
-above the low 4GB of the host address space.
-
-Emulating this requires full control of the guest address space, which we don't usually 
-do.  Though, see reserved_va.
+>   hw/arm/smmuv3-internal.h       | 255 +------------------------------
+>   include/hw/arm/smmuv3-common.h | 268 +++++++++++++++++++++++++++++++++
+>   2 files changed, 269 insertions(+), 254 deletions(-)
+>   create mode 100644 include/hw/arm/smmuv3-common.h
 
 
-r~
+> --- /dev/null
+> +++ b/include/hw/arm/smmuv3-common.h
+> @@ -0,0 +1,268 @@
+> +/*
+> + * ARM SMMUv3 support - Common API
+> + *
+> + * Copyright (C) 2014-2016 Broadcom Corporation
+> + * Copyright (c) 2017 Red Hat, Inc.
+> + * Written by Prem Mallappa, Eric Auger
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_ARM_SMMUV3_COMMON_H
+> +#define HW_ARM_SMMUV3_COMMON_H
+> +
+> +/* Configuration Data */
+> +
+> +/* STE Level 1 Descriptor */
+> +typedef struct STEDesc {
+> +    uint32_t word[2];
+> +} STEDesc;
+> +
+> +/* CD Level 1 Descriptor */
+> +typedef struct CDDesc {
+> +    uint32_t word[2];
+> +} CDDesc;
+> +
+> +/* Stream Table Entry(STE) */
+> +typedef struct STE {
+> +    uint32_t word[16];
+> +} STE;
+> +
+> +/* Context Descriptor(CD) */
+> +typedef struct CD {
+> +    uint32_t word[16];
+> +} CD;
+Pre-existing: should these be QEMU_PACKED?
 
