@@ -4,69 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B138DE8FDA5
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 08:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A7AE8FDA7
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 11:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZ3FC-0008On-Nu; Fri, 26 Dec 2025 03:32:18 -0500
+	id 1vZ62l-0004Nx-2r; Fri, 26 Dec 2025 06:31:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vZ3FB-0008Oa-7g
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 03:32:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vZ3F9-0002TB-Rt
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 03:32:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766737933;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=mcQvO6KRWnJJS3KyTDoVuXbimhCHRaOCEYqOs8v+at4=;
- b=Yo/vfcRWWxrHfly8YE2BAVDd4e62xiooojGRBX36sT857DsI1VQoZ6kciUArQLDrO0EhQV
- NYY+inHISy+kht98eY+6oNG6Kypx5x7An3xV+YY4Pfp1rKLUciZzVL/Cr9pbYUVl/xIzWU
- NN0y7jYtcTkyG0/LPiYaplg011eyx9w=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-1EUHXDlYP-KNkSPjg69xfg-1; Fri,
- 26 Dec 2025 03:32:10 -0500
-X-MC-Unique: 1EUHXDlYP-KNkSPjg69xfg-1
-X-Mimecast-MFC-AGG-ID: 1EUHXDlYP-KNkSPjg69xfg_1766737930
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E69E1195608F; Fri, 26 Dec 2025 08:32:09 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.60])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E459519560A7; Fri, 26 Dec 2025 08:32:08 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Bulekov <alxndr@bu.edu>, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] MAINTAINERS: remove old email for Bandan Das
-Date: Fri, 26 Dec 2025 09:32:06 +0100
-Message-ID: <20251226083207.506850-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ62g-0004Ng-B4
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:31:37 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ62L-0001yD-OC
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:31:16 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-477b5e0323bso40303245e9.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 03:31:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766748671; x=1767353471; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zaC8E/02I4AMJN2PwnFJsoa19sLuEKguCJQvCsJwGD0=;
+ b=Ra8wy92vajTCn8NwTv55A29XaidQS9Eo8L8xwKT7+8R2AVY6L2jGRXEMY61Jp+86kk
+ BM2Nik4Oyx6Lp9Pl7TW/Mk2TVL/SFDhgGtwaNCgiyJM0wKslfzLci6wBBNV7ZROTgV2f
+ AJv3zc0imCaqnFhY6RA5yFg/NGSTgee5lJ8HbEHERcM2333KhA4NIPpJDTAK97+6TJph
+ tlLTgDjTVZCkUKmKGjNEkGVVsxStT2mTouOTOGBtjfIBZYdMLQqJl3h1hG30Nkp4x69v
+ Pu/hA9Ce4hb9LfEhqQ4tC/OV4iyVqsX10mrNiWC9xEPYWG/nNdYDUsQK6iSV11A7d8rQ
+ O0Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766748671; x=1767353471;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zaC8E/02I4AMJN2PwnFJsoa19sLuEKguCJQvCsJwGD0=;
+ b=eeOFqUp5wGLpj/cLolpa6N2MYOTvCdZjWMFCLxWgxm5TMlvwiH7no2MRqRQvAR+2Yy
+ v19h82hMluGO80lIEOnKXmP9CK/iYkYaXysLvgyDIuSfn0h+xiB8RLkoRFX4KqpQffOU
+ v6EHaiKRhk2dGr4mlIiC15einhdXIIanBOGg13FCipy8IbvNr4PvV0gEuZkIPMO/xPlN
+ +dCydr8qHK2pyLhdum5vsvkzCqkszzUg4Gjmq0mtf7LkyYxBvGykSRRlT9yEZpvIPpua
+ tVbQ+SQXS0cHqgDwimLWkDAnQsXWYhy5EfX+G7G974gLyKcVxdAEaM6umHgdFVT4wdaC
+ g/qw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpPcJnaNa+ZWSziFX+tz1X+a8aKLmyHqmEtyA8a6wivRYe/dqQSpDfM5K+Pv5ssMpUgX9CkTriD+p6@nongnu.org
+X-Gm-Message-State: AOJu0YyKjWrfzOKvGJkfsYlyGZDFRDHaJ/mJgYJ0tiC8P/wNlDaqz0L1
+ 3V8350R5LFoyFTbYX2n6JrJNuJF3F96/Fc5LC+cFDZ9/gJ/NO8+U8Qghz1Sv0Uu/Kxo=
+X-Gm-Gg: AY/fxX7PbwS0x1G98iUS+NWWsGJyX0Zk4aGkrGMqXzhW0j/d7/1QYAX8t1Cpo57slQC
+ OOiNnGBsZcaChFY2Jh/JC0HCuKVKu8oRTUe39qa4ngJfcnq7GRJtgWbmIbCV9bFP7lQg3DmUr4p
+ x7fU/PYe1NxBZYqPEGaZN+27xmyDPf+p6NMZtkx9hriLYR7wbU+YM7DbakMiECIMip2wWOWTrSY
+ gzXIw6fJR7A7rthuulSmqpJI8KqK1jLTCPiHIKuLLGoP6e/wccjGQe+/OYfhmJI6aavs+SwTI8x
+ mEpd+UAU/NKlplnGpJRZIrY9CnJF3SPw+PNMtdAHMhIO9htyoAiPdcqGwfHqzyM/XPY/9Qv+J2u
+ 8OwMDqzm2ApYhsQWtA/IX+KXySFOMQVvNuktFH3o7k/T+Tzpp+4N3nuUiBwW4tPv8ICVVh+RH5C
+ qCuwdGmOWlE4gMNxJhS/tCwia11hghQ+PH66ITm3sslQlxwrx7YZOqBI6DWN1ecQ==
+X-Google-Smtp-Source: AGHT+IGmALyOvBNag9TqNMgn1V9xwABCBuf09gwFJpHmjNNDJIu5m+epK+m7gj0Id0VP0WLrPGNMQA==
+X-Received: by 2002:a5d:5f46:0:b0:425:86da:325f with SMTP id
+ ffacd0b85a97d-4324e4379aemr27859344f8f.27.1766748671245; 
+ Fri, 26 Dec 2025 03:31:11 -0800 (PST)
+Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
+ [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324eab257asm45711077f8f.38.2025.12.26.03.31.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Dec 2025 03:31:10 -0800 (PST)
+Message-ID: <fdb62b59-00bc-42ef-980c-a388b1791ed0@linaro.org>
+Date: Fri, 26 Dec 2025 12:31:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] memory: Factor out more common ram region
+ initialization
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <cover.1766525089.git.balaton@eik.bme.hu>
+ <6a6918fb8b1e1f207485ea25fd8bc9161fe5c32b.1766525089.git.balaton@eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <6a6918fb8b1e1f207485ea25fd8bc9161fe5c32b.1766525089.git.balaton@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,29 +107,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bandan recently left Red Hat and emails to his old address now result in
-bounce messages. I contacted Bandan and he asked me to remove his old
-address on his behalf.
+On 23/12/25 22:49, BALATON Zoltan wrote:
+> Introduce internal memory_region_do_init_ram_ptr() function to remove
+> duplicated code from different memory_region_init_ram_*ptr functions.
+> 
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   system/memory.c | 17 ++++++++++-------
+>   1 file changed, 10 insertions(+), 7 deletions(-)
 
-Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 63e9ba521b..d8f9db2697 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3542,7 +3542,6 @@ X: tests/qtest/migration-*
- Device Fuzzing
- M: Alexander Bulekov <alxndr@bu.edu>
- R: Paolo Bonzini <pbonzini@redhat.com>
--R: Bandan Das <bsd@redhat.com>
- R: Stefan Hajnoczi <stefanha@redhat.com>
- R: Fabiano Rosas <farosas@suse.de>
- R: Darren Kenny <darren.kenny@oracle.com> 
--- 
-2.52.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
