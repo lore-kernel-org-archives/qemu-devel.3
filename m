@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5BFE8FDA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 11:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6326AE8FDA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 11:38:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZ645-0005R3-1k; Fri, 26 Dec 2025 06:33:01 -0500
+	id 1vZ68d-0006Pa-Ti; Fri, 26 Dec 2025 06:37:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ643-0005QS-Pp
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:32:59 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ68c-0006Ok-32
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:37:42 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ642-00023G-86
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:32:59 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-42fb2314f52so3999027f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 03:32:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZ68a-0002Q6-BN
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 06:37:41 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-47bdbc90dcaso45315895e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 03:37:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766748777; x=1767353577; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766749058; x=1767353858; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BZHBXK4X23LOfjikstAJWMHoGRgVA2k2Qi1r6MxO49o=;
- b=C8LUsfYB+Z8pbpJwYndh0miPkD6dRN2K7VDUj9HYDcyGaBiCzfIatjxndGChBAskyH
- iwInOTi1CuDeBdTSU5SfJ+2Kd5m40T/MltOJxo8L3eGJbpvOG+cTI13o2GUPX4BMwkZz
- x5tEQNOITE+kyZdCHpLfShFGNP2+M1KMEAtll6I0Qn+yv7s6FWQoG3AglSke3V8tir9M
- cE4hIdCLzdn7j8VT8RR3/UGjY4c7aXfRvcM8ytLkGtGS3OafSnOmNrqhPXXsboDLpiA1
- JNLEJdIQElSmV7gtnmNx2l3/x/6pN16yY5t1wRd83lJ8wLZC2KdNmUWaPBgygX3Buw5e
- FTAg==
+ bh=yiBGZCG5mTJoae0Mk4duAMkJ9xuDW3gIF4Zs7lMmn64=;
+ b=MDzjUOzYqGrC5wyg7z4livcghXJr9+hgMxFad2fMyzQZtOjg4iTyOKcc+XRfq6qNhb
+ jW0F+3fiYyu4iSz1HU7vssHGd3m4yc7j/8Kdjkqc750lCtYMn6P3FlvU6sVfF1XfdAWv
+ uUrbo2hWbJii0lh1rbmtAGmFcnReit7cZihR6G9YHxEYvlJC7t4u/79wgq7RAb2/Q9oH
+ Kd1GXLu4+4UALBfE+N8VgcKkG91KHZWO0nqq/BibzymfvE9IqSyzrxKUkb+d6rgBqPtA
+ A8hgvYvwqy83niY1Zdc0kVx/fCqP7sBTjz8NL9ufEwpVe/3r6EYEWJhMIOz+wIRRioZJ
+ LC0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766748777; x=1767353577;
+ d=1e100.net; s=20230601; t=1766749058; x=1767353858;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BZHBXK4X23LOfjikstAJWMHoGRgVA2k2Qi1r6MxO49o=;
- b=Ab+tf3RFPiaCpE7qaxEqyfHOSVxHRH09uxdqyfn2o0HoAEKXIDhKbN4zjH22tdghoi
- esCcPSUUH7jfV7Yg124JiilEgruZHpovH2DNt/YROPTPQidu+2jdOW+4RTeYh8o5XSpg
- RU6V8jg1Qi3QXDukcueNG4PUev9hbvBcc1H+HebulK7CFfYoL4Sko1MrpTUcYNsoFXV9
- ZHuNOVJ0Pz1bUVcppvRa23h0bStnVOW2HNC4IA9xW+vCsuB0yAMfpKYBQJN92cgViJyg
- +wdzV0ZAbkdNQeA5gzS9npYR6brBlJFCZDu4gAfRZP56+uZ4JaFVTChVhvUPcYqb9S63
- d7tQ==
+ bh=yiBGZCG5mTJoae0Mk4duAMkJ9xuDW3gIF4Zs7lMmn64=;
+ b=ubDGFUx5zd8Z9E/ELHEY2U/TiZATeBhzv8T4k38cpuVRKWVzt+piBs44iExEy0VonC
+ LNUD09MQj7OMXpF8XiOcio/yqH7EXprES/2f88boXaQMKJVYVcya8eCDd3MPUxQ5FKwC
+ LoOjNVmh9lL2xRq5BwZkFF64omAAX6p3PgdeyHhPfiIHnxbvEbyXF/hODfsiAiZd74SN
+ QvFQJoU2oKNzXRMK0b8IliCVH/wmir1mnrodHVcGfHTzYKwNZsOTHnaxED5yzTAIXN7W
+ HgeltGw5dDpIAURnEyGUQz2oYaNhGrjEwglmpa4nPeOExrgwt1BVmcTzx1kBxIg4gc2o
+ baRg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVIxioUdtwrIhHA//oQ8fWYHN2ciO8d2K+jWrCI5QEb3kgFhEm+WuUIj5Dt1RguCTUDgBUSrKrvZWpA@nongnu.org
-X-Gm-Message-State: AOJu0YyDxVDSn0msTmkkEaCFYUy2F3BghC5KHvw6oPspG3vDQIkrXo9k
- SRjXO/ho96KQzhiHLf24SoTbiF4sWxUIfOBo47dSLqZb76NvhJOsPdX8HNTySxYt/5s=
-X-Gm-Gg: AY/fxX5fYUJF1n6QZa6JHqa4TpMABPHBXhFzcGxNgCGzGOPmXthouuMKA0LIMuOtWxB
- rAgXVj5jpfB4XmjHvJy/W+a2KN+Pt++pyONP3KpEvk9CMwqXAbah826A2L6YTGheXkrpsl8ca6G
- Sj1TlQtjIajyVYGX9oqFSX78+zCpGlWyGrL4C+7sCNSjTRBUWcKgFgBRo76y+oRvaWk0lSych0o
- ZhNkDwNmBWlMUQAguTIg/aCs18+aTrF0WWwF35JHMUho/p9SqvU1cyY1AqcJrCBoZwgAUvG6m5j
- u7T2UDmgDa7p/ZLOqfTPY3tgNwT9iO7l8rfQytJ4mYIt+stlFw9pmRyjqJXjYWVPslChIw4V+JB
- IiP1U0Hcpfy6JoagMaBiRVp0MEsvAz6Vhh8Wf1wz4RwQ6lhYIIqWXfsI5GmGIoE+lwJKjk33Nf3
- 6XlCDm1ZTnF1qPWUzr0HzF6IY7YLAJ43gMW/xT0UYNoodLj3BMcKP0C7toeqCXWg==
-X-Google-Smtp-Source: AGHT+IE3VcyFnoqKSzexugaZxTMNtVX4ifQu/ix258gpLU0EkrO2TWIXnc0c0hTJXy1Z0AKqjdEW5A==
-X-Received: by 2002:a05:6000:4029:b0:429:cbba:b246 with SMTP id
- ffacd0b85a97d-4324e45d729mr24232036f8f.0.1766748776651; 
- Fri, 26 Dec 2025 03:32:56 -0800 (PST)
+ AJvYcCXbyEhyHcLMtJd13sswv5G6/V2UI9gtkLFLlHFufsoAhdKNzvRpvAn7c2E40I86jRpH/Wlp8A3/3UnU@nongnu.org
+X-Gm-Message-State: AOJu0YyRLmoHmF1LXWgiem7PWVo2+Lvx7tE6qqdvtlWbw2Jh6UGAQXN2
+ 6cKxtBCN45go3ruzkyXzVmoqcVleFmsvriR1Q8+9kSVmWEobUdOcKnvyH+fjKQW7tWnT9kb+vLg
+ kbwkr
+X-Gm-Gg: AY/fxX4W8LuwVliO4LPJeb128Kf0/G52X7PcfW2i2gwX+LQI9lJ023o8AtKfUB4zai4
+ zODsdmd3rfPAInBSgHMrWxj2arTLS27yv9ss2XPpLRcprypGtSnWqWKSXtkGLnn04b8zecLZklP
+ MZ28uwLJ3RxiWvQlRsJFMwCBksGmVa71HdSKalDYRbQvljKlZHCor8LXu1iwh5sVtnmqhFtJl0x
+ jAIIUY84Io2gBpLDAPDDgQk3PDBMihe5eTTfTjTLDRtpMeUHhywAp6muw98PwgECzFzeACr3zvn
+ gARz5X6hqbQEaGOofse6aTIA9kz3gvCE6fav9HZeoQ75rPSdBRxVErlc5rBAp6ix/fkdu/xGdIv
+ 0GtjfH7cpTwz/J0idRd4hGdtZp9Nf66iUPYEbeFVe+Lgn2VhV8hxQZbPqx0WwWhz63Yfj+Zrynz
+ rX3yurLbM11SKS9G/qzj4II798bIScjhKS0DEuaBv5w8oUyprF6OismEhqK6H7mA==
+X-Google-Smtp-Source: AGHT+IEb0TENAiCIRO+QT/Oc/4eF5b/luQ8MC8Px4lC1aBR+MnUr5Kl0wpqBUjEQ1dYtzyg7r1zrGQ==
+X-Received: by 2002:adf:f18c:0:b0:432:8036:4a0e with SMTP id
+ ffacd0b85a97d-43280364b6dmr3235876f8f.35.1766749058527; 
+ Fri, 26 Dec 2025 03:37:38 -0800 (PST)
 Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
  [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43277b82a58sm11620143f8f.6.2025.12.26.03.32.55
+ ffacd0b85a97d-4324eab257asm45736019f8f.38.2025.12.26.03.37.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Dec 2025 03:32:56 -0800 (PST)
-Message-ID: <9d5614ad-f334-4e58-83ac-bd2afd5352b6@linaro.org>
-Date: Fri, 26 Dec 2025 12:32:55 +0100
+ Fri, 26 Dec 2025 03:37:37 -0800 (PST)
+Message-ID: <e7e0807a-1d80-4067-b2b9-7f01e89f34c1@linaro.org>
+Date: Fri, 26 Dec 2025 12:37:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] memory: Add internal memory_region_register_ram
- function
+Subject: Re: [PATCH 0/8] target/loongarch: Use explicit little-endian LD/ST API
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <cover.1766525089.git.balaton@eik.bme.hu>
- <cb3aaafb264b8f85f57549019163ac1728583d1a.1766525089.git.balaton@eik.bme.hu>
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Anton Johansson <anjo@rev.ng>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20251224161456.89707-1-philmd@linaro.org>
+ <cf98f635-b1d9-942e-bdef-be8c260f764d@loongson.cn>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cb3aaafb264b8f85f57549019163ac1728583d1a.1766525089.git.balaton@eik.bme.hu>
+In-Reply-To: <cf98f635-b1d9-942e-bdef-be8c260f764d@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,16 +109,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/12/25 22:50, BALATON Zoltan wrote:
-> Factor out common operation from memory_region_init_{ram,rom}
-> functions to register the region for migration. This avoids
-> duplicating the long comment in several functions.
+On 25/12/25 03:17, Bibo Mao wrote:
 > 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   system/memory.c | 75 +++++++++++++------------------------------------
->   1 file changed, 20 insertions(+), 55 deletions(-)
+> 
+> On 2025/12/25 上午12:14, Philippe Mathieu-Daudé wrote:
+>> LoongArch is little-endian. Use the explicit 'little'
+>> endianness instead of the 'native' one.
+>> Remove some target_ulong uses. Forbid further uses of
+>> legacy APIs.
+>>
+>> tag: https://gitlab.com/philmd/qemu/-/tags/endian_loongarch-v1
+>> CI: https://gitlab.com/philmd/qemu/-/pipelines/2231223066
+>>
+>> Philippe Mathieu-Daudé (8):
+>>    hw/loongarch: Use explicit little-endian LD/ST API
+>>    target/loongarch: Replace target_ulong -> uint64_t for DMW and
+>>      TLBRBADV
+>>    target/loongarch: Use hwaddr type for physical addresses
+>>    target/loongarch: Replace MO_TE -> MO_LE
+>>    target/loongarch: Inline cpu_ldl_code() call in cpu_do_interrupt()
+>>    target/loongarch: Use explicit little-endian LD/ST API
+>>    target/loongarch: Inline translator_ldl()
+>>    configs/targets: Forbid LoongArch to use legacy native endianness APIs
+>>
+>>   configs/targets/loongarch64-linux-user.mak    |  1 +
+>>   configs/targets/loongarch64-softmmu.mak       |  1 +
+>>   hw/loongarch/virt.c                           | 18 ++---
+>>   target/loongarch/cpu_helper.c                 | 12 +--
+>>   target/loongarch/tcg/iocsr_helper.c           | 24 +++---
+>>   target/loongarch/tcg/tcg_cpu.c                |  4 +-
+>>   target/loongarch/tcg/tlb_helper.c             | 10 ++-
+>>   target/loongarch/tcg/translate.c              |  3 +-
+>>   .../tcg/insn_trans/trans_atomic.c.inc         | 80 +++++++++----------
+>>   .../tcg/insn_trans/trans_fmemory.c.inc        | 32 ++++----
+>>   .../tcg/insn_trans/trans_memory.c.inc         | 64 +++++++--------
+>>   .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 ++--
+>>   12 files changed, 136 insertions(+), 129 deletions(-)
+>>
+> Thanks for doing this on LoongArch, this series looks good to me.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks. Low hanging fruit, so better to clean it now (by blocking
+further legacy API uses) than later. These changes makes LoongArch
+closer to be used in heterogenous setup :)
+
+> 
+> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+> 
 
 
