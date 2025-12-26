@@ -4,209 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E97E8FDA1
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 07:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F7DE8FDA0
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 07:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZ2Q3-0005WN-Jr; Fri, 26 Dec 2025 02:39:27 -0500
+	id 1vZ2bG-0006pY-70; Fri, 26 Dec 2025 02:51:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vZ2Px-0005Vg-FX
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 02:39:21 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vZ2Pt-0000xy-Uu
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 02:39:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1766734758; x=1798270758;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=Am4zTHwbcCxEQAAd+1jwgWjhZJ0mH1U5SiZyt6qCJX0=;
- b=eDwPkwmCteHUaHLAqaNDi37WlFr/GKDlwGEKifVvLfjQIJFafWw9DoeZ
- wehA2kYsfcvrJj7fUHJmspFQ7KXC5qw0MllAz93J9hcrYrVWVtN95n2jK
- j8vs0D6RwKo1d8gczptXvvL8c1bV71M9wldIwVfmgzQyvcykNh+4yqfi+
- mcGVd3ZMWtQaTFljeBVDxXlB+vpJqbuSYNcbivDsxHUek9tXFP6jIH8JQ
- ++UjiiK3xhlyFSdlP0DcLorQKbIU91iNpW7loYOAlpmwqvqaCCScxme3j
- JwWi1vgFaiK16ykzIP4XPN1jK0Op9H5za/jvUoQRF7s34SRIHyoNUdkxb g==;
-X-CSE-ConnectionGUID: 8vvphhNiSpqnN6Pg0HJelQ==
-X-CSE-MsgGUID: U8eu0Ns2TRqLEVX14qZBGw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="68482831"
-X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; d="scan'208";a="68482831"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Dec 2025 23:39:12 -0800
-X-CSE-ConnectionGUID: 2uZrSWwLTbWDLggdLN6ePg==
-X-CSE-MsgGUID: N7PUitL1SviQCTjGDcxwPQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; d="scan'208";a="231412205"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Dec 2025 23:39:11 -0800
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Thu, 25 Dec 2025 23:39:11 -0800
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29 via Frontend Transport; Thu, 25 Dec 2025 23:39:11 -0800
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.3) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Thu, 25 Dec 2025 23:39:11 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bJargA3mypsKBe0N792A0xyl6vlFV8BYBW4bwCPaLOLQxjg1R1Z+7P9S1Jd68q7TafXudJf75VHbcKAaNK0FQJon5i25FbtHr9NuOYROI3gv2qcvdkA1VqydxgmDJNM5lxMmNKddDqP1OGUcs8cndtS/8gc/duy9oVaGTDwnqqdn//Gp+b3faqlwrcI+lPxEDta/on52+BlkX9/DlP1aqTZ7praVi4qMeSPo7O9QhTcCiWvdKXq1Z4navxZNBfhlAIfBRwGTN8nKCHnI3DdekPpjz9pGWRqcUHT0KB9NhaVoWlI2aWPYGbWqORd+x1exBcNK23iSVCtGM0Dv/BMQ9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Am4zTHwbcCxEQAAd+1jwgWjhZJ0mH1U5SiZyt6qCJX0=;
- b=hPFOFIfhGVBZ9FWhiSkrnJCloqvSfZ4aVFzbBGUfhTctvur++B+fSecpsh2wjz6t5E6ldVfcBE07F74XVkhw31mFxMU9HWIrtmdRZZ9HE73U3Bb9tVgmwIPEUcEYyDjbDBtOeiwgFs2FXkCOCbP22wR5pOjqZUJEQWOpvqO0BkVszK7QHxlalcalKrNjt1bzx0pN3tEyFqfZaLi13g3tLpgsWA9qTFFR1C/x2e6Q/Ga86GX/M9H30i38hRylfc4amzsgWS+HNypQ11ibC3gdBORQjzF5mDGKd7BPwt4gTZ3+cGgCe9B9H+ZSleTnaT3buobVoU95yxgVCMPBOl73ZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by PH8PR11MB6660.namprd11.prod.outlook.com (2603:10b6:510:1c3::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.11; Fri, 26 Dec
- 2025 07:39:08 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9456.008; Fri, 26 Dec 2025
- 07:39:08 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-CC: "devel@lists.libvirt.org" <devel@lists.libvirt.org>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>, "clg@redhat.com" <clg@redhat.com>, "Michael S .
- Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, "Liu, Yi L"
- <yi.l.liu@intel.com>, =?utf-8?B?Q2zDqW1lbnQgTWF0aGlldS0tRHJpZg==?=
- <clement.mathieu--drif@eviden.com>, QEMU Developers <qemu-devel@nongnu.org>
-Subject: RE: [PATCH 2/3] conf: add support for 'scalable_mode' and
- 'first_stage' attributes to intel IOMMU
-Thread-Topic: [PATCH 2/3] conf: add support for 'scalable_mode' and
- 'first_stage' attributes to intel IOMMU
-Thread-Index: AQHccA47qXi9zJWsN0mX4CQPdSE8gbUnQj8AgAxQ3XA=
-Date: Fri, 26 Dec 2025 07:39:08 +0000
-Message-ID: <IA3PR11MB9136424958A27E048C9CFF0D92B0A@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20251218110449.53658-1-zhenzhong.duan@intel.com>
- <20251218110449.53658-3-zhenzhong.duan@intel.com>
- <aUPk4f8PU1uenVN-@redhat.com>
-In-Reply-To: <aUPk4f8PU1uenVN-@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH8PR11MB6660:EE_
-x-ms-office365-filtering-correlation-id: 9c338456-bc5e-4d5c-6434-08de4451da9b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?TnlvSDhYMUpvMlIyL3htaEdCMEJqa0I3dWptY0xUVGJIQVpidGxFbGliWktJ?=
- =?utf-8?B?Z2JqSWFrVmR4SXB0aEplWUlkS3BhQmtjL1FVN2Y0WkQ1RS9kNUZDZVRYM1hw?=
- =?utf-8?B?MTRiV3dzWVNyc2F3WmhjeTJhdVNlY05KRTl1TVIrNlZvMGd1NVRmNStqdW83?=
- =?utf-8?B?eTJKVTFsZWVjbGVscS96d2VQSk9PQjlyVVFnaTZOUTduYmN0VnAxK0h0WmUz?=
- =?utf-8?B?QjBoMjY1dkNDVkVsUVJJa2M4VGhMVGpHMUwzekZsZW1TNTlDWFdpVjREUUl6?=
- =?utf-8?B?dXdtR0VXZXZnQW1oMkdHM2RDYUREdWU1RWdKL0MxaysveENva2pPelRvNVls?=
- =?utf-8?B?ZU9wY2N5dWxSTUtKSzFrQ00xZ2g1N1g3T1VqOXhRR0lxdHQ0dmVqN2tDZnVN?=
- =?utf-8?B?V2RrTkF0SXZQM0V5OGVWSlFiNXlPNmQ3TS9ZQVp3UlIvL25ocG5ZTVRHS1hQ?=
- =?utf-8?B?YUN0bFRCWEliak9zV285YitYS3cva3lWUEVUblIzUnJ4S1djblR2Nkw3aEsr?=
- =?utf-8?B?cUZDR2ZUb0RzY3hNNC9idC83VFhXOWltQWlKYkdVVlFnU1dYUm5aWEYvcUtN?=
- =?utf-8?B?RmNGNzMyYVVJWkFWYkNaU1E3bG5qZXVmZjh0WFJnSkFYYTBoN042dVhWR3hY?=
- =?utf-8?B?UHNqZVlMS1VNSEI1UGt2SW1lRFpmVElrUDRhTUpZNzliOGxWcDI1S01QQlVq?=
- =?utf-8?B?YkcwR0Z0UGd4MnZHdzZVSDdzQzBvaGZNc2VaWHd6ZHd0Ulh6VFpKRGVwdC9P?=
- =?utf-8?B?UXU3SEFYQUJ2WEtWRE9LYkVWV2pWVGRYaXhKN1hLQWE5eFBkMmFoLzFqUmJ6?=
- =?utf-8?B?ZDhFSU5ySVVFS05nb0VOUmVnS0l1ZFdXcXJQQ0d4eld6dE0xUTNQZ1pIYWF2?=
- =?utf-8?B?VFBiWGtCQnYxanM5clpVYXB0T3hmR1BFSFloZWxIcWxNd29XMGpJRmtnNXlR?=
- =?utf-8?B?YkRyaThIMlRTVFN5b05vTmlTSXFmYkg0bDJDVTBTUVF1TkdLbWZBNHlvV00y?=
- =?utf-8?B?UWJ2MjFqZWlQcFRjRVlwUW9tNHltY0lRenRCQzNXRTJxRzJsZk5OQTY2Y0JJ?=
- =?utf-8?B?Yy9teWR5bUIzNWpaV1hPdThUdjhBdnpSbjVBdm4ySHlQSXhYZkx4cDJGdFFL?=
- =?utf-8?B?KzhqdWJuSWlGMVFPcVRNanYvK3lEUk9sMHJTUEhZbEtKeml0bzAwZEUyMU5r?=
- =?utf-8?B?YVkrRXFMMEduUHZiR2NPUFJKKzVFWkhuRXpzUXdhVThUMXlXQk4zeUNsSnBn?=
- =?utf-8?B?YzlSSkdTVjJkYjN0aEVRaGx5OEhBcHZZcGhxVXcrRzE1aGdWSGFXMXpuSU9T?=
- =?utf-8?B?UjFndUkrTzYySjdXTVNNSk1aYi9vZzRpQ0lSSE84Y1RqRkxId3loUEJyakxM?=
- =?utf-8?B?NHYvWFJXeHM3ZkNhS1J1MWpGRW5EMmh2N0kwN0FocDU0MTJYY1d0SzJjaks4?=
- =?utf-8?B?ZTVYd3h4Snd2VjJIZnNoWVh6U3FqWFFOTUNQSFVsS09jdWhudy9IOUg0SUdH?=
- =?utf-8?B?bVk4Y2M3TzM0Mnc0Rnhxa1hZM3Vzem4rNmtvWkZ1S1czY3RYbGtncytMQmdQ?=
- =?utf-8?B?M0ZMYzQ0cy8vOHhHMVdibWF3bEQ0bUFWb1lSWmlHUzdXQnFoU1dDdko0MmdW?=
- =?utf-8?B?ZWx1STRDSzJzTVQvMVgzbG1OazIyZjAyRXBwVG1BTEtlL2M1RTNMUXBKS1p0?=
- =?utf-8?B?UkxETzMrTFhFR2pKcm00UERxeXhXVlhiMktoNEZIdjZnRzdITE9JWXhBOW9J?=
- =?utf-8?B?MTlMQVBFMzlzTFBzOWpQYUs3dVdkWmZ6cUFzSjUwV0dXM1dxaDhJOGN1V1Ur?=
- =?utf-8?B?eFFRNFQyZE1pM1lMR2ZaaS9mdVlITFEyeXk0ZERyZG5zM09BWHQzUE5BeFBo?=
- =?utf-8?B?L2hCUzh6dzFHMjhrcWtaOW9RRGMvd2hmMnRkWVp1OFV1b0pyelpERURvNFNp?=
- =?utf-8?B?UFRhRWtrUUxXREhJL3ZVbWQyajUraTJNeHRjbEcrL1BPNEY0UEc1N0JOZnl2?=
- =?utf-8?B?OHU5SW02T1Niay9sbVV4V2lCOEZSRGFIVExyeXptV0hxNDc2YVFadFphemUw?=
- =?utf-8?Q?VREfic?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MFEwck9ZU2QvVEI3ZGgyVGdSN2t3S0E0dFVtMkYxUzN1YlBPSnFRaWFkanUz?=
- =?utf-8?B?WWFKZlhFVk1aS3hKb3BZODk0SklXbGFnRnQ2ZzZKMG1MWk1ad0ZoWGtENytB?=
- =?utf-8?B?L0czZXRwMTA3d0lGeStNQzBra1lScjFtK0E5ZDczaGN3aytlSEFBUWkrM0VE?=
- =?utf-8?B?ZzJZeEphYmcxYzhiSlFLZ3FPcXlkQis2TXZEQzkrWW1xNmJoTHlkaEFrK3JO?=
- =?utf-8?B?ZEw0VlJOMENmRGdxbUZYZlVwZlRSdlAyWXh4c3AzZEJTTmxHS0pxRTZHc2wv?=
- =?utf-8?B?K0tIUnh3TUtqdVdsN0hNUXZ0T3hnMXNBa3JuRUJ1bUU3S0hyZjlVR3orbkM0?=
- =?utf-8?B?S0RnY2VVRjR5dG8rV3JUQWxzOURuYTZUQWJPdWYrTUo2VU9yR1BSZDQ5Q1VO?=
- =?utf-8?B?U2xzSk1iYitFS2FYUGFYSVhORTZkalZlMXJNVGVsTGJlQ3J6TzE4MjR5LzFD?=
- =?utf-8?B?Z3ZmZTNxMGNGWlFIRjNpSkxxdDdLQ3pPTlJiRUtyMGFMUE5EUU5JNnhaSzNq?=
- =?utf-8?B?cElLK1Y5QVo5T0tITDVQdDNZQUhJSy9wcG53d0hPWERsdDhKWE56bldUQ1FT?=
- =?utf-8?B?aVVJeWdEOForQ2Fwd2djOHNQUzE0VVYvU0JXVVdsT3B0YXgvemEzbzdIbTJV?=
- =?utf-8?B?QmUzb3pwNmUzK1FwZXhBWDVSVU01RmRnVU9lb0hzZGYrclNDSzBTUlBsV1hn?=
- =?utf-8?B?bmo4MWFvcXlzYTNNQTRiM3hHTTRTTytMajQyUU1wckZQR3M3NEY2dFlJb3ky?=
- =?utf-8?B?NW9ETUZTcEl5Q20ySWVMT0dZRURNTjM4T1VKV1owbytJVUtFNDJRaWJPU0d6?=
- =?utf-8?B?QUxLbmFMZllLS0JycmtKTmVvMjc2OURZeTZQN3VHU01sLzVuZTFJVVhjQ2Rp?=
- =?utf-8?B?YUY2ek9LMmVmZElwT3hjalVmSHFnWExaeDQwamFvMStLRkJlQ2VqeTlVNmor?=
- =?utf-8?B?OUJYTGdOc2RsZFQ5b3BlUGtnL1JRRWFhVE5HbHdwVFYwamViS0wxaWI5S2Yw?=
- =?utf-8?B?OGNza3VkYm5XQS9pWjNJY0EwNXNyd3U3Vk9yNkdlaFBKRzFvTEI5S2M5OTBB?=
- =?utf-8?B?OHFRZmJhSE5INDg2ZlFHLzIvbWZkV2VHY1lSaGJ3ZDhjdmtIdnZ6OWpUR0NH?=
- =?utf-8?B?anExYi9uU1FDMDQ1U3Vidk85RjN3dkY4c2txUXBsVjRDaUl0SC9vaFFLaTJ6?=
- =?utf-8?B?eG8vSWlLYkErUDViQWJsanVTckRyTGxiU2hvTURSZUpnajlSNVdFMUpiekE4?=
- =?utf-8?B?bUp0V2dmcWg3TjUwNEc3YVpjVFczdCs2YXRZeVd3UEx1Vm1HK1pNRURVUUJL?=
- =?utf-8?B?dlZYL1Vabk5meXlWNzVHdENZWjRsQ25TV1dlb1pHeXpRTGZLV0hBcFo3Q09v?=
- =?utf-8?B?U1pJdUhBVkNCWGcyVW5UdldrL250b2pDNDRJYnJiVWpsZ2I4MzJzQXpCSTlI?=
- =?utf-8?B?ZnFXdnp0YmpveEtTNktIcHlTN05pQTVoaXRSUVQ0ME1TVU5od2k3dlROdmN0?=
- =?utf-8?B?ak9Vc3JmRGRUSU81MHJRWHBlTzYyck9VT1VXb3NjdFdLdlhvRWN0QWdrYVo0?=
- =?utf-8?B?dzM1QkdkTFRKcDUwTG1uUmFRVnNUM3YvL0NzbVRyMy9XU013bnpoVjFQU09H?=
- =?utf-8?B?UW91Z25XelpSUkowOEZlRjZqZENsSXQ1K0VVMnJpV1VjckM4b3d5c1VEYXFI?=
- =?utf-8?B?Y0pFeGt0MjdWU1ZyckVZNVhaeVM4c1BSRC9nM08wdUZ2akxnOThIek95VFNa?=
- =?utf-8?B?YnZ3cE5IdGlMV3lIMEFqellwWi9LWm96VmNlRlZQNXJ6TmM1WUhibGxOaFJ2?=
- =?utf-8?B?VElIRUlobU8zRmhqSDFNSVFpZEJyRFZnVjFMU1dxcWpBeXF1amdSRUZJeGpk?=
- =?utf-8?B?d2N5N2U0RlBBa3RIZDcrbE4zT3R3a24yL09PanIxSUt3WVVLaTliTHg3T25E?=
- =?utf-8?B?WTZZYWRkRlR5WGJnSmVZeC9mTXQ1Y1ZDaS9Mc0kybWROZVJsK3ZBckdNcS9l?=
- =?utf-8?B?U3FaVnBLTUx3WXZSWUk1dWdLcjV3azl1NEtYTFhYK0J3RDdROFY2dDgyaExH?=
- =?utf-8?B?R3ZhcXlaK2IxdEN5aWw3T0ZGYUdmdlFjK3hVc08zcUkyNnBYUzBKcXNuUWtt?=
- =?utf-8?B?NDhYOGcrd1kyd2hZckRPQTE5VlE4UHJPYW94THhIalZ4QjQ4V3lOelRlcnZ2?=
- =?utf-8?B?ZlRUUWNsSzhXTEJ1SXNXdWNiMER4aHUxMHpNemgydFF3OXZyMEp0Q1ZCaC8w?=
- =?utf-8?B?MU8wWWR5WCt0Z2hJMXFWMlZlS2wraVkwUzdORzIvRWhWak5RL0l1b3BVOURR?=
- =?utf-8?B?L2VMaXl6aG9xT2tzM3o4aFJmZUhqTWRGMnA0SGltSlZSbmZXOEdTQT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vZ2bD-0006pQ-Rs
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 02:50:59 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vZ2bC-0004J8-88
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 02:50:59 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-64b7b737eddso8482439a12.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Dec 2025 23:50:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1766735456; x=1767340256; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dunF8xl8O0FoPQukDs/fxVjMs6SfkbPfOoSuePTJvFU=;
+ b=jmRAcF7uDtvfzFex9+sU73jDLSGf718pyNWPRMr4EzfqtTr8m+icQnabB3eGMhc6Bn
+ JtJPUkdCi//AGUMbwFUECXhNE5XogjFjdZ9ihc0CgBW3MnJ82ScJ99gnkltFSUdDD6Y3
+ hEOKsCzZL/wE/GheofADUWrqiTYuKVwquobDncQ6mtRWA28b2UGoQb4i+uL87TyFtUMJ
+ 56nuqThF7FaJqk6cQuv8L/nOqnEK2yv6e3yRNn+e6mTlvuwSserrrgXy9dZNzDX+JkPH
+ fGeJVgFOG2GggCZNDfbxGnwjoOEf8ACT85ALfVu4Nt+eNaKwdEpXjHdw+i1J2i1oPskJ
+ xrDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766735456; x=1767340256;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dunF8xl8O0FoPQukDs/fxVjMs6SfkbPfOoSuePTJvFU=;
+ b=L6XFV/ykjSsg3Tk8M6UUns/2Yr3ocPkO1TZlID66PkEWhhFQYcsXjoD0E1Bk0PcVIb
+ xZ7E6gb/w4WD9eHtuQhrtTYty1hLsH2boFRbW+LCAU/i8R/1tOaKHiptHNf9Wkmswh5T
+ 8yazxgmdAwiLEMCM2O/3iApCTQ3kRuzNHDkv41nZfGpxQfBLJQ3KiRC2cy2TTRpiwkkN
+ lr/7rIW/BP+Sd3JYKi7i8MOeO0E/yriBMNQfzp0q9mYezCeQXj82sw6dCm8yBp0FeCvh
+ AWOdZaJllwESjLxaLOEL882OiiFoRkBCcZaH+MC+hkZelS8AR1bLb2ugHLiUitEejkaN
+ M3eQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUb2D+DGw0aBwz6yLDe4tgdWNhALOLtfzQJ+xKRfHK1l+1fi6qqTUaPL0wjVcAfqgPDxXjdBb9tNLzI@nongnu.org
+X-Gm-Message-State: AOJu0YyH1ClTaFHAARh3j3NRp1Vd0RUrMKTqden+X2seBNDR2ZLq9h8e
+ T2hY4NVIVePC9/PBhZ/6PbdTAbHhwjFkBRNrvML1jLOV+E0uWdfcpWrhPrreLnDxuR00RF8y2J0
+ r6YjtMs9Lbyj5C0A3+pM5H1hZeFhPrfo=
+X-Gm-Gg: AY/fxX7wvwaXpOjqSu40qSUz+geEi2mPr2MWkzohvT6q9mNMVMbr5zve14OfeqI628H
+ mOwiajOKJXBxuZ3q6odB6f/oPf6EWZR3WDu+NXa6+XUadzPZmARS6otM5nGu92Npc7IggyjEOSW
+ U30R4NQMymaGcb334voMVV/nhUwIKRgI315T9y7A9SwjiLQkwOT7fcleta8yDfs5MeYRqsm18If
+ j7CTnoyc+TLl7dsD9Yvhj4blS2fcmprhKMGVz/sNXC/QiWBkC+MOyt5D+TajmJvB2Sxyvc=
+X-Google-Smtp-Source: AGHT+IFkQBhlGolm1K3AyN1IpcjvFok9EENtqGiHubif8GDMX+jiMYe+HpSFmrx0iajHF5+aQ7bNp+P+bcz8xNE/jD4=
+X-Received: by 2002:a17:907:8e95:b0:b76:7e90:713f with SMTP id
+ a640c23a62f3a-b8036ece45amr2249715766b.10.1766735455256; Thu, 25 Dec 2025
+ 23:50:55 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c338456-bc5e-4d5c-6434-08de4451da9b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Dec 2025 07:39:08.3647 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: senepmgKBOyXwiedECe10y2LdalRZmf+AXKgtw3SkMfspPG7dQzU+yeFc0HVcJWeDkBPAqeT71CU9aMfkOfCzEIwRIzAmyWM3LbemxcjbuQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB6660
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.17;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20251225072442.36012-1-jasowang@redhat.com>
+ <20251225072442.36012-2-jasowang@redhat.com>
+ <CAK3tnvJQCV3YFMB-YWwE5aRmAt6dVepVssKSu+1c7fy8FbUP7A@mail.gmail.com>
+ <CACGkMEsUy-ATw1vEZ+Wb3Gm4a2Kc6pjXx3uCWceTJ32cNKbs2w@mail.gmail.com>
+ <CAK3tnvK7NL4eCx=ndqr=ZKkCkjqapyt=zHEqqWk9ogzFBFFFWA@mail.gmail.com>
+ <CACGkMEsJCf0OnrP10XGTgpf3Km=9Dg9KcStcF1pB2vOYkgfQEw@mail.gmail.com>
+ <CACGkMEtTCXTPB2oE9mwEOgSuSJfYoyA803w-yYcyojxBJRDHNg@mail.gmail.com>
+ <CAK3tnvJ+L-XJ6yRiKUTAy0FJV5bTfgNFJwZuGzJ2tEfs9QQDVw@mail.gmail.com>
+ <CACGkMEvvE=Wyga7+tScUXW=VG7OEL7i240e+1FOYX0a1k4Xeeg@mail.gmail.com>
+In-Reply-To: <CACGkMEvvE=Wyga7+tScUXW=VG7OEL7i240e+1FOYX0a1k4Xeeg@mail.gmail.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Fri, 26 Dec 2025 15:50:18 +0800
+X-Gm-Features: AQt7F2qWvOEXGChcl_Ws40nLqUgNa1z59yJ8hJ8WuBRPhQB3i2qSSyDSQQoah00
+Message-ID: <CAK3tnvLe7XODwWUXz8U9OMpiQCZ7qfbQ9SN5AmRp8ve5BoN=8A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tests/qtest: add test for filter-buffer interval
+ change
+To: Jason Wang <jasowang@redhat.com>
+Cc: lizhijian@fujitsu.com, qemu-devel@nongnu.org, lulu@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -223,18 +105,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogRGFuaWVsIFAuIEJlcnJhbmfDqSA8
-YmVycmFuZ2VAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIDIvM10gY29uZjogYWRk
-IHN1cHBvcnQgZm9yICdzY2FsYWJsZV9tb2RlJyBhbmQNCj4nZmlyc3Rfc3RhZ2UnIGF0dHJpYnV0
-ZXMgdG8gaW50ZWwgSU9NTVUNCj4NCj5PbiBUaHUsIERlYyAxOCwgMjAyNSBhdCAwNjowNDo0OEFN
-IC0wNTAwLCBaaGVuemhvbmcgRHVhbiB3cm90ZToNCj4+IENvcnJlc3BvbmQgdG8gJ3gtc2NhbGFi
-bGUtbW9kZScgYW5kICd4LWZsdHMnIHByb3BlcnRpZXMgaW4gUUVNVS4NCj4NCj5UaGUgJ3gtJyBw
-cmVmaXggb24gdGhlc2UgcHJvcGVydHkgbmFtZXMgaW5kaWNhdGVzIFFFTVUgY29uc2lkZXJzDQo+
-dGhlbSBleHBlcmltZW50YWwgLyB1bnN0YWJsZSwgd2hpY2ggbWFrZXMgdGhlbSB1bnN1aXRhYmxl
-IGZvcg0KPmV4cG9zaW5nIGZyb20gbGlidmlydC4gIFdlIG5lZWQgdGhlIFFFTVUgaW1wbGVtZW50
-YXRpb24gdG8gYmVjb21lDQo+ZnVsbHkgc3VwcG9ydGVkIGZpcnN0Lg0KDQpJIHNlZSwgdGhhbmtz
-LiBJIGRpZG4ndCBrbm93IHRoaXMgcnVsZSBiZWZvcmUuDQoNCkNDaW5nIHFlbXUgdnRkIG1haW50
-YWluZXIvcmV2aWV3ZXJzIGFuZCBxZW11LWRldmVsOg0KDQpEbyB5b3UgdGhpbmsgd2UgY2FuIGRy
-b3AgJ3gtJyBhcyB3ZSBoYWQgIngtc2NhbGFibGUtbW9kZSIgbW9yZSB0aGFuIDUgeWVhcnMgYW5k
-ICJ4LWZsdHMiIG1vcmUgdGhhbiAxIHllYXI/DQoNClRoYW5rcw0KWmhlbnpob25nDQo=
+On Fri, Dec 26, 2025 at 3:29=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
+ote:
+>
+> On Fri, Dec 26, 2025 at 3:19=E2=80=AFPM Zhang Chen <zhangckid@gmail.com> =
+wrote:
+> >
+> > On Fri, Dec 26, 2025 at 2:30=E2=80=AFPM Jason Wang <jasowang@redhat.com=
+> wrote:
+> > >
+> > > On Fri, Dec 26, 2025 at 2:26=E2=80=AFPM Jason Wang <jasowang@redhat.c=
+om> wrote:
+> > > >
+> > > > On Fri, Dec 26, 2025 at 11:15=E2=80=AFAM Zhang Chen <zhangckid@gmai=
+l.com> wrote:
+> > > > >
+> > > > > On Fri, Dec 26, 2025 at 9:37=E2=80=AFAM Jason Wang <jasowang@redh=
+at.com> wrote:
+> > > > > >
+> > > > > > On Thu, Dec 25, 2025 at 6:27=E2=80=AFPM Zhang Chen <zhangckid@g=
+mail.com> wrote:
+> > > > > > >
+> > > > > > > On Thu, Dec 25, 2025 at 3:24=E2=80=AFPM Jason Wang <jasowang@=
+redhat.com> wrote:
+> > > > > > > >
+> > > > > > > > Add test_change_interval_timer to verify that modifying the=
+ 'interval'
+> > > > > > > > property of filter-buffer at runtime takes effect immediate=
+ly.
+> > > > > > > >
+> > > > > > > > The test uses socket backend and filter-redirector to verif=
+y timer behavior:
+> > > > > > > > - Creates filter-buffer with a very long interval (1000 sec=
+onds)
+> > > > > > > > - Sends a packet which gets buffered
+> > > > > > > > - Advances virtual clock by 1 second, verifies packet is st=
+ill buffered
+> > > > > > > > - Changes interval to 1ms via qom-set (timer should be resc=
+heduled)
+> > > > > > > > - Advances virtual clock by 2ms, verifies packet is now rel=
+eased
+> > > > > > > > - This proves the timer was rescheduled immediately when in=
+terval changed
+> > > > > > > >
+> > > > > > > > The test uses filter-redirector to observe when packets are=
+ released
+> > > > > > > > by filter-buffer, providing end-to-end verification of the =
+timer
+> > > > > > > > rescheduling behavior.
+> > > > > > >
+> > > > > > > If user try to simulate network latency by filter-buffer, the=
+ accuracy
+> > > > > > > of time is important.
+> > > > > > > Do we need add some note about the first buffered packet time=
+ not
+> > > > > > > equel to dynamic
+> > > > > > > changed time (default interval time - new qmp cmd effected ti=
+me +
+> > > > > > > changed time ?).
+> > > > > >
+> > > > > > I'm not sure I will get here, we can't forcast when the first p=
+acket
+> > > > > > will come. So the behaviour is always that the filter-buffer wi=
+ll
+> > > > > > flush at a fixed interval. Or I may miss something here.
+> > > > >
+> > > > > This case same like this test, before change the user target inte=
+rval time,
+> > > > > filter-buffer maybe already buffered lots of packets, for this pa=
+rts, the user
+> > > > > external measured time did not meet the expected settings.
+> > > >
+> > > > There's indeed a change of the behaviour, but I'm not sure if there=
+'s
+> > > > a user that depends on the previous behaviour.
+> > > >
+> > > > Or if we really care, we need a new attribute.
+> > >
+> > > Btw, the use case is something like these (out of the scope of COLO).
+> > >
+> > > Mgmt want to buffer the packets for a while and release the buffered
+> > > packets immediately when something happens.
+> >
+> > Yes, I know that.  And back to COLO, do you think we should change the
+> > colo-compare module
+> > to a general network comparision module? Any comments about it?
+>
+> I don't see how colo-compare could be used out of the scope of COLO,
+> but I do see buffer, mirror and redirector can.
+>
+> Going back to this patch, are you ok with this or expect something else
+>
+
+Yes, it's OK for me. Thanks for add the new qtest.
+Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+
+Thanks
+Chen
+
+> Thanks
+>
+> >
+> > Thanks
+> > Chen
+> >
+> > >
+> > > Thanks
+> > >
+> >
+>
 
