@@ -4,91 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F7DE8FDA0
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 07:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81417E8FDA1
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 08:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZ2bG-0006pY-70; Fri, 26 Dec 2025 02:51:02 -0500
+	id 1vZ2mk-0008TE-DQ; Fri, 26 Dec 2025 03:02:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vZ2bD-0006pQ-Rs
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 02:50:59 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vZ2bC-0004J8-88
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 02:50:59 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-64b7b737eddso8482439a12.1
- for <qemu-devel@nongnu.org>; Thu, 25 Dec 2025 23:50:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766735456; x=1767340256; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dunF8xl8O0FoPQukDs/fxVjMs6SfkbPfOoSuePTJvFU=;
- b=jmRAcF7uDtvfzFex9+sU73jDLSGf718pyNWPRMr4EzfqtTr8m+icQnabB3eGMhc6Bn
- JtJPUkdCi//AGUMbwFUECXhNE5XogjFjdZ9ihc0CgBW3MnJ82ScJ99gnkltFSUdDD6Y3
- hEOKsCzZL/wE/GheofADUWrqiTYuKVwquobDncQ6mtRWA28b2UGoQb4i+uL87TyFtUMJ
- 56nuqThF7FaJqk6cQuv8L/nOqnEK2yv6e3yRNn+e6mTlvuwSserrrgXy9dZNzDX+JkPH
- fGeJVgFOG2GggCZNDfbxGnwjoOEf8ACT85ALfVu4Nt+eNaKwdEpXjHdw+i1J2i1oPskJ
- xrDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766735456; x=1767340256;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dunF8xl8O0FoPQukDs/fxVjMs6SfkbPfOoSuePTJvFU=;
- b=L6XFV/ykjSsg3Tk8M6UUns/2Yr3ocPkO1TZlID66PkEWhhFQYcsXjoD0E1Bk0PcVIb
- xZ7E6gb/w4WD9eHtuQhrtTYty1hLsH2boFRbW+LCAU/i8R/1tOaKHiptHNf9Wkmswh5T
- 8yazxgmdAwiLEMCM2O/3iApCTQ3kRuzNHDkv41nZfGpxQfBLJQ3KiRC2cy2TTRpiwkkN
- lr/7rIW/BP+Sd3JYKi7i8MOeO0E/yriBMNQfzp0q9mYezCeQXj82sw6dCm8yBp0FeCvh
- AWOdZaJllwESjLxaLOEL882OiiFoRkBCcZaH+MC+hkZelS8AR1bLb2ugHLiUitEejkaN
- M3eQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUb2D+DGw0aBwz6yLDe4tgdWNhALOLtfzQJ+xKRfHK1l+1fi6qqTUaPL0wjVcAfqgPDxXjdBb9tNLzI@nongnu.org
-X-Gm-Message-State: AOJu0YyH1ClTaFHAARh3j3NRp1Vd0RUrMKTqden+X2seBNDR2ZLq9h8e
- T2hY4NVIVePC9/PBhZ/6PbdTAbHhwjFkBRNrvML1jLOV+E0uWdfcpWrhPrreLnDxuR00RF8y2J0
- r6YjtMs9Lbyj5C0A3+pM5H1hZeFhPrfo=
-X-Gm-Gg: AY/fxX7wvwaXpOjqSu40qSUz+geEi2mPr2MWkzohvT6q9mNMVMbr5zve14OfeqI628H
- mOwiajOKJXBxuZ3q6odB6f/oPf6EWZR3WDu+NXa6+XUadzPZmARS6otM5nGu92Npc7IggyjEOSW
- U30R4NQMymaGcb334voMVV/nhUwIKRgI315T9y7A9SwjiLQkwOT7fcleta8yDfs5MeYRqsm18If
- j7CTnoyc+TLl7dsD9Yvhj4blS2fcmprhKMGVz/sNXC/QiWBkC+MOyt5D+TajmJvB2Sxyvc=
-X-Google-Smtp-Source: AGHT+IFkQBhlGolm1K3AyN1IpcjvFok9EENtqGiHubif8GDMX+jiMYe+HpSFmrx0iajHF5+aQ7bNp+P+bcz8xNE/jD4=
-X-Received: by 2002:a17:907:8e95:b0:b76:7e90:713f with SMTP id
- a640c23a62f3a-b8036ece45amr2249715766b.10.1766735455256; Thu, 25 Dec 2025
- 23:50:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vZ2ma-0008Qs-Nw
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 03:02:46 -0500
+Received: from mgamail.intel.com ([198.175.65.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vZ2mY-0005D0-Af
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 03:02:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1766736163; x=1798272163;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=H7ot/hRp81HthlDYk6TwFqV3Z6FYhPOKwVbR85Mr8Gk=;
+ b=Da/XwrlmMyk6F+CA1mL+GUyburajFHGb5670GLUbFUfL+jjSJ30vPdd7
+ G070Ac7o0H6Qc/DHjlcpFgdC4rpEPvSTAT4sv+/nhUEoFXyl8jApbhFQg
+ YE9w2uPhJiuAGhe9UO42T1Ng7RlJnDQGky3Wsc5JY6Un1Wxe1UEQkpv6W
+ da5jlff0Vl8uzdaU3XPgFdCo5JqU/KNdPL3oScqNye5MIOhWLPSTTLYHa
+ ehrhcGPc5zLCQOZHJoG516mR7mOAYYnICFaFAk43JWvRAcbZPOxrmHvyJ
+ OaC6ozdLu2B626M/EjomXZbUbNZDJ1/AOO2LvIJqhrP7TpprLClUP6PVP A==;
+X-CSE-ConnectionGUID: NKASdE7YQ72uV8MXSnAVag==
+X-CSE-MsgGUID: kwB/Dpk/QfyldGp9D7RiQg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="68392814"
+X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; d="scan'208";a="68392814"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Dec 2025 00:02:39 -0800
+X-CSE-ConnectionGUID: /8As4clwTrqCVnrBiyl/dg==
+X-CSE-MsgGUID: 1XbQAyDwS2+4a6RXAf1t+Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; d="scan'208";a="204846799"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Dec 2025 00:02:34 -0800
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v9 0/4] Implement ERRATA_772415 quirk for VTD
+Date: Fri, 26 Dec 2025 03:02:22 -0500
+Message-ID: <20251226080227.1167993-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-References: <20251225072442.36012-1-jasowang@redhat.com>
- <20251225072442.36012-2-jasowang@redhat.com>
- <CAK3tnvJQCV3YFMB-YWwE5aRmAt6dVepVssKSu+1c7fy8FbUP7A@mail.gmail.com>
- <CACGkMEsUy-ATw1vEZ+Wb3Gm4a2Kc6pjXx3uCWceTJ32cNKbs2w@mail.gmail.com>
- <CAK3tnvK7NL4eCx=ndqr=ZKkCkjqapyt=zHEqqWk9ogzFBFFFWA@mail.gmail.com>
- <CACGkMEsJCf0OnrP10XGTgpf3Km=9Dg9KcStcF1pB2vOYkgfQEw@mail.gmail.com>
- <CACGkMEtTCXTPB2oE9mwEOgSuSJfYoyA803w-yYcyojxBJRDHNg@mail.gmail.com>
- <CAK3tnvJ+L-XJ6yRiKUTAy0FJV5bTfgNFJwZuGzJ2tEfs9QQDVw@mail.gmail.com>
- <CACGkMEvvE=Wyga7+tScUXW=VG7OEL7i240e+1FOYX0a1k4Xeeg@mail.gmail.com>
-In-Reply-To: <CACGkMEvvE=Wyga7+tScUXW=VG7OEL7i240e+1FOYX0a1k4Xeeg@mail.gmail.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 26 Dec 2025 15:50:18 +0800
-X-Gm-Features: AQt7F2qWvOEXGChcl_Ws40nLqUgNa1z59yJ8hJ8WuBRPhQB3i2qSSyDSQQoah00
-Message-ID: <CAK3tnvLe7XODwWUXz8U9OMpiQCZ7qfbQ9SN5AmRp8ve5BoN=8A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] tests/qtest: add test for filter-buffer interval
- change
-To: Jason Wang <jasowang@redhat.com>
-Cc: lizhijian@fujitsu.com, qemu-devel@nongnu.org, lulu@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,113 +85,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 26, 2025 at 3:29=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
-ote:
->
-> On Fri, Dec 26, 2025 at 3:19=E2=80=AFPM Zhang Chen <zhangckid@gmail.com> =
-wrote:
-> >
-> > On Fri, Dec 26, 2025 at 2:30=E2=80=AFPM Jason Wang <jasowang@redhat.com=
-> wrote:
-> > >
-> > > On Fri, Dec 26, 2025 at 2:26=E2=80=AFPM Jason Wang <jasowang@redhat.c=
-om> wrote:
-> > > >
-> > > > On Fri, Dec 26, 2025 at 11:15=E2=80=AFAM Zhang Chen <zhangckid@gmai=
-l.com> wrote:
-> > > > >
-> > > > > On Fri, Dec 26, 2025 at 9:37=E2=80=AFAM Jason Wang <jasowang@redh=
-at.com> wrote:
-> > > > > >
-> > > > > > On Thu, Dec 25, 2025 at 6:27=E2=80=AFPM Zhang Chen <zhangckid@g=
-mail.com> wrote:
-> > > > > > >
-> > > > > > > On Thu, Dec 25, 2025 at 3:24=E2=80=AFPM Jason Wang <jasowang@=
-redhat.com> wrote:
-> > > > > > > >
-> > > > > > > > Add test_change_interval_timer to verify that modifying the=
- 'interval'
-> > > > > > > > property of filter-buffer at runtime takes effect immediate=
-ly.
-> > > > > > > >
-> > > > > > > > The test uses socket backend and filter-redirector to verif=
-y timer behavior:
-> > > > > > > > - Creates filter-buffer with a very long interval (1000 sec=
-onds)
-> > > > > > > > - Sends a packet which gets buffered
-> > > > > > > > - Advances virtual clock by 1 second, verifies packet is st=
-ill buffered
-> > > > > > > > - Changes interval to 1ms via qom-set (timer should be resc=
-heduled)
-> > > > > > > > - Advances virtual clock by 2ms, verifies packet is now rel=
-eased
-> > > > > > > > - This proves the timer was rescheduled immediately when in=
-terval changed
-> > > > > > > >
-> > > > > > > > The test uses filter-redirector to observe when packets are=
- released
-> > > > > > > > by filter-buffer, providing end-to-end verification of the =
-timer
-> > > > > > > > rescheduling behavior.
-> > > > > > >
-> > > > > > > If user try to simulate network latency by filter-buffer, the=
- accuracy
-> > > > > > > of time is important.
-> > > > > > > Do we need add some note about the first buffered packet time=
- not
-> > > > > > > equel to dynamic
-> > > > > > > changed time (default interval time - new qmp cmd effected ti=
-me +
-> > > > > > > changed time ?).
-> > > > > >
-> > > > > > I'm not sure I will get here, we can't forcast when the first p=
-acket
-> > > > > > will come. So the behaviour is always that the filter-buffer wi=
-ll
-> > > > > > flush at a fixed interval. Or I may miss something here.
-> > > > >
-> > > > > This case same like this test, before change the user target inte=
-rval time,
-> > > > > filter-buffer maybe already buffered lots of packets, for this pa=
-rts, the user
-> > > > > external measured time did not meet the expected settings.
-> > > >
-> > > > There's indeed a change of the behaviour, but I'm not sure if there=
-'s
-> > > > a user that depends on the previous behaviour.
-> > > >
-> > > > Or if we really care, we need a new attribute.
-> > >
-> > > Btw, the use case is something like these (out of the scope of COLO).
-> > >
-> > > Mgmt want to buffer the packets for a while and release the buffered
-> > > packets immediately when something happens.
-> >
-> > Yes, I know that.  And back to COLO, do you think we should change the
-> > colo-compare module
-> > to a general network comparision module? Any comments about it?
->
-> I don't see how colo-compare could be used out of the scope of COLO,
-> but I do see buffer, mirror and redirector can.
->
-> Going back to this patch, are you ok with this or expect something else
->
+Hi,
 
-Yes, it's OK for me. Thanks for add the new qtest.
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+Based on Cédric's suggestions[1], The nesting series v8 is split to
+"base nesting series" + "ERRATA_772415_SPR17 quirk series", this is the
+ERRATA_772415_SPR17 quirk series.
+
+On a system influenced by ERRATA_772415, IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
+is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the readonly
+range mapped on second stage page table could still be written.
+
+Reference from 4th Gen Intel Xeon Processor Scalable Family Specification
+Update, Errata Details, SPR17.
+Link https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/eagle-stream/sapphire-rapids-specification-update/
+Backup link https://cdrdv2.intel.com/v1/dl/getContent/772415
+
+Also copied the SPR17 details from above link:
+"Problem: When remapping hardware is configured by system software in
+scalable mode as Nested (PGTT=011b) and with PWSNP field Set in the
+PASID-table-entry, it may Set Accessed bit and Dirty bit (and Extended
+Access bit if enabled) in first-stage page-table entries even when
+second-stage mappings indicate that corresponding first-stage page-table
+is Read-Only.
+
+Implication: Due to this erratum, pages mapped as Read-only in second-stage
+page-tables may be modified by remapping hardware Access/Dirty bit updates.
+
+Workaround: None identified. System software enabling nested translations
+for a VM should ensure that there are no read-only pages in the
+corresponding second-stage mappings."
+
+QEMU code can be found at [2], it's based after below two series:
+
+[PATCH v9 00/19] intel_iommu: Enable first stage translation for passthrough device
+[PATCH v6 0/9] vfio: relax the vIOMMU check
 
 Thanks
-Chen
+Zhenzhong
 
-> Thanks
->
-> >
-> > Thanks
-> > Chen
-> >
-> > >
-> > > Thanks
-> > >
-> >
->
+Changelog:
+This is a new split from nesting series, see the link[2] for history changelog.
+
+[1] https://lore.kernel.org/qemu-devel/bbc8412b-25c3-4c95-9fde-a1c9c29b54ce@redhat.com/
+[2] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_ERRATA_772415.v9
+
+
+Zhenzhong Duan (4):
+  hw/pci: Introduce pci_device_get_host_iommu_quirks()
+  intel_iommu_accel: Implement get_host_iommu_quirks() callback
+  vfio/listener: Bypass readonly region for dirty tracking
+  Workaround for ERRATA_772415_SPR17
+
+ docs/devel/vfio-iommufd.rst      |  9 ++++++
+ hw/i386/intel_iommu_accel.h      |  5 ++++
+ include/hw/iommu.h               |  5 ++++
+ include/hw/pci/pci.h             | 31 ++++++++++++++++++++
+ include/hw/vfio/vfio-container.h |  1 +
+ include/hw/vfio/vfio-device.h    |  3 ++
+ hw/i386/intel_iommu.c            |  2 ++
+ hw/i386/intel_iommu_accel.c      | 21 ++++++++++++++
+ hw/pci/pci.c                     | 12 ++++++++
+ hw/vfio/device.c                 | 14 +++++++++
+ hw/vfio/iommufd.c                |  9 +++++-
+ hw/vfio/listener.c               | 50 +++++++++++++++++++++++++-------
+ hw/vfio/trace-events             |  1 +
+ 13 files changed, 151 insertions(+), 12 deletions(-)
+
+-- 
+2.47.1
+
 
