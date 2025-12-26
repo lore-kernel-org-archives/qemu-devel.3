@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 239D1E8FDB0
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 17:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7277CE8FDAC
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Dec 2025 20:32:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZBj9-0006QU-B7; Fri, 26 Dec 2025 12:35:47 -0500
+	id 1vZETk-0007bX-R0; Fri, 26 Dec 2025 15:32:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vZBj7-0006QD-TA
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 12:35:45 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1vZETk-0007bO-33
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 15:32:04 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vZBj6-0008Mj-4C
- for qemu-devel@nongnu.org; Fri, 26 Dec 2025 12:35:45 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-477619f8ae5so43765145e9.3
- for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 09:35:43 -0800 (PST)
+ id 1vZETi-0002T4-AD
+ for qemu-devel@nongnu.org; Fri, 26 Dec 2025 15:32:03 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4779cc419b2so59299815e9.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Dec 2025 12:32:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766770542; x=1767375342; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1766781121; x=1767385921; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=c9zIHzNk/zX6b4v+zzS+hNXbQFRs1l0qf8scYPkEdUQ=;
- b=gXWlwPXReyHuSZj/Vq9t6eMNS+tvXhcdu2+wMZSTGJskbwSiR9Pm779U3Rlg35Xl1h
- bXQOzkXfY9OZhyM+NrQm56ndgusMe0izYhpSmjsCqrBpAI6KXnXN7B6iLryPvJS8W2ED
- FCTSoOS24Um0LTe2waCd0hZSRa2vUBOMF+drjrBFbhK0V3m6wP4jQrsvaFSXI8WScHW8
- eW8AGOu1sXecXXi5bp9lvxNJ5mDjKZ0qD5IkfUG24mP1KmAg8owUNaj/lckU2+4azjxn
- 7qqvYkEMoQ7vtcJP9jdGxpdLpx7/GDCONlHKUAqIrs/SzbXluZY91O4XM0KGP8AkXU3l
- gThQ==
+ bh=/CzAGB9yL8G5U4vFJFxQvsqsvNZ+dnI5o8uF0Ip/aT0=;
+ b=HQ4SCrDWiziE0qpQPL8clqvnawqM6ziL9BJmJDsokU5rWRfQIcuv2CbXdhqRan3RFH
+ u0hKSWcQXrqp7xSwdbujbI14kKGp00tKS36BYdZWYPbJp6ne3+oC97VeIehT7x1FYitu
+ 8ad9I9Wjn43EVI8r26RHPaWKQlViAcKqXy02tORH6xkTALkRW4J/Ha9stz02bV/oQEuU
+ AXW5kMJI4/QaQCNBwqoiuS1XILKy2gUChf+ec2aYDnJMS1+yulpNBFymV5Se4VMr0gdH
+ Ikm0+RvAAaoEK0Rt0e50szXumGNAr1yGDSKKL5iGZqQY40yDHbakh1Z3jqEvOuaqKyKZ
+ r76Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766770542; x=1767375342;
+ d=1e100.net; s=20230601; t=1766781121; x=1767385921;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=c9zIHzNk/zX6b4v+zzS+hNXbQFRs1l0qf8scYPkEdUQ=;
- b=ROGj9KGD8Yk/UTLvHJDFBWNAUqDbZjpzxhudn5q/W/qUd8h5Ighw6NcuviedS3a65b
- mn0lO4IPKdS8AFw3tlSqBm+AdINIoyDftt4BfAtVGpI5JsC4PO0/eMnItp9c/V4TcLqj
- +odJIB5CV6N/+B26KQ+3zh6ihsSERT2g7eguFwI+j/c2TorRIWdrQKLqONVmA76hN8CV
- 5PSh3M+LG7xTimXTUmrpmhXsbghWFOtDINhy+lNISuTUvRDzKXiTGWkIhCClEBjzFgoj
- lve+SoqgWiYiGz9evtaIO0sp4XHFdVsDP8YJR8D7XDc5dmNly9pm8QhR200jNAuYHtTn
- S8Pw==
-X-Gm-Message-State: AOJu0Yze1DsG1xaXhovTEE7qdGgFQe9YCjHv8D+VGAFXPwfHK74+0vfm
- 5rBCAmkZW1ndEIjIzCrU453qdMbhQzsuUrRY2Ai2uPOqjsP0NckHYk3xJorpIHoDxDs=
-X-Gm-Gg: AY/fxX6VlerPqiqEw3yZHC5LbvHkMQfQlY2NKEhbPcHZvQ+MZfgXbOxCGoVurslbR5b
- PUpo+nZb5J1Gk8b7Vg2Bzj9j/d7Buzsx8/vz34ZR1u5gxqlDbSIqbnCrSKy4T7TqvS7eyS+uCjY
- sYj5fgMiPpkriJyfs6bg4gIjNGlNsPchxUKUiK5n0rsEpkGKbvIu4d7okp+76CjAFT7etmGxlvZ
- R3wN/koGZICFc89MmONORLLK2M440BujswrQDU3Pv1rBBVuXFSl7/telKj/YQClNnSGGbk0yZ+m
- z4vn6n0tLxXWHqG9Q7q8D/nrqkQFTGmx6SmUtCnDRC1su5by8wqP5zUM8Gl/TOex8wIvdqFqzQ+
- YI0VhhVr8ACXAHiQGDZGbRp8Lv9wbXh6pfvuWzP732HKguwW9P5zyn1QwdDJQ+wIp+h9bdicLK8
- uRcEG4ntyUtLeN9G8a6YGTpVrQdjfjGi8=
-X-Google-Smtp-Source: AGHT+IHzu6vM3dx4OUDCGtC8oehiKkdWMM6o31+tUMIB5VDQMVE5kHRlFo0QOMajFS44gY5YBY5LgQ==
-X-Received: by 2002:a05:600c:6299:b0:477:73e9:dbe7 with SMTP id
- 5b1f17b1804b1-47d1959ae49mr291812215e9.35.1766770541880; 
- Fri, 26 Dec 2025 09:35:41 -0800 (PST)
+ bh=/CzAGB9yL8G5U4vFJFxQvsqsvNZ+dnI5o8uF0Ip/aT0=;
+ b=j83AomrZTFCalUNxXyRjR6U9LmQVucmdypg6Kq6CyijhKt1JhgUSvjcd8FAfUQux37
+ mN1PyKsuA8igNFMYs2Bq/ZzC5gXpjiOzB9GSP7k9d8oweLSfkagdEHcGzV7+u3LQwVa/
+ uva33pUIhQeTJSxNGPNoEGX+/NhNSnWXxoODrEqXfGbW9C5neMKYM9MavV2QewWmaxFk
+ zGU1M1w/9jD7yODmM4nNdddm43Xrkjh0NtI4zxY1d6JwcP7LjrM8XQK2cYPrtzmrMbQa
+ bU6PvGKkJA3hHg5dh3WYAZs5K1kWsHuM4CqW1xcq3l9DPEMsUgpoOaAzROBu0V1LNNQI
+ SoMg==
+X-Gm-Message-State: AOJu0YzlNEHNVsmkHviwzjaw2bobf7joExVxwfpPaFGKQGzPUtuWcZE3
+ 5wcKCJfc0AJrM/E2tbI+M0rEz+SzpzJAAjkWoJCFD33vYVinqdKhjx9I4GIB/5m/+Zo=
+X-Gm-Gg: AY/fxX4rvK+b0jeOb9NrhjbKhcnisRak2XddnQ7LNxCkyY2NzSe9OfzEQoNcONQvAck
+ 74+4YluwmYN6P4byxWotNsy80AiYMaHWLWoX3Us7seFXYNHydelTMPAv5po6DJ6C56QP5QCqpFk
+ 7xcpFC34tizS6JxZ9LHjEgwXyxI+zZuS7lUUazbtWUXmBn8bKqFegDke/F3sUl25yOL22KroBDk
+ brd+YJEsn8hTO/05RoAaxeWTo2lgB9KEJfRAG7HkjZcgWColJ3J842YPmliUKrG+h66I27nmmSa
+ Jo6zPCZpwhhbeLTdifxrskWDaSxeteQqSUg2y7QtpjLSbm3AvdsMa/XklasZ5fE8534t/cbEqBp
+ tXSgVkhKJmMJ75zWFNCpXQ6CYYoj/sgYcnTHpRDLlRic1xfuKrf0CF5Eot10qzA6s6Q/q3UuaNi
+ MxuMKPAqDhC9tObZVUnPCUEaBIyZiTKjA=
+X-Google-Smtp-Source: AGHT+IEIUNTaWB2hi8XKe22lMWb9QuDt+aUnwvuVNq863ndN6spf1OjhuYJIkA3Y/CWOehFytFbhfQ==
+X-Received: by 2002:a05:600c:3b88:b0:47a:814c:ee95 with SMTP id
+ 5b1f17b1804b1-47d19556cf7mr331207655e9.12.1766781120661; 
+ Fri, 26 Dec 2025 12:32:00 -0800 (PST)
 Received: from tuf-gaming ([2a02:2f01:760c:a301:1665:9199:948a:6af7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3a4651bsm178032295e9.7.2025.12.26.09.35.40
+ ffacd0b85a97d-4324eaa64cesm47640451f8f.35.2025.12.26.12.31.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Dec 2025 09:35:41 -0800 (PST)
+ Fri, 26 Dec 2025 12:31:59 -0800 (PST)
 From: =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?=
  <jean.christian.cirstea@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
  =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?= <jean.christian.cirstea@gmail.com>
-Subject: [PATCH v2] linux-user/strace: fix printing of file offsets
-Date: Fri, 26 Dec 2025 19:35:21 +0200
-Message-ID: <20251226173521.1957025-1-jean.christian.cirstea@gmail.com>
+Subject: [PATCH] linux-user: add support for MAP_32BIT
+Date: Fri, 26 Dec 2025 22:31:47 +0200
+Message-ID: <20251226203147.1964597-1-jean.christian.cirstea@gmail.com>
 X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=jean.christian.cirstea@gmail.com; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=jean.christian.cirstea@gmail.com; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,146 +100,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, 64-bit file offsets (loff_t) were printed using `print_raw_param()`
-function, which led to silent truncation of the upper part. This commit fixes
-this issue by adding two helper functions:
-
-1. print_file_offset32(): prints 32-bit file offsets (off_t)
-2. print_file_offset64(): prints 64-bit file offsets (loff_t)
-
-Changelog v2:
-
-1. Make `print_file_offset32()` static.
-2. Use `last` parameter in `print_file_offset32()`.
-3. Rename `low` and `high` parameters of `print_file_offset64()` to `word0`,
-`word1` respectively
-4. Convert `last` to bool for `print_file_offset[32,64]()`
-5. Use `PRId64` instead of `PRIu64` for `print_file_offset64()`
-6. Fix `print__llseek()`
+x86_64 defines MAP_32BIT which forces `mmap()` to return a 32-bit
+address. This commit adds support for this flag if supported by the
+host.
 
 Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
 ---
- linux-user/strace.c | 43 +++++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ include/user/abitypes.h         |  2 ++
+ include/user/thunk.h            |  3 ++
+ linux-user/strace.c             | 26 ++++++++++++++++-
+ linux-user/strace.list          |  4 +--
+ linux-user/syscall.c            | 50 ++++++++++++++++-----------------
+ linux-user/x86_64/target_mman.h |  3 ++
+ 6 files changed, 59 insertions(+), 29 deletions(-)
 
+diff --git a/include/user/abitypes.h b/include/user/abitypes.h
+index be7a876523..0228e1b77c 100644
+--- a/include/user/abitypes.h
++++ b/include/user/abitypes.h
+@@ -47,6 +47,8 @@ typedef uint32_t abi_uint __attribute__((aligned(ABI_INT_ALIGNMENT)));
+ typedef int64_t abi_llong __attribute__((aligned(ABI_LLONG_ALIGNMENT)));
+ typedef uint64_t abi_ullong __attribute__((aligned(ABI_LLONG_ALIGNMENT)));
+ 
++#define TARGET_ABI_FMT_x  "%08x"
++
+ #ifdef TARGET_ABI32
+ typedef uint32_t abi_ulong __attribute__((aligned(ABI_LONG_ALIGNMENT)));
+ typedef int32_t abi_long __attribute__((aligned(ABI_LONG_ALIGNMENT)));
+diff --git a/include/user/thunk.h b/include/user/thunk.h
+index 2a2104b568..e4cfb5fe46 100644
+--- a/include/user/thunk.h
++++ b/include/user/thunk.h
+@@ -73,6 +73,9 @@ typedef struct bitmask_transtbl {
+     unsigned int host_bits;
+ } bitmask_transtbl;
+ 
++#define BITMASK_BIT(target, host) \
++    { target, target, host, host }
++
+ void thunk_register_struct(int id, const char *name, const argtype *types);
+ void thunk_register_struct_direct(int id, const char *name,
+                                   const StructEntry *se1);
 diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 758c5d32b6..285fc987f5 100644
+index 758c5d32b6..616c801e6b 100644
 --- a/linux-user/strace.c
 +++ b/linux-user/strace.c
-@@ -85,6 +85,10 @@ UNUSED static void print_enums(const struct enums *, abi_long, int);
- UNUSED static void print_at_dirfd(abi_long, int);
- UNUSED static void print_file_mode(abi_long, int);
- UNUSED static void print_open_flags(abi_long, int);
-+UNUSED static void print_file_offset32(abi_long offset, bool last);
-+UNUSED static void print_file_offset64(abi_long word0,
-+                                       abi_long word1,
-+                                       bool last);
- UNUSED static void print_syscall_prologue(const struct syscallname *);
- UNUSED static void print_syscall_epilogue(const struct syscallname *);
- UNUSED static void print_string(abi_long, int);
-@@ -1664,6 +1668,20 @@ print_open_flags(abi_long flags, int last)
-     print_flags(open_flags, flags, last);
+@@ -802,6 +802,27 @@ print_syscall_ret_addr(CPUArchState *cpu_env, const struct syscallname *name,
+     qemu_log("\n");
  }
  
-+/* Prints 32-bit file offset (off_t) */
 +static void
-+print_file_offset32(abi_long offset, bool last)
++print_mmap_ret(CPUArchState *cpu_env, const struct syscallname *name,
++               abi_long ret, abi_long arg0, abi_long arg1,
++               abi_long arg2, abi_long arg3, abi_long arg4,
++               abi_long arg5)
 +{
-+    print_raw_param(TARGET_ABI_FMT_ld, offset, last);
++    if (!print_syscall_err(ret)) {
++        const abi_ulong mmap_flags = (abi_ulong)arg3;
++        /*
++         * If MAP_32BIT is set, print the address as a 32-bit value. This is
++         * consistent with strace output
++         */
++        if (mmap_flags & MAP_32BIT) {
++            qemu_log("0x" TARGET_ABI_FMT_x, (abi_uint)ret);
++        } else {
++            qemu_log("0x" TARGET_ABI_FMT_lx, ret);
++        }
++    }
++    qemu_log("\n");
 +}
 +
-+/* Prints 64-bit file offset (loff_t) */
-+static void
-+print_file_offset64(abi_long word0, abi_long word1, bool last)
-+{
-+    print_raw_param64("%" PRId64, target_offset64(word0, word1), last);
-+}
-+
+ #if 0 /* currently unused */
  static void
- print_syscall_prologue(const struct syscallname *sc)
- {
-@@ -2187,11 +2205,13 @@ print_fallocate(CPUArchState *cpu_env, const struct syscallname *name,
-     print_raw_param("%d", arg0, 0);
-     print_flags(falloc_flags, arg1, 0);
- #if TARGET_ABI_BITS == 32
--    print_raw_param("%" PRIu64, target_offset64(arg2, arg3), 0);
--    print_raw_param("%" PRIu64, target_offset64(arg4, arg5), 1);
-+    /* On 32-bit targets, two registers are used for `loff_t` */
-+    print_file_offset64(arg2, arg3, false);
-+    print_file_offset64(arg4, arg5, true);
- #else
--    print_raw_param(TARGET_ABI_FMT_ld, arg2, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg3, 1);
-+    /* On 64-bit targets, one register is used for `loff_t` */
-+    print_file_offset64(arg2, 0, false);
-+    print_file_offset64(arg3, 0, true);
+ print_syscall_ret_raw(struct syscallname *name, abi_long ret)
+@@ -1196,8 +1217,11 @@ UNUSED static const struct flags mmap_flags[] = {
+     FLAG_TARGET(MAP_POPULATE),
+     FLAG_TARGET(MAP_STACK),
+     FLAG_TARGET(MAP_SYNC),
+-#if TARGET_MAP_UNINITIALIZED != 0
++#ifdef TARGET_MAP_UNINITIALIZED
+     FLAG_TARGET(MAP_UNINITIALIZED),
++#endif
++#ifdef TARGET_MAP_32BIT
++    FLAG_TARGET(MAP_32BIT),
  #endif
-     print_syscall_epilogue(name);
- }
-@@ -2597,8 +2617,7 @@ print__llseek(CPUArchState *cpu_env, const struct syscallname *name,
-     const char *whence = "UNKNOWN";
-     print_syscall_prologue(name);
-     print_raw_param("%d", arg0, 0);
--    print_raw_param("%ld", arg1, 0);
--    print_raw_param("%ld", arg2, 0);
-+    print_file_offset64(arg1, arg2, false);
-     print_pointer(arg3, 0);
-     switch(arg4) {
-     case SEEK_SET: whence = "SEEK_SET"; break;
-@@ -2619,7 +2638,7 @@ print_lseek(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     print_syscall_prologue(name);
-     print_raw_param("%d", arg0, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg1, 0);
-+    print_file_offset32(arg1, false);
-     switch (arg2) {
-     case SEEK_SET:
-         qemu_log("SEEK_SET"); break;
-@@ -2650,7 +2669,7 @@ print_truncate(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     print_syscall_prologue(name);
-     print_string(arg0, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg1, 1);
-+    print_file_offset32(arg1, true);
-     print_syscall_epilogue(name);
- }
+     FLAG_END,
+ };
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 51b5ead969..7a8d18ba96 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -602,10 +602,10 @@
+ { TARGET_NR_mlockall, "mlockall" , NULL, print_mlockall, NULL },
  #endif
-@@ -2667,7 +2686,7 @@ print_truncate64(CPUArchState *cpu_env, const struct syscallname *name,
-         arg1 = arg2;
-         arg2 = arg3;
-     }
--    print_raw_param("%" PRIu64, target_offset64(arg1, arg2), 1);
-+    print_file_offset64(arg1, arg2, true);
-     print_syscall_epilogue(name);
- }
+ #ifdef TARGET_NR_mmap
+-{ TARGET_NR_mmap, "mmap" , NULL, print_mmap, print_syscall_ret_addr },
++{ TARGET_NR_mmap, "mmap" , NULL, print_mmap, print_mmap_ret },
  #endif
-@@ -2684,7 +2703,7 @@ print_ftruncate64(CPUArchState *cpu_env, const struct syscallname *name,
-         arg1 = arg2;
-         arg2 = arg3;
-     }
--    print_raw_param("%" PRIu64, target_offset64(arg1, arg2), 1);
-+    print_file_offset64(arg1, arg2, true);
-     print_syscall_epilogue(name);
- }
+ #ifdef TARGET_NR_mmap2
+-{ TARGET_NR_mmap2, "mmap2" , NULL, print_mmap2, print_syscall_ret_addr },
++{ TARGET_NR_mmap2, "mmap2" , NULL, print_mmap2, print_mmap_ret },
  #endif
-@@ -3239,7 +3258,7 @@ print_stat(CPUArchState *cpu_env, const struct syscallname *name,
-     print_syscall_epilogue(name);
- }
- #define print_lstat     print_stat
--#define print_stat64	print_stat
-+#define print_stat64    print_stat
- #define print_lstat64   print_stat
+ #ifdef TARGET_NR_modify_ldt
+ { TARGET_NR_modify_ldt, "modify_ldt" , NULL, NULL, NULL },
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 2060e561a2..0bb56e7a8e 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -5896,32 +5896,6 @@ static const StructEntry struct_termios_def = {
+ #define MAP_UNINITIALIZED 0
  #endif
  
-@@ -4228,7 +4247,7 @@ print_pread64(CPUArchState *cpu_env, const struct syscallname *name,
-     print_raw_param("%d", arg0, 0);
-     print_pointer(arg1, 0);
-     print_raw_param("%d", arg2, 0);
--    print_raw_param("%" PRIu64, target_offset64(arg3, arg4), 1);
-+    print_file_offset64(arg3, arg4, true);
-     print_syscall_epilogue(name);
- }
+-static const bitmask_transtbl mmap_flags_tbl[] = {
+-    { TARGET_MAP_FIXED, TARGET_MAP_FIXED, MAP_FIXED, MAP_FIXED },
+-    { TARGET_MAP_ANONYMOUS, TARGET_MAP_ANONYMOUS,
+-      MAP_ANONYMOUS, MAP_ANONYMOUS },
+-    { TARGET_MAP_GROWSDOWN, TARGET_MAP_GROWSDOWN,
+-      MAP_GROWSDOWN, MAP_GROWSDOWN },
+-    { TARGET_MAP_DENYWRITE, TARGET_MAP_DENYWRITE,
+-      MAP_DENYWRITE, MAP_DENYWRITE },
+-    { TARGET_MAP_EXECUTABLE, TARGET_MAP_EXECUTABLE,
+-      MAP_EXECUTABLE, MAP_EXECUTABLE },
+-    { TARGET_MAP_LOCKED, TARGET_MAP_LOCKED, MAP_LOCKED, MAP_LOCKED },
+-    { TARGET_MAP_NORESERVE, TARGET_MAP_NORESERVE,
+-      MAP_NORESERVE, MAP_NORESERVE },
+-    { TARGET_MAP_HUGETLB, TARGET_MAP_HUGETLB, MAP_HUGETLB, MAP_HUGETLB },
+-    /* MAP_STACK had been ignored by the kernel for quite some time.
+-       Recognize it for the target insofar as we do not want to pass
+-       it through to the host.  */
+-    { TARGET_MAP_STACK, TARGET_MAP_STACK, 0, 0 },
+-    { TARGET_MAP_NONBLOCK, TARGET_MAP_NONBLOCK, MAP_NONBLOCK, MAP_NONBLOCK },
+-    { TARGET_MAP_POPULATE, TARGET_MAP_POPULATE, MAP_POPULATE, MAP_POPULATE },
+-    { TARGET_MAP_FIXED_NOREPLACE, TARGET_MAP_FIXED_NOREPLACE,
+-      MAP_FIXED_NOREPLACE, MAP_FIXED_NOREPLACE },
+-    { TARGET_MAP_UNINITIALIZED, TARGET_MAP_UNINITIALIZED,
+-      MAP_UNINITIALIZED, MAP_UNINITIALIZED },
+-};
+-
+ /*
+  * Arrange for legacy / undefined architecture specific flags to be
+  * ignored by mmap handling code.
+@@ -5936,6 +5910,30 @@ static const bitmask_transtbl mmap_flags_tbl[] = {
+ #define TARGET_MAP_HUGE_1GB 0
  #endif
+ 
++static const bitmask_transtbl mmap_flags_tbl[] = {
++    BITMASK_BIT(TARGET_MAP_FIXED, MAP_FIXED),
++    BITMASK_BIT(TARGET_MAP_ANONYMOUS, MAP_ANONYMOUS),
++    BITMASK_BIT(TARGET_MAP_GROWSDOWN, MAP_GROWSDOWN),
++    BITMASK_BIT(TARGET_MAP_DENYWRITE, MAP_DENYWRITE),
++    BITMASK_BIT(TARGET_MAP_EXECUTABLE, MAP_EXECUTABLE),
++    BITMASK_BIT(TARGET_MAP_LOCKED, MAP_LOCKED),
++    BITMASK_BIT(TARGET_MAP_NORESERVE, MAP_NORESERVE),
++    BITMASK_BIT(TARGET_MAP_HUGETLB, MAP_HUGETLB),
++    /*
++     * MAP_STACK had been ignored by the kernel for quite some time.
++     * Recognize it for the target insofar as we do not want to pass
++     * it through to the host.
++     */
++    BITMASK_BIT(TARGET_MAP_STACK, 0),
++    BITMASK_BIT(TARGET_MAP_NONBLOCK, MAP_NONBLOCK),
++    BITMASK_BIT(TARGET_MAP_POPULATE, MAP_POPULATE),
++    BITMASK_BIT(TARGET_MAP_FIXED_NOREPLACE, MAP_FIXED_NOREPLACE),
++    BITMASK_BIT(TARGET_MAP_UNINITIALIZED, MAP_UNINITIALIZED),
++#if TARGET_MAP_32BIT != 0
++    BITMASK_BIT(TARGET_MAP_32BIT, MAP_32BIT),
++#endif
++};
++
+ static abi_long do_mmap(abi_ulong addr, abi_ulong len, int prot,
+                         int target_flags, int fd, off_t offset)
+ {
+diff --git a/linux-user/x86_64/target_mman.h b/linux-user/x86_64/target_mman.h
+index 48fbf20b42..14c29203f9 100644
+--- a/linux-user/x86_64/target_mman.h
++++ b/linux-user/x86_64/target_mman.h
+@@ -13,4 +13,7 @@
+ /* arch/x86/include/asm/elf.h */
+ #define ELF_ET_DYN_BASE       (TASK_UNMAPPED_BASE * 2)
+ 
++/* arch/x86/include/uapi/asm/mman.h */
++#define TARGET_MAP_32BIT 0x40
++
+ #include "../generic/target_mman.h"
 -- 
 2.51.0
 
