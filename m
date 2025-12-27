@@ -4,108 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8643E8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42A0BE8FDD8
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQRb-0007Vu-Pl; Sat, 27 Dec 2025 04:18:39 -0500
+	id 1vZQQn-0005Fa-G6; Sat, 27 Dec 2025 04:17:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRM-0006vX-Ds
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vZQQl-000541-Ex
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRK-0003n2-QE
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:24 -0500
+ id 1vZQQj-0003FR-N7
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827102;
+ s=mimecast20190719; t=1766827064;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SIY+C6WBcDEaxjsneB4epVbDtpl9yBW5enqGVp+ga3s=;
- b=EZQQvtRQVz4Ec7bJI8JqD955Xp3wKN/lYO/4GrHiFURv7OjOczak9FXsB/hvr0tznTVfC7
- g5eNraEx3fkG9SJfWLk91aIxZVWwelf37Ic2y0rTSxSgCPwFBKuhRYxHCPFfK1IDvX/8Xl
- qYe9PSal6F/VqrI0ttVpikLSz/5K4T4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FwekjZinjWJMgWeTKWwSXEYnWdIxsqhWLTJE90n1OPI=;
+ b=VCfcWmE3a/UTAtNmJSc2WZad3zJUKyT+bljEY1b/koMGgfLnaVs3VWxRi2tMGybp4bOC8X
+ eoclOsxLPYXw7GFMSxuIYVwUQd5xiSpk+txA93Gv1DjvcvIgyiHwZY0G1LonUcmTZUj1W/
+ S151j+XIy3ucUQhDcIYm99NcvAskwnU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-340-ePmPP8tNMe6Eozv1bvZpmA-1; Sat, 27 Dec 2025 04:18:21 -0500
-X-MC-Unique: ePmPP8tNMe6Eozv1bvZpmA-1
-X-Mimecast-MFC-AGG-ID: ePmPP8tNMe6Eozv1bvZpmA_1766827100
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4775f51ce36so74622825e9.1
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:20 -0800 (PST)
+ us-mta-417-X-kt2YoDNdGVIy3KXTFAxA-1; Sat, 27 Dec 2025 04:17:42 -0500
+X-MC-Unique: X-kt2YoDNdGVIy3KXTFAxA-1
+X-Mimecast-MFC-AGG-ID: X-kt2YoDNdGVIy3KXTFAxA_1766827061
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-430fc83f58dso4347552f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827099; x=1767431899; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827061; x=1767431861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SIY+C6WBcDEaxjsneB4epVbDtpl9yBW5enqGVp+ga3s=;
- b=NnWEZO78n34F822Ac2PRDf1q2tt5aCpvaORyjugODESv/7Bn2u+p7eIFtH7K7vow3Y
- dwfS7x5BSeAQlZAognJ3P1KAiZr2oPw9j3g+uxGcyo3zBPu1qxVvBo81x4jSRQ/bFP8T
- 4YOcyRTxvQoRwFXYPaobM9oXKny6UiuhE2ddxP5kvsyu8WE6rt5VgHwh4V7ITzSDS8/5
- udrTkEMzmuGOqhB76bXz6W1PV3DXjYqc0mTLUgDiX+kY/gi9qLCOmh4z7JHOALvbQUIr
- wd1BD1XCEaFG5seuvCt7lpxYh9sBPJJR7fikGZkRwK4yRhODzRqzQs2l4NIEYjlKoJPm
- P7kg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=FwekjZinjWJMgWeTKWwSXEYnWdIxsqhWLTJE90n1OPI=;
+ b=ivnTbBgZn3QzIeo+C4iL2LgkHBRyf7FHFMGtNqN8RTX6cJIDnR9oSGk7IuaGD7NSjo
+ skWQXqNbdwRSCfPGfkbFv7S9aIn9fb2S5mhStdjePS+z6h4g7nV3tm5nruLQkW0plgc4
+ PddpZmY5zQs+6fzPDs72fvJE0uo5OHCyzB7ItGDydkJVgw7GXbpfAT0+fv5+R9peLJwl
+ SdLIdeqOxy7SjIZ2dwbVQEhEJ1bMhGhYOemkfalyttTWKsHk5uZnwcbC/DstCjau91L4
+ +dmNkOTBlu7QkQp2cTysxX042IRmYsjvL2SKQ/ZSTgX4uj6WNBM8Am0evgBlObXZ51Ct
+ Yt+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827099; x=1767431899;
+ d=1e100.net; s=20230601; t=1766827061; x=1767431861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=SIY+C6WBcDEaxjsneB4epVbDtpl9yBW5enqGVp+ga3s=;
- b=GNjYz9ZSzqPafjl3GmBC6uWYs9pLswK87Snq/zt5jHuS6/Woh5gEGNUvEP3dzDmfOK
- C4RhQWzaTNVik6MEy5nQCzPlhUUhjaDVyjcyiownokFLoM8K4ZQ5beVOo1L3n/NqRUI3
- cf433BuMdcsWLtXf1qNkKNIhjORdoKm99BRCvJ8D5edOLveilpSnoonqkbIQFYVLwnpg
- J/6+ufitfyCPPh6T76aKju/u+IvFkSm7ljcemsis3Ur6gUowxbxvUIyrSVxkAzslDMZr
- F7xYErBkTMq98Bb3zRLXMy9rqd8MMr85Z2M93iHg+gZXUWTAlBmnb5mLmhmlH7+jNClO
- ywvA==
-X-Gm-Message-State: AOJu0YxSTLBvsihscQraA7EtU/AagXJ8XAKA95v5lYzg3oo80sGuiT19
- AnL4Wmbn+T3QQV6nFb+2yD8bU46XlJ882hPnSK0LLNZiKx9p+RKeWaVxu2Zb6ZzQ16JF9UBjNkt
- N0JhFMjQRBPjGkV1Og8T7Gefb7mN6PSikw1BBkFaUQGtfutAkRblkSKAeSzSfn/rElcHfOaInQO
- EJPWSsRYxYIEL4jrpA4fA+00Q7b+Yw//4eIqkQPAnw
-X-Gm-Gg: AY/fxX6GZe45qiZDmbzmLrItAluwWktEqoM5gibIUVUhpUdbYlLM741TNh0ogGlEHYn
- NuVLopPUcsuPtTq8AkRiS2AcAPBvkjuWVHth/tRVlCNI2C3wpuuNdMnVUZuYNydNzMOiiq8OAoA
- t8ldycpAPPDOa/0cI+pUSBaExP82Pv133cnr5iYBRQi8NOEuiWgf87idU6VrwwONWWRFyTQozGU
- vk2/3rawxrlM9G9zVlSjKDmeRtuCY+ATH/StT+a5x8W0Zmz/Ted82ssAsCVnFZFiZ2NqqVUTTnK
- 5puuxBdcrE5vI4tG+raXlBaFauBDkoUrdcC+AoBWdL+uJF7yH8Yg/DLASJwC3VmqGRK0EsC4G1a
- jx8RP7029K5J/frBUcS7GXLWgs+vva7lDs8XGAGTnuwk20WPRTlHCwArmtErQ5ud4ODtYCegooa
- 3ypDHTt6CYvDEossk=
-X-Received: by 2002:a05:600c:5250:b0:479:3a86:dc1b with SMTP id
- 5b1f17b1804b1-47d36243a0bmr140761465e9.37.1766827098885; 
- Sat, 27 Dec 2025 01:18:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHanS1ghInQAvwtDhSvYf6har0Q+vF093ZAOSRuiGuoI4W2lYsAuea+rJ1MYQvOuuOlvQiLPg==
-X-Received: by 2002:a05:600c:5250:b0:479:3a86:dc1b with SMTP id
- 5b1f17b1804b1-47d36243a0bmr140761265e9.37.1766827098479; 
- Sat, 27 Dec 2025 01:18:18 -0800 (PST)
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=FwekjZinjWJMgWeTKWwSXEYnWdIxsqhWLTJE90n1OPI=;
+ b=JxyFZbvKLnuUq1dLmb9YH1typJU9Ydbk9TTWBKcMR6rg5DVWcx6bPybfQEOkhPumh5
+ bFjDBA04hbR3W/jljmdRSG2KG1OGA1viBzTm7MXVQZcQYzQKI12lD9ppQJVvTvt0B3T7
+ 5+R/c/2rfVHToL1quvMv9eJEI+0kVibrdiGaiwssVSoWknL+jZPyWmEUbDBFxekQRAg/
+ tFFwuOvnlGSApR7utfxv2wAST3zbD9qObmdZJk7Ryz7z7/4Q0KSRfnVjUhiICIOAljPZ
+ ptDcT5GImMzF3aaAx2XzwPYlX3yEsJOrtfrfLWPEeutk3IoIwieRgH+qjRqwaRRmD0mz
+ ad5A==
+X-Gm-Message-State: AOJu0YyutcDX5+uhADlbEjCG+C55iQBH0Cy3QZO2Prp49GzkBaTgbeSc
+ nwz/PiFmeODj036DDOc+iGLVV6c1v/ZK+jNuovJ896bkRK+HX0qq6899yVvVKTTEqLZ5wvrfsLW
+ FM7nLGYOMcCgR+gJmhda+vA/BATHIj6MgQSEdJttkfKnKAZMM64pFT/dHhcD20P4QRKWtNtsdV5
+ NQR2p4/2CQIJvo0aDqY0k4kZ7aTyTRxuDLKTl27WE/
+X-Gm-Gg: AY/fxX7N9YBiQSKp45B2tCGHM3NafT9RknhD/x8XF45yFUmrPLvOr1qeJhAiizvBH9J
+ 3U7YOpLgAuew9wWPhEFwOldNFQAP14Arj4ZhyTTanVdguDOX8YYKPFbKk01yWuBjn/bxrSiXe9E
+ J1FXm9iWM8KFytAnwIwihRw+xMu8mL0Eh1w3Ta5RK5espr0fzzMNGjtt7QZBCNxL45AVrxP+kMT
+ OKfzVJT1PdK6WYdkvTihIZ0VLWRdbI5dPXBw7oZpdp7HObgKiOhx48fkx9oGHyKHvk/JWJ3wR/w
+ pMHtmrEeSH+U012sCG73IVzddgxFwqT76KK/lxkpIRmEuutnB4FmpAkn34ZtyEGGk3CgZDOBYRq
+ oTbSC4CdHITSgYrzuhGYQlH+6NtkPWupIcxSg4BKXthN3dQxfQvVJosVZqDRvMS8z4WOjWdQYLx
+ F1rvJECFH9QRMB5qk=
+X-Received: by 2002:a05:6000:24c4:b0:430:fc3a:fbce with SMTP id
+ ffacd0b85a97d-4324e4c9d45mr34443861f8f.15.1766827060937; 
+ Sat, 27 Dec 2025 01:17:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEE9bb0R5f+0u58pO69zWp65EnjxxVRVrAvKPl359NUjwK8hb5k+6GwJyKKe/a9+dSPFcVPkw==
+X-Received: by 2002:a05:6000:24c4:b0:430:fc3a:fbce with SMTP id
+ ffacd0b85a97d-4324e4c9d45mr34443833f8f.15.1766827060415; 
+ Sat, 27 Dec 2025 01:17:40 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d28a33adcsm130098485e9.18.2025.12.27.01.18.16
+ ffacd0b85a97d-4324ea830fesm50395867f8f.20.2025.12.27.01.17.39
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:18:16 -0800 (PST)
+ Sat, 27 Dec 2025 01:17:39 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 059/153] rust/hpet: Explicitly initialize complex fields in
- init()
-Date: Sat, 27 Dec 2025 10:14:46 +0100
-Message-ID: <20251227091622.20725-60-pbonzini@redhat.com>
+Subject: [PULL 040/153] migration: add prelude
+Date: Sat, 27 Dec 2025 10:14:27 +0100
+Message-ID: <20251227091622.20725-41-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,53 +121,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
-
-Explicitly initialize more fields which are complex structures.
-
-For simple types (bool/u32/usize), they can be omitted since C has
-already initialized memory to all zeros and this is the valid
-initialization for those simple types.
-
-Previously such complex fields (InterruptSource/BqlCell/BqlRefCell) were
-not explicitly initialized in init() and it's fine, because simply
-setting all memory to zero aligns with their default initialization
-behavior. However, this behavior is not robust. When adding new complex
-struct or modifying the initial values of existing structs, this default
-behavior can easily be broken.
-
-Thus, do explicit initialization for HPET to become a good example.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20251113051937.4017675-16-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ rust/chardev/src/prelude.rs       |  3 +++
+ rust/hw/char/pl011/src/device.rs  |  5 +----
+ rust/hw/core/tests/tests.rs       |  2 +-
+ rust/hw/timer/hpet/src/device.rs  |  5 +----
+ rust/migration/meson.build        |  1 +
+ rust/migration/src/lib.rs         |  5 +++++
+ rust/migration/src/prelude.rs     | 19 +++++++++++++++++++
+ rust/tests/tests/vmstate_tests.rs |  5 ++---
+ 8 files changed, 33 insertions(+), 12 deletions(-)
+ create mode 100644 rust/chardev/src/prelude.rs
+ create mode 100644 rust/migration/src/prelude.rs
 
+diff --git a/rust/chardev/src/prelude.rs b/rust/chardev/src/prelude.rs
+new file mode 100644
+index 00000000000..9f0b561bfab
+--- /dev/null
++++ b/rust/chardev/src/prelude.rs
+@@ -0,0 +1,3 @@
++//! Essential types and traits intended for blanket imports.
++
++pub use crate::chardev::{Chardev, CharFrontend, Event};
+\ No newline at end of file
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 164f27d5bb2..2e4ccc9b231 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -8,10 +8,7 @@
+ use chardev::{CharFrontend, Chardev, Event};
+ use common::prelude::*;
+ use hwcore::{prelude::*, ClockEvent, IRQState};
+-use migration::{
+-    self, impl_vmstate_forward, impl_vmstate_struct, vmstate_fields, vmstate_of,
+-    vmstate_subsections, vmstate_unused, VMStateDescription, VMStateDescriptionBuilder,
+-};
++use migration::{self, prelude::*};
+ use qom::{prelude::*, ObjectImpl, Owned, ParentField, ParentInit};
+ use system::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder};
+ use util::prelude::*;
+diff --git a/rust/hw/core/tests/tests.rs b/rust/hw/core/tests/tests.rs
+index b39d1501d5b..f38376d0016 100644
+--- a/rust/hw/core/tests/tests.rs
++++ b/rust/hw/core/tests/tests.rs
+@@ -6,7 +6,7 @@
+ 
+ use bql::BqlCell;
+ use hwcore::prelude::*;
+-use migration::{VMStateDescription, VMStateDescriptionBuilder};
++use migration::prelude::*;
+ use qom::{prelude::*, ObjectImpl, ParentField};
+ use util::bindings::{module_call_init, module_init_type};
+ 
 diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index abbaebc405e..d622a6920a8 100644
+index 7ab9897cdfb..4ff1779a3d2 100644
 --- a/rust/hw/timer/hpet/src/device.rs
 +++ b/rust/hw/timer/hpet/src/device.rs
-@@ -733,6 +733,18 @@ unsafe fn init(mut this: ParentInit<Self>) {
-             HPET_REG_SPACE_LEN,
-         );
+@@ -13,10 +13,7 @@
+ use bql::{BqlCell, BqlRefCell};
+ use common::prelude::*;
+ use hwcore::prelude::*;
+-use migration::{
+-    self, impl_vmstate_struct, vmstate_fields, vmstate_of, vmstate_subsections, vmstate_validate,
+-    VMStateDescription, VMStateDescriptionBuilder,
+-};
++use migration::{self, prelude::*};
+ use qom::{prelude::*, ObjectImpl, ParentField, ParentInit};
+ use system::{
+     bindings::{address_space_memory, address_space_stl_le, hwaddr},
+diff --git a/rust/migration/meson.build b/rust/migration/meson.build
+index 94590dc1b87..76d86b0ac0f 100644
+--- a/rust/migration/meson.build
++++ b/rust/migration/meson.build
+@@ -32,6 +32,7 @@ _migration_rs = static_library(
+       'src/lib.rs',
+       'src/bindings.rs',
+       'src/migratable.rs',
++      'src/prelude.rs',
+       'src/vmstate.rs',
+     ],
+     {'.' : _migration_bindings_inc_rs},
+diff --git a/rust/migration/src/lib.rs b/rust/migration/src/lib.rs
+index c9bdf0d4133..32e182e716a 100644
+--- a/rust/migration/src/lib.rs
++++ b/rust/migration/src/lib.rs
+@@ -7,5 +7,10 @@
+ pub mod migratable;
+ pub use migratable::*;
  
-+        // Only consider members with more complex structures. C has already
-+        // initialized memory to all zeros - simple types (bool/u32/usize) can
-+        // rely on this without explicit initialization.
-+        uninit_field_mut!(*this, regs).write(Default::default());
-+        uninit_field_mut!(*this, hpet_offset).write(Default::default());
-+        // Set null_mut for now and post_init() will fill it.
-+        uninit_field_mut!(*this, irqs).write(Default::default());
-+        uninit_field_mut!(*this, rtc_irq_level).write(Default::default());
-+        uninit_field_mut!(*this, pit_enabled).write(Default::default());
-+        uninit_field_mut!(*this, num_timers_save).write(Default::default());
-+        uninit_field_mut!(*this, hpet_id).write(Default::default());
++// preserve one-item-per-"use" syntax, it is clearer
++// for prelude-like modules
++#[rustfmt::skip]
++pub mod prelude;
 +
-         Self::init_timers(&mut this);
-     }
+ pub mod vmstate;
+ pub use vmstate::*;
+diff --git a/rust/migration/src/prelude.rs b/rust/migration/src/prelude.rs
+new file mode 100644
+index 00000000000..797e7ec59d1
+--- /dev/null
++++ b/rust/migration/src/prelude.rs
+@@ -0,0 +1,19 @@
++//! Essential types and traits intended for blanket imports.
++
++// Core migration traits and types
++pub use crate::vmstate::VMState;
++pub use crate::vmstate::VMStateDescription;
++pub use crate::vmstate::VMStateDescriptionBuilder;
++
++// Migratable wrappers
++pub use crate::migratable::Migratable;
++pub use crate::ToMigrationState;
++
++// Commonly used macros
++pub use crate::impl_vmstate_forward;
++pub use crate::impl_vmstate_struct;
++pub use crate::vmstate_fields;
++pub use crate::vmstate_of;
++pub use crate::vmstate_subsections;
++pub use crate::vmstate_unused;
++pub use crate::vmstate_validate;
+diff --git a/rust/tests/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
+index fa9bbd6a122..c3f9e1c7436 100644
+--- a/rust/tests/tests/vmstate_tests.rs
++++ b/rust/tests/tests/vmstate_tests.rs
+@@ -16,9 +16,8 @@
+         vmstate_info_bool, vmstate_info_int32, vmstate_info_int64, vmstate_info_int8,
+         vmstate_info_uint64, vmstate_info_uint8, vmstate_info_unused_buffer, VMStateFlags,
+     },
+-    impl_vmstate_forward, impl_vmstate_struct,
+-    vmstate::{VMStateDescription, VMStateDescriptionBuilder, VMStateField},
+-    vmstate_fields, vmstate_of, vmstate_unused, vmstate_validate,
++    prelude::*,
++    vmstate::VMStateField,
+ };
  
+ const FOO_ARRAY_MAX: usize = 3;
 -- 
 2.52.0
 
