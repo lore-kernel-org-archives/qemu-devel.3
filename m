@@ -4,88 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9750AE92714
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 15:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B17E8FDCD
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 15:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZWZh-0006pc-8e; Sat, 27 Dec 2025 10:51:25 -0500
+	id 1vZWdE-00086w-8B; Sat, 27 Dec 2025 10:55:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZWZf-0006pQ-PL
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 10:51:23 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZWdC-00085A-Ds
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 10:55:02 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZWZe-0008Lm-8a
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 10:51:23 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso81556635e9.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 07:51:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZWdA-0002z3-9F
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 10:55:02 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4779a4fc95aso42597145e9.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 07:54:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766850680; x=1767455480; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766850898; x=1767455698; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Q6Ynz1b0FNLZGvJPvSqeGtlWQTuOE9JMhqJ6FwrmHVg=;
- b=uQ6sOw54n82dQiWtfWamFxWwWmU/iAHG3VQE9Li8qMnDBwb7/7oIjey1dt9Vi0tcfg
- S2Ix359P5gxnzs9R8dk545BT3NhADVrRdrBaGZr/PnIcVC0fz4EnzjVWo4TCcKUtl0y8
- pOuAW1IZXr4wDLSJzn0rMBY7uKPkbeyZCHoeEa4o+5zJPjQ9M/R4KOggMpTMs3QLd0ZB
- xhwQdcAQh2tbqwj9F9fB68UY/9gyyn8ZSF592tbiVjtqE9M4jqd3FblZpNvtUmglBh/X
- HH9ulTvaYkYZTv8vuYHDyYq0u971vPNHeUf7QEJlOlF1OYiguWU6ATwXNRePnVJxRJEE
- ttvg==
+ bh=QdvmLruiVsbgl5zamO0j9b+6ZRIAlO8QZ5wv1YJUuBI=;
+ b=jRqXzS2D+tHFp9R0vorT+0jtORb935D/L1V8BLVC+12+sEN7YPVvu7f3610L9wz91J
+ H7itq/1LkOOonuBL4jcwwoU/GGLYe7X2SdMwwoejLPSQfX4Iw37U6sPXR7gp70UeQ+jx
+ /YGOHgMn1l/M5HicDiEVOR+PddUl0Febw9SaEezl6546Cw+3CpUPrXVB/L8xWfI4lnX+
+ JVMca9UdhsAo0RI3zU7Xrm0oO7LLduipR0rrZ9TXQmCM0tmjb0jZAbpn4FzfPW0/p6Va
+ FZfSRptsH8tHD6MtUFnMFvXXL58VJ3MRJtbaWsS5/0cKmCuCNRG5YRKpP/Wm7r85SMx8
+ BoiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766850680; x=1767455480;
+ d=1e100.net; s=20230601; t=1766850898; x=1767455698;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Q6Ynz1b0FNLZGvJPvSqeGtlWQTuOE9JMhqJ6FwrmHVg=;
- b=hHqIs6y8npo6XEXwAreaU2/5QbKXHHWgWBFvd73zImQaQ7pAE+SmmesugWW8HnnYkl
- gSlmDMqanXloJns4AGUyBnHrXRwjUdr0ocOyMcZgr8xNzUuoh0daeKtZPwiX5kvsZ/QQ
- eRmMe181YW+mcTzj0+pQzLJlkdvyC27hbmPNAW9PYKzkKw+ig8bPG0cusOm+1OR7w/aG
- LUHuWP9yAfh+k7PdHe9H95TSimOMX1aeZ0Eaf8Ai/RJRiSQCb1mcUCTVIUk9AEwe8gA7
- P7ucgLbWahYVVqjZQYQyxoY+z4+OybHWD5Q2+qPw9QoZUAm0OrpLg8ZvIndNd6BLhiCg
- GHsA==
-X-Gm-Message-State: AOJu0Yz6z9+R9/ifEUumtl4wp9NSuJvlrJLt6Pv66WliJthG22h1vJjR
- xqmva/fZMLAVjtioSgbwbbxB6PNYdBxo5t4UyS293lMc5rMjgslvFvZK8uLP6fgWlLk=
-X-Gm-Gg: AY/fxX5absbFHsUkZtzm4q60lCmwgBHKw2ohM6YvJExvuAcSDp48FYXtawgRauoLZ9H
- s5ElaNKNJ62AfEKExYDC1NQOcwD8IWthpRo/33UZjA1cbErKafWj1X21B2YspUVmLUfkXvZfWTN
- virnw7eoFbX006dS1zvOxGlfHnzEX7BZDyDxSltmEf1vNJstIq/fnRh9E9ZzeUYDX1OuHRgVAE/
- PZvtR/7MlRSRloSf/kERAFDzRv989+/aBojHkS3JZiE0YG4lwp4uC0azM2okwYW/lw856WPpJxb
- aTeJMieV5NK4U1gayXFx6J57tH4cO1mMvSVqDRkqtI+AzzaugCpIzeZeVwNkn+2Eru9gbeQk9bh
- lnPiyjfufuLwtL0aKv74szcdd8hUssbv4JSP/wY8Io1buFpSxNby84atnHUoimXkmvWjARz6L8m
- uy1/JumhLouDq3YXecukGyKG/xQXk0JIuku/EzdvzpuDSL+jC4EE7Rapouz6wP1g==
-X-Google-Smtp-Source: AGHT+IGRYWFb4jaDTtiCcta5gxwPW5ddRAhEkBzCYGwNaRWFXBQXfJ8lUVCT9deOB1Ds2//cPa1i1Q==
-X-Received: by 2002:a05:600c:1e1c:b0:47d:4047:f377 with SMTP id
- 5b1f17b1804b1-47d4047f3e5mr115495705e9.36.1766850680253; 
- Sat, 27 Dec 2025 07:51:20 -0800 (PST)
+ bh=QdvmLruiVsbgl5zamO0j9b+6ZRIAlO8QZ5wv1YJUuBI=;
+ b=uBl/jZeSagN2FUZ1vfROr9yuus53CZf8/8Gkh1oOkeZBOOC3D/5F+ppRClhap6SnFi
+ b3LKfSNbd1kN9czrh9pL10YoCGKyoH3g/5iKH9vSaWGgz96xM4uARXck3Kj1/fTodDZA
+ k1vO+9CmBZJH+T3x35l7oSZykJM8OLsqFVSHf7spoVXaKx13MRve3qzORE6UUQlsi4G7
+ 2nwGtsGO+KCx0YHpLUSRcXTVv7uQLYSMwUsCrTRF6gzGp2i10DgA6VpRo9Zv1drmbfVB
+ Av5jYTuttQazg+Kqsar1ksFVSsCqzeGh9TCOsKWQ0KFznjfzLxBfsMenxcwd24wrTR18
+ fQag==
+X-Gm-Message-State: AOJu0Yy6j7Xv1rJtuqQFwyaqk3n5jfcUx+oyI+UIoQsMwqTmg6q/P88V
+ 7sHAAxOqi6onSK4JlSwzMHcUCS05epbkeXECtHWblYh+YkQiQ+0NqTpQUT882q5BRjE=
+X-Gm-Gg: AY/fxX68XtZLtJ6gIyY9WyQR5nudnhdokUf5+l0JNFDAHVvtrsV5ZvpVRRlu4wbk2Ds
+ XrAZ8EuA4J/M8bOkF6VbUiWx0NaWjT7Xknm57a0oXRpqAjsqLGlJds8s19Xq2dGMnZtJze02q4X
+ kme3xHM7Y7YhxI6fhF/tncL+FwX70Fc5XYZBpN0P1b2+N4YC0mFPS3LqZikYcthBR2VU2f07tn8
+ Xq7+nWYzMTMBTzMJ7+b/JuGpVzBmYEljyweVcbBo5gFkF9wFyCDFUDIRgTkKySormBhHfMmhtVH
+ VANevhfnTygloM5yDQyKMEGqXy7GT25hxalvwuWvaD5cWIbjyTgxh2oC+Dphdpe98ZeqW6sp15Z
+ hDFuMDr/jNCLMJIvnbEu6skdqIJEkwmuVP+bcIWY+o5m/2xqGxozaC45fGemDVt/1bZN3euhJYO
+ NwisYC6h51xduPeg+uwhK72pQk38VFw0KsdinFbFwQroycToqF+k1cJmnBiP5UyA==
+X-Google-Smtp-Source: AGHT+IGwI7wyY90jgFEY2Hh10x0oT5wnGfiYH2pOL+Z/8Ey4/zOOvAVDeaSLLvlhR+hfqYLdTiM2xg==
+X-Received: by 2002:a5d:64c4:0:b0:430:f593:aa34 with SMTP id
+ ffacd0b85a97d-432448b7ee5mr38309898f8f.17.1766850897941; 
+ Sat, 27 Dec 2025 07:54:57 -0800 (PST)
 Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
  [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea82feasm51950552f8f.24.2025.12.27.07.51.19
+ ffacd0b85a97d-4324eaa46c0sm52111460f8f.34.2025.12.27.07.54.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Dec 2025 07:51:19 -0800 (PST)
-Message-ID: <e0b99887-934e-4587-9410-b090a4fcfdc8@linaro.org>
-Date: Sat, 27 Dec 2025 16:51:19 +0100
+ Sat, 27 Dec 2025 07:54:57 -0800 (PST)
+Message-ID: <5ce59811-f408-4ecb-9650-9c9aa5aa6c8c@linaro.org>
+Date: Sat, 27 Dec 2025 16:54:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 16/25] system: Allow restricting the legacy ld/st_he()
- 'native-endian' API
+Subject: Re: [RFC v8 3/7] hw/misc: Introduce iommu-testdev for bare-metal
+ IOMMU testing
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
- <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-17-philmd@linaro.org>
- <CABgObfa9gHpK3CR8Aa6MA4YqfaMs3bn70pba58QQ2+32+xwxzQ@mail.gmail.com>
+To: Tao Tang <tangtao1634@phytium.com.cn>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20251224034647.2596434-1-tangtao1634@phytium.com.cn>
+ <20251224034647.2596434-4-tangtao1634@phytium.com.cn>
+ <f3c919df-076c-4f19-ba28-686c713fc53f@linaro.org>
+ <e77c63ea-471f-4bea-af4b-378081446e0a@phytium.com.cn>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfa9gHpK3CR8Aa6MA4YqfaMs3bn70pba58QQ2+32+xwxzQ@mail.gmail.com>
+In-Reply-To: <e77c63ea-471f-4bea-af4b-378081446e0a@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,32 +114,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/12/25 09:56, Paolo Bonzini wrote:
+On 27/12/25 06:16, Tao Tang wrote:
+> Hi Philippe,
+> 
+> On 2025/12/27 06:56, Philippe Mathieu-Daudé wrote:
+>> Hi Tao,
+>>
+>> On 24/12/25 04:46, Tao Tang wrote:
+>>> Add a minimal PCI test device designed to exercise IOMMU translation
+>>> (such as ARM SMMUv3) without requiring guest firmware or OS. The device
+>>> provides MMIO registers to configure and trigger DMA operations with
+>>> controllable attributes (security state, address space), enabling
+>>> deterministic IOMMU testing.
+>>>
+>>> Key features:
+>>> - Bare-metal IOMMU testing via simple MMIO interface
+>>> - Configurable DMA attributes for security states and address spaces
+>>> - Write-then-read verification pattern with automatic result checking
+>>>
+>>> The device performs a deterministic DMA test pattern: write a known
+>>> value (0x12345678) to a configured GVA, read it back, and verify data
+>>> integrity. Results are reported through a dedicated result register,
+>>> eliminating the need for complex interrupt handling or driver
+>>> infrastructure in tests.
+>>>
+>>> This is purely a test device and not intended for production use or
+>>> machine realism. It complements existing test infrastructure like
+>>> pci-testdev but focuses specifically on IOMMU translation path
+>>> validation.
+>>>
+>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+>>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>>> ---
+>>>   MAINTAINERS                     |   7 +
+>>>   docs/specs/index.rst            |   1 +
+>>>   docs/specs/iommu-testdev.rst    | 112 +++++++++++++
+>>>   hw/misc/Kconfig                 |   5 +
+>>>   hw/misc/iommu-testdev.c         | 271 ++++++++++++++++++++++++++++++++
+>>>   hw/misc/meson.build             |   1 +
+>>>   hw/misc/trace-events            |  10 ++
+>>>   include/hw/misc/iommu-testdev.h |  68 ++++++++
+>>>   8 files changed, 475 insertions(+)
+>>>   create mode 100644 docs/specs/iommu-testdev.rst
+>>>   create mode 100644 hw/misc/iommu-testdev.c
+>>>   create mode 100644 include/hw/misc/iommu-testdev.h
+>>
+>>
+>>> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+>>> index fccd735c24..b5f6fdbd9c 100644
+>>> --- a/hw/misc/Kconfig
+>>> +++ b/hw/misc/Kconfig
+>>> @@ -25,6 +25,11 @@ config PCI_TESTDEV
+>>>       default y if TEST_DEVICES
+>>>       depends on PCI
+>>>   +config IOMMU_TESTDEV
+>>> +    bool
+>>> +    default y if TEST_DEVICES
+>>> +    depends on PCI
+>>
+>>        "depends on PCI && ARM"
+>>
+>> ?
 > 
 > 
-> Il mer 24 dic 2025, 16:24 Philippe Mathieu-Daudé <philmd@linaro.org 
-> <mailto:philmd@linaro.org>> ha scritto:
-> 
->     Guard the native endian APIs we want to remove by surrounding
->     them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
-> 
->     Once a target gets cleaned we'll set the definition in the
->     target config, then the target won't be able to use the legacy
->     API anymore.
+> Thanks for your review.
 > 
 > 
-> Host endianness APIs are fine and are used when talking to the kernel. 
-> These functions that take a void* should not be included in 
-> TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API.
-> 
-> (And also they are the same for all targets so they don't get in the way 
-> of the single binary effort).
+> iommu-testdev is intended to be a generic PCI test DMA engine, usable to 
+> exercise different IOMMU models, not ARM-specific. The current series 
+> uses SMMUv3 as the first backend/example, but the device itself should 
+> only depend on PCI and is gated by TEST_DEVICES.
 
-Indeed they don't get in the way: I'm trying to have clearer APIs where
-everything is explicit. Anyway I can live keeping this for now.
+Ah great, I just noticed the "Translation Setup Workflow" chapter of
+this patch :)
 
-> If the only change needed in the series is to drop this patch, don't 
-> bother with reposting.
+Regards,
 
-OK, thanks.
+Phil.
 
