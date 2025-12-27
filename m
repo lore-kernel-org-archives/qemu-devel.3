@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35EF9E8FDD4
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A4EFE8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQQv-0005P8-3t; Sat, 27 Dec 2025 04:17:57 -0500
+	id 1vZQRk-0008RR-VF; Sat, 27 Dec 2025 04:18:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQs-0005O0-3q
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vZQRb-0007PD-3F
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQq-0003Mq-Ha
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:53 -0500
+ id 1vZQRZ-0004Bh-4G
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827071;
+ s=mimecast20190719; t=1766827116;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Saf9PETHsvdIuPhzv3hNmYIifKozrOKriQHb+ziBQiU=;
- b=goJEhM4X5HEYERcdHyhKo7DYw0oOdMJnBgw+mnoxQ3siG6IbthnQivcRMRwhKGqdqVCCw4
- 1D1/ml5MMuakTcqwmW1JN9ve5+8hyfGdnSBR+3scoD9joSTtdscqkCmdgARTBQCsMSuXfB
- eiTUNjoweI08ZpOhfy7xbXRwthlqCnE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xJg73JCP5bk90I6eF87pOlmwqjr/KR3OYSz/2lMy7Lo=;
+ b=A1jRbETd/SILeAf+9rl+Lm03V0iZUvplZs/vlbfpb5UQ2wb3gKe1RgdFfiUmfrDb8LEJyN
+ RgRHjHCdsMpY9IAjgkJLUWBiuQWGy8ET14VsEyrBsCqGp4prLy3XT6NkesFdG0Fwur/ZWc
+ GKD+duX7T6mE40IwbcCFIV5VORW+v8M=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-m-WjB_NaPVO6xIhky76RKg-1; Sat, 27 Dec 2025 04:17:50 -0500
-X-MC-Unique: m-WjB_NaPVO6xIhky76RKg-1
-X-Mimecast-MFC-AGG-ID: m-WjB_NaPVO6xIhky76RKg_1766827069
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-430f527f5easo4791414f8f.1
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:50 -0800 (PST)
+ us-mta-84--IIT5waaMqWW5_FA3yzWwA-1; Sat, 27 Dec 2025 04:18:33 -0500
+X-MC-Unique: -IIT5waaMqWW5_FA3yzWwA-1
+X-Mimecast-MFC-AGG-ID: -IIT5waaMqWW5_FA3yzWwA_1766827113
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4792bd2c290so73398945e9.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827068; x=1767431868; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827112; x=1767431912; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Saf9PETHsvdIuPhzv3hNmYIifKozrOKriQHb+ziBQiU=;
- b=b3AzFjEcJhNZ7IrRCdVsFhZBU5yIohVT82O8IuvsmJ+ycCqtPUxLfL3Lq4tbEUhL9a
- YDQYGNtr25aKDEWI0w3sDmfaRgZBandVV3djN/1JtQb8Dh9pgR8+nyfqxrrs4x5mnM26
- qPCfewyrJ0axLV1Z1IH/v9gG5Ps3TNsSCDqw4mrulsvzOU/lZYhvlv+U9Io4lTwAkGJL
- JHHT1SKbp1897BGByorbe8VPzuqH0oubg0s8ft4Pcjp5v/Feb2ivxVcWj3RbLy53Ek++
- vgHwJfaifqzx650JbR8sBjPqOEAk9pocSaRmey59JYkJiax4N1rith/QiG2DvU5zsQh7
- yxoQ==
+ bh=xJg73JCP5bk90I6eF87pOlmwqjr/KR3OYSz/2lMy7Lo=;
+ b=KY9tad2y4nmqWF4zgMWb7VMJBeWiMIP3nQ+IGgCLyXrGB8giHY7Ga7R4eAxnCnKESb
+ oQ09ZzSJet9SBCbH9vHtkXfGpiz7CRhn5KJcjXH98hsXPlFIMHp9vyIulIHKDxd2Z2WO
+ kxVZ5RpPkRQ/OmstUS4SAxfWxlyxSaTBsU0VpnogUieOpE0Mut6aXZG+yk93Eb3cDLig
+ dysxZXQoqX1AM8kZm3zSNTJ0gsueFACr96lYKfmMbThrNkdb6XwHeACndS5Jc5rhBNVZ
+ v5UGKiKAsd/Tj2AJSCidn2UTeqaptQqIUWyioGkaW9RdqNGOeg5MgUnpO+uyYO03LK5K
+ o5ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827068; x=1767431868;
+ d=1e100.net; s=20230601; t=1766827112; x=1767431912;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Saf9PETHsvdIuPhzv3hNmYIifKozrOKriQHb+ziBQiU=;
- b=U+ACRvjED/JTp+DF50TEkwwT2ARy7wkPj6U/iISfgt4LClr24gWkWBnzarSJn/Mrt7
- xX/ol6rmR25tsvfd2UYMaacPQLdJCcqmpMuY+VQI1W97Ku5DMjvxK16Kl4O391lND8It
- sKgSOLvKAs5ztcWR2D+TTmit+5GFVTjlsqMLVgZ9MR34Q55nCp4by7BCm2SPI6tmFyQl
- 8sNoP6dVagXG6dzxtLA9HOUDXzBLM8vDKwjeQHNukrYuGe65kp4121c/ZNB378zKWshA
- GNKZRG0tPBHvKI2NjYnhPpaP2oiYIcQthKrYTqP/6tVuHMtQa4VsjWcU7iAUce8ApAfC
- CReg==
-X-Gm-Message-State: AOJu0YydNQyevH32N8S+M/6KnHBycfOjLUI4R0uhmjGuf3XfiPOt9D18
- FBHvwaIDVG/wPWn84e4olvPHooNtgV5xpe09gRxRsU4eSbtrhRWENXfWAFcIjza96zOQFApnATK
- JjBR7Q1C+npat5aaCRZl6S78YNLXMBmpExOrxmg2IoPb7eWWUGPetAOMNVp1xdjEAvkB27ohlEb
- k9kst0PcSAh+1xJtYFq5VvDe7z//2zi9GGLhDPAa5j
-X-Gm-Gg: AY/fxX5A3ByN/LlW73+0kMzUJx2jJoKZwwyYvxwycqpWKf55V3l0uJXCTEdzjVHWW0B
- pH3v1hXt2gXBIUyGK0M+FavhVxIs0NGB/2gS0b0Qjdb21ALbY/4nJhKEQwwJQmBZ6lOP0M4m4Au
- SNXRRaKv9VPp1qEABYVTJm/Iv8bHK9c3ju+18M8EGRo14Gl/JuvTfjTRqY94AvCtlOBB8xbegjb
- 7yObZwg8tdaJJk8+QE4FDlQhAR1dAWzztbRdMwpcdneMNFIhEe5PQqej/15hzJopbmmicfbKtwB
- ZcX6l87FZZATasbJr8J9cSmwL5orh4ZrWUI3c+/U4VCeFuW5Wb2a+0GkMwY6uvcc3D1Dh/t+L91
- DD3j62u6nnm+c0RdQTXaslrHZPr2PgDFukCqkoC4oJhUmTfYJGKw8AujTnghZaulX0H9MzdYXxj
- GgxcfDuvTK/tBukXs=
-X-Received: by 2002:a05:600c:4f08:b0:475:d9de:952e with SMTP id
- 5b1f17b1804b1-47d18b83218mr273763375e9.1.1766827068126; 
- Sat, 27 Dec 2025 01:17:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEf36DEy3WgmEV+PRop4O1VCaEYDnttE/4kNKkHZerpkgnFKSo475+eyM2AGyHovOYeR1fMIg==
-X-Received: by 2002:a05:600c:4f08:b0:475:d9de:952e with SMTP id
- 5b1f17b1804b1-47d18b83218mr273763095e9.1.1766827067629; 
- Sat, 27 Dec 2025 01:17:47 -0800 (PST)
+ bh=xJg73JCP5bk90I6eF87pOlmwqjr/KR3OYSz/2lMy7Lo=;
+ b=YJWBRnPR8MpxGsuTy1ahjUYwep2XCC9b3OL2dgUTbbOKVkxNugogP13uOBSPvLSCac
+ OhzzPMi5oQTOIQ6P0+ilYlcnP+DKYH2e6VqmAhNnooJabXmczW3fLUqajPsGk8vcsJ6x
+ fiShrLKUUqrEqOnaY3/GlQyeJdPIy/OfpHd0xTIkOicn3vNfJGMHnKKVIUPRB+BuiMFN
+ gl1Wf3kboGXflQSivTgGDARVp2ZRQTE/blniBzI0EjBom5/j9LVtWc7NS2C7biVqtt9v
+ a5ae9YvXxmuu1WR7jPgDRfHsLYoYZdVhg2ZYZm+76CAzZADrnrkNNlt2g9EeBqgAk7kV
+ Z2Tw==
+X-Gm-Message-State: AOJu0YxxTOueZkmCejK9gqB9t+t5uwTgFWmjrC3/2P4xcymjcrASn/Iz
+ oQwyqu88Z4HrNjGFkW3O7K/K02swERAJjB9urXlmJjYllw6BzXNuO119JkNSL+N3BSwxUJ6QB3W
+ lFiWRZlheI8p1e0i02/JohNFdB0cvi3zvSjPxerxzlHXJpLGgnLc3ZXQpcj16nOH3TVv4JtZlHp
+ VdswxkbEDja2r2P7rsL9A84dpMQDo3AaTrV2TGUQ8b
+X-Gm-Gg: AY/fxX5h4WbgS0zyTwYP4JpakVkqraXnl41Gzo+ezc7YgcYGn5RYGiYnWj46jQretGu
+ 0+PukbeOW9Yr84CJxZoNvwfy8X3l6Ix1AAGtCy5xsbky0yVI2UioG2AgaaFAgc8g56WgHAkEzc5
+ cIMMzuRLhbX+hsAP5BjKJzUp7Ie9ymuYrAXJahWDUu4VpFdmTwnJ+esQIbOA75Nom9CvNvRSeoX
+ luuSKa2mC2RnZmVeeruVEbL4g+Qjbtr8J5rQCil4IHGl87ElomqCmCvC8MEQVvPIKQWjGfGzpuq
+ /8MjpTON0PnqGSAx+e2QClfAM1rqjFItNjXPUjo53MMAg+YrUg7hYeBtHSkFs+35afPeVRrUhOb
+ hKZ7RaQpBUghHUUdarNIxbzB8kQzkE9NU1jkzxpoZMCPEyPSZzFIczIyO0e2l/2uK7atSUIYXpc
+ +yeVCg5KFsztkKzXA=
+X-Received: by 2002:a05:600c:1385:b0:477:7b16:5fb1 with SMTP id
+ 5b1f17b1804b1-47d3a5f47b3mr133615155e9.7.1766827111893; 
+ Sat, 27 Dec 2025 01:18:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH16AAAEs8WOB3izfhztSHCIKz03DbffUWBXBoaojP8vqKu2zBDnjrrWhqPVWUjKhV2d8RZmw==
+X-Received: by 2002:a05:600c:1385:b0:477:7b16:5fb1 with SMTP id
+ 5b1f17b1804b1-47d3a5f47b3mr133614875e9.7.1766827111446; 
+ Sat, 27 Dec 2025 01:18:31 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be279d6d8sm483811885e9.10.2025.12.27.01.17.46
+ 5b1f17b1804b1-47d193621c8sm429301655e9.7.2025.12.27.01.18.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:17:46 -0800 (PST)
+ Sat, 27 Dec 2025 01:18:29 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 045/153] hpet: remove unused trace events
-Date: Sat, 27 Dec 2025 10:14:32 +0100
-Message-ID: <20251227091622.20725-46-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 065/153] rust/hpet: move hpet_offset to HPETRegisters
+Date: Sat, 27 Dec 2025 10:14:52 +0100
+Message-ID: <20251227091622.20725-66-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,33 +122,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+Likewise, do not separate hpet_offset from the other registers.
+However, because it is migrated in a subsection it is necessary
+to copy it out of HPETRegisters and into a BqlCell<>.
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Link: https://lore.kernel.org/r/20251106215606.36598-2-stefanha@redhat.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/timer/trace-events | 2 --
- 1 file changed, 2 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 69 ++++++++++++++++++--------------
+ 1 file changed, 40 insertions(+), 29 deletions(-)
 
-diff --git a/hw/timer/trace-events b/hw/timer/trace-events
-index 2bb51f95ea8..f3fca6fc9b1 100644
---- a/hw/timer/trace-events
-+++ b/hw/timer/trace-events
-@@ -112,7 +112,6 @@ sh_timer_write(uint64_t offset, uint64_t value) "tmu012_write 0x%" PRIx64 " 0x%0
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 0dbfc5b3bab..41d5c8fea0e 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -362,8 +362,9 @@ fn update_irq(&self, regs: &mut HPETRegisters, set: bool) {
+         self.set_irq(regs, set);
+     }
  
- # hpet.c
- hpet_timer_id_out_of_range(uint8_t timer_id) "timer id out of range: 0x%" PRIx8
--hpet_invalid_hpet_cfg(uint8_t reg_off) "invalid HPET_CFG + %u" PRIx8
- hpet_ram_read(uint64_t addr) "enter hpet_ram_readl at 0x%" PRIx64
- hpet_ram_read_reading_counter(uint8_t reg_off, uint64_t cur_tick) "reading counter + %" PRIu8 " = 0x%" PRIx64
- hpet_ram_read_invalid(void) "invalid hpet_ram_readl"
-@@ -123,4 +122,3 @@ hpet_ram_write_tn_cmp(uint8_t reg_off) "hpet_ram_writel HPET_TN_CMP + %" PRIu8
- hpet_ram_write_invalid_tn_cmp(void) "invalid HPET_TN_CMP + 4 write"
- hpet_ram_write_invalid(void) "invalid hpet_ram_writel"
- hpet_ram_write_counter_write_while_enabled(void) "Writing counter while HPET enabled!"
--hpet_ram_write_counter_written(uint8_t reg_off, uint64_t value, uint64_t counter) "HPET counter + %" PRIu8 "written. crt = 0x%" PRIx64 " -> 0x%" PRIx64
+-    fn arm_timer(&self, tn_regs: &mut HPETTimerRegisters, tick: u64) {
+-        let mut ns = self.get_state().get_ns(tick);
++    fn arm_timer(&self, regs: &mut HPETRegisters, tick: u64) {
++        let mut ns = regs.get_ns(tick);
++        let tn_regs = &mut regs.tn_regs[self.index as usize];
+ 
+         // Clamp period to reasonable min value (1 us)
+         if tn_regs.is_periodic() && ns - tn_regs.last < 1000 {
+@@ -375,21 +376,22 @@ fn arm_timer(&self, tn_regs: &mut HPETTimerRegisters, tick: u64) {
+     }
+ 
+     fn set_timer(&self, regs: &mut HPETRegisters) {
++        let cur_tick: u64 = regs.get_ticks();
+         let tn_regs = &mut regs.tn_regs[self.index as usize];
+-        let cur_tick: u64 = self.get_state().get_ticks();
+ 
+         tn_regs.wrap_flag = 0;
+         tn_regs.update_cmp64(cur_tick);
++
++        let mut next_tick: u64 = tn_regs.cmp64;
+         if tn_regs.is_32bit_mod() {
+             // HPET spec says in one-shot 32-bit mode, generate an interrupt when
+             // counter wraps in addition to an interrupt with comparator match.
+             if !tn_regs.is_periodic() && tn_regs.cmp64 > hpet_next_wrap(cur_tick) {
+                 tn_regs.wrap_flag = 1;
+-                self.arm_timer(tn_regs, hpet_next_wrap(cur_tick));
+-                return;
++                next_tick = hpet_next_wrap(cur_tick);
+             }
+         }
+-        self.arm_timer(tn_regs, tn_regs.cmp64);
++        self.arm_timer(regs, next_tick);
+     }
+ 
+     fn del_timer(&self, regs: &mut HPETRegisters) {
+@@ -506,10 +508,10 @@ fn reset(&self, regs: &mut HPETRegisters) {
+ 
+     /// timer expiration callback
+     fn callback(&self, regs: &mut HPETRegisters) {
++        let cur_tick: u64 = regs.get_ticks();
+         let tn_regs = &mut regs.tn_regs[self.index as usize];
+-        let cur_tick: u64 = self.get_state().get_ticks();
+ 
+-        if tn_regs.is_periodic() && tn_regs.period != 0 {
++        let next_tick = if tn_regs.is_periodic() && tn_regs.period != 0 {
+             while hpet_time_after(cur_tick, tn_regs.cmp64) {
+                 tn_regs.cmp64 += tn_regs.period;
+             }
+@@ -518,10 +520,16 @@ fn callback(&self, regs: &mut HPETRegisters) {
+             } else {
+                 tn_regs.cmp = tn_regs.cmp64;
+             }
+-            self.arm_timer(tn_regs, tn_regs.cmp64);
++            Some(tn_regs.cmp64)
+         } else if tn_regs.wrap_flag != 0 {
+             tn_regs.wrap_flag = 0;
+-            self.arm_timer(tn_regs, tn_regs.cmp64);
++            Some(tn_regs.cmp64)
++        } else {
++            None
++        };
++
++        if let Some(tick) = next_tick {
++            self.arm_timer(regs, tick);
+         }
+         self.update_irq(regs, true);
+     }
+@@ -573,9 +581,20 @@ pub struct HPETRegisters {
+ 
+     /// HPET Timer N Registers
+     tn_regs: [HPETTimerRegisters; HPET_MAX_TIMERS],
++
++    /// Offset of main counter relative to qemu clock.
++    pub hpet_offset: u64,
+ }
+ 
+ impl HPETRegisters {
++    fn get_ticks(&self) -> u64 {
++        ns_to_ticks(CLOCK_VIRTUAL.get_ns() + self.hpet_offset)
++    }
++
++    fn get_ns(&self, tick: u64) -> u64 {
++        ticks_to_ns(tick) - self.hpet_offset
++    }
++
+     fn is_legacy_mode(&self) -> bool {
+         self.config & (1 << HPET_CFG_LEG_RT_SHIFT) != 0
+     }
+@@ -603,8 +622,7 @@ pub struct HPETState {
+     #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT, default = false)]
+     flags: u32,
+ 
+-    /// Offset of main counter relative to qemu clock.
+-    hpet_offset: BqlCell<u64>,
++    hpet_offset_migration: BqlCell<u64>,
+     #[property(rename = "hpet-offset-saved", default = true)]
+     hpet_offset_saved: bool,
+ 
+@@ -636,14 +654,6 @@ const fn has_msi_flag(&self) -> bool {
+         self.flags & (1 << HPET_FLAG_MSI_SUPPORT_SHIFT) != 0
+     }
+ 
+-    fn get_ticks(&self) -> u64 {
+-        ns_to_ticks(CLOCK_VIRTUAL.get_ns() + self.hpet_offset.get())
+-    }
+-
+-    fn get_ns(&self, tick: u64) -> u64 {
+-        ticks_to_ns(tick) - self.hpet_offset.get()
+-    }
+-
+     fn handle_legacy_irq(&self, irq: u32, level: u32) {
+         let regs = self.regs.borrow();
+         if irq == HPET_LEGACY_PIT_INT {
+@@ -682,8 +692,7 @@ fn set_cfg_reg(&self, regs: &mut HPETRegisters, shift: u32, len: u32, val: u64)
+ 
+         if activating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
+             // Enable main counter and interrupt generation.
+-            self.hpet_offset
+-                .set(ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns());
++            regs.hpet_offset = ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns();
+ 
+             for t in self.timers.iter().take(self.num_timers) {
+                 let id = t.index as usize;
+@@ -696,7 +705,7 @@ fn set_cfg_reg(&self, regs: &mut HPETRegisters, shift: u32, len: u32, val: u64)
+             }
+         } else if deactivating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
+             // Halt main counter and disable interrupt generation.
+-            regs.counter = self.get_ticks();
++            regs.counter = regs.get_ticks();
+ 
+             for t in self.timers.iter().take(self.num_timers) {
+                 t.del_timer(regs);
+@@ -763,7 +772,7 @@ unsafe fn init(mut this: ParentInit<Self>) {
+         // initialized memory to all zeros - simple types (bool/u32/usize) can
+         // rely on this without explicit initialization.
+         uninit_field_mut!(*this, regs).write(Default::default());
+-        uninit_field_mut!(*this, hpet_offset).write(Default::default());
++        uninit_field_mut!(*this, hpet_offset_migration).write(Default::default());
+         // Set null_mut for now and post_init() will fill it.
+         uninit_field_mut!(*this, irqs).write(Default::default());
+         uninit_field_mut!(*this, rtc_irq_level).write(Default::default());
+@@ -814,6 +823,7 @@ fn reset_hold(&self, _type: ResetType) {
+ 
+         regs.counter = 0;
+         regs.config = 0;
++        regs.hpet_offset = 0;
+         HPETFwConfig::update_hpet_cfg(
+             self.hpet_id.get(),
+             regs.capability as u32,
+@@ -826,7 +836,6 @@ fn reset_hold(&self, _type: ResetType) {
+         drop(regs);
+ 
+         self.pit_enabled.set(true);
+-        self.hpet_offset.set(0);
+ 
+         // to document that the RTC lowers its output on reset as well
+         self.rtc_irq_level.set(0);
+@@ -871,7 +880,7 @@ fn read(&self, addr: hwaddr, size: u32) -> u64 {
+             Global(INT_STATUS) => regs.int_status,
+             Global(COUNTER) => {
+                 let cur_tick = if regs.is_hpet_enabled() {
+-                    self.get_ticks()
++                    regs.get_ticks()
+                 } else {
+                     regs.counter
+                 };
+@@ -907,8 +916,9 @@ fn write(&self, addr: hwaddr, value: u64, size: u32) {
+ 
+     fn pre_save(&self) -> Result<(), migration::Infallible> {
+         let mut regs = self.regs.borrow_mut();
++        self.hpet_offset_migration.set(regs.hpet_offset);
+         if regs.is_hpet_enabled() {
+-            regs.counter = self.get_ticks();
++            regs.counter = regs.get_ticks();
+         }
+ 
+         /*
+@@ -933,9 +943,10 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
+ 
+         // Recalculate the offset between the main counter and guest time
+         if !self.hpet_offset_saved {
+-            self.hpet_offset
++            self.hpet_offset_migration
+                 .set(ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns());
+         }
++        regs.hpet_offset = self.hpet_offset_migration.get();
+ 
+         Ok(())
+     }
+@@ -987,7 +998,7 @@ impl ObjectImpl for HPETState {
+         .minimum_version_id(1)
+         .needed(&HPETState::is_offset_needed)
+         .fields(vmstate_fields! {
+-            vmstate_of!(HPETState, hpet_offset),
++            vmstate_of!(HPETState, hpet_offset_migration),
+         })
+         .build();
+ 
 -- 
 2.52.0
 
