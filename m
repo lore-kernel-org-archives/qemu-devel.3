@@ -4,105 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCFB2E8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 08:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5489CE8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQ6H-0002uc-MP; Sat, 27 Dec 2025 03:56:37 -0500
+	id 1vZQD2-00056t-5A; Sat, 27 Dec 2025 04:03:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQ6F-0002uE-O3
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 03:56:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQ6E-0002Af-5W
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 03:56:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766825792;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wVQTTxAlSm7uaINqK/t71AApv1AnT8OGVNySVSVWrPk=;
- b=Lh7NLCkBml8M90kvcO2ZXTb4Rkfx7DC6LHgC8C7s0ZyCFHodpEF5DBmkr5d0Z07rh4TjtC
- wLhUO1dvs5qKZ7ORtwlM02beYQNwWlNurc4iXWtuCdZ5f6c9FBsInY485+mi0i6QuW9Mhb
- SaqT1qLGv9G7KwgZu+xRIZUuqlj+5Iw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-dID0uJx3ORiAC78AkcgD5A-1; Sat, 27 Dec 2025 03:56:30 -0500
-X-MC-Unique: dID0uJx3ORiAC78AkcgD5A-1
-X-Mimecast-MFC-AGG-ID: dID0uJx3ORiAC78AkcgD5A_1766825789
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477cf25ceccso85424145e9.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 00:56:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vZQD1-00056d-Ad
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:03:35 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vZQCz-0005qh-Rr
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:03:35 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b553412a19bso7395150a12.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:03:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766825789; x=1767430589; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wVQTTxAlSm7uaINqK/t71AApv1AnT8OGVNySVSVWrPk=;
- b=hYwCeq1WfA5n8sF/R6LpQPgOkuR4DwXgDxbnyD9EuFQKNYGD2LY+NtvyDSnuSDj+aJ
- 7wB1lFG5ToW1R3Be4acG1qDyNzHl4CiWlsayKspi+Rc+O2eN7YGh/gJD5Qg9CZwb74Ua
- 722dJUPpO8JUuZNE8xuE7ai5kDrHBe1UOOEs5SmqFp9OuJz7JVZ//M6kINsHgJF/5yn3
- aH/Nsh5nMU5qIujXMNlnHMzXCPGFvm0SxLpjwF8QIe601lZ+NRUPsYXjn093JEW/+TrM
- UKSkMuqtJAU/2/lKGALdzYS5IBKYakqeugt14k3t5pqAd/JORYdo1hbiUm3qzzJ5brqX
- D1cw==
+ d=ventanamicro.com; s=google; t=1766826212; x=1767431012; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VbVQUs80GiGOCSQqQk+VysYiYqitbdlaNQWa1P/crgU=;
+ b=icQ2Wl4EF1qlPXiRNNUTEM59qexZp2GrcHUCk4LKs3YGg5gfmIoM4plO12LKLJkVQ6
+ Nd34i0//X3rLBgulIwATm7iRCTIudSJzndLyCzYcEepagUrkQmT9Gv/TPfUQRdXH10Zw
+ A58lboKNvC5zYhIirpszmLQc7IKwq0s7O+093WXhbojr6OQqhgNN2HdRfhhVktyZ/6fH
+ Jr7bB/NdGdI5hteyOp2u0dnkdk6y0qAaLk0nVQemAKcPFAbbHoEepvonvv8RqcWPyIp1
+ OrAB2yVXM0PaXqOwl9jeJIOpQ+07t2CNZT7NUI5iOVOAQBrPgz5mf2qIbdpjje/K3bwD
+ 7oUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766825789; x=1767430589;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wVQTTxAlSm7uaINqK/t71AApv1AnT8OGVNySVSVWrPk=;
- b=vtbg6WVxJjwgq61Z/TBzfbgnJHs2OKRkO+D54YCo/R6RLkmmeQhcAGKX8a1ux6LyNF
- +ejRpK2KP9AYmtKfGPPw0/4VlxtfVhyn1//bNJjer4iJtqXvh2X60WtoDiZs8LZk16fx
- rejUyBuVhIV8oyk9gE/hg+AZdB0galYmy+gq0DA/jIKo2TO777nr/mXv1UQM1i9bpz/P
- hY6f86NC5Y4tFom8XJR/6jlH2zQR4OrFQFSREdPXeqoYkdf1gAQdlerXaH8hBE2FBlJp
- aDRdDWcjvlaQPd4AWfsxPA9V/ovmc02SEdMvhzmvX0NLa9JkOn2YaNjkvC8Dd7ry5hdx
- 9LRw==
-X-Gm-Message-State: AOJu0YyvvUa6S3MAKWiPjPwXKtP9Guihi3ui6NrkinifG9YZz99OO0WD
- b6Cwfb8B5XphARWgP7TgxPSQVBvM5rwO3+p10wEdJLYeU7aBcv4rXumpBXUDilBlcPsANA4npLB
- uULJRps0yBFisAKrYm+8EJGSTUwhhHBPVFtGjXWpxk450uLHbuCz56/iueymEjX+On6gfW39NHG
- GGThH+7tFeGG6NOmcfLd+NrSvfgS/5jtA=
-X-Gm-Gg: AY/fxX60FXVqNjy+pNcwpJVfVPyOQm7isr7LUMNzCUiQpwAmzvG6//MWlKB8jZ5NBPN
- 13pHZ+ydChgJ0943dwSGl7lMW2jUSVu+SHqdxoduVDNW+kBigl52vTlNYJ2q8/MZjaBEDx0CA1r
- kdQHVo1TT8jsYdgueFCrs02T+EPGYgfrUBAHOXE0G3vDcoOQ/QyogTGmy/J/ic0cfZQveKbow++
- xlWxZch7BeQkSW51sBKGvtDi++DEl0GdME4dcTVlEwXW8vkkJKJ/o1GsGGzBzO24hAW97M=
-X-Received: by 2002:a05:600c:1912:b0:477:89d5:fdac with SMTP id
- 5b1f17b1804b1-47d1959f714mr323558555e9.31.1766825789084; 
- Sat, 27 Dec 2025 00:56:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGPtpOZQCRNN2KUr80gb+tw/nraPJwlFhATpuBokbXFZilVXivfSuWx+4r1yS17xpd//5LaC/IZ02vTdb0M5wY=
-X-Received: by 2002:a05:600c:1912:b0:477:89d5:fdac with SMTP id
- 5b1f17b1804b1-47d1959f714mr323558405e9.31.1766825788721; Sat, 27 Dec 2025
- 00:56:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1766826212; x=1767431012;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VbVQUs80GiGOCSQqQk+VysYiYqitbdlaNQWa1P/crgU=;
+ b=pmfZ8OFgnvjQmhzoUgxKMdsIdJnD2oD6R7U8XsANyZwEQtfZFyjsjG9mL5v0bxZdo/
+ ad2Mkc8zUS99QnqW4JR38rfJF9LfEM1tgwuJO8wiSFo41+K4T4844NneMFe8e3+LP8VV
+ tMtndQn93tDhrnJiXASQm5T1F1Hm/cEJEnB0KbZU8fP1kAiHty2tgTaB4rgmXs8qqf4c
+ iLmiPdQT51NHH5r0L2l+bGn6hFub+GJBpNxGJXB6qgPI6MAuPfxRQBuWanpvjSRna8JD
+ 0Sk8D2sMN3RPjmbkcedrQidR01YeXlPU4Gngua278RkIsdnr6G7WSr/8ICfCZquzilCA
+ yNuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPwE1uLIwMNoSCvDtgrdJc0ctyLvLqxyoorE4NPpIPdBUoSzuySxXtq0t/nSNBSVpAFyzeaF2g1JYQ@nongnu.org
+X-Gm-Message-State: AOJu0Yy4elgqoJOeublFReH6uPK38E1qudxQ4dWp+lQ3SUGv7G3p6ZJf
+ AmfeKto5dEW44AT9F6Ru472bzGm9oxx938dUBM08dspd4o2+olMlLFb3yzZLai4VDFY=
+X-Gm-Gg: AY/fxX4+djg8aHj+OVINMYqEucRGcvDqI+IhZ5gtgxTrQcC3s3yZqOp1XMdk/PuE7Gv
+ SohoLXHdj2hfdrAWvfQ8w5P4+ewG7XwMj63hg4TPRjW9ocTbmgQf6lgfm2FoWar0z8tLpfw49PR
+ lZCIBgTwALg88s/nquCoFhhR4H11mu38akfffuKWeZ8jjhU0UGfGrIqh0OQyOKM73Ij3vdsIc2u
+ nrvL9/J35XEYsvRgcHM0S8P3Sgq2y+dH3nPrq+wvcJ0X7APr/TwpumMvkF6SXyvAUG2h835eyXA
+ P+6jIl+SL63RXIkZPWYNzydiQzXcKpNHUHwQsJF/feOy8SIQzuA+7UYCkqeIhwZVyOKPGV5KCgT
+ KFb2SSWyqz/5ZA0glNUIbiv6RFtyQa651gBn6nBFa5AdxasygnWCU1so12Ld8xFgm9lw7MUZVTF
+ /KabaU63vIgikBq/ECmWnDpGp4taQ=
+X-Google-Smtp-Source: AGHT+IE1nNZtLgh5hSGdmROCJypW3+SIGTbDKqLPHzKUtHhimw5jU01sklnkfxAhzPz84tqMR3e3gA==
+X-Received: by 2002:a05:7301:430c:b0:2b0:59f3:7746 with SMTP id
+ 5a478bee46e88-2b05ecd7507mr16723475eec.40.1766826211845; 
+ Sat, 27 Dec 2025 01:03:31 -0800 (PST)
+Received: from [192.168.68.110] ([187.101.184.177])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2b06a046e99sm64113483eec.6.2025.12.27.01.03.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 27 Dec 2025 01:03:31 -0800 (PST)
+Message-ID: <f9cb3ad3-1279-40ac-8fff-7b09d4e411db@ventanamicro.com>
+Date: Sat, 27 Dec 2025 06:03:27 -0300
 MIME-Version: 1.0
-References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-17-philmd@linaro.org>
-In-Reply-To: <20251224152210.87880-17-philmd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sat, 27 Dec 2025 09:56:18 +0100
-X-Gm-Features: AQt7F2pndtzbEr_lz1-0lcMZQeO3qYWkDYOBTOgplfR_mHfG9Q62zewwgBaLLyg
-Message-ID: <CABgObfa9gHpK3CR8Aa6MA4YqfaMs3bn70pba58QQ2+32+xwxzQ@mail.gmail.com>
-Subject: Re: [PATCH v3 16/25] system: Allow restricting the legacy ld/st_he()
- 'native-endian' API
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Content-Type: multipart/alternative; boundary="000000000000845e0b0646eb2f0c"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests: fix comment declaring runtime in rv64
+ interruptedmemory test
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+References: <20251227085349.23808-1-neither@nut.email>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <20251227085349.23808-1-neither@nut.email>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,149 +109,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000845e0b0646eb2f0c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Il mer 24 dic 2025, 16:24 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
-a
-scritto:
-
-> Guard the native endian APIs we want to remove by surrounding
-> them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
->
-> Once a target gets cleaned we'll set the definition in the
-> target config, then the target won't be able to use the legacy
-> API anymore.
->
-
-Host endianness APIs are fine and are used when talking to the kernel.
-These functions that take a void* should not be included in
-TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API.
-
-(And also they are the same for all targets so they don't get in the way of
-the single binary effort).
-
-If the only change needed in the series is to drop this patch, don't bother
-with reposting.
-
-Paolo
 
 
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 12/27/25 5:53 AM, Julian Ganz wrote:
+> The test attempts to trigger a regression for arount 30s. However, a
+> comment just before the computation of the target wall clock time falsly
+> declares the run time to be around 60s.
+> 
+> This was the case already when we introduced the test in
+> 
+>      5241645c47a9987f4fcc65bab303a444966b7942
+>      (tests: add test with interrupted memory accesses on rv64)
+> 
+> Signed-off-by: Julian Ganz <neither@nut.email>
 > ---
->  include/qemu/bswap.h | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-> index 65a1b3634f4..d1c889e7bc9 100644
-> --- a/include/qemu/bswap.h
-> +++ b/include/qemu/bswap.h
-> @@ -412,7 +412,9 @@ static inline void stq_be_p(void *ptr, uint64_t v)
->          }                                                               =
-\
->      }
->
-> +#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
->  DO_STN_LDN_P(he)
-> +#endif
->  DO_STN_LDN_P(le)
->  DO_STN_LDN_P(be)
->
-> @@ -423,6 +425,7 @@ DO_STN_LDN_P(be)
->  #undef le_bswaps
->  #undef be_bswaps
->
-> +#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
->
->  /* Return ld{word}_{le,be}_p following target endianness. */
->  #define LOAD_IMPL(word, args...)                    \
-> @@ -494,4 +497,6 @@ static inline void stn_p(void *ptr, int sz, uint64_t =
-v)
->
->  #undef STORE_IMPL
->
-> +#endif /* TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API */
-> +
->  #endif /* BSWAP_H */
-> --
-> 2.52.0
->
->
 
---000000000000845e0b0646eb2f0c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 24 dic 2025, 16:24 Philip=
-pe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linar=
-o.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Guard the native endian APIs we want to remove by surrounding<br=
->
-them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef&#39;ry.<br>
-<br>
-Once a target gets cleaned we&#39;ll set the definition in the<br>
-target config, then the target won&#39;t be able to use the legacy<br>
-API anymore.<br></blockquote></div></div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto">Host endianness APIs are fine and are used when talking to the =
-kernel. These functions that take a void* should not be included in TARGET_=
-NOT_USING_LEGACY_NATIVE_ENDIAN_API.</div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto">(And also they are the same for all targets so they don&#39;t g=
-et in the way of the single binary effort).</div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">If the only change needed in the series is to drop this=
- patch, don&#39;t bother with reposting.</div><div dir=3D"auto"><br></div><=
-div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><=
-div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">
-<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank" rel=3D"noreferrer">philmd@linaro.org</a>&gt;<br>
----<br>
-=C2=A0include/qemu/bswap.h | 5 +++++<br>
-=C2=A01 file changed, 5 insertions(+)<br>
-<br>
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h<br>
-index 65a1b3634f4..d1c889e7bc9 100644<br>
---- a/include/qemu/bswap.h<br>
-+++ b/include/qemu/bswap.h<br>
-@@ -412,7 +412,9 @@ static inline void stq_be_p(void *ptr, uint64_t v)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API<br>
-=C2=A0DO_STN_LDN_P(he)<br>
-+#endif<br>
-=C2=A0DO_STN_LDN_P(le)<br>
-=C2=A0DO_STN_LDN_P(be)<br>
-<br>
-@@ -423,6 +425,7 @@ DO_STN_LDN_P(be)<br>
-=C2=A0#undef le_bswaps<br>
-=C2=A0#undef be_bswaps<br>
-<br>
-+#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API<br>
-<br>
-=C2=A0/* Return ld{word}_{le,be}_p following target endianness. */<br>
-=C2=A0#define LOAD_IMPL(word, args...)=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
-@@ -494,4 +497,6 @@ static inline void stn_p(void *ptr, int sz, uint64_t v)=
-<br>
-<br>
-=C2=A0#undef STORE_IMPL<br>
-<br>
-+#endif /* TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API */<br>
-+<br>
-=C2=A0#endif /* BSWAP_H */<br>
--- <br>
-2.52.0<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000845e0b0646eb2f0c--
+>   tests/tcg/riscv64/interruptedmemory.S | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/tcg/riscv64/interruptedmemory.S b/tests/tcg/riscv64/interruptedmemory.S
+> index cd9073ee31..c154f93839 100644
+> --- a/tests/tcg/riscv64/interruptedmemory.S
+> +++ b/tests/tcg/riscv64/interruptedmemory.S
+> @@ -25,7 +25,7 @@ _start:
+>   	li	a0, 0x03	# 8N1, DLAB=0
+>   	sb	a0, 3(t1)
+>   
+> -	# Run test for around 60s
+> +	# Run test for around 30s
+>   	call	rtc_get
+>   	li	t0, 30
+>   	slli	t0, t0, 30 # Approx. 10e9 ns
 
 
