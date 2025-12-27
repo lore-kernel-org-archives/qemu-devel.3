@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6347E8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1BB2E8FDD4
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:19:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQQK-0002Zx-FG; Sat, 27 Dec 2025 04:17:20 -0500
+	id 1vZQRf-0007xC-Hj; Sat, 27 Dec 2025 04:18:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQG-0002Y7-Fn
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:16 -0500
+ id 1vZQRR-00071l-4p
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQC-0002Pp-1g
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:16 -0500
+ id 1vZQRO-0003tb-Rw
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827031;
+ s=mimecast20190719; t=1766827106;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EAPNHDeDnVTBZPtsdYZ4vNsLhPqjrTIxBmnpOYzbcEI=;
- b=I5rYKOTuiO8jglsQCNkb4z4oHtdrOPAxnoAvFX+owYOCvpaBVWepc2Ss2mMsvennkKSD13
- l6m2Ujl4xyPlivO6l8fqFahf1zG2sJEVacd7+TZWzeezR3HNpJgbMQn6+izLXk1oTqV3/y
- y7Csjwa2LkjS74OVvqkeuuut7vN0JOA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1Uq86M4XvjQn415+OGKJuuGSPMQ2/3Qzq3ETHRXpqV0=;
+ b=QoKifPe3YagwPMrqBXVTQnNqWIy60kKqeuefMqIML9RVvgo16F+wGoxOnwyAeSYHaDZlIr
+ 1+n924TkhDqsCvk6RvwzE9e6CS4QHDeWyvulOIdCerH4kTr4iI4yoLgz0XKhdQrmgZhZ28
+ ioHFG/K2SU6XMLaSuVQ5zbVYpHoRTwQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-GEfQPRwEN_2Vd5mvd3U7JA-1; Sat, 27 Dec 2025 04:17:09 -0500
-X-MC-Unique: GEfQPRwEN_2Vd5mvd3U7JA-1
-X-Mimecast-MFC-AGG-ID: GEfQPRwEN_2Vd5mvd3U7JA_1766827028
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47d3c4468d8so15091925e9.2
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:09 -0800 (PST)
+ us-mta-490-iQK6Cn2vPpOYGgkyUK6Itw-1; Sat, 27 Dec 2025 04:18:24 -0500
+X-MC-Unique: iQK6Cn2vPpOYGgkyUK6Itw-1
+X-Mimecast-MFC-AGG-ID: iQK6Cn2vPpOYGgkyUK6Itw_1766827103
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47d40e8a588so11256205e9.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827027; x=1767431827; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827102; x=1767431902; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EAPNHDeDnVTBZPtsdYZ4vNsLhPqjrTIxBmnpOYzbcEI=;
- b=BNKHrVT58UoRXgRFLBYtiJBJHJ6jTC7RK6ySu630jLDfHH2fFaik75jM6Ceg/17838
- 24RdG8p24+tZBL5vykbJOzM5F/26eVVLCYdOEKFlAJlTO2srI2ju65PtnMq4ms6lHUzX
- 4S2EW3ZqKtxw8r/6Q3jmdS/u7iyk6ShjlABDSu1+ammLx0sNDEgNl6d8/m+Oh0l+Jbrd
- GH9BHRePM0gO2qBwDPsOb/myCzp5dzYTITj4jFRt2cfOL+KV3beJr4QnNqGpFpT8qUmx
- 4TpK9Sv6hydQ7ARws7LudOZV/hvYVdicgvhaJnu3VkkJQSO7QO7gHWpETPh0P4Ie0Uiq
- UWJw==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1Uq86M4XvjQn415+OGKJuuGSPMQ2/3Qzq3ETHRXpqV0=;
+ b=GYGfirU7wPBvIr3qvUzhro2bXwgWwP7m09VeywSrsOqbvHoKJk3mFY5FK43SSt2SjU
+ eeT/NIi08RgbiVHPcmowWVAxVLkh4uG2zIzaqnMQnE0RarRG4wu7h+fJsMPSKvmzPX4s
+ o8Z/Y8MJKJqfgBTiFHS1HNGYygUmwiiluIic7HRIQ8Ya1epJkBXPhAEHYLubVuysPD0O
+ lXwB7PDC44pwAAmyq+RmgqPmxb5pAtpvtpy672JT8BB+j4CkLi5YTKEDGtfpK0861xqM
+ WHVUkvXA8z8ppcTxG7teC/lZhgFMvfJt2yl1jTQSrk1bA7SryhwyFpfzwWOaTMbuPFVf
+ a0VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827027; x=1767431827;
+ d=1e100.net; s=20230601; t=1766827102; x=1767431902;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=EAPNHDeDnVTBZPtsdYZ4vNsLhPqjrTIxBmnpOYzbcEI=;
- b=Vwuau8B6oQnuEiO3c92cCiK5JlNNSbdaLM9DVKCB1mOAhXDvdhOs6V6w4e6UdPpdF6
- DiWli88e6oFvNzLxsVVlETfkg6A7D4HBKZv8UQKp/vg4aQXh+a3pkIULma6XsQ05qrY4
- F6+x25ckPolmDmZrV+wdMqVGgx1W7rm9J0uZJ7jZDmSZGcO++cSumfbf30X8pXwaWvUA
- u1+1OMqzsMVATYcG/OxMIjHiigHkFU1DoZEDkVjvAfdDzA0awlChxtpop1X4trgf4n00
- ap74CODYf8YtsYMXq2fbKElkM1/X0vEEt0bNZevu7UbJvTEl4COpQ7vrdEtK8aJ6tMju
- 0O/w==
-X-Gm-Message-State: AOJu0YzwPWBkslmAR3MpvvegbYKXWbpyAoUegEpX6D8XyH/8nPMe5o2G
- B1ppG6Qk9fjrPFycDNpEMKXNxv7hevL0mLCmwYwn1lVhCMqyKNmg2elzl1Bx6LWBkvfd/UOmLvc
- r1Fn9d+vkzHh0Z93IM4B8xWQEDbVfHIy54CLE8UIdrvF8dMvYTY5tcPZTGiYvCeUZVSmj39gS9m
- CO5zjFw/oOGSnvV8UkBa4+8Z2Jmtbo9S1LXC5+q3oe
-X-Gm-Gg: AY/fxX7266mIx6y2umj3DXp0wHrxWATJGeSnO1UDQU+RKPZ9fjIYaQ1sf4h1t9Ot4Ay
- 4B+jY99TaeXWotm+71sh/zEpYjQPYJbsszGhdnoVqW96u3CVdYtOCRLlGfOwsyWrkGuvxzIOhYr
- IYkXjpIEXez1pGZseByoMoVvRBZAXByZ1qe9D+CGCCYtqa10EII7Mb/ldxyIuzMtqjkkV7Gv8G5
- 9KKKHkmqaTKvuRKxR6rtlMN/h3rbW3cktifV3DoaPSYPX6k70Gyu8WVTEVLBcCEow3u3ruPjmTv
- Yd7nZFsj67J1lGkrCPDvFUQixypBN15Jrc9KWzY+BF1dzGSPIvF0T39quBXM+GbfnTAmS/lZDsz
- gPRZ55XLXZHBSvu2b8BveXi3RJRTR/6TJ6/POyyzjVJf9IaHmDVp6aLrMh3WhA2Alph5P6zOAqF
- /kmYhsNa7WPDFQEYM=
-X-Received: by 2002:a05:600c:6388:b0:477:7b16:5f88 with SMTP id
- 5b1f17b1804b1-47d1953345cmr252589575e9.6.1766827026394; 
- Sat, 27 Dec 2025 01:17:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFff8IBSuSqPPNoQrZWDyEaTRSd77kDMKbRx8xzM/I0jdqdVgK38QqqXn0DQFJ/zw9cFFIfvg==
-X-Received: by 2002:a05:600c:6388:b0:477:7b16:5f88 with SMTP id
- 5b1f17b1804b1-47d1953345cmr252589295e9.6.1766827025481; 
- Sat, 27 Dec 2025 01:17:05 -0800 (PST)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1Uq86M4XvjQn415+OGKJuuGSPMQ2/3Qzq3ETHRXpqV0=;
+ b=Sbzn8CA07Yq8NSb4yiij0CgvbN87COVISUfE2uElpxKNEdjomEmUw7Yq1txm8CABeg
+ g4eb7OpfzBPWw8kUhL750S83YrVvejXEdeaVpi8eGslkZFDBpgnNwzhthNu35RzgQL1m
+ fNFKM6r3xJ7WUq+hGBly5WryyJXoydne67J/GgPuZwHRNmK7s3y4YX95BUkPcOUgSjrD
+ YPMvyOcAmSa4Lt15qyxvhHRdhb3ljU8qgDF9Cty9SIMWObYm/MMhmTn51p3IbWeNyMh/
+ mTbClxm5sfulILpLUyvw57oGD+JD7bhqfoHTpxVn8vTs+TXY/PbvSxZuBygk0m1pvj3H
+ vNbQ==
+X-Gm-Message-State: AOJu0YyHOT+lioVzK/39kuZArC5icD4+1xZ+mUwHSW1cPYyGxUjnMwNZ
+ XJlc/161FxVdcqjptuK1q7p4ffxVz43OG3QAlrX8YRxWiU4ZFkFSVrmTuA3TyGqACH+lMW3OxU7
+ trW7B5i63LYvfLBIVBMftrvRLPo+7n7o3ZxYNDt/3LYkreY2cwYldkNgdCarK7CBPg22AD2iGAb
+ ynK70HhUtsASujFZxhp0olXQZip5lnH8GgMMp5E4g7
+X-Gm-Gg: AY/fxX78E6HypHv9y7YXRcJC5hktfL7O9g0Wwubb7AeEt9/p3hx6JuLpf+kK7DeK8Md
+ CC6EPIGA+SWEs85OqjdI/zOdNTvxfdVyIPsEFa3X5L9snXSNDx59kWc0Lc06puHsyTn5tpJemR+
+ cfNRX6zVBBcoPLrgVVVMGFeAGe64DGAUftoJtIvG2GWLOLyia4qTFqSN1FWJ5kLDwv0CjlADzfk
+ 75IXIoZgAKZXVsL2TDlxNQqNz93+D2rtdns3Ul2+QsaL1LxOi8mP68NMj2sD4OXU/NbUe0ZkgYR
+ lIcso/A7o3O6dLu0A+fc/c7yijjkT248B0BljGTgda54/ZuQbyoPvqcDBfsG/20FgiyD1q7Ntpv
+ 1d32ZyWxacuOncPLgoqES3A2fzTHdF6iivtqL8uC2vlKZO7j/G6gXZb1NrFtoknN6bZpxzDy0p+
+ PzTsU3/v75xzmB2Q4=
+X-Received: by 2002:a05:600c:1d0b:b0:479:2a0b:180d with SMTP id
+ 5b1f17b1804b1-47d1954a5f7mr273164285e9.11.1766827102452; 
+ Sat, 27 Dec 2025 01:18:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHivJ8xaNlju7I0KZ5kVb6YandZ626sG0lgpCoPcmyYnMz0ayyBeGkWM9fUpLkr83TSKOCp3Q==
+X-Received: by 2002:a05:600c:1d0b:b0:479:2a0b:180d with SMTP id
+ 5b1f17b1804b1-47d1954a5f7mr273163955e9.11.1766827101878; 
+ Sat, 27 Dec 2025 01:18:21 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3a4651bsm191146895e9.7.2025.12.27.01.17.04
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-47d193d4f09sm442684595e9.12.2025.12.27.01.18.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:17:05 -0800 (PST)
+ Sat, 27 Dec 2025 01:18:21 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 023/153] include: move hw/register.h to hw/core/
-Date: Sat, 27 Dec 2025 10:14:10 +0100
-Message-ID: <20251227091622.20725-24-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 061/153] rust/hpet: Maintain HPETTimerRegisters in HPETRegisters
+Date: Sat, 27 Dec 2025 10:14:48 +0100
+Message-ID: <20251227091622.20725-62-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -121,674 +122,430 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Zhao Liu <zhao1.liu@intel.com>
+
+Lockless IO requires holding a single lock during MMIO access, so that
+it's necessary to maintain timer N's registers (HPETTimerRegisters) with
+global register in one place.
+
+Therefore, move HPETTimerRegisters to HPETRegisters from HPETTimer, and
+access timer registers from HPETRegisters struct for the whole HPET
+code.
+
+This changes HPETTimer and HPETRegisters, and the layout of VMState has
+changed, which makes it incompatible to migrate with previous versions.
+Thus, bump up the version IDs in VMStates of HPETState and HPETTimer.
+
+The VMState version IDs of HPETRegisters doesn't need to change since
+it's a newly added struct and its version IDs doesn't affect the
+compatibility of HPETState's VMState.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20251113051937.4017675-18-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                                 | 2 +-
- include/hw/{ => core}/register.h            | 0
- include/hw/cxl/cxl_component.h              | 2 +-
- include/hw/cxl/cxl_device.h                 | 2 +-
- include/hw/dma/xlnx-zdma.h                  | 2 +-
- include/hw/dma/xlnx-zynq-devcfg.h           | 2 +-
- include/hw/dma/xlnx_csu_dma.h               | 2 +-
- include/hw/intc/xlnx-pmu-iomod-intc.h       | 2 +-
- include/hw/intc/xlnx-zynqmp-ipi.h           | 2 +-
- include/hw/misc/allwinner-a10-dramc.h       | 2 +-
- include/hw/misc/xlnx-versal-cframe-reg.h    | 2 +-
- include/hw/misc/xlnx-versal-cfu.h           | 2 +-
- include/hw/misc/xlnx-versal-crl.h           | 2 +-
- include/hw/misc/xlnx-versal-pmc-iou-slcr.h  | 2 +-
- include/hw/misc/xlnx-versal-trng.h          | 2 +-
- include/hw/misc/xlnx-versal-xramc.h         | 2 +-
- include/hw/misc/xlnx-zynqmp-apu-ctrl.h      | 2 +-
- include/hw/misc/xlnx-zynqmp-crf.h           | 2 +-
- include/hw/net/xlnx-versal-canfd.h          | 2 +-
- include/hw/net/xlnx-zynqmp-can.h            | 2 +-
- include/hw/nvram/xlnx-bbram.h               | 2 +-
- include/hw/nvram/xlnx-versal-efuse.h        | 2 +-
- include/hw/nvram/xlnx-zynqmp-efuse.h        | 2 +-
- include/hw/pci/pcie_doe.h                   | 2 +-
- include/hw/rtc/xlnx-zynqmp-rtc.h            | 2 +-
- include/hw/ssi/xlnx-versal-ospi.h           | 2 +-
- include/hw/usb/hcd-dwc3.h                   | 2 +-
- include/hw/usb/xlnx-usb-subsystem.h         | 2 +-
- include/hw/usb/xlnx-versal-usb2-ctrl-regs.h | 2 +-
- hw/core/register.c                          | 2 +-
- hw/dma/xlnx_csu_dma.c                       | 2 +-
- hw/intc/xlnx-pmu-iomod-intc.c               | 2 +-
- hw/intc/xlnx-zynqmp-ipi.c                   | 2 +-
- hw/misc/xlnx-versal-cframe-reg.c            | 2 +-
- hw/misc/xlnx-versal-cfu.c                   | 2 +-
- hw/misc/xlnx-versal-crl.c                   | 2 +-
- hw/misc/xlnx-versal-pmc-iou-slcr.c          | 2 +-
- hw/misc/xlnx-versal-xramc.c                 | 2 +-
- hw/misc/xlnx-zynqmp-apu-ctrl.c              | 2 +-
- hw/misc/xlnx-zynqmp-crf.c                   | 2 +-
- hw/net/can/xlnx-versal-canfd.c              | 2 +-
- hw/net/can/xlnx-zynqmp-can.c                | 2 +-
- hw/rtc/ls7a_rtc.c                           | 2 +-
- hw/rtc/xlnx-zynqmp-rtc.c                    | 2 +-
- hw/ssi/xilinx_spips.c                       | 2 +-
- hw/usb/hcd-dwc3.c                           | 2 +-
- hw/usb/xlnx-usb-subsystem.c                 | 2 +-
- hw/usb/xlnx-versal-usb2-ctrl-regs.c         | 2 +-
- 48 files changed, 47 insertions(+), 47 deletions(-)
- rename include/hw/{ => core}/register.h (100%)
+ rust/hw/timer/hpet/src/device.rs | 163 ++++++++++++++++++-------------
+ 1 file changed, 96 insertions(+), 67 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e0904cc0cc7..b38215954a2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3559,7 +3559,7 @@ Register API
- M: Alistair Francis <alistair@alistair23.me>
- S: Maintained
- F: hw/core/register.c
--F: include/hw/register.h
-+F: include/hw/core/register.h
- F: include/hw/core/registerfields.h
- 
- Rust
-diff --git a/include/hw/register.h b/include/hw/core/register.h
-similarity index 100%
-rename from include/hw/register.h
-rename to include/hw/core/register.h
-diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-index 945ee6ffd04..b0f2aa79143 100644
---- a/include/hw/cxl/cxl_component.h
-+++ b/include/hw/cxl/cxl_component.h
-@@ -17,7 +17,7 @@
- 
- #include "qemu/range.h"
- #include "hw/cxl/cxl_cdat.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qapi/error.h"
- 
- enum reg_type {
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 89411c80936..165355baf9d 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -12,7 +12,7 @@
- 
- #include "hw/cxl/cxl_component.h"
- #include "hw/pci/pci_device.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/cxl/cxl_events.h"
- 
- /*
-diff --git a/include/hw/dma/xlnx-zdma.h b/include/hw/dma/xlnx-zdma.h
-index 9c57c499102..2d2d4aeefab 100644
---- a/include/hw/dma/xlnx-zdma.h
-+++ b/include/hw/dma/xlnx-zdma.h
-@@ -30,7 +30,7 @@
- #define XLNX_ZDMA_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "system/dma.h"
- #include "qom/object.h"
- 
-diff --git a/include/hw/dma/xlnx-zynq-devcfg.h b/include/hw/dma/xlnx-zynq-devcfg.h
-index e4cf085d703..8d10553c22a 100644
---- a/include/hw/dma/xlnx-zynq-devcfg.h
-+++ b/include/hw/dma/xlnx-zynq-devcfg.h
-@@ -27,7 +27,7 @@
- #ifndef XLNX_ZYNQ_DEVCFG_H
- #define XLNX_ZYNQ_DEVCFG_H
- 
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/sysbus.h"
- #include "qom/object.h"
- 
-diff --git a/include/hw/dma/xlnx_csu_dma.h b/include/hw/dma/xlnx_csu_dma.h
-index 85b6b64e0e3..63af4586dd9 100644
---- a/include/hw/dma/xlnx_csu_dma.h
-+++ b/include/hw/dma/xlnx_csu_dma.h
-@@ -22,7 +22,7 @@
- #define XLNX_CSU_DMA_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/core/ptimer.h"
- #include "hw/stream.h"
- 
-diff --git a/include/hw/intc/xlnx-pmu-iomod-intc.h b/include/hw/intc/xlnx-pmu-iomod-intc.h
-index ccc8bd272a2..e36b5e17629 100644
---- a/include/hw/intc/xlnx-pmu-iomod-intc.h
-+++ b/include/hw/intc/xlnx-pmu-iomod-intc.h
-@@ -26,7 +26,7 @@
- #define HW_INTC_XLNX_PMU_IOMOD_INTC_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qom/object.h"
- 
- #define TYPE_XLNX_PMU_IO_INTC "xlnx.pmu_io_intc"
-diff --git a/include/hw/intc/xlnx-zynqmp-ipi.h b/include/hw/intc/xlnx-zynqmp-ipi.h
-index 33eff1d4f68..53fc89084af 100644
---- a/include/hw/intc/xlnx-zynqmp-ipi.h
-+++ b/include/hw/intc/xlnx-zynqmp-ipi.h
-@@ -26,7 +26,7 @@
- #define XLNX_ZYNQMP_IPI_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qom/object.h"
- 
- #define TYPE_XLNX_ZYNQMP_IPI "xlnx.zynqmp_ipi"
-diff --git a/include/hw/misc/allwinner-a10-dramc.h b/include/hw/misc/allwinner-a10-dramc.h
-index b61fbecbe74..a1ae621e217 100644
---- a/include/hw/misc/allwinner-a10-dramc.h
-+++ b/include/hw/misc/allwinner-a10-dramc.h
-@@ -25,7 +25,7 @@
- 
- #include "qom/object.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- 
- /**
-  * @name Constants
-diff --git a/include/hw/misc/xlnx-versal-cframe-reg.h b/include/hw/misc/xlnx-versal-cframe-reg.h
-index 83f6a077446..fe8788a7453 100644
---- a/include/hw/misc/xlnx-versal-cframe-reg.h
-+++ b/include/hw/misc/xlnx-versal-cframe-reg.h
-@@ -18,7 +18,7 @@
- #define HW_MISC_XLNX_VERSAL_CFRAME_REG_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/misc/xlnx-cfi-if.h"
- #include "hw/misc/xlnx-versal-cfu.h"
- #include "qemu/fifo32.h"
-diff --git a/include/hw/misc/xlnx-versal-cfu.h b/include/hw/misc/xlnx-versal-cfu.h
-index 3de3ee49231..3d7ca506de1 100644
---- a/include/hw/misc/xlnx-versal-cfu.h
-+++ b/include/hw/misc/xlnx-versal-cfu.h
-@@ -18,7 +18,7 @@
- #define HW_MISC_XLNX_VERSAL_CFU_APB_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/misc/xlnx-cfi-if.h"
- #include "qemu/fifo32.h"
- 
-diff --git a/include/hw/misc/xlnx-versal-crl.h b/include/hw/misc/xlnx-versal-crl.h
-index 49ed500acde..ace3d198bde 100644
---- a/include/hw/misc/xlnx-versal-crl.h
-+++ b/include/hw/misc/xlnx-versal-crl.h
-@@ -11,7 +11,7 @@
- #define HW_MISC_XLNX_VERSAL_CRL_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "target/arm/cpu-qom.h"
- #include "hw/arm/xlnx-versal-version.h"
- 
-diff --git a/include/hw/misc/xlnx-versal-pmc-iou-slcr.h b/include/hw/misc/xlnx-versal-pmc-iou-slcr.h
-index 0c4a4fd66d9..d8f45bd94b2 100644
---- a/include/hw/misc/xlnx-versal-pmc-iou-slcr.h
-+++ b/include/hw/misc/xlnx-versal-pmc-iou-slcr.h
-@@ -55,7 +55,7 @@
- #define XLNX_VERSAL_PMC_IOU_SLCR_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- 
- #define TYPE_XILINX_VERSAL_PMC_IOU_SLCR "xlnx.versal-pmc-iou-slcr"
- 
-diff --git a/include/hw/misc/xlnx-versal-trng.h b/include/hw/misc/xlnx-versal-trng.h
-index 4e516216dbe..8de29104048 100644
---- a/include/hw/misc/xlnx-versal-trng.h
-+++ b/include/hw/misc/xlnx-versal-trng.h
-@@ -28,7 +28,7 @@
- 
- #include "hw/core/irq.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- 
- #define TYPE_XLNX_VERSAL_TRNG "xlnx.versal-trng"
- OBJECT_DECLARE_SIMPLE_TYPE(XlnxVersalTRng, XLNX_VERSAL_TRNG);
-diff --git a/include/hw/misc/xlnx-versal-xramc.h b/include/hw/misc/xlnx-versal-xramc.h
-index 35e4e8b91dd..e79941d8865 100644
---- a/include/hw/misc/xlnx-versal-xramc.h
-+++ b/include/hw/misc/xlnx-versal-xramc.h
-@@ -10,7 +10,7 @@
- #define XLNX_VERSAL_XRAMC_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- 
- #define TYPE_XLNX_XRAM_CTRL "xlnx.versal-xramc"
- 
-diff --git a/include/hw/misc/xlnx-zynqmp-apu-ctrl.h b/include/hw/misc/xlnx-zynqmp-apu-ctrl.h
-index fbfe34aa7e5..c0315720053 100644
---- a/include/hw/misc/xlnx-zynqmp-apu-ctrl.h
-+++ b/include/hw/misc/xlnx-zynqmp-apu-ctrl.h
-@@ -12,7 +12,7 @@
- #define HW_MISC_XLNX_ZYNQMP_APU_CTRL_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "target/arm/cpu-qom.h"
- 
- #define TYPE_XLNX_ZYNQMP_APU_CTRL "xlnx.apu-ctrl"
-diff --git a/include/hw/misc/xlnx-zynqmp-crf.h b/include/hw/misc/xlnx-zynqmp-crf.h
-index c746ae10397..df83034a988 100644
---- a/include/hw/misc/xlnx-zynqmp-crf.h
-+++ b/include/hw/misc/xlnx-zynqmp-crf.h
-@@ -9,7 +9,7 @@
- #define HW_MISC_XLNX_ZYNQMP_CRF_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- 
- #define TYPE_XLNX_ZYNQMP_CRF "xlnx.zynqmp_crf"
- OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqMPCRF, XLNX_ZYNQMP_CRF)
-diff --git a/include/hw/net/xlnx-versal-canfd.h b/include/hw/net/xlnx-versal-canfd.h
-index 45cf0001c6b..7cadf3123b5 100644
---- a/include/hw/net/xlnx-versal-canfd.h
-+++ b/include/hw/net/xlnx-versal-canfd.h
-@@ -28,7 +28,7 @@
- #ifndef HW_CANFD_XILINX_H
- #define HW_CANFD_XILINX_H
- 
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/core/ptimer.h"
- #include "net/can_emu.h"
- #include "hw/core/qdev-clock.h"
-diff --git a/include/hw/net/xlnx-zynqmp-can.h b/include/hw/net/xlnx-zynqmp-can.h
-index d272f40ea80..d23c1523caf 100644
---- a/include/hw/net/xlnx-zynqmp-can.h
-+++ b/include/hw/net/xlnx-zynqmp-can.h
-@@ -31,7 +31,7 @@
- #define XLNX_ZYNQMP_CAN_H
- 
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "net/can_emu.h"
- #include "net/can_host.h"
- #include "qemu/fifo32.h"
-diff --git a/include/hw/nvram/xlnx-bbram.h b/include/hw/nvram/xlnx-bbram.h
-index 63558dbc329..27423035d40 100644
---- a/include/hw/nvram/xlnx-bbram.h
-+++ b/include/hw/nvram/xlnx-bbram.h
-@@ -30,7 +30,7 @@
- #include "hw/core/qdev.h"
- #include "hw/core/irq.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- 
- #define RMAX_XLNX_BBRAM ((0x4c / 4) + 1)
- 
-diff --git a/include/hw/nvram/xlnx-versal-efuse.h b/include/hw/nvram/xlnx-versal-efuse.h
-index 37d09da4809..07f1000a851 100644
---- a/include/hw/nvram/xlnx-versal-efuse.h
-+++ b/include/hw/nvram/xlnx-versal-efuse.h
-@@ -24,7 +24,7 @@
- 
- #include "hw/core/irq.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/nvram/xlnx-efuse.h"
- 
- #define XLNX_VERSAL_EFUSE_CTRL_R_MAX ((0x100 / 4) + 1)
-diff --git a/include/hw/nvram/xlnx-zynqmp-efuse.h b/include/hw/nvram/xlnx-zynqmp-efuse.h
-index 6eb3fea8fa2..d4886943860 100644
---- a/include/hw/nvram/xlnx-zynqmp-efuse.h
-+++ b/include/hw/nvram/xlnx-zynqmp-efuse.h
-@@ -24,7 +24,7 @@
- 
- #include "hw/core/irq.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/nvram/xlnx-efuse.h"
- 
- #define XLNX_ZYNQMP_EFUSE_R_MAX ((0x10fc / 4) + 1)
-diff --git a/include/hw/pci/pcie_doe.h b/include/hw/pci/pcie_doe.h
-index 9e1275db8ae..4bd49bb5ae6 100644
---- a/include/hw/pci/pcie_doe.h
-+++ b/include/hw/pci/pcie_doe.h
-@@ -11,7 +11,7 @@
- #define PCIE_DOE_H
- 
- #include "qemu/range.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- 
- /*
-  * Reference:
-diff --git a/include/hw/rtc/xlnx-zynqmp-rtc.h b/include/hw/rtc/xlnx-zynqmp-rtc.h
-index f0c6a2d78a8..a542b87cb89 100644
---- a/include/hw/rtc/xlnx-zynqmp-rtc.h
-+++ b/include/hw/rtc/xlnx-zynqmp-rtc.h
-@@ -27,7 +27,7 @@
- #ifndef HW_RTC_XLNX_ZYNQMP_RTC_H
- #define HW_RTC_XLNX_ZYNQMP_RTC_H
- 
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/sysbus.h"
- #include "qom/object.h"
- 
-diff --git a/include/hw/ssi/xlnx-versal-ospi.h b/include/hw/ssi/xlnx-versal-ospi.h
-index 4ac975aa2fd..e8709208caa 100644
---- a/include/hw/ssi/xlnx-versal-ospi.h
-+++ b/include/hw/ssi/xlnx-versal-ospi.h
-@@ -52,7 +52,7 @@
- #ifndef XLNX_VERSAL_OSPI_H
- #define XLNX_VERSAL_OSPI_H
- 
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/ssi/ssi.h"
- #include "qemu/fifo8.h"
- #include "hw/dma/xlnx_csu_dma.h"
-diff --git a/include/hw/usb/hcd-dwc3.h b/include/hw/usb/hcd-dwc3.h
-index dbdf12b21d7..e656532d6c0 100644
---- a/include/hw/usb/hcd-dwc3.h
-+++ b/include/hw/usb/hcd-dwc3.h
-@@ -26,7 +26,7 @@
- #ifndef HCD_DWC3_H
- #define HCD_DWC3_H
- 
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/usb/hcd-xhci.h"
- #include "hw/usb/hcd-xhci-sysbus.h"
- 
-diff --git a/include/hw/usb/xlnx-usb-subsystem.h b/include/hw/usb/xlnx-usb-subsystem.h
-index 40f9e97e093..b22e5d065be 100644
---- a/include/hw/usb/xlnx-usb-subsystem.h
-+++ b/include/hw/usb/xlnx-usb-subsystem.h
-@@ -25,7 +25,7 @@
- #ifndef XLNX_USB_SUBSYSTEM_H
- #define XLNX_USB_SUBSYSTEM_H
- 
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/sysbus.h"
- #include "hw/usb/xlnx-versal-usb2-ctrl-regs.h"
- #include "hw/usb/hcd-dwc3.h"
-diff --git a/include/hw/usb/xlnx-versal-usb2-ctrl-regs.h b/include/hw/usb/xlnx-versal-usb2-ctrl-regs.h
-index 6a502006b07..c1470da4758 100644
---- a/include/hw/usb/xlnx-versal-usb2-ctrl-regs.h
-+++ b/include/hw/usb/xlnx-versal-usb2-ctrl-regs.h
-@@ -26,7 +26,7 @@
- #ifndef XLNX_VERSAL_USB2_CTRL_REGS_H
- #define XLNX_VERSAL_USB2_CTRL_REGS_H
- 
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/sysbus.h"
- 
- #define TYPE_XILINX_VERSAL_USB2_CTRL_REGS "xlnx.versal-usb2-ctrl-regs"
-diff --git a/hw/core/register.c b/hw/core/register.c
-index 81316d48597..c3f3c936e70 100644
---- a/hw/core/register.c
-+++ b/hw/core/register.c
-@@ -16,7 +16,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
- 
-diff --git a/hw/dma/xlnx_csu_dma.c b/hw/dma/xlnx_csu_dma.c
-index 650401614ed..ffe258cf31a 100644
---- a/hw/dma/xlnx_csu_dma.c
-+++ b/hw/dma/xlnx_csu_dma.c
-@@ -28,7 +28,7 @@
- #include "system/dma.h"
- #include "hw/core/ptimer.h"
- #include "hw/stream.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/dma/xlnx_csu_dma.h"
- 
- /*
-diff --git a/hw/intc/xlnx-pmu-iomod-intc.c b/hw/intc/xlnx-pmu-iomod-intc.c
-index f3509efa0ab..b8bafe2f3f3 100644
---- a/hw/intc/xlnx-pmu-iomod-intc.c
-+++ b/hw/intc/xlnx-pmu-iomod-intc.c
-@@ -27,7 +27,7 @@
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/bitops.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-diff --git a/hw/intc/xlnx-zynqmp-ipi.c b/hw/intc/xlnx-zynqmp-ipi.c
-index 99566bc2e20..e69ea74ff74 100644
---- a/hw/intc/xlnx-zynqmp-ipi.c
-+++ b/hw/intc/xlnx-zynqmp-ipi.c
-@@ -28,7 +28,7 @@
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/bitops.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-diff --git a/hw/misc/xlnx-versal-cframe-reg.c b/hw/misc/xlnx-versal-cframe-reg.c
-index a5a5e41f3e3..efacbe83abb 100644
---- a/hw/misc/xlnx-versal-cframe-reg.c
-+++ b/hw/misc/xlnx-versal-cframe-reg.c
-@@ -10,7 +10,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/core/registerfields.h"
- #include "qemu/bitops.h"
- #include "qemu/log.h"
-diff --git a/hw/misc/xlnx-versal-cfu.c b/hw/misc/xlnx-versal-cfu.c
-index 13cd597da49..bdce0ce7475 100644
---- a/hw/misc/xlnx-versal-cfu.c
-+++ b/hw/misc/xlnx-versal-cfu.c
-@@ -12,7 +12,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/core/irq.h"
- #include "qemu/bitops.h"
- #include "qemu/log.h"
-diff --git a/hw/misc/xlnx-versal-crl.c b/hw/misc/xlnx-versal-crl.c
-index b0baabc1adf..072d6d98591 100644
---- a/hw/misc/xlnx-versal-crl.c
-+++ b/hw/misc/xlnx-versal-crl.c
-@@ -12,7 +12,7 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/resettable.h"
- 
- #include "target/arm/arm-powerctl.h"
-diff --git a/hw/misc/xlnx-versal-pmc-iou-slcr.c b/hw/misc/xlnx-versal-pmc-iou-slcr.c
-index 84d474c38fc..0246167a5e6 100644
---- a/hw/misc/xlnx-versal-pmc-iou-slcr.c
-+++ b/hw/misc/xlnx-versal-pmc-iou-slcr.c
-@@ -25,7 +25,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/core/irq.h"
- #include "qemu/bitops.h"
- #include "qemu/log.h"
-diff --git a/hw/misc/xlnx-versal-xramc.c b/hw/misc/xlnx-versal-xramc.c
-index 6a86f6b5d48..f4f02c7680b 100644
---- a/hw/misc/xlnx-versal-xramc.c
-+++ b/hw/misc/xlnx-versal-xramc.c
-@@ -11,7 +11,7 @@
- #include "qapi/error.h"
- #include "migration/vmstate.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/irq.h"
- #include "hw/misc/xlnx-versal-xramc.h"
-diff --git a/hw/misc/xlnx-zynqmp-apu-ctrl.c b/hw/misc/xlnx-zynqmp-apu-ctrl.c
-index 93f0bedc48e..957043f01b9 100644
---- a/hw/misc/xlnx-zynqmp-apu-ctrl.c
-+++ b/hw/misc/xlnx-zynqmp-apu-ctrl.c
-@@ -15,7 +15,7 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- 
- #include "qemu/bitops.h"
- 
-diff --git a/hw/misc/xlnx-zynqmp-crf.c b/hw/misc/xlnx-zynqmp-crf.c
-index 841bce2231c..a2ebf6ce5d7 100644
---- a/hw/misc/xlnx-zynqmp-crf.c
-+++ b/hw/misc/xlnx-zynqmp-crf.c
-@@ -8,7 +8,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/bitops.h"
- #include "qemu/log.h"
- #include "migration/vmstate.h"
-diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-index 94d9178a540..3ceb1a8b912 100644
---- a/hw/net/can/xlnx-versal-canfd.c
-+++ b/hw/net/can/xlnx-versal-canfd.c
-@@ -33,7 +33,7 @@
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/net/can/xlnx-zynqmp-can.c b/hw/net/can/xlnx-zynqmp-can.c
-index 533ac854a2f..6c583cab8f5 100644
---- a/hw/net/can/xlnx-zynqmp-can.c
-+++ b/hw/net/can/xlnx-zynqmp-can.c
-@@ -31,7 +31,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "hw/core/irq.h"
- #include "qapi/error.h"
- #include "qemu/bitops.h"
-diff --git a/hw/rtc/ls7a_rtc.c b/hw/rtc/ls7a_rtc.c
-index 54943f60b80..b0c6588e098 100644
---- a/hw/rtc/ls7a_rtc.c
-+++ b/hw/rtc/ls7a_rtc.c
-@@ -8,7 +8,7 @@
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/timer.h"
- #include "system/system.h"
- #include "qemu/cutils.h"
-diff --git a/hw/rtc/xlnx-zynqmp-rtc.c b/hw/rtc/xlnx-zynqmp-rtc.c
-index 18849340d62..49d48dc6782 100644
---- a/hw/rtc/xlnx-zynqmp-rtc.c
-+++ b/hw/rtc/xlnx-zynqmp-rtc.c
-@@ -26,7 +26,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/bitops.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
-index e3c6035c169..a56a5e304dc 100644
---- a/hw/ssi/xilinx_spips.c
-+++ b/hw/ssi/xilinx_spips.c
-@@ -32,7 +32,7 @@
- #include "qemu/bitops.h"
- #include "hw/ssi/xilinx_spips.h"
- #include "qapi/error.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "system/dma.h"
- #include "migration/blocker.h"
- #include "migration/vmstate.h"
-diff --git a/hw/usb/hcd-dwc3.c b/hw/usb/hcd-dwc3.c
-index 74dff39fda1..4018d70f02f 100644
---- a/hw/usb/hcd-dwc3.c
-+++ b/hw/usb/hcd-dwc3.c
-@@ -29,7 +29,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/bitops.h"
- #include "qom/object.h"
- #include "migration/vmstate.h"
-diff --git a/hw/usb/xlnx-usb-subsystem.c b/hw/usb/xlnx-usb-subsystem.c
-index 7193dd4cd2c..e0dfdfdcbd1 100644
---- a/hw/usb/xlnx-usb-subsystem.c
-+++ b/hw/usb/xlnx-usb-subsystem.c
-@@ -24,7 +24,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/bitops.h"
- #include "qom/object.h"
- #include "qapi/error.h"
-diff --git a/hw/usb/xlnx-versal-usb2-ctrl-regs.c b/hw/usb/xlnx-versal-usb2-ctrl-regs.c
-index eb946b5dbd9..33a7d7fbca0 100644
---- a/hw/usb/xlnx-versal-usb2-ctrl-regs.c
-+++ b/hw/usb/xlnx-versal-usb2-ctrl-regs.c
-@@ -30,7 +30,7 @@
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/register.h"
-+#include "hw/core/register.h"
- #include "qemu/bitops.h"
- #include "qom/object.h"
- #include "migration/vmstate.h"
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 0e076a7f1d8..f9cdced5406 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -235,7 +235,6 @@ pub struct HPETTimer {
+     /// timer block abstraction containing this timer
+     state: NonNull<HPETState>,
+ 
+-    regs: HPETTimerRegisters,
+     // Hidden register state
+     /// comparator (extended to counter width)
+     cmp64: u64,
+@@ -260,7 +259,6 @@ fn new(index: u8, state: *const HPETState) -> HPETTimer {
+             // is initialized below.
+             qemu_timer: unsafe { Timer::new() },
+             state: NonNull::new(state.cast_mut()).unwrap(),
+-            regs: Default::default(),
+             cmp64: 0,
+             period: 0,
+             wrap_flag: 0,
+@@ -289,8 +287,14 @@ fn is_int_active(&self, hpet_regs: &BqlRefCell<HPETRegisters>) -> bool {
+     /// calculate next value of the general counter that matches the
+     /// target (either entirely, or the low 32-bit only depending on
+     /// the timer mode).
+-    fn calculate_cmp64(&self, cur_tick: u64, target: u64) -> u64 {
+-        if self.regs.is_32bit_mod() {
++    fn calculate_cmp64(
++        &self,
++        hpet_regs: &BqlRefCell<HPETRegisters>,
++        cur_tick: u64,
++        target: u64,
++    ) -> u64 {
++        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
++        if tn_regs.is_32bit_mod() {
+             let mut result: u64 = cur_tick.deposit(0, 32, target);
+             if result < cur_tick {
+                 result += 0x100000000;
+@@ -322,32 +326,33 @@ fn get_int_route(&self, regs: &HPETRegisters) -> usize {
+             // ...
+             // If the LegacyReplacement Route bit is not set, the individual
+             // routing bits for each of the timers are used.
+-            self.regs.get_individual_route()
++            regs.tn_regs[self.index as usize].get_individual_route()
+         }
+     }
+ 
+     fn set_irq(&self, regs: &HPETRegisters, set: bool) {
++        let tn_regs = &regs.tn_regs[self.index as usize];
+         let route = self.get_int_route(regs);
+ 
+-        if set && self.regs.is_int_enabled() && regs.is_hpet_enabled() {
+-            if self.regs.is_fsb_route_enabled() {
++        if set && tn_regs.is_int_enabled() && regs.is_hpet_enabled() {
++            if tn_regs.is_fsb_route_enabled() {
+                 // SAFETY:
+                 // the parameters are valid.
+                 unsafe {
+                     address_space_stl_le(
+                         addr_of_mut!(address_space_memory),
+-                        self.regs.fsb >> 32,  // Timer N FSB int addr
+-                        self.regs.fsb as u32, // Timer N FSB int value, truncate!
++                        tn_regs.fsb >> 32,  // Timer N FSB int addr
++                        tn_regs.fsb as u32, // Timer N FSB int value, truncate!
+                         MEMTXATTRS_UNSPECIFIED,
+                         null_mut(),
+                     );
+                 }
+-            } else if self.regs.is_int_level_triggered() {
++            } else if tn_regs.is_int_level_triggered() {
+                 self.get_state().irqs[route].raise();
+             } else {
+                 self.get_state().irqs[route].pulse();
+             }
+-        } else if !self.regs.is_fsb_route_enabled() {
++        } else if !tn_regs.is_fsb_route_enabled() {
+             self.get_state().irqs[route].lower();
+         }
+     }
+@@ -360,16 +365,17 @@ fn update_irq(&self, hpet_regs: &BqlRefCell<HPETRegisters>, set: bool) {
+         regs.int_status = regs.int_status.deposit(
+             self.index.into(),
+             1,
+-            u64::from(set && self.regs.is_int_level_triggered()),
++            u64::from(set && regs.tn_regs[self.index as usize].is_int_level_triggered()),
+         );
+         self.set_irq(&regs, set);
+     }
+ 
+-    fn arm_timer(&mut self, tick: u64) {
++    fn arm_timer(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>, tick: u64) {
++        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
+         let mut ns = self.get_state().get_ns(tick);
+ 
+         // Clamp period to reasonable min value (1 us)
+-        if self.regs.is_periodic() && ns - self.last < 1000 {
++        if tn_regs.is_periodic() && ns - self.last < 1000 {
+             ns = self.last + 1000;
+         }
+ 
+@@ -377,21 +383,22 @@ fn arm_timer(&mut self, tick: u64) {
+         self.qemu_timer.modify(self.last);
+     }
+ 
+-    fn set_timer(&mut self) {
++    fn set_timer(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
++        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
+         let cur_tick: u64 = self.get_state().get_ticks();
+ 
+         self.wrap_flag = 0;
+-        self.cmp64 = self.calculate_cmp64(cur_tick, self.regs.cmp);
+-        if self.regs.is_32bit_mod() {
++        self.cmp64 = self.calculate_cmp64(hpet_regs, cur_tick, tn_regs.cmp);
++        if tn_regs.is_32bit_mod() {
+             // HPET spec says in one-shot 32-bit mode, generate an interrupt when
+             // counter wraps in addition to an interrupt with comparator match.
+-            if !self.regs.is_periodic() && self.cmp64 > hpet_next_wrap(cur_tick) {
++            if !tn_regs.is_periodic() && self.cmp64 > hpet_next_wrap(cur_tick) {
+                 self.wrap_flag = 1;
+-                self.arm_timer(hpet_next_wrap(cur_tick));
++                self.arm_timer(hpet_regs, hpet_next_wrap(cur_tick));
+                 return;
+             }
+         }
+-        self.arm_timer(self.cmp64);
++        self.arm_timer(hpet_regs, self.cmp64);
+     }
+ 
+     fn del_timer(&self, hpet_regs: &BqlRefCell<HPETRegisters>) {
+@@ -406,16 +413,16 @@ fn del_timer(&self, hpet_regs: &BqlRefCell<HPETRegisters>) {
+         }
+     }
+ 
+-    /// Configuration and Capability Register
+-    fn set_tn_cfg_reg(
+-        &mut self,
++    fn prepare_tn_cfg_reg_new(
++        &self,
+         hpet_regs: &BqlRefCell<HPETRegisters>,
+         shift: u32,
+         len: u32,
+         val: u64,
+-    ) {
++    ) -> (u64, u64) {
+         trace::trace_hpet_ram_write_tn_cfg((shift / 8).try_into().unwrap());
+-        let old_val: u64 = self.regs.config;
++        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
++        let old_val: u64 = tn_regs.config;
+         let mut new_val: u64 = old_val.deposit(shift, len, val);
+         new_val = hpet_fixup_reg(new_val, old_val, HPET_TN_CFG_WRITE_MASK);
+ 
+@@ -426,7 +433,21 @@ fn set_tn_cfg_reg(
+             self.update_irq(hpet_regs, false);
+         }
+ 
+-        self.regs.config = new_val;
++        (new_val, old_val)
++    }
++
++    /// Configuration and Capability Register
++    fn set_tn_cfg_reg(
++        &mut self,
++        hpet_regs: &BqlRefCell<HPETRegisters>,
++        shift: u32,
++        len: u32,
++        val: u64,
++    ) {
++        // Factor out a prepare_tn_cfg_reg_new() to better handle immutable scope.
++        let (new_val, old_val) = self.prepare_tn_cfg_reg_new(hpet_regs, shift, len, val);
++        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
++        tn_regs.config = new_val;
+ 
+         if activating_bit(old_val, new_val, HPET_TN_CFG_INT_ENABLE_SHIFT)
+             && self.is_int_active(hpet_regs)
+@@ -434,13 +455,13 @@ fn set_tn_cfg_reg(
+             self.update_irq(hpet_regs, true);
+         }
+ 
+-        if self.regs.is_32bit_mod() {
+-            self.regs.cmp = u64::from(self.regs.cmp as u32); // truncate!
++        if tn_regs.is_32bit_mod() {
++            tn_regs.cmp = u64::from(tn_regs.cmp as u32); // truncate!
+             self.period = u64::from(self.period as u32); // truncate!
+         }
+ 
+         if hpet_regs.borrow().is_hpet_enabled() {
+-            self.set_timer();
++            self.set_timer(hpet_regs);
+         }
+     }
+ 
+@@ -452,10 +473,11 @@ fn set_tn_cmp_reg(
+         len: u32,
+         val: u64,
+     ) {
++        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
+         let mut length = len;
+         let mut value = val;
+ 
+-        if self.regs.is_32bit_mod() {
++        if tn_regs.is_32bit_mod() {
+             // High 32-bits are zero, leave them untouched.
+             if shift != 0 {
+                 trace::trace_hpet_ram_write_invalid_tn_cmp();
+@@ -467,41 +489,43 @@ fn set_tn_cmp_reg(
+ 
+         trace::trace_hpet_ram_write_tn_cmp((shift / 8).try_into().unwrap());
+ 
+-        if !self.regs.is_periodic() || self.regs.is_valset_enabled() {
+-            self.regs.cmp = self.regs.cmp.deposit(shift, length, value);
++        if !tn_regs.is_periodic() || tn_regs.is_valset_enabled() {
++            tn_regs.cmp = tn_regs.cmp.deposit(shift, length, value);
+         }
+ 
+-        if self.regs.is_periodic() {
++        if tn_regs.is_periodic() {
+             self.period = self.period.deposit(shift, length, value);
+         }
+ 
+-        self.regs.clear_valset();
++        tn_regs.clear_valset();
+         if hpet_regs.borrow().is_hpet_enabled() {
+-            self.set_timer();
++            self.set_timer(hpet_regs);
+         }
+     }
+ 
+     /// FSB Interrupt Route Register
+     fn set_tn_fsb_route_reg(
+-        &mut self,
+-        _hpet_regs: &BqlRefCell<HPETRegisters>,
++        &self,
++        hpet_regs: &BqlRefCell<HPETRegisters>,
+         shift: u32,
+         len: u32,
+         val: u64,
+     ) {
+-        self.regs.fsb = self.regs.fsb.deposit(shift, len, val);
++        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
++        tn_regs.fsb = tn_regs.fsb.deposit(shift, len, val);
+     }
+ 
+     fn reset(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
+         self.del_timer(hpet_regs);
+-        self.regs.cmp = u64::MAX; // Comparator Match Registers reset to all 1's.
+-        self.regs.config =
+-            (1 << HPET_TN_CFG_PERIODIC_CAP_SHIFT) | (1 << HPET_TN_CFG_SIZE_CAP_SHIFT);
++
++        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
++        tn_regs.cmp = u64::MAX; // Comparator Match Registers reset to all 1's.
++        tn_regs.config = (1 << HPET_TN_CFG_PERIODIC_CAP_SHIFT) | (1 << HPET_TN_CFG_SIZE_CAP_SHIFT);
+         if self.get_state().has_msi_flag() {
+-            self.regs.config |= 1 << HPET_TN_CFG_FSB_CAP_SHIFT;
++            tn_regs.config |= 1 << HPET_TN_CFG_FSB_CAP_SHIFT;
+         }
+         // advertise availability of ioapic int
+-        self.regs.config |=
++        tn_regs.config |=
+             (u64::from(self.get_state().int_route_cap)) << HPET_TN_CFG_INT_ROUTE_CAP_SHIFT;
+         self.period = 0;
+         self.wrap_flag = 0;
+@@ -509,32 +533,35 @@ fn reset(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
+ 
+     /// timer expiration callback
+     fn callback(&mut self, hpet_regs: &BqlRefCell<HPETRegisters>) {
++        let tn_regs = &mut hpet_regs.borrow_mut().tn_regs[self.index as usize];
+         let period: u64 = self.period;
+         let cur_tick: u64 = self.get_state().get_ticks();
+ 
+-        if self.regs.is_periodic() && period != 0 {
++        if tn_regs.is_periodic() && period != 0 {
+             while hpet_time_after(cur_tick, self.cmp64) {
+                 self.cmp64 += period;
+             }
+-            if self.regs.is_32bit_mod() {
+-                self.regs.cmp = u64::from(self.cmp64 as u32); // truncate!
++            if tn_regs.is_32bit_mod() {
++                tn_regs.cmp = u64::from(self.cmp64 as u32); // truncate!
+             } else {
+-                self.regs.cmp = self.cmp64;
++                tn_regs.cmp = self.cmp64;
+             }
+-            self.arm_timer(self.cmp64);
++            self.arm_timer(hpet_regs, self.cmp64);
+         } else if self.wrap_flag != 0 {
+             self.wrap_flag = 0;
+-            self.arm_timer(self.cmp64);
++            self.arm_timer(hpet_regs, self.cmp64);
+         }
+         self.update_irq(hpet_regs, true);
+     }
+ 
+-    const fn read(&self, target: TimerRegister, _hpet_regs: &BqlRefCell<HPETRegisters>) -> u64 {
++    fn read(&self, target: TimerRegister, hpet_regs: &BqlRefCell<HPETRegisters>) -> u64 {
++        let tn_regs = &hpet_regs.borrow().tn_regs[self.index as usize];
++
+         use TimerRegister::*;
+         match target {
+-            CFG => self.regs.config, // including interrupt capabilities
+-            CMP => self.regs.cmp,    // comparator register
+-            ROUTE => self.regs.fsb,
++            CFG => tn_regs.config, // including interrupt capabilities
++            CMP => tn_regs.cmp,    // comparator register
++            ROUTE => tn_regs.fsb,
+         }
+     }
+ 
+@@ -571,6 +598,9 @@ pub struct HPETRegisters {
+     /// Main Counter Value Register
+     #[doc(alias = "hpet_counter")]
+     counter: u64,
++
++    /// HPET Timer N Registers
++    tn_regs: [HPETTimerRegisters; HPET_MAX_TIMERS],
+ }
+ 
+ impl HPETRegisters {
+@@ -686,11 +716,13 @@ fn set_cfg_reg(&self, regs: &BqlRefCell<HPETRegisters>, shift: u32, len: u32, va
+ 
+             for timer in self.timers.iter().take(self.num_timers) {
+                 let mut t = timer.borrow_mut();
++                let id = t.index as usize;
++                let tn_regs = &regs.borrow().tn_regs[id];
+ 
+-                if t.regs.is_int_enabled() && t.is_int_active(regs) {
++                if tn_regs.is_int_enabled() && t.is_int_active(regs) {
+                     t.update_irq(regs, true);
+                 }
+-                t.set_timer();
++                t.set_timer(regs);
+             }
+         } else if deactivating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
+             // Halt main counter and disable interrupt generation.
+@@ -932,8 +964,9 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
+         for timer in self.timers.iter().take(self.num_timers) {
+             let mut t = timer.borrow_mut();
+             let cnt = regs.counter;
++            let cmp = regs.tn_regs[t.index as usize].cmp;
+ 
+-            t.cmp64 = t.calculate_cmp64(cnt, t.regs.cmp);
++            t.cmp64 = t.calculate_cmp64(&self.regs, cnt, cmp);
+             t.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
+         }
+ 
+@@ -997,8 +1030,6 @@ impl ObjectImpl for HPETState {
+         })
+         .build();
+ 
+-// In fact, version_id and minimum_version_id for HPETTimerRegisters are
+-// unrelated to HPETTimer's version IDs. Does not affect compatibility.
+ impl_vmstate_struct!(
+     HPETTimerRegisters,
+     VMStateDescriptionBuilder::<HPETTimerRegisters>::new()
+@@ -1016,11 +1047,10 @@ impl ObjectImpl for HPETState {
+ const VMSTATE_HPET_TIMER: VMStateDescription<HPETTimer> =
+     VMStateDescriptionBuilder::<HPETTimer>::new()
+         .name(c"hpet_timer")
+-        .version_id(1)
+-        .minimum_version_id(1)
++        .version_id(2)
++        .minimum_version_id(2)
+         .fields(vmstate_fields! {
+             vmstate_of!(HPETTimer, index),
+-            vmstate_of!(HPETTimer, regs),
+             vmstate_of!(HPETTimer, period),
+             vmstate_of!(HPETTimer, wrap_flag),
+             vmstate_of!(HPETTimer, qemu_timer),
+@@ -1031,18 +1061,17 @@ impl ObjectImpl for HPETState {
+ 
+ const VALIDATE_TIMERS_NAME: &CStr = c"num_timers must match";
+ 
+-// In fact, version_id and minimum_version_id for HPETRegisters are
+-// unrelated to HPETState's version IDs. Does not affect compatibility.
+ impl_vmstate_struct!(
+     HPETRegisters,
+     VMStateDescriptionBuilder::<HPETRegisters>::new()
+         .name(c"hpet/regs")
+-        .version_id(1)
+-        .minimum_version_id(1)
++        .version_id(2)
++        .minimum_version_id(2)
+         .fields(vmstate_fields! {
+             vmstate_of!(HPETRegisters, config),
+             vmstate_of!(HPETRegisters, int_status),
+             vmstate_of!(HPETRegisters, counter),
++            vmstate_of!(HPETRegisters, tn_regs),
+         })
+         .build()
+ );
+@@ -1050,8 +1079,8 @@ impl ObjectImpl for HPETState {
+ const VMSTATE_HPET: VMStateDescription<HPETState> =
+     VMStateDescriptionBuilder::<HPETState>::new()
+         .name(c"hpet")
+-        .version_id(2)
+-        .minimum_version_id(2)
++        .version_id(3)
++        .minimum_version_id(3)
+         .pre_save(&HPETState::pre_save)
+         .post_load(&HPETState::post_load)
+         .fields(vmstate_fields! {
 -- 
 2.52.0
 
