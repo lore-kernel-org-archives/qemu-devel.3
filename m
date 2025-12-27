@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4266E8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCA0E8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQRZ-0007E5-U7; Sat, 27 Dec 2025 04:18:37 -0500
+	id 1vZQQr-0005NN-Kp; Sat, 27 Dec 2025 04:17:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRK-0006rV-Nm
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:24 -0500
+ id 1vZQQp-0005Lg-V4
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRJ-0003gw-2D
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:22 -0500
+ id 1vZQQo-0003JK-Fr
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827100;
+ s=mimecast20190719; t=1766827070;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N/s+BcBJhXrQ1Hn7p2/Ew5sWlE3mbAppM59lkGTyxaY=;
- b=GLemswEEpfNhllbZEyFcHBlIfE7nZaiCAXcyedaFYj+71964VADgFgzxty8prxoZMzeRf8
- b3cUvv8cYuxuFHXE+5HhZSPsrJc/PPUK4JpXt1EPG07ZY6xchlTajkd5omNr9ng8Cu74wO
- MGtN1czX/hIfI1pZsdKFj805/F/qzqg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fsRfJ17Tv3k56iygc1dJWL298tqHmSNxwclb6VwBO0g=;
+ b=hwGiaceLoMrPKEfQVRsKCO/eMMSGs+PwWLCnvzZDyo/GfM0npjn7X+gcn13Es2HbO61np4
+ 85D4M0VSsvgb3tKy3G6+DFtH1NN7jyIRbqFNOEna/yoU0BhRcnz3K7o5R5G131Um8Y2A52
+ hF0OBAIOv+Gl7O6SMCwghiPluf9hmwc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-124-OZdyd51_PsScrhVsDiv7OQ-1; Sat, 27 Dec 2025 04:18:18 -0500
-X-MC-Unique: OZdyd51_PsScrhVsDiv7OQ-1
-X-Mimecast-MFC-AGG-ID: OZdyd51_PsScrhVsDiv7OQ_1766827097
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-477c49f273fso99541045e9.3
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:18 -0800 (PST)
+ us-mta-106-ISCKBvEwPmWZ0BbK4RWF-A-1; Sat, 27 Dec 2025 04:17:44 -0500
+X-MC-Unique: ISCKBvEwPmWZ0BbK4RWF-A-1
+X-Mimecast-MFC-AGG-ID: ISCKBvEwPmWZ0BbK4RWF-A_1766827063
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4325aa61c6bso2497420f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827096; x=1767431896; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827063; x=1767431863; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N/s+BcBJhXrQ1Hn7p2/Ew5sWlE3mbAppM59lkGTyxaY=;
- b=ob+zouEBtt4VkeO5FroZFqVWJ8xdmY8/8iEFexbs/Kk3JvB3J98F1kmLgnjZCXy3X9
- N3gJMTYbYvyOQfVDaorPWMzGoTD0DvR0VZLE+U5JwVse3UZSlAIDurdWAaKZck5HqnRT
- gNS/fe9qVfsyZx84Cj0xF0U7tdf693TPgjDvpLKp7dm0DtIk7Qfk5mGlZ7dpoGJBdsp0
- sdQf8xqQELlLqUevn4EDOMk4pch5WNsvFaDx2Xiv8TJhUnPYnZbbDKvcBRuFz85qDvRh
- f5fSWtXWsEGtMIld7axF2NVRmQ2mYsVhs3uNrbNsEp1mnXEI2PJtTGnIMx50KYJweajV
- HDFg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=fsRfJ17Tv3k56iygc1dJWL298tqHmSNxwclb6VwBO0g=;
+ b=g4TTJzqnNGgtuDRk44JtpVphZTdWJkKUMfj5VhlpF2BmFmMtm9A6sPzLTFyR4oS/88
+ g7IWHuj4ZVFxx8CIZ1FgP/h6PD12MKghzJsQbZDrYS6tZ6n1iNErfCZMmxQ0VCFZBri0
+ fa7kTzOsazD+t6PxjC8fFkDUyjGcN1ewiF5vCRSV5/B1tQE91L1QzZEztNpWRnvj5f/e
+ IR5AufR+GYFAN/QJxbeW5ObxC+CJFOrYnkzcCm3TFjgqPxbq9rG1yYE1SDlSDGk9kIaB
+ 9iLpT/3MPqWxHhOaJ0w6M5Pop6kX87FkCaZh0QubpTq6YA24DGCqM4UQDBPGHj0vQvrw
+ T6FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827096; x=1767431896;
+ d=1e100.net; s=20230601; t=1766827063; x=1767431863;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=N/s+BcBJhXrQ1Hn7p2/Ew5sWlE3mbAppM59lkGTyxaY=;
- b=o3NH8CWciYHllyWAPEvhnzUqgAGKT7iMt86AfCIog3rGoNPLAGdoYimh+AcMJ9kr1U
- RBV5xDK2Sl4o0JsGx7Lfzm5FxBim0Zie3RRDJCA9jxhCQvzkHJxHn1Mh0o8gWBp8qqAp
- dPtaSsCRws+LjUSqnXDSSUGZr32IW4ulwNslgKD/9PJJmPOubR2DeTW6uY9I7iPlNVpP
- PRAa48yKcIYAhlOisQoszQ/eN2q4ii7XYjSgiK2hiKyyhp5lDoffSFgqvPvAkelDQFXq
- 9KF5SsQmDuF2ixwQnJvIvbi5vGw9Lvyy7N9WYqFAo3zpf7cQg6Puza/Z4rHwNskF09et
- nCsg==
-X-Gm-Message-State: AOJu0Ywfa0+DpEBiOhW7hZ+KWuJvJfHGc12bxai0XPmA/B5CP/F1kQOT
- qjoBeEO8sN7dWYYpS6E7LCuv1uGN5z5qv7wiPBcFhyG2l2GthKXBwvtUYilKa0M5CAKS87o1azP
- IZZlIqJlSFBaea906imVkJjMRtzZk6KSud01UjMjAVrAPpS24y/YZo7q9h3llEX9V+u9Vv/n6C6
- N5Zg7RZXzFAwh3IrrbqdWzBxsVoU6RTWM7rodxS47D
-X-Gm-Gg: AY/fxX523yQZ7T6KqwteM/c7GCwWzLNRgSkUSCmLwCjnLLIhDGxluxk89R7we62BsDL
- 8l5ItUeE2XyQ8TDxvakN4s8zbQaVoXS27TCY7tJUpWVt6wmwpxSwQd/AAcgh9Bway7REWozhWC1
- 7wNkq/kwpQ8mYpl/6vIEcwYjgwIoZuGxF8cCaphzQl7NIqgM8K0uROwt7qUs588LN99548EjyIb
- rDuBTdwWVaiXdGpfRgTSwkb/U+wnl73PwaGNklgBgvR6/WHNoYU9B16p2dLbUQgXuZGTLfhDB3N
- 8/e52jtDvXATS2PfdqOVAXn9yKnHXYwSCxRmvZp1shDJwoLrLY5Arwu8d87g0cFePQCLiqQmoT+
- IloCyB9mPv2vk5SFXIIHcmN8Okbh8Unqwlp5B0m7rQCUDC4EZ7CupFRTHN9KWGPV2Lxfhaj37/J
- sqIKyjeJJOrUs8wH8=
-X-Received: by 2002:a05:600c:3e18:b0:46e:1fb7:a1b3 with SMTP id
- 5b1f17b1804b1-47d4e6fc0f1mr40400235e9.23.1766827096445; 
- Sat, 27 Dec 2025 01:18:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHHjvIW48Vu01GRNP4RseiHgKFoIYr+urKP+RGe8ldUJn9pUUQlZKpFbnUZmyl6JjpaxXjk8w==
-X-Received: by 2002:a05:600c:3e18:b0:46e:1fb7:a1b3 with SMTP id
- 5b1f17b1804b1-47d4e6fc0f1mr40399965e9.23.1766827095961; 
- Sat, 27 Dec 2025 01:18:15 -0800 (PST)
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=fsRfJ17Tv3k56iygc1dJWL298tqHmSNxwclb6VwBO0g=;
+ b=le02nlMCSK1ztO9FGw4AdIqpIYP0d3v9Bhn7lWhRZ2RPC10Nyeb/arteJVpJ89NPoj
+ bQUFSV98hr06rn8lf8O/xp/qilH2rMoFhDGsEGpdmnnIV2HlnczoAWLexywTL7DC8oAk
+ rmH0CKjjgQccOv+5K9xiDhB9GeETwFWFGQonhMljNs5snk1UV73xQTAXKaqF45nNVMUJ
+ hn71ISpxKtm9qIwqrI7N8aukYSAig9nNe/AtZsXj/wQyM49he3oWhOO0LRmnEXPAzs/7
+ liqHwJoLfCl0NXv7ydOzDlvAETTav0yoNQQ/pZA6GaMbUaSpKnMW7jLlui9ra7BcEqOv
+ W4qw==
+X-Gm-Message-State: AOJu0Yy0tSkNvBaDMt/9UrqI+8vLhYxFpOqxroMsPfeDpWtKLKDzsIjN
+ 2GnMFeqhDIfzqvBtce/HoHfh/ajRO6fomkd37g9AZAKymK6yun+FLhpV0ochzITDRHoSsCEVV3Z
+ ALDXurhP3xv2pc0eLmjEAjjBgVg/n6thuiPpTs6EUMr4xW81ZKOjpHx1GLXKAhBKkcqk+d2jpWF
+ OSoYxxJtoBkkF3BVbSa2gLdPQa0ew2Keke4vaeX3kj
+X-Gm-Gg: AY/fxX6S2y3hHuxH7+uxcuI0Tx+5VNgwbhecV2m9SrGGrxIudFy3jPtLicUK4VZLrCO
+ o+0Uy4a+9/fYkrxQ4FCRVRX2S3DbuUCd25v3OftH5DcyySJgichIavJ+IjPdX8F+5Nbt787ldHh
+ iebCrDnzNTr7cfFt2W6Jl5HESa3bloQ158ZuZgxjN7FTe0FVzSDqsqNvgIsTy080FFzTfwTem/w
+ nty8cFsjLuYzyPa7sxniSs53jiyZdtb0ApdCmUc4ARXOim6zF1YayaJkV89s5j/842JI4IGPfYa
+ P/3FVM5oGvMpeDXUAaSAzVRif0z1LM++UXgWqkp+mY0eeEYQm/3gPpl8u9u0AEr9pPrEHif35B4
+ 1Iiqlp799/DQtUY6A1LJn/Ta26ITIBcRH6xS4gKARwop7saIBY2l11X0hkc0VmnLk3xOfYpY6Tn
+ wP7E/CtwpyJxa1t1Y=
+X-Received: by 2002:a05:6000:40de:b0:432:851d:23e2 with SMTP id
+ ffacd0b85a97d-432851d2633mr4205088f8f.49.1766827062842; 
+ Sat, 27 Dec 2025 01:17:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHZgUyTignmUNVGcnYrV8ZqNnWSrdz2zQ0J4yerIydqlD+JEwFe8zx9r14iCsiDpyDCkf0IbQ==
+X-Received: by 2002:a05:6000:40de:b0:432:851d:23e2 with SMTP id
+ ffacd0b85a97d-432851d2633mr4205062f8f.49.1766827062298; 
+ Sat, 27 Dec 2025 01:17:42 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3a49315sm203692265e9.2.2025.12.27.01.18.13
+ ffacd0b85a97d-4324eaa4749sm50634584f8f.37.2025.12.27.01.17.40
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:18:13 -0800 (PST)
+ Sat, 27 Dec 2025 01:17:41 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 058/153] rust/hpet: Borrow HPETState.regs once in
- HPETState::post_load()
-Date: Sat, 27 Dec 2025 10:14:45 +0100
-Message-ID: <20251227091622.20725-59-pbonzini@redhat.com>
+Subject: [PULL 041/153] chardev: add prelude
+Date: Sat, 27 Dec 2025 10:14:28 +0100
+Message-ID: <20251227091622.20725-42-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -123,51 +121,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
-
-Timers in post_load() access the same HPETState, which is the "self"
-HPETState.
-
-So there's no need to access HPETState from child HPETTimer again and
-again. Instead, just cache and borrow HPETState.regs at the beginning,
-and this could save some CPU cycles and reduce borrow() calls.
-
-It's safe, because post_load() is called with BQL protection, so that
-there's no other chance to modify the regs.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20251113051937.4017675-15-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ rust/chardev/meson.build         | 1 +
+ rust/chardev/src/lib.rs          | 5 +++++
+ rust/chardev/src/prelude.rs      | 4 +++-
+ rust/hw/char/pl011/src/device.rs | 2 +-
+ 4 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index da938f356e9..abbaebc405e 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -882,9 +882,11 @@ fn pre_save(&self) -> Result<(), migration::Infallible> {
-     }
+diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
+index 6b681c609ad..54bb2962528 100644
+--- a/rust/chardev/meson.build
++++ b/rust/chardev/meson.build
+@@ -30,6 +30,7 @@ _chardev_rs = static_library(
+       'src/lib.rs',
+       'src/bindings.rs',
+       'src/chardev.rs',
++      'src/prelude.rs',
+     ],
+     {'.': _chardev_bindings_inc_rs}
+   ),
+diff --git a/rust/chardev/src/lib.rs b/rust/chardev/src/lib.rs
+index 2e549f99d91..93a28725932 100644
+--- a/rust/chardev/src/lib.rs
++++ b/rust/chardev/src/lib.rs
+@@ -4,3 +4,8 @@
  
-     fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
-+        let regs = self.regs.borrow();
+ mod chardev;
+ pub use chardev::*;
 +
-         for timer in self.timers.iter().take(self.num_timers) {
-             let mut t = timer.borrow_mut();
--            let cnt = t.get_state().regs.borrow().counter;
-+            let cnt = regs.counter;
++// preserve one-item-per-"use" syntax, it is clearer
++// for prelude-like modules
++#[rustfmt::skip]
++pub mod prelude;
+diff --git a/rust/chardev/src/prelude.rs b/rust/chardev/src/prelude.rs
+index 9f0b561bfab..f949d925399 100644
+--- a/rust/chardev/src/prelude.rs
++++ b/rust/chardev/src/prelude.rs
+@@ -1,3 +1,5 @@
+ //! Essential types and traits intended for blanket imports.
  
-             t.cmp64 = t.calculate_cmp64(cnt, t.regs.cmp);
-             t.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
-@@ -893,7 +895,7 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
-         // Recalculate the offset between the main counter and guest time
-         if !self.hpet_offset_saved {
-             self.hpet_offset
--                .set(ticks_to_ns(self.regs.borrow().counter) - CLOCK_VIRTUAL.get_ns());
-+                .set(ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns());
-         }
+-pub use crate::chardev::{Chardev, CharFrontend, Event};
+\ No newline at end of file
++pub use crate::chardev::Chardev;
++pub use crate::chardev::CharFrontend;
++pub use crate::chardev::Event;
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 2e4ccc9b231..ff929e60993 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -5,7 +5,7 @@
+ use std::{ffi::CStr, mem::size_of};
  
-         Ok(())
+ use bql::BqlRefCell;
+-use chardev::{CharFrontend, Chardev, Event};
++use chardev::prelude::*;
+ use common::prelude::*;
+ use hwcore::{prelude::*, ClockEvent, IRQState};
+ use migration::{self, prelude::*};
 -- 
 2.52.0
 
