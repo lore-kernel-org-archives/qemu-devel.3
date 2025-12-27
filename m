@@ -4,107 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1416E8FDD9
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790A6E8FDD8
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQRW-000778-J0; Sat, 27 Dec 2025 04:18:35 -0500
+	id 1vZQPr-0002Nw-VO; Sat, 27 Dec 2025 04:16:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRH-0006nc-Lf
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vZQPn-0002Lq-41
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:16:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRF-0003gH-L0
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:19 -0500
+ id 1vZQPl-0002Jd-BK
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:16:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827097;
+ s=mimecast20190719; t=1766827004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FEQp1QeOCaVuElqN45AAQIvtGjAtReoau7wTk87mvLg=;
- b=RxXZcXM8OPrarMlQ2YoVwLeOJvAL+3MrQjCEzOaz6/ZyMSx4ki+fjDYYXvAghJ+dCLwB1O
- azBPnLvVHzXeujw4tchkeYgO0u5aTDx3uF69yaYNJHl9YswuhnAECBSH3dA4J4KOLkOUcw
- iMWENRJzybYm83EqmIJEZQrIe6l5Jmk=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NH4AbEhMDNj1w9MP13tf9nDpr24WI1sJGsuQBiB53Bs=;
+ b=Hsft2Gop2V3xSHoiMraO9GF5cY/neiYAH2nwhC17LXRpMI2ajSi7rMQAxBf1KdRgmEfLun
+ ultMZyNEvfsWnbIAAgvuknpPmH5rRJ9bMIKKHpqrCTulr85PAQgIzNscjaXa/AGri5+8DQ
+ isduprz5zx8fDc5dHIghM86j9IkI5Wk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-92FXTLBdPjyNdWhjYtJESg-1; Sat, 27 Dec 2025 04:18:14 -0500
-X-MC-Unique: 92FXTLBdPjyNdWhjYtJESg-1
-X-Mimecast-MFC-AGG-ID: 92FXTLBdPjyNdWhjYtJESg_1766827093
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4327778efa9so1318090f8f.2
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:14 -0800 (PST)
+ us-mta-281-dZQApyp_PS2Kflfla_lieA-1; Sat, 27 Dec 2025 04:16:41 -0500
+X-MC-Unique: dZQApyp_PS2Kflfla_lieA-1
+X-Mimecast-MFC-AGG-ID: dZQApyp_PS2Kflfla_lieA_1766827000
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-432488a0ce8so6220230f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:16:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827093; x=1767431893; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766826999; x=1767431799; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FEQp1QeOCaVuElqN45AAQIvtGjAtReoau7wTk87mvLg=;
- b=O2X7doFI/alP+e97FJzVfieaGXpKF6BmAaXIstdHS5PTwvrgxmrx/B7oCM8FoY6OVg
- mcGz87qP0effSXqASFKhg0sztE9DljoPsbXrPdyETpxcenAFe4u/f4vFznhjamoXZ0qR
- qYpncM2/j1VsVMtC92nSQX+6X/TjAFOXz+2ugNwKkf5f/EIjJHViEBJRH2tt4AoIDd8I
- UDC5fVVvMqR7K7uocDclTDe4zyThQqI938G7LGNj2rUcZbRN87dxibH65R0b2UaMWJG5
- y2goXk93fPVoS+TBS2tv3RHDcPAevpMTPZjTGzyE2/TR44c5DTpcsrzjQiQgPkiLJhiW
- Vr8w==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=NH4AbEhMDNj1w9MP13tf9nDpr24WI1sJGsuQBiB53Bs=;
+ b=afLmjkIPwa3y1gDHYiHE72g19ywFZRb5U+vV4UiMSuo0K2vqHAel9+5ZL2h8x7EeD3
+ uXNKVNv6FI09RzxS8fxNDlnmaFO4b1XaHfWFD7KOlGkfjuAd+9DpgaJR9qi7X2jMkGv9
+ 62zuIcquylL3vbN9XKHjGZ9+Z8jS12jpcojxdBSkgf4BH8MulNHf6C9xesY9KHgvpDJL
+ OOBZHuskxWS9fUltoN+kbiARDKw9U2cvtEp75a7KoMZtSwPKjaf1dXToAUs/N4JJKktg
+ NU76z6tYD/NRf35gVvptYLkhWk7wfks6C9J5+O0cblvJX3yucr8t449Z7MXSB0Dx80C2
+ xEvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827093; x=1767431893;
+ d=1e100.net; s=20230601; t=1766826999; x=1767431799;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FEQp1QeOCaVuElqN45AAQIvtGjAtReoau7wTk87mvLg=;
- b=S6TN/DByYOQ3dYBKBFpu+fJQuIQ2gym+xd2A+Mnq6eA0S/6PepxeYPJmuMmk3CMmuO
- 22Uw51ZQ64prUZvAWpTrXI75LSzGs/OXihU7QnE8sNIzm/UEZpLEQmivzdRERHCBorn0
- 1sUiW8KxfwhGDuYL5chlDWReGNEld17o7Uo6tGAa93VbpSaU1FeZ4JzZdwyxKtgiLP2M
- HrkbbvI6Jxk317Vtp/+OmhprM+QONNABEyJNLUqklcuXiat+KGUl/zVTe8SKk2GSoqlz
- zL48e11CD9YsJ3ooZ4w2BJU7JiWt20LMr3dGMWXwRmWifWunSGFCe2khM2mgJcfZ+5dL
- 0YpA==
-X-Gm-Message-State: AOJu0YzGlQAr1xaeXC+JYZAcPRLLpZwzI54be5DV55Mt1GKoiC2Mp4QG
- 1OaQiXl0jT0zehUrJOEMLNO5qxeaqS7A71FqVmVTbPlT1KLy3VBs2htoRqug6NkJmMeI9/+tlZg
- 8UTqIn06ddxGs5X3kJEENUYcjhOUgu7QrArfqBcFoYD34Wh3Kjxq+HUKvMQEXMoQRxrwAu9th2n
- N5h79qbbpmKJj97lI4Iaxn/FlavwyZbQqeTotIOYe3
-X-Gm-Gg: AY/fxX7p1GEmqPIc1v3vREnrvNFCrVyOXEvKNyMldVKKtsYkF3mpnyNtZy146LE6dqR
- YF3Mx3Xdz7HyxOR5O5GZ/SzPuoOYxVINujqhQPJuxkD2XojMAGIIigMx9Hfjy3kXxWBjNXpzhLO
- PwsSskI6H2pCyHcegziv1roMSGPvkWW4wSB/DKvkyfYESnnCS0dNFOiHtvGUWIeBnQ/JkOdhaVJ
- PvulDO2aPT9Hos4VbAZs9c6KSY+kOCtBbpXP4+hkIExca8LWfkd0GqWoyjKMjq+KrZtAQUa8U/o
- ipv85EXWLiDNvEJOgNQSmMUNiL5vYHaakiUZ69fllRTdD3X9xwI3h3xLCeMKSbwPtAWe05/Rb+R
- zkcBm+ALoQgQV/PwnbuU36pYaU5T10ulFKnuNodkTFAJih2wt3aDQzlWYpNABziuMzFH+BlHmUJ
- HQJAHkhB/OiIm45Z4=
-X-Received: by 2002:a05:6000:2285:b0:430:fafd:f1d2 with SMTP id
- ffacd0b85a97d-4324e4c6848mr32383803f8f.11.1766827092713; 
- Sat, 27 Dec 2025 01:18:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHO48PlqlieWihndh+EVkuTjcBEF8YXPXM6OWzbBD5XGzvQ6djlsm8DEl4voz3u8TsjR3UJBg==
-X-Received: by 2002:a05:6000:2285:b0:430:fafd:f1d2 with SMTP id
- ffacd0b85a97d-4324e4c6848mr32383771f8f.11.1766827092196; 
- Sat, 27 Dec 2025 01:18:12 -0800 (PST)
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=NH4AbEhMDNj1w9MP13tf9nDpr24WI1sJGsuQBiB53Bs=;
+ b=bInKZmyi4D4bo6Pde90FoiuYLcrPHX13l6cIz/2XocNH6RamB50hck0jNe6VeFsHhG
+ jHcPrpnv9Tx/inYUBiTv93XWnsJ1hwG+CuSwfelXVBPcUklMzivciEzWvcsAIJGDftml
+ XWQe9nTREIAWTK7xArgWhSt+qCw4fh4xpiU1csHQMKY4rUrMeQD1eDrF9J/W7CJEW3y8
+ PZNp/qumBwSbK7dIaGf8MsyevQn8qEHh/oLtOTydhT15jlOTcvpwI9hbkbBBVgtStHCE
+ SOiaQAw3scmun7QApJ7asgXz3kEkLEG7Hes7Au4TifBTmRrp9/lZhKJq+UHBkuCJgYZO
+ l6LQ==
+X-Gm-Message-State: AOJu0Yx46wo9ASgrREpQmMi6/yv8GQKYS/Az+wNWUrsJbL2KOL6/4ycK
+ FxwCoURdehjyu+W6qxHtMBwgrzs4cTa/c88VXIgbR/8PYXOOfVLkPbtZ3OiAxRqdRwUBdBZdEH3
+ wQsnqkPvfghDKn9dnKDpinJBfBXxVirBMeEGodyvmXRcOYAqe94gft/kQbTr2VAP540K1QsYFUv
+ QXxxPYvUQrKj/Z+RIZFN4trWIPYg3vQ0TibgSeYQmT
+X-Gm-Gg: AY/fxX43IVHxTQFZktyLXFaf6JucbrB8dvKUQ0QQxmJMKh5aHLkU7YBlcOPl7DqSaTg
+ lS2BnHIbK8FtBdNTNuoPnq3YzGTkvL4F6Ka0ZckgZG8nK2kPJtNQdgv310SOiP2O6QBHRwYrisF
+ KC2mH2O34IxVm8UAtrggWVO9hlo5sEN+2gfpyRlIdT0Qk3z1UduyzH2U3sMRqMXTTbvs2lROYHU
+ DCF4+OB1kvjFbvQiPCDj7QQuQ9nBEPBHsTNgH4W7jyqacuwKRT+mShNfi8WIqaAHKJb/95NqCLX
+ 2VI2k29DdGODpNHeR6joVHHDJkO45BSEbkYbD7CM41UdrXcU91Cy8bOhTwZyp5TwVBzwE27/4h3
+ YJ+62xko45KnPUvzLHOnGkX21rvCCRlg4XCIYnDhSpMBuoSVfAcgf+MXQ+ygGK6wgM7JE7aBRev
+ i9RGcGBi+17NnwWXs=
+X-Received: by 2002:a05:6000:25c3:b0:430:f879:a0fc with SMTP id
+ ffacd0b85a97d-4324e4cb9f4mr30676223f8f.21.1766826998856; 
+ Sat, 27 Dec 2025 01:16:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG1l6pc8IqaFFNHn7fd+wFNxuZsFSW3se8DJYc6r1tMmA76PAdpWlGGJgqCY2cRjmSSkCoOaA==
+X-Received: by 2002:a05:6000:25c3:b0:430:f879:a0fc with SMTP id
+ ffacd0b85a97d-4324e4cb9f4mr30676193f8f.21.1766826998206; 
+ Sat, 27 Dec 2025 01:16:38 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea226d1sm50703204f8f.13.2025.12.27.01.18.09
+ ffacd0b85a97d-4324ea82f6asm51476575f8f.27.2025.12.27.01.16.37
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:18:09 -0800 (PST)
+ Sat, 27 Dec 2025 01:16:37 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 056/153] rust/hpet: Abstract HPETRegisters struct
-Date: Sat, 27 Dec 2025 10:14:43 +0100
-Message-ID: <20251227091622.20725-57-pbonzini@redhat.com>
+Subject: [PULL 008/153] include: move hw/fw-path-provider.h to hw/core/
+Date: Sat, 27 Dec 2025 10:13:55 +0100
+Message-ID: <20251227091622.20725-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,280 +121,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
-
-Place all HPET (global) timer block registers in a HPETRegisters struct,
-and wrap the whole register struct with a BqlRefCell<>.
-
-This allows to elevate the Bql check from individual register access to
-register structure access, making the Bql check more coarse-grained. But
-in current step, just treat BqlRefCell as BqlCell while maintaining
-fine-grained BQL protection. This approach helps to use HPETRegisters
-struct clearly without introducing the "already borrowed" around
-BqlRefCell.
-
-HPETRegisters struct makes it possible to take a Mutex<> to replace
-BqlRefCell<>, like C side did.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20251113051937.4017675-13-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 116 +++++++++++++++++++------------
- 1 file changed, 70 insertions(+), 46 deletions(-)
+ include/hw/{ => core}/fw-path-provider.h | 0
+ include/hw/virtio/vhost-scsi-common.h    | 2 +-
+ hw/core/fw-path-provider.c               | 2 +-
+ hw/core/qdev-fw.c                        | 2 +-
+ hw/ppc/mac_newworld.c                    | 2 +-
+ hw/ppc/mac_oldworld.c                    | 2 +-
+ hw/ppc/pegasos.c                         | 2 +-
+ hw/ppc/spapr.c                           | 2 +-
+ hw/scsi/vhost-scsi-common.c              | 2 +-
+ hw/scsi/vhost-scsi.c                     | 2 +-
+ hw/scsi/vhost-user-scsi.c                | 2 +-
+ hw/sparc64/sun4u.c                       | 2 +-
+ 12 files changed, 11 insertions(+), 11 deletions(-)
+ rename include/hw/{ => core}/fw-path-provider.h (100%)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 8dc3cc59c98..bf9f4936718 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -524,24 +524,29 @@ fn write(&mut self, target: TimerRegister, value: u64, shift: u32, len: u32) {
-     }
- }
+diff --git a/include/hw/fw-path-provider.h b/include/hw/core/fw-path-provider.h
+similarity index 100%
+rename from include/hw/fw-path-provider.h
+rename to include/hw/core/fw-path-provider.h
+diff --git a/include/hw/virtio/vhost-scsi-common.h b/include/hw/virtio/vhost-scsi-common.h
+index d54d9c916f2..7f34c7cb4fe 100644
+--- a/include/hw/virtio/vhost-scsi-common.h
++++ b/include/hw/virtio/vhost-scsi-common.h
+@@ -16,7 +16,7 @@
  
-+#[repr(C)]
-+#[derive(Default)]
-+pub struct HPETRegisters {
-+    // HPET block Registers: Memory-mapped, software visible registers
-+    /// General Capabilities and ID Register
-+    capability: u64,
-+    ///  General Configuration Register
-+    config: u64,
-+    /// General Interrupt Status Register
-+    #[doc(alias = "isr")]
-+    int_status: u64,
-+    /// Main Counter Value Register
-+    #[doc(alias = "hpet_counter")]
-+    counter: u64,
-+}
-+
- /// HPET Event Timer Block Abstraction
- #[repr(C)]
- #[derive(qom::Object, hwcore::Device)]
- pub struct HPETState {
-     parent_obj: ParentField<SysBusDevice>,
-     iomem: MemoryRegion,
--
--    // HPET block Registers: Memory-mapped, software visible registers
--    /// General Capabilities and ID Register
--    capability: BqlCell<u64>,
--    ///  General Configuration Register
--    config: BqlCell<u64>,
--    /// General Interrupt Status Register
--    #[doc(alias = "isr")]
--    int_status: BqlCell<u64>,
--    /// Main Counter Value Register
--    #[doc(alias = "hpet_counter")]
--    counter: BqlCell<u64>,
-+    regs: BqlRefCell<HPETRegisters>,
+ #include "hw/virtio/virtio-scsi.h"
+ #include "hw/virtio/vhost.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "qom/object.h"
  
-     // Internal state
-     /// Capabilities that QEMU HPET supports.
-@@ -583,15 +588,15 @@ const fn has_msi_flag(&self) -> bool {
-     }
+ #define TYPE_VHOST_SCSI_COMMON "vhost-scsi-common"
+diff --git a/hw/core/fw-path-provider.c b/hw/core/fw-path-provider.c
+index 4840faefd1a..2a9da1aa4a2 100644
+--- a/hw/core/fw-path-provider.c
++++ b/hw/core/fw-path-provider.c
+@@ -16,7 +16,7 @@
+  */
  
-     fn is_legacy_mode(&self) -> bool {
--        self.config.get() & (1 << HPET_CFG_LEG_RT_SHIFT) != 0
-+        self.regs.borrow().config & (1 << HPET_CFG_LEG_RT_SHIFT) != 0
-     }
+ #include "qemu/osdep.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "qemu/module.h"
  
-     fn is_hpet_enabled(&self) -> bool {
--        self.config.get() & (1 << HPET_CFG_ENABLE_SHIFT) != 0
-+        self.regs.borrow().config & (1 << HPET_CFG_ENABLE_SHIFT) != 0
-     }
+ char *fw_path_provider_get_dev_path(FWPathProvider *p, BusState *bus,
+diff --git a/hw/core/qdev-fw.c b/hw/core/qdev-fw.c
+index a31958355ff..a587d2ddf90 100644
+--- a/hw/core/qdev-fw.c
++++ b/hw/core/qdev-fw.c
+@@ -16,7 +16,7 @@
+  */
  
-     fn is_timer_int_active(&self, index: usize) -> bool {
--        self.int_status.get() & (1 << index) != 0
-+        self.regs.borrow().int_status & (1 << index) != 0
-     }
+ #include "qemu/osdep.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "hw/qdev-core.h"
  
-     fn get_ticks(&self) -> u64 {
-@@ -631,22 +636,22 @@ fn init_timers(this: &mut MaybeUninit<Self>) {
-     }
+ const char *qdev_fw_name(DeviceState *dev)
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index bdc6c7ed7fe..3a6e47eb8b7 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -66,7 +66,7 @@
+ #include "hw/misc/macio/macio.h"
+ #include "hw/ppc/openpic.h"
+ #include "hw/loader.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "elf.h"
+ #include "qemu/error-report.h"
+ #include "system/kvm.h"
+diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+index 8d35080b9d1..8f9ce68b8b0 100644
+--- a/hw/ppc/mac_oldworld.c
++++ b/hw/ppc/mac_oldworld.c
+@@ -43,7 +43,7 @@
+ #include "hw/char/escc.h"
+ #include "hw/misc/macio/macio.h"
+ #include "hw/loader.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "elf.h"
+ #include "qemu/error-report.h"
+ #include "system/kvm.h"
+diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
+index 3b48a54e7a0..e7396a729f3 100644
+--- a/hw/ppc/pegasos.c
++++ b/hw/ppc/pegasos.c
+@@ -26,7 +26,7 @@
+ #include "system/qtest.h"
+ #include "hw/core/boards.h"
+ #include "hw/loader.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "elf.h"
+ #include "qemu/log.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 6f2d10330d6..7c695ac4ecc 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -43,7 +43,7 @@
+ #include "system/reset.h"
+ #include "system/runstate.h"
+ #include "qemu/log.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "elf.h"
+ #include "net/net.h"
+ #include "system/device_tree.h"
+diff --git a/hw/scsi/vhost-scsi-common.c b/hw/scsi/vhost-scsi-common.c
+index 43525ba46d3..0bb4305de61 100644
+--- a/hw/scsi/vhost-scsi-common.c
++++ b/hw/scsi/vhost-scsi-common.c
+@@ -24,7 +24,7 @@
+ #include "hw/virtio/virtio-scsi.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/virtio-access.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
  
-     fn update_int_status(&self, index: u32, level: bool) {
--        self.int_status
--            .set(self.int_status.get().deposit(index, 1, u64::from(level)));
-+        let mut regs = self.regs.borrow_mut();
-+        regs.int_status = regs.int_status.deposit(index, 1, u64::from(level));
-     }
- 
-     /// General Configuration Register
-     fn set_cfg_reg(&self, shift: u32, len: u32, val: u64) {
--        let old_val = self.config.get();
-+        let old_val = self.regs.borrow().config;
-         let mut new_val = old_val.deposit(shift, len, val);
- 
-         new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
--        self.config.set(new_val);
-+        self.regs.borrow_mut().config = new_val;
- 
-         if activating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
-             // Enable main counter and interrupt generation.
-             self.hpet_offset
--                .set(ticks_to_ns(self.counter.get()) - CLOCK_VIRTUAL.get_ns());
-+                .set(ticks_to_ns(self.regs.borrow().counter) - CLOCK_VIRTUAL.get_ns());
- 
-             for timer in self.timers.iter().take(self.num_timers) {
-                 let mut t = timer.borrow_mut();
-@@ -658,7 +663,7 @@ fn set_cfg_reg(&self, shift: u32, len: u32, val: u64) {
-             }
-         } else if deactivating_bit(old_val, new_val, HPET_CFG_ENABLE_SHIFT) {
-             // Halt main counter and disable interrupt generation.
--            self.counter.set(self.get_ticks());
-+            self.regs.borrow_mut().counter = self.get_ticks();
- 
-             for timer in self.timers.iter().take(self.num_timers) {
-                 timer.borrow().del_timer();
-@@ -681,7 +686,7 @@ fn set_cfg_reg(&self, shift: u32, len: u32, val: u64) {
-     /// General Interrupt Status Register: Read/Write Clear
-     fn set_int_status_reg(&self, shift: u32, _len: u32, val: u64) {
-         let new_val = val << shift;
--        let cleared = new_val & self.int_status.get();
-+        let cleared = new_val & self.regs.borrow().int_status;
- 
-         for (index, timer) in self.timers.iter().take(self.num_timers).enumerate() {
-             if cleared & (1 << index) != 0 {
-@@ -701,8 +706,8 @@ fn set_counter_reg(&self, shift: u32, len: u32, val: u64) {
-             // not be changed as well).
-             trace::trace_hpet_ram_write_counter_write_while_enabled();
-         }
--        self.counter
--            .set(self.counter.get().deposit(shift, len, val));
-+        let mut regs = self.regs.borrow_mut();
-+        regs.counter = regs.counter.deposit(shift, len, val);
-     }
- 
-     unsafe fn init(mut this: ParentInit<Self>) {
-@@ -745,14 +750,12 @@ fn realize(&self) -> util::Result<()> {
-         self.hpet_id.set(HPETFwConfig::assign_hpet_id()?);
- 
-         // 64-bit General Capabilities and ID Register; LegacyReplacementRoute.
--        self.capability.set(
--            HPET_CAP_REV_ID_VALUE << HPET_CAP_REV_ID_SHIFT |
-+        self.regs.borrow_mut().capability = HPET_CAP_REV_ID_VALUE << HPET_CAP_REV_ID_SHIFT |
-             1 << HPET_CAP_COUNT_SIZE_CAP_SHIFT |
-             1 << HPET_CAP_LEG_RT_CAP_SHIFT |
-             HPET_CAP_VENDER_ID_VALUE << HPET_CAP_VENDER_ID_SHIFT |
-             ((self.num_timers - 1) as u64) << HPET_CAP_NUM_TIM_SHIFT | // indicate the last timer
--            (HPET_CLK_PERIOD * FS_PER_NS) << HPET_CAP_CNT_CLK_PERIOD_SHIFT, // 10 ns
--        );
-+            (HPET_CLK_PERIOD * FS_PER_NS) << HPET_CAP_CNT_CLK_PERIOD_SHIFT; // 10 ns
- 
-         self.init_gpio_in(2, HPETState::handle_legacy_irq);
-         self.init_gpio_out(from_ref(&self.pit_enabled));
-@@ -764,17 +767,23 @@ fn reset_hold(&self, _type: ResetType) {
-             timer.borrow_mut().reset();
-         }
- 
--        self.counter.set(0);
--        self.config.set(0);
-+        // pit_enabled.set(true) will call irq handler and access regs
-+        // again. We cannot borrow BqlRefCell twice at once. Minimize the
-+        // scope of regs to ensure it will be dropped before irq callback.
-+        {
-+            let mut regs = self.regs.borrow_mut();
-+            regs.counter = 0;
-+            regs.config = 0;
-+            HPETFwConfig::update_hpet_cfg(
-+                self.hpet_id.get(),
-+                regs.capability as u32,
-+                self.mmio_addr(0).unwrap(),
-+            );
-+        }
-+
-         self.pit_enabled.set(true);
-         self.hpet_offset.set(0);
- 
--        HPETFwConfig::update_hpet_cfg(
--            self.hpet_id.get(),
--            self.capability.get() as u32,
--            self.mmio_addr(0).unwrap(),
--        );
--
-         // to document that the RTC lowers its output on reset as well
-         self.rtc_irq_level.set(0);
-     }
-@@ -812,14 +821,14 @@ fn read(&self, addr: hwaddr, size: u32) -> u64 {
-         use GlobalRegister::*;
-         (match target {
-             Timer(timer, tn_target) => timer.borrow_mut().read(tn_target),
--            Global(CAP) => self.capability.get(), /* including HPET_PERIOD 0x004 */
--            Global(CFG) => self.config.get(),
--            Global(INT_STATUS) => self.int_status.get(),
-+            Global(CAP) => self.regs.borrow().capability, /* including HPET_PERIOD 0x004 */
-+            Global(CFG) => self.regs.borrow().config,
-+            Global(INT_STATUS) => self.regs.borrow().int_status,
-             Global(COUNTER) => {
-                 let cur_tick = if self.is_hpet_enabled() {
-                     self.get_ticks()
-                 } else {
--                    self.counter.get()
-+                    self.regs.borrow().counter
-                 };
- 
-                 trace::trace_hpet_ram_read_reading_counter((addr & 4) as u8, cur_tick);
-@@ -852,7 +861,7 @@ fn write(&self, addr: hwaddr, value: u64, size: u32) {
- 
-     fn pre_save(&self) -> Result<(), migration::Infallible> {
-         if self.is_hpet_enabled() {
--            self.counter.set(self.get_ticks());
-+            self.regs.borrow_mut().counter = self.get_ticks();
-         }
- 
-         /*
-@@ -867,15 +876,16 @@ fn pre_save(&self) -> Result<(), migration::Infallible> {
-     fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
-         for timer in self.timers.iter().take(self.num_timers) {
-             let mut t = timer.borrow_mut();
-+            let cnt = t.get_state().regs.borrow().counter;
- 
--            t.cmp64 = t.calculate_cmp64(t.get_state().counter.get(), t.regs.cmp);
-+            t.cmp64 = t.calculate_cmp64(cnt, t.regs.cmp);
-             t.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
-         }
- 
-         // Recalculate the offset between the main counter and guest time
-         if !self.hpet_offset_saved {
-             self.hpet_offset
--                .set(ticks_to_ns(self.counter.get()) - CLOCK_VIRTUAL.get_ns());
-+                .set(ticks_to_ns(self.regs.borrow().counter) - CLOCK_VIRTUAL.get_ns());
-         }
- 
-         Ok(())
-@@ -966,6 +976,22 @@ impl ObjectImpl for HPETState {
- 
- const VALIDATE_TIMERS_NAME: &CStr = c"num_timers must match";
- 
-+// In fact, version_id and minimum_version_id for HPETRegisters are
-+// unrelated to HPETState's version IDs. Does not affect compatibility.
-+impl_vmstate_struct!(
-+    HPETRegisters,
-+    VMStateDescriptionBuilder::<HPETRegisters>::new()
-+        .name(c"hpet/regs")
-+        .version_id(1)
-+        .minimum_version_id(1)
-+        .fields(vmstate_fields! {
-+            vmstate_of!(HPETRegisters, config),
-+            vmstate_of!(HPETRegisters, int_status),
-+            vmstate_of!(HPETRegisters, counter),
-+        })
-+        .build()
-+);
-+
- const VMSTATE_HPET: VMStateDescription<HPETState> =
-     VMStateDescriptionBuilder::<HPETState>::new()
-         .name(c"hpet")
-@@ -974,9 +1000,7 @@ impl ObjectImpl for HPETState {
-         .pre_save(&HPETState::pre_save)
-         .post_load(&HPETState::post_load)
-         .fields(vmstate_fields! {
--            vmstate_of!(HPETState, config),
--            vmstate_of!(HPETState, int_status),
--            vmstate_of!(HPETState, counter),
-+            vmstate_of!(HPETState, regs),
-             vmstate_of!(HPETState, num_timers_save),
-             vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
-             vmstate_of!(HPETState, timers[0 .. num_timers_save], HPETState::validate_num_timers).with_version_id(0),
+ int vhost_scsi_common_start(VHostSCSICommon *vsc, Error **errp)
+ {
+diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+index 239138c9316..573a44b2b3e 100644
+--- a/hw/scsi/vhost-scsi.c
++++ b/hw/scsi/vhost-scsi.c
+@@ -26,7 +26,7 @@
+ #include "hw/virtio/vhost.h"
+ #include "hw/virtio/virtio-scsi.h"
+ #include "hw/virtio/virtio-bus.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "hw/qdev-properties.h"
+ #include "qemu/cutils.h"
+ #include "system/system.h"
+diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+index 25f2d894e7c..0d7bbb52aba 100644
+--- a/hw/scsi/vhost-user-scsi.c
++++ b/hw/scsi/vhost-user-scsi.c
+@@ -18,7 +18,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "hw/qdev-core.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index 961d599f48d..62ceb7eef4d 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -54,7 +54,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/ide/pci.h"
+ #include "hw/loader.h"
+-#include "hw/fw-path-provider.h"
++#include "hw/core/fw-path-provider.h"
+ #include "elf.h"
+ #include "trace.h"
+ #include "qom/object.h"
 -- 
 2.52.0
 
