@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4471E8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:21:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0168DE8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQRp-0000gV-Ga; Sat, 27 Dec 2025 04:18:53 -0500
+	id 1vZQQY-0004CQ-KE; Sat, 27 Dec 2025 04:17:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRn-0000TV-Iu
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:51 -0500
+ id 1vZQQW-0003pl-TM
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRl-0004QV-16
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:51 -0500
+ id 1vZQQV-0002lr-G9
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827128;
+ s=mimecast20190719; t=1766827050;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q/vVrG06Rr5jifGh9xz0OwdmLw8dMRsZZ4hi+JD78cQ=;
- b=Wf/4VmpNMY5j4TIUeZekBSnuqYi74Py3RF7JZQmBuUOAIUZhEotIYViw4h+5dXBYxyuI2m
- UyyTq3skEZgbcccE2e7LY6vcFXr7KsAcBzuQbsiiszia+kP+fOkVdytHsXdKn6+K/gjFDG
- itzzbbU4i7Dxp5vkrnqWu8PLw/y7Gd8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FhMZmw4l6Hf5SDK8IzfKQnQK0WMwwbYlh1bvQfymtds=;
+ b=Exs7qz9ADA3lzaWGx/AfVs8GMHnDB+5EoG6n/sTISAgN5mHOArP9JbJxrZzjwJIMLQgiM7
+ leS139K/j/E51j1NnJ/0DxVYEYZw1sH7gBr+v4yMTFOrGVZbRQ7AewuX78iPdg0/4p6X0c
+ Lwh0mXva3U74ht9z0wAWWKLLAXZg/0c=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-_oAY5Rt3OGCl9x54apX3fg-1; Sat, 27 Dec 2025 04:18:46 -0500
-X-MC-Unique: _oAY5Rt3OGCl9x54apX3fg-1
-X-Mimecast-MFC-AGG-ID: _oAY5Rt3OGCl9x54apX3fg_1766827125
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477cf2230c8so77995135e9.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:46 -0800 (PST)
+ us-mta-556-PEhCGSqBN4Kzkm8-dJO9Zw-1; Sat, 27 Dec 2025 04:17:29 -0500
+X-MC-Unique: PEhCGSqBN4Kzkm8-dJO9Zw-1
+X-Mimecast-MFC-AGG-ID: PEhCGSqBN4Kzkm8-dJO9Zw_1766827048
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47a97b719ccso46045225e9.2
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827125; x=1767431925; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827047; x=1767431847; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q/vVrG06Rr5jifGh9xz0OwdmLw8dMRsZZ4hi+JD78cQ=;
- b=ftmQDcLPk5X8gjdX94+AIjM4qQpZhrvVV4wKCJ8NxPRRJ1YFc6poiwyObYjjg2o6v+
- eEFgDhlQl0npkcC5mvXVeIfWVXbTqYN/eFJcSCHP6MXW2Xef7XPxsffNADN2NDeoFrdG
- 9wtRst/31edmY/XeJCo2rTja82LrqOacLAUGLKb+F6QgslUP/5Iv38I8o4FsW4qs2HSc
- hpQwPzIItXv8eTq5AU520j/k/g1qf+2OY1d6LdbbzbCuzgvBUFHwXgzPj0NrtpqTraK5
- xJymHsdYM2npV6ufDTf5R3B2jmepHpaOWLCPr9A39J5o4w14lFhDWaCstJv0+a+zRD8d
- 4IZQ==
+ bh=FhMZmw4l6Hf5SDK8IzfKQnQK0WMwwbYlh1bvQfymtds=;
+ b=tQCaRl4mf4zviyxZMZvV6hJG38f4OsDKuXmLKy8f0HJ7j+UbpLpvDDk3WqgIh0Si5S
+ VIuNgQtv/Jc6U6rFGNTXxrTu1LDnx2hZkJtyK0LD4undt2aAhmt+xTWuGQdXboMkKlcy
+ XqVBL3PRtU927jrZ8D4XilgXFSVAU9swdrO2SXd+v4yPMy9egzzQyknQNp4CkHx5WCpo
+ zHMkNymNeT6nuDsfhdnjhiNfB7N94EEJghQ+KnjtcQIqmnT0Q2e/XXw4I0QW/QBzLBap
+ BtWDNFyUojubBxahwOzOuYdnQiq/S+XhKs9zPjaLCUeghbbBmOCEUnDMJZ/jOfRCSoGl
+ mg4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827125; x=1767431925;
+ d=1e100.net; s=20230601; t=1766827047; x=1767431847;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=q/vVrG06Rr5jifGh9xz0OwdmLw8dMRsZZ4hi+JD78cQ=;
- b=v3MB5rdKrF/38q5c0Nd/forJlbfVn1SrzR3NnfLVoQmhxP3+DfTT/msqnQ7gMKKyoL
- CzxrM3s4LK6PP1zbAI+sCviSTnERtuxiswYpLDw6b997HNqDKH90WtTwLDx4fXnmgJ14
- QTrqmlECp1o4r3jzQpMooH9p2JA5JUridYuGq1Z6hs1QP+6t43A5r1T47d/4NOwySRMR
- yQfeCIT0Udp7RVrqR5AklCt45R18Q/fV/vEHUA4ljGeS413NihcFuKPxaYpnsQCJUBW2
- f4OLVKI2Y9yMd8tcTA2KvTy0A7TA9Z4s75UKoXPXFsLxemTLbg38zV53PrUoGmZ1AOOi
- kIPA==
-X-Gm-Message-State: AOJu0Yyw9Y+CvTfx1aiV7I9XIUUGxLmWPh5ePv554HHsuA3UiFJGVjGd
- 4ptA550/M4Zj+g2c53wmECE/g6Khg1Ii5WTprRnQHNra5ZIU4FFGmvEHUvEYlOGIBLPXUeMGKod
- C92bu/cu6kuIbWCqKoFh0sXQbw242Qd1Lv1TehoRMl7gI2BA3dIAPnTJHa7dBay0Un/bKv1fdWB
- OyOam7Gq4Uo3l6052sP+AOGtfb2Yy8ROX2whgN5Uxt
-X-Gm-Gg: AY/fxX5ZHjDFTBphrOMsc0LR9WHtcjs8z05cNW3LEWcjpkcLURjn229u1dcvJXVTJ5Q
- amkReP+D3wmcLPPL7Fnsv48HGCmvsp9FinHIwhF1351EtiArV89OD3gXSh1IiM9LpJWKy5JTny0
- 74kLXVDZIpkRUz8dUmjbxhBAih2dDGHxi1nBY0f5r8a2K1Ay+Z42i5GWrcfJmdtu7CvkLY+M/fH
- tta8XD7/PlCMQbMcA6y97fD/uos2oWy7oq4RKumSweLt2he3azoclXasHWDYmdDEf9u4HYybP9C
- B5nw1HCK+Ucp2qlfqY59o5ycJuKFYexSsV8XGlXqqnZ9u6IBbq8LtRJEpkWoyxH80H8gApb0Ae8
- zIKtxhK3ZHt2KYC0Vvs2RycfVHeL/fK6Iw1icfdUSyLXvkPZFsydWtw6stTLyKuTjBBaTZlEfo1
- kpacY8LZv2HmEl0Fs=
-X-Received: by 2002:a05:600c:4e01:b0:477:9574:d641 with SMTP id
- 5b1f17b1804b1-47d1957f712mr294941535e9.22.1766827124938; 
- Sat, 27 Dec 2025 01:18:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFH7My0YJ6bXCTbKrST8rl6I8SJ6atVJZTu3q3CZYRAf3RAlVIHeJXxU7AQ4iNTDpUlseRgDA==
-X-Received: by 2002:a05:600c:4e01:b0:477:9574:d641 with SMTP id
- 5b1f17b1804b1-47d1957f712mr294941295e9.22.1766827124444; 
- Sat, 27 Dec 2025 01:18:44 -0800 (PST)
+ bh=FhMZmw4l6Hf5SDK8IzfKQnQK0WMwwbYlh1bvQfymtds=;
+ b=Isdd0wESQSfML0Z/eF/eBQHoeiRptnFamComiJqMFSh4N5Tfcew9BdZQSnSWHifvcm
+ j5olakZvj8hSOahf3d0Ozxg49oNsKENxyYcZqvPkgAiWX87F6Mx5ebC75iMimVaqwhwj
+ eP00GcmjPhSCOowTdr6KdftH8aQkCEaz3YVwf7HG6qppvSJC/D532FyJmh91rosleuOU
+ KkhGVAdG1yR7fSUVx4ma6KId8Em6kxdtO0Wv5Nv0UPzKKoo0wnvGbhi1Wj2WfG9ihOyy
+ ZPOT4+/ot+IHqGuD8sDjBj9R2m8nVvOVjWilS7egFfoW8xv+QeGi/NpMp71QbUJiBbA1
+ cV5A==
+X-Gm-Message-State: AOJu0Yyu3LUuYelxHqflD0SiyGg6yIwlDFr0YQDIjUmNNCRNlHp7+GmM
+ yMnpEEK+m1khBEs2uHHUlhAXXTbDhRtIKc1oA64XE891H6wIMM9LAZM19dF+sDjb43Job7+xgOP
+ Fd4boc0n5XOBp5aJMA3o2gPwyahnhVeXMkLoWfJzCAkfUaC6EdagzIdL98mzXb8Vdu7TrZDtTVG
+ YtI8hL3lc/xpT5gM+BAtjyV+NIaRwaKyw3hprMwtRq
+X-Gm-Gg: AY/fxX6hHheLj0fE+x3VQJdrNQQlKj4UB3BGyMumBNeR2UySn69F4BpLM3/kjcXP+Wi
+ IoPxi+w7BxmT4uZ3G4Ppyw1Fx2vOCP24QkWBrJYKf41rC0hUS22XqqfHOGmnmSq0Y3+upGS4uT1
+ MAErPbErJqBiTeFvn+XMa5QiqfoFMKNBbmNjkNsIzTPZv9RNSG+tWTJM6FqfChTl3cJeaDGCyT6
+ EPdd3BTDZQiCS5Lpbcl5BLbBXSVl1wHLl0/IVNIoPzB5FRFbfES8zr9hBa7MC+3yym8+47Vrw10
+ 58wfc4VKY3RQ7/jd7pbK1E+rGqg/twHH273NSGk8QwmmUH4errPjYyKi55UdRhAEa1BUMQlbcdy
+ t9pnkXMo14LXDndsZTGT3vGcIVEcBQuTQ5EePKaaHUDURxfwsedmsaR17rnB4wn8hXqQZA/ySE6
+ UM1iVuHWzAtLe4TQU=
+X-Received: by 2002:a05:600c:c83:b0:479:3876:22a8 with SMTP id
+ 5b1f17b1804b1-47d19555940mr294996425e9.16.1766827047529; 
+ Sat, 27 Dec 2025 01:17:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFIbaFoSTuzbMOM6w2TnNnqHOHVgbC7rvsa5ZRIMPwj/Oiv/2BVWsdaAqBovczFP80Gz9bYQg==
+X-Received: by 2002:a05:600c:c83:b0:479:3876:22a8 with SMTP id
+ 5b1f17b1804b1-47d19555940mr294996185e9.16.1766827047055; 
+ Sat, 27 Dec 2025 01:17:27 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1b36fsm49744289f8f.5.2025.12.27.01.18.43
+ 5b1f17b1804b1-47be27b0d5asm489405475e9.13.2025.12.27.01.17.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:18:43 -0800 (PST)
+ Sat, 27 Dec 2025 01:17:25 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Julian Andres Klode <jak@jak-linux.org>
-Subject: [PULL 072/153] qemu-options.hx: Document -M as -machine alias
-Date: Sat, 27 Dec 2025 10:14:59 +0100
-Message-ID: <20251227091622.20725-73-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 033/153] rust: do not copy the SysBusDevice
+Date: Sat, 27 Dec 2025 10:14:20 +0100
+Message-ID: <20251227091622.20725-34-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -123,60 +122,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-
--M is used heavily in documentation and scripts, but isn't actually
-documented anywhere.
-
-Document it as equivalent to -machine, also moving to -machine the sole
-suboption that was documented under -M.
-
-Reported-by: Julian Andres Klode <jak@jak-linux.org>
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-Link: https://lore.kernel.org/r/20251203131511.153460-1-dave@treblig.org
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qemu-options.hx | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ rust/hw/core/src/sysbus.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index fca2b7bc74f..ec92723f10d 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -44,6 +44,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
- #endif
-     "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
-     "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
-+    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n"
-     "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
-     QEMU_ARCH_ALL)
- SRST
-@@ -179,6 +180,9 @@ SRST
- 
-             -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
- 
-+    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
-+        Define an SGX EPC section.
-+
-     ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
-         Define cache properties for SMP system.
- 
-@@ -208,12 +212,10 @@ SRST
- ERST
- 
- DEF("M", HAS_ARG, QEMU_OPTION_M,
--    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n",
--    QEMU_ARCH_ALL)
--
-+    "-M              as -machine\n", QEMU_ARCH_ALL)
- SRST
--``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
--    Define an SGX EPC section.
-+``-M``
-+    as -machine.
- ERST
- 
- DEF("cpu", HAS_ARG, QEMU_OPTION_cpu,
+diff --git a/rust/hw/core/src/sysbus.rs b/rust/hw/core/src/sysbus.rs
+index 68165e89295..ec620639be5 100644
+--- a/rust/hw/core/src/sysbus.rs
++++ b/rust/hw/core/src/sysbus.rs
+@@ -78,7 +78,7 @@ fn mmio_addr(&self, id: u32) -> Option<u64> {
+         assert!(bql::is_locked());
+         // SAFETY: the BQL ensures that no one else writes to sbd.mmio[], and
+         // the SysBusDevice must be initialized to get an IsA<SysBusDevice>.
+-        let sbd = unsafe { *self.upcast().as_ptr() };
++        let sbd = unsafe { &*self.upcast().as_ptr() };
+         let id: usize = id.try_into().unwrap();
+         if sbd.mmio[id].memory.is_null() {
+             None
 -- 
 2.52.0
 
