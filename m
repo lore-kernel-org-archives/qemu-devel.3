@@ -4,110 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C10E8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6B4E8FDD6
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQRt-0001El-Bn; Sat, 27 Dec 2025 04:18:57 -0500
+	id 1vZQpP-0000wh-Dt; Sat, 27 Dec 2025 04:43:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRr-0000yc-L1
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRp-0004Uh-My
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827133;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=J25vunL87AyvdpBRg+pj1dyV40vixOMAuev4scCnlOg=;
- b=PEzA2HOv6iKesB2FX5/RSxsoUxDKQv3gBLiksKgotiCbOsVq0UeFA3uPxqh0VALEEaZznV
- sJD4aVuL5STbegouqHUy8bN/9yc7AA4HYrhS8AsJtm8Dcgc3gX9ddeYUfKvTesarkNG0CP
- ya2e4GWS7HTLprFH2sSf4czZV0W9cJc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-oPmPdGV1PUC30CwWxUpt5A-1; Sat, 27 Dec 2025 04:18:51 -0500
-X-MC-Unique: oPmPdGV1PUC30CwWxUpt5A-1
-X-Mimecast-MFC-AGG-ID: oPmPdGV1PUC30CwWxUpt5A_1766827130
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-47777158a85so88673625e9.3
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827130; x=1767431930; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=J25vunL87AyvdpBRg+pj1dyV40vixOMAuev4scCnlOg=;
- b=idrQTWWdNbNhKWWOz6eDx5vvzcLn7moN2FT7OpxHc8hkbQCPHZLK76DrmuqcxLLqXc
- f/fwQ1sYsBUAx0wP/HB5XUiZzplvNKAkT5//GHAKbBAuDJ4HTR9YG45df0LYGdztpu9Y
- okq8GbOf/j4t7NO64czS/vDKqAyyKVQ8zumVmZvrNQ9/pwHiHlZsRSLRpXR44S0AL1Dl
- XeT8y3IdAKSG5iZXg5ukgBcI8cDd13zpJDdKu9/qOnJdvmXWEi5gmnrV4AhIjtJTAUGh
- doKKDalgs6lX8cnZ7Rj7tByUptXrZ8u+SUcMMFl3uJkFwkqRoMWYfxqp3ZUi/YmrDDDx
- z7CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827130; x=1767431930;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=J25vunL87AyvdpBRg+pj1dyV40vixOMAuev4scCnlOg=;
- b=Yzbr5zmZsUa0u9gJQc7EC6r4sNs1vThoh2hAI07k8YARwgXkVUtJyr/9Is3JiJRWiG
- zsCbiH39hLe2mHbKzWGCtw+We0Oju/Wy7ev0Fmcj+8konci5RaB6fRRFje8nStUaB61k
- 2qrxVEg+SjAAJwymQE8NRM8kk6TOx4f7Bvmzq/3/LAOBBZH6dlu4hZRdagMn1rP9r07m
- F23FnpKoMNUNR8VZDISxScs9qkV5sEuSE3XfUiLtWdZSm+oU2w4sP5lwDZowpurQrWAY
- 0dGzN3V32yeY/DcEghL43bFD5Ev/eslsVhEVTGU41R7Pqw873HFXZxtIAFPrfEzE+uOQ
- jFfw==
-X-Gm-Message-State: AOJu0YwmFRsBpAw8IoaFOnIgH/UNIc7UhVehabRTvskTzRxSqg62O27m
- Cfj+hvMWjnTAx8swMJcQFriyHg3BLJqLkzQQUmbUbK7pKCm+hWf+Q5sRYshn2tdq3l+dRk6l6MD
- AI0Uxe0ZdWNnauWoDUR38uFMhKlG4TsRHvOIiGehTrSaf7cNeLGkTTKuzPJDrkH0EBw28ugIltH
- YtvcitQ7aacIfAQI3KrRbNgi1cfWvPwxepHVZBQtng
-X-Gm-Gg: AY/fxX7y9UXJcAah8LwPdyaHcIyaC7o7GL0hcRXFicnyELeKo+IZ1AgXIR0hIFTlONA
- 3GtxI0GnGKBMau9mAILH9FFhn/a9eaoierelESTrk1BwYI6FyElb8NVGl0TvIM2I3OLBnSN9L0v
- PeTQcGytzHUDbYcuL7G0lVt5WNHq+gMHZf/siDTIb1RR3soN30hige479nmwG9w6KfE0OMjIN6l
- gLcRdo3Y1lxzeFlK7Q/aM6IwSMbd8GPJh8E+fibqnCcyCYFwF1X+KZdZwBr2AoTNM/CtxuBdfqA
- c7sLBABvdN1YD06f3Z2vQk2pdN2/CrGWmETMgVerEE2Iqq+xa6xFbYKdrj29ByAK6om0TTJmsmd
- kjUkbwXZPaPzQOXhLUYRn9soR7UzRrgdmMhtN8yKir3Q0dZC8CnOblC7ZV+SMh340Xgv+GxlzfZ
- +rmKtSTr2EWZB50G4=
-X-Received: by 2002:a05:600c:4711:b0:47a:9560:5944 with SMTP id
- 5b1f17b1804b1-47d195c1a71mr305956875e9.34.1766827129928; 
- Sat, 27 Dec 2025 01:18:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpIjSCRhI6ULWCTlHJ+qzoMyWijns64sX3ZDzLys//wvgq1UHbFifCoz0s3IstI+AdWVOYVA==
-X-Received: by 2002:a05:600c:4711:b0:47a:9560:5944 with SMTP id
- 5b1f17b1804b1-47d195c1a71mr305956615e9.34.1766827129503; 
- Sat, 27 Dec 2025 01:18:49 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.145.106])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3aea77bsm188468025e9.17.2025.12.27.01.18.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:18:47 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vZQpJ-0000w5-AV
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:43:09 -0500
+Received: from mailgate01.uberspace.is ([95.143.172.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vZQpH-00033d-EO
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:43:09 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 43E0660DC8
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 10:43:04 +0100 (CET)
+Received: (qmail 21120 invoked by uid 990); 27 Dec 2025 09:43:04 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Sat, 27 Dec 2025 10:43:04 +0100
+From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
- Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 074/153] i386/cpu: Clean up arch lbr xsave struct and comment
-Date: Sat, 27 Dec 2025 10:15:01 +0100
-Message-ID: <20251227091622.20725-75-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
-References: <20251227091622.20725-1-pbonzini@redhat.com>
+Cc: Julian Ganz <neither@nut.email>
+Subject: [RFC PATCH] plugins: bump plugin API version
+Date: Sat, 27 Dec 2025 10:42:38 +0100
+Message-ID: <20251227094240.6652-1-neither@nut.email>
+X-Mailer: git-send-email 2.51.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Rspamd-Bar: -
+X-Rspamd-Report: MID_CONTAINS_FROM(1) BAYES_HAM(-2.999999) MIME_GOOD(-0.1)
+ R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -1.599999
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=Ce5GsQlnyuY2KkJr7uLnAP6VnfjSGQVL3ktgiV37Wd4=;
+ b=mB5BAifDo0rXZ8BHCw9zzjqMPN5Np8QXWmB3iYN0b2am9A5BlI6vd7h0IY/aa1Qzny3YD8ZTXe
+ UHI+axpi5jkxc5eCEJFmYctspatgyKcWyogTn0JMemyzmMXR0F03Zz+Job20ni6VNzJV9kqTNzDD
+ jqivuVnm57CIjqx7bRJ9X/UGvvdONkKHqZk0mjRQ+42kaxujMHxAqq/pmpAPkEmE+XrUea35iYQ5
+ b2T5Sm/V4AC3gv8RcrMtohUIDWILgUuLZvdMMfnLB9rcPpp6qP7dfCI0Vg6evUXULrKE3uod+K4d
+ Zk/jvkMfSd0wBH7dVaY7cWOk0lxdN3qoYWg8aXAw/SWylTe1cgkTvo5gog4GYJ37JMVqzm1gUMLo
+ E36zvn2nbxEOgR7ubmIb21Ddt+XaMUpfr8N91ujLZImhY9D8CVjDKuZIqZrTysA7InSFEorj78jg
+ +VvG9UiB3bhAg9jaTiR69j/XQrCUGYMtxE7Wd9UTcfXSP8PioN5VWPvbBI84mNjPPycYa+1Uq78H
+ ArwXd9gLoe6gHPoKpj9qKKdBPqaSaBemm6TqmEtzHXHrcoIbPToRDyu7tBUTMIWoyf2eluVxQiEQ
+ smjW5QJdLQT7qPasOaJTYYZVb4b30z9nyVtX3zFrBIzfUni+FBLFuwlkvT3QntqiPk3P0KQSMI36
+ o=
+Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
+ helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,82 +77,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+We introduced a new function `qemu_plugin_register_vcpu_discon_cb` as
+well as some types since v5.
 
-Arch LBR state is area 15, not 19. Fix this comment. And considerring
-other areas don't mention user or supervisor state, for consistent
-style, remove "Supervisor mode" from its comment.
+Signed-off-by: Julian Ganz <neither@nut.email>
 
-Moreover, rename XSavesArchLBR to XSaveArchLBR since there's no need to
-emphasize XSAVES in naming; the XSAVE related structure is mainly
-used to represent memory layout.
+--
 
-In addition, arch lbr specifies its offset of xsave component as 0. But
-this cannot help on anything. The offset of ExtSaveArea is initialized
-by accelerators (e.g., hvf_cpu_xsave_init(), kvm_cpu_xsave_init() and
-x86_tcg_cpu_xsave_init()), so explicitly setting the offset doesn't
-work and CPUID 0xD encoding has already ensure supervisor states won't
-have non-zero offsets. Drop the offset initialization and its comment
-from the xsave area of arch lbr.
-
-Tested-by: Farrah Chen <farrah.chen@intel.com>
-Reviewed-by: Zide Chen <zide.chen@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20251211060801.3600039-3-zhao1.liu@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+I should probably have included this in my patch series introducing the
+register function in question instead of noticing that the API version
+was not bumped with 10.2.0 after the fact.
 ---
- target/i386/cpu.h | 8 ++++----
- target/i386/cpu.c | 3 +--
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ include/qemu/qemu-plugin.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index cee1f692a1c..c95b772719c 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1747,15 +1747,15 @@ typedef struct {
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 60de4fdd3f..b445c26389 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -72,11 +72,14 @@ typedef uint64_t qemu_plugin_id_t;
+  * - added qemu_plugin_write_memory_hwaddr
+  * - added qemu_plugin_write_register
+  * - added qemu_plugin_translate_vaddr
++ *
++ * version 6:
++ * - qemu_plugin_register_vcpu_discon_cb
+  */
  
- #define ARCH_LBR_NR_ENTRIES            32
+ extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
  
--/* Ext. save area 19: Supervisor mode Arch LBR state */
--typedef struct XSavesArchLBR {
-+/* Ext. save area 15: Arch LBR state */
-+typedef struct XSaveArchLBR {
-     uint64_t lbr_ctl;
-     uint64_t lbr_depth;
-     uint64_t ler_from;
-     uint64_t ler_to;
-     uint64_t ler_info;
-     LBREntry lbr_records[ARCH_LBR_NR_ENTRIES];
--} XSavesArchLBR;
-+} XSaveArchLBR;
+-#define QEMU_PLUGIN_VERSION 5
++#define QEMU_PLUGIN_VERSION 6
  
- QEMU_BUILD_BUG_ON(sizeof(XSaveAVX) != 0x100);
- QEMU_BUILD_BUG_ON(sizeof(XSaveBNDREG) != 0x40);
-@@ -1766,7 +1766,7 @@ QEMU_BUILD_BUG_ON(sizeof(XSaveHi16_ZMM) != 0x400);
- QEMU_BUILD_BUG_ON(sizeof(XSavePKRU) != 0x8);
- QEMU_BUILD_BUG_ON(sizeof(XSaveXTILECFG) != 0x40);
- QEMU_BUILD_BUG_ON(sizeof(XSaveXTILEDATA) != 0x2000);
--QEMU_BUILD_BUG_ON(sizeof(XSavesArchLBR) != 0x328);
-+QEMU_BUILD_BUG_ON(sizeof(XSaveArchLBR) != 0x328);
- 
- typedef struct ExtSaveArea {
-     uint32_t feature, bits;
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index a1de82b92c7..de4e5c57746 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -2058,8 +2058,7 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
-     },
-     [XSTATE_ARCH_LBR_BIT] = {
-         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
--        .offset = 0 /*supervisor mode component, offset = 0 */,
--        .size = sizeof(XSavesArchLBR),
-+        .size = sizeof(XSaveArchLBR),
-     },
-     [XSTATE_XTILE_CFG_BIT] = {
-         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
+ /**
+  * struct qemu_info_t - system information for plugins
 -- 
-2.52.0
+2.51.2
 
 
