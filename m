@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F07E8FDDB
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87884E8FDD6
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQyT-0007TH-Hv; Sat, 27 Dec 2025 04:52:38 -0500
+	id 1vZQv7-0004KT-Jp; Sat, 27 Dec 2025 04:49:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQy1-0006oK-Es
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:52:14 -0500
+ id 1vZQv6-00048G-0h
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:49:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQxy-0007Yf-7j
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:52:09 -0500
+ id 1vZQv4-0006yn-18
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:49:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766829119;
+ s=mimecast20190719; t=1766828945;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kI7Ens2iUFj6+g0CAWOKjGlJK4R7nHbTYZmOISHQub8=;
- b=R3EDk+kh5K0xP8Koz+pGwCX9szfUOqkwS9C+s733Qk4IGk/tvs+c5D8Iyl/6i3lZD/eTaC
- tZUKtJk0mngpe++/+7TMtTNu4M6m6XFg3r7yXW7rWHnyqBGBOMWGXP1bhjTxJJ9oTl2oxq
- xI257z1NdoWtquXCjDRfJDGZzVjOZ94=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DxnDfLQvdu3TSi/2oTj0ek4cmNNQ1H4hkvCMk+FPjfk=;
+ b=RzhCKZA7Pvir+nQPyJnLRJI/QpM0qZC6RIfK5QSxOIIPtc/q4Tziz4FpSx/HWVM4snIcSP
+ rKBJb8u8zPC0Z58uxDfYuELq3uEg2EP97e46Rml2qOWlJ9qqh4R1W0vWzKPCcKYZZQODHJ
+ 1PVoeJQ1RxmrVLQ7fZjZZ6fo0DlIgTg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-452-CvsEPy_-OH6hAluqAK2lkA-1; Sat, 27 Dec 2025 04:51:57 -0500
-X-MC-Unique: CvsEPy_-OH6hAluqAK2lkA-1
-X-Mimecast-MFC-AGG-ID: CvsEPy_-OH6hAluqAK2lkA_1766829117
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-477cf2230c8so78162955e9.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:51:57 -0800 (PST)
+ us-mta-20-Z6gY1cOROuOZjjZiB2FaPg-1; Sat, 27 Dec 2025 04:49:04 -0500
+X-MC-Unique: Z6gY1cOROuOZjjZiB2FaPg-1
+X-Mimecast-MFC-AGG-ID: Z6gY1cOROuOZjjZiB2FaPg_1766828943
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4325ddc5babso2696575f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:49:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766829115; x=1767433915; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766828942; x=1767433742; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kI7Ens2iUFj6+g0CAWOKjGlJK4R7nHbTYZmOISHQub8=;
- b=qOfsjBVzQWXEsmlTiFnOrICTwsdeEjYRQve41qVhx4NpIUYcQnpfumqVYK3UQb6j3/
- 1h848XaLei82VUwwO6QDzbdTq4jXy2j3x/Wdh0uBuNIOdeVAu8PmAOQhPLEX3gRE3Wb6
- oWZiOxfOybMQYz1zPKUe81WepdPSuHw/AGK4ANTltm5aHlry6LbajbHFGgmWX0c40+SD
- ZtzYH3Hd8qyqbknMoVM5tBAl8faK/LTr7k5oEAZnoPaf526LJ8szEJBW3Tf+UEYUaIRF
- sgOHZ61Em6/UeNNxw6MbQa2jV26irV7H6O80WR1sbVrdf6BLl4u3Op2Ub84JqJ10iGf0
- O/+A==
+ bh=DxnDfLQvdu3TSi/2oTj0ek4cmNNQ1H4hkvCMk+FPjfk=;
+ b=DmOwr7dVkcdS31O0oI35PFFuFiL9MnR2I+DFgq5RaC4XuW3it5hVohXcjJpK4h+MfP
+ G1mTL1w5JMsina8Tvs8p3LnKe9ek6cdFNZViELQgaLeBuH0EOQGmUs99UttjmeuQTQWt
+ /hYFDsdGxtuBFTZKjJnoCGaGrBi5to1pEnZ3u2lMtodlz2E3LApMIXqiMlm/OR8Ezifc
+ 8OmV5I1Z5pcITXzBw7YZfV0zoK31SMgiirTA4dPmEBboHo2bvqTftEByB+7PeI1o+XC0
+ bKtlwbpWeh6fesk4maernMhXojZwawa3v7E9P2Clpb/bsrRj8qAUj2pQOG5Z0cgYaFRN
+ kYtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766829115; x=1767433915;
+ d=1e100.net; s=20230601; t=1766828942; x=1767433742;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=kI7Ens2iUFj6+g0CAWOKjGlJK4R7nHbTYZmOISHQub8=;
- b=aqYU7Ztf1hxqxbBENen6PMa3TdyACXmlGoA3bUV28MEp8U9brc2wvVr4JgQeG33tx6
- CVTnvy2MuQ8NrGXX5slOrrydmOpVL/Vy9HhZNXcW2iRPOs6njFXJ7bfxAZ/wx3bEZjz6
- +nYpZBzE0+rMtNs0ot8EiRaemBraRi6EYXiX7uTuyEGB9ZmeZDYbV6wZtdY4scUKkG2e
- /mQDi+CQTNg/Y4f9FpRZa2RCz1osS9v+lUbUzypKnEhFRaZSS1mlzbqlUz9gk+hwD759
- MuotsuxRepxtLYORXA26v3ud5JGV/5Xsv8AsP6Bk5yaJyd8MfR6aLP8CusE1sfyaAie3
- wRiQ==
-X-Gm-Message-State: AOJu0Yxa8PvOqa+2s0Zc/0dwd/JmjuwZI2/5/sSRyA8/l7Lym/pQqak6
- u1w0TQdZ1HnUN+xuxxKGsZEGinv4L0f7S/aC6H+syIYtZ/2ECJqYE4Lwv4dMEyR/8txLjx2EMmY
- xdBnTEr0hnKK85IzKKPuZPZD3Yh2DHqokYin5BJxMrAvYhlKgGnozJrHisydz4ILmgdt4LgbAaG
- WRMpBnwwMOqMbfRoVh5z4aQZ0hRdRocfRr1m0d8gZ+
-X-Gm-Gg: AY/fxX7JfOcvGz3ev8oDE83hzi79JSR3hCM1DbO2HDfjYLevFua9/h/T+S1gCBZM0I6
- DpZcgrs7dFYTvhXA0oet/w+pLxDkHsZlG+y26XiTIk66tf3rRg4AjUgfq4dZ551QYZx/SzjhP15
- KFCYRn9rWk9r5bMI70ikAZ892rvFlbCcWNgOldvVtR/kWpu3S2Bx4lS+TmjSOg/N3E3X3IYdm4o
- Rv71nmo3d6xLB+YkwvOmvsvoKqiBjPGO4BUH/wmaJ3XUjFGg+Mxgvz2atvV7IxBKRlI/44QB7ET
- hFteEP8ndngmlMYSR5K/Kg88cU6NoMdU28TOEGhrtYuJK3SuSDxKOFEdux/5Or34v6NMQ1Ww381
- 2SmzgQm3b7tXG+nXenhqblWOnPl4Gt+PRhbDs8zVBYsmPl/b5EXeb26Mjd2Zu8T2Nhya0sqDg1W
- p9N7A9Bhdpyjpa/jw=
-X-Received: by 2002:a05:600c:314f:b0:47d:4fbe:e6cc with SMTP id
- 5b1f17b1804b1-47d4fbee749mr18982355e9.13.1766829114334; 
- Sat, 27 Dec 2025 01:51:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEyH+rngQmnvQQ5IYrFGR7PqUG4DRz8FqvwvdWsqInRMsLYHwauldLt0PR8sHC62P4OWZ2Lzw==
-X-Received: by 2002:a05:600c:314f:b0:47d:4fbe:e6cc with SMTP id
- 5b1f17b1804b1-47d4fbee749mr18982055e9.13.1766829113769; 
- Sat, 27 Dec 2025 01:51:53 -0800 (PST)
+ bh=DxnDfLQvdu3TSi/2oTj0ek4cmNNQ1H4hkvCMk+FPjfk=;
+ b=q4+9uHFLyfHyoLsWGw1UdrRbOn+CA9On/wLF5wD7u9n4ZpHEdhKhNCJ8S2L2HJ1aJW
+ VFbJGJc36aLoK51o79Qvtf3tkCHWq633dDV769ocNHbx3KuvdQYeGj/NGRCLmxua+sNy
+ 5lzO/X5h4Cf5A7zFO9TOsBoMEQIc/s2yo2diULF9t5XibxxIjAtw7lsKukrlI3kO1yQA
+ 4onctgCWTQNIzDIFJ7iPo4KFAncuLDAb3wXx5HtZAyY32FdTRrV0r7s/oxP+WFqpPBvz
+ xw5oOe2upUxKL+zSDZQTcPVhnFsj0OR+4e7wVGxZ3HoOUmptM4FW5bZ3EWQ0n9B0BETM
+ 1G1A==
+X-Gm-Message-State: AOJu0YxsLVtrwPNh8x/B/FQPyRcdqw8hhdeRS2AG4gflM5gyMfu3+b4o
+ 3qoCVyh6dSsQBDcvVKZW2ZZ89COypS7wV0AMFXwF3wQ/Q91kS+JPLk5ik8vrv6Zo60YRbZejMCR
+ M24K4DvnH7ljSVVOJzC3BQY9nDe7Tm0tSN/n5pju+aiucZHUU0Tto6AP0Y+xRY9Gla3k6aVrziu
+ 4WbvLEdOennFf0fh80WGcIRzNoKyBzFSmMjnoAvz7g
+X-Gm-Gg: AY/fxX6C835IZk+pgsfqHmAf7TkcNe9QTr0CgZYxWgl8OmnNwezNYXdjsJ7AbVC1zV3
+ 0niToPZxRQixEgko38OQFO1HdHzUhLhwDnCyPPokujyDj7mFSKAYKZSZ2LiovBfX4+bD4V973cL
+ a2WrGiVoLXfDpFgxJOv9xOpGT9WY7VNISBlkrDCDFM823M2bkbgdfKLQv0mkhl3K2q0uts3sK6Z
+ AyIf50s8hiBXxLwMFkbbV86bOgX/wcjUiNpZq5DOF1hGgExnB/zFlIB75FqL0d532qjld33zW+2
+ CDBm7i3LB9LEJtP4oLzmgI+PQ9jI8toqjTPMoApgHhoDGVwA61GgyC9N0C9F0Z6SzCDuUm42UV/
+ h/85GQ4kFL5MExY/R7Lm3T5fn7mWjBkhrvu8ZTKRIIJ+qDWPsdyXL4JQAT5ICDtcVX8SqLntrG+
+ i29pjJlDmlTFlahfA=
+X-Received: by 2002:a05:6000:26d0:b0:430:fd84:3175 with SMTP id
+ ffacd0b85a97d-4324e503ec6mr30504327f8f.38.1766828942113; 
+ Sat, 27 Dec 2025 01:49:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEbnaaZNWBa9BENaOGla9HJ1J0/EyvKnGMH7WYRPVI7pELzCQQv7qM0RNNTIaNGpqjvcoE9CA==
+X-Received: by 2002:a05:6000:26d0:b0:430:fd84:3175 with SMTP id
+ ffacd0b85a97d-4324e503ec6mr30504308f8f.38.1766828941683; 
+ Sat, 27 Dec 2025 01:49:01 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be2723b2bsm488443555e9.3.2025.12.27.01.51.52
+ ffacd0b85a97d-4324ea1b36fsm49869093f8f.5.2025.12.27.01.49.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:51:52 -0800 (PST)
+ Sat, 27 Dec 2025 01:49:00 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
- Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 152/153] block: rename block/aio.h to qemu/aio.h
-Date: Sat, 27 Dec 2025 10:47:57 +0100
-Message-ID: <20251227094759.35658-78-pbonzini@redhat.com>
+ Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Xudong Hao <xudong.hao@intel.com>
+Subject: [PULL 100/153] i386/monitor: Support EGPRs in hmp_print
+Date: Sat, 27 Dec 2025 10:47:05 +0100
+Message-ID: <20251227094759.35658-26-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -123,614 +124,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AioContexts are used as a generic event loop even outside the block
-layer; move the header file out of block/ just like the implementation
-is in util/.
+From: Zhao Liu <zhao1.liu@intel.com>
 
+Add EGPRs in monitor_defs[] to allow HMP to access EGPRs.
+
+For example,
+
+(qemu) print $r16
+
+Since monitor_defs[] is used for read-only case, no need to consider
+xstate synchronization issues that might be caused by modifying EGPRs
+(like what gdbstub did).
+
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20251211070942.3612547-7-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                       | 2 +-
- docs/devel/multiple-iothreads.rst | 4 ++--
- include/block/aio-wait.h          | 2 +-
- include/block/raw-aio.h           | 2 +-
- include/block/thread-pool.h       | 2 +-
- include/hw/scsi/scsi.h            | 2 +-
- include/hw/virtio/virtio.h        | 2 +-
- include/io/channel.h              | 2 +-
- include/{block => qemu}/aio.h     | 0
- include/qemu/job.h                | 2 +-
- include/qemu/main-loop.h          | 2 +-
- include/qemu/throttle.h           | 2 +-
- include/scsi/pr-manager.h         | 2 +-
- include/system/event-loop-base.h  | 2 +-
- include/system/iothread.h         | 2 +-
- include/system/replay.h           | 2 +-
- tests/unit/iothread.h             | 2 +-
- util/aio-posix.h                  | 2 +-
- block/aio_task.c                  | 2 +-
- block/export/fuse.c               | 2 +-
- block/io_uring.c                  | 2 +-
- block/linux-aio.c                 | 2 +-
- block/win32-aio.c                 | 2 +-
- iothread.c                        | 2 +-
- qapi/qmp-dispatch.c               | 2 +-
- replay/replay-events.c            | 2 +-
- scsi/pr-manager.c                 | 2 +-
- stubs/linux-aio.c                 | 2 +-
- stubs/replay-tools.c              | 2 +-
- tests/unit/iothread.c             | 2 +-
- tests/unit/test-aio-multithread.c | 2 +-
- tests/unit/test-aio.c             | 2 +-
- tests/unit/test-nested-aio-poll.c | 2 +-
- tests/unit/test-thread-pool.c     | 2 +-
- tests/unit/test-throttle.c        | 2 +-
- util/async.c                      | 2 +-
- util/main-loop.c                  | 2 +-
- util/qemu-co-timeout.c            | 2 +-
- util/qemu-coroutine-lock.c        | 2 +-
- util/qemu-coroutine-sleep.c       | 2 +-
- util/qemu-coroutine.c             | 2 +-
- util/throttle.c                   | 2 +-
- scripts/analyze-inclusions        | 2 +-
- 43 files changed, 43 insertions(+), 43 deletions(-)
- rename include/{block => qemu}/aio.h (100%)
+ target/i386/monitor.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 81f48f0709c..efceed9fe52 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3071,7 +3071,7 @@ F: util/aio-*.h
- F: util/defer-call.c
- F: util/fdmon-*.c
- F: block/io.c
--F: include/block/aio.h
-+F: include/qemu/aio.h
- F: include/block/aio-wait.h
- F: include/qemu/defer-call.h
- F: scripts/qemugdb/aio.py
-diff --git a/docs/devel/multiple-iothreads.rst b/docs/devel/multiple-iothreads.rst
-index d1f3fc4510a..a6eb0462673 100644
---- a/docs/devel/multiple-iothreads.rst
-+++ b/docs/devel/multiple-iothreads.rst
-@@ -52,7 +52,7 @@ How to program for ``IOThread``\ s
- ----------------------------------
- The main difference between legacy code and new code that can run in an
- ``IOThread`` is dealing explicitly with the event loop object, ``AioContext``
--(see ``include/block/aio.h``).  Code that only works in the main loop
-+(see ``include/qemu/aio.h``).  Code that only works in the main loop
- implicitly uses the main loop's ``AioContext``.  Code that supports running
- in ``IOThread``\ s must be aware of its ``AioContext``.
- 
-@@ -74,7 +74,7 @@ Since they implicitly work on the main loop they cannot be used in code that
- runs in an ``IOThread``.  They might cause a crash or deadlock if called from an
- ``IOThread`` since the BQL is not held.
- 
--Instead, use the ``AioContext`` functions directly (see ``include/block/aio.h``):
-+Instead, use the ``AioContext`` functions directly (see ``include/qemu/aio.h``):
-  * ``aio_set_fd_handler()`` - monitor a file descriptor
-  * ``aio_set_event_notifier()`` - monitor an event notifier
-  * ``aio_timer_new()`` - create a timer
-diff --git a/include/block/aio-wait.h b/include/block/aio-wait.h
-index cf5e8bde1ca..57ebe21b31f 100644
---- a/include/block/aio-wait.h
-+++ b/include/block/aio-wait.h
-@@ -25,7 +25,7 @@
- #ifndef QEMU_AIO_WAIT_H
- #define QEMU_AIO_WAIT_H
- 
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qemu/main-loop.h"
- 
- /**
-diff --git a/include/block/raw-aio.h b/include/block/raw-aio.h
-index d568b887f1c..256d0468a88 100644
---- a/include/block/raw-aio.h
-+++ b/include/block/raw-aio.h
-@@ -17,7 +17,7 @@
- #define QEMU_RAW_AIO_H
- 
- #include "qemu/aiocb.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/block-common.h"
- #include "qemu/iov.h"
- 
-diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
-index 65cabfc1388..e9ddb2b6d3c 100644
---- a/include/block/thread-pool.h
-+++ b/include/block/thread-pool.h
-@@ -19,7 +19,7 @@
- #define QEMU_THREAD_POOL_H
- 
- #include "qemu/aiocb.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- #define THREAD_POOL_MAX_THREADS_DEFAULT         64
- 
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 75b4d781a5c..d26f1127bb5 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -2,7 +2,7 @@
- #define QEMU_HW_SCSI_H
- 
- #include "qemu/aiocb.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "hw/block/block.h"
- #include "hw/core/qdev.h"
- #include "scsi/utils.h"
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 91ff2fa21a5..27cd98d2fe1 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -23,7 +23,7 @@
- #include "standard-headers/linux/virtio_config.h"
- #include "standard-headers/linux/virtio_ring.h"
- #include "qom/object.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- /*
-  * A guest should never accept this. It implies negotiation is broken
-diff --git a/include/io/channel.h b/include/io/channel.h
-index f42be760f9f..1b02350437d 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -23,7 +23,7 @@
- 
- #include "qom/object.h"
- #include "qemu/coroutine-core.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- #define TYPE_QIO_CHANNEL "qio-channel"
- OBJECT_DECLARE_TYPE(QIOChannel, QIOChannelClass,
-diff --git a/include/block/aio.h b/include/qemu/aio.h
-similarity index 100%
-rename from include/block/aio.h
-rename to include/qemu/aio.h
-diff --git a/include/qemu/job.h b/include/qemu/job.h
-index 2b163602c56..0e40e8b4570 100644
---- a/include/qemu/job.h
-+++ b/include/qemu/job.h
-@@ -31,7 +31,7 @@
- #include "qemu/queue.h"
- #include "qemu/progress_meter.h"
- #include "qemu/coroutine.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/graph-lock.h"
- 
- typedef struct JobDriver JobDriver;
-diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
-index 241dc87be50..8c1241a2c11 100644
---- a/include/qemu/main-loop.h
-+++ b/include/qemu/main-loop.h
-@@ -25,7 +25,7 @@
- #ifndef QEMU_MAIN_LOOP_H
- #define QEMU_MAIN_LOOP_H
- 
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qom/object.h"
- #include "system/event-loop-base.h"
- 
-diff --git a/include/qemu/throttle.h b/include/qemu/throttle.h
-index 8fa2b29452a..06b6589c946 100644
---- a/include/qemu/throttle.h
-+++ b/include/qemu/throttle.h
-@@ -25,7 +25,7 @@
- #ifndef THROTTLE_H
- #define THROTTLE_H
- 
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qapi/qapi-types-block-core.h"
- #include "qemu/timer.h"
- 
-diff --git a/include/scsi/pr-manager.h b/include/scsi/pr-manager.h
-index 45de28d3542..5045d115c44 100644
---- a/include/scsi/pr-manager.h
-+++ b/include/scsi/pr-manager.h
-@@ -4,7 +4,7 @@
- #include "qom/object.h"
- #include "qapi/visitor.h"
- #include "qom/object_interfaces.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- #define TYPE_PR_MANAGER "pr-manager"
- 
-diff --git a/include/system/event-loop-base.h b/include/system/event-loop-base.h
-index a6c24f13513..130629e7f31 100644
---- a/include/system/event-loop-base.h
-+++ b/include/system/event-loop-base.h
-@@ -13,7 +13,7 @@
- #define QEMU_EVENT_LOOP_BASE_H
- 
- #include "qom/object.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- #define TYPE_EVENT_LOOP_BASE         "event-loop-base"
- OBJECT_DECLARE_TYPE(EventLoopBase, EventLoopBaseClass,
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index d95c17a6456..e26d13c6c71 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -14,7 +14,7 @@
- #ifndef IOTHREAD_H
- #define IOTHREAD_H
- 
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qemu/thread.h"
- #include "qom/object.h"
- #include "system/event-loop-base.h"
-diff --git a/include/system/replay.h b/include/system/replay.h
-index 68f91bdfbf2..f8715ca9feb 100644
---- a/include/system/replay.h
-+++ b/include/system/replay.h
-@@ -15,7 +15,7 @@
- #include "qapi/qapi-types-misc.h"
- #include "qapi/qapi-types-run-state.h"
- #include "qapi/qapi-types-ui.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qemu/audio.h"
- 
- /* replay clock kinds */
-diff --git a/tests/unit/iothread.h b/tests/unit/iothread.h
-index 4877cea6a31..eb4d0c77f86 100644
---- a/tests/unit/iothread.h
-+++ b/tests/unit/iothread.h
-@@ -13,7 +13,7 @@
- #ifndef TEST_IOTHREAD_H
- #define TEST_IOTHREAD_H
- 
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qemu/thread.h"
- 
- typedef struct IOThread IOThread;
-diff --git a/util/aio-posix.h b/util/aio-posix.h
-index babbfa83141..0cedb8d1891 100644
---- a/util/aio-posix.h
-+++ b/util/aio-posix.h
-@@ -17,7 +17,7 @@
- #ifndef AIO_POSIX_H
- #define AIO_POSIX_H
- 
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qapi/error.h"
- 
- struct AioHandler {
-diff --git a/block/aio_task.c b/block/aio_task.c
-index bb5c05f455d..21b68a9fc02 100644
---- a/block/aio_task.c
-+++ b/block/aio_task.c
-@@ -23,7 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/aio_task.h"
- 
- struct AioTaskPool {
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index 465cc9891d6..8cf4572f78d 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -20,7 +20,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/memalign.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/block_int-common.h"
- #include "block/export.h"
- #include "block/fuse.h"
-diff --git a/block/io_uring.c b/block/io_uring.c
-index f1514cf024a..cb131d3b8b5 100644
---- a/block/io_uring.c
-+++ b/block/io_uring.c
-@@ -10,7 +10,7 @@
-  */
- #include "qemu/osdep.h"
- #include <liburing.h>
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/block.h"
- #include "block/raw-aio.h"
- #include "qemu/coroutine.h"
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index c200e7ad20f..53c3e9af8ae 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -8,7 +8,7 @@
-  * See the COPYING file in the top-level directory.
-  */
- #include "qemu/osdep.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qemu/queue.h"
- #include "block/block.h"
- #include "block/raw-aio.h"
-diff --git a/block/win32-aio.c b/block/win32-aio.c
-index 539f1c81c65..6e1b34fb95f 100644
---- a/block/win32-aio.c
-+++ b/block/win32-aio.c
-@@ -26,7 +26,7 @@
- #include "qemu/timer.h"
- #include "block/block-io.h"
- #include "block/block_int.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/raw-aio.h"
- #include "qemu/aiocb.h"
- #include "qemu/event_notifier.h"
-diff --git a/iothread.c b/iothread.c
-index 8810376dcea..caf68e07645 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -15,7 +15,7 @@
- #include "qom/object.h"
- #include "qom/object_interfaces.h"
- #include "qemu/module.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/block.h"
- #include "system/event-loop-base.h"
- #include "system/iothread.h"
-diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
-index e569224eaea..9bb1e6a9f4a 100644
---- a/qapi/qmp-dispatch.c
-+++ b/qapi/qmp-dispatch.c
-@@ -13,7 +13,7 @@
- 
- #include "qemu/osdep.h"
- 
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qapi/compat-policy.h"
- #include "qapi/error.h"
- #include "qapi/qmp-registry.h"
-diff --git a/replay/replay-events.c b/replay/replay-events.c
-index a96e47e7740..9e5af5e8495 100644
---- a/replay/replay-events.c
-+++ b/replay/replay-events.c
-@@ -13,7 +13,7 @@
- #include "qemu/error-report.h"
- #include "system/replay.h"
- #include "replay-internal.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "ui/input.h"
- #include "hw/core/cpu.h"
- 
-diff --git a/scsi/pr-manager.c b/scsi/pr-manager.c
-index 40e1210eb21..fec0d68c4cc 100644
---- a/scsi/pr-manager.c
-+++ b/scsi/pr-manager.c
-@@ -13,7 +13,7 @@
- #include <scsi/sg.h>
- 
- #include "qapi/error.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/thread-pool.h"
- #include "scsi/pr-manager.h"
- #include "trace.h"
-diff --git a/stubs/linux-aio.c b/stubs/linux-aio.c
-index 84d1f784aed..b1a27e926e3 100644
---- a/stubs/linux-aio.c
-+++ b/stubs/linux-aio.c
-@@ -8,7 +8,7 @@
-  * See the COPYING file in the top-level directory.
-  */
- #include "qemu/osdep.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/raw-aio.h"
- 
- void laio_detach_aio_context(LinuxAioState *s, AioContext *old_context)
-diff --git a/stubs/replay-tools.c b/stubs/replay-tools.c
-index c537485f401..17dc3babd9b 100644
---- a/stubs/replay-tools.c
-+++ b/stubs/replay-tools.c
-@@ -1,6 +1,6 @@
- #include "qemu/osdep.h"
- #include "system/replay.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- bool replay_events_enabled(void)
- {
-diff --git a/tests/unit/iothread.c b/tests/unit/iothread.c
-index f9b0791084e..a363bf8f709 100644
---- a/tests/unit/iothread.c
-+++ b/tests/unit/iothread.c
-@@ -14,7 +14,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qemu/main-loop.h"
- #include "qemu/rcu.h"
- #include "iothread.h"
-diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
-index c24200a7121..9179cdc6a32 100644
---- a/tests/unit/test-aio-multithread.c
-+++ b/tests/unit/test-aio-multithread.c
-@@ -11,7 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qemu/coroutine.h"
- #include "qemu/thread.h"
- #include "qemu/error-report.h"
-diff --git a/tests/unit/test-aio.c b/tests/unit/test-aio.c
-index 010d65b79a5..b3ca4d8a596 100644
---- a/tests/unit/test-aio.c
-+++ b/tests/unit/test-aio.c
-@@ -11,7 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qapi/error.h"
- #include "qemu/timer.h"
- #include "qemu/sockets.h"
-diff --git a/tests/unit/test-nested-aio-poll.c b/tests/unit/test-nested-aio-poll.c
-index d13ecccd8c0..9ab1ad08a79 100644
---- a/tests/unit/test-nested-aio-poll.c
-+++ b/tests/unit/test-nested-aio-poll.c
-@@ -13,7 +13,7 @@
-  * aio_poll() calls. This test case checks that this is indeed what happens.
-  */
- #include "qemu/osdep.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qapi/error.h"
- #include "util/aio-posix.h"
- 
-diff --git a/tests/unit/test-thread-pool.c b/tests/unit/test-thread-pool.c
-index ea5234f9f48..1e2f05f8416 100644
---- a/tests/unit/test-thread-pool.c
-+++ b/tests/unit/test-thread-pool.c
-@@ -1,5 +1,5 @@
- #include "qemu/osdep.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/thread-pool.h"
- #include "block/block.h"
- #include "qapi/error.h"
-diff --git a/tests/unit/test-throttle.c b/tests/unit/test-throttle.c
-index dfa61c75ea4..52eb8966b3f 100644
---- a/tests/unit/test-throttle.c
-+++ b/tests/unit/test-throttle.c
-@@ -14,7 +14,7 @@
- 
- #include "qemu/osdep.h"
- #include <math.h>
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "qapi/error.h"
- #include "qemu/throttle.h"
- #include "qemu/error-report.h"
-diff --git a/util/async.c b/util/async.c
-index 39f391fb71a..80d6b01a8aa 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -25,7 +25,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/thread-pool.h"
- #include "block/graph-lock.h"
- #include "qemu/main-loop.h"
-diff --git a/util/main-loop.c b/util/main-loop.c
-index b462598f76e..ad8645c30a4 100644
---- a/util/main-loop.c
-+++ b/util/main-loop.c
-@@ -30,7 +30,7 @@
- #include "exec/icount.h"
- #include "system/replay.h"
- #include "qemu/main-loop.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "block/thread-pool.h"
- #include "qemu/error-report.h"
- #include "qemu/queue.h"
-diff --git a/util/qemu-co-timeout.c b/util/qemu-co-timeout.c
-index 00cd335649f..6774440b287 100644
---- a/util/qemu-co-timeout.c
-+++ b/util/qemu-co-timeout.c
-@@ -25,7 +25,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/coroutine.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- typedef struct QemuCoTimeoutState {
-     CoroutineEntry *entry;
-diff --git a/util/qemu-coroutine-lock.c b/util/qemu-coroutine-lock.c
-index 2534435388f..fac91582b5f 100644
---- a/util/qemu-coroutine-lock.c
-+++ b/util/qemu-coroutine-lock.c
-@@ -30,7 +30,7 @@
- #include "qemu/coroutine_int.h"
- #include "qemu/processor.h"
- #include "qemu/queue.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- #include "trace.h"
- 
- void qemu_co_queue_init(CoQueue *queue)
-diff --git a/util/qemu-coroutine-sleep.c b/util/qemu-coroutine-sleep.c
-index af59f9af984..edef1172844 100644
---- a/util/qemu-coroutine-sleep.c
-+++ b/util/qemu-coroutine-sleep.c
-@@ -14,7 +14,7 @@
- #include "qemu/osdep.h"
- #include "qemu/coroutine_int.h"
- #include "qemu/timer.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- static const char *qemu_co_sleep_ns__scheduled = "qemu_co_sleep_ns";
- 
-diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
-index 64d6264fc74..d17135f585a 100644
---- a/util/qemu-coroutine.c
-+++ b/util/qemu-coroutine.c
-@@ -19,7 +19,7 @@
- #include "qemu/coroutine_int.h"
- #include "qemu/coroutine-tls.h"
- #include "qemu/cutils.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- enum {
-     COROUTINE_POOL_BATCH_MAX_SIZE = 128,
-diff --git a/util/throttle.c b/util/throttle.c
-index 9582899da3e..8044f04ffc9 100644
---- a/util/throttle.c
-+++ b/util/throttle.c
-@@ -26,7 +26,7 @@
- #include "qapi/error.h"
- #include "qemu/throttle.h"
- #include "qemu/timer.h"
--#include "block/aio.h"
-+#include "qemu/aio.h"
- 
- /* This function make a bucket leak
-  *
-diff --git a/scripts/analyze-inclusions b/scripts/analyze-inclusions
-index 50a7d95d9e7..c30e44f02ec 100644
---- a/scripts/analyze-inclusions
-+++ b/scripts/analyze-inclusions
-@@ -52,7 +52,7 @@ echo $(grep_include -F 'qapi-types.h') files include qapi-types.h
- echo $(grep_include -F 'trace/generated-tracers.h') files include generated-tracers.h
- echo $(grep_include -F 'qapi/error.h') files include qapi/error.h
- echo $(grep_include -F 'qom/object.h') files include qom/object.h
--echo $(grep_include -F 'block/aio.h') files include block/aio.h
-+echo $(grep_include -F 'qemu/aio.h') files include block/aio.h
- echo $(grep_include -F 'system/memory.h') files include system/memory.h
- echo $(grep_include -F 'fpu/softfloat.h') files include fpu/softfloat.h
- echo $(grep_include -F 'qemu/bswap.h') files include qemu/bswap.h
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index d2bb873d494..99b32cb7b0f 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -623,6 +623,22 @@ const MonitorDef monitor_defs[] = {
+     { "r13", offsetof(CPUX86State, regs[13]) },
+     { "r14", offsetof(CPUX86State, regs[14]) },
+     { "r15", offsetof(CPUX86State, regs[15]) },
++    { "r16", offsetof(CPUX86State, regs[16]) },
++    { "r17", offsetof(CPUX86State, regs[17]) },
++    { "r18", offsetof(CPUX86State, regs[18]) },
++    { "r19", offsetof(CPUX86State, regs[19]) },
++    { "r20", offsetof(CPUX86State, regs[20]) },
++    { "r21", offsetof(CPUX86State, regs[21]) },
++    { "r22", offsetof(CPUX86State, regs[22]) },
++    { "r23", offsetof(CPUX86State, regs[23]) },
++    { "r24", offsetof(CPUX86State, regs[24]) },
++    { "r25", offsetof(CPUX86State, regs[25]) },
++    { "r26", offsetof(CPUX86State, regs[26]) },
++    { "r27", offsetof(CPUX86State, regs[27]) },
++    { "r28", offsetof(CPUX86State, regs[28]) },
++    { "r29", offsetof(CPUX86State, regs[29]) },
++    { "r30", offsetof(CPUX86State, regs[30]) },
++    { "r31", offsetof(CPUX86State, regs[31]) },
+ #endif
+     { "eflags", offsetof(CPUX86State, eflags) },
+     { "eip", offsetof(CPUX86State, eip) },
 -- 
 2.52.0
 
