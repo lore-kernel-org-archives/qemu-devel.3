@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B786E92704
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C689BE92715
 	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 15:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZWQR-0001tu-LC; Sat, 27 Dec 2025 10:41:52 -0500
+	id 1vZWPo-0001OW-FU; Sat, 27 Dec 2025 10:41:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZWQP-0001s3-3G
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 10:41:49 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZWPm-0001HX-1w
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 10:41:10 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZWQM-0004W9-WD
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 10:41:48 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4775895d69cso33194825e9.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 07:41:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZWPk-0003kg-7r
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 10:41:09 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47755de027eso47119555e9.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 07:41:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766850105; x=1767454905; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766850067; x=1767454867; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gWrBhlZ9U3CH8tbukp0mChJencQLpTKDcbLkgs8C3MQ=;
- b=Tw+kXBT2eJIidMIem5LHKDo+6C9IlZnmzFLb6EgqC1fEyd/kTQOCgQgJtBLSKOPOm0
- C9OTnjlGVFJE4hjTcVknUIGSwVnK7C/tWE0WMvzmbJntauUvcPVaTfC+dt6LhluELJ22
- ngtcxDHf2uhQx3qeLwRPWOllvrCvPZSPknytPkBLdFhoUjywD8bBjxraxRW6R30Va1dE
- VGtrguAmu5B1bfsb7qv2JWyzhpwad4mN9HMZ43UGqlQbH5sv9a1ci/G3g0+SuCD/d0Dx
- pLSfkwOfSVmVjYg7mJBnhStufvELuBeT4xXmhDrD5owhLT0+qBQOJucIid9aZ1A2gbp1
- VUkA==
+ bh=1+ztlfd9wrwmAsNc2ze/59DQCS8/8L7BHQYzP5XHBNQ=;
+ b=Oa6DgGTNlkODnGmSYEwZSX8wD7F+9VL+0DvVNDs8XWBcPrpi4MlUjzTiTsgOdWjJ3y
+ dlI7LWXOfN1wFAbIEb1vBZan7N8hS6v4nOJL4gvSFU/GWUFWVYPD+3X4a+mIN82luZe2
+ mkBq6mFCstP63a1gmNHERhuD4oYtGhkpH3I/Q4rInuIr8HQR9O8EXHbh9v0UnK8AzZNp
+ d3kIg18FvggX3HQJt8mgybA30vipMXu4zCtf6nux3WzTeSFUYBy1CavC8EU1IPJGDdTo
+ jnIzDLbUJaw+HeeodWVUjA8yWcL18VK6kEountflc73FFLfQiq9YB0hr0oZAUM3tNPjD
+ +l1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766850105; x=1767454905;
+ d=1e100.net; s=20230601; t=1766850067; x=1767454867;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gWrBhlZ9U3CH8tbukp0mChJencQLpTKDcbLkgs8C3MQ=;
- b=G9Y0W4D7KQ3kdAmyCPUOtFrkQczkdUUWVCNhBxXMhannMVfXIDtMvFdzJpMAcLyzBd
- XZgyzeD0bcpd8NzOn+Ewk2bl0ZcQ11HPDUpz9QdEiJr/Vj3ehBvKQBqT520piHAyl2ay
- RZvX01Gv5BFWW/3ocGEkXZfcgF/Sm8kovZFTKFBsY6QRZVQGeWADMPRU4yW605nOt32s
- SHEVI04urNJ2X9y/zcIqwLxPT/U+nowa1cpdjRvz0MO5n3f73r62WdTt02f+fcxNLjOi
- HZMTXfAmclx4u5caMqftFVBJqEqgkem1aFSjrXrt8j/NU6eprNwLYWziR+i87tCgwl4U
- if2A==
+ bh=1+ztlfd9wrwmAsNc2ze/59DQCS8/8L7BHQYzP5XHBNQ=;
+ b=cqao9i0A6taqzT/644BNRwcRsV/AwmL7CR1hz1mtD6cfKhgMi2y5VxRv4cEZbXpm6X
+ 1+fkt4zKi+4l8Tc+djF1ATu3R3vtcD2ed7n87mZzRa8zaSRxdBj7fZPBxBQkSHlnVnc4
+ umAFpV/y3u1jOYAb+3dW1a288i9LyZDHLVECZoybjcTS90UfYJPKfCdebuY9WQD6QBxk
+ 9W+LA+RpkEeE67KbIQCLqb7KlRlzC7y2quGsVSFzsPXoMSZOA4Cy1tubswZ/NOeQEDmv
+ z8cdErwcfqI6podMaGiI0SbfOcNdr4EshFtHIRetNleLn86nUNLHGrtxCOFH/R0wmpGn
+ A8OA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdWkhZdO8C7l3g+lNpaoj+2RfbvLNo6n5IIV9bS9uqY2mt7oIo8pbP6SK0XUkgCOKopP04CoeHGNaG@nongnu.org
-X-Gm-Message-State: AOJu0Yy6zpUqOG+qRVE+2rLaqml8Y0qOvFw/o4xW1U68ykkfQYkQ2P0k
- lb/wwoQAVTVuzm5KZmQAI+UBdr8gQbUXp/+p92M0oXjVvKTxqUTx2nNnswZThv5Luk8=
-X-Gm-Gg: AY/fxX7paUV/FQ9NuIvSG/amPusBN745LNMYDPSrgrpaGci1EWTCkpsdjrF+gxiwMt3
- xLO97RwiK/aOKAv5YnUmnk5AQYkewKiFnjJUBmsyIh5MUs++wkpbUlTaHQQVzb2ULWLNQRtEtc5
- QdH+gbnQ00p5ew5Ib112H3onYYYWzjwNfDM3d2gYHMMtOX5f+yFN7uIHgBgB7s37dNKkrd6R18s
- xgM6N8L1xu7w8H7bSGnk1N+XTd23H8MdFDzYX2794Q4rONppBF3v0JXTb3k1qE1G0nnntazUDVW
- iMlwU5HxTDHQkAMqma1aBiYpveQmeVHms8SmE/MOkY4hJhr+xhvZf0FnL42JV4fkcPIQCs7Q5rb
- PvaZR3UgqC6XG+g5i4Jgg+35DazHyY8QDumGfVIy0XpNZVp09dGZ+bva+kDGtG7Fb5Ino6686Bd
- hK4rNQoqCDh4n+om6ZQBTolCCAu3/QJgOpycOYuZLquTSH8SAVclO7ddjgUCqI3aoCVEwSu3m+
-X-Google-Smtp-Source: AGHT+IFeMLAFLDZQ0P8Rf6fERCl2NOoGug/pLfIrOMpSm4WffhJFZw7xnhDRtuviDzuFvYdr5sXiqg==
-X-Received: by 2002:a05:600c:3b2a:b0:477:b734:8c22 with SMTP id
- 5b1f17b1804b1-47d1953bd29mr275628075e9.8.1766850105389; 
- Sat, 27 Dec 2025 07:41:45 -0800 (PST)
+ AJvYcCXk/FH5lzhBNXj46+lpWfwsQ/mb0et+5K4TpS3uKfsm8U/2Hsduaylj6gA8qDSfmLOazfaAI1kMtWlR@nongnu.org
+X-Gm-Message-State: AOJu0YyegEtDKUS2tGPpeX+/Am4UdG59RA326+A04OKf3uQ10prOVA1n
+ AZUyjh+hbpfn8RMJxtKfshCxQaoxsQOpkeLspVzOtUTWVemupw0Jc3cdh0GM/Qa77HRW+BVhbM0
+ Q/r81
+X-Gm-Gg: AY/fxX5SQm2mhPNxi8RKJkC1Zj25C4f5BZtpJp4ai8c3MhBehknNotx2HUAZt+Aqg+5
+ COsOskL8o4O4tTm8noBC+RK8XhOivxU5SBygYl93A6f0OEQCqA1bCP9QXgJkBT7nIkjmng3Hv0M
+ +5kCPOFv21ZdqGkg5fmmzMwUs2JaILECzgwBE/4SbmnXZmb/4/NYIfUfdg2f3Uegw6aD+smU7V7
+ sZ6xhZjADRkTyd+MvehSzZ9SVDT9E0xQfeIQ2Bv2dVTjYX/EK/dGpqOWIDg/qSXmrO6fij4QXyE
+ VekPCMldyfwNZE9x/JCe/W2dK/S717EsY579OTgMemV5Eia9PdL2UvePMxbN/Tw6tdVKkyyg/ZK
+ VvO+oogt0hETDdDQ2rZevktxef+zzrdGiOzroGv/26HEP60wFU3klh/y/EJUxH38HebemPaJywk
+ kq35wB2aZc1JELFAVcq/9IPBv/3YJyt3ZmjGHEncspWa5Kh+FQS1zudObRv6HKcA==
+X-Google-Smtp-Source: AGHT+IFSnNHzK8jErOeGSNV3lqs5E+yWRKFE0o57egwAqy143zLYvJDjRqYZ1hTSrj22lHJDNYMWZA==
+X-Received: by 2002:a05:600c:4447:b0:47a:9560:ec22 with SMTP id
+ 5b1f17b1804b1-47d1954a2fdmr261090545e9.14.1766850066649; 
+ Sat, 27 Dec 2025 07:41:06 -0800 (PST)
 Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
  [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1aef7sm51739139f8f.7.2025.12.27.07.41.44
+ 5b1f17b1804b1-47d193cbe58sm447297765e9.9.2025.12.27.07.41.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Dec 2025 07:41:44 -0800 (PST)
-Message-ID: <d38e5c5e-35f5-45de-a1b8-2d96886bd974@linaro.org>
-Date: Sat, 27 Dec 2025 16:41:44 +0100
+ Sat, 27 Dec 2025 07:41:06 -0800 (PST)
+Message-ID: <3395dd2c-0599-461b-8c44-f83850721c98@linaro.org>
+Date: Sat, 27 Dec 2025 16:41:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 005/153] include: move hw/usb.h to hw/usb/
+Subject: Re: [PULL 004/153] include: move memory_ldst* to include/system
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20251227091622.20725-1-pbonzini@redhat.com>
- <20251227091622.20725-6-pbonzini@redhat.com>
+ <20251227091622.20725-5-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251227091622.20725-6-pbonzini@redhat.com>
+In-Reply-To: <20251227091622.20725-5-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,66 +105,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/12/25 10:13, Paolo Bonzini wrote:
+> These partial headers are only included via system/memory.h, so keep them in
+> the same directory.
+> 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   MAINTAINERS                   | 2 +-
->   hw/usb/hcd-dwc2.h             | 2 +-
->   hw/usb/hcd-ehci.h             | 2 +-
->   hw/usb/hcd-ohci.h             | 2 +-
->   hw/usb/hcd-uhci.h             | 2 +-
->   hw/usb/hcd-xhci-pci.h         | 2 +-
->   hw/usb/hcd-xhci-sysbus.h      | 2 +-
->   hw/usb/hcd-xhci.h             | 2 +-
->   include/hw/usb/msd.h          | 2 +-
->   include/hw/{ => usb}/usb.h    | 0
->   chardev/baum.c                | 2 +-
->   hw/arm/sbsa-ref.c             | 2 +-
->   hw/hppa/machine.c             | 2 +-
->   hw/i386/pc.c                  | 2 +-
->   hw/i386/pc_piix.c             | 2 +-
->   hw/i386/pc_q35.c              | 2 +-
->   hw/mips/loongson3_virt.c      | 2 +-
->   hw/ppc/mac_newworld.c         | 2 +-
->   hw/ppc/spapr.c                | 2 +-
->   hw/sh4/r2d.c                  | 2 +-
->   hw/usb/bus-stub.c             | 2 +-
->   hw/usb/bus.c                  | 2 +-
->   hw/usb/canokey.c              | 2 +-
->   hw/usb/combined-packet.c      | 2 +-
->   hw/usb/core.c                 | 2 +-
->   hw/usb/desc-msos.c            | 2 +-
->   hw/usb/desc.c                 | 2 +-
->   hw/usb/dev-audio.c            | 2 +-
->   hw/usb/dev-hid.c              | 2 +-
->   hw/usb/dev-hub.c              | 2 +-
->   hw/usb/dev-mtp.c              | 2 +-
->   hw/usb/dev-network.c          | 2 +-
->   hw/usb/dev-serial.c           | 2 +-
->   hw/usb/dev-smartcard-reader.c | 2 +-
->   hw/usb/dev-storage-bot.c      | 2 +-
->   hw/usb/dev-storage-classic.c  | 2 +-
->   hw/usb/dev-storage.c          | 2 +-
->   hw/usb/dev-uas.c              | 2 +-
->   hw/usb/dev-wacom.c            | 2 +-
->   hw/usb/hcd-ohci-pci.c         | 2 +-
->   hw/usb/hcd-ohci-sysbus.c      | 2 +-
->   hw/usb/hcd-ohci.c             | 2 +-
->   hw/usb/hcd-uhci.c             | 2 +-
->   hw/usb/hcd-xhci-nec.c         | 2 +-
->   hw/usb/host-libusb.c          | 2 +-
->   hw/usb/libhw.c                | 2 +-
->   hw/usb/pcap.c                 | 2 +-
->   hw/usb/quirks.c               | 2 +-
->   hw/usb/redirect.c             | 2 +-
->   hw/usb/u2f-emulated.c         | 2 +-
->   hw/usb/u2f-passthru.c         | 2 +-
->   hw/usb/u2f.c                  | 2 +-
->   hw/usb/xen-usb.c              | 2 +-
->   hw/vmapple/vmapple.c          | 2 +-
->   system/vl.c                   | 2 +-
->   55 files changed, 54 insertions(+), 54 deletions(-)
->   rename include/hw/{ => usb}/usb.h (100%)
+>   include/system/memory.h                           | 14 +++++++-------
+>   include/{exec => system}/memory_ldst.h.inc        |  0
+>   include/{exec => system}/memory_ldst_cached.h.inc |  0
+>   include/{exec => system}/memory_ldst_phys.h.inc   |  0
+>   4 files changed, 7 insertions(+), 7 deletions(-)
+>   rename include/{exec => system}/memory_ldst.h.inc (100%)
+>   rename include/{exec => system}/memory_ldst_cached.h.inc (100%)
+>   rename include/{exec => system}/memory_ldst_phys.h.inc (100%)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Similar to
+https://lore.kernel.org/qemu-devel/20251219161953.72724-7-philmd@linaro.org/
+which also update MAINTAINERS accordingly.
 
