@@ -4,106 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA80E8FDD6
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 006B1E8FDD6
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQQ3-0002UT-FY; Sat, 27 Dec 2025 04:17:03 -0500
+	id 1vZQPn-0002Ln-AL; Sat, 27 Dec 2025 04:16:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQ1-0002To-MV
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vZQPi-0002L9-0T
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:16:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQPz-0002Lu-AP
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:01 -0500
+ id 1vZQPf-0002JD-DQ
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:16:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827018;
+ s=mimecast20190719; t=1766826998;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qyFzvwWwzZP1cmLWJexrLce9Jt9k/RT/l754HFIGcZ8=;
- b=d4qOTyMGlBwM2xVJBVttnY+t2D7lNERV3IF8GQhFBvhDdgwoaKA9TCyhVHcp+AMBxvwdCF
- /ZFwJPd+dapZjhHSGqJOs3YUX/hF5IhDpLGy+ed5zQoztszfC1Sei9n8Tlb4nW4lF1qHT/
- QT4uKYVYj5E889LQnShyno2eeQlnqow=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1+vlyWLoQiKm/kSRGWshczE1HompBlg/4CXMUL70oT8=;
+ b=CbKAqDT39+LoFHNGbkqT5btcBPLo1nyjvKSlGJMcQimfYZwauXvbMyv7zCvXPgdwWixyQg
+ kk4JCi0hrL3DcDZ3q6XxHpQ/Za4nVuGdTmZSRVurYYhX2RqhRQ4kbnVRnc4AulHxES4ED8
+ Bv8eF0WlU6lSNnvNguBtcgrjtbYn9N8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-nxeeyZ0bMPKtz2NbJdYyeA-1; Sat, 27 Dec 2025 04:16:56 -0500
-X-MC-Unique: nxeeyZ0bMPKtz2NbJdYyeA-1
-X-Mimecast-MFC-AGG-ID: nxeeyZ0bMPKtz2NbJdYyeA_1766827016
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43101a351c7so6156922f8f.2
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:16:56 -0800 (PST)
+ us-mta-480-nlQccyPHNiSY7qhMpGwgtA-1; Sat, 27 Dec 2025 04:16:37 -0500
+X-MC-Unique: nlQccyPHNiSY7qhMpGwgtA-1
+X-Mimecast-MFC-AGG-ID: nlQccyPHNiSY7qhMpGwgtA_1766826996
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-430f5dcd4cdso3879786f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:16:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827015; x=1767431815; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766826995; x=1767431795; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qyFzvwWwzZP1cmLWJexrLce9Jt9k/RT/l754HFIGcZ8=;
- b=HqAQAuX6iXBqvVxxBrQMLZVnTfOssRwnxt0fG+SgvJp3rVO4CzkTvc7CFU8rqeXlCU
- /cZVlopAJIg/VA2MZA6R4b1Z0M7zZw/8y/6e++aYVgdiXQiSJNzGFBnuRm7LEnB9HtdJ
- pq/9tv2FGstTPmn8KE1cXoOO/42iVfCUP8mpLvn18u/j8+dA1y3sKL6o8uZ1v3cJXbeT
- w4YMHEllPuzZuLOO35mBRdJYHiPPzKLwGpRgKhln4Jr8B5yNgKJisXBikQ2Bz5DB9pAe
- ny6wW9BI8o9gfhUU6q0TE5LtWPtuYsi1coA4ZkxfTrmUyIl4PVnHyRa+pDtLmwX5ex1O
- S+VQ==
+ :reply-to; bh=1+vlyWLoQiKm/kSRGWshczE1HompBlg/4CXMUL70oT8=;
+ b=iWR18y/DEvqNADa2zk5Vi8D2LchBb448zj736qD0n69uDYyq3GiiptG/Cv7PAnX2rN
+ 6ShnGHfP9/HEOIUmMxKcPQG9N3LQssnENQP5GEaOFj3lsTmX7onfHZ0HmTu3w6xUFeel
+ LdRQ40pU98GapRe/ASZ4jrz2sT11ckvHYvSGPuC4+xQ64YMImqoUpEUTpmzcRD+Ufa9q
+ UmLHYBbp5UYuMSrX0ZV+jr4M+MhOBhgjZkHs5OeFKu8qT5qCTGuFwHLPLp0ms3xZJnHD
+ O9O5JpkHL9MMz9pn33O+i6nmuoWqcDCSm+g+e9hJW+BfDpfJ5ebqHBlVKzdXz1g9xcMd
+ PLdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827015; x=1767431815;
+ d=1e100.net; s=20230601; t=1766826995; x=1767431795;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qyFzvwWwzZP1cmLWJexrLce9Jt9k/RT/l754HFIGcZ8=;
- b=YF1uoIDnlyDmwmKSL83FGnnGlwUmclPB94sDe/FiB1I2JJMLAyOgK3du7fO4wLt24z
- nG5KY7u9hgkO/aPlidGVDJ3SnAh5ULj3jbzt8oSj89QPPDJtG4fFeLv4Gs4C8gEIoqGK
- YudmY5/MjkpbHUUIpZfuntdFcmyUjEQFkSCq2a0nngdbmFZ5LGnHu+2mQTsxXAQq24em
- KBCIvBG/ki9j5mQS60s2l8GZwSMt0VOQ2PWTCVTQYK6kU8y4/dKx9tJRLNNA6f5/h2S9
- bIq0JtpYkhB3sN4FvG/JHC3qYRuHA5D1+LdZedRXp0LqzfLkJDvEctCSh2lI+uQodpBr
- el6A==
-X-Gm-Message-State: AOJu0YwU2+h3m1ryrX+tculOlSTdKCHklsBo7WcNOuTkPn44FUZjlTuf
- mHTUd1kgxakRW6nohhLO9umfhg0D4CWpDQz+uAWveSSjgOCa6oTf9jx8b9rErILtOcWbPvv6NwS
- 5exD1Xey1AFxBU6c+d91FUvv9hZ5W4JHxQ+2B8SUpmdaNWCzJGllPJh4v4wbof/3oDnoFerDWz9
- pZXQxE60MkO3JgI563eeSKU6EW8e/hxr6aNmL6BZk1
-X-Gm-Gg: AY/fxX7ZyLPkW2XqAsvfI8pUAUX2NfEceAxIt4onfTW8g9SytqqG4nTt9eYBBuTVM3I
- KgvGFGBCoDye9zmtPPocjiZa1re5un7JyQrqVaoa8TA39dnPg+R+IIPU+Se3JQsVEbf/TSI7UwB
- gMTObdY5Mz2fWyDrKSuloDI5MnBLgS7qdmckWuJ9hIpvCgFAbNBlXa1dpTZexBV2SHHWXnhKOd4
- 1xLZM/yBZrlJ4NXA3IQJWh1MpBgijmbMfOSDf+8aaWFeMxxr8uN+H2a7ilUb++VzONU09g6VNVH
- MuWxGhChaZhQG3Brf5p4KmRfkq2SdhQ05HZpzz69eoUPTmByupqS52MKk4eTdeeYXKflk/86LWN
- +XwtsSeR7GKd0Bo1+y5Bm1dLEukK4GEnVj4oOe61gspHcRH9sunDIMKOrA6ZVWmZWgLtIOSRgXb
- Pna7HCsHKnvX6ByGw=
-X-Received: by 2002:a05:6000:200f:b0:430:f879:a0ee with SMTP id
- ffacd0b85a97d-4324e4c1259mr32288262f8f.5.1766827014523; 
- Sat, 27 Dec 2025 01:16:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFP35zIqqUpm7CC+vVW5D4R27gd39sZVUljQ01LeOYOb2RKnripisqV74f3m6FbcfMQEVQTuQ==
-X-Received: by 2002:a05:6000:200f:b0:430:f879:a0ee with SMTP id
- ffacd0b85a97d-4324e4c1259mr32288222f8f.5.1766827013769; 
- Sat, 27 Dec 2025 01:16:53 -0800 (PST)
+ bh=1+vlyWLoQiKm/kSRGWshczE1HompBlg/4CXMUL70oT8=;
+ b=tolOCn5Rc6mpvLmhfj5r1V+eOdDUqXVP5YquwiCfn7qCuCqLrAqL2XW5Pkee3tG8wY
+ QPSFWa7wSsF19e8XKbuSGuyCJMK5t0dJ8RTzT8wvETTJzS9QFT+um2Y/EhuM6Hh8duz0
+ /ClcYAzRDmciHoDycq75uTbm2gbyISjJRO8yhqWsHGR0/nCUaSP190hh650LXK1ObGAb
+ ykQXZ8tKztjkA7DsTwTB510aQdTqCLMc2q+DAb8uWon7gdqIz0KhZqE0OXTym+feAE7r
+ vE+woGSmitITQYfpOIU5NgTj3JrGZKqmLcDdtCyT87DyFS72z8fmEzrOAV0xVBr3pwmY
+ xEHg==
+X-Gm-Message-State: AOJu0Yx32UcSeVkKldfaVVkjCBoS4NQo8qAg1tba+uZHxXHY4ACEqcAF
+ Uitj4gx0MMETBnEWzETPz4FfGRIEuDTec5jWpHzqcv2tUCPi8NUY5q+2VcmwOfA8eeWux+5oOlc
+ HtOqONIspbVpKlkrsqW3dQLtdq5k8ALSU33wrVmDScWfxN9Kms8oL9eHad5RM5GaHG7y/BhD7sF
+ HjE+lhyb26GHdpyCrvyrk5wu5PUJM/XqYsKWxnr/gb
+X-Gm-Gg: AY/fxX7x/Xv8mnzKD02kbMp2+IM4dp8aNXagQNa1wS1TXX82L8v6zyGiB+psu1FRf8X
+ FrHzT2axdhOxEn8D6ahwbITa0/kUQTolPDPgF079WOp9Z+58RRqmXblXPY3AAFqgpjOM785aWQa
+ U6U/RVoBNhtl3c4gbaAXIDixkD7QBJJ6mErnTvQpv0AiAQBLic4UE5t6phxAMqGqdet3fgAGCf8
+ G+ABJRrWsTQ4Q/mZvfHRQfRHmeFXG1i3284qecPKEXCbkMEV+//teImuMYSTNJb79bR6mt/Xu/2
+ 856o1lGY8Z0ek01tls4J8LndQRx2j0cKlCNgZ22A0YWNU+OtXchUmPhqB3R3D2yhXZfM+hHbtF6
+ 0qqRH6K+xiX4Io4vWuZPf1AFawLgs4g2Ut+aEQZ9icycmYCHw6dCLxBEhmu39mumOQpbheHRIXc
+ cd92Pl5XBabPvVeuE=
+X-Received: by 2002:a05:6000:22c4:b0:431:9f1:e4c7 with SMTP id
+ ffacd0b85a97d-4324e4c9d76mr30240835f8f.21.1766826994639; 
+ Sat, 27 Dec 2025 01:16:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFjmzZvuaAKuvLGewDHkOf++jQvt8ITxUFQAdSfVjNSg12B+x7k7LxZ1HnfLBGCQZPBdfOcMw==
+X-Received: by 2002:a05:6000:22c4:b0:431:9f1:e4c7 with SMTP id
+ ffacd0b85a97d-4324e4c9d76mr30240808f8f.21.1766826993789; 
+ Sat, 27 Dec 2025 01:16:33 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea8311fsm50393044f8f.28.2025.12.27.01.16.52
+ ffacd0b85a97d-4324ea1aef7sm50065078f8f.7.2025.12.27.01.16.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:16:52 -0800 (PST)
+ Sat, 27 Dec 2025 01:16:33 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 016/153] include: move hw/ptimer.h to hw/core/
-Date: Sat, 27 Dec 2025 10:14:03 +0100
-Message-ID: <20251227091622.20725-17-pbonzini@redhat.com>
+Subject: [PULL 005/153] include: move hw/usb.h to hw/usb/
+Date: Sat, 27 Dec 2025 10:13:52 +0100
+Message-ID: <20251227091622.20725-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,532 +123,766 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/net/fsl_etsec/etsec.h                 | 2 +-
- include/hw/{ => core}/ptimer.h           | 0
- include/hw/display/xlnx_dp.h             | 2 +-
- include/hw/dma/xlnx_csu_dma.h            | 2 +-
- include/hw/net/xlnx-versal-canfd.h       | 2 +-
- include/hw/net/xlnx-zynqmp-can.h         | 2 +-
- include/hw/timer/allwinner-a10-pit.h     | 2 +-
- include/hw/timer/armv7m_systick.h        | 2 +-
- include/hw/timer/cmsdk-apb-dualtimer.h   | 2 +-
- include/hw/timer/cmsdk-apb-timer.h       | 2 +-
- include/hw/timer/digic-timer.h           | 2 +-
- include/hw/timer/imx_epit.h              | 2 +-
- include/hw/timer/imx_gpt.h               | 2 +-
- include/hw/timer/mss-timer.h             | 2 +-
- include/hw/watchdog/allwinner-wdt.h      | 2 +-
- include/hw/watchdog/cmsdk-apb-watchdog.h | 2 +-
- include/hw/watchdog/wdt_imx2.h           | 2 +-
- hw/arm/musicpal.c                        | 2 +-
- hw/core/ptimer.c                         | 2 +-
- hw/dma/xilinx_axidma.c                   | 2 +-
- hw/dma/xlnx_csu_dma.c                    | 2 +-
- hw/m68k/mcf5206.c                        | 2 +-
- hw/m68k/mcf5208.c                        | 2 +-
- hw/net/fsl_etsec/etsec.c                 | 2 +-
- hw/net/lan9118.c                         | 2 +-
- hw/rtc/exynos4210_rtc.c                  | 2 +-
- hw/sparc/leon3.c                         | 2 +-
- hw/ssi/xilinx_spips.c                    | 2 +-
- hw/timer/arm_mptimer.c                   | 2 +-
- hw/timer/arm_timer.c                     | 2 +-
- hw/timer/digic-timer.c                   | 2 +-
- hw/timer/exynos4210_mct.c                | 2 +-
- hw/timer/exynos4210_pwm.c                | 2 +-
- hw/timer/grlib_gptimer.c                 | 2 +-
- hw/timer/sh_timer.c                      | 2 +-
- hw/timer/slavio_timer.c                  | 2 +-
- hw/timer/xilinx_timer.c                  | 2 +-
- tests/unit/ptimer-test.c                 | 2 +-
- 38 files changed, 37 insertions(+), 37 deletions(-)
- rename include/hw/{ => core}/ptimer.h (100%)
+ MAINTAINERS                   | 2 +-
+ hw/usb/hcd-dwc2.h             | 2 +-
+ hw/usb/hcd-ehci.h             | 2 +-
+ hw/usb/hcd-ohci.h             | 2 +-
+ hw/usb/hcd-uhci.h             | 2 +-
+ hw/usb/hcd-xhci-pci.h         | 2 +-
+ hw/usb/hcd-xhci-sysbus.h      | 2 +-
+ hw/usb/hcd-xhci.h             | 2 +-
+ include/hw/usb/msd.h          | 2 +-
+ include/hw/{ => usb}/usb.h    | 0
+ chardev/baum.c                | 2 +-
+ hw/arm/sbsa-ref.c             | 2 +-
+ hw/hppa/machine.c             | 2 +-
+ hw/i386/pc.c                  | 2 +-
+ hw/i386/pc_piix.c             | 2 +-
+ hw/i386/pc_q35.c              | 2 +-
+ hw/mips/loongson3_virt.c      | 2 +-
+ hw/ppc/mac_newworld.c         | 2 +-
+ hw/ppc/spapr.c                | 2 +-
+ hw/sh4/r2d.c                  | 2 +-
+ hw/usb/bus-stub.c             | 2 +-
+ hw/usb/bus.c                  | 2 +-
+ hw/usb/canokey.c              | 2 +-
+ hw/usb/combined-packet.c      | 2 +-
+ hw/usb/core.c                 | 2 +-
+ hw/usb/desc-msos.c            | 2 +-
+ hw/usb/desc.c                 | 2 +-
+ hw/usb/dev-audio.c            | 2 +-
+ hw/usb/dev-hid.c              | 2 +-
+ hw/usb/dev-hub.c              | 2 +-
+ hw/usb/dev-mtp.c              | 2 +-
+ hw/usb/dev-network.c          | 2 +-
+ hw/usb/dev-serial.c           | 2 +-
+ hw/usb/dev-smartcard-reader.c | 2 +-
+ hw/usb/dev-storage-bot.c      | 2 +-
+ hw/usb/dev-storage-classic.c  | 2 +-
+ hw/usb/dev-storage.c          | 2 +-
+ hw/usb/dev-uas.c              | 2 +-
+ hw/usb/dev-wacom.c            | 2 +-
+ hw/usb/hcd-ohci-pci.c         | 2 +-
+ hw/usb/hcd-ohci-sysbus.c      | 2 +-
+ hw/usb/hcd-ohci.c             | 2 +-
+ hw/usb/hcd-uhci.c             | 2 +-
+ hw/usb/hcd-xhci-nec.c         | 2 +-
+ hw/usb/host-libusb.c          | 2 +-
+ hw/usb/libhw.c                | 2 +-
+ hw/usb/pcap.c                 | 2 +-
+ hw/usb/quirks.c               | 2 +-
+ hw/usb/redirect.c             | 2 +-
+ hw/usb/u2f-emulated.c         | 2 +-
+ hw/usb/u2f-passthru.c         | 2 +-
+ hw/usb/u2f.c                  | 2 +-
+ hw/usb/xen-usb.c              | 2 +-
+ hw/vmapple/vmapple.c          | 2 +-
+ system/vl.c                   | 2 +-
+ 55 files changed, 54 insertions(+), 54 deletions(-)
+ rename include/hw/{ => usb}/usb.h (100%)
 
-diff --git a/hw/net/fsl_etsec/etsec.h b/hw/net/fsl_etsec/etsec.h
-index bd2de3f99c7..ca8ad5638a3 100644
---- a/hw/net/fsl_etsec/etsec.h
-+++ b/hw/net/fsl_etsec/etsec.h
-@@ -27,7 +27,7 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 63e9ba521bc..71286729341 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2285,7 +2285,7 @@ S: Orphan
+ F: hw/usb/*
+ F: tests/qtest/usb-*-test.c
+ F: docs/system/devices/usb.rst
+-F: include/hw/usb.h
++F: include/hw/usb/usb.h
+ F: include/hw/usb/
  
+ USB (serial adapter)
+diff --git a/hw/usb/hcd-dwc2.h b/hw/usb/hcd-dwc2.h
+index 2d5a5690fc2..0c02392ade0 100644
+--- a/hw/usb/hcd-dwc2.h
++++ b/hw/usb/hcd-dwc2.h
+@@ -22,7 +22,7 @@
+ #include "qemu/timer.h"
+ #include "hw/irq.h"
  #include "hw/sysbus.h"
- #include "net/net.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "system/dma.h"
  #include "qom/object.h"
  
- /* Buffer Descriptors */
-diff --git a/include/hw/ptimer.h b/include/hw/core/ptimer.h
-similarity index 100%
-rename from include/hw/ptimer.h
-rename to include/hw/core/ptimer.h
-diff --git a/include/hw/display/xlnx_dp.h b/include/hw/display/xlnx_dp.h
-index af859e477da..9ec5a90c342 100644
---- a/include/hw/display/xlnx_dp.h
-+++ b/include/hw/display/xlnx_dp.h
-@@ -35,7 +35,7 @@
- #include "hw/dma/xlnx_dpdma.h"
- #include "qemu/audio.h"
- #include "qom/object.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
+index ffd6c5108eb..c16717294d3 100644
+--- a/hw/usb/hcd-ehci.h
++++ b/hw/usb/hcd-ehci.h
+@@ -19,7 +19,7 @@
+ #define HW_USB_HCD_EHCI_H
  
- #define AUD_CHBUF_MAX_DEPTH                 (32 * KiB)
- #define MAX_QEMU_BUFFER_SIZE                (4 * KiB)
-diff --git a/include/hw/dma/xlnx_csu_dma.h b/include/hw/dma/xlnx_csu_dma.h
-index 922ab80eb61..85b6b64e0e3 100644
---- a/include/hw/dma/xlnx_csu_dma.h
-+++ b/include/hw/dma/xlnx_csu_dma.h
+ #include "qemu/timer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "system/dma.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/sysbus.h"
+diff --git a/hw/usb/hcd-ohci.h b/hw/usb/hcd-ohci.h
+index 3cc35a5cdc5..75e266de90b 100644
+--- a/hw/usb/hcd-ohci.h
++++ b/hw/usb/hcd-ohci.h
 @@ -23,7 +23,7 @@
  
  #include "hw/sysbus.h"
- #include "hw/register.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/stream.h"
- 
- #define TYPE_XLNX_CSU_DMA "xlnx.csu_dma"
-diff --git a/include/hw/net/xlnx-versal-canfd.h b/include/hw/net/xlnx-versal-canfd.h
-index 396f90d6dc1..d2e582918fb 100644
---- a/include/hw/net/xlnx-versal-canfd.h
-+++ b/include/hw/net/xlnx-versal-canfd.h
-@@ -29,7 +29,7 @@
- #define HW_CANFD_XILINX_H
- 
- #include "hw/register.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "net/can_emu.h"
- #include "hw/qdev-clock.h"
- 
-diff --git a/include/hw/net/xlnx-zynqmp-can.h b/include/hw/net/xlnx-zynqmp-can.h
-index fd2aa777603..8262f11d33d 100644
---- a/include/hw/net/xlnx-zynqmp-can.h
-+++ b/include/hw/net/xlnx-zynqmp-can.h
-@@ -35,7 +35,7 @@
- #include "net/can_emu.h"
- #include "net/can_host.h"
- #include "qemu/fifo32.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/qdev-clock.h"
- 
- #define TYPE_XLNX_ZYNQMP_CAN "xlnx.zynqmp-can"
-diff --git a/include/hw/timer/allwinner-a10-pit.h b/include/hw/timer/allwinner-a10-pit.h
-index 8435758ad68..623a1fec219 100644
---- a/include/hw/timer/allwinner-a10-pit.h
-+++ b/include/hw/timer/allwinner-a10-pit.h
-@@ -1,7 +1,7 @@
- #ifndef ALLWINNER_A10_PIT_H
- #define ALLWINNER_A10_PIT_H
- 
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/sysbus.h"
+ #include "system/dma.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
  #include "qom/object.h"
  
-diff --git a/include/hw/timer/armv7m_systick.h b/include/hw/timer/armv7m_systick.h
-index ac7de0a43ef..fb73f78a7b8 100644
---- a/include/hw/timer/armv7m_systick.h
-+++ b/include/hw/timer/armv7m_systick.h
-@@ -14,7 +14,7 @@
+ /* Number of Downstream Ports on the root hub: */
+diff --git a/hw/usb/hcd-uhci.h b/hw/usb/hcd-uhci.h
+index e0a6525505c..3154837f1d1 100644
+--- a/hw/usb/hcd-uhci.h
++++ b/hw/usb/hcd-uhci.h
+@@ -31,7 +31,7 @@
+ #include "system/memory.h"
+ #include "qemu/timer.h"
+ #include "hw/pci/pci_device.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
  
+ typedef struct UHCIQueue UHCIQueue;
+ 
+diff --git a/hw/usb/hcd-xhci-pci.h b/hw/usb/hcd-xhci-pci.h
+index 5b61ae84555..c9359f1bd90 100644
+--- a/hw/usb/hcd-xhci-pci.h
++++ b/hw/usb/hcd-xhci-pci.h
+@@ -25,7 +25,7 @@
+ #define HW_USB_HCD_XHCI_PCI_H
+ 
+ #include "hw/pci/pci_device.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hcd-xhci.h"
+ 
+ #define TYPE_XHCI_PCI "pci-xhci"
+diff --git a/hw/usb/hcd-xhci-sysbus.h b/hw/usb/hcd-xhci-sysbus.h
+index fdfcbbee3bf..f8175470bab 100644
+--- a/hw/usb/hcd-xhci-sysbus.h
++++ b/hw/usb/hcd-xhci-sysbus.h
+@@ -11,7 +11,7 @@
+ #ifndef HW_USB_HCD_XHCI_SYSBUS_H
+ #define HW_USB_HCD_XHCI_SYSBUS_H
+ 
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hcd-xhci.h"
  #include "hw/sysbus.h"
- #include "qom/object.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/core/clock.h"
  
- #define TYPE_SYSTICK "armv7m_systick"
-diff --git a/include/hw/timer/cmsdk-apb-dualtimer.h b/include/hw/timer/cmsdk-apb-dualtimer.h
-index f098128a588..103ac228815 100644
---- a/include/hw/timer/cmsdk-apb-dualtimer.h
-+++ b/include/hw/timer/cmsdk-apb-dualtimer.h
-@@ -27,7 +27,7 @@
- #define CMSDK_APB_DUALTIMER_H
- 
- #include "hw/sysbus.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/core/clock.h"
- #include "qom/object.h"
- 
-diff --git a/include/hw/timer/cmsdk-apb-timer.h b/include/hw/timer/cmsdk-apb-timer.h
-index 74eaf611aeb..f8c8fb8ce55 100644
---- a/include/hw/timer/cmsdk-apb-timer.h
-+++ b/include/hw/timer/cmsdk-apb-timer.h
-@@ -13,7 +13,7 @@
- #define CMSDK_APB_TIMER_H
- 
- #include "hw/sysbus.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/core/clock.h"
- #include "qom/object.h"
- 
-diff --git a/include/hw/timer/digic-timer.h b/include/hw/timer/digic-timer.h
-index da82fb46637..f62242eaad3 100644
---- a/include/hw/timer/digic-timer.h
-+++ b/include/hw/timer/digic-timer.h
-@@ -19,7 +19,7 @@
- #define HW_TIMER_DIGIC_TIMER_H
- 
- #include "hw/sysbus.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index 9c3974f1489..5cb9e06d1d6 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -23,7 +23,7 @@
+ #define HW_USB_HCD_XHCI_H
  #include "qom/object.h"
  
- #define TYPE_DIGIC_TIMER "digic-timer"
-diff --git a/include/hw/timer/imx_epit.h b/include/hw/timer/imx_epit.h
-index 79aff0cec20..2947fad1069 100644
---- a/include/hw/timer/imx_epit.h
-+++ b/include/hw/timer/imx_epit.h
-@@ -30,7 +30,7 @@
- #define IMX_EPIT_H
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/xhci.h"
+ #include "system/dma.h"
  
- #include "hw/sysbus.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/misc/imx_ccm.h"
- #include "qom/object.h"
+diff --git a/include/hw/usb/msd.h b/include/hw/usb/msd.h
+index f9fd862b529..125d2c218f6 100644
+--- a/include/hw/usb/msd.h
++++ b/include/hw/usb/msd.h
+@@ -7,7 +7,7 @@
+  * This code is licensed under the LGPL.
+  */
  
-diff --git a/include/hw/timer/imx_gpt.h b/include/hw/timer/imx_gpt.h
-index 5488f7e4df5..5c12f686e1b 100644
---- a/include/hw/timer/imx_gpt.h
-+++ b/include/hw/timer/imx_gpt.h
-@@ -30,7 +30,7 @@
- #define IMX_GPT_H
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/scsi/scsi.h"
  
- #include "hw/sysbus.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/misc/imx_ccm.h"
- #include "qom/object.h"
- 
-diff --git a/include/hw/timer/mss-timer.h b/include/hw/timer/mss-timer.h
-index da38512904e..0cc376f945f 100644
---- a/include/hw/timer/mss-timer.h
-+++ b/include/hw/timer/mss-timer.h
-@@ -26,7 +26,7 @@
- #define HW_MSS_TIMER_H
- 
- #include "hw/sysbus.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "qom/object.h"
- 
- #define TYPE_MSS_TIMER     "mss-timer"
-diff --git a/include/hw/watchdog/allwinner-wdt.h b/include/hw/watchdog/allwinner-wdt.h
-index 7fe41e20f2e..6f84dbd1a72 100644
---- a/include/hw/watchdog/allwinner-wdt.h
-+++ b/include/hw/watchdog/allwinner-wdt.h
+ enum USBMSDMode {
+diff --git a/include/hw/usb.h b/include/hw/usb/usb.h
+similarity index 100%
+rename from include/hw/usb.h
+rename to include/hw/usb/usb.h
+diff --git a/chardev/baum.c b/chardev/baum.c
+index ad683215041..157f8b95195 100644
+--- a/chardev/baum.c
++++ b/chardev/baum.c
+@@ -28,7 +28,7 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+ #include "qemu/timer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "ui/console.h"
+ #include <brlapi.h>
+ #include <brlapi_constants.h>
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index 2205500a8da..3ba69d37d79 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -45,7 +45,7 @@
+ #include "hw/loader.h"
+ #include "hw/pci-host/gpex.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/xhci.h"
+ #include "hw/char/pl011.h"
+ #include "hw/watchdog/sbsa_gwdt.h"
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 8c66eed5a26..acd1c3f005b 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
 @@ -24,7 +24,7 @@
- #define HW_WATCHDOG_ALLWINNER_WDT_H
- 
- #include "qom/object.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+ #include "hw/input/lasips2.h"
+ #include "hw/net/lasi_82596.h"
+ #include "hw/nmi.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/pci-host/astro.h"
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index f8b919cb6c4..0f2a5889022 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -52,7 +52,7 @@
+ #include "acpi-build.h"
+ #include "hw/mem/nvdimm.h"
+ #include "hw/cxl/cxl_host.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/i386/intel_iommu.h"
+ #include "hw/net/ne2000-isa.h"
+ #include "hw/virtio/virtio-iommu.h"
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 7b3611e973c..f6b9a1bc406 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -35,7 +35,7 @@
+ #include "hw/display/ramfb.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_ids.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "net/net.h"
+ #include "hw/ide/pci.h"
+ #include "hw/irq.h"
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 6015e639d7b..02de7453baa 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -52,7 +52,7 @@
+ #include "hw/ide/ahci-pci.h"
+ #include "hw/intc/ioapic.h"
+ #include "hw/southbridge/ich9.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/hcd-uhci.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 77dc895648f..4df6cf13b36 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -43,7 +43,7 @@
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_host.h"
+ #include "hw/pci-host/gpex.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "net/net.h"
+ #include "system/kvm.h"
+ #include "system/qtest.h"
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index 951de4bae4b..739f1af3e18 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -72,7 +72,7 @@
+ #include "system/kvm.h"
+ #include "system/reset.h"
+ #include "kvm_ppc.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
  #include "hw/sysbus.h"
+ #include "trace.h"
+ 
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 99b843ba2fa..6f2d10330d6 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -78,7 +78,7 @@
+ #include "hw/virtio/vhost-scsi-common.h"
+ 
+ #include "system/confidential-guest-support.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
+ #include "trace.h"
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 010be6d5394..c29ee690690 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -41,7 +41,7 @@
+ #include "hw/ide/mmio.h"
+ #include "hw/irq.h"
+ #include "hw/loader.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/block/flash.h"
+ #include "exec/tswap.h"
+ 
+diff --git a/hw/usb/bus-stub.c b/hw/usb/bus-stub.c
+index cd0c317b718..a7c3909e967 100644
+--- a/hw/usb/bus-stub.c
++++ b/hw/usb/bus-stub.c
+@@ -12,7 +12,7 @@
+ #include "qapi/qapi-commands-machine.h"
+ #include "system/system.h"
+ #include "monitor/monitor.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ 
+ USBDevice *usbdevice_create(const char *driver)
+ {
+diff --git a/hw/usb/bus.c b/hw/usb/bus.c
+index 714e33989f4..c1dd1429658 100644
+--- a/hw/usb/bus.c
++++ b/hw/usb/bus.c
+@@ -1,6 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "qapi/type-helpers.h"
+diff --git a/hw/usb/canokey.c b/hw/usb/canokey.c
+index cbefbb5daf8..acd4ea30d98 100644
+--- a/hw/usb/canokey.c
++++ b/hw/usb/canokey.c
+@@ -12,7 +12,7 @@
+ 
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/qdev-properties.h"
+ #include "trace.h"
+ #include "desc.h"
+diff --git a/hw/usb/combined-packet.c b/hw/usb/combined-packet.c
+index e56802f89a3..f18e53b7885 100644
+--- a/hw/usb/combined-packet.c
++++ b/hw/usb/combined-packet.c
+@@ -21,7 +21,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "qemu/iov.h"
+ #include "trace.h"
+ 
+diff --git a/hw/usb/core.c b/hw/usb/core.c
+index 975f76250a1..b3f811c513b 100644
+--- a/hw/usb/core.c
++++ b/hw/usb/core.c
+@@ -24,7 +24,7 @@
+  * THE SOFTWARE.
+  */
+ #include "qemu/osdep.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "qemu/iov.h"
+ #include "trace.h"
+ 
+diff --git a/hw/usb/desc-msos.c b/hw/usb/desc-msos.c
+index c72c65b650c..3f53d4943d2 100644
+--- a/hw/usb/desc-msos.c
++++ b/hw/usb/desc-msos.c
+@@ -1,5 +1,5 @@
+ #include "qemu/osdep.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "desc.h"
  
  /*
-diff --git a/include/hw/watchdog/cmsdk-apb-watchdog.h b/include/hw/watchdog/cmsdk-apb-watchdog.h
-index 5bbf4979c9f..9bf95ba06d5 100644
---- a/include/hw/watchdog/cmsdk-apb-watchdog.h
-+++ b/include/hw/watchdog/cmsdk-apb-watchdog.h
+diff --git a/hw/usb/desc.c b/hw/usb/desc.c
+index f2bdc05a953..268eaf06994 100644
+--- a/hw/usb/desc.c
++++ b/hw/usb/desc.c
+@@ -1,6 +1,6 @@
+ #include "qemu/osdep.h"
+ 
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "desc.h"
+ #include "trace.h"
+ 
+diff --git a/hw/usb/dev-audio.c b/hw/usb/dev-audio.c
+index 8dd9d265996..988824ea750 100644
+--- a/hw/usb/dev-audio.c
++++ b/hw/usb/dev-audio.c
 @@ -32,7 +32,7 @@
- #define CMSDK_APB_WATCHDOG_H
- 
- #include "hw/sysbus.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/core/clock.h"
- #include "qom/object.h"
- 
-diff --git a/include/hw/watchdog/wdt_imx2.h b/include/hw/watchdog/wdt_imx2.h
-index ddc49aaea4f..53a8360e906 100644
---- a/include/hw/watchdog/wdt_imx2.h
-+++ b/include/hw/watchdog/wdt_imx2.h
-@@ -15,7 +15,7 @@
- #include "qemu/bitops.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "qom/object.h"
- 
- #define TYPE_IMX2_WDT "imx2.wdt"
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index 100a9f59b3f..a4ddc0d08f9 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -21,7 +21,7 @@
- #include "hw/core/boards.h"
- #include "hw/char/serial-mm.h"
- #include "qemu/timer.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
  #include "hw/qdev-properties.h"
- #include "hw/block/flash.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+ #include "qemu/audio.h"
+diff --git a/hw/usb/dev-hid.c b/hw/usb/dev-hid.c
+index 96623aa3223..296e9d0d856 100644
+--- a/hw/usb/dev-hid.c
++++ b/hw/usb/dev-hid.c
+@@ -25,7 +25,7 @@
+ 
+ #include "qemu/osdep.h"
  #include "ui/console.h"
-diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
-index a7337f02b8d..e42e06fa4de 100644
---- a/hw/core/ptimer.c
-+++ b/hw/core/ptimer.c
-@@ -7,7 +7,7 @@
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+ #include "qapi/error.h"
+diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
+index a19350d9c42..f418da14094 100644
+--- a/hw/usb/dev-hub.c
++++ b/hw/usb/dev-hub.c
+@@ -27,7 +27,7 @@
+ #include "qemu/timer.h"
+ #include "trace.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index afd7944b737..04e8eedbf61 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -23,7 +23,7 @@
+ #include "qemu/filemonitor.h"
+ #include "trace.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+ #include "qemu/units.h"
+diff --git a/hw/usb/dev-network.c b/hw/usb/dev-network.c
+index 1df24541814..34cd906d6cc 100644
+--- a/hw/usb/dev-network.c
++++ b/hw/usb/dev-network.c
+@@ -26,7 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+ #include "net/net.h"
+diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
+index 2eb52b2e01e..17bdff9e820 100644
+--- a/hw/usb/dev-serial.c
++++ b/hw/usb/dev-serial.c
+@@ -15,7 +15,7 @@
+ #include "qemu/module.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+ #include "chardev/char-serial.h"
+diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
+index 6ce7154feed..a1081e545aa 100644
+--- a/hw/usb/dev-smartcard-reader.c
++++ b/hw/usb/dev-smartcard-reader.c
+@@ -41,7 +41,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+ 
+diff --git a/hw/usb/dev-storage-bot.c b/hw/usb/dev-storage-bot.c
+index df6ab7f656b..a7f8d80c17a 100644
+--- a/hw/usb/dev-storage-bot.c
++++ b/hw/usb/dev-storage-bot.c
+@@ -9,7 +9,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/desc.h"
+ #include "hw/usb/msd.h"
+ 
+diff --git a/hw/usb/dev-storage-classic.c b/hw/usb/dev-storage-classic.c
+index dabe1563593..977151c4a08 100644
+--- a/hw/usb/dev-storage-classic.c
++++ b/hw/usb/dev-storage-classic.c
+@@ -10,7 +10,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/desc.h"
+ #include "hw/usb/msd.h"
+ #include "system/system.h"
+diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
+index b13fe345c45..bbd97406f00 100644
+--- a/hw/usb/dev-storage.c
++++ b/hw/usb/dev-storage.c
+@@ -13,7 +13,7 @@
+ #include "qemu/module.h"
+ #include "qemu/option.h"
+ #include "qemu/config-file.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/msd.h"
+ #include "desc.h"
+ #include "hw/qdev-properties.h"
+diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
+index 18ebe15d0c4..75f01c74038 100644
+--- a/hw/usb/dev-uas.c
++++ b/hw/usb/dev-uas.c
+@@ -18,7 +18,7 @@
+ #include "qemu/module.h"
+ #include "qemu/log.h"
+ 
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+ #include "hw/qdev-properties.h"
+diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
+index f4b71a21472..14d07e81281 100644
+--- a/hw/usb/dev-wacom.c
++++ b/hw/usb/dev-wacom.c
+@@ -28,7 +28,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "ui/console.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/hid.h"
+ #include "migration/vmstate.h"
+ #include "qemu/module.h"
+diff --git a/hw/usb/hcd-ohci-pci.c b/hw/usb/hcd-ohci-pci.c
+index 94d1077eb9e..e180e96b5f1 100644
+--- a/hw/usb/hcd-ohci-pci.c
++++ b/hw/usb/hcd-ohci-pci.c
+@@ -21,7 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qemu/timer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/sysbus.h"
+diff --git a/hw/usb/hcd-ohci-sysbus.c b/hw/usb/hcd-ohci-sysbus.c
+index 3fc6cce44b0..2d3c770b117 100644
+--- a/hw/usb/hcd-ohci-sysbus.c
++++ b/hw/usb/hcd-ohci-sysbus.c
+@@ -23,7 +23,7 @@
+ #include "qapi/error.h"
+ #include "qemu/module.h"
+ #include "qemu/timer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "hw/sysbus.h"
+ #include "hw/qdev-dma.h"
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 72a9f9f4749..c48f07f7e39 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -30,7 +30,7 @@
+ #include "qapi/error.h"
+ #include "qemu/module.h"
+ #include "qemu/timer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "hw/sysbus.h"
+ #include "hw/qdev-dma.h"
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index e207d0587a1..124ac4faec0 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -27,7 +27,7 @@
   */
  
  #include "qemu/osdep.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/uhci-regs.h"
  #include "migration/vmstate.h"
- #include "qemu/host-utils.h"
- #include "exec/replay-core.h"
-diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-index 9b05080ae59..15da3fcbc2c 100644
---- a/hw/dma/xilinx_axidma.c
-+++ b/hw/dma/xilinx_axidma.c
-@@ -28,7 +28,7 @@
- #include "qemu/timer.h"
- #include "hw/hw.h"
- #include "hw/core/irq.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/qdev-properties.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-diff --git a/hw/dma/xlnx_csu_dma.c b/hw/dma/xlnx_csu_dma.c
-index 0b1185325ba..92f445034e8 100644
---- a/hw/dma/xlnx_csu_dma.c
-+++ b/hw/dma/xlnx_csu_dma.c
-@@ -26,7 +26,7 @@
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
- #include "system/dma.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/stream.h"
- #include "hw/register.h"
- #include "hw/dma/xlnx_csu_dma.h"
-diff --git a/hw/m68k/mcf5206.c b/hw/m68k/mcf5206.c
-index 4cf86d510b3..e17da4fd209 100644
---- a/hw/m68k/mcf5206.c
-+++ b/hw/m68k/mcf5206.c
-@@ -15,7 +15,7 @@
- #include "hw/core/irq.h"
- #include "hw/m68k/mcf.h"
- #include "qemu/timer.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "system/system.h"
- #include "hw/sysbus.h"
- 
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index b81305ae6e4..3a87e1f282c 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -25,7 +25,7 @@
- #include "hw/m68k/mcf.h"
- #include "hw/m68k/mcf_fec.h"
- #include "qemu/timer.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "system/system.h"
- #include "system/qtest.h"
- #include "net/net.h"
-diff --git a/hw/net/fsl_etsec/etsec.c b/hw/net/fsl_etsec/etsec.c
-index 6ae8a1e1a3c..e6a29d9ec6d 100644
---- a/hw/net/fsl_etsec/etsec.c
-+++ b/hw/net/fsl_etsec/etsec.c
-@@ -30,7 +30,7 @@
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
- #include "hw/net/mii.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/qdev-properties.h"
- #include "etsec.h"
- #include "registers.h"
-diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-index 1c9bb4807d2..191fd8b421b 100644
---- a/hw/net/lan9118.c
-+++ b/hw/net/lan9118.c
-@@ -18,7 +18,7 @@
- #include "hw/core/irq.h"
- #include "hw/net/lan9118_phy.h"
- #include "hw/net/lan9118.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- #include "qemu/bswap.h"
-diff --git a/hw/rtc/exynos4210_rtc.c b/hw/rtc/exynos4210_rtc.c
-index a7e17031ca8..a15b5274bd3 100644
---- a/hw/rtc/exynos4210_rtc.c
-+++ b/hw/rtc/exynos4210_rtc.c
-@@ -32,7 +32,7 @@
- #include "migration/vmstate.h"
- #include "qemu/timer.h"
- #include "qemu/bcd.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- 
- #include "hw/core/irq.h"
- 
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index cd1a03a5584..50f1cf91706 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -32,7 +32,7 @@
- #include "cpu.h"
- #include "hw/core/irq.h"
- #include "qemu/timer.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/qdev-properties.h"
- #include "system/system.h"
- #include "system/qtest.h"
-diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
-index b2f66275182..5fa9bf965ff 100644
---- a/hw/ssi/xilinx_spips.c
-+++ b/hw/ssi/xilinx_spips.c
-@@ -25,7 +25,7 @@
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/qdev-properties.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-diff --git a/hw/timer/arm_mptimer.c b/hw/timer/arm_mptimer.c
-index ac6313039a8..adec87cc8d2 100644
---- a/hw/timer/arm_mptimer.c
-+++ b/hw/timer/arm_mptimer.c
-@@ -22,7 +22,7 @@
- #include "qemu/osdep.h"
- #include "hw/hw.h"
- #include "hw/core/irq.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/qdev-properties.h"
- #include "hw/timer/arm_mptimer.h"
- #include "migration/vmstate.h"
-diff --git a/hw/timer/arm_timer.c b/hw/timer/arm_timer.c
-index e5ef28de6f7..8d8b250698c 100644
---- a/hw/timer/arm_timer.c
-+++ b/hw/timer/arm_timer.c
-@@ -12,7 +12,7 @@
- #include "migration/vmstate.h"
- #include "qemu/timer.h"
- #include "hw/core/irq.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- #include "hw/qdev-properties.h"
- #include "qemu/module.h"
- #include "qemu/log.h"
-diff --git a/hw/timer/digic-timer.c b/hw/timer/digic-timer.c
-index 355138d3547..12b79914df0 100644
---- a/hw/timer/digic-timer.c
-+++ b/hw/timer/digic-timer.c
-@@ -28,7 +28,7 @@
+ #include "hw/pci/pci.h"
+diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
+index 9e0fea26f40..5fc853eb330 100644
+--- a/hw/usb/hcd-xhci-nec.c
++++ b/hw/usb/hcd-xhci-nec.c
+@@ -20,7 +20,7 @@
+  */
  
  #include "qemu/osdep.h"
- #include "hw/sysbus.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
  #include "qemu/module.h"
- #include "qemu/log.h"
- 
-diff --git a/hw/timer/exynos4210_mct.c b/hw/timer/exynos4210_mct.c
-index 06524efca27..f6527a451b6 100644
---- a/hw/timer/exynos4210_mct.c
-+++ b/hw/timer/exynos4210_mct.c
-@@ -58,7 +58,7 @@
- #include "migration/vmstate.h"
- #include "qemu/timer.h"
- #include "qemu/module.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- 
- #include "hw/arm/exynos4210.h"
- #include "hw/core/irq.h"
-diff --git a/hw/timer/exynos4210_pwm.c b/hw/timer/exynos4210_pwm.c
-index dc76932fdfb..1643fa39418 100644
---- a/hw/timer/exynos4210_pwm.c
-+++ b/hw/timer/exynos4210_pwm.c
-@@ -26,7 +26,7 @@
- #include "migration/vmstate.h"
- #include "qemu/timer.h"
- #include "qemu/module.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
- 
- #include "hw/arm/exynos4210.h"
- #include "hw/core/irq.h"
-diff --git a/hw/timer/grlib_gptimer.c b/hw/timer/grlib_gptimer.c
-index 6218c255d2c..82d0d9d7622 100644
---- a/hw/timer/grlib_gptimer.c
-+++ b/hw/timer/grlib_gptimer.c
-@@ -29,7 +29,7 @@
- #include "hw/sysbus.h"
- #include "qemu/timer.h"
- #include "hw/core/irq.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+ #include "hw/pci/pci.h"
  #include "hw/qdev-properties.h"
- #include "qemu/module.h"
- 
-diff --git a/hw/timer/sh_timer.c b/hw/timer/sh_timer.c
-index adc05715528..41ece9c6136 100644
---- a/hw/timer/sh_timer.c
-+++ b/hw/timer/sh_timer.c
-@@ -14,7 +14,7 @@
- #include "hw/core/irq.h"
- #include "hw/sh4/sh.h"
- #include "hw/timer/tmu012.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index b74670ae256..38893b5e680 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -56,7 +56,7 @@
  #include "trace.h"
  
- #define TIMER_TCR_TPSC          (7 << 0)
-diff --git a/hw/timer/slavio_timer.c b/hw/timer/slavio_timer.c
-index 5bf94157ca4..f66b3aaa433 100644
---- a/hw/timer/slavio_timer.c
-+++ b/hw/timer/slavio_timer.c
-@@ -25,7 +25,7 @@
- #include "qemu/osdep.h"
- #include "qemu/timer.h"
- #include "hw/core/irq.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
  #include "hw/qdev-properties.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
-diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-index c1b6d2bdf2d..fbc10015916 100644
---- a/hw/timer/xilinx_timer.c
-+++ b/hw/timer/xilinx_timer.c
-@@ -29,7 +29,7 @@
- #include "qapi/error.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ 
+ /* ------------------------------------------------------------------------ */
+ 
+diff --git a/hw/usb/libhw.c b/hw/usb/libhw.c
+index 4f03ef4ba9a..e108be054c9 100644
+--- a/hw/usb/libhw.c
++++ b/hw/usb/libhw.c
+@@ -20,7 +20,7 @@
+  * THE SOFTWARE.
+  */
+ #include "qemu/osdep.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "system/dma.h"
+ 
+ int usb_packet_map(USBPacket *p, QEMUSGList *sgl)
+diff --git a/hw/usb/pcap.c b/hw/usb/pcap.c
+index dbff00be252..bb74d046a59 100644
+--- a/hw/usb/pcap.c
++++ b/hw/usb/pcap.c
+@@ -8,7 +8,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ 
+ #define PCAP_MAGIC                   0xa1b2c3d4
+ #define PCAP_MAJOR                   2
+diff --git a/hw/usb/quirks.c b/hw/usb/quirks.c
+index 23ea7a23ea1..44007f8de7a 100644
+--- a/hw/usb/quirks.c
++++ b/hw/usb/quirks.c
+@@ -14,7 +14,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "quirks.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ 
+ static bool usb_id_match(const struct usb_device_id *ids,
+                          uint16_t vendor_id, uint16_t product_id,
+diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
+index d603a4a6f96..1a73db68f26 100644
+--- a/hw/usb/redirect.c
++++ b/hw/usb/redirect.c
+@@ -43,7 +43,7 @@
+ 
  #include "hw/qdev-properties.h"
  #include "hw/qdev-properties-system.h"
- #include "qemu/log.h"
-diff --git a/tests/unit/ptimer-test.c b/tests/unit/ptimer-test.c
-index 08240594bbd..6de658812b1 100644
---- a/tests/unit/ptimer-test.c
-+++ b/tests/unit/ptimer-test.c
-@@ -12,7 +12,7 @@
- #include <glib/gprintf.h>
- 
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
+diff --git a/hw/usb/u2f-emulated.c b/hw/usb/u2f-emulated.c
+index ace5eceadd9..783e7f1af0b 100644
+--- a/hw/usb/u2f-emulated.c
++++ b/hw/usb/u2f-emulated.c
+@@ -28,7 +28,7 @@
+ #include "qemu/thread.h"
  #include "qemu/main-loop.h"
--#include "hw/ptimer.h"
-+#include "hw/core/ptimer.h"
+ #include "qapi/error.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/qdev-properties.h"
  
- #include "ptimer-test.h"
+ #include <u2f-emu/u2f-emu.h>
+diff --git a/hw/usb/u2f-passthru.c b/hw/usb/u2f-passthru.c
+index fa8d9cdda89..b3206fb7fe4 100644
+--- a/hw/usb/u2f-passthru.c
++++ b/hw/usb/u2f-passthru.c
+@@ -29,7 +29,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
  
+ #include "u2f.h"
+diff --git a/hw/usb/u2f.c b/hw/usb/u2f.c
+index b051a999d3a..d6291852f63 100644
+--- a/hw/usb/u2f.c
++++ b/hw/usb/u2f.c
+@@ -26,7 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/usb/hid.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+diff --git a/hw/usb/xen-usb.c b/hw/usb/xen-usb.c
+index fa46a7da01c..caf9efbb77c 100644
+--- a/hw/usb/xen-usb.c
++++ b/hw/usb/xen-usb.c
+@@ -26,7 +26,7 @@
+ #include "qemu/config-file.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/option.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/xen/xen-legacy-backend.h"
+ #include "monitor/qdev.h"
+ #include "qapi/error.h"
+diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
+index f3cff329244..62d33525bab 100644
+--- a/hw/vmapple/vmapple.c
++++ b/hw/vmapple/vmapple.c
+@@ -30,7 +30,7 @@
+ #include "hw/loader.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/sysbus.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/arm/boot.h"
+ #include "hw/arm/primecell.h"
+ #include "hw/char/pl011.h"
+diff --git a/system/vl.c b/system/vl.c
+index 5091fe52d92..cdf32c119b2 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -54,7 +54,7 @@
+ #include "qemu/accel.h"
+ #include "qemu/async-teardown.h"
+ #include "qemu/exit-with-parent.h"
+-#include "hw/usb.h"
++#include "hw/usb/usb.h"
+ #include "hw/isa/isa.h"
+ #include "hw/scsi/scsi.h"
+ #include "hw/sd/sd.h"
 -- 
 2.52.0
 
