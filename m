@@ -4,110 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE97E8FDD6
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 622CCE8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQuw-0003Zm-EU; Sat, 27 Dec 2025 04:48:58 -0500
+	id 1vZQww-0001nU-4G; Sat, 27 Dec 2025 04:51:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQuY-0002IV-Un
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:48:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vZQwi-0001b5-BT
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:50:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQuT-0006ta-Um
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:48:31 -0500
+ id 1vZQwg-0007Nz-6Z
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:50:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766828909;
+ s=mimecast20190719; t=1766829045;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bhMzQBznpreh9ZxnptD90zF45nT9leymZqtVkihCPfI=;
- b=J4HykKCYxbLPRvWtgI8//WfWe0Q8KHzJqeH+xv4Lc+i2KEgNOB0BMObEKhjlsXuqL++x07
- 3m2Es1ZVBlvt0LiRas9x96RGLLJ8L+NDuH1iFo6r9NdtQaLHfmSyWFrRIDZRM7MOb9awgY
- yI72S2OtZoZ1vWlp9hvw9OI5rfVeMTM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zGKQcTYH8NslXOFyWO8VlfRFFvEFNB+uFId5LqaXI7k=;
+ b=gtmG7ZE1C/2R0HmPcFo4ubSQxySn11MH/2PE4xDN9TIpg0Y2hgv5xQ8tB4SCZgGzOxN0xE
+ UmRp1Fs0QmUea0+EwPRk5xLKKpwHsY0aDW3XGvDN8qj8QvhWP/SuoKIp/k04FLkfC4gmoE
+ rfGEtG7akYqfzIibthoteodmoT0S2hY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-448-M5uEcwAMMKm5uortkMvgAA-1; Sat, 27 Dec 2025 04:48:28 -0500
-X-MC-Unique: M5uEcwAMMKm5uortkMvgAA-1
-X-Mimecast-MFC-AGG-ID: M5uEcwAMMKm5uortkMvgAA_1766828907
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47910af0c8bso53726435e9.2
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:48:27 -0800 (PST)
+ us-mta-473-hDH96O2qNyyexJstnGpFKg-1; Sat, 27 Dec 2025 04:50:43 -0500
+X-MC-Unique: hDH96O2qNyyexJstnGpFKg-1
+X-Mimecast-MFC-AGG-ID: hDH96O2qNyyexJstnGpFKg_1766829043
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-430f4609e80so3984504f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:50:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766828906; x=1767433706; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766829041; x=1767433841; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bhMzQBznpreh9ZxnptD90zF45nT9leymZqtVkihCPfI=;
- b=YLRQE1Pr114VoWQmORc6wlDlz+55I176k9rAwDgy3FVWKnSkiDaVy+vpgaRM6TD3XI
- h0mYNDZbjxnDJVHusiRGUOJkrtFss/7U+srAAnItYmyftPeWNsZekxj1FKRdMApSj7cY
- wXYqVuIqvFd9AKtke6wvmUlYqIx4JdG90acpxv5RP0/6TXkLnB2xqHC6z2bnWHtyCwAs
- G6abtABXHN+uc2MfseLOYQPCzi2uHFz4kxVefYagAURq6QOvI7T5fEmfvWNzzmzFZ0bR
- zFskmfH8rgP3YM2l7QxHURIoShO9AD6HA/l2yI5W5r6O3mhCfUUcGrf6IBRcIAk6mCPq
- exZQ==
+ bh=zGKQcTYH8NslXOFyWO8VlfRFFvEFNB+uFId5LqaXI7k=;
+ b=L7PVAuCE6/4sgH83knuHX6YM1yt9Av9KY09AH9iLgsMklDv5F9ykMH3zRRHeh3A+cB
+ ZybZKdR8+q/nbULBY8QJLQWHnGTJYU44nlC1b1q9IcT82Pq0YRE6Zqo60EqW03pEbUH2
+ MJ9k1yXqO/eEvg0lQ4Te8GimHabJXuWXJbSXMXw/DMGfnLfZ3uXyZaCqutfPHy716SAc
+ nEwo8e4mz2NAI3kF44o08CCOGc4yQdT+tSQd/fqHuU/Kw7vC1lbO0K138yBPJXb6LDZg
+ Iajd6EKgZtv0sJPDnDDZxyAGPhZ5lxbOGroFzhAFHMChdJzxm6qTkJ6FJroFiFT+n28R
+ PWPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766828906; x=1767433706;
+ d=1e100.net; s=20230601; t=1766829041; x=1767433841;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bhMzQBznpreh9ZxnptD90zF45nT9leymZqtVkihCPfI=;
- b=SZlhAp70ixzrX4dCkEu3zPLP1lJb1xjVMdSHdytOwAsqETkp4InHuEggL6F/+hGgay
- Sr2jsvP5ILBE3iKfNMl9RSwdBcmHkQs1PF8Q+ueEEU+EXvBlg0YEMf/gckE0ZlEwiEpY
- GEzmgDG0uG8BKNAUekoXVKSvPHCcre7F8f+Y4Lw2otSXoA+GnjAay+AMDKMCvVDE9Zb9
- lOAvM4wJGnDevW+6uHCYJkWFTkkfIwiK6nwQ7kuIRvIhisNIOT4fp+lo88MmJV6PPnTe
- xsNqAxdENcb0Wa7FUeLPpHEuubBP6ProMF3muxM6qE21Rc5LkS0kHYQAeTa+7GJtM3sK
- WTBQ==
-X-Gm-Message-State: AOJu0YxMRQsPveRbsJP5qDYPv17Ap2lOEUI1cqe9gCPoNIyD6nqLx+Rg
- fBgZFrakopMKNNpFxkpDrkIvjssh9zjjfrYgUJMn3+AjIcDknQLf0kV2FGGealtOvozbyC4Fb1k
- U9qBVVHDhQHcrIXFXngFIFr+gBrwTkfINYiemc8oJ7XyOYt1sdbs6LzPEymvBp9XGI+vLTBUmG1
- 18qbUCyeTloBFWvFAV1cr7EqS6X8ivemYOp2mwFVXk
-X-Gm-Gg: AY/fxX4TD28AXQp7PBSsJ7LNrUVngVLbffGmqwKeJTSV1B2ZcQxd/Z/UDuAEKF5nBtu
- A+qOPCw/JFz/xGJ4LJlFEJPtS2nh7U4Xo+cXkMEtZgRKL5IP3ZR9qC56vJn5jTdJnEOwW5TIPea
- t5Nem1x1jDfCJKyqie4o5GgV7t3GciWatuKXq2wAtY09PIkp4iU+PyHk6Fo0UyIQTtJ/g039Z0g
- t8h7QOW1ixhLrb0E3PHxqPOHJAaPR1O/kFxlj8uH2IlvC3etHCk7A2FkJPG0dDJuW4ajfooxGT0
- QXDLH4fCa048futb8jOzjyL3DcWtXrwDglGaeBYI+o7a2aVKQkX2+cYwRtIMFKMuWXz/IDyYkyA
- 1LSz6q8gHRdDVY0mnTMDWvaT6ePEwD3PG8Eq0+9rANCtVZ8oysZXp4pe30aGsGcOafm0mA0gMnl
- NUiXMKC/vkzPgf6y8=
-X-Received: by 2002:a05:600c:524f:b0:45d:d8d6:7fcc with SMTP id
- 5b1f17b1804b1-47d1958b73cmr285259695e9.27.1766828905877; 
- Sat, 27 Dec 2025 01:48:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE/xBIzn+C7tpRU0OnKNoFMvXqW1ZtmfBtZjkVl69mPPy90XAWq97D0itjfDmw/NxyTABMHHw==
-X-Received: by 2002:a05:600c:524f:b0:45d:d8d6:7fcc with SMTP id
- 5b1f17b1804b1-47d1958b73cmr285259385e9.27.1766828905417; 
- Sat, 27 Dec 2025 01:48:25 -0800 (PST)
+ bh=zGKQcTYH8NslXOFyWO8VlfRFFvEFNB+uFId5LqaXI7k=;
+ b=LDCuIHkJO4oZ5Gpxm1vVxlVYz5PUjqntYTgJ6xlOQkUvykK7YG8qIDwJ6dcQuZNqH7
+ kXKsBw4OxM0bMO1URLwDSQXHJ7XdXIm6elsQoqsM5sHYLWxKOSK/vh2ans3m1sAA90MR
+ Zv99coj2zKQKVd5JNDN8Ouxc9r09PtGnv2gGpVUQlG9JhofoiOLFUwFbTxYWKFBTZkR+
+ DrzgeJ8W33vKtFU/i2HrWk1NsqN3xEj0VrZ4h9cprV2my224SSTJuLHvTp6rufI6mKeZ
+ Vg8fs1gw88TviqHZWXP4X+sIuFJD5WumiOJ1JFwdQcdHoVS0Wi3agHYf+/S541RKiHr7
+ 6UzQ==
+X-Gm-Message-State: AOJu0YxggdSfuXNyGdaKawYJaL/9wn3hlS3pVGB8JAhJGKtr3yHTCmeC
+ Vn0IID0TqK1i2pM+QGTrBUvW+LHOVIr1IXJfVFc8T2LXtnaDsmiX64pB7z4kX/Quczo9BWXOlAJ
+ t0MTmwE0H+WTBeN+c1gPWSc659D/4stVv+6+vQmuGz7865z9ORYJdsu6vV53x+7vYD2oiLlPjgB
+ MP+WtZAScwtz+pDRJM2VT1ACfs7A2qaKBJpt9+eoPK
+X-Gm-Gg: AY/fxX5KLWWoSmw89SeALXgEHJbA9ybgIWh8y2lo7bYPqXmL+iPENhYFhPg/hAGByGK
+ DKbNYzNlb5RcG83wvz+vFJXPa5Fdq5YvSndoBkU4gr73RoJL5uKkrxoduVQLxdEwlNBEtuO52jK
+ dDniOLwqlnFBV6upYUrT48CqffmYoyCIFVnxNO1j20as1972zRmm9ZMcoyz0mM9q1YsBmao49cY
+ 4Kq9r/Avf/7G0HoxRZorspXoTIs5uug/3+GZ4kKS1J/beYM+PCpvEsU1er8bF6yeXO7s8SAOHFK
+ /S67Nh43TwWSEJoALaZQm+5cP4IZ6+gzMeda/gFw/pGaij7dimmDpg56j2NY6SgG5RySvQt4pc/
+ /SD+SNSwO6jjjmkMkcPfTfit+ZfrsJzpBW93YdBQYzJ87CFECUmbLol5kkH8CI2x6WfUnO6Xu01
+ KGFOY1WOg2vOgYlNE=
+X-Received: by 2002:a05:6000:402b:b0:430:f6c0:6c5e with SMTP id
+ ffacd0b85a97d-4324e4d013cmr26755165f8f.28.1766829041324; 
+ Sat, 27 Dec 2025 01:50:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGlG9oVmfpeGCQmN23pt/pr4g7uDeJNmyQmcCnH+Yw+SOyTFiWrgMhzvt3zQv3Nj47CRhxLlQ==
+X-Received: by 2002:a05:6000:402b:b0:430:f6c0:6c5e with SMTP id
+ ffacd0b85a97d-4324e4d013cmr26755144f8f.28.1766829040764; 
+ Sat, 27 Dec 2025 01:50:40 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3acdb87sm191616315e9.16.2025.12.27.01.48.24
+ ffacd0b85a97d-4324ea1b1bdsm49215690f8f.8.2025.12.27.01.50.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:48:24 -0800 (PST)
+ Sat, 27 Dec 2025 01:50:38 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
- Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Yang Weijiang <weijiang.yang@intel.com>, "Xin Li (Intel)" <xin@zytor.com>,
- Chao Gao <chao.gao@intel.com>
-Subject: [PULL 086/153] i386/kvm: Add save/restore support for CET MSRs
-Date: Sat, 27 Dec 2025 10:46:51 +0100
-Message-ID: <20251227094759.35658-12-pbonzini@redhat.com>
+ Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 130/153] target/i386/tcg: add a CCOp for SBB x,x
+Date: Sat, 27 Dec 2025 10:47:35 +0100
+Message-ID: <20251227094759.35658-56-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,232 +123,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yang Weijiang <weijiang.yang@intel.com>
+This is more efficient both when generating code and when testing
+flags.
 
-CET (architectural) MSRs include:
-MSR_IA32_U_CET - user mode CET control bits.
-MSR_IA32_S_CET - supervisor mode CET control bits.
-MSR_IA32_PL{0,1,2,3}_SSP - linear addresses of SSPs for user/kernel modes.
-MSR_IA32_INT_SSP_TAB - linear address of interrupt SSP table
-
-Since FRED also needs to save/restore MSR_IA32_PL0_SSP, to avoid duplicate
-operations, make FRED only save/restore MSR_IA32_PL0_SSP when CET-SHSTK
-is not enumerated.
-
-And considerring MSR_IA32_SSP_TBL_ADDR is only presented on 64 bit
-processor, wrap it with TARGET_X86_64 macro.
-
-For other MSRs, add save/restore support directly.
-
-Tested-by: Farrah Chen <farrah.chen@intel.com>
-Suggested-by: Xin Li (Intel) <xin@zytor.com>
-Signed-off-by: Yang Weijiang <weijiang.yang@intel.com>
-Co-developed-by: Chao Gao <chao.gao@intel.com>
-Signed-off-by: Chao Gao <chao.gao@intel.com>
-Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20251211060801.3600039-15-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h     | 26 ++++++++++---
- target/i386/kvm/kvm.c | 91 ++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 98 insertions(+), 19 deletions(-)
+ target/i386/cpu.h           | 13 ++++++++++++-
+ target/i386/cpu-dump.c      |  2 ++
+ target/i386/tcg/cc_helper.c |  6 ++++++
+ target/i386/tcg/translate.c | 13 +++++++++++++
+ target/i386/tcg/emit.c.inc  | 33 ++++++---------------------------
+ 5 files changed, 39 insertions(+), 28 deletions(-)
 
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 84e5cf0ab0c..37cc218bf3a 100644
+index fc634883649..697dde375c6 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -543,7 +543,7 @@ typedef enum X86Seg {
- #define MSR_IA32_XFD                    0x000001c4
- #define MSR_IA32_XFD_ERR                0x000001c5
+@@ -1565,7 +1565,18 @@ typedef enum {
+     CC_OP_POPCNTL__,
+     CC_OP_POPCNTQ__,
+     CC_OP_POPCNT = sizeof(target_ulong) == 8 ? CC_OP_POPCNTQ__ : CC_OP_POPCNTL__,
+-#define CC_OP_LAST_BWLQ CC_OP_POPCNTQ__
++
++    /*
++     * Note that only CC_OP_SBB_SELF (i.e. the one with MO_TL size)
++     * is used or implemented, because the translator sign-extends
++     * the -1 or 0 value that is written in CC_DST.
++     */
++    CC_OP_SBB_SELFB__, /* S/Z/C/A via CC_DST, O clear, P set.  */
++    CC_OP_SBB_SELFW__,
++    CC_OP_SBB_SELFL__,
++    CC_OP_SBB_SELFQ__,
++    CC_OP_SBB_SELF = sizeof(target_ulong) == 8 ? CC_OP_SBB_SELFQ__ : CC_OP_SBB_SELFL__,
++#define CC_OP_LAST_BWLQ CC_OP_SBB_SELFQ__
  
--/* FRED MSRs */
-+/* FRED MSRs (MSR_IA32_FRED_SSP0 is defined as MSR_IA32_PL0_SSP in CET MSRs) */
- #define MSR_IA32_FRED_RSP0              0x000001cc       /* Stack level 0 regular stack pointer */
- #define MSR_IA32_FRED_RSP1              0x000001cd       /* Stack level 1 regular stack pointer */
- #define MSR_IA32_FRED_RSP2              0x000001ce       /* Stack level 2 regular stack pointer */
-@@ -554,9 +554,6 @@ typedef enum X86Seg {
- #define MSR_IA32_FRED_SSP3              0x000001d3       /* Stack level 3 shadow stack pointer in ring 0 */
- #define MSR_IA32_FRED_CONFIG            0x000001d4       /* FRED Entrypoint and interrupt stack level */
+     CC_OP_DYNAMIC, /* must use dynamic code to get cc_op */
+ } CCOp;
+diff --git a/target/i386/cpu-dump.c b/target/i386/cpu-dump.c
+index ed8fd363c6b..9e290c0b9b4 100644
+--- a/target/i386/cpu-dump.c
++++ b/target/i386/cpu-dump.c
+@@ -91,6 +91,8 @@ static const char * const cc_op_str[] = {
+     [CC_OP_BMILGQ] = "BMILGQ",
  
--/* FRED and CET MSR */
--#define MSR_IA32_PL0_SSP                0x000006a4       /* ring-0 shadow stack pointer (aka MSR_IA32_FRED_SSP0 for FRED) */
+     [CC_OP_POPCNT] = "POPCNT",
++
++    [CC_OP_SBB_SELF] = "SBBx,x",
+ };
+ 
+ static void
+diff --git a/target/i386/tcg/cc_helper.c b/target/i386/tcg/cc_helper.c
+index f1940b40927..1e022da7b02 100644
+--- a/target/i386/tcg/cc_helper.c
++++ b/target/i386/tcg/cc_helper.c
+@@ -84,6 +84,9 @@ target_ulong helper_cc_compute_all(target_ulong dst, target_ulong src1,
+         return src1;
+     case CC_OP_POPCNT:
+         return dst ? 0 : CC_Z;
++    case CC_OP_SBB_SELF:
++	/* dst is either all zeros (--Z-P-) or all ones (-S-APC) */
++        return (dst & (CC_Z|CC_A|CC_C|CC_S)) ^ (CC_P | CC_Z);
+ 
+     case CC_OP_MULB:
+         return compute_all_mulb(dst, src1);
+@@ -246,6 +249,9 @@ target_ulong helper_cc_compute_c(target_ulong dst, target_ulong src1,
+     case CC_OP_MULQ:
+         return src1 != 0;
+ 
++    case CC_OP_SBB_SELF:
++        return dst & 1;
++
+     case CC_OP_ADCX:
+     case CC_OP_ADCOX:
+         return dst;
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index d3e5e4d8edb..5aa38a912bd 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -304,6 +304,7 @@ static const uint8_t cc_op_live_[] = {
+     [CC_OP_ADOX] = USES_CC_SRC | USES_CC_SRC2,
+     [CC_OP_ADCOX] = USES_CC_DST | USES_CC_SRC | USES_CC_SRC2,
+     [CC_OP_POPCNT] = USES_CC_DST,
++    [CC_OP_SBB_SELF] = USES_CC_DST,
+ };
+ 
+ static uint8_t cc_op_live(CCOp op)
+@@ -938,6 +939,9 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+         size = cc_op_size(s->cc_op);
+         return gen_prepare_val_nz(cpu_cc_src, size, false);
+ 
++    case CC_OP_SBB_SELF:
++        return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_dst };
++
+     case CC_OP_ADCX:
+     case CC_OP_ADCOX:
+         return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_dst,
+@@ -999,6 +1003,7 @@ static CCPrepare gen_prepare_eflags_o(DisasContext *s, TCGv reg)
+     case CC_OP_ADCOX:
+         return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src2,
+                              .no_setcond = true };
++    case CC_OP_SBB_SELF:
+     case CC_OP_LOGICB ... CC_OP_LOGICQ:
+     case CC_OP_POPCNT:
+         return (CCPrepare) { .cond = TCG_COND_NEVER };
+@@ -1078,6 +1083,14 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
+         }
+         break;
+ 
++    case CC_OP_SBB_SELF:
++        /* checking for nonzero is usually the most efficient */
++        if (jcc_op == JCC_L || jcc_op == JCC_B || jcc_op == JCC_S) {
++            jcc_op = JCC_Z;
++            inv = !inv;
++        }
++        goto slow_jcc;
++
+     case CC_OP_LOGICB ... CC_OP_LOGICQ:
+         /* Mostly used for test+jump */
+         size = s->cc_op - CC_OP_LOGICB;
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 8dac4d09da1..0fde3d669d9 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -3876,37 +3876,16 @@ static void gen_SBB(DisasContext *s, X86DecodedInsn *decode)
+         return;
+     }
+ 
+-    c_in = tcg_temp_new();
+-    gen_compute_eflags_c(s, c_in);
 -
- #define MSR_IA32_BNDCFGS                0x00000d90
- #define MSR_IA32_XSS                    0x00000da0
- #define MSR_IA32_UMWAIT_CONTROL         0xe1
-@@ -583,6 +580,15 @@ typedef enum X86Seg {
- #define MSR_APIC_START                  0x00000800
- #define MSR_APIC_END                    0x000008ff
- 
-+/* CET MSRs */
-+#define MSR_IA32_U_CET                  0x000006a0       /* user mode cet */
-+#define MSR_IA32_S_CET                  0x000006a2       /* kernel mode cet */
-+#define MSR_IA32_PL0_SSP                0x000006a4       /* ring-0 shadow stack pointer */
-+#define MSR_IA32_PL1_SSP                0x000006a5       /* ring-1 shadow stack pointer */
-+#define MSR_IA32_PL2_SSP                0x000006a6       /* ring-2 shadow stack pointer */
-+#define MSR_IA32_PL3_SSP                0x000006a7       /* ring-3 shadow stack pointer */
-+#define MSR_IA32_INT_SSP_TAB            0x000006a8       /* exception shadow stack table */
-+
- #define XSTATE_FP_BIT                   0
- #define XSTATE_SSE_BIT                  1
- #define XSTATE_YMM_BIT                  2
-@@ -1973,8 +1979,16 @@ typedef struct CPUArchState {
-     uint64_t fred_config;
- #endif
- 
--    /* MSR used for both FRED and CET (SHSTK) */
--    uint64_t pl0_ssp;
-+    /* CET MSRs */
-+    uint64_t u_cet;
-+    uint64_t s_cet;
-+    uint64_t pl0_ssp; /* also used for FRED */
-+    uint64_t pl1_ssp;
-+    uint64_t pl2_ssp;
-+    uint64_t pl3_ssp;
-+#ifdef TARGET_X86_64
-+    uint64_t int_ssp_table;
-+#endif
- 
-     uint64_t tsc_adjust;
-     uint64_t tsc_deadline;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 5b8c7550a16..e1a1f0ce9e5 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -4009,11 +4009,14 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, env->fred_ssp2);
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, env->fred_ssp3);
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, env->fred_config);
+-    /*
+-     * Here the change is as follows:
+-     * CC_SBB: src1 = T0, src2 = T0, src3 = c_in
+-     * CC_SUB: src1 = 0, src2 = c_in (no src3)
+-     *
+-     * The difference also does not matter:
+-     * - AF is bit 4 of dst^src1^src2, but bit 4 of src1^src2 is zero in both cases
+-     *   therefore AF comes straight from dst (in fact it is c_in)
+-     * - for OF, src1 and src2 have the same sign in both cases, meaning there
+-     *   can be no overflow
+-     */
++    /* SBB x,x has its own CCOp so that's even easier.  */
+     if (decode->e.op2 != X86_TYPE_I && !decode->op[0].has_ea && decode->op[0].n == decode->op[2].n) {
+-        if (s->cc_op == CC_OP_DYNAMIC) {
+-            tcg_gen_neg_tl(s->T0, c_in);
+-        } else {
 -            /*
--             * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
--             * CET shadow stack is not supported.
+-             * Do not negate c_in because it will often be dead and only the
+-             * instruction generated by negsetcond will survive.
 -             */
--            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, env->pl0_ssp);
-+
-+            if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK)) {
-+                /*
-+                 * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
-+                 * CET shadow stack is not supported.
-+                 */
-+                kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, env->pl0_ssp);
-+            }
-         }
-     }
- #endif
-@@ -4267,6 +4270,26 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-         }
+-            gen_neg_setcc(s, JCC_B << 1, s->T0);
+-        }
+-        tcg_gen_movi_tl(s->cc_srcT, 0);
+-        decode->cc_src = c_in;
+-        decode->cc_dst = s->T0;
+-        decode->cc_op = CC_OP_SUBB + ot;
++        gen_neg_setcc(s, JCC_B << 1, s->T0);
++        prepare_update1_cc(decode, s, CC_OP_SBB_SELF);
+         return;
      }
  
-+    if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK ||
-+        env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT) {
-+        kvm_msr_entry_add(cpu, MSR_IA32_U_CET, env->u_cet);
-+        kvm_msr_entry_add(cpu, MSR_IA32_S_CET, env->s_cet);
++    c_in = tcg_temp_new();
++    gen_compute_eflags_c(s, c_in);
 +
-+        if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, env->pl0_ssp);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL1_SSP, env->pl1_ssp);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL2_SSP, env->pl2_ssp);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL3_SSP, env->pl3_ssp);
-+
-+#ifdef TARGET_X86_64
-+            if (lm_capable_kernel) {
-+                kvm_msr_entry_add(cpu, MSR_IA32_INT_SSP_TAB,
-+                                  env->int_ssp_table);
-+            }
-+#endif
-+        }
-+    }
-+
-     return kvm_buf_set_msrs(cpu);
- }
- 
-@@ -4501,11 +4524,14 @@ static int kvm_get_msrs(X86CPU *cpu)
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, 0);
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, 0);
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, 0);
--            /*
--             * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
--             * CET shadow stack is not supported.
--             */
--            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
-+
-+            if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK)) {
-+                /*
-+                 * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
-+                 * CET shadow stack is not supported.
-+                 */
-+                kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
-+            }
-         }
-     }
- #endif
-@@ -4663,6 +4689,25 @@ static int kvm_get_msrs(X86CPU *cpu)
-         }
-     }
- 
-+    if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK ||
-+        env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT) {
-+        kvm_msr_entry_add(cpu, MSR_IA32_U_CET, 0);
-+        kvm_msr_entry_add(cpu, MSR_IA32_S_CET, 0);
-+
-+        if (env->features[FEAT_7_0_EDX] & CPUID_7_0_ECX_CET_SHSTK) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL1_SSP, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL2_SSP, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL3_SSP, 0);
-+
-+#ifdef TARGET_X86_64
-+            if (lm_capable_kernel) {
-+                kvm_msr_entry_add(cpu, MSR_IA32_INT_SSP_TAB, 0);
-+            }
-+#endif
-+        }
-+    }
-+
-     ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, cpu->kvm_msr_buf);
-     if (ret < 0) {
-         return ret;
-@@ -4757,9 +4802,6 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_IA32_FRED_CONFIG:
-             env->fred_config = msrs[i].data;
-             break;
--        case MSR_IA32_PL0_SSP: /* aka MSR_IA32_FRED_SSP0 */
--            env->pl0_ssp = msrs[i].data;
--            break;
- #endif
-         case MSR_IA32_TSC:
-             env->tsc = msrs[i].data;
-@@ -5013,6 +5055,29 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_ARCH_LBR_INFO_0 ... MSR_ARCH_LBR_INFO_0 + 31:
-             env->lbr_records[index - MSR_ARCH_LBR_INFO_0].info = msrs[i].data;
-             break;
-+        case MSR_IA32_U_CET:
-+            env->u_cet = msrs[i].data;
-+            break;
-+        case MSR_IA32_S_CET:
-+            env->s_cet = msrs[i].data;
-+            break;
-+        case MSR_IA32_PL0_SSP: /* aka MSR_IA32_FRED_SSP0 */
-+            env->pl0_ssp = msrs[i].data;
-+            break;
-+        case MSR_IA32_PL1_SSP:
-+            env->pl1_ssp = msrs[i].data;
-+            break;
-+        case MSR_IA32_PL2_SSP:
-+            env->pl2_ssp = msrs[i].data;
-+            break;
-+        case MSR_IA32_PL3_SSP:
-+            env->pl3_ssp = msrs[i].data;
-+            break;
-+#ifdef TARGET_X86_64
-+        case MSR_IA32_INT_SSP_TAB:
-+            env->int_ssp_table = msrs[i].data;
-+            break;
-+#endif
-         case MSR_K7_HWCR:
-             env->msr_hwcr = msrs[i].data;
-             break;
+     if (s->prefix & PREFIX_LOCK) {
+         tcg_gen_add_tl(s->T0, s->T1, c_in);
+         tcg_gen_neg_tl(s->T0, s->T0);
 -- 
 2.52.0
 
