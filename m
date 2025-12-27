@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECC8E9270E
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 12:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D637E8FDD8
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 12:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZTLl-0000Us-GC; Sat, 27 Dec 2025 07:24:49 -0500
+	id 1vZTMX-0001WA-Ph; Sat, 27 Dec 2025 07:25:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vZTLk-0000U4-8h
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 07:24:48 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1vZTMW-0001Up-RP
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 07:25:36 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vZTLi-00056x-S9
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 07:24:48 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7b89c1ce9easo8836522b3a.2
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 04:24:46 -0800 (PST)
+ id 1vZTMS-0005MO-Uf
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 07:25:35 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a09a3bd9c5so69700265ad.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 04:25:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1766838285; x=1767443085; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1766838331; x=1767443131; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fLSK/Ba+sSg+pOC6zImzmZs/l+0OXc+3Jj36fclfvCE=;
- b=LZjAZ7m54to8O00xtI7DYx3OAkHrMYyfoLxW5aA9Tzupz0+ISfjea6n9cvUDnnbfMr
- 6xyM8klT2FFudSkyOlacAfKFeLkJ+g+g7aqt+n0eefgybHMlPswWaflNFrP0uXFIoHxW
- m/SPcSGf26ujlAw0j8eZNSiJRSJd3sr34ZR3Wlg87Tm2YOkA7r3M1s6UYclqYMZ2UQxo
- IaYZJiWsteAYEF65RcY4cm9ufbIwBfnSobxr1KPpBR8UWG6fa8j4JZiYWITogsSbUuvZ
- HXDikO9N1PfPtI5DwDl128tGhheiZT5pR1w414KO4bU0lQJtEVRFBuOO9w6ZsWvFWm6I
- 099A==
+ bh=tGCN4kNRzivpgazlU6yse++mXkdYhAiT3gh1hfyja+E=;
+ b=J1xWECp6V9w/RWzfIPNqeeFY8CWJTeFj+xG9bpsLRqik9OAUK1Sp5GC4uWje/T5QQE
+ XVODWf8MDbVCYh1KJrsJWEoBxH2dVPrEwUDmlAglsZKuPAvoBK003nkleIQO3/7wYPwl
+ DQIFELKXoytGHbc1ibBcvbnKR74z2VAJRi76bmmeXBbBoQufbEFAI7T0r9phfWZ36uR8
+ dZ7JtkD1KkLOrbwcDFikFs5TTSt7ckUVPIDRcInCpA4bl63kIfg+zYmnbHRlTMu0mQnx
+ e9l5VIa3FUY83xQMVYB+i2Z8p+ZqoC1Wb3zlcfDJwGQZCAnkzgIDLTz2eiRGUTd8F9iT
+ GNDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766838285; x=1767443085;
+ d=1e100.net; s=20230601; t=1766838331; x=1767443131;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fLSK/Ba+sSg+pOC6zImzmZs/l+0OXc+3Jj36fclfvCE=;
- b=RG58GII5A1C7D2zvoymD5I45fPgVzZct5i9aKRxs0vEIHCz1Z6C7SyU1PZSqRRvr1k
- s7qFqBpnbjK8bYOGzXNJiVB8JqkDjxipy1OW3xQaFBeot/iQlftdVhaMx/fi4XytTQgz
- IzbmXxyhcxVLiaxk2rJR3Q8NFRxGqjvciht7y42noqYY50IHpIf+rLDfLKBRtfQjtTb1
- abifxAZNNhYPRCqrL7H2SNyHD9MFAJO5k+67KoXdRCtnqge+GQXGa8HoAi2IXkPwaVVt
- ZBXXANBDMTkA+v/cH9p3fBXDhboxvNjG1hTyTziY00V8bXkkunh41tCrUuzk0a4KOhX5
- QcaQ==
+ bh=tGCN4kNRzivpgazlU6yse++mXkdYhAiT3gh1hfyja+E=;
+ b=K2WXyltOAFR6BhwYVbvpmXZVn65cYNmWxiDi1PFMtUCTeq7LlyYqgY7mdSU8j5dH/O
+ EoGaIlPbDVpjHHcWAyZ525BiN56JBoonLoH2zTko+9B420cO/ro3OzIJJwiGx12tsQdx
+ O4WwjJhjHDABtpJVipXp39YtQy7p/ErRfUTowazWqy9o+ecIQEqpGcQGJ7VN3iTaIXs5
+ 5d9grawruU9owxK17rAIXUUN7EIIrXGFOOMrOQdF78+Au2KFxfWl2oAiFuXpJtuQ+uBG
+ 8fBWxSTu2tBnKhuw3RCfEUqFXWUc+whehuXDlkSI9vrFH8YYtXptumrgagzDPQUVbKHB
+ xR9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUUGDy1Fin0tAqvIrDY8IrNcdMm+9vj+nLec7qjwPEOgMlpDEXrLdsZGHTHArhGjEEO0ZX7R3xcVk8g@nongnu.org
-X-Gm-Message-State: AOJu0Yzf4Yvclzc52jOQf5pzkh8Shu5zJXjoG0OTeIiCqAkT7KHo156u
- Unb3xdMF4k1HdpfdDTYR5tilQovlcxmR0czRIr3BEPG85wQ2F9M2qM/TSNPFthCyZps=
-X-Gm-Gg: AY/fxX6IX3BJzO4tQPBj3dLkUv/VM98bkJy2zy6Iy6W6Xqq0UPRrXHiZcIF7jpE5zyT
- E/h1oLqy/iRVCtONnAWhBwTt7b9q3NsGYmvnRgEsHNTW0aJ6GKCo2Cv6gkX9c3UuaxDyZIa8Mwv
- F0r26c3BgUzv3+bMZiOy0xxg1liQ951vpg0Rz25I9iy6OoutKtCXfGeKs+wsU/jm53To1RaFzOP
- UvgUvV9gWCSDPJBaUjpwu+xnB/Usa5+lFRTMBuQQcLA8JgnrugJcdn3KH6N8ryptVjAnAiX0+9p
- V8N4Dz8omqAbVveAZMn0otiz46gd1mca/cAU7YV0wFFaTUiGFGy9AnCdWTX9bd8tyiUL0WHjfrJ
- lmBx+fRa+pckbpAmfaEGoprfczqsVGvAxfvZd+UUnT9n/ub74vehh2YlUoz6yBgbUG4Fo+e98Lu
- LHzzvfkwmme3iudMcawLRB6urx1ZM=
-X-Google-Smtp-Source: AGHT+IEmXS0Hd+Z9pC70fegWMFhui+DUtuw0vjEeyI4Lkz1fwb4hFXtBQVt41DOtBl4Blh7z6QjDlA==
-X-Received: by 2002:a05:7022:6294:b0:119:e569:f26d with SMTP id
- a92af1059eb24-121722b509emr27691765c88.22.1766838285420; 
- Sat, 27 Dec 2025 04:24:45 -0800 (PST)
+ AJvYcCX+spgHJx/xyQXegkfdbnydPF71TG0gSDZGNNco3x3GuIa6X0b+099F0wW2Qg9ZKFHHSWQgrXlNIVH4@nongnu.org
+X-Gm-Message-State: AOJu0Ywwe6ZYepf8aiqnX+gUSPCZNLy/wbxTgrE6Sanz4XObggP4K1SP
+ eo6jOQaLc5TyJ7/loI0nZ/IiqkZpXoyC/UDufVnFUIp/cm+hz1ffLqE7sXf4mLpZO5c=
+X-Gm-Gg: AY/fxX5WDKG7Ec3tCR9OKMQ7kso1LgqOjwUTT4ehKLGSdMGBQ+PcEey3cb8ZjVtFkXL
+ VixJqVZ3MS4ILdlXhTXmwj8nSG2El8pE6bcZvRr5TqQ9vpkXkMFYNiHzSuuUlZjR8urnU4Ir221
+ eRZXvbm56K8SW+U5XQpucKvIkqJFA8jFfdRW4XO0QVHBHlidP2SxquiTdDgvIbdBaB1UazwM3QE
+ wqOhM9irIbDM9lksReqfuOXZI3Bs09qlJSsgXgnE5BH1Kyy48Ae+ETk1B6+3RAzNZ547r9Tscm2
+ kiFCdkeAY9lodPmPScGRMtz51zbWpRiuKN1d2VTz88w+6SSACN8OA5EFzkX/Rqz02wuaOtSKpXa
+ Iqd2mtPS4Exo/AJb01XEINhGb7MqNvkSKYnX0Ll4AeOZAuoE2ZQqlLVMfS1XHHvc2CffWMerNwW
+ 8dqlw5Oxn4wgjAcIXroTOGhxhe0os=
+X-Google-Smtp-Source: AGHT+IGWiJ+l301wQaAaaBklKacmPpczF56i5IyWsLjkg6s3iD+91IVwAo8K1t+xQ2wf3pk6UwPVSQ==
+X-Received: by 2002:a05:7022:7e8e:b0:11a:c387:1357 with SMTP id
+ a92af1059eb24-121722ac203mr23430874c88.16.1766838331365; 
+ Sat, 27 Dec 2025 04:25:31 -0800 (PST)
 Received: from [192.168.68.110] ([187.101.184.177])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1217254c734sm99671996c88.13.2025.12.27.04.24.42
+ a92af1059eb24-1217254ce49sm95419413c88.15.2025.12.27.04.25.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Dec 2025 04:24:44 -0800 (PST)
-Message-ID: <032d9816-fac2-4e3f-a4e5-a1ad609deb57@ventanamicro.com>
-Date: Sat, 27 Dec 2025 09:24:41 -0300
+ Sat, 27 Dec 2025 04:25:30 -0800 (PST)
+Message-ID: <d8f08ec0-ad45-48f2-bc2d-830ed25b623a@ventanamicro.com>
+Date: Sat, 27 Dec 2025 09:25:27 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/riscv: Refactor riscv_iommu_ctx_put() for Bare
- mode handling
+Subject: Re: [PATCH] target/riscv: Align pmp size to pmp-granularity
 To: Jay Chang <jay.chang@sifive.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
  <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Frank Chang <frank.chang@sifive.com>
-References: <20251211025611.99038-1-jay.chang@sifive.com>
- <20251211025611.99038-3-jay.chang@sifive.com>
+References: <20251223102547.13337-1-jay.chang@sifive.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20251211025611.99038-3-jay.chang@sifive.com>
+In-Reply-To: <20251223102547.13337-1-jay.chang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,41 +111,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 12/10/25 11:56 PM, Jay Chang wrote:
-> Align SPEC: Bare mode contexts are not cached, so they require
-> direct memory deallocation via g_free instead of hash table cleanup.
+On 12/23/25 7:25 AM, Jay Chang wrote:
+> When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
+> value is smaller than the PMP granularity, it automatically aligned
+> to the PMP granularity.
 > 
 > Signed-off-by: Jay Chang <jay.chang@sifive.com>
 > Reviewed-by: Frank Chang <frank.chang@sifive.com>
 > ---
 
-
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   hw/riscv/riscv-iommu.c | 11 ++++++++++-
->   1 file changed, 10 insertions(+), 1 deletion(-)
+>   target/riscv/pmp.c | 10 ++++++++--
+>   1 file changed, 8 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 79eee2e85e..fca5763858 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -1344,7 +1344,16 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
+> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+> index 3ef62d26ad..01b337f529 100644
+> --- a/target/riscv/pmp.c
+> +++ b/target/riscv/pmp.c
+> @@ -167,11 +167,12 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+>               uint8_t a_field = pmp_get_a_field(val);
+>               /*
+>                * When granularity g >= 1 (i.e., granularity > 4 bytes),
+> -             * the NA4 (Naturally Aligned 4-byte) mode is not selectable
+> +             * the NA4 (Naturally Aligned 4-byte) mode is not selectable.
+> +             * In this case, an NA4 setting is reinterpreted as a NAPOT mode.
+>                */
+>               if ((riscv_cpu_cfg(env)->pmp_granularity >
+>                   MIN_RISCV_PMP_GRANULARITY) && (a_field == PMP_AMATCH_NA4)) {
+> -                    return false;
+> +                    val |= PMP_AMATCH;
+>               }
+>               env->pmp_state.pmp[pmp_index].cfg_reg = val;
+>               pmp_update_rule_addr(env, pmp_index);
+> @@ -251,6 +252,11 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+>           break;
 >   
->   static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
->   {
-> -    if (ref) {
-> +    unsigned mode = get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
+>       case PMP_AMATCH_NAPOT:
+> +        /* Align to pmp_granularity */
+> +        if (g >= 2) {
+> +            this_addr |= ((1ULL << (g - 1ULL)) - 1ULL);
+> +        }
 > +
-> +    if (!ref) {
-> +        return;
-> +    }
-> +
-> +    /* ref is pointing to ctx in Bare mode. Bare mode ctx is not cached */
-> +    if (mode == RISCV_IOMMU_DDTP_MODE_BARE) {
-> +        g_free(ref);
-> +    } else {
->           g_hash_table_unref((GHashTable *)ref);
->       }
->   }
+>           pmp_decode_napot(this_addr, &sa, &ea);
+>           break;
+>   
 
 
