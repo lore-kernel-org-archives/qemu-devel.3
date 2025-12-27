@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCA0E8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA01E8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQQr-0005NN-Kp; Sat, 27 Dec 2025 04:17:53 -0500
+	id 1vZQR6-0005t4-04; Sat, 27 Dec 2025 04:18:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQp-0005Lg-V4
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:51 -0500
+ id 1vZQR2-0005c9-UV
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQo-0003JK-Fr
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:51 -0500
+ id 1vZQR1-0003b4-8K
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827070;
+ s=mimecast20190719; t=1766827082;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fsRfJ17Tv3k56iygc1dJWL298tqHmSNxwclb6VwBO0g=;
- b=hwGiaceLoMrPKEfQVRsKCO/eMMSGs+PwWLCnvzZDyo/GfM0npjn7X+gcn13Es2HbO61np4
- 85D4M0VSsvgb3tKy3G6+DFtH1NN7jyIRbqFNOEna/yoU0BhRcnz3K7o5R5G131Um8Y2A52
- hF0OBAIOv+Gl7O6SMCwghiPluf9hmwc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LinX1JQiwqc2ikT9Actgt6zsDgwmjLDHb98Wkwcyz80=;
+ b=fkCeu0uR8Dq2wbS19lEUAe2v6k4eUUtWzEGL12XAUfDX/k9gpog4D+CRyvOb2oxiGDtTU9
+ 24fgvD0hkF3mFzI3ORqoBXcd3fSA+RmFcWaeTrCMli6Gt9PjQMKdftCA5wC8HxvLwTY3W6
+ EerQ4OyOgCJLuXw3LIx3G1Knu+H8MEM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-ISCKBvEwPmWZ0BbK4RWF-A-1; Sat, 27 Dec 2025 04:17:44 -0500
-X-MC-Unique: ISCKBvEwPmWZ0BbK4RWF-A-1
-X-Mimecast-MFC-AGG-ID: ISCKBvEwPmWZ0BbK4RWF-A_1766827063
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4325aa61c6bso2497420f8f.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:44 -0800 (PST)
+ us-mta-326-9dw69hg8Mwur7C8SQguAaQ-1; Sat, 27 Dec 2025 04:18:01 -0500
+X-MC-Unique: 9dw69hg8Mwur7C8SQguAaQ-1
+X-Mimecast-MFC-AGG-ID: 9dw69hg8Mwur7C8SQguAaQ_1766827080
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47775585257so54467625e9.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827063; x=1767431863; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827079; x=1767431879; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fsRfJ17Tv3k56iygc1dJWL298tqHmSNxwclb6VwBO0g=;
- b=g4TTJzqnNGgtuDRk44JtpVphZTdWJkKUMfj5VhlpF2BmFmMtm9A6sPzLTFyR4oS/88
- g7IWHuj4ZVFxx8CIZ1FgP/h6PD12MKghzJsQbZDrYS6tZ6n1iNErfCZMmxQ0VCFZBri0
- fa7kTzOsazD+t6PxjC8fFkDUyjGcN1ewiF5vCRSV5/B1tQE91L1QzZEztNpWRnvj5f/e
- IR5AufR+GYFAN/QJxbeW5ObxC+CJFOrYnkzcCm3TFjgqPxbq9rG1yYE1SDlSDGk9kIaB
- 9iLpT/3MPqWxHhOaJ0w6M5Pop6kX87FkCaZh0QubpTq6YA24DGCqM4UQDBPGHj0vQvrw
- T6FA==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LinX1JQiwqc2ikT9Actgt6zsDgwmjLDHb98Wkwcyz80=;
+ b=sNnJyG0YbIvtvqQc4yu7MtvHPs0eU/FvLZNvg+xnIf5r2YIX05ZgGWDLy5kp27xagL
+ No9UZO8OuV+jcGjCwx/8Su8aX9CvpWxxSKLNoIWP/1qxULkI37io4XhKcP6BlttSkOvY
+ RJzEOXUDteNfzTFMevVTUXbUP06lGupTSz6PqdgKXZx4d/EymI/CDv3NyGObrd3xoonX
+ jfIzTZiEYbTiqn6sS92fyX+2NYz2SrCIL+XF4JTKed4QTp9jroqeCtmVKJzB8JQS8UeR
+ JQATXfi7YdRxT3RdN0XwixrXKSl3vtU1pbD4GoSNjORV1Y1QMqHdmAQFHye4dXKkFAPB
+ JTYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827063; x=1767431863;
+ d=1e100.net; s=20230601; t=1766827079; x=1767431879;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=fsRfJ17Tv3k56iygc1dJWL298tqHmSNxwclb6VwBO0g=;
- b=le02nlMCSK1ztO9FGw4AdIqpIYP0d3v9Bhn7lWhRZ2RPC10Nyeb/arteJVpJ89NPoj
- bQUFSV98hr06rn8lf8O/xp/qilH2rMoFhDGsEGpdmnnIV2HlnczoAWLexywTL7DC8oAk
- rmH0CKjjgQccOv+5K9xiDhB9GeETwFWFGQonhMljNs5snk1UV73xQTAXKaqF45nNVMUJ
- hn71ISpxKtm9qIwqrI7N8aukYSAig9nNe/AtZsXj/wQyM49he3oWhOO0LRmnEXPAzs/7
- liqHwJoLfCl0NXv7ydOzDlvAETTav0yoNQQ/pZA6GaMbUaSpKnMW7jLlui9ra7BcEqOv
- W4qw==
-X-Gm-Message-State: AOJu0Yy0tSkNvBaDMt/9UrqI+8vLhYxFpOqxroMsPfeDpWtKLKDzsIjN
- 2GnMFeqhDIfzqvBtce/HoHfh/ajRO6fomkd37g9AZAKymK6yun+FLhpV0ochzITDRHoSsCEVV3Z
- ALDXurhP3xv2pc0eLmjEAjjBgVg/n6thuiPpTs6EUMr4xW81ZKOjpHx1GLXKAhBKkcqk+d2jpWF
- OSoYxxJtoBkkF3BVbSa2gLdPQa0ew2Keke4vaeX3kj
-X-Gm-Gg: AY/fxX6S2y3hHuxH7+uxcuI0Tx+5VNgwbhecV2m9SrGGrxIudFy3jPtLicUK4VZLrCO
- o+0Uy4a+9/fYkrxQ4FCRVRX2S3DbuUCd25v3OftH5DcyySJgichIavJ+IjPdX8F+5Nbt787ldHh
- iebCrDnzNTr7cfFt2W6Jl5HESa3bloQ158ZuZgxjN7FTe0FVzSDqsqNvgIsTy080FFzTfwTem/w
- nty8cFsjLuYzyPa7sxniSs53jiyZdtb0ApdCmUc4ARXOim6zF1YayaJkV89s5j/842JI4IGPfYa
- P/3FVM5oGvMpeDXUAaSAzVRif0z1LM++UXgWqkp+mY0eeEYQm/3gPpl8u9u0AEr9pPrEHif35B4
- 1Iiqlp799/DQtUY6A1LJn/Ta26ITIBcRH6xS4gKARwop7saIBY2l11X0hkc0VmnLk3xOfYpY6Tn
- wP7E/CtwpyJxa1t1Y=
-X-Received: by 2002:a05:6000:40de:b0:432:851d:23e2 with SMTP id
- ffacd0b85a97d-432851d2633mr4205088f8f.49.1766827062842; 
- Sat, 27 Dec 2025 01:17:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHZgUyTignmUNVGcnYrV8ZqNnWSrdz2zQ0J4yerIydqlD+JEwFe8zx9r14iCsiDpyDCkf0IbQ==
-X-Received: by 2002:a05:6000:40de:b0:432:851d:23e2 with SMTP id
- ffacd0b85a97d-432851d2633mr4205062f8f.49.1766827062298; 
- Sat, 27 Dec 2025 01:17:42 -0800 (PST)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LinX1JQiwqc2ikT9Actgt6zsDgwmjLDHb98Wkwcyz80=;
+ b=D8+iMhlkV1S9hlJOiIYl16sn8HTjN3m0vUln+nT+7bd0Z9QhDIa9MDWc55ICRXfa5W
+ oI+rtI2FU38Wyz2s5pLg2BKXMfXxosb/DJWkqzqVzouNT1j6Vqv/1jJV8NxwY3BxUaMS
+ hSTVLaCgG35VXudzLTAlPDdJQQQpvPagp7lpvklCAdQVuDkq3H23uDn8fslFHpNZBDz4
+ bY1avAu0NE+LXsozpzsuAaWhj+boB8C6QhZDyIIuvHC1Qu1hkOTdiB/JmC9qtJTQovXL
+ 4HW/6icx82KxIDR0rz/JYSq0GHzYthqhnfDlgn3qkGIqdecR2cPq+w9BnHaeNtaMbgKE
+ SVxA==
+X-Gm-Message-State: AOJu0Yz6TWQKkXeaqlhYhY3jfRPzgBVsbEDCOvXNnzUh+xHxqJ219DUj
+ IO7Lft40FG8/FOYuIt6dCt3N7Oj9sBSJxtpf10jxTjvL5zSzFuwwN3qMx0YpDF0TTpUdox4OB+E
+ vaXULTjYj28Y1bDvVRMHrD82WHotzOfIbYXfheF1ECzIwLp9rEw/yVTkYDWo/hu+PAtGozfLpJt
+ rH3q8uIciPOhWW+ckpjwzFglzwT/cS/VCiIX5eRkcq
+X-Gm-Gg: AY/fxX4sYL0RTTetR01OJS5m1SoVdcKxD0ZGUjhA2XRP9kcDMtGugK4DC/rNgmbRbZP
+ 0ldwuUYizBIiuA8XbIAhUy4exgnYrqSYLi56DhDRXmCd+262OAkjXbOEYKKE7Zj5iTrwpZm2vqf
+ HBeJUU1LBCTuwpoLYGrln7dbz2RqLNc7Ub88nSSASAzR6aQIdsn/DTUtVlO81EAAiaTax77hGGu
+ eL81Q/wFF5hBDkP9ivQI3SlR5CgYq0zaEkvEWJjAa7flA+1k4MaNyF0WBEm4gyKmXUcFet6Gj+j
+ wAUGj9avKK1prSQ/UPDl4tn4AkAMa+Lgn2ScG9DWkd7Ok0O/3zMxKP2Bh65fNrMTaQyYd6ytfOa
+ MIjkfUYdalnPJTAyGhvhc1urtkHbk4VEPEWHL1QS4VDKNVUrA9sG7rA+KdsfGcvqNHBhFTb1Gy/
+ 1rXDdQOMENBslI140=
+X-Received: by 2002:a05:600c:470a:b0:477:7b16:5f9f with SMTP id
+ 5b1f17b1804b1-47d1958a61fmr275526105e9.31.1766827078856; 
+ Sat, 27 Dec 2025 01:17:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEFpmz/kkWzre+yKSsaqZMtgvSe4yE86hi47PQ3yn7UEscppUy/QAmNtPPhp4p/RcW9rwiiwQ==
+X-Received: by 2002:a05:600c:470a:b0:477:7b16:5f9f with SMTP id
+ 5b1f17b1804b1-47d1958a61fmr275525865e9.31.1766827078362; 
+ Sat, 27 Dec 2025 01:17:58 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eaa4749sm50634584f8f.37.2025.12.27.01.17.40
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-4324ea82f6asm51482780f8f.27.2025.12.27.01.17.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:17:41 -0800 (PST)
+ Sat, 27 Dec 2025 01:17:57 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 041/153] chardev: add prelude
-Date: Sat, 27 Dec 2025 10:14:28 +0100
-Message-ID: <20251227091622.20725-42-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 050/153] rust/bql: Ensure BQL locked early at BqlRefCell
+ borrowing
+Date: Sat, 27 Dec 2025 10:14:37 +0100
+Message-ID: <20251227091622.20725-51-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -121,64 +123,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Zhao Liu <zhao1.liu@intel.com>
+
+At present, BqlRefCell checks whether BQL is locked when it blocks BQL
+unlock (in bql_block_unlock).
+
+But the such check should be done earlier - at the beginning of
+BqlRefCell borrowing.
+
+So convert BqlRefCell::borrow field from Cell<> to BqlCell<>, to
+guarantee BQL is locked from the beginning when someone is trying to
+borrow BqlRefCell.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20251113051937.4017675-6-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/chardev/meson.build         | 1 +
- rust/chardev/src/lib.rs          | 5 +++++
- rust/chardev/src/prelude.rs      | 4 +++-
- rust/hw/char/pl011/src/device.rs | 2 +-
- 4 files changed, 10 insertions(+), 2 deletions(-)
+ rust/bql/src/cell.rs | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
-index 6b681c609ad..54bb2962528 100644
---- a/rust/chardev/meson.build
-+++ b/rust/chardev/meson.build
-@@ -30,6 +30,7 @@ _chardev_rs = static_library(
-       'src/lib.rs',
-       'src/bindings.rs',
-       'src/chardev.rs',
-+      'src/prelude.rs',
-     ],
-     {'.': _chardev_bindings_inc_rs}
-   ),
-diff --git a/rust/chardev/src/lib.rs b/rust/chardev/src/lib.rs
-index 2e549f99d91..93a28725932 100644
---- a/rust/chardev/src/lib.rs
-+++ b/rust/chardev/src/lib.rs
-@@ -4,3 +4,8 @@
+diff --git a/rust/bql/src/cell.rs b/rust/bql/src/cell.rs
+index f4bfa697d32..b25906a6503 100644
+--- a/rust/bql/src/cell.rs
++++ b/rust/bql/src/cell.rs
+@@ -142,8 +142,10 @@
+ //! Multiple immutable borrows are allowed via [`borrow`](BqlRefCell::borrow),
+ //! or a single mutable borrow via [`borrow_mut`](BqlRefCell::borrow_mut).  The
+ //! thread will panic if these rules are violated or if the BQL is not held.
++#[cfg(feature = "debug_cell")]
++use std::cell::Cell;
+ use std::{
+-    cell::{Cell, UnsafeCell},
++    cell::UnsafeCell,
+     cmp::Ordering,
+     fmt,
+     marker::PhantomData,
+@@ -378,7 +380,7 @@ pub struct BqlRefCell<T> {
+     // for std::cell::BqlRefCell), so that we can use offset_of! on it.
+     // UnsafeCell and repr(C) both prevent usage of niches.
+     value: UnsafeCell<T>,
+-    borrow: Cell<BorrowFlag>,
++    borrow: BqlCell<BorrowFlag>,
+     // Stores the location of the earliest currently active borrow.
+     // This gets updated whenever we go from having zero borrows
+     // to having a single borrow. When a borrow occurs, this gets included
+@@ -427,7 +429,7 @@ impl<T> BqlRefCell<T> {
+     pub const fn new(value: T) -> BqlRefCell<T> {
+         BqlRefCell {
+             value: UnsafeCell::new(value),
+-            borrow: Cell::new(UNUSED),
++            borrow: BqlCell::new(UNUSED),
+             #[cfg(feature = "debug_cell")]
+             borrowed_at: Cell::new(None),
+         }
+@@ -689,12 +691,12 @@ fn from(t: T) -> BqlRefCell<T> {
+ }
  
- mod chardev;
- pub use chardev::*;
-+
-+// preserve one-item-per-"use" syntax, it is clearer
-+// for prelude-like modules
-+#[rustfmt::skip]
-+pub mod prelude;
-diff --git a/rust/chardev/src/prelude.rs b/rust/chardev/src/prelude.rs
-index 9f0b561bfab..f949d925399 100644
---- a/rust/chardev/src/prelude.rs
-+++ b/rust/chardev/src/prelude.rs
-@@ -1,3 +1,5 @@
- //! Essential types and traits intended for blanket imports.
+ struct BorrowRef<'b> {
+-    borrow: &'b Cell<BorrowFlag>,
++    borrow: &'b BqlCell<BorrowFlag>,
+ }
  
--pub use crate::chardev::{Chardev, CharFrontend, Event};
-\ No newline at end of file
-+pub use crate::chardev::Chardev;
-+pub use crate::chardev::CharFrontend;
-+pub use crate::chardev::Event;
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 2e4ccc9b231..ff929e60993 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -5,7 +5,7 @@
- use std::{ffi::CStr, mem::size_of};
+ impl<'b> BorrowRef<'b> {
+     #[inline]
+-    fn new(borrow: &'b Cell<BorrowFlag>) -> Option<BorrowRef<'b>> {
++    fn new(borrow: &'b BqlCell<BorrowFlag>) -> Option<BorrowRef<'b>> {
+         let b = borrow.get().wrapping_add(1);
+         if !is_reading(b) {
+             // Incrementing borrow can result in a non-reading value (<= 0) in these cases:
+@@ -790,12 +792,12 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+ }
  
- use bql::BqlRefCell;
--use chardev::{CharFrontend, Chardev, Event};
-+use chardev::prelude::*;
- use common::prelude::*;
- use hwcore::{prelude::*, ClockEvent, IRQState};
- use migration::{self, prelude::*};
+ struct BorrowRefMut<'b> {
+-    borrow: &'b Cell<BorrowFlag>,
++    borrow: &'b BqlCell<BorrowFlag>,
+ }
+ 
+ impl<'b> BorrowRefMut<'b> {
+     #[inline]
+-    fn new(borrow: &'b Cell<BorrowFlag>) -> Option<BorrowRefMut<'b>> {
++    fn new(borrow: &'b BqlCell<BorrowFlag>) -> Option<BorrowRefMut<'b>> {
+         // There must currently be no existing references when borrow_mut() is
+         // called, so we explicitly only allow going from UNUSED to UNUSED - 1.
+         match borrow.get() {
 -- 
 2.52.0
 
