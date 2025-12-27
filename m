@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E8A7E8FDB0
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 05:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A7D8E8FDD4
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 08:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZMfI-00011x-W1; Sat, 27 Dec 2025 00:16:33 -0500
+	id 1vZQ44-0001ML-OQ; Sat, 27 Dec 2025 03:54:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vZMfH-00011P-1h; Sat, 27 Dec 2025 00:16:31 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vZMfE-0004nP-Qr; Sat, 27 Dec 2025 00:16:30 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBXOCWoa09p6kBMAg--.44401S2;
- Sat, 27 Dec 2025 13:16:24 +0800 (CST)
-Received: from [192.168.31.152] (unknown [113.246.232.145])
- by mail (Coremail) with SMTP id AQAAfwBXsO2ka09pzh0PAA--.13006S2;
- Sat, 27 Dec 2025 13:16:20 +0800 (CST)
-Message-ID: <e77c63ea-471f-4bea-af4b-378081446e0a@phytium.com.cn>
-Date: Sat, 27 Dec 2025 13:16:20 +0800
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vZQ42-0001LS-OW
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 03:54:18 -0500
+Received: from mailgate01.uberspace.is ([95.143.172.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vZQ41-0001kt-7a
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 03:54:18 -0500
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 5F0CF60D43
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 09:54:08 +0100 (CET)
+Received: (qmail 27282 invoked by uid 990); 27 Dec 2025 08:54:08 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Sat, 27 Dec 2025 09:54:08 +0100
+From: Julian Ganz <neither@nut.email>
+To: qemu-devel@nongnu.org
+Cc: Julian Ganz <neither@nut.email>, qemu-trivial@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH] tests: fix comment declaring runtime in rv64
+ interruptedmemory test
+Date: Sat, 27 Dec 2025 09:53:46 +0100
+Message-ID: <20251227085349.23808-1-neither@nut.email>
+X-Mailer: git-send-email 2.51.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v8 3/7] hw/misc: Introduce iommu-testdev for bare-metal
- IOMMU testing
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-References: <20251224034647.2596434-1-tangtao1634@phytium.com.cn>
- <20251224034647.2596434-4-tangtao1634@phytium.com.cn>
- <f3c919df-076c-4f19-ba28-686c713fc53f@linaro.org>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <f3c919df-076c-4f19-ba28-686c713fc53f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwBXsO2ka09pzh0PAA--.13006S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAQBWlNmrIGFAAFsP
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxCw17ZryUGr48JFWrWFyfJFb_yoW5AFyfpF
- ykKay5KFy8Arn3Cr4fXw1UWFy5WF4kJw1Y9r17JF1jgryYyry0qr4Uuw1jg3ykJrsYqF17
- Z3yDK3WUuw45ZrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Rspamd-Bar: -
+X-Rspamd-Report: MID_CONTAINS_FROM(1) BAYES_HAM(-2.991974) MIME_GOOD(-0.1)
+ R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -1.591974
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=bDOhklJZKzpwddgwnTDpyzmwJIi+r0iPIv63V8dbigw=;
+ b=H2W1CziceSMNdh1Q6GzBKRyW7uOLY8bYBH6muIbsIdZUOU/s0Pj9jf1d6FaRJo0q4rIvSOmW1X
+ LBK1YCRcBjFrqaM5YRpU/7QHdiqm901QaD89Bs6ZS8v/cxOBJoKLgVll/rlO3kiirDrGezkpRC7e
+ 9hLmJmgw5yuPNr5/ppe9ls372ZphloosJGRTPza6GC/Cbi0lW5Jrd+28Vl/ogK6S60tcyP2ApV51
+ pvy44+mV2YzCuz+aZ6bmpZ3el1E0jcz25l2excfksrqiBiaMOUu59lo7vwzg2ndkXyC1JCySPX1M
+ cSS5N89bPdc0Wq2jJFQ0Wwr+vR6Vzg12VkcAEd6uONnoLm0TedtZHGJhDNAkOFis6eGNyjAbNwcr
+ dtugcSsVZBypDaEBmtU9P84rl9zucSNHWMkwYrKjKyzmGKaYi89Km4S8wKeWiA/eIPU92kYLtSZP
+ gh/58XBTcaKYb1W72YgrdKjcW/IpPWeo9SO9jh2MlO1PF7LmkK9K90QXdWjRKobm//4uOUJAu6Jf
+ z3uhF0MWZR4FBMfkwSOOvLeGcAvpO5UsaKTnW2lAgPokXYUW8LUZEfA76pwHPlZMKmvIKk4PfkLp
+ fhAbMRrEN6A7l6oJKTGdkbspM2XeZxFowkC4arFPUfJhEwbn7Dl7Q7+qR/3AtIQtiastkPRCviJg
+ 4=
+Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
+ helo=mailgate01.uberspace.is
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,81 +84,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+The test attempts to trigger a regression for arount 30s. However, a
+comment just before the computation of the target wall clock time falsly
+declares the run time to be around 60s.
 
-On 2025/12/27 06:56, Philippe Mathieu-Daudé wrote:
-> Hi Tao,
->
-> On 24/12/25 04:46, Tao Tang wrote:
->> Add a minimal PCI test device designed to exercise IOMMU translation
->> (such as ARM SMMUv3) without requiring guest firmware or OS. The device
->> provides MMIO registers to configure and trigger DMA operations with
->> controllable attributes (security state, address space), enabling
->> deterministic IOMMU testing.
->>
->> Key features:
->> - Bare-metal IOMMU testing via simple MMIO interface
->> - Configurable DMA attributes for security states and address spaces
->> - Write-then-read verification pattern with automatic result checking
->>
->> The device performs a deterministic DMA test pattern: write a known
->> value (0x12345678) to a configured GVA, read it back, and verify data
->> integrity. Results are reported through a dedicated result register,
->> eliminating the need for complex interrupt handling or driver
->> infrastructure in tests.
->>
->> This is purely a test device and not intended for production use or
->> machine realism. It complements existing test infrastructure like
->> pci-testdev but focuses specifically on IOMMU translation path
->> validation.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>   MAINTAINERS                     |   7 +
->>   docs/specs/index.rst            |   1 +
->>   docs/specs/iommu-testdev.rst    | 112 +++++++++++++
->>   hw/misc/Kconfig                 |   5 +
->>   hw/misc/iommu-testdev.c         | 271 ++++++++++++++++++++++++++++++++
->>   hw/misc/meson.build             |   1 +
->>   hw/misc/trace-events            |  10 ++
->>   include/hw/misc/iommu-testdev.h |  68 ++++++++
->>   8 files changed, 475 insertions(+)
->>   create mode 100644 docs/specs/iommu-testdev.rst
->>   create mode 100644 hw/misc/iommu-testdev.c
->>   create mode 100644 include/hw/misc/iommu-testdev.h
->
->
->> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
->> index fccd735c24..b5f6fdbd9c 100644
->> --- a/hw/misc/Kconfig
->> +++ b/hw/misc/Kconfig
->> @@ -25,6 +25,11 @@ config PCI_TESTDEV
->>       default y if TEST_DEVICES
->>       depends on PCI
->>   +config IOMMU_TESTDEV
->> +    bool
->> +    default y if TEST_DEVICES
->> +    depends on PCI
->
->        "depends on PCI && ARM"
->
-> ?
+This was the case already when we introduced the test in
 
+    5241645c47a9987f4fcc65bab303a444966b7942
+    (tests: add test with interrupted memory accesses on rv64)
 
-Thanks for your review.
+Signed-off-by: Julian Ganz <neither@nut.email>
+---
+ tests/tcg/riscv64/interruptedmemory.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-iommu-testdev is intended to be a generic PCI test DMA engine, usable to 
-exercise different IOMMU models, not ARM-specific. The current series 
-uses SMMUv3 as the first backend/example, but the device itself should 
-only depend on PCI and is gated by TEST_DEVICES.
-
-
-Regards,
-
-Tao
+diff --git a/tests/tcg/riscv64/interruptedmemory.S b/tests/tcg/riscv64/interruptedmemory.S
+index cd9073ee31..c154f93839 100644
+--- a/tests/tcg/riscv64/interruptedmemory.S
++++ b/tests/tcg/riscv64/interruptedmemory.S
+@@ -25,7 +25,7 @@ _start:
+ 	li	a0, 0x03	# 8N1, DLAB=0
+ 	sb	a0, 3(t1)
+ 
+-	# Run test for around 60s
++	# Run test for around 30s
+ 	call	rtc_get
+ 	li	t0, 30
+ 	slli	t0, t0, 30 # Approx. 10e9 ns
+-- 
+2.51.2
 
 
