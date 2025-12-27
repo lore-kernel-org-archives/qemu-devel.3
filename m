@@ -4,110 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFE1E8FDD6
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6133CE8FDD8
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQvf-0006WM-4v; Sat, 27 Dec 2025 04:49:43 -0500
+	id 1vZQw0-00007c-FP; Sat, 27 Dec 2025 04:50:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQvd-0006Vb-H1
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:49:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vZQvy-0008Sv-4r
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:50:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQvc-000735-0q
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:49:41 -0500
+ id 1vZQvw-00076c-MQ
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:50:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766828979;
+ s=mimecast20190719; t=1766829000;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+obehD/6XgLBmBbpDgAeb1sGrtgaFddAnzlpY2bxiQA=;
- b=JwFrHneMrbbxUp/+vXjhqPpxj9JI95eaVyFYoUlJYGGjtZsf4vKwiuMRxyjSjJm875gICB
- mN64SGw8JjySgHhqwxFI8q4cXyPO3JAXZAddl9zQE9J7V+++8LzAxc18pTErq3FFFMtVTY
- 8uQpL0CMG7LBzii1upk7IN3um5I7/gw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UMX6XGLgAoHmFfL2qR77G3yc1UxcsxwMbqixV2REwfU=;
+ b=bgvqBUOHFp/VaEUfLUXiV0tw4eKWRivvlUyLh4UXm1kgqNfXHt1fznzGl+xoq4kctfuCZA
+ e6rLQgS8iIQyzQmAorz6UHQLeypWb+kNG7gB/AmmgCQuTYXJvMG09bRoi1+mTQQ6NCtyCd
+ ddQkXP70X0RrD+6PI6Vj5uZtzWntwJs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-253-vF_NFMNNOD2--M12j2QpuA-1; Sat, 27 Dec 2025 04:49:37 -0500
-X-MC-Unique: vF_NFMNNOD2--M12j2QpuA-1
-X-Mimecast-MFC-AGG-ID: vF_NFMNNOD2--M12j2QpuA_1766828977
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4792bd2c290so73505975e9.1
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:49:37 -0800 (PST)
+ us-mta-168-_ZxInSJhOQeIzvKPudWkBg-1; Sat, 27 Dec 2025 04:49:59 -0500
+X-MC-Unique: _ZxInSJhOQeIzvKPudWkBg-1
+X-Mimecast-MFC-AGG-ID: _ZxInSJhOQeIzvKPudWkBg_1766828998
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4325aa61c6bso2502834f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:49:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766828976; x=1767433776; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766828996; x=1767433796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+obehD/6XgLBmBbpDgAeb1sGrtgaFddAnzlpY2bxiQA=;
- b=TdHrZfuV6de8Td9JzloAq7B0/NBGm8yMd6OXdnZjxTkzl0sV4/AU31edGRxK8+viHN
- hherkt369doPcIBmkY+Ue3T5heIx61QtZ2FSKLpWNush1dg2CYvhV0bjJWCOuAgfCEIi
- uHRdpNT0DT5L1Rrw5OVOmbXV5oaK222YbMOcv+/iab3ZMWgaavG9DrMATqFS53aaOUP+
- HZipSMHc6hQDdmLrnSwvZJEkgnzD78YhMNHbAtMjXuBdCSxa/gQVSHB6kgQHIQUbZ4+E
- e2f5fU9c8W31ssGCNh/x7hUXlXjutxeQsRfo6R+4hnML8CxkfyJxwo0rlaIEnH2R6Czb
- VQKA==
+ bh=UMX6XGLgAoHmFfL2qR77G3yc1UxcsxwMbqixV2REwfU=;
+ b=FgNAFFd8KIJhVShNTIrjXJ9DZnnEYjkXmHDtChYPGIaaXO8Y3hGCMWVNz27SG5VYiT
+ Ny2RB0pc2feyw1VOxFsEN3w0a8YAdUyFIKDaLVqzXnYWt6Oy5pfO7IOTCyAc8RS0VZws
+ 9hJQjxwTY4dZTwX6c8OFqR/rAZ2MAXW35s83m/BnaNOGj1wuWFpc1sO1VT/S8k2Cbt4u
+ /fbOZDOqweJxfJw6Qy6S3nj4QqowjniKVEMUFVyeZfVJDP7XL+HFC1RFcZ6p5gFV6C/i
+ e2GDu0uRMM+3s/hHOJkHIo9vMDFwu5XUixnt9axh4bTsLEh8Urm9wQ/liiqTZQo1vlyz
+ i7gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766828976; x=1767433776;
+ d=1e100.net; s=20230601; t=1766828996; x=1767433796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+obehD/6XgLBmBbpDgAeb1sGrtgaFddAnzlpY2bxiQA=;
- b=umpJXuUCAAd+c6ZGLsqSHTZYIA8ev6U7xlydgjwxLjH+Pt95uBtdkDXnyRGNSFN2Oa
- lfIHog369PPYgNLK/exshVVlp5wA4VZxYIwKof9toPpSiBtBsMLwUXTmyRRdu5DCgAFM
- x7p4rgzHViyxyi/hn82KUOi6B4zfPIQXMSYIbKZblQuI2kO6pvgs55fcA/508LbfqASR
- ABzA1/LK46Z+JXHwRbGRwjpkQD8lIfDPGrX2UJZBK/hhnmljeZJolaD0yY44rIFpbIkb
- tsESefxCvk8SQAnJfSqKk0awsndjQUzNn8p+dPhTa+Jt7NhIBpbLfrgyLJ3HDbiJRf//
- V9og==
-X-Gm-Message-State: AOJu0Yz66U4RSiGBQSSVrmL2O1ZiEXSdgN4lk/RsFXNsA/SyrMzWaNFA
- CZft+YtrvM+vRXF5sQ1NngQuX4q9iUctuTYOCtnCLlUjLF8k58gMbLluiZAgm3PFSGsUaVZ/ede
- FCcylUDHi562G7nlnDgHmbQtO9PlR6kZe+7M5zzEuVk1b91XRE9ZVNHsWG5/jgpPMp8bxNzAC+B
- +G08PhXX+0fOWQIlKWB42lleoAwfTYjjcoXFFq5Cv3
-X-Gm-Gg: AY/fxX4DEhxTrea/tpCHnVvqOd1ZIKmVOQZLCa5tIiWW62NYaulGGwj1coOyrRRR/gE
- tDm5T0B1GtIBCOuZRJAszlQJqH/S2R1kTdPCQDw4Im8a/FUAjEQvw1LM6U+eQICUF8OTS8qMIvZ
- q36+AjfgNzuCgt98x7AGRnkLF5PKEdtGyB93qr3YB+o1rWL1JhrX2qUs0jsJdWqZvHC1BapeKA6
- 6DVSRxx8TNnUDBdt37udBogTRiyo/8h6iUeGTHB98BiHauEpCEmOJ+dQy8QjW8xmpXV4yOvFqgh
- fZ0IWcgGRKuJlwHESFwSKEeyWsWjf8fQrMo6UaOULr/xqqR40TYDEWEXiD7I82oauXFR49xRxlX
- eIjzR5/QqHJ+oEA1lOMOdwFGm3uxC9tU4qeN9T6+96c//vnhNTQXxhI538Ho4F0CFCvC/YVb68B
- rvq4vKA80VvWPB1sc=
-X-Received: by 2002:a05:600c:6812:b0:477:63b5:7148 with SMTP id
- 5b1f17b1804b1-47d1955b97cmr294928285e9.6.1766828975969; 
- Sat, 27 Dec 2025 01:49:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHtCex/Vs3RYDuRfkoHScDwXAlBgN8l0dmFpWVQZMwQuBRjAgnUJYDDrtER3EiXVQKiyjLwSg==
-X-Received: by 2002:a05:600c:6812:b0:477:63b5:7148 with SMTP id
- 5b1f17b1804b1-47d1955b97cmr294928115e9.6.1766828975580; 
- Sat, 27 Dec 2025 01:49:35 -0800 (PST)
+ bh=UMX6XGLgAoHmFfL2qR77G3yc1UxcsxwMbqixV2REwfU=;
+ b=OOFBsegW2JeMhnA3p0h4uIecACH+JoID+NDVqltcv3jlmoYuCXMKNrlkBAf3Wpp9Y3
+ Dr8ncNuWCzDuOILa24jJNdfRSr0mRGb6TD/wbJqw2XFAGuRpTpBur7TfVOgQyGYhEObQ
+ dqnckbb/bA+QLMfOtn6JPuEehL2F3M3DC2qHzY/zFxHnbAq3Ty92Vl6WLjb6fvIpOMAv
+ pQhkgnj653XFe8DGFRJupf1M8ZDPHtC4Vt6Mayvhj5u23v83NtJeKuC1Ta3+UeDggjNx
+ EJTad9g5Y1jdbZc4Pfj6KJOwy8nlTb/Vbiij0/o9T4kKxk6c1hEDbDeyxtEwPI6YNgP4
+ Mj9w==
+X-Gm-Message-State: AOJu0Yw1QmcyJS1RVAl0xlHavFe6r7abjm3LFnkfyGk10Mti7WHAnfmE
+ fkyQ5Lz/0MhdbP5WmmHHDn8lwNZNB6LB8qh3onOSMd8PPJPKjfk6KmXk2Q7FFEAuB+9B8oRUgSO
+ mGUL7CK879UC+/vvr5CohjXtHc4OmryY+DMAIzLYag4ng5fBAljlv3VfmAQmnsBzOYuPUQ4mlEq
+ joqL6co5z8Tg1Vs8+ohW47PKbuQrpQ8DEG7B2NhWyY
+X-Gm-Gg: AY/fxX44vReRQKo0+o6pAN2H68Z4UcTh4a8McQ6XAzvWrBKIRs1aY5gdOvUA3jobzLc
+ fvZPFDXMfNVvU7oq/rxSPsDOi7JJjhzIVYt0u+NeOZWRvDD5lvErP5NkOYcUNR2CMmoXUfOw+X3
+ DfxHnlGl4UqBSDPzTNVofgM9vnXPjQ/KmZKieaTaVPQ5obV3iJ/D6KTwb/TKVVYaBPP56cJ+10r
+ ZLbhLi+Xm92j2bh8xmjzh/uQMmndDgmGyuptl5DHop/99FH1EGcsYIc1H2tOXCvQo6Wtw/RUedQ
+ SGK6JWHu19QBJFcv3LkjWfJyHSd549Ypeoq3Af5/Nh+MwL+mGYZ0aubGuopaoTOBX0ObtX42uYg
+ 6G24AxgyZm4kQoaaOkLAKvs2D3s6g1abGut5V4Vi5DXbh97GfOA9rzGAH5k5bP+k/I+BObEJcRR
+ VonmbPQ9/LVwQhXKM=
+X-Received: by 2002:a05:6000:2301:b0:431:266:d134 with SMTP id
+ ffacd0b85a97d-4324e50c2ccmr30009753f8f.53.1766828996390; 
+ Sat, 27 Dec 2025 01:49:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEpQEWs0Nss3GVFySYRyf72A6ZT6AvrIt/x7fCJ6PP7FfQ8xxT0YsYqY2tF4t+/dbq5veA6IA==
+X-Received: by 2002:a05:6000:2301:b0:431:266:d134 with SMTP id
+ ffacd0b85a97d-4324e50c2ccmr30009726f8f.53.1766828995912; 
+ Sat, 27 Dec 2025 01:49:55 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193d4e91sm422511075e9.13.2025.12.27.01.49.34
+ ffacd0b85a97d-4324eab2ebfsm49665631f8f.40.2025.12.27.01.49.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:49:34 -0800 (PST)
+ Sat, 27 Dec 2025 01:49:53 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
  Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 110/153] cirrus/macos: enable Rust
-Date: Sat, 27 Dec 2025 10:47:15 +0100
-Message-ID: <20251227094759.35658-36-pbonzini@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 118/153] target/i386/tcg: mark more instructions that are
+ invalid in 64-bit mode
+Date: Sat, 27 Dec 2025 10:47:23 +0100
+Message-ID: <20251227094759.35658-44-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,26 +125,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20250924120426.2158655-25-marcandre.lureau@redhat.com
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- .gitlab-ci.d/cirrus.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/tcg/decode-new.c.inc | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 0d66a14186a..177bd684ef5 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -56,5 +56,5 @@ aarch64-macos-build:
-     INSTALL_COMMAND: brew install
-     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
-     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
--    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu --enable-rust
-     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index dfaffec599e..8a1fb2855d5 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1698,9 +1698,9 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xD1] = X86_OP_GROUP1(group2, E,v),
+     [0xD2] = X86_OP_GROUP2(group2, E,b, 1,b), /* CL */
+     [0xD3] = X86_OP_GROUP2(group2, E,v, 1,b), /* CL */
+-    [0xD4] = X86_OP_ENTRY2(AAM, 0,w, I,b),
+-    [0xD5] = X86_OP_ENTRY2(AAD, 0,w, I,b),
+-    [0xD6] = X86_OP_ENTRYw(SALC, 0,b),
++    [0xD4] = X86_OP_ENTRY2(AAM, 0,w, I,b, chk(i64)),
++    [0xD5] = X86_OP_ENTRY2(AAD, 0,w, I,b, chk(i64)),
++    [0xD6] = X86_OP_ENTRYw(SALC, 0,b, chk(i64)),
+     [0xD7] = X86_OP_ENTRY1(XLAT, 0,b, zextT0), /* AL read/written */
+ 
+     [0xE0] = X86_OP_ENTRYr(LOOPNE, J,b), /* implicit: CX with aflag size */
+@@ -1834,7 +1834,7 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xCB] = X86_OP_ENTRY0(RETF),
+     [0xCC] = X86_OP_ENTRY0(INT3),
+     [0xCD] = X86_OP_ENTRYr(INT, I,b,  chk(vm86_iopl)),
+-    [0xCE] = X86_OP_ENTRY0(INTO),
++    [0xCE] = X86_OP_ENTRY0(INTO, chk(i64)),
+     [0xCF] = X86_OP_ENTRY0(IRET,      chk(vm86_iopl) svm(IRET)),
+ 
+     /*
 -- 
 2.52.0
 
