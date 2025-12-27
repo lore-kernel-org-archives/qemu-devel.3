@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21262E8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7200BE8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQxm-0006Hb-M9; Sat, 27 Dec 2025 04:51:55 -0500
+	id 1vZQus-000361-A9; Sat, 27 Dec 2025 04:48:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQxj-00065o-Lh
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:51:51 -0500
+ id 1vZQui-0002O7-7P
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:48:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQxi-0007XN-0c
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:51:51 -0500
+ id 1vZQud-0006uZ-C9
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:48:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766829109;
+ s=mimecast20190719; t=1766828916;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z0o903Dc2qu1dTRcXlXDrKlZDWfP3LsB5Y748CsL1HI=;
- b=VD3xolqRKIGZkW1MNEws0C8A6zqNiQdoxG+X2upJEYfDyCQZ8ZnUKHCxg14NlmZudm3IxA
- WzRRfknBQScrzAB/TEc83/ULqiBTmfYqg5uFdx5ygsiA/aXqHyrLDISx19x4lVFXetqnH6
- H6vGOZghci/xEj+fdj4dGdimqMwNIO8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=B1NClWp8k93LnwznfnQ9F9fegAQxKZaohNu9b81EugQ=;
+ b=M62RSQuoIQBkxMckx0nbBdQjon5MJRz0cyT1LxXA31aj87gzFW97j+OcUSbpN0aqr9Nd5m
+ pXw2HDt68eTWR/ftcTRZaw+E1BEYhQMLPmeOsg902zZtQ0GSfrDsd0uHbe5+DHml74Ss+/
+ +8i7vTHp346Wxe+4/8scDhTrs7f+cMg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-427-jW6IK-0sM1a04RHTtYFvOg-1; Sat, 27 Dec 2025 04:51:47 -0500
-X-MC-Unique: jW6IK-0sM1a04RHTtYFvOg-1
-X-Mimecast-MFC-AGG-ID: jW6IK-0sM1a04RHTtYFvOg_1766829106
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4325cc15176so3163262f8f.1
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:51:47 -0800 (PST)
+ us-mta-177-WvQ_x1cHOEac6ync84v1YQ-1; Sat, 27 Dec 2025 04:48:35 -0500
+X-MC-Unique: WvQ_x1cHOEac6ync84v1YQ-1
+X-Mimecast-MFC-AGG-ID: WvQ_x1cHOEac6ync84v1YQ_1766828914
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-43284edbbc8so552062f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:48:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766829105; x=1767433905; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766828913; x=1767433713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z0o903Dc2qu1dTRcXlXDrKlZDWfP3LsB5Y748CsL1HI=;
- b=bGb6KU8mz1xqTgQhKwWdoHo3+IK6htzf+li29dLNgdICw16jxxojYWD1taGkgYdPUZ
- scYOqepPrUVAqF57YMcZroEcKQHS+5heInzl0Ey04azZ9q24hyaRxrWwCALMsAr4jG82
- cAED1ZAcXefLeRb7EwYjOKEKuqucAtsMj9ii9sztCYcE0fBJoATDXsfrw2pXj7We1sDB
- z1hnfV+p75yTYKPuOZZiaYWQswlEV24vwsYVNOez+ntIuKKouhqxvOkmZamZA6x6JFco
- it/CyoJRdm4p45YuC2Z+VVCfhMCGYIShHTGKYpMsabZsm+eyDZxOZsx13ZOo8hqKDZ5z
- 8J2w==
+ bh=B1NClWp8k93LnwznfnQ9F9fegAQxKZaohNu9b81EugQ=;
+ b=fqIJgrse+35In4vMrfBPzECKXsAN6mshjvcNbOJmZ0Grr8Bh2kQLHd2WT+GXbmJXi5
+ lbuZL8v3zLajZBC5XvDGmNqwiCU+z9RV/Bjq2lUqAGoPfs6sZfiv1e+ERLedp74rEPAg
+ g5lV7WFO6bGWGczNQ3xrY28M1x35R6CDjKIvqfAbLWUZtsI07EqJfctHMTZIA9CrpvW0
+ SPeC3oDVClyhbM0Z3jTRvAjF/dyk5IoJjYltNCtqw6bCqU1KcdNdxRu7ntqJmVWgN6AL
+ UVkU8jZusDCFoJlez31Xy4MGajbw8ezNMmyRwCbLuvzMN/VWojf5TdJA65C9zwPlUUGA
+ j8eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766829105; x=1767433905;
+ d=1e100.net; s=20230601; t=1766828913; x=1767433713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Z0o903Dc2qu1dTRcXlXDrKlZDWfP3LsB5Y748CsL1HI=;
- b=gNQS39ctZgWOd3Ye2Hryom6yHL9ZiDZFZeO+CroO1bGsAjS/Cku9SaykFBa/ahWMtq
- +ACZS/z9rv+K5l3e1gYs8zQLeVfXKMzYFgPiFzL5UnnHBnc6GwNljMsLxlOBWaO6nbxP
- o6ZSs/2C7HU4ZNLQaw6RUp8qXFS9KpfTlS4g4nmjV7GBTbe2qc8GS+ZgSbXaMriQY7Nu
- QFB/Nn9rRcNgfTMxR+QoabQwNUhHY03HH8lvviAdwAD9peeU+YdfuryKftFWT0SRj0oh
- qmpW2UlKrE7SMz44KBWoNod1h8FAV3DeQW/f1BIuL7ju8S7tY7Eax38lL6LfC0bTHHzf
- tu3w==
-X-Gm-Message-State: AOJu0YxU7oD5csn5gXzKStTmZ7+kNjhzFrjn2mWhRrDkvVOeABLYItK+
- hvMKrtIczCFQ3uHFJh1KJrgvc+0k/FxSVEd61FbHGn/PrWg09SvG/8CnDuYbre66jHf72bR+tZl
- 9YR94S2Jl6RmKvOckFTn0ySohIkwPxt6kTdaJP13UrnlanWpPZ4y+7kkDTpnF3R/ujxUBwM1dSW
- QrbmKm/cVGIjvbwxQBkuKItNNPZMrSXXkz1nHMJG5U
-X-Gm-Gg: AY/fxX4Cm/G4odAewaTC1YJ/NZSqb56SET/3j9JU/vvyfw40q8ldqOaRG2sg8cb4pXK
- BSMX/xeDJo/iF8+VV5DzFB9lCE/DQ9mvZPJjqzt8nr/LsyS3mZZRw4oEQszxowkThpdXG3WhWyr
- iI0d/3m24tnJwlrJ4rxogrweiEE3hvxEYL4todbzp6nCbJ0R1QxlS6U728kqqysP3rfr4BavSfm
- HnmIOchkUb4ZNZ0++G3Pvo6lX5w2y/hGl6VHloqEmzES3tMWuJFM91h4cAfz4Z4iK0Wb8wFmdxB
- MnSnvcUP5DME4GgiJtD9aPHbS0o2KfLGwygOglQ/AZQk86mXdM4LAhFIQzJzYVUzUVgCmnCB6G9
- FqFfihaKUNZLiQm9B/RZPLI3gyE/2Z19P/KDWp4bcO3VAc99SO/VQfk1pSH79/uaszQ2REi1brr
- vSnBsV6TopUjzNOh0=
-X-Received: by 2002:a5d:5f51:0:b0:429:ba48:4d8 with SMTP id
- ffacd0b85a97d-4324e4d27b3mr32374534f8f.25.1766829105544; 
- Sat, 27 Dec 2025 01:51:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFBUaRu73ct84RjgxYRULxBvA7yHcq9pISyCGPzNs0toPA/ZR4Q9osS2P8d6LNVVN8t1BlXYg==
-X-Received: by 2002:a5d:5f51:0:b0:429:ba48:4d8 with SMTP id
- ffacd0b85a97d-4324e4d27b3mr32374511f8f.25.1766829105162; 
- Sat, 27 Dec 2025 01:51:45 -0800 (PST)
+ bh=B1NClWp8k93LnwznfnQ9F9fegAQxKZaohNu9b81EugQ=;
+ b=UwSQj8TG0hUb6nH2Kc/mES/u4w6m5OYB5ZBQAD9ahkrGc91fntI3YlxFWrMdkW5GpZ
+ fqNaog/a0k5uC5Zxwmcrvt8iRY1RpanREP670wOqxrFtxIO374YzrEl6gc1hotJGy1j0
+ joHmX8ZU8+DrJeQS4un/OkaNWbKOP38yb5IPdwatdmoqyUXUoTd0tZJ82i//ZVUoMoWe
+ vJv9mvbkLJu8xc0pECA2V80gw+5zBwetGsUv6PEmNNHTozskillecpDGWfgSwLUNTbYp
+ tj4L2jvKcAtovkb9cYCa88hwihkSRHRghVjYUmnN8spp97pF9A+S8Ho18RDkDzjqBQ7N
+ 7jgw==
+X-Gm-Message-State: AOJu0YzmdFPImNsW4R3A5hHwo1tHPlX1Ip0I71Jk2ITPxbMUbwOMqpLc
+ 3GvPBOPyqRkdoh5p5qE1AfjDDlhrH6YesGn/Axz9FkvSKqEeiCiF3m9HzaCDkAcUyXZA8m2Frvb
+ s74aicm4tbNh+Hej1muAn8C3KhXKYQCCiE1pTfYk6kWaS6rS7K49EByZkr6MfGNkK3Oev9wp6YH
+ vuJBQDd28Uo7YkNZOSJ6Wro3QtYq15HJV0r0Czm/+N
+X-Gm-Gg: AY/fxX70YCj25Rl8KJ5b3VvD94PsExTRjhgzgFczGvVulBpVl9jFTfkHC7N4I9yCqW2
+ RrDsFE4q3dtY4FU77iHT3r1ghRnUEHNuI/+Byhg/jjAHYOiJTO39aG7hPmG2Joh6cTA54z13fBf
+ 1lNQmAMSRKW4j4ImG+aU1HtHuYEuoLwRgXOr+8HUxWGqidTz+OXsFHX1zhWkaSPpTNaU9XyGutA
+ 1XGDs86vzGkQn0F6OluzU5+N7+iFnJYgTGCITc0bO2iAef0vbWojVqgMDcFeqWbmwuy7olzaACI
+ v6ooG7y5RqRuwGFlqI0gl9AZKvXmnj8dwOagbHl2ckaGCijoRd136bJmVS9iqPvJQ9HsIfYRjWS
+ iwv03kRSeaHCeICUinU1RxsskU2SNoh7gz/xJgnomBUTKSoN4/RGA68mneRwzJyTiNtmhP/DMOh
+ v73wOLpC/XjR41K+I=
+X-Received: by 2002:adf:b605:0:b0:432:7d2a:2be4 with SMTP id
+ ffacd0b85a97d-4327d2a2d3dmr7559583f8f.60.1766828912963; 
+ Sat, 27 Dec 2025 01:48:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFiV9bpbN4q8ShhY/lYm9lf1k9/TfLV68VC/9arPx+AxLNQKsN/4pdCOsCKwDeCUGUdNBb5hA==
+X-Received: by 2002:adf:b605:0:b0:432:7d2a:2be4 with SMTP id
+ ffacd0b85a97d-4327d2a2d3dmr7559559f8f.60.1766828912397; 
+ Sat, 27 Dec 2025 01:48:32 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea82f6asm51627902f8f.27.2025.12.27.01.51.43
+ ffacd0b85a97d-4324ea227casm50084695f8f.15.2025.12.27.01.48.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:51:43 -0800 (PST)
+ Sat, 27 Dec 2025 01:48:31 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
  Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Marc Morcos <marcmorcos@google.com>
-Subject: [PULL 148/153] qmp: Fix thread race
-Date: Sat, 27 Dec 2025 10:47:53 +0100
-Message-ID: <20251227094759.35658-74-pbonzini@redhat.com>
+ Yang Weijiang <weijiang.yang@intel.com>, Chao Gao <chao.gao@intel.com>
+Subject: [PULL 089/153] i386/machine: Add vmstate for cet-shstk and cet-ibt
+Date: Sat, 27 Dec 2025 10:46:54 +0100
+Message-ID: <20251227094759.35658-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -124,56 +124,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc Morcos <marcmorcos@google.com>
+From: Yang Weijiang <weijiang.yang@intel.com>
 
-This fixes a thread race involving the monitor in monitor_qmp_event and monitor_qapi_event_emit .
+Add vmstates for cet-shstk and cet-ibt
 
-Signed-off-by: Marc Morcos <marcmorcos@google.com>
-Link: https://lore.kernel.org/r/20251213001443.2041258-4-marcmorcos@google.com
-[Use QEMU_LOCK_GUARD and "continue". - Paolo]
+Tested-by: Farrah Chen <farrah.chen@intel.com>
+Signed-off-by: Yang Weijiang <weijiang.yang@intel.com>
+Co-developed-by: Chao Gao <chao.gao@intel.com>
+Signed-off-by: Chao Gao <chao.gao@intel.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20251211060801.3600039-18-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- monitor/monitor.c | 8 ++++++--
- monitor/qmp.c     | 6 ++++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ target/i386/machine.c | 52 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index c5a5d308774..1273eb72605 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -346,9 +346,13 @@ static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
-         }
- 
-         qmp_mon = container_of(mon, MonitorQMP, common);
--        if (qmp_mon->commands != &qmp_cap_negotiation_commands) {
--            qmp_send_response(qmp_mon, qdict);
-+        {
-+            QEMU_LOCK_GUARD(&mon->mon_lock);
-+            if (qmp_mon->commands == &qmp_cap_negotiation_commands) {
-+                continue;
-+            }
-         }
-+        qmp_send_response(qmp_mon, qdict);
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index bf13f7f0f66..57a968c30db 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1690,6 +1690,57 @@ static const VMStateDescription vmstate_pl0_ssp = {
      }
- }
+ };
  
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index cb99a12d941..e1419a9efa3 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -462,8 +462,10 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
- 
-     switch (event) {
-     case CHR_EVENT_OPENED:
--        mon->commands = &qmp_cap_negotiation_commands;
--        monitor_qmp_caps_reset(mon);
-+        WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
-+            mon->commands = &qmp_cap_negotiation_commands;
-+            monitor_qmp_caps_reset(mon);
-+        }
-         data = qmp_greeting(mon);
-         qmp_send_response(mon, data);
-         qobject_unref(data);
++static bool shstk_needed(void *opaque)
++{
++    X86CPU *cpu = opaque;
++    CPUX86State *env = &cpu->env;
++
++    return !!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK);
++}
++
++static const VMStateDescription vmstate_shstk = {
++    .name = "cpu/cet_shstk",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = shstk_needed,
++    .fields = (VMStateField[]) {
++        /* pl0_ssp has been covered by vmstate_pl0_ssp. */
++        VMSTATE_UINT64(env.pl1_ssp, X86CPU),
++        VMSTATE_UINT64(env.pl2_ssp, X86CPU),
++        VMSTATE_UINT64(env.pl3_ssp, X86CPU),
++#ifdef TARGET_X86_64
++        VMSTATE_UINT64(env.int_ssp_table, X86CPU),
++#endif
++        VMSTATE_UINT64(env.guest_ssp, X86CPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static bool cet_needed(void *opaque)
++{
++    X86CPU *cpu = opaque;
++    CPUX86State *env = &cpu->env;
++
++    return !!((env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK) ||
++              (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT));
++}
++
++static const VMStateDescription vmstate_cet = {
++    .name = "cpu/cet",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = cet_needed,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT64(env.u_cet, X86CPU),
++        VMSTATE_UINT64(env.s_cet, X86CPU),
++        VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_shstk,
++        NULL,
++    },
++};
++
+ const VMStateDescription vmstate_x86_cpu = {
+     .name = "cpu",
+     .version_id = 12,
+@@ -1840,6 +1891,7 @@ const VMStateDescription vmstate_x86_cpu = {
+         &vmstate_arch_lbr,
+         &vmstate_triple_fault,
+         &vmstate_pl0_ssp,
++        &vmstate_cet,
+         NULL
+     }
+ };
 -- 
 2.52.0
 
