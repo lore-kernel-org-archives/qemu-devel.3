@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68128E8FDDB
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C84E8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQPr-0002Nr-Fq; Sat, 27 Dec 2025 04:16:51 -0500
+	id 1vZQQZ-0004Ma-Fg; Sat, 27 Dec 2025 04:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQPf-0002Ke-IQ
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:16:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vZQQX-0003qZ-1b
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQPe-0002J3-4K
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:16:39 -0500
+ id 1vZQQU-0002lS-1Z
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766826997;
+ s=mimecast20190719; t=1766827049;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yHi0OhiUBJaRSmRmnVJ4fshCFpycq4d1vaapmTx7gfE=;
- b=asuZ9iX9utP1X9451u/e2pO74AYNvKMho6h+EwFd1iYjuRkpeYomx9+reXSgbMaMGXfuCW
- sDeMKf1XErcqbrEiQsnGDu/9UMWEQdvZ8RulGtAeIueKIaJV41E7DZyPOLtjSE/3lM9M+R
- 3TeAPRQMUYATZ5+xQxCXA6JDRNeFwV4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Z7YclRVtO4qoFigCNOFrbbMZmcmDW1b22zXAtv4jyAY=;
+ b=ZeT3SmBDFsFWUOCH4GbBZs7zgNWdzF7ifSJ5ixHkKzNpFXsektdUqMF8fvklPnOitla9NV
+ r5z96MzFYkvJHEf+D02pygR7cj6TxLAW/fuyhBrB4igKnZnSTLimBYqYWwHc2iOQSG4pmo
+ cdPv/YFObC3U7MFf7hKgrEcS90TE17c=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-DWE2GoqqNt2nsQJ2MFoJ5A-1; Sat, 27 Dec 2025 04:16:35 -0500
-X-MC-Unique: DWE2GoqqNt2nsQJ2MFoJ5A-1
-X-Mimecast-MFC-AGG-ID: DWE2GoqqNt2nsQJ2MFoJ5A_1766826994
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-430fc153d50so6248280f8f.1
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:16:34 -0800 (PST)
+ us-mta-433-bl1MYdBAPEWIdOprNAxo3g-1; Sat, 27 Dec 2025 04:17:26 -0500
+X-MC-Unique: bl1MYdBAPEWIdOprNAxo3g-1
+X-Mimecast-MFC-AGG-ID: bl1MYdBAPEWIdOprNAxo3g_1766827045
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-477cf2230c8so77990305e9.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766826993; x=1767431793; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827045; x=1767431845; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yHi0OhiUBJaRSmRmnVJ4fshCFpycq4d1vaapmTx7gfE=;
- b=C0sDESaLtA+THW4rgJnkXeDq1gSDbypDYZ43nkjtk9GrNsEfdY8NFWrUsMzSt5Hn0T
- ChSX/V0Jg2g+CZTjheEdww/OHgp/qUrhAMD7moJGgna3t57ncvMjN2n9Y03yLcR4Nl46
- BdZl27yH/3N9+PJk9AlKn+UDAfqyAI2uFkEgJPfaNBt6WmBAUwkkDTDNElDb61o9+bdD
- mzZfdOf8+AlY0PPWUbWkBkDCfsptMtBQErekXPTYK5oGQXvbbIdeOXk+dmRsqWZ/HKf1
- KFZTR6YezxBSlNR/m4Zv9zWIWuervGqvrkPdVCCZGL73uvEN0D4kidw6W77dF4cHwWgl
- EbKQ==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z7YclRVtO4qoFigCNOFrbbMZmcmDW1b22zXAtv4jyAY=;
+ b=Urix5876PMrPQslxHq3fD4c9dtnr1g0Mu751DrEyUdkCJdqnn7pSqkjUOL5zE+b6QG
+ o/AXXd4+m4Tewtk8nMwRwSCjAK/19KOM7eh9EwN208IXLOQ45eQ7hMUHdSnSS5970ZVh
+ 1MrfyRQDGEuEZHJ4+5FgxGIEvv6DvVCaM2PuUBnPtGSd+pSPjK5WKCabkSfao5JHWPpf
+ 9SQo4XEruNv8UizN43uZi6G6fideEkP7dQwZbmClIUZ+nOkS/JNRQl+X4v5pVOrhJxK7
+ vmIC3DDNHqFkDD9P9d9RQValbZdnqhfS9Wb7gsMSHeZ4Ev/245GxeX1mIhVrLAS95IR2
+ 2mVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766826993; x=1767431793;
+ d=1e100.net; s=20230601; t=1766827045; x=1767431845;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=yHi0OhiUBJaRSmRmnVJ4fshCFpycq4d1vaapmTx7gfE=;
- b=PrM0z+uQm3RIAm7ARoHkDKIP7MkuL/IUuHDYCPTY3tMouI+DTcqAuy4EQF6vxyUsMS
- azW2e5WAp1e9LHxrSsTxj+07zT49ctPyeWqiENeqJEd0wtjmYs5shRTLJ9G+1s6Uv4PN
- aRHyJM8aehNDmMrHcbHcuHX0Nm7FJrbfEaYHBwsyjHER36j2ljwATU/uWFmw5dh19Toa
- +kO91ndc2fHl+0vpgqKAFRGdzPm86s0cVC9mPlDxxFzk+DRRexo3Ble17evzLDDVLTKG
- 3K/z90HMOuUhFcU6AQzZ6j9pR0ZXRbEu7sCwQ5t5BkQiXtsIP0kggsaWzXooOT1qcsOF
- w1kw==
-X-Gm-Message-State: AOJu0YzrzrMfSACYTZree+I/gJOhO1ODdWHkICUN/2V1/Izq9+Mlmyqa
- 5D9kzN9YPKZYEJhjnzQTq1xrDtzjTkRoWp0d3FFgjtFJomEFXhGwBid9G5GNBTbF6cpFLdQer3I
- 9QLrF+9AQueF+kuwXf9ZKUcFRnhMEEqWdTowZCoNZf8ecSeMdAaIWfMzeVv7hU9Ksu47y6roivM
- CqdDg72fQX/0QvAF+GHiHY5jCpDez6X0VyTYlE3Jpq
-X-Gm-Gg: AY/fxX5wAJWUY+shhad96mAYYh09zw9EL05a4zFjEybxm6kwyvKO2exKLknU6yy/anO
- ZvC0krD1s2DTotHupoVCTpCAp1/na6/hVg5E0++bNtdMHlqxYXtgOeXaHeeRRMHmXIe9BW+fIDV
- Mkcg1XVZQqW+YfmHWP4xqKU/5qfFXRJl4i5mMirmAo+qqGDsGBDpuGRBNtCmL7+T5jwQ7OUDL0t
- 0Tt0zH4rElOq/RB8knq2Oex9Jp9V4WUUXMCw96AVcas3k+bNF36IeBxedtarMoBF+5jhiWT+YU2
- dkOnwO8W5HDEPUMG0ctKKIbQmZ/HpJH0LjRTPQhn1Xl3RfrRZ02uH2byq0cTahd5ekhFkwcrt9s
- fAiHyxPagp2RJG21QNvtBM3TriJRZDxPc5dl4OuPJpl2qyG+MBzSrbXJM584LapajMHp1cSiIZC
- u87MJC6Q8WAZpwy50=
-X-Received: by 2002:a05:6000:2586:b0:430:fcda:452d with SMTP id
- ffacd0b85a97d-4324e4cbd79mr31571175f8f.22.1766826993133; 
- Sat, 27 Dec 2025 01:16:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGRnlY9U6HFAYkfBTwMQvspwksuT27hclGnpMo5umHHfmzqJfaOO+TXLW2PBybXoCnFNzBgGA==
-X-Received: by 2002:a05:6000:2586:b0:430:fcda:452d with SMTP id
- ffacd0b85a97d-4324e4cbd79mr31571146f8f.22.1766826992622; 
- Sat, 27 Dec 2025 01:16:32 -0800 (PST)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Z7YclRVtO4qoFigCNOFrbbMZmcmDW1b22zXAtv4jyAY=;
+ b=mr6/pN58CKk8Iwjwh51MB+HKYpue4Ndp5bmiJNYq0yWplfQ7KIorhWuRGplfyYOExP
+ 9gcqXJOMtXWJR4yqeFvwKX88FmF7Mx6GBVzzf/TDScIVS2CRxOqG31dPn+PJzSHAKe7Z
+ C+AO/12GuZ0kyqxiRdEBJLv5uywWy/JATQAtYScb6ewSu/0ugkY3rxE8dOcBaL8xqZVV
+ xhHjXpE1+mFJI20GX/PVz1Yp0La9I6whw1RCAjpcAb9WJmTOKisrfuLxk2ktoHeKbt6l
+ xVHZ/wUNmuYwChRVHxxlb96jkB1Bbef2MnHCh95agSIlxJ19GnUqeIm8fHRD6vmmmbEj
+ cQiA==
+X-Gm-Message-State: AOJu0YzaBDQSmnC2aCd5M4iTDUxPIJuKbsf/IZ8LOtweU4uuUN8N10tq
+ 2328tdWD3M6M0eSAUQIvHy6Bz0pmLZWsA2OvwEX435E/lUw0vTezzWZSdX5BKfqP+cz6x4AC6Dn
+ KjLxlTqsS4V4ZltnYzYOr/P0dUIDmwHwsEBpvtHNfbxNHPX0M/nUJTeAiB8WA0k2+Pm+9bT0U7j
+ EMnlv5nvkUJ+6hJ/F42JMYUIwIxjOVuEN3aSr9iv2/
+X-Gm-Gg: AY/fxX51rmsrLzvW4ENhr5J/0EE6heIz/LobMbH4+zJ/IMA46p8Sh5GXlgt7QubuSy0
+ W4vHyD3R68pyjHVaj2b3JSVwfXv6oilG2IDhD4OvapLah9HUDXat+7t6hdQM4GmcOCW2SwzcO4R
+ rrkEU7rSWOdyJlu4y42A0zAU+zRCvPe7zXpWdraDKi5PPxdGPEUkb24I9lsSEWEPVuDlnWhB6tP
+ Of0Ts9u960aO4Bucvd1idNj0jjwXHaF/NK8Jb0iXi1bf50IQzknieeiF4TOFF2X7Jgw3hwRUcq2
+ 6b9H2gdXlVTbFEAaaiboKDYdwybY1Id44wMctJjBEtW8TYp8YkY6nc5XsZ0Anvm0BFOnFnq56jo
+ 90B+xP8PR6nhTEYxzJ07VJ+IEDFi3kyYfWIIiJaISjj+b9zjrqQpJrag87vyi3cn3M7/QAoVeeL
+ MFe2/6FfrASCIn660=
+X-Received: by 2002:a05:600c:3ba3:b0:46e:761b:e7ff with SMTP id
+ 5b1f17b1804b1-47d1958c90cmr283354195e9.28.1766827044626; 
+ Sat, 27 Dec 2025 01:17:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlzsELfVLkTvLG9B+wbrBIn96UviLFWBwCGpOweK9mfeurgJfPufyDQMp/LMFgkL0hQYS/Hw==
+X-Received: by 2002:a05:600c:3ba3:b0:46e:761b:e7ff with SMTP id
+ 5b1f17b1804b1-47d1958c90cmr283354005e9.28.1766827044190; 
+ Sat, 27 Dec 2025 01:17:24 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1b1bdsm49077492f8f.8.2025.12.27.01.16.31
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-47d193d4f09sm442644615e9.12.2025.12.27.01.17.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:16:31 -0800 (PST)
+ Sat, 27 Dec 2025 01:17:21 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 004/153] include: move memory_ldst* to include/system
-Date: Sat, 27 Dec 2025 10:13:51 +0100
-Message-ID: <20251227091622.20725-5-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 032/153] rust: remove unnecessary repetitive options
+Date: Sat, 27 Dec 2025 10:14:19 +0100
+Message-ID: <20251227091622.20725-33-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,86 +122,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These partial headers are only included via system/memory.h, so keep them in
-the same directory.
-
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/memory.h                           | 14 +++++++-------
- include/{exec => system}/memory_ldst.h.inc        |  0
- include/{exec => system}/memory_ldst_cached.h.inc |  0
- include/{exec => system}/memory_ldst_phys.h.inc   |  0
- 4 files changed, 7 insertions(+), 7 deletions(-)
- rename include/{exec => system}/memory_ldst.h.inc (100%)
- rename include/{exec => system}/memory_ldst_cached.h.inc (100%)
- rename include/{exec => system}/memory_ldst_phys.h.inc (100%)
+ meson.build                  | 3 ++-
+ rust/bits/meson.build        | 2 --
+ rust/bql/meson.build         | 2 --
+ rust/chardev/meson.build     | 2 --
+ rust/common/meson.build      | 2 --
+ rust/migration/meson.build   | 2 --
+ rust/qemu-macros/meson.build | 1 -
+ rust/qom/meson.build         | 2 --
+ rust/system/meson.build      | 2 --
+ rust/tests/meson.build       | 1 -
+ rust/trace/meson.build       | 2 --
+ rust/util/meson.build        | 2 --
+ 12 files changed, 2 insertions(+), 21 deletions(-)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 3bd5ffa5e0d..1cacc117cc6 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -2848,7 +2848,7 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
- #define SUFFIX
- #define ARG1         as
- #define ARG1_DECL    AddressSpace *as
--#include "exec/memory_ldst.h.inc"
-+#include "system/memory_ldst.h.inc"
+diff --git a/meson.build b/meson.build
+index d9293294d8e..270181038bf 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1,6 +1,7 @@
+ project('qemu', ['c'], meson_version: '>=1.5.0',
+         default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=gnu++11', 'b_colorout=auto',
+-                          'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
++                          'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true',
++                          'rust_std=2021', 'build.rust_std=2021'],
+         version: files('VERSION'))
  
- static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val)
- {
-@@ -2859,7 +2859,7 @@ static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val
- #define SUFFIX
- #define ARG1         as
- #define ARG1_DECL    AddressSpace *as
--#include "exec/memory_ldst_phys.h.inc"
-+#include "system/memory_ldst_phys.h.inc"
+ meson.add_devenv({ 'MESON_BUILD_ROOT' : meson.project_build_root() })
+diff --git a/rust/bits/meson.build b/rust/bits/meson.build
+index 359ca86f155..c0094ffcf38 100644
+--- a/rust/bits/meson.build
++++ b/rust/bits/meson.build
+@@ -1,8 +1,6 @@
+ _bits_rs = static_library(
+   'bits',
+   'src/lib.rs',
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+-  rust_abi: 'rust',
+   dependencies: [qemu_macros],
+ )
  
- struct MemoryRegionCache {
-     uint8_t *ptr;
-@@ -2897,7 +2897,7 @@ struct MemoryRegionCache {
- #define SUFFIX       _cached_slow
- #define ARG1         cache
- #define ARG1_DECL    MemoryRegionCache *cache
--#include "exec/memory_ldst.h.inc"
-+#include "system/memory_ldst.h.inc"
+diff --git a/rust/bql/meson.build b/rust/bql/meson.build
+index 091372dd7b6..e5836e3f566 100644
+--- a/rust/bql/meson.build
++++ b/rust/bql/meson.build
+@@ -34,8 +34,6 @@ _bql_rs = static_library(
+     ],
+     {'.': _bql_bindings_inc_rs}
+   ),
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+-  rust_abi: 'rust',
+   rust_args: _bql_cfg,
+   dependencies: [glib_sys_rs],
+ )
+diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
+index 36ada7c4546..6b681c609ad 100644
+--- a/rust/chardev/meson.build
++++ b/rust/chardev/meson.build
+@@ -33,8 +33,6 @@ _chardev_rs = static_library(
+     ],
+     {'.': _chardev_bindings_inc_rs}
+   ),
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+-  rust_abi: 'rust',
+   link_with: [_bql_rs, _migration_rs, _qom_rs, _util_rs],
+   dependencies: [glib_sys_rs, common_rs, qemu_macros],
+ )
+diff --git a/rust/common/meson.build b/rust/common/meson.build
+index aff601d1df2..4b1cd35f639 100644
+--- a/rust/common/meson.build
++++ b/rust/common/meson.build
+@@ -16,8 +16,6 @@ _common_rs = static_library(
+       'src/zeroable.rs',
+     ],
+   ),
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+-  rust_abi: 'rust',
+   rust_args: _common_cfg,
+   dependencies: [libc_rs, qemu_macros],
+ )
+diff --git a/rust/migration/meson.build b/rust/migration/meson.build
+index 444494700ad..94590dc1b87 100644
+--- a/rust/migration/meson.build
++++ b/rust/migration/meson.build
+@@ -36,8 +36,6 @@ _migration_rs = static_library(
+     ],
+     {'.' : _migration_bindings_inc_rs},
+   ),
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+-  rust_abi: 'rust',
+   link_with: [_util_rs, _bql_rs],
+   dependencies: [common_rs, glib_sys_rs, qemu_macros],
+ )
+diff --git a/rust/qemu-macros/meson.build b/rust/qemu-macros/meson.build
+index 17b2a4e2e24..cdea5bf439e 100644
+--- a/rust/qemu-macros/meson.build
++++ b/rust/qemu-macros/meson.build
+@@ -1,7 +1,6 @@
+ _qemu_macros_rs = rust.proc_macro(
+   'qemu_macros',
+   files('src/lib.rs'),
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   dependencies: [
+     attrs_rs_native,
+     proc_macro2_rs_native,
+diff --git a/rust/qom/meson.build b/rust/qom/meson.build
+index e50f41858d6..551c4f0bf5f 100644
+--- a/rust/qom/meson.build
++++ b/rust/qom/meson.build
+@@ -26,8 +26,6 @@ _qom_rs = static_library(
+     ],
+     {'.': _qom_bindings_inc_rs}
+   ),
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+-  rust_abi: 'rust',
+   link_with: [_bql_rs, _migration_rs],
+   dependencies: [common_rs, glib_sys_rs, qemu_macros],
+ )
+diff --git a/rust/system/meson.build b/rust/system/meson.build
+index 73d61991146..2cd2dd36679 100644
+--- a/rust/system/meson.build
++++ b/rust/system/meson.build
+@@ -33,8 +33,6 @@ _system_rs = static_library(
+     ],
+     {'.': _system_bindings_inc_rs}
+   ),
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+-  rust_abi: 'rust',
+   link_with: [_bql_rs, _migration_rs, _qom_rs, _util_rs],
+   dependencies: [glib_sys_rs, common_rs, qemu_macros],
+ )
+diff --git a/rust/tests/meson.build b/rust/tests/meson.build
+index 00688c66fb1..3c5020490b0 100644
+--- a/rust/tests/meson.build
++++ b/rust/tests/meson.build
+@@ -2,7 +2,6 @@ test('rust-integration',
+     executable(
+         'rust-integration',
+         files('tests/vmstate_tests.rs'),
+-        override_options: ['rust_std=2021', 'build.rust_std=2021'],
+         rust_args: ['--test'],
+         install: false,
+         dependencies: [bql_rs, common_rs, util_rs, migration_rs, qom_rs]),
+diff --git a/rust/trace/meson.build b/rust/trace/meson.build
+index adca57e5507..1b3498f7fc1 100644
+--- a/rust/trace/meson.build
++++ b/rust/trace/meson.build
+@@ -11,9 +11,7 @@ _trace_rs = static_library(
+   'trace',             # Library name,
+   lib_rs,
+   trace_rs_targets,         # List of generated `.rs` custom targets
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   dependencies: [libc_rs],
+-  rust_abi: 'rust',
+ )
  
- /* Inline fast path for direct RAM access.  */
- static inline uint8_t address_space_ldub_cached(MemoryRegionCache *cache,
-@@ -2923,18 +2923,18 @@ static inline void address_space_stb_cached(MemoryRegionCache *cache,
- }
+ trace_rs = declare_dependency(link_with: _trace_rs)
+diff --git a/rust/util/meson.build b/rust/util/meson.build
+index 8ad344dccbd..18d67a4b374 100644
+--- a/rust/util/meson.build
++++ b/rust/util/meson.build
+@@ -38,8 +38,6 @@ _util_rs = static_library(
+     ],
+     {'.': _util_bindings_inc_rs}
+   ),
+-  override_options: ['rust_std=2021', 'build.rust_std=2021'],
+-  rust_abi: 'rust',
+   dependencies: [anyhow_rs, libc_rs, foreign_rs, glib_sys_rs, common_rs, qom, qemuutil],
+ )
  
- #define ENDIANNESS
--#include "exec/memory_ldst_cached.h.inc"
-+#include "system/memory_ldst_cached.h.inc"
- 
- #define ENDIANNESS   _le
--#include "exec/memory_ldst_cached.h.inc"
-+#include "system/memory_ldst_cached.h.inc"
- 
- #define ENDIANNESS   _be
--#include "exec/memory_ldst_cached.h.inc"
-+#include "system/memory_ldst_cached.h.inc"
- 
- #define SUFFIX       _cached
- #define ARG1         cache
- #define ARG1_DECL    MemoryRegionCache *cache
--#include "exec/memory_ldst_phys.h.inc"
-+#include "system/memory_ldst_phys.h.inc"
- 
- /* address_space_cache_init: prepare for repeated access to a physical
-  * memory region
-diff --git a/include/exec/memory_ldst.h.inc b/include/system/memory_ldst.h.inc
-similarity index 100%
-rename from include/exec/memory_ldst.h.inc
-rename to include/system/memory_ldst.h.inc
-diff --git a/include/exec/memory_ldst_cached.h.inc b/include/system/memory_ldst_cached.h.inc
-similarity index 100%
-rename from include/exec/memory_ldst_cached.h.inc
-rename to include/system/memory_ldst_cached.h.inc
-diff --git a/include/exec/memory_ldst_phys.h.inc b/include/system/memory_ldst_phys.h.inc
-similarity index 100%
-rename from include/exec/memory_ldst_phys.h.inc
-rename to include/system/memory_ldst_phys.h.inc
 -- 
 2.52.0
 
