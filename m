@@ -4,106 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790A6E8FDD8
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBA1E8FDD6
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQPr-0002Nw-VO; Sat, 27 Dec 2025 04:16:51 -0500
+	id 1vZQQ7-0002WB-F1; Sat, 27 Dec 2025 04:17:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQPn-0002Lq-41
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:16:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vZQQ5-0002Vd-Pg
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQPl-0002Jd-BK
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:16:46 -0500
+ id 1vZQQ2-0002Mg-Mx
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827004;
+ s=mimecast20190719; t=1766827022;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NH4AbEhMDNj1w9MP13tf9nDpr24WI1sJGsuQBiB53Bs=;
- b=Hsft2Gop2V3xSHoiMraO9GF5cY/neiYAH2nwhC17LXRpMI2ajSi7rMQAxBf1KdRgmEfLun
- ultMZyNEvfsWnbIAAgvuknpPmH5rRJ9bMIKKHpqrCTulr85PAQgIzNscjaXa/AGri5+8DQ
- isduprz5zx8fDc5dHIghM86j9IkI5Wk=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tdxJKYOKUz5JL+KO3PUJskny+oYGwFFxlHWI6yYx3Bs=;
+ b=D7TzPG7DLw4oFkN65L8WGzyhXLcalfbu9Lw1zo9eB0l9hRgKDVx2oqRr6Jlxiva/p36dld
+ PPDzFrnHKB4Te0jO3CsQLWY3Xj12YIOAAuGjVONfM4VRoRVv9eQu2RR23hL72elt0jmwWb
+ 3Oee8iYZYJQx8FTsFmJtGH04IGdxtSY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-281-dZQApyp_PS2Kflfla_lieA-1; Sat, 27 Dec 2025 04:16:41 -0500
-X-MC-Unique: dZQApyp_PS2Kflfla_lieA-1
-X-Mimecast-MFC-AGG-ID: dZQApyp_PS2Kflfla_lieA_1766827000
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-432488a0ce8so6220230f8f.2
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:16:40 -0800 (PST)
+ us-mta-674-Te4oH0QaPjCfRtiQZvtr_g-1; Sat, 27 Dec 2025 04:16:58 -0500
+X-MC-Unique: Te4oH0QaPjCfRtiQZvtr_g-1
+X-Mimecast-MFC-AGG-ID: Te4oH0QaPjCfRtiQZvtr_g_1766827017
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47777158a85so88666715e9.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:16:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766826999; x=1767431799; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827016; x=1767431816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NH4AbEhMDNj1w9MP13tf9nDpr24WI1sJGsuQBiB53Bs=;
- b=afLmjkIPwa3y1gDHYiHE72g19ywFZRb5U+vV4UiMSuo0K2vqHAel9+5ZL2h8x7EeD3
- uXNKVNv6FI09RzxS8fxNDlnmaFO4b1XaHfWFD7KOlGkfjuAd+9DpgaJR9qi7X2jMkGv9
- 62zuIcquylL3vbN9XKHjGZ9+Z8jS12jpcojxdBSkgf4BH8MulNHf6C9xesY9KHgvpDJL
- OOBZHuskxWS9fUltoN+kbiARDKw9U2cvtEp75a7KoMZtSwPKjaf1dXToAUs/N4JJKktg
- NU76z6tYD/NRf35gVvptYLkhWk7wfks6C9J5+O0cblvJX3yucr8t449Z7MXSB0Dx80C2
- xEvg==
+ :reply-to; bh=tdxJKYOKUz5JL+KO3PUJskny+oYGwFFxlHWI6yYx3Bs=;
+ b=hviU9MZ3zW/l6bjeIrsuUUqiukQcJA1jP1qrkpHUgFOwm888GXPUnGCZ/comDe4V/5
+ 2gx+PWRJ3ZNuN4sSzbvcLApdFR3CUcTCZs5U6+wXFH39uR4vYxHBX2y3R35ZW19fWk+U
+ Ep+TKsC5ac8h7mYMrSC9yyKYa7GZelDudUlw0Cy3u9gx9d3a/NgmwAcahPs4MWbE73UY
+ 28hFZF/b8oZ51WSd43zsEy45oZHe2kFcjoVpgViA9R+UrYxJerObTdo4BDhZdaRo6hyk
+ n/DnjcQO3LVsjyiOCUx0mUtFt3sTz+/LWjkB0OhcTtMWYNcI5GUIYAWTMRstD5iiqeMJ
+ i9cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766826999; x=1767431799;
+ d=1e100.net; s=20230601; t=1766827016; x=1767431816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NH4AbEhMDNj1w9MP13tf9nDpr24WI1sJGsuQBiB53Bs=;
- b=bInKZmyi4D4bo6Pde90FoiuYLcrPHX13l6cIz/2XocNH6RamB50hck0jNe6VeFsHhG
- jHcPrpnv9Tx/inYUBiTv93XWnsJ1hwG+CuSwfelXVBPcUklMzivciEzWvcsAIJGDftml
- XWQe9nTREIAWTK7xArgWhSt+qCw4fh4xpiU1csHQMKY4rUrMeQD1eDrF9J/W7CJEW3y8
- PZNp/qumBwSbK7dIaGf8MsyevQn8qEHh/oLtOTydhT15jlOTcvpwI9hbkbBBVgtStHCE
- SOiaQAw3scmun7QApJ7asgXz3kEkLEG7Hes7Au4TifBTmRrp9/lZhKJq+UHBkuCJgYZO
- l6LQ==
-X-Gm-Message-State: AOJu0Yx46wo9ASgrREpQmMi6/yv8GQKYS/Az+wNWUrsJbL2KOL6/4ycK
- FxwCoURdehjyu+W6qxHtMBwgrzs4cTa/c88VXIgbR/8PYXOOfVLkPbtZ3OiAxRqdRwUBdBZdEH3
- wQsnqkPvfghDKn9dnKDpinJBfBXxVirBMeEGodyvmXRcOYAqe94gft/kQbTr2VAP540K1QsYFUv
- QXxxPYvUQrKj/Z+RIZFN4trWIPYg3vQ0TibgSeYQmT
-X-Gm-Gg: AY/fxX43IVHxTQFZktyLXFaf6JucbrB8dvKUQ0QQxmJMKh5aHLkU7YBlcOPl7DqSaTg
- lS2BnHIbK8FtBdNTNuoPnq3YzGTkvL4F6Ka0ZckgZG8nK2kPJtNQdgv310SOiP2O6QBHRwYrisF
- KC2mH2O34IxVm8UAtrggWVO9hlo5sEN+2gfpyRlIdT0Qk3z1UduyzH2U3sMRqMXTTbvs2lROYHU
- DCF4+OB1kvjFbvQiPCDj7QQuQ9nBEPBHsTNgH4W7jyqacuwKRT+mShNfi8WIqaAHKJb/95NqCLX
- 2VI2k29DdGODpNHeR6joVHHDJkO45BSEbkYbD7CM41UdrXcU91Cy8bOhTwZyp5TwVBzwE27/4h3
- YJ+62xko45KnPUvzLHOnGkX21rvCCRlg4XCIYnDhSpMBuoSVfAcgf+MXQ+ygGK6wgM7JE7aBRev
- i9RGcGBi+17NnwWXs=
-X-Received: by 2002:a05:6000:25c3:b0:430:f879:a0fc with SMTP id
- ffacd0b85a97d-4324e4cb9f4mr30676223f8f.21.1766826998856; 
- Sat, 27 Dec 2025 01:16:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG1l6pc8IqaFFNHn7fd+wFNxuZsFSW3se8DJYc6r1tMmA76PAdpWlGGJgqCY2cRjmSSkCoOaA==
-X-Received: by 2002:a05:6000:25c3:b0:430:f879:a0fc with SMTP id
- ffacd0b85a97d-4324e4cb9f4mr30676193f8f.21.1766826998206; 
- Sat, 27 Dec 2025 01:16:38 -0800 (PST)
+ bh=tdxJKYOKUz5JL+KO3PUJskny+oYGwFFxlHWI6yYx3Bs=;
+ b=ppFZMPoiWpferacx0LIyCU8vk7NJYZBsHRNQOnLhWZB/caH4bYUncr+GzrAg4Gdccx
+ yoHcV3dSkcMw3L1X+nFcc9x7HfVsZDlbHvuhNk7UNbpBeVGYHy65BpmmBDdR5/gQx4/k
+ vR5Pz+SerOWtWNj34U1vYJOUMd4Uokd9R6LCbGvOLfn3Dp7PyubaUn3uLDrfHyFrqHbs
+ uy1NIEcjMUB42TyGD7bdsi41jS0MsSsH0wE5lt9XgYILmR4HZyOIuV5LVdOXp95rUKt1
+ GDAZ14KXAg67YCk1TRHFiEJGBvaPtKCB+G2ijWumTaaxIZcwr8qFUTvJEpkFlAUYL+AQ
+ u0qw==
+X-Gm-Message-State: AOJu0YwvRTpbm/II5TLKYybbKUogdwBMueEfpHHuOQrHscXTjlItkBpO
+ XjkB+r7TYrOtEQxIqFQMUQWRU6chR6EEcmf7Z4U61z0O4RGQ/5EhLKut4OBAyAnuvB8D09xZFTD
+ AKaPtNXiY67qULQ/+VAooJCBXZqUWqpLEeuSWpfi8FSrhYI+QEP6r45SGkF9xR3Yc3oDoLA9Rzn
+ brYRDaflyX2+EwheaegDSOoOfr2p4ZHnYObKjyuPQi
+X-Gm-Gg: AY/fxX50zpNMgiwSOgB73F37Xks/vZ2Bcihtc5saaEtPl4FqPHmbnztyTY6om0FLxii
+ Y7Z4KGsxW70oeNyWK+95y0/X8RCXQVfRBgQzFB92rfeQKJCQciVEt/mRnNIBFqecpmEF/FOlEA6
+ DA8jIXkDAivjfj/xN2B/MnjNUEY79YgJAatN+mNCmp63EIq+IaYOSFwx/U2alO9ghBw3UzEKV1s
+ H6mFf9VYNL3PwvLYcXuPz4DzqrCvc+MGK5IuU6b9FYBYDRgLgiRYlrE4yTJe/1rhuzdQCKszCDx
+ d6Sr9VObdNbPc8TZ1tzce13X2n+Qn0jEYIHRsE8rdOWMoTC6n15lhtb7O7tEMjzLgHqgfip83y1
+ JAJgMtT/3vxl8nLDQfhfrYVTMjuOVOXivyQkccrOsG19YoN+/8DlwWGVE0tpA1YVN0T9u/rdFJn
+ Jfa78dFcAzyInWhSE=
+X-Received: by 2002:a05:600c:1394:b0:47d:3ead:7440 with SMTP id
+ 5b1f17b1804b1-47d3ed097f8mr125711325e9.32.1766827016230; 
+ Sat, 27 Dec 2025 01:16:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFe3VYBUA8adx4bfOOC5CKfwmL5L/+XMt72ihDKStB4ooeW5oMl+6F6z5im4uYmYHw+Xv6m6g==
+X-Received: by 2002:a05:600c:1394:b0:47d:3ead:7440 with SMTP id
+ 5b1f17b1804b1-47d3ed097f8mr125710865e9.32.1766827015412; 
+ Sat, 27 Dec 2025 01:16:55 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea82f6asm51476575f8f.27.2025.12.27.01.16.37
+ 5b1f17b1804b1-47d1936d220sm472858465e9.8.2025.12.27.01.16.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:16:37 -0800 (PST)
+ Sat, 27 Dec 2025 01:16:54 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 008/153] include: move hw/fw-path-provider.h to hw/core/
-Date: Sat, 27 Dec 2025 10:13:55 +0100
-Message-ID: <20251227091622.20725-9-pbonzini@redhat.com>
+Subject: [PULL 017/153] include: move hw/qdev-clock.h to hw/core/
+Date: Sat, 27 Dec 2025 10:14:04 +0100
+Message-ID: <20251227091622.20725-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,168 +123,919 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/{ => core}/fw-path-provider.h | 0
- include/hw/virtio/vhost-scsi-common.h    | 2 +-
- hw/core/fw-path-provider.c               | 2 +-
- hw/core/qdev-fw.c                        | 2 +-
- hw/ppc/mac_newworld.c                    | 2 +-
- hw/ppc/mac_oldworld.c                    | 2 +-
- hw/ppc/pegasos.c                         | 2 +-
- hw/ppc/spapr.c                           | 2 +-
- hw/scsi/vhost-scsi-common.c              | 2 +-
- hw/scsi/vhost-scsi.c                     | 2 +-
- hw/scsi/vhost-user-scsi.c                | 2 +-
- hw/sparc64/sun4u.c                       | 2 +-
- 12 files changed, 11 insertions(+), 11 deletions(-)
- rename include/hw/{ => core}/fw-path-provider.h (100%)
+ MAINTAINERS                        | 2 +-
+ docs/devel/clocks.rst              | 4 ++--
+ include/hw/{ => core}/qdev-clock.h | 0
+ include/hw/misc/bcm2835_cprman.h   | 2 +-
+ include/hw/net/xlnx-versal-canfd.h | 2 +-
+ include/hw/net/xlnx-zynqmp-can.h   | 2 +-
+ rust/hw/core/wrapper.h             | 2 +-
+ hw/adc/npcm7xx_adc.c               | 2 +-
+ hw/arm/armsse.c                    | 2 +-
+ hw/arm/armv7m.c                    | 2 +-
+ hw/arm/aspeed.c                    | 2 +-
+ hw/arm/aspeed_ast10x0.c            | 2 +-
+ hw/arm/aspeed_ast10x0_evb.c        | 2 +-
+ hw/arm/aspeed_ast27x0-fc.c         | 2 +-
+ hw/arm/aspeed_ast27x0-ssp.c        | 2 +-
+ hw/arm/aspeed_ast27x0-tsp.c        | 2 +-
+ hw/arm/fby35.c                     | 2 +-
+ hw/arm/max78000_soc.c              | 2 +-
+ hw/arm/max78000fthr.c              | 2 +-
+ hw/arm/mps2-tz.c                   | 2 +-
+ hw/arm/mps2.c                      | 2 +-
+ hw/arm/mps3r.c                     | 2 +-
+ hw/arm/msf2-soc.c                  | 2 +-
+ hw/arm/msf2-som.c                  | 2 +-
+ hw/arm/musca.c                     | 2 +-
+ hw/arm/netduino2.c                 | 2 +-
+ hw/arm/netduinoplus2.c             | 2 +-
+ hw/arm/npcm7xx.c                   | 2 +-
+ hw/arm/npcm8xx.c                   | 2 +-
+ hw/arm/nrf51_soc.c                 | 2 +-
+ hw/arm/olimex-stm32-h405.c         | 2 +-
+ hw/arm/stellaris.c                 | 2 +-
+ hw/arm/stm32f100_soc.c             | 2 +-
+ hw/arm/stm32f205_soc.c             | 2 +-
+ hw/arm/stm32f405_soc.c             | 2 +-
+ hw/arm/stm32l4x5_soc.c             | 2 +-
+ hw/arm/stm32vldiscovery.c          | 2 +-
+ hw/arm/xilinx_zynq.c               | 2 +-
+ hw/char/cadence_uart.c             | 2 +-
+ hw/char/ibex_uart.c                | 2 +-
+ hw/char/pl011.c                    | 2 +-
+ hw/char/stm32l4x5_usart.c          | 2 +-
+ hw/core/qdev-clock.c               | 2 +-
+ hw/core/qdev.c                     | 2 +-
+ hw/gpio/stm32l4x5_gpio.c           | 2 +-
+ hw/mips/boston.c                   | 2 +-
+ hw/mips/cps.c                      | 2 +-
+ hw/mips/malta.c                    | 2 +-
+ hw/misc/npcm7xx_mft.c              | 2 +-
+ hw/misc/npcm7xx_pwm.c              | 2 +-
+ hw/misc/npcm_clk.c                 | 2 +-
+ hw/misc/stm32l4x5_rcc.c            | 2 +-
+ hw/misc/stm32l4x5_syscfg.c         | 2 +-
+ hw/misc/zynq_slcr.c                | 2 +-
+ hw/net/npcm7xx_emc.c               | 2 +-
+ hw/timer/armv7m_systick.c          | 2 +-
+ hw/timer/cmsdk-apb-dualtimer.c     | 2 +-
+ hw/timer/cmsdk-apb-timer.c         | 2 +-
+ hw/timer/npcm7xx_timer.c           | 2 +-
+ hw/timer/sse-counter.c             | 2 +-
+ hw/timer/sse-timer.c               | 2 +-
+ hw/timer/stellaris-gptm.c          | 2 +-
+ hw/watchdog/cmsdk-apb-watchdog.c   | 2 +-
+ target/mips/cpu.c                  | 2 +-
+ target/xtensa/cpu.c                | 2 +-
+ 65 files changed, 65 insertions(+), 65 deletions(-)
+ rename include/hw/{ => core}/qdev-clock.h (100%)
 
-diff --git a/include/hw/fw-path-provider.h b/include/hw/core/fw-path-provider.h
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f44259b305f..41b536c3a2a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3952,7 +3952,7 @@ M: Luc Michel <luc@lmichel.fr>
+ R: Damien Hedde <damien.hedde@dahe.fr>
+ S: Maintained
+ F: include/hw/core/clock.h
+-F: include/hw/qdev-clock.h
++F: include/hw/core/qdev-clock.h
+ F: hw/core/clock.c
+ F: hw/core/clock-vmstate.c
+ F: hw/core/qdev-clock.c
+diff --git a/docs/devel/clocks.rst b/docs/devel/clocks.rst
+index 2dbdc668606..16de32147b9 100644
+--- a/docs/devel/clocks.rst
++++ b/docs/devel/clocks.rst
+@@ -47,7 +47,7 @@ Here is an example of clocks::
+                                                 +--------------+
+ 
+ Clocks are defined in the ``include/hw/core/clock.h`` header and device
+-related functions are defined in the ``include/hw/qdev-clock.h``
++related functions are defined in the ``include/hw/core/qdev-clock.h``
+ header.
+ 
+ The clock state
+@@ -97,7 +97,7 @@ Note that it is possible to create a static array describing clock inputs and
+ outputs. The function ``qdev_init_clocks()`` must be called with the array as
+ parameter to initialize the clocks: it has the same behaviour as calling the
+ ``qdev_init_clock_in/out()`` for each clock in the array. To ease the array
+-construction, some macros are defined in ``include/hw/qdev-clock.h``.
++construction, some macros are defined in ``include/hw/core/qdev-clock.h``.
+ As an example, the following creates 2 clocks to a device: one input and one
+ output.
+ 
+diff --git a/include/hw/qdev-clock.h b/include/hw/core/qdev-clock.h
 similarity index 100%
-rename from include/hw/fw-path-provider.h
-rename to include/hw/core/fw-path-provider.h
-diff --git a/include/hw/virtio/vhost-scsi-common.h b/include/hw/virtio/vhost-scsi-common.h
-index d54d9c916f2..7f34c7cb4fe 100644
---- a/include/hw/virtio/vhost-scsi-common.h
-+++ b/include/hw/virtio/vhost-scsi-common.h
-@@ -16,7 +16,7 @@
+rename from include/hw/qdev-clock.h
+rename to include/hw/core/qdev-clock.h
+diff --git a/include/hw/misc/bcm2835_cprman.h b/include/hw/misc/bcm2835_cprman.h
+index 0d380367280..7b2c0a54642 100644
+--- a/include/hw/misc/bcm2835_cprman.h
++++ b/include/hw/misc/bcm2835_cprman.h
+@@ -10,7 +10,7 @@
+ #define HW_MISC_BCM2835_CPRMAN_H
  
- #include "hw/virtio/virtio-scsi.h"
- #include "hw/virtio/vhost.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "qom/object.h"
+ #include "hw/sysbus.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
  
- #define TYPE_VHOST_SCSI_COMMON "vhost-scsi-common"
-diff --git a/hw/core/fw-path-provider.c b/hw/core/fw-path-provider.c
-index 4840faefd1a..2a9da1aa4a2 100644
---- a/hw/core/fw-path-provider.c
-+++ b/hw/core/fw-path-provider.c
-@@ -16,7 +16,7 @@
-  */
+ #define TYPE_BCM2835_CPRMAN "bcm2835-cprman"
  
- #include "qemu/osdep.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "qemu/module.h"
+diff --git a/include/hw/net/xlnx-versal-canfd.h b/include/hw/net/xlnx-versal-canfd.h
+index d2e582918fb..45cf0001c6b 100644
+--- a/include/hw/net/xlnx-versal-canfd.h
++++ b/include/hw/net/xlnx-versal-canfd.h
+@@ -31,7 +31,7 @@
+ #include "hw/register.h"
+ #include "hw/core/ptimer.h"
+ #include "net/can_emu.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
  
- char *fw_path_provider_get_dev_path(FWPathProvider *p, BusState *bus,
-diff --git a/hw/core/qdev-fw.c b/hw/core/qdev-fw.c
-index a31958355ff..a587d2ddf90 100644
---- a/hw/core/qdev-fw.c
-+++ b/hw/core/qdev-fw.c
-@@ -16,7 +16,7 @@
-  */
+ #define TYPE_XILINX_CANFD "xlnx.versal-canfd"
  
- #include "qemu/osdep.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "hw/qdev-core.h"
+diff --git a/include/hw/net/xlnx-zynqmp-can.h b/include/hw/net/xlnx-zynqmp-can.h
+index 8262f11d33d..d272f40ea80 100644
+--- a/include/hw/net/xlnx-zynqmp-can.h
++++ b/include/hw/net/xlnx-zynqmp-can.h
+@@ -36,7 +36,7 @@
+ #include "net/can_host.h"
+ #include "qemu/fifo32.h"
+ #include "hw/core/ptimer.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
  
- const char *qdev_fw_name(DeviceState *dev)
-diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-index bdc6c7ed7fe..3a6e47eb8b7 100644
---- a/hw/ppc/mac_newworld.c
-+++ b/hw/ppc/mac_newworld.c
-@@ -66,7 +66,7 @@
- #include "hw/misc/macio/macio.h"
- #include "hw/ppc/openpic.h"
- #include "hw/loader.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "qemu/error-report.h"
- #include "system/kvm.h"
-diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
-index 8d35080b9d1..8f9ce68b8b0 100644
---- a/hw/ppc/mac_oldworld.c
-+++ b/hw/ppc/mac_oldworld.c
-@@ -43,7 +43,7 @@
- #include "hw/char/escc.h"
- #include "hw/misc/macio/macio.h"
- #include "hw/loader.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "qemu/error-report.h"
- #include "system/kvm.h"
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index 3b48a54e7a0..e7396a729f3 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -26,7 +26,7 @@
- #include "system/qtest.h"
- #include "hw/core/boards.h"
- #include "hw/loader.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "qemu/log.h"
- #include "qemu/error-report.h"
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 6f2d10330d6..7c695ac4ecc 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -43,7 +43,7 @@
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "qemu/log.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "net/net.h"
- #include "system/device_tree.h"
-diff --git a/hw/scsi/vhost-scsi-common.c b/hw/scsi/vhost-scsi-common.c
-index 43525ba46d3..0bb4305de61 100644
---- a/hw/scsi/vhost-scsi-common.c
-+++ b/hw/scsi/vhost-scsi-common.c
-@@ -24,7 +24,7 @@
- #include "hw/virtio/virtio-scsi.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/virtio-access.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
+ #define TYPE_XLNX_ZYNQMP_CAN "xlnx.zynqmp-can"
  
- int vhost_scsi_common_start(VHostSCSICommon *vsc, Error **errp)
- {
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index 239138c9316..573a44b2b3e 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -26,7 +26,7 @@
- #include "hw/virtio/vhost.h"
- #include "hw/virtio/virtio-scsi.h"
- #include "hw/virtio/virtio-bus.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "hw/qdev-properties.h"
- #include "qemu/cutils.h"
- #include "system/system.h"
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 25f2d894e7c..0d7bbb52aba 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -18,7 +18,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "hw/qdev-core.h"
+diff --git a/rust/hw/core/wrapper.h b/rust/hw/core/wrapper.h
+index e5c7e0518a5..44f8583bff9 100644
+--- a/rust/hw/core/wrapper.h
++++ b/rust/hw/core/wrapper.h
+@@ -26,7 +26,7 @@ typedef enum memory_order {
+ 
+ #include "hw/sysbus.h"
+ #include "hw/core/clock.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
  #include "hw/qdev-properties.h"
  #include "hw/qdev-properties-system.h"
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 961d599f48d..62ceb7eef4d 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -54,7 +54,7 @@
- #include "hw/sysbus.h"
- #include "hw/ide/pci.h"
- #include "hw/loader.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
+ #include "hw/core/irq.h"
+diff --git a/hw/adc/npcm7xx_adc.c b/hw/adc/npcm7xx_adc.c
+index ddb219d4562..4494d5558f0 100644
+--- a/hw/adc/npcm7xx_adc.c
++++ b/hw/adc/npcm7xx_adc.c
+@@ -16,7 +16,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/adc/npcm7xx_adc.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/registerfields.h"
+ #include "migration/vmstate.h"
+diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
+index c0d99182bf9..42ceb097ae8 100644
+--- a/hw/arm/armsse.c
++++ b/hw/arm/armsse.c
+@@ -23,7 +23,7 @@
+ #include "hw/arm/armsse-version.h"
+ #include "hw/arm/boot.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ 
+ /*
+  * The SSE-300 puts some devices in different places to the
+diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
+index 8198a83d15c..d9c7bcbcd71 100644
+--- a/hw/arm/armv7m.c
++++ b/hw/arm/armv7m.c
+@@ -14,7 +14,7 @@
+ #include "hw/arm/boot.h"
+ #include "hw/core/loader.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
  #include "elf.h"
- #include "trace.h"
+ #include "system/reset.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 3a5071a3841..6199d2d2d7c 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -21,7 +21,7 @@
+ #include "system/block-backend.h"
+ #include "qemu/error-report.h"
+ #include "qemu/units.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "system/system.h"
+ 
+ static struct arm_boot_info aspeed_board_binfo = {
+diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+index ca487774aee..f923b9505b7 100644
+--- a/hw/arm/aspeed_ast10x0.c
++++ b/hw/arm/aspeed_ast10x0.c
+@@ -13,7 +13,7 @@
+ #include "qapi/error.h"
+ #include "system/address-spaces.h"
+ #include "system/system.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/arm/aspeed_soc.h"
+ 
+diff --git a/hw/arm/aspeed_ast10x0_evb.c b/hw/arm/aspeed_ast10x0_evb.c
+index 7af2a77865e..329578a542c 100644
+--- a/hw/arm/aspeed_ast10x0_evb.c
++++ b/hw/arm/aspeed_ast10x0_evb.c
+@@ -12,7 +12,7 @@
+ #include "hw/arm/machines-qom.h"
+ #include "hw/arm/aspeed.h"
+ #include "hw/arm/aspeed_soc.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "system/system.h"
+ #include "hw/i2c/smbus_eeprom.h"
+ 
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index 1678cce416b..0502a137f3d 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -16,7 +16,7 @@
+ #include "system/system.h"
+ #include "hw/arm/aspeed.h"
+ #include "hw/core/boards.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/arm/aspeed_soc.h"
+ #include "hw/core/loader.h"
+ #include "hw/arm/boot.h"
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index d12a9b8459c..04d37056596 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -11,7 +11,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/arm/aspeed_soc.h"
+ #include "hw/arm/aspeed_coprocessor.h"
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+index 5b75e142063..f40c70fea54 100644
+--- a/hw/arm/aspeed_ast27x0-tsp.c
++++ b/hw/arm/aspeed_ast27x0-tsp.c
+@@ -11,7 +11,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/arm/aspeed_soc.h"
+ #include "hw/arm/aspeed_coprocessor.h"
+diff --git a/hw/arm/fby35.c b/hw/arm/fby35.c
+index 3e036cfd2ba..d3bfd2c7d26 100644
+--- a/hw/arm/fby35.c
++++ b/hw/arm/fby35.c
+@@ -11,7 +11,7 @@
+ #include "system/system.h"
+ #include "system/block-backend.h"
+ #include "hw/core/boards.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/arm/aspeed_soc.h"
+ #include "hw/arm/boot.h"
+ #include "hw/arm/machines-qom.h"
+diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+index 7f1856f5ba1..321e63723e3 100644
+--- a/hw/arm/max78000_soc.c
++++ b/hw/arm/max78000_soc.c
+@@ -14,7 +14,7 @@
+ #include "system/address-spaces.h"
+ #include "system/system.h"
+ #include "hw/arm/max78000_soc.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ 
+ static const uint32_t max78000_icc_addr[] = {0x4002a000, 0x4002a800};
+diff --git a/hw/arm/max78000fthr.c b/hw/arm/max78000fthr.c
+index e4ceb7efcd5..4b6e76e46bb 100644
+--- a/hw/arm/max78000fthr.c
++++ b/hw/arm/max78000fthr.c
+@@ -10,7 +10,7 @@
+ #include "qapi/error.h"
+ #include "hw/core/boards.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qemu/error-report.h"
+ #include "hw/arm/max78000_soc.h"
+ #include "hw/arm/boot.h"
+diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
+index c262a9c6795..f101c1b7c3b 100644
+--- a/hw/arm/mps2-tz.c
++++ b/hw/arm/mps2-tz.c
+@@ -73,7 +73,7 @@
+ #include "hw/net/lan9118.h"
+ #include "net/net.h"
+ #include "hw/core/split-irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
  #include "qom/object.h"
+ #include "hw/core/irq.h"
+ 
+diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
+index af3b0124891..7d2efc703bd 100644
+--- a/hw/arm/mps2.c
++++ b/hw/arm/mps2.c
+@@ -48,7 +48,7 @@
+ #include "hw/net/lan9118.h"
+ #include "net/net.h"
+ #include "hw/watchdog/cmsdk-apb-watchdog.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qobject/qlist.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
+index c64e103f599..77a0c0b7aff 100644
+--- a/hw/arm/mps3r.c
++++ b/hw/arm/mps3r.c
+@@ -33,7 +33,7 @@
+ #include "system/system.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/or-irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/arm/boot.h"
+ #include "hw/arm/bsa.h"
+diff --git a/hw/arm/msf2-soc.c b/hw/arm/msf2-soc.c
+index c5e9c7175a4..27d77af9dcd 100644
+--- a/hw/arm/msf2-soc.c
++++ b/hw/arm/msf2-soc.c
+@@ -29,7 +29,7 @@
+ #include "hw/char/serial-mm.h"
+ #include "hw/arm/msf2-soc.h"
+ #include "hw/misc/unimp.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "system/system.h"
+ 
+ #define MSF2_TIMER_BASE       0x40004000
+diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
+index 78d98c4a407..10382f0d3b2 100644
+--- a/hw/arm/msf2-som.c
++++ b/hw/arm/msf2-som.c
+@@ -33,7 +33,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/arm/boot.h"
+ #include "hw/arm/machines-qom.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "system/address-spaces.h"
+ #include "hw/arm/msf2-soc.h"
+ 
+diff --git a/hw/arm/musca.c b/hw/arm/musca.c
+index 7b30d9bd446..75d82eebcac 100644
+--- a/hw/arm/musca.c
++++ b/hw/arm/musca.c
+@@ -34,7 +34,7 @@
+ #include "hw/misc/tz-ppc.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/rtc/pl031.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qom/object.h"
+ 
+ #define MUSCA_NUMIRQ_MAX 96
+diff --git a/hw/arm/netduino2.c b/hw/arm/netduino2.c
+index 1657612fe77..c9281059365 100644
+--- a/hw/arm/netduino2.c
++++ b/hw/arm/netduino2.c
+@@ -26,7 +26,7 @@
+ #include "qapi/error.h"
+ #include "hw/core/boards.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qemu/error-report.h"
+ #include "hw/arm/stm32f205_soc.h"
+ #include "hw/arm/boot.h"
+diff --git a/hw/arm/netduinoplus2.c b/hw/arm/netduinoplus2.c
+index 746a3deef8e..d64d2aefe46 100644
+--- a/hw/arm/netduinoplus2.c
++++ b/hw/arm/netduinoplus2.c
+@@ -26,7 +26,7 @@
+ #include "qapi/error.h"
+ #include "hw/core/boards.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qemu/error-report.h"
+ #include "hw/arm/stm32f405_soc.h"
+ #include "hw/arm/boot.h"
+diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+index 6d6f6744869..6905e1d8a7d 100644
+--- a/hw/arm/npcm7xx.c
++++ b/hw/arm/npcm7xx.c
+@@ -21,7 +21,7 @@
+ #include "hw/char/serial-mm.h"
+ #include "hw/core/loader.h"
+ #include "hw/misc/unimp.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
+ #include "exec/tswap.h"
+diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
+index 2bf5e132bb5..71e47dac2e1 100644
+--- a/hw/arm/npcm8xx.c
++++ b/hw/arm/npcm8xx.c
+@@ -24,7 +24,7 @@
+ #include "hw/intc/arm_gic.h"
+ #include "hw/core/loader.h"
+ #include "hw/misc/unimp.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
+ #include "qemu/units.h"
+diff --git a/hw/arm/nrf51_soc.c b/hw/arm/nrf51_soc.c
+index d8cc3214ed6..a4ccfa373a6 100644
+--- a/hw/arm/nrf51_soc.c
++++ b/hw/arm/nrf51_soc.c
+@@ -12,7 +12,7 @@
+ #include "qapi/error.h"
+ #include "hw/arm/boot.h"
+ #include "hw/sysbus.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ #include "qemu/log.h"
+ 
+diff --git a/hw/arm/olimex-stm32-h405.c b/hw/arm/olimex-stm32-h405.c
+index d15545ff07a..1a08d742155 100644
+--- a/hw/arm/olimex-stm32-h405.c
++++ b/hw/arm/olimex-stm32-h405.c
+@@ -27,7 +27,7 @@
+ #include "qapi/error.h"
+ #include "hw/core/boards.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qemu/error-report.h"
+ #include "hw/arm/stm32f405_soc.h"
+ #include "hw/arm/boot.h"
+diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
+index 34cbcbe32c2..f3e8e15de81 100644
+--- a/hw/arm/stellaris.c
++++ b/hw/arm/stellaris.c
+@@ -31,7 +31,7 @@
+ #include "migration/vmstate.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/timer/stellaris-gptm.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qom/object.h"
+ #include "qobject/qlist.h"
+ #include "ui/input.h"
+diff --git a/hw/arm/stm32f100_soc.c b/hw/arm/stm32f100_soc.c
+index 0702d51cc3e..8d61be72c48 100644
+--- a/hw/arm/stm32f100_soc.c
++++ b/hw/arm/stm32f100_soc.c
+@@ -30,7 +30,7 @@
+ #include "system/address-spaces.h"
+ #include "hw/arm/stm32f100_soc.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ #include "system/system.h"
+ 
+diff --git a/hw/arm/stm32f205_soc.c b/hw/arm/stm32f205_soc.c
+index e3c7203c6e7..406f614f1d5 100644
+--- a/hw/arm/stm32f205_soc.c
++++ b/hw/arm/stm32f205_soc.c
+@@ -29,7 +29,7 @@
+ #include "system/address-spaces.h"
+ #include "hw/arm/stm32f205_soc.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "system/system.h"
+ 
+ /* At the moment only Timer 2 to 5 are modelled */
+diff --git a/hw/arm/stm32f405_soc.c b/hw/arm/stm32f405_soc.c
+index c8684e2b4c5..c2bc460603f 100644
+--- a/hw/arm/stm32f405_soc.c
++++ b/hw/arm/stm32f405_soc.c
+@@ -27,7 +27,7 @@
+ #include "system/address-spaces.h"
+ #include "system/system.h"
+ #include "hw/arm/stm32f405_soc.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ 
+ #define RCC_ADDR                       0x40023800
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index c28ce15e6bb..39b8cdf97dc 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -30,7 +30,7 @@
+ #include "hw/arm/stm32l4x5_soc.h"
+ #include "hw/char/stm32l4x5_usart.h"
+ #include "hw/gpio/stm32l4x5_gpio.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ 
+ #define FLASH_BASE_ADDRESS 0x08000000
+diff --git a/hw/arm/stm32vldiscovery.c b/hw/arm/stm32vldiscovery.c
+index 4843c5565b6..e7e1b8200e1 100644
+--- a/hw/arm/stm32vldiscovery.c
++++ b/hw/arm/stm32vldiscovery.c
+@@ -27,7 +27,7 @@
+ #include "qapi/error.h"
+ #include "hw/core/boards.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qemu/error-report.h"
+ #include "hw/arm/stm32f100_soc.h"
+ #include "hw/arm/boot.h"
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index e127b232d75..0d9c01e4b78 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -34,7 +34,7 @@
+ #include "hw/char/cadence_uart.h"
+ #include "hw/net/cadence_gem.h"
+ #include "hw/cpu/a9mpcore.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ #include "system/reset.h"
+ #include "qom/object.h"
+diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
+index 738ba3114b9..58c4c95fded 100644
+--- a/hw/char/cadence_uart.c
++++ b/hw/char/cadence_uart.c
+@@ -31,7 +31,7 @@
+ #include "qemu/module.h"
+ #include "hw/char/cadence_uart.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties-system.h"
+ #include "trace.h"
+ 
+diff --git a/hw/char/ibex_uart.c b/hw/char/ibex_uart.c
+index db852511091..23abeacb1b5 100644
+--- a/hw/char/ibex_uart.c
++++ b/hw/char/ibex_uart.c
+@@ -28,7 +28,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/char/ibex_uart.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
+ #include "hw/registerfields.h"
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index 75fdb8158e4..030d6a2e8b4 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -23,7 +23,7 @@
+ #include "hw/char/pl011.h"
+ #include "hw/core/irq.h"
+ #include "hw/sysbus.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+index ce4a35da8f4..4533cbc93be 100644
+--- a/hw/char/stm32l4x5_usart.c
++++ b/hw/char/stm32l4x5_usart.c
+@@ -25,7 +25,7 @@
+ #include "hw/char/stm32l4x5_usart.h"
+ #include "hw/core/clock.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
+ #include "hw/registerfields.h"
+diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
+index dacafa4e036..b96525951cd 100644
+--- a/hw/core/qdev-clock.c
++++ b/hw/core/qdev-clock.c
+@@ -13,7 +13,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-core.h"
+ #include "qapi/error.h"
+ 
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index f9f56c66aec..fae9ffc7595 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -36,7 +36,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/core/boards.h"
+ #include "hw/sysbus.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "migration/vmstate.h"
+ #include "trace.h"
+ 
+diff --git a/hw/gpio/stm32l4x5_gpio.c b/hw/gpio/stm32l4x5_gpio.c
+index a5a38da6384..5686bd53c23 100644
+--- a/hw/gpio/stm32l4x5_gpio.c
++++ b/hw/gpio/stm32l4x5_gpio.c
+@@ -21,7 +21,7 @@
+ #include "hw/gpio/stm32l4x5_gpio.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/clock.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/visitor.h"
+ #include "qapi/error.h"
+diff --git a/hw/mips/boston.c b/hw/mips/boston.c
+index b4b4a86a5fa..b63b27d03fa 100644
+--- a/hw/mips/boston.c
++++ b/hw/mips/boston.c
+@@ -30,7 +30,7 @@
+ #include "hw/mips/bootloader.h"
+ #include "hw/mips/cps.h"
+ #include "hw/pci-host/xilinx-pcie.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/mips/cps.c b/hw/mips/cps.c
+index e47695e2b0a..13f048ef9c9 100644
+--- a/hw/mips/cps.c
++++ b/hw/mips/cps.c
+@@ -22,7 +22,7 @@
+ #include "qemu/module.h"
+ #include "hw/mips/cps.h"
+ #include "hw/mips/mips.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "system/tcg.h"
+ #include "system/reset.h"
+diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+index 2b0eb8c478e..e5ed0b56923 100644
+--- a/hw/mips/malta.c
++++ b/hw/mips/malta.c
+@@ -58,7 +58,7 @@
+ #include "system/kvm.h"
+ #include "semihosting/semihost.h"
+ #include "hw/mips/cps.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "target/mips/internal.h"
+ #include "trace.h"
+ #include "cpu.h"
+diff --git a/hw/misc/npcm7xx_mft.c b/hw/misc/npcm7xx_mft.c
+index 514d29f2015..0bbae111cf9 100644
+--- a/hw/misc/npcm7xx_mft.c
++++ b/hw/misc/npcm7xx_mft.c
+@@ -16,7 +16,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/misc/npcm7xx_mft.h"
+ #include "hw/misc/npcm7xx_pwm.h"
+diff --git a/hw/misc/npcm7xx_pwm.c b/hw/misc/npcm7xx_pwm.c
+index 2e72d1c7d4f..39ac0dbe2a5 100644
+--- a/hw/misc/npcm7xx_pwm.c
++++ b/hw/misc/npcm7xx_pwm.c
+@@ -16,7 +16,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/misc/npcm7xx_pwm.h"
+ #include "hw/registerfields.h"
+diff --git a/hw/misc/npcm_clk.c b/hw/misc/npcm_clk.c
+index e202a8a2998..bc9ee975de7 100644
+--- a/hw/misc/npcm_clk.c
++++ b/hw/misc/npcm_clk.c
+@@ -18,7 +18,7 @@
+ 
+ #include "hw/misc/npcm_clk.h"
+ #include "hw/timer/npcm7xx_timer.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "migration/vmstate.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+index d4af2cd6963..1b012d1cc1e 100644
+--- a/hw/misc/stm32l4x5_rcc.c
++++ b/hw/misc/stm32l4x5_rcc.c
+@@ -25,7 +25,7 @@
+ #include "hw/misc/stm32l4x5_rcc_internals.h"
+ #include "hw/core/clock.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
+ #include "hw/registerfields.h"
+diff --git a/hw/misc/stm32l4x5_syscfg.c b/hw/misc/stm32l4x5_syscfg.c
+index de488a46780..52495610d1b 100644
+--- a/hw/misc/stm32l4x5_syscfg.c
++++ b/hw/misc/stm32l4x5_syscfg.c
+@@ -27,7 +27,7 @@
+ #include "hw/core/irq.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/clock.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qapi/error.h"
+ #include "hw/misc/stm32l4x5_syscfg.h"
+ #include "hw/gpio/stm32l4x5_gpio.h"
+diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
+index 010387beec4..cc18b21b22b 100644
+--- a/hw/misc/zynq_slcr.c
++++ b/hw/misc/zynq_slcr.c
+@@ -22,7 +22,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "hw/registerfields.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qom/object.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
+diff --git a/hw/net/npcm7xx_emc.c b/hw/net/npcm7xx_emc.c
+index 9eb39a6b846..704f4387684 100644
+--- a/hw/net/npcm7xx_emc.c
++++ b/hw/net/npcm7xx_emc.c
+@@ -32,7 +32,7 @@
+ #include <zlib.h> /* for crc32 */
+ 
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/net/npcm7xx_emc.h"
+ #include "net/eth.h"
+diff --git a/hw/timer/armv7m_systick.c b/hw/timer/armv7m_systick.c
+index c9e0f4c2e17..baba0817b8f 100644
+--- a/hw/timer/armv7m_systick.c
++++ b/hw/timer/armv7m_systick.c
+@@ -14,7 +14,7 @@
+ #include "migration/vmstate.h"
+ #include "hw/core/irq.h"
+ #include "hw/sysbus.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "qemu/timer.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+diff --git a/hw/timer/cmsdk-apb-dualtimer.c b/hw/timer/cmsdk-apb-dualtimer.c
+index 57fea11a855..5f4848ef618 100644
+--- a/hw/timer/cmsdk-apb-dualtimer.c
++++ b/hw/timer/cmsdk-apb-dualtimer.c
+@@ -25,7 +25,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/registerfields.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/timer/cmsdk-apb-dualtimer.h"
+ #include "migration/vmstate.h"
+ 
+diff --git a/hw/timer/cmsdk-apb-timer.c b/hw/timer/cmsdk-apb-timer.c
+index 8b7595731cc..d80bf1f96d0 100644
+--- a/hw/timer/cmsdk-apb-timer.c
++++ b/hw/timer/cmsdk-apb-timer.c
+@@ -35,7 +35,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/core/irq.h"
+ #include "hw/registerfields.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/timer/cmsdk-apb-timer.h"
+ #include "migration/vmstate.h"
+ 
+diff --git a/hw/timer/npcm7xx_timer.c b/hw/timer/npcm7xx_timer.c
+index e09e4ee03ad..0e62add74d3 100644
+--- a/hw/timer/npcm7xx_timer.c
++++ b/hw/timer/npcm7xx_timer.c
+@@ -17,7 +17,7 @@
+ #include "qemu/osdep.h"
+ 
+ #include "hw/core/irq.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/timer/npcm7xx_timer.h"
+ #include "migration/vmstate.h"
+diff --git a/hw/timer/sse-counter.c b/hw/timer/sse-counter.c
+index bb364e815be..de9d354483b 100644
+--- a/hw/timer/sse-counter.c
++++ b/hw/timer/sse-counter.c
+@@ -35,7 +35,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/registerfields.h"
+ #include "hw/core/clock.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "migration/vmstate.h"
+ 
+ /* Registers in the control frame */
+diff --git a/hw/timer/sse-timer.c b/hw/timer/sse-timer.c
+index fc48179d25d..1de882f3eb3 100644
+--- a/hw/timer/sse-timer.c
++++ b/hw/timer/sse-timer.c
+@@ -44,7 +44,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/registerfields.h"
+ #include "hw/core/clock.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+ 
+diff --git a/hw/timer/stellaris-gptm.c b/hw/timer/stellaris-gptm.c
+index d97b2f8309c..37cd760318e 100644
+--- a/hw/timer/stellaris-gptm.c
++++ b/hw/timer/stellaris-gptm.c
+@@ -12,7 +12,7 @@
+ #include "qemu/timer.h"
+ #include "qapi/error.h"
+ #include "migration/vmstate.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/timer/stellaris-gptm.h"
+ 
+ static void gptm_update_irq(gptm_state *s)
+diff --git a/hw/watchdog/cmsdk-apb-watchdog.c b/hw/watchdog/cmsdk-apb-watchdog.c
+index e1a2a33d73e..f1dd7d66eee 100644
+--- a/hw/watchdog/cmsdk-apb-watchdog.c
++++ b/hw/watchdog/cmsdk-apb-watchdog.c
+@@ -30,7 +30,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/registerfields.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/watchdog/cmsdk-apb-watchdog.h"
+ #include "migration/vmstate.h"
+ 
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index 5989c3ba177..894799c02c7 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -30,7 +30,7 @@
+ #include "system/kvm.h"
+ #include "system/qtest.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "fpu_helper.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "semihosting/semihost.h"
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 1eeed44e336..ecc5e093a40 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -34,7 +34,7 @@
+ #include "fpu/softfloat.h"
+ #include "qemu/module.h"
+ #include "migration/vmstate.h"
+-#include "hw/qdev-clock.h"
++#include "hw/core/qdev-clock.h"
+ #include "accel/tcg/cpu-ops.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "system/memory.h"
 -- 
 2.52.0
 
