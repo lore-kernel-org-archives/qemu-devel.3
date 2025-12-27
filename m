@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19C0E8FDD6
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF3EE8FDD8
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQRr-0000zg-RE; Sat, 27 Dec 2025 04:18:55 -0500
+	id 1vZQQd-0004o5-7Z; Sat, 27 Dec 2025 04:17:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRp-0000i0-Lz
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vZQQb-0004bt-2s
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRn-0004Sm-QK
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:53 -0500
+ id 1vZQQZ-0002qP-GF
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827131;
+ s=mimecast20190719; t=1766827055;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QLDG/mu3345byp5m3TmLYz4W6m4rlJhi1efMLR5uavA=;
- b=WfWvrBKKoiRKjhqLzziS3ZxMtDVFCoPJmsCUySXDBUl4lehsaER+HXz25VaQmTLTSF6+/u
- bco3sFNVr/rqWWjEuSba/zJ9RujSIL0b48rEum68eWuV64SZhbsuAIEsQpJyHe9qetteBo
- AyGsPDbvwIWz3t8XIZDf+1JW6qjKUSI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ah8JPPokp8PIS242o3ghPDmvg2Xy6nZa/QiTTUPeBrw=;
+ b=JrshS1yVt3bcrfIedLmlpfDcv/DtQRJ4z3vMzYMamH1iqlon732e1LL/BWPlreMLb/zskK
+ rbrtOVWBlNmZ2UvBt6/rHkbv+ZaObyj8wb2hC+4jsUsmZeryPXSJVEoiLZx0ZdPVq3UNZS
+ 7aPh0o2nUUSUju/vM2wGvAWKrLYfXzc=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-ZC1FiFcUN228m1Z-M_oWhA-1; Sat, 27 Dec 2025 04:18:49 -0500
-X-MC-Unique: ZC1FiFcUN228m1Z-M_oWhA-1
-X-Mimecast-MFC-AGG-ID: ZC1FiFcUN228m1Z-M_oWhA_1766827128
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4776079ada3so70687555e9.1
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:49 -0800 (PST)
+ us-mta-590-I5KM845oMQWzdSaGniXmxw-1; Sat, 27 Dec 2025 04:17:33 -0500
+X-MC-Unique: I5KM845oMQWzdSaGniXmxw-1
+X-Mimecast-MFC-AGG-ID: I5KM845oMQWzdSaGniXmxw_1766827052
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-430fdaba167so4115618f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827127; x=1767431927; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827051; x=1767431851; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QLDG/mu3345byp5m3TmLYz4W6m4rlJhi1efMLR5uavA=;
- b=Y4mdILSYdtLcCDEiEI7gAY6RTzNad790/492qD/FMPC8xHX3FTpGIoEf4NKX+v0Sf/
- EZoTZKsfAL+Z8aEvKYlVqWcYxrPUMxER3Se7ALwndU6deV/v9+2vofV2B6h02skAqDLc
- cK6Atebdg0fO9Mkw08KE2oVCs0IVh0Dwx6ThSvdCIJcugdh+EZ6o625BBUa1pNlThywH
- bCGI7iTgY2LVPyeNESVZf/OLzRV/+hqScztIFyXFmSu9U/jhJ/9+eyi984Qh2sLpYALD
- DN5BbqKMbZ/lW6akwoIj4q31McKbVpdBigmuTzw0Cb10Cxcm6aU4eKDvsASG5X3HiCkg
- boRQ==
+ bh=ah8JPPokp8PIS242o3ghPDmvg2Xy6nZa/QiTTUPeBrw=;
+ b=EwrGyLo98wRYrze4//IMPbAjDRm8VUdviMHN8mPMe4l+895OnhQCFryY2A3zJi31cJ
+ 1PzSNnFC5oRWi/PKTusq4OdhBdvcbs++Ap55NNnDHb/jjxYREU3caQ4PNPVw8XcpTVrZ
+ J4jt3b4rHHkXlGap0nvBC7reFKPUUe9ZhJKN9r9LFKEMOkgtVALT16NMiU3Adju0n3r7
+ iNZn2JyBaDhPTVdaC6D237BKIE9XftDUgOpKRUwMRFL26bAMpcqgDMbJ6tpt23mRIY+m
+ vbtL3H64TuN18UVwIdQnvaWVQ+DgmzHOpBALiKsoHjOoKsfjJpsR3uQdthVD1GnjBZcv
+ rROg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827127; x=1767431927;
+ d=1e100.net; s=20230601; t=1766827051; x=1767431851;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QLDG/mu3345byp5m3TmLYz4W6m4rlJhi1efMLR5uavA=;
- b=l0exxbPbbCnkdW1BtQY311sOxolqItQhrEq+Ayga6nyRINu9PZ6jFpb2WnqvZMBMlO
- JpAwY64HopNaxT2cAKr3i2pp6nR7qoY1BVWLopBIG1cBw7q39dU+IiXW8FMZ8jG5Mzol
- ngwuB0qKk0F385GeR1dvZNjsjuse1tcYcndfTztWkYpyeKorH3H6RdTILvw+7vFu0JNY
- NxUgKEGLhyNTAmrV9ipi2w6Yfjt5iAsx+c48+N4UkQFjj1eazW5zEboVpz3IKWNwqW1K
- MDRD/SsWkYdFz79j9VgLk4Nqii+W/oJqlKjSn7FBTTK3Bavjhzx7y32Q++bBuQVHwXo2
- LuYQ==
-X-Gm-Message-State: AOJu0YzAGF7u85XY21h0KHh+wnGlvptZVAFQbbk6R1eAIP36b8Ne+Iq2
- 49Vs68HtvQls14rYNOdUTjQytq0+M0TKnZdVyAWe18UjelkRcgTSYBei+gyIIw+H7BVR+8PalLf
- CINqkl8fUkEFrgkDq/a93FKNOcRrx1W1sefU2V2Xkke9QyLVRjxuXQnDXhhPxCP3TGpQy7zG6LP
- seFoNCF0YQOAn78ju2Hb0TaDxswGq7OZuSA+2geR5C
-X-Gm-Gg: AY/fxX5WvfC0Ky0jx8wSicGChBlx1Wry05/IpCsSVuZdNz+NGKiSmeeGI+W3H/cTzXM
- W0F486oLKATGqXnSuipt/9BYSRcDUN9rM6E/pl1AGsqy9XKhUZz/e9gs658hBcfdhzafNGOE2MS
- najUzZ9GIY61Sl9UiaO0Mw+1ECFmUBhim8Q3+7EZpPgDJmXQIUZrJ38Qa25xmpvWrJESb/1cGs4
- UzqoyiOExKbjoKYHxquqYNzzd1TC1f5CzAWNV/315hxjrgRrJiw/CRBqH04bkp61psZR52Rl6we
- 7bC5c/LFgMngTVFIHAtOqtRKEjBoLu7V+PBKYusthLc46+pIJbt6RRtzf6uwQeBaE7hNqHtEaPM
- xK4FW8PINqKCYM7gfGxeoEkN26+Gn/NLpzb6UDa2MEFFxV0Buqf9ydhJdXuWg0uiksKR5+z6Img
- d0n8+tO6YC5WaxTQQ=
-X-Received: by 2002:a05:600d:4453:10b0:47d:2093:649f with SMTP id
- 5b1f17b1804b1-47d2093660fmr182024115e9.8.1766827127220; 
- Sat, 27 Dec 2025 01:18:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHROktWE4utAdCy0tq+mXNPChgtU/N53C/k2gSXjy+OGJVISmWCDeT5VAAMQEhg4v8zH3O61g==
-X-Received: by 2002:a05:600d:4453:10b0:47d:2093:649f with SMTP id
- 5b1f17b1804b1-47d2093660fmr182023915e9.8.1766827126727; 
- Sat, 27 Dec 2025 01:18:46 -0800 (PST)
+ bh=ah8JPPokp8PIS242o3ghPDmvg2Xy6nZa/QiTTUPeBrw=;
+ b=wqjuhpHMrZ1JFt1vdvOPFr42kXsj69hNdNc4oPFiqctym0L6YCNAfGch8P7XIjJDPT
+ aV6kyq7F4tR9zaO4j4vSYek9nTnVIrzxdXTXb3xoOtVNeWy5TXgCl8AVhlIVImqsAD+k
+ +ONWiZfWcP/KqWUNuSyz5r16AxfpjmsArJLDAmQMeCz9sUb95GsEZby06190vDgqKgk8
+ Vu2Ly3fjMrPb9bi7sFJVOsmq233opax50VSEbxIw5RiATTd8+1A1YDDkyErlJSQCWXc8
+ Y6ZuKorJf+M0FsRELG2jy5CTzLImFq15u9ItCTSBVXehGQeF+R58rMzuxQkVJ512mkxm
+ 6tiA==
+X-Gm-Message-State: AOJu0Yyy7AyEXHAvCftKIrKoqOAayV7evTxkTvfTyuU2wWrK8cS36xXP
+ wKWDs5GSxoyWEi7DJjKGf/h/26KsebpfyK4sNVMZHXZVBGVJx0E6DBGfLY/QMb/seHxoPedXjrN
+ JgChN7ZBTVJ7wDQVihjvOMqaAEAMjR6SYbrfOJxUYQJprU4XIU4j3/vMx03QUzUDki7ASirWvyb
+ ng7R8p4eYI0YmgI9v1I3/AOtdONBtS7CYmZZM1i9c/
+X-Gm-Gg: AY/fxX7JO53Hg4Hqr8j1j9N/gFNreUFA3y+SB0lU+z9sBSqQmWBxEvxImZofistGrSJ
+ llgbHfqb7QqlcuZa9Kxy8T1dZiM21qIoE/dk5mYVHhmA20cdf5FAVSE1PP+HTffilnY8fgljO/h
+ BbLYPQFeq+j7SwuzHI67fTQmogtzFrIKjCuVBCbM7VzcDzlonGMK7LIRBlu87w2nwS7tcHWmTWd
+ myuhsQ6C3cCuaQp3zmOTabIuoo5iA4VJc3zau1Q2sQVLSHpLVWB+sfhXc6FOy7zmqvWXma+vHe9
+ AVXp6T9Fwt5Z4wnznbCpvuxgzkDP88oYi9cIKyKR899OWk5+RJMYn6Kj54RZMCJQ0Xmi5oD9Bem
+ DxcoFKJ4wqR4A1s2gj1ivnnNjK5Ft/psLIFDLmd+PmHVEBkkWQ+8dSuU6B8b168y8PwQw56CRG6
+ O1ybcGUSCz/AUXlUQ=
+X-Received: by 2002:a5d:588c:0:b0:430:ff81:295d with SMTP id
+ ffacd0b85a97d-4324e4f9350mr30589213f8f.41.1766827051222; 
+ Sat, 27 Dec 2025 01:17:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHinHH6HAofe1h8KWEgYSLXrHsnp1RiKfQP3PCHdwQtKJQBy/v0i7xB7LuWLLl8EWkkEUdcvQ==
+X-Received: by 2002:a5d:588c:0:b0:430:ff81:295d with SMTP id
+ ffacd0b85a97d-4324e4f9350mr30589185f8f.41.1766827050758; 
+ Sat, 27 Dec 2025 01:17:30 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193cba81sm426762775e9.10.2025.12.27.01.18.44
+ ffacd0b85a97d-4324ea227casm49960066f8f.15.2025.12.27.01.17.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:18:45 -0800 (PST)
+ Sat, 27 Dec 2025 01:17:29 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 073/153] i386/cpu: Clean up indent style of x86_ext_save_areas[]
-Date: Sat, 27 Dec 2025 10:15:00 +0100
-Message-ID: <20251227091622.20725-74-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 035/153] rust: hide panicking default associated constants from
+ rustdoc
+Date: Sat, 27 Dec 2025 10:14:22 +0100
+Message-ID: <20251227091622.20725-36-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,96 +123,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Work around rustdoc issue that panics while trying to evaluate
+the constants.
 
-The indentation style in `x86_ext_save_areas[]` is extremely
-inconsistent. Clean it up to ensure a uniform style.
-
-Tested-by: Farrah Chen <farrah.chen@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20251211060801.3600039-2-zhao1.liu@intel.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 58 +++++++++++++++++++++++++++--------------------
- 1 file changed, 33 insertions(+), 25 deletions(-)
+ rust/hw/core/src/qdev.rs      | 1 +
+ rust/migration/src/vmstate.rs | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index fe52538723b..a1de82b92c7 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -2028,38 +2028,46 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
-         .feature = FEAT_1_ECX, .bits = CPUID_EXT_XSAVE,
-         .size = sizeof(X86LegacyXSaveArea) + sizeof(X86XSaveHeader),
-     },
--    [XSTATE_YMM_BIT] =
--          { .feature = FEAT_1_ECX, .bits = CPUID_EXT_AVX,
--            .size = sizeof(XSaveAVX) },
--    [XSTATE_BNDREGS_BIT] =
--          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
--            .size = sizeof(XSaveBNDREG)  },
--    [XSTATE_BNDCSR_BIT] =
--          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
--            .size = sizeof(XSaveBNDCSR)  },
--    [XSTATE_OPMASK_BIT] =
--          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
--            .size = sizeof(XSaveOpmask) },
--    [XSTATE_ZMM_Hi256_BIT] =
--          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
--            .size = sizeof(XSaveZMM_Hi256) },
--    [XSTATE_Hi16_ZMM_BIT] =
--          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
--            .size = sizeof(XSaveHi16_ZMM) },
--    [XSTATE_PKRU_BIT] =
--          { .feature = FEAT_7_0_ECX, .bits = CPUID_7_0_ECX_PKU,
--            .size = sizeof(XSavePKRU) },
-+    [XSTATE_YMM_BIT] = {
-+        .feature = FEAT_1_ECX, .bits = CPUID_EXT_AVX,
-+        .size = sizeof(XSaveAVX),
-+    },
-+    [XSTATE_BNDREGS_BIT] = {
-+        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
-+        .size = sizeof(XSaveBNDREG),
-+    },
-+    [XSTATE_BNDCSR_BIT] = {
-+        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
-+        .size = sizeof(XSaveBNDCSR),
-+    },
-+    [XSTATE_OPMASK_BIT] = {
-+        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-+        .size = sizeof(XSaveOpmask),
-+    },
-+    [XSTATE_ZMM_Hi256_BIT] = {
-+        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-+        .size = sizeof(XSaveZMM_Hi256),
-+    },
-+    [XSTATE_Hi16_ZMM_BIT] = {
-+        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-+        .size = sizeof(XSaveHi16_ZMM),
-+    },
-+    [XSTATE_PKRU_BIT] = {
-+        .feature = FEAT_7_0_ECX, .bits = CPUID_7_0_ECX_PKU,
-+        .size = sizeof(XSavePKRU),
-+    },
-     [XSTATE_ARCH_LBR_BIT] = {
--            .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
--            .offset = 0 /*supervisor mode component, offset = 0 */,
--            .size = sizeof(XSavesArchLBR) },
-+        .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
-+        .offset = 0 /*supervisor mode component, offset = 0 */,
-+        .size = sizeof(XSavesArchLBR),
-+    },
-     [XSTATE_XTILE_CFG_BIT] = {
-         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
-         .size = sizeof(XSaveXTILECFG),
-     },
-     [XSTATE_XTILE_DATA_BIT] = {
-         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
--        .size = sizeof(XSaveXTILEDATA)
-+        .size = sizeof(XSaveXTILEDATA),
-     },
- };
- 
+diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+index 4e983da28b7..c2ca17f6ce0 100644
+--- a/rust/hw/core/src/qdev.rs
++++ b/rust/hw/core/src/qdev.rs
+@@ -132,6 +132,7 @@ pub trait ResettablePhasesImpl {
+ /// [`bindings::PropertyInfo`] pointer for the trait implementation to be safe.
+ pub unsafe trait QDevProp {
+     const BASE_INFO: *const bindings::PropertyInfo;
++    #[doc(hidden)] // https://github.com/rust-lang/rust/issues/149635
+     const BIT_INFO: *const bindings::PropertyInfo = {
+         panic!("invalid type for bit property");
+     };
+diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
+index 267f9c8e053..f9d9f335b98 100644
+--- a/rust/migration/src/vmstate.rs
++++ b/rust/migration/src/vmstate.rs
+@@ -101,6 +101,7 @@ pub unsafe trait VMState {
+     /// type for the length (i.e. if it is not `u8`, `u16`, `u32`), using it
+     /// in a call to [`vmstate_of!`](crate::vmstate_of) will cause a
+     /// compile-time error.
++    #[doc(hidden)] // https://github.com/rust-lang/rust/issues/149635
+     const VARRAY_FLAG: VMStateFlags = {
+         panic!("invalid type for variable-sized array");
+     };
 -- 
 2.52.0
 
