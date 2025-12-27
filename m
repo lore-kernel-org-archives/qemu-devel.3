@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ACD7E8FDD8
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19C0E8FDD6
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQQl-00054E-Hg; Sat, 27 Dec 2025 04:17:47 -0500
+	id 1vZQRr-0000zg-RE; Sat, 27 Dec 2025 04:18:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQk-00051n-9L
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:46 -0500
+ id 1vZQRp-0000i0-Lz
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQi-0003E6-Ia
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:46 -0500
+ id 1vZQRn-0004Sm-QK
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827064;
+ s=mimecast20190719; t=1766827131;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4/gCmmzBIF+KM2x1EnkEGwKPoQsC1VbJV5BydwbuYfs=;
- b=feyHm5+m4RU9snon+yOQWumFQyfo60WZzd46YVexq/3Tp3MVW0sT5XhFk9EYZYHxCwZkQL
- MpW2NjUPD/mUktKLipBj4xj4RDc4/9S8+FNrV01VzYNN33HC1EIKUqfJbWmgD1prWzgGnC
- AnwYNamH3ru/vaOzNdaPKBxFdvaUdu0=
+ bh=QLDG/mu3345byp5m3TmLYz4W6m4rlJhi1efMLR5uavA=;
+ b=WfWvrBKKoiRKjhqLzziS3ZxMtDVFCoPJmsCUySXDBUl4lehsaER+HXz25VaQmTLTSF6+/u
+ bco3sFNVr/rqWWjEuSba/zJ9RujSIL0b48rEum68eWuV64SZhbsuAIEsQpJyHe9qetteBo
+ AyGsPDbvwIWz3t8XIZDf+1JW6qjKUSI=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-rwVkcEpIPXWHmm6l-8nHVQ-1; Sat, 27 Dec 2025 04:17:41 -0500
-X-MC-Unique: rwVkcEpIPXWHmm6l-8nHVQ-1
-X-Mimecast-MFC-AGG-ID: rwVkcEpIPXWHmm6l-8nHVQ_1766827060
+ us-mta-523-ZC1FiFcUN228m1Z-M_oWhA-1; Sat, 27 Dec 2025 04:18:49 -0500
+X-MC-Unique: ZC1FiFcUN228m1Z-M_oWhA-1
+X-Mimecast-MFC-AGG-ID: ZC1FiFcUN228m1Z-M_oWhA_1766827128
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-477cf2230c8so77991055e9.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:41 -0800 (PST)
+ 5b1f17b1804b1-4776079ada3so70687555e9.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827060; x=1767431860; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827127; x=1767431927; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4/gCmmzBIF+KM2x1EnkEGwKPoQsC1VbJV5BydwbuYfs=;
- b=ir1WOkqJhn53sLM5TV2WM2rX9X+Wwj0YMkHX6l1hvobouRXT/2GcXR49DOaHVT+KL5
- Tzgb+uRbPru24DHGDEnHI1nbeIHcHpV0uLUxmb6HhWM9U9a/QyCxS6YlrAOBg2FtZb4D
- FOsSn17ft1MhpEmzNmWTtKfzMYkrxExiCEZyG7pN9O2Wq0HfhwlXOhqEHFNWEmoXpHND
- iqtTLg56Xm8jw2x0c5LLc/7OV+3rf8z64Lgzpw685jJCxwETSv1+dKK9eME7vIyRwmeu
- 7Vdk9Ea5Lzl0s6UjGiMMP6fD/S+QKfU5i02cvL8Xbo509pWloHseSvJ4H9ht+Deu1Vfz
- KK2w==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QLDG/mu3345byp5m3TmLYz4W6m4rlJhi1efMLR5uavA=;
+ b=Y4mdILSYdtLcCDEiEI7gAY6RTzNad790/492qD/FMPC8xHX3FTpGIoEf4NKX+v0Sf/
+ EZoTZKsfAL+Z8aEvKYlVqWcYxrPUMxER3Se7ALwndU6deV/v9+2vofV2B6h02skAqDLc
+ cK6Atebdg0fO9Mkw08KE2oVCs0IVh0Dwx6ThSvdCIJcugdh+EZ6o625BBUa1pNlThywH
+ bCGI7iTgY2LVPyeNESVZf/OLzRV/+hqScztIFyXFmSu9U/jhJ/9+eyi984Qh2sLpYALD
+ DN5BbqKMbZ/lW6akwoIj4q31McKbVpdBigmuTzw0Cb10Cxcm6aU4eKDvsASG5X3HiCkg
+ boRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827060; x=1767431860;
+ d=1e100.net; s=20230601; t=1766827127; x=1767431927;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=4/gCmmzBIF+KM2x1EnkEGwKPoQsC1VbJV5BydwbuYfs=;
- b=Ooiqpm4Z1TzNdywtsV3yBdHcLfaip6auG63aydObYXyT4aKB5pKxmHw7+bv2u23K36
- 8vdWNV/lVMdg1FLP5N5gFP2XlVVnkl5e6RVQa4ejozwL8GMWi51V34cjH1+ZUJine0DC
- 9EGU3t2Vl+KKcKtCTVHTxavOBeCw8wa9GRX+cD8wPSBr2VspGGXxIPmeePUd0TMoU9oB
- CeZwn2lCtMXB9zgDFhH3frdXFcUzh0L9m2d4ObBaDSsvKVdy65qvO+nBdxTVXtcuX7t0
- +a70EyqhRhUatrfnn44S264YMc5gegI532eJObhzjqof2mLqWuvThuelOyPcqWSnnUNs
- rhdw==
-X-Gm-Message-State: AOJu0Yw8iXPa5zUGtFxVfhFgYrN8y7RpjEmU6QD5eI+Lw3uOWa5psyoZ
- Kg3rEoV2n8kFp4Kg2FFsNnLTNRjJY94Jivx5tlg9d2Qguk+UxJ9mFLwMg1NKFv26ycsnsGl8ceZ
- k6GZe1b5ccJrC/+ztiO1vOA43pKIjnbRXfo89A53ii6eA9ByMqB1BNNP5gZGmJYSrh0I+41zdFn
- reajUxZB+q3GBi9QVROaLsGSY1PFLmzxqcX3Ap7nkr
-X-Gm-Gg: AY/fxX79u27XmVAuToNWgc/Zkgk/3lNX/foT7XDaDHC0RpiQnsAGDCFelzaaUd/Cg6V
- 6OEsb5yKRHioVm4FStaUj2S2VGXdwMy+IBvOEoybIn2smJguFVgdqtqA+2+u4MXHpY9e/tUj5xT
- adUvog+Cw2WmzpcPU2+CDvKTlfntr1EX7jw0AY8niyAofnQcY7PFBMmZZDVwSfvzZTUMLx9E5fC
- azcnQGfS+LJtgJU09IvMGD08dA0ptREbMdj1dOr9j4Zvl+4k/SNDMJNXPSXdvzWOKdb/yc48oT8
- KW/A3w4YqIDgANNyVtljW2EZTr8AP951NaUxA4AUoEuMLS32em8vzeOZcukzz6+q+cpskqcHhTf
- QqQNXEGhnrIfN7znxzZCZQzIECwyrm772dRrVspg0oCg4UULIB50VuBJTYBOfAAOwD0nmoe5pKC
- EZP16PFLMbYtih5cQ=
-X-Received: by 2002:a05:600c:3ba3:b0:46e:761b:e7ff with SMTP id
- 5b1f17b1804b1-47d1958c90cmr283360495e9.28.1766827059779; 
- Sat, 27 Dec 2025 01:17:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFXzL5fFBOCR8SLXi3YbZKWcuIyCUjtAMyIvjFYjix0rCzfZIE+yheFNDEaXF37WFD8XMd9Q==
-X-Received: by 2002:a05:600c:3ba3:b0:46e:761b:e7ff with SMTP id
- 5b1f17b1804b1-47d1958c90cmr283360315e9.28.1766827059276; 
- Sat, 27 Dec 2025 01:17:39 -0800 (PST)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QLDG/mu3345byp5m3TmLYz4W6m4rlJhi1efMLR5uavA=;
+ b=l0exxbPbbCnkdW1BtQY311sOxolqItQhrEq+Ayga6nyRINu9PZ6jFpb2WnqvZMBMlO
+ JpAwY64HopNaxT2cAKr3i2pp6nR7qoY1BVWLopBIG1cBw7q39dU+IiXW8FMZ8jG5Mzol
+ ngwuB0qKk0F385GeR1dvZNjsjuse1tcYcndfTztWkYpyeKorH3H6RdTILvw+7vFu0JNY
+ NxUgKEGLhyNTAmrV9ipi2w6Yfjt5iAsx+c48+N4UkQFjj1eazW5zEboVpz3IKWNwqW1K
+ MDRD/SsWkYdFz79j9VgLk4Nqii+W/oJqlKjSn7FBTTK3Bavjhzx7y32Q++bBuQVHwXo2
+ LuYQ==
+X-Gm-Message-State: AOJu0YzAGF7u85XY21h0KHh+wnGlvptZVAFQbbk6R1eAIP36b8Ne+Iq2
+ 49Vs68HtvQls14rYNOdUTjQytq0+M0TKnZdVyAWe18UjelkRcgTSYBei+gyIIw+H7BVR+8PalLf
+ CINqkl8fUkEFrgkDq/a93FKNOcRrx1W1sefU2V2Xkke9QyLVRjxuXQnDXhhPxCP3TGpQy7zG6LP
+ seFoNCF0YQOAn78ju2Hb0TaDxswGq7OZuSA+2geR5C
+X-Gm-Gg: AY/fxX5WvfC0Ky0jx8wSicGChBlx1Wry05/IpCsSVuZdNz+NGKiSmeeGI+W3H/cTzXM
+ W0F486oLKATGqXnSuipt/9BYSRcDUN9rM6E/pl1AGsqy9XKhUZz/e9gs658hBcfdhzafNGOE2MS
+ najUzZ9GIY61Sl9UiaO0Mw+1ECFmUBhim8Q3+7EZpPgDJmXQIUZrJ38Qa25xmpvWrJESb/1cGs4
+ UzqoyiOExKbjoKYHxquqYNzzd1TC1f5CzAWNV/315hxjrgRrJiw/CRBqH04bkp61psZR52Rl6we
+ 7bC5c/LFgMngTVFIHAtOqtRKEjBoLu7V+PBKYusthLc46+pIJbt6RRtzf6uwQeBaE7hNqHtEaPM
+ xK4FW8PINqKCYM7gfGxeoEkN26+Gn/NLpzb6UDa2MEFFxV0Buqf9ydhJdXuWg0uiksKR5+z6Img
+ d0n8+tO6YC5WaxTQQ=
+X-Received: by 2002:a05:600d:4453:10b0:47d:2093:649f with SMTP id
+ 5b1f17b1804b1-47d2093660fmr182024115e9.8.1766827127220; 
+ Sat, 27 Dec 2025 01:18:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHROktWE4utAdCy0tq+mXNPChgtU/N53C/k2gSXjy+OGJVISmWCDeT5VAAMQEhg4v8zH3O61g==
+X-Received: by 2002:a05:600d:4453:10b0:47d:2093:649f with SMTP id
+ 5b1f17b1804b1-47d2093660fmr182023915e9.8.1766827126727; 
+ Sat, 27 Dec 2025 01:18:46 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1aee5sm50854018f8f.4.2025.12.27.01.17.38
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-47d193cba81sm426762775e9.10.2025.12.27.01.18.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:17:38 -0800 (PST)
+ Sat, 27 Dec 2025 01:18:45 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 039/153] hwcore: add prelude
-Date: Sat, 27 Dec 2025 10:14:26 +0100
-Message-ID: <20251227091622.20725-40-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 073/153] i386/cpu: Clean up indent style of x86_ext_save_areas[]
+Date: Sat, 27 Dec 2025 10:15:00 +0100
+Message-ID: <20251227091622.20725-74-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -121,110 +123,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Zhao Liu <zhao1.liu@intel.com>
+
+The indentation style in `x86_ext_save_areas[]` is extremely
+inconsistent. Clean it up to ensure a uniform style.
+
+Tested-by: Farrah Chen <farrah.chen@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20251211060801.3600039-2-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs |  5 +----
- rust/hw/core/meson.build         |  1 +
- rust/hw/core/src/lib.rs          |  5 +++++
- rust/hw/core/src/prelude.rs      | 14 ++++++++++++++
- rust/hw/core/tests/tests.rs      |  2 +-
- rust/hw/timer/hpet/src/device.rs |  5 +----
- 6 files changed, 23 insertions(+), 9 deletions(-)
- create mode 100644 rust/hw/core/src/prelude.rs
+ target/i386/cpu.c | 58 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 33 insertions(+), 25 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index b7e8e393d2e..164f27d5bb2 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -7,10 +7,7 @@
- use bql::BqlRefCell;
- use chardev::{CharFrontend, Chardev, Event};
- use common::prelude::*;
--use hwcore::{
--    Clock, ClockEvent, DeviceImpl, DeviceMethods, DeviceState, IRQState, InterruptSource,
--    ResetType, ResettablePhasesImpl, SysBusDevice, SysBusDeviceImpl, SysBusDeviceMethods,
--};
-+use hwcore::{prelude::*, ClockEvent, IRQState};
- use migration::{
-     self, impl_vmstate_forward, impl_vmstate_struct, vmstate_fields, vmstate_of,
-     vmstate_subsections, vmstate_unused, VMStateDescription, VMStateDescriptionBuilder,
-diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
-index 1560dd20c6b..fa1765a2302 100644
---- a/rust/hw/core/meson.build
-+++ b/rust/hw/core/meson.build
-@@ -51,6 +51,7 @@ _hwcore_rs = static_library(
-       'src/lib.rs',
-       'src/bindings.rs',
-       'src/irq.rs',
-+      'src/prelude.rs',
-       'src/qdev.rs',
-       'src/sysbus.rs',
-     ],
-diff --git a/rust/hw/core/src/lib.rs b/rust/hw/core/src/lib.rs
-index b40801eb843..491743d2b9d 100644
---- a/rust/hw/core/src/lib.rs
-+++ b/rust/hw/core/src/lib.rs
-@@ -8,6 +8,11 @@
- mod irq;
- pub use irq::*;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index fe52538723b..a1de82b92c7 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2028,38 +2028,46 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
+         .feature = FEAT_1_ECX, .bits = CPUID_EXT_XSAVE,
+         .size = sizeof(X86LegacyXSaveArea) + sizeof(X86XSaveHeader),
+     },
+-    [XSTATE_YMM_BIT] =
+-          { .feature = FEAT_1_ECX, .bits = CPUID_EXT_AVX,
+-            .size = sizeof(XSaveAVX) },
+-    [XSTATE_BNDREGS_BIT] =
+-          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
+-            .size = sizeof(XSaveBNDREG)  },
+-    [XSTATE_BNDCSR_BIT] =
+-          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
+-            .size = sizeof(XSaveBNDCSR)  },
+-    [XSTATE_OPMASK_BIT] =
+-          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
+-            .size = sizeof(XSaveOpmask) },
+-    [XSTATE_ZMM_Hi256_BIT] =
+-          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
+-            .size = sizeof(XSaveZMM_Hi256) },
+-    [XSTATE_Hi16_ZMM_BIT] =
+-          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
+-            .size = sizeof(XSaveHi16_ZMM) },
+-    [XSTATE_PKRU_BIT] =
+-          { .feature = FEAT_7_0_ECX, .bits = CPUID_7_0_ECX_PKU,
+-            .size = sizeof(XSavePKRU) },
++    [XSTATE_YMM_BIT] = {
++        .feature = FEAT_1_ECX, .bits = CPUID_EXT_AVX,
++        .size = sizeof(XSaveAVX),
++    },
++    [XSTATE_BNDREGS_BIT] = {
++        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
++        .size = sizeof(XSaveBNDREG),
++    },
++    [XSTATE_BNDCSR_BIT] = {
++        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
++        .size = sizeof(XSaveBNDCSR),
++    },
++    [XSTATE_OPMASK_BIT] = {
++        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
++        .size = sizeof(XSaveOpmask),
++    },
++    [XSTATE_ZMM_Hi256_BIT] = {
++        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
++        .size = sizeof(XSaveZMM_Hi256),
++    },
++    [XSTATE_Hi16_ZMM_BIT] = {
++        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
++        .size = sizeof(XSaveHi16_ZMM),
++    },
++    [XSTATE_PKRU_BIT] = {
++        .feature = FEAT_7_0_ECX, .bits = CPUID_7_0_ECX_PKU,
++        .size = sizeof(XSavePKRU),
++    },
+     [XSTATE_ARCH_LBR_BIT] = {
+-            .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
+-            .offset = 0 /*supervisor mode component, offset = 0 */,
+-            .size = sizeof(XSavesArchLBR) },
++        .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
++        .offset = 0 /*supervisor mode component, offset = 0 */,
++        .size = sizeof(XSavesArchLBR),
++    },
+     [XSTATE_XTILE_CFG_BIT] = {
+         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
+         .size = sizeof(XSaveXTILECFG),
+     },
+     [XSTATE_XTILE_DATA_BIT] = {
+         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
+-        .size = sizeof(XSaveXTILEDATA)
++        .size = sizeof(XSaveXTILEDATA),
+     },
+ };
  
-+// preserve one-item-per-"use" syntax, it is clearer
-+// for prelude-like modules
-+#[rustfmt::skip]
-+pub mod prelude;
-+
- mod qdev;
- pub use qdev::*;
- 
-diff --git a/rust/hw/core/src/prelude.rs b/rust/hw/core/src/prelude.rs
-new file mode 100644
-index 00000000000..c544c317b39
---- /dev/null
-+++ b/rust/hw/core/src/prelude.rs
-@@ -0,0 +1,14 @@
-+//! Essential types and traits intended for blanket imports.
-+
-+pub use crate::qdev::Clock;
-+pub use crate::qdev::DeviceState;
-+pub use crate::qdev::DeviceImpl;
-+pub use crate::qdev::DeviceMethods;
-+pub use crate::qdev::ResettablePhasesImpl;
-+pub use crate::qdev::ResetType;
-+
-+pub use crate::sysbus::SysBusDevice;
-+pub use crate::sysbus::SysBusDeviceImpl;
-+pub use crate::sysbus::SysBusDeviceMethods;
-+
-+pub use crate::irq::InterruptSource;
-diff --git a/rust/hw/core/tests/tests.rs b/rust/hw/core/tests/tests.rs
-index 247d812866d..b39d1501d5b 100644
---- a/rust/hw/core/tests/tests.rs
-+++ b/rust/hw/core/tests/tests.rs
-@@ -5,7 +5,7 @@
- use std::{ffi::CStr, ptr::addr_of};
- 
- use bql::BqlCell;
--use hwcore::{DeviceImpl, DeviceState, ResettablePhasesImpl, SysBusDevice};
-+use hwcore::prelude::*;
- use migration::{VMStateDescription, VMStateDescriptionBuilder};
- use qom::{prelude::*, ObjectImpl, ParentField};
- use util::bindings::{module_call_init, module_init_type};
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index e9c7afa24d5..7ab9897cdfb 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -12,10 +12,7 @@
- 
- use bql::{BqlCell, BqlRefCell};
- use common::prelude::*;
--use hwcore::{
--    DeviceImpl, DeviceMethods, DeviceState, InterruptSource, ResetType, ResettablePhasesImpl,
--    SysBusDevice, SysBusDeviceImpl, SysBusDeviceMethods,
--};
-+use hwcore::prelude::*;
- use migration::{
-     self, impl_vmstate_struct, vmstate_fields, vmstate_of, vmstate_subsections, vmstate_validate,
-     VMStateDescription, VMStateDescriptionBuilder,
 -- 
 2.52.0
 
