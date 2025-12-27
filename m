@@ -4,106 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA7FFE8FDD5
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02657E8FDD6
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:18:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQQH-0002YG-0o; Sat, 27 Dec 2025 04:17:17 -0500
+	id 1vZQQg-0004vh-Os; Sat, 27 Dec 2025 04:17:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQF-0002XU-JJ
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vZQQf-0004vH-R7
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQQB-0002PM-JD
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:15 -0500
+ id 1vZQQe-00032r-6O
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:17:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827031;
+ s=mimecast20190719; t=1766827059;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N2T9Qo+I/XfHhW0PoTnRWcNW5Xf7eKo5IY8PYEQOWvY=;
- b=cYwaRHED6ACEV0ao4snryLK416Eviqf1Os5PkzbIvdryriCdNyEG6RQtSJg9uWEvFRz1tZ
- fHf70dMe5yHNBHt9dmQjzjGJdZ8QzDTikgPwDyfePXu4LBg1Kmr5VitRHYIBEAcmB+FuYB
- 1DDiM3szUFBH7WDYqTa+XTUMbI5dYPM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=npP6lBXv8yluOnouSv/I/yZNTQJ/85K9PXZ3liTT2JQ=;
+ b=OMg2mN0EirGz6N8NK9hjIy8mNIxqyGRU7DWnr9ijMXRV6QCtME2IkbkPrQPsem/gRHzxCl
+ FLTUd91l+FgFf5f9wK3wYcQXtAQKh0WHx3rf58xvEdfPGJ5rsTJNY+FqLF6bqxw/4OX+ty
+ MmNjdExpGKi/hfi+Pu+yqwgU8AndjAI=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-4zIVNiHiM7u6HNAqtfcPMg-1; Sat, 27 Dec 2025 04:17:08 -0500
-X-MC-Unique: 4zIVNiHiM7u6HNAqtfcPMg-1
-X-Mimecast-MFC-AGG-ID: 4zIVNiHiM7u6HNAqtfcPMg_1766827027
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47918084ac1so65200865e9.2
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:08 -0800 (PST)
+ us-mta-150-pwbDrNd4OJu_X03NwDyLwQ-1; Sat, 27 Dec 2025 04:17:37 -0500
+X-MC-Unique: pwbDrNd4OJu_X03NwDyLwQ-1
+X-Mimecast-MFC-AGG-ID: pwbDrNd4OJu_X03NwDyLwQ_1766827056
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4325b182e3cso3054652f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:17:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827027; x=1767431827; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827055; x=1767431855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=N2T9Qo+I/XfHhW0PoTnRWcNW5Xf7eKo5IY8PYEQOWvY=;
- b=TuvmFJQ5EjR+GFH3DTsxrf5AyeLF5wJ7Hwe46z9cDt7/FnhdNBqxrv2cwpsNusfx0W
- YIX+99nKILtO7bpXAl/YDry66TYrVKStzhkTYcf3WlhZia8+OcDwn/nDTrNKTho7GRkI
- OXTpLf4B1hcZGYh2NUcGItTjEK2V9j/yL8kqoT2eQnDWZRPZCC5YZ2yONqMcyPAsRb5k
- CVHAevvkuL7Q7ryWIPtanOYXqvXFEH1F/59f54XkSvsONGgzSD45canZ/JzlHAvTDZ6d
- gdekKjYRTHtEIv2PApbFMC1Gsn0gEeRHKUPOBgHCNl+sjH/gDhfV6pghWdxCuAMpRyHF
- qzMA==
+ :reply-to; bh=npP6lBXv8yluOnouSv/I/yZNTQJ/85K9PXZ3liTT2JQ=;
+ b=GzI6BcSn9dBva+IOrPG+shVJBhE6mLHnfisamqT/j1csWktkkGwOKkKOEXBm/0bpHr
+ LjNMy5c8AEV/GnRwZmUX8Qu0RFJ+ojP7J5RBAMhjqTIB4/v0wlAhjizrvvoTkSUYpXve
+ gFICf3XVur2LW2sZkigYhC9N6xKcgTCyVTSIXrD0SJvt3WlB2jLJ92hBuN2lPjyVkc1N
+ rIK5zbjG7mwIJhaQthdF8Z8XO/YH4zI1nxMh9zo04c+Vq9MJTroVJCj0TgHEVInSv7iP
+ cmMaJoTCWPbeYTzyF6cPAaYEoFX2/rSuiS0k+ZcXgTmTpA8lV/jkkls/sYGHCtAKKL2n
+ +sug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827027; x=1767431827;
+ d=1e100.net; s=20230601; t=1766827055; x=1767431855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=N2T9Qo+I/XfHhW0PoTnRWcNW5Xf7eKo5IY8PYEQOWvY=;
- b=U4mthe0JHHYOs1rKiJQUYqyHaz3Tea5Ug3XgoeFimFlfOhGHMRwHoPijZt75/se+Yv
- z5/BMCltpLr9kDTLMsvc9aWVr6/e5641GD/P8Lk+aKFJGJpl8GrmsidJ6kvB9fo05k8a
- QfO6jR0DxkZ+jRpW6e7CrJH2s0EjKDw4dC2EnE8qwpE04Ckg/QH8O0saqLVRoIesIA7p
- Uj31j9kOJvoI46bqp9JHFSI8QAm12F8YABfs9BEar9YrFzqHugNh5K8pwneUPsB8wkFf
- oq0IICYeBmvoW18EDhU2QV0oL6oEE51QjYQNNw0bz7sbCHp5um86S5gWNPgmaRcnE5sC
- Bb5Q==
-X-Gm-Message-State: AOJu0YwMqv5pxTuWvM3miuKnfeYrkcjVhc7YZCnc9FaF9l4r4yyLLwjH
- szLXctPOnpKPetvUAZ+Yj8v+C++/p3QiJPPBJ2FAt8T3rVbEoLVc3LCXVjC01C0EU45s3O84lDh
- rpT4y+kVTRUXPEorkolOPfsKt+xyVJoIQC8AfJpVjIKJ4VSnF9+FuUuKwkkQarQvPl0tjkeIGk/
- BKSx67u5FteWNswAC2vzWs8VVFpaWOkPSIWBCSXSzM
-X-Gm-Gg: AY/fxX6AFhudfTOPvXrifxtkkQ3GDDjoJ5Y2r6wTxA/pmEisWoa+0Jp0WLWsF9HMEN6
- B/gvgDBehCXC3xJG286h9vP2SarXOYu/uli3TLIcjAd4ZQvsj3hbHDuuK8KbhIBhm2aGb3KIRgD
- HAF9lEBEvfAJ1u4aemTGrlXgHZH4lJ5C9BEYBcY8wdhf8CzLVYj8qwpbzJl2/IgjQh/Dq6ZDr0e
- CTW/bd7VrHskE7GItBsvwVotrzTvEczJ4r8Fw7jcTcFdhphisX/POcbKQpngXNhrhLmswXVeVuK
- Sofu1IjZpJe1yE78gRYsERIAEaSMuP8EGBn0xCue1lqJFAFc7RQQDs0wTjLTh/lBnQhbLS4uaRq
- 1hhRCq7r3HHbXGNEQv+z9S2niGILmvwHLQMYFmQ1jG7hXMZf+q/Ai44mwVhyMPVbqXtt3g/y/GL
- Nbn1YseB8lJqTpaT0=
-X-Received: by 2002:a05:600c:45c8:b0:477:8a2a:1244 with SMTP id
- 5b1f17b1804b1-47d195558bemr275598985e9.11.1766827026130; 
- Sat, 27 Dec 2025 01:17:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IESg8EQ+T+UjY7ACO/aIsNmqsWSfYgH4vNigyiLeRrA+M6ZdtJCQGJtKhHsJpMtoTV/Wr4OxQ==
-X-Received: by 2002:a05:600c:45c8:b0:477:8a2a:1244 with SMTP id
- 5b1f17b1804b1-47d195558bemr275597935e9.11.1766827024257; 
- Sat, 27 Dec 2025 01:17:04 -0800 (PST)
+ bh=npP6lBXv8yluOnouSv/I/yZNTQJ/85K9PXZ3liTT2JQ=;
+ b=GE9KfePighwsPSW3Bt1/s9L92hdJgFteN0T16rTHev7RH2hmtM1B/jwYdRq2A7SACf
+ 1ZAxzNvzbDOCyDhkNNMQaMX7qeUDeBVWRJjx54vmUoVBnl5hMF3kizL4fiIIJeDq2LpL
+ IXoiN60qLw5N8Uiq4uTIVTTuIq8Ob9ikRj9rjjBQIA/6lexYMkG7vlyzi8H+1vHPsfdv
+ oubwEMXm5X7VWiJDpOklTfrcAiEoyEOWJ1JrYkpIFgz8o5su79SX0hL6mOSzeuhpayk0
+ ZGnnLK2iZyY+Or0tUg+KHi7+O/IIW0waj4Zjilpw3UP2wAjuoIW/3WAs4O231hk55yl0
+ TINQ==
+X-Gm-Message-State: AOJu0YylAq8WADKHms/Y6/VCkjIcBerFlUEw60moFAGWx5O3kkZlbR1S
+ kHRYtrXSZf9lrnOEiR9iF1ll7R4WBydNTGcybis+TGaXchJgV/cp7hvCKTu1chmwrrloxSmzoBr
+ QJMMMvEAWw40o0xD6Aj8GXHl3hu+5EIlyfCX9BWQ7rGlQbgSjlyq4ylynJ7pt4YhYILHUqfIT1S
+ xSSQZXC8HpMpouIoKny+Qi6QWtogCUcCU2foHpkw45
+X-Gm-Gg: AY/fxX4gE9NMrTM9Vf61kxzB/89Njv8yZVt1lYAkuLd0rl8KNol6a6zjbbjIv56qyUe
+ udr2iYv3k4pyztV9tK9gcNEr4xn05qG0M4Hzn75jyqRfhlh4SQsV0DkP7upBqWZPxm29GzctLd7
+ 23OLe1osDga4GbNfOsErqJMXajQ16Lab/I/VYZN48gEbYl88s4rFubwze2HccYKtE6wpliza25B
+ QEp6aUhhzuNWf41Fxi9LnQZx/j8zYtLJ4/MJsw23C6SCs6AijNR/mUd0dgTz+ppPUcikPl8Kw/f
+ 6aU66UYdVxwpEyqccUB2EnbFZHTVU9EEAApgTPPZoEDM1sx1ffdFLyI/8hGtl4xnvmejPTrR7hB
+ r/QHIdm7w2aJZZrH6IzhGn8yf3nlZL0NVBJ0Tw89DX9T3u4Q3U9GjV0ZGY1exGwoXewNoV4LtNC
+ 078VtVzH57ma/4fkA=
+X-Received: by 2002:a05:6000:611:b0:431:3ba:1188 with SMTP id
+ ffacd0b85a97d-4324e4c70e5mr25675141f8f.3.1766827055178; 
+ Sat, 27 Dec 2025 01:17:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGrKB4MYlE58YQiODrimvgOYLPwJRoz7zmW8GXjiXHvr5xEITVHgC4ICIl/4yWEV11td/YI9A==
+X-Received: by 2002:a05:6000:611:b0:431:3ba:1188 with SMTP id
+ ffacd0b85a97d-4324e4c70e5mr25675113f8f.3.1766827054664; 
+ Sat, 27 Dec 2025 01:17:34 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193d4e91sm421370455e9.13.2025.12.27.01.17.03
+ ffacd0b85a97d-4324ea22674sm51317229f8f.10.2025.12.27.01.17.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:17:03 -0800 (PST)
+ Sat, 27 Dec 2025 01:17:34 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 022/153] include: move hw/registerfields.h to hw/core/
-Date: Sat, 27 Dec 2025 10:14:09 +0100
-Message-ID: <20251227091622.20725-23-pbonzini@redhat.com>
+Subject: [PULL 037/153] util: add prelude
+Date: Sat, 27 Dec 2025 10:14:24 +0100
+Message-ID: <20251227091622.20725-38-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,1330 +123,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                                | 2 +-
- docs/devel/style.rst                       | 2 +-
- hw/arm/smmuv3-internal.h                   | 2 +-
- hw/intc/gic_internal.h                     | 2 +-
- hw/intc/gicv3_internal.h                   | 2 +-
- hw/sd/sdhci-internal.h                     | 2 +-
- include/block/nvme.h                       | 2 +-
- include/block/ufs.h                        | 2 +-
- include/fpu/softfloat-types.h              | 2 +-
- include/hw/acpi/tpm.h                      | 2 +-
- include/hw/char/nrf51_uart.h               | 2 +-
- include/hw/{ => core}/registerfields.h     | 0
- include/hw/i2c/aspeed_i2c.h                | 2 +-
- include/hw/misc/bcm2835_cprman_internals.h | 2 +-
- include/hw/misc/stm32l4x5_rcc_internals.h  | 2 +-
- include/hw/register.h                      | 2 +-
- target/arm/cpregs.h                        | 2 +-
- target/arm/cpu-features.h                  | 2 +-
- target/arm/cpu.h                           | 2 +-
- target/arm/internals.h                     | 2 +-
- target/arm/mmuidx-internal.h               | 2 +-
- target/hexagon/cpu.h                       | 2 +-
- target/hppa/cpu.h                          | 2 +-
- target/loongarch/cpu-csr.h                 | 2 +-
- target/loongarch/cpu.h                     | 2 +-
- target/ppc/cpu.h                           | 2 +-
- target/ppc/internal.h                      | 2 +-
- target/riscv/cpu.h                         | 2 +-
- target/riscv/internals.h                   | 2 +-
- target/riscv/vector_internals.h            | 2 +-
- target/rx/cpu.h                            | 2 +-
- target/tricore/cpu.h                       | 2 +-
- hw/adc/npcm7xx_adc.c                       | 2 +-
- hw/arm/armsse.c                            | 2 +-
- hw/arm/raspi.c                             | 2 +-
- hw/arm/raspi4b.c                           | 2 +-
- hw/char/cmsdk-apb-uart.c                   | 2 +-
- hw/char/ibex_uart.c                        | 2 +-
- hw/char/renesas_sci.c                      | 2 +-
- hw/char/stm32l4x5_usart.c                  | 2 +-
- hw/gpio/aspeed_gpio.c                      | 2 +-
- hw/i2c/arm_sbcon_i2c.c                     | 2 +-
- hw/i2c/aspeed_i2c.c                        | 2 +-
- hw/intc/aspeed_intc.c                      | 2 +-
- hw/intc/rx_icu.c                           | 2 +-
- hw/misc/armsse-cpu-pwrctrl.c               | 2 +-
- hw/misc/armsse-cpuid.c                     | 2 +-
- hw/misc/armsse-mhu.c                       | 2 +-
- hw/misc/aspeed_i3c.c                       | 2 +-
- hw/misc/aspeed_peci.c                      | 2 +-
- hw/misc/bcm2835_thermal.c                  | 2 +-
- hw/misc/imx6ul_ccm.c                       | 2 +-
- hw/misc/imx7_src.c                         | 2 +-
- hw/misc/iotkit-secctl.c                    | 2 +-
- hw/misc/iotkit-sysctl.c                    | 2 +-
- hw/misc/iotkit-sysinfo.c                   | 2 +-
- hw/misc/mps2-fpgaio.c                      | 2 +-
- hw/misc/mps2-scc.c                         | 2 +-
- hw/misc/npcm7xx_mft.c                      | 2 +-
- hw/misc/npcm7xx_pwm.c                      | 2 +-
- hw/misc/sifive_e_aon.c                     | 2 +-
- hw/misc/stm32l4x5_rcc.c                    | 2 +-
- hw/misc/tz-mpc.c                           | 2 +-
- hw/misc/tz-msc.c                           | 2 +-
- hw/misc/tz-ppc.c                           | 2 +-
- hw/misc/xlnx-versal-cframe-reg.c           | 2 +-
- hw/misc/zynq_slcr.c                        | 2 +-
- hw/net/cadence_gem.c                       | 2 +-
- hw/net/msf2-emac.c                         | 2 +-
- hw/net/npcm_gmac.c                         | 2 +-
- hw/net/npcm_pcs.c                          | 2 +-
- hw/net/smc91c111.c                         | 2 +-
- hw/pci-host/aspeed_pcie.c                  | 2 +-
- hw/pci-host/bonito.c                       | 2 +-
- hw/pci-host/gt64120.c                      | 2 +-
- hw/rtc/ls7a_rtc.c                          | 2 +-
- hw/sd/sd.c                                 | 2 +-
- hw/sensor/tmp105.c                         | 2 +-
- hw/ssi/ibex_spi_host.c                     | 2 +-
- hw/ssi/npcm_pspi.c                         | 2 +-
- hw/timer/bcm2835_systmr.c                  | 2 +-
- hw/timer/cmsdk-apb-dualtimer.c             | 2 +-
- hw/timer/cmsdk-apb-timer.c                 | 2 +-
- hw/timer/renesas_cmt.c                     | 2 +-
- hw/timer/renesas_tmr.c                     | 2 +-
- hw/timer/sifive_pwm.c                      | 2 +-
- hw/timer/sse-counter.c                     | 2 +-
- hw/timer/sse-timer.c                       | 2 +-
- hw/watchdog/allwinner-wdt.c                | 2 +-
- hw/watchdog/cmsdk-apb-watchdog.c           | 2 +-
- target/tricore/helper.c                    | 2 +-
- tests/qtest/sdhci-test.c                   | 2 +-
- tests/qtest/sifive-e-aon-watchdog-test.c   | 2 +-
- tests/qtest/stm32l4x5_rcc-test.c           | 2 +-
- tests/qtest/stm32l4x5_usart-test.c         | 2 +-
- 95 files changed, 94 insertions(+), 94 deletions(-)
- rename include/hw/{ => core}/registerfields.h (100%)
+ rust/hw/char/pl011/src/device.rs |  2 +-
+ rust/hw/timer/hpet/src/device.rs |  5 +----
+ rust/hw/timer/hpet/src/fw_cfg.rs |  2 +-
+ rust/util/meson.build            |  1 +
+ rust/util/src/lib.rs             |  5 +++++
+ rust/util/src/prelude.rs         | 11 +++++++++++
+ 6 files changed, 20 insertions(+), 6 deletions(-)
+ create mode 100644 rust/util/src/prelude.rs
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 41b536c3a2a..e0904cc0cc7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3560,7 +3560,7 @@ M: Alistair Francis <alistair@alistair23.me>
- S: Maintained
- F: hw/core/register.c
- F: include/hw/register.h
--F: include/hw/registerfields.h
-+F: include/hw/core/registerfields.h
- 
- Rust
- M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-index 941fe14bfd4..12e509d10de 100644
---- a/docs/devel/style.rst
-+++ b/docs/devel/style.rst
-@@ -433,7 +433,7 @@ We also suggest avoiding bitfields even in structures where the exact
- layout does not matter, unless you can show that they provide a significant
- usability benefit.
- 
--We encourage the usage of ``include/hw/registerfields.h`` as a safe replacement
-+We encourage the usage of ``include/hw/core/registerfields.h`` as a safe replacement
- for bitfields.
- 
- Reserved namespaces in C and POSIX
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index b6b7399347f..d15031f2651 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -21,7 +21,7 @@
- #ifndef HW_ARM_SMMUV3_INTERNAL_H
- #define HW_ARM_SMMUV3_INTERNAL_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/arm/smmu-common.h"
- 
- typedef enum SMMUTranslationStatus {
-diff --git a/hw/intc/gic_internal.h b/hw/intc/gic_internal.h
-index 8ddbf554c69..b821f1feb3b 100644
---- a/hw/intc/gic_internal.h
-+++ b/hw/intc/gic_internal.h
-@@ -21,7 +21,7 @@
- #ifndef QEMU_ARM_GIC_INTERNAL_H
- #define QEMU_ARM_GIC_INTERNAL_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/intc/arm_gic.h"
- 
- #define ALL_CPU_MASK ((unsigned)(((1 << GIC_NCPU) - 1)))
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index fc586524f56..880dbe52d86 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -24,7 +24,7 @@
- #ifndef QEMU_ARM_GICV3_INTERNAL_H
- #define QEMU_ARM_GICV3_INTERNAL_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/intc/arm_gicv3_common.h"
- 
- /* Distributor registers, as offsets from the distributor base address */
-diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-index 9f768c418e0..3e81821dd1e 100644
---- a/hw/sd/sdhci-internal.h
-+++ b/hw/sd/sdhci-internal.h
-@@ -24,7 +24,7 @@
- #ifndef SDHCI_INTERNAL_H
- #define SDHCI_INTERNAL_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- /* R/W SDMA System Address register 0x0 */
- #define SDHC_SYSAD                     0x00
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 8640dfa8269..9d7159ed7a7 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -1,7 +1,7 @@
- #ifndef BLOCK_NVME_H
- #define BLOCK_NVME_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- typedef struct QEMU_PACKED NvmeBar {
-     uint64_t    cap;
-diff --git a/include/block/ufs.h b/include/block/ufs.h
-index a3ee62b027a..ede4aff08ea 100644
---- a/include/block/ufs.h
-+++ b/include/block/ufs.h
-@@ -3,7 +3,7 @@
- #ifndef BLOCK_UFS_H
- #define BLOCK_UFS_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- typedef struct QEMU_PACKED UfsReg {
-     uint32_t cap;
-diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-index 1af2a0cb14b..8f82fdfc975 100644
---- a/include/fpu/softfloat-types.h
-+++ b/include/fpu/softfloat-types.h
-@@ -80,7 +80,7 @@ this code that are retained.
- #ifndef SOFTFLOAT_TYPES_H
- #define SOFTFLOAT_TYPES_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- /*
-  * Software IEC/IEEE floating-point types.
-diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
-index 9d0fe6f2f96..d2bf6637c54 100644
---- a/include/hw/acpi/tpm.h
-+++ b/include/hw/acpi/tpm.h
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 04155dabe1a..18f40fdc58b 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
 @@ -17,7 +17,7 @@
- #define HW_ACPI_TPM_H
- 
- #include "qemu/units.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/acpi/aml-build.h"
- #include "system/tpm.h"
- 
-diff --git a/include/hw/char/nrf51_uart.h b/include/hw/char/nrf51_uart.h
-index 03d8c2a20d2..7a54db746bd 100644
---- a/include/hw/char/nrf51_uart.h
-+++ b/include/hw/char/nrf51_uart.h
-@@ -13,7 +13,7 @@
- 
- #include "hw/sysbus.h"
- #include "chardev/char-fe.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qom/object.h"
- 
- #define UART_FIFO_LENGTH 6
-diff --git a/include/hw/registerfields.h b/include/hw/core/registerfields.h
-similarity index 100%
-rename from include/hw/registerfields.h
-rename to include/hw/core/registerfields.h
-diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-index 2daacc10ce0..c9c2620a8a3 100644
---- a/include/hw/i2c/aspeed_i2c.h
-+++ b/include/hw/i2c/aspeed_i2c.h
-@@ -22,7 +22,7 @@
- 
- #include "hw/i2c/i2c.h"
- #include "hw/sysbus.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qom/object.h"
- 
- #define TYPE_ASPEED_I2C "aspeed.i2c"
-diff --git a/include/hw/misc/bcm2835_cprman_internals.h b/include/hw/misc/bcm2835_cprman_internals.h
-index 7617aff96fd..de75139cfdd 100644
---- a/include/hw/misc/bcm2835_cprman_internals.h
-+++ b/include/hw/misc/bcm2835_cprman_internals.h
-@@ -9,7 +9,7 @@
- #ifndef HW_MISC_BCM2835_CPRMAN_INTERNALS_H
- #define HW_MISC_BCM2835_CPRMAN_INTERNALS_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/bcm2835_cprman.h"
- 
- #define TYPE_CPRMAN_PLL "bcm2835-cprman-pll"
-diff --git a/include/hw/misc/stm32l4x5_rcc_internals.h b/include/hw/misc/stm32l4x5_rcc_internals.h
-index ff1c834f694..1e044604c87 100644
---- a/include/hw/misc/stm32l4x5_rcc_internals.h
-+++ b/include/hw/misc/stm32l4x5_rcc_internals.h
-@@ -18,7 +18,7 @@
- #ifndef HW_STM32L4X5_RCC_INTERNALS_H
- #define HW_STM32L4X5_RCC_INTERNALS_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/stm32l4x5_rcc.h"
- 
- #define TYPE_RCC_CLOCK_MUX "stm32l4x5-rcc-clock-mux"
-diff --git a/include/hw/register.h b/include/hw/register.h
-index b3d20fee7d3..1f265f4ed71 100644
---- a/include/hw/register.h
-+++ b/include/hw/register.h
-@@ -13,7 +13,7 @@
- 
- #include "hw/core/qdev.h"
- #include "system/memory.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qom/object.h"
- 
- typedef struct RegisterInfo RegisterInfo;
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index 48a406a5fbc..f5ec7484c1d 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -21,7 +21,7 @@
- #ifndef TARGET_ARM_CPREGS_H
- #define TARGET_ARM_CPREGS_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "exec/memop.h"
- #include "target/arm/kvm-consts.h"
- #include "cpu.h"
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 579fa8f8f42..c86a4e667dc 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -20,7 +20,7 @@
- #ifndef TARGET_ARM_FEATURES_H
- #define TARGET_ARM_FEATURES_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qemu/host-utils.h"
- #include "cpu.h"
- #include "cpu-sysregs.h"
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 39f2b2e54de..9579d43ba33 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -22,7 +22,7 @@
- 
- #include "kvm-consts.h"
- #include "qemu/cpu-float.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "cpu-qom.h"
- #include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 75677945af3..9cd4bf74efb 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -29,7 +29,7 @@
- #include "exec/vaddr.h"
- #include "exec/breakpoint.h"
- #include "accel/tcg/tb-cpu-state.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "system/memory.h"
- #include "syndrome.h"
-diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
-index 962b0538526..776e31c9ba5 100644
---- a/target/arm/mmuidx-internal.h
-+++ b/target/arm/mmuidx-internal.h
-@@ -8,7 +8,7 @@
- 
- #include "mmuidx.h"
- #include "tcg/debug-assert.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- 
- FIELD(MMUIDXINFO, EL, 0, 2)
-diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index 43a854f5172..656b7dc0449 100644
---- a/target/hexagon/cpu.h
-+++ b/target/hexagon/cpu.h
-@@ -25,7 +25,7 @@
- #include "exec/cpu-defs.h"
- #include "hex_regs.h"
- #include "mmvec/mmvec.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- #ifndef CONFIG_USER_ONLY
- #error "Hexagon does not support system emulation"
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index c652ef945ac..012e54f8f6f 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -27,7 +27,7 @@
- #include "system/memory.h"
- #include "qemu/cpu-float.h"
- #include "qemu/interval-tree.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- #define MMU_KERNEL_IDX    0
- #define MMU_KERNEL_P_IDX  1
-diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-index 68989474987..77555929264 100644
---- a/target/loongarch/cpu-csr.h
-+++ b/target/loongarch/cpu-csr.h
-@@ -8,7 +8,7 @@
- #ifndef LOONGARCH_CPU_CSR_H
- #define LOONGARCH_CPU_CSR_H
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- /* Based on kernel definitions: arch/loongarch/include/asm/loongarch.h */
- 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 1a14469b3bc..92af68ea7f8 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -13,7 +13,7 @@
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "fpu/softfloat-types.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qemu/timer.h"
- #ifndef CONFIG_USER_ONLY
- #include "system/memory.h"
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 787020f6f90..dbebae89dce 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -27,7 +27,7 @@
- #include "exec/cpu-interrupt.h"
- #include "cpu-qom.h"
- #include "qom/object.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- #define CPU_RESOLVING_TYPE TYPE_POWERPC_CPU
- 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 7723350227f..58f315ffcf5 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -19,7 +19,7 @@
- #define PPC_INTERNAL_H
- 
- #include "exec/breakpoint.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "exec/page-protection.h"
- #include "accel/tcg/tb-cpu-state.h"
- 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index b54cd78f8f7..90b3e951053 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -21,7 +21,7 @@
- #define RISCV_CPU_H
- 
- #include "hw/core/cpu.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-properties.h"
- #include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
-diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-index 172296f12e2..35b923c4bf5 100644
---- a/target/riscv/internals.h
-+++ b/target/riscv/internals.h
-@@ -20,7 +20,7 @@
- #define RISCV_CPU_INTERNALS_H
- 
- #include "exec/cpu-common.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "fpu/softfloat-types.h"
- #include "target/riscv/cpu_bits.h"
- 
-diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 8eee7e5c31c..5681b818153 100644
---- a/target/riscv/vector_internals.h
-+++ b/target/riscv/vector_internals.h
-@@ -20,7 +20,7 @@
- #define TARGET_RISCV_VECTOR_INTERNALS_H
- 
- #include "qemu/bitops.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "cpu.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "internals.h"
-diff --git a/target/rx/cpu.h b/target/rx/cpu.h
-index ba5761b6472..b3b1ecff5af 100644
---- a/target/rx/cpu.h
-+++ b/target/rx/cpu.h
-@@ -20,7 +20,7 @@
- #define RX_CPU_H
- 
- #include "qemu/bitops.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "cpu-qom.h"
- 
- #include "exec/cpu-common.h"
-diff --git a/target/tricore/cpu.h b/target/tricore/cpu.h
-index 82085fbc32f..ab46192e261 100644
---- a/target/tricore/cpu.h
-+++ b/target/tricore/cpu.h
-@@ -21,7 +21,7 @@
- #define TRICORE_CPU_H
- 
- #include "cpu-qom.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "qemu/cpu-float.h"
-diff --git a/hw/adc/npcm7xx_adc.c b/hw/adc/npcm7xx_adc.c
-index 44079791cbd..3584c27c75a 100644
---- a/hw/adc/npcm7xx_adc.c
-+++ b/hw/adc/npcm7xx_adc.c
-@@ -18,7 +18,7 @@
- #include "hw/adc/npcm7xx_adc.h"
- #include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
-index 42ceb097ae8..b6fc95df3b6 100644
---- a/hw/arm/armsse.c
-+++ b/hw/arm/armsse.c
-@@ -18,7 +18,7 @@
- #include "trace.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/arm/armsse.h"
- #include "hw/arm/armsse-version.h"
- #include "hw/arm/boot.h"
-diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
-index 637525a7e3f..1276bb4df40 100644
---- a/hw/arm/raspi.c
-+++ b/hw/arm/raspi.c
-@@ -20,7 +20,7 @@
- #include "hw/arm/bcm2836.h"
- #include "hw/arm/bcm2838.h"
- #include "hw/arm/raspi_platform.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qemu/error-report.h"
- #include "hw/core/boards.h"
- #include "hw/core/loader.h"
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index ead28500c73..3eeb8f447e6 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -14,7 +14,7 @@
- #include "hw/arm/machines-qom.h"
- #include "hw/arm/raspi_platform.h"
- #include "hw/display/bcm2835_fb.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qemu/error-report.h"
- #include "system/device_tree.h"
- #include "hw/core/boards.h"
-diff --git a/hw/char/cmsdk-apb-uart.c b/hw/char/cmsdk-apb-uart.c
-index c3645a553ec..1a83e4a9bd1 100644
---- a/hw/char/cmsdk-apb-uart.c
-+++ b/hw/char/cmsdk-apb-uart.c
-@@ -22,7 +22,7 @@
- #include "trace.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "chardev/char-fe.h"
- #include "chardev/char-serial.h"
- #include "hw/char/cmsdk-apb-uart.h"
-diff --git a/hw/char/ibex_uart.c b/hw/char/ibex_uart.c
-index 3166f6d3094..127d219df3c 100644
---- a/hw/char/ibex_uart.c
-+++ b/hw/char/ibex_uart.c
-@@ -31,7 +31,7 @@
- #include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-diff --git a/hw/char/renesas_sci.c b/hw/char/renesas_sci.c
-index f1c5d5ae6b3..dc2810a9b11 100644
---- a/hw/char/renesas_sci.c
-+++ b/hw/char/renesas_sci.c
-@@ -24,7 +24,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
- #include "hw/char/renesas_sci.h"
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index 664d03d6b96..736f1e764e6 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -28,7 +28,7 @@
- #include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "trace.h"
- 
- 
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index 85a5acd7087..d9237d4360f 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -16,7 +16,7 @@
- #include "hw/core/irq.h"
- #include "migration/vmstate.h"
- #include "trace.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- #define GPIOS_PER_GROUP 8
- 
-diff --git a/hw/i2c/arm_sbcon_i2c.c b/hw/i2c/arm_sbcon_i2c.c
-index 979ccbe0ed6..688f45c3139 100644
---- a/hw/i2c/arm_sbcon_i2c.c
-+++ b/hw/i2c/arm_sbcon_i2c.c
-@@ -24,7 +24,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/i2c/arm_sbcon_i2c.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "qom/object.h"
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index e3ca77865bd..1f9ce131bf7 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -29,7 +29,7 @@
- #include "hw/i2c/aspeed_i2c.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "trace.h"
- 
- /* Enable SLAVE_ADDR_RX_MATCH always */
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index d92305b9ca1..f14c340b602 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -11,7 +11,7 @@
- #include "hw/core/irq.h"
- #include "qemu/log.h"
- #include "trace.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qapi/error.h"
- 
- /*
-diff --git a/hw/intc/rx_icu.c b/hw/intc/rx_icu.c
-index 788afe6b1a0..87cdc6cbdef 100644
---- a/hw/intc/rx_icu.c
-+++ b/hw/intc/rx_icu.c
-@@ -27,7 +27,7 @@
- #include "qemu/log.h"
- #include "qemu/error-report.h"
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/intc/rx_icu.h"
- #include "migration/vmstate.h"
-diff --git a/hw/misc/armsse-cpu-pwrctrl.c b/hw/misc/armsse-cpu-pwrctrl.c
-index 66e9218f277..87770facfce 100644
---- a/hw/misc/armsse-cpu-pwrctrl.c
-+++ b/hw/misc/armsse-cpu-pwrctrl.c
-@@ -22,7 +22,7 @@
- #include "qapi/error.h"
- #include "migration/vmstate.h"
- #include "hw/sysbus.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/armsse-cpu-pwrctrl.h"
- 
- REG32(CPUPWRCFG, 0x0)
-diff --git a/hw/misc/armsse-cpuid.c b/hw/misc/armsse-cpuid.c
-index 3a52bb5381f..03833125514 100644
---- a/hw/misc/armsse-cpuid.c
-+++ b/hw/misc/armsse-cpuid.c
-@@ -24,7 +24,7 @@
- #include "trace.h"
- #include "qapi/error.h"
- #include "hw/sysbus.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/armsse-cpuid.h"
- #include "hw/core/qdev-properties.h"
- 
-diff --git a/hw/misc/armsse-mhu.c b/hw/misc/armsse-mhu.c
-index 2673c2de3ef..6fbe2cca37e 100644
---- a/hw/misc/armsse-mhu.c
-+++ b/hw/misc/armsse-mhu.c
-@@ -22,7 +22,7 @@
- #include "qapi/error.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/irq.h"
- #include "hw/misc/armsse-mhu.h"
- 
-diff --git a/hw/misc/aspeed_i3c.c b/hw/misc/aspeed_i3c.c
-index 37a05b9ce27..ac6db214ee2 100644
---- a/hw/misc/aspeed_i3c.c
-+++ b/hw/misc/aspeed_i3c.c
-@@ -11,7 +11,7 @@
- #include "qemu/log.h"
- #include "qemu/error-report.h"
- #include "hw/misc/aspeed_i3c.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-properties.h"
- #include "qapi/error.h"
- #include "migration/vmstate.h"
-diff --git a/hw/misc/aspeed_peci.c b/hw/misc/aspeed_peci.c
-index cf902a8ab8c..0569ee57d1f 100644
---- a/hw/misc/aspeed_peci.c
-+++ b/hw/misc/aspeed_peci.c
-@@ -11,7 +11,7 @@
- #include "qemu/log.h"
- #include "hw/core/irq.h"
- #include "hw/misc/aspeed_peci.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "trace.h"
- 
- #define ASPEED_PECI_CC_RSP_SUCCESS (0x40U)
-diff --git a/hw/misc/bcm2835_thermal.c b/hw/misc/bcm2835_thermal.c
-index 33bfc91c7aa..0dc1be15b4a 100644
---- a/hw/misc/bcm2835_thermal.c
-+++ b/hw/misc/bcm2835_thermal.c
-@@ -10,7 +10,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "hw/misc/bcm2835_thermal.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- 
- REG32(CTL, 0)
-diff --git a/hw/misc/imx6ul_ccm.c b/hw/misc/imx6ul_ccm.c
-index 7f3ae61710c..c4f6e372fe1 100644
---- a/hw/misc/imx6ul_ccm.c
-+++ b/hw/misc/imx6ul_ccm.c
-@@ -11,7 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- #include "hw/misc/imx6ul_ccm.h"
- #include "qemu/log.h"
-diff --git a/hw/misc/imx7_src.c b/hw/misc/imx7_src.c
-index df0b0a69057..77f13bd020b 100644
---- a/hw/misc/imx7_src.c
-+++ b/hw/misc/imx7_src.c
-@@ -17,7 +17,7 @@
- #include "qemu/module.h"
- #include "target/arm/arm-powerctl.h"
- #include "hw/core/cpu.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- #include "trace.h"
- 
-diff --git a/hw/misc/iotkit-secctl.c b/hw/misc/iotkit-secctl.c
-index 64e94a76479..832b0217774 100644
---- a/hw/misc/iotkit-secctl.c
-+++ b/hw/misc/iotkit-secctl.c
-@@ -16,7 +16,7 @@
- #include "trace.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/irq.h"
- #include "hw/misc/iotkit-secctl.h"
- #include "hw/arm/armsse-version.h"
-diff --git a/hw/misc/iotkit-sysctl.c b/hw/misc/iotkit-sysctl.c
-index a9c3568c216..d673ae326bc 100644
---- a/hw/misc/iotkit-sysctl.c
-+++ b/hw/misc/iotkit-sysctl.c
-@@ -25,7 +25,7 @@
- #include "qapi/error.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/iotkit-sysctl.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/arm/armsse-version.h"
-diff --git a/hw/misc/iotkit-sysinfo.c b/hw/misc/iotkit-sysinfo.c
-index a53b1f51802..3b4d228e3ef 100644
---- a/hw/misc/iotkit-sysinfo.c
-+++ b/hw/misc/iotkit-sysinfo.c
-@@ -23,7 +23,7 @@
- #include "trace.h"
- #include "qapi/error.h"
- #include "hw/sysbus.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/iotkit-sysinfo.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/arm/armsse-version.h"
-diff --git a/hw/misc/mps2-fpgaio.c b/hw/misc/mps2-fpgaio.c
-index f3d51fd2286..9cd5e9884c0 100644
---- a/hw/misc/mps2-fpgaio.c
-+++ b/hw/misc/mps2-fpgaio.c
-@@ -22,7 +22,7 @@
- #include "trace.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/mps2-fpgaio.h"
- #include "hw/misc/led.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/misc/mps2-scc.c b/hw/misc/mps2-scc.c
-index 56aa0135072..06d436cf58e 100644
---- a/hw/misc/mps2-scc.c
-+++ b/hw/misc/mps2-scc.c
-@@ -25,7 +25,7 @@
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/mps2-scc.h"
- #include "hw/misc/led.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/misc/npcm7xx_mft.c b/hw/misc/npcm7xx_mft.c
-index 21e74385c71..742166c4e82 100644
---- a/hw/misc/npcm7xx_mft.c
-+++ b/hw/misc/npcm7xx_mft.c
-@@ -20,7 +20,7 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/misc/npcm7xx_mft.h"
- #include "hw/misc/npcm7xx_pwm.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
-diff --git a/hw/misc/npcm7xx_pwm.c b/hw/misc/npcm7xx_pwm.c
-index 1b010e51ec0..3ee34820c8a 100644
---- a/hw/misc/npcm7xx_pwm.c
-+++ b/hw/misc/npcm7xx_pwm.c
-@@ -19,7 +19,7 @@
- #include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/misc/npcm7xx_pwm.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- #include "qemu/bitops.h"
- #include "qemu/error-report.h"
-diff --git a/hw/misc/sifive_e_aon.c b/hw/misc/sifive_e_aon.c
-index 4d6e015ca38..0e82ae3758b 100644
---- a/hw/misc/sifive_e_aon.c
-+++ b/hw/misc/sifive_e_aon.c
-@@ -20,7 +20,7 @@
- #include "qemu/timer.h"
- #include "qemu/log.h"
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/sifive_e_aon.h"
- #include "qapi/visitor.h"
- #include "qapi/error.h"
-diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
-index cf7fa28cbe9..85095871340 100644
---- a/hw/misc/stm32l4x5_rcc.c
-+++ b/hw/misc/stm32l4x5_rcc.c
-@@ -28,7 +28,7 @@
- #include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "trace.h"
- 
- #define HSE_DEFAULT_FRQ 48000000ULL
-diff --git a/hw/misc/tz-mpc.c b/hw/misc/tz-mpc.c
-index fb5d232bff5..65517d390d3 100644
---- a/hw/misc/tz-mpc.c
-+++ b/hw/misc/tz-mpc.c
-@@ -16,7 +16,7 @@
- #include "trace.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/irq.h"
- #include "hw/misc/tz-mpc.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/misc/tz-msc.c b/hw/misc/tz-msc.c
-index 3e33455d421..dd845193d64 100644
---- a/hw/misc/tz-msc.c
-+++ b/hw/misc/tz-msc.c
-@@ -16,7 +16,7 @@
- #include "trace.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/irq.h"
- #include "hw/misc/tz-msc.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/misc/tz-ppc.c b/hw/misc/tz-ppc.c
-index a41c6011fba..7b812a034b2 100644
---- a/hw/misc/tz-ppc.c
-+++ b/hw/misc/tz-ppc.c
-@@ -16,7 +16,7 @@
- #include "trace.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/irq.h"
- #include "hw/misc/tz-ppc.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/misc/xlnx-versal-cframe-reg.c b/hw/misc/xlnx-versal-cframe-reg.c
-index 33a4ece26f6..a5a5e41f3e3 100644
---- a/hw/misc/xlnx-versal-cframe-reg.c
-+++ b/hw/misc/xlnx-versal-cframe-reg.c
-@@ -11,7 +11,7 @@
- #include "qemu/osdep.h"
- #include "hw/sysbus.h"
- #include "hw/register.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qemu/bitops.h"
- #include "qemu/log.h"
- #include "qemu/units.h"
-diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
-index d1900a2b948..d7d490b093d 100644
---- a/hw/misc/zynq_slcr.c
-+++ b/hw/misc/zynq_slcr.c
-@@ -21,7 +21,7 @@
- #include "migration/vmstate.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-clock.h"
- #include "qom/object.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-index fe9747fdb6f..b568fa3392d 100644
---- a/hw/net/cadence_gem.c
-+++ b/hw/net/cadence_gem.c
-@@ -28,7 +28,7 @@
- #include "hw/core/irq.h"
- #include "hw/net/cadence_gem.h"
- #include "hw/core/qdev-properties.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-diff --git a/hw/net/msf2-emac.c b/hw/net/msf2-emac.c
-index ac01d1ce472..077485c95d9 100644
---- a/hw/net/msf2-emac.c
-+++ b/hw/net/msf2-emac.c
-@@ -31,7 +31,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qapi/error.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/net/msf2-emac.h"
- #include "hw/net/mii.h"
- #include "hw/core/irq.h"
-diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
-index 5e32cd3edf3..123fb92ca40 100644
---- a/hw/net/npcm_gmac.c
-+++ b/hw/net/npcm_gmac.c
-@@ -23,7 +23,7 @@
- 
- #include "qemu/osdep.h"
- 
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/net/mii.h"
- #include "hw/net/npcm_gmac.h"
- #include "migration/vmstate.h"
-diff --git a/hw/net/npcm_pcs.c b/hw/net/npcm_pcs.c
-index 6aec105271a..ae078e14c38 100644
---- a/hw/net/npcm_pcs.c
-+++ b/hw/net/npcm_pcs.c
-@@ -24,7 +24,7 @@
- #include "qemu/osdep.h"
- 
- #include "exec/hwaddr.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/net/npcm_pcs.h"
- #include "migration/vmstate.h"
- #include "qemu/log.h"
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index e3bf3b0e726..d6f57bc004a 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -13,7 +13,7 @@
- #include "net/net.h"
- #include "hw/core/irq.h"
- #include "hw/net/smc91c111.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-properties.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-index 27f1078e3a5..83a1c7075c3 100644
---- a/hw/pci-host/aspeed_pcie.c
-+++ b/hw/pci-host/aspeed_pcie.c
-@@ -18,7 +18,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "hw/core/qdev-properties.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/irq.h"
- #include "hw/pci/pci_host.h"
- #include "hw/pci/pcie_port.h"
-diff --git a/hw/pci-host/bonito.c b/hw/pci-host/bonito.c
-index 90040045c1f..ff2f5c966eb 100644
---- a/hw/pci-host/bonito.c
-+++ b/hw/pci-host/bonito.c
-@@ -50,7 +50,7 @@
- #include "migration/vmstate.h"
- #include "system/runstate.h"
- #include "hw/misc/unimp.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "qom/object.h"
- #include "trace.h"
- 
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index 2339f10a30a..d361c457edb 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -30,7 +30,7 @@
- #include "qemu/log.h"
- #include "qemu/bswap.h"
- #include "hw/core/qdev-properties.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/pci/pci_device.h"
- #include "hw/pci/pci_host.h"
- #include "hw/misc/empty_slot.h"
-diff --git a/hw/rtc/ls7a_rtc.c b/hw/rtc/ls7a_rtc.c
-index 234a7e97698..54943f60b80 100644
---- a/hw/rtc/ls7a_rtc.c
-+++ b/hw/rtc/ls7a_rtc.c
-@@ -16,7 +16,7 @@
- #include "migration/vmstate.h"
- #include "hw/misc/unimp.h"
- #include "system/rtc.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- 
- #define SYS_TOYTRIM        0x20
- #define SYS_TOYWRITE0      0x24
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 5aa34f1d5bd..5a1fda38a7b 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -36,7 +36,7 @@
- #include "qemu/units.h"
- #include "qemu/cutils.h"
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "system/block-backend.h"
- #include "hw/sd/sd.h"
- #include "migration/vmstate.h"
-diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index 4e5c968bcc7..c5089d74f4b 100644
---- a/hw/sensor/tmp105.c
-+++ b/hw/sensor/tmp105.c
-@@ -26,7 +26,7 @@
- #include "qapi/error.h"
- #include "qapi/visitor.h"
- #include "qemu/module.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "trace.h"
- 
- FIELD(CONFIG, SHUTDOWN_MODE,        0, 1)
-diff --git a/hw/ssi/ibex_spi_host.c b/hw/ssi/ibex_spi_host.c
-index 50cf08de9c9..1e574c3fcb8 100644
---- a/hw/ssi/ibex_spi_host.c
-+++ b/hw/ssi/ibex_spi_host.c
-@@ -26,7 +26,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/ssi/ibex_spi_host.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/ssi/npcm_pspi.c b/hw/ssi/npcm_pspi.c
-index 1f11e1f8a46..2e05d5dacb2 100644
---- a/hw/ssi/npcm_pspi.c
-+++ b/hw/ssi/npcm_pspi.c
-@@ -17,7 +17,7 @@
- #include "qemu/osdep.h"
- 
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/ssi/npcm_pspi.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-diff --git a/hw/timer/bcm2835_systmr.c b/hw/timer/bcm2835_systmr.c
-index 7929aaa882a..00bcfcd05c6 100644
---- a/hw/timer/bcm2835_systmr.c
-+++ b/hw/timer/bcm2835_systmr.c
-@@ -16,7 +16,7 @@
- #include "qemu/log.h"
- #include "qemu/timer.h"
- #include "hw/timer/bcm2835_systmr.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- #include "trace.h"
- 
-diff --git a/hw/timer/cmsdk-apb-dualtimer.c b/hw/timer/cmsdk-apb-dualtimer.c
-index bcb6f8e43d7..39b1fa3a149 100644
---- a/hw/timer/cmsdk-apb-dualtimer.c
-+++ b/hw/timer/cmsdk-apb-dualtimer.c
-@@ -24,7 +24,7 @@
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-clock.h"
- #include "hw/timer/cmsdk-apb-dualtimer.h"
- #include "migration/vmstate.h"
-diff --git a/hw/timer/cmsdk-apb-timer.c b/hw/timer/cmsdk-apb-timer.c
-index d80bf1f96d0..e8b6601097c 100644
---- a/hw/timer/cmsdk-apb-timer.c
-+++ b/hw/timer/cmsdk-apb-timer.c
-@@ -34,7 +34,7 @@
- #include "trace.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-clock.h"
- #include "hw/timer/cmsdk-apb-timer.h"
- #include "migration/vmstate.h"
-diff --git a/hw/timer/renesas_cmt.c b/hw/timer/renesas_cmt.c
-index 35962e66c32..a5cc7ebd270 100644
---- a/hw/timer/renesas_cmt.c
-+++ b/hw/timer/renesas_cmt.c
-@@ -24,7 +24,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/timer/renesas_cmt.h"
- #include "migration/vmstate.h"
-diff --git a/hw/timer/renesas_tmr.c b/hw/timer/renesas_tmr.c
-index 2e7d7d4543a..c917f70de22 100644
---- a/hw/timer/renesas_tmr.c
-+++ b/hw/timer/renesas_tmr.c
-@@ -24,7 +24,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/timer/renesas_tmr.h"
- #include "migration/vmstate.h"
-diff --git a/hw/timer/sifive_pwm.c b/hw/timer/sifive_pwm.c
-index 8fda5445e74..780eaa50799 100644
---- a/hw/timer/sifive_pwm.c
-+++ b/hw/timer/sifive_pwm.c
-@@ -29,7 +29,7 @@
- #include "hw/core/irq.h"
- #include "hw/timer/sifive_pwm.h"
- #include "hw/core/qdev-properties.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-diff --git a/hw/timer/sse-counter.c b/hw/timer/sse-counter.c
-index de9d354483b..39d140347e5 100644
---- a/hw/timer/sse-counter.c
-+++ b/hw/timer/sse-counter.c
-@@ -33,7 +33,7 @@
- #include "trace.h"
- #include "hw/timer/sse-counter.h"
- #include "hw/sysbus.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/clock.h"
- #include "hw/core/qdev-clock.h"
- #include "migration/vmstate.h"
-diff --git a/hw/timer/sse-timer.c b/hw/timer/sse-timer.c
-index 50d1de58055..62381e07e06 100644
---- a/hw/timer/sse-timer.c
-+++ b/hw/timer/sse-timer.c
-@@ -42,7 +42,7 @@
- #include "hw/timer/sse-counter.h"
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/clock.h"
- #include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/watchdog/allwinner-wdt.c b/hw/watchdog/allwinner-wdt.c
-index 8fcd7766752..68b600689a5 100644
---- a/hw/watchdog/allwinner-wdt.c
-+++ b/hw/watchdog/allwinner-wdt.c
-@@ -26,7 +26,7 @@
- #include "qemu/module.h"
- #include "trace.h"
- #include "hw/sysbus.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/watchdog/allwinner-wdt.h"
- #include "system/watchdog.h"
- #include "migration/vmstate.h"
-diff --git a/hw/watchdog/cmsdk-apb-watchdog.c b/hw/watchdog/cmsdk-apb-watchdog.c
-index 90d14e342b0..ceae792580e 100644
---- a/hw/watchdog/cmsdk-apb-watchdog.c
-+++ b/hw/watchdog/cmsdk-apb-watchdog.c
-@@ -29,7 +29,7 @@
- #include "hw/sysbus.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/qdev-clock.h"
- #include "hw/watchdog/cmsdk-apb-watchdog.h"
- #include "migration/vmstate.h"
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index 7574111c87d..7ee8c7fd699 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -17,7 +17,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/log.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "cpu.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-mmu-index.h"
-diff --git a/tests/qtest/sdhci-test.c b/tests/qtest/sdhci-test.c
-index 6275e7626c2..7b32711c8f8 100644
---- a/tests/qtest/sdhci-test.c
-+++ b/tests/qtest/sdhci-test.c
-@@ -9,7 +9,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "libqtest.h"
- #include "qemu/module.h"
- #include "libqos/pci-pc.h"
-diff --git a/tests/qtest/sifive-e-aon-watchdog-test.c b/tests/qtest/sifive-e-aon-watchdog-test.c
-index 1f313d16ad8..277f1b8360b 100644
---- a/tests/qtest/sifive-e-aon-watchdog-test.c
-+++ b/tests/qtest/sifive-e-aon-watchdog-test.c
-@@ -20,7 +20,7 @@
- #include "qemu/timer.h"
- #include "qemu/bitops.h"
- #include "libqtest.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "hw/misc/sifive_e_aon.h"
- 
- FIELD(AON_WDT_WDOGCFG, SCALE, 0, 4)
-diff --git a/tests/qtest/stm32l4x5_rcc-test.c b/tests/qtest/stm32l4x5_rcc-test.c
-index d927c655d13..4ab0a0ab29f 100644
---- a/tests/qtest/stm32l4x5_rcc-test.c
-+++ b/tests/qtest/stm32l4x5_rcc-test.c
-@@ -11,7 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "libqtest-single.h"
- #include "hw/misc/stm32l4x5_rcc_internals.h"
- 
-diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
-index 98a7472307f..a72c5a685d1 100644
---- a/tests/qtest/stm32l4x5_usart-test.c
-+++ b/tests/qtest/stm32l4x5_usart-test.c
-@@ -11,7 +11,7 @@
- #include "qemu/osdep.h"
- #include "libqtest.h"
- #include "hw/misc/stm32l4x5_rcc_internals.h"
--#include "hw/registerfields.h"
-+#include "hw/core/registerfields.h"
- #include "stm32l4x5.h"
- 
- #define RCC_BASE_ADDR 0x40021000
+ };
+ use qom::{prelude::*, ObjectImpl, Owned, ParentField, ParentInit};
+ use system::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder};
+-use util::{log::Log, log_mask_ln, ResultExt};
++use util::prelude::*;
+ 
+ use crate::registers::{self, Interrupt, RegisterOffset};
+ 
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 3564aa79c6e..6e9c004ecae 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -25,10 +25,7 @@
+     bindings::{address_space_memory, address_space_stl_le, hwaddr},
+     MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder, MEMTXATTRS_UNSPECIFIED,
+ };
+-use util::{
+-    ensure,
+-    timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND},
+-};
++use util::prelude::*;
+ 
+ use crate::fw_cfg::HPETFwConfig;
+ 
+diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
+index 777fc8ef45e..ad80acd998c 100644
+--- a/rust/hw/timer/hpet/src/fw_cfg.rs
++++ b/rust/hw/timer/hpet/src/fw_cfg.rs
+@@ -5,7 +5,7 @@
+ use std::ptr::addr_of_mut;
+ 
+ use common::Zeroable;
+-use util::{self, ensure};
++use util::{self, prelude::*};
+ 
+ /// Each `HPETState` represents a Event Timer Block. The v1 spec supports
+ /// up to 8 blocks. QEMU only uses 1 block (in PC machine).
+diff --git a/rust/util/meson.build b/rust/util/meson.build
+index 18d67a4b374..95b44f7c670 100644
+--- a/rust/util/meson.build
++++ b/rust/util/meson.build
+@@ -34,6 +34,7 @@ _util_rs = static_library(
+       'src/error.rs',
+       'src/log.rs',
+       'src/module.rs',
++      'src/prelude.rs',
+       'src/timer.rs',
+     ],
+     {'.': _util_bindings_inc_rs}
+diff --git a/rust/util/src/lib.rs b/rust/util/src/lib.rs
+index d14aa14ca77..7d2de3ed811 100644
+--- a/rust/util/src/lib.rs
++++ b/rust/util/src/lib.rs
+@@ -4,6 +4,11 @@
+ pub mod error;
+ pub mod log;
+ pub mod module;
++
++// preserve one-item-per-"use" syntax, it is clearer
++// for prelude-like modules
++#[rustfmt::skip]
++pub mod prelude;
+ pub mod timer;
+ 
+ pub use error::{Error, Result, ResultExt};
+diff --git a/rust/util/src/prelude.rs b/rust/util/src/prelude.rs
+new file mode 100644
+index 00000000000..f52e7100e9f
+--- /dev/null
++++ b/rust/util/src/prelude.rs
+@@ -0,0 +1,11 @@
++//! Essential types and traits intended for blanket imports.
++
++pub use crate::error::ResultExt;
++pub use crate::log::Log;
++pub use crate::timer::Timer;
++pub use crate::timer::CLOCK_VIRTUAL;
++pub use crate::timer::NANOSECONDS_PER_SECOND;
++
++// Re-export commonly used macros
++pub use crate::ensure;
++pub use crate::log_mask_ln;
 -- 
 2.52.0
 
