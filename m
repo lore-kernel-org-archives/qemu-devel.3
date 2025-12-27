@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 620D0E8FDD8
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCCAE8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQw9-0000Xv-0p; Sat, 27 Dec 2025 04:50:13 -0500
+	id 1vZQxS-00047F-EW; Sat, 27 Dec 2025 04:51:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQw6-0000PS-TD
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:50:10 -0500
+ id 1vZQxO-00042B-6K
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:51:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQw5-0007Jw-05
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:50:10 -0500
+ id 1vZQxM-0007UT-Ll
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:51:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766829008;
+ s=mimecast20190719; t=1766829088;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t744vUWy2Ee77dP49UO1E2no25c9JrA3rvTNF0iTUl0=;
- b=Wu0nrk0cHNpPJqAO6ZDxeO7UPGtyPjoUU2TlHQHGtgK2jFPWbWzGztoP/gKo6XbvxIgJPA
- oXXBpgNd/JUQSJcCQFAiNzdMchh8R1OXk07hAZDUC/IwWnFo8DDoISbzh+US0BI9rLvy6c
- Vc94ZNoABihvsFCujQq8HAllI7uaQoY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NMfeC1qlGyQBU+oYdudT1wA8cDp85oJp5sp29r1hMGw=;
+ b=X5C99Zr+cjAmANcDSBX9e/5xi/qHOEVTXuk9Z+G0pPqtSS4qoWhd92VX0tOKDrg5zPbmfX
+ rou6tidbO5ttMvDIxIqRx3QXtIAbvrLLXyWaDs88Ygc4X2MygWXoMu8qN3y/I1rvrlXsvW
+ U3kOwAUmR8Ebkbd+OJb+/YWtNxuArg0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-wITtALy0Ny6dQuLgbk0A5Q-1; Sat, 27 Dec 2025 04:50:07 -0500
-X-MC-Unique: wITtALy0Ny6dQuLgbk0A5Q-1
-X-Mimecast-MFC-AGG-ID: wITtALy0Ny6dQuLgbk0A5Q_1766829006
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4779b432aecso45665695e9.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:50:06 -0800 (PST)
+ us-mta-477-Xq9W42MgOr2b2o305_2TlA-1; Sat, 27 Dec 2025 04:51:26 -0500
+X-MC-Unique: Xq9W42MgOr2b2o305_2TlA-1
+X-Mimecast-MFC-AGG-ID: Xq9W42MgOr2b2o305_2TlA_1766829085
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-430f57cd2caso7690434f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:51:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766829005; x=1767433805; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766829084; x=1767433884; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t744vUWy2Ee77dP49UO1E2no25c9JrA3rvTNF0iTUl0=;
- b=Fmqz5lCyyZfdp/VA8Aov5wU5U2KOE2Vvy0p3szXzILGfZ/a/CZNY6S6UvUSg624K6H
- /jjD6RA8ODmS1yxazb7nJNKUjzlcbzLNiBTqNu3wHu42Kn5QTDLr6d1MtWEZoPlIKaXD
- tyPseOpigtpcmXf+1m2tdAUZeQOxH33ZYgo7KQCqChcM1sB6cGKOxiW3loLqilRjPGEh
- QWqVdP46VlRPR1fb7dWxi7MxGEDaQaYZCYDAyGTm5WHtQxgqTS5PzpdSWLN46CeJJ8n+
- JC+9bDJtkwPv1581eW0QRdhJG/9dvtZxaXta7MTEjSgmbFHl5Y7TSQXoRD69URuBP8Rf
- 0a/g==
+ bh=NMfeC1qlGyQBU+oYdudT1wA8cDp85oJp5sp29r1hMGw=;
+ b=Flei8qsKhJOFSd1Nhzdo2s9rxBnDBFWDhDlPiCGVtiOe6+CGJT5oHGoy2pRoNBZkyF
+ vOO701HllRR0N8Mt7H+yXE5XeFGzACUIiVl6QJvR3uijSycaEWloHutIOy/5uig0wEU8
+ MJceTIF/B882An8x5dPBVWiKB36p/7xwNVzVBpCYzb9tTT/F1oUdi8qjqkVlnwIyip6N
+ LYdKKLdNs/Y+ikn4Zc7/Zywt46ESnhfuNVtIe9hDe7tCvDv8zMsyCB+DV13/FiaBjom1
+ JYznewkHK7oALEOFTC1cqNmplhdY5Vkm57psnDgaxZouQg7m4RdDmxHKLotTOaByUNbI
+ t/zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766829005; x=1767433805;
+ d=1e100.net; s=20230601; t=1766829084; x=1767433884;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=t744vUWy2Ee77dP49UO1E2no25c9JrA3rvTNF0iTUl0=;
- b=GFgbVBNx3whgw0mqUvzsUnz2gJU/2fHXeQM0gxHtjvDPN8TI/INaSqw82jUn2AxRc0
- KLbybVRaUTOmBObS6oE2wWd1L8zSI6ihfbkS3DXEEXccoqiFJsJUxRkySeYtI0PJjnwH
- K7j1wH0AFv1F7PN/DIzudSMG4G3Bo2xnaVyHg8nXjQftMcFXpGwVxamIitfK6GXV5iiB
- 2ttWe+EI49T7HRtfunO96o4Ry3fZ0bEHidM6roCoI+dJUBh9tk2jngHwlbkaFvSVsPaP
- dDk528j4Zso8kb/sQo9R+ekJqZUPAvami5vHYbdY+Gi9Fk8IDojLO8q3u5Y/HpFbhUy7
- 0UDw==
-X-Gm-Message-State: AOJu0YzlzQaXLINO3VYQx0GdRTJiRRWFSG9lkbUc7V++Vt1uBfo9U3fs
- fbcg2c+N0bJE9izyw61F4wD93Y+I/6ZmAvJCVk4dQ0cyxigquLD2y5jpf9Hq1lef2ms2nnZGwuM
- /DCP5nYPe2RTGmOU1Ep8WoYjgxT3SsbZo0cEQNxAFleh4QesUY0ljHqDDyj+f3UHmpHi30rw+EL
- LLupFu75g6/rU11571VmNWP9sZC/4/wGWubqagXBL3
-X-Gm-Gg: AY/fxX6klfWfSFSUqwZue+9lrJJPRZzU0YTS1IwktgxxpN8xYT9Kc6s2qaXwyD0KKXr
- bjnFTEQGu1vyfsSnxjg7PRA05jG0P3dJ/FNkUBSMbnQHNVd0mf/UkkUhbFTGXtH+52gO6NcwvCy
- DQJrnn68PTLz0+5ilYh7CjAVjk9BO0D+FdJ+FLD6UshClVfNGL+vQg1Lvqt2YinaqDvDtB/MF68
- mkbHVN+2qPCVbTgkchNwP1O7o1EP7WL3k82uE7tmcSMiiy3yZw/JBztzpFyeHhQjCccy20qP+dz
- HrjzUgMe3Z9w2K5ex4pk5EcY/hW/AayZ/WEutp+VMlI2ErbMsN2x9rhCLONTbxoaXqykV/ghdAT
- wD2a59GffH+jZWfwagRd66eI5I83YAbTlOPx+DodS+sWGeZPvIkED8M34J44CfQXXfDxdIZGj7T
- m8Xv2iyKPo7rPCnxY=
-X-Received: by 2002:a05:600c:1d1d:b0:477:632a:fd67 with SMTP id
- 5b1f17b1804b1-47d19546487mr276574735e9.12.1766829004933; 
- Sat, 27 Dec 2025 01:50:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE5kzhMDqxTj3/SmGWLuzKPFTtxuWKd2dXVg6OMyG1px2W6Nyka7Yd07keEvstCbgIosCP2IA==
-X-Received: by 2002:a05:600c:1d1d:b0:477:632a:fd67 with SMTP id
- 5b1f17b1804b1-47d19546487mr276574535e9.12.1766829004522; 
- Sat, 27 Dec 2025 01:50:04 -0800 (PST)
+ bh=NMfeC1qlGyQBU+oYdudT1wA8cDp85oJp5sp29r1hMGw=;
+ b=U6rYBQ7AOkTFAjQIpqOY+JFJCoqKful9zDPzeaQQ9iM6PU1LHWeJEy4rpX5VMOIN81
+ fywpwCfEk5C87X6RR0g2lXIssem3qHdv5wxLutPHxRN8LXBLKvK66JTgb4Xd+N+eRx5C
+ dDVJxt2pulKLSdRpOM40Yc5FunOU0xuxB4wv0oc4+Jo4/bv2pR1NZGbCQI7TYO8SUxR5
+ qsrY6QKf7PvPm57y3mGE47E6yLRz5CSi4FS9HP6NBOh+DHPteMaZ/hByd0uDazl1Rond
+ sQQWHfTPds9MjZOhxTYDWuTiJW4iUmRFMxlq45NkkK1PaksP7NcqZt4Ftj4Qg6X6aViG
+ npOQ==
+X-Gm-Message-State: AOJu0YzSrBsClnudr5DtrhCHHs8eVgY5dzBcQF8RWdo2AOOna0kM33rS
+ tPhSxmoLsrXHuRBPGjUQSSTSeFQh3Tug8vK6OSwVMkChXRCINuWTl5VszcTTsBC963Pxs1lH0Y2
+ cWossHDYo3dkf8AiNVKV5CfhBApoxlQMGyD8jGVKeCVeDC1s+qQg+8tnjTEoCC5yh8SoOqbhTv4
+ ukg3oa/y2Amp3k/An8chRhntvv4GJREEBCIlDkEp6D
+X-Gm-Gg: AY/fxX4WctT2DvZf/0+jegb9AaZkR0uS5r2q01nqEmzXs72e1BQDoZ1UYmBQaCZMujp
+ 2HaTi4eGW84HscNUmVxZ4l0BroDCz+Et11HCO/CksR7oXYWs1HkICcYzG9q4KVUvYe67CdHg2h3
+ IB4D/kEgskbEYf0kDqmSIlFzruzFIEt9q7PnG3hZTL/trapV5fkMOiXv+ry18TtPM+Q8UDWUhdn
+ M8x1gGoRRKI1esg7KC87xs4hEHH17p0jNqlPHKnLnIvwRg+4rM2Hx1KPsEjHmU/xtO4Rce4Q1Mx
+ Uzf2/+VXzcYcXOk65hVxhDHWSXv1izu5/Q11qDFpIK0lDwVoVVNsOotj+lhCeXyA3Bk+9aeHiF+
+ CcDaXIvi2lZfsyQzFHY6Fs0wrLs/7JujoEc1qByBci57N+2i1TerMKRZ4xOhEDZxsQKC2SAmpvy
+ qeKByxZlL9wB8+R7I=
+X-Received: by 2002:a5d:58e9:0:b0:432:5b81:480 with SMTP id
+ ffacd0b85a97d-4325b810a80mr18706711f8f.24.1766829083870; 
+ Sat, 27 Dec 2025 01:51:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFd3Wt98qUIwz/sQy4OqXdV8R0vtPiYE39vdb56TeZqYjOLazBmxyoqQkgWex7kXwAciA1cHw==
+X-Received: by 2002:a5d:58e9:0:b0:432:5b81:480 with SMTP id
+ ffacd0b85a97d-4325b810a80mr18706693f8f.24.1766829083343; 
+ Sat, 27 Dec 2025 01:51:23 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be26a81b6sm499601285e9.0.2025.12.27.01.50.01
+ ffacd0b85a97d-4324eaa2beasm49032870f8f.33.2025.12.27.01.51.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:50:01 -0800 (PST)
+ Sat, 27 Dec 2025 01:51:21 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
  Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 120/153] target/i386/tcg: remove do_decode_0F
-Date: Sat, 27 Dec 2025 10:47:25 +0100
-Message-ID: <20251227094759.35658-46-pbonzini@redhat.com>
+ Xudong Hao <xudong.hao@intel.com>
+Subject: [PULL 141/153] i386/cpu: Allow unsupported avx10_version with
+ x-force-features
+Date: Sat, 27 Dec 2025 10:47:46 +0100
+Message-ID: <20251227094759.35658-67-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -124,36 +125,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is not needed anymore since all prefixes are handled by the
-new decoder.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The "force_features" ("x-force-features" property) forces setting
+feature even if host doesn't support, but also reports the warning.
+
+Given its function, it's useful for debug, so even if the AVX10
+version is unsupported by host, force to set this AVX10 version if
+x-force-features=on.
+
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20251215073743.4055227-7-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ target/i386/cpu.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 8a1fb2855d5..d2c024ea342 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1430,15 +1430,10 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xff] = X86_OP_ENTRYr(UD,     nop,v),                        /* UD0 */
- };
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index c460e3bec7c..f62bd48d4b0 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9490,16 +9490,27 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+         uint8_t version = x86_cpu_get_host_avx10_version();
  
--static void do_decode_0F(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
--{
--    *entry = opcodes_0F[*b];
--}
--
- static void decode_0F(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
- {
-     *b = x86_ldub_code(env, s);
--    do_decode_0F(s, env, entry, b);
-+    *entry = opcodes_0F[*b];
- }
- 
- static void decode_63(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+         if (version < env->avx10_version) {
+-            if (prefix) {
+-                warn_report("%s: avx10.%d. Adjust to avx10.%d",
+-                            prefix, env->avx10_version, version);
+-            }
+             /*
+-             * Discrete feature bits have been checked and filtered based on
+-             * host support. So it's safe to change version without reverting
+-             * other feature bits.
++             * With x-force-features=on, CPUID_7_1_EDX_AVX10 will not be masked
++             * off, so there's no need to zero avx10 version.
+              */
+-            env->avx10_version = version;
++            if (!cpu->force_features) {
++                if (prefix) {
++                    warn_report("%s: avx10.%d. Adjust to avx10.%d",
++                                prefix, env->avx10_version, version);
++                }
++                /*
++                 * Discrete feature bits have been checked and filtered based
++                 * on host support. So it's safe to change version without
++                 * reverting other feature bits.
++                 */
++                env->avx10_version = version;
++            } else {
++                if (prefix) {
++                    warn_report("%s: avx10.%d.",
++                                prefix, env->avx10_version);
++                }
++            }
+             have_filtered_features = true;
+         }
+     } else if (env->avx10_version) {
 -- 
 2.52.0
 
