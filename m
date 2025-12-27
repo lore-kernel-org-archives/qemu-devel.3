@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB6BE8FDD6
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8643E8FDD5
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Dec 2025 09:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZQRr-0000ve-6P; Sat, 27 Dec 2025 04:18:55 -0500
+	id 1vZQRb-0007Vu-Pl; Sat, 27 Dec 2025 04:18:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRn-0000V3-Of
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:51 -0500
+ id 1vZQRM-0006vX-Ds
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZQRk-0004MH-BL
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:51 -0500
+ id 1vZQRK-0003n2-QE
+ for qemu-devel@nongnu.org; Sat, 27 Dec 2025 04:18:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766827124;
+ s=mimecast20190719; t=1766827102;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8p/Bpe0gmBVLAqwDcW5Zxplm8I9ytkWLraykQNKpZ9M=;
- b=IXqcWysTdUSvR6u7x5jlpgTOm8GUgR69MiKtnbkrKQ8iTm3/rj7alAqsrG+SXUFKVSn+K1
- 1PqY+0uVO13XcW0RH6UWeWqs+LvtOYD1ekyUqc7bQQb6jxPAdbm2oxhycONpSbbI8dGpKb
- brmyc48ms+jJq0uksDlivd13FGHF2X8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SIY+C6WBcDEaxjsneB4epVbDtpl9yBW5enqGVp+ga3s=;
+ b=EZQQvtRQVz4Ec7bJI8JqD955Xp3wKN/lYO/4GrHiFURv7OjOczak9FXsB/hvr0tznTVfC7
+ g5eNraEx3fkG9SJfWLk91aIxZVWwelf37Ic2y0rTSxSgCPwFBKuhRYxHCPFfK1IDvX/8Xl
+ qYe9PSal6F/VqrI0ttVpikLSz/5K4T4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-5mX0-G6rPlWXQGneDpqBKQ-1; Sat, 27 Dec 2025 04:18:43 -0500
-X-MC-Unique: 5mX0-G6rPlWXQGneDpqBKQ-1
-X-Mimecast-MFC-AGG-ID: 5mX0-G6rPlWXQGneDpqBKQ_1766827122
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43102ac1da8so5533820f8f.2
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:42 -0800 (PST)
+ us-mta-340-ePmPP8tNMe6Eozv1bvZpmA-1; Sat, 27 Dec 2025 04:18:21 -0500
+X-MC-Unique: ePmPP8tNMe6Eozv1bvZpmA-1
+X-Mimecast-MFC-AGG-ID: ePmPP8tNMe6Eozv1bvZpmA_1766827100
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4775f51ce36so74622825e9.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 01:18:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766827120; x=1767431920; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766827099; x=1767431899; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8p/Bpe0gmBVLAqwDcW5Zxplm8I9ytkWLraykQNKpZ9M=;
- b=sQW+1cUH7Pq16InfDIicMVSuLsUht1BHdUhXoHvlHeXTtiwV+dKHrPd/o6JDzTAN2G
- OW9fDhlc7QR6Y20w80nLygzCbF2bql+z9ZXh+M8/LnmPURN6kn8g2fXehYDHTfXh+83M
- T/fpO5U9CXcUYzlbk6HUFdGDBgOnrrWxYF75WeJBDzIXoKeeOHWM+oix/p+WaylS+OCK
- S53gS0o356EWDEhYnMFOCZ8OqU8DQblmrau+efeJGdksPvzlx9dpeTIeYFa4mIw4jqnR
- kVGb2CgUQ/1MRWqN1ZaYcQGUdqHt/PIMzdU1iEeX8TtiuyDTa3GFmSPYdZ3i+z3rQ9EI
- rtQQ==
+ bh=SIY+C6WBcDEaxjsneB4epVbDtpl9yBW5enqGVp+ga3s=;
+ b=NnWEZO78n34F822Ac2PRDf1q2tt5aCpvaORyjugODESv/7Bn2u+p7eIFtH7K7vow3Y
+ dwfS7x5BSeAQlZAognJ3P1KAiZr2oPw9j3g+uxGcyo3zBPu1qxVvBo81x4jSRQ/bFP8T
+ 4YOcyRTxvQoRwFXYPaobM9oXKny6UiuhE2ddxP5kvsyu8WE6rt5VgHwh4V7ITzSDS8/5
+ udrTkEMzmuGOqhB76bXz6W1PV3DXjYqc0mTLUgDiX+kY/gi9qLCOmh4z7JHOALvbQUIr
+ wd1BD1XCEaFG5seuvCt7lpxYh9sBPJJR7fikGZkRwK4yRhODzRqzQs2l4NIEYjlKoJPm
+ P7kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766827120; x=1767431920;
+ d=1e100.net; s=20230601; t=1766827099; x=1767431899;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8p/Bpe0gmBVLAqwDcW5Zxplm8I9ytkWLraykQNKpZ9M=;
- b=Fzk/WWy7ImJBXB572pFu76VEUigQL2o4x7khCz5BcF6MPtrnAGq8bJ+GLWhwZewncb
- d5MkLE0lBFOlz++tWToVMdwM+sOS6touqnPNInP72h1TyA1uJDlLCUAiXLufNoMMuPG3
- UCa0dgYGnMiqLsWr0PewqpjbirXRxzDsXHbLvfiAtpiPa9vSKyOLl8MpYYpgz9O0eTq4
- f1XcEZENZaainEis2d5DSCnAT9AWw+klScsjTOXRDiSuX2HzWxERvOIzeVkmz6vS0Ydj
- K7W/U5kWOofuqXUJ92v8jXhc8+N1IxsV8OnIVkxbBkUouzWP1xjvG2s017aS+WOSu/Sl
- 8jiQ==
-X-Gm-Message-State: AOJu0YysBGWIhoUuI9YGpx7zWnFtbysWjF29NhhiqdkGU1pRKbwZrFH/
- Nah+yk9GI5V83tyLHf89g8wi3iDYQ1p1o8Xd3hic86qw0bbFD4kPhUyaiOS7Tc/wnhMzE4r3c0L
- zRbpWXi6S7hwumWs9DaizRt9eaZbo7TKWdYreHRWWXnLr99C275ykRVztyF0kYAHL6JvjKlNmkq
- YZ7R4E27LFG12s4CBBbt+o4PUNLzKufxHIlxivbfQk
-X-Gm-Gg: AY/fxX4GHJ4UdtkIucu78RhwiYrpKBFbcDY9ilxoyV81z76sZIwayYwzb22h8jYpApZ
- hSSEO7z11lv6TCzW7CiMUsuS4Y3h8uKcJi9irC4JKP+iPp5ba8UatM38smAVz++/N0GRv5itcGW
- nItVykmBg35y1Pr5vgH6o//wvfRClVmH3Gcvpncm5OyK2tiFLdFNc5qrv0k1LvrU1ONVIhc+fYc
- 0tAPJlFXu25Vb5OYNe7VTN4/RFSzYBddPtd98wT5I7BLT42/8d7+yGIVw3yOvalQHRfeoda251R
- 576BlxmKxu/aeleVTgi+ljwYBwme6LYqe2RYEbv7MKnWo1gPzlpaBazjY63WcFMMnpwqRstrHcc
- hxFo/yh6qnxtEA9OXlXLe6GIew0Oj8MVnCSJ9gEZ5iX0QGbiv4BUB7xJXelFOifGw2ol2Qpv2bS
- AJ1s0GWn5A2g8BHQ4=
-X-Received: by 2002:adf:f392:0:b0:432:5bf9:cf22 with SMTP id
- ffacd0b85a97d-4325bf9d1admr18151076f8f.3.1766827120484; 
- Sat, 27 Dec 2025 01:18:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHF773MeYjm1VFhIvuqc0SdmBm93iIJm/C7LnADvueQnLpyqyVnsRFxQGn2AmV14dYskkJ1Wg==
-X-Received: by 2002:adf:f392:0:b0:432:5bf9:cf22 with SMTP id
- ffacd0b85a97d-4325bf9d1admr18151057f8f.3.1766827120041; 
- Sat, 27 Dec 2025 01:18:40 -0800 (PST)
+ bh=SIY+C6WBcDEaxjsneB4epVbDtpl9yBW5enqGVp+ga3s=;
+ b=GNjYz9ZSzqPafjl3GmBC6uWYs9pLswK87Snq/zt5jHuS6/Woh5gEGNUvEP3dzDmfOK
+ C4RhQWzaTNVik6MEy5nQCzPlhUUhjaDVyjcyiownokFLoM8K4ZQ5beVOo1L3n/NqRUI3
+ cf433BuMdcsWLtXf1qNkKNIhjORdoKm99BRCvJ8D5edOLveilpSnoonqkbIQFYVLwnpg
+ J/6+ufitfyCPPh6T76aKju/u+IvFkSm7ljcemsis3Ur6gUowxbxvUIyrSVxkAzslDMZr
+ F7xYErBkTMq98Bb3zRLXMy9rqd8MMr85Z2M93iHg+gZXUWTAlBmnb5mLmhmlH7+jNClO
+ ywvA==
+X-Gm-Message-State: AOJu0YxSTLBvsihscQraA7EtU/AagXJ8XAKA95v5lYzg3oo80sGuiT19
+ AnL4Wmbn+T3QQV6nFb+2yD8bU46XlJ882hPnSK0LLNZiKx9p+RKeWaVxu2Zb6ZzQ16JF9UBjNkt
+ N0JhFMjQRBPjGkV1Og8T7Gefb7mN6PSikw1BBkFaUQGtfutAkRblkSKAeSzSfn/rElcHfOaInQO
+ EJPWSsRYxYIEL4jrpA4fA+00Q7b+Yw//4eIqkQPAnw
+X-Gm-Gg: AY/fxX6GZe45qiZDmbzmLrItAluwWktEqoM5gibIUVUhpUdbYlLM741TNh0ogGlEHYn
+ NuVLopPUcsuPtTq8AkRiS2AcAPBvkjuWVHth/tRVlCNI2C3wpuuNdMnVUZuYNydNzMOiiq8OAoA
+ t8ldycpAPPDOa/0cI+pUSBaExP82Pv133cnr5iYBRQi8NOEuiWgf87idU6VrwwONWWRFyTQozGU
+ vk2/3rawxrlM9G9zVlSjKDmeRtuCY+ATH/StT+a5x8W0Zmz/Ted82ssAsCVnFZFiZ2NqqVUTTnK
+ 5puuxBdcrE5vI4tG+raXlBaFauBDkoUrdcC+AoBWdL+uJF7yH8Yg/DLASJwC3VmqGRK0EsC4G1a
+ jx8RP7029K5J/frBUcS7GXLWgs+vva7lDs8XGAGTnuwk20WPRTlHCwArmtErQ5ud4ODtYCegooa
+ 3ypDHTt6CYvDEossk=
+X-Received: by 2002:a05:600c:5250:b0:479:3a86:dc1b with SMTP id
+ 5b1f17b1804b1-47d36243a0bmr140761465e9.37.1766827098885; 
+ Sat, 27 Dec 2025 01:18:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHanS1ghInQAvwtDhSvYf6har0Q+vF093ZAOSRuiGuoI4W2lYsAuea+rJ1MYQvOuuOlvQiLPg==
+X-Received: by 2002:a05:600c:5250:b0:479:3a86:dc1b with SMTP id
+ 5b1f17b1804b1-47d36243a0bmr140761265e9.37.1766827098479; 
+ Sat, 27 Dec 2025 01:18:18 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1aee5sm50858965f8f.4.2025.12.27.01.18.39
+ 5b1f17b1804b1-47d28a33adcsm130098485e9.18.2025.12.27.01.18.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Dec 2025 01:18:39 -0800 (PST)
+ Sat, 27 Dec 2025 01:18:16 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 070/153] subprojects: add probe crate
-Date: Sat, 27 Dec 2025 10:14:57 +0100
-Message-ID: <20251227091622.20725-71-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 059/153] rust/hpet: Explicitly initialize complex fields in
+ init()
+Date: Sat, 27 Dec 2025 10:14:46 +0100
+Message-ID: <20251227091622.20725-60-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251227091622.20725-1-pbonzini@redhat.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
@@ -122,126 +123,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-The probe crate (https://crates.io/crates/probe) provides a probe!()
-macro that defines SystemTap SDT probes on Linux hosts or does nothing
-on other host OSes.
+Explicitly initialize more fields which are complex structures.
 
-This crate will be used to implement DTrace support for Rust.
+For simple types (bool/u32/usize), they can be omitted since C has
+already initialized memory to all zeros and this is the valid
+initialization for those simple types.
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20251119205200.173170-4-stefanha@redhat.com
+Previously such complex fields (InterruptSource/BqlCell/BqlRefCell) were
+not explicitly initialized in init() and it's fine, because simply
+setting all memory to zero aligns with their default initialization
+behavior. However, this behavior is not robust. When adding new complex
+struct or modifying the initial values of existing structs, this default
+behavior can easily be broken.
+
+Thus, do explicit initialization for HPET to become a good example.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20251113051937.4017675-16-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/meson.build                              |  2 ++
- scripts/archive-source.sh                     |  1 +
- scripts/make-release                          |  2 +-
- subprojects/.gitignore                        |  1 +
- .../packagefiles/probe-0.5-rs/meson.build     | 22 +++++++++++++++++++
- subprojects/probe-0.5-rs.wrap                 |  7 ++++++
- 6 files changed, 34 insertions(+), 1 deletion(-)
- create mode 100644 subprojects/packagefiles/probe-0.5-rs/meson.build
- create mode 100644 subprojects/probe-0.5-rs.wrap
+ rust/hw/timer/hpet/src/device.rs | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/rust/meson.build b/rust/meson.build
-index 76e10699b37..afbeeeb47a7 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -4,6 +4,7 @@ subproject('bilge-impl-0.2-rs', required: true)
- subproject('foreign-0.3-rs', required: true)
- subproject('glib-sys-0.21-rs', required: true)
- subproject('libc-0.2-rs', required: true)
-+subproject('probe-0.5-rs', required: true)
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index abbaebc405e..d622a6920a8 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -733,6 +733,18 @@ unsafe fn init(mut this: ParentInit<Self>) {
+             HPET_REG_SPACE_LEN,
+         );
  
- anyhow_rs = dependency('anyhow-1-rs')
- bilge_rs = dependency('bilge-0.2-rs')
-@@ -11,6 +12,7 @@ bilge_impl_rs = dependency('bilge-impl-0.2-rs')
- foreign_rs = dependency('foreign-0.3-rs')
- glib_sys_rs = dependency('glib-sys-0.21-rs')
- libc_rs = dependency('libc-0.2-rs')
-+probe_rs = dependency('probe-0.5-rs')
++        // Only consider members with more complex structures. C has already
++        // initialized memory to all zeros - simple types (bool/u32/usize) can
++        // rely on this without explicit initialization.
++        uninit_field_mut!(*this, regs).write(Default::default());
++        uninit_field_mut!(*this, hpet_offset).write(Default::default());
++        // Set null_mut for now and post_init() will fill it.
++        uninit_field_mut!(*this, irqs).write(Default::default());
++        uninit_field_mut!(*this, rtc_irq_level).write(Default::default());
++        uninit_field_mut!(*this, pit_enabled).write(Default::default());
++        uninit_field_mut!(*this, num_timers_save).write(Default::default());
++        uninit_field_mut!(*this, hpet_id).write(Default::default());
++
+         Self::init_timers(&mut this);
+     }
  
- subproject('proc-macro2-1-rs', required: true)
- subproject('quote-1-rs', required: true)
-diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index 8f97b19a088..a37acab524e 100755
---- a/scripts/archive-source.sh
-+++ b/scripts/archive-source.sh
-@@ -41,6 +41,7 @@ subprojects=(
-   keycodemapdb
-   libc-0.2-rs
-   libvfio-user
-+  probe-0.5-rs
-   proc-macro-error-1-rs
-   proc-macro-error-attr-1-rs
-   proc-macro2-1-rs
-diff --git a/scripts/make-release b/scripts/make-release
-index bc1b43caa25..5f54b0e7939 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -42,7 +42,7 @@ fi
- SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
-   berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs attrs-0.2-rs bilge-0.2-rs
-   bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
--  libc-0.2-rs proc-macro2-1-rs
-+  libc-0.2-rs probe-0.5-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
-   syn-2-rs unicode-ident-1-rs"
- 
-diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-index c00c8478372..011ce4dc3b7 100644
---- a/subprojects/.gitignore
-+++ b/subprojects/.gitignore
-@@ -16,6 +16,7 @@
- /glib-sys-*
- /itertools-*
- /libc-*
-+/probe-*
- /proc-macro-error-*
- /proc-macro-error-attr-*
- /proc-macro*
-diff --git a/subprojects/packagefiles/probe-0.5-rs/meson.build b/subprojects/packagefiles/probe-0.5-rs/meson.build
-new file mode 100644
-index 00000000000..e6ea69533b7
---- /dev/null
-+++ b/subprojects/packagefiles/probe-0.5-rs/meson.build
-@@ -0,0 +1,22 @@
-+project('probe-0.5-rs', 'rust',
-+  meson_version: '>=1.5.0',
-+  version: '0.5.2',
-+  license: 'Apache-2.0 OR MIT',
-+  default_options: [])
-+
-+_probe_rs = static_library(
-+  'probe',
-+  files('src/lib.rs'),
-+  gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi: 'rust',
-+  rust_args: [
-+    '--cap-lints', 'allow',
-+  ],
-+)
-+
-+probe_deps = declare_dependency(
-+  link_with: _probe_rs,
-+)
-+
-+meson.override_dependency('probe-0.5-rs', probe_deps)
-diff --git a/subprojects/probe-0.5-rs.wrap b/subprojects/probe-0.5-rs.wrap
-new file mode 100644
-index 00000000000..73229ee1c29
---- /dev/null
-+++ b/subprojects/probe-0.5-rs.wrap
-@@ -0,0 +1,7 @@
-+[wrap-file]
-+directory = probe-0.5.2
-+source_url = https://crates.io/api/v1/crates/probe/0.5.2/download
-+source_filename = probe-0.5.2.tar.gz
-+source_hash = 136558b6e1ebaecc92755d0ffaf9421f519531bed30cc2ad23b22cb00965cc5e
-+#method = cargo
-+patch_directory = probe-0.5-rs
 -- 
 2.52.0
 
