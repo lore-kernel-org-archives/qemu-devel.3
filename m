@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 774A4D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 21:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73148D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 22:09:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZyHg-0000J3-Gj; Sun, 28 Dec 2025 16:26:40 -0500
+	id 1vZywl-0001ha-7y; Sun, 28 Dec 2025 17:09:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZyHc-0000EV-Sh
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 16:26:38 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vZywj-0001h9-7b
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:09:05 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZyHb-0005sX-Cy
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 16:26:36 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-477a219dbcaso69597745e9.3
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 13:26:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vZywh-00038q-Nn
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:09:05 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-78fc7893c93so54471827b3.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 14:09:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766957193; x=1767561993; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1766959742; x=1767564542; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yKI+C4ldvsZNoD/dy3z0rvdKNo8G0h0NOyVUYNo74uA=;
- b=NzEMdc3gKqVKL/6O/+20njEpSa68n44wZikN28oLPPeTjFp+Zp1RgGiycqimWcSGc2
- 7+y8XFCCH0E91gaDIrBCFKhPGMyiTPhltXKRKUFsQSfQCItNtzf5SniHkVR2kXMmlEEc
- ynVXnoE872q7js/DhJ7303MnBEOonM+Jd3LRXGc59oOr3DNrrHJfuHoLCGXqKRtTQxiV
- vxJbWCOLdeVyV2imeGGcPLIa9lOHLkB4Xe3Ti0hGjaFL1QLHW9gsmv7KjUDwhXFlkErJ
- Labq3jpizc8O9FWdvvoM6tHev5BwuSKBYrANY7sfQl8f4qPx1k78bNqauZ6kRBcVJuu+
- T/KA==
+ bh=Q9AcDac+MmW6NxNnIlSv8XyAIxHc+6KyWU+PcV0DW8M=;
+ b=gqXJlY9dmAetMLHogtG2rS7++GMU44jQr6pTyxYfEDKPlC+2i96tWo79dI+c8N00zv
+ NtZWxCOu3jOFgIYXw5g+UPcZRUUwXO4cCIOsY4e2MLXhKPLAoJkwgh2WHfQF3Ir7m/gK
+ PivgWNfp4bo/Mu0ftReEAz1jnpaHiBA1ufr4+ronDJGboVHV0IGs5eP9TpC7XtEldWqx
+ e06hZjIXCsXRQKPjXtNzMfpdAiq02jh3hSZQtVjPB2zDzmdV4eRGcYFxyqUW2pJ9R284
+ CS7uUUWPa44G9nLM5kC+Jr9FN+P+ZtDwsWg+vLtI7idBhVmyHl5ghLGkJZwD1KPfDJy1
+ oGUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766957193; x=1767561993;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1766959742; x=1767564542;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yKI+C4ldvsZNoD/dy3z0rvdKNo8G0h0NOyVUYNo74uA=;
- b=JoIigHpVt2o50/9Y6QkF/dNhxOuE63hc0X9peb2o9xnuTb4l86W3OF4pw0cRqdVXiL
- I3R/0MfofZPlPmnY7s646woSpBc8qeJZagAxn9UPxMuEidzCiDM5kEepVdgtQBC/ozBZ
- IiCkryqMei+d3xHZfKSq8cNm2lHaflRq1iI9Cte2eWp9KsgmkrUiUS1ol109MSzubsAI
- Put9RrgxwNhdi4HnYcGEXkq0fHi6UWUE0lL5noer7E2v5MjAfbeDBjcZE4BXO5iOTEYL
- GFadmmfiGVvF/zXZEt3lc1V1U3gXpeXNi6nQbkMp3bS7a6shuC1vGC724eLocRnOjfdo
- A8hg==
-X-Gm-Message-State: AOJu0Ywd1ebb81H2YLPQb/vSu1hPdcot50eys9HCMg97PCRZfXLGVLSV
- V8Z83EJw7KPAE543yumg/PvniwMI3sAm/78AAorM78ALUE+MaqbIX7pp8B1e8t8uvCI=
-X-Gm-Gg: AY/fxX6t1Cb/x/dq08/FHsZTJ0w+8hyEhT1WZPPQM4JnI7LeJBs1qPUmT6QTNfhMZQF
- Af9LIccxFCW59VB0UXqB9Qxrtw7/irwAG9vFhTUivF4Q4RpDiWuzmikw7MWkcZypvIn1onQYqE6
- R+hCVcGDdCWbtgPchfjm/xRjG92PykhVJ3fJq5NjUbmveCNPu5uVZfaOtOuPb7IE03hdCYsoPDV
- MY84bBD7x1lnSL/5GSGf9kVBuVBKZvXBO/j3JcVsyQcYA77cdC1/2OH3Oo3A0lO5IkDqOVpTqqu
- bSRWSf/BcE0Yx0+pTmukSis0ATldwHz9QOeugWmds8Hh0vwypAR7X5dZXHEPMJsM/7snvKuBrMK
- 7vw3uLSL+1m3WT7tltzqDSVMTr+nJiHBZWPdYAXUs+cb+fC+jeDp1fadoYxIdOrk75qqYlULRgT
- OUGXE7yWK9jpIE04PaJudw0JSosNU2tp/ipwXuxqCD/cu9/z8dZ/gFWCmmbzWB9zgjJ2uKLsET
-X-Google-Smtp-Source: AGHT+IFGlP5JkuA7fc7oS18pZTqpw6ulZX5HOXTX52A+LzflvMNvoh7xDwa9o0k6HRqmqk3W77W5rg==
-X-Received: by 2002:a05:600c:4f94:b0:477:c71:1fc1 with SMTP id
- 5b1f17b1804b1-47d19595e3dmr323748255e9.19.1766957193287; 
- Sun, 28 Dec 2025 13:26:33 -0800 (PST)
-Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
- [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be27c2260sm546863665e9.15.2025.12.28.13.26.32
+ bh=Q9AcDac+MmW6NxNnIlSv8XyAIxHc+6KyWU+PcV0DW8M=;
+ b=B0WvAm2GSExBUDdZTLo8pA7vmffpc0b5gm4nJM+wawC3LmikoJDR8k/BynWEQsnUXk
+ V9VQoaq03fSUmWtABzW67yNAW2rTpMTIPcxN9mLnZ4tCdJEymn1ywDmfUIBTeGH1PhfS
+ SUwYJ5K3SqNFfvMSqbKxAyvaRVMSrRncdp44BQdJaMtj4aAiE5sDHnqBqIt+st+XKoMv
+ 8FSAv6wPfdJq/U8hr307H71fO6txu7byIcpCAa22+Eg8tcU2k3V8d/EO1bjiz0rSbjqd
+ 38/UyfJl2Qdgvrf7js6iHI7nAJDvgBVdjuRbL+uI/Jhs7SS8mrEBozBKblEblw5bNWCV
+ xDFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5eV/B7rXQ+KnOQ0zo0JSDZc0Azqz+SeoFR9d6JHU9KQzoFYixyR1s8MPpZ9Q5RVIEMMAy9647318J@nongnu.org
+X-Gm-Message-State: AOJu0YzuauCXiBDTv8IJ9uqgBw5FbVsyxDl/59khPPP6d9zKwoMfdy59
+ bTgnsYouIHfCHsxSCkO70FKx+aQcVB6HuZMZNJImHxCaTt90ocFbwsyEZgppNSBuRbg4FL1Mk6G
+ ZdtwV
+X-Gm-Gg: AY/fxX5DXtWd6ji1NFbdVuGIsIJIuWFTrwj5paOErqX5bGUWPtaWfgZcqYVFF75MTAr
+ Zwn3/tSscTTFVrZShFLDcNfVBwUX5PeAsLC/3wp7rQyA03EtHsHHREMIEFVMiXqhMue7jLnw4ku
+ oancq7AQhHbDwhPEBYo/ICGXa4nqvk1MkYtSpO4tnpBmMD95cvqbPhvE7MDUN7hCt5fJ/ca23TB
+ DuABgjYWEBtRzXfPy2ojl94H/Jd1gXssgEwfoTpDFjYVaOKV1WekKMsuBr6LVvHLYWmuZ9CD7hC
+ pXOaOZsbfFFAB4jDqkJipMKyGAEjEJdkNdBwiHhcEE+e6no6SDbBW+R6i22fED2ePEAS9E/YHI4
+ jI+NBpjiNPz8XfPpJMhj5nxKv1HKBM3Ws/fEBWarym8ySiu24oldvQsCOVFHQIXfG20EsNKTLL5
+ KfeG4IbeimEjzxRRlLyHQpTApFpBA2eej7qvc/k6T7aHtbieTKpCAX
+X-Google-Smtp-Source: AGHT+IEMAU3DcSPIZ7ghoepGldo4C8+J3hACHbcsAdjAWFTmkC6t/gpgno4vV5Eot3JITQ6PjznSBw==
+X-Received: by 2002:a05:690c:2606:b0:786:68da:26d6 with SMTP id
+ 00721157ae682-78fb3efd2f6mr214495597b3.2.1766959742561; 
+ Sun, 28 Dec 2025 14:09:02 -0800 (PST)
+Received: from [10.212.166.227] ([172.59.192.106])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-78fb44f0d4csm108552307b3.37.2025.12.28.14.08.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 13:26:32 -0800 (PST)
-Message-ID: <5795688b-5030-4446-b839-a257b74d1f63@linaro.org>
-Date: Sun, 28 Dec 2025 22:26:31 +0100
+ Sun, 28 Dec 2025 14:09:02 -0800 (PST)
+Message-ID: <6c3ffe8b-3dc1-47bf-b3d5-b21f34c02bb8@linaro.org>
+Date: Mon, 29 Dec 2025 09:08:54 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] system/memory: Remove ldn_he_p() and stn_he_p()
- helpers
+Subject: Re: [PULL 00/12] Hppa updates qemu v11 patches
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Helge Deller <deller@gmx.de>,
+ Sven Schnelle <svens@stackframe.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fam Zheng <fam@euphon.net>
+References: <20251223155031.7110-1-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- David Hildenbrand <david@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20251228161837.12413-1-philmd@linaro.org>
- <20251228161837.12413-2-philmd@linaro.org>
- <CABgObfYx8KsRB+6gdWx_U=pJgax8DE6wJMpXSstLDpLpsguu9A@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfYx8KsRB+6gdWx_U=pJgax8DE6wJMpXSstLDpLpsguu9A@mail.gmail.com>
+In-Reply-To: <20251223155031.7110-1-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1129.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,19 +110,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/12/25 21:29, Paolo Bonzini wrote:
+On 12/24/25 02:50, deller@kernel.org wrote:
+> From: Helge Deller<deller@gmx.de>
 > 
+> The following changes since commit 8dd5bceb2f9cc58481e9d22355a8d998220896de:
 > 
-> Il dom 28 dic 2025, 17:18 Philippe Mathieu-Daudé <philmd@linaro.org 
-> <mailto:philmd@linaro.org>> ha scritto:
+>    Open 11.0 development tree (2025-12-23 14:45:38 +1100)
 > 
->     ldn_he_p() and stn_he_p() helpers expand to a plain
->     memcpy(), but in a convoluted way. We are not using
->     them, just remove so we are not tempted to start to.
+> are available in the Git repository at:
 > 
+>    https://github.com/hdeller/qemu-hppa.git tags/hppa-updates-qemu-v11-pull-request
 > 
-> I am confused, doesn't ati_2d.c use them? And in the future they could 
-> also be used by ram_device_ops etc.
+> for you to fetch changes up to b2c2d00f48cc5f4486cfba33b505ff86d79cb137:
+> 
+>    target/hppa: add 64 bit support to gdbstub (2025-12-23 16:41:56 +0100)
+> 
+> ----------------------------------------------------------------
+> Please pull fixes and updates for the parisc architecture:
+> 
+> - New SeaBIOS-hppa v21 mit fixes for 715 machine
+> - ncr710 fixes for NetBSD and HP-UX on 715 machine
+> - 64-bit gdb support
 
-Yeah sorry, this patch is crap, I should better get some rest.
+
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
+
+r~
 
