@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF02E784BE
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 17:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45F99E784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 17:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZuBO-00055J-Ih; Sun, 28 Dec 2025 12:03:54 -0500
+	id 1vZuG4-0006x4-C3; Sun, 28 Dec 2025 12:08:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vZuB9-00053r-Kq
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 12:03:43 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1vZuG3-0006vt-0D
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 12:08:43 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vZuB7-0008DV-GB
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 12:03:38 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-787eb2d8663so106432477b3.0
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 09:03:36 -0800 (PST)
+ id 1vZuG1-0001k5-HQ
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 12:08:42 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-78fc7892214so55679707b3.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 09:08:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766941416; x=1767546216; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766941720; x=1767546520; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9+YsXflcSjwD3SKZXI7ejyNJK9FtblWoLLFVOe8TsYc=;
- b=cY5mIsqorwTlkRFVm88iK8rt8iXmT7jSQhRihSCZmB4tK+6tsA4A+dVlwHDP7urN5N
- Qev7CSqAM/uy7NBy64hK7FQhr9W9VO8dUjL7ZtPVgSedk3GGf+D1Hp+GuHkYy3ajfi4s
- WLuJEpfAKSHzM12T3EHY7LwxX1ltkyXN1x/SjJ/iyHViyCuhiiJL9dlWriLN/VLANVEg
- FSR/co0FaJNZFvVOrA2v9/8XkrcnmxfY4X4S79W9+bvRe9g9VvMdEee8Mv8R87IzHlzh
- q+seanv1nZMKx1HxZkauP9g+cOsDGeicwdcMGh6huNgDCIs6l/xkVRAksyLq8eoJQiW7
- WanQ==
+ bh=jL44AaMnL+XlOL2KGeRIObyV48ISGUhidJNsD3qk2rI=;
+ b=BS04Q05v7xePql4biQTtsEb7L5uywDhpqSCCMeOtVTNg9MpnQgnUwZe7hb2oBpIW3l
+ BCScJbiWuywXeK+iGqeeTYEWNm/tkZWEoDczeGnAHmgcw53xAKeUteQA45kbz3Xm2Osa
+ ytu91mRE1f91sfwTzTW491Wa8eJ1V8JSd/EycqqiAm2b9g/VhxerSYTubkLR42cMGk4I
+ ln3sgMixCsVAPxNGyrrwp6i7bu/J+MOxPnsy7oSGb/pbh6v6I7b6jxTLOxHZ6jy0FrNK
+ 1CFkV/cWmuds8Z3rVQ2zn+I4EsNc24NCvAgJbfmJiH9EtC3YN18Qj2Uc40Zgdc57+GHu
+ DQlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766941416; x=1767546216;
+ d=1e100.net; s=20230601; t=1766941720; x=1767546520;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9+YsXflcSjwD3SKZXI7ejyNJK9FtblWoLLFVOe8TsYc=;
- b=p/bn/Ig+4dY3vlfWgVKGpWoJhu6JXCofRIJlDbRalJZ1jPljojifZ54pJ40A+SV6Aw
- rAJI2ujf8qZY0WTeXpsns1CGoWQQ7hk4ZFDDCgFNOn191uVEKU/QYSwakcRCE3M9+BG4
- yQZL3fvKIUqsIWoXNSC+cRgjTFtVND0T4qKpG4xncEYHh49Wkwtxr4Ql1I2C7eWGeMH6
- HwfzO6r5BR3BmReNlrCKQnznI8TtajeiIgNE2nBByR3JqaT56un/zD8ZcqiLxt/PQot7
- jSsYlU+vABAZgUzNk1bZESsrax/AklBA5ezi7+mJG41LXSMmyOjK+gEafGHEiymHRgjF
- GVhQ==
-X-Gm-Message-State: AOJu0Yy0sMeN0zpvIrGWoGzCLOFai7/yeCykTR2e4WZDgb1G7T5lnslB
- RjL964HL8H0netqIspLsxwzYmXBk/Uma0MlNSuid58KkxsQrP4o9l2SPMHwIary1E6z8EO/hG/1
- GAscpimvc2mPoqpZNXw4n+aW8Zlmf13v4X4Owz9beUA==
-X-Gm-Gg: AY/fxX6mPb/FGZ9n4xFbnB+jzQP3FX+g8XWtoMRvSmYc59IzTOyUa/uEIdsbb/7/Wwd
- HLEID98StgRVFdBvZGi7pSg8gJ1qbhamKjdsCcUzKEgp1z88Kx8xUPI25NDaC6PSqKvbMxhVgzz
- SzIOSglc5HACdFMBq5f7sPPkXWwkbjseFuuGc6EJMdqYamBkC4QWIp9WrcxghuGD5YaaD1hceyh
- t26IiQ55kTJUCGlwxr+yDaMAwep53SZhV2CtAf10CeAIJ0mvANG3athu95tgEndJEZh/DfA776/
- MtxCK/Ya1Y07vH/Vf6XhZAE=
-X-Google-Smtp-Source: AGHT+IGUTOK9B7a+/UkumJvyu1R55econhf51fmn+jqSCBWb20zEcAp/qgpL18ip/tcWCKF/qheMdK4k6iXtR/VBaPI=
-X-Received: by 2002:a05:690c:398:b0:787:d09e:88fa with SMTP id
- 00721157ae682-78fa5b1669fmr262930207b3.21.1766941415611; Sun, 28 Dec 2025
- 09:03:35 -0800 (PST)
+ bh=jL44AaMnL+XlOL2KGeRIObyV48ISGUhidJNsD3qk2rI=;
+ b=jrsCX+750WDVRDGsgf1qncX7MWkNXc52es905PW7yfI42iSeOwJ41a/0cNjYcKAHCH
+ qHHxRXgT9jNXAaDnGitZIsAnteFjEF7SIxT8Mbva73M7e0AEX1lLmKAfT5XsagaiIhKz
+ XOl1hZ7qA727xiJ4K8Ia6pO1yWrtdPY2PNgehZ4mn6pF0p6VCsjMyTroT4C/I7dKcqpF
+ ZszH8hqLlyiNNpOEI7stIUecNB/wcM99jgfYJ4KL1KRXIQ9MrzldghE/taB/i5JP3Siu
+ 1UQ1fQHFWRgwvszuLQy+PT6szGQPUM4no9OZKLG4TQOtVMa3zVL9AyIZOpaoPZ2ccNzn
+ xUyg==
+X-Gm-Message-State: AOJu0YwrrQtyM54QY9jBALHqU9/bFJOcpXS+0PUJyKuAao4hoD3wh8pM
+ EntEY//tFUW/ziqQZ538Ttaxd7hUKL/LYEItSFY3TVQF++5fQVVfUZPcp6/1YvsnvN9IbADgPJr
+ 3xQDIBFZgrJTJAEGwA/EzfNr52+4T4L1+0PUAYghn8g==
+X-Gm-Gg: AY/fxX6dIcdNQm/nPmX+XMvu2KPy3BLhpHGrVn6r0NCT8o49R6WlduxBvnsHasOftSu
+ mBCWvFN9mU7UghOFlvOgRadjfZWrbfVCaiSXtSOBUbp2neIgsYEnd1wrwi4iMVEcq0m5DipP5rK
+ NipPIsKIUSJLRRBNEPwJSVUx6FwsgJnwAUSUQD1Cm2TL/2hQtTyQFlrWQ+aDy2yi1eYj73OQ1lw
+ leBGOJqLJCym1Z74I8Cv5e1R8TuSUcLXpgnGUOBpza64HEomPDJXzIUrzJR3o5dDLF94mSolZTM
+ M0JO5MnsJJJBkP8nWTt5SiabgaZ6H4F1aA==
+X-Google-Smtp-Source: AGHT+IEcIvqx4VidfxWASBLWhsvXMPtSaUfJZ6Qev+agsEWmQ8QnAwrPR8iVm2hfe9qup8ekV3XXGW7gI3+0xOVuAQU=
+X-Received: by 2002:a05:690c:4446:b0:78f:f385:4116 with SMTP id
+ 00721157ae682-78ff3854144mr143633737b3.34.1766941720351; Sun, 28 Dec 2025
+ 09:08:40 -0800 (PST)
 MIME-Version: 1.0
-References: <20251221062734.100559-1-AlanoSong@163.com>
-In-Reply-To: <20251221062734.100559-1-AlanoSong@163.com>
+References: <20251223223712.17047-1-ruslichenko.r@gmail.com>
+In-Reply-To: <20251223223712.17047-1-ruslichenko.r@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 28 Dec 2025 17:03:24 +0000
-X-Gm-Features: AQt7F2qaqX7Zr1kiFSwoey8H5mSVjDMJ3cNFVwTAxTlteDYxSoFDeFGloUT8tZk
-Message-ID: <CAFEAcA8Sx4Sq24ntjWZWORF+eGyXOPhiHVm=K1cnLHd8E7TNPw@mail.gmail.com>
-Subject: Re: [PATCH] hw/i2c/allwinner: Add missing state data
-To: AlanoSong@163.com
-Cc: qemu-devel@nongnu.org, cminyard@mvista.com, strahinjapjankovic@gmail.com
+Date: Sun, 28 Dec 2025 17:08:29 +0000
+X-Gm-Features: AQt7F2rClaxWXZYxUbkjJYjDMD_wna96LCGvM4qybkM3jxovSX7IF4Jkvg5m6Fc
+Message-ID: <CAFEAcA_SSnwo0N8j_zz4jRrzcewAiRaVCENj1_gzdBVCthNVFg@mail.gmail.com>
+Subject: Re: [RFC PATCH] hw/arm/smmuv3: add support for combined irq
+To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Eric Auger <eric.auger@redhat.com>,
+ Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,46 +95,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 21 Dec 2025 at 06:27, <AlanoSong@163.com> wrote:
+On Tue, 23 Dec 2025 at 22:37, Ruslan Ruslichenko
+<ruslichenko.r@gmail.com> wrote:
 >
-> Signed-off-by: Alano Song <AlanoSong@163.com>
-> ---
->  hw/i2c/allwinner-i2c.c | 2 ++
->  1 file changed, 2 insertions(+)
+> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 >
-> diff --git a/hw/i2c/allwinner-i2c.c b/hw/i2c/allwinner-i2c.c
-> index fe887e1c6a..728b7e622f 100644
-> --- a/hw/i2c/allwinner-i2c.c
-> +++ b/hw/i2c/allwinner-i2c.c
-> @@ -419,10 +419,12 @@ static const VMStateDescription allwinner_i2c_vmstate = {
->          VMSTATE_UINT8(xaddr, AWI2CState),
->          VMSTATE_UINT8(data, AWI2CState),
->          VMSTATE_UINT8(cntr, AWI2CState),
-> +        VMSTATE_UINT8(stat, AWI2CState),
->          VMSTATE_UINT8(ccr, AWI2CState),
->          VMSTATE_UINT8(srst, AWI2CState),
->          VMSTATE_UINT8(efr, AWI2CState),
->          VMSTATE_UINT8(lcr, AWI2CState),
-> +        VMSTATE_BOOL(irq_clear_inverted, AWI2CState),
->          VMSTATE_END_OF_LIST()
->      }
+> Some platforms use combined irq type, in which case
+> only single interrupt line is used, instead of 4
+> different irq's for each type.
+>
+> Add emulation support for combined irq mode.
+>
+> This mode can be selected by platforms by setting
+> 'combined_irq' property.
 
-It isn't valid to add new vmstate fields without changing the
-vmstate version number, because this breaks migration compatibility.
+Which platforms?
 
-For a board like the allwinner ones where we don't need to retain
-migration compatibility across versions, it is good enough to
-increase the version and minimum-version number when making the
-change. You won't be able to load/restore the state data across
-the change, but it will fail with a reasonable error message.
-
-The commit message should note the compatibility break and which
-machine types it applies to.
-
-Speaking of commit messages, it would also be useful here to say:
- * what is the (user-visible) problem this is fixing
- * which commit the problem was introduced in
- * whether it is worth back-porting this to stable releases
+The other way to approach this would be to have the
+relevant SoC/platform models create a TYPE_OR_IRQ
+or gate to wire the interrupts together.
 
 thanks
 -- PMM
