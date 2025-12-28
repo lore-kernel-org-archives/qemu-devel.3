@@ -4,101 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D66D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 16:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA98E784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 16:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZtZ9-0004jP-S4; Sun, 28 Dec 2025 11:24:23 -0500
+	id 1vZtuq-00013n-5p; Sun, 28 Dec 2025 11:46:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZtZ7-0004ih-HW
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 11:24:22 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZtZ5-0000x7-Vj
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 11:24:21 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47a95efd2ceso76853995e9.2
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 08:24:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766939058; x=1767543858; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=US1Zg0/tKv9eGHW2iM+lDucsBa4cAkR1LWKQbwFbeto=;
- b=zr2eLSYo2xlRABgo21G/t9jKkXj//E8I/9VZiHv8C3BfqD4xHyXjA7Dv+dNRnjIBzQ
- O34SOOJAdH1Psb8aB+yfVxMyT6NFt97IQlQzTN+4i8EeaQzmj9nKiY6W3HqMVoIGsV1x
- mOV0GYkwbRPdnPr9bMU9oVJkVEraK0HL9SwQo9ZsVPDj8O6BuYJ3D5xzUvUj6d7uMck2
- mkIQoM3Mjnpt2nmuVoKS37wjT7dRLwmzPgcId4yjOJ5FWMmi495AAXihmGttyYSIcIbU
- cF3SSwx5hxC/k+0wVwfruPHQ6Zs6UiA2Iu/biPobOz2nNwcXn8646mHDS2RoQ7CbA44g
- Yy7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766939058; x=1767543858;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=US1Zg0/tKv9eGHW2iM+lDucsBa4cAkR1LWKQbwFbeto=;
- b=ef/P1wfXI1C9xXuGsLuuMiz4YcCDLsH5UtoyXQZzb1U/pyXuCez9HWowNmj9mYav6T
- ejQcHyXY5EjWbrpb9x0v6/tKwbDpoD7+Mx6om4a3V6i9xkqT7hd6YUT/A04cM9zONGo3
- U+YybyfBdLHs2x9q22BNH+00IihPbsLVZ2zXR1WcHS+imcYlq95LZWRFK9RW+NdgrHv1
- /k372T4wblS/LnP4PO2dAv2UljBbrtPNqdq+S55yj3siwmFCsOaACfURhtP9ZNRvffnT
- uAiqs46FxPrqsPl0rV+Eu3ua934gxg1ep6PXVQQLZCPjN8VGHEoeZw8jB22mIqr7Fi48
- yp5g==
-X-Gm-Message-State: AOJu0YyYxUiNdf8LFkZ2izIxa/SgcdxT4Iqi0WMbY6Kw6azKLtxNaO45
- xSKZyEJn69epkzNOcxRNqNO5cet7Ya9TayGr7XGoeTcVj3jru8Fn6peZxsVr1ZHjXP0=
-X-Gm-Gg: AY/fxX4giWpvHKgF8rBfZXmG/jJSo9yRF01FPr62Or3C+q1mREHjSr9oENs+zXAOF7z
- Kh3Gz26nVAL308bVhZ1Zo8sACc20bytR2tajCd3vVj+lMZlsAjCn7jkamRpAPg+098ws5Tylh+4
- DrP4LzCDcNOv1vBPfR/z06RAWW8FP5wGvGDEjsGMkSc4VVYgd9jN2CMRZ3SkcNJH16rZGNVKOsW
- bEU0x1e/8ea/fZw0OL4W8SC01wXB1n5xQ0iJndqq8u9T8zudCoLeT9Gpnc8KaDIdBMAcw6AQKnA
- 1q9fPwDGU8RS1kWFbRYERtUz2S4xvnuOFEUE58OMI1rU0g9EpD2WdzR/GyRx8OkB2EKvv/lub1z
- /sZusXD9p4z+9Bi+gh+HfsbXR4bLVkLgVyBkADizrzWEv+A+67pOD+lpGOLGLGfR3V71vJp5O7m
- k/K52BekWLQOvw0zI+GBp7XSQHdfMjHomKJ2idfdXu7VaVkPQl2eKezE9dCwA+0Q==
-X-Google-Smtp-Source: AGHT+IH6tx/3xaZWXUPvJvJclEoim4T1WxOUC8lnjY12g1F35PoZsTN7o4qCVX8je6O/4HlFXGdJVw==
-X-Received: by 2002:a05:600c:4e90:b0:471:1717:411 with SMTP id
- 5b1f17b1804b1-47d19595f54mr348787195e9.24.1766939057969; 
- Sun, 28 Dec 2025 08:24:17 -0800 (PST)
-Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
- [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d19346e48sm484644475e9.2.2025.12.28.08.24.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 08:24:17 -0800 (PST)
-Message-ID: <4a452081-8b99-49f7-b525-3722f7a9d756@linaro.org>
-Date: Sun, 28 Dec 2025 17:24:16 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vZtug-000133-3k; Sun, 28 Dec 2025 11:46:39 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vZtue-0005U8-6W; Sun, 28 Dec 2025 11:46:37 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 49872596A0A;
+ Sun, 28 Dec 2025 17:46:28 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 8DvPubEfB2K8; Sun, 28 Dec 2025 17:46:26 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 4368F5969FF; Sun, 28 Dec 2025 17:46:26 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 411145969FD;
+ Sun, 28 Dec 2025 17:46:26 +0100 (CET)
+Date: Sun, 28 Dec 2025 17:46:26 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ David Hildenbrand <david@kernel.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
+ Jagannathan Raman <jag.raman@oracle.com>, Alexander Graf <agraf@csgraf.de>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, Jason Wang <jasowang@redhat.com>, 
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH 2/3] system/memory: Extract 'qemu/memory_ldst_unaligned.h'
+ header
+In-Reply-To: <20251228161837.12413-3-philmd@linaro.org>
+Message-ID: <ffcf5368-9b35-d1c8-16ba-6b517e056469@eik.bme.hu>
+References: <20251228161837.12413-1-philmd@linaro.org>
+ <20251228161837.12413-3-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 16/25] system: Allow restricting the legacy ld/st_he()
- 'native-endian' API
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
- <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-17-philmd@linaro.org>
- <CABgObfa9gHpK3CR8Aa6MA4YqfaMs3bn70pba58QQ2+32+xwxzQ@mail.gmail.com>
- <e0b99887-934e-4587-9410-b090a4fcfdc8@linaro.org>
- <5e44a3e7-5eb3-4220-9193-8eb86690535c@linaro.org>
- <CABgObfaXgpdPe32ks+xkzOuNxvJMJhsfpvtjFobBJTueR1X24A@mail.gmail.com>
- <913b7541-d8f0-47b9-8523-9e1389bf4f84@linaro.org>
- <CABgObfYXW7RqZjqHVQd8T-RfZvy8oxb7-uWK0Au1W5VXzHVSNA@mail.gmail.com>
- <1b73aeb0-fa3f-4ced-9c07-5f0accebc324@linaro.org>
- <CABgObfbquY+4KqQn+o5nKhWPuFJnOB_LYTJzVCjF-GgH8VcQNg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfbquY+4KqQn+o5nKhWPuFJnOB_LYTJzVCjF-GgH8VcQNg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1953544996-1766940386=:15422"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,45 +74,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/12/25 17:20, Paolo Bonzini wrote:
-> Il dom 28 dic 2025, 17:00 Philippe Mathieu-Daudé <philmd@linaro.org 
-> <mailto:philmd@linaro.org>> ha scritto:
-> 
->     On 28/12/25 16:38, Paolo Bonzini wrote:
->      >
->      >
->      > Il dom 28 dic 2025, 16:14 Philippe Mathieu-Daudé
->     <philmd@linaro.org <mailto:philmd@linaro.org>
->      > <mailto:philmd@linaro.org <mailto:philmd@linaro.org>>> ha scritto:
->      >
->      >      > Perhaps the source of the confusion is that they are in
->     bswap.h
->      >     but they
->      >      > (quite obviously since it's host endianness) never swap?
->      >
->      >     Hmm, maybe not well named API then.
->      >
->      >
->      > The name is fine, the placement maybe a bit less; they could be
->     moved
->      > out of bswap.h but it's not really necessary to do it now.
-> 
->     Indeed not needed now, but already done to figure this API ;) This
->     helped me to understand what we don't need is "DO_STN_LDN_P(he)"
->     because this is a convoluted expansion to a plain memcpy().
-> 
-> 
-> Without having seen your code, I will note that the simple conversion to 
-> memcpy() only works for little endian hosts. On big endian, you also 
-> need to adjust the first byte, like
-> 
->     memcpy(p, ((uint8_t*)&val) + sizeof(val) - n, n);
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks, this is exactly what I had in mind for few replacements.
+--3866299591-1953544996-1766940386=:15422
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-> 
-> And likewise for ldn_he_p. (Apologize if you had noticed it, just trying 
-> to avoid a possible round trip over the holidays!)
+On Sun, 28 Dec 2025, Philippe Mathieu-Daudé wrote:
+> Unaligned memcpy API is buried within 'qemu/bswap.h',
+> supposed to be related to endianness swapping. Extract
+> to a new header to clarify.
+>
+> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> include/qemu/bswap.h                 | 62 +------------------------
+> include/qemu/memory_ldst_unaligned.h | 67 ++++++++++++++++++++++++++++
+> accel/tcg/translator.c               |  1 +
+> hw/display/ati_2d.c                  |  1 +
+> hw/display/sm501.c                   |  2 +-
+> hw/remote/vfio-user-obj.c            |  1 +
+> hw/vmapple/virtio-blk.c              |  1 +
+> net/checksum.c                       |  1 +
+> ui/vnc-enc-tight.c                   |  1 +
+> util/bufferiszero.c                  |  2 +-
+> 10 files changed, 76 insertions(+), 63 deletions(-)
+> create mode 100644 include/qemu/memory_ldst_unaligned.h
+>
+> diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+> index b77ea955de5..e8b944988c3 100644
+> --- a/include/qemu/bswap.h
+> +++ b/include/qemu/bswap.h
+> @@ -1,6 +1,7 @@
+> #ifndef BSWAP_H
+> #define BSWAP_H
+>
+> +#include "qemu/memory_ldst_unaligned.h"
 
-Thanks for your review and help :)
+If it's included here do users need to also include it separately or if so 
+should some of those users lose bswap.h include now instead of including 
+both this header and bswap.h? I think it's simpler to only include it here 
+and let users get it through bswap.h unless you review and remove now 
+unnecessary bswap.h includes from places that only need this hearder but 
+I don't know if that's worth the effort.
+
+Regards,
+BALATON Zoltan
+--3866299591-1953544996-1766940386=:15422--
 
