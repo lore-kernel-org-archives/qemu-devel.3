@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C7CE8FDBE
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 23:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 065AAD3B7E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 23:59:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va0dV-0006Ry-Qf; Sun, 28 Dec 2025 18:57:22 -0500
+	id 1va0eP-0001gx-Kh; Sun, 28 Dec 2025 18:58:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1va0dL-00065O-1p
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:57:11 -0500
-Received: from p-west1-cluster4-host1-snip4-10.eps.apple.com ([57.103.65.141]
+ id 1va0eO-0001Zb-De
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:58:16 -0500
+Received: from p-west1-cluster4-host3-snip4-10.eps.apple.com ([57.103.65.201]
  helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1va0dF-0007HF-Qj
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:57:07 -0500
+ id 1va0eM-0007SW-Pz
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:58:16 -0500
 Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-1a-60-percent-5 (Postfix) with ESMTPS id
- D7E041800753; Sun, 28 Dec 2025 23:56:57 +0000 (UTC)
+ 09367180075F; Sun, 28 Dec 2025 23:58:07 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=pv9LTpPl13EUE97IZEQWuikh1ZpqnK830pITzzND0NY=;
+ s=sig1; bh=KNda2FnGVdB+1PuvMJJo6JwnL0/5/2Oo7u+nyBw0Jtc=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=LcgRTI9InhRpSzDz0rnPsMrbxpRdtjvZcKB/tI3VG/e0A5WQ0SoynA8cN1bxx0f6ojIxVcc+luOO/+a1cCtjPtOuX08Iwyybi+WoEo27MJiFStKZo3tNk4A2kAUNJGK87rY1fsRDZni0yYqjeharv8djcM9qdiHpz2e8DFiGmYpsGf0vYpTaQ2hEZEUY+SFQItmpLQSTbw5krYI9Ksq6cm6akAJ5PBPdCf87kJpGKPu+Hr0wWxI5TyJcr2qsTOf7kfTbRxVvBbYTZCGsqWtY03SE94YO7MifJVe6q0YfZaRSduQtunOh0xWf4TvEqmhsTto9mJvcI1sRY8A/FqHLpw==
+ b=Cc80Y0vB5ZSeGN8OuhTNFNsqRAyw1TtlVWmhCPuAoE5YBOgb4dEUJKBWFRbd9aQuR5Ss9mvu6jocfbTyjcbpZsVcRjFQh3sUhZFtYZXgIj6ri9PM1n1KlCOXXyOjaHluMraUN6dcGk4uPibgB8Ll/iRQGRwSUEE/ugoAcgrnFF1f02nspHi1OtJvnrXBMvRUDtGc756LpcPkomH3qqSyX3rNfHlU5ZCE5GYp/HN2rctl4UBJOUcTOJ73l00dkBjBMGvqu+62teqMAGvd/OM7hJ+1BSLJcZubCcbGt7GUsASzzYgOL49wG3Xe6i09GWuBA6bOcVvfo9tR7u/2RrH0Gg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.56.9.36])
  by p00-icloudmta-asmtp-us-west-1a-60-percent-5 (Postfix) with ESMTPSA id
- DE5891800759; Sun, 28 Dec 2025 23:56:51 +0000 (UTC)
+ 37F5B1800755; Sun, 28 Dec 2025 23:58:02 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org,
 	mohamed@unpredictable.fr
@@ -55,45 +55,46 @@ Cc: Alexander Graf <agraf@csgraf.de>,
  Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v12 12/28] whpx: ifdef out winhvemulation on non-x86_64
-Date: Mon, 29 Dec 2025 00:54:06 +0100
-Message-ID: <20251228235422.30383-13-mohamed@unpredictable.fr>
+Subject: [PATCH v12 24/28] whpx: enable arm64 builds
+Date: Mon, 29 Dec 2025 00:54:18 +0100
+Message-ID: <20251228235422.30383-25-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251228235422.30383-1-mohamed@unpredictable.fr>
 References: <20251228235422.30383-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI4MDIyMyBTYWx0ZWRfX9kMyA6Ya9PRL
- ZGNeIGDN6sx1tKcmJx9upNZEZXVWYfWXweUMhcN8JIXbeNTEi5hDbWrnWScCwZV9DMpUbNnxs4F
- BY08DgHXgPGfusvSvvTUIilNp+I6bEkyXNsE7v0cKHv3rWPYo1OcqKj69irOa7dyxc451Fmhppb
- 5MSbfyHcfRAmLSW0RVjRQSYhGzW5IwJ9g4l1nFwQK4MgXvgOMxrcfAkjL+c1Y8rl9FEDySwbCBi
- Zfp68/dtMf5NlKTOSyG8E35TFydjGp6Lir2ndyWvLJGy8J2iVl5remDlGgSDGtjyCSfxevaEAlB
- cYGBeIaONWEvO1KsESI
-X-Authority-Info: v=2.4 cv=O600fR9W c=1 sm=1 tr=0 ts=6951c3ce cx=c_apl:c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI4MDIyMyBTYWx0ZWRfX96raMmH+vzwi
+ vMDNQYRvozKfq0YvcbS2rScyJjDnp+3SfE4fTlk8ZgCwdgHjFBT0bR3NFxr2Mf3e6665/wP5zFj
+ xu22+CZc7Vgib0IC1x0YBDy/cmJGFIw3XOpgRO9JALlDU2mRuuTrAaQTNQU1EwI/j2g1Lprq+Gu
+ xdk/CDOu1LakFGjqPF3iqlNmM7R0rpIgG3nBICFl6okhzKGC7OipSRf3rXCy/sU+7CeuOhuL86g
+ EDjSueR4tmXCp8NOf59XJps6qXQwBLbbTYoXsCW/kJ37vLfdbryzEWQ1yhAPnGMp30C1Mj1Pz0Y
+ m80V4TO5uizQKtl1DsL
+X-Authority-Info: v=2.4 cv=csSWUl4i c=1 sm=1 tr=0 ts=6951c413 cx=c_apl:c_pps
  a=azHRBMxVc17uSn+fyuI/eg==:117 a=azHRBMxVc17uSn+fyuI/eg==:17
  a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=VExx-Oqz_yhFp4n2Ql0A:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: TscuJr8mrurIBbJm5fl-ob52L0nzqDaA
-X-Proofpoint-ORIG-GUID: TscuJr8mrurIBbJm5fl-ob52L0nzqDaA
+ a=Ck9h3XeVBPDugYI9Na4A:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 3SD7tV2nlMz17eNSRBslENJ6_NVMFYEe
+X-Proofpoint-ORIG-GUID: 3SD7tV2nlMz17eNSRBslENJ6_NVMFYEe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-28_07,2025-12-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- phishscore=0 malwarescore=0 spamscore=0 mlxscore=0
- mlxlogscore=894
- bulkscore=0 clxscore=1030 adultscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512280223
-X-JNJ: AAAAAAAB/SHWJB4X6LBTaMgPZ/Op10PBxGIgbDZqgo2P2Pga+dWxvzq0xmhI1Bfk5wJWknKDHSiBZkRRMql0X/eUHZVtIhPIxawiG+Siq5dYrO+6QQ/xKAPFjBpB2ENTEsiBk/U2ZwcAlloauDwKt/1EkXzm+ueKW8eemH9GoRgDVCTMTl8T4e5wHCEFA1CbnRVMB/6VUD6osNuUrTRUT03oV7GVNsiD86zfKwcF+igxikA95M5FP/neKujA5Ehm9vF5IJA05ACC4b8Gx7XSKTcRoRW0tmr4Vp/J7zHx9NM+SvOk8D1wDVl5+dgBJex4p4HbAq/FYICuC3AUUjb/pT1+vdRa6qAq/5KvUYMbfTYOEP6CXtqwzFiNKCjx6WJxkiHg9+MD4r5ShyQsMGyBs+wzNK8IS770TNn2/gVgdzuZoHA5LYKanZsYwOrLS3WHfspIvR0ddfpGXOcrwxD551Ipn1Scic4gmSvZxALAn6K0JItcjKRm8LL/0Kb8p41X+nEWMkgRaGXQHtRZgz50akUe9+s80MoHnUuP32f6Vb7RmZU+RBe7+bw0IZpMsQXbLA9NAtMjIRuZpHljUuJu7oZDfhlmvLzcUEImuTxfjbqRpvC/wEJNUbRL2EwVD6aImFNtR09/yYBuptxAWt9nTki5X05gM8ZyOIUf168cIe0kBMpLKGVcEFgAGqntecqXMW+5nQJ7kHtSmqMyYsXiMPUd8dtgLecE6JyqmMSgv3/BBwrk1gH2FAjsgL3bZeZQCqTFBROOTXTG4phz2wDzrsQs0Zl4j6OEYMi0YLXlMLrSIjc+M/YDy1E2Bx1yg+YtaRPRKhoBuhnTdmBekH4yVsATHewOnYCA2T525gKp8ftxue8F5abfQ0Ug09TCi49lDzM3Evxr12BuuXV+PJw8LBmP8Mv1zUhZ2itcPU9gehuQKlfejVoRIT56ReW1aFiHjSsNCpmLToszFnz+6e1ezwdMLPxIjGo
- h/zBIUkKOIcJPmz0+VqqcokmMTIYX
-Received-SPF: pass client-ip=57.103.65.141;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ clxscore=1030 spamscore=0 mlxlogscore=742 phishscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 suspectscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512280223
+X-JNJ: AAAAAAAB1MFkOMbyechtoT4PwmZrc8w0/Vg8fgnzC4Q0PTdLdt9m1VZPYcQO71wwrJcns4HsQrOydKJW0jrScbNCIP6AFMa545b1keyhQgagz8Th1Ic+djLkegagsECOq7/z33VPofv+tQcjUxxIXPA97/zPi4qY456A0zRyULiD+18W1f6UdAyyFLJeHZGPHkDW9KP5GT628BnpRI+3/EsfX5kV+eKuETvzy/4ificohvyIBBqEf4KxXvDgR9fbCcSrgdxeZ9qJ+Xy50iBA6jiKKgFY333iCpYDyy7vm32wKjsqTK5G98zLLGVyHKBr8aPicwscX6sb+j+N5q5GQtb4cwAcj0QrmhhukyjCmYXYxuLH5g6PxlNaLYO7XnNG8OIIb8UVdL2BxHmd5pmdlKIeMAbyOgDDywKi5PWDUIC6Zy6QJ2wxo5qUCXUK6TUFJm5RfBCgepWF9HPRaU7GQr5V7gaOi5lUJGNhy1QZsIfDu2XCHC08IkMeDihEHzYL7uelW2bRBZhExSJcZ0jeWOevxCIi4lxboqpRjdhHBL+wiO6nMDeR+CIg66xt2TmfmLWMncGGMUWnhVsM7z9WvHdVfm+NH7aKodeYXSFg0en8o7v/WRtg82vQbElJyx5lLhhS++VFmxwwobGMSkTQfx9Os7gbUUnXey2ziEntvxGglkvc1ATXyq9S2SpHyVLEMUAsaOOJksDeW2SsXS+I8Mkvayu/PKLGbh9E9sicXZf+ZMA8KM6Nhk3UDvXg/egmk18Qu+K1DqWBn50ueHD0EnyBuP/1qz5Daw6xsT33ACz0e7gKm5idWC55rCyXdsjZBRTs11FBzbfakXHmz1e5poa5jNyHZKi992U9y52l+cbmhCM03FgQeC02RQJ3fB4lqh5oB5+uAepIhYviw1l8l2Xo/5T6PHPyMkOSuXiJ+eWjO7UfMZdnAciGvDbjc3JxXBYW1QC88vQ16xU4n+Ne0ZOh7c09E57
+ D6WoO
+Received-SPF: pass client-ip=57.103.65.201;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,130 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-winhvemulation is x86_64 only.
-
-In the future, we might want to get rid of winhvemulation usage
-entirely.
-
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- accel/whpx/whpx-common.c       | 14 ++++++++++++--
- include/system/whpx-common.h   |  2 ++
- include/system/whpx-internal.h |  7 ++++++-
- 3 files changed, 20 insertions(+), 3 deletions(-)
+ meson.build | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index d106776ff4..5152f80804 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -41,7 +41,9 @@
- bool whpx_allowed;
- static bool whp_dispatch_initialized;
- static HMODULE hWinHvPlatform;
-+#ifdef HOST_X86_64
- static HMODULE hWinHvEmulation;
-+#endif
+diff --git a/meson.build b/meson.build
+index 14b1160c15..7421ead19e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -317,7 +317,8 @@ accelerator_targets += { 'CONFIG_XEN': xen_targets }
  
- struct whpx_state whpx_global;
- struct WHPDispatch whp_dispatch;
-@@ -236,8 +238,10 @@ void whpx_destroy_vcpu(CPUState *cpu)
-     struct whpx_state *whpx = &whpx_global;
+ if cpu == 'aarch64'
+   accelerator_targets += {
+-    'CONFIG_HVF': ['aarch64-softmmu']
++    'CONFIG_HVF': ['aarch64-softmmu'],
++    'CONFIG_WHPX': ['aarch64-softmmu']
+   }
+ elif cpu == 'x86_64'
+   accelerator_targets += {
+@@ -883,13 +884,18 @@ if get_option('mshv').allowed() and host_os == 'linux'
+ endif
  
-     whp_dispatch.WHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_index);
-+#ifdef HOST_X86_64
-     AccelCPUState *vcpu = cpu->accel;
-     whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
-+#endif
-     g_free(cpu->accel);
- }
+ if get_option('whpx').allowed() and host_os == 'windows'
+-  if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
+-    error('WHPX requires 64-bit host')
+-  elif cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
+-       cc.has_header('winhvemulation.h', required: get_option('whpx'))
+-    accelerators += 'CONFIG_WHPX'
++  if cpu == 'i386'
++    if get_option('whpx').enabled()
++     error('WHPX requires 64-bit host')
++    endif
++   # Leave CONFIG_WHPX disabled
++  else
++    if cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
++      cc.has_header('winhvemulation.h', required: get_option('whpx'))
++      accelerators += 'CONFIG_WHPX'
++    endif
+   endif
+-endif
++ endif
  
-@@ -412,8 +416,12 @@ static bool load_whp_dispatch_fns(HMODULE *handle,
-         LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
-         break;
-     case WINHV_EMULATION_FNS_DEFAULT:
-+#ifdef HOST_X86_64
-         WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
-         LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
-+#else
-+        g_assert_not_reached();
-+#endif
-         break;
-     case WINHV_PLATFORM_FNS_SUPPLEMENTAL:
-         WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
-@@ -539,11 +547,11 @@ bool init_whp_dispatch(void)
-     if (!load_whp_dispatch_fns(&hWinHvPlatform, WINHV_PLATFORM_FNS_DEFAULT)) {
-         goto error;
-     }
--
-+#ifdef HOST_X86_64
-     if (!load_whp_dispatch_fns(&hWinHvEmulation, WINHV_EMULATION_FNS_DEFAULT)) {
-         goto error;
-     }
--
-+#endif
-     assert(load_whp_dispatch_fns(&hWinHvPlatform,
-         WINHV_PLATFORM_FNS_SUPPLEMENTAL));
-     whp_dispatch_initialized = true;
-@@ -553,9 +561,11 @@ error:
-     if (hWinHvPlatform) {
-         FreeLibrary(hWinHvPlatform);
-     }
-+#ifdef HOST_X86_64
-     if (hWinHvEmulation) {
-         FreeLibrary(hWinHvEmulation);
-     }
-+#endif
-     return false;
- }
- 
-diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
-index e549c7539c..8f171d1397 100644
---- a/include/system/whpx-common.h
-+++ b/include/system/whpx-common.h
-@@ -3,7 +3,9 @@
- #define SYSTEM_WHPX_COMMON_H
- 
- struct AccelCPUState {
-+#ifdef HOST_X86_64
-     WHV_EMULATOR_HANDLE emulator;
-+#endif
-     bool window_registered;
-     bool interruptable;
-     bool ready_for_pic_interrupt;
-diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
-index 041fa958b4..609d0e1c08 100644
---- a/include/system/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -4,8 +4,9 @@
- 
- #include <windows.h>
- #include <winhvplatform.h>
-+#ifdef HOST_X86_64
- #include <winhvemulation.h>
--
-+#endif
- #include "hw/i386/apic.h"
- #include "exec/vaddr.h"
- 
-@@ -101,12 +102,16 @@ void whpx_apic_get(APICCommonState *s);
- 
- /* Define function typedef */
- LIST_WINHVPLATFORM_FUNCTIONS(WHP_DEFINE_TYPE)
-+#ifdef HOST_X86_64
- LIST_WINHVEMULATION_FUNCTIONS(WHP_DEFINE_TYPE)
-+#endif
- LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DEFINE_TYPE)
- 
- struct WHPDispatch {
-     LIST_WINHVPLATFORM_FUNCTIONS(WHP_DECLARE_MEMBER)
-+#ifdef HOST_X86_64
-     LIST_WINHVEMULATION_FUNCTIONS(WHP_DECLARE_MEMBER)
-+#endif
-     LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DECLARE_MEMBER)
- };
- 
+ hvf = not_found
+ if get_option('hvf').allowed()
 -- 
 2.50.1 (Apple Git-155)
 
