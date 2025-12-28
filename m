@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD52D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 22:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C4E6E784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 22:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZywx-0001im-KZ; Sun, 28 Dec 2025 17:09:19 -0500
+	id 1vZzJ9-0006m9-Bo; Sun, 28 Dec 2025 17:32:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vZyww-0001ic-6T
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:09:18 -0500
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1vZzJ7-0006ln-5H
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:32:13 -0500
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vZywu-00039C-PL
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:09:17 -0500
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-786d1658793so74384417b3.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 14:09:16 -0800 (PST)
+ id 1vZzJ5-0007k7-Kv
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:32:12 -0500
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-6446d7a8eadso7033265d50.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 14:32:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766959756; x=1767564556; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766961130; x=1767565930; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FXCmaCz6FSbA6E+lo0D8VAKHOhyPQbS1hMZB1R98wR0=;
- b=NYrj8Cc0PCpIwwg8gd5HZF+T+nknjwu36HNxje15R0Q4XeJ3QzIOkujEI54h2oQnJh
- rkD/9sLYSAF/cawdyRfIuA8EuMHyfceHxjQ5vPLpxcHJb5xb4XTG1cvEGR7P0YDtQoct
- jWBuLxLaF9dsG37AGiwDiAPQRoMgJ676Quz6XGYUMCPBvPckazHNkQjY+HeeQhePskTq
- VNCNo+HWLyPQcevI1vcENYVIDiWbqlBBAh7qX4UW9ytzJYBehfz73PtkLQh6ntYw0hQ/
- WkHP5UkhVWK0XFf7LuJBIleQKlcs9wPXuPS24vilGn8TE7+NFe/RwWw9AG7kv8Ec7GQY
- 7XrA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fmahlLVw924619D83LuAsPxakBRGBHvrQ8moGIzQc2s=;
+ b=Tnyzrrof+F0GA9eJ54im+HkNneCCd+0KZcBnp9Dqll7ahg98rcM+XuLGw4s76YuEBX
+ uL6GbkQSX7rU0fcHcbcQ/I9w7sDMWWIfjJ7DtKuijR4Xp4BpKp5kfgBv4YJqUxJLK1eO
+ gsJOdHZfBE156uHqhv/yyjAK/XjztBJ0vKh9nocEJWkfbp8xwXtBVfHQuQ+Fheb1aWsS
+ XI9AQs7tQoLkXN8T7n5mFhODAyKSFRvishpeIe10Vh09Fg4kUnP7lFcDOCpsgPH1DjRr
+ nHgk2x5eTLGtyBN7Gmlqw3P8MsRrNxBxdR4qPSOqHw2j0v1ftrb+7IG6weE3gLowr8Ec
+ boJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766959756; x=1767564556;
+ d=1e100.net; s=20230601; t=1766961130; x=1767565930;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FXCmaCz6FSbA6E+lo0D8VAKHOhyPQbS1hMZB1R98wR0=;
- b=Wr9xNWSIwXvBu7Zr7726KWrpIhizhwsE/Z57M0HLE2yV7c+62ajjRnYmpOgb8rQJRL
- vqhc41oUKf79C5uYDMQELXFkOB3QdnTzb75oHSS1PpKNZgJnoMmTJHm3Gb9F9FkrPfWB
- EO0pVT4wksyBgGNO9mvouhzxbfs+2v5uI8WUp/SmzBONKbshcjjRdk5GRHDR/w6+6eum
- p+RRxrLZ+p8ernkAYECWey2dUfztlwQ3N0SuLWbChSxpfquUifJNi5yYzxqeRZy74+k9
- YfToeJoRzSkV4KdjJElHcorhx067grx9kfURMR1tU/ojBZSjeLU6dHngNPe6ELTSCt2p
- l/DQ==
+ bh=fmahlLVw924619D83LuAsPxakBRGBHvrQ8moGIzQc2s=;
+ b=vtK/QsBo8xejL4Yat2My6kgKYMjdEBtEMU++z2o2wiQUKL4uTtbNrKUQ5YFh3vOfjU
+ +xulgnzWXYudfCLr+YHOqYCZ/AIVEBBKFOOrxuFFQf4z01Swx/B6D/tq67O0C3XlXRCO
+ XnOkMgfZVVyom9Nz390gOZ/+2yzHmgTRQ/kT32euQdCqi++RFK5SJvTeB0jIYPOnnUGn
+ GCZZWSnYke1jQVFBoSfNrbuqFwmExeXdkqfjqMQGLmh2MwEpKZN8LC1H90GNM5E1xuPE
+ le5c124MIn8qVfrMmeuBwXExHRwErGaHOYg+FhGC1U+RcSzTeN+P4tLXFdOa6OBMVi1B
+ FCTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHqwV30XvOkk/bZq0IjNczdKHxPjD5WjF2cRYt19Ljb1OI96T1WFZde8orWW744YC2nAyzh6iv+slX@nongnu.org
-X-Gm-Message-State: AOJu0Yw0dKROxBv+UfyrJBd6rT/eO2BIdqz30EwBXjEzNd7Mqgqj7GG2
- QPBCiYjNV7iynFY49SvxBEKoLYbR0CVSec4ALSD0xSbSf0Wi0UmNl5PmXxBlQJLjBqPiisWxDPI
- R6crN
-X-Gm-Gg: AY/fxX488YC1jcetnlieJ9rHi2NuOP00dgAbT3sD/v1fKVk6gO1eity1rN2CmVi8l5F
- G6FE6sDL21X2GsCnN6W8dx+pE88Enq8ExyLkFd2Ct7py4uf4UsUir8bHBFTYM3oZwzB5KDesv1y
- y48eOSOQHTVvjPe1aMhs7RSh7ceZtj/V7xIR+IwLXH859ZlYlIla9fBpaOK8TParHRhL97WukXI
- WoOGQbodf0Bti1QVfd2KtY8JAzc9zPElmwYBl3IrJNpn1emqHqaZQfOWo2GfM3uQ0ZQZPV612me
- 424h1gJCsLgvEBCrw5ScpqumcQA1SKHzGm9cN1z0W9QLkJUJJDuJlfSbAcEcYbubO+VeLewXdi7
- AsQBYxYXsv17QuYJv4luX0UFnNqlfkhdmQVlRF81EEA4oJuNl96K1nRl+F8kXmq0tmmSKM0r/nc
- Wy1SXoKCUhbMOkwTAN9RYtRDKGwsWs2jZhRd6kv2xGN/i6NHRZd8Qf
-X-Google-Smtp-Source: AGHT+IFtVmCJg2j2+kbr4XwvyCWKV3K57uMubySfsaNIef/mkaCPsp3e/8Wd44u1FlKy9PLjca4+eg==
-X-Received: by 2002:a05:690c:968b:b0:78c:69c9:d142 with SMTP id
- 00721157ae682-78fb403b99emr550311457b3.44.1766959755589; 
- Sun, 28 Dec 2025 14:09:15 -0800 (PST)
+ AJvYcCVxYJlSY/DnryddWMXG6eVlWxgPet5HiFvSJoREL4pvlBkjRLx2B+Wajcf19fMgBOGyfezr7FTk+NWd@nongnu.org
+X-Gm-Message-State: AOJu0YyIGXUY7rn7h59ZNAO0oU5AfWik2MRkZf/9YyK7Rm+wb+p38q+D
+ jX3iWe5stpe5ptqWjcYTx+g9G8BkA9KzOJMeYs+UrzFj4ogD6fuNkkZWvr6nGgKdQx4=
+X-Gm-Gg: AY/fxX5jVTQO6lDambdi83ra/Oe32x+xikAjQ9LcRDKIfz8t87q9Oe6eYkbQ2AM6SWr
+ iQVpYKhmbtjBwwbqlYV0CKrVOY05/yaMBuSSe2rSy3J08kIRuDJb0nToBWwBXInfVvXViMjwlL0
+ c7Qw0gIoiUSL68UrWnrXcbX6EqyRtEVVLzJupdbAxF/QfI7RHsKlvQYrx5nX6lgdvcIhYI2gB1E
+ ys+A3OjDUQYclkNBCtPmFy3gy9dlmroLsTDUZFBX9yxq2EtwzoH39kNd4kED53clm0U9H2P8Tkq
+ iELfoEXHFcPSMuoDPF91rPB6LYFi4wl6c1HQspqbYmljYRMePMmCMX04rRzcuj0is8b/1SWZEGz
+ kG4yAdmYrEQkAg8Hco+YLwNsWAK4iXmGBoVr+GC/BOSl0VSQqEAm+WN+UjaXsLgdxGocDBLdcHp
+ aZMIKMe7zbq73Ph9hpSqmq1admfR6+m2RjBhR2SbQ3auCRO6107kpK
+X-Google-Smtp-Source: AGHT+IEYZJos3v6VG8dy/85VK6r6sfoXV9Zdrzx3Q3MHBmed5A+H8rMghaZTm0EXwSCRDv03oHL2rA==
+X-Received: by 2002:a05:690e:1881:b0:646:7da0:3a96 with SMTP id
+ 956f58d0204a3-6467da03affmr19184652d50.50.1766961129870; 
+ Sun, 28 Dec 2025 14:32:09 -0800 (PST)
 Received: from [10.212.166.227] ([172.59.192.106])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-6466a92d94asm13975184d50.19.2025.12.28.14.09.13
+ 00721157ae682-78fb43c1aa4sm108972987b3.21.2025.12.28.14.32.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 14:09:15 -0800 (PST)
-Message-ID: <d40f6733-ea14-4d89-8fc8-37b812ca3f49@linaro.org>
-Date: Mon, 29 Dec 2025 09:09:09 +1100
+ Sun, 28 Dec 2025 14:32:09 -0800 (PST)
+Message-ID: <bc46127c-54df-463c-84a7-9e7dbd37234c@linaro.org>
+Date: Mon, 29 Dec 2025 09:31:58 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/1] QTest patches for 2025-12-26
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-References: <20251226172718.12071-1-farosas@suse.de>
+Subject: Re: [PATCH 1/4] system/memory: Use explicit endianness in
+ ram_device::read/write()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@kernel.org>
+References: <20251218212814.61445-1-philmd@linaro.org>
+ <20251218212814.61445-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251226172718.12071-1-farosas@suse.de>
+In-Reply-To: <20251218212814.61445-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x112f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -105,26 +112,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/27/25 04:27, Fabiano Rosas wrote:
-> The following changes since commit 8dd5bceb2f9cc58481e9d22355a8d998220896de:
-> 
->    Open 11.0 development tree (2025-12-23 14:45:38 +1100)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/farosas/qemu.git tags/qtest-20251226-pull-request
-> 
-> for you to fetch changes up to 9eef3854d30911d117f85253f1f2a154e4076adf:
-> 
->    tests/qtest: Do not use versioned pc-q35-5.0 machine anymore (2025-12-26 12:06:46 -0300)
-> 
-> ----------------------------------------------------------------
-> Qtest pull request
-> 
-> - Fix tests using deprecated machine versions
+On 12/19/25 08:28, Philippe Mathieu-Daudé wrote:
+> Replace the ldn_he_p/stn_he_p() calls by their explicit endianness
+> variants. Duplicate the MemoryRegionOps, using one entry for BIG
+> and another for LITTLE endianness. Select the proper MemoryRegionOps
+> in memory_region_init_ram_device_ptr().
+...
+> -static const MemoryRegionOps ram_device_mem_ops = {
+> -    .read = memory_region_ram_device_read,
+> -    .write = memory_region_ram_device_write,
+> -    .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
 
+How is the choice here different than ...
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
+> -    mr->ops = &ram_device_mem_ops;
+> +    mr->ops = &ram_device_mem_ops[HOST_BIG_ENDIAN];
+
+... here?
+
+One of those two sets of functions is always dead.
+
 
 r~
 
