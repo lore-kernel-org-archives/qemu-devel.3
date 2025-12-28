@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 280A7E9271B
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 01:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8CAE784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 08:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZfeS-0003V8-3E; Sat, 27 Dec 2025 20:32:56 -0500
+	id 1vZluS-0003fP-Dr; Sun, 28 Dec 2025 03:13:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wsh@wshooper.org>) id 1vZfeN-0003UZ-PW
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 20:32:51 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wsh@wshooper.org>) id 1vZfeM-0007vx-3Q
- for qemu-devel@nongnu.org; Sat, 27 Dec 2025 20:32:51 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7bab7c997eeso9420704b3a.0
- for <qemu-devel@nongnu.org>; Sat, 27 Dec 2025 17:32:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=wshooper-org.20230601.gappssmtp.com; s=20230601; t=1766885568; x=1767490368;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YHF634QQEy7XLPI8IFuAQD92NavKWIssy44yKkEKhqk=;
- b=fsqE5UZYTkDIenwuaujMMR9ozYU4zj4YLqGwJkmnj74JujUbIMQ6GkS0mP+5mAhl7l
- N1WMfT89RXty6bRoaD30YLXwQ4Pfeam1KymbkVWBvezmXrNVW34/b1HCQAv2+LK0rISZ
- LEPxi3J5swRjqhKag//yf1EP5QIrXlobkf15U/Du/B2YxRpL4s/ci2S94+kAjT1KuWt3
- L6CmFMmKaVpDczqH8Vea1ByLNNvfKQiP6i/a7QG6yBTvfLw/pDLTroy7BNUt+8Y4ohym
- 2OqrIISU7IqSpQ/giqoFc3DfJDNJFgxSwnRn57SiVGO3rwEslHHgGWda6xUsvq7nqfxC
- 3sow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766885568; x=1767490368;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YHF634QQEy7XLPI8IFuAQD92NavKWIssy44yKkEKhqk=;
- b=PWjkMQ3PVAIhNBika/Qx1STolth1VhHvGfM1I+H/YisD48B/fBp19p5vaDs19i6jDa
- 3+EQC3u+b9NhtlHcgFWA+TqLGSYotgAobhGVks+ntTTh+bv1D6yzlpAn72toFTxrGm2y
- hUDZ5fwKRxrShfAD4Xzv0yyZbnjPkww0Z0F1UcppeAbgBMjTIpm2SqziWwj8dtqHxHIL
- SXvCQXIHMQb5qSAoUXk49rXfVhkmFkKEel1YjJdyCBs+hdd6ao+MCYkWG5YEbWcEGIvC
- KLiZUQXskely1pcYpTaQdNargv7Vt8sztd5re//gCqYKPmEknDGDSfCN39gVpAsGYgpM
- imQg==
-X-Gm-Message-State: AOJu0YwoWV7uuttYn7AMxxfFR1DcPEfdr87ldRh4eao5jCQsVFXQLib0
- p5bnvtLMKERX6RlVW3MGAiSartTY8S1NkPSoWO03NssKE0bt+L25H5Bn6amxO5si7To=
-X-Gm-Gg: AY/fxX5T809q+csG67tp2WbAtjd4r3AllcFdneUPOz1TYpZipg3CeQWtFiULXND111T
- YedFhKpqiFBpkbDwrLsmLRCZruQegg/rLHgM9CPo44Sofs/xv6TXlsLqWh3QBtupYwxMcERMVor
- x03sj1VUYaHmI+Tn45YnWtv57/aUbk/lHpRqM04m333MEe1dRIc8sb9OYBY4C89tYZPDhJ8Ja69
- zzRbb+9mW1ugR7lRePae4DR1OAJfKJ5Ls0WXFShy+hZXT/U3NiaWIPurogr9Oi+EI4khMSFKMxm
- qF/ASSvodJ9l5/fscPkAt1BJN8SEDH37At/Jo5kpFbsJOuDSd0jTp1wHM46EUjMqCWyiArA3421
- +Bz1U/gkJvt5uJ26JA/8wQuL7/HzyjFi0AagVopq5TU7zRSK3QQkcEo7ZXLMDAQ9pWPhqO0H6Hp
- f5okZbKfvGoSjJDUpnBNkuSHAehaB1tKPx20ahy9EJtbNuTINjcB39yuQG6nn9YBo6smo=
-X-Google-Smtp-Source: AGHT+IHaxGxeiin9a1I1RGaXV5eoQe4/3tG/FPIPsARO+nivwUkeYRyNAgCP4954aOQITNIwcJnZxg==
-X-Received: by 2002:a05:7022:2514:b0:119:e569:f275 with SMTP id
- a92af1059eb24-121722de5e9mr27250198c88.30.1766885567420; 
- Sat, 27 Dec 2025 17:32:47 -0800 (PST)
-Received: from localhost.localdomain (syn-076-081-243-074.biz.spectrum.com.
- [76.81.243.74]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-121724dd7f5sm102760893c88.5.2025.12.27.17.32.46
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 27 Dec 2025 17:32:47 -0800 (PST)
-From: William Hooper <wsh@wshooper.org>
-To: Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] m68k: link.l is only available with 68020+
-Date: Sat, 27 Dec 2025 17:32:46 -0800
-Message-ID: <20251228013246.77473-1-wsh@wshooper.org>
-In-Reply-To: <20251227210250.411882-1-laurent@vivier.eu>
-References: <20251227210250.411882-1-laurent@vivier.eu>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vZluP-0003et-Tu
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 03:13:49 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vZluN-0005A1-Ql
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 03:13:49 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C4EAA179940;
+ Sun, 28 Dec 2025 11:12:51 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 153EC342993;
+ Sun, 28 Dec 2025 11:13:31 +0300 (MSK)
+Message-ID: <57b71277-e7ec-4282-869e-4870fe34663e@tls.msk.ru>
+Date: Sun, 28 Dec 2025 11:13:30 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm/tcg/vfp_helper: Fix incorrect bit field
+ deposition in rsqrte_f64
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Li-Hang Lin <lihang.lin@gmail.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20251226064225.791454-1-lihang.lin@gmail.com>
+ <4f617585-87d5-4e01-8f36-38f68bbec9dc@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <4f617585-87d5-4e01-8f36-38f68bbec9dc@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::42c;
- envelope-from=wsh@wshooper.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,15 +107,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 27 Dec 2025 at 22:02, Laurent Vivier <laurent@vivier.eu> wrote:
-> Base 68000 only supports word size.
+On 12/26/25 18:19, Philippe Mathieu-Daudé wrote:
+> On 26/12/25 07:42, Li-Hang Lin wrote:
+>> Fix an error in rsqrte_f64() where the sign bit was being
+>> placed incorrectly. Specifically, ensure f64_sign is deposited
+>> into bit 63.
+>>
+>> Additionally, update the comments regarding the exponent (exp) bit
+>> width to reflect the correct double-precision specifications.
+>>
 > 
-> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
-> ---
->  target/m68k/cpu.c       | 3 ++-
->  target/m68k/cpu.h       | 2 ++
->  target/m68k/translate.c | 2 +-
->  3 files changed, 5 insertions(+), 2 deletions(-)
+> Fixes: d719cbc7641 ("arm/helper.c: re-factor rsqrte and add rsqrte_f16")
 
-Reviewed-by: William Hooper <wsh@wshooper.org>
+That's.. 2.12, 2018 - not too far ago :)
+
+Cc: qemu-stable@nongnu.org.
+
+/mjt
 
