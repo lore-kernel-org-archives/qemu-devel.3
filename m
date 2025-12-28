@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F93E784BE
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 10:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F78D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 10:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZngc-0001Bj-SE; Sun, 28 Dec 2025 05:07:42 -0500
+	id 1vZnoG-0004Uj-Sb; Sun, 28 Dec 2025 05:15:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZngb-0001BG-6G
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:07:41 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZnoE-0004Tu-Jw
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:15:34 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZngZ-0000Lv-H5
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:07:40 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47aa03d3326so52476375e9.3
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 02:07:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZnoC-0002Tm-24
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:15:34 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6c56so62711385e9.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 02:15:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766916458; x=1767521258; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1766916923; x=1767521723; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nFp4oSETAOPHxt81iiTGbUa68jbwyVikoXX7rE9NWmE=;
- b=up8hBFEXvv94b+5qX+wCfFoingueV3egWTiroZUaiS5qZnrnZVgaN2/vPZX/dnPpm9
- 0183duOnHL3E1ZnTM10EvFVo956aosp0zHc4Otul8WVDgOvH9iVeY+8ZkZmjYI5HUV1a
- Hs4TNtSxlbVOwJBqPvkAsLMds9lI7cc+aViR0Og2jXxbjobUMQZr5QBp4UtS0ls70hi3
- iPkFxVnxAIpVy34JOUbpf2d9txfHINeV6GJ++4k+en9adf8sryrts5RRNlS/LIKR8j9i
- RZ8L5bouWbuuAq3Qzg9mSxc6GEt0TowgvbXsT+9Rc8v3b4xiYP3i6WPMmyYjig1cHn4u
- PqRA==
+ bh=uPw19BXrN17Du/CZfQSlpDZKGRKppz7MHBt6a0FNOUY=;
+ b=t+fhGmCqGpyxmVBSsrizIpTkGBfwVYx75dcZ11tscFkTFVMso2Fsq+ayoh+HXKoUSX
+ YhaljRJHmXCjSAYK7qo+9Xvw+gC1fgdTR6NZBr0Ve2/6mbm07d9jhgKEqoBq/09XXpVL
+ rbmjdFbn0dEu8fXjLK112eXT3bR2SOmIawHpKVOQ2Yl/R3otEzR5IVHrysjt8K89mbnm
+ V+D6xtlkCrf9xrpu/1q9kofYlCBy/I2UO/lxpcgJtvE1aKmGeFsOuGoeS7xC4dSfTHpX
+ A/Xw8xQcQELx13ldIJNiQSFBqkEU74PxO+oaxQzENNx6iPAdwr/0syYwoDSlIP+luoBF
+ K8MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766916458; x=1767521258;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1766916923; x=1767521723;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nFp4oSETAOPHxt81iiTGbUa68jbwyVikoXX7rE9NWmE=;
- b=PL5gFJDtyFRfZD+wr9DXFQ2NGUHVVrjlAr5iLEvov/zg9H/8+DP8cDtl02Pi7nLbo7
- njWOFNn9PHDkbiM06jfPXyYPGEzBzC59NWZkyW1mekSm5I4URBRcb9K+SkxEWGX74RBz
- LrhfHMP5zhPY4nUONo/iln80c2KMB3MRfzYOseaTSW67AE/TptcxsLzBKBLkByDjrBfE
- HLkvLKspfwfGCkpzX1wEBkAx1zp20SMwLOU1HDcT05EiTw/IMUpaS+7h2/x+hUMAiMyw
- F5hnpMmIik4zSHINI+6Ywz1OSndPVIy4FNUSW0cUAesyCKHccLjCe/EOrxOYPRXhSqk7
- A2yg==
+ bh=uPw19BXrN17Du/CZfQSlpDZKGRKppz7MHBt6a0FNOUY=;
+ b=Pqn1KQ0nTMhALqwsmoQZVeXWWzwSvcExLXRcotsRgqutZWotuxIfB6VV055GQ2UhBC
+ 7xOs+vKGPyZN0IbEXc9SmwRgYGehJwe8UYuecBi5FwHUxPvZS0hwjvkQ+rfMWRr8pXZQ
+ ScnLO4o+1uWlBpGBcrjFyYLF8Fk0HIdT0MOCIfQWAGtMTJi+u1eM5oFu/j9EXg72J4xO
+ JVMzF2xnsYeFej7USZeLIGVu/aSxIO29xUwZPidT/XGyAjM+W15MQYqgS3vs7NSPGMgW
+ /QQ4I5WBOIrgOpxV4pTM2C1RxmdMy/uy76eD4r+/pTXhmNTBDzudpMB5v6snRXnm2yO7
+ HnyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4kxa/tajp3MduhlKPWudoOgePnC/pc6FMTnOiLJLRO2zQpUZi95OnE9QeTuTfJBhktVqsU+vk2RKk@nongnu.org
-X-Gm-Message-State: AOJu0YykgxJeSZLq4FKxZzAlo1xQBt9oeQxn92FRwLE2pWWgVeCkBUbZ
- WrgRklqJRJwhTtekSSocXl7E4S5pNBtjNObA4qyvbhrSGTSpZGwAsffYiG7XGdgD4ak=
-X-Gm-Gg: AY/fxX5C1u0fiRlFJWmYbbsCTdGDcmohjkjNWG4L8Ftl2CCEmEBxy3fPmQZUMHkVJSD
- ARlNZ8yDo8G6yQ3GWLXulwGM8HlE7LEqCjhw7eWlGERWh8/HS3WnW3CBrjtTNBOwc6S5W3V9Dtm
- SwvdU6xG6uARqFbcDg6ClJiqNVI5iXVj7AaFzVjAnyZeVdREBIvSaSzYnVU1T++3yAtBkFfyyFq
- aSd94dd1A0UTJ6KZgmi7M+9pboMt8to1l4ZjCI+xfqkBBRXnSnXycUBRBqlA3BqlBMnzapjsW+L
- ku1A18/Cdvp+CW0t4QwoP4trhJJBlI7NLUFDPk74XkssYqul/NUqIzLwwpGuWU2IQrfQ3YDZreO
- x03bsP96Wea4yzgPJQ5JlnOkx7FQbFi11KRLOvylb34dsPy7ZbRjTPSXswV0iMkDnXlqgyn+w4g
- ytnrPkCEasIdNceOtUwryMd0rGeW9O4BDckm/SPhVGn8QboV68HZlTPOZ7LD0Ddlz8a2ekicTH
-X-Google-Smtp-Source: AGHT+IFPHNViaNB9QW/+tLRWmf9jjgRtsqSc4cFKazD44OVCrkkjnXEhz30yC3is1upBnNEbzcEQRA==
-X-Received: by 2002:a05:600c:3489:b0:477:7ae0:cd6e with SMTP id
- 5b1f17b1804b1-47d206a9856mr267842465e9.5.1766916457575; 
- Sun, 28 Dec 2025 02:07:37 -0800 (PST)
+ AJvYcCVi1Qz9ir4WvUtkS7ydbJRV438i2ydDERzZqBUTZo+u5alFrnzsoSglb8DUvFPedM5ZE+ucL4uyO75B@nongnu.org
+X-Gm-Message-State: AOJu0YwsdLDM8U/881/p9Pr0Ym5gGrAmKZ5Ai9bn0Y6nKUP6BRHBmZaR
+ YGtOBwGUtcnQebdpgFCInqN95k1kTlNw2ReWDPyexpgm+4pLBgZUHd7hM8F985pEbbo=
+X-Gm-Gg: AY/fxX6JkxYH574r8aTMqdLIb6zYY+V4x7Dqrbj+azaaH0h3aNhHF5TZqIGmWwn1euL
+ ysE8M+VKX5+EVysjmwT8HYXimew7Ab8fnbwQ/fsbV7yf1PJ4h0hut4YIOj+8V7JH46pVoUtM+2s
+ rummKIgJFJBdXgQTFGA1CFi5Jk1dlnIHWVlqpq6NBv0ONU0qX7fqZX59/m59lorz4tgYrWA6D99
+ IKhMZej6wdnwKwo8xLK0DpemiKOpXQ2mgWGIbSeqAlIrIxc8mA1tFO/FdZS9x9zFfQszmfJSsdb
+ DlPVaJHWrbZtg8Tcfo66FsEG+YG9polWwADfnZnhM1NvxUF6fuhtlx0EmJLPmbGIqS5EOBopXRe
+ cEmHlteClqLho97wyDvnzGIyqfUzkY8DSdFG8mcMajmCtaYWuZ92jsNtsenEzwtxCYNpvRa3j2v
+ FAth1y9PJyOvOtuKAgIVsnyscIeRfDWpLZAZdM1GRreaPiHS4KebbiI+cV1z3X9ICF5UU3Vubc
+X-Google-Smtp-Source: AGHT+IEMF+2BYn986cAsQAaCTrK/ayj0UVoCZktxvqo6oPsK35BxazTaFxOc3PSySW+h+ilB2Be+Pw==
+X-Received: by 2002:a05:600c:1912:b0:477:89d5:fdac with SMTP id
+ 5b1f17b1804b1-47d1959f714mr360394165e9.31.1766916923567; 
+ Sun, 28 Dec 2025 02:15:23 -0800 (PST)
 Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
  [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324e9ba877sm55445658f8f.0.2025.12.28.02.07.36
+ ffacd0b85a97d-4327791d2f3sm23085127f8f.11.2025.12.28.02.15.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 02:07:36 -0800 (PST)
-Message-ID: <422ae192-4801-4f5e-b649-b8106fd79162@linaro.org>
-Date: Sun, 28 Dec 2025 11:07:35 +0100
+ Sun, 28 Dec 2025 02:15:23 -0800 (PST)
+Message-ID: <1f86c213-1bbc-49fe-bdd4-f91e1c1e8b84@linaro.org>
+Date: Sun, 28 Dec 2025 11:15:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 153/153] block: rename block/aio-wait.h to qemu/aio-wait.h
+Subject: Re: [PULL 105/153] tests/meson: do not reuse migration_files variable
+Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
  Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
 References: <20251227091622.20725-1-pbonzini@redhat.com>
- <20251227094759.35658-79-pbonzini@redhat.com>
-Content-Language: en-US
+ <20251227094759.35658-31-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251227094759.35658-79-pbonzini@redhat.com>
+In-Reply-To: <20251227094759.35658-31-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,29 +106,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/12/25 10:47, Paolo Bonzini wrote:
-> AIO_WAIT_WHILE is used even outside the block layer; move the header file
-> out of block/ just like the implementation is in util/.
+> The variable is defined in migration/meson.build, reusing it is confusing.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   MAINTAINERS                        | 2 +-
->   include/block/block-io.h           | 2 +-
->   include/{block => qemu}/aio-wait.h | 0
->   block/io.c                         | 2 +-
->   blockjob.c                         | 2 +-
->   io/channel.c                       | 2 +-
->   job.c                              | 2 +-
->   net/colo-compare.c                 | 2 +-
->   net/filter-mirror.c                | 2 +-
->   util/aio-wait.c                    | 2 +-
->   util/vhost-user-server.c           | 2 +-
->   hw/display/apple-gfx-mmio.m        | 2 +-
->   hw/display/apple-gfx.m             | 2 +-
->   13 files changed, 12 insertions(+), 12 deletions(-)
->   rename include/{block => qemu}/aio-wait.h (100%)
-
-As in 
-https://lore.kernel.org/qemu-devel/754c984d-9082-49eb-8538-23e746d6a126@linaro.org/:
+>   tests/qtest/meson.build | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
