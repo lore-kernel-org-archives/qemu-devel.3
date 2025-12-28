@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CCDE784BE
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 10:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08313E784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 10:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZnsm-0005Kk-HO; Sun, 28 Dec 2025 05:20:16 -0500
+	id 1vZnvb-0005sC-FL; Sun, 28 Dec 2025 05:23:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZnsi-0005KP-SP
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:20:13 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZnvS-0005ry-EB
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:23:03 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZnsg-0004XB-Ef
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:20:12 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-4327555464cso1339640f8f.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 02:20:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZnvR-0004iM-0J
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:23:02 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4775895d69cso34625955e9.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 02:23:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766917207; x=1767522007; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1766917379; x=1767522179; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xoB1Tk9mhOkJCBFi3HNkXDKt8ra40NHnDZKM6ldxTSA=;
- b=MOoj79bbKsa6HngbS40x/SeYJ6xX6j/MAhKcBiA+MOvcFXZwoLRNmP342wN4Tc/ZdA
- XzVjnyxf9afAmnUsJlhpTHI5kqxvMtiDn1DcWPPIPHsB+PlBGfkbSam3hdqeZlp3X/81
- tSLqoM2K2HZJnGITByPexxUnX/z4ZFKNiSNMZs7TRrXvtRU22eVP1fVnjqG689T7xpqw
- oY3wB6+ZRK4UfDORjm3a14iSSDWugjH42zu2RGID/7fJmGqaIZ2Fnq5c0kGxpDb7A1RY
- BkiHwxsWiyXF4J4tiC+k6kkh0Kyfy6X8+xv7+3twdO41JM78VEYQZLJmHMWokBhan1Xm
- 9wIQ==
+ bh=hwpUEdjLWhhNd+PQLkDlil1MVgSXRWF4oHgr3CVuak4=;
+ b=m3SGGzKhxaUZiPkF9eAy61GrWLmGRq58nq3mwDecNHt83np+Hel1yQ/J57rjGxk4Kc
+ TPaALTudiBhzo/4ZOAdziJ1M93yP6WtiXa8oTwCjA5MRr79KhLTQ5mLIujq32ojBqNO3
+ LElNBamQ7okTzwAIjnG2knfTu/RejLm/alPlxkB0du25Zt9NpYOs9xxD37Kt8g1vF3SD
+ 2jufcBu7pwW4GW6CkNcJq/ppda+6H96LKSxAnVafUUZQa0hI9ckxyHM5BQq4JyuTi4e2
+ VmXwnmPJJwpexcoWR/Cu0+8PKTmZSBSrTiyDpympoZXHWLpEuHwk7F8/Fs+eICe2gg8q
+ YEDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766917207; x=1767522007;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1766917379; x=1767522179;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xoB1Tk9mhOkJCBFi3HNkXDKt8ra40NHnDZKM6ldxTSA=;
- b=gryWGPYcu7QfWnb1xU0rj5iE8GGzRJMdIDL3RZKbKsIX4jfUpsLAuVgTymUhXYVk/2
- vPHTKbxDnxyfb9BPKnaVs39LkvRv5jsQgI0XT2uyXM5gdTFP93uWbx8xyIbazHP5pSTV
- NggRTn/7JlobDdTvgPiSH8JE5BSHesx5vsUBmrEcwMA8c1OKXmuHwZiIlGcphtOAf0f0
- /EB/tZyg6YUr3lT/3ec2xGmJxl5vlOEXOb1LfAo5kgALLmsSf/lQYeAxwv0w3xhTkOmh
- gY9MSHb0B/VEslQ8mjompJr9UZAGm7cMCd0TgftDFA7syLqlAPIp7AoH2eAgKBa1HYjs
- bUjA==
+ bh=hwpUEdjLWhhNd+PQLkDlil1MVgSXRWF4oHgr3CVuak4=;
+ b=i+9SUg+IbvhW+uagsbAzxxA9z/N5P6SNsLvTi9BbDAUvciYDzfWbn8CtrXttpErrwb
+ l1px4/xggC5EC3RnmpEiFjpkQcSbkaNS54mfXBdgH/PsBgcO50DpJdHKi/bkMQv4cKVH
+ 3n5scfVzXe6KpJNrTo5LCyqMpIYTWZApg4ixDWfGYluxvhfvgN15DORLZzT7XBluf/K/
+ jmdwX0QgmbmyIuNR0Lgui8mkFmU7ZHlCzzVswCvquq/Sf/mhxHCajh6KczZKQjKiABiO
+ a+VBZpI2gKvIt2xokR59P3UMJD8CJTob9hCeVD5NPQybPzbPrp+Ze4ncYefCmWS5RtsZ
+ DIzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRDcvooiFdi975BX6u96T4HluJtz1q3cbAI4jOw4+M2X7uyqE0cjRxEFuWZAY2ZYoNaB0SHifvs0dL@nongnu.org
-X-Gm-Message-State: AOJu0YzOnpqqROx+cjPL55Uj62E6+Qn+7Md682rk5HXJ7e7DR4hF8Vi9
- A4SVhakFgnu36bdATMjWwwIFvN0Y+kNE/odklt1mI+qaNNs1zYGLKXptataQB+VXjdo=
-X-Gm-Gg: AY/fxX40E+NJuET25Fa0l9yH+h/xwekjdKMF+ASre25V2qxZGitnXty2D7eQcLbeBnW
- cUZIcf0fSjYfb2PlXvnbqKQzZ8LAcbDMK5ObFxXa8OaoCDGsNZGuLbLVmZ65yjg5WHBrdHID3YX
- R2zLro3Mogq8uLBDVv969VcBHM6Jt+xEIIVFfOSzuSw5JTaqmdnabbbiHnOOuldrz5YeSVH/z/k
- 9qWwd9ogsoaIGnXTPsTZ3R4XeypQIq4nO6827HQtEKcJPsdyr0ykeomZUGKyWYP0XFw2PJzIPXz
- WE2AQYBOTDn81ozDn8bxmiBELL7N9boQjYLDpMYWcxKG/pecMMPnPXoeySUvBYbFwrNoQTQOKhm
- OJ//BWMonru6Loq8tqbP/CbmR5mfPrS76QO7ErWO82etpm49RKQRuZoPD3ciTjcr5CyB4uypqiD
- 4jOf5DsKH8Jf9SDaJdVdhdJ91dDzU+d+MKP9+xGj2RojMQDeEcHxEyr00sFqBuIw==
-X-Google-Smtp-Source: AGHT+IGOFQn8LpNx4yilxAv/Hi8uKyU2933ZQZRlSfmGK0VOdMEtEjciqRMjqPOxbB12P/TTZrluow==
-X-Received: by 2002:a05:6000:230c:b0:430:fd9f:e705 with SMTP id
- ffacd0b85a97d-4324e4d3e9dmr37555492f8f.27.1766917206643; 
- Sun, 28 Dec 2025 02:20:06 -0800 (PST)
+ AJvYcCXVc3QLSnlfN3HKjt6geQpCcLkwUSH2a2Qq6ySIIFuutP6LUsU3RTEtWlU4bEJR4LJD2JQT3ebC1kVJ@nongnu.org
+X-Gm-Message-State: AOJu0YzsZg6z1kv8kAV6MCyiV1Ncxf4wWzs+bwYfrj9ZUj0ThbXLSW7H
+ lRn0KeT0euVcNSX+bRmZjaODuRt4JCwyKBFbsCT8g1/bIbV6b79zpXZl2TYgj2Au1zA=
+X-Gm-Gg: AY/fxX6AeynITqtgt2GFQBfgRQekMqDwtrzhOM/SJm8wiQhedU6SJ9JhtsI/qT9wn6X
+ DkmOOTuJSGMe1XYeFl5EH96l5J4uUXyooBKmUTwpWzWqFs9OOB8SUhcI79MVupSc3puTTFwvtD4
+ tkqNGxgLWqrk3Z+VjFWAlakgchGA6hZihWqNqtyQJnmGX71+/k1QZdZux5mPB1iM1sygqLuvtlZ
+ GmJW4M0yPxyxCi87A+lvr3h4oWJZMb0r7gtWJ2rtRhtBAFkvdnJidUpSDa4F+2Ce5TgWpEmTVcS
+ UUd8ZKQHylM5J3jcE7srGUMeyp95wIlyzXgbCt/dJp1oV4q0/BC/Zml94XFnzACi6sxwi6WUoE3
+ ADfYsTwo7qYklfiLL0IwB28Rjuwl8bBFup5oif8iRdEisWUYVqVva9161o0P3+tbzl2weo9doqO
+ aK4CUI8yCekQ3vgYxkiPBi7sl6CMgbPcxXCn//pw1ncBCWIZC4DYMbHppYr6JoVuYRFd/DavAd
+X-Google-Smtp-Source: AGHT+IEDlhEl8YGdO01hic8aF60gkqQYUF4Erl1+wbBfs1+7Kg4eBMHSrmVKUompCpMX+Og3yvW34A==
+X-Received: by 2002:a05:600c:8116:b0:477:abea:9028 with SMTP id
+ 5b1f17b1804b1-47d1953bc47mr268334495e9.6.1766917379258; 
+ Sun, 28 Dec 2025 02:22:59 -0800 (PST)
 Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
  [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4325d10cc48sm46332218f8f.16.2025.12.28.02.20.05
+ 5b1f17b1804b1-47be3a9687dsm225418855e9.3.2025.12.28.02.22.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 02:20:06 -0800 (PST)
-Message-ID: <50d860e6-beaf-4a0a-9439-ac6c7e06aa09@linaro.org>
-Date: Sun, 28 Dec 2025 11:20:05 +0100
+ Sun, 28 Dec 2025 02:22:58 -0800 (PST)
+Message-ID: <035358ad-bdd4-46c2-adb3-cfda875eb06c@linaro.org>
+Date: Sun, 28 Dec 2025 11:22:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Change email and status of TriCore
+Subject: Re: [PATCH] MAINTAINERS: remove old email for Bandan Das
 Content-Language: en-US
-To: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>, qemu-devel@nongnu.org
-Cc: kbastian@rumtueddeln.de
-References: <20251227132135.4886-1-kbastian@mail.uni-paderborn.de>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251227132135.4886-1-kbastian@mail.uni-paderborn.de>
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Alexander Bulekov <alxndr@bu.edu>
+References: <20251226083207.506850-1-stefanha@redhat.com>
+ <a387daeb-187a-4620-b607-a90edb8213a5@linaro.org>
+In-Reply-To: <a387daeb-187a-4620-b607-a90edb8213a5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,45 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/12/25 14:21, Bastian Koppelmann wrote:
-> I'm no longer employed at the university of Paderborn. This also means
-> my time available for QEMU has reduced significantly. Thus, I'm dropping
-> the status to odd fixes.
+On 26/12/25 12:47, Philippe Mathieu-Daudé wrote:
+> On 26/12/25 09:32, Stefan Hajnoczi wrote:
+>> Bandan recently left Red Hat and emails to his old address now result in
+>> bounce messages. I contacted Bandan and he asked me to remove his old
+>> address on his behalf.
+>>
+>> Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> ---
+>>   MAINTAINERS | 1 -
+>>   1 file changed, 1 deletion(-)
 > 
-> Signed-off-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> ---
-> I'm losing access to my kbastian@mail.uni-paderborn.de account with the 01st of
-> January 2026. So I'm kind of late. Who takes this patch into their tree? Do I have
-> to send a PR myself?
-
-Thanks for your work with TriCore!
-
-Patch queued.
-
+> Thank you Stefan.
 > 
-> Thanks,
-> Bastian
-> 
->   MAINTAINERS | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 63e9ba521b..fc9a67c410 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -419,8 +419,8 @@ F: include/hw/xtensa/xtensa-isa.h
->   F: configs/devices/xtensa*/default.mak
->   
->   TriCore TCG CPUs
-> -M: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-> -S: Maintained
-> +M: Bastian Koppelmann <kbastian@rumtueddeln.de>
-> +S: Odd Fixes
->   F: target/tricore/
->   F: hw/tricore/
->   F: include/hw/tricore/
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Patch queued, thanks.
 
