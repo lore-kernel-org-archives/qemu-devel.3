@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1C7D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 20:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D20ED3B7E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 20:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZxQ5-0005m6-Cb; Sun, 28 Dec 2025 15:31:17 -0500
+	id 1vZxb1-00006G-Ui; Sun, 28 Dec 2025 15:42:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZxQ2-0005j7-VD
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 15:31:14 -0500
+ id 1vZxaz-00005v-7D
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 15:42:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZxPz-00052z-G6
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 15:31:14 -0500
+ id 1vZxaw-00065I-Uk
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 15:42:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766953871;
+ s=mimecast20190719; t=1766954549;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=bYHAbgFDiFq2rRw4aEdu+21friVlqL2FY4Huiu0+hgQ=;
- b=UAqvdAF6YnF7DgyYQ7u3bcua6wtp47r9XNkMeZ4Q1oAAIRESvPVHZjUMGqXvQnw/dks7Rq
- MNEYpKy4DKQBIQUIc07HnAp+ZI/+DWqvYj9qb2A1bqSeDluvUDjc/Tfrm19K17vG38Ymwq
- sn4TN8PDjz2Q05MAuPRHcL3OjNwPaEg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VlNanx6ECBvXNo6gfQvt5xryS9X2RTEIospcCl+eX4s=;
+ b=cO2+SIIn+nv2msbnZUE1h2w03RtnoczLvvYSGcrGCc/qVCNI92if2bNI5+aBmeUZFGSsof
+ 7cmSI4w4mxU/0uZiROFx9Ou3MEfCZdhyhxdi0/RPKqZmX1vumm6LrmDHhBIewFAuizJzf1
+ f5BPIZikGc9lNcQig70a9+ICoC3XdTU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-Zk31L8oxNH--LvC_d9CJQg-1; Sun, 28 Dec 2025 15:31:07 -0500
-X-MC-Unique: Zk31L8oxNH--LvC_d9CJQg-1
-X-Mimecast-MFC-AGG-ID: Zk31L8oxNH--LvC_d9CJQg_1766953866
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-430fcf10280so6329027f8f.0
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 12:31:06 -0800 (PST)
+ us-mta-128-tAbWno8tN_yf0I49pU7cdg-1; Sun, 28 Dec 2025 15:42:27 -0500
+X-MC-Unique: tAbWno8tN_yf0I49pU7cdg-1
+X-Mimecast-MFC-AGG-ID: tAbWno8tN_yf0I49pU7cdg_1766954546
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47d1622509eso49843085e9.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 12:42:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766953866; x=1767558666; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766954545; x=1767559345; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bYHAbgFDiFq2rRw4aEdu+21friVlqL2FY4Huiu0+hgQ=;
- b=MFlAsY9PgAs939KkAozEyE6meEvJNlulJMcv+MfcWjGnuVLUiL+A7k3RpkgD0/w8cq
- mQSV+TYxqal5Fuaqs1qg/xP+HK/RXpyXSVwAX4NHpYxFiXSJllm/2zB2El7x6DGK16UW
- Fe/DKjt2ADywE1omDq0aVbxtlrPLUhkWIPgEPzFL5+FVAN/2rwIGZFVQbNfiqJ0AtZvM
- WAvZGK5JBXcJw2CMj9AjhV6o2MoGikKiHqqSJlV+DZvwdjY13qdaWrCLGp+BFV0b1E8O
- kDx0/itPHDBcqvKMjOet1YdtC8qK8/IKuAWGKVV41zvAdq7cJQ/6I7Lr9WilTpLQ/5jQ
- MQqw==
+ bh=VlNanx6ECBvXNo6gfQvt5xryS9X2RTEIospcCl+eX4s=;
+ b=g+pTsxuJuXdtsPobok3E/I0qHVDd2UzFMo2fJIk3x4J/38ANMsxtLwrDcrykZ2xUWH
+ QMtnoGIJFhDNMa/RioNo3qDWZROGXapzfso+AxIr8eUKZajE/CEmwA6w+MUywx/ANOkp
+ s5ujM3DSI+JDx65Nm5STMUIj0KseTgoSYvqU4/JeJwafpkTBeThpoFP7VlnwcOWqXjrr
+ 4AyUuM0LdXVFn2amiwgcUy1vOtYOp1Pr6IkfQa8RMn24XE7CqQeFYJjLFUnkyNJTi/Bq
+ d0Chvh1WRMTHYLFnMjk8SP0cpXCaqCfZag40RzvhT185sLpvXSX3VYuKlYTf1nCVLM+7
+ lVNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766953866; x=1767558666;
+ d=1e100.net; s=20230601; t=1766954545; x=1767559345;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bYHAbgFDiFq2rRw4aEdu+21friVlqL2FY4Huiu0+hgQ=;
- b=noHun7ZT7JbLjuAfP3/wefQAdgsPJt+9+6LN+32OZE/dT39M3wDEfuACvM+xB1b3+d
- LU4F2a/aQW2j65KMFuKUSJQ8ct1ohkNtQWY0kK6zmfO7XXJXec5j1tAcqlRoM/+ntaag
- rO8IJMJIl/HSbKP6Fs0hsxd8qlOHxSNKpK1TK9+cERtrcuaOdCALks8I12idmWKvzUhP
- ZrnT+hVhQdGqS9s5dBFp/14ooN3cihOw85FxQ+IK3os4K8Ii9OwpvU1PT+UKuSatHGxS
- 8a2Us8P1ZCPG7EFIlNZ66z1Z3n8FtAZkk+BFdyxUaqlbKlgq0nCrMePJ8wrlNLynA31r
- w2IA==
-X-Gm-Message-State: AOJu0Yx1J1UiMayIpTf5BXPEqgxnRpU+1NIT19J4AZdk3uqWjMUwjF5i
- 5DGmiv3/mE4rJ5L8S9aRD8ryVx2Kj0YuZfzTapisxB3XqCDwAPDJb/fVRnYJd5o5HBzZYUzRy9+
- YkeZgfjf6kYkkCowvlJfEWwuFQJIvs4DLg0FjWwMeymkFXQLid31t3Yl9g91Dm50kALdNDarI/I
- iucprjuzOgKUmujXrFWsW3K5pJcsxh05A=
-X-Gm-Gg: AY/fxX6sWpSk4DCjRno2CWenm3aaa9G8aKu3N+vpfi978YDA7yPEaz9X61PuHVtbMpP
- u730R1rzWHXeLJ9XWNUg0djJODGmA4WSS1xkj8wzfkdLz1ARO5ZBUgf0FHUCbecJvNPKq3pzEN9
- VXxQQH+5p8Mrgso9fAcNP3azdbnaDFBieJg7v10GneRWyv36eEg/FH0A9b/O4wg8Q7xnAIow0TJ
- oUGbWQEyM4YAzg9d83PxzjVRniobA4BtDPaF13Y0W190u86IKA0KaHTjPcmUKyOculYBno=
-X-Received: by 2002:a05:6000:2305:b0:431:808:2d49 with SMTP id
- ffacd0b85a97d-4324e4c6fbfmr30116840f8f.8.1766953865486; 
- Sun, 28 Dec 2025 12:31:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHsmgv6RnjX5GYGZQHDeAdJTvNydTV/uJmCZWLawcqdTmPTnTRGHkzsMGojeMWFJmBFHU1wf5Ag3foyKu4ZiGY=
-X-Received: by 2002:a05:6000:2305:b0:431:808:2d49 with SMTP id
- ffacd0b85a97d-4324e4c6fbfmr30116827f8f.8.1766953864966; Sun, 28 Dec 2025
- 12:31:04 -0800 (PST)
+ bh=VlNanx6ECBvXNo6gfQvt5xryS9X2RTEIospcCl+eX4s=;
+ b=Lq4wpkeUp1G2yDyqW2hdr1fVjkX/0QWwxzuDMSMeDRZWZefqX440SGlq+v/wKaUgnK
+ pmFH5qakFO6nw35cqjpeR5V4TAlPila//9iS2AnuTXsJ3QbaFdJw55Nd/raAXrFlawy0
+ JFfAKoIzYaTPBadru1WdZDC/aX9YF0Yy5gap3fmSEwUBl7aXawN+8rvhtECWFp7gB6fD
+ St+Z+pg0Rm1+qfOMgVl1FdA56JwrjqSbH9TwukMQdmn83RvkEvZ90AEIh8nJCoye4BdY
+ VY/EV6Ikle7jb6OIPIM4riD/Zxf6Ke5Ki8Key1HXDJ8OEQBDx8i9uvjTbyR6ubZXv1KG
+ QgeQ==
+X-Gm-Message-State: AOJu0Yz3d776ozjI8wWkMu9mc97N/sX6v9c2Z5SB5byBLb6ochTYwfsJ
+ yLSj6GP5GE3llBiuKATyJgGdhWyDFxa4fXzuMyrhrFcCFUVoy8ynQgmIcudT7bZJJ0nQCXNM7NM
+ 0rQdeoINJ0An/Tw37V5dKz9CLXXRICxHoKmh4hCuc148lQTMCoUCX/DGiB0CzbYwcn02pgU+KTx
+ RuLJjPf6ITTkPqWdqrZxRHCdZoF8pIHigcKSUJIps=
+X-Gm-Gg: AY/fxX4Frf+SbC56E1uuaASTZTuf8E+S7wNsfJlK8r3cMVg69zCLxn4VpHaq0DYFcIX
+ Q7OGikmUl0+yGL1upE5+ss11hgXDQUhngEpEun5Tuo+gyGSyHlGfOIdOwSxd+5vXPFScxjdHDLi
+ DFRwIX6wGiiOND5UiwOvg3UmhMDcmwN/t2vraNZNGQVYU+XXHM7DnqlB59UYPtaQE/wQroYcDDB
+ 6CrG7CQhj7PjykP4eIFze+0CjSvang7DYbOjpWOf9j9s3kbTQznC9YA5O30C1pvehEHDgQ=
+X-Received: by 2002:a05:600c:310b:b0:471:1716:11c4 with SMTP id
+ 5b1f17b1804b1-47d1959783amr322165575e9.34.1766954545396; 
+ Sun, 28 Dec 2025 12:42:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE7lJ4oW7tB6r77qltULhVxWUiZqytanGM5hJdfj8CJs1UI/u2bqsLVwOxIgVB2zToyLiVFpIp92Dr5BJ4CBhc=
+X-Received: by 2002:a05:600c:310b:b0:471:1716:11c4 with SMTP id
+ 5b1f17b1804b1-47d1959783amr322165395e9.34.1766954544959; Sun, 28 Dec 2025
+ 12:42:24 -0800 (PST)
 MIME-Version: 1.0
-References: <20251228161837.12413-1-philmd@linaro.org>
- <20251228161837.12413-4-philmd@linaro.org>
-In-Reply-To: <20251228161837.12413-4-philmd@linaro.org>
+References: <20251227091622.20725-1-pbonzini@redhat.com>
+ <20251227091622.20725-30-pbonzini@redhat.com>
+ <f7dd1a94-c135-489f-857f-0b71f891e5fc@linaro.org>
+In-Reply-To: <f7dd1a94-c135-489f-857f-0b71f891e5fc@linaro.org>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sun, 28 Dec 2025 21:30:52 +0100
-X-Gm-Features: AQt7F2oDGhqLafQpdcsg1YU8xH43tkgYM-NqutrpZf5DKHXO-71AfNIYhRejwrY
-Message-ID: <CABgObfYmP2jrM+uGj0Vpb-7Fx+W2LZge=Tf231GJSUQWfjOO9w@mail.gmail.com>
-Subject: Re: [PATCH 3/3] system/memory: Rename unaligned load/store API
+Date: Sun, 28 Dec 2025 21:42:12 +0100
+X-Gm-Features: AQt7F2ozA2HbpH99HI_O4q-bs8WGIkK6y5PnHv1NcL5S0fsiX3JquojV75olF9Y
+Message-ID: <CABgObfbc05R089L1dmWPHfA33y+S2kRnK5bMiwoQ_goSjXGZxg@mail.gmail.com>
+Subject: Re: [PULL 029/153] include: reorganize memory API headers
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- David Hildenbrand <david@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>, 
- Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Jason Wang <jasowang@redhat.com>, 
- "zmta06.collab.prod.int.phx2.redhat.com, list@suse.de" <qemu-ppc@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000074cb6a0647090159"
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000fcbc73064709298e"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -123,1246 +115,338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000074cb6a0647090159
+--000000000000fcbc73064709298e
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Il dom 28 dic 2025, 17:19 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
+Il sab 27 dic 2025, 16:45 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
 a
 scritto:
 
-> Rename the API methods using the explicit 'unaligned'
-> description instead of 'he' which stands for 'host
-> endianness'.
+> Hi Paolo,
 >
-> Inspired-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/qemu/bswap.h                 | 32 ++++++++++++++--------------
->  include/qemu/memory_ldst_unaligned.h | 16 +++++++-------
+> On 27/12/25 10:14, Paolo Bonzini wrote:
+> > Move RAMBlock functions out of ram_addr.h and cpu-common.h;
+> > move memory API headers out of include/exec and into include/system.
+>
+> I know you want the good of the project and make it evolve,
+> but TBH pushing your own unreviewed patches without looking
+> at others work in the same area is really demotivating, it
+> feel like you completely ignore us.
 >
 
-No "memory_" since it's for host pointers and not guest memory addresses.
+This cleanup was posted over a month ago and I didn't get any reviews... it
+does absolutely nothing except splitting up a couple header files so that
+they do what the names signify, so I didn't think too much about it and
+thought people didn't really care.
+
+Sorry for not spotting the duplicate patch among your patches=E2=80=94what =
+happened
+is that I agreed with the general idea and, seeing Richard and others
+reviewing them, I trusted both you and them; I only looked at them closely
+today after you pointed out the duplication.
+
+Rest assured that it's really trusting the people that are working on QEMU,
+like you (or Peter or David for the memory API) and not ignoring them.
 
 Paolo
 
- accel/tcg/translator.c               |  6 +++---
->  hw/display/ati_2d.c                  |  2 +-
->  hw/display/sm501.c                   | 19 ++++++++++-------
->  hw/remote/vfio-user-obj.c            |  4 ++--
->  hw/vmapple/virtio-blk.c              |  2 +-
->  net/checksum.c                       |  6 +++---
->  system/memory.c                      |  4 ++--
->  system/physmem.c                     |  8 +++----
->  ui/vnc-enc-tight.c                   |  2 +-
->  util/bufferiszero.c                  |  6 +++---
->  accel/tcg/ldst_atomicity.c.inc       | 10 ++++-----
->  13 files changed, 60 insertions(+), 57 deletions(-)
->
-> diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-> index e8b944988c3..f7c806085fb 100644
-> --- a/include/qemu/bswap.h
-> +++ b/include/qemu/bswap.h
-> @@ -237,82 +237,82 @@ static inline void stb_p(void *ptr, uint8_t v)
->
->  static inline int lduw_le_p(const void *ptr)
->  {
-> -    return (uint16_t)le_bswap(lduw_he_p(ptr), 16);
-> +    return (uint16_t)le_bswap(lduw_unaligned_p(ptr), 16);
->  }
->
->  static inline int ldsw_le_p(const void *ptr)
->  {
-> -    return (int16_t)le_bswap(lduw_he_p(ptr), 16);
-> +    return (int16_t)le_bswap(lduw_unaligned_p(ptr), 16);
->  }
->
->  static inline int ldl_le_p(const void *ptr)
->  {
-> -    return le_bswap(ldl_he_p(ptr), 32);
-> +    return le_bswap(ldl_unaligned_p(ptr), 32);
->  }
->
->  static inline uint64_t ldq_le_p(const void *ptr)
->  {
-> -    return le_bswap(ldq_he_p(ptr), 64);
-> +    return le_bswap(ldq_unaligned_p(ptr), 64);
->  }
->
->  static inline void stw_le_p(void *ptr, uint16_t v)
->  {
-> -    stw_he_p(ptr, le_bswap(v, 16));
-> +    stw_unaligned_p(ptr, le_bswap(v, 16));
->  }
->
->  static inline void st24_le_p(void *ptr, uint32_t v)
->  {
-> -    st24_he_p(ptr, le_bswap24(v));
-> +    st24_unaligned_p(ptr, le_bswap24(v));
->  }
->
->  static inline void stl_le_p(void *ptr, uint32_t v)
->  {
-> -    stl_he_p(ptr, le_bswap(v, 32));
-> +    stl_unaligned_p(ptr, le_bswap(v, 32));
->  }
->
->  static inline void stq_le_p(void *ptr, uint64_t v)
->  {
-> -    stq_he_p(ptr, le_bswap(v, 64));
-> +    stq_unaligned_p(ptr, le_bswap(v, 64));
->  }
->
->  static inline int lduw_be_p(const void *ptr)
->  {
-> -    return (uint16_t)be_bswap(lduw_he_p(ptr), 16);
-> +    return (uint16_t)be_bswap(lduw_unaligned_p(ptr), 16);
->  }
->
->  static inline int ldsw_be_p(const void *ptr)
->  {
-> -    return (int16_t)be_bswap(lduw_he_p(ptr), 16);
-> +    return (int16_t)be_bswap(lduw_unaligned_p(ptr), 16);
->  }
->
->  static inline int ldl_be_p(const void *ptr)
->  {
-> -    return be_bswap(ldl_he_p(ptr), 32);
-> +    return be_bswap(ldl_unaligned_p(ptr), 32);
->  }
->
->  static inline uint64_t ldq_be_p(const void *ptr)
->  {
-> -    return be_bswap(ldq_he_p(ptr), 64);
-> +    return be_bswap(ldq_unaligned_p(ptr), 64);
->  }
->
->  static inline void stw_be_p(void *ptr, uint16_t v)
->  {
-> -    stw_he_p(ptr, be_bswap(v, 16));
-> +    stw_unaligned_p(ptr, be_bswap(v, 16));
->  }
->
->  static inline void st24_be_p(void *ptr, uint32_t v)
->  {
-> -    st24_he_p(ptr, be_bswap24(v));
-> +    st24_unaligned_p(ptr, be_bswap24(v));
->  }
->
->  static inline void stl_be_p(void *ptr, uint32_t v)
->  {
-> -    stl_he_p(ptr, be_bswap(v, 32));
-> +    stl_unaligned_p(ptr, be_bswap(v, 32));
->  }
->
->  static inline void stq_be_p(void *ptr, uint64_t v)
->  {
-> -    stq_he_p(ptr, be_bswap(v, 64));
-> +    stq_unaligned_p(ptr, be_bswap(v, 64));
->  }
->
->  /* Store v to p as a sz byte value in host order */
-> diff --git a/include/qemu/memory_ldst_unaligned.h
-> b/include/qemu/memory_ldst_unaligned.h
-> index f6b64e8fe9c..6b0cc3e2777 100644
-> --- a/include/qemu/memory_ldst_unaligned.h
-> +++ b/include/qemu/memory_ldst_unaligned.h
-> @@ -16,50 +16,50 @@
->   * of good performance.
->   */
->
-> -static inline int lduw_he_p(const void *ptr)
-> +static inline int lduw_unaligned_p(const void *ptr)
->  {
->      uint16_t r;
->      __builtin_memcpy(&r, ptr, sizeof(r));
->      return r;
->  }
->
-> -static inline int ldsw_he_p(const void *ptr)
-> +static inline int ldsw_unaligned_p(const void *ptr)
->  {
->      int16_t r;
->      __builtin_memcpy(&r, ptr, sizeof(r));
->      return r;
->  }
->
-> -static inline void stw_he_p(void *ptr, uint16_t v)
-> +static inline void stw_unaligned_p(void *ptr, uint16_t v)
->  {
->      __builtin_memcpy(ptr, &v, sizeof(v));
->  }
->
-> -static inline void st24_he_p(void *ptr, uint32_t v)
-> +static inline void st24_unaligned_p(void *ptr, uint32_t v)
->  {
->      __builtin_memcpy(ptr, &v, 3);
->  }
->
-> -static inline int ldl_he_p(const void *ptr)
-> +static inline int ldl_unaligned_p(const void *ptr)
->  {
->      int32_t r;
->      __builtin_memcpy(&r, ptr, sizeof(r));
->      return r;
->  }
->
-> -static inline void stl_he_p(void *ptr, uint32_t v)
-> +static inline void stl_unaligned_p(void *ptr, uint32_t v)
->  {
->      __builtin_memcpy(ptr, &v, sizeof(v));
->  }
->
-> -static inline uint64_t ldq_he_p(const void *ptr)
-> +static inline uint64_t ldq_unaligned_p(const void *ptr)
->  {
->      uint64_t r;
->      __builtin_memcpy(&r, ptr, sizeof(r));
->      return r;
->  }
->
-> -static inline void stq_he_p(void *ptr, uint64_t v)
-> +static inline void stq_unaligned_p(void *ptr, uint64_t v)
->  {
->      __builtin_memcpy(ptr, &v, sizeof(v));
->  }
-> diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-> index 86cdd70c47f..497128c96c5 100644
-> --- a/accel/tcg/translator.c
-> +++ b/accel/tcg/translator.c
-> @@ -342,14 +342,14 @@ static bool translator_ld(CPUArchState *env,
-> DisasContextBase *db,
->      case 2:
->          if (QEMU_IS_ALIGNED(pc, 2)) {
->              uint16_t t =3D qatomic_read((uint16_t *)host);
-> -            stw_he_p(dest, t);
-> +            stw_unaligned_p(dest, t);
->              return true;
->          }
->          break;
->      case 4:
->          if (QEMU_IS_ALIGNED(pc, 4)) {
->              uint32_t t =3D qatomic_read((uint32_t *)host);
-> -            stl_he_p(dest, t);
-> +            stl_unaligned_p(dest, t);
->              return true;
->          }
->          break;
-> @@ -357,7 +357,7 @@ static bool translator_ld(CPUArchState *env,
-> DisasContextBase *db,
->      case 8:
->          if (QEMU_IS_ALIGNED(pc, 8)) {
->              uint64_t t =3D qatomic_read__nocheck((uint64_t *)host);
-> -            stq_he_p(dest, t);
-> +            stq_unaligned_p(dest, t);
->              return true;
->          }
->          break;
-> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-> index 24a3c3e942f..333d78d7455 100644
-> --- a/hw/display/ati_2d.c
-> +++ b/hw/display/ati_2d.c
-> @@ -222,7 +222,7 @@ void ati_2d_blt(ATIVGAState *s)
->              for (y =3D 0; y < s->regs.dst_height; y++) {
->                  i =3D dst_x * bypp + (dst_y + y) * dst_pitch;
->                  for (x =3D 0; x < s->regs.dst_width; x++, i +=3D bypp) {
-> -                    stn_he_p(&dst_bits[i], bypp, filler);
-> +                    stn_unaligned_p(&dst_bits[i], bypp, filler);
->                  }
->              }
->          }
-> diff --git a/hw/display/sm501.c b/hw/display/sm501.c
-> index 51efe2ad41f..776fedebb13 100644
-> --- a/hw/display/sm501.c
-> +++ b/hw/display/sm501.c
-> @@ -768,7 +768,7 @@ static void sm501_2d_operation(SM501State *s)
->              for (y =3D 0; y < height; y++) {
->                  i =3D (dst_x + (dst_y + y) * dst_pitch) * bypp;
->                  for (x =3D 0; x < width; x++, i +=3D bypp) {
-> -                    stn_he_p(&d[i], bypp, ~ldn_he_p(&d[i], bypp));
-> +                    stn_unaligned_p(&d[i], bypp, ~ldn_unaligned_p(&d[i],
-> bypp));
->                  }
->              }
->          } else if (!rop_mode && rop =3D=3D 0x99) {
-> @@ -781,8 +781,9 @@ static void sm501_2d_operation(SM501State *s)
->                  i =3D (dst_x + (dst_y + y) * dst_pitch) * bypp;
->                  j =3D (src_x + (src_y + y) * src_pitch) * bypp;
->                  for (x =3D 0; x < width; x++, i +=3D bypp, j +=3D bypp) =
-{
-> -                    stn_he_p(&d[i], bypp,
-> -                             ~(ldn_he_p(&sp[j], bypp) ^ ldn_he_p(&d[i],
-> bypp)));
-> +                    stn_unaligned_p(&d[i], bypp,
-> +                                    ~(ldn_unaligned_p(&sp[j], bypp)
-> +                                      ^ ldn_unaligned_p(&d[i], bypp)));
->                  }
->              }
->          } else if (!rop_mode && rop =3D=3D 0xee) {
-> @@ -795,8 +796,9 @@ static void sm501_2d_operation(SM501State *s)
->                  i =3D (dst_x + (dst_y + y) * dst_pitch) * bypp;
->                  j =3D (src_x + (src_y + y) * src_pitch) * bypp;
->                  for (x =3D 0; x < width; x++, i +=3D bypp, j +=3D bypp) =
-{
-> -                    stn_he_p(&d[i], bypp,
-> -                             ldn_he_p(&sp[j], bypp) | ldn_he_p(&d[i],
-> bypp));
-> +                    stn_unaligned_p(&d[i], bypp,
-> +                                    ldn_unaligned_p(&sp[j], bypp)
-> +                                    | ldn_unaligned_p(&d[i], bypp));
->                  }
->              }
->          } else {
-> @@ -818,8 +820,9 @@ static void sm501_2d_operation(SM501State *s)
->              if (width =3D=3D 1 && height =3D=3D 1) {
->                  unsigned int si =3D (src_x + src_y * src_pitch) * bypp;
->                  unsigned int di =3D (dst_x + dst_y * dst_pitch) * bypp;
-> -                stn_he_p(&s->local_mem[dst_base + di], bypp,
-> -                         ldn_he_p(&s->local_mem[src_base + si], bypp));
-> +                stn_unaligned_p(&s->local_mem[dst_base + di], bypp,
-> +                                ldn_unaligned_p(&s->local_mem[src_base +
-> si],
-> +                                                bypp));
->                  break;
->              }
->              /* If reverse blit do simple check for overlaps */
-> @@ -917,7 +920,7 @@ static void sm501_2d_operation(SM501State *s)
->                  for (y =3D 0; y < height; y++) {
->                      i =3D (dst_x + (dst_y + y) * dst_pitch) * bypp;
->                      for (x =3D 0; x < width; x++, i +=3D bypp) {
-> -                        stn_he_p(&d[i], bypp, color);
-> +                        stn_unaligned_p(&d[i], bypp, color);
->                      }
->                  }
->              }
-> diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-> index 9c9ac8b0d92..44adff10eb9 100644
-> --- a/hw/remote/vfio-user-obj.c
-> +++ b/hw/remote/vfio-user-obj.c
-> @@ -392,7 +392,7 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t
-> *buf, hwaddr offset,
->          access_size =3D memory_access_size(mr, size, offset);
->
->          if (is_write) {
-> -            val =3D ldn_he_p(ptr, access_size);
-> +            val =3D ldn_unaligned_p(ptr, access_size);
->
->              result =3D memory_region_dispatch_write(mr, offset, val,
->                                                    size_memop(access_size=
-),
-> @@ -402,7 +402,7 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t
-> *buf, hwaddr offset,
->                                                   size_memop(access_size)=
-,
->                                                   MEMTXATTRS_UNSPECIFIED)=
-;
->
-> -            stn_he_p(ptr, access_size, val);
-> +            stn_unaligned_p(ptr, access_size, val);
->          }
->
->          if (release_lock) {
-> diff --git a/hw/vmapple/virtio-blk.c b/hw/vmapple/virtio-blk.c
-> index f5e8e92df75..805bcbc9467 100644
-> --- a/hw/vmapple/virtio-blk.c
-> +++ b/hw/vmapple/virtio-blk.c
-> @@ -79,7 +79,7 @@ static void vmapple_virtio_blk_get_config(VirtIODevice
-> *vdev, uint8_t *config)
->      g_assert(dev->parent_obj.config_size >=3D endof(struct
-> virtio_blk_config, zoned));
->
->      /* Apple abuses the field for max_secure_erase_sectors as type id */
-> -    stl_he_p(&blkcfg->max_secure_erase_sectors, dev->apple_type);
-> +    stl_unaligned_p(&blkcfg->max_secure_erase_sectors, dev->apple_type);
->  }
->
->  static void vmapple_virtio_blk_class_init(ObjectClass *klass, const void
-> *data)
-> diff --git a/net/checksum.c b/net/checksum.c
-> index 18be31c26e5..56314f5e76d 100644
-> --- a/net/checksum.c
-> +++ b/net/checksum.c
-> @@ -110,7 +110,7 @@ void net_checksum_calculate(void *data, int length,
-> int csum_flag)
->
->      /* Calculate IP checksum */
->      if (csum_flag & CSUM_IP) {
-> -        stw_he_p(&ip->ip_sum, 0);
-> +        stw_unaligned_p(&ip->ip_sum, 0);
->          csum =3D net_raw_checksum((uint8_t *)ip, IP_HDR_GET_LEN(ip));
->          stw_be_p(&ip->ip_sum, csum);
->      }
-> @@ -142,7 +142,7 @@ void net_checksum_calculate(void *data, int length,
-> int csum_flag)
->          }
->
->          /* Set csum to 0 */
-> -        stw_he_p(&tcp->th_sum, 0);
-> +        stw_unaligned_p(&tcp->th_sum, 0);
->
->          csum =3D net_checksum_tcpudp(ip_len, ip->ip_p,
->                                     (uint8_t *)&ip->ip_src,
-> @@ -166,7 +166,7 @@ void net_checksum_calculate(void *data, int length,
-> int csum_flag)
->          }
->
->          /* Set csum to 0 */
-> -        stw_he_p(&udp->uh_sum, 0);
-> +        stw_unaligned_p(&udp->uh_sum, 0);
->
->          csum =3D net_checksum_tcpudp(ip_len, ip->ip_p,
->                                     (uint8_t *)&ip->ip_src,
-> diff --git a/system/memory.c b/system/memory.c
-> index 8b84661ae36..653d46e8e79 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1365,7 +1365,7 @@ static uint64_t memory_region_ram_device_read(void
-> *opaque,
->                                                hwaddr addr, unsigned size=
-)
->  {
->      MemoryRegion *mr =3D opaque;
-> -    uint64_t data =3D ldn_he_p(mr->ram_block->host + addr, size);
-> +    uint64_t data =3D ldn_unaligned_p(mr->ram_block->host + addr, size);
->
->      trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data,
-> size);
->
-> @@ -1379,7 +1379,7 @@ static void memory_region_ram_device_write(void
-> *opaque, hwaddr addr,
->
->      trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data=
-,
-> size);
->
-> -    stn_he_p(mr->ram_block->host + addr, size, data);
-> +    stn_unaligned_p(mr->ram_block->host + addr, size, data);
->  }
->
->  static const MemoryRegionOps ram_device_mem_ops =3D {
-> diff --git a/system/physmem.c b/system/physmem.c
-> index fb69cdb57d9..d62af6f2480 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3284,7 +3284,7 @@ static MemTxResult
-> flatview_write_continue_step(MemTxAttrs attrs,
->
->          /*
->           * Assure Coverity (and ourselves) that we are not going to
-> OVERRUN
-> -         * the buffer by following ldn_he_p().
-> +         * the buffer by following ldn_unaligned_p().
->           */
->  #ifdef QEMU_STATIC_ANALYSIS
->          assert((*l =3D=3D 1 && len >=3D 1) ||
-> @@ -3292,7 +3292,7 @@ static MemTxResult
-> flatview_write_continue_step(MemTxAttrs attrs,
->                 (*l =3D=3D 4 && len >=3D 4) ||
->                 (*l =3D=3D 8 && len >=3D 8));
->  #endif
-> -        val =3D ldn_he_p(buf, *l);
-> +        val =3D ldn_unaligned_p(buf, *l);
->          result =3D memory_region_dispatch_write(mr, mr_addr, val,
->                                                size_memop(*l), attrs);
->          if (release_lock) {
-> @@ -3379,7 +3379,7 @@ static MemTxResult
-> flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
->
->          /*
->           * Assure Coverity (and ourselves) that we are not going to
-> OVERRUN
-> -         * the buffer by following stn_he_p().
-> +         * the buffer by following stn_unaligned_p().
->           */
->  #ifdef QEMU_STATIC_ANALYSIS
->          assert((*l =3D=3D 1 && len >=3D 1) ||
-> @@ -3387,7 +3387,7 @@ static MemTxResult
-> flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
->                 (*l =3D=3D 4 && len >=3D 4) ||
->                 (*l =3D=3D 8 && len >=3D 8));
->  #endif
-> -        stn_he_p(buf, *l, val);
-> +        stn_unaligned_p(buf, *l, val);
->
->          if (release_lock) {
->              bql_unlock();
-> diff --git a/ui/vnc-enc-tight.c b/ui/vnc-enc-tight.c
-> index b645aebccef..62d825dc05f 100644
-> --- a/ui/vnc-enc-tight.c
-> +++ b/ui/vnc-enc-tight.c
-> @@ -912,7 +912,7 @@ static void tight_pack24(VncState *vs, uint8_t *buf,
-> size_t count, size_t *ret)
->      }
->
->      while (count--) {
-> -        pix =3D ldl_he_p(buf8);
-> +        pix =3D ldl_unaligned_p(buf8);
->          *buf++ =3D (char)(pix >> rshift);
->          *buf++ =3D (char)(pix >> gshift);
->          *buf++ =3D (char)(pix >> bshift);
-> diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-> index 9548dd3ad1b..d7775dc891d 100644
-> --- a/util/bufferiszero.c
-> +++ b/util/bufferiszero.c
-> @@ -38,10 +38,10 @@ static bool buffer_is_zero_int_lt256(const void *buf,
-> size_t len)
->       * the beginning and end of the buffer.
->       */
->      if (unlikely(len <=3D 8)) {
-> -        return (ldl_he_p(buf) | ldl_he_p(buf + len - 4)) =3D=3D 0;
-> +        return (ldl_unaligned_p(buf) | ldl_unaligned_p(buf + len - 4)) =
-=3D=3D
-> 0;
->      }
->
-> -    t =3D ldq_he_p(buf) | ldq_he_p(buf + len - 8);
-> +    t =3D ldq_unaligned_p(buf) | ldq_unaligned_p(buf + len - 8);
->      p =3D QEMU_ALIGN_PTR_DOWN(buf + 8, 8);
->      e =3D QEMU_ALIGN_PTR_DOWN(buf + len - 1, 8);
->
-> @@ -58,7 +58,7 @@ static bool buffer_is_zero_int_ge256(const void *buf,
-> size_t len)
->       * Use unaligned memory access functions to handle
->       * the beginning and end of the buffer.
->       */
-> -    uint64_t t =3D ldq_he_p(buf) | ldq_he_p(buf + len - 8);
-> +    uint64_t t =3D ldq_unaligned_p(buf) | ldq_unaligned_p(buf + len - 8)=
-;
->      const uint64_t *p =3D QEMU_ALIGN_PTR_DOWN(buf + 8, 8);
->      const uint64_t *e =3D QEMU_ALIGN_PTR_DOWN(buf + len - 1, 8);
->
-> diff --git a/accel/tcg/ldst_atomicity.c.inc
-> b/accel/tcg/ldst_atomicity.c.inc
-> index c735add2615..eeb18c716c0 100644
-> --- a/accel/tcg/ldst_atomicity.c.inc
-> +++ b/accel/tcg/ldst_atomicity.c.inc
-> @@ -415,7 +415,7 @@ static uint16_t load_atom_2(CPUState *cpu, uintptr_t
-> ra,
->      atmax =3D required_atomicity(cpu, pi, memop);
->      switch (atmax) {
->      case MO_8:
-> -        return lduw_he_p(pv);
-> +        return lduw_unaligned_p(pv);
->      case MO_16:
->          /* The only case remaining is MO_ATOM_WITHIN16. */
->          if (!HAVE_al8_fast && (pi & 3) =3D=3D 1) {
-> @@ -512,7 +512,7 @@ static uint64_t load_atom_8(CPUState *cpu, uintptr_t
-> ra,
->      }
->      switch (atmax) {
->      case MO_8:
-> -        return ldq_he_p(pv);
-> +        return ldq_unaligned_p(pv);
->      case MO_16:
->          return load_atom_8_by_2(pv);
->      case MO_32:
-> @@ -875,7 +875,7 @@ static void store_atom_2(CPUState *cpu, uintptr_t ra,
->
->      atmax =3D required_atomicity(cpu, pi, memop);
->      if (atmax =3D=3D MO_8) {
-> -        stw_he_p(pv, val);
-> +        stw_unaligned_p(pv, val);
->          return;
->      }
->
-> @@ -928,7 +928,7 @@ static void store_atom_4(CPUState *cpu, uintptr_t ra,
->      atmax =3D required_atomicity(cpu, pi, memop);
->      switch (atmax) {
->      case MO_8:
-> -        stl_he_p(pv, val);
-> +        stl_unaligned_p(pv, val);
->          return;
->      case MO_16:
->          store_atom_4_by_2(pv, val);
-> @@ -996,7 +996,7 @@ static void store_atom_8(CPUState *cpu, uintptr_t ra,
->      atmax =3D required_atomicity(cpu, pi, memop);
->      switch (atmax) {
->      case MO_8:
-> -        stq_he_p(pv, val);
-> +        stq_unaligned_p(pv, val);
->          return;
->      case MO_16:
->          store_atom_8_by_2(pv, val);
-> --
-> 2.52.0
+
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >   MAINTAINERS                              |   2 +-
+> >   include/exec/cpu-common.h                |  74 -----------
+> >   include/exec/cputlb.h                    |   1 +
+> >   include/exec/translation-block.h         |   2 +
+> >   include/hw/core/qdev-properties-system.h |   1 +
+> >   include/hw/i2c/smbus_eeprom.h            |   2 +-
+> >   include/hw/xen/xen-hvm-common.h          |   1 +
+> >   include/system/balloon.h                 |   2 +-
+> >   include/system/block-ram-registrar.h     |   2 +-
+> >   include/system/iommufd.h                 |   2 +-
+> >   include/system/memory.h                  |  16 ++-
+> >   include/system/memory_mapping.h          |   4 +-
+> >   include/system/physmem.h                 |   2 +-
+> >   include/system/ram_addr.h                | 136 +++----------------
+> >   include/system/ramblock.h                | 160 ++++++++++++++++++++++=
+-
+> >   include/{exec =3D> system}/ramlist.h       |  10 +-
+> >   include/system/xen-mapcache.h            |   1 -
+> >   include/system/xen.h                     |   3 +-
+> >   migration/migration.h                    |   3 +-
+> >   migration/ram.h                          |   1 +
+> >   accel/mshv/mshv-all.c                    |   1 +
+> >   accel/tcg/cputlb.c                       |   2 +-
+> >   accel/tcg/tcg-accel-ops-mttcg.c          |   1 +
+> >   backends/hostmem.c                       |   1 +
+> >   block/blkio.c                            |   2 +-
+> >   dump/dump.c                              |   1 +
+> >   hw/acpi/ghes.c                           |   1 +
+> >   hw/acpi/nvdimm.c                         |   1 +
+> >   hw/acpi/vmgenid.c                        |   1 +
+> >   hw/arm/omap1.c                           |   1 +
+> >   hw/audio/marvell_88w8618.c               |   1 +
+> >   hw/char/riscv_htif.c                     |   1 +
+> >   hw/core/cpu-common.c                     |   1 +
+> >   hw/core/machine-qmp-cmds.c               |   1 +
+> >   hw/core/numa.c                           |   3 +-
+> >   hw/display/exynos4210_fimd.c             |   1 +
+> >   hw/display/omap_lcdc.c                   |   1 +
+> >   hw/display/ramfb.c                       |   1 +
+> >   hw/display/vga.c                         |   1 +
+> >   hw/dma/i8257.c                           |   1 +
+> >   hw/dma/omap_dma.c                        |   1 +
+> >   hw/dma/rc4030.c                          |   1 +
+> >   hw/dma/sifive_pdma.c                     |   1 +
+> >   hw/hyperv/hyperv.c                       |   1 +
+> >   hw/hyperv/syndbg.c                       |   1 +
+> >   hw/hyperv/vmbus.c                        |   1 +
+> >   hw/i386/kvm/clock.c                      |   1 +
+> >   hw/i386/vapic.c                          |   1 +
+> >   hw/intc/apic.c                           |   1 +
+> >   hw/intc/xive2.c                          |   1 +
+> >   hw/m68k/next-cube.c                      |   1 +
+> >   hw/microblaze/boot.c                     |   1 +
+> >   hw/misc/pc-testdev.c                     |   1 +
+> >   hw/net/fsl_etsec/rings.c                 |   1 +
+> >   hw/net/mcf_fec.c                         |   1 +
+> >   hw/net/opencores_eth.c                   |   1 +
+> >   hw/net/xgmac.c                           |   1 +
+> >   hw/nvram/spapr_nvram.c                   |   1 +
+> >   hw/ppc/amigaone.c                        |   1 +
+> >   hw/ppc/e500.c                            |   1 +
+> >   hw/ppc/pegasos.c                         |   1 +
+> >   hw/ppc/pnv.c                             |   1 +
+> >   hw/ppc/ppc440_uc.c                       |   1 +
+> >   hw/ppc/spapr.c                           |   1 +
+> >   hw/ppc/spapr_drc.c                       |   1 +
+> >   hw/ppc/spapr_events.c                    |   1 +
+> >   hw/ppc/spapr_hcall.c                     |   1 +
+> >   hw/ppc/spapr_rtas.c                      |   1 +
+> >   hw/ppc/spapr_tpm_proxy.c                 |   1 +
+> >   hw/ppc/virtex_ml507.c                    |   1 +
+> >   hw/remote/proxy-memory-listener.c        |   1 +
+> >   hw/s390x/css.c                           |   1 +
+> >   hw/s390x/ipl.c                           |   1 +
+> >   hw/s390x/s390-pci-bus.c                  |   1 +
+> >   hw/s390x/s390-stattrib.c                 |   1 +
+> >   hw/s390x/virtio-ccw.c                    |   1 +
+> >   hw/scsi/vmw_pvscsi.c                     |   1 +
+> >   hw/sparc/leon3.c                         |   1 +
+> >   hw/vfio-user/container.c                 |   1 +
+> >   hw/vfio/container.c                      |   2 +-
+> >   hw/vfio/helpers.c                        |   1 +
+> >   hw/vfio/migration.c                      |   2 +-
+> >   hw/virtio/vhost.c                        |   1 +
+> >   hw/xen/xen-mapcache.c                    |   1 +
+> >   hw/xen/xen_pt_graphics.c                 |   1 +
+> >   hw/xtensa/xtfpga.c                       |   1 +
+> >   migration/ram.c                          |   2 +-
+> >   stubs/physmem.c                          |   2 +-
+> >   stubs/ram-block.c                        |   4 +-
+> >   system/ioport.c                          |   1 +
+> >   system/memory.c                          |   2 +-
+> >   system/physmem.c                         |   2 +-
+> >   target/arm/kvm.c                         |   1 +
+> >   target/i386/kvm/kvm.c                    |   1 +
+> >   target/i386/sev.c                        |   1 +
+> >   target/ppc/kvm.c                         |   2 +-
+> >   target/s390x/kvm/kvm.c                   |   2 +-
+> >   tests/qtest/fuzz/generic_fuzz.c          |   2 +-
+> >   util/vfio-helpers.c                      |   2 +-
+> >   rust/hw/char/pl011/src/bindings.rs       |   4 +-
+> >   rust/hw/core/src/bindings.rs             |   2 +-
+> >   rust/system/src/bindings.rs              |   5 +-
+> >   102 files changed, 298 insertions(+), 234 deletions(-)
+> >   rename include/{exec =3D> system}/ramlist.h (94%)
 >
 >
 
---00000000000074cb6a0647090159
+--000000000000fcbc73064709298e
 Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il dom 28 dic 2025, 17:19 Philip=
-pe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linar=
-o.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Rename the API methods using the explicit &#39;unaligned&#39;<br=
->
-description instead of &#39;he&#39; which stands for &#39;host<br>
-endianness&#39;.<br>
-<br>
-Inspired-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank" rel=3D"noreferrer">philmd@linaro.org</a>&gt;<br>
----<br>
-=C2=A0include/qemu/bswap.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0| 32 ++++++++++++++--------------<br>
-=C2=A0include/qemu/memory_ldst_unaligned.h | 16 +++++++-------<br></blockqu=
-ote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">No &quot;memo=
-ry_&quot; since it&#39;s for host pointers and not guest memory addresses.<=
-/div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_cont=
-ainer"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0accel/tcg/translator.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0|=C2=A0 6 +++---<br>
-=C2=A0hw/display/ati_2d.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0hw/display/sm501.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0| 19 ++++++++++-------<br>
-=C2=A0hw/remote/vfio-user-obj.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=
-=C2=A0 4 ++--<br>
-=C2=A0hw/vmapple/virtio-blk.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 |=C2=A0 2 +-<br>
-=C2=A0net/checksum.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 6 +++---<br>
-=C2=A0system/memory.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 4 ++--<br>
-=C2=A0system/physmem.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 8 +++----<br>
-=C2=A0ui/vnc-enc-tight.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-<br>
-=C2=A0util/bufferiszero.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 6 +++---<br>
-=C2=A0accel/tcg/ldst_atomicity.c.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0| 10 ++++---=
---<br>
-=C2=A013 files changed, 60 insertions(+), 57 deletions(-)<br>
-<br>
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h<br>
-index e8b944988c3..f7c806085fb 100644<br>
---- a/include/qemu/bswap.h<br>
-+++ b/include/qemu/bswap.h<br>
-@@ -237,82 +237,82 @@ static inline void stb_p(void *ptr, uint8_t v)<br>
-<br>
-=C2=A0static inline int lduw_le_p(const void *ptr)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return (uint16_t)le_bswap(lduw_he_p(ptr), 16);<br>
-+=C2=A0 =C2=A0 return (uint16_t)le_bswap(lduw_unaligned_p(ptr), 16);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline int ldsw_le_p(const void *ptr)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return (int16_t)le_bswap(lduw_he_p(ptr), 16);<br>
-+=C2=A0 =C2=A0 return (int16_t)le_bswap(lduw_unaligned_p(ptr), 16);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline int ldl_le_p(const void *ptr)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return le_bswap(ldl_he_p(ptr), 32);<br>
-+=C2=A0 =C2=A0 return le_bswap(ldl_unaligned_p(ptr), 32);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline uint64_t ldq_le_p(const void *ptr)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return le_bswap(ldq_he_p(ptr), 64);<br>
-+=C2=A0 =C2=A0 return le_bswap(ldq_unaligned_p(ptr), 64);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline void stw_le_p(void *ptr, uint16_t v)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 stw_he_p(ptr, le_bswap(v, 16));<br>
-+=C2=A0 =C2=A0 stw_unaligned_p(ptr, le_bswap(v, 16));<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline void st24_le_p(void *ptr, uint32_t v)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 st24_he_p(ptr, le_bswap24(v));<br>
-+=C2=A0 =C2=A0 st24_unaligned_p(ptr, le_bswap24(v));<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline void stl_le_p(void *ptr, uint32_t v)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 stl_he_p(ptr, le_bswap(v, 32));<br>
-+=C2=A0 =C2=A0 stl_unaligned_p(ptr, le_bswap(v, 32));<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline void stq_le_p(void *ptr, uint64_t v)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 stq_he_p(ptr, le_bswap(v, 64));<br>
-+=C2=A0 =C2=A0 stq_unaligned_p(ptr, le_bswap(v, 64));<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline int lduw_be_p(const void *ptr)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return (uint16_t)be_bswap(lduw_he_p(ptr), 16);<br>
-+=C2=A0 =C2=A0 return (uint16_t)be_bswap(lduw_unaligned_p(ptr), 16);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline int ldsw_be_p(const void *ptr)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return (int16_t)be_bswap(lduw_he_p(ptr), 16);<br>
-+=C2=A0 =C2=A0 return (int16_t)be_bswap(lduw_unaligned_p(ptr), 16);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline int ldl_be_p(const void *ptr)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return be_bswap(ldl_he_p(ptr), 32);<br>
-+=C2=A0 =C2=A0 return be_bswap(ldl_unaligned_p(ptr), 32);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline uint64_t ldq_be_p(const void *ptr)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return be_bswap(ldq_he_p(ptr), 64);<br>
-+=C2=A0 =C2=A0 return be_bswap(ldq_unaligned_p(ptr), 64);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline void stw_be_p(void *ptr, uint16_t v)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 stw_he_p(ptr, be_bswap(v, 16));<br>
-+=C2=A0 =C2=A0 stw_unaligned_p(ptr, be_bswap(v, 16));<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline void st24_be_p(void *ptr, uint32_t v)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 st24_he_p(ptr, be_bswap24(v));<br>
-+=C2=A0 =C2=A0 st24_unaligned_p(ptr, be_bswap24(v));<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline void stl_be_p(void *ptr, uint32_t v)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 stl_he_p(ptr, be_bswap(v, 32));<br>
-+=C2=A0 =C2=A0 stl_unaligned_p(ptr, be_bswap(v, 32));<br>
-=C2=A0}<br>
-<br>
-=C2=A0static inline void stq_be_p(void *ptr, uint64_t v)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 stq_he_p(ptr, be_bswap(v, 64));<br>
-+=C2=A0 =C2=A0 stq_unaligned_p(ptr, be_bswap(v, 64));<br>
-=C2=A0}<br>
-<br>
-=C2=A0/* Store v to p as a sz byte value in host order */<br>
-diff --git a/include/qemu/memory_ldst_unaligned.h b/include/qemu/memory_lds=
-t_unaligned.h<br>
-index f6b64e8fe9c..6b0cc3e2777 100644<br>
---- a/include/qemu/memory_ldst_unaligned.h<br>
-+++ b/include/qemu/memory_ldst_unaligned.h<br>
-@@ -16,50 +16,50 @@<br>
-=C2=A0 * of good performance.<br>
-=C2=A0 */<br>
-<br>
--static inline int lduw_he_p(const void *ptr)<br>
-+static inline int lduw_unaligned_p(const void *ptr)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0uint16_t r;<br>
-=C2=A0 =C2=A0 =C2=A0__builtin_memcpy(&amp;r, ptr, sizeof(r));<br>
-=C2=A0 =C2=A0 =C2=A0return r;<br>
-=C2=A0}<br>
-<br>
--static inline int ldsw_he_p(const void *ptr)<br>
-+static inline int ldsw_unaligned_p(const void *ptr)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0int16_t r;<br>
-=C2=A0 =C2=A0 =C2=A0__builtin_memcpy(&amp;r, ptr, sizeof(r));<br>
-=C2=A0 =C2=A0 =C2=A0return r;<br>
-=C2=A0}<br>
-<br>
--static inline void stw_he_p(void *ptr, uint16_t v)<br>
-+static inline void stw_unaligned_p(void *ptr, uint16_t v)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0__builtin_memcpy(ptr, &amp;v, sizeof(v));<br>
-=C2=A0}<br>
-<br>
--static inline void st24_he_p(void *ptr, uint32_t v)<br>
-+static inline void st24_unaligned_p(void *ptr, uint32_t v)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0__builtin_memcpy(ptr, &amp;v, 3);<br>
-=C2=A0}<br>
-<br>
--static inline int ldl_he_p(const void *ptr)<br>
-+static inline int ldl_unaligned_p(const void *ptr)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0int32_t r;<br>
-=C2=A0 =C2=A0 =C2=A0__builtin_memcpy(&amp;r, ptr, sizeof(r));<br>
-=C2=A0 =C2=A0 =C2=A0return r;<br>
-=C2=A0}<br>
-<br>
--static inline void stl_he_p(void *ptr, uint32_t v)<br>
-+static inline void stl_unaligned_p(void *ptr, uint32_t v)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0__builtin_memcpy(ptr, &amp;v, sizeof(v));<br>
-=C2=A0}<br>
-<br>
--static inline uint64_t ldq_he_p(const void *ptr)<br>
-+static inline uint64_t ldq_unaligned_p(const void *ptr)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0uint64_t r;<br>
-=C2=A0 =C2=A0 =C2=A0__builtin_memcpy(&amp;r, ptr, sizeof(r));<br>
-=C2=A0 =C2=A0 =C2=A0return r;<br>
-=C2=A0}<br>
-<br>
--static inline void stq_he_p(void *ptr, uint64_t v)<br>
-+static inline void stq_unaligned_p(void *ptr, uint64_t v)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0__builtin_memcpy(ptr, &amp;v, sizeof(v));<br>
-=C2=A0}<br>
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c<br>
-index 86cdd70c47f..497128c96c5 100644<br>
---- a/accel/tcg/translator.c<br>
-+++ b/accel/tcg/translator.c<br>
-@@ -342,14 +342,14 @@ static bool translator_ld(CPUArchState *env, DisasCon=
-textBase *db,<br>
-=C2=A0 =C2=A0 =C2=A0case 2:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (QEMU_IS_ALIGNED(pc, 2)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0uint16_t t =3D qatomic_read=
-((uint16_t *)host);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_he_p(dest, t);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_unaligned_p(dest, t);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return true;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0case 4:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (QEMU_IS_ALIGNED(pc, 4)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t t =3D qatomic_read=
-((uint32_t *)host);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stl_he_p(dest, t);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stl_unaligned_p(dest, t);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return true;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-@@ -357,7 +357,7 @@ static bool translator_ld(CPUArchState *env, DisasConte=
-xtBase *db,<br>
-=C2=A0 =C2=A0 =C2=A0case 8:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (QEMU_IS_ALIGNED(pc, 8)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0uint64_t t =3D qatomic_read=
-__nocheck((uint64_t *)host);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stq_he_p(dest, t);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stq_unaligned_p(dest, t);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return true;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c<br>
-index 24a3c3e942f..333d78d7455 100644<br>
---- a/hw/display/ati_2d.c<br>
-+++ b/hw/display/ati_2d.c<br>
-@@ -222,7 +222,7 @@ void ati_2d_blt(ATIVGAState *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (y =3D 0; y &lt; s-&gt;=
-regs.dst_height; y++) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i =3D dst_x *=
- bypp + (dst_y + y) * dst_pitch;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (x =3D 0;=
- x &lt; s-&gt;regs.dst_width; x++, i +=3D bypp) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_=
-he_p(&amp;dst_bits[i], bypp, filler);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_=
-unaligned_p(&amp;dst_bits[i], bypp, filler);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-diff --git a/hw/display/sm501.c b/hw/display/sm501.c<br>
-index 51efe2ad41f..776fedebb13 100644<br>
---- a/hw/display/sm501.c<br>
-+++ b/hw/display/sm501.c<br>
-@@ -768,7 +768,7 @@ static void sm501_2d_operation(SM501State *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (y =3D 0; y &lt; height=
-; y++) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i =3D (dst_x =
-+ (dst_y + y) * dst_pitch) * bypp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (x =3D 0;=
- x &lt; width; x++, i +=3D bypp) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_=
-he_p(&amp;d[i], bypp, ~ldn_he_p(&amp;d[i], bypp));<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_=
-unaligned_p(&amp;d[i], bypp, ~ldn_unaligned_p(&amp;d[i], bypp));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else if (!rop_mode &amp;&amp; rop =3D=
-=3D 0x99) {<br>
-@@ -781,8 +781,9 @@ static void sm501_2d_operation(SM501State *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i =3D (dst_x =
-+ (dst_y + y) * dst_pitch) * bypp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0j =3D (src_x =
-+ (src_y + y) * src_pitch) * bypp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (x =3D 0;=
- x &lt; width; x++, i +=3D bypp, j +=3D bypp) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_=
-he_p(&amp;d[i], bypp,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0~(ldn_he_p(&amp;sp[j], bypp) ^ ldn_he_p(&amp=
-;d[i], bypp)));<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_=
-unaligned_p(&amp;d[i], bypp,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~(ldn_unaligned_p(&amp=
-;sp[j], bypp)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^ ldn_unaligned=
-_p(&amp;d[i], bypp)));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else if (!rop_mode &amp;&amp; rop =3D=
-=3D 0xee) {<br>
-@@ -795,8 +796,9 @@ static void sm501_2d_operation(SM501State *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i =3D (dst_x =
-+ (dst_y + y) * dst_pitch) * bypp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0j =3D (src_x =
-+ (src_y + y) * src_pitch) * bypp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (x =3D 0;=
- x &lt; width; x++, i +=3D bypp, j +=3D bypp) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_=
-he_p(&amp;d[i], bypp,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ldn_he_p(&amp;sp[j], bypp) | ldn_he_p(&amp;d=
-[i], bypp));<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_=
-unaligned_p(&amp;d[i], bypp,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ldn_unaligned_p(&amp;s=
-p[j], bypp)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | ldn_unaligned_p(&amp=
-;d[i], bypp));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
-@@ -818,8 +820,9 @@ static void sm501_2d_operation(SM501State *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (width =3D=3D 1 &amp;&am=
-p; height =3D=3D 1) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned int =
-si =3D (src_x + src_y * src_pitch) * bypp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned int =
-di =3D (dst_x + dst_y * dst_pitch) * bypp;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_he_p(&amp;s-&g=
-t;local_mem[dst_base + di], bypp,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0ldn_he_p(&amp;s-&gt;local_mem[src_base + si], bypp));<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_unaligned_p(&a=
-mp;s-&gt;local_mem[dst_base + di], bypp,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ldn_unaligned_p(&amp;s-&gt;local_mem=
-[src_base + si],<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 bypp));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* If reverse blit do simpl=
-e check for overlaps */<br>
-@@ -917,7 +920,7 @@ static void sm501_2d_operation(SM501State *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (y =3D 0;=
- y &lt; height; y++) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0i =3D (dst_x + (dst_y + y) * dst_pitch) * bypp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0for (x =3D 0; x &lt; width; x++, i +=3D bypp) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 stn_he_p(&amp;d[i], bypp, color);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 stn_unaligned_p(&amp;d[i], bypp, color);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c<br>
-index 9c9ac8b0d92..44adff10eb9 100644<br>
---- a/hw/remote/vfio-user-obj.c<br>
-+++ b/hw/remote/vfio-user-obj.c<br>
-@@ -392,7 +392,7 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t *=
-buf, hwaddr offset,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0access_size =3D memory_access_size(mr, si=
-ze, offset);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (is_write) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D ldn_he_p(ptr, access_siz=
-e);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D ldn_unaligned_p(ptr, acc=
-ess_size);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0result =3D memory_region_di=
-spatch_write(mr, offset, val,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0size_memop(access_size),<br>
-@@ -402,7 +402,7 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t *=
-buf, hwaddr offset,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 size_memop(access_size),<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 MEMTXATTRS_UNSPECIFIED);<br>
-<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_he_p(ptr, access_size, val);=
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_unaligned_p(ptr, access_size=
-, val);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (release_lock) {<br>
-diff --git a/hw/vmapple/virtio-blk.c b/hw/vmapple/virtio-blk.c<br>
-index f5e8e92df75..805bcbc9467 100644<br>
---- a/hw/vmapple/virtio-blk.c<br>
-+++ b/hw/vmapple/virtio-blk.c<br>
-@@ -79,7 +79,7 @@ static void vmapple_virtio_blk_get_config(VirtIODevice *v=
-dev, uint8_t *config)<br>
-=C2=A0 =C2=A0 =C2=A0g_assert(dev-&gt;parent_obj.config_size &gt;=3D endof(s=
-truct virtio_blk_config, zoned));<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* Apple abuses the field for max_secure_erase_sectors =
-as type id */<br>
--=C2=A0 =C2=A0 stl_he_p(&amp;blkcfg-&gt;max_secure_erase_sectors, dev-&gt;a=
-pple_type);<br>
-+=C2=A0 =C2=A0 stl_unaligned_p(&amp;blkcfg-&gt;max_secure_erase_sectors, de=
-v-&gt;apple_type);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static void vmapple_virtio_blk_class_init(ObjectClass *klass, const v=
-oid *data)<br>
-diff --git a/net/checksum.c b/net/checksum.c<br>
-index 18be31c26e5..56314f5e76d 100644<br>
---- a/net/checksum.c<br>
-+++ b/net/checksum.c<br>
-@@ -110,7 +110,7 @@ void net_checksum_calculate(void *data, int length, int=
- csum_flag)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* Calculate IP checksum */<br>
-=C2=A0 =C2=A0 =C2=A0if (csum_flag &amp; CSUM_IP) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_he_p(&amp;ip-&gt;ip_sum, 0);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_unaligned_p(&amp;ip-&gt;ip_sum, 0);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0csum =3D net_raw_checksum((uint8_t *)ip, =
-IP_HDR_GET_LEN(ip));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0stw_be_p(&amp;ip-&gt;ip_sum, csum);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-@@ -142,7 +142,7 @@ void net_checksum_calculate(void *data, int length, int=
- csum_flag)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Set csum to 0 */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_he_p(&amp;tcp-&gt;th_sum, 0);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_unaligned_p(&amp;tcp-&gt;th_sum, 0);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0csum =3D net_checksum_tcpudp(ip_len, ip-&=
-gt;ip_p,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (uint8_t *)&amp;ip-&gt=
-;ip_src,<br>
-@@ -166,7 +166,7 @@ void net_checksum_calculate(void *data, int length, int=
- csum_flag)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Set csum to 0 */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_he_p(&amp;udp-&gt;uh_sum, 0);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_unaligned_p(&amp;udp-&gt;uh_sum, 0);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0csum =3D net_checksum_tcpudp(ip_len, ip-&=
-gt;ip_p,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (uint8_t *)&amp;ip-&gt=
-;ip_src,<br>
-diff --git a/system/memory.c b/system/memory.c<br>
-index 8b84661ae36..653d46e8e79 100644<br>
---- a/system/memory.c<br>
-+++ b/system/memory.c<br>
-@@ -1365,7 +1365,7 @@ static uint64_t memory_region_ram_device_read(void *o=
-paque,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0hwaddr addr, unsigned size)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0MemoryRegion *mr =3D opaque;<br>
--=C2=A0 =C2=A0 uint64_t data =3D ldn_he_p(mr-&gt;ram_block-&gt;host + addr,=
- size);<br>
-+=C2=A0 =C2=A0 uint64_t data =3D ldn_unaligned_p(mr-&gt;ram_block-&gt;host =
-+ addr, size);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0trace_memory_region_ram_device_read(get_cpu_index(), mr=
-, addr, data, size);<br>
-<br>
-@@ -1379,7 +1379,7 @@ static void memory_region_ram_device_write(void *opaq=
-ue, hwaddr addr,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0trace_memory_region_ram_device_write(get_cpu_index(), m=
-r, addr, data, size);<br>
-<br>
--=C2=A0 =C2=A0 stn_he_p(mr-&gt;ram_block-&gt;host + addr, size, data);<br>
-+=C2=A0 =C2=A0 stn_unaligned_p(mr-&gt;ram_block-&gt;host + addr, size, data=
-);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static const MemoryRegionOps ram_device_mem_ops =3D {<br>
-diff --git a/system/physmem.c b/system/physmem.c<br>
-index fb69cdb57d9..d62af6f2480 100644<br>
---- a/system/physmem.c<br>
-+++ b/system/physmem.c<br>
-@@ -3284,7 +3284,7 @@ static MemTxResult flatview_write_continue_step(MemTx=
-Attrs attrs,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * Assure Coverity (and ourselves) that w=
-e are not going to OVERRUN<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* the buffer by following ldn_he_p().<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* the buffer by following ldn_unaligned_=
-p().<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
-=C2=A0#ifdef QEMU_STATIC_ANALYSIS<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0assert((*l =3D=3D 1 &amp;&amp; len &gt;=
-=3D 1) ||<br>
-@@ -3292,7 +3292,7 @@ static MemTxResult flatview_write_continue_step(MemTx=
-Attrs attrs,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (*l =3D=3D 4 &amp;&=
-amp; len &gt;=3D 4) ||<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (*l =3D=3D 8 &amp;&=
-amp; len &gt;=3D 8));<br>
-=C2=A0#endif<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D ldn_he_p(buf, *l);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D ldn_unaligned_p(buf, *l);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0result =3D memory_region_dispatch_write(m=
-r, mr_addr, val,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0size_memop(*l), attrs);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (release_lock) {<br>
-@@ -3379,7 +3379,7 @@ static MemTxResult flatview_read_continue_step(MemTxA=
-ttrs attrs, uint8_t *buf,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * Assure Coverity (and ourselves) that w=
-e are not going to OVERRUN<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* the buffer by following stn_he_p().<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* the buffer by following stn_unaligned_=
-p().<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
-=C2=A0#ifdef QEMU_STATIC_ANALYSIS<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0assert((*l =3D=3D 1 &amp;&amp; len &gt;=
-=3D 1) ||<br>
-@@ -3387,7 +3387,7 @@ static MemTxResult flatview_read_continue_step(MemTxA=
-ttrs attrs, uint8_t *buf,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (*l =3D=3D 4 &amp;&=
-amp; len &gt;=3D 4) ||<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (*l =3D=3D 8 &amp;&=
-amp; len &gt;=3D 8));<br>
-=C2=A0#endif<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_he_p(buf, *l, val);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 stn_unaligned_p(buf, *l, val);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (release_lock) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bql_unlock();<br>
-diff --git a/ui/vnc-enc-tight.c b/ui/vnc-enc-tight.c<br>
-index b645aebccef..62d825dc05f 100644<br>
---- a/ui/vnc-enc-tight.c<br>
-+++ b/ui/vnc-enc-tight.c<br>
-@@ -912,7 +912,7 @@ static void tight_pack24(VncState *vs, uint8_t *buf, si=
-ze_t count, size_t *ret)<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0while (count--) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 pix =3D ldl_he_p(buf8);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 pix =3D ldl_unaligned_p(buf8);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*buf++ =3D (char)(pix &gt;&gt; rshift);<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*buf++ =3D (char)(pix &gt;&gt; gshift);<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*buf++ =3D (char)(pix &gt;&gt; bshift);<b=
-r>
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c<br>
-index 9548dd3ad1b..d7775dc891d 100644<br>
---- a/util/bufferiszero.c<br>
-+++ b/util/bufferiszero.c<br>
-@@ -38,10 +38,10 @@ static bool buffer_is_zero_int_lt256(const void *buf, s=
-ize_t len)<br>
-=C2=A0 =C2=A0 =C2=A0 * the beginning and end of the buffer.<br>
-=C2=A0 =C2=A0 =C2=A0 */<br>
-=C2=A0 =C2=A0 =C2=A0if (unlikely(len &lt;=3D 8)) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return (ldl_he_p(buf) | ldl_he_p(buf + len - 4=
-)) =3D=3D 0;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return (ldl_unaligned_p(buf) | ldl_unaligned_p=
-(buf + len - 4)) =3D=3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 t =3D ldq_he_p(buf) | ldq_he_p(buf + len - 8);<br>
-+=C2=A0 =C2=A0 t =3D ldq_unaligned_p(buf) | ldq_unaligned_p(buf + len - 8);=
-<br>
-=C2=A0 =C2=A0 =C2=A0p =3D QEMU_ALIGN_PTR_DOWN(buf + 8, 8);<br>
-=C2=A0 =C2=A0 =C2=A0e =3D QEMU_ALIGN_PTR_DOWN(buf + len - 1, 8);<br>
-<br>
-@@ -58,7 +58,7 @@ static bool buffer_is_zero_int_ge256(const void *buf, siz=
-e_t len)<br>
-=C2=A0 =C2=A0 =C2=A0 * Use unaligned memory access functions to handle<br>
-=C2=A0 =C2=A0 =C2=A0 * the beginning and end of the buffer.<br>
-=C2=A0 =C2=A0 =C2=A0 */<br>
--=C2=A0 =C2=A0 uint64_t t =3D ldq_he_p(buf) | ldq_he_p(buf + len - 8);<br>
-+=C2=A0 =C2=A0 uint64_t t =3D ldq_unaligned_p(buf) | ldq_unaligned_p(buf + =
-len - 8);<br>
-=C2=A0 =C2=A0 =C2=A0const uint64_t *p =3D QEMU_ALIGN_PTR_DOWN(buf + 8, 8);<=
-br>
-=C2=A0 =C2=A0 =C2=A0const uint64_t *e =3D QEMU_ALIGN_PTR_DOWN(buf + len - 1=
-, 8);<br>
-<br>
-diff --git a/accel/tcg/ldst_atomicity.c.inc b/accel/tcg/ldst_atomicity.c.in=
-c<br>
-index c735add2615..eeb18c716c0 100644<br>
---- a/accel/tcg/ldst_atomicity.c.inc<br>
-+++ b/accel/tcg/ldst_atomicity.c.inc<br>
-@@ -415,7 +415,7 @@ static uint16_t load_atom_2(CPUState *cpu, uintptr_t ra=
-,<br>
-=C2=A0 =C2=A0 =C2=A0atmax =3D required_atomicity(cpu, pi, memop);<br>
-=C2=A0 =C2=A0 =C2=A0switch (atmax) {<br>
-=C2=A0 =C2=A0 =C2=A0case MO_8:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return lduw_he_p(pv);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return lduw_unaligned_p(pv);<br>
-=C2=A0 =C2=A0 =C2=A0case MO_16:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* The only case remaining is MO_ATOM_WIT=
-HIN16. */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!HAVE_al8_fast &amp;&amp; (pi &amp; 3=
-) =3D=3D 1) {<br>
-@@ -512,7 +512,7 @@ static uint64_t load_atom_8(CPUState *cpu, uintptr_t ra=
-,<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0switch (atmax) {<br>
-=C2=A0 =C2=A0 =C2=A0case MO_8:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ldq_he_p(pv);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ldq_unaligned_p(pv);<br>
-=C2=A0 =C2=A0 =C2=A0case MO_16:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return load_atom_8_by_2(pv);<br>
-=C2=A0 =C2=A0 =C2=A0case MO_32:<br>
-@@ -875,7 +875,7 @@ static void store_atom_2(CPUState *cpu, uintptr_t ra,<b=
-r>
-<br>
-=C2=A0 =C2=A0 =C2=A0atmax =3D required_atomicity(cpu, pi, memop);<br>
-=C2=A0 =C2=A0 =C2=A0if (atmax =3D=3D MO_8) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_he_p(pv, val);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 stw_unaligned_p(pv, val);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-@@ -928,7 +928,7 @@ static void store_atom_4(CPUState *cpu, uintptr_t ra,<b=
-r>
-=C2=A0 =C2=A0 =C2=A0atmax =3D required_atomicity(cpu, pi, memop);<br>
-=C2=A0 =C2=A0 =C2=A0switch (atmax) {<br>
-=C2=A0 =C2=A0 =C2=A0case MO_8:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 stl_he_p(pv, val);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 stl_unaligned_p(pv, val);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0 =C2=A0 =C2=A0case MO_16:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0store_atom_4_by_2(pv, val);<br>
-@@ -996,7 +996,7 @@ static void store_atom_8(CPUState *cpu, uintptr_t ra,<b=
-r>
-=C2=A0 =C2=A0 =C2=A0atmax =3D required_atomicity(cpu, pi, memop);<br>
-=C2=A0 =C2=A0 =C2=A0switch (atmax) {<br>
-=C2=A0 =C2=A0 =C2=A0case MO_8:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 stq_he_p(pv, val);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 stq_unaligned_p(pv, val);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0 =C2=A0 =C2=A0case MO_16:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0store_atom_8_by_2(pv, val);<br>
--- <br>
-2.52.0<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000074cb6a0647090159--
+PGRpdiBkaXI9ImF1dG8iPjxkaXY+PGJyPjxicj48ZGl2IGNsYXNzPSJnbWFpbF9xdW90ZSBnbWFp
+bF9xdW90ZV9jb250YWluZXIiPjxkaXYgZGlyPSJsdHIiIGNsYXNzPSJnbWFpbF9hdHRyIj5JbCBz
+YWIgMjcgZGljIDIwMjUsIDE2OjQ1IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpICZsdDs8YSBocmVm
+PSJtYWlsdG86cGhpbG1kQGxpbmFyby5vcmciPnBoaWxtZEBsaW5hcm8ub3JnPC9hPiZndDsgaGEg
+c2NyaXR0bzo8YnI+PC9kaXY+PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0i
+bWFyZ2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0OjFweCBzb2xpZCByZ2IoMjA0LDIw
+NCwyMDQpO3BhZGRpbmctbGVmdDoxZXgiPkhpIFBhb2xvLDxicj4NCjxicj4NCk9uIDI3LzEyLzI1
+IDEwOjE0LCBQYW9sbyBCb256aW5pIHdyb3RlOjxicj4NCiZndDsgTW92ZSBSQU1CbG9jayBmdW5j
+dGlvbnMgb3V0IG9mIHJhbV9hZGRyLmggYW5kIGNwdS1jb21tb24uaDs8YnI+DQomZ3Q7IG1vdmUg
+bWVtb3J5IEFQSSBoZWFkZXJzIG91dCBvZiBpbmNsdWRlL2V4ZWMgYW5kIGludG8gaW5jbHVkZS9z
+eXN0ZW0uPGJyPg0KPGJyPg0KSSBrbm93IHlvdSB3YW50IHRoZSBnb29kIG9mIHRoZSBwcm9qZWN0
+IGFuZCBtYWtlIGl0IGV2b2x2ZSw8YnI+DQpidXQgVEJIIHB1c2hpbmcgeW91ciBvd24gdW5yZXZp
+ZXdlZCBwYXRjaGVzIHdpdGhvdXQgbG9va2luZzxicj4NCmF0IG90aGVycyB3b3JrIGluIHRoZSBz
+YW1lIGFyZWEgaXMgcmVhbGx5IGRlbW90aXZhdGluZywgaXQ8YnI+DQpmZWVsIGxpa2UgeW91IGNv
+bXBsZXRlbHkgaWdub3JlIHVzLjxicj48L2Jsb2NrcXVvdGU+PC9kaXY+PC9kaXY+PGRpdiBkaXI9
+ImF1dG8iPjxicj48L2Rpdj48ZGl2IGRpcj0iYXV0byI+VGhpcyBjbGVhbnVwIHdhcyBwb3N0ZWQg
+b3ZlciBhIG1vbnRoIGFnbyBhbmQgSSBkaWRuJiMzOTt0IGdldCBhbnkgcmV2aWV3cy4uLiBpdCBk
+b2VzIGFic29sdXRlbHkgbm90aGluZyBleGNlcHQgc3BsaXR0aW5nIHVwIGEgY291cGxlIGhlYWRl
+ciBmaWxlcyBzbyB0aGF0IHRoZXkgZG8gd2hhdCB0aGUgbmFtZXMgc2lnbmlmeSwgc28gSSBkaWRu
+JiMzOTt0IHRoaW5rIHRvbyBtdWNoIGFib3V0IGl0IGFuZCB0aG91Z2h0IHBlb3BsZSBkaWRuJiMz
+OTt0IHJlYWxseSBjYXJlLjwvZGl2PjxkaXYgZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRpdiBkaXI9
+ImF1dG8iPlNvcnJ5IGZvciBub3Qgc3BvdHRpbmcgdGhlIGR1cGxpY2F0ZSBwYXRjaCBhbW9uZyB5
+b3VyIHBhdGNoZXPigJR3aGF0IGhhcHBlbmVkIGlzIHRoYXQgSSBhZ3JlZWQgd2l0aCB0aGUgZ2Vu
+ZXJhbCBpZGVhIGFuZCwgc2VlaW5nIFJpY2hhcmQgYW5kIG90aGVycyByZXZpZXdpbmcgdGhlbSwg
+SSB0cnVzdGVkIGJvdGggeW91IGFuZCB0aGVtOyBJIG9ubHkgbG9va2VkIGF0IHRoZW0gY2xvc2Vs
+eSB0b2RheSBhZnRlciB5b3UgcG9pbnRlZCBvdXQgdGhlIGR1cGxpY2F0aW9uLjwvZGl2PjxkaXYg
+ZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRpdiBkaXI9ImF1dG8iPlJlc3QgYXNzdXJlZCB0aGF0IGl0
+JiMzOTtzIHJlYWxseSB0cnVzdGluZyB0aGUgcGVvcGxlIHRoYXQgYXJlIHdvcmtpbmcgb24gUUVN
+VSwgbGlrZSB5b3UgKG9yIFBldGVyIG9yIERhdmlkIGZvciB0aGUgbWVtb3J5IEFQSSkgYW5kIG5v
+dCBpZ25vcmluZyB0aGVtLjwvZGl2PjxkaXYgZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRpdiBkaXI9
+ImF1dG8iPlBhb2xvPC9kaXY+PGRpdiBkaXI9ImF1dG8iPjxicj48L2Rpdj48ZGl2IGRpcj0iYXV0
+byI+PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUgZ21haWxfcXVvdGVfY29udGFpbmVyIj48YmxvY2tx
+dW90ZSBjbGFzcz0iZ21haWxfcXVvdGUiIHN0eWxlPSJtYXJnaW46MHB4IDBweCAwcHggMC44ZXg7
+Ym9yZGVyLWxlZnQ6MXB4IHNvbGlkIHJnYigyMDQsMjA0LDIwNCk7cGFkZGluZy1sZWZ0OjFleCI+
+DQo8YnI+DQomZ3Q7IFNpZ25lZC1vZmYtYnk6IFBhb2xvIEJvbnppbmkgJmx0OzxhIGhyZWY9Im1h
+aWx0bzpwYm9uemluaUByZWRoYXQuY29tIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub3JlZmVycmVy
+Ij5wYm9uemluaUByZWRoYXQuY29tPC9hPiZndDs8YnI+DQomZ3Q7IC0tLTxicj4NCiZndDvCoCDC
+oE1BSU5UQUlORVJTwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+fMKgIMKgMiArLTxicj4NCiZndDvCoCDCoGluY2x1ZGUvZXhlYy9jcHUtY29tbW9uLmjCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCB8wqAgNzQgLS0tLS0tLS0tLS08YnI+DQomZ3Q7wqAgwqBpbmNsdWRl
+L2V4ZWMvY3B1dGxiLmjCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8wqAgwqAxICs8YnI+
+DQomZ3Q7wqAgwqBpbmNsdWRlL2V4ZWMvdHJhbnNsYXRpb24tYmxvY2suaMKgIMKgIMKgIMKgIMKg
+fMKgIMKgMiArPGJyPg0KJmd0O8KgIMKgaW5jbHVkZS9ody9jb3JlL3FkZXYtcHJvcGVydGllcy1z
+eXN0ZW0uaCB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBpbmNsdWRlL2h3L2kyYy9zbWJ1c19lZXBy
+b20uaMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDIgKy08YnI+DQomZ3Q7wqAgwqBpbmNsdWRlL2h3
+L3hlbi94ZW4taHZtLWNvbW1vbi5owqAgwqAgwqAgwqAgwqAgfMKgIMKgMSArPGJyPg0KJmd0O8Kg
+IMKgaW5jbHVkZS9zeXN0ZW0vYmFsbG9vbi5owqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAg
+wqAyICstPGJyPg0KJmd0O8KgIMKgaW5jbHVkZS9zeXN0ZW0vYmxvY2stcmFtLXJlZ2lzdHJhci5o
+wqAgwqAgwqB8wqAgwqAyICstPGJyPg0KJmd0O8KgIMKgaW5jbHVkZS9zeXN0ZW0vaW9tbXVmZC5o
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAyICstPGJyPg0KJmd0O8KgIMKgaW5jbHVk
+ZS9zeXN0ZW0vbWVtb3J5LmjCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8wqAgMTYgKystPGJy
+Pg0KJmd0O8KgIMKgaW5jbHVkZS9zeXN0ZW0vbWVtb3J5X21hcHBpbmcuaMKgIMKgIMKgIMKgIMKg
+IHzCoCDCoDQgKy08YnI+DQomZ3Q7wqAgwqBpbmNsdWRlL3N5c3RlbS9waHlzbWVtLmjCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDIgKy08YnI+DQomZ3Q7wqAgwqBpbmNsdWRlL3N5c3Rl
+bS9yYW1fYWRkci5owqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfCAxMzYgKysrLS0tLS0tLS0tLS0t
+LS0tLTxicj4NCiZndDvCoCDCoGluY2x1ZGUvc3lzdGVtL3JhbWJsb2NrLmjCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCB8IDE2MCArKysrKysrKysrKysrKysrKysrKysrLTxicj4NCiZndDvCoCDCoGlu
+Y2x1ZGUve2V4ZWMgPSZndDsgc3lzdGVtfS9yYW1saXN0LmjCoCDCoCDCoCDCoHzCoCAxMCArLTxi
+cj4NCiZndDvCoCDCoGluY2x1ZGUvc3lzdGVtL3hlbi1tYXBjYWNoZS5owqAgwqAgwqAgwqAgwqAg
+wqAgfMKgIMKgMSAtPGJyPg0KJmd0O8KgIMKgaW5jbHVkZS9zeXN0ZW0veGVuLmjCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDMgKy08YnI+DQomZ3Q7wqAgwqBtaWdyYXRpb24v
+bWlncmF0aW9uLmjCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8wqAgwqAzICstPGJyPg0K
+Jmd0O8KgIMKgbWlncmF0aW9uL3JhbS5owqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgYWNjZWwvbXNodi9tc2h2LWFsbC5jwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgYWNjZWwvdGNn
+L2NwdXRsYi5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAyICstPGJy
+Pg0KJmd0O8KgIMKgYWNjZWwvdGNnL3RjZy1hY2NlbC1vcHMtbXR0Y2cuY8KgIMKgIMKgIMKgIMKg
+IHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGJhY2tlbmRzL2hvc3RtZW0uY8KgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgYmxvY2svYmxraW8u
+Y8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDIgKy08YnI+
+DQomZ3Q7wqAgwqBkdW1wL2R1bXAuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L2FjcGkvZ2hlcy5jwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBo
+dy9hY3BpL252ZGltbS5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAg
+wqAxICs8YnI+DQomZ3Q7wqAgwqBody9hY3BpL3ZtZ2VuaWQuY8KgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L2FybS9vbWFwMS5jwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAxICs8YnI+DQomZ3Q7
+wqAgwqBody9hdWRpby9tYXJ2ZWxsXzg4dzg2MTguY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKg
+IMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvY2hhci9yaXNjdl9odGlmLmPCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L2NvcmUvY3B1LWNvbW1v
+bi5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAxICs8YnI+DQomZ3Q7wqAg
+wqBody9jb3JlL21hY2hpbmUtcW1wLWNtZHMuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKg
+MSArPGJyPg0KJmd0O8KgIMKgaHcvY29yZS9udW1hLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoHzCoCDCoDMgKy08YnI+DQomZ3Q7wqAgwqBody9kaXNwbGF5L2V4eW5v
+czQyMTBfZmltZC5jwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBo
+dy9kaXNwbGF5L29tYXBfbGNkYy5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAx
+ICs8YnI+DQomZ3Q7wqAgwqBody9kaXNwbGF5L3JhbWZiLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L2Rpc3BsYXkvdmdhLmPCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDC
+oGh3L2RtYS9pODI1Ny5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8
+wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBody9kbWEvb21hcF9kbWEuY8KgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L2RtYS9yYzQwMzAu
+Y8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDEgKzxicj4NCiZn
+dDvCoCDCoGh3L2RtYS9zaWZpdmVfcGRtYS5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBody9oeXBlcnYvaHlwZXJ2LmPCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L2h5cGVydi9z
+eW5kYmcuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0K
+Jmd0O8KgIMKgaHcvaHlwZXJ2L3ZtYnVzLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBody9pMzg2L2t2bS9jbG9jay5jwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvaTM4Ni92
+YXBpYy5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfMKgIMKgMSArPGJy
+Pg0KJmd0O8KgIMKgaHcvaW50Yy9hcGljLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L2ludGMveGl2ZTIuY8KgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3
+L202OGsvbmV4dC1jdWJlLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8wqAgwqAx
+ICs8YnI+DQomZ3Q7wqAgwqBody9taWNyb2JsYXplL2Jvb3QuY8KgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvbWlzYy9wYy10ZXN0ZGV2LmPC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3
+L25ldC9mc2xfZXRzZWMvcmluZ3MuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSAr
+PGJyPg0KJmd0O8KgIMKgaHcvbmV0L21jZl9mZWMuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvbmV0L29wZW5jb3Jlc19ldGgu
+Y8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcv
+bmV0L3hnbWFjLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDC
+oDEgKzxicj4NCiZndDvCoCDCoGh3L252cmFtL3NwYXByX252cmFtLmPCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L3BwYy9hbWlnYW9uZS5jwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKg
+aHcvcHBjL2U1MDAuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzC
+oCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L3BwYy9wZWdhc29zLmPCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L3BwYy9wbnYuY8Kg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0K
+Jmd0O8KgIMKgaHcvcHBjL3BwYzQ0MF91Yy5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBody9wcGMvc3BhcHIuY8KgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvcHBj
+L3NwYXByX2RyYy5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAxICs8
+YnI+DQomZ3Q7wqAgwqBody9wcGMvc3BhcHJfZXZlbnRzLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBody9wcGMvc3BhcHJfaGNhbGwuY8KgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvcHBj
+L3NwYXByX3J0YXMuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDEgKzxi
+cj4NCiZndDvCoCDCoGh3L3BwYy9zcGFwcl90cG1fcHJveHkuY8KgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvcHBjL3ZpcnRleF9tbDUwNy5jwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvcmVtb3Rl
+L3Byb3h5LW1lbW9yeS1saXN0ZW5lci5jwqAgwqAgwqAgwqAgfMKgIMKgMSArPGJyPg0KJmd0O8Kg
+IMKgaHcvczM5MHgvY3NzLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L3MzOTB4L2lwbC5jwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBody9zMzkweC9z
+MzkwLXBjaS1idXMuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDEgKzxicj4NCiZn
+dDvCoCDCoGh3L3MzOTB4L3MzOTAtc3RhdHRyaWIuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+fMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvczM5MHgvdmlydGlvLWNjdy5jwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvc2NzaS92bXdfcHZz
+Y3NpLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvC
+oCDCoGh3L3NwYXJjL2xlb24zLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L3ZmaW8tdXNlci9jb250YWluZXIuY8KgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgaHcvdmZpby9jb250YWlu
+ZXIuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDIgKy08YnI+DQomZ3Q7
+wqAgwqBody92ZmlvL2hlbHBlcnMuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L3ZmaW8vbWlncmF0aW9uLmPCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCB8wqAgwqAyICstPGJyPg0KJmd0O8KgIMKgaHcvdmlydGlvL3Zo
+b3N0LmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8wqAgwqAxICs8YnI+DQom
+Z3Q7wqAgwqBody94ZW4veGVuLW1hcGNhY2hlLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBody94ZW4veGVuX3B0X2dyYXBoaWNzLmPCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoGh3L3h0ZW5zYS94dGZw
+Z2EuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMSArPGJyPg0KJmd0
+O8KgIMKgbWlncmF0aW9uL3JhbS5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgfMKgIMKgMiArLTxicj4NCiZndDvCoCDCoHN0dWJzL3BoeXNtZW0uY8KgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDIgKy08YnI+DQomZ3Q7wqAgwqBzdHVicy9y
+YW0tYmxvY2suY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDQgKy08
+YnI+DQomZ3Q7wqAgwqBzeXN0ZW0vaW9wb3J0LmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCB8wqAgwqAxICs8YnI+DQomZ3Q7wqAgwqBzeXN0ZW0vbWVtb3J5LmPCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8wqAgwqAyICstPGJyPg0KJmd0O8KgIMKg
+c3lzdGVtL3BoeXNtZW0uY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKg
+IMKgMiArLTxicj4NCiZndDvCoCDCoHRhcmdldC9hcm0va3ZtLmPCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDEgKzxicj4NCiZndDvCoCDCoHRhcmdldC9pMzg2L2t2
+bS9rdm0uY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHzCoCDCoDEgKzxicj4NCiZndDvC
+oCDCoHRhcmdldC9pMzg2L3Nldi5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+fMKgIMKgMSArPGJyPg0KJmd0O8KgIMKgdGFyZ2V0L3BwYy9rdm0uY8KgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIMKgMiArLTxicj4NCiZndDvCoCDCoHRhcmdldC9zMzkw
+eC9rdm0va3ZtLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHzCoCDCoDIgKy08YnI+DQom
+Z3Q7wqAgwqB0ZXN0cy9xdGVzdC9mdXp6L2dlbmVyaWNfZnV6ei5jwqAgwqAgwqAgwqAgwqAgfMKg
+IMKgMiArLTxicj4NCiZndDvCoCDCoHV0aWwvdmZpby1oZWxwZXJzLmPCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCB8wqAgwqAyICstPGJyPg0KJmd0O8KgIMKgcnVzdC9ody9jaGFyL3Bs
+MDExL3NyYy88YSBocmVmPSJodHRwOi8vYmluZGluZ3MucnMiIHJlbD0ibm9yZWZlcnJlciBub3Jl
+ZmVycmVyIiB0YXJnZXQ9Il9ibGFuayI+YmluZGluZ3MucnM8L2E+wqAgwqAgwqAgwqB8wqAgwqA0
+ICstPGJyPg0KJmd0O8KgIMKgcnVzdC9ody9jb3JlL3NyYy88YSBocmVmPSJodHRwOi8vYmluZGlu
+Z3MucnMiIHJlbD0ibm9yZWZlcnJlciBub3JlZmVycmVyIiB0YXJnZXQ9Il9ibGFuayI+YmluZGlu
+Z3MucnM8L2E+wqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgwqAyICstPGJyPg0KJmd0O8KgIMKgcnVz
+dC9zeXN0ZW0vc3JjLzxhIGhyZWY9Imh0dHA6Ly9iaW5kaW5ncy5ycyIgcmVsPSJub3JlZmVycmVy
+IG5vcmVmZXJyZXIiIHRhcmdldD0iX2JsYW5rIj5iaW5kaW5ncy5yczwvYT7CoCDCoCDCoCDCoCDC
+oCDCoCDCoCB8wqAgwqA1ICstPGJyPg0KJmd0O8KgIMKgMTAyIGZpbGVzIGNoYW5nZWQsIDI5OCBp
+bnNlcnRpb25zKCspLCAyMzQgZGVsZXRpb25zKC0pPGJyPg0KJmd0O8KgIMKgcmVuYW1lIGluY2x1
+ZGUve2V4ZWMgPSZndDsgc3lzdGVtfS9yYW1saXN0LmggKDk0JSk8YnI+DQo8YnI+DQo8L2Jsb2Nr
+cXVvdGU+PC9kaXY+PC9kaXY+PC9kaXY+DQo=
+--000000000000fcbc73064709298e--
 
 
