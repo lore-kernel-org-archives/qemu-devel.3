@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F202E9271B
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 16:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAA0E784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 16:01:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZtBw-0006P2-9b; Sun, 28 Dec 2025 11:00:24 -0500
+	id 1vZtCk-0006ja-5G; Sun, 28 Dec 2025 11:01:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZtBt-0006Ok-Sw
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 11:00:21 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZtCj-0006jE-BB
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 11:01:13 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZtBs-0002al-Cz
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 11:00:21 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-42fb6ce71c7so6662727f8f.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 08:00:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZtCh-0002ki-Uy
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 11:01:13 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4779ce2a624so63829045e9.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 08:01:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766937618; x=1767542418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766937670; x=1767542470; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LqWOWU3XDh7jX6tlGGaFahQELO3kvKEEAIC3/pwpSPQ=;
- b=lPZCesCqSwDHCTK3Auixnrvg/YcVvMF2vzXHg8FcNx1p59n5eZeLsTI1yLcLpPQtYI
- Mge7NVc4Ks+7QMLOSkxLsa55+HHkGZo0DsI2YUiPTVNgiXxVsCood3lNQVz/TAOCRu1B
- uBQ9kqAY1qva+wJleZ78KXPDDn8i4IN+hAs5ty2Cl5F1Z95qK7iZSAi6DKYZQHABYED3
- lxhpu9ka9b5USTKD4casBVQptRCy3mqctAqxOs8Eo90NdZ17Pi4B8aeVqlokrtAwtJh4
- Yzg+eSd6tbYIyjfJ4VwJQxfEdI5TnNJiBJFLSjetAj5S61P8/owO8yazfDYUejPuL9Yi
- rE0g==
+ bh=/H15o4kfx6hgKkgLlbhbtG4JmrSZCiBDC5hYoo8K7ps=;
+ b=ezQ05CiMfPC1/LBh/dTFzHLbNI0uBFt7yUBYalhrQPUlnu0a2XDkLFZhja2Lzf+LZv
+ cmCnkEScqzQCRB7HsAm0aovXvDGUHp1zbVU+UskfUUl62GfpadqysoSfSYf6htZ6gZTe
+ 36Xn/rtTgrKEdFBYPaghOR1FHpWXIVuBWgow9ZllBV4/4qywR2kcw11EuaSBaNlqZ9+t
+ 9gY4kHiOxiHGyeP9NcWJW3TDat5MtZAV0TJa1vgKBeoz3ShY4GqYqlnNcyZ5WQ5fkZ0i
+ c2d39lpVFaarnJYeHysnYxFPs/VSwthqV+CJvLGmhM2J9j0t26F3sJhBUBe7wm8VwkZ2
+ qgbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766937618; x=1767542418;
+ d=1e100.net; s=20230601; t=1766937670; x=1767542470;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LqWOWU3XDh7jX6tlGGaFahQELO3kvKEEAIC3/pwpSPQ=;
- b=JUGcUtfEHaaR8CFETgL74gLia+D7xVE4LbnxKZO5bHqZdeJ52/ENqT++xNp5CZ89rC
- wRFVy8jlsSVRTyW7ALgmk9aX/R0hDjcybzVaV70S5XSniMGb2UH7n7FEbiVn8RsnmXQC
- xMHRffAHHo8zHcwIHT0cOdFXmB4YYT80svlC3ECGwKJN5di4Y4e5CkqQcLKgejX8D34t
- XjQ7F01IftFljPtGRltVPw1wvVFOhrREBvv/ZARh+zALSXUqH+YoTmR+m3dQBQI4wxDp
- vD3iT9JEkJevPKfOQZbXfrwOMz9uZ9jlTwvkfF92pRgFFydQ1UDVDxOEI8Xpd2TBN55o
- IwOA==
-X-Gm-Message-State: AOJu0Yy2lZgAzcpH4WHKoJvX5DKdxFH3DOdl07gpsD+6jk++uw5o8f5S
- rnznoHL3OYYzUw7GkvZs3feVXgOmFRUJ+byjYzvENA0AY7TlR4ZzA+pr4oEb3pF6kQo=
-X-Gm-Gg: AY/fxX7Om51VZZdGJOX5KkBYVgGzbkFADstWVvx5wlrOp4a1H9Afi1S/dggH81kko1C
- jPSr9FnDp5bhuu5bKRDXtZVwISfECc2lZ+/EEax7Ia/VkseE7MWw4qk+CNtGPz8An1SNtKg+sXA
- BnQVeKT7d3h3nEzR87gxghIwcx7F5EK7jZcrIppXU14NKaCkTYBOLJKQVSGrI2Ei+3Odp7qfA1Y
- nxO4mWW73WVw4Ids6eEPgccQE5ZfcFmoX28zBR5Q/Vtq57qgicH9efCY1Y5aWO4rsIyjd9qXrDC
- ZY1SWdoFqnWEtbOc3oSbqJX4mwg44SRzrJpe3kLsKvPHkkVW7LSEdS1c1ZWCRQDNU+vKdvDy7LX
- D49D2U3+0B3Hy+4qcGY4DoZM6Z3CKNMr9+nfvA8QZ6yCy7wzlpNMf00O99zSIndj/kxJdZlQ6J2
- FjI0dfjfOHeNoXOMFPXLuYgfPeKDtGGD2J9KZyEvE62B5rXZ6fRJjf2/kqF1blXA==
-X-Google-Smtp-Source: AGHT+IEL2Xz8w5uOC3QkjdQ9UzjWO3YAG7DWEIJBbRopNxYDXJQ346qhwH/72DFadH1hI7de6Wwj2Q==
-X-Received: by 2002:a5d:6e88:0:b0:430:fcda:4529 with SMTP id
- ffacd0b85a97d-4324e703b00mr28604269f8f.61.1766937618197; 
- Sun, 28 Dec 2025 08:00:18 -0800 (PST)
+ bh=/H15o4kfx6hgKkgLlbhbtG4JmrSZCiBDC5hYoo8K7ps=;
+ b=nqYTKMgmieaEcoHetnGSp3Hf9XRKfUfQGw5XKJENR8ouywsBlYreVn0cA+raNYbuab
+ XnH8C9KYQAJQooUtifpW/3w0yxiVlcYTxI5IgzfO3TvGH4XTrnY6xzC9pFr2JG8AEXHV
+ aVVM5zZnhl14tP8x/EW/SAmhn03VTT2XiKmwUd4UT95GYobvr85Vj0BQ4PkNhxG1tSH4
+ UdEarj4+zTYR3fP4qEk8cqxXYdGeH0HaryqAOBrOEd1l8JhyZmfKYmMw6rdAJcUXit8R
+ NouYeRj9iixZUBMzPeDdwt57l8/fJ1H6v0Xms8mmF2JHJ6FVYUI7yWEtXBNwJwVaEp/s
+ ggeQ==
+X-Gm-Message-State: AOJu0Yz778YRUMnrFbKs8fYvrFiLHn60xFYZjOQUMErho9e+XA6SCl8n
+ krGKMKsyziOHuOvbf2QpYuz4UNg2V/LIQ/09FHp//nADgRstLkbzpWx4i28/4iv7X4M=
+X-Gm-Gg: AY/fxX5EcnrBIIG4yD56W7+BEleGnJjAq+xTqRa66xoZw+LQh/2ad4N13Y9OPoAXcx5
+ giEash4Pm5zcrPv0AuIFIC9VVhb3Ia+0GGvvpLxf5Hpx6k2lkmzlsFTpGe8/rVLkuxFi8OKtdFd
+ VkldQCc5CX64i8TO44QHrbV0hHbwYH457UyfBi6kox/6TARA1ZESmvFLLUSHQr2HSVGTMVUg477
+ E6Gmnmy9Eg2K+/qyLa7R1bAJto33wqxLC0PYe1pYaKNaeqTDAfwT6RFHE8gfHN8Fe1VQqBacybV
+ dKapEgL0KCcQ2+kRR/zxnJKuc8FsJow/wMtTod2GKWSfZHT6LL4ZQFCbMu/imijkGn9/Wi64KoY
+ QVylmJnj9leoaB0V9uEeMo4G75ugXWMxjmJHriieujkFFhpxs12OfejGOfKWUvkgyAO9MyoJj+t
+ hSASx9D9eEMjah8mUxUQhoXj8Nf4SNhSbE8U2oxLgVsQSOdmFuxUmfR71Z0ExrbQ==
+X-Google-Smtp-Source: AGHT+IGkKQEIm7bxnUHnezwzfJL9lG8k6xsRc6NmKQcWc9WckFKQC+1Cn6oPALjqvHhRrB7/3HnoJA==
+X-Received: by 2002:a05:600c:1d0a:b0:477:79c7:8994 with SMTP id
+ 5b1f17b1804b1-47d1959f72amr328275725e9.30.1766937670271; 
+ Sun, 28 Dec 2025 08:01:10 -0800 (PST)
 Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
  [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43277b0efefsm24128692f8f.25.2025.12.28.08.00.17
+ ffacd0b85a97d-4324eaa0908sm57017488f8f.31.2025.12.28.08.01.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 08:00:17 -0800 (PST)
-Message-ID: <1b73aeb0-fa3f-4ced-9c07-5f0accebc324@linaro.org>
-Date: Sun, 28 Dec 2025 17:00:16 +0100
+ Sun, 28 Dec 2025 08:01:09 -0800 (PST)
+Message-ID: <40f36e06-de73-435c-b219-f950b546037e@linaro.org>
+Date: Sun, 28 Dec 2025 17:01:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 16/25] system: Allow restricting the legacy ld/st_he()
- 'native-endian' API
+Subject: Re: [PATCH v3 14/25] system/memory: Use explicit endianness in
+ ram_device::read/write()
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
  <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Anton Johansson <anjo@rev.ng>
+ Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-17-philmd@linaro.org>
- <CABgObfa9gHpK3CR8Aa6MA4YqfaMs3bn70pba58QQ2+32+xwxzQ@mail.gmail.com>
- <e0b99887-934e-4587-9410-b090a4fcfdc8@linaro.org>
- <5e44a3e7-5eb3-4220-9193-8eb86690535c@linaro.org>
- <CABgObfaXgpdPe32ks+xkzOuNxvJMJhsfpvtjFobBJTueR1X24A@mail.gmail.com>
- <913b7541-d8f0-47b9-8523-9e1389bf4f84@linaro.org>
- <CABgObfYXW7RqZjqHVQd8T-RfZvy8oxb7-uWK0Au1W5VXzHVSNA@mail.gmail.com>
+ <20251224152210.87880-15-philmd@linaro.org>
+ <CABgObfbcsao=NdVN0tg-m5ZCNB3soCq-nwyFkarLVYdEGV_NAA@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfYXW7RqZjqHVQd8T-RfZvy8oxb7-uWK0Au1W5VXzHVSNA@mail.gmail.com>
+In-Reply-To: <CABgObfbcsao=NdVN0tg-m5ZCNB3soCq-nwyFkarLVYdEGV_NAA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,47 +108,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/12/25 16:38, Paolo Bonzini wrote:
+On 28/12/25 12:12, Paolo Bonzini wrote:
 > 
 > 
-> Il dom 28 dic 2025, 16:14 Philippe Mathieu-Daudé <philmd@linaro.org 
+> Il mer 24 dic 2025, 16:24 Philippe Mathieu-Daudé <philmd@linaro.org 
 > <mailto:philmd@linaro.org>> ha scritto:
 > 
->      > Perhaps the source of the confusion is that they are in bswap.h
->     but they
->      > (quite obviously since it's host endianness) never swap?
+>     Replace the ldn_he_p/stn_he_p() calls by their explicit endianness
+>     variants. Duplicate the MemoryRegionOps, using one entry for BIG
+>     and another for LITTLE endianness. Select the proper MemoryRegionOps
+>     in memory_region_init_ram_device_ptr().
 > 
->     Hmm, maybe not well named API then.
 > 
+> This extra complication makes no sense to me. You're introducing dead 
+> code and dead data, because only one of the MemoryRegionOps will be ever 
+> used on a given host.
 > 
-> The name is fine, the placement maybe a bit less; they could be moved 
-> out of bswap.h but it's not really necessary to do it now.
+> Given this example and the ATI one, I would really prefer to keep _he_ 
+> functions around and use them whenever you're reading from host memory 
+> as in this case.
 
-Indeed not needed now, but already done to figure this API ;) This
-helped me to understand what we don't need is "DO_STN_LDN_P(he)"
-because this is a convoluted expansion to a plain memcpy().
-
->     OK. Let's consider the following patches removed then:
-> 
->     - 03/25 system: Use explicit endianness in subpage_ops::read/write()
->     - 14/25 system: Use explicit endianness in ram_device::read/write()
->     - 16/25 system: Allow restricting legacy ld/st_he() 'native-endian' API
-> 
->     All the series I posted this week build fine without them.
-> 
-> 
-> Great, the other change I suggested was about the handling of MO_BSWAP 
-> but it can be done separately.
-
-This request is not ignored, but I plan to address it on top to keep
-current changes simple enough.
-
-> 
-> If you don't want to repost and prefer to drop patch 14, we will also 
-> remove DEVICE_NATIVE_ENDIAN from subpages in a second step, for example 
-> by using "HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN" as 
-> in the ram_device ops.
-
-Yeah, that would even be smth like "DEVICE_ENDIANNESS_IS_IRRELEVANT", as
-we call directly the ld/st_unaligned helpers. I'll think about that later.
+Ack, patch dropped.
 
