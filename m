@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45F99E784BE
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 17:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69347E784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 17:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZuG4-0006x4-C3; Sun, 28 Dec 2025 12:08:44 -0500
+	id 1vZuN0-0000jt-TJ; Sun, 28 Dec 2025 12:15:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vZuG3-0006vt-0D
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 12:08:43 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ id 1vZuMm-0000i2-Rf
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 12:15:44 -0500
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vZuG1-0001k5-HQ
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 12:08:42 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-78fc7892214so55679707b3.0
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 09:08:41 -0800 (PST)
+ id 1vZuMj-0002r4-Vl
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 12:15:39 -0500
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-78ab039ddb4so80222557b3.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 09:15:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766941720; x=1767546520; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766942137; x=1767546937; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jL44AaMnL+XlOL2KGeRIObyV48ISGUhidJNsD3qk2rI=;
- b=BS04Q05v7xePql4biQTtsEb7L5uywDhpqSCCMeOtVTNg9MpnQgnUwZe7hb2oBpIW3l
- BCScJbiWuywXeK+iGqeeTYEWNm/tkZWEoDczeGnAHmgcw53xAKeUteQA45kbz3Xm2Osa
- ytu91mRE1f91sfwTzTW491Wa8eJ1V8JSd/EycqqiAm2b9g/VhxerSYTubkLR42cMGk4I
- ln3sgMixCsVAPxNGyrrwp6i7bu/J+MOxPnsy7oSGb/pbh6v6I7b6jxTLOxHZ6jy0FrNK
- 1CFkV/cWmuds8Z3rVQ2zn+I4EsNc24NCvAgJbfmJiH9EtC3YN18Qj2Uc40Zgdc57+GHu
- DQlg==
+ bh=YEpwVmAu1Z79AjcpVRXCEdgwbkqyKw4wnqKEoHnuMDI=;
+ b=zn7tfcaETzTDVBWUfY2V/G9b6uLXFihojyyDQ4Hrl2BwcHU1rxasdOPs+PYSFGdo/S
+ nmiED0+1xsoShEZXywPs9OodSxojwPwR7LePtIMP7IDJwbuHfA060EBHjJkb1Yk8moTd
+ zeiBKfTtaUC7ejLgc+XVq1eVgxVCg12ni7Wn9hgrtWE5A/coePpwZpCEamlQXePR5s3D
+ RFpyO5gemlIrzSziDDiSrxXKOu436JY8YAujsZZpVLjrY8QcEgYGoQrw7Q12aERcgeMx
+ EjXke+w7JsLOx0Sgh7EL3weZnpCMkzps57+3JDE6Wzu2SiQRwt9WiD6kpWOSUfGJiJQy
+ CdQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766941720; x=1767546520;
+ d=1e100.net; s=20230601; t=1766942137; x=1767546937;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jL44AaMnL+XlOL2KGeRIObyV48ISGUhidJNsD3qk2rI=;
- b=jrsCX+750WDVRDGsgf1qncX7MWkNXc52es905PW7yfI42iSeOwJ41a/0cNjYcKAHCH
- qHHxRXgT9jNXAaDnGitZIsAnteFjEF7SIxT8Mbva73M7e0AEX1lLmKAfT5XsagaiIhKz
- XOl1hZ7qA727xiJ4K8Ia6pO1yWrtdPY2PNgehZ4mn6pF0p6VCsjMyTroT4C/I7dKcqpF
- ZszH8hqLlyiNNpOEI7stIUecNB/wcM99jgfYJ4KL1KRXIQ9MrzldghE/taB/i5JP3Siu
- 1UQ1fQHFWRgwvszuLQy+PT6szGQPUM4no9OZKLG4TQOtVMa3zVL9AyIZOpaoPZ2ccNzn
- xUyg==
-X-Gm-Message-State: AOJu0YwrrQtyM54QY9jBALHqU9/bFJOcpXS+0PUJyKuAao4hoD3wh8pM
- EntEY//tFUW/ziqQZ538Ttaxd7hUKL/LYEItSFY3TVQF++5fQVVfUZPcp6/1YvsnvN9IbADgPJr
- 3xQDIBFZgrJTJAEGwA/EzfNr52+4T4L1+0PUAYghn8g==
-X-Gm-Gg: AY/fxX6dIcdNQm/nPmX+XMvu2KPy3BLhpHGrVn6r0NCT8o49R6WlduxBvnsHasOftSu
- mBCWvFN9mU7UghOFlvOgRadjfZWrbfVCaiSXtSOBUbp2neIgsYEnd1wrwi4iMVEcq0m5DipP5rK
- NipPIsKIUSJLRRBNEPwJSVUx6FwsgJnwAUSUQD1Cm2TL/2hQtTyQFlrWQ+aDy2yi1eYj73OQ1lw
- leBGOJqLJCym1Z74I8Cv5e1R8TuSUcLXpgnGUOBpza64HEomPDJXzIUrzJR3o5dDLF94mSolZTM
- M0JO5MnsJJJBkP8nWTt5SiabgaZ6H4F1aA==
-X-Google-Smtp-Source: AGHT+IEcIvqx4VidfxWASBLWhsvXMPtSaUfJZ6Qev+agsEWmQ8QnAwrPR8iVm2hfe9qup8ekV3XXGW7gI3+0xOVuAQU=
-X-Received: by 2002:a05:690c:4446:b0:78f:f385:4116 with SMTP id
- 00721157ae682-78ff3854144mr143633737b3.34.1766941720351; Sun, 28 Dec 2025
- 09:08:40 -0800 (PST)
+ bh=YEpwVmAu1Z79AjcpVRXCEdgwbkqyKw4wnqKEoHnuMDI=;
+ b=rjQsgi16yvwwIdIBM/CauxGmlhOT4+V6xGzIVndSvx9gubC7K9ApBkp5/iSIIOOukF
+ LiwOfOVqlfkOEvcOgVQaGdwu7Wkek4Rkgsu0VaqnTA+SL7eqQ0bFT++Sab1BACbCwCbl
+ cnv3wg2+hRAzLvditEUT/5O8Pwo5PYIXOrjzg22JxkUYAms6QrFaNTTo++YxUp5cEEj+
+ 5Zt93tJ6Ukzlj4SlW7uZjcgFtK4Vxngio3AnZJOWTlgDFmqm4BASSL3BX0xEVgd9FF7x
+ Mq9pMPoExMCeO3+z77rUQhnOGLumlCUAqK2Gmu3Tru8S+GwXVyRPsRiSmNJVTotJ98OT
+ 1+MQ==
+X-Gm-Message-State: AOJu0YwpibhOA2PQrUrkKyMFuNvEWX93BQQBXvT8kamng9W/w8EoX637
+ De6/OU7CAOOKvaVnEMT+nfTJz7MGWZvTY1vrpcNszR1WdtzQeOXPsGpZE8upRs7Hq5GF1ftJng5
+ LwlUHzEJZby0IOIM//QRM3xHJh9BGyHHteVzJ6ky3Dw==
+X-Gm-Gg: AY/fxX6k1X1mcHunoWsJ3En4cXeJLXneb2Hfbh7avxAO1ZToPTqFLaFvTx33u0JGYTL
+ xkZy8L+mfwhzqb3Zv9hCx+PexXqfu/Qs60yEK0GwfAqeY0HYLCEI1iUz1mplnVWn/DhnjsarB4g
+ uPsmXwClh/5oMZSkG88uLX1UrYROzA9Ct8vSU1L5pTG3Gn2F07SEzFLjeOeub3aEflessEiV5zQ
+ QN0jAJ4LFcP1yFcIT14po1ed88Wo9lyk4NTvDlwGxWkjdQ+fNXzw1uN0gO1olGhVbV5yC7aR2xB
+ vPwP5KOPAqbarNHGMtwtTSU=
+X-Google-Smtp-Source: AGHT+IEWYVERgyCITqiRFvffkIZJE7u8Mdfp86yRdiY12ucFK2hvYZ1HHI+3Qc1Uc0lbQ2XQP1A1zWhiVDmeTWK04KA=
+X-Received: by 2002:a05:690c:63c7:b0:78c:6a6a:123b with SMTP id
+ 00721157ae682-78fb40ab03amr244080717b3.63.1766942136672; Sun, 28 Dec 2025
+ 09:15:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20251223223712.17047-1-ruslichenko.r@gmail.com>
-In-Reply-To: <20251223223712.17047-1-ruslichenko.r@gmail.com>
+References: <20251226064225.791454-1-lihang.lin@gmail.com>
+In-Reply-To: <20251226064225.791454-1-lihang.lin@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 28 Dec 2025 17:08:29 +0000
-X-Gm-Features: AQt7F2rClaxWXZYxUbkjJYjDMD_wna96LCGvM4qybkM3jxovSX7IF4Jkvg5m6Fc
-Message-ID: <CAFEAcA_SSnwo0N8j_zz4jRrzcewAiRaVCENj1_gzdBVCthNVFg@mail.gmail.com>
-Subject: Re: [RFC PATCH] hw/arm/smmuv3: add support for combined irq
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Eric Auger <eric.auger@redhat.com>,
- Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+Date: Sun, 28 Dec 2025 17:15:25 +0000
+X-Gm-Features: AQt7F2pEI4IpmO02l3_PfwMOedgA54dgnhK-PKTWJY76daGUnvQtWvD6iU1Hoag
+Message-ID: <CAFEAcA_ovy2HzhVTKJiRNaZvVQ3qvkw0Pres0HZ+TFJjx1wc3g@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/tcg/vfp_helper: Fix incorrect bit field
+ deposition in rsqrte_f64
+To: Li-Hang Lin <lihang.lin@gmail.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,25 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Dec 2025 at 22:37, Ruslan Ruslichenko
-<ruslichenko.r@gmail.com> wrote:
+On Fri, 26 Dec 2025 at 06:43, Li-Hang Lin <lihang.lin@gmail.com> wrote:
 >
-> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> Fix an error in rsqrte_f64() where the sign bit was being
+> placed incorrectly. Specifically, ensure f64_sign is deposited
+> into bit 63.
 >
-> Some platforms use combined irq type, in which case
-> only single interrupt line is used, instead of 4
-> different irq's for each type.
->
-> Add emulation support for combined irq mode.
->
-> This mode can be selected by platforms by setting
-> 'combined_irq' property.
+> Additionally, update the comments regarding the exponent (exp) bit
+> width to reflect the correct double-precision specifications.
 
-Which platforms?
-
-The other way to approach this would be to have the
-relevant SoC/platform models create a TYPE_OR_IRQ
-or gate to wire the interrupts together.
+This seems like it would produce incorrect results -- do you
+have an example of an instruction plus input data values that p
+produces a different output value to the hardware?
 
 thanks
 -- PMM
