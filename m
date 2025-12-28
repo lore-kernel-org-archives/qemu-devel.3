@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F586D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 08:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F93E784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 10:08:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZlx1-0004Ho-La; Sun, 28 Dec 2025 03:16:31 -0500
+	id 1vZngc-0001Bj-SE; Sun, 28 Dec 2025 05:07:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vZlwz-0004Gk-BR; Sun, 28 Dec 2025 03:16:29 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vZlwx-0005rJ-RH; Sun, 28 Dec 2025 03:16:29 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CA702179943;
- Sun, 28 Dec 2025 11:15:46 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 15E4B342998;
- Sun, 28 Dec 2025 11:16:26 +0300 (MSK)
-Message-ID: <bb81eab2-b48f-449e-86e6-32da90236a05@tls.msk.ru>
-Date: Sun, 28 Dec 2025 11:16:25 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZngb-0001BG-6G
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:07:41 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vZngZ-0000Lv-H5
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:07:40 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47aa03d3326so52476375e9.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 02:07:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766916458; x=1767521258; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nFp4oSETAOPHxt81iiTGbUa68jbwyVikoXX7rE9NWmE=;
+ b=up8hBFEXvv94b+5qX+wCfFoingueV3egWTiroZUaiS5qZnrnZVgaN2/vPZX/dnPpm9
+ 0183duOnHL3E1ZnTM10EvFVo956aosp0zHc4Otul8WVDgOvH9iVeY+8ZkZmjYI5HUV1a
+ Hs4TNtSxlbVOwJBqPvkAsLMds9lI7cc+aViR0Og2jXxbjobUMQZr5QBp4UtS0ls70hi3
+ iPkFxVnxAIpVy34JOUbpf2d9txfHINeV6GJ++4k+en9adf8sryrts5RRNlS/LIKR8j9i
+ RZ8L5bouWbuuAq3Qzg9mSxc6GEt0TowgvbXsT+9Rc8v3b4xiYP3i6WPMmyYjig1cHn4u
+ PqRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766916458; x=1767521258;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nFp4oSETAOPHxt81iiTGbUa68jbwyVikoXX7rE9NWmE=;
+ b=PL5gFJDtyFRfZD+wr9DXFQ2NGUHVVrjlAr5iLEvov/zg9H/8+DP8cDtl02Pi7nLbo7
+ njWOFNn9PHDkbiM06jfPXyYPGEzBzC59NWZkyW1mekSm5I4URBRcb9K+SkxEWGX74RBz
+ LrhfHMP5zhPY4nUONo/iln80c2KMB3MRfzYOseaTSW67AE/TptcxsLzBKBLkByDjrBfE
+ HLkvLKspfwfGCkpzX1wEBkAx1zp20SMwLOU1HDcT05EiTw/IMUpaS+7h2/x+hUMAiMyw
+ F5hnpMmIik4zSHINI+6Ywz1OSndPVIy4FNUSW0cUAesyCKHccLjCe/EOrxOYPRXhSqk7
+ A2yg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4kxa/tajp3MduhlKPWudoOgePnC/pc6FMTnOiLJLRO2zQpUZi95OnE9QeTuTfJBhktVqsU+vk2RKk@nongnu.org
+X-Gm-Message-State: AOJu0YykgxJeSZLq4FKxZzAlo1xQBt9oeQxn92FRwLE2pWWgVeCkBUbZ
+ WrgRklqJRJwhTtekSSocXl7E4S5pNBtjNObA4qyvbhrSGTSpZGwAsffYiG7XGdgD4ak=
+X-Gm-Gg: AY/fxX5C1u0fiRlFJWmYbbsCTdGDcmohjkjNWG4L8Ftl2CCEmEBxy3fPmQZUMHkVJSD
+ ARlNZ8yDo8G6yQ3GWLXulwGM8HlE7LEqCjhw7eWlGERWh8/HS3WnW3CBrjtTNBOwc6S5W3V9Dtm
+ SwvdU6xG6uARqFbcDg6ClJiqNVI5iXVj7AaFzVjAnyZeVdREBIvSaSzYnVU1T++3yAtBkFfyyFq
+ aSd94dd1A0UTJ6KZgmi7M+9pboMt8to1l4ZjCI+xfqkBBRXnSnXycUBRBqlA3BqlBMnzapjsW+L
+ ku1A18/Cdvp+CW0t4QwoP4trhJJBlI7NLUFDPk74XkssYqul/NUqIzLwwpGuWU2IQrfQ3YDZreO
+ x03bsP96Wea4yzgPJQ5JlnOkx7FQbFi11KRLOvylb34dsPy7ZbRjTPSXswV0iMkDnXlqgyn+w4g
+ ytnrPkCEasIdNceOtUwryMd0rGeW9O4BDckm/SPhVGn8QboV68HZlTPOZ7LD0Ddlz8a2ekicTH
+X-Google-Smtp-Source: AGHT+IFPHNViaNB9QW/+tLRWmf9jjgRtsqSc4cFKazD44OVCrkkjnXEhz30yC3is1upBnNEbzcEQRA==
+X-Received: by 2002:a05:600c:3489:b0:477:7ae0:cd6e with SMTP id
+ 5b1f17b1804b1-47d206a9856mr267842465e9.5.1766916457575; 
+ Sun, 28 Dec 2025 02:07:37 -0800 (PST)
+Received: from [192.168.1.15] (alyon-655-1-564-32.w80-9.abo.wanadoo.fr.
+ [80.9.105.32]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324e9ba877sm55445658f8f.0.2025.12.28.02.07.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 28 Dec 2025 02:07:36 -0800 (PST)
+Message-ID: <422ae192-4801-4f5e-b649-b8106fd79162@linaro.org>
+Date: Sun, 28 Dec 2025 11:07:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Align pmp size to pmp-granularity
-To: Jay Chang <jay.chang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Frank Chang <frank.chang@sifive.com>
-References: <20251223102547.13337-1-jay.chang@sifive.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251223102547.13337-1-jay.chang@sifive.com>
+Subject: Re: [PULL 153/153] block: rename block/aio-wait.h to qemu/aio-wait.h
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Farrah Chen <farrah.chen@intel.com>,
+ Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+References: <20251227091622.20725-1-pbonzini@redhat.com>
+ <20251227094759.35658-79-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251227094759.35658-79-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,14 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/23/25 13:25, Jay Chang wrote:
-> When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
-> value is smaller than the PMP granularity, it automatically aligned
-> to the PMP granularity.
+On 27/12/25 10:47, Paolo Bonzini wrote:
+> AIO_WAIT_WHILE is used even outside the block layer; move the header file
+> out of block/ just like the implementation is in util/.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   MAINTAINERS                        | 2 +-
+>   include/block/block-io.h           | 2 +-
+>   include/{block => qemu}/aio-wait.h | 0
+>   block/io.c                         | 2 +-
+>   blockjob.c                         | 2 +-
+>   io/channel.c                       | 2 +-
+>   job.c                              | 2 +-
+>   net/colo-compare.c                 | 2 +-
+>   net/filter-mirror.c                | 2 +-
+>   util/aio-wait.c                    | 2 +-
+>   util/vhost-user-server.c           | 2 +-
+>   hw/display/apple-gfx-mmio.m        | 2 +-
+>   hw/display/apple-gfx.m             | 2 +-
+>   13 files changed, 12 insertions(+), 12 deletions(-)
+>   rename include/{block => qemu}/aio-wait.h (100%)
 
-There's a verb missing here. It "should be"? "needs to be" aligned?
+As in 
+https://lore.kernel.org/qemu-devel/754c984d-9082-49eb-8538-23e746d6a126@linaro.org/:
 
-Is it a qemu-stable material?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-/mjt
 
