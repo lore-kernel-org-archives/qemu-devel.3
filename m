@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC12E784BE
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 22:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E161FD3B7E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 22:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZzZj-0004qX-11; Sun, 28 Dec 2025 17:49:23 -0500
+	id 1vZzfw-0006EG-U0; Sun, 28 Dec 2025 17:55:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vZzZh-0004qF-FH
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:49:21 -0500
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ id 1vZzfu-0006Cw-PB
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:55:46 -0500
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vZzZg-0003O5-3d
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:49:21 -0500
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-7c7545310b8so4290354a34.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 14:49:19 -0800 (PST)
+ id 1vZzft-0004jw-DZ
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 17:55:46 -0500
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-640e065991dso7095052d50.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 14:55:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766962158; x=1767566958; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766962544; x=1767567344; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FoNylknlnWh/erIYHcNyii7jWtQvlc8Cx0EsGBg2xac=;
- b=WqNM2Ah0fOtADeJqyQScI5e/ZdcI7rGpWTcpcM0FyZae015vCckwgtSYzjApd6yeT5
- IYJtBNeWtLKahg/BYN5b0dfEo3SKFN/jUERlhYreji2ineqQiteyZYQJcYyJJUAtyw31
- YEFzOCVA0cKemVnNR0MYpzBUrf0/vM+u8jYVT4V58ozK/QgzFB6nZvaA1EbgeC8Qa6kJ
- VYLG+KyiQf0aqMMWJZjG8jYfyKKwmZJYwIxIGBcRyyb4G6onRHB0Bia850oFSMdDkIBS
- +iNhqCB/ibiz9cFMXJOppZJLbc7bSlDIwE+PJbO8xKgiQOG2bGE78qR1IJj3GuVIjNvE
- m2gA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=8LOnjzhSj7irEtS7A/k2nEwf6fFd69hgtz7m5WkXCh8=;
+ b=NaNzVUDhK8hYcpyaYJMuFw6sD1OM9f/VsHBIJwP+0H/oz7BE4bOABwxKLlFBjYU/0V
+ 8HJr+qxUaO0FXhqW9dNvQXw5Uqf7uq0JH/1jR8GdNFP7jdIG8gGt5SaR0iioCQWS41IF
+ yBffNS2Nb3Dhu5d/1h0y7hTAIdZ8R8/RJtbgs2tO/tqmdGVKhi1FDHYpmMBA/p2Z/2eK
+ Sz0xua9GpTrgK49biqxGmAqZajOCzKBWRCkG1vuHEhgJ83QtawloQORRTOTOhV2LDKPz
+ rlC/mM91kTzscVK9Xf0vwLTfRv08gAuKDqo0sf8M5qHfV1N9qnlK/Nj3PL7AbA4uFpwT
+ xQxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766962158; x=1767566958;
+ d=1e100.net; s=20230601; t=1766962544; x=1767567344;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FoNylknlnWh/erIYHcNyii7jWtQvlc8Cx0EsGBg2xac=;
- b=cHZrI1vpNvpgyrvE/HrCVFLnBwrG0LsHXstS3uqy+HcbEXjLOePEb7wiZ4atSr+cpW
- 0iTyafhwfczltLyTeghCB+nL1/MNEem2SHL433Gx7D8Xfpve7SCCkggbrTdV2shjAdb3
- 0/SMWC0w91C0RgzSAAtEkOAOKDyaKIjQEX0anYh+mZ06/ZdRiu5KbqREw89lZ9eUklr7
- xsRs8XMBkCP0kvi/ThBlvZvyCLXx39EbLmwQYBWX8GGeEV77zHWTdyblM67nVCTEA9Dj
- 0C61xqdQjDrVGKaljS9N30Q5OTZKecA8FPVeEeiKDX4bIgncGDRvKGD8dvaZqqrLLNLc
- 2lxQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWf3gwyY/OvNAp4GJBYDFQDF5sum/gGETeS153E4qbl1Dn3kuig3Z81i7roQrogVFQRqDoDJ+xbROl7@nongnu.org
-X-Gm-Message-State: AOJu0Yzue+XWGQsbINKOqfWHco/0ucCHyGIU0LtKMMp9Z/ST7kozOKQW
- dAkh5rsUCnNh0xi6LkBmEY14McMY7DRy1LEZ6T7/F/DJlvZyLCLoJPU7FAc7EhJc8HU=
-X-Gm-Gg: AY/fxX7RKIUnth9JqLIe2c6vi3+ODgT6mB5v3wRk+f6Q//vo5ThF08qQs5KrcATFB+k
- ntZPTHCKzz6FB0Je+Nwrqu8GRDx1Osxa9ku+zBKzekaTeKKCFbZOMHXpF28g++I7TE8U4Sl0oLw
- 6F3urKVCdvFkRyYO+BMklkCb4w4bvzaiSWzbEeBq7FaDBFp+n/koDVxwwx3BwrtssMcWN9FccHV
- EJfW+Jj/iRgm0M4jhIRVtM67w8dXwAql4DmjYvK/9hho/If2BO9tQlCgYSQHejP2oozRM2oRPjp
- 68jpeKHIRcRDDIYs0kB5P0+sV3cLJ6oSCCNvxCaS/IeqeKupaLquGcGVc2PmGiCDrHiNbzGdgw2
- cH/MP32+f8iryNtCLKGVRGsCuquguva7K0nux7bhYv6AhuVlrXeQ6im9HglRCFa66KYyud7XyWt
- cbjHw+Wm9rgCiuaxSpU/oGBT6IbfNN8PhdxsK4lgvuRXWXFifq3+vm
-X-Google-Smtp-Source: AGHT+IH0sZwD3trJvJdPIAU8nDukw4a57hjUWU1bVZDwa3F50NywbhbudPpkOo4t6k+yoTQS1iMZBQ==
-X-Received: by 2002:a05:6830:2b07:b0:7c7:5d72:567b with SMTP id
- 46e09a7af769-7cc66a19be4mr15442646a34.23.1766962158379; 
- Sun, 28 Dec 2025 14:49:18 -0800 (PST)
+ bh=8LOnjzhSj7irEtS7A/k2nEwf6fFd69hgtz7m5WkXCh8=;
+ b=pb1brly5CsQf0fxGbDcwrBoxX02OFykPixBwGGJK7wIuVy3T5Vfc9VuUGx5vERZjYj
+ lJ4wUM5Lg1sDAJYPLkC2fpI0C7ATqzwjswz1/DHkrYzHN7duDVV8gYqN6Y1DSL46/ODn
+ ks2002X7RWRnBosJSngcIGtik19iJF7I8ErZbtvbC0v4nG5Qr6q0o33cPlNLydKuTktR
+ 4mxUFafl2fNlhmhqkcS8a7BYMDnEAPWYnu//yfuse+tk1njNDm/gCbevDEfMTwszJ/md
+ XeXyEM/XwyrDuCCLam2hlvyFr/9XGMWinRMKv8rLBTt3xvY1ghViNE3lCjB50bup4+ta
+ 4Suw==
+X-Gm-Message-State: AOJu0Yym0h+NKyk4N3c39qUFKG2508ZfvYa08gHy764VIz8H/NxL6gN0
+ lO8pthoZQDSQQW4LKO6lpMuEMejtsr/XjZ4XZAxO7vkvuResNltwB3iNstuu1RvhKGryPpCrEdo
+ gIvPO
+X-Gm-Gg: AY/fxX4vyzZ4TXdUTuRdw0qd4IOHRkiYDxNeUiyvoIBA/cXUNOTiPjkYOsBEqOjBGfn
+ eDfWmjUt6jiACQWrZY0gBmI/J6dlQ1OKfFQC7AJfqlVY4EaAL6aMok2Ebka6Eif+rAO9rCJd+7M
+ +vdMuFjl32tfcFfrS3mbYrIlX8B+M2Jaw2w+FkTcM8o3B6thfvyXsvfjwS4pCXtVy+ETX+tF+Al
+ SWej06xrfVXix5SsQt7PqGyLNE6s+RNN99MVX6zdgAOXa3255iHJZdq0L9+IIobPSOrh8O5XaDp
+ UKP0snIxcLsM9TfpUfJwC3KajP55H093/Lhk8ikK7Djrl/yU9MelK/8bnj+uPiRSviNy7XsGn1V
+ oXWFOPNcR1Dy367i4rajQsOlK267y+H6S+XB8P/xVsVL1bsLU1U2GvzVp9Iil3jS7R9LCGDNaYM
+ HVaoz+S1Z/NGlnNdwUGB/KgDu0zsou81isw9nez43bUQlgeIV+39le
+X-Google-Smtp-Source: AGHT+IHXWaUn3yHPt3aWoWJcQWlWUVViAb1AX89HYZpvojNCpodxs9dTbpo5HM3OYGoN4hl0nihWPQ==
+X-Received: by 2002:a53:c94a:0:b0:646:5127:9ce2 with SMTP id
+ 956f58d0204a3-6466a8abe7fmr19642006d50.46.1766962543522; 
+ Sun, 28 Dec 2025 14:55:43 -0800 (PST)
 Received: from [10.212.166.227] ([172.59.192.106])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7cc6680358asm20094156a34.30.2025.12.28.14.49.09
+ 00721157ae682-78fb43782bfsm109263017b3.5.2025.12.28.14.55.41
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 14:49:17 -0800 (PST)
-Message-ID: <5bfe2b0b-fdde-4fc1-b19c-44649b1aa614@linaro.org>
-Date: Mon, 29 Dec 2025 09:49:04 +1100
+ Sun, 28 Dec 2025 14:55:43 -0800 (PST)
+Message-ID: <f7d3507a-a6b6-49f9-8881-d4b0e33bb1f5@linaro.org>
+Date: Mon, 29 Dec 2025 09:55:37 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] system/memory: Rename unaligned load/store API
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- David Hildenbrand <david@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>, Alexander Graf <agraf@csgraf.de>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Jason Wang <jasowang@redhat.com>,
- qemu-ppc@nongnu.org
-References: <20251228161837.12413-1-philmd@linaro.org>
- <20251228161837.12413-4-philmd@linaro.org>
+Subject: Re: [PATCH] m68k: link.l is only available with 68020+
+To: qemu-devel@nongnu.org
+References: <20251227210250.411882-1-laurent@vivier.eu>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251228161837.12413-4-philmd@linaro.org>
+In-Reply-To: <20251227210250.411882-1-laurent@vivier.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -114,29 +104,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/29/25 03:18, Philippe Mathieu-Daudé wrote:
-> Rename the API methods using the explicit 'unaligned'
-> description instead of 'he' which stands for 'host
-> endianness'.
+On 12/28/25 08:02, Laurent Vivier wrote:
+> Base 68000 only supports word size.
 > 
-> Inspired-by: Paolo Bonzini<pbonzini@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
 > ---
->   include/qemu/bswap.h                 | 32 ++++++++++++++--------------
->   include/qemu/memory_ldst_unaligned.h | 16 +++++++-------
->   accel/tcg/translator.c               |  6 +++---
->   hw/display/ati_2d.c                  |  2 +-
->   hw/display/sm501.c                   | 19 ++++++++++-------
->   hw/remote/vfio-user-obj.c            |  4 ++--
->   hw/vmapple/virtio-blk.c              |  2 +-
->   net/checksum.c                       |  6 +++---
->   system/memory.c                      |  4 ++--
->   system/physmem.c                     |  8 +++----
->   ui/vnc-enc-tight.c                   |  2 +-
->   util/bufferiszero.c                  |  6 +++---
->   accel/tcg/ldst_atomicity.c.inc       | 10 ++++-----
->   13 files changed, 60 insertions(+), 57 deletions(-)
-
+>   target/m68k/cpu.c       | 3 ++-
+>   target/m68k/cpu.h       | 2 ++
+>   target/m68k/translate.c | 2 +-
+>   3 files changed, 5 insertions(+), 2 deletions(-)
+> 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
