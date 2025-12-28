@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 863C2E8FDBE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E853D3B7E5
 	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 23:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va0eK-0001Kq-CV; Sun, 28 Dec 2025 18:58:12 -0500
+	id 1va0cu-00056K-CT; Sun, 28 Dec 2025 18:56:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1va0eJ-0001Ew-3Z
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:58:11 -0500
-Received: from p-west1-cluster5-host4-snip4-10.eps.apple.com ([57.103.66.171]
+ id 1va0cs-000529-T2
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:56:42 -0500
+Received: from p-west1-cluster4-host10-snip4-3.eps.apple.com ([57.103.65.164]
  helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1va0eH-0007Rk-DM
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:58:10 -0500
+ id 1va0cn-0007AH-Sx
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:56:39 -0500
 Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-1a-60-percent-5 (Postfix) with ESMTPS id
- ACEC41800759; Sun, 28 Dec 2025 23:58:02 +0000 (UTC)
+ 076141800751; Sun, 28 Dec 2025 23:56:33 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=kLQA6rv7sDQAG6jrMiTsp6VgPXcx5wZdDjsp3PZWbuo=;
+ s=sig1; bh=1CjKM6KDEmf5eo7QDBOx5N5scvQteXKGcwrcKL+2vCA=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=NuZayDbPv8AN4MwMr/Y6oc3dao9Q47HNv/vZ8IeNH0BdsWedrD+oV9VK7Y72q/XIoAmdcpvGABo7yDymUEdinhahPDTju4iphzl33pNSD/GtfGYy5auonGhtWvCDE3wqaOU+i33XMtuQ1WkYyzEVkhQEsvgONkRnlntAsPcJmR3KvoEcejVZZqcUdZiGjU6A5fjzwny2z58N+URbSboveydpMypMsy65oBWqb5sTtxpTqRoP08pd7Fo04OTqs81w3xKuaxC19VCcU8go9V+RHgXLI5JQs3x+L88UI05erGpIbhxf4iMX2SxasSt5JhCT/OvQ9daCgLFb7PKaiqHuLg==
+ b=LAc4znXfQbXvtnHRxjnjmD3r1JY73JOEbc3WY3g/vlgg6rPRoFchnju8/XXVxJB8ns8T5TrRVtNs5MJpWE/yxLlELHoFMXDdqKe6on9tB4N63FDiH+u2GSx4Lx1/I3aSYvD7Y5FzgKIYMRw1uZGw9VPK1cNylkOBIi1Mo23das99T9UwnFRpWTCkdeqNsy9kiNNLiDJUKrEhoGpSo/OxqOlIvaVLsqIVyTSrulEV4OdBlx86tY6Tgq8wTjERbVhCCzVj9K8L5nQ+EMkaNNzFBPE8jqTJA4NSnA+egZkIzKeqqAPW7XZiKkdsdlQC/mEAl7ODpuvS1pJr0Wyiq/mQyQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.56.9.36])
  by p00-icloudmta-asmtp-us-west-1a-60-percent-5 (Postfix) with ESMTPSA id
- E0E931800758; Sun, 28 Dec 2025 23:57:56 +0000 (UTC)
+ B3ED318000B9; Sun, 28 Dec 2025 23:56:28 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org,
 	mohamed@unpredictable.fr
@@ -53,47 +53,44 @@ Cc: Alexander Graf <agraf@csgraf.de>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v12 23/28] whpx: arm64: gicv3: add migration blocker
-Date: Mon, 29 Dec 2025 00:54:17 +0100
-Message-ID: <20251228235422.30383-24-mohamed@unpredictable.fr>
+ Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>
+Subject: [PATCH v12 08/28] hw: arm: virt-acpi-build: add temporary hack to
+ match existing behavior
+Date: Mon, 29 Dec 2025 00:54:02 +0100
+Message-ID: <20251228235422.30383-9-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251228235422.30383-1-mohamed@unpredictable.fr>
 References: <20251228235422.30383-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI4MDIyMyBTYWx0ZWRfX8/BFux9mqVRx
- xXbQfAi77jJEo6TnploVmGusPwFrnUYayA1KYeIEmSkPvsVon+LfAotE9yrUXCIcYw78LJmkVPa
- mlj0Fbw4CU2GvxAayG8UmZCMvsKdNKdDRm7M1kiQGYA7OermOEM107kJ9DDDNefJucPo8AlInIo
- wa5t+rA11ghLepHEPWl6fFrqRsbB0kokMdxxOz8Tx4R7gB0lIx+zC+1VzX51RPe+DXOKA4TUzE6
- FJVF9Pfk94xfDWYBwNLTEUeSgfBJnNt1m/F3rvMrhtCv1W0Nud23e3BQrBKxiwLxfcvaonUQOb0
- pBrRwh8MJ2eJ+8B3dcw
-X-Proofpoint-ORIG-GUID: yTxwXTl9wsxJXGVz9NWPuhI47BW7-Ijb
-X-Authority-Info: v=2.4 cv=EfrFgfmC c=1 sm=1 tr=0 ts=6951c40e cx=c_apl:c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI4MDIyMyBTYWx0ZWRfXzrTr5EsRZPYj
+ QXxB6Y6/+7lKl8AoIuseWMBO6m45XWgAWzNGySC3hy/QqstbtaGquaMET0A4uFoQ3x372RhOjxA
+ Uv2jDhfi6uVObAj4jhtRmM08dJqKHyGyG8oq0aWCkoX4uy2hL7C9oZYz6o2RO4qViONQemMh7kI
+ 9ki/K0PMyA5jUPd3OMCT1QbSvVaDJGsBfrUaabNkWFi0dXkghsiT8WSM8qeCAJ9LH0TWA2XaxUf
+ O6nUSUixZIEVb9EpQRrpfv4xv/h2kS8YkpkgdmgegFCv5dOac9GEYkKGU/9z7a9PNKHxmDYczVt
+ tn6s7CSPw87WzNo3Js1
+X-Proofpoint-GUID: Fadwj1TMWmJSLQzJeE44ZuSqq06F9ZMJ
+X-Proofpoint-ORIG-GUID: Fadwj1TMWmJSLQzJeE44ZuSqq06F9ZMJ
+X-Authority-Info: v=2.4 cv=CcYFJbrl c=1 sm=1 tr=0 ts=6951c3b3 cx=c_apl:c_pps
  a=azHRBMxVc17uSn+fyuI/eg==:117 a=azHRBMxVc17uSn+fyuI/eg==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=ZsnAEJ0dk2gu5naU1fIA:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: yTxwXTl9wsxJXGVz9NWPuhI47BW7-Ijb
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=HMNHyw_DGvBsvbusI_IA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-28_07,2025-12-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 adultscore=0 clxscore=1030 malwarescore=0 suspectscore=0
- mlxlogscore=911 spamscore=0 mlxscore=0 classifier=spam authscore=0 adjust=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxlogscore=999 bulkscore=0 spamscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 suspectscore=0 clxscore=1030 classifier=spam authscore=0 adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512280223
-X-JNJ: AAAAAAAB/tCRCsGoin7QIcNoebtRXIj3WUczFqkiutQj2wC2EKcDdy4kr0UlNCv9craj3RU3X6nBa7Zsafk+rmoXOwyK96UI1ldUWvhAqhbyx170xeTGm8wDXRAW2qSvquqS+ASYgtGSTYozrtw7qgvE/eKnA+0Dfg/soZeGw+usP581ukFmaPcU/AS1ux8ZX6liuvvfW2m6e88jKHixN2WCEPBuKMqagyXc+JSlitTojuGUYRy79QLfbXc5xCag8uU1UUvxGnSpa43hkY5pET54xf9ZyZkD1gFVy+pNvCFzX2JxKmOj07jsX+w6r2vRHa20Hz86DRXaMdKH/Q2coAQ9/nPRgcUcoN9kb6FBcY4/SWYDTdUO45I0uSX5hVstQBvlk5aiDIt+5fqDDUoEkQW0AWwBA16IetQF87Yz6J+1kT1lEhAxBujHZH36JN7T6VGYwDJM3/nRDj5kpLXs9O6p3eNiTtmPH202Np9J1IaydF3Xlgvnw/bWoTyaUdwMy1Xx/43BFc8boy2Kqdjm/eL/Bg3o2qXnpW2JgsmGo53Pbi9pd95si+JTSQOQlB9mWD0aFqeeg4gSJa68tKcWg7YgwNsV49omK3hq8Ijaf3ey2zBF5e0UmTjR3BdKqkcRz8ghf2F2jcbtiply+W7m8TS1V83Mj01+fnUKjw4J/0HmzqNCTrodx7iWNKL2wBPYUCNrCOkCVg1bFWIleOMon/xctFPfnKAENmxZNhuD5ZxNv1rqXUGQby+4b/EhidADgpGmAIThUUQlmwRt2HiBk+0NWxUFbqfDyILLemZ6xRuS+sOUcld51Z+FkLTI9kAwWr6QgQfhtH2KUcGFf7T/muKAjIFhHnM4EHjjvJKEQ8BeYJ880i3FXVtOCjK/jDqOp0JoNUbhiFzXbzg/vh2JyNcBVt8uBnpBZm0ICBYkFllBGIhdsBcVlTuedInqZI+nIDRA24D7oAvhbrH6qb3lojFTZWi5qbn
- Rf+Iuv5qO/KhzgSuq6Cgw
-Received-SPF: pass client-ip=57.103.66.171;
+X-JNJ: AAAAAAABTeNfovWtPCnelYkI7Whkwav5cIsnvyD1YFj4+gLpYVM6erlHd1gMDCCuCfmkEetazzj4nuv3JEo4cZwiqirqzD8NR1vbLAYl92rNJe9TQ2aZNA47LxKZSuv6zHU4miCEfLVvq0Q0Lhqbb9qQ38ezOqCquPR8vxK0Ow7I2o2XKTPcq1NI1HunJ8+7vPG31VBtaXRXCz6vGPxOkbxo/bcQO3/y0aBryR1AqeB5kN3JxamlC6fvoqrlbwRgv1MCiXSBGFb0m3KqKQyGTlXlYC4HqUhb4rue//i8iJ7yjR+Le3q/p7z+kkHEjShMEISTcYr7RwytweZ6m02oIFryUuBZjI6/QfjiDR7FE9mFO5rGIAa257ujXrzoOvycdl+tbes/5GzbzZc4TTq95DhR+MrPZFh5SEcx/nhLePGaXO8B5XluPxeMPzWAJbp1TqsLA2oLoOygGrcurZh7PLZXEsyJgVzxdHo/GkmM59Cys+i8Rm7qN5Ob5Oy/TUSHXOjKIvBvCYTOybyP/agg5IMvxUZ4Sjdiugjh9XPt1IU3wDxDtPcGzP+E2Hz9Y7FQuoXTr/d1hVS1oqEXmBwUu0xieqLdmQGGMGKqDiyQvrjHCLkejfFdXWh6SeWZihEyQFdnAj4B1SPMxqdyIhz/yPLKOR/lYOyU9Z+jiu1RY/2yn2ty/kRw8ICmmcRJakzJPIzjGP9Qw+4xboX4RwIiZGEsGcVhgcNFx5SeankJwbp2AUrQubkCX1zj6AZsd5aUxgby+ZRBNa1GX2U6imeA8htmep0wx48/qcZgSwMdYYzZBBCvT2LGysAIyr4fWsEjhftDKb/Geg+28xROcnS5KdQCAUHcZHGmzKTD6BXqMcARJ7viTgQuGyRIgDFKKQhXPgylUZTOeMfRG37JnACAhiCH5iY8oGekaizpEaAy6dVqlI9PhRaU90r24MajTfrqYoA=
+Received-SPF: pass client-ip=57.103.65.164;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,43 +106,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GICv3 state save-restore is currently not implemented yet.
+In the prior Qemu ACPI table handling, GICv2 configurations
+had vms->its=1... That's broken.
+
+Match that assumption to match the existing ACPI tables that
+have been shipping for quite a while.
+
+And see what to do for older releases. Likely don't
+want this to be carried around indefinitely.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/intc/arm_gicv3_whpx.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/arm/virt-acpi-build.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_whpx.c b/hw/intc/arm_gicv3_whpx.c
-index 4fe6305c89..3aa3b8bb6b 100644
---- a/hw/intc/arm_gicv3_whpx.c
-+++ b/hw/intc/arm_gicv3_whpx.c
-@@ -17,6 +17,7 @@
- #include "system/whpx-internal.h"
- #include "gicv3_internal.h"
- #include "vgic_common.h"
-+#include "migration/blocker.h"
- #include "qom/object.h"
- #include "target/arm/cpregs.h"
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index f3adb95cfe..2b217e8681 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -473,7 +473,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
+         rc_mapping_count = rc_smmu_idmaps_len;
  
-@@ -205,6 +206,15 @@ static void whpx_gicv3_realize(DeviceState *dev, Error **errp)
-         error_setg(errp, "Nested virtualisation not currently supported by WHPX.");
-         return;
-     }
-+
-+    Error *whpx_migration_blocker = NULL;
-+
-+    error_setg(&whpx_migration_blocker,
-+        "Live migration disabled because GIC state save/restore not supported on WHPX");
-+    if (migrate_add_blocker(&whpx_migration_blocker, errp)) {
-+        error_free(whpx_migration_blocker);
-+        return;
-+    }
- }
+-        if (virt_is_its_enabled(vms)) {
++        if (virt_is_its_enabled(vms) || vms->gic_version == 2) {
+             /*
+              * Knowing the ID ranges from the RC to the SMMU, it's possible to
+              * determine the ID ranges from RC that go directly to ITS.
+@@ -484,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             rc_mapping_count += rc_its_idmaps->len;
+         }
+     } else {
+-        if (virt_is_its_enabled(vms)) {
++        if (virt_is_its_enabled(vms) || vms->gic_version == 2) {
+             nb_nodes = 2; /* RC and ITS */
+             rc_mapping_count = 1; /* Direct map to ITS */
+         } else {
+@@ -499,7 +499,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
+     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
  
- static void whpx_gicv3_class_init(ObjectClass *klass, const void *data)
+-    if (virt_is_its_enabled(vms)) {
++    if (virt_is_its_enabled(vms) || vms->gic_version == 2) {
+         /* Table 12 ITS Group Format */
+         build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
+         node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
+@@ -518,7 +518,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         int smmu_mapping_count, offset_to_id_array;
+         int irq = sdev->irq;
+ 
+-        if (virt_is_its_enabled(vms)) {
++        if (virt_is_its_enabled(vms) || vms->gic_version == 2) {
+             smmu_mapping_count = 1; /* ITS Group node */
+             offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
+         } else {
+@@ -611,7 +611,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             }
+         }
+ 
+-        if (virt_is_its_enabled(vms)) {
++        if (virt_is_its_enabled(vms) || vms->gic_version == 2) {
+             /*
+              * Map bypassed (don't go through the SMMU) RIDs (input) to
+              * ITS Group node directly: RC -> ITS.
 -- 
 2.50.1 (Apple Git-155)
 
