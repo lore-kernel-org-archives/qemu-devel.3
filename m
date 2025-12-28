@@ -4,105 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 821A4D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 10:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A32D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 11:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZoQd-0006Cy-KT; Sun, 28 Dec 2025 05:55:15 -0500
+	id 1vZoe1-0001tg-Q8; Sun, 28 Dec 2025 06:09:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZoQc-0006CW-Qc
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:55:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vZody-0001sr-NC
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 06:09:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vZoQa-0003ik-RS
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 05:55:14 -0500
+ id 1vZodv-0006mB-LV
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 06:09:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766919311;
+ s=mimecast20190719; t=1766920138;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mlrgCIkrQA0D6TEmz4isG+Td0QCeHERVu1/EiC/NvGM=;
- b=CkyLjDH7wMlXW18hiNUUQjENqbT2KQ9cXPXH2GZFjFwQUj22MRFAXJVJS6v9x1BPROIFUg
- WwamDIUx1Vm9O9444d/ehtOOtGJ8tZMIE95IOINfbRarhjsqrx5MryRNVvbadtIPFgtmAd
- Mr9NxGfFuc1pACyncC8Lrgq9IZIdTzY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3l2phkXCJaytY2ehavBw7H8fQY5W/jClO6TyvC/6NvQ=;
+ b=Hs5nXDMwT6ymnM4sgzD8NwyrggsFLdDGDHOivQ8HSCEXl0yXq6WN943kDuZzGLVC+2s5CR
+ SpH+R/Ea6wXeSngFtrHNSYeEKJlJ4A5E9vA9CPjsMdVjzvC0UMMwjhcdo7AO/XU5V56EcH
+ L4TkYfHz455gdblKWHt3Ge9NmIXYynA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-497-7LVECr0fPI2fE2IkN9LP_A-1; Sun, 28 Dec 2025 05:55:09 -0500
-X-MC-Unique: 7LVECr0fPI2fE2IkN9LP_A-1
-X-Mimecast-MFC-AGG-ID: 7LVECr0fPI2fE2IkN9LP_A_1766919308
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47775585257so58127835e9.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 02:55:09 -0800 (PST)
+ us-mta-356-5c0sRSuuOc6oqPv5pvqYxQ-1; Sun, 28 Dec 2025 06:08:55 -0500
+X-MC-Unique: 5c0sRSuuOc6oqPv5pvqYxQ-1
+X-Mimecast-MFC-AGG-ID: 5c0sRSuuOc6oqPv5pvqYxQ_1766920134
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-430fc153d50so6700147f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 03:08:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766919308; x=1767524108; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766920134; x=1767524934; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mlrgCIkrQA0D6TEmz4isG+Td0QCeHERVu1/EiC/NvGM=;
- b=GFW8qnUMOI9oSTJqv+5tfetkRPA0HD8tONo6yRBId/QlS6AR/X7m18L8C1ISXhqJNK
- 1Zej/kgUR2pU5jVOLQEXkR8KwuBHHsEnFC+H2diaav+NxqTE+ilOfzJrIx6JzsZUniMd
- Dvmlwv8ci7KtMuO5ebeFU5okkESapeRiYGvUg6Eiz15DG8uxS8947tqI5fd97kV9b5IV
- P7JNNIwYalcxyFQscb5UQLVUX2M25wSwDp/r10BTQ0skIorvKZKP0RQEZZOXSytnOVdX
- 8XsvUrgehJcigsNnNxlRJwuIr3P8djoc9RQsGD25L1N9Q8PYZCE5YtVFyl60wxSPh7lK
- Iz4g==
+ bh=3l2phkXCJaytY2ehavBw7H8fQY5W/jClO6TyvC/6NvQ=;
+ b=iUTWNbXYE8YZQrM5bBsNSVZOppOCCdGM5xuLP50k7iCkfs6uB1JOjJnKDVgz+DPwKG
+ gcl5xfyuQgGawhgV/vEoo+T+v3evZ3c//z3okX/GSaizXw0nNqqRbYMPGoWffUMz1d+K
+ WVTAAyfmXJClfC/I1CV6HH7p7azn53OQgYfxXc2tWvLRNQ4otHkSG0/DjDOPh2WzqbEl
+ KZuD5cqJMbKuP0En6jU1ZOqt5rBseCzUw6eDCBtQATRVVjBbLq6Hx6KUgyE+4WkYq08r
+ RSjvKRQ2DLPN3j1rwASIQkOoLCNyDzvzCIHntRL7UsDH0JFojcj3wiizRhYOugsRH601
+ 6sFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766919308; x=1767524108;
+ d=1e100.net; s=20230601; t=1766920134; x=1767524934;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mlrgCIkrQA0D6TEmz4isG+Td0QCeHERVu1/EiC/NvGM=;
- b=b01a0zKPPc8FFPJALAvlqE+8ZhD3H4RaQ0s1qLzVZGDOmUFzXp5+QOMWixKUUG86g4
- sk8KKi31aXBWRNTypnmYKd2VwAQQwNoJ0oAbOL9m+CivH1Gqvh5Z2CXad9Uqd95auE3O
- ufVDFmXESJOqHKIOVOqckoFfi/q9Tpz3hm5uaDD0FSf5+Be9ZQJ4I0eOUfLhxE6n9YpK
- JZ5so5kuLSeUE/cxnOtqJ6OJ4VnB8QPuygCh+yXGTkBX0ke7KZ+BjSYFu9quSLfBpurB
- eUeLD9I8LK0f0dJlWRVag0goS1rBK4kVM7K8NPHC6XcF5UR0TZ4LQBwjMew8y3JObXtL
- UUvw==
-X-Gm-Message-State: AOJu0YyLrPya/xc/q9BitsUcPRW40k/3UXT5dYZop//DBgBmw6dHuIcs
- 3Ma4Y7fFYFiXKu5gToHyB8azhgG64nwKg4ovbcZmVss+I40kAE5h4OwmJZCwZrqIEY2wWpdbd71
- 45R6rBY8pY9aXuspMR19dT5rz9Lybnq1Z+0zr5V2LK/NubfwiGkdLGT7eGBITEIJbALLTcMFdKR
- A5SC1nOSIKU20pEoDfwclS0XNCMUfun5E=
-X-Gm-Gg: AY/fxX4/UelMBWzNIDDNFxhmHjOA9lp2HTZuLOr/9+JuvVUdNte1Et7hKwzvgzCFmv0
- eDjWbJVi+ECjwjvTJ3Nj8Otd4sFtpNGPmEA7wkZnkglio4CjGOTPf6hfL3d/orNn/Lty0ISMiOG
- TV6DuY9zjMlDLuy39A+2vrQ3Vul7HykouLGD3vdBdBGKT5WTLHzUD7DczT7s8x4Po0wpO5Ijg+7
- WMKW6rhbR5RUqcNzKFcDts1bPzCGWxTG0uotf5Wtfk6sZEb/+bX71GnO7CpwJdDDo/Or+s=
-X-Received: by 2002:a05:600c:1c28:b0:45d:dc85:c009 with SMTP id
- 5b1f17b1804b1-47d1954586amr300093065e9.10.1766919308406; 
- Sun, 28 Dec 2025 02:55:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHff1HKTGyviVG0TZ79apBR6C7tTuejO6UX/9BEiLdhCBH8WktL/Kl68ue5qjBglGEmSp/xQVlTQ+JLpPIcNXA=
-X-Received: by 2002:a05:600c:1c28:b0:45d:dc85:c009 with SMTP id
- 5b1f17b1804b1-47d1954586amr300092955e9.10.1766919308020; Sun, 28 Dec 2025
- 02:55:08 -0800 (PST)
+ bh=3l2phkXCJaytY2ehavBw7H8fQY5W/jClO6TyvC/6NvQ=;
+ b=g4teAHY2uop6MA/8RJbnJHX3TCqKYnhDEblJJUjFiAQHTN0XNtsXvmiutRdvg3FrMv
+ j3pR+G1ulwZvlYcbE4EU2GAn5ScKfCqMzm1dg5CvEpZHaeHB1thKHPE0FeHNl/sq0qqi
+ Ht0Y3GQex1pNyAufoeYlUs0QbAgcZyK0AJW7wg7izRZ1mfD5xgerLXDEg5gu1ZFGzvFh
+ vgSW0Kx+utNCCme+wznDYkeDHqSL4NvMUsl4KiNibiw2JV0Z6GGamDvOKO6WwnMuFsRq
+ okICqgJOCnAdQ9heF6PZb3418kW7tjuf2URANdcpYaDR+A5fEM7wBDXRK/p64ju+E61m
+ eI5w==
+X-Gm-Message-State: AOJu0Yx1psRAV+UagG7WpQ29JX3otpQlxZcA2VGQn9a5NCfpP7bUKk9k
+ XOsO+O/0POfOBoTP/soO8iJI7XqXbeoeJsNq90zgqnlxrkIo7eJpSBLrCBz/dB26eEwRFdxBsr2
+ LtruWC0hQQ1G7AN4mmUOxC847IYSYsAZt3jLM0VtuSXOyPM8MH7/0ooPnf3n/266+0oq5U3sZxi
+ Tnv9s/jI39vVkgpvcf+zbjJ/2/NBK59Fs=
+X-Gm-Gg: AY/fxX79Ew8Nrd4nAze/d0WDRQ8cDD1Rz7MDJR8MjOnMCluU5gg/3mGgkvuDp0OeORI
+ M6hCFitaiKALvBacHYLDQAwgxZc9mLTnsBZRlHPJJb+ihTb7wDR97pkPZS9KiozsmEme+1CVyWs
+ UNCMqbY7R3Z3zeHd0ETfblFsPB968ifF5vywvagyOf4J4zKIftfKQfYiUTGMmF67XA/bCpXWPz6
+ rwgnVFdzA/OESLZDfwLQ84AiO53QB1JccpVHePSqYxXsHzRdb5cCErNG9ash49rp7GP
+X-Received: by 2002:a05:6000:186a:b0:430:f301:3e6c with SMTP id
+ ffacd0b85a97d-4324e4fdcd8mr28911670f8f.34.1766920134285; 
+ Sun, 28 Dec 2025 03:08:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEYIs5OWrPvUqWIGlpm+gzIgcPFg6prD8UcY+7tWzniK0nu0WCP9gI5fHInlW7aZXWYTlsUGO5PCWN/GvgIdsI=
+X-Received: by 2002:a05:6000:186a:b0:430:f301:3e6c with SMTP id
+ ffacd0b85a97d-4324e4fdcd8mr28911645f8f.34.1766920133809; Sun, 28 Dec 2025
+ 03:08:53 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-4-philmd@linaro.org>
-In-Reply-To: <20251224152210.87880-4-philmd@linaro.org>
+ <20251224152210.87880-12-philmd@linaro.org>
+In-Reply-To: <20251224152210.87880-12-philmd@linaro.org>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sun, 28 Dec 2025 11:54:56 +0100
-X-Gm-Features: AQt7F2pNSzhKcumXt7Rj9S2EuzGmuFPPAqm4mUhtd3Yj9NqSRVSJ8wsEnlrogpk
-Message-ID: <CABgObfYbU70d=02Sw=KCV-9fmZpFKoighKjxKfLW-p5Oi4iwxw@mail.gmail.com>
-Subject: Re: [PATCH v3 03/25] system/physmem: Use explicit endianness in
- subpage_ops::read/write()
+Date: Sun, 28 Dec 2025 12:08:41 +0100
+X-Gm-Features: AQt7F2p2LrR6LqNCIQrTFN-Z0WhDl0Dyu-EuKb2g9BK8EY6E5pnPAxS6LMdk_D0
+Message-ID: <CABgObfYWG8ot6ZLpoj6Bh7fXRUZaLtVKZ7bVQLbUbAyzs+LiyQ@mail.gmail.com>
+Subject: Re: [PATCH v3 11/25] system/memory: Pass device_endian argument as
+ MemOp bit
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Peter Xu <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>
-Content-Type: multipart/alternative; boundary="000000000000b3a010064700f5d8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: multipart/alternative; boundary="000000000000ec2d31064701261c"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,49 +119,511 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b3a010064700f5d8
+--000000000000ec2d31064701261c
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Il mer 24 dic 2025, 16:22 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
+Il mer 24 dic 2025, 16:24 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
 a
 scritto:
 
-> Replace the ldn_p/stn_p() calls by their explicit endianness
-> variants. Duplicate the MemoryRegionOps, replacing the single
-> DEVICE_NATIVE_ENDIAN entry by a pair of LITTLE and BIG ones.
-> Select the proper MemoryRegionOps in subpage_init().
+> -        switch (endian) {
+> -        case DEVICE_LITTLE_ENDIAN:
+> +        if ((mop & MO_BSWAP) =3D=3D MO_LE) {
+>              val =3D ldn_le_p(ptr, size);
+> -            break;
+> -        case DEVICE_BIG_ENDIAN:
+> +        } else {
+>              val =3D ldn_be_p(ptr, size);
+> -            break;
+> -        default:
+> -            val =3D ldn_p(ptr, size);
+> -            break;
+>          }
 >
 
-This would need further adjustment when the target endianness is not fixed,
-but luckily the extra complexity you're introducing is not needed. The two
-ops add either 0 or 2 swaps to the underlying flatview_read/flatview_write
-so you only need one copy. As long as the ldn_*_p is consistent with the
-endianness of the MemoryRegionOps the result is the same.
+This is an example in which you could use ldn_he_p as a memcpy, followed by
+the bswap if mop & MO_BSWAP. It would be closer to how MemOp bits are
+defined.
 
 Paolo
 
---000000000000b3a010064700f5d8
+         r =3D MEMTX_OK;
+>      }
+> @@ -73,37 +65,33 @@ uint64_t glue(address_space_ldm_internal,
+> SUFFIX)(ARG1_DECL, MemOp mop,
+>
+>  /* warning: addr must be aligned */
+>  static inline uint32_t glue(address_space_ldl_internal, SUFFIX)(ARG1_DEC=
+L,
+> -    hwaddr addr, MemTxAttrs attrs, MemTxResult *result,
+> -    enum device_endian endian)
+> +    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_32, addr,
+> -                                                    attrs, result,
+> endian);
+> +    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_32,
+> addr,
+> +                                                    attrs, result);
+>  }
+>
+>  /* warning: addr must be aligned */
+>  static inline uint64_t glue(address_space_ldq_internal, SUFFIX)(ARG1_DEC=
+L,
+> -    hwaddr addr, MemTxAttrs attrs, MemTxResult *result,
+> -    enum device_endian endian)
+> +    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_64, addr,
+> -                                                    attrs, result,
+> endian);
+> +    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_64,
+> addr,
+> +                                                    attrs, result);
+>  }
+>
+>  uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL, hwaddr addr,
+>                                           MemTxAttrs attrs, MemTxResult
+> *result)
+>  {
+>      return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_8, addr,
+> -                                                    attrs, result,
+> -                                                    DEVICE_NATIVE_ENDIAN=
+);
+> +                                                    attrs, result);
+>  }
+>
+>  /* warning: addr must be aligned */
+>  static inline uint16_t glue(address_space_lduw_internal,
+> SUFFIX)(ARG1_DECL,
+> -    hwaddr addr, MemTxAttrs attrs, MemTxResult *result,
+> -    enum device_endian endian)
+> +    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_16, addr,
+> -                                                    attrs, result,
+> endian);
+> +    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_16,
+> addr,
+> +                                                    attrs, result);
+>  }
+>
+>  /* warning: addr must be aligned */
+> @@ -111,8 +99,7 @@ static inline
+>  void glue(address_space_stm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
+>                                                hwaddr addr, uint64_t val,
+>                                                MemTxAttrs attrs,
+> -                                              MemTxResult *result,
+> -                                              enum device_endian endian)
+> +                                              MemTxResult *result)
+>  {
+>      const unsigned size =3D memop_size(mop);
+>      uint8_t *ptr;
+> @@ -126,21 +113,14 @@ void glue(address_space_stm_internal,
+> SUFFIX)(ARG1_DECL, MemOp mop,
+>      mr =3D TRANSLATE(addr, &addr1, &l, true, attrs);
+>      if (l < size || !memory_access_is_direct(mr, true, attrs)) {
+>          release_lock |=3D prepare_mmio_access(mr);
+> -        r =3D memory_region_dispatch_write(mr, addr1, val,
+> -                                         mop | devend_memop(endian),
+> attrs);
+> +        r =3D memory_region_dispatch_write(mr, addr1, val, mop, attrs);
+>      } else {
+>          /* RAM case */
+>          ptr =3D qemu_map_ram_ptr(mr->ram_block, addr1);
+> -        switch (endian) {
+> -        case DEVICE_LITTLE_ENDIAN:
+> +        if ((mop & MO_BSWAP) =3D=3D MO_LE) {
+>              stn_le_p(ptr, size, val);
+> -            break;
+> -        case DEVICE_BIG_ENDIAN:
+> +        } else {
+>              stn_be_p(ptr, size, val);
+> -            break;
+> -        default:
+> -            stn_p(ptr, size, val);
+> -            break;
+>          }
+>          invalidate_and_set_dirty(mr, addr1, size);
+>          r =3D MEMTX_OK;
+> @@ -156,48 +136,44 @@ void glue(address_space_stm_internal,
+> SUFFIX)(ARG1_DECL, MemOp mop,
+>
+>  /* warning: addr must be aligned */
+>  static inline void glue(address_space_stl_internal, SUFFIX)(ARG1_DECL,
+> -    hwaddr addr, uint32_t val, MemTxAttrs attrs,
+> -    MemTxResult *result, enum device_endian endian)
+> +    MemOp mop, hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult
+> *result)
+>  {
+> -    glue(address_space_stm_internal, SUFFIX)(ARG1, MO_32, addr, val,
+> -                                             attrs, result, endian);
+> +    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_32, addr, va=
+l,
+> +                                             attrs, result);
+>  }
+>
+>  void glue(address_space_stb, SUFFIX)(ARG1_DECL, hwaddr addr, uint8_t val=
+,
+>                                       MemTxAttrs attrs, MemTxResult
+> *result)
+>  {
+>      glue(address_space_stm_internal, SUFFIX)(ARG1, MO_8, addr, val,
+> -                                             attrs, result,
+> -                                             DEVICE_NATIVE_ENDIAN);
+> +                                             attrs, result);
+>  }
+>
+>  /* warning: addr must be aligned */
+>  static inline void glue(address_space_stw_internal, SUFFIX)(ARG1_DECL,
+> -    hwaddr addr, uint16_t val, MemTxAttrs attrs,
+> -    MemTxResult *result, enum device_endian endian)
+> +    MemOp mop, hwaddr addr, uint16_t val, MemTxAttrs attrs, MemTxResult
+> *result)
+>  {
+> -    glue(address_space_stm_internal, SUFFIX)(ARG1, MO_16, addr, val,
+> -                                             attrs, result, endian);
+> +    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_16, addr, va=
+l,
+> +                                             attrs, result);
+>  }
+>
+>  static inline void glue(address_space_stq_internal, SUFFIX)(ARG1_DECL,
+> -    hwaddr addr, uint64_t val, MemTxAttrs attrs,
+> -    MemTxResult *result, enum device_endian endian)
+> +    MemOp mop, hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult
+> *result)
+>  {
+> -    glue(address_space_stm_internal, SUFFIX)(ARG1, MO_64, addr, val,
+> -                                             attrs, result, endian);
+> +    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_64, addr, va=
+l,
+> +                                             attrs, result);
+>  }
+>
+>  #define ENDIANNESS
+> -#define DEVICE_ENDIANNESS       DEVICE_NATIVE_ENDIAN
+> +#define MO_ENDIAN               (target_big_endian() ? MO_BE : MO_LE)
+>  #include "memory_ldst_endian.c.inc"
+>
+>  #define ENDIANNESS              _le
+> -#define DEVICE_ENDIANNESS       DEVICE_LITTLE_ENDIAN
+> +#define MO_ENDIAN               MO_LE
+>  #include "memory_ldst_endian.c.inc"
+>
+>  #define ENDIANNESS              _be
+> -#define DEVICE_ENDIANNESS       DEVICE_BIG_ENDIAN
+> +#define MO_ENDIAN               MO_BE
+>  #include "memory_ldst_endian.c.inc"
+>
+>  #undef ARG1_DECL
+> diff --git a/system/memory_ldst_endian.c.inc
+> b/system/memory_ldst_endian.c.inc
+> index 791d041b15d..9cf36017135 100644
+> --- a/system/memory_ldst_endian.c.inc
+> +++ b/system/memory_ldst_endian.c.inc
+> @@ -22,43 +22,43 @@
+>  uint16_t ADDRESS_SPACE_LD(uw)(ARG1_DECL, hwaddr addr,
+>                                MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    return ADDRESS_SPACE_LD_INTERNAL(uw)(ARG1, addr, attrs, result,
+> -                                         DEVICE_ENDIANNESS);
+> +    return ADDRESS_SPACE_LD_INTERNAL(uw)(ARG1, MO_ENDIAN,
+> +                                        addr, attrs, result);
+>  }
+>
+>  uint32_t ADDRESS_SPACE_LD(l)(ARG1_DECL, hwaddr addr,
+>                               MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    return ADDRESS_SPACE_LD_INTERNAL(l)(ARG1, addr, attrs, result,
+> -                                        DEVICE_ENDIANNESS);
+> +    return ADDRESS_SPACE_LD_INTERNAL(l)(ARG1, MO_ENDIAN,
+> +                                        addr, attrs, result);
+>  }
+>
+>  uint64_t ADDRESS_SPACE_LD(q)(ARG1_DECL, hwaddr addr,
+>                               MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    return ADDRESS_SPACE_LD_INTERNAL(q)(ARG1, addr, attrs, result,
+> -                                        DEVICE_ENDIANNESS);
+> +    return ADDRESS_SPACE_LD_INTERNAL(q)(ARG1, MO_ENDIAN,
+> +                                        addr, attrs, result);
+>  }
+>
+>  void ADDRESS_SPACE_ST(w)(ARG1_DECL, hwaddr addr, uint16_t val,
+>                           MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    ADDRESS_SPACE_ST_INTERNAL(w)(ARG1, addr, val, attrs, result,
+> -                                 DEVICE_ENDIANNESS);
+> +    ADDRESS_SPACE_ST_INTERNAL(w)(ARG1, MO_ENDIAN,
+> +                                 addr, val, attrs, result);
+>  }
+>
+>  void ADDRESS_SPACE_ST(l)(ARG1_DECL, hwaddr addr, uint32_t val,
+>                           MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    ADDRESS_SPACE_ST_INTERNAL(l)(ARG1, addr, val, attrs, result,
+> -                                 DEVICE_ENDIANNESS);
+> +    ADDRESS_SPACE_ST_INTERNAL(l)(ARG1, MO_ENDIAN,
+> +                                 addr, val, attrs, result);
+>  }
+>
+>  void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr, uint64_t val,
+>                           MemTxAttrs attrs, MemTxResult *result)
+>  {
+> -    ADDRESS_SPACE_ST_INTERNAL(q)(ARG1, addr, val, attrs, result,
+> -                                 DEVICE_ENDIANNESS);
+> +    ADDRESS_SPACE_ST_INTERNAL(q)(ARG1, MO_ENDIAN,
+> +                                 addr, val, attrs, result);
+>  }
+>
+>  #undef ADDRESS_SPACE_LD
+> @@ -67,4 +67,4 @@ void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr,
+> uint64_t val,
+>  #undef ADDRESS_SPACE_ST_INTERNAL
+>
+>  #undef ENDIANNESS
+> -#undef DEVICE_ENDIANNESS
+> +#undef MO_ENDIAN
+> --
+> 2.52.0
+>
+>
+
+--000000000000ec2d31064701261c
 Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 24 dic 2025, 16:22 Philip=
-pe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linar=
-o.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Replace the ldn_p/stn_p() calls by their explicit endianness<br>
-variants. Duplicate the MemoryRegionOps, replacing the single<br>
-DEVICE_NATIVE_ENDIAN entry by a pair of LITTLE and BIG ones.<br>
-Select the proper MemoryRegionOps in subpage_init().<br></blockquote></div>=
-</div><div dir=3D"auto"><br></div><div dir=3D"auto">This would need further=
- adjustment when the target endianness is not fixed, but luckily the extra =
-complexity you&#39;re introducing is not needed. The two ops add either 0 o=
-r 2 swaps to the underlying flatview_read/flatview_write so you only need o=
-ne copy. As long as the ldn_*_p is consistent with the endianness of the Me=
-moryRegionOps the result is the same.</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto">Paolo</div></div>
-
---000000000000b3a010064700f5d8--
+PGRpdiBkaXI9ImF1dG8iPjxkaXY+PGJyPjxicj48ZGl2IGNsYXNzPSJnbWFpbF9xdW90ZSBnbWFp
+bF9xdW90ZV9jb250YWluZXIiPjxkaXYgZGlyPSJsdHIiIGNsYXNzPSJnbWFpbF9hdHRyIj5JbCBt
+ZXIgMjQgZGljIDIwMjUsIDE2OjI0IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpICZsdDs8YSBocmVm
+PSJtYWlsdG86cGhpbG1kQGxpbmFyby5vcmciPnBoaWxtZEBsaW5hcm8ub3JnPC9hPiZndDsgaGEg
+c2NyaXR0bzo8L2Rpdj48YmxvY2txdW90ZSBjbGFzcz0iZ21haWxfcXVvdGUiIHN0eWxlPSJtYXJn
+aW46MHB4IDBweCAwcHggMC44ZXg7Ym9yZGVyLWxlZnQ6MXB4IHNvbGlkIHJnYigyMDQsMjA0LDIw
+NCk7cGFkZGluZy1sZWZ0OjFleCI+DQotwqAgwqAgwqAgwqAgc3dpdGNoIChlbmRpYW4pIHs8YnI+
+DQotwqAgwqAgwqAgwqAgY2FzZSBERVZJQ0VfTElUVExFX0VORElBTjo8YnI+DQorwqAgwqAgwqAg
+wqAgaWYgKChtb3AgJmFtcDsgTU9fQlNXQVApID09IE1PX0xFKSB7PGJyPg0KwqAgwqAgwqAgwqAg
+wqAgwqAgwqB2YWwgPSBsZG5fbGVfcChwdHIsIHNpemUpOzxicj4NCi3CoCDCoCDCoCDCoCDCoCDC
+oCBicmVhazs8YnI+DQotwqAgwqAgwqAgwqAgY2FzZSBERVZJQ0VfQklHX0VORElBTjo8YnI+DQor
+wqAgwqAgwqAgwqAgfSBlbHNlIHs8YnI+DQrCoCDCoCDCoCDCoCDCoCDCoCDCoHZhbCA9IGxkbl9i
+ZV9wKHB0ciwgc2l6ZSk7PGJyPg0KLcKgIMKgIMKgIMKgIMKgIMKgIGJyZWFrOzxicj4NCi3CoCDC
+oCDCoCDCoCBkZWZhdWx0Ojxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCB2YWwgPSBsZG5fcChwdHIs
+IHNpemUpOzxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCBicmVhazs8YnI+DQrCoCDCoCDCoCDCoCDC
+oH08YnI+PC9ibG9ja3F1b3RlPjwvZGl2PjwvZGl2PjxkaXYgZGlyPSJhdXRvIj48YnI+PC9kaXY+
+PGRpdiBkaXI9ImF1dG8iPlRoaXMgaXMgYW4gZXhhbXBsZSBpbiB3aGljaCB5b3UgY291bGQgdXNl
+IGxkbl9oZV9wIGFzIGEgbWVtY3B5LCBmb2xsb3dlZCBieSB0aGUgYnN3YXAgaWYgbW9wICZhbXA7
+IE1PX0JTV0FQLiBJdCB3b3VsZCBiZSBjbG9zZXIgdG8gaG93IE1lbU9wIGJpdHMgYXJlIGRlZmlu
+ZWQuPC9kaXY+PGRpdiBkaXI9ImF1dG8iPjxicj48L2Rpdj48ZGl2IGRpcj0iYXV0byI+UGFvbG/C
+oDwvZGl2PjxkaXYgZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRpdiBkaXI9ImF1dG8iPjxkaXYgY2xh
+c3M9ImdtYWlsX3F1b3RlIGdtYWlsX3F1b3RlX2NvbnRhaW5lciI+PGJsb2NrcXVvdGUgY2xhc3M9
+ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFyZ2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0
+OjFweCBzb2xpZCByZ2IoMjA0LDIwNCwyMDQpO3BhZGRpbmctbGVmdDoxZXgiPg0KwqAgwqAgwqAg
+wqAgwqByID0gTUVNVFhfT0s7PGJyPg0KwqAgwqAgwqB9PGJyPg0KQEAgLTczLDM3ICs2NSwzMyBA
+QCB1aW50NjRfdCBnbHVlKGFkZHJlc3Nfc3BhY2VfbGRtX2ludGVybmFsLCBTVUZGSVgpKEFSRzFf
+REVDTCwgTWVtT3AgbW9wLDxicj4NCjxicj4NCsKgLyogd2FybmluZzogYWRkciBtdXN0IGJlIGFs
+aWduZWQgKi88YnI+DQrCoHN0YXRpYyBpbmxpbmUgdWludDMyX3QgZ2x1ZShhZGRyZXNzX3NwYWNl
+X2xkbF9pbnRlcm5hbCwgU1VGRklYKShBUkcxX0RFQ0wsPGJyPg0KLcKgIMKgIGh3YWRkciBhZGRy
+LCBNZW1UeEF0dHJzIGF0dHJzLCBNZW1UeFJlc3VsdCAqcmVzdWx0LDxicj4NCi3CoCDCoCBlbnVt
+IGRldmljZV9lbmRpYW4gZW5kaWFuKTxicj4NCivCoCDCoCBNZW1PcCBtb3AsIGh3YWRkciBhZGRy
+LCBNZW1UeEF0dHJzIGF0dHJzLCBNZW1UeFJlc3VsdCAqcmVzdWx0KTxicj4NCsKgezxicj4NCi3C
+oCDCoCByZXR1cm4gZ2x1ZShhZGRyZXNzX3NwYWNlX2xkbV9pbnRlcm5hbCwgU1VGRklYKShBUkcx
+LCBNT18zMiwgYWRkciw8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYXR0cnMsIHJlc3VsdCwg
+ZW5kaWFuKTs8YnI+DQorwqAgwqAgcmV0dXJuIGdsdWUoYWRkcmVzc19zcGFjZV9sZG1faW50ZXJu
+YWwsIFNVRkZJWCkoQVJHMSwgbW9wIHwgTU9fMzIsIGFkZHIsPGJyPg0KK8KgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIGF0dHJzLCByZXN1bHQpOzxicj4NCsKgfTxicj4NCjxicj4NCsKgLyogd2FybmluZzog
+YWRkciBtdXN0IGJlIGFsaWduZWQgKi88YnI+DQrCoHN0YXRpYyBpbmxpbmUgdWludDY0X3QgZ2x1
+ZShhZGRyZXNzX3NwYWNlX2xkcV9pbnRlcm5hbCwgU1VGRklYKShBUkcxX0RFQ0wsPGJyPg0KLcKg
+IMKgIGh3YWRkciBhZGRyLCBNZW1UeEF0dHJzIGF0dHJzLCBNZW1UeFJlc3VsdCAqcmVzdWx0LDxi
+cj4NCi3CoCDCoCBlbnVtIGRldmljZV9lbmRpYW4gZW5kaWFuKTxicj4NCivCoCDCoCBNZW1PcCBt
+b3AsIGh3YWRkciBhZGRyLCBNZW1UeEF0dHJzIGF0dHJzLCBNZW1UeFJlc3VsdCAqcmVzdWx0KTxi
+cj4NCsKgezxicj4NCi3CoCDCoCByZXR1cm4gZ2x1ZShhZGRyZXNzX3NwYWNlX2xkbV9pbnRlcm5h
+bCwgU1VGRklYKShBUkcxLCBNT182NCwgYWRkciw8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+YXR0cnMsIHJlc3VsdCwgZW5kaWFuKTs8YnI+DQorwqAgwqAgcmV0dXJuIGdsdWUoYWRkcmVzc19z
+cGFjZV9sZG1faW50ZXJuYWwsIFNVRkZJWCkoQVJHMSwgbW9wIHwgTU9fNjQsIGFkZHIsPGJyPg0K
+K8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIGF0dHJzLCByZXN1bHQpOzxicj4NCsKgfTxicj4NCjxicj4N
+CsKgdWludDhfdCBnbHVlKGFkZHJlc3Nfc3BhY2VfbGR1YiwgU1VGRklYKShBUkcxX0RFQ0wsIGh3
+YWRkciBhZGRyLDxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIE1lbVR4QXR0cnMgYXR0cnMsIE1lbVR4UmVzdWx0ICpyZXN1
+bHQpPGJyPg0KwqB7PGJyPg0KwqAgwqAgwqByZXR1cm4gZ2x1ZShhZGRyZXNzX3NwYWNlX2xkbV9p
+bnRlcm5hbCwgU1VGRklYKShBUkcxLCBNT184LCBhZGRyLDxicj4NCi3CoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCBhdHRycywgcmVzdWx0LDxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBERVZJQ0VfTkFU
+SVZFX0VORElBTik7PGJyPg0KK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGF0dHJzLCByZXN1bHQpOzxi
+cj4NCsKgfTxicj4NCjxicj4NCsKgLyogd2FybmluZzogYWRkciBtdXN0IGJlIGFsaWduZWQgKi88
+YnI+DQrCoHN0YXRpYyBpbmxpbmUgdWludDE2X3QgZ2x1ZShhZGRyZXNzX3NwYWNlX2xkdXdfaW50
+ZXJuYWwsIFNVRkZJWCkoQVJHMV9ERUNMLDxicj4NCi3CoCDCoCBod2FkZHIgYWRkciwgTWVtVHhB
+dHRycyBhdHRycywgTWVtVHhSZXN1bHQgKnJlc3VsdCw8YnI+DQotwqAgwqAgZW51bSBkZXZpY2Vf
+ZW5kaWFuIGVuZGlhbik8YnI+DQorwqAgwqAgTWVtT3AgbW9wLCBod2FkZHIgYWRkciwgTWVtVHhB
+dHRycyBhdHRycywgTWVtVHhSZXN1bHQgKnJlc3VsdCk8YnI+DQrCoHs8YnI+DQotwqAgwqAgcmV0
+dXJuIGdsdWUoYWRkcmVzc19zcGFjZV9sZG1faW50ZXJuYWwsIFNVRkZJWCkoQVJHMSwgTU9fMTYs
+IGFkZHIsPGJyPg0KLcKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGF0dHJzLCByZXN1bHQsIGVuZGlhbik7
+PGJyPg0KK8KgIMKgIHJldHVybiBnbHVlKGFkZHJlc3Nfc3BhY2VfbGRtX2ludGVybmFsLCBTVUZG
+SVgpKEFSRzEsIG1vcCB8IE1PXzE2LCBhZGRyLDxicj4NCivCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBh
+dHRycywgcmVzdWx0KTs8YnI+DQrCoH08YnI+DQo8YnI+DQrCoC8qIHdhcm5pbmc6IGFkZHIgbXVz
+dCBiZSBhbGlnbmVkICovPGJyPg0KQEAgLTExMSw4ICs5OSw3IEBAIHN0YXRpYyBpbmxpbmU8YnI+
+DQrCoHZvaWQgZ2x1ZShhZGRyZXNzX3NwYWNlX3N0bV9pbnRlcm5hbCwgU1VGRklYKShBUkcxX0RF
+Q0wsIE1lbU9wIG1vcCw8YnI+DQrCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGh3YWRkciBhZGRyLCB1aW50NjRfdCB2
+YWwsPGJyPg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBNZW1UeEF0dHJzIGF0dHJzLDxicj4NCi3CoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCBNZW1UeFJlc3VsdCAqcmVzdWx0LDxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBlbnVtIGRldmljZV9lbmRp
+YW4gZW5kaWFuKTxicj4NCivCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBNZW1UeFJlc3VsdCAqcmVzdWx0KTxicj4NCsKg
+ezxicj4NCsKgIMKgIMKgY29uc3QgdW5zaWduZWQgc2l6ZSA9IG1lbW9wX3NpemUobW9wKTs8YnI+
+DQrCoCDCoCDCoHVpbnQ4X3QgKnB0cjs8YnI+DQpAQCAtMTI2LDIxICsxMTMsMTQgQEAgdm9pZCBn
+bHVlKGFkZHJlc3Nfc3BhY2Vfc3RtX2ludGVybmFsLCBTVUZGSVgpKEFSRzFfREVDTCwgTWVtT3Ag
+bW9wLDxicj4NCsKgIMKgIMKgbXIgPSBUUkFOU0xBVEUoYWRkciwgJmFtcDthZGRyMSwgJmFtcDts
+LCB0cnVlLCBhdHRycyk7PGJyPg0KwqAgwqAgwqBpZiAobCAmbHQ7IHNpemUgfHwgIW1lbW9yeV9h
+Y2Nlc3NfaXNfZGlyZWN0KG1yLCB0cnVlLCBhdHRycykpIHs8YnI+DQrCoCDCoCDCoCDCoCDCoHJl
+bGVhc2VfbG9jayB8PSBwcmVwYXJlX21taW9fYWNjZXNzKG1yKTs8YnI+DQotwqAgwqAgwqAgwqAg
+ciA9IG1lbW9yeV9yZWdpb25fZGlzcGF0Y2hfd3JpdGUobXIsIGFkZHIxLCB2YWwsPGJyPg0KLcKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgbW9wIHwgZGV2ZW5kX21lbW9wKGVuZGlhbiksIGF0dHJzKTs8YnI+DQorwqAgwqAgwqAgwqAg
+ciA9IG1lbW9yeV9yZWdpb25fZGlzcGF0Y2hfd3JpdGUobXIsIGFkZHIxLCB2YWwsIG1vcCwgYXR0
+cnMpOzxicj4NCsKgIMKgIMKgfSBlbHNlIHs8YnI+DQrCoCDCoCDCoCDCoCDCoC8qIFJBTSBjYXNl
+ICovPGJyPg0KwqAgwqAgwqAgwqAgwqBwdHIgPSBxZW11X21hcF9yYW1fcHRyKG1yLSZndDtyYW1f
+YmxvY2ssIGFkZHIxKTs8YnI+DQotwqAgwqAgwqAgwqAgc3dpdGNoIChlbmRpYW4pIHs8YnI+DQot
+wqAgwqAgwqAgwqAgY2FzZSBERVZJQ0VfTElUVExFX0VORElBTjo8YnI+DQorwqAgwqAgwqAgwqAg
+aWYgKChtb3AgJmFtcDsgTU9fQlNXQVApID09IE1PX0xFKSB7PGJyPg0KwqAgwqAgwqAgwqAgwqAg
+wqAgwqBzdG5fbGVfcChwdHIsIHNpemUsIHZhbCk7PGJyPg0KLcKgIMKgIMKgIMKgIMKgIMKgIGJy
+ZWFrOzxicj4NCi3CoCDCoCDCoCDCoCBjYXNlIERFVklDRV9CSUdfRU5ESUFOOjxicj4NCivCoCDC
+oCDCoCDCoCB9IGVsc2Ugezxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgc3RuX2JlX3AocHRyLCBz
+aXplLCB2YWwpOzxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCBicmVhazs8YnI+DQotwqAgwqAgwqAg
+wqAgZGVmYXVsdDo8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgc3RuX3AocHRyLCBzaXplLCB2YWwp
+Ozxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCBicmVhazs8YnI+DQrCoCDCoCDCoCDCoCDCoH08YnI+
+DQrCoCDCoCDCoCDCoCDCoGludmFsaWRhdGVfYW5kX3NldF9kaXJ0eShtciwgYWRkcjEsIHNpemUp
+Ozxicj4NCsKgIMKgIMKgIMKgIMKgciA9IE1FTVRYX09LOzxicj4NCkBAIC0xNTYsNDggKzEzNiw0
+NCBAQCB2b2lkIGdsdWUoYWRkcmVzc19zcGFjZV9zdG1faW50ZXJuYWwsIFNVRkZJWCkoQVJHMV9E
+RUNMLCBNZW1PcCBtb3AsPGJyPg0KPGJyPg0KwqAvKiB3YXJuaW5nOiBhZGRyIG11c3QgYmUgYWxp
+Z25lZCAqLzxicj4NCsKgc3RhdGljIGlubGluZSB2b2lkIGdsdWUoYWRkcmVzc19zcGFjZV9zdGxf
+aW50ZXJuYWwsIFNVRkZJWCkoQVJHMV9ERUNMLDxicj4NCi3CoCDCoCBod2FkZHIgYWRkciwgdWlu
+dDMyX3QgdmFsLCBNZW1UeEF0dHJzIGF0dHJzLDxicj4NCi3CoCDCoCBNZW1UeFJlc3VsdCAqcmVz
+dWx0LCBlbnVtIGRldmljZV9lbmRpYW4gZW5kaWFuKTxicj4NCivCoCDCoCBNZW1PcCBtb3AsIGh3
+YWRkciBhZGRyLCB1aW50MzJfdCB2YWwsIE1lbVR4QXR0cnMgYXR0cnMsIE1lbVR4UmVzdWx0ICpy
+ZXN1bHQpPGJyPg0KwqB7PGJyPg0KLcKgIMKgIGdsdWUoYWRkcmVzc19zcGFjZV9zdG1faW50ZXJu
+YWwsIFNVRkZJWCkoQVJHMSwgTU9fMzIsIGFkZHIsIHZhbCw8YnI+DQotwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBhdHRy
+cywgcmVzdWx0LCBlbmRpYW4pOzxicj4NCivCoCDCoCBnbHVlKGFkZHJlc3Nfc3BhY2Vfc3RtX2lu
+dGVybmFsLCBTVUZGSVgpKEFSRzEsIG1vcCB8IE1PXzMyLCBhZGRyLCB2YWwsPGJyPg0KK8KgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgYXR0cnMsIHJlc3VsdCk7PGJyPg0KwqB9PGJyPg0KPGJyPg0KwqB2b2lkIGdsdWUoYWRk
+cmVzc19zcGFjZV9zdGIsIFNVRkZJWCkoQVJHMV9ERUNMLCBod2FkZHIgYWRkciwgdWludDhfdCB2
+YWwsPGJyPg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgTWVtVHhBdHRycyBhdHRycywgTWVtVHhSZXN1bHQgKnJlc3VsdCk8YnI+DQrCoHs8
+YnI+DQrCoCDCoCDCoGdsdWUoYWRkcmVzc19zcGFjZV9zdG1faW50ZXJuYWwsIFNVRkZJWCkoQVJH
+MSwgTU9fOCwgYWRkciwgdmFsLDxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGF0dHJzLCByZXN1bHQsPGJyPg0K
+LcKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgREVWSUNFX05BVElWRV9FTkRJQU4pOzxicj4NCivCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGF0dHJz
+LCByZXN1bHQpOzxicj4NCsKgfTxicj4NCjxicj4NCsKgLyogd2FybmluZzogYWRkciBtdXN0IGJl
+IGFsaWduZWQgKi88YnI+DQrCoHN0YXRpYyBpbmxpbmUgdm9pZCBnbHVlKGFkZHJlc3Nfc3BhY2Vf
+c3R3X2ludGVybmFsLCBTVUZGSVgpKEFSRzFfREVDTCw8YnI+DQotwqAgwqAgaHdhZGRyIGFkZHIs
+IHVpbnQxNl90IHZhbCwgTWVtVHhBdHRycyBhdHRycyw8YnI+DQotwqAgwqAgTWVtVHhSZXN1bHQg
+KnJlc3VsdCwgZW51bSBkZXZpY2VfZW5kaWFuIGVuZGlhbik8YnI+DQorwqAgwqAgTWVtT3AgbW9w
+LCBod2FkZHIgYWRkciwgdWludDE2X3QgdmFsLCBNZW1UeEF0dHJzIGF0dHJzLCBNZW1UeFJlc3Vs
+dCAqcmVzdWx0KTxicj4NCsKgezxicj4NCi3CoCDCoCBnbHVlKGFkZHJlc3Nfc3BhY2Vfc3RtX2lu
+dGVybmFsLCBTVUZGSVgpKEFSRzEsIE1PXzE2LCBhZGRyLCB2YWwsPGJyPg0KLcKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+YXR0cnMsIHJlc3VsdCwgZW5kaWFuKTs8YnI+DQorwqAgwqAgZ2x1ZShhZGRyZXNzX3NwYWNlX3N0
+bV9pbnRlcm5hbCwgU1VGRklYKShBUkcxLCBtb3AgfCBNT18xNiwgYWRkciwgdmFsLDxicj4NCivC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoGF0dHJzLCByZXN1bHQpOzxicj4NCsKgfTxicj4NCjxicj4NCsKgc3RhdGljIGlu
+bGluZSB2b2lkIGdsdWUoYWRkcmVzc19zcGFjZV9zdHFfaW50ZXJuYWwsIFNVRkZJWCkoQVJHMV9E
+RUNMLDxicj4NCi3CoCDCoCBod2FkZHIgYWRkciwgdWludDY0X3QgdmFsLCBNZW1UeEF0dHJzIGF0
+dHJzLDxicj4NCi3CoCDCoCBNZW1UeFJlc3VsdCAqcmVzdWx0LCBlbnVtIGRldmljZV9lbmRpYW4g
+ZW5kaWFuKTxicj4NCivCoCDCoCBNZW1PcCBtb3AsIGh3YWRkciBhZGRyLCB1aW50NjRfdCB2YWws
+IE1lbVR4QXR0cnMgYXR0cnMsIE1lbVR4UmVzdWx0ICpyZXN1bHQpPGJyPg0KwqB7PGJyPg0KLcKg
+IMKgIGdsdWUoYWRkcmVzc19zcGFjZV9zdG1faW50ZXJuYWwsIFNVRkZJWCkoQVJHMSwgTU9fNjQs
+IGFkZHIsIHZhbCw8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBhdHRycywgcmVzdWx0LCBlbmRpYW4pOzxicj4N
+CivCoCDCoCBnbHVlKGFkZHJlc3Nfc3BhY2Vfc3RtX2ludGVybmFsLCBTVUZGSVgpKEFSRzEsIG1v
+cCB8IE1PXzY0LCBhZGRyLCB2YWwsPGJyPg0KK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgYXR0cnMsIHJlc3VsdCk7PGJy
+Pg0KwqB9PGJyPg0KPGJyPg0KwqAjZGVmaW5lIEVORElBTk5FU1M8YnI+DQotI2RlZmluZSBERVZJ
+Q0VfRU5ESUFOTkVTU8KgIMKgIMKgIMKgREVWSUNFX05BVElWRV9FTkRJQU48YnI+DQorI2RlZmlu
+ZSBNT19FTkRJQU7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCh0YXJnZXRfYmlnX2VuZGlhbigpID8g
+TU9fQkUgOiBNT19MRSk8YnI+DQrCoCNpbmNsdWRlICZxdW90O21lbW9yeV9sZHN0X2VuZGlhbi5j
+LmluYyZxdW90Ozxicj4NCjxicj4NCsKgI2RlZmluZSBFTkRJQU5ORVNTwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgX2xlPGJyPg0KLSNkZWZpbmUgREVWSUNFX0VORElBTk5FU1PCoCDCoCDCoCDCoERFVklD
+RV9MSVRUTEVfRU5ESUFOPGJyPg0KKyNkZWZpbmUgTU9fRU5ESUFOwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqBNT19MRTxicj4NCsKgI2luY2x1ZGUgJnF1b3Q7bWVtb3J5X2xkc3RfZW5kaWFuLmMuaW5j
+JnF1b3Q7PGJyPg0KPGJyPg0KwqAjZGVmaW5lIEVORElBTk5FU1PCoCDCoCDCoCDCoCDCoCDCoCDC
+oCBfYmU8YnI+DQotI2RlZmluZSBERVZJQ0VfRU5ESUFOTkVTU8KgIMKgIMKgIMKgREVWSUNFX0JJ
+R19FTkRJQU48YnI+DQorI2RlZmluZSBNT19FTkRJQU7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoE1P
+X0JFPGJyPg0KwqAjaW5jbHVkZSAmcXVvdDttZW1vcnlfbGRzdF9lbmRpYW4uYy5pbmMmcXVvdDs8
+YnI+DQo8YnI+DQrCoCN1bmRlZiBBUkcxX0RFQ0w8YnI+DQpkaWZmIC0tZ2l0IGEvc3lzdGVtL21l
+bW9yeV9sZHN0X2VuZGlhbi5jLmluYyBiL3N5c3RlbS9tZW1vcnlfbGRzdF9lbmRpYW4uYy5pbmM8
+YnI+DQppbmRleCA3OTFkMDQxYjE1ZC4uOWNmMzYwMTcxMzUgMTAwNjQ0PGJyPg0KLS0tIGEvc3lz
+dGVtL21lbW9yeV9sZHN0X2VuZGlhbi5jLmluYzxicj4NCisrKyBiL3N5c3RlbS9tZW1vcnlfbGRz
+dF9lbmRpYW4uYy5pbmM8YnI+DQpAQCAtMjIsNDMgKzIyLDQzIEBAPGJyPg0KwqB1aW50MTZfdCBB
+RERSRVNTX1NQQUNFX0xEKHV3KShBUkcxX0RFQ0wsIGh3YWRkciBhZGRyLDxicj4NCsKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgTWVtVHhBdHRycyBhdHRycywg
+TWVtVHhSZXN1bHQgKnJlc3VsdCk8YnI+DQrCoHs8YnI+DQotwqAgwqAgcmV0dXJuIEFERFJFU1Nf
+U1BBQ0VfTERfSU5URVJOQUwodXcpKEFSRzEsIGFkZHIsIGF0dHJzLCByZXN1bHQsPGJyPg0KLcKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgREVWSUNFX0VORElBTk5FU1MpOzxicj4NCivCoCDCoCByZXR1cm4gQUREUkVTU19TUEFDRV9M
+RF9JTlRFUk5BTCh1dykoQVJHMSwgTU9fRU5ESUFOLDxicj4NCivCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBhZGRyLCBhdHRycywgcmVz
+dWx0KTs8YnI+DQrCoH08YnI+DQo8YnI+DQrCoHVpbnQzMl90IEFERFJFU1NfU1BBQ0VfTEQobCko
+QVJHMV9ERUNMLCBod2FkZHIgYWRkciw8YnI+DQrCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCBNZW1UeEF0dHJzIGF0dHJzLCBNZW1UeFJlc3VsdCAqcmVzdWx0KTxi
+cj4NCsKgezxicj4NCi3CoCDCoCByZXR1cm4gQUREUkVTU19TUEFDRV9MRF9JTlRFUk5BTChsKShB
+UkcxLCBhZGRyLCBhdHRycywgcmVzdWx0LDxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBERVZJQ0VfRU5ESUFOTkVTUyk7PGJy
+Pg0KK8KgIMKgIHJldHVybiBBRERSRVNTX1NQQUNFX0xEX0lOVEVSTkFMKGwpKEFSRzEsIE1PX0VO
+RElBTiw8YnI+DQorwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgYWRkciwgYXR0cnMsIHJlc3VsdCk7PGJyPg0KwqB9PGJyPg0KPGJyPg0K
+wqB1aW50NjRfdCBBRERSRVNTX1NQQUNFX0xEKHEpKEFSRzFfREVDTCwgaHdhZGRyIGFkZHIsPGJy
+Pg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgTWVtVHhBdHRy
+cyBhdHRycywgTWVtVHhSZXN1bHQgKnJlc3VsdCk8YnI+DQrCoHs8YnI+DQotwqAgwqAgcmV0dXJu
+IEFERFJFU1NfU1BBQ0VfTERfSU5URVJOQUwocSkoQVJHMSwgYWRkciwgYXR0cnMsIHJlc3VsdCw8
+YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgREVWSUNFX0VORElBTk5FU1MpOzxicj4NCivCoCDCoCByZXR1cm4gQUREUkVTU19T
+UEFDRV9MRF9JTlRFUk5BTChxKShBUkcxLCBNT19FTkRJQU4sPGJyPg0KK8KgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFkZHIsIGF0dHJz
+LCByZXN1bHQpOzxicj4NCsKgfTxicj4NCjxicj4NCsKgdm9pZCBBRERSRVNTX1NQQUNFX1NUKHcp
+KEFSRzFfREVDTCwgaHdhZGRyIGFkZHIsIHVpbnQxNl90IHZhbCw8YnI+DQrCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBNZW1UeEF0dHJzIGF0dHJzLCBNZW1UeFJlc3VsdCAq
+cmVzdWx0KTxicj4NCsKgezxicj4NCi3CoCDCoCBBRERSRVNTX1NQQUNFX1NUX0lOVEVSTkFMKHcp
+KEFSRzEsIGFkZHIsIHZhbCwgYXR0cnMsIHJlc3VsdCw8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBERVZJQ0VfRU5ESUFOTkVTUyk7PGJyPg0K
+K8KgIMKgIEFERFJFU1NfU1BBQ0VfU1RfSU5URVJOQUwodykoQVJHMSwgTU9fRU5ESUFOLDxicj4N
+CivCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGFkZHIs
+IHZhbCwgYXR0cnMsIHJlc3VsdCk7PGJyPg0KwqB9PGJyPg0KPGJyPg0KwqB2b2lkIEFERFJFU1Nf
+U1BBQ0VfU1QobCkoQVJHMV9ERUNMLCBod2FkZHIgYWRkciwgdWludDMyX3QgdmFsLDxicj4NCsKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIE1lbVR4QXR0cnMgYXR0cnMsIE1l
+bVR4UmVzdWx0ICpyZXN1bHQpPGJyPg0KwqB7PGJyPg0KLcKgIMKgIEFERFJFU1NfU1BBQ0VfU1Rf
+SU5URVJOQUwobCkoQVJHMSwgYWRkciwgdmFsLCBhdHRycywgcmVzdWx0LDxicj4NCi3CoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoERFVklDRV9FTkRJQU5O
+RVNTKTs8YnI+DQorwqAgwqAgQUREUkVTU19TUEFDRV9TVF9JTlRFUk5BTChsKShBUkcxLCBNT19F
+TkRJQU4sPGJyPg0KK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgYWRkciwgdmFsLCBhdHRycywgcmVzdWx0KTs8YnI+DQrCoH08YnI+DQo8YnI+DQrCoHZv
+aWQgQUREUkVTU19TUEFDRV9TVChxKShBUkcxX0RFQ0wsIGh3YWRkciBhZGRyLCB1aW50NjRfdCB2
+YWwsPGJyPg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgTWVtVHhBdHRy
+cyBhdHRycywgTWVtVHhSZXN1bHQgKnJlc3VsdCk8YnI+DQrCoHs8YnI+DQotwqAgwqAgQUREUkVT
+U19TUEFDRV9TVF9JTlRFUk5BTChxKShBUkcxLCBhZGRyLCB2YWwsIGF0dHJzLCByZXN1bHQsPGJy
+Pg0KLcKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgREVW
+SUNFX0VORElBTk5FU1MpOzxicj4NCivCoCDCoCBBRERSRVNTX1NQQUNFX1NUX0lOVEVSTkFMKHEp
+KEFSRzEsIE1PX0VORElBTiw8YnI+DQorwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqBhZGRyLCB2YWwsIGF0dHJzLCByZXN1bHQpOzxicj4NCsKgfTxicj4N
+Cjxicj4NCsKgI3VuZGVmIEFERFJFU1NfU1BBQ0VfTEQ8YnI+DQpAQCAtNjcsNCArNjcsNCBAQCB2
+b2lkIEFERFJFU1NfU1BBQ0VfU1QocSkoQVJHMV9ERUNMLCBod2FkZHIgYWRkciwgdWludDY0X3Qg
+dmFsLDxicj4NCsKgI3VuZGVmIEFERFJFU1NfU1BBQ0VfU1RfSU5URVJOQUw8YnI+DQo8YnI+DQrC
+oCN1bmRlZiBFTkRJQU5ORVNTPGJyPg0KLSN1bmRlZiBERVZJQ0VfRU5ESUFOTkVTUzxicj4NCisj
+dW5kZWYgTU9fRU5ESUFOPGJyPg0KLS0gPGJyPg0KMi41Mi4wPGJyPg0KPGJyPg0KPC9ibG9ja3F1
+b3RlPjwvZGl2PjwvZGl2PjwvZGl2Pg0K
+--000000000000ec2d31064701261c--
 
 
