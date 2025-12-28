@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1399E9272A
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 23:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A86FCD3B7E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 23:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va0cd-0004hS-7Q; Sun, 28 Dec 2025 18:56:27 -0500
+	id 1va0e9-0000HE-NQ; Sun, 28 Dec 2025 18:58:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1va0cb-0004gp-C2
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:56:25 -0500
-Received: from p-west1-cluster1-host4-snip4-4.eps.apple.com ([57.103.64.117]
+ id 1va0e7-00005V-KZ
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:57:59 -0500
+Received: from p-west1-cluster5-host1-snip4-4.eps.apple.com ([57.103.66.175]
  helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1va0cZ-0006jV-9g
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:56:25 -0500
+ id 1va0e5-0007QH-9x
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 18:57:59 -0500
 Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-1a-60-percent-5 (Postfix) with ESMTPS id
- 8625F18000AE; Sun, 28 Dec 2025 23:56:19 +0000 (UTC)
+ E935A18000B9; Sun, 28 Dec 2025 23:57:51 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=djqUEZPSjZdkvi8i+dN9B7VY4WoV8PBYEEOOXDcPQHk=;
+ s=sig1; bh=vIKxdUqmkJfbx59PuPOqxNWNB3HpZRZgAEdMNyICtkQ=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Z2BPXQC8G0IEYabVBvcXu2lDAuzWsCbkQPu0BLGfbnr29RcaZfp+2h/u4jg0wFBptfwjNYcP7xe75BKBniCsaZvkyfwJXuLq2vZx3My7yfAY61ZUThCy6uiZw12N+6pDEHiKpM0bRLmyRf5m+i7Ln7WQTnBS9LxdruLlBZLquUYIvDfOf93VC/5QwxtekDln/l7If17+QLY/sk3Z71AI9s5MgLOqyDf6+QWBHu0/RZXxhgnnJ6Op2DM9Bcy0eirxjtdvCztveJnOfh3CxFQZTdr8bd3p57bE5Usgd5z8woVEPMFJ1+Sob/cUwdhAb+NN5u8714w7uEumwpkVb3GJcA==
+ b=RAwgbAJ2X+0zWmItRxY4Oe3N27c6Qy0KT2QxUGarHL/S7m8nlotHJaOxvtqP+kdUsdMi4/ZvQBHsULyeLAqqDFei84+5+7CA2/KSr4tI8alaHY7I4qQ7iCzo/DnTL2/JYpR7X1Y4f16lkmX8GTW8Q12bmpLtm3k8zIyl7qukg1prts9vU0aNbKMQFKhLzO75hi7dP/BAgp5z3yg8v1WCZzzWZN52Lx+QdrwDi4TadMR2uDJ1Qlv5oHEdwHD/mWl/8LcjPt/KCnxfCZgPm3SoxF1emi35+x9mZwjMUI3kiQaiAwq3y/YiGcxaUvng13WAf0dYoBjZ3zlDMWjBVpzijA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.56.9.36])
  by p00-icloudmta-asmtp-us-west-1a-60-percent-5 (Postfix) with ESMTPSA id
- 9FC7D1800753; Sun, 28 Dec 2025 23:56:06 +0000 (UTC)
+ F240D1800757; Sun, 28 Dec 2025 23:57:44 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org,
 	mohamed@unpredictable.fr
@@ -53,38 +53,39 @@ Cc: Alexander Graf <agraf@csgraf.de>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>
-Subject: [PATCH v12 06/28] hw/arm: virt: cleanly fail on attempt to use the
- platform vGIC together with ITS
-Date: Mon, 29 Dec 2025 00:54:00 +0100
-Message-ID: <20251228235422.30383-7-mohamed@unpredictable.fr>
+ Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v12 21/28] whpx: arm64: implement -cpu host
+Date: Mon, 29 Dec 2025 00:54:15 +0100
+Message-ID: <20251228235422.30383-22-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251228235422.30383-1-mohamed@unpredictable.fr>
 References: <20251228235422.30383-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: nVPxbZAZ2vc2VjDHWa5ipICtOFHOSLzM
-X-Authority-Info: v=2.4 cv=V51wEOni c=1 sm=1 tr=0 ts=6951c3a5 cx=c_apl:c_pps
+X-Authority-Info: v=2.4 cv=Jo38bc4C c=1 sm=1 tr=0 ts=6951c403 cx=c_apl:c_pps
  a=azHRBMxVc17uSn+fyuI/eg==:117 a=azHRBMxVc17uSn+fyuI/eg==:17
- a=065Y4zqepXN3nrMe:21 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=eCCvHKTOcc9AFgEG6kwA:9
-X-Proofpoint-ORIG-GUID: nVPxbZAZ2vc2VjDHWa5ipICtOFHOSLzM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI4MDIyMyBTYWx0ZWRfX1rTX1awvGXsh
- bOG8nfIelwbnwipQrdlKBaYTZB2/frH8C1L3FGSBQ8ueGo3gM20Ndb11qeH2oenhVRisDpFFVq0
- m5f9GaHHF5rMFXBq8imhfdFjlogvGZL6JOUvPTr9JEHUFwqhC5l7XSa1b7ry7jG1AS+HE2ZmtC6
- CmFxzerbBoAnuuL1aVkcFkscgybGlMOJjV1auCNrkcwazptWTQUChj0601Ty0uAA0s4fcRIKGVX
- W+YVElafHSmMBY+FlqjV8slekSkxK7smBICTUnB+IPzJ6Hhzbz/x7iZVZDBiIQks/La/f6eLGRj
- Z1qC2K4b55gDo2eWYGg
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=L6Cw-x9jAAAA:20
+ a=KKAkSRfTAAAA:8 a=hGuVB2XOhXFvD5HHq_UA:9 a=cvBusfyB2V15izCimMoJ:22
+ a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-GUID: hoy6sG7KmspUGRRPVvnM2Dv1UTavCS14
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI4MDIyMyBTYWx0ZWRfX89HsorR/lor0
+ KlK7Uu+vPfr7NOK772QAJqclKytF8kqNshsIXFZD2V4ZGf8zv5f+UwaoR6JcaPdDDZauEXk86Og
+ Rpmg6oDvA9C3tsPFuVMfXopxSdp3Rit0zcbY8BoFSn7zH3IswQ3jlFXfgatnFAEVEl2WwusE2C6
+ QyUznr9t27GAToE9XPw+lwN5K+I5RdsF4PWIkPiRN2JBALMs9F2lrIOzOxTw2BU63carHYhEm7M
+ I3CDm6ftr9gH/Ztw5UXzaq4Skr1/tyROqlfwWRDiMRxvklImItCvVYtJTHWGWdnhup1qDWDnIoJ
+ BoK/yEta038RzZSD2TF
+X-Proofpoint-ORIG-GUID: hoy6sG7KmspUGRRPVvnM2Dv1UTavCS14
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-28_07,2025-12-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- malwarescore=0 suspectscore=0 adultscore=0
- phishscore=0 mlxscore=0
- spamscore=0 clxscore=1030 bulkscore=0 classifier=spam authscore=0 adjust=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ spamscore=0 clxscore=1030 bulkscore=0 malwarescore=0 mlxlogscore=999
+ suspectscore=0 phishscore=0 mlxscore=0 classifier=spam authscore=0 adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512280223
-X-JNJ: AAAAAAABUK2f1aE+CtpqEg3DyMwdOB9zxxk17QKCZ+L2U6dfYz5XPZtHqCpcyb+LnFahHvfQXrp5naMO0VTdzLz1TKGcx7J03s+n43UFSaZo7NtWV3Eo0RtfQtTJyQL9Yi5Zfc5jcj9J3DmWZ4d7dSDzI/QLgNBSgoyAfhlKDAfvFKdID47Ryn/fV1EmFAZ+Via7dR4+UFDEX97+rnJusE/UfeVGOXQ1aLpdrWMQGMX2cgDH74YTryElSSUPy0Pi/UPi9wNbmGx78cMD0ftn8fIsQjIK0LvIBxO+YkyweZNBLltWVloLlRalVM+tyRy0vWHDxJWEiyu6O748fELeAYc8Hk+x/Ws77hQzoqvHAwTZndKItkocBvmN8GN1TBgkIV1Ub94OuuI65UMHtsW4VNqIaYCYLPxvAwiJk4Uxvu3xyfEr+2bmVqn7fMeLAAH0gzxWiwACoUhLy2UFleJseQzVnCxq7D11mGon9QobPtkFb3PIuhmmrNf8rukkbD4sq/wkUyM5fjjqF8N3CVxVo46wf7mZNUpG9pCIMJNQGwMMGqi6v9mxOY9A8MXgL6NLxXUBwX5zfgC8cHMG9+phunEjfHz+AbvkmQ6ICoaEd16qCo67eNoB3/S65vhtxwiDIWS10u9FrSjVTS6T09XQtt+OahraWdarOPTdLFWyjIexjaq4wNc5+B7QySxsdaIbsgj/lJEHqQhOPD9nYiszF/XMgfwLKcZhmR+KPe3ic/mNBAUzM+Vujigb5fye6MsNhhlvbtVl8Tv2yK8r8VZLNHbVVvGFgdSryok1/wsnFeLq9IUkdCu3YzPEjbNFIfHZcGTM3X0XBoLwy9+GuR8O3RI/+4SsJGhQudrXuaII1BEmuC9wkrEtMFUuOGZsECZ1tYtvQv8PXgrvkHUuFPgHfwnyfomZNQ68V7J4QcZiQsYS1q2vNxy5bNoISCm55n/rqRCt+HQbZQ==
-Received-SPF: pass client-ip=57.103.64.117;
+X-JNJ: AAAAAAAB9nIe16wmmehUvrw9rYKcTcJH8bKk4R/n+MC6eNj8TK/1CnYfnjCWST0z/4JVxzMwbFgV4BV+0/o+hxTxWpc0D/WMI+FiaaYUu9ZcCZmyajqieJDLvuChyeE5cJtoLxUZKZBOhSBCcOwVzML0eXCeoC7idhjI6Qhvry/M1fJ3LmhipkTU7r1WYw5abRuOyLUZebaBUQfVXbXv1J3REh8sZ+/SuFWWaeL2FDypuJuBqvmm2PDHr3q4q8ojEDch6GNRc8hTKi7FijGPpTtaUTLOWNFCxlbBi5FFgmyNIGMVTcapKQFLDbHvYBkVS9datVP8j6xKLubkIg51ICKRESrQPQKIag98elhWd4ZVDFPwT0dNmLOZwmmtBVIaoneMUkNMcFnUjA9t75wLe+e+z0F1LOcZ09Bu6FMHmQZNQMxALHT8+MicX6D2XuY0WlUPQriH77R2P64K3yjKgweM+ZTYe3zybJFaZytvdWz1TZtRodLGl6MhGyWnz78uo+WElbtbbW2y+/cXbc8d4tfHAbMO9w9NZAYVxYWn37fAEaqTChePNF+0kW+8SZBPhygHIR127EUn5rhFRkQjFyt/M+OmutlW7NGsGBdiGkflRaJbDpRY9M/CCfjPAL43bfHtH/YRzPVDDuPEP+aZGGJjz1wMWtvCPuGkYzGP+HrYr5Z1ZIVjR1HP566YounnQ4HNTLNRgHBTaXvRPsMbqOpnMyL9zzVfbXB+w31QtIW5fwrsoM9xDne3FXEYDg+zidiQH6Df6y6JmhKywQ5I1z2xXowQvt0OtLkmfMJJVLWXUCLJKXlaZuJC+Ji2aHt2S9dQSZRoNvzGDBsxm2I85DtxrQPOupo31yjC9xMh65QTZ0vyYvMjHBY5w1g5x7gFYH5BkeanjxosHc+HmRnVqVkSbZl92egNDG1nGJyvJa3Djxmqv99Hu53xDgbNRNn9ViDWkknXYcRk/TfN9q3bxgtsjkA3YLS
+ S7w7a
+Received-SPF: pass client-ip=57.103.66.175;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,210 +109,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch its to a tristate.
-
-Windows Hypervisor Platform's vGIC doesn't support ITS.
-Deal with this by reporting to the user and exiting.
-
-Regular configuration: GICv3 + ITS
-New default configuration with WHPX: GICv3 with GICv2m
-And its=off explicitly for the newest machine version: GICv3 + GICv2m
+Logic to fetch MIDR_EL1 for cpu 0 adapted from:
+https://github.com/FEX-Emu/FEX/blob/e6de17e72ef03aa88ba14fa0ec13163061608c74/Source/Windows/Common/CPUFeatures.cpp#L62
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- hw/arm/virt-acpi-build.c | 15 +++++++------
- hw/arm/virt.c            | 46 +++++++++++++++++++++++++++++++---------
- include/hw/arm/virt.h    |  4 +++-
- 3 files changed, 47 insertions(+), 18 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index b6f722657a..86024a1a73 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -473,7 +473,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
-         rc_mapping_count = rc_smmu_idmaps_len;
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ target/arm/cpu64.c         |  17 +++---
+ target/arm/whpx/whpx-all.c | 104 +++++++++++++++++++++++++++++++++++++
+ target/arm/whpx_arm.h      |   1 +
+ 3 files changed, 116 insertions(+), 6 deletions(-)
+
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index bf30381370..689babe822 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -26,10 +26,13 @@
+ #include "qemu/units.h"
+ #include "system/kvm.h"
+ #include "system/hvf.h"
++#include "system/whpx.h"
++#include "system/hw_accel.h"
+ #include "system/qtest.h"
+ #include "system/tcg.h"
+ #include "kvm_arm.h"
+ #include "hvf_arm.h"
++#include "whpx_arm.h"
+ #include "qapi/visitor.h"
+ #include "hw/core/qdev-properties.h"
+ #include "internals.h"
+@@ -521,7 +524,7 @@ void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
+     isar2 = FIELD_DP64(isar2, ID_AA64ISAR2, APA3, 0);
+     isar2 = FIELD_DP64(isar2, ID_AA64ISAR2, GPA3, 0);
  
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * Knowing the ID ranges from the RC to the SMMU, it's possible to
-              * determine the ID ranges from RC that go directly to ITS.
-@@ -484,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             rc_mapping_count += rc_its_idmaps->len;
-         }
-     } else {
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             nb_nodes = 2; /* RC and ITS */
-             rc_mapping_count = 1; /* Direct map to ITS */
-         } else {
-@@ -499,7 +499,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
-     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
- 
--    if (vms->its) {
-+    if (virt_is_its_enabled(vms)) {
-         /* Table 12 ITS Group Format */
-         build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
-         node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
-@@ -518,7 +518,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         int smmu_mapping_count, offset_to_id_array;
-         int irq = sdev->irq;
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             smmu_mapping_count = 1; /* ITS Group node */
-             offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
-         } else {
-@@ -611,7 +611,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             }
-         }
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * Map bypassed (don't go through the SMMU) RIDs (input) to
-              * ITS Group node directly: RC -> ITS.
-@@ -946,7 +946,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                                           memmap[VIRT_HIGH_GIC_REDIST2].size);
-         }
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * ACPI spec, Revision 6.0 Errata A
-              * (original 6.0 definition has invalid Length)
-@@ -962,7 +962,8 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         }
-     }
- 
--    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) && !vms->no_gicv3_with_gicv2m) {
-+    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms))
-+     && !vms->no_gicv3_with_gicv2m) {
-         const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
- 
-         /* 5.2.12.16 GIC MSI Frame Structure */
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0fb8dcb07d..dcdb740586 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -737,7 +737,7 @@ static void create_its(VirtMachineState *vms)
- {
-     DeviceState *dev;
- 
--    assert(vms->its);
-+    assert(virt_is_its_enabled(vms));
-     if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
+-    if (kvm_enabled() || hvf_enabled()) {
++    if (hwaccel_enabled()) {
          /*
-          * Do nothing if ITS is neither supported by the host nor emulated by
-@@ -746,6 +746,15 @@ static void create_its(VirtMachineState *vms)
+          * Exit early if PAuth is enabled and fall through to disable it.
+          * The algorithm selection properties are not present.
+@@ -598,10 +601,10 @@ void aarch64_add_pauth_properties(Object *obj)
+ 
+     /* Default to PAUTH on, with the architected algorithm on TCG. */
+     qdev_property_add_static(DEVICE(obj), &arm_cpu_pauth_property);
+-    if (kvm_enabled() || hvf_enabled()) {
++    if (hwaccel_enabled()) {
+         /*
+          * Mirror PAuth support from the probed sysregs back into the
+-         * property for KVM or hvf. Is it just a bit backward? Yes it is!
++         * property for HW accel. Is it just a bit backward? Yes it is!
+          * Note that prop_pauth is true whether the host CPU supports the
+          * architected QARMA5 algorithm or the IMPDEF one. We don't
+          * provide the separate pauth-impdef property for KVM or hvf,
+@@ -769,6 +772,8 @@ static void aarch64_host_initfn(Object *obj)
+     }
+ #elif defined(CONFIG_HVF)
+     hvf_arm_set_cpu_features_from_host(cpu);
++#elif defined(CONFIG_WHPX)
++    whpx_arm_set_cpu_features_from_host(cpu);
+ #else
+     g_assert_not_reached();
+ #endif
+@@ -779,8 +784,8 @@ static void aarch64_host_initfn(Object *obj)
+ 
+ static void aarch64_max_initfn(Object *obj)
+ {
+-    if (kvm_enabled() || hvf_enabled()) {
+-        /* With KVM or HVF, '-cpu max' is identical to '-cpu host' */
++    if (hwaccel_enabled()) {
++        /* When hardware acceleration enabled, '-cpu max' is identical to '-cpu host' */
+         aarch64_host_initfn(obj);
          return;
      }
+@@ -799,7 +804,7 @@ static const ARMCPUInfo aarch64_cpus[] = {
+     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
+     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
+     { .name = "max",                .initfn = aarch64_max_initfn },
+-#if defined(CONFIG_KVM) || defined(CONFIG_HVF)
++#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX)
+     { .name = "host",               .initfn = aarch64_host_initfn },
+ #endif
+ };
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 4254a8aadb..07bb6fae5d 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -41,6 +41,17 @@
  
-+    if (whpx_enabled() && vms->tcg_its) {
-+        /*
-+         * Signal to the user when ITS is neither supported by the host
-+         * nor emulated by the machine.
-+         */
-+        info_report("ITS not supported on WHPX.");
-+        exit(1);
-+    }
+ #include <winhvplatform.h>
+ #include <winhvplatformdefs.h>
++#include <winreg.h>
 +
-     dev = qdev_new(its_class_name());
++typedef struct ARMHostCPUFeatures {
++    ARMISARegisters isar;
++    uint64_t features;
++    uint64_t midr;
++    uint32_t reset_sctlr;
++    const char *dtb_compatible;
++} ARMHostCPUFeatures;
++
++static ARMHostCPUFeatures arm_host_cpu_features;
  
-     object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(vms->gic),
-@@ -957,7 +966,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
- 
-     fdt_add_gic_node(vms);
- 
--    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
-+    if (vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms)) {
-         create_its(vms);
-     } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
-         create_v2m(vms);
-@@ -2699,18 +2708,34 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
+ struct whpx_reg_match {
+     WHV_REGISTER_NAME reg;
+@@ -692,6 +703,99 @@ static void clamp_id_aa64mmfr0_parange_to_ipa_size(ARMISARegisters *isar)
+     SET_IDREG(isar, ID_AA64MMFR0, id_aa64mmfr0);
  }
  
--static bool virt_get_its(Object *obj, Error **errp)
-+bool virt_is_its_enabled(VirtMachineState *vms)
++static uint64_t whpx_read_midr(void)
 +{
-+    if (vms->its == ON_OFF_AUTO_OFF) {
-+        return false;
++    HKEY key;
++    uint64_t midr_el1;
++    DWORD size = sizeof(midr_el1);
++    const char *path = "Hardware\\Description\\System\\CentralProcessor\\0\\";
++    assert(!RegOpenKeyExA(HKEY_LOCAL_MACHINE, path, 0, KEY_READ, &key));
++    assert(!RegGetValueA(key, NULL, "CP 4000", RRF_RT_REG_QWORD, NULL, &midr_el1, &size));
++    RegCloseKey(key);
++    return midr_el1;
++}
++
++static bool whpx_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
++{
++    const struct isar_regs {
++        WHV_REGISTER_NAME reg;
++        uint64_t *val;
++    } regs[] = {
++        { WHvArm64RegisterIdAa64Pfr0El1, &ahcf->isar.idregs[ID_AA64PFR0_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Pfr1El1, &ahcf->isar.idregs[ID_AA64PFR1_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Dfr0El1, &ahcf->isar.idregs[ID_AA64DFR0_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Dfr1El1 , &ahcf->isar.idregs[ID_AA64DFR1_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Isar0El1, &ahcf->isar.idregs[ID_AA64ISAR0_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Isar1El1, &ahcf->isar.idregs[ID_AA64ISAR1_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Isar2El1, &ahcf->isar.idregs[ID_AA64ISAR2_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Mmfr0El1, &ahcf->isar.idregs[ID_AA64MMFR0_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Mmfr1El1, &ahcf->isar.idregs[ID_AA64MMFR1_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Mmfr2El1, &ahcf->isar.idregs[ID_AA64MMFR2_EL1_IDX] },
++        { WHvArm64RegisterIdAa64Mmfr3El1, &ahcf->isar.idregs[ID_AA64MMFR2_EL1_IDX] }
++    };
++
++    int i;
++    WHV_REGISTER_VALUE val;
++
++    ahcf->dtb_compatible = "arm,armv8";
++    ahcf->features = (1ULL << ARM_FEATURE_V8) |
++                     (1ULL << ARM_FEATURE_NEON) |
++                     (1ULL << ARM_FEATURE_AARCH64) |
++                     (1ULL << ARM_FEATURE_PMU) |
++                     (1ULL << ARM_FEATURE_GENERIC_TIMER);
++
++    for (i = 0; i < ARRAY_SIZE(regs); i++) {
++        clean_whv_register_value(&val);
++        whpx_get_global_reg(regs[i].reg, &val);
++        *regs[i].val = val.Reg64;
 +    }
-+    if (vms->its == ON_OFF_AUTO_AUTO) {
-+        if (whpx_enabled()) {
-+            return false;
-+        }
-+    }
++
++    /*
++     * MIDR_EL1 is not a global register on WHPX
++     * As such, read the CPU0 from the registry to get a consistent value.
++     * Otherwise, on heterogenous systems, you'll get variance between CPUs.
++     */
++    ahcf->midr = whpx_read_midr();
++
++    clamp_id_aa64mmfr0_parange_to_ipa_size(&ahcf->isar);
++
++    /*
++     * Disable SVE, which is not supported by QEMU whpx yet.
++     * Work needed for SVE support:
++     * - SVE state save/restore
++     * - any potentially needed VL management
++     * Also disable SME at the same time. (not currently supported by Hyper-V)
++     */
++    SET_IDREG(&ahcf->isar, ID_AA64PFR0,
++              GET_IDREG(&ahcf->isar, ID_AA64PFR0) & ~R_ID_AA64PFR0_SVE_MASK);
++
++    SET_IDREG(&ahcf->isar, ID_AA64PFR1,
++              GET_IDREG(&ahcf->isar, ID_AA64PFR1) & ~R_ID_AA64PFR1_SME_MASK);
++
 +    return true;
 +}
 +
-+static void virt_get_its(Object *obj, Visitor *v, const char *name,
-+                          void *opaque, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
-+    OnOffAuto its = vms->its;
- 
--    return vms->its;
-+    visit_type_OnOffAuto(v, name, &its, errp);
- }
- 
--static void virt_set_its(Object *obj, bool value, Error **errp)
-+static void virt_set_its(Object *obj, Visitor *v, const char *name,
-+                          void *opaque, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
- 
--    vms->its = value;
-+    visit_type_OnOffAuto(v, name, &vms->its, errp);
- }
- 
- static bool virt_get_dtb_randomness(Object *obj, Error **errp)
-@@ -3427,8 +3452,9 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                           "guest CPU which implements the ARM "
-                                           "Memory Tagging Extension");
- 
--    object_class_property_add_bool(oc, "its", virt_get_its,
--                                   virt_set_its);
-+    object_class_property_add(oc, "its", "OnOffAuto",
-+        virt_get_its, virt_set_its,
-+        NULL, NULL);
-     object_class_property_set_description(oc, "its",
-                                           "Set on/off to enable/disable "
-                                           "ITS instantiation");
-@@ -3488,8 +3514,8 @@ static void virt_instance_init(Object *obj)
-     vms->highmem_mmio = true;
-     vms->highmem_redists = true;
- 
--    /* Default allows ITS instantiation */
--    vms->its = true;
-+    /* Default allows ITS instantiation if available */
-+    vms->its = ON_OFF_AUTO_AUTO;
-     /* Allow ITS emulation if the machine version supports it */
-     vms->tcg_its = !vmc->no_tcg_its;
-     vms->no_gicv3_with_gicv2m = false;
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index c5bc47ee88..394b70c62e 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -147,7 +147,7 @@ struct VirtMachineState {
-     bool highmem_ecam;
-     bool highmem_mmio;
-     bool highmem_redists;
--    bool its;
-+    OnOffAuto its;
-     bool tcg_its;
-     bool virt;
-     bool ras;
-@@ -216,4 +216,6 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
-             vms->highmem_redists) ? 2 : 1;
- }
- 
-+bool virt_is_its_enabled(VirtMachineState *vms);
++void whpx_arm_set_cpu_features_from_host(ARMCPU *cpu)
++{
++    if (!arm_host_cpu_features.dtb_compatible) {
++        if (!whpx_enabled() ||
++            !whpx_arm_get_host_cpu_features(&arm_host_cpu_features)) {
++            /*
++             * We can't report this error yet, so flag that we need to
++             * in arm_cpu_realizefn().
++             */
++            cpu->host_cpu_probe_failed = true;
++            return;
++        }
++    }
 +
- #endif /* QEMU_ARM_VIRT_H */
++    cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
++    cpu->isar = arm_host_cpu_features.isar;
++    cpu->env.features = arm_host_cpu_features.features;
++    cpu->midr = arm_host_cpu_features.midr;
++    cpu->reset_sctlr = arm_host_cpu_features.reset_sctlr;
++}
++
+ int whpx_init_vcpu(CPUState *cpu)
+ {
+     HRESULT hr;
+diff --git a/target/arm/whpx_arm.h b/target/arm/whpx_arm.h
+index de7406b66f..df65fd753c 100644
+--- a/target/arm/whpx_arm.h
++++ b/target/arm/whpx_arm.h
+@@ -12,5 +12,6 @@
+ #include "target/arm/cpu-qom.h"
+ 
+ uint32_t whpx_arm_get_ipa_bit_size(void);
++void whpx_arm_set_cpu_features_from_host(ARMCPU *cpu);
+ 
+ #endif
 -- 
 2.50.1 (Apple Git-155)
 
