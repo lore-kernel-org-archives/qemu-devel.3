@@ -4,60 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA98E784BE
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 16:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1839BE784BE
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Dec 2025 17:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vZtuq-00013n-5p; Sun, 28 Dec 2025 11:46:49 -0500
+	id 1vZu7S-0002vL-Ax; Sun, 28 Dec 2025 11:59:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vZtug-000133-3k; Sun, 28 Dec 2025 11:46:39 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vZtue-0005U8-6W; Sun, 28 Dec 2025 11:46:37 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 49872596A0A;
- Sun, 28 Dec 2025 17:46:28 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 8DvPubEfB2K8; Sun, 28 Dec 2025 17:46:26 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4368F5969FF; Sun, 28 Dec 2025 17:46:26 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 411145969FD;
- Sun, 28 Dec 2025 17:46:26 +0100 (CET)
-Date: Sun, 28 Dec 2025 17:46:26 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- David Hildenbrand <david@kernel.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- Jagannathan Raman <jag.raman@oracle.com>, Alexander Graf <agraf@csgraf.de>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Jason Wang <jasowang@redhat.com>, 
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH 2/3] system/memory: Extract 'qemu/memory_ldst_unaligned.h'
- header
-In-Reply-To: <20251228161837.12413-3-philmd@linaro.org>
-Message-ID: <ffcf5368-9b35-d1c8-16ba-6b517e056469@eik.bme.hu>
-References: <20251228161837.12413-1-philmd@linaro.org>
- <20251228161837.12413-3-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vZu7J-0002ug-Vt
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 11:59:42 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vZu7I-0007Nc-Iu
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 11:59:41 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64669a2ecb5so7895110d50.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 08:59:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1766941179; x=1767545979; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=KnWJV+dWscrgd3i2Qb07vc81L3vpXB/DDGbUd1Hm5fM=;
+ b=yAIR94Ck0rQkEgXrVp4eE1w8zjIpg5ZaqYn3Ns2PL6rOL43rQ0Q+yyroKnJCE7S8BJ
+ /FJNHcJEx7xhFB6L7hAMWN3b48LkAxlABEWaFAfsBrNJEmDcu2ppKV7XjvXJ7cvbQFRK
+ svpUJkxJhaWMuNrYNznwh2jTPYM83uhivDtHwdCTn5DT4FTt0/qm25ZEuu0nC+TcknRB
+ v8JasJ1V56mTZwKjYjQUxYcTeAvwXX15fKaz/NBAgmuQCXdw/Ne16jaRBF2UkSvfzg3o
+ d/RA6TlpLcwNJzmcU8W/prgPqHNXrDH5531LvCK9D53NGsIkXWSygeTVdJdPYZAb3YV8
+ d6QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766941179; x=1767545979;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KnWJV+dWscrgd3i2Qb07vc81L3vpXB/DDGbUd1Hm5fM=;
+ b=LMYrFQxeAB9vlygne1VMnEqqUQPBbax2FOD3YAyzPQelxjkoPmjdl2QnKF6Btgmn2X
+ 0UVVipMiCccn/yi9yecedmBPwf/jNA9N+hVVCT4HSK7PS9uJBP/vXKvsLzQT4thcSlGJ
+ /ehkK6O2ldHfz6f5EGCNUjZggEuIb+cUcjdF4zv/XGT2m72welXVYWm+YsE8FpT0XSvL
+ y3NmvPFlp6MasZrYkxvAjHmwCruZJDmmGjbq9KYloCDxRWiETdqWa1/xwdalswmoKrmP
+ 0Qe3bEYTEp3/3lzMl33yv5q0tbS9NeLjgeNIWbkhkTcUeMJvLVTUEobK3/u0njlrPNhz
+ yUyg==
+X-Gm-Message-State: AOJu0YyPWMmaVuA2D0FkmgItN4TuHXNSo/+yDn2Q8uwrHU3nWaN2RHET
+ SAP55cwfzHvzyiooLWEmaA3SUN4uWjVQDCm4HKmOwH5wPYbnlB8pBZbIVr2m/bFtKQmPa3gxqWe
+ 73r7lF1D8eard0k98pu+yQnRcD2yK1B3Zjxfn+53pPQ==
+X-Gm-Gg: AY/fxX52wnxE3IucSre3BE1osxACgBNTZoRflBfrp7uPL3xa/wCvdTXxZILjKeW1AlZ
+ QDuKhQoiNiJICusZFtA8a+wUCrVVOxRem0ZhG4uiuszvPbXNvuN33Q/+bGeWcA6Z2Ubbk2Ojig0
+ qB5Tc9/9afvKbbUUU7SlurRyPPCWOndNHDQFY15gm/3J2EDrYTj2i9Bfnxo29vbouIIVmq+CUhr
+ NG0eEjRojIlztsVoGgLugCdeiwj0NLiVMC+ASxzdn5kad1TQ6oryct4D4THnhNRD078KxDl4jlR
+ OAWusvIC0rfC6VjEwfeHrHk=
+X-Google-Smtp-Source: AGHT+IF2MWwvSv7vBR6AvWHwx97NGwbbyvsvRle1pzBZEtccT6sedEnL0xlAVYF9xr+RelRVqX3eVFJFcz2+0XBiFuQ=
+X-Received: by 2002:a05:690e:13c8:b0:645:5325:3e59 with SMTP id
+ 956f58d0204a3-646632274f9mr25479155d50.6.1766941179022; Sun, 28 Dec 2025
+ 08:59:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1953544996-1766940386=:15422"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20251219222439.2497195-1-ruslan_ruslichenko@epam.com>
+In-Reply-To: <20251219222439.2497195-1-ruslan_ruslichenko@epam.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sun, 28 Dec 2025 16:59:27 +0000
+X-Gm-Features: AQt7F2pZDNkG3o-BEggkbMRUn88zutPtRU0Js4vlVdGbRr2n6IUOHi1MLtwRn9I
+Message-ID: <CAFEAcA-VYhtvXK5tyVJWfskqqKFim43DsKfWrpaMxteWueR6aQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/6] hw/arm/smmuv3: Add SMMUv3 sysbus support
+To: ruslichenko.r@gmail.com
+Cc: qemu-devel@nongnu.org, ruslan_ruslichenko@epam.com, artem_mygaiev@epam.com,
+ volodymyr_babchuk@epam.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,52 +94,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-1953544996-1766940386=:15422
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Sun, 28 Dec 2025, Philippe Mathieu-Daudé wrote:
-> Unaligned memcpy API is buried within 'qemu/bswap.h',
-> supposed to be related to endianness swapping. Extract
-> to a new header to clarify.
+On Fri, 19 Dec 2025 at 22:25, <ruslichenko.r@gmail.com> wrote:
 >
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> include/qemu/bswap.h                 | 62 +------------------------
-> include/qemu/memory_ldst_unaligned.h | 67 ++++++++++++++++++++++++++++
-> accel/tcg/translator.c               |  1 +
-> hw/display/ati_2d.c                  |  1 +
-> hw/display/sm501.c                   |  2 +-
-> hw/remote/vfio-user-obj.c            |  1 +
-> hw/vmapple/virtio-blk.c              |  1 +
-> net/checksum.c                       |  1 +
-> ui/vnc-enc-tight.c                   |  1 +
-> util/bufferiszero.c                  |  2 +-
-> 10 files changed, 76 insertions(+), 63 deletions(-)
-> create mode 100644 include/qemu/memory_ldst_unaligned.h
+> By SMMUv3 specification it can be attached either to PCIe Root
+> Complex or regular IO bus devices. However, current
+> implementation only allow to associate with PCI bus.
 >
-> diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-> index b77ea955de5..e8b944988c3 100644
-> --- a/include/qemu/bswap.h
-> +++ b/include/qemu/bswap.h
-> @@ -1,6 +1,7 @@
-> #ifndef BSWAP_H
-> #define BSWAP_H
+> This patch series add support to use SMMU for sysbus devices.
 >
-> +#include "qemu/memory_ldst_unaligned.h"
+> One usage example implemented for virtio-mmio, which allow
+> devices to perform DMA operations SMMUv3 with address translation
+> and isolation.
 
-If it's included here do users need to also include it separately or if so 
-should some of those users lose bswap.h include now instead of including 
-both this header and bswap.h? I think it's simpler to only include it here 
-and let users get it through bswap.h unless you review and remove now 
-unnecessary bswap.h includes from places that only need this hearder but 
-I don't know if that's worth the effort.
+If you want virtio devices behind an SMMU, why not use
+the PCI virtio?
 
-Regards,
-BALATON Zoltan
---3866299591-1953544996-1766940386=:15422--
+The only SMMU sysbus requirement I'm aware of is that for
+RME we will want to have things like the GIC do GPT lookups,
+which is most conveniently done by having them route through
+the existing for-PCI SMMU, rather than by having an extra
+SMMU just for them.
+
+thanks
+-- PMM
 
