@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30B0E8FDB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 10:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D15DD3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 10:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaAfp-0007xn-6j; Mon, 29 Dec 2025 05:40:25 -0500
+	id 1vaAvK-0002Ge-In; Mon, 29 Dec 2025 05:56:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vaAfI-0007pi-69
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:39:53 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vaAv9-0002Fl-6t
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:56:15 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vaAfF-0000GJ-SF
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:39:51 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7b80fed1505so9029499b3a.3
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 02:39:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vaAv6-0002G8-4S
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:56:14 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-64b83949fdaso11949020a12.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 02:56:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767004788; x=1767609588; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1767005769; x=1767610569; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5O9XwvOZjmNoe2JJ9aP4ZO66IgUxzTTJkBQs1eogz1Y=;
- b=Yq1+rMqzliSmjfQMGXTI3rsjGVjJwyAY8l/hMcpUR7cGoQgnDOum6HQhytVN2Z2kFU
- dp0xaIZEveknyoI+CXFykBggXYb5J7a8NIbnsBYlBIGST0mJHzEQjuClNeCB6CTd4QGQ
- 1QVesql1i8XlnYgZpF15erBSuV+Q9JV3tWrgoi4pYCEOaLJk9M/UgSbTvVs6m0dKwkp6
- JaC5C9nDEjep1T6gQ4pakAI8E+3Yl4xz2UID7+gd74sdoevQYlZwPebiHQw2dmzfwaKn
- 8Gl/yAZGfjPB78/M7h9qJx/SjltAG8jLLcniIifXo0gVMGFinqZCcOvdcPCycfFpoUHM
- 0ChA==
+ bh=LPhTct9QOa8R0mVKAMdyfbeAyQnub/sqy2/BpUKgCS0=;
+ b=XLjzsyy4oIKkBREJkaidGVgkmO5a/TY9Kwc/JB0phyPPrYKi37S/a1fUr6aBaOXS3S
+ 50/hSQz0yQWpZB7lGcEhk7w9cMxW9UYHBY+hmIBiFQv8FRsMkmgslrijJa3jkpnsp6x/
+ QqfcPJP1JlWs9EccynAdSue2JoZ0URrGG1Ul++vHrWHpqhbuXX6fueSOT9NEMMzmybgQ
+ JFRcA0qf5KdUKTAqITQ/aJDvbiJ2AnuMSoSkiWpe2vSNdweMkYgpT5F+qUiJ1z42WY/p
+ j0Xu1luvEhMBppa0jc4tWyisZey6KBAPyNhkQTRDD1ZY5bbOsWx3ORnDFwgaJK9NfESk
+ 5l5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767004788; x=1767609588;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1767005769; x=1767610569;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5O9XwvOZjmNoe2JJ9aP4ZO66IgUxzTTJkBQs1eogz1Y=;
- b=q4eM6isnzbPv1XEk367ujivDoSweZNCR0bWLexSob6QnMBjiEO4G3gm4P/dH+cVD2J
- t2+etAnewVbxCQgKnsX9ZbkQu46VuvfkEPcEJ97w6nT1CKCWCBuFU6qzxaGx/gvQfVGj
- 9x3mtG7LfIpmrtXo6ODhhrZGfVzkDsBNz6KoXNdosZvBOLQj18e8eEbOQhdNCpuVfDLT
- evRjrYsjP8rw8K2wKfdQlbsdapvj4JC26rxt5wGxBJh9PdW/X/NYDK+N/4kQW08cTYUX
- NPzFgkzag5nSeRNNwj/qbPdywaNgZonrao44OaQEwVSnwNVujFbtmIKkben3sd2rKKC4
- xI7A==
-X-Gm-Message-State: AOJu0YwVh9RraEU4ILuDFIe8uteq2oU6pfCiZKOx+LqO/ZxIKAR+neEM
- xQBh1HGMdb6AAQCHCMtg4JiqwKT+RFvNcn12Jkzmq4v190383heOy3RT0/Le99pm
-X-Gm-Gg: AY/fxX6RGliIt828DaFK5Nd+2IpyWDULSR542kHAUGDXqsGaqQw6Tc7u5UXVZNu12f+
- g/75xd6kAklM4AD/9ar34U0P0YQY9osdbDz08DIca+eVmonV62S5J8NlSh60KxWh968pTrBHuDW
- FsR43hJP5RrDi0jq7R7vdk3OBeieLIZ8t6VhM6Klg2JzPL0UD/i0IHGyRmCgLwAG3QQr65iwCCs
- 1kUuK88Xb4fU2Y8fbBkjCKQ+yG4hPWRP70mtqI/w8VWShoIJ9goRieku2s8eIaTalVvom61TudB
- mjCGlSLCn1llwP3KZ2w9gtw2MGmdRXHzsGK80zmIdDzpY+YpHDNlBGZuBm4vhTptNNngMSsINLq
- tOY2q8Bi/+titpUslcVMELnd6rbNkkoJTsJYJ2BseWYNLhcEiFOB7TJFIUOmgAiMCYtuxHiVmns
- 9R2HOcdGSFdEY=
-X-Google-Smtp-Source: AGHT+IH10HhTQ+mFuRiSb7wof8E9Uk4JZJt+DuyUl4Bfys4hfgLBj4inFDIzk+e9TR63QG400pVARw==
-X-Received: by 2002:a05:6a20:4309:b0:364:387:8f4e with SMTP id
- adf61e73a8af0-376a8eb2c71mr29986034637.34.1767004787714; 
- Mon, 29 Dec 2025 02:39:47 -0800 (PST)
-Received: from localhost.localdomain ([115.108.63.147])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34e76f03baesm17082982a91.2.2025.12.29.02.39.45
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Dec 2025 02:39:47 -0800 (PST)
-From: Zhang Chen <zhangckid@gmail.com>
-To: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH 3/3] qapi: Add thread_status flag for iothreads
-Date: Mon, 29 Dec 2025 18:38:59 +0800
-Message-ID: <20251229103859.98777-3-zhangckid@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20251229103859.98777-1-zhangckid@gmail.com>
-References: <20251229103859.98777-1-zhangckid@gmail.com>
+ bh=LPhTct9QOa8R0mVKAMdyfbeAyQnub/sqy2/BpUKgCS0=;
+ b=HFtstNnMGXhmGfDudD/jQl0Uk/QLXkfwNQwAt63WQOHQzGzktXJQsnhh+cg0h4QA6a
+ y37ehIUOG7VyI0voflyZCNIXoPdlDBqux53UaDZV4jUR9IqIJZbw//aJLiHvqqPsZSpp
+ 3rX2+e5QFZprEGTt94bdtiCjVbyH41wmiufwRT8FDRTukf5S7cO/CBfrVEsgppUZ8Bs3
+ PDYxSjkhczlKrkXKHPfiPWzBEbjJgJqnJk4Rvsu0VacemBPzgNf/BCZbG13U8ZPoj8+3
+ BTPs8PmdSh+9JqlAOlSKYQWIP7fRlQGU5fT/OfEt+0wisBnbi+ASHFYYMYBrbkLOr+Ic
+ VlWQ==
+X-Gm-Message-State: AOJu0Yya+nTPAn0yWBi4mlD33APVrDQ3wJXC34LeWBxfU6BKDbiPe3Lc
+ OsvPqEq35/A3zfqJfigZTy7P5sDfOYz198FRGwX578AE4ZJ344qoVjmNF/3A1sx6QrJIpAtF5jf
+ fsPmKjGoDEFuciUhqVvxLV2eWMR321xVt4Y3o8virRg==
+X-Gm-Gg: AY/fxX5FtyWYFOybBTvVKVzmXnX3LjWvm+u2RPjD1vD3Z0LTNUV2UuTIM37xIuKQjGf
+ pda3VA+jhelBRa2ra2s1G0xUgRSCkYSpCAzUuYC3k+hwMFu55IwGVErjfJHbgXPfhdTVyYH/5Rt
+ NOpV4zR3l9PCqw9iKmb2SsliLkdplCpGnCMGKY6z5SZkafrgpqU4CjI+4l5W1RDTgs+KTFUlEFI
+ O4VpNIhSbMmWJB5YQF34zJ13FR/tTy23qGrYlpVUgITUuOS3OsARMfGr5BbjfMiHoW49/Xv4qW/
+ s0S4YKqWFBOux2Mz4XpaUMFmCh/RNU9/uxTIIP9jhR9CuT0Bgg==
+X-Google-Smtp-Source: AGHT+IH4QS8sgJsj8SvmY+cADGiM3lTg/BieaKmH0yLfL9Cp+l4beNGQjgK2VxZYuv+DngTvoSFdpwcc3hb8RZ+nR/E=
+X-Received: by 2002:a17:907:7e9a:b0:b76:6c85:9fd3 with SMTP id
+ a640c23a62f3a-b8036960757mr3262986466b.0.1767005768731; Mon, 29 Dec 2025
+ 02:56:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=zhangckid@gmail.com; helo=mail-pf1-x429.google.com
+References: <20251224160335.88861-1-philmd@linaro.org>
+ <20251224160335.88861-2-philmd@linaro.org>
+In-Reply-To: <20251224160335.88861-2-philmd@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Mon, 29 Dec 2025 12:55:42 +0200
+X-Gm-Features: AQt7F2oLrB4OhMqEevlXIF7MKbJ1JV7l7kiGaFY-mBfy96WY41t7Z8izGxyps44
+Message-ID: <CAAjaMXZX_OZoL15Bh4bjk0nozCHP3JuoL5+Hysw2iV1CyRBLWw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] hw/avr: Mark AVR-specific peripherals as little-endian
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,81 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The thread_status depends on struct IOThreadInfo's
-'attached': 'bool'. Show in the qmp/hmp CMD with
-'attached' or 'detached'.
+On Wed, Dec 24, 2025 at 6:03=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> These devices are only used by the AVR target, which is only
+> built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
+> definition expand to DEVICE_LITTLE_ENDIAN (besides, the
+> DEVICE_BIG_ENDIAN case isn't tested). Simplify directly
+> using DEVICE_LITTLE_ENDIAN.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
 
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
----
- iothread.c         | 1 +
- monitor/hmp-cmds.c | 2 ++
- qapi/misc.json     | 6 ++++++
- 3 files changed, 9 insertions(+)
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-diff --git a/iothread.c b/iothread.c
-index 38e38fb44d..fb4898e491 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, void *opaque)
-     info = g_new0(IOThreadInfo, 1);
-     info->id = iothread_get_id(iothread);
-     info->thread_id = iothread->thread_id;
-+    info->attached = iothread->attached;
-     info->poll_max_ns = iothread->poll_max_ns;
-     info->poll_grow = iothread->poll_grow;
-     info->poll_shrink = iothread->poll_shrink;
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 33a88ce205..84b01737cf 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict *qdict)
-         value = info->value;
-         monitor_printf(mon, "%s:\n", value->id);
-         monitor_printf(mon, "  thread_id=%" PRId64 "\n", value->thread_id);
-+        monitor_printf(mon, "  thread_status=%s" "\n",
-+                       value->attached ? "attached" : "detached");
-         monitor_printf(mon, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
-         monitor_printf(mon, "  poll-grow=%" PRId64 "\n", value->poll_grow);
-         monitor_printf(mon, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 6153ed3d04..2eea920bd2 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -76,6 +76,9 @@
- #
- # @thread-id: ID of the underlying host thread
- #
-+# @attached: flag to show current iothread attached status
-+#            (since 10.3.0)
-+#
- # @poll-max-ns: maximum polling time in ns, 0 means polling is
- #     disabled (since 2.9)
- #
-@@ -93,6 +96,7 @@
- { 'struct': 'IOThreadInfo',
-   'data': {'id': 'str',
-            'thread-id': 'int',
-+           'attached': 'bool',
-            'poll-max-ns': 'int',
-            'poll-grow': 'int',
-            'poll-shrink': 'int',
-@@ -118,6 +122,7 @@
- #              {
- #                 "id":"iothread0",
- #                 "thread-id":3134,
-+#                 'thread_status':"attached",
- #                 'poll-max-ns':0,
- #                 "poll-grow":0,
- #                 "poll-shrink":0,
-@@ -126,6 +131,7 @@
- #              {
- #                 "id":"iothread1",
- #                 "thread-id":3135,
-+#                 'thread_status':"detached",
- #                 'poll-max-ns':0,
- #                 "poll-grow":0,
- #                 "poll-shrink":0,
--- 
-2.49.0
-
+>  hw/char/avr_usart.c    | 2 +-
+>  hw/misc/avr_power.c    | 2 +-
+>  hw/timer/avr_timer16.c | 6 +++---
+>  target/avr/helper.c    | 4 ++--
+>  4 files changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/hw/char/avr_usart.c b/hw/char/avr_usart.c
+> index fae15217e9f..5510dd3f487 100644
+> --- a/hw/char/avr_usart.c
+> +++ b/hw/char/avr_usart.c
+> @@ -255,7 +255,7 @@ static void avr_usart_write(void *opaque, hwaddr addr=
+, uint64_t value,
+>  static const MemoryRegionOps avr_usart_ops =3D {
+>      .read =3D avr_usart_read,
+>      .write =3D avr_usart_write,
+> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>      .impl =3D {.min_access_size =3D 1, .max_access_size =3D 1}
+>  };
+>
+> diff --git a/hw/misc/avr_power.c b/hw/misc/avr_power.c
+> index 411f016c997..d8e0d918519 100644
+> --- a/hw/misc/avr_power.c
+> +++ b/hw/misc/avr_power.c
+> @@ -69,7 +69,7 @@ static void avr_mask_write(void *opaque, hwaddr offset,
+>  static const MemoryRegionOps avr_mask_ops =3D {
+>      .read =3D avr_mask_read,
+>      .write =3D avr_mask_write,
+> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>      .impl =3D {
+>          .max_access_size =3D 1,
+>      },
+> diff --git a/hw/timer/avr_timer16.c b/hw/timer/avr_timer16.c
+> index 012d8290018..110bcd58163 100644
+> --- a/hw/timer/avr_timer16.c
+> +++ b/hw/timer/avr_timer16.c
+> @@ -524,21 +524,21 @@ static void avr_timer16_ifr_write(void *opaque, hwa=
+ddr offset,
+>  static const MemoryRegionOps avr_timer16_ops =3D {
+>      .read =3D avr_timer16_read,
+>      .write =3D avr_timer16_write,
+> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>      .impl =3D {.max_access_size =3D 1}
+>  };
+>
+>  static const MemoryRegionOps avr_timer16_imsk_ops =3D {
+>      .read =3D avr_timer16_imsk_read,
+>      .write =3D avr_timer16_imsk_write,
+> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>      .impl =3D {.max_access_size =3D 1}
+>  };
+>
+>  static const MemoryRegionOps avr_timer16_ifr_ops =3D {
+>      .read =3D avr_timer16_ifr_read,
+>      .write =3D avr_timer16_ifr_write,
+> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>      .impl =3D {.max_access_size =3D 1}
+>  };
+>
+> diff --git a/target/avr/helper.c b/target/avr/helper.c
+> index 365c8c60e19..9ee0a558ea7 100644
+> --- a/target/avr/helper.c
+> +++ b/target/avr/helper.c
+> @@ -256,7 +256,7 @@ static void avr_cpu_trap_write(void *opaque, hwaddr a=
+ddr,
+>  const MemoryRegionOps avr_cpu_reg1 =3D {
+>      .read =3D avr_cpu_reg1_read,
+>      .write =3D avr_cpu_trap_write,
+> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>      .valid.min_access_size =3D 1,
+>      .valid.max_access_size =3D 1,
+>  };
+> @@ -264,7 +264,7 @@ const MemoryRegionOps avr_cpu_reg1 =3D {
+>  const MemoryRegionOps avr_cpu_reg2 =3D {
+>      .read =3D avr_cpu_reg2_read,
+>      .write =3D avr_cpu_trap_write,
+> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>      .valid.min_access_size =3D 1,
+>      .valid.max_access_size =3D 1,
+>  };
+> --
+> 2.52.0
+>
 
