@@ -4,104 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 544D3E92733
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 16:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BF5E92733
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 16:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaFui-0000wR-JV; Mon, 29 Dec 2025 11:16:08 -0500
+	id 1vaFwP-000246-9S; Mon, 29 Dec 2025 11:17:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaFua-0000w6-QJ
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 11:16:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1vaFwL-0001wl-02; Mon, 29 Dec 2025 11:17:49 -0500
+Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaFuZ-0004zZ-4h
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 11:16:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767024956;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pNKjgL7/p3ZDdIHnXIRowtJnboN7G7ElxhqJFCNCqxw=;
- b=FNWY+kS4j9pK158NtHBOrlqEah+1e0+Duhx+SBT+X11CW5p4w1/XaNKGxyWjY20wiH+aSn
- Bc4b8tLnR9seQU5gEx/MvCkgy08aGsafQ7/A/pbUBzAPoBguhuuOp+eLIHnScanHs5zgg6
- DfPxWz3D9lko43q2aXYfP3q06S6vhKw=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-P2z7VT2gMTCmnQGqcuJzVg-1; Mon, 29 Dec 2025 11:15:54 -0500
-X-MC-Unique: P2z7VT2gMTCmnQGqcuJzVg-1
-X-Mimecast-MFC-AGG-ID: P2z7VT2gMTCmnQGqcuJzVg_1767024954
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8bbe16e0a34so2266197285a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 08:15:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767024954; x=1767629754; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=pNKjgL7/p3ZDdIHnXIRowtJnboN7G7ElxhqJFCNCqxw=;
- b=pYmCNX+HbBKkDzo9uPYXyRvtJDnHo8vTBPeOYtf0TbRUU97/8uSr05ZONuaFgZ2c7U
- IYZOCELpHMmya/xF2WD7M+uI490pfKSh71+OMcRlRuk1v0AvY6pWASxs5pHb+iQ3sJgR
- wZy2V3tJr7r5vDKoQxdIkKV8REzzJPkRFmBONzWxoiBYChC9c+mz+dtvAg81vuVA4jyw
- +ENLcbIUxuxdQ6zlwBu+0jzmRgmsEQAG8oDq2T9mqzmrS4TbXolz1wrppxSdP94bTxVl
- VxOo66y+zXBPnsPfghqd1VTJ+uNmZO6sG6R3zlutB1fQ3pdovQ4yH6seWqY0CBJyC/+m
- 6ZDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767024954; x=1767629754;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pNKjgL7/p3ZDdIHnXIRowtJnboN7G7ElxhqJFCNCqxw=;
- b=EChty15cVC2Ch1NyOV9v+sYFu8F/6wGxRodYaTu1Au5fQVNbyddbprv+5+OtRtFfEL
- 3Zj3r1x+Djg+SlVw/5YWaiosvLK5NGCOFFcLIunEo4nS4SdMIoExDQPat96L1E3Qna06
- rDzJD1JmeB4RbMGt0ya7ngyLjHK7KC5uGYkzjGddKDmKARIlCVzcpVtNcDijQ6d6G33M
- LEXkgnbw4OEffraf0fHo/omPaJ7KQX1NGdzQ5ZZND2ncO/Ca1sje7hRngHF+124oA1Ec
- HI1Il/csQ5+O3n9ROpJ7zTcXxtNkHwhMWrCXz8xB++Nn7cVY464aWSRTWa97Exxoprki
- 9pLg==
-X-Gm-Message-State: AOJu0Yy+lvSlRV+zE9bHphLty2EbqobyiuYlwAGKZmNuf3j+RH0uMP3B
- sx4XfZr0BgaBCl5qnTAe0u0Vmu23QMxKlT7srjHQ10XSKRjPfMkCglCXLpnCiZBUg4HdZLaoLuI
- 4uXeoc1U8O9WvlGzs1NdUOMk33Rmr32CX4kDFxE0YHMmHQoekI3By2rVzyPPt435V
-X-Gm-Gg: AY/fxX7udx3DnjCoogpsSEjbXXF3g3n70iemIBiDKVssgVrqxwT+bnF7EI+QwiD98gq
- cA4NSrRvyM3Lkb58c1JGJySgmo7Ej0TbLlXXTO61htssxN4YL6P0nUmWJs6esSmFjbyYyBFt59V
- LF4+lw/he81EJfip1Vu96JNpV7zrIzEIsJ+gAODS3Li8c8fmoeiIguRR1M56tvu7yQgdwP8eF/r
- AZEEvRFhl90rhV4+hN3M0uMNEIUolgKp+jsTJsSsVmL47DaU4nmQTn7OHIBoU1X+yff+k8bTPIO
- X5B0OpX5e0HZR2GEqqBF96AraXxvEAAzpUqK1NeJJ7jHQW2igGMMUbEbJ+huV0ObgfONRKw61Gt
- Js4c=
-X-Received: by 2002:a05:620a:4686:b0:8b2:eb66:c5a with SMTP id
- af79cd13be357-8c08fd02e33mr5194976685a.14.1767024953873; 
- Mon, 29 Dec 2025 08:15:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG4QOTpGqoKWzbXfutp7tdvZMxZlvVJJs+ARKzYZ2TXqiV4VOmiCkWM7ISiT/81OJYNjH+6Rw==
-X-Received: by 2002:a05:620a:4686:b0:8b2:eb66:c5a with SMTP id
- af79cd13be357-8c08fd02e33mr5194967985a.14.1767024953327; 
- Mon, 29 Dec 2025 08:15:53 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c0973edecdsm2476741885a.37.2025.12.29.08.15.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Dec 2025 08:15:52 -0800 (PST)
-Date: Mon, 29 Dec 2025 11:15:52 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 06/25] migration: Move postcopy_try_recover into
- migration_incoming_process
-Message-ID: <aVKpOC7fnhF6S-iI@x1.local>
-References: <20251226211930.27565-1-farosas@suse.de>
- <20251226211930.27565-7-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1vaFwI-0005OL-Gq; Mon, 29 Dec 2025 11:17:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
+ Content-Type; bh=KWu6dgQsyiprW8vGaRrrJa32iLgci/iXzBGySqZ9RAY=; b=hOW+8s6nvSx0
+ Vv/IJUFKxR5sCN7ZTb2QcygAwFNw783sN9OcaB9u1jTRE8aG2N0+GcxJ8BQWnruBbc432BjcXwtkQ
+ 4juizmwwPQ5x0vZSvTP2Dfj7bQYUDe15tlzUbCZXI3tj6q5zV0w+3thvLq951bfO5HfJDnFEWkePO
+ T9+MmijvG9s5dmQSRQCatJPBJ8V3WOSVhTI8R0sXqBShEjzR9vs/V4skwakrsNT684cbBeMGw8vFm
+ GCiujCiN7ETd651vI0U3W1ijPFUh6RQXWBq95hFdQ6fd4HmOEQKOUaDG6lylciSkh6QSQ6bbK/gew
+ N5xwGb+gAebvPKvGTsSQdA==;
+Received: from [10.193.1.107] (helo=dev007.aci.vzint.dev)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <den@openvz.org>) id 1vaFvu-00Apz0-2A;
+ Mon, 29 Dec 2025 17:17:32 +0100
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org,
+	qemu-stable@nongnu.org
+Cc: den@openvz.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 0/3] fix potential data loss in QEMU (missed flush)
+Date: Mon, 29 Dec 2025 19:07:42 +0300
+Message-ID: <20251229161740.758800-1-den@openvz.org>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251226211930.27565-7-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
+ helo=relay.virtuozzo.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_SOFTFAIL=0.665 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,24 +62,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Denis V. Lunev" <den@openvz.org>
+From:  "Denis V. Lunev" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 26, 2025 at 06:19:08PM -0300, Fabiano Rosas wrote:
-> The postcopy_try_recover() call doesn't need to be duplicated, move it
-> into migration_incoming_process().
-> 
-> This removes code from migration_fd_process_incoming() so it can be
-> removed in the near future.
-> 
-> (the diff is a bit strange because migration_incoming_process() was
-> moved after postcopy_try_recover())
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+This series is a followup to my previous patch sent under
+"qcow2: add very final sync on QCOW2 image closing". Could be considered
+as v2.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+This series addresses two problems:
+1. bdrv_co_flush() at the end of bdrv_driver_pwritev() and
+   bdrv_co_do_pwrite_zeroes() could be effectively no op. The problem is
+   that bdrv_co_flush() is optimized internally this way to track real
+   requests which were making changes in the image and without such
+   requests from previous flush() do nothing. Requests are tracked using
+   write_gen on BDS. This field should be incremented after write is
+   completed but before flush is called.
 
--- 
-Peter Xu
+   This could be considered as potential data loss if caller relies on
+   BDRV_REQ_FUA flag which means that such requests are really lands on
+   the underlying device, which could not due to missed flush().
+
+2. qcow2_update_header() must actually write header with BDRV_REQ_FUA
+   flag as image processing on open relies on the fact that header is
+   actual and it is not possible to reorder header modifications and
+   image content modifications.
+
+Changes:
+    * added patches 1 & 2
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
 
 
