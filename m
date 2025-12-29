@@ -4,167 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 795F4E9273E
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 16:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18768E92734
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 16:40:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaGEh-0007h5-QX; Mon, 29 Dec 2025 11:36:47 -0500
+	id 1vaGHV-00006N-Ud; Mon, 29 Dec 2025 11:39:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vaGEg-0007gj-Ix; Mon, 29 Dec 2025 11:36:46 -0500
-Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaGHM-0008WS-MM
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 11:39:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vaGEe-0007yQ-VX; Mon, 29 Dec 2025 11:36:46 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lpLzJmqD4xn8mG04ciYNjMu+4lKQdIYwaKHCCV3PhZaFUUrUdfZjz2kyC9H9+7607MAMuEujTBlwF6h/tEjEZ4v4KwhFrnPzACqlKUfCKdxHdLvmBmraJPQTCspxtWfjWSaVdehpDINd9iH5ZFes3qAJVU73KQg8PwYCEZIaP0XU8Uoqww/Y46K5MzlvS/P10osSIq2d+RDkiOQNJIDQekkbVI2NVmi2r4wn8+tfGp4wCjge32zq6bMULF7NizoHHc9vbkLx/K+H1niSSsEyu+sBmcwEZHrU5Mf07qWDZN49NPocorHMxvYjBbj0fZzUYFdlmUKKksgr/NcpzKi2Sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+NcjOMvTe/lcrbrtfe2XHk4rVRXZP7GspoWVABYrjRg=;
- b=OMGtzS0p/YmnfJiNEg30dRwh4fvL8gb6OVRMZV4DQPUgWUDDqh6/q0ymzpYJi5NaVZBzpzKePVGtsXSlcfMXQEZ4t9FDqsCEKSw7rdrvnTQzB7mzG4v41FT3mXj7dR7XldZh2CDbvBGI/9TF9DmuMnR5U5owZTjBrZ/rMGxuQXK4b+v4vE3oI6bnG2+FP/+vDsjD4aE71PVWqiP2DHZS08csO27lW2yxe+OYBbth9QqpvP4a0RvNmxaNNUZLNSjXjO/2fbT7FxWMlFm1DHdh9YxsIBXXDTp9sbw3GvrDvlxmHOkeLDLeSFv7ifY8M8sgMFGasw3b/pOjCHY+O+Lt8Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+NcjOMvTe/lcrbrtfe2XHk4rVRXZP7GspoWVABYrjRg=;
- b=wFoduGH9yx9DCkc2z8eNBZZpjWmm1PT1XElHMjX+Qmu18/DVXJr0deDWbSUVO1ecnJwnMZbkwRZXIEW/XSXpl7BWtwdFXJljwx6sys5P/ufG8wyXOzzQUfc4YN64H3aUxbXqvcZiRU+nc24+T9rmPaE2eFBnCtMs+CXp9oSztoL9IyxolxAhYHBqigXVee2sy+VJ2mnOt7ZwHDBWb8GeoytsoPBnYqZWUkvqp6Tn2/ICDitQYfplfEO9Q5+dpivYSqDbG1RRfyFZ+AR9R+QG37D5x12wiPmehOydVdSPgkwK/+5skWgaC5sSeYzNlthZhf8ppYyqyDfE7QRlBpEUfw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by VE1PR08MB5614.eurprd08.prod.outlook.com
- (2603:10a6:800:1a8::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
- 2025 16:36:39 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%3]) with mapi id 15.20.9456.013; Mon, 29 Dec 2025
- 16:36:38 +0000
-Message-ID: <8164d0a1-c1d1-4136-830c-9578ff33dc62@virtuozzo.com>
-Date: Mon, 29 Dec 2025 17:34:02 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] block: create bdrv_advance_flush_gen() helper
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-References: <20251229161740.758800-1-den@openvz.org>
- <20251229161740.758800-2-den@openvz.org>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20251229161740.758800-2-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: ZR2P278CA0016.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:46::10) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaGHK-0008N7-Oq
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 11:39:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767026369;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Vv0kzW/OBZtkZeFJwtFPl861a0tnJnouUTswpexiN0=;
+ b=DqDWtomJ9FIWOj9TtJLVvxbhopumXQhCfXLmc9FnM+hOpX5nS60dF2i3g/cQv0DEFgUSiF
+ YG0rkKyh8TebKMk4znPFHG+0vSdbMZJEELQdRmWyixkOufZ7kpjWoVHKsyqsnfNDfmvwH1
+ tOYNw3Hn0GFEgF34y5nmf2xWHAJ/t+0=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-138-jeq_40GGPt2GYcoO7jhAnw-1; Mon, 29 Dec 2025 11:39:27 -0500
+X-MC-Unique: jeq_40GGPt2GYcoO7jhAnw-1
+X-Mimecast-MFC-AGG-ID: jeq_40GGPt2GYcoO7jhAnw_1767026367
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8c2a3a614b5so48506285a.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 08:39:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767026367; x=1767631167; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Vv0kzW/OBZtkZeFJwtFPl861a0tnJnouUTswpexiN0=;
+ b=TA7Jwb2BcYA0ELfyGGzJvm5CA1QkadPUSGD0LEJesPSkkguVq5ZBHCQgTF4RuGaWKB
+ FG45v1VMJ4uSeDDkbug30XfMI1YQWTSEgFP1C+4IYLLLOnGSO/dOAEGHBGy3vaoO2VlC
+ uXpevO9+P7yvvzlUA9g2EPxP/d8z2ZNCdQUAVabcCEjsFDRNBOG+5BAjs0grAG/CKPFl
+ yV6RYMduzDbv15roSYfEfNIMMURxdYLk9Q/ZZyCUk8pleqZuoxPIxI1cVQ17nOCRxeT+
+ OWiwFBdzemshHA7fHjrYFKNFVbyv3kDgF9qAhXpOxQLArU5Rc1GnkTFFehaPvpWw+JqD
+ hziw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767026367; x=1767631167;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6Vv0kzW/OBZtkZeFJwtFPl861a0tnJnouUTswpexiN0=;
+ b=ie+y1o0DDn7Kord2YB2VRYRXJAtFxo+bIk0SDbJihvFNxOukuQ6yGbghfU3jKx2npS
+ ODgmewq0kDgk4hqQOMHsSW8cNcn/tYMY9rVR27At/p3cIHOQJJ7xuxgAP38l25oCeKmv
+ kwYZzlvplVxMS5clYOh4Lfs7tdSxyWReLelcoXiH65rJmempmbvQGcFxHritfCOqb++G
+ uWegd+U6cpPsiDMzC62flEQMOEBgANJfCyvpJJ0UWxYq/HV8JHylPDsJ7mHvGKPn7T4H
+ Cg25VkwtlVB5crcXx/dlK2013Jv1FP1LvQRd3XWUTkoiP95SyiB3pO5LpLPe3rSwh05o
+ LsJA==
+X-Gm-Message-State: AOJu0Yy7r70pL2niT3yqzo4fiFjkqO40qkaE19hHsi1PKWIVjX6arxOf
+ JMebT506PGzNPE8d+DUOXWKoGN84K1n8stYdgads2V29HyJ1x86sZ7jS7fTZrwPZ9ieNzAk1TmN
+ c8VuyWPmmRqFKMD+N4btZzJ4CxYrmzJ9l4v89dw11UZMunmIsKCYHwzkM
+X-Gm-Gg: AY/fxX7ggH8EkmV1PNER9gbtLShF1XjlukP5kTYFf/oyVHXknJL4R2Q/mbnMsrn31ww
+ yIifyYj9U27A1wPc4X+eISe1Kf4LDq266vSF1NhQO1SPxlzjSKNrIROYEjxrxaoQRpMAnW+4RQ8
+ BghuFP+BtUof0oZI30/4WmucMrGdvjPmRZCl3meWCwhMRpvkSDRplrtnwuwufoIHexMEs/oZFrL
+ lvPaHQHQNSmaLTfDuZaDOjPJLmybnD8fFc5cCa8wWZP4ZvU8Hige7knE/QsEzmypj5dLFA1qapY
+ L8GjW+UwqWrKGiDAFU4eg+yBeOPGTixwpB4zBT5D9nLkzf73BC5YTkcHspC9EewMTevIEvk3WvW
+ xS6Y=
+X-Received: by 2002:a05:620a:4686:b0:891:e10a:9d3f with SMTP id
+ af79cd13be357-8c08fc0e898mr4145764885a.10.1767026366864; 
+ Mon, 29 Dec 2025 08:39:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGbvyjUPMjIjS+EXl1cWez40BimhqYGu3VdCQIgMy9LHr8NUXbRcqP4sjoUQWNl6au5UKWEEQ==
+X-Received: by 2002:a05:620a:4686:b0:891:e10a:9d3f with SMTP id
+ af79cd13be357-8c08fc0e898mr4145761385a.10.1767026366368; 
+ Mon, 29 Dec 2025 08:39:26 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c0971ee182sm2392772185a.33.2025.12.29.08.39.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Dec 2025 08:39:26 -0800 (PST)
+Date: Mon, 29 Dec 2025 11:39:25 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 08/25] migration: Free the error earlier in the
+ resume case'
+Message-ID: <aVKuvS54yhtAY0Is@x1.local>
+References: <20251226211930.27565-1-farosas@suse.de>
+ <20251226211930.27565-9-farosas@suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|VE1PR08MB5614:EE_
-X-MS-Office365-Filtering-Correlation-Id: 528e1419-399b-48b4-255a-08de46f8707f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VW14WTRPcUdxendLaWIxTzlqVEVGRndlQW1TUnM3ZDVDd3V5TnpMbm5NL3Ix?=
- =?utf-8?B?ZEx3eE01bVNuL2VaWXFpUkt6OEFRZFJqVlN5YTVnWVFUTGZNVlVzaFZFekJa?=
- =?utf-8?B?dmJxS011cCtxdHFvaEdwbExYd3huT1RBdVhjK3BLMnJJWmlHMUQ1ZWIvd2Nl?=
- =?utf-8?B?Q3gvZE1BYUw3SWVUM1J0dm4zb1ZoM3gxYmFYMldJSVlJUnZabiszUDBLVEcy?=
- =?utf-8?B?L3BHbEhyUVcwMVdMMjd5NHZrZ29Yb2ZwRUVSOEFyb1M1YVdETXNlOGlvTTRD?=
- =?utf-8?B?S2hXdzhRbFdySXZyM255UENnQ1pFUTZYTVZKRmtWV1oraHVsNFNCbFBtdGlo?=
- =?utf-8?B?MVN4Z1VaNCtzS2tBWnNVa1VLSVZ4bENTWWdaSnZZLzlzSm1rOFVpcVM2WGI1?=
- =?utf-8?B?Mm8rbW5CWER6bTF5LzV4WHVDRmJLOUdsSWJzTjEyUmJLTGtxMlE2RTNDODdM?=
- =?utf-8?B?dVpZUURscnpJM3A3dFNDQW9UOU1BdldHZlo2anpQNExFZSt3UGViK0VncW1q?=
- =?utf-8?B?eFFPazVrVXhYUGdVcmgvQjlLazlZOXY4aVJjazhmNjlIbTdTdHhYcXlmekVF?=
- =?utf-8?B?VlFIYzJzVVp6TTd5dDhxNTIvV1BpTlRsY2VmZmdOTFJrTW5Mbmc4MVE4UytQ?=
- =?utf-8?B?b2gzTWhEUHBuMWVUcFZEVkJCSzR2Z2NhWlRxNmZjSTJFSW1nMk1ZNXpQdHBt?=
- =?utf-8?B?SEpHUTBWRWpYVTZaUTE4NzlRZ0RqclZGaG1JNUhoTmpkTm9KOUJ4UTBXRGR5?=
- =?utf-8?B?L2ZIVFgzV1FEM284Qm9FQzJ2RDhZRW1oRXU3RnRBQnEwZ01NaEMxRTlFbUxK?=
- =?utf-8?B?VE5OUlVLRC8xU0JLTUJaSyt1WDNOOUVOYUt1bHRVV1ZyTTJmTmd1MmJoSUtE?=
- =?utf-8?B?Y2Z2U3FNVTVVaTFLMzhtOElRMElocHNhemZBa2k0S2drdjZpMFpYS2U4ZmtW?=
- =?utf-8?B?czE4bHQrelcwNWRRb0Mra3pWbEZUSzNOdUIzTEtBSXgzdnlrMDlLTG9vYWhS?=
- =?utf-8?B?NFByUDM3eGErbXE1dzVNQWF1VWlPUTJZWkFTME9yQmt1QVcrQk12SFloNmVM?=
- =?utf-8?B?Z1UxNUZ3Q1hlVnlkaktyUUZNOUIxV0djTjVDckRVQ3JIa1dIUU9TUlRYV29R?=
- =?utf-8?B?YkZSRXMzVkliOVJTU29BY21xL3Z0TndLS2hjSmZpMDduOElTTm8zN1dpWlA2?=
- =?utf-8?B?NlRvbFhsZU9HYklLRTRqWG9MWDg4OCtSU256Z0I5aXBUQm1YRU5OY2JhYUNy?=
- =?utf-8?B?czNXcDkxM3M4eE5EdkFoYzRTUmRjUXZtM1NJSThVU3ZSTlIxaU5EUHNrMUVa?=
- =?utf-8?B?TDM3WnljQXVQQ3ZKTER2dlQ2TXFMd0FGWUYzUlVybC8wd3hlUm1zdktRM2FG?=
- =?utf-8?B?dTNpWFFPQytUaERpdm13b0taVSs3VkNIM1V0ZDdRQ2Y2STdCWkxrWC83OW04?=
- =?utf-8?B?ZGx2a3JXZFFUbnpzWkozbW4zWlNkd3kvYzl3Q05LbnA2c2E2Y2h4azd6MGxx?=
- =?utf-8?B?UE5JRmFtakp2emhTaytBMFhwS3dsdjZYYm5IeHVlMzNVVjNLZjdnd0FnMlZZ?=
- =?utf-8?B?WSt0SHRWaDdjazdoUER0K0JKRkN5UjdEdDR3NWlFSlM5VlU4UFdyTzhZbERh?=
- =?utf-8?B?SjQ2NEZWUG1kdklRTk1SdVVEMnNhWm5MR1hPVm1pclBDenFJSXlmK2ZLYU1n?=
- =?utf-8?B?ejkxaWxybmMwZEwwaTh0NE1MK1QyQlB2M0VvbWdXOXduMGxoT25ZZE41TDVZ?=
- =?utf-8?B?WmI3Q0V1VkVnT09wMzVOdEdKaVQyRkwySGJzS0FTOGNpMFJDWTI5OEI2R1Fi?=
- =?utf-8?B?L015dmhaVWVOZktIVkw2Y2FwOTllWm95T04xK0RjY04xa3Z1Z1NXd21aTDRp?=
- =?utf-8?B?MEwya1crTGwweXpPc3RNTHVFVEYvelFmSUlFbWtSMHZSbnYxVUZMbUZCUGVn?=
- =?utf-8?Q?VDW6pAqLTbcTc8rTV5XSIxpMNM1MuyvG?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(7053199007); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aU5tL25ZcTk2ZjB1aDZ1MG9BbzAyMUtVUDJ1OWFmM0dINGVTckx0OWl6Mjdu?=
- =?utf-8?B?VDdkUHZ2UUI2Q0FHSSt1QmhYRnlzeHRkVEduM2FaUjQrVzBxcVo4YWtQNzFX?=
- =?utf-8?B?cjdYU1M1VlFKSkU3aUNrTm9SeHJWNDlPNyt4STR1Y2hTbWYxRG1HMTRhKzUy?=
- =?utf-8?B?Rlg4LzYzYk9NV2wvQ01zR1VXZzNwcU9ZWnMyTzFvSUZNT2hxR0N2K09KdGxM?=
- =?utf-8?B?N2UxaDNweTF3UXg4Uk5HTkJka3dkdXprN1VFeXBEMU9XZnVhVzJpMTFoc1hw?=
- =?utf-8?B?Mjh3RWxGTnBvTlJHemdFbEF4WDJ3bk5PRVc2dWVBWmpBdzZpUFZsQUJ2NEhD?=
- =?utf-8?B?bmdVVFg2THZTTEpWRHZpMDBiTm8xZnNLL0dCR1kxRzBWb3ZPS1Z5WDJINFJ6?=
- =?utf-8?B?K1Vwbzk2QWlCM2hsK0JVM3J5SHhJc0JUaHNEamdNaEllQ2xKNGtaaGoxc0gy?=
- =?utf-8?B?SEFFOStzMFhoVjFRc25PZHBOeXJIUzFrOGU0NGlLUEc0RzBOUzRyU0VCN3gz?=
- =?utf-8?B?SjNHcG4xSUkyT21XeWRxb2YwMUl2dFJKSE1LNVlOaDNtRTNwZVN4SURURUFM?=
- =?utf-8?B?RC9tK292dC9EdENVRWN0NUdDWENiTGFYZm9EUXIxUGlTNWw3ZWExbWRDdGIx?=
- =?utf-8?B?QjIvVkU4NTkxVWhKL0crRlB0ZnVKaXQ2UkZIWnhLZ3RHOVc4WnNhdzNxTitq?=
- =?utf-8?B?NVlBQVppMFdhdHVyVXhKcVcxWWsxVU1xOFN3VXNNUmRwOE0vVVpEaytpNDUx?=
- =?utf-8?B?Nzdra2k3MERTVDJORHI1NkpYUS9SZ2VTNkhqanJGMERzODEvYlI1TG9EeC81?=
- =?utf-8?B?YWFlWSt0dFc1M09CRFhsWU1RZzk0UHg4NU1PSUlnd1lrbnRENVM5RU9EMldp?=
- =?utf-8?B?bk1xV0RQQ2hSNVFpWmJFSXd6VzB4aXBLRGw1YlZabnRxS0NlNkFKMDZFRHZv?=
- =?utf-8?B?U3hxQ29aWHFONitZMDJOMjQwM3Zyc1FBQVRObXJVZnNjUWkzQzBSV0tLcE5B?=
- =?utf-8?B?YlQvZ1AxRExvbE1EYjdOQWJtdThERWtZR0RIT0twNGhUYVFjZzlUb3drdjBF?=
- =?utf-8?B?VkFMdlVqR3RzVlArOG1teW51QnoyV0ErUkszNFNFbEU5L29raWZhR0poanBt?=
- =?utf-8?B?SE5QUEY2aXcwWSsrOFl0QnFBcWxFYU8xT3NaRy92ejlOam50YnhPZXdlRTZy?=
- =?utf-8?B?MEl1bm1JYUlJWC94UkJ4SzI5K20zQUkzWnRHMlZGcWRTSjBrcU0rNTMrci9j?=
- =?utf-8?B?SzY4eHJqamFrUmxVanIvV1FacXllL2NENVU5MWNNcUN0dEE0aS9ralJ0azNm?=
- =?utf-8?B?Zkh1TE11M3V1aE53aGIvcDdJQW1BWkJmSmt1Z2E5MXJTbTJ1OW43S09JbzRk?=
- =?utf-8?B?b2szYlRRbjU4cXk1NlVsKzdWZ21FeEo5Z3J3V1F1eWNUVDRJYVIzaXVLaU42?=
- =?utf-8?B?cCt6L0hFTVRuQ0pXWGtWQmNWMWhPdXQvTkEzdHNzZ1dabEZNNEZtejZKVUk4?=
- =?utf-8?B?QjVpS3o5OSs1MTFUbzl4blZQYUpGcXFGSHpYb3l0b05sZzAyT29wVFdGLzJ3?=
- =?utf-8?B?RUVqSTRpRzZvRytkdUswdGxseWJLdmNPWEMrbFllSVhFTWY4OWR0ZzIrUGJt?=
- =?utf-8?B?WWR3M2lPK0tlTEtiTVFhbzg2UmV2QVdFcG1FVlNuMWk3RHdrWndkMUNzMnpn?=
- =?utf-8?B?cncrOTN6OEp1N2FWMk9tUXdCUGdNR1dwbWMrV1VKdmllcmp5dm1PRVlMb080?=
- =?utf-8?B?SUlFWVo2TkdLTStLNXB6eVNpaWExNDFBcy9rMGhGU3hGdy9ZSjcxeU16cHZS?=
- =?utf-8?B?TGNrcWk4ZCtTUDBheVZTcHRQeVQ4bHBocW0vMWVZa1lHVGVKWXNjcFJvS3lU?=
- =?utf-8?B?L0xSVVlvSjlSdUNDdUljMit2TDJVaWlIdlk5K1phbGhJRCs0M3hYZEdIamY3?=
- =?utf-8?B?WWF5b1N3bXQzVStIdmJndlpXMmJ3SlF3WW9nSVg0UG10NTMvN3hVZUl1WEJq?=
- =?utf-8?B?d2ZBa1NNOHRqNjY0bXBnL2xWMVdGek15R2xsWVVpMEhXOEVlS0VsQzQ3bVNq?=
- =?utf-8?B?U0pxWWZYYW56MDJWNFBYL2E2MXVGeTc4ZWM4VGxydU9tSkl1clppY09jWjZC?=
- =?utf-8?B?NXQySzVuTmFzZUJoNkdjMDFQMEx3R0Z4ckxsUkxMeStGMExvdUxHUS8vaUdC?=
- =?utf-8?B?MExxZHJTdU5YaFBvVS83Wmo1S0F1SGJ6MjZHeW13U0dBT1BhT3o0blVoZEQ2?=
- =?utf-8?B?TmhWOXJDZUw4T3g1NENMaGJoU1d3alhHQUkxajR0UERwSjM4WXBJQmFBb2Fu?=
- =?utf-8?B?TVpnTzRTZ1lSRVNiNmorTnAxakJJOVRTS1NLcWsxQ3hWOFZJQ0d0MDExMHIx?=
- =?utf-8?Q?zQQSaMYVbXElC3Dw=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 528e1419-399b-48b4-255a-08de46f8707f
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 16:36:38.7658 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /azyVV9Ov6BL8ZwQgdO99j6o0IlBcLe/nVGv8Yq2qCMMwnltAWPZOBs0eiwEx9OLzG0fSeJM3odIttpha3XUIeSVfUj+060kiRNagS8cxng=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR08MB5614
-Received-SPF: pass client-ip=2a01:111:f403:c201::1;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251226211930.27565-9-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,61 +117,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/29/25 6:07 PM, Denis V. Lunev wrote:
-> The patch creates helper to advance flush generation.
+On Fri, Dec 26, 2025 at 06:19:10PM -0300, Fabiano Rosas wrote:
+> Freeing the error at migration_connect() is redundant in the normal
+> migration case. The freeing already happened at migrate_init():
 > 
-> Right now there is the only place which handles bs->write_gen, but this
-> is going to be changed in the next patches. Unfortunately we need to
-> precisely control the moment of flush() when BDRV_REQ_FUA is passed
-> as a request flag. Generic processing inside bdrv_co_write_req_finish()
-> is too late.
+> qmp_migrate()
+> -> migrate_prepare()
+>    -> migrate_init()
+> -> qmp_migrate_finish()
+>    -> *_start_outgoing_migration()
+>    -> migration_channel_connect()
+>       -> migration_connect()
 > 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
+> For the resume case, migrate_prepare() returns early and doesn't reach
+> migrate_init(). Move the extra migrate_error_free() call to
+> migrate_prepare() along with the resume check.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+We could also use migrate_error_free() in migrate_init(), to be clear on
+when the error can be erased.
+
 > ---
->  block/io.c                       | 2 +-
->  include/block/block_int-common.h | 5 +++++
->  2 files changed, 6 insertions(+), 1 deletion(-)
+>  migration/migration.c | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> diff --git a/block/io.c b/block/io.c
-> index d37da2e0ac5..f39ff862c11 100644
-> --- a/block/io.c
-> +++ b/block/io.c
-> @@ -2147,7 +2147,7 @@ bdrv_co_write_req_finish(BdrvChild *child, int64_t offset, int64_t bytes,
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 4b1afcab24..a56f8fb05e 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -2088,6 +2088,13 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+>          migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
+>                            MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
 >  
->      bdrv_check_request(offset, bytes, &error_abort);
->  
-> -    qatomic_inc(&bs->write_gen);
-> +    bdrv_advance_flush_gen(bs);
->  
->      /*
->       * Discard cannot extend the image, but in error handling cases, such as
-> diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-> index 80c54a6d09f..67552463dbe 100644
-> --- a/include/block/block_int-common.h
-> +++ b/include/block/block_int-common.h
-> @@ -1373,6 +1373,11 @@ int bdrv_check_qiov_request(int64_t offset, int64_t bytes,
->                              QEMUIOVector *qiov, size_t qiov_offset,
->                              Error **errp);
->  
-> +static inline void bdrv_advance_flush_gen(BlockDriverState *bs)
-> +{
-> +    qatomic_inc(&bs->write_gen);
-> +}
+> +        /*
+> +         * If there's a previous error, free it and prepare for
+> +         * another one. For the non-resume case, this happens at
+> +         * migrate_init() below.
+> +         */
+> +        migrate_error_free(s);
 > +
+>          /* This is a resume, skip init status */
+>          return true;
+>      }
+> @@ -4016,13 +4023,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+>      bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+>      int ret;
+>  
+> -    /*
+> -     * If there's a previous error, free it and prepare for another one.
+> -     * Meanwhile if migration completes successfully, there won't have an error
+> -     * dumped when calling migration_cleanup().
+> -     */
+> -    migrate_error_free(s);
+> -
+>      s->expected_downtime = migrate_downtime_limit();
+>      if (error_in) {
+>          migration_connect_error_propagate(s, error_in);
+> -- 
+> 2.51.0
+> 
 
-The name is misleading.  In bdrv_co_flush() we're comparing
-bs->flushed_gen with bs->write_gen.  Here we're incrementing
-bs->write_gen. Did you mean bdrv_advance_write_gen() maybe?
-
->  bool cbw_filter_present(void);
->
-
-Minor issue: patch doesn't apply cleanly because of the declaration
-above.  Probably was committed on a downstream branch?
-
->  #ifdef _WIN32
+-- 
+Peter Xu
 
 
