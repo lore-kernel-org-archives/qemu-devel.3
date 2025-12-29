@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D15DD3B7E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 10:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF60E8FDB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 10:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaAvK-0002Ge-In; Mon, 29 Dec 2025 05:56:27 -0500
+	id 1vaAvl-0002Ss-1t; Mon, 29 Dec 2025 05:56:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaAv9-0002Fl-6t
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:56:15 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1vaAvd-0002R5-FO
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:56:48 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaAv6-0002G8-4S
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:56:14 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-64b83949fdaso11949020a12.2
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 02:56:10 -0800 (PST)
+ id 1vaAva-0002HC-FW
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:56:45 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b7a02592efaso1353746466b.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 02:56:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767005769; x=1767610569; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767005800; x=1767610600; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LPhTct9QOa8R0mVKAMdyfbeAyQnub/sqy2/BpUKgCS0=;
- b=XLjzsyy4oIKkBREJkaidGVgkmO5a/TY9Kwc/JB0phyPPrYKi37S/a1fUr6aBaOXS3S
- 50/hSQz0yQWpZB7lGcEhk7w9cMxW9UYHBY+hmIBiFQv8FRsMkmgslrijJa3jkpnsp6x/
- QqfcPJP1JlWs9EccynAdSue2JoZ0URrGG1Ul++vHrWHpqhbuXX6fueSOT9NEMMzmybgQ
- JFRcA0qf5KdUKTAqITQ/aJDvbiJ2AnuMSoSkiWpe2vSNdweMkYgpT5F+qUiJ1z42WY/p
- j0Xu1luvEhMBppa0jc4tWyisZey6KBAPyNhkQTRDD1ZY5bbOsWx3ORnDFwgaJK9NfESk
- 5l5A==
+ bh=i/4kOM0gQ4D8rKxOqAn1LlUsp9O2OKl2y5Evmi2iOiI=;
+ b=rD/D36QMNuCNK8U10v2yewzTdoilUIXzWNvr/hijOW8+hJYJX8GFK9+q2fwW8x718M
+ 3kDP+WPxwew3jWeifR8crQHrxMDGyw5kArd9M1HuU/Lel94xM+FSPD/PbCLei+gK8Vua
+ C6UOGrhnbxV0ZrDTqb84yEjcQtpG4iH2bcpiuslKKAsaZEagXuuWgScraxRIA5b6kDQE
+ HOHJKf9o0ofUGRR6f+3SIxrmA3q8UVSUbMjx/uBbLncLCswiAH9+IJWTd/JXW1B4G4mC
+ ddT7O9pnQ++AUz+IIafBjuhgXkxyF62BBMzt3MAgATaoM7cek+YSF+SRMUuz0JtO39t3
+ Ojdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767005769; x=1767610569;
+ d=1e100.net; s=20230601; t=1767005800; x=1767610600;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LPhTct9QOa8R0mVKAMdyfbeAyQnub/sqy2/BpUKgCS0=;
- b=HFtstNnMGXhmGfDudD/jQl0Uk/QLXkfwNQwAt63WQOHQzGzktXJQsnhh+cg0h4QA6a
- y37ehIUOG7VyI0voflyZCNIXoPdlDBqux53UaDZV4jUR9IqIJZbw//aJLiHvqqPsZSpp
- 3rX2+e5QFZprEGTt94bdtiCjVbyH41wmiufwRT8FDRTukf5S7cO/CBfrVEsgppUZ8Bs3
- PDYxSjkhczlKrkXKHPfiPWzBEbjJgJqnJk4Rvsu0VacemBPzgNf/BCZbG13U8ZPoj8+3
- BTPs8PmdSh+9JqlAOlSKYQWIP7fRlQGU5fT/OfEt+0wisBnbi+ASHFYYMYBrbkLOr+Ic
- VlWQ==
-X-Gm-Message-State: AOJu0Yya+nTPAn0yWBi4mlD33APVrDQ3wJXC34LeWBxfU6BKDbiPe3Lc
- OsvPqEq35/A3zfqJfigZTy7P5sDfOYz198FRGwX578AE4ZJ344qoVjmNF/3A1sx6QrJIpAtF5jf
- fsPmKjGoDEFuciUhqVvxLV2eWMR321xVt4Y3o8virRg==
-X-Gm-Gg: AY/fxX5FtyWYFOybBTvVKVzmXnX3LjWvm+u2RPjD1vD3Z0LTNUV2UuTIM37xIuKQjGf
- pda3VA+jhelBRa2ra2s1G0xUgRSCkYSpCAzUuYC3k+hwMFu55IwGVErjfJHbgXPfhdTVyYH/5Rt
- NOpV4zR3l9PCqw9iKmb2SsliLkdplCpGnCMGKY6z5SZkafrgpqU4CjI+4l5W1RDTgs+KTFUlEFI
- O4VpNIhSbMmWJB5YQF34zJ13FR/tTy23qGrYlpVUgITUuOS3OsARMfGr5BbjfMiHoW49/Xv4qW/
- s0S4YKqWFBOux2Mz4XpaUMFmCh/RNU9/uxTIIP9jhR9CuT0Bgg==
-X-Google-Smtp-Source: AGHT+IH4QS8sgJsj8SvmY+cADGiM3lTg/BieaKmH0yLfL9Cp+l4beNGQjgK2VxZYuv+DngTvoSFdpwcc3hb8RZ+nR/E=
-X-Received: by 2002:a17:907:7e9a:b0:b76:6c85:9fd3 with SMTP id
- a640c23a62f3a-b8036960757mr3262986466b.0.1767005768731; Mon, 29 Dec 2025
- 02:56:08 -0800 (PST)
+ bh=i/4kOM0gQ4D8rKxOqAn1LlUsp9O2OKl2y5Evmi2iOiI=;
+ b=WBag+InkzLpAQjotO4mgjUCh1Lj2QgvA0JMZMfGrCJF3KuclUI0+f1cUpKhlhD0xoo
+ EiIeTMeq+tjsQGGVr+66rwKfBckDq4uJcf3fAswl0RuqGuHpK40jC4H7weS6kh+b17mK
+ BSaI9gFyNiqI0SxnBDADpDy+S4BaXpf2uZPRrGw1hupRUlu1NK7Mu2ItykHtlNKgP2vt
+ a4DPqRtpTi5JoRkSyJk0f4+srZBUlytvA3F1iE1xSn49eR7TzCjdPAoaq80RmAaImm7B
+ YLBlhPpKeCgDDosYivm4wEb46AxGB7x08iL8e+UN/SXDOe4FVpKpB4ES7t69z8uYQExa
+ Rldg==
+X-Gm-Message-State: AOJu0YxNY2uwwee9FMxirAkhBL2coxF9Ia+16AOXYxA0+wcMlrkrl3ga
+ uwSqATJWk8FgnGoRk8BGtql0rilJhdn7s1PjHz1VJMg9qXZsc4YqR7I2Qt9QdpZEk9iuTRRQbYC
+ 5Y9CpJvrd2vlA/EqpP/Xakvyiw1qTu/1f3N8kMcKv6A==
+X-Gm-Gg: AY/fxX5VGqxvAG8heo82V2Vkr9xKFToHJD9wvmsV3XoCbHDtjK5Ia3uO4B+k4VcEVuJ
+ agL/ptd5kVGOXFSfkLV2R9iG9VNoJCBAiRxakp9oZ0OE0u3oywRXcCgQOFPXyuBjXATMQuR3P6S
+ 9ox4XAt5SW31lpwh2VlN3FZ7LkyF96i98as7KEmdLC7E6utvSeR/5VJs3m7sqRU4LFENSVuJzl8
+ si7cC6EBVzfFr0B+3rVqy7Hs1HsyJglll7JIzYszBGeb2Q7wPH+GdiwhSPbHgrRT6JsPklJr1wR
+ XWf1V7h/9B+OVFrSdQWoUXBtsf2w7ask74+ULbk=
+X-Google-Smtp-Source: AGHT+IG0OB7xJFMzaUgnNzFnJDsCT1azEGBnUfGR0mfVsO/HKbCz3EXgRFG2qBfNIGoGzOPpFBmRqFYnjfk2t5YTFr8=
+X-Received: by 2002:a17:907:829a:b0:b83:246c:d125 with SMTP id
+ a640c23a62f3a-b83246cd206mr838846066b.41.1767005800289; Mon, 29 Dec 2025
+ 02:56:40 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224160335.88861-1-philmd@linaro.org>
- <20251224160335.88861-2-philmd@linaro.org>
-In-Reply-To: <20251224160335.88861-2-philmd@linaro.org>
+ <20251224160335.88861-3-philmd@linaro.org>
+In-Reply-To: <20251224160335.88861-3-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Dec 2025 12:55:42 +0200
-X-Gm-Features: AQt7F2oLrB4OhMqEevlXIF7MKbJ1JV7l7kiGaFY-mBfy96WY41t7Z8izGxyps44
-Message-ID: <CAAjaMXZX_OZoL15Bh4bjk0nozCHP3JuoL5+Hysw2iV1CyRBLWw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] hw/avr: Mark AVR-specific peripherals as little-endian
+Date: Mon, 29 Dec 2025 12:56:13 +0200
+X-Gm-Features: AQt7F2pjVvV7dH4eUmmxn1FuP-zn2O6LUoyblaaS2nhFrWp-Ok8_xv5nFb6PiVA
+Message-ID: <CAAjaMXYdJAxzyGZvfKuPZS6w2HSfZZhc7tu3U41iX27zKDHa5w@mail.gmail.com>
+Subject: Re: [PATCH 2/3] target/avr: Inline translator_lduw()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, 
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -75,8 +75,8 @@ Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Michael Rolnik <mrolnik@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,103 +102,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Dec 24, 2025 at 6:03=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> These devices are only used by the AVR target, which is only
-> built as little-endian. Therefore the DEVICE_NATIVE_ENDIAN
-> definition expand to DEVICE_LITTLE_ENDIAN (besides, the
-> DEVICE_BIG_ENDIAN case isn't tested). Simplify directly
-> using DEVICE_LITTLE_ENDIAN.
+> translator_lduw() is defined in "exec/translator.h" as:
+>
+>  192 static inline uint16_t
+>  193 translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
+>  194 {
+>  195     return translator_lduw_end(env, db, pc, MO_TE);
+>  196 }
+>
+> Directly use the inlined form, expanding MO_TE -> MO_LE
+> since AVR only exists in little-endian.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  hw/char/avr_usart.c    | 2 +-
->  hw/misc/avr_power.c    | 2 +-
->  hw/timer/avr_timer16.c | 6 +++---
->  target/avr/helper.c    | 4 ++--
->  4 files changed, 7 insertions(+), 7 deletions(-)
+>  target/avr/translate.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/char/avr_usart.c b/hw/char/avr_usart.c
-> index fae15217e9f..5510dd3f487 100644
-> --- a/hw/char/avr_usart.c
-> +++ b/hw/char/avr_usart.c
-> @@ -255,7 +255,7 @@ static void avr_usart_write(void *opaque, hwaddr addr=
-, uint64_t value,
->  static const MemoryRegionOps avr_usart_ops =3D {
->      .read =3D avr_usart_read,
->      .write =3D avr_usart_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .impl =3D {.min_access_size =3D 1, .max_access_size =3D 1}
->  };
+> diff --git a/target/avr/translate.c b/target/avr/translate.c
+> index ef6f655a458..78ae83df219 100644
+> --- a/target/avr/translate.c
+> +++ b/target/avr/translate.c
+> @@ -173,7 +173,7 @@ static int to_regs_00_30_by_two(DisasContext *ctx, in=
+t indx)
 >
-> diff --git a/hw/misc/avr_power.c b/hw/misc/avr_power.c
-> index 411f016c997..d8e0d918519 100644
-> --- a/hw/misc/avr_power.c
-> +++ b/hw/misc/avr_power.c
-> @@ -69,7 +69,7 @@ static void avr_mask_write(void *opaque, hwaddr offset,
->  static const MemoryRegionOps avr_mask_ops =3D {
->      .read =3D avr_mask_read,
->      .write =3D avr_mask_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .impl =3D {
->          .max_access_size =3D 1,
->      },
-> diff --git a/hw/timer/avr_timer16.c b/hw/timer/avr_timer16.c
-> index 012d8290018..110bcd58163 100644
-> --- a/hw/timer/avr_timer16.c
-> +++ b/hw/timer/avr_timer16.c
-> @@ -524,21 +524,21 @@ static void avr_timer16_ifr_write(void *opaque, hwa=
-ddr offset,
->  static const MemoryRegionOps avr_timer16_ops =3D {
->      .read =3D avr_timer16_read,
->      .write =3D avr_timer16_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .impl =3D {.max_access_size =3D 1}
->  };
+>  static uint16_t next_word(DisasContext *ctx)
+>  {
+> -    return translator_lduw(ctx->env, &ctx->base, ctx->npc++ * 2);
+> +    return translator_lduw_end(ctx->env, &ctx->base, ctx->npc++ * 2, MO_=
+LE);
+>  }
 >
->  static const MemoryRegionOps avr_timer16_imsk_ops =3D {
->      .read =3D avr_timer16_imsk_read,
->      .write =3D avr_timer16_imsk_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .impl =3D {.max_access_size =3D 1}
->  };
->
->  static const MemoryRegionOps avr_timer16_ifr_ops =3D {
->      .read =3D avr_timer16_ifr_read,
->      .write =3D avr_timer16_ifr_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .impl =3D {.max_access_size =3D 1}
->  };
->
-> diff --git a/target/avr/helper.c b/target/avr/helper.c
-> index 365c8c60e19..9ee0a558ea7 100644
-> --- a/target/avr/helper.c
-> +++ b/target/avr/helper.c
-> @@ -256,7 +256,7 @@ static void avr_cpu_trap_write(void *opaque, hwaddr a=
-ddr,
->  const MemoryRegionOps avr_cpu_reg1 =3D {
->      .read =3D avr_cpu_reg1_read,
->      .write =3D avr_cpu_trap_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .valid.min_access_size =3D 1,
->      .valid.max_access_size =3D 1,
->  };
-> @@ -264,7 +264,7 @@ const MemoryRegionOps avr_cpu_reg1 =3D {
->  const MemoryRegionOps avr_cpu_reg2 =3D {
->      .read =3D avr_cpu_reg2_read,
->      .write =3D avr_cpu_trap_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .valid.min_access_size =3D 1,
->      .valid.max_access_size =3D 1,
->  };
+>  static int append_16(DisasContext *ctx, int x)
 > --
 > 2.52.0
 >
