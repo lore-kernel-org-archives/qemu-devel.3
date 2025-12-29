@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D30E8FDB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B92D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:16:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaBEn-0004X7-Cs; Mon, 29 Dec 2025 06:16:33 -0500
+	id 1vaBF2-0004ub-Bz; Mon, 29 Dec 2025 06:16:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaBEh-0004Si-CA
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:16:27 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1vaBEz-0004pr-1o
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:16:45 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaBEf-0005Vc-Ef
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:16:27 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b727f452fffso1599899566b.1
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:16:25 -0800 (PST)
+ id 1vaBEx-0005W8-6o
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:16:44 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b725ead5800so1255842866b.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:16:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767006984; x=1767611784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767007002; x=1767611802; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sjctmgzYSgSvw2TTfv2AVl7rIub0XsJ0kxy4yiBuDn0=;
- b=lQVLgnUQbzf7G5EnaHkfKtzR3oAe8glEbnrtmJHhno2i9DBEZ2Demm2oFP266sj6xH
- LzqiJWk2zEpevdKiI72SeTN1HbRxlzGkbahhQuTuTNM6cVDVsvY9efq08cGSNIxQqV/r
- Q+6L6wG57ZrbWk+UoXIFOF7OIG4yEv2sLZyA8s2TK8d9bmRn3FkHxe6HOuPKnJ9x1VZx
- e31PVBtk4oVvOIve5w5w4YkoGBsu/BK2KG9het8ECawKoQeDNLnHJnIvVFptVv6CA67E
- LDp6ItNy5qNzz7IMu6p+kepZBoIhZYVtizMHoy9wfJGTpJ0maKqkzoUlCqzOsphcQ8Bs
- v9Ag==
+ bh=BKlbFAwsQ7LB5x+UqR1L5llLhJY0/GrJXzxo4R3mztk=;
+ b=H+uPHM9sj8NGi3BfZ3a+SuP/NKr7wuBAA9EQ4jgbtfL04LxT3EM5mkcdSXooNS4waZ
+ PXJkynXJzrM6uuMFNmGu78CJyNP/aptJRKJWfjYGua+fEMRLnsF/DV0E6OL0fw1Y4+Od
+ vcq7Au8Bto+8pR/kZhsBSQ+KblHrlK9sQb1YnzZCCn6LD2cztZJC1qDzR9/xzrEhTP+p
+ LEIrbtxxHYkoSlzdNDoHZHCdb6YzCPqReQdGCdnn6P0/Z35cpAJHiRv9zMCsmNCYawSY
+ hlkMfhz/DhDR6BFFbw0ysEQBci+1NL/94YloFALNCSyol+FbUMXocZUYRaWVTnvdtrF0
+ xq7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767006984; x=1767611784;
+ d=1e100.net; s=20230601; t=1767007002; x=1767611802;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sjctmgzYSgSvw2TTfv2AVl7rIub0XsJ0kxy4yiBuDn0=;
- b=JnLvGbinXIBXASLovZumDGVFG81ZQOdN0Lm8r2A4f9tsrd9bfuQW7vD28MHdJE8ViG
- l4u4/+qust4I0qNlpzIVGr7NfdYMVCj4/1mG3Vua4iA1j8azVx9ySehHY0nTj64L8Eyn
- b/QYidBc3j527lstrdnCeZRifcjAwHnWem0DoULzCBl/7N7Bc7zOdJdQBB4hZulUCJGo
- qKLFcahn7uVXD7QDwRlAeObxcGGBCxv9tYFHVfBFdlHUpFyAxIvUyHr76zZ/QqL36KLm
- Cnu7jlpiugc+025olaPTngYsyT9qiAjZp4bmki8UqN34fQWs7/BBg8+kGN6r8kRBHvRP
- UNfA==
-X-Gm-Message-State: AOJu0YzmLiuQRvMVgp0YPbid5P5t4QnYQ+VEg+U89QOL5fHaUPtrcugY
- Dpe3FVP5wPFey06eywzQ64Xic4f1K18v2E1guOSn1KqJ8NzyFTIw7Fi7blMqOqj2UhxoYxgkHOH
- +irNX0yfGW55klhSg2Gl0NY9+htvDGkll3PsWNghpgg==
-X-Gm-Gg: AY/fxX5oJYvSPEacZROnmS7WzGSuFTrEXcw9f4M4J/fhKvITksp7nAtX/AkqfvhNDOl
- 5HrD7qckx5Pl12UbJOEAxLvTBgaJIkOuY3HRPUOJipYaCcVK7yAOzWpBJ/tOC9r/IK58RVTruXi
- TIMitrwsyNO6YGK4bLLqkquGLv+P+WL8/zbgH6pQmdXL8mjiPSt7bB3oj+LexkD4V7lyO239TBf
- caG7KZYzd0PSyuTlZtVMNvIbpCvyQuXyg7h+VX7Q30OBJNf3bxRaHD9V2xFXqjpTNexQwfC6LOS
- mVBnYk/HUNoSc+QJ2hkl6qO6qL67ds4r1+gPWoU=
-X-Google-Smtp-Source: AGHT+IGdTlmGcdZ7eqOwzwmOgvQKYI1s1Dpsl/NkTp+KBKFME8RFYYIZGYfC8MgqFQ0OjpKs6YOYQezzrRWE1J3DJi4=
-X-Received: by 2002:a17:907:3f9f:b0:b76:3d56:f666 with SMTP id
- a640c23a62f3a-b80205ed2bdmr3382009366b.26.1767006983672; Mon, 29 Dec 2025
- 03:16:23 -0800 (PST)
+ bh=BKlbFAwsQ7LB5x+UqR1L5llLhJY0/GrJXzxo4R3mztk=;
+ b=TDRcOZqCNOr6FTWeYxUjiKWDJw6fhPiU8/CbI0JrSnSWYnOEIWgUO1l0FSKfqg2IGe
+ nHl/odAWHLaWuGjB3d5pft1Ilvphka3r67l2mXmLIZyIlOJyioYeQpxNOON0ycas5pmb
+ 99afJT25/v8HEvJpDRfVFx1ovyLkaWEsEmzQoSDKDEk/Ia1l8JzoBnMdUgdO7sSp00LK
+ SKuw2oIKJGyc5uacg/3gQ8gV+CDu9+5XPPo1u8k9HOPA5965TfDscIS74zlCrgZennW6
+ IGJUJzETImlK/kyNfl1+R1nQfWi5iK1QrkMEokwaEzbGm1CvnDK4S3a/LoMPbXKVLlsv
+ d/Sw==
+X-Gm-Message-State: AOJu0YxkZL/xiJmjJcy+fXaAGRJunOIf1KsrFXduNUIMGFn7wK2Xk6FY
+ 34FqdAu7BouC/XILGm9OuuPMr2XFG7hqfjjXt52YPiq4GRZ7OxyUFMX3vuhoLlRrSZ2maF0LhKM
+ 0dlYdd0fv+qSn1WyRfIgF6L2EDvkSn0HEmRX0SsAfog==
+X-Gm-Gg: AY/fxX5wm8FrnT9SeGL7VfDW3xDRgoxUq7MLbPkz+H/P8deJ7/s42wiYBb8E0nxNXGg
+ hhZs6Tg4yBDuO/ak846BUT1uLe4sagMMcchUIX6EouSRPFdcKTvtmkZdTj0o07L9eMWKmqSThMO
+ NH9OAkyKQQ1SSRho1yUG/enPwwz/nneONjOxrZSS0oTu+7Aiho4I9seRfK6491R1X8qU5M+478I
+ ZcY98uWl313x44C4ZCohi31ZbdkVD1ptJdvqBukZeP2UM7TpXvzuN12SR1KzbX6aPTpmqdbG087
+ P8CDdu8r0Ysg9Pcnpb662hM3dg1z7Uhac/iyhl4=
+X-Google-Smtp-Source: AGHT+IH4HHAWOi4idF+QLsZMmTXGm0xIYArC4AdGAzitnSlkBzC2YDDeKPdAIKGn7ANThkTlHyiENESRWCbkqC+wpCU=
+X-Received: by 2002:a17:906:ef08:b0:b72:6728:5bb1 with SMTP id
+ a640c23a62f3a-b803726dd35mr3587879966b.56.1767007001645; Mon, 29 Dec 2025
+ 03:16:41 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224162642.90857-1-philmd@linaro.org>
- <20251224162642.90857-5-philmd@linaro.org>
-In-Reply-To: <20251224162642.90857-5-philmd@linaro.org>
+ <20251224162642.90857-6-philmd@linaro.org>
+In-Reply-To: <20251224162642.90857-6-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Dec 2025 13:15:56 +0200
-X-Gm-Features: AQt7F2oATXYuv6sfJhoySLA2gR7v5TOjrA4svpmn7fyQvWvUMNzDpqxVkfR9pO4
-Message-ID: <CAAjaMXYXOA68DRrbOX1yphfF6WAxg=GfM_++F0vL7eWabTSwFQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/9] target/sparc: Use explicit big-endian LD/ST API
+Date: Mon, 29 Dec 2025 13:16:15 +0200
+X-Gm-Features: AQt7F2p6ELv4a7L71th4jzr3P4k6kAJMRNUkwedCLnrcMVn8upet6B5ikMjhxcg
+Message-ID: <CAAjaMXYZt4NvnE=yb+UB8oU-iH_iEOEuh98cxGoWTbKUTpWThQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/9] target/sparc: Use big-endian variant of
+ cpu_ld/st_data*()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -77,11 +78,12 @@ Cc: qemu-devel@nongnu.org,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, 
- Laurent Vivier <laurent@vivier.eu>, Frederic Konrad <konrad.frederic@yahoo.fr>
+ Laurent Vivier <laurent@vivier.eu>, Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,235 +109,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Dec 24, 2025 at 6:27=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> The SPARC architecture uses big endianness. Directly use
-> the big-endian LD/ST API.
+> We only build the SPARC targets using big endianness order,
+> therefore the cpu_ld/st_data*() definitions expand to the big
+> endian declarations. Use the explicit big-endian variants.
 >
 > Mechanical change running:
 >
->   $ for a in uw w l q; do \
->       sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
->         $(git grep -wlE '(ld|st)u?[wlq]_p' target/sparc/);
+>   $ tgt=3Dsparc; \
+>     end=3Dbe; \
+>     for op in data mmuidx_ra; do \
+>       for ac in uw sw l q; do \
+>         sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+>                   $(git grep -l cpu_ target/${tgt}/); \
+>       done;
+>       for ac in w l q; do \
+>         sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+>                   $(git grep -l cpu_ target/${tgt}/); \
+>       done;
 >     done
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  target/sparc/ldst_helper.c | 36 ++++++++++++++++++------------------
->  target/sparc/mmu_helper.c  | 32 +++++++++++++++++---------------
->  2 files changed, 35 insertions(+), 33 deletions(-)
+>  target/sparc/ldst_helper.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
 > diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-> index a87a0b3eee0..9892c8f61c6 100644
+> index 9892c8f61c6..d39f7d72a7e 100644
 > --- a/target/sparc/ldst_helper.c
 > +++ b/target/sparc/ldst_helper.c
-> @@ -707,17 +707,17 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_u=
-long addr,
->                                       MEMTXATTRS_UNSPECIFIED, &result);
+> @@ -1228,13 +1228,13 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target=
+_ulong addr,
+>              ret =3D cpu_ldub_data(env, addr);
 >              break;
 >          case 2:
-> -            ret =3D address_space_lduw(cs->as, access_addr,
-> -                                     MEMTXATTRS_UNSPECIFIED, &result);
-> +            ret =3D address_space_lduw_be(cs->as, access_addr,
-> +                                        MEMTXATTRS_UNSPECIFIED, &result)=
-;
+> -            ret =3D cpu_lduw_data(env, addr);
+> +            ret =3D cpu_lduw_be_data(env, addr);
 >              break;
->          default:
 >          case 4:
-> -            ret =3D address_space_ldl(cs->as, access_addr,
-> -                                    MEMTXATTRS_UNSPECIFIED, &result);
-> +            ret =3D address_space_ldl_be(cs->as, access_addr,
-> +                                       MEMTXATTRS_UNSPECIFIED, &result);
+> -            ret =3D cpu_ldl_data(env, addr);
+> +            ret =3D cpu_ldl_be_data(env, addr);
 >              break;
 >          case 8:
-> -            ret =3D address_space_ldq(cs->as, access_addr,
-> -                                    MEMTXATTRS_UNSPECIFIED, &result);
-> +            ret =3D address_space_ldq_be(cs->as, access_addr,
-> +                                       MEMTXATTRS_UNSPECIFIED, &result);
+> -            ret =3D cpu_ldq_data(env, addr);
+> +            ret =3D cpu_ldq_be_data(env, addr);
 >              break;
->          }
->
-> @@ -878,10 +878,10 @@ void helper_st_asi(CPUSPARCState *env, target_ulong=
- addr, uint64_t val,
->                  MemTxResult result;
->                  hwaddr access_addr =3D (env->mxccregs[0] & 0xffffffffULL=
-) + 8 * i;
->
-> -                env->mxccdata[i] =3D address_space_ldq(cs->as,
-> -                                                     access_addr,
-> -                                                     MEMTXATTRS_UNSPECIF=
-IED,
-> -                                                     &result);
-> +                env->mxccdata[i] =3D address_space_ldq_be(cs->as,
-> +                                                        access_addr,
-> +                                                        MEMTXATTRS_UNSPE=
-CIFIED,
-> +                                                        &result);
->                  if (result !=3D MEMTX_OK) {
->                      /* TODO: investigate whether this is the right behav=
-iour */
->                      sparc_raise_mmu_fault(cs, access_addr, false, false,
-> @@ -906,8 +906,8 @@ void helper_st_asi(CPUSPARCState *env, target_ulong a=
-ddr, uint64_t val,
->                  MemTxResult result;
->                  hwaddr access_addr =3D (env->mxccregs[1] & 0xffffffffULL=
-) + 8 * i;
->
-> -                address_space_stq(cs->as, access_addr, env->mxccdata[i],
-> -                                  MEMTXATTRS_UNSPECIFIED, &result);
-> +                address_space_stq_be(cs->as, access_addr, env->mxccdata[=
-i],
-> +                                     MEMTXATTRS_UNSPECIFIED, &result);
->
->                  if (result !=3D MEMTX_OK) {
->                      /* TODO: investigate whether this is the right behav=
-iour */
-> @@ -1072,17 +1072,17 @@ void helper_st_asi(CPUSPARCState *env, target_ulo=
-ng addr, uint64_t val,
->                                    MEMTXATTRS_UNSPECIFIED, &result);
->                  break;
->              case 2:
-> -                address_space_stw(cs->as, access_addr, val,
-> -                                  MEMTXATTRS_UNSPECIFIED, &result);
-> +                address_space_stw_be(cs->as, access_addr, val,
-> +                                     MEMTXATTRS_UNSPECIFIED, &result);
->                  break;
->              case 4:
->              default:
-> -                address_space_stl(cs->as, access_addr, val,
-> -                                  MEMTXATTRS_UNSPECIFIED, &result);
-> +                address_space_stl_be(cs->as, access_addr, val,
-> +                                     MEMTXATTRS_UNSPECIFIED, &result);
->                  break;
->              case 8:
-> -                address_space_stq(cs->as, access_addr, val,
-> -                                  MEMTXATTRS_UNSPECIFIED, &result);
-> +                address_space_stq_be(cs->as, access_addr, val,
-> +                                     MEMTXATTRS_UNSPECIFIED, &result);
->                  break;
->              }
->              if (result !=3D MEMTX_OK) {
-> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-> index 46bf500ea83..5a58239d65e 100644
-> --- a/target/sparc/mmu_helper.c
-> +++ b/target/sparc/mmu_helper.c
-> @@ -102,7 +102,8 @@ static int get_physical_address(CPUSPARCState *env, C=
-PUTLBEntryFull *full,
->      /* SPARC reference MMU table walk: Context table->L1->L2->PTE */
->      /* Context base + context number */
->      pde_ptr =3D (env->mmuregs[1] << 4) + (env->mmuregs[2] << 2);
-> -    pde =3D address_space_ldl(cs->as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &=
-result);
-> +    pde =3D address_space_ldl_be(cs->as, pde_ptr,
-> +                               MEMTXATTRS_UNSPECIFIED, &result);
->      if (result !=3D MEMTX_OK) {
->          return 4 << 2; /* Translation fault, L =3D 0 */
->      }
-> @@ -117,8 +118,8 @@ static int get_physical_address(CPUSPARCState *env, C=
-PUTLBEntryFull *full,
->          return 4 << 2;
->      case 1: /* L0 PDE */
->          pde_ptr =3D ((address >> 22) & ~3) + ((pde & ~3) << 4);
-> -        pde =3D address_space_ldl(cs->as, pde_ptr,
-> -                                MEMTXATTRS_UNSPECIFIED, &result);
-> +        pde =3D address_space_ldl_be(cs->as, pde_ptr,
-> +                                   MEMTXATTRS_UNSPECIFIED, &result);
->          if (result !=3D MEMTX_OK) {
->              return (1 << 8) | (4 << 2); /* Translation fault, L =3D 1 */
->          }
-> @@ -131,8 +132,8 @@ static int get_physical_address(CPUSPARCState *env, C=
-PUTLBEntryFull *full,
->              return (1 << 8) | (4 << 2);
->          case 1: /* L1 PDE */
->              pde_ptr =3D ((address & 0xfc0000) >> 16) + ((pde & ~3) << 4)=
-;
-> -            pde =3D address_space_ldl(cs->as, pde_ptr,
-> -                                    MEMTXATTRS_UNSPECIFIED, &result);
-> +            pde =3D address_space_ldl_be(cs->as, pde_ptr,
-> +                                       MEMTXATTRS_UNSPECIFIED, &result);
->              if (result !=3D MEMTX_OK) {
->                  return (2 << 8) | (4 << 2); /* Translation fault, L =3D =
-2 */
->              }
-> @@ -145,8 +146,8 @@ static int get_physical_address(CPUSPARCState *env, C=
-PUTLBEntryFull *full,
->                  return (2 << 8) | (4 << 2);
->              case 1: /* L2 PDE */
->                  pde_ptr =3D ((address & 0x3f000) >> 10) + ((pde & ~3) <<=
- 4);
-> -                pde =3D address_space_ldl(cs->as, pde_ptr,
-> -                                        MEMTXATTRS_UNSPECIFIED, &result)=
-;
-> +                pde =3D address_space_ldl_be(cs->as, pde_ptr,
-> +                                           MEMTXATTRS_UNSPECIFIED, &resu=
-lt);
->                  if (result !=3D MEMTX_OK) {
->                      return (3 << 8) | (4 << 2); /* Translation fault, L =
-=3D 3 */
->                  }
-> @@ -189,7 +190,7 @@ static int get_physical_address(CPUSPARCState *env, C=
-PUTLBEntryFull *full,
->          if (is_dirty) {
->              pde |=3D PG_MODIFIED_MASK;
->          }
-> -        stl_phys(cs->as, pde_ptr, pde);
-> +        stl_be_phys(cs->as, pde_ptr, pde);
->      }
->
->      /* the page can be put in the TLB */
-> @@ -276,7 +277,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulo=
-ng address, int mmulev)
->      /* Context base + context number */
->      pde_ptr =3D (hwaddr)(env->mmuregs[1] << 4) +
->          (env->mmuregs[2] << 2);
-> -    pde =3D address_space_ldl(cs->as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &=
-result);
-> +    pde =3D address_space_ldl_be(cs->as, pde_ptr,
-> +                               MEMTXATTRS_UNSPECIFIED, &result);
->      if (result !=3D MEMTX_OK) {
->          return 0;
->      }
-> @@ -292,8 +294,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulo=
-ng address, int mmulev)
->              return pde;
->          }
->          pde_ptr =3D ((address >> 22) & ~3) + ((pde & ~3) << 4);
-> -        pde =3D address_space_ldl(cs->as, pde_ptr,
-> -                                MEMTXATTRS_UNSPECIFIED, &result);
-> +        pde =3D address_space_ldl_be(cs->as, pde_ptr,
-> +                                   MEMTXATTRS_UNSPECIFIED, &result);
->          if (result !=3D MEMTX_OK) {
->              return 0;
->          }
-> @@ -310,8 +312,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulo=
-ng address, int mmulev)
->                  return pde;
->              }
->              pde_ptr =3D ((address & 0xfc0000) >> 16) + ((pde & ~3) << 4)=
-;
-> -            pde =3D address_space_ldl(cs->as, pde_ptr,
-> -                                    MEMTXATTRS_UNSPECIFIED, &result);
-> +            pde =3D address_space_ldl_be(cs->as, pde_ptr,
-> +                                       MEMTXATTRS_UNSPECIFIED, &result);
->              if (result !=3D MEMTX_OK) {
->                  return 0;
->              }
-> @@ -328,8 +330,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulo=
-ng address, int mmulev)
->                      return pde;
->                  }
->                  pde_ptr =3D ((address & 0x3f000) >> 10) + ((pde & ~3) <<=
- 4);
-> -                pde =3D address_space_ldl(cs->as, pde_ptr,
-> -                                        MEMTXATTRS_UNSPECIFIED, &result)=
-;
-> +                pde =3D address_space_ldl_be(cs->as, pde_ptr,
-> +                                           MEMTXATTRS_UNSPECIFIED, &resu=
-lt);
->                  if (result !=3D MEMTX_OK) {
->                      return 0;
->                  }
+>          default:
+>              g_assert_not_reached();
 > --
 > 2.52.0
 >
