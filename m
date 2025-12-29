@@ -4,145 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A69ABE92FCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B1D8E9271B
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaJFs-0008NW-TM; Mon, 29 Dec 2025 14:50:12 -0500
+	id 1vaJHV-0000fV-1B; Mon, 29 Dec 2025 14:51:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vaJFX-0008Kt-W6; Mon, 29 Dec 2025 14:49:52 -0500
-Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
- ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vaJFW-0001mD-Jl; Mon, 29 Dec 2025 14:49:51 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WTZMvd6AgUrPlDxFBV5C9K2YWyPQL5wYZaJdcK7Bhgj+xzu+yM/PlKbq5CC6i9/zE9DYmXQrotNRSNNULnsCTpc/mD2DYSz8pL5jYsowJ5W+Qr1kkADXuI+VamIYLh+ubkAXKY0GDiErsE0QaZInEH7vUTgfj9LfSpEj82q+aOTiK4hfu3ywof28FZTjfUhkZWqWOXwZa6t7ek/N/M658DUcQ3EH+YlbW6sQri7jn0wSPjsuFktVA1QaAIeH2YukybthkCbgO2tsGWNv9in1N/nmpVeV2LI2TIm6czdnJg8xoQ8BF5tx/usgO8ccOdzC3vV63s8+ilqBU4K4BLJ00Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+U1eOLF9Pd3JV1rzok8H/7ZgA/+Vkm4A8jUZWTzSiIU=;
- b=hZHGWgP3mvLApU2MOHW13wtoOGUVu1S4PykgwX31zrwKOCHwDw09Tf7Lpu4cVFqgcAdNi5r3rYd2T2/FltPOiC8s2Plkvc66yoNY7XzaxUk2JY++wV3/K7tj8gXYDCisKNbJdNYn0YB14nCdzIKATqBgDK7PZd9DfDyMP0Y4WdBHhmtJhRPCNtlajktAOZ8nZL2bKNz1w3mL/y/lBsiyeflajMLWBP8MLQRvvpQBk4XuxfB+ESHaoE9FGJ4mSVhLxPwO4N3u68qYPuJpuQcPQ2rl5wUp4vIO1L74zlCiKNaW7BQOfsKdZjBG/z3kvKpTMpkIJ0Bc8ebnosSPlOMPmQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+U1eOLF9Pd3JV1rzok8H/7ZgA/+Vkm4A8jUZWTzSiIU=;
- b=AWM65pG/1WWhuI0CC3HX5gxdzIIY9SvowZk8DYt+vYFPSmVQgJqptzxrsFNPYJMYufG0bzGpOVTfmpLPmjOAFW+dogRELDNS0NGLQ7c89Y89oMByATgAftIFtRmo2syi1eu24B2PGNe5joTdQp9KFKipbV4MbdWVuU2zDCVnczYCT7dH2338Xt2lGTq6zc/WKN/5zQGS5QkHVNyL9GADjngqAnRNupsBIfwm3Ae4s1YxjeJ8JiHN1DhAp9bpwzuUSBlHLt1PSiRTf3xktmzJ/cwHu4rUUKI3N3vkWlkQ5WylXz9p7YTSrC1phH7W+GkRA27bTZJdFDA6JrG0m+TDow==
-Received: from DM6PR07CA0087.namprd07.prod.outlook.com (2603:10b6:5:337::20)
- by LV9PR12MB9808.namprd12.prod.outlook.com (2603:10b6:408:2e7::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.11; Mon, 29 Dec
- 2025 19:49:45 +0000
-Received: from DS1PEPF00017093.namprd03.prod.outlook.com
- (2603:10b6:5:337:cafe::20) by DM6PR07CA0087.outlook.office365.com
- (2603:10b6:5:337::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9456.14 via Frontend Transport; Mon,
- 29 Dec 2025 19:49:34 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DS1PEPF00017093.mail.protection.outlook.com (10.167.17.136) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9478.4 via Frontend Transport; Mon, 29 Dec 2025 19:49:45 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
- 2025 11:49:33 -0800
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
- 2025 11:49:33 -0800
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 29 Dec 2025 11:49:32 -0800
-Date: Mon, 29 Dec 2025 11:49:31 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
-Subject: Re: [RFC PATCH 10/16] hw/arm/tegra241-cmdqv: Allocate vEVENTQ object
-Message-ID: <aVLbS6g+Sd6vfaFc@Asurada-Nvidia>
-References: <20251210133737.78257-1-skolothumtho@nvidia.com>
- <20251210133737.78257-11-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vaJHT-0000dP-01
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:51:51 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vaJHQ-00025D-O5
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:51:50 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 018295BCE2;
+ Mon, 29 Dec 2025 19:51:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767037907; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JcjTPBWK0RmOEAEoPN4Fq9MWCiqHV71xMMmWKXhivlA=;
+ b=XoB4WLaFG4qfBDZkthtE1b0O7LoK5JTby6Ms8Hy6TrIuSMdELm4uEpIcQp3Y3+3RUws3/z
+ j7ehY4W8xHbotF55ikyzbFMaDXbVlvxx/2lI6VfE7zRCaVuDi9CNjDv6NhGkZsEUm+nJW/
+ qrDLcJVMYcTMsLhoZL7EhavJ8IAsJN8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767037907;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JcjTPBWK0RmOEAEoPN4Fq9MWCiqHV71xMMmWKXhivlA=;
+ b=VubipLiinyCWP5hwDz9wjnT6odyFOrun8pLJH4IY88mxcd9ejvZ7oJP5SPNM1nO1yAabjz
+ DSZp+uxz+E4S89BQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MO47XcR7;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=3vBuywWL
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767037906; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JcjTPBWK0RmOEAEoPN4Fq9MWCiqHV71xMMmWKXhivlA=;
+ b=MO47XcR7VCgxW5FAz5u3iGw7oiSi1KZkEEFeN1U9V5HOJK2N4PRX6yYQ0yt/kWfj0CYosT
+ nPUTgBYjxtxNXWjDhh/K8nRCuSA/ZE+91c3H43yNGVZtteHW7o+8yN06iBbDLfK6EMamaM
+ u0dC2SqcLq3URnlDT2Xo65TrqCBJiho=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767037906;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JcjTPBWK0RmOEAEoPN4Fq9MWCiqHV71xMMmWKXhivlA=;
+ b=3vBuywWLtVPF25aqQBbP3tE7C+aLKS6I4lliLsy6fSwYAuT6uThABoIZhAaLhiB7E3nuea
+ DyfJPNrrFpNAk0DA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6FBE7137C3;
+ Mon, 29 Dec 2025 19:51:45 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xQxCDNHbUmmxWAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 29 Dec 2025 19:51:45 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>
+Subject: Re: [RFC PATCH 14/25] migration: Remove QEMUFile from channel.c
+In-Reply-To: <aVLYQGQo2gSRs7Xm@x1.local>
+References: <20251226211930.27565-1-farosas@suse.de>
+ <20251226211930.27565-15-farosas@suse.de> <aVLYQGQo2gSRs7Xm@x1.local>
+Date: Mon, 29 Dec 2025 16:51:42 -0300
+Message-ID: <87a4z183sh.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20251210133737.78257-11-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF00017093:EE_|LV9PR12MB9808:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4b780f49-ef3b-4f68-d7d1-08de47136a9b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?sZhKyuLK8BG4IpX+l4cf9Y3/aAycGVsGzd0Saj481Wj9CTB0hQTlMn2saQMA?=
- =?us-ascii?Q?jpdHUHzJOMcU/kHcZLbDOt9WzUSYMfx/epscOxq89g8ZFVS/grh48PpnImar?=
- =?us-ascii?Q?bkEQbe13ovHajfAoHUlaEEX0rIrh97UKCR57I+mT6veODDqbQEn/2Yt9GNDS?=
- =?us-ascii?Q?vc/rHmA0tzq80xoCYRHit9I9HQZeQ3qlMrINVsJRKmsfrWoc+uhM3n/7gQ3r?=
- =?us-ascii?Q?eZ82FX4HhOZ1T+OAzEC/HDNQmzOfgOgKElrRQAxfb7MqAM3jSCTv247Ovhph?=
- =?us-ascii?Q?Bts/0r4xJLMI7xPLnf8/y0r7bSmctBo0BlF/eTfW9hkYxjkn4+mxL5iUI7iM?=
- =?us-ascii?Q?PTWIxzdg6wyuZidYEXHuXllL9WU/kKjZWnE7SyNei1qXxNSY1Kx/XtsE02tv?=
- =?us-ascii?Q?m+al4p4I4sXscFJKUgsy69+OxR9Q83uIjvwTn2p0s82qlr5aedQXg19vObzx?=
- =?us-ascii?Q?dHGeyXbmkx7EoVf4RIN6NENeWsxvXMYlGKhqDDOtzfQehPH7/NzhrYwcKs8Q?=
- =?us-ascii?Q?VV4Axt7E4+IhW4RKUu66q/tZKtHYz3X8B6ttaQe/+Q+uMc5CVxLqfPW0kKPY?=
- =?us-ascii?Q?ySPY0/jvBgaDlGlomWei5Zt9OFtkNB3QLFNk9ZuuCCTsvMxCNK9tcS7uhWan?=
- =?us-ascii?Q?dB/1RGQQwS329q1cB2OqiOKHw0cQGmftEHPHJhZ1sFxRBJkiRWvIBvmng5n7?=
- =?us-ascii?Q?XxumJ2rLVJ5IdVXUfcl4E6SeBU2RehaxbMMWq2o+yyLiahhZn3Jq7zKTHZj5?=
- =?us-ascii?Q?jFso42Tp284iYNmhHonS32D+y4hyi8eLnIzpGjEHz6HZYQWBXu2nzmwL2dfZ?=
- =?us-ascii?Q?HZB7buTalEJyd5pTBQDrfF89/SkBS28Lrnnaq9JD1eX86I1PYptHIxF+OvYz?=
- =?us-ascii?Q?LJ8fCoiCRoZoNotQvXMVM8W+mGwbrYEiaiAtpDNM1VhylNiqhgmEomx1Y/bo?=
- =?us-ascii?Q?4dMeKE7fvDnCAew1u4HPIYQgg+wpbJz5ySUoVFAJ3CGSqN1s2D7TzLYeAmUh?=
- =?us-ascii?Q?OPKyaS/u7Kq+kbZWlUNNoSyAl21eYl41Usxz0a/K5H/1GWxqoq8O77oI4NnC?=
- =?us-ascii?Q?IHfbyrKWzfYE80qfBu4jjLshT9fOWvHPeQbXps/PEVxQ1P+BPbwO1fj4+zUk?=
- =?us-ascii?Q?eRrx5Ev4PY6DZwCnSR75jSFtwSiES0Wz7N27zjkVW6MUWmIQXlR3Sl/coEOQ?=
- =?us-ascii?Q?LVIagDWFlvYKhoIXy+LqCfMK5lyLIam8LeijZAzWpT5jEgi8lPvw3BhxgMe2?=
- =?us-ascii?Q?cbEOMvCfKAQfwCU2TXl+C3XcxVxYNPGuW3ihZftXcw6Q0ULb1wCfACBJBF4e?=
- =?us-ascii?Q?7fj6qNqoyCRfyMtdLY8GZQNvxob5kvsh4G0XRoCr9FF5ZjrJFE8/tL5Y+5Xe?=
- =?us-ascii?Q?1HdYhwwGBB1J2SABGix2Aqd55N/3nAhlAz9g355SiagpedFRTFGBdip0MhkW?=
- =?us-ascii?Q?r/U+h5SMWLTTGZkiqjQI4g143aQsdENFlQUPaIL/q91kPv4MOFOa/30T5PDb?=
- =?us-ascii?Q?eF4NSs0PGAjcE2KB3TUvZpUMlXtCNbm3P0rGj8re7R1O4wazxhInW0kO+Pcq?=
- =?us-ascii?Q?39eKIWs1skpDOazcAGI=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 19:49:45.0357 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4b780f49-ef3b-4f68-d7d1-08de47136a9b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF00017093.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV9PR12MB9808
-Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
- envelope-from=nicolinc@nvidia.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 018295BCE2
+X-Spamd-Result: default: False [-5.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ DWL_DNSWL_LOW(-1.00)[suse.de:dkim];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim,suse.de:email];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,20 +126,352 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 10, 2025 at 01:37:31PM +0000, Shameer Kolothum wrote:
-> @@ -259,11 +305,16 @@ static bool tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int index,
->          g_free(vcmdq);
->      }
->  
-> +    if (!tegra241_cmdqv_alloc_veventq(cmdqv, errp)) {
-> +        return false;
-> +    }
-> +
+Peter Xu <peterx@redhat.com> writes:
 
-I think this should be called in tegra241_cmdqv_alloc_viommu().
+> On Fri, Dec 26, 2025 at 06:19:16PM -0300, Fabiano Rosas wrote:
+>> Make channel.c deal only with QIOChannel objects. Move any handling of
+>> QEMUFile into migration.c. To achieve this in a clean way:
+>> 
+>> 1) Define a migration_outgoing_setup, analogous to
+>> migration_incoming_setup, responsible for creating the QEMUFile from
+>> the QIOChannel.
+>> 
+>> 2) Increase the scope of migration_incoming_setup to create not only
+>> the main channel, but all the others as well. That is currently being
+>> done at migration_ioc_process, so move the code.
+>> 
+>> 3) Adjust RDMA code to pass in the QIOChannel and remove some of the
+>> usage of QEMUFile.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/channel.c   | 21 ++++++-----
+>>  migration/migration.c | 88 ++++++++++++++++++++++---------------------
+>>  migration/migration.h |  6 ++-
+>>  migration/multifd.c   |  7 ++--
+>>  migration/multifd.h   |  2 +-
+>>  migration/rdma.c      | 28 ++++----------
+>>  6 files changed, 73 insertions(+), 79 deletions(-)
+>> 
+>> diff --git a/migration/channel.c b/migration/channel.c
+>> index 7243b99108..af6c2cc76e 100644
+>> --- a/migration/channel.c
+>> +++ b/migration/channel.c
+>> @@ -14,7 +14,6 @@
+>>  #include "channel.h"
+>>  #include "tls.h"
+>>  #include "migration.h"
+>> -#include "qemu-file.h"
+>>  #include "trace.h"
+>>  #include "qapi/error.h"
+>>  #include "io/channel-tls.h"
+>> @@ -34,6 +33,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>>  {
+>>      MigrationIncomingState *mis = migration_incoming_get_current();
+>>      Error *local_err = NULL;
+>> +    uint8_t ch;
+>>  
+>>      trace_migration_set_incoming_channel(
+>>          ioc, object_get_typename(OBJECT(ioc)));
+>> @@ -42,9 +42,16 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>>          migration_tls_channel_process_incoming(ioc, &local_err);
+>>      } else {
+>>          migration_ioc_register_yank(ioc);
+>> -        migration_ioc_process_incoming(ioc, &local_err);
+>> -    }
+>> +        ch = migration_ioc_process_incoming(ioc, &local_err);
+>> +        if (!ch) {
+>> +            goto out;
+>> +        }
+>>  
+>> +        if (migration_incoming_setup(ioc, ch, &local_err)) {
+>> +            migration_incoming_process();
+>> +        }
+>> +    }
+>> +out:
+>>      if (local_err) {
+>>          error_report_err(local_err);
+>>          migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
+>> @@ -75,14 +82,8 @@ void migration_channel_connect(MigrationState *s, QIOChannel *ioc)
+>>          return;
+>>      }
+>>  
+>> -    QEMUFile *f = qemu_file_new_output(ioc);
+>> -
+>>      migration_ioc_register_yank(ioc);
+>> -
+>> -    qemu_mutex_lock(&s->qemu_file_lock);
+>> -    s->to_dst_file = f;
+>> -    qemu_mutex_unlock(&s->qemu_file_lock);
+>> -
+>> +    migration_outgoing_setup(ioc);
+>>      migration_connect(s);
+>>  }
+>>  
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index 5c6c76f110..677581b5a5 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -92,7 +92,7 @@ enum mig_rp_message_type {
+>>  };
+>>  
+>>  /* Migration channel types */
+>> -enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
+>> +enum { CH_NONE, CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
+>>  
+>>  /* When we add fault tolerance, we could have several
+>>     migrations at once.  For now we don't need to add
+>> @@ -934,17 +934,48 @@ out:
+>>      migrate_incoming_unref_outgoing_state();
+>>  }
+>>  
+>> -/**
+>> - * migration_incoming_setup: Setup incoming migration
+>> - * @f: file for main migration channel
+>> - */
+>> -static void migration_incoming_setup(QEMUFile *f)
+>> +static bool migration_has_main_and_multifd_channels(void);
+>> +
+>> +bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp)
+>>  {
+>>      MigrationIncomingState *mis = migration_incoming_get_current();
+>> +    QEMUFile *f;
+>>  
+>> -    assert(!mis->from_src_file);
+>> -    mis->from_src_file = f;
+>> -    qemu_file_set_blocking(f, false, &error_abort);
+>> +    switch (channel) {
+>> +    case CH_MAIN:
+>> +        f = qemu_file_new_input(ioc);
+>> +        assert(!mis->from_src_file);
+>> +        mis->from_src_file = f;
+>> +        qemu_file_set_blocking(f, false, &error_abort);
+>> +        break;
+>> +
+>> +    case CH_MULTIFD:
+>> +        if (!multifd_recv_new_channel(ioc, errp)) {
+>> +            return false;
+>> +        }
+>> +        break;
+>> +
+>> +    case CH_POSTCOPY:
+>> +        assert(!mis->postcopy_qemufile_dst);
+>> +        f = qemu_file_new_input(ioc);
+>> +        postcopy_preempt_new_channel(mis, f);
+>> +        return false;
+>> +
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +
+>> +    return migration_has_main_and_multifd_channels();
+>> +}
+>> +
+>> +void migration_outgoing_setup(QIOChannel *ioc)
+>> +{
+>> +    MigrationState *s = migrate_get_current();
+>> +    QEMUFile *f = qemu_file_new_output(ioc);
+>> +
+>> +    qemu_mutex_lock(&s->qemu_file_lock);
+>> +    s->to_dst_file = f;
+>> +    qemu_mutex_unlock(&s->qemu_file_lock);
+>>  }
+>>  
+>>  /* Returns true if recovered from a paused migration, otherwise false */
+>> @@ -990,12 +1021,6 @@ void migration_incoming_process(void)
+>>      qemu_coroutine_enter(co);
+>>  }
+>>  
+>> -void migration_fd_process_incoming(QEMUFile *f)
+>> -{
+>> -    migration_incoming_setup(f);
+>> -    migration_incoming_process();
+>> -}
+>> -
+>>  static bool migration_has_main_and_multifd_channels(void)
+>>  {
+>>      MigrationIncomingState *mis = migration_incoming_get_current();
+>> @@ -1012,12 +1037,10 @@ static bool migration_has_main_and_multifd_channels(void)
+>>      return true;
+>>  }
+>>  
+>> -void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>> +uint8_t migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>>  {
+>>      MigrationIncomingState *mis = migration_incoming_get_current();
+>> -    Error *local_err = NULL;
+>> -    QEMUFile *f;
+>> -    uint8_t channel;
+>> +    uint8_t channel = CH_NONE;
+>>      uint32_t channel_magic = 0;
+>>      int ret = 0;
+>>  
+>> @@ -1036,7 +1059,7 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>>              ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
+>>                                                sizeof(channel_magic), errp);
+>>              if (ret != 0) {
+>> -                return;
+>> +                goto out;
+>>              }
+>>  
+>>              channel_magic = be32_to_cpu(channel_magic);
+>> @@ -1051,7 +1074,6 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>>                  channel = CH_MAIN;
+>>              } else {
+>>                  error_setg(errp, "unknown channel magic: %u", channel_magic);
+>> -                return;
+>>              }
+>>          } else if (mis->from_src_file && migrate_multifd()) {
+>>              /*
+>> @@ -1063,33 +1085,13 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>>              channel = CH_MAIN;
+>>          } else {
+>>              error_setg(errp, "non-peekable channel used without multifd");
+>> -            return;
+>>          }
+>>      } else {
+>>          assert(migrate_postcopy_preempt());
+>>          channel = CH_POSTCOPY;
+>>      }
+>> -
+>> -    if (channel == CH_MAIN) {
+>> -        f = qemu_file_new_input(ioc);
+>> -        migration_incoming_setup(f);
+>> -    } else if (channel == CH_MULTIFD) {
+>> -        /* Multiple connections */
+>> -        multifd_recv_new_channel(ioc, &local_err);
+>> -        if (local_err) {
+>> -            error_propagate(errp, local_err);
+>> -            return;
+>> -        }
+>> -    } else if (channel == CH_POSTCOPY) {
+>> -        assert(!mis->postcopy_qemufile_dst);
+>> -        f = qemu_file_new_input(ioc);
+>> -        postcopy_preempt_new_channel(mis, f);
+>> -        return;
+>> -    }
+>> -
+>> -    if (migration_has_main_and_multifd_channels()) {
+>> -        migration_incoming_process();
+>> -    }
+>> +out:
+>> +    return channel;
+>>  }
+>>  
+>>  /**
+>> diff --git a/migration/migration.h b/migration/migration.h
+>> index f340cd518d..d2b82cf54f 100644
+>> --- a/migration/migration.h
+>> +++ b/migration/migration.h
+>> @@ -526,8 +526,10 @@ struct MigrationState {
+>>  void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+>>                         MigrationStatus new_state);
+>>  
+>> -void migration_fd_process_incoming(QEMUFile *f);
+>> -void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
+>> +void migration_outgoing_setup(QIOChannel *ioc);
+>> +bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp);
+>> +
+>> +uint8_t migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
+>>  void migration_incoming_process(void);
+>>  
+>>  bool  migration_has_all_channels(void);
+>> diff --git a/migration/multifd.c b/migration/multifd.c
+>> index 3fb1a07ba9..c6639dbab5 100644
+>> --- a/migration/multifd.c
+>> +++ b/migration/multifd.c
+>> @@ -1521,7 +1521,7 @@ bool multifd_recv_all_channels_created(void)
+>>   * Try to receive all multifd channels to get ready for the migration.
+>>   * Sets @errp when failing to receive the current channel.
+>>   */
+>> -void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>> +bool multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>>  {
+>>      MultiFDRecvParams *p;
+>>      Error *local_err = NULL;
+>> @@ -1536,7 +1536,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>>                                      "failed to receive packet"
+>>                                      " via multifd channel %d: ",
+>>                                      qatomic_read(&multifd_recv_state->count));
+>> -            return;
+>> +            return false;
+>>          }
+>>          trace_multifd_recv_new_channel(id);
+>>      } else {
+>> @@ -1549,7 +1549,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>>                     id);
+>>          multifd_recv_terminate_threads(error_copy(local_err));
+>>          error_propagate(errp, local_err);
+>> -        return;
+>> +        return false;
+>>      }
+>>      p->c = ioc;
+>>      object_ref(OBJECT(ioc));
+>> @@ -1558,4 +1558,5 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>>      qemu_thread_create(&p->thread, p->name, multifd_recv_thread, p,
+>>                         QEMU_THREAD_JOINABLE);
+>>      qatomic_inc(&multifd_recv_state->count);
+>> +    return true;
+>>  }
+>> diff --git a/migration/multifd.h b/migration/multifd.h
+>> index 9b6d81e7ed..89a395aef2 100644
+>> --- a/migration/multifd.h
+>> +++ b/migration/multifd.h
+>> @@ -42,7 +42,7 @@ int multifd_recv_setup(Error **errp);
+>>  void multifd_recv_cleanup(void);
+>>  void multifd_recv_shutdown(void);
+>>  bool multifd_recv_all_channels_created(void);
+>> -void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
+>> +bool multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
+>>  void multifd_recv_sync_main(void);
+>>  int multifd_send_sync_main(MultiFDSyncReq req);
+>>  bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
+>> diff --git a/migration/rdma.c b/migration/rdma.c
+>> index 596a1aba0b..7bee871e2b 100644
+>> --- a/migration/rdma.c
+>> +++ b/migration/rdma.c
+>> @@ -384,7 +384,6 @@ struct QIOChannelRDMA {
+>>      QIOChannel parent;
+>>      RDMAContext *rdmain;
+>>      RDMAContext *rdmaout;
+>> -    QEMUFile *file;
+>>      bool blocking; /* XXX we don't actually honour this yet */
+>>  };
+>>  
+>> @@ -3836,32 +3835,20 @@ static void qio_channel_rdma_register_types(void)
+>>  
+>>  type_init(qio_channel_rdma_register_types);
+>>  
+>> -static QEMUFile *rdma_new_input(RDMAContext *rdma)
+>> +static QIOChannel *rdma_new_ioc(RDMAContext *rdma)
+>>  {
+>>      QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
+>>  
+>> -    rioc->file = qemu_file_new_input(QIO_CHANNEL(rioc));
+>> -    rioc->rdmain = rdma;
+>> -    rioc->rdmaout = rdma->return_path;
+>> -
+>> -    return rioc->file;
+>> -}
+>> -
+>> -static QEMUFile *rdma_new_output(RDMAContext *rdma)
+>> -{
+>> -    QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
+>> -
+>> -    rioc->file = qemu_file_new_output(QIO_CHANNEL(rioc));
+>>      rioc->rdmaout = rdma;
+>>      rioc->rdmain = rdma->return_path;
+>
+> Likely it was overlooked rdmaout/rdmain was set in reverse order in these
+> two functions.  I gave it a quick run on rdma and it was indeed broken
+> starting from this patch.
+>
 
-FWIW, vEVENTQ is crucial for CMDQV, because VINTF/VCMDQ will not
-work if guest OS doesn't recover the HW error correctly.
+I'll remember to test rdma next time, thanks for catching this.
 
-Nicolin
+> The goal of the change looks reasonable in general otherwise, said that,
+> maybe there's way to split the patch somehow?
+>
+
+Yes, no problem.
 
