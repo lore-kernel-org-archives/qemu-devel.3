@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE8CBE784BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 01:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D166D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 01:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va1sZ-0004iZ-QZ; Sun, 28 Dec 2025 20:16:59 -0500
+	id 1va1wI-0005mU-Ot; Sun, 28 Dec 2025 20:20:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va1sV-0004iH-Oh
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:16:55 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1va1wE-0005lj-H6
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:20:46 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va1sS-00013I-HF
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:16:54 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-6446c924f9eso7692793d50.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 17:16:52 -0800 (PST)
+ id 1va1wD-0001iQ-37
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:20:46 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a0d52768ccso107403585ad.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 17:20:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766971011; x=1767575811; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766971243; x=1767576043; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7sWmpLytq81vjdmTZDhI6/te3RLAgTP3BaTBjOqUkLc=;
- b=uOesusgsWxdxFzqScj3jzTLQnekz08EPv7cMSR+pMlz9SHyysiTMXn9KQQda2VPXPK
- jKJRzHpq1Uj0szuu7v3qa1TbNOzP+FqO64YGE1XwcRYQxuzdQMvfzPTbiCJAekZvrRuX
- WNMMaggS6f5mUJvKbkf/dbrMBXivoTCqkml8I0Xuigg+I5pImT38kZqxe2ZMzI/jyUGU
- Mx5AtPqr+fw+I15TKD8FgBYf0JTxU+pc7XstVS/+pkKe3b3UFbVX2ozTDbwXhjPgJwuE
- 8OtkvUWWXxgV5qGc+GmEgJFjiyfmuMnVEzD6P/myH4XE6FK5NeV4ovwW/StWP5cm2FF2
- x24w==
+ bh=ZzgjZVOH0TuVlTZVe+keidLwn6BWFJyS9XoaeCJHPMc=;
+ b=idXb8x2fVVp++Q15eVGv3xlc/lpdK6gM1BaXV2ob3jp8lJeQgAqMianVrBs9VoCYaQ
+ w9uYwjp4cTv/huTucWNpFM7O3FaU9iikwUo3sfOHwm/Wqj/Tc5+5GRtkhrcnkgJdTigu
+ VKNlCRyadaPCThVqyY79NuBTQBpdNaNo8BknQ0adI01V/vsceyz6OdiBKrUbNx0jUqqj
+ iQmBV3qnN2vbh63tsRfnTCoDr/KYFBphsRSUGzzfMmHIseic0ipb0/n9Rr2rjFu/TIqy
+ yZsvV8rN7cGVLvjVhsjdNQn6PTRiILqoRCzsizVGsE5aCBf1Bnaf8zPMDeMz74UHigFf
+ l//w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766971011; x=1767575811;
+ d=1e100.net; s=20230601; t=1766971243; x=1767576043;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7sWmpLytq81vjdmTZDhI6/te3RLAgTP3BaTBjOqUkLc=;
- b=okrxqVE2IvOWYAmXX4fU8AfTP1bl5NT+55TyHB5itCSgFwQmF4csEX0xvjBRwUxS98
- foTrQ0Y9p6Gro+tFDM/EQozzpCuuc9i2CNDDHq/2LpmQ0wWZ8lrIFqEa55bYeEfsEpAl
- luwte3UbgRIRngZN1LT1vGandxk3x7/0T3x+jdkJJzhYPmCdLtyzN+RdlVgYDhjPATHo
- UNLGhWXlYyXqDlyWa3GGrcesFa7YRFDUSvxn0/64dhhtTLyvR++D8/+wuCaKBMJQ9mpC
- Wg5UF8kGJWWz4SrfY/+PcVlYefDJ08YXQCw0nCDE5Pc5Ds5GHGt2mh9Ck/yhioJ5lUpE
- ZBaQ==
+ bh=ZzgjZVOH0TuVlTZVe+keidLwn6BWFJyS9XoaeCJHPMc=;
+ b=ZVTEP03gy1PRSVFWgq7lF5vemqgjuUfpFGuh+18OEhR8nQC6xMR8mn1YkwW8gjssae
+ z9gY+UV9CTDJZu4JIGSWw5y8SYqujv941z94N2haz0qDa0IJRVrGwairwotaf9JiY/oQ
+ rGZvZxw1umj+/TLP2HW2yNjmi8eqPjTkgbRiEP6l4zuQE5ATyt5vZTTgZvqqRVTUoG1G
+ iYYDdxiY4Zx2LNtYx1lanJJjjsyFt9PdummbJil0LvLJzm0S/6UYyD/AXvCBBQtdNR6h
+ GZDA8ssIKZ42GKCM8az+4DIF+b8WO42WGR1Xlzgh/auzD2kqbU6ZHVrCezub9vRY79Lq
+ s+cg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWj0ABcVGl2DS6ek/7ENz4OElx0z0Kkmh8YxPs5fvxd789We4ux2RHioYIZs/b6CoyLicoYRm2GcXOD@nongnu.org
-X-Gm-Message-State: AOJu0YwwcPUwBOQwBXAiWNec5YIwOXdozbQFcMYAL42uS5DZs+7xbB85
- t3NZzI9e3f4mSjMYsBY44KPt0lfYE23DCJuHaXs0pwTQddf4YPFRI9nkOsVla4wxc7bxeCixkj6
- xsYhVyvo=
-X-Gm-Gg: AY/fxX5SeKS3EO4o7AiM30OgMn1zN29tmMK716MhFyMqANmPidOp7eaKlkgaXhvc4Hv
- UEBOUYZgWdXzumbVF1nb3ReCI60ytLKUFBnhQeb3e2Vu9UXUrV6WS5VOEplvbQNGZEQisicPqU0
- JBjHYLGneHYZPrmW/Ums327b1BRDsgV2HrQJWV8Qh5QLcC/1c1LQqUQTnuMuZlOg1b3cOx1dzhS
- f+yvl+TnJ+XDy/sRSoB/C4cPwE+enqu3eX9inQID1kWogXZ0l2DPHRHenjEkrDRaDdlm40AfLWQ
- HPX+ynDH1XpOC3J28Fbba19f3TtvQvfjS2r+Xc93J4yXnlhb/QHNUAdKAwVX3VtlgbVsuSsHlsY
- q0GQP2GJVlEOv07+9kkhbEpfn1/yjPPMl7uMgRLfqRlWhRhksBc6c1FZn6+X/+sWNEzPgx3d9Dg
- CGcLBze4d4DPIfpLA8rIAAffvhfNry+rOwFPV93UfEBAOOC0r5UTanUIfjaktMsFT6UOxmSg==
-X-Google-Smtp-Source: AGHT+IFbETjgK9bGHnCFMDGkqI8KO3xTagVobX9vPD3ggf1PHzLfYNbPWQv/QiPl+T12juOxgYNRZA==
-X-Received: by 2002:a05:690e:4012:b0:63f:a95d:66f0 with SMTP id
- 956f58d0204a3-6466a8f2f34mr28120458d50.44.1766971011255; 
- Sun, 28 Dec 2025 17:16:51 -0800 (PST)
-Received: from ?IPV6:2406:2d40:40cd:310:f6a1:5e51:f9d7:f095?
- ([2406:2d40:40cd:310:f6a1:5e51:f9d7:f095])
+ AJvYcCUWKT1XaAt5SZxPof6fcDBqidD/fWehRnfEliLNT3AS1JjhUCGLak6Ol//izH0nQmxzunUQJuXODQgz@nongnu.org
+X-Gm-Message-State: AOJu0YzimxaqsAQHcRGfZZCfiPY1LvzfSZffZ0CT9hD8EtYWH+bb8zBH
+ iA5xFTJMNpH4XMkYDmAJW8DiE/H0md2IP6gHoYncc3C2OlWu+a8kXThURiiuitJ9A8w=
+X-Gm-Gg: AY/fxX7jCybXA8ipBI1FNK11513gEMBs/2eBmCa5dv+TWn/G7dFtrHRSAcb5i5XvrMS
+ aTtBDAkuctIu24d0QTZwUtrDwSKHj8USg0LHwDoVUrj7JGnUbMN9X5QcE3pluMwf7jV1oFWEymp
+ +v4+qnwoOYNsR2/xb1zUvHye7EReKOgvUZgaXWWcYMyoHHUmIvhvHTSjAM5mxi0GPQzxCiEPpfj
+ R+xXEDLxSkFnoSE/ogyvKWAUvS0orr3oDLa1NP6Lx4mpkHoTT8s+IM6aT78KN74Thoj95Gj0hLR
+ D3KaLOd5c4vhOOnTQK+5DqgFeD2+TLxqBb3z1f7Pn+lb3HBDfYW358GySqCaQCmmg/HCxHJ2+q5
+ o2cSJ7cLT0PULDqhlCj64LJWdDuXRZfY7lTMCX3WW22hFBz4ZkVJ/KRIuDqJ9LbRqAzX5SxPL4l
+ +ggcHBozR1NvMjFbrE55luDE66Aw==
+X-Google-Smtp-Source: AGHT+IF212/GVb4Ja20CfOjVUdoPBN9tD5yeGzTIjjNHIHO40TUo77TvgMS3gAo+75Kcq7saKWDI6w==
+X-Received: by 2002:a17:903:234a:b0:298:3aa6:c03d with SMTP id
+ d9443c01a7336-2a2f2a3fc97mr308807015ad.57.1766971243183; 
+ Sun, 28 Dec 2025 17:20:43 -0800 (PST)
+Received: from [192.168.1.105] ([206.83.118.74])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-78fb43a9cc9sm108965647b3.17.2025.12.28.17.16.47
+ d9443c01a7336-2a2f3c8286esm258215635ad.33.2025.12.28.17.20.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 17:16:50 -0800 (PST)
-Message-ID: <bdfaa88a-139b-4b99-8560-0bc2bf3b23cc@linaro.org>
-Date: Mon, 29 Dec 2025 12:16:42 +1100
+ Sun, 28 Dec 2025 17:20:42 -0800 (PST)
+Message-ID: <0173261b-0fbe-478c-aad7-007e6b03ddb0@linaro.org>
+Date: Mon, 29 Dec 2025 12:17:47 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 24/25] system/ioport: Declare x86-specific I/O port in
- little-endian order
+Subject: Re: [PATCH v3 25/25] system/ioport: Do not open-code
+ address_space_ld/st_le() methods
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
  <peterx@redhat.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+ Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-25-philmd@linaro.org>
+ <20251224152210.87880-26-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224152210.87880-25-philmd@linaro.org>
+In-Reply-To: <20251224152210.87880-26-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=richard.henderson@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,16 +112,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/25/25 02:22, Philippe Mathieu-Daudé wrote:
-> X86 in/out port (related to ISA bus) uses little endianness:
-> - enforce little endianness in x86 cpu_in/out() accessors,
-> - serialize QTest in/out port accesses as little-endian.
+> When a variable size is known, prefer the address_space_ld/st()
+> API. Keep address_space_read/write() for blobs.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   system/ioport.c               | 10 +++++-----
->   tests/qtest/endianness-test.c | 10 ++++++----
->   tests/qtest/libqtest.c        | 13 +++++++++----
->   3 files changed, 20 insertions(+), 13 deletions(-)
+>   system/ioport.c | 32 ++++++++++++--------------------
+>   1 file changed, 12 insertions(+), 20 deletions(-)
+
+I was just thinking that patch 24 could be improved.  Thanks!
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
