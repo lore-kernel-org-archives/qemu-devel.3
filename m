@@ -4,146 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9997EE9271B
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CB5E9271B
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 20:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaJOx-0003q6-HG; Mon, 29 Dec 2025 14:59:35 -0500
+	id 1vaJWM-0006X2-Vm; Mon, 29 Dec 2025 15:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vaJOr-0003hK-0N; Mon, 29 Dec 2025 14:59:29 -0500
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaJWL-0006WJ-34
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 15:07:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vaJOp-0003eY-Ms; Mon, 29 Dec 2025 14:59:28 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HqgdjYRLmkV/5n1hF+RibgnWcaFE3dxLfL/ymCGjvU9y8t6URUbK3oiIcLsDFSNLri9Zl9x8CNJwSJZTyZblnfLh8dUBJGD+F7EeMbCM1dZdsg3ct5KoMpcF0Ny3uwRbzVDQomVj6oIC7ozvdkUN7xiPYR3WzHS5U37XTWpyjLbP1EQoWE8HVsvsdPQSrxtOzsut0CcuteYvOwu1/JoKYtR1RV4sIpcEVN81II6I4y5WTaL7+4hHY0qFs6XV7kCkW2I/CKQUmWm/CwQmQR5eFkWo41zfDxrx0Mr1HmCmJqjYoFQ87kEpeZY2+dpDaCHlbDUkUSgqDl0dzrXkdP3H3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ldg2ki9Lb/Ou9oCo5FZvFS9rikg2985fI6wzhLr6WM0=;
- b=ATM49EOPYCVuKN8yOpkC05LoH4dtWUotoxMvGPIk9hfYGg5Qwqrtmy0fIEKIAjtHpGxkuI8XSGCRc/JLxcL1UgBZ8Iz0dQlyL402GrU8WLJCijcYicbQcyuBAH2InWgoH/mrJomU6vJF/398Bkr1Jn+JvZBDFjIOYy6kaKPQpSx3nn7d3KXo32JYG3h3MJcFz/7ZZeBPbqUN+Ydd+uykk0MQeyUCh5s4QlR1kthRNZKJrill+9JQ879TbZOaICl8ITgCdiyku1Uk5BqgpE4b61/ZqJ0dMg4b40XzdRFK2TSLy/9c8tbb0P+r8CSWGkDqCjTbw6pz4ADiL6EZ3+LvDw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ldg2ki9Lb/Ou9oCo5FZvFS9rikg2985fI6wzhLr6WM0=;
- b=JZvloJ7xzRClBxAdzQJgLoyz+lcL7sRJbmMd0PTPaT6+XyEuamG3TmCzgwmpJ9u3FP2viZj6dLIAnaOo+/TvCI8QYp8LwtNZC2FEEW78s45uQft1sJ0q/u6XUPkXkXRJ7Ji1phUBfVR9oEvK5/LpyteWbeaNmZLQVHl2NVoEti9gWX7NCvqrMNNu9y4vdhJzS0/+2eTlk2l0Qsa+xhiH3rJ278Z0VpO0C211XaC0jdKHwE63dLRsDWyLmQSM88j+yUj3S9ZRTAn/OZe/3mpHatQCd9HI7U2dMKKxf+F/ufblf2ZGWeRfCO5aDEwDTyPFDMCY031kadHmdfpaY6eVqg==
-Received: from PH7PR13CA0001.namprd13.prod.outlook.com (2603:10b6:510:174::7)
- by SA1PR12MB8985.namprd12.prod.outlook.com (2603:10b6:806:377::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
- 2025 19:59:22 +0000
-Received: from SA2PEPF000015CD.namprd03.prod.outlook.com
- (2603:10b6:510:174:cafe::ab) by PH7PR13CA0001.outlook.office365.com
- (2603:10b6:510:174::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9478.4 via Frontend Transport; Mon,
- 29 Dec 2025 19:59:21 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SA2PEPF000015CD.mail.protection.outlook.com (10.167.241.203) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9478.4 via Frontend Transport; Mon, 29 Dec 2025 19:59:21 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
- 2025 11:59:17 -0800
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
- 2025 11:59:16 -0800
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 29 Dec 2025 11:59:15 -0800
-Date: Mon, 29 Dec 2025 11:59:14 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
-Subject: Re: [RFC PATCH 14/16] virt-acpi-build: Rename AcpiIortSMMUv3Dev to
- AcpiSMMUv3Dev
-Message-ID: <aVLdkkv9eZMqOR9w@Asurada-Nvidia>
-References: <20251210133737.78257-1-skolothumtho@nvidia.com>
- <20251210133737.78257-15-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaJWD-0005Vz-AN
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 15:07:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767038823;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VjWFcz2K4hTWWfN6iCFtTpnqV/f47YvrCvXLgeHCg8E=;
+ b=YI5f9B4Aqal6j60n82GMxPw5wRJkLck8L4gD9kg1iERp2R0kT3QtkVmhv+tZ9ROjz1mXLL
+ 1URi3pdhmHarUScAQ1JBX+yekp02fl2rYgipXVIGkIxZNdOpic64XJyIdaWyCmq15ROeE4
+ 2I+WjsTD9LMqm9ewKTUR0nNGSU3Lw7I=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-161-hUL8nUZKM4mkBOVrYdO-Sg-1; Mon, 29 Dec 2025 15:07:01 -0500
+X-MC-Unique: hUL8nUZKM4mkBOVrYdO-Sg-1
+X-Mimecast-MFC-AGG-ID: hUL8nUZKM4mkBOVrYdO-Sg_1767038820
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4ee1b7293e7so350610771cf.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 12:07:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767038820; x=1767643620; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=VjWFcz2K4hTWWfN6iCFtTpnqV/f47YvrCvXLgeHCg8E=;
+ b=RDkyuQ4EALyEbxhka4nvj93Mye4dgg3Hlmc2k2b+Lkg+LHJzCyOcB230KgzXVIKjuc
+ 00FWRlOKlK/Hzp60yOGgGtNw+tKC4m9vg8Pu65/gYySupVbZct9K/zLTUw1Mji4XhbOn
+ RrEPLVtBs3xISRHaM+IPJA+BXAd8hzlR+Uv/8odovmH0Ssy9YMvfa8XdU4umaCRjsLIz
+ PyIF5/AWbeqSFoUkuwb1Kmw1BXaewHWMJSLDJp11qePHuIU7wNdemUNJpNJHKlBWnFbE
+ VuJpBBXMKj55OIpoQf4erxj7EgIQG3xAtZM7K2gDysg4ewmkxInt8RQclGQJcCwUgZBJ
+ MfdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767038820; x=1767643620;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VjWFcz2K4hTWWfN6iCFtTpnqV/f47YvrCvXLgeHCg8E=;
+ b=s3hrceFSUqFssODa/Jy1vdzSI3XcZn+ltlCWoE/oh4Cq63e4Tukky8uvD1QWgwJ+Tc
+ OyW3g1oZbt5HYWZ81UlhMQPXzu3sXf3//3uUaOpMGaFF9RXsR81eoeDicx3YDl13JsYf
+ 5WQWn+tqX1uiSgEhM5tr4iXcoE+oa+f7CPNFmlIKYNMl/91goEjHgKGnqhMViFYVbumb
+ SvctqDgLSb1tKSnbUmg1LDF0UOLpnwLGil4oRLKVd2H4g/kKuTgs1U92OIf8cSbpPPle
+ WPpXWXKxv9+2X/tHgcp5Z9l8jZA/y5tzHnuFTRogz7hZHs/2XicC6lGEo68MdcstUSar
+ Sw6Q==
+X-Gm-Message-State: AOJu0Yzb3ucrwV4ttTadKqVy9mEpTQL7AzfrCH+iwt8Uze1V8279mHbG
+ 0/YO7lIHkyqdTKSvGkG9fmjVT32Qsab9gwfNTClLqWn9fVtAijnS4FliLUNB/93th9LsYisYD1z
+ BzOf7TO3vNOTT/tcm5+7RoMmUmVARv/nLq8M3RKJ0kxSbc/tI46cO+r/I
+X-Gm-Gg: AY/fxX5cg7oH0HOYUXR9+Xycyohw4GqRMueGtgHC8UIN02z2g8Is24hkpZL+w8r4kg+
+ Ik2epQiRfv89Z6ncNO0am/rwlSbGfDQ1lV5Sahr4GuZzcgDoiJ2+arZIKolqLzDPUelVbMSFYdm
+ 6J3ph7dL6yqvhQo5nBtFD0OxnhloMHQhlSZ0ffDyLrqqt2I6bTIElSKxa60G5QLCM1NEPOBzAUS
+ jw5DWm6wwoP5rjiVDjiDBkNEtkHQBcFAdfi/EYoFettpINO/wF0fESKRNCkBOdXtR8mOipeOWl2
+ dZtmWGgVb1JIjtm8zG5shSKM07bezS9JhAi0F60fjWf4sDzNKVTXjEm7h4xT9iB9sUn7vgfmqod
+ XnKc=
+X-Received: by 2002:a05:622a:4813:b0:4f0:23b6:c285 with SMTP id
+ d75a77b69052e-4f4abd80b13mr447928461cf.41.1767038820424; 
+ Mon, 29 Dec 2025 12:07:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFaHZzMkqlxMmgJt8f0XNHz6eeDEBFYrZmzZsLnl8PAYV/R0ZsV6RomoXEzVAVEy2A48ApJAA==
+X-Received: by 2002:a05:622a:4813:b0:4f0:23b6:c285 with SMTP id
+ d75a77b69052e-4f4abd80b13mr447927981cf.41.1767038819883; 
+ Mon, 29 Dec 2025 12:06:59 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88d973a7f17sm231205506d6.22.2025.12.29.12.06.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Dec 2025 12:06:59 -0800 (PST)
+Date: Mon, 29 Dec 2025 15:06:58 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 22/25] migration/channel: Merge both sides of the
+ connection initiation code
+Message-ID: <aVLfYlEwDu3rL3wj@x1.local>
+References: <20251226211930.27565-1-farosas@suse.de>
+ <20251226211930.27565-23-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251210133737.78257-15-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF000015CD:EE_|SA1PR12MB8985:EE_
-X-MS-Office365-Filtering-Correlation-Id: 44a4f416-0a56-4f8c-bbbf-08de4714c258
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?xcqo7FuWquBg32XxI+uNzPs/uGJjBm6AUIsBQuKjzrLSiy8fBwCaMWvl3Kjj?=
- =?us-ascii?Q?17Ca3YPQqwe92srJnGWNqnwLXlYjeuwd1DR9o2oAyqJOPg7YlCiiWs7jn4LJ?=
- =?us-ascii?Q?26gPRb+OWmApOX6Btcv1g1cuiHv+/hpscWI+LBg+0t6KCrWkfkPB+WxlCXpc?=
- =?us-ascii?Q?lJLzK+/OE2B/a0swSgCp7eMfc3uTs5oFGX+V01YY5DRMopbaBs6xge5uKy+J?=
- =?us-ascii?Q?gs5bLObAGOKbEbAZ2hsDbCff00q472tg/ZomBofwVm6nljGNqF4TWHBRU4H3?=
- =?us-ascii?Q?FOHFwKqnPF+iUtO/LbEXo6Ut95wP3648sWz9GQmCJIFihDZ1zvUI1t0LuAQG?=
- =?us-ascii?Q?nQg4RC8KZehU/ZfvFuiue+wUeWE8Lc7XIrx24yumyzNgD2YnekzvBiY2O+IS?=
- =?us-ascii?Q?Z95qUTKmGyCc7ZXQt80KQWU5H9q9mCBuSyHpM3EsgxUUel5JbhmhHkq//2Co?=
- =?us-ascii?Q?HMz9zqrikI93qxh4dNpvEyK0aT+rh4m6+TzCBHXapF89mUbFKjiXHQ2WJoSb?=
- =?us-ascii?Q?Wi9oAlVB7z5F3jfRWqDPsDblIisEZ7wC/LRY3qQOhxFoREJhqJJGCYezihjB?=
- =?us-ascii?Q?mD3J8sB6qDuelRDu+tBbo6LgJKqYVVFinINeUvKie0Boi4n88ItqKAoZb5S7?=
- =?us-ascii?Q?Eig9eQE/OZbjdsyPjyMLmZ2h8821jcuscDxv/GfzcTQYuHlQihgZBm6pMS0v?=
- =?us-ascii?Q?JGghw9CPEy49KY4J5UwSa3tAfeWmIAYP1hBD1rnLld3gmw5+Ue8ypjZ8VRWI?=
- =?us-ascii?Q?ca0HWRNX2lIYtkBsBzhQiUtc2tmwX7oVaAb8shxtGwvsdWwh2OfpkkYDlMMm?=
- =?us-ascii?Q?igRetPEIVVHx7VyyHEQF6Lt2RsXwhuSEPdwNQKHdpNgsfoGINMA3kEy6KcyR?=
- =?us-ascii?Q?ZozIsxqfHE3YchXmIv6aHMB/Q7G0iHMkeNgCrcD7QGta7IOgkaWJbZLkgqY1?=
- =?us-ascii?Q?bxydtadgqo/nsa/87/XLEJ6LbqzeClGrNMYvrhvy59a2kwwdqQIbjZwSCGWw?=
- =?us-ascii?Q?bEL9deWylKYHsMxrbixIA7MELvy4oUWNbmG0wqa86sXv8ECbqVsA8+35LPTb?=
- =?us-ascii?Q?oyUjQHoIHp0O+2laozh7fZro8+12afntojN9UPpqwIzXHEilyI6gXUfJqrGw?=
- =?us-ascii?Q?GhhKASCKf2mrpCrNDx3K/E9VanhcgSwQxWMXDPcxZBSX9JKmS3nQrBAUm7Gb?=
- =?us-ascii?Q?THVp4rJ93bbU99caS/Atd5Qp5Y//pcNNMfiOhjOrvx7b9tSejfTBvyST3EUP?=
- =?us-ascii?Q?JSLtJjKK7x/TFe7t0xNsrkEufAzCsZQQX8J07HXXwVED/0a1QCR6JI4OasHX?=
- =?us-ascii?Q?MsRGHcHPQ88xgpQUlJs02nxbPpY9IgzyQLkpS2ynR9wG9L7ijU3l0NWfqp7Q?=
- =?us-ascii?Q?v8sCkU1U4jiPgaFQIpGhLDYu6Ohng0n+upF1wdlM5JiR7XmfCV3ZzrMd0wx3?=
- =?us-ascii?Q?1RxeQjYafbZKVZQAs0MjfUgOhQ6uB+zKM1tQnA+p6quN7y6G3nsgMG6VlUkG?=
- =?us-ascii?Q?sd1QdS5zoOB2b47kv+ianfAGGmb+0BkZ5ZNyM35vCnebmm5lkI2ib4k/QuCJ?=
- =?us-ascii?Q?pmmcdlKIHCbx0TspNKc=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 19:59:21.7246 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44a4f416-0a56-4f8c-bbbf-08de4714c258
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF000015CD.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8985
-Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
- envelope-from=nicolinc@nvidia.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20251226211930.27565-23-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,14 +117,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 10, 2025 at 01:37:35PM +0000, Shameer Kolothum wrote:
-> Rename struct AcpiIortSMMUv3Dev to AcpiSMMUv3Dev so that it is not
-> specific to IORT. Subsequent Tegra241 CMDQV support patch will use the
-> same struct to build CMDQV DSDT support as well.
+On Fri, Dec 26, 2025 at 06:19:24PM -0300, Fabiano Rosas wrote:
+> Now that everything is in channel.c, it's easier to browse this code
+> if it's all in the same place. It's also easier to grasp what the
+> connection flow is if both sides of the connection are close together.
 > 
-> No functional changes intended.
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/channel.c | 86 +++++++++++++++++++++++----------------------
+>  migration/channel.h | 14 ++++++--
+>  2 files changed, 56 insertions(+), 44 deletions(-)
 > 
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> diff --git a/migration/channel.c b/migration/channel.c
+> index 042e01b224..ba9aa1c58b 100644
+> --- a/migration/channel.c
+> +++ b/migration/channel.c
+> @@ -31,10 +31,11 @@
+>  #include "trace.h"
+>  #include "yank_functions.h"
+>  
+> -bool migration_connect_outgoing(MigrationAddress *addr, Error **errp)
+> +bool migration_connect(MigrationAddress *addr, bool out, Error **errp)
+>  {
+>      g_autoptr(QIOChannel) ioc = NULL;
+>      SocketAddress *saddr;
+> +    ERRP_GUARD();
+>  
+>      switch (addr->transport) {
+>      case MIGRATION_ADDRESS_TYPE_SOCKET:
+> @@ -44,15 +45,24 @@ bool migration_connect_outgoing(MigrationAddress *addr, Error **errp)
+>          case SOCKET_ADDRESS_TYPE_INET:
+>          case SOCKET_ADDRESS_TYPE_UNIX:
+>          case SOCKET_ADDRESS_TYPE_VSOCK:
+> -            socket_connect_outgoing(saddr, errp);
+> -            /*
+> -             * async: after the socket is connected, calls
+> -             * migration_channel_connect_outgoing() directly.
+> -             */
+> -            return true;
+> +            if (out) {
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Personally I wouldn't suggest we merge the outgoing / incoming with
+migration_connect() then split paths once more in this exact function.
+
+I got this conclusion when I started to count how many "if (out)" are
+there..  When there're too much, it may imply we need to think more..
+
+This also answers part of my confusion when reading the previous patch - if
+that was only paving way for this one, IMHO it may not be as worthwhile,
+and I would tend to avoid both.
+
+Thoughts?
+
+> +                socket_connect_outgoing(saddr, errp);
+> +                /*
+> +                 * async: after the socket is connected, calls
+> +                 * migration_channel_connect_outgoing() directly.
+> +                 */
+> +                return true;
+> +            } else {
+> +                socket_connect_incoming(saddr, errp);
+> +            }
+> +
+>              break;
+>          case SOCKET_ADDRESS_TYPE_FD:
+> -            ioc = fd_connect_outgoing(saddr->u.fd.str, errp);
+> +            if (out) {
+> +                ioc = fd_connect_outgoing(saddr->u.fd.str, errp);
+> +            } else {
+> +                fd_connect_incoming(saddr->u.fd.str, errp);
+> +            }
+>              break;
+>          default:
+>              g_assert_not_reached();
+> @@ -62,16 +72,28 @@ bool migration_connect_outgoing(MigrationAddress *addr, Error **errp)
+>  
+>  #ifdef CONFIG_RDMA
+>      case MIGRATION_ADDRESS_TYPE_RDMA:
+> -        ioc = rdma_connect_outgoing(&addr->u.rdma, errp);
+> +        if (out) {
+> +            ioc = rdma_connect_outgoing(&addr->u.rdma, errp);
+> +        } else {
+> +            rdma_connect_incoming(&addr->u.rdma, errp);
+> +        }
+>          break;
+>  #endif
+>  
+>      case MIGRATION_ADDRESS_TYPE_EXEC:
+> -        ioc = exec_connect_outgoing(addr->u.exec.args, errp);
+> +        if (out) {
+> +            ioc = exec_connect_outgoing(addr->u.exec.args, errp);
+> +        } else {
+> +            exec_connect_incoming(addr->u.exec.args, errp);
+> +        }
+>          break;
+>  
+>      case MIGRATION_ADDRESS_TYPE_FILE:
+> -        ioc = file_connect_outgoing(&addr->u.file, errp);
+> +        if (out) {
+> +            ioc = file_connect_outgoing(&addr->u.file, errp);
+> +        } else {
+> +            file_connect_incoming(&addr->u.file, errp);
+> +        }
+>          break;
+>  
+>      default:
+> @@ -79,42 +101,22 @@ bool migration_connect_outgoing(MigrationAddress *addr, Error **errp)
+>          break;
+>      }
+>  
+> -    if (!ioc) {
+> -        return false;
+> -    }
+> -
+> -    migration_channel_connect_outgoing(ioc);
+> -    return true;
+> -}
+> -
+> -void migration_connect_incoming(MigrationAddress *addr, Error **errp)
+> -{
+> -    if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+> -        SocketAddress *saddr = &addr->u.socket;
+> -        if (saddr->type == SOCKET_ADDRESS_TYPE_INET ||
+> -            saddr->type == SOCKET_ADDRESS_TYPE_UNIX ||
+> -            saddr->type == SOCKET_ADDRESS_TYPE_VSOCK) {
+> -            socket_connect_incoming(saddr, errp);
+> -        } else if (saddr->type == SOCKET_ADDRESS_TYPE_FD) {
+> -            fd_connect_incoming(saddr->u.fd.str, errp);
+> +    if (out) {
+> +        if (!ioc) {
+> +            return false;
+>          }
+> -#ifdef CONFIG_RDMA
+> -    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
+> -        rdma_connect_incoming(&addr->u.rdma, errp);
+> -#endif
+> -    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_EXEC) {
+> -        exec_connect_incoming(addr->u.exec.args, errp);
+> -    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
+> -        file_connect_incoming(&addr->u.file, errp);
+> -    } else {
+> -        error_setg(errp, "unknown migration protocol");
+> +
+> +        migration_channel_connect_outgoing(ioc);
+> +        return true;
+>      }
+>  
+>      /*
+> -     * async: the above routines all wait for the incoming connection
+> -     * and call back to migration_channel_process_incoming() to start
+> -     * the migration.
+> +     * async: on the incoming side all of the transport routines above
+> +     * wait for the incoming connection and call back to
+> +     * migration_channel_process_incoming() to start the migration.
+>       */
+> +
+> +    return !*errp;
+>  }
+>  
+>  bool migration_has_main_and_multifd_channels(void)
+> diff --git a/migration/channel.h b/migration/channel.h
+> index 8cf16bfda9..86934fee38 100644
+> --- a/migration/channel.h
+> +++ b/migration/channel.h
+> @@ -39,6 +39,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
+>  bool migration_has_main_and_multifd_channels(void);
+>  bool migration_has_all_channels(void);
+>  
+> -bool migration_connect_outgoing(MigrationAddress *addr, Error **errp);
+> -void migration_connect_incoming(MigrationAddress *addr, Error **errp);
+> +bool migration_connect(MigrationAddress *addr, bool out, Error **errp);
+> +static inline bool migration_connect_outgoing(MigrationAddress *addr,
+> +                                              Error **errp)
+> +{
+> +    return migration_connect(addr, true, errp);
+> +}
+> +
+> +static inline bool migration_connect_incoming(MigrationAddress *addr,
+> +                                              Error **errp)
+> +{
+> +    return migration_connect(addr, false, errp);
+> +}
+>  #endif
+> -- 
+> 2.51.0
+> 
+
+-- 
+Peter Xu
+
 
