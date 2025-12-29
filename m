@@ -4,92 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A74E8FDB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 03:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456BBE8FDB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 04:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va42V-0004Bp-Us; Sun, 28 Dec 2025 22:35:23 -0500
+	id 1va4ji-0001Bu-59; Sun, 28 Dec 2025 23:20:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va42T-0004BS-Re
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 22:35:21 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ (Exim 4.90_1) (envelope-from <lihang.lin@gmail.com>)
+ id 1va4jc-0001Ae-Rm
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 23:19:58 -0500
+Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va42S-0007EZ-CE
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 22:35:21 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-78fc4425b6bso49367967b3.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 19:35:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lihang.lin@gmail.com>)
+ id 1va4ja-0005Tk-85
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 23:19:56 -0500
+Received: by mail-vs1-xe29.google.com with SMTP id
+ ada2fe7eead31-5dbd150efe8so3404718137.0
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 20:19:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766979319; x=1767584119; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W2RbvkafNavjlwNIqnFA+FQJZPXMiIfHMjLPGERDDlk=;
- b=JGvLOu+WPTPTpxODDdiq9EUHWJio+1E5cjOVS24dOK6T7cokmmwrZdaZNor5n1CQuw
- 3npY7/NOkrW2GzAHF5hF2i3VjFVxjTsJTGOGvw4Trk4vvvFBGbO/tG/0ZmmvOqDsylEl
- 4GDG+q8tmF0+7oOr1u/Jl1TDjLw37YK8dWExNl+75zkoHvErsoYoZDqjaza8cnk1mhNK
- c7lZgx6V4m2QTmbtlVAb/p8vOHcW0vNGvUoCvKnq/B9PIfz9NPTfc9/v0RswoqTz3AMY
- 5xLNbVOmrPxJ4ZFNBH63iIxmipIQgAKsca57kkq7kufYVciNy9XpblmwUslnu4cCyRSt
- sDDw==
+ d=gmail.com; s=20230601; t=1766981993; x=1767586793; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uJEL4RKSM536WrhiVNtubZxgtGjAp6vJubgCFmbwf4s=;
+ b=j/ZR8IxSrWngY3/9pWy6PKjzGqY54JwLwp/k0h5F+1cMQOSHZJE1DQ3H8N1rcJ31eT
+ Gzy81r4Y0yoPb4mOATrn1umnHOtG+s6nYWGCE03G1WsxrxT207EaNfkC1UA+AQoriPDz
+ 0k1F6UVwnJpoFp7LeEFWhKt3P8FO55cCR/RaGO/E96PmpL4ZJSXpPVNH+0Sf6FWS3mZT
+ dYGdMZffESD7j5/GUvM3xBcKvsguyNmFkO+hcEPUe/GYGOXnaVAPOsYKvgRj5ym+6RtW
+ U6WlrwXz9EZZsmPw2J/myezbg/H8lBsU92Ut+VLt22yYhSPRrwc90LLJWVfEh0bzYuXt
+ sGxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766979319; x=1767584119;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W2RbvkafNavjlwNIqnFA+FQJZPXMiIfHMjLPGERDDlk=;
- b=Vx4/PfvNHVGR70pV6sn0kDXGEyxVMIyo+5gayhz+/3CHASpJFHc2l3XlxdEN4HyJ6M
- aNmYcSVL0fdv0/7hl5hOCmr+X5xZ56y6cRwUJVn/GjxGgVGSndcGwyDxAJmWh6VQodb9
- KKFNIZdXxYR4mdppEtzoo1gBmbvcW2MJyCJCKzdCCbzkRyXYqKCu1Jj+6jO2TNWnvqL0
- MnuJMhNr0IS7YUzvKsw1wqkgt7si1IMcEZbNgWGmXYYIjPOXQHBKRnPLq7g0V8aztzad
- xVuk+sCHS/IfLKFyDleA/4bml+PF2JK8grMl6Zo1xcVN1J0HEbWkqqiiw6BxEL3OqYeF
- jDQw==
-X-Gm-Message-State: AOJu0YwUHwjpssIuOl+VHjEfUwPjrWcNz3z5u/WHJ9UmAzFdjHMO4qL4
- aboTDc0ET6g7UkuQrC4owrBE+Gl7bnYWAFcqJXk7F1cClc6eJA5hF2A8PvXN7gQfZEy0xBNdC2u
- D5hMI9Z0=
-X-Gm-Gg: AY/fxX41YMQYYOpxg/Ag5F0DJXi44cEyUpuH11Tpgj4fTuZ/ipgDrLHU/95QXF5VQW7
- e1SL/RdH8ZZvZ1bQdNcKZHFzYdYxdKQOQbNK9HYmQiNSeuUaBN9pkFfKtQfXHORs1UabaYQjz4A
- tKoP8Pynw86pgG/0V9lh1oLEjzXbDTfg5SKbSB9+jmxaCh3lvaCzCP453HfABVKEMPknnWNynw9
- Fzvfsn1rccCi/uhgIskAjafCqvQnZmZXKsDor1qoZK6XTWqDNIm3eCvUj6waJIxxjYtW+SPy+Dd
- azzOisHsdNd+jqev4gY5KdJ7qbXgBQzAYpIHXHEPe0Yan0DokQB7ww73eZGpG0tmjineJxuvL/a
- sYmNZ8bvCiybvOQmydo30QmJ+FTlXdPFiFX50RzdTz+x0hUcO2hZsiHatjbfdtRIQ1k3J9vsn9q
- 3lh1t0t9e6ahVsIQHRzLT1CgYm+7Rg4vyEmeBatqUT7F1JztOycJF+RymgSiScOcRVsHVpUxicc
- D11NbM5
-X-Google-Smtp-Source: AGHT+IEOLL4FeFiRmjFtZQfGnT8iC0QFpSOzyBwCt7Ria5cvpzWj1PejlZv5L+HpXDE3xXXZeDwRQQ==
-X-Received: by 2002:a05:690c:d1b:b0:786:3ee8:6703 with SMTP id
- 00721157ae682-78fb417c7bbmr235080407b3.48.1766979318825; 
- Sun, 28 Dec 2025 19:35:18 -0800 (PST)
-Received: from ?IPV6:2406:2d40:40cd:310:f6a1:5e51:f9d7:f095?
- ([2406:2d40:40cd:310:f6a1:5e51:f9d7:f095])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-78fb44f3e26sm110553797b3.36.2025.12.28.19.35.17
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 19:35:18 -0800 (PST)
-Message-ID: <5725d33f-1a04-4d4a-bcd6-d5f4e3a7e3bc@linaro.org>
-Date: Mon, 29 Dec 2025 14:35:13 +1100
+ d=1e100.net; s=20230601; t=1766981993; x=1767586793;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uJEL4RKSM536WrhiVNtubZxgtGjAp6vJubgCFmbwf4s=;
+ b=NbhLKk/fuM0Tg4EtAYfken3IK6GIUQdfoU42J+w4g2ZyyWUqMh3LNo5jIEDq0NoE7H
+ 4tWd2JmUTw9m55oAOaw2/0VEsFNU0j2dmLprksxTEtyT9EO8eqvIPx9MzCFFkvDgTk1r
+ 4Gz7inJ4fp+R8PDSONlVJgF2VnohLznh6S64sntzKmgJaAaP3s+QP+tkKNz3VrqMwZW6
+ QxNus3EUQca8WFWbAD1usEi5XsNz+d0BogeitgHWedT7GliBWNDs23Bisr+dDsYJIdwF
+ rne6qAZj00CKOVaAbJN9TzV/0KiriRLNvupHb05v3uumf0nZna9xkTkTj2/yld0atKPu
+ d7vg==
+X-Gm-Message-State: AOJu0YwkKbC9TiMs1rT9L7+YwoEIGCb/Mczw40RjcYqvHM2+/oQLXwdD
+ brqdoa3wd/fPD0jbLutm0sVxWcBTHBvl59jnDJcxiYMcLCtO2iRgblxwnbMiE07mfMxfGY4Aq7G
+ nJdLpdtbRTjdjs1vZDiHWxf8jhyOjFPpOPd9BG7Y=
+X-Gm-Gg: AY/fxX5M8MvwQ+/ZhaFXJ0Wc6UYZ10CQf00dMVwQ3WmUmpfUwm0nCOvoPPewCSeATjk
+ fojzn9GHI0pGwHbQEaJh3TH4mloBZ8u/DON/7ru/5Ve4WOFk7ik7K0it5WOKdvEJv3PnQg5wb06
+ c6oT9DDp33q1edVB8jrJQalWjA8mKuOg796042ZB9QVubeYsf3q8NXAoa3rJz1iSrYBLGXE8jCa
+ 5q0kDDQUCwHZcSV2oUZh+hnQXFJUzomHsmVO/MtC95+/EojrV2jT6u7/6+yzdsfgi/8quLnGmiq
+ OGVf6OV0OCM3TzoPTt9eBciIpQ==
+X-Google-Smtp-Source: AGHT+IHvbhWJSfhahh16B83Yc7r6kOQ+2nx68fnq0WVlNnXIsjENxAGDYDDNdyDK2LpWCyd07YbUNS2g/GoZMDFoMKg=
+X-Received: by 2002:a05:6102:3a13:b0:5e5:5cb7:eb0a with SMTP id
+ ada2fe7eead31-5eb1a7dc7fbmr9153298137.21.1766981992698; Sun, 28 Dec 2025
+ 20:19:52 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] linux-user: allow null `pathname` for statx()/fstatat()
-To: qemu-devel@nongnu.org
-References: <20251225153932.1906919-1-jean.christian.cirstea@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251225153932.1906919-1-jean.christian.cirstea@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1136.google.com
+References: <20251226064225.791454-1-lihang.lin@gmail.com>
+ <CAFEAcA_ovy2HzhVTKJiRNaZvVQ3qvkw0Pres0HZ+TFJjx1wc3g@mail.gmail.com>
+In-Reply-To: <CAFEAcA_ovy2HzhVTKJiRNaZvVQ3qvkw0Pres0HZ+TFJjx1wc3g@mail.gmail.com>
+From: Lin Li-Hang <lihang.lin@gmail.com>
+Date: Mon, 29 Dec 2025 12:19:41 +0800
+X-Gm-Features: AQt7F2p2KrQx7--aI22dW9QRRyivqoax88AdsD6ipZynvwoGCCTdlveMj00SUqQ
+Message-ID: <CAPR+-WF6uSsm6nBY7jmmxKEMSHR3t+d4KG5KAtsDNJPxen-r9A@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/tcg/vfp_helper: Fix incorrect bit field
+ deposition in rsqrte_f64
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000ffd7cc06470f8d57"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
+ envelope-from=lihang.lin@gmail.com; helo=mail-vs1-xe29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,46 +95,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/26/25 02:39, Jean-Christian CÎRSTEA wrote:
-> Since Linux 6.11, statx() and fstatat() syscalls accept a null `pathname`.
-> 
-> Before this patch, qemu-*-linux-user failed with EFAULT when `pathname` was
-> specified as NULL, even for Linux kernel hosts > 6.10. This patch fixes this
-> issue by checking whether `arg2` is 0. If so, don't return EFAULT, but instead
-> perform the appropiate syscall and let the host's kernel handle null `pathname`.
-> 
-> Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
-> ---
->   linux-user/syscall.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 2060e561a2..e1b61f6dc5 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -12142,7 +12142,8 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
->               int flags = arg3;
->   
->               p = lock_user_string(arg2);
-> -            if (p == NULL) {
-> +            /* Since Linux 6.11, the path argument may be NULL */
-> +            if (arg2 != 0 && p == NULL) {
->                   return -TARGET_EFAULT;
->               }
->   #if defined(__NR_statx)
+--000000000000ffd7cc06470f8d57
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-No need to call lock_user_string if arg2 == 0.
+Hi Peter,
 
-Better as
+Thank you for your reply.
 
-	p = NULL;
-	if (arg2) {
-	    p = lock_user_string(arg2);
-	    if (p == NULL) {
-		return -TARGET_EFAULT;
-	    }
-	}
+I initially identified this error while reviewing the code and was curious
+why it hadn't caused any bugs.
+After further testing, it appears the original code behaved correctly by
+coincidence.
+
+The ASL code in the ARM ARM for FRSQRTE states:
+
+```
+elsif sign =3D=3D '1' then
+         result =3D FPDefaultNaN(fpcr, N);
+         if fpexc then FPProcessException(FPExc_InvalidOp, fpcr);
+```
+
+As it turns out, the sign bit must be zero by the time it reaches the final
+deposition code, which explains why the incorrect bit placement did not
+surface as a functional bug.
 
 
-r~
+On Mon, Dec 29, 2025 at 1:15=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org>
+wrote:
+
+> On Fri, 26 Dec 2025 at 06:43, Li-Hang Lin <lihang.lin@gmail.com> wrote:
+> >
+> > Fix an error in rsqrte_f64() where the sign bit was being
+> > placed incorrectly. Specifically, ensure f64_sign is deposited
+> > into bit 63.
+> >
+> > Additionally, update the comments regarding the exponent (exp) bit
+> > width to reflect the correct double-precision specifications.
+>
+> This seems like it would produce incorrect results -- do you
+> have an example of an instruction plus input data values that p
+> produces a different output value to the hardware?
+>
+> thanks
+> -- PMM
+>
+
+--000000000000ffd7cc06470f8d57
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Peter,</div><div><br></div><div>Thank you for your=
+ reply.</div><div><br></div><div>I initially identified this error while re=
+viewing the code and was curious why it hadn&#39;t caused any bugs.</div><d=
+iv>After further testing, it appears the original code behaved correctly by=
+ coincidence.</div><div><br></div><div>The ASL code in the ARM ARM for FRSQ=
+RTE states:</div><div><br></div><div>```</div><div>elsif sign =3D=3D &#39;1=
+&#39; then</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0result =3D FPDefault=
+NaN(fpcr, N);</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if fpexc then FPP=
+rocessException(FPExc_InvalidOp, fpcr);</div><div>```</div><div><br></div><=
+div>As it turns out, the sign bit must be zero by the time it reaches the f=
+inal deposition code, which explains why the incorrect bit placement did no=
+t surface as a functional bug.</div><div><br></div></div><br><div class=3D"=
+gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On=
+ Mon, Dec 29, 2025 at 1:15=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:p=
+eter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">On Fri, 26 Dec 2025 at 06:=
+43, Li-Hang Lin &lt;<a href=3D"mailto:lihang.lin@gmail.com" target=3D"_blan=
+k">lihang.lin@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Fix an error in rsqrte_f64() where the sign bit was being<br>
+&gt; placed incorrectly. Specifically, ensure f64_sign is deposited<br>
+&gt; into bit 63.<br>
+&gt;<br>
+&gt; Additionally, update the comments regarding the exponent (exp) bit<br>
+&gt; width to reflect the correct double-precision specifications.<br>
+<br>
+This seems like it would produce incorrect results -- do you<br>
+have an example of an instruction plus input data values that p<br>
+produces a different output value to the hardware?<br>
+<br>
+thanks<br>
+-- PMM<br>
+</blockquote></div>
+
+--000000000000ffd7cc06470f8d57--
 
