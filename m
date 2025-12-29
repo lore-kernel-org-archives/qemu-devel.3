@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D166D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 01:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7F3D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 01:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va1wI-0005mU-Ot; Sun, 28 Dec 2025 20:20:50 -0500
+	id 1va1wh-0005x4-7R; Sun, 28 Dec 2025 20:21:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va1wE-0005lj-H6
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:20:46 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1va1wb-0005tn-Mx
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:21:10 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va1wD-0001iQ-37
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:20:46 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a0d52768ccso107403585ad.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 17:20:44 -0800 (PST)
+ id 1va1wa-0001yc-AQ
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:21:09 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2a0eaf55d58so55907555ad.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 17:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766971243; x=1767576043; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766971265; x=1767576065; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZzgjZVOH0TuVlTZVe+keidLwn6BWFJyS9XoaeCJHPMc=;
- b=idXb8x2fVVp++Q15eVGv3xlc/lpdK6gM1BaXV2ob3jp8lJeQgAqMianVrBs9VoCYaQ
- w9uYwjp4cTv/huTucWNpFM7O3FaU9iikwUo3sfOHwm/Wqj/Tc5+5GRtkhrcnkgJdTigu
- VKNlCRyadaPCThVqyY79NuBTQBpdNaNo8BknQ0adI01V/vsceyz6OdiBKrUbNx0jUqqj
- iQmBV3qnN2vbh63tsRfnTCoDr/KYFBphsRSUGzzfMmHIseic0ipb0/n9Rr2rjFu/TIqy
- yZsvV8rN7cGVLvjVhsjdNQn6PTRiILqoRCzsizVGsE5aCBf1Bnaf8zPMDeMz74UHigFf
- l//w==
+ bh=+fxO5/XW7dS4LIWLCSkyJ2B8Z7xKSKm4MqH012JIrHE=;
+ b=MG1xfpkflo5iyPaMulwFSgjr1hR1oaG0KK7pgfALYT8D8BlzWvne6XxPvFtqD9gYmG
+ GZVoMJ7DZF622jV5K5OjWLCgMxz5d06KBuyWmHvMbApU2fefOPl4mF57u+OoM7Bi8bO0
+ SWioOpQcIdzbpmxdh5cl3W7RBT0Y2V9hCQxHq+ffrPtTYTFkL0SnLCnwN9t0DEE11VnK
+ LJi1JhdnITsNElJOUkBoNBdez6flnhWPIOKxRCsblef0A1+qoH3n8cTGEOZF298VuAHS
+ EPN4q3KQTbfAPlFmGhhOMPqLym0gOrQrusLkKTExOJbogOL9RWOQZPgz4Wx4hJu6zOHC
+ tM3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766971243; x=1767576043;
+ d=1e100.net; s=20230601; t=1766971265; x=1767576065;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZzgjZVOH0TuVlTZVe+keidLwn6BWFJyS9XoaeCJHPMc=;
- b=ZVTEP03gy1PRSVFWgq7lF5vemqgjuUfpFGuh+18OEhR8nQC6xMR8mn1YkwW8gjssae
- z9gY+UV9CTDJZu4JIGSWw5y8SYqujv941z94N2haz0qDa0IJRVrGwairwotaf9JiY/oQ
- rGZvZxw1umj+/TLP2HW2yNjmi8eqPjTkgbRiEP6l4zuQE5ATyt5vZTTgZvqqRVTUoG1G
- iYYDdxiY4Zx2LNtYx1lanJJjjsyFt9PdummbJil0LvLJzm0S/6UYyD/AXvCBBQtdNR6h
- GZDA8ssIKZ42GKCM8az+4DIF+b8WO42WGR1Xlzgh/auzD2kqbU6ZHVrCezub9vRY79Lq
- s+cg==
+ bh=+fxO5/XW7dS4LIWLCSkyJ2B8Z7xKSKm4MqH012JIrHE=;
+ b=v1eQqTuQZVjAyAf2CFTXvqFMEx8NM1y8WL/B7py+b6TLAE2gReBXF9hIflbvM1f5i8
+ caupClfsvit5qckH1NYWUsS2QnhsNUrdOaaWWS6yIYh+iyJ6BuM02vDHvZtkC2GxRmAq
+ GUKHnWbntdnPrh/K5Z1spcYU/COgwksdHu0uFEspnaeGFb+3jdw3UiHEj8/9FLNH+lvY
+ XUPLeFBs6E7kKmylrSzsAbUCP7K7VPJKfl3CA44Ik6GC3/tVqR7/Z8BecqygpgM1Wpz7
+ hMSx6z6F/VpiYeZAHVGXkZN7Z/6rp+NiW27SdNmLDO1EbvJEy/z2FmTl/KWOn2KrBU98
+ fnLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWKT1XaAt5SZxPof6fcDBqidD/fWehRnfEliLNT3AS1JjhUCGLak6Ol//izH0nQmxzunUQJuXODQgz@nongnu.org
-X-Gm-Message-State: AOJu0YzimxaqsAQHcRGfZZCfiPY1LvzfSZffZ0CT9hD8EtYWH+bb8zBH
- iA5xFTJMNpH4XMkYDmAJW8DiE/H0md2IP6gHoYncc3C2OlWu+a8kXThURiiuitJ9A8w=
-X-Gm-Gg: AY/fxX7jCybXA8ipBI1FNK11513gEMBs/2eBmCa5dv+TWn/G7dFtrHRSAcb5i5XvrMS
- aTtBDAkuctIu24d0QTZwUtrDwSKHj8USg0LHwDoVUrj7JGnUbMN9X5QcE3pluMwf7jV1oFWEymp
- +v4+qnwoOYNsR2/xb1zUvHye7EReKOgvUZgaXWWcYMyoHHUmIvhvHTSjAM5mxi0GPQzxCiEPpfj
- R+xXEDLxSkFnoSE/ogyvKWAUvS0orr3oDLa1NP6Lx4mpkHoTT8s+IM6aT78KN74Thoj95Gj0hLR
- D3KaLOd5c4vhOOnTQK+5DqgFeD2+TLxqBb3z1f7Pn+lb3HBDfYW358GySqCaQCmmg/HCxHJ2+q5
- o2cSJ7cLT0PULDqhlCj64LJWdDuXRZfY7lTMCX3WW22hFBz4ZkVJ/KRIuDqJ9LbRqAzX5SxPL4l
- +ggcHBozR1NvMjFbrE55luDE66Aw==
-X-Google-Smtp-Source: AGHT+IF212/GVb4Ja20CfOjVUdoPBN9tD5yeGzTIjjNHIHO40TUo77TvgMS3gAo+75Kcq7saKWDI6w==
-X-Received: by 2002:a17:903:234a:b0:298:3aa6:c03d with SMTP id
- d9443c01a7336-2a2f2a3fc97mr308807015ad.57.1766971243183; 
- Sun, 28 Dec 2025 17:20:43 -0800 (PST)
+ AJvYcCUdq6Fe0YNCwbVdAMtnQ0vRQjvFiAZJbIp4Vo30qcImjP6J9jEhRoXHyl1h3OfntcE2yZOGFU8ZGv3s@nongnu.org
+X-Gm-Message-State: AOJu0YydgT9sA1nwqM4CU91pLDxbtHaOri9U5tkQCqD8a9zYy9W8EzN/
+ m+GtUvFZxNhCwERQQ9OFfGF7RzhFboNnJkRvTurcONh43c6JTMranLFmdtSPnE06qc4=
+X-Gm-Gg: AY/fxX7f9b+6vHw7Panf4mQqrteYE3GdwCizJPTZFmFhlMWTMjBT6UGcv953RdIXbVg
+ D3fyJ0lH80EkkxyqCOqInnS5tSFZUEh3CHUs4RrQj6dhS5Se20mPREdz2WjA9czkpD2aVO8wpkP
+ DjA44zRTx/y1K88E8MQnTHg0hfEckW3IjdpXo3PkTmt3zvam+/FXmVzvYBg5sFMnMIO/zSE9KqZ
+ psoeQYoZriZvRgSYpNBJ7UfzFCZ1XJQcoZyLvsc5fsNS86Ryt+cHrcsysg7Buq5Ws0w7AUya5uX
+ M8pOcHogK4mtL5ZrGTVgB/0uf4RDuCMye0gO6cC3EFf4f0mUurO6vJGzdi0WrtHUhkXFJeD0DbI
+ Zfv8MPT+5yQc3fh8w4btN0h7PyQsUZi/5sts9EQSVK0jMqlKGoRM+aOyhIe02SVCtIfuOEqEhGw
+ aIvzxY2TLLRYvmlg/jEAjWsjujR1o6+opbqjwq
+X-Google-Smtp-Source: AGHT+IF2JOBrUIf+UCLWUrYk5ljXAFUI3X+YXTf8WHrBoeBI3O/lOjQZOL0r4ttoBeLM9TTx2Bqagg==
+X-Received: by 2002:a17:903:3508:b0:2a0:9047:a738 with SMTP id
+ d9443c01a7336-2a2cab1635dmr268540075ad.19.1766971264938; 
+ Sun, 28 Dec 2025 17:21:04 -0800 (PST)
 Received: from [192.168.1.105] ([206.83.118.74])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3c8286esm258215635ad.33.2025.12.28.17.20.10
+ d9443c01a7336-2a2f3c8286esm258215635ad.33.2025.12.28.17.20.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 17:20:42 -0800 (PST)
-Message-ID: <0173261b-0fbe-478c-aad7-007e6b03ddb0@linaro.org>
-Date: Mon, 29 Dec 2025 12:17:47 +1100
+ Sun, 28 Dec 2025 17:21:04 -0800 (PST)
+Message-ID: <9f1fc42b-1321-471a-a0d5-a5d7f3e2af2f@linaro.org>
+Date: Mon, 29 Dec 2025 12:19:56 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 25/25] system/ioport: Do not open-code
- address_space_ld/st_le() methods
+Subject: Re: [PATCH v2 1/8] hw/arm/Kconfig: Have FSL_IMX6UL SoC select
+ IMX_USBPHY
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
- <peterx@redhat.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>
-References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-26-philmd@linaro.org>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-rust@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Anton Johansson <anjo@rev.ng>,
+ Max Filippov <jcmvbkbc@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+References: <20251224134644.85582-1-philmd@linaro.org>
+ <20251224134644.85582-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224152210.87880-26-philmd@linaro.org>
+In-Reply-To: <20251224134644.85582-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,16 +115,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/25/25 02:22, Philippe Mathieu-Daudé wrote:
-> When a variable size is known, prefer the address_space_ld/st()
-> API. Keep address_space_read/write() for blobs.
+On 12/25/25 00:46, Philippe Mathieu-Daudé wrote:
+> Since commit 17372bd812d, the SoC used by the mcimx6ul-evk
+> machine requires the IMX USB PHY component.
+> As this component is only used by 2 machines, do not select
+> it by default (it will be automatically  selected when
+> necessary).
 > 
+> Fixes: 17372bd812d ("hw/arm/fsl-imx6ul: Wire up USB controllers")
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Reviewed-by: Thomas Huth<thuth@redhat.com>
 > ---
->   system/ioport.c | 32 ++++++++++++--------------------
->   1 file changed, 12 insertions(+), 20 deletions(-)
-
-I was just thinking that patch 24 could be improved.  Thanks!
+>   hw/arm/Kconfig | 1 +
+>   hw/usb/Kconfig | 1 -
+>   2 files changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
