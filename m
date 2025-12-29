@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45543E784BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 00:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CB12E784BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 01:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va1bS-0006B0-VM; Sun, 28 Dec 2025 19:59:18 -0500
+	id 1va1hS-0007r8-PM; Sun, 28 Dec 2025 20:05:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va1bL-0006AW-Km
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 19:59:13 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1va1hI-0007qe-Tl
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:05:24 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va1bK-0007MP-6X
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 19:59:11 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-34ccbf37205so6443642a91.2
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 16:59:09 -0800 (PST)
+ id 1va1hG-0008IV-Jl
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:05:20 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-34cf1e31f85so7013778a91.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 17:05:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766969948; x=1767574748; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766970317; x=1767575117; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NHSlXGuLn/FiDCG77u3uzy5vGW6vM7HD6CEVEvVd6R8=;
- b=cec7Lxgi06OOpqZB3fN0bp+Gm+3KkaucegLlre2zTzcOEPYVsPy/dCL0VN7X+mnAgt
- zysb5WcSXv56ANGJIC2L7WRf3sFS7k+5Bt7vGSIn4NdOwRm4Rxp2wLOyGPGK0zrhj98Q
- LcCC04tzxNdBcOG9ehW48I6+7qw2z/7rhC0SpWaOzpdLAueErGNarGaWP8YzNzjw8ca8
- esOwvXQvsVnqxGok5u5VvQzk62E9zCpONeQOZdz4MH1jobGBCTOeVBLlrGSknBlxYZUP
- 2nMFoHD7EKxuWfActEGC8ffjUKLUh3M5BAjURX1bbjkzYE33nlVp8Ku8VNyIzhnw0qrS
- dxLQ==
+ bh=krspu5Ta32VEquDexhjjvIZdCRtt8WXCpn1T/BESWAk=;
+ b=ZvGAjHWXKCRCcv0bhPEDc6ARuGdplIEfGGhLhg9g89YRBdjDjBXv5ZmZnJ93ACIMa+
+ 7/1rI8Ff9CBqlAupvlgOP+veW6dLLa/Pj6aXMQHKLdOHm8BZvTi2HmBnlhMcPkFEDs78
+ k6NV4eLf7wpV5H0AH8p23VLQAZHv2zuGl4v+0RxDBlaxMa7spJfXPUcwiTZAss5RD0db
+ CX2/fZ0SbhcHZOCmgRjxrEWJfkK9E4pX5t1kPIIWq/HIJs3iRP0XPM/ep0WmC5RLOe08
+ tIw7DSUfiow6KLPD0LcqByjMZqaHPOKjF5zNW2t6/KN2RKUYps7tgOYwQpuj1ecfPRfd
+ dDDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766969948; x=1767574748;
+ d=1e100.net; s=20230601; t=1766970317; x=1767575117;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NHSlXGuLn/FiDCG77u3uzy5vGW6vM7HD6CEVEvVd6R8=;
- b=u6YZYlaZ+SWfCxw2KaJLeoM5wkXtTl25pTHFVVgZeP2r+oHuhJ6cDfUKH8kn+7gJk3
- pJXrRPNIlEY0mybGrvRUcE5hy616UGqCrhedw6LyK4T9EVSxROLNes10aeZ8ComKnE3Z
- mOQut/b1dMXFjF8D5EOf09bqveSHuqz1Cu9RF6gp1SXyXJPmz3cSQyQ/wkX+ou/1U8Ck
- 3vClrzofM9EVXwQZ4awGU11THScQE/gYlgliBnebTEBWENiItGYb3nTFGIbb1Nn3hFl7
- jGSW6ISLz8M8w0wnz5nGbrC7EfQ+/yldDwf2piLDbEcrhrPe5KTBVUOcUQu2nS/eQ/PR
- bvyw==
+ bh=krspu5Ta32VEquDexhjjvIZdCRtt8WXCpn1T/BESWAk=;
+ b=M0eO0LMM2Y7rYcljjbVXWsCUykJUvodJsCV41aliCXJxcHdNPktszm/cbHGjNTCRoJ
+ MN/0tLDR83/BUt7600wcQEUj9q5b17VGrkaFdLxNl8DqKhprWzgBz+7uUARAX9O3152d
+ 2JzaRj8pFn5EBqoy8ZrScxTkc3h0GPHt/MKKbam4oltw9+xO6bVOTQnrYYaV+NzRguOS
+ o0bZekr1dGwHqCq1idrf0/fXK5QmpKzTOSuZsTa/YEYWZnR+O4Wls53hgTC8U550YpRz
+ GyABCR3zxLoh0z1WrqfzTEC7/TekAPJNseLLNLYb+KnMnpw7jxu+adkObSiG4stUcNGF
+ o+tA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdfUWdZL/htLV5HN+hAwX7+x7ZwEkBs1P6MrE0tItMuxpofgvLYyUUwob0SwmefDSynOzixIZFM3gJ@nongnu.org
-X-Gm-Message-State: AOJu0YyzApnem3aEi2wiXQEBZ2YQiNxAjnZ9W83BZk11glbMMP3fiEo3
- S9PumSkxkUFW875WDJsj08EZyw47u1ljMrTk7uJtMxB62HC1u9K1BOEWbWU+yU48crg=
-X-Gm-Gg: AY/fxX4+K2rW/2baiMwYPpAfnk+bb1o23yK5MSE8cmFRupF6Fw4Y7KEfgTd8vjQX4D3
- drPY4+MQKaTUQiIn0W91OSse3etMvtQm1lUc11ApOzIXa/QVGJfh8omFCvZbs90nTUayJ4H+Qgz
- FxhdyPEh6en8HrKPKp+ccGXmY1D7rEOAJErRJhYNdNpKvkSj8p0w3+Hc2CrShVKCAQCo1Ibp/XW
- E3i6M9Zr/2CwW+OcT2qDyWwrJCmNKgizxetmPIlTIVasMT/lQhUSM9MJt65nUwDVJvnh5754HqA
- k5lZRm3UwLJPK93bEIZDu553P0bJMpVUsovR3teJhUxhsHrbAwqG7sCO960GPVH7nifkGYv+ELB
- xiypPAKnF6bruxo/YUoj3hZpaxGMtxqXUZI5wv9/HQ2HCnhcGtqXlwrHi2zM/lUGp2fDOf+SsSF
- HbvnCU/dbrgpbvGcDTEnt6Og+EpRPGUY7RwrMleXRK/oxYdNrbsDR7pXa/o+CFxB1XAjyMxQ==
-X-Google-Smtp-Source: AGHT+IHXedYbYyWkABnajFgk04WIMicBazgjxtlA/yWYF2OdoCZcP0ETtUtydklmUM+YOf4ZB26fgQ==
-X-Received: by 2002:a17:90b:1fcc:b0:34c:6124:3616 with SMTP id
- 98e67ed59e1d1-34e921ddcb6mr26934292a91.27.1766969948306; 
- Sun, 28 Dec 2025 16:59:08 -0800 (PST)
+ AJvYcCXs+XGvHUSO50pAfBA3yo2fd/d9PVKK+l7uWd4gEEXjpQGwg+J0+d22B1D2nwxiKdpZtWgf7+QuPMZT@nongnu.org
+X-Gm-Message-State: AOJu0YxoYwqrMpwBBuYIs3qOXUqxOevgS0R5yX6mhoLTWzS+Qkma5wrc
+ 3vKZIOfJqy//nF2hotl4LB1D6B5fe6ocmplAeo/y4DuliRWWD34oYiBFS0+OzmYhpSo=
+X-Gm-Gg: AY/fxX7PKZNmvAMCLLe4Vw5civbSkKK0gHTDrGhlDyuNgs1WxCqUC0ttnVG+3WWkm5t
+ uIyu8W5h2HkpSZDoBKotCJjpUH1KGoOBNQuVlEQHBiohCw/j11QatBbbYYas5sxUtGdWM3wS1XS
+ BGfg67SGcrDfCX2PHvVDJH/swLX8xN8HGjwiqUZXEidH27ANo/j6sfCtC2DcOAaPczteBb/YOki
+ PuLTV8egmOZDObQ2ZuHVq7XH8VF0fC4LLjxmyUnExJOfys0ONLZ8ZklIey91K4fwzzyqSZAslA0
+ Dgmdn83xmmXPZkdxufu6voRdb/aftRdM4ot+0i1oYPk+BY9iMZA5kCW2lSjHCGLoYCFbJsO4dFw
+ ZGfEsC9IEFxNRPG5y7Iwke8mlQlLt/5xdNKng1jtbcaIuDtzy1xTC1KgbWn52EBfeN3O5GE5SC4
+ gk05kGId39mslEANFcwJfSHmoUtsK/dtPsCFdCbcd0RA5N0NE9+3hIV5ZFNW3R9fHv8UwX3g==
+X-Google-Smtp-Source: AGHT+IGZsKv3knuZQ/KyvSsJGBFeuZ3HqpGkko7mEQ+1sBHioD1SahPbJlPHWYtTV+BaN8Z9Q6+iSQ==
+X-Received: by 2002:a17:90b:1346:b0:340:4abf:391d with SMTP id
+ 98e67ed59e1d1-34e921353c3mr27796768a91.16.1766970317082; 
+ Sun, 28 Dec 2025 17:05:17 -0800 (PST)
 Received: from ?IPV6:2406:2d40:40cd:310:f6a1:5e51:f9d7:f095?
  ([2406:2d40:40cd:310:f6a1:5e51:f9d7:f095])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34e772e16c6sm11433438a91.12.2025.12.28.16.59.04
+ 98e67ed59e1d1-34e9223adf5sm25705118a91.14.2025.12.28.17.05.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 16:59:07 -0800 (PST)
-Message-ID: <056252ee-f74c-456b-8d2e-e02fe76c3e96@linaro.org>
-Date: Mon, 29 Dec 2025 11:58:59 +1100
+ Sun, 28 Dec 2025 17:05:16 -0800 (PST)
+Message-ID: <9fe352be-6d51-4821-a2f5-f0d927af5222@linaro.org>
+Date: Mon, 29 Dec 2025 12:05:03 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/25] system: Allow restricting the legacy
- ld/st_phys() 'native-endian' API
+Subject: Re: [PATCH v3 17/25] system: Allow restricting legacy
+ address_space_ldst() native-endian API
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -82,14 +82,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  <peterx@redhat.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>
 References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-16-philmd@linaro.org>
+ <20251224152210.87880-18-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224152210.87880-16-philmd@linaro.org>
+In-Reply-To: <20251224152210.87880-18-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,11 +112,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/25/25 02:21, Philippe Mathieu-Daudé wrote:
+On 12/25/25 02:22, Philippe Mathieu-Daudé wrote:
 > Guard the native endian APIs we want to remove by surrounding
 > them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
-> 
-> Since all targets can check the definition, do not poison it.
 > 
 > Once a target gets cleaned we'll set the definition in the
 > target config, then the target won't be able to use the legacy
@@ -124,9 +122,10 @@ On 12/25/25 02:21, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   include/system/memory_ldst_phys.h.inc | 2 ++
->   scripts/make-config-poison.sh         | 1 +
->   2 files changed, 3 insertions(+)
+>   include/system/memory_cached.h   | 2 ++
+>   include/system/memory_ldst.h.inc | 2 ++
+>   system/memory_ldst.c.inc         | 2 ++
+>   3 files changed, 6 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
