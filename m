@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2689AE9273E
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 17:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE1CE92FCA
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 17:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaHO4-0003T1-PM; Mon, 29 Dec 2025 12:50:32 -0500
+	id 1vaHP8-0004QI-Ol; Mon, 29 Dec 2025 12:51:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vaHO3-0003Rx-7q
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:50:31 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1vaHP4-0004L3-Mw
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:51:34 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vaHO1-0003k0-Pb
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:50:31 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7b8bbf16b71so9202554b3a.2
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 09:50:29 -0800 (PST)
+ id 1vaHP2-0003sw-BW
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:51:34 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-7f0da2dfeaeso9957588b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 09:51:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767030628; x=1767635428; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767030690; x=1767635490; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NMJvl+26zye/uc6N8hPetEtCSv2kkfCtjjQWUsWfol8=;
- b=CRJkdZei0wytMIcABr7VpzsInWHKa8yEK3eTLIdnxT82ibFbRWpXYgOJM32IGPUqFl
- MRR7vuhdzGVa7JyoL7ROjV0P+7h3hc436d/7Ek3rlRLPAKH1ByJfWt8FVHwXqrBs3iJU
- 2FuDpZuhmKqIIj1DueC5z0LjtjBxmSM1mJ2B64G3c8CkiHIsoi2TU0sSRbYWr/m0Uagn
- ucdpBLsLwZ0ogI7N852say4o8JxT8Vtlav7ri6hmsdkYbmoUdwm9BaNiA+RBH8+6WKLY
- 0VyMvdKbjLtMX/SJalcIPpPdMZxj23dlBToTIk0dTLqjpxjx0bE8KQb/m3ALYHmtxCoe
- qapg==
+ bh=p+436XRNbTzJRavV5d66W2uNYOAK8m1ou4UvIqQXOdM=;
+ b=McLITGYuPpnQauxcTFwDI5OQjZBZYxAenOvLtduWQoUx9VoRXT6Uat45gJup1fKB9W
+ vPg6VMFyDQNrc5Jj/QMflJrlChdNy45snmmoy080x+dUsoYm9vW3n7P00i2T2RonUR7Z
+ 1FBq9RQWXAw/2SX5aDOneiMEBIrdFCSYtNzB+CCagdgM8GzYOrGoj6LzesXETw91dBX+
+ +CYWJLMK5jYuxU3GdfGgW9iKMozJVDY0YqucCTh5DEs2TuyZsI0ogaCG8a0xOKvjFjfQ
+ cYu0rACapxm/FTQXsU1XWWfuvyDRXe8L9swNPdOgEJJyxC0Zx/DM6UuqBp/w6Zo5bVmb
+ xxBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767030628; x=1767635428;
+ d=1e100.net; s=20230601; t=1767030690; x=1767635490;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NMJvl+26zye/uc6N8hPetEtCSv2kkfCtjjQWUsWfol8=;
- b=Zxd1GjoX/aC61ossOxfF4otBCst7bBNCRV5H1r6n9C7ssdnbxbMG7L+M2wsx4c5NzV
- 69WbulGGpMZM8YEtKyLnlK89wUXBVOT2k5raJO5NSbxt4/Bs9JJpCh2cYJgRtNLJqOQ0
- 5EXJrgaDBkJjxXiGLs7/g+CbTTTMteC6QNRaQbgguAjHC7eql+H7cDC4Vx6dUHuNI9HP
- JDC3kCzqB5g066lmWGSLtRfsuHQadsfbPgFMYISrjftN0mncJjfVaDVDYYyd0Ou8XH1y
- xGGMu90IfawJaOnlFW+mJm22uYgT8tPfbiJhA1cXHbBfXWhKvmTiz93sXtRO+O/0FYEP
- UnkA==
+ bh=p+436XRNbTzJRavV5d66W2uNYOAK8m1ou4UvIqQXOdM=;
+ b=DIejYy90SUDU1kmrd3+IhrTwH7bvRyWViNVcUE5NfcQgW2LRhWjcBL2bYzN0fvpicU
+ gPR8N8RFSM3+Xj7jcv5rlUIEI/+KBX2iTKlE2z60ZoTp5+rJo+NY5lcGjPUVKMos8YU1
+ mv2G8ZAZnpS1ZO9GPFp+bxMH4WaRRLJHV1VplT15qL5jarvOCq34N4idHUMdzz9Vfszt
+ b6i0WjNc4V5D5AJYKS7ehx8Unbq/OELU1fJubQTjp48QRuASJp/yeQKQhJS9ADZ3ukhM
+ FnhDncXrIpcw6OPXC5OQx87ijbq/r82VZ6VuzxaU58CWrsEc4nxL/Jr7g5JuDYDDk3K4
+ vRJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0oWU67Kby6PsJ2NfSOVXCsgLwuOm3VSgyHFbjS0PEKBupEMyVEeQmFp5LbX0AKfzTvGBni7vlaQzl@nongnu.org
-X-Gm-Message-State: AOJu0YycoEW6ZPUn47vLTzGVz9ZvCErtVKdtbPpbWyoVLYar29YcVeue
- +ooJJ2pX2aADMnCSrbB8aw2LN7Lr7pQIoLpsfwntbcKgmdwJu+K1jlqLK2kBjUjvzew=
-X-Gm-Gg: AY/fxX629Di/CDWnT/XEPG/nGGYF4sz2G3COU9dyzkzN75v0pc7h9z76Y46IRjOmSp/
- 9l1DhDaeC7wCABu3D755UbuWfJVk5iV3GQJiTqt6w9ex75Cfa3h7pCWqYBYHKAxqoskB2ENfoef
- aLpYp4wzoz6q+YPIKR2ShdGrEt9SONaC9gsTQ6EYKKwEPp0Hzsxw14nbLD76s4D0oPJ2DllAm93
- /9N/gLXlpH0EoO9DCVGOogoUEqTm0c2rZb1tR6EWTawFGlGbze+OjtBcqpIt7y/jO6aWW/8z3Jg
- tpDZCzxI6l2Mhj3u4pZHRIlHQBHmCrLvnOCJX/7CFrfKHYw3kPoLAACuNafppTl8GoSb/H5zLBr
- X43s0homOYoxnyoQKxV43JwdByBAZeA6z/9ZVIaxrDGbGcxWXHf2KMl1xHp5rGP1cdtLsoZY1k/
- VW7xNHYH2828gvL+GBHzja/KR2lUdEpNqqdTjTZvnFFuKD4It1MPP79xGZ5lwnxIiZTus=
-X-Google-Smtp-Source: AGHT+IGWKwlx6v7gYluQ1MLIMhcafWyUo/A9TAcRutAdcXVCZWqG3IA4aGb+/LU8vGsEZaPt18WRVw==
-X-Received: by 2002:a05:6a00:4c83:b0:7a2:710d:43e7 with SMTP id
- d2e1a72fcca58-7ff648ede90mr25019660b3a.24.1767030628311; 
- Mon, 29 Dec 2025 09:50:28 -0800 (PST)
+ AJvYcCUC/cw89ACCyrr+AmJkSWQb33vyc2xdesjPQ13VtxJd2mh9wwlLir0Qqab2qTNFocqd1n0K4aQ86MAo@nongnu.org
+X-Gm-Message-State: AOJu0YygRkpIjQd7awRGqU6WWlmBokRdL9Ug+uoYde93OVgnIP28JuxV
+ GPTD+vUIMzfMINZV9qk6QaS04SlHnzaPlrBoNTb6ZwptbnyQi/zf3bbNgKSY5RlpLJA=
+X-Gm-Gg: AY/fxX6pFcaxSqlDsoWPJr+2P0Ft4XVddDNRJOmo/XdpszMLYcocOS12cgKhNnF7ssH
+ 9PQLiH3thcvirgoV+l5c53vMth75o3PMVaQU0suARAQ8gAOoRPDemHVO4AqA5CCToGybl9t0Dxf
+ T7qOPQ5Ha2wRFW1h2EJwkAxA8h3tnhLmVnDPPfPjF128jcI9zz7vaCx5bE+dAEb6APl3iN3kwxf
+ FAdsxcrYbvazDhq44gznr+pqgVnNvbQHKYaWzs97KGB2r3E0ZRaB7heQ912AzZ/UDyyotd07I7+
+ ea5HNhuhf79vcWqwSYpTD2KKVu8N2laXhTBVabTfE//lXmUlz0TEwAkyNZn7dPVwZO9kMA+z0cz
+ kLkmEQgFE7KM7Zxv4nhsXS7MbpRmdVvtQ4Ho+tdlHqQlYAKx3ipew+Bzno608WEeuN5MJPm0qYb
+ oVa4hOYilH3KwxFQI2g7jFL1sGShAZCxBSFHAzW1/WSvMSdLo0crDB5BtawKT0sQkHFho=
+X-Google-Smtp-Source: AGHT+IEu0SutJzP+BJb9bkVvZemWlptXnQ4xXCFNyljFOneNGXzzI2JU3qSyIt8+37F0+y1bh+ecyQ==
+X-Received: by 2002:a05:6a00:44ca:b0:7e8:43f5:bd11 with SMTP id
+ d2e1a72fcca58-7ff66f5a163mr30881735b3a.38.1767030690360; 
+ Mon, 29 Dec 2025 09:51:30 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7b31c479sm29978778b3a.24.2025.12.29.09.50.27
+ d2e1a72fcca58-7ff7e792b65sm30541530b3a.58.2025.12.29.09.51.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Dec 2025 09:50:27 -0800 (PST)
-Message-ID: <52121d27-59ae-4547-8c07-90514f1f2d74@linaro.org>
-Date: Mon, 29 Dec 2025 09:50:26 -0800
+ Mon, 29 Dec 2025 09:51:30 -0800 (PST)
+Message-ID: <f597965d-feb6-4ecf-958f-b299632811f6@linaro.org>
+Date: Mon, 29 Dec 2025 09:51:28 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 05/28] tests: data: update AArch64 ACPI tables
+Subject: Re: [PATCH v12 06/28] hw/arm: virt: cleanly fail on attempt to use
+ the platform vGIC together with ITS
 Content-Language: en-US
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>,
@@ -95,20 +96,20 @@ Cc: Alexander Graf <agraf@csgraf.de>,
  "Michael S. Tsirkin" <mst@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
  Cameron Esfahani <dirty@apple.com>
 References: <20251228235422.30383-1-mohamed@unpredictable.fr>
- <20251228235422.30383-6-mohamed@unpredictable.fr>
+ <20251228235422.30383-7-mohamed@unpredictable.fr>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251228235422.30383-6-mohamed@unpredictable.fr>
+In-Reply-To: <20251228235422.30383-7-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,15 +125,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/28/25 3:53 PM, Mohamed Mediouni wrote:
-> After the previous commit introducing GICv3 + GICv2m configurations,
-> update the AArch64 ACPI table for the its=off case.
+On 12/28/25 3:54 PM, Mohamed Mediouni wrote:
+> Switch its to a tristate.
+> 
+> Windows Hypervisor Platform's vGIC doesn't support ITS.
+> Deal with this by reporting to the user and exiting.
+> 
+> Regular configuration: GICv3 + ITS
+> New default configuration with WHPX: GICv3 with GICv2m
+> And its=off explicitly for the newest machine version: GICv3 + GICv2m
 > 
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   tests/data/acpi/aarch64/virt/APIC.its_off   | Bin 164 -> 188 bytes
->   tests/qtest/bios-tables-test-allowed-diff.h |   1 -
->   2 files changed, 1 deletion(-)
+>   hw/arm/virt-acpi-build.c | 15 +++++++------
+>   hw/arm/virt.c            | 46 +++++++++++++++++++++++++++++++---------
+>   include/hw/arm/virt.h    |  4 +++-
+>   3 files changed, 47 insertions(+), 18 deletions(-)
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
