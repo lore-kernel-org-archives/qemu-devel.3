@@ -4,79 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A11D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58DCED3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaB1y-00077O-C7; Mon, 29 Dec 2025 06:03:18 -0500
+	id 1vaB2f-0007PA-Ge; Mon, 29 Dec 2025 06:04:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaB1t-000775-3s
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:03:13 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1vaB2d-0007MB-E3
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:03:59 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaB1r-00039x-Ef
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:03:12 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b83122f9d78so489910366b.0
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:03:10 -0800 (PST)
+ id 1vaB2b-0003CE-FC
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:03:59 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b7636c96b9aso1627349966b.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:03:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767006189; x=1767610989; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767006236; x=1767611036; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Uu6vunQXCjF8xJqzsTm9DS0i8fjdoizrbY78MtCfq4M=;
- b=iYiel73PaXSaHfm8pO9YmhOybRQ126jr2GfdBOgjlc5EKpHY9ccfGiqpCOrhERnpn3
- h5h5Zv7AbCFoKCP5Vr1AQY1QGVlc3PY4X7n8PAzfOBNb6P/Fl66q/2ehM8p2UvM6x+Q7
- CbzaOQsbUo4n7/tM4p6iaKsdTan57nmG/0JlVej9iCOLledxG7inKGV2DcgYD4dCTo1s
- tTSLO+q7dcgPpvFIeb+XstzGbBuEwMXwZokuvPKQt05+moFJC8cHpxJCUArBVgjoNefo
- XlWM+Nw6ldYHEOO4I3mV5UbGgdSAMokMz49DOZzV6cCZttLmVU4yFHdaoBf/8Be3MEQw
- Q54Q==
+ bh=iyJLARG22ua/FQ0hvU8tCbRtxU2Bjse8dDsXtsofhy8=;
+ b=NwEByJG27d5dyG3H2lSbD0rbkfnVKwEYu5BZkU6+m7S4pQInm0+OpPyF7wpA/ebwwm
+ uFgw6pmpJz/DSnplbu97BH+EnngR4bab6HOtMZrMcLpHYkYL5tF+z7Hm0gngwTed1taD
+ wnccFlxO/mQF75Pk1tARU6UixuS8kDFSbMAbi2aLgPw3JYHLadtVFpjEdPttlgWx8Wyf
+ bhGsV5RIQTLQeO3hWjacF/XWwZR7wXM4JvZ1us2ESb8hyEvemmwIqJ5iTAppTqQM8zH0
+ yjOLSAhj2UvsFihPiG1ljKfCUR2oLABosInh+PA28HdGDtvlzrGkX+utVffTCm9V6g0A
+ BGDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767006189; x=1767610989;
+ d=1e100.net; s=20230601; t=1767006236; x=1767611036;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Uu6vunQXCjF8xJqzsTm9DS0i8fjdoizrbY78MtCfq4M=;
- b=aAzXMYd1p+FgCOec9Om59GQ0xe9SW8dO3HCHofXKQbLEON7J2kzeFBgvxzpRiGK9iB
- R57GcA49ToBjFye3K1W9IgGj062A95SAhdldLDiu98434DZKlJgUR5ReCF7iLacyjmSU
- DKn2TwEQbTMmu38YTlfuqv/TXpIRayKQXzgDVxQIusMPIg+M7La+E5q3jf/mWpy3e/Hd
- 43IXNdIAUOUpPoIJ1SnHoJkGKYHukAcsIHAUnAZPMszzn53bMwO+9Yb3bBZIHgjjfSbr
- rrcJL+sOWsIscYiWXusoLlmsYVXGHHej9X6kaXHJKhTniz/40ndIGT8GCj/JP0bpN1LA
- vfnw==
-X-Gm-Message-State: AOJu0Yx5iyjZ/vCsYlP/kNpaZPdrLS8zkrgpsSU6armVjF0mMwsiqI6J
- IyF4GdyebnYAaB8555sV3ISII21snokgU7iVL1cCh7BwYzRCk7WKIAabt+XNJQYOyAqi3El3HD0
- 1VRHmyFhPQt9UISI+3/V6Z6ZXBjc1HR/dGZ7o+G2PVQ==
-X-Gm-Gg: AY/fxX7kbNfd8NLKjQcJFwsk3w4KH/87aljyMfOw5xvkattJcXrlJkoaRJWhap0BkU0
- mU+9H4gqVLXMYl6V/pDItewYKKEW3Uz2sxfgvSXoJe5+hoYvqwxxJkD791+F5MBRP8+FtZESRPS
- J8xZiNJfzLZJxJUcFjJSCYqkVgjpR1GYIaaXE/OqUEEmjoGc6pfAAWGBfJrjCZUH9IXcJTsSD/4
- DfUdjVrFxcHr7Mnb5NMIgDX8xBdMtICWkdBgrcMadPVfh65JFhWS2gdCfyh2Ac8KY83Js8x3vbp
- aVF0YcIFvfUkNFeSn4yhwAxLPeunj3RHV4LylXo=
-X-Google-Smtp-Source: AGHT+IExy0xsy9hzw+Idtj7KOTo0J87qyqDwy2yJ9r18tcL+VPraY8vNnD949E5oV82q9fPiOaZoYSeUeAs7CvH5iBg=
-X-Received: by 2002:a17:907:608c:b0:b73:7ac4:a5f with SMTP id
- a640c23a62f3a-b8036f0f1c1mr2898923366b.21.1767006189382; Mon, 29 Dec 2025
- 03:03:09 -0800 (PST)
+ bh=iyJLARG22ua/FQ0hvU8tCbRtxU2Bjse8dDsXtsofhy8=;
+ b=WrfrqC6tlTRp61BQ+mKZxw2u72hDchO8Qry0dSac/NDudPiWTSwQjn2X0t7m2owjlg
+ J1JOP7/r8qKPt1g5TXUrHhQbhGHiBDq/hIwiVkg3fk3TS4+7Fgle7A9aC4ru+Qu5BSnR
+ TyCgnvTDNiAQx43qUTs8ATtzwaLMK4+AamQbJKP8ydn1vaPY0xm602HsGqsI94CEGFRG
+ Yd+G227TiAYoePrkNHJzfzyYkzsGYje+M90AwM3vlxgDt6DGALRpwkBgR58jJ112KoYx
+ tMTFExhjjIzAivCInshEOoQbKSgVjH4Ra8lhfpW6WmPgUnc8QEiod1zA6ZBkRF739mxh
+ jEJg==
+X-Gm-Message-State: AOJu0YyJ/dX/JP1gmcpn/QFhMhoktfjDkWuFY1576T0+8kKr5kp44VEY
+ 8ks1yo886xoc4gmdn9C93rTcqAESwXqTcgdEfPfpkxREfJPDK2D24zTZZEFgIQ7RqS5Y4TvOhIH
+ oeAOc64rYLOsCJg8l4uo5Izo7MDr7rEWHq4x6vwoD/w==
+X-Gm-Gg: AY/fxX4bdbaG9aLwq2wSgunyMSitFZcMOxK+8mOhT/2weoeGi1B/Dfa4VZztHauDhVo
+ bNagMFciCUZhVh3xAnD12LIfxx+L9fCHWLuaGjCMiqPi7fdb7erw9NO/K9LF/y41DnXH9d0Y5Pg
+ 6ve3k2odr9fTKN+iQA8/ZSMi75nMWnYbLdYewDr53OmFs/SLUTWJJTMLdTHwpMLTkq1+mEcNvcg
+ ZfbdllzjwQpijougWQp34XRqXqQ/mQA5/Ezr5NngjvF48NX32eQ8U7Xfo126KE1T8VVQ0w4NlO/
+ qFIbbJsi4Wgab3Q5Ohg/Zp9/15t7Lxwv8ywSMevYy4LAJXlxcQ==
+X-Google-Smtp-Source: AGHT+IFW4JLaaFaoDeDM4rCrrAbr3sJVIjfMtTM4ZQVduD3YTYBqYahS858aGRdyLeweQ/WVwIu3G8xkVypcXFhIkfo=
+X-Received: by 2002:a17:907:868e:b0:b76:4c8f:2cd8 with SMTP id
+ a640c23a62f3a-b8037233e75mr3022213866b.55.1767006235836; Mon, 29 Dec 2025
+ 03:03:55 -0800 (PST)
 MIME-Version: 1.0
-References: <20251224161804.90064-1-philmd@linaro.org>
- <20251224161804.90064-5-philmd@linaro.org>
-In-Reply-To: <20251224161804.90064-5-philmd@linaro.org>
+References: <20251224162036.90404-1-philmd@linaro.org>
+ <20251224162036.90404-3-philmd@linaro.org>
+In-Reply-To: <20251224162036.90404-3-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Dec 2025 13:02:43 +0200
-X-Gm-Features: AQt7F2peo4CeEpnzGohK-yL8lzodCzACVRnEdqJRbh3JOzGGJAXX8wZjHlEr3UU
-Message-ID: <CAAjaMXYAw=HNDzf351+-Qy3gzgu4wyWfBCgkJm0nS6acs44--g@mail.gmail.com>
-Subject: Re: [PATCH 4/4] configs/targets: Forbid OpenRISC to use legacy native
- endianness APIs
+Date: Mon, 29 Dec 2025 13:03:29 +0200
+X-Gm-Features: AQt7F2otN2BjjRmNgEbKRlxFaAFMLNrnjmSbBrGnTOKOuSwmf_mzFrU0gBAPHiw
+Message-ID: <CAAjaMXa2pVMEOCPpy8+XUjNgKiXdnVdSTgkSmb_ZTh1F+DHCGw@mail.gmail.com>
+Subject: Re: [PATCH 2/8] target/s390x: Use explicit big-endian LD/ST API
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jia Liu <proljc@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>, 
- Laurent Vivier <laurent@vivier.eu>, Stafford Horne <shorne@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ David Hildenbrand <david@kernel.org>, 
+ Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ "Michael S. Tsirkin" <mst@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,64 +107,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 24, 2025 at 6:18=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Wed, Dec 24, 2025 at 6:20=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> All OpenRISC-related binaries are buildable without a single
-> use of the legacy "native endian" API. Unset the transitional
-> TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
-> further uses of the legacy API.
+> The S390x architecture uses big endianness. Directly use
+> the big-endian LD/ST API.
 >
-> Preliminary commits allowing this final change:
+> Mechanical change running:
 >
->  . 5b67dbf1dc3 target/openrisc: Replace target_ulong -> uint32_t
->  . 500708331e3 target/openrisc: Inline tcg_gen_trunc_i64_tl()
->  . 4f6c60683f2 target/openrisc: Replace MO_TE -> MO_BE
->  . 73cd283e58d target/openrisc: Introduce mo_endian() helper
->  . 2f737e19a4d target/openrisc: Conceal MO_TE within do_store()
->  . 22c36c0a20c target/openrisc: Conceal MO_TE within do_load()
->  . ef797ac0025 target/openrisc: Explode MO_TExx -> MO_TE | MO_xx
->  . 81e2fb236b7 target/openrisc: Remove 'TARGET_LONG_BITS !=3D 32' dead co=
-de
->  . 9dc4862dc4a target/openrisc: Use vaddr type for $pc jumps
->  . 2367c94cbb1 target/openrisc: Remove target_ulong use in raise_mmu_exce=
-ption()
->  . 1843e89bec5 target/openrisc: Remove unused cpu_openrisc_map_address_*(=
-) handlers
->  . a3c4facd395 target/openrisc: Do not use target_ulong for @mr in MTSPR =
-helper
->  . 2795bc52af4 target/openrisc: Replace VMSTATE_UINTTL() -> VMSTATE_UINT3=
-2()
+>   $ for a in uw w l q; do \
+>       sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
+>         $(git grep -wlE '(ld|st)u?[wlq]_p' target/s390x/);
+>     done
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  configs/targets/or1k-linux-user.mak | 1 +
->  configs/targets/or1k-softmmu.mak    | 1 +
->  2 files changed, 2 insertions(+)
+>  target/s390x/cpu-system.c      |  2 +-
+>  target/s390x/kvm/kvm.c         |  8 ++++----
+>  target/s390x/mmu_helper.c      |  3 ++-
+>  target/s390x/tcg/excp_helper.c | 16 ++++++++--------
+>  target/s390x/tcg/mem_helper.c  |  5 +++--
+>  5 files changed, 18 insertions(+), 16 deletions(-)
 >
-> diff --git a/configs/targets/or1k-linux-user.mak b/configs/targets/or1k-l=
-inux-user.mak
-> index 810567a98f9..97d7cb10465 100644
-> --- a/configs/targets/or1k-linux-user.mak
-> +++ b/configs/targets/or1k-linux-user.mak
-> @@ -3,3 +3,4 @@ TARGET_BIG_ENDIAN=3Dy
->  TARGET_SYSTBL_ABI=3Dcommon,32,or1k,time32,stat64,rlimit,renameat
->  TARGET_SYSTBL=3Dsyscall.tbl
->  TARGET_LONG_BITS=3D32
-> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
-> diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-soft=
-mmu.mak
-> index 89f81b75bf7..c53408a2bf5 100644
-> --- a/configs/targets/or1k-softmmu.mak
-> +++ b/configs/targets/or1k-softmmu.mak
-> @@ -4,3 +4,4 @@ TARGET_BIG_ENDIAN=3Dy
->  TARGET_NEED_FDT=3Dy
->  TARGET_LONG_BITS=3D32
->  TARGET_NOT_USING_LEGACY_LDST_PHYS_API=3Dy
-> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
+> diff --git a/target/s390x/cpu-system.c b/target/s390x/cpu-system.c
+> index f3a9ffb2a27..b0c59b5676e 100644
+> --- a/target/s390x/cpu-system.c
+> +++ b/target/s390x/cpu-system.c
+> @@ -63,7 +63,7 @@ static void s390_cpu_load_normal(CPUState *s)
+>      uint64_t spsw;
+>
+>      if (!s390_is_pv()) {
+> -        spsw =3D ldq_phys(s->as, 0);
+> +        spsw =3D ldq_be_phys(s->as, 0);
+>          cpu->env.psw.mask =3D spsw & PSW_MASK_SHORT_CTRL;
+>          /*
+>           * Invert short psw indication, so SIE will report a specificati=
+on
+> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+> index 916dac1f14e..89911f356e4 100644
+> --- a/target/s390x/kvm/kvm.c
+> +++ b/target/s390x/kvm/kvm.c
+> @@ -1667,10 +1667,10 @@ static int handle_oper_loop(S390CPU *cpu, struct =
+kvm_run *run)
+>      CPUState *cs =3D CPU(cpu);
+>      PSW oldpsw, newpsw;
+>
+> -    newpsw.mask =3D ldq_phys(cs->as, cpu->env.psa +
+> -                           offsetof(LowCore, program_new_psw));
+> -    newpsw.addr =3D ldq_phys(cs->as, cpu->env.psa +
+> -                           offsetof(LowCore, program_new_psw) + 8);
+> +    newpsw.mask =3D ldq_be_phys(cs->as, cpu->env.psa +
+> +                              offsetof(LowCore, program_new_psw));
+> +    newpsw.addr =3D ldq_be_phys(cs->as, cpu->env.psa +
+> +                              offsetof(LowCore, program_new_psw) + 8);
+>      oldpsw.mask  =3D run->psw_mask;
+>      oldpsw.addr  =3D run->psw_addr;
+>      /*
+> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+> index 3b1e75f7833..8c87b30a8e3 100644
+> --- a/target/s390x/mmu_helper.c
+> +++ b/target/s390x/mmu_helper.c
+> @@ -44,7 +44,8 @@ static void trigger_access_exception(CPUS390XState *env=
+, uint32_t type,
+>      } else {
+>          CPUState *cs =3D env_cpu(env);
+>          if (type !=3D PGM_ADDRESSING) {
+> -            stq_phys(cs->as, env->psa + offsetof(LowCore, trans_exc_code=
+), tec);
+> +            stq_be_phys(cs->as, env->psa + offsetof(LowCore, trans_exc_c=
+ode),
+> +                        tec);
+>          }
+>          trigger_pgm_exception(env, type);
+>      }
+> diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helpe=
+r.c
+> index c6641280bc6..868efca3221 100644
+> --- a/target/s390x/tcg/excp_helper.c
+> +++ b/target/s390x/tcg/excp_helper.c
+> @@ -55,8 +55,8 @@ G_NORETURN void tcg_s390_data_exception(CPUS390XState *=
+env, uint32_t dxc,
+>      g_assert(dxc <=3D 0xff);
+>  #if !defined(CONFIG_USER_ONLY)
+>      /* Store the DXC into the lowcore */
+> -    stl_phys(env_cpu(env)->as,
+> -             env->psa + offsetof(LowCore, data_exc_code), dxc);
+> +    stl_be_phys(env_cpu(env)->as,
+> +                env->psa + offsetof(LowCore, data_exc_code), dxc);
+>  #endif
+>
+>      /* Store the DXC into the FPC if AFP is enabled */
+> @@ -72,8 +72,8 @@ G_NORETURN void tcg_s390_vector_exception(CPUS390XState=
+ *env, uint32_t vxc,
+>      g_assert(vxc <=3D 0xff);
+>  #if !defined(CONFIG_USER_ONLY)
+>      /* Always store the VXC into the lowcore, without AFP it is undefine=
+d */
+> -    stl_phys(env_cpu(env)->as,
+> -             env->psa + offsetof(LowCore, data_exc_code), vxc);
+> +    stl_be_phys(env_cpu(env)->as,
+> +                env->psa + offsetof(LowCore, data_exc_code), vxc);
+>  #endif
+>
+>      /* Always store the VXC into the FPC, without AFP it is undefined */
+> @@ -651,10 +651,10 @@ void monitor_event(CPUS390XState *env,
+>                     uint8_t monitor_class, uintptr_t ra)
+>  {
+>      /* Store the Monitor Code and the Monitor Class Number into the lowc=
+ore */
+> -    stq_phys(env_cpu(env)->as,
+> -             env->psa + offsetof(LowCore, monitor_code), monitor_code);
+> -    stw_phys(env_cpu(env)->as,
+> -             env->psa + offsetof(LowCore, mon_class_num), monitor_class)=
+;
+> +    stq_be_phys(env_cpu(env)->as,
+> +                env->psa + offsetof(LowCore, monitor_code), monitor_code=
+);
+> +    stw_be_phys(env_cpu(env)->as,
+> +                env->psa + offsetof(LowCore, mon_class_num), monitor_cla=
+ss);
+>
+>      tcg_s390_program_interrupt(env, PGM_MONITOR, ra);
+>  }
+> diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.=
+c
+> index 24675fc818d..0c7e099df21 100644
+> --- a/target/s390x/tcg/mem_helper.c
+> +++ b/target/s390x/tcg/mem_helper.c
+> @@ -958,8 +958,9 @@ uint32_t HELPER(mvpg)(CPUS390XState *env, uint64_t r0=
+, uint32_t r1, uint32_t r2)
+>  inject_exc:
+>  #if !defined(CONFIG_USER_ONLY)
+>      if (exc !=3D PGM_ADDRESSING) {
+> -        stq_phys(env_cpu(env)->as, env->psa + offsetof(LowCore, trans_ex=
+c_code),
+> -                 env->tlb_fill_tec);
+> +        stq_be_phys(env_cpu(env)->as,
+> +                    env->psa + offsetof(LowCore, trans_exc_code),
+> +                    env->tlb_fill_tec);
+>      }
+>      if (exc =3D=3D PGM_PAGE_TRANS) {
+>          stb_phys(env_cpu(env)->as, env->psa + offsetof(LowCore, op_acces=
+s_id),
 > --
 > 2.52.0
 >
