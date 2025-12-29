@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A80E92FE3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 23:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F955E92FE3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 23:17:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaMTA-0006zF-A4; Mon, 29 Dec 2025 18:16:08 -0500
+	id 1vaMTM-00077i-Ih; Mon, 29 Dec 2025 18:16:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaMT8-0006yx-8K
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 18:16:06 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaMTK-00077R-Qb
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 18:16:18 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaMT6-0004TB-Lk
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 18:16:05 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-47bdbc90dcaso59065945e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 15:16:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaMTJ-0004U3-Ab
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 18:16:18 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47d3ba3a4deso21746835e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 15:16:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767050162; x=1767654962; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767050175; x=1767654975; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5D4I0hKen7zTmms4TFT5Wn2w/psueUc6XUEBMd2bJm0=;
- b=x7KBbOwmZDop+Y1bgKoxY6RQ/clZ5N1uUrpzQXv7zgYnftCVeiAewavitqbk4TwZ2d
- dnyYa1ans9Kly8e8l5XqFz7xFOgP8oaAW48oJ4/7lOAOL2guYMJ7axEfaAMxTQDsh+hj
- YR8YtNJSfUyBWKTdjl3PoUSfIl+pfvmZk4IbHG+0DVkIW5zCorp4BvKkhPzocjfPAgP8
- WFB4Z07f3TD4zqIFXB8DcfXQtqXk2ybAj3+IkQR4M7JEOWK0Z941CeLFLm+0OBwT4u3G
- Fw6eEKpSx9WnkbRGX8JJxOGAV8Ty/xgXPhoHUP2aCBp9nLetjZtEUOkx01U2GpKoFYYO
- ph9Q==
+ bh=o/8cYZmYdBL+VWLXphrjYK3VWDt4CKidadasVU86r/0=;
+ b=ZxFvoayK3ez0WqOUQEPbjWZeGvu1//MjSn3CIMAMN4GeUnhPaa85713URWRdXRGvBK
+ kcJFIbXZCfHgreZNbNnOq3ynChL7Ux56gIeU91BHZCYMSdxwZRokfY8DTN0uquwLgZ7U
+ LfSqXbP7NhbLe12lDiwvJdsVj07ISzRQvDAZ63vYC7eZcw4K/NQoSpPFY8MwCyEEplm3
+ SORhEL7ExoXbpOjtz6dI2MgWMNe5A5VetaO7/Aw5aThIZl65tbSnFyRTt9taILT68/Y5
+ jrxwkJTv//1+W+aIr+PI0cQ5/ftTh8FHWdDO26nr1K0cWic5O1DNf7zV24Tlamzbg1+L
+ Ux6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767050162; x=1767654962;
+ d=1e100.net; s=20230601; t=1767050175; x=1767654975;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5D4I0hKen7zTmms4TFT5Wn2w/psueUc6XUEBMd2bJm0=;
- b=lywF+bqcdZv51IZ1SI2Lp8uj8fSths8HbS6zp6HdBhVz6wq/uo+3OFViOJwjqQm+Vz
- AfiyzPpsU9VAH/ByjbfLc/lH1P7fN9FkX6GvUb5H7yDYJXMhmL8OjF050BCFnlyWiCyz
- PKUevaTzBDgqz3Jfp/5XAJf8Kv33YVw2eTkzM3cpL3Lmbndp+4VZ2xYmJlvtdDJpJlRv
- i3iWxed/qFmeV6xnExLmbKOsFOBF+0PoSorvNy1UkGNuukp7L0eZGBLLudxtU/n8UwJg
- CLxBmcHi7jcZqLo+Q8OE7t+a/dUQdiUqy2N0Sp/gNl7APjFPLzCXwaojdyrnBXAymveO
- M5jA==
-X-Gm-Message-State: AOJu0YzZlKGpRGRor1kteOBF9HXYDPmCHG8qzzpKbY/hzUixppV+f6Fu
- HUGToOua684QYKCYzSun9e3QyoO8bFgkQNaB7V3APvUT+2+KJcT5rjyJhWNHL2fy7Sef5hJaUBD
- RhOtQKzg=
-X-Gm-Gg: AY/fxX5h4DoZ/tzb44i539joxnXnP6hsTFNejAEuYwiHyS042cB2icGWH2knhmx4VQf
- IuWiEnuyTWWp9iakje3JMGh8NpzCB9ZDSO3xJUDjSuY1+37RizIlXFDJAVCOOH4myhPJtB/feKT
- E9R0YlwLTajJoiCixY2YFGSRnEBrZqH0y/gNtel1AV9lFUAqTOCHjOZilLxbkDZVGhcsHLHas2p
- XE7D0YB8vZaNIFdPVYirDAM+rW9kncy0FKwtRK6NQ90qVnpra+mifAA2MsqFHOft1X9GVgwcPFY
- CxNH1Wl2cMQpTQP2ARBwZvn134g1dBMQMNF/zZKQm3MkTf0xYWj72hjlbTXbM2jnrgDv+xQWBhi
- 4844UOpmm8zMDyXkUZ8RzjC96X1Bil/SEROkvSA/aCKGHMHIUq/hi1bnBmbnMbduoSxuR88CZri
- Uhb91nwuiSk9iRIUmWPGHZ64/69vexNgxMMQS50dMl9m/i/t9nDDOe0D0ovcwu
-X-Google-Smtp-Source: AGHT+IGFjGITe1wntBwZcn6FdjWvyNhJmHGqDQex4ErHbg4KhXXNqSUgN9EL8w4dk2+eNGxn9QeOBQ==
-X-Received: by 2002:a05:600c:1c21:b0:47b:e2a9:2bd9 with SMTP id
- 5b1f17b1804b1-47d19583142mr443798655e9.31.1767050161908; 
- Mon, 29 Dec 2025 15:16:01 -0800 (PST)
+ bh=o/8cYZmYdBL+VWLXphrjYK3VWDt4CKidadasVU86r/0=;
+ b=YKHhVGjw7o1Mj7tzRbqKTX+gc0qnEVjfBWQt25i+c5F7hbPpSUVFMrJpMhvwXSKhEU
+ 0QbGEWAAlmNKWEGsLGir297y0g3+rJUwYF/6rO1oq1ONIdPjJHJNUBCXGqEC7hth7EYf
+ 3JkiODct1bmkMPOZXVY7+zt0j4pjMtbFplK+uiHHfC2NVKatfEs1zGH+uQYSH+irC0Pt
+ zZ56dHsqAsIdl+iP5QC6gaYAgcjRYeFBSajZHOGxb7Ya/PfJswF6ddkdGe81GJMKCjz9
+ HE+E72XOJ1CQyL1LbhvtxZTiMmDIECCXgOO440xKTP+MeeJfEc23eAG8EO3wWOuqcAnA
+ 63Zw==
+X-Gm-Message-State: AOJu0YzfHrDg1LeVdpEZAa6HflIuoSP0kTNSm0poF71P1qBijVYA2uYy
+ r7bxdhojgDMNfeOp9girr5pavb3qFh0L2FdIioaaQv2CI4lutcR9TAGJ/3uoFzLygNzVFbFEBi+
+ e/eunUG0=
+X-Gm-Gg: AY/fxX6x/EgxHLGl6oDZjDj2RNNiruROcRCD5yEmTUxo74MPlrAezRYucjK7Y8BiwIX
+ pKSR5zlcA6cpU7KdWjIUWWqTwJuOEf4OgQqrVTiVEHJ+HlDLae75yLqy6qcCkYc9NOBJjEm6WuU
+ MHylIgoDrtPTPZVP/8X6SVNP2/qkfBzaf2om2beY8BzAhAe6v0EALUvrNK6cLNABCARAonynwVk
+ 7VOVUd5jx2lYiWt18Hz3ZAVN20jbCNfHCqtW+GM4mRRPCSxWpOFB4RSlMo0v2rDz705h+qjyUrD
+ qVAS7oiGF98G67rfA+J0VvAYL56W07YjIzPVp+gEafi2Fcf72DW25ZOejQs+mxnSPn+mNKPrxx5
+ e3j5Ul7s7ABot84o6/B/lxD6jYnxpuGXYyqM7yx5FyMsK6vQdLQAxLaPdEXX860CQvRO2ozBsTV
+ SPrvwAgPlK6qUAy9+/dJIB1aIzc4+MbuRC274DzMsYElqe27xaWS3jMmpE8VkMKAMzjmNCGpE=
+X-Google-Smtp-Source: AGHT+IE993cDsbTJXzfvD+sHTJGNrnmaLdTATy8vAzE6PS32zivYNKhAr0iIVKVOetgn5S2ltWBUlw==
+X-Received: by 2002:a05:600c:45cf:b0:477:582e:7a81 with SMTP id
+ 5b1f17b1804b1-47d1954986fmr342620555e9.4.1767050175215; 
+ Mon, 29 Dec 2025 15:16:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be279c5f8sm587408345e9.9.2025.12.29.15.16.01
+ 5b1f17b1804b1-47d19352306sm551499355e9.5.2025.12.29.15.16.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Dec 2025 15:16:01 -0800 (PST)
+ Mon, 29 Dec 2025 15:16:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -71,18 +71,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/7] monitor/hmp: Make memory_dump() @is_physical argument
- a boolean
-Date: Tue, 30 Dec 2025 00:15:40 +0100
-Message-ID: <20251229231546.50604-3-philmd@linaro.org>
+Subject: [PATCH v2 4/7] monitor/hmp: Remove target_long uses in memory_dump()
+Date: Tue, 30 Dec 2025 00:15:42 +0100
+Message-ID: <20251229231546.50604-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251229231546.50604-1-philmd@linaro.org>
 References: <20251229231546.50604-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,43 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Suggested-by: Dr. David Alan Gilbert <dave@treblig.org>
+Pass a plain vaddr type to express virtual address.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- monitor/hmp-cmds-target.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ monitor/hmp-cmds-target.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
-index 2976f986d35..51dcb9e314c 100644
+index e855c0d8a2c..7c8bddabbac 100644
 --- a/monitor/hmp-cmds-target.c
 +++ b/monitor/hmp-cmds-target.c
-@@ -122,7 +122,7 @@ void hmp_info_registers(Monitor *mon, const QDict *qdict)
- }
- 
- static void memory_dump(Monitor *mon, int count, int format, int wsize,
--                        hwaddr addr, int is_physical)
-+                        hwaddr addr, bool is_physical)
- {
-     int l, line_size, i, max_digits, len;
-     uint8_t buf[16];
-@@ -237,7 +237,7 @@ void hmp_memory_dump(Monitor *mon, const QDict *qdict)
+@@ -232,7 +232,7 @@ void hmp_memory_dump(Monitor *mon, const QDict *qdict)
+     int count = qdict_get_int(qdict, "count");
+     int format = qdict_get_int(qdict, "format");
      int size = qdict_get_int(qdict, "size");
-     target_long addr = qdict_get_int(qdict, "addr");
+-    target_long addr = qdict_get_int(qdict, "addr");
++    vaddr addr = qdict_get_int(qdict, "addr");
  
--    memory_dump(mon, count, format, size, addr, 0);
-+    memory_dump(mon, count, format, size, addr, false);
+     memory_dump(mon, count, format, size, addr, false);
  }
- 
- void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict)
-@@ -247,7 +247,7 @@ void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict)
-     int size = qdict_get_int(qdict, "size");
-     hwaddr addr = qdict_get_int(qdict, "addr");
- 
--    memory_dump(mon, count, format, size, addr, 1);
-+    memory_dump(mon, count, format, size, addr, true);
- }
- 
- void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
 -- 
 2.52.0
 
