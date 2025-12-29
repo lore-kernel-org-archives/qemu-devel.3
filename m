@@ -4,146 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EEFCE92FCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 18:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E663E92FCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 18:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaIMu-00009H-5K; Mon, 29 Dec 2025 13:53:24 -0500
+	id 1vaIJ0-00050T-6u; Mon, 29 Dec 2025 13:49:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vaIMP-0008K5-JL; Mon, 29 Dec 2025 13:52:56 -0500
-Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vaIMN-0000K0-TG; Mon, 29 Dec 2025 13:52:53 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nve2mRs1JbckwCif+tCknJP69caMlv3yVrmZjm82VXvOc5UryV1qRWJTLbB+XClcpO9InCcUF88wIMCB7WJ9RnH/t897sCkXlYN0sndsZJnmrKEXs7ZRcfcBxpxFA66McmjOyWoHsygoRznZbC/1QW3VZOehLjIp5tpZjmzOj5fRSMJvTgIygLCDikRn0eitnuOwo5EH0qfU1Bwx7e1LTH/gXQWS8eclQLf5vHCd28BsK13yQ+KQHzebxZAhD1LdNLuDRn3jKyNu/ELArFvocLsuMFTZ5VXZRlIOd11ctN3xS8YLN0/b5f/7kXVAjgbZsI+8zPQXLUWCC4jcBupLAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oQ6RCzNXXAL2uirSeudmw86obDsNHSYrYVVZaPm8dlw=;
- b=B/3qwBH1QtwHr6Oj5uW12iMnj0336E7+mBu9C6vYsezEuhafkwV0Nhl8X/kSF8eJQVFYlpwrKqFOSx6mrpD1qgIFFkEu4ViZUDdYFn1SHEPdYnJulsAkqGT8mt2Zhta/IW52StlxpvJu6aH/YDcmImMIp64mSI8DUCV97ntLM3WbTxk3UhvhIWcLPyIXAe6RMuQh8LUeeV5O70y5wwzrB8rofk5SI4ndmFHEe/J+DgP1EBuK6QIGY3Hy5ivnILfMxqfe7WHpSlBGUksAZRq2sPcoHuAc/P71bApghHRqWapgEoDhuJaPkWoUPdJXPY9nn604/sJ3twUPCA6TrLBfeA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oQ6RCzNXXAL2uirSeudmw86obDsNHSYrYVVZaPm8dlw=;
- b=CRXJs/Sqn0008ztPmcbDO1M/CfZbJL98KBqzH+iMJQ/ym2ILW4EbKd0mpNrgOv3YqA3+BmQPyoz2y1t853TqIKq0Hv3d3EdGW6vok5RiH5Jtua0PojUa+Pb0ZPPwFjPG1/bYYf5rPnDgTXtddJCd0BMJP1Z2kV4CQe3OeNeGhz+rqOyKEij6R1RsPk6s3VLiDefrsah4zom4Brjtp5Flxp3/cO590woylI3d2FsIq9w6yZKUjHqWpuWYRVc9E+ZUkFrCPlTD6fKrPTXG02YqUAdByISdRzaTVtcCSJXvuu/EFi5IR/8Gx6A1N/9hhlyiORyFmOw07vex4smjkkC33Q==
-Received: from CH2PR15CA0027.namprd15.prod.outlook.com (2603:10b6:610:51::37)
- by CH2PR12MB9519.namprd12.prod.outlook.com (2603:10b6:610:27c::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
- 2025 18:52:44 +0000
-Received: from CH3PEPF00000010.namprd04.prod.outlook.com
- (2603:10b6:610:51:cafe::4) by CH2PR15CA0027.outlook.office365.com
- (2603:10b6:610:51::37) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9456.14 via Frontend Transport; Mon,
- 29 Dec 2025 18:52:44 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CH3PEPF00000010.mail.protection.outlook.com (10.167.244.41) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9478.4 via Frontend Transport; Mon, 29 Dec 2025 18:52:44 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
- 2025 10:52:43 -0800
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
- 2025 10:52:43 -0800
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 29 Dec 2025 10:52:42 -0800
-Date: Mon, 29 Dec 2025 10:52:41 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
-Subject: Re: [RFC PATCH 04/16] backends/iommufd: Introduce
- iommufd_backend_viommu_mmap
-Message-ID: <aVLN+TufyaJp02XU@Asurada-Nvidia>
-References: <20251210133737.78257-1-skolothumtho@nvidia.com>
- <20251210133737.78257-5-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vaIHp-0003le-EW
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:48:14 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vaIHi-0008I5-Si
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:48:07 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7f1243792f2so6202582b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 10:47:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767034075; x=1767638875; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HjlNaSuWDJGQZltEQ1Gr0JR+hacBIOSScxQel3kNd0c=;
+ b=rJ9tI3wFW/iSVfhuqIsRKZnq8NDRsXLrw92THsRCBWoBWzqqFL3GzVF3uoTkKi2r4D
+ J0FpLb4GXyimW1UpqzlJxP6tMCLqHR4kuyqt1Cofr94mJ2nHetfgOVQgltqQwPg6nKIY
+ 1i7bXqGklG1SPFHGNnDQgKg6t9TZRKYxbAWNVApCtWDqP6RtiMRKtZTtiGxk0BfAh3yL
+ MuFsbYfAJuC+gvdrE99ZJCAnoLjkG1vsNLU7wyQSPRfuiZZm+cjDjYarezCt7VZnsE40
+ ELpGYjuA2Tv44mOkdGbQyjWfw0f+D92OMiy5An2OW12J3YtkbhMsO6CylI812gS7Rrcq
+ kP4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767034075; x=1767638875;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HjlNaSuWDJGQZltEQ1Gr0JR+hacBIOSScxQel3kNd0c=;
+ b=OQ6krWTydMQvONvaiTyeDINZOLUoXKIG5MzLbuiNEtvTSqFl8a6mw1dmuVv+C7Nwn3
+ rquNqA1KLjni4qhqZ/89pg3JaTVaaJgon0B8FmyGk76nAd2PHiyEWKFvbxQ5Ms5tUkXJ
+ TA6VM3uFi/E2pSm9M33/RbMlkhsWSBgOUDpGDo3SyYvdyTjCGVUoCkQyF/+IlGMrtKmw
+ zxb8UML4uGllBtgMxvpJf9bnllDCnqY0F+hREb0vOPPudqnXGb2RL7xCKeYEbaF8ihRf
+ rEt33cgNR4YnskBJlMco+3uMVQqUadB9EJutbUUjybk5o32suw4I2YW/FbaLQOUWoLnE
+ c0rg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWd4Pc0hF9/5TiTc2wzogPHTHL6PKFrSWie7y/Z3Uql3ohdRy3OCjMsh98HIrDcZxQFDz4Umhk1qOaD@nongnu.org
+X-Gm-Message-State: AOJu0Yx1TG1HwiMTfBHiqNM195LNYGx3rbjmO/hPjgKxafW/osBZ1tkM
+ 3NjUso7CeNr1uAD16DgLgLoLJ3oUXbjRzxogfqhh6uLmpCh4SoDuPBHIbedieBKdtAc=
+X-Gm-Gg: AY/fxX7DD5ELVcD0RxauadkWrF64nS38gyLDktZ/CFB/18gLaYYNm/Vh1Hw0uiD9gv3
+ qkpWaBaRs02/rlAtFRZPP1dqMKjf4NdzDKVjXGbJqYziC+shAx62u25mlDQSPmT1k8VXrRSq4zN
+ b20C39C1wF/4KTPioUW4a5zJ0UoBmsJvJpMpII8Q5zMVslGEVXQJVJjTF1X3Ln3mR1UskyquaLu
+ dAFwdnIvXgRx+OflG4Mvs/XmN7Osqbe92hm0aKVRPSnr1UHm66dC1lUZ/C+73CxVWoeY1NYFZdW
+ Qgg+OxNTt8JqzMKjwSdymMjN0JMO94+/VlN1MGkXwEhbROpyh+u2brKuB6GDpgOJActwaj07QG4
+ wzfT9fNEBCWzuu8vuZsqIP1/OKOt9JeyUQEJJAYc6o8ljWwErcDNq2Ifh/r3x5DXqpvcqAGwdtS
+ 5ml7fMnERGxlU89AAhb1AsWgUzBfH12A8Jra9PCojMs/XWxPUTf1PIvLIE
+X-Google-Smtp-Source: AGHT+IEUM+PySF9fE8H6bjy183pC3XDOTIMWhOvzxGMlStDSQ2Wun5rqsTGiiIaVABn6oh8OTNpFoA==
+X-Received: by 2002:a05:6a00:e11:b0:7a2:6c61:23fc with SMTP id
+ d2e1a72fcca58-7ff64ed12f8mr27507105b3a.10.1767034074553; 
+ Mon, 29 Dec 2025 10:47:54 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7ff7e0a19d8sm30113899b3a.42.2025.12.29.10.47.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Dec 2025 10:47:54 -0800 (PST)
+Message-ID: <4344a029-90f1-4268-8822-779411de18ac@linaro.org>
+Date: Mon, 29 Dec 2025 10:47:53 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20251210133737.78257-5-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF00000010:EE_|CH2PR12MB9519:EE_
-X-MS-Office365-Filtering-Correlation-Id: 21dee9f7-f16d-4af5-7b77-08de470b73bf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?qDEOmWWc0vA/ZMPmwFVmHNzapHuLi9ZOQg9VhcbHaDWs93cdwX8Xf2Z7D/dE?=
- =?us-ascii?Q?VjoY3pqPIDfXIev3hQxVrPSNTAHx2WPgVxWy9QnBWfD67eQWhkgfHuR9OtyQ?=
- =?us-ascii?Q?nvjDhTKZvZhpig9C5wUp1syQUdaeFmEFSbY2Jqc59r7m/z3pJrh4TD9mMoUo?=
- =?us-ascii?Q?cM4meoZdLomujXjzQB6s6BWc4hZUoDa4KU9IWHh7Y/EWt5SAxiojrIYEqaQP?=
- =?us-ascii?Q?PFjH5WAikz5a5HQBzAA3j1D2N0PegGp8920CkYag/hooR9u2NWF3dRn0UugN?=
- =?us-ascii?Q?d/ZxlWn0fZ6QxRa5jSvkmDus3IulycVetJZtzjST0DVGpkJHYru4d/yM5nmU?=
- =?us-ascii?Q?g19Fy7raW1ppgsrd+jQCAt8666thBHjbIJmzMF7Yxy+rwe1sqGtI8gJh+GMt?=
- =?us-ascii?Q?G0E5AqURxXgmgWErytLPkoOzaU5uKIHfj3ia3PYFDyMoLge1DsSH39iGR2gJ?=
- =?us-ascii?Q?VRphd58CUjw9ds6FIyJxGmOvXgQBMFmw94JM/dFQKI/zw9Yt8luzNfI+5nA1?=
- =?us-ascii?Q?A8ky4o+YT1cQ73DNeCYlyY9p0Pjba2oD4hHvrMCmxbp2+LS5gsqDCYqEory8?=
- =?us-ascii?Q?dtUzssPWFTCTD5zltwaU5i/sL+3bIL3kdj7iwvCX6Z86HnRMXKlgPvkLxTxn?=
- =?us-ascii?Q?k1J0vkyMDHbdjK1AQuFSae3IHzfIvuSM/3z4uRl3QKn0NghtkqfoXy4ydSZM?=
- =?us-ascii?Q?vuVOYjEfL4gujajbCF4g1KNqhKF34+NYElVpX2orp22lWq0kyf80QfWjkY7z?=
- =?us-ascii?Q?D7RvFwMpBWuAJIt6UXks+JvDrVj5H3XmY+N466YTnjcoZUYbCuZ3yjak4JLr?=
- =?us-ascii?Q?d9uSWgLuPSpPcQLkqdA+EUbB56n8wld5rXBXzLE2Vq6nXbE1Qb4z8iwBqc5+?=
- =?us-ascii?Q?i/tUPrlFZrhzxWEKGb50EMZs4dBMT7pzmXqi/IWVRQEiBH0Mu0FrjYpLHowL?=
- =?us-ascii?Q?Ml6yVVTAw5EbahSw+AkHcr1VTklmd4/IZ1vo4urxWFLJkQwv6RYjOWmnj5Z0?=
- =?us-ascii?Q?k4FkyIIl6Wr4XoaXSQ0ZNBtWgux8hIeHIVnpCm62UFEGARHezlSlVacJF4S8?=
- =?us-ascii?Q?r8pADfLcxjeJeXgUTKAVP2tDzC2ov2ho0kqa5RKWjcM6kATMuH4BRglNtMRb?=
- =?us-ascii?Q?TRUtyf7dZq/AOCt0u2ozuLZqiYUoUn6s31FdlIJqHE/AlXITP3+j9525FINl?=
- =?us-ascii?Q?pFOmcPSIcL0lDIAkLvb/qxj1DPTn4CB9Jq9ZpcZR70slhTorWN4/Dqr0b9BV?=
- =?us-ascii?Q?xQ9T+A66d7kme2qoWhdU3JATC/ag7IpbeL162O/JAjNSpP95WTdtqG2DL0Oc?=
- =?us-ascii?Q?+tfLD9HSvenYFLRzDAuD/UrQlzOJUwEhvq7N8x34RKFlAHyCpKY+DkF4XDwJ?=
- =?us-ascii?Q?o5oaw4eojwS6HbYUqGHB8NBn8MuQV3WrHRQtVFJLgAv86xpcMJqoBMTOq8+f?=
- =?us-ascii?Q?hRU7+bBL26gwPRvYUlsYUjfSo6sGDZdT5XjvDxhYCRYg4qWf4fnUCbIM9HDX?=
- =?us-ascii?Q?hOEnwuTFMDBilGzzUcONGvTNahEsTK64H4nJQA5UClgNMYMEA/a0WiNsClCG?=
- =?us-ascii?Q?YmEbQY4YaevSYs3Dc+o=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 18:52:44.3753 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 21dee9f7-f16d-4af5-7b77-08de470b73bf
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF00000010.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB9519
-Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
- envelope-from=nicolinc@nvidia.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 17/28] whpx: change memory management logic
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ kvm@vger.kernel.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Cameron Esfahani <dirty@apple.com>
+References: <20251228235422.30383-1-mohamed@unpredictable.fr>
+ <20251228235422.30383-18-mohamed@unpredictable.fr>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20251228235422.30383-18-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,27 +124,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 10, 2025 at 01:37:25PM +0000, Shameer Kolothum wrote:
-> +bool iommufd_backend_viommu_mmap(IOMMUFDBackend *be, uint32_t viommu_id,
-> +                                 uint64_t size, off_t offset, void **out_ptr,
-> +                                 Error **errp)
-> +{
-> +    g_assert(viommu_id);
-> +    g_assert(out_ptr);
-> +
-> +    *out_ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, be->fd,
-> +                   offset);
-> +    if (*out_ptr == MAP_FAILED) {
-> +        error_setg_errno(errp, errno, "failed to mmap (size=0x%" PRIx64
-> +                         " offset=0x%" PRIx64 ") for viommu (id=%d)",
-> +                         size, offset, viommu_id);
-> +        return false;
+On 12/28/25 3:54 PM, Mohamed Mediouni wrote:
+> This allows edk2 to work on Arm, although u-boot is still not functional.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   accel/whpx/whpx-common.c | 97 +++++++++++++++-------------------------
+>   1 file changed, 36 insertions(+), 61 deletions(-)
+> 
+> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+> index 0d20b1d24c..e0db8ace4a 100644
+> --- a/accel/whpx/whpx-common.c
+> +++ b/accel/whpx/whpx-common.c
+> @@ -259,89 +259,64 @@ void whpx_vcpu_kick(CPUState *cpu)
+>    * Memory support.
+>    */
+>   
+> -static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
+> -                                void *host_va, int add, int rom,
+> -                                const char *name)
+> +static void whpx_set_phys_mem(MemoryRegionSection *section, bool add)
+>   {
+>       struct whpx_state *whpx = &whpx_global;
+> +    MemoryRegion *area = section->mr;
+> +    bool writable = !area->readonly && !area->rom_device;
+> +    WHV_MAP_GPA_RANGE_FLAGS flags;
+> +    uint64_t page_size = qemu_real_host_page_size();
+> +    uint64_t gva = section->offset_within_address_space;
+> +    uint64_t size = int128_get64(section->size);
+>       HRESULT hr;
+> +    void *mem;
+>   
+> -    /*
+> -    if (add) {
+> -        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
+> -               (void*)start_pa, (void*)size, host_va,
+> -               (rom ? "ROM" : "RAM"), name);
+> -    } else {
+> -        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
+> -               (void*)start_pa, (void*)size, host_va, name);
+> -    }
+> -    */
+> -
+> -    if (add) {
+> -        hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
+> -                                         host_va,
+> -                                         start_pa,
+> -                                         size,
+> -                                         (WHvMapGpaRangeFlagRead |
+> -                                          WHvMapGpaRangeFlagExecute |
+> -                                          (rom ? 0 : WHvMapGpaRangeFlagWrite)));
+> -    } else {
+> -        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
+> -                                           start_pa,
+> -                                           size);
+> -    }
+> -
+> -    if (FAILED(hr)) {
+> -        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p bytes,"
+> -                     " Host:%p, hr=%08lx",
+> -                     (add ? "MAP" : "UNMAP"), name,
+> -                     (void *)(uintptr_t)start_pa, (void *)size, host_va, hr);
+> +    if (!memory_region_is_ram(area)) {
+> +        if (writable) {
+> +            return;
+> +        } else if (!memory_region_is_romd(area)) {
+> +             add = false;
+> +        }
+
+ERROR: suspect code indent for conditional statements (8, 13)
+#48: FILE: accel/whpx/whpx-common.c:277:
++        } else if (!memory_region_is_romd(area)) {
++             add = false;
+
+Seems like a false positive from checkpatch, easier to write a second if 
+to workaround this.
+
+>       }
+> -}
+> -
+> -static void whpx_process_section(MemoryRegionSection *section, int add)
+> -{
+> -    MemoryRegion *mr = section->mr;
+> -    hwaddr start_pa = section->offset_within_address_space;
+> -    ram_addr_t size = int128_get64(section->size);
+> -    unsigned int delta;
+> -    uint64_t host_va;
+>   
+> -    if (!memory_region_is_ram(mr)) {
+> -        return;
+> +    if (!QEMU_IS_ALIGNED(size, page_size) ||
+> +        !QEMU_IS_ALIGNED(gva, page_size)) {
+> +        /* Not page aligned, so we can not map as RAM */
+> +        add = false;
+>       }
+>   
+> -    delta = qemu_real_host_page_size() - (start_pa & ~qemu_real_host_page_mask());
+> -    delta &= ~qemu_real_host_page_mask();
+> -    if (delta > size) {
+> -        return;
+> -    }
+> -    start_pa += delta;
+> -    size -= delta;
+> -    size &= qemu_real_host_page_mask();
+> -    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
+> +    if (!add) {
+> +        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
+> +                gva, size);
+> +        if (FAILED(hr)) {
+> +            error_report("WHPX: failed to unmap GPA range");
+> +            abort();
+> +        }
+>           return;
+>       }
+>   
+> -    host_va = (uintptr_t)memory_region_get_ram_ptr(mr)
+> -            + section->offset_within_region + delta;
+> +    flags = WHvMapGpaRangeFlagRead | WHvMapGpaRangeFlagExecute
+> +     | (writable ? WHvMapGpaRangeFlagWrite : 0);
+> +    mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
+>   
+> -    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
+> -                        memory_region_is_rom(mr), mr->name);
+> +    hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
+> +         mem, gva, size, flags);
+> +    if (FAILED(hr)) {
+> +        error_report("WHPX: failed to map GPA range");
+> +        abort();
 > +    }
-> +
-> +    trace_iommufd_backend_viommu_mmap(be->fd, viommu_id, size, offset);
+>   }
+>   
+>   static void whpx_region_add(MemoryListener *listener,
+>                              MemoryRegionSection *section)
+>   {
+> -    memory_region_ref(section->mr);
+> -    whpx_process_section(section, 1);
+> +    whpx_set_phys_mem(section, true);
+>   }
+>   
+>   static void whpx_region_del(MemoryListener *listener,
+>                              MemoryRegionSection *section)
+>   {
+> -    whpx_process_section(section, 0);
+> -    memory_region_unref(section->mr);
+> +    whpx_set_phys_mem(section, false);
+>   }
+>   
+>   static void whpx_transaction_begin(MemoryListener *listener)
 
-Like the other two APIs, maybe move the trace next to mmap() and
-simplify the error_setg_errno()?
-
-Nicolin
 
