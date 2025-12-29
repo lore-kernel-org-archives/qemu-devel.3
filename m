@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58DCED3B7E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441DBE8FDB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:04:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaB2f-0007PA-Ge; Mon, 29 Dec 2025 06:04:01 -0500
+	id 1vaB37-0007g2-7a; Mon, 29 Dec 2025 06:04:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaB2d-0007MB-E3
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:03:59 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1vaB35-0007fq-Ip
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:04:27 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaB2b-0003CE-FC
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:03:59 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-b7636c96b9aso1627349966b.2
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:03:57 -0800 (PST)
+ id 1vaB33-0003DR-RL
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:04:27 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b7ffa5d1b80so1135030066b.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:04:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767006236; x=1767611036; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767006264; x=1767611064; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iyJLARG22ua/FQ0hvU8tCbRtxU2Bjse8dDsXtsofhy8=;
- b=NwEByJG27d5dyG3H2lSbD0rbkfnVKwEYu5BZkU6+m7S4pQInm0+OpPyF7wpA/ebwwm
- uFgw6pmpJz/DSnplbu97BH+EnngR4bab6HOtMZrMcLpHYkYL5tF+z7Hm0gngwTed1taD
- wnccFlxO/mQF75Pk1tARU6UixuS8kDFSbMAbi2aLgPw3JYHLadtVFpjEdPttlgWx8Wyf
- bhGsV5RIQTLQeO3hWjacF/XWwZR7wXM4JvZ1us2ESb8hyEvemmwIqJ5iTAppTqQM8zH0
- yjOLSAhj2UvsFihPiG1ljKfCUR2oLABosInh+PA28HdGDtvlzrGkX+utVffTCm9V6g0A
- BGDQ==
+ bh=zXwawnmp4nBE/Ru+wI3DJQ1CWQS+qWsqn4VLj9jjCnY=;
+ b=iUk5nvTWcdIvs13krV8LGtxg5VsbpMbCeTpztkxKwQB6GReo3BQDAbWy9OIm6Qd0v5
+ B2xEYBV2SLjOufto30Sqprrwzcb7yOwAv1djDowK9dMf+tLJb7VBvnpfUdV4YvpDnS0B
+ PQYYcOdWvtwz1RpHdKR6acAT7OHf2ZpiqcCQkGJD+a4Ol0T6PlaChyrhVFJaiVWhxECx
+ VmZfbp15V1PZSWZUbIzMFUacsjmIAwO/jkFB0DSEecUraQkIIzOVxdJtFuefBSEtLlst
+ KlxE5IT7b79jSFocYN7EBI1y0qNJXqfFVc95bcPaO20eISzxYre9wDViz6o0wEwloExv
+ 6mcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767006236; x=1767611036;
+ d=1e100.net; s=20230601; t=1767006264; x=1767611064;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iyJLARG22ua/FQ0hvU8tCbRtxU2Bjse8dDsXtsofhy8=;
- b=WrfrqC6tlTRp61BQ+mKZxw2u72hDchO8Qry0dSac/NDudPiWTSwQjn2X0t7m2owjlg
- J1JOP7/r8qKPt1g5TXUrHhQbhGHiBDq/hIwiVkg3fk3TS4+7Fgle7A9aC4ru+Qu5BSnR
- TyCgnvTDNiAQx43qUTs8ATtzwaLMK4+AamQbJKP8ydn1vaPY0xm602HsGqsI94CEGFRG
- Yd+G227TiAYoePrkNHJzfzyYkzsGYje+M90AwM3vlxgDt6DGALRpwkBgR58jJ112KoYx
- tMTFExhjjIzAivCInshEOoQbKSgVjH4Ra8lhfpW6WmPgUnc8QEiod1zA6ZBkRF739mxh
- jEJg==
-X-Gm-Message-State: AOJu0YyJ/dX/JP1gmcpn/QFhMhoktfjDkWuFY1576T0+8kKr5kp44VEY
- 8ks1yo886xoc4gmdn9C93rTcqAESwXqTcgdEfPfpkxREfJPDK2D24zTZZEFgIQ7RqS5Y4TvOhIH
- oeAOc64rYLOsCJg8l4uo5Izo7MDr7rEWHq4x6vwoD/w==
-X-Gm-Gg: AY/fxX4bdbaG9aLwq2wSgunyMSitFZcMOxK+8mOhT/2weoeGi1B/Dfa4VZztHauDhVo
- bNagMFciCUZhVh3xAnD12LIfxx+L9fCHWLuaGjCMiqPi7fdb7erw9NO/K9LF/y41DnXH9d0Y5Pg
- 6ve3k2odr9fTKN+iQA8/ZSMi75nMWnYbLdYewDr53OmFs/SLUTWJJTMLdTHwpMLTkq1+mEcNvcg
- ZfbdllzjwQpijougWQp34XRqXqQ/mQA5/Ezr5NngjvF48NX32eQ8U7Xfo126KE1T8VVQ0w4NlO/
- qFIbbJsi4Wgab3Q5Ohg/Zp9/15t7Lxwv8ywSMevYy4LAJXlxcQ==
-X-Google-Smtp-Source: AGHT+IFW4JLaaFaoDeDM4rCrrAbr3sJVIjfMtTM4ZQVduD3YTYBqYahS858aGRdyLeweQ/WVwIu3G8xkVypcXFhIkfo=
-X-Received: by 2002:a17:907:868e:b0:b76:4c8f:2cd8 with SMTP id
- a640c23a62f3a-b8037233e75mr3022213866b.55.1767006235836; Mon, 29 Dec 2025
- 03:03:55 -0800 (PST)
+ bh=zXwawnmp4nBE/Ru+wI3DJQ1CWQS+qWsqn4VLj9jjCnY=;
+ b=IhzeHiFv79MVHnqWiKv27+JojVzXoW/QZYS6vivVAR/xJgR58YllMX2JxyqJI4kHEH
+ 50lpHSsh91ixJ5aXeABh9kxxhkPDeuyCOlYgTL+xbJ02Nm70mD9p/9f8rGbIl35Ou/qM
+ BgVFCEo3wLRZtdBPctdPJ61F5W6DTXHX6yLAsSzYXIhWwCdBuge4YU/nQlvZc5Eqbo3f
+ N1aVcQ+QE0WkVKjC4MgJcvrw6fucwJOL4y6yMNYBWYi8qrNP+gKG9JtEIStR5hlgkl5x
+ onzbv1b7Kjbhiy15B7NmSv7T0+9ixjqN15Ikl6MOlA/K/b6U+7xYthDuAnIllnGzLwlu
+ AZkA==
+X-Gm-Message-State: AOJu0Yxz+ZocYDDi4KcqrF7vwVL6LjK5ksPZPF+ZKyythgr9HSlb28XI
+ TzrY75Btxp6RJYcKPGODTBuDtQzFqC26pnU8aC/2XRksZn3PtOyj7H+aB7LSOXsRXvg3+nIv0ir
+ SNhbPiewjIheUwNhkrGUgjn5NTef59J5IX1Ht5NJXDQ==
+X-Gm-Gg: AY/fxX4o9kouKy8aQuW6DxWKi4E1Sr6ygZqCpQoXRTK3qeYdxmti6/BdPb6ao8hC5nq
+ XqSJ5639Ju5bj6no78X7uPDlcIKW154Sp3gtF4XJQY7eUzwEE45ESy5Xe5iZ1m1xGvFSCAEHVdd
+ g18Ox8jGq4jYJM1kLhxqOpGpXX93geO/Uv5DBPkZBKiO13woK7AuywNkjw/dXYe4UPe8tUv7zTI
+ Vb8aB0HMI5bT0QLwRSqxZDCnmkqFpQBBRIv9uxUkYFpvjE6GXggmAugx4UvupRR8AYrpmo85NbI
+ gRbhq31mDzRtA6URoCTWzglyci0PdCDIlcUESRc=
+X-Google-Smtp-Source: AGHT+IEwJJq7kBp4gYgYA9c+30flCa3tEWYDqrfvQq50/rY8VDZJV6xQEXlRJhk2D+jT1DorC6fVzS4uGxMhtNssZ6I=
+X-Received: by 2002:a17:907:268c:b0:b76:339b:d681 with SMTP id
+ a640c23a62f3a-b803695c31cmr2983236066b.0.1767006263809; Mon, 29 Dec 2025
+ 03:04:23 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224162036.90404-1-philmd@linaro.org>
- <20251224162036.90404-3-philmd@linaro.org>
-In-Reply-To: <20251224162036.90404-3-philmd@linaro.org>
+ <20251224162036.90404-4-philmd@linaro.org>
+In-Reply-To: <20251224162036.90404-4-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Dec 2025 13:03:29 +0200
-X-Gm-Features: AQt7F2otN2BjjRmNgEbKRlxFaAFMLNrnjmSbBrGnTOKOuSwmf_mzFrU0gBAPHiw
-Message-ID: <CAAjaMXa2pVMEOCPpy8+XUjNgKiXdnVdSTgkSmb_ZTh1F+DHCGw@mail.gmail.com>
-Subject: Re: [PATCH 2/8] target/s390x: Use explicit big-endian LD/ST API
+Date: Mon, 29 Dec 2025 13:03:56 +0200
+X-Gm-Features: AQt7F2rghdt1_EtmPLi1K1Qd6l57HBo0YnCi5U1IRXG-w5pubXXTLSg756HMS3Y
+Message-ID: <CAAjaMXbre_ntCh6sT8RjGFT+SAC3zV5XgZPr_t3oOT0VXP6cSA@mail.gmail.com>
+Subject: Re: [PATCH 3/8] target/s390x: Replace gdb_get_regl() ->
+ gdb_get_reg64()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, 
  Christian Borntraeger <borntraeger@linux.ibm.com>,
@@ -83,15 +84,15 @@ Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  "Michael S. Tsirkin" <mst@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,151 +108,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 24, 2025 at 6:20=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Wed, Dec 24, 2025 at 6:21=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> The S390x architecture uses big endianness. Directly use
-> the big-endian LD/ST API.
+> We only build s390x targets as 64-bit:
 >
-> Mechanical change running:
+>   $ git grep BIT configs/targets/s390x-*
+>   configs/targets/s390x-linux-user.mak:6:TARGET_LONG_BITS=3D64
+>   configs/targets/s390x-softmmu.mak:5:TARGET_LONG_BITS=3D64
 >
->   $ for a in uw w l q; do \
->       sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
->         $(git grep -wlE '(ld|st)u?[wlq]_p' target/s390x/);
->     done
+> Therefore gdb_get_regl() expands to gdb_get_reg64(). Use
+> the latter which is more explicit.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  target/s390x/cpu-system.c      |  2 +-
->  target/s390x/kvm/kvm.c         |  8 ++++----
->  target/s390x/mmu_helper.c      |  3 ++-
->  target/s390x/tcg/excp_helper.c | 16 ++++++++--------
->  target/s390x/tcg/mem_helper.c  |  5 +++--
->  5 files changed, 18 insertions(+), 16 deletions(-)
+>  target/s390x/gdbstub.c | 26 +++++++++++++-------------
+>  1 file changed, 13 insertions(+), 13 deletions(-)
 >
-> diff --git a/target/s390x/cpu-system.c b/target/s390x/cpu-system.c
-> index f3a9ffb2a27..b0c59b5676e 100644
-> --- a/target/s390x/cpu-system.c
-> +++ b/target/s390x/cpu-system.c
-> @@ -63,7 +63,7 @@ static void s390_cpu_load_normal(CPUState *s)
->      uint64_t spsw;
+> diff --git a/target/s390x/gdbstub.c b/target/s390x/gdbstub.c
+> index 6bca376f2b6..d1f02ea5ce4 100644
+> --- a/target/s390x/gdbstub.c
+> +++ b/target/s390x/gdbstub.c
+> @@ -34,11 +34,11 @@ int s390_cpu_gdb_read_register(CPUState *cs, GByteArr=
+ay *mem_buf, int n)
 >
->      if (!s390_is_pv()) {
-> -        spsw =3D ldq_phys(s->as, 0);
-> +        spsw =3D ldq_be_phys(s->as, 0);
->          cpu->env.psw.mask =3D spsw & PSW_MASK_SHORT_CTRL;
->          /*
->           * Invert short psw indication, so SIE will report a specificati=
-on
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index 916dac1f14e..89911f356e4 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -1667,10 +1667,10 @@ static int handle_oper_loop(S390CPU *cpu, struct =
-kvm_run *run)
->      CPUState *cs =3D CPU(cpu);
->      PSW oldpsw, newpsw;
->
-> -    newpsw.mask =3D ldq_phys(cs->as, cpu->env.psa +
-> -                           offsetof(LowCore, program_new_psw));
-> -    newpsw.addr =3D ldq_phys(cs->as, cpu->env.psa +
-> -                           offsetof(LowCore, program_new_psw) + 8);
-> +    newpsw.mask =3D ldq_be_phys(cs->as, cpu->env.psa +
-> +                              offsetof(LowCore, program_new_psw));
-> +    newpsw.addr =3D ldq_be_phys(cs->as, cpu->env.psa +
-> +                              offsetof(LowCore, program_new_psw) + 8);
->      oldpsw.mask  =3D run->psw_mask;
->      oldpsw.addr  =3D run->psw_addr;
->      /*
-> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-> index 3b1e75f7833..8c87b30a8e3 100644
-> --- a/target/s390x/mmu_helper.c
-> +++ b/target/s390x/mmu_helper.c
-> @@ -44,7 +44,8 @@ static void trigger_access_exception(CPUS390XState *env=
-, uint32_t type,
->      } else {
->          CPUState *cs =3D env_cpu(env);
->          if (type !=3D PGM_ADDRESSING) {
-> -            stq_phys(cs->as, env->psa + offsetof(LowCore, trans_exc_code=
-), tec);
-> +            stq_be_phys(cs->as, env->psa + offsetof(LowCore, trans_exc_c=
-ode),
-> +                        tec);
->          }
->          trigger_pgm_exception(env, type);
+>      switch (n) {
+>      case S390_PSWM_REGNUM:
+> -        return gdb_get_regl(mem_buf, s390_cpu_get_psw_mask(env));
+> +        return gdb_get_reg64(mem_buf, s390_cpu_get_psw_mask(env));
+>      case S390_PSWA_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->psw.addr);
+> +        return gdb_get_reg64(mem_buf, env->psw.addr);
+>      case S390_R0_REGNUM ... S390_R15_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->regs[n - S390_R0_REGNUM]);
+> +        return gdb_get_reg64(mem_buf, env->regs[n - S390_R0_REGNUM]);
 >      }
-> diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helpe=
-r.c
-> index c6641280bc6..868efca3221 100644
-> --- a/target/s390x/tcg/excp_helper.c
-> +++ b/target/s390x/tcg/excp_helper.c
-> @@ -55,8 +55,8 @@ G_NORETURN void tcg_s390_data_exception(CPUS390XState *=
-env, uint32_t dxc,
->      g_assert(dxc <=3D 0xff);
->  #if !defined(CONFIG_USER_ONLY)
->      /* Store the DXC into the lowcore */
-> -    stl_phys(env_cpu(env)->as,
-> -             env->psa + offsetof(LowCore, data_exc_code), dxc);
-> +    stl_be_phys(env_cpu(env)->as,
-> +                env->psa + offsetof(LowCore, data_exc_code), dxc);
->  #endif
->
->      /* Store the DXC into the FPC if AFP is enabled */
-> @@ -72,8 +72,8 @@ G_NORETURN void tcg_s390_vector_exception(CPUS390XState=
- *env, uint32_t vxc,
->      g_assert(vxc <=3D 0xff);
->  #if !defined(CONFIG_USER_ONLY)
->      /* Always store the VXC into the lowcore, without AFP it is undefine=
-d */
-> -    stl_phys(env_cpu(env)->as,
-> -             env->psa + offsetof(LowCore, data_exc_code), vxc);
-> +    stl_be_phys(env_cpu(env)->as,
-> +                env->psa + offsetof(LowCore, data_exc_code), vxc);
->  #endif
->
->      /* Always store the VXC into the FPC, without AFP it is undefined */
-> @@ -651,10 +651,10 @@ void monitor_event(CPUS390XState *env,
->                     uint8_t monitor_class, uintptr_t ra)
->  {
->      /* Store the Monitor Code and the Monitor Class Number into the lowc=
-ore */
-> -    stq_phys(env_cpu(env)->as,
-> -             env->psa + offsetof(LowCore, monitor_code), monitor_code);
-> -    stw_phys(env_cpu(env)->as,
-> -             env->psa + offsetof(LowCore, mon_class_num), monitor_class)=
-;
-> +    stq_be_phys(env_cpu(env)->as,
-> +                env->psa + offsetof(LowCore, monitor_code), monitor_code=
-);
-> +    stw_be_phys(env_cpu(env)->as,
-> +                env->psa + offsetof(LowCore, mon_class_num), monitor_cla=
-ss);
->
->      tcg_s390_program_interrupt(env, PGM_MONITOR, ra);
+>      return 0;
 >  }
-> diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.=
-c
-> index 24675fc818d..0c7e099df21 100644
-> --- a/target/s390x/tcg/mem_helper.c
-> +++ b/target/s390x/tcg/mem_helper.c
-> @@ -958,8 +958,9 @@ uint32_t HELPER(mvpg)(CPUS390XState *env, uint64_t r0=
-, uint32_t r1, uint32_t r2)
->  inject_exc:
->  #if !defined(CONFIG_USER_ONLY)
->      if (exc !=3D PGM_ADDRESSING) {
-> -        stq_phys(env_cpu(env)->as, env->psa + offsetof(LowCore, trans_ex=
-c_code),
-> -                 env->tlb_fill_tec);
-> +        stq_be_phys(env_cpu(env)->as,
-> +                    env->psa + offsetof(LowCore, trans_exc_code),
-> +                    env->tlb_fill_tec);
+> @@ -190,7 +190,7 @@ static int cpu_read_c_reg(CPUState *cs, GByteArray *b=
+uf, int n)
+>
+>      switch (n) {
+>      case S390_C0_REGNUM ... S390_C15_REGNUM:
+> -        return gdb_get_regl(buf, env->cregs[n]);
+> +        return gdb_get_reg64(buf, env->cregs[n]);
+>      default:
+>          return 0;
 >      }
->      if (exc =3D=3D PGM_PAGE_TRANS) {
->          stb_phys(env_cpu(env)->as, env->psa + offsetof(LowCore, op_acces=
-s_id),
+> @@ -227,13 +227,13 @@ static int cpu_read_virt_reg(CPUState *cs, GByteArr=
+ay *mem_buf, int n)
+>
+>      switch (n) {
+>      case S390_VIRT_CKC_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->ckc);
+> +        return gdb_get_reg64(mem_buf, env->ckc);
+>      case S390_VIRT_CPUTM_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->cputm);
+> +        return gdb_get_reg64(mem_buf, env->cputm);
+>      case S390_VIRT_BEA_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->gbea);
+> +        return gdb_get_reg64(mem_buf, env->gbea);
+>      case S390_VIRT_PREFIX_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->psa);
+> +        return gdb_get_reg64(mem_buf, env->psa);
+>      default:
+>          return 0;
+>      }
+> @@ -279,13 +279,13 @@ static int cpu_read_virt_kvm_reg(CPUState *cs, GByt=
+eArray *mem_buf, int n)
+>
+>      switch (n) {
+>      case S390_VIRT_KVM_PP_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->pp);
+> +        return gdb_get_reg64(mem_buf, env->pp);
+>      case S390_VIRT_KVM_PFT_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->pfault_token);
+> +        return gdb_get_reg64(mem_buf, env->pfault_token);
+>      case S390_VIRT_KVM_PFS_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->pfault_select);
+> +        return gdb_get_reg64(mem_buf, env->pfault_select);
+>      case S390_VIRT_KVM_PFC_REGNUM:
+> -        return gdb_get_regl(mem_buf, env->pfault_compare);
+> +        return gdb_get_reg64(mem_buf, env->pfault_compare);
+>      default:
+>          return 0;
+>      }
+> @@ -330,7 +330,7 @@ static int cpu_read_gs_reg(CPUState *cs, GByteArray *=
+buf, int n)
+>      S390CPU *cpu =3D S390_CPU(cs);
+>      CPUS390XState *env =3D &cpu->env;
+>
+> -    return gdb_get_regl(buf, env->gscb[n]);
+> +    return gdb_get_reg64(buf, env->gscb[n]);
+>  }
+>
+>  static int cpu_write_gs_reg(CPUState *cs, uint8_t *mem_buf, int n)
 > --
 > 2.52.0
 >
