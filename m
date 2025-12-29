@@ -4,115 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EEA2E92FCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDFE8E92FC4
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 18:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaIIx-0004hF-1F; Mon, 29 Dec 2025 13:49:19 -0500
+	id 1vaIIh-0004Bf-1Z; Mon, 29 Dec 2025 13:49:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1vaIHO-0003i2-5d
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:47:49 -0500
+ id 1vaIHE-0003fS-4S
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:47:35 -0500
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1vaIHL-0008FY-8G
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:47:41 -0500
+ id 1vaIHB-0008E1-Gf
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:47:31 -0500
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 5BTId0eO3797792
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 18:47:37 GMT
+ 5BTAlwQk1461913
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 18:47:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=R/GWoUy7LJE
- VVqvZX97tTx8AeIjr/zUMQuH53icANjM=; b=jtrrl8NVDiu+BW76E1AhNpEW2KN
- /Aw1heyYouLHooB9onmOt36HZf3o3EmOfXuxH+JdYlA5cTc63qV7rGcix1k616HA
- dqQc8zFZjnZinxztpDk6odVr8W1FKIsaCYY4El/sL9ixWUu0PxFX8Y2QVvGZ0rEn
- qBwewxwhqqa9okAVJJyuN52idxJTuV8OraaR0nfEN6GO83yenx3Ee1JfPbJ3L5Lf
- 2i05w9NYO4n16+Ce7HXhWtVQ8v8KI2105FdoL9/rS+p2GidV8lss408uBrrwS+/R
- xQYWrU8UbMsiKtuZTexyxmgw+Dj8J2T/kr5laXAMS2O8ZC3fkVAkpzDcuXQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bavrj3mg4-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=oAJGVkzFfOQ
+ IiDXh0qMlqrI8SbjU24rOP1b1tZiWHA8=; b=A7mG5xgj2wNjzV8rFy58wE+MF1t
+ 5k7g3U7MMgzTKzc0UYq78POmsEpmoKVVQgOS7Bv1QHe7goKTLU+76HeGXgoAdR+K
+ 6F3Gl9sO7+b0ItGmqhIYm+M/dJUeGej1TFgDCss5XJkYXL87q/4hhO72EnrY9JO8
+ /8ipE4wZqZKE29s0MC5QPlZi25GG8QQgFD85et3JLHZ+kScjgNiET1kNnq5xlkLR
+ dUTocdhTsd2eycTZejlFYYWCxOSThupUv7XSUqQIN1d4pABVNLQyDEZd6Mqa/98E
+ cHfbVQMKl/gsEfr1Vxm/1LzuwbNEWSbwC2qk0qkMOXP3hiFqXJAHP/nP2VA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bavrj3mfu-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 18:47:36 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-29f8e6a5de4so127693155ad.2
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 10:47:36 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 18:47:27 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2a08cbeb87eso155586135ad.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 10:47:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1767034056; x=1767638856; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1767034047; x=1767638847; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R/GWoUy7LJEVVqvZX97tTx8AeIjr/zUMQuH53icANjM=;
- b=K+XIqZev3majGN9OLppddxlQ7Q69eZbqLEpTJq0TfjJWxVgtEqxAgADyeY8loF6Qbd
- vAJlqzTD4sAJycFxLOiS3p/yTmOlYdFSim2IKYHJyliKJQSVEHd8KXucBE37/zfuzXIw
- Q980BVsRP1hbCdgPfPd/ZmYCkxhthS0zdtpANfPJ41pKrKXRmSLw6B3rx0HMJ/CRB3nk
- ZMY1e3vWf8+GJGp3goKgEC1saWQ11Op+XDOf6GyFqfFLVoxpbVzvMePBglkg5nJkMCjE
- taL++LQP58G6xkex76aCqytc69VJ5IJNbXKjxB/vRrxobHQnw17YXRSE+OwrET+s5umz
- 5sow==
+ bh=oAJGVkzFfOQIiDXh0qMlqrI8SbjU24rOP1b1tZiWHA8=;
+ b=S3jDO6G53V5tF+PUikefqrdo0qZSkaXtKApFxuhxQf/uUvaLeRCZIlZEkreTP/qlRq
+ nNXZQ3uGaxhiUBo9O/E6pHgqcy+VKnA5tAhqSOinGDf6pyLf6SFdXY6+zu8RE6x03j6D
+ wI/PMFy7jYnu3YZJ2pM0oja8AxgJaOTo8rbR34Zzur0aVEGssiv8FMSHVlPNhWuMW+Vk
+ FS39E5PGtt6qpxRAOtODr8HFvMhgl9rAU0wKDdJoMElo1X34qUZDxmdY6gArtQf/5S/u
+ R4gFAM6bEB+cQYBTiuZtZg1bZsiTGtSFz6uIozUwhp/S4Akyij+CM/wfUWkytpcNMN4R
+ lsyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767034056; x=1767638856;
+ d=1e100.net; s=20230601; t=1767034047; x=1767638847;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=R/GWoUy7LJEVVqvZX97tTx8AeIjr/zUMQuH53icANjM=;
- b=hWD+7DhlnXgbUDQ9tINZxO/nqgewy7sRRIgJl7Ci4cJ0QbQjbovfd4J8/vTaKMtnO3
- fT2Y374n85FBqzD4LCnDWgaX35iVmS+evlWGFYncBRenatytatSG63PziuMxjHTWQIRG
- LzLV6c6I+PDtpD1S5ar5Z1sE2ZoWT4/nAN3itnnPyrV3aU7LuDZU4pFjhAqffSx5czvE
- WFhGMxE4+rROVqX7lMjHRV+iTDh1rf6OVnPiJ8uR849XLttYaX2UJUcv/LDgjyLqMiOt
- /uJB4VEFvQphPdcxLhu9qCegO49vf2Y6WtpDt5Ntnss2EK19E7kBoScBXuFwb1Qp77SF
- jMbw==
-X-Gm-Message-State: AOJu0Yy3b7CdHx1ttKob/ihQbZZPldT0w6yExoxfiPf+5zqHjpkT4cSN
- Lz+9+AYNCO0AEzpZOJRvAK8fCmDJlOYL5RCnFIXG7NTyrhBuCjhoPIztBgfhhTGGHiae/v0KibZ
- pHx1/y85+1X7ancfFObk0SRVKXkFwZ8fmviJLayacFOr0SyFQv40GrvFKsjIw3GkBpg==
-X-Gm-Gg: AY/fxX4fffVOaT1BE28mvRcagAEyg3a3+kD+Pe6+wtYA9BJYTjBPFK1LwvyhSOIQjes
- cfIvm/dqb9N/uY7ci9F85Vcdlq7gzuamSCgdnbxheT7wsybmbB75vUY8Hk3WYd71/SIV7DtzwjG
- aRvV4fX/IHSduaTjnvtYOEt0kuwNs0knSvd6pHKv8quArVxoruziJ/7yO2QPduGcg6zC8JZ67gr
- e0PGlJwfflXNpi9k7YiwaF1ujYVWb1QViMkpbqB5eaVQHT9oXk9HS5TUOXXlaUeP9aat+bmL42U
- DjqxKXQj7C5zr7AaDnO9MlE6bf+edaMxW1Z8fHACojNY/16T9GVv3h4+I689K6m7BzURBD4iXdm
- JqwSA0qY5JP8LnBUd++Fwyq3J7Lhp1e2fRnOU5vzkpz+47GE=
-X-Received: by 2002:a17:902:ced0:b0:2a3:1b33:ae30 with SMTP id
- d9443c01a7336-2a31b33af21mr207308475ad.51.1767034055483; 
- Mon, 29 Dec 2025 10:47:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEpjBSQ45DO9xo7N18Kt8HnyR1+KUvgtTi3W7GcPzmZBfA1hf21k9a+6iqYBm3wwoswtKDRog==
-X-Received: by 2002:a17:902:ced0:b0:2a3:1b33:ae30 with SMTP id
- d9443c01a7336-2a31b33af21mr207308335ad.51.1767034054950; 
- Mon, 29 Dec 2025 10:47:34 -0800 (PST)
+ bh=oAJGVkzFfOQIiDXh0qMlqrI8SbjU24rOP1b1tZiWHA8=;
+ b=qrLFIMhtBVnjuapcHdZxw5tgXEKKveP0f3tBahETxEgYyb4L6DxvTSZCb/UhSlikI9
+ RphtHedbUnXe3Fhpo662oi0O7uTcO6LlU3Wdx7EmFBFil8vkwfSbpLm1ZLqPF0/5j6ey
+ FH+d3cF0Etp1g/GF9P5pbIWGMLmbYQFJrGI16gSTl8YgqjlFEQFsxZIxmhuz4nhods0B
+ QIIN7JFr+H5oZz80JN4EX1yYxRolLvl+QDvl8aBlm35pp1NHxm8WYXbpX+mzWBCqoR9W
+ zXkec0vxocAGMC0MIo6UvZevTd2PulOGyDjCY4KRI6Dir2GWvtbwE0vhyUZMfmTmFycb
+ ohiA==
+X-Gm-Message-State: AOJu0Yws2C5QkjeKeomNh4PfHy1SoZKEsSrGmeCmmz6G6IAZuYpNqg+h
+ cO62Vgkq3XNzYv66Cih61ZFPCD/8GbhV2dlz5ZPH4Dy5eJ25HmeetfPV6Q23m8b3S0/Fe8Hynas
+ IxHeXp5UyN4gCa/dCZyb9nwGtUEiUzZAsl2pOljV4Mw0nEgiqZoPzCnbg87K3/et3vA==
+X-Gm-Gg: AY/fxX5wkkuZUTHg2q9QZXSliEBF8yw/Duq0oz+y46WHLq2z6X/thfWtd4XhxIFB23B
+ T8pgPmvk4ySk7ePYx0n3z/D2JpVeF4KlyBf4Vhd0IkTFoKaJ3nGvU0zNR9ErDopkVQ2kU5KWkPI
+ Uv9wYC4qJFp9Ijy1M8tD68K0eyQ1DB5UW1nrpEADZwvWH9lq5/p/ClvBObDIvvdHryveB1q5MX8
+ VwhBmzazwr05fvFfHss5U/EzALoiZehcBB/mRAIGKydVQ25Iy+a8kR3AhLOiLulqDN3lKwC8wGj
+ SMmlEX8Ugx9/iuWHPh9mzyJmTT6XQ8qLSyriPkEZMTq7PzWAOLxrmp0Uuz0LchsBC0yzmN3dMa3
+ HcVe8+bctbMaEfLd+cIKvAI+WCJ8G+krbxWe8JMXi1EqG1sQ=
+X-Received: by 2002:a17:902:cf0b:b0:29e:c2dd:85ea with SMTP id
+ d9443c01a7336-2a2f22049b9mr336303875ad.11.1767034046986; 
+ Mon, 29 Dec 2025 10:47:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGyd1Z5D2V0kG5oiJrXgVDBpPInn69qoMITF6nXP9hsVieTAYDAM1A5VQ1yvyivVgUTLo8dVA==
+X-Received: by 2002:a17:902:cf0b:b0:29e:c2dd:85ea with SMTP id
+ d9443c01a7336-2a2f22049b9mr336303725ad.11.1767034046409; 
+ Mon, 29 Dec 2025 10:47:26 -0800 (PST)
 Received: from grind.dc1.ventanamicro.com ([187.101.184.177])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3c82aa8sm282198705ad.31.2025.12.29.10.47.32
+ d9443c01a7336-2a2f3c82aa8sm282198705ad.31.2025.12.29.10.47.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Dec 2025 10:47:34 -0800 (PST)
+ Mon, 29 Dec 2025 10:47:25 -0800 (PST)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PATCH v3 07/17] target/riscv: add initial trace instrumentation
-Date: Mon, 29 Dec 2025 15:46:46 -0300
-Message-ID: <20251229184656.2224369-8-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v3 04/17] hw/riscv/virt.c: add trace encoders and trace ram
+ sinks
+Date: Mon, 29 Dec 2025 15:46:43 -0300
+Message-ID: <20251229184656.2224369-5-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251229184656.2224369-1-daniel.barboza@oss.qualcomm.com>
 References: <20251229184656.2224369-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: qiq4DLWVCErnGbK-SxtEmmYnUtm_tNAO
-X-Proofpoint-GUID: qiq4DLWVCErnGbK-SxtEmmYnUtm_tNAO
-X-Authority-Analysis: v=2.4 cv=coiWUl4i c=1 sm=1 tr=0 ts=6952ccc8 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=cW5wcbexNO3A0Ml9TiDm9w==:17
+X-Proofpoint-ORIG-GUID: LzxkbRwi0q4tHk9sRpP97xW72NeRxpNH
+X-Proofpoint-GUID: LzxkbRwi0q4tHk9sRpP97xW72NeRxpNH
+X-Authority-Analysis: v=2.4 cv=coiWUl4i c=1 sm=1 tr=0 ts=6952ccbf cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=cW5wcbexNO3A0Ml9TiDm9w==:17
  a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=ZZQmujYLDWRuECq2q14A:9 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI5MDE3MiBTYWx0ZWRfXzzGIiZLlO9m9
- RZ8yn+v5p6j1VMdcMSjCg1b4Yp24wUM1w0rEo1D25Vmn6L1h2PJn9L04iZmUybOzVCvL2GROp0u
- nZRu+5H/6WSVJ9vfaoaLVxkOvwoRPBrZPKDvyxnom/dmBY1NgbUCvdrBxs9gg1GoNYuocsEShYq
- KwlJ2CVGRbPNWL8ioEFZPZFXX1cGbVLRvgETysHRAxhFaAwVbc9XjVSBj7DTpW8kU8DhGuT9f0e
- 15u14nG3SrQ8ZH1pB9wKbS3EYTKuUFyBkqlPqQoYhynx0UFbdgn5cH26sZRjS3zgquUCKHbfQSb
- Ld8HKwaVMMNoaP57mxuBl2llCfusJBGPeANqwmPJ2JfcL88WYerb/FviESWzzTGTGkI29iqUci6
- vB+GGPqoQqLQFI52ttg3hotG4EtgY3DA/4GZ9Buk2k9xfRenZJzvmc5KdoOXbVSMNJuVkeG0a0C
- C1WN9nemBPCGtCK5gpg==
+ a=EUspDBNiAAAA:8 a=MVOyIR3Nq1xdiiQTEeAA:9 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI5MDE3MiBTYWx0ZWRfX5F+B/ueforMx
+ QavBnN1ts1QdTSHZ+udO5ChaML8yLvCLTMU6dLNiLl7oPSticVodoUW5ZAPQtR8o42gUtXijrtH
+ rmyTFbRveq7JjO2cuplowJDxuFs03lNIvKoGI3FIKHUiyV2PjGVaztEGjDlCxvg2UieDz/SZkuo
+ HDEeJOxgrA3HHML5KFDFAlM3lj8cwlRocuH4XFCwj/DKLYXlWL5CNyRrj7hBaQBaGtl1pkU0/tn
+ YlFOqnt50UxcKUTUEqN/jKKLI5f102QodDowWl8q9H9giMl6NXbCcDFt6qUQXE1/a9404FSZdHH
+ dt9bqMGk/iQ5P1R7gL0AhwS2fC3mpGb/HU1IuQRG/GTiKeoLUn9eCbk4WGlXIu3x0jvY0JHIBwp
+ G+P+PViQIkUxI3+RjXh7dKs5PEGF7kLeL+DASeKYZwFofDgCV16pQDEudVJHAUm6pfGSWEmvGOf
+ zuipujBpSmxuqlD6M+g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-29_06,2025-12-29_01,2025-10-01_01
@@ -146,257 +147,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll have to instrument some RISC-V translations, as well as the start
-of a translation block, communicating with the associated trace encoder
-in case we're running a trace session. The trace encoder needs to report
-the first insn of the session so we'll start with that.
+Add the minimal topology required for e-trace support in the virt
+machine, e.g. each CPU will have a single trace encoder, and each trace
+encoder will communicate to a single associated trace ram sink.
 
-Unfortunately we've run out of bits in tb_flags, meaning we can't use
-riscv_tr_init_disas_context() and riscv_get_tb_cpu_state() to
-communicate whether we're running a trace session. One alternative would
-be to fold the "trace is running" logic in each trace helper. That would
-make all code paths, regardless of even having a trace encoder
-associated with the CPU, to check for trace encoder existence.
-
-Another alternative, which is implemented here, is to add an additional
-mirror flag 'trace_running' in CPURISCVState and turn it into a TCG
-global 'cpu_trace_running'. Each trace helper call is gated via this
-global, allowing us to skip calling trace helpers when we're not running
-a trace session.
-
-In case we end up increasing the size of tb_flags in the future we
-should revisit this code and use tb_flags instead.
+At this moment we're not going to support more complex topologies with
+trace funnels and so on.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- hw/riscv/trace-encoder.c    | 17 +++++++++++++++++
- hw/riscv/trace-encoder.h    |  4 ++++
- hw/riscv/trace-events       |  1 +
- target/riscv/cpu.h          |  2 ++
- target/riscv/helper.h       |  4 ++++
- target/riscv/meson.build    |  3 ++-
- target/riscv/trace_helper.c | 36 ++++++++++++++++++++++++++++++++++++
- target/riscv/translate.c    | 10 ++++++++++
- 8 files changed, 76 insertions(+), 1 deletion(-)
- create mode 100644 target/riscv/trace_helper.c
+ hw/riscv/virt.c            | 77 ++++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h    |  2 +
+ target/riscv/cpu.h         |  9 +++++
+ target/riscv/tcg/tcg-cpu.c |  5 +++
+ 4 files changed, 93 insertions(+)
 
-diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c
-index 37d882f66c..b6f0fc7e13 100644
---- a/hw/riscv/trace-encoder.c
-+++ b/hw/riscv/trace-encoder.c
-@@ -150,11 +150,15 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
-     uint32_t trTeEnable = ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL, ENABLE);
-     uint32_t trTeInstTracing = ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL,
-                                                 INST_TRACING);
-+    RISCVCPU *cpu = te->cpu;
-+    CPURISCVState *env = &cpu->env;
- 
-     if (!trTeActive) {
-         te->enabled = false;
-         te->trace_running = false;
-         te->trace_next_insn = false;
-+
-+        env->trace_running = false;
-         return;
-     }
- 
-@@ -170,6 +174,7 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
-     }
- 
-     te->trace_running = trTeInstTracing ? true : false;
-+    env->trace_running = te->trace_running;
- }
- 
- static RegisterAccessInfo trencoder_regs_info[] = {
-@@ -231,6 +236,8 @@ static const MemoryRegionOps trencoder_ops = {
- static void trencoder_reset(DeviceState *dev)
- {
-     TraceEncoder *te = TRACE_ENCODER(dev);
-+    RISCVCPU *cpu = te->cpu;
-+    CPURISCVState *env = &cpu->env;
- 
-     for (int i = 0; i < ARRAY_SIZE(te->regs_info); i++) {
-         register_reset(&te->regs_info[i]);
-@@ -239,6 +246,7 @@ static void trencoder_reset(DeviceState *dev)
-     te->enabled = false;
-     te->trace_running = false;
-     te->trace_next_insn = false;
-+    env->trace_running = false;
- }
- 
- static void trencoder_realize(DeviceState *dev, Error **errp)
-@@ -266,6 +274,14 @@ static void trencoder_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
-+void trencoder_set_first_trace_insn(Object *trencoder_obj, uint64_t pc)
-+{
-+    TraceEncoder *trencoder = TRACE_ENCODER(trencoder_obj);
-+
-+    trencoder->first_pc = pc;
-+    trace_trencoder_first_trace_insn(pc);
-+}
-+
- static const Property trencoder_props[] = {
-     /*
-      * We need a link to the associated CPU to
-@@ -294,6 +310,7 @@ static const VMStateDescription vmstate_trencoder = {
-         VMSTATE_UINT64(ramsink_ramstart, TraceEncoder),
-         VMSTATE_UINT64(ramsink_ramlimit, TraceEncoder),
-         VMSTATE_INT32(cpu_id, TraceEncoder),
-+        VMSTATE_UINT64(first_pc, TraceEncoder),
-         VMSTATE_END_OF_LIST(),
-     }
- };
-diff --git a/hw/riscv/trace-encoder.h b/hw/riscv/trace-encoder.h
-index 517675d062..2b3d9437ec 100644
---- a/hw/riscv/trace-encoder.h
-+++ b/hw/riscv/trace-encoder.h
-@@ -27,6 +27,8 @@ struct TraceEncoder {
-     MemoryRegion reg_mem;
-     uint32_t reg_mem_size;
- 
-+    uint64_t first_pc;
-+
-     hwaddr baseaddr;
-     hwaddr dest_baseaddr;
-     hwaddr ramsink_ramstart;
-@@ -43,4 +45,6 @@ struct TraceEncoder {
- 
- OBJECT_DECLARE_SIMPLE_TYPE(TraceEncoder, TRACE_ENCODER)
- 
-+void trencoder_set_first_trace_insn(Object *trencoder_obj, uint64_t pc);
-+
- #endif
-diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
-index 14e333fd9e..dc25377acf 100644
---- a/hw/riscv/trace-events
-+++ b/hw/riscv/trace-events
-@@ -28,6 +28,7 @@ riscv_iommu_hpm_evt_write(uint32_t ctr_idx, uint32_t ovf, uint64_t val) "ctr_idx
- # trace-encoder.c
- trencoder_read_error(uint64_t addr) "addr 0x%" PRIx64
- trencoder_write_error(uint64_t addr, uint64_t value) "addr 0x%" PRIx64 " value 0x%" PRIx64
-+trencoder_first_trace_insn(uint64_t pc) "pc 0x%" PRIx64
- 
- # trace-ram-sink.c
- tr_ramsink_read_error(uint64_t addr) "addr 0x%" PRIx64
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5ebf7f663e..372292f71f 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -508,6 +508,8 @@ struct CPUArchState {
-     uint64_t rnmip;
-     uint64_t rnmi_irqvec;
-     uint64_t rnmi_excpvec;
-+
-+    bool trace_running;
- };
- 
- /*
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index b785456ee0..e80320ad16 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -128,6 +128,10 @@ DEF_HELPER_4(csrrw, tl, env, int, tl, tl)
- DEF_HELPER_2(csrr_i128, tl, env, int)
- DEF_HELPER_4(csrw_i128, void, env, int, tl, tl)
- DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
-+
-+/* Trace helpers (should be put inside ifdef) */
-+DEF_HELPER_2(trace_insn, void, env, i64)
-+
- #ifndef CONFIG_USER_ONLY
- DEF_HELPER_1(sret, tl, env)
- DEF_HELPER_1(mret, tl, env)
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index fdefe88ccd..564e2da5f2 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -26,7 +26,8 @@ riscv_ss.add(files(
-   'm128_helper.c',
-   'crypto_helper.c',
-   'zce_helper.c',
--  'vcrypto_helper.c'
-+  'vcrypto_helper.c',
-+  'trace_helper.c'
- ))
- 
- riscv_system_ss = ss.source_set()
-diff --git a/target/riscv/trace_helper.c b/target/riscv/trace_helper.c
-new file mode 100644
-index 0000000000..5a6d725f56
---- /dev/null
-+++ b/target/riscv/trace_helper.c
-@@ -0,0 +1,36 @@
-+/*
-+ * RISC-V Trace Support TCG helpers
-+ *
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "cpu.h"
-+#include "trace.h"
-+#include "exec/helper-proto.h"
-+
-+#ifndef CONFIG_USER_ONLY
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 17909206c7..b1a4d63efd 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -58,6 +58,8 @@
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/uefi/var-service-api.h"
 +#include "hw/riscv/trace-encoder.h"
-+#endif
++#include "hw/riscv/trace-ram-sink.h"
+ 
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+ static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+@@ -79,6 +81,17 @@ static bool virt_aclint_allowed(void)
+     return tcg_enabled() || qtest_enabled();
+ }
+ 
++#define TR_DEV_REGMAP_SIZE 0x1000
++/* For VIRT_CPUS_MAX = 512: TRACE_DEV_REG_MAX = 0x200000 */
++#define TRACE_DEV_REG_MAX (TR_DEV_REGMAP_SIZE * VIRT_CPUS_MAX)
 +
-+#ifndef CONFIG_USER_ONLY
-+void helper_trace_insn(CPURISCVState *env, uint64_t pc)
++/*
++ * 64k for the RAM Sink that includes the 4k (0x1000)
++ * for regs, for each possible CPU. For 512 max CPUs,
++ * total size = 0x2000000.
++ */
++#define TRACE_RAM_SINK_SIZE (1UL << 16)
++
+ static const MemMapEntry virt_memmap[] = {
+     [VIRT_DEBUG] =        {        0x0,         0x100 },
+     [VIRT_MROM] =         {     0x1000,        0xf000 },
+@@ -88,7 +101,9 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_ACLINT_SSWI] =  {  0x2F00000,        0x4000 },
+     [VIRT_PCIE_PIO] =     {  0x3000000,       0x10000 },
+     [VIRT_IOMMU_SYS] =    {  0x3010000,        0x1000 },
++    [VIRT_TR_ENCODERS] =  {  0x3020000, TRACE_DEV_REG_MAX },
+     [VIRT_PLATFORM_BUS] = {  0x4000000,     0x2000000 },
++    [VIRT_TR_RAM_SINKS] = {  0x6000000, TRACE_RAM_SINK_SIZE * VIRT_CPUS_MAX },
+     [VIRT_PLIC] =         {  0xc000000, VIRT_PLIC_SIZE(VIRT_CPUS_MAX * 2) },
+     [VIRT_APLIC_M] =      {  0xc000000, APLIC_SIZE(VIRT_CPUS_MAX) },
+     [VIRT_APLIC_S] =      {  0xd000000, APLIC_SIZE(VIRT_CPUS_MAX) },
+@@ -1525,6 +1540,64 @@ static void virt_machine_done(Notifier *notifier, void *data)
+     }
+ }
+ 
++/*
++ * Must be called after 'soc' realize since it
++ * uses CPU objs.
++ */
++static void virt_init_socket_trace_hw(RISCVVirtState *s, int socket_num)
 +{
-+    RISCVCPU *cpu = env_archcpu(env);
-+    TraceEncoder *te = TRACE_ENCODER(cpu->trencoder);
++    for (int cpu = 0; cpu < s->soc[socket_num].num_harts; cpu++) {
++        RISCVCPU *cpu_ptr = &s->soc[socket_num].harts[cpu];
++        DeviceState *trencoder, *ram_sink;
++        uint64_t trencoder_addr, ram_sink_addr, smem_addr;
++        uint32_t smem_size = TRACE_RAM_SINK_SIZE - TR_DEV_REGMAP_SIZE;
 +
-+    if (te->trace_next_insn) {
-+        trencoder_set_first_trace_insn(cpu->trencoder, pc);
-+        te->trace_next_insn = false;
++        ram_sink = qdev_new(TYPE_TRACE_RAM_SINK);
++
++        ram_sink_addr = virt_memmap[VIRT_TR_RAM_SINKS].base +
++                        TRACE_RAM_SINK_SIZE * cpu;
++        /* smem is located right after ram sink base */
++        smem_addr = ram_sink_addr + TR_DEV_REGMAP_SIZE;
++
++        object_property_set_uint(OBJECT(ram_sink), "baseaddr",
++                                 ram_sink_addr, &error_fatal);
++        object_property_set_uint(OBJECT(ram_sink), "smemaddr",
++                                 smem_addr, &error_fatal);
++        object_property_set_uint(OBJECT(ram_sink), "smemsize",
++                                 smem_size, &error_fatal);
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(ram_sink), &error_fatal);
++
++        /*
++         * We can't do object_property_set_link() because we're
++         * coming after cpu.realize() (the riscv_hart obj creates
++         * the CPU objs in its realize() since it has no init).
++         * We need changes in how riscv_hart works to use
++         * set_link() and to not manually realize the trace
++         * encoder.
++         *
++         * For now do everything manually.
++         */
++        trencoder = qdev_new(TYPE_TRACE_ENCODER);
++        cpu_ptr->trencoder = OBJECT(trencoder);
++
++        trencoder_addr = virt_memmap[VIRT_TR_ENCODERS].base +
++                         TR_DEV_REGMAP_SIZE * cpu;
++
++        object_property_set_link(OBJECT(trencoder), "cpu",
++                                 OBJECT(cpu_ptr), &error_fatal);
++        object_property_set_int(OBJECT(trencoder), "cpu-id", cpu, &error_fatal);
++        object_property_set_uint(OBJECT(trencoder), "baseaddr",
++                                 trencoder_addr, &error_fatal);
++        object_property_set_uint(OBJECT(trencoder), "dest-baseaddr",
++                                 ram_sink_addr, &error_fatal);
++        object_property_set_uint(OBJECT(trencoder), "ramsink-ramstart",
++                                 smem_addr, &error_fatal);
++        object_property_set_uint(OBJECT(trencoder), "ramsink-ramlimit",
++                                 smem_addr + smem_size, &error_fatal);
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(trencoder), &error_fatal);
 +    }
 +}
-+#else /* #ifndef CONFIG_USER_ONLY */
-+void helper_trace_insn(CPURISCVState *env, uint64_t pc)
-+{
-+    return;
-+}
-+#endif /* #ifndef CONFIG_USER_ONLY*/
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 280ce48a1e..9dbc8649f0 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -43,6 +43,9 @@ static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
- static TCGv load_res;
- static TCGv load_val;
- 
-+/* TODO: this should be a tb_flag instead of a global */
-+static TCGv cpu_trace_running;
 +
- /*
-  * If an operation is being performed on less than TARGET_LONG_BITS,
-  * it may require the inputs to be sign- or zero-extended; which will
-@@ -1341,6 +1344,11 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
- 
- static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+ static void virt_machine_init(MachineState *machine)
  {
-+    TCGLabel *skip = gen_new_label();
-+
-+    tcg_gen_brcondi_tl(TCG_COND_EQ, cpu_trace_running, 0, skip);
-+    gen_helper_trace_insn(tcg_env, tcg_constant_i64(db->pc_first));
-+    gen_set_label(skip);
- }
+     RISCVVirtState *s = RISCV_VIRT_MACHINE(machine);
+@@ -1580,6 +1653,10 @@ static void virt_machine_init(MachineState *machine)
+                                 hart_count, &error_abort);
+         sysbus_realize(SYS_BUS_DEVICE(&s->soc[i]), &error_fatal);
  
- static void riscv_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
-@@ -1465,4 +1473,6 @@ void riscv_translate_init(void)
-                              "load_res");
-     load_val = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_val),
-                              "load_val");
-+    cpu_trace_running = tcg_global_mem_new(tcg_env,
-+                offsetof(CPURISCVState, trace_running), "trace_running");
- }
++        if (tcg_enabled()) {
++            virt_init_socket_trace_hw(s, i);
++        }
++
+         if (virt_aclint_allowed() && s->have_aclint) {
+             if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
+                 /* Per-socket ACLINT MTIMER */
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 7b4c2c8b7d..e2aa6fbbcd 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -88,6 +88,8 @@ enum {
+     VIRT_PLATFORM_BUS,
+     VIRT_PCIE_ECAM,
+     VIRT_IOMMU_SYS,
++    VIRT_TR_ENCODERS,
++    VIRT_TR_RAM_SINKS,
+ };
+ 
+ enum {
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 8899bf7667..5ebf7f663e 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -547,6 +547,15 @@ struct ArchCPU {
+     /* Mapping of events to counters */
+     GHashTable *pmu_event_ctr_map;
+     const GPtrArray *decoders;
++
++#ifndef CONFIG_USER_ONLY
++    /*
++     * Associated Trace Encoder. It will not be NULL if
++     * we're running with TCG and initialized manually by
++     * the board.
++     */
++    Object *trencoder;
++#endif
+ };
+ 
+ typedef struct RISCVCSR RISCVCSR;
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 440626ddfa..265b460487 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -37,6 +37,7 @@
+ #include "hw/boards.h"
+ #include "system/tcg.h"
+ #include "exec/icount.h"
++#include "hw/riscv/trace-encoder.h"
+ #endif
+ 
+ /* Hash that stores user set extensions */
+@@ -1327,6 +1328,10 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
+     if (riscv_has_ext(env, RVH)) {
+         env->mideleg = MIP_VSSIP | MIP_VSTIP | MIP_VSEIP | MIP_SGEIP;
+     }
++
++    if (cpu->trencoder) {
++        qdev_realize(DEVICE(cpu->trencoder), NULL, &error_fatal);
++    }
+ #endif
+ 
+     return true;
 -- 
 2.51.1
 
