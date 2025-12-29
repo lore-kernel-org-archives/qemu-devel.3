@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F35E8FDB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A78E8D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:26:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaBO7-0000vq-31; Mon, 29 Dec 2025 06:26:15 -0500
+	id 1vaBOL-0001CT-3u; Mon, 29 Dec 2025 06:26:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaBNt-0000r3-01
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:25:57 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1vaBOF-000159-Cx
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:26:22 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaBNm-0006zX-Mr
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:25:56 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-64b9cb94ff5so10699479a12.2
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:25:49 -0800 (PST)
+ id 1vaBOC-00071y-Jg
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:26:18 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b7ffa421f1bso1715650666b.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:26:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767007548; x=1767612348; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767007574; x=1767612374; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jgtZar7dYWRCX9WcBM4Q6J2jBm+o7esigXCIUlS8v6Q=;
- b=c/lC5zS6uTcPjsvm42MVyjBpBU98MmAq49rHKdizLlr6h0Nw6nHneL1dZaE15vQUlq
- CE4hDEEIX/GBXWeejbHXpr8LOTLZOmfloiHRDGg7ayT74RxhKB9lE1tli5148AQ7NsTT
- iaj4qQEgqPG2XhjxqPr/2fILGAj2ItuQHUmO6SuZX7hagiWqNnoriWKneSvyWmCQX3em
- O4INj/Gqrutf6hiXnj4drt/ioC7HKYu9ELzHAbFM7QJMJi8NTCUIMfGuDe878fVeOICg
- KlaBtkxa3DUmIW6/A2KtQZMcbum+T2AcmRZi5NzsmUCItcUlP+6GiJmhE09tAXPmyuRe
- bMag==
+ bh=VhFN3m/LV5JZm2WE4LRjGBxXv/1BaedT8fbrFZWJ8HI=;
+ b=bpYcuNEoNABPf66BtNe1nc3bQKJ+REMhsLJTxWaeLmlcVEZjCK9+MAzUNajFSeJOLu
+ NHG2LMffDCr2yDukWUMPZuHSBHxV7vx0MulCuDjoFlmc091NThBerMsJzCeZs17iHkH3
+ iFPONJR2gBE3qZFaBoAwYW0SY9x/OqL6eqoPPlFVw/mp5K+IN4136LP68KuzfuiGBfq/
+ vuCzuAjIbewl3YiH4XWXgFpSFsYxkBS7p3gOn5b9R+v51mwM/wAql+ftkTugxXNtkqZm
+ ZL7rxG6aUoS7A/tZSkzgXoK5P0b1TjgB2mMgyySFsolkx1UHGKUqIiFIb2LTr7aPYB/c
+ WJ2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767007548; x=1767612348;
+ d=1e100.net; s=20230601; t=1767007574; x=1767612374;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jgtZar7dYWRCX9WcBM4Q6J2jBm+o7esigXCIUlS8v6Q=;
- b=GjE5S+0O+6zJ/NlfwLpYhGRLwG72uWbBDooNXENawel8QPgXmw7aUOiCl1KkEPG0jh
- GUSDg9dg+aHzHLslxhXDCKTL8HThLZmAeiJhTs/IpqzUhcYxZCj8Hc4jWAD1qU4wyjg0
- 9ZDNPecnmoVS73PSwfxxH9kRPDnDqHErr1eOCEskhFPLLpK4YY4f5UKYeFHAFfapbRZt
- B2Iz8W467FQIcloEXSJbR+7DynKx4+ZX60LrZFy3zYFaODVkI9ILJlY0jhG1p5IENbIi
- ksLu5dS6DGwMQQmqeJDpnkSMfqDsbnoQa/XmtjsAb0nVEBSWNyGWkUGHidjhr9h9Ra4y
- EEaA==
-X-Gm-Message-State: AOJu0YzOgz1hdT2TIt2OElO50L8dirGGPf8iYQ2w9mResb+xwjFXhO5V
- fqZ8Ncn16rn0Tf7yzCUX1LpVKSm0WHUSjR5xWRBKAM7ntLfqdOCPJq3DJvKvFqzVD8r7PGwi0Lk
- wZJRkDZ05BtzgYVz5EEeS5JY5aN0Z0TXzv2fX1D6BKA==
-X-Gm-Gg: AY/fxX7tYgKvZm9u06d+bKx8E+qu1A8eMBymvjSjdciifYX0Ofr6AM7i8bf4gvhPlgS
- btgw9XH0aCC6iHCfETW3RQIuJPOypSL9VuYm/SkCNFHyJiFrJUBLoBFlEwR17xLvQuAZNb0vZMs
- JWdgL6vLjYzkt1cibF2qfN6jFo2flRY8f+Uza1FMDVlHLWT1WJhepqarXT909qi8THA/DsBTWY9
- D9JiYWSxlsl8sXTA4Ldo4C6vCNPv4CFaivpEppKtA4TUHh/jZYlqEWsZas65YzMOuETA6cvDwvf
- ujOYHl8HhY/g2/kUTz2NVIv+JUgeRs3OAH7K7jo=
-X-Google-Smtp-Source: AGHT+IE2mC6EQQU8GmfZKCWH4xPG09fyUx8wacD8S/2JLbVUzf96JKWgzlsKYMqxDaL3+/15x9RAJs3aw23XyDyfAlc=
-X-Received: by 2002:a17:907:608c:b0:b76:e346:f74 with SMTP id
- a640c23a62f3a-b8036f637f2mr3212693366b.16.1767007548065; Mon, 29 Dec 2025
- 03:25:48 -0800 (PST)
+ bh=VhFN3m/LV5JZm2WE4LRjGBxXv/1BaedT8fbrFZWJ8HI=;
+ b=EYItYTV3PRd/qf/hRCTaXqXbtA3m10AAVVqACmhO131SXolizPjwlNwL5rNilWxJR3
+ Gh/f+EIWGxC7YlQd6Qsvd0bXKNvdUTMj514g1Hn0ranB7WctxwmR6erkydf+DgWqfO6O
+ tj+gNRgOtVNene+SIb4pfEkGZ3TpTj1N6ynnflFJFtZVwZ/xETqKgOVyk0L5xFC23s2A
+ bzfqgN9RRq8+ERpR4WocEkrOnDBw5RVoO/AqXqQ/xOwOtbWlkglBoV9dDQhVgyCMxgSW
+ b2bk0lDxP9royrb9ofuGUM/0Gv/rcUNJDzRyWFZSSkPotMn7I7nWJZqLTstGrTFMktK9
+ 60qA==
+X-Gm-Message-State: AOJu0YxNKuqI6S9wtyuCQKNxREbDs8iOH4SNYZW6P6khq/mdAZ6j9sj5
+ xZntohhhvPYNx1UIc/Q4+0LVhcv1r9SU8tIjtYNvjn+Sc+hsW/lcQ6EwCxdFoaNQcxzWP8rS/1Y
+ Om4tBYMSMRaGeGpL4n4l8V5eyigmX9AZszt6sWEUCMQ==
+X-Gm-Gg: AY/fxX6SMN5o2Ywp7AVYlJret59xKbnQv077fRftG+EeVGIpDFkCaeTAjy+k7dVKvha
+ yhJBVvqBN7ehMNaS3kZ4XNWKudpi+O63A67zFit3KkU2XsdX6tCLhEd0Z/z0O8UzRvDcRVWwrvp
+ Ky9T2miFdWBl7CY+in6hkh36O+rVbyxabyCOjdyxXNMt085eEeUzSck/6BALIOBm95lwgrKbrUi
+ cOtLPT5OEpFgTrVoYjp6CW7Qc+K0eo5hpaOXcgp+2N3AsNsANlSm+V/kvi3gu0TW5AcZmcvGAhQ
+ zdS9w0MbmfekAHkpFcU74yVo20sMfA+zrjDbjo0=
+X-Google-Smtp-Source: AGHT+IFCv+DZz186bJBgaD1K3pvi87vuwOt2ave/LQVoHjveGaL/+pyCMBEd9UjuqeeqY/8+LYkafI/yDjsc6k70Dg4=
+X-Received: by 2002:a17:907:2d8c:b0:b73:2d9c:9581 with SMTP id
+ a640c23a62f3a-b80358bd87emr3544015766b.28.1767007574289; Mon, 29 Dec 2025
+ 03:26:14 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224163304.91384-1-philmd@linaro.org>
- <20251224163304.91384-2-philmd@linaro.org>
-In-Reply-To: <20251224163304.91384-2-philmd@linaro.org>
+ <20251224163304.91384-3-philmd@linaro.org>
+In-Reply-To: <20251224163304.91384-3-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Dec 2025 13:25:22 +0200
-X-Gm-Features: AQt7F2plI0VzZEWbDrmAM2HK8cJrfiMCsWaFEUghYiSJWcCdlQnBhaN-ZGczkRM
-Message-ID: <CAAjaMXYj4+X=sfwTLgkmDRs2V9+Ls6ppYw3yrsLuEt+wkFXqGg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] target/rx: Use little-endian variant of
- cpu_ld/st_data*()
+Date: Mon, 29 Dec 2025 13:25:47 +0200
+X-Gm-Features: AQt7F2r8BqlvLSauBMx6DDIJ8K-o_yCkfvtZ8fwSwNvCjdfbdFy-_bzLsAOa82A
+Message-ID: <CAAjaMXYt8sEYft1VZWTmeRjH-MbZR-f=_EcOUu2vuWnaF_ZuAw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] target/rx: Use explicit little-endian LD/ST API
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>, 
- Richard Henderson <richard.henderson@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,103 +100,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Dec 24, 2025 at 6:33=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> We only build the RX target using little endianness order,
-> therefore the cpu_ld/st_data*() definitions expand to the little
-> endian declarations. Use the explicit little-endian variants.
+> The RX architecture uses little endianness. Directly use
+> the little-endian LD/ST API.
 >
-> Mechanical change running:
+> Mechanical change using:
 >
->   $ tgt=3Drx; \
->     end=3Dle; \
->     for op in data mmuidx_ra; do \
->       for ac in uw sw l q; do \
->         sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
->                   $(git grep -l cpu_ target/${tgt}/); \
->       done;
->       for ac in w l q; do \
->         sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
->                   $(git grep -l cpu_ target/${tgt}/); \
->       done;
+>   $ end=3Dle; \
+>     for acc in uw w l q tul; do \
+>       sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
+>              -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
+>         $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/rx/); \
 >     done
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-
-
->  target/rx/helper.c    | 14 +++++++-------
->  target/rx/op_helper.c |  6 +++---
->  2 files changed, 10 insertions(+), 10 deletions(-)
+>  target/rx/cpu.c     |  2 +-
+>  target/rx/gdbstub.c | 24 ++++++++++++------------
+>  2 files changed, 13 insertions(+), 13 deletions(-)
 >
-> diff --git a/target/rx/helper.c b/target/rx/helper.c
-> index e9a7aaf610d..83cd491eb4a 100644
-> --- a/target/rx/helper.c
-> +++ b/target/rx/helper.c
-> @@ -68,10 +68,10 @@ void rx_cpu_do_interrupt(CPUState *cs)
->          qemu_log_mask(CPU_LOG_INT, "fast interrupt raised\n");
->      } else if (cpu_test_interrupt(cs, CPU_INTERRUPT_HARD)) {
->          env->isp -=3D 4;
-> -        cpu_stl_data(env, env->isp, save_psw);
-> +        cpu_stl_le_data(env, env->isp, save_psw);
->          env->isp -=3D 4;
-> -        cpu_stl_data(env, env->isp, env->pc);
-> -        env->pc =3D cpu_ldl_data(env, env->intb + env->ack_irq * 4);
-> +        cpu_stl_le_data(env, env->isp, env->pc);
-> +        env->pc =3D cpu_ldl_le_data(env, env->intb + env->ack_irq * 4);
->          env->psw_ipl =3D env->ack_ipl;
->          cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
->          qemu_set_irq(env->ack, env->ack_irq);
-> @@ -82,14 +82,14 @@ void rx_cpu_do_interrupt(CPUState *cs)
->          const char *expname =3D "unknown exception";
->
->          env->isp -=3D 4;
-> -        cpu_stl_data(env, env->isp, save_psw);
-> +        cpu_stl_le_data(env, env->isp, save_psw);
->          env->isp -=3D 4;
-> -        cpu_stl_data(env, env->isp, env->pc);
-> +        cpu_stl_le_data(env, env->isp, env->pc);
->
->          if (vec < 0x100) {
-> -            env->pc =3D cpu_ldl_data(env, 0xffffff80 + vec * 4);
-> +            env->pc =3D cpu_ldl_le_data(env, 0xffffff80 + vec * 4);
->          } else {
-> -            env->pc =3D cpu_ldl_data(env, env->intb + (vec & 0xff) * 4);
-> +            env->pc =3D cpu_ldl_le_data(env, env->intb + (vec & 0xff) * =
-4);
+> diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+> index da02ae7bf88..0841b594f63 100644
+> --- a/target/rx/cpu.c
+> +++ b/target/rx/cpu.c
+> @@ -99,7 +99,7 @@ static void rx_cpu_reset_hold(Object *obj, ResetType ty=
+pe)
+>      resetvec =3D rom_ptr(0xfffffffc, 4);
+>      if (resetvec) {
+>          /* In the case of kernel, it is ignored because it is not set. *=
+/
+> -        env->pc =3D ldl_p(resetvec);
+> +        env->pc =3D ldl_le_p(resetvec);
+>      }
+>      rx_cpu_unpack_psw(env, 0, 1);
+>      env->regs[0] =3D env->isp =3D env->usp =3D 0;
+> diff --git a/target/rx/gdbstub.c b/target/rx/gdbstub.c
+> index f222bf003be..30074c9da7b 100644
+> --- a/target/rx/gdbstub.c
+> +++ b/target/rx/gdbstub.c
+> @@ -56,7 +56,7 @@ int rx_cpu_gdb_write_register(CPUState *cs, uint8_t *me=
+m_buf, int n)
+>      uint32_t psw;
+>      switch (n) {
+>      case 0 ... 15:
+> -        env->regs[n] =3D ldl_p(mem_buf);
+> +        env->regs[n] =3D ldl_le_p(mem_buf);
+>          if (n =3D=3D 0) {
+>              if (env->psw_u) {
+>                  env->usp =3D env->regs[0];
+> @@ -66,38 +66,38 @@ int rx_cpu_gdb_write_register(CPUState *cs, uint8_t *=
+mem_buf, int n)
 >          }
->
->          if (vec =3D=3D 30) {
-> diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
-> index 2b190a4b2cf..ca3e9e85fc7 100644
-> --- a/target/rx/op_helper.c
-> +++ b/target/rx/op_helper.c
-> @@ -217,20 +217,20 @@ void helper_scmpu(CPURXState *env)
->  static uint32_t (* const cpu_ldufn[])(CPUArchState *env,
->                                       abi_ptr ptr,
->                                       uintptr_t retaddr) =3D {
-> -    cpu_ldub_data_ra, cpu_lduw_data_ra, cpu_ldl_data_ra,
-> +    cpu_ldub_data_ra, cpu_lduw_le_data_ra, cpu_ldl_le_data_ra,
->  };
->
->  static uint32_t (* const cpu_ldfn[])(CPUArchState *env,
->                                       abi_ptr ptr,
->                                       uintptr_t retaddr) =3D {
-> -    cpu_ldub_data_ra, cpu_lduw_data_ra, cpu_ldl_data_ra,
-> +    cpu_ldub_data_ra, cpu_lduw_le_data_ra, cpu_ldl_le_data_ra,
->  };
->
->  static void (* const cpu_stfn[])(CPUArchState *env,
->                                   abi_ptr ptr,
->                                   uint32_t val,
->                                   uintptr_t retaddr) =3D {
-> -    cpu_stb_data_ra, cpu_stw_data_ra, cpu_stl_data_ra,
-> +    cpu_stb_data_ra, cpu_stw_le_data_ra, cpu_stl_le_data_ra,
->  };
->
->  void helper_sstr(CPURXState *env, uint32_t sz)
+>          break;
+>      case 16:
+> -        env->usp =3D ldl_p(mem_buf);
+> +        env->usp =3D ldl_le_p(mem_buf);
+>          if (env->psw_u) {
+> -            env->regs[0] =3D ldl_p(mem_buf);
+> +            env->regs[0] =3D ldl_le_p(mem_buf);
+>          }
+>          break;
+>      case 17:
+> -        env->isp =3D ldl_p(mem_buf);
+> +        env->isp =3D ldl_le_p(mem_buf);
+>          if (!env->psw_u) {
+> -            env->regs[0] =3D ldl_p(mem_buf);
+> +            env->regs[0] =3D ldl_le_p(mem_buf);
+>          }
+>          break;
+>      case 18:
+> -        psw =3D ldl_p(mem_buf);
+> +        psw =3D ldl_le_p(mem_buf);
+>          rx_cpu_unpack_psw(env, psw, 1);
+>          break;
+>      case 19:
+> -        env->pc =3D ldl_p(mem_buf);
+> +        env->pc =3D ldl_le_p(mem_buf);
+>          break;
+>      case 20:
+> -        env->intb =3D ldl_p(mem_buf);
+> +        env->intb =3D ldl_le_p(mem_buf);
+>          break;
+>      case 21:
+> -        env->bpsw =3D ldl_p(mem_buf);
+> +        env->bpsw =3D ldl_le_p(mem_buf);
+>          break;
+>      case 22:
+> -        env->bpc =3D ldl_p(mem_buf);
+> +        env->bpc =3D ldl_le_p(mem_buf);
+>          break;
+>      case 23:
+> -        env->fintv =3D ldl_p(mem_buf);
+> +        env->fintv =3D ldl_le_p(mem_buf);
+>          break;
+>      case 24:
+> -        env->fpsw =3D ldl_p(mem_buf);
+> +        env->fpsw =3D ldl_le_p(mem_buf);
+>          break;
+>      case 25:
+>          return 8;
 > --
 > 2.52.0
 >
