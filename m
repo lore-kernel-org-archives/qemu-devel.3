@@ -4,122 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C121E92FC4
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5864E92FC4
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:37:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaJ2K-0001UB-Ok; Mon, 29 Dec 2025 14:36:12 -0500
+	id 1vaJ3D-0002Jf-2m; Mon, 29 Dec 2025 14:37:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vaJ2I-0001OM-6P
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:36:10 -0500
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vaJ2E-0008IT-Up
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:36:09 -0500
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-4ee147baf7bso3866821cf.1
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 11:36:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1767036965; cv=none;
- d=google.com; s=arc-20240605;
- b=ZzA1x+NMYxhYQCqX4ZWc/pNxBuhtkiGWekJGpsXh4QhvZi23+7BHOpoNXz9Z67djeK
- CcN6pdsxfPgMXz+Sjbu/SzrR/jLKsTRpbbppC21Q97m29Ux0/Gs5MB4j/uCoZWMvCUcN
- ogYrtBbBhLve1oJzZeAvwOcKt8CAepzyVYrwHAn3gEl8sEqSUOIy/++xokopxGJ6juPs
- 3bW/JLnxKOF8qGVChvUkMAx9FfzeYXm4qgWWFgkV3IVCHXYv/cQ7F0TqcgyckyaYoIvn
- oDynvzNrLtNyEdILufEW2R0ToGSpxzixwreKqGkHJGBHcwwv5pk7J+hKfA8FZ6xFo0px
- D4UQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ZRR3yxbpq2V3CkfGHou7Vzmk0iQ3VJchRoplq3BvZaI=;
- fh=2D7CzKXYWJgVMdypf6YwwC7ZINLPW47S231REpWyfCo=;
- b=bITVGFVT3UXJutybNObCGexVdvSdZYW4A4Qwf8PnYbFdw5M2x2Oqn7YGySjXEuxtOD
- odelnjyHGIcBF8h17OzwbP4L+a8vPfAkzA4KaPAmQRkUyvSyiQssRnkKAJNAX9M3mXbd
- 6RJ98IOThsBk6VQMEC9Y5a77/lV9FJcYOrARQz/qG9jkbfmXW2+PZuy6odrKm0ZH8/Hl
- 0d9WLe1WO+J433M5yPcOMZZqXmVedHRIaQlTzykEh+Mjc6JE8E3WXPEI1fOqHervSbJV
- JXGJua1Y7SYPa7Jtw2Gx+gE/dQXvPCDyhhSCsQz/lpLVUVX+FpuZ96EqdhDOYe4X6SWD
- BTRg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaJ2t-0001zS-Vj
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:36:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaJ2n-0008Ps-Vj
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:36:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767037000;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UcjaE1We6/D6i3bWdqH0Bn2loG4hR3iqGdbVqVDOZu8=;
+ b=UvTLU3fWEMlKYvDIUEi6xeQsFrxA8TIzHblH0fvJDGfmjDUNJBOmVoUJTYC5F/e6/vgaGA
+ YC7e0LTefX4SSaIFtS7CgBRlEtuVkKSR7btiwoeYRNjaFxpNyjExdO7IcUytSBzX0BnIcq
+ JhI3M8koKJrvPTmmyjo67v109jiwq94=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-328-6DF2boGsNyWLME0prV0etw-1; Mon, 29 Dec 2025 14:36:38 -0500
+X-MC-Unique: 6DF2boGsNyWLME0prV0etw-1
+X-Mimecast-MFC-AGG-ID: 6DF2boGsNyWLME0prV0etw_1767036998
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-88a39993e5fso241113766d6.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 11:36:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1767036965; x=1767641765; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZRR3yxbpq2V3CkfGHou7Vzmk0iQ3VJchRoplq3BvZaI=;
- b=28mw1Cwf5x8BpqD0K2whQapPDZpFqtyQfBpK4aI0e9kUjEqo0GsUnLzlb/q4Mm5emS
- Q+0DH70GM0yI35CTFvdmIyg1+O8XeFA1p0Elw629v+oOSWw0jyPz/xvE4xITPGSs9mSU
- cfhc9FK2N/EaeXG1GzqmYFTkmJF4i2BJ4i4JjCSDeVRbyFbxKjha9IwGzH9uWgjjSfse
- zcDZwcHlhJ8weQF+qKYl15Eud7rywcA3VAjHzse5qsa7lVrP35IIySMzoVuBE9lMblGM
- 66UIHi241G+EtjDrj1s+2IOun6acrHTzdrtZKD+6DS+XmWm+qoOLZowZoiais/iNJVSn
- UWSA==
+ d=redhat.com; s=google; t=1767036998; x=1767641798; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=UcjaE1We6/D6i3bWdqH0Bn2loG4hR3iqGdbVqVDOZu8=;
+ b=su5NAwaZSfUDUBc5DjOc6ZElD31RclVElzyEPDvu8bJgk3kwOEKjqe7hZHFwwgeEr9
+ qqKk5VmMQOcz5s5jkVGdXMz+AAu9Q/v/14qHWssCQMtzAfszbaAE/A3tq72NTwFcLIBg
+ BFBJXuoSNI5RJCoe1pYI9w2zUGfsiR7DSfGWkwJ2b0rdzUm8jEdHgCQkBcaeYeMaUaA/
+ iKbRHEGpHS7avQRKq2XUqH6P3rzufcdm3eZxTL4HeC+OyrHj1qhyti/O+jaExbvSm/V3
+ s+dvVECJEVYA8DJBaQ4IP03mw9KR43ivL8qJt+dz+AwG+v/pE/jNdeDXloZb2nhfexga
+ KswA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767036965; x=1767641765;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZRR3yxbpq2V3CkfGHou7Vzmk0iQ3VJchRoplq3BvZaI=;
- b=pGW92SB0gQYQYpk/qVqTnk352OD7e3Eq3W2g5yJhGFWZqxxN5sbEUve+hJgQ9HwGtE
- Cx29kUa1l+vW6/EzvKcAIL0AlhNthwm7r50vQpqlIi8zgQhiuolIQRjDHaS1VzodGats
- CRvCHJg/TCPrrJm2yalLzIwDQ3+1R20iD0dEnA/TYP7B+46aoRuda1s8OJwxe6oOMxRK
- 6PyM1DgRQkkeFBxgVKY5g6LuT1HxOu1xSw/pThU6m7iEMiiXPdI33bf7Il//o9Uv8eOV
- TwnLjX9An9LZ1/brbGaxhlqRisT3s/VEAjyFjxKyzoH6AGGf5ZGoOJEwj4Aokjn5fpqo
- KC+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW59BNNJpguHQXwTU8e7ZrJ6rR83QT9QTOn0T5JqoHP5Fn2ARDzS6AnRMSFxf+5YQdtIm6mNjVlj50l@nongnu.org
-X-Gm-Message-State: AOJu0Yw7oe7t7E619A0Zb8fRaDjVYL1KrdZU2RaTL4+p2d34czXgtHII
- jSkcldy1+3hUCd6VwtHGjVqah7e10ibvQbKeMQXjnSmzwXyWZcos0ie+M3fa1/IFa4N9bM9i1gO
- HCHF5eI6NZ3oIRU5IQb84gTPQhPhrlU9y+6e9frUv
-X-Gm-Gg: AY/fxX5ZtY/GnuBsdOJSGbEdKSdT+q2JkRqmEqhSs1t+dgh/FL3N3Hih3jD2gU+/shp
- 7+QeQFxGq2+hF/W5NUOYspVIiJf8K4/i/8l7YCpM2uR8WRs1TdvPYwE9R0GYsu4szgoFnzu7MFX
- POi9eQiSc/9JB1rRgjCSrP1EoRtDNyh29wNzqImaJjYI8DhMSe1XLsiSs3IrxMWrKmocPIMWQOa
- zDv9RnrBw2RAsg7iteHjM4QScROB8oZWbGR+WySG3Qiz+jXkGcE9Uc0DqxKA/8QjXNXqVXkfOAO
- TsRKVpdPZqESIB5AmvfA5Tsr/A==
-X-Google-Smtp-Source: AGHT+IGt38XSoG40pMa5YuNcdYBSB7uZ/EHfwgb+wVPmZUzlrS9ccxGMkQIbQafNyTPL7DW2K31uGc/D5qsIyf934Hc=
-X-Received: by 2002:a05:622a:102:b0:4f1:aa29:7796 with SMTP id
- d75a77b69052e-4f4e5f88cd9mr31392371cf.15.1767036964658; Mon, 29 Dec 2025
- 11:36:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1767036998; x=1767641798;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UcjaE1We6/D6i3bWdqH0Bn2loG4hR3iqGdbVqVDOZu8=;
+ b=sjSyBr/HRgciIuYRGEGmicOapxkbBRvptGT24P0W3IxAXhHn+ZWWHU6LceUFPpi0hZ
+ fMxjMi0vg9CkdexvA+6PdWwDd8iWfmB32bDolK5HHfCchLy2jo4iLjSyiQZoAWFWnnN5
+ noyi4EDCCyG8FX0Kx6Q876IU5WUJJt/4cwtDTH4Fad2xU4hIZXp2WY02sPgjnmazoOoD
+ /3XiS8ecTgC+nmL8W0nSxIjDbDIxR05SPxyulz0dSWBgnZGxLkWKxUneqGy4CrG0svTx
+ kYS+G+xEftKAtYCccJ7wfCdt9Z/i2+zn2qUGeRI5kpOWMYMiqa6q/cBfzfKvXmHDCblr
+ iD1Q==
+X-Gm-Message-State: AOJu0YxiTvPC8ey1TTGmhoqIdP0kEqOkg+QYONdegF28bSqePPRcqovI
+ g4mcI+w8oOe8YXbb+EJVQq7NNngPJ1//25qyhiH4O+zmb1slGwrv/CU1rpropNwU+jhXLfLvJcT
+ VbuO5wZfI//R011zcc3B++1xfv+gA/217MS72nxr3rypNbasDy7seQFBiJdDOl6/u
+X-Gm-Gg: AY/fxX4l492POWHzVFHRMORGFtvSm73Wn6BHxZqyzXGuCaTPxhZ0UdFt2UMmxExWKcQ
+ UoWVGhvs9jXh7DJf6GNCo6yVX2k5eDyB/yYy4P0Q+uqvcctPjqum7CXWULy8f+hIx9ZjikZ7kaf
+ xqBNVFlCk89501BegKowoTqVbHMli00TZ+MLvunSJsiaTWQKp1J/gaz6N2e1RndMp21wa9dL8d8
+ 18tM2oUSqqNZBGXHYO5e40WZsEmXFddAjnuK2jH3sZAxHAPECtrB0E4U6TZDqkyVTRttlP27E5l
+ HVqAXYP5u3CIT818WcfiCmKof09pjECWVnM6MaGd6iLhs1xD0z62fhBkzNlsqoG8rDcNjhKMuA3
+ OFv0=
+X-Received: by 2002:a05:6214:e48:b0:88a:4391:59cc with SMTP id
+ 6a1803df08f44-88d868698f2mr498979546d6.50.1767036994100; 
+ Mon, 29 Dec 2025 11:36:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyil408Lq+ZL8Z7DNlWY2vHGEiQROygBVecRabiNBy4/qyau/z0ipcTe8TaI5uR1961zrR+g==
+X-Received: by 2002:a05:6214:e48:b0:88a:4391:59cc with SMTP id
+ 6a1803df08f44-88d868698f2mr498979246d6.50.1767036993548; 
+ Mon, 29 Dec 2025 11:36:33 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88d9a44fe52sm232667306d6.45.2025.12.29.11.36.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Dec 2025 11:36:33 -0800 (PST)
+Date: Mon, 29 Dec 2025 14:36:32 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>
+Subject: Re: [RFC PATCH 14/25] migration: Remove QEMUFile from channel.c
+Message-ID: <aVLYQGQo2gSRs7Xm@x1.local>
+References: <20251226211930.27565-1-farosas@suse.de>
+ <20251226211930.27565-15-farosas@suse.de>
 MIME-Version: 1.0
-References: <20251224014203.756264-1-kane_chen@aspeedtech.com>
- <20251224014203.756264-7-kane_chen@aspeedtech.com>
- <465b0714-bd08-40b5-9cf9-5cd206e8548b@kaod.org>
- <SI6PR06MB76312852C6243B1F48202A89F7B0A@SI6PR06MB7631.apcprd06.prod.outlook.com>
- <55adfce4-0dbc-492a-b586-4c46df78007a@kaod.org>
- <SI6PR06MB76318E7A596008386B0AE51CF7BFA@SI6PR06MB7631.apcprd06.prod.outlook.com>
- <ed07c0f2-737d-4d65-917f-d39d02c37063@kaod.org>
- <006fa26f-6b84-4e82-b6e1-7d1353579441@kaod.org>
-In-Reply-To: <006fa26f-6b84-4e82-b6e1-7d1353579441@kaod.org>
-From: Nabih Estefan <nabihestefan@google.com>
-Date: Mon, 29 Dec 2025 11:35:53 -0800
-X-Gm-Features: AQt7F2ogMb0AC9i6qx8BM0zRYMH-1rriH9lHCIQsM2s8FJdC6js1NAlttpR3eDY
-Message-ID: <CA+QoejXzjvyLA0Pp0xJjCsrwSyegSBRBs-MaT7yP41Nd2B9BcQ@mail.gmail.com>
-Subject: Re: [PATCH v4 06/19] hw/arm/aspeed: Integrate interrupt controller
- for AST1700
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Troy Lee <troy_lee@aspeedtech.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=nabihestefan@google.com; helo=mail-qt1-x835.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251226211930.27565-15-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,99 +116,395 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 29, 2025 at 8:51=E2=80=AFAM C=C3=A9dric Le Goater <clg@kaod.org=
-> wrote:
->
-> +phil
->
-> On 12/29/25 12:41, C=C3=A9dric Le Goater wrote:
-> > On 12/29/25 11:00, Kane Chen wrote:
-> >>> -----Original Message-----
-> >>> From: C=C3=A9dric Le Goater <clg@kaod.org>
-> >>> Sent: Sunday, December 28, 2025 1:51 AM
-> >>> To: Kane Chen <kane_chen@aspeedtech.com>; Peter Maydell
-> >>> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; T=
-roy
-> >>> Lee <leetroy@gmail.com>; Jamin Lin <jamin_lin@aspeedtech.com>; Andrew
-> >>> Jeffery <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>;
-> >>> open list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC
-> >>> here <qemu-devel@nongnu.org>
-> >>> Cc: Troy Lee <troy_lee@aspeedtech.com>; nabihestefan@google.com
-> >>> Subject: Re: [PATCH v4 06/19] hw/arm/aspeed: Integrate interrupt cont=
-roller
-> >>> for AST1700
-> >>>
-> >>> Hello Kane,
-> >>>
-> >>>> Thank you for the suggestion. Since I need to submit a v5 patch to
-> >>>> split the I2C code changes anyway,
-> >>>
-> >>> Can you please introduce the bus label property at the end of the pat=
-ch series ?
-> >>> Please consider adding a functional test and updating the documentati=
-on too.
-> >>>
-> >>>> I will handle the naming adjustments and other minor fixes myself in
-> >>>> that version.
-> >>>
-> >>> Thanks,
-> >>>
-> >>> C.
-> >>
-> >> Hi C=C3=A9dric,
-> >>
-> >> If I move the bus label property to the end of this patch series, it w=
-ill trigger
-> >> a test failure in the current patch series.
-> >
-> > Which test ?
-> >
-> >> To avoid this, I plan to move the bus
-> >> label changes into a separate patch series and submit it before the AS=
-T1700
-> >> series. I believe this approach ensures both series pass the tests pro=
-perly.
-> >> What are your thoughts on this?
-> >
-> > I would like to understand the issue first.
-> I see.
->
-> The AST2700 functional tests fail :
->
->         self.vm.add_args('-device',
->                           'tmp105,bus=3Daspeed.i2c.bus.1,address=3D0x4d,i=
-d=3Dtmp-test')
->
-> The "bus label" proposal renames the IO expander I2C buses (32) to avoid
-> the name conflicts :
->
->            /aspeed.ioexp0.i2c.bus.0 (i2c-bus)
->            ...
->            /aspeed.ioexp0.i2c.bus.15 (i2c-bus)
->
->            /aspeed.ioexp1.i2c.bus.0 (i2c-bus)
->            ...
->            /aspeed.ioexp1.i2c.bus.15 (i2c-bus)
->
-> Since this will be exposed in the user API, it would be best to avoid
-> introducing poorly chosen names. Having so many I2C buses (48) in a
-> single machine is somewhat new in QEMU and I am not aware of any naming
-> convention for this.
->
-> May be others do ?
->
-> Thanks,
->
-> C.
+On Fri, Dec 26, 2025 at 06:19:16PM -0300, Fabiano Rosas wrote:
+> Make channel.c deal only with QIOChannel objects. Move any handling of
+> QEMUFile into migration.c. To achieve this in a clean way:
+> 
+> 1) Define a migration_outgoing_setup, analogous to
+> migration_incoming_setup, responsible for creating the QEMUFile from
+> the QIOChannel.
+> 
+> 2) Increase the scope of migration_incoming_setup to create not only
+> the main channel, but all the others as well. That is currently being
+> done at migration_ioc_process, so move the code.
+> 
+> 3) Adjust RDMA code to pass in the QIOChannel and remove some of the
+> usage of QEMUFile.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/channel.c   | 21 ++++++-----
+>  migration/migration.c | 88 ++++++++++++++++++++++---------------------
+>  migration/migration.h |  6 ++-
+>  migration/multifd.c   |  7 ++--
+>  migration/multifd.h   |  2 +-
+>  migration/rdma.c      | 28 ++++----------
+>  6 files changed, 73 insertions(+), 79 deletions(-)
+> 
+> diff --git a/migration/channel.c b/migration/channel.c
+> index 7243b99108..af6c2cc76e 100644
+> --- a/migration/channel.c
+> +++ b/migration/channel.c
+> @@ -14,7 +14,6 @@
+>  #include "channel.h"
+>  #include "tls.h"
+>  #include "migration.h"
+> -#include "qemu-file.h"
+>  #include "trace.h"
+>  #include "qapi/error.h"
+>  #include "io/channel-tls.h"
+> @@ -34,6 +33,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>  {
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+>      Error *local_err = NULL;
+> +    uint8_t ch;
+>  
+>      trace_migration_set_incoming_channel(
+>          ioc, object_get_typename(OBJECT(ioc)));
+> @@ -42,9 +42,16 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>          migration_tls_channel_process_incoming(ioc, &local_err);
+>      } else {
+>          migration_ioc_register_yank(ioc);
+> -        migration_ioc_process_incoming(ioc, &local_err);
+> -    }
+> +        ch = migration_ioc_process_incoming(ioc, &local_err);
+> +        if (!ch) {
+> +            goto out;
+> +        }
+>  
+> +        if (migration_incoming_setup(ioc, ch, &local_err)) {
+> +            migration_incoming_process();
+> +        }
+> +    }
+> +out:
+>      if (local_err) {
+>          error_report_err(local_err);
+>          migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
+> @@ -75,14 +82,8 @@ void migration_channel_connect(MigrationState *s, QIOChannel *ioc)
+>          return;
+>      }
+>  
+> -    QEMUFile *f = qemu_file_new_output(ioc);
+> -
+>      migration_ioc_register_yank(ioc);
+> -
+> -    qemu_mutex_lock(&s->qemu_file_lock);
+> -    s->to_dst_file = f;
+> -    qemu_mutex_unlock(&s->qemu_file_lock);
+> -
+> +    migration_outgoing_setup(ioc);
+>      migration_connect(s);
+>  }
+>  
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 5c6c76f110..677581b5a5 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -92,7 +92,7 @@ enum mig_rp_message_type {
+>  };
+>  
+>  /* Migration channel types */
+> -enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
+> +enum { CH_NONE, CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
+>  
+>  /* When we add fault tolerance, we could have several
+>     migrations at once.  For now we don't need to add
+> @@ -934,17 +934,48 @@ out:
+>      migrate_incoming_unref_outgoing_state();
+>  }
+>  
+> -/**
+> - * migration_incoming_setup: Setup incoming migration
+> - * @f: file for main migration channel
+> - */
+> -static void migration_incoming_setup(QEMUFile *f)
+> +static bool migration_has_main_and_multifd_channels(void);
+> +
+> +bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp)
+>  {
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+> +    QEMUFile *f;
+>  
+> -    assert(!mis->from_src_file);
+> -    mis->from_src_file = f;
+> -    qemu_file_set_blocking(f, false, &error_abort);
+> +    switch (channel) {
+> +    case CH_MAIN:
+> +        f = qemu_file_new_input(ioc);
+> +        assert(!mis->from_src_file);
+> +        mis->from_src_file = f;
+> +        qemu_file_set_blocking(f, false, &error_abort);
+> +        break;
+> +
+> +    case CH_MULTIFD:
+> +        if (!multifd_recv_new_channel(ioc, errp)) {
+> +            return false;
+> +        }
+> +        break;
+> +
+> +    case CH_POSTCOPY:
+> +        assert(!mis->postcopy_qemufile_dst);
+> +        f = qemu_file_new_input(ioc);
+> +        postcopy_preempt_new_channel(mis, f);
+> +        return false;
+> +
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    return migration_has_main_and_multifd_channels();
+> +}
+> +
+> +void migration_outgoing_setup(QIOChannel *ioc)
+> +{
+> +    MigrationState *s = migrate_get_current();
+> +    QEMUFile *f = qemu_file_new_output(ioc);
+> +
+> +    qemu_mutex_lock(&s->qemu_file_lock);
+> +    s->to_dst_file = f;
+> +    qemu_mutex_unlock(&s->qemu_file_lock);
+>  }
+>  
+>  /* Returns true if recovered from a paused migration, otherwise false */
+> @@ -990,12 +1021,6 @@ void migration_incoming_process(void)
+>      qemu_coroutine_enter(co);
+>  }
+>  
+> -void migration_fd_process_incoming(QEMUFile *f)
+> -{
+> -    migration_incoming_setup(f);
+> -    migration_incoming_process();
+> -}
+> -
+>  static bool migration_has_main_and_multifd_channels(void)
+>  {
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+> @@ -1012,12 +1037,10 @@ static bool migration_has_main_and_multifd_channels(void)
+>      return true;
+>  }
+>  
+> -void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+> +uint8_t migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>  {
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+> -    Error *local_err = NULL;
+> -    QEMUFile *f;
+> -    uint8_t channel;
+> +    uint8_t channel = CH_NONE;
+>      uint32_t channel_magic = 0;
+>      int ret = 0;
+>  
+> @@ -1036,7 +1059,7 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>              ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
+>                                                sizeof(channel_magic), errp);
+>              if (ret != 0) {
+> -                return;
+> +                goto out;
+>              }
+>  
+>              channel_magic = be32_to_cpu(channel_magic);
+> @@ -1051,7 +1074,6 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>                  channel = CH_MAIN;
+>              } else {
+>                  error_setg(errp, "unknown channel magic: %u", channel_magic);
+> -                return;
+>              }
+>          } else if (mis->from_src_file && migrate_multifd()) {
+>              /*
+> @@ -1063,33 +1085,13 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>              channel = CH_MAIN;
+>          } else {
+>              error_setg(errp, "non-peekable channel used without multifd");
+> -            return;
+>          }
+>      } else {
+>          assert(migrate_postcopy_preempt());
+>          channel = CH_POSTCOPY;
+>      }
+> -
+> -    if (channel == CH_MAIN) {
+> -        f = qemu_file_new_input(ioc);
+> -        migration_incoming_setup(f);
+> -    } else if (channel == CH_MULTIFD) {
+> -        /* Multiple connections */
+> -        multifd_recv_new_channel(ioc, &local_err);
+> -        if (local_err) {
+> -            error_propagate(errp, local_err);
+> -            return;
+> -        }
+> -    } else if (channel == CH_POSTCOPY) {
+> -        assert(!mis->postcopy_qemufile_dst);
+> -        f = qemu_file_new_input(ioc);
+> -        postcopy_preempt_new_channel(mis, f);
+> -        return;
+> -    }
+> -
+> -    if (migration_has_main_and_multifd_channels()) {
+> -        migration_incoming_process();
+> -    }
+> +out:
+> +    return channel;
+>  }
+>  
+>  /**
+> diff --git a/migration/migration.h b/migration/migration.h
+> index f340cd518d..d2b82cf54f 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -526,8 +526,10 @@ struct MigrationState {
+>  void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+>                         MigrationStatus new_state);
+>  
+> -void migration_fd_process_incoming(QEMUFile *f);
+> -void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
+> +void migration_outgoing_setup(QIOChannel *ioc);
+> +bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp);
+> +
+> +uint8_t migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
+>  void migration_incoming_process(void);
+>  
+>  bool  migration_has_all_channels(void);
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 3fb1a07ba9..c6639dbab5 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -1521,7 +1521,7 @@ bool multifd_recv_all_channels_created(void)
+>   * Try to receive all multifd channels to get ready for the migration.
+>   * Sets @errp when failing to receive the current channel.
+>   */
+> -void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+> +bool multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>  {
+>      MultiFDRecvParams *p;
+>      Error *local_err = NULL;
+> @@ -1536,7 +1536,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>                                      "failed to receive packet"
+>                                      " via multifd channel %d: ",
+>                                      qatomic_read(&multifd_recv_state->count));
+> -            return;
+> +            return false;
+>          }
+>          trace_multifd_recv_new_channel(id);
+>      } else {
+> @@ -1549,7 +1549,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>                     id);
+>          multifd_recv_terminate_threads(error_copy(local_err));
+>          error_propagate(errp, local_err);
+> -        return;
+> +        return false;
+>      }
+>      p->c = ioc;
+>      object_ref(OBJECT(ioc));
+> @@ -1558,4 +1558,5 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>      qemu_thread_create(&p->thread, p->name, multifd_recv_thread, p,
+>                         QEMU_THREAD_JOINABLE);
+>      qatomic_inc(&multifd_recv_state->count);
+> +    return true;
+>  }
+> diff --git a/migration/multifd.h b/migration/multifd.h
+> index 9b6d81e7ed..89a395aef2 100644
+> --- a/migration/multifd.h
+> +++ b/migration/multifd.h
+> @@ -42,7 +42,7 @@ int multifd_recv_setup(Error **errp);
+>  void multifd_recv_cleanup(void);
+>  void multifd_recv_shutdown(void);
+>  bool multifd_recv_all_channels_created(void);
+> -void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
+> +bool multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
+>  void multifd_recv_sync_main(void);
+>  int multifd_send_sync_main(MultiFDSyncReq req);
+>  bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 596a1aba0b..7bee871e2b 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -384,7 +384,6 @@ struct QIOChannelRDMA {
+>      QIOChannel parent;
+>      RDMAContext *rdmain;
+>      RDMAContext *rdmaout;
+> -    QEMUFile *file;
+>      bool blocking; /* XXX we don't actually honour this yet */
+>  };
+>  
+> @@ -3836,32 +3835,20 @@ static void qio_channel_rdma_register_types(void)
+>  
+>  type_init(qio_channel_rdma_register_types);
+>  
+> -static QEMUFile *rdma_new_input(RDMAContext *rdma)
+> +static QIOChannel *rdma_new_ioc(RDMAContext *rdma)
+>  {
+>      QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
+>  
+> -    rioc->file = qemu_file_new_input(QIO_CHANNEL(rioc));
+> -    rioc->rdmain = rdma;
+> -    rioc->rdmaout = rdma->return_path;
+> -
+> -    return rioc->file;
+> -}
+> -
+> -static QEMUFile *rdma_new_output(RDMAContext *rdma)
+> -{
+> -    QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
+> -
+> -    rioc->file = qemu_file_new_output(QIO_CHANNEL(rioc));
+>      rioc->rdmaout = rdma;
+>      rioc->rdmain = rdma->return_path;
 
-I'm not aware of any convention, but I'd argue the current naming with
-the bus label makes sense. A i2c bus on the main machine is
-"aspeed.i2c.bus.%d" which clearly makes it easy to differenciate but
-see that the two busses are somehow related. Maybe it'd be worth
-changing the `aspeed_i2c_class_init` to make this relation more
-obvious by not using TYPE_ASPEED_I2C_BUS but use the string
-explicitly?
+Likely it was overlooked rdmaout/rdmain was set in reverse order in these
+two functions.  I gave it a quick run on rdma and it was indeed broken
+starting from this patch.
 
-Thanks,
-Nabih
+The goal of the change looks reasonable in general otherwise, said that,
+maybe there's way to split the patch somehow?
+
+>  
+> -    return rioc->file;
+> +    return QIO_CHANNEL(rioc);
+>  }
+>  
+>  static void rdma_accept_incoming_migration(void *opaque)
+>  {
+>      RDMAContext *rdma = opaque;
+> -    QEMUFile *f;
+> +    QIOChannel *ioc;
+>  
+>      trace_qemu_rdma_accept_incoming_migration();
+>      if (qemu_rdma_accept(rdma) < 0) {
+> @@ -3875,15 +3862,16 @@ static void rdma_accept_incoming_migration(void *opaque)
+>          return;
+>      }
+>  
+> -    f = rdma_new_input(rdma);
+> -    if (f == NULL) {
+> +    ioc = rdma_new_ioc(rdma);
+> +    if (!ioc) {
+>          error_report("RDMA ERROR: could not open RDMA for input");
+>          qemu_rdma_cleanup(rdma);
+>          return;
+>      }
+>  
+>      rdma->migration_started_on_destination = 1;
+> -    migration_fd_process_incoming(f);
+> +    migration_incoming_setup(ioc, 0, NULL);
+> +    migration_incoming_process();
+>  }
+>  
+>  void rdma_start_incoming_migration(InetSocketAddress *host_port,
+> @@ -3995,8 +3983,8 @@ void rdma_start_outgoing_migration(void *opaque,
+>  
+>      trace_rdma_start_outgoing_migration_after_rdma_connect();
+>  
+> -    s->to_dst_file = rdma_new_output(rdma);
+>      s->rdma_migration = true;
+> +    migration_outgoing_setup(rdma_new_ioc(rdma));
+>      migration_connect(s);
+>      return;
+>  return_path_err:
+> -- 
+> 2.51.0
+> 
+
+-- 
+Peter Xu
+
 
