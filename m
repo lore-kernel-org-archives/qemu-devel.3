@@ -4,86 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7BE1D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 12:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3DC3D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 14:23:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaC8s-0001nx-Cs; Mon, 29 Dec 2025 07:14:30 -0500
+	id 1vaE9H-0004n9-0S; Mon, 29 Dec 2025 09:23:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vaC8o-0001n6-2Y
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 07:14:26 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vaC8m-0006N4-IM
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 07:14:25 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-42fbc305914so5980692f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 04:14:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767010462; x=1767615262; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Cg/K9VgvAilbScUceQqlUu9k42/HHS1nN7+wlJHCh24=;
- b=f+xhs5iVvbhhqaLuKDMo99xjz39twxOIIhO1viP6GMJYFI59cmeOD5lLJff9aAUjVF
- 5Adwf49cI0iKY4RZek4Y8DWQ/rHPxPqIzfenFmhEL92t/LfuHZX4k9RQspKJ9Nu8vKpN
- Hq8lgDQbAyroRdiBD+kxkRGi0971fuUafoRRPIC+J2mWnTDLUMvBMJ0/n18dLhTJFf2w
- IsPV7M0HOhgTPUwmaaSyOH0aIJKCt9qFRQgJUXMy0RQ6/NWZGybLn0T5Dh21u1JHzX2K
- h9pTCgsvEAmBj6r5pbA++hDab6n1+v4+63L4GuTlURl8iyjWtZtlCKZU5fh5yhXWYmf5
- gDLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767010462; x=1767615262;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Cg/K9VgvAilbScUceQqlUu9k42/HHS1nN7+wlJHCh24=;
- b=LMLRMZf3CtoGqkUzoJj4Br4tVbJgCVbmwfZNaVe3sA+pVsh8xZ0FsbXwAFP9Y/Vy9U
- rptxi7/0dIDKCQhtx9NsmWQPC3aq4CkJeZCwc38L9oAkOFgr7CAX7Jwmck/tLTJ6vpr6
- mIGUN8/jM32bG7bbZgyQmnBHQfcWXBWaSzwYZqiZOdJVIgivh3ji+PXctrBArMCZs8YM
- Dn6ZFkpAp2Hk1X6TqCf/NFqDespzzXCU9vxZmzF86JURfspiX6bOjuYABPu9VJbXhYBS
- JOEculPndPqk9biW3cBdXGCgpm30o5QP58GJLivGbGaYpW4Y//pKJUU65k5+aN4EqWtQ
- YuOw==
-X-Gm-Message-State: AOJu0Yyc2AkO3o7yo9DD5eerSwoq2+f1jI+dhzSNPwntZndenJ9Xst9a
- W5f5aNX6f/wjC2UgcvUoc9qPEDHf5qCA9cNrezbOv3wwaWv/eGLFYbU7RxhDgQ==
-X-Gm-Gg: AY/fxX6oJVR+L1jwDEMy6yL6NKyfF0a9yG3O/dGtItzicfDggpb2cq7dH3I9XEQ52QO
- Rnjt4rqRWM5Y6dFtoG1+tR2xSciFp4O6j6zdiiYqzgt2VUDB6oyuzZe0DgOga0XtYGQwwcALeRt
- WdcNnOMJ2THxxkhKQJR5jPSHmmPU3/Qo5Rl+dE41hdBrqPXB+V4KGr+8uLa6ErTgXtcDzjocC63
- BFJ55LS3YBhp1yyjSr+zS2ZR/0USnx8v7awjG/hEXpbZSpwAAFopNfvjr51nqXCMh3B/eR6V+lg
- QYmCJCJFpEKcqSk8kPcAU811BEAh8w0SxomIB1hf6PmBw2kQP0dbmNmzonZsdN1wVHoC1koAcoJ
- E9WEZ0Ix9/GBX+xkMxD4pvL5M/3aVeXHuN+clczpctNKfdsv1FUi42F3b+Er3kSPeh4+jLwbEBI
- luEmnn6XEfCYi0K4NwpQeBcxb/PCR9xQ==
-X-Google-Smtp-Source: AGHT+IH1O3zw067NRlhFKANyTyQNai/slOBOmI3q3X0/OXTzFZrZHH/7T81mBXyobN3nmFfUPcXQGQ==
-X-Received: by 2002:a05:6000:2305:b0:431:808:2d49 with SMTP id
- ffacd0b85a97d-4324e4c6fbfmr31716300f8f.8.1767010461924; 
- Mon, 29 Dec 2025 04:14:21 -0800 (PST)
-Received: from tuf-gaming ([2a02:2f01:7704:5801:e5d:77de:1b20:9c8a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea22674sm63542255f8f.10.2025.12.29.04.14.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Dec 2025 04:14:21 -0800 (PST)
-From: =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?=
- <jean.christian.cirstea@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, richard.henderson@linaro.org,
- =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?= <jean.christian.cirstea@gmail.com>
-Subject: [PATCH v3] linux-user: allow null `pathname` for statx()/fstatat()
-Date: Mon, 29 Dec 2025 14:14:16 +0200
-Message-ID: <20251229121416.2209295-1-jean.christian.cirstea@gmail.com>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1vaE90-0004lY-7e; Mon, 29 Dec 2025 09:22:46 -0500
+Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1vaE8y-0002GG-7u; Mon, 29 Dec 2025 09:22:45 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SJw/28fgNSBjVmk4Kjtn5v4QzV5SyGkQk+1L7nMBJrXuAgSDpGBp5bko4ToROUq0MHTKl3VAJDKXZoVMaFUdhAzK454wqauasaFnGjYB0x1gQymQHuhWWWtMF08On3kyODItBDii/ykykyQrVPjd8FkEMr5//edTTnapqOAnKqRDECrMBmzYQCse3sHzhWuhH6sLHvnQtaQan0Op2AdN4u9Uhi3oJSkURmxp6zdKy5o8VK/1PlBNnQrO/ui90sqicqZimPtAD6s5Ni7zoxe/lOnDZk5DgHKPW9i+oUO0wfrNbmeE1XY3aW3N8k1YjK3j6GJQ3P0z1YtNh7CENTDCyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OzYid6qTqNy3+9VzmyDEj7RMIAuP+/r48Xlx7JBYwUU=;
+ b=Ym/9QXr5JdsO0yXdYxqd5cnGpTaM922u+E1D10OXyYM7wWYL9g8IgUGpBHXNo0Q/1qkqz2E66Ozgvzx9o3fk62+zqmW+Sb8it9ani5puPWvth80uVAuV2/IyKQQUEMdCvOh3+Sby3EzNAWSShBC1e1yTaVfvCS8ENsgr4wTCcZO7CbyDm/pIeOhLXqwG6irgy+2NFAz/Ldt+XNH6SAwhZhXm8AQeKbwXkMX1AwiLBVhkn1KE6J/nenkKXa5cSi97qshTJLnqXNdYfg58DQWB+lqFO7NDTKZlrE0JUqcYRCIo+l1soN3FhZoUqp4ms6L+RCmF9cTGNq3AoLsoTT/bUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OzYid6qTqNy3+9VzmyDEj7RMIAuP+/r48Xlx7JBYwUU=;
+ b=AJFRYtVNYjs94jMH2gKiZrPZGPXPvROqYn5Hnp/yDmEy9Ap0VWOAOfS0WkB2Uithm1kmijdLDLjnrHv7BCkOBS/+wlkgE2JY8cNKt7Vy86W7XEMhMMeIQBjUwIwA636aSsM9c8NEKtMq2GiTlFROdSYwD79/djNAk7q5rMByrmjeWNNdZIamo8K1UHj86lSormmLMQref59GpeHEUh9gIJWJ6A79OXMr+fUeqqFACfRwxN5der5lxLoPS41RMg4f6aryrvXmyzBdCdD+QitXwUpg3MUsB3QOFwv+eypf2hKDxGDmjJ6FewyTgKspsKLgnyw7wBIzTTGePrWwJ47ThA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by AS2PR08MB10324.eurprd08.prod.outlook.com (2603:10a6:20b:5e7::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
+ 2025 14:22:37 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%7]) with mapi id 15.20.9456.013; Mon, 29 Dec 2025
+ 14:22:37 +0000
+Message-ID: <af263158-4e59-4736-9961-32f613e6c892@virtuozzo.com>
+Date: Mon, 29 Dec 2025 15:22:35 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] qcow2: add very final sync on QCOW2 image closing
+To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+References: <20251219180813.1000884-1-den@openvz.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20251219180813.1000884-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1PR07CA0275.eurprd07.prod.outlook.com
+ (2603:10a6:803:b4::42) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=jean.christian.cirstea@gmail.com; helo=mail-wr1-x42a.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS2PR08MB10324:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7adedb8e-fa3b-4492-13d2-08de46e5b742
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?V0FqQk9JbXNGRHlEaFhOTFBFSG05ZEl1eVdVWDdnOXBsaVAvTm5PS1h4UnF0?=
+ =?utf-8?B?V3pIVzVsUTlnNWNvYWdMU0lzR2Z1cjIvWndlZGhNYjN1NnVsS0cyT1RQMmdU?=
+ =?utf-8?B?MnpReGdKbnpYbnp1aEl4azBoWldQUVlFYmsxK1ZBczZKRDhUbmdxRG5PYVFx?=
+ =?utf-8?B?ZDZoYlRNcGR0Z2EyT1FFVTBDM1pVejFyZVNFV3lROGZLREFzdXhRMFVOWkY1?=
+ =?utf-8?B?YzM3QlJlbzlhL3R0YStEYTdFNktUVkRrSGxoek5YWlUyL01JSFFqcVl3dkRz?=
+ =?utf-8?B?K0FRNy9RUmltSjV0OWg5a1NwanNtRkhRRkhWTXUwR0xZck5yMW9OeUMyU1VV?=
+ =?utf-8?B?MEFBM001a21jdDBxeTlhS2ZrTllEajhialVrd2o0MDYzbmpWRnRjT1RZR3NF?=
+ =?utf-8?B?cEJwR2FlOVk1VHpnOXBXZVplMUdrdHdqS1Y4V0xsQzBIVnJjd2JKNDFnUFRh?=
+ =?utf-8?B?UUdqZ2F0UFRhbkRpdWJBaVIvcDVKS0E3ajVGMXZMelZuRDRzRzF2UE9wK3Fm?=
+ =?utf-8?B?Tm5zS1dmMXVCdTQxa0NRTDlzQXRkYnFkZnByYXgrcWdZUnhyOUFXWXNmZ0x2?=
+ =?utf-8?B?eC9PRE5sMVRhZVpDcDR1SGdSbGpxVzBZeGRhRVdkbXFvdVd2NFh6aHpIS0xq?=
+ =?utf-8?B?ZEV4Qld4TlJyMGp0TjhkZk4xcVIyNnRnT3VGYkVURzNyVG04Y3p2QnhvaWo2?=
+ =?utf-8?B?djlreURrZEQxMUNvNlRGVnVCSldCWGsxT0M5R2gweFk1bWZrYnhIWU9wTmtW?=
+ =?utf-8?B?cHVWaWJpa0hZd1RvTXVkc1RGbHRrUUVQNTNENnFKSTNrYlUzekF4Yy9iVll0?=
+ =?utf-8?B?cTRRR0JFc1p2ZEJ0aUZoWG1iT3dscEc3bUUzZHNPRzNBR2NYN0I2OHozY0Qv?=
+ =?utf-8?B?RjF0WUtTU3BTQ3BaTW1yOVE5YVJuMGw3SEdBNm1zUjM2U3lsTEt0V2duNG1W?=
+ =?utf-8?B?T3hpUFpRYUMvMUhPZEVKa05QNE45aDYrM1pBL3dQRlUxV2pKOWloTGtKRDJr?=
+ =?utf-8?B?NUp4d0VjVFQrb0ZjQWVQZGljdW9oUXk1ejBVRHhiR0tBRkJzK0dKOXFodHJJ?=
+ =?utf-8?B?VEdFRWpPbW9CblNHMU5IZ1hsZmhiQWJDWDVWbERpTW1TRi8zaGNDb1E4RmNk?=
+ =?utf-8?B?SjdqbW4wajBRSTNMMGlweHUyaXlMT3ExU1B0c1ZVZUU0TVZqOVZydWdUS0Nv?=
+ =?utf-8?B?U24vQ1dRRmgwUDJlZ0ZyY245azZHc0ZRNjRuSENWeWorbVhtOWlLa3ZwbHFR?=
+ =?utf-8?B?dW9hM1lyZnJNeXZqR3lhMm1QVFZjTGc1UGdzeSsya0JWU1pNdlRZZDB2czVj?=
+ =?utf-8?B?ekNmNHhjaldCbll0SitJQ2FCSHBSV3JKU0ZCSnJodm5tV0pWbkVQcWtnUUlt?=
+ =?utf-8?B?LzNqOTF3d21XdnZZbE13R0FYNW5jMnlzQUlOdjBNTC8zbWMwTTQvakRCK3I1?=
+ =?utf-8?B?SWZrL3pVM054L2xyRXJ4cEZSaGgvNG5CUHVVQXNHY21RUm04bkJQS0FqRUFN?=
+ =?utf-8?B?eDA1NnppYno3TUh3OXlURnpPbi9KOXdqYjhRTlNDQ3hUQVIyajJMemNhUUJM?=
+ =?utf-8?B?V0U4NTIrMFc4MGthLzk5a3ZMZGc2WnllYnRWT3RTSmhKaGNGL0hyVEhPbUlh?=
+ =?utf-8?B?bXhYbWthRmxaNStYdG1ITFhYeEJnblo1MGxkVnRDU0czeEk4d3VtSldxcWc5?=
+ =?utf-8?B?djFkMkpGRTM4SjJueU1MTGV5ZUsxc2N4WXY5WkNka250Y3BnQWFRWlRGRDJJ?=
+ =?utf-8?B?aEZPdjY4M01NREJvRUJHQVczRnJLaEluNHFnN2Y4OXR6NXAwS3E1d3NBUFBD?=
+ =?utf-8?B?ZGlXcDBRcWRsd0xvZDNFdEdEekNsUGJWSW51SmYzUHZjQVZTU0REU1MvMWlG?=
+ =?utf-8?B?SzA3Mnd6UnhjWm5US3ZDcUxrYVhRSmpmTTN1UlByUkllTUZidHRnaTdXdWNC?=
+ =?utf-8?Q?xNLQ+XzkdiBCjztX52163B61PimLnf1F?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(7053199007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?M0JGNnozeXZPSms2S283Y3hPMTV2Yk5UMTNxZitnN3h6NWRxajd1aTJ6N2FE?=
+ =?utf-8?B?Z1lqc2V5aytFY1JYbTN3N0NjS2FGOHVQVDRWdGlPUzJyMnMyM0VySHJZdnEv?=
+ =?utf-8?B?WUtYbnNwK1hhZzJQVDZnNjNtVElsOWRMN0tLTHhYUFVnbFE0dEs3VXB6OGdK?=
+ =?utf-8?B?bnUvTGU2OGhtZzZLeUs0YXB6MkVaZG56YUpPZ2tBTU9LNCsvOGZubXJkZkxP?=
+ =?utf-8?B?NXZQTXRSaXVjcW9EVGpwVkNQbndkOHVEN3lCekZqeVZRb2kwSzE2L0xzemsx?=
+ =?utf-8?B?eFRoMUxRTURZakZodC9FeHViZUJaeTZyalAxUVF2YUV6K3RoTUIyd2x6a3ZG?=
+ =?utf-8?B?UitaS3ZXdWE1cXhxbEMrbEhiUThJR0pmMzlvS3RZTW5SWVpEWUQyd0NmVUF2?=
+ =?utf-8?B?UDYxT0I5M1A1aU94VVZpMldqUnp0Z3NjV1p2YytyVHliaUxXN3JHc3FzRElK?=
+ =?utf-8?B?L2tpMEhvVXRxY1VtTzkxZUFuQVk1b0dVaElQWW16ZDZCcU5zMjdzT2dydElh?=
+ =?utf-8?B?SEhlWWdTYW1xZFc5bWxUaWczK2JyUmJaYXd6WHozUGFucWV3Y0w3SWc3eE1q?=
+ =?utf-8?B?QktPSDVYZVcvK205QUc2RUQwOS9RM1gyK3FIUjI5TlJOSmc5SlJOS1BoWFZU?=
+ =?utf-8?B?TXhsTTlMSllyOFkwUzBhK3RUeW1FbVZTUzM4VmY2SWcyMlNIdnE0Y3pUMUNQ?=
+ =?utf-8?B?bmVDR0F2VlFDZkhEUGxKck92aGd2cVd3YlZpczlyUmc0bkFOQWd0UFpKWUNq?=
+ =?utf-8?B?S0trK3g1bGlwM2pBYjZrb01reHdXajlNdTJST3E5bkM0UzRmbU92SWxOalY1?=
+ =?utf-8?B?UVkxNWFsTFhMdEpYMW0waEZqQ3pXZmI3YW5nc1NSL2lKK3ZRdzEzSmpLc1JZ?=
+ =?utf-8?B?N0JaeXdITnhZcHdtZUlJeFVHZ3p0dTc5bEM1SXdVbFdrdUpLWEltVm92ZlY0?=
+ =?utf-8?B?bk1JY3U4dngxUm5Kbkx4RkxUakJ3a0s4OGZ1RWdTUW01MW9DcDQzc1pTSlRI?=
+ =?utf-8?B?L0FMVk9zRDBlSUVzaU9VamQwMmJ2NUNKOE9RL01DdXp4bkE4c1J0SjJQSkV4?=
+ =?utf-8?B?UGNtNnRSaDdkbDh2ZC9Hd1ZJS0lXQklpK0RhR0xpY25hSm85aGJrOCs1YzQ3?=
+ =?utf-8?B?NFVsYU1XMUZKbUJVVXZBZDdrcHZpUyt5VEFXZXVCR0xIbXlVenJOVEMwdFJE?=
+ =?utf-8?B?c3k5MWZCcHJsYUVWeE5ZSFJJeGdOMkZxMm5NY1dYT1ljZFhYb3dYK2lmbXQr?=
+ =?utf-8?B?ODRIQTZuVXhQdm5LMjRlWEFMbEZjQlFRY2FhcU5FMDJSVGh0Z1Fldk01anRq?=
+ =?utf-8?B?UTlzRlMzdnQySDR5SFI4TjdCVFg4SlZYUXdJNzZPazQvUXc1VEV1Y0JGQ2VY?=
+ =?utf-8?B?UitqWFZ6VnpscjRGQWIxYXZzRmpPbjZSaDNXMmZ0ZW9ycXlGdjdla1hQMWtC?=
+ =?utf-8?B?OXlKWkFHNVV1ZHJyczg0eS95cDNTSnVjQWtpK3hKV3EzYXp6Rzh2emJwbEVt?=
+ =?utf-8?B?YTFMWVZCVHZEVmZUNjg1N3VVb0dHVlROYWRqQmJDRHhqbHlPNXdkaExSVWpO?=
+ =?utf-8?B?THJVWUpBT3JUb3JEbFcyUjR0Z0pEY0xDVFNqY202cmpkNnBhSnVjdnRRNVpD?=
+ =?utf-8?B?WHFvZWtlVG1SNHoxS2N3M2ZpTklKWlVjSVJFV1JBM1QxL2hScUtueGJ2L2N0?=
+ =?utf-8?B?elB6MXdkN1pQSlV1TkJyMVlQY0tDMVlkS2dQSG53UHpROTM3c01JN0t5V3pT?=
+ =?utf-8?B?M3hib2xGUEZQK1QvMkdBTGVIZ2U0Y1N3R0swUmNnWkVTR2xRMENnMHhxREhh?=
+ =?utf-8?B?ejZUNjZ1bUh2bEpOR2dNdWtOcEI3anBqQUd6dnVYNmJTNTBmZllPRTk4YTdz?=
+ =?utf-8?B?ejcwRW9RQUJPeHQ0bVg1T3IzKzVaaTVKVE9qeitqcDFPYXZWNlB6UzA1V1Z1?=
+ =?utf-8?B?c1E4TVJseDM3WE5qaGdSaE9UVllHVjdOWXd6QkIwMmxTNkZRVVo2NjZ3S1E2?=
+ =?utf-8?B?aWlHUUVpNFRvbTh1ZWxRL2s4M2g5WEZJU1BaL2hZMnhucGFvYjBId2pKdW1y?=
+ =?utf-8?B?alYrUzdBOENzL0F3bHk4TDkwcGJLNy9jS3Exa2V4RVNXNDdnci85RXVsczli?=
+ =?utf-8?B?enoxWEgzYkhubjFkcFVySm1KUXN1ekcrdm1qQTB3SDduVzJSM1REMjdiZUhT?=
+ =?utf-8?B?dDI1S0JxVmRkdmN3Qm44SlprYzBxbDZsNVAyaDdmRjI4M0VkSE80akVISVdU?=
+ =?utf-8?B?ODduemRIdm55d3Rpcm9zaU1SODFhRWNrVnRpVmpvNmNKZ0t1b3NTWlMydEJY?=
+ =?utf-8?Q?L47SfdC2xwTgSB90Ux?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7adedb8e-fa3b-4492-13d2-08de46e5b742
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 14:22:37.0953 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: cOBErGr6Hcdal+YBwdN5khFDNrsw280lmPAvITEiU0bO5uggZ/l7PCSdlvk6Yitkg25FDmYRcSqcTH2VrsLMjw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB10324
+Received-SPF: pass client-ip=2a01:111:f403:c200::3;
+ envelope-from=den@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,48 +179,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since Linux 6.11, the path argument may be NULL.
+On 12/19/25 19:08, Denis V. Lunev wrote:
+> qcow2_header_updated() is the final call during image close. This means
+> after this point we will have no IO operations on this file descriptor.
+> This assumption has been validated via 'strace' which clearly confirms
+> that this is very final write and there is no sync after this point.
+>
+> There is almost no problem when the image is residing in local
+> filesystem except that we will have image check if the chage will
+> not reach disk before powerloss, but with a network or distributed
+> filesystem we come to trouble. The change could be in flight and we
+> can miss this data on other node like during migration.
+>
+> The patch adds BDRV_REQ_FUA to the write request to do the trick.
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Hanna Reitz <hreitz@redhat.com>
+> ---
+>   block/qcow2.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/block/qcow2.c b/block/qcow2.c
+> index e29810d86a..abbc4e82ba 100644
+> --- a/block/qcow2.c
+> +++ b/block/qcow2.c
+> @@ -3252,7 +3252,7 @@ int qcow2_update_header(BlockDriverState *bs)
+>       }
+>   
+>       /* Write the new header */
+> -    ret = bdrv_pwrite(bs->file, 0, s->cluster_size, header, 0);
+> +    ret = bdrv_pwrite(bs->file, 0, s->cluster_size, header, BDRV_REQ_FUA);
+>       if (ret < 0) {
+>           goto fail;
+>       }
+Thanks a lot for Andrey Drobyshev who has attempted to review
+and test this patch.
 
-Before this patch, qemu-*-linux-user failed with EFAULT when `pathname` was
-specified as NULL, even for Linux kernel hosts > 6.10. This patch fixes this
-issue by checking whether `arg2` is 0. If so, don't return EFAULT, but instead
-perform the appropiate syscall and let the host's kernel handle null `pathname`.
+In reality the patch is non working and the problem is even
+more severe than it appears. BDRV_REQ_FUA processing is broken in 
+mainstream QEMU. Generic write path ends in static int coroutine_fn 
+GRAPH_RDLOCK bdrv_aligned_pwritev(BdrvChild *child, BdrvTrackedRequest 
+*req, int64_t offset, int64_t bytes, int64_t align, QEMUIOVector *qiov, 
+size_t qiov_offset, BdrvRequestFlags flags) { .... if (ret < 0) { /* Do 
+nothing, write notifier decided to fail this request */ } else if (flags 
+& BDRV_REQ_ZERO_WRITE) { bdrv_co_debug_event(bs, BLKDBG_PWRITEV_ZERO); 
+ret = bdrv_co_do_pwrite_zeroes(bs, offset, bytes, flags); } else if 
+(flags & BDRV_REQ_WRITE_COMPRESSED) { ret = 
+bdrv_driver_pwritev_compressed(bs, offset, bytes, qiov, qiov_offset); } 
+else if (bytes <= max_transfer) { bdrv_co_debug_event(bs, 
+BLKDBG_PWRITEV); ret = bdrv_driver_pwritev(bs, offset, bytes, qiov, 
+qiov_offset, flags); } else { bdrv_co_debug_event(bs, BLKDBG_PWRITEV); 
+while (bytes_remaining) { int num = MIN(bytes_remaining, max_transfer); 
+int local_flags = flags; assert(num); if (num < bytes_remaining && 
+(flags & BDRV_REQ_FUA) && !(bs->supported_write_flags & BDRV_REQ_FUA)) { 
+/* If FUA is going to be emulated by flush, we only * need to flush on 
+the last iteration */ local_flags &= ~BDRV_REQ_FUA; } ret = 
+bdrv_driver_pwritev(bs, offset + bytes - bytes_remaining, num, qiov, 
+qiov_offset + bytes - bytes_remaining, local_flags); if (ret < 0) { 
+break; } bytes_remaining -= num; } } bdrv_co_debug_event(bs, 
+BLKDBG_PWRITEV_DONE); if (ret >= 0) { ret = 0; } 
+bdrv_co_write_req_finish(child, offset, bytes, req, ret);
 
-Changelog v3:
-
-1. Don't call `lock_user_string()` when arg2 is NULL.
-
-Changelog v2:
-
-1. Removed cover letter
-
-Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
----
- linux-user/syscall.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 2060e561a2..ee7c34027e 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -12141,9 +12141,13 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             int dirfd = arg1;
-             int flags = arg3;
- 
--            p = lock_user_string(arg2);
--            if (p == NULL) {
--                return -TARGET_EFAULT;
-+            p = NULL;
-+            /* Since Linux 6.11, the path argument may be NULL */
-+            if (arg2 != 0) {
-+                p = lock_user_string(arg2);
-+                if (p == NULL) {
-+                    return -TARGET_EFAULT;
-+                }
-             }
- #if defined(__NR_statx)
-             {
--- 
-2.51.0
+BDRV_REQ_FUA is processed insidebdrv_driver_pwritev() and resulted in bdrv_co_flush() is __NO OP (!)__ 
+until bdrv_co_write_req_finish() is called which performs 
+qatomic_inc(&bs->write_gen); Only next flush will really flush the data. 
+This means that flush semantics is broken inside QEMU and this problem 
+looks serious to me. I'll come up with a patch. Den
 
 
