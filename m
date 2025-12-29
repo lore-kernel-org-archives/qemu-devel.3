@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CB12E784BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 01:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17750D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 01:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va1hS-0007r8-PM; Sun, 28 Dec 2025 20:05:31 -0500
+	id 1va1j3-0000Tz-Gy; Sun, 28 Dec 2025 20:07:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va1hI-0007qe-Tl
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:05:24 -0500
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1va1j1-0000TR-Ua
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:07:08 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va1hG-0008IV-Jl
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:05:20 -0500
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-34cf1e31f85so7013778a91.1
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 17:05:18 -0800 (PST)
+ id 1va1j0-00005I-GK
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 20:07:07 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-78fc84772abso59262217b3.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 17:07:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766970317; x=1767575117; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766970425; x=1767575225; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=krspu5Ta32VEquDexhjjvIZdCRtt8WXCpn1T/BESWAk=;
- b=ZvGAjHWXKCRCcv0bhPEDc6ARuGdplIEfGGhLhg9g89YRBdjDjBXv5ZmZnJ93ACIMa+
- 7/1rI8Ff9CBqlAupvlgOP+veW6dLLa/Pj6aXMQHKLdOHm8BZvTi2HmBnlhMcPkFEDs78
- k6NV4eLf7wpV5H0AH8p23VLQAZHv2zuGl4v+0RxDBlaxMa7spJfXPUcwiTZAss5RD0db
- CX2/fZ0SbhcHZOCmgRjxrEWJfkK9E4pX5t1kPIIWq/HIJs3iRP0XPM/ep0WmC5RLOe08
- tIw7DSUfiow6KLPD0LcqByjMZqaHPOKjF5zNW2t6/KN2RKUYps7tgOYwQpuj1ecfPRfd
- dDDw==
+ bh=X55mHw4g2Ka6gAWM3/Bf2jpjuH/4l03Q/8zDDWsrmco=;
+ b=RAv3STmp+0OK+Yn2l/spWjQeuyxWkmsqk4CUxmnBTd72eVtTJtcb/KPlyvS7FvPSsy
+ AllDTLs9t/dfhTryl2yGn4VB6HsBCCLA7/min2LXJSOnQLSA0+IM34vVgluSlG1S1QZi
+ dLnD1uFG1g5m7apGTkSJ6qzYqKpn13aGDtKFiHPpyZCyc4cl5Gagk0RDIjWjrcUDFu4v
+ Kbu1befLbbbKO3nsW/qpq/HovTC6pMg3Dp1k2ZTA5/ajj36lQlXWMFJX0btYNzj7YqSA
+ CXRI9rIwUtt0cHA2lciGbWXyjiCcb4Vx+CPl3wEUoeBTHM1SFRxZ6JDK3snenKnOl3S6
+ RSRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766970317; x=1767575117;
+ d=1e100.net; s=20230601; t=1766970425; x=1767575225;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=krspu5Ta32VEquDexhjjvIZdCRtt8WXCpn1T/BESWAk=;
- b=M0eO0LMM2Y7rYcljjbVXWsCUykJUvodJsCV41aliCXJxcHdNPktszm/cbHGjNTCRoJ
- MN/0tLDR83/BUt7600wcQEUj9q5b17VGrkaFdLxNl8DqKhprWzgBz+7uUARAX9O3152d
- 2JzaRj8pFn5EBqoy8ZrScxTkc3h0GPHt/MKKbam4oltw9+xO6bVOTQnrYYaV+NzRguOS
- o0bZekr1dGwHqCq1idrf0/fXK5QmpKzTOSuZsTa/YEYWZnR+O4Wls53hgTC8U550YpRz
- GyABCR3zxLoh0z1WrqfzTEC7/TekAPJNseLLNLYb+KnMnpw7jxu+adkObSiG4stUcNGF
- o+tA==
+ bh=X55mHw4g2Ka6gAWM3/Bf2jpjuH/4l03Q/8zDDWsrmco=;
+ b=sEy/BbTA6fJlCVx+f5YQMIQQjTP6r1kKY53Bkk6z/RYaurDqoxkAH464GoNt5MjVQL
+ EhCeM4/mQtlNegT6q82Gm7ePb56R/pPog9BlPDv7o1qMGUTnqnE0tarwpfWGpOc7NgpI
+ 5plsPNs5n6385YLl9aA9evpqIL5ktQRY3YPTP1EWqlUOc0BFruA3hKWo7nuCa8YjPk62
+ AQo8TA+yzwgg1HQwF+ZskPR6m/sl29LRKGX1iO6c1hZ7ZSckHE4i0EdE07toIFWOFzrw
+ kYx8Yvmw88fy5MJZ1f151Kx8stqsTQq2eCtOQ5EwQykdtd+7YucKDtvr2MMxNoDRvbxk
+ /YKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXs+XGvHUSO50pAfBA3yo2fd/d9PVKK+l7uWd4gEEXjpQGwg+J0+d22B1D2nwxiKdpZtWgf7+QuPMZT@nongnu.org
-X-Gm-Message-State: AOJu0YxoYwqrMpwBBuYIs3qOXUqxOevgS0R5yX6mhoLTWzS+Qkma5wrc
- 3vKZIOfJqy//nF2hotl4LB1D6B5fe6ocmplAeo/y4DuliRWWD34oYiBFS0+OzmYhpSo=
-X-Gm-Gg: AY/fxX7PKZNmvAMCLLe4Vw5civbSkKK0gHTDrGhlDyuNgs1WxCqUC0ttnVG+3WWkm5t
- uIyu8W5h2HkpSZDoBKotCJjpUH1KGoOBNQuVlEQHBiohCw/j11QatBbbYYas5sxUtGdWM3wS1XS
- BGfg67SGcrDfCX2PHvVDJH/swLX8xN8HGjwiqUZXEidH27ANo/j6sfCtC2DcOAaPczteBb/YOki
- PuLTV8egmOZDObQ2ZuHVq7XH8VF0fC4LLjxmyUnExJOfys0ONLZ8ZklIey91K4fwzzyqSZAslA0
- Dgmdn83xmmXPZkdxufu6voRdb/aftRdM4ot+0i1oYPk+BY9iMZA5kCW2lSjHCGLoYCFbJsO4dFw
- ZGfEsC9IEFxNRPG5y7Iwke8mlQlLt/5xdNKng1jtbcaIuDtzy1xTC1KgbWn52EBfeN3O5GE5SC4
- gk05kGId39mslEANFcwJfSHmoUtsK/dtPsCFdCbcd0RA5N0NE9+3hIV5ZFNW3R9fHv8UwX3g==
-X-Google-Smtp-Source: AGHT+IGZsKv3knuZQ/KyvSsJGBFeuZ3HqpGkko7mEQ+1sBHioD1SahPbJlPHWYtTV+BaN8Z9Q6+iSQ==
-X-Received: by 2002:a17:90b:1346:b0:340:4abf:391d with SMTP id
- 98e67ed59e1d1-34e921353c3mr27796768a91.16.1766970317082; 
- Sun, 28 Dec 2025 17:05:17 -0800 (PST)
-Received: from ?IPV6:2406:2d40:40cd:310:f6a1:5e51:f9d7:f095?
- ([2406:2d40:40cd:310:f6a1:5e51:f9d7:f095])
+ AJvYcCVhWQ3GwCEJw4biva7mLuQZ0inWyHuFSV3aIqBfI5H5h6OtNBKPd0RSRZpvbvDx7LTdnrktxcbhyU7F@nongnu.org
+X-Gm-Message-State: AOJu0YwRigkycs55ei/dTAaVqYvW0m2qNAwBNpvfZE1YUtQZq/Sh3sM6
+ CmVc3M7X1h0TDKD59/yKjLtUpeAFlCwW3tnEaGIZr8Mus3URvKMeCdj9Rj3DOUZYRps=
+X-Gm-Gg: AY/fxX5lQxSbgPZeSVerLXMwWuPPy9MX9gmudqLpQrxXGcUJ3sDzib4jpD/GBPZ1Tnw
+ m5ORNtaDVR9VbAjYMDCkQaajkhDOF6zoxizsaBGEK+d+8NhL9yEBPituNNeun98bLAh+Yh4Hu7X
+ nwTTsqFjjSpXTsfFyVtDhyJcE83ruQ//YJMAkxUVhSZLMjyr0+bxP7GG38RC9bLlc6j4LQOPp9B
+ ALcVCG7lOneqWIXV1fys/QzP6Frkvc4r+UYvgJZEdCaaQLe2ybrZMqbTTJXhnbmYW/dxqnGHiSK
+ eGr76QhIrZwWNbfo4wx2u5RqA6TwBRUR+5QWpnGlJCLzXwJWpRZYiAoKF4Bt5c3laQddgLNIPWP
+ fYW9eBV6IQckZNgBtNMvVISKo0VXPfMUkWVVNlwM2IJjfVLcxCk0I7dQEarw2f9UU5OxZ06Biiv
+ AsuCvgpvoK25Ijp1aMNAcxbZodYg==
+X-Google-Smtp-Source: AGHT+IEt5FWbt8GSbunjitutmOugM21l9GjKfJRcCgYM97iYHl4pJHb6R8UrzYn4JJ9vbvp4/pH2oQ==
+X-Received: by 2002:a05:690c:4442:b0:78c:5803:f68e with SMTP id
+ 00721157ae682-78fb400de07mr241527717b3.33.1766970425150; 
+ Sun, 28 Dec 2025 17:07:05 -0800 (PST)
+Received: from [192.168.1.105] ([206.83.118.74])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34e9223adf5sm25705118a91.14.2025.12.28.17.05.12
+ 00721157ae682-78fb452c441sm109859747b3.46.2025.12.28.17.06.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 17:05:16 -0800 (PST)
-Message-ID: <9fe352be-6d51-4821-a2f5-f0d927af5222@linaro.org>
-Date: Mon, 29 Dec 2025 12:05:03 +1100
+ Sun, 28 Dec 2025 17:07:04 -0800 (PST)
+Message-ID: <35501b01-f0cb-45a6-b6b5-f85074db96d1@linaro.org>
+Date: Mon, 29 Dec 2025 12:06:55 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 17/25] system: Allow restricting legacy
- address_space_ldst() native-endian API
+Subject: Re: [PATCH v3 18/25] system: Allow restricting the legacy cpu_ld/st()
+ 'native-endian' API
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
  <peterx@redhat.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Anton Johansson <anjo@rev.ng>, David Hildenbrand <david@kernel.org>
+ Anton Johansson <anjo@rev.ng>
 References: <20251224152210.87880-1-philmd@linaro.org>
- <20251224152210.87880-18-philmd@linaro.org>
+ <20251224152210.87880-19-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224152210.87880-18-philmd@linaro.org>
+In-Reply-To: <20251224152210.87880-19-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,12 +119,10 @@ On 12/25/25 02:22, Philippe Mathieu-Daudé wrote:
 > target config, then the target won't be able to use the legacy
 > API anymore.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/system/memory_cached.h   | 2 ++
->   include/system/memory_ldst.h.inc | 2 ++
->   system/memory_ldst.c.inc         | 2 ++
->   3 files changed, 6 insertions(+)
+>   include/accel/tcg/cpu-ldst.h | 2 ++
+>   1 file changed, 2 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
