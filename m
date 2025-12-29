@@ -4,103 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5368CE9273E
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 17:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B84EAE92FC8
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 17:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaGs1-0003Fj-3V; Mon, 29 Dec 2025 12:17:25 -0500
+	id 1vaHNu-0003GV-7Y; Mon, 29 Dec 2025 12:50:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaGrz-0003FK-EU
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:17:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaGry-0006mn-1C
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:17:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767028640;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=iTJ5nzZuYxlGkcNPYCY4Oxn1ZDw2jiK/T3uoGI0wVcA=;
- b=fbh7q30EIBtUoU2ZORK9VUh4tgDRbwSfW94IubnPJ2vcvApw7zswVwqnRWMh13OplYzL6i
- bXOFyHTZL3CvTpQg6oFrCct1AQKmLOsWCQhOzNEIHTSve6lpbhFUuFZ9ybWRCSvybaJLGq
- p2W8wJMKM/bLIRgaiyRlAeOs1q4OYFg=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-501-U1MxAtJ9ML6nrjmvJpu9Gg-1; Mon, 29 Dec 2025 12:17:15 -0500
-X-MC-Unique: U1MxAtJ9ML6nrjmvJpu9Gg-1
-X-Mimecast-MFC-AGG-ID: U1MxAtJ9ML6nrjmvJpu9Gg_1767028634
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4ed6855557aso216017281cf.1
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 09:17:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vaHNd-0003BT-FV
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:50:12 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vaHNb-0003QC-9N
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:50:04 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7ade456b6abso7554495b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 09:50:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767028634; x=1767633434; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=iTJ5nzZuYxlGkcNPYCY4Oxn1ZDw2jiK/T3uoGI0wVcA=;
- b=czHvyy25WaCjVbPQyYG1zP5121TR8vxfc/pKGL19wZ+NW9n/Wga7I+hgCunKSjEBsz
- sR1sMkpa948RdJI9jSKjPgq+q3WZVnOnUrlJaYN0jsgJ53Qa2yu2O3+ugPHss0W/vd4f
- pyfyVyKhU+jp+Ay/SdBVW4JWeuv8WAHLjQLOQyqF5zppzAVB3fc+dCVlAgDPbyWdH5bk
- Zx+KvAm8yG+1Qdh3yksjjbg2E77GJ0Y3J/AwEZsFsf2TwPdsoYOR/4+YADX69EUldHDr
- gt9ni1V8o0Sj/65LP4iXmLBmCzS/jYQviDPI6XYAGhfsfcu3zfOvGagnLK66dp5tdl/N
- p24A==
+ d=linaro.org; s=google; t=1767030599; x=1767635399; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EcAbgDXHVxo//9dE/opdwDSUstPmjyc3Gle9ozu/kak=;
+ b=cSqJlNEy72Yaf1FaAfSSzMtMoBHpjWIjueDjKi8uGZySCg8Qk4lg7qQmx6uDs4MCrO
+ ngv7WoqLCI7geuAvimUHz+XqqRjRsI+bDiaOV5erU8m/a/xg5LxGD2r1bfDZSMwDw+TG
+ yaa/O/aM5AdkF/KHxQQ9b7VfjHUsKAjk8/EuRcDzssTt/QAn9Dv3ZacjQ/QS+5NobzBB
+ Y2f2xVg2YLKa0XA0SKWSvSg19hTw/PWJSh5bik0+tqSYwzTnocI5zmNe8mfL4lWtsJw8
+ wa55E/QG2zC/s8jBmDx22FEOQnkWPzJ+HTwj/RwdwPShPVjkD1mEhlowMf9J+vZ2nljl
+ g8+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767028634; x=1767633434;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iTJ5nzZuYxlGkcNPYCY4Oxn1ZDw2jiK/T3uoGI0wVcA=;
- b=xDAE3fihvrTTrLbckqmi+6onfu/WYLOatS9UU9u76AAtsB/3E/8azv3jL/UzT0WXzT
- 3XMoXM2O1Rf1+wIbdQuKNm6GyCGk0FBMW7c0U+6UKsOXeK/N6hw9kQEpsjD9cuGCozSm
- EHKkWsAYuHm7SQ2YPRMZoLnH8eS46gQanDlxkmy/p37iN78dsRh9XLLJk+ezDQLniyQb
- IcEZHGjJbGltfiCWDrjiK0q0y2Qz/LLUHD+1NyjOSd2fLcKqOEZHyw36O4TYg0jYmDQS
- nczCHXB7vHcP0T/Qg5Gl0w9rfS9cO61jP6tI5K2PvITuCnQVuDtgB9aBat+NaRfTX7ZH
- 75CQ==
-X-Gm-Message-State: AOJu0YywvsROvpt/a67f+n3dsO58FbT0ci5UqClLg5KoshORwqMVJvhf
- ea0Rr/ysc76y5nhzbyKVU65I7x58MiFGyPxQk1qtXyv85SwIz71oeuR6h1xSKcDAe8MlvGTlixE
- Lek3cOxNwsrYAQt3hvqDueSAVXO91qiD4CbfRHrl5eCG+7Xy6LS+GCqi+
-X-Gm-Gg: AY/fxX7PbRFdBbpUczdrM6EvW3S/hkVZqvxUVWNqAyX+BsalrtT+4VLL78lMZ9bC/BN
- xuVSkHgcU7gW5F1t4v3595QA9ssStm79CK03geWDEQkveM4QSZO9MbQXrZUDA5BSvRtDiRnrGuW
- jok6uO8mn9QngxzwwTmDm3XteYzjsUVXZzX1TPm6hXLPg+OfgGbDlP9SeQqYsda/RTBMpLwPzC6
- Yt00tNAkaqZCffY95tRr/r35U9EfMm/Je4F7eOnc2qTxF56q3zEi0zT8gRqJd6lUxFjRDMhS3vg
- lD9BihXkabrnkv+GccrP9FXwKzkA+pby5lb2Ol8G8DlkpPqV9Pmkjyy3SRQ+XwzOdgQiKcR8gCF
- +bXY=
-X-Received: by 2002:a05:622a:15d6:b0:4ed:bc0a:88c3 with SMTP id
- d75a77b69052e-4f4aadb1032mr544278361cf.33.1767028634441; 
- Mon, 29 Dec 2025 09:17:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF3YYx255VsEDOKutgFZMPAt3mKudwn+ZzKsvER10q0H8Bg4FF5M2AUofPOSGEEGChrHLXI6w==
-X-Received: by 2002:a05:622a:15d6:b0:4ed:bc0a:88c3 with SMTP id
- d75a77b69052e-4f4aadb1032mr544277961cf.33.1767028633974; 
- Mon, 29 Dec 2025 09:17:13 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4f4ac62f973sm232849301cf.18.2025.12.29.09.17.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Dec 2025 09:17:13 -0800 (PST)
-Date: Mon, 29 Dec 2025 12:17:10 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 11/25] migration: yank: Move register instance earlier
-Message-ID: <aVK3lpIGhfypr-Qc@x1.local>
-References: <20251226211930.27565-1-farosas@suse.de>
- <20251226211930.27565-12-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1767030599; x=1767635399;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EcAbgDXHVxo//9dE/opdwDSUstPmjyc3Gle9ozu/kak=;
+ b=drVn2wSYde7rUzHDX52rEM5i33vgiz6zkjY4HGZjX84QuWheIVcp/m7KJk7YOW6k2a
+ hY+4nw6fkmvvF0PBPd+2QXMdZ7DJQOIfhRzI8nS16vtwiUGMY5BUro+cdanlmUsdCZR8
+ m0hVikMvRp7bqqRPoc48uzdQzCZDh1mSPzOv8KOCsL1nYC/l48rdGJXDh5NdzVJvzXdZ
+ ZbzBxIyb6v/yHqBuplMaxrNBMlNA+1NFO9dF+nSUD1RwAe62RWyPRqpnvYkkT3AKnn0Y
+ nwQf3LiMf0ZoZnZSvdKi8UUDDbPRZKLjz/jpDC4HBmzSUsiC5eN9bc/Fm5cr89sN6Nwx
+ SezA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOsLoJfTVIUdXDsFqJ1q8uie4gFx7jFb1lCFVRdtgUWwMALPQIu850LrJqYQXcCzI8s3z9z7k601RQ@nongnu.org
+X-Gm-Message-State: AOJu0YyJw213NdlHyC7rjgaGTl0YkBL/lZOE4fhXlRdVzqU7aTwRENms
+ 3j+yCheQ7tO9LZLSn/FdPKhIkfML7b8T5I2QWuHQuk6yoFk8MbFhvM+5kgCnSsloof0=
+X-Gm-Gg: AY/fxX71TcPSiiz5OC7u2sWO7k6OXGHxr1RkdbPe3jpneGcXWd6dlHFp7kiUlHd/J/W
+ TOS070fUEutDy8IGI2Fv/Ky2Z7ktE01VSwEe2ZKC+5wDMMm0cjQn1HyCl5WXUqCSr0e7lsCCIpf
+ BGbljcsq/daHgqNd0JDhwgly9xS0aGEYhd9iuOP5DzMGQDv7kBkGCWusKIUECtP+V3TAwTRhobt
+ I3nz5TAs9JkhiM1nXTDKNCPUk8K5DO896RtEJ4ZNlswDOFOK6upXY49u2ahEtLjqNBdsxm7qEMZ
+ /EUviMS9+QLllNbxXoQN9D31FL43XY8HUvUv1Cm4s3gbABogJ8oyBLdWQHrvKAsLLfdRmz3kHiI
+ gDdfmRX/cG9AMY/Ecx8lt2YhMbxQqbDLGa3k3kqrzW7B5N5doEPBKHECZf3rLfHDg2Fv3/LR0B1
+ UVb4t4jnaeIKHbPgUaoJTD4wOQvIf85evTDpLADtORcTGebXDiRSP8nm3N
+X-Google-Smtp-Source: AGHT+IGHkY0NPJFlofxy7Lt+4zSf3MOYzItOPAg2JidTI0ZvomHj5KR6VtjPsNPyzYiGIk6cD5T2YA==
+X-Received: by 2002:a05:6a21:33a0:b0:350:66b2:9723 with SMTP id
+ adf61e73a8af0-376a9acee6emr27007930637.43.1767030599142; 
+ Mon, 29 Dec 2025 09:49:59 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c1e7bd61b4csm26034630a12.18.2025.12.29.09.49.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Dec 2025 09:49:58 -0800 (PST)
+Message-ID: <322e53ba-4b89-48df-95b0-98c2a72d174a@linaro.org>
+Date: Mon, 29 Dec 2025 09:49:57 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251226211930.27565-12-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 02/28] accel/system: Introduce hwaccel_enabled() helper
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ kvm@vger.kernel.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Cameron Esfahani <dirty@apple.com>
+References: <20251228235422.30383-1-mohamed@unpredictable.fr>
+ <20251228235422.30383-3-mohamed@unpredictable.fr>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20251228235422.30383-3-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,21 +124,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 26, 2025 at 06:19:13PM -0300, Fabiano Rosas wrote:
-> Move the register_instance call to migrate_prepare() so it can be
-> paired with the unregister_instance at migration_cleanup(). Otherwise,
-> the cleanup cannot be run when cpr_state_save() fails because the
-> instance is registered only after it.
+On 12/28/25 3:53 PM, Mohamed Mediouni wrote:
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> When resuming from a paused postcopy migration, migrate_prepare()
-> returns early, but migration_cleanup() doesn't run, so the yank will
-> remain paired.
+> hwaccel_enabled() return whether any hardware accelerator
+> is enabled.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/system/hw_accel.h | 13 +++++++++++++
+>   1 file changed, 13 insertions(+)
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
