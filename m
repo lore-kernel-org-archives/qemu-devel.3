@@ -4,112 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0024E92FC4
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 18:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E41E92FC4
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 18:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaIDa-0001Os-EE; Mon, 29 Dec 2025 13:43:46 -0500
+	id 1vaIEk-0001p8-6N; Mon, 29 Dec 2025 13:44:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vaIDY-0001Nq-LZ
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:43:44 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vaIDW-0007hF-6Z
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:43:44 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2a1022dda33so75876975ad.2
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 10:43:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767033820; x=1767638620; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uwn1Ia6i5f2r6o+NnwihSUzXHLhls41F5p1+a1eMrFQ=;
- b=PBeGHGNX6DQxOq5c+0kHWPPaH0gRCW31+aNp/Facd3Ttc6QXfmcLbemOQfZQNEtfns
- 20kYGW5z087nRa6/Y1b6BUlz0d2uyIGrLHuSuqSuXwZjDHFwS9AjEv4FcVh9O7KRcIvN
- JWC6ReNCQOitcnaA+ogZbosQq2DMqca73L6spq1TPd0vd6W9ph88jwUTSNp+f+iaO0Jq
- ac/K76lgGMnbDFi5l7K36Ij4dI9rGoDdnNAfTLKII52CqlRi7Gdkc/T5p1Vlsim3a8Dh
- IwOCKL038Xno5yaE8tnBxUTJ0KNui/Gn/+mOorRsH88DOn3O9MExmAELKap56ajrRqJ8
- Knlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767033820; x=1767638620;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uwn1Ia6i5f2r6o+NnwihSUzXHLhls41F5p1+a1eMrFQ=;
- b=mJlF3x7vRIZ69YRuS9cl4kauMkAQcxXX475qr0fyw9CEKA+edDNs47TaC3o8UpTdIh
- A9nInwXctItKxrUesQF95OIHWXnVNMxHvuAe4xsAOXsb6t2O2/M7WoO0l48v3AwnTNHy
- B3sGG65WrP4ndJ55h/NTZtEDG9ZhTpIy+biIrrSmlNcIopVEjspGXNSZnF2jpq6ywO0g
- jDzhUOSMZ2mdVncA9ytlTC7X2RjTYWqnjbNeLqnqvoNLwcRbtrYBwilaLA8R+E+SfiE0
- I3V63OH4cwyDtLZ/AS3mUgGBFn6OD9RWlqnR7VUCxlATRhtdAK7zabpu7hwhFFy8q66Q
- hCng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVeZKm4P16dx+BoNaVZtfczj/2cE/LGvTjvaXmXcDnAHU3KQpNSIU229PC4wumQubOtqJI/nxC3meWs@nongnu.org
-X-Gm-Message-State: AOJu0YwZlQD0Ub6HQlhZCMVsySjWfkIH4ESBtKpkpLB+aywuvKFEXf0I
- pvQAzHPZQG/WZlqiFFQWptuR+y0MhZJW70djvN6tRk9jlQkhKPK9U5Wdmd6RB7S9kvk=
-X-Gm-Gg: AY/fxX4RvlrRIlivlIexnvIGUdfj5KmtwHPcckbeqh957+ww1iECHubaiiNquDF74v6
- fqfkyS8GQvC/EAB01RAWtWVlN10FQCb2g40wi6u3qbtlIUbIojiqNFRE59Ki8gfmBv71yERepWR
- Wp7Om4ptgIwdrWsVlosZvP1IXQnC8QJzb57RTm3CfcCm0Gutmuq/poPokwLVWwD0LAaJHmXbMKp
- g3nEuo5D1ptVUUTN36vakcS2Vh7JNI+Bv6C7XnpEgZ8QUjpmOq8J/IH2dEXz7zmPlVbQdJIu+P2
- HyQHZ4CLE7KoV8Zj0NalP0g1Io+ZIIkp/SyTBW+u45d5V/s3uxB0Hd4nuDY/omKDadnJRsUCS1Z
- VHf/byB1zlU6vmj+Cl/PhTIgzOf4LYi/8aGtd1G4r4L0X9v9dxr8qULefRNnsKXzk6CG36nmb87
- 409MDZ6UJrJwA9rH5RTdzs5JawHTFctG9wi6/wnVP7KA+RoH98TaztyOzA
-X-Google-Smtp-Source: AGHT+IH38YtqoTF7wx7s38i2m+/OSaoP7yEHgGhDuk2Zgmj+fK7stjLK8Nlx5s43A/87PIrNe3VV5A==
-X-Received: by 2002:a17:903:1a2e:b0:297:d764:9874 with SMTP id
- d9443c01a7336-2a2f222bfebmr313442345ad.21.1767033820186; 
- Mon, 29 Dec 2025 10:43:40 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3c83325sm281846545ad.34.2025.12.29.10.43.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Dec 2025 10:43:39 -0800 (PST)
-Message-ID: <f9a6ac85-f3d5-4e14-a717-bd2183cda1d6@linaro.org>
-Date: Mon, 29 Dec 2025 10:43:38 -0800
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vaIEN-0001cX-7e; Mon, 29 Dec 2025 13:44:41 -0500
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vaIEL-0007lA-LV; Mon, 29 Dec 2025 13:44:34 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=N/1EoAfJYbdzn/iVIwAR5asjTliLvpVElgVlHlupdu3hBvmkZVWdk7sN54BzCTpPCxYDxy3PrtNEs106xhSew7ZFc7uCRWW1mzOAOOTYDSQCoR04GaACgkR5FpZB+ikdL7aMaCCbpJJ5FjJsPxdqR8+74j63jL/yTpQZ/PqSkgemHC/TvXoDq+JWfJtgEhfb4A6bKxrF0CvV5ZKmonm9C+WNZfHCEiFaUmhW9uEdhEoiibvMrz5OoC4kplumvQm2g0GFzfOEkHgRcC6GJwPNyP3jaYkRhdOj9/t6SXEQKBcyMPVCGx8PRLGejaCusTrgcyBcecQqENd6kz+LDMZ/5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GIb7i5qL4toKfCtbmMQV0pl+5mn+EJ1+/LYGqRSrcI8=;
+ b=HojV8SMzzuKt5lXCzH0K8mMcfnZ2Eon0RNHX3ja0glMkbOC0Vd9qbsAp9yt0j/Ab2940OB6bwdPL1hEwhzbNcWHWxcRd2gNrwnJHYwW8OlGFqPOclLGec/rGeiJV6NnQMgE4mqAFJhYzr7WJA4lcjtdypVC++6olGO+hnAjoEM0YlbGZgHfQc3itkzkLuZEr2A99SsEt5T2lD0jElviycb16dD26F9lpK0foENFT5U+G1fhmBiMVfSav/2OYhB38WHJE5fYyqX/+iG+r6wB2A3DeqyUdaoN5CiENRccUhWQ3E/NjThthS/hEQHwHEvZTvnduzmopxSI6Qv+81pqVDA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GIb7i5qL4toKfCtbmMQV0pl+5mn+EJ1+/LYGqRSrcI8=;
+ b=m9R1i+N3yNUkaZJ7inPxK+ZqArkqPXLOSz6B3XZOxSmGEXShURL/LB8HfIY74kPTkA/H/WCoHMYZ5wIJAfXNax4hheoESIqcx3gxfcfnz6zo2SKbqlOUMcYerJ8K7f/tDzeM3U/rVZm70+pfhEXqQ56rVjbGdUTMk8gSqMiynBu5r4DV02gY9swn8dFzgKyPJvS3/VrK9sR5Kuc4U2PXnXaLZEy1an1C1iIeLApgGZNOjP/reLqjXp/bQjSaYvzrss+K41XokvZCQ4VGQNROC+jEjTknPwUEmRBkZgRCR9vsL1AEgC55ZE4R3Ks7wKyDJh/Vd4zxfmckLecVG56YaQ==
+Received: from BN1PR14CA0025.namprd14.prod.outlook.com (2603:10b6:408:e3::30)
+ by IA0PR12MB8352.namprd12.prod.outlook.com (2603:10b6:208:3dd::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
+ 2025 18:44:24 +0000
+Received: from BL6PEPF00020E66.namprd04.prod.outlook.com
+ (2603:10b6:408:e3:cafe::53) by BN1PR14CA0025.outlook.office365.com
+ (2603:10b6:408:e3::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9456.14 via Frontend Transport; Mon,
+ 29 Dec 2025 18:44:17 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL6PEPF00020E66.mail.protection.outlook.com (10.167.249.27) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9478.4 via Frontend Transport; Mon, 29 Dec 2025 18:44:24 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
+ 2025 10:44:08 -0800
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
+ 2025 10:44:07 -0800
+Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 29 Dec 2025 10:44:07 -0800
+Date: Mon, 29 Dec 2025 10:44:06 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [RFC PATCH 02/16] backends/iommufd: Update
+ iommufd_backend_alloc_viommu to allow user ptr
+Message-ID: <aVLL9tvQfRgZ4hnq@Asurada-Nvidia>
+References: <20251210133737.78257-1-skolothumtho@nvidia.com>
+ <20251210133737.78257-3-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 04/28] hw/arm: virt: add GICv2m for the case when ITS
- is not available
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- kvm@vger.kernel.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>
-References: <20251228235422.30383-1-mohamed@unpredictable.fr>
- <20251228235422.30383-5-mohamed@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251228235422.30383-5-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20251210133737.78257-3-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF00020E66:EE_|IA0PR12MB8352:EE_
+X-MS-Office365-Filtering-Correlation-Id: 223ae393-88fe-4e42-5852-08de470a499f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|36860700013|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?TQAx1C0krFytbBun4VPR8MspkWEWhss/KlI0RQNBq+cHwNY+StFap1PnZIiV?=
+ =?us-ascii?Q?40tRxPVMDyWtd52J3IMFSXnuMNifL5z0DKSK3jWAuUAmLMWkuZx4EYwjVA+Z?=
+ =?us-ascii?Q?pWIajts9wLXcYL+HCAhlD6ncNUjdkPXgG557kBm/GTTaF5dYWW7toMQJRmXx?=
+ =?us-ascii?Q?QWDHsm37E2QEUX1Z8h05ZlLtSJU2waYv0gG8X++WFxoVDYr3JGe5bj0S44ft?=
+ =?us-ascii?Q?GeL1ZegRU9mlM070OoZPBJrKiM4Or2W0rZ6EX7zUFAE5YVDO+Rp01NfUFLP6?=
+ =?us-ascii?Q?QMiItLoIUWvySYdRZj8ghednCP9IFkzpyNansgOJDhuZxFXXBySpV25+aC/S?=
+ =?us-ascii?Q?6ufNZB9Qo58yRrKnXj+NIbBNCXwYKUIHLSNUIZXl1GPMOyRimdxeoP3MvzAM?=
+ =?us-ascii?Q?GvR2falPgcOk3AOVTQNySMFKPnHl43kwg09pmXZ/Ih3jUZf0J/bCquWjlKyh?=
+ =?us-ascii?Q?ijxZX4sVJ5yrEwGP1DRpW1fynaQIOvInKbQyOSAMobAF4OapZZQuohkoxE3y?=
+ =?us-ascii?Q?VulijVF9UvRq9BGyzT0mSsrirQWZ4jsKMbNkYoyiSfMquAUc/uuzQ5jW/fME?=
+ =?us-ascii?Q?NibO0P9deqDzdniecxtUxGwwnC6JVV371m5Bh4IaaNZqP8Vte5NN9cK6jhp6?=
+ =?us-ascii?Q?Qp50dljyQJfr2AvNG55L75BjBuBKk+xi63C+dWAXa4fmAMVREGk1gjC2Xg0X?=
+ =?us-ascii?Q?5oMA+xzUcSCKKzhF8vEM3LkVN/LGaVwrQkarjyhggkmnfg36q7FzyKDcEp9c?=
+ =?us-ascii?Q?GPNpPZnVnGqOJww7r77I2+duQP4g464bXlyNsf4JNDChkxPPNHH//aoIf13J?=
+ =?us-ascii?Q?hNUZltPb9dhlc91X7p5uemA57AOjN6tE08NRPT8thG2pilLotUhnRavkpKzp?=
+ =?us-ascii?Q?jDjawHduJAOKXVUFRYuEByudghcXhcpJ3BpfwaNAqiWJ0Ck7SJJIk7iiC5pE?=
+ =?us-ascii?Q?/hdmdbPM5wfI24cTe5PO6RN1apCUafRxDE0FCt8YPmX4YkEQ5fHmPSfUdzTQ?=
+ =?us-ascii?Q?e7yiO1pgWSeLsIhWEVfdJEn2vIfoK0TP8RsxMAfuajexxKwSBJJzZ5gDED2H?=
+ =?us-ascii?Q?OFDXFSQ2qzJSnjS5FSANsG9jz/8gXKkvuSpr0hRzaC/3bdnr5kM75OZF2qa6?=
+ =?us-ascii?Q?RrQ9bPDKtfcLdJzvuRUINf0iSn4fmc8XOvubEGtKb11gjFiFoa+Y4rFeFqvi?=
+ =?us-ascii?Q?ZTeZhBon/vcR508kwPn25Sc6EW8ADrTkUR1iNqqBPhPkCQlR02RDVuaW3+As?=
+ =?us-ascii?Q?xygvIbzXttDuP3PrnoDR7dTwFU4au5c/MzPrj5vP3+aUqdNWVnMpEmEb56DG?=
+ =?us-ascii?Q?etKr4ZnQ+ZID/b66cTiOwxb6DPyWhARoD+hNxETYsYpbq4ojn1JzHa77Ybqy?=
+ =?us-ascii?Q?3G6Si9hBkeW9ZOLRMy3QDPXRZBzYYMolPc9VTija6jWojWmPQkql3zJGDKMG?=
+ =?us-ascii?Q?YR9+rnKW3MkbMsxWH1awlrFJ92Q3RhlUBqg/tvMqitl4SSX+n6BqCwP+sxRy?=
+ =?us-ascii?Q?STo1J6GjUfBTBEuWuS00aD5iWNgMSZg2OtVgkNfMDwGOAYEdI5DL86Lqs8Ym?=
+ =?us-ascii?Q?GjsVYWnqE1R5f+4+nHw=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(36860700013)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 18:44:24.1812 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 223ae393-88fe-4e42-5852-08de470a499f
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E66.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8352
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+ envelope-from=nicolinc@nvidia.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,112 +159,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/28/25 3:53 PM, Mohamed Mediouni wrote:
-> On Hypervisor.framework for macOS and WHPX for Windows, the provided environment is a GICv3 without ITS.
-> 
-> As such, support a GICv3 w/ GICv2m for that scenario.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/arm/virt-acpi-build.c |  4 +++-
->   hw/arm/virt.c            | 16 +++++++++++++++-
->   include/hw/arm/virt.h    |  2 ++
->   3 files changed, 20 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 03b4342574..b6f722657a 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -960,7 +960,9 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->               build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
->               build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
->           }
-> -    } else {
-> +    }
-> +
-> +    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) && !vms->no_gicv3_with_gicv2m) {
+On Wed, Dec 10, 2025 at 01:37:23PM +0000, Shameer Kolothum wrote:
+>  bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+>                                    uint32_t viommu_type, uint32_t hwpt_id,
+> +                                  void *data_ptr, uint32_t len,
+>                                    uint32_t *out_viommu_id, Error **errp)
+>  {
+>      int ret;
+> @@ -467,6 +468,8 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+>          .type = viommu_type,
+>          .dev_id = dev_id,
+>          .hwpt_id = hwpt_id,
+> +        .data_len = len,
+> +        .data_uptr = (uintptr_t)data_ptr,
+>      };
 
-check patch reports:
-ERROR: line over 90 characters
-#31: FILE: hw/arm/virt-acpi-build.c:965:
-+    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) && 
-!vms->no_gicv3_with_gicv2m) {
+Perhaps we should update the trace as well, given that we do print
+data_len/ptr for iommufd_backend_alloc_hwpt().
 
->           const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
->   
->           /* 5.2.12.16 GIC MSI Frame Structure */
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index fd0e28f030..0fb8dcb07d 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -959,6 +959,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
->   
->       if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
->           create_its(vms);
-> +    } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
-> +        create_v2m(vms);
->       } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
->           create_v2m(vms);
->       }
-> @@ -2444,6 +2446,8 @@ static void machvirt_init(MachineState *machine)
->       vms->ns_el2_virt_timer_irq = ns_el2_virt_timer_present() &&
->           !vmc->no_ns_el2_virt_timer_irq;
->   
-> +    vms->no_gicv3_with_gicv2m = vmc->no_gicv3_with_gicv2m;
-> +
->       fdt_add_timer_nodes(vms);
->       fdt_add_cpu_nodes(vms);
->   
-> @@ -3488,6 +3492,7 @@ static void virt_instance_init(Object *obj)
->       vms->its = true;
->       /* Allow ITS emulation if the machine version supports it */
->       vms->tcg_its = !vmc->no_tcg_its;
-> +    vms->no_gicv3_with_gicv2m = false;
->   
->       /* Default disallows iommu instantiation */
->       vms->iommu = VIRT_IOMMU_NONE;
-> @@ -3533,10 +3538,19 @@ static void machvirt_machine_init(void)
->   }
->   type_init(machvirt_machine_init);
->   
-> +static void virt_machine_11_0_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 0)
-> +
->   static void virt_machine_10_2_options(MachineClass *mc)
->   {
-> +    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
-> +
-> +    vmc->no_gicv3_with_gicv2m = true;
-> +    virt_machine_11_0_options(mc);
->   }
-> -DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
-> +DEFINE_VIRT_MACHINE(10, 2)
->   
->   static void virt_machine_10_1_options(MachineClass *mc)
->   {
-> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-> index 8694aaa4e2..c5bc47ee88 100644
-> --- a/include/hw/arm/virt.h
-> +++ b/include/hw/arm/virt.h
-> @@ -130,6 +130,7 @@ struct VirtMachineClass {
->       bool no_cpu_topology;
->       bool no_tcg_lpa2;
->       bool no_ns_el2_virt_timer_irq;
-> +    bool no_gicv3_with_gicv2m;
->       bool no_nested_smmu;
->   };
->   
-> @@ -178,6 +179,7 @@ struct VirtMachineState {
->       char *oem_id;
->       char *oem_table_id;
->       bool ns_el2_virt_timer_irq;
-> +    bool no_gicv3_with_gicv2m;
->       CXLState cxl_devices_state;
->       bool legacy_smmuv3_present;
->   };
-
+Nicolin
 
