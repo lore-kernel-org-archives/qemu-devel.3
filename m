@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C84E8FDB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B941BE8FDB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:25:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaBMg-0008Ga-4X; Mon, 29 Dec 2025 06:24:42 -0500
+	id 1vaBN2-00008g-KK; Mon, 29 Dec 2025 06:25:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaBMd-00088y-Ow
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:24:39 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1vaBMs-0008TF-RH
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:24:58 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaBMc-0006a2-7j
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:24:39 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b7636c96b9aso1630335966b.2
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:24:37 -0800 (PST)
+ id 1vaBMr-0006bp-6x
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:24:54 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-64d30dc4ed7so10819121a12.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:24:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767007477; x=1767612277; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767007491; x=1767612291; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dtRM1mc/ZlSVhwSxDBa2Qgm8TmxkGTqa6zsaLqwnBYQ=;
- b=iRuYPMg6OTxX1yQyt7RPTsG+rHcv9vII4dMIO3FM+mP/RtGym9MqYlIiR0R00+h1Dr
- dN7XT74Hg5fBRZ6EkytZoc8/LeQs684v9oAE+4KdStEGi2hEKqFtlnEhu1ixvjkilwuX
- wv80wzvn6GgNEkKZEqKlyToajudne5yJENl+4TonIReuZbSHVci6wOhfp06CbCbeREcy
- 7BnImkTrAjkhJYfmEFBcPjgxdOTpNz8VejIECTjlPba101HmkN7klIQnPkIV8P3SmwiB
- r1O50zC0Sh8Gub6Ci4d1qzrgk8HRCeRYivhKni0UPlLsnl7K6HT38dz2Jf+rVV0kSI+g
- xVjg==
+ bh=GL5QiCDGGMdUivLLoFnnqtdZyCvc43hcdc0r3RMhuwU=;
+ b=pEK12g2rYAcyNuGrZeIJwjXkLeVEMosxjglKg055AjHJw9OWuALaQ87+9+hHua+MZj
+ hVa3bSdAYwZFlCzUuQ8T3oVSZv+D+CGZKOVgA6Zwg1M+SMgq/Uoex/2sPK1tGu11wzwK
+ 8vzFr7XDuFkZ61smn4E2qqf79NAGRs1om7sd5hqZn18f9a8ozTy3QPa7PlbbiMANJMSO
+ KXEqIIQ/BVe6ZAQmI3dbgeGk1DBITSZi4qLLjG36mUtzIW6EBNg8wipV3f94g2FaQz3x
+ tblvmWzjBunLp6xEiYUciNjiq2HnfhzG5lbYWbmu1O7/acDluqRrN4mIvy2vP2E3zr4y
+ e58g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767007477; x=1767612277;
+ d=1e100.net; s=20230601; t=1767007491; x=1767612291;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dtRM1mc/ZlSVhwSxDBa2Qgm8TmxkGTqa6zsaLqwnBYQ=;
- b=vFbu9WleO+PHTxpiHs0GrpEMCn79tLHflTN23jZEFmu+/WT4xyixU3AER4pms/tzCU
- 6JDsvnodiUi1rEqFmTxZwaAkkeJ7+KaFQDDqnoof3bALhp9N75ttJ9r6ATKzG4y+N0tQ
- xPhrn3cEF5HCfO5oD3T3Bz8YoHCxqXW0dNia4/YDNU56cd9bz9U5X5JFpEW/g/V8aS1C
- r8zL9Vcll5VI/oXYSgObnYiDQp5PbEeWsDIKneKzi+Pc523Gs3Z6h6Lf8enhwMpJqcAZ
- /9ofV8K6EFahLY5TT3AdO+vFEEdUZnNiHYQZMtWSLVf61AQWXgErIeV5I+4fAuk38LKv
- ngXA==
-X-Gm-Message-State: AOJu0Yx8nl5EexFyUX8f7AXo/Q1qoeP3lZzcvvht0Y8Z7E/LlR9h5Aj3
- ZHak4dongSNR+syNNHhGO4zztZg7sUdPK2ZuURcQ9/ZEMFPRHSxzz+emT3Rj/aUoS0MvcAH5FM6
- nT1Ls7kqg+JneHFrGek4Sy8OI9P+snMtnqV1vDSsujhVml4LoSeu+JcoNCA==
-X-Gm-Gg: AY/fxX4KxhGEmRx2vKxiPFGEwWde50xlo9n+lZsQCgbfa69dLFN9JFvG8peSUvBHOk0
- oQcaT6orRHmE+4dvLmVr4RkCGSehG7b4JmgJAM4VEd23FkvYOeGhgSda5debCURRJTJla2wjsgH
- KlFUeC6oMRS0TNjuDH8Z7MPj82gg8b1yaOMlBYqBq5AxA4yixE7X13OVVms4+hbxswo2aZnoY2c
- Gygz6xHsMhu6Bj0y7LUDIAmk2Q05si+lgmIUTQPksdqJd1Vs++OPg4iMXx1r/yyZKIglJnwVBbm
- oXDcgvs0MFiqfMB+xU9xGi54HGHeyvBFRA89hCI=
-X-Google-Smtp-Source: AGHT+IGwYksX7pJM9MoMRJUKjr1ph40d0LCL6IDv9EGKT0GGy8EaXGHxmLuJ5p45pF+xEiHTxfNQ7229QvnfsiNoEs0=
-X-Received: by 2002:a17:907:1c0f:b0:b83:3715:530e with SMTP id
- a640c23a62f3a-b83371556d9mr975396966b.11.1767007476587; Mon, 29 Dec 2025
- 03:24:36 -0800 (PST)
+ bh=GL5QiCDGGMdUivLLoFnnqtdZyCvc43hcdc0r3RMhuwU=;
+ b=cAnDTMintVQDxmp0JirdYFwwNv88yA9IKYwDr3To0fIT5yrkm7hGkrCIwpgPU3sYcC
+ 09c1CLWF8Mqb5GBdQYnsjrxxwVf+jVYzLIPIo0sxLaQnP3iR0fu1MfeAYaMPluQXAlWy
+ kBGaqIVNcF1CtSPyXr3dD0NdiHkYThQ6pNh7VMqjUk26AP/thwBvw7yDWrq99GyN8cKW
+ rQtWH/7shz2Kbbz51ExJk+oW7eHVTXf5XdFQmkrVSqujulN+D8ksBg8PSfy+k7H1nEZs
+ 8MnFPMT5BHwom/Zm3yqlih3h8QfEQbzo28A2KyPVFl418Jgtkb/XOoBB9RrQhgpkx/Sd
+ PT4g==
+X-Gm-Message-State: AOJu0YxAL978rbRNHIwpBZzBbB4Kj+JM0FBY0UoR13KXVi15iTqyyBuK
+ GXU7kDf5E4ykJ6hZfEm9HUu3cgTkWg6xvlGcrulL4lP2ZJoA8jZM2uTmfWWkFzto4SdaMlgdlYS
+ S58HQDyea22Jt5EvIpau3niOcveIAe2cJ0DqjNtOXSw==
+X-Gm-Gg: AY/fxX7SMEjFPvZUCzotVXaUfL1TxTqKjjjBCN11Z6VaU5BO/yFrV7mab7h4+UVvbDI
+ bH+4d02nCMUwmJWJJbiylcvhKW9dU7fkVX2DzmXMll41gscu+t66gka5iFhBBuU5wgON5T97nwB
+ D5fnaHWGYYZPYZxJmNgjXqXlnn4pt/5nqcT76OrklXJflmaZSdNnSA+fOpv2dBW7TwEGMHvG36l
+ Hnee3v7LJiNfzcHlxY58ilUBrdkWatckgM/YHgAY8AsyjOnMcc3uopXkAjw/SWKO3/qMMnavuHO
+ YlZseiHjCBLtTY0Uv1nV8I+U6P0i4uaE/hNJdEConNVL06bNUA==
+X-Google-Smtp-Source: AGHT+IFFdudTzDPtghUISuxXF+1bdhbZpWfklallcg9V2m8hh0PHmd/pPebbE1ZgcVBkeyISJjCMZsEwBr2I1uG5EeE=
+X-Received: by 2002:a17:907:7f8e:b0:b7d:11ae:4006 with SMTP id
+ a640c23a62f3a-b8037197254mr3351234166b.52.1767007491377; Mon, 29 Dec 2025
+ 03:24:51 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224163005.91137-1-philmd@linaro.org>
- <20251224163005.91137-3-philmd@linaro.org>
-In-Reply-To: <20251224163005.91137-3-philmd@linaro.org>
+ <20251224163005.91137-4-philmd@linaro.org>
+In-Reply-To: <20251224163005.91137-4-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Dec 2025 13:24:10 +0200
-X-Gm-Features: AQt7F2rCPNtuyyOtu9_mWJUcjXL1dbjBIPRfWBzMFJlJs_Qv21Br1-9Hjdb2K84
-Message-ID: <CAAjaMXbsR1wm-0UM0KG4UzpqfKe1zTNzQdmAXdm2GKVwxZ3FbQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] target/tricore: Inline translator_lduw()
+Date: Mon, 29 Dec 2025 13:24:25 +0200
+X-Gm-Features: AQt7F2rh8xXKO5vpXZMkYlbeeR8fl2EqPH05dhmbTkjWuLyrSr-T7KpifRomODg
+Message-ID: <CAAjaMXZxTrnSufP4wkSN0sAK2MBX6u6kH98C8bAxrfchs-hPFw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] configs/targets: Forbid TriCore to use legacy native
+ endianness API
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, 
  Bastian Koppelmann <kbastian@mail.uni-paderborn.de>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,19 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 24, 2025 at 6:30=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+On Wed, Dec 24, 2025 at 6:31=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> translator_lduw() is defined in "exec/translator.h" as:
+> The qemu-system-tricore binary is buildable without a single
+> use of the legacy "native endian" API. Unset the transitional
+> TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
+> further uses of the legacy API.
 >
->  192 static inline uint16_t
->  193 translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
->  194 {
->  195     return translator_lduw_end(env, db, pc, MO_TE);
->  196 }
+> Preliminary commits allowing this final change:
 >
-> Directly use the inlined form, expanding MO_TE -> MO_LE
-> since we only build the TriCore target as little-endian.
+>  . cd08bcaa36b target/tricore: Expand TCGv type for 32-bit target
+>  . 8a2235dd077 target/tricore: Un-inline various helpers
+>  . e843ef2bbac target/tricore: Pass DisasContext as first argument
+>  . 4f08815467e target/tricore: Expand TCG helpers for 32-bit target
+>  . f30c8aa229d target/tricore: Inline tcg_gen_ld32u_tl()
+>  . 6b2e4fcb836 target/tricore: Declare registers as TCGv_i32
+>  . c558aa94211 target/tricore: Replace target_ulong -> uint32_t in op_hel=
+per.c
+>  . 30257dcd2b0 target/tricore: Remove unnecessary cast to target_ulong
+>  . 44e2b68d275 target/tricore: Remove target_ulong use in gen_addi_d()
+>  . a15e8996268 target/tricore: Remove target_ulong use in translate_insn(=
+) handler
+>  . 0d5f9542561 target/tricore: Replace target_ulong -> vaddr with tlb_fil=
+l() callees
+>  . 809b460f305 target/tricore: Remove target_ulong use in gen_goto_tb()
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
@@ -119,48 +132,19 @@ Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
 
->  target/tricore/translate.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+>  configs/targets/tricore-softmmu.mak | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/target/tricore/translate.c b/target/tricore/translate.c
-> index fbe05a93a8a..18d8726af6d 100644
-> --- a/target/tricore/translate.c
-> +++ b/target/tricore/translate.c
-> @@ -8422,7 +8422,8 @@ static bool insn_crosses_page(DisasContext *ctx, CP=
-UTriCoreState *env)
->       * 4 bytes from the page boundary, so we cross the page if the first
->       * 16 bits indicate that this is a 32 bit insn.
->       */
-> -    uint16_t insn =3D translator_lduw(env, &ctx->base, ctx->base.pc_next=
-);
-> +    uint16_t insn =3D translator_lduw_end(env, &ctx->base, ctx->base.pc_=
-next,
-> +                                        MO_LE);
->
->      return !tricore_insn_is_16bit(insn);
->  }
-> @@ -8435,15 +8436,15 @@ static void tricore_tr_translate_insn(DisasContex=
-tBase *dcbase, CPUState *cpu)
->      uint16_t insn_lo;
->      bool is_16bit;
->
-> -    insn_lo =3D translator_lduw(env, &ctx->base, ctx->base.pc_next);
-> +    insn_lo =3D translator_lduw_end(env, &ctx->base, ctx->base.pc_next, =
-MO_LE);
->      is_16bit =3D tricore_insn_is_16bit(insn_lo);
->      if (is_16bit) {
->          ctx->opcode =3D insn_lo;
->          ctx->pc_succ_insn =3D ctx->base.pc_next + 2;
->          decode_16Bit_opc(ctx);
->      } else {
-> -        uint32_t insn_hi =3D translator_lduw(env, &ctx->base,
-> -                                           ctx->base.pc_next + 2);
-> +        uint32_t insn_hi =3D translator_lduw_end(env, &ctx->base,
-> +                                               ctx->base.pc_next + 2, MO=
-_LE);
->          ctx->opcode =3D insn_hi << 16 | insn_lo;
->          ctx->pc_succ_insn =3D ctx->base.pc_next + 4;
->          decode_32Bit_opc(ctx);
+> diff --git a/configs/targets/tricore-softmmu.mak b/configs/targets/tricor=
+e-softmmu.mak
+> index 5e018d81068..9a9f23c7731 100644
+> --- a/configs/targets/tricore-softmmu.mak
+> +++ b/configs/targets/tricore-softmmu.mak
+> @@ -1,3 +1,4 @@
+>  TARGET_ARCH=3Dtricore
+>  TARGET_LONG_BITS=3D32
+>  TARGET_NOT_USING_LEGACY_LDST_PHYS_API=3Dy
+> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
 > --
 > 2.52.0
 >
