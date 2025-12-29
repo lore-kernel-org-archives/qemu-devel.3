@@ -4,110 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 647F9E92FCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B50CEE92FCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaIUb-0007L4-Mj; Mon, 29 Dec 2025 14:01:22 -0500
+	id 1vaIai-0000SJ-1y; Mon, 29 Dec 2025 14:07:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vaIUO-0007J3-76
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:01:15 -0500
-Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vaIUI-0001Ny-PO
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:01:07 -0500
-Received: by mail-pl1-x642.google.com with SMTP id
- d9443c01a7336-2a0d5c365ceso122606485ad.3
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 11:01:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767034861; x=1767639661; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lVPFq1PK5llLQFLjZ+90vWPQ+JVxEZ0MCjapERVy89E=;
- b=xkP5i3D6dk3G1jOte1D0W6RKxys6eDe1nY8+zz9YeZ3E7RQkM/JBwEgNHJhEWH7elp
- TxlcMDyWlCRi2N/mMmi8c/FjhUNiYVqKHAjKbvRwtCtmZGV5okbwQFKsR8S5se8ccDMb
- lFULLyxkOGJyvripiBDl6tN/s7KOdeyRJevQBZB4hF4SbG6q0TZC86Sl0M5zE2IV793W
- GV410m8mmeual8l1jy/7XxvmcUuu+SFusQwvHbgeq1M53qkpZ0KCkDzILnaQgMXj9b3f
- BhKsoor09F9KjYPXPV+XesdvaiNvVz9JTanLQ0AOXNEdOQytZv/TLnoDlRf5FWzaCbTP
- rdSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767034861; x=1767639661;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lVPFq1PK5llLQFLjZ+90vWPQ+JVxEZ0MCjapERVy89E=;
- b=wLTN/RpkV98NKil+nhuHhQbljAhiDOKr6cNB4x4YGNqUmYtQuTMAWpV+2ChV4o0pGb
- bJ5vEpFJXteWe10wWreexmYrE+GHFWGAdnEZNZgZaUKNoE+dRWOyNkIoqAatwVmK0FWC
- Qwpi9W1/Ikw5+SUT8b2fars+mnTYloshW9sOaOWpmxEcgDexNBmzZJnV2GO1MQVdQI4c
- 984U/ZD3zREIHFjSxpGU9CGR7VfRFXUKR96676R4imo0fNhzMW+6QxiLvx6J/AQCenXr
- oTkmnOBLvYQfCF5WFISEYBGyQFgm2C1gxh2X7vF0Cz233BV+GBelZ7YAtDMceQdGYuse
- wNPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZXmorMqY6f1wyab/Aq1ekFu8OJv9HYHWS/DC6NGWq/Vayntbi6QZLe8TRb0ZrP1NGmsfY1PeCYJ9I@nongnu.org
-X-Gm-Message-State: AOJu0Yxmft0T1QuXWIozVOlZwxo5aByZuxDpbsloUEp/tGMNNLBGW0Jd
- 6AE83pXOHjLjl0vLGvWBR0QkrXDmVccI5//jYhWUQAtAufH+pR3VSrdIk0hcojtiO1o=
-X-Gm-Gg: AY/fxX6dz4jfQ2E+agJ07RgBLQTYTHvWxHUHqTBZU1L/MzzpeP4k82aF/PfQmyDtt9S
- goqLBTSuT81ZtHbFR2yu+zFsgOm8gdZdSRjTMp5fXnhA/nuetpznz6EEjP8RjPL0JCnB/PXexYQ
- aSIrk7qKHsS3uPqEyF6XJMHtA3EB1gFirZHyGc8ia/Z0evL4Eq+Icu/EC1H6XooN4MREWD1nvIg
- g+4aL9GPkgtz/39uB4bSOHIVIiZeyiINRQkkxvjSkhCyxnRpbHPmrIb5jCYpH9etiMAEqvMRQy+
- sdXpHT5+/EnMoZoiSxjArriqZqBTyyyV/vUCm7VD/y9dp2ePLmGtmAXhhyJapHJ2GTEELwiaOxV
- mg0wqxq9ZCEcE2A3W8xeKk8VFMRcGEL1xzz3n7YpirIDXPJOdE4tHI+QfM1QX8Eh/H9FGGoj6HA
- qiB8LpYKN7cmIpU/FRA6XVgvqm8ofFxwu7RyBwE7GhF7cQ6uMAdxNJPrVb
-X-Google-Smtp-Source: AGHT+IEuWNhfWufD2Kkd1yAdad6nVLpvFyGnJLa95A0KqzbFGo2YrmyjLeeEWWd7x7mfeXjPDIk2NA==
-X-Received: by 2002:a17:902:d547:b0:2a2:acc5:7a42 with SMTP id
- d9443c01a7336-2a2f2833082mr312196275ad.48.1767034860700; 
- Mon, 29 Dec 2025 11:01:00 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3d5d6e4sm279567595ad.75.2025.12.29.11.00.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Dec 2025 11:01:00 -0800 (PST)
-Message-ID: <05930cad-44dd-43e9-8126-0d1b1b23836f@linaro.org>
-Date: Mon, 29 Dec 2025 11:00:59 -0800
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vaIag-0000S5-NM; Mon, 29 Dec 2025 14:07:38 -0500
+Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vaIaf-0001zT-7J; Mon, 29 Dec 2025 14:07:38 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qwe9lw/L6goDMjPQBWDC1GMW+pVaZ7OzLgLZc4ckQ29wNe1fKnhoPFbch4Alhkk0jktcha7MkHY70oyar7x73F9Mh21PUKx6Zmz6BAT8kVA/P3esE4dnfaOsRuRnzA88Z82iss8xentDE+jFNhSaw7lA2mjVzuf4+IhmrsDgU7a5ARQ+JIhw6pmwnAGaShXi7X8liiMGfjWHPN9J2LGHe0qVnlJ8I+dt9Z0AIVkV57ocEh8WechCx54IcUnx8rQxc49Oqpo8t7FoguNox+BO2bAnPF0NoPhzO4NI7WI9d/lYLqVrP6RuWrvxPmlY4J2O11BLLPmMDrSjPN3nKxC/AA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QQ6a1xUOrdVm+kmKYGT+wi9ZcEJll7Gu/6RF39I18DM=;
+ b=nF+WyYYAN6jhxe2rAQtxxAziBe5M1SLavHA725+fPG5P/YrVyocKfxLb1n/r7hFKkgo5o/7qFXJ6mg40EHpzz1blyOtBIvD6WwvsWxkG2jt7uN4KNV3WsgJznthc84KtXE2TKyWWDMzVVR0fzCckmyYl1czrxoHDqcyXy22ho8wpDNNG1iX1DzwKpB+o1J9KnmSr0UgZSh/45duNNqn1Cf8jTh8hcfMTYLLO90leYUITLpWLI2O05pNOfX9Rridv2YgN39lGlZxspyJT86ZoMWpMun2oBL/erfF/ZqtkEhXOryJwF9MSXahKU3tCM3aXJ19CT/Tdwq31p/lc+j4CIQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QQ6a1xUOrdVm+kmKYGT+wi9ZcEJll7Gu/6RF39I18DM=;
+ b=PjktQABhSX8Uvx8Mw1KpVwSghbishlUatqgS9/vlBzaqB8XFGWpmybgXNWGc8CwkMpuKQUOk9dywwXuC3+Aiv0Ci8H34QMevZfJrOW0kj4EmL6tS5LM+7dgC32SMhkMGK9GtmP+EBk+Fkd7sqbqZWXDsGoicchM3GHeeiFQA5sgcqOPLuP7eutlCSfiVUB8jEDr3iyLhcy1v/ua/Brr0K4QnQfm8uLwnQpm6R0xy6pGfyGZ3EGjDsEeofa6dUHh79gCEDXWtJSGaqMUHKj7QPwBtiyjiPBxGDW92sjGvPqIQuyY/4NJiHu/3KKTHqifnkd1yKjUv0bTUoqBi/sMqaQ==
+Received: from CH2PR11CA0027.namprd11.prod.outlook.com (2603:10b6:610:54::37)
+ by DM6PR12MB4076.namprd12.prod.outlook.com (2603:10b6:5:213::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
+ 2025 19:07:30 +0000
+Received: from CH3PEPF0000000A.namprd04.prod.outlook.com
+ (2603:10b6:610:54:cafe::d5) by CH2PR11CA0027.outlook.office365.com
+ (2603:10b6:610:54::37) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9456.14 via Frontend Transport; Mon,
+ 29 Dec 2025 19:06:53 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CH3PEPF0000000A.mail.protection.outlook.com (10.167.244.37) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9478.4 via Frontend Transport; Mon, 29 Dec 2025 19:07:29 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
+ 2025 11:07:27 -0800
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
+ 2025 11:07:26 -0800
+Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 29 Dec 2025 11:07:26 -0800
+Date: Mon, 29 Dec 2025 11:07:24 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [RFC PATCH 05/16] hw/arm/tegra241-cmdqv: Add initial Tegra241
+ CMDQ-Virtualisation support
+Message-ID: <aVLRbI2dYkvIwEBv@Asurada-Nvidia>
+References: <20251210133737.78257-1-skolothumtho@nvidia.com>
+ <20251210133737.78257-6-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 00/28] WHPX support for Arm
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- kvm@vger.kernel.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>
-References: <20251228235422.30383-1-mohamed@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251228235422.30383-1-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x642.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20251210133737.78257-6-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PEPF0000000A:EE_|DM6PR12MB4076:EE_
+X-MS-Office365-Filtering-Correlation-Id: 23eef60d-b9e5-457c-723d-08de470d8396
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700013|82310400026|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?hX94tZ/c1iVv2C3J6MzhOUkktRIU7JBXumla2OsqTrusumsB12bm0iES6l0T?=
+ =?us-ascii?Q?eVdUjRFb5twomMfE7Ftkbpv/7tqLfu+qGRURMZCvkVq/eXOSWU+OHLNuG05n?=
+ =?us-ascii?Q?a1AFKhonOu3TShGZSm1IVqDfNZky08yIMiBAEJVJJcdDRj1+8ae/Ib2CKq4Z?=
+ =?us-ascii?Q?7WKXFQ1UDpnA5dgtZdKZQol3tHjei+dB0hvMEoGdJQrzRvVCrzpvaF+Pri79?=
+ =?us-ascii?Q?8HR0uJE/EwKLDoNZAdCBmmd1V2ZeFKlQcFSQUg01B8fVolsnr49i9MkUIskR?=
+ =?us-ascii?Q?Ot6+HiN3EtlwEvnlvKrdP+cWFkAw7LEOcuqn+4oEnJZc6+fzW7WTOl/CFnmD?=
+ =?us-ascii?Q?+p2hp+PGT3ygnfLefrfeSG3ZVQrY3GJS+3z93xu88jrJsPdUK8x9KO1NhBlu?=
+ =?us-ascii?Q?wN8PuHKwP9cZSzevkjwLNBOCMcbk1jf5aSVgAaUTSYXjrGVMOOn/SQSv6LTv?=
+ =?us-ascii?Q?+MubO/jFcGVTJC6Ft+xw83yeP9d8HW/gbz256vhg0DmW1TzMKYMcgaD2W+Sf?=
+ =?us-ascii?Q?9JIHRwfPyqfRY5a9z+dW8T/vTSXvQpbvhiSQl4s1BNN8+7Q5a9Vc/sdc5pCW?=
+ =?us-ascii?Q?btMDcxx4ZpzS1bDlOUemyQF1TLI1AK9D1vmqL1CCE0KnZwxMiYjODh0IuNaK?=
+ =?us-ascii?Q?q6YuPPRcuj1aWhLVzbYG5uL8Wv4ixFOvcNeH0NACxOtawvXvK07gJR0EcaRg?=
+ =?us-ascii?Q?8qkuOzNkzv2GpoSAWdiAvKB8WEIWlgsLQO2SNxoY/hb/f/c05UKEFOX+nfsb?=
+ =?us-ascii?Q?rHb3Ma3mihGoKwGZvcvJwGJkm1XAzDi/4KWMtAL6F53aoZ7T4fvE6FjLUvDl?=
+ =?us-ascii?Q?wM5kyRXrIOLY128IsrxA3oyIUrI6qwyRoA42S4RJGD4Ahnk60iVDECy5LpmD?=
+ =?us-ascii?Q?8PV70iBDlMVD9Tnint7o8eImU05EHOvSe2LISnipLrmXNHDi1lGgHo0QgPtI?=
+ =?us-ascii?Q?GrcNutcdwNY2E2QQ0rskXpV2juvfj3BDG1zvzy93nUhOfmsyba1seKMW5Bau?=
+ =?us-ascii?Q?piaUyjN8r+Q9sqgqPUD1l3xAwOYXXVvBzvS8jjmPgTCE8WrlgnkkBnuCV8os?=
+ =?us-ascii?Q?VRpVoRqFRkikwj5WuN2PdZmTtKH/gFSKua5lef3NO5L34RokJbR3J/G+RFda?=
+ =?us-ascii?Q?4a3vpjOtCUwCAyAX3CsPTrnyFlxvK5UiB+5yr56MMHbMMiH5w0hw8UIWMRRR?=
+ =?us-ascii?Q?ZLTadpeN7q8oZWv9MXop8JUdfp+bi4+/94AyFUkCxsgis0BQsQMDNa5Bsg3K?=
+ =?us-ascii?Q?3pqV03vLufxx/+3OsfVGp4XCgFL6rkbK+Zg7YucvksmQb/WbvMaobyFfTgJd?=
+ =?us-ascii?Q?xS4JAI4r+CBaJ1fZp8dVrlzzC0RYqiqMjGzg2PjHENYwPrCxkSHELCX8tx1H?=
+ =?us-ascii?Q?Iwd/KHmdpSJO4sxujy8Gu1PJo/o/YTLGMLFdEAlTtjjGtUsGdE8Z5rOWfis8?=
+ =?us-ascii?Q?C9WKP0Y4gcf2TIlVH/DewQFM4hVb7vM9+ya3fO2SBKo5d01iYKzQrvZKuZvF?=
+ =?us-ascii?Q?BRcr5G9En+D3U+OOcxm6KK81AwLKqzizjdbfkSQ/plcbtySiki6J3Q+wMxwF?=
+ =?us-ascii?Q?rg8d6aH5OSocYhy9vL4=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(36860700013)(82310400026)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 19:07:29.9389 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 23eef60d-b9e5-457c-723d-08de470d8396
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF0000000A.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4076
+Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,206 +159,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/28/25 3:53 PM, Mohamed Mediouni wrote:
-> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v12)
-> 
-> Missing features:
-> - VM save-restore: interrupt controller state notably
-> - SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
-> So SVE2 is currently masked for VMs when running this.
-> 
-> Known bugs:
-> - U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
-> 
-> Note:
-> 
-> "target/arm/kvm: add constants for new PSCI versions" taken from the mailing list.
-> 
-> "accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
-> as part of this series to make it compilable as a whole.
-> 
-> "hw/arm: virt: add GICv2m for the case when ITS is not available" present in both the HVF
-> vGIC and this series.
-> 
-> "hw: arm: virt-acpi-build: add temporary hack to match existing behavior" is not proper" is
-> for ACPI stability but what is the right approach to follow there?
-> 
-> And another note:
-> 
-> Seems that unlike HVF there isn't direct correspondence between WHv registers and the actual register layout,
-> so didn't do changes there to a sysreg.inc.
-> 
-> Updates since v11:
-> - Address review comments
-> - Rebase up to latest staging
-> - Switch to assuming Qemu 11.0 as the newest machine model
-> 
-> Updates since v10:
-> - Bring forward to latest Qemu
-> - Fix a typo in the GICv3+GICv2m PR
-> 
-> Updates since v9:
-> - Adding partition reset on the reboot side of things...
-> 
-> Updates since v8:
-> - v9 and v8 were not submitted properly because of my MTA not behaving, sorry for that.
-> - v10 introduces a new argument, -M msi=, to handle MSI-X configuration more granularly.
-> - That surfaced what I think is a bug (?), with vms->its=1 on GICv2 configurations... or I did understand everything wrong.
-> - Oopsie due to email provider ratelimiting.
-> 
-> Updates since v7:
-> - Oops, fixing bug in "hw/arm: virt: cleanly fail on attempt to use the platform vGIC together with ITS".
-> Other commits are unchanged.
-> 
-> Updates since v6:
-> - Rebasing
-> - Fixing a bug in the GICv3+GICv2m case for ACPI table generation
-> - getting rid of the slots infrastructure for memory management
-> - Place the docs commit right after the "cleanly fail on attempt to run GICv3+GICv2m on an unsupported config" one
-> as that's what switches ITS to a tristate.
-> - Fixing a build issue when getting rid of the arch-specific arm64 hvf-stub.
-> 
-> Updates since v5:
-> - Rebasing
-> - Address review comments
-> - Rework ITS enablement to a tristate
-> - On x86: move away from deprecated APIs to get/set APIC state
-> 
-> Updates since v4:
-> - Taking into account review comments
-> - Add migration blocker in the vGICv3 code due to missing interrupt controller save/restore
-> - Debug register sync
-> 
-> Updates since v3:
-> - Disabling SVE on WHPX
-> - Taking into account review comments incl:
-> 
-> - fixing x86 support
-> - reduce the amount of __x86_64__ checks in common code to the minimum (winhvemulation)
-> which can be reduced even further down the road.
-> - generalize get_physical_address_range into something common between hvf and whpx
-> 
-> Updates since v2:
-> - Fixed up a rebase screwup for whpx-internal.h
-> - Fixed ID_AA64ISAR1_EL1 and ID_AA64ISAR2_EL1 feature probe for -cpu host
-> - Switched to ID_AA64PFR1_EL1/ID_AA64DFR0_EL1 instead of their non-AA64 variant
-> 
-> Updates since v1:
-> - Shutdowns and reboots
-> - MPIDR_EL1 register sync
-> - Fixing GICD_TYPER_LPIS value
-> - IPA size clamping
-> - -cpu host now implemented
-> 
-> Mohamed Mediouni (26):
->    qtest: hw/arm: virt: skip ACPI test for ITS off
->    hw/arm: virt: add GICv2m for the case when ITS is not available
->    tests: data: update AArch64 ACPI tables
->    hw/arm: virt: cleanly fail on attempt to use the platform vGIC
->      together with ITS
->    hw: arm: virt: rework MSI-X configuration
->    hw: arm: virt-acpi-build: add temporary hack to match existing
->      behavior
->    docs: arm: update virt machine model description
->    whpx: Move around files before introducing AArch64 support
->    whpx: reshuffle common code
->    whpx: ifdef out winhvemulation on non-x86_64
->    whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
->    hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
->    whpx: interrupt controller support
->    whpx: add arm64 support
->    whpx: change memory management logic
->    target/arm: cpu: mark WHPX as supporting PSCI 1.3
->    whpx: arm64: clamp down IPA size
->    hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
->      and HVF
->    whpx: arm64: implement -cpu host
->    target/arm: whpx: instantiate GIC early
->    whpx: arm64: gicv3: add migration blocker
->    whpx: enable arm64 builds
->    whpx: apic: use non-deprecated APIs to control interrupt controller
->      state
->    whpx: arm64: check for physical address width after WHPX availability
->    whpx: arm64: add partition-wide reset on the reboot path
->    MAINTAINERS: update the list of maintained files for WHPX
-> 
-> Philippe Mathieu-Daudé (1):
->    accel/system: Introduce hwaccel_enabled() helper
-> 
-> Sebastian Ott (1):
->    target/arm/kvm: add constants for new PSCI versions
-> 
->   MAINTAINERS                                   |    6 +
->   accel/hvf/hvf-all.c                           |    7 +-
->   accel/meson.build                             |    1 +
->   accel/stubs/whpx-stub.c                       |    1 +
->   accel/whpx/meson.build                        |    7 +
->   {target/i386 => accel}/whpx/whpx-accel-ops.c  |    6 +-
->   accel/whpx/whpx-common.c                      |  540 +++++++++
->   docs/system/arm/virt.rst                      |   13 +-
->   hw/arm/virt-acpi-build.c                      |   16 +-
->   hw/arm/virt.c                                 |  140 ++-
->   hw/i386/x86-cpu.c                             |    4 +-
->   hw/intc/arm_gicv3_common.c                    |    3 +
->   hw/intc/arm_gicv3_whpx.c                      |  249 ++++
->   hw/intc/meson.build                           |    1 +
->   include/hw/arm/virt.h                         |    8 +-
->   include/hw/core/boards.h                      |    3 +-
->   include/hw/intc/arm_gicv3_common.h            |    3 +
->   include/system/hvf_int.h                      |    5 +
->   include/system/hw_accel.h                     |   13 +
->   .../whpx => include/system}/whpx-accel-ops.h  |    4 +-
->   include/system/whpx-all.h                     |   20 +
->   include/system/whpx-common.h                  |   26 +
->   .../whpx => include/system}/whpx-internal.h   |   25 +-
->   include/system/whpx.h                         |    5 +-
->   meson.build                                   |   20 +-
->   target/arm/cpu.c                              |    3 +
->   target/arm/cpu64.c                            |   17 +-
->   target/arm/hvf-stub.c                         |   20 -
->   target/arm/hvf/hvf.c                          |    6 +-
->   target/arm/hvf_arm.h                          |    3 -
->   target/arm/kvm-consts.h                       |    2 +
->   target/arm/meson.build                        |    2 +-
->   target/arm/whpx/meson.build                   |    5 +
->   target/arm/whpx/whpx-all.c                    | 1020 +++++++++++++++++
->   target/arm/whpx/whpx-stub.c                   |   15 +
->   target/arm/whpx_arm.h                         |   17 +
->   target/i386/cpu-apic.c                        |    2 +-
->   target/i386/hvf/hvf.c                         |   11 +
->   target/i386/whpx/meson.build                  |    1 -
->   target/i386/whpx/whpx-all.c                   |  569 +--------
->   target/i386/whpx/whpx-apic.c                  |   48 +-
->   tests/data/acpi/aarch64/virt/APIC.its_off     |  Bin 164 -> 188 bytes
->   42 files changed, 2219 insertions(+), 648 deletions(-)
->   create mode 100644 accel/whpx/meson.build
->   rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
->   create mode 100644 accel/whpx/whpx-common.c
->   create mode 100644 hw/intc/arm_gicv3_whpx.c
->   rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
->   create mode 100644 include/system/whpx-all.h
->   create mode 100644 include/system/whpx-common.h
->   rename {target/i386/whpx => include/system}/whpx-internal.h (88%)
->   delete mode 100644 target/arm/hvf-stub.c
->   create mode 100644 target/arm/whpx/meson.build
->   create mode 100644 target/arm/whpx/whpx-all.c
->   create mode 100644 target/arm/whpx/whpx-stub.c
->   create mode 100644 target/arm/whpx_arm.h
-> 
+On Wed, Dec 10, 2025 at 01:37:26PM +0000, Shameer Kolothum wrote:
+> +void tegra241_cmdqv_init(SMMUv3State *s)
+> +{
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(OBJECT(s));
+> +    Tegra241CMDQV *cmdqv;
+> +
+> +    if (!s->tegra241_cmdqv) {
+> +        return;
+> +    }
 
-It seems like there are some build failures for mingw x86_64:
-https://github.com/pbo-linaro/qemu-ci/actions/runs/20579084208/job/59103016908
+Maybe g_assert?
 
-../target/i386/whpx/whpx-all.c: In function 'whpx_accel_init':
-../target/i386/whpx/whpx-all.c:2190:19: error: 'struct whpx_state' has 
-no member named 'kernel_irqchip'; did you mean 'kernel_irqchip_allowed'?
-  2190 |             whpx->kernel_irqchip = true;
-       |                   ^~~~~~~~~~~~~~
-       |                   kernel_irqchip_allowed
+> +typedef struct Tegra241CMDQV {
+> +    struct iommu_viommu_tegra241_cmdqv cmdqv_data;
+> +    SMMUv3State *smmu;
 
-You can cross compile for x86_64 from your windows-arm64 machine using:
-https://www.qemu.org/docs/master/devel/build-environment.html#build-on-windows-aarch64
+I see all the cmdqv functions want "smmu->s_accel", so maybe store
+"s_accel" instead?
 
-Regards,
-Pierrick
+> +#ifdef CONFIG_TEGRA241_CMDQV
+> +bool tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+> +                                 uint32_t *out_viommu_id, Error **errp);
+> +void tegra241_cmdqv_init(SMMUv3State *s);
+> +#else
+> +static inline void tegra241_cmdqv_init(SMMUv3State *s)
+> +{
+> +}
+> +static inline bool
+> +tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+> +                            uint32_t *out_viommu_id, Error **errp)
+> +{
+> +    return true;
+
+Should it return false?
+
+> index 2d4970fe19..8e56e480a0 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -73,6 +73,9 @@ struct SMMUv3State {
+>      bool ats;
+>      uint8_t oas;
+>      bool pasid;
+> +    /* Support for NVIDIA Tegra241 SMMU CMDQV extension */
+> +    struct Tegra241CMDQV *cmdqv;
+> +    bool tegra241_cmdqv;
+
+tegra241_cmdqv is a Property, so it has to stay with SMMUv3State.
+
+But "struct Tegra241CMDQV *cmdqv" might be in the SMMUv3AccelState?
+
+Nicolin
 
