@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D69D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A11D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaB00-0005Uf-Dz; Mon, 29 Dec 2025 06:01:18 -0500
+	id 1vaB1y-00077O-C7; Mon, 29 Dec 2025 06:03:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaAzp-0005Pg-Jk
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:01:05 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1vaB1t-000775-3s
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:03:13 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaAzn-0002uF-Jf
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:01:05 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b7277324204so1333211566b.0
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:01:03 -0800 (PST)
+ id 1vaB1r-00039x-Ef
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:03:12 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b83122f9d78so489910366b.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:03:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767006062; x=1767610862; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767006189; x=1767610989; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lBh/xXqzE2ZpDR+LmY6vNjUFo3FaCc2tm8ZztdYj2C4=;
- b=dZ+/8DX7Mu14TzkjUv8eJB/3+u6tg76fbix/QGSepckk+O68tz3XNFPfgOg/tlaRTf
- eKdhHFgYXyHask6eehw2WFQTgI9IP7UlMgwfgJLaLGtYYoGiHenCSnkqVD7Hvt0YZ/Hy
- rHjd9IZO2wwM0ibzKjFVve62cf7HIRy84GORUuIrvjAWz64hjRk6VuHIMQqVuInqvi5V
- wf+4G8gCNpxWvEXMsM5Xk+2Pdk6zisoOeo9uZ4EGp0RJA0h6aIJtxfKmTdnswrr3THFc
- U9v4roQiUJ4m8KADkeOJ4/JO/x8XK0/fD6Unk8PnVVh1/mErdbCv/RAOGCFD/2yjJD96
- srjQ==
+ bh=Uu6vunQXCjF8xJqzsTm9DS0i8fjdoizrbY78MtCfq4M=;
+ b=iYiel73PaXSaHfm8pO9YmhOybRQ126jr2GfdBOgjlc5EKpHY9ccfGiqpCOrhERnpn3
+ h5h5Zv7AbCFoKCP5Vr1AQY1QGVlc3PY4X7n8PAzfOBNb6P/Fl66q/2ehM8p2UvM6x+Q7
+ CbzaOQsbUo4n7/tM4p6iaKsdTan57nmG/0JlVej9iCOLledxG7inKGV2DcgYD4dCTo1s
+ tTSLO+q7dcgPpvFIeb+XstzGbBuEwMXwZokuvPKQt05+moFJC8cHpxJCUArBVgjoNefo
+ XlWM+Nw6ldYHEOO4I3mV5UbGgdSAMokMz49DOZzV6cCZttLmVU4yFHdaoBf/8Be3MEQw
+ Q54Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767006062; x=1767610862;
+ d=1e100.net; s=20230601; t=1767006189; x=1767610989;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lBh/xXqzE2ZpDR+LmY6vNjUFo3FaCc2tm8ZztdYj2C4=;
- b=P7IDtdA36MSvjGe6dd60DW9vVBPuykKQHB1A12+TxRN8eBbZSb2jEgrD9amqQppeMn
- IvdKKN1RxOtY19v/9rF7eCrY6oIeZ4qVNmDigs+Nk10Pi8O4xlA/hkwPRmhkmwacq118
- ThF15MPnyKuWC5TcENn0hO33lnOhySldYL7i9NRZx/a28QtRtcbic88XNkVg+M6vrrMK
- Qlsaf3tA0RdYju2X0CXFZvANFWf2NM9Vh8ca2NdPxrbBuWBhSHsDy54HizTUhKbR8L8w
- UKrXwT3YfEptSGDq/hQtWxtOZGu1Yx+VcSnw1+d/akRDEu3Dy7OFXk2Cgp1AacM9H793
- 4sCA==
-X-Gm-Message-State: AOJu0YwViwE/jl2v+eLpCXm270XyoKLkor1SPfHAJQ6wUIgvxORQ7vPn
- l1N4nIehCypOfHSvTw9Y1A6UEVPSof7jlb1pFk/kwXUO38ELOvsNkFhmVEzPpoIpPHgkkre8zIo
- h2MiRVtbpzleBIyPTMlgjGcazdVADy+LQ9ID33GqeZg==
-X-Gm-Gg: AY/fxX7PrV6cb64gF83RlWp17ofPXv7N5Gil3PIVxyk4HrLR9bKxrB6rXHvo9FI8WsX
- yFpwuSNpnqEivXU5ZCcB8tIhm435BgH0ArbTe0nrkgsRyPhq9wtvH7V4zyJieBet4JUB1IzqXZg
- W+aw4QCvAeXSY4hq17J7gwhCsqPmyrPJzhuJEHAUiPRD7hsq8XPhZvOPRjRbrb4PrAsgMuqUde6
- gBHNo5w+1ZKmFjDUUihHowdSD+AtJFJO6hWQYaSST6XizX2yLIblXCIITWLMjpgJeERHQt7yCcI
- vMiA/fqEzK2wZGjCDyLXRDJP2N5TRlklFOslB6B5BScUgTa+hw==
-X-Google-Smtp-Source: AGHT+IHnEfi1mBUmIfzIGho0WLP9FLI0nDO9h+k25tTY/TCGKPeuq1ReweJeUAw2atWuEcOQInmLmsg7aJhb3gXjLXQ=
-X-Received: by 2002:a17:907:7f21:b0:b79:a827:4d47 with SMTP id
- a640c23a62f3a-b8036a8d6e4mr2988897266b.0.1767006061846; Mon, 29 Dec 2025
- 03:01:01 -0800 (PST)
+ bh=Uu6vunQXCjF8xJqzsTm9DS0i8fjdoizrbY78MtCfq4M=;
+ b=aAzXMYd1p+FgCOec9Om59GQ0xe9SW8dO3HCHofXKQbLEON7J2kzeFBgvxzpRiGK9iB
+ R57GcA49ToBjFye3K1W9IgGj062A95SAhdldLDiu98434DZKlJgUR5ReCF7iLacyjmSU
+ DKn2TwEQbTMmu38YTlfuqv/TXpIRayKQXzgDVxQIusMPIg+M7La+E5q3jf/mWpy3e/Hd
+ 43IXNdIAUOUpPoIJ1SnHoJkGKYHukAcsIHAUnAZPMszzn53bMwO+9Yb3bBZIHgjjfSbr
+ rrcJL+sOWsIscYiWXusoLlmsYVXGHHej9X6kaXHJKhTniz/40ndIGT8GCj/JP0bpN1LA
+ vfnw==
+X-Gm-Message-State: AOJu0Yx5iyjZ/vCsYlP/kNpaZPdrLS8zkrgpsSU6armVjF0mMwsiqI6J
+ IyF4GdyebnYAaB8555sV3ISII21snokgU7iVL1cCh7BwYzRCk7WKIAabt+XNJQYOyAqi3El3HD0
+ 1VRHmyFhPQt9UISI+3/V6Z6ZXBjc1HR/dGZ7o+G2PVQ==
+X-Gm-Gg: AY/fxX7kbNfd8NLKjQcJFwsk3w4KH/87aljyMfOw5xvkattJcXrlJkoaRJWhap0BkU0
+ mU+9H4gqVLXMYl6V/pDItewYKKEW3Uz2sxfgvSXoJe5+hoYvqwxxJkD791+F5MBRP8+FtZESRPS
+ J8xZiNJfzLZJxJUcFjJSCYqkVgjpR1GYIaaXE/OqUEEmjoGc6pfAAWGBfJrjCZUH9IXcJTsSD/4
+ DfUdjVrFxcHr7Mnb5NMIgDX8xBdMtICWkdBgrcMadPVfh65JFhWS2gdCfyh2Ac8KY83Js8x3vbp
+ aVF0YcIFvfUkNFeSn4yhwAxLPeunj3RHV4LylXo=
+X-Google-Smtp-Source: AGHT+IExy0xsy9hzw+Idtj7KOTo0J87qyqDwy2yJ9r18tcL+VPraY8vNnD949E5oV82q9fPiOaZoYSeUeAs7CvH5iBg=
+X-Received: by 2002:a17:907:608c:b0:b73:7ac4:a5f with SMTP id
+ a640c23a62f3a-b8036f0f1c1mr2898923366b.21.1767006189382; Mon, 29 Dec 2025
+ 03:03:09 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224161804.90064-1-philmd@linaro.org>
- <20251224161804.90064-4-philmd@linaro.org>
-In-Reply-To: <20251224161804.90064-4-philmd@linaro.org>
+ <20251224161804.90064-5-philmd@linaro.org>
+In-Reply-To: <20251224161804.90064-5-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Dec 2025 13:00:35 +0200
-X-Gm-Features: AQt7F2rl2zCSdcFJPfMpyzeScBU2riLtPVY_bvWgpsYEABagJIe19W9BBwMS13g
-Message-ID: <CAAjaMXbwhGbd3AQ1XoN0iCfOX8f1hy09-h99Dgdsr6LNq=MKwQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] target/openrisc: Inline translator_ldl()
+Date: Mon, 29 Dec 2025 13:02:43 +0200
+X-Gm-Features: AQt7F2peo4CeEpnzGohK-yL8lzodCzACVRnEdqJRbh3JOzGGJAXX8wZjHlEr3UU
+Message-ID: <CAAjaMXYAw=HNDzf351+-Qy3gzgu4wyWfBCgkJm0nS6acs44--g@mail.gmail.com>
+Subject: Re: [PATCH 4/4] configs/targets: Forbid OpenRISC to use legacy native
+ endianness APIs
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Jia Liu <proljc@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>, 
  Laurent Vivier <laurent@vivier.eu>, Stafford Horne <shorne@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +102,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Dec 24, 2025 at 6:18=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> translator_ldl() is defined in "exec/translator.h" as:
+> All OpenRISC-related binaries are buildable without a single
+> use of the legacy "native endian" API. Unset the transitional
+> TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
+> further uses of the legacy API.
 >
->   198 static inline uint32_t
->   199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
->   200 {
->   201     return translator_ldl_end(env, db, pc, MO_TE);
->   202 }
+> Preliminary commits allowing this final change:
 >
-> Directly use the inlined form, expanding MO_TE -> MO_BE
-> since we only build the OpenRISC targets as big-endian.
+>  . 5b67dbf1dc3 target/openrisc: Replace target_ulong -> uint32_t
+>  . 500708331e3 target/openrisc: Inline tcg_gen_trunc_i64_tl()
+>  . 4f6c60683f2 target/openrisc: Replace MO_TE -> MO_BE
+>  . 73cd283e58d target/openrisc: Introduce mo_endian() helper
+>  . 2f737e19a4d target/openrisc: Conceal MO_TE within do_store()
+>  . 22c36c0a20c target/openrisc: Conceal MO_TE within do_load()
+>  . ef797ac0025 target/openrisc: Explode MO_TExx -> MO_TE | MO_xx
+>  . 81e2fb236b7 target/openrisc: Remove 'TARGET_LONG_BITS !=3D 32' dead co=
+de
+>  . 9dc4862dc4a target/openrisc: Use vaddr type for $pc jumps
+>  . 2367c94cbb1 target/openrisc: Remove target_ulong use in raise_mmu_exce=
+ption()
+>  . 1843e89bec5 target/openrisc: Remove unused cpu_openrisc_map_address_*(=
+) handlers
+>  . a3c4facd395 target/openrisc: Do not use target_ulong for @mr in MTSPR =
+helper
+>  . 2795bc52af4 target/openrisc: Replace VMSTATE_UINTTL() -> VMSTATE_UINT3=
+2()
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  target/openrisc/translate.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  configs/targets/or1k-linux-user.mak | 1 +
+>  configs/targets/or1k-softmmu.mak    | 1 +
+>  2 files changed, 2 insertions(+)
 >
-> diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
-> index 6fa4d6cfa70..a6d550bbc2e 100644
-> --- a/target/openrisc/translate.c
-> +++ b/target/openrisc/translate.c
-> @@ -1558,7 +1558,8 @@ static void openrisc_tr_insn_start(DisasContextBase=
- *dcbase, CPUState *cs)
->  static void openrisc_tr_translate_insn(DisasContextBase *dcbase, CPUStat=
-e *cs)
->  {
->      DisasContext *dc =3D container_of(dcbase, DisasContext, base);
-> -    uint32_t insn =3D translator_ldl(cpu_env(cs), &dc->base, dc->base.pc=
-_next);
-> +    uint32_t insn =3D translator_ldl_end(cpu_env(cs), &dc->base,
-> +                                       dc->base.pc_next, MO_BE);
->
->      if (!decode(dc, insn)) {
->          gen_illegal_exception(dc);
+> diff --git a/configs/targets/or1k-linux-user.mak b/configs/targets/or1k-l=
+inux-user.mak
+> index 810567a98f9..97d7cb10465 100644
+> --- a/configs/targets/or1k-linux-user.mak
+> +++ b/configs/targets/or1k-linux-user.mak
+> @@ -3,3 +3,4 @@ TARGET_BIG_ENDIAN=3Dy
+>  TARGET_SYSTBL_ABI=3Dcommon,32,or1k,time32,stat64,rlimit,renameat
+>  TARGET_SYSTBL=3Dsyscall.tbl
+>  TARGET_LONG_BITS=3D32
+> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
+> diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-soft=
+mmu.mak
+> index 89f81b75bf7..c53408a2bf5 100644
+> --- a/configs/targets/or1k-softmmu.mak
+> +++ b/configs/targets/or1k-softmmu.mak
+> @@ -4,3 +4,4 @@ TARGET_BIG_ENDIAN=3Dy
+>  TARGET_NEED_FDT=3Dy
+>  TARGET_LONG_BITS=3D32
+>  TARGET_NOT_USING_LEGACY_LDST_PHYS_API=3Dy
+> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
 > --
 > 2.52.0
 >
