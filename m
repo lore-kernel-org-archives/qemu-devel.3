@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12B1DE8FDB1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 821ACD3B7E5
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 10:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaAfo-0007rj-J1; Mon, 29 Dec 2025 05:40:24 -0500
+	id 1vaAfo-0007xl-Tf; Mon, 29 Dec 2025 05:40:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vaAfE-0007pM-Sy
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:39:50 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1vaAfB-0007p4-Hs
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:39:46 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vaAfC-0000G7-Fi
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:39:47 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2a0d0788adaso79350955ad.3
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 02:39:46 -0800 (PST)
+ id 1vaAfA-0000FZ-3T
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:39:45 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-34ccbf37205so6687330a91.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 02:39:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767004785; x=1767609585; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+a3OwfwQBO2otyKeHBN1LrQH4TMfKPwgsXvF1+xAS4A=;
- b=M4BHrubz8gfDZllcsd6CbCqKfnfq3hzvKFikwQ3Siu0uEkBZXTwKJPlF0owNvC0SSv
- KEAOb/TOdxelessIj4Q053NssotG8LXOLNLWxvAE4KEHNzamM+blCBMSgRiiZEARDsZp
- D+P9UH4+9TMhgpPXIwSdssZvJt0STKmjlX06klevPMTLusU1K8aZfwx+3Xzry7SJj0p1
- +A4fEwBJbQTXO07W3glrlFcfi03Ce85m2V7BWtfSxOVUu4VkC3gwnKABlZdtxcaB3i+v
- 3TLHLaaREOgmEdzp3rb1Ijsl9SZMHv2LAf7aHkZD4Y/EvjirCar1hHvRq6bLl8sSngd4
- 2SJQ==
+ d=gmail.com; s=20230601; t=1767004781; x=1767609581; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0HjVDu1KKaZEVDhVpQXw2F/PCF8s9RlfszGzbJVND14=;
+ b=lZc0XQahAdzrMS7hPairAeQiymOg5y0vZfFowWkh4qkdtvgF80yozMURzpwSYwtgip
+ y+h70OPH9/0nxf6cdLNry+99qVMl1v5mYPdIxF9oCxexesB2LbNff509giM80KwXFoOC
+ f+HZPNNpyDGhMv264BvXm/wKCdTvNqP9hTJA6qjxrFTugL41hL9yGzL+zMyLRRksxYzZ
+ 1EuVWpLtQ8tYIMfbddSy5dbC8rGuZ6YujrEb3eHFcceAXI8USc74ZgaPgOXn/z/QvJrb
+ PPnJMzPgD4R4wbYIOPXwlsltSn35gXahLV0z6cCwlkSyMPU15U3bsPnDR/etIokjloyN
+ P1eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767004785; x=1767609585;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+a3OwfwQBO2otyKeHBN1LrQH4TMfKPwgsXvF1+xAS4A=;
- b=sJe81gBf0f6brfZ3C50ok6Xz5TB1zUtQTTWT/ny/fLaDld9UNGXh1vWsYf+0HGB0cp
- FZWfTwozBtuD05G8C1gGAwK7KpF6ATulpktGxIxDS6pOnF8ar7lQbi79FOcpzvI8Gy0h
- KZwSuE8ajADdqeyriHi/BzmuKB4YGve/0Y6zDD0nGZMpbxpt5EYunT6QJySbicN+7Lyw
- GdqBNYJwwMboWXeV0gZDCAERy5bvJM8Rwx50EwqHg9mhdvFmuH//2SDUzVwZdLbzDeC9
- 67vskgeNOldo2S1WQNq4Y77Uj+Zs9G7OWsfFvglZ/j6VCSRNqrswop09/amujyM+QtWk
- kX8w==
-X-Gm-Message-State: AOJu0Yzh+n4NmR/iaW/xrDtQlvt1H0H32x/AGohv9CgSf6laE5P+iByv
- EZOsdlM3aTMGTOzlCWbo0uxaFGG6Fj414RySOAsvkHxzpZZRyditR9AR7+KTtmZl
-X-Gm-Gg: AY/fxX6c1ExrIGw8VzGK5zphDgzruLnmi0hlslas1QRI02pqznZDidUHvAp0MqawCNk
- 7OTkeANwkZSZAqiIGpwin463LbB6Zrc2MWos//5riMAfKw5AgTxLRkYNIp/277LApuEEUkomi/w
- ZjzArmadMEVJOyzsQbmMNImm8LnD1NksyZkzs2WCGH+nQCkQImIbfwcZHm3TbQyFUyUaa4TI+aM
- vhy6T6oWzEyNulrXpMtzifDrV/fDlYIkwstvatOJ06moHY/17+usU4apq8Z7Q+o2g+smf4/wX1S
- 7lX5XUulic/AKCi22rduNsO3KKFzt7rGcJjmKxkHpN4K1MNCQhTx6aEtrriBmnj7zS/O28mfTUX
- l9Bhm/GhScl9R6kJAAu1X2gtrz06IF3j3tkmMkKKJH8uAEb9VRO1yAlJTRL2+ScRbuGzzVBpPFN
- FyjAVsx4E5gR8=
-X-Google-Smtp-Source: AGHT+IHZ1LWkZNrvLzOA6GfZExyw28UHbqiYu1WiamKzCVIiRLikvdJjTa2FFN4KVLkaoxVhIDudUg==
-X-Received: by 2002:a17:903:1b4d:b0:2a3:628d:dbea with SMTP id
- d9443c01a7336-2a3628de27amr100690955ad.24.1767004784607; 
- Mon, 29 Dec 2025 02:39:44 -0800 (PST)
+ d=1e100.net; s=20230601; t=1767004781; x=1767609581;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0HjVDu1KKaZEVDhVpQXw2F/PCF8s9RlfszGzbJVND14=;
+ b=tbkj5jdJrB85fe7QSQ9MJMrkfFTOVXLb3PTQqwma0Q2+xnoS+serZJz2FqiRS1PC5H
+ m4/N0HxaPbjvuRxLJ54X3vVr0NMXOuFTRABjebWbmTXbfHWNMPKIhIISBFq0TuhFIicQ
+ 5xcudnjylvS9U7udVqg812qZk7+dRX7+AU/RskrgoiYK/+fCtNfZmdQAJ6zfyZc5OZnZ
+ MQkCkuhML1G9u4GVxiumWnzvmVVFnqrmMl6VZ1sKJfObUUoNzPdnSmbGXUOI4p4SJ0bP
+ YvAzqXujEbokWxATX3mG3Qatr3BBlcKbxBRuX8Ajm1b7m0XN5jJYdnl68nva8CAudZ+b
+ W/kw==
+X-Gm-Message-State: AOJu0YwEiWqIGOZ7flaWYrD9tPUJzjzztBjQnRXPzMJushgQx+Fsl2gl
+ ycBNdfLqIbwEl3+V66iRBxgS1DXf84xNv9yKKcQTqQn0HVEOs4KgLy98HteZ3Las
+X-Gm-Gg: AY/fxX714DPy5TFL8wxu/aPsU3Lovcxr8vZrOBG6224jPtDnL8jyyNDyk3bDi97xXsy
+ QXcYUoYKiV/LIwsoH+FfdLl1YxASHTttDqgmFpxn9D1UugsJHG6rWI1jIbMONJ4Z3khD7fbolZJ
+ 46EpicG5Jd3RX/Q/CW++znVJItpB7Y0VS4UYFQ+EElq1xiSQaHSPaY/SJWmVQt/At0xuhZzOzdv
+ ZQdklQgUTTjnASatIK8EQehI+xzD9qxPhzModaGVZ3EtczUPTnBUFxS2OLKCiHnV81hFvZI9Dv+
+ DyfCTjlkzbjUKif/p1S79juKZj7p/edDcKjRKEAytdRNjRl1kpo16eOEXYcogPzVO1LxuP5FxTI
+ EYhXybJwM+E7jY7ZivVlsSOPYgvM/rPHM2CnPSgbog2QZUea5WdQKGvQQSZb3ejdK/2iks5zIns
+ npOC5KRVNtSQiR1O3qzPNZHg==
+X-Google-Smtp-Source: AGHT+IFTk6NnEJEnfCiHzKJ+YTu7SgL8uWJSt9IRE+i1Jku+ImFlxbP/79ZGd56+ah06OXtyA47PnA==
+X-Received: by 2002:a17:90b:3c4b:b0:34c:e5fc:faec with SMTP id
+ 98e67ed59e1d1-34e9212f72dmr21308850a91.2.1767004781516; 
+ Mon, 29 Dec 2025 02:39:41 -0800 (PST)
 Received: from localhost.localdomain ([115.108.63.147])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34e76f03baesm17082982a91.2.2025.12.29.02.39.41
+ 98e67ed59e1d1-34e76f03baesm17082982a91.2.2025.12.29.02.39.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Dec 2025 02:39:44 -0800 (PST)
+ Mon, 29 Dec 2025 02:39:40 -0800 (PST)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH 2/3] iothread: Introduce a new flag to show iothreads attached
- status
-Date: Mon, 29 Dec 2025 18:38:58 +0800
-Message-ID: <20251229103859.98777-2-zhangckid@gmail.com>
+Subject: [PATCH 1/3] qapi/misc: Fix missed query-iothreads items
+Date: Mon, 29 Dec 2025 18:38:57 +0800
+Message-ID: <20251229103859.98777-1-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20251229103859.98777-1-zhangckid@gmail.com>
-References: <20251229103859.98777-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=zhangckid@gmail.com; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,57 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU Need a flag to show current iothread attached status
-when hotplug multi iothreads. For example virtio-blk.
+As the struct IOThreadInfo definition:
+{ 'struct': 'IOThreadInfo',
+  'data': {'id': 'str',
+           'thread-id': 'int',
+           'poll-max-ns': 'int',
+           'poll-grow': 'int',
+           'poll-shrink': 'int',
+           'aio-max-batch': 'int' } }
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- include/system/iothread.h | 1 +
- iothread.c                | 5 +++++
- 2 files changed, 6 insertions(+)
+ qapi/misc.json | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index e26d13c6c7..3d00474523 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -32,6 +32,7 @@ struct IOThread {
-     QemuSemaphore init_done_sem; /* is thread init done? */
-     bool stopping;              /* has iothread_stop() been called? */
-     bool running;               /* should iothread_run() continue? */
-+    bool attached;              /* Whether or not attached to device */
-     int thread_id;
- 
-     /* AioContext poll parameters */
-diff --git a/iothread.c b/iothread.c
-index caf68e0764..38e38fb44d 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -94,6 +94,7 @@ void iothread_stop(IOThread *iothread)
-         return;
-     }
-     iothread->stopping = true;
-+    iothread->attached = false;
-     aio_bh_schedule_oneshot(iothread->ctx, iothread_stop_bh, iothread);
-     qemu_thread_join(&iothread->thread);
- }
-@@ -199,6 +200,9 @@ static void iothread_init(EventLoopBase *base, Error **errp)
-      */
-     iothread_init_gcontext(iothread, thread_name);
- 
-+    /* Clear iothread attached flag for init gcontext */
-+    iothread->attached = false;
-+
-     iothread_set_aio_context_params(base, &local_error);
-     if (local_error) {
-         error_propagate(errp, local_error);
-@@ -336,6 +340,7 @@ char *iothread_get_id(IOThread *iothread)
- 
- AioContext *iothread_get_aio_context(IOThread *iothread)
- {
-+    iothread->attached = true;
-     return iothread->ctx;
- }
- 
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 28c641fe2f..6153ed3d04 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -117,11 +117,19 @@
+ #     <- { "return": [
+ #              {
+ #                 "id":"iothread0",
+-#                 "thread-id":3134
++#                 "thread-id":3134,
++#                 'poll-max-ns':0,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              },
+ #              {
+ #                 "id":"iothread1",
+-#                 "thread-id":3135
++#                 "thread-id":3135,
++#                 'poll-max-ns':0,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              }
+ #           ]
+ #        }
 -- 
 2.49.0
 
