@@ -4,167 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AB4EE92724
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 14:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E217E8FDBE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 14:32:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaEG1-0006z2-N8; Mon, 29 Dec 2025 09:30:01 -0500
+	id 1vaEHo-0007Ww-Dz; Mon, 29 Dec 2025 09:31:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1vaEFz-0006ye-Uo; Mon, 29 Dec 2025 09:29:59 -0500
-Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vaEHY-0007T8-FE
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 09:31:40 -0500
+Received: from mout.kundenserver.de ([212.227.126.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1vaEFx-0004KN-SX; Mon, 29 Dec 2025 09:29:59 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k+O1eBy7taMopCEisu4RLl0lNLK5y/jP+ZgUnoVpxbKteuTIVvULIJxsPOV3JLXD+UGG6+LkdxvGZO9NDdvQxlj/htsZxUQxjIm23Blvd1JFqvKME9m/d2JfTaVCdGPUwlLgg4ZWahkYh7lbeAfjhRri3WeVkJa2WDlvAElqKB6AUe9oAXZeZvVzyH32vG7nnbT0a5DgSK2JUeLiYI9f2udWRFahHHPuu4sOcWJbH2GBW6KkXh8UMJMNGGK+1aAe+9XJAlED+sreYXTCKaelNc76RsMFMWT+uufe1B8/pSJu+yoyN5WOL/AvyuAlKLR2ivzQMOjFDE6uKVXpohRzuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mHlT0ZGoc/an8az2MGCtSBbA8S4DKl/lnUrPdC93+gU=;
- b=eQNKB1sPws2N0HXjqnlZHh6YlP2x284Qg/DtXLjQ0b1XH2vjCysECfbs+UzwcLJB02EuRr5/sg/OLjMdTMAS3ZHZSl/kVflv3CF6iYy4xY0wKSpxazdAbG9wmxd58MM54qNxjFIV00a9npxXG4Sy4q1NGOJN/GxibR6Wf1BTccRcBaKTdzYZGeC9/s4Z6CSgtzK/vLWaZLoV7TZxS1wgJoQVh9fXc2xKyrq+vvBlLFBujG3gB3v6yKVF3lN8AW5GeKm1F1QauN6ZfxxIoyt+rDdtKs3IfXVEZ3LjpIN4I7EBS6dpOiD3etBOAiHJZGQATQuQeswK285t+gr098TKLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mHlT0ZGoc/an8az2MGCtSBbA8S4DKl/lnUrPdC93+gU=;
- b=VT9szQV/HgAI7kBpz7yHQtH7Hxye0t4eCxx7U62DTZqcV9aExt3Bha3Patqp7pGshaPkOihdYg8EAVQ2ljaHHLKWBb5iTEWZJ91Xv9u2QcGZ3MQv+R1nOX2DJZ32yqJbQdChxvdn6AFpq56eO/b8BQXO9eYO3YaM2+YT8k7AFjzy8rLuFcDj1eZCWpeCaB0KuWM/rP2C5nHp3/wYl5V+jdabLvvMj+BY28Nbo1579vN5ikV/mupadGOwTku3eMklQR+Hw3zvJYhhCOcPP9ZXTsEHButrK/U52cVzLcDdD6sy9AfSdfyZktrx7p0YJqDaJE6SpulrEL5/rF2A7LJU0A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by DBAPR08MB5605.eurprd08.prod.outlook.com (2603:10a6:10:1af::24)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
- 2025 14:29:52 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%7]) with mapi id 15.20.9456.013; Mon, 29 Dec 2025
- 14:29:52 +0000
-Message-ID: <62286d8a-eb8b-4753-984e-1e294d96529b@virtuozzo.com>
-Date: Mon, 29 Dec 2025 15:29:51 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] qcow2: add very final sync on QCOW2 image closing -
- BDRV_REQ_FUA processing is broken
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-References: <20251219180813.1000884-1-den@openvz.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20251219180813.1000884-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR04CA0085.eurprd04.prod.outlook.com
- (2603:10a6:803:64::20) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vaEHV-0004oI-MH
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 09:31:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
+ s=s1-ionos; t=1767018677; x=1767623477; i=laurent@vivier.eu;
+ bh=NiBDCR7peu09zjb71rD/BcRqvjxunCML05uASAhoSgc=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=xDaGLZj5iEr2y4Hh2Kv32I3o7rL6ODollvQJW01VWvStvDdCR7uPFPeUJH+j875c
+ kv7shZSComUPjlSI1k0whX8secjnEVgFle7es4hkpcP586LWUOgg3P4yhVj/KdtWj
+ XXdeoUhdK4br8WQabmunFzCxZkOZSsBjUrer7NqDBy9Zj5lqOKOzSuqozrL3KDsPF
+ 3zXR+q9Dut8SpMcEFKDgwkiHnPIf+0717wWYoevz7ScvvIgVp/4QB1fBr5qxE6lrK
+ aSal2cFy1oozgeIZ4HdiwAbgrhA0aTHPH6vcUMsRcNrKRW135MSFiBMRnBEVk9QXs
+ B1nqlYMmxhVOhydFBg==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue010 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1MrQ2R-1wEXQY307T-00kxw1; Mon, 29 Dec 2025 15:31:17 +0100
+Message-ID: <46bee198-d686-48a8-8353-201b7729fb29@vivier.eu>
+Date: Mon, 29 Dec 2025 15:31:17 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DBAPR08MB5605:EE_
-X-MS-Office365-Filtering-Correlation-Id: 37d4e583-1f0a-45f0-84e1-08de46e6bad8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RkRMQlg5TUZpYUs2UlYwcmhyT3FjTnBtWUxIQ3piRnczTjRVVUhZVlBhdGdJ?=
- =?utf-8?B?a3RFaUUzT25XNFk5QjJXWHR4UmJORjEyWFM2cHZKVFRDZDVuN01rMFpGZ2NK?=
- =?utf-8?B?a21lZTlsa0s1enlxRTUrbUZnS0NxUkNleE9QTlVZdU45dmF0ZC94L2RiTzBP?=
- =?utf-8?B?QSsyU3hTeVFoZmsxV2dYaG5Kc3lLNTgyQlRMVWN4MVIyb3A3WXlwVFRhOEI0?=
- =?utf-8?B?QVFrUkVzU05pdkEyaXgvMEQxYitCMGZOMGUrTnJHOGZHV21oMmtXejlwNUVX?=
- =?utf-8?B?aXd6WC9YNU9rRVVocXNvS3BtVTJaUFdhS3FZTXpJVGVabGdTTm03Z0V6RlN0?=
- =?utf-8?B?c2R3L0pESGYyMmtJMHZHcDJQeWhKVkR2Q0svUXFZeDYveGFyZElOVVRVcm0z?=
- =?utf-8?B?Z1RhRjhwQ2ZhR2NGenZOYThOd3V6c24yTER6RExzM1ZlMUgzbGY5NUtHTVRD?=
- =?utf-8?B?ckhWeVhMK3RnMWRwRTNHQlpzVmMrbGNoN0NZYmJKWVUrSFNweUV4c1kxTW9G?=
- =?utf-8?B?bVJ1U09OQW9CNEF3Vm9TT3A1azFjenh5OGd1MzNqYU1YMUtPTVgwUUswQUVQ?=
- =?utf-8?B?bmlRdGs3aE1pM1BZT0FBVlBGV3lWUWo2TW1aVzlCMkU5Z0V1NjV4Qzg5bXdu?=
- =?utf-8?B?eTEvWXU3TDlBeWx2RjZnUFVydDZlTURhTWpzVCtWTFYzd0Rld3UyVzV2U2xO?=
- =?utf-8?B?YTJvanRGS2FwVVYrNm04bFY1Q2VDRENsOVgzRU82enpOWnh3Rms1NHk3OFF2?=
- =?utf-8?B?R2dUc0p6NnVYNngyMzNWRWwrZmU1U05nZlFqVzNxSVRONDVoUEt2UUxrcTNT?=
- =?utf-8?B?b2NHTjV0c29yT3ZyNExHbEdNNEVaNUEwMXQ5VW8zSkU0UGRuTkdUYkVFb0FY?=
- =?utf-8?B?RFMvemxuc3J4eExLbEhNV1hhNmxEbXBXWjVRcXcxS1NzUEZxR0JwUDBsTC9G?=
- =?utf-8?B?VGVRRk1sRjNPa081NG4vcDJKTUl3aktmK2xOM1l1M2FtSVV3MVRlS3RIQ3dI?=
- =?utf-8?B?cGpidmpyKzBpZGZaVHM1UFNFc3k2Ni9TOHNkOE5Sck83bzM5T05PdENJcjZL?=
- =?utf-8?B?UEZ4K3V3RU9OVnpRVWN2eFlIWXYyTDhPUFNyV3RHVEhZNUJXY0lDQ3FZSmRK?=
- =?utf-8?B?aERlZzQ1QnFsNzczV3lTdmg1YVdYVVY5dlB2bXNxVFcwSTJraURsMzNERkRK?=
- =?utf-8?B?aGJKY2kvZ2EyamhKOVFYN1pFQWtGbGNMZXlldXh6QmNvV1RjMTd3RHJRRjd2?=
- =?utf-8?B?TU9TbjNjVlp0amxJS3JqTzgxZHJ4ck5HakU1bkhjdXNzSTRFUzVkeHJ6emNq?=
- =?utf-8?B?QWJhVkp6TUhja0FkY3ZpQ0RaeVZtcTVZTUx4ZDZ6eEp4TnNlV3RMcGxjbU1m?=
- =?utf-8?B?SEsxSWJGcGF2UzE3MHdwNjUzcWJiTHpBcXRsV0xCR3FlU0o2WmQxMUVrd3Jh?=
- =?utf-8?B?UHF5OEx6TGFtb1JuNUEydzZaQ3VmZnk2M0FtT2huMEYzWHlXWlFXRkZzYmZK?=
- =?utf-8?B?M21qMVNqUlVZWlA5cTBRdE9pdHgyRmIrUVF3U3JEWHNsYTREdmU3T0dRZ0Vx?=
- =?utf-8?B?ZFR4NXE3ZHpHVlJGQ0IxVHdTL2FrMDkwYmhyZFVmSm1SVDAzMk11cERtS0Nt?=
- =?utf-8?B?ZXpKclg5ek1pNGtjd2lZbFpqME9nSVozcko1Z01UV29wS2RaRFBjR05JM0hm?=
- =?utf-8?B?RUJqc2JtMnkzbys4V2Z0aDdVMkk5Y2w4WHFMdzkwYVVJUHdvNlByR0JOMDRG?=
- =?utf-8?B?bHJET2U3RnFVUGtqYTh0ODhWRFQrLzFoalhIN2IrT2I5aW9GY2QyV0YyNDRm?=
- =?utf-8?B?QjhlRXcvM09jNWNzKzRyeno0NGpTTGNveVdOVDBQSTdFdzZDbXQ4ZXE4QmxC?=
- =?utf-8?B?am1UODRFWEc4UVFieDdwNmttNGVWa0k0Rm1VK1EySWR5UXdYTHBMWlVveG4v?=
- =?utf-8?Q?rfEgSu6+5cfsYaGihdwvsklfnCLhImJ5?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(7053199007); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RHZMSnFXOHNVZWNPR1o5OS8wT3JVTXdaVks1OFBTbFcwcllSV0x4eVVuQmEy?=
- =?utf-8?B?dW5PMCt1STdldTNqMjR3UVdCT0lHTEtLVTBoNDE5TldjY0FmWkRwQVNFempt?=
- =?utf-8?B?ZFBSRnZMRmdxejFVWGVxWitZak42Z0hEMG9va3cyZG8yTVg2MFVkY0RPTGdH?=
- =?utf-8?B?Z09KSmJYaHlEcmNBSkNDN1d2V0FiaCtUOUFkdkNnb00xbDJvOUF4L09xOGdD?=
- =?utf-8?B?TlA3VXUwNFdrR0NVMy9yTXJOUXliRUpSdnRUWnV4VUxiakZsWnVPdldtNXov?=
- =?utf-8?B?Wmp2ZXlXYzNvUzc4QjZuSURYenJJWTAyYUt2K2hKSkNTbHhMbjBZWkpDNDZO?=
- =?utf-8?B?ckZyTk9WNDMyOHo4T0dSdnFFd1hqajc0NUlxd0drUHgzd0kwV2d6cGEwR2Nk?=
- =?utf-8?B?bllqL2IwY3RCajFoZno3aHR2WkVvWFJJVktqUDloR0JkOC9UcktmT0gycjRq?=
- =?utf-8?B?MEhzQ2I1RTB6U3FzUjJ0QWRlWnRrVHM4elowcUZOOUlTRWo0UDliNHBoZ1RI?=
- =?utf-8?B?RnYzTE9SdG5mTUE1VXpLZUs0a09Ddm9SeTB3dnpmekNoVk02UGtqYWY3bDhy?=
- =?utf-8?B?QVNoWEZZajJYbE1tVFB3eXNVUkFINGxvUmpteHJGTC9UTEdJNmg5NjNBNW9p?=
- =?utf-8?B?djZQOU5tZEhkZDNKZlQwRHdFZDRjbHdQc3UxUThBYmg0UGgrR0hVUDJOalNs?=
- =?utf-8?B?MUNtd1BiYzYvUUFMN2VSckVyeWJVVHRxMEgzeXRjdFJOWUFUdTFHemxkb3JS?=
- =?utf-8?B?bTFBSmZUbFZ2SmZURnNQNmRsdXVuVy9VRHBsS21lWHgrUitKVHVvUWcwUGNn?=
- =?utf-8?B?RHlOeGZ3RUFmTFoyWHgrOUd4MkVNVkV4d3NEUXVkcHlJQ0N6MU5lTFYzTVBK?=
- =?utf-8?B?NCtEbjQ5czlxblFHMWtKNC9zaDZ6SklqWXowL2E1a3EwRStmMURCTFV2UUl4?=
- =?utf-8?B?dGk0SHpwVXdxUjhwbDViQlorWnltT2MwU1dRaEdTU3ZYb0pDdStyUXJYWHFH?=
- =?utf-8?B?WlppNkhFUFNKcEtDNzZPYVN0M04rVnFwVEFGekdNTExscWY1YXNhdHR6ZkhE?=
- =?utf-8?B?aDJMMHZadXJXOWp0aWZiTVJXNzlnUEFSWER6REdBeTBoUEFYejJYZDFtVHJB?=
- =?utf-8?B?YksyVlE4ME54SXEwZDVXNXFEbXhqeEk0dW1qaGt1SllZUm1nVXVtYzlMYVdr?=
- =?utf-8?B?a2I4U3V2aE5HL2F6RzAyd1ZiY0g5andqSm1rcTc0OVVsL3RqOURia0NNRGhO?=
- =?utf-8?B?aW5hNFZ5Z3Q3UWdOc2p5Y3VRUlZudVE0OEd5VE8wYjg4dnY0WW4reDMwd0ps?=
- =?utf-8?B?RDlwYTY4MENoMWtvV0JFUG40RWQyYklVdVRoTGlza0pidWpBYTdUSjBFaEZK?=
- =?utf-8?B?UGtOLzcrd1F1ZzR4MW4yY01KVDd5UDVtcGNKZlNxc2w1bkMrT28rQjlqTFdQ?=
- =?utf-8?B?bmtEdWN2dkQ4KzZESnM2ZEpTYkswTTVXdGNwR0ZubVhrN3RaWXNrTFVHYmVC?=
- =?utf-8?B?Smc0QUxxbE16N1JvWG5XdS93N1RxdHZvdDNmdlAxMGx5VSs5ZWloM0tsdG1T?=
- =?utf-8?B?dG9qUk45TXRrMG1kMnUvck5HanJNYVNaOTFreVRlQkVxQ3hVeTJobHM5WXN0?=
- =?utf-8?B?bER2VWsvbXlYVDJkMkVBb0xyS0hSbkdoSmp2RVU3V1QrZUREN2JSbjRqN2Nr?=
- =?utf-8?B?Z09JTUtDdCtyV0F2NWI0aWIxa2FhYjNUQm83bFptTWJRUDZwOEdiUUxycGho?=
- =?utf-8?B?enNjZVlIZ2pkWUlTN28va0NRUmM5UHp6STdCdFBnS3QzcVJJakhRWkMySXhY?=
- =?utf-8?B?OHpTSW5OTFBldVh4S1htdnY4dnhCUmtVbG9qS3hCZGlkMkZWNUdpRFFlQkVK?=
- =?utf-8?B?eU9HaXBVQzBEZTVhTytHVWkxOGhXMUMycGwyNitJWkFtVVg1N0xCV2N5aXZN?=
- =?utf-8?B?NnB0ZEVlSTZVYkZqYmp2djZMcmJOZ21ZUG9OQjFMK2EwSjFWSDhMNUJib0Qr?=
- =?utf-8?B?QlMrRUpWK1l5MFlsa1gwTDQvaElSS0FHb2RidndTdHVYRVVoY2pjak5mZ0RM?=
- =?utf-8?B?WFpUM2dFS0Zya0FHcXVtMHFycG96bmFhdXlMZVE0c01yR0NjWm1QMnRXdnQ4?=
- =?utf-8?B?TG5MMExqdlFOSFBoai9ld2g3MGozZnlCbEhhVnpjMnFpVXhnNjVFaGQyOXNm?=
- =?utf-8?B?RWlhNk92NDFlSGlXc2hSY0tQSkoydmJ5UlQ5T2Q4YVY4aTYycFE0SmE3N05w?=
- =?utf-8?B?OVRFMkhDQXV6c28rZVlibWgrQmxpcGNvRDd5ci9qQ0kxR1hiblh2aVI5UElt?=
- =?utf-8?B?YmJ6QndFdlkwUGRLbHBFNEFvdTkwUkFVb0cwNEQxVHRZYmhJQ0FsQT09?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37d4e583-1f0a-45f0-84e1-08de46e6bad8
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 14:29:52.5460 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pDjn/esV4ZbO8z12PXzp9RL3d9TQnvkWGDeogMpcxTowcx594j1U+fyOsqDbK3XtUjb4FjZomagcGr2N0dZxFg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR08MB5605
-Received-SPF: pass client-ip=2a01:111:f403:c201::3;
- envelope-from=den@virtuozzo.com;
- helo=AS8PR04CU009.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] m68k: fix CAS2 writeback when Dc1==Dc2
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20251226213707.331741-1-laurent@vivier.eu>
+ <1c2fc596-7196-4901-b9aa-91a1a6efd71d@linaro.org>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <1c2fc596-7196-4901-b9aa-91a1a6efd71d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:aqL2vnZJq2DRLMdxtsLrHEkh/YtZsUexaPFF6jiQ4wLksZE5YKx
+ cBQMfxt25CrzqKcYdLyzKBpGqmj2J3D1SzDiEBizx3fxvha6hvtQXlyriVOeBDQ2sx0yUvl
+ vfVTrCMob79ZzHEIfgSTB8mcyhMfBd13I82BDaAiOoD1ZQifteaK8RniPcEYpNDKiIGJsmk
+ M9D2HDnH8OC2jZdGlxY9Q==
+UI-OutboundReport: notjunk:1;M01:P0:HlTXoveFdc0=;7ZzOFb9KJjCMXt0R9Y5w6LTWNpO
+ lG/X+1zulqIx0UjVA0oqTnRo0C6xo5F8wdTkT91ZhVTgfRvaPYwKQ46Y5sFLk8aGqs8otOGOr
+ qyn55IRviUlZNhrv5MuS2K1jTawBtBW7lq3o56Z+FbZ4xv7vdrMv6MYdNG+Z6UmSElunJWSwU
+ N3FdqMUTqHol2qDtoCrCEtSo+7WAqjXpt9gWD78bsTKzBVjooCS+9MKc7h4HSGtbiUK9Kd10F
+ 4HBSaV9K1VfufUjUwesP0Ew3vPkxCJ7K6RaK4HBAo0jZQpMDcmkOhPFSDPuakR/sXJgBQ4Fqh
+ eNMF4PKRzPbdOfe1wXHgrgmOQPIRxZVRjFLc1CHiD4HbAtGfsco4OMjEV6BYHc9McE6ama1EW
+ fMqe1L/9u1xuR2fkImlLEBLPZdcCmHsKeEaWvEz4v2FbEjoDBic3B8E6i5K6DrWlttpOnhKRq
+ TTtCysz45N/heXDr1T/Q2bbgYat8SUcByrnVaSM9zEJ9PlrWkW1/4R6eZq9vMaxWRO6ygD05f
+ JLDJpoAWFmDhIp04cEhiu22kAuJaujfWZtjRxoX+m795fEkOP2cmR9ekLwtkk2X2KEK+44DJf
+ Ra3dV+8ZkG0AUNDeqOeeagM5BuJRr5fHiGd+xSA26l+k58TDv8jxJqqh+dbVC1IiARAs1/w4S
+ +wxHrGx7Lts8DfnM21KF81IBc3fI3nfJZXV4Ta+thCklvCSFXSSPljqmGzBC55kbp5GeLhDpO
+ +fFayyVxDw4ufe2fmhXc28J8N9TxfZeEcTJVebTxdWfsJh2MKBRJPTY7xxWmXIkbIhnSgWnSp
+ tAtUiNITSM2ROF15stwafJNbx/TflkQ8c7NinBTlvs4oJTBOW/f1ywY9GDPC+LR/EDR0h9jdS
+ vk49IlUf7MnRQYRfel1eRR9w/6RqzZMwmAfHRGgz7jOs70R7OCYLg5bc8gR7lvRKZtcxEki59
+ peeDw890c50tHpYEOCW+auPovqVCfYOJ4RxdkWIjn1TahhxNIGpE4PVhnkRHvCn401vfyluDo
+ reISCIOSC/0hisGgFHXiS/fx1mqfSEbvPqYXdXoS/nqnYHV+Zc1tCjLFrasAxP0CMlxGIHoSB
+ Q8f6uvEOEqU3tQTDeYiZtjyPfbEVV2ldgYnWVWBKrnt++bChY6eehYYbq8Ew06KVUFTaauAft
+ YtW1qi0TOlgM8a+6PTGob5ESkbpH4S+lhSQg+Fh2emI9qt47/y//0DD0ulE5TL54FUmZMIjXQ
+ gW+36XGqUstO6r8oNGuuu1FQyR+Yafr8nPiil8xCjaQgHU5fXOelnXTQlPQ193geV24hDWS1F
+ CHYrxGi6zj5vLZLASk0wYjuJle4ZKXt8E1QLKDcFOKbarm1xaE0AAl6OyflrduyCE1RrKCfyA
+ viwL9Db0UfLBKqjfAcdHEWcv17xJUpDqpl/qbD9WWYSCETXPNRC2angb9xeBdqcYtNXpKlBZC
+ zqLehEKt7/V+7IoXzC29g+BkjRQAw1wnHn/SPjCFMN/wKuUiCl1a7WRlHbyqwq8iPdStAtfdf
+ VFPkYa9GlDIoKG46LMxph9V3S123Iz2plUj1+ZdNOSITFl+Rn891TReQMUm58IgrEJFgdQr8O
+ kh373GYn3DGhuMZI7cXt69/IsxY6E0TXdWRHDhiIKjdgt1UBfaAigrj9NhCedTEDYEzPwcEEZ
+ K/d7trqRfkfyNL8aMsXy8fhPaxFa6e7UuzSgiW95uyaE0TskUOzrHeFJrxNkagtQ0Wo1HRjmX
+ bHuxKty7EFpi+l+64tFH8hUHmBLkUOgVmplHI1aP3kh0oNerDq88uYIM=
+Received-SPF: pass client-ip=212.227.126.131; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,51 +146,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/19/25 19:08, Denis V. Lunev wrote:
-> qcow2_header_updated() is the final call during image close. This means
-> after this point we will have no IO operations on this file descriptor.
-> This assumption has been validated via 'strace' which clearly confirms
-> that this is very final write and there is no sync after this point.
->
-> There is almost no problem when the image is residing in local
-> filesystem except that we will have image check if the chage will
-> not reach disk before powerloss, but with a network or distributed
-> filesystem we come to trouble. The change could be in flight and we
-> can miss this data on other node like during migration.
->
-> The patch adds BDRV_REQ_FUA to the write request to do the trick.
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> ---
->   block/qcow2.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/block/qcow2.c b/block/qcow2.c
-> index e29810d86a..abbc4e82ba 100644
-> --- a/block/qcow2.c
-> +++ b/block/qcow2.c
-> @@ -3252,7 +3252,7 @@ int qcow2_update_header(BlockDriverState *bs)
->       }
->   
->       /* Write the new header */
-> -    ret = bdrv_pwrite(bs->file, 0, s->cluster_size, header, 0);
-> +    ret = bdrv_pwrite(bs->file, 0, s->cluster_size, header, BDRV_REQ_FUA);
->       if (ret < 0) {
->           goto fail;
->       }
-(attempt #2, mailer has rotten the mail. sorry).
+Le 29/12/2025 =C3=A0 00:13, Richard Henderson a =C3=A9crit=C2=A0:
+> On 12/27/25 08:37, Laurent Vivier wrote:
+>> According to Programmer's Reference Manual, if Dc1 and Dc2 specify the
+>> same data register and the comparison fails, memory operand 1 is stored
+>> in the data register.
+>=20
+> Where does it say that?
+>=20
+> All I see is the pseudocode
+>=20
+> CAS2
+> Destination 1 =E2=80=93 Compare 1 =E2=86=92 cc;
+> If Z, Destination 2 =E2=80=93 Compare 2 =E2=86=92 cc
+> If Z, Update 1 =E2=86=92 Destination 1; Update 2 =E2=86=92 Destination 2
+> Else Destination 1 =E2=86=92 Compare 1; Destination 2 =E2=86=92 Compare =
+2
+>=20
+> which *suggests* that Dc2 is the final store.
+>=20
 
-Thanks a lot for Andrey Drobyshev who has attempted to review and
-test this patch.
+This suggests but later it's explicit:
 
-The patch is non-working due to broken BDRV_REQ_FUA processing in QEMU 
-code and this looks more severe than the original problem. bdrv_pwrite() 
-endups in bdrv_aligned_pwritev() which internally calls 
-bdrv_driver_pwritev() -> bdrv_co_flush() bdrv_co_write_req_finish() 
-Please note, that bdrv_co_flush() is in reality noop until bs->write_gen 
-is incremented, which happened only late inside 
-bdrv_co_write_req_finish(). This means that BDRV_REQ_FUA request will be 
-flushed only on the NEXT flush operation, which is definitely wrong. Den
+MP68000PA/AD REV.1
+MOTOROLA M68000 FAMILY Programmer=E2=80=99s Reference Manual
+(Includes CPU32 Instructions)
+https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
+
+CAS/CAS2 Compare and Swap with Operand
+
+P 4-68
+
+Instuction Fields:
+
+Dc1, Dc2 fields =E2=80=94 Specify the data registers that contain the test=
+ values to be compared
+to the first and second memory operands, respectively. If Dc1 and Dc2 spec=
+ify the
+same data register and the comparison fails, memory operand 1 is stored in=
+ the
+data register.
+
+Thanks,
+Laurent
 
