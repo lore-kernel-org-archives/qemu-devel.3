@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F20FAE92733
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 17:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5368CE9273E
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 17:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaGn7-0002GY-JO; Mon, 29 Dec 2025 12:12:21 -0500
+	id 1vaGs1-0003Fj-3V; Mon, 29 Dec 2025 12:17:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaGn6-0002GC-Bx
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:12:20 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaGrz-0003FK-EU
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:17:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaGn3-00067M-0r
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:12:20 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaGry-0006mn-1C
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 12:17:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767028334;
+ s=mimecast20190719; t=1767028640;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=p+N6d6FZ0owyY5D77OCXrnv55/f5iSaSLYIoviXPgjk=;
- b=hhJ/3O7dZsvMGjJYAPJs4YtayfG6nLjqepOLozoIa17P/T5QnB+zwpgRmOAIqmI0jWKMYm
- 6uo26y6nP5W6sWzltlYyqyBa6NtVhwCwGO2o3n7XNazKw+9BZVpr3aUKvOZucYOyvJLXNe
- s14Q4CRMefnUDXNiRzzq95ZgER1wk/s=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iTJ5nzZuYxlGkcNPYCY4Oxn1ZDw2jiK/T3uoGI0wVcA=;
+ b=fbh7q30EIBtUoU2ZORK9VUh4tgDRbwSfW94IubnPJ2vcvApw7zswVwqnRWMh13OplYzL6i
+ bXOFyHTZL3CvTpQg6oFrCct1AQKmLOsWCQhOzNEIHTSve6lpbhFUuFZ9ybWRCSvybaJLGq
+ p2W8wJMKM/bLIRgaiyRlAeOs1q4OYFg=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-24n8Q904O9aH0dYwAbRtfw-1; Mon, 29 Dec 2025 12:12:12 -0500
-X-MC-Unique: 24n8Q904O9aH0dYwAbRtfw-1
-X-Mimecast-MFC-AGG-ID: 24n8Q904O9aH0dYwAbRtfw_1767028332
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8b9ff555d2dso2255996685a.0
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 09:12:12 -0800 (PST)
+ us-mta-501-U1MxAtJ9ML6nrjmvJpu9Gg-1; Mon, 29 Dec 2025 12:17:15 -0500
+X-MC-Unique: U1MxAtJ9ML6nrjmvJpu9Gg-1
+X-Mimecast-MFC-AGG-ID: U1MxAtJ9ML6nrjmvJpu9Gg_1767028634
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4ed6855557aso216017281cf.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 09:17:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767028332; x=1767633132; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767028634; x=1767633434; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=p+N6d6FZ0owyY5D77OCXrnv55/f5iSaSLYIoviXPgjk=;
- b=kmPodPRn3NuS60MTsj59eBnjThFc47C1z6I6P2ZruDpMBYUcpJAUlbleAUP0KSQkRb
- q+RuZ7p1t3FC6zdr2wb7oD1Ual1Q6Ax6MkbYPt2JGjSfiWcYSUIaRSc+hFhaBJbklfDQ
- DasqIHBgiQlW6EsLwIqu/ke2HZKs+G7xbQtyXoI9/6seDDMpsZMNrCgjyeVYNPTudqsB
- E7TxJPU3h7vYwF1jDul2OS53woSrQzaQDkQVZbZHtYvC47D81EBRFAt1MAbeU/j9oiUd
- oaO9z+iAv+b1lp9AXDa2U9DB6Z1sHOAeQ88FNPMCDMuZfx/Idogvr/JaehuwJaAMPGBz
- Ap7w==
+ bh=iTJ5nzZuYxlGkcNPYCY4Oxn1ZDw2jiK/T3uoGI0wVcA=;
+ b=czHvyy25WaCjVbPQyYG1zP5121TR8vxfc/pKGL19wZ+NW9n/Wga7I+hgCunKSjEBsz
+ sR1sMkpa948RdJI9jSKjPgq+q3WZVnOnUrlJaYN0jsgJ53Qa2yu2O3+ugPHss0W/vd4f
+ pyfyVyKhU+jp+Ay/SdBVW4JWeuv8WAHLjQLOQyqF5zppzAVB3fc+dCVlAgDPbyWdH5bk
+ Zx+KvAm8yG+1Qdh3yksjjbg2E77GJ0Y3J/AwEZsFsf2TwPdsoYOR/4+YADX69EUldHDr
+ gt9ni1V8o0Sj/65LP4iXmLBmCzS/jYQviDPI6XYAGhfsfcu3zfOvGagnLK66dp5tdl/N
+ p24A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767028332; x=1767633132;
+ d=1e100.net; s=20230601; t=1767028634; x=1767633434;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=p+N6d6FZ0owyY5D77OCXrnv55/f5iSaSLYIoviXPgjk=;
- b=qT03K3o6qgpoyK75t5NDhcLw4lPb3uvp3SFrhf5+RgRtc09su8lHPkkATiWxK084So
- ICl/PsYcGoVXVnTt+iZEbLL1WlY577ijURCVy1jZMmNPieHQnXG0snljuaR0c1u4mogP
- JQ+guS1tdSvNEdsAILtprn/bUyYBWip8av2NJnGRhrJMN08eu3rTd8T2Wn4xcmBxS+NJ
- hYLZvrI/kfZenshrNX436o8ZFhB6k6IQNd1H/9xby115nEiQhFHYgjLFB6zCQYEpKSW8
- LHqpo5pUimy1yi4y933127OJnZtzSLoXRMx5gRBY23/GaguAtjh6+L8Z98oij4zWwvpm
- W1cA==
-X-Gm-Message-State: AOJu0YxECDbNq6gAaDZi6JyF6fZ71hss304bAL8cev5bfqSSU3J27m+N
- BhDTc8d/EjNoNjuTjCdKf//0H15Voy5myqhZzZyGW1IagIpkHoE7tXQKuTH737Hm9IuOTZwaaM0
- 0MtUGZjWsletVwbbn7x0Ef6lzDtU7ggUqqQ6EUxK6Q82h6MGlMH1Ng+aI
-X-Gm-Gg: AY/fxX4SbH2+LE7VmCHUhT1FTXH7GdcTSY5XS8eQpc1MgX23zcok+igk8EZw01S7bTJ
- s/nf7K31PVE4o/FGPMXekpludEvmJ9uEyzonA//31m7Q60wfeqqb4hQ63aVWFblJ2WrXvpxbWYW
- NATBQVa7cRGUCwv+17YZvvq/4p79jZO+OD09F3HqTo+hIPKHAqIJbf2uiCtwtHr/XhtWhjrbSMg
- qLnFnjkN8GzxenqhPRo6w4NBIErxbc4uPrRnKno5fOjDDit6QXXDXRdzOaOSA2kYgDggCI1nm2d
- 8VKj5o1F1cfvnsaqB5UkJNMpx3tHoyp+rhg1T8RZfGOoPbMcWogBA1VWyZ5WMgBx9V0wUK/DDBN
- rDF4=
-X-Received: by 2002:a05:620a:1901:b0:8b2:1f04:f83 with SMTP id
- af79cd13be357-8c08fab3fa0mr4419491085a.70.1767028332347; 
- Mon, 29 Dec 2025 09:12:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH42y7d5tXyANQ3iNdqLtkWY8b2LA9Gfjf2qA/hcZepOvAyWL7dnLl2W8rnICpoK5STEbNb3g==
-X-Received: by 2002:a05:620a:1901:b0:8b2:1f04:f83 with SMTP id
- af79cd13be357-8c08fab3fa0mr4419486985a.70.1767028331890; 
- Mon, 29 Dec 2025 09:12:11 -0800 (PST)
+ bh=iTJ5nzZuYxlGkcNPYCY4Oxn1ZDw2jiK/T3uoGI0wVcA=;
+ b=xDAE3fihvrTTrLbckqmi+6onfu/WYLOatS9UU9u76AAtsB/3E/8azv3jL/UzT0WXzT
+ 3XMoXM2O1Rf1+wIbdQuKNm6GyCGk0FBMW7c0U+6UKsOXeK/N6hw9kQEpsjD9cuGCozSm
+ EHKkWsAYuHm7SQ2YPRMZoLnH8eS46gQanDlxkmy/p37iN78dsRh9XLLJk+ezDQLniyQb
+ IcEZHGjJbGltfiCWDrjiK0q0y2Qz/LLUHD+1NyjOSd2fLcKqOEZHyw36O4TYg0jYmDQS
+ nczCHXB7vHcP0T/Qg5Gl0w9rfS9cO61jP6tI5K2PvITuCnQVuDtgB9aBat+NaRfTX7ZH
+ 75CQ==
+X-Gm-Message-State: AOJu0YywvsROvpt/a67f+n3dsO58FbT0ci5UqClLg5KoshORwqMVJvhf
+ ea0Rr/ysc76y5nhzbyKVU65I7x58MiFGyPxQk1qtXyv85SwIz71oeuR6h1xSKcDAe8MlvGTlixE
+ Lek3cOxNwsrYAQt3hvqDueSAVXO91qiD4CbfRHrl5eCG+7Xy6LS+GCqi+
+X-Gm-Gg: AY/fxX7PbRFdBbpUczdrM6EvW3S/hkVZqvxUVWNqAyX+BsalrtT+4VLL78lMZ9bC/BN
+ xuVSkHgcU7gW5F1t4v3595QA9ssStm79CK03geWDEQkveM4QSZO9MbQXrZUDA5BSvRtDiRnrGuW
+ jok6uO8mn9QngxzwwTmDm3XteYzjsUVXZzX1TPm6hXLPg+OfgGbDlP9SeQqYsda/RTBMpLwPzC6
+ Yt00tNAkaqZCffY95tRr/r35U9EfMm/Je4F7eOnc2qTxF56q3zEi0zT8gRqJd6lUxFjRDMhS3vg
+ lD9BihXkabrnkv+GccrP9FXwKzkA+pby5lb2Ol8G8DlkpPqV9Pmkjyy3SRQ+XwzOdgQiKcR8gCF
+ +bXY=
+X-Received: by 2002:a05:622a:15d6:b0:4ed:bc0a:88c3 with SMTP id
+ d75a77b69052e-4f4aadb1032mr544278361cf.33.1767028634441; 
+ Mon, 29 Dec 2025 09:17:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF3YYx255VsEDOKutgFZMPAt3mKudwn+ZzKsvER10q0H8Bg4FF5M2AUofPOSGEEGChrHLXI6w==
+X-Received: by 2002:a05:622a:15d6:b0:4ed:bc0a:88c3 with SMTP id
+ d75a77b69052e-4f4aadb1032mr544277961cf.33.1767028633974; 
+ Mon, 29 Dec 2025 09:17:13 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c096781f33sm2442829485a.11.2025.12.29.09.12.11
+ d75a77b69052e-4f4ac62f973sm232849301cf.18.2025.12.29.09.17.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Dec 2025 09:12:11 -0800 (PST)
-Date: Mon, 29 Dec 2025 12:12:10 -0500
+ Mon, 29 Dec 2025 09:17:13 -0800 (PST)
+Date: Mon, 29 Dec 2025 12:17:10 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 10/25] migration: Expand
- migration_connect_error_propagate to cover cancelling
-Message-ID: <aVK2aqXZICw9IDke@x1.local>
+Subject: Re: [RFC PATCH 11/25] migration: yank: Move register instance earlier
+Message-ID: <aVK3lpIGhfypr-Qc@x1.local>
 References: <20251226211930.27565-1-farosas@suse.de>
- <20251226211930.27565-11-farosas@suse.de>
+ <20251226211930.27565-12-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251226211930.27565-11-farosas@suse.de>
+In-Reply-To: <20251226211930.27565-12-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -117,87 +116,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 26, 2025 at 06:19:12PM -0300, Fabiano Rosas wrote:
-> Cover the CANCELLING state in migration_connect_error_propagate() and
-> use it to funnel errors from migrate_prepare() until the end of
-> migration_connect().
+On Fri, Dec 26, 2025 at 06:19:13PM -0300, Fabiano Rosas wrote:
+> Move the register_instance call to migrate_prepare() so it can be
+> paired with the unregister_instance at migration_cleanup(). Otherwise,
+> the cleanup cannot be run when cpr_state_save() fails because the
+> instance is registered only after it.
 > 
-> (add some line breaks for legibility)
+> When resuming from a paused postcopy migration, migrate_prepare()
+> returns early, but migration_cleanup() doesn't run, so the yank will
+> remain paired.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/migration.c | 24 +++++++++++++++---------
->  1 file changed, 15 insertions(+), 9 deletions(-)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 83854d084a..e1c00867ab 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1575,18 +1575,25 @@ static void migrate_error_free(MigrationState *s)
->  static void migration_connect_error_propagate(MigrationState *s, Error *error)
->  {
->      MigrationStatus current = s->state;
-> -    MigrationStatus next;
-> -
-> -    assert(s->to_dst_file == NULL);
-> +    MigrationStatus next = MIGRATION_STATUS_NONE;
->  
->      switch (current) {
->      case MIGRATION_STATUS_SETUP:
->          next = MIGRATION_STATUS_FAILED;
->          break;
-> +
->      case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
->          /* Never fail a postcopy migration; switch back to PAUSED instead */
->          next = MIGRATION_STATUS_POSTCOPY_PAUSED;
->          break;
-> +
-> +    case MIGRATION_STATUS_CANCELLING:
-> +        /*
-> +         * Don't move out of CANCELLING, the only valid transition is to
-> +         * CANCELLED, at migration_cleanup().
-> +         */
-> +        break;
-> +
->      default:
->          /*
->           * This really shouldn't happen. Just be careful to not crash a VM
-> @@ -1597,7 +1604,10 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
->          return;
->      }
->  
-> -    migrate_set_state(&s->state, current, next);
-> +    if (next) {
-> +        migrate_set_state(&s->state, current, next);
-> +    }
-> +
->      migrate_error_propagate(s, error);
->  }
->  
-> @@ -4107,11 +4117,7 @@ void migration_connect(MigrationState *s, Error *error_in)
->      return;
->  
->  fail:
-> -    migrate_error_propagate(s, error_copy(local_err));
-> -    if (s->state != MIGRATION_STATUS_CANCELLING) {
-> -        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-> -    }
-> -    error_report_err(local_err);
-
-OK you removed this line here..  maybe it should belong to the previous
-patch?
-
-If you agree, feel free to take:
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
-
-> +    migration_connect_error_propagate(s, local_err);
->      migration_cleanup(s);
->      if (s->error) {
->          error_report_err(error_copy(s->error));
-> -- 
-> 2.51.0
-> 
 
 -- 
 Peter Xu
