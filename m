@@ -4,104 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D91E92FD0
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 18:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0024E92FC4
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 18:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaICA-0000fh-5p; Mon, 29 Dec 2025 13:42:18 -0500
+	id 1vaIDa-0001Os-EE; Mon, 29 Dec 2025 13:43:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaIC6-0000bF-Os
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:42:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vaIC1-0007Wp-VC
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:42:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767033725;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Q0VpudXbOuwgvKi3M2nVEq4u6PHjiT6r0dq7IP+SJls=;
- b=QUA/gxKB4BXbj7h6NM+lrjUfEG8a4QENv05W8hVAj3TQaWcLkqRSZtqqjDvx8xTJ9mr15Y
- CiHiGZ8GGA6+jVyEsgMrc7CpuWR7k2nWnoLgsllLTu1VoCsbwUITkYHCxo52Ol9y5lgRIi
- THSMQj/2d1axim77N/e2ZEB/af8loI8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-ski6NZXROo2FrpesIPx1AQ-1; Mon, 29 Dec 2025 13:42:03 -0500
-X-MC-Unique: ski6NZXROo2FrpesIPx1AQ-1
-X-Mimecast-MFC-AGG-ID: ski6NZXROo2FrpesIPx1AQ_1767033723
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8b22d590227so1082465685a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 10:42:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vaIDY-0001Nq-LZ
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:43:44 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vaIDW-0007hF-6Z
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 13:43:44 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2a1022dda33so75876975ad.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 10:43:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767033723; x=1767638523; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Q0VpudXbOuwgvKi3M2nVEq4u6PHjiT6r0dq7IP+SJls=;
- b=d9fRh5EB/V0qTP9xLoXK7VDbP5WZg0fTD42CuwFvGoH4zSJ1EWAoeibmUg19grfD4x
- FABWBss+OFaBjWC2lnPlnb5uc7bGvBudIQv0/QQN6lSzvdeBPuseiblet5QNJiWXW+QN
- kVhYBh+kzRz7W80vaqFGS99AoCKk2ONk/pHtw3KTIdEdOvTemEUglcRyo4DvUrkGTCoJ
- k1QsAlrnAClqsbnNLPA98OsRqDAGqqPdoew3bFVl/g2Hm3+ZKkD3ephbaw1hrkttTZBp
- MoVjlUBwugYXUSdjxl7KJeTzc653SIAnTTDZ5N6ycO9nOO1ly4hcw+IrrUb3NOw8sgQh
- WP4A==
+ d=linaro.org; s=google; t=1767033820; x=1767638620; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uwn1Ia6i5f2r6o+NnwihSUzXHLhls41F5p1+a1eMrFQ=;
+ b=PBeGHGNX6DQxOq5c+0kHWPPaH0gRCW31+aNp/Facd3Ttc6QXfmcLbemOQfZQNEtfns
+ 20kYGW5z087nRa6/Y1b6BUlz0d2uyIGrLHuSuqSuXwZjDHFwS9AjEv4FcVh9O7KRcIvN
+ JWC6ReNCQOitcnaA+ogZbosQq2DMqca73L6spq1TPd0vd6W9ph88jwUTSNp+f+iaO0Jq
+ ac/K76lgGMnbDFi5l7K36Ij4dI9rGoDdnNAfTLKII52CqlRi7Gdkc/T5p1Vlsim3a8Dh
+ IwOCKL038Xno5yaE8tnBxUTJ0KNui/Gn/+mOorRsH88DOn3O9MExmAELKap56ajrRqJ8
+ Knlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767033723; x=1767638523;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q0VpudXbOuwgvKi3M2nVEq4u6PHjiT6r0dq7IP+SJls=;
- b=Hld3Gxk+EqkeAT5J68rDWeJXCinqNto7xH5ZtCY6UY6DzQvgF0Y+XzJRH30J3uoX2l
- pp+EjFaVBVWCUH9kyUNRW8W3LOPwl1yJurfelky1boTG8kBqVxwXXNqREifwjhWH9WxS
- lUjTqrXcui7KnZetR7dPJ5tCFUfuUTPNAsq3Rk3aN5QfFHQOzMwiCBh+Wa22w9QDpXfQ
- ofmNJ0SWlbif8E4t8xaeIZi4bqOgpf4gWXpGU9XJrm/3Z2//sPbxFF9tiDlL4vK6OZvH
- 67nuH7KdPuafgdonmE9jAftxRznnQEMOtIKHhdEPtDsm9MR4IVg0fofpqZDHY2UVEmkt
- mp+g==
-X-Gm-Message-State: AOJu0YxJVJou4WyDMwhZTE4oG9sb1xRyvNo2SIj8LjCs7EiQWJh5+ZVA
- iQefYFumtBQKYtJc+QQLfK6p2yfPZjUSbDP2gl5c+pBuMY8HZJ4ocJkjTgmWemnqAvyEJbXa0Ru
- wcHdItGBda6PELVya1leQVlkbaAnpDapYyxX3JWUYUoZt5Df4iElP1DNQ
-X-Gm-Gg: AY/fxX4ey6Yx5gDgqZ80MUPrEWeBGeSQQ/Ubxl57W4VJYhyTWSYb+mWYE8IIcGzVvA0
- VYBK9KTbTUzZfsgJNuZmLLf8OWDdcze1UB2Lvx2fSaVIHMfggm4bzrG1GmVAJYYUeYVIoaw54YZ
- DMOy+i0wwzXyHryaqUzswMkJlxAl8nGsIKL+e1puQWq0xsZedUszbRqAQEHFdytqM9gR87TMILv
- LoMLNJ662deRGWhLNdovj/7IypE0uUErYZoKQq5CLLzYHQMCpy4AcTMc/YV+Lyb+vBxc/EkNqKB
- FwUipQjXGiP3O12zzWguRrQn+I/gpxcNxnXKWZq+J6iweWT+agiYK2Yt+SLZmeGhSBdoqPpHoNU
- fmXY=
-X-Received: by 2002:a05:620a:1a0c:b0:89e:a9ea:a374 with SMTP id
- af79cd13be357-8c08ff20edfmr4359169885a.67.1767033723122; 
- Mon, 29 Dec 2025 10:42:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG3VR04jOM6M+lPU6WUQo0AzSw7ZxLR7MV8sCqPzooxBhSCVXKnqjdpg2AuUIslF9VBEMKLvQ==
-X-Received: by 2002:a05:620a:1a0c:b0:89e:a9ea:a374 with SMTP id
- af79cd13be357-8c08ff20edfmr4359166685a.67.1767033722575; 
- Mon, 29 Dec 2025 10:42:02 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-88d99d7e8d4sm241690756d6.41.2025.12.29.10.42.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Dec 2025 10:42:02 -0800 (PST)
-Date: Mon, 29 Dec 2025 13:42:01 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 12/25] migration: Fold migration_cleanup() into
- migration_connect_error_propagate()
-Message-ID: <aVLLeZQm376POJ0t@x1.local>
-References: <20251226211930.27565-1-farosas@suse.de>
- <20251226211930.27565-13-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1767033820; x=1767638620;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uwn1Ia6i5f2r6o+NnwihSUzXHLhls41F5p1+a1eMrFQ=;
+ b=mJlF3x7vRIZ69YRuS9cl4kauMkAQcxXX475qr0fyw9CEKA+edDNs47TaC3o8UpTdIh
+ A9nInwXctItKxrUesQF95OIHWXnVNMxHvuAe4xsAOXsb6t2O2/M7WoO0l48v3AwnTNHy
+ B3sGG65WrP4ndJ55h/NTZtEDG9ZhTpIy+biIrrSmlNcIopVEjspGXNSZnF2jpq6ywO0g
+ jDzhUOSMZ2mdVncA9ytlTC7X2RjTYWqnjbNeLqnqvoNLwcRbtrYBwilaLA8R+E+SfiE0
+ I3V63OH4cwyDtLZ/AS3mUgGBFn6OD9RWlqnR7VUCxlATRhtdAK7zabpu7hwhFFy8q66Q
+ hCng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVeZKm4P16dx+BoNaVZtfczj/2cE/LGvTjvaXmXcDnAHU3KQpNSIU229PC4wumQubOtqJI/nxC3meWs@nongnu.org
+X-Gm-Message-State: AOJu0YwZlQD0Ub6HQlhZCMVsySjWfkIH4ESBtKpkpLB+aywuvKFEXf0I
+ pvQAzHPZQG/WZlqiFFQWptuR+y0MhZJW70djvN6tRk9jlQkhKPK9U5Wdmd6RB7S9kvk=
+X-Gm-Gg: AY/fxX4RvlrRIlivlIexnvIGUdfj5KmtwHPcckbeqh957+ww1iECHubaiiNquDF74v6
+ fqfkyS8GQvC/EAB01RAWtWVlN10FQCb2g40wi6u3qbtlIUbIojiqNFRE59Ki8gfmBv71yERepWR
+ Wp7Om4ptgIwdrWsVlosZvP1IXQnC8QJzb57RTm3CfcCm0Gutmuq/poPokwLVWwD0LAaJHmXbMKp
+ g3nEuo5D1ptVUUTN36vakcS2Vh7JNI+Bv6C7XnpEgZ8QUjpmOq8J/IH2dEXz7zmPlVbQdJIu+P2
+ HyQHZ4CLE7KoV8Zj0NalP0g1Io+ZIIkp/SyTBW+u45d5V/s3uxB0Hd4nuDY/omKDadnJRsUCS1Z
+ VHf/byB1zlU6vmj+Cl/PhTIgzOf4LYi/8aGtd1G4r4L0X9v9dxr8qULefRNnsKXzk6CG36nmb87
+ 409MDZ6UJrJwA9rH5RTdzs5JawHTFctG9wi6/wnVP7KA+RoH98TaztyOzA
+X-Google-Smtp-Source: AGHT+IH38YtqoTF7wx7s38i2m+/OSaoP7yEHgGhDuk2Zgmj+fK7stjLK8Nlx5s43A/87PIrNe3VV5A==
+X-Received: by 2002:a17:903:1a2e:b0:297:d764:9874 with SMTP id
+ d9443c01a7336-2a2f222bfebmr313442345ad.21.1767033820186; 
+ Mon, 29 Dec 2025 10:43:40 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a2f3c83325sm281846545ad.34.2025.12.29.10.43.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Dec 2025 10:43:39 -0800 (PST)
+Message-ID: <f9a6ac85-f3d5-4e14-a717-bd2183cda1d6@linaro.org>
+Date: Mon, 29 Dec 2025 10:43:38 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251226211930.27565-13-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 04/28] hw/arm: virt: add GICv2m for the case when ITS
+ is not available
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ kvm@vger.kernel.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Cameron Esfahani <dirty@apple.com>
+References: <20251228235422.30383-1-mohamed@unpredictable.fr>
+ <20251228235422.30383-5-mohamed@unpredictable.fr>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20251228235422.30383-5-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,170 +125,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 26, 2025 at 06:19:14PM -0300, Fabiano Rosas wrote:
-> Whenever an error occurs between migrate_init() and the start of
-> migration_thread, do cleanup immediately after.
+On 12/28/25 3:53 PM, Mohamed Mediouni wrote:
+> On Hypervisor.framework for macOS and WHPX for Windows, the provided environment is a GICv3 without ITS.
 > 
-> This allows the special casing for resume to be removed from
-> migration_connect(), that check is now done at
-> migration_connect_error_propagate() which already had a case for
-> resume.
+> As such, support a GICv3 w/ GICv2m for that scenario.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-
-Didn't spot anything wrong,
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
-One nitpick below,
-
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->  migration/migration.c | 42 +++++++++++++++++++++++++++---------------
->  1 file changed, 27 insertions(+), 15 deletions(-)
+>   hw/arm/virt-acpi-build.c |  4 +++-
+>   hw/arm/virt.c            | 16 +++++++++++++++-
+>   include/hw/arm/virt.h    |  2 ++
+>   3 files changed, 20 insertions(+), 2 deletions(-)
 > 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 0f1644b276..a66b2d7aaf 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1576,15 +1576,21 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
->  {
->      MigrationStatus current = s->state;
->      MigrationStatus next = MIGRATION_STATUS_NONE;
-> +    bool resume = false;
->  
->      switch (current) {
->      case MIGRATION_STATUS_SETUP:
->          next = MIGRATION_STATUS_FAILED;
->          break;
->  
-> +    case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> +        resume = true;
-> +        break;
-> +
->      case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
->          /* Never fail a postcopy migration; switch back to PAUSED instead */
->          next = MIGRATION_STATUS_POSTCOPY_PAUSED;
-> +        resume = true;
->          break;
->  
->      case MIGRATION_STATUS_CANCELLING:
-> @@ -1609,6 +1615,10 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
->      }
->  
->      migrate_error_propagate(s, error);
-> +
-> +    if (!resume) {
-> +        migration_cleanup(s);
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 03b4342574..b6f722657a 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -960,7 +960,9 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>               build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
+>               build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
+>           }
+> -    } else {
 > +    }
->  }
->  
->  void migration_cancel(void)
-> @@ -2209,12 +2219,19 @@ static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
->                                        GIOCondition cond,
->                                        void *opaque)
->  {
-> +    MigrationState *s = migrate_get_current();
->      MigrationAddress *addr = opaque;
-> +    Error *local_err = NULL;
 > +
-> +    qmp_migrate_finish(addr, &local_err);
+> +    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) && !vms->no_gicv3_with_gicv2m) {
+
+check patch reports:
+ERROR: line over 90 characters
+#31: FILE: hw/arm/virt-acpi-build.c:965:
++    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) && 
+!vms->no_gicv3_with_gicv2m) {
+
+>           const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
+>   
+>           /* 5.2.12.16 GIC MSI Frame Structure */
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index fd0e28f030..0fb8dcb07d 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -959,6 +959,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+>   
+>       if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
+>           create_its(vms);
+> +    } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
+> +        create_v2m(vms);
+>       } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
+>           create_v2m(vms);
+>       }
+> @@ -2444,6 +2446,8 @@ static void machvirt_init(MachineState *machine)
+>       vms->ns_el2_virt_timer_irq = ns_el2_virt_timer_present() &&
+>           !vmc->no_ns_el2_virt_timer_irq;
+>   
+> +    vms->no_gicv3_with_gicv2m = vmc->no_gicv3_with_gicv2m;
 > +
-> +    if (local_err) {
-> +        migration_connect_error_propagate(s, local_err);
-> +    }
->  
-> -    qmp_migrate_finish(addr, NULL);
->  
->      cpr_state_close();
-> -    migrate_hup_delete(migrate_get_current());
-> +    migrate_hup_delete(s);
-
-IMHO we should drop these two lines.  For error cases, now they'll be done
-in migration_cleanup() above.  Actually for success, it's the same, but in
-the cleanup BH.
-
-Maybe there're other cases where we can clean the code a bit on cpr;
-there're codes that always does "if (xxx)" and calling them all over the
-places, so it's easy to write such code when drafting a feature, but hard
-to maintain, because it'll be obscure when it'll really trigger, like this
-one.  We can leave the rest for later if there're applicable similar
-cleanups.
-
->      qapi_free_MigrationAddress(addr);
->      return G_SOURCE_REMOVE;
->  }
-> @@ -2223,7 +2240,6 @@ void qmp_migrate(const char *uri, bool has_channels,
->                   MigrationChannelList *channels, bool has_detach, bool detach,
->                   bool has_resume, bool resume, Error **errp)
->  {
-> -    Error *local_err = NULL;
->      MigrationState *s = migrate_get_current();
->      g_autoptr(MigrationChannel) channel = NULL;
->      MigrationAddress *addr = NULL;
-> @@ -2280,6 +2296,13 @@ void qmp_migrate(const char *uri, bool has_channels,
->          return;
->      }
->  
-> +    /*
-> +     * The migrate_prepare() above calls migrate_init(). From this
-> +     * point on, until the end of migration, make sure any failures
-> +     * eventually result in a call to migration_cleanup().
-> +     */
-> +    Error *local_err = NULL;
+>       fdt_add_timer_nodes(vms);
+>       fdt_add_cpu_nodes(vms);
+>   
+> @@ -3488,6 +3492,7 @@ static void virt_instance_init(Object *obj)
+>       vms->its = true;
+>       /* Allow ITS emulation if the machine version supports it */
+>       vms->tcg_its = !vmc->no_tcg_its;
+> +    vms->no_gicv3_with_gicv2m = false;
+>   
+>       /* Default disallows iommu instantiation */
+>       vms->iommu = VIRT_IOMMU_NONE;
+> @@ -3533,10 +3538,19 @@ static void machvirt_machine_init(void)
+>   }
+>   type_init(machvirt_machine_init);
+>   
+> +static void virt_machine_11_0_options(MachineClass *mc)
+> +{
+> +}
+> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 0)
 > +
->      if (!cpr_state_save(cpr_channel, &local_err)) {
->          goto out;
->      }
-> @@ -2299,12 +2322,11 @@ void qmp_migrate(const char *uri, bool has_channels,
->                          QAPI_CLONE(MigrationAddress, addr));
->  
->      } else {
-> -        qmp_migrate_finish(addr, errp);
-> +        qmp_migrate_finish(addr, &local_err);
->      }
->  
->  out:
->      if (local_err) {
-> -        yank_unregister_instance(MIGRATION_YANK_INSTANCE);
->          migration_connect_error_propagate(s, error_copy(local_err));
->          error_propagate(errp, local_err);
->      }
-> @@ -2335,12 +2357,6 @@ static void qmp_migrate_finish(MigrationAddress *addr, Error **errp)
->      } else {
->          error_setg(&local_err, "uri is not a valid migration protocol");
->      }
-> -
-> -    if (local_err) {
-> -        migration_connect_error_propagate(s, error_copy(local_err));
-> -        error_propagate(errp, local_err);
-> -        return;
-> -    }
->  }
->  
->  void qmp_migrate_cancel(Error **errp)
-> @@ -4027,9 +4043,6 @@ void migration_connect(MigrationState *s, Error *error_in)
->      s->expected_downtime = migrate_downtime_limit();
->      if (error_in) {
->          migration_connect_error_propagate(s, error_in);
-> -        if (!resume) {
-> -            migration_cleanup(s);
-> -        }
->          if (s->error) {
->              error_report_err(error_copy(s->error));
->          }
-> @@ -4108,7 +4121,6 @@ void migration_connect(MigrationState *s, Error *error_in)
->  
->  fail:
->      migration_connect_error_propagate(s, local_err);
-> -    migration_cleanup(s);
->      if (s->error) {
->          error_report_err(error_copy(s->error));
->      }
-> -- 
-> 2.51.0
-> 
-
--- 
-Peter Xu
+>   static void virt_machine_10_2_options(MachineClass *mc)
+>   {
+> +    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+> +
+> +    vmc->no_gicv3_with_gicv2m = true;
+> +    virt_machine_11_0_options(mc);
+>   }
+> -DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
+> +DEFINE_VIRT_MACHINE(10, 2)
+>   
+>   static void virt_machine_10_1_options(MachineClass *mc)
+>   {
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index 8694aaa4e2..c5bc47ee88 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -130,6 +130,7 @@ struct VirtMachineClass {
+>       bool no_cpu_topology;
+>       bool no_tcg_lpa2;
+>       bool no_ns_el2_virt_timer_irq;
+> +    bool no_gicv3_with_gicv2m;
+>       bool no_nested_smmu;
+>   };
+>   
+> @@ -178,6 +179,7 @@ struct VirtMachineState {
+>       char *oem_id;
+>       char *oem_table_id;
+>       bool ns_el2_virt_timer_irq;
+> +    bool no_gicv3_with_gicv2m;
+>       CXLState cxl_devices_state;
+>       bool legacy_smmuv3_present;
+>   };
 
 
