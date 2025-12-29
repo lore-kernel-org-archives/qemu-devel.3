@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C2AD3B7E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 03:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A74E8FDB1
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 03:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va3rL-0001Hm-Lq; Sun, 28 Dec 2025 22:23:51 -0500
+	id 1va42V-0004Bp-Us; Sun, 28 Dec 2025 22:35:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va3rK-0001HO-5u
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 22:23:50 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1va42T-0004BS-Re
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 22:35:21 -0500
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1va3rI-0005rw-N6
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 22:23:49 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64472ea7d18so5563851d50.2
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 19:23:48 -0800 (PST)
+ id 1va42S-0007EZ-CE
+ for qemu-devel@nongnu.org; Sun, 28 Dec 2025 22:35:21 -0500
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-78fc4425b6bso49367967b3.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 19:35:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766978628; x=1767583428; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766979319; x=1767584119; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=llH/i4hOyUEQaOaNKcIuSsPuy4YcM+ohmUHNZZeO26E=;
- b=XROtmGc3ykTfW/U6etpphpd9WK/euCTKFS0e4ExJcjtsgOkM0iyiUuVA4p865qEDn0
- xuIpJ2hMYlDsyT+3IadECcLG3Gnioh4IRX0wAWf5YfVIPbIRzh2KYSDIXNojO2QWoGGx
- I/4fZH8PjMUf4ouebWL+j9tBD5HlKeLnifkSIyFY8pZB9RpuVRnwd1OPSU/Z8jJSihLf
- Zu/8GwmpScJFs5HZYa6wZHHYjq9VGZ5sgWH9/vFnoEjTqcuFz1znivNn5ZlHhm9XProo
- QuuzsJpD1yiqwYuDVfiaYFLfvJSSPQOOtnbaMnZUC70yMrmhr/pTTqD2SZgynuZS9o2N
- 0/1w==
+ bh=W2RbvkafNavjlwNIqnFA+FQJZPXMiIfHMjLPGERDDlk=;
+ b=JGvLOu+WPTPTpxODDdiq9EUHWJio+1E5cjOVS24dOK6T7cokmmwrZdaZNor5n1CQuw
+ 3npY7/NOkrW2GzAHF5hF2i3VjFVxjTsJTGOGvw4Trk4vvvFBGbO/tG/0ZmmvOqDsylEl
+ 4GDG+q8tmF0+7oOr1u/Jl1TDjLw37YK8dWExNl+75zkoHvErsoYoZDqjaza8cnk1mhNK
+ c7lZgx6V4m2QTmbtlVAb/p8vOHcW0vNGvUoCvKnq/B9PIfz9NPTfc9/v0RswoqTz3AMY
+ 5xLNbVOmrPxJ4ZFNBH63iIxmipIQgAKsca57kkq7kufYVciNy9XpblmwUslnu4cCyRSt
+ sDDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766978628; x=1767583428;
+ d=1e100.net; s=20230601; t=1766979319; x=1767584119;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=llH/i4hOyUEQaOaNKcIuSsPuy4YcM+ohmUHNZZeO26E=;
- b=qiNcYIEPhYC80GQf8u+jaz+KQImPM+IA7AW7ANZBX3l0APEZiMw6Emq5YrYc7MLAFW
- 3XQYI9L9hb93KvC4dd6PbO8kvxLamnYb97dvXOiJmLBPcP4gh57N2BUAc5Ll6UV7gp90
- IHuUsIBCJQHhhPxhitSMiiM+va1jJVW1gZQ8EpCS+iRaXUEHyiIrSBxdDu+zCDKru+jD
- Q7PgRKDquNU99RgfJHRs/iSBEH1FFjSaESGIOO2PAvrZjZtTF69EJOP8qiwe7+8zqtQX
- aF2IvSxKO9G0oaaTGfORJHh6pIHbSMTQf76rXo3Xc3edPAxzUrsOKi0nM2LfVkQArA3L
- I44g==
-X-Gm-Message-State: AOJu0YymO2TpfdenOBFrIt3waILOQsTZDU52lgYlbISACIKZn3KryrzA
- 8dJYI+rpXx4Z/EUP4ofunEEMnWVsTdGB5Sma1P+bgyhpbPs1m6HMalK9WPz0bjWlSbIaJecbb8X
- Zc6O/I7A=
-X-Gm-Gg: AY/fxX7wEMBdqQtZHl7IzXUznky9FapuysaBo0Guxd44ExKEqStAxuGiWcOzwf0wlgk
- 3Al+d8zG5M8ifCM3b8MUCxPLeBelB8H13JZ8Dl0T5amFT9/oKk/+nZ03CG5UnI6upYGR5UUd+bI
- RHgZU33/4tzLIC7OZXi01Nl5nAVY8bsVN5dhirNbmgde84hQtG84t1V8ffoheEwG3g1s1NIyWXI
- z9pUktWQHwTZGcdcpv9d7ewpFlCFFaow5k1IyV2sHsy+aBbDJ3MXPnOcY3QPEEq/ncbY11MIAsM
- niWghUPHx1gIOrKwk54LZVMAS5vesIH45SZFiZ7yaunb2XvFxXbowhtvkQvHva7PXbB0k9yYQSO
- RSrPJ0YRd5IQ0rsRsIBF0+ZFF6lWsxYhEWP14P5hbcTIQ8xo6BFAUZiZ1dTjuHROcQOv9olAJwi
- sUHXO8T2YRyC0nZn9e6OSFNR4Y46T/TOQJhqxxMyfFigSvCueI/X0oN4B2IJqowzaICgPyuw==
-X-Google-Smtp-Source: AGHT+IHiQL8yqGU/5MiGxw9YtRZu1J1o8d9Zgk1XNpeJYjRU5fsiglnQPJwG5+efiWuGgkKo4NGzWg==
-X-Received: by 2002:a05:690e:1a0d:b0:644:2e68:d1a0 with SMTP id
- 956f58d0204a3-6466a84a223mr20990959d50.32.1766978627757; 
- Sun, 28 Dec 2025 19:23:47 -0800 (PST)
+ bh=W2RbvkafNavjlwNIqnFA+FQJZPXMiIfHMjLPGERDDlk=;
+ b=Vx4/PfvNHVGR70pV6sn0kDXGEyxVMIyo+5gayhz+/3CHASpJFHc2l3XlxdEN4HyJ6M
+ aNmYcSVL0fdv0/7hl5hOCmr+X5xZ56y6cRwUJVn/GjxGgVGSndcGwyDxAJmWh6VQodb9
+ KKFNIZdXxYR4mdppEtzoo1gBmbvcW2MJyCJCKzdCCbzkRyXYqKCu1Jj+6jO2TNWnvqL0
+ MnuJMhNr0IS7YUzvKsw1wqkgt7si1IMcEZbNgWGmXYYIjPOXQHBKRnPLq7g0V8aztzad
+ xVuk+sCHS/IfLKFyDleA/4bml+PF2JK8grMl6Zo1xcVN1J0HEbWkqqiiw6BxEL3OqYeF
+ jDQw==
+X-Gm-Message-State: AOJu0YwUHwjpssIuOl+VHjEfUwPjrWcNz3z5u/WHJ9UmAzFdjHMO4qL4
+ aboTDc0ET6g7UkuQrC4owrBE+Gl7bnYWAFcqJXk7F1cClc6eJA5hF2A8PvXN7gQfZEy0xBNdC2u
+ D5hMI9Z0=
+X-Gm-Gg: AY/fxX41YMQYYOpxg/Ag5F0DJXi44cEyUpuH11Tpgj4fTuZ/ipgDrLHU/95QXF5VQW7
+ e1SL/RdH8ZZvZ1bQdNcKZHFzYdYxdKQOQbNK9HYmQiNSeuUaBN9pkFfKtQfXHORs1UabaYQjz4A
+ tKoP8Pynw86pgG/0V9lh1oLEjzXbDTfg5SKbSB9+jmxaCh3lvaCzCP453HfABVKEMPknnWNynw9
+ Fzvfsn1rccCi/uhgIskAjafCqvQnZmZXKsDor1qoZK6XTWqDNIm3eCvUj6waJIxxjYtW+SPy+Dd
+ azzOisHsdNd+jqev4gY5KdJ7qbXgBQzAYpIHXHEPe0Yan0DokQB7ww73eZGpG0tmjineJxuvL/a
+ sYmNZ8bvCiybvOQmydo30QmJ+FTlXdPFiFX50RzdTz+x0hUcO2hZsiHatjbfdtRIQ1k3J9vsn9q
+ 3lh1t0t9e6ahVsIQHRzLT1CgYm+7Rg4vyEmeBatqUT7F1JztOycJF+RymgSiScOcRVsHVpUxicc
+ D11NbM5
+X-Google-Smtp-Source: AGHT+IEOLL4FeFiRmjFtZQfGnT8iC0QFpSOzyBwCt7Ria5cvpzWj1PejlZv5L+HpXDE3xXXZeDwRQQ==
+X-Received: by 2002:a05:690c:d1b:b0:786:3ee8:6703 with SMTP id
+ 00721157ae682-78fb417c7bbmr235080407b3.48.1766979318825; 
+ Sun, 28 Dec 2025 19:35:18 -0800 (PST)
 Received: from ?IPV6:2406:2d40:40cd:310:f6a1:5e51:f9d7:f095?
  ([2406:2d40:40cd:310:f6a1:5e51:f9d7:f095])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-78fb4562df4sm110572327b3.55.2025.12.28.19.23.46
+ 00721157ae682-78fb44f3e26sm110553797b3.36.2025.12.28.19.35.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Dec 2025 19:23:47 -0800 (PST)
-Message-ID: <7cddc2db-7b00-4c32-94fe-7a714b625600@linaro.org>
-Date: Mon, 29 Dec 2025 14:23:39 +1100
+ Sun, 28 Dec 2025 19:35:18 -0800 (PST)
+Message-ID: <5725d33f-1a04-4d4a-bcd6-d5f4e3a7e3bc@linaro.org>
+Date: Mon, 29 Dec 2025 14:35:13 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] configs/targets: Mark targets not using legacy
- ldst_phys() API
+Subject: Re: [PATCH v2] linux-user: allow null `pathname` for statx()/fstatat()
 To: qemu-devel@nongnu.org
-References: <20251224151351.86733-1-philmd@linaro.org>
- <20251224151351.86733-10-philmd@linaro.org>
+References: <20251225153932.1906919-1-jean.christian.cirstea@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224151351.86733-10-philmd@linaro.org>
+In-Reply-To: <20251225153932.1906919-1-jean.christian.cirstea@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=richard.henderson@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,30 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/25/25 02:13, Philippe Mathieu-Daudé wrote:
-> These targets were only using the legacy ldst_phys() API
-> via the virtio load/store helpers, which got cleaned up.
+On 12/26/25 02:39, Jean-Christian CÎRSTEA wrote:
+> Since Linux 6.11, statx() and fstatat() syscalls accept a null `pathname`.
 > 
-> Mark them not using the legacy ldst_phys() API to avoid
-> further use, allowing to eventually remove it.
+> Before this patch, qemu-*-linux-user failed with EFAULT when `pathname` was
+> specified as NULL, even for Linux kernel hosts > 6.10. This patch fixes this
+> issue by checking whether `arg2` is 0. If so, don't return EFAULT, but instead
+> perform the appropiate syscall and let the host's kernel handle null `pathname`.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
 > ---
->   configs/targets/mips-softmmu.mak     | 1 +
->   configs/targets/mips64-softmmu.mak   | 1 +
->   configs/targets/mips64el-softmmu.mak | 1 +
->   configs/targets/mipsel-softmmu.mak   | 1 +
->   configs/targets/or1k-softmmu.mak     | 1 +
->   configs/targets/riscv32-softmmu.mak  | 1 +
->   configs/targets/riscv64-softmmu.mak  | 1 +
->   configs/targets/sh4-softmmu.mak      | 1 +
->   configs/targets/sh4eb-softmmu.mak    | 1 +
->   configs/targets/sparc64-softmmu.mak  | 1 +
->   configs/targets/xtensa-softmmu.mak   | 1 +
->   configs/targets/xtensaeb-softmmu.mak | 1 +
->   12 files changed, 12 insertions(+)
+>   linux-user/syscall.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 2060e561a2..e1b61f6dc5 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -12142,7 +12142,8 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>               int flags = arg3;
+>   
+>               p = lock_user_string(arg2);
+> -            if (p == NULL) {
+> +            /* Since Linux 6.11, the path argument may be NULL */
+> +            if (arg2 != 0 && p == NULL) {
+>                   return -TARGET_EFAULT;
+>               }
+>   #if defined(__NR_statx)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+No need to call lock_user_string if arg2 == 0.
+
+Better as
+
+	p = NULL;
+	if (arg2) {
+	    p = lock_user_string(arg2);
+	    if (p == NULL) {
+		return -TARGET_EFAULT;
+	    }
+	}
+
 
 r~
 
