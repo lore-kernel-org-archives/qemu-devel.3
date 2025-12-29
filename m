@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456BBE8FDB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 04:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B88A0D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 08:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1va4ji-0001Bu-59; Sun, 28 Dec 2025 23:20:02 -0500
+	id 1va8vW-0001UH-DH; Mon, 29 Dec 2025 03:48:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lihang.lin@gmail.com>)
- id 1va4jc-0001Ae-Rm
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 23:19:58 -0500
-Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lihang.lin@gmail.com>)
- id 1va4ja-0005Tk-85
- for qemu-devel@nongnu.org; Sun, 28 Dec 2025 23:19:56 -0500
-Received: by mail-vs1-xe29.google.com with SMTP id
- ada2fe7eead31-5dbd150efe8so3404718137.0
- for <qemu-devel@nongnu.org>; Sun, 28 Dec 2025 20:19:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1766981993; x=1767586793; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=uJEL4RKSM536WrhiVNtubZxgtGjAp6vJubgCFmbwf4s=;
- b=j/ZR8IxSrWngY3/9pWy6PKjzGqY54JwLwp/k0h5F+1cMQOSHZJE1DQ3H8N1rcJ31eT
- Gzy81r4Y0yoPb4mOATrn1umnHOtG+s6nYWGCE03G1WsxrxT207EaNfkC1UA+AQoriPDz
- 0k1F6UVwnJpoFp7LeEFWhKt3P8FO55cCR/RaGO/E96PmpL4ZJSXpPVNH+0Sf6FWS3mZT
- dYGdMZffESD7j5/GUvM3xBcKvsguyNmFkO+hcEPUe/GYGOXnaVAPOsYKvgRj5ym+6RtW
- U6WlrwXz9EZZsmPw2J/myezbg/H8lBsU92Ut+VLt22yYhSPRrwc90LLJWVfEh0bzYuXt
- sGxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766981993; x=1767586793;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uJEL4RKSM536WrhiVNtubZxgtGjAp6vJubgCFmbwf4s=;
- b=NbhLKk/fuM0Tg4EtAYfken3IK6GIUQdfoU42J+w4g2ZyyWUqMh3LNo5jIEDq0NoE7H
- 4tWd2JmUTw9m55oAOaw2/0VEsFNU0j2dmLprksxTEtyT9EO8eqvIPx9MzCFFkvDgTk1r
- 4Gz7inJ4fp+R8PDSONlVJgF2VnohLznh6S64sntzKmgJaAaP3s+QP+tkKNz3VrqMwZW6
- QxNus3EUQca8WFWbAD1usEi5XsNz+d0BogeitgHWedT7GliBWNDs23Bisr+dDsYJIdwF
- rne6qAZj00CKOVaAbJN9TzV/0KiriRLNvupHb05v3uumf0nZna9xkTkTj2/yld0atKPu
- d7vg==
-X-Gm-Message-State: AOJu0YwkKbC9TiMs1rT9L7+YwoEIGCb/Mczw40RjcYqvHM2+/oQLXwdD
- brqdoa3wd/fPD0jbLutm0sVxWcBTHBvl59jnDJcxiYMcLCtO2iRgblxwnbMiE07mfMxfGY4Aq7G
- nJdLpdtbRTjdjs1vZDiHWxf8jhyOjFPpOPd9BG7Y=
-X-Gm-Gg: AY/fxX5M8MvwQ+/ZhaFXJ0Wc6UYZ10CQf00dMVwQ3WmUmpfUwm0nCOvoPPewCSeATjk
- fojzn9GHI0pGwHbQEaJh3TH4mloBZ8u/DON/7ru/5Ve4WOFk7ik7K0it5WOKdvEJv3PnQg5wb06
- c6oT9DDp33q1edVB8jrJQalWjA8mKuOg796042ZB9QVubeYsf3q8NXAoa3rJz1iSrYBLGXE8jCa
- 5q0kDDQUCwHZcSV2oUZh+hnQXFJUzomHsmVO/MtC95+/EojrV2jT6u7/6+yzdsfgi/8quLnGmiq
- OGVf6OV0OCM3TzoPTt9eBciIpQ==
-X-Google-Smtp-Source: AGHT+IHvbhWJSfhahh16B83Yc7r6kOQ+2nx68fnq0WVlNnXIsjENxAGDYDDNdyDK2LpWCyd07YbUNS2g/GoZMDFoMKg=
-X-Received: by 2002:a05:6102:3a13:b0:5e5:5cb7:eb0a with SMTP id
- ada2fe7eead31-5eb1a7dc7fbmr9153298137.21.1766981992698; Sun, 28 Dec 2025
- 20:19:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zengzhijin@linux.spacemit.com>)
+ id 1va8vS-0001Th-Sk; Mon, 29 Dec 2025 03:48:26 -0500
+Received: from smtpbg151.qq.com ([18.169.211.239])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zengzhijin@linux.spacemit.com>)
+ id 1va8vL-0004Nj-FC; Mon, 29 Dec 2025 03:48:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+ s=mxsw2412; t=1766998080;
+ bh=CswC8Rb9pFZatFilDZ6pwMvbkX/TJXCpyiYKpp7Qhdc=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version;
+ b=IBT9INXx4ZODVtUiZYH8p3cLSa04ArvSC7/5MJcU1L3K2a7reFpVOykga/mYcSzjX
+ /FREB15NzqpwquEAGwBjbnefzvwHvYxyeHtuH2aFX3sKFPDCYEycL/vZ+6i/kLxw1W
+ +anEHrpxafIMvKLejg57SJgtgIcgBnZtnL0cdAhQ=
+X-QQ-mid: esmtpsz20t1766998075t12f1b6ae
+X-QQ-Originating-IP: WHI0eEDNFORSg8B8pMMJLfACyrsxe56rVDDGTYHf+mQ=
+Received: from ZhijinZeng.dc.com ( [183.48.244.56])
+ by bizesmtp.qq.com (ESMTP) with 
+ id ; Mon, 29 Dec 2025 16:47:52 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5362272422245591132
+EX-QQ-RecipientCnt: 5
+From: zengzhijin@linux.spacemit.com
+To: qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, qemu-devel@nongnu.org,
+ Zhijin Zeng <zengzhijin@linux.spacemit.com>
+Subject: [PATCH v2] tcg/risc-v: Fix clobbering of TCG_REG_TMP0 (t6) in vector
+ code generation
+Date: Mon, 29 Dec 2025 16:47:47 +0800
+Message-ID: <5D809A625CAA1DCC+20251229084747.1428-1-zengzhijin@linux.spacemit.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20251226064225.791454-1-lihang.lin@gmail.com>
- <CAFEAcA_ovy2HzhVTKJiRNaZvVQ3qvkw0Pres0HZ+TFJjx1wc3g@mail.gmail.com>
-In-Reply-To: <CAFEAcA_ovy2HzhVTKJiRNaZvVQ3qvkw0Pres0HZ+TFJjx1wc3g@mail.gmail.com>
-From: Lin Li-Hang <lihang.lin@gmail.com>
-Date: Mon, 29 Dec 2025 12:19:41 +0800
-X-Gm-Features: AQt7F2p2KrQx7--aI22dW9QRRyivqoax88AdsD6ipZynvwoGCCTdlveMj00SUqQ
-Message-ID: <CAPR+-WF6uSsm6nBY7jmmxKEMSHR3t+d4KG5KAtsDNJPxen-r9A@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/tcg/vfp_helper: Fix incorrect bit field
- deposition in rsqrte_f64
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000ffd7cc06470f8d57"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
- envelope-from=lihang.lin@gmail.com; helo=mail-vs1-xe29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
+X-QQ-XMAILINFO: MQaNw+J8Qgodkb9Tcl1wG8qTBYbzmGsJCqYapTJHzn/76YczXY0Ybke5
+ XlWpsXMLo8SgqWdx/tSBjWyP3uXhWFC1HOMysabJQL7xXfwTJaFJoRBw9/IYO9bbn2E3kx3
+ WiuNtB+gMlgt8fG3iraFesO9T31fr1AnQRDfKzE58rD0rxTEolwp+zn7RpaFYXiq5mEYrXm
+ sDtQ3rpTs1jEubzVuVzCdN9e7XrSEVtucBqX2x0Q5rNRFn40ADgTpZUQ53GS0Nr4KaSPF/Y
+ zV9tgpXybOMIaXtWd8jd4gHbfg9GUjMwGlzWS+W67agyocmRdqv4Qf06zJR8VZ+xx+JK4cW
+ gRAQ0en5HAq34A4k3ZqoafWGor450cGUO+ja/yFmucIrcEGzEv3mY+kp+1L1d+yyhdGzei+
+ ELOPdIe0LTWN3cjOI3y1MTwQD+INsdDWXGog0VakGfmzB/8+j2wBZtm4awSzvmx2iVFGGk5
+ OVhlaIQgbACvX/Fsgd7wAAKbry93+FXr/h91/kDk0yQbpSa/BRQLogiT3YPhEjxSJMvoWHQ
+ Y43IHKCY1+UH/W2+3PIyB+HqYJRfR3KDCRzJNee27NbNZu9Z/gL0nJY4fvCVZ9L81up6YC+
+ t+RVfDoiWKfGNnDBmbjfMS3eKSNTwngn1c5orRLHCtESuvUPmtIngVrecTna+ZK8kf3ZRn0
+ RLza0AgWVVTOIB4E7VPHAmfjeOmU8iTDBumtNlaK1dqYLeY9PCJu70kBxla0mmws9hNDwcJ
+ +TueXBPMEuIOZ7VjBo3oCyC9PJDHbfvuseMZJxhCO5SiSx45/CBwktTLuvyJj8rd2b28uAv
+ 0lLWbRdCypqDAX551+4rU7KTPnHP7EUpkJcvHk2TOtl8Afoe9yUFo22QeeVTrIxC8elh6EM
+ /eAwTH7fCgo1cZMRnMGOevlNGUKnBj3Bz4t8Z3CjBgH12nBR8f5BZn4gE6vQLNoCSoSSpIb
+ ldG9Bai/nChe9RUlVNnSwhuxU8rXSgprmmG+FbM49roKD81yWs2rAhr1QA5OzgYtrn9I97U
+ 8Jh4JTeOFnEzxx1O40TSF7HIl7Jkv8r8cUxr9Mydr0/zhoo6kDdUQMtjMQZBg2zY6eXZ08U
+ vY9d69CI75VAiIKsVAiz1wl5Tpj5wjal5FX62x26XgYf/zNtOQUToA8k5YiFsUYIkuIQzR7
+ uxl8
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
+Received-SPF: none client-ip=18.169.211.239;
+ envelope-from=zengzhijin@linux.spacemit.com; helo=smtpbg151.qq.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,91 +92,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ffd7cc06470f8d57
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Zhijin Zeng <zengzhijin@linux.spacemit.com>
 
-Hi Peter,
+The RISC-V target currently uses register t6 as the destination for vsetvli and
+vsetvl instructions to capture the resulting vector length (vl).
 
-Thank you for your reply.
+However, in the tcg_out_dupm_vec function, t6 is also used as a temporary
+register. Since tcg_out_dup_vec may emit a vsetvli or vsetvl instruction
+internally, the value previously written to t6 (e.g., by an earlier ld in
+the same translation block) can be unintentionally overwritten.
 
-I initially identified this error while reviewing the code and was curious
-why it hadn't caused any bugs.
-After further testing, it appears the original code behaved correctly by
-coincidence.
+This patch reserves the t3 register to be used as the destination for vsetvli
+and vsetvl instructions.
 
-The ASL code in the ARM ARM for FRSQRTE states:
+Signed-off-by: Zhijin Zeng <zengzhijin@linux.spacemit.com>
+---
+ tcg/riscv/tcg-target.c.inc | 10 +++++++---
+ tcg/riscv/tcg-target.h     |  1 +
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-```
-elsif sign =3D=3D '1' then
-         result =3D FPDefaultNaN(fpcr, N);
-         if fpexc then FPProcessException(FPExc_InvalidOp, fpcr);
-```
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+index 31b9f7d87a..359021aa76 100644
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -3022,10 +3022,12 @@ static void probe_frac_lmul_1(TCGType type, MemOp vsew)
+         p->vset_insn = encode_vseti(OPC_VSETIVLI, TCG_REG_ZERO, avl, vtype);
+     } else if (lmul_eq_avl) {
+         /* rd != 0 and rs1 == 0 uses vlmax */
+-        p->vset_insn = encode_vset(OPC_VSETVLI, TCG_REG_TMP0, TCG_REG_ZERO, vtype);
++        p->vset_insn = encode_vset(OPC_VSETVLI, TCG_REG_TMP3, TCG_REG_ZERO,
++                                   vtype);
+     } else {
+-        p->movi_insn = encode_i(OPC_ADDI, TCG_REG_TMP0, TCG_REG_ZERO, avl);
+-        p->vset_insn = encode_vset(OPC_VSETVLI, TCG_REG_ZERO, TCG_REG_TMP0, vtype);
++        p->movi_insn = encode_i(OPC_ADDI, TCG_REG_TMP3, TCG_REG_ZERO, avl);
++        p->vset_insn = encode_vset(OPC_VSETVLI, TCG_REG_ZERO, TCG_REG_TMP3,
++                                   vtype);
+     }
+ }
+ 
+@@ -3070,6 +3072,8 @@ static void tcg_target_init(TCGContext *s)
+     tcg_regset_set_reg(s->reserved_regs, TCG_REG_TP);
+ 
+     if (cpuinfo & CPUINFO_ZVE64X) {
++        tcg_regset_set_reg(s->reserved_regs, TCG_REG_TMP3);
++
+         switch (riscv_lg2_vlenb) {
+         case TCG_TYPE_V64:
+             tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
+index 6dc77d944b..0f2dced8e2 100644
+--- a/tcg/riscv/tcg-target.h
++++ b/tcg/riscv/tcg-target.h
+@@ -55,6 +55,7 @@ typedef enum {
+     TCG_REG_TMP0       = TCG_REG_T6,
+     TCG_REG_TMP1       = TCG_REG_T5,
+     TCG_REG_TMP2       = TCG_REG_T4,
++    TCG_REG_TMP3       = TCG_REG_T3,
+ } TCGReg;
+ 
+ #define TCG_REG_ZERO  TCG_REG_ZERO
+-- 
+2.43.0
 
-As it turns out, the sign bit must be zero by the time it reaches the final
-deposition code, which explains why the incorrect bit placement did not
-surface as a functional bug.
-
-
-On Mon, Dec 29, 2025 at 1:15=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org>
-wrote:
-
-> On Fri, 26 Dec 2025 at 06:43, Li-Hang Lin <lihang.lin@gmail.com> wrote:
-> >
-> > Fix an error in rsqrte_f64() where the sign bit was being
-> > placed incorrectly. Specifically, ensure f64_sign is deposited
-> > into bit 63.
-> >
-> > Additionally, update the comments regarding the exponent (exp) bit
-> > width to reflect the correct double-precision specifications.
->
-> This seems like it would produce incorrect results -- do you
-> have an example of an instruction plus input data values that p
-> produces a different output value to the hardware?
->
-> thanks
-> -- PMM
->
-
---000000000000ffd7cc06470f8d57
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi Peter,</div><div><br></div><div>Thank you for your=
- reply.</div><div><br></div><div>I initially identified this error while re=
-viewing the code and was curious why it hadn&#39;t caused any bugs.</div><d=
-iv>After further testing, it appears the original code behaved correctly by=
- coincidence.</div><div><br></div><div>The ASL code in the ARM ARM for FRSQ=
-RTE states:</div><div><br></div><div>```</div><div>elsif sign =3D=3D &#39;1=
-&#39; then</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0result =3D FPDefault=
-NaN(fpcr, N);</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if fpexc then FPP=
-rocessException(FPExc_InvalidOp, fpcr);</div><div>```</div><div><br></div><=
-div>As it turns out, the sign bit must be zero by the time it reaches the f=
-inal deposition code, which explains why the incorrect bit placement did no=
-t surface as a functional bug.</div><div><br></div></div><br><div class=3D"=
-gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On=
- Mon, Dec 29, 2025 at 1:15=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:p=
-eter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">On Fri, 26 Dec 2025 at 06:=
-43, Li-Hang Lin &lt;<a href=3D"mailto:lihang.lin@gmail.com" target=3D"_blan=
-k">lihang.lin@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Fix an error in rsqrte_f64() where the sign bit was being<br>
-&gt; placed incorrectly. Specifically, ensure f64_sign is deposited<br>
-&gt; into bit 63.<br>
-&gt;<br>
-&gt; Additionally, update the comments regarding the exponent (exp) bit<br>
-&gt; width to reflect the correct double-precision specifications.<br>
-<br>
-This seems like it would produce incorrect results -- do you<br>
-have an example of an instruction plus input data values that p<br>
-produces a different output value to the hardware?<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
-
---000000000000ffd7cc06470f8d57--
 
