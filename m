@@ -4,51 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B37E8FDB1
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 12:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E8E2D3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 12:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaC3g-0007rA-DL; Mon, 29 Dec 2025 07:09:08 -0500
+	id 1vaC3r-0007vZ-SP; Mon, 29 Dec 2025 07:09:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1vaC3d-0007pb-PB
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 07:09:05 -0500
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1vaC3p-0007un-QN
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 07:09:18 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1vaC3a-00050d-CD
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 07:09:05 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1767010125; cv=none; 
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1vaC3o-0005Au-7K
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 07:09:17 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1767010127; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=Bd8GuRR4rpHSI5S/kq9tPMOeJj1o4JRv1ZaboXGpmhfWAK+pD8RmZ20V2V6Uq3NVZ7nc6udtY0QlHcOmJbf7jU3pjxnoByA44EMOnIofnjnenR/xD0nQtBTEDsHgbKNj3ar2GzoWHu0/9JZ4/PQ5wZR5CYom9QFj4JduP2grTj8=
+ b=WwWbg7x4ZhKPv7Drz9LTjL0hqnBstpOGnLXVtK2mNQCPdlsvS7nN/sLwC/mgcRwy4MlmzbuSBLb8cOFtFT7r6qawy3vwRFxpSxrJumxbHXSEeVs5LBPnaIaO0PmBPqritN2zaJY6iTpdWJlIEezZdCicaxa189ppPs8+jPqY58k=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1767010125;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=nO989N1pTRDKgXYDQSXHOZSK27Yt+2ttn7E9RvfDPRc=; 
- b=CiC8rvIgWElV5aoJN4mZBQVGdfA2UPVSJIAM0x/eiN8/enND+hjJTUFjSs9++Ge7KEjRA21sd1vrwg+C8VJHznmPHAdsfg4VE6k9+DjOr7I/ITU8wkA0O9aQSc4w0yfn85OrvTeqXDmSDd867r02EO+J8Kv1WfjNX656BCzOGik=
+ s=zohoarc; t=1767010127;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=KmL3yQU8cI+4O6Tqt+R8xR9IxD5kn1z34uVz/ZpIegU=; 
+ b=OPVKRmS7nvZViCKM63a9Ie6BiV8V7UURqcajCDB/IJh5fsC+i81dOhgZVZPgEyxYsryAv5P3jF0jpnREv7Y0RBVCQ3rT1SRxcAVyTPRUuGY1tdNRN5DQQNuJniQ3OOtaRwliK+UlTVDAvtHso7AORC8JBYcKfH/PeNPxD4RqbyY=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=linux.beauty;
  spf=pass  smtp.mailfrom=me@linux.beauty;
  dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767010125; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767010127; 
  s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=nO989N1pTRDKgXYDQSXHOZSK27Yt+2ttn7E9RvfDPRc=;
- b=kpCCFIa+DZUCTgaVYdLaYrEKtVTp0vpo7zKAi7ZtqHgTDDmUBeHuSEkMiSHcbTvV
- sNJSXeAckR35Ng0BXp5uy5zdDx61fKjpPhnEhM9Oa5ZEQM3Piis5VPnnifmg4U+TfyH
- iIU97QBdsD13Eyx3H0tBCibWR/D2SVUP9qcEBx8U=
-Received: by mx.zohomail.com with SMTPS id 17670101237511013.621651035437;
- Mon, 29 Dec 2025 04:08:43 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=KmL3yQU8cI+4O6Tqt+R8xR9IxD5kn1z34uVz/ZpIegU=;
+ b=TcgcwRmVW893pKZIet0XESxGjbCEAhqtlqjE8jPQjuBRhmBfPb4quTWsnK6ompVV
+ 1h4x5RdhyE+uTVtXALpe7nuozkjQ1RClADexL60Wk1J5fXxw5cudu5/Bi+IwnwqrBHn
+ 89slAsbJAxCs/Zsdpr3D46lwGgJUQ/aHBgByqWOI=
+Received: by mx.zohomail.com with SMTPS id 1767010126666353.00298807412594;
+ Mon, 29 Dec 2025 04:08:46 -0800 (PST)
 From: Li Chen <me@linux.beauty>
 To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
 Cc: David Hildenbrand <david@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Pasha Tatashin" <pasha.tatashin@soleen.com>, qemu-devel@nongnu.org
-Subject: [PATCH 0/3] CPR: shared RAM with /dev/fdset for LUO kexec reboot
-Date: Mon, 29 Dec 2025 20:08:34 +0800
-Message-ID: <20251229120839.89817-1-me@linux.beauty>
+ "Pasha Tatashin" <pasha.tatashin@soleen.com>, qemu-devel@nongnu.org,
+ Li Chen <me@linux.beauty>
+Subject: [PATCH 1/3] system/physmem: allow /dev/fdset for file-backed RAM
+Date: Mon, 29 Dec 2025 20:08:35 +0800
+Message-ID: <20251229120839.89817-2-me@linux.beauty>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251229120839.89817-1-me@linux.beauty>
+References: <20251229120839.89817-1-me@linux.beauty>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
@@ -77,46 +80,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+CPR with x-ignore-shared can skip migration of shared RAM pages, so only
+vmstate is transferred. This relies on guest RAM being externally managed
+and re-used in place.
 
-This series improves a CPR workflow for large guests where guest RAM is
-shared/external and preserved in place. With shared RAM and x-ignore-shared
-enabled, the migration stream skips guest RAM pages and transfers only
-non-RAM VM state (vmstate). This avoids copying guest RAM to the on-disk
-migration URI, which can significantly reduce checkpoint/restore downtime for
-multi-GB guests.
+Allow users to pass a pre-opened RAM backing FD via -add-fd and attach it
+with memory-backend-file mem-path=/dev/fdset/<id>. File-backed RAM used
+plain open()/creat(), so /dev/fdset/<id> could not be resolved through the
+fdset mechanism. Switch to qemu_open()/qemu_create(), return -EINVAL when
+creation is attempted, and add a hint for missing -add-fd. Add a qtest that
+creates a memory-backend-file object from /dev/fdset/<id>.
 
-In the LUO/KHO update flow [1], a LUO agent coordinates a host kexec reboot
-while keeping VM RAM content intact. LUO creates the guest RAM backing as a
-memfd and passes it to QEMU via -add-fd on the initial launch, so that
-memory-backend-file can use it as the shared RAM backing. On update, LUO
-checkpoints QEMU, reboots the host kernel via kexec, and then re-launches QEMU
-to restore vmstate while reusing the same preserved memfd-backed RAM FD.
-Today LUO only supports handing off guest RAM via memfd [2].
+Signed-off-by: Li Chen <me@linux.beauty>
+---
+ system/physmem.c                  | 17 ++++++++++++--
+ tests/qtest/migration/cpr-tests.c | 38 ++++++++++++++++++++++++++++++-
+ 2 files changed, 52 insertions(+), 3 deletions(-)
 
-To re-attach that preserved RAM backing without reopening non-persistent
-paths, QEMU needs to let memory-backend-file consume the pre-opened FD using
-mem-path=/dev/fdset/<id>. However, memory-backend-file currently uses
-open()/creat() directly, so /dev/fdset/<id> cannot be resolved through the
-fdset mechanism, making this workflow impossible.
-
-This series allows /dev/fdset/<id> for file-backed RAM, documents the setup,
-and adds qtests to validate that x-ignore-shared keeps RAM transfer minimal
-in the cpr-reboot path.
-
-[1]: https://docs.kernel.org/next/core-api/liveupdate.html
-[2]: https://docs.kernel.org/mm/memfd_preservation.html
-
-Li Chen (3):
-  system/physmem: allow /dev/fdset for file-backed RAM
-  docs: CPR: document shared RAM with x-ignore-shared
-  tests/qtest: cpr-reboot: check ignore-shared transfer
-
- docs/devel/migration/CPR.rst      | 17 ++++++++--
- system/physmem.c                  | 17 ++++++++--
- tests/qtest/migration/cpr-tests.c | 56 ++++++++++++++++++++++++++++++-
- 3 files changed, 84 insertions(+), 6 deletions(-)
-
+diff --git a/system/physmem.c b/system/physmem.c
+index c9869e4049..7717de5e7b 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1650,10 +1650,14 @@ static int file_ram_open(const char *path,
+     char *sanitized_name;
+     char *c;
+     int fd = -1;
++    const char *tmp;
++    const bool is_fdset = strstart(path, "/dev/fdset/", &tmp);
+ 
+     *created = false;
+     for (;;) {
+-        fd = open(path, readonly ? O_RDONLY : O_RDWR);
++        g_autoptr(Error) local_err = NULL;
++
++        fd = qemu_open(path, readonly ? O_RDONLY : O_RDWR, &local_err);
+         if (fd >= 0) {
+             /*
+              * open(O_RDONLY) won't fail with EISDIR. Check manually if we
+@@ -1682,8 +1686,13 @@ static int file_ram_open(const char *path,
+                 /* Refuse to create new, readonly files. */
+                 return -ENOENT;
+             }
++            if (is_fdset) {
++                /* /dev/fdset/N is a QEMU fdset handle and cannot be created. */
++                return -EINVAL;
++            }
+             /* @path names a file that doesn't exist, create it */
+-            fd = open(path, O_RDWR | O_CREAT | O_EXCL, 0644);
++            local_err = NULL;
++            fd = qemu_create(path, O_RDWR | O_EXCL, 0644, &local_err);
+             if (fd >= 0) {
+                 *created = true;
+                 break;
+@@ -2410,6 +2419,10 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
+     if (fd < 0) {
+         error_setg_errno(errp, -fd, "can't open backing store %s for guest RAM",
+                          mem_path);
++        if (g_str_has_prefix(mem_path, "/dev/fdset/")) {
++            error_append_hint(errp, "Did you forget to pass the backing FD via"
++                              " '-add-fd fd=<n>,set=<id>'?\n");
++        }
+         if (!(ram_flags & RAM_READONLY_FD) && !(ram_flags & RAM_SHARED) &&
+             fd == -EACCES) {
+             /*
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 2a186c6f35..5eafc4d678 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -19,6 +19,39 @@
+ 
+ static char *tmpfs;
+ 
++#ifndef _WIN32
++static void test_mem_backend_file_fdset(void)
++{
++    const uint64_t size = 8 * 1024 * 1024;
++    g_autofree char *file = g_strdup_printf("%s/fdset-ram.bin", tmpfs);
++    QTestState *qts;
++    int fd;
++
++    fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0600);
++    g_assert_cmpint(fd, >=, 0);
++    g_assert_cmpint(ftruncate(fd, size), ==, 0);
++
++    qts = qtest_init("-machine none -nodefaults");
++    qtest_qmp_fds_assert_success(qts, &fd, 1,
++                                 "{'execute': 'add-fd',"
++                                 " 'arguments': { 'fdset-id': 1 } }");
++    close(fd);
++
++    qtest_qmp_assert_success(qts, "{ 'execute': 'object-add',"
++                             "  'arguments': {"
++                             "    'qom-type': 'memory-backend-file',"
++                             "    'id': 'ram0',"
++                             "    'mem-path': '/dev/fdset/1',"
++                             "    'size': %" PRIu64 " } }",
++                             size);
++    qtest_qmp_assert_success(qts, "{ 'execute': 'object-del',"
++                             "  'arguments': { 'id': 'ram0' } }");
++    qtest_quit(qts);
++
++    unlink(file);
++}
++#endif
++
+ static void *migrate_hook_start_mode_reboot(QTestState *from, QTestState *to)
+ {
+     migrate_set_parameter_str(from, "mode", "cpr-reboot");
+@@ -247,7 +280,10 @@ void migration_test_add_cpr(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
+ 
+-    /* no tests in the smoke set for now */
++#ifndef _WIN32
++    migration_test_add("/migration/fdset/mem-backend-file",
++                       test_mem_backend_file_fdset);
++#endif
+ 
+     if (!env->full_set) {
+         return;
 -- 
 2.52.0
+
 
