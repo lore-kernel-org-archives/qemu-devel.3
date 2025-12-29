@@ -4,97 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83ED9E92FDF
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 21:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DDC1E92FDE
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 21:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaKXN-0000d6-Qr; Mon, 29 Dec 2025 16:12:22 -0500
+	id 1vaKa0-0001mq-Gp; Mon, 29 Dec 2025 16:15:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vaKXH-0000cL-73
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 16:12:15 -0500
-Received: from p-east2-cluster4-host11-snip4-10.eps.apple.com ([57.103.78.181]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vaKXF-0007kx-96
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 16:12:14 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-4 (Postfix) with ESMTPS id
- 671251800416; Mon, 29 Dec 2025 21:12:04 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=OtUXijhvSEKfguDH3+XnhVo02DQlxvuoylgbDMGrhIc=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=cG3MT24wNqOgvKBCZEV9rHnewSGyiR1ccA0EqrQfLyGTO4QD7pa3Cuaw4Y5p5B12Aw0NGVBNnjr9WnhHL/Hwq2MR5Wqi3WP9Bard1j/0gfZt1wYikxD1Z6dsqnhoSyEXZRBlonaw35KMGTMo8HtdxsVUMYx0OYCNgLWxSE/ZwJJYm7nA07N8LtvJq9QA+36XuStHQ3jL/WrDXRSalC6HgOdjZ33XfmsSCElChsBfDg8KW2DMoq720ivAx+pRtBnz/z2JjxSJ/WpJ+yctoks55wc2c+vTdhcPpySS/hXry7drOu6kooRkDUqvs/UaOQTUjpAOk7JoIExT6qzb+GWgew==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-4 (Postfix) with ESMTPSA id
- CB53D1800425; Mon, 29 Dec 2025 21:11:57 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <2F12B75F-5AE5-494A-96E8-5B0766804685@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_587FF383-DC53-4EC5-AD1C-2D6D0F41ECB3"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH v12 11/28] whpx: reshuffle common code
-Date: Mon, 29 Dec 2025 22:11:44 +0100
-In-Reply-To: <c8bba373-0ff1-4acc-ac3e-7157b3627247@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- kvm@vger.kernel.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20251228235422.30383-1-mohamed@unpredictable.fr>
- <20251228235422.30383-12-mohamed@unpredictable.fr>
- <c8bba373-0ff1-4acc-ac3e-7157b3627247@linaro.org>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Proofpoint-GUID: pHejKiP2ef8xMR29enHKsQiLbNY7WR12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI5MDE5NCBTYWx0ZWRfX0nOFEwnzwoIJ
- XXGZoTAjM5pNkTQvF6d4SoQ3gznVmKQ7tpnjdjRKV56mSzFcM7E6MXGfgKTyelzUJNrhbEL7PWq
- TA1ISeYvYJQDHJQmCQYLA49lcHjYjIW4tf4LFZQ+aWzTPHwPPOuYY6dH9tcyoyGVUNPqk5ot+n8
- eVrEPYNOSMBmSTV+4ZInUZ/DgEcid7w34SR88MCKt5atwflIil/+eohgeWYP9orNLmQnFKab2eF
- LQFAX1wfMIPujxCjTDZSLUmHKyvgQkH6YWU0ZMtjpRhQo6uhrS0mWRIhPmEXx5UENJYQkRQkBDe
- zR6F2OC0Bu8MRwI7xeV
-X-Authority-Info: v=2.4 cv=X/9f6WTe c=1 sm=1 tr=0 ts=6952eea6 cx=c_apl:c_pps
- a=YrL12D//S6tul8v/L+6tKg==:117 a=YrL12D//S6tul8v/L+6tKg==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=3agsX6oeCuEBZHekYfsA:9 a=QEXdDO2ut3YA:10 a=CfRu4lmQCga3v1vYNv0A:9
- a=jW965Cys1SRW_oyn:21 a=_W_S_7VecoQA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: pHejKiP2ef8xMR29enHKsQiLbNY7WR12
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-29_06,2025-12-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- spamscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- bulkscore=0 adultscore=0 phishscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512290194
-X-JNJ: AAAAAAAByWglAGTDgbITy9AEqAUcDhAmGHZr9hRs2ZzTGGG1wSBc8m+8GlVZah4huuY4D6RWRI8k+JK4bQDLwEmozbHZQw6VKGCdTeE2QcbN8dUhRXOYztj2Tc6VkBTOPQO7zy7rVD0s3/OaBT5P6TYXTPkGmGQyXghv2/QbK4GBSYKzZqHjzBF587Ofp+2do74LuAjBX+7VHTUz15/Yem5GT0/KCtp8HoSzONEpM8nP8DGCmkEHEGnreEqZa6gTqGeJvFM+NQutT1PZWuaP5/R3QTUiDTDMFUteQcbGKCF4a58sBr7cNAx3iQwAPIA/CMP/61IoS1nWPST0749KNzI6BzWTICrA273SZa34abk9EV0nqXajZBWqhsFvGw/Uzr6J/WmDp790fzV2+WYDfDm1Fn1TA4bhIZts8TmtIP7a9iOwVm89CjdfL7UtCH7ZbFFMjmiLUDC6S3uzhoej8maZ68Zy0iUSg8pCpnC2lT9Qvy7b5Pn6w6U4FmNnFH/Cxzz58C1+BekRLD8C+79Z4K2CcG5ABaJXIWsVwmtLV4GtZUmuN6TZ0ib2njYOlsOSuNQRsmdWhuKSSeq22wtJBqxOJ2Fglet1juQAnIz0nVPHe4sZoufIZxQqDeCyT5ox/DB7Ud9ZKMmxvoaN3KgImtWjasJZJUDpkhJsjo39MV4k5t7+f4w64tk42Qa9Ua6p+ErZv0JfPW4Hwlvv5H4o+HgQ7Ar/o4pT339Uh/kYpebDigdMpM540WtwWro7lypweUDs/HQT6QTzBzbobqGufnlfz3hL78WYLMtkycEoEBXixXsUuIQLrqvAEFqIfH4BOfWQfn+YQ2BonmOry2CvURLzyGSghdylaSL/pIypOJakGSm29+yJea7LRCb7QH3VOmm+11ZlZ67qdHKy8YTlPCS9f0EkR5lZbMgIasfGFjUK+VduQkQ7GU5lxqYdRQvE/Xynyq2K81BuaOskFQs=
-Received-SPF: pass client-ip=57.103.78.181;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vaKZz-0001mJ-Jo
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 16:15:03 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vaKZx-00089J-Fk
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 16:15:03 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 2BE9D5BCD9;
+ Mon, 29 Dec 2025 21:14:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767042897; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tKsyT7tbp7WuqZuoaJlBJ8qywR2mV3VRst23hULT+2E=;
+ b=RYNPsOduMAtUQVt5pU+BVqO+XY7bl89mXD8Gg7W6QBuX99pG5bODxbXzy1vDaerTmKElKA
+ MfliDt/Q1uodRDv2H8PgOcT/moxHptHpt7uvht8lPAyVNyKFF7x9buL+n/xsjlHO8V1f2D
+ sdE9KoVZnV8Bs+vlQjVfr0Bcwpuy51k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767042897;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tKsyT7tbp7WuqZuoaJlBJ8qywR2mV3VRst23hULT+2E=;
+ b=XC4yGGwFlnWSuuvSm8eki9oqG9eO7leLD7L4d4w871RxnEGWg6ZendASVKpXW8qEytDTju
+ jz7sbcZlkXgiXnBg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=q6QP+dRA;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ODi4GEoT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767042896; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tKsyT7tbp7WuqZuoaJlBJ8qywR2mV3VRst23hULT+2E=;
+ b=q6QP+dRAHIk0nXXBtqf8WCq+NbTB8iSr3VnPp32adgmo16CK5Md3fZ9Kam6x9pibiVyYn4
+ 7krYdY/GmVkM/b6+PyRn+TxxMLRqNdQg2wkga7DSlcINB9xAIkvxjuu37grEYraj6TrgPB
+ T9VblWXqV57XGhQFmc1IRDLqj1s7wqU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767042896;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tKsyT7tbp7WuqZuoaJlBJ8qywR2mV3VRst23hULT+2E=;
+ b=ODi4GEoT1Hjxf0lrSJF+Fn3c42RF3cDC4AU7sD7T8+NwaDBklgKgHcnXBQ+FGXwaZzJwFO
+ fYGdXWSN2OMfgbAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9CA0F137C3;
+ Mon, 29 Dec 2025 21:14:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id NuhGF0/vUmmhZAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 29 Dec 2025 21:14:55 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 22/25] migration/channel: Merge both sides of the
+ connection initiation code
+In-Reply-To: <aVLfYlEwDu3rL3wj@x1.local>
+References: <20251226211930.27565-1-farosas@suse.de>
+ <20251226211930.27565-23-farosas@suse.de> <aVLfYlEwDu3rL3wj@x1.local>
+Date: Mon, 29 Dec 2025 18:14:52 -0300
+Message-ID: <875x9p7zxv.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 2BE9D5BCD9
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCPT_COUNT_TWO(0.00)[2]; FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,64 +125,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
---Apple-Mail=_587FF383-DC53-4EC5-AD1C-2D6D0F41ECB3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+> On Fri, Dec 26, 2025 at 06:19:24PM -0300, Fabiano Rosas wrote:
+>> Now that everything is in channel.c, it's easier to browse this code
+>> if it's all in the same place. It's also easier to grasp what the
+>> connection flow is if both sides of the connection are close together.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/channel.c | 86 +++++++++++++++++++++++----------------------
+>>  migration/channel.h | 14 ++++++--
+>>  2 files changed, 56 insertions(+), 44 deletions(-)
+>> 
+>> diff --git a/migration/channel.c b/migration/channel.c
+>> index 042e01b224..ba9aa1c58b 100644
+>> --- a/migration/channel.c
+>> +++ b/migration/channel.c
+>> @@ -31,10 +31,11 @@
+>>  #include "trace.h"
+>>  #include "yank_functions.h"
+>>  
+>> -bool migration_connect_outgoing(MigrationAddress *addr, Error **errp)
+>> +bool migration_connect(MigrationAddress *addr, bool out, Error **errp)
+>>  {
+>>      g_autoptr(QIOChannel) ioc = NULL;
+>>      SocketAddress *saddr;
+>> +    ERRP_GUARD();
+>>  
+>>      switch (addr->transport) {
+>>      case MIGRATION_ADDRESS_TYPE_SOCKET:
+>> @@ -44,15 +45,24 @@ bool migration_connect_outgoing(MigrationAddress *addr, Error **errp)
+>>          case SOCKET_ADDRESS_TYPE_INET:
+>>          case SOCKET_ADDRESS_TYPE_UNIX:
+>>          case SOCKET_ADDRESS_TYPE_VSOCK:
+>> -            socket_connect_outgoing(saddr, errp);
+>> -            /*
+>> -             * async: after the socket is connected, calls
+>> -             * migration_channel_connect_outgoing() directly.
+>> -             */
+>> -            return true;
+>> +            if (out) {
+>
+> Personally I wouldn't suggest we merge the outgoing / incoming with
+> migration_connect() then split paths once more in this exact function.
+>
+> I got this conclusion when I started to count how many "if (out)" are
+> there..  When there're too much, it may imply we need to think more..
+>
 
+Well, compared to before, there 50% less "if (addr->transport == ...)",
+this is top level programming! =D
 
+This part of the series is highly subjective, if there's a patch you
+don't like it we can drop it, let's not dwell on it.. Just read my words
+below on the previous patch, which I think you may be mistaken about.
 
-> On 29. Dec 2025, at 19:46, Pierrick Bouvier =
-<pierrick.bouvier@linaro.org> wrote:
->=20
-> ERROR: New file 'accel/whpx/whpx-common.c' must not have license =
-boilerplate header text, only the SPDX-License-Identifier, unless this =
-file was copied from existing code already having such text.
+> This also answers part of my confusion when reading the previous patch - if
+> that was only paving way for this one, IMHO it may not be as worthwhile,
+> and I would tend to avoid both.
+>
 
-Hello,
+Patch 21 is just a cleanup after patch 19 moves the call to
+migration_channel_connect_outgoing from being inside the transport
+routines to this top level here at migration_connect(), which moves the
+places where MigrationState is used as well. So it removes unused
+passing of MigrationState along with the SocketConnectionData.
 
-Deliberately didn=E2=80=99t do it because it=E2=80=99s copying chunks of =
-the existing x86_64 WHPX backend.
-
-Should I still do it despite that?
-
-Thank you,
--Mohamed=
-
---Apple-Mail=_587FF383-DC53-4EC5-AD1C-2D6D0F41ECB3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 29. Dec 2025, at 19:46, Pierrick Bouvier =
-&lt;pierrick.bouvier@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><span style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">ERROR: New file 'accel/whpx/whpx-common.c' =
-must not have license boilerplate header text, only the =
-SPDX-License-Identifier, unless this file was copied from existing code =
-already having such text.</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"></div></blockquote></div><br><div>Hello,</div><div><br></div><div>=
-Deliberately didn=E2=80=99t do it because it=E2=80=99s copying chunks of =
-the existing x86_64 WHPX backend.</div><div><br></div><div>Should I =
-still do it despite that?</div><div><br></div><div>Thank =
-you,</div><div>-Mohamed</div></body></html>=
-
---Apple-Mail=_587FF383-DC53-4EC5-AD1C-2D6D0F41ECB3--
+> Thoughts?
+>
+>> +                socket_connect_outgoing(saddr, errp);
+>> +                /*
+>> +                 * async: after the socket is connected, calls
+>> +                 * migration_channel_connect_outgoing() directly.
+>> +                 */
+>> +                return true;
+>> +            } else {
+>> +                socket_connect_incoming(saddr, errp);
+>> +            }
+>> +
+>>              break;
+>>          case SOCKET_ADDRESS_TYPE_FD:
+>> -            ioc = fd_connect_outgoing(saddr->u.fd.str, errp);
+>> +            if (out) {
+>> +                ioc = fd_connect_outgoing(saddr->u.fd.str, errp);
+>> +            } else {
+>> +                fd_connect_incoming(saddr->u.fd.str, errp);
+>> +            }
+>>              break;
+>>          default:
+>>              g_assert_not_reached();
+>> @@ -62,16 +72,28 @@ bool migration_connect_outgoing(MigrationAddress *addr, Error **errp)
+>>  
+>>  #ifdef CONFIG_RDMA
+>>      case MIGRATION_ADDRESS_TYPE_RDMA:
+>> -        ioc = rdma_connect_outgoing(&addr->u.rdma, errp);
+>> +        if (out) {
+>> +            ioc = rdma_connect_outgoing(&addr->u.rdma, errp);
+>> +        } else {
+>> +            rdma_connect_incoming(&addr->u.rdma, errp);
+>> +        }
+>>          break;
+>>  #endif
+>>  
+>>      case MIGRATION_ADDRESS_TYPE_EXEC:
+>> -        ioc = exec_connect_outgoing(addr->u.exec.args, errp);
+>> +        if (out) {
+>> +            ioc = exec_connect_outgoing(addr->u.exec.args, errp);
+>> +        } else {
+>> +            exec_connect_incoming(addr->u.exec.args, errp);
+>> +        }
+>>          break;
+>>  
+>>      case MIGRATION_ADDRESS_TYPE_FILE:
+>> -        ioc = file_connect_outgoing(&addr->u.file, errp);
+>> +        if (out) {
+>> +            ioc = file_connect_outgoing(&addr->u.file, errp);
+>> +        } else {
+>> +            file_connect_incoming(&addr->u.file, errp);
+>> +        }
+>>          break;
+>>  
+>>      default:
+>> @@ -79,42 +101,22 @@ bool migration_connect_outgoing(MigrationAddress *addr, Error **errp)
+>>          break;
+>>      }
+>>  
+>> -    if (!ioc) {
+>> -        return false;
+>> -    }
+>> -
+>> -    migration_channel_connect_outgoing(ioc);
+>> -    return true;
+>> -}
+>> -
+>> -void migration_connect_incoming(MigrationAddress *addr, Error **errp)
+>> -{
+>> -    if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+>> -        SocketAddress *saddr = &addr->u.socket;
+>> -        if (saddr->type == SOCKET_ADDRESS_TYPE_INET ||
+>> -            saddr->type == SOCKET_ADDRESS_TYPE_UNIX ||
+>> -            saddr->type == SOCKET_ADDRESS_TYPE_VSOCK) {
+>> -            socket_connect_incoming(saddr, errp);
+>> -        } else if (saddr->type == SOCKET_ADDRESS_TYPE_FD) {
+>> -            fd_connect_incoming(saddr->u.fd.str, errp);
+>> +    if (out) {
+>> +        if (!ioc) {
+>> +            return false;
+>>          }
+>> -#ifdef CONFIG_RDMA
+>> -    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
+>> -        rdma_connect_incoming(&addr->u.rdma, errp);
+>> -#endif
+>> -    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_EXEC) {
+>> -        exec_connect_incoming(addr->u.exec.args, errp);
+>> -    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
+>> -        file_connect_incoming(&addr->u.file, errp);
+>> -    } else {
+>> -        error_setg(errp, "unknown migration protocol");
+>> +
+>> +        migration_channel_connect_outgoing(ioc);
+>> +        return true;
+>>      }
+>>  
+>>      /*
+>> -     * async: the above routines all wait for the incoming connection
+>> -     * and call back to migration_channel_process_incoming() to start
+>> -     * the migration.
+>> +     * async: on the incoming side all of the transport routines above
+>> +     * wait for the incoming connection and call back to
+>> +     * migration_channel_process_incoming() to start the migration.
+>>       */
+>> +
+>> +    return !*errp;
+>>  }
+>>  
+>>  bool migration_has_main_and_multifd_channels(void)
+>> diff --git a/migration/channel.h b/migration/channel.h
+>> index 8cf16bfda9..86934fee38 100644
+>> --- a/migration/channel.h
+>> +++ b/migration/channel.h
+>> @@ -39,6 +39,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
+>>  bool migration_has_main_and_multifd_channels(void);
+>>  bool migration_has_all_channels(void);
+>>  
+>> -bool migration_connect_outgoing(MigrationAddress *addr, Error **errp);
+>> -void migration_connect_incoming(MigrationAddress *addr, Error **errp);
+>> +bool migration_connect(MigrationAddress *addr, bool out, Error **errp);
+>> +static inline bool migration_connect_outgoing(MigrationAddress *addr,
+>> +                                              Error **errp)
+>> +{
+>> +    return migration_connect(addr, true, errp);
+>> +}
+>> +
+>> +static inline bool migration_connect_incoming(MigrationAddress *addr,
+>> +                                              Error **errp)
+>> +{
+>> +    return migration_connect(addr, false, errp);
+>> +}
+>>  #endif
+>> -- 
+>> 2.51.0
+>> 
 
