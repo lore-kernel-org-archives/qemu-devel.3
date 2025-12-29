@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CAD2E92FF7
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 22:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32AAE92FF7
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 22:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaM9c-0001qv-4u; Mon, 29 Dec 2025 17:55:59 -0500
+	id 1vaMA1-0002Ho-Hu; Mon, 29 Dec 2025 17:56:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaM9R-0001pC-Gn
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 17:55:48 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaMA0-0002GH-8l
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 17:56:20 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaM9Q-0001D6-4N
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 17:55:45 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-430fbb6012bso7901609f8f.1
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 14:55:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaM9x-0001Ho-Rs
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 17:56:20 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4775ae77516so94209715e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 14:56:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767048942; x=1767653742; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lGYkc1H9/lsxRR3MoTUEzNJDH2iC1/n24u+6XvBjahc=;
- b=alg/uHCxHIBX0jQTB+rPe+ZHk63wpsuw6e04YKCNJ/WzW7Ymt3oqAqhkCVxev1dV/u
- BIlhGltDqBR+/gWdIgKgfAfkGlunz3rBjd+qR0W4enHtvmWzLegGg8vGoa353cJwyPm5
- sQYQ9sidEkNSOzDA6LrCdG2/EOMFr7dPF/EPRmD2Xvrzr8ZugoNFvdZv9IrudXMs7XPE
- gqJwtvz0uyRYiNnG4o5dwvZeVWWBgHaQq+SxeVVryKYUCmkpHrNEBeTEdyPPwcIQh71w
- v7yl2Os0wVvcosNXaZNkqcJ1DEKlu2GkRQhA73ygLsvMrbR/ZPz59BnvmfNBUAwomCZR
- fUnQ==
+ d=linaro.org; s=google; t=1767048976; x=1767653776; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PljzS5mHObQKNZoDCnGt8Ab6Z+bMs20yKVXLtQSSPbA=;
+ b=OjwKH+DGakqe8DMXiB7Ob4uDzn36+sXaSb/f54qByUQQElO8IQmtEQDUAJTt/91O1D
+ AQfANPZRyirYwRPwa8691TpfX6l/IfzhZrfaYJ9losUEEkGgGt0VQOICelTCjuTT2dl7
+ Y8GnWejlqUUt5Rp9nubcKYDR5ud1Yqb6h1Uoo9fjZ1ODiRRmpTQ5U7O84wqKm+KFnWfn
+ PRYEkY4Dx1sXyth0LqHUA5/LbIkngWoy/2NzpdfEWUYWczLqm4pxnKCzMSu5Teg3ULPo
+ cg+pH3i/4j5vaYH1fJa0dSMZV4+uKzrqy4AU7P/O+soX9QFVmLco3R2G9iXAh0gqVnAo
+ AJlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767048942; x=1767653742;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lGYkc1H9/lsxRR3MoTUEzNJDH2iC1/n24u+6XvBjahc=;
- b=c24Ax4qrUNHTgXhyh4xYqW8xOgUcwSFvEaIJzc4N9eJt6jGugjxjKIXI+uMcSSOO+s
- Dtmvwi6Uu5L/lPfguXP00chBh35Qd/t82SVuvOo4l9nWbOjpGyxQPAx1/XOtG6LqBy9D
- w8SH4kmJ5WXxl2qzrFzRY8f6WUw0G/rNn2gZbv9mZgIy9KHLRSck78h/FlhwBHtMnnZf
- 0iYAMbrQXfzeLpxOUjFNJ/M90nB/7SfZSV0Ofk7wu2ku/3eZSZLmsde2CRLvpnry/fGr
- RXO3D9RH+1rdtsfTSh62GXWtv/V2l+/JXgE0V8hP0ddpaQcMvICDqxYFX9ZdJoL76Z+O
- MJlw==
-X-Gm-Message-State: AOJu0YxdA2kmqIQgWMEe3rBVi72CxdfIQGGH4V5ac4fE3M41thotBMZi
- U/FQz5qWRPUDigwCPfKJgLkGlzxF+GTA0DZ+XBrH4wxsuSrvN3fb7IzibxEZH4ePRTy54J19emx
- stmHMCeg=
-X-Gm-Gg: AY/fxX7h1XVv7Vpz7jrZheF3XqYTLizK0VFqQtEhtdvrjJU3+GcNGr0YlEEw8kcIDRJ
- fcP+NksQunZ8ZzBYr93yO5RKE3pz0ndFJ64viJNthGvVlasq5JGnYsUc+KHGe2mre3rC03c5oja
- qOj6hhk5gK9EubzGM2EppoMfj8i6F2c5Rmu//YU8bsE1N57pkQeyEuj0WgDT0zAQV2P898+KdW7
- S52am9hi9v1l/TlkTPmrS2FC2GcrxKOrVHccCfxEYCOANtaRTcPnC75gcKn0lYuRwfiSzGN9XdD
- dw7E5uKLSEVWZewTOMMuFz574/tuosT/GJYQOc3LY9V2O+EI8sOE//T0IeKGYYZ48XT3A1G/ZMR
- rnNK2EuAGsFXP1bvNEmv/4TP+WCE9Q5PeNFB1irm/28GUQrFvMbEbKRehmeXBxu+0OzDPqelgLS
- oJH7UivxBDHrkTktJc4djFIucYY2F0IxGVju1+AqOE8/q7tmzDlL3nJdiMBQOc
-X-Google-Smtp-Source: AGHT+IGBjUeon2Q3CDufdLqBpow/V73ALV0slnC9Xt5iuA4ljZQjy4D3fohhhjIaGebb/8pEno51oQ==
-X-Received: by 2002:a05:6000:4202:b0:430:f5ed:83fc with SMTP id
- ffacd0b85a97d-4324e4c7127mr43216838f8f.11.1767048942306; 
- Mon, 29 Dec 2025 14:55:42 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1767048976; x=1767653776;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PljzS5mHObQKNZoDCnGt8Ab6Z+bMs20yKVXLtQSSPbA=;
+ b=glchijsOH2Bh+T69QqTS7MgncDiM/W5iJ/1Pqg7ia2cBUkDUu0jj5CI/SMrwV7I5rx
+ uD685s1UYea5LOZS4o6vWHkqU55I9JjV/SLPz7mI3Qy3Z3Yuzpxl5gGQ+uUhNzEEdZ/0
+ vH0nJ9XxYdbNZFGp1Z/3I3h7J+2QdQ/deJfur/srYoBz7xu5v5/8V+iXkc1SXWBUEDwc
+ InxkOMpDO7CX1u9evJMvJW+KO9WUQIudydZeqdBF9Q7M3rZjOuT2E9UBLXQXsSbH1djd
+ mL3eQ/7XVaI53DHD+jintD3b8x2FxDNf6GsjFVoRG5pEwoSweL1sG8GeuXsokRPNEhyf
+ uriA==
+X-Gm-Message-State: AOJu0Yz/95X5izzOSJJRDet0Q3mx6Uz8kHWL2tZNd0q5zthjUpdBG1Wt
+ qx1nsccYe2R1hBhbeyyMSmNr2yo9Xc9djXTD+TE59MkkqAlJDqLmLYX61aQPda6cFSULOQgVefW
+ SZmhykbI=
+X-Gm-Gg: AY/fxX4sTK+BE2PP/pWHKwg3F5qLsu+GGL/5UirMwJ+/Od2RC3lqYU0c2VBuAvC24yF
+ nv3bz4ikT8ADvngeiGe0VtfV5BtpacTwWzQQrjSBfru0HOFEyrPaQxokFp2ZUVmVu7gdX+ZtQzq
+ xn9LHDpFTrWb6LAjeFO1bGZ3PYUm2x8k4ob9ypcj4ieQouufzvjYZLsxE1rexKu/mGKmNbalrTM
+ TXl8L3mhQMlblI1CA0y+jzVgOZ/SFIN3GqoCIQdACJVeIZNcpq0IBZm076Xc/6sYzDVTG7mFxOI
+ o55PejaJn8TwINb1vvHEJOOx620QLI/L0XGDEtC88sBXK5wI5CDdY8Hoq/o01uMJQlkkj/dnsPh
+ YMjdPfM9acunEVSldfF1tW1/t1r5WjqdfFxYqr93eQ5TFOu0kfRCT0z2llAZoyojzFFytBcZ6Bc
+ BPr66Xpsz0ZnoAnA9MpGVcirSN01aCFIHWkzYJFPge99uVO9vu1joN0Evm+hzxTp4O
+X-Google-Smtp-Source: AGHT+IEWwq+TYnjTyIOHdUkmFXPDq5JpgFfvxRNyufR17jp+JmfZGfwF88HttXRjOgWWpZJIfNpaoA==
+X-Received: by 2002:a05:600c:4711:b0:47a:9560:5944 with SMTP id
+ 5b1f17b1804b1-47d195c1a71mr401321205e9.34.1767048975792; 
+ Mon, 29 Dec 2025 14:56:15 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43264613923sm49491231f8f.26.2025.12.29.14.55.40
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Dec 2025 14:55:41 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ 5b1f17b1804b1-47be3aa8fd9sm239053635e9.10.2025.12.29.14.56.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Dec 2025 14:56:15 -0800 (PST)
+Message-ID: <3dabccb2-f216-483e-ba65-33f9b816cbd7@linaro.org>
+Date: Mon, 29 Dec 2025 23:56:14 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/5] target/hppa: Use explicit big-endian LD/ST API
+Content-Language: en-US
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Sven Schnelle <svens@stackframe.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 3/5] target/hppa: Use explicit big-endian LD/ST API
-Date: Mon, 29 Dec 2025 23:55:15 +0100
-Message-ID: <20251229225517.45078-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251229225517.45078-1-philmd@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Helge Deller
+ <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>
 References: <20251229225517.45078-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251229225517.45078-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,51 +107,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HPPA architecture uses big endianness. Directly use
-the big-endian LD/ST API.
+On 29/12/25 23:55, Philippe Mathieu-Daudé wrote:
+> Missing review: #2 and #3
+> 
+> Since v1:
+> - Rebased on commit 83202ca7227 (hppa-updates-qemu-v11-pull-request)
+> 
+> PA-RISC is big-endian. Use the explicit 'big'
+> endianness instead of the 'native' one.
+> Forbid further uses of legacy APIs.
+> 
+> tag: https://gitlab.com/philmd/qemu/-/tags/endian_hppa-v1
 
-Mechanical change using:
+   https://gitlab.com/philmd/qemu/-/tags/endian_hppa-v2 ;)
 
-  $ end=be; \
-    for acc in uw w l q tul; do \
-      sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
-             -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
-        $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/hppa/); \
-    done
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/hppa/gdbstub.c    | 2 +-
- target/hppa/int_helper.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
-index 0c5e41410a0..4f016a0e61d 100644
---- a/target/hppa/gdbstub.c
-+++ b/target/hppa/gdbstub.c
-@@ -168,7 +168,7 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-         return 0;
-     }
- 
--    val = ldn_p(mem_buf, hppa_reg_size(env));
-+    val = ldn_be_p(mem_buf, hppa_reg_size(env));
- 
-     switch (n) {
-     case 0:
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index 4e4869285b5..d5a20cd549d 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -178,7 +178,7 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-                         break;
-                     }
-                 }
--                env->cr[CR_IIR] = ldl_phys(cs->as, paddr);
-+                env->cr[CR_IIR] = ldl_be_phys(cs->as, paddr);
-                 if (i == EXCP_ASSIST) {
-                     /* stuff insn code into bits of FP exception register #1 */
-                     env->fr[0] |= (env->cr[CR_IIR] & 0x03ffffff);
--- 
-2.52.0
+> CI: https://gitlab.com/philmd/qemu/-/pipelines/2231223066
+> 
+> Philippe Mathieu-Daudé (5):
+>    target/hppa: Use big-endian variant of cpu_ld/st_data*()
+>    target/hppa: Remove unnecessary @cpu variable by using cpu_env()
+>    target/hppa: Use explicit big-endian LD/ST API
+>    target/hppa: Inline translator_ldl()
+>    configs/targets: Forbid HPPA to use legacy native endianness APIs
+> 
+>   configs/targets/hppa-linux-user.mak |  1 +
+>   configs/targets/hppa-softmmu.mak    |  1 +
+>   target/hppa/gdbstub.c               |  8 ++----
+>   target/hppa/int_helper.c            |  2 +-
+>   target/hppa/op_helper.c             | 44 ++++++++++++++---------------
+>   target/hppa/translate.c             |  3 +-
+>   6 files changed, 30 insertions(+), 29 deletions(-)
+> 
 
 
