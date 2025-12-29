@@ -4,146 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671A6E92FCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C619E92FCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 19:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaIvb-00073c-Pm; Mon, 29 Dec 2025 14:29:18 -0500
+	id 1vaJ1h-00011e-L2; Mon, 29 Dec 2025 14:35:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vaIv0-0006wc-V3; Mon, 29 Dec 2025 14:28:42 -0500
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vaIuz-00060v-8O; Mon, 29 Dec 2025 14:28:38 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QGubPDiua11KG5DhKsLIj7rtkE8bUQ8xffAqaqbFMpCP5bJ3SwwU7pq0runfJgVIehqmxG7LrzVqkrHv2B/tb3c5yllW517bSEQS4Oh1zahwW7fH0oXrFz7NyM1T4r7rpK8W+/Q3JAk5Q/bnv1jc6iO/+RH1cAgpRtF/uC70/Rc2CieOF7zJuxfURfzk0uYYXFT9wBtbvfwD0CSMhuRtYqzsEy6mxOJllCVWIx8h8Obp2X3H9D+pvllgS/Geeya5bYxnAakFgMq3AHptzzFIQHzJQ82TrHBeP3bg/7E1dqDBgR8MTOv8hoqAcSmTCjSjxJxV996rgEj4zpxWUTar8w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7v2xavG1N8Cudz0aOj0F5j+umOaZorTKBR9YTBxLSCE=;
- b=eJkA+IZmrgpEnVUoqm82ALFsuarPL/hT/t1khTFrqlzJXJjA3eyoZ78l7I4FYk3InMk+6jJsEwKKczteaIv3o6nS/gEbTTJCzfVncqkXEJ2fjPJtqaGt21wMqXuNsuTSXQeQ448fhCjv4POoEV2EZ8KwG1BSEcB5Criro3qEQSSlLQ+1t4S/3NR9TT0Tt6fxbRPBA+aVMGQJTKDlKQMLMvq/P9gG4YT9kVvMmABNiZ6UFmX67JKS/sms5GEEol1Ae8KuIvBfI1FCf5n0aFIKzPMRSLdM3AKSjK8/4JvqTHOdg8utAzFfR4gDDr9uwpny8oQ08HhfoxgREHT/Fdkhmw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7v2xavG1N8Cudz0aOj0F5j+umOaZorTKBR9YTBxLSCE=;
- b=kCw5VOXR2C8ZV8/0l3H1uL5VPXy+WxEKTFAtZ7l0cOzMHbxiETY+D8OEUyOXyuacQNbgInphraBabBWSDP70PBxmNePpS/x5/g0jBjI3LwVqQ7/gLD2NsrZ7cpYAZvYVUipbT+MCDJJV/anWjx+4OBT3PPNsWeoONvj5IUlwF3igi/w4jOPXPWBUlVz6/9C72LNfyrwTdEPlyfGXKc71TNaJIBUml/xxtFEVe8YUV9G0gVTTqAcnXK18LKVTJurzaHd1n36zBvZs7STNEc38TPAR001LuPHV4R2/KzAmYDO1hivJBgn4qIHig6m283zUDaAXqcirveqcPcQElt69sQ==
-Received: from DS0PR17CA0011.namprd17.prod.outlook.com (2603:10b6:8:191::13)
- by CH2PR12MB9459.namprd12.prod.outlook.com (2603:10b6:610:27d::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
- 2025 19:28:28 +0000
-Received: from DS1PEPF0001709A.namprd05.prod.outlook.com
- (2603:10b6:8:191:cafe::a8) by DS0PR17CA0011.outlook.office365.com
- (2603:10b6:8:191::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9456.14 via Frontend Transport; Mon,
- 29 Dec 2025 19:28:21 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- DS1PEPF0001709A.mail.protection.outlook.com (10.167.18.104) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9478.4 via Frontend Transport; Mon, 29 Dec 2025 19:28:28 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
- 2025 11:28:13 -0800
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 29 Dec
- 2025 11:28:12 -0800
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 29 Dec 2025 11:28:11 -0800
-Date: Mon, 29 Dec 2025 11:28:10 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
-Subject: Re: [RFC PATCH 06/16] hw/arm/tegra241-cmdqv: Map VINTF Page0 into
- guest
-Message-ID: <aVLWSp9JCEjXnjvr@Asurada-Nvidia>
-References: <20251210133737.78257-1-skolothumtho@nvidia.com>
- <20251210133737.78257-7-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vaJ1c-0000xw-G9
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:35:29 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vaJ1a-0008D1-3Y
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 14:35:28 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B6161336BA;
+ Mon, 29 Dec 2025 19:35:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767036922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EZDrq1EN9UYHWklRiflBzSW/afKV6QONVnfiH/tw0LU=;
+ b=NNYGtVouIJVH4/8Hi9Y200X0cMOqifZYsHGDQ4j0JVn1LndQeqvpuN5GyI0ANDLWoVYXyn
+ epL7liA7UxlVoZZ9X/ikVWP9S2K8AEHyxe4Yi1H+R6ppfNBPkp27IYlBsAGz5r2eRMpEly
+ KQSWzENW5D96/2eBGPtKOHQIcooBhGI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767036922;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EZDrq1EN9UYHWklRiflBzSW/afKV6QONVnfiH/tw0LU=;
+ b=647B6icBK4mhHerZgnq1sEhOxxhFA5hoxYNa4g2qFiGCmK3fibReVRXbtN6FlLFXi4ZSnq
+ ZL7kvuRoBMxyRbDQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767036921; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EZDrq1EN9UYHWklRiflBzSW/afKV6QONVnfiH/tw0LU=;
+ b=FMyqsswe4DDTvvUKsTKrFSSg2CblbieiNlPS1tNfuQnn5AlOnRkXZ0AOip0QkRhfw9TEDL
+ /LJ3AjsOQP/aRgegTrZW6gCdv0QRW7YIJwDDkqUbu56U7Do6CR17jD4SIauLELkdbxL5bz
+ NKeJ4HZkmcNaivFXxcjRxkyooENMJ6U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767036921;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EZDrq1EN9UYHWklRiflBzSW/afKV6QONVnfiH/tw0LU=;
+ b=DsZriVsO9c/Mwp0GQNYZ2v0WI2nn5y7B9HqluMQ+wGQYxz/sMt99ry74aQrXgIKFf0KObf
+ NJIbq3dInQST6gAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 31FB8137C3;
+ Mon, 29 Dec 2025 19:35:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9poiOfjXUmlIVgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 29 Dec 2025 19:35:20 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>
+Subject: Re: [RFC PATCH 13/25] migration: Handle error in the early async paths
+In-Reply-To: <aVLRsm5dukbnVZtb@x1.local>
+References: <20251226211930.27565-1-farosas@suse.de>
+ <20251226211930.27565-14-farosas@suse.de> <aVLRsm5dukbnVZtb@x1.local>
+Date: Mon, 29 Dec 2025 16:35:18 -0300
+Message-ID: <87fr8t84jt.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20251210133737.78257-7-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF0001709A:EE_|CH2PR12MB9459:EE_
-X-MS-Office365-Filtering-Correlation-Id: 92eb759b-cada-4971-a6ee-08de471071ae
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?R10MjljLWWdBvcWby6GeYEJSBOOQyfjgglvZ7EL5Qf79L8VpeC+GQj4w/R+X?=
- =?us-ascii?Q?tYR7ULo2iCCHJlfZU+9amPcazNysXVMrb8kH2FUl2ENeylTwg1oL/uamGd4d?=
- =?us-ascii?Q?BR8yWDDXg5d8JUO0084XxXzzT/yuQ8+2NYEmCl9/VEVYKJwlTp/+WV7qg5EC?=
- =?us-ascii?Q?eKw5nzhfMirqDJkcSjSaX8AoPlwr8Qff845MlaC2hVimzFhLSrRnmxzL+CIF?=
- =?us-ascii?Q?5j/uUs/q0Sj9HhN4fkQcvmp3MbmqfwwVl81MBYEpGHqZxGox9fctM3j3W9r4?=
- =?us-ascii?Q?KnTdBSLAz/ahuZ+uNCWgcn5h70G04T4XrRZcHpZ7SRW4r5D7dcLJklufMGe0?=
- =?us-ascii?Q?jUaSARifloZv1M/a+71sQnn/i9qwBbHgpa4d/kRPEoDrE8HGArk9pQaKeKjc?=
- =?us-ascii?Q?p87eFmW07UK3U5FIyPwQV6Z8bU2sB7lqMX5pnmlrsSKxC73WIdgbFUCQQ3sa?=
- =?us-ascii?Q?qXYgvtx7g18BV8a52HMxKRS0MpG3bQkNqJanYEF7viMsT7yM1lUgUmoVL8b0?=
- =?us-ascii?Q?7Xjb4+5aTenE9mlDSW8qePYYbBv8Xtf3xaMUDGVNdnsQgqwSfV8/j27n1V9I?=
- =?us-ascii?Q?MYaEgGEzBfE9f5vaTXVbd1g6iyQUqeVvVxYXfKv0XH+IYvI51SueHDF6nGJE?=
- =?us-ascii?Q?OxYPz3N2FhssP5peSmTnmUGoAe8/xXLVGl/osYDqtulLAxye/NpQ6VP5cyw+?=
- =?us-ascii?Q?jayqhPg68OnNXhaEQaYFDoRsIX/ZuIJS8XQPPh5MBqJI5RbrXSI9IUr6OohP?=
- =?us-ascii?Q?vWy7nVa8GDG/84IUj8RtsS6g8THVy6a/+WXdRwqfX2x8bNwhkL4aYPi3ttzp?=
- =?us-ascii?Q?17QjDL1fjhgrvSOUtSFqi9a8g/ti4xvcCdGXBoh88ViAkcxTJC8iWouE7Im5?=
- =?us-ascii?Q?QC5AJorReYIjp1CUenZWNluqTKV8K2ua3ls7FyyhUOqZjGTI0gh7gC0WVKl/?=
- =?us-ascii?Q?M6tOjkHZOfnTP2f96AGIUDXR7tZ3klliEHWuQWu+ztzWk0KxXNuZPz1fZJ70?=
- =?us-ascii?Q?BO7eOA8tDPeghhdfPshc9zVRgk7IjhMvXJhPJcOja6F4GVk0hbBYqSR+DMv5?=
- =?us-ascii?Q?tPOe9FpNOlz7/rhFqDtUvU9IkWkVf7jwbRd1iTDyzSR/PhQeldySKUJ805Dw?=
- =?us-ascii?Q?cxcgyDwk16aB/z5nX6waBGzNVBWrTcr5VljDYi6YVsnNMKdIyrtvg6V/LekE?=
- =?us-ascii?Q?cNU6uw4YpJU1mHCVIVMBg9ddtoEiYlqPGoS7dDzLZqpmONfzHftP0doY1vKT?=
- =?us-ascii?Q?ExaPLa3k2RIYMp3ogYP1iQmPdZTf5rm8hG9KbuTP4sJIKEV1lb56SO82rnLM?=
- =?us-ascii?Q?rqYuLS80snan/oX7GFLmFmfzzSQtlyT88+6j/aTMF7Yj+vc2UXVbUD1/IwW6?=
- =?us-ascii?Q?T5djV9zXTZeBIRF8OZTWN3dT/xuzklQEg47zYP4v18fozoZLQfQidAA8oNIf?=
- =?us-ascii?Q?hhxk8ent6BHmwjClKJE+bXXHdVdlG990q/sp0prn3l2uHZTB/4fZEy6pmVlQ?=
- =?us-ascii?Q?Gad8AM4Z2s/VdZM39lOAocsOMihIlIxHf1ncYXKnNApblEwcCVXc2WKRg1ur?=
- =?us-ascii?Q?VBOA5CRqfMI8QNkljpo=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 19:28:28.4019 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92eb759b-cada-4971-a6ee-08de471071ae
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF0001709A.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB9459
-Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
- envelope-from=nicolinc@nvidia.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.992]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,77 +116,360 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 10, 2025 at 01:37:27PM +0000, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> 
-> Tegra241 CMDQV assigns each VINTF a 128KB MMIO region split into two
-> 64 KB pages:
->  - Page0: guest accessible control/status registers for all VCMDQs
->  - Page1: configuration registers (queue GPA/size) that must be trapped
->           by the VMM and translated before programming the HW queue.
-> 
-> This patch implements the Page0 handling in QEMU. Using the vintf offset
-> returned by IOMMUFD during VIOMMU allocation, QEMU maps Page0 into
-> guest physical address space and exposes it via two guest MMIO windows:
->  - 0x10000 :VCMDQ register
+Peter Xu <peterx@redhat.com> writes:
 
-global VCMDQ MMIO pages.
+> On Fri, Dec 26, 2025 at 06:19:15PM -0300, Fabiano Rosas wrote:
+>> Simplify migration_channel_connect() and migration_connect() to not
+>> take an error as input. Move the error handling into the paths that
+>> generate the error.
+>> 
+>> To achive this, call migration_connect_error_propagate() from socket.c
+>> and tls.c, which are the async paths.
+>> 
+>> For the sync paths, the handling is done as normal by returning all
+>> the way to qmp_migrate_finish(), except that now the sync paths don't
+>> pass the error forward into migration_connect() anymore.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> Yeah this looks better in general, feel free to take:
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+>
+> One thing to mention:
+>
+> Strictly speaking, migration_tls_channel_connect() doesn't fall into the
+> "async op" category - it was invoked from migration core, so logically it
+> can still keep its errp, then the migration core should also be able to
+> process the error in migration_channel_connect().  It's not like the other
+> two "async ops" where migration context was lost.
+>
 
->  - 0x30000 :VINTF register
+I actually had it return the error in a previous version. Let me check
+if it still makes sense to do that.
 
-private VINTF MMIO pages
+> IOW, I can kind of see why we used to pass an Error into the current
+> migration_channel_connect(), and it still makes some sense.
 
-> +static bool tegra241_cmdqv_init_vcmdq_page0(Tegra241CMDQV *cmdqv, Error **errp)
-> +{
-> +    SMMUv3State *smmu = cmdqv->smmu;
-> +    SMMUv3AccelState *s_accel = smmu->s_accel;
-> +    IOMMUFDViommu *viommu;
-> +    char *name;
-> +
-> +    if (!s_accel) {
-> +        return true;
-> +    }
+Yes, it was definitely not incorrect. I just think it's become a
+surprising thing to do given how the code has evolved.
 
-g_assert?
-
-The entire thing can't work without s_accel, so returning true
-doesn't seem to make sense.
-
-> +    viommu = &s_accel->viommu;
-> +    if (!iommufd_backend_viommu_mmap(viommu->iommufd, viommu->viommu_id,
-> +                                     VCMDQ_REG_PAGE_SIZE,
-> +                                     cmdqv->cmdqv_data.out_vintf_mmap_offset,
-> +                                     &cmdqv->vcmdq_page0, errp)) {
-> +        cmdqv->vcmdq_page0 = NULL;
-
-We probably shouldn't nuke the vcmdq_page0.
-
-And I think we should add g_assert(!cmdqv->vcmdq_page0) too. It
-would be a bug if we pass in a valid page0 pointer.
-
-> +    name = g_strdup_printf("%s vcmdq", memory_region_name(&cmdqv->mmio_cmdqv));
-> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vcmdq_page,
-> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
-> +                                      name, 0x10000, cmdqv->vcmdq_page0);
-> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x10000,
-> +                                        &cmdqv->mmio_vcmdq_page, 1);
-> +    g_free(name);
-> +
-> +    name = g_strdup_printf("%s vintf", memory_region_name(&cmdqv->mmio_cmdqv));
-> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vintf_page,
-> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
-> +                                      name, 0x10000, cmdqv->vcmdq_page0);
-> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x30000,
-> +                                        &cmdqv->mmio_vintf_page, 1);
-
-Let's add some comments here (maybe something similar in commit log also):
-
-    /*
-     * Each VM can only own one VINTF exposed by the kernel via a VIOMMU object.
-     * And all available VCMDQs are already preallocated in the VINTF. Thus, the
-     * global VCMDQ MMIO page0 and the private VINTF MMIO page0 are effectively
-     * the same, i.e. cmdqv->vcmdq_page0.
-     */
-
-Nicolin
+> OTOH, it doesn't really make sense to me to keep passing it to
+> migration_connect()..
+>
+> But since that's the only user of migration_tls_channel_connect(), I assume
+> it's not a huge deal, anyway.
+>
+>> ---
+>>  migration/channel.c    | 46 +++++++++++++++++-------------------------
+>>  migration/channel.h    |  4 +---
+>>  migration/exec.c       |  2 +-
+>>  migration/fd.c         |  2 +-
+>>  migration/file.c       |  2 +-
+>>  migration/migration.c  | 11 ++--------
+>>  migration/migration.h  |  3 ++-
+>>  migration/rdma.c       |  2 +-
+>>  migration/socket.c     | 17 ++++++++--------
+>>  migration/tls.c        | 19 ++++++++---------
+>>  migration/tls.h        |  4 +---
+>>  migration/trace-events |  2 +-
+>>  12 files changed, 49 insertions(+), 65 deletions(-)
+>> 
+>> diff --git a/migration/channel.c b/migration/channel.c
+>> index ba14f66d85..7243b99108 100644
+>> --- a/migration/channel.c
+>> +++ b/migration/channel.c
+>> @@ -60,38 +60,30 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>>   *
+>>   * @s: Current migration state
+>>   * @ioc: Channel to which we are connecting
+>> - * @error: Error indicating failure to connect, free'd here
+>>   */
+>> -void migration_channel_connect(MigrationState *s,
+>> -                               QIOChannel *ioc,
+>> -                               Error *error)
+>> +void migration_channel_connect(MigrationState *s, QIOChannel *ioc)
+>>  {
+>> -    trace_migration_set_outgoing_channel(
+>> -        ioc, object_get_typename(OBJECT(ioc)), error);
+>> +    trace_migration_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)));
+>>  
+>> -    if (!error) {
+>> -        if (migrate_channel_requires_tls_upgrade(ioc)) {
+>> -            migration_tls_channel_connect(s, ioc, &error);
+>> +    if (migrate_channel_requires_tls_upgrade(ioc)) {
+>> +        migration_tls_channel_connect(s, ioc);
+>>  
+>> -            if (!error) {
+>> -                /* tls_channel_connect will call back to this
+>> -                 * function after the TLS handshake,
+>> -                 * so we mustn't call migration_connect until then
+>> -                 */
+>> -
+>> -                return;
+>> -            }
+>> -        } else {
+>> -            QEMUFile *f = qemu_file_new_output(ioc);
+>> -
+>> -            migration_ioc_register_yank(ioc);
+>> -
+>> -            qemu_mutex_lock(&s->qemu_file_lock);
+>> -            s->to_dst_file = f;
+>> -            qemu_mutex_unlock(&s->qemu_file_lock);
+>> -        }
+>> +        /*
+>> +         * async: the above will call back to this function after
+>> +         * the TLS handshake is successfully completed.
+>> +         */
+>> +        return;
+>>      }
+>> -    migration_connect(s, error);
+>> +
+>> +    QEMUFile *f = qemu_file_new_output(ioc);
+>> +
+>> +    migration_ioc_register_yank(ioc);
+>> +
+>> +    qemu_mutex_lock(&s->qemu_file_lock);
+>> +    s->to_dst_file = f;
+>> +    qemu_mutex_unlock(&s->qemu_file_lock);
+>> +
+>> +    migration_connect(s);
+>>  }
+>>  
+>>  
+>> diff --git a/migration/channel.h b/migration/channel.h
+>> index 2215091323..ccfeaaef18 100644
+>> --- a/migration/channel.h
+>> +++ b/migration/channel.h
+>> @@ -20,9 +20,7 @@
+>>  
+>>  void migration_channel_process_incoming(QIOChannel *ioc);
+>>  
+>> -void migration_channel_connect(MigrationState *s,
+>> -                               QIOChannel *ioc,
+>> -                               Error *error_in);
+>> +void migration_channel_connect(MigrationState *s, QIOChannel *ioc);
+>>  
+>>  int migration_channel_read_peek(QIOChannel *ioc,
+>>                                  const char *buf,
+>> diff --git a/migration/exec.c b/migration/exec.c
+>> index 78fe0fff13..d83a07435a 100644
+>> --- a/migration/exec.c
+>> +++ b/migration/exec.c
+>> @@ -55,7 +55,7 @@ void exec_start_outgoing_migration(MigrationState *s, strList *command,
+>>      }
+>>  
+>>      qio_channel_set_name(ioc, "migration-exec-outgoing");
+>> -    migration_channel_connect(s, ioc, NULL);
+>> +    migration_channel_connect(s, ioc);
+>>      object_unref(OBJECT(ioc));
+>>  }
+>>  
+>> diff --git a/migration/fd.c b/migration/fd.c
+>> index c956b260a4..0144a70742 100644
+>> --- a/migration/fd.c
+>> +++ b/migration/fd.c
+>> @@ -70,7 +70,7 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
+>>      }
+>>  
+>>      qio_channel_set_name(ioc, "migration-fd-outgoing");
+>> -    migration_channel_connect(s, ioc, NULL);
+>> +    migration_channel_connect(s, ioc);
+>>      object_unref(OBJECT(ioc));
+>>  }
+>>  
+>> diff --git a/migration/file.c b/migration/file.c
+>> index c490f2b219..7bb9c1c79f 100644
+>> --- a/migration/file.c
+>> +++ b/migration/file.c
+>> @@ -122,7 +122,7 @@ void file_start_outgoing_migration(MigrationState *s,
+>>          return;
+>>      }
+>>      qio_channel_set_name(ioc, "migration-file-outgoing");
+>> -    migration_channel_connect(s, ioc, NULL);
+>> +    migration_channel_connect(s, ioc);
+>>  }
+>>  
+>>  static gboolean file_accept_incoming_migration(QIOChannel *ioc,
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index a66b2d7aaf..5c6c76f110 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -1572,7 +1572,7 @@ static void migrate_error_free(MigrationState *s)
+>>      }
+>>  }
+>>  
+>> -static void migration_connect_error_propagate(MigrationState *s, Error *error)
+>> +void migration_connect_error_propagate(MigrationState *s, Error *error)
+>>  {
+>>      MigrationStatus current = s->state;
+>>      MigrationStatus next = MIGRATION_STATUS_NONE;
+>> @@ -4033,7 +4033,7 @@ fail_setup:
+>>      return NULL;
+>>  }
+>>  
+>> -void migration_connect(MigrationState *s, Error *error_in)
+>> +void migration_connect(MigrationState *s)
+>>  {
+>>      Error *local_err = NULL;
+>>      uint64_t rate_limit;
+>> @@ -4041,13 +4041,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+>>      int ret;
+>>  
+>>      s->expected_downtime = migrate_downtime_limit();
+>> -    if (error_in) {
+>> -        migration_connect_error_propagate(s, error_in);
+>> -        if (s->error) {
+>> -            error_report_err(error_copy(s->error));
+>> -        }
+>> -        return;
+>> -    }
+>>  
+>>      if (resume) {
+>>          /* This is a resumed migration */
+>> diff --git a/migration/migration.h b/migration/migration.h
+>> index 4d42e8f9a7..f340cd518d 100644
+>> --- a/migration/migration.h
+>> +++ b/migration/migration.h
+>> @@ -532,10 +532,11 @@ void migration_incoming_process(void);
+>>  
+>>  bool  migration_has_all_channels(void);
+>>  
+>> +void migration_connect_error_propagate(MigrationState *s, Error *error);
+>>  void migrate_error_propagate(MigrationState *s, Error *error);
+>>  bool migrate_has_error(MigrationState *s);
+>>  
+>> -void migration_connect(MigrationState *s, Error *error_in);
+>> +void migration_connect(MigrationState *s);
+>>  
+>>  int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+>>                               Error **errp);
+>> diff --git a/migration/rdma.c b/migration/rdma.c
+>> index 337b415889..596a1aba0b 100644
+>> --- a/migration/rdma.c
+>> +++ b/migration/rdma.c
+>> @@ -3997,7 +3997,7 @@ void rdma_start_outgoing_migration(void *opaque,
+>>  
+>>      s->to_dst_file = rdma_new_output(rdma);
+>>      s->rdma_migration = true;
+>> -    migration_connect(s, NULL);
+>> +    migration_connect(s);
+>>      return;
+>>  return_path_err:
+>>      qemu_rdma_cleanup(rdma);
+>> diff --git a/migration/socket.c b/migration/socket.c
+>> index 426f363b99..298bac30cc 100644
+>> --- a/migration/socket.c
+>> +++ b/migration/socket.c
+>> @@ -59,24 +59,25 @@ static void socket_outgoing_migration(QIOTask *task,
+>>                                        gpointer opaque)
+>>  {
+>>      struct SocketConnectData *data = opaque;
+>> -    QIOChannel *sioc = QIO_CHANNEL(qio_task_get_source(task));
+>> +    g_autoptr(QIOChannel) sioc = QIO_CHANNEL(qio_task_get_source(task));
+>>      Error *err = NULL;
+>>  
+>>      if (qio_task_propagate_error(task, &err)) {
+>> -        trace_migration_socket_outgoing_error(error_get_pretty(err));
+>> -           goto out;
+>> +        goto err;
+>>      }
+>>  
+>> -    trace_migration_socket_outgoing_connected();
+>> -
+>>      if (migrate_zero_copy_send() &&
+>>          !qio_channel_has_feature(sioc, QIO_CHANNEL_FEATURE_WRITE_ZERO_COPY)) {
+>>          error_setg(&err, "Zero copy send feature not detected in host kernel");
+>> +        goto err;
+>>      }
+>>  
+>> -out:
+>> -    migration_channel_connect(data->s, sioc, err);
+>> -    object_unref(OBJECT(sioc));
+>> +    trace_migration_socket_outgoing_connected();
+>> +    migration_channel_connect(data->s, sioc);
+>> +    return;
+>> +err:
+>> +    trace_migration_socket_outgoing_error(error_get_pretty(err));
+>> +    migration_connect_error_propagate(data->s, err);
+>>  }
+>>  
+>>  void socket_start_outgoing_migration(MigrationState *s,
+>> diff --git a/migration/tls.c b/migration/tls.c
+>> index 82f58cbc78..a54e8e6e14 100644
+>> --- a/migration/tls.c
+>> +++ b/migration/tls.c
+>> @@ -104,16 +104,17 @@ static void migration_tls_outgoing_handshake(QIOTask *task,
+>>                                               gpointer opaque)
+>>  {
+>>      MigrationState *s = opaque;
+>> -    QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
+>> +    g_autoptr(QIOChannel) ioc = QIO_CHANNEL(qio_task_get_source(task));
+>>      Error *err = NULL;
+>>  
+>>      if (qio_task_propagate_error(task, &err)) {
+>>          trace_migration_tls_outgoing_handshake_error(error_get_pretty(err));
+>> -    } else {
+>> -        trace_migration_tls_outgoing_handshake_complete();
+>> +        migration_connect_error_propagate(s, err);
+>> +        return;
+>>      }
+>> -    migration_channel_connect(s, ioc, err);
+>> -    object_unref(OBJECT(ioc));
+>> +
+>> +    trace_migration_tls_outgoing_handshake_complete();
+>> +    migration_channel_connect(s, ioc);
+>>  }
+>>  
+>>  QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+>> @@ -129,14 +130,14 @@ QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+>>      return qio_channel_tls_new_client(ioc, creds, migrate_tls_hostname(), errp);
+>>  }
+>>  
+>> -void migration_tls_channel_connect(MigrationState *s,
+>> -                                   QIOChannel *ioc,
+>> -                                   Error **errp)
+>> +void migration_tls_channel_connect(MigrationState *s, QIOChannel *ioc)
+>>  {
+>>      QIOChannelTLS *tioc;
+>> +    Error *local_err = NULL;
+>>  
+>> -    tioc = migration_tls_client_create(ioc, errp);
+>> +    tioc = migration_tls_client_create(ioc, &local_err);
+>>      if (!tioc) {
+>> +        migration_connect_error_propagate(s, local_err);
+>>          return;
+>>      }
+>>  
+>> diff --git a/migration/tls.h b/migration/tls.h
+>> index 7cd9c76013..7399c42edf 100644
+>> --- a/migration/tls.h
+>> +++ b/migration/tls.h
+>> @@ -29,9 +29,7 @@ void migration_tls_channel_process_incoming(QIOChannel *ioc, Error **errp);
+>>  QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+>>                                             Error **errp);
+>>  
+>> -void migration_tls_channel_connect(MigrationState *s,
+>> -                                   QIOChannel *ioc,
+>> -                                   Error **errp);
+>> +void migration_tls_channel_connect(MigrationState *s, QIOChannel *ioc);
+>>  void migration_tls_channel_end(QIOChannel *ioc, Error **errp);
+>>  /* Whether the QIO channel requires further TLS handshake? */
+>>  bool migrate_channel_requires_tls_upgrade(QIOChannel *ioc);
+>> diff --git a/migration/trace-events b/migration/trace-events
+>> index da8f909cac..cbf10d0b63 100644
+>> --- a/migration/trace-events
+>> +++ b/migration/trace-events
+>> @@ -204,7 +204,7 @@ migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma)
+>>  
+>>  # channel.c
+>>  migration_set_incoming_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
+>> -migration_set_outgoing_channel(void *ioc, const char *ioctype, void *err)  "ioc=%p ioctype=%s err=%p"
+>> +migration_set_outgoing_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
+>>  
+>>  # global_state.c
+>>  migrate_state_too_big(void) ""
+>> -- 
+>> 2.51.0
+>> 
 
