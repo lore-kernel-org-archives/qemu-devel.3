@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D8A5D3B7E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2627DD3B7E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Dec 2025 11:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaAz4-0004mW-Hb; Mon, 29 Dec 2025 06:00:19 -0500
+	id 1vaAzl-0005F7-A4; Mon, 29 Dec 2025 06:01:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaAyj-0004bj-NZ
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:00:05 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1vaAzJ-00052E-5V
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:00:45 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaAyi-0002ZL-5u
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 05:59:57 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-64e48264e56so3033478a12.1
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 02:59:55 -0800 (PST)
+ id 1vaAzH-0002tO-MV
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 06:00:32 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b72b495aa81so1497774066b.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 03:00:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767005995; x=1767610795; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767006030; x=1767610830; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j3++AK+/D2k4Ir6eMImmVeWYHi2A6CAe5d/WqaHCVqE=;
- b=WBugU8qrR+Q2CuWieiGqWVt0CQdo8WWfYtZlGVFZ5lzGne8FWXOGjHoZsa00ELNtBw
- bxk5ZfGJ4SV1Pg4MZbkAFeNlS7gi2MlmJvk8iZDEIQm7xDWZWzUeyhO1zq9hl9D74vWO
- zehUrPXVniSj8RFUskbqS8KSwqYcFB+E8tjMjBw0JzVSLydhTyuEsBza1uxc64Eh2eyk
- uIaOgrgGq0+gOEXfnzR5LztoXW8QbcmDErUHtzP3E5lEe58ZvIozpPyp3gsZsCctGEAl
- KJd5SmOI6OuZQB9pqyt4yTbiIry8ameWvVRQL3je01UfxBi3aOBYqzuKqkgJrMviYfZP
- M+5Q==
+ bh=FaScrPJCraYBbYBx0impQBs+ZteQMgxtxNRJoE5FS70=;
+ b=IoD/gJp9zAuYD9sMiZ4uC5zvcSVl3XGWrLVpwLBQck/Njmm+6PokYYJEowEb3w25ou
+ 4PbDpd2dwijpkzWAOnDDrW3EUc9Dqla73ccoiayswycC1CkG5MJJQkdF+Njao2qMsdc1
+ AX8AWEHk+JESZnbF1YDM+an1WVFeGB4CEvqbv4pr6i0bRWZgoHUft7B0IsXRdVEJYmYi
+ S+YpCqpQSnUfx95dLpraFTlRVIu9modDOxlgefKXd9bUo8UgJL2MSz3NG8tvhOs73IOD
+ tOyWxosZZ6yEbWmUyK1xV5IZkZbWWOITnJVGwfdL7faAo94HuUTUrQZOv2QPc1dV3RsG
+ YlHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767005995; x=1767610795;
+ d=1e100.net; s=20230601; t=1767006030; x=1767610830;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=j3++AK+/D2k4Ir6eMImmVeWYHi2A6CAe5d/WqaHCVqE=;
- b=WqHZ/3MoMKAPyytGVAksPLwj9axPcIoIAO0FKKuDWXJ/Nr65OhdVA/yrFBsrz62XQy
- cVQboKgQcpydLjJKtKS7QiRbqAhP3nOSwcfX17Bd3HBJ/MOEwawfl8cEfyHs90LipSHB
- vAHi9W+JgKBWDxYN8HdDClwvHvUaHlCj/jTa91+32zu2WIQKrrdeBTfdeIm8TudTbU99
- OkNMnHVyKcEAZQQRMwBaqK7ClevOHeN4zpiYoE2awQYSlG8Ilwu8LFZbnXffthsF5iGJ
- /u8uR4vlP2zmssI4PBRu3PHwGxjV21Vs9EOKtIyfX/J4QmBQExauIMEmgGouMPDA+8TB
- hHvA==
-X-Gm-Message-State: AOJu0Yzk89AHJ9oFRDxnjRkTCNltCgAyC+s0NnXNKnFNrc1mFTvrfxKJ
- 4hEAHQr4wiiyipKXLjGOLTZLJuD6VN4d+zFu1SejsYFbQN3V7GpDbPXu5FUcs3O4KDSX9x7RCCp
- /47//IVfAg1VBjJKjKDi7SAqQgPWd36bnASIQbV93ZA==
-X-Gm-Gg: AY/fxX5n+22xEwKVqpH8M8UusZv9mMEEyxuvrPdgF1a4TpaG9SB3vYU3/5XbYKGDHGx
- 9dwMjAjptLzdIpeHjhLAv+UMjDhDgPmB2edlS34b8rBS1gy2vdk5meZL7j8y4lJJAt1xtBw/mK5
- n8O8+B6wkNOvmnfkl0IR05s5UsCynGIVSLO3AziqXY+DbjlqwRRpKJJN8N9VhmSCxT+ZOFkQvCt
- qXTMVRK3hRPEUZ2yIpBTFyZlJLHcr7tFVE8IP5DYdtsgxhkJFIB5W9bttPsvnUSftw2OTbjYPUv
- uUjBjWeEyxTaJ3/29EqGLInjDuPrUcRV8Wxk8BM=
-X-Google-Smtp-Source: AGHT+IFcarMJX/5LI6rMw90DdPeRWnNQrz3XuS9FDpJEDUw9N9HHoYQRBol/p4bx2Ar9VOs7mE9WAYO9CyvabmNSxvI=
-X-Received: by 2002:a17:907:984:b0:b72:3765:eda9 with SMTP id
- a640c23a62f3a-b8037256c76mr3092517466b.60.1767005994621; Mon, 29 Dec 2025
- 02:59:54 -0800 (PST)
+ bh=FaScrPJCraYBbYBx0impQBs+ZteQMgxtxNRJoE5FS70=;
+ b=AOrNO6ueW+WxHn3+TF6n/hKKgo/yF4/Rxp7xkJfsfzQ9T/OhH9Ele/2rJsGS1SkgcW
+ aXadBaeJ46tkA5VMnB31Y6oimxn2WB18tOxH2sjj3BlLWelsCZW2twJKA+3Y9ANFGC6e
+ Py3TDTsardNSkWTHkVYRwIHUartHHmDKpVzD2O/aHxP74Hc6Dxy6EoLl1Sz8CumR0vGQ
+ 44v32YljSKG56BN6F1Md8KelmsAlTbLJWefAdyCDuIhQ2XBDCByuqKme5G3d2U2MB1AG
+ kwfzhUFJPz3vJScrXbHKoGdIa0xuAex/zqTNiC2tGhUfzzw7rluibS+s9PK8wIkQM8nj
+ 4qoQ==
+X-Gm-Message-State: AOJu0YzUx8P8F7D6PqKYlGnq33HLAh0KXl6er/YsLZ/gmAcBB+lmkhur
+ 5qEqDz5dBv9QE4qN5M1GE5Gb0bgWFoechapttXmzuPExzKSAZ1s/geYLOTx5jK1xv6FrTei1FeH
+ jLCJrRS/txnQ4UNrTUYMNGTZ8VkvN1rDsbzrjv/rW+Q==
+X-Gm-Gg: AY/fxX7mSaP2hIhr6AER+/9eeVl+s5ucE8U3R8PoyIhTIjsfjWm9qIjTlr9gaqsrlmZ
+ wmNcA1MQL8hvu/N8DglXXmNs1hQS1rGd0B8Mj7LIhSPYd1HGuSij0rpO+5nMTBrqou2gbRNrkmx
+ 4AXfZKchspuP47mpC36IrT27ePg2HX6Q+FG7U7eTPD7RHJpZaUkEJTDXGg0HHYDYE6Ss+MEBmqj
+ bWlnng+l9vXgfFkkIzVsxazUT+S7NQeXNQ0qRBNp7zORdBHoW6H4EzIVMoMcehnrpf+i1/woeAt
+ iAKDX39NTbyiqocSNqYsSqRT4bqKKj0PspmwtCQ=
+X-Google-Smtp-Source: AGHT+IGMChuq4ueDEVEX5wYwR1VcbjAY2wih61U0jPNnD0XirMQBLe9LKWgj4Rn/NHqZ536I2AyfOmPwCMbwQ6jMPsc=
+X-Received: by 2002:a17:906:9fd2:b0:b73:42df:27a with SMTP id
+ a640c23a62f3a-b8036f2fa8fmr2860072666b.1.1767006029902; Mon, 29 Dec 2025
+ 03:00:29 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224161804.90064-1-philmd@linaro.org>
- <20251224161804.90064-2-philmd@linaro.org>
-In-Reply-To: <20251224161804.90064-2-philmd@linaro.org>
+ <20251224161804.90064-3-philmd@linaro.org>
+In-Reply-To: <20251224161804.90064-3-philmd@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 29 Dec 2025 12:59:28 +0200
-X-Gm-Features: AQt7F2oSBqNpbXT5-U1YaKLbMabe5ZFWCx6GtxOmMyGpHkAWKn80AaApKstkULo
-Message-ID: <CAAjaMXbby7PVZy-Au2F3m+0cgLVaEL5jA9SunxibtAqOWpYf3Q@mail.gmail.com>
-Subject: Re: [PATCH 1/4] hw/intc: Mark OpenRISC-specific peripheral as
- big-endian
+Date: Mon, 29 Dec 2025 13:00:03 +0200
+X-Gm-Features: AQt7F2pZTaHcfsK11S2wtD-1hIkHXgFM9XIo8z9V9-I2iK1sqV_hg9-JSSiDnFc
+Message-ID: <CAAjaMXbETpkpiQC2QFgNedFOu7nbVY1oJEi5odYMy-y0da_pEg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] target/openrisc: Use explicit big-endian LD/ST API
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Jia Liu <proljc@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>, 
  Laurent Vivier <laurent@vivier.eu>, Stafford Horne <shorne@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,34 +101,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Dec 24, 2025 at 6:18=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> The Open Multi-Processor Interrupt Controller (ompic) is only
-> used by the OpenRISC target, which is only built as big-endian.
-> Therefore the DEVICE_NATIVE_ENDIAN definition expand to
-> DEVICE_BIG_ENDIAN (besides, the DEVICE_LITTLE_ENDIAN case isn't
-> tested). Simplify directly using DEVICE_BIG_ENDIAN.
+> The OpenRISC architecture uses big endianness. Directly
+> use the big-endian LD/ST API.
+>
+> Mechanical change running:
+>
+>   $ for a in uw w l q; do \
+>       sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
+>         $(git grep -wlE '(ld|st)u?[wlq]_p' target/openrisc/);
+>     done
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  hw/intc/ompic.c | 2 +-
+>  target/openrisc/gdbstub.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/intc/ompic.c b/hw/intc/ompic.c
-> index 047c367478d..ee34501f675 100644
-> --- a/hw/intc/ompic.c
-> +++ b/hw/intc/ompic.c
-> @@ -96,7 +96,7 @@ static void ompic_write(void *opaque, hwaddr addr, uint=
-64_t data, unsigned size)
->  static const MemoryRegionOps ompic_ops =3D {
->      .read =3D ompic_read,
->      .write =3D ompic_write,
-> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +    .endianness =3D DEVICE_BIG_ENDIAN,
->      .impl =3D {
->          .max_access_size =3D 8,
->      },
+> diff --git a/target/openrisc/gdbstub.c b/target/openrisc/gdbstub.c
+> index 45bba80d878..ca1592c6200 100644
+> --- a/target/openrisc/gdbstub.c
+> +++ b/target/openrisc/gdbstub.c
+> @@ -50,7 +50,7 @@ int openrisc_cpu_gdb_write_register(CPUState *cs, uint8=
+_t *mem_buf, int n)
+>      CPUOpenRISCState *env =3D cpu_env(cs);
+>      uint32_t tmp;
+>
+> -    tmp =3D ldl_p(mem_buf);
+> +    tmp =3D ldl_be_p(mem_buf);
+>
+>      if (n < 32) {
+>          cpu_set_gpr(env, n, tmp);
 > --
 > 2.52.0
 >
