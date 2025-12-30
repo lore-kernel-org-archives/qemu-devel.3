@@ -4,62 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A26BE9410F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 05:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63414E94113
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 06:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaSki-0001y2-Er; Tue, 30 Dec 2025 00:58:40 -0500
+	id 1vaSys-0006pQ-Lj; Tue, 30 Dec 2025 01:13:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <13824125580@163.com>)
- id 1vaSkf-0001xW-VY
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 00:58:37 -0500
-Received: from m16.mail.163.com ([220.197.31.3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <13824125580@163.com>)
- id 1vaSka-0001m8-5W
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 00:58:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
- Message-ID; bh=8E+WE8DKWWfz7m9zLjRt4imtZiV+2SbTRaN1u1u3M2o=; b=Q
- zWGTJSd2KhZ56/b/CzM/QPdbFk7MsN0Gj5XHcvDOSV88hPbsKhmdidrTYYcLU5Vw
- qtvtjeENa9YAFW7h3Y1Om+2asRrGbEvyoZ2e4lwmQF0mxD1qtG9YA9CyFQm0gyO2
- BEbxoysYWWFCV4iAbvCAGi78GTLNpY1CgX3DRWxZvg=
-Received: from 13824125580$163.com ( [218.13.223.218] ) by
- ajax-webmail-wmsvr-40-148 (Coremail) ; Tue, 30 Dec 2025 13:58:16 +0800
- (CST)
-X-Originating-IP: [218.13.223.218]
-Date: Tue, 30 Dec 2025 13:58:16 +0800 (CST)
-From: tugouxp <13824125580@163.com>
-To: qemu-devel@nongnu.org
-Subject: How can we develop a new QEMU platform from scratch to run a
- manufacturer's proprietary software system?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20250723(a044bf12) Copyright (c) 2002-2025 www.mailtech.cn 163com
-X-NTES-SC: AL_Qu2dBfycu0oi4CSRZekfmUkbhuw6UcWxsv4g1Y5fc+AGuhHp5C4BbHhcPlXdwcKlDjmGrAO5TAFW0sJgb7Z/qvjI+89LuzXapT80I9e7Pw==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_71094_925319560.1767074296502"
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vaSyh-0006nJ-6g
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 01:13:08 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vaSyf-00046x-BY
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 01:13:06 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7bab7c997eeso11428526b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 22:13:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1767075183; x=1767679983; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=XvspG0nwtXz45+7BcMmaNltvwpMH9nkZAv9CcUzEGYQ=;
+ b=ZDCND/Y8xlXFbMAnWF6nt++uMKKEF+LLoP4mbLlOi9c5RZ04976jzhzTyoiss615eF
+ sOLxgTCsOyvK56wZM5C+Y8VRHspAoK7zplvc6EScXTpL4dtrln7nc659lw+W56580j1D
+ +VLhbg4JZPenqv286hW0G/GAY2l/y4HDOvKYN8mVByZau0z7beOmYAKSgMuORfmADA7c
+ 8KbwjuaquCStQW2uEKOa6KCLWTiJ91GBUACwAjE9IFOvculEUNPsfoFnBVxYePbkXirc
+ tdiMXwFwpnbAyZA6yR8EwAHV9j1L0x2Ec/wQZBIzPa5GC6Q4OwnhAeg0Zk0ArE1OjAnn
+ hIMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767075183; x=1767679983;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XvspG0nwtXz45+7BcMmaNltvwpMH9nkZAv9CcUzEGYQ=;
+ b=uD8MSGyfp6/zITrGjoWJOseBXEOO+pJXpQblf+qFF+cmmX89rUwwd2eWWltXIAya2i
+ 3cNIizog9JWeU0UhoEdMgeZb+DhRhAS8kWEmKwa+5cGxDE65/HTZnQbU5XztUEjAttDe
+ 220Ha43ec5yfGEm/MqkGPQVexg5ry8kDEbETq+0PXyNyfwsshtVV4/eqk9VHMWmeqZr/
+ XqJQk6KeSdyGxryxCQ2L+4wuYk/dZKaXDXapx/cEeqq7g/MUZqwVifNJPuWZSK9v+F3g
+ 93nC/FMtcScODAGxUKMxJWr3vKDnp2DoCcCmlfbCD4DCu0WO7ZI9EQfKcBkWxbuHbZdq
+ HWcQ==
+X-Gm-Message-State: AOJu0Yxicy5Eoy36XFm7D6PNmyP16Qis/fD2Ro7pRiRGVWZ2slN4Eb2/
+ 1RGKfdWUKORa6whoXicF/NyjitTPwNzTVXBRNLvk/uq0TUgjPr96CnmJRK4sVGX7Tg0hZsAoD5f
+ zA1FIwMPx/y2AhEk3MgYeS1+jKOmGD701Mk216D9LU+HZ8GzRVyTcYVsZsFjK4AFPNFhHbs2BIl
+ 01sg703XnEpfcYSJsPoLiUwNAiD2M80ldEOuAuGxnrZ9E=
+X-Gm-Gg: AY/fxX71k6l5av5QjCXRzIBFvYOdfahRUEKXJ1A4xYD5cVBpuzpHl+AHzZE2T2+Czkm
+ Dspcm6BhyZL6IlK1eREOJBDU7h9if8RfbMG/IsEVJF4JlpHNsMVsuApaZc5j7YiF3eCg+x0IJrB
+ U+RTWTmSQ+vx3Vg1lld1XtKd48Dyd12+F7GP4q0jtDHSuPUShlu8b9xiVrpckXcejKDZdcrcwPj
+ 34dz4IHD9I36iWdctD7+69+CrjB1CbU5nyfPED/D/IjCbFj608Pj2qrQdmtSHppIvBVJcbm2Atx
+ 9pLMRY7KuOuZ7Tmf7NivMdGNyk6PN9rwZq4yGWTchlqv0XChS5O33CRn0tcFHPbJNnqTDY2IuRq
+ FYSnolUOw6dZbFm2CdZIKjk8K0HWfiLCJwdq/3tY29msQqvm0OuPHt1jVV4h4eK+C9e/k3M0Ki+
+ ZbF4OV4SKZ4s9tWHcGjWTsffNvhKgGGp6QZvvxCvVQyGbAKyKlcQ==
+X-Google-Smtp-Source: AGHT+IHNOLQYRzcmLPaisYkHKC5Ekq693XDX9l4SeQ8SiXdeO191jT/lOToSqm2PvsfGWrawMvU6tA==
+X-Received: by 2002:a05:6a21:6da2:b0:35e:4171:b7e2 with SMTP id
+ adf61e73a8af0-376aacfc6c8mr27905398637.55.1767075183315; 
+ Mon, 29 Dec 2025 22:13:03 -0800 (PST)
+Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c1e79a1778esm26960906a12.13.2025.12.29.22.13.01
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 29 Dec 2025 22:13:03 -0800 (PST)
+From: Jay Chang <jay.chang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jay Chang <jay.chang@sifive.com>
+Subject: [PATCH v2 0/2] target/riscv: Fix PMP address alignment
+Date: Tue, 30 Dec 2025 14:12:56 +0800
+Message-ID: <20251230061258.15596-1-jay.chang@sifive.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-Message-ID: <16b311d9.48de.19b6dd5f2b7.Coremail.13824125580@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: lCgvCgDXDzr4aVNpoStNAA--.1319W
-X-CM-SenderInfo: bprtmjyurskkiyq6il2tof0z/xtbC8hjHCmlTafiz2wAA3k
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Received-SPF: pass client-ip=220.197.31.3; envelope-from=13824125580@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=jay.chang@sifive.com; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
- FROM_LOCAL_HEX=0.006, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_KAM_HTML_FONT_INVALID=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,55 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------=_Part_71094_925319560.1767074296502
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+This series fixes PMP address alignment to comply with the RISC-V
+specification WARL (Write-Any, Read-Legal) semantics.
 
-SGkgZm9sa3M6CiAgICAgICAgSG93IGNhbiB3ZSBkZXZlbG9wIGEgbmV3IFFFTVUgcGxhdGZvcm0g
-ZnJvbSBzY3JhdGNoIHRvIHJ1biBhIG1hbnVmYWN0dXJlcidzIHByb3ByaWV0YXJ5IHNvZnR3YXJl
-IHN5c3RlbT8gQXJlIHRoZXJlIGFueSBzdGVwLWJ5LXN0ZXAgZ3VpZGVzIG9yIGRlbW8gZXhhbXBs
-ZXMgYXZhaWxhYmxlIGZvciBzdGFydGluZyBmcm9tIHplcm8/IFRoYW5rIHlvdS4KCgpCUnMKemxj
-YW8=
-------=_Part_71094_925319560.1767074296502
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
+value is smaller than the PMP granularity, it needs to be aligned
+to the PMP granularity.
 
-PGRpdiBkYXRhLW50ZXM9Im50ZXNfbWFpbF9ib2R5X3Jvb3QiIHN0eWxlPSJsaW5lLWhlaWdodDox
-Ljc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdiBz
-dHlsZT0ibWFyZ2luOiAwcHg7Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogdHJhbnNw
-YXJlbnQ7IGNvbG9yOiByZ2IoMTUsIDE3LCAyMSk7IGZvbnQtZmFtaWx5OiBxdW90ZS1jamstcGF0
-Y2gsIEludGVyLCBzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwg
-JnF1b3Q7U2Vnb2UgVUkmcXVvdDssIFJvYm90bywgT3h5Z2VuLCBVYnVudHUsIENhbnRhcmVsbCwg
-JnF1b3Q7T3BlbiBTYW5zJnF1b3Q7LCAmcXVvdDtIZWx2ZXRpY2EgTmV1ZSZxdW90Oywgc2Fucy1z
-ZXJpZjsgZm9udC1zaXplOiAxNnB4OyI+SGkgZm9sa3M6PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9
-Im1hcmdpbjogMHB4OyI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50
-OyBjb2xvcjogcmdiKDE1LCAxNywgMjEpOyBmb250LWZhbWlseTogcXVvdGUtY2prLXBhdGNoLCBJ
-bnRlciwgc3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90
-O1NlZ29lIFVJJnF1b3Q7LCBSb2JvdG8sIE94eWdlbiwgVWJ1bnR1LCBDYW50YXJlbGwsICZxdW90
-O09wZW4gU2FucyZxdW90OywgJnF1b3Q7SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7
-IGZvbnQtc2l6ZTogMTZweDsiPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyBIb3cgY2FuIHdl
-IGRldmVsb3AgYSBuZXcgUUVNVSBwbGF0Zm9ybSBmcm9tIHNjcmF0Y2ggdG8gcnVuIGEgbWFudWZh
-Y3R1cmVyJ3MgcHJvcHJpZXRhcnkgc29mdHdhcmUgc3lzdGVtPyBBcmUgdGhlcmUgYW55IHN0ZXAt
-Ynktc3RlcCBndWlkZXMgb3IgZGVtbyBleGFtcGxlcyBhdmFpbGFibGUgZm9yIHN0YXJ0aW5nIGZy
-b20gemVybz8gVGhhbmsgeW91Ljwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46IDBweDsi
-PjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDsgY29sb3I6IHJnYigx
-NSwgMTcsIDIxKTsgZm9udC1mYW1pbHk6IHF1b3RlLWNqay1wYXRjaCwgSW50ZXIsIHN5c3RlbS11
-aSwgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90
-OywgUm9ib3RvLCBPeHlnZW4sIFVidW50dSwgQ2FudGFyZWxsLCAmcXVvdDtPcGVuIFNhbnMmcXVv
-dDssICZxdW90O0hlbHZldGljYSBOZXVlJnF1b3Q7LCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE2
-cHg7Ij48YnI+PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjogMHB4OyI+PHNwYW4gc3R5
-bGU9ImJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50OyBjb2xvcjogcmdiKDE1LCAxNywgMjEp
-OyBmb250LWZhbWlseTogcXVvdGUtY2prLXBhdGNoLCBJbnRlciwgc3lzdGVtLXVpLCAtYXBwbGUt
-c3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCBSb2JvdG8s
-IE94eWdlbiwgVWJ1bnR1LCBDYW50YXJlbGwsICZxdW90O09wZW4gU2FucyZxdW90OywgJnF1b3Q7
-SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTZweDsiPkJSczwv
-c3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46IDBweDsiPjxzcGFuIHN0eWxlPSJiYWNrZ3Jv
-dW5kLWNvbG9yOiB0cmFuc3BhcmVudDsgY29sb3I6IHJnYigxNSwgMTcsIDIxKTsgZm9udC1mYW1p
-bHk6IHF1b3RlLWNqay1wYXRjaCwgSW50ZXIsIHN5c3RlbS11aSwgLWFwcGxlLXN5c3RlbSwgQmxp
-bmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90OywgUm9ib3RvLCBPeHlnZW4sIFVi
-dW50dSwgQ2FudGFyZWxsLCAmcXVvdDtPcGVuIFNhbnMmcXVvdDssICZxdW90O0hlbHZldGljYSBO
-ZXVlJnF1b3Q7LCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE2cHg7Ij56bGNhbzwvc3Bhbj48L2Rp
-dj48L2Rpdj4=
-------=_Part_71094_925319560.1767074296502--
+Changes in v2:
+- Fixed commit message grammar ("it needs to be aligned")
+- Use ROUND_DOWN() macro for TOR address alignment to improve
+  code readability 
+
+Jay Chang (2):
+  target/riscv: Align pmp size to pmp-granularity
+  target/riscv: Use ROUND_DOWN for PMP address alignment
+
+ target/riscv/pmp.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+-- 
+2.48.1
 
 
