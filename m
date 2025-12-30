@@ -4,105 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CEF5E9411C
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 07:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B50F0E94109
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 08:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaUZa-0006VO-LP; Tue, 30 Dec 2025 02:55:18 -0500
+	id 1vaV7d-000130-Nh; Tue, 30 Dec 2025 03:30:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1vaUZY-0006UZ-MJ
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 02:55:16 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1vaV7a-00011y-V4
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 03:30:27 -0500
+Received: from sender4-op-o12.zoho.com ([136.143.188.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1vaUZW-0007Qe-6x
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 02:55:16 -0500
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 5BU5jXLU3340849; Tue, 30 Dec 2025 07:55:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=Ae1i3
- ZgdFyZpkrY/9W4A2f1cEMKCHx6Z+YERyr537xU=; b=QywVDMz5bJNwynHgfQX/n
- G7w7ea3XQyEmhMFnASko47J1xM0ObOGyFKNnQXjqe0sGk8FmntBS+DR47APo2NH4
- VM8Z5jgjinNwp1LJT/+w3Y9IKepljWIxCcDLvstXCi9pEHDugdKmBTXFGXOJ/Kp4
- 1ivAQ7IOTTEPp2p3cIMRoPL3M85DeIZYdh7P2vPLDYVK/tcdWHZwmO84sSNUOBeU
- GOc6rCV6mtEFCiIQkpfJVlEHQ3Q2pa8YxNeaVNmOkSnI3UQ6pfnJMFm0cB4zP5Rh
- m6n8WmCRyzAVQhRbNh0ztlMG5860Rgzqu6B07TufPsLgUQiIxRr0ehzJEv2P/zT+
- g==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4ba80pt948-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Dec 2025 07:55:00 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 5BU7eEAt017343; Tue, 30 Dec 2025 07:54:59 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4ba5wbp6c4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Dec 2025 07:54:59 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5BU7smZt005421;
- Tue, 30 Dec 2025 07:54:58 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4ba5wbp6aa-6; Tue, 30 Dec 2025 07:54:58 +0000
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
- like.xu.linux@gmail.com, groug@kaod.org, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
- ewanhai@zhaoxin.com
-Subject: [PATCH v8 5/7] target/i386/kvm: reset AMD PMU registers during VM
- reset
-Date: Mon, 29 Dec 2025 23:42:44 -0800
-Message-ID: <20251230074354.88958-6-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20251230074354.88958-1-dongli.zhang@oracle.com>
-References: <20251230074354.88958-1-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>) id 1vaV7Y-0005s5-Pa
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 03:30:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1767083403; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=aH9IBuuduhChbo9MsOngnWhBAwMByEsgQcx1noPDqpd+8fW5LNU97caUjNij2ExtP3A/9lGszg1HVGT+Q4P3PuZm7w/fiqYn5H2v9UpDBCOIm+UT8totl/7XLBuBeERBkmdCTRAdDdnMbFzsS1S/CLxW6KFhJwE7CY3vkXkFdEk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1767083403;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=LJpH1HARvjskdKzfKikilHbmzvPqY+Q6k5LRrZ6CMYs=; 
+ b=fxmhjZOofS6hMUlh2bnyjozGKin6LozdTneyGkuuUfMLykk0/quuegn0zR68Ec+9Y0jqTKq7QT1LZTej87vRUl8MbUunDptHLSEvQCk4sTR68fm4XgTU7cswhR4mpT/VxjtmFrij5K+C800VUmMV9UoM3684Z+L9fK8ZDW6FaIg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1767083403; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=LJpH1HARvjskdKzfKikilHbmzvPqY+Q6k5LRrZ6CMYs=;
+ b=MUB0X5ev//gaJV2ktTMxtwwwF17nqqL7ZperQVFQPhAy/pqqUvvZvTT3p6yfSE0e
+ pWnN37JjYPn2wt5sQDskaAFF7uwCmcJs8TNI34jiz3GUqp2EfMamVNBq1PvcNkwmO7M
+ tpJullSep5IT92v03FsOjeyRElVqljqbZd+iEeQE=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1767083401196358.94956268333954;
+ Tue, 30 Dec 2025 00:30:01 -0800 (PST)
+Date: Tue, 30 Dec 2025 16:30:01 +0800
+From: Li Chen <me@linux.beauty>
+To: "Pasha Tatashin" <pasha.tatashin@soleen.com>
+Cc: "Peter Xu" <peterx@redhat.com>, "Fabiano Rosas" <farosas@suse.de>,
+ "Paolo Bonzini" <pbonzini@redhat.com>,
+ "Laurent Vivier" <lvivier@redhat.com>,
+ "David Hildenbrand" <david@kernel.org>,
+ =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
+ "qemu-devel" <qemu-devel@nongnu.org>,
+ "David Matlack" <dmatlack@google.com>,
+ "Pratyush Yadav" <pratyush@kernel.org>, "Mike Rapoport" <rppt@kernel.org>,
+ "Alexander Graf" <graf@amazon.com>, "Jason Gunthorpe" <jgg@nvidia.com>,
+ "Samiullah Khawaja" <skhawaja@google.com>
+Message-ID: <19b6e60dfd2.187d822f1751681.8912147399180739154@linux.beauty>
+In-Reply-To: <CA+CK2bA1Xv+asZ3d2jALk+VePDdDg+4ao0Y72CWV2i0rg3GsyQ@mail.gmail.com>
+References: <20251229120839.89817-1-me@linux.beauty>
+ <CA+CK2bA1Xv+asZ3d2jALk+VePDdDg+4ao0Y72CWV2i0rg3GsyQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] CPR: shared RAM with /dev/fdset for LUO kexec reboot
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-29_07,2025-12-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=999 phishscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2512120000 definitions=main-2512300070
-X-Proofpoint-ORIG-GUID: LXa7DK9hoKdxlT2OEQJl0_EGOPbkXM6t
-X-Proofpoint-GUID: LXa7DK9hoKdxlT2OEQJl0_EGOPbkXM6t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjMwMDA3MCBTYWx0ZWRfX1nNVWmvcCfMW
- gt5xuuBQ91PFth0ARiI1iAeESnozRpFCllpLGNJokjfqtMOdt6GSSiLGcsUKY3hPM/5DNDXgpOO
- LnqryOwOllp2PHFMwVkbQkqH/ZbBKBEnux32x1KsbXhdGEBE2NWc8Do2615icS1RZ8bi+35oimT
- H+3KqA+G77tKzFjqhrBGpahUrLfnKQyrnQ25KM9LGLeRx938TEL2kGH7Smgew6JwahuSOUoBSyM
- 8s+ufnrORUawsYwBFqqkkBAGQhlAulmTM+HWSSfKnT4gfIv9ITQlNj0I6Ma/wNkc9IYme1q6vNM
- LzZXEQoeZAvmfebOWmBuTNvL/mT+vcJyAKOIPrXejt7iBqi/4/gpU2cXVFP9bme0CavfT0ibBvq
- qv3CtHShhAVwQmQdme4Hb9Jh9jn2GxYNimFa/LP2zW221R8EneQ2tPKcrU/a4PFQEncgNOAu5BF
- 7aPM/+oBbO2PX2gwDNmEPqMDWoFJwSFD+XcowaTM=
-X-Authority-Analysis: v=2.4 cv=RY2dyltv c=1 sm=1 tr=0 ts=69538555 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117
- a=zPCbziy225d3KhSqZt3L1A==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8
- a=zd2uoN0lAAAA:8 a=z8CyqhYIDdzzOy9ts9wA:9 cc=ntf awl=host:12109
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Received-SPF: pass client-ip=136.143.188.12; envelope-from=me@linux.beauty;
+ helo=sender4-op-o12.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,343 +89,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU uses the kvm_get_msrs() function to save Intel PMU registers from KVM
-and kvm_put_msrs() to restore them to KVM. However, there is no support for
-AMD PMU registers. Currently, pmu_version and num_pmu_gp_counters are
-initialized based on cpuid(0xa), which does not apply to AMD processors.
-For AMD CPUs, prior to PerfMonV2, the number of general-purpose registers
-is determined based on the CPU version.
+Hi Pasha,
 
-To address this issue, we need to add support for AMD PMU registers.
-Without this support, the following problems can arise:
+Thanks for the detailed clarification, that's very helpful.
 
-1. If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
-running "perf top", the PMU registers are not disabled properly.
+ ---- On Mon, 29 Dec 2025 23:50:35 +0800  Pasha Tatashin <pasha.tatashin@so=
+leen.com> wrote ---=20
+ > Hi Li,
+ >=20
+ > Thanks for the series. I have a few comments regarding the interaction
+ > with the LUO agent and the broader architecture.
+ >=20
+ > > In the LUO/KHO update flow [1], a LUO agent coordinates a host kexec r=
+eboot
+ > > while keeping VM RAM content intact. LUO creates the guest RAM backing=
+ as a
+ > > memfd and passes it to QEMU via -add-fd on the initial launch, so that
+ >=20
+ > I am currently working on the LUO agent (LUOD) documentation, and the
+ > intended behavior differs slightly from this description.
+ >=20
+ > Rather than the agent simply passing FDs, the design involves LUOD
+ > opening /dev/liveupdate and creating a UDS socket (e.g., at
+ > /run/luod/liveupdate.sock). Live-update-capable clients connect to
+ > this socket, create a LUO session, and preserve their resources into
+ > that session. Once all clients notify LUOD that they are ready, LUOD
+ > performs the kexec reboot while keeping /dev/liveupdate open, ensuring
+ > the LUO sessions survive.
+ >=20
+ > After the reboot, the restarted clients reconnect to LUOD via UDS and
+ > request their preserved sessions. The sessions are passed as FDs back
+ > to the clients. From those sessions, the clients retrieve the
+ > resources, restore them, and resume suspended operations. Finally, the
+ > clients "finish" their sessions, fully reclaiming ownership of the
+ > preserved resources from LUO back to userspace.
 
-2. Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
-does not handle AMD PMU registers, causing some PMU events to remain
-enabled in KVM.
+Ack, and sorry for my cover letter text over-simplified the design.=20
 
-3. The KVM kvm_pmc_speculative_in_use() function consistently returns true,
-preventing the reclamation of these events. Consequently, the
-kvm_pmc->perf_event remains active.
+ > > memory-backend-file can use it as the shared RAM backing. On update, L=
+UO
+ > > checkpoints QEMU, reboots the host kernel via kexec, and then re-launc=
+hes QEMU
+ > > to restore vmstate while reusing the same preserved memfd-backed RAM F=
+D.
+ > > Today LUO only supports handing off guest RAM via memfd [2].
+ > >
+ > > To re-attach that preserved RAM backing without reopening non-persiste=
+nt
+ > > paths, QEMU needs to let memory-backend-file consume the pre-opened FD=
+ using
+ > > mem-path=3D/dev/fdset/<id>. However, memory-backend-file currently use=
+s
+ > > open()/creat() directly, so /dev/fdset/<id> cannot be resolved through=
+ the
+ > > fdset mechanism, making this workflow impossible.
+ > >
+ > > This series allows /dev/fdset/<id> for file-backed RAM, documents the =
+setup,
+ > > and adds qtests to validate that x-ignore-shared keeps RAM transfer mi=
+nimal
+ > > in the cpr-reboot path.
+ >=20
+ > Sessions become particularly relevant when we look beyond guest RAM.
+ > For complex resources like VFIO or IOMMU, simply passing the FD is
+ > insufficient. These resources require specific ioctls to be issued by
+ > clients after the FD is retrieved, but before vCPUs are resumed or the
+ > session is "finished".
 
-4. After a reboot, the VM kernel may report the following error:
+One question: in the intended LUOD/session architecture, do you still expec=
+t
+clients (or a wrapper) to inject the retrieved guest RAM memfd FD into QEMU
+via -add-fd + /dev/fdset/<id> at QEMU startup? (as this patchset does)
 
-[    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
-[    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
+Or is the longer-term plan that QEMU itself connects to LUOD over UDS, retr=
+ieves
+the session/resource FD directly, and consumes it as the RAM backing withou=
+t
+going through -add-fd?=20
 
-5. In the worst case, the active kvm_pmc->perf_event may inject unknown
-NMIs randomly into the VM kernel:
+If the latter, I think we'd likely need a QEMU-side interface to
+consume an inherited/pre-opened FD for RAM backing during early machine ini=
+t.
 
-[...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
+Regards,
 
-To resolve these issues, we propose resetting AMD PMU registers during the
-VM reset process.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Sandipan Das <sandipan.das@amd.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
----
-Changed since v1:
-  - Modify "MSR_K7_EVNTSEL0 + 3" and "MSR_K7_PERFCTR0 + 3" by using
-    AMD64_NUM_COUNTERS (suggested by Sandipan Das).
-  - Use "AMD64_NUM_COUNTERS_CORE * 2 - 1", not "MSR_F15H_PERF_CTL0 + 0xb".
-    (suggested by Sandipan Das).
-  - Switch back to "-pmu" instead of using a global "pmu-cap-disabled".
-  - Don't initialize PMU info if kvm.enable_pmu=N.
-Changed since v2:
-  - Remove 'static' from host_cpuid_vendorX.
-  - Change has_pmu_version to pmu_version.
-  - Use object_property_get_int() to get CPU family.
-  - Use cpuid_find_entry() instead of cpu_x86_cpuid().
-  - Send error log when host and guest are from different vendors.
-  - Move "if (!cpu->enable_pmu)" to begin of function. Add comments to
-    reminder developers.
-  - Add support to Zhaoxin. Change is_same_vendor() to
-    is_host_compat_vendor().
-  - Didn't add Reviewed-by from Sandipan because the change isn't minor.
-Changed since v3:
-  - Use host_cpu_vendor_fms() from Zhao's patch.
-  - Check AMD directly makes the "compat" rule clear.
-  - Add comment to MAX_GP_COUNTERS.
-  - Skip PMU info initialization if !kvm_pmu_disabled.
-Changed since v4:
-  - Add Reviewed-by from Zhao and Sandipan.
-Changed since v6:
-  - Add Reviewed-by from Dapeng Mi.
-
- target/i386/cpu.h     |  12 +++
- target/i386/kvm/kvm.c | 175 +++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 183 insertions(+), 4 deletions(-)
-
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 41ea04099b..c1649d1247 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -506,6 +506,14 @@ typedef enum X86Seg {
- #define MSR_CORE_PERF_GLOBAL_CTRL       0x38f
- #define MSR_CORE_PERF_GLOBAL_OVF_CTRL   0x390
- 
-+#define MSR_K7_EVNTSEL0                 0xc0010000
-+#define MSR_K7_PERFCTR0                 0xc0010004
-+#define MSR_F15H_PERF_CTL0              0xc0010200
-+#define MSR_F15H_PERF_CTR0              0xc0010201
-+
-+#define AMD64_NUM_COUNTERS              4
-+#define AMD64_NUM_COUNTERS_CORE         6
-+
- #define MSR_MC0_CTL                     0x400
- #define MSR_MC0_STATUS                  0x401
- #define MSR_MC0_ADDR                    0x402
-@@ -1737,6 +1745,10 @@ typedef struct {
- #endif
- 
- #define MAX_FIXED_COUNTERS 3
-+/*
-+ * This formula is based on Intel's MSR. The current size also meets AMD's
-+ * needs.
-+ */
- #define MAX_GP_COUNTERS    (MSR_IA32_PERF_STATUS - MSR_P6_EVNTSEL0)
- 
- #define NB_OPMASK_REGS 8
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 338b9558e4..b8e9c9192b 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2107,7 +2107,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
--static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid)
-+static void kvm_init_pmu_info_intel(struct kvm_cpuid2 *cpuid)
- {
-     struct kvm_cpuid_entry2 *c;
- 
-@@ -2140,6 +2140,96 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid)
-     }
- }
- 
-+static void kvm_init_pmu_info_amd(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
-+{
-+    struct kvm_cpuid_entry2 *c;
-+    int64_t family;
-+
-+    family = object_property_get_int(OBJECT(cpu), "family", NULL);
-+    if (family < 0) {
-+        return;
-+    }
-+
-+    if (family < 6) {
-+        error_report("AMD performance-monitoring is supported from "
-+                     "K7 and later");
-+        return;
-+    }
-+
-+    pmu_version = 1;
-+    num_pmu_gp_counters = AMD64_NUM_COUNTERS;
-+
-+    c = cpuid_find_entry(cpuid, 0x80000001, 0);
-+    if (!c) {
-+        return;
-+    }
-+
-+    if (!(c->ecx & CPUID_EXT3_PERFCORE)) {
-+        return;
-+    }
-+
-+    num_pmu_gp_counters = AMD64_NUM_COUNTERS_CORE;
-+}
-+
-+static bool is_host_compat_vendor(CPUX86State *env)
-+{
-+    char host_vendor[CPUID_VENDOR_SZ + 1];
-+
-+    host_cpu_vendor_fms(host_vendor, NULL, NULL, NULL);
-+
-+    /*
-+     * Intel and Zhaoxin are compatible.
-+     */
-+    if ((g_str_equal(host_vendor, CPUID_VENDOR_INTEL) ||
-+         g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN1) ||
-+         g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN2)) &&
-+        (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
-+        return true;
-+    }
-+
-+    return g_str_equal(host_vendor, CPUID_VENDOR_AMD) &&
-+           IS_AMD_CPU(env);
-+}
-+
-+static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
-+{
-+    CPUX86State *env = &cpu->env;
-+
-+    /*
-+     * The PMU virtualization is disabled by kvm.enable_pmu=N.
-+     */
-+    if (kvm_pmu_disabled) {
-+        return;
-+    }
-+
-+    /*
-+     * If KVM_CAP_PMU_CAPABILITY is not supported, there is no way to
-+     * disable the AMD PMU virtualization.
-+     *
-+     * Assume the user is aware of this when !cpu->enable_pmu. AMD PMU
-+     * registers are not going to reset, even they are still available to
-+     * guest VM.
-+     */
-+    if (!cpu->enable_pmu) {
-+        return;
-+    }
-+
-+    /*
-+     * It is not supported to virtualize AMD PMU registers on Intel
-+     * processors, nor to virtualize Intel PMU registers on AMD processors.
-+     */
-+    if (!is_host_compat_vendor(env)) {
-+        error_report("host doesn't support requested feature: vPMU");
-+        return;
-+    }
-+
-+    if (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) {
-+        kvm_init_pmu_info_intel(cpuid);
-+    } else if (IS_AMD_CPU(env)) {
-+        kvm_init_pmu_info_amd(cpuid, cpu);
-+    }
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     struct {
-@@ -2330,7 +2420,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
-     cpuid_data.cpuid.nent = cpuid_i;
- 
--    kvm_init_pmu_info(&cpuid_data.cpuid);
-+    kvm_init_pmu_info(&cpuid_data.cpuid, cpu);
- 
-     if (x86_cpu_family(env->cpuid_version) >= 6
-         && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
-@@ -4121,7 +4211,7 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-             kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
-         }
- 
--        if (pmu_version > 0) {
-+        if ((IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) && pmu_version > 0) {
-             if (pmu_version > 1) {
-                 /* Stop the counter.  */
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-@@ -4152,6 +4242,38 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-                                   env->msr_global_ctrl);
-             }
-         }
-+
-+        if (IS_AMD_CPU(env) && pmu_version > 0) {
-+            uint32_t sel_base = MSR_K7_EVNTSEL0;
-+            uint32_t ctr_base = MSR_K7_PERFCTR0;
-+            /*
-+             * The address of the next selector or counter register is
-+             * obtained by incrementing the address of the current selector
-+             * or counter register by one.
-+             */
-+            uint32_t step = 1;
-+
-+            /*
-+             * When PERFCORE is enabled, AMD PMU uses a separate set of
-+             * addresses for the selector and counter registers.
-+             * Additionally, the address of the next selector or counter
-+             * register is determined by incrementing the address of the
-+             * current register by two.
-+             */
-+            if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
-+                sel_base = MSR_F15H_PERF_CTL0;
-+                ctr_base = MSR_F15H_PERF_CTR0;
-+                step = 2;
-+            }
-+
-+            for (i = 0; i < num_pmu_gp_counters; i++) {
-+                kvm_msr_entry_add(cpu, ctr_base + i * step,
-+                                  env->msr_gp_counters[i]);
-+                kvm_msr_entry_add(cpu, sel_base + i * step,
-+                                  env->msr_gp_evtsel[i]);
-+            }
-+        }
-+
-         /*
-          * Hyper-V partition-wide MSRs: to avoid clearing them on cpu hot-add,
-          * only sync them to KVM on the first cpu
-@@ -4656,7 +4778,8 @@ static int kvm_get_msrs(X86CPU *cpu)
-     if (env->features[FEAT_KVM] & CPUID_KVM_POLL_CONTROL) {
-         kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
-     }
--    if (pmu_version > 0) {
-+
-+    if ((IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) && pmu_version > 0) {
-         if (pmu_version > 1) {
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
-@@ -4672,6 +4795,35 @@ static int kvm_get_msrs(X86CPU *cpu)
-         }
-     }
- 
-+    if (IS_AMD_CPU(env) && pmu_version > 0) {
-+        uint32_t sel_base = MSR_K7_EVNTSEL0;
-+        uint32_t ctr_base = MSR_K7_PERFCTR0;
-+        /*
-+         * The address of the next selector or counter register is
-+         * obtained by incrementing the address of the current selector
-+         * or counter register by one.
-+         */
-+        uint32_t step = 1;
-+
-+        /*
-+         * When PERFCORE is enabled, AMD PMU uses a separate set of
-+         * addresses for the selector and counter registers.
-+         * Additionally, the address of the next selector or counter
-+         * register is determined by incrementing the address of the
-+         * current register by two.
-+         */
-+        if (num_pmu_gp_counters == AMD64_NUM_COUNTERS_CORE) {
-+            sel_base = MSR_F15H_PERF_CTL0;
-+            ctr_base = MSR_F15H_PERF_CTR0;
-+            step = 2;
-+        }
-+
-+        for (i = 0; i < num_pmu_gp_counters; i++) {
-+            kvm_msr_entry_add(cpu, ctr_base + i * step, 0);
-+            kvm_msr_entry_add(cpu, sel_base + i * step, 0);
-+        }
-+    }
-+
-     if (env->mcg_cap) {
-         kvm_msr_entry_add(cpu, MSR_MCG_STATUS, 0);
-         kvm_msr_entry_add(cpu, MSR_MCG_CTL, 0);
-@@ -5002,6 +5154,21 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_P6_EVNTSEL0 ... MSR_P6_EVNTSEL0 + MAX_GP_COUNTERS - 1:
-             env->msr_gp_evtsel[index - MSR_P6_EVNTSEL0] = msrs[i].data;
-             break;
-+        case MSR_K7_EVNTSEL0 ... MSR_K7_EVNTSEL0 + AMD64_NUM_COUNTERS - 1:
-+            env->msr_gp_evtsel[index - MSR_K7_EVNTSEL0] = msrs[i].data;
-+            break;
-+        case MSR_K7_PERFCTR0 ... MSR_K7_PERFCTR0 + AMD64_NUM_COUNTERS - 1:
-+            env->msr_gp_counters[index - MSR_K7_PERFCTR0] = msrs[i].data;
-+            break;
-+        case MSR_F15H_PERF_CTL0 ...
-+             MSR_F15H_PERF_CTL0 + AMD64_NUM_COUNTERS_CORE * 2 - 1:
-+            index = index - MSR_F15H_PERF_CTL0;
-+            if (index & 0x1) {
-+                env->msr_gp_counters[index] = msrs[i].data;
-+            } else {
-+                env->msr_gp_evtsel[index] = msrs[i].data;
-+            }
-+            break;
-         case HV_X64_MSR_HYPERCALL:
-             env->msr_hv_hypercall = msrs[i].data;
-             break;
--- 
-2.39.3
+Li=E2=80=8B
 
 
