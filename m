@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56755EE57C6
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07801EE0203
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:12:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vah00-0006K3-K2; Tue, 30 Dec 2025 16:11:24 -0500
+	id 1vah06-0006lL-Q8; Tue, 30 Dec 2025 16:11:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzx-0006Ag-Mk
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:21 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vah03-0006YQ-RV
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:27 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzw-0002s5-2y
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:21 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47a80d4a065so51651395e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:11:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vah02-0002tD-Bk
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:27 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-4327790c4e9so1826959f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:11:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767129078; x=1767733878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767129084; x=1767733884; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DK0mq3Imy0OD9x4GM+uaaTCwAi8dtPUGh7Hpx81Zgo4=;
- b=QKFFRkncwAuRAJsuDYAT9fodRqEzKbE3tOvzs8RFWm28QbHlkD1UszpOMR1YmeSAXw
- in047styG9NgJce01cy7D7azbR+4qIyTqJ6bhJic1/qyp9UampAfQBiC3+CaAXzW9e/C
- gUxR384RsmWNgB/KCfmIneTdOCFwIanT9IHAACYbVPEVdrcMdgrYCjxYA4+A2R7cNb6C
- kiFpMsruj3XxubCKqNIhn3gxEwM6XYRibO29+g87F23m7coq9y8XUTFw8iGbim9rxpgI
- 8Mbt79ZkSYgEf+al92c29NBaqp1aYm/l1JXPoqnniOyk+g8z3VpzlkYRWrxL3S3ootvx
- SAyQ==
+ :reply-to; bh=5rXIIuuJOx9dPiHg3QhjGbzovkvDH2p8y3rHgXwhNGI=;
+ b=bKkM9JKeN4UQGCkUO1hVTkY/IdrFjYQ+uXAWZsut9TsgH2dYBO2RqwLe+SuVxgGKft
+ B9tLBZvmhuVlydT8LUrjoh3dLkoKBtWcHMZS+H3p+KJ0Xz6MtlCqpy1kB/CqsayoJfHB
+ l71yPL3pJGjSIaD7TfJBBoOIXHlOmkeGKbZRnAkKtMV0PEqiATP5oroz4lj6W5YzdGG3
+ ZhNkBT6n1TvPurydWSGMzM7RfneopcAn3owyU/1vnRj54/+M8eBBjZcVAQfpo7h/0tvN
+ UBXvOO1eamftdSLapocWnY6XqToUrM3RmVZsYGT5R5O1zzeBMnshVm32GRbaMV9wuYER
+ Z78g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767129078; x=1767733878;
+ d=1e100.net; s=20230601; t=1767129084; x=1767733884;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=DK0mq3Imy0OD9x4GM+uaaTCwAi8dtPUGh7Hpx81Zgo4=;
- b=OLOW47c3sIivNM/v++bQVLOnQ0kL5ENERvKgIyMKh+YSoDJ/T+6/5Kj1AFDh3V3oU0
- v9kzSVzE4U1Wg/cY8zf4WePz9VpqE8AHwk1SOFuNWcvHYzlkZGVW579m5xl8bPEcFHjZ
- GMF2w4bkZY9BQt6NmrH+6kE/fh0DABmVV9ms6uOGoXm9E1sBaMu0I7euR7CNxUSOlRM0
- F/HKCUw7USoxsaKNNZDPj9gGi28t9WoO4InN9s65sjPK7eA0a+Wb1b47fcfghGZE8thy
- QtQYqPafTkICy2q+rvLDv6GZuzJWDooJnKO5X5PZgSMQX5SuLQDOppLorwCLQCuaYtID
- JBSg==
-X-Gm-Message-State: AOJu0YxHsdMpsAep2XMnJ11QRoyuu6xFqyq3b0ajfZVmL7eWQVc8sFr+
- 6OBCaJLGOH3i6EGgQ0J6aqsqTTpPRQBz6XRAeYDf7S2FbMEn++lTWBOR+k8SUXjpAQ1XLd1d3yg
- F0DDvtss=
-X-Gm-Gg: AY/fxX78VLebH+MMWqjcbf+F6p3tMAl8z7X+0qUKHsYYCoKMsuxgf729uBwOGe352GH
- Q8XNDtkHKHV9gJ4WpFRXm5mge7QdKRRGGlx7IBjpvg0MiNZdltdxP+PV7LH/Fzg6UaDTMG9VBfs
- A1R3a233yIrLyF/CdFlZ/8QqZa1ELYCPPVHsN6PXChOLTPxDi4bY6bQKFS9iecJZ3EYhlnawlb1
- 4KVafafcFrl8plb6b7HaWcfD4R238Txq0EF32gu36e/VdzaxZkRX0YU0HqxeI8cVJayThgbEj7q
- GZdmITh4E4u1NAHBZ0IwZVRc0E4aKSBHz4hJvt99QFka0LuZLflL0d3X+HBwZUykCEu5kDx36hn
- 4qCR4kTaPrnyxtG/z/eFrh/uHeiLF3WNW6EBMDThVDCshJ7cykE2Wm2xcU93NXEHBXnrrBa2piV
- 6Fn1s7+oWz8coVTdjgAK8Ka1SeldNrKm6L8l3pEHltZyJBF9gOXp0/Skz9CVmhoxfUxtjmXJo=
-X-Google-Smtp-Source: AGHT+IE2F7DhkxNEtfOf2eklwmbApFPpcM98snmmVlx2xzbXi7i3GIOlSsvqJma4Bi0YXoMI2xTaMw==
-X-Received: by 2002:a05:600c:4f15:b0:477:b734:8c41 with SMTP id
- 5b1f17b1804b1-47d19538dfbmr457544785e9.1.1767129078117; 
- Tue, 30 Dec 2025 13:11:18 -0800 (PST)
+ bh=5rXIIuuJOx9dPiHg3QhjGbzovkvDH2p8y3rHgXwhNGI=;
+ b=QYpFIY2L4UOhe6Jnk+FbWENX28y77R/4RP3iWYWevVPbb1UITRrJEY6A2ZvA2dXyP+
+ xEPABhpaRMeEA/OUl81e34AbMCN/Sue1qM1d4cW0WscUd4bmXa5w0H+V0ZJKdcopdeqD
+ dm0fn9Bjzo2MRJ3Ycl2gt3zQDdhInnNzBES3E7TNOnlc2U3abAHtAdB0zymWfdgwisSA
+ hcNNcBgbIqbmuyNiRBoochEc3VvLjxN4gwlzPu7vjXjEqo9rtPJBtDfYfTGO/WPnDb7M
+ rSj4VL7JZ6LNJHxMwtYKgLaz/4hRB7iqt6+LnEAWiwTY2JvOPg72bTGm85nJmCaUeXJL
+ QkLg==
+X-Gm-Message-State: AOJu0Yy4cxQrFNV19hMAglqaQh+S5UjuldftsThT+hE36/D5cRMzzbyf
+ U19NzHKLi4y9+BLTilpWSJy4WCk9pINAwUs94ihXIVQDAgogi+RwwIU5EF7aa1HAh4pSDnU2WW/
+ HRAFTpco=
+X-Gm-Gg: AY/fxX6fjYUWF1brUC6L9C9EIoF9SCI1pDxzWtYOkJcEtuJDvtYiJT4MR5Opd1e6Wlf
+ TcFIaBUZkAGYOkpCV5rryUcddTZfUxR+fQK3glXXQEi6cdysitgrZRbt5HOfLrY9pPLHq9gbYcG
+ wRyo8qaiV8FzoP9T9Jx3m2LO5uXwC/+GfjJz4fC78yRhjKiQvNyFIWU46y4MRsQETxZ4M0cRhFM
+ vLsQnmHnysZ5rWi7vAec+D/GjkFStTsw5PcCNc1YUIPXMUd6hPFxcmfKwPvmIQnogRsiKeBWbEK
+ 0kLjqeU3R7Pf1bSUThETJkaf4q6jScrLtYJP8/0N6dUOwxT+lwByWj2miFaH7VaBMK9xRH7z4KQ
+ 9Cbt7ORLaDgNUZWYT2/clJHdGif533s7o9GCXlUtGN2Xat7ekiM+SZ46PSHzXhEmWXQ4behGTe5
+ MaKpojGBVG7BRACy0L2p7L0CGw081pPU+Hb0uYl3b+Tnp7LWJgHFt7s2cx7VJP
+X-Google-Smtp-Source: AGHT+IGWW7US14n06nI61jlc48DbuXSqiaUziOlB0rvaawxFfX1LYMSJ0jE6y9gbljxyR9r9OjGO7g==
+X-Received: by 2002:adf:e588:0:b0:430:f742:fbc8 with SMTP id
+ ffacd0b85a97d-4324e4bfa36mr32490091f8f.6.1767129084501; 
+ Tue, 30 Dec 2025 13:11:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d19346e48sm597817615e9.2.2025.12.30.13.11.17
+ ffacd0b85a97d-4324ea830fesm71328031f8f.20.2025.12.30.13.11.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:11:17 -0800 (PST)
+ Tue, 30 Dec 2025 13:11:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/34] util: Move qemu_ftruncate64 from block/file-win32.c to
- oslib-win32.c
-Date: Tue, 30 Dec 2025 22:07:52 +0100
-Message-ID: <20251230210757.13803-31-philmd@linaro.org>
+Subject: [PULL 31/34] hw/i2c/imx: Fix trace func name error
+Date: Tue, 30 Dec 2025 22:07:53 +0100
+Message-ID: <20251230210757.13803-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
 References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,106 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+From: Alano Song <AlanoSong@163.com>
 
-qemu_ftruncate64() is a general-purpose utility function that may be
-used outside of the block layer. Move it to util/oslib-win32.c where
-other Windows-specific utility functions reside.
-
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Signed-off-by: Alano Song <AlanoSong@163.com>
+Fixes: e589c0ea9c9 ("hw/i2c/imx_i2c: Convert DPRINTF() to trace events")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20251218085446.462827-3-phind.uet@gmail.com>
+Message-ID: <20251218141144.51001-1-AlanoSong@163.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- block/file-win32.c | 32 --------------------------------
- util/oslib-win32.c | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+), 32 deletions(-)
+ hw/i2c/imx_i2c.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/file-win32.c b/block/file-win32.c
-index 0efb609e1d5..b00039bf945 100644
---- a/block/file-win32.c
-+++ b/block/file-win32.c
-@@ -170,38 +170,6 @@ static BlockAIOCB *paio_submit(BlockDriverState *bs, HANDLE hfile,
-     return thread_pool_submit_aio(aio_worker, acb, cb, opaque);
- }
- 
--int qemu_ftruncate64(int fd, int64_t length)
--{
--    LARGE_INTEGER li;
--    DWORD dw;
--    LONG high;
--    HANDLE h;
--    BOOL res;
--
--    if ((GetVersion() & 0x80000000UL) && (length >> 32) != 0)
--        return -1;
--
--    h = (HANDLE)_get_osfhandle(fd);
--
--    /* get current position, ftruncate do not change position */
--    li.HighPart = 0;
--    li.LowPart = SetFilePointer (h, 0, &li.HighPart, FILE_CURRENT);
--    if (li.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
--        return -1;
--    }
--
--    high = length >> 32;
--    dw = SetFilePointer(h, (DWORD) length, &high, FILE_BEGIN);
--    if (dw == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
--        return -1;
--    }
--    res = SetEndOfFile(h);
--
--    /* back to old position */
--    SetFilePointer(h, li.LowPart, &li.HighPart, FILE_BEGIN);
--    return res ? 0 : -1;
--}
--
- static int set_sparse(int fd)
+diff --git a/hw/i2c/imx_i2c.c b/hw/i2c/imx_i2c.c
+index 88269653e2c..9b2d10060ca 100644
+--- a/hw/i2c/imx_i2c.c
++++ b/hw/i2c/imx_i2c.c
+@@ -151,8 +151,8 @@ static void imx_i2c_write(void *opaque, hwaddr offset,
  {
-     DWORD returned;
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index 839b8a4170e..5f3e8f4d980 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -899,3 +899,36 @@ int qemu_shm_alloc(size_t size, Error **errp)
-     error_setg(errp, "Shared memory is not supported.");
-     return -1;
- }
-+
-+int qemu_ftruncate64(int fd, int64_t length)
-+{
-+    LARGE_INTEGER li;
-+    DWORD dw;
-+    LONG high;
-+    HANDLE h;
-+    BOOL res;
-+
-+    if ((GetVersion()&0x80000000UL) && (length >> 32) != 0) {
-+        return -1;
-+    }
-+
-+    h = (HANDLE)_get_osfhandle(fd);
-+
-+    /* get current position, ftruncate do not change position */
-+    li.HighPart = 0;
-+    li.LowPart = SetFilePointer (h, 0, &li.HighPart, FILE_CURRENT);
-+    if (li.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
-+        return -1;
-+    }
-+
-+    high = length >> 32;
-+    dw = SetFilePointer(h, (DWORD) length, &high, FILE_BEGIN);
-+    if (dw == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR) {
-+        return -1;
-+    }
-+    res = SetEndOfFile(h);
-+
-+    /* back to old position */
-+    SetFilePointer(h, li.LowPart, &li.HighPart, FILE_BEGIN);
-+    return res ? 0 : -1;
-+}
+     IMXI2CState *s = IMX_I2C(opaque);
+ 
+-    trace_imx_i2c_read(DEVICE(s)->canonical_path, imx_i2c_get_regname(offset),
+-                       offset, value);
++    trace_imx_i2c_write(DEVICE(s)->canonical_path, imx_i2c_get_regname(offset),
++                        offset, value);
+ 
+     value &= 0xff;
+ 
 -- 
 2.52.0
 
