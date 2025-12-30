@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB42E94104
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9544E94106
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 00:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaNFE-0007Ay-PG; Mon, 29 Dec 2025 19:05:48 -0500
+	id 1vaNEL-0006Bx-DR; Mon, 29 Dec 2025 19:04:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vaNEj-0006Ru-Vh
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 19:05:23 -0500
-Received: from p-east2-cluster2-host1-snip4-10.eps.apple.com ([57.103.78.13]
+ id 1vaNEH-0006AJ-4M
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 19:04:49 -0500
+Received: from p-east2-cluster6-host9-snip4-2.eps.apple.com ([57.103.76.193]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vaNEf-0003v3-Dy
- for qemu-devel@nongnu.org; Mon, 29 Dec 2025 19:05:16 -0500
+ id 1vaNEF-0003hX-7B
+ for qemu-devel@nongnu.org; Mon, 29 Dec 2025 19:04:48 -0500
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-60-percent-9 (Postfix) with ESMTPS id
- C96EA180010E; Tue, 30 Dec 2025 00:05:02 +0000 (UTC)
+ 2A6551800470; Tue, 30 Dec 2025 00:04:44 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=1zFYtxGhq0VuOqIx4HS+RS5UNcitCPNW8rhTvyPPr5c=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=EYzJp0RU3Bb8SAL2FmJHM42HchCAffPCg2NAopl6NVduPKc85MuHr4Xws4nD9R2CSidYLNdIFXRHxhj7ga3D7I5gO3lMKssgzMOjq0KtH2DKQ4oGhxE8kbOzbFYUK9lqNGxbafh6VEVQNBXaN2K1u32EYwNmTOV8DH4g95RlU3i2XerxhphMuo+TE4q70xJVF8MUqkN/l2L6NP49e4tRTYeUmTWb/EG09MFdNu/AnfuuAI+sM0mhDCkJHD3F43w3QHykMrpb4J0NMLO/V/+hGG7PcVBbj4ZKMJf3pPAFSDYF3o/JM0KtSXNmIuPAuAeHAOYkq8NFt6KRVmoo6lALXw==
+ s=sig1; bh=I0HpQlmLeMnsVhsgmIJRE/DJeIbftWJyZSQLdGKoz3c=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=OWR488ZcLaMoncq8goHO+8O0uO41kv2m3nCeJ1AiPqcBKq+KCwXsI92ubvjQLtq8M9QXd9jRJ7e5W34Vqd3Cd6jdcqwbaqxrbD3eUTTO1veCFEFaBG1fJWp/w83uY4Pu7Lc8Ocs2Ne2l0UmMV+GT2TW4XY1USzLneEpoAWim9fnIVb10cw0fRRCe1y9Q4GSaWJgkmwKLcYdgTyqEI4mtwsbxYPE2t2PeMINvGO3MOS+XHRAEBgNLM46An1krYqHip2Gvzw4QgwwKo+S8QY+GqB/RDqLrEjb8FlIsUOf20Je5NVFOt9P4uEJY3WuqyrCB1Wk/iu+miGn8sWmdg9pQDw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-60-percent-9 (Postfix) with ESMTPSA id
- 8B7B3180046E; Tue, 30 Dec 2025 00:04:57 +0000 (UTC)
+ B8FCD180044B; Tue, 30 Dec 2025 00:04:39 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: mohamed@unpredictable.fr,
 	qemu-devel@nongnu.org
@@ -55,46 +55,42 @@ Cc: Yanan Wang <wangyanan55@huawei.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v13 10/28] whpx: Move around files before introducing AArch64
- support
-Date: Tue, 30 Dec 2025 01:03:42 +0100
-Message-ID: <20251230000401.72124-11-mohamed@unpredictable.fr>
+Subject: [PATCH v13 06/28] hw/arm: virt: cleanly fail on attempt to use the
+ platform vGIC together with ITS
+Date: Tue, 30 Dec 2025 01:03:38 +0100
+Message-ID: <20251230000401.72124-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251230000401.72124-1-mohamed@unpredictable.fr>
 References: <20251230000401.72124-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI5MDIyMiBTYWx0ZWRfX80WOdJuZspIr
- 7bl2Wkc6QVY5DRnEitUsFyhtmqONXlkQaCcRKMsDzniSrIJTiXjJgdRQ2rnyZCjtlBB8zidOZWA
- 1qAfVg/u6hJUN3yNEd3lkmrIrf8GixNJCbeZITIflzoyyVYPqt7LwxdjwcLze+kA/dmMlhSQedU
- SAelV7QsgUh8op58qH94g1B0eTHE8c4HSm4w0Y5q9bJyRK6OOQGiPaksr2ixTTkj1QaIlQ3x1U8
- 2OAwZ18+6XU5sE91LtW1plT0ClbRUnycRk1hgZ5q2b/pJ/2Bk/wkRd/OXUGXb+sW4lysIHTLaIM
- q44dfGQk973nkB8YRO6
-X-Proofpoint-ORIG-GUID: swzBjZ56bxAyAeL9YLic-rR0bRHaViwX
-X-Authority-Info: v=2.4 cv=RfOdyltv c=1 sm=1 tr=0 ts=69531732 cx=c_apl:c_pps
+X-Proofpoint-ORIG-GUID: L3f12YKyspPzAI4_m2hxj9qtLvBupGlY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI5MDIyMiBTYWx0ZWRfX+HLgOnrpmZkW
+ Zph7wVlFZ9XJj3SVTVdHntyPUT4BIyAxQMokEfDzguatu/EFaCogeuSoFlyCLYaWC2cas0RXi05
+ KK45e+IV6KgGX8Iv3NKKCNlyvv0UrtVc8fzMsPHkQBx55D2nB5J3pRtQoyvmkF13iwRYoo9MzOE
+ JIk7i9nnCCgBWY6xZmJEpgfbLuvE6q9MX0hHrzP55BwB2RnIBCsxWCiAloHx18mCIeoYgfjn/AD
+ BDOWr45Dm+qAekL28uK+xnybjMpIa7hF+X2XGMbDq/BY/Rp5FYVO1DRS2xrbc/nk68/dBgbo8Pb
+ s0dh2XU1tV2WhYlWsRy
+X-Authority-Info: v=2.4 cv=SLJPlevH c=1 sm=1 tr=0 ts=6953171c cx=c_apl:c_pps
  a=YrL12D//S6tul8v/L+6tKg==:117 a=YrL12D//S6tul8v/L+6tKg==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=yMhMjlubAAAA:8 a=5-iGLm-LtT_B5TT3xKgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: swzBjZ56bxAyAeL9YLic-rR0bRHaViwX
+ a=065Y4zqepXN3nrMe:21 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=eCCvHKTOcc9AFgEG6kwA:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: L3f12YKyspPzAI4_m2hxj9qtLvBupGlY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-29_07,2025-12-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- adultscore=0 mlxscore=0 suspectscore=0 phishscore=0 malwarescore=0
- clxscore=1030 mlxlogscore=999 spamscore=0 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512290222
-X-JNJ: AAAAAAAB0pDhyk0YfV2Mcq/Ay5O97pftrHRAjitlkPlL0M3DTxkpsxBrX3eY/p+tzwzfnGNgN/oWWcmmlANUSaJTIm9yUbMKz+X9X4MKUOPfqwDVbI4oIUezIhymj4V8eg9ClzEh9FM/e4NH1RxGYiEPROPYLBBtmmOceCq2Ph8ZzaZaQBw3suhu1eI4/1mwPLEQ94ZriDDCgZRBN3Kdacy83vMzzE/l5ieXpY6q7esSYGwDQ/cNG7GBFhPbYQUsphirSyETLlId4OlvQx4T/sxWGQLzMfyHb/QYytpDc6bLkvB0scF7K06bHMp0ZxsfoHF7d+70UUa0bLbzy3WXDCA2E6ow4HnJd+u2e5bgDPwPw2PkQPnp1/hwyuyLqXxRDJD9VlhfirU2OkA8MXNWdpbukq1WF0a8l5nmOO1Gn0LsFlUU6Mj9VXN+QZ+iGYmCq6Zf+McskGgEcdcLyHee7l7mIDBk+SuuvdQHqEkxx99xnFvBrygm90QJEQqJhXLqHOBy2G9JsxQgTsfzBCNYMppRSWrWYGQOhSDXA5mpnxkZOSVT1DDlKA737P8LhsswxOQA2ka3HShbKQ5H195D80csRPRCzNBmtMFV1d8PwSw46syttKluGCRFZwNYxGnP/8vt5YXT0mhtNu4zyDKiB/t9sVE6XKVLGstC+VByTwd4v6fdva1BN7M7KahHADmUTRqibk3hf5VBhr9Mzj813xFs4Qpssc4lkZWxax/j2br2f7CvB6pIs/1WivvKNvN+jTJurFmxsKgXjl9xSvZfHqizhoRfTvdyTdWUmnGE+gAu2MdwJ/cLS02MNXFlH+bRgNaWmCWG9Mw0Rq+232HT6711UlxqKfjgMtMQjhmhxQ+WzaKATbePE99voRb7D7Hj4YaYTg8qXhoZrJSj1CSHmZIVunQPAVJP0zV1RZPf64cj45Y+qSgGOv9Wz5fS+prmu/0E/lFzr0hBqJdpC/qSnEBSpA==
-Received-SPF: pass client-ip=57.103.78.13;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ malwarescore=0 mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0
+ clxscore=1030 spamscore=0 phishscore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512290222
+X-JNJ: AAAAAAABEO2s6sGoWyzZvFjF4ks0ANEB0LFbKrO66pNy8gU9wwvjRnYizKFLFa1mzGLSxHO+Q2lmTVOXBCRd2mDHbUQvGn8dzyuepYtNLSlTHblC4mXkiBdZ6Cy2o6KixS9+Aut+3mbJhINEiyoSacIYM1RwDn9A4rFVFrmaU6Dx/Bfix3QtxwtdiNYWcSpHGbENE/ShIflaF2H3EoicXnft0EbauknZuGUjwbaQKcuhpow/5fodM2tYUib9s04QeopkYJwS2pyGQ+qIXFDQu93HNd8Ngg7lDXu5mW8M/rAzJFmJisfuL/gen2Rg4i2MrDPAqrv0KlIhAMIFsp+LKp8PdrdnA3Jp5V79lhYt6P1oW0VPJPbXtmSLbDWNi1nq6FgTcUIhoh+swP4Ys+1WM/TLXRRmF+eMozLemyZs2BU28dPkhRGyScBwmRXOT6orHXeho7KDFmRL3I3qB+rHtjMKR1fQTk5b71dgwG4yIQKz5rJgZE0QYwfjmim9bj+C/GDl5ahhUDNz3ff2Brq9YLZunbqj972AuDNeoLY/UO1BQqwe/LRZL5AL6JduxxgHrJDUrctfIxOXGesMeVy6q1vqpUIexvlEP9TCvEFjDyfIPYMie1kumDUwKScb7VyzZueg/HtGeJSwmqpfYZt/UPfBhmi+M9/6eHGPZfwAUXl5OVSlp3H3vYfier2/Gcj1F8haqyfXixfIxKQcrcGEVmknArux2QhnY8EkBYgXtFIoaVTz+L+2K4AERwTGZMpdn92FlFK4kDIADPbRTgRi3T4luuJTNxBqOdJyw93o4agySSuF0BAgD3e+VPMzhzx8fppQ9c1IJwLLcGiS3GnhjvYOUtR1fXOxKZ+iWPV/vgtCdMAOHe9iB1pc8PdW9TTOVJoIRmnbBpQdIu/IyKmed8d74MApmApuFj2TCwK5CU1lKAI036/fUOfKIpjCIktT4hs6zF1H94esoymQ
+Received-SPF: pass client-ip=57.103.76.193;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -112,166 +108,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch to a design where we can share whpx code between x86 and AArch64 when it makes sense to do so.
+Switch its to a tristate.
+
+Windows Hypervisor Platform's vGIC doesn't support ITS.
+Deal with this by reporting to the user and exiting.
+
+Regular configuration: GICv3 + ITS
+New default configuration with WHPX: GICv3 with GICv2m
+And its=off explicitly for the newest machine version: GICv3 + GICv2m
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS                                           | 2 ++
- accel/meson.build                                     | 1 +
- accel/whpx/meson.build                                | 6 ++++++
- {target/i386 => accel}/whpx/whpx-accel-ops.c          | 4 ++--
- {target/i386/whpx => include/system}/whpx-accel-ops.h | 4 ++--
- {target/i386/whpx => include/system}/whpx-internal.h  | 6 ++++--
- target/i386/whpx/meson.build                          | 1 -
- target/i386/whpx/whpx-all.c                           | 4 ++--
- target/i386/whpx/whpx-apic.c                          | 2 +-
- 9 files changed, 20 insertions(+), 10 deletions(-)
- create mode 100644 accel/whpx/meson.build
- rename {target/i386 => accel}/whpx/whpx-accel-ops.c (97%)
- rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
- rename {target/i386/whpx => include/system}/whpx-internal.h (97%)
+ hw/arm/virt-acpi-build.c | 14 ++++++------
+ hw/arm/virt.c            | 46 +++++++++++++++++++++++++++++++---------
+ include/hw/arm/virt.h    |  4 +++-
+ 3 files changed, 46 insertions(+), 18 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cbae7c26f8..6b045fb3f8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -550,9 +550,11 @@ WHPX CPUs
- M: Pedro Barbuda <pbarbuda@microsoft.com>
- M: Mohamed Mediouni <mohamed@unpredictable.fr>
- S: Supported
-+F: accel/whpx/
- F: target/i386/whpx/
- F: accel/stubs/whpx-stub.c
- F: include/system/whpx.h
-+F: include/system/whpx-accel-ops.h
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 40ea6b6dd5..86024a1a73 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -473,7 +473,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
+         rc_mapping_count = rc_smmu_idmaps_len;
  
- MSHV
- M: Magnus Kulke <magnus.kulke@linux.microsoft.com>
-diff --git a/accel/meson.build b/accel/meson.build
-index 983dfd0bd5..289b7420ff 100644
---- a/accel/meson.build
-+++ b/accel/meson.build
-@@ -6,6 +6,7 @@ user_ss.add(files('accel-user.c'))
- subdir('tcg')
- if have_system
-   subdir('hvf')
-+  subdir('whpx')
-   subdir('qtest')
-   subdir('kvm')
-   subdir('xen')
-diff --git a/accel/whpx/meson.build b/accel/whpx/meson.build
-new file mode 100644
-index 0000000000..7b3d6f1c1c
---- /dev/null
-+++ b/accel/whpx/meson.build
-@@ -0,0 +1,6 @@
-+whpx_ss = ss.source_set()
-+whpx_ss.add(files(
-+  'whpx-accel-ops.c',
-+))
-+
-+specific_ss.add_all(when: 'CONFIG_WHPX', if_true: whpx_ss)
-diff --git a/target/i386/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
-similarity index 97%
-rename from target/i386/whpx/whpx-accel-ops.c
-rename to accel/whpx/whpx-accel-ops.c
-index f75886128d..c84a25c273 100644
---- a/target/i386/whpx/whpx-accel-ops.c
-+++ b/accel/whpx/whpx-accel-ops.c
-@@ -16,8 +16,8 @@
- #include "qemu/guest-random.h"
+-        if (vms->its) {
++        if (virt_is_its_enabled(vms)) {
+             /*
+              * Knowing the ID ranges from the RC to the SMMU, it's possible to
+              * determine the ID ranges from RC that go directly to ITS.
+@@ -484,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             rc_mapping_count += rc_its_idmaps->len;
+         }
+     } else {
+-        if (vms->its) {
++        if (virt_is_its_enabled(vms)) {
+             nb_nodes = 2; /* RC and ITS */
+             rc_mapping_count = 1; /* Direct map to ITS */
+         } else {
+@@ -499,7 +499,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
+     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
  
- #include "system/whpx.h"
--#include "whpx-internal.h"
--#include "whpx-accel-ops.h"
-+#include "system/whpx-internal.h"
-+#include "system/whpx-accel-ops.h"
+-    if (vms->its) {
++    if (virt_is_its_enabled(vms)) {
+         /* Table 12 ITS Group Format */
+         build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
+         node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
+@@ -518,7 +518,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         int smmu_mapping_count, offset_to_id_array;
+         int irq = sdev->irq;
  
- static void *whpx_cpu_thread_fn(void *arg)
+-        if (vms->its) {
++        if (virt_is_its_enabled(vms)) {
+             smmu_mapping_count = 1; /* ITS Group node */
+             offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
+         } else {
+@@ -611,7 +611,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             }
+         }
+ 
+-        if (vms->its) {
++        if (virt_is_its_enabled(vms)) {
+             /*
+              * Map bypassed (don't go through the SMMU) RIDs (input) to
+              * ITS Group node directly: RC -> ITS.
+@@ -946,7 +946,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+                                           memmap[VIRT_HIGH_GIC_REDIST2].size);
+         }
+ 
+-        if (vms->its) {
++        if (virt_is_its_enabled(vms)) {
+             /*
+              * ACPI spec, Revision 6.0 Errata A
+              * (original 6.0 definition has invalid Length)
+@@ -962,7 +962,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         }
+     }
+ 
+-    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its)
++    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms))
+      && !vms->no_gicv3_with_gicv2m) {
+         const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 0fb8dcb07d..dcdb740586 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -737,7 +737,7 @@ static void create_its(VirtMachineState *vms)
  {
-diff --git a/target/i386/whpx/whpx-accel-ops.h b/include/system/whpx-accel-ops.h
-similarity index 92%
-rename from target/i386/whpx/whpx-accel-ops.h
-rename to include/system/whpx-accel-ops.h
-index 54cfc25a14..ed9d4c49f4 100644
---- a/target/i386/whpx/whpx-accel-ops.h
-+++ b/include/system/whpx-accel-ops.h
-@@ -7,8 +7,8 @@
-  * See the COPYING file in the top-level directory.
-  */
+     DeviceState *dev;
  
--#ifndef TARGET_I386_WHPX_ACCEL_OPS_H
--#define TARGET_I386_WHPX_ACCEL_OPS_H
-+#ifndef SYSTEM_WHPX_ACCEL_OPS_H
-+#define SYSTEM_WHPX_ACCEL_OPS_H
+-    assert(vms->its);
++    assert(virt_is_its_enabled(vms));
+     if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
+         /*
+          * Do nothing if ITS is neither supported by the host nor emulated by
+@@ -746,6 +746,15 @@ static void create_its(VirtMachineState *vms)
+         return;
+     }
  
- #include "system/cpus.h"
++    if (whpx_enabled() && vms->tcg_its) {
++        /*
++         * Signal to the user when ITS is neither supported by the host
++         * nor emulated by the machine.
++         */
++        info_report("ITS not supported on WHPX.");
++        exit(1);
++    }
++
+     dev = qdev_new(its_class_name());
  
-diff --git a/target/i386/whpx/whpx-internal.h b/include/system/whpx-internal.h
-similarity index 97%
-rename from target/i386/whpx/whpx-internal.h
-rename to include/system/whpx-internal.h
-index 2dcad1f565..041fa958b4 100644
---- a/target/i386/whpx/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -1,11 +1,13 @@
--#ifndef TARGET_I386_WHPX_INTERNAL_H
--#define TARGET_I386_WHPX_INTERNAL_H
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef SYSTEM_WHPX_INTERNAL_H
-+#define SYSTEM_WHPX_INTERNAL_H
+     object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(vms->gic),
+@@ -957,7 +966,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
  
- #include <windows.h>
- #include <winhvplatform.h>
- #include <winhvemulation.h>
+     fdt_add_gic_node(vms);
  
- #include "hw/i386/apic.h"
-+#include "exec/vaddr.h"
+-    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
++    if (vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms)) {
+         create_its(vms);
+     } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
+         create_v2m(vms);
+@@ -2699,18 +2708,34 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
+     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
+ }
  
- typedef enum WhpxBreakpointState {
-     WHPX_BP_CLEARED = 0,
-diff --git a/target/i386/whpx/meson.build b/target/i386/whpx/meson.build
-index 9c54aaad39..c3aaaff9fd 100644
---- a/target/i386/whpx/meson.build
-+++ b/target/i386/whpx/meson.build
-@@ -1,5 +1,4 @@
- i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
-   'whpx-all.c',
-   'whpx-apic.c',
--  'whpx-accel-ops.c',
- ))
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index db184e1b0d..cef31fc1a8 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -31,8 +31,8 @@
- #include "accel/accel-cpu-target.h"
- #include <winerror.h>
+-static bool virt_get_its(Object *obj, Error **errp)
++bool virt_is_its_enabled(VirtMachineState *vms)
++{
++    if (vms->its == ON_OFF_AUTO_OFF) {
++        return false;
++    }
++    if (vms->its == ON_OFF_AUTO_AUTO) {
++        if (whpx_enabled()) {
++            return false;
++        }
++    }
++    return true;
++}
++
++static void virt_get_its(Object *obj, Visitor *v, const char *name,
++                          void *opaque, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
++    OnOffAuto its = vms->its;
  
--#include "whpx-internal.h"
--#include "whpx-accel-ops.h"
-+#include "system/whpx-internal.h"
-+#include "system/whpx-accel-ops.h"
+-    return vms->its;
++    visit_type_OnOffAuto(v, name, &its, errp);
+ }
  
- #include <winhvplatform.h>
- #include <winhvemulation.h>
-diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
-index afcb25843b..b934fdcbe1 100644
---- a/target/i386/whpx/whpx-apic.c
-+++ b/target/i386/whpx/whpx-apic.c
-@@ -18,7 +18,7 @@
- #include "hw/pci/msi.h"
- #include "system/hw_accel.h"
- #include "system/whpx.h"
--#include "whpx-internal.h"
-+#include "system/whpx-internal.h"
+-static void virt_set_its(Object *obj, bool value, Error **errp)
++static void virt_set_its(Object *obj, Visitor *v, const char *name,
++                          void *opaque, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
  
- struct whpx_lapic_state {
-     struct {
+-    vms->its = value;
++    visit_type_OnOffAuto(v, name, &vms->its, errp);
+ }
+ 
+ static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+@@ -3427,8 +3452,9 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+                                           "guest CPU which implements the ARM "
+                                           "Memory Tagging Extension");
+ 
+-    object_class_property_add_bool(oc, "its", virt_get_its,
+-                                   virt_set_its);
++    object_class_property_add(oc, "its", "OnOffAuto",
++        virt_get_its, virt_set_its,
++        NULL, NULL);
+     object_class_property_set_description(oc, "its",
+                                           "Set on/off to enable/disable "
+                                           "ITS instantiation");
+@@ -3488,8 +3514,8 @@ static void virt_instance_init(Object *obj)
+     vms->highmem_mmio = true;
+     vms->highmem_redists = true;
+ 
+-    /* Default allows ITS instantiation */
+-    vms->its = true;
++    /* Default allows ITS instantiation if available */
++    vms->its = ON_OFF_AUTO_AUTO;
+     /* Allow ITS emulation if the machine version supports it */
+     vms->tcg_its = !vmc->no_tcg_its;
+     vms->no_gicv3_with_gicv2m = false;
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index c5bc47ee88..394b70c62e 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -147,7 +147,7 @@ struct VirtMachineState {
+     bool highmem_ecam;
+     bool highmem_mmio;
+     bool highmem_redists;
+-    bool its;
++    OnOffAuto its;
+     bool tcg_its;
+     bool virt;
+     bool ras;
+@@ -216,4 +216,6 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
+             vms->highmem_redists) ? 2 : 1;
+ }
+ 
++bool virt_is_its_enabled(VirtMachineState *vms);
++
+ #endif /* QEMU_ARM_VIRT_H */
 -- 
 2.50.1 (Apple Git-155)
 
