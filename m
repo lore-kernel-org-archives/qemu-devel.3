@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A8DEE57C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D894EEE01F6
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:08:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vagxB-0004aq-Rm; Tue, 30 Dec 2025 16:08:29 -0500
+	id 1vagxW-00053s-DU; Tue, 30 Dec 2025 16:08:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagxA-0004Zz-U0
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:28 -0500
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagxU-000537-Jv
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:48 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagx9-0002Ej-5E
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:28 -0500
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-47755de027eso61075955e9.0
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:08:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagxT-0002G0-3O
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:48 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4779aa4f928so103152855e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:08:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767128905; x=1767733705; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767128925; x=1767733725; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YEG6iZ6Aw3LQd9IRTTR+j/7S3SvDhMq9IcY5HHvReKc=;
- b=YSgpjQfdNREyXxKHE7+4Yu75rG+BL+k0FG2zNVCnJ4X++dXRR5v+qNcb4ha8T896N4
- hZRi2QZyX47emHwBw5JsUlALXHkJb9gyeYQYJI+Rb0j1Qc3iCBtO/+wyV/UdEsiSMtD3
- 7oYyhQhbXBSfjuewU1CT1SdNuTsCcw5a5li7LYk8Y9SYFm9958z66Bn/Bw82GnRnbYSR
- nMlbRSZmlT7db9ChnJY5tVUN82JPzDDjueSk+ygl1hFiy7FyePK9EnmW5v1eNTOuozSm
- VJ+svPx8tEKBfgiJbKOwq2/mh36OZwSBVrTlSgTY34A8mE/vfOJD0uSCuJAdwlMrV3Nc
- nYwQ==
+ :reply-to; bh=J6K9VfrYM9O58NYLBO+LcXYAGm/XGIvX82MjEg9FdAU=;
+ b=uz3CsImxacePYGEQ3lQ+2edmNcwQDxP3cdcpB541ZJ7bM2oYb9l9zdRisR6HOjiTBh
+ xVGI9SRHEM+J7NM08GEEWNQBs62phaaidzN/9dP0MMSVVKOBG4qIGcLkPEy8DjfYPm28
+ XsvnSnDN2zYQfcyOPXYch3pA6QqwtYSpxrpvMfcKXhZ1mkLQ8LtFOYoMDlsZYoIWrywZ
+ mpoqzKWmYd4g9J+vObnr3/JRRThnG4m9v1kL/kBXGWP21zocvehfD4FRmuasNC6RM+nU
+ pVF5L7cLAqZk3KK6N5Fdg2MzVBnqlUgXBwscDC+iCXw0ON5PaY1IiviE+qGQjHtmS4Rs
+ 4Jjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767128905; x=1767733705;
+ d=1e100.net; s=20230601; t=1767128925; x=1767733725;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=YEG6iZ6Aw3LQd9IRTTR+j/7S3SvDhMq9IcY5HHvReKc=;
- b=A1SOV+GxA3re7XnFEAdHXwIOHWlIy1E9KeHaPOLLh7hXO2Rwn4OwwfBpQVYW3r3jOX
- ibrOMq13b4u6fQ2HIsmEzPAlwxRGZxcnmk+GD+lCHBECk0JC8b0GmzefRMaG1TKRvxTv
- LnhKbmCRkVDSBz1q9jDYUqF02zpnmO32czMngoPAIpY8Eo5tWRM8L7keBcJVOF+Z+1vy
- w1TT+E+df8KkQkYrRsDcDZeautajjrqZdi3dIPvtUqI1vDY7SU+BJJkgxdXZ0q5aAJL1
- AtSN6L1cqrZKY36vW6Z5ZAGlwtEw7lhvmnEpsF2+LmK1GGSsWI8zjjgQ4L8/HxhpcWQm
- 6zEA==
-X-Gm-Message-State: AOJu0Yw9f4CU4ttoCk1k/aF80VgZTKXp1R5QjWUKguLpkfTO3lyPGlSX
- W+AQITZ/U3rFC0oQX5GMnaupvqjFS06nxbFN/UPLmtqovArQHZtu27KPHqnpf+8mz4vt351RjK3
- 3g/iaLk8=
-X-Gm-Gg: AY/fxX6dnN/Cf59q8d2iPgSusDYrCKjzAr/8sRdPJFWUuajaWzrFrQFcYaxMrE/v38c
- lMxzJ4oCSZTHtBBQmqspeBag5LDvVThOHm88+spOaN+jqEa226cfoB2odBC2yiusW7XZAkmBJai
- jzhaLtxeuoxpDGm7Z1Kzj3u7OA6lXcjlWE0bSEO7yjOJsocVJQMmdoil1B8s/I6+320Rn36qw6t
- KJ+mAWDIqZh6vh7Lqyn8hyMnxAaYs04XzU/iqH4mB/xf+6byCoWAsA/gPQkhASOtaytUpuA7gXM
- Ca+bSW54WwBE5DZV1VfdIotsuLJBFcKBsCgk5zOr7GDbTz4LXQA9PtEmm2z8IAZkOhAn/wrv94f
- b5S1nIITRArPjslvjUdEVsPvC5p9sa9RLpFc+b9MBxtsWbsPzcSZPTPpatFS62p5bBFBX+FiXri
- Y6jjKdCPcZhMiaDfLuWsLlwGN04X93iJMdDc1VP9vSmfsqJJDZY/QWVuZEGFav7DIhhJr50to=
-X-Google-Smtp-Source: AGHT+IEPHCNmtgG5XM11k8QqrbT6RoyvIC3v+e+8gRAeVchklO+RXBRHUNAmdK/7JgNQL8hDKQYT4Q==
-X-Received: by 2002:a05:600c:46ce:b0:477:8985:4036 with SMTP id
- 5b1f17b1804b1-47d1953bb1emr442489195e9.1.1767128905218; 
- Tue, 30 Dec 2025 13:08:25 -0800 (PST)
+ bh=J6K9VfrYM9O58NYLBO+LcXYAGm/XGIvX82MjEg9FdAU=;
+ b=BZ6bTVlhwqept6y5RRnV8x4AtS9jkrhlh6EpqFG44JzwIdMKH/3b8bFDwb4Ci5MluO
+ UURp2yZgz7jLHQwEuSTPHpbyajbxocS2uJoDewMEK4Chw+4mMwuiFWS9znUM1scKsIEb
+ Uhw2ifpHPQcIwyv1lNVkgm8XonVJXqdyAy3DFz4jJuReylFM/LcYwyEdeY5bWiTefaqQ
+ qjqVzcdp6+Z4TzFB+ZzX6JK1AnPVaicCybLsiuJHFBkdhtVndkAJsgaEjjYe7jGoh5Kn
+ oCfmUUp//jQIw7q3KdmGqJEmWv0AMd4RbCCaQ+g016jpE0X1LA+b32FwU8urqnv6XcSN
+ CeoQ==
+X-Gm-Message-State: AOJu0YyX7GpDHXotIl8ONJLzNTvbSf5QSagZYIkFI1aaKStsMuqBrCT9
+ YZyrsrDhGcLfnkZ5P1hXeKhnZ+omJCKpNA2zWIf0tApNRKm2SbkvlDM4KY5uldQR7WKvTUdUhYC
+ bbgrnbFo=
+X-Gm-Gg: AY/fxX5EJHBNZTUs/bSgYsRKBO4pNX/HuXCMIBuqP1NGlaMkOFWsHDR9MlqVS5MsBGK
+ AUeCZh0NApj7aOocRRxaK3jsUf2uMoKk13efQS/zv0sKkN936qTjCFhZYzMRFRQT4A6y+d9VfjU
+ OyW2pNZUuOOHuO3MmvNiYS01g/T1ix9UDTN5+2Xj5IUz9nHzCY6+DWrCdtRqahH91VbGQvK3sVj
+ DKy84LjU6DXwReBbxEOVuJ4yGxsz50aQamEbd9ML1qGafGkswnPyVO0Dud/E4nX3Csk5QaDcwW6
+ tO0pEs3BQ+gODRAD+aMBvDAI7cyvD52PpABm39tUHXXVh14kCc8igMQwrVyNKw132xpEjJkbnpR
+ V/GyMMYHYtQMMYiXK7i7nNi4JLRuFoWEo/gOxpjrDIulSIzjayw5EO2Hip3RIVDVqG0q1QbFoaJ
+ KMKdbpYQq0BNuSP10sz6h3W+1LTuAj+EIAXC4+E3tlzuto6SFFfkIif8WXfkzK
+X-Google-Smtp-Source: AGHT+IHjRJFEPCpmtF1d1fOUz6/NeEeSSDi7ivz4NbqDULRUK52RohkvYyyH+icCxmzz4YWOGdHf1g==
+X-Received: by 2002:a05:600c:524f:b0:45d:d8d6:7fcc with SMTP id
+ 5b1f17b1804b1-47d1958b73cmr422165405e9.27.1767128925308; 
+ Tue, 30 Dec 2025 13:08:45 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193621c8sm609207835e9.7.2025.12.30.13.08.24
+ 5b1f17b1804b1-47d193621c8sm609217975e9.7.2025.12.30.13.08.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:08:24 -0800 (PST)
+ Tue, 30 Dec 2025 13:08:44 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/34] hw/misc: make the tz-ppc-port names more useful
-Date: Tue, 30 Dec 2025 22:07:26 +0100
-Message-ID: <20251230210757.13803-5-philmd@linaro.org>
+Subject: [PULL 07/34] monitor/hmp: Use plain uint64_t @addr argument in
+ memory_dump()
+Date: Tue, 30 Dec 2025 22:07:29 +0100
+Message-ID: <20251230210757.13803-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
 References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,121 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+memory_dump() takes either hwaddr or vaddr type, depending
+on the @is_physical argument. Simply use uint64_t type which
+is common to both.
+Pad address using field width formatting, removing the need
+for the target_ulong type.
 
-The TrustZone peripheral protection controller (tz-ppc) sits between
-peripherals and the main system. However this results in "info mtree"
-looking at bit confusing, especially as the sequence numbers can
-overlap and miss steps:
-
-      0000000000000000-ffffffffffffffff (prio -2, i/o): system
-        0000000000000000-00000000003fffff (prio 0, i/o): tz-mpc-upstream
-        0000000000400000-00000000007fffff (prio 0, i/o): alias ssram-0-alias @tz-mpc-upstream 0000000000000000-00000000003fffff
-        0000000028000000-00000000281fffff (prio 0, i/o): tz-mpc-upstream
-        0000000028200000-00000000283fffff (prio 0, i/o): tz-mpc-upstream
-        0000000040080000-0000000040080fff (prio 0, i/o): iotkit-secctl-ns-regs
-        0000000040100000-0000000040100fff (prio 0, i/o): tz-ppc-port[1]
-        0000000040101000-0000000040101fff (prio 0, i/o): tz-ppc-port[2]
-        0000000040102000-0000000040102fff (prio 0, i/o): tz-ppc-port[3]
-        0000000040103000-0000000040103fff (prio 0, i/o): tz-ppc-port[4]
-        0000000040110000-0000000040110fff (prio 0, i/o): tz-ppc-port[0]
-        0000000040111000-0000000040111fff (prio 0, i/o): tz-ppc-port[1]
-        0000000040112000-0000000040112fff (prio 0, i/o): tz-ppc-port[2]
-        0000000040113000-0000000040113fff (prio 0, i/o): tz-ppc-port[3]
-        0000000040200000-0000000040200fff (prio 0, i/o): tz-ppc-port[5]
-        0000000040201000-0000000040201fff (prio 0, i/o): tz-ppc-port[6]
-        0000000040202000-0000000040202fff (prio 0, i/o): tz-ppc-port[7]
-        0000000040203000-0000000040203fff (prio 0, i/o): tz-ppc-port[8]
-        0000000040204000-0000000040204fff (prio 0, i/o): tz-ppc-port[9]
-        0000000040205000-0000000040205fff (prio 0, i/o): tz-ppc-port[0]
-        0000000040206000-0000000040206fff (prio 0, i/o): tz-ppc-port[1]
-        0000000040207000-0000000040207fff (prio 0, i/o): tz-ppc-port[10]
-        0000000040208000-0000000040208fff (prio 0, i/o): tz-ppc-port[11]
-        0000000040209000-0000000040209fff (prio 0, i/o): tz-ppc-port[2]
-        000000004020a000-000000004020afff (prio 0, i/o): tz-ppc-port[3]
-        000000004020b000-000000004020bfff (prio 0, i/o): tz-ppc-port[4]
-        000000004020c000-000000004020cfff (prio 0, i/o): tz-ppc-port[12]
-        000000004020d000-000000004020dfff (prio 0, i/o): tz-ppc-port[13]
-        0000000040300000-0000000040300fff (prio 0, i/o): tz-ppc-port[0]
-        0000000040301000-0000000040301fff (prio 0, i/o): tz-ppc-port[1]
-        0000000040302000-0000000040302fff (prio 0, i/o): tz-ppc-port[2]
-        0000000041000000-000000004113ffff (prio 0, i/o): tz-ppc-port[0]
-        0000000042000000-00000000420000ff (prio 0, i/o): tz-ppc-port[5]
-        0000000048007000-0000000048007fff (prio -1000, i/o): FPGA NS PC
-        0000000050080000-0000000050080fff (prio 0, i/o): iotkit-secctl-s-regs
-        0000000058007000-0000000058007fff (prio 0, i/o): tz-ppc-port[0]
-        0000000058008000-0000000058008fff (prio 0, i/o): tz-ppc-port[1]
-        0000000058009000-0000000058009fff (prio 0, i/o): tz-ppc-port[2]
-        0000000080000000-0000000080ffffff (prio 0, ram): mps.ram
-
-So as a quality of life feature lets expose the name of the underlying
-region so we get something more useful:
-
-    0000000000000000-ffffffffffffffff (prio -2, i/o): system
-      0000000000000000-00000000003fffff (prio 0, i/o): tz-mpc-upstream
-      0000000000400000-00000000007fffff (prio 0, i/o): alias ssram-0-alias @tz-mpc-upstream 0000000000000000-00000000003fffff
-      0000000028000000-00000000281fffff (prio 0, i/o): tz-mpc-upstream
-      0000000028200000-00000000283fffff (prio 0, i/o): tz-mpc-upstream
-      0000000040080000-0000000040080fff (prio 0, i/o): iotkit-secctl-ns-regs
-      0000000040100000-0000000040100fff (prio 0, i/o): tz-ppc-port[gpio0]
-      0000000040101000-0000000040101fff (prio 0, i/o): tz-ppc-port[gpio1]
-      0000000040102000-0000000040102fff (prio 0, i/o): tz-ppc-port[gpio2]
-      0000000040103000-0000000040103fff (prio 0, i/o): tz-ppc-port[gpio3]
-      0000000040110000-0000000040110fff (prio 0, i/o): tz-ppc-port[pl080]
-      0000000040111000-0000000040111fff (prio 0, i/o): tz-ppc-port[pl080]
-      0000000040112000-0000000040112fff (prio 0, i/o): tz-ppc-port[pl080]
-      0000000040113000-0000000040113fff (prio 0, i/o): tz-ppc-port[pl080]
-      0000000040200000-0000000040200fff (prio 0, i/o): tz-ppc-port[uart]
-      0000000040201000-0000000040201fff (prio 0, i/o): tz-ppc-port[uart]
-      0000000040202000-0000000040202fff (prio 0, i/o): tz-ppc-port[uart]
-      0000000040203000-0000000040203fff (prio 0, i/o): tz-ppc-port[uart]
-      0000000040204000-0000000040204fff (prio 0, i/o): tz-ppc-port[uart]
-      0000000040205000-0000000040205fff (prio 0, i/o): tz-ppc-port[pl022]
-      0000000040206000-0000000040206fff (prio 0, i/o): tz-ppc-port[pl022]
-      0000000040207000-0000000040207fff (prio 0, i/o): tz-ppc-port[arm_sbcon_i2c]
-      0000000040208000-0000000040208fff (prio 0, i/o): tz-ppc-port[arm_sbcon_i2c]
-      0000000040209000-0000000040209fff (prio 0, i/o): tz-ppc-port[pl022]
-      000000004020a000-000000004020afff (prio 0, i/o): tz-ppc-port[pl022]
-      000000004020b000-000000004020bfff (prio 0, i/o): tz-ppc-port[pl022]
-      000000004020c000-000000004020cfff (prio 0, i/o): tz-ppc-port[arm_sbcon_i2c]
-      000000004020d000-000000004020dfff (prio 0, i/o): tz-ppc-port[arm_sbcon_i2c]
-      0000000040300000-0000000040300fff (prio 0, i/o): tz-ppc-port[mps2-scc]
-      0000000040301000-0000000040301fff (prio 0, i/o): tz-ppc-port[i2s-audio]
-      0000000040302000-0000000040302fff (prio 0, i/o): tz-ppc-port[mps2-fpgaio]
-      0000000041000000-000000004113ffff (prio 0, i/o): tz-ppc-port[gfx]
-      0000000042000000-00000000420000ff (prio 0, i/o): tz-ppc-port[lan9118-mmio]
-      0000000048007000-0000000048007fff (prio -1000, i/o): FPGA NS PC
-      0000000050080000-0000000050080fff (prio 0, i/o): iotkit-secctl-s-regs
-      0000000058007000-0000000058007fff (prio 0, i/o): tz-ppc-port[tz-mpc-regs]
-      0000000058008000-0000000058008fff (prio 0, i/o): tz-ppc-port[tz-mpc-regs]
-      0000000058009000-0000000058009fff (prio 0, i/o): tz-ppc-port[tz-mpc-regs]
-      0000000080000000-0000000080ffffff (prio 0, ram): mps.ram
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Jim MacArthur <jim.macarthur@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251215170548.2594651-1-alex.bennee@linaro.org>
-[PMD: Wrap long line to avoid checkpatch.pl warning]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Message-Id: <20251229231546.50604-4-philmd@linaro.org>
 ---
- hw/misc/tz-ppc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ monitor/hmp-cmds-target.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/hw/misc/tz-ppc.c b/hw/misc/tz-ppc.c
-index 159073d1e6d..6f820430eed 100644
---- a/hw/misc/tz-ppc.c
-+++ b/hw/misc/tz-ppc.c
-@@ -273,8 +273,8 @@ static void tz_ppc_realize(DeviceState *dev, Error **errp)
-             continue;
-         }
+diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+index 51dcb9e314c..e855c0d8a2c 100644
+--- a/monitor/hmp-cmds-target.c
++++ b/monitor/hmp-cmds-target.c
+@@ -122,12 +122,13 @@ void hmp_info_registers(Monitor *mon, const QDict *qdict)
+ }
  
--        name = g_strdup_printf("tz-ppc-port[%d]", i);
--
-+        name = g_strdup_printf("tz-ppc-port[%s]",
-+                               memory_region_name(port->downstream));
-         port->ppc = s;
-         address_space_init(&port->downstream_as, port->downstream, name);
+ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+-                        hwaddr addr, bool is_physical)
++                        uint64_t addr, bool is_physical)
+ {
+     int l, line_size, i, max_digits, len;
+     uint8_t buf[16];
+     uint64_t v;
+     CPUState *cs = mon_get_cpu(mon);
++    const unsigned int addr_width = is_physical ? 8 : (target_long_bits() * 2);
  
+     if (!cs && (format == 'i' || !is_physical)) {
+         monitor_printf(mon, "Can not dump without CPU\n");
+@@ -165,11 +166,7 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+     }
+ 
+     while (len > 0) {
+-        if (is_physical) {
+-            monitor_printf(mon, HWADDR_FMT_plx ":", addr);
+-        } else {
+-            monitor_printf(mon, TARGET_FMT_lx ":", (target_ulong)addr);
+-        }
++        monitor_printf(mon, "%0*" PRIx64 ":", addr_width, addr);
+         l = len;
+         if (l > line_size)
+             l = line_size;
 -- 
 2.52.0
 
