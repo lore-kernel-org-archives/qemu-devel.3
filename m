@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A268EE0203
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63ECCEE01F6
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vagzF-0001lF-G4; Tue, 30 Dec 2025 16:10:39 -0500
+	id 1vagyQ-00080c-Un; Tue, 30 Dec 2025 16:09:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagz3-0001Yn-Dm
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:27 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagy2-0006lL-Jf
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:09:25 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagz0-0002fk-Qq
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:25 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4779ce2a624so78973515e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:10:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagxz-0002K5-Pz
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:09:21 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47d3ffa6720so43813495e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:09:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767129018; x=1767733818; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767128958; x=1767733758; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=L50V/EzCjudz2Uvy5oJglYhqNvb4wYscqaxHo/WQGxg=;
- b=JlyII0pLPWp3dTevpaR7Wy5EGZXi3QDSeFB57fPcc2cBYeIopjWlx8mFu2s6ydnTDP
- hwiVNQ9p+ZLTFmOllD4FdphyXZSZA8MHcxMbvBqfIeixBe+4M8jvjfDkf/c+uch52KdG
- dPREM9uV95+0tcFyrGuqy7nr3LzJap3WiD69wU41Ka19koU0wId6qsDl70Oh24ejgTBo
- bzR9dlWNWfKuKVZty7lPsCAHgYdh3pzSDzV1n1u5drXWC6NV6I7HJ4fAy8ZVSGokfS+B
- PGxJ0175D+vutNpx9S8sbQxmaitsX1fLuF0jHsE7JLmsBQscBCbiJdGITmjNZUDz4xLY
- Xh7w==
+ :reply-to; bh=DgIrNp2Q4FL23fByvzV3YdB6W+rarWqyshGf/QdgOu8=;
+ b=AbeUaTrWHzILkrYCdNagTkycNHLDbyF7kwNXYOlWMejqRa/mhNlIhhxWfREP9/8jJq
+ 1ugDFK10Zni9e9sF/K+Mza0uTGYhwIP4mCYwUfmZrxoTvxuvpGhBOfboql8KqPc5yEmA
+ 2J0Af2YZCZ/tbThTn5OhBYupxC3ONbx9P7GOpjzXsoxxh0WnjwZz5gt2daiu+26Nn5yH
+ RTnQSFjaXU0pVSYXKiee/ek1PsXYO4yzqH8MB+sKCv4xgm5vJDdQ6gYzohjS50hrP0Jd
+ dH053lAfeSVOLDNPs7PUaTsJQB7VoIxvZMLxhEfNJpr+AuXN9WNP113LTMq4Qq/cdhTE
+ Ro8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767129018; x=1767733818;
+ d=1e100.net; s=20230601; t=1767128958; x=1767733758;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=L50V/EzCjudz2Uvy5oJglYhqNvb4wYscqaxHo/WQGxg=;
- b=FEqEwDY0YUHpsTYZQoYoMFqp4CAZyuGL/IPplRNGZX/hVP0P5DYTFgJRxBKbLGEHRx
- vE0o7y55UstagEHhbAsQ50uQqygXB1VNc7kRB/qpAqydQMsF/XXNg/TzJnv15JTLPE1u
- FnuV0o8qOfxSmoaz9n0GVdxy2wQWLoINu99FG+LCEbgK1QUw0nK4nG2r6/PDVhx81PnJ
- 4L2PHtQmLjkmXX4H17H6g0MKYt8UPaR+MzEo6QhU39DobVD9i8bkPMw3nymMXffTEzKT
- K76kFzCsJOM653LosqK586AUz0y4dKrTLpsBbi/uMVPs+8sK/wCE0DygkOQVR22k0yyD
- u3fg==
-X-Gm-Message-State: AOJu0YzZob9pRm49nv4H01hYxhcx1zZHtIkUPlWLmKUQ2zIpETHCuV8P
- PHmcvP2mDmsZ+bmaDCMHYpOmcuyA5Ls6nFqs4+OybCnb4l5g4Jlj47FiFzfHyt51VYc1LOV+qHa
- fnRN3qU8=
-X-Gm-Gg: AY/fxX7KJjt/scIljS6Wx+o9oYHaX4RUvu3xPa4AtjOCGevgM6xFSyjCBCUE7tiiAxv
- xlFMExo5vhi9dJNh41jyNb+uqFManCwoN9l0sWGqRu/dItC8QjEKsZ1Ono4pCb7hHk5NHQCWXeE
- Se6cuXcnB8xO96913wQmjNBq+KXLlnEi4NK7vToE0W1+Ktj7TXULl6tmHGhlXoyknAS5+qkcNiq
- hZprs6udF7NYyF5nGAbzKswlUDQbOa6pV0l2RA5/uiMJbH5JPrwUkoeKFMMQuL9o/P5PSm3/gox
- OoxNrhlY0P/WU1s2Ryv1hWinkIyZOl6noAWO8TLhSDF04Q4dyAWAFzT1wt91Sfja3elXSQYaLFI
- 5abPGnBICHU7Y5NlJGOFv8vyARaXVqH3BQQNRqfGwCRWbiVFkXhGFIV6892fWhkly/0tFaLH+3j
- NZ8MSvr9KlyxDKfYx1HStFPVHb0UKQsxepHcp5Rfn3CO8gTq7hMizs/9LrBFtoyLvg7pwL4l4=
-X-Google-Smtp-Source: AGHT+IHs90/+ssDgsmBL+qh/7YJDd7RoVqso1/aK2jBXtrxx0En8x67lERTxV9X6aRtisgJs3lJMGw==
-X-Received: by 2002:adf:b605:0:b0:432:7d2a:2be4 with SMTP id
- ffacd0b85a97d-4327d2a2d3dmr19266331f8f.60.1767129017858; 
- Tue, 30 Dec 2025 13:10:17 -0800 (PST)
+ bh=DgIrNp2Q4FL23fByvzV3YdB6W+rarWqyshGf/QdgOu8=;
+ b=vfK0+MaPEPImsCvxMkFHdLR7+RQRT1oPdlsrCOqSTWv4GNPkYph5qyioj1hgh4SKMI
+ Z4NvAuJYCLjv0gfIWZvtsP1Z8NtAkdayYtKSvx1621Wy4qROeCIdnIiXaMXG0aB8YxPS
+ H+0QCeMERzWokc0SddJrYcmQMmv5oaFZhnDVZ8wKEgBeh6hNR7iafRM/YXqYgjMc4H3r
+ Tih/5V25OmjZP4n4AXVHXercxTJqScAUeFoTperwIUjXvkkge+eeDeSuh9FTR0kMz866
+ mLkx2UmgjiTeUZjCoFOLl+h+sDcf0GeOa6gVBgMy3OhbHLeE7rxwknuttZG3oIKMc7rJ
+ qJ+Q==
+X-Gm-Message-State: AOJu0YySZ3KGVyBtj7qAfZwJSHwf6Zq4lcb2o8HJE3g0EYsnKn5B+bh+
+ Gf0+fqrDKJJCUCgoZalTrHwY6poQCwz7a1XtjZCP4wszVBZyv1uugEqclUq2N73a+7/9VjhwN7O
+ EcM3jOP8=
+X-Gm-Gg: AY/fxX4OYYbgt/eTfQeGsFN2KDTgruUShoOOGXkXeskVznDX0bv1eRGLprFvqEGU9oX
+ NaihgIDHjheADwrhjwx1XSwO2OOAElCZsY+Wz+aziQEl8/e8G6H4DOb+KoGGVyQmqIu+B2vR6K/
+ 0y4uy/TgaaRltMc7pkFezFVUzOlWqyjn1XofNHd2dfFH6USn7tZLmD5hN/KWSgQBZjG8hrNPYGl
+ XeoH9X05QSSFNpie3AW6kzqbXk2Y0EHqxiCsKqHz4XzWgb1xBmwhUcYtgn4LlWz3BtnJMGpVcRK
+ E0Y4iJ5D+memDuAkd9pcGMddKhpkqGLMveVclpBLzIetxd/NcYIxJLGSQCUYGPQKJXTyGjDLcd3
+ t5X/FWV4qD/tvUqSHMn+8inM3093suEUoqw47LWZ1gXrYuJRh0vxRnzROZDdZiI2zOhiIgbful9
+ yvXgNgy9G/nkFr2FSXYIaoC4vvR8Mi6Egrl1CwkbD6FQg2NfTIWIVvIsshmfr3
+X-Google-Smtp-Source: AGHT+IFPWEPE2P2Warughsbvvh4HvSsodSqsri/i/NSj+sSOlZY8AMbMZqqZaJLN2NHpHZBYV5sM5g==
+X-Received: by 2002:a05:600c:3584:b0:46e:59bd:f7d3 with SMTP id
+ 5b1f17b1804b1-47d195a724bmr457324115e9.20.1767128957863; 
+ Tue, 30 Dec 2025 13:09:17 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1b1b1sm69761949f8f.3.2025.12.30.13.10.17
+ 5b1f17b1804b1-47d193cbe58sm611524755e9.9.2025.12.30.13.09.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:10:17 -0800 (PST)
+ Tue, 30 Dec 2025 13:09:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/34] target/sparc: Update MMU page table using stl_phys()
-Date: Tue, 30 Dec 2025 22:07:43 +0100
-Message-ID: <20251230210757.13803-22-philmd@linaro.org>
+Subject: [PULL 12/34] hw/arm/Kconfig: Have FSL_IMX6UL SoC select IMX_USBPHY
+Date: Tue, 30 Dec 2025 22:07:34 +0100
+Message-ID: <20251230210757.13803-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
 References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,31 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-stl_phys_notdirty() is supposed to do an optimized CODE
-path store. Here we update the page table via the DATA
-path, so can use the normal stl_phys() helper.
+Since commit 17372bd812d, the SoC used by the mcimx6ul-evk
+machine requires the IMX USB PHY component.
+As this component is only used by 2 machines, do not select
+it by default (it will be automatically  selected when
+necessary).
 
+Fixes: 17372bd812d ("hw/arm/fsl-imx6ul: Wire up USB controllers")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251224151351.86733-3-philmd@linaro.org>
+Message-Id: <20251224134644.85582-2-philmd@linaro.org>
 ---
- target/sparc/mmu_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/Kconfig | 1 +
+ hw/usb/Kconfig | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 217580a4d8c..46bf500ea83 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -189,7 +189,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
-         if (is_dirty) {
-             pde |= PG_MODIFIED_MASK;
-         }
--        stl_phys_notdirty(cs->as, pde_ptr, pde);
-+        stl_phys(cs->as, pde_ptr, pde);
-     }
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 78775063840..97d747e2062 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -638,6 +638,7 @@ config FSL_IMX6UL
+     select IMX
+     select IMX_FEC
+     select IMX_I2C
++    select IMX_USBPHY
+     select WDT_IMX2
+     select SDHCI
+     select USB_CHIPIDEA
+diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
+index 69c663be52f..de95686720c 100644
+--- a/hw/usb/Kconfig
++++ b/hw/usb/Kconfig
+@@ -132,7 +132,6 @@ config USB_CANOKEY
  
-     /* the page can be put in the TLB */
+ config IMX_USBPHY
+     bool
+-    default y
+     depends on USB
+ 
+ config USB_DWC3
 -- 
 2.52.0
 
