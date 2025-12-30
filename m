@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5430EE01F6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E061FEE0203
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vah0I-0007Nm-4M; Tue, 30 Dec 2025 16:11:42 -0500
+	id 1vagzt-0005ii-52; Tue, 30 Dec 2025 16:11:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vah0G-0007Mw-Me
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:40 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzr-0005Vn-7o
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:15 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vah0F-0002v7-6W
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:40 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-42e2ba54a6fso4460689f8f.3
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:11:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzp-0002rN-FQ
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:14 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47d3ffa5f33so19824435e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:11:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767129097; x=1767733897; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767129072; x=1767733872; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=L6ML9swyx3/50z1k31zOpaJrNweHVDBzQiceI3AV+jg=;
- b=ADyubTHfRfHlUnbFXAdFrOLyq8Eu2o0IE03Xj4fx5Ni09g7EsJ5BJmG5rFakl/eGuZ
- 3K+VEsNxNVljNiA8LK41Kk7j0mP01v671VNwOlfKmMsDrrld0B93koPWvjjh6vBxFToX
- C3G/itaeV/4cyNe7SZ7nYxuGDaZr1jUaPrYvxz8RkoDZVEgIP6KCAiy08vmwrtL3VgQq
- /I54XVQLgwF0Q1pJJttMlolt0OnzmY+jSTxdicPsIU59nsGQYbgR62ZSQ+D15oUj5/wr
- LUZKXOtwlRzFFaDSZRq51JKVjtHCpVb1/L6NjlK/93BO/CIemYjS1GaaE+u/lSFRsmCs
- rB8A==
+ :reply-to; bh=Zu2BaYB0moTFOIMF7F4LVDdXIbTCjZNqLUd4CaPJB3A=;
+ b=kky9DiBiGSuDezXkofVnWWHtCCcyQm5jyybiPUTRPUHbJ1LcfhVxuyDsaw3iP/ytWW
+ 8Y7322IyCYb8r3lW4AT9P32zZym16CckLPxWVVGxYSy9gNiYUQtWmS+h0g0f+wczMLY/
+ HyRh7VZuuH+jMiVQWwXTxT2/r19J90AA7GNP9OOMrIsvHW9dnQJvvLxGH8BUBnBzmm7F
+ 0gLAweaJBsh8ZJXh8JLaibTpATgUs1xi+BOfBnElklnwvhinUfuV4+f81Vl+WJLK++Yn
+ xnfJEX3BadlkC3qamMwm2dBz4cxJ7eVdCoFclC4vgpoMSmaFJlmedDvkJEDGkrtsDMW2
+ Umgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767129097; x=1767733897;
+ d=1e100.net; s=20230601; t=1767129072; x=1767733872;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=L6ML9swyx3/50z1k31zOpaJrNweHVDBzQiceI3AV+jg=;
- b=tfzij/w9oks9gp4OhCoBPywBZeS2JenTfXXcVTPB03uv/g4OqpWNBAnpIyQVu0qTkT
- 7SBHNfrBsKyLn3bHANHUF7GfX1aLGqWsp8TZk96YLQbr2ssREhGhgNILBgzQZryop82j
- 4C7mnKT+E/+Yhsk+e0H6n/E0xoxad2BEgTt+7FI0TOjcqAe+0TQb4I1xn5zczazGtsmv
- 1r7JOHUMMV0hPiUN7iUPPvZzby3DRDSQ6Fhb0Qmy2TNe5hHC+IhA/iqYk0KCpj+ShpQx
- P/qLolNhpfq6RZCB6TiZedwLlr/QwnfJl8Huf5dQ/pGJ32MpE79wwfikL5Ix8OikIb/l
- 9Biw==
-X-Gm-Message-State: AOJu0YxnENUzghc3W1QbG0sNYHkyORaYOuOt+HWAM1SpZKx6k5WM4iqu
- bOv/kMT+1PsSbeVGnk9IFAAEYNhVAEptaoBA9HjueUtPXzVXdPeZE337upzZDUDzPmlW9MMvSgN
- cpkvfFQ0=
-X-Gm-Gg: AY/fxX6tsPzEVnQMTTXmt60ThcJBcwJ9fCJ5aSuvIk6LQ3ufPacndB2UVHEoo4KtBOT
- 8uBJwQCvF59ao2OJdsK750HEUL0aBngGF+HqrvxJZUgzafjmDUYpQz7gPLQ4jn8ynv2CwIEuvZa
- L+kr8zri8BaAfLEzsGJq3nktqNJd4OzWOpY2/OfVaQFtbDWoqapbHSU85X09SJO/AaUDE44Lf8Z
- sldjM9CJyBAHg6aN513aMF1uER5vZAA3nyXlIkwRlbbkUebR0GyD59OklCcHjAFzlbS6fzDrVGr
- xSFTG14AIZjD0XsomSBzaKwMzNkVghxmBLPpuCLhv3NYG9zUJuI1L1DmOHJW64Qg5Y/G6R66dLk
- DYQFqp8JIGsEt8YEHzeS2A9XFMIR92mf2oV+S6ZlaactmEbKIuwq71leQecA1PeIYo4wccjXvmP
- 7SAFxADum8b7M9PT/WLRdCzAfxzWhj5EqtQhHKqGCnf2MwaUXHvdXO4jPAjgET+TiYPVUOPaM=
-X-Google-Smtp-Source: AGHT+IG/a7SnuP7wprj7M5p94oVcAcENC8Kw/RvUxRG7Rh4yWDKYWbBkpVc1NdXqbasatAeq2LJhLQ==
-X-Received: by 2002:a05:6000:24c4:b0:430:fc3a:fbce with SMTP id
- ffacd0b85a97d-4324e4c9d45mr50225063f8f.15.1767129097256; 
- Tue, 30 Dec 2025 13:11:37 -0800 (PST)
+ bh=Zu2BaYB0moTFOIMF7F4LVDdXIbTCjZNqLUd4CaPJB3A=;
+ b=Si1Jfd8g8qPqrd84M05XukIO5R0qLTnXL+UpRDCw7VtznqwfQoifx0zsWxGbS1QexH
+ 67JUikQHpOm3Z6AmWdf5Zu/038A6p9qEJ9Gi6ndGEJWTxAIMgk6iA2TUV+KSkXxRSG8W
+ Z58J5+vTI+X8W1V64dWtZwspo9qqQWi5oMjL5euISP5McPW6gVJGfTVE/YYEvla3xlpV
+ b2gjIum6JjMN5ILJ469QjeyMgMpEo+phriRWYrSFwTkEYq/XIEbOQpyGUvr9LcNu8DB7
+ xND3/QuV4LKOY+FNeuIIKVGefoEo8Er+ejjrhKIVduHxUU58ZJlnNSJ4YJ7ZIZyGqOlG
+ P7xg==
+X-Gm-Message-State: AOJu0YzT9jULj24dlPmCJ5zv7hVyC1muBLJxRYhd+TIAqK9Gy7pGYKTZ
+ 5WVYNw/otV+9bg6s20VjVorzFZ2eMeZhddY8Ka0ns9yyxRJBHou45gJIOR9hP3A5anNUsJIrR+7
+ XZDSbBGI=
+X-Gm-Gg: AY/fxX56UH8sOYDBKOZ4kGNc5QJpzE3wYXvvPa1TltXJ1447SNFfEq6rYbDqogRk+b8
+ KH6xg7cxgcMy1AXJHsffoASRAxx4r9tPqTSXvBbZ+Rfz/kOz7QzmLstib0U/u0i6crqosQfs1/s
+ YyuE5GdmlhBIqqrdPz7nSJ5sVJxwZj60hrBYbNMqWu/Jax1g6sSrst1tK9zQ1IhrkA94Dr+Pofl
+ QyFA83o/4U8brMh52RXmEJ0eyf8jrSK+tyotd3LjcEkgQUacZ+MNoCONZRfK1x6udjkDqsZG2D7
+ niFTVlRgJ/M3JAKCjnyHwdHoH3pz3ghouFGlq7P/D2wvlx+GHjCj2Qh591u8Axm1Pw3cP4cQr8f
+ 1F496Og8e/FgI9Pala109TaZxqCo/LYHZzZALjn1ZN+xAE9IRcUcNh4egd2D2PJRNZuOrM60KUg
+ oB7ixz6vnWh//U8pLxUIBmakbd4A/Xv9Xjp5iz1RShpgewKjVdeUFo+RlEz7RF
+X-Google-Smtp-Source: AGHT+IFnLUTeFZ+YjLjJp4l9qNWPh4YMJPcKcVKQF4mU5kqNsWVJkZq0R+IcntLNquLlShqXT9i8tw==
+X-Received: by 2002:a05:600c:3508:b0:477:1bb6:17de with SMTP id
+ 5b1f17b1804b1-47d19590bbemr412516955e9.30.1767129071619; 
+ Tue, 30 Dec 2025 13:11:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eaa2beasm69062242f8f.33.2025.12.30.13.11.36
+ 5b1f17b1804b1-47d19346dfcsm739823945e9.1.2025.12.30.13.11.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:11:36 -0800 (PST)
+ Tue, 30 Dec 2025 13:11:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/34] MAINTAINERS: remove old email for Bandan Das
-Date: Tue, 30 Dec 2025 22:07:55 +0100
-Message-ID: <20251230210757.13803-34-philmd@linaro.org>
+Subject: [PULL 29/34] qga/vss-win32: Fix ConvertStringToBSTR redefinition with
+ newer MinGW
+Date: Tue, 30 Dec 2025 22:07:51 +0100
+Message-ID: <20251230210757.13803-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
 References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,33 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Nguyen Dinh Phi <phind.uet@gmail.com>
 
-Bandan recently left Red Hat and emails to his old address now result in
-bounce messages. I contacted Bandan and he asked me to remove his old
-address on his behalf.
+Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the
+_com_util namespace via <comutil.h>. This causes a redefinition
+error when building qemu-ga on Windows with these toolchains.
 
-Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251226083207.506850-1-stefanha@redhat.com>
+Add a meson check to detect whether ConvertStringToBSTR is already
+available, and conditionally compile our fallback implementation
+only when the system does not provide one.
+
+Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Message-ID: <20251218085446.462827-2-phind.uet@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
+ meson.build               | 12 ++++++++++++
+ qga/vss-win32/install.cpp |  2 ++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cbae7c26f83..1b4fd48935d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3543,7 +3543,6 @@ X: tests/qtest/migration-*
- Device Fuzzing
- M: Alexander Bulekov <alxndr@bu.edu>
- R: Paolo Bonzini <pbonzini@redhat.com>
--R: Bandan Das <bsd@redhat.com>
- R: Stefan Hajnoczi <stefanha@redhat.com>
- R: Fabiano Rosas <farosas@suse.de>
- R: Darren Kenny <darren.kenny@oracle.com> 
+diff --git a/meson.build b/meson.build
+index 14b1160c15d..8111e62bf12 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3241,6 +3241,18 @@ endif
+ # Detect host pointer size for the target configuration loop.
+ host_long_bits = cc.sizeof('void *') * 8
+ 
++# Detect if ConvertStringToBSTR has been defined in _com_util namespace
++if host_os == 'windows'
++  has_convert_string_to_bstr = cxx.links('''
++    #include <comutil.h>
++    int main() {
++        BSTR b = _com_util::ConvertStringToBSTR("test");
++        return b ? 0 : 1;
++    }
++  ''')
++  config_host_data.set('CONFIG_CONVERT_STRING_TO_BSTR', has_convert_string_to_bstr)
++endif
++
+ ########################
+ # Target configuration #
+ ########################
+diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+index 7b25d9098ba..5b7a8e9bc52 100644
+--- a/qga/vss-win32/install.cpp
++++ b/qga/vss-win32/install.cpp
+@@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)
+ 
+ 
+ /* Support function to convert ASCII string into BSTR (used in _bstr_t) */
++#ifndef CONFIG_CONVERT_STRING_TO_BSTR
+ namespace _com_util
+ {
+     BSTR WINAPI ConvertStringToBSTR(const char *ascii) {
+@@ -566,6 +567,7 @@ namespace _com_util
+         return bstr;
+     }
+ }
++#endif
+ 
+ /* Stop QGA VSS provider service using Winsvc API  */
+ STDAPI StopService(void)
 -- 
 2.52.0
 
