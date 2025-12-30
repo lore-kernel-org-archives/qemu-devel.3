@@ -4,105 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C081EE020A
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 15:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F7EEE021F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 15:50:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vabFE-0006Ai-BS; Tue, 30 Dec 2025 10:02:44 -0500
+	id 1vabyn-0004D2-5L; Tue, 30 Dec 2025 10:49:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vabFD-0006AB-2S
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 10:02:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vabFA-0004OU-G4
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 10:02:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767106958;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sq89PB/aRcuCOVIBt7Sn9cCBLLbnaVHO63YRPBgGCH0=;
- b=g7gp41g0kqlrneEhOiJPRdHPWwYveFicRLDX2QaQGG+A8ZpMHr3cjn14wQCT9cK4Nvy6oV
- IvsGoE+nnsCrxGYkM5Apv004gqP5ABSG++gKiiStBPp/QuaKTsz+6anFwwx4dC2eFAXBqb
- qcqJLXqx1hzwgDrWou1vXDCxuBerH2w=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-103-QGii4i58OuSygmRHypeajg-1; Tue, 30 Dec 2025 10:02:35 -0500
-X-MC-Unique: QGii4i58OuSygmRHypeajg-1
-X-Mimecast-MFC-AGG-ID: QGii4i58OuSygmRHypeajg_1767106954
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-8088be744afso2775743b3a.0
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 07:02:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1vabyl-0004CS-RG
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 10:49:47 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1vabyk-0006j9-C1
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 10:49:47 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-430f5ecaa08so4127215f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 07:49:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767106954; x=1767711754; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=sq89PB/aRcuCOVIBt7Sn9cCBLLbnaVHO63YRPBgGCH0=;
- b=N9eCeQfiEX2F00wxjvzwC9nIjwQT6JwRYiCCwstlvtRxRfrOaKU8YbNqkTOVad4Chy
- eXUyC3RAKZqJeWiNOnJxSv1z/o8nhdswL/Dm/A0xExJ/peZDIBF/LDSKkJ1y2pJsBbm4
- 9+GUZX3YTKp5gWQGAr69ZaqFIGl5ZO2wnaa3W+kCRFklHRmJUtQ6o2b/3XA1m8ZinvUT
- BG62olkmjleFyJamh2pMngpgpE8EoRJSEvoIVLfSJLIJFlSQsqCRuegSJjV/KzT3reNo
- k5FKV9SLRZEbka+C22oRkelbxs7j8wsIo65u37/vc+79J5hmtrK9v/G5py5fbF4e3RcW
- OOhw==
+ d=linaro.org; s=google; t=1767109783; x=1767714583; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7o4WR474es/5e2xL8IEZwboJcaG4RYzal78dgOeo56I=;
+ b=bdFe7SLXglrj3ZcakpNjsBKCVcXGHlP7Gcvkdoou0Iv9gQ/jCxJvJ/PXqDcTwK3Wnk
+ MWdnfkji/a9gvu+C/vsio3RUPdIWfcDfJovq6c0bcyb6+jey3wDPhGJh8uoepjUjRx64
+ mOqltFgkaWvOdXFcMH4RbaG6CotV9XJVoFmLMV1ssJd4hVm80YMS8PeZdreGAcrz/YF8
+ ZDxqHr+yDrX6SkyzhPExUOBu1pavxTcORzpCXZb4MsW7qKcx7sDZP0vX1uKRYFrnZCAI
+ AGko7SAkMfK5fXgXMFYsAikKcuGkLenhK/g7Ko9t6JBiVOibn6YiSP7FFEsAQA2eNYGE
+ wStA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767106954; x=1767711754;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sq89PB/aRcuCOVIBt7Sn9cCBLLbnaVHO63YRPBgGCH0=;
- b=OcegbV54JUGqYIa81/uVUZhw2IOHQCNv/pzvedqvba6kcLbyNJpdnvwWZMiEzRbdeD
- ZKaaHKW9qLCK080z7uG3GK+n/YjIB2AJjjhYVZ81gHhl4rO9zBiaZbGL1dcOObBl6Mta
- hmwwfL1CF8k/CJJxFCz6cG3zyP8bclqWap1JlBgcDnGG3+QZDaj0DEIBrG5JglAtyPva
- 16OJTJ/edpoh+vEAJscUu+o7jxssYIq16iLn6M8ZFwtDCmePL2o+KZ8/F2vXKkwkvdEh
- EogSv6eVrQoSRC5d85qbDdZyNpmYqIM6W9F7q9UD8FhPfeSgsuz0kjLrlsKemjjqQktQ
- biZw==
-X-Gm-Message-State: AOJu0YyUAVOIBO1aL+93VPxXGf1yBuExZkMNXBrsN+qvI9yt1IK7ID0S
- RjrZoKwQPU8iPbYXDHkXHv3/4HF0ftceyyqHYljcP3z8A1qhMJ1dxZyjeQYEslIFW41sIhrO+mk
- G2Hr4e+Rt3Uuw1kbRCxqJRsx5fCwU6m6FV4LsDB81m4Wl8Y79EDOTFS+p
-X-Gm-Gg: AY/fxX7ZEZkEDOBRfEHTtjfztp3zngYOIZJz54dhz1PGVZJY2ZISnxJqIF2xV0iSuyi
- vzR9M3Z7Er6RgkTmgVc/+sxDkI6+0QulW52VM7y1nP6OUQG5OhM/OP/CN0h6x8l9iYdHUzLw0tl
- MkK+tfUigwL81gbGLxkhJZzpkfESvaOaIj/6e+UI4FTXK3pJBvuny0v+nMcdP0CWR1hQVLsG7iA
- TIi9wD8tGwnW3Gf+n4QvBg86TTC7nZsgLLdXPKb3DH78iatwxD0naylyS/XK+al8SZIRZ1oO2sA
- j1dGVP23D5pvKD+WYB5HPOf+b17NZ7Bwm9OSbmJcbVNZ3gq2F46ISLBAThwljza0PwUasHEuIV7
- 2Ntg=
-X-Received: by 2002:a05:6a00:1d9f:b0:7e8:3fcb:bc3c with SMTP id
- d2e1a72fcca58-7ff545e4018mr33172108b3a.17.1767106953931; 
- Tue, 30 Dec 2025 07:02:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IENrvyz3LlEtlrpwuTRk2iAyii/rdukKduYB32U9F9ZpBNbQddw9OrWgpDNrngw+88wL0OIEg==
-X-Received: by 2002:a05:6a00:1d9f:b0:7e8:3fcb:bc3c with SMTP id
- d2e1a72fcca58-7ff545e4018mr33172057b3a.17.1767106953365; 
- Tue, 30 Dec 2025 07:02:33 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7e48f3d7sm32968532b3a.51.2025.12.30.07.02.30
+ d=1e100.net; s=20230601; t=1767109783; x=1767714583;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7o4WR474es/5e2xL8IEZwboJcaG4RYzal78dgOeo56I=;
+ b=iePMwNeoyIrAwEgGpHDvIrXkhSVBeDIWJKcMDKuMc5Juh6TCciBtEAuehmzgoJn6rG
+ 3gqWcrLDgaIa4R3AM60zJ/X7ryWEPiUZwpQAxWDt8sY+fmYU8zl1bmKZ4Nb++qH+rlZu
+ bWObv46yMw1zBgjrrG0rXbyDl3Qe612J1+XkYV7tlFeMnAd5zhOdfYQc5XExRgJ1tQtp
+ U3Ru64XYKMH4INL4JmFHgC69oBbXHNURSKfpKvOvgP/UoUqiyxO3cuNUE1b0eP4wb9ds
+ 97+CTBS8H4WqN7wrzE4PrMTtQ/n25uuRNEHN1PSBsSlG/JJi4wDTwmSjxWmO1RHzF5P1
+ Ib9A==
+X-Gm-Message-State: AOJu0YyqP3D8V85++S7Wo9PcZadCbrBJmJCaNYfnGg9tl5HvLVqWy7SM
+ d1L+hKOgNLYQbz9ip0QCpsPemwcp3kvADfoyHN6h663UjSSs0TTmzWIfP8WXfJg2YYw=
+X-Gm-Gg: AY/fxX6T7j8dZ09ebDbn4zO5fwCBX4RLnD8zDmmfEJ+CTnaw1vgg+JufXCI0c94zgCU
+ gjicjfFrQvnPwBp1EASZeac8/PWx8uZAPwR7FntUO/KtaWqzIITBuq4Jb01ou0TAuRL7Kunyhpp
+ 3s0QMr7rj4LqIK2Kq9r8wWkuaehp8vqaUcPzsPv1kD1v/JukBcJIoW3QT+mKfG3VLjMoc1R1/RT
+ kuyIOv/wZhSujwg9WZxk/Jnha5XbLDKX4UiT8QYWVE6i2/zRx2ABnUCLzHRNH5cDIcPHdrMj+eg
+ Hr68hn8av06G+Jsc/4DS5F/jG25Ybhrq4gG3MmmWc6U8nB5BP2Bbw8W7fU3yay7QGeuIzeH78NQ
+ tbY/Yf+AlpNFyvvy/X/MZ514Nc4OH/Nbs6xNt9+UONTSD/aovW5MiRsAeVpL2jS5vMAOPXHMbDV
+ BA6BVHbq978mkQ87Zb/zAaaYEfWcUymh/6cBp/gEp7baWttzVvT0g=
+X-Google-Smtp-Source: AGHT+IGcnGQwF7BtUFWWzHfH1eLReTptWIEqZ4OfRfZtQXz5imzUdnzwwqgjZoltymIcW6UaERgGrA==
+X-Received: by 2002:a5d:5f82:0:b0:432:852d:8f61 with SMTP id
+ ffacd0b85a97d-432852d8f98mr16972869f8f.21.1767109783496; 
+ Tue, 30 Dec 2025 07:49:43 -0800 (PST)
+Received: from myrica.home (233.226.6.51.dyn.plus.net. [51.6.226.233])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324ea1aee5sm70343633f8f.4.2025.12.30.07.49.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Dec 2025 07:02:33 -0800 (PST)
-Date: Tue, 30 Dec 2025 10:02:27 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Lukas Straub <lukasstraub2@web.de>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>, Juan Quintela <quintela@trasno.org>
-Subject: Re: [PATCH 0/3] migration: Add COLO multifd support and COLO
- migration unit test
-Message-ID: <aVPpg_LwlGFIPfen@x1.local>
-References: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
+ Tue, 30 Dec 2025 07:49:43 -0800 (PST)
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: eric.auger@redhat.com
+Cc: qemu-devel@nongnu.org, mst@redhat.com, imammedo@redhat.com,
+ anisinha@redhat.com, jpb@kernel.org,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>
+Subject: [PATCH] MAINTAINERS: Update VIOT maintainer
+Date: Tue, 30 Dec 2025 15:48:45 +0000
+Message-ID: <20251230154844.325364-2-jean-philippe@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,65 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 30, 2025 at 03:05:43PM +0100, Lukas Straub wrote:
-> Hello everyone,
-> This adds COLO multifd support and migration unit tests for COLO migration
-> and failover.
+Unfortunately I can't contribute to QEMU for the time being, but Eric
+has offered to take on maintainership of the ACPI VIOT. Thank you!
 
-Hi, Lukas,
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'll review the series after the new year.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cbae7c26f8..a11338f1b8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2174,7 +2174,7 @@ S: Maintained
+ F: hw/riscv/virt-acpi-build.c
+ 
+ ACPI/VIOT
+-M: Jean-Philippe Brucker <jean-philippe@linaro.org>
++M: Eric Auger <eric.auger@redhat.com>
+ S: Supported
+ F: hw/acpi/viot.c
+ F: hw/acpi/viot.h
 
-Could you still introduce some background on how you're deploying COLO?  Do
-you use it in production, or for fun?
-
-COLO is still a nice and interesting feature, said that, COLO has quite a
-lot of code plugged into migration core.  I wished it's like a multifd
-compressor which was much more self-contained, but it's not.  I wished we
-can simplify the code in QEMU migration.
-
-We've talked it through before with current COLO maintainers, it looks to
-me there aren't really much users using it in production, meanwhile COLO
-doesn't look like a feature to benefit individual QEMU users either.
-
-I want to study the use case of COLO in status quo, and evaluate how much
-effort we should put on it in the future.  Note that if it's for fun we can
-always use a stable branch which will be there forever.  We'll need to
-think about QEMU evolving in the future, and what's best for QEMU.
-
-Thanks,
-
-> 
-> Regards,
-> Lukas
-> 
-> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
-> ---
-> Lukas Straub (3):
->       multifd: Add colo support
->       migration-test: Add -snapshot option for COLO
->       migration-test: Add COLO migration unit test
-> 
->  migration/meson.build              |   2 +-
->  migration/multifd-colo.c           |  57 ++++++++++++++++++
->  migration/multifd-colo.h           |  26 +++++++++
->  migration/multifd.c                |  14 ++++-
->  tests/qtest/meson.build            |   7 ++-
->  tests/qtest/migration-test.c       |   1 +
->  tests/qtest/migration/colo-tests.c | 115 +++++++++++++++++++++++++++++++++++++
->  tests/qtest/migration/framework.c  |  69 +++++++++++++++++++++-
->  tests/qtest/migration/framework.h  |  10 ++++
->  9 files changed, 294 insertions(+), 7 deletions(-)
-> ---
-> base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
-> change-id: 20251230-colo_unit_test_multifd-8bf58dcebd46
-> 
-> Best regards,
-> -- 
-> Lukas Straub <lukasstraub2@web.de>
-> 
-
+base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
 -- 
-Peter Xu
+2.51.0
 
 
