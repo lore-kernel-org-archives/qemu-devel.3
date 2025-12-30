@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7795E95A79
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 11:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4212DE95A7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 11:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaYJY-0005v7-81; Tue, 30 Dec 2025 06:55:00 -0500
+	id 1vaYJY-0005yc-8i; Tue, 30 Dec 2025 06:55:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vaYJW-0005tU-7r
+ id 1vaYJW-0005rt-0J
  for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:54:58 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vaYJT-0005We-Bt
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:54:58 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1vaYJT-0005Vy-7r
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:54:57 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxecKCvVNpt2IEAA--.13509S3;
- Tue, 30 Dec 2025 19:54:42 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxMvF_vVNpsWIEAA--.14050S3;
+ Tue, 30 Dec 2025 19:54:39 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJBxLMJ+vVNp_78GAA--.15307S4;
- Tue, 30 Dec 2025 19:54:42 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxLMJ+vVNp_78GAA--.15307S2;
+ Tue, 30 Dec 2025 19:54:39 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v3 2/3] target/loongarch: Fix exception BCE missing update
- CSR_BADV
-Date: Tue, 30 Dec 2025 19:30:01 +0800
-Message-Id: <20251230113002.59623-3-gaosong@loongson.cn>
+Subject: [PATCH v3 0/3] Fix some exception missing update CSR_BADV
+Date: Tue, 30 Dec 2025 19:29:59 +0800
+Message-Id: <20251230113002.59623-1-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20251230113002.59623-1-gaosong@loongson.cn>
-References: <20251230113002.59623-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxLMJ+vVNp_78GAA--.15307S4
+X-CM-TRANSID: qMiowJBxLMJ+vVNp_78GAA--.15307S2
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,36 +64,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Exception BCE need update CSR_BADV, and the value is env->pc.
+Hi,
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/tcg/tcg_cpu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+This series fix some exception missing update CSR_BADV, such as
+ADEF/ADEM/BCE. and some exceptions are needn' update CSR_BADV.
+Exception BCE and ADEF CSR_BADV from env->pc. Exception ADEM CSR_BADV
+from virtual address.
 
-diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-index ab247e82ec..c05a06eeb5 100644
---- a/target/loongarch/tcg/tcg_cpu.c
-+++ b/target/loongarch/tcg/tcg_cpu.c
-@@ -113,6 +113,9 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-         cause = cs->exception_index;
-         update_badinstr = 0;
-         break;
-+    case EXCCODE_BCE:
-+        env->CSR_BADV = env->pc;
-+        QEMU_FALLTHROUGH;
-     case EXCCODE_SYS:
-     case EXCCODE_BRK:
-     case EXCCODE_INE:
-@@ -121,7 +124,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-     case EXCCODE_FPE:
-     case EXCCODE_SXD:
-     case EXCCODE_ASXD:
--    case EXCCODE_BCE:
-     case EXCCODE_ADEM:
-     case EXCCODE_PIL:
-     case EXCCODE_PIS:
+Thanks.
+Song Gao
+
+Song Gao (3):
+  target/loongach: Fix some exception need't upadate CSR_BADV
+  target/loongarch: Fix exception BCE missing update CSR_BADV
+  target/loongarch: Fix exception ADEF/ADEM missing update CSR_BADV
+
+ target/loongarch/tcg/tcg_cpu.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
 -- 
 2.47.3
 
