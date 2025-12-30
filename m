@@ -4,116 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3873EE95A6E
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 10:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6D0E95A6C
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 11:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaWsI-0004j7-FM; Tue, 30 Dec 2025 05:22:46 -0500
+	id 1vaXdi-0003hQ-KZ; Tue, 30 Dec 2025 06:11:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1vaWsF-0004eP-UB; Tue, 30 Dec 2025 05:22:43 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1vaWsE-00038F-AU; Tue, 30 Dec 2025 05:22:43 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BTMRejQ029976;
- Tue, 30 Dec 2025 10:22:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lBQYwb
- Z7/O3KG9kLYfknibxVtharLjOFLuM2fZYDsjY=; b=egzhFGBbobRU2EL+K99sr8
- 62bfHjfMTv8RNmhqgbR1OjTQZnlR4kd0OiIZNteTNvdsX6Leff+lu32No89SJL2U
- Kzu/TRVp6JxwTspRNF8Cq9vf15hUvimMjr7KRKUpvk/f9XNzQfjoI0NiEha2df3d
- 1LuzrfoDlE0u88DrnqMxvIILdDz11+9enAGXp4kygAjMjL/knDWq8b6R1RVBu3Ne
- J2UcD94K1+9QSOHZRa1GnIlVshjhGKOFrK/12nmRUNJTHrd3SWPRfNSw44s6I+rz
- OcfKT24X3otZXDOK2/L7AElEVCKJYrRWqNQZq3f4z1oTPdH7rGkkSe2iwYM6w0LA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ba74u3079-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Dec 2025 10:22:38 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BUAIjSU001818;
- Tue, 30 Dec 2025 10:22:38 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ba74u3078-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Dec 2025 10:22:38 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BU6TWtn023904;
- Tue, 30 Dec 2025 10:22:37 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bat5y9jsx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Dec 2025 10:22:36 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BUAMZ0M19399214
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Dec 2025 10:22:35 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 66FB258054;
- Tue, 30 Dec 2025 10:22:35 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D87D5805A;
- Tue, 30 Dec 2025 10:22:34 +0000 (GMT)
-Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Dec 2025 10:22:34 +0000 (GMT)
-From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- saif.abrar@linux.vnet.ibm.com
-Subject: [PATCH v2 8/9] pnv/phb4: Implement IODA PCT table
-Date: Tue, 30 Dec 2025 04:21:26 -0600
-Message-ID: <20251230102156.886288-9-saif.abrar@linux.vnet.ibm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
-References: <20251230102156.886288-1-saif.abrar@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaXdZ-0003gZ-E3
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:11:38 -0500
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaXdV-0004PF-5q
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:11:37 -0500
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-47d493a9b96so14524915e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 03:11:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767093091; x=1767697891; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iboKySgS+glvER0jzQ4xSzFcejAGlCIzD8S2d+hiauU=;
+ b=aKVc54+5H3vKjCMh8jt+it1/hpoVmotcEaa/49vDaUqlt2/qy1/HKZzorKfOn+s74b
+ vksQRLp5ApyDg8PgU8S+rSUNH7CeuujmIeLA2w5jugfgC42FKhsjyYqHgo+cpZGuoe+s
+ RY0uQpDo0wZHmGaAXDyyK2fQYYzqjyH/cw7DhQGbUgwLf8GotDEFLJ/7Jh1K/EwqjqTm
+ MUXVXRr9YDmZGz36pgy11BRzO9fAyKs2QHE4c+k1G72G/tC3DY/hEn7hiIF+PG5cjpfm
+ O+w3AJP8orqnaQJWrp6CyciPS+f4uCD17hivF3Elm8m3SHHQHqYPsJ4ZxGv1niRI8JYq
+ +/xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767093091; x=1767697891;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iboKySgS+glvER0jzQ4xSzFcejAGlCIzD8S2d+hiauU=;
+ b=BHlooFn8vqh/SYkEpIll+jAxCz6ho6mWZ8/ISrcEKBWB3OAgcKw3r2gvia0aF0tX/l
+ BQ778RgNd8in0X6fCsfEJkNZbbTNtS4LSuN2NnbluOwWZ0/07k2cUs/XQR72/ONs1iIw
+ 8ASi8KTc5MNE0/Y8OfXYQ4SWEzNRBIxCbnGY1Ipmsa8ENhpR1RXIoFNipFk2Au5eqfKX
+ Lox6hEJxZKpUkCh1800pg+RJM4uPOVMOecABNBa05yP7TKgWKiWbOJ0qfORfV12U95bf
+ BXevWqyo0aanZCnIZGr6LdGfmbqWssoZQDKRkynXyBgIGqKTcBccR1vablXV4e8JuTti
+ pozw==
+X-Gm-Message-State: AOJu0YxIj1Rsz/MJSlDXWNe6Tk5X7ChBsT4Y8q9BucXL2zE00NsqLQu1
+ yi6xAPN5L+TXp4IEg8/+MbnWjK6Piw7P1nt3FO2cXJ9h/gbovkfYLfa4EoEmeM5dgcg=
+X-Gm-Gg: AY/fxX6KCzgSeZM4A971CCZDLUy+DHkn0mb2fsI7PPQ2P1Vpi7eQZKKu0c++QZZjmeb
+ dX9X2iowOj/EerMNTjuQltmwkRTnpNNqAo9U/cdjO9Z9c5vEXCSeIR5Hjz8eUqkL4BqRFkiuaql
+ baAkM1vfI7prMXSsBNfP4/acSwi7YI8ucv7qUm+XOdy7SszdkpqaXGFrV93fhmADg9mAOf6Jdfk
+ tt7MiJqRdSLQmqCevixmNglk7EpMGCyGzJoxio7868Cv55IsM/RL0rEz8aYFEfrTpZ5TKmzDW6g
+ 9yOK0nmBqRMwcoVLJZSJ0MRbcTW6xfyO0CCpvk2V/Sd0PbpLRK8st6dOMxsISQgd9f9Whflrmvy
+ CCgLR1X1j8/jdGk+nkA2tjwoU052PNhDkBfQwjGtmqvhbqruLHjeGeMwuxZlWYM1JBfFnfQJiwV
+ sD7Xia6KG4f1oxx7Fq0tywmlIeVSsVuedjMxK3NEPiO/mmGzL4NFU1GpERD6w3YlM3
+X-Google-Smtp-Source: AGHT+IHr3zpDFjE6qM0YdavFHZPjBR3MboYZUYZ+cfShfNADoBH22uJcM9H9jkyy61tJ1Bvvgw1vEQ==
+X-Received: by 2002:a05:600c:45d3:b0:47d:4044:4ada with SMTP id
+ 5b1f17b1804b1-47d40444b44mr231439335e9.13.1767093091319; 
+ Tue, 30 Dec 2025 03:11:31 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d193d4f09sm602723675e9.12.2025.12.30.03.11.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Dec 2025 03:11:30 -0800 (PST)
+Message-ID: <10a72070-3a06-4933-a6e8-91220881d3ac@linaro.org>
+Date: Tue, 30 Dec 2025 12:11:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/9] system/memory: Allow restricting legacy ldst_phys()
+ API usage
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ qemu-arm@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson
+ <anjo@rev.ng>, David Hildenbrand <david@kernel.org>, qemu-riscv@nongnu.org,
+ Steven Lee <steven_lee@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Troy Lee <leetroy@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Alistair Francis <alistair.francis@wdc.com>,
+ Joel Stanley <joel@jms.id.au>
+References: <20251224151351.86733-1-philmd@linaro.org>
+ <20251224151351.86733-6-philmd@linaro.org>
+ <CAAjaMXZXSBQx+tQOyg6PVr1Y5R0c0uFsMrC9TdWE4mcvvejKZA@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAAjaMXZXSBQx+tQOyg6PVr1Y5R0c0uFsMrC9TdWE4mcvvejKZA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Bd9whcPASCU3Sy0co6l1kdXfwbv9cdgP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjMwMDA5MiBTYWx0ZWRfX2eujULApXV6b
- l09AGqI7gz/bZQNHMi7fqHplLRn+coB8NOMXEOsPJUVHp8wChSf67EaDUZ8qzRE3DpkLYuahYFC
- qQhCLRdyRu/fIUz6wFNN5DLbhU/AXGIvL5lFR4Srnq7vjP357NIWptlCg2xLEe73JGluFzNWVzK
- NI30qiP5oJwnjAVlIYGkoFk3nN+n+wiIHF8FMrpnUpJ5Yd9K6sMDHFUwKaXoK6Pzm3jzfEBQllZ
- KjPjdmjdxL/soMceRjTnQ7WhsRhWSvxQwPc+gwN0Oy1ZTYMq31fc30Tgxi5vaj9PDwzTUg2xIqF
- awzT6TZcWz7TKzT0Ha+BASaGBtzDJuLYB0fRgDojsOpaCgNbqmFcWtW1SSQ7+KcYrXyR6YumtJN
- iQokZnPzP0+DRJT0Soyn+/UPohTMAs1PvZ18lm+3ypqVLj1vdJHAI7vs721cuAIZgJpgiDzgYjt
- vriDb9Ymb76x3jRxE3w==
-X-Authority-Analysis: v=2.4 cv=AN8t5o3d c=1 sm=1 tr=0 ts=6953a7ee cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=zgsLwUnGCMBw8fX4dgEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-GUID: Cq92P27LlKghK8d7t7bt3a_Cxr_2Ce05
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-29_07,2025-12-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 adultscore=0 suspectscore=0 malwarescore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2512300092
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,74 +119,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IODA PCT table (#3) is implemented
-without any functionality, being a debug table.
+On 24/12/25 19:34, Manos Pitsidianakis wrote:
+> On Wed, Dec 24, 2025 at 5:14 PM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> Commit 500131154d6 ("exec.c: Add new address_space_ld*/st*
+>> functions") added a new API to fix a shortcoming of the
+>> ld/st*_phys() API, which does blind bus access, not reporting
+>> failure (and it also allow to provide transaction attributes).
+>>
+>> Later commit 42874d3a8c6 ("Switch non-CPU callers from ld/st*_phys
+>> to address_space_ld/st*") automatically converted the legacy uses
+>> to the new API, not precising transaction attributes
+>> (MEMTXATTRS_UNSPECIFIED) and ignoring the transation result (passing
+>> NULL pointer as MemTxResult).
+>>
+>> While this is a faithful replacement, without any logical change,
+>> we later realized better is to not use MEMTXATTRS_UNSPECIFIED or
+>> NULL MemTxResult, and adapt each call site on a pair basis, looking
+>> at the device model datasheet to do the correct behavior (which is
+>> unlikely to ignore transaction failures).
+>>
+>> Since this is quite some work, we defer that to device model
+>> maintainers. Meanwhile we introduce a definition, to allow a
+>> target which removed all legacy API call to prohibit further
+>> legacy API uses, named "TARGET_NOT_USING_LEGACY_LDST_PHYS_API".
+>>
+> 
+> Personally the negation (i.e. TARGET_USING_LEGACY_LDST_PHYS_API) would
+> make more sense since you're opting-in an API but that must be more
+> complex to introduce I guess?
 
-Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
----
- hw/pci-host/pnv_phb4.c              | 6 ++++++
- include/hw/pci-host/pnv_phb4.h      | 2 ++
- include/hw/pci-host/pnv_phb4_regs.h | 1 +
- 3 files changed, 9 insertions(+)
+Not much more complex, this was the previous approach (allow
+all then opt out):
+https://lore.kernel.org/qemu-devel/20251218212814.61445-5-philmd@linaro.org/
 
-diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index ba351bb147..528117f409 100644
---- a/hw/pci-host/pnv_phb4.c
-+++ b/hw/pci-host/pnv_phb4.c
-@@ -264,6 +264,10 @@ static uint64_t *pnv_phb4_ioda_access(PnvPHB4 *phb,
-         mask = phb->big_phb ? PNV_PHB4_MAX_MIST : (PNV_PHB4_MAX_MIST >> 1);
-         mask -= 1;
-         break;
-+    case IODA3_TBL_PCT:
-+        tptr = phb->ioda_PCT;
-+        mask = 7;
-+        break;
-     case IODA3_TBL_RCAM:
-         mask = phb->big_phb ? 127 : 63;
-         break;
-@@ -362,6 +366,8 @@ static void pnv_phb4_ioda_write(PnvPHB4 *phb, uint64_t val)
-     /* Handle side effects */
-     switch (table) {
-     case IODA3_TBL_LIST:
-+    case IODA3_TBL_PCT:
-+        /* No action for debug tables */
-         break;
-     case IODA3_TBL_MIST: {
-         /* Special mask for MIST partial write */
-diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
-index bea0684724..6bb75edeef 100644
---- a/include/hw/pci-host/pnv_phb4.h
-+++ b/include/hw/pci-host/pnv_phb4.h
-@@ -65,6 +65,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4RootBus, PNV_PHB4_ROOT_BUS)
- #define PNV_PHB4_MAX_LSIs          8
- #define PNV_PHB4_MAX_INTs          4096
- #define PNV_PHB4_MAX_MIST          (PNV_PHB4_MAX_INTs >> 2)
-+#define PNV_PHB4_MAX_PCT           128
- #define PNV_PHB4_MAX_MMIO_WINDOWS  32
- #define PNV_PHB4_MIN_MMIO_WINDOWS  16
- #define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
-@@ -138,6 +139,7 @@ struct PnvPHB4 {
-     /* On-chip IODA tables */
-     uint64_t ioda_LIST[PNV_PHB4_MAX_LSIs];
-     uint64_t ioda_MIST[PNV_PHB4_MAX_MIST];
-+    uint64_t ioda_PCT[PNV_PHB4_MAX_PCT];
-     uint64_t ioda_TVT[PNV_PHB4_MAX_TVEs];
-     uint64_t ioda_MBT[PNV_PHB4_MAX_MBEs];
-     uint64_t ioda_MDT[PNV_PHB4_MAX_PEs];
-diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-index c1d5a83271..e30adff7b2 100644
---- a/include/hw/pci-host/pnv_phb4_regs.h
-+++ b/include/hw/pci-host/pnv_phb4_regs.h
-@@ -486,6 +486,7 @@
- 
- #define IODA3_TBL_LIST          1
- #define IODA3_TBL_MIST          2
-+#define IODA3_TBL_PCT           3
- #define IODA3_TBL_RCAM          5
- #define IODA3_TBL_MRT           6
- #define IODA3_TBL_PESTA         7
--- 
-2.47.3
+But Pierrick suggested the less aggressive approach, opting
+in, disturbing maintainers a bit less. In term of code churn
+I expect the same lines of code amount to change.
+
+> 
+> In any case:
+> 
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+Thanks!
 
 
