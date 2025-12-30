@@ -4,94 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC44BE92722
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 06:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C622CE94110
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 06:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaSyw-0006qP-IG; Tue, 30 Dec 2025 01:13:22 -0500
+	id 1vaT4E-0001NB-4Z; Tue, 30 Dec 2025 01:18:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vaSym-0006oQ-EW
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 01:13:12 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vaT4C-0001Mt-MN
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 01:18:48 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vaSyl-00048M-0E
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 01:13:12 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-ba599137cf8so3156380a12.0
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 22:13:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vaT49-0005WU-VP
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 01:18:47 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b79af62d36bso1645354866b.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 22:18:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1767075189; x=1767679989; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1767075524; x=1767680324; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ldf2kbdgnmOIY67ePy0AhhoIYKjLiKyp8sJYjnWKUkU=;
- b=JO4P6InE5otQ3kAvu0Vo0NH5bfKbjL+MrNWXcPziIi2EsxGXHy5p/FwCxxZRGpe/CJ
- JpM/LArEqvTmoOCxafUtqmEZ+NlRfgBOBdHQ+a/O1S+se7k1+exVESNglSVxXaePUkbm
- YwtHzPEJxtHhirtukUrohMZ9t6PsTVP1RipZ/KC9B1SZDxMAL1mpOGv0FVVcjNcnbj/j
- wZ3Bv8qJXlkEbfaU3nHGQgqnaFObHJmxDZUJ4EToBpMali2swGfuibGqDonj3Ol6HE+4
- UZxjV0uo7rIKBqrhGbx0VEvI3JXBtvSI4Bs5tv5JWLjItiL0QgoYGmCHKUPQS+j4neqc
- A+Yw==
+ bh=WPa2nSKspOcaMDlZdktnwG9tq8ZSvPY1cl/vu337I6Y=;
+ b=jdt1sPfuMNef9cLuBxcOwemF0ZUGAtRZv33+NcxTHL2DYScmhqsNoZmTAX0CuIWkJX
+ DeenSq3gXOYvfmmtLbKdnHgLlYD+7x6BEvGfGcoPWiWF22W+uvk9j+/CfzW/nsEFas2O
+ 9aLJmK4DCkpozGOILKnmqEHWuFhqKc5IQ//P23slV3RoVsW36RIhVuC7Ge6DLz8vt7id
+ ZYESttbAOmHm75MONg/VnMwUx6kjgUlSFlzqxcEwC83+xdAXb/wqgSPy855jkda2guP8
+ f++yB/mTwDll9DivYawEH+uwDQc7JpussJeT20m/3X+Q3vK7dBHE4U6+MN57xuvEW2CY
+ UMCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767075189; x=1767679989;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1767075524; x=1767680324;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ldf2kbdgnmOIY67ePy0AhhoIYKjLiKyp8sJYjnWKUkU=;
- b=sWQWSf6FfBRH2uC5pOok8cZdXc60+YMz4+rfOXGn1Az+ilOi/9eF8QcYYp9zvSKaIh
- 9MEaG51DNztH92XomZlt9GpnfRKu7DcrfKHSBmz8Bt5h1dvOUu2O22XQQ+IIWlwWwMmY
- 1Ti0x9MA797Gp+QhATX6pBmrezw82XI3AeI6tCdhy4JGceT5Y5giM+GP2m4RjqDQronX
- CNY40l2ns6huNKyUx3ECy7pgk0ZSQ0L3fkHK/QEhdkmJoB+ggaGjs+kGvlSAX/GRo9f9
- wJtmDLjM3m9CqRYhm8e4ohosMOcIX8KPFJKTB7BvQ+E8YYsz01hza3Gq+/eD+JeidEaz
- 4kNg==
-X-Gm-Message-State: AOJu0Yx6Nc+tG1QMSLoFGrHE32hYdr88LJcYg1At//jfXYw+wQ6qUwdE
- ECrVogEgs3rlpw+RcA5+PPVTlRFcOdPk9PovbAVtMKjKa+ooTjnTCk8GoPpO3nnduIupSQ7e6iG
- V4zUyxJYEAX403ZtFhURj1J4eqljgznRab5xMRTCKuF1yCNf82IPZceI6d67wOZtNfMoc12GzwP
- TZMnleNwIq8porYNXOj+l8P6lNp4ZHjIYxhAoiog5BObs=
-X-Gm-Gg: AY/fxX7okmXX0E8pkX+9/Ini0qy1uiX+c5Dec1YYi4cCbrUQyMGF2wI5ShQmdkc/P79
- bTNJ4fvWWZmejct6AkIjnW5Q3LRQXDN0RS7J06D/rX0bBZlLCA9EuytQW2C4NQqEAvsKlB45lYr
- 19NsDM7SkxZcHKKecH7Zpwx7seSdODOEZVftu99IzwYACXXaoWVcEuFSy85MZgudblT1cIk75Ok
- WGTEyTzIZDCshcrBQGTgsUvcaB7SPID8v9L+yfJy+9dnM2jYm+KI5Bua1H2S4pWzDGW4WPRUsfy
- 3/qXK50tpCTYMLtp8uqV++sU5Q8zmh3KBUGCDasZFec4+9YhDvpIW8F9cgPRuzI9gb+FB3rEjrQ
- q2XmMt7cThGQSlE72aNeB1mMza76HRO+oVP6Cv/WFW9EZRl4PH1bjSsgyd7mPE4fMfS/5z+ABHf
- ZoKHHOGqnREaVLQOQoJV+HuqAoXffBgxvhhvvPSUQ44Qe99Ha08YgwUzdlYGkE
-X-Google-Smtp-Source: AGHT+IHksMYj76gJ5tO2uFaAuwxe0pWIqOBUjvIFGQB/KzzPm4/ozfoKClvjfgqpwOpbabLyDuuCrQ==
-X-Received: by 2002:a05:6300:83:b0:366:14b0:4afe with SMTP id
- adf61e73a8af0-37554a4cceamr37636847637.37.1767075189245; 
- Mon, 29 Dec 2025 22:13:09 -0800 (PST)
-Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c1e79a1778esm26960906a12.13.2025.12.29.22.13.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Dec 2025 22:13:09 -0800 (PST)
-From: Jay Chang <jay.chang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jay Chang <jay.chang@sifive.com>
-Subject: [PATCH v2 2/2] target/riscv: Use ROUND_DOWN for PMP address alignment
-Date: Tue, 30 Dec 2025 14:12:58 +0800
-Message-ID: <20251230061258.15596-3-jay.chang@sifive.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251230061258.15596-1-jay.chang@sifive.com>
-References: <20251230061258.15596-1-jay.chang@sifive.com>
+ bh=WPa2nSKspOcaMDlZdktnwG9tq8ZSvPY1cl/vu337I6Y=;
+ b=g1Lp6KGqh1thp7aNzy+xkT8i5Nw7A4bWQvIUGc700qDWtIFzrRCDl/yS/5EPCfVvh7
+ azo3H/4KN4rGN/9valeVkqU7GxeumDVTbSyfkk1sBgovEXfiY4InuHPuy46HJ/2wcVDY
+ 2Y5mP73TaMjCdg8n1RLv9Dm+/7SE0WZp+90p6zD4H0GAseQr0O+gFtYEA6OZ54ZQv1cw
+ 7bXWbo2PBsYoLsij5TwnDhShzJ++OLjveNdvMyDzcsmnBtObBKtLTKqXA/mogPhEB9p4
+ DlVxCgzDVATKGa4Om60tPSjBUxPr3ICFyAzYyhu/hGkPv4mmmvlEuUL8yt+GiYKMGbCl
+ zAlQ==
+X-Gm-Message-State: AOJu0YxuII8oSRgUNWx4XhUmvIR1SqKCEVYq591MQOwwGHpwayBGzsAf
+ +xSG9DPR0WMSiyACzVDO5gi4ulvC8UZlHB3J22m7A6nvLhH5LO6jASemROgpHRrHG/Q4eN7waa1
+ 7vZwOU77v3oLjJgjr62eL+XDifUjZIiaiL+NTn2vHGg==
+X-Gm-Gg: AY/fxX4H9Se/pRzpVju8ir1W/sy3jgsimc4aXMtqqMdpdRGQjUeVBDMhY1jKAeixkKA
+ EmbCLb041TMuZabtyS3/Ny1WUS67FEYcGkuF3WY4FkRRqlSVXe9Y0bKgfDUwrgP6D7uAnN806iy
+ TZ+A7ogJN3HdFMAatkygECgQzTXxM32lUB1/Tgh9Awivue2a/41KQPf0ELmQpJGDy/ixk7V5dSP
+ 2xOaln2g39LaX2Fq3Ed7WYP3dF1lkKyGy7CXoxZTUE45JZp6dx40NvNnK0e80FiFGahWdnoLJuu
+ mN1zZ3SkJn2X/3YWwd4zCNB4d6d7e1QoY7/HekDsVG7LIAiB1Q==
+X-Google-Smtp-Source: AGHT+IEIzHmoE6pLlS2WrJZwkHA9pivOwo+keYZD+aLW4KnohBG+kFoZxWNGK263UG+1v3CDYGvDV5qKOtFBuoGP8yI=
+X-Received: by 2002:a17:907:6e8e:b0:b73:b0eb:16f5 with SMTP id
+ a640c23a62f3a-b8037152abcmr3025584266b.31.1767075524082; Mon, 29 Dec 2025
+ 22:18:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=jay.chang@sifive.com; helo=mail-pg1-x531.google.com
+References: <20251229225517.45078-1-philmd@linaro.org>
+ <20251229225517.45078-4-philmd@linaro.org>
+In-Reply-To: <20251229225517.45078-4-philmd@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 30 Dec 2025 08:18:18 +0200
+X-Gm-Features: AQt7F2oB-7Bmw7Q-hGq_DlQukhK_BJ184qaf9QuKnvPfF2T1PpG1QomyKHnfvRo
+Message-ID: <CAAjaMXbOeGRZaNCu=8iK3383SZAPohUwBFunk3odHUkTdL5YiQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] target/hppa: Use explicit big-endian LD/ST API
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Anton Johansson <anjo@rev.ng>, Sven Schnelle <svens@stackframe.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Helge Deller <deller@gmx.de>, 
+ Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,41 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace manual bit manipulation with ROUND_DOWN() macro for
-better readability. The behavior remains unchanged.
+On Tue, Dec 30, 2025 at 12:55=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> The HPPA architecture uses big endianness. Directly use
+> the big-endian LD/ST API.
+>
+> Mechanical change using:
+>
+>   $ end=3Dbe; \
+>     for acc in uw w l q tul; do \
+>       sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
+>              -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
+>         $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/hppa/); \
+>     done
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
 
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
----
- target/riscv/pmp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 01b337f529..7ac5cbfae2 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -235,8 +235,9 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
-     case PMP_AMATCH_TOR:
-         /* Bits pmpaddr[G-1:0] do not affect the TOR address-matching logic. */
-         if (g >= 1) {
--            prev_addr &= ~((1ULL << g) - 1ULL);
--            this_addr &= ~((1ULL << g) - 1ULL);
-+            target_ulong granule = 1ULL << g;
-+            prev_addr = ROUND_DOWN(prev_addr, granule);
-+            this_addr = ROUND_DOWN(this_addr, granule);
-         }
-         if (prev_addr >= this_addr) {
-             sa = ea = 0u;
-@@ -625,7 +626,8 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
-         case PMP_AMATCH_TOR:
-             /* Bit [g-1:0] read all zero */
-             if (g >= 1 && g < TARGET_LONG_BITS) {
--                val &= ~((1ULL << g) - 1ULL);
-+                target_ulong granule = 1ULL << g;
-+                val = ROUND_DOWN(val, granule);
-             }
-             break;
-         case PMP_AMATCH_NAPOT:
--- 
-2.48.1
-
+>  target/hppa/gdbstub.c    | 2 +-
+>  target/hppa/int_helper.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
+> index 0c5e41410a0..4f016a0e61d 100644
+> --- a/target/hppa/gdbstub.c
+> +++ b/target/hppa/gdbstub.c
+> @@ -168,7 +168,7 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t=
+ *mem_buf, int n)
+>          return 0;
+>      }
+>
+> -    val =3D ldn_p(mem_buf, hppa_reg_size(env));
+> +    val =3D ldn_be_p(mem_buf, hppa_reg_size(env));
+>
+>      switch (n) {
+>      case 0:
+> diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+> index 4e4869285b5..d5a20cd549d 100644
+> --- a/target/hppa/int_helper.c
+> +++ b/target/hppa/int_helper.c
+> @@ -178,7 +178,7 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+>                          break;
+>                      }
+>                  }
+> -                env->cr[CR_IIR] =3D ldl_phys(cs->as, paddr);
+> +                env->cr[CR_IIR] =3D ldl_be_phys(cs->as, paddr);
+>                  if (i =3D=3D EXCP_ASSIST) {
+>                      /* stuff insn code into bits of FP exception registe=
+r #1 */
+>                      env->fr[0] |=3D (env->cr[CR_IIR] & 0x03ffffff);
+> --
+> 2.52.0
+>
 
