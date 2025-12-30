@@ -4,79 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F7EEE021F
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 15:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D00AEE4988
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 16:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vabyn-0004D2-5L; Tue, 30 Dec 2025 10:49:49 -0500
+	id 1vaco9-0000Zf-1B; Tue, 30 Dec 2025 11:42:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1vabyl-0004CS-RG
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 10:49:47 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <pasha.tatashin@soleen.com>)
+ id 1vaco7-0000ZT-VB
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 11:42:51 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1vabyk-0006j9-C1
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 10:49:47 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-430f5ecaa08so4127215f8f.3
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 07:49:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pasha.tatashin@soleen.com>)
+ id 1vaco6-0001RY-Bf
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 11:42:51 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-64b8123c333so14868263a12.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 08:42:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767109783; x=1767714583; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7o4WR474es/5e2xL8IEZwboJcaG4RYzal78dgOeo56I=;
- b=bdFe7SLXglrj3ZcakpNjsBKCVcXGHlP7Gcvkdoou0Iv9gQ/jCxJvJ/PXqDcTwK3Wnk
- MWdnfkji/a9gvu+C/vsio3RUPdIWfcDfJovq6c0bcyb6+jey3wDPhGJh8uoepjUjRx64
- mOqltFgkaWvOdXFcMH4RbaG6CotV9XJVoFmLMV1ssJd4hVm80YMS8PeZdreGAcrz/YF8
- ZDxqHr+yDrX6SkyzhPExUOBu1pavxTcORzpCXZb4MsW7qKcx7sDZP0vX1uKRYFrnZCAI
- AGko7SAkMfK5fXgXMFYsAikKcuGkLenhK/g7Ko9t6JBiVOibn6YiSP7FFEsAQA2eNYGE
- wStA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767109783; x=1767714583;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=soleen.com; s=google; t=1767112968; x=1767717768; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7o4WR474es/5e2xL8IEZwboJcaG4RYzal78dgOeo56I=;
- b=iePMwNeoyIrAwEgGpHDvIrXkhSVBeDIWJKcMDKuMc5Juh6TCciBtEAuehmzgoJn6rG
- 3gqWcrLDgaIa4R3AM60zJ/X7ryWEPiUZwpQAxWDt8sY+fmYU8zl1bmKZ4Nb++qH+rlZu
- bWObv46yMw1zBgjrrG0rXbyDl3Qe612J1+XkYV7tlFeMnAd5zhOdfYQc5XExRgJ1tQtp
- U3Ru64XYKMH4INL4JmFHgC69oBbXHNURSKfpKvOvgP/UoUqiyxO3cuNUE1b0eP4wb9ds
- 97+CTBS8H4WqN7wrzE4PrMTtQ/n25uuRNEHN1PSBsSlG/JJi4wDTwmSjxWmO1RHzF5P1
- Ib9A==
-X-Gm-Message-State: AOJu0YyqP3D8V85++S7Wo9PcZadCbrBJmJCaNYfnGg9tl5HvLVqWy7SM
- d1L+hKOgNLYQbz9ip0QCpsPemwcp3kvADfoyHN6h663UjSSs0TTmzWIfP8WXfJg2YYw=
-X-Gm-Gg: AY/fxX6T7j8dZ09ebDbn4zO5fwCBX4RLnD8zDmmfEJ+CTnaw1vgg+JufXCI0c94zgCU
- gjicjfFrQvnPwBp1EASZeac8/PWx8uZAPwR7FntUO/KtaWqzIITBuq4Jb01ou0TAuRL7Kunyhpp
- 3s0QMr7rj4LqIK2Kq9r8wWkuaehp8vqaUcPzsPv1kD1v/JukBcJIoW3QT+mKfG3VLjMoc1R1/RT
- kuyIOv/wZhSujwg9WZxk/Jnha5XbLDKX4UiT8QYWVE6i2/zRx2ABnUCLzHRNH5cDIcPHdrMj+eg
- Hr68hn8av06G+Jsc/4DS5F/jG25Ybhrq4gG3MmmWc6U8nB5BP2Bbw8W7fU3yay7QGeuIzeH78NQ
- tbY/Yf+AlpNFyvvy/X/MZ514Nc4OH/Nbs6xNt9+UONTSD/aovW5MiRsAeVpL2jS5vMAOPXHMbDV
- BA6BVHbq978mkQ87Zb/zAaaYEfWcUymh/6cBp/gEp7baWttzVvT0g=
-X-Google-Smtp-Source: AGHT+IGcnGQwF7BtUFWWzHfH1eLReTptWIEqZ4OfRfZtQXz5imzUdnzwwqgjZoltymIcW6UaERgGrA==
-X-Received: by 2002:a5d:5f82:0:b0:432:852d:8f61 with SMTP id
- ffacd0b85a97d-432852d8f98mr16972869f8f.21.1767109783496; 
- Tue, 30 Dec 2025 07:49:43 -0800 (PST)
-Received: from myrica.home (233.226.6.51.dyn.plus.net. [51.6.226.233])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1aee5sm70343633f8f.4.2025.12.30.07.49.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Dec 2025 07:49:43 -0800 (PST)
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: eric.auger@redhat.com
-Cc: qemu-devel@nongnu.org, mst@redhat.com, imammedo@redhat.com,
- anisinha@redhat.com, jpb@kernel.org,
- Jean-Philippe Brucker <jean-philippe@linaro.org>
-Subject: [PATCH] MAINTAINERS: Update VIOT maintainer
-Date: Tue, 30 Dec 2025 15:48:45 +0000
-Message-ID: <20251230154844.325364-2-jean-philippe@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ bh=aUx1dwRpB9x+C+GHXgrsd6etfsxRhj2Yi9akRYZPEpQ=;
+ b=KkKh/MGF5Xe5IhJm5NIPvsTnyRNRgLItoWPhhO+xDH4ZFpZA4O45iCzHskL6/NlGFM
+ zvCWgriYLl4JCGxZc7P0brP5AlKLm7S82uJL8SFnP8pBtlesf2PsH1ITQuUXqZZ4jOmZ
+ 0bPMel1TFDSVDnyIUXS8Esx84vSxMtrpLYbwqEbI150DLk436VcRAaRdqYIlUMs7bvsb
+ LhwSkzCXMeFe/W5GA7/H33OSmAF5AACOdQDmbLR9kCbTRwoFezmDJh6/RtdeD1pfdsmL
+ aqAUUt4czBW+sU2ZD5cVa8py1R7pAYWbS7ARoB4rvOb51QJmsqhD7CA5tHoYFiiM8hQj
+ az9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767112968; x=1767717768;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aUx1dwRpB9x+C+GHXgrsd6etfsxRhj2Yi9akRYZPEpQ=;
+ b=rcAfMAUdZUuO2csxi05sInINCVx4Pr3yXqC4wV43smAwxffEHSBANMsDiTEku10GPW
+ +zWJrfzfawkanp9Dc6TKyX+jrd65NGkHZyQRDydhIlfYaoxm1nr3cRxoYZZEsuBOpvV+
+ pEKBfFvP1Neie1c35eBp7d0zknPLvanWYEJ9TV3oFaOvTgblHxAb7+we/YnRRafswedm
+ vt5mZtm5YLSVWEwrs2ikQMrRmD/G9JojQ8IhGFyhrHiKsamM8viS9ryLz59cUv4kRAcC
+ mB0UfmmX8cGa5hULk4KHFMgV+yAMqBRSjj1LtUnxJBTHbcAlnrtvA1TEyZd6Yt+zR4mT
+ EoyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmdr5bzF8/+GShbGn3gUxRlnfq0HPOKzX2j7zYLxgc8qxny2ToPbAGpUETYTxVSOFqWFeK8dxXprJh@nongnu.org
+X-Gm-Message-State: AOJu0Yx/X8s7zLM9OFZ+XtSCT9PG61YJa2VMrs+8J7cWMsgwi8wmQFDC
+ w80Z4tlx6zlmAN4ilr0M87a/iHmwBY/MH2tkJh5tFugtBu35AsqDW8sysQXtsHbHYWrLZjIT56J
+ 837anYPsNEsTYAW+UKaqywwEiqP7mmnwishuPF8W2SA==
+X-Gm-Gg: AY/fxX5x9ZtL4cEE3FmAYc99+Pl81hvUtct0dK89SRzUJPugk1wiJVCeWwGa8NRCeo1
+ FigcDJf0Tt+wXlDEx2NnGqbCVUoQdmF4tYVpj+Np0iC9ydp47xPl9emeSa6PJeuRIjLe5wI1t8i
+ R00t6bNZqKfv4RemgUn/fx4e4jR2v7YBNdMmASNUbamehol/8AWi3uQ2F6weptrUs8gTv/UGXPp
+ K+eSvZ+66S7MTFzQWZuBAoFT6zaFmxn4f88NFCgAdheFTA2xStIf2m+hiANFxnlcbwdCuse3cz2
+ Iw9SzmyNjs4uN7P0VelmM9gnPg==
+X-Google-Smtp-Source: AGHT+IEalSwHXlSyP0XIVEIOS0vVwiNaX3KH41ieJB+8/YYSB0lKoi0vJB6BuvETI8wSKFNZEjcgFjJQ/GJe+QmQlGM=
+X-Received: by 2002:a17:906:f58f:b0:b7c:e4e9:b10e with SMTP id
+ a640c23a62f3a-b8036f5aa24mr4010245766b.18.1767112967776; Tue, 30 Dec 2025
+ 08:42:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x431.google.com
+References: <20251229120839.89817-1-me@linux.beauty>
+ <CA+CK2bA1Xv+asZ3d2jALk+VePDdDg+4ao0Y72CWV2i0rg3GsyQ@mail.gmail.com>
+ <19b6e60dfd2.187d822f1751681.8912147399180739154@linux.beauty>
+In-Reply-To: <19b6e60dfd2.187d822f1751681.8912147399180739154@linux.beauty>
+From: Pasha Tatashin <pasha.tatashin@soleen.com>
+Date: Tue, 30 Dec 2025 11:42:09 -0500
+X-Gm-Features: AQt7F2oM-pg5mgu9YhN6e53Vv0e13rpVZEhhUkpJI8x-6pPd4Yj3Dmd_GE8ChvE
+Message-ID: <CA+CK2bC0N7v7MnC6LybAzE_oJPWeWK0v9xVng-JgEnvC6ay+nQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] CPR: shared RAM with /dev/fdset for LUO kexec reboot
+To: Li Chen <me@linux.beauty>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ David Hildenbrand <david@kernel.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, David Matlack <dmatlack@google.com>, 
+ Pratyush Yadav <pratyush@kernel.org>, Mike Rapoport <rppt@kernel.org>,
+ Alexander Graf <graf@amazon.com>, 
+ Jason Gunthorpe <jgg@nvidia.com>, Samiullah Khawaja <skhawaja@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=pasha.tatashin@soleen.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +106,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unfortunately I can't contribute to QEMU for the time being, but Eric
-has offered to take on maintainership of the ACPI VIOT. Thank you!
+On Tue, Dec 30, 2025 at 3:30=E2=80=AFAM Li Chen <me@linux.beauty> wrote:
+>
+> Hi Pasha,
+>
+> Thanks for the detailed clarification, that's very helpful.
+>
+>  ---- On Mon, 29 Dec 2025 23:50:35 +0800  Pasha Tatashin <pasha.tatashin@=
+soleen.com> wrote ---
+>  > Hi Li,
+>  >
+>  > Thanks for the series. I have a few comments regarding the interaction
+>  > with the LUO agent and the broader architecture.
+>  >
+>  > > In the LUO/KHO update flow [1], a LUO agent coordinates a host kexec=
+ reboot
+>  > > while keeping VM RAM content intact. LUO creates the guest RAM backi=
+ng as a
+>  > > memfd and passes it to QEMU via -add-fd on the initial launch, so th=
+at
+>  >
+>  > I am currently working on the LUO agent (LUOD) documentation, and the
+>  > intended behavior differs slightly from this description.
+>  >
+>  > Rather than the agent simply passing FDs, the design involves LUOD
+>  > opening /dev/liveupdate and creating a UDS socket (e.g., at
+>  > /run/luod/liveupdate.sock). Live-update-capable clients connect to
+>  > this socket, create a LUO session, and preserve their resources into
+>  > that session. Once all clients notify LUOD that they are ready, LUOD
+>  > performs the kexec reboot while keeping /dev/liveupdate open, ensuring
+>  > the LUO sessions survive.
+>  >
+>  > After the reboot, the restarted clients reconnect to LUOD via UDS and
+>  > request their preserved sessions. The sessions are passed as FDs back
+>  > to the clients. From those sessions, the clients retrieve the
+>  > resources, restore them, and resume suspended operations. Finally, the
+>  > clients "finish" their sessions, fully reclaiming ownership of the
+>  > preserved resources from LUO back to userspace.
+>
+> Ack, and sorry for my cover letter text over-simplified the design.
+>
+>  > > memory-backend-file can use it as the shared RAM backing. On update,=
+ LUO
+>  > > checkpoints QEMU, reboots the host kernel via kexec, and then re-lau=
+nches QEMU
+>  > > to restore vmstate while reusing the same preserved memfd-backed RAM=
+ FD.
+>  > > Today LUO only supports handing off guest RAM via memfd [2].
+>  > >
+>  > > To re-attach that preserved RAM backing without reopening non-persis=
+tent
+>  > > paths, QEMU needs to let memory-backend-file consume the pre-opened =
+FD using
+>  > > mem-path=3D/dev/fdset/<id>. However, memory-backend-file currently u=
+ses
+>  > > open()/creat() directly, so /dev/fdset/<id> cannot be resolved throu=
+gh the
+>  > > fdset mechanism, making this workflow impossible.
+>  > >
+>  > > This series allows /dev/fdset/<id> for file-backed RAM, documents th=
+e setup,
+>  > > and adds qtests to validate that x-ignore-shared keeps RAM transfer =
+minimal
+>  > > in the cpr-reboot path.
+>  >
+>  > Sessions become particularly relevant when we look beyond guest RAM.
+>  > For complex resources like VFIO or IOMMU, simply passing the FD is
+>  > insufficient. These resources require specific ioctls to be issued by
+>  > clients after the FD is retrieved, but before vCPUs are resumed or the
+>  > session is "finished".
+>
+> One question: in the intended LUOD/session architecture, do you still exp=
+ect
+> clients (or a wrapper) to inject the retrieved guest RAM memfd FD into QE=
+MU
+> via -add-fd + /dev/fdset/<id> at QEMU startup? (as this patchset does)
+>
+> Or is the longer-term plan that QEMU itself connects to LUOD over UDS, re=
+trieves
+> the session/resource FD directly, and consumes it as the RAM backing with=
+out
+> going through -add-fd?
 
-Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The latter, I expect QEMU and other VMMs use their LUO session FDs
+that they receive from LUOD to retrieve and restore the preserved
+resources: memfd+iommufd+vfiofd and resume the suspended VMs.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cbae7c26f8..a11338f1b8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2174,7 +2174,7 @@ S: Maintained
- F: hw/riscv/virt-acpi-build.c
- 
- ACPI/VIOT
--M: Jean-Philippe Brucker <jean-philippe@linaro.org>
-+M: Eric Auger <eric.auger@redhat.com>
- S: Supported
- F: hw/acpi/viot.c
- F: hw/acpi/viot.h
-
-base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
--- 
-2.51.0
-
+>
+> If the latter, I think we'd likely need a QEMU-side interface to
+> consume an inherited/pre-opened FD for RAM backing during early machine i=
+nit.
+>
+> Regards,
+>
+> Li
+>
 
