@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADEF0EE0203
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE7DEE01F6
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vagzZ-0002wL-Mq; Tue, 30 Dec 2025 16:10:57 -0500
+	id 1vagzV-0002Mu-Gm; Tue, 30 Dec 2025 16:10:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzX-0002dO-6r
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:55 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzJ-0001v0-96
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:45 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzV-0002nZ-Bq
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:54 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4775ae77516so103358555e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:10:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzH-0002l8-Mu
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:40 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-477ba2c1ca2so108923115e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:10:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767129051; x=1767733851; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767129037; x=1767733837; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VR9BV23KQUTf4h5KpNYH7odqkl2T3CFFTAp+5wOs8cc=;
- b=he0PvotGOEJnx1BmHw9OPJCK2fVrV8DDU/ru21WV+3uAJvdJqPAABnbXgxDKoYQtWu
- sczS7yvmn5VimM1kjwcwW49Cv75M5B3jGtvn4X8gHFjp9v88zUdmDqgEogAIvqJpaZHw
- I5VsGCGhBpM0vztlA+WFHXfutx08rh7pHzWdc33INqCwVJNs3cR0oWr+DNi7HlK9zHCB
- B6zKlEkoAcSMlvCmHPvtEaIMfi5UIEigwViM4p4ExCT2DBepwD4sTz8HIXFZBup9dEq+
- KoGkqpiiByOW5ptqIQFJNEJ13ejdKEtZHgsqk6noPvQzgzbZvTWzO8s3yjAZpBoPQjvU
- eflQ==
+ :reply-to; bh=mUsD1NrQKJS1hhbZfGXfvt9Z6Ms3MhVNlf1j+nUs6zo=;
+ b=PSGvvUIbD9LQOpFoacG7yiEkX4XQNQpaEa0HaHW8GzkbKYdz9T3oXrj7WIxiXQaX/o
+ Kyq53Hhza+G04HND/XiSjsaBnovN0Jzbm0CyedYMopH+FblfsjGK0F8HgYe7SvJJfpzr
+ w3wfwCWe4j0VzA5xq/ehnPhfrH6odppn857EXP1jPaUHA9UyvhUG/GqSSd179vnc4PCs
+ EjpLnQZqVQIwA9U8tOPzD6CxWZfpHovuzBtvc8vkb64y+bla0rn34trEUwnV19jStrXH
+ HPFrTfKU8++fpaVN171QJlM3NLVqdlVaEgq5oBuOQrU/PBmb/nueQEqe4bvTrLc5T6ao
+ 0MNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767129051; x=1767733851;
+ d=1e100.net; s=20230601; t=1767129037; x=1767733837;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=VR9BV23KQUTf4h5KpNYH7odqkl2T3CFFTAp+5wOs8cc=;
- b=A5lM1rFOU4aw/bKuk3xfyaLAQ0wg4lIHKemkwElmHehzTm3Oc9ruyIyLr5uGUx2Mke
- wnLJzWm3UnytHdCIgRzHMY08H5GDmIAdCdASqIbnXdofwY6X5eCNYvzGQ6nRvmskeoy6
- o9VSPl4OiSpnFtwJPMPNesMmceKFJFOthOjlN+ltpV3OEb9CYvdWeEn0ojKYok9Yh5nU
- Xp/xkpymaNCBa5qPbq9TFJp+1KxUv7WgcoejzRiMymowWw1kCCPA8pwXFESoCuERgM18
- NAKNo2m6TGe2fM0oy/dETdoaDnwuogkOg/jMBaFKruOLOKlmt9pXOoneijZEUVQhhcVq
- tEuw==
-X-Gm-Message-State: AOJu0YyQGe4xhLKlk+CX2RB49/UBZyuKgBQNaVDsPUnVOuOQjOqTWZh8
- AmJJgtidN875x0JeElTHprp05w3upUwZ9oCAe4mVZoJ7V/06lY7aeXsf6RGGl9ZwVsgVNFVk83t
- LX/xQ860=
-X-Gm-Gg: AY/fxX6k6qYd39WPwK2GYUndGa4Achm5tbK7SheOmXEoRNTTz64+XiIzPNk4P9uy9vu
- 0ziGNazkajBPEWuzu8CjmaDgxVBXXLaWjsjMc5Y7cc5p9eZOTNrZKRyWFFkSfJXvnEmqNp0484Z
- RMdxLzZ84TQe/maWXk1ZTDbldlcmvrdyvzOlD2laFup0zF/QZYKR5Ycx2POUF/gOROMvSQ3cDGq
- AWiZcMcn8iFgCzcpp9AfJ2TOVZK54l4mQ3TdMqXNdfzipQKnGBBjMXgL1NXiavcHr9CWfs9Fyn4
- p2F6ddyNk1liLYpw+d7hy0wXVzhOu1+TSyVRTHiV85rkuIKrwF+pPOMW8pJ5yoU0axGoBHnGX4I
- O4Fb4EDXZTvo3KeV9HuS34IGBK/oUqt0vfUTCRaBLSMFO9KPgARoj/u9M36mhBEjz7HrIf0rQMJ
- HgGB7Mh1peOTAQ3ZJPjtRfVWRxo8+XIKwj7KHqNgjdsaFt34Cyd6S0EmnLzvziMsd9fXKvjJE=
-X-Google-Smtp-Source: AGHT+IEl2/NNJCRs0vKuAXFU6DZI23CvkC9GkM/qjznitTCQ2qaHtfBQJc43xewn7+kSAYDECiljbQ==
-X-Received: by 2002:a05:600c:5250:b0:479:3a86:dc1b with SMTP id
- 5b1f17b1804b1-47d36243a0bmr254354835e9.37.1767129051502; 
- Tue, 30 Dec 2025 13:10:51 -0800 (PST)
+ bh=mUsD1NrQKJS1hhbZfGXfvt9Z6Ms3MhVNlf1j+nUs6zo=;
+ b=KgaIEu1dzcsqvz/csJV0YCuyKYmFHHDjMc/EuSB8kWqHY1wHhr0o3hfzFTOrdn2zlz
+ 1lWcBVInCjsOFpclaJQhHqRqRk5fANRqNunzEHewqPvhh1M/JlHkaIZz0LcIJyobK8JE
+ /2KZjiRfpQGKTjaxBuT97wfMe/85SkmSXDSEJ6qDYyyHA1hId8vQ7nNBcEY6Zt3THVsd
+ odHU/gpZ2lPy+70xeBkA5+XWx0ngfA5VPqa8qN9LAntEZMQ0XxNAjrjL44pNjFTgJMuG
+ VoEzMynkDYZCzfGvARpOfZ9q4wM7b1yfn4uXFuccIrHCn2hsCam9cA5DKfbF/EYdglAd
+ u4xQ==
+X-Gm-Message-State: AOJu0Yw7yFA6hRS+TN/b83Nt6ksaGuzHwBb/uK4rM3ja0PQ/4+1NNJIh
+ 0JVRhzVHHQ6QRaj20oiihRqDPtKpv5PijEG0qYB6mQl9R7gxKUjtripiOTbOTMO5OE1Sc7anhQJ
+ nfndSU6g=
+X-Gm-Gg: AY/fxX56tCewKN7pnwIBbjXUpILxUCjqEQz3sHt9FU+0S4UNOOqHy/YaI5kMJ9l+kMU
+ G3JuGpwBg/dwIyW3lHrhjkhwOjqFTsLTF++Q/d0tJ4I5ZNNpnNVwkIWboPZeAxeykKSxhIHfuza
+ nCMBQt3B6KRle6DxpiU6I5TBuMZ23yMLqd9Y8u43AqltgwFjejGhOSVteJjG1ZSY3ZuNDm9DRkW
+ DhfojLWMaqrYxlkUDzElkVlkgpNu06+ycBjKHI8K/pTnZ6MYXlI1gcNeo12NHuQMRoI5voMULvl
+ rZ1KXSRXbPFBk2LjQrnlA6zlQ9lSLyFSZxb7aaBNFRX9B8ZeL/nxdi2PK757GFioIANRewjxdQu
+ Z2q7lwubssf8ciFiAEoNJnfOfSiajf4Mj79osVqr6+GznuNLSpgBcakfVj2RROl/Q/J5tp3loYI
+ 57uDC3iUze5vcAVYnxs54UKIlJ5ulHU4TaTmKSpv5QjBFGaMqf2gXVxgRceJjm
+X-Google-Smtp-Source: AGHT+IGF9dRmxN9jdO3HgRa9+cJlNfNFy3ys0DYLm8wF4wk0fCB2JheVWD/Uvdhun+oH5L/+h9c9yw==
+X-Received: by 2002:a05:600c:4f4a:b0:477:58:7cf4 with SMTP id
+ 5b1f17b1804b1-47d1953b79dmr463595425e9.4.1767129037290; 
+ Tue, 30 Dec 2025 13:10:37 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea227casm69791089f8f.15.2025.12.30.13.10.50
+ 5b1f17b1804b1-47be3aa9971sm259124825e9.13.2025.12.30.13.10.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:10:51 -0800 (PST)
+ Tue, 30 Dec 2025 13:10:36 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/34] hw/virtio: Remove unused ldst_phys() helpers
-Date: Tue, 30 Dec 2025 22:07:48 +0100
-Message-ID: <20251230210757.13803-27-philmd@linaro.org>
+Subject: [PULL 24/34] system/memory: Allow restricting legacy ldst_phys() API
+ usage
+Date: Tue, 30 Dec 2025 22:07:46 +0100
+Message-ID: <20251230210757.13803-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
 References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,134 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-None of the following virtio ldst_phys() inlined helpers are used:
+Commit 500131154d6 ("exec.c: Add new address_space_ld*/st*
+functions") added a new API to fix a shortcoming of the
+ld/st*_phys() API, which does blind bus access, not reporting
+failure (and it also allow to provide transaction attributes).
 
- - virtio_lduw_phys()
- - virtio_ldl_phys[_cached]()
- - virtio_ldq_phys[_cached]()
- - virtio_stw_phys()
- - virtio_stl_phys[_cached]()
+Later commit 42874d3a8c6 ("Switch non-CPU callers from ld/st*_phys
+to address_space_ld/st*") automatically converted the legacy uses
+to the new API, not precising transaction attributes
+(MEMTXATTRS_UNSPECIFIED) and ignoring the transation result (passing
+NULL pointer as MemTxResult).
 
-Just remove them.
+While this is a faithful replacement, without any logical change,
+we later realized better is to not use MEMTXATTRS_UNSPECIFIED or
+NULL MemTxResult, and adapt each call site on a pair basis, looking
+at the device model datasheet to do the correct behavior (which is
+unlikely to ignore transaction failures).
 
+Since this is quite some work, we defer that to device model
+maintainers. Meanwhile we introduce a definition, to allow a
+target which removed all legacy API call to prohibit further
+legacy API uses, named "TARGET_NOT_USING_LEGACY_LDST_PHYS_API".
+
+Since all targets should be able to check this definition, we
+take care to not poison it.
+
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251224151351.86733-8-philmd@linaro.org>
+Message-Id: <20251224151351.86733-6-philmd@linaro.org>
 ---
- include/hw/virtio/virtio-access.h | 85 -------------------------------
- 1 file changed, 85 deletions(-)
+ include/system/memory.h       | 2 ++
+ scripts/make-config-poison.sh | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
-index 07aae69042a..c866769cad8 100644
---- a/include/hw/virtio/virtio-access.h
-+++ b/include/hw/virtio/virtio-access.h
-@@ -39,60 +39,6 @@ static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
- #endif
- }
+diff --git a/include/system/memory.h b/include/system/memory.h
+index edef51a276d..0e8de527d36 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2855,10 +2855,12 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+ #define ARG1_DECL    AddressSpace *as
+ #include "system/memory_ldst.h.inc"
  
--static inline uint16_t virtio_lduw_phys(VirtIODevice *vdev, hwaddr pa)
--{
--    AddressSpace *dma_as = vdev->dma_as;
--
--    if (virtio_access_is_big_endian(vdev)) {
--        return lduw_be_phys(dma_as, pa);
--    }
--    return lduw_le_phys(dma_as, pa);
--}
--
--static inline uint32_t virtio_ldl_phys(VirtIODevice *vdev, hwaddr pa)
--{
--    AddressSpace *dma_as = vdev->dma_as;
--
--    if (virtio_access_is_big_endian(vdev)) {
--        return ldl_be_phys(dma_as, pa);
--    }
--    return ldl_le_phys(dma_as, pa);
--}
--
--static inline uint64_t virtio_ldq_phys(VirtIODevice *vdev, hwaddr pa)
--{
--    AddressSpace *dma_as = vdev->dma_as;
--
--    if (virtio_access_is_big_endian(vdev)) {
--        return ldq_be_phys(dma_as, pa);
--    }
--    return ldq_le_phys(dma_as, pa);
--}
--
--static inline void virtio_stw_phys(VirtIODevice *vdev, hwaddr pa,
--                                   uint16_t value)
--{
--    AddressSpace *dma_as = vdev->dma_as;
--
--    if (virtio_access_is_big_endian(vdev)) {
--        stw_be_phys(dma_as, pa, value);
--    } else {
--        stw_le_phys(dma_as, pa, value);
--    }
--}
--
--static inline void virtio_stl_phys(VirtIODevice *vdev, hwaddr pa,
--                                   uint32_t value)
--{
--    AddressSpace *dma_as = vdev->dma_as;
--
--    if (virtio_access_is_big_endian(vdev)) {
--        stl_be_phys(dma_as, pa, value);
--    } else {
--        stl_le_phys(dma_as, pa, value);
--    }
--}
--
- static inline void virtio_stw_p(VirtIODevice *vdev, void *ptr, uint16_t v)
- {
-     if (virtio_access_is_big_endian(vdev)) {
-@@ -166,26 +112,6 @@ static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
-     return lduw_le_phys_cached(cache, pa);
- }
++#ifndef TARGET_NOT_USING_LEGACY_LDST_PHYS_API
+ #define SUFFIX
+ #define ARG1         as
+ #define ARG1_DECL    AddressSpace *as
+ #include "system/memory_ldst_phys.h.inc"
++#endif
  
--static inline uint32_t virtio_ldl_phys_cached(VirtIODevice *vdev,
--                                              MemoryRegionCache *cache,
--                                              hwaddr pa)
--{
--    if (virtio_access_is_big_endian(vdev)) {
--        return ldl_be_phys_cached(cache, pa);
--    }
--    return ldl_le_phys_cached(cache, pa);
--}
--
--static inline uint64_t virtio_ldq_phys_cached(VirtIODevice *vdev,
--                                              MemoryRegionCache *cache,
--                                              hwaddr pa)
--{
--    if (virtio_access_is_big_endian(vdev)) {
--        return ldq_be_phys_cached(cache, pa);
--    }
--    return ldq_le_phys_cached(cache, pa);
--}
--
- static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
-                                           MemoryRegionCache *cache,
-                                           hwaddr pa, uint16_t value)
-@@ -197,17 +123,6 @@ static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
-     }
- }
- 
--static inline void virtio_stl_phys_cached(VirtIODevice *vdev,
--                                          MemoryRegionCache *cache,
--                                          hwaddr pa, uint32_t value)
--{
--    if (virtio_access_is_big_endian(vdev)) {
--        stl_be_phys_cached(cache, pa, value);
--    } else {
--        stl_le_phys_cached(cache, pa, value);
--    }
--}
--
- static inline void virtio_tswap16s(VirtIODevice *vdev, uint16_t *s)
- {
-     *s = virtio_tswap16(vdev, *s);
+ struct MemoryRegionCache {
+     uint8_t *ptr;
+diff --git a/scripts/make-config-poison.sh b/scripts/make-config-poison.sh
+index 2b36907e239..937357b3531 100755
+--- a/scripts/make-config-poison.sh
++++ b/scripts/make-config-poison.sh
+@@ -10,6 +10,7 @@ exec sed -n \
+   -e' /CONFIG_TCG/d' \
+   -e '/CONFIG_USER_ONLY/d' \
+   -e '/CONFIG_SOFTMMU/d' \
++  -e '/TARGET_NOT_USING_LEGACY_LDST_PHYS_API/d' \
+   -e '/^#define / {' \
+   -e    's///' \
+   -e    's/ .*//' \
 -- 
 2.52.0
 
