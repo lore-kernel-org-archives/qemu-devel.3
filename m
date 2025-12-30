@@ -4,106 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6D0E95A6C
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 11:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DC0E95A77
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 11:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaXdi-0003hQ-KZ; Tue, 30 Dec 2025 06:11:48 -0500
+	id 1vaYJY-0005ys-LF; Tue, 30 Dec 2025 06:55:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaXdZ-0003gZ-E3
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:11:38 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vaXdV-0004PF-5q
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:11:37 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-47d493a9b96so14524915e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 03:11:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767093091; x=1767697891; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iboKySgS+glvER0jzQ4xSzFcejAGlCIzD8S2d+hiauU=;
- b=aKVc54+5H3vKjCMh8jt+it1/hpoVmotcEaa/49vDaUqlt2/qy1/HKZzorKfOn+s74b
- vksQRLp5ApyDg8PgU8S+rSUNH7CeuujmIeLA2w5jugfgC42FKhsjyYqHgo+cpZGuoe+s
- RY0uQpDo0wZHmGaAXDyyK2fQYYzqjyH/cw7DhQGbUgwLf8GotDEFLJ/7Jh1K/EwqjqTm
- MUXVXRr9YDmZGz36pgy11BRzO9fAyKs2QHE4c+k1G72G/tC3DY/hEn7hiIF+PG5cjpfm
- O+w3AJP8orqnaQJWrp6CyciPS+f4uCD17hivF3Elm8m3SHHQHqYPsJ4ZxGv1niRI8JYq
- +/xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767093091; x=1767697891;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iboKySgS+glvER0jzQ4xSzFcejAGlCIzD8S2d+hiauU=;
- b=BHlooFn8vqh/SYkEpIll+jAxCz6ho6mWZ8/ISrcEKBWB3OAgcKw3r2gvia0aF0tX/l
- BQ778RgNd8in0X6fCsfEJkNZbbTNtS4LSuN2NnbluOwWZ0/07k2cUs/XQR72/ONs1iIw
- 8ASi8KTc5MNE0/Y8OfXYQ4SWEzNRBIxCbnGY1Ipmsa8ENhpR1RXIoFNipFk2Au5eqfKX
- Lox6hEJxZKpUkCh1800pg+RJM4uPOVMOecABNBa05yP7TKgWKiWbOJ0qfORfV12U95bf
- BXevWqyo0aanZCnIZGr6LdGfmbqWssoZQDKRkynXyBgIGqKTcBccR1vablXV4e8JuTti
- pozw==
-X-Gm-Message-State: AOJu0YxIj1Rsz/MJSlDXWNe6Tk5X7ChBsT4Y8q9BucXL2zE00NsqLQu1
- yi6xAPN5L+TXp4IEg8/+MbnWjK6Piw7P1nt3FO2cXJ9h/gbovkfYLfa4EoEmeM5dgcg=
-X-Gm-Gg: AY/fxX6KCzgSeZM4A971CCZDLUy+DHkn0mb2fsI7PPQ2P1Vpi7eQZKKu0c++QZZjmeb
- dX9X2iowOj/EerMNTjuQltmwkRTnpNNqAo9U/cdjO9Z9c5vEXCSeIR5Hjz8eUqkL4BqRFkiuaql
- baAkM1vfI7prMXSsBNfP4/acSwi7YI8ucv7qUm+XOdy7SszdkpqaXGFrV93fhmADg9mAOf6Jdfk
- tt7MiJqRdSLQmqCevixmNglk7EpMGCyGzJoxio7868Cv55IsM/RL0rEz8aYFEfrTpZ5TKmzDW6g
- 9yOK0nmBqRMwcoVLJZSJ0MRbcTW6xfyO0CCpvk2V/Sd0PbpLRK8st6dOMxsISQgd9f9Whflrmvy
- CCgLR1X1j8/jdGk+nkA2tjwoU052PNhDkBfQwjGtmqvhbqruLHjeGeMwuxZlWYM1JBfFnfQJiwV
- sD7Xia6KG4f1oxx7Fq0tywmlIeVSsVuedjMxK3NEPiO/mmGzL4NFU1GpERD6w3YlM3
-X-Google-Smtp-Source: AGHT+IHr3zpDFjE6qM0YdavFHZPjBR3MboYZUYZ+cfShfNADoBH22uJcM9H9jkyy61tJ1Bvvgw1vEQ==
-X-Received: by 2002:a05:600c:45d3:b0:47d:4044:4ada with SMTP id
- 5b1f17b1804b1-47d40444b44mr231439335e9.13.1767093091319; 
- Tue, 30 Dec 2025 03:11:31 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193d4f09sm602723675e9.12.2025.12.30.03.11.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Dec 2025 03:11:30 -0800 (PST)
-Message-ID: <10a72070-3a06-4933-a6e8-91220881d3ac@linaro.org>
-Date: Tue, 30 Dec 2025 12:11:29 +0100
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1vaYJX-0005w8-55
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:54:59 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1vaYJU-0005WW-As
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 06:54:58 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8AxjsOCvVNptGIEAA--.14409S3;
+ Tue, 30 Dec 2025 19:54:42 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJBxLMJ+vVNp_78GAA--.15307S3;
+ Tue, 30 Dec 2025 19:54:41 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org,
+	philmd@linaro.org,
+	jiaxun.yang@flygoat.com
+Subject: [PATCH v3 1/3] target/loongach: Fix some exception need't upadate
+ CSR_BADV
+Date: Tue, 30 Dec 2025 19:30:00 +0800
+Message-Id: <20251230113002.59623-2-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20251230113002.59623-1-gaosong@loongson.cn>
+References: <20251230113002.59623-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] system/memory: Allow restricting legacy ldst_phys()
- API usage
-Content-Language: en-US
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
- qemu-arm@nongnu.org, Peter Xu <peterx@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson
- <anjo@rev.ng>, David Hildenbrand <david@kernel.org>, qemu-riscv@nongnu.org,
- Steven Lee <steven_lee@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Troy Lee <leetroy@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Zhao Liu <zhao1.liu@intel.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Alistair Francis <alistair.francis@wdc.com>,
- Joel Stanley <joel@jms.id.au>
-References: <20251224151351.86733-1-philmd@linaro.org>
- <20251224151351.86733-6-philmd@linaro.org>
- <CAAjaMXZXSBQx+tQOyg6PVr1Y5R0c0uFsMrC9TdWE4mcvvejKZA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAAjaMXZXSBQx+tQOyg6PVr1Y5R0c0uFsMrC9TdWE4mcvvejKZA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowJBxLMJ+vVNp_78GAA--.15307S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,50 +67,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/12/25 19:34, Manos Pitsidianakis wrote:
-> On Wed, Dec 24, 2025 at 5:14 PM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> Commit 500131154d6 ("exec.c: Add new address_space_ld*/st*
->> functions") added a new API to fix a shortcoming of the
->> ld/st*_phys() API, which does blind bus access, not reporting
->> failure (and it also allow to provide transaction attributes).
->>
->> Later commit 42874d3a8c6 ("Switch non-CPU callers from ld/st*_phys
->> to address_space_ld/st*") automatically converted the legacy uses
->> to the new API, not precising transaction attributes
->> (MEMTXATTRS_UNSPECIFIED) and ignoring the transation result (passing
->> NULL pointer as MemTxResult).
->>
->> While this is a faithful replacement, without any logical change,
->> we later realized better is to not use MEMTXATTRS_UNSPECIFIED or
->> NULL MemTxResult, and adapt each call site on a pair basis, looking
->> at the device model datasheet to do the correct behavior (which is
->> unlikely to ignore transaction failures).
->>
->> Since this is quite some work, we defer that to device model
->> maintainers. Meanwhile we introduce a definition, to allow a
->> target which removed all legacy API call to prohibit further
->> legacy API uses, named "TARGET_NOT_USING_LEGACY_LDST_PHYS_API".
->>
-> 
-> Personally the negation (i.e. TARGET_USING_LEGACY_LDST_PHYS_API) would
-> make more sense since you're opting-in an API but that must be more
-> complex to introduce I guess?
+According to Volume 1 Manual 7.4.8 ,exception,SYS,BRK,INE,IPE,PPD
+FPE,SXD,ASXD are need't update CSR_BADV, this patch correct it.
 
-Not much more complex, this was the previous approach (allow
-all then opt out):
-https://lore.kernel.org/qemu-devel/20251218212814.61445-5-philmd@linaro.org/
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/tcg/tcg_cpu.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-But Pierrick suggested the less aggressive approach, opting
-in, disturbing maintainers a bit less. In term of code churn
-I expect the same lines of code amount to change.
-
-> 
-> In any case:
-> 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
-Thanks!
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 9d077c56d9..ab247e82ec 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -121,8 +121,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     case EXCCODE_FPE:
+     case EXCCODE_SXD:
+     case EXCCODE_ASXD:
+-        env->CSR_BADV = env->pc;
+-        QEMU_FALLTHROUGH;
+     case EXCCODE_BCE:
+     case EXCCODE_ADEM:
+     case EXCCODE_PIL:
+-- 
+2.47.3
 
 
