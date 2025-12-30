@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72B47EE57C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10BCEE01F6
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:12:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vah0C-0007J4-HY; Tue, 30 Dec 2025 16:11:36 -0500
+	id 1vah0X-0007rO-BG; Tue, 30 Dec 2025 16:11:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vah0A-0007Ak-Ep
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:34 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vah0N-0007b5-SJ
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:47 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vah08-0002tj-Qj
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:34 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47bdbc90dcaso64181005e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:11:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vah0L-0002vq-N7
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:11:47 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-42fb2314f52so5776529f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:11:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767129091; x=1767733891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767129104; x=1767733904; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=H4lmZbkpIbKlo+Cbmsb70+Gpr14aO3pvkdUUaISmtEc=;
- b=Hu4Jo4lYgfyOpMmkotlf3NOeZC41/AGek9U4y0n556bwUXEW6t5Sa1+G18Iv6AuDLh
- 0R8gQTOm3NcU8+V8ZHpfyQn6hQdPdEfgvVyLyyUp7PXmWUsFkjIwvrOjuTedoC29Qvx/
- 6FHGdDU3EEP9DUxy5KCMm+uC4xsh604ZtPs2gZUc7eiqmYw7VuirsqAOKmhpkJrKspQ6
- fE5ZXICoBMK11Vkhg8JSRehkIjCihL5kwZsyJtnzAkslSzCr7umaH6gHgk65G8aIEzn3
- POdVx4aFTdkd+Y04p6OtWUrntBHJW8vTPQQ9hf4XU4NGrEL9eha/pqcyaisRTN3oKRUb
- dOjw==
+ :reply-to; bh=kJzV47Vvj6GDTqW3GrUAatkuKHl3RZvRZn1ylCKI1OE=;
+ b=lB4QNPdYxx06UzMmcAfZeW0s7kwUHmCx8Hbn0n75v7EeE3Mz/O4RZi4KU6jzE1rD+3
+ zeInuYZIrI7em8VcmXS4xmAZrEjhPLR6B6jPbGG7lOBpsv30/SlNyo/MyCsDuRDflmxQ
+ GGP44p3+lbz/P1yOwL+MPbFJd2z/TgOoZOttFqYKGstd/aiTJgD8Md7D8B9X8GXZOSHo
+ w5mkESdyIT5TzKHa3QsywUL8+vXPKnw4S6DAd/82FqW0yf+v/3flfBv3tN9ud29d0WdH
+ IWY7ovpqqqos0HZsjZBttAlfiUzJNlYI+s26DpbFwLz8oSoOHSFm9F3g2u4kLCOHPW6r
+ 4NpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767129091; x=1767733891;
+ d=1e100.net; s=20230601; t=1767129104; x=1767733904;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=H4lmZbkpIbKlo+Cbmsb70+Gpr14aO3pvkdUUaISmtEc=;
- b=D5WMLICO+ZTPoQbriivrMIKg6uLWJKws+DW+e74NVNWNQ55cjbqsqq+kmsYlcEJ34B
- p8ox22m1HCWf0d4hwOQKDUcTSvCKgzsPPeW8xURBMyTMbxgfrqxTIIWcjGVzpj2wgKpT
- 0ptP3lT6Ribbt2JWE450Mk5sBOLhh4vZIjwEM2X7wq2vJR/hrkw30D3Rr6DnDRd/kvqg
- lnpOKPhE/Fj9DgxrrMuXBJgobm0QzGEr2bQ/7thj3Ol+qUfq95SnSOnjyfE9Qjq9zw3X
- CeYgCrbSxLRekbsDYyu8KvP3EQUms/D3vtunw49n2gsR0TcJ1dqNcXzhAQT/xQ7ZW+3z
- w5WQ==
-X-Gm-Message-State: AOJu0YzlKbvCij+IeZBBreQ5cThNapm65J5xO/AIOBGP7ogSX4dn8kOH
- WuMfUM41jURbPnfTaTtygHYI4QNiRvyG/GOtWUYstEoh62Bb2Trn4pnNjefclbtIxgDiRtcI9hf
- dcm7G0oE=
-X-Gm-Gg: AY/fxX5Zt4VE+acJUly2z2U8qRHAthQMGAKXiLHW4l1q8wvHH42vgDS6aTiQ0bLdGX0
- Nv6KmxUkm02CQrIvHlFI/j3Z7mYUknZPeLgIhcoZTDOA3NbYLXNQvpVtca+msH82iId1nLMCv39
- 3TJfgYT8ZHoWaUZqpiIg7IW7KN+j+n/XgQ7sFFRcb22ebpN7YP+6M/7xrIgrR6J6gVLKMh2qrZs
- rgOh4KYLv6HmYL+FawssOvG5ZpqOwbjBTXQ95DPqMkmjoSzXrJ22uY/0xCSGYdko6EsFrEmxXhV
- VR83IPIaohU/dp50Co+Dh6HoPxWcyjojz+JT+RCgBvkz3OXSM7r1hJ3f2CMAAuHJ8OQlLZh6ikC
- I+oVbxGIZs1QSyplohKV+zdO+a97NNPojQADBEnid9bY4hgwUFW4jOPmQ4UMbKxni3BnOHlag1b
- B74Efwxf96lGnvKFFMCR0iL7RKKfI0V5CeE4q1lknFS4ir7dcoZS10+A7amb6i
-X-Google-Smtp-Source: AGHT+IGI1+kt8tkkyfZ373Hv3dpdD98aEP7ptvaUpzxoq7ROk9LtEntYWqi/ouzJNJYnPoEKDNQZyg==
-X-Received: by 2002:a05:600c:470a:b0:479:3a86:dc1f with SMTP id
- 5b1f17b1804b1-47d1958e43emr322603395e9.37.1767129090876; 
- Tue, 30 Dec 2025 13:11:30 -0800 (PST)
+ bh=kJzV47Vvj6GDTqW3GrUAatkuKHl3RZvRZn1ylCKI1OE=;
+ b=PMZyeSw23jewZGgVnk5tOlT2rjCDZoYfGNIctoeE32t4xr0eHu1l1nbK8YTCnZAZVQ
+ 6UP2ltJgyPM3aQUlv/ImShxXDrtkpm9AveScMektrYvKllzE79E3B1bI4A90eJuICHDZ
+ gQPI/l5r92KyhpBq0IUCKBcC0INoQDU4J0YFud8XeZQk6KrMGRnHXxUiYwBNpgchj21+
+ 6mJZZg1iksRdZNTUrxfCxiVfgCOeMzQX1bx8tVGFV5FUI6eDjfebIWS/od1LNeduyn9v
+ Vi7fqMtpmsE8XNBlYi0aEw31pOKe2XKiS5wwJxxblECNzUjI3EirBCL/9v0ieiz2D+Eo
+ Ozew==
+X-Gm-Message-State: AOJu0YzfzOVaHKVsVwRETxAHb67j96bburcpqP9FDm07ud2KRvGUNgMT
+ unZINW4501gFj/lySVSWUEvw0031cxUUqLtOsefv96sxSZzuzeF9xuru1N6Bk1Cr42K3xTzXOS1
+ pz/dUNhw=
+X-Gm-Gg: AY/fxX5mAhyhNFRq30ShOJjo26XiOYbGoxzFIHwRutUzAevAi0mFgPvcWINX9sYSTWL
+ XS6E1KhSNudZS9ndjZcKPOdaEx6rZ1KJuuKg3aE2lgsyzcgqu+gT1OfZUaGnoVfH6u0cbUTbAyg
+ cPcKLAYw/ToeQ7Dx2koCKUm4z7rqaRHgRHeozaS7afsdI/7sGh0En0RmgRCJXjMKcipIFfKVs6I
+ YD8JZydCXAN3EPMI85T8l5oN/I4qcD4lCR4sj3gOhNPHCFqNlhx2Chbs+Xr4leZ/obGgVWI7CJn
+ LevAus7q3ykpQp9sTwayQhN2i9wfu8PLTuvdB1yxP1D+jyTehUY/J6mSSCy+prDQzmfwacOtEIY
+ Kv4nGHc4r0Ts7Cdcg3ILLwUQgdcGkFRxriYr9W6zj+E4GI2QXjkwpiNKCm6c30l4zIYpvtSjyG5
+ iehMw9bDLmfea8TRfM7PVRi54BAEVNjcvzoXT2FdzkT4gydExFFX3XzRwelmpP
+X-Google-Smtp-Source: AGHT+IESUFX+P0qq9X61GxAWzQv1bRsGAUjPIZ4w/6HIbLxjTvMRVjubDrVPH9ZAuv0foi9Q+bmzfg==
+X-Received: by 2002:a05:6000:25c1:b0:42f:bbc6:edaf with SMTP id
+ ffacd0b85a97d-4324e504044mr43846630f8f.37.1767129103656; 
+ Tue, 30 Dec 2025 13:11:43 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be272e46fsm647306255e9.4.2025.12.30.13.11.30
+ ffacd0b85a97d-4324eaa08d9sm70778311f8f.30.2025.12.30.13.11.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:11:30 -0800 (PST)
+ Tue, 30 Dec 2025 13:11:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/34] meson: Optimize summary_info about directories
-Date: Tue, 30 Dec 2025 22:07:54 +0100
-Message-ID: <20251230210757.13803-33-philmd@linaro.org>
+Subject: [PULL 34/34] MAINTAINERS: Change email and status of TriCore
+Date: Tue, 30 Dec 2025 22:07:56 +0100
+Message-ID: <20251230210757.13803-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
 References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,33 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 
-Clear summary_info first, otherwise there will be redundant output
-about build environment.
+I'm no longer employed at the university of Paderborn. This also means
+my time available for QEMU has reduced significantly. Thus, I'm dropping
+the status to odd fixes.
 
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251219230456.37178-1-guobin@linux.alibaba.com>
+Message-ID: <20251227132135.4886-1-kbastian@mail.uni-paderborn.de>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 8111e62bf12..db87358d62d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4650,6 +4650,7 @@ summary_info += {'Download dependencies': get_option('wrap_mode') != 'nodownload
- summary(summary_info, bool_yn: true, section: 'Build environment')
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1b4fd48935d..cca9b57c02f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -419,8 +419,8 @@ F: include/hw/xtensa/xtensa-isa.h
+ F: configs/devices/xtensa*/default.mak
  
- # Directories
-+summary_info = {}
- summary_info += {'Install prefix':    get_option('prefix')}
- summary_info += {'BIOS directory':    qemu_datadir}
- pathsep = host_os == 'windows' ? ';' : ':'
+ TriCore TCG CPUs
+-M: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+-S: Maintained
++M: Bastian Koppelmann <kbastian@rumtueddeln.de>
++S: Odd Fixes
+ F: target/tricore/
+ F: hw/tricore/
+ F: include/hw/tricore/
 -- 
 2.52.0
 
