@@ -4,64 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5153E94122
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 14:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C081EE020A
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 15:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaaku-00056E-RI; Tue, 30 Dec 2025 09:31:25 -0500
+	id 1vabFE-0006Ai-BS; Tue, 30 Dec 2025 10:02:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vaakr-00051B-Qe; Tue, 30 Dec 2025 09:31:21 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vabFD-0006AB-2S
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 10:02:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vaakp-0005bU-Gz; Tue, 30 Dec 2025 09:31:21 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0C65B596A0E;
- Tue, 30 Dec 2025 15:31:15 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id j3YYsJlYOYju; Tue, 30 Dec 2025 15:31:13 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id F1B545969FA; Tue, 30 Dec 2025 15:31:12 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EF46F5969F6;
- Tue, 30 Dec 2025 15:31:12 +0100 (CET)
-Date: Tue, 30 Dec 2025 15:31:12 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- David Hildenbrand <david@kernel.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- Jagannathan Raman <jag.raman@oracle.com>, Alexander Graf <agraf@csgraf.de>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Jason Wang <jasowang@redhat.com>, 
- qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 2/3] system/memory: Extract 'qemu/memory_ldst_unaligned.h'
- header
-In-Reply-To: <b81fec3d-022a-4b40-8b65-fc0904b88dab@linaro.org>
-Message-ID: <27c5ad59-5a71-f0a2-b0e7-c03487ae4f62@eik.bme.hu>
-References: <20251228161837.12413-1-philmd@linaro.org>
- <20251228161837.12413-3-philmd@linaro.org>
- <ffcf5368-9b35-d1c8-16ba-6b517e056469@eik.bme.hu>
- <0102f50b-0778-4a32-9bab-a4786a7b1b92@linaro.org>
- <b81fec3d-022a-4b40-8b65-fc0904b88dab@linaro.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vabFA-0004OU-G4
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 10:02:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767106958;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sq89PB/aRcuCOVIBt7Sn9cCBLLbnaVHO63YRPBgGCH0=;
+ b=g7gp41g0kqlrneEhOiJPRdHPWwYveFicRLDX2QaQGG+A8ZpMHr3cjn14wQCT9cK4Nvy6oV
+ IvsGoE+nnsCrxGYkM5Apv004gqP5ABSG++gKiiStBPp/QuaKTsz+6anFwwx4dC2eFAXBqb
+ qcqJLXqx1hzwgDrWou1vXDCxuBerH2w=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-103-QGii4i58OuSygmRHypeajg-1; Tue, 30 Dec 2025 10:02:35 -0500
+X-MC-Unique: QGii4i58OuSygmRHypeajg-1
+X-Mimecast-MFC-AGG-ID: QGii4i58OuSygmRHypeajg_1767106954
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-8088be744afso2775743b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 07:02:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767106954; x=1767711754; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=sq89PB/aRcuCOVIBt7Sn9cCBLLbnaVHO63YRPBgGCH0=;
+ b=N9eCeQfiEX2F00wxjvzwC9nIjwQT6JwRYiCCwstlvtRxRfrOaKU8YbNqkTOVad4Chy
+ eXUyC3RAKZqJeWiNOnJxSv1z/o8nhdswL/Dm/A0xExJ/peZDIBF/LDSKkJ1y2pJsBbm4
+ 9+GUZX3YTKp5gWQGAr69ZaqFIGl5ZO2wnaa3W+kCRFklHRmJUtQ6o2b/3XA1m8ZinvUT
+ BG62olkmjleFyJamh2pMngpgpE8EoRJSEvoIVLfSJLIJFlSQsqCRuegSJjV/KzT3reNo
+ k5FKV9SLRZEbka+C22oRkelbxs7j8wsIo65u37/vc+79J5hmtrK9v/G5py5fbF4e3RcW
+ OOhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767106954; x=1767711754;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sq89PB/aRcuCOVIBt7Sn9cCBLLbnaVHO63YRPBgGCH0=;
+ b=OcegbV54JUGqYIa81/uVUZhw2IOHQCNv/pzvedqvba6kcLbyNJpdnvwWZMiEzRbdeD
+ ZKaaHKW9qLCK080z7uG3GK+n/YjIB2AJjjhYVZ81gHhl4rO9zBiaZbGL1dcOObBl6Mta
+ hmwwfL1CF8k/CJJxFCz6cG3zyP8bclqWap1JlBgcDnGG3+QZDaj0DEIBrG5JglAtyPva
+ 16OJTJ/edpoh+vEAJscUu+o7jxssYIq16iLn6M8ZFwtDCmePL2o+KZ8/F2vXKkwkvdEh
+ EogSv6eVrQoSRC5d85qbDdZyNpmYqIM6W9F7q9UD8FhPfeSgsuz0kjLrlsKemjjqQktQ
+ biZw==
+X-Gm-Message-State: AOJu0YyUAVOIBO1aL+93VPxXGf1yBuExZkMNXBrsN+qvI9yt1IK7ID0S
+ RjrZoKwQPU8iPbYXDHkXHv3/4HF0ftceyyqHYljcP3z8A1qhMJ1dxZyjeQYEslIFW41sIhrO+mk
+ G2Hr4e+Rt3Uuw1kbRCxqJRsx5fCwU6m6FV4LsDB81m4Wl8Y79EDOTFS+p
+X-Gm-Gg: AY/fxX7ZEZkEDOBRfEHTtjfztp3zngYOIZJz54dhz1PGVZJY2ZISnxJqIF2xV0iSuyi
+ vzR9M3Z7Er6RgkTmgVc/+sxDkI6+0QulW52VM7y1nP6OUQG5OhM/OP/CN0h6x8l9iYdHUzLw0tl
+ MkK+tfUigwL81gbGLxkhJZzpkfESvaOaIj/6e+UI4FTXK3pJBvuny0v+nMcdP0CWR1hQVLsG7iA
+ TIi9wD8tGwnW3Gf+n4QvBg86TTC7nZsgLLdXPKb3DH78iatwxD0naylyS/XK+al8SZIRZ1oO2sA
+ j1dGVP23D5pvKD+WYB5HPOf+b17NZ7Bwm9OSbmJcbVNZ3gq2F46ISLBAThwljza0PwUasHEuIV7
+ 2Ntg=
+X-Received: by 2002:a05:6a00:1d9f:b0:7e8:3fcb:bc3c with SMTP id
+ d2e1a72fcca58-7ff545e4018mr33172108b3a.17.1767106953931; 
+ Tue, 30 Dec 2025 07:02:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IENrvyz3LlEtlrpwuTRk2iAyii/rdukKduYB32U9F9ZpBNbQddw9OrWgpDNrngw+88wL0OIEg==
+X-Received: by 2002:a05:6a00:1d9f:b0:7e8:3fcb:bc3c with SMTP id
+ d2e1a72fcca58-7ff545e4018mr33172057b3a.17.1767106953365; 
+ Tue, 30 Dec 2025 07:02:33 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7ff7e48f3d7sm32968532b3a.51.2025.12.30.07.02.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Dec 2025 07:02:33 -0800 (PST)
+Date: Tue, 30 Dec 2025 10:02:27 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>, Juan Quintela <quintela@trasno.org>
+Subject: Re: [PATCH 0/3] migration: Add COLO multifd support and COLO
+ migration unit test
+Message-ID: <aVPpg_LwlGFIPfen@x1.local>
+References: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1383952829-1767105072=:39524"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,95 +118,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Dec 30, 2025 at 03:05:43PM +0100, Lukas Straub wrote:
+> Hello everyone,
+> This adds COLO multifd support and migration unit tests for COLO migration
+> and failover.
 
---3866299591-1383952829-1767105072=:39524
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Hi, Lukas,
 
-On Tue, 30 Dec 2025, Philippe Mathieu-Daudé wrote:
-> On 28/12/25 21:04, Philippe Mathieu-Daudé wrote:
->> Hi Zoltan,
->> 
->> On 28/12/25 17:46, BALATON Zoltan wrote:
->>> On Sun, 28 Dec 2025, Philippe Mathieu-Daudé wrote:
->>>> Unaligned memcpy API is buried within 'qemu/bswap.h',
->>>> supposed to be related to endianness swapping. Extract
->>>> to a new header to clarify.
->>>> 
->>>> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>> include/qemu/bswap.h                 | 62 +------------------------
->>>> include/qemu/memory_ldst_unaligned.h | 67 ++++++++++++++++++++++++++++
->>>> accel/tcg/translator.c               |  1 +
->>>> hw/display/ati_2d.c                  |  1 +
->>>> hw/display/sm501.c                   |  2 +-
->>>> hw/remote/vfio-user-obj.c            |  1 +
->>>> hw/vmapple/virtio-blk.c              |  1 +
->>>> net/checksum.c                       |  1 +
->>>> ui/vnc-enc-tight.c                   |  1 +
->>>> util/bufferiszero.c                  |  2 +-
->>>> 10 files changed, 76 insertions(+), 63 deletions(-)
->>>> create mode 100644 include/qemu/memory_ldst_unaligned.h
->>>> 
->>>> diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
->>>> index b77ea955de5..e8b944988c3 100644
->>>> --- a/include/qemu/bswap.h
->>>> +++ b/include/qemu/bswap.h
->>>> @@ -1,6 +1,7 @@
->>>> #ifndef BSWAP_H
->>>> #define BSWAP_H
->>>> 
->>>> +#include "qemu/memory_ldst_unaligned.h"
->>> 
->>> If it's included here do users need to also include it separately or if so 
->>> should some of those users lose bswap.h include now instead of including 
->>> both this header and bswap.h? I think it's simpler to only include it here 
->>> and let users get it through bswap.h unless you review and remove now 
->>> unnecessary bswap.h includes from places that only need this hearder but I 
->>> don't know if that's worth the effort.
->> 
->> bswap API users have to include <qemu/bswap.h>,
->> users of ld/st_unaligned() one have to include <qemu/ 
->> memory_ldst_unaligned.h>.
->
-> Let me try again.
->
-> Users of the ld/st_unaligned() API have to include
-> <qemu/ldst_unaligned.h>; if they don't use <qemu/bswap.h>
-> then first it is pointless to include it, but furthermore
-> it saves few compilation cycles for the unused inlined
-> bswap functions.
->
-> Users of the bswap() API have to include <qemu/bswap.h>
-> (which indirectly includes <qemu/ldst_unaligned.h>, but
-> this is irrelevant).
->
-> Users of both the bswap() and ld/st_unaligned() APIs have
-> to include both <qemu/bswap.h> AND <qemu/ldst_unaligned.h>,
-> even if it is indirectly included. That makes the use of
-> APIs more explicit in the source file, and furthermore it
-> avoids code churn when indirect headers are reworked.
+I'll review the series after the new year.
 
-Your patch added #include of the new header to 8 files so this is already 
-causing churn in the hope of avoiding it.
+Could you still introduce some background on how you're deploying COLO?  Do
+you use it in production, or for fun?
 
-> For recent examples see commits 34bcd8f4ff9 ("hw/int/loongarch:
-> Include missing 'system/memory.h' header") or fdda97b47e6
-> ("hw/arm/virt-acpi-build: Include missing 'cpu.h' header").
->
-> Is it clearer?
+COLO is still a nice and interesting feature, said that, COLO has quite a
+lot of code plugged into migration core.  I wished it's like a multifd
+compressor which was much more self-contained, but it's not.  I wished we
+can simplify the code in QEMU migration.
 
-I did not notice that you removed bswap.h from 2 files and thought the 
-patch only added the new header. In that case my comment does not apply 
-but I still see this more as a churn than useful cleanup. OK, host endian 
-does not swap but if you consider that the le and be functions in bswap.h 
-are based on the he functions then you can just leave these there. If it 
-bothers you add a comment, that's still less churn.
+We've talked it through before with current COLO maintainers, it looks to
+me there aren't really much users using it in production, meanwhile COLO
+doesn't look like a feature to benefit individual QEMU users either.
 
-Regards,
-BALATON Zoltan
---3866299591-1383952829-1767105072=:39524--
+I want to study the use case of COLO in status quo, and evaluate how much
+effort we should put on it in the future.  Note that if it's for fun we can
+always use a stable branch which will be there forever.  We'll need to
+think about QEMU evolving in the future, and what's best for QEMU.
+
+Thanks,
+
+> 
+> Regards,
+> Lukas
+> 
+> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+> ---
+> Lukas Straub (3):
+>       multifd: Add colo support
+>       migration-test: Add -snapshot option for COLO
+>       migration-test: Add COLO migration unit test
+> 
+>  migration/meson.build              |   2 +-
+>  migration/multifd-colo.c           |  57 ++++++++++++++++++
+>  migration/multifd-colo.h           |  26 +++++++++
+>  migration/multifd.c                |  14 ++++-
+>  tests/qtest/meson.build            |   7 ++-
+>  tests/qtest/migration-test.c       |   1 +
+>  tests/qtest/migration/colo-tests.c | 115 +++++++++++++++++++++++++++++++++++++
+>  tests/qtest/migration/framework.c  |  69 +++++++++++++++++++++-
+>  tests/qtest/migration/framework.h  |  10 ++++
+>  9 files changed, 294 insertions(+), 7 deletions(-)
+> ---
+> base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
+> change-id: 20251230-colo_unit_test_multifd-8bf58dcebd46
+> 
+> Best regards,
+> -- 
+> Lukas Straub <lukasstraub2@web.de>
+> 
+
+-- 
+Peter Xu
+
 
