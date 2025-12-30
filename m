@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E878FEE01F6
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:11:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC521EE57C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vagzW-0002Xb-S0; Tue, 30 Dec 2025 16:10:54 -0500
+	id 1vagzV-0002QW-Se; Tue, 30 Dec 2025 16:10:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzC-0001jK-Jh
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:35 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzQ-00027z-EN
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:48 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzA-0002jL-RY
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:34 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-47bdbc90dcaso64177455e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:10:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagzO-0002lx-2S
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:10:48 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-42b3d7c1321so6064692f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:10:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767129031; x=1767733831; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767129044; x=1767733844; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4HHs8JJBlkqK5dGRyRM7AMKgYGwv/c7DPSq4oaL1jlE=;
- b=MyyZstlX71f4yi+AuIjo0OIUBbcxCQeWkavA3Mn8ljFahAqFA1FGB5IUz6Tm+NGIBU
- gnHbiRy1denzdBymMCC8uIC0WnbE2ISGdfa7ZT2e46n7qYmUSewaBLjwcVw6NKeuhmsj
- 0aEDH3y1/7WzXzQBZh1jWtrnPXb12p9RRK/QJ2x8UydpKgBQQRTLI6bSnpLxzq22l3qt
- AvhVBUbW0UQUauCEZ7mP0e4lZPz/chGvHqUwLADnpZ2miF2RUf2K2Ay15GwsnMJtv7S7
- XFeMh8ZcHY5zXmVlvu9Sh77pimWRIw27va0T67Bxx68AtM4aGp1nGjW31CNaLJfebz8N
- d4Gg==
+ :reply-to; bh=X7ibe+zOWYAfY6rtdYT7opXCQK7sUSxI1ZrKDvOBvKI=;
+ b=lS7CIZ5KLrVdPV7fIhbyPsHD7JVg+wA2pAXNJCclBQ7jSHWXRNdcIoQJorFmFMLmjy
+ BG3sM/cDUdggbiEVpGNhZLl4/2n8BPL26ld0pFIv+pI1L8Tn3HZzutKRqgqLEuQFodPu
+ ov4L7ui38IBBpizZ2VLGq/Q1yGz75d5N3JsS/U0f7PnMngW530yCEKdIye9hJdJ5lx2I
+ 9jL8BZ1wlrmq7wFwWTeCsj2yb7HUhoURXokNx7Qy3B7lcam7sR4FNsajKkFjjIIEgUFF
+ hL2WvYkr8fQ6XscTIhr3t4wde7r5PQgwCkRFuN5Zf04F6byXFB8L3P1pLnvRwMkVYOL7
+ lEag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767129031; x=1767733831;
+ d=1e100.net; s=20230601; t=1767129044; x=1767733844;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4HHs8JJBlkqK5dGRyRM7AMKgYGwv/c7DPSq4oaL1jlE=;
- b=P1Eqw5FhngiZ21uGwaSqexHt4Ly3+xGFF39Vr38NxjCv+66ae1f4XjpIGrY3adDP9D
- 7YWZlQsORRLppE7nZ9PohSJOxKbNF3JcnCL9ktq7FhafZLt0u+sgEP1exjcTCTohC/zt
- 8ZvfbF1k8eRj/j6dED3XDlIU6F7/sN/OlHQHBFIK+QiWE+wJzAeQCmoOYUBrq0zIV4tx
- qsb++kvFJ/fdAHqXKIiprMZ4b3J+ao5A6aiIVRMi76I5OgoerQ3V9R2hnKNL8EAiKvMt
- 1JaF9vWW8NCkCKqTPY6R7WL07dUjcseRB3uFZTKYHwb0RCerUwv9G9VQaO8z1r7RxO05
- C8qg==
-X-Gm-Message-State: AOJu0Yx1aqdv6tQuOxhO+c6NC++UrRXPn1gpLLo2RT8mG0GFV5Z3BaRI
- d1wZe0sQCIGh58gSKE6cExuL8tZ1u1W4qmLh8ivhLcawJ1kgf9rJA+c1tIG0Q2ig+9QqbnoMgWB
- 2KdvFMMc=
-X-Gm-Gg: AY/fxX7pxh9wLrpJaEioCN9xPnSl30koE0O8uqpLGBfAp+Pw4DfrD393xPharYWJrvn
- 8uXKocMJVUv9xi/p4BulFnEeG3dDJMlL/hAPp+ofSopSbqdQe0De/HD3Hnv1hfLcmB8tL8/U4Gn
- k5EYlaTa0d39qDW1Fkad27OX7RCEnxtxKPsia35FNOHTWCKaZgolplrlY7m91RDwc7uwt+YmBdN
- w0AYQjWejVante0/PH62rd2edXclFPciMna6jneefgal67H7bpyti8kj1y6k2jzTWXyKJLsuwWK
- N8y/Mrju5fAh67Svh6yr7jcvP2mMj5woFZVEnP/Kw6Xnn2n+wzSocjcD75RErHTTno7pAl6573G
- UhQwdJC8hUa11n7dRr88j14GPt/pE/KI8E6Pk7797SBIE07y5RAZ3bjtWwwGrnVbh4gHKrFHL9s
- HCjwRqQJt5wFhOArAGB2rscvmvAqs+OA7iKk4nBdb2VivGp7NDiGuRdl4xvjo5tcdv/TVtCGM=
-X-Google-Smtp-Source: AGHT+IHBIGMx4ih4HMbfdXMjwWkKOGzypUnxFyEBGW79owQgoHTdHzzzI4lA19U3aCBcgmDBUDtLqQ==
-X-Received: by 2002:a05:600c:4fd3:b0:477:9cdb:e337 with SMTP id
- 5b1f17b1804b1-47d19532e14mr349319655e9.7.1767129030718; 
- Tue, 30 Dec 2025 13:10:30 -0800 (PST)
+ bh=X7ibe+zOWYAfY6rtdYT7opXCQK7sUSxI1ZrKDvOBvKI=;
+ b=tE2aXso5XqoBVCUewWQULxaCZb5dPviwdQhQHXzQcfrnyyu+8dzz9rcFqcUrJGwVTq
+ e3V4Dfy5egOtzJRKBRljHRVrj2q4jfm9QhZBkQfv45aYaEH+zGYg686REyywS7HWjKsk
+ 4KbQHOr7oWDkAYkdAbFVfOj9BgynT4MwrWD7Hon4OI4bgz+r2908c8zDcaauw1XMFz2i
+ Ow1NWcEyun1CvOBV+bUu0dwGwh+s4UP8OkTtm5mCSNpIgQVJj4Z0mpjlQdl77FtCLT0b
+ HkwpPIsQL1wH6rh29ROwBbC4JbOHMfkctYwGQsFgnDi6mYNUUnhMaFCoBekXdC32QszY
+ eU4w==
+X-Gm-Message-State: AOJu0YzeOEMU/XrU0eFQ0xwbthQK9WvneS4gXRm8KU+YlfPQ1uj5rtr9
+ EU/uikr7W3p6bB0AzlWpGvH28a9GEvx4ioUO9V1nGIx/QdYNEu2VUdXyDYu9MiwoVPrTvAc7rNh
+ D7AFCOwM=
+X-Gm-Gg: AY/fxX43yTHP88dYfMqw8HIRvdiBmPfUyhpqb6TeDsiEEtqG9L5tIR7SKXScTjSJew0
+ yffkWljY1QncKtyirawxWMc+gCUBeHNoUH5OVEKw2AMB8rJlclIC7SCz/uAncx/gD3Eckp4njQ3
+ urgt+7HRclfvj5LwAEu8iHap1w9tAD4P1Ph22vyqeIDLIoB378/tE7bWdVxSnFq5v1ElJ5jGNjv
+ tWIOWou3X2/zbQFlsYuTOfvsVkzXHgxl5HOj4kgYc7rBkgUdxpaXSuRcswLz0aC/jNLksgkx+TR
+ EvorrxSK197R/rAP3mlepJWBywmdDHj+EeYoiwnEW6bztJNLPKCWY5Zh5627aNJ7UQazhuy2oud
+ j692RHpGi+jbFV3aQucYQVl9E/XMFSvGrIWua5QapA31tej7Dxh6qRiQ4RFpecNMDbizEQ82zkd
+ ZCfkQFFA2GmaPKyEsw53tSZDtWebR34qMR8EE/Q7+lUShKVJvIxVinggAsYSY6
+X-Google-Smtp-Source: AGHT+IELipBGLFYyhF5cIgG9vpPnIgWYHDqmPC8eWg9Oqlx+xtxqO8+B/CRqyJwFGgd3TeFhXz64gQ==
+X-Received: by 2002:a05:6000:22c9:b0:430:f72e:c998 with SMTP id
+ ffacd0b85a97d-4324e51081bmr46269596f8f.51.1767129044302; 
+ Tue, 30 Dec 2025 13:10:44 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be27b28a7sm664836485e9.12.2025.12.30.13.10.30
+ ffacd0b85a97d-4325d10cc48sm60041048f8f.16.2025.12.30.13.10.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:10:30 -0800 (PST)
+ Tue, 30 Dec 2025 13:10:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/34] system/memory: Remove address_space_stl_notdirty and
- stl_phys_notdirty
-Date: Tue, 30 Dec 2025 22:07:45 +0100
-Message-ID: <20251230210757.13803-24-philmd@linaro.org>
+Subject: [PULL 25/34] configs/targets: Mark targets not using legacy
+ ldst_phys() API
+Date: Tue, 30 Dec 2025 22:07:47 +0100
+Message-ID: <20251230210757.13803-26-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
 References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,106 +100,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-stl_phys_notdirty() was added in commit 8df1cd076cc ("physical memory
-access functions") as a (premature?) optimisation for the CODE path.
-Meanwhile 20 years passed, we might never have understood / used it
-properly; the code evolved and now the recommended way to access the
-CODE path is via the cpu_ld/st_mmu*() API.
+Luckily these targets don't use the legacy ldst_phys() API at
+all. Set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable to
+hide the API to them, avoiding further API uses to creep in.
 
-Remove both address_space_stl_notdirty() and stl_phys_notdirty()
-leftovers.
-
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251224151351.86733-5-philmd@linaro.org>
+Message-Id: <20251224151351.86733-7-philmd@linaro.org>
 ---
- include/system/memory.h          |  6 -----
- include/system/memory_ldst.h.inc |  2 --
- system/memory_ldst.c.inc         | 39 --------------------------------
- 3 files changed, 47 deletions(-)
+ configs/targets/avr-softmmu.mak          | 1 +
+ configs/targets/microblaze-softmmu.mak   | 1 +
+ configs/targets/microblazeel-softmmu.mak | 1 +
+ configs/targets/rx-softmmu.mak           | 1 +
+ configs/targets/tricore-softmmu.mak      | 1 +
+ 5 files changed, 5 insertions(+)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index b3597fb2d04..edef51a276d 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -2855,12 +2855,6 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
- #define ARG1_DECL    AddressSpace *as
- #include "system/memory_ldst.h.inc"
- 
--static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val)
--{
--    address_space_stl_notdirty(as, addr, val,
--                               MEMTXATTRS_UNSPECIFIED, NULL);
--}
--
- #define SUFFIX
- #define ARG1         as
- #define ARG1_DECL    AddressSpace *as
-diff --git a/include/system/memory_ldst.h.inc b/include/system/memory_ldst.h.inc
-index 7270235c600..173164fee3a 100644
---- a/include/system/memory_ldst.h.inc
-+++ b/include/system/memory_ldst.h.inc
-@@ -25,8 +25,6 @@ uint32_t glue(address_space_ldl, SUFFIX)(ARG1_DECL,
-     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
- uint64_t glue(address_space_ldq, SUFFIX)(ARG1_DECL,
-     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
--void glue(address_space_stl_notdirty, SUFFIX)(ARG1_DECL,
--    hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result);
- void glue(address_space_stw, SUFFIX)(ARG1_DECL,
-     hwaddr addr, uint16_t val, MemTxAttrs attrs, MemTxResult *result);
- void glue(address_space_stl, SUFFIX)(ARG1_DECL,
-diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
-index 333da209d1a..b45bfecd137 100644
---- a/system/memory_ldst.c.inc
-+++ b/system/memory_ldst.c.inc
-@@ -261,45 +261,6 @@ uint16_t glue(address_space_lduw_be, SUFFIX)(ARG1_DECL,
-                                        DEVICE_BIG_ENDIAN);
- }
- 
--/* warning: addr must be aligned. The ram page is not masked as dirty
--   and the code inside is not invalidated. It is useful if the dirty
--   bits are used to track modified PTEs */
--void glue(address_space_stl_notdirty, SUFFIX)(ARG1_DECL,
--    hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result)
--{
--    uint8_t *ptr;
--    MemoryRegion *mr;
--    hwaddr l = 4;
--    hwaddr addr1;
--    MemTxResult r;
--    uint8_t dirty_log_mask;
--    bool release_lock = false;
--
--    RCU_READ_LOCK();
--    mr = TRANSLATE(addr, &addr1, &l, true, attrs);
--    if (l < 4 || !memory_access_is_direct(mr, true, attrs)) {
--        release_lock |= prepare_mmio_access(mr);
--
--        r = memory_region_dispatch_write(mr, addr1, val, MO_32, attrs);
--    } else {
--        ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
--        stl_p(ptr, val);
--
--        dirty_log_mask = memory_region_get_dirty_log_mask(mr);
--        dirty_log_mask &= ~(1 << DIRTY_MEMORY_CODE);
--        physical_memory_set_dirty_range(memory_region_get_ram_addr(mr) + addr,
--                                            4, dirty_log_mask);
--        r = MEMTX_OK;
--    }
--    if (result) {
--        *result = r;
--    }
--    if (release_lock) {
--        bql_unlock();
--    }
--    RCU_READ_UNLOCK();
--}
--
- /* warning: addr must be aligned */
- static inline void glue(address_space_stl_internal, SUFFIX)(ARG1_DECL,
-     hwaddr addr, uint32_t val, MemTxAttrs attrs,
+diff --git a/configs/targets/avr-softmmu.mak b/configs/targets/avr-softmmu.mak
+index b6157fc465d..baf20fb7f2f 100644
+--- a/configs/targets/avr-softmmu.mak
++++ b/configs/targets/avr-softmmu.mak
+@@ -1,3 +1,4 @@
+ TARGET_ARCH=avr
+ TARGET_XML_FILES= gdb-xml/avr-cpu.xml
+ TARGET_LONG_BITS=32
++TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/microblaze-softmmu.mak b/configs/targets/microblaze-softmmu.mak
+index bab7b498c24..cf635798c90 100644
+--- a/configs/targets/microblaze-softmmu.mak
++++ b/configs/targets/microblaze-softmmu.mak
+@@ -4,3 +4,4 @@ TARGET_BIG_ENDIAN=y
+ TARGET_NEED_FDT=y
+ TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
+ TARGET_LONG_BITS=32
++TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/microblazeel-softmmu.mak b/configs/targets/microblazeel-softmmu.mak
+index 8aee7ebc5cf..52feb957b48 100644
+--- a/configs/targets/microblazeel-softmmu.mak
++++ b/configs/targets/microblazeel-softmmu.mak
+@@ -3,3 +3,4 @@ TARGET_ARCH=microblaze
+ TARGET_NEED_FDT=y
+ TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
+ TARGET_LONG_BITS=32
++TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/rx-softmmu.mak b/configs/targets/rx-softmmu.mak
+index 1c250a6450d..3a90f1b9977 100644
+--- a/configs/targets/rx-softmmu.mak
++++ b/configs/targets/rx-softmmu.mak
+@@ -3,3 +3,4 @@ TARGET_XML_FILES= gdb-xml/rx-core.xml
+ # all boards require libfdt
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=32
++TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/tricore-softmmu.mak b/configs/targets/tricore-softmmu.mak
+index 781ce49a62f..5e018d81068 100644
+--- a/configs/targets/tricore-softmmu.mak
++++ b/configs/targets/tricore-softmmu.mak
+@@ -1,2 +1,3 @@
+ TARGET_ARCH=tricore
+ TARGET_LONG_BITS=32
++TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
 -- 
 2.52.0
 
