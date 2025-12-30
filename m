@@ -4,92 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D00AEE4988
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 16:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B87AEE498E
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 17:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaco9-0000Zf-1B; Tue, 30 Dec 2025 11:42:53 -0500
+	id 1vadBc-0007q3-D7; Tue, 30 Dec 2025 12:07:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pasha.tatashin@soleen.com>)
- id 1vaco7-0000ZT-VB
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 11:42:51 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pasha.tatashin@soleen.com>)
- id 1vaco6-0001RY-Bf
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 11:42:51 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-64b8123c333so14868263a12.3
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 08:42:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=soleen.com; s=google; t=1767112968; x=1767717768; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aUx1dwRpB9x+C+GHXgrsd6etfsxRhj2Yi9akRYZPEpQ=;
- b=KkKh/MGF5Xe5IhJm5NIPvsTnyRNRgLItoWPhhO+xDH4ZFpZA4O45iCzHskL6/NlGFM
- zvCWgriYLl4JCGxZc7P0brP5AlKLm7S82uJL8SFnP8pBtlesf2PsH1ITQuUXqZZ4jOmZ
- 0bPMel1TFDSVDnyIUXS8Esx84vSxMtrpLYbwqEbI150DLk436VcRAaRdqYIlUMs7bvsb
- LhwSkzCXMeFe/W5GA7/H33OSmAF5AACOdQDmbLR9kCbTRwoFezmDJh6/RtdeD1pfdsmL
- aqAUUt4czBW+sU2ZD5cVa8py1R7pAYWbS7ARoB4rvOb51QJmsqhD7CA5tHoYFiiM8hQj
- az9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767112968; x=1767717768;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aUx1dwRpB9x+C+GHXgrsd6etfsxRhj2Yi9akRYZPEpQ=;
- b=rcAfMAUdZUuO2csxi05sInINCVx4Pr3yXqC4wV43smAwxffEHSBANMsDiTEku10GPW
- +zWJrfzfawkanp9Dc6TKyX+jrd65NGkHZyQRDydhIlfYaoxm1nr3cRxoYZZEsuBOpvV+
- pEKBfFvP1Neie1c35eBp7d0zknPLvanWYEJ9TV3oFaOvTgblHxAb7+we/YnRRafswedm
- vt5mZtm5YLSVWEwrs2ikQMrRmD/G9JojQ8IhGFyhrHiKsamM8viS9ryLz59cUv4kRAcC
- mB0UfmmX8cGa5hULk4KHFMgV+yAMqBRSjj1LtUnxJBTHbcAlnrtvA1TEyZd6Yt+zR4mT
- EoyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVmdr5bzF8/+GShbGn3gUxRlnfq0HPOKzX2j7zYLxgc8qxny2ToPbAGpUETYTxVSOFqWFeK8dxXprJh@nongnu.org
-X-Gm-Message-State: AOJu0Yx/X8s7zLM9OFZ+XtSCT9PG61YJa2VMrs+8J7cWMsgwi8wmQFDC
- w80Z4tlx6zlmAN4ilr0M87a/iHmwBY/MH2tkJh5tFugtBu35AsqDW8sysQXtsHbHYWrLZjIT56J
- 837anYPsNEsTYAW+UKaqywwEiqP7mmnwishuPF8W2SA==
-X-Gm-Gg: AY/fxX5x9ZtL4cEE3FmAYc99+Pl81hvUtct0dK89SRzUJPugk1wiJVCeWwGa8NRCeo1
- FigcDJf0Tt+wXlDEx2NnGqbCVUoQdmF4tYVpj+Np0iC9ydp47xPl9emeSa6PJeuRIjLe5wI1t8i
- R00t6bNZqKfv4RemgUn/fx4e4jR2v7YBNdMmASNUbamehol/8AWi3uQ2F6weptrUs8gTv/UGXPp
- K+eSvZ+66S7MTFzQWZuBAoFT6zaFmxn4f88NFCgAdheFTA2xStIf2m+hiANFxnlcbwdCuse3cz2
- Iw9SzmyNjs4uN7P0VelmM9gnPg==
-X-Google-Smtp-Source: AGHT+IEalSwHXlSyP0XIVEIOS0vVwiNaX3KH41ieJB+8/YYSB0lKoi0vJB6BuvETI8wSKFNZEjcgFjJQ/GJe+QmQlGM=
-X-Received: by 2002:a17:906:f58f:b0:b7c:e4e9:b10e with SMTP id
- a640c23a62f3a-b8036f5aa24mr4010245766b.18.1767112967776; Tue, 30 Dec 2025
- 08:42:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vadB2-0007Y1-3c
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 12:06:34 -0500
+Received: from 5.mo552.mail-out.ovh.net ([188.165.45.220])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vadAz-0006Ov-Il
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 12:06:31 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.6])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dgfcv28qlz5w9D;
+ Tue, 30 Dec 2025 17:06:22 +0000 (UTC)
+Received: from kaod.org (37.59.142.101) by DAG3EX1.mxp5.local (172.16.2.21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 30 Dec
+ 2025 18:06:21 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-101G004c94e92db-3063-4018-a7df-e9c262bfd6f5,
+ 10BB85812771F3279B7407FE60307F74CBD19E16) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 90.14.253.154
+Message-ID: <b67a04d9-3561-4d90-8238-e476ae8896de@kaod.org>
+Date: Tue, 30 Dec 2025 18:06:21 +0100
 MIME-Version: 1.0
-References: <20251229120839.89817-1-me@linux.beauty>
- <CA+CK2bA1Xv+asZ3d2jALk+VePDdDg+4ao0Y72CWV2i0rg3GsyQ@mail.gmail.com>
- <19b6e60dfd2.187d822f1751681.8912147399180739154@linux.beauty>
-In-Reply-To: <19b6e60dfd2.187d822f1751681.8912147399180739154@linux.beauty>
-From: Pasha Tatashin <pasha.tatashin@soleen.com>
-Date: Tue, 30 Dec 2025 11:42:09 -0500
-X-Gm-Features: AQt7F2oM-pg5mgu9YhN6e53Vv0e13rpVZEhhUkpJI8x-6pPd4Yj3Dmd_GE8ChvE
-Message-ID: <CA+CK2bC0N7v7MnC6LybAzE_oJPWeWK0v9xVng-JgEnvC6ay+nQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] CPR: shared RAM with /dev/fdset for LUO kexec reboot
-To: Li Chen <me@linux.beauty>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, David Matlack <dmatlack@google.com>, 
- Pratyush Yadav <pratyush@kernel.org>, Mike Rapoport <rppt@kernel.org>,
- Alexander Graf <graf@amazon.com>, 
- Jason Gunthorpe <jgg@nvidia.com>, Samiullah Khawaja <skhawaja@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=pasha.tatashin@soleen.com; helo=mail-ed1-x52d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/4] Remove AST2700 A0
+To: Jamin Lin <jamin_lin@aspeedtech.com>, "reviewer:Incompatible changes"
+ <devel@lists.libvirt.org>, Peter Maydell <peter.maydell@linaro.org>, Steven
+ Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open list:All
+ patches CC here" <qemu-devel@nongnu.org>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
+References: <20250901040808.1454742-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250901040808.1454742-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.101]
+X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG3EX1.mxp5.local
+ (172.16.2.21)
+X-Ovh-Tracer-GUID: 6000dc71-8dc6-4a30-82ef-dd5ad27c6926
+X-Ovh-Tracer-Id: 472315013890149365
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGL3soYvqjCTyXFEPoUCSY/3eN0A10NNb4YLLriUUnvqRnTk7Asso0mVe6NizB0waxBlThWX/f2zC6EI+xMpcOSHW5RFiCVuztH3JoIrkxyfNs56suxoiMOg+okDh1X5DrhWl7m0xQb3wEhrxkOpQNKRplhK27OVQei2abSDNOu74RXXGlx2wOfZ5vUaNidxKU9sjS4sxU2OfHN4SQKfAs6jJQb9WmPnQW2yOmpqlemIBb0WM/EwzR+1uIAVB5jInB9L8OgpDgPBz4ljewMQR0KYdSgD1hT+VEaYrpWQb3IQBbm/a5njJyDMyxceLKPjodt5H2jFUb7ZyFqrpgq2UgFs1f/qfHZF0NQmCGfTUYH0JMQXIixvGlqFPyXsSmSXuIlKuRTyf5u9NKm8hqnuuEHKWsjxlqdMu70bA1Zv2UjzS+5EFeNFhaA+5o7TA14nP+9bfKdXLfpO7Y4Vczmp+c/bfFtF+5lY9oYnlR5kpcYGvVDt5eDbHnUHKaWHUmxD4pPEa0lc1iIic201ec1EX+XHzHiZyhxRMi+xM/O7Wekg+AnfTWHBKD0BGHVFVW0jodWUwJ6UDAyqpr/p16T/c6fZGlX+RBFojdCjF7eayIS/+sJGJhAJp2wqw88ij6HIGRsFCBi40IFpF9JM0Hx/tfZ+7wrsjhBwEZwEAyCclZFOA
+DKIM-Signature: a=rsa-sha256; bh=x74yeCKIlcpYZnHtsmaMTZ3ko2qaE8iVeTjhpj2DNJA=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1767114384; v=1;
+ b=Zy/zLNPqidK7GVfpRKXvI6YTp2jnE+Q5yYS63mkFScMFIg88w/CkeFTE8XsmH9Ysn64Ehb63
+ 3ZsiuPYqo/8PtUNgl1QT7+EHIDaG0nHgyHS6O374yv7ymBGjyOQ80PZKjcgUvjPlbuX486fzEZD
+ 1xrY+IV8wGxLlA34snr2wna8SVXqP8XQEbjOf+ZBCejv18l6IznQDc56MSkbiQzU/2/pDGDteY4
+ orLrDJJy5SYCb/IC2L0HJv5REnmpBeEZnCdym8Hrm49owEo8Kz7rUVsYgUh4bqS/B+pDKHx//Wr
+ eWQxWeqtuXtp9f2c/aLl8PQRjWkR68IL2BsoVmmqY9Yzw==
+Received-SPF: pass client-ip=188.165.45.220; envelope-from=clg@kaod.org;
+ helo=5.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,99 +130,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 30, 2025 at 3:30=E2=80=AFAM Li Chen <me@linux.beauty> wrote:
->
-> Hi Pasha,
->
-> Thanks for the detailed clarification, that's very helpful.
->
->  ---- On Mon, 29 Dec 2025 23:50:35 +0800  Pasha Tatashin <pasha.tatashin@=
-soleen.com> wrote ---
->  > Hi Li,
->  >
->  > Thanks for the series. I have a few comments regarding the interaction
->  > with the LUO agent and the broader architecture.
->  >
->  > > In the LUO/KHO update flow [1], a LUO agent coordinates a host kexec=
- reboot
->  > > while keeping VM RAM content intact. LUO creates the guest RAM backi=
-ng as a
->  > > memfd and passes it to QEMU via -add-fd on the initial launch, so th=
-at
->  >
->  > I am currently working on the LUO agent (LUOD) documentation, and the
->  > intended behavior differs slightly from this description.
->  >
->  > Rather than the agent simply passing FDs, the design involves LUOD
->  > opening /dev/liveupdate and creating a UDS socket (e.g., at
->  > /run/luod/liveupdate.sock). Live-update-capable clients connect to
->  > this socket, create a LUO session, and preserve their resources into
->  > that session. Once all clients notify LUOD that they are ready, LUOD
->  > performs the kexec reboot while keeping /dev/liveupdate open, ensuring
->  > the LUO sessions survive.
->  >
->  > After the reboot, the restarted clients reconnect to LUOD via UDS and
->  > request their preserved sessions. The sessions are passed as FDs back
->  > to the clients. From those sessions, the clients retrieve the
->  > resources, restore them, and resume suspended operations. Finally, the
->  > clients "finish" their sessions, fully reclaiming ownership of the
->  > preserved resources from LUO back to userspace.
->
-> Ack, and sorry for my cover letter text over-simplified the design.
->
->  > > memory-backend-file can use it as the shared RAM backing. On update,=
- LUO
->  > > checkpoints QEMU, reboots the host kernel via kexec, and then re-lau=
-nches QEMU
->  > > to restore vmstate while reusing the same preserved memfd-backed RAM=
- FD.
->  > > Today LUO only supports handing off guest RAM via memfd [2].
->  > >
->  > > To re-attach that preserved RAM backing without reopening non-persis=
-tent
->  > > paths, QEMU needs to let memory-backend-file consume the pre-opened =
-FD using
->  > > mem-path=3D/dev/fdset/<id>. However, memory-backend-file currently u=
-ses
->  > > open()/creat() directly, so /dev/fdset/<id> cannot be resolved throu=
-gh the
->  > > fdset mechanism, making this workflow impossible.
->  > >
->  > > This series allows /dev/fdset/<id> for file-backed RAM, documents th=
-e setup,
->  > > and adds qtests to validate that x-ignore-shared keeps RAM transfer =
-minimal
->  > > in the cpr-reboot path.
->  >
->  > Sessions become particularly relevant when we look beyond guest RAM.
->  > For complex resources like VFIO or IOMMU, simply passing the FD is
->  > insufficient. These resources require specific ioctls to be issued by
->  > clients after the FD is retrieved, but before vCPUs are resumed or the
->  > session is "finished".
->
-> One question: in the intended LUOD/session architecture, do you still exp=
-ect
-> clients (or a wrapper) to inject the retrieved guest RAM memfd FD into QE=
-MU
-> via -add-fd + /dev/fdset/<id> at QEMU startup? (as this patchset does)
->
-> Or is the longer-term plan that QEMU itself connects to LUOD over UDS, re=
-trieves
-> the session/resource FD directly, and consumes it as the RAM backing with=
-out
-> going through -add-fd?
+On 9/1/25 06:08, Jamin Lin via wrote:
+> v1:
+>    - Remove ast2700a0-evb machine
+>    - Remove ast2700-a0 SOC
+>    - Remove GIC 128 - 136 for AST2700 A0
+> 
+> *** BLURB HERE ***
+> 
+> Jamin Lin (4):
+>    hw/arm: Remove ast2700a0-evb machine
+>    hw/arm/aspeed_ast27x0: Remove ast2700-a0 SOC
+>    hw/intc/aspeed: Remove GIC 128 - 136
+>    docs/specs/aspeed-intc:  Remove GIC 128 - 136
+> 
+>   docs/about/deprecated.rst                     |   8 --
+>   docs/specs/aspeed-intc.rst                    |  93 ++++----------
+>   hw/arm/aspeed.c                               |  28 +---
+>   hw/arm/aspeed_ast27x0.c                       | 121 ++----------------
+>   hw/intc/aspeed_intc.c                         |  49 +------
+>   .../functional/aarch64/test_aspeed_ast2700.py |  12 --
+>   6 files changed, 39 insertions(+), 272 deletions(-)
+> 
 
-The latter, I expect QEMU and other VMMs use their LUO session FDs
-that they receive from LUOD to retrieve and restore the preserved
-resources: memfd+iommufd+vfiofd and resume the suspended VMs.
 
->
-> If the latter, I think we'd likely need a QEMU-side interface to
-> consume an inherited/pre-opened FD for RAM backing during early machine i=
-nit.
->
-> Regards,
->
-> Li
->
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Applied to aspeed-next.
+
+Thanks,
+
+C.
 
