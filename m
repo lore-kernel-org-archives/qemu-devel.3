@@ -4,85 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052C5E92722
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 06:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04F8E9411C
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 07:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaT65-0002b9-Or; Tue, 30 Dec 2025 01:20:45 -0500
+	id 1vaUZW-0006Sm-8w; Tue, 30 Dec 2025 02:55:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaT64-0002ay-I6
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 01:20:44 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vaT63-0006AU-1h
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 01:20:44 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-64b8b5410a1so10887379a12.2
- for <qemu-devel@nongnu.org>; Mon, 29 Dec 2025 22:20:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767075641; x=1767680441; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g4JlwfR6wGNR+xCf/PhewrTc6z907l4maBJeRzP/9Rg=;
- b=n5Xy28Xb1z9DVKQ2yCKIpDMcfLOKgLoEL4WUexTn4+KXEIbdVutSLFAhv8wx2EEQLc
- k7KAJH7FtId/d6WwkrMYIvpXsBkizE9Io2pFTghiTbith32QcX9+tBz98CeEO5l17ys+
- mJTY61d8XVJut9VgrpnaCkcBuAhpe1d16eBzkqD5lTes64zDLmNV8mn73ZAmHD/0CvsC
- yOKtC15wpUCpHnbWpy/IR8BXqjXs2L341PemwbpUi7AVJaGyeMrEBLvQVE5OjQQJQw8P
- 4f/D08v7C996Exq3gJFD2gYbTC1iOl4SbA1Y+Xc0XGqoQYa+qrlWcgcaset7kNe3d5gN
- AkwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767075641; x=1767680441;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=g4JlwfR6wGNR+xCf/PhewrTc6z907l4maBJeRzP/9Rg=;
- b=GddBUhuwD7uK03sC6h9LlunSsIfpGaheBh7DVnhC6XILiCb16zT6OifWimYVEyjkvN
- lVXvDZqvurI0iXr4L5lFuMr2fU14IGkaNH6qDzjbd9nYWsEhG/GOJ//VtNW/pxJLv0F1
- uZDihR0XbnTAhLpuaAKVxFGcvodYblKRqAE2TiEVhNCfRhujH6f05bs9zLHPGefj1OVy
- xKtRkgZlgi3fY7w2mhBeygouNyyXsfPdrTvP5wDPRtq/LkT1Myrl/X1PQzn8iiSYbdnz
- jB0jaw6t1X1p//97u6n66hrFGg3QeyfrsisL2R3hg1TXs9rPRJpBlio0CXosOrC8pRN8
- knDQ==
-X-Gm-Message-State: AOJu0YzZ0ZGnsiTfqGMx4fFUGze7Xp50szmZS6ZCj60lYB0lbvTf1vXe
- FvgMVNhWattM3OxtdSE0AyDbq4RwCle29yIZIwgpGcCb8mQi7bbuSQsoKE27Qrn/RQ2dUH2DnLW
- a3XVPZvRe6vBcFS7HtxBbwI7hZax/K/SVUt3fhZwK0g==
-X-Gm-Gg: AY/fxX733QrfjtI3I3WGHgXaxqaNc+qfXilH0t2k53xuPL1tOsHor7rxS+8TWItcLtI
- w26Bqrjuw0bbB/N9ZMQPb74s10I6wyIHHIxJfx11250ASokOSYFwVXx2QTps72ZX2b+OaSKzAOp
- BORmADxDF03N1t6iwJpnv3zzSfGQVEhOij2D9Gb1oCdxL0u8soVIkbnCBHbuX8a/ZbNk+xBKop/
- 4SUPVq0HgzhorWY2JuPVoKWji25CszbzZ7gdFhbTGx3eu5vqfXgP/dwXX3Fs97RfgHWbyXjvgFp
- rzXgREeUNHESf6xP/I0C1SS9YLZCJioAq/Sd4tA=
-X-Google-Smtp-Source: AGHT+IG5uSFZzBnpvEZkyQnyAWABbUHt/3E9W6oXZ6xrVUBkQNO7AfZmgcIsH/zvGbTyhiLKBXUDX+ZyAJ+vuK9dsqY=
-X-Received: by 2002:a17:907:868e:b0:b76:4c8f:2cd8 with SMTP id
- a640c23a62f3a-b8037233e75mr3266472266b.55.1767075640652; Mon, 29 Dec 2025
- 22:20:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1vaUZU-0006SD-CN
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 02:55:12 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1vaUZR-0007Oh-Ax
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 02:55:12 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 5BU4KR2I3185393; Tue, 30 Dec 2025 07:54:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=LB2Vj
+ /MWHUNtV6h54DkHNSWb4nqk6QJBlJZJjtacKdo=; b=NdZrNBaIhMqN0GvNZajfT
+ bsTF6IuKhBkS1eyCq0cY1y1CrvJr3rmoAJfsFKgWhlxGF1gn9C+Vq7EwZCkifYbJ
+ eFO85/gkdC8pqL4CPgpIU0lqW3Ri7FGmiGb5Ikqrv6a6qpVnG0iy4QJDRr8RYDjv
+ V1FsfEK1mP6lw5UKCUBPmj/AfxRZa3MaE9JocZCk1qeRCTOo0AqH/2JIjr3pDWmm
+ zPHcV2vzUz5zVgn9TKn6k69pQp5/Oqz4L6Rns+58LkRRE59uBXXF6p4lnmBlfnwW
+ 3uLEsGpl8Eie0vD4kHTQeoPabsqNbWGO6WrWJgb1WbvCjdMHErX5vksVJjCFmHw8
+ A==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4ba61waack-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Dec 2025 07:54:54 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 5BU2s4PB017352; Tue, 30 Dec 2025 07:54:53 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4ba5wbp6ba-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Dec 2025 07:54:53 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5BU7smZn005421;
+ Tue, 30 Dec 2025 07:54:52 GMT
+Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 4ba5wbp6aa-3; Tue, 30 Dec 2025 07:54:52 +0000
+From: Dongli Zhang <dongli.zhang@oracle.com>
+To: qemu-devel@nongnu.org, kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, groug@kaod.org, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com
+Subject: [PATCH v8 2/7] target/i386/kvm: extract unrelated code out of
+ kvm_x86_build_cpuid()
+Date: Mon, 29 Dec 2025 23:42:41 -0800
+Message-ID: <20251230074354.88958-3-dongli.zhang@oracle.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20251230074354.88958-1-dongli.zhang@oracle.com>
+References: <20251230074354.88958-1-dongli.zhang@oracle.com>
 MIME-Version: 1.0
-References: <20251229231546.50604-1-philmd@linaro.org>
- <20251229231546.50604-3-philmd@linaro.org>
-In-Reply-To: <20251229231546.50604-3-philmd@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 30 Dec 2025 08:20:14 +0200
-X-Gm-Features: AQt7F2om8yuNNMEh47MfYR7w6ICZbcOcszZtkVXIG9R_fOWp8lOW-LAKbGFUOkw
-Message-ID: <CAAjaMXarjxwxBZhRJ-8y1N9M+Rxxd+ps0vEccWGC2tbKGY5A5w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] monitor/hmp: Make memory_dump() @is_physical
- argument a boolean
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Anton Johansson <anjo@rev.ng>, "Dr. David Alan Gilbert" <dave@treblig.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-29_07,2025-12-30_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0
+ malwarescore=0 bulkscore=0 mlxlogscore=999 phishscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2512120000 definitions=main-2512300070
+X-Authority-Analysis: v=2.4 cv=LL1rgZW9 c=1 sm=1 tr=0 ts=6953854e b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117
+ a=zPCbziy225d3KhSqZt3L1A==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8
+ a=PfVMnciqd94fTzcZrM0A:9 cc=ntf awl=host:12109
+X-Proofpoint-ORIG-GUID: zxtJd8cAKdm-OzWedISRPmOXbRYJWTmw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjMwMDA3MCBTYWx0ZWRfX5zH5fBQcojQk
+ mGWW9unXcTBiINMoRNjw/d3DjPCyh3198oHoPIzH7OcaLk661jorIllD5T8PmuzBq6VBHw4Ou+s
+ IEwHVcJteTbkTLJTWmAi1HROGIm9khiFR/XHdFQmihfILmUfq4pN9oWO7tpW4ZuBrPC/dhLaLrC
+ zPePPjASO0vKjpIm/w9rFvWGpzfYMsOHZCClCKkZTYc9667Nktxox+wdGGSjomjUevUjHgrPOwW
+ NXPPoRU4p7D8eqHjhzaruTJk8CrbPD7+o3ETsrQEUJsb5649FgBYRyxHaRFNEr3GeJb2TCbJXyc
+ kp1WqFkFssKTZcnCj0NGGHHmgP5doComK/gHaRHlzE+Num9lx12ww8RyRl04Q85y8YvqB4s50IO
+ SvKATbYvAup5KeQjrw+lO8iXYGHNu+3n93bYPrXiuRomvwHZPQsJLsDeGJmKX1GBubcLGS4ZGX6
+ UwyndJvJVhNjjdTLwjjvJoUD0yf8Vis0fhRdSQrY=
+X-Proofpoint-GUID: zxtJd8cAKdm-OzWedISRPmOXbRYJWTmw
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,54 +120,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 30, 2025 at 1:16=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Suggested-by: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
+The initialization of 'has_architectural_pmu_version',
+'num_architectural_pmu_gp_counters', and
+'num_architectural_pmu_fixed_counters' is unrelated to the process of
+building the CPUID.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Extract them out of kvm_x86_build_cpuid().
 
->  monitor/hmp-cmds-target.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
-> index 2976f986d35..51dcb9e314c 100644
-> --- a/monitor/hmp-cmds-target.c
-> +++ b/monitor/hmp-cmds-target.c
-> @@ -122,7 +122,7 @@ void hmp_info_registers(Monitor *mon, const QDict *qd=
-ict)
->  }
->
->  static void memory_dump(Monitor *mon, int count, int format, int wsize,
-> -                        hwaddr addr, int is_physical)
-> +                        hwaddr addr, bool is_physical)
->  {
->      int l, line_size, i, max_digits, len;
->      uint8_t buf[16];
-> @@ -237,7 +237,7 @@ void hmp_memory_dump(Monitor *mon, const QDict *qdict=
-)
->      int size =3D qdict_get_int(qdict, "size");
->      target_long addr =3D qdict_get_int(qdict, "addr");
->
-> -    memory_dump(mon, count, format, size, addr, 0);
-> +    memory_dump(mon, count, format, size, addr, false);
->  }
->
->  void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict)
-> @@ -247,7 +247,7 @@ void hmp_physical_memory_dump(Monitor *mon, const QDi=
-ct *qdict)
->      int size =3D qdict_get_int(qdict, "size");
->      hwaddr addr =3D qdict_get_int(qdict, "addr");
->
-> -    memory_dump(mon, count, format, size, addr, 1);
-> +    memory_dump(mon, count, format, size, addr, true);
->  }
->
->  void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **e=
-rrp)
-> --
-> 2.52.0
->
+In addition, use cpuid_find_entry() instead of cpu_x86_cpuid(), because
+CPUID has already been filled at this stage.
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+---
+Changed since v1:
+  - Still extract the code, but call them for all CPUs.
+Changed since v2:
+  - Use cpuid_find_entry() instead of cpu_x86_cpuid().
+  - Didn't add Reviewed-by from Dapeng as the change isn't minor.
+Changed since v6:
+  - Add Reviewed-by from Dapeng Mi.
+
+ target/i386/kvm/kvm.c | 62 ++++++++++++++++++++++++-------------------
+ 1 file changed, 35 insertions(+), 27 deletions(-)
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index c98832f423..08d80ff677 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1986,33 +1986,6 @@ uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
+         }
+     }
+ 
+-    if (limit >= 0x0a) {
+-        uint32_t eax, edx;
+-
+-        cpu_x86_cpuid(env, 0x0a, 0, &eax, &unused, &unused, &edx);
+-
+-        has_architectural_pmu_version = eax & 0xff;
+-        if (has_architectural_pmu_version > 0) {
+-            num_architectural_pmu_gp_counters = (eax & 0xff00) >> 8;
+-
+-            /* Shouldn't be more than 32, since that's the number of bits
+-             * available in EBX to tell us _which_ counters are available.
+-             * Play it safe.
+-             */
+-            if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
+-                num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
+-            }
+-
+-            if (has_architectural_pmu_version > 1) {
+-                num_architectural_pmu_fixed_counters = edx & 0x1f;
+-
+-                if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
+-                    num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
+-                }
+-            }
+-        }
+-    }
+-
+     cpu_x86_cpuid(env, 0x80000000, 0, &limit, &unused, &unused, &unused);
+ 
+     for (i = 0x80000000; i <= limit; i++) {
+@@ -2116,6 +2089,39 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+     return 0;
+ }
+ 
++static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid)
++{
++    struct kvm_cpuid_entry2 *c;
++
++    c = cpuid_find_entry(cpuid, 0xa, 0);
++
++    if (!c) {
++        return;
++    }
++
++    has_architectural_pmu_version = c->eax & 0xff;
++    if (has_architectural_pmu_version > 0) {
++        num_architectural_pmu_gp_counters = (c->eax & 0xff00) >> 8;
++
++        /*
++         * Shouldn't be more than 32, since that's the number of bits
++         * available in EBX to tell us _which_ counters are available.
++         * Play it safe.
++         */
++        if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
++            num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
++        }
++
++        if (has_architectural_pmu_version > 1) {
++            num_architectural_pmu_fixed_counters = c->edx & 0x1f;
++
++            if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
++                num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
++            }
++        }
++    }
++}
++
+ int kvm_arch_init_vcpu(CPUState *cs)
+ {
+     struct {
+@@ -2306,6 +2312,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+     cpuid_data.cpuid.nent = cpuid_i;
+ 
++    kvm_init_pmu_info(&cpuid_data.cpuid);
++
+     if (x86_cpu_family(env->cpuid_version) >= 6
+         && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+            (CPUID_MCE | CPUID_MCA)) {
+-- 
+2.39.3
+
 
