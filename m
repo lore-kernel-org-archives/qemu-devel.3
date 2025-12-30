@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C9BBEE0203
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A8DEE57C2
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vagwn-0004Sh-3i; Tue, 30 Dec 2025 16:08:05 -0500
+	id 1vagxB-0004aq-Rm; Tue, 30 Dec 2025 16:08:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagwl-0004Re-JV
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:03 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagxA-0004Zz-U0
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:28 -0500
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagwj-0002Az-F8
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:03 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-47bdbc90dcaso64167985e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:08:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagx9-0002Ej-5E
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:28 -0500
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-47755de027eso61075955e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:08:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767128879; x=1767733679; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=/8a9txETZsIGRArhrqD1LIVGpeabi/5aw9YN5bJf928=;
- b=mQKu+94l3H48uYtoX6vfGdZkSjoTP+vuVZGjyGY31ED0lRef98G9v+FhsdVoegGEtI
- 2BuYanHiE53UOWi/ilXVEJb7fGzthJq993c8/e/t+/eWzQcKfc8B69yJF+2mT5P1KXSV
- sg1QTV7UeGQDqIam8Y+h6Qe+5bUguhbGMKyd39xNUM6MzYykxjaP+10kMsb3DqI2jwvs
- rmq3rOb1CO1MEPcRQi+CumdX062qmcU3a2d9oAl+16n6ZD1eOlfRXp9Do7Hj152H1kJn
- CtphG963SVuVzJMCTR1YGUrQNpPRx/AgCsotrvNUXn8SagWvMJPUGtiI93Z3DJ0uvgZi
- 3yIg==
+ d=linaro.org; s=google; t=1767128905; x=1767733705; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=YEG6iZ6Aw3LQd9IRTTR+j/7S3SvDhMq9IcY5HHvReKc=;
+ b=YSgpjQfdNREyXxKHE7+4Yu75rG+BL+k0FG2zNVCnJ4X++dXRR5v+qNcb4ha8T896N4
+ hZRi2QZyX47emHwBw5JsUlALXHkJb9gyeYQYJI+Rb0j1Qc3iCBtO/+wyV/UdEsiSMtD3
+ 7oYyhQhbXBSfjuewU1CT1SdNuTsCcw5a5li7LYk8Y9SYFm9958z66Bn/Bw82GnRnbYSR
+ nMlbRSZmlT7db9ChnJY5tVUN82JPzDDjueSk+ygl1hFiy7FyePK9EnmW5v1eNTOuozSm
+ VJ+svPx8tEKBfgiJbKOwq2/mh36OZwSBVrTlSgTY34A8mE/vfOJD0uSCuJAdwlMrV3Nc
+ nYwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767128879; x=1767733679;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/8a9txETZsIGRArhrqD1LIVGpeabi/5aw9YN5bJf928=;
- b=vFPOBcWYdM6LS5vfzQTehFO+BWRul5xN6LaE0ZHxNUqFOAEEcUYr18tKHXXrcsd8q1
- Lm+U2rDEyNr1DxKNwvNMOduG1nA5aWCuavCRdzRtEAQTaeIsT0Wk1l1OWWJ2dO+YhBJn
- no0oTNRSgFiR9WTi+gGZOjlPkxizS9AW5i/ITrRJfck7tBtshpM8iCUz83KEedjYOBtD
- stUOGR1YIRjHEKZU7/sn6yKRgVU2fO47m879Y9nMV9QuxPhJAQS9JqxWAzoDMNXJ/8eY
- kZ5OOOSdsD58B1tiuQxFcPfOdmKmqfTSx/BZdAVRqfEeL2Nr/kuNGtGxHN8d5fYl6QPB
- 9a6Q==
-X-Gm-Message-State: AOJu0YxDlRhe1dqHJ+L5LrF3+TeeJyhLU/OtSM92dLeQ3wEqE+iIwE7z
- yaoI/uLavvufCxcvCt6/wBeP4H5o1v7ZU861GU19+b6iH21grnJKT5ZNkH3AbooqpyY/lPx97wS
- 4l3pH/yc=
-X-Gm-Gg: AY/fxX5jkYmF6dHo6qjU4ttHykKv6XpoY65LTm7rUoezm9rCnWGHArKx7pbjPbhMj5p
- JGbwJpMWn5KTR8O+veapMsQvWD1rr59HG8iNbLvnyKCLV41DR14E2i9qSmCuDdBI0WI/rvUOVdV
- iByJNrA+nb+++c9253/hhsY+8gBJFMFWhqYsDFWNJiS2ApbvL7mZYg+ZTy8i0kVCOBEDObsWaF+
- Pn7feENnKm7zcPhtGHaGDHlav7pQjnmFdI8IRUY6PMriULeOqyNwyxtM0YCntTMSR4vWyJyCSmj
- SBjPyCAy8Ty/+jB6FTfTmFfCZU+alaitF1W035MLxfM4NiOPZOmUjKW6YlZ/PcanT0IiMD6vCqq
- XsDZFQeaq7cb6VhN2RmWCb5jVLqpzRyUxSpYQWNeJlZHVCXF/bsTJZD5MZlRu66QcxBwL2WZzge
- hIRy46QfuwlzTKQjgRITKjg+AI/HKG/2mGisdtFR5iLRgxmTA96DEcLg8mdipB
-X-Google-Smtp-Source: AGHT+IF9vc+gDpjZfCcZ1zc6lVfBmII0OfP5mcKD9H9ONso9DDD2EuBNYIi94G50xvCHNNgfXvgajg==
-X-Received: by 2002:a05:600c:1f84:b0:477:7c7d:d9b7 with SMTP id
- 5b1f17b1804b1-47d3884cfdemr295190255e9.33.1767128879345; 
- Tue, 30 Dec 2025 13:07:59 -0800 (PST)
+ d=1e100.net; s=20230601; t=1767128905; x=1767733705;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=YEG6iZ6Aw3LQd9IRTTR+j/7S3SvDhMq9IcY5HHvReKc=;
+ b=A1SOV+GxA3re7XnFEAdHXwIOHWlIy1E9KeHaPOLLh7hXO2Rwn4OwwfBpQVYW3r3jOX
+ ibrOMq13b4u6fQ2HIsmEzPAlwxRGZxcnmk+GD+lCHBECk0JC8b0GmzefRMaG1TKRvxTv
+ LnhKbmCRkVDSBz1q9jDYUqF02zpnmO32czMngoPAIpY8Eo5tWRM8L7keBcJVOF+Z+1vy
+ w1TT+E+df8KkQkYrRsDcDZeautajjrqZdi3dIPvtUqI1vDY7SU+BJJkgxdXZ0q5aAJL1
+ AtSN6L1cqrZKY36vW6Z5ZAGlwtEw7lhvmnEpsF2+LmK1GGSsWI8zjjgQ4L8/HxhpcWQm
+ 6zEA==
+X-Gm-Message-State: AOJu0Yw9f4CU4ttoCk1k/aF80VgZTKXp1R5QjWUKguLpkfTO3lyPGlSX
+ W+AQITZ/U3rFC0oQX5GMnaupvqjFS06nxbFN/UPLmtqovArQHZtu27KPHqnpf+8mz4vt351RjK3
+ 3g/iaLk8=
+X-Gm-Gg: AY/fxX6dnN/Cf59q8d2iPgSusDYrCKjzAr/8sRdPJFWUuajaWzrFrQFcYaxMrE/v38c
+ lMxzJ4oCSZTHtBBQmqspeBag5LDvVThOHm88+spOaN+jqEa226cfoB2odBC2yiusW7XZAkmBJai
+ jzhaLtxeuoxpDGm7Z1Kzj3u7OA6lXcjlWE0bSEO7yjOJsocVJQMmdoil1B8s/I6+320Rn36qw6t
+ KJ+mAWDIqZh6vh7Lqyn8hyMnxAaYs04XzU/iqH4mB/xf+6byCoWAsA/gPQkhASOtaytUpuA7gXM
+ Ca+bSW54WwBE5DZV1VfdIotsuLJBFcKBsCgk5zOr7GDbTz4LXQA9PtEmm2z8IAZkOhAn/wrv94f
+ b5S1nIITRArPjslvjUdEVsPvC5p9sa9RLpFc+b9MBxtsWbsPzcSZPTPpatFS62p5bBFBX+FiXri
+ Y6jjKdCPcZhMiaDfLuWsLlwGN04X93iJMdDc1VP9vSmfsqJJDZY/QWVuZEGFav7DIhhJr50to=
+X-Google-Smtp-Source: AGHT+IEPHCNmtgG5XM11k8QqrbT6RoyvIC3v+e+8gRAeVchklO+RXBRHUNAmdK/7JgNQL8hDKQYT4Q==
+X-Received: by 2002:a05:600c:46ce:b0:477:8985:4036 with SMTP id
+ 5b1f17b1804b1-47d1953bb1emr442489195e9.1.1767128905218; 
+ Tue, 30 Dec 2025 13:08:25 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324eab2a94sm70817998f8f.43.2025.12.30.13.07.57
+ 5b1f17b1804b1-47d193621c8sm609207835e9.7.2025.12.30.13.08.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:07:58 -0800 (PST)
+ Tue, 30 Dec 2025 13:08:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/34] Misc HW patches for 2025-12-30
-Date: Tue, 30 Dec 2025 22:07:22 +0100
-Message-ID: <20251230210757.13803-1-philmd@linaro.org>
+Subject: [PULL 04/34] hw/misc: make the tz-ppc-port names more useful
+Date: Tue, 30 Dec 2025 22:07:26 +0100
+Message-ID: <20251230210757.13803-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
+References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,146 +99,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 942b0d378a1de9649085ad6db5306d5b8cef3591:
+From: Alex Bennée <alex.bennee@linaro.org>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-12-29 09:10:40 +1100)
+The TrustZone peripheral protection controller (tz-ppc) sits between
+peripherals and the main system. However this results in "info mtree"
+looking at bit confusing, especially as the sequence numbers can
+overlap and miss steps:
 
-are available in the Git repository at:
+      0000000000000000-ffffffffffffffff (prio -2, i/o): system
+        0000000000000000-00000000003fffff (prio 0, i/o): tz-mpc-upstream
+        0000000000400000-00000000007fffff (prio 0, i/o): alias ssram-0-alias @tz-mpc-upstream 0000000000000000-00000000003fffff
+        0000000028000000-00000000281fffff (prio 0, i/o): tz-mpc-upstream
+        0000000028200000-00000000283fffff (prio 0, i/o): tz-mpc-upstream
+        0000000040080000-0000000040080fff (prio 0, i/o): iotkit-secctl-ns-regs
+        0000000040100000-0000000040100fff (prio 0, i/o): tz-ppc-port[1]
+        0000000040101000-0000000040101fff (prio 0, i/o): tz-ppc-port[2]
+        0000000040102000-0000000040102fff (prio 0, i/o): tz-ppc-port[3]
+        0000000040103000-0000000040103fff (prio 0, i/o): tz-ppc-port[4]
+        0000000040110000-0000000040110fff (prio 0, i/o): tz-ppc-port[0]
+        0000000040111000-0000000040111fff (prio 0, i/o): tz-ppc-port[1]
+        0000000040112000-0000000040112fff (prio 0, i/o): tz-ppc-port[2]
+        0000000040113000-0000000040113fff (prio 0, i/o): tz-ppc-port[3]
+        0000000040200000-0000000040200fff (prio 0, i/o): tz-ppc-port[5]
+        0000000040201000-0000000040201fff (prio 0, i/o): tz-ppc-port[6]
+        0000000040202000-0000000040202fff (prio 0, i/o): tz-ppc-port[7]
+        0000000040203000-0000000040203fff (prio 0, i/o): tz-ppc-port[8]
+        0000000040204000-0000000040204fff (prio 0, i/o): tz-ppc-port[9]
+        0000000040205000-0000000040205fff (prio 0, i/o): tz-ppc-port[0]
+        0000000040206000-0000000040206fff (prio 0, i/o): tz-ppc-port[1]
+        0000000040207000-0000000040207fff (prio 0, i/o): tz-ppc-port[10]
+        0000000040208000-0000000040208fff (prio 0, i/o): tz-ppc-port[11]
+        0000000040209000-0000000040209fff (prio 0, i/o): tz-ppc-port[2]
+        000000004020a000-000000004020afff (prio 0, i/o): tz-ppc-port[3]
+        000000004020b000-000000004020bfff (prio 0, i/o): tz-ppc-port[4]
+        000000004020c000-000000004020cfff (prio 0, i/o): tz-ppc-port[12]
+        000000004020d000-000000004020dfff (prio 0, i/o): tz-ppc-port[13]
+        0000000040300000-0000000040300fff (prio 0, i/o): tz-ppc-port[0]
+        0000000040301000-0000000040301fff (prio 0, i/o): tz-ppc-port[1]
+        0000000040302000-0000000040302fff (prio 0, i/o): tz-ppc-port[2]
+        0000000041000000-000000004113ffff (prio 0, i/o): tz-ppc-port[0]
+        0000000042000000-00000000420000ff (prio 0, i/o): tz-ppc-port[5]
+        0000000048007000-0000000048007fff (prio -1000, i/o): FPGA NS PC
+        0000000050080000-0000000050080fff (prio 0, i/o): iotkit-secctl-s-regs
+        0000000058007000-0000000058007fff (prio 0, i/o): tz-ppc-port[0]
+        0000000058008000-0000000058008fff (prio 0, i/o): tz-ppc-port[1]
+        0000000058009000-0000000058009fff (prio 0, i/o): tz-ppc-port[2]
+        0000000080000000-0000000080ffffff (prio 0, ram): mps.ram
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20251230
+So as a quality of life feature lets expose the name of the underlying
+region so we get something more useful:
 
-for you to fetch changes up to 4bd2b65e524836fef274fd169db804a2efce8836:
+    0000000000000000-ffffffffffffffff (prio -2, i/o): system
+      0000000000000000-00000000003fffff (prio 0, i/o): tz-mpc-upstream
+      0000000000400000-00000000007fffff (prio 0, i/o): alias ssram-0-alias @tz-mpc-upstream 0000000000000000-00000000003fffff
+      0000000028000000-00000000281fffff (prio 0, i/o): tz-mpc-upstream
+      0000000028200000-00000000283fffff (prio 0, i/o): tz-mpc-upstream
+      0000000040080000-0000000040080fff (prio 0, i/o): iotkit-secctl-ns-regs
+      0000000040100000-0000000040100fff (prio 0, i/o): tz-ppc-port[gpio0]
+      0000000040101000-0000000040101fff (prio 0, i/o): tz-ppc-port[gpio1]
+      0000000040102000-0000000040102fff (prio 0, i/o): tz-ppc-port[gpio2]
+      0000000040103000-0000000040103fff (prio 0, i/o): tz-ppc-port[gpio3]
+      0000000040110000-0000000040110fff (prio 0, i/o): tz-ppc-port[pl080]
+      0000000040111000-0000000040111fff (prio 0, i/o): tz-ppc-port[pl080]
+      0000000040112000-0000000040112fff (prio 0, i/o): tz-ppc-port[pl080]
+      0000000040113000-0000000040113fff (prio 0, i/o): tz-ppc-port[pl080]
+      0000000040200000-0000000040200fff (prio 0, i/o): tz-ppc-port[uart]
+      0000000040201000-0000000040201fff (prio 0, i/o): tz-ppc-port[uart]
+      0000000040202000-0000000040202fff (prio 0, i/o): tz-ppc-port[uart]
+      0000000040203000-0000000040203fff (prio 0, i/o): tz-ppc-port[uart]
+      0000000040204000-0000000040204fff (prio 0, i/o): tz-ppc-port[uart]
+      0000000040205000-0000000040205fff (prio 0, i/o): tz-ppc-port[pl022]
+      0000000040206000-0000000040206fff (prio 0, i/o): tz-ppc-port[pl022]
+      0000000040207000-0000000040207fff (prio 0, i/o): tz-ppc-port[arm_sbcon_i2c]
+      0000000040208000-0000000040208fff (prio 0, i/o): tz-ppc-port[arm_sbcon_i2c]
+      0000000040209000-0000000040209fff (prio 0, i/o): tz-ppc-port[pl022]
+      000000004020a000-000000004020afff (prio 0, i/o): tz-ppc-port[pl022]
+      000000004020b000-000000004020bfff (prio 0, i/o): tz-ppc-port[pl022]
+      000000004020c000-000000004020cfff (prio 0, i/o): tz-ppc-port[arm_sbcon_i2c]
+      000000004020d000-000000004020dfff (prio 0, i/o): tz-ppc-port[arm_sbcon_i2c]
+      0000000040300000-0000000040300fff (prio 0, i/o): tz-ppc-port[mps2-scc]
+      0000000040301000-0000000040301fff (prio 0, i/o): tz-ppc-port[i2s-audio]
+      0000000040302000-0000000040302fff (prio 0, i/o): tz-ppc-port[mps2-fpgaio]
+      0000000041000000-000000004113ffff (prio 0, i/o): tz-ppc-port[gfx]
+      0000000042000000-00000000420000ff (prio 0, i/o): tz-ppc-port[lan9118-mmio]
+      0000000048007000-0000000048007fff (prio -1000, i/o): FPGA NS PC
+      0000000050080000-0000000050080fff (prio 0, i/o): iotkit-secctl-s-regs
+      0000000058007000-0000000058007fff (prio 0, i/o): tz-ppc-port[tz-mpc-regs]
+      0000000058008000-0000000058008fff (prio 0, i/o): tz-ppc-port[tz-mpc-regs]
+      0000000058009000-0000000058009fff (prio 0, i/o): tz-ppc-port[tz-mpc-regs]
+      0000000080000000-0000000080ffffff (prio 0, ram): mps.ram
 
-  MAINTAINERS: Change email and status of TriCore (2025-12-30 20:38:41 +0100)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Jim MacArthur <jim.macarthur@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251215170548.2594651-1-alex.bennee@linaro.org>
+[PMD: Wrap long line to avoid checkpatch.pl warning]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/misc/tz-ppc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-----------------------------------------------------------------
-Misc HW patches
-
-- Remove few target_ulong uses
-- Make human monitor non-target specific
-- Better name for TrustZone Peripheral Protection Controller memory regions
-- Do not expose DEVICE_NATIVE_ENDIAN on Rust
-- Remove address_space_stl_notdirty() and stl_phys_notdirty()
-- Allow to restrict targets to legacy ldst_phys() API
-- Fix MinGW-w64 link failure due to ConvertStringToBSTR()
-- Header cleanups
-- MAINTAINERS updates
-----------------------------------------------------------------
-
-Alano Song (1):
-  hw/i2c/imx: Fix trace func name error
-
-Alex Bennée (1):
-  hw/misc: make the tz-ppc-port names more useful
-
-Anton Johansson (1):
-  hw/riscv: Treat kernel_start_addr as vaddr
-
-Bastian Koppelmann (1):
-  MAINTAINERS: Change email and status of TriCore
-
-Bin Guo (1):
-  meson: Optimize summary_info about directories
-
-Bin Meng (1):
-  hw/sd: Remove unused header includes in ssi-sd.c
-
-Nguyen Dinh Phi (2):
-  qga/vss-win32: Fix ConvertStringToBSTR redefinition with newer MinGW
-  util: Move qemu_ftruncate64 from block/file-win32.c to oslib-win32.c
-
-Osama Abdelkader (1):
-  hw/core: remove duplicate include
-
-Philippe Mathieu-Daudé (24):
-  monitor/hmp: Replace target_ulong -> vaddr in hmp_gva2gpa()
-  monitor/hmp: Make memory_dump() @is_physical argument a boolean
-  monitor/hmp: Use plain uint64_t @addr argument in memory_dump()
-  monitor/hmp: Remove target_long uses in memory_dump()
-  monitor/hmp: Inline ld[uw,l,q]_p() calls in memory_dump()
-  monitor/hmp: Fix coding style in hmp-cmds-target.c
-  monitor/hmp: Merge hmp-cmds-target.c within hmp-cmds.c
-  hw/arm/Kconfig: Have FSL_IMX6UL SoC select IMX_USBPHY
-  hw/net/opencores: Clarify MMIO read/write handlers expect 32-bit access
-  hw/char/serial: Let compiler pick serial_mm_ops[] array length
-  hw/misc/pvpanic: Expose MMIO interface as little-endian
-  hw/timer/hpet: Mark implementation as being little-endian
-  hw/char/pl011: Mark implementation as being little-endian
-  rust/system: Stop exposing bogus DEVICE_NATIVE_ENDIAN symbol
-  target/hexagon: Include missing 'cpu.h' header in 'internal.h'
-  target/i386: Remove x86_stl_phys_notdirty() leftover
-  target/sparc: Update MMU page table using stl_phys()
-  hw/arm: Avoid address_space_stl_notdirty() when generating bootloader
-  system/memory: Remove address_space_stl_notdirty and stl_phys_notdirty
-  system/memory: Allow restricting legacy ldst_phys() API usage
-  configs/targets: Mark targets not using legacy ldst_phys() API
-  hw/virtio: Remove unused ldst_phys() helpers
-  hw/virtio: Reduce virtio_lduw/stw_phys_cached() scope
-  configs/targets: Mark targets not using legacy ldst_phys() API
-
-Stefan Hajnoczi (1):
-  MAINTAINERS: remove old email for Bandan Das
-
- MAINTAINERS                              |   5 +-
- configs/targets/avr-softmmu.mak          |   1 +
- configs/targets/microblaze-softmmu.mak   |   1 +
- configs/targets/microblazeel-softmmu.mak |   1 +
- configs/targets/mips-softmmu.mak         |   1 +
- configs/targets/mips64-softmmu.mak       |   1 +
- configs/targets/mips64el-softmmu.mak     |   1 +
- configs/targets/mipsel-softmmu.mak       |   1 +
- configs/targets/or1k-softmmu.mak         |   1 +
- configs/targets/riscv32-softmmu.mak      |   1 +
- configs/targets/riscv64-softmmu.mak      |   1 +
- configs/targets/rx-softmmu.mak           |   1 +
- configs/targets/sh4-softmmu.mak          |   1 +
- configs/targets/sh4eb-softmmu.mak        |   1 +
- configs/targets/sparc64-softmmu.mak      |   1 +
- configs/targets/tricore-softmmu.mak      |   1 +
- configs/targets/xtensa-softmmu.mak       |   1 +
- configs/targets/xtensaeb-softmmu.mak     |   1 +
- meson.build                              |  13 +
- include/hw/riscv/boot.h                  |   6 +-
- include/hw/virtio/virtio-access.h        | 106 -------
- include/system/memory.h                  |   8 +-
- target/hexagon/internal.h                |   2 +-
- target/i386/cpu.h                        |   1 -
- include/system/memory_ldst.h.inc         |   2 -
- block/file-win32.c                       |  32 --
- hw/arm/aspeed.c                          |   4 +-
- hw/arm/boot.c                            |   8 +-
- hw/char/pl011.c                          |   2 +-
- hw/char/serial-mm.c                      |   2 +-
- hw/i2c/imx_i2c.c                         |   4 +-
- hw/misc/pvpanic.c                        |   1 +
- hw/misc/tz-ppc.c                         |   4 +-
- hw/net/opencores_eth.c                   |  15 +-
- hw/riscv/boot.c                          |   6 +-
- hw/riscv/microchip_pfsoc.c               |   3 +-
- hw/riscv/sifive_u.c                      |   3 +-
- hw/riscv/spike.c                         |   2 +-
- hw/riscv/virt.c                          |   3 +-
- hw/sd/ssi-sd.c                           |   4 -
- hw/timer/hpet.c                          |   2 +-
- hw/virtio/virtio.c                       |  21 ++
- monitor/hmp-cmds-target.c                | 381 -----------------------
- monitor/hmp-cmds.c                       | 354 +++++++++++++++++++++
- system/vl.c                              |   1 -
- target/i386/helper.c                     |  10 -
- target/sparc/mmu_helper.c                |   2 +-
- util/oslib-win32.c                       |  33 ++
- system/memory_ldst.c.inc                 |  39 ---
- hw/arm/Kconfig                           |   1 +
- hw/usb/Kconfig                           |   1 -
- monitor/meson.build                      |   2 +-
- qga/vss-win32/install.cpp                |   2 +
- rust/hw/char/pl011/src/device.rs         |   2 +-
- rust/hw/timer/hpet/src/device.rs         |   2 +-
- rust/system/src/memory.rs                |   6 -
- scripts/make-config-poison.sh            |   1 +
- 57 files changed, 487 insertions(+), 626 deletions(-)
- delete mode 100644 monitor/hmp-cmds-target.c
-
+diff --git a/hw/misc/tz-ppc.c b/hw/misc/tz-ppc.c
+index 159073d1e6d..6f820430eed 100644
+--- a/hw/misc/tz-ppc.c
++++ b/hw/misc/tz-ppc.c
+@@ -273,8 +273,8 @@ static void tz_ppc_realize(DeviceState *dev, Error **errp)
+             continue;
+         }
+ 
+-        name = g_strdup_printf("tz-ppc-port[%d]", i);
+-
++        name = g_strdup_printf("tz-ppc-port[%s]",
++                               memory_region_name(port->downstream));
+         port->ppc = s;
+         address_space_init(&port->downstream_as, port->downstream, name);
+ 
 -- 
 2.52.0
 
