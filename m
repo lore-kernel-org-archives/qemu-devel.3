@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916B8EE57C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08102EE0203
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Dec 2025 21:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vagx6-0004Z1-HR; Tue, 30 Dec 2025 16:08:24 -0500
+	id 1vagxS-0004wm-UV; Tue, 30 Dec 2025 16:08:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagx4-0004YR-HV
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:22 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagxO-0004pv-Fr
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:43 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagx2-0002CV-Pi
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:22 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43277900fb4so1809420f8f.1
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:08:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vagxM-0002Ff-Qn
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 16:08:42 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-430fbb6012bso8572882f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 13:08:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767128899; x=1767733699; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767128919; x=1767733719; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lzRXwIe1Jc8ddqbcAemZlDpnfBq+V4MD5nODk/G3BH4=;
- b=DaLd8VRUHHQtlYjjES4hB66egx9o/GsGpQrDC8HrCUXqlgLXzPNnkZghcRHQiDxm6n
- bQGD3a6gi4YgMisT2NoUCT0iRvTjmorhOKEwSabCqHQwXp/ZFDFi9RmXmlD5LodNmuE2
- sMoN0XSf8XwUa8xBOAnHe/fNcWcOo8DaNCbzzOn3q46JG1DJ7M1pG04wVXv8TFzoJYmD
- hVQup3EWoUpCHF1p5DAKprsKBwyLTfgC7hZmE92IFfWRTREWn8dk3f2LOlJCE2o4e+gd
- RT7bk4ol1wMNadwLUG3j6tNOB06k0/lqlkVHfTT76CCX/Ck7r8MSWSnT6h8OfjXT+RG1
- k8eA==
+ :reply-to; bh=dq6gDL+VvfsJgspbVgIcSIatyQ9ZwkoXNNTZK0OwJ2Y=;
+ b=nOSYvE14j1JQo7oEsjzulP0fd1vOeBl8elMXh+Sj+lEr1njJvpMaNCW1jEgtdMz7LX
+ eGKbWuej2IsvEuL843vBVEmBhOrzBr4i5ve23h8ATZcbLYEjpCq1eWQyymFJaSdcZvTT
+ GI883dGiDkcCrE/p+weecyzeQpNJr2l4TOf0bR6VzDVDa41ZW5LcgMLLsvbs9bZKpDEe
+ ivClzYYJnBdeVbxKEug98XRvIQpe2D1kETC8fptyRZfSzIb63B8aSijaq07AkO2YmRsk
+ YoxezBpFReWrrRmYCmFDLCg8ZE83x3yPtFS1VXalgM5tKDhB3caKbawbaLDWCE1yoUgk
+ TPDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767128899; x=1767733699;
+ d=1e100.net; s=20230601; t=1767128919; x=1767733719;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lzRXwIe1Jc8ddqbcAemZlDpnfBq+V4MD5nODk/G3BH4=;
- b=ma3hOknKQnSTllDlVDLci2++9D8hb2vXiHz41Unhd2l5B3+9iwCGROwcWtI/KUcRda
- OunwrTQ2xu9aZy0jyJmCiPEzT+1UhmGHEsdyYZPS9GvtQk3RzHhpwbCAK71vx9Yzv8uD
- t/6eZfiN/nSMrLz0PVobDXvwaMTGveu+5bM/nQkYjrhUGTXsKmLCTYTpVNSqwkNc/E8Z
- MODOGiJwhUQ0u20jddzw2bYB1OQhoJ7sl92Ug8ewytQ5ZgMO2w+gFxZzL18b+cjg3fOj
- a07c4dOoGCKVzZ2F5jzwHi0dqjFD0Vf+RUBH/ZhSRUtatIKjN7ZFTAdU+oD10CNWZ2/b
- Mpwg==
-X-Gm-Message-State: AOJu0Yx1SAGrbCbO/QCGe2LSlX6WKUKf83g8t4Xaw0dGaCPOWHN89KyQ
- xQL/VfBTD6KMMLq1V5zdhUx+MgyjFG3AN10KIlXFusblRxeERQpKoTmU8KrIav2LKHuQwnjPZla
- Q8BDRKaU=
-X-Gm-Gg: AY/fxX4YNUczXZThSw0Ohi76em0h4QARG9Y9ENyb3tLVNwKEi65rkUyVXngHmYqhytu
- Roez2oQLwNG8TA8JF2+r3GNi1+WivjSkkBWit4Fco0/EI32Z/s5VaS8NPXFlJG/nIQ/R6E8fc2J
- IfcoQjbQ/vNLJqEpAJmAjATrAF6V0mtt4OeXlBmUR+kZdKCMhkYZR//odP4ulk9KeGxpbjGMg9b
- JLaYIhAEo+SAC4fOVTZbyEJpVOQMe20EiUpSJ+J/IBMqL6+cdmQWXDa8EpuDb7uc4KyR/tYieRN
- eM3pSQ6600yGzTZ/pyQX/mHEnt3E9hTiYYbqVMxaJK7IJRZU0xExa6hZGZyNI8k9BgVfAWxbBQd
- Thmdax/FZgaR79e0yGTLvGWszQukjZrrpunSgNMweF9FRur2gpQ4pEuVmkg9S+7KcjGacs7YmvG
- ZsSYmeVZCkrAWhOQQjpvdjPrOGzvZBbJPraUs1aA3JBD6KAFoA5rIqULPxAAP8
-X-Google-Smtp-Source: AGHT+IEbx5oTGr66BMSxHkLtY0pp53PGAt32kN+7qD1+O64wUPZb/QSL9bPpjAi96EJxhd22sGdrNg==
-X-Received: by 2002:a5d:64e9:0:b0:431:382:f141 with SMTP id
- ffacd0b85a97d-4324e3f5da3mr53342152f8f.12.1767128898771; 
- Tue, 30 Dec 2025 13:08:18 -0800 (PST)
+ bh=dq6gDL+VvfsJgspbVgIcSIatyQ9ZwkoXNNTZK0OwJ2Y=;
+ b=WF9n2foE1CRg4Xrx+5mS1V3wuVIGXPEADblv54oNkt1kT7r655SWawtxoYhuH9DlyJ
+ vZM31pFWpeNpYkJVY5iagCC0HFJh5t6AF6VX30X9JXdxYQuOB+87LnOMhdxRTdzMVyfr
+ 9S0L4q3zEGWKDzQlL2hGVH+PwKtO+W8fieGwN/rwN9m5fXEbwCC78R4dgBAF0aD7/kdV
+ lZkcX+BZHGGqBJ7PCuT4vCPPnm0rXYjJ9egik/rsWj0icFEmZWKsoEpHiOIF5jYQTD/2
+ hr46kDDJwjnw4upUCVcKluFBtPuGywCgPFAcqnwV6u7uU6R1f3LAYRTgoMehF9y2tGhs
+ p/fQ==
+X-Gm-Message-State: AOJu0YyXbMvaOhhTHOp8RhyYsMRacTDp4TnOECIwEjKycURpwSexuoPN
+ pXWjHWNREg2iKUFHwebwBBqN7l5vwoJ4LtJUBZneIltbkyOlaRG1PvsrTYP5AmIPOx/PWqKufCo
+ fbCwNNvk=
+X-Gm-Gg: AY/fxX71Vbu8Ox3ESEtm3RWK2CmqAhQ69xxSfe456nTiwBUjtGoS8am1CC8EhyS7n7q
+ 2uN2TTqvrb9lKmm5DAQX5i1hVGw1kj9zv7Kq5+3kvG19uAmWQaghj9wvaomrZUQv6EAS1m2g2Zs
+ i4F+HHYIqafmQaajvi9StOKi0o8zp67NMvPt3WoR/UQqeiKG9FIQZnt49xcSDKnaP3H9JnC6ztc
+ 88aW70VERwRQ5dFMi/lOCXmsUYNI3ZoI/T/FOxJwpH0M2B8sLRfgEPxXsm0XBokXRUkFdeu/LZW
+ pZ0rK4C9Q8S3Cib3fcGJtfPwxLuA8NvaF+f64uFxT6j8CFXH0oaF/Vf+pYEjvarFR0QtaLGpRW+
+ dDfyUe5UMWOd5r3VTgg0UxCw9nZe8poTiA+uPVhopv5RpCFvc9y/+nb9B5rK4GGaN+pddBU2r1l
+ aSpN78Swwu5ZFp0zTKJlOCGe0u0X16VgikZFd0zaP2RX6ROvplsA6OEQqQo2Hh
+X-Google-Smtp-Source: AGHT+IEtlzQySgxjCQZCN/743cdzfbyg0bK42e6Plmkm5pEsW9B3rapzsVviqnsu30LtJBq6Y5WK6Q==
+X-Received: by 2002:a5d:5d0d:0:b0:431:3a5:d9b8 with SMTP id
+ ffacd0b85a97d-4324e510810mr41922457f8f.52.1767128918791; 
+ Tue, 30 Dec 2025 13:08:38 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1af2bsm70137622f8f.1.2025.12.30.13.08.18
+ ffacd0b85a97d-4324eaa46c0sm70687019f8f.34.2025.12.30.13.08.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Dec 2025 13:08:18 -0800 (PST)
+ Tue, 30 Dec 2025 13:08:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/34] hw/riscv: Treat kernel_start_addr as vaddr
-Date: Tue, 30 Dec 2025 22:07:25 +0100
-Message-ID: <20251230210757.13803-4-philmd@linaro.org>
+Subject: [PULL 06/34] monitor/hmp: Make memory_dump() @is_physical argument a
+ boolean
+Date: Tue, 30 Dec 2025 22:07:28 +0100
+Message-ID: <20251230210757.13803-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251230210757.13803-1-philmd@linaro.org>
 References: <20251230210757.13803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,130 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
-
-Changes kernel_start_addr from target_ulong to vaddr. Logically, the
-argument represents a virtual address at which to load the kernel image,
-which gets treated as a hwaddr as a fallback if elf and uimage loading
-fails.
-
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251210132130.14465-1-anjo@rev.ng>
+Suggested-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <20251229231546.50604-3-philmd@linaro.org>
 ---
- include/hw/riscv/boot.h    | 6 +++---
- hw/riscv/boot.c            | 6 +++---
- hw/riscv/microchip_pfsoc.c | 3 ++-
- hw/riscv/sifive_u.c        | 3 ++-
- hw/riscv/spike.c           | 2 +-
- hw/riscv/virt.c            | 3 ++-
- 6 files changed, 13 insertions(+), 10 deletions(-)
+ monitor/hmp-cmds-target.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index 35964bf8318..f00b3ca1224 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -43,8 +43,8 @@ bool riscv_is_32bit(RISCVHartArrayState *harts);
- char *riscv_plic_hart_config_string(int hart_count);
- 
- void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
--hwaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
--                                    hwaddr firmware_end_addr);
-+vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-+                                   hwaddr firmware_end_addr);
- hwaddr riscv_find_and_load_firmware(MachineState *machine,
-                                     const char *default_machine_firmware,
-                                     hwaddr *firmware_load_addr,
-@@ -57,7 +57,7 @@ hwaddr riscv_load_firmware(const char *firmware_filename,
-                            symbol_fn_t sym_cb);
- void riscv_load_kernel(MachineState *machine,
-                        RISCVBootInfo *info,
--                       target_ulong kernel_start_addr,
-+                       vaddr kernel_start_addr,
-                        bool load_initrd,
-                        symbol_fn_t sym_cb);
- uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index df1f3abd171..e5490beda00 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -74,8 +74,8 @@ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
-     info->is_32bit = riscv_is_32bit(harts);
+diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+index 2976f986d35..51dcb9e314c 100644
+--- a/monitor/hmp-cmds-target.c
++++ b/monitor/hmp-cmds-target.c
+@@ -122,7 +122,7 @@ void hmp_info_registers(Monitor *mon, const QDict *qdict)
  }
  
--hwaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
--                                    hwaddr firmware_end_addr) {
-+vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-+                                   hwaddr firmware_end_addr) {
-     if (info->is_32bit) {
-         return QEMU_ALIGN_UP(firmware_end_addr, 4 * MiB);
-     } else {
-@@ -228,7 +228,7 @@ static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info)
- 
- void riscv_load_kernel(MachineState *machine,
-                        RISCVBootInfo *info,
--                       target_ulong kernel_start_addr,
-+                       vaddr kernel_start_addr,
-                        bool load_initrd,
-                        symbol_fn_t sym_cb)
+ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+-                        hwaddr addr, int is_physical)
++                        hwaddr addr, bool is_physical)
  {
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 0cf849ffb6d..4ff83e49403 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -521,7 +521,8 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
-     uint64_t mem_low_size, mem_high_size;
-     hwaddr firmware_load_addr;
-     const char *firmware_name;
--    hwaddr firmware_end_addr, kernel_start_addr;
-+    hwaddr firmware_end_addr;
-+    vaddr kernel_start_addr;
-     uint64_t kernel_entry;
-     uint64_t fdt_load_addr;
-     DriveInfo *dinfo = drive_get(IF_SD, 0, 0);
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index f1b47ab5848..7ec67b25651 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -515,7 +515,8 @@ static void sifive_u_machine_init(MachineState *machine)
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *flash0 = g_new(MemoryRegion, 1);
-     hwaddr start_addr = memmap[SIFIVE_U_DEV_DRAM].base;
--    hwaddr firmware_end_addr, kernel_start_addr;
-+    hwaddr firmware_end_addr;
-+    vaddr kernel_start_addr;
-     const char *firmware_name;
-     uint32_t start_addr_hi32 = 0x00000000;
-     uint32_t fdt_load_addr_hi32 = 0x00000000;
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index ea527c7bfc1..1493b928dad 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -199,7 +199,7 @@ static void spike_board_init(MachineState *machine)
-     MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
-     hwaddr firmware_end_addr = memmap[SPIKE_DRAM].base;
-     hwaddr firmware_load_addr = memmap[SPIKE_DRAM].base;
--    hwaddr kernel_start_addr;
-+    vaddr kernel_start_addr;
-     char *firmware_name;
-     uint64_t fdt_load_addr;
-     uint64_t kernel_entry;
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index c87c169d38c..bd8608ea5bf 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1434,7 +1434,8 @@ static void virt_machine_done(Notifier *notifier, void *data)
-                                      machine_done);
-     MachineState *machine = MACHINE(s);
-     hwaddr start_addr = s->memmap[VIRT_DRAM].base;
--    hwaddr firmware_end_addr, kernel_start_addr;
-+    hwaddr firmware_end_addr;
-+    vaddr kernel_start_addr;
-     const char *firmware_name = riscv_default_firmware_name(&s->soc[0]);
-     uint64_t fdt_load_addr;
-     uint64_t kernel_entry = 0;
+     int l, line_size, i, max_digits, len;
+     uint8_t buf[16];
+@@ -237,7 +237,7 @@ void hmp_memory_dump(Monitor *mon, const QDict *qdict)
+     int size = qdict_get_int(qdict, "size");
+     target_long addr = qdict_get_int(qdict, "addr");
+ 
+-    memory_dump(mon, count, format, size, addr, 0);
++    memory_dump(mon, count, format, size, addr, false);
+ }
+ 
+ void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict)
+@@ -247,7 +247,7 @@ void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict)
+     int size = qdict_get_int(qdict, "size");
+     hwaddr addr = qdict_get_int(qdict, "addr");
+ 
+-    memory_dump(mon, count, format, size, addr, 1);
++    memory_dump(mon, count, format, size, addr, true);
+ }
+ 
+ void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
 -- 
 2.52.0
 
