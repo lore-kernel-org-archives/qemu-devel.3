@@ -4,93 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16530EE57D6
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Dec 2025 07:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F7EEE57D4
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Dec 2025 07:53:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vaqim-0007TX-5P; Wed, 31 Dec 2025 02:34:16 -0500
+	id 1var0Z-00080d-0F; Wed, 31 Dec 2025 02:52:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vaqik-0007SK-B4
- for qemu-devel@nongnu.org; Wed, 31 Dec 2025 02:34:14 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vaqii-00019N-I9
- for qemu-devel@nongnu.org; Wed, 31 Dec 2025 02:34:14 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7b9215e55e6so6517839b3a.2
- for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 23:34:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767166451; x=1767771251; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pFDpaqVfMywBDSQG0C6nZ29vsJWyVrth+eUfWW0xuig=;
- b=vJROXhzXViVgKwE2K2Jwym63GYbN5kBdzruIvTNubuWQy1pdueEpbD/Jw05EPXHMfJ
- HCo0GzgcmGqMVleyceBk9cPK9LIN0ywbDe3zILyKM95qDGzD8pzsvE9BWZi6t++cjbJY
- PljOzft45eAPgnjaBGxx4yrdlyb+vrxQXuEovsJe/feLAPJt6bs7UpuKv24I4zcfOBuo
- xMd0qLhhNYQMUBgORn6S89fGo3UmVM729VRVZbaaSZsmIBT1BOQ8+OSkr68CD7ZnRFj2
- UM0cZL/BVIo/hEwej6RO+qSz7/0huxBa98xnerr0yGL1VKg6UsWvS3/QRTN8adSRiwje
- HPvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767166451; x=1767771251;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pFDpaqVfMywBDSQG0C6nZ29vsJWyVrth+eUfWW0xuig=;
- b=frgBX0aouzVFIx9VLT7A7ELlWWeJSucEPJJryU1uGsigi4nWc4XvqaLomLb7oOCMTq
- L6yePvVWMF9JHpJk0t/cBKtUWRQw9dC4tOz0C08QPBgnJq6zBd9/IcxBS+hSD0K1n+rh
- EbAmHGtiiiALpPLHW48/kM6t6jJplldCI0dlO5j/5SUZYsC8UvgOKf/2eKOdm1ouJAJB
- VemyhGIMQoW2JOhK8FomsW3liPegUHlSzmXlTwO+a64yrJwH/G7kAiLQUmpBhs5bBCBv
- 5X59P2/t79tViGj4xPlKOZn76TxpnBGj66ZHY3qJp7UwZGPNMxYh042KGfF/OC67yd1B
- e+VA==
-X-Gm-Message-State: AOJu0YxgqxIZwbralnf2kXcPiqgVZqMKaJ038EqoSkWFfvVtDIUzzgt8
- sMgYUSWHz9kgR6XROYn8YxAlPeqhJBd2OGg6Gd0RULbIF7KZd3qXzznYtWswjkqB9pR8qjafFs6
- 2U5GH
-X-Gm-Gg: AY/fxX7NczaGGt2c9Jd/sHNE1LfOxC+hm5p0CSGTZrNUWqJ4JZxe7RGQ4yp0aQLNSIN
- 7nh5bkwHzJK+KM2xUbVfqz+cD0dBm2NgIn2DXKuZFIASbvXMsAv1x0EUYISIE6q7moKWXvbHi4c
- +Jf81VWAFQY/Efy3u/qv2zeuHIt3Vz6D7ZwuwKqbKhWHNkiYY03rBwpEhIFyj6JBZ6CB9m1/VYI
- xw7TpwCtFGJ0/liDpkLR2ekkYc1VdHEjgDJSLP/ozmL3ea+bHr9olXKYVVYxbHzVnGzXZ4WlUGm
- cu90GYjSRm6mcqNbwLWiFPYDnuhJpxYwdSJ0UH0fTjDSEuWjMKshUhyIsa9Fhj6Wyfa88+sHhsF
- rDumaWw0Gjsfj8mrsRAw3OSegs5x01EXn6eO7Up6xJ3b98Qb1fymbi1JR5Cg5UhsDAeMBZ/ORGU
- PCkWLPIUrhO0ct2ZV3BNMWmEpaiI/A5hTqliOqiNRcQcBq1pqyy2tv+FkopRU1J0SI
-X-Google-Smtp-Source: AGHT+IHCt9sQSkGW2Un7urezkWF0PQgDWpZ1ZJbdeMYbO+hxGqPQOPFgSOyAhAooM5DqUTv8gkyKLw==
-X-Received: by 2002:a05:6a21:6d97:b0:341:84ee:7597 with SMTP id
- adf61e73a8af0-376a96b90b4mr32941342637.47.1767166450548; 
- Tue, 30 Dec 2025 23:34:10 -0800 (PST)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7e48f3d7sm34597984b3a.51.2025.12.30.23.34.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Dec 2025 23:34:10 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Phil=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 00/11] plugins: enable C++ plugins
-Date: Tue, 30 Dec 2025 23:33:50 -0800
-Message-ID: <20251231073401.2097765-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1var0W-00080K-GK
+ for qemu-devel@nongnu.org; Wed, 31 Dec 2025 02:52:36 -0500
+Received: from shrimp.cherry.relay.mailchannels.net ([23.83.223.164])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1var0U-0002M0-NG
+ for qemu-devel@nongnu.org; Wed, 31 Dec 2025 02:52:36 -0500
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id DA7157823B7;
+ Wed, 31 Dec 2025 07:52:31 +0000 (UTC)
+Received: from pdx1-sub0-mail-a256.dreamhost.com
+ (100-113-119-120.trex-nlb.outbound.svc.cluster.local [100.113.119.120])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 013767823DE;
+ Wed, 31 Dec 2025 07:52:28 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+ t=1767167549;
+ b=peZJMpfG8TITwTugXcc5mzsylQStWOp/s9568rxnxYgnTKNwQ0XxxMhqwQgXoWcGMX9dG7
+ ssuQjDIbPv7pbvqTR7zqN1n9NzOEBsPZNsRv1fZ5QN3QsGgGPGtS+1xUrC/IzWUy1NFmS4
+ e1rc9JzoAR5JTWAUNn3J/9wnStHcoHMD/UwlBvD9IMN2rgSPpg2S/ILVMjvgW4TScucEdn
+ 9b2D0y8ke1lMgZGzmrYRDWh2F8Va0csXGfozOW3aHUXZzAmpHHH58rtC7hmrRa1iGzTAza
+ 8IV3FJpOYQM319WCU53DNBVezuwswYdAQX3yE3siKUuYywkj7UZINB5HVvga1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1767167549;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=zjKj5zUtUukLIBCdnEqcVWD27aAhqZBtOuVCH6aWtJM=;
+ b=ufFpA6lvWTlFLNRxIko8eDfAKDzJT6knvFgRxbtO8l0sjpsEWywI2la6F3NPOpeCYJ5n+S
+ 7qSyKENg/LCS7CiaTBfngawcGOTVbK0G4XLyvt8UJ6CekNSsvvTrNxKrtQawmg/uirDViO
+ byzwHz2G/7SwXm3otQsVQkvsBdT47EsQtziqIxBuQDp46kAejFbm4EPFLV/aVE+taL4cCD
+ sBtYXs6Y5bLDLDRFRYwB1hOZ0FSgPK39dduNAX4lBVjQmeYO4lQbk6bs9GghO8So3q+HZB
+ iFd60rLp5A3IYSE8fN6okdEB8GB65RlPxFtFX9M8S5JtnXqoh4X3JzqTH9uZ3g==
+ARC-Authentication-Results: i=1; rspamd-85db7f4c96-t7gj4;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
+X-MailChannels-Auth-Id: dreamhost
+X-Thread-Arch: 0300a45c522d25af_1767167551272_1126787258
+X-MC-Loop-Signature: 1767167551272:138142507
+X-MC-Ingress-Time: 1767167551271
+Received: from pdx1-sub0-mail-a256.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.113.119.120 (trex/7.1.3); Wed, 31 Dec 2025 07:52:31 +0000
+Received: from [IPV6:2607:fb90:fa85:cea:c1aa:4813:f755:98f6] (unknown
+ [172.56.10.2])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ (No client certificate requested)
+ (Authenticated sender: rob@landley.net)
+ by pdx1-sub0-mail-a256.dreamhost.com (Postfix) with ESMTPSA id 4dh2HJ1wbZz105C;
+ Tue, 30 Dec 2025 23:52:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
+ s=dreamhost; t=1767167548;
+ bh=zjKj5zUtUukLIBCdnEqcVWD27aAhqZBtOuVCH6aWtJM=;
+ h=Date:Subject:From:To:Cc:Content-Type:Content-Transfer-Encoding;
+ b=Ntg9C3q63XIvr+hvfGASQYZVHUsOw1ooGQRShJdchT0RexbMG/yDR4Ioqn2Wfs3Qx
+ YoXzdmDSjj3L6wx9Eub2SwXLgLjLAXQes3/UtpSVDVVjOJc0lfG24rga9pNwtud69Z
+ ofx2WyZp96aftUjOQ/cQKfuvivnCA01E/KSlajFKCNSR5f4L/6apgF98VCLCkNQkkZ
+ e3tY5hZRuzWYqp0+5c60DC46zx4RfNrE2NkuAqG2mjI81ZOAibuQxVzAFTAk7WNEK9
+ ZrEQspvogdSRfKFoyr3VcrkFrRcsYz5KE8oa8QrlS+MGuDqGrYvfWWKG1U0it2Nsp1
+ zq8hRdTHZsXRg==
+Message-ID: <f189995e-09f7-456d-b860-ee6a3dc8fc49@landley.net>
+Date: Wed, 31 Dec 2025 01:52:18 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.0 01/13] hw/sh4/r2d: Bail out early if user request
+ invalid RAM size
+From: Rob Landley <rob@landley.net>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ qemu-devel@nongnu.org
+Cc: Thorsten Glaser <tg@debian.org>, Yoshinori Sato
+ <yoshinori.sato@nifty.com>, Magnus Damm <magnus.damm@gmail.com>
+References: <20251124095109.66091-1-philmd@linaro.org>
+ <20251124095109.66091-2-philmd@linaro.org>
+ <a841c041-30c2-471c-81bc-f0f4576cb772@landley.net>
+Content-Language: en-US
+In-Reply-To: <a841c041-30c2-471c-81bc-f0f4576cb772@landley.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=23.83.223.164; envelope-from=rob@landley.net;
+ helo=shrimp.cherry.relay.mailchannels.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,126 +120,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Writing plugins in C can be sometimes tedious, especially when using Glib to
-keep track of execution state. We can directly use the same C API but write our
-plugin in C++, benefiting from its great standard library offering strings,
-smart pointers, data structures and synchronization mechanisms.
+On 12/31/25 01:32, Rob Landley wrote:
+> I fixed it up by hand for testing in the meantime, and it loaded the 
+> kernel with -m 192 but then initramfs couldn't find init. Without the 
+> patch series the same git version (942b0d378a1d) booted to a shell 
+> prompt. I can try to track down what happened in the morning...
 
-It's common for downstream QEMU forks to provide C++ for plugins, like this:
-- https://github.com/panda-re/panda/tree/dev/panda/plugins
-- https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
+Ah, it boots with the full patch stack applied for -m 64 but not -m 128. 
+It's mapping in the extra memory that breaks it.
 
-Hopefully this will help more people to use upstream QEMU, and as a benefit, get
-their contribution back and help to develop plugins ecosystem upstream directly.
+The initramfs doesn't seem to be extracting with the second memory block 
+enabled? What's the diff in the output...
 
-This series first cleans up build system for plugins, factorizing details
-between contrib/plugins and tests/tcg/plugins folders.
-Then, we perform codebase cleanups to fix conflicts between existing headers
-and C++ headers.
-After that, we can update the C++ standard used by QEMU, to benefit fully
-from latest updates of the language.
-Finally, we define an empty C++ plugin, making sure we can keep track of
-possible regression in qemu-plugin header.
+--- out.txt     2025-12-31 01:42:33.487421358 -0600
++++ out2.txt    2025-12-31 01:42:47.359676340 -0600
+@@ -105,7 +105,6 @@
+  NET: Registered PF_UNIX/PF_LOCAL protocol family
+  PCI: CLS 0 bytes, default 32
+  Unpacking initramfs...
+-Freeing initrd memory: 528K
+  workingset: timestamp_bits=30 max_order=14 bucket_order=0
+  squashfs: version 4.0 (2009/01/31) Phillip Lougher
+  SuperH (H)SCI(F) driver initialized
+@@ -121,50 +120,14 @@
+  Segment Routing with IPv6
+  In-situ OAM (IOAM) with IPv6
+  NET: Registered PF_PACKET protocol family
++Freeing initrd memory: 528K
+  netconsole: network logging started
+-check access for rdinit=/init failed: -2, ignoring
+-/dev/root: Can't open blockdev
+-VFS: Cannot open root device "" or unknown-block(1,0): error -6
+... [filesystem list and panic dump elided]
+- [<8c3d0e24>] kernel_init+0x0/0x104
+-
+-Rebooting in 1 seconds..
++devtmpfs: mounted
++Freeing unused kernel image (initmem) memory: 132K
++This architecture does not have kernel memory protection.
++Run /init as init process
++8139cp 0000:00:02.0 eth0: link up, 100Mbps, full-duplex, lpa 0x05E1
++ESC[?7hType exit when done.
++$ exit
++reboot: Restarting system
 
-Note: This series is *not* a trojan horse to bring C++ in QEMU
-codebase, nor to define an alternative C++ API for plugins. It's just enabling
-more users to get the most out of existing C plugin API.
+Why on earth did the "freeing initrd memory" move? (Interrupts shouldn't 
+be enabled until right before it spawns PID 1, unless they rewrote that 
+part when I wasn't looking...)
 
-CI: https://gitlab.com/pbo-linaro/qemu/-/pipelines/2239199381
+Ah, the - is the fail and the + is the success, I'm guessing the extract 
+failed and the error path freed it early. Possibly the new memory block 
+is either overwriting the cpio.gz or changing where it lives in a way 
+the kernel isn't finding it.
 
-Pierrick Bouvier (11):
-  plugins: move win32_linker.c file to plugins directory
-  plugins: factorize plugin dependencies and library details
-  plugins: use complete filename for defining plugins sources
-  plugins: define plugin API symbols as extern "C" when compiling in C++
-  include: qemu/ctype.h -> qemu/qemu-ctype.h
-  include: qemu/coroutine.h -> qemu/qemu-coroutine.h
-  meson: fix supported compiler arguments in other languages than C
-  meson: enable cpp (optionally) for plugins
-  qga/vss-win32: fix clang warning with C++20
-  meson: update C++ standard to C++23
-  contrib/plugins: add empty cpp plugin
+Anyway, you've got the tarball if you want to smoketest it yourself. 
+Unless this is expected and we need kernel tweaks just to boot even when 
+not using the new memory, in which case -m 256 warning and dropping down 
+to 192 would _still_ lose backwards compatibility. (If there's an 
+address range conflict, could the -initrd loaded contents be IN the new 
+memory block, as if it had been loaded rather than a mapped in ROM?)
 
- meson.build                                   |  24 ++--
- block/parallels.h                             |   2 +-
- block/qcow2.h                                 |   2 +-
- fsdev/qemu-fsdev-throttle.h                   |   2 +-
- hw/9pfs/9p.h                                  |   2 +-
- include/block/block-global-state.h            |   2 +-
- include/block/block-hmp-cmds.h                |   2 +-
- include/block/block-io.h                      |   2 +-
- include/block/reqlist.h                       |   2 +-
- include/block/throttle-groups.h               |   2 +-
- include/qemu/coroutine_int.h                  |   2 +-
- include/qemu/job.h                            |   2 +-
- .../qemu/{coroutine.h => qemu-coroutine.h}    |   0
- include/qemu/{ctype.h => qemu-ctype.h}        |   0
- include/qemu/qemu-plugin.h                    |   8 ++
- migration/migration.h                         |   2 +-
- ui/console-priv.h                             |   2 +-
- block.c                                       |   2 +-
- block/block-copy.c                            |   2 +-
- block/io_uring.c                              |   2 +-
- block/linux-aio.c                             |   2 +-
- block/mirror.c                                |   2 +-
- block/progress_meter.c                        |   2 +-
- block/ssh.c                                   |   2 +-
- block/vdi.c                                   |   2 +-
- block/vvfat.c                                 |   2 +-
- chardev/char.c                                |   2 +-
- gdbstub/gdbstub.c                             |   2 +-
- hw/9pfs/coth.c                                |   2 +-
- hw/block/virtio-blk.c                         |   2 +-
- hw/core/bus.c                                 |   2 +-
- hw/core/qdev-properties-system.c              |   2 +-
- hw/core/qdev-properties.c                     |   2 +-
- hw/hyperv/syndbg.c                            |   2 +-
- hw/nvme/nguid.c                               |   2 +-
- hw/s390x/ccw-device.c                         |   2 +-
- hw/s390x/ipl.c                                |   2 +-
- hw/s390x/s390-virtio-ccw.c                    |   2 +-
- hw/scsi/scsi-generic.c                        |   2 +-
- migration/migration.c                         |   2 +-
- migration/rdma.c                              |   2 +-
- monitor/fds.c                                 |   2 +-
- monitor/hmp.c                                 |   2 +-
- nbd/client-connection.c                       |   2 +-
- net/colo-compare.c                            |   2 +-
- net/net.c                                     |   2 +-
- net/tap-solaris.c                             |   2 +-
- {contrib/plugins => plugins}/win32_linker.c   |   0
- qapi/qapi-util.c                              |   2 +-
- qapi/qmp-dispatch.c                           |   2 +-
- qobject/json-parser.c                         |   2 +-
- target/ppc/ppc-qmp-cmds.c                     |   2 +-
- target/riscv/cpu.c                            |   2 +-
- target/riscv/riscv-qmp-cmds.c                 |   2 +-
- tests/qtest/libqtest.c                        |   2 +-
- tests/qtest/migration/migration-util.c        |   2 +-
- tests/unit/test-aio-multithread.c             |   2 +-
- tests/vhost-user-bridge.c                     |   2 +-
- ui/console.c                                  |   2 +-
- ui/keymaps.c                                  |   2 +-
- ui/ui-qmp-cmds.c                              |   2 +-
- util/cutils.c                                 |   2 +-
- util/id.c                                     |   2 +-
- util/qemu-co-shared-resource.c                |   2 +-
- util/qemu-co-timeout.c                        |   2 +-
- util/qemu-coroutine-io.c                      |   2 +-
- util/readline.c                               |   2 +-
- util/thread-pool.c                            |   2 +-
- contrib/plugins/cpp.cpp                       | 119 ++++++++++++++++++
- contrib/plugins/meson.build                   |  25 ++--
- plugins/meson.build                           |  15 ++-
- qga/vss-win32/requester.cpp                   |   6 +-
- tests/tcg/plugins/meson.build                 |  18 +--
- 73 files changed, 237 insertions(+), 104 deletions(-)
- rename include/qemu/{coroutine.h => qemu-coroutine.h} (100%)
- rename include/qemu/{ctype.h => qemu-ctype.h} (100%)
- rename {contrib/plugins => plugins}/win32_linker.c (100%)
- create mode 100644 contrib/plugins/cpp.cpp
+Thanks,
 
--- 
-2.47.3
-
+Rob
 
