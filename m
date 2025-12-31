@@ -4,99 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F7EEE57D4
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Dec 2025 07:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22575EE57D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Dec 2025 08:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1var0Z-00080d-0F; Wed, 31 Dec 2025 02:52:39 -0500
+	id 1varBz-0003IQ-86; Wed, 31 Dec 2025 03:04:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1var0W-00080K-GK
- for qemu-devel@nongnu.org; Wed, 31 Dec 2025 02:52:36 -0500
-Received: from shrimp.cherry.relay.mailchannels.net ([23.83.223.164])
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1varBu-0003HA-3l
+ for qemu-devel@nongnu.org; Wed, 31 Dec 2025 03:04:23 -0500
+Received: from chocolate.elm.relay.mailchannels.net ([23.83.212.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1var0U-0002M0-NG
- for qemu-devel@nongnu.org; Wed, 31 Dec 2025 02:52:36 -0500
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1varBs-0004a3-1P
+ for qemu-devel@nongnu.org; Wed, 31 Dec 2025 03:04:21 -0500
 X-Sender-Id: dreamhost|x-authsender|rob@landley.net
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id DA7157823B7;
- Wed, 31 Dec 2025 07:52:31 +0000 (UTC)
+ by relay.mailchannels.net (Postfix) with ESMTP id CC06D782646;
+ Wed, 31 Dec 2025 08:04:16 +0000 (UTC)
 Received: from pdx1-sub0-mail-a256.dreamhost.com
  (100-113-119-120.trex-nlb.outbound.svc.cluster.local [100.113.119.120])
  (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 013767823DE;
- Wed, 31 Dec 2025 07:52:28 +0000 (UTC)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 438957826F4;
+ Wed, 31 Dec 2025 08:04:14 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
- t=1767167549;
- b=peZJMpfG8TITwTugXcc5mzsylQStWOp/s9568rxnxYgnTKNwQ0XxxMhqwQgXoWcGMX9dG7
- ssuQjDIbPv7pbvqTR7zqN1n9NzOEBsPZNsRv1fZ5QN3QsGgGPGtS+1xUrC/IzWUy1NFmS4
- e1rc9JzoAR5JTWAUNn3J/9wnStHcoHMD/UwlBvD9IMN2rgSPpg2S/ILVMjvgW4TScucEdn
- 9b2D0y8ke1lMgZGzmrYRDWh2F8Va0csXGfozOW3aHUXZzAmpHHH58rtC7hmrRa1iGzTAza
- 8IV3FJpOYQM319WCU53DNBVezuwswYdAQX3yE3siKUuYywkj7UZINB5HVvga1A==
+ t=1767168254;
+ b=hlMwThd6QmLIMNZ9+R6NFAQ7ffOJQf4jR22owqDcd8Aj8wO7EDCOKnQzh0erjhanGc5sNm
+ 7eECkH+UUq+R9Et0LpmxuE8rH86zTv1tm/7J+YzVQhWE3bDNrhrtu1I7wDC11f+lo4Xnnq
+ WviH+oslvY9OqOQMSi5qn6WFlV8MSGzlo37nNsBG9K+qJFy89R04WPoss8G9L0YFSTTNvi
+ 2jdobFG23+sGdeAjVgbvwFGu5L/4TGnrC1W0IQcjNrAAlVfz5aDGAyqNIvrfEdvQ+wDa/A
+ 27q4SjxDEQh9U5tifuWVjby7ScNiUvTyiJEE5YfaTnzlEAeYktZtS//GlwS8UA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1767167549;
+ d=mailchannels.net; s=arc-2022; t=1767168254;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=zjKj5zUtUukLIBCdnEqcVWD27aAhqZBtOuVCH6aWtJM=;
- b=ufFpA6lvWTlFLNRxIko8eDfAKDzJT6knvFgRxbtO8l0sjpsEWywI2la6F3NPOpeCYJ5n+S
- 7qSyKENg/LCS7CiaTBfngawcGOTVbK0G4XLyvt8UJ6CekNSsvvTrNxKrtQawmg/uirDViO
- byzwHz2G/7SwXm3otQsVQkvsBdT47EsQtziqIxBuQDp46kAejFbm4EPFLV/aVE+taL4cCD
- sBtYXs6Y5bLDLDRFRYwB1hOZ0FSgPK39dduNAX4lBVjQmeYO4lQbk6bs9GghO8So3q+HZB
- iFd60rLp5A3IYSE8fN6okdEB8GB65RlPxFtFX9M8S5JtnXqoh4X3JzqTH9uZ3g==
-ARC-Authentication-Results: i=1; rspamd-85db7f4c96-t7gj4;
+ bh=a/vGCNVRMBzR613XqxSZyPO2xpr4QIGt9uOM8K5zufk=;
+ b=P9ZNsHSnZOG9QxauI3h/98n2fbcmrBSrwkBrinN7iW02JLzAiAqcJy63ddSW4Ag8eEQ0RC
+ Vd4MFRYC6cWv8OHQ/c8KqtlR90pqNVDQ1v7OsGTtmOmQJEdX7ebUe6UztmmueAWKV92ZzY
+ Lza1Wpn1YxXnmJnrm2wc8WxRVhiSvNPE9q2HvvSWlP1r4OksXUK4/0R83x6LURSqjVwAlf
+ loHIcJiYxDGCab51prItJb+gsHS9oSMsOy3NdxV6ROT9yr+cC4mochHwdpYechRP605O2s
+ 2218goIpSpxYR64A/Az9C+FWqwTtO8A2hBsgCdzzQKhYm2g4UYBoBETNsaJ9NQ==
+ARC-Authentication-Results: i=1; rspamd-85db7f4c96-bqrz9;
  auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
 X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-X-MC-Relay: Neutral
+X-MC-Relay: Good
 X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
 X-MailChannels-Auth-Id: dreamhost
-X-Thread-Arch: 0300a45c522d25af_1767167551272_1126787258
-X-MC-Loop-Signature: 1767167551272:138142507
-X-MC-Ingress-Time: 1767167551271
+X-Celery-Tank: 627b7ec640042afe_1767168256566_4275684198
+X-MC-Loop-Signature: 1767168256566:1705755685
+X-MC-Ingress-Time: 1767168256564
 Received: from pdx1-sub0-mail-a256.dreamhost.com (pop.dreamhost.com
  [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.113.119.120 (trex/7.1.3); Wed, 31 Dec 2025 07:52:31 +0000
+ by 100.113.119.120 (trex/7.1.3); Wed, 31 Dec 2025 08:04:16 +0000
 Received: from [IPV6:2607:fb90:fa85:cea:c1aa:4813:f755:98f6] (unknown
  [172.56.10.2])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
  (Authenticated sender: rob@landley.net)
- by pdx1-sub0-mail-a256.dreamhost.com (Postfix) with ESMTPSA id 4dh2HJ1wbZz105C;
- Tue, 30 Dec 2025 23:52:28 -0800 (PST)
+ by pdx1-sub0-mail-a256.dreamhost.com (Postfix) with ESMTPSA id 4dh2Xs2VH4z106C;
+ Wed, 31 Dec 2025 00:04:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
- s=dreamhost; t=1767167548;
- bh=zjKj5zUtUukLIBCdnEqcVWD27aAhqZBtOuVCH6aWtJM=;
- h=Date:Subject:From:To:Cc:Content-Type:Content-Transfer-Encoding;
- b=Ntg9C3q63XIvr+hvfGASQYZVHUsOw1ooGQRShJdchT0RexbMG/yDR4Ioqn2Wfs3Qx
- YoXzdmDSjj3L6wx9Eub2SwXLgLjLAXQes3/UtpSVDVVjOJc0lfG24rga9pNwtud69Z
- ofx2WyZp96aftUjOQ/cQKfuvivnCA01E/KSlajFKCNSR5f4L/6apgF98VCLCkNQkkZ
- e3tY5hZRuzWYqp0+5c60DC46zx4RfNrE2NkuAqG2mjI81ZOAibuQxVzAFTAk7WNEK9
- ZrEQspvogdSRfKFoyr3VcrkFrRcsYz5KE8oa8QrlS+MGuDqGrYvfWWKG1U0it2Nsp1
- zq8hRdTHZsXRg==
-Message-ID: <f189995e-09f7-456d-b860-ee6a3dc8fc49@landley.net>
-Date: Wed, 31 Dec 2025 01:52:18 -0600
+ s=dreamhost; t=1767168254;
+ bh=a/vGCNVRMBzR613XqxSZyPO2xpr4QIGt9uOM8K5zufk=;
+ h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
+ b=dS/6W1i9sRXtWzTKqK6RoyLOJHYBBi5H3jDi11z1oAiwEDGuTybGhoHNawdtuZ5Lt
+ FALEAMMpOh+FrGRE0O8BA5t3nvJ3h/5Aq+NXLZefmTjP1RHEghB49aVOdRoOGOhXeO
+ 12Zz1+/06GEbIrzsGfBrD0pIsaQeGcunAS6iRPfmHVfBlStswzDCARZPliBKucgxTK
+ SFPTn/ktK774FE7aNBoiCWdjIo+53ITJpyuEdbGv7tL7RTjY6q+HKlo3Lfz9mEPTOE
+ 4C1glnhzX+OWyfT3XPM5rlRaaCRsty7p2hKiHyrt2DamI2GajYBzlBTNpRnSot+JP7
+ MN91sl7kND/Lg==
+Message-ID: <6b3fdecb-739b-4149-8736-2fb6bd209d10@landley.net>
+Date: Wed, 31 Dec 2025 02:04:04 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 01/13] hw/sh4/r2d: Bail out early if user request
- invalid RAM size
-From: Rob Landley <rob@landley.net>
+Subject: Re: qemu-system-sh4eb build has something hinky in the ethernet
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- qemu-devel@nongnu.org
-Cc: Thorsten Glaser <tg@debian.org>, Yoshinori Sato
- <yoshinori.sato@nifty.com>, Magnus Damm <magnus.damm@gmail.com>
-References: <20251124095109.66091-1-philmd@linaro.org>
- <20251124095109.66091-2-philmd@linaro.org>
- <a841c041-30c2-471c-81bc-f0f4576cb772@landley.net>
+ Geert Uytterhoeven <geert@linux-m68k.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: Thorsten Glaser <tg@debian.org>, Michael Tokarev <mjt@tls.msk.ru>,
+ security@debian.org,
+ Debian QEMU Team <pkg-qemu-devel@lists.alioth.debian.org>,
+ debian-ports@lists.debian.org
+References: <aKi6IWVX2uIlGKnw@seger.debian.org>
+ <Pine.BSM.4.64L.2508230023030.21591@herc.mirbsd.org>
+ <6abe2750-5e2c-43a1-be57-1dc2ccabdd91@tls.msk.ru>
+ <119d5858-52f4-ce1b-9ee7-9615ce2054b9@debian.org>
+ <79f14fef-123f-4938-b069-10f07e7d0405@landley.net>
+ <CAMuHMdXZNroJF=s8gXj_vguGPGjUvgLu7w2PZxQg9tcHtSkNyg@mail.gmail.com>
+ <351ebd4d-8ec6-43fe-b308-a0e54801a33b@linaro.org>
 Content-Language: en-US
-In-Reply-To: <a841c041-30c2-471c-81bc-f0f4576cb772@landley.net>
+From: Rob Landley <rob@landley.net>
+In-Reply-To: <351ebd4d-8ec6-43fe-b308-a0e54801a33b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=23.83.223.164; envelope-from=rob@landley.net;
- helo=shrimp.cherry.relay.mailchannels.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=23.83.212.35; envelope-from=rob@landley.net;
+ helo=chocolate.elm.relay.mailchannels.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,67 +125,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/31/25 01:32, Rob Landley wrote:
-> I fixed it up by hand for testing in the meantime, and it loaded the 
-> kernel with -m 192 but then initramfs couldn't find init. Without the 
-> patch series the same git version (942b0d378a1d) booted to a shell 
-> prompt. I can try to track down what happened in the morning...
+On 11/24/25 01:18, Philippe Mathieu-Daudé wrote:
+> On 1/9/25 09:47, Geert Uytterhoeven wrote:
+> 
+>> On Sun, 24 Aug 2025 at 20:40, Rob Landley <rob@landley.net> wrote:
+>>> Anyway, this works fine on little endian, but the qemu-system-sh4eb
+>>> build has something hinky in the ethernet, I haven't tackled it myself
+>>> because I don't know whether the device emulation or the driver is
+>>> what's missing an endian swap. (I don't want to fix it the "wrong way",
+>>
+>> That is using sh_eth, right?
+>>
+>> Last time I tried booting a big-endian ARM kernel on R-Car M2-W,
+>> the Linux kernel booted fine, except for Ethernet.  So sh_eth is 
+>> definitely
+>> not big-endian clean.
+> 
+> qemu-system-sh4{eb} only emulates the R2D+ board, which AFAIK
+> provides ethernet via a RTL8139 over PCI. While old, RTL8139
+> is very tested and expected to have endianness well handled.
 
-Ah, it boots with the full patch stack applied for -m 64 but not -m 128. 
-It's mapping in the extra memory that breaks it.
+Expected, sure. In reality? Compare the sh4 vs sh4eb tarballs in 
+https://landley.net/bin/mkroot/0.8.13/ (in each case extract and 
+./run-qemu.sh should get you a shell prompt).
 
-The initramfs doesn't seem to be extracting with the second memory block 
-enabled? What's the diff in the output...
+The sh4 one has working ethernet, the sh4eb one always reports link down 
+and it doesn't seem to probe the mac address right. Built from almost 
+the same configs, the only difference is:
 
---- out.txt     2025-12-31 01:42:33.487421358 -0600
-+++ out2.txt    2025-12-31 01:42:47.359676340 -0600
-@@ -105,7 +105,6 @@
-  NET: Registered PF_UNIX/PF_LOCAL protocol family
-  PCI: CLS 0 bytes, default 32
-  Unpacking initramfs...
--Freeing initrd memory: 528K
-  workingset: timestamp_bits=30 max_order=14 bucket_order=0
-  squashfs: version 4.0 (2009/01/31) Phillip Lougher
-  SuperH (H)SCI(F) driver initialized
-@@ -121,50 +120,14 @@
-  Segment Routing with IPv6
-  In-situ OAM (IOAM) with IPv6
-  NET: Registered PF_PACKET protocol family
-+Freeing initrd memory: 528K
-  netconsole: network logging started
--check access for rdinit=/init failed: -2, ignoring
--/dev/root: Can't open blockdev
--VFS: Cannot open root device "" or unknown-block(1,0): error -6
-... [filesystem list and panic dump elided]
-- [<8c3d0e24>] kernel_init+0x0/0x104
--
--Rebooting in 1 seconds..
-+devtmpfs: mounted
-+Freeing unused kernel image (initmem) memory: 132K
-+This architecture does not have kernel memory protection.
-+Run /init as init process
-+8139cp 0000:00:02.0 eth0: link up, 100Mbps, full-duplex, lpa 0x05E1
-+ESC[?7hType exit when done.
-+$ exit
-+reboot: Restarting system
+https://github.com/landley/toybox/blob/0.8.13/mkroot/mkroot.sh#L297
 
-Why on earth did the "freeing initrd memory" move? (Interrupts shouldn't 
-be enabled until right before it spawns PID 1, unless they rewrote that 
-part when I wasn't looking...)
+Line 305 adds:
+     [ "$CROSS" == sh4eb ] && KCONF+=,CPU_BIG_ENDIAN
 
-Ah, the - is the fail and the + is the success, I'm guessing the extract 
-failed and the error path freed it early. Possibly the new memory block 
-is either overwriting the cpio.gz or changing where it lives in a way 
-the kernel isn't finding it.
+When I tried to track it down, I didn't know if the kernel or qemu was 
+what had it backwards, so it went back on the todo heap and composted...
 
-Anyway, you've got the tarball if you want to smoketest it yourself. 
-Unless this is expected and we need kernel tweaks just to boot even when 
-not using the new memory, in which case -m 256 warning and dropping down 
-to 192 would _still_ lose backwards compatibility. (If there's an 
-address range conflict, could the -initrd loaded contents be IN the new 
-memory block, as if it had been loaded rather than a mapped in ROM?)
+>> [*] I didn't have a big-endian userspace.
 
-Thanks,
+That script builds one, the resulting binary tarball is at 
+https://landley.net/bin/mkroot/0.8.13/sh2eb.tgz and the toolchain I used 
+is at 
+https://landley.net/bin/toolchains/25-03-2024/sh4eb-linux-musl-cross.tar.xz 
+which was built with https://landley.net/toybox/faq.html#cross2
+
+There might also be something wrong with -hda block device support, I'd 
+have to check my notes. But I can work around lack of -hda with 
+nbd-server, kinda hard to do it the other way...
 
 Rob
 
