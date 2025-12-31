@@ -4,70 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1980BEE57CE
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Dec 2025 01:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B3A6EE57D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Dec 2025 04:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1val3e-0005m3-Dq; Tue, 30 Dec 2025 20:31:27 -0500
+	id 1vaoA1-0001FI-GF; Tue, 30 Dec 2025 23:50:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1val3U-0005l0-Ff
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 20:31:21 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1val3J-0008GE-Lo
- for qemu-devel@nongnu.org; Tue, 30 Dec 2025 20:31:09 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Dx98HPfFRpJo4EAA--.1971S3;
- Wed, 31 Dec 2025 09:30:55 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBx68HNfFRps2cHAA--.16435S3;
- Wed, 31 Dec 2025 09:30:55 +0800 (CST)
-Subject: Re: [PATCH v3 3/3] target/loongarch: Fix exception ADEF/ADEM missing
- update CSR_BADV
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20251230113002.59623-1-gaosong@loongson.cn>
- <20251230113002.59623-4-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <ec94c7d1-7448-9137-c5e8-eb87fed2bbdb@loongson.cn>
-Date: Wed, 31 Dec 2025 09:28:21 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vao9z-0001Eu-ID
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 23:50:11 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vao9x-0004J7-UA
+ for qemu-devel@nongnu.org; Tue, 30 Dec 2025 23:50:11 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7bab7c997eeso12423702b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Dec 2025 20:50:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1767156608; x=1767761408; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lyEBQI9fudLZA6hp/64GGbEj5D+LdOyrIGJqk0OSFBY=;
+ b=HSakyuzxYpxkKIM7E1dGrUgA/sRS4snCdAIS60vNpVvv88QAHyDI8o7lgukYEJBN3O
+ QI2DahyKCsEG32L5zeFCALz37cRwBNzNiGvKaawFBLX4WJH7xwulHzl9SpD9PKNX3sSM
+ DuxymVpi3RdhRmRaRuVr9KUcXpiNvLkm71Qn4mKUOOCynTYLnlYimJjLb2yRwY1FAVCP
+ 8pjUhIRb0s88kiAPk4A14pRQCK5pqxZD6n4uVIJD2KZBf/V8RM7iNn1cB0NIHwXP6w8x
+ Pz2GlArJQL8V+s2UigbUwR9QiefA1r71Eu19HtAe5k8Ni+84rABQXqnlz8n4mR9wFgl1
+ LW+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767156608; x=1767761408;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lyEBQI9fudLZA6hp/64GGbEj5D+LdOyrIGJqk0OSFBY=;
+ b=uM37jq0H9AH7LpAffKIOiYWfCeYZ/cJfaN2AMu/uBJ2oQ0ohCLwWKKP/3YKbRED58g
+ iXeyM8lQSAYnmEUT4NXT3OMdMh8qgIKbAJ4i+UTHiDIvjXP/zcDxFDkkWXN1ch91sUFy
+ nFmBwNSFCrsbLexhbdg+vTj3/QA4KW7CA90+Jl2WTKy4qQmWmI3Ix3tCAZ3xHtWpKqeQ
+ dtmk786YaA+ZR0o7DvqNSYLHeLmCqno8uImhNyCPwtkjy2ynRserKEDZYKWocNmzBe/i
+ TbTC4RbFgeSr7y8iLhu5d9N72Wzr2M8i1Qz3vJSjMCkl7OJQc9Yf+TEuHL2Fu9KDIQxV
+ jX8A==
+X-Gm-Message-State: AOJu0YzlNAe04nOkDpECfXeMo8oHYLVLJvS+rMphp/gjUtID0mPo8jyu
+ xJS/AimZcIdrqQx2xKcAJzyaqj6nYF9zvhafSks9TNdbXnigxCALOrTVRlWEB1EG14teM/wUNUO
+ rtOoT/unAUUQlgYsbgMIk4zBhJbx0D098YpQ3Xy4UzOhEpAuQMN+IBoaSHzda9mdOj8w/EN7fKd
+ fQQiCMO5TyAh0vMh49Wy4Og+JvvnTKL8MRNjABs4XqKF8=
+X-Gm-Gg: AY/fxX6J5W9LSOaJN1U4enz/+UP6fa2BiRePx2gUti0hT0mlUrtbd3ei/tZCLK9u1Uo
+ 3xtplqbniY9YNkJkwaQOHG6nMeNyx8NsvmO2yg0hdgWO7kMG6z9PSk7/C6zxnuyIJawFHkS36Ju
+ AjrtTv5OQVTlVbfgyxBoFlXwxrLm9HTyZk/o4xnbMpj33iCT/fwCZ9H1iVBl3xSDe0/ntfFJfZ9
+ BFeN45XeuDTaUbUtSX6PSUimuZigyhbNLv5dfVFTGhAQdpV24eMRSLei6nYhA8lZEOgWFE5zWDH
+ 8LovQsftyjxVoqisoLaRTsOFXMFwrrAh52UzOdMStPP0aCgYfM5NSMYkMG+L+X4w0ayxA/5ugkL
+ 6Maz8rzYL1IXPPTw2EoRoYRnH1n7f5nFCFpsB6fUBEImOWFjfF5eg/ATFAsA4gV6P3Sf+CYrYxB
+ Hmo0DskYcmkkO3zuh9ME68bNJjKrdn6AGQy8x32TQ8I3kEkqNqRw==
+X-Google-Smtp-Source: AGHT+IHTcQHWKFvGgGXfVRmkLKeTEUayZIJi1WNZL6u8uR5KNjh5guh3smPOl4UDGNwYhACjcJZGNg==
+X-Received: by 2002:a05:6a00:4406:b0:7e8:4471:ae58 with SMTP id
+ d2e1a72fcca58-7ff67456ce0mr27232366b3a.36.1767156607834; 
+ Tue, 30 Dec 2025 20:50:07 -0800 (PST)
+Received: from jchang-1875.internal.sifive.com ([136.226.240.163])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7ff7a8442edsm33981945b3a.12.2025.12.30.20.50.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 30 Dec 2025 20:50:07 -0800 (PST)
+From: Jay Chang <jay.chang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v3 1/2] target/riscv: Align pmp size to pmp-granularity
+Date: Wed, 31 Dec 2025 12:49:59 +0800
+Message-ID: <20251231045000.30120-2-jay.chang@sifive.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20251231045000.30120-1-jay.chang@sifive.com>
+References: <20251231045000.30120-1-jay.chang@sifive.com>
 MIME-Version: 1.0
-In-Reply-To: <20251230113002.59623-4-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBx68HNfFRps2cHAA--.16435S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7GryfXryUtr4kCFW3ur1xJFc_yoW3uwc_Xa
- 1Svr1vkr4DWw12qayjqr98Aw1fGw4kKrsayFsrXF97J345Jrs5JrWqg3Z5CF1akrW8tFsx
- A393Xr1Y9r1YvosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbxxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
- JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzZ2-UUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.628,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=jay.chang@sifive.com; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,27 +109,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/30 下午7:30, Song Gao wrote:
-> Exception ADEM/ADEF need update CSR_BADV, the value from the virtual address.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/tcg/tcg_cpu.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-> index c05a06eeb5..8615e03d14 100644
-> --- a/target/loongarch/tcg/tcg_cpu.c
-> +++ b/target/loongarch/tcg/tcg_cpu.c
-> @@ -225,6 +225,7 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
->   {
->       CPULoongArchState *env = cpu_env(cs);
->   
-> +    env->CSR_BADV = addr;
->       if (access_type == MMU_INST_FETCH) {
->           do_raise_exception(env, EXCCODE_ADEF, retaddr);
->       } else {
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
+value is smaller than the PMP granularity, it needs to be aligned
+to the PMP granularity.
+
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ target/riscv/pmp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 3ef62d26ad..c88e86cb11 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -167,11 +167,12 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+             uint8_t a_field = pmp_get_a_field(val);
+             /*
+              * When granularity g >= 1 (i.e., granularity > 4 bytes),
+-             * the NA4 (Naturally Aligned 4-byte) mode is not selectable
++             * the NA4 (Naturally Aligned 4-byte) mode is not selectable.
++             * In this case, an NA4 setting is reinterpreted as a NAPOT mode.
+              */
+             if ((riscv_cpu_cfg(env)->pmp_granularity >
+                 MIN_RISCV_PMP_GRANULARITY) && (a_field == PMP_AMATCH_NA4)) {
+-                    return false;
++                    val |= PMP_AMATCH;
+             }
+             env->pmp_state.pmp[pmp_index].cfg_reg = val;
+             pmp_update_rule_addr(env, pmp_index);
+@@ -251,6 +252,11 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+         break;
+ 
+     case PMP_AMATCH_NAPOT:
++        /* Bits [g-2:0] need to be all one to align pmp granularity */
++        if (g >= 2) {
++            this_addr |= ((1ULL << (g - 1ULL)) - 1ULL);
++        }
++
+         pmp_decode_napot(this_addr, &sa, &ea);
+         break;
+ 
+-- 
+2.48.1
 
 
