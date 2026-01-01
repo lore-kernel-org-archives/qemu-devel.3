@@ -4,97 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35433E9410C
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Jan 2026 03:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE1BE9410C
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Jan 2026 06:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vb9oc-0002HD-6Q; Wed, 31 Dec 2025 22:57:34 -0500
+	id 1vbCRf-00072O-Nf; Thu, 01 Jan 2026 01:46:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vb9oZ-0002Ek-38
- for qemu-devel@nongnu.org; Wed, 31 Dec 2025 22:57:31 -0500
-Received: from fout-b3-smtp.messagingengine.com ([202.12.124.146])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vbCRY-0006xT-95; Thu, 01 Jan 2026 01:45:57 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vb9oX-0003hx-0I
- for qemu-devel@nongnu.org; Wed, 31 Dec 2025 22:57:30 -0500
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfout.stl.internal (Postfix) with ESMTP id 8198E1D00058;
- Wed, 31 Dec 2025 22:57:27 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Wed, 31 Dec 2025 22:57:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm1; t=1767239847; x=1767326247; bh=iZsO2ANcj7
- 57/EhFpo0VoAnVh3P9dsWdpvnxBoY+X/M=; b=OzKGk8ijCF7eZCT8vy22+qGuIY
- w4Y/F3hMzjYmwRqnp20vY6reGjpZGZtXkrSTpKoNez/YLma1uQeQCdsbiocqq7DK
- YTFuH4qPJlhmKieXRWmBYrI0nwU0GlFj+k8LnkUKm5/HlY+EN4BCpOd2LWatBhcF
- uprHSVL8OvlQPobSNRjuIZXpts3/yt2indonguqmc0SR1i7OzSTftlh6k0mb3UOI
- SaV49aqc/gvuTAEunZewo8RH6l4eMBDFs/mpDwFRf+gXzuBQDt7z2Mk+ZSM7xvsY
- WJHkeBLmCq8QyEbdafWCk/NhQd6mKW8Z6fGqeXCIb//8BdK4T99TvHmm2uUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1767239847; x=1767326247; bh=iZsO2ANcj757/EhFpo0VoAnVh3P9dsWdpvn
- xBoY+X/M=; b=Kv52ujGuwfkmqrbJol6J92xAA0/vASz3axWzMXTc+k6+GO8OhBZ
- H6QwSL56QUoLSkLv8uNpMzLpQPkh1IthgfFlwlC83GRCcblFLxLkHXI3vcQA5wru
- E1V6538t6ePlbtiRq8cy63SD7VWOokcH5D4lE44FUCj1+A+tSx5FmUcPOxjyoj/H
- Q+m9aQyPuVl3PYQfJWaBquBXKwDoKTvkmfaH1opwq64VHJ6W4GZhvB6TDeETSl3z
- m2iFnomKwgOc+VWg62WTe8TlPKkfqfOUGD4bH2H/O3eCypb6gZwe2vsN1Ax7aj5P
- gE3YCTQwkAfG+3oOpDm0zl6JQW6peB/zIyw==
-X-ME-Sender: <xms:p_BVaXY-tlEZsl4ntm4CpqZ__YbuB94BtjuZwj2_TDNjndKAiwcRYA>
- <xme:p_BVad2TUCG-vnu3_OiBuop738Z4nicXGgH4vjwMF4qijt3O5iFSr5p95phIp90_G
- FvXIU6yB-VF7FN9niRTdoEBa-pJere_DB89luiZhKU-RPfmT282nRc>
-X-ME-Received: <xmr:p_BVaXWLYb7k7LIw5gn8U6ThPNb8-AE0oPD0QbCrEjFZR_sxQjPH9uLHI6FS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekgeejhecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhephffvvefuff
- fkofgggfestdekredtredttdenucfhrhhomhepvehhrgguucflrggslhhonhhskhhiuceo
- tghhrggusehjrggslhhonhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhtddvhe
- eiveeggfetffehieeghedtledvvdeuieejjedvleeiffetvdffjedtueenucffohhmrghi
- nheptghouggvsggvrhhgrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
- hmpehmrghilhhfrhhomheptghhrggusehjrggslhhonhhskhhirdighiiipdhnsggprhgt
- phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsrghlrghtohhnse
- gvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhu
- rdhorhhgpdhrtghpthhtoheptghhrggusehjrggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:p_BVaXUCeqEQSEl2lnJc3iTck1jyEA3Ft3cKPaTQvMBmHVbZTsYxcA>
- <xmx:p_BVaWelZYOR0aoHvhV28pkjqDVRSAMx_1XiS2mC0Xx9Kin3L9yuDg>
- <xmx:p_BVaQV4Zxwm76QycnmpRWta4iK41SNCxed-Cmzx7zunbhGeLAJeOg>
- <xmx:p_BVafehUXa2LCXDnlDhuSnIx4lLhGy9xlDsTL8evBSRyVrY8mP90A>
- <xmx:p_BVaTDrIBLtCbcPEadGKgCtnwJGkYyjToCGCFgTEdfGCMRFaBYuhztn>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 31 Dec 2025 22:57:26 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 3cff8a48;
- Thu, 1 Jan 2026 03:57:26 +0000 (UTC)
-From: Chad Jablonski <chad@jablonski.xyz>
-To: qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu,
-	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v2 0/7] ati-vga: CCE engine setup and PIO packet processing
-Date: Wed, 31 Dec 2025 22:55:48 -0500
-Message-ID: <20260101035555.1300511-1-chad@jablonski.xyz>
-X-Mailer: git-send-email 2.51.2
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vbCRW-0003G2-KL; Thu, 01 Jan 2026 01:45:56 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6014SCHD005967;
+ Thu, 1 Jan 2026 06:45:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=FIEUP8
+ xgWGB5GA31Nrvr8a1WC4FC0h7rdeslxfM0yyQ=; b=otwsLdUJ4UmWHKzVM2EbqZ
+ YwfkAPaXCOYtz9n6vIslOoMaQM7yZfGxhPWZQulQuVAlIsC57tlY4sD/uTmRr3u1
+ tI7PlMdXor0cU0rdXZtxSbDyi/51P2llKDlpjnjHu2yOIFRUtL1zFcXOPl4yc5Wp
+ dRUisiMBzeHka6Ba2skZomax2evmrnxA8XULqn5TOJbccqvorqeB8dK+7VU5OSKV
+ pQEwVFq62Jk4L8HwvFgZbbD1tcwWiimeBzoUC2YgCHGpgAWKzOramFuA+WVLsOx/
+ yQ5Na/t4wLyncBzuYx6kU370Ge3VFJwkSUDK9Qmknx4Fqw6dhiUuGNQHEXeQ2rZw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ba73w0mvw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Jan 2026 06:45:50 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 6016joF2020937;
+ Thu, 1 Jan 2026 06:45:50 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ba73w0mvu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Jan 2026 06:45:50 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6011Qm4q025077;
+ Thu, 1 Jan 2026 06:45:49 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bau9khmdp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Jan 2026 06:45:49 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6016jjWm38142254
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 1 Jan 2026 06:45:45 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 78F6D20049;
+ Thu,  1 Jan 2026 06:45:45 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5CB1720040;
+ Thu,  1 Jan 2026 06:45:43 +0000 (GMT)
+Received: from [9.109.199.210] (unknown [9.109.199.210])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  1 Jan 2026 06:45:43 +0000 (GMT)
+Message-ID: <41ece6d5-e211-4b32-ab87-d1fe5f359228@linux.ibm.com>
+Date: Thu, 1 Jan 2026 12:15:42 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.146; envelope-from=chad@jablonski.xyz;
- helo=fout-b3-smtp.messagingengine.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.498, FROM_SUSPICIOUS_NTLD_FP=0.058,
- PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ppc/pnv: Add dummy MMIO support for OCMB chips
+To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, milesg@linux.ibm.com,
+ rathc@linux.ibm.com, chalapathi.v@linux.ibm.com
+References: <20251224142249.1356424-1-calebs@linux.ibm.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <20251224142249.1356424-1-calebs@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: P-MH_6H3G6OUuGiVVRJp-GKhtwrGuEgE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTAxMDA1NCBTYWx0ZWRfXy9CdgNW/iD73
+ u/sd+uAHPlVSTVnfIRCLwQNyaUscKUX9xipK4OKRssZI1B9a8mWxtEyAHbzXp4SLrVDRYPqza1n
+ LXDFBGON6/x7K0bqcsxmvYnQ6PzUcRI5lDbzSpqQzRpvw0XaGfV1/mazFf0YuA5nh45CO9vFv5E
+ K4FKTCReFoWcV3uXZN1PHQswG7u9S1mXyPUFpKekczWkFwLq0TcADQzpwWZc+mpDxZWyuWsICbO
+ /dEn6wxYM3ImvILgO6/BQa08Ei7vhRhtl8e6NvG0nBhcQk0mu7+8Hhr7qPcKY8D3EScLX7W5OyU
+ tRC9yHaFJ7OnlXBeUHX1r9BY5/HHKPz/UQjzoi/9UfTeBnbgsAIC8S/yDf0FfGUa7hy7epzgNSq
+ 703FQ895DaJQKZQa5zgaasB+X5snaB2ItuTlYBZYpvGySP3340WCxEm//ro5o9zxXGkXh8+eT14
+ Pe6WGBQSa/uRn/iP/NQ==
+X-Authority-Analysis: v=2.4 cv=fobRpV4f c=1 sm=1 tr=0 ts=6956181e cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=D4yLe6ciAAAA:8 a=VnNF1IyMAAAA:8 a=N2-0zKC2n98ZbhYZ008A:9 a=QEXdDO2ut3YA:10
+ a=RJBimmv2CioV9QQA5JKZ:22
+X-Proofpoint-GUID: Xk6aFjhGekd_duXxppZOY93LziX-twGp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-01_02,2025-12-31_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 adultscore=0 malwarescore=0
+ spamscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601010054
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,47 +128,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series implements CCE engine setup and PIO packet submission/processing.
-This forms the foundation for full CCE support in the future.
+On 24/12/25 19:52, Caleb Schlossin wrote:
 
-CCE engine microcode is stored but not executed in this series. Reverse
-engineering doesn't look impossible but it will definitely be a journey
-and I think an initial implementation of at least some of the CCE
-packets in C will make it much easier.
+> The Power Hypervisor for P10 expects to be able to access certain
+> Open CAPI Memory Buffer (OCMB) chip registers.  Since QEMU does not
+> currently support these registers, several access errors are being
+> posted.  The hypervisor is able to progress despite these errors,
+> but it does create unwanted noise on the console.  Adding some
+> dummy MMIO support for this IO region in order to suppress the
+> error messages.
 
-Ring buffer (BM modes) and Type-3 packet processing will follow in
-future series.
+Hi Caleb,
 
-Hardware tests available at:
-https://codeberg.org/cjab/ati-tests/src/branch/main/tests/cce.c
+If there any public document/spec available that documents these 
+registers ? Can you please point me to it.
 
-Tested on real hardware (Rage 128 Pro Ultra, PCI 1002:5446) and QEMU.
+I don't find any 'ocmb' mention in any docs here: 
+https://computeexpresslink.org/resource/opencapi-specification-archive/
 
-Changes from v1:
+Since a new TODO is getting introduced here to implement those register 
+accesses, it can only be done if some public information is available.
 
-- Rebased onto master (no longer depends on HOST_DATA series)
 
-Chad Jablonski (7):
-  ati-vga: Extract ati_reg_write() from ati_mm_write()
-  ati-vga: Implement CCE/PM4 microcode register handling
-  ati-vga: Implement PM4_BUFFER_CNTL register
-  ati-vga: Implement PM4_MICRO_CNTL register
-  ati-vga: Disable GUI engine MMIO writes when CCE enabled
-  ati-vga: Process Type-0/1/2 CCE packets via PIO
-  ati-vga: Implement PM4_STAT register and common flags
+Thanks,
+- Aditya G
 
- hw/display/ati.c        | 123 ++++++++++++++++++++++---
- hw/display/ati_cce.c    | 194 ++++++++++++++++++++++++++++++++++++++++
- hw/display/ati_cce.h    |  91 +++++++++++++++++++
- hw/display/ati_int.h    |   4 +
- hw/display/ati_regs.h   |  16 ++++
- hw/display/meson.build  |   2 +-
- hw/display/trace-events |   9 ++
- 7 files changed, 428 insertions(+), 11 deletions(-)
- create mode 100644 hw/display/ati_cce.c
- create mode 100644 hw/display/ati_cce.h
 
--- 
-2.51.2
-
+> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+> ---
+>   hw/ppc/meson.build        |   1 +
+>   hw/ppc/pnv.c              |  10 ++++
+>   hw/ppc/pnv_ocmb.c         | 103 ++++++++++++++++++++++++++++++++++++++
+>   include/hw/ppc/pnv.h      |   3 ++
+>   include/hw/ppc/pnv_chip.h |   2 +
+>   include/hw/ppc/pnv_ocmb.h |  38 ++++++++++++++
+>   6 files changed, 157 insertions(+)
+>   create mode 100644 hw/ppc/pnv_ocmb.c
+>   create mode 100644 include/hw/ppc/pnv_ocmb.h
+>
 
