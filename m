@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DB4BEEE25C
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Jan 2026 21:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8D0EEEC1C
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Jan 2026 21:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbQDT-0003jE-2c; Thu, 01 Jan 2026 16:28:19 -0500
+	id 1vbQNV-0007m2-0o; Thu, 01 Jan 2026 16:38:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vbQDQ-0003iz-W7
- for qemu-devel@nongnu.org; Thu, 01 Jan 2026 16:28:17 -0500
+ id 1vbQNT-0007lc-3X
+ for qemu-devel@nongnu.org; Thu, 01 Jan 2026 16:38:39 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vbQDN-0007A9-Ev
- for qemu-devel@nongnu.org; Thu, 01 Jan 2026 16:28:15 -0500
+ id 1vbQNP-0000JY-Vv
+ for qemu-devel@nongnu.org; Thu, 01 Jan 2026 16:38:38 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 203BF5969FF;
- Thu, 01 Jan 2026 22:28:10 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 81BDB5969FF;
+ Thu, 01 Jan 2026 22:38:33 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id tfrOddjlIjyZ; Thu,  1 Jan 2026 22:28:08 +0100 (CET)
+ id DHyJlwMopFJM; Thu,  1 Jan 2026 22:38:31 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 26DD85969FA; Thu, 01 Jan 2026 22:28:08 +0100 (CET)
+ id 3E7265969FA; Thu, 01 Jan 2026 22:38:31 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2532E5969F6;
- Thu, 01 Jan 2026 22:28:08 +0100 (CET)
-Date: Thu, 1 Jan 2026 22:28:08 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3D4015969F6;
+ Thu, 01 Jan 2026 22:38:31 +0100 (CET)
+Date: Thu, 1 Jan 2026 22:38:31 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Chad Jablonski <chad@jablonski.xyz>
 cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 01/11] ati-vga: Fix DST_PITCH and SRC_PITCH reads
-In-Reply-To: <20251118154812.57861-2-chad@jablonski.xyz>
-Message-ID: <a9e63ff7-3fe4-f7a7-566f-b1cfbe3476dd@eik.bme.hu>
+Subject: Re: [PATCH v3 02/11] ati-vga: Add scissor clipping register
+ support
+In-Reply-To: <20251118154812.57861-3-chad@jablonski.xyz>
+Message-ID: <b69b2767-6ae5-9be1-c350-0cd26f96bc48@eik.bme.hu>
 References: <20251118154812.57861-1-chad@jablonski.xyz>
- <20251118154812.57861-2-chad@jablonski.xyz>
+ <20251118154812.57861-3-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
@@ -66,40 +67,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 18 Nov 2025, Chad Jablonski wrote:
-> Reading DST_PITCH and SRC_PITCH on the Rage 128 is broken. The read
-> handlers attempt to construct the value from pitch and tile bits in
-> the register state but mistakenly AND them instead of ORing them. This
-> means the pitch is always zero on read.
+> Implement read and write operations on SC_TOP_LEFT, SC_BOTTOM_RIGHT,
+> and SRC_SC_BOTTOM_RIGHT registers. These registers are also updated
+> when the src and/or dst clipping fields on DP_GUI_MASTER_CNTL are set
+> to default clipping.
+>
+> Scissor clipping is used when rendering text in X.org. The r128 driver
+> sends host data much wider than is necessary to draw a glyph and cuts it
+> down to size using clipping before rendering. The actual clipping
+> implementation follows in a future patch.
+>
+> This also includes a very minor refactor of the combined
+> default_sc_bottom_right field in the registers struct to
+> default_sc_bottom and default_sc_right. This was done to
+> stay consistent with the other scissor registers and prevent repeated
+> masking and extraction.
 >
 > Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 
 Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-
-> ---
-> hw/display/ati.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index 0b4298d078..66fad6459a 100644
-> --- a/hw/display/ati.c
-> +++ b/hw/display/ati.c
-> @@ -438,7 +438,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
->     case DST_PITCH:
->         val = s->regs.dst_pitch;
->         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-> -            val &= s->regs.dst_tile << 16;
-> +            val |= s->regs.dst_tile << 16;
->         }
->         break;
->     case DST_WIDTH:
-> @@ -468,7 +468,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
->     case SRC_PITCH:
->         val = s->regs.src_pitch;
->         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-> -            val &= s->regs.src_tile << 16;
-> +            val |= s->regs.src_tile << 16;
->         }
->         break;
->     case DP_BRUSH_BKGD_CLR:
->
 
