@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6317EEB575
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Jan 2026 00:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A05C7EE57CE
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Jan 2026 03:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vb6xR-0001ai-Nh; Wed, 31 Dec 2025 19:54:30 -0500
+	id 1vb9ob-0002Gc-Ug; Wed, 31 Dec 2025 22:57:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vb6xE-0001Z6-HZ; Wed, 31 Dec 2025 19:54:18 -0500
-Received: from fout-b1-smtp.messagingengine.com ([202.12.124.144])
+ id 1vb9oa-0002FU-8X
+ for qemu-devel@nongnu.org; Wed, 31 Dec 2025 22:57:32 -0500
+Received: from fhigh-b3-smtp.messagingengine.com ([202.12.124.154])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vb6xB-0005CY-Py; Wed, 31 Dec 2025 19:54:15 -0500
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.stl.internal (Postfix) with ESMTP id 762601D0005E;
- Wed, 31 Dec 2025 19:54:11 -0500 (EST)
+ id 1vb9oY-0003iI-8X
+ for qemu-devel@nongnu.org; Wed, 31 Dec 2025 22:57:32 -0500
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 5E5707A008F;
+ Wed, 31 Dec 2025 22:57:29 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Wed, 31 Dec 2025 19:54:11 -0500
+ by phl-compute-03.internal (MEProxy); Wed, 31 Dec 2025 22:57:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1767228851; x=1767315251; bh=bhZQy/5jBUzINhcePIt/xONoOqENNoVH
- /9JyJc/yobo=; b=i47NONSwBxW8Kw3BfDzlO7xfeexlLWukZ5J8ljvjzqxki9Jx
- 6BGHIJmO/Hqmt5h5id3gqwJKPsqLpvofKc3ywCQWarBJAyafBaspzVmo8aretR2w
- z9QSmh6UmKRoLl+Bsa9blDD/E1W+gEkbtH9dPpHJKKJFT8/fKT0iYHlp3YVM9Si2
- Z4RA3CT7Ccw+imtMRB+YTSMTYtdbESA9ep9Ih2CxNfdIdcxN1wbGQ/9qsIjJR4TO
- zv8fHx0AHmWBiY24iR/5kHE8cqIdE/WhsY65EQ9RHb1fp7nd8ikZ49//N8WBp+sI
- zk6a/W95MKqxM0ubpjIIG5qDU3FyYedUP9U/QQ==
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1767239849; x=
+ 1767326249; bh=1/oQvf+7oFxMlLhS7xldh1B7Xf0xiDTcW0n9KdiVD7A=; b=A
+ dBLFivlpcUhXnCSG15WQE5B466tPty38JrMrbWDEYJGOXO4OEo2/7tljD9xS4DZX
+ lsh/Jjeg2JhTY6qeZDnHMx+A0zuN4MWdsJeOyaLy6cSfrml9pZt+gTT2fChjEXvL
+ rHbx1+pxWVIKeC3swfbczSKQNx7RTDscghKY/EvmO9WlCVYoErkEDlQupz7g/sQh
+ qPuWMQhIihGegJa7ovp8BfM5QpMJV81kDL4jHoywZWehLXg9ifArctKLuOdlPOzV
+ x08vbnMT0DytpoTvM0UHRThyCbE+CieyizoHjiAdokOfVtNFr4W1qDhDd488ZMzw
+ 7bMOLR+UbQkw5jdjH0/Og==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767228851; x=
- 1767315251; bh=bhZQy/5jBUzINhcePIt/xONoOqENNoVH/9JyJc/yobo=; b=E
- nG9uMl7ul/78ZiUu3n+7DWhVge/igGU8eQkVaas+GMNxaUeWfZ5X4BGZ2edHwgWi
- Xy/FK9sgehD4o2RPiSNxvtYiSOaL8YF8EdgKBXGgxaOL0jzsQD9A6P8yY3n725sX
- x7HVcID8a9XJXcVtPwxhedMwXUCy/BapxnlQWTlKvie/Y0mrL9K/6myBcO7//Na/
- hsi3cpGjHeeR61VSYrmsRx4Omom1XIX6TD6Y56IJKFvSvnb99VeI3E40McvuWxV9
- xw1zG0UWC8UAabladXGHpwl7kVJSrO5RrDwqxKEP8+g/icjDxqKQhXnZbTIbGZmT
- zzit9CS1EKjvH2BDsVFEQ==
-X-ME-Sender: <xms:ssVVaTHucwmb8HHfOxvoljohTnFlBt_v04zhSIkehsyHe8tFmFBc7w>
- <xme:ssVVaXUxt6QTO6LfQ2N7dE0TzEWDxMRWYgcId5gpzwtspYHjgd5FJyR6b0mPVLWd3
- 02R9Srdm_QG8Ibk6JYcXRSVErZpCcYXfboRZB8JLqdD8K1O65b00uA>
-X-ME-Received: <xmr:ssVVaaI6NTRokVu99ZSIZvzaCmymSY1JyzSyTmfK71HQCfEa9ABW7x2075h6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekgeeflecutefuodetggdotefrod
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; t=1767239849; x=1767326249; bh=1
+ /oQvf+7oFxMlLhS7xldh1B7Xf0xiDTcW0n9KdiVD7A=; b=riugsOYB8ukZCRFUl
+ rsaX2T7b3eW5dnUpaVIUYWnutVcZWdfnl163l2GZxw08F6sXhb6yMOtYNY1X9PGv
+ W0brtfTBSVxnP1aXPw45cue5tSXeEOzhd+ef3+zWtdfdnBGgairElY7v5puI2i6R
+ s1+wrCSKy0CnxqCDY+PM3r2mbbT2zlB8P3kBHxaL4wPWnUZxM7d0EhjeeqGzA7Re
+ 2+ZBXZIGgySwfcZpHm7hd+OhEJmpQZwBsy62TVPirl3w6JHeCYYnYWmjImOYqGFV
+ AbdY0ZB3qKI1OP4IFp9sN0msmWa0927w2pg4LyuaRBKu/0a4BccGnINExBhQOFKv
+ 8zNyQ==
+X-ME-Sender: <xms:qfBVaTsQM_zhnTLHPMUU9uDhUQhGQIvMVzW4rl_u8sI5wiP5OSX3Qg>
+ <xme:qfBVab7iiBTNMot44cL7H920GnWfxwyMmXwzetR7Wvkn6whflfLUI4YPnxj3r3zj9
+ 4Fb-R9WO1ZUpqIZeC6O48N64Tb8fejgdd3SE9m5WbkKtWAF8ke01K8>
+X-ME-Received: <xmr:qfBVaUJHpblxGPFSX3YPniiq9Ad1C8qI8f_L-VT9Xa08_zGHAN6WhEQT-dpU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekgeejiecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecufghrlhcuvffnffculdejtddmnecujfgurhepggfgtgffkf
- evuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedfvehhrgguucflrggslhhonhhs
- khhifdcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnh
- ephfefudffkeffheduffetledvkeetvdejhedtheektefhhedvgefhheethfffkeegnecu
- vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrgguse
- hjrggslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhp
- ohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlhdqsghouhhntggvshdotghhrggupe
- hjrggslhhonhhskhhirdighiiisehnohhnghhnuhdrohhrghdprhgtphhtthhopegthhgr
- ugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhopehqvghmuhdquggvvhgvlhesnh
- honhhgnhhurdhorhhgpdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhu
-X-ME-Proxy: <xmx:ssVVaf-Qz2_vHBl0LECJxfIdDC63E5CbSr2h1gqKSZVw7ZwM1EZVVQ>
- <xmx:ssVVaVIM-5F78jKwXDfPMqXrBdahnlls7YvNX1e-WLgnM2l-RXdLgw>
- <xmx:ssVVack4JHsm8rsIWgfTnxOdmWzrtbVBryKKHWfbyygqLDiKzIBDKw>
- <xmx:ssVVaRPXpyiqKxzoW2GscBMgeXJGVYmjtOs_LLqQmlByyfXNJ9tasA>
- <xmx:s8VVaZMwO-aP0DCx1Z_vyg5I6waey-E-wz-3yjF8ndAG0Sx2Z3z_StaO>
+ ihhlohhuthemuceftddtnecufghrlhcuvffnffculdejtddmnecujfgurhephffvvefuff
+ fkofgjfhgggfestdekredtredttdenucfhrhhomhepvehhrgguucflrggslhhonhhskhhi
+ uceotghhrggusehjrggslhhonhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefgie
+ etjefhleehfeeiteejgfeljeffhfeuffdvudeijefgueeuuedvvdekjefhleenucevlhhu
+ shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsg
+ hlohhnshhkihdrgiihiidpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
+ pdhrtghpthhtoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepqh
+ gvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegsrghlrghtohhn
+ segvihhkrdgsmhgvrdhhuh
+X-ME-Proxy: <xmx:qfBVab4mB1-aqTEvmNZ85rdP5HXf1aYoCFIdhqzXM5NMpldmkj9Erw>
+ <xmx:qfBVaXyuY8hwdtSJPQOgkCKuB-kb5-TcItdy2CzDJ8tDdgdYyaQFyQ>
+ <xmx:qfBVafYzFk4zLeVxkXTD7bfWRpRIZHC9__62nY7ni5Ex0TII1BWu1A>
+ <xmx:qfBVaZQtvtqYFPmPtT-0jMaaESoWbNLFsOjHytGmMuYfWCOFy8RQow>
+ <xmx:qfBVaYlLpa10Ry9Sen-_l4CUQ2LrPSaLGpgHaxwst8O3WsrcCCxXJY07>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 31 Dec 2025 19:54:10 -0500 (EST)
+ 31 Dec 2025 22:57:28 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id ddd7c1ac;
- Thu, 1 Jan 2026 00:54:09 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 31 Dec 2025 19:54:09 -0500
-Message-Id: <DFCUCDPY9DRX.3Q6NTWWVHI8EZ@jablonski.xyz>
-Cc: <balaton@eik.bme.hu>, <qemu-devel-bounces+chad=jablonski.xyz@nongnu.org>
-Subject: Re: [PATCH 0/7] ati-vga: CCE engine setup and PIO packet processing
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "Chad Jablonski" <chad@jablonski.xyz>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <20251231212107.1020964-1-chad@jablonski.xyz>
-In-Reply-To: <20251231212107.1020964-1-chad@jablonski.xyz>
-Received-SPF: pass client-ip=202.12.124.144; envelope-from=chad@jablonski.xyz;
- helo=fout-b1-smtp.messagingengine.com
+ by chomposaur (OpenSMTPD) with ESMTPA id cf25ce26;
+ Thu, 1 Jan 2026 03:57:26 +0000 (UTC)
+From: Chad Jablonski <chad@jablonski.xyz>
+To: qemu-devel@nongnu.org
+Cc: balaton@eik.bme.hu,
+	Chad Jablonski <chad@jablonski.xyz>
+Subject: [PATCH v2 2/7] ati-vga: Implement CCE/PM4 microcode register handling
+Date: Wed, 31 Dec 2025 22:55:50 -0500
+Message-ID: <20260101035555.1300511-3-chad@jablonski.xyz>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20260101035555.1300511-1-chad@jablonski.xyz>
+References: <20260101035555.1300511-1-chad@jablonski.xyz>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=202.12.124.154; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-b3-smtp.messagingengine.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
@@ -112,6 +113,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series was accidentally based on my pending HOST_DATA series.
-Sending a v2 rebased on master. Sorry for the noise!
+Implement registers used for loading and reading microcode for the CCE
+engine. Loading the microcode is the first step for any driver
+implementing CCE. Reading, while not used by drivers is very helpful for
+any reverse engineering and testing work. The microcode is currently
+stored but not used. This lays the groundwork for future RE work on the
+microcode.
+
+There's some quirky behavior around microcode reads that isn't
+documented elsewhere. There appear to be two internal pointers, one for
+reading and one for writing that can get out of sync. Comments in the
+code expand on this.
+
+Tested and validated against a Rage 128 Pro Ultra (PCI 1002:5446).
+
+Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+---
+ hw/display/ati.c     | 47 ++++++++++++++++++++++++++++++++++++++++++++
+ hw/display/ati_cce.h | 26 ++++++++++++++++++++++++
+ hw/display/ati_int.h |  2 ++
+ 3 files changed, 75 insertions(+)
+ create mode 100644 hw/display/ati_cce.h
+
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 33f8e211dc..e291926470 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -510,6 +510,31 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case DEFAULT_SC_BOTTOM_RIGHT:
+         val = s->regs.default_sc_bottom_right;
+         break;
++    case PM4_MICROCODE_ADDR:
++        val = s->cce.microcode.addr;
++        break;
++    case PM4_MICROCODE_RADDR:
++        val = 0;
++        break;
++    case PM4_MICROCODE_DATAH:
++        val = (s->cce.microcode.microcode[s->cce.microcode.raddr] >> 32) &
++              0xffffffff;
++        break;
++    case PM4_MICROCODE_DATAL:
++        val = s->cce.microcode.microcode[s->cce.microcode.raddr] & 0xffffffff;
++        s->cce.microcode.addr += 1;
++        /*
++         * The write address (addr) is always copied into the
++         * read address (raddr) after a DATAL read. This leads
++         * to surprising behavior when the PM4_MICROCODE_ADDR
++         * instead of the PM4_MICROCODE_RADDR register is set to
++         * a value just before a read. The first read after this
++         * will reflect the previous raddr before incrementing and
++         * re-syncing with addr. This is expected and observed on
++         * the hardware.
++         */
++        s->cce.microcode.raddr = s->cce.microcode.addr;
++        break;
+     default:
+         break;
+     }
+@@ -932,6 +957,28 @@ void ati_reg_write(ATIVGAState *s, hwaddr addr,
+     case DEFAULT_SC_BOTTOM_RIGHT:
+         s->regs.default_sc_bottom_right = data & 0x3fff3fff;
+         break;
++    case PM4_MICROCODE_ADDR:
++        s->cce.microcode.addr = data;
++        break;
++    case PM4_MICROCODE_RADDR:
++        s->cce.microcode.raddr = data;
++        s->cce.microcode.addr = data;
++        break;
++    case PM4_MICROCODE_DATAH: {
++        uint64_t curr = s->cce.microcode.microcode[s->cce.microcode.addr];
++        uint64_t low = curr & 0xffffffff;
++        uint64_t high = (data & 0x1f) << 32;
++        s->cce.microcode.microcode[s->cce.microcode.addr] = high | low;
++        break;
++    }
++    case PM4_MICROCODE_DATAL: {
++        uint64_t curr = s->cce.microcode.microcode[s->cce.microcode.addr];
++        uint64_t low = data & 0xffffffff;
++        uint64_t high = curr & (0xffffffffull << 32);
++        s->cce.microcode.microcode[s->cce.microcode.addr] = high | low;
++        s->cce.microcode.addr += 1;
++        break;
++    }
+     default:
+         break;
+     }
+diff --git a/hw/display/ati_cce.h b/hw/display/ati_cce.h
+new file mode 100644
+index 0000000000..f2ef1345de
+--- /dev/null
++++ b/hw/display/ati_cce.h
+@@ -0,0 +1,26 @@
++/*
++ * QEMU ATI SVGA emulation
++ * CCE engine functions
++ *
++ * Copyright (c) 2025 Chad Jablonski
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef ATI_CCE_H
++#define ATI_CCE_H
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++
++typedef struct ATIPM4MicrocodeState {
++    uint8_t addr;
++    uint8_t raddr;
++    uint64_t microcode[256];
++} ATIPM4MicrocodeState;
++
++typedef struct ATICCEState {
++    ATIPM4MicrocodeState microcode;
++} ATICCEState;
++
++#endif /* ATI_CCE_H */
+diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+index ea1a8bceab..ed6307151b 100644
+--- a/hw/display/ati_int.h
++++ b/hw/display/ati_int.h
+@@ -14,6 +14,7 @@
+ #include "hw/i2c/bitbang_i2c.h"
+ #include "vga_int.h"
+ #include "qom/object.h"
++#include "ati_cce.h"
+ 
+ /*#define DEBUG_ATI*/
+ 
+@@ -100,6 +101,7 @@ struct ATIVGAState {
+     MemoryRegion io;
+     MemoryRegion mm;
+     ATIVGARegs regs;
++    ATICCEState cce;
+ };
+ 
+ const char *ati_reg_name(int num);
+-- 
+2.51.2
+
 
