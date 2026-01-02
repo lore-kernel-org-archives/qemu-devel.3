@@ -4,116 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFD41FA3753
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 16:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD11FA3728
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 16:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbhaw-0004w9-5Q; Fri, 02 Jan 2026 11:01:47 -0500
+	id 1vbhsi-0002YY-Eg; Fri, 02 Jan 2026 11:20:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vbhao-0004vI-Bm; Fri, 02 Jan 2026 11:01:36 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbhsg-0002YE-A1
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 11:20:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vbhak-0005V3-Sn; Fri, 02 Jan 2026 11:01:34 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 601LRKHm002948;
- Fri, 2 Jan 2026 16:01:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=SY+QM6
- SwOQlEOtNArQaFnQGASZ22U/kNCco7JJZueNc=; b=coGEFXF+9veuqaMNGeBEDU
- NmEnp3ZS9fwUvC/mWm1a2yg9DgXH1zG+QM1msC1CBgHldL9wGSphpEGqalsl6BOj
- f2zZbzCvzSCO8ZVJW9XJhKoNUxUIsDBTBpW8C+P2jB3Vd1n0OKF/pFvyyKNcQ8Rk
- Fezz5z5y2gjBdo/eyKQmFl4VUNhQ/abmQMrnXRcGJ0utal9Ik/Cz2vpPestMLlyJ
- phSNj5ajYiI4nEdTHsnfZ00bx0fjuzif/Om63RPCyZkJRaN8TEy5MFan7QSn79sf
- Iw9towhnovMiZrhN2fIM053V7ur6QL267dgOqOhkn/Y6ctf+HkkbcU2g7f9IfrXA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ba73w519f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 02 Jan 2026 16:01:11 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 602G1BOQ012861;
- Fri, 2 Jan 2026 16:01:11 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ba73w519c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 02 Jan 2026 16:01:10 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 602F4dBX008050;
- Fri, 2 Jan 2026 16:01:10 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bav0k70f7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 02 Jan 2026 16:01:10 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 602G19Br28508926
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 2 Jan 2026 16:01:09 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2EC645805C;
- Fri,  2 Jan 2026 16:01:09 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B31E75805A;
- Fri,  2 Jan 2026 16:01:08 +0000 (GMT)
-Received: from [9.61.250.167] (unknown [9.61.250.167])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  2 Jan 2026 16:01:08 +0000 (GMT)
-Message-ID: <9006fe79-1065-464d-bfba-3b9bf5a422b4@linux.ibm.com>
-Date: Fri, 2 Jan 2026 10:01:08 -0600
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbhsd-0000iP-7B
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 11:20:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767370797;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ARYheAmxa9ljSA4IpiioRkqrtBhHmGunpYB+nB6ePPg=;
+ b=PhJzVbw+DsllTkcGaOvrGT6y7h6Ucf7/PayCwAlNmPDdy+CdVUWNFWsBA3NOlvCiiWRpdX
+ cn9o10p8Wzjngyyiy43X+QUBXQXM+6cakHH1A7DF1zIRGgfyUiYBlRLpqjKKL4JPEK3eQl
+ /8/X5UqF8AcMti+1X+Ur6wTq+Pe9cJY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-587-YZR3rY21Pqes3hQ0uXeH2g-1; Fri, 02 Jan 2026 11:19:56 -0500
+X-MC-Unique: YZR3rY21Pqes3hQ0uXeH2g-1
+X-Mimecast-MFC-AGG-ID: YZR3rY21Pqes3hQ0uXeH2g_1767370795
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-430fc153d50so9485796f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 08:19:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767370795; x=1767975595; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=ARYheAmxa9ljSA4IpiioRkqrtBhHmGunpYB+nB6ePPg=;
+ b=fpP9u0aSZkQmS9gPy/CJ1URtAJ0ASTussSI9TeDsPUBNdbwatHpBI0bccSOUlAyCId
+ jkn8QNyTxE8SXoxxS/WY+O4d1EzOtGFeaJnlRVhNQhTTiApmht0TXpDcXjifHoqL5oMq
+ Sor0sZ909zpldKt+9yMeehFZgHM817IgNp0MhRrZwTokmjmSog13Oz/D77sO3IF4q0iD
+ tibyX0+PBJz58vjQjPlTJroZxj8/FMEtp2WcfU6zB30r+Iqh1jh0TwcdqrrIBa9pJdLF
+ vA0ZPSAE54aUlC/fWGYt9ntQXqcBVP8sHXbXHnYLmMhCL7jIOS0u254EN75zAYeEg7pp
+ et1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767370795; x=1767975595;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ARYheAmxa9ljSA4IpiioRkqrtBhHmGunpYB+nB6ePPg=;
+ b=NDBLGsWinrMah8B81ISQo1LEh9itmbnZl0yFSwN6hp99LbrxV4myqrKo19fVrJxUAD
+ Jesw/D9PlVd3MqLUrLOGYs2MAN96aM8RfG3hQvO0bvNMXGOpJmjrnxDLHrEl7sxwsEMS
+ 2wIoFTORx2IZFzCh66pzOJ/kWvwhBXguS0BgR395faqhbgA2KW9+iDazXIFe9LaU9zwa
+ OVKIwMMp5KpK5BL0cuL5EihdMhwEO89BdwZpq4vamvLteDqBgsaHeb9DDZzA846xhTy1
+ 6UEdh34hvjNwSFcKOXmqkksFksAa2sSXIpxUQUCfJlbMfphRgNowt6enkLBNfZ6fa14T
+ M5rw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvYldpNeNhhM2qF2MyfhvaiF+YR2+7RojqUmxh1bXt3WB4lqIrrd+1p4hy6w9Psw6tNYo4MRb/pGJo@nongnu.org
+X-Gm-Message-State: AOJu0YyxItS0Iac+64uEtST0s1/gM/vyPsuNmbZRphA77NgIXa2sRUa3
+ rITMFzRsHnQMHgbsQ2MFBMFbe8GevM16H4x4szu/tBaGVuvkPdhj9xz/I8iXzFsg2gS9xAw/Lg5
+ KQ1CDiuPqc5tU0FC2PG0IF5/1ht9oy/vyBqiHQC48G29XQcgtWcdjTvyr
+X-Gm-Gg: AY/fxX7lwo/shnmAAqduzXHEnPdy1HwCPtISXrz/XHPffP4u1s1H/HshVP4uSjKNlJk
+ 1muawBV13yVJbjswYe1ksZ8tWr3NN9FaQt9t02vwHs/Qkcg/psFjI3pHnXQKdSNpDYBKcqbzWJj
+ nSjRpspNSrwxkj2szcMvOES0SH94td8nt30Dzxs2TfTciGE9TVQZnpI/N7boLS/MR/buOPRw39Q
+ EczE1jVvglirN5rAuk7TPD5oyi3mgFMzof+LzX6PV5+2bXNsU8fI7fH1GjWzz945NcCXm0sS7p8
+ /sfbCAV/XVT5378hyUWkZiyiVy09bT/QrhaCngzz47HjZ0uRyjrQh1pL4JJLd4GgcO5uk/tapIb
+ QoFX6hzE=
+X-Received: by 2002:a05:6000:288c:b0:430:fbfc:ec77 with SMTP id
+ ffacd0b85a97d-4324e4c637dmr65811142f8f.12.1767370794732; 
+ Fri, 02 Jan 2026 08:19:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHfvFZOUo+shnCDjQqfTbNxy7D97TKUwO566+W0KRCUFOdMozRpt+H/Dc3/wHeXm2KDtfgewA==
+X-Received: by 2002:a05:6000:288c:b0:430:fbfc:ec77 with SMTP id
+ ffacd0b85a97d-4324e4c637dmr65811107f8f.12.1767370794272; 
+ Fri, 02 Jan 2026 08:19:54 -0800 (PST)
+Received: from [192.168.0.8] ([47.64.114.140])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324ea8311fsm85582740f8f.28.2026.01.02.08.19.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Jan 2026 08:19:53 -0800 (PST)
+Message-ID: <16974f48-e25b-4dca-8b21-a6c09329dd1d@redhat.com>
+Date: Fri, 2 Jan 2026 17:19:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/pnv: Add dummy MMIO support for OCMB chips
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, milesg@linux.ibm.com,
- rathc@linux.ibm.com, chalapathi.v@linux.ibm.com
-References: <20251224142249.1356424-1-calebs@linux.ibm.com>
- <41ece6d5-e211-4b32-ab87-d1fe5f359228@linux.ibm.com>
+Subject: Re: [PATCH v2] tests/functional: Allow tests to be run individually
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20251218123320.31347-1-farosas@suse.de>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Caleb Schlossin <calebs@linux.ibm.com>
-In-Reply-To: <41ece6d5-e211-4b32-ab87-d1fe5f359228@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: F2tuCu933Y9V04hNNAPcGLSPAywt36bF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTAyMDE0MSBTYWx0ZWRfX5mGzl4kehjw4
- qK2PN5h42tNQ+jxIxUXFZpU/V5so1VZGv26uW8TPNuj2h2vAS6CWJ13TSMaeZzml6AFPh1EnXJ7
- LdjUeb7mStGjzHSN+WjyXNJ3WiOBWlfa18EcygfRfyzDhb+22wjk88KeiR6XYJkh7KoXjHQtJid
- ejbwmWsRnvIIS/yBLdtLQ/vB4ophMtai+e/2UlkCLxveAbiRFBSA8qM3Wc4gGo4UZ/EDqi9et6g
- W/OM5nHPfmOevbtjhXxjC5orrWAuDKsnV7wf10eYrfMj3EsrZ7pfZXaPiCP2JVe82g7hOZksn/U
- nPikL+LCKwmY1ovnMlslxTIX3PN86rorcuWOES+lVhzP7p91SQZl0s+G2fipmelVFicFRL5UYFm
- e8zrmNQ1ZexXdDpLcxDA5834CmVfCOr20TsyzG8fR8oop6rxq5ADxYys94toQbBL9qMNgxLNKzv
- em9uYhNVvZAbgGOxCIg==
-X-Authority-Analysis: v=2.4 cv=fobRpV4f c=1 sm=1 tr=0 ts=6957ebc7 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=D4yLe6ciAAAA:8 a=VnNF1IyMAAAA:8 a=BSKlWoiaO1rI1dpI8jIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=RJBimmv2CioV9QQA5JKZ:22
-X-Proofpoint-GUID: Es4j0coB1qF_7bMgKMjWtcH6nvytJE40
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-02_02,2025-12-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 adultscore=0 malwarescore=0
- spamscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601020141
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251218123320.31347-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,51 +167,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 18/12/2025 13.33, Fabiano Rosas wrote:
+> The functional tests currently don't allow a single test to be
+> selected for execution by dotted name, e.g:
+> 
+> ../tests/functional/ppc64/test_pseries.py PseriesMachine.test_ppc64_linux_boot
+>                                            ^
+> The issue is that the testcase.py main function passes the test
+> module's name as the second argument to unittest.main(), which makes
+> it ignore all other positional arguments (presumably because the
+> module is already the superset of all tests).
+> 
+> After commit cac08383f0 ("tests/functional: expose sys.argv to
+> unittest.main"), the situation improves by passing the rest of the
+> argv from the command line invocation into unittest.main(), but it
+> still doesn't fix the issue. The short form options are now accepted,
+> so the -k option could be used to filter for a pattern, which is
+> useful, but not the same as listing the test names.
+> 
+> Fix this by passing the test module name via the "module" argument to
+> unittest.main() and stop touching argv. The ways of invoking tests are
+> now as per unittests documentation (-k still works):
+> 
+>    Examples:
+>      test_pseries.py                           - run default set of tests
+>      test_pseries.py MyTestSuite               - run suite 'MyTestSuite'
+>      test_pseries.py MyTestCase.testSomething  - run MyTestCase.testSomething
+>      test_pseries.py MyTestCase                - run all 'test*' test methods in MyTestCase
+> 
+> Note that ever since we've been programatically passing the module
+> name to unittest.main(), the usage 'test_pseries.py test_pseries' was
+> never valid. It used to "work" just the same as 'test_pseries.py
+> foobar' would. After this patch, that usage results in an error.
+> 
+> Also note that testcase.py:main() pertains to running the test module
+> that invoked it via QemuSystemTest.main(), i.e. module == __main__. So
+> the 'discover' usage of unittest doesn't apply here, the module is
+> already discovered because that's where this code was called from to
+> begin with. This patch could just as well call unittest.main() instead
+> of unittest.main(test_module), but the latter provides nicer error
+> messages prefixed with the module name.
+> 
+> Tested-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+> v2: added docs
+> ---
+>   docs/devel/testing/functional.rst      | 19 +++++++++++++++++--
+>   tests/functional/qemu_test/testcase.py |  7 +++----
+>   2 files changed, 20 insertions(+), 6 deletions(-)
+> 
+> diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+> index fdeaebaadc..4ccc7c3940 100644
+> --- a/docs/devel/testing/functional.rst
+> +++ b/docs/devel/testing/functional.rst
+> @@ -52,17 +52,32 @@ the following line will only run the tests for the x86_64 target:
+>   
+>     make check-functional-x86_64
+>   
+> -To run a single test file without the meson test runner, you can also
+> +To run the tests from a test file without the meson test runner, you can also
+>   execute the file directly by specifying two environment variables first,
+>   the PYTHONPATH that has to include the python folder and the tests/functional
+>   folder of the source tree, and QEMU_TEST_QEMU_BINARY that has to point
+>   to the QEMU binary that should be used for the test. The current working
+> -directory should be your build folder. For example::
+> +directory should be your build folder. Like so::
+>   
+>     $ export PYTHONPATH=../python:../tests/functional
+>     $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
+> +
+> +With the above set, run all tests from a test file::
+> +
+>     $ pyvenv/bin/python3 ../tests/functional/test_file.py
+>   
+> +Run all tests from a test class::
+> +
+> +  $ pyvenv/bin/python3 ../tests/functional/test_file.py TestClass
+> +
+> +Or a single test::
+> +
+> +  $ pyvenv/bin/python3 ../tests/functional/test_file.py TestClass.test_name
+> +
+> +Filtering test names also works::
+> +
+> +  $ pyvenv/bin/python3 ../tests/functional/test_file.py -k pattern
+> +
+>   The test framework will automatically purge any scratch files created during
+>   the tests. If needing to debug a failed test, it is possible to keep these
+>   files around on disk by setting ``QEMU_TEST_KEEP_SCRATCH=1`` as an env
 
 
-On 1/1/26 12:45 AM, Aditya Gupta wrote:
-> On 24/12/25 19:52, Caleb Schlossin wrote:
-> 
->> The Power Hypervisor for P10 expects to be able to access certain
->> Open CAPI Memory Buffer (OCMB) chip registers.  Since QEMU does not
->> currently support these registers, several access errors are being
->> posted.  The hypervisor is able to progress despite these errors,
->> but it does create unwanted noise on the console.  Adding some
->> dummy MMIO support for this IO region in order to suppress the
->> error messages.
-> 
-> Hi Caleb,
-> 
-> If there any public document/spec available that documents these registers ? Can you please point me to it.
-> 
-> I don't find any 'ocmb' mention in any docs here: https://computeexpresslink.org/resource/opencapi-specification-archive/
-> 
-> Since a new TODO is getting introduced here to implement those register accesses, it can only be done if some public information is available.
-> 
-> 
-> Thanks,
-> - Aditya G
+  Hi Fabiano!
 
-Aditya,
-I did some searching and couldn't seem to find the registers used in any of the public OpenCAPI documentation. I think the registers being accessed are Vendor-specific and likely not publicly defined. If that is a new requirement, we don't have to proceed with upstreaming of this patch and can keep it private.
+I was just about to pick this patch up, but seems like this now has a 
+conflict with another update to the functional.rst file that got merged in 
+between ... could you please rebase and send a v3?
 
-Thanks,
-Caleb
-
-> 
-> 
->> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
->> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
->> ---
->>   hw/ppc/meson.build        |   1 +
->>   hw/ppc/pnv.c              |  10 ++++
->>   hw/ppc/pnv_ocmb.c         | 103 ++++++++++++++++++++++++++++++++++++++
->>   include/hw/ppc/pnv.h      |   3 ++
->>   include/hw/ppc/pnv_chip.h |   2 +
->>   include/hw/ppc/pnv_ocmb.h |  38 ++++++++++++++
->>   6 files changed, 157 insertions(+)
->>   create mode 100644 hw/ppc/pnv_ocmb.c
->>   create mode 100644 include/hw/ppc/pnv_ocmb.h
->>
+  Thanks,
+   Thomas
 
 
