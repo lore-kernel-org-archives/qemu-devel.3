@@ -4,78 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7355FA3729
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 15:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 886E2FA3729
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 15:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbgiE-00084B-9d; Fri, 02 Jan 2026 10:05:10 -0500
+	id 1vbgox-0001pR-T6; Fri, 02 Jan 2026 10:12:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vbgi1-0007xG-Jh; Fri, 02 Jan 2026 10:04:59 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vbghy-0001Zz-1B; Fri, 02 Jan 2026 10:04:57 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 602F1nAk032541
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 3 Jan 2026 00:02:56 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=1h+hnK3OBi1TOOFX3eCgZtpm9N83bc+D4vaCQwqKoZQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:From:To;
- s=rs20250326; t=1767366176; v=1;
- b=cedcn8hXv8DfGQJZXQ2ab/HHZFuyvLMfQnznz9/e/UiaC03r3irIX3AGpn+mB8TV
- BmzX4cGV1Z22/2On1F6FigZdvd1D5DOtUrmTaTRhENz/58b3L0cRP/f5CLEZ0L6G
- WVXh0JKjQ4MmNalDkm02RwHarXy4Crxf3meGrnZ0lHu6yISJOGtoh5hxGTS+XBMb
- Y/Tfer+2+p9wlOStLu3aSSneW1bsBE/f3fw7ZyAxQz5Qv/72s4YaXSfs6h4I1Veo
- 2h3CuKo1wUwl5AIEzw78wNGp+7Ld6h5xI+c+gijPWSJUW/2ZLiJRcA2OHpP16DCy
- GBfT93Oz9QNzisghp5x0/g==
-Message-ID: <1806b1fe-c9b0-43d6-8dbf-c5389631f606@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 3 Jan 2026 00:01:49 +0900
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vbgos-0001oq-OO
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 10:12:02 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vbgop-00036Z-1H
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 10:12:00 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47d493a9b96so25972645e9.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 07:11:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1767366716; x=1767971516; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aK2olkTpRWCFEb6DHOzo3M+Yo+gZujeyKPO/GMd0xGc=;
+ b=SVwdyoPnwmtdG7u2p8recuyNRwEKpNEVxaAP9a+6i7DtAEdFUSmrfvYldA/KFB2Td7
+ Zo4HAgtO0E3xYWFWk3FeTjvrheGSSfhT5tliNGOp9bOQ+pFai6bTyy3a/Ar5K8QlsoOB
+ kyUnlO/+GjEQ+q6dKlmA7r7SPIvY7ZnQMNqXoKvd2YaXPsrQkK/VXH2MELvio0bTH46B
+ m6HeOTCm1fBv3ySxKlLORqb7tSa+hkjGbJiH+DrBROGm1zLgQcsy0KwlvoIGh5Pnp3ak
+ Wy+uCOCqndS93SNaXkJVg9x91oBqY0Yc09y1WUG3XPXfXERS17YLug8sJnth58M8vH+H
+ xnww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767366716; x=1767971516;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aK2olkTpRWCFEb6DHOzo3M+Yo+gZujeyKPO/GMd0xGc=;
+ b=Dgh+XKNz2rdpQZqDaW4Gu6JGQUq3IVVzUaXTaVhQNOOFTZB7Gu5pVtxpng3Bg7JI5i
+ HTv/b2ts4DONxAtUIQrYY7TZmzFpYy/aRg3WTPFAzbfT3fvvrOjcc3DJ2b+24VLvY2+H
+ UCVA8eRP25WVAODei0pEbldxoutO50H9JHuU9LvVFwg7dIlUA2iHTp18zHoe66NVyULv
+ qrtmtyx1JACCThnWwdHInenBFbypc8jv7hndaMWWKb5fkVcNWdqLrADh83Ho3fvvpf1f
+ Lxw3/aOHXFipvucp1exaLDmALWGK+goVfQzmv/kcE00glLoID2QAUxo0TGDJddDnlfZO
+ ag5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXNVS1z0PpwqO7Z7r6ZqC4GiN5DJxQir5SVKkpf/VktaM4mWsQxZ2oURZlXXNuFkBhSLo3xj4cG+rpQ@nongnu.org
+X-Gm-Message-State: AOJu0Yw3dSe5rF/USGv3FXmBOegE8561btagd9aSN2JM/CJvLSG80G4V
+ ks6aeGW4Gu8bqWfIiN1wmRUrYdsz8R8qbkwl4o98JhfbXCHb2QGfN2zI
+X-Gm-Gg: AY/fxX7YK1ckAR4A4D6xZ2WDrnctJHF9HAd0rVymj2oJmSn0/eHU/Y6FGUNGMQwZikK
+ +9l23RS6tCuerNq021MaAurpTwURzn3mQpdcstgQUoCa0vBJ8t8kLiaThw3tmd9tnbrL3g8yYll
+ FmMMztLbRzrXr3YpTetcfLw76oHTjV0uY44iLDrn+DusiAZGfKcdEm5q9zJkiu06MZFMZ5uXwJb
+ 1FIEmotvvIeu/+/3UVN8JPQwTCN0bcpuVJpmUSUg0cunWuHwjjkFxsHJNXDq/XijWVfBSs32dXe
+ W/A+tVushxO8GB8HGdKELjML4uGTVUzWt2v2/BoZmRMeqFaJuXkcFCPUtB3mQjW+N1kTB7u1kbw
+ xA7sNv77eBx5xK8XvnMYRCYW1ppSexQwvturWrQT3pUGS7W4bDiraPLNLthtteZZPr3pVVpWETX
+ wyC73fbEgwAZW4rrwMDdp2HLPeZnnVxOtjbgxSMZEDWCJ//pzUx+90xHMBvcLfreo53GDGYwZMH
+ mcVmi+Fk9B9YIFXmgOWUIslB7m+Um2s69w=
+X-Google-Smtp-Source: AGHT+IGFvxxAG6tZ6HEvgND2vujLrvYNyv0WE8bnidZ5AVSdZVeuVDtyQpdxPK1OrQdZh2NiRZbyrw==
+X-Received: by 2002:a05:600c:4686:b0:471:9da:5232 with SMTP id
+ 5b1f17b1804b1-47d1954ea05mr595555345e9.15.1767366716001; 
+ Fri, 02 Jan 2026 07:11:56 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-237d-1400-f91d-651c-a220-693b.310.pool.telefonica.de.
+ [2a02:3100:237d:1400:f91d:651c:a220:693b])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47be2724fe8sm946375695e9.1.2026.01.02.07.11.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Jan 2026 07:11:55 -0800 (PST)
+Date: Fri, 02 Jan 2026 15:11:55 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
+ qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ Pavel Pisa <pisa@fel.cvut.cz>
+CC: Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v1 6/6] docs/arm/sabrelite: Mention FlexCAN support
+In-Reply-To: <b13be1ee5d264b051eacf260ea767f6b6424e55b.1765826753.git.matyas.bobek@gmail.com>
+References: <cover.1765826753.git.matyas.bobek@gmail.com>
+ <b13be1ee5d264b051eacf260ea767f6b6424e55b.1765826753.git.matyas.bobek@gmail.com>
+Message-ID: <547A6765-6BAE-459C-A41C-E3667AA1486F@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 06/28] hw/arm: virt: cleanly fail on attempt to use
- the platform vGIC together with ITS
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Yanan Wang <wangyanan55@huawei.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
- Roman Bolshakov <rbolshakov@ddn.com>, Peter Xu <peterx@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cameron Esfahani
- <dirty@apple.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Graf <agraf@csgraf.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20251230000401.72124-1-mohamed@unpredictable.fr>
- <20251230000401.72124-7-mohamed@unpredictable.fr>
- <f0fc8c7c-50ad-408c-9127-a2404af4f28e@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-In-Reply-To: <f0fc8c7c-50ad-408c-9127-a2404af4f28e@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,232 +110,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/02 19:24, Akihiko Odaki wrote:
-> On 2025/12/30 9:03, Mohamed Mediouni wrote:
->> Switch its to a tristate.
->>
->> Windows Hypervisor Platform's vGIC doesn't support ITS.
->> Deal with this by reporting to the user and exiting.
->>
->> Regular configuration: GICv3 + ITS
->> New default configuration with WHPX: GICv3 with GICv2m
->> And its=off explicitly for the newest machine version: GICv3 + GICv2m
->>
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   hw/arm/virt-acpi-build.c | 14 ++++++------
->>   hw/arm/virt.c            | 46 +++++++++++++++++++++++++++++++---------
->>   include/hw/arm/virt.h    |  4 +++-
->>   3 files changed, 46 insertions(+), 18 deletions(-)
->>
->> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
->> index 40ea6b6dd5..86024a1a73 100644
->> --- a/hw/arm/virt-acpi-build.c
->> +++ b/hw/arm/virt-acpi-build.c
->> @@ -473,7 +473,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, 
->> VirtMachineState *vms)
->>           nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
->>           rc_mapping_count = rc_smmu_idmaps_len;
->> -        if (vms->its) {
->> +        if (virt_is_its_enabled(vms)) {
->>               /*
->>                * Knowing the ID ranges from the RC to the SMMU, it's 
->> possible to
->>                * determine the ID ranges from RC that go directly to ITS.
->> @@ -484,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, 
->> VirtMachineState *vms)
->>               rc_mapping_count += rc_its_idmaps->len;
->>           }
->>       } else {
->> -        if (vms->its) {
->> +        if (virt_is_its_enabled(vms)) {
->>               nb_nodes = 2; /* RC and ITS */
->>               rc_mapping_count = 1; /* Direct map to ITS */
->>           } else {
->> @@ -499,7 +499,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, 
->> VirtMachineState *vms)
->>       build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
->>       build_append_int_noprefix(table_data, 0, 4); /* Reserved */
->> -    if (vms->its) {
->> +    if (virt_is_its_enabled(vms)) {
->>           /* Table 12 ITS Group Format */
->>           build_append_int_noprefix(table_data, 0 /* ITS Group */, 
->> 1); /* Type */
->>           node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS 
->> Identifier */;
->> @@ -518,7 +518,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, 
->> VirtMachineState *vms)
->>           int smmu_mapping_count, offset_to_id_array;
->>           int irq = sdev->irq;
->> -        if (vms->its) {
->> +        if (virt_is_its_enabled(vms)) {
->>               smmu_mapping_count = 1; /* ITS Group node */
->>               offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after 
->> the header */
->>           } else {
->> @@ -611,7 +611,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, 
->> VirtMachineState *vms)
->>               }
->>           }
->> -        if (vms->its) {
->> +        if (virt_is_its_enabled(vms)) {
->>               /*
->>                * Map bypassed (don't go through the SMMU) RIDs (input) to
->>                * ITS Group node directly: RC -> ITS.
->> @@ -946,7 +946,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, 
->> VirtMachineState *vms)
->>                                             
->> memmap[VIRT_HIGH_GIC_REDIST2].size);
->>           }
->> -        if (vms->its) {
->> +        if (virt_is_its_enabled(vms)) {
->>               /*
->>                * ACPI spec, Revision 6.0 Errata A
->>                * (original 6.0 definition has invalid Length)
->> @@ -962,7 +962,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, 
->> VirtMachineState *vms)
->>           }
->>       }
->> -    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its)
->> +    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && 
->> virt_is_its_enabled(vms))
->>        && !vms->no_gicv3_with_gicv2m) {
->>           const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + 
->> ARM_SPI_BASE;
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 0fb8dcb07d..dcdb740586 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -737,7 +737,7 @@ static void create_its(VirtMachineState *vms)
->>   {
->>       DeviceState *dev;
->> -    assert(vms->its);
->> +    assert(virt_is_its_enabled(vms));
->>       if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
->>           /*
->>            * Do nothing if ITS is neither supported by the host nor 
->> emulated by
->> @@ -746,6 +746,15 @@ static void create_its(VirtMachineState *vms)
->>           return;
->>       }
->> +    if (whpx_enabled() && vms->tcg_its) {
 
-The check of vms->tcg_its is apparently extraneous and should be removed.
 
-tcg_its is a compatibility flag that tells not to emulate ITS when kvm 
-is enabled for old machine versions and has nothing to do with whpx. 
-Having vms->tcg_its in the condition lets the machine create ITS for old 
-machine versions even if whpx is enabled.
+Am 15=2E Dezember 2025 20:03:15 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <maty=
+as=2Ebobek@gmail=2Ecom>:
+>Also added example command line usage of the Sabrelite board
+>with FlexCAN controllers=2E
+>
+>Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas=2Ebobek@gmail=2Ecom>
+>---
+> docs/system/arm/sabrelite=2Erst |  1 +
+> docs/system/devices/can=2Erst   | 20 ++++++++++++++++++++
+> 2 files changed, 21 insertions(+)
+>
+>diff --git a/docs/system/arm/sabrelite=2Erst b/docs/system/arm/sabrelite=
+=2Erst
+>index 4ccb0560af=2E=2Ed3a3c01dd6 100644
+>--- a/docs/system/arm/sabrelite=2Erst
+>+++ b/docs/system/arm/sabrelite=2Erst
+>@@ -24,6 +24,7 @@ The SABRE Lite machine supports the following devices:
+>  * 4 SDHC storage controllers
+>  * 4 USB 2=2E0 host controllers
+>  * 5 ECSPI controllers
+>+ * 2 FlexCAN CAN controllers
+>  * 1 SST 25VF016B flash
+>=20
+> Please note above list is a complete superset the QEMU SABRE Lite machin=
+e can
+>diff --git a/docs/system/devices/can=2Erst b/docs/system/devices/can=2Ers=
+t
+>index 09121836fd=2E=2E5f21c01550 100644
+>--- a/docs/system/devices/can=2Erst
+>+++ b/docs/system/devices/can=2Erst
+>@@ -173,6 +173,26 @@ The test can also be run the other way around, gener=
+ating messages in the
+> guest system and capturing them in the host system=2E Other combinations=
+ are
+> also possible=2E
+>=20
+>+Examples on how to use CAN emulation for FlexCAN on SabreLite board
+>+-------------------------------------------------------------------
+>+FlexCANs are connected to QEMU CAN buses by passing the bus IDs as machi=
+ne properties:
 
-ITS should be disabled whenever whpx is enabled since "ITS is neither 
-supported by the host nor emulated by the machine" as the following 
-comment points out.
+Blank line needed here=2E=2E=2E
 
->> +        /*
->> +         * Signal to the user when ITS is neither supported by the host
->> +         * nor emulated by the machine.
->> +         */
->> +        info_report("ITS not supported on WHPX.");
-> 
-> This use of info_report() is unusual. Any other configuration problems 
-> are reported with error_report() in this file. Please maintain consistency.
-> 
->> +        exit(1);
->> +    }
->> +
->>       dev = qdev_new(its_class_name());
->>       object_property_set_link(OBJECT(dev), "parent-gicv3", 
->> OBJECT(vms->gic),
->> @@ -957,7 +966,7 @@ static void create_gic(VirtMachineState *vms, 
->> MemoryRegion *mem)
->>       fdt_add_gic_node(vms);
->> -    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
->> +    if (vms->gic_version != VIRT_GIC_VERSION_2 && 
->> virt_is_its_enabled(vms)) {
->>           create_its(vms);
->>       } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms- 
->> >no_gicv3_with_gicv2m) {
->>           create_v2m(vms);
->> @@ -2699,18 +2708,34 @@ static void virt_set_highmem_mmio_size(Object 
->> *obj, Visitor *v,
->>       extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
->>   }
->> -static bool virt_get_its(Object *obj, Error **errp)
->> +bool virt_is_its_enabled(VirtMachineState *vms)
->> +{
->> +    if (vms->its == ON_OFF_AUTO_OFF) {
->> +        return false;
->> +    }
->> +    if (vms->its == ON_OFF_AUTO_AUTO) {
->> +        if (whpx_enabled()) {
->> +            return false;
->> +        }
->> +    }
->> +    return true;
->> +}
->> +
->> +static void virt_get_its(Object *obj, Visitor *v, const char *name,
->> +                          void *opaque, Error **errp)
->>   {
->>       VirtMachineState *vms = VIRT_MACHINE(obj);
->> +    OnOffAuto its = vms->its;
->> -    return vms->its;
->> +    visit_type_OnOffAuto(v, name, &its, errp);
->>   }
->> -static void virt_set_its(Object *obj, bool value, Error **errp)
->> +static void virt_set_its(Object *obj, Visitor *v, const char *name,
->> +                          void *opaque, Error **errp)
->>   {
->>       VirtMachineState *vms = VIRT_MACHINE(obj);
->> -    vms->its = value;
->> +    visit_type_OnOffAuto(v, name, &vms->its, errp);
->>   }
->>   static bool virt_get_dtb_randomness(Object *obj, Error **errp)
->> @@ -3427,8 +3452,9 @@ static void virt_machine_class_init(ObjectClass 
->> *oc, const void *data)
->>                                             "guest CPU which 
->> implements the ARM "
->>                                             "Memory Tagging Extension");
->> -    object_class_property_add_bool(oc, "its", virt_get_its,
->> -                                   virt_set_its);
->> +    object_class_property_add(oc, "its", "OnOffAuto",
->> +        virt_get_its, virt_set_its,
->> +        NULL, NULL);
->>       object_class_property_set_description(oc, "its",
->>                                             "Set on/off to enable/ 
->> disable "
->>                                             "ITS instantiation");
->> @@ -3488,8 +3514,8 @@ static void virt_instance_init(Object *obj)
->>       vms->highmem_mmio = true;
->>       vms->highmem_redists = true;
->> -    /* Default allows ITS instantiation */
->> -    vms->its = true;
->> +    /* Default allows ITS instantiation if available */
->> +    vms->its = ON_OFF_AUTO_AUTO;
->>       /* Allow ITS emulation if the machine version supports it */
->>       vms->tcg_its = !vmc->no_tcg_its;
->>       vms->no_gicv3_with_gicv2m = false;
->> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
->> index c5bc47ee88..394b70c62e 100644
->> --- a/include/hw/arm/virt.h
->> +++ b/include/hw/arm/virt.h
->> @@ -147,7 +147,7 @@ struct VirtMachineState {
->>       bool highmem_ecam;
->>       bool highmem_mmio;
->>       bool highmem_redists;
->> -    bool its;
->> +    OnOffAuto its;
->>       bool tcg_its;
->>       bool virt;
->>       bool ras;
->> @@ -216,4 +216,6 @@ static inline int 
->> virt_gicv3_redist_region_count(VirtMachineState *vms)
->>               vms->highmem_redists) ? 2 : 1;
->>   }
->> +bool virt_is_its_enabled(VirtMachineState *vms);
->> +
->>   #endif /* QEMU_ARM_VIRT_H */
-> 
+>+* property ``canbus0`` for connecting ``flexcan1``
+>+* property ``canbus1`` for connecting ``flexcan2``
 
+=2E=2E=2E and here to turn this into a list of bullet points=2E
+
+I'd merge this patch into "[PATCH v1 4/6] hw/arm: Plug FlexCAN into FSL_IM=
+X6 and Sabrelite" but this is totally up to you=2E
+
+With the bullet points fixed:
+
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+
+>+Note that upstream Linux SabreLite DTs have only a single FlexCAN (``fle=
+xcan1``) enabled=2E
+>+
+>+An example command to run QEMU emulating a Sabrelite development board
+>+with both FlexCANs connected to a single QEMU CAN bus (called ``qcan0``)=
+,
+>+bridged to host system ``can0`` interface::
+>+
+>+  qemu-system-arm -M sabrelite -smp 4 -m 1G \
+>+    -object can-bus,id=3Dqcan0 \
+>+    -machine canbus0=3Dqcan0 -machine canbus1=3Dqcan0 \
+>+    -object can-host-socketcan,if=3Dcan0,canbus=3Dqcan0,id=3Dqcan0-socke=
+tcan \
+>+    -kernel =2E=2E=2E -dtb =2E=2E=2E -initrd =2E=2E=2E
+>+
+>+Note that in the Linux guest, bitrate for the FlexCAN device is ignored,
+>+but needs to be set via the ``ip`` command=2E
+>+
+> Links to other resources
+> ------------------------
+>=20
 
