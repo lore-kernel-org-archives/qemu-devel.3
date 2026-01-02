@@ -4,51 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D623FA3728
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 09:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAE5E9410B
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 09:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbb8i-0006wR-KA; Fri, 02 Jan 2026 04:08:08 -0500
+	id 1vbbgd-0007WS-44; Fri, 02 Jan 2026 04:43:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vbb8f-0006rL-1U; Fri, 02 Jan 2026 04:08:05 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vbbgW-0007Un-B8; Fri, 02 Jan 2026 04:43:05 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vbb8c-0003of-Rz; Fri, 02 Jan 2026 04:08:04 -0500
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 2 Jan
- 2026 17:07:46 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Fri, 2 Jan 2026 17:07:46 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 2/3] hw/intc/aspeed: Remove TSP 128 - 138
-Date: Fri, 2 Jan 2026 17:07:44 +0800
-Message-ID: <20260102090746.1130033-3-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260102090746.1130033-1-jamin_lin@aspeedtech.com>
-References: <20260102090746.1130033-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vbbgP-0003b5-Ks; Fri, 02 Jan 2026 04:43:02 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6029fjCv037334
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 2 Jan 2026 18:41:49 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=AyPWekWPBOxdSCAtxAdJSXgOlEea5UXlyVK1fV0ACGA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1767346910; v=1;
+ b=amXil69PcaljsSCIYOnZ8GzJfwsNbiYZ2iCxw0Ov9BCELpYNhElJFjVYsoSPzL34
+ G34RUUwSSvk3XdluOzEo18mih4rlAoCmqzBK7GvTdGRZh6mCR2yz+7FGbMfsZuGI
+ VItH+7b5+SOIoJiwBJv4l3FBJTroD93M2N3D+cvH/9ueyt7sxdxe5u1toL+NZn0y
+ Wnv+P3mzwxfD3T3Soxsmxi5nXDTjBQZknFznqH6f0wauUJdYBJp6ePEs4rK/4/3a
+ J8rziGELNQNUZW6Vh38yiqY66qdQWBpdEIeNmcY7FEK3yU1M2T4xyK1pcYOGcxRn
+ IlbPV7GlAgC2u61kyDrugQ==
+Message-ID: <99da59b7-8bd8-4746-a0dd-9a04b82c515d@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 2 Jan 2026 18:41:41 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 00/28] WHPX support for Arm
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Peter Xu <peterx@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cameron Esfahani
+ <dirty@apple.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20251230000401.72124-1-mohamed@unpredictable.fr>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251230000401.72124-1-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,149 +84,227 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SSP interrupts 128 - 138 were only used by the AST2700 A0 SoC.
-Since the AST2700 A0 has been deprecated, these interrupt
-definitions are no longer needed. This commit removes them to
-clean up the codebase.
+On 2025/12/30 9:03, Mohamed Mediouni wrote:
+> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v13)
+> 
+> Missing features:
+> - VM save-restore: interrupt controller state notably
+> - SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
+> So SVE2 is currently masked for VMs when running this.
+> 
+> Known bugs:
+> - U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
+> 
+> Note:
+> 
+> "target/arm/kvm: add constants for new PSCI versions" taken from the mailing list.
+> 
+> "accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
+> as part of this series to make it compilable as a whole.
+> 
+> "hw/arm: virt: add GICv2m for the case when ITS is not available" present in both the HVF
+> vGIC and this series.
+> 
+> "hw: arm: virt-acpi-build: add temporary hack to match existing behavior" is
+> for ACPI stability but what is the right approach to follow there?
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/arm/aspeed_ast27x0-tsp.c | 13 ++-------
- hw/intc/aspeed_intc.c       | 55 ++-----------------------------------
- 2 files changed, 4 insertions(+), 64 deletions(-)
+Since I missed this question in previous versions and seems no one have 
+answered yet; so I add my answer here:
 
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index f40c70fea5..9c11c016ca 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -62,7 +62,7 @@ static const int aspeed_soc_ast27x0tsp_irqmap[] = {
- };
- 
- /* TSPINT 164 */
--static const int ast2700_tsp132_tsp164_intcmap[] = {
-+static const int ast2700_tsp164_intcmap[] = {
-     [ASPEED_DEV_UART0]     = 7,
-     [ASPEED_DEV_UART1]     = 8,
-     [ASPEED_DEV_UART2]     = 9,
-@@ -89,21 +89,12 @@ static struct nvic_intc_irq_info ast2700_tsp_intcmap[] = {
-     {161, 1, 1, NULL},
-     {162, 1, 2, NULL},
-     {163, 1, 3, NULL},
--    {164, 1, 4, ast2700_tsp132_tsp164_intcmap},
-+    {164, 1, 4, ast2700_tsp164_intcmap},
-     {165, 1, 5, NULL},
-     {166, 1, 6, NULL},
-     {167, 1, 7, NULL},
-     {168, 1, 8, NULL},
-     {169, 1, 9, NULL},
--    {128, 0, 1, NULL},
--    {129, 0, 2, NULL},
--    {130, 0, 3, NULL},
--    {131, 0, 4, NULL},
--    {132, 0, 5, ast2700_tsp132_tsp164_intcmap},
--    {133, 0, 6, NULL},
--    {134, 0, 7, NULL},
--    {135, 0, 8, NULL},
--    {136, 0, 9, NULL},
- };
- 
- static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedCoprocessorState *s,
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 305458d6d4..1702cb87dc 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -69,28 +69,6 @@ REG32(SSPINT165_STATUS,     0x1D4)
- /*
-  * TSP INTC Registers
-  */
--REG32(TSPINT128_EN,             0x3000)
--REG32(TSPINT128_STATUS,         0x3004)
--REG32(TSPINT129_EN,             0x3100)
--REG32(TSPINT129_STATUS,         0x3104)
--REG32(TSPINT130_EN,             0x3200)
--REG32(TSPINT130_STATUS,         0x3204)
--REG32(TSPINT131_EN,             0x3300)
--REG32(TSPINT131_STATUS,         0x3304)
--REG32(TSPINT132_EN,             0x3400)
--REG32(TSPINT132_STATUS,         0x3404)
--REG32(TSPINT133_EN,             0x3500)
--REG32(TSPINT133_STATUS,         0x3504)
--REG32(TSPINT134_EN,             0x3600)
--REG32(TSPINT134_STATUS,         0x3604)
--REG32(TSPINT135_EN,             0x3700)
--REG32(TSPINT135_STATUS,         0x3704)
--REG32(TSPINT136_EN,             0x3800)
--REG32(TSPINT136_STATUS,         0x3804)
--REG32(TSPINT137_EN,             0x3900)
--REG32(TSPINT137_STATUS,         0x3904)
--REG32(TSPINT138_EN,             0x3A00)
--REG32(TSPINT138_STATUS,         0x3A04)
- REG32(TSPINT160_169_EN,         0x3B00)
- REG32(TSPINT160_169_STATUS,     0x3B04)
- 
-@@ -511,29 +489,9 @@ static void aspeed_tsp_intc_write(void *opaque, hwaddr offset, uint64_t data,
-     trace_aspeed_intc_write(name, offset, size, data);
- 
-     switch (reg) {
--    case R_TSPINT128_EN:
--    case R_TSPINT129_EN:
--    case R_TSPINT130_EN:
--    case R_TSPINT131_EN:
--    case R_TSPINT132_EN:
--    case R_TSPINT133_EN:
--    case R_TSPINT134_EN:
--    case R_TSPINT135_EN:
--    case R_TSPINT136_EN:
-     case R_TSPINT160_169_EN:
-         aspeed_intc_enable_handler(s, offset, data);
-         break;
--    case R_TSPINT128_STATUS:
--    case R_TSPINT129_STATUS:
--    case R_TSPINT130_STATUS:
--    case R_TSPINT131_STATUS:
--    case R_TSPINT132_STATUS:
--    case R_TSPINT133_STATUS:
--    case R_TSPINT134_STATUS:
--    case R_TSPINT135_STATUS:
--    case R_TSPINT136_STATUS:
--        aspeed_intc_status_handler(s, offset, data);
--        break;
-     case R_TSPINT160_169_STATUS:
-         aspeed_intc_status_handler_multi_outpins(s, offset, data);
-         break;
-@@ -929,15 +887,6 @@ static const TypeInfo aspeed_2700ssp_intcio_info = {
- 
- static AspeedINTCIRQ aspeed_2700tsp_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
-     {0, 0, 10, R_TSPINT160_169_EN, R_TSPINT160_169_STATUS},
--    {1, 10, 1, R_TSPINT128_EN, R_TSPINT128_STATUS},
--    {2, 11, 1, R_TSPINT129_EN, R_TSPINT129_STATUS},
--    {3, 12, 1, R_TSPINT130_EN, R_TSPINT130_STATUS},
--    {4, 13, 1, R_TSPINT131_EN, R_TSPINT131_STATUS},
--    {5, 14, 1, R_TSPINT132_EN, R_TSPINT132_STATUS},
--    {6, 15, 1, R_TSPINT133_EN, R_TSPINT133_STATUS},
--    {7, 16, 1, R_TSPINT134_EN, R_TSPINT134_STATUS},
--    {8, 17, 1, R_TSPINT135_EN, R_TSPINT135_STATUS},
--    {9, 18, 1, R_TSPINT136_EN, R_TSPINT136_STATUS},
- };
- 
- static void aspeed_2700tsp_intc_class_init(ObjectClass *klass, const void *data)
-@@ -947,8 +896,8 @@ static void aspeed_2700tsp_intc_class_init(ObjectClass *klass, const void *data)
- 
-     dc->desc = "ASPEED 2700 TSP INTC Controller";
-     aic->num_lines = 32;
--    aic->num_inpins = 10;
--    aic->num_outpins = 19;
-+    aic->num_inpins = 1;
-+    aic->num_outpins = 10;
-     aic->mem_size = 0x4000;
-     aic->nr_regs = 0x3B08 >> 2;
-     aic->reg_offset = 0;
--- 
-2.43.0
+If the hack is intended to be temporary, it should be implemented with a 
+compatibility property.
+
+docs/devel/migration/compatibility.rst says "migration is only supposed 
+to work if you use the same machine type in both source and 
+destination." So it is fine to make a sensible change to the 
+guest-visible behavior for newer machine type versions.
+
+What's not tolerated is to break the existing versions. Please note that 
+such a rule is applied for *each patch* instead of the entire series. It 
+looks the patch series once creates a change of the ACPI table and patch 
+"hw: arm: virt-acpi-build: add temporary hack to match existing 
+behavior" reverts it. This prevents git bisect so should be avoided 
+according to: docs/devel/submitting-a-patch.rst
+
+I think making a change is fine as long as the rules described in the 
+documentation are followed and it "makes sense" in general; I cannot 
+really tell if it makes sense since I have rarely touched that 
+particular code, but you can actually send a patch to make the change, 
+possibily with the RFC tag, and ask for review.
+
+Regards,
+Akihiko Odaki
+
+> 
+> And another note:
+> 
+> Seems that unlike HVF there isn't direct correspondence between WHv registers and the actual register layout,
+> so didn't do changes there to a sysreg.inc.
+> 
+> Updates since v12:
+> - Address review comments and make sure that checkpatch shows no errors, make test also ran
+> - Tested the Windows x86_64 build too in addition to Windows arm64 and macOS arm64
+> - Hopefully the last revision, should be ready to merge.
+> 
+> Updates since v11:
+> - Address review comments
+> - Rebase up to latest staging
+> - Switch to assuming Qemu 11.0 as the newest machine model
+> 
+> Updates since v10:
+> - Bring forward to latest Qemu
+> - Fix a typo in the GICv3+GICv2m PR
+> 
+> Updates since v9:
+> - Adding partition reset on the reboot side of things...
+> 
+> Updates since v8:
+> - v9 and v8 were not submitted properly because of my MTA not behaving, sorry for that.
+> - v10 introduces a new argument, -M msi=, to handle MSI-X configuration more granularly.
+> - That surfaced what I think is a bug (?), with vms->its=1 on GICv2 configurations... or I did understand everything wrong.
+> - Oopsie due to email provider ratelimiting.
+> 
+> Updates since v7:
+> - Oops, fixing bug in "hw/arm: virt: cleanly fail on attempt to use the platform vGIC together with ITS".
+> Other commits are unchanged.
+> 
+> Updates since v6:
+> - Rebasing
+> - Fixing a bug in the GICv3+GICv2m case for ACPI table generation
+> - getting rid of the slots infrastructure for memory management
+> - Place the docs commit right after the "cleanly fail on attempt to run GICv3+GICv2m on an unsupported config" one
+> as that's what switches ITS to a tristate.
+> - Fixing a build issue when getting rid of the arch-specific arm64 hvf-stub.
+> 
+> Updates since v5:
+> - Rebasing
+> - Address review comments
+> - Rework ITS enablement to a tristate
+> - On x86: move away from deprecated APIs to get/set APIC state
+> 
+> Updates since v4:
+> - Taking into account review comments
+> - Add migration blocker in the vGICv3 code due to missing interrupt controller save/restore
+> - Debug register sync
+> 
+> Updates since v3:
+> - Disabling SVE on WHPX
+> - Taking into account review comments incl:
+> 
+> - fixing x86 support
+> - reduce the amount of __x86_64__ checks in common code to the minimum (winhvemulation)
+> which can be reduced even further down the road.
+> - generalize get_physical_address_range into something common between hvf and whpx
+> 
+> Updates since v2:
+> - Fixed up a rebase screwup for whpx-internal.h
+> - Fixed ID_AA64ISAR1_EL1 and ID_AA64ISAR2_EL1 feature probe for -cpu host
+> - Switched to ID_AA64PFR1_EL1/ID_AA64DFR0_EL1 instead of their non-AA64 variant
+> 
+> Updates since v1:
+> - Shutdowns and reboots
+> - MPIDR_EL1 register sync
+> - Fixing GICD_TYPER_LPIS value
+> - IPA size clamping
+> - -cpu host now implemented
+> 
+> Mohamed Mediouni (26):
+>    qtest: hw/arm: virt: skip ACPI test for ITS off
+>    hw/arm: virt: add GICv2m for the case when ITS is not available
+>    tests: data: update AArch64 ACPI tables
+>    hw/arm: virt: cleanly fail on attempt to use the platform vGIC
+>      together with ITS
+>    hw: arm: virt: rework MSI-X configuration
+>    hw: arm: virt-acpi-build: add temporary hack to match existing
+>      behavior
+>    docs: arm: update virt machine model description
+>    whpx: Move around files before introducing AArch64 support
+>    whpx: reshuffle common code
+>    whpx: ifdef out winhvemulation on non-x86_64
+>    whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
+>    hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
+>    whpx: interrupt controller support
+>    whpx: add arm64 support
+>    whpx: change memory management logic
+>    target/arm: cpu: mark WHPX as supporting PSCI 1.3
+>    whpx: arm64: clamp down IPA size
+>    hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
+>      and HVF
+>    whpx: arm64: implement -cpu host
+>    target/arm: whpx: instantiate GIC early
+>    whpx: arm64: gicv3: add migration blocker
+>    whpx: enable arm64 builds
+>    whpx: apic: use non-deprecated APIs to control interrupt controller
+>      state
+>    whpx: arm64: check for physical address width after WHPX availability
+>    whpx: arm64: add partition-wide reset on the reboot path
+>    MAINTAINERS: update the list of maintained files for WHPX
+> 
+> Philippe Mathieu-Daudé (1):
+>    accel/system: Introduce hwaccel_enabled() helper
+> 
+> Sebastian Ott (1):
+>    target/arm/kvm: add constants for new PSCI versions
+> 
+>   MAINTAINERS                                   |    6 +
+>   accel/hvf/hvf-all.c                           |    7 +-
+>   accel/meson.build                             |    1 +
+>   accel/stubs/whpx-stub.c                       |    1 +
+>   accel/whpx/meson.build                        |    7 +
+>   {target/i386 => accel}/whpx/whpx-accel-ops.c  |    6 +-
+>   accel/whpx/whpx-common.c                      |  536 +++++++++
+>   docs/system/arm/virt.rst                      |   13 +-
+>   hw/arm/virt-acpi-build.c                      |   16 +-
+>   hw/arm/virt.c                                 |  140 ++-
+>   hw/i386/x86-cpu.c                             |    4 +-
+>   hw/intc/arm_gicv3_common.c                    |    3 +
+>   hw/intc/arm_gicv3_whpx.c                      |  249 ++++
+>   hw/intc/meson.build                           |    1 +
+>   include/hw/arm/virt.h                         |    8 +-
+>   include/hw/core/boards.h                      |    3 +-
+>   include/hw/intc/arm_gicv3_common.h            |    3 +
+>   include/system/hvf_int.h                      |    5 +
+>   include/system/hw_accel.h                     |   13 +
+>   .../whpx => include/system}/whpx-accel-ops.h  |    4 +-
+>   include/system/whpx-all.h                     |   20 +
+>   include/system/whpx-common.h                  |   26 +
+>   .../whpx => include/system}/whpx-internal.h   |   25 +-
+>   include/system/whpx.h                         |    5 +-
+>   meson.build                                   |   20 +-
+>   target/arm/cpu.c                              |    3 +
+>   target/arm/cpu64.c                            |   17 +-
+>   target/arm/hvf-stub.c                         |   20 -
+>   target/arm/hvf/hvf.c                          |    6 +-
+>   target/arm/hvf_arm.h                          |    3 -
+>   target/arm/kvm-consts.h                       |    2 +
+>   target/arm/meson.build                        |    2 +-
+>   target/arm/whpx/meson.build                   |    5 +
+>   target/arm/whpx/whpx-all.c                    | 1020 +++++++++++++++++
+>   target/arm/whpx/whpx-stub.c                   |   15 +
+>   target/arm/whpx_arm.h                         |   17 +
+>   target/i386/cpu-apic.c                        |    2 +-
+>   target/i386/hvf/hvf.c                         |   11 +
+>   target/i386/whpx/meson.build                  |    1 -
+>   target/i386/whpx/whpx-all.c                   |  569 +--------
+>   target/i386/whpx/whpx-apic.c                  |   48 +-
+>   tests/data/acpi/aarch64/virt/APIC.its_off     |  Bin 164 -> 188 bytes
+>   42 files changed, 2215 insertions(+), 648 deletions(-)
+>   create mode 100644 accel/whpx/meson.build
+>   rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
+>   create mode 100644 accel/whpx/whpx-common.c
+>   create mode 100644 hw/intc/arm_gicv3_whpx.c
+>   rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
+>   create mode 100644 include/system/whpx-all.h
+>   create mode 100644 include/system/whpx-common.h
+>   rename {target/i386/whpx => include/system}/whpx-internal.h (88%)
+>   delete mode 100644 target/arm/hvf-stub.c
+>   create mode 100644 target/arm/whpx/meson.build
+>   create mode 100644 target/arm/whpx/whpx-all.c
+>   create mode 100644 target/arm/whpx/whpx-stub.c
+>   create mode 100644 target/arm/whpx_arm.h
+> 
 
 
