@@ -4,77 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F0CFA3726
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 10:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BFBAEEE25C
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 10:35:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbcNH-0001zz-QT; Fri, 02 Jan 2026 05:27:15 -0500
+	id 1vbcV3-00050G-A6; Fri, 02 Jan 2026 05:35:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vbcNF-0001yp-0g; Fri, 02 Jan 2026 05:27:13 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vbcNB-00053H-TJ; Fri, 02 Jan 2026 05:27:12 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 602AOi2u049471
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 2 Jan 2026 19:25:57 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=3geGrFgBt5e0G3GddPQ+io0iQu1LWTDlk/sm73SHQew=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1767349558; v=1;
- b=vjNGV0JslOkEfDDiSSXEHaGa12Ug3jhgTMnxvILwEIrIpjUdNATvqzEaTZRsg1Sa
- vK6ZRq8312CFtLL3HJWKMYPPExLsLegR3pscp3xjIT4Soh2gNHmai7hamtUwwAEy
- hhKNHPit7CmzFdEa6Lb2tyD+IKxHPsbSl/lpK33jdZvOIq6BBD4iwQrsYNqXqYRC
- gwe93I7IRrvJ9iC1KN6KT5+tWjWC9cGXYjXLGxQFg0c0hHGRxTAHkwwETUr11+XF
- PYzVRVqXWMxdkUXzNVxYye/pHfxlj24RXbu9BHyA/Wn6DvDt7jxfWnOBHr2x3DAl
- 7cRU3R4p2St+zp0+eFTwEw==
-Message-ID: <f0fc8c7c-50ad-408c-9127-a2404af4f28e@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 2 Jan 2026 19:24:44 +0900
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vbcV1-0004zm-VX
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 05:35:15 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vbcUz-0005yo-M9
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 05:35:15 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42b3d7c1321so7058208f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 02:35:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767350111; x=1767954911; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hdt/lzR4u4ucmiMgea+EAUFxClBR4AH7k7WvIJUFIE4=;
+ b=tou35Laq1GYZRaN4JDzjObFhaklqX+bHjevW42J+lzs8I/nQ00kc3VqUGiFojCbDGV
+ UUXOpXeuyl4pzfVqEnzx7kZ+XdLZ8oelYvAptLZQn92m62fgBy9k6d/z4+97HcAScus5
+ xCenQWM6srK/vbIALZ5PVndLAja3KzY3FUoJPr2QwIQWKQknGnYFx1GT8+0Nq3ujGJE4
+ WBg+AWl5bHL/KFFrMrbK7hVZbOBvH+OlzZF+TigdTRVnmGK7Gjavi3mY7R9Oo3n/OQdV
+ hXcfUVNYvCUpXP9mSuBSlDAgZt1AEFsugh9isojdiLY3/Z6bOdPq0ev1gr0XhYYXUkU5
+ FohA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767350111; x=1767954911;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Hdt/lzR4u4ucmiMgea+EAUFxClBR4AH7k7WvIJUFIE4=;
+ b=qJaQZpouRvzEkIi5XRLwuG+/uoxi8uQRJ5gOHn5Sp/EdYrYK8+2iNpUzNb9TZMhBdO
+ k9dZFCQTA4anrOLYoNgbGvPYW0y4Pgc1cfvP6KJbGc7jgmYTSFJUgtcrglboDHjA+vPI
+ kFmeHshwTuAlScuATNt7iGzql8QfTjmu6rbSPGQ64gqVrk6VyZuSz07H6uAAtwePjDs3
+ 7ym4sRikpncJywsTA7BjoHgMsaVyhFky9YjCzTMrtR3RmZVyvM/d6yJ9k1nkxtMmw4W4
+ JfFiIQR5H/MCAkwQBpsJoyhNSu4cNFuhyN+i9VkcYyUaFoGahQDTNDp1lSXGzGSpNway
+ dm6g==
+X-Gm-Message-State: AOJu0YwY/QfzJre3x51svBhUsv2tDUqhTpLoV012lD73xZgO3LNUdobu
+ J3P3iUme8lDb2yJ/TIZNJGBSOgappOTPDWL5W+nv8kgKyrvoqn6xivgl0LrUN+M/iqs=
+X-Gm-Gg: AY/fxX5+9l1SDM7ThRxBSp4mXyc0hkoY/13tgjhD0SQAOK/qQnrxpWPBUG1VxjJjkRK
+ FkM/TQtJYHUFFtbtO+hozTYkHjzrZX70NoEH6ADx+hIzsGPCRX0GUEyT+Ln09F1uKoWQHM7cWZE
+ 7K05ntM1D94GRKqwHNTXJnNMmD0O7Nrk/LrNQ3jdkA/f42yQF6ymi2vrfhsl2fOLmviF0PDiyxF
+ f/8SFULqbmNKek7gIc3jsSkOcsQ2KDB581BEr+CaJRGEIsnywtIOgwVEa0SDpdxBqGEQ7FucHJZ
+ G0ORYMAwMzfZ98aDaHQCOjpCevifubl+/ACsc1rggfiA5WenTKj9VM58cProS7N4DLSopAzMTLi
+ HZewzd+DvORz/LOrLL9goprBDp/849WGK7ovUvdTzX864l/MZ/N2DGiLsYNmWj0ff6j5IP/iQJZ
+ UNikcuc/FDN1g=
+X-Google-Smtp-Source: AGHT+IG1FpO+sA1pIY8wtvz5i13nNYHJmqj9JI18TnDssszJ8ZePX5+BLNkc2Zgm26vwDm+dqA4IsQ==
+X-Received: by 2002:a5d:5c89:0:b0:431:38f:8bc4 with SMTP id
+ ffacd0b85a97d-4324e70d84emr55077688f8f.61.1767350110868; 
+ Fri, 02 Jan 2026 02:35:10 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43277b0efefsm50946512f8f.25.2026.01.02.02.35.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 Jan 2026 02:35:10 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8635B5F7FE;
+ Fri, 02 Jan 2026 10:35:09 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Gustavo
+ Bueno Romero <gustavo.romero@linaro.org>,  Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9?= <berrange@redhat.com>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, rowan Hart
+ <rowanbhart@gmail.com>
+Subject: Re: [PATCH 00/11] plugins: enable C++ plugins
+In-Reply-To: <20251231073401.2097765-1-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 30 Dec 2025 23:33:50 -0800")
+References: <20251231073401.2097765-1-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.12.14; emacs 30.1
+Date: Fri, 02 Jan 2026 10:35:09 +0000
+Message-ID: <87h5t4xpya.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 06/28] hw/arm: virt: cleanly fail on attempt to use
- the platform vGIC together with ITS
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Yanan Wang <wangyanan55@huawei.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
- Roman Bolshakov <rbolshakov@ddn.com>, Peter Xu <peterx@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cameron Esfahani
- <dirty@apple.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Graf <agraf@csgraf.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20251230000401.72124-1-mohamed@unpredictable.fr>
- <20251230000401.72124-7-mohamed@unpredictable.fr>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251230000401.72124-7-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,214 +110,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/30 9:03, Mohamed Mediouni wrote:
-> Switch its to a tristate.
-> 
-> Windows Hypervisor Platform's vGIC doesn't support ITS.
-> Deal with this by reporting to the user and exiting.
-> 
-> Regular configuration: GICv3 + ITS
-> New default configuration with WHPX: GICv3 with GICv2m
-> And its=off explicitly for the newest machine version: GICv3 + GICv2m
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/arm/virt-acpi-build.c | 14 ++++++------
->   hw/arm/virt.c            | 46 +++++++++++++++++++++++++++++++---------
->   include/hw/arm/virt.h    |  4 +++-
->   3 files changed, 46 insertions(+), 18 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 40ea6b6dd5..86024a1a73 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -473,7 +473,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->           nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
->           rc_mapping_count = rc_smmu_idmaps_len;
->   
-> -        if (vms->its) {
-> +        if (virt_is_its_enabled(vms)) {
->               /*
->                * Knowing the ID ranges from the RC to the SMMU, it's possible to
->                * determine the ID ranges from RC that go directly to ITS.
-> @@ -484,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->               rc_mapping_count += rc_its_idmaps->len;
->           }
->       } else {
-> -        if (vms->its) {
-> +        if (virt_is_its_enabled(vms)) {
->               nb_nodes = 2; /* RC and ITS */
->               rc_mapping_count = 1; /* Direct map to ITS */
->           } else {
-> @@ -499,7 +499,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->       build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
->       build_append_int_noprefix(table_data, 0, 4); /* Reserved */
->   
-> -    if (vms->its) {
-> +    if (virt_is_its_enabled(vms)) {
->           /* Table 12 ITS Group Format */
->           build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
->           node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
-> @@ -518,7 +518,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->           int smmu_mapping_count, offset_to_id_array;
->           int irq = sdev->irq;
->   
-> -        if (vms->its) {
-> +        if (virt_is_its_enabled(vms)) {
->               smmu_mapping_count = 1; /* ITS Group node */
->               offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
->           } else {
-> @@ -611,7 +611,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->               }
->           }
->   
-> -        if (vms->its) {
-> +        if (virt_is_its_enabled(vms)) {
->               /*
->                * Map bypassed (don't go through the SMMU) RIDs (input) to
->                * ITS Group node directly: RC -> ITS.
-> @@ -946,7 +946,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->                                             memmap[VIRT_HIGH_GIC_REDIST2].size);
->           }
->   
-> -        if (vms->its) {
-> +        if (virt_is_its_enabled(vms)) {
->               /*
->                * ACPI spec, Revision 6.0 Errata A
->                * (original 6.0 definition has invalid Length)
-> @@ -962,7 +962,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->           }
->       }
->   
-> -    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its)
-> +    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms))
->        && !vms->no_gicv3_with_gicv2m) {
->           const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
->   
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 0fb8dcb07d..dcdb740586 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -737,7 +737,7 @@ static void create_its(VirtMachineState *vms)
->   {
->       DeviceState *dev;
->   
-> -    assert(vms->its);
-> +    assert(virt_is_its_enabled(vms));
->       if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
->           /*
->            * Do nothing if ITS is neither supported by the host nor emulated by
-> @@ -746,6 +746,15 @@ static void create_its(VirtMachineState *vms)
->           return;
->       }
->   
-> +    if (whpx_enabled() && vms->tcg_its) {
-> +        /*
-> +         * Signal to the user when ITS is neither supported by the host
-> +         * nor emulated by the machine.
-> +         */
-> +        info_report("ITS not supported on WHPX.");
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-This use of info_report() is unusual. Any other configuration problems 
-are reported with error_report() in this file. Please maintain consistency.
+> Writing plugins in C can be sometimes tedious, especially when using Glib=
+ to
+> keep track of execution state. We can directly use the same C API but wri=
+te our
+> plugin in C++, benefiting from its great standard library offering string=
+s,
+> smart pointers, data structures and synchronization mechanisms.
+>
+> It's common for downstream QEMU forks to provide C++ for plugins, like th=
+is:
+> - https://github.com/panda-re/panda/tree/dev/panda/plugins
+> - https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
+>
+> Hopefully this will help more people to use upstream QEMU, and as a benef=
+it, get
+> their contribution back and help to develop plugins ecosystem upstream di=
+rectly.
+>
+> This series first cleans up build system for plugins, factorizing details
+> between contrib/plugins and tests/tcg/plugins folders.
+> Then, we perform codebase cleanups to fix conflicts between existing head=
+ers
+> and C++ headers.
+> After that, we can update the C++ standard used by QEMU, to benefit fully
+> from latest updates of the language.
+> Finally, we define an empty C++ plugin, making sure we can keep track of
+> possible regression in qemu-plugin header.
+>
+> Note: This series is *not* a trojan horse to bring C++ in QEMU
+> codebase, nor to define an alternative C++ API for plugins. It's just ena=
+bling
+> more users to get the most out of existing C plugin API.
 
-> +        exit(1);
-> +    }
-> +
->       dev = qdev_new(its_class_name());
->   
->       object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(vms->gic),
-> @@ -957,7 +966,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
->   
->       fdt_add_gic_node(vms);
->   
-> -    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
-> +    if (vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms)) {
->           create_its(vms);
->       } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
->           create_v2m(vms);
-> @@ -2699,18 +2708,34 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
->       extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
->   }
->   
-> -static bool virt_get_its(Object *obj, Error **errp)
-> +bool virt_is_its_enabled(VirtMachineState *vms)
-> +{
-> +    if (vms->its == ON_OFF_AUTO_OFF) {
-> +        return false;
-> +    }
-> +    if (vms->its == ON_OFF_AUTO_AUTO) {
-> +        if (whpx_enabled()) {
-> +            return false;
-> +        }
-> +    }
-> +    return true;
-> +}
-> +
-> +static void virt_get_its(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
->   {
->       VirtMachineState *vms = VIRT_MACHINE(obj);
-> +    OnOffAuto its = vms->its;
->   
-> -    return vms->its;
-> +    visit_type_OnOffAuto(v, name, &its, errp);
->   }
->   
-> -static void virt_set_its(Object *obj, bool value, Error **errp)
-> +static void virt_set_its(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
->   {
->       VirtMachineState *vms = VIRT_MACHINE(obj);
->   
-> -    vms->its = value;
-> +    visit_type_OnOffAuto(v, name, &vms->its, errp);
->   }
->   
->   static bool virt_get_dtb_randomness(Object *obj, Error **errp)
-> @@ -3427,8 +3452,9 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
->                                             "guest CPU which implements the ARM "
->                                             "Memory Tagging Extension");
->   
-> -    object_class_property_add_bool(oc, "its", virt_get_its,
-> -                                   virt_set_its);
-> +    object_class_property_add(oc, "its", "OnOffAuto",
-> +        virt_get_its, virt_set_its,
-> +        NULL, NULL);
->       object_class_property_set_description(oc, "its",
->                                             "Set on/off to enable/disable "
->                                             "ITS instantiation");
-> @@ -3488,8 +3514,8 @@ static void virt_instance_init(Object *obj)
->       vms->highmem_mmio = true;
->       vms->highmem_redists = true;
->   
-> -    /* Default allows ITS instantiation */
-> -    vms->its = true;
-> +    /* Default allows ITS instantiation if available */
-> +    vms->its = ON_OFF_AUTO_AUTO;
->       /* Allow ITS emulation if the machine version supports it */
->       vms->tcg_its = !vmc->no_tcg_its;
->       vms->no_gicv3_with_gicv2m = false;
-> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-> index c5bc47ee88..394b70c62e 100644
-> --- a/include/hw/arm/virt.h
-> +++ b/include/hw/arm/virt.h
-> @@ -147,7 +147,7 @@ struct VirtMachineState {
->       bool highmem_ecam;
->       bool highmem_mmio;
->       bool highmem_redists;
-> -    bool its;
-> +    OnOffAuto its;
->       bool tcg_its;
->       bool virt;
->       bool ras;
-> @@ -216,4 +216,6 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
->               vms->highmem_redists) ? 2 : 1;
->   }
->   
-> +bool virt_is_its_enabled(VirtMachineState *vms);
-> +
->   #endif /* QEMU_ARM_VIRT_H */
+I don't have any fundamental objection to allowing this - as you say it
+keep the existing API and just makes it easier for the plugin authors to
+use C++.
 
+It would be interesting to see if there are any other changes that would
+also be useful for other language bindings. I suspect the most relevant
+would be Rust bindings for the plugins.
+
+>
+> CI: https://gitlab.com/pbo-linaro/qemu/-/pipelines/2239199381
+>
+> Pierrick Bouvier (11):
+>   plugins: move win32_linker.c file to plugins directory
+>   plugins: factorize plugin dependencies and library details
+>   plugins: use complete filename for defining plugins sources
+>   plugins: define plugin API symbols as extern "C" when compiling in C++
+>   include: qemu/ctype.h -> qemu/qemu-ctype.h
+>   include: qemu/coroutine.h -> qemu/qemu-coroutine.h
+>   meson: fix supported compiler arguments in other languages than C
+>   meson: enable cpp (optionally) for plugins
+>   qga/vss-win32: fix clang warning with C++20
+>   meson: update C++ standard to C++23
+>   contrib/plugins: add empty cpp plugin
+>
+>  meson.build                                   |  24 ++--
+>  block/parallels.h                             |   2 +-
+>  block/qcow2.h                                 |   2 +-
+>  fsdev/qemu-fsdev-throttle.h                   |   2 +-
+>  hw/9pfs/9p.h                                  |   2 +-
+>  include/block/block-global-state.h            |   2 +-
+>  include/block/block-hmp-cmds.h                |   2 +-
+>  include/block/block-io.h                      |   2 +-
+>  include/block/reqlist.h                       |   2 +-
+>  include/block/throttle-groups.h               |   2 +-
+>  include/qemu/coroutine_int.h                  |   2 +-
+>  include/qemu/job.h                            |   2 +-
+>  .../qemu/{coroutine.h =3D> qemu-coroutine.h}    |   0
+>  include/qemu/{ctype.h =3D> qemu-ctype.h}        |   0
+>  include/qemu/qemu-plugin.h                    |   8 ++
+>  migration/migration.h                         |   2 +-
+>  ui/console-priv.h                             |   2 +-
+>  block.c                                       |   2 +-
+>  block/block-copy.c                            |   2 +-
+>  block/io_uring.c                              |   2 +-
+>  block/linux-aio.c                             |   2 +-
+>  block/mirror.c                                |   2 +-
+>  block/progress_meter.c                        |   2 +-
+>  block/ssh.c                                   |   2 +-
+>  block/vdi.c                                   |   2 +-
+>  block/vvfat.c                                 |   2 +-
+>  chardev/char.c                                |   2 +-
+>  gdbstub/gdbstub.c                             |   2 +-
+>  hw/9pfs/coth.c                                |   2 +-
+>  hw/block/virtio-blk.c                         |   2 +-
+>  hw/core/bus.c                                 |   2 +-
+>  hw/core/qdev-properties-system.c              |   2 +-
+>  hw/core/qdev-properties.c                     |   2 +-
+>  hw/hyperv/syndbg.c                            |   2 +-
+>  hw/nvme/nguid.c                               |   2 +-
+>  hw/s390x/ccw-device.c                         |   2 +-
+>  hw/s390x/ipl.c                                |   2 +-
+>  hw/s390x/s390-virtio-ccw.c                    |   2 +-
+>  hw/scsi/scsi-generic.c                        |   2 +-
+>  migration/migration.c                         |   2 +-
+>  migration/rdma.c                              |   2 +-
+>  monitor/fds.c                                 |   2 +-
+>  monitor/hmp.c                                 |   2 +-
+>  nbd/client-connection.c                       |   2 +-
+>  net/colo-compare.c                            |   2 +-
+>  net/net.c                                     |   2 +-
+>  net/tap-solaris.c                             |   2 +-
+>  {contrib/plugins =3D> plugins}/win32_linker.c   |   0
+>  qapi/qapi-util.c                              |   2 +-
+>  qapi/qmp-dispatch.c                           |   2 +-
+>  qobject/json-parser.c                         |   2 +-
+>  target/ppc/ppc-qmp-cmds.c                     |   2 +-
+>  target/riscv/cpu.c                            |   2 +-
+>  target/riscv/riscv-qmp-cmds.c                 |   2 +-
+>  tests/qtest/libqtest.c                        |   2 +-
+>  tests/qtest/migration/migration-util.c        |   2 +-
+>  tests/unit/test-aio-multithread.c             |   2 +-
+>  tests/vhost-user-bridge.c                     |   2 +-
+>  ui/console.c                                  |   2 +-
+>  ui/keymaps.c                                  |   2 +-
+>  ui/ui-qmp-cmds.c                              |   2 +-
+>  util/cutils.c                                 |   2 +-
+>  util/id.c                                     |   2 +-
+>  util/qemu-co-shared-resource.c                |   2 +-
+>  util/qemu-co-timeout.c                        |   2 +-
+>  util/qemu-coroutine-io.c                      |   2 +-
+>  util/readline.c                               |   2 +-
+>  util/thread-pool.c                            |   2 +-
+>  contrib/plugins/cpp.cpp                       | 119 ++++++++++++++++++
+>  contrib/plugins/meson.build                   |  25 ++--
+>  plugins/meson.build                           |  15 ++-
+>  qga/vss-win32/requester.cpp                   |   6 +-
+>  tests/tcg/plugins/meson.build                 |  18 +--
+>  73 files changed, 237 insertions(+), 104 deletions(-)
+>  rename include/qemu/{coroutine.h =3D> qemu-coroutine.h} (100%)
+>  rename include/qemu/{ctype.h =3D> qemu-ctype.h} (100%)
+>  rename {contrib/plugins =3D> plugins}/win32_linker.c (100%)
+>  create mode 100644 contrib/plugins/cpp.cpp
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
