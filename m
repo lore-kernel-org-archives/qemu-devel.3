@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2348FA3727
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 09:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD9AFA3727
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 09:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbb8d-0006oi-Kc; Fri, 02 Jan 2026 04:08:04 -0500
+	id 1vbb8j-0006xQ-Ir; Fri, 02 Jan 2026 04:08:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vbb8W-0006lR-Qq; Fri, 02 Jan 2026 04:07:58 -0500
+ id 1vbb8h-0006vO-O5; Fri, 02 Jan 2026 04:08:07 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vbb8T-0003of-SR; Fri, 02 Jan 2026 04:07:55 -0500
+ id 1vbb8g-0003of-2f; Fri, 02 Jan 2026 04:08:07 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 2 Jan
- 2026 17:07:46 +0800
+ 2026 17:07:47 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Fri, 2 Jan 2026 17:07:46 +0800
+ Transport; Fri, 2 Jan 2026 17:07:47 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,13 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 0/3] Remove AST2700 A0 Settings
-Date: Fri, 2 Jan 2026 17:07:42 +0800
-Message-ID: <20260102090746.1130033-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 3/3] hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when
+ I2CM_DMA_TX/RX_ADDR set first
+Date: Fri, 2 Jan 2026 17:07:45 +0800
+Message-ID: <20260102090746.1130033-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260102090746.1130033-1-jamin_lin@aspeedtech.com>
+References: <20260102090746.1130033-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -64,26 +67,63 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series is based on legoater/qemu, branch aspeed-next.
-https://github.com/legoater/qemu
+In the previous design, the I2C model would update I2CC_DMA_LEN (0x54) based on
+the value of I2CM_DMA_LEN (0x1C) when the firmware set either I2CM_DMA_TX_ADDR
+(0x30) or I2CM_DMA_RX_ADDR (0x34). However, this only worked correctly if the
+firmware set I2CM_DMA_LEN before setting I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR.
 
-v1:
- 1. Remove SSP NVIC 128 to 138 for AST2700 A0
- 2. Remove TSP NVIC 128 to 138 for AST2700 A0
- 3. Fix wrong I2CC_DMA_LEN when I2CM_DMA_TX/RX_ADDR set first 
+If the firmware instead set I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR before setting
+I2CM_DMA_LEN, the value written to I2CC_DMA_LEN would be incorrect.
 
-Jamin Lin (3):
-  hw/intc/aspeed: Remove SSP 128 - 138
-  hw/intc/aspeed: Remove TSP 128 - 138
-  hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when I2CM_DMA_TX/RX_ADDR set
-    first
+To fix this issue, the model should be updated to set I2CC_DMA_LEN when the
+firmware writes to the I2CM_DMA_LEN register, rather than when it writes to the
+I2CM_DMA_RX_ADDR and I2CM_DMA_TX_ADDR registers.
 
- hw/arm/aspeed_ast27x0-ssp.c |  13 +----
- hw/arm/aspeed_ast27x0-tsp.c |  13 +----
- hw/i2c/aspeed_i2c.c         |  10 ++--
- hw/intc/aspeed_intc.c       | 110 ++----------------------------------
- 4 files changed, 14 insertions(+), 132 deletions(-)
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Fixes: ba2cccd (aspeed: i2c: Add new mode support)
+---
+ hw/i2c/aspeed_i2c.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index faf2160c06..1b8ac561c3 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -656,8 +656,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+         bus->dma_dram_offset =
+             deposit64(bus->dma_dram_offset, 0, 32,
+                       FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
+-        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
+-                                                     TX_BUF_LEN) + 1;
+         break;
+     case A_I2CM_DMA_RX_ADDR:
+         bus->regs[R_I2CM_DMA_RX_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR,
+@@ -665,8 +663,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+         bus->dma_dram_offset =
+             deposit64(bus->dma_dram_offset, 0, 32,
+                       FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
+-        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
+-                                                     RX_BUF_LEN) + 1;
+         break;
+     case A_I2CM_DMA_LEN:
+         w1t = FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||
+@@ -679,10 +675,16 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+         if (FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T)) {
+             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, RX_BUF_LEN,
+                              FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN));
++            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
++                                                         I2CM_DMA_LEN,
++                                                         RX_BUF_LEN) + 1;
+         }
+         if (FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN_W1T)) {
+             ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, TX_BUF_LEN,
+                              FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN));
++            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
++                                                         I2CM_DMA_LEN,
++                                                         TX_BUF_LEN) + 1;
+         }
+         break;
+     case A_I2CM_DMA_LEN_STS:
 -- 
 2.43.0
 
