@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F3BFA3744
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 13:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2133FA374A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 13:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbfCz-0007Ex-44; Fri, 02 Jan 2026 08:28:49 -0500
+	id 1vbfCs-0007Bw-UT; Fri, 02 Jan 2026 08:28:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vbfCw-0007Cz-Lc
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 08:28:46 -0500
-Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vbfCj-0007A1-Lc; Fri, 02 Jan 2026 08:28:36 -0500
+Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vbfCr-0007zP-2a
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 08:28:44 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.58.222])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4djPfF5C1pz5w25;
- Fri,  2 Jan 2026 13:28:37 +0000 (UTC)
-Received: from kaod.org (37.59.142.100) by DAG3EX1.mxp5.local (172.16.2.21)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vbfCe-0007wc-Lk; Fri, 02 Jan 2026 08:28:31 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.75])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4djPdp2ntjz5w8j;
+ Fri,  2 Jan 2026 13:28:14 +0000 (UTC)
+Received: from kaod.org (37.59.142.112) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 2 Jan
- 2026 14:28:36 +0100
+ 2026 14:28:12 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-100R00366f6700c-9825-417e-94d9-3ccebe1ea7fe,
+ (GARM-112S0062b48a99b-67b1-4a38-b3a2-ad9b7b5a0fb2,
  B7FD5E44328430CDF13337E5E30BE77826E2EBC7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 90.14.253.154
-Message-ID: <91694864-29ce-4603-934d-ccf725bc40cf@kaod.org>
-Date: Fri, 2 Jan 2026 14:28:36 +0100
+Message-ID: <637a3773-004a-42c3-9a1b-0ea7a7ddd8f8@kaod.org>
+Date: Fri, 2 Jan 2026 14:28:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] hw/intc/aspeed: Remove TSP 128 - 138
+Subject: Re: [PATCH v1 3/3] hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when
+ I2CM_DMA_TX/RX_ADDR set first
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -41,7 +42,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20260102090746.1130033-1-jamin_lin@aspeedtech.com>
- <20260102090746.1130033-3-jamin_lin@aspeedtech.com>
+ <20260102090746.1130033-4-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,35 +87,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260102090746.1130033-3-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260102090746.1130033-4-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.100]
-X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG3EX1.mxp5.local
+X-Originating-IP: [37.59.142.112]
+X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: 0cad113c-e66b-4d04-8d55-7cc72dffab51
-X-Ovh-Tracer-Id: 14412926183869877170
+X-Ovh-Tracer-GUID: 9f073d49-04cf-4a54-a5e7-6303c2a96ea5
+X-Ovh-Tracer-Id: 14406170787081653170
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGyKqhfzqYiLfy0XHcrtO7ud0e8JjnqSUrlkJkCtFUzxGOEy72d4Jv2qKPWnUNOF0HU12jYLRo/wNYrnHPTirp2lIWK1zOal56zmPP8P6LRedhCb+8OsBpPx7+cb2tFJVWD5t2JnRVkF386i8YvZlMDYjouBhIAEBVBUysOSGUceremXebXwbaAPzubccIQyExk52793UMOX1Md+t0BvH9d6iHU9P964pRJIFDgTAnUdDqe0HU4n0fOgGjSyi8FJX4iASfnDqGOxRTFK9MJokewSHzzIcsM8eCQpxS7598xUKNsIbbfIY1QXexBSZBWmbqliSHvPIJnJ1RYtyruDBX2otsr/23QXYg95gwBYGeA4Z5uzlMWg16fInx1K0LZPniQLEVT/9oRuJrrehM7xvcXZ8DcLChf4/rp6NR9jv4PBdZ+F87dMGTxOHeI9IV0k+nID3f9jtkSvboAF6KI+JFSgrqaJBm9gPQ7uM3MzGWXcXkiYSAUYZbXJ2AkjPmd+pDkIDIU8ORl8Gklta6fwOlr9K2W9tQi/h0cuuqQN21ysTYWumwp2CxbNBolntdE+8rVuMTAR673gjpJxmErbWuKh+xarl/B31Xy7L4xHX1lp7yLWNuyIS+dcMsECn6iaQEKSsU+hWrXibmSzJ3ci8acQpskVRrLyn/1Cd5TJ1dZdA
-DKIM-Signature: a=rsa-sha256; bh=e8skIPXTKPkD5kZkjr8JiU4XqExm5ISASNtzLcJdBzs=; 
+X-VR-SPAMCAUSE: dmFkZTEZdQjDjPxWmruKpvMPuDGzVE1cxcPGmCa3dvAu8T/Z4yWJ6RxddKNB6t3k/1NBlcjHF8dE6gWhPEEIBz/+921EVKZIVSUORCeK0deoHWfI8EAOdjXWlpx7NgUzkBw5/EgeA8HTtjmsIz4BWgpTx77mAkzE799hM7AkPxr+W8AkUp11Kb1KNWBXLaMOIn25AMlUW7yX0f93ro3fOZnRBLJLlL/qVdA/V6wjhhM7jy1TnO0lhZwOA6XHuQMNTFI29eqsWBiBcU9r1l+x+4FVkAuukumEnAWQPtJMFELO6cXJyF3Pr7KyW++0AN5Rw+STYebdq4cqmdmFj8ycoMIhqVaSDBX6CSjadjCxWzNR+pmG+VlwlZMcxh2QrzPK6qSrHnfZ0PV4N5LqztMSMDzoPtx+mXFGjhAR+VAebaCtLpY61DGHD4FlIN+crHxKRF8vg9P1DchxpdSgeYRMwPKjiEtCrN8oiYo2mnS7/GuzPvNYzaM4q+n6n2gO11fCy9NJbLgGGp+FrRVRdWpllod23dryqWk2InLSWNV913SanGyG+VHGSJN7g51sOMkUFoUBTnpP1P5JEir0eGDOANd9QeodPnwMe/AbjINgReP1rH4nIuATfNHS1bZ4fPjZSvhtQfiqB+QHVbf8zyJBgaWbrsj3/3rZgAd/4FpxuzyMogmWGQ
+DKIM-Signature: a=rsa-sha256; bh=qZgYOABXk12OdwGj5dCvvYrpt3WJnfL11CFxL1GSc+Y=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1767360517; v=1;
- b=r9lynUsXJ5krTJqTvyRnIMIhb5uMjoAezRF3lguCsTGIFoBVSQpGBZ0NckO4Fr4JIcQLBRsi
- 0BkEevS7dHv1fhkjne5Ccm+poxsDor3t46BCLCMfJ2ESEGLE+9/3HM0Cvw9jDI/pdQ1x8x5Hlyu
- RBlYmIWRndo5pHnNXQr6m8qxm82614lFNGlFX5lyprnCFpcfA++hdJrRY4F+RICe/PVttUtcDXZ
- Sk68Lukmk3w1Xd3V3cunzE71cAsnOAxK09vP16SbDaFmiZb5z7hXrj1+qI4wJBxS83J+m9q1jfO
- IadtjWivWnxmG7WrbLfI+iHvnWYQaWzAxgxDOnX/M2NOA==
-Received-SPF: pass client-ip=178.33.105.233; envelope-from=clg@kaod.org;
- helo=2.mo552.mail-out.ovh.net
+ t=1767360495; v=1;
+ b=hQdxJ3BMiAeBsaCWjVBasnGAK9buhD8kphJTrN+3xvntL58KXrB8QnuCYhlN5/s7xfAZ+6jS
+ lEAICKFzARTrInKmmTTXO/JIFOGACEKEQ2QWvPgTwvP22RF7ziXp6w1O2L3Em4nHf25wUJcRbk6
+ Oml3MimIFShLcCF9wK0ub3VhYJa52b2Aks6op3THuUicpbBSpVjjm6l5QuzrA504HvlFwRXBdsm
+ ZHZEbn+zDEM3UYte1UXYwAVjRbyjybdyLOmWLz/r2K7Q3wAajT/u+qtvP+YdJHjne/T2TJl+53K
+ Ux6qPbB6eR9Xx5uVa8EZ+9FglEKQMJElGea+/BZkp9EEQ==
+Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,12 +132,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/2/26 10:07, Jamin Lin wrote:
-> The SSP interrupts 128 - 138 were only used by the AST2700 A0 SoC.
-> Since the AST2700 A0 has been deprecated, these interrupt
-> definitions are no longer needed. This commit removes them to
-> clean up the codebase.
+> In the previous design, the I2C model would update I2CC_DMA_LEN (0x54) based on
+> the value of I2CM_DMA_LEN (0x1C) when the firmware set either I2CM_DMA_TX_ADDR
+> (0x30) or I2CM_DMA_RX_ADDR (0x34). However, this only worked correctly if the
+> firmware set I2CM_DMA_LEN before setting I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR.
+> 
+> If the firmware instead set I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR before setting
+> I2CM_DMA_LEN, the value written to I2CC_DMA_LEN would be incorrect.
+> 
+> To fix this issue, the model should be updated to set I2CC_DMA_LEN when the
+> firmware writes to the I2CM_DMA_LEN register, rather than when it writes to the
+> I2CM_DMA_RX_ADDR and I2CM_DMA_TX_ADDR registers.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Fixes: ba2cccd (aspeed: i2c: Add new mode support)
+
+Fixes: ba2cccd64e90 ("aspeed: i2c: Add new mode support")
+
+This change should be backported on the stable branches.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -144,138 +157,48 @@ Thanks,
 
 C.
 
-
-
 > ---
->   hw/arm/aspeed_ast27x0-tsp.c | 13 ++-------
->   hw/intc/aspeed_intc.c       | 55 ++-----------------------------------
->   2 files changed, 4 insertions(+), 64 deletions(-)
+>   hw/i2c/aspeed_i2c.c | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-> index f40c70fea5..9c11c016ca 100644
-> --- a/hw/arm/aspeed_ast27x0-tsp.c
-> +++ b/hw/arm/aspeed_ast27x0-tsp.c
-> @@ -62,7 +62,7 @@ static const int aspeed_soc_ast27x0tsp_irqmap[] = {
->   };
->   
->   /* TSPINT 164 */
-> -static const int ast2700_tsp132_tsp164_intcmap[] = {
-> +static const int ast2700_tsp164_intcmap[] = {
->       [ASPEED_DEV_UART0]     = 7,
->       [ASPEED_DEV_UART1]     = 8,
->       [ASPEED_DEV_UART2]     = 9,
-> @@ -89,21 +89,12 @@ static struct nvic_intc_irq_info ast2700_tsp_intcmap[] = {
->       {161, 1, 1, NULL},
->       {162, 1, 2, NULL},
->       {163, 1, 3, NULL},
-> -    {164, 1, 4, ast2700_tsp132_tsp164_intcmap},
-> +    {164, 1, 4, ast2700_tsp164_intcmap},
->       {165, 1, 5, NULL},
->       {166, 1, 6, NULL},
->       {167, 1, 7, NULL},
->       {168, 1, 8, NULL},
->       {169, 1, 9, NULL},
-> -    {128, 0, 1, NULL},
-> -    {129, 0, 2, NULL},
-> -    {130, 0, 3, NULL},
-> -    {131, 0, 4, NULL},
-> -    {132, 0, 5, ast2700_tsp132_tsp164_intcmap},
-> -    {133, 0, 6, NULL},
-> -    {134, 0, 7, NULL},
-> -    {135, 0, 8, NULL},
-> -    {136, 0, 9, NULL},
->   };
->   
->   static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedCoprocessorState *s,
-> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> index 305458d6d4..1702cb87dc 100644
-> --- a/hw/intc/aspeed_intc.c
-> +++ b/hw/intc/aspeed_intc.c
-> @@ -69,28 +69,6 @@ REG32(SSPINT165_STATUS,     0x1D4)
->   /*
->    * TSP INTC Registers
->    */
-> -REG32(TSPINT128_EN,             0x3000)
-> -REG32(TSPINT128_STATUS,         0x3004)
-> -REG32(TSPINT129_EN,             0x3100)
-> -REG32(TSPINT129_STATUS,         0x3104)
-> -REG32(TSPINT130_EN,             0x3200)
-> -REG32(TSPINT130_STATUS,         0x3204)
-> -REG32(TSPINT131_EN,             0x3300)
-> -REG32(TSPINT131_STATUS,         0x3304)
-> -REG32(TSPINT132_EN,             0x3400)
-> -REG32(TSPINT132_STATUS,         0x3404)
-> -REG32(TSPINT133_EN,             0x3500)
-> -REG32(TSPINT133_STATUS,         0x3504)
-> -REG32(TSPINT134_EN,             0x3600)
-> -REG32(TSPINT134_STATUS,         0x3604)
-> -REG32(TSPINT135_EN,             0x3700)
-> -REG32(TSPINT135_STATUS,         0x3704)
-> -REG32(TSPINT136_EN,             0x3800)
-> -REG32(TSPINT136_STATUS,         0x3804)
-> -REG32(TSPINT137_EN,             0x3900)
-> -REG32(TSPINT137_STATUS,         0x3904)
-> -REG32(TSPINT138_EN,             0x3A00)
-> -REG32(TSPINT138_STATUS,         0x3A04)
->   REG32(TSPINT160_169_EN,         0x3B00)
->   REG32(TSPINT160_169_STATUS,     0x3B04)
->   
-> @@ -511,29 +489,9 @@ static void aspeed_tsp_intc_write(void *opaque, hwaddr offset, uint64_t data,
->       trace_aspeed_intc_write(name, offset, size, data);
->   
->       switch (reg) {
-> -    case R_TSPINT128_EN:
-> -    case R_TSPINT129_EN:
-> -    case R_TSPINT130_EN:
-> -    case R_TSPINT131_EN:
-> -    case R_TSPINT132_EN:
-> -    case R_TSPINT133_EN:
-> -    case R_TSPINT134_EN:
-> -    case R_TSPINT135_EN:
-> -    case R_TSPINT136_EN:
->       case R_TSPINT160_169_EN:
->           aspeed_intc_enable_handler(s, offset, data);
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index faf2160c06..1b8ac561c3 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -656,8 +656,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+>           bus->dma_dram_offset =
+>               deposit64(bus->dma_dram_offset, 0, 32,
+>                         FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
+> -        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
+> -                                                     TX_BUF_LEN) + 1;
 >           break;
-> -    case R_TSPINT128_STATUS:
-> -    case R_TSPINT129_STATUS:
-> -    case R_TSPINT130_STATUS:
-> -    case R_TSPINT131_STATUS:
-> -    case R_TSPINT132_STATUS:
-> -    case R_TSPINT133_STATUS:
-> -    case R_TSPINT134_STATUS:
-> -    case R_TSPINT135_STATUS:
-> -    case R_TSPINT136_STATUS:
-> -        aspeed_intc_status_handler(s, offset, data);
-> -        break;
->       case R_TSPINT160_169_STATUS:
->           aspeed_intc_status_handler_multi_outpins(s, offset, data);
+>       case A_I2CM_DMA_RX_ADDR:
+>           bus->regs[R_I2CM_DMA_RX_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR,
+> @@ -665,8 +663,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+>           bus->dma_dram_offset =
+>               deposit64(bus->dma_dram_offset, 0, 32,
+>                         FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
+> -        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
+> -                                                     RX_BUF_LEN) + 1;
 >           break;
-> @@ -929,15 +887,6 @@ static const TypeInfo aspeed_2700ssp_intcio_info = {
->   
->   static AspeedINTCIRQ aspeed_2700tsp_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
->       {0, 0, 10, R_TSPINT160_169_EN, R_TSPINT160_169_STATUS},
-> -    {1, 10, 1, R_TSPINT128_EN, R_TSPINT128_STATUS},
-> -    {2, 11, 1, R_TSPINT129_EN, R_TSPINT129_STATUS},
-> -    {3, 12, 1, R_TSPINT130_EN, R_TSPINT130_STATUS},
-> -    {4, 13, 1, R_TSPINT131_EN, R_TSPINT131_STATUS},
-> -    {5, 14, 1, R_TSPINT132_EN, R_TSPINT132_STATUS},
-> -    {6, 15, 1, R_TSPINT133_EN, R_TSPINT133_STATUS},
-> -    {7, 16, 1, R_TSPINT134_EN, R_TSPINT134_STATUS},
-> -    {8, 17, 1, R_TSPINT135_EN, R_TSPINT135_STATUS},
-> -    {9, 18, 1, R_TSPINT136_EN, R_TSPINT136_STATUS},
->   };
->   
->   static void aspeed_2700tsp_intc_class_init(ObjectClass *klass, const void *data)
-> @@ -947,8 +896,8 @@ static void aspeed_2700tsp_intc_class_init(ObjectClass *klass, const void *data)
->   
->       dc->desc = "ASPEED 2700 TSP INTC Controller";
->       aic->num_lines = 32;
-> -    aic->num_inpins = 10;
-> -    aic->num_outpins = 19;
-> +    aic->num_inpins = 1;
-> +    aic->num_outpins = 10;
->       aic->mem_size = 0x4000;
->       aic->nr_regs = 0x3B08 >> 2;
->       aic->reg_offset = 0;
+>       case A_I2CM_DMA_LEN:
+>           w1t = FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||
+> @@ -679,10 +675,16 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+>           if (FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T)) {
+>               ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, RX_BUF_LEN,
+>                                FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN));
+> +            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
+> +                                                         I2CM_DMA_LEN,
+> +                                                         RX_BUF_LEN) + 1;
+>           }
+>           if (FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN_W1T)) {
+>               ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, TX_BUF_LEN,
+>                                FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN));
+> +            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
+> +                                                         I2CM_DMA_LEN,
+> +                                                         TX_BUF_LEN) + 1;
+>           }
+>           break;
+>       case A_I2CM_DMA_LEN_STS:
 
 
