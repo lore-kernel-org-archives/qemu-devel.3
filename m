@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B264FA3755
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 21:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ECA7FA3751
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 21:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbn0m-0006ph-1L; Fri, 02 Jan 2026 16:48:44 -0500
+	id 1vbn0m-0006ps-5Q; Fri, 02 Jan 2026 16:48:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vbmzj-0006fy-Lt
+ id 1vbmzg-0006fs-Lq
  for qemu-devel@nongnu.org; Fri, 02 Jan 2026 16:47:44 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vbmzi-0000K1-3E
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 16:47:39 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-34c84ec3b6eso15883074a91.3
- for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 13:47:37 -0800 (PST)
+ id 1vbmze-0000JG-1U
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 16:47:36 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-34c718c5481so11847628a91.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 13:47:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767390457; x=1767995257; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767390452; x=1767995252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iqM7COsTdr9LPMsj9apOX/ZpJOoVf7y5fe5bZ4sfTUo=;
- b=NfYvG3dgSnD8gUuhvpO4cH0JA7m+8jvFO8YWWGuLMQOkfDoftBFJmJ/T0h491lO4JY
- +n6f1ZfrSYWQcqXXU6Y1yLqxN7sqWviwCpKNWp5sPtrjH1Ina2aK8sK+OXdQikDSk1bb
- yvEe5i64I6DNNh9Wdo0QBWkxfruZznLRdK43gXLzun1Cd5BZjm8vyV2APSjGusDvuBWD
- ZTsLUjdqiQZRn966aS0Foi7iEutx0fXMua1Ob7q4OaWYSbIlxHCMGR5vz8we98aL7+T6
- t9CA0mS6e2iJDKvBtxuo/BnNJBlw3uG9gQ+962a3EUc0XWLw6KFwnTgOcV97C7R3/bb1
- cGCg==
+ bh=FAxt9eRCBAnOw0tS+03oIZgAiM6wZWJgVfag7QKOmwk=;
+ b=dxjUAZsBCfrzZoNiy855Lg5LOLPvUU3XiRMSHl2TUFBFJVHnb7JJQ+YUQZJpV7rpeP
+ spvR2SFb0xg25yQQ6eSART/doqpyHqjZ9vHZg4xFsRD6Nh0e5RLzIkAd5Dy6ACcC40i8
+ ewitxjix6+mQoN7BcHoPcDGIop+tvIukR+vPXdWRWs+jV75daUNBmGMhRKWhz4fHD2mc
+ WuoKwgGtqqFbPtOwQ25mvP1OQEJ6kga0mV17upLDKKXy2ikUlAQOV3ooRCgOmFpwK5zl
+ xUusyXXMVmqeR+zYJ0aEIeu6rdkW3R6esQGK0f5i291VBtzTT7KN9oyzai2OszvBsX0o
+ 3Ypw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767390457; x=1767995257;
+ d=1e100.net; s=20230601; t=1767390452; x=1767995252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iqM7COsTdr9LPMsj9apOX/ZpJOoVf7y5fe5bZ4sfTUo=;
- b=I2r9VNrukdPTVERzzIVaR+QOnrT7tvAShXxQF8VqJa3GfKcpsBVNOzXfCyRpSIQ0OL
- 5q0jdVECPVSMUwg6SopEKX6A/P5CYixnep0WNbPfs7VccqfaSBMD2A8/KQ+ZROZlAyF2
- Oy/5rzdy7aI+12d9y3ZKKg/FO1KcG3r/f5n43993VCKiXA0uFpq+m0QprODSw6rTmAxf
- pN4ldvAAvbangQfBJoR7bjdWItTqqoxZAAIxnQCtLNryM098Wp0/E93EdYi1lDRlN8bM
- f4iugD+95N67FqzOGxJdU0Ndld3twlAbaPQN/ohSKRCsfUETkvyNCuZnRTd9CBBhD/IX
- 2Tgw==
-X-Gm-Message-State: AOJu0YxHzBg7s+iXAUEYo8CXQ+oBAAGIsXCe7xfTD41bw/vHJO++83aI
- dLCcQyJztErcBXTGQMGDU7hECLXuDQ1FUqI94yaDehh0o3yXmZOnre2iOBHVIHTh+zTlW0U9UDP
- WGaXt
-X-Gm-Gg: AY/fxX5Nr+zVGjnMMcfJ8zNUZpHO7WySJ8Zhe/ruluxTEfAzXH02TriSC/H+8Xcp0lP
- /cer5DC5ecjQvD+79q9T/k8g3oPd1L0xukbS92AU+b5ly6yiQsNFp0fr2iqyWP/7KVec+35e9KB
- uX6MaqKdGz59NXaVzHhVFDKmI+N2h8pV3GdC2ODn4wxPY+a8NE9/8q+xBkXAOYhvxKFy1lYGNR7
- l0rLYD3AxKIk74rF9DKUiKEE+QPAQQO3BMTIDV2qtr3lActn0oiJdtzzFRlViwujk/U0OSKs/ld
- fvYCYI7fWfpIk3uI0SaPTuyCKZ+GOxQ243WOf/Ru5puajyrOogIeM2Fh883L8/BQnzi5kaDgWoh
- O4Lbw7xPhuHxrVrZrcnwKuQu5oj9zQZRO1cDAlUXEe6iQOslbhrORaswR1D092q5m7CZa602MdS
- 0zuoOS+8SxNZM6HGAZihxPFZiZplGpL6PLH0B6pjTULuOUfDzBBbdf257bdo6fQY58
-X-Google-Smtp-Source: AGHT+IHLh5uFiks6muIKVCBWRwRd2b5oFAZ2RzmJlDBY5t7iHCRpstuafvejCJJqcN8F5Y+wH/Yvzw==
-X-Received: by 2002:a17:90b:224a:b0:34c:99d6:175d with SMTP id
- 98e67ed59e1d1-34e92122004mr31567075a91.2.1767390456736; 
- Fri, 02 Jan 2026 13:47:36 -0800 (PST)
+ bh=FAxt9eRCBAnOw0tS+03oIZgAiM6wZWJgVfag7QKOmwk=;
+ b=SeOKDI2GD9ZjT8mKs/DlmkXJ5aoO2z2thCDYm0ZQUqsz86lhygun6GilRIVRkID0Ot
+ 0IlH5jXTISWMe47/j0ZlKkUCZyNqyXFFNm4OdTM+hVNnqdyOMmhdeAz8eTnoPggBA1e7
+ cns5z+kFl/sU05Pjw5Fdxqtjl0S5lGz6oHwCDT/bueiX4l+O//cUqy5L6hwO+9Kdq8B/
+ KymcWf/jdoj31bOc4pedH9uFli1/BsTGxTyBYu4a6vv24vvtgH80eX/jTSs21hJl3aPS
+ 99lO/oIjR7Jfsey1aTuQYvZJe7EWoaCGMFM8BhvzXP4s8fgJ0B9Z7TeMyGzZx32a0+UB
+ RsQQ==
+X-Gm-Message-State: AOJu0YxwQEw4UdhbKvoegav8bxvIA/h4sysifNUrQ9IXhXfyYcW+tY5R
+ vsC/mvddoInqXXwDywjNBfS/yGHa2jj2RLqbvc4JGffU38z6wW8Q6w5C7mwBN0mX3Dser/DL0A1
+ O0PI0
+X-Gm-Gg: AY/fxX55M9WmbSkdCbUaLUO/GB/U+9e1oNzxbkzaXd61cZdeXYx5dkB2kNWC4O1QmGA
+ AvTBccDw4PtWkZl7gLZLWGFVqR79LMWuzIr6qD/SAcCVZsCFNj3lvAzKr63dk397x8gN5AaFTf6
+ vIKxnnnA1AZGR1p2Xcoey9aaNsapiI6x/gD/PEWFk8J9cngN+kuv3mAZ642mL9L34VsV5naL5KD
+ 66DwNSq5w0UyzyeVGRFzI5W4GMa2OZDI7tkK7h/Fsi+h1Ccj/K+xszBPOOZFPyIMLeVElwtgj4q
+ 8mlJiyJkYhpkiEAdRaplstsdhPmF1yH5H0h/zbapdHwxyOBmYRAUruI2zpemVJcXoFGRkJqPO3g
+ caJj5ynthJxsx0lxhU0b6D46GenRA31HzH65leDxQvzCZIDTathUdy/NrEaSW2svJKPy0zP4uYG
+ o1/r0NwyDHA1pMqxuKVGiShnNvOuvA7x4FHIXTAKl5c6OO068WjAmk/kDzDPax54oE
+X-Google-Smtp-Source: AGHT+IFb5x5I/sKOn8Gj/HzF2WrqAvEqu7u8OyILPKEpVhhAGcQso0NGdUGvBcGCj05e9JGeaiuLxg==
+X-Received: by 2002:a17:90b:46:b0:349:3fe8:e7de with SMTP id
+ 98e67ed59e1d1-34e921e64efmr35137613a91.28.1767390451938; 
+ Fri, 02 Jan 2026 13:47:31 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f476f8f3fsm62925a91.5.2026.01.02.13.47.35
+ 98e67ed59e1d1-34f476f8f3fsm62925a91.5.2026.01.02.13.47.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Jan 2026 13:47:35 -0800 (PST)
+ Fri, 02 Jan 2026 13:47:31 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>,
@@ -76,18 +76,17 @@ Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 07/11] meson: fix supported compiler arguments in other
- languages than C
-Date: Fri,  2 Jan 2026 13:47:20 -0800
-Message-ID: <20260102214724.4128196-8-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 02/11] plugins: factorize plugin dependencies and library
+ details
+Date: Fri,  2 Jan 2026 13:47:15 -0800
+Message-ID: <20260102214724.4128196-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
 References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,60 +109,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_common_flags are only checked for c compiler, even though they
-are applied to c++ and objc. This is a problem when C compiler is gcc,
-and C++ compiler is clang, creating a possible mismatch.
-
-One concrete example is option -fzero-call-used-regs=used-gpr with
-ubuntu2204 container, which is supported by gcc, but not by clang, thus
-leading to a failure when compiling a C++ TCG plugin.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ meson.build                   |  2 +-
+ contrib/plugins/meson.build   | 13 ++-----------
+ plugins/meson.build           | 15 ++++++++++++++-
+ tests/tcg/plugins/meson.build | 13 ++-----------
+ 4 files changed, 19 insertions(+), 24 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index a8fd8e88225..256cc0cdb21 100644
+index db87358d62d..3d6c6c702d0 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -709,10 +709,7 @@ if cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }'
-     hardening_flags += '-fzero-call-used-regs=used-gpr'
+@@ -4499,7 +4499,7 @@ if get_option('plugins')
+   if host_os == 'windows'
+     # On windows, we want to deliver the qemu_plugin_api.lib file in the qemu installer,
+     # so that plugin authors can compile against it.
+-    install_data(win32_qemu_plugin_api_lib, install_dir: 'lib')
++    install_data(win32_qemu_plugin_api, install_dir: 'lib')
+   endif
  endif
  
--qemu_common_flags += cc.get_supported_arguments(hardening_flags)
--
--add_global_arguments(qemu_common_flags, native: false, language: all_languages)
--add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
-+qemu_common_flags += hardening_flags
- 
- # Collect warning flags we want to set, sorted alphabetically
- warn_flags = [
-@@ -771,15 +768,19 @@ if 'cpp' in all_languages
-   qemu_cxxflags = ['-D__STDC_LIMIT_MACROS', '-D__STDC_CONSTANT_MACROS', '-D__STDC_FORMAT_MACROS'] + qemu_cflags
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 6f72b2ce0c9..8f9f0257ee5 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -9,17 +9,8 @@ endif
+ t = []
+ if get_option('plugins')
+   foreach i : contrib_plugins
+-    if host_os == 'windows'
+-      t += shared_module(i, files(i + '.c') + '../../plugins/win32_linker.c',
+-                        include_directories: '../../include/qemu',
+-                        link_depends: [win32_qemu_plugin_api_lib],
+-                        link_args: win32_qemu_plugin_api_link_flags,
+-                        dependencies: glib)
+-    else
+-      t += shared_module(i, files(i + '.c'),
+-                        include_directories: '../../include/qemu',
+-                        dependencies: glib)
+-    endif
++    t += shared_module(i, files(i + '.c'),
++                      dependencies: plugins_deps)
+   endforeach
  endif
- 
--add_project_arguments(qemu_cflags, native: false, language: 'c')
--add_project_arguments(cc.get_supported_arguments(warn_flags), native: false, language: 'c')
-+add_project_arguments(cc.get_supported_arguments(qemu_common_flags + qemu_cflags + warn_flags),
-+                      native: false, language: 'c')
-+add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
+ if t.length() > 0
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 62c991d87fc..4318e3a1671 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -51,11 +51,24 @@ if host_os == 'windows'
+     dlltool_cmd = [dlltool, '--input-def', '@INPUT@',
+                    '--output-delaylib', '@OUTPUT@', '--dllname', 'qemu.exe']
+   endif
+-  win32_qemu_plugin_api_lib = configure_file(
++  win32_qemu_plugin_api = configure_file(
+     input: win32_plugin_def,
+     output: 'libqemu_plugin_api.a',
+     command: dlltool_cmd
+   )
++  win32_qemu_plugin_api_lib = static_library('win32_qemu_plugin_api',
++                                             link_depends: win32_qemu_plugin_api)
++endif
 +
- if 'cpp' in all_languages
--  add_project_arguments(qemu_cxxflags, native: false, language: 'cpp')
-+  add_project_arguments(cxx.get_supported_arguments(qemu_common_flags + qemu_cxxflags),
-+                        native: false, language: 'cpp')
-   add_project_arguments(cxx.get_supported_arguments(warn_flags), native: false, language: 'cpp')
++if host_os == 'windows'
++  plugins_deps = declare_dependency(sources: [files('win32_linker.c')],
++                                    include_directories: '../include/qemu',
++                                    link_with: win32_qemu_plugin_api_lib,
++                                    link_args: win32_qemu_plugin_api_link_flags,
++                                    dependencies: glib)
++else
++  plugins_deps = declare_dependency(include_directories: '../include/qemu',
++                                    dependencies: glib)
  endif
- if 'objc' in all_languages
-   # Note sanitizer flags are not applied to Objective-C sources!
--  add_project_arguments(objc.get_supported_arguments(warn_flags), native: false, language: 'objc')
-+  add_project_arguments(objc.get_supported_arguments(qemu_common_flags + warn_flags),
-+                        native: false, language: 'objc')
+ 
+ user_ss.add(files('user.c', 'api-user.c'))
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index a6e78438510..c58f2e382ae 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -1,17 +1,8 @@
+ t = []
+ if get_option('plugins')
+   foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
+-    if host_os == 'windows'
+-      t += shared_module(i, files(i + '.c') + '../../../plugins/win32_linker.c',
+-                        include_directories: '../../../include/qemu',
+-                        link_depends: [win32_qemu_plugin_api_lib],
+-                        link_args: win32_qemu_plugin_api_link_flags,
+-                        dependencies: glib)
+-    else
+-      t += shared_module(i, files(i + '.c'),
+-                        include_directories: '../../../include/qemu',
+-                        dependencies: glib)
+-    endif
++    t += shared_module(i, files(i + '.c'),
++                      dependencies: plugins_deps)
+   endforeach
  endif
- if host_os == 'linux'
-   add_project_arguments('-isystem', meson.current_source_dir() / 'linux-headers',
+ if t.length() > 0
 -- 
 2.47.3
 
