@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F60E9410B
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 09:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB92E9410B
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 09:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbb6U-0004gw-90; Fri, 02 Jan 2026 04:05:50 -0500
+	id 1vbb6z-00058V-7F; Fri, 02 Jan 2026 04:06:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbb6S-0004gW-2P
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 04:05:48 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbb6q-000551-Ls
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 04:06:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbb6Q-0003cf-CF
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 04:05:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbb6m-0003eT-LS
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 04:06:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767344745;
+ s=mimecast20190719; t=1767344768;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZDDmBvy1YoTWuCH5t25N76KvQhF0yMF2OcfXLH3iDuY=;
- b=JKq1RWl35BONGdU0IhavGS+e0BtZHnRWV9IdlMjBRZkgx+JYGz1s17DxNVIsbLSVGXUf1a
- XS2+oOKmKvjs33HDk23hW0VW6zEnhE7PZ9g051jxLXB5P1rSaByrM7yWtNUh9TKuKLcvDK
- ycByBphd9iQYrK2xKAWm9OYaMLXFEqY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1i3GnS0GvgkoImo7R6lJeHgFpJBrVOVvBnJONNem4VY=;
+ b=O3j51JmDg1LaTrCEYzgMvClmmomp5wV88hgMqHXzyQt2+MT9XV4uGuHgAckcJa2mlYyd87
+ ROzKgzAct6rPYjijYCwWuwL4rc2jJAfObQZLcISUWk5khdBNOAB7B5OmkJX/bXt4ltGM9k
+ I7NftGem/4PW4mJr2MX5TZdcfiDkKCQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-54-F-QF7XiEMAe01TIXNadWsA-1; Fri, 02 Jan 2026 04:05:43 -0500
-X-MC-Unique: F-QF7XiEMAe01TIXNadWsA-1
-X-Mimecast-MFC-AGG-ID: F-QF7XiEMAe01TIXNadWsA_1767344742
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47775585257so83078685e9.1
- for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 01:05:43 -0800 (PST)
+ us-mta-256-FEVM2sz_OUq6k3iUWMui9w-1; Fri, 02 Jan 2026 04:06:06 -0500
+X-MC-Unique: FEVM2sz_OUq6k3iUWMui9w-1
+X-Mimecast-MFC-AGG-ID: FEVM2sz_OUq6k3iUWMui9w_1767344765
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-43284edbbc8so3027487f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 01:06:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767344742; x=1767949542; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767344765; x=1767949565; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ZDDmBvy1YoTWuCH5t25N76KvQhF0yMF2OcfXLH3iDuY=;
- b=b3gRuDOYx7cGJoKQ1PL9BagkhtKqiGPgtDxrVdtp8DWwbFT47EmslClkB/MtEc2NKg
- KyGdoH5J1fhQTo5JKN93x+5cp+5r5/EroP47Gwx6dQW1X88WfPYPM5Aysft4CGJNNohl
- ybkzIseWL1ZcAt9YPacVDjfrucaSdkUL2JFVpW1jBj2QQPpj+cbBCc8VUapRnEqR/7La
- hrXH/0s/708g4AFy5Sc6BHtbMugEzg40LJQOspyLdZXtHJHPGfjWMT0St/xqVxI5AqK8
- sLivF6DjMT8PUROPNqp12ZwN/zZm+cuRe+M1eEm001wzOWLdlLmChs9yQ4ffl+bqJUSH
- 5C7w==
+ bh=1i3GnS0GvgkoImo7R6lJeHgFpJBrVOVvBnJONNem4VY=;
+ b=LuiqnbPAo7SnjoPcciivIo6qTqLpuatQEo07Ya9rA4Un9Asq2xHdOdauxd4sv4PhOs
+ VAlVrchSXfsd8RB4IprtH+MT0Jam0EDhaxTdMeu82RzllB5yhgzEZL1Mjrt0wRzBbAjo
+ S0v83Vnway/yH3lOtWlVSGk97ijRznW1UVkqA5H0lM0wH92ZmQDMKe60z4yFCOB+Ot7A
+ eGeo9k5+UmBPuFLsJA0k7SzyVKK5JknundWaDdorSZQup214JJZGLcjl7AxmCu2TrB74
+ 3cjczFYaOfs0H0dS+ET+8QQTkzs8f7m+2giJGBbHbcSdzqaQFBmmGpdoHZRhjcsSAUd4
+ GlUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767344742; x=1767949542;
+ d=1e100.net; s=20230601; t=1767344765; x=1767949565;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZDDmBvy1YoTWuCH5t25N76KvQhF0yMF2OcfXLH3iDuY=;
- b=tQ+a/x6Zi+Qu54hf62g3VySuiLnSUkHGshDv+zh5Y8QeYKGDn4DEUFkvhq5kKOIjCh
- Pr7Gxw1l1BrP2pN10Ph8FVD2A4/wr1RVL0DVcM3QXY367gt+HxyKg5VH5yeL6U57MzMj
- MEpegDVG6mKg5GO7DWsj9bchUXX6OywcvDTMsxE5oBtjPcN3h2Dgaz2fl4IGTEpzp2fH
- fnYGfj/b4oD0cgSOMtqi+/VfEVDVF5bWUqUYkucYo1F3rRQCYXiJxYfuGceaUL9AC6lO
- TP9SSrPoWBkTk8Oe4Y6l2T7ONzZPxxb5uo6H4jLfitQ3Qsnqwgv5W1xcZHvbSsdw9fxZ
- ZMaw==
+ bh=1i3GnS0GvgkoImo7R6lJeHgFpJBrVOVvBnJONNem4VY=;
+ b=b0msyhIM6+XU0vrgl1XVnshrMGZewBsE9lMSLxFywyU6LhGryFpzl9Y1wH0Nkh3jtW
+ UIKQLROteOMXn7Zn8ELgwrG/ywariJVsY06xNbcAF0t4aLxi3RVDyxlAoZcWYQ20+r8T
+ XWS6gEPlLT+C67lr8uBGSvnw+ws51RuYsAPqs9799yvUXOLF09swXaG4Naub0CO99X95
+ 5DP/EWWHtGv0FEOaQg1KkjNLKZMqtpTiI6zMfDvbOtxQHlSlV8pD/zzfneyxScNobm1R
+ nzJN0ScYBmTvyoHP9W27N0hSuQsSlEt6O5efNAscluKgDH8rK2e4MlRG7nLwpYf6Wj+x
+ R9Rw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUG8WlCw7MVMbnfH+PZ9U8kStryGbQ08PPHTFmYTKtroR9Me59UkJ9qRLIfwcLciYDzuGZ9guWcacPO@nongnu.org
-X-Gm-Message-State: AOJu0YwIIF8zyGzi6ix0e7Z5rUP32/roOv8Z96hedWD+bSdVoC7MhVua
- yf/UFvMtavYfV76LrW44hGPbJ22WrpD4j6Qt+M5pl7Mn7heiX8UlmfUrxt71dXsH9YQQUhLQtyx
- TD+ttWXL4Db34qKBJ2sXLy35VKNhDYTeje6AAGfrE9z2k3wRwQEXfKMVv
-X-Gm-Gg: AY/fxX4eASnfT7ELYMdYKtt79xAIIRYkXwRxCuqlVDckCH+tXhOyK1T0F+Y8UqyB8TG
- /5BrpD3MWvis4TxXusWH4RHDD+MJs65UO6fVjRv3HC/zaNaBJPdbXpCQofWUx1my8Fye6Ahkw08
- ZyfsXNkmA/9jy8465+CdnlE+jiAtlBMCp1SNf2Z5b3nRVPrZ4PrWxejLv4oovrw+F7ij994TGys
- nL/FQcWOQ0BmkGf+1sC1rfSbUqrEXGcpbNRn7kvxaN8ewsow+iWAiLSZ4iaS/1t+KzehNKFbVYm
- zlcJbQJ0hZmBPdfLCKS9skiqSnahqztJb6wEvSsswgi+rdkxLgIkG4ChTjfR0DqQIIZmiD8f6oy
- gNLy2BvE=
-X-Received: by 2002:a05:600c:35c4:b0:475:dd9a:f791 with SMTP id
- 5b1f17b1804b1-47d195869e7mr569229185e9.28.1767344742473; 
- Fri, 02 Jan 2026 01:05:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEAatCGy/Isqmx0aiwX6RuAbfeDeN1x4X65Nf6ywt/0/Lo3zr4VWFXcZLvAHoDLJJJ+vEAKjQ==
-X-Received: by 2002:a05:600c:35c4:b0:475:dd9a:f791 with SMTP id
- 5b1f17b1804b1-47d195869e7mr569228705e9.28.1767344742056; 
- Fri, 02 Jan 2026 01:05:42 -0800 (PST)
+ AJvYcCUKTmPvLvzSLWrfMmMt3QUcxk5Ci52Xv7EwEOUOaV12FCSZrLKXQ+nOaNmDlvDHFj1eCYwTE6DfwsTA@nongnu.org
+X-Gm-Message-State: AOJu0YypexTlVvFzq++W0v5i05lpvmccbOjrxd/gfhq52kpAHLjOHadc
+ JxY3YqJU0Ki7t0VhF8UDcXDl7+u/Uwjsc8NKZtcni8t0E3Qol9EXABgd5RaGyZbMSH/tYpaXRbb
+ zw6OGiuOVZ7CA31KfrW+FusrNQqZ5tIHSGH9iSwFfa7hkbvk1MCrQHx55
+X-Gm-Gg: AY/fxX6KeZLT1A19TnWzuMxEIQXhbqOHdlpvZvf7xp1Rtc6aUXhvW5Ma0vMB+7YEDqH
+ U6zwx+FMTqE8vyANA2PJX3IwiyEVOO7CwJEu6s6VgDo6yF2FV3lRaJc950xGDgPNoI/5qRe2srd
+ y5jzVuz4ETPH+SBpxQtLNQv+xILaFM/xP8NpJVxfR/+TeXa0fVsSZCDcTpx3thF/IM0geB2/P0s
+ yec6KfMa5sOUHLIAbMlAAcOos/v79OoodwK08vprb3Ebe53wIJfLcNtApDjdNHdggj4bFn5TtX+
+ GBKTC5LEIXy5XJcTos/AKKTyBssQfk6xuko7jvl49Spk6OuWwfFO0LCGcNKcYmBQEDce3EiFTB1
+ oToug2Rs=
+X-Received: by 2002:a5d:5d03:0:b0:431:1ae:a3d0 with SMTP id
+ ffacd0b85a97d-4324e4cc063mr49633730f8f.25.1767344765404; 
+ Fri, 02 Jan 2026 01:06:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFiQk/MU7zSY6tHBESbB6nrHV/ZgxEqrQegoM2jHKarGEmlt2B9/3yZ/Y9uwPdtLrAY1+JgqQ==
+X-Received: by 2002:a5d:5d03:0:b0:431:1ae:a3d0 with SMTP id
+ ffacd0b85a97d-4324e4cc063mr49633689f8f.25.1767344764967; 
+ Fri, 02 Jan 2026 01:06:04 -0800 (PST)
 Received: from [192.168.0.8] ([47.64.114.140])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d193621c8sm731340155e9.7.2026.01.02.01.05.40
+ ffacd0b85a97d-4324ea226d1sm85678172f8f.13.2026.01.02.01.06.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Jan 2026 01:05:41 -0800 (PST)
-Message-ID: <c83e856d-eed7-4927-8283-08da53ade4ca@redhat.com>
-Date: Fri, 2 Jan 2026 10:05:40 +0100
+ Fri, 02 Jan 2026 01:06:04 -0800 (PST)
+Message-ID: <97d1ac72-a057-4f5d-ba5c-0dce90091647@redhat.com>
+Date: Fri, 2 Jan 2026 10:06:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] MAINTAINERS: Fix coverage of meson.build in
- tests/functional
+Subject: Re: [PATCH v2 3/4] MAINTAINERS: Add EEPROM 93xx section
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: berrange@redhat.com, alex.bennee@linaro.org
+Cc: berrange@redhat.com, alex.bennee@linaro.org, Stefan Weil <sw@weilnetz.de>
 References: <20251220173336.3781377-1-armbru@redhat.com>
- <20251220173336.3781377-3-armbru@redhat.com>
+ <20251220173336.3781377-4-armbru@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -139,7 +138,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251220173336.3781377-3-armbru@redhat.com>
+In-Reply-To: <20251220173336.3781377-4-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -168,15 +167,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/12/2025 18.33, Markus Armbruster wrote:
-> Of the 29 meson.build wihin tests/functional, only 8 are covered.  Add
-> the architecture-independent ones to "Functional testing framework",
-> and the remainder to "$arcg general architecture support" when
-> available, else to "$arch TCG CPUs".
+> Stefan Weil volunteered to serve as maintainer.  Thanks!
 > 
+> Cc: Stefan Weil <sw@weilnetz.de>
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
 > ---
->   MAINTAINERS | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
+>   MAINTAINERS | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 746cca7ae9..3efc943c9b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2706,6 +2706,12 @@ F: hw/nvram/chrp_nvram.c
+>   F: include/hw/nvram/chrp_nvram.h
+>   F: tests/qtest/prom-env-test.c
+>   
+> +EEPROM 93xx
+> +M: Stefan Weil <sw@weilnetz.de>
+> +S: Maintained
+> +F: hw/nvram/eeprom93xx.c
+> +F: include/hw/nvram/eeprom93xx.h
+> +
+>   VM Generation ID
+>   S: Orphan
+>   R: Ani Sinha <ani@anisinha.ca>
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
