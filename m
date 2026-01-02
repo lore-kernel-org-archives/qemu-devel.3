@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F235FA3744
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 13:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F3BFA3744
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 13:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbfCx-0007DW-3O; Fri, 02 Jan 2026 08:28:47 -0500
+	id 1vbfCz-0007Ex-44; Fri, 02 Jan 2026 08:28:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vbfCn-0007Aw-F5; Fri, 02 Jan 2026 08:28:38 -0500
-Received: from 10.mo552.mail-out.ovh.net ([87.98.187.244])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vbfCw-0007Cz-Lc
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 08:28:46 -0500
+Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vbfCg-0007xa-Aj; Fri, 02 Jan 2026 08:28:36 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.143])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4djPf038YMz5vtL;
- Fri,  2 Jan 2026 13:28:23 +0000 (UTC)
-Received: from kaod.org (37.59.142.107) by DAG3EX1.mxp5.local (172.16.2.21)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vbfCr-0007zP-2a
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 08:28:44 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.58.222])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4djPfF5C1pz5w25;
+ Fri,  2 Jan 2026 13:28:37 +0000 (UTC)
+Received: from kaod.org (37.59.142.100) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 2 Jan
- 2026 14:28:23 +0100
+ 2026 14:28:36 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-107S00165809949-757b-485d-98f6-fe9de4857ee6,
+ (GARM-100R00366f6700c-9825-417e-94d9-3ccebe1ea7fe,
  B7FD5E44328430CDF13337E5E30BE77826E2EBC7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 90.14.253.154
-Message-ID: <e73caa29-7bfc-4a2f-a8ea-a305e6d7f0e5@kaod.org>
-Date: Fri, 2 Jan 2026 14:28:22 +0100
+Message-ID: <91694864-29ce-4603-934d-ccf725bc40cf@kaod.org>
+Date: Fri, 2 Jan 2026 14:28:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] hw/intc/aspeed: Remove SSP 128 - 138
+Subject: Re: [PATCH v1 2/3] hw/intc/aspeed: Remove TSP 128 - 138
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20260102090746.1130033-1-jamin_lin@aspeedtech.com>
- <20260102090746.1130033-2-jamin_lin@aspeedtech.com>
+ <20260102090746.1130033-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,27 +86,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260102090746.1130033-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260102090746.1130033-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.107]
-X-ClientProxiedBy: DAG2EX1.mxp5.local (172.16.2.11) To DAG3EX1.mxp5.local
+X-Originating-IP: [37.59.142.100]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: 48665a2e-1599-4b30-9f4d-0c2c65435b2f
-X-Ovh-Tracer-Id: 14408985534673554354
+X-Ovh-Tracer-GUID: 0cad113c-e66b-4d04-8d55-7cc72dffab51
+X-Ovh-Tracer-Id: 14412926183869877170
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEfPCNna7+YE1uAmOktcyyNYT+5GmGBcczz/xCKw7vnBr2apRt0wmHVyNi1+ZiCHV7wUD52i1EGbJJjx4ZRNYNeyMylTVVR2vHM7bKqWmKFRDAvW/vQK1+gAJw6qC+SS5QY5/+qj77ngoq8soZb85kMiclrWDwUZ2tIaqef+CEyJVdheLaqHbZvGYYb+W4ZjvArh+stoPYClHTfwBkDeBAsJMQVcyuKGlaaFSyLqNFqw5qrrfXomAH1g7b1e9mX1eDUlk2zKLirOiTf+OJV2NC0iyjxTi0VDH3SzZN+pxQyXEf3jvGotBgygdWxC1JZ65zt+6vX9xI17iLNy19TYt2tpBssHiLlrmw5ieFFAWQ8mdnKsiYv3KTcXTImhXA6lzMBj25cDAgAmhTtoy/T/+4MBEwxL3z4AERnQOdqPhJTLPWdOd2UVZXC3OdE0Wm1nL0qSJU4Nv5rcadmx0jZ6s/lrIi1qjCxeEO4BULTPnXf3Xw6UbISTYLj7e8VYWy+LKCzSiDjRWipJyihGkefDXzZMd0cSF+ZVEjP1C+TLkgV5ED7c3HApC/1n00gWtWV9xphk9jdw/nORG+4wHd/swIZO4VL0FazcD5UuqRgGXtvydPpIBxrQ0aEgiL14fXNgt3LmWyQErdrjGE1egioIhY20ogR16kfpA/KPqcfb6zD3A
-DKIM-Signature: a=rsa-sha256; bh=UcpmyTpogJt8kf29pa8w3XCtEHLmnhPMp0BwL5eFZh0=; 
+X-VR-SPAMCAUSE: dmFkZTGyKqhfzqYiLfy0XHcrtO7ud0e8JjnqSUrlkJkCtFUzxGOEy72d4Jv2qKPWnUNOF0HU12jYLRo/wNYrnHPTirp2lIWK1zOal56zmPP8P6LRedhCb+8OsBpPx7+cb2tFJVWD5t2JnRVkF386i8YvZlMDYjouBhIAEBVBUysOSGUceremXebXwbaAPzubccIQyExk52793UMOX1Md+t0BvH9d6iHU9P964pRJIFDgTAnUdDqe0HU4n0fOgGjSyi8FJX4iASfnDqGOxRTFK9MJokewSHzzIcsM8eCQpxS7598xUKNsIbbfIY1QXexBSZBWmbqliSHvPIJnJ1RYtyruDBX2otsr/23QXYg95gwBYGeA4Z5uzlMWg16fInx1K0LZPniQLEVT/9oRuJrrehM7xvcXZ8DcLChf4/rp6NR9jv4PBdZ+F87dMGTxOHeI9IV0k+nID3f9jtkSvboAF6KI+JFSgrqaJBm9gPQ7uM3MzGWXcXkiYSAUYZbXJ2AkjPmd+pDkIDIU8ORl8Gklta6fwOlr9K2W9tQi/h0cuuqQN21ysTYWumwp2CxbNBolntdE+8rVuMTAR673gjpJxmErbWuKh+xarl/B31Xy7L4xHX1lp7yLWNuyIS+dcMsECn6iaQEKSsU+hWrXibmSzJ3ci8acQpskVRrLyn/1Cd5TJ1dZdA
+DKIM-Signature: a=rsa-sha256; bh=e8skIPXTKPkD5kZkjr8JiU4XqExm5ISASNtzLcJdBzs=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1767360505; v=1;
- b=JZNVyIQR7vJb3I0sH/CLpk3HgU5zw6SBxFn15IqbSwLhddoTZBLsfZA1yOwcSTeOUYTQuwbb
- XKmn/WhWq7iRjMGN8U7GZxB1I/ZxH2T8S/GnlFmoldvDvD0dvn6fyCj7+uoIoZSCDikJDCTj64+
- HJqfN9xNUXanm2/ySqcUw6WCrur++m+VZHvaEtAZbyCi2XaQCyJiKo+4MNsmT4Dkx8pUxTThto4
- Rra5zFhTTXxCxVqyjD71LcMDfjA7GcWBQmTfqjpCPfu1uf/VyD1KtiolmCPYHKJnIUZ861kKfyy
- hcHcaCflbp+O6UL7qspPVIjQEm7nq1l+ELpbgQva+72cw==
-Received-SPF: pass client-ip=87.98.187.244; envelope-from=clg@kaod.org;
- helo=10.mo552.mail-out.ovh.net
+ t=1767360517; v=1;
+ b=r9lynUsXJ5krTJqTvyRnIMIhb5uMjoAezRF3lguCsTGIFoBVSQpGBZ0NckO4Fr4JIcQLBRsi
+ 0BkEevS7dHv1fhkjne5Ccm+poxsDor3t46BCLCMfJ2ESEGLE+9/3HM0Cvw9jDI/pdQ1x8x5Hlyu
+ RBlYmIWRndo5pHnNXQr6m8qxm82614lFNGlFX5lyprnCFpcfA++hdJrRY4F+RICe/PVttUtcDXZ
+ Sk68Lukmk3w1Xd3V3cunzE71cAsnOAxK09vP16SbDaFmiZb5z7hXrj1+qI4wJBxS83J+m9q1jfO
+ IadtjWivWnxmG7WrbLfI+iHvnWYQaWzAxgxDOnX/M2NOA==
+Received-SPF: pass client-ip=178.33.105.233; envelope-from=clg@kaod.org;
+ helo=2.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,7 +114,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,37 +138,38 @@ On 1/2/26 10:07, Jamin Lin wrote:
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
+
+
 > ---
->   hw/arm/aspeed_ast27x0-ssp.c | 13 ++-------
+>   hw/arm/aspeed_ast27x0-tsp.c | 13 ++-------
 >   hw/intc/aspeed_intc.c       | 55 ++-----------------------------------
 >   2 files changed, 4 insertions(+), 64 deletions(-)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-> index 04d3705659..cee937b37e 100644
-> --- a/hw/arm/aspeed_ast27x0-ssp.c
-> +++ b/hw/arm/aspeed_ast27x0-ssp.c
-> @@ -62,7 +62,7 @@ static const int aspeed_soc_ast27x0ssp_irqmap[] = {
+> diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+> index f40c70fea5..9c11c016ca 100644
+> --- a/hw/arm/aspeed_ast27x0-tsp.c
+> +++ b/hw/arm/aspeed_ast27x0-tsp.c
+> @@ -62,7 +62,7 @@ static const int aspeed_soc_ast27x0tsp_irqmap[] = {
 >   };
 >   
->   /* SSPINT 164 */
-> -static const int ast2700_ssp132_ssp164_intcmap[] = {
-> +static const int ast2700_ssp164_intcmap[] = {
+>   /* TSPINT 164 */
+> -static const int ast2700_tsp132_tsp164_intcmap[] = {
+> +static const int ast2700_tsp164_intcmap[] = {
 >       [ASPEED_DEV_UART0]     = 7,
 >       [ASPEED_DEV_UART1]     = 8,
 >       [ASPEED_DEV_UART2]     = 9,
-> @@ -89,21 +89,12 @@ static struct nvic_intc_irq_info ast2700_ssp_intcmap[] = {
+> @@ -89,21 +89,12 @@ static struct nvic_intc_irq_info ast2700_tsp_intcmap[] = {
 >       {161, 1, 1, NULL},
 >       {162, 1, 2, NULL},
 >       {163, 1, 3, NULL},
-> -    {164, 1, 4, ast2700_ssp132_ssp164_intcmap},
-> +    {164, 1, 4, ast2700_ssp164_intcmap},
+> -    {164, 1, 4, ast2700_tsp132_tsp164_intcmap},
+> +    {164, 1, 4, ast2700_tsp164_intcmap},
 >       {165, 1, 5, NULL},
 >       {166, 1, 6, NULL},
 >       {167, 1, 7, NULL},
@@ -178,103 +179,103 @@ C.
 > -    {129, 0, 2, NULL},
 > -    {130, 0, 3, NULL},
 > -    {131, 0, 4, NULL},
-> -    {132, 0, 5, ast2700_ssp132_ssp164_intcmap},
+> -    {132, 0, 5, ast2700_tsp132_tsp164_intcmap},
 > -    {133, 0, 6, NULL},
 > -    {134, 0, 7, NULL},
 > -    {135, 0, 8, NULL},
 > -    {136, 0, 9, NULL},
 >   };
 >   
->   static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedCoprocessorState *s,
+>   static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedCoprocessorState *s,
 > diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-> index 606bde65bb..305458d6d4 100644
+> index 305458d6d4..1702cb87dc 100644
 > --- a/hw/intc/aspeed_intc.c
 > +++ b/hw/intc/aspeed_intc.c
-> @@ -47,28 +47,6 @@ REG32(GICINT197_STATUS,     0x54)
+> @@ -69,28 +69,6 @@ REG32(SSPINT165_STATUS,     0x1D4)
 >   /*
->    * SSP INTC Registers
+>    * TSP INTC Registers
 >    */
-> -REG32(SSPINT128_EN,             0x2000)
-> -REG32(SSPINT128_STATUS,         0x2004)
-> -REG32(SSPINT129_EN,             0x2100)
-> -REG32(SSPINT129_STATUS,         0x2104)
-> -REG32(SSPINT130_EN,             0x2200)
-> -REG32(SSPINT130_STATUS,         0x2204)
-> -REG32(SSPINT131_EN,             0x2300)
-> -REG32(SSPINT131_STATUS,         0x2304)
-> -REG32(SSPINT132_EN,             0x2400)
-> -REG32(SSPINT132_STATUS,         0x2404)
-> -REG32(SSPINT133_EN,             0x2500)
-> -REG32(SSPINT133_STATUS,         0x2504)
-> -REG32(SSPINT134_EN,             0x2600)
-> -REG32(SSPINT134_STATUS,         0x2604)
-> -REG32(SSPINT135_EN,             0x2700)
-> -REG32(SSPINT135_STATUS,         0x2704)
-> -REG32(SSPINT136_EN,             0x2800)
-> -REG32(SSPINT136_STATUS,         0x2804)
-> -REG32(SSPINT137_EN,             0x2900)
-> -REG32(SSPINT137_STATUS,         0x2904)
-> -REG32(SSPINT138_EN,             0x2A00)
-> -REG32(SSPINT138_STATUS,         0x2A04)
->   REG32(SSPINT160_169_EN,         0x2B00)
->   REG32(SSPINT160_169_STATUS,     0x2B04)
+> -REG32(TSPINT128_EN,             0x3000)
+> -REG32(TSPINT128_STATUS,         0x3004)
+> -REG32(TSPINT129_EN,             0x3100)
+> -REG32(TSPINT129_STATUS,         0x3104)
+> -REG32(TSPINT130_EN,             0x3200)
+> -REG32(TSPINT130_STATUS,         0x3204)
+> -REG32(TSPINT131_EN,             0x3300)
+> -REG32(TSPINT131_STATUS,         0x3304)
+> -REG32(TSPINT132_EN,             0x3400)
+> -REG32(TSPINT132_STATUS,         0x3404)
+> -REG32(TSPINT133_EN,             0x3500)
+> -REG32(TSPINT133_STATUS,         0x3504)
+> -REG32(TSPINT134_EN,             0x3600)
+> -REG32(TSPINT134_STATUS,         0x3604)
+> -REG32(TSPINT135_EN,             0x3700)
+> -REG32(TSPINT135_STATUS,         0x3704)
+> -REG32(TSPINT136_EN,             0x3800)
+> -REG32(TSPINT136_STATUS,         0x3804)
+> -REG32(TSPINT137_EN,             0x3900)
+> -REG32(TSPINT137_STATUS,         0x3904)
+> -REG32(TSPINT138_EN,             0x3A00)
+> -REG32(TSPINT138_STATUS,         0x3A04)
+>   REG32(TSPINT160_169_EN,         0x3B00)
+>   REG32(TSPINT160_169_STATUS,     0x3B04)
 >   
-> @@ -511,29 +489,9 @@ static void aspeed_ssp_intc_write(void *opaque, hwaddr offset, uint64_t data,
+> @@ -511,29 +489,9 @@ static void aspeed_tsp_intc_write(void *opaque, hwaddr offset, uint64_t data,
 >       trace_aspeed_intc_write(name, offset, size, data);
 >   
 >       switch (reg) {
-> -    case R_SSPINT128_EN:
-> -    case R_SSPINT129_EN:
-> -    case R_SSPINT130_EN:
-> -    case R_SSPINT131_EN:
-> -    case R_SSPINT132_EN:
-> -    case R_SSPINT133_EN:
-> -    case R_SSPINT134_EN:
-> -    case R_SSPINT135_EN:
-> -    case R_SSPINT136_EN:
->       case R_SSPINT160_169_EN:
+> -    case R_TSPINT128_EN:
+> -    case R_TSPINT129_EN:
+> -    case R_TSPINT130_EN:
+> -    case R_TSPINT131_EN:
+> -    case R_TSPINT132_EN:
+> -    case R_TSPINT133_EN:
+> -    case R_TSPINT134_EN:
+> -    case R_TSPINT135_EN:
+> -    case R_TSPINT136_EN:
+>       case R_TSPINT160_169_EN:
 >           aspeed_intc_enable_handler(s, offset, data);
 >           break;
-> -    case R_SSPINT128_STATUS:
-> -    case R_SSPINT129_STATUS:
-> -    case R_SSPINT130_STATUS:
-> -    case R_SSPINT131_STATUS:
-> -    case R_SSPINT132_STATUS:
-> -    case R_SSPINT133_STATUS:
-> -    case R_SSPINT134_STATUS:
-> -    case R_SSPINT135_STATUS:
-> -    case R_SSPINT136_STATUS:
+> -    case R_TSPINT128_STATUS:
+> -    case R_TSPINT129_STATUS:
+> -    case R_TSPINT130_STATUS:
+> -    case R_TSPINT131_STATUS:
+> -    case R_TSPINT132_STATUS:
+> -    case R_TSPINT133_STATUS:
+> -    case R_TSPINT134_STATUS:
+> -    case R_TSPINT135_STATUS:
+> -    case R_TSPINT136_STATUS:
 > -        aspeed_intc_status_handler(s, offset, data);
 > -        break;
->       case R_SSPINT160_169_STATUS:
+>       case R_TSPINT160_169_STATUS:
 >           aspeed_intc_status_handler_multi_outpins(s, offset, data);
 >           break;
-> @@ -911,15 +869,6 @@ static const TypeInfo aspeed_2700_intcio_info = {
+> @@ -929,15 +887,6 @@ static const TypeInfo aspeed_2700ssp_intcio_info = {
 >   
->   static AspeedINTCIRQ aspeed_2700ssp_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
->       {0, 0, 10, R_SSPINT160_169_EN, R_SSPINT160_169_STATUS},
-> -    {1, 10, 1, R_SSPINT128_EN, R_SSPINT128_STATUS},
-> -    {2, 11, 1, R_SSPINT129_EN, R_SSPINT129_STATUS},
-> -    {3, 12, 1, R_SSPINT130_EN, R_SSPINT130_STATUS},
-> -    {4, 13, 1, R_SSPINT131_EN, R_SSPINT131_STATUS},
-> -    {5, 14, 1, R_SSPINT132_EN, R_SSPINT132_STATUS},
-> -    {6, 15, 1, R_SSPINT133_EN, R_SSPINT133_STATUS},
-> -    {7, 16, 1, R_SSPINT134_EN, R_SSPINT134_STATUS},
-> -    {8, 17, 1, R_SSPINT135_EN, R_SSPINT135_STATUS},
-> -    {9, 18, 1, R_SSPINT136_EN, R_SSPINT136_STATUS},
+>   static AspeedINTCIRQ aspeed_2700tsp_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
+>       {0, 0, 10, R_TSPINT160_169_EN, R_TSPINT160_169_STATUS},
+> -    {1, 10, 1, R_TSPINT128_EN, R_TSPINT128_STATUS},
+> -    {2, 11, 1, R_TSPINT129_EN, R_TSPINT129_STATUS},
+> -    {3, 12, 1, R_TSPINT130_EN, R_TSPINT130_STATUS},
+> -    {4, 13, 1, R_TSPINT131_EN, R_TSPINT131_STATUS},
+> -    {5, 14, 1, R_TSPINT132_EN, R_TSPINT132_STATUS},
+> -    {6, 15, 1, R_TSPINT133_EN, R_TSPINT133_STATUS},
+> -    {7, 16, 1, R_TSPINT134_EN, R_TSPINT134_STATUS},
+> -    {8, 17, 1, R_TSPINT135_EN, R_TSPINT135_STATUS},
+> -    {9, 18, 1, R_TSPINT136_EN, R_TSPINT136_STATUS},
 >   };
 >   
->   static void aspeed_2700ssp_intc_class_init(ObjectClass *klass, const void *data)
-> @@ -929,8 +878,8 @@ static void aspeed_2700ssp_intc_class_init(ObjectClass *klass, const void *data)
+>   static void aspeed_2700tsp_intc_class_init(ObjectClass *klass, const void *data)
+> @@ -947,8 +896,8 @@ static void aspeed_2700tsp_intc_class_init(ObjectClass *klass, const void *data)
 >   
->       dc->desc = "ASPEED 2700 SSP INTC Controller";
+>       dc->desc = "ASPEED 2700 TSP INTC Controller";
 >       aic->num_lines = 32;
 > -    aic->num_inpins = 10;
 > -    aic->num_outpins = 19;
 > +    aic->num_inpins = 1;
 > +    aic->num_outpins = 10;
 >       aic->mem_size = 0x4000;
->       aic->nr_regs = 0x2B08 >> 2;
->       aic->reg_offset = 0x0;
+>       aic->nr_regs = 0x3B08 >> 2;
+>       aic->reg_offset = 0;
 
 
