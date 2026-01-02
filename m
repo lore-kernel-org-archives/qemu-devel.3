@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34039FA372F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 12:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0DDCFA373C
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 12:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbdvF-0005tB-5W; Fri, 02 Jan 2026 07:06:25 -0500
+	id 1vbe1m-0007RH-IG; Fri, 02 Jan 2026 07:13:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vbdv2-0005lZ-HU
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 07:06:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vbe1g-0007QW-CO
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 07:13:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vbduz-0008Eu-O8
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 07:06:12 -0500
+ id 1vbe1d-0000yD-2b
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 07:13:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767355567;
+ s=mimecast20190719; t=1767355979;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=A9VVsM2kR1Tdg4Q9bX0R3/95PjIZcPh3A+gObY5fDrc=;
- b=CM5Zzsk1nqil5h+60ERLSCC0acytFpHLQ9DUvLdJ7/jGCSfV7yPg+T0eztRKqo0r/N3gG1
- Eny9KKJFO4AvDsDRhzayaJm9eYpQji3ZnXStkP0tT9+4jHeAMK0VKexiDuz9sBobCQJuQX
- uXB0aUO3Hq6yuMsvrtKcRpchBdL8424=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nW9XwVxBLKwFDNWVC3UTVO/05YMBVA4lPveN0CXYiUc=;
+ b=TKM9kPqy9abDGrPtlNuGgT4X0w/jQN+Ts3U0AaChwXRYOIudo5ahZQK+eUlGHrNc6aUbDA
+ G6GtBR36WTaKVUFX1FkYJ8awkQnyuVEWer5luEf2LypOpDGuuOlJfXyYGF/u1mT3NFUnMG
+ zBEAce/LtPaEZPiOMfmItlLLqQEyop0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-91-m-o8FUC-NGuq1hQm-w5Y4Q-1; Fri, 02 Jan 2026 07:06:06 -0500
-X-MC-Unique: m-o8FUC-NGuq1hQm-w5Y4Q-1
-X-Mimecast-MFC-AGG-ID: m-o8FUC-NGuq1hQm-w5Y4Q_1767355565
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47d3ba3a49cso70867765e9.2
- for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 04:06:06 -0800 (PST)
+ us-mta-480-DT-MMMDkNES9ESXkSxCEgA-1; Fri, 02 Jan 2026 07:12:58 -0500
+X-MC-Unique: DT-MMMDkNES9ESXkSxCEgA-1
+X-Mimecast-MFC-AGG-ID: DT-MMMDkNES9ESXkSxCEgA_1767355977
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4775d110fabso104044785e9.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 04:12:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767355565; x=1767960365; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767355977; x=1767960777; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:organization:references
  :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=A9VVsM2kR1Tdg4Q9bX0R3/95PjIZcPh3A+gObY5fDrc=;
- b=L2f8v2EgZ2OMntTU6wDvEoZxZyYwuYA3lTMlq8xlX+B/kRUWSlj7vYbMwdLOFODm/U
- U9A6ERKguad0tRmCUNmgOI5tmIPHHF7mvu6KwhXxKlQFnt6V1cwzdUUEAsr28PgiTRmb
- pEtNA/Hp0wstdSEdMYdrebIHf9KM0x1UOhRiTTqR095CjCYR3TDnGGOJJpsxanSGY62W
- 4VMOH1mZNNphrzQHC6JMPqeTx6j5h3z9npA1uFO+WnsI7PFC/vVT/i8Yuutu7xcATNvH
- Y/3uxJPxWJWUHmfPO9gzE9RUsrykiq8vqm1wF0PFN9qoSm6vlKfHlSElqP+BQiKol1Tt
- QmCQ==
+ bh=nW9XwVxBLKwFDNWVC3UTVO/05YMBVA4lPveN0CXYiUc=;
+ b=d79XWJGCVy8LrOWQScCi+vpXRBL7pv899fJ4igQAxbxUgBprz2AmLKWxUgUdUrnsBL
+ PuM015UJafryQqafTDrr64aKNSnIlsAPsZb8FDvHjIymMcda3R2la+tmv5uXngLisyJl
+ wIyto5s6GCEyx2M0uLUtrMcvoDkAHngbNVJrDtsAO986Gp5540eQhHaSAUgbJd7LQXNX
+ YUsjdO8UqXgDwdhmTQL7ET6mY+xsKuzT3TJQb4UBhpQCse5rGNK+jWKP8wYCoEIZ2+ER
+ ydNjVgrVabKqFBdDY43nUmASifjMDW2oy56HvBBYHEPilNHqMU5HnMzr4vkLkph0ymm/
+ XWGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767355565; x=1767960365;
+ d=1e100.net; s=20230601; t=1767355977; x=1767960777;
  h=content-transfer-encoding:mime-version:organization:references
  :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A9VVsM2kR1Tdg4Q9bX0R3/95PjIZcPh3A+gObY5fDrc=;
- b=Ct4CBIc6vPOdx2E9W/sBBkJrm1vYadySY4hr6ioErS34zswwFvBx5IajfN/YWBiqbj
- QFXxTUk52wscXgTxC1svTfpmqQi/Xli89CeXUwdn/1MQO0q/kLrbl25p4kBL7OjEj97b
- T0nJz/EtDxLYB4TRxHN9H+W63ZmkQtq0gtvgp1F4mMFYe8CgZrnTpgBIv7LC32pZKoDM
- Zo+oZmkRnwiGGgsRuI/MsONV85HJtzLiY8Wxapbv9hDZjFnHAhbGrE8QSgSurwPIG+mS
- 5uRxxsyp/lWW0TGjycyTLPRwS4Bzc8bNECqUlZrF9SVrHDXqlPpvRLB/aWyRh36R5gf/
- FhXQ==
+ bh=nW9XwVxBLKwFDNWVC3UTVO/05YMBVA4lPveN0CXYiUc=;
+ b=fUoqL32TiHwgEkKeSQam1s4WMmwB/3nxByNnNOK1ASG0J7eY2qPla3akA9o7CJc8I8
+ Nvi1r2YUZeYuRIcu/dKI3m3XvJdNEpyIVNGyAZGBdadqnP627AshOoF8fwbOxypNqq8E
+ 6dic+VqHBbyXZ6KElUEJcn+idxTN143dmO8+EHDX8dm+zHU+YP1kvrQ5UOyPDBPDCH0W
+ 0ssTHAUSTOAutZT8uZ7dNa5ZBz3otZF0DXiH1n/a53bxU0jCucqgB0Zd5urwGkmoyr6/
+ cBq5F+Ytw+MjId7XeiblEB+nehpPqYr12JoXQcmv5ZKOmYr+J7DelcrkA9LyxGNz+AMS
+ n2Mg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXOZIA/jpcWWjJXsrZ6111TWMiCOtxLX2OVdyTwUWhojhDYTRNvn/w2GZ9CrNEULqN4uk1BzfAEq19Q@nongnu.org
-X-Gm-Message-State: AOJu0YxLYorwPrGj/fuqTB8SgY3dTCgEnqF6O3FfBJxVJaHJYZQ0QL6A
- N5jQkiEFl6RIyWQJFz8JG+R4K1HqN8kTVDSU3rKIt5FoqPaFqG7r7o3rWERD8sPcbM3ADmSlhg4
- otX6RpfbJ0FUe7/mcMiZ7uO1xbQXRrTQC/+DhTvxgTa7hzLz/2Ywrix+H
-X-Gm-Gg: AY/fxX40piIt/W5oUcKBS24ad1v8EwcbgbfNLqv6BOABr5HrQlawTvU6G/a+qHs1JcW
- rGO2g7abm+oT2T/MPKgaOKy6aKddc+tREk9kgqEsrHGudS5XItH5zO1Hu3yi8Hujo6/G0Xbzy9Z
- WzNId7P7oOMqT9pBkSPvrtk4aC0n8nn10f2vDy9sFuo6nDJC6LOgwsXwxZ4S9pNnJ50G/2yyn4J
- FMK4qWTzWRZx7Aiok72rfx+6wxGMJCJK45Jch5nwRK/HXnxdoxOJjgc6D62lzO4zVmXsIr2pRrf
- mkP4W1GTa+58VeOePsfEtET6aJCIFP4aEIHW6LT6va6ma2oQgspdi9MJV+IvF5YxaRKtgGBWXcl
- +EoGJJx5LvWBLrLvHHDZ9ig==
-X-Received: by 2002:a05:600c:1389:b0:47d:403e:4eaf with SMTP id
- 5b1f17b1804b1-47d403e4fd0mr297876575e9.10.1767355564887; 
- Fri, 02 Jan 2026 04:06:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHS8FH1pH0ZPJjikV9PCNSrFngLPHTCkncFX8oe+7uDSL7phRgXS8OK5/5TVO4ZyY6V8NFb2w==
-X-Received: by 2002:a05:600c:1389:b0:47d:403e:4eaf with SMTP id
- 5b1f17b1804b1-47d403e4fd0mr297876045e9.10.1767355564350; 
- Fri, 02 Jan 2026 04:06:04 -0800 (PST)
+ AJvYcCX5ou2Uu4QmI8iWAUdge/lzm3WfnDsn+PFEcLyQnGKw56X3re4LgPfLVKSVewRbkrvcyFv9I7efRUM4@nongnu.org
+X-Gm-Message-State: AOJu0YzHa17TEm536BQP1HvGLwRF89ygAmQol50TdxLXBgrYmvZtWuHn
+ MzJEv+ZY8G+CCo7wnDIKISQxIzP1/Y6qASy2SnvOrXYAcxVbxZxpmqypA2/PzG2tgHGowP/j4TT
+ VUiPZqn1VuMQgbDXuUfKdAKsptCLy959h/PT68k7Sn64a6RyMw3ARBZv6
+X-Gm-Gg: AY/fxX7CqYGGG9hmtKjpZErbCy+aSnL3U5MG8H4ed6q1boin1T4ITKgnXeOH+fNNEAs
+ bkT6K62nE/8+F4MqY7uGvlvAqJi5U+U950Xja8hfvdGIlxGag5PROjHr/j++TpmU2agpcWhl0VZ
+ qD6TvHQX66o/TkBMztfpr2SUTdZW+hrBKTouoIolRgiG1ZxBWPdh2D9ZqE2cFOxNGRJYkOo0swd
+ Nrh8B0EwHU7NdF6BYWK7G+wdZJlDoNU8BCW5W/Iaw7QSJqoBp9LSkHZF/5sHgjFhr/tZpYk+BmY
+ Ftf8e/h1ekMdk+5RL0KSOP/V6GgXyTaNW2GLOIIKgnVKB1RWZhQWryfrHp51VTNmKPa4VqKZ9Jx
+ S2MFswpZw6mVww7ljic49kg==
+X-Received: by 2002:a05:600c:4fce:b0:47a:935f:61a0 with SMTP id
+ 5b1f17b1804b1-47d194c659emr475479495e9.0.1767355977164; 
+ Fri, 02 Jan 2026 04:12:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGXyyd3ggKQsB42zpqL0CS/+fCusJrkkJNzoD10K/ZSkQx5BeQjG3ZQki+ASQ4T6C3vWZ8JCg==
+X-Received: by 2002:a05:600c:4fce:b0:47a:935f:61a0 with SMTP id
+ 5b1f17b1804b1-47d194c659emr475479165e9.0.1767355976688; 
+ Fri, 02 Jan 2026 04:12:56 -0800 (PST)
 Received: from imammedo-mac ([185.140.112.229])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be2724fe8sm938814075e9.1.2026.01.02.04.06.03
+ ffacd0b85a97d-4324ea830f3sm83469162f8f.22.2026.01.02.04.12.55
  (version=TLS1_2 cipher=AES128-SHA bits=128/128);
- Fri, 02 Jan 2026 04:06:03 -0800 (PST)
-Date: Fri, 2 Jan 2026 13:06:01 +0100
+ Fri, 02 Jan 2026 04:12:56 -0800 (PST)
+Date: Fri, 2 Jan 2026 13:12:53 +0100
 From: Igor Mammedov <imammedo@redhat.com>
 To: Zhao Liu <zhao1.liu@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Daniel P . =?UTF-8?Q?Berrang?=
@@ -97,26 +97,26 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Daniel P . =?UTF-8?Q?Berrang?=
  <peter.maydell@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>, BALATON
  Zoltan <balaton@eik.bme.hu>, Mark Cave-Ayland
  <mark.caveayland@nutanix.com>, devel@lists.libvirt.org
-Subject: Re: [RFC 02/10] qom: Add basic object property deprecation hint
- support
-Message-ID: <20260102130601.0697deeb@imammedo-mac>
-In-Reply-To: <20251202170502.3228625-3-zhao1.liu@intel.com>
+Subject: Re: [RFC 01/10] qom: Rename ObjectPropertyFlags to
+ ObjectPropertyAccessorFlags
+Message-ID: <20260102131253.5b60853b@imammedo-mac>
+In-Reply-To: <20251202170502.3228625-2-zhao1.liu@intel.com>
 References: <20251202170502.3228625-1-zhao1.liu@intel.com>
- <20251202170502.3228625-3-zhao1.liu@intel.com>
+ <20251202170502.3228625-2-zhao1.liu@intel.com>
 Organization: imammedo@redhat.com
 X-Mailer: Claws Mail 3.11.1-67-g0d58c6-dirty (GTK+ 2.24.21;
  x86_64-apple-darwin14.0.0)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -134,310 +134,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  3 Dec 2025 01:04:54 +0800
+On Wed,  3 Dec 2025 01:04:53 +0800
 Zhao Liu <zhao1.liu@intel.com> wrote:
 
-> Now the common (but a bit fragmented) way to mark a property deprecated
-> is to add the warning in its accssors.
+> At present, ObjectPropertyFlags is used to select accessors and such
+> flags won't be stored in ObjectProperty itself.
 > 
-> But this is pretty inconvenient for such qdev properties, which are
-> defined via DEFINE_PROP_* macros in the Property array. For qdev
-> properties, their accessors are provided by pre-defined PropertyInfo, so
-> that it's possible to modify PropertyInfo for a single "deprecated"
-> property.
+> So it's not proper to extend this ObjectPropertyFlags for "deprecated"
+> or "internal" flags.
 > 
-> Then it's necessary to introduce property flags to mark some properties
-> as deprecated, and to check the property flags when set the property,
-> thereby to print a deprecation warning.
-> 
-> This not only benefits traditional qdev properties but also helps the
-> deprecation of generic objects.
-> 
-> Note, internal attempt (except the compat case) should not trigger the
-> deprecation warning but external user should see the deprecation
-> information. Whether to perform deprecation checks based on property
-> flags is controlled by the newly added "check" argument in
-> object_property_try_add_full().
+> Therefore, rename ObjectPropertyFlags to ObjectPropertyAccessorFlags,
+> and then the original name ObjectPropertyFlags can be used for other
+> cases.
 
-I'd split deprecation warning out for this patch,
-i.e. make this one "add per object instance flags",
-and take care of deprecation stuff on top,
+I wonder if we can  just make existing ObjectPropertyFlags per object as you are planing
+and still continue using it for accessor flags.
 
-Also, API likely would need set/get/clear calls to operate on object flags.
+That basically will lets you use new flags everywhere without rewriting call sites
+everywhere.
 
-> 
-> In subsequent work, the "check" option will be enabled for specific
-> external property setting paths.
 > 
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->  include/qom/object.h | 72 ++++++++++++++++++++++++++++++++++++++++++++
->  qom/object.c         | 72 +++++++++++++++++++++++++++++++++++---------
->  2 files changed, 130 insertions(+), 14 deletions(-)
+>  include/qom/object.h | 28 ++++++++++++++--------------
+>  qom/object.c         | 16 ++++++++--------
+>  2 files changed, 22 insertions(+), 22 deletions(-)
 > 
 > diff --git a/include/qom/object.h b/include/qom/object.h
-> index 3f807a03f5aa..8f4c2f44d835 100644
+> index 26df6137b911..3f807a03f5aa 100644
 > --- a/include/qom/object.h
 > +++ b/include/qom/object.h
-> @@ -86,6 +86,12 @@ typedef void (ObjectPropertyRelease)(Object *obj,
+> @@ -1846,14 +1846,14 @@ typedef enum {
+>      OBJ_PROP_FLAG_WRITE = 1 << 1,
+>      /* Automatically add a getter and a setter to the property */
+>      OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
+> -} ObjectPropertyFlags;
+> +} ObjectPropertyAccessorFlags;
+>  
+>  /**
+>   * object_property_add_uint8_ptr:
+>   * @obj: the object to add a property to
+>   * @name: the name of the property
+>   * @v: pointer to value
+> - * @flags: bitwise-or'd ObjectPropertyFlags
+> + * @flags: bitwise-or'd ObjectPropertyAccessorFlags
+>   *
+>   * Add an integer property in memory.  This function will add a
+>   * property of type 'uint8'.
+> @@ -1861,20 +1861,20 @@ typedef enum {
+>   * Returns: The newly added property on success, or %NULL on failure.
 >   */
->  typedef void (ObjectPropertyInit)(Object *obj, ObjectProperty *prop);
+>  ObjectProperty *object_property_add_uint8_ptr(Object *obj, const char *name,
+> -                                              const uint8_t *v,
+> -                                              ObjectPropertyFlags flags);
+> +                                        const uint8_t *v,
+> +                                        ObjectPropertyAccessorFlags flags);
 >  
-> +typedef enum ObjectPropertyFlags {
-> +    OBJECT_PROPERTY_NO_FLAGS     =                             0,
-> +    OBJECT_PROPERTY_DEPRECATED   =                        1 << 0,
-
-maybe use BIT() instead of manual shift?
-
-addidtionally given you are going to distinguish external vs internal,
-perhaps add flags 'default' and 'user set',
-I think the both could be used to cleanup cpu flags handling where we rely on
-setting/checking  magic numbers to figure out where value comes from.
-
-
-> +    OBJECT_PROPERTY_FULL_FLAGS   =    OBJECT_PROPERTY_DEPRECATED,
-> +} ObjectPropertyFlags;
-> +
->  struct ObjectProperty
->  {
->      char *name;
-> @@ -98,6 +104,7 @@ struct ObjectProperty
->      ObjectPropertyInit *init;
->      void *opaque;
->      QObject *defval;
-> +    uint8_t flags;
->  };
+>  ObjectProperty *object_class_property_add_uint8_ptr(ObjectClass *klass,
+>                                           const char *name,
+>                                           const uint8_t *v,
+> -                                         ObjectPropertyFlags flags);
+> +                                         ObjectPropertyAccessorFlags flags);
 >  
 >  /**
-> @@ -1090,6 +1097,41 @@ ObjectProperty *object_property_try_add(Object *obj, const char *name,
->                                          ObjectPropertyRelease *release,
->                                          void *opaque, Error **errp);
+>   * object_property_add_uint16_ptr:
+>   * @obj: the object to add a property to
+>   * @name: the name of the property
+>   * @v: pointer to value
+> - * @flags: bitwise-or'd ObjectPropertyFlags
+> + * @flags: bitwise-or'd ObjectPropertyAccessorFlags
+>   *
+>   * Add an integer property in memory.  This function will add a
+>   * property of type 'uint16'.
+> @@ -1883,19 +1883,19 @@ ObjectProperty *object_class_property_add_uint8_ptr(ObjectClass *klass,
+>   */
+>  ObjectProperty *object_property_add_uint16_ptr(Object *obj, const char *name,
+>                                      const uint16_t *v,
+> -                                    ObjectPropertyFlags flags);
+> +                                    ObjectPropertyAccessorFlags flags);
 >  
-> +/**
-> + * object_property_try_add_full:
-
-what's the reason for adding _full flavour over just modifying existing API?
-
-> + *
-> + * Same as object_property_try_add() with more arguments (@flags).
-> + *
-> + * @obj: the object to add a property to
-> + * @name: the name of the property.  This can contain any character except for
-> + *  a forward slash.  In general, you should use hyphens '-' instead of
-> + *  underscores '_' when naming properties.
-> + * @type: the type name of the property.  This namespace is pretty loosely
-> + *   defined.  Sub namespaces are constructed by using a prefix and then
-> + *   to angle brackets.  For instance, the type 'virtio-net-pci' in the
-> + *   'link' namespace would be 'link<virtio-net-pci>'.
-> + * @get: The getter to be called to read a property.  If this is NULL, then
-> + *   the property cannot be read.
-> + * @set: the setter to be called to write a property.  If this is NULL,
-> + *   then the property cannot be written.
-> + * @release: called when the property is removed from the object.  This is
-> + *   meant to allow a property to free its opaque upon object
-> + *   destruction.  This may be NULL.
-> + * @flags: the flags to control property uses.
-> + * @opaque: an opaque pointer to pass to the callbacks for the property
-> + * @errp: pointer to error object
-> + *
-> + * Returns: The #ObjectProperty; this can be used to set the @resolve
-> + * callback for child and link properties.
-> + */
-> +ObjectProperty *object_property_try_add_full(Object *obj, const char *name,
-> +                                             const char *type,
-> +                                             ObjectPropertyAccessor *get,
-> +                                             ObjectPropertyAccessor *set,
-> +                                             ObjectPropertyRelease *release,
-> +                                             ObjectPropertyFlags flags,
-> +                                             void *opaque, Error **errp);
-> +
->  /**
->   * object_property_add:
->   * Same as object_property_try_add() with @errp hardcoded to
-> @@ -1128,6 +1170,15 @@ ObjectProperty *object_class_property_add(ObjectClass *klass, const char *name,
->                                            ObjectPropertyRelease *release,
->                                            void *opaque);
+>  ObjectProperty *object_class_property_add_uint16_ptr(ObjectClass *klass,
+>                                            const char *name,
+>                                            const uint16_t *v,
+> -                                          ObjectPropertyFlags flags);
+> +                                          ObjectPropertyAccessorFlags flags);
 >  
-> +ObjectProperty *object_class_property_add_full(ObjectClass *klass,
-> +                                               const char *name,
-> +                                               const char *type,
-> +                                               ObjectPropertyAccessor *get,
-> +                                               ObjectPropertyAccessor *set,
-> +                                               ObjectPropertyRelease *release,
-> +                                               ObjectPropertyFlags flags,
-> +                                               void *opaque);
-> +
 >  /**
->   * object_property_set_default_bool:
->   * @prop: the property to set
-> @@ -1469,6 +1520,27 @@ int object_property_get_enum(Object *obj, const char *name,
->  bool object_property_set(Object *obj, const char *name, Visitor *v,
->                           Error **errp);
+>   * object_property_add_uint32_ptr:
+>   * @obj: the object to add a property to
+>   * @name: the name of the property
+>   * @v: pointer to value
+> - * @flags: bitwise-or'd ObjectPropertyFlags
+> + * @flags: bitwise-or'd ObjectPropertyAccessorFlags
+>   *
+>   * Add an integer property in memory.  This function will add a
+>   * property of type 'uint32'.
+> @@ -1904,19 +1904,19 @@ ObjectProperty *object_class_property_add_uint16_ptr(ObjectClass *klass,
+>   */
+>  ObjectProperty *object_property_add_uint32_ptr(Object *obj, const char *name,
+>                                      const uint32_t *v,
+> -                                    ObjectPropertyFlags flags);
+> +                                    ObjectPropertyAccessorFlags flags);
 >  
-> +/**
-> + * object_property_set_full:
-> + *
-> + * Same as object_property_set() with extra check over property flags
-> + * (ObjectPropertyFlags) if @check is true.
-> + *
-> + * @obj: the object
-> + * @name: the name of the property
-> + * @v: the visitor that will be used to write the property value.  This should
-> + *   be an Input visitor and the data will be first read with @name as the
-> + *   name and then written as the property value.
-> + * @check: whether to check if the property can be set over property flags.
-> + * @errp: returns an error if this function fails
-> + *
-> + * Writes a property to a object.
-> + *
-> + * Returns: %true on success, %false on failure.
-> + */
-> +bool object_property_set_full(Object *obj, const char *name,
-> +                              Visitor *v, bool check, Error **errp);
-> +
+>  ObjectProperty *object_class_property_add_uint32_ptr(ObjectClass *klass,
+>                                            const char *name,
+>                                            const uint32_t *v,
+> -                                          ObjectPropertyFlags flags);
+> +                                          ObjectPropertyAccessorFlags flags);
+>  
 >  /**
->   * object_property_parse:
->   * @obj: the object
+>   * object_property_add_uint64_ptr:
+>   * @obj: the object to add a property to
+>   * @name: the name of the property
+>   * @v: pointer to value
+> - * @flags: bitwise-or'd ObjectPropertyFlags
+> + * @flags: bitwise-or'd ObjectPropertyAccessorFlags
+>   *
+>   * Add an integer property in memory.  This function will add a
+>   * property of type 'uint64'.
+> @@ -1925,12 +1925,12 @@ ObjectProperty *object_class_property_add_uint32_ptr(ObjectClass *klass,
+>   */
+>  ObjectProperty *object_property_add_uint64_ptr(Object *obj, const char *name,
+>                                      const uint64_t *v,
+> -                                    ObjectPropertyFlags flags);
+> +                                    ObjectPropertyAccessorFlags flags);
+>  
+>  ObjectProperty *object_class_property_add_uint64_ptr(ObjectClass *klass,
+>                                            const char *name,
+>                                            const uint64_t *v,
+> -                                          ObjectPropertyFlags flags);
+> +                                          ObjectPropertyAccessorFlags flags);
+>  
+>  /**
+>   * object_property_add_alias:
 > diff --git a/qom/object.c b/qom/object.c
-> index 85d31bb64b36..184afc6730dd 100644
+> index 4f32c1aba7d7..85d31bb64b36 100644
 > --- a/qom/object.c
 > +++ b/qom/object.c
-> @@ -1234,15 +1234,17 @@ void object_unref(void *objptr)
->  }
->  
+> @@ -2636,7 +2636,7 @@ static void property_set_uint64_ptr(Object *obj, Visitor *v, const char *name,
 >  ObjectProperty *
-> -object_property_try_add(Object *obj, const char *name, const char *type,
-> -                        ObjectPropertyAccessor *get,
-> -                        ObjectPropertyAccessor *set,
-> -                        ObjectPropertyRelease *release,
-> -                        void *opaque, Error **errp)
-> +object_property_try_add_full(Object *obj, const char *name, const char *type,
-> +                             ObjectPropertyAccessor *get,
-> +                             ObjectPropertyAccessor *set,
-> +                             ObjectPropertyRelease *release,
-> +                             ObjectPropertyFlags flags, void *opaque, Error **errp)
+>  object_property_add_uint8_ptr(Object *obj, const char *name,
+>                                const uint8_t *v,
+> -                              ObjectPropertyFlags flags)
+> +                              ObjectPropertyAccessorFlags flags)
 >  {
->      ObjectProperty *prop;
->      size_t name_len = strlen(name);
->  
-> +    assert(!flags || !(flags & ~(OBJECT_PROPERTY_FULL_FLAGS)));
-> +
->      if (name_len >= 3 && !memcmp(name + name_len - 3, "[*]", 4)) {
->          int i;
->          ObjectProperty *ret = NULL;
-> @@ -1279,11 +1281,24 @@ object_property_try_add(Object *obj, const char *name, const char *type,
->      prop->set = set;
->      prop->release = release;
->      prop->opaque = opaque;
-> +    prop->flags = flags;
->  
->      g_hash_table_insert(obj->properties, prop->name, prop);
->      return prop;
->  }
->  
-> +ObjectProperty *
-> +object_property_try_add(Object *obj, const char *name, const char *type,
-> +                        ObjectPropertyAccessor *get,
-> +                        ObjectPropertyAccessor *set,
-> +                        ObjectPropertyRelease *release,
-> +                        void *opaque, Error **errp)
-> +{
-> +    return object_property_try_add_full(obj, name, type, get, set, release,
-> +                                        OBJECT_PROPERTY_NO_FLAGS, opaque,
-> +                                        errp);
-> +}
-> +
+>      ObjectPropertyAccessor *getter = NULL;
+>      ObjectPropertyAccessor *setter = NULL;
+> @@ -2656,7 +2656,7 @@ object_property_add_uint8_ptr(Object *obj, const char *name,
 >  ObjectProperty *
->  object_property_add(Object *obj, const char *name, const char *type,
->                      ObjectPropertyAccessor *get,
-> @@ -1296,17 +1311,19 @@ object_property_add(Object *obj, const char *name, const char *type,
->  }
->  
+>  object_class_property_add_uint8_ptr(ObjectClass *klass, const char *name,
+>                                      const uint8_t *v,
+> -                                    ObjectPropertyFlags flags)
+> +                                    ObjectPropertyAccessorFlags flags)
+>  {
+>      ObjectPropertyAccessor *getter = NULL;
+>      ObjectPropertyAccessor *setter = NULL;
+> @@ -2676,7 +2676,7 @@ object_class_property_add_uint8_ptr(ObjectClass *klass, const char *name,
 >  ObjectProperty *
-> -object_class_property_add(ObjectClass *klass,
-> -                          const char *name,
-> -                          const char *type,
-> -                          ObjectPropertyAccessor *get,
-> -                          ObjectPropertyAccessor *set,
-> -                          ObjectPropertyRelease *release,
-> -                          void *opaque)
-> +object_class_property_add_full(ObjectClass *klass,
-> +                               const char *name,
-> +                               const char *type,
-> +                               ObjectPropertyAccessor *get,
-> +                               ObjectPropertyAccessor *set,
-> +                               ObjectPropertyRelease *release,
-> +                               ObjectPropertyFlags flags,
-> +                               void *opaque)
+>  object_property_add_uint16_ptr(Object *obj, const char *name,
+>                                 const uint16_t *v,
+> -                               ObjectPropertyFlags flags)
+> +                               ObjectPropertyAccessorFlags flags)
 >  {
->      ObjectProperty *prop;
->  
->      assert(!object_class_property_find(klass, name));
-> +    assert(!flags || !(flags & ~(OBJECT_PROPERTY_FULL_FLAGS)));
->  
->      prop = g_malloc0(sizeof(*prop));
->  
-> @@ -1317,12 +1334,27 @@ object_class_property_add(ObjectClass *klass,
->      prop->set = set;
->      prop->release = release;
->      prop->opaque = opaque;
-> +    prop->flags = flags;
->  
->      g_hash_table_insert(klass->properties, prop->name, prop);
->  
->      return prop;
->  }
->  
-> +ObjectProperty *
-> +object_class_property_add(ObjectClass *klass,
-> +                          const char *name,
-> +                          const char *type,
-> +                          ObjectPropertyAccessor *get,
-> +                          ObjectPropertyAccessor *set,
-> +                          ObjectPropertyRelease *release,
-> +                          void *opaque)
-> +{
-> +    return object_class_property_add_full(klass, name, type, get, set,
-> +                                          release, OBJECT_PROPERTY_NO_FLAGS,
-> +                                          opaque);
-> +}
-> +
->  ObjectProperty *object_property_find(Object *obj, const char *name)
+>      ObjectPropertyAccessor *getter = NULL;
+>      ObjectPropertyAccessor *setter = NULL;
+> @@ -2696,7 +2696,7 @@ object_property_add_uint16_ptr(Object *obj, const char *name,
+>  ObjectProperty *
+>  object_class_property_add_uint16_ptr(ObjectClass *klass, const char *name,
+>                                       const uint16_t *v,
+> -                                     ObjectPropertyFlags flags)
+> +                                     ObjectPropertyAccessorFlags flags)
 >  {
->      ObjectProperty *prop;
-> @@ -1432,8 +1464,8 @@ bool object_property_get(Object *obj, const char *name, Visitor *v,
->      return !err;
->  }
->  
-> -bool object_property_set(Object *obj, const char *name, Visitor *v,
-> -                         Error **errp)
-> +bool object_property_set_full(Object *obj, const char *name,
-> +                              Visitor *v, bool check, Error **errp)
+>      ObjectPropertyAccessor *getter = NULL;
+>      ObjectPropertyAccessor *setter = NULL;
+> @@ -2716,7 +2716,7 @@ object_class_property_add_uint16_ptr(ObjectClass *klass, const char *name,
+>  ObjectProperty *
+>  object_property_add_uint32_ptr(Object *obj, const char *name,
+>                                 const uint32_t *v,
+> -                               ObjectPropertyFlags flags)
+> +                               ObjectPropertyAccessorFlags flags)
 >  {
->      ERRP_GUARD();
->      ObjectProperty *prop = object_property_find_err(obj, name, errp);
-> @@ -1447,10 +1479,22 @@ bool object_property_set(Object *obj, const char *name, Visitor *v,
->                     object_get_typename(obj), name);
->          return false;
->      }
-> +
-> +    if (check && prop->flags & OBJECT_PROPERTY_DEPRECATED) {
-> +        warn_report("Property '%s.%s' has been deprecated. "
-> +                    "Please do not use it.", object_get_typename(obj), name);
-> +    }
-> +
->      prop->set(obj, v, name, prop->opaque, errp);
->      return !*errp;
->  }
->  
-> +bool object_property_set(Object *obj, const char *name, Visitor *v,
-> +                         Error **errp)
-> +{
-> +    return object_property_set_full(obj, name, v, false, errp);
-> +}
-> +
->  bool object_property_set_str(Object *obj, const char *name,
->                               const char *value, Error **errp)
+>      ObjectPropertyAccessor *getter = NULL;
+>      ObjectPropertyAccessor *setter = NULL;
+> @@ -2736,7 +2736,7 @@ object_property_add_uint32_ptr(Object *obj, const char *name,
+>  ObjectProperty *
+>  object_class_property_add_uint32_ptr(ObjectClass *klass, const char *name,
+>                                       const uint32_t *v,
+> -                                     ObjectPropertyFlags flags)
+> +                                     ObjectPropertyAccessorFlags flags)
 >  {
+>      ObjectPropertyAccessor *getter = NULL;
+>      ObjectPropertyAccessor *setter = NULL;
+> @@ -2756,7 +2756,7 @@ object_class_property_add_uint32_ptr(ObjectClass *klass, const char *name,
+>  ObjectProperty *
+>  object_property_add_uint64_ptr(Object *obj, const char *name,
+>                                 const uint64_t *v,
+> -                               ObjectPropertyFlags flags)
+> +                               ObjectPropertyAccessorFlags flags)
+>  {
+>      ObjectPropertyAccessor *getter = NULL;
+>      ObjectPropertyAccessor *setter = NULL;
+> @@ -2776,7 +2776,7 @@ object_property_add_uint64_ptr(Object *obj, const char *name,
+>  ObjectProperty *
+>  object_class_property_add_uint64_ptr(ObjectClass *klass, const char *name,
+>                                       const uint64_t *v,
+> -                                     ObjectPropertyFlags flags)
+> +                                     ObjectPropertyAccessorFlags flags)
+>  {
+>      ObjectPropertyAccessor *getter = NULL;
+>      ObjectPropertyAccessor *setter = NULL;
 
 
