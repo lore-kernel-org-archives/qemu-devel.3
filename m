@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB92E9410B
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 09:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E0BFA3727
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 09:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbb6z-00058V-7F; Fri, 02 Jan 2026 04:06:21 -0500
+	id 1vbb7k-00068l-4z; Fri, 02 Jan 2026 04:07:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbb6q-000551-Ls
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 04:06:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbb7i-000684-S1
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 04:07:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbb6m-0003eT-LS
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 04:06:10 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vbb7h-0003i6-FF
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 04:07:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767344768;
+ s=mimecast20190719; t=1767344824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1i3GnS0GvgkoImo7R6lJeHgFpJBrVOVvBnJONNem4VY=;
- b=O3j51JmDg1LaTrCEYzgMvClmmomp5wV88hgMqHXzyQt2+MT9XV4uGuHgAckcJa2mlYyd87
- ROzKgzAct6rPYjijYCwWuwL4rc2jJAfObQZLcISUWk5khdBNOAB7B5OmkJX/bXt4ltGM9k
- I7NftGem/4PW4mJr2MX5TZdcfiDkKCQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vEFMmNVwYXNq2YtMkBLuu0wmQ5SWNCghCHFruACUfoY=;
+ b=C4PGmErNJPOUs8AzkmcUVYTw8T9KLkDNnJibWF+VIm+3PvzA5Dku586qeotB1HXZZ2+l6O
+ jc2+wAQy9pAdY2x0KOJSl0o/+gEoO3p3iqrcP3Hbeb+guUbBhnLFgQuaWoX2IPcMybGlBn
+ l6SkBLr3XG2IbNOPFumaiteJC8xwOCY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-FEVM2sz_OUq6k3iUWMui9w-1; Fri, 02 Jan 2026 04:06:06 -0500
-X-MC-Unique: FEVM2sz_OUq6k3iUWMui9w-1
-X-Mimecast-MFC-AGG-ID: FEVM2sz_OUq6k3iUWMui9w_1767344765
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43284edbbc8so3027487f8f.0
- for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 01:06:06 -0800 (PST)
+ us-mta-269-JIX-ag-rM5mEVAMAO4i3aA-1; Fri, 02 Jan 2026 04:07:03 -0500
+X-MC-Unique: JIX-ag-rM5mEVAMAO4i3aA-1
+X-Mimecast-MFC-AGG-ID: JIX-ag-rM5mEVAMAO4i3aA_1767344822
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47d1622509eso72133585e9.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 01:07:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767344765; x=1767949565; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767344822; x=1767949622; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=1i3GnS0GvgkoImo7R6lJeHgFpJBrVOVvBnJONNem4VY=;
- b=LuiqnbPAo7SnjoPcciivIo6qTqLpuatQEo07Ya9rA4Un9Asq2xHdOdauxd4sv4PhOs
- VAlVrchSXfsd8RB4IprtH+MT0Jam0EDhaxTdMeu82RzllB5yhgzEZL1Mjrt0wRzBbAjo
- S0v83Vnway/yH3lOtWlVSGk97ijRznW1UVkqA5H0lM0wH92ZmQDMKe60z4yFCOB+Ot7A
- eGeo9k5+UmBPuFLsJA0k7SzyVKK5JknundWaDdorSZQup214JJZGLcjl7AxmCu2TrB74
- 3cjczFYaOfs0H0dS+ET+8QQTkzs8f7m+2giJGBbHbcSdzqaQFBmmGpdoHZRhjcsSAUd4
- GlUw==
+ bh=vEFMmNVwYXNq2YtMkBLuu0wmQ5SWNCghCHFruACUfoY=;
+ b=OmASvOCCiZ9hQVTJ8sCz7f4ksx3kiE1LcVQkp3srUYTO3F78KxuD0MJaX/t69d7oad
+ yYOozvhf3Z4KA7rNGuWcAF7MSQyG1p5iQh1+IxASYOwjycM+8AOf1E9kiG3rE4m+UGGS
+ KZZVXa4eE545d/P/q73JsgIzSbAaKJpNRAUvQa2HqANwTdagfT0EwpXU+O6K0R7J9Wep
+ h4TANYhzIIEaDuLh1A2H0mqIVGAVcVuoReQHbRKF8rkbkinWQxQilF3zD2gicz7hJxCP
+ m/nzwLIKBo0qzQIbWCjvzyNcdEiARhH8ahFUUjvy2HsnJrbigkEENVj080dL7Kbvqh6j
+ ofxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767344765; x=1767949565;
+ d=1e100.net; s=20230601; t=1767344822; x=1767949622;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1i3GnS0GvgkoImo7R6lJeHgFpJBrVOVvBnJONNem4VY=;
- b=b0msyhIM6+XU0vrgl1XVnshrMGZewBsE9lMSLxFywyU6LhGryFpzl9Y1wH0Nkh3jtW
- UIKQLROteOMXn7Zn8ELgwrG/ywariJVsY06xNbcAF0t4aLxi3RVDyxlAoZcWYQ20+r8T
- XWS6gEPlLT+C67lr8uBGSvnw+ws51RuYsAPqs9799yvUXOLF09swXaG4Naub0CO99X95
- 5DP/EWWHtGv0FEOaQg1KkjNLKZMqtpTiI6zMfDvbOtxQHlSlV8pD/zzfneyxScNobm1R
- nzJN0ScYBmTvyoHP9W27N0hSuQsSlEt6O5efNAscluKgDH8rK2e4MlRG7nLwpYf6Wj+x
- R9Rw==
+ bh=vEFMmNVwYXNq2YtMkBLuu0wmQ5SWNCghCHFruACUfoY=;
+ b=KoF277x0xNB9/u8u+xRmHLNE+qsXNNF7qMeCJdZ7mNWVim7/NbXpXSZmSICab366C2
+ SxCCl8s34nHPbN/L+E3cPAzeqcJWIzP3thJJps6rpkVidRrr3doUWYVLQ3w+mjpgH5TK
+ 26ywT8f252Ctv3C+E4nhYxX1XolIomfUZPLxQ3y2wCSCBt+wgGpN6hzvl89AlFjqNyHw
+ xDLEQmGJkmpJA3EZQMRse8t45Sz7RvtK0oAAoLrZSuLVsbC+ZpDlkiIcwHCZbUoISoRY
+ rUkHcs69z6fxdJS8jnVMvZR2zEGYv88MB5SkelM1S9lHbYYdG5lg08+Hk/clEUSrkOtW
+ jr2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKTmPvLvzSLWrfMmMt3QUcxk5Ci52Xv7EwEOUOaV12FCSZrLKXQ+nOaNmDlvDHFj1eCYwTE6DfwsTA@nongnu.org
-X-Gm-Message-State: AOJu0YypexTlVvFzq++W0v5i05lpvmccbOjrxd/gfhq52kpAHLjOHadc
- JxY3YqJU0Ki7t0VhF8UDcXDl7+u/Uwjsc8NKZtcni8t0E3Qol9EXABgd5RaGyZbMSH/tYpaXRbb
- zw6OGiuOVZ7CA31KfrW+FusrNQqZ5tIHSGH9iSwFfa7hkbvk1MCrQHx55
-X-Gm-Gg: AY/fxX6KeZLT1A19TnWzuMxEIQXhbqOHdlpvZvf7xp1Rtc6aUXhvW5Ma0vMB+7YEDqH
- U6zwx+FMTqE8vyANA2PJX3IwiyEVOO7CwJEu6s6VgDo6yF2FV3lRaJc950xGDgPNoI/5qRe2srd
- y5jzVuz4ETPH+SBpxQtLNQv+xILaFM/xP8NpJVxfR/+TeXa0fVsSZCDcTpx3thF/IM0geB2/P0s
- yec6KfMa5sOUHLIAbMlAAcOos/v79OoodwK08vprb3Ebe53wIJfLcNtApDjdNHdggj4bFn5TtX+
- GBKTC5LEIXy5XJcTos/AKKTyBssQfk6xuko7jvl49Spk6OuWwfFO0LCGcNKcYmBQEDce3EiFTB1
- oToug2Rs=
-X-Received: by 2002:a5d:5d03:0:b0:431:1ae:a3d0 with SMTP id
- ffacd0b85a97d-4324e4cc063mr49633730f8f.25.1767344765404; 
- Fri, 02 Jan 2026 01:06:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFiQk/MU7zSY6tHBESbB6nrHV/ZgxEqrQegoM2jHKarGEmlt2B9/3yZ/Y9uwPdtLrAY1+JgqQ==
-X-Received: by 2002:a5d:5d03:0:b0:431:1ae:a3d0 with SMTP id
- ffacd0b85a97d-4324e4cc063mr49633689f8f.25.1767344764967; 
- Fri, 02 Jan 2026 01:06:04 -0800 (PST)
+ AJvYcCWOsRwcN+Lrs2fGcHSWWqZdAvP5q9YN0OR2/UUI9ZE8S1YWP/MjqxZ+Zso2yy+TYM/htwcibGNkJHQy@nongnu.org
+X-Gm-Message-State: AOJu0Yw8ZjW12HJdr2tJd13RZ+BimD3kfv/wDbsbQZ+IJqMT9fdJIvS9
+ 1V0wqA99ZU3PBCa2S8+d25bR4P4OIPcQ93Tb4+yLNuZZr0paLEJtw0mvnXipe9ZCKkpq8PealgI
+ KhKhpkqitD9fpu0eVZ84dOmaZN9sXZc49CNXH1PPccdQIdKBRhiln78Xo
+X-Gm-Gg: AY/fxX6f5hWc9b6q1esxoPmiUin1i+AUbX6jVD1LbWi6E9VdVLs6NHkeLByfDyAaAab
+ tidQ0jv68TZ/HqK8oNeBeGXGKVa1NfFFwG2XNFLTQgN8PbqWHtCBblwA0dF5wCIW/eTjfZrSCGL
+ 2uuxfjYrrxf8oF/YS1gPGKQKqxQITS70g3LfF3kNZQ2OZnkR+vQgTdS+/BKfIgn9I2lELzuniSu
+ TrJ73gRNYyaJP+0fFvzvsIheKqDg+8U1HtoC1ZWVsHP93JHQeBTwSEI2LGh3jWWSCWowQEOt/Vu
+ rGZOcjgjmDzPWNzzOut6s1ptZfjbRhy95+rBq90qSNL5/tRIfcSgg3ZQUEoAgTksJiCZWUg/CKE
+ SXt/XfoI=
+X-Received: by 2002:a05:600c:458f:b0:46f:b32e:5094 with SMTP id
+ 5b1f17b1804b1-47d19592a3dmr477669775e9.32.1767344822211; 
+ Fri, 02 Jan 2026 01:07:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG+W1bpv/CicLFRZ3DDJQPUzPn0+fraZHM3/ps/PMtyUvODFfWs+Ss2hSG9gvwcGG4YlVkSTw==
+X-Received: by 2002:a05:600c:458f:b0:46f:b32e:5094 with SMTP id
+ 5b1f17b1804b1-47d19592a3dmr477669485e9.32.1767344821798; 
+ Fri, 02 Jan 2026 01:07:01 -0800 (PST)
 Received: from [192.168.0.8] ([47.64.114.140])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea226d1sm85678172f8f.13.2026.01.02.01.06.03
+ 5b1f17b1804b1-47be3a3ec73sm305363885e9.5.2026.01.02.01.07.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Jan 2026 01:06:04 -0800 (PST)
-Message-ID: <97d1ac72-a057-4f5d-ba5c-0dce90091647@redhat.com>
-Date: Fri, 2 Jan 2026 10:06:03 +0100
+ Fri, 02 Jan 2026 01:07:01 -0800 (PST)
+Message-ID: <5cb2ccfd-4c5f-45dc-bd15-cb64995f2074@redhat.com>
+Date: Fri, 2 Jan 2026 10:06:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] MAINTAINERS: Add EEPROM 93xx section
+Subject: Re: [PATCH v2 4/4] MAINTAINERS: Add MAX78000FTHR section as orphan
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: berrange@redhat.com, alex.bennee@linaro.org, Stefan Weil <sw@weilnetz.de>
+Cc: berrange@redhat.com, alex.bennee@linaro.org,
+ Jackson Donaldson <jackson88044@gmail.com>, qemu-arm@nongnu.org
 References: <20251220173336.3781377-1-armbru@redhat.com>
- <20251220173336.3781377-4-armbru@redhat.com>
+ <20251220173336.3781377-5-armbru@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -138,17 +139,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251220173336.3781377-4-armbru@redhat.com>
+In-Reply-To: <20251220173336.3781377-5-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -167,32 +168,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/12/2025 18.33, Markus Armbruster wrote:
-> Stefan Weil volunteered to serve as maintainer.  Thanks!
+> This machine was contributed by Jackson Donaldson a couple of months
+> ago.  Its RISC-V core is not implemented.  Unfortunately, Jackson
+> isn't able to serve as maintainer at this time, so add it as orphan.
 > 
-> Cc: Stefan Weil <sw@weilnetz.de>
+> Cc: Jackson Donaldson <jackson88044@gmail.com>
+> Cc: qemu-arm@nongnu.org
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Stefan Weil <sw@weilnetz.de>
 > ---
->   MAINTAINERS | 6 ++++++
->   1 file changed, 6 insertions(+)
+>   MAINTAINERS | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 > 
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index 746cca7ae9..3efc943c9b 100644
+> index 3efc943c9b..e91f9c4361 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -2706,6 +2706,12 @@ F: hw/nvram/chrp_nvram.c
->   F: include/hw/nvram/chrp_nvram.h
->   F: tests/qtest/prom-env-test.c
+> @@ -871,6 +871,14 @@ F: include/hw/misc/arm_integrator_debug.h
+>   F: tests/functional/arm/test_integratorcp.py
+>   F: docs/system/arm/integratorcp.rst
 >   
-> +EEPROM 93xx
-> +M: Stefan Weil <sw@weilnetz.de>
-> +S: Maintained
-> +F: hw/nvram/eeprom93xx.c
-> +F: include/hw/nvram/eeprom93xx.h
+> +MAX78000FTHR
+> +L: qemu-arm@nongnu.org
+> +S: Orphan
+> +F: docs/system/arm/max78000.rst
+> +F: hw/*/max78000*
+> +F: include/hw/*/max78000*
+> +F: tests/functional/arm/test_max78000fthr.py
 > +
->   VM Generation ID
->   S: Orphan
->   R: Ani Sinha <ani@anisinha.ca>
+>   MCIMX6UL EVK / i.MX6ul
+>   M: Peter Maydell <peter.maydell@linaro.org>
+>   R: Jean-Christophe Dubois <jcd@tribudubois.net>
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
