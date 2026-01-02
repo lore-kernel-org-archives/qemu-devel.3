@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2D48FA3728
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 18:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75361FA3755
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 18:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbji8-0001sb-7u; Fri, 02 Jan 2026 13:17:16 -0500
+	id 1vbk0h-0000Zu-AI; Fri, 02 Jan 2026 13:36:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vbji3-0001s0-7A
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 13:17:11 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vbk0c-0000Yy-1k
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 13:36:23 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vbji1-0000Pi-Dr
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 13:17:10 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 30845336CC;
- Fri,  2 Jan 2026 18:17:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767377826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=/lLW7KtM15DzpIj6tfDWd+/fpdO8mgZk2O9d1zqSK3I=;
- b=PcnHTLjvaOiL4NPzEwKnzMe0N/aOymrudomE9lGj/6IuAVZzPm4IgAJb1/m9EsVZM66ALU
- a8u5W/pYrMmMxPNGDU0KOVHp2fTnEkWe2ahhQbld3m/t7DPpvJbYy4N7F5TQP1h/7v/JmF
- ntT2rBCOCwlWdaRt6Zpd0sx1n1m6W98=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767377826;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=/lLW7KtM15DzpIj6tfDWd+/fpdO8mgZk2O9d1zqSK3I=;
- b=0sZ9Vsmo5VA/XE8RBP4mDhXLrjw8Ghvk3vTduHkOYo8XUAk0jv8r8Ct8nXJSuN8zjV1OL/
- a26Yrd12wNZ6wKDA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767377825; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=/lLW7KtM15DzpIj6tfDWd+/fpdO8mgZk2O9d1zqSK3I=;
- b=LWdMfzFfRKOVUXC4BXQSmsIzMv5QBTrr4y9ST9uJzJSzvOlbG14oYI33NAW7PgOfWaVFvd
- PG2Xhe58RP3THNL1eLy64IFJuvs5YNJvQKaQ+JLRomnSfvRCjgwknqyaqDr8XXnm6axNTA
- zSa171UnlTiQWDaH2oRYBCkD89p4ns0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767377825;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=/lLW7KtM15DzpIj6tfDWd+/fpdO8mgZk2O9d1zqSK3I=;
- b=vnuaBZhXukm1I9lUDJpllMYQ4wNtrMjLjIP+J1wKNnQRc3sYWCio5DUHGJgG8TzuIFw0Tf
- fW6yRK/RT/yL9VDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9215B3EA63;
- Fri,  2 Jan 2026 18:17:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id raM8FJ8LWGkhfwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Jan 2026 18:17:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3] tests/functional: Allow tests to be run individually
-Date: Fri,  2 Jan 2026 15:17:00 -0300
-Message-ID: <20260102181700.11886-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vbk0Z-0003US-Ry
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 13:36:21 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7f121c00dedso16362879b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Jan 2026 10:36:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767378978; x=1767983778; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WOXWujS7VIn0EAfL1fKGv8JLn2R7dNSkrqZVX5tc8JY=;
+ b=PvtcCSRRw6jZEYgCGJ757UgLDxhc7OqguOta/8MXTB1FGCcZPPVnmX/cGbeFy6ZdmI
+ dd+ptrC7vykiOpZvy4uBZE7VRdyxjFVoQwiXtCNEwztuBrrU+oi9Bsc8bQjjNA8wg2RL
+ uDqbxdMYPkFS0eqxtvk8wsmXhU2FQ3wcci0sBUUM5eI4cYIExLs90epQWokT7ol+aIre
+ HorQaHSD88+OSspSYBpciCMFHNzB8cKygRNVs2BAGQVylGXzWeZCg4JV9J/84oYILAJj
+ 4xaSqvumiy08fgOsZYDBABAvLeBUB21eUzg+nfYB7JO7P44huku8uXcCPxdltscbcBSF
+ PTEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767378978; x=1767983778;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WOXWujS7VIn0EAfL1fKGv8JLn2R7dNSkrqZVX5tc8JY=;
+ b=VHRDx57EiunfuT/v8+YQc1bgyzB5tsoHAebUsQcyj58rA8DPj/+a31tkCrTEiiNj+8
+ OWhm/qB0k/WUbJoNp2reAZcRlSG9pv7MqbrhJOdgyHeDiM0rMs8rKTN/bI9NlDnaXKzg
+ q7+NEHSTCFhQkqyjSlcDUpelyGgJlYvZTqPlswrlpIfwIfprCEkV8dZmVX67FQlsItaR
+ 4S8B+5A3KgJ4xGIMmQSPQJk/OSHTIX0MvJGnzk9YpKY1XhszoaS4E4bUZV9QlDfaPxc9
+ 8xKIlOMGtuTN9/EXcZaCIR8dhQvKScOlCYmobx2JTLE4nUa4oSSg+Pd0aal2nu9q2an+
+ D5Fw==
+X-Gm-Message-State: AOJu0YyFtIoPekpzCiWy+lsubz9JvkzkTfB+Ql8qYdfKjAzQuIb33uuc
+ afRUrlH8jCsb5ap8hJ5tgnSEMSOOg9YNXfrNq2fA+DHEVh5xRL8ObrZlQR5np8GjkoA=
+X-Gm-Gg: AY/fxX56AopGvuik/UtvVqcfNKpjZ7FvUdTfMWcRnMzC56Dn4rc9JiG4aOEW0CNFHFx
+ LPqMHfGorWiNkPZt3+SH9XBR+1H7WqzGrTqepET5aG1WQQMF/a+j3hIvwNbuZnxnAjGnfoA0qYv
+ WrfSZS8oLmYeV+WXC5FFrtdegH3v9+YugZaXTvEEn+Qtmg4IcquEhx60vJSrZ//dbjdOxM7S+S/
+ Xi4SWZbXN8Kjqi0gmCmArGHHHzSC73/wpEn/UrJMpGiNGPYNES2oFY/rsePq0np2GPM4LwkPYHu
+ Y1X1QBgko9Xk2X7kCc3xFX7lYOzzW9bUT2Xove6za1OFZVEO0VJKhHPZK3KK9fbvx3vNGcsNk2T
+ tMAlDSC+bS7GLs5C5w2VOIP9aRkTNKSaAa5JuyAElaRN2qCWJ3zcPVGzWjz/rye90mKAKrQrc0U
+ CCetMFy4n0LoI/ysSj2rhAcfiddGLEkpYnuyjSOe7nA21mDfUNYyZlidDA
+X-Google-Smtp-Source: AGHT+IHVC6kusus7RKMCafSmgK8Q9Vbd49+ouAjVuVuZLVSctvcKz+D3QVJju/s0pM+wYTM2ipdtCQ==
+X-Received: by 2002:a05:6a00:2345:b0:7ff:d378:98f with SMTP id
+ d2e1a72fcca58-7ffd3875007mr36047257b3a.37.1767378978029; 
+ Fri, 02 Jan 2026 10:36:18 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7ff7a93b441sm40510897b3a.9.2026.01.02.10.36.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Jan 2026 10:36:17 -0800 (PST)
+Message-ID: <f35b6016-4a8a-4f25-9578-c47588c73b1b@linaro.org>
+Date: Fri, 2 Jan 2026 10:36:17 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/11] plugins: enable C++ plugins
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ rowan Hart <rowanbhart@gmail.com>
+References: <20251231073401.2097765-1-pierrick.bouvier@linaro.org>
+ <87h5t4xpya.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87h5t4xpya.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.995];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,test_pseries.py:url,testcase.py:url];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,110 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The functional tests currently don't allow a single test to be
-selected for execution by dotted name, e.g:
+On 1/2/26 2:35 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+> 
+>> Writing plugins in C can be sometimes tedious, especially when using Glib to
+>> keep track of execution state. We can directly use the same C API but write our
+>> plugin in C++, benefiting from its great standard library offering strings,
+>> smart pointers, data structures and synchronization mechanisms.
+>>
+>> It's common for downstream QEMU forks to provide C++ for plugins, like this:
+>> - https://github.com/panda-re/panda/tree/dev/panda/plugins
+>> - https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
+>>
+>> Hopefully this will help more people to use upstream QEMU, and as a benefit, get
+>> their contribution back and help to develop plugins ecosystem upstream directly.
+>>
+>> This series first cleans up build system for plugins, factorizing details
+>> between contrib/plugins and tests/tcg/plugins folders.
+>> Then, we perform codebase cleanups to fix conflicts between existing headers
+>> and C++ headers.
+>> After that, we can update the C++ standard used by QEMU, to benefit fully
+>> from latest updates of the language.
+>> Finally, we define an empty C++ plugin, making sure we can keep track of
+>> possible regression in qemu-plugin header.
+>>
+>> Note: This series is *not* a trojan horse to bring C++ in QEMU
+>> codebase, nor to define an alternative C++ API for plugins. It's just enabling
+>> more users to get the most out of existing C plugin API.
+> 
+> I don't have any fundamental objection to allowing this - as you say it
+> keep the existing API and just makes it easier for the plugin authors to
+> use C++.
+>
 
-./build/run tests/functional/ppc64/test_pseries.py PseriesMachine.test_ppc64_linux_boot
-                                          ^
-The issue is that the testcase.py main function passes the test
-module's name as the second argument to unittest.main(), which makes
-it ignore all other positional arguments (presumably because the
-module is already the superset of all tests).
+Sounds good, thanks Alex.
 
-After commit cac08383f0 ("tests/functional: expose sys.argv to
-unittest.main"), the situation improves by passing the rest of the
-argv from the command line invocation into unittest.main(), but it
-still doesn't fix the issue. The short form options are now accepted,
-so the -k option could be used to filter for a pattern, which is
-useful, but not the same as listing the test names.
+> It would be interesting to see if there are any other changes that would
+> also be useful for other language bindings. I suspect the most relevant
+> would be Rust bindings for the plugins.
+>
+It would be an interesting topic, and I feel that the right way to 
+provide Rust support would be to offer a new API (using existing C one 
+internally) embracing its philosophy, instead of direct bindings to the 
+existing C API. Some people already explored this and it could be a 
+great source of inspiration:
+https://github.com/qemu-rs/qemu-rs
+It's definitely out of the scope for current series and C++ support though.
 
-Fix this by passing the test module name via the "module" argument to
-unittest.main() and stop touching argv. The ways of invoking tests are
-now as per unittests documentation (-k still works):
-
-  Examples:
-    test_pseries.py                           - run default set of tests
-    test_pseries.py MyTestSuite               - run suite 'MyTestSuite'
-    test_pseries.py MyTestCase.testSomething  - run MyTestCase.testSomething
-    test_pseries.py MyTestCase                - run all 'test*' test methods in MyTestCase
-
-Note that ever since we've been programatically passing the module
-name to unittest.main(), the usage 'test_pseries.py test_pseries' was
-never valid. It used to "work" just the same as 'test_pseries.py
-foobar' would. After this patch, that usage results in an error.
-
-Also note that testcase.py:main() pertains to running the test module
-that invoked it via QemuSystemTest.main(), i.e. module == __main__. So
-the 'discover' usage of unittest doesn't apply here, the module is
-already discovered because that's where this code was called from to
-begin with. This patch could just as well call unittest.main() instead
-of unittest.main(test_module), but the latter provides nicer error
-messages prefixed with the module name.
-
-Tested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-v3: rebased over ./build/run changes
-v2: added docs
----
- docs/devel/testing/functional.rst      | 15 +++++++++++++++
- tests/functional/qemu_test/testcase.py |  7 +++----
- 2 files changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index 1978f96eba..60a427d175 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -60,8 +60,23 @@ Assuming the current working directory is the top level source checkout
- and the build directory is './build'::
- 
-   $ export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
-+
-+Run all tests from a test file::
-+
-   $ ./build/run tests/functional/x86_64/test_virtio_version.py
- 
-+Run all tests from a test class::
-+
-+  $ ./build/run tests/functional/x86_64/test_virtio_version.py VirtioVersionCheck
-+
-+Or a single test::
-+
-+  $ ./build/run tests/functional/x86_64/test_virtio_version.py VirtioVersionCheck.test_modern_only_devs
-+
-+Filtering test names also works::
-+
-+  $ ./build/run tests/functional/x86_64/test_virtio_version.py -k modern
-+
- The test framework will automatically purge any scratch files created during
- the tests. If needing to debug a failed test, it is possible to keep these
- files around on disk by setting ``QEMU_TEST_KEEP_SCRATCH=1`` as an env
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 58f2740100..fa100d9632 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -249,17 +249,16 @@ def main():
-         warnings.simplefilter("default")
-         os.environ["PYTHONWARNINGS"] = "default"
- 
--        path = os.path.basename(sys.argv[0])[:-3]
-+        test_module = os.path.basename(sys.argv[0])[:-3]
- 
-         cache = os.environ.get("QEMU_TEST_PRECACHE", None)
-         if cache is not None:
--            Asset.precache_suites(path, cache)
-+            Asset.precache_suites(test_module, cache)
-             return
- 
-         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-                                    test_output_log = pycotap.LogMode.LogToError)
--        res = unittest.main(module = None, testRunner = tr, exit = False,
--                            argv=[sys.argv[0], path] + sys.argv[1:])
-+        res = unittest.main(test_module, testRunner = tr, exit = False)
-         failed = {}
-         for (test, _message) in res.result.errors + res.result.failures:
-             if hasattr(test, "log_filename") and not test.id() in failed:
--- 
-2.51.0
-
+Pierrick
 
