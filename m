@@ -4,96 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED90EEE265
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 05:02:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C63EEEE265
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Jan 2026 05:12:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vbXIJ-0005cm-67; Fri, 02 Jan 2026 00:01:47 -0500
+	id 1vbXSG-0000NT-5W; Fri, 02 Jan 2026 00:12:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vbXIG-0005cH-TS
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 00:01:45 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vbXIF-0006qa-2U
- for qemu-devel@nongnu.org; Fri, 02 Jan 2026 00:01:44 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-34aa62f9e74so15082070a91.1
- for <qemu-devel@nongnu.org>; Thu, 01 Jan 2026 21:01:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vbXSE-0000NC-G0
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 00:12:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vbXSC-0000N2-Ji
+ for qemu-devel@nongnu.org; Fri, 02 Jan 2026 00:12:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767330718;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LcyFKho138SsiiO8BN1LSqVjTxLnLBkpfoWMKdxc3Cc=;
+ b=BkpkAEzQkE+GbE3KVjTCSyO71sLVWshmaYplvNctti2G6U5H/liJMnIdXos/9uZ9x2b6lv
+ hK/J4jjkU8mPI/gGygldwHr10kPZvII9v4notvaGoC5u9lUTw92Xc9k+5HepYqQg2mgjP3
+ sJi1wuWM3QDof1JvhBelwHdlmv9+pQM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-352-5ZkZKPXqOHqtZjmDf2M2Ig-1; Fri, 02 Jan 2026 00:11:56 -0500
+X-MC-Unique: 5ZkZKPXqOHqtZjmDf2M2Ig-1
+X-Mimecast-MFC-AGG-ID: 5ZkZKPXqOHqtZjmDf2M2Ig_1767330716
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-477964c22e0so86730465e9.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Jan 2026 21:11:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767330101; x=1767934901; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xl3krVWdC0nnBH5V5QytgIWOb85N/rQRWfUSupDomBk=;
- b=NGMJkFqFvB2/mHL/4NYGNir2P5NGTU9Cj8A9PV9te6O+QGyvyY7gGSWLSxGSfVej5X
- xGmk0yKn31AEi3rad8so2nyUlAx/7mL+AOTIpK3goqfrfqlF8721KZRKvW8Hzdj5ScHM
- KTeajcf5HI19IPhvCOmLQ1NCFYSUtlfECRE3fnsFVbft81nQtjx5TZy4Pjgy5lvdLelP
- wduCBPUN5bQh+YgtwdBQrbF7nkWn+A2h3PmpOvYgTCnVzE4GT5dP7HSQ9sRGGg+Wr8Y0
- 9PdMWcLLAdt2Pqz3gDbNBRPDvCCP0PJVxUdDzIE4uo8wZXnstb6ZXGi/OUF3DUnyCsDD
- tc7w==
+ d=redhat.com; s=google; t=1767330716; x=1767935516; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LcyFKho138SsiiO8BN1LSqVjTxLnLBkpfoWMKdxc3Cc=;
+ b=A8FMC5h3M2VJ7fakXqnGb9nvwqvNgMeDT000flkPXqazPgJak/01RSk7/ql29b4Rv/
+ svG/hXwuvoQnZFjFZSd9rjDYijWmD1Bmeq1+FERMIfyZgkneDGTsyCjj3qDK+TzjGAWs
+ dTjfZxFJjt+cBUOkd+l6gWNMWvzMGWrfPPXhvGXDmRVdkyPwFrQSi51I0bI9VETEONo+
+ hY5lPJ0p+i9jYfvlK7zcLA9Q8eSXFkdKS4/C3C6hFJur68tLQR2t3P5augVRanZUnNAF
+ yWjQmmaOzFuLKmYU5Jor79y4wcWTgoyj2njvlrIabLd2Wr2sJLVDsW0BSkhZ6oOzY5iV
+ 6Jwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767330101; x=1767934901;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xl3krVWdC0nnBH5V5QytgIWOb85N/rQRWfUSupDomBk=;
- b=B1xeNBgj0qZMHXMRqCh3fdOpGul91LnW64rXU9DHmrh4GqvgSw1lFv4dFbCcufiTHr
- UIGR4YiL15Jiid2aaOjBEOvtAfiFHqFb97Ehd/EsUSKCue3rgKZW5FrpplsgfESPXISH
- AaVH9SSoefaUReE//v6SrR5eeUasKF3ofJPWEb9reKLWoqofgekH3pMoJpyrIa3H4gAC
- 8CaaIIBnTxi46kybXqJJf3QvWpEZLWZx9HNNa6vVebF6CC1er9jR5di2f9ntkZOqLfOs
- +s7kzjWw7JaVRZDZpI2K7CHTtt9ShLlVVHsQ7BdsLlmKY9356+ievlmSxf1TfnmOaf1G
- WDnA==
-X-Gm-Message-State: AOJu0YxhR7+ObB8F0e9DMFz+7HB/n9yZTjBK8I50UMJ6gVEsrIEAtgxv
- To5D4igO0EO1IS7A78xqNh4SWu09SjIB0JnAN/Qe9+PqUe2T9B1kwjJyfpfzFk12H30=
-X-Gm-Gg: AY/fxX7KNSX3B4N6A4AtK0LjvbbMurd0o8t6eUcj9UvHcv6QnGrKERba5/iC2vLLCvC
- mMsb9v6rcvMOnRFdm9v6r9ONFoYnjRmkEnffitezuC4V1rDHN26RVqh54SOeRCQr73o6Df5Wmfe
- eCfuRd1FDbbI/CDKkhZV6ips3qcA4Bj9OrMQS9qTLphRgK6eGeCrWL7D+xeRMctc7sRvuIasEdG
- hVlSUYfm44LwCVsrdpjs+Mc9KCK1ZwYtDtGSINEe08S9C67zebvvDFxwOY4sjL3OJtvL4YLM8Mv
- TQYl036xj7vbTWgu80Rel5c7xbD7GANslL5Zhbgon784dTctCX9scrks4ZoeReedEVuevFWnhSo
- SXnglxsbJTEePq6uAYSzhCw2afYxOF64sWqdF3NWdLzljo+CQIxWVgv22iyBYj0jUhYgEPaSZDr
- XM+kLt8OUCRLRb4rbtu3mSj+OtSQRCWs3HUwVgu6S3UR1/aJsE5JJapoT4
-X-Google-Smtp-Source: AGHT+IGpgBBScNQSjcCu66WRKbCJW3jJ7pARVuEeEfT4QCg7LomywswoD5J0DekBClNEc+4zXq18OA==
-X-Received: by 2002:a17:90a:dfd0:b0:34c:253d:581d with SMTP id
- 98e67ed59e1d1-34e92139ac9mr32417073a91.9.1767330100778; 
- Thu, 01 Jan 2026 21:01:40 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34eacbca905sm16294044a91.5.2026.01.01.21.01.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Jan 2026 21:01:39 -0800 (PST)
-Message-ID: <523e0a47-9076-45cb-bdc7-8310cbde0566@linaro.org>
-Date: Thu, 1 Jan 2026 21:01:39 -0800
+ d=1e100.net; s=20230601; t=1767330716; x=1767935516;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LcyFKho138SsiiO8BN1LSqVjTxLnLBkpfoWMKdxc3Cc=;
+ b=u5yjme4pRFe4IJFv9cXSn0+oTcGnwuYRMWiaRQvqK+vIBZUA8iHvYt0DB4CDxibVs3
+ POHAHww9CBCKq1iLk6NX3/4jECTX1gl70Xr/a7qJDEVubpWn2gXHAZn0m5cBrq+EDU8l
+ 7SBQBNvxtufp6oC1HDn9GVDG+Jes1g9T+LZin9ViOMbe6yMO8WsybbOLjno+2j5m4zQk
+ cuzTSREZ2hMkPpIXh3RteEvVQnyU+j8WGIWqOICUY7lQulI/CtDbxUpI0DHA26gfW1CQ
+ sBUyhwhnLlrqfC8ZwMvzHyg/v6Y3HU2YAZoWIL//OpvSSVpB4EkeNI1nHVPSOcncR3HN
+ 6XOw==
+X-Gm-Message-State: AOJu0YwSW4FueGX7zznqm13C/z1bAiWhdUSftKozDVmUqO8rNfdtzteV
+ Q1XCuw0QilIL3YO7+AOCXi9cxRk5LjtEnIAlvmVh6kNG/GrBCDsLxsDlQwj3ktnmZzfc7wmcsIc
+ X0XyoTRQ1ilNc1wBKqFYjzMpnzBq/VziCCzg9YiIXHkND6DhgYEq93F613fOsiTtWroUDR+D/n6
+ bXTFRn/AxxuafVUXp9WkPFxh6CxhJFlqY=
+X-Gm-Gg: AY/fxX4xZnL7SEQcHBoMV/l2O+jMHAlAXKm5MhQS66fmc6cV/CAvpCvTfitkBxA5BOi
+ AItVC1rFYpt7VQknh5/MJ7tJES+g04AQ6IYYRyFE3u2HPWnncyC4TvjE2mvJCitmcwJZ+Tr0luV
+ xVIMxF2UTW00o9YEL7v/zJRUmvIRzIV69CKe5xI+85fZy0m9Z3wOhBztQU1qsf9m7YBAdK177jV
+ cqhFFCpWdkzKyyqY0v9stVNLUXtXsWfGUD97cNYi83x1JuXgoIz1GcbJ+LPGKVQnBlWVA==
+X-Received: by 2002:a05:600c:6749:b0:471:665:e688 with SMTP id
+ 5b1f17b1804b1-47d18be89d5mr589436005e9.17.1767330715721; 
+ Thu, 01 Jan 2026 21:11:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHcXr5ITMBE6AXPmi3avuo29xn6edfcySEZamVAnlncS/M5GTMxd/coeobiZo/2Dex78jsPgvniASR6Xj4I7gU=
+X-Received: by 2002:a05:600c:6749:b0:471:665:e688 with SMTP id
+ 5b1f17b1804b1-47d18be89d5mr589435825e9.17.1767330715339; Thu, 01 Jan 2026
+ 21:11:55 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/11] include: qemu/ctype.h -> qemu/qemu-ctype.h
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
 References: <20251231073401.2097765-1-pierrick.bouvier@linaro.org>
  <20251231073401.2097765-6-pierrick.bouvier@linaro.org>
  <CABgObfY1wpqryyBbf3tpCwZGT0izto_hda+izOUGZ57jwQzXMg@mail.gmail.com>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CABgObfY1wpqryyBbf3tpCwZGT0izto_hda+izOUGZ57jwQzXMg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
+ <523e0a47-9076-45cb-bdc7-8310cbde0566@linaro.org>
+In-Reply-To: <523e0a47-9076-45cb-bdc7-8310cbde0566@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 2 Jan 2026 06:11:45 +0100
+X-Gm-Features: AQt7F2pfHwSp3xrW3ggi0DwjwGSdarmPOpLAYtpFgIrtcxuPzoVhROUt9o14_e4
+Message-ID: <CABgObfZqauCJHZOgaH01pCC7t-7pA70QihpALieXtEBRYe8RLQ@mail.gmail.com>
+Subject: Re: [PATCH 05/11] include: qemu/ctype.h -> qemu/qemu-ctype.h
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000007d22fd064760bf2b"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,41 +122,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/1/26 12:38 AM, Paolo Bonzini wrote:
-> 
-> 
-> Il mer 31 dic 2025, 08:34 Pierrick Bouvier <pierrick.bouvier@linaro.org 
-> <mailto:pierrick.bouvier@linaro.org>> ha scritto:
-> 
->     This headers conflicts with C++ ctype header, included from iostream.
-> 
->     Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org
->     <mailto:pierrick.bouvier@linaro.org>>
-> 
-> 
-> Stupid question sorry: the header is meant to be included as qemu/ 
-> ctype.h, not ctype.h; why is include/qemu/ on the include path instead 
-> of just include/? Can the include path be changed instead?
+--0000000000007d22fd064760bf2b
+Content-Type: text/plain; charset="UTF-8"
+
+Il ven 2 gen 2026, 06:01 Pierrick Bouvier <pierrick.bouvier@linaro.org> ha
+scritto:
+
+>
+>
+> Thinking about all this, a good solution could be to isolate
+> <qemu-plugin.h> in a new subfolder (include/plugins). This way, we make
+> sure plugins are properly isolated, and there won't be any conflict with
+> existing ctype header, so this patch can be dropped.
+>
+> What do you think about this?
 >
 
-That's not a stupid question. Looking at it, inclusion comes from 
-plugins themselves, to include <qemu-plugin.h> instead of
-<qemu/qemu-plugin.h>. I thought it was needed somewhere else also.
+That's exactly how I thought it already worked. :)
 
-I think the rationale is to make sure that people can't pull anything 
-out of include/qemu from plugins code, which makes sense. That said, 
-there is still a lot of stuff that can be included from this folder.
+Paolo
 
-Thinking about all this, a good solution could be to isolate 
-<qemu-plugin.h> in a new subfolder (include/plugins). This way, we make 
-sure plugins are properly isolated, and there won't be any conflict with 
-existing ctype header, so this patch can be dropped.
 
-What do you think about this?
-
-> Paolo
+> > Paolo
+> >
+>
+> Regards,
+> Pierrick
+>
 >
 
-Regards,
-Pierrick
+--0000000000007d22fd064760bf2b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il ven 2 gen 2026, 06:01 Pierric=
+k Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro.org">pierrick.bouvi=
+er@linaro.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex"><br>
+<br>
+Thinking about all this, a good solution could be to isolate <br>
+&lt;qemu-plugin.h&gt; in a new subfolder (include/plugins). This way, we ma=
+ke <br>
+sure plugins are properly isolated, and there won&#39;t be any conflict wit=
+h <br>
+existing ctype header, so this patch can be dropped.<br>
+<br>
+What do you think about this?<br></blockquote></div></div><div dir=3D"auto"=
+><br></div><div dir=3D"auto">That&#39;s exactly how I thought it already wo=
+rked. :)</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div=
+ dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_q=
+uote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; Paolo<br>
+&gt;<br>
+<br>
+Regards,<br>
+Pierrick<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000007d22fd064760bf2b--
+
 
