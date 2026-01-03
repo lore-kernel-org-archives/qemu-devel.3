@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C0EFC6175
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 15:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87BA2FC6160
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 15:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vc3d8-0004nS-4w; Sat, 03 Jan 2026 10:33:26 -0500
+	id 1vc3dB-0004oz-Q6; Sat, 03 Jan 2026 10:33:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dilfridge@gentoo.org>)
- id 1vc3d5-0004lN-Rx
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 10:33:23 -0500
+ id 1vc3d7-0004mi-4K
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 10:33:25 -0500
 Received: from mail.gentoo.org ([2001:470:ea4a:1:5054:ff:fec7:86e4]
  helo=smtp.gentoo.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
  (Exim 4.90_1) (envelope-from <dilfridge@gentoo.org>)
- id 1vc3d3-0002ms-UZ
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 10:33:23 -0500
+ id 1vc3d5-0002ru-1S
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 10:33:24 -0500
 Received: from noumea.fritz.box
  (p200300e5cf308a00a98854cc6072a531.dip0.t-ipconnect.de
  [IPv6:2003:e5:cf30:8a00:a988:54cc:6072:a531])
@@ -28,15 +28,17 @@ Received: from noumea.fritz.box
  key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dilfridge@gentoo.org)
- by smtp.gentoo.org (Postfix) with ESMTPSA id 64CEB341081
- for <qemu-devel@nongnu.org>; Sat, 03 Jan 2026 15:33:11 +0000 (UTC)
+ by smtp.gentoo.org (Postfix) with ESMTPSA id C573A341E6C;
+ Sat, 03 Jan 2026 15:33:19 +0000 (UTC)
 From: =?UTF-8?q?Andreas=20K=2E=20H=C3=BCttel?= <dilfridge@gentoo.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH] linux-user: support for termios2 required after glibc 2.42
- upgrade
-Date: Sat,  3 Jan 2026 16:25:31 +0100
-Message-ID: <20260103153239.15787-1-dilfridge@gentoo.org>
+Cc: Luca Bonissi <qemu@bonslack.org>
+Subject: [PATCH 2/8] Add termios2 support to alpha target
+Date: Sat,  3 Jan 2026 16:25:33 +0100
+Message-ID: <20260103153239.15787-3-dilfridge@gentoo.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260103153239.15787-1-dilfridge@gentoo.org>
+References: <20260103153239.15787-1-dilfridge@gentoo.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2001:470:ea4a:1:5054:ff:fec7:86e4;
@@ -61,20 +63,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm re-sending a patch series here collected by @dramforever, see
-https://gitlab.com/qemu-project/qemu/-/issues/3065#note_2969046870
-https://github.com/qemu/qemu/compare/v10.1.2...dramforever:add-termios2
+From: Luca Bonissi <qemu@bonslack.org>
 
-With glibc-2.42 several architectures switch to termios2 for default terminal control,
-that however so far fails badly at the moment since the ioctls are unsupported.
-This series fixes that.
+Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Link: https://lore.kernel.org/qemu-devel/02dba951-1bcf-4c74-8a6a-f4f4aa5ce909@bonslack.org
+---
+ linux-user/alpha/termbits.h | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-While I have not authored any of this, I have reviewed it and have tested it extensively
-on alpha and (o32 be) mips. In both cases a Gentoo installation stage successfully
-rebuilt itself in a systemd-nspawn.
-
-Please consider for inclusion.
-
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3065
+diff --git a/linux-user/alpha/termbits.h b/linux-user/alpha/termbits.h
+index 4a4b1e96f2..b7be23ea13 100644
+--- a/linux-user/alpha/termbits.h
++++ b/linux-user/alpha/termbits.h
+@@ -17,6 +17,29 @@ struct target_termios {
+ 	target_speed_t c_ospeed;		/* output speed */
+ };
+ 
++struct target_termios2 {
++	target_tcflag_t c_iflag;		/* input mode flags */
++	target_tcflag_t c_oflag;		/* output mode flags */
++	target_tcflag_t c_cflag;		/* control mode flags */
++	target_tcflag_t c_lflag;		/* local mode flags */
++	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
++	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
++	target_speed_t c_ispeed;		/* input speed */
++	target_speed_t c_ospeed;		/* output speed */
++};
++
++struct target_ktermios {
++	target_tcflag_t c_iflag;		/* input mode flags */
++	target_tcflag_t c_oflag;		/* output mode flags */
++	target_tcflag_t c_cflag;		/* control mode flags */
++	target_tcflag_t c_lflag;		/* local mode flags */
++	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
++	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
++	target_speed_t c_ispeed;		/* input speed */
++	target_speed_t c_ospeed;		/* output speed */
++};
++
++
+ /* c_cc characters */
+ #define TARGET_VEOF 0
+ #define TARGET_VEOL 1
+@@ -247,6 +270,12 @@ struct target_termios {
+ #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
+ #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
+ #define TARGET_TIOCGSID	0x5429  /* Return the session ID of FD */
++#define TARGET_TCGETS2		TARGET_IOR('T', 0x2A, struct target_termios2)
++#define TARGET_TCSETS2		TARGET_IOW('T', 0x2B, struct target_termios2)
++#define TARGET_TCSETSW2	TARGET_IOW('T', 0x2C, struct target_termios2)
++#define TARGET_TCSETSF2	TARGET_IOW('T', 0x2D, struct target_termios2)
++#define TARGET_TIOCGRS485	TARGET_IOR('T', 0x2E, struct serial_rs485)
++#define TARGET_TIOCSRS485	TARGET_IOWR('T', 0x2F, struct serial_rs485)
+ #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
+ #define TARGET_TIOCSPTLCK	TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
+ #define TARGET_TIOCGPTPEER      TARGET_IO('T', 0x41) /* Safely open the slave */
+-- 
+2.52.0
 
 
