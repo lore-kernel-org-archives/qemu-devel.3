@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9820BFA3750
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 13:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE112FC6179
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 13:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vc1JG-0007vj-Io; Sat, 03 Jan 2026 08:04:46 -0500
+	id 1vc1JF-0007s5-8J; Sat, 03 Jan 2026 08:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vc1It-0007n8-0e
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 08:04:30 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1vc1Hc-0007T2-VY
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 08:03:13 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vc1Iq-0005Fr-Pt
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 08:04:22 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-4327555464cso3816474f8f.1
- for <qemu-devel@nongnu.org>; Sat, 03 Jan 2026 05:04:18 -0800 (PST)
+ id 1vc1Hb-00050l-AD
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 08:03:04 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43284ed32a0so2704885f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 03 Jan 2026 05:03:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767445458; x=1768050258; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767445381; x=1768050181; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=Ia9R79yRNWopSD0AE0WK/bL7v8Z1Xq0elWnJQXQZtmk=;
- b=pDEcWwYwCPd/v9wgNnTx/5S7fzQVY/W/q0jK2lgf0BrNIL0OKDUa94X8+vBIMVba+3
- qw5NITLdidm6vXE9enT/nBryylI5qI/EDLliVqo3VR/7pVs5wSj9q7M9UeX0RVbEjxaD
- W9RNSpWpyo+IYI0VIQgxx21GTRpIT5xEg5BertMb7zbg5byYojl4EdrZoS3TDCTfZ3Cd
- FItrZDtifWC34GUHYkxm6PKpDEnrJB0Du0yqXz+VFWYVhT4XkCDFqddDVr+twYSqM6hG
- iEKvfDBZuWT9/4mQfz2l0Ra6nzodQ25RPld7MUqjCODYNfyFaLzR7KJKP4uhb3b0a1NO
- 6Hbg==
+ bh=4D7zAZzX15Yitx7OEmCi8jMqe6J5O5RM0xcI53samB8=;
+ b=IHshF2jIwKXFLHLr2AB43Z6e5w3/Ybp4S67JWooio/iObsys0ACUsVJEuVXpolIaPB
+ dexYWfVsI5RLLvZTrRC1KKNdf1Nq7miZ37rEuyccaRITznl4fn5ZiSEsHHg8wggP1JCV
+ kpASvUI3s751yllZ61vuIXk7MzURaSGpGF69U3S7czKUhfC6i38WgQgXQI8zlvRT1jG+
+ JywHPw+eIqMvwJW6MpsDUfIOWrbenuxaE7qPBpeJOmwkbTmjp4LK3I90dAzmcvf6X2I+
+ R5Wp2WLAf7EI74rJaXH+Q6ttP7utGISdiyn432NYSa6+NwcKVJsYpG9W8gV2wPRL3vcO
+ 918Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767445458; x=1768050258;
+ d=1e100.net; s=20230601; t=1767445381; x=1768050181;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ia9R79yRNWopSD0AE0WK/bL7v8Z1Xq0elWnJQXQZtmk=;
- b=W76uj+mOIbvIB4KNcs7l9pIdHKgviIwbwZiWgYYDOGjhH40FdSUdCh/pb++TM+cxW2
- U0M8jEB60uJSq0U30LVVCHWFGp+8BUJtVMDy2dGGV9iOPFGZutinUmg4VjYXiE2bOC/E
- MMd5u7DjpQvm04AgGerNUMZg3apeBlOJL3WGyjzdFP00Y1Xg34N3bQ5i9at5W551ZqJi
- GVGjTlJzRgDenZt4rgcDfB8QhXpaMG3QXB16WoiphQVs5twLw03VD6OO7ffhLWMk3+eE
- AKnRvO42DhuM7Cf9iXRTiCRQwlI32JyMV1QCYSdqLV1JjXenm5t1XxLA2F1kr0kDvru+
- 36xw==
+ bh=4D7zAZzX15Yitx7OEmCi8jMqe6J5O5RM0xcI53samB8=;
+ b=r+rJ+drZJuHdyJ6NLQPmF7SyV95uPZup756VilCzxYlkr8IU0pVSzgl5ps9bJuiT1s
+ Q78sMgqfKAK8ejhH4yWM988a83MjsXOjbJoIWK/iNK+f7bk6LO7aVG2q2CJx5zzIEXzZ
+ dTUro1/zJ2QTE3+wlyB1szALkbLmuy2UwqlaDSJgGg8aUfhTjhFgE+QfrP7NDSR3pySi
+ oAw8NNc40848EMoj4x5VwKSZhpjk7Cg7qca0998m8wY3UF0vK8z6GX0wzXIuC/4LQtM4
+ l5m33JOtvO7tZfQJPlQts6mgusqvPM9+4H4uCKbdNDyJ+b9td2axXs6ZQdXFlcN5UOnY
+ fE8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9OgA4chEF5l24hPSyD7plMKTerkfdD5RhgtJiPKFQAB3CyoTqPBb9VeF9sUwFnk9zK/SlxbwfROeq@nongnu.org
-X-Gm-Message-State: AOJu0Yw9fewVH7S8cyniauSr+etsyT0YFJJAh9M3/4QHX4WFCS47TC5i
- D79nqrPhx6WEutzlr+opEKN93B0M9CntuNTGJcQ2WpszJ0O1Unr1By7rapFZPCjq1fQ=
-X-Gm-Gg: AY/fxX5mNRZg3kySNuRXqLo0MhdVsvf+Z4TWKDTVWIGEzBzcAcNPLEBcFZt/ZyVtfbN
- fs1K/xivcOXz3cay46szArLDNx6/KVEqpbVWDQIWSkoeOg7o4vqyt2ntiDIZ6bMPYTr6gLTm3vY
- uqwPrIJSrdUvtZYAW2zeXX6iV4pWGQk2gARGKFd2jTq1qSjxkPWmxlM6J9LO5Pfc221qW1UMvSr
- aUlkvbslH42C5NF77GIxGd1ONB6CC8ACjEicdFk5gPO4FYACJg1ntZ/qGLtln+/2UwE0yqkRbDx
- rKUm3YCzRZOy+DQe0yhlGUAX2wPjWKCTSqz8/Aby1oKF+mCaqAm2xzqTcjLjxjOsnFJAzv15HN4
- In5qn0sFU11nvFoE+MKHFZbKKbw5kwrO3LFiD3g+XkiS4GtDxHaFnmji9QXIhClZ6KcpIaTvn+I
- 611ze8kxa6x2gTWI/bMOMVp6LJN0cQNazNmdBALQLZvUHKqsybV6nvRf3+3BLXtPcfsIphdA==
-X-Google-Smtp-Source: AGHT+IFCr4QeyWfDno/wapVu60xAuyRC4gYSxRGj8waZDLpQSkXanWwVuOF8zDdvkyNzxgR3e50HUw==
-X-Received: by 2002:adf:f10b:0:b0:432:58f5:fb36 with SMTP id
- ffacd0b85a97d-43258f5fc8bmr42036296f8f.47.1767445457675; 
- Sat, 03 Jan 2026 05:04:17 -0800 (PST)
+ AJvYcCU/GdFbyBKzLHcfhn98ZI06fLxuWCjQba0yUFQiIkEtBG/2Thn3PdHKFrk4jyfgvPCnDDP8A3cw1f0r@nongnu.org
+X-Gm-Message-State: AOJu0YxrYydnB1SBwZlBrlJfwPG11nD3F/PbsYoVZb++amjIoopGev1n
+ /+mB1wPmCUzWZ9p+MfofZvgZapKqZ3ePX+yUH59H+h3k/3AqkLqZOjj6B1u6j0r7GQg=
+X-Gm-Gg: AY/fxX5i3a9SnTWc/xqezVpwKHJjSJJnOkEMsjxig+QZ8limg5kd8WtH779JKF7C0P7
+ ewsM6Wif/qS467kOLTJecdAhWljwGfq5ODtKGfO1Lxw716HPgcD5pWtUb4rHeZtQpPacjZQA9dF
+ S4ArEO/uGFOzpSLUEwLXFXXjRxCsjNJ2Fe2tBR2NdCsiqFy/5gA2JQPSYbAAEfzWGZFYESCQn5j
+ B8nh2jhDbjRHZd19npaujlb8gY61tautOcQEu7Jr+cENGPY4BQ0Lqk9PDCiUdQV1WkybLDpTICQ
+ iUQ+/wyBJN464P/XsUYuXWVWNXaUUBu0EoErNC5UGe7ita009tcEpm94VPjtwi62Oj03OLQC7pW
+ 2YjgxZwlpX35qAe1wY2gWk4fEK3qLr1JCzisbwnQA18eRi6o7Cu74aQXQnVa4/HLEaoJUep7Pk0
+ ZouCPjAs3JcnRl1p57Kdw50rVjG8pQz0zpDsa4nBbnpFJu6oTJef3XZJFjsTkzCeNXD+aNsA==
+X-Google-Smtp-Source: AGHT+IEVddUmF4S+Z9k14P+/jb4Boo7czvuprWwQqTI5uW5/uWFmFUFONP0m+YXm+m33WunxSzantA==
+X-Received: by 2002:a05:6000:609:b0:431:342:ad41 with SMTP id
+ ffacd0b85a97d-4324e6fa1a7mr59175461f8f.61.1767445381638; 
+ Sat, 03 Jan 2026 05:03:01 -0800 (PST)
 Received: from meli-email.org ([109.178.218.84])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324ea1afbfsm90338671f8f.9.2026.01.03.05.04.16
+ ffacd0b85a97d-4324ea830fesm90473350f8f.20.2026.01.03.05.03.00
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 03 Jan 2026 05:04:16 -0800 (PST)
-Date: Sat, 03 Jan 2026 15:03:09 +0200
+ Sat, 03 Jan 2026 05:03:01 -0800 (PST)
+Date: Sat, 03 Jan 2026 15:02:31 +0200
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>,
@@ -78,17 +78,17 @@ Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Daniel P . Berrang=?UTF-8?B?w6kg?=<berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH v2 09/11] qga/vss-win32: fix clang warning with C++20
+Subject: Re: [PATCH v2 08/11] meson: enable cpp (optionally) for plugins
 User-Agent: meli/0.8.12
 References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
- <20260102214724.4128196-10-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260102214724.4128196-10-pierrick.bouvier@linaro.org>
-Message-ID: <t8ahn3.37pmnt55v78m0@linaro.org>
+ <20260102214724.4128196-9-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260102214724.4128196-9-pierrick.bouvier@linaro.org>
+Message-ID: <t8ahkz.3or5mwb2bqvkf@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,39 +112,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 02 Jan 2026 23:47, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->C++20 deprecated such constructs.
->
->../qga/vss-win32/requester.cpp:380:32: error: bitwise operation between different enumeration types ('_VSS_SNAPSHOT_CONTEXT' and '_VSS_VOLUME_SNAPSHOT_ATTRIBUTES') is deprecated [-Werror,-Wdeprecated-enum-enum-conversion]
->  380 |     ctx = VSS_CTX_APP_ROLLBACK | VSS_VOLSNAP_ATTR_TRANSPORTABLE |
->
->This is a false positive, since VSS_CTX_APP_ROLLBACK is not a value
->defined in _VSS_VOLUME_SNAPSHOT_ATTRIBUTES enum.
->
+>Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-> qga/vss-win32/requester.cpp | 6 ++++--
-> 1 file changed, 4 insertions(+), 2 deletions(-)
+> meson.build | 3 ++-
+> 1 file changed, 2 insertions(+), 1 deletion(-)
 >
->diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
->index 5615955b6f3..74489fcd0ae 100644
->--- a/qga/vss-win32/requester.cpp
->+++ b/qga/vss-win32/requester.cpp
->@@ -377,8 +377,10 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
->      * To prevent the final commit (which requires to write to snapshots),
->      * ATTR_NO_AUTORECOVERY and ATTR_TRANSPORTABLE are specified here.
->      */
->-    ctx = VSS_CTX_APP_ROLLBACK | VSS_VOLSNAP_ATTR_TRANSPORTABLE |
->-        VSS_VOLSNAP_ATTR_NO_AUTORECOVERY | VSS_VOLSNAP_ATTR_TXF_RECOVERY;
->+    ctx = VSS_CTX_APP_ROLLBACK;
->+    ctx |= VSS_VOLSNAP_ATTR_TRANSPORTABLE |
->+           VSS_VOLSNAP_ATTR_NO_AUTORECOVERY |
->+           VSS_VOLSNAP_ATTR_TXF_RECOVERY;
->     hr = vss_ctx.pVssbc->SetContext(ctx);
->     if (hr == (HRESULT)VSS_E_UNSUPPORTED_CONTEXT) {
->         /* Non-server version of Windows doesn't support ATTR_TRANSPORTABLE */
+>diff --git a/meson.build b/meson.build
+>index 256cc0cdb21..38767c2c68a 100644
+>--- a/meson.build
+>+++ b/meson.build
+>@@ -77,7 +77,8 @@ python = import('python').find_installation()
+> 
+> cc = meson.get_compiler('c')
+> all_languages = ['c']
+>-if host_os == 'windows' and add_languages('cpp', required: false, native: false)
+>+enable_cpp = host_os == 'windows' or get_option('plugins')
+>+if enable_cpp and add_languages('cpp', required: false, native: false)
+>   all_languages += ['cpp']
+>   cxx = meson.get_compiler('cpp')
+> endif
 >-- 
 >2.47.3
 >
