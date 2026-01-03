@@ -4,56 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3660BFC6182
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 21:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB6BFC6182
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 22:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vc9QA-0004W2-AV; Sat, 03 Jan 2026 16:44:26 -0500
+	id 1vcA3q-0005GF-2v; Sat, 03 Jan 2026 17:25:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce.d86mq3ge2ho10b1=w20q0n0bx2we=2qt2ewlysgjf5v@em483429.getutm.app>)
- id 1vc9Q8-0004VM-UJ
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 16:44:24 -0500
+ <bounce.8bmvk0rz9lc5ar2=xj4ufw9t8b8q=dppqz225d7bekf@em483429.getutm.app>)
+ id 1vcA3o-0005Fe-5V
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 17:25:24 -0500
 Received: from a4i726.smtp2go.com ([158.120.82.214])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce.d86mq3ge2ho10b1=w20q0n0bx2we=2qt2ewlysgjf5v@em483429.getutm.app>)
- id 1vc9Q7-0002jr-7l
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 16:44:24 -0500
+ <bounce.8bmvk0rz9lc5ar2=xj4ufw9t8b8q=dppqz225d7bekf@em483429.getutm.app>)
+ id 1vcA3l-0006Ys-UX
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 17:25:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
- i=@getutm.app; q=dns/txt; s=s483429; t=1767476653; h=from : subject :
+ i=@getutm.app; q=dns/txt; s=s483429; t=1767479117; h=from : subject :
  to : message-id : date;
- bh=VR9Up13b8dTB1mgr5eJ6rhvArKgValaoK8FbWzJqJFA=;
- b=VpS8jAOaUx2VxjbJTKXJ4iUQlQR+yDYRC6vvDrmWSZIANx7tCEwJLXJut2yfK6H7NE5Sj
- ZWvXLbDIXuaXN7ouMWbp8EPekNGv4y38mxLYsHQ3nSvmv6e6dfGBi/SyD+58lsX0i9NLmrJ
- giBOtsBwfbGGj/Y7KPXRPL+z2t6TBWsZjluRF8QmvtBhyjAkbRg2XPgjXbf56hrh1mC6NuM
- Srkt4R2xTQyy5fEDaBLNAluBhMXhrIJwIZbhytUctqCWPVphDSR8FForMNglG+Q56e4u543
- vXQW+JA/KGvTsCC38lDY4IcpSZxyxTN2rROl1Lqb+Xv+nMZ6G7HYwo8p7HJg==
-Received: from [10.159.238.187] (helo=localhost.localdomain)
+ bh=B7pVOJ0j5v0+fbAscYvQFHDWgRZw9zn3ENoxemyE3kE=;
+ b=NOs+2+IWDjgP6qrOBe3yknKwAiPofrAVr6jOEI2aVM1ZWr1EBzNIzpfb1n1IBQBcnnUsj
+ 27HN9LbCX2JxXHkRkJqNV1uqe/g3PI3Co9iC4icZrJuQ6gce5QVGRb/KyX7J8xaJZPZ1334
+ Z7f7fWzGSYQOqR6IOzB9AVlzSnaURqzG9Wk+mVF5PHhvgCme+mrvvDBENPEpB2PpZkNiTcK
+ KXwa0pfz438Z8xIU+0LbXaCV/zYg7tNk+vZq79DkwNzHgcztT7DuVt63Xtw1aGTqpDzE2z/
+ LgoI2h22aR9+cgLmYbajZb+lFE9CLl5vZbOBav4cfY3u0IKQVQS4eMLA7RPA==
+Received: from [10.159.238.187] (helo=mail-ej1-f45.google.com)
  by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA512__CHACHA20_POLY1305:256)
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
  (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
- id 1vc9Pq-4o5NDgrrZL6-jU47; Sat, 03 Jan 2026 21:44:07 +0000
-From: Joelle van Dyne <j@getutm.app>
-To: qemu-devel@nongnu.org
-Cc: Joelle van Dyne <j@getutm.app>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH v3] virtio-gpu-virgl: correct parent for blob memory region
-Date: Sat,  3 Jan 2026 13:43:59 -0800
-Message-ID: <20260103214400.71694-1-j@getutm.app>
-X-Mailer: git-send-email 2.50.1
+ id 1vcA3T-FnQW0hPvzDF-Nw2B for qemu-devel@nongnu.org;
+ Sat, 03 Jan 2026 22:25:04 +0000
+Received: by mail-ej1-f45.google.com with SMTP id
+ a640c23a62f3a-b7ffa421f1bso130263766b.0
+ for <qemu-devel@nongnu.org>; Sat, 03 Jan 2026 14:25:02 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXR3qxZrKILkPaKqKh8TZuOPZagYhOGRTKuott4QGi82Bhr7kinVgH3B92EZdxrMtI/qVLvPBzTbsqm@nongnu.org
+X-Gm-Message-State: AOJu0YxmIJW3jLanwvYxvmN2ECtbju0mK+mlgJuASSahchyhTVzWNl7C
+ 5tsS3Iej7vBy4CLP5YocEpne9jG+mPT8hrE5e3x68s+a9lWOeflVwkRwUkvUnnYtN23G0AQXsgI
+ WNiLgegdFNp3JlYn3XPH2gBaqWEInYhM=
+X-Google-Smtp-Source: AGHT+IFoMT6yDZa1+K4htBpQMT7OnkOxi6pDAKUcHiySdp7Wqn7/l8i25AKi5j5g+25FxbT26ugLV/leIWxRuf/BKmI=
+X-Received: by 2002:a17:907:1ca7:b0:b80:499:8a80 with SMTP id
+ a640c23a62f3a-b83e26ffdacmr391301366b.20.1767479101251; Sat, 03 Jan 2026
+ 14:25:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251203040754.94487-1-j@getutm.app>
+ <20251203040754.94487-2-j@getutm.app>
+ <3a401334-700f-4b11-b006-a93470d38a66@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+E+eSBOEzzb-aO2B_yWtJeoK4QGvjf=pB555+GGE2U0OH=vbw@mail.gmail.com>
+ <f246dcbd-2a13-46e8-97cb-d6959d8115dc@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+E+eSCJ8y8RnGe99kFVSLbex_jE71z74+pF4aom-LMbjXgzPQ@mail.gmail.com>
+ <a4e9815c-8641-4250-9bf4-ec13fa49e1ee@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <a4e9815c-8641-4250-9bf4-ec13fa49e1ee@rsg.ci.i.u-tokyo.ac.jp>
+From: Joelle van Dyne <j@getutm.app>
+Date: Sat, 3 Jan 2026 14:24:49 -0800
+X-Gmail-Original-Message-ID: <CA+E+eSAKYCui8huYrZ=0Vw5pKQHXoGJjRPYb1Pr6ozSezXyUgA@mail.gmail.com>
+X-Gm-Features: AQt7F2p7aSc2KFCaeiYcmnRH1C5L73JerfGzXlH5WfARavdTl2A_ydUtcU5AcoA
+Message-ID: <CA+E+eSAKYCui8huYrZ=0Vw5pKQHXoGJjRPYb1Pr6ozSezXyUgA@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/7] egl-helpers: store handle to native device
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Report-Abuse: Please forward a copy of this message, including all headers,
  to <abuse-report@smtp2go.com>
-Feedback-ID: 483429m:483429abrvJvs:483429sW-ujAA395
-X-smtpcorp-track: 94kD0OWaS-Uz.QirYWaV5p0dr.6ei-qgSB8ok
+Feedback-ID: 483429m:483429abrvJvs:483429sWxEtmuJYa
+X-smtpcorp-track: JAh0_4lNiL1j.MI6jLNZihPTm.hG1_4wB0F-l
 Received-SPF: pass client-ip=158.120.82.214;
- envelope-from=bounce.d86mq3ge2ho10b1=w20q0n0bx2we=2qt2ewlysgjf5v@em483429.getutm.app;
+ envelope-from=bounce.8bmvk0rz9lc5ar2=xj4ufw9t8b8q=dppqz225d7bekf@em483429.getutm.app;
  helo=a4i726.smtp2go.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -77,57 +101,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When `owner` == `mr`, `object_unparent` will crash:
+On Wed, Dec 24, 2025 at 12:22=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2025/12/24 16:54, Joelle van Dyne wrote:
+> > On Tue, Dec 23, 2025 at 10:23=E2=80=AFPM Akihiko Odaki
+> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+> >>
+> >> On 2025/12/20 1:11, Joelle van Dyne wrote:
+> >>> On Wed, Dec 3, 2025 at 10:31=E2=80=AFPM Akihiko Odaki
+> >>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+> >>>>
+> >>>> On 2025/12/03 13:07, Joelle van Dyne wrote:
+> >>>>> Make way for other platforms by making the variable more general. A=
+lso we
+> >>>>> will be using the device in the future so let's save the pointer in=
+ the
+> >>>>> global instead of just a boolean flag.
+> >>>>>
+> >>>>> Signed-off-by: Joelle van Dyne <j@getutm.app>
+> >>>>> ---
+> >>>>>     include/ui/egl-helpers.h      | 2 +-
+> >>>>>     hw/display/virtio-gpu-virgl.c | 2 +-
+> >>>>>     ui/egl-helpers.c              | 4 ++--
+> >>>>>     3 files changed, 4 insertions(+), 4 deletions(-)
+> >>>>>
+> >>>>> diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
+> >>>>> index acf993fcf5..c239d32317 100644
+> >>>>> --- a/include/ui/egl-helpers.h
+> >>>>> +++ b/include/ui/egl-helpers.h
+> >>>>> @@ -12,7 +12,7 @@
+> >>>>>     extern EGLDisplay *qemu_egl_display;
+> >>>>>     extern EGLConfig qemu_egl_config;
+> >>>>>     extern DisplayGLMode qemu_egl_mode;
+> >>>>> -extern bool qemu_egl_angle_d3d;
+> >>>>> +extern void *qemu_egl_angle_native_device;
+> >>>>
+> >>>> I guess ANGLE will not be relevant for Metal and leaving it will be
+> >>>> misleading.
+> >>> What is your suggestion? This is just to remove "D3D" from the
+> >>> variable name. If you want to remove "ANGLE" from the variable name a=
+s
+> >>> well, it may be misleading because this variable is only used with an
+> >>> ANGLE EGL backend.
+> >> Looking the usage of the variable in your tree, I realized this variab=
+le
+> >> may not be necessary for this at all.
+> >>
+> >> There are two use cases:
+> >>
+> >> 1. To determine if VIRGL_RENDERER_NATIVE_SHARE_TEXTURE needs to be set=
+.
+> >> 2. To pass the device used by ANGLE to Cocoa.
+> >>
+> >> Regarding 1, virglrenderer can simply pass MTLTexture whenever the EGL
+> >> context is backed with Metal and Venus is in use.
+> >>
+> >> Although your code is modeled after the code dealing with Direct3D
+> >> handles, the functionality of your code is quite a different from it.
+> >>
+> >> Direct3D handles are used to "share" texture with other processes in a
+> >> zero-copy manner. It is an optional hint; dbus can fall back to use
+> >> OpenGL textures if they are missing, and the other displays just don't=
+ care.
+> >>
+> >> On the other hand, MTLTexture plays an essential role in your scenario=
+.
+> >> There are no corresponding OpenGL texture so no fallback happens.
+> > That's a good point, but there's two uses of MTLTexture: one as a
+> > direct parallel to D3D handles (vrend allocate a texture backed by
+> > MTLTexture; returns it in info_ext along with a tex_id) and one
+> > returned as part of the new API
+> > (virgl_renderer_create_handle_for_scanout) which does not have an
+> > associated tex_id.
+>
+> Thanks for clarification. I think the point I mentioned below still
+> holds; virglrenderer does not have any code that can be skipped for
+> MTLTexture with the absence of VIRGL_RENDERER_NATIVE_SHARE_TEXTURE.
+We support the same "hint" use case in vrend for MTLTexture. So,
+without that flag set, there will be no attempt to allocate a
+MTLTexture. This works regardless if Venus is used or not. However, in
+the Venus use case, the hint does not matter at all because as long as
+the new API virgl_renderer_create_handle_for_scanout is used, a
+MTLTexture is returned. In this sense, I think it makes sense to
+rename *D3D* to *NATIVE*.
 
-object_unparent(mr) ->
-object_property_del_child(mr, mr) ->
-object_finalize_child_property(mr, name, mr) ->
-object_unref(mr) ->
-object_finalize(mr) ->
-object_property_del_all(mr) ->
-object_finalize_child_property(mr, name, mr) ->
-object_unref(mr) ->
-fail on g_assert(obj->ref > 0)
+I agree with point 2 though, it is better to pass the native device
+handle from the Cocoa backend. I will wait for those changes to be
+upstreamed.
 
-However, passing a different `owner` to `memory_region_init` does not
-work. `memory_region_ref` has an optimization where it takes a ref
-only on the owner. That means when flatviews are created, it does not
-take a ref on the region and you can get a UAF from `flatview_destroy`
-called from RCU.
-
-The correct fix therefore is to use `NULL` as the name which will set
-the `owner` but not the `parent` (which is still NULL). This allows us
-to use `memory_region_ref` on itself while not having to rely on unparent
-for cleanup.
-
-Signed-off-by: Joelle van Dyne <j@getutm.app>
----
- hw/display/virtio-gpu-virgl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 18404be5892..b8a0af702e0 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -123,7 +123,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     vmr->g = g;
- 
-     mr = &vmr->mr;
--    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
-+    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
-     memory_region_add_subregion(&b->hostmem, offset, mr);
-     memory_region_set_enabled(mr, true);
- 
-@@ -189,7 +189,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-         /* memory region owns self res->mr object and frees it by itself */
-         memory_region_set_enabled(mr, false);
-         memory_region_del_subregion(&b->hostmem, mr);
--        object_unparent(OBJECT(mr));
-+        object_unref(OBJECT(mr));
-     }
- 
-     return 0;
--- 
-2.50.1 (Apple Git-155)
-
+>
+> >
+> >>
+> >> The difference shows that the VIRGL_RENDERER_NATIVE_SHARE_TEXTURE flag
+> >> is useful when dealing with Direct3D handles but not with MTLTexture.
+> >> The absence of flag tells virglrenderer that we do not need Direct3D
+> >> handle (because the dbus display is not used), and allows it to skip
+> >> some code to convert OpenGL textures to Direct3D handles).
+> >>
+> >> On the other hand, not passing MTLTexture in your scenario does not ma=
+ke
+> >> sense because it prevents the scanout at all. virglrenderer does not
+> >> have any code that can be skipped when the flag is absent. virglrender=
+er
+> >> can simply pass MTLTexture in your scenario.
+> >>
+> >> 2 implicitly lets ANGLE choose a device, but this can be suboptimal.
+> >> Ideally, Cocoa should instead choose a device because it knows what
+> >> device displays the window. Cocoa should pass the device it chose to A=
+NGLE.
+> >>
+> >> To demonstrate the point, I updated my tree to use ANGLE's Metal
+> >> renderer for OpenGL and to pass the device from Cocoa to ANGLE:
+> >> https://github.com/akihikodaki/v/commit/8f191a7d2c225fa601c22a783c24c8=
+1a3fda47fa
+> >>
+> >> By the way, I had to make a few modifications to ANGLE, Epoxy, and
+> >> virglrenderer to fix glitches when hosting glmark2 and Firefox on GNOM=
+E.
+> >> You can also find them with the above URL if you are interested.
+> > Thank you, we picked up a couple of your changes in the UTM branch
+> > already. Do you have plans to upstream those changes? And also, what
+> > are your plans for upstreaming the Cocoa GL backend changes for QEMU?
+>
+> It depends on changes.
+>
+> I intend to upstream the Cocoa change and the following virlgrenderer
+> changes once the libepoxy change to enable ANGLE is merged, which is
+> blocking forever... They are useless without the libepoxy change:
+> https://github.com/akihikodaki/virglrenderer/commit/6dfbc7e61a72347485c09=
+a171c8c6c0908e12a2a
+> https://github.com/akihikodaki/virglrenderer/commit/b12bda2fd272b0ffd0a9b=
+95a021e4a13e947749b
+>
+> I intend to upstream all two changes for ANGLE:
+> https://github.com/akihikodaki/angle/commits/v/
+>
+> The other changes are already submitted to the upstream if I don't miss
+> anything.
+>
+> Regards,
+> Akihiko Odaki
 
