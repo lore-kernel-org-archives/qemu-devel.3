@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7200FC6179
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 13:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99BF0FC6175
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 15:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vc1Kf-0000pk-Ud; Sat, 03 Jan 2026 08:06:19 -0500
+	id 1vc39z-0002ma-Nk; Sat, 03 Jan 2026 10:03:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vc1K5-0000Zd-BM
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 08:05:42 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vc39x-0002e5-RX
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 10:03:18 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vc1K0-0006DW-1h
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 08:05:35 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-477bf34f5f5so94218065e9.0
- for <qemu-devel@nongnu.org>; Sat, 03 Jan 2026 05:05:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vc39v-0002uI-Vb
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 10:03:17 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4779adb38d3so83211765e9.2
+ for <qemu-devel@nongnu.org>; Sat, 03 Jan 2026 07:03:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767445530; x=1768050330; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=QqgAj6fln7rKs7/PFoyYY+bWuK1XncGBIEWTKQs3/T8=;
- b=wOZSQhQugTip8UnjqX8Dw1c8YJ0l4RkpPgEWs1vgboVVbQXyj4fi4VkEsPc9ST0XJe
- 4RZgfoBQKQmNfBmrvsqp+EQRWUyjTTVgcMtjH7G30gUfDVKD8e3ZOcuvMJ+rpZU9uckN
- Sh+sCay/zlOqihuTiE5xP68MG1+I6FEcjJNSitGX3zRKzsOPT4j3HEeKI45BtoYBLEDY
- 4kRIhNnTbyJU/gVCfLCCjXG/IEtPThhNrGPAshYw+xb4tuJ4r6t+B4APPd0m+k42T3pM
- QB2WrHRLlgNlUeeH/VulTsVnWiUdbB2yTyFNsOnh5b35VJHl6TziuPNwgyrK3JKyueZD
- ahfQ==
+ d=linaro.org; s=google; t=1767452594; x=1768057394; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UeZj2ZQtdY8FAoWlI5KwKq/STWOdIJp4CZfl0pH4btA=;
+ b=STKgEPOpuvcYWlLvTGoLT7t05+R+AR+CeIrdLa4Y2SGRM5ZTusllFJFAZY05fJaPYg
+ oMNDAMl/belpe+dLRppNcZwQKD7zER8xMJLhk85jdcisT+mvVYB0PUDyaKiKgU1DdEwr
+ Mzfn+hr2oDqmEJUlHDo9TtsMnu84Co/JzyDWhBxyvWgecrUxzSE7XeDmZtzStLpZNVM0
+ qXWoMepkMhYotkxygkbrlhpwXE2QT01AEi2aIIUyN4EU32ul9J4z1LzETuSOQ/deCVCd
+ 6hTUROJQ9nxullv7UMQGhFpalH8X/Fdfc77tiUAH8CtL94ZN6KQF6jAOzTriqXfwwTFL
+ ykZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767445530; x=1768050330;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20230601; t=1767452594; x=1768057394;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QqgAj6fln7rKs7/PFoyYY+bWuK1XncGBIEWTKQs3/T8=;
- b=eHgz7vuCl0OSijOw1NW/yElIPHVgQ/emwijY/hvzZO6JqWN5OWeZ7WlzSFkFrhN/pF
- Ywsznk8ay3EnkOht5u42TT4tMeNoNAhqymgZPTZGnnPID+v+6MfGc13cVBLKvldksE/w
- tpvXZjGQltXiIM/5dH5MUv2mi/TXD90QHIwZGgNnlsdF4dMmO8fMFW9+OmBjpPQbFLaU
- 9kB8bTvCfnVCFP1TghJVyiW6RScUvrEZcqZWeYX0591a4d61Y6UrZj85Aj95mrM6O8Un
- /aYWQjv+dpRvqf3iRRVpvEkaOqVVXsCU0X6thZssimd037hbKFQSnXHWSjXdlcBkINkT
- jrVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX7xwKwmZvwCbAxg89evNGskDguAIdsjKtHdNlyaO7x7Y6aNwt5Ppjzm1r+EKvxgk1ZlztXPliG9mJo@nongnu.org
-X-Gm-Message-State: AOJu0Yz695ZZpaqmm1J5CDulDYGp9m2aLHjLIYc0/mMXwLPwg3Tsgo+X
- e5zvJsAUM4NwFh3ienGaZk0Rsv74nrBjLLDZuDV7m/QMyyCgBG/iB1QfEayQBWADyk8=
-X-Gm-Gg: AY/fxX7evN7ASX98Bi7RMieeCCDMiaZUxUYoMmKr6DrRRBSPHK/8BHYNo+PoGWWjChC
- 17bVX0K4+M6q+90e65y7RmCkPlK31VD50IXxAEfkVEDSnvgbVAvWfPbCUdFdkvzlxBwsQ3Tl1Or
- gByKXhalsgJW8YVnq2P/oMNw6KxsYsYJ+zMcztpC+V9VApOibQOCvLrAaMQmUaUj5aOk8w4IJSN
- LEol1CE2yhsmPQrulU0sIyzJLBvCeu6AwbGr9zxvnQi8BJuoQbz2yGawMlsjt6YeAKSjckcDOl9
- 9JNPHK/lozmsEHvkFKD97wgsdC0mPYAn9BGrF8NLk8cS7UGDLS9ZkAl7kk3Ofz+dWbpPhX3nwer
- PXq4/xmVVLRbq98er77lkoK+Chl1UF3V3toSXsixclq7lOtkTMR0OWGwi0tBwlYimUsOYwdWQ8g
- oavQsgtkLUtjLyhedbi/bFEZxhzFsmv7TFMSBOykDjK0f9+D19Yu/xmQx/bn2pZJlLIU4rmA==
-X-Google-Smtp-Source: AGHT+IF8WkcKio6ybBiJ6+8V6Yfo44X61b0ypDHhc+35Mg/j7RTzdjUuka/iHZdcSCBjQugeLsPrmQ==
-X-Received: by 2002:a05:600c:8b11:b0:477:55ce:f3bc with SMTP id
- 5b1f17b1804b1-47d2d273515mr538126345e9.19.1767445530064; 
- Sat, 03 Jan 2026 05:05:30 -0800 (PST)
-Received: from meli-email.org ([109.178.218.84])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d6d452c69sm44733105e9.9.2026.01.03.05.05.29
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 03 Jan 2026 05:05:29 -0800 (PST)
-Date: Sat, 03 Jan 2026 15:05:03 +0200
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P . Berrang=?UTF-8?B?w6kg?=<berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH v2 11/11] contrib/plugins: add empty cpp plugin
-User-Agent: meli/0.8.12
-References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
- <20260102214724.4128196-12-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260102214724.4128196-12-pierrick.bouvier@linaro.org>
-Message-ID: <t8ahp3.j8i64w8mt9gb@linaro.org>
+ bh=UeZj2ZQtdY8FAoWlI5KwKq/STWOdIJp4CZfl0pH4btA=;
+ b=L8KEVaJBQfBiYQbwlV0yiQGUuaIfQ5jZsRCjJ8YdJe9AoZ9MR34EUEjPzIF/xgqwZG
+ 8YR64U4SobNv9NFn2xGAN0B2CdZoUj5KSTn2yd38uiRpKztyOBlNKhbWnQTP8J8NbILx
+ GMIU/uYakNJugzR8WXBsdiw0Ud7NjJV8pvPXu8kYjt2aALB2sOf9DtHzwQsTjXYa1KOM
+ 3pcVS11aLpVS44779PCej5Du91Z65KdVMXEFmk/E5fAbM22w7RRco/e4j/vx0TBpvqNj
+ gAP0B8xYS9iXBOzi3k7JB+YB65Tn9lvvrsAXzCwxbbPg1BZGyqmKO2vvsOQwh8cE1Syz
+ JtWg==
+X-Gm-Message-State: AOJu0YyddvTBQN3jb7bHTzlz+DEwKyeY1KKrXEcxpILy376HIJx5QJna
+ nnR1uSD4Xws4sXeg0cbOXW6vksbJ8z2ARKOmh21FzPoDVmH/nEhzMPqV2Ou0mifcHw4=
+X-Gm-Gg: AY/fxX6AWcuctOERnsw5o1avw68vH7o8HlXBkbDW4dp41Syk4u1AQxl7q0krL0uy3Tn
+ Qgj/2+6evgRFQNu4BNf3687P4eYeuI+GoGqV64igW8oeF5HLqD88px7Bk8SZmZvQH4htlkFfmg0
+ ImqblGWMVD3YPknXCN5BA5Z0DOZn1372GRzwJ/FNK0hHBY/eIcrtTkUh/4pYUsbTnvX9yRTBT4J
+ NdlItYXPXd37xNuXXwAyTnZGm2aC/64mNYT3tSc8ieHoO5RdEMQ/nHhpunsIRzv4DF3Qi1fpCqw
+ 0Aa0fO+LrRSYliL9fphFNa9lFv/N2fRQFyiWf/CGWSi0PZTSQ1l1sUkua3rJ1a1F/AS7EuF2Dqd
+ ACzqfZeqlhqaJv3QYDmMxltYjcHfhgRp1AFVaKeVBa21yoKzX3o+c/pYNzM5El0GYqt/I9pxYyQ
+ JwDOdxrDIkuiU=
+X-Google-Smtp-Source: AGHT+IEQx57yfi11Kh20XcGH2IfFWJY38ZYL3kJFIdBSn5xAJIMgdtrIxlzB+GnSXdmL17acJgK6yA==
+X-Received: by 2002:a05:600c:154b:b0:458:a7fa:211d with SMTP id
+ 5b1f17b1804b1-47d1958fd40mr518129635e9.29.1767452593639; 
+ Sat, 03 Jan 2026 07:03:13 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d6d13ed0asm43115965e9.3.2026.01.03.07.03.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 03 Jan 2026 07:03:11 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 197745F7FE;
+ Sat, 03 Jan 2026 15:03:08 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Jim MacArthur <jim.macarthur@linaro.org>
+Cc: qemu-devel@nongnu.org,  Gerd Hoffmann <kraxel@redhat.com>,  Stefano
+ Garzarella <sgarzare@redhat.com>,  Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH] docs/system/igvm.rst: Update external link
+In-Reply-To: <20251230-igvm-documentation-fix-v1-1-865750a66cc8@linaro.org>
+ (Jim MacArthur's message of "Tue, 30 Dec 2025 19:23:33 +0000")
+References: <20251230-igvm-documentation-fix-v1-1-865750a66cc8@linaro.org>
+User-Agent: mu4e 1.12.14; emacs 30.1
+Date: Sat, 03 Jan 2026 15:03:07 +0000
+Message-ID: <87h5t268no.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,164 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 02 Jan 2026 23:47, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->This plugin makes sure we can compile in C++ while including qemu-plugin
->header. It includes all C++ standard headers, up to C++23 standard,
->minus the ones that are missing in the oldest environments we need to
->build for.
->
->Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->---
+Jim MacArthur <jim.macarthur@linaro.org> writes:
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Also updated revision to 3.43.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3247
+> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 
-> contrib/plugins/cpp.cpp     | 119 ++++++++++++++++++++++++++++++++++++
-> contrib/plugins/meson.build |   4 ++
-> 2 files changed, 123 insertions(+)
-> create mode 100644 contrib/plugins/cpp.cpp
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+> ---
+> Just fixes a broken link for the AMD64 Architecture Programmer's
+> Manual.
+> ---
+>  docs/system/igvm.rst | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
->diff --git a/contrib/plugins/cpp.cpp b/contrib/plugins/cpp.cpp
->new file mode 100644
->index 00000000000..1ff54896d97
->--- /dev/null
->+++ b/contrib/plugins/cpp.cpp
->@@ -0,0 +1,119 @@
->+/*
->+ * SPDX-License-Identifier: GPL-2.0-or-later
->+ *
->+ * This C++ plugin ensures we don't have regression when compiling C++.
->+ */
->+
->+#include <qemu-plugin.h>
->+
->+/* https://en.cppreference.com/w/cpp/headers.html */
->+#include <algorithm>
->+#include <any>
->+#include <array>
->+#include <atomic>
->+#include <barrier>
->+#include <bit>
->+#include <bitset>
->+#include <cassert>
->+#include <cctype>
->+#include <cerrno>
->+#include <cfenv>
->+#include <cfloat>
->+#include <charconv>
->+#include <chrono>
->+#include <cinttypes>
->+#include <climits>
->+#include <clocale>
->+#include <cmath>
->+#include <codecvt>
->+#include <compare>
->+#include <complex>
->+#include <concepts>
->+#include <condition_variable>
->+#include <coroutine>
->+#include <csetjmp>
->+#include <csignal>
->+#include <cstdarg>
->+#include <cstddef>
->+#include <cstdint>
->+#include <cstdio>
->+#include <cstdlib>
->+#include <cstring>
->+#include <ctime>
->+#include <cuchar>
->+#include <cwchar>
->+#include <cwctype>
->+#include <deque>
->+#include <exception>
->+#include <execution>
->+#include <filesystem>
->+#include <forward_list>
->+#include <fstream>
->+#include <functional>
->+#include <future>
->+#include <initializer_list>
->+#include <iomanip>
->+#include <ios>
->+#include <iosfwd>
->+#include <iostream>
->+#include <istream>
->+#include <iterator>
->+#include <latch>
->+#include <limits>
->+#include <list>
->+#include <locale>
->+#include <map>
->+#include <memory>
->+#include <memory_resource>
->+#include <mutex>
->+#include <new>
->+#include <numbers>
->+#include <numeric>
->+#include <optional>
->+#include <ostream>
->+#include <queue>
->+#include <random>
->+#include <ranges>
->+#include <ratio>
->+#include <regex>
->+#include <scoped_allocator>
->+#include <semaphore>
->+#include <set>
->+#include <shared_mutex>
->+#include <source_location>
->+#include <span>
->+#include <sstream>
->+#include <stack>
->+#include <stdexcept>
->+#include <stop_token>
->+#include <streambuf>
->+#include <string>
->+#include <string_view>
->+#include <syncstream>
->+#include <system_error>
->+#include <thread>
->+#include <tuple>
->+#include <typeindex>
->+#include <typeinfo>
->+#include <type_traits>
->+#include <unordered_map>
->+#include <unordered_set>
->+#include <utility>
->+#include <valarray>
->+#include <variant>
->+#include <vector>
->+#include <version>
->+
->+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
->+
->+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+{
->+}
->+
->+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->+                                           const qemu_info_t *info,
->+                                           int argc, char **argv)
->+{
->+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
->+    return 0;
->+}
->diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
->index 3d2d7862e0c..53d52c97967 100644
->--- a/contrib/plugins/meson.build
->+++ b/contrib/plugins/meson.build
->@@ -6,6 +6,10 @@ if host_os != 'windows'
->   contrib_plugins += 'lockstep.c'
-> endif
-> 
->+if 'cpp' in all_languages
->+  contrib_plugins += 'cpp.cpp'
->+endif
->+
-> t = []
-> if get_option('plugins')
->   foreach i : contrib_plugins
->-- 
->2.47.3
+> diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
+> index 79508d9588..f45eb1707e 100644
+> --- a/docs/system/igvm.rst
+> +++ b/docs/system/igvm.rst
+> @@ -166,8 +166,8 @@ References
+>  ----------
+>=20=20
+>  [1] AMD64 Architecture Programmer's Manual, Volume 2: System Programming
+> -  Rev 3.41
+> -  https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/p=
+rogrammer-references/24593.pdf
+> +  Rev 3.43
+> +  https://docs.amd.com/v/u/en-US/24593_3.43
+>=20=20
+>  [2] ``buildigvm`` - A tool to build example IGVM files containing OVMF f=
+irmware
+>    https://github.com/roy-hopkins/buildigvm
+> \ No newline at end of file
 >
+> ---
+> base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
+> change-id: 20251230-igvm-documentation-fix-6a937c2cb9fc
+>
+> Best regards,
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
