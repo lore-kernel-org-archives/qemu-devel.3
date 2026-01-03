@@ -4,100 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE6EFC618A
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 20:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3660BFC6182
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Jan 2026 21:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vc8Oy-0006eq-Bq; Sat, 03 Jan 2026 15:39:08 -0500
+	id 1vc9QA-0004W2-AV; Sat, 03 Jan 2026 16:44:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vc8Ox-0006ee-1C
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 15:39:07 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vc8Ov-00082f-71
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 15:39:06 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-34c3cb504efso14681749a91.2
- for <qemu-devel@nongnu.org>; Sat, 03 Jan 2026 12:39:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767472743; x=1768077543; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lcLy0QVB9X5U+3xZHqE5lwh0JlcGjbR2eR574+j4m8E=;
- b=jxBjl+GKifI5Cr6S6GcBXoKuAVwFBDjZrvXXBYfMaGGD2axc0lg/J77b3Hq3STsBxQ
- d3gTpSUgftA+pnH8I5nFOIkKIa+200K6vrisKsjx1d124UAHeRZI8+4zHnqtngXvGkVd
- P2aQzl6tBJpcx+Ry8X5lJsTJRJ+mBSKmnkks1pL/gzwBqw+NMMrXhigae/7Rv8rbLPpw
- l+parkLWYCHDG/8uB3UQMQ+aDZzhZ6bMRRWEj7gyVrRf1DymToRNnUafNReLO/kRiFPX
- vFlPiLd38Q4c8jYQuMqBCR5mEGvsS7xvR6LeXi4wHhIfB2CZTCaPUx/ItSsADHohDKv2
- kwHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767472743; x=1768077543;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lcLy0QVB9X5U+3xZHqE5lwh0JlcGjbR2eR574+j4m8E=;
- b=wr7tUROies3VgNWeV5C1WTXaRIZyRQA0UDb9ilddyMtSJlqWhycyJb61/fbcj3UBTS
- 6HqY5pY1DtqCeRYJX8mt25LAjhW7djv9CVfFxrwsks4SNww4S1r1N3G2+r5GwdsLPgKU
- 9ca3PEDBi5+JIGjTAcldBBAGdn1ABME0pCltkBW7jxbhkzu4tVEk7PHf3qxAwVKYEGxM
- SkzHITtc7YKMIq5SE72bPPEmK1T7e1bl45CldtmAcYwwbxt6cSWxQmZYYOZPyYZJB+vh
- qSfjVxPBLVkUd7IRWpbRRW0B0YL7xtX0Fa9SWpf+HM50iEB7rE4vORbWx9RqjU0cuN9T
- h6Vg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPls6Vm6N+yXJ/+XQbLrcQ7vItXHAIckaiRWuq+3Sebo3icm5Ayeb3sZaMfoMpdbtcn1LmI69+XXvJ@nongnu.org
-X-Gm-Message-State: AOJu0Yx4hR2//y+xNGZiP+rU/Hz1JcoB4uu42IU4Z2LYm5J6X5O6vdg9
- WJ6aTgNDPSmdFvkDN2838GEVPLeFxXjaxQ80SLNIY8a8/KNcc6ZBlhMv0iUL1fkLa9U=
-X-Gm-Gg: AY/fxX4ivP6zfvPvgb7D8EcbYwtQlaqh1jgOVa1j8JfuDyisqJm6yPuIrnkwc2zY+Km
- 4FdQKxwJz4qcuVOlkGzReKJN0PTn9dQL8BGx2Qrx6lfUnnuMavPNpVu9NSGgw42TaFSwx61XJkH
- X9jEbEGNMpoj7mlBuYbRjuIXsFL9ScV0ueFPcRpjZUxiFUoRn/8FYUoA1Qe85Cx+5aJ/JIMev2h
- DV67GzPvmSpz0B2tmnXvuaHYGxAGGabaQeIx3PZIr96OSKLmbJPgMm+cANZad4OmWfsIsTHWjSm
- wAo4LXGIGWyxqXGwysonfxte0zEjswOMm7y7Lblg/bN+9Tqmhbp95oMEHCaQdljISsR1p7Hvl6U
- wZUzKqq+53enpojOVCE5QzOwsbLwFCuQiUbDTn5FRdM8niWGxng2UQKzs1mZs3mkmwyvRLMiMee
- QazyD+a2o3+O5t6P2POFkK6+Coi4BPLna9qHGEsRcUXMOt00NIzHiDYXJaHwEilCjaPlc=
-X-Google-Smtp-Source: AGHT+IE8moFWrEPbiyo4QjNXNkUmzvoQvAxeFfEBKif9bEkSXOs7VycSzTprKpSEDrqXJB88DiYhBQ==
-X-Received: by 2002:a17:90b:2e8e:b0:340:ca7d:936a with SMTP id
- 98e67ed59e1d1-34e921b0623mr38379336a91.18.1767472743125; 
- Sat, 03 Jan 2026 12:39:03 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f476fb86dsm2424852a91.8.2026.01.03.12.39.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 03 Jan 2026 12:39:02 -0800 (PST)
-Message-ID: <c17de286-f432-426b-b181-06cd7a8edc55@linaro.org>
-Date: Sat, 3 Jan 2026 12:39:03 -0800
+ (Exim 4.90_1) (envelope-from
+ <bounce.d86mq3ge2ho10b1=w20q0n0bx2we=2qt2ewlysgjf5v@em483429.getutm.app>)
+ id 1vc9Q8-0004VM-UJ
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 16:44:24 -0500
+Received: from a4i726.smtp2go.com ([158.120.82.214])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <bounce.d86mq3ge2ho10b1=w20q0n0bx2we=2qt2ewlysgjf5v@em483429.getutm.app>)
+ id 1vc9Q7-0002jr-7l
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 16:44:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
+ i=@getutm.app; q=dns/txt; s=s483429; t=1767476653; h=from : subject :
+ to : message-id : date;
+ bh=VR9Up13b8dTB1mgr5eJ6rhvArKgValaoK8FbWzJqJFA=;
+ b=VpS8jAOaUx2VxjbJTKXJ4iUQlQR+yDYRC6vvDrmWSZIANx7tCEwJLXJut2yfK6H7NE5Sj
+ ZWvXLbDIXuaXN7ouMWbp8EPekNGv4y38mxLYsHQ3nSvmv6e6dfGBi/SyD+58lsX0i9NLmrJ
+ giBOtsBwfbGGj/Y7KPXRPL+z2t6TBWsZjluRF8QmvtBhyjAkbRg2XPgjXbf56hrh1mC6NuM
+ Srkt4R2xTQyy5fEDaBLNAluBhMXhrIJwIZbhytUctqCWPVphDSR8FForMNglG+Q56e4u543
+ vXQW+JA/KGvTsCC38lDY4IcpSZxyxTN2rROl1Lqb+Xv+nMZ6G7HYwo8p7HJg==
+Received: from [10.159.238.187] (helo=localhost.localdomain)
+ by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA512__CHACHA20_POLY1305:256)
+ (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
+ id 1vc9Pq-4o5NDgrrZL6-jU47; Sat, 03 Jan 2026 21:44:07 +0000
+From: Joelle van Dyne <j@getutm.app>
+To: qemu-devel@nongnu.org
+Cc: Joelle van Dyne <j@getutm.app>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH v3] virtio-gpu-virgl: correct parent for blob memory region
+Date: Sat,  3 Jan 2026 13:43:59 -0800
+Message-ID: <20260103214400.71694-1-j@getutm.app>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/11] meson: fix supported compiler arguments in other
- languages than C
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Phil_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2EBerrang_=C3=A9?=
- <berrange@redhat.com>
-References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
- <20260102214724.4128196-8-pierrick.bouvier@linaro.org>
- <t8ahil.2ih2pjydhjsas@linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <t8ahil.2ih2pjydhjsas@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
+X-Report-Abuse: Please forward a copy of this message, including all headers,
+ to <abuse-report@smtp2go.com>
+Feedback-ID: 483429m:483429abrvJvs:483429sW-ujAA395
+X-smtpcorp-track: 94kD0OWaS-Uz.QirYWaV5p0dr.6ei-qgSB8ok
+Received-SPF: pass client-ip=158.120.82.214;
+ envelope-from=bounce.d86mq3ge2ho10b1=w20q0n0bx2we=2qt2ewlysgjf5v@em483429.getutm.app;
+ helo=a4i726.smtp2go.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,69 +77,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/3/26 4:54 AM, Manos Pitsidianakis wrote:
-> On Fri, 02 Jan 2026 23:47, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->> qemu_common_flags are only checked for c compiler, even though they
->> are applied to c++ and objc. This is a problem when C compiler is gcc,
->> and C++ compiler is clang, creating a possible mismatch.
->>
->> One concrete example is option -fzero-call-used-regs=used-gpr with
->> ubuntu2204 container, which is supported by gcc, but not by clang, thus
->> leading to a failure when compiling a C++ TCG plugin.
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->> meson.build | 17 +++++++++--------
->> 1 file changed, 9 insertions(+), 8 deletions(-)
->>
->> diff --git a/meson.build b/meson.build
->> index a8fd8e88225..256cc0cdb21 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -709,10 +709,7 @@ if cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }'
->>      hardening_flags += '-fzero-call-used-regs=used-gpr'
->> endif
->>
->> -qemu_common_flags += cc.get_supported_arguments(hardening_flags)
->> -
->> -add_global_arguments(qemu_common_flags, native: false, language: all_languages)
->> -add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
->> +qemu_common_flags += hardening_flags
->>
->> # Collect warning flags we want to set, sorted alphabetically
->> warn_flags = [
->> @@ -771,15 +768,19 @@ if 'cpp' in all_languages
->>    qemu_cxxflags = ['-D__STDC_LIMIT_MACROS', '-D__STDC_CONSTANT_MACROS', '-D__STDC_FORMAT_MACROS'] + qemu_cflags
->> endif
->>
->> -add_project_arguments(qemu_cflags, native: false, language: 'c')
->> -add_project_arguments(cc.get_supported_arguments(warn_flags), native: false, language: 'c')
->> +add_project_arguments(cc.get_supported_arguments(qemu_common_flags + qemu_cflags + warn_flags),
->> +                      native: false, language: 'c')
->> +add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
->> +
->> if 'cpp' in all_languages
->> -  add_project_arguments(qemu_cxxflags, native: false, language: 'cpp')
->> +  add_project_arguments(cxx.get_supported_arguments(qemu_common_flags + qemu_cxxflags),
->> +                        native: false, language: 'cpp')
-> 
-> This is a subtle behavior change (qemu_cxxflags wasn't filtered through
-> cxx.get_supported_arguments previously). Do we care about this?
->
+When `owner` == `mr`, `object_unparent` will crash:
 
-Sames goes for qemu_c_flags that we now filter also and we applied 
-directly before. The goal is to have the same code layout in meson.build 
-between the three languages for code clarity.
-My argument for this and qemu_cxxflags is that it should be equivalent, 
-and if it's not, it should have been raised previously with an 
-unsupported argument warning at compile time anyway.
+object_unparent(mr) ->
+object_property_del_child(mr, mr) ->
+object_finalize_child_property(mr, name, mr) ->
+object_unref(mr) ->
+object_finalize(mr) ->
+object_property_del_all(mr) ->
+object_finalize_child_property(mr, name, mr) ->
+object_unref(mr) ->
+fail on g_assert(obj->ref > 0)
 
-By curiousity, looking at meson source, has_argument is implemented by 
-compiling a file with the given flag, which is equivalent to what we do 
-manually. It has different implementations per language: grep 
-has_multi_arguments.
+However, passing a different `owner` to `memory_region_init` does not
+work. `memory_region_ref` has an optimization where it takes a ref
+only on the owner. That means when flatviews are created, it does not
+take a ref on the region and you can get a UAF from `flatview_destroy`
+called from RCU.
 
-Thanks,
-Pierrick
+The correct fix therefore is to use `NULL` as the name which will set
+the `owner` but not the `parent` (which is still NULL). This allows us
+to use `memory_region_ref` on itself while not having to rely on unparent
+for cleanup.
+
+Signed-off-by: Joelle van Dyne <j@getutm.app>
+---
+ hw/display/virtio-gpu-virgl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 18404be5892..b8a0af702e0 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -123,7 +123,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     vmr->g = g;
+ 
+     mr = &vmr->mr;
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
+ 
+@@ -189,7 +189,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+         /* memory region owns self res->mr object and frees it by itself */
+         memory_region_set_enabled(mr, false);
+         memory_region_del_subregion(&b->hostmem, mr);
+-        object_unparent(OBJECT(mr));
++        object_unref(OBJECT(mr));
+     }
+ 
+     return 0;
+-- 
+2.50.1 (Apple Git-155)
+
 
