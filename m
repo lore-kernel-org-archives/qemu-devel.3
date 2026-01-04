@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B82EAC2A069
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 02:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A25C2A06D
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 02:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcDrz-0002w8-JN; Sat, 03 Jan 2026 21:29:27 -0500
+	id 1vcDry-0002vE-I2; Sat, 03 Jan 2026 21:29:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vcDrx-0002v9-3P
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 21:29:25 -0500
+ id 1vcDrv-0002uj-Sx
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 21:29:23 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vcDrt-00072y-Uk
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 21:29:24 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1vcDrt-00072I-Fo
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 21:29:23 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Cx68J80Flp_UoFAA--.16412S3;
- Sun, 04 Jan 2026 10:29:16 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxcfB40Flp+koFAA--.17012S3;
+ Sun, 04 Jan 2026 10:29:12 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJAx38J70Flp5fULAA--.27562S2;
- Sun, 04 Jan 2026 10:29:16 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJAxWcF30Flp4vULAA--.13603S2;
+ Sun, 04 Jan 2026 10:29:12 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 4/4] target/loongarch: Add some CPUCFG bits with host CPU
- model
-Date: Sun,  4 Jan 2026 10:29:05 +0800
-Message-Id: <20260104022905.2120787-5-maobibo@loongson.cn>
+Subject: [PATCH v2 2/4] target/loongarch: Add generic CPU model information
+Date: Sun,  4 Jan 2026 10:29:03 +0800
+Message-Id: <20260104022905.2120787-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260104022905.2120787-1-maobibo@loongson.cn>
 References: <20260104022905.2120787-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx38J70Flp5fULAA--.27562S2
+X-CM-TRANSID: qMiowJAxWcF30Flp4vULAA--.13603S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,88 +65,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some CPUCFG capability bits depend on KVM host hypervsior and they
-are detected on QEMU. However some CPUCFG bits are irrelative with
-hypervsior, here these bits are checked from host machine and set
-for VM with host CPU model.
+On LoongArch system, CPU model name comes from IOCSR register
+LOONGARCH_IOCSR_VENDOR and LOONGARCH_IOCSR_CPUNAME. Its value
+can be initialized when CPU is created.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.c | 27 ++++++++++++++++++++++++++-
- target/loongarch/cpu.h |  8 ++++++++
- 2 files changed, 34 insertions(+), 1 deletion(-)
+ hw/loongarch/virt.c    | 6 ++++--
+ target/loongarch/cpu.c | 4 ++++
+ target/loongarch/cpu.h | 6 ++++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 6efa15da47..4db0e8a981 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -635,7 +635,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
+     uint64_t ret = 0;
+     int features;
++    CPULoongArchState *env;
+ 
++    env = &LOONGARCH_CPU(first_cpu)->env;
+     switch (addr) {
+     case VERSION_REG:
+         ret = 0x11ULL;
+@@ -650,10 +652,10 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         }
+         break;
+     case VENDOR_REG:
+-        ret = 0x6e6f73676e6f6f4cULL; /* "Loongson" */
++        ret = env->vendor_id;
+         break;
+     case CPUNAME_REG:
+-        ret = 0x303030354133ULL;     /* "3A5000" */
++        ret = env->cpu_id;
+         break;
+     case MISC_FUNC_REG:
+         if (kvm_irqchip_in_kernel()) {
 diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index f9255c4f84..b87819c8e0 100644
+index ead1dccd0b..dffe6f652f 100644
 --- a/target/loongarch/cpu.c
 +++ b/target/loongarch/cpu.c
-@@ -503,7 +503,7 @@ static uint32_t get_host_cpucfg(int number)
+@@ -282,6 +282,8 @@ static void loongarch_la464_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA464);
+     data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
+     env->cpucfg[0] = data;
++    memccpy((void *)&env->vendor_id, CPU_VENDOR_LOONGSON, 0, 8);
++    memccpy((void *)&env->cpu_id, CPU_MODEL_3A5000, 0, 8);
  
- static void loongarch_host_initfn(Object *obj)
- {
--    uint32_t data;
-+    uint32_t data, cpucfg, field;
-     uint64_t cpuid;
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+     data = 0;
+     data = FIELD_DP32(data, CPUCFG1, ARCH, 2);
+@@ -393,6 +395,8 @@ static void loongarch_la132_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA132);
+     data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
+     env->cpucfg[0] = data;
++    memccpy((void *)&env->vendor_id, CPU_VENDOR_LOONGSON, 0, 8);
++    memccpy((void *)&env->cpu_id, CPU_MODEL_1C101, 0, 8);
  
-@@ -513,6 +513,31 @@ static void loongarch_host_initfn(Object *obj)
-         cpu->env.cpucfg[0] = data;
-     }
- 
-+    /* Set cpucfg bits irrelative with KVM hypervisor */
-+    data = get_host_cpucfg(2);
-+    cpucfg = cpu->env.cpucfg[2];
-+    field = FIELD_EX32(data, CPUCFG2, FRECIPE);
-+    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, FRECIPE, field);
-+    field = FIELD_EX32(data, CPUCFG2, DIV32);
-+    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, DIV32, field);
-+    field = FIELD_EX32(data, CPUCFG2, LAM_BH);
-+    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, LAM_BH, field);
-+    field = FIELD_EX32(data, CPUCFG2, LAMCAS);
-+    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, LAMCAS, field);
-+    field = FIELD_EX32(data, CPUCFG2, LLACQ_SCREL);
-+    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, LLACQ_SCREL, field);
-+    field = FIELD_EX32(data, CPUCFG2, SCQ);
-+    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, SCQ, field);
-+    cpu->env.cpucfg[2] = cpucfg;
-+
-+    data = get_host_cpucfg(3);
-+    cpucfg = cpu->env.cpucfg[3];
-+    field = FIELD_EX32(data, CPUCFG3, DBAR_HINTS);
-+    cpucfg = FIELD_DP32(cpucfg, CPUCFG3, DBAR_HINTS, field);
-+    field = FIELD_EX32(data, CPUCFG3, SLDORDER_STA);
-+    cpucfg = FIELD_DP32(cpucfg, CPUCFG3, SLDORDER_STA, field);
-+    cpu->env.cpucfg[3] = cpucfg;
-+
-     cpuid = get_host_cpu_model();
-     if (cpuid) {
-         cpu->env.cpu_id = cpuid;
+     data = 0;
+     data = FIELD_DP32(data, CPUCFG1, ARCH, 1); /* LA32 */
 diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index a2613cecb7..7d0537a3c5 100644
+index a258b22141..a2613cecb7 100644
 --- a/target/loongarch/cpu.h
 +++ b/target/loongarch/cpu.h
-@@ -146,6 +146,12 @@ FIELD(CPUCFG2, LBT_ALL, 18, 3)
- FIELD(CPUCFG2, LSPW, 21, 1)
- FIELD(CPUCFG2, LAM, 22, 1)
- FIELD(CPUCFG2, HPTW, 24, 1)
-+FIELD(CPUCFG2, FRECIPE, 25, 1)
-+FIELD(CPUCFG2, DIV32, 26, 1)
-+FIELD(CPUCFG2, LAM_BH, 27, 1)
-+FIELD(CPUCFG2, LAMCAS, 28, 1)
-+FIELD(CPUCFG2, LLACQ_SCREL, 29, 1)
-+FIELD(CPUCFG2, SCQ, 30, 1)
+@@ -301,6 +301,10 @@ typedef struct  LoongArchBT {
+     uint32_t ftop;
+ } lbt_t;
  
- /* cpucfg[3] bits */
- FIELD(CPUCFG3, CCDMA, 0, 1)
-@@ -160,6 +166,8 @@ FIELD(CPUCFG3, SPW_LVL, 8, 3)
- FIELD(CPUCFG3, SPW_HP_HF, 11, 1)
- FIELD(CPUCFG3, RVA, 12, 1)
- FIELD(CPUCFG3, RVAMAX, 13, 4)
-+FIELD(CPUCFG3, DBAR_HINTS, 17, 1)
-+FIELD(CPUCFG3, SLDORDER_STA, 23, 1)
++#define CPU_VENDOR_LOONGSON   "Loongson"
++#define CPU_MODEL_3A5000      "3A5000"
++#define CPU_MODEL_1C101       "1C101"
++
+ typedef struct CPUArchState {
+     uint64_t gpr[32];
+     uint64_t pc;
+@@ -312,6 +316,8 @@ typedef struct CPUArchState {
  
- /* cpucfg[4] bits */
- FIELD(CPUCFG4, CC_FREQ, 0, 32)
+     uint32_t cpucfg[21];
+     uint32_t pv_features;
++    uint64_t vendor_id;
++    uint64_t cpu_id;
+ 
+     /* LoongArch CSRs */
+     uint64_t CSR_CRMD;
 -- 
 2.39.3
 
