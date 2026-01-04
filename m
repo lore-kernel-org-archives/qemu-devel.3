@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B07C2A069
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 20:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234FAC2A06C
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 21:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcUzA-0005pn-CI; Sun, 04 Jan 2026 15:46:01 -0500
+	id 1vcW40-0002hz-BP; Sun, 04 Jan 2026 16:55:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1vcUyx-0005pE-13
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 15:45:48 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1vcUyu-0005HP-9A
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 15:45:46 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 604BPswJ022322;
- Sun, 4 Jan 2026 20:45:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=fQHSHW
- CS7Gu9nGVTLsY4BqEWGHIdNfgdge7O2akImqA=; b=oSlyttbG37L93L575s4bjX
- 6Rzg+FJbECtk++yl1s9m7/DkdaucUpXo353suSiJJjutkisOzMb16jDJ/d5vb0MH
- 2BK9KZZyQAEAc3xAs+DmY/AeBzUCqMlsPLplrOlpG7fMxnseba+Ad1kuFHcfrs58
- ZBG9et/+gff1UDZnoT9MZ2mkABFYcggWoK7bTbdkjfXc9Wvre8kYye016Utm+OmF
- 5eaHmJvWiu+/h7jt9D9H5LivmoRiCm1juSMGIRBCi/QLvvLx8/eAvOVR/UzjJ4IX
- iN4ui293gmsgp9EHBPCty+gpBSTK/aVbI+9q0aghMc2vrl1WsUoGRTfm4hnViqww
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4berhjvafd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 04 Jan 2026 20:45:38 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 604EDHbP014667;
- Sun, 4 Jan 2026 20:45:38 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bfeemjm1c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 04 Jan 2026 20:45:37 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 604KjaU326936028
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 4 Jan 2026 20:45:36 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EE73720043;
- Sun,  4 Jan 2026 20:45:35 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B99EA20040;
- Sun,  4 Jan 2026 20:45:35 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.1.137])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sun,  4 Jan 2026 20:45:35 +0000 (GMT)
-Message-ID: <76c4d5b1-2d67-428a-90ca-7accea69b810@linux.ibm.com>
-Date: Sun, 4 Jan 2026 21:45:35 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vcW3N-0002PT-I4
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 16:54:26 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vcW3I-00053B-5d
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 16:54:22 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2a0fe77d141so154426965ad.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 13:54:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767563656; x=1768168456; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=l28eNT0s2HQhubb8enm6f2kzdu0qWF61f0Sq1o1gJhw=;
+ b=a65+UBRNDYZtN1qoEFDRH2RAs2mpMdkL+bOxlN+UhSmD7wDOxaRToaNlKS7Z4Yc2M2
+ xoH5ta1lfPu2pPEmz61YRpEgwsBKYCRs25/31inv784XAZE9Zm1cj/deswJn2J5Ysba2
+ Rw7MeigMyk+KpSQwPUOerr3thUCjzmMyVk/6qfQfW+1qnt5O3mcr55WaDfzl2JEnXbpI
+ sxmz+TbTgkuXgQAN3/tV1+f4rJanMW/c70/z6lIP2wCMHAIHU+uPOCsVwVCWmuL8KcRH
+ xVVjydWO7vonk9pesm36TmcQAyi7Jc6lzEfGIkzPL/9jdRY1D33GtRjDhV8Ua9z40SMv
+ pIzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767563656; x=1768168456;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=l28eNT0s2HQhubb8enm6f2kzdu0qWF61f0Sq1o1gJhw=;
+ b=Ue815i3ftkuu6gmLmW+WpCJS8zCePZgSJ33TeU/7sQG5Bw7km4UO4JV0WsTm21PxDU
+ Hi3Hd3FyTJ1HcOxff1vXwFsKeTlwQ1pftgnQaSOuOd/Z4g0bZn6a41oVYhm191gTtkQT
+ 7VBrcZv16dRBHbcFKVbLrPI2oVTWbkvIo0f7AS2ILxvgc6yqAW4fCwyM1ZyGJNrVaVky
+ Hq1At5BuG3hWPz9S6caR/Bh/P5S2Wp+ibW1RWWKhx2EZlMzRFCmbUKAo3sOunosDt1tO
+ inGKzAPi6kkDaarijvdVlg6MQAoDJvSa8+nFKSpFYT2K5olHv6x44p6jNOWRC3nsq5h7
+ HZvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFqG0bJh6vuJE8aaaoSfBblhKdCOccNVpDUyBoinwk4l4GwDaZG7Hxr8X7dM0x5ph+ppkYvDPMNLED@nongnu.org
+X-Gm-Message-State: AOJu0YyxdASwgex3bMwIFe+FJe1KMwBW70+NSHQVe+sSobKEXgHmKLgT
+ Jr0Wvzr3iFHSr7tH8TaJkrhqoEpCtazpOu41ANENnDgdbvK4dq9t9BB1lyzJZinYFgk=
+X-Gm-Gg: AY/fxX6faxzjSL8iDuAgQVqBm+boB71FjHz3XqR+LH11r+C0+5MYirnhNoGC6gDo/Se
+ b11On48Anx1+kkEQ9wyHrMhjo3OGOA7Uw3aYiBvefr0sURsEGCs1hE5vYC8n/9LzzUTv+nrfXpt
+ 18XpMePbMueGeBkUdLTroBbPcKamu8jHRpPRAXbYOVk2tco5xqZ3nQynri3f8kvq/NN63Z2dEFv
+ qT/gzQtxt/16D7zXMSMjp/QDt4114b67LVQuKfxBiyDB5wkCakJ+kuBA3dj3nUy8jXICbKxQhqg
+ kk9LuhnYJDrnr6Iy+rvcZ2cW1Q3fNaK8TH75y6931YvQqhJandNqnV6OL8grg2dcs/NTxb+/W7r
+ lOPmOyMQvy7Wzrso81A2lJj59mhRV9JzxXGpP9+cJP5rg8lxT41QP2Qyf6tf9FqwhV9P6xVZJv/
+ 1wSDsvXE9uCd5kht+dl2C9wj5WtEccxw==
+X-Google-Smtp-Source: AGHT+IF5k0AtGlRFu/k386db4yd2WcPPb4X0CIfUZVQfMOTo56WdDqWdRaWsTyQrdC0WVl2HxOvTLA==
+X-Received: by 2002:a17:902:ccd1:b0:2a2:f465:1273 with SMTP id
+ d9443c01a7336-2a2f4651332mr435915185ad.35.1767563655979; 
+ Sun, 04 Jan 2026 13:54:15 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a39018dc8bsm182290105ad.43.2026.01.04.13.54.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 04 Jan 2026 13:54:15 -0800 (PST)
+Message-ID: <fc1e064f-cccc-4f6e-8fbe-372f4659a02f@linaro.org>
+Date: Mon, 5 Jan 2026 08:54:11 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] gdbstub: re-do unlinking of unix socket before bind
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20251225062919.685146-1-mjt@tls.msk.ru>
+Subject: Re: [PULL 0/9] hex queue
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: ltaylorsimpson@gmail.com
+References: <20260102201205.2050363-1-brian.cain@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20251225062919.685146-1-mjt@tls.msk.ru>
+In-Reply-To: <20260102201205.2050363-1-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=P4s3RyAu c=1 sm=1 tr=0 ts=695ad172 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=9qUTvQc-AAAA:8 a=VnNF1IyMAAAA:8 a=1kgRwCGjvmI_MkLCpmwA:9
- a=QEXdDO2ut3YA:10 a=axOgMmt4Ejcwn1cqzmsR:22
-X-Proofpoint-ORIG-GUID: L8VyV61fdj_slMvMCksCAXDZ0WLUZeZA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA0MDE4NyBTYWx0ZWRfX+FJnorNEpN1z
- MPvES9x6EQ+5BP0JEUzlJpcKUH17bA0vMPsBj3kB0m9OD7CjNvHJRaHXtlqNyxx9zrSxSekEqmr
- VVAII8vhflEHxxU327tFirIQaY3b7nH9f8oAVuf0DNIgL1TzP7Y2QBvdF3CZjYf53rG9oUWdMS8
- uRWZAINOG97h+MTudgiHa0ZxHtSr/HwpWJFR5z5HbWCnDz10TIzyVybOi8ychvm0bZCkelydKvQ
- 5sqhsXT2qXvAtoDIP6AxjSrts7YqkX6sQfXTQPzGm1RzEXIMRxhbVz2RhA70RbnELujMFdHVdUw
- xBW2I3oPXnVrehrQF+EGRok6P8DolOBfeOnDlhn0I5CBjDrqMDgH4z3QOsOPZV5QaQqfENoFF3p
- LZboJd3NYlFVCvsDwOYmI2euMG6VNIPqB6KLZ923yg8xW873v+fezB8HGspY/FEHIp5eZrrhHcX
- eLr0xbA/kQjQK44n/9Q==
-X-Proofpoint-GUID: L8VyV61fdj_slMvMCksCAXDZ0WLUZeZA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-04_06,2025-12-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1011 suspectscore=0
- phishscore=0 adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601040187
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,32 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/25/25 07:29, Michael Tokarev wrote:
-> Prior discussion is at
-> https://lore.kernel.org/qemu-devel/ee091002-a552-49fe-ae5e-8916937dba15@tls.msk.ru/
->
-> In short: when adding unlink() before bind() for unix socket
-> in gdbstub/user.c, a previous patch introduced dependency of
-> linux-user binaries on qemu-sockets.c, which is more problematic
-> for usually-static binaries.  The monitor_get_fd stub which were
-> also needed is another example why this might not be the right
-> approach.
->
-> This patchset reverts the previous commit (with fixes for current
-> code), and adds just a single unlink() to the original code which
-> handled unix sockets directly.
->
-> Michael Tokarev (2):
->    Revert "gdbstub: Try unlinking the unix socket before binding"
->    gdbstub: unlink the unix socket before bind()
->
->   gdbstub/user.c    | 30 +++++++++++++++++++++++++++---
->   stubs/meson.build |  2 --
->   util/meson.build  |  2 --
->   3 files changed, 27 insertions(+), 7 deletions(-)
+On 1/3/26 07:11, Brian Cain wrote:
+> The following changes since commit 667e1fff878326c35c7f5146072e60a63a9a41c8:
+> 
+>    Merge tag 'hw-misc-20251230' ofhttps://github.com/philmd/qemu into staging (2025-12-31 16:44:17 +1100)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/quic/qemu tags/pull-hex-20260102
+> 
+> for you to fetch changes up to 15722c774ab2fa6904464cd531bc1120d9553896:
+> 
+>    Hexagon (target/hexagon) s/log_write/gen_write (2025-12-31 22:57:44 -0600)
+> 
+> ----------------------------------------------------------------
+> Bypass packet commit for implicit usr write; cleanup
 
-Thanks!
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
+r~
 
