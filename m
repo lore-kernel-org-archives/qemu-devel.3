@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6581C2A06C
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 15:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 120B2C2A062
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 16:17:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcPlT-0002OL-BV; Sun, 04 Jan 2026 10:11:31 -0500
+	id 1vcQmI-0000Af-Ua; Sun, 04 Jan 2026 11:16:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vcPlR-0002NY-F9
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 10:11:29 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vcPlP-0000La-Qu
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 10:11:29 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-47a95efd2ceso119572555e9.2
- for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 07:11:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767539486; x=1768144286; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oDk9/LzkEZVT4JGdub3WDo1knrTMsltMwSFKHHXT880=;
- b=Nz1N3Lr6y7cTJOu8ZuQtdx+UhDBjTVj+z8pLqWrXzIg+8K4Bowkfseu0APfIT7TGOs
- fN9C9ToHf7CPm2Eh8ay7oXzrcK8naMlEQMgazYj/pYuL1Au7xN+ehAwdCs9VTqTHVa/H
- SL9WijKRBWg+fwz9qlvgphkqjDuUIpXNd4xATJU2pnowgcGRZZG6X31XlmuawkC+bs3T
- lU2SnzrnxE7wZO9ykvU4B0gU8nJODF8p1y/8M1cQohcSPnMktfiH/7QB0Zf0dfFb2PkX
- 6ZXpXxVvwRK+Y1hi31QTijn/uTVXqdrEXT9rSMdpHDMq9elwRF6FBAfXDWBQwPfe69u1
- Hn0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767539486; x=1768144286;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oDk9/LzkEZVT4JGdub3WDo1knrTMsltMwSFKHHXT880=;
- b=TZpt53cqDRdAJ/0pjDGjeiJKUbl9M8FVwZpWVaKDR6pR6zfsQXVYObVLArLZ9e4Tyv
- K6fk0/QSiEhMTg91oPwUW1M5i7VBZYyj4txnxb3+zGcxwQflVbG46j3TKh2GhDZMTjsV
- AoB6BGM23BPAcdDYEfpstQsY4K1VY8IGT14T6fr12aYZKziT0Jwh5KVcRMuyD410CI7u
- Adg1sd/Fh2CjyTcSkVKj29gtwAyIzBpFfIV/+7+ujxj/08KgOMq44+27ySsEV6mmOUke
- 4toXc2gD24dLR8r979cXxJMJc+9zsc+f+OGAdWr1MxNi8OOq0j1Z7L+2Av1n6u6Y/HTP
- f79A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXLiAsn9SArzJGFtEJp3GE2uUHXDgzu85LfHWh/2rKVA78sFjejXLUNWxrB0p2wC4OD6CL+0+PE9hG@nongnu.org
-X-Gm-Message-State: AOJu0YzK4DRW95+KarXCejDJslt1++yRJf48JBo9K8OsheWZXxt/Mgix
- nspwXeEIY4hZXKfYvx44XTWgO/7DowmM33JhSXAudHxUoFTN6/Bhq57bQFuKnWR2IX4=
-X-Gm-Gg: AY/fxX5ckmRRxhtlvtD1yPERL6QhL7fyWNUWB6gmICnlxywDRDnKlnXcsl16HWZon1q
- LmBFQ8CHJXGxzbr9b68E9UAtIm+TDpsSycLqauV/ced1u4JlErwmZsEDppTBQXGFskyDEDY3Ip2
- dWji2zo2p7o9oJwZKDjJcD+39A2vEUGOt8DKaY0i2yqmksEf/mYKSP1vlugNHdhRFSdMHxuGdho
- l6w9g+jnMVwYZ+/1y4gC9DelhF8JS9jF8gWS1WxeXy83opnnrvHhV8j8azn9QLJcp/bGd9Tk/G8
- TXfknFyjeMyaxeSd+Eal23YIaaXfBC/Li/oG8Eoi4JorIocWLeNLZteoKvWYOVthPVKRqF3ndD3
- uL3945DQn7t0aCy23lQeDIWQGW5qjB0A+Duo/TmuuFTjUQHqMGHXx1+g/B32g+PDhQ4VV7Yp3+T
- vBwczq7+wEIGsPa7eucgital2BILBFQWIFdQOcB8JqM69kEGSg++KC2w==
-X-Google-Smtp-Source: AGHT+IH5p47OUA/W+tYGpggdcjtTC/Flbl267HOsBwxkm+jJW44lwDn5K5TuWVUK2g4bCSh+sbt15A==
-X-Received: by 2002:a05:600c:4fc6:b0:477:755b:5587 with SMTP id
- 5b1f17b1804b1-47d1955b35fmr508711445e9.8.1767539486089; 
- Sun, 04 Jan 2026 07:11:26 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d6d34500fsm99214845e9.15.2026.01.04.07.11.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Jan 2026 07:11:25 -0800 (PST)
-Message-ID: <05847b10-91ee-4def-83e7-0e0cb50da585@linaro.org>
-Date: Sun, 4 Jan 2026 16:11:24 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] target/loongarch: Add some CPUCFG bits with host
- CPU model
-Content-Language: en-US
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20260104022905.2120787-1-maobibo@loongson.cn>
- <20260104022905.2120787-5-maobibo@loongson.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260104022905.2120787-5-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vcQm9-00006k-Lk
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 11:16:18 -0500
+Received: from p-east3-cluster3-host3-snip4-10.eps.apple.com ([57.103.86.33]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vcQlr-0004gr-0r
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 11:16:06 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-7 (Postfix) with ESMTPS id
+ DFF781800613; Sun,  4 Jan 2026 16:15:46 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=KfaSwAMEtx+X4HNczRDD6txv7uJquY0ig8685onqh2I=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=B58mRuvikaocM4cmAddd503zJXon9wbuTJrXGoat8ZokxelERzOw3g+nGcdXZIPrSVPwZscqpcyh7ujjFzPvO/Zcdc43HzlvqW5NLluck5QAEys40VajZCaMLgDPwdl5k7bVY0l57DSobn4LQTwoxWo21gGoxNN0SXiQWe9msDj5+RaXRR619OmAGKhtRlwkgK391QWt5KLZBAV1/KrvFglgpU0+1iGqgYQozIKm2i6MxTcrraiksB696ORHkagofJzZgiMUtokw5dCGQCyrCZrgbeQNXayGX/Vo35uciFKHS9MWXdb9J5rha4VDKZmBIMiZwaFCwQkultMfiZ1AzA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-7 (Postfix) with ESMTPSA id
+ 0144F1800119; Sun,  4 Jan 2026 16:15:44 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH RFC 1/7] egl-helpers: store handle to native device
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <207deefa-9f9e-498a-8568-96fe7424706f@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 4 Jan 2026 17:15:33 +0100
+Cc: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <33981354-90A0-41FE-9B40-0AB96A342358@unpredictable.fr>
+References: <20251203040754.94487-1-j@getutm.app>
+ <20251203040754.94487-2-j@getutm.app>
+ <3a401334-700f-4b11-b006-a93470d38a66@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+E+eSBOEzzb-aO2B_yWtJeoK4QGvjf=pB555+GGE2U0OH=vbw@mail.gmail.com>
+ <f246dcbd-2a13-46e8-97cb-d6959d8115dc@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+E+eSCJ8y8RnGe99kFVSLbex_jE71z74+pF4aom-LMbjXgzPQ@mail.gmail.com>
+ <a4e9815c-8641-4250-9bf4-ec13fa49e1ee@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+E+eSAKYCui8huYrZ=0Vw5pKQHXoGJjRPYb1Pr6ozSezXyUgA@mail.gmail.com>
+ <bfa37bf0-78bf-47be-9c67-af2a7911fc30@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+E+eSBDppoSFaYDJWw82aHcm1U2iYtzOckD=jagBV11+7-wtg@mail.gmail.com>
+ <207deefa-9f9e-498a-8568-96fe7424706f@rsg.ci.i.u-tokyo.ac.jp>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-GUID: ZMX1ThiEq0c0q1LjUbWcL3MYwFSx7liu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA0MDE1MSBTYWx0ZWRfX/GOsCbWbqm4L
+ qvvPvTIBnRvE2KC6Wd2HetOdWyyP1eT2LT0Jp4dCSWukKEkhKvxt+ATwaA5E5bsPs544Xx9Bo5L
+ gP59VXTEIQz6UD2deRvLzCPRcHI5O5NVoCsxL3wAk+nzl0F3HPvGajYsSlfIpHTpImHqw1qQoOo
+ exSGSEoJzp5Yb+uE8mKON81MDpNTnTadT4DlbkbjAYQQovHWtrF/TxIkxXMI8Ut4/gypbEXwU5b
+ BTk8vEnOQguP5CyHVbS6mFyVOH2V8WbgqnDtDQLQdG+o0pkj1i7xnz8z0QVcv6BHdPsB6R1We7C
+ fzQmPHflnTNoPL8aes9
+X-Authority-Info: v=2.4 cv=PoqergM3 c=1 sm=1 tr=0 ts=695a9233 cx=c_apl:c_pps
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:117 a=bsP7O+dXZ5uKcj+dsLqiMw==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=ZeBP_3k6spsOvqXfUQIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: ZMX1ThiEq0c0q1LjUbWcL3MYwFSx7liu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-04_05,2025-12-31_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxscore=0 adultscore=0 bulkscore=0 spamscore=0 clxscore=1030 mlxlogscore=999
+ malwarescore=0 suspectscore=0 classifier=spam authscore=0 adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2510240001 definitions=main-2601040151
+X-JNJ: AAAAAAABOw3/u4nVPP2vXdZKPAmI9UbsdsbfcQE+ymzKacJn7t6a6EcYmlCmqj2ZcdS1LUcKMPaLnPJl64RsCebvy0LZRpCjalmLrQR3GKpleqokpjKucm94BrDKxXYmPsDNCypqBqqyVxQcOx6M3VTAyd+AWJt5c5ADrzG1+1SYYq2VqMJ6NHEc5LRM7Z3MBskgrGBdXlMhPVtI4ssi83A0uA/rswkbFcMesU25L3D/n5Wl+Fw4BIx5yPjtnVoR/ea9gd9LKahofRCMUMibYc9Y0xDKFEGY0jEjJUhDlVWWtBQK/5BqpShOUL5XebwgTuR0M2zU0K63LHgRjQgYxmEJWm0fayemSP1JCoXgCoqaSBDZ4l/6KKATfzR8KYiDwyQ6Y8ME/uANlVjxRs1+pbrHdpY0A1sDpDoK1jD56BygVhJBY0lceunE7U6e5SpTTTaHfh/0hV7JcxDwEeTzCkYZ627C6WtJ8zIt5yHVMJ/gQ/moCf6etTd243yeRR/p1IcdHgihtigEYDBgIevh8oYCGASl9OLhUbMzQOIzR0v7lhMoq6yerMiS2G/T+e6eZoXKT9Gt79UiuAdSWNeccs7B6Z+zI9gDEU45EdOZBSBmbVD366Uf4oashYX5n+uPNgnYssq+k3WoXVeMzSfnEq/OkZ7e8Hs2/SWSiY1bGG6ipR+RV6dg4WnwEn/J
+Received-SPF: pass client-ip=57.103.86.33;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,39 +104,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-On 4/1/26 03:29, Bibo Mao wrote:
-> Some CPUCFG capability bits depend on KVM host hypervsior and they
-> are detected on QEMU. However some CPUCFG bits are irrelative with
-> hypervsior, here these bits are checked from host machine and set
-> for VM with host CPU model.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/cpu.c | 27 ++++++++++++++++++++++++++-
->   target/loongarch/cpu.h |  8 ++++++++
->   2 files changed, 34 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index f9255c4f84..b87819c8e0 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -503,7 +503,7 @@ static uint32_t get_host_cpucfg(int number)
->   
->   static void loongarch_host_initfn(Object *obj)
->   {
-> -    uint32_t data;
-> +    uint32_t data, cpucfg, field;
->       uint64_t cpuid;
->       LoongArchCPU *cpu = LOONGARCH_CPU(obj);
->   
-> @@ -513,6 +513,31 @@ static void loongarch_host_initfn(Object *obj)
->           cpu->env.cpucfg[0] = data;
->       }
->   
-> +    /* Set cpucfg bits irrelative with KVM hypervisor */
 
-What do you mean by "irrelative"?
+> On 4. Jan 2026, at 12:01, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> =
+wrote:
+>=20
+> On 2026/01/04 13:27, Joelle van Dyne wrote:
+>> On Sat, Jan 3, 2026 at 7:35=E2=80=AFPM Akihiko Odaki
+>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>>=20
+>>> On 2026/01/04 7:24, Joelle van Dyne wrote:
+>>>> On Wed, Dec 24, 2025 at 12:22=E2=80=AFAM Akihiko Odaki
+>>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>>>>=20
+>>>>> On 2025/12/24 16:54, Joelle van Dyne wrote:
+>>>>>> On Tue, Dec 23, 2025 at 10:23=E2=80=AFPM Akihiko Odaki
+>>>>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>>>>>>=20
+>>>>>>> On 2025/12/20 1:11, Joelle van Dyne wrote:
+>>>>>>>> On Wed, Dec 3, 2025 at 10:31=E2=80=AFPM Akihiko Odaki
+>>>>>>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>>>>>>>>=20
+>>>>>>>>> On 2025/12/03 13:07, Joelle van Dyne wrote:
+>>>>>>>>>> Make way for other platforms by making the variable more =
+general. Also we
+>>>>>>>>>> will be using the device in the future so let's save the =
+pointer in the
+>>>>>>>>>> global instead of just a boolean flag.
+>>>>>>>>>>=20
+>>>>>>>>>> Signed-off-by: Joelle van Dyne <j@getutm.app>
+>>>>>>>>>> ---
+>>>>>>>>>>     include/ui/egl-helpers.h      | 2 +-
+>>>>>>>>>>     hw/display/virtio-gpu-virgl.c | 2 +-
+>>>>>>>>>>     ui/egl-helpers.c              | 4 ++--
+>>>>>>>>>>     3 files changed, 4 insertions(+), 4 deletions(-)
+>>>>>>>>>>=20
+>>>>>>>>>> diff --git a/include/ui/egl-helpers.h =
+b/include/ui/egl-helpers.h
+>>>>>>>>>> index acf993fcf5..c239d32317 100644
+>>>>>>>>>> --- a/include/ui/egl-helpers.h
+>>>>>>>>>> +++ b/include/ui/egl-helpers.h
+>>>>>>>>>> @@ -12,7 +12,7 @@
+>>>>>>>>>>     extern EGLDisplay *qemu_egl_display;
+>>>>>>>>>>     extern EGLConfig qemu_egl_config;
+>>>>>>>>>>     extern DisplayGLMode qemu_egl_mode;
+>>>>>>>>>> -extern bool qemu_egl_angle_d3d;
+>>>>>>>>>> +extern void *qemu_egl_angle_native_device;
+>>>>>>>>>=20
+>>>>>>>>> I guess ANGLE will not be relevant for Metal and leaving it =
+will be
+>>>>>>>>> misleading.
+>>>>>>>> What is your suggestion? This is just to remove "D3D" from the
+>>>>>>>> variable name. If you want to remove "ANGLE" from the variable =
+name as
+>>>>>>>> well, it may be misleading because this variable is only used =
+with an
+>>>>>>>> ANGLE EGL backend.
+>>>>>>> Looking the usage of the variable in your tree, I realized this =
+variable
+>>>>>>> may not be necessary for this at all.
+>>>>>>>=20
+>>>>>>> There are two use cases:
+>>>>>>>=20
+>>>>>>> 1. To determine if VIRGL_RENDERER_NATIVE_SHARE_TEXTURE needs to =
+be set.
+>>>>>>> 2. To pass the device used by ANGLE to Cocoa.
+>>>>>>>=20
+>>>>>>> Regarding 1, virglrenderer can simply pass MTLTexture whenever =
+the EGL
+>>>>>>> context is backed with Metal and Venus is in use.
+>>>>>>>=20
+>>>>>>> Although your code is modeled after the code dealing with =
+Direct3D
+>>>>>>> handles, the functionality of your code is quite a different =
+from it.
+>>>>>>>=20
+>>>>>>> Direct3D handles are used to "share" texture with other =
+processes in a
+>>>>>>> zero-copy manner. It is an optional hint; dbus can fall back to =
+use
+>>>>>>> OpenGL textures if they are missing, and the other displays just =
+don't care.
+>>>>>>>=20
+>>>>>>> On the other hand, MTLTexture plays an essential role in your =
+scenario.
+>>>>>>> There are no corresponding OpenGL texture so no fallback =
+happens.
+>>>>>> That's a good point, but there's two uses of MTLTexture: one as a
+>>>>>> direct parallel to D3D handles (vrend allocate a texture backed =
+by
+>>>>>> MTLTexture; returns it in info_ext along with a tex_id) and one
+>>>>>> returned as part of the new API
+>>>>>> (virgl_renderer_create_handle_for_scanout) which does not have an
+>>>>>> associated tex_id.
+>>>>>=20
+>>>>> Thanks for clarification. I think the point I mentioned below =
+still
+>>>>> holds; virglrenderer does not have any code that can be skipped =
+for
+>>>>> MTLTexture with the absence of =
+VIRGL_RENDERER_NATIVE_SHARE_TEXTURE.
+>>>> We support the same "hint" use case in vrend for MTLTexture. So,
+>>>> without that flag set, there will be no attempt to allocate a
+>>>> MTLTexture. This works regardless if Venus is used or not. However, =
+in
+>>>> the Venus use case, the hint does not matter at all because as long =
+as
+>>>> the new API virgl_renderer_create_handle_for_scanout is used, a
+>>>> MTLTexture is returned. In this sense, I think it makes sense to
+>>>> rename *D3D* to *NATIVE*.
+>>>=20
+>>> MTLTexture is always allocated; If virglrenderer doesn't, ANGLE does
+>>> that internally. There should be no practical difference whether
+>>> MTLTexture is exposed to QEMU or not.
+>> The difference is that if virglrenderer creates it and exposes it to
+>> QEMU, then the UI can use a faster blit path. When the flag is set,
+>> virglrenderer creates the MTLTexture, passes it to ANGLE, and holds a
+>> reference for QEMU to retrieve. When the flag is not set, there is no
+>> way of getting the MTLTexture from ANGLE.
+>=20
+> I suspect it is a premature optimization. There is only one blit per =
+frame and it is a simple blit, so I don't think it can create a =
+perceivable performance uplift.
+>=20
+> Besides, if the optimization turns out useful, you can still =
+unconditionally let virglrenderer create the MTLTexture, so the flag is =
+unnecessary.
+>=20
+> Regards,
+> Akihiko Odaki
+>=20
+
+Hello,
+
+It might be worthwhile having a way to do partial damage from the get-go =
+- which entails not doing full blits each frame. It has its importance =
+for battery life.
+
+Although there are more aspects around that still look in flux within =
+virglrenderer=E2=80=A6 and ANGLE (at least on Vulkan) has a stub =
+implementation of EGL_KHR_partial_update that doesn=E2=80=99t actually =
+implement partial damage...
 
 
