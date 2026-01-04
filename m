@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39435C2A074
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 11:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A03C2A062
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 15:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcLrx-0006Dz-Rw; Sun, 04 Jan 2026 06:01:58 -0500
+	id 1vcPgA-0000gD-Ok; Sun, 04 Jan 2026 10:06:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vcLrs-0006De-Ag
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 06:01:54 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vcLrp-0005Ky-2y
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 06:01:52 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 604B1J8h061192
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 4 Jan 2026 20:01:33 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=TgWJs67kFTKyT7utMSQen9S3iVcM5MzFitmXR93VBKA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1767524493; v=1;
- b=JlO97yOkq0pCzUi4tYJ5h30ARGOwpykflcWAuy5r/ks4DikcR27YzjfPyv9O0pQF
- sFD8RHHZ6DTJlIqOWqEZ9y4oGBxuOWdTFRl8RnmRUeRmBh2m8bLIR9PexViILtsC
- edaBcivhHNZlgqA9S+8dVVf+1xMa6m7YVZVwGjbF+N9rgOBgM1Layuoftnk9vuQS
- NAPdG1bpgRAx7F1DHUs2djrhbMVTP7BjDwhhySaTKv1zvWm65wI6viPagCO77GMb
- 1UvAqZbpOIvfTar37cHye71EiGF5BiUOgudkdpdVrcixDJUQjK0D7QuyBGfu9+e0
- 0mE+T6V1t+ehMxE1GQtUeA==
-Message-ID: <207deefa-9f9e-498a-8568-96fe7424706f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 4 Jan 2026 20:01:18 +0900
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vcPg7-0000g2-Oz
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 10:05:59 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vcPg6-0007Bp-8O
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 10:05:59 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6c56so104914285e9.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 07:05:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767539156; x=1768143956; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PNrK1QkDmBxXNOa1hK84RT5Tp7Nd/aMgQ6rgj8dz+Tw=;
+ b=uGJ38ImwhLparu2Ep+sXzm1KJXbdNU2qn2ZbXbWrTMNFrIwfzVfRjit9o+wP4z30q5
+ nIEAH+BRdhGTD8Pjvy5hiEuCkTNC/L5o8Ke7A4zXeFrGvgpgDxH0jGsTc2VO7rVNckKz
+ QHE0l2cBGT8bSmqgEBUYHzLnYDliM98ygAjcdlOT+lHVWYN7c84kbcZWHqaRpDIXcUvg
+ GgfxfPhKhBmHpTzBdL5ZA0PGdL+Iwudx1O3b3sgppFuXKfj5BDmby183cOJ6/c/LxRTO
+ lHidNCQJqdx5NQOhTqQbPLrQbaAgPEAQKU9i2GFZCxHBgP75QwA33sNwgzHblG1n52RV
+ qgeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767539156; x=1768143956;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PNrK1QkDmBxXNOa1hK84RT5Tp7Nd/aMgQ6rgj8dz+Tw=;
+ b=BCLS91tFxs2p9U3ZyYbFM2S1je4nMvtIIbrFjmZHKbPOSPlUUuybMpQr8qJ8QmONUm
+ Mmk0e7rYPqA9dy310ZQR/cU3gZ7q6SmhHclg1+HSsMDcnqFgyuMhATKelXu2Y0+iKY8l
+ i52PHfICHACCH6zbdfGIoozWoW/hLvk0y7txomRyBIFpqECGcwAZmHs+c2V6iOFWN1hi
+ xlSvYUicxI1OjiMMOGPAJ6Em0G0FQj5OhPB62qUN10Yz6MWRxuFaE9bZxzHVgEqD2eut
+ TiptgmE4s4kSn+zVFGXs6k+HOYppD1s9tYs9EvOvM3zV8FgmNHHhf2OvPvXc34euSSo3
+ OUzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW9EjI+cawQFwSnhRSFKaP7+EPDwySJ4AsxwTKiaBJ4pi3FuEF0hH9SQvXje/UIvTKhhF7fukHr6jIZ@nongnu.org
+X-Gm-Message-State: AOJu0YzSau162/pecEHFsoXnzZDJxY4+P8vsYntgMIAZ9tqRCnAZL1AE
+ L1TJKMR/0a6nlaB2Cb5mciCsAye53P+cjLXruE5pjQ1l1q/48cQx+UbkUBUlWEQn3nK9U8mESFk
+ a3Akc0rM=
+X-Gm-Gg: AY/fxX4YpcS+o648SrvjbPIwsF9Oelp/VTnDWD5wqbsoxmSVH/2z3V3C2JXBFoZvAUg
+ MjjAJqv+BpdFP2Rs9WoUU6pblWPRJGIUUKHEEcWq1hl2JiMqbH+RO3e+DsVhkHpCFlzNiVfKeYb
+ gaoLzquwhimhP8d9KUBUg/euHQMiXbDcE1kGWP5JRGCwGd0QIAGt8an3xD+w7cmpLgQ3pIPEOvf
+ +s3l7FqtraTj7b+1woYxT6KmN0IQCWXu0oRSZRWl5QDoAFBQ4OGV3FbaQjRIpSt0HPWwV9uDlTg
+ ZL9TQOd7eqgKFn4VV6oP824XxKpYrlqzGBlueCUOd666gb4khgTyPo7Rw1mg//PkPxUxZC48aOH
+ vWHYnMf3ePNkysER77uV6zfr2w3D/BQGlueSbVbMdiQdTvW5oQ/7fdMleGbhjgjRV7xsoVdFwMn
+ 2URdkeX7LWRk0azRTj9ifoV3I/Uhz52BrGoB0P1Gy5np3mAes7xM4x99OQLnhLl2vJ
+X-Google-Smtp-Source: AGHT+IGFZNmsGktLASND2xiElwJgyA34alcuf5Uww4yn2NbHIJNeMC7LyoVTYOzrM1OscY0rLKqjYg==
+X-Received: by 2002:a05:600c:8b11:b0:477:55ce:f3bc with SMTP id
+ 5b1f17b1804b1-47d2d273515mr582537645e9.19.1767539155696; 
+ Sun, 04 Jan 2026 07:05:55 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d6d34472dsm101438915e9.13.2026.01.04.07.05.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 04 Jan 2026 07:05:55 -0800 (PST)
+Message-ID: <5d3bb3d2-03ce-4101-a05b-625445f84dad@linaro.org>
+Date: Sun, 4 Jan 2026 16:05:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/7] egl-helpers: store handle to native device
-To: Joelle van Dyne <j@getutm.app>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20251203040754.94487-1-j@getutm.app>
- <20251203040754.94487-2-j@getutm.app>
- <3a401334-700f-4b11-b006-a93470d38a66@rsg.ci.i.u-tokyo.ac.jp>
- <CA+E+eSBOEzzb-aO2B_yWtJeoK4QGvjf=pB555+GGE2U0OH=vbw@mail.gmail.com>
- <f246dcbd-2a13-46e8-97cb-d6959d8115dc@rsg.ci.i.u-tokyo.ac.jp>
- <CA+E+eSCJ8y8RnGe99kFVSLbex_jE71z74+pF4aom-LMbjXgzPQ@mail.gmail.com>
- <a4e9815c-8641-4250-9bf4-ec13fa49e1ee@rsg.ci.i.u-tokyo.ac.jp>
- <CA+E+eSAKYCui8huYrZ=0Vw5pKQHXoGJjRPYb1Pr6ozSezXyUgA@mail.gmail.com>
- <bfa37bf0-78bf-47be-9c67-af2a7911fc30@rsg.ci.i.u-tokyo.ac.jp>
- <CA+E+eSBDppoSFaYDJWw82aHcm1U2iYtzOckD=jagBV11+7-wtg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] target/loongarch: Add detailed information with
+ CPU Product ID
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20260104022905.2120787-1-maobibo@loongson.cn>
+ <20260104022905.2120787-2-maobibo@loongson.cn>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CA+E+eSBDppoSFaYDJWw82aHcm1U2iYtzOckD=jagBV11+7-wtg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260104022905.2120787-2-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,106 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/04 13:27, Joelle van Dyne wrote:
-> On Sat, Jan 3, 2026 at 7:35 PM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/01/04 7:24, Joelle van Dyne wrote:
->>> On Wed, Dec 24, 2025 at 12:22 AM Akihiko Odaki
->>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>>>
->>>> On 2025/12/24 16:54, Joelle van Dyne wrote:
->>>>> On Tue, Dec 23, 2025 at 10:23 PM Akihiko Odaki
->>>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>>>>>
->>>>>> On 2025/12/20 1:11, Joelle van Dyne wrote:
->>>>>>> On Wed, Dec 3, 2025 at 10:31 PM Akihiko Odaki
->>>>>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>>>>>>>
->>>>>>>> On 2025/12/03 13:07, Joelle van Dyne wrote:
->>>>>>>>> Make way for other platforms by making the variable more general. Also we
->>>>>>>>> will be using the device in the future so let's save the pointer in the
->>>>>>>>> global instead of just a boolean flag.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Joelle van Dyne <j@getutm.app>
->>>>>>>>> ---
->>>>>>>>>       include/ui/egl-helpers.h      | 2 +-
->>>>>>>>>       hw/display/virtio-gpu-virgl.c | 2 +-
->>>>>>>>>       ui/egl-helpers.c              | 4 ++--
->>>>>>>>>       3 files changed, 4 insertions(+), 4 deletions(-)
->>>>>>>>>
->>>>>>>>> diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
->>>>>>>>> index acf993fcf5..c239d32317 100644
->>>>>>>>> --- a/include/ui/egl-helpers.h
->>>>>>>>> +++ b/include/ui/egl-helpers.h
->>>>>>>>> @@ -12,7 +12,7 @@
->>>>>>>>>       extern EGLDisplay *qemu_egl_display;
->>>>>>>>>       extern EGLConfig qemu_egl_config;
->>>>>>>>>       extern DisplayGLMode qemu_egl_mode;
->>>>>>>>> -extern bool qemu_egl_angle_d3d;
->>>>>>>>> +extern void *qemu_egl_angle_native_device;
->>>>>>>>
->>>>>>>> I guess ANGLE will not be relevant for Metal and leaving it will be
->>>>>>>> misleading.
->>>>>>> What is your suggestion? This is just to remove "D3D" from the
->>>>>>> variable name. If you want to remove "ANGLE" from the variable name as
->>>>>>> well, it may be misleading because this variable is only used with an
->>>>>>> ANGLE EGL backend.
->>>>>> Looking the usage of the variable in your tree, I realized this variable
->>>>>> may not be necessary for this at all.
->>>>>>
->>>>>> There are two use cases:
->>>>>>
->>>>>> 1. To determine if VIRGL_RENDERER_NATIVE_SHARE_TEXTURE needs to be set.
->>>>>> 2. To pass the device used by ANGLE to Cocoa.
->>>>>>
->>>>>> Regarding 1, virglrenderer can simply pass MTLTexture whenever the EGL
->>>>>> context is backed with Metal and Venus is in use.
->>>>>>
->>>>>> Although your code is modeled after the code dealing with Direct3D
->>>>>> handles, the functionality of your code is quite a different from it.
->>>>>>
->>>>>> Direct3D handles are used to "share" texture with other processes in a
->>>>>> zero-copy manner. It is an optional hint; dbus can fall back to use
->>>>>> OpenGL textures if they are missing, and the other displays just don't care.
->>>>>>
->>>>>> On the other hand, MTLTexture plays an essential role in your scenario.
->>>>>> There are no corresponding OpenGL texture so no fallback happens.
->>>>> That's a good point, but there's two uses of MTLTexture: one as a
->>>>> direct parallel to D3D handles (vrend allocate a texture backed by
->>>>> MTLTexture; returns it in info_ext along with a tex_id) and one
->>>>> returned as part of the new API
->>>>> (virgl_renderer_create_handle_for_scanout) which does not have an
->>>>> associated tex_id.
->>>>
->>>> Thanks for clarification. I think the point I mentioned below still
->>>> holds; virglrenderer does not have any code that can be skipped for
->>>> MTLTexture with the absence of VIRGL_RENDERER_NATIVE_SHARE_TEXTURE.
->>> We support the same "hint" use case in vrend for MTLTexture. So,
->>> without that flag set, there will be no attempt to allocate a
->>> MTLTexture. This works regardless if Venus is used or not. However, in
->>> the Venus use case, the hint does not matter at all because as long as
->>> the new API virgl_renderer_create_handle_for_scanout is used, a
->>> MTLTexture is returned. In this sense, I think it makes sense to
->>> rename *D3D* to *NATIVE*.
->>
->> MTLTexture is always allocated; If virglrenderer doesn't, ANGLE does
->> that internally. There should be no practical difference whether
->> MTLTexture is exposed to QEMU or not.
-> The difference is that if virglrenderer creates it and exposes it to
-> QEMU, then the UI can use a faster blit path. When the flag is set,
-> virglrenderer creates the MTLTexture, passes it to ANGLE, and holds a
-> reference for QEMU to retrieve. When the flag is not set, there is no
-> way of getting the MTLTexture from ANGLE.
+On 4/1/26 03:29, Bibo Mao wrote:
+> CPUCFG0 is LoongArch CPU Product ID, it is a combination of Vendor ID,
+> Series ID and Product ID, here is the layout:
+>   +-------------+----------------+------------+----------------+
+>   | Reserved    | Vendor  ID     | Series ID  |  Product ID    |
+>   +-------------+----------------+------------+----------------+
+>    31         24 23            16 15        12 11              0
+> 
+> Here adds detailed information with CPUCFG0, it is convenient to add
+> such information with host or LA664 CPU type in future.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/cpu.c | 12 ++++++++++--
+>   target/loongarch/cpu.h | 10 +++++++++-
+>   2 files changed, 19 insertions(+), 3 deletions(-)
 
-I suspect it is a premature optimization. There is only one blit per 
-frame and it is a simple blit, so I don't think it can create a 
-perceivable performance uplift.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Besides, if the optimization turns out useful, you can still 
-unconditionally let virglrenderer create the MTLTexture, so the flag is 
-unnecessary.
-
-Regards,
-Akihiko Odaki
 
