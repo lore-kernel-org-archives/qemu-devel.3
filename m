@@ -4,52 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A9EBC2A069
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 02:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90599C2A069
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 03:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcDry-0002w2-IY; Sat, 03 Jan 2026 21:29:26 -0500
+	id 1vcEbH-0005xh-Np; Sat, 03 Jan 2026 22:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vcDrv-0002ui-Rx
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 21:29:23 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vcDrs-00072T-W2
- for qemu-devel@nongnu.org; Sat, 03 Jan 2026 21:29:23 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxVvB50Flp_EoFAA--.17168S3;
- Sun, 04 Jan 2026 10:29:13 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJAxWcF30Flp4vULAA--.13603S3;
- Sun, 04 Jan 2026 10:29:13 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 3/4] target/loongarch: Add host CPU model in kvm mode
-Date: Sun,  4 Jan 2026 10:29:04 +0800
-Message-Id: <20260104022905.2120787-4-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20260104022905.2120787-1-maobibo@loongson.cn>
-References: <20260104022905.2120787-1-maobibo@loongson.cn>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxWcF30Flp4vULAA--.13603S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vcEbA-0005sn-Tn
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 22:16:08 -0500
+Received: from p-east2-cluster2-host9-snip4-5.eps.apple.com ([57.103.78.68]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vcEb7-00044z-M9
+ for qemu-devel@nongnu.org; Sat, 03 Jan 2026 22:16:08 -0500
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-12 (Postfix) with ESMTPS id
+ 25440180009D; Sun,  4 Jan 2026 03:15:58 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=+dKkymVULqQ48k0W+JWOHayVLAoO7p5yhA5mS5mRUPM=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=au6dPz6qJcSQ7kaVyleH6OVF7hO0T28zC0bR2JLlHrBnmdu1T9655iGWUqpBJp4OIhLJcyCOD3TNPzjIhMjdII46HxVL5P2XAZ8mDihLZK4/YKV4TxnQULHZ2KnIJrotRjiGkCR6JIlu8/keWfZb8jDuo47mqiRig+EQao074N8UgJPcrjxG0a0ryAFLPHQIAa7bFOKsYcKB1oPDATb8VF9nF7O8+gY1ogShxItX5JedN8EbbJWJRqyEybRL5iMxmO8C86jyYPsUMGmsErR/VdH0eayKGtOeDt8NnP1G/28XlXj+IUoCvsANC6QCsHPqqxktGzdv4e4qra6AmqZAKg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-12 (Postfix) with ESMTPSA id
+ 4E96318000AE; Sun,  4 Jan 2026 03:15:57 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Message-Id: <47DF75FA-8539-4748-94E0-74DE080BD71D@unpredictable.fr>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_259E8AA2-64FE-4C96-9328-89BEC282FB95"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v13 07/28] hw: arm: virt: rework MSI-X configuration
+Date: Sun, 4 Jan 2026 04:15:45 +0100
+In-Reply-To: <c6eafd44-3187-4c63-97b9-bd4bf96595c0@phytium.com.cn>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+To: Tao Tang <tangtao1634@phytium.com.cn>
+References: <c6eafd44-3187-4c63-97b9-bd4bf96595c0@phytium.com.cn>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA0MDAyOCBTYWx0ZWRfXxB1AjAhxEAGX
+ 17Ysj51+mMYvhazjDtkdCM/jvsREDIzoHghynLTNqCaT5HH1KTCZrMFoqFIcu/KZlKAUH2KG6Vf
+ E6Jba4InCMprA36cb6ZNL/ENHKFehXNuBQwMgYEI+FaZmco3rz0hl1daGRfC8fxSCMujBlA8Pzf
+ vW83Rau42ftdBAyxhJB6sGgdHh8voVoqwjETc1bI2Yo4lrevS8vAvnRXOXmMjokqX0tpA3sAZ/g
+ 4qh4T3za12mEXKUv7njdaKfRDRnjms2SiOgjoBZSh0hpUNY27j/Evd3r/7KdcFwGDfcUp+ToOnc
+ 5NvOJfFVzWqZfVbK7A9
+X-Authority-Info: v=2.4 cv=csSWUl4i c=1 sm=1 tr=0 ts=6959db6f cx=c_apl:c_pps
+ a=YrL12D//S6tul8v/L+6tKg==:117 a=YrL12D//S6tul8v/L+6tKg==:17
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=69wJf7TsAAAA:8
+ a=t_0_BxdfAAAA:20 a=fgrLqfBXAAAA:8 a=KKAkSRfTAAAA:8 a=a2Il46PqAXRzGH9R2ewA:9
+ a=QEXdDO2ut3YA:10 a=mPuSz27myjgA:10 a=6iWrutSnyxVHwnIEY3sA:9
+ a=LQZB4E8K4079zUNo:21 a=_W_S_7VecoQA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=_Ge82aPy-h_wFa7gWU4u:22 a=cvBusfyB2V15izCimMoJ:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-GUID: g_LI9KyDJjfpO1dGgqGCVoExUkXbWDPV
+X-Proofpoint-ORIG-GUID: g_LI9KyDJjfpO1dGgqGCVoExUkXbWDPV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-04_01,2025-12-31_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ clxscore=1030 spamscore=0 mlxlogscore=999 phishscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 suspectscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2601040028
+X-JNJ: AAAAAAABUNToXuT2hQsGRo2sWt1GM6aN0nxjr93GrjbrEk6DMGbOmX/ZA9MZbZFO19hZJ8AWEPpLS0iHeMgILh0z5MBwz814fNwmps6FeuxdtPEZZzZVSVDARBVpBEm87NxdN4qqFzjVbdpLQ6YunPTk/aiFXgGuIdMhv0acM8dOXtyp3+vUPbX0zokXoFZ/1yvVju1JlkW0syaP8TJG+dGl02u96Wz0Qg2n4QhNZ+HByTThrjkKAF94mqWRz7munflO+wTtUngZ7HQrkORjKKwMEveclgsk5sG3m2/ggyTRkhgK+wHZEK/sNjb2u+yPVIhfMm2RqE68tWRLbAlJRIKXKzkxBlNhatdhitNwX4cxQi7VrKYFk6gqvJ0lKgwJSVE68Rr+EbCn5MSnX7izij0zRVu79+/6og3ybMOOYTaRggkYzgrGO/62Zzkx6Mhag767hxd2YddqguENi2mxSdcRzBNWCq9H5cVDtoL0f/OuKIpPV//13Y4UypgkXY2ft8YF5XL7wb8yaSMZnuZuwazC6b5jMj/nQvyYtJaCBPVF22zvpDtS8h2Vct3wGaKZmibloo8PQr1TDtFl99dzu3fMSr88VoNpYvSRmPBrHh/2lFem0OwE8tP6uL+M3QjIMv73f5SuuaFxl5t195eJrgkosMnJX/psz47XHxQBqDafCnd8yg==
+Received-SPF: pass client-ip=57.103.78.68;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,128 +96,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Host CPU model is basically the same with max CPU model, except Product
-ID and CPU model name. With host CPU model, Product ID comes from
-cpucfg0 and CPU model comes from /proc/cpuinfo.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu.c | 94 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 94 insertions(+)
+--Apple-Mail=_259E8AA2-64FE-4C96-9328-89BEC282FB95
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index dffe6f652f..f9255c4f84 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -429,6 +429,97 @@ static void loongarch_max_initfn(Object *obj)
-     }
- }
- 
-+#if defined(CONFIG_KVM)
-+static int read_cpuinfo(const char *field, char *value, int len)
-+{
-+    FILE *f;
-+    int ret = -1;
-+    int field_len = strlen(field);
-+    char line[512];
-+
-+    f = fopen("/proc/cpuinfo", "r");
-+    if (!f) {
-+        return -1;
-+    }
-+
-+    do {
-+        if (!fgets(line, sizeof(line), f)) {
-+            break;
-+        }
-+        if (!strncmp(line, field, field_len)) {
-+            strncpy(value, line, len);
-+            ret = 0;
-+            break;
-+        }
-+    } while (*line);
-+
-+    fclose(f);
-+
-+    return ret;
-+}
-+
-+static uint64_t get_host_cpu_model(void)
-+{
-+    char line[512];
-+    char *ns;
-+    static uint64_t cpuid;
-+
-+    if (cpuid) {
-+        return cpuid;
-+    }
-+
-+    if (read_cpuinfo("Model Name", line, sizeof(line))) {
-+        return 0;
-+    }
-+
-+    ns = strchr(line, ':');
-+    if (!ns) {
-+        return 0;
-+    }
-+
-+    ns = strstr(ns, "Loongson-");
-+    if (!ns) {
-+        return 0;
-+    }
-+
-+    ns += strlen("Loongson-");
-+    memccpy((void *)&cpuid, ns, 0, 8);
-+    return cpuid;
-+}
-+
-+static uint32_t get_host_cpucfg(int number)
-+{
-+    unsigned int data = 0;
-+
-+#ifdef __loongarch__
-+    asm volatile("cpucfg %[val], %[reg]"
-+                 : [val] "=r" (data)
-+                 : [reg] "r" (number)
-+                 : "memory");
-+#endif
-+
-+    return data;
-+}
-+
-+static void loongarch_host_initfn(Object *obj)
-+{
-+    uint32_t data;
-+    uint64_t cpuid;
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+
-+    loongarch_max_initfn(obj);
-+    data = get_host_cpucfg(0);
-+    if (data) {
-+        cpu->env.cpucfg[0] = data;
-+    }
-+
-+    cpuid = get_host_cpu_model();
-+    if (cpuid) {
-+        cpu->env.cpu_id = cpuid;
-+    }
-+}
-+#endif
-+
- static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
- {
-     uint8_t tlb_ps;
-@@ -780,6 +871,9 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
-     DEFINE_LOONGARCH_CPU_TYPE(64, "la464", loongarch_la464_initfn),
-     DEFINE_LOONGARCH_CPU_TYPE(32, "la132", loongarch_la132_initfn),
-     DEFINE_LOONGARCH_CPU_TYPE(64, "max", loongarch_max_initfn),
-+#if defined(CONFIG_KVM)
-+    DEFINE_LOONGARCH_CPU_TYPE(64, "host", loongarch_host_initfn),
-+#endif
- };
- 
- DEFINE_TYPES(loongarch_cpu_type_infos)
--- 
-2.39.3
 
+
+> On 3. Jan 2026, at 06:21, Tao Tang <tangtao1634@phytium.com.cn> wrote:
+>=20
+> Hi all,
+>=20
+>> Introduce a -M msi=3D argument to be able to control MSI-X support =
+independently
+>> from ITS, as part of supporting GICv3 + GICv2m platforms.
+>>=20
+>> Remove vms->its as it's no longer needed after that change.
+>>=20
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>  hw/arm/virt-acpi-build.c |   3 +-
+>>  hw/arm/virt.c            | 110 =
+++++++++++++++++++++++++++++++++-------
+>>  include/hw/arm/virt.h    |   4 +-
+>>  3 files changed, 94 insertions(+), 23 deletions(-)
+>>=20
+>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+>> index 86024a1a73..f3adb95cfe 100644
+>=20
+> I=E2=80=99m trying to clarify the current status of ITS under TCG for =
+the virt machine.(may be a stupid question...)
+>=20
+> The virt documentation states: "Note that ITS is not modeled in TCG =
+mode." [1]
+
+Hello,
+
+That=E2=80=99s outdated documentation, ITS emulation was added in Qemu =
+6.2 to cover the TCG case.
+
+Was implemented in patchset: =
+https://lists.nongnu.org/archive/html/qemu-arm/2021-08/msg00070.html
+
+> However, when looking at hw/arm/virt.c, I don=E2=80=99t immediately =
+see a hard prohibition of ITS under TCG; for example, the MSI/ITS logic =
+appears to allow ITS depending on machine/version settings, and the =
+series also keeps tcg_its.[2] [3]
+>=20
+>=20
+> Could you please confirm the intended behavior today: is ITS expected =
+to be modeled under TCG for the latest virt machine?
+>=20
+>=20
+> [1]: =
+https://github.com/qemu/qemu/blob/master/docs/system/arm/virt.rst?plain=3D=
+1#L46
+>=20
+> [2]: https://github.com/qemu/qemu/blob/master/hw/arm/virt.c#L3490
+>=20
+> [3]: https://github.com/qemu/qemu/blob/master/hw/arm/virt.c#L3656
+>=20
+>=20
+> Also, Mohamed=E2=80=99s recent work to support "GICv3 + GICv2m" (and =
+to control MSI independently from ITS via -M msi=3D) looks like a very =
+practical workaround for environments where GICv3 is needed but ITS is =
+unavailable.
+>=20
+>=20
+> Best regards,
+>=20
+> Tao
+>=20
+>=20
+
+
+--Apple-Mail=_259E8AA2-64FE-4C96-9328-89BEC282FB95
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 3. Jan 2026, at 06:21, Tao Tang =
+&lt;tangtao1634@phytium.com.cn&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><div>Hi all,<br><br><blockquote =
+type=3D"cite">Introduce a -M msi=3D argument to be able to control MSI-X =
+support independently<br>from ITS, as part of supporting GICv3 + GICv2m =
+platforms.<br><br>Remove vms-&gt;its as it's no longer needed after that =
+change.<br><br>Signed-off-by: Mohamed Mediouni =
+&lt;mohamed@unpredictable.fr&gt;<br>Reviewed-by: Pierrick Bouvier =
+&lt;pierrick.bouvier@linaro.org&gt;<br>---<br> =
+&nbsp;hw/arm/virt-acpi-build.c | &nbsp;&nbsp;3 +-<br> =
+&nbsp;hw/arm/virt.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 110 =
+++++++++++++++++++++++++++++++++-------<br> &nbsp;include/hw/arm/virt.h =
+&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;4 +-<br> &nbsp;3 files changed, 94 =
+insertions(+), 23 deletions(-)<br><br>diff --git =
+a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c<br>index =
+86024a1a73..f3adb95cfe 100644<br></blockquote><br>I=E2=80=99m trying to =
+clarify the current status of ITS under TCG for the virt machine.(may be =
+a stupid question...)<br><br>The virt documentation states: "Note that =
+ITS is not modeled in TCG mode." =
+[1]<br></div></div></blockquote><div><br></div><div>Hello,</div><div><br><=
+/div><div>That=E2=80=99s outdated documentation, ITS emulation was added =
+in Qemu 6.2 to cover the TCG case.</div><div><br></div><div>Was =
+implemented in patchset:&nbsp;<a =
+href=3D"https://lists.nongnu.org/archive/html/qemu-arm/2021-08/msg00070.ht=
+ml">https://lists.nongnu.org/archive/html/qemu-arm/2021-08/msg00070.html</=
+a></div><div><br></div><blockquote type=3D"cite"><div><div>However, when =
+looking at hw/arm/virt.c, I don=E2=80=99t immediately see a hard =
+prohibition of ITS under TCG; for example, the MSI/ITS logic appears to =
+allow ITS depending on machine/version settings, and the series also =
+keeps tcg_its.[2] [3]<br><br><br>Could you please confirm the intended =
+behavior today: is ITS expected to be modeled under TCG for the latest =
+virt =
+machine?<br><br><br>[1]:&nbsp;https://github.com/qemu/qemu/blob/master/doc=
+s/system/arm/virt.rst?plain=3D1#L46<br><br>[2]: =
+https://github.com/qemu/qemu/blob/master/hw/arm/virt.c#L3490<br><br>[3]: =
+https://github.com/qemu/qemu/blob/master/hw/arm/virt.c#L3656<br><br><br>Al=
+so, Mohamed=E2=80=99s recent work to support "GICv3 + GICv2m" (and to =
+control MSI independently from ITS via -M msi=3D) looks like a very =
+practical workaround for environments where GICv3 is needed but ITS is =
+unavailable.<br><br><br>Best =
+regards,<br><br>Tao<br><br><br></div></div></blockquote></div><br></body><=
+/html>=
+
+--Apple-Mail=_259E8AA2-64FE-4C96-9328-89BEC282FB95--
 
