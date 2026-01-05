@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F346BCD041D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 22:22:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42312CD041F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 22:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcsx9-000414-48; Mon, 05 Jan 2026 17:21:31 -0500
+	id 1vct8W-0002MS-Ua; Mon, 05 Jan 2026 17:33:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vcswO-0003mO-2P; Mon, 05 Jan 2026 17:20:44 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vcswL-0002QJ-H1; Mon, 05 Jan 2026 17:20:43 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 605D99h6000759;
- Mon, 5 Jan 2026 22:20:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=y1/+WhwG+nzlaVYrg1SRxWe2ex3o9LplwmqEzGizD
- Tg=; b=PnsrnXkko6+TPMV7hdz9KxrCm7dDDyXaAtUSosv4xYet1NTozlh98OzfA
- VzmJmweX/l0mH0WsHeIyNef488c3GA7SclbKZV2MO4XefLbpYANBmDo5xTXaeHce
- YOZjABEnQ8BGdSMQklmeJezESKhDfzyT1d8yDrau6craZYcxiNbPOpk+bSqTdTHf
- nTnl+k+H9MmMZ4RdgsJdSbz/dd4Olbb9hXQMU9JEj327mkdiDLhn/+PD5vbQNJx5
- MdAr87j/7ofnAJxdxmeeA/mJu/46ptG+AaoKsgfW7earHxfCfaFfGEeJhs3YXNTr
- +aI3Lc9siby8Uo6e2gHLzh6QbJWnw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betrtgpwv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Jan 2026 22:20:36 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 605KmoUD014528;
- Mon, 5 Jan 2026 22:20:35 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bfeemra58-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Jan 2026 22:20:35 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 605MKXw664291248
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Jan 2026 22:20:34 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B20AA58056;
- Mon,  5 Jan 2026 22:20:33 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF92B58052;
- Mon,  5 Jan 2026 22:20:32 +0000 (GMT)
-Received: from IBM-D32RQW3.ibm.com (unknown [9.61.241.165])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 Jan 2026 22:20:32 +0000 (GMT)
-From: Farhan Ali <alifm@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, alifm@linux.ibm.com, thuth@redhat.com,
- stefanha@redhat.com, kwolf@redhat.com, fam@euphon.net,
- alex@shazbot.org, clg@redhat.com, philmd@linaro.org
-Subject: [PATCH v1 1/1] util/vfio-helper: Fix endianess in PCI config
- read/write functions
-Date: Mon,  5 Jan 2026 14:20:29 -0800
-Message-ID: <20260105222029.2423-1-alifm@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vct8M-0002Fh-4R
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 17:33:09 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vct8J-00046z-O7
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 17:33:05 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2a0bb2f093aso3700255ad.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 14:33:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767652382; x=1768257182; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+Rn4zgYufMW7rIMHFO5uTe8EU5x+JDUJ8tv9sxcWIH8=;
+ b=etZtkWwtUDVq9YkwsDYOfWyZ0ZydO9u5QlimPwXBh4y/424HdIve8ErAy1P9lN1srV
+ wHNDQr8WXO18HgoFp597lIQ95ECUNIn/0X4hWPOc/37wxdQnfBG43Ar/4o6SJ52igeIA
+ xdYeKvjvmOB0Uhz9n6Uho0Kn0EXDUXT7nWfM/jolXGIS/zHnqb3eZw7b4UQDfWbBtMoc
+ NKJWnOK3hgA9kbbkgEY91poFMBJSRUdbgdHBhZpvUvptuJrVq9KM37AX0kI7zA7V38A2
+ j+nBwa8RXqLv1BfZgmg3Y3cugwO5W8DeiVVxLWHvjrQ4sWb8fCTqZRJh02gxD6lwMjY2
+ YHjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767652382; x=1768257182;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+Rn4zgYufMW7rIMHFO5uTe8EU5x+JDUJ8tv9sxcWIH8=;
+ b=JvzVuQYqyuYMas0WnmBsEiAm751PYbRG7l6o6P54BbxPYuvAPrMokHu5JYKnEUm+oi
+ X/siXAhv0PPn4bkVlRiHIhyJBoAa4XA/1dsjRBl5Oluz6SvOvDdLv8IZ63iQs8cvw+gQ
+ HqyLeg1snTNbksoqEfeuBB0W+qBgbV9ab8nnz/chOzhnNe0fgTPe3tmC2zt0su3bNa/c
+ 7lBPguOjSAAq4pza5Dw1tFM2QDBCFmLfe/9+CZBJ8Ks26av4PWYZVCV8rNW7064eU8lv
+ TY6FXanm+V5EtxB7bqlUDCN8mDlOBDAgVT2OheIDznc4YTPutwwjPX8FXHePLNLmOJwh
+ KsoA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVrnghpmMIWbXEJ+attmkCUh1JWmbvZEf5RiAlMsKBLam/B/uFAeUqhSZSq6rplNJiqRuLAJTMyGOJj@nongnu.org
+X-Gm-Message-State: AOJu0YwNcB3HYJB1VKbKgR15o/Rq2DRjy0f2rhJGfIJnNkXKGYu6cVez
+ 5XdkiZT2JTLkbjucdQwXjL1Zy4kPCSDyrh4j+ppp0Cmwk0KUF21drne88kKztOq9t/gbw4uh+XP
+ jqrSyJOY=
+X-Gm-Gg: AY/fxX4XeGoJTVdSt/dmdGTZarhH/dp0s+7NOC0djZEuxjpKJ4AS8Ccao/+NERP7yjx
+ w5gHG4HAGBklr35ZhyRezbxlYv9XSltYghqPg154mUK/d/Axgn5UYKAmNRNT3oCG7K4gXZnD72L
+ vNPLsXuZHOCldFBrMLcoZTwPd4rZi72nlmixEwYxZikYt0ReAS8ybqIvG3aFJtEd1FF943qacen
+ 4xKy5Exgu88F7UpkDAwipH580uDubS/pUZZZsN7oNqm+UiOqAxvqas6WDJ99zrPOcLgRJd7WQad
+ E2ATX2aY5SsZBQioVmF9WyvGEMdFxgOAMiZy2huLwilfikiCHkY4pB3GiC2+pT6jUuOnxCxyBu9
+ 8Km0l0jh+kGXkjRiFDuA61rZQQCTnaOaKZBdLISgGLaXy9OzF8ydwIxZeuwIAYOriZKqoia9nZn
+ h6JSpEVVNCd1f/L6OW6RZ91slbu34jiw==
+X-Google-Smtp-Source: AGHT+IHdqFjaOzlPDrbCcbqaIb2hcqvT1VIzaLvjMCs+EV7x/nXnnQMlvxq26yS4MUgVuLTI6voMqw==
+X-Received: by 2002:a17:903:2f8f:b0:2a1:5f23:7ddf with SMTP id
+ d9443c01a7336-2a3e2c92066mr10946115ad.6.1767652381528; 
+ Mon, 05 Jan 2026 14:33:01 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a3e3c48d77sm2380185ad.41.2026.01.05.14.32.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Jan 2026 14:33:01 -0800 (PST)
+Message-ID: <76dfc640-b8db-4ed5-9232-41ede17da314@linaro.org>
+Date: Tue, 6 Jan 2026 09:32:55 +1100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=aaJsXBot c=1 sm=1 tr=0 ts=695c3934 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=ereiXZdFKGvgvgjS8uQA:9
-X-Proofpoint-GUID: a0OdMoIda9pfjtXHVLw42GSIZvb0OMUs
-X-Proofpoint-ORIG-GUID: a0OdMoIda9pfjtXHVLw42GSIZvb0OMUs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDE5NCBTYWx0ZWRfX53CHQfZniG29
- rp3izzqW9z55ug57xFfoYVyZpmfjLuR4qc2t+3tlAW1z9O+Ul9M0g0I66aWwXD5yHohQNndfa6j
- OZw9f1j07fujv/U/at9iOOdQeiC77MQj0HpFhdmmEf1yDyYevxkFr28X3PJj2RwfM6zqDcqmFOz
- 7no/1+PdfbsewZzkNpl+raJFiFz2VVi+wv7a8arPvqv3lDYC18WGXvrL2FiFbd8EsoWieFdUBO6
- 8msvM3GKoMWEmZa/NCy3EYkEHnp7RT6UQIdMZaCDRp5E+26RI74U4No+W/X8SfNZgFFVK1vQgf5
- /t3EZbk/45QdhNib3u/yjq0drhZ5QjLOKzuCHIX4g3hysDO+QNyPAxs023gRCJRzqV1VcGNBY1q
- WiS6POJMdodtlY1hsLAiU9kilgPR8ozVEVhxCc9Heho1DJCVscrDGb5i/uFKG98SytxHWK0Z230
- xLOi1pAoItdmeCs0jKQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-05_02,2026-01-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601050194
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v3 03/12] target/arm: mte_check unemitted on
+ STORE_ONLY load
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com>
+ <20260105-feat-mte4-v3-3-86a0d99ef2e4@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260105-feat-mte4-v3-3-86a0d99ef2e4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,80 +110,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VFIO pread/pwrite functions use little-endian data format. Currently, the
-qemu_vfio_pci_read_config() and qemu_vfio_pci_write_config() don't correctly
-convert from CPU native endian format to little-endian (and vice versa) when
-using the pread/pwrite functions. Fix this by limiting read/write to 32 bits
-and handling endian conversion in qemu_vfio_pci_read_config() and
-qemu_vfio_pci_write_config().
+On 1/6/26 05:14, Gabriel Brookman wrote:
+> This feature disables generation of the mte check helper on loads when
+> STORE_ONLY tag checking mode is enabled.
+> 
+> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+> ---
+>   target/arm/cpu.h               |  2 ++
+>   target/arm/tcg/hflags.c        | 14 ++++++++++++++
+>   target/arm/tcg/translate-a64.c |  8 ++++++--
+>   target/arm/tcg/translate.h     |  2 ++
+>   4 files changed, 24 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 393bfc0dc9..4087484faf 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -2496,6 +2496,8 @@ FIELD(TBFLAG_A64, ZT0EXC_EL, 39, 2)
+>   FIELD(TBFLAG_A64, GCS_EN, 41, 1)
+>   FIELD(TBFLAG_A64, GCS_RVCEN, 42, 1)
+>   FIELD(TBFLAG_A64, GCSSTR_EL, 43, 2)
+> +FIELD(TBFLAG_A64, MTE_STORE_ONLY, 45, 1)
+> +FIELD(TBFLAG_A64, MTE0_STORE_ONLY, 46, 1)
 
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
----
- util/vfio-helpers.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+Skipping bit 44?
 
-v1 -> v2
-v1 https://lore.kernel.org/all/20251217184253.1520-1-alifm@linux.ibm.com/
- - Drop Philipe's r-b as code has changed.
- - Do endian conversion in  qemu_vfio_pci_read_config() and
-qemu_vfio_pci_write_config().
+> diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+> index 5c9b9bec3b..c4696af5d8 100644
+> --- a/target/arm/tcg/hflags.c
+> +++ b/target/arm/tcg/hflags.c
+> @@ -425,6 +425,16 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+>                        */
+>                       DP_TBFLAG_A64(flags, MTE0_ACTIVE, 1);
+>                   }
+> +                /*
+> +                 * Repeat for MTE_STORE_ONLY
+> +                 */
+> +                if (cpu_isar_feature(aa64_mte4, env_archcpu(env)) &&
+> +                    ((el == 0 ? SCTLR_TCSO0 : SCTLR_TCSO) & sctlr)) {
+> +                    DP_TBFLAG_A64(flags, MTE_STORE_ONLY, 1);
+> +                    if (!EX_TBFLAG_A64(flags, UNPRIV)) {
+> +                        DP_TBFLAG_A64(flags, MTE0_STORE_ONLY, 1);
+> +                    }
+> +                }
+>               }
+>           }
+>           /* And again for unprivileged accesses, if required.  */
+> @@ -434,6 +444,10 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+>               && (sctlr & SCTLR_TCF0)
+>               && allocation_tag_access_enabled(env, 0, sctlr)) {
+>               DP_TBFLAG_A64(flags, MTE0_ACTIVE, 1);
+> +            if (cpu_isar_feature(aa64_mte4, env_archcpu(env)) &&
+> +                (SCTLR_TCSO0 & sctlr)) {
+> +                DP_TBFLAG_A64(flags, MTE0_STORE_ONLY, 1);
+> +            }
+>           }
+
+These two hunks don't need to check cpu_isar_feature, because we already did that when 
+filtering the valid SCTLR bits.
 
 
-diff --git a/util/vfio-helpers.c b/util/vfio-helpers.c
-index 44b457c442..5a4169d1b1 100644
---- a/util/vfio-helpers.c
-+++ b/util/vfio-helpers.c
-@@ -233,31 +233,36 @@ int qemu_vfio_pci_init_irq(QEMUVFIOState *s, EventNotifier *e,
-     return 0;
- }
- 
--static int qemu_vfio_pci_read_config(QEMUVFIOState *s, void *buf,
-+static int qemu_vfio_pci_read_config(QEMUVFIOState *s, uint32_t *buf,
-                                      int size, int ofs)
- {
-     int ret;
-+    uint32_t val_le;
- 
-     trace_qemu_vfio_pci_read_config(buf, ofs, size,
-                                     s->config_region_info.offset,
-                                     s->config_region_info.size);
-     assert(QEMU_IS_ALIGNED(s->config_region_info.offset + ofs, size));
-     ret = RETRY_ON_EINTR(
--        pread(s->device, buf, size, s->config_region_info.offset + ofs)
-+        pread(s->device, &val_le, size, s->config_region_info.offset + ofs)
-     );
-+
-+    *buf = le32_to_cpu(val_le);
-     return ret == size ? 0 : -errno;
- }
- 
--static int qemu_vfio_pci_write_config(QEMUVFIOState *s, void *buf, int size, int ofs)
-+static int qemu_vfio_pci_write_config(QEMUVFIOState *s, uint32_t *buf, int size, int ofs)
- {
-     int ret;
-+    uint32_t val_le;
- 
-+    val_le = cpu_to_le32(*buf);
-     trace_qemu_vfio_pci_write_config(buf, ofs, size,
-                                      s->config_region_info.offset,
-                                      s->config_region_info.size);
-     assert(QEMU_IS_ALIGNED(s->config_region_info.offset + ofs, size));
-     ret = RETRY_ON_EINTR(
--        pwrite(s->device, buf, size, s->config_region_info.offset + ofs)
-+        pwrite(s->device, &val_le, size, s->config_region_info.offset + ofs)
-     );
-     return ret == size ? 0 : -errno;
- }
-@@ -296,7 +301,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
- {
-     int ret;
-     int i;
--    uint16_t pci_cmd;
-+    uint32_t pci_cmd;
-     struct vfio_group_status group_status = { .argsz = sizeof(group_status) };
-     struct vfio_iommu_type1_info *iommu_info = NULL;
-     size_t iommu_info_size = sizeof(*iommu_info);
--- 
-2.43.0
-
+r~
 
