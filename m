@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B18DC79F8C
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A099C79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vck8v-00048E-1Y; Mon, 05 Jan 2026 07:57:05 -0500
+	id 1vck8o-0003yf-Pk; Mon, 05 Jan 2026 07:56:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8g-0003sq-9g
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:51 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8X-0003r9-Fn
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8e-0007z1-BY
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:50 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8V-0007xe-Cf
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767617807;
+ s=mimecast20190719; t=1767617798;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VkRyG+nuOL2if1Rh7rIC8AA3xkyAH90XSBBfJpYnefc=;
- b=KbJjfUUQofRnWkyqe1oR3u8Ch5qHZvGuB4rtk09ZekGpRyN6c6DqTOtnSMqRVPM9vALSxv
- 0ot5aVOempLouxW/OWeP9G7CownmLxJegivyDE3u4XRTnNM4Sc6p/knNdYAR27XOoNe1Vj
- Z/2cuL1YnnRh7byhYN+rZxzn9XxYj9I=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=xGnMfdF6G4uUQw2uzyCr9taP/1Mlago7zualsFQFCLg=;
+ b=XyZ1XWg7ccAbFM3O4yJHfIt5SRU8qTxHbDNDCN3Tf1PrDt7E+gZoc2anWutAi5LzSnO07P
+ s/ucb+J2ZuZz4WotFpKAQGqOMOR2WUftK7tWWI9jiyfqjOV3qFrMeEC7fy038SlCtR3Dm4
+ PJhxbTctyn7qXY+AJ7JU4af1DnaGMmw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-f5nJHjXmOLaC4YJzEY5owA-1; Mon,
- 05 Jan 2026 07:56:46 -0500
-X-MC-Unique: f5nJHjXmOLaC4YJzEY5owA-1
-X-Mimecast-MFC-AGG-ID: f5nJHjXmOLaC4YJzEY5owA_1767617805
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-lzSEMYAsNTOi54Sy2NvY-g-1; Mon,
+ 05 Jan 2026 07:56:36 -0500
+X-MC-Unique: lzSEMYAsNTOi54Sy2NvY-g-1
+X-Mimecast-MFC-AGG-ID: lzSEMYAsNTOi54Sy2NvY-g_1767617795
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 78DDD180028B; Mon,  5 Jan 2026 12:56:45 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92ED7195609F; Mon,  5 Jan 2026 12:56:35 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 066EF19560A7; Mon,  5 Jan 2026 12:56:43 +0000 (UTC)
+ id 1ECD519560A7; Mon,  5 Jan 2026 12:56:33 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Patrick Williams <patrick@stwcx.xyz>,
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 14/36] hw/arm/aspeed: catalina: add PDB FRU EEPROM
-Date: Mon,  5 Jan 2026 13:55:51 +0100
-Message-ID: <20260105125613.622667-15-clg@redhat.com>
+Subject: [PULL 09/36] tests/functional/arm/test_aspeed_ast1060: Add functional
+ tests for Aspeed AST1060 SoC
+Date: Mon,  5 Jan 2026 13:55:46 +0100
+Message-ID: <20260105125613.622667-10-clg@redhat.com>
 In-Reply-To: <20260105125613.622667-1-clg@redhat.com>
 References: <20260105125613.622667-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,88 +85,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Patrick Williams <patrick@stwcx.xyz>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Use ipmitool/frugen tool to generate a PDB image based on a
-sanitized set of data from a real device EEPROM.
+Add functional tests for the Aspeed AST1060 SoC and its evaluation board.
+The new test test_aspeed_ast1060.py validates booting the AST1060 EVB
+machine using the Zephyr OS and ASPEED PROT application (ast1060_prot_v03.02.tgz)
+and ensures basic console functionality.
 
-Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251217-catalina-eeproms-v1-3-dc7b276efd57@stwcx.xyz
+Link: https://lore.kernel.org/qemu-devel/20251112030553.291734-11-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast2600_catalina.c | 51 +++++++++++++++++++++++++++++++-
- 1 file changed, 50 insertions(+), 1 deletion(-)
+ tests/functional/arm/meson.build            |  1 +
+ tests/functional/arm/test_aspeed_ast1060.py | 52 +++++++++++++++++++++
+ 2 files changed, 53 insertions(+)
+ create mode 100644 tests/functional/arm/test_aspeed_ast1060.py
 
-diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
-index 6e8f4d39d97e..2ba2c5c08850 100644
---- a/hw/arm/aspeed_ast2600_catalina.c
-+++ b/hw/arm/aspeed_ast2600_catalina.c
-@@ -103,6 +103,54 @@ static const uint8_t scm_eeprom[] = {
- };
- static const size_t scm_eeprom_len = sizeof(scm_eeprom);
+diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+index d1ed076a6aa8..1762a496049d 100644
+--- a/tests/functional/arm/meson.build
++++ b/tests/functional/arm/meson.build
+@@ -28,6 +28,7 @@ tests_arm_system_quick = [
  
-+/*
-+ * "Power Distribution Board" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *        "board": {
-+ *            "mfg": "Quanta",
-+ *            "pname": "Catalina PDB MP (QEMU)",
-+ *            "pn": "00000000000",
-+ *            "serial": "00000000000000",
-+ *            "date": "01/12/2025 00:00",
-+ *            "custom": [
-+ *                "19-100579",
-+ *                "",
-+ *                "",
-+ *                "hsc-ltc fsc-max vr-delta gndsen-ina p12vsen-ina p12vfan-mps"
-+ *            ]
-+ *        },
-+ *        "product": {
-+ *            "mfg": "Quanta",
-+ *            "pname": "CI-Catalina",
-+ *            "pn": "10000000001",
-+ *            "ver": "MP",
-+ *            "serial": "10000000000000",
-+ *            "atag": "QEMU"
-+ *        }
-+ *    }
-+ */
-+static const uint8_t pdb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x12, 0x00, 0x00, 0xec, 0x01, 0x11, 0x19, 0x8c,
-+    0x19, 0xf0, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xd6, 0x43, 0x61,
-+    0x74, 0x61, 0x6c, 0x69, 0x6e, 0x61, 0x20, 0x50, 0x44, 0x42, 0x20, 0x4d,
-+    0x50, 0x20, 0x28, 0x51, 0x45, 0x4d, 0x55, 0x29, 0x8b, 0x10, 0x04, 0x41,
-+    0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x89, 0x10, 0x04, 0x41,
-+    0x10, 0x04, 0x41, 0x10, 0x04, 0x01, 0xc0, 0x87, 0x51, 0xd6, 0x44, 0x10,
-+    0x54, 0x5d, 0x19, 0xc0, 0xc0, 0xfb, 0x68, 0x73, 0x63, 0x2d, 0x6c, 0x74,
-+    0x63, 0x20, 0x66, 0x73, 0x63, 0x2d, 0x6d, 0x61, 0x78, 0x20, 0x76, 0x72,
-+    0x2d, 0x64, 0x65, 0x6c, 0x74, 0x61, 0x20, 0x67, 0x6e, 0x64, 0x73, 0x65,
-+    0x6e, 0x2d, 0x69, 0x6e, 0x61, 0x20, 0x70, 0x31, 0x32, 0x76, 0x73, 0x65,
-+    0x6e, 0x2d, 0x69, 0x6e, 0x61, 0x20, 0x70, 0x31, 0x32, 0x76, 0x66, 0x61,
-+    0x6e, 0x2d, 0x6d, 0x70, 0x73, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24,
-+    0x01, 0x07, 0x19, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcb, 0x43,
-+    0x49, 0x2d, 0x43, 0x61, 0x74, 0x61, 0x6c, 0x69, 0x6e, 0x61, 0x89, 0x11,
-+    0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x14, 0x01, 0x82, 0x2d, 0x0c, 0x8b,
-+    0x11, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x83,
-+    0x71, 0xd9, 0xd6, 0xc0, 0xc1, 0x00, 0x00, 0x37
-+};
-+static const size_t pdb_eeprom_len = sizeof(pdb_eeprom);
+ tests_arm_system_thorough = [
+   'aspeed_ast1030',
++  'aspeed_ast1060',
+   'aspeed_palmetto',
+   'aspeed_romulus',
+   'aspeed_witherspoon',
+diff --git a/tests/functional/arm/test_aspeed_ast1060.py b/tests/functional/arm/test_aspeed_ast1060.py
+new file mode 100644
+index 000000000000..034efa534262
+--- /dev/null
++++ b/tests/functional/arm/test_aspeed_ast1060.py
+@@ -0,0 +1,52 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots the ASPEED SoCs with firmware
++#
++# Copyright (C) 2025 ASPEED Technology Inc
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     /* Reference from v6.16-rc2 aspeed-bmc-facebook-catalina.dts */
-@@ -166,7 +214,8 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* i2c1mux0ch5 */
-     /* eeprom@54 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB,
-+                          pdb_eeprom, pdb_eeprom_len);
-     /* tpm75@4f */
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
- 
++from aspeed import AspeedTest
++from qemu_test import Asset, exec_command_and_wait_for_pattern
++
++
++class AST1060Machine(AspeedTest):
++    ASSET_ASPEED_AST1060_PROT_3_02 = Asset(
++        ('https://github.com/AspeedTech-BMC'
++         '/aspeed-zephyr-project/releases/download/v03.02'
++         '/ast1060_prot_v03.02.tgz'),
++         'dd5f1adc935316ddd1906506a02e15567bd7290657b52320f1a225564cc175bd')
++
++    def test_arm_ast1060_prot_3_02(self):
++        self.set_machine('ast1060-evb')
++
++        kernel_name = "ast1060_prot/zephyr.bin"
++        kernel_file = self.archive_extract(
++            self.ASSET_ASPEED_AST1060_PROT_3_02, member=kernel_name)
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', kernel_file, '-nographic')
++        self.vm.launch()
++        self.wait_for_console_pattern("Booting Zephyr OS")
++        exec_command_and_wait_for_pattern(self, "help",
++                                          "Available commands")
++
++    def test_arm_ast1060_otp_blockdev_device(self):
++        self.vm.set_machine("ast1060-evb")
++
++        kernel_name = "ast1060_prot/zephyr.bin"
++        kernel_file = self.archive_extract(self.ASSET_ASPEED_AST1060_PROT_3_02,
++                                           member=kernel_name)
++        otp_img = self.generate_otpmem_image()
++
++        self.vm.set_console()
++        self.vm.add_args(
++            "-kernel", kernel_file,
++            "-blockdev", f"driver=file,filename={otp_img},node-name=otp",
++            "-global", "aspeed-otp.drive=otp",
++        )
++        self.vm.launch()
++        self.wait_for_console_pattern("Booting Zephyr OS")
++
++if __name__ == '__main__':
++    AspeedTest.main()
 -- 
 2.52.0
 
