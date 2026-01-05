@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE842C2A062
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C83C2A062
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcYbF-0007Qc-Ku; Sun, 04 Jan 2026 19:37:33 -0500
+	id 1vcYbq-0007ss-MQ; Sun, 04 Jan 2026 19:38:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYbE-0007QM-50
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:37:32 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vcYbo-0007rj-G9
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:38:08 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYbC-0000r5-LE
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:37:31 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-29f102b013fso168953275ad.2
- for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:37:30 -0800 (PST)
+ id 1vcYbm-0000rc-UD
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:38:08 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2a110548cdeso181794075ad.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:38:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767573449; x=1768178249; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767573485; x=1768178285; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3i4v5gECwExzhredOzOZmpQvz+e4RZmNqxgF47q9l50=;
- b=WXuUcnC6Rb1ku51UOJTuxM65r0N0OOAUWCGNQtTY2BjE+PusnUeH74FFLe6Yf1KVrf
- CWQ2zfnqpFPZ0q25JBFgEkFUctAH2JZj51wLddbDvtFa91g9psqBLMM/Em0mCtCkEMbU
- uC+LgPeDHT8hbzlh4FFF04vtIqYYvMtFQbc8EXuVNMB4aS6mxop8Ci93sGUb1Voau0uN
- sTuHMxAjAtEk2roTKhHfX30Z+6yZePhMobszKggCmx9IjoGvR25Eh2mNqTNVjL63Roo3
- ooNv4gFGnUiq5P3GdyJAG0R63JSDQTKyqknkR7j5ZDFoUzycSBnfWrRShnGUsNJW6CXr
- QR6Q==
+ bh=zNVkkkA9MGF/ped4nZC8MUqNrM6qfumeg1TW8aUntjs=;
+ b=KVqvOXgkzHf70/pf2A5i8wyZ7VOXTY2jQcI842zRc4k/CfYzE7ukSFHTF/6cDMmu04
+ +4PAa9aoW8MAFW+wJM/8c0Qe/zP2N+VF3Jo3ttg5L77TBe0qLvkLN2pSU/RJu5QobveS
+ SJhaClsYP8eKACp9Le9Hp3pSx4jpFG6p+blNuMZsijhS+sEkEUXHK9gzCo+DqL8l4TME
+ YV4qLQfMkJ8dNJI4iFf3fB0eWDzSLqS93YtIqX9F7pP2FiMwR2kqaatb+q3x+dnxGVkY
+ oetXPpwWFUJ++Vj/i0w4XsmRZf+WaIL8SNzTuGX78j/YuL12eFgA1bDTmjl6n/WSuktB
+ 9Kvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767573449; x=1768178249;
+ d=1e100.net; s=20230601; t=1767573485; x=1768178285;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3i4v5gECwExzhredOzOZmpQvz+e4RZmNqxgF47q9l50=;
- b=LKj5Eu6zIjuEabxmMvrxM0jTvv7LPOCEw8ixBGfN956eqyF4Wzz8iA7+TvxnSb+ui+
- tz96h4Lxe+5yr+SgsBKfBuCaiN5Qup7IV4ZWeVLI4Z3SOvnh0F26qYmsjXtSzdiCUzdM
- o+rllnYiJbKt06nLDs8x1wLqt1OgXVrGFtg/YdnuKCuMDFIgLgccwnbycvwHyeKA71on
- ENNUBc7QRYUrf41yeHQpzBlgZFgnnGa3BBp2eZW/7y44JGnppXRkcUZGIHpqovoM56iJ
- 28bc825290k6Ft4r+jfnXTBtJqHjhjqWHw0CCNjhMUKMoqE0tHKQYYY2SaY95qahUryC
- B/Dw==
+ bh=zNVkkkA9MGF/ped4nZC8MUqNrM6qfumeg1TW8aUntjs=;
+ b=tx5zoGpKiO9l/kacvMMurbAuwYkYs7zuFu8Zp19ose0DM+zV7PXFeUxy0sK/hK9lGG
+ MJ/NOaeTihh6Aj4DRKztE2Qqi9MF321w/6CnWwQa5Bdhk8dVMAd9Mtt8W+yuK2N5YdTu
+ 4KTQPCi1aqxsrYLdqFp5qX0Y6bUM3IEOGbi6fSYgz6nTIp59KxLG+n8uqGiXAxA7lVFL
+ CXrgyPh0dCLU0OuYqrvCKMClGWo928sFloGYsECywreRj/PL4oWB04+aViGd5/XzRRak
+ PkSqFHlrdWa9IxMrQI/ojJWw5Q8zqTQbG6e7fFhXmdM+xmQM20FRx/6zGR0Kxgw3hPVr
+ vi3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKy3w758WXGTkMVrBJPzvWLVQThOYaY3hTIqQzBf1s7LLJLoFL91mhjy82ln73M7c/UTfLxUVyikET@nongnu.org
-X-Gm-Message-State: AOJu0Yx5Q0TeIqYDDgDWhR4PU5Ol8ETVX28ZtOt81L78dtX8U46zZ2t3
- EjcL4CGgP9GxgF872K6wMuMK1VDIAFuqGYd5UGWFI5RDi96GNCZirs+PrArvv7r6AaQ=
-X-Gm-Gg: AY/fxX4EJzrZKsP9WzIfjU4ajUriNjL89zkFG9d0W+MYT3/FZWtgS9hFzufAhXRszy4
- G0HVVv5ygm4ocUdXm0py6uwKsY0hM3eJkM7xWofZuulQLPQ4zHVamn/0jQLdNr7UtPZlmhv4uOC
- tGs3VgOkdfAv8GTrAEDkk95DTE3AwF5CBYWPkX5p4TvtB9awMXJb5zfnYayTbt8IuLGWIpSspS3
- Tmip63VfwgVVtoOpDEfIau1KSq3LqOqQUstJTg4oPan3sC2Bh7ujpiOWx//5k4P5ZH/T86zN/8z
- 1cWehuJlH7vE1EV7G8fiIUcrskUzbsYW7Bz6V56kQtNUjhKMOIQ1GCF6EqvJWvTg7UeKGnkh55I
- BachMAR1iTN1uN8o7b1kA01XOBwZh43i+91WqwnWkRo5fpqEue4WPbGGIvT4ctA6MJRlf7KOLQ2
- 1udcltnKmAQvyvPTFwAK3xPFWSzgNgnw==
-X-Google-Smtp-Source: AGHT+IHcJxrjYq2wtX0FJvSqAjc4Z1xMBrQrPG4d34tDTaqVMcTS7icKE4483flkuBzI6ZmnVe27Cg==
-X-Received: by 2002:a17:903:b90:b0:29f:301a:f6da with SMTP id
- d9443c01a7336-2a2f2a34f54mr474567445ad.43.1767573449089; 
- Sun, 04 Jan 2026 16:37:29 -0800 (PST)
+ AJvYcCV8NpffKZAXiD9NJv9N8m6l22skrzRcA056LzTDjvNBgMc6YXS+r22K8KK36IyXDLZii18qqwUFuTAP@nongnu.org
+X-Gm-Message-State: AOJu0YxaBi/ZZeiToaeXngsK1oHFbXVAyCdSDCKg5+/BDCM3WpZSA3Pe
+ SPGKztvKkusPf+BjDsdtAQOu3Mt0yi2Get6buyHU2Fpp+4AKJQSa2Fwt9QdyvXbBv4w=
+X-Gm-Gg: AY/fxX4JzyCrDeM+jirPbcwv99ilbMtmL83LnT+56hdnekwKYEw6bMM6MezmCUiGCdb
+ rn1y8LnnTVAuWM+AS1H4IFkqMUtxM8cv40686YsdqVt7pnTJxGVeOUZv0a51G+mR8gNxOZ9HLoE
+ VPgLnweGrjk5FXByKS0hrVpw8FLXpJ1Az4s068EJvLVcGI1yvzWv+s0Yk2UG4dYUUTKT19uqMSP
+ 618XxokrafkPckOLgf8ZkLTpJEU7KhsszvROPx3Q44YJ+2/rhviMSmAARZ+k92uf3QlFlesta4v
+ xf/xO/tktn4uyZiTmaNZuojqWvQ/tgiwmj+vOwmayK2phAiFhZM+GR1QSrykBIjcMSP9QmCdnO2
+ BDxKoa9AQs0cIC7eclq1t0/eoA3zEUJoqicaH/ReLAmyWndxC71UBDlM+NyRKJ76G/orfltKUb5
+ TGtrLqcSyTY4q5M15urOkYhm7XmyiBmH855oGMtCK5
+X-Google-Smtp-Source: AGHT+IGF03tT4TqGRlX4/6lCfvJC7N3Lu5nHQ65cb0wsNBtW2HLinr/S1tbNwIfizvysUlJ5o4xnqQ==
+X-Received: by 2002:a17:903:228b:b0:2a1:3895:e0d8 with SMTP id
+ d9443c01a7336-2a2f2a5934dmr376023065ad.60.1767573485354; 
+ Sun, 04 Jan 2026 16:38:05 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3d5d3e1sm426611455ad.76.2026.01.04.16.37.23
+ d9443c01a7336-2a2f3d4d88asm425051815ad.48.2026.01.04.16.37.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Jan 2026 16:37:28 -0800 (PST)
-Message-ID: <a48503cb-0a62-4cc7-83ff-393945dace0d@linaro.org>
-Date: Mon, 5 Jan 2026 11:37:21 +1100
+ Sun, 04 Jan 2026 16:38:04 -0800 (PST)
+Message-ID: <4c980190-839b-49af-bcaa-4becefc300e3@linaro.org>
+Date: Mon, 5 Jan 2026 11:37:56 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/9] target/sparc: Simplify gdbstub
- sparc_cpu_gdb_write_register()
+Subject: Re: [PATCH v3 9/9] configs/targets: Forbid SPARC to use legacy native
+ endianness APIs
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -86,14 +86,14 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Frederic Konrad <konrad.frederic@yahoo.fr>
 References: <20251224162642.90857-1-philmd@linaro.org>
- <20251224162642.90857-9-philmd@linaro.org>
+ <20251224162642.90857-10-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224162642.90857-9-philmd@linaro.org>
+In-Reply-To: <20251224162642.90857-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,50 +117,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/25/25 03:26, Philippe Mathieu-Daudé wrote:
-> Rather than ldtul_p() which uses the underlying 'unsigned
-> long' size, use the ldn() variant, passing the access size
-> as argument (evaluating TARGET_LONG_BITS / 8).
+> All SPARC-related binaries are buildable without a single use
+> of the legacy "native endian" API. Unset the transitional
+> TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
+> further uses of the legacy API.
 > 
-> No need to use #ifdef'ry to check for TARGET_ABI32, since
-> it is 64-bit:
-> 
->    $ git grep -E '(ABI32|LONG_BITS)' configs/targets/sparc*
->    configs/targets/sparc-linux-user.mak:5:TARGET_LONG_BITS=32
->    configs/targets/sparc-softmmu.mak:4:TARGET_LONG_BITS=32
->    configs/targets/sparc32plus-linux-user.mak:2:TARGET_ABI32=y
->    configs/targets/sparc32plus-linux-user.mak:8:TARGET_LONG_BITS=64
->    configs/targets/sparc64-linux-user.mak:8:TARGET_LONG_BITS=64
->    configs/targets/sparc64-softmmu.mak:6:TARGET_LONG_BITS=64
-> 
-> Directly expand to the big-endian variant (with the '_be' suffix)
-> since we only build the SPARC targets as big-endian.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/sparc/gdbstub.c | 12 ++----------
->   1 file changed, 2 insertions(+), 10 deletions(-)
-> 
-> diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
-> index 134617fb232..d265681f6d2 100644
-> --- a/target/sparc/gdbstub.c
-> +++ b/target/sparc/gdbstub.c
-> @@ -112,15 +112,7 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->   {
->       SPARCCPU *cpu = SPARC_CPU(cs);
->       CPUSPARCState *env = &cpu->env;
-> -#if defined(TARGET_ABI32)
-> -    uint32_t tmp;
-> -
-> -    tmp = ldl_p(mem_buf);
-> -#else
-> -    target_ulong tmp;
-> -
-> -    tmp = ldtul_p(mem_buf);
-> -#endif
-> +    uint64_t tmp = ldn_be_p(mem_buf, TARGET_LONG_BITS / 8);
+>   configs/targets/sparc-linux-user.mak       | 1 +
+>   configs/targets/sparc-softmmu.mak          | 1 +
+>   configs/targets/sparc32plus-linux-user.mak | 1 +
+>   configs/targets/sparc64-linux-user.mak     | 1 +
+>   configs/targets/sparc64-softmmu.mak        | 1 +
+>   5 files changed, 5 insertions(+)
 
-No, this changes the behaviour of sparc32plus.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
