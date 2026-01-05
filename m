@@ -4,82 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103B0C2A075
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 08:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AAFC2A072
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 08:42:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcg9O-0003hf-T5; Mon, 05 Jan 2026 03:41:18 -0500
+	id 1vcg9T-0003jD-H5; Mon, 05 Jan 2026 03:41:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vcg9M-0003gx-0i
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 03:41:16 -0500
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
+ id 1vcg9S-0003id-9L
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 03:41:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vcg9J-0006K6-CN
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 03:41:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767602473; x=1799138473;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=zzCFUre12J5S1n5MXly8Cz/XMaLl0lsc+PyKLeJKgQo=;
- b=U873SNfdTOPrQ5lZ1qBJ5WAywUdHgyr9k1+1XC6UmLVtkUOnMrW9Q4r2
- vUbLn8WJbyWm4Ii1E80P43YlbtJGe7deJk42/qTO+f1lxSthn3k1m4eoR
- TloBFBJZ8UuprnJLQVkJUfYkXzKwi8zvRJnK9crijG+4QJbWAPYM0bvFi
- 1roXF1KAuomWfMLPcPLJb/11iUZGL+LQRMTWdl6hEPVXEzzelqR0frLoR
- 5IDbRgrZHmexxczQNfctzF2jNCJISQ/PoSYSNf2LztryNwSi8dUxRGNan
- nFSAtSBD6nTO+FYl12HN/jJ2jnw34c/cb4aaeW/WSlCZRJ5LJyGg8c/2+ A==;
-X-CSE-ConnectionGUID: FVU2IqlYQXKX02DONRVjYw==
-X-CSE-MsgGUID: Ix6oWurtRNKN7fqlGPKLmw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11661"; a="68706649"
-X-IronPort-AV: E=Sophos;i="6.21,203,1763452800"; d="scan'208";a="68706649"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 00:41:10 -0800
-X-CSE-ConnectionGUID: 3fGi00+RQSGV1gt+rZCixQ==
-X-CSE-MsgGUID: R+Y6nJxgRQOxiSqIKv4iBw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,203,1763452800"; d="scan'208";a="206894046"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 05 Jan 2026 00:41:07 -0800
-Date: Mon, 5 Jan 2026 17:06:31 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- devel@lists.libvirt.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC 02/10] qom: Add basic object property deprecation hint
- support
-Message-ID: <aVt/F6qjR+UMfXrO@intel.com>
-References: <20251202170502.3228625-1-zhao1.liu@intel.com>
- <20251202170502.3228625-3-zhao1.liu@intel.com>
- <20260102130601.0697deeb@imammedo-mac>
+ (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
+ id 1vcg9Q-0006N2-Gt
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 03:41:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767602478;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CpBaI83/QXQnH/6r1gOGX/LSjWj4be/cHbKPdrjMLlA=;
+ b=erCkl+lmhZXoCJqjlBIU0CiT5qk5YpxcJ34/TL+bMa/gv5aMeb0HOW5uAFw3shGRMlL98P
+ rzTAfurMmb1flVFUDykQf209NZtB5H3jeZBO0dqSNhTMO0n2zD8EOxHSUJXuV0TxxlzSkZ
+ JSNhgprEkQLLH1hAtckxVY9cSYSbdCk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-511-vtAVs4ZgOPGLfsgD5dqo7w-1; Mon, 05 Jan 2026 03:40:09 -0500
+X-MC-Unique: vtAVs4ZgOPGLfsgD5dqo7w-1
+X-Mimecast-MFC-AGG-ID: vtAVs4ZgOPGLfsgD5dqo7w_1767602408
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47918084ac1so120472075e9.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 00:40:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767602408; x=1768207208; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CpBaI83/QXQnH/6r1gOGX/LSjWj4be/cHbKPdrjMLlA=;
+ b=lRkBhJvx5J851586r6SEtV9+ITw5F1Fw7yQ+y9cRh93CBxv0IXiWvEazBWvOFogTto
+ jRhzMwAxF/RslNfaeXwtBGxgBbs6LlRFd3VOZtBL7gCEN3d0BttMDm+ADKIBgj746pn1
+ P6/v9SMPTRO56uY32FNTKJVeFDcRe5hARloUbIsR1g95mSslBnGn/BAc67zyRaFyah0F
+ wOU0T3rL8q3vctWvDzbJIFXDzw1qncW9/ZKrn4gd+YzmM6rY/007+mBh0w7rgFMQ0JXQ
+ +nTqtcrtWTfgprjtK9U8nVOohWdMF6whjOBF04DVQHlHayHozoT0Fw2a3udgJ2T8Bz4g
+ goew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767602408; x=1768207208;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CpBaI83/QXQnH/6r1gOGX/LSjWj4be/cHbKPdrjMLlA=;
+ b=VS9jqIL+PLcKvhUV04wPqH+TuY1zWmKpXvZ0KIhN9QixK2+MwS09DtXc754UO9+aSN
+ Ivx8bPQ5jEEnmjpii53j2Mipz31zAGnZK0A5jdp/yfXjXg7xtN7WbOxJjnLyfgg/BKjA
+ DB3a+/8pMnzZviRIuDAlIJ5hmcGF+/1FhCzxLxEsTTn9fVNJ7nOYijbNLux7U8iPlRXD
+ acsnwix6oAM6+2afBgScA0VvUOeG62x4c2mEdZaP7W1l2Vd8+XxuKh1VQVufGLdyjdbF
+ fqKbpWxQA0aXFjJKfXT0mMcVlVpqP8dxWq/5TJgVZParoK67Y0WIgATKqlkpfNNozuhs
+ p7+g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU90dXrJus2aFp7Tp8ek+Dc9/axY1E9yGmjfEWiSdsrZ3imBWke5R4ihUqJWuypdhZ43iGGCOqifuGw@nongnu.org
+X-Gm-Message-State: AOJu0Yztt30A7moPl9s6Tl8XvWqJY4cYGlfCo+/Hk2FSuasB2me4I/mL
+ dS2mP86AzQJr2EREdnCyErMmgRPVLILBD1yGLHqSr/OK1YZ9i7/5gpf+RwFNBlwU+vE2v8lNP6L
+ o4AQk0vhwQ02euAkEEqvRNEnAVFeqoU4YKR4QV8XWjO/oP00n/MDGjxCX
+X-Gm-Gg: AY/fxX5usCtWzDvDnGiSYnUNH9G9/18R83ga+fCyzY9n5anfIzq1S87EiB8TOv4ahX5
+ MEcbugjF10boYuyHLM6ZAoIoTM1mS7TTxNAWaTjWvLoOB+2Jd3zG8wkqJHSB3aKT6lOyh2TjxEE
+ pkI075UsIQznQVjIz83A3hHTUczb952aswrBj/p1KySsQHX0RSFoCuPx8go9feYSaS2jG3mmGBa
+ ecetJEsSVg9OQJr6gC8+57p/+5Nd5aMy/nN5cO7TD61WmG9hjipLrDPVaTznM5np5Nz1eW66l3j
+ K2kFpiMRlKyulxZTmQ1ZGNyJBxMAE75kTq87Q67aHgOXqtpDqFCgUDDhzXfuvbKZIwkn/YlOkL4
+ =
+X-Received: by 2002:a05:600c:348a:b0:46e:1a5e:211 with SMTP id
+ 5b1f17b1804b1-47d1958a755mr656043745e9.21.1767602408353; 
+ Mon, 05 Jan 2026 00:40:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH95a52nPfqxCMH/IFUE4jS5rV/1ExZzhK0HtVLMD5w4RhlZAsgNa8sdh4ikhaQJFKQ59rXlA==
+X-Received: by 2002:a05:600c:348a:b0:46e:1a5e:211 with SMTP id
+ 5b1f17b1804b1-47d1958a755mr656043395e9.21.1767602407976; 
+ Mon, 05 Jan 2026 00:40:07 -0800 (PST)
+Received: from [10.43.3.236] ([213.175.37.14])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4324ea830fesm100412053f8f.20.2026.01.05.00.40.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Jan 2026 00:40:07 -0800 (PST)
+Message-ID: <0bf79738-4197-4746-a5fc-3c06722e0937@redhat.com>
+Date: Mon, 5 Jan 2026 09:40:06 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260102130601.0697deeb@imammedo-mac>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] docs/interop/firmware: Rename FirmwareFormat to
+ FirmwareFlashFormat
+To: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org
+Cc: Kashyap Chamarthy <kchamart@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20251228232649.1708400-1-abologna@redhat.com>
+ <20251228232649.1708400-2-abologna@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?B?TWljaGFsIFByw612b3puw61r?= <mprivozn@redhat.com>
+In-Reply-To: <20251228232649.1708400-2-abologna@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mprivozn@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,116 +130,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 02, 2026 at 01:06:01PM +0100, Igor Mammedov wrote:
-> Date: Fri, 2 Jan 2026 13:06:01 +0100
-> From: Igor Mammedov <imammedo@redhat.com>
-> Subject: Re: [RFC 02/10] qom: Add basic object property deprecation hint
->  support
-> X-Mailer: Claws Mail 3.11.1-67-g0d58c6-dirty (GTK+ 2.24.21;
->  x86_64-apple-darwin14.0.0)
+On 12/29/25 00:26, Andrea Bolognani wrote:
+> We are about to introduce a new set of enums that will be used
+> by FirmwareMappingMemory and that don't overlap with the formats
+> that are supported for FirmwareMappingFlash, so we need to
+> disambiguate things.
 > 
-> On Wed,  3 Dec 2025 01:04:54 +0800
-> Zhao Liu <zhao1.liu@intel.com> wrote:
+> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
+> ---
+>  docs/interop/firmware.json | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> > Now the common (but a bit fragmented) way to mark a property deprecated
-> > is to add the warning in its accssors.
-> > 
-> > But this is pretty inconvenient for such qdev properties, which are
-> > defined via DEFINE_PROP_* macros in the Property array. For qdev
-> > properties, their accessors are provided by pre-defined PropertyInfo, so
-> > that it's possible to modify PropertyInfo for a single "deprecated"
-> > property.
-> > 
-> > Then it's necessary to introduce property flags to mark some properties
-> > as deprecated, and to check the property flags when set the property,
-> > thereby to print a deprecation warning.
-> > 
-> > This not only benefits traditional qdev properties but also helps the
-> > deprecation of generic objects.
-> > 
-> > Note, internal attempt (except the compat case) should not trigger the
-> > deprecation warning but external user should see the deprecation
-> > information. Whether to perform deprecation checks based on property
-> > flags is controlled by the newly added "check" argument in
-> > object_property_try_add_full().
-> 
-> I'd split deprecation warning out for this patch,
-> i.e. make this one "add per object instance flags",
-> and take care of deprecation stuff on top,
+> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+> index da0362a2c0..ef9b976a34 100644
+> --- a/docs/interop/firmware.json
+> +++ b/docs/interop/firmware.json
+> @@ -233,7 +233,7 @@
+>               'verbose-dynamic', 'verbose-static' ] }
+>  
+>  ##
+> -# @FirmwareFormat:
+> +# @FirmwareFlashFormat:
+>  #
+>  # Formats that are supported for firmware images.
 
-Yeah, will do.
+Nitpick, ... "supported for flash firmware images" perhaps? Because
+after this, the enum is specific to FirmwareFlashFile.
 
-> Also, API likely would need set/get/clear calls to operate on object flags.
+>  #
+> @@ -243,7 +243,7 @@
+>  #
+>  # Since: 3.0
+>  ##
+> -{ 'enum': 'FirmwareFormat',
+> +{ 'enum': 'FirmwareFlashFormat',
+>    'data': [ 'raw', 'qcow2' ] }
+>  
+>  ##
+> @@ -265,7 +265,7 @@
+>  ##
+>  { 'struct' : 'FirmwareFlashFile',
+>    'data'   : { 'filename' : 'str',
+> -               'format'   : 'FirmwareFormat' } }
+> +               'format'   : 'FirmwareFlashFormat' } }
+>  
+>  
+>  ##
 
-I see, for dynamic flags ("user set" - you mentioned), these APIs are
-necessary. Will add something like object_property_[set|get|clear]_flags.
-
-> > In subsequent work, the "check" option will be enabled for specific
-> > external property setting paths.
-> > 
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> >  include/qom/object.h | 72 ++++++++++++++++++++++++++++++++++++++++++++
-> >  qom/object.c         | 72 +++++++++++++++++++++++++++++++++++---------
-> >  2 files changed, 130 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/include/qom/object.h b/include/qom/object.h
-> > index 3f807a03f5aa..8f4c2f44d835 100644
-> > --- a/include/qom/object.h
-> > +++ b/include/qom/object.h
-> > @@ -86,6 +86,12 @@ typedef void (ObjectPropertyRelease)(Object *obj,
-> >   */
-> >  typedef void (ObjectPropertyInit)(Object *obj, ObjectProperty *prop);
-> >  
-> > +typedef enum ObjectPropertyFlags {
-> > +    OBJECT_PROPERTY_NO_FLAGS     =                             0,
-> > +    OBJECT_PROPERTY_DEPRECATED   =                        1 << 0,
-> 
-> maybe use BIT() instead of manual shift?
-
-Sure, will do.
-
-> addidtionally given you are going to distinguish external vs internal,
-> perhaps add flags 'default' and 'user set',
-> I think the both could be used to cleanup cpu flags handling where we rely on
-> setting/checking  magic numbers to figure out where value comes from.
-
-Good idea.
-
-I think a "user set" flag is enough. Considerring a property may be set
-multiple timers. In object_property_set_full(), we could add the "user
-set" flag for external setting and clear that flag for internal setting,
-then property's set accessor could know whether the value is from user
-or not.
-
-> > +    OBJECT_PROPERTY_FULL_FLAGS   =    OBJECT_PROPERTY_DEPRECATED,
-> > +} ObjectPropertyFlags;
-> > +
-> >  struct ObjectProperty
-> >  {
-> >      char *name;
-> > @@ -98,6 +104,7 @@ struct ObjectProperty
-> >      ObjectPropertyInit *init;
-> >      void *opaque;
-> >      QObject *defval;
-> > +    uint8_t flags;
-> >  };
-> >  
-> >  /**
-> > @@ -1090,6 +1097,41 @@ ObjectProperty *object_property_try_add(Object *obj, const char *name,
-> >                                          ObjectPropertyRelease *release,
-> >                                          void *opaque, Error **errp);
-> >  
-> > +/**
-> > + * object_property_try_add_full:
-> 
-> what's the reason for adding _full flavour over just modifying existing API?
-
-I was previously concerned about making too many changes to other parts,
-but after re-checking, directly extending the current object_property_try_add()
-is better — there's not too many changes. Thanks for the reminder.
-
-Regards,
-Zhao
+Michal
 
 
