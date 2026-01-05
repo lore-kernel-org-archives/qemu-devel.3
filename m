@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AD7C2A073
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BFDC2A062
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcYnM-00025l-G7; Sun, 04 Jan 2026 19:50:04 -0500
+	id 1vcYs1-0003Mm-Pf; Sun, 04 Jan 2026 19:54:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYnK-00021p-DD
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:50:02 -0500
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1vcYrz-0003MN-NS
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:54:51 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYnI-0001lD-MA
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:50:02 -0500
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-34c718c5481so12912752a91.3
- for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:50:00 -0800 (PST)
+ id 1vcYry-0002AZ-B0
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:54:51 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7aae5f2633dso14074107b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:54:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767574199; x=1768178999; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767574488; x=1768179288; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W+rnA2UjP5RGsGmtugtwXDtHoTR3QpzD7s4CXiG8aJ0=;
- b=pmSIPQQW/lHxkyy8aVzPXoXWC5qbNsgvdDPFUm9PO0LzXogEySIpUPsNqbniq3z++y
- YkmbiNJMjr1bM9hleggtSsHa66RP/lp2538e0IgzBDOpBdDQCTtUR6GFxiCgiH1/vIqi
- LjH8CYtItopZ9nO43AGwms3Da5sKe6C+D714x31dW4bgpfU9MY1hxIPNdMJ7+tSnCcPY
- olXF38cAxi8KM/3jb1V1wIiNxyQzxOw34hPkT/gDUeXM9QLy7m+1m8L8Hi5D+1PXSo7D
- lMQzezgMgSGpMC4RItKvSuZRh6ghs2LkpUd0LgjhRfzzexHYAWKzOg5MfszMyKUyca3x
- Enxw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JzNv4PaUjR8dyzlt2jp8cJo3LFPcbrV5+ihxMrzIiQA=;
+ b=rCgcKXooBjN9mhfYr1AnOAd6M5IGn7ONQMw54jEuPD/vGqVlXYx5urJBKmgMauLOKx
+ I+0+7FRtfjH15DOqM/PLg8ZqC+OUHP1BdnitSygT3JOL+TFulh8E6LEKBxsNvw2rrRXr
+ PVG7N24eLRqM2lnOhltraHPqONPgA5V4817d6WjgMmf5Dryw5scw8VOU+miFUO+xuFlr
+ LkVem9AP8ROErSYEUGmPwMM6n+iDglcSvHYg1rhQ644WupmKhX5qrS9N+llj2/jUVIu+
+ /sfTiIfRrHLcSbcFgSh+XIimddPP7r7fVZGOxYE598yi5DMILLlTnsc/52d3rTkyMTGi
+ hdIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767574199; x=1768178999;
+ d=1e100.net; s=20230601; t=1767574488; x=1768179288;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=W+rnA2UjP5RGsGmtugtwXDtHoTR3QpzD7s4CXiG8aJ0=;
- b=Tpg3iBF90aO5Xd1pJ0CCzeFXVELXiFA05WhLbj/JU3IQ3F46CZsjfqtzc+FvwScKWl
- BS7rR1Rgx+/TYDovSFB99SdWr5/XELECMaUazELme5LTNfXgWPrS6CcLpx6jE3WcVcJx
- DYgGSY+LDIY4kWhkWi6k9mipgAXJgq22FCdPtiMy6OIntKA+w+hx+BxChCeapipA9mIo
- roLVM/XwKdfnAeD9IrH3wffl9ONZb/E9N/2H+Hm2fKFvN+6JlQX7r7FhqMxGAHcK8DK6
- Uek6yKFfPSerEmkQrW8SZAwQ9FtIAmtFTZ65HdAI3ucDIPgXpv4/DJ6hqN1rN8uBKl3t
- 8Psg==
+ bh=JzNv4PaUjR8dyzlt2jp8cJo3LFPcbrV5+ihxMrzIiQA=;
+ b=v2hFTkqHnQevPW+JZqGkVm4Cwj6GE/IEa6vPeq6lCH/9npKv+r7F8EBykaVB9OPvRd
+ fJfF1MMsdV/axu4RWWlpgqu8Sedl634XGGqTiIN/1l7KwG7IzFEgLUOkY6QK05s3YWJe
+ wcnusNe2lIUaKEqih7Z0LsLldKIaP5HuQt95lQAVYKd77iWCimCcPlJPQSyQi7RlyaqD
+ rkcaWCM6ybST3EIl520sopVbInyn4JiqEJr6mL1ZFwn+w38JZc8thw2DEF26silMSRda
+ Wz27N1NKc3J4b3iMdf7M1NVIZ1XohELC14qgmajlqvjAi7mh7nZuidBQ0K2OuFn2db9i
+ 1ojA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSRAm9MTkNYtw2dNG7EmMx81kdvp1AySA2WRz9cIeZb0LVGUeYrYMVnmyqfIzRFYbgq0lHR+1zBbTo@nongnu.org
-X-Gm-Message-State: AOJu0YzdM+d83x2MgbuRsZT8FzoCQkDGJprmfCdCt0jZaR8SwI0A+SuU
- simFRHWlCysOsehAhVCZx8UQdqaz9hkv37Am9vMoDgAIlE+kIcuwteMbwXoLo31cVoM=
-X-Gm-Gg: AY/fxX6LHPD1HiOA3sT2CvlQkyeCH8+q2qDDTfGlXKsRZzdBFO805eNcl4KAmyTH9QX
- a3WUTdimaAN0VQkkaPg5OrabGprwOwnKsRRFNdTKcrri7l0hi0+i4Pz/rQuh7gL895vYzqkRWmj
- LRB4RYRvvL4ziyP+UiXNujo1De/Yyvy7U3BTGA+8+Bn0TOMeLvGCwCq8/56Fc3zblHL8RhXaADE
- NV2Wv2LsynRnoe3sYmgKgjSaCMxuwJEzSH79RCkWre81V+hN+O/J82msYFyH1Wg95PSug153+/L
- vxJ3xcIiV5bGJk1vRtPw9h8T+9ez5/Ix+cQt+DtPZqpUoCRWgtbP2bp4CHkKvSyfqTrXyxMGf+T
- Rp9IRBdSFrfChZuhdqTjMsa1VW12z/5o3c3ulLjSr/GLznfNMHoHxIttIjMAO2RrhqA59BIYmaH
- vB0bAjURSzNKTmVijKt3aJfAf5lRVg1A==
-X-Google-Smtp-Source: AGHT+IEfi2+zqfskk89cSBQchQxdjyJGPTjmhU8frRT1H8NVtc2ncp3Amlq3YOep1ykt5oQmU1cQfA==
-X-Received: by 2002:a17:90b:2fc5:b0:33b:a906:e40 with SMTP id
- 98e67ed59e1d1-34e92137cd4mr34411767a91.2.1767574198766; 
- Sun, 04 Jan 2026 16:49:58 -0800 (PST)
+ AJvYcCX78W26tnqdLQEjdsQ6e0gJJRrvdwc6tnmclY39rYqEJM4007OXUHIT3BEEXBN5NRy9x2ReswOukjqN@nongnu.org
+X-Gm-Message-State: AOJu0YxrawX4tWSdhq0u0IWuqezxOac0rkI1ugBaJTPUy+i5CCxMiihb
+ hEM9mY29YaDXAcvWKpPgmfsN7LfzRc0PskYmk8SU3+1iXpYpMvUAwGOUZLLMbcoLY5Q=
+X-Gm-Gg: AY/fxX5uEK2kr1v9EFfyD5+z4FufdJ+cHWI+zXXovB1S1c1chUtt6nqBoTXM3X/9TJd
+ lNp4/LocS0Ybgd0rF1MMnUd8elnE4O3sbO8lEpx6j/EsNN71PuYMPhSikWMaNUo1NQ1Kx6RZ/sl
+ G1XM9lthTJIedsh6OI/cHccN1stcul6l4m1aUNr4kDnsLo3JdPWY+S8n6fz06Efp2G7sjsv0orA
+ saK9/aRY3zH3ZCRXvI5K3UFHHxjmSEvfiEV1ZPPd9gJBWQP6t2aPZs4nJuN3guzUmQx14PD4zfA
+ jG4bhhJ0ynPW6jfaqN52wEGJjMo7LApKGLoZX9Qhc5mx+XPj6Ob0o1z1FH6vgC4IlI+BWcJH4ha
+ pZ3ywnkBKMkr/ipytfS6qlLzf4WHEjatbEkKptm0QNOh7CBmC65PXm9kZaJhVDiMvjc2S8RpZws
+ qqgT805DrS2yfYYDxhahPH+rm0uYJ2uw==
+X-Google-Smtp-Source: AGHT+IEmt4Ua3MMtkw+HZvExQDkIJCfQU9bG8GqhJ3gKtyG/OuR5bWoNpxr/+jjLcncM5P26cjpRIw==
+X-Received: by 2002:a05:6a20:918d:b0:35d:d477:a801 with SMTP id
+ adf61e73a8af0-376a7eed254mr42810894637.13.1767574487801; 
+ Sun, 04 Jan 2026 16:54:47 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f476fb86dsm4497910a91.8.2026.01.04.16.49.57
+ 41be03b00d2f7-c1e79a17fb2sm39865465a12.12.2026.01.04.16.54.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Jan 2026 16:49:58 -0800 (PST)
-Message-ID: <03447f71-16d3-4ec4-b4a7-67df34bb8257@linaro.org>
-Date: Mon, 5 Jan 2026 11:49:54 +1100
+ Sun, 04 Jan 2026 16:54:47 -0800 (PST)
+Message-ID: <bc17579d-f198-426e-b14d-008504ffd7e1@linaro.org>
+Date: Mon, 5 Jan 2026 11:54:41 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0] tcg/optimize: do use affected bits
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20251223163720.985578-1-pbonzini@redhat.com>
+Subject: Re: [PATCH 2/3] target/tricore: Inline translator_lduw()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251224163005.91137-1-philmd@linaro.org>
+ <20251224163005.91137-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251223163720.985578-1-pbonzini@redhat.com>
+In-Reply-To: <20251224163005.91137-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,38 +110,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/24/25 03:37, Paolo Bonzini wrote:
-> Commit 932522a9ddc ("tcg/optimize: Fold and to extract during optimize",
-> 2025-06-30) inadvertently disabled affected bits optimizations on
-> operations that use fold_masks_zosa.  These happen relatively often
-> in x86 code for extract/sextract; for example given the following:
+On 12/25/25 03:30, Philippe Mathieu-Daudé wrote:
+> translator_lduw() is defined in "exec/translator.h" as:
 > 
->     mov %esi, %ebp
->     xor $0x1, %ebp
+>   192 static inline uint16_t
+>   193 translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
+>   194 {
+>   195     return translator_lduw_end(env, db, pc, MO_TE);
+>   196 }
 > 
-> the optimizer is able to simplify the "extract_i64 rbp,tmp0,$0x0,$0x20"
-> produced by the second instruction to a move.
+> Directly use the inlined form, expanding MO_TE -> MO_LE
+> since we only build the TriCore target as little-endian.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   tcg/optimize.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tcg/optimize.c b/tcg/optimize.c
-> index f69702b26e8..c546e8910ba 100644
-> --- a/tcg/optimize.c
-> +++ b/tcg/optimize.c
-> @@ -1102,7 +1102,7 @@ static bool fold_masks_zosa_int(OptContext *ctx, TCGOp *op,
->   static bool fold_masks_zosa(OptContext *ctx, TCGOp *op, uint64_t z_mask,
->                               uint64_t o_mask, int64_t s_mask, uint64_t a_mask)
->   {
-> -    fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, -1);
-> +    fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, a_mask);
->       return true;
->   }
->   
+>   target/tricore/translate.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
 
-Queued, thanks.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
