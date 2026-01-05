@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE5FC2A062
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B24BC2A062
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcYYi-0005yC-VF; Sun, 04 Jan 2026 19:34:56 -0500
+	id 1vcYZF-0006oa-TK; Sun, 04 Jan 2026 19:35:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYYh-0005xd-4p
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:34:55 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1vcYZE-0006oF-QS
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:35:28 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYYf-0000YF-Qn
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:34:54 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7acd9a03ba9so13875402b3a.1
- for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:34:53 -0800 (PST)
+ id 1vcYZD-0000ka-9Q
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:35:28 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7f0da2dfeaeso14501924b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:35:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767573292; x=1768178092; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767573325; x=1768178125; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=N3IDSwr8TCfQ5DxtMSSf4NmC5ruhlNoJf5PlpdQZtiA=;
- b=Ew6RwNrYPXDF3iIRtJZ/90xIYRPn2T5//mbzbh5dTh3P+dIyNoILGGxq2uivILRHrd
- 0SjrYat/HczDLLNIzbesZeCpVD93nTgU/0U6jd01sNGzsZzXehJ602bT4auTfAhWypdL
- a1pzawVLV5HfjYz9ic+GF8CpL6L6VndbBcRIwSilh5bv9WphED2M43tpKg1305KmkViQ
- q8ivd/tHZ1xtTbK7GGgpBpuJ4ETb6M1WVZFoByuaBWLcMGIN5ALUJFf2u3tvFxdf+1ka
- 98d3z0yOl7Zzdq3AQOSDmHUzbUUxncrnxdwP+s7/OY0cSDVL+vqoGePHWIWcHqgAXMH/
- dX8A==
+ bh=67P0VelRO0HOdGIIcXf1Wiy26tR6dCvSeKQN9Bwot48=;
+ b=PiWxMLq1ILgLyDE4BwAafhvzNASOGFiUvhIszvbJ4SDKKogr6gdYckzDvwP5drP0BH
+ qed8TtapLhm5PgTBjRPlIN1TiFT2tC09mwP11qpTYskqHKHu5lwh4qJaY6PlWuZM49c3
+ MFULCFG7ji8hK45vHDqFuR7lebUmuW9P0wBtUXwWLXyiGJiIToCXgu6zBUNcD/nhFIPb
+ Yf47wZsASY5T4dqr/Ygx93ItG8Nxg2TTnMOVGUsB0695ku3dP9PlnKYHhFhrk5xxt8Q7
+ M8V9zFNiMSZa6wmAIrBL+ifOtK+9MnPQG6jdIzLOtCbygT1IvuzSK02Uevk+DvqsiCji
+ ZSLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767573292; x=1768178092;
+ d=1e100.net; s=20230601; t=1767573326; x=1768178126;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=N3IDSwr8TCfQ5DxtMSSf4NmC5ruhlNoJf5PlpdQZtiA=;
- b=FlPGfDFaRojvScE77WIngI0Uo2qCYZAeZiuobIOhg00Z24njhw34qsAJX1iBPtVcdY
- F3vZ74Y31RM+gR8rygwG0mlX2ZhI5ZODobvyBrz/+lgTYb8We7mUqFotKezafSUPsbaz
- ehpirlbDoxddv05vmj7+S03Z79Cm/N4Jr5wQBcqfE2oM3Ei3oc3spVLurm4+JXgsIsk6
- VWaPlxEP7y2p4oS+HV+/qAXvo4J8dyCEKJAEOgRk6tV9X0PAv9PKn3A7k8QvvIDSo/cX
- rYPb7F+NEcJoJnAPPJV29qbAU+rf0eZ1EQHIiS3k4owRABbd/0BKCRbOwQIEC7KxmTCV
- R1Lg==
+ bh=67P0VelRO0HOdGIIcXf1Wiy26tR6dCvSeKQN9Bwot48=;
+ b=X2LZITCoAh7RtZTf3uqEOtT0MpjjhDxBuYkcpmRXZ0zb49q/JUBjd2Wx7c24oaq7i5
+ 4wu9e86xbMzaMufG/SNEVHqrqkvybxyBELmjupiv+OA+E87N8/G/IbzztwJHSnkp9cvy
+ nVI246CSntjc4kwhE5nH1Pt3GaKdi4TbezD+Fp7VH3IlJNZMKuKgpvURix7UUMQo/6k0
+ HD9+2LWX/33rgBXhDbaSnn6Jw7yI0EDuiSeK1D4LSd41GjcmuGDsIeLHtDzqMTEmq7zt
+ 4fuWRx+OBnS7sFOfwgz9wi2xGvVhRlLIzCivYHpXHPsUjVJoJkcX/TLePww6AGex6ZwO
+ dVdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+nV5weJah7MpAwwhKWWrmpML8sz9Z+ywIHzDUzI6X4O8bZrrmZhxwmbsOqLfKm6sHUICPFxwCnxbg@nongnu.org
-X-Gm-Message-State: AOJu0Ywm81sMC9xJQZURMT5/NySzbfGAz/x8sIrH8C67qnS0DZc8oy/z
- q/Q5Z6l34v3Ubs0oXyuBGogaPawJYi6fv/XQ7gUUBmuqM8qrw9NurmgTMYTR6VF7Nr0=
-X-Gm-Gg: AY/fxX7RHLpne10thNTAuGnPKBg4DUuZLCJ2SA0q6bHIrSWrD2TBlqX4pDmxCStFwxE
- cUrFvAcIcC5HjlXcm+Y5+wzBhOJoia5rKxTPxnGxk4xFBwRBmc/YAlDRzh/cGZhYtPY6wpT3s6K
- Xm54jVr7IpS9bDB6umgv3vlJlX2Zoxbof/fEq9DoFDlpZuND1tN0+CkUMDr6Uu++/OSMnUrNnFc
- ercJfqBqmCYcKOLb/ydPdLTo2ytdaeKVVnVDTpMdh7C2e3Eqc1tUQKEhGcDcLh+j8E53aao2+Mz
- 8HhJ+mBb0wrjw+OWXHI4JrOnx9Co/5MDXDYasG2/wUIJD1pBe8bQuY6cYYPqdSpUBtpN9ZLG1re
- m+zVbwB/4qpG5USVGIPk+mVmQ9F+a40VO44g1tCoKtP/DbjQbFlnfwJzFFnIHRyb8M+yuo3QFGW
- uljl6BYF0vL3ZcI4v1N/6QkVgotMQs3Fexz/9qr5bS
-X-Google-Smtp-Source: AGHT+IHw18VY5VCyU5Azuk6KBSVcS4p8M2wLiaTMg6o6KgI/ug/0Z8AoSz83PWMeniO3E1jdssVc2g==
-X-Received: by 2002:a05:6a00:4092:b0:7bf:5011:d1e0 with SMTP id
- d2e1a72fcca58-7ff642159efmr37864157b3a.2.1767573292159; 
- Sun, 04 Jan 2026 16:34:52 -0800 (PST)
+ AJvYcCWeW7Uu/roM4pUwo5XTIZVcALDgDw/r8Q8RNE72FTC50hM9wuHd00X0zipSdMzy/PxxqeSPBiEbI+Qd@nongnu.org
+X-Gm-Message-State: AOJu0YyTY+gvICeJDw8Q1rGIRULOGxQFfsmnVYAF6EiA3V7LJ61Wodp/
+ TdHZJwW2JjOTwUo42tDvT20Rdj9rpmrOej7umisvpho0f9BSzbQrLMo9ERPQjJGcR+Q=
+X-Gm-Gg: AY/fxX7xwzyJHjzCo9J4vrwjMmkItwPZydtMFc8cAkXpoGnz1qe0OjYifvAaultxg/g
+ O8GHjRu1YqQFf5q8CaLX5FnUh41YMeMyqyeVyuDEyUdvTi0md3O6myGRMQC+hmaqgYbKr+EgqPD
+ k+JFMYBJ/6cYu7YOD60HlLv/f07n5lAPen+Aq1xwqK40HvVxTiVi8XSEON5/VX7xMDoNyaq+BSS
+ iXMoc4brnR3pLSpf+m++CbqyATzW0rzPzLspDv+Q9zWtJw1O26vwVd8UaglnjEz8wl9ciug5WT6
+ hG1DydcsW30nx88BEyiJOtCEYBy/o2WWUSfI5YLDp1dpuweyVjlAnyvqgJhrm2nnVU9Q0YkN2cG
+ sYdxz/UJBedrq4fnEY0Sn7BctT3atYjMcSGZFYudTuCOfVOhTs8Iw6r6IchF0Y+0VQfPhVeGYiE
+ mlH4qdlAdBUJWozGWjJlAgp0xr4jCy+w==
+X-Google-Smtp-Source: AGHT+IF3A8B0V7uYMEXDCwlv5zyIQMCRvpPGPFAf+sPPcM581WNawWXnJJbD5VIQO9cLwzLLhSKWIw==
+X-Received: by 2002:a05:6a00:1f04:b0:7e8:43f5:bd26 with SMTP id
+ d2e1a72fcca58-7ff67455837mr44606280b3a.59.1767573325490; 
+ Sun, 04 Jan 2026 16:35:25 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7e892926sm46307111b3a.66.2026.01.04.16.34.47
+ d2e1a72fcca58-7ff7aa328basm46468566b3a.11.2026.01.04.16.35.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Jan 2026 16:34:51 -0800 (PST)
-Message-ID: <da49e094-57f3-4463-a3f2-21bebefd8f87@linaro.org>
-Date: Mon, 5 Jan 2026 11:34:44 +1100
+ Sun, 04 Jan 2026 16:35:25 -0800 (PST)
+Message-ID: <ea5b0c1a-cd90-4e98-9aef-f25e864f1a4c@linaro.org>
+Date: Mon, 5 Jan 2026 11:35:17 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/9] target/sparc: Inline translator_ldl()
+Subject: Re: [PATCH v3 7/9] target/sparc: Inline cpu_ldl_code() call in
+ cpu_do_interrupt()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -85,14 +86,14 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Frederic Konrad <konrad.frederic@yahoo.fr>
 References: <20251224162642.90857-1-philmd@linaro.org>
- <20251224162642.90857-7-philmd@linaro.org>
+ <20251224162642.90857-8-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224162642.90857-7-philmd@linaro.org>
+In-Reply-To: <20251224162642.90857-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,21 +117,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/25/25 03:26, Philippe Mathieu-Daudé wrote:
-> translator_ldl() is defined in "exec/translator.h" as:
+> In preparation of removing the cpu_ldl_code wrapper, inline it.
 > 
->    198 static inline uint32_t
->    199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
->    200 {
->    201     return translator_ldl_end(env, db, pc, MO_TE);
->    202 }
-> 
-> Directly use the inlined form, expanding MO_TE -> MO_BE
-> since we only build the SPARC targets as big-endian.
+> Since SPARC instructions are always stored in big-endian order,
+> replace MO_TE -> MO_BE.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/sparc/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/sparc/int32_helper.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
