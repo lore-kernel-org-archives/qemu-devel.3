@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E306C79FBE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC36C79FBC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcqV4-0004bP-RJ; Mon, 05 Jan 2026 14:44:22 -0500
+	id 1vcqXX-0005jH-MM; Mon, 05 Jan 2026 14:46:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcqV0-0004Z0-Dt
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:44:18 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcqXT-0005ir-BE
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:46:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcqUy-0004E9-RU
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:44:18 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcqXR-00054V-Rk
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:46:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767642255;
+ s=mimecast20190719; t=1767642408;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CNtWMqmGGXA4jUDvYktdeZ61y542mMBn9GwntZ99uu0=;
- b=ci5Fx4YrOFdw2hwkPzomEXTbFhhZBj/dQKHzWAfbLapVWtmShfR79Xj9cw+I+osxG4MxbK
- xirVpy9qgvgMy41tnnmD3lVNIYCNk6dpgaEj9JYi/JQmTI2ZhrJCB63LePpmKxruqt67R9
- NT6Pd0BcxBVrH1tmiaaTz4td+lgnYmE=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DUBmv5xfJx8DwJvoeFwHfGP9fhrawenx3Z8JhuE2GsE=;
+ b=ZJUkveysuwYpYspKPztKYJcLUxylpd2OXBVAp23E3nwtKWgR8sgA+GrIkt3vfF3ECFU2Rr
+ 4LTMMEowHOabsMXlIlIumW4yDAUf0s3q3Mxps7XdYYAeWK1cbE9hwJ7OCKKO7RoPK70fEh
+ HXhIRkGOnHFKyT9IzEowVzuwEemwANw=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-Qofh8xV6NTaqevtJzNF3zg-1; Mon, 05 Jan 2026 14:44:12 -0500
-X-MC-Unique: Qofh8xV6NTaqevtJzNF3zg-1
-X-Mimecast-MFC-AGG-ID: Qofh8xV6NTaqevtJzNF3zg_1767642251
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2a0d59f0198so3106365ad.1
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 11:44:12 -0800 (PST)
+ us-mta-621-xOcseWy8PGSRSZV2pClKqQ-1; Mon, 05 Jan 2026 14:46:47 -0500
+X-MC-Unique: xOcseWy8PGSRSZV2pClKqQ-1
+X-Mimecast-MFC-AGG-ID: xOcseWy8PGSRSZV2pClKqQ_1767642406
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b6ce1b57b9cso207745a12.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 11:46:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767642251; x=1768247051; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767642406; x=1768247206; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CNtWMqmGGXA4jUDvYktdeZ61y542mMBn9GwntZ99uu0=;
- b=G7djgcUpmyTjbUn99nNwehJgrT0T2NXKEmFAIhQfCg7Wbdq6OVre9NRbFZg+zzvFzs
- ZCgcyFlYYgaFjevTpF9WKtVqXyQPqlVkqLlpo431N1dbTlbnfnI8uyIOoaM+QI8YUNiI
- mHDgusn0HA+ypVioNPiL7KAPMK3np3Fh+I9TgPmIH+eM/nmHvX/pal7YYidGpqFumhb6
- bCoWNRIxaqUDW2KhuWhvz7mWufKcN3vCzaBrEZmJn2Z+fkU9H6tSQbobjJPOKkHjcp8x
- EjcRIMBI8aXZkpw8gqGsfNg24Wluhzu8e/atXTg72oPXk6+x4Pa4f4mUtrGDz2epOfii
- 4RtQ==
+ bh=DUBmv5xfJx8DwJvoeFwHfGP9fhrawenx3Z8JhuE2GsE=;
+ b=QLd5LtOzoiJcQJOl07etv8BEd91nzLssgqXJcMdpeAdTJg5zlQIAN2Mc9qnz/tceyG
+ kWU7cIdPSlLJuIM5hbLLRPoVoaUxSaH/Hn2I/lFN5NnZr1pxMPjSM8NNzCHgKyxKc0Vn
+ DTo0acX7wol1S3aqqojVJJmDV9FZH4qWi/XWsYAHwhx6Dau8CrxH09YxwcV4L9uHiKqR
+ I9TtmukrB90utCpEQA4L2K2N7yMeAP3sEU8kGdObBo4UYyHDoTsgMoxngIMFYCNb+Qnx
+ dkS9rzj838e6oCgMY6N57q4DtWOpmHhaC+k52PRNJtGeMcA8xpxsHUPvpGlUWG8SmFIE
+ Htzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767642251; x=1768247051;
+ d=1e100.net; s=20230601; t=1767642406; x=1768247206;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CNtWMqmGGXA4jUDvYktdeZ61y542mMBn9GwntZ99uu0=;
- b=ZCjp/tsRKmWUDzq11sdcRlZ7cuPFis98+g1adHaaOUiuUwqAEx7HRQu0lLCwVOgY9Y
- XZNjUW63PE5Xed/P6UchL2xDp1Uqht3vARx9aLbo1vo3EKHtvu7CkbQz5WwMsz+FRtH/
- nDTLgsNvjyqYrAHONhgGFoQKl8f3eXQFeaHWsEn3K7Z+xv9MrFjqzdTBx6gA7yZiQ/bz
- 2dA/ys/3B1BL3pEuxHTvfICB/KQvN8DinsxeJcysRUEBRazsqZq/z95FCYVxlEyQE1kP
- smpf8SlREV2wwEufgDTHECS7Bd6lXE61AhvwCc9k0UDVGvIT7ebGpZtqjd21qUp533fi
- Ks3Q==
-X-Gm-Message-State: AOJu0YzONSNlyHoXQA/phytkxrnJACXzLUpnstFrmiRX1W+gbrLvTdyL
- DXWcRlAQdcF3KZ5mrpUhgWlj/F3HDcNsObKQNZoLhe4ivD1eorHeDANDZFfUYXOL/fLwLOM9t0/
- 8eFJpZxVA72aLUBUGfY+8td/xQkb9HUkpojhBm4WQ6ZCNXnd4wx1lul47BIqeHynX
-X-Gm-Gg: AY/fxX6+JLFZl/Wa3SbK6YrVkzmW+MfB83v8YDlkMG++viy9S/PVK8k37yzuN7Vz0zL
- Y2q+JCy0/gswilCMpS+n5XWJ7B/fg6PtAzqKM5eurw6n1ieBuZw7oGdkumNxuI7nrg31pHmR/am
- potxDTV0E50+rhtAnPpfxgA7gEmOpL5iR5pWhBsZ2gcI/fD5K9OFigB5/egZws2bwCwHq5KjFl1
- gzi1m8Ew3T01ZU+mpufw0HtiM3ZwVZ64kqw03LPgEKchicONHfT1OqXSV0H5snd/C3cdcQTTQHG
- Vci0TdY4XcQzaAyZbzgzbT0x19AATrEm1zxxQF9+MEIqXiNd0yKtHev7jjOAjY+3rBcjGBGE6tm
- 3Ln4=
-X-Received: by 2002:a17:903:298f:b0:2a2:d2e7:1601 with SMTP id
- d9443c01a7336-2a3e2d1a865mr6252145ad.48.1767642251228; 
- Mon, 05 Jan 2026 11:44:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFfoLup5VJYW+VfAwAjIgfbmabDQuN7xjGT1RLuN4BdcQhZniD+RXg9F02veGC6BLOsMarH2w==
-X-Received: by 2002:a17:903:298f:b0:2a2:d2e7:1601 with SMTP id
- d9443c01a7336-2a3e2d1a865mr6252015ad.48.1767642250715; 
- Mon, 05 Jan 2026 11:44:10 -0800 (PST)
+ bh=DUBmv5xfJx8DwJvoeFwHfGP9fhrawenx3Z8JhuE2GsE=;
+ b=nT4+a5UmQle+QS3X5hhLcXPKRJwTYM8DffvucInUZJoia5fGVCDc2HTcGKJynHLz6p
+ IxrXqzaz513Kql65f0NnbbMmK8oWZGsUSl/HevObw/0uIpoOhHpLuiWwBVYya27IlO+g
+ bKrykzR1BAuagBS//+oAtRBb3Nf6ATadFYuUeU5pdtLLU+alD/NCVAhXg3R+ZOofINh0
+ cFkCXYEalJd9pqsb114wCcGW/bGtp5fba666F0vPdsborg341rYIHOOCUf2ILYQWNG81
+ yD4AZdnm+eXRGdHASaIyJZhTs2aHc2W/zqgmLklJh7bbpiDF/bVo1eHKq3QIcutVHOAT
+ +8hg==
+X-Gm-Message-State: AOJu0Ywgil50vquSeI1g0IndKM2it1sTa7fWSEWT258ybJPcdMGSRgJm
+ unKFXOE1GO2cZcf9ZMAI/6zfO48nuPGfM+jQ16OhMUqBAzIbW44ErnK6xi4RZYf0ivb9Uuxb5HA
+ e/CZ+mk1HJQ6M6uv8nhsklvy+3v05ZjU17b1qVGViyzmwUaZAinMaxrz1
+X-Gm-Gg: AY/fxX6JqSYpjBvO80D07QgKtLfN8NNFJT4AIQBxhntF8All64sAsUi56iK3s38yxgu
+ 5RUqdYMSaips74y1WcvfmS+lDZGY+KSabvUdz9zLpa+s1den5A6ZAkRZrCP8p0XZiIXef4ZloUN
+ ZSavj/4Ho6BQcTRc1JQ9sVjJ8p5z2qROgan1sPXsvVfXqxYi6h3cgBDCSHg6VGFUc1LKq+juVxQ
+ 8iGKHmE3UXDBminzSnBCA5EuLq/+Kg3hjj5Y2mUBCOMTwPn/6NCvaEksCr+qDbWISiiM/U6LHt1
+ QF8PAZvqV6PTXApj+Xcbj5n5mENdGUUVsFxJo6FY3tp2aqw9kJwWyq9M7RmSR/M89PisgTgPr3w
+ 4GCY=
+X-Received: by 2002:a05:7301:7110:b0:2ac:1caa:8705 with SMTP id
+ 5a478bee46e88-2b16f91965cmr324685eec.36.1767642406140; 
+ Mon, 05 Jan 2026 11:46:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEvyToQcfWRZPoDaBS10Z2jYz7oW8ty8LeJRjw87//iLiwtI8mnNCjHUOHyl9rAce/uDMjvZw==
+X-Received: by 2002:a05:7301:7110:b0:2ac:1caa:8705 with SMTP id
+ 5a478bee46e88-2b16f91965cmr324664eec.36.1767642405560; 
+ Mon, 05 Jan 2026 11:46:45 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cb2dd4sm489505ad.47.2026.01.05.11.44.08
+ 5a478bee46e88-2b1707d76aasm48763eec.33.2026.01.05.11.46.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Jan 2026 11:44:10 -0800 (PST)
-Date: Mon, 5 Jan 2026 14:44:05 -0500
+ Mon, 05 Jan 2026 11:46:45 -0800 (PST)
+Date: Mon, 5 Jan 2026 14:46:40 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com
-Subject: Re: [PATCH v2 16/25] migration/channel: Rename
- migration_channel_connect
-Message-ID: <aVwUhflyt0AKA0Pz@x1.local>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com,
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: Re: [PATCH v2 17/25] migration: Rename instances of start
+Message-ID: <aVwVIAt46jc_TxpW@x1.local>
 References: <20260105190644.14072-1-farosas@suse.de>
- <20260105190644.14072-17-farosas@suse.de>
+ <20260105190644.14072-18-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260105190644.14072-17-farosas@suse.de>
+In-Reply-To: <20260105190644.14072-18-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -117,15 +117,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 05, 2026 at 04:06:33PM -0300, Fabiano Rosas wrote:
-> Rename migration_channel_connect to indicate this is the source
-> side. Future patches will do similar changes to the incoming side and
-> this will avoid inconsistencies in naming.
+On Mon, Jan 05, 2026 at 04:06:34PM -0300, Fabiano Rosas wrote:
+> To make it easier to follow the code, rename the functions that start
+> the migration thread and migration coroutine to contain the word
+> "start".
+> 
+> This will give new contributors the chance of seeing the word start
+> and reaching the actual migration code, instead of twists and turns of
+> qio_channel_add_watch and qio_task_run_in_thread.
+> 
+> Remove all other instances of "start" and use wording more suitable to
+> what the current migration stage is. The transport code such as
+> fd_start_migration_outgoing becomes fd_connect_outgoing, the early
+> setup code such as qemu_start_incoming_migration becomes
+> qemu_setup_incoming_migration and so on.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-
-Maybe it should use a common prefix, like migration_{incoming|outgoing}_*..
-Not a big deal.. though.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 
