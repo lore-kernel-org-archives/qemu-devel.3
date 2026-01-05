@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A9DC2A062
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30928C2A073
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcY1t-0005FI-RU; Sun, 04 Jan 2026 19:01:01 -0500
+	id 1vcY2z-0005Yb-7O; Sun, 04 Jan 2026 19:02:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcY1k-0005Ec-B2
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:00:57 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1vcY2x-0005Sc-Cv
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:02:07 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcY1i-0005qQ-LE
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:00:51 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2a110548cdeso181585745ad.0
- for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:00:50 -0800 (PST)
+ id 1vcY2v-0005sa-Sg
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:02:07 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2a1022dda33so107460265ad.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767571249; x=1768176049; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767571324; x=1768176124; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DsQF0cRXv3d7BSGA/ghAlxSb/S8HYBmdwaqoNGzeu8Q=;
- b=EN1sPWIh4MCqpaZuyuIvnHIbMY9KSsFzALg+V7F8sdM76wAZWSVp4qILAblEmbT/VQ
- tlMHRwauc/b1bOL8hgucnIJgfJIid0c9R0bO1KIDq32eFpmOxJYLROYDOE0j5RkuDPNL
- pl5eZZ0AXwBv6JjTVrLCmh1+VQPyWFrGeVv1pP3Udl0r0PWc9PFhWq1QVRaB8DIFCxnj
- pgxJQBlwwUV4l+PelnsMYrKUSTQ5TpBKUqcgttuaYpH3Fg6ACM4Ty3LCwDv3a1f/+bLL
- 941yAGs739mfo4jw1OmzAnDEyD6J9VDjd84Dky/M27Jf+aLHr5eV0vFwWay6EoEzNk35
- +12A==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7DkgRYzMmrn4MrfGap9rVuGNNxDjbY50Yr/6iMbDwnU=;
+ b=eX8RYF0y51Ca0LSr5M1eb4LhImvf4EWWRmyO5zOp9yFedabeNAV0isE7QJerZxSbS6
+ sojaX/8/ObQn5AqaVfTuPiHkgZIVrGTqgBY4o3RG4r+83vuKAFgaalfcYc6NjlSlejrd
+ ypZVnp/+/c7eFjYDvD2ecSCc4SBhK2iT4c84t/xEQBrnYWMxHVhZ8Zdsg4E6yqdk+W3v
+ zInLLnXjCDSi1XIvl4Y8NwvirNM2IbZIE7F7LoRzjq7tSEN5h4PgUqVSL0zcgt7NLacM
+ 5Dk4hk/yLjEKn2NzuhduXxG7XCjeyrT/CxWP4OGA0VgEgYano/aT+Y4bBQpa8EZIDpQ+
+ BW5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767571249; x=1768176049;
+ d=1e100.net; s=20230601; t=1767571324; x=1768176124;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=DsQF0cRXv3d7BSGA/ghAlxSb/S8HYBmdwaqoNGzeu8Q=;
- b=K4Xy8wCHaOxE3ykUs1RlWSxtZwX3ClPpcZvEtDFUUxiq52Y6msFb6WXSQpK/BbqvQs
- teQGMu7heAYlYPyfqbeHJBktu1KsidtFUEvMynaRZyPOfliyqgbOLm/pZ9jr2qo+/9cJ
- UMCXBCWoSXzIW6i6O8lJjuMH9QDhzGQwqex3DftAOEUFCIQGhl8vxjWya6jeEr0uRsOe
- 8j7kGGQ+CUkhKyfsrlxSzfJw9F2jlgfpMfDSBdcCz/BTSGmz9LT6R51G/y3jWiGJUPSS
- 7Fu2+Fs+uN0yPwpWYB28BrOMGtb3T8ooGQPRvhJk8YbxzxO2stVzIXW7ecRx/h9JMTJ6
- 9F/A==
-X-Gm-Message-State: AOJu0Yxqpg/8QZzkLvfukVc0bP6NZ2xD8ylQBXUR1U/ytJa0CCm1bGpO
- 87PrLkhMGRkJsk+zu1HjbApF9NCrHKczgfPZBGm9bgPC3KxYWvLjKdZizuBkM8wQg0pQ9mVVwXx
- i1Nd64/E=
-X-Gm-Gg: AY/fxX6gFcodu1TeIUWVXmY6quIUOIoHIYw3BGO74I56p+JmEHphADHznoMKSp6Pimk
- n+4J+i5Q+ra32Ni25S/lUomY2QnYN7lq5gltxNlAYhFwmDwIU6frHg45RTMioRF0GrVSRS+sGaO
- E+cDSaHO1bqIH+0TCVcgs/5Oc7ycj3qHdQq9JyiOTRR7K+N2++ZhKeSO5zXSHx0yx25TLonEhTl
- vdKIr6rnu2ZbTSqfhouxLaYVQjFDLcD9YKlcFnKOqyrNmr4o//5vZTf3+NL8R5cgTJRMEe5FzVF
- x+nmkGpfME4mLCgfHkB546CLNUeSsBRoniBvI7ArLu0PqATJkc4oe253wScc/b3WMbvkE2OUOBO
- xClXi2af/S56fkyuhGyfT5bkvqFoXdGpTCPQvtENPGs3fYbRGYbNQv6GGV3a3BEmBU1rwFx8O1X
- fzw4ws6oFpwm6JcMX276wSZuP0I2bq+A==
-X-Google-Smtp-Source: AGHT+IFPPjadwu0R1VH9leUzQXygDshUlVIx8IabRAIIXiWezDNtREPgNMtpco3kKDqNGX3U0UeDmw==
-X-Received: by 2002:a17:902:ec8b:b0:2a2:c1a3:63df with SMTP id
- d9443c01a7336-2a2f2830da5mr487703165ad.31.1767571248798; 
- Sun, 04 Jan 2026 16:00:48 -0800 (PST)
+ bh=7DkgRYzMmrn4MrfGap9rVuGNNxDjbY50Yr/6iMbDwnU=;
+ b=V2zBk0ISw0YFy6VPgoErp0gpnkMbCT1wPljkX+MfJeJrgFqxXxeYb6e6TQ7sBNkvi/
+ ZvXwvU0aqVmLI8NJcCMZLs9kNG6U6MjoCi7jEbWEQs+KCezjdIfoOmA5St5kBDbA59l0
+ nv7aZOhR5OPHovJWwc7uofWi8L4rF+TGp/G7x45b68QmbY4R3YBxgrt6fYTUs3KjYew3
+ 5Xh7yL1aW8EhBSAg166Czh2MZ6qo85XKZWjPU/03iSwmRy2/YJxjn71j6SKIy/Z7Rfcj
+ 0rfWqT13i2xC0yv2P9YwTQnzqEW0Bnf//pAUpLtrrDEs5c/g1F+l29VGgpgLsbM8Lbmv
+ /9lw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8LqaZdpMR2Ly9MgiuVuIFkhXmwVD5/J/G001AFg03OOYgV59ST3eb4RKh7mI7bKpGzhxHDTfDzzrm@nongnu.org
+X-Gm-Message-State: AOJu0YwfWbDoeWBXBn6dWzDQHRdLY/RQTDa5tcsYtWdKR5SDCfGGwll8
+ SJ8w9UgCmPMyYQVP4er+WME0ZBGAwd5vBgxziezp7bcRREInR9xcON1MzpDOxBGdBSxECjYNgEC
+ g/91sYgs=
+X-Gm-Gg: AY/fxX6Fd4hyrDo3Ww6lrejHPP+U4RsLwmabrw+eG+ruyiznTpOe7PIOTBJgiQ8wv46
+ /ariL/6Sy5kXCs7cqqzt7CicfsI8CeUVcegLssPugG3FVAHOaP4SM0o3q8EYmzyqDnJGTl1Z+Bk
+ hWgRveL1hahk2Q53SJb1s0IiLi7Y6NErDllQW25a/QT4h6Cm3/pCDS5KHGWNn2uMqJDFtPrHcxm
+ +L/1xzWUFYH8alQEHoMcR76v3j9duCmIlDqXGNs1di8ImifR+H0E0NL90haW1OQ5yT8h+s0MDOm
+ 8aEZX7PJfICC9rqh2ny93alvmFcIhdHv+e7RyXaH2trhIfQS8DFG7ZMbzj35NlTvkrPbUyRgcpY
+ d9nrb5/xgrZ/luznBUGqPM9V2kDcqTD9TanZbYJB5ajZaYqbaYXwRkODhzINt7kMT8kFJc0uXFD
+ FKE990IP/5FtJV1+J3XqN87MxEhiH+bg==
+X-Google-Smtp-Source: AGHT+IHU3V2LavQfs6YWx7LGU2/JTni8ri8JOOkHneh3oKogpCVp6XBm8aVEm+4WUJIMvMXAMdpOhQ==
+X-Received: by 2002:a17:902:e846:b0:246:7a43:3f66 with SMTP id
+ d9443c01a7336-2a2f220d878mr512624195ad.7.1767571324123; 
+ Sun, 04 Jan 2026 16:02:04 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3c83961sm435086985ad.38.2026.01.04.16.00.47
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2a2f3d4d2bbsm436581135ad.55.2026.01.04.16.02.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Jan 2026 16:00:48 -0800 (PST)
-Message-ID: <c69a083e-0705-4a7b-9588-bf5e26544d1d@linaro.org>
-Date: Mon, 5 Jan 2026 11:00:44 +1100
+ Sun, 04 Jan 2026 16:02:03 -0800 (PST)
+Message-ID: <26f83bcf-4eee-427b-948c-3b2b0924c97c@linaro.org>
+Date: Mon, 5 Jan 2026 11:01:57 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tcg/risc-v: Fix clobbering of TCG_REG_TMP0 (t6) in
- vector code generation
-To: qemu-devel@nongnu.org
-References: <5D809A625CAA1DCC+20251229084747.1428-1-zengzhijin@linux.spacemit.com>
+Subject: Re: [PATCH v3 1/3] target/hexagon: Inline translator_ldl()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Anton Johansson <anjo@rev.ng>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20251224160708.89085-1-philmd@linaro.org>
+ <20251224160708.89085-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <5D809A625CAA1DCC+20251229084747.1428-1-zengzhijin@linux.spacemit.com>
+In-Reply-To: <20251224160708.89085-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,27 +111,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/29/25 19:47, zengzhijin@linux.spacemit.com wrote:
-> From: Zhijin Zeng <zengzhijin@linux.spacemit.com>
+On 12/25/25 03:07, Philippe Mathieu-Daudé wrote:
+> translator_ldl() is defined in "exec/translator.h" as:
 > 
-> The RISC-V target currently uses register t6 as the destination for vsetvli and
-> vsetvl instructions to capture the resulting vector length (vl).
+>    198 static inline uint32_t
+>    199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
+>    200 {
+>    201     return translator_ldl_end(env, db, pc, MO_TE);
+>    202 }
 > 
-> However, in the tcg_out_dupm_vec function, t6 is also used as a temporary
-> register. Since tcg_out_dup_vec may emit a vsetvli or vsetvl instruction
-> internally, the value previously written to t6 (e.g., by an earlier ld in
-> the same translation block) can be unintentionally overwritten.
+> Directly use the inlined form, expanding MO_TE -> MO_LE
+> since Hexagon use little-endian order.
 > 
-> This patch reserves the t3 register to be used as the destination for vsetvli
-> and vsetvl instructions.
-> 
-> Signed-off-by: Zhijin Zeng <zengzhijin@linux.spacemit.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/hexagon/translate.c | 11 +++++++----
+>   1 file changed, 7 insertions(+), 4 deletions(-)
 
-You don't need to reserve a new register.
-
-There are only two places where a tmp register is live across set_vtype: dupm and dupi. 
-Both of those places can be changed to use TCG_REG_TMP1 instead, with a comment.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
