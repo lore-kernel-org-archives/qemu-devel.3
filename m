@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4531C2A099
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 11:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A10ABC2A099
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 11:49:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcj2P-0002w2-9P; Mon, 05 Jan 2026 06:46:18 -0500
+	id 1vcj5K-0004Rq-61; Mon, 05 Jan 2026 06:49:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcj2D-0002st-M2
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 06:46:13 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vcj5E-0004Q9-G6
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 06:49:12 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcj2B-0005P4-4A
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 06:46:05 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7aae5f2633dso14556703b3a.3
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 03:46:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vcj5A-0005b9-83
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 06:49:11 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-c1e7cdf0905so10459825a12.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 03:49:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767613559; x=1768218359; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1767613744; x=1768218544; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cbDjOVqIGteFc5iDKNL2pbIYz3DrQR6Vlr70wVlaNWw=;
- b=WManrdC7FbAFKULzK6AatOI3Ys6l7MMETYfraQOCD+1RMpVfDGp9zyDUQ5NEQXmamp
- ErERVX0Ij+tvzUWgJbLyJujdEib9WyzIrhP6OgsREzSnpwjmH69VAy6vgyiRrQxhdQJb
- +4FAY1e1H2fzGxHbSOelopKlEHbI0EHNd+106CMhshyTCZFBoToYPbHaH8sYsbbBph5P
- Gs7bUs1MVl6l/CgIJEZKpG70AiJSyfhRQLc6kYEG4DnU1rSzUaUH+oiqxCu0JhQAmWiC
- AOut0ZSUPqurYrg5FMctaX8wH2eu5Rl9uCg7Ktq9KDnBT5OPREqm2wx6cn1BZfV4si36
- uoGw==
+ bh=iER4t5/MGcuA0jUOCw7RZKhxoEYE4NOXiwEELaUDpvc=;
+ b=Btmhim/deW97JQBcUygYqphIitOKfe03Adc1KxqNFBn8YLAIrrLy+fJQ9VXGRJU5zN
+ fIEO3M9vQT5OCGwi0PbpCDYvqM290Og02jlVZnxbNiASWO+UewAMz1TI36ff/0sg5PqH
+ fwItALu1caw58xzLqKI0BV5NFtwDNNLXyh5uCDV+5QROvVA9vltedjeJvv50R9/QuE7a
+ z/Gzq2AXHAADk1tumKfqW9kKnEoWNvqnitshsW6G6wx8mngX+wpl6CzxBrwvc+ujCwmL
+ KJobukyEVS8xihjTcEbeM6FT0X1B64TjNMyLVNxatmRT0TsFogPMrZlzyP5cw+Z53BzZ
+ JgEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767613559; x=1768218359;
+ d=1e100.net; s=20230601; t=1767613744; x=1768218544;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cbDjOVqIGteFc5iDKNL2pbIYz3DrQR6Vlr70wVlaNWw=;
- b=ppAGv9p2O50IITUkMdFrUzGGpe/ieUGEA+oLGgbzbN9R3wFE3oNzL5eqeX2FTura1O
- fjX6vUhBpZ8sM6rIAAy3KmYqSY4Ik1CSMluSGFnevMQzXlE/vpimSBYDqSNwCN/zzYwD
- 0tybu4LUF1MYB0v/pkoAZu1a4CfYQarqoE1LNzzTMdl7mi1WxQFHEfAIe7Y4TxrW/MgA
- 6kTLwX0d2spQFeLp/SIUtQgmdZGhIWNhmaYMg1cobGVQ+jAHesXFjJudgIetHO5srgM4
- FYATQZ4p3OPmIL2GaLova5Y1yEFLiVYiQwOz3YO/b7m5iIIa1r/vZngDi4kwKGub9ooZ
- X6pg==
+ bh=iER4t5/MGcuA0jUOCw7RZKhxoEYE4NOXiwEELaUDpvc=;
+ b=Cip8bGizP8lJaWHLi2/0R4DbOgwHh0lbUUo6GrXQpw82Lvxt3BhVd/o1+QKjIsnE8a
+ St3zYCxwG2yVZYlrXDOHxC66DYm043aeW46gJ7a+wZWKly9nzdjtRikhE03WauyG9yjy
+ t2xy2+qZRVRdYa1+6D8I2f3p1+S5c99c2RtVRB0D86mtvjvkdAp43jUtJfTL+Q0NHltg
+ Wy3BwmEa9BiPDxaq5oVpuLNsWAGC8K4p+12Pb+G+TfaDeHNFPjdpcAoA/5exuIo/lXhm
+ Ua7GcYCgtwZeepYkP3jQmdCaEHFq857PnMpOaK866ToU1o3YvXYvW7fp5A0JZpNkGpaS
+ 5ySA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2OnpNG9kJ7yJX+K41RiXlyuyRrl5z+6EyEVEJ0hXSehRrqyTzHyLoZV7ETYy/E2bYKAdAGAHdlJh0@nongnu.org
-X-Gm-Message-State: AOJu0Yy/xLFoqocxwkt6SVKG64mGJykqsIkRqWmk5lfkHyHkSc2tlA5O
- 9cYqhlygrj6HijK8WGEJtWLK3hUy9h3Bt0fHjQFepjT+Nc5Rzav+03IkADWkZAtLyiU=
-X-Gm-Gg: AY/fxX5ZpgLpn5cg941z3ybjp82IMMjlQP3v2mPwHQhxhxYwR+15ThLg/5w259Yr/Wi
- 5irOfmUwcsgldg5qSaKYL2CB7wQxF5y32ui0fQ+iynXu+Vn96EDTZeFP60xflD4BWZpjQlSexXB
- O5FVE/fkxf2EL9bYNZZvH3F8ivaVNJwSLfInQ4gAbhoYU+Jc0DGevO21sH7BgUL3zIsln9JUt2w
- HzLHQ4tQ/A+/y0jtgPOG/ODsFaRh78Tq4KwfcSDuBjoLOod8pN7nIQohijOe0ZAgTf6XUFZjiey
- kxVWb5N6o7GajsUAn3SBWVJA8rM3TA+Q4RA2Hz0yq2+7fRELZk+ACPZjV177YslfllKtZeLeQ07
- sNf8HGAYWZEKqBqa28rEFXHU2EfyZWxq/lX8SQfRi2osihFTDEmakaKDe1rrU3Rf7lWohsRksyu
- yWaPpm1rhyghvVD9CEVy1YSORxImDz/A==
-X-Google-Smtp-Source: AGHT+IEEng14EIVtIT7uClXOQ0JNGruyQYYlG9UCwmZYBrkU+eRBRJVHiFPSzpyNOwbQJMb2ronIzA==
-X-Received: by 2002:aa7:9318:0:b0:7e8:450c:61c5 with SMTP id
- d2e1a72fcca58-7ff6667cb84mr42420707b3a.53.1767613559502; 
- Mon, 05 Jan 2026 03:45:59 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7ff7b5236b5sm47636148b3a.29.2026.01.05.03.45.53
+ AJvYcCXUCA5EdDvGrNhzdvLze+0wTin3yUjcgiOEum6GzzTU5YJgW4xP/RtHEaQLkopqjVS6r+Fg05ZYeAFF@nongnu.org
+X-Gm-Message-State: AOJu0YxuCXYUCm51aUHppBzXwnoR3w61KnQA3mzgGBqMOCwy/6dI3Wv9
+ lvI+tqYAcq9XH+nSsh9YUeTNRP1SaT4/FaD6j9wsMieZF5EEYyOSgvjTKxuRi7MpOjk=
+X-Gm-Gg: AY/fxX5wALGJvMuZ2EJLRNhKQcWkq6d/g1B31mARe4O+KEt2q+GofM6ru+p0eVRHJ50
+ ffx5rIBDcFbHWUrsFjUy0Ap4QOEpigmWMJDxZ/Q8kHOnR8ykXQO2MqGWvxc/adbQ2ljGWwLCDWh
+ TFZEyyy+mchpV81+v6Ej1tbyd0ISKyXwpV+EDv+BbE/NtbjAdOKjKGf/GiBMHPFnZ9SQUk6Au+Z
+ qGv+RFBB/5whxrWFB9pBDw58KZdVRFaeNPNzjZvLPnwc4/tF3piNxxayJjn7XpyLC515plBLfvV
+ f1PuWncGmItTARhy17EuoNt2npNdW4E8zT+XoBqXiNlFduH2rd2f/+xRfshX+q0unKSuFhpbsoX
+ P77dqmMmdw8wACepXO92ujHC1hbT6fv8fbiavGdbhRDB74bkF9m1sVvSGyrYP2Fwt6DbYjC8XHP
+ CyVEYRJdpmwPWsltQ/gCX3vpFpjwB77lkZ95YQuvy1ELHuYZmfj7up7+dlW4i+3PRbVBYQ3847
+X-Google-Smtp-Source: AGHT+IGEQnWrBGyhe9hzeHyHmMy/vzRshi62IzVb/je091Yz8e9j/tDEklgyHyrTTjfCI518rpQLJA==
+X-Received: by 2002:a05:7300:7255:b0:2ae:6109:9d77 with SMTP id
+ 5a478bee46e88-2b1456be987mr4768226eec.40.1767613744087; 
+ Mon, 05 Jan 2026 03:49:04 -0800 (PST)
+Received: from [192.168.68.110] (200-162-225-127.static-corp.ajato.com.br.
+ [200.162.225.127]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2b140c42dfdsm10754008eec.33.2026.01.05.03.49.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Jan 2026 03:45:59 -0800 (PST)
-Message-ID: <0a04dfd8-1c8c-4d87-99b8-d0e3cb9329d6@linaro.org>
-Date: Mon, 5 Jan 2026 22:45:49 +1100
+ Mon, 05 Jan 2026 03:49:03 -0800 (PST)
+Message-ID: <bc812773-1a09-4541-ae6d-7a6d7327b6a5@ventanamicro.com>
+Date: Mon, 5 Jan 2026 08:48:59 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/9] target/sparc: Simplify gdbstub
- sparc_cpu_gdb_write_register()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH 0/5] target/riscv: Add arch= CPU property for ISA
+ configuration
+To: Kito Cheng <kito.cheng@sifive.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
- <chigot@adacore.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Anton Johansson <anjo@rev.ng>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Frederic Konrad <konrad.frederic@yahoo.fr>
-References: <20251224162642.90857-1-philmd@linaro.org>
- <20251224162642.90857-9-philmd@linaro.org>
- <a48503cb-0a62-4cc7-83ff-393945dace0d@linaro.org>
- <854a4169-0f9b-4f10-a519-0410b799cb4e@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, kito.cheng@gmail.com
+References: <20260105105940.3567112-1-kito.cheng@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <854a4169-0f9b-4f10-a519-0410b799cb4e@linaro.org>
+In-Reply-To: <20260105105940.3567112-1-kito.cheng@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,68 +108,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/5/26 21:56, Philippe Mathieu-Daudé wrote:
-> On 5/1/26 01:37, Richard Henderson wrote:
->> On 12/25/25 03:26, Philippe Mathieu-Daudé wrote:
->>> Rather than ldtul_p() which uses the underlying 'unsigned
->>> long' size, use the ldn() variant, passing the access size
->>> as argument (evaluating TARGET_LONG_BITS / 8).
->>>
->>> No need to use #ifdef'ry to check for TARGET_ABI32, since
->>> it is 64-bit:
->>>
->>>    $ git grep -E '(ABI32|LONG_BITS)' configs/targets/sparc*
->>>    configs/targets/sparc-linux-user.mak:5:TARGET_LONG_BITS=32
->>>    configs/targets/sparc-softmmu.mak:4:TARGET_LONG_BITS=32
->>>    configs/targets/sparc32plus-linux-user.mak:2:TARGET_ABI32=y
->>>    configs/targets/sparc32plus-linux-user.mak:8:TARGET_LONG_BITS=64
->>>    configs/targets/sparc64-linux-user.mak:8:TARGET_LONG_BITS=64
->>>    configs/targets/sparc64-softmmu.mak:6:TARGET_LONG_BITS=64
->>>
->>> Directly expand to the big-endian variant (with the '_be' suffix)
->>> since we only build the SPARC targets as big-endian.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   target/sparc/gdbstub.c | 12 ++----------
->>>   1 file changed, 2 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
->>> index 134617fb232..d265681f6d2 100644
->>> --- a/target/sparc/gdbstub.c
->>> +++ b/target/sparc/gdbstub.c
->>> @@ -112,15 +112,7 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, 
->>> int n)
->>>   {
->>>       SPARCCPU *cpu = SPARC_CPU(cs);
->>>       CPUSPARCState *env = &cpu->env;
->>> -#if defined(TARGET_ABI32)
->>> -    uint32_t tmp;
->>> -
->>> -    tmp = ldl_p(mem_buf);
->>> -#else
->>> -    target_ulong tmp;
->>> -
->>> -    tmp = ldtul_p(mem_buf);
->>> -#endif
->>> +    uint64_t tmp = ldn_be_p(mem_buf, TARGET_LONG_BITS / 8);
->>
->> No, this changes the behaviour of sparc32plus.
+
+
+On 1/5/26 7:59 AM, Kito Cheng wrote:
+> Motivation
+> ==========
 > 
-> $ git grep TARGET_ABI32 configs/targets/sparc*
-> configs/targets/sparc32plus-linux-user.mak:2:TARGET_ABI32=y
+> Here is the motivation for this patch set. Please try to answer the
+> following 3 questions without checking QEMU source code:
 > 
-> $ cat configs/targets/sparc32plus-linux-user.mak
-> TARGET_ABI32=y
-> TARGET_BIG_ENDIAN=y
-> TARGET_LONG_BITS=64
+> 1. How do you run RISC-V QEMU with a specific extension configuration?
+>     Please try to configure an rv64im user mode QEMU before you answer
+>     this question.
+
+I would use the 'rv64i' bare CPU that we introduced a few releases ago
+and enable just 'm':
+
+qemu-riscv64 -cpu rv64i,m=on
+
+
+It gives you a bare bones CPU with only "RVI" enabled. We added this CPU
+specifically to support the use case you mentioned: users that want to
+have full control of what is enabled in the CPU.
+
+> 2. How do you know which extensions are supported in RISC-V QEMU?
+
+You mean all available extensions? We don't have an user friendly way of
+knowing that. I usually grep the code.
+
+> 3. How do you know which extensions are enabled in the current RISC-V QEMU?
+
+
+We can fetch them using query-cpu-model-expansion from QMP. But that's
+not exactly user friendly.
+
 > 
-> Isn't it the same?
+> And here are my answers to those 3 questions:
+> 
+> 1. It's hard to configure RISC-V QEMU with a specific extension. The
+>     correct way to configure rv64im is:
+> 
+>       qemu-riscv64 -cpu rv64,a=false,d=false,f=false,zfa=false,zawrs=false,\
+>         c=false,zifencei=false,zicsr=false,zihintntl=false,zihintpause=false,\
+>         zbb=false,zba=false,zbs=false,zbc=false,zicbom=false,zicbop=false,\
+>         zicboz=false
 
-No.  ABI32 uses uint32_t, not uint64_t, even with 64-bit registers.
+As I said above:
 
-Which is probably functionally broken, because, history.
+qemu-riscv64 -cpu rv64i,m=on
 
 
-r~
+> 
+>     I've seen 4 different QEMU wrappers to handle arch string to QEMU CPU
+>     option: 3 in-house scripts, 1 open source script in riscv-gnu-toolchain,
+>     and I guess some vendors/developers may have their own scripts to do
+>     that as well...
+
+We can't control how riscv-gnu-toolchain and others implement their scripts and
+wrappers. These are the kind of thing that people write once and never look it
+back, and that's fine.
+
+That said, we have 'rv64i' and other bare CPUs since QEMU 9.0, released in April
+24. We don't need to do this kind of massive extension disablement to get a
+clean CPU for almost 2 years.
+
+I advise to not take QEMU wrappers, scripts and etc from other projects as a sort
+of proof of what QEMU is currently capable. They're usually outdated.
+  
+
+> 
+> 2. I don't know a better way other than reading the QEMU source code.
+> 
+> 3. I don't really know the answer...
+> 
+> So how do other tools/simulators address these problems? Toolchains like
+> Clang and GCC use -march with an arch string to configure, and Spike uses
+> --isa=<ISA-string> to configure.
+> 
+> Could we introduce a similar way to configure QEMU? Yes, I think we can.
+> That's what this patch set does.
+> 
+>    -cpu rv64,arch=<ISA-string>
+
+I don't mind the 'arch' property if users find it easier to enable extensions with
+it rather than the boolean properties, but it should be used on top of bare CPUs
+only. Otherwise the 'arch' property would include the already enabled extensions
+from 'rv64' and others.
+
+And we would need to be okay with the fact that this is redundant to what we already
+can do with bare CPUs + manual extension enablement.
+
+> 
+> to configure QEMU. And also introduce arch=help and arch=dump to show
+> which extensions are supported, and which extensions are enabled/disabled.
+
+arch=help and arch=dump is indeed a nice addition.
+
+
+> 
+> Also supported:
+> 
+>    arch=<profile>["_"optional-ext]*
+> 
+> to specify configuration with RISC-V profiles like the toolchain convention[1].
+
+
+We have profile CPUs for this use case:
+
+$ ./qemu-riscv64 -cpu help
+Available CPUs:
+   max
+   rv64
+   rv64e
+   rv64i
+   rva22s64
+   rva22u64
+   rva23s64
+   rva23u64
+(...)
+
+
+So 'qemu-riscv64 -cpu rva23u64'  creates an user mode QEMU with RVA23.
+
+
+> 
+> [1] https://github.com/riscv-non-isa/riscv-toolchain-conventions/blob/main/src/toolchain-conventions.adoc#specifying-the-target-profile-with--march
+> 
+> Overview
+> ========
+> 
+> This patch series introduces the arch= CPU property for RISC-V, providing
+> a convenient interface to configure ISA extensions similar to GCC/Clang's
+> -march option.
+> 
+> The arch= property supports the following modes:
+> 
+> 1. arch=dump
+>     Print the current ISA configuration and exit. Shows the full ISA string
+>     and the status of all supported extensions.
+> 
+>     Example:
+>       $ qemu-riscv64 -cpu rv64,v=true,arch=dump /bin/true
+> 
+> 2. arch=help
+>     Print a list of all supported ISA extensions and exit. Lists standard
+>     single-letter extensions, multi-letter extensions, vendor extensions,
+>     profiles, and vector length extensions.
+> 
+>     Example:
+>       $ qemu-riscv64 -cpu rv64,arch=help /bin/true
+> 
+> 3. arch=<ISA-STRING>
+>     Configure extensions using a standard RISC-V ISA string. The format is
+>     rv{32|64}[single-letter-exts][_multi-letter-ext]*.
+> 
+>     Key features:
+>     - First extension must be i, e, or g (base ISA requirement)
+>     - Single-letter extensions can be concatenated (rv64imafdc)
+>     - Single-letter extensions can use underscore separators (rv64i_m_a_f_d_c)
+>     - Multi-letter extensions are separated by underscores (_zba_zbb)
+>     - Single-letter can transition directly to multi-letter (rv64imazba)
+>     - Extensions i, e, g can only appear as the first extension
+>     - When arch= is specified, all extensions are first reset to disabled
+>     - G expands to imafd_zicsr_zifencei
+>     - B expands to zba_zbb_zbs
+> 
+>     Examples:
+>       $ qemu-riscv64 -cpu rv64,arch=rv64gc_zba_zbb /bin/true
+>       $ qemu-riscv64 -cpu rv64,arch=rv64imafdc_zba_zbb_zbc /bin/true
+> 
+> 4. arch=<PROFILE>[_extension]*
+>     Configure the CPU using a standard RISC-V profile, optionally with
+>     additional extensions. Available profiles (64-bit only):
+>     - rva22u64, rva22s64, rva23u64, rva23s64
+> 
+>     Examples:
+>       $ qemu-riscv64 -cpu rv64,arch=rva23u64 /bin/true
+>       $ qemu-riscv64 -cpu rv64,arch=rva23u64_zbkb_zkne /bin/true
+> 
+> 5. zvl*b extensions
+>     Specify vector length (VLEN) in bits using zvl<N>b where N is a power
+>     of 2 (32-65536). Requires v or zve* extension.
+> 
+>     Examples:
+>       $ qemu-riscv64 -cpu rv64,arch=rv64gcv_zvl256b /bin/true
+>       $ qemu-riscv64 -cpu rv64,arch=rv64i_zve64f_zvl128b /bin/true
+
+We already have vlen and elen properties. Not sure if we need another way to set
+the same stuff.
+
+I'll give a closer look later at the first 2 patches (arch=dump and arch=help)
+since these are nice additions for the user experience.
+
+I would like to hear other opinions about arch=<ISA_STRING> because it would be
+just another way (probably an easier way) of doing what we already support with
+bare CPUs + manual extension enablement.
+
+I don't see the need to support arch=PROFILE given that we have profile CPUs
+that does exactly that. Same thing for the 'vlen' setting.
+
+
+
+
+
+> 
+> Individual extension properties (e.g., zba=true) can be combined with
+> arch= and will override the ISA string settings when specified after arch=.
+> 
+> Kito Cheng (5):
+>    target/riscv: Add arch=dump CPU property for ISA introspection
+>    target/riscv: Add arch=help to list supported ISA extensions
+>    target/riscv: Add arch=ISA-STRING to configure extensions via ISA
+>      string
+>    target/riscv: Add arch=PROFILE to configure CPU using RISC-V profiles
+>    target/riscv: Add zvl*b extension support in arch= property
+> 
+>   docs/system/target-riscv.rst              | 144 ++++++++
+>   target/riscv/cpu.c                        | 226 ++++++++++++
+>   target/riscv/cpu.h                        |   1 +
+>   target/riscv/cpu_cfg_fields.h.inc         |   3 +
+>   target/riscv/tcg/tcg-cpu.c                | 424 ++++++++++++++++++++++
+>   tests/functional/riscv32/meson.build      |   4 +
+>   tests/functional/riscv32/test_cpu_arch.py |  94 +++++
+>   tests/functional/riscv64/meson.build      |   4 +
+>   tests/functional/riscv64/test_cpu_arch.py | 411 +++++++++++++++++++++
+>   9 files changed, 1311 insertions(+)
+>   create mode 100644 tests/functional/riscv32/test_cpu_arch.py
+>   create mode 100644 tests/functional/riscv64/test_cpu_arch.py
+> 
+> --
+> 2.52.0
+> 
+
 
