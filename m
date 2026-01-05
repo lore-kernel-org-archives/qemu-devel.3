@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 517D9C2A072
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 08:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103B0C2A075
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 08:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcfeJ-0007kF-Ny; Mon, 05 Jan 2026 03:09:11 -0500
+	id 1vcg9O-0003hf-T5; Mon, 05 Jan 2026 03:41:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vcfeD-0007jh-Lq
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 03:09:07 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ id 1vcg9M-0003gx-0i
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 03:41:16 -0500
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vcfeA-0002Z7-Es
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 03:09:04 -0500
+ id 1vcg9J-0006K6-CN
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 03:41:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767600542; x=1799136542;
+ t=1767602473; x=1799138473;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=C/ESKvPoYQ25jGL1V9iWNitjx4rrjRjsa5yd1yUDkA8=;
- b=RATWm1QZwNDJfC6hQaDh+JmcXQDk5LmRwAN3KIkzEGRmWGceLpU40XcU
- YW6AyqU2NoTLAZds9f2T1qElEVuKfgW7Mcq0UdnSeHEvHyzYXV9G94KJh
- apHBTSXknQcpRu2nSV1d1U8O9QdcRRtrCFhW5ykQyrV6QciEvx7yGuY7A
- hK8H4jEywIqzCtyZKoexBFJvL+yw/knCSxDg8ZHywjWKFKu5LucMmVu51
- g78qovy+8xOUT065zWS9wh+Qtx+x8xXULReuf2fINaZiYHCPwjNLqVOAA
- eRgtF21jRMaS7L0C3ykWMGF7xX363qnt0d1ce2cGAS0IoW7gIJBnUbHtY A==;
-X-CSE-ConnectionGUID: qPx8ck9WRR6tGXassbYbXg==
-X-CSE-MsgGUID: CMG0IBGhS5OUGSGBOe7mHQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11661"; a="86552121"
-X-IronPort-AV: E=Sophos;i="6.21,203,1763452800"; d="scan'208";a="86552121"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 00:08:58 -0800
-X-CSE-ConnectionGUID: Zt2oDJz4Sf+sOBOcMz544g==
-X-CSE-MsgGUID: bUFwb0cFRCanTS6lkJSeRg==
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=zzCFUre12J5S1n5MXly8Cz/XMaLl0lsc+PyKLeJKgQo=;
+ b=U873SNfdTOPrQ5lZ1qBJ5WAywUdHgyr9k1+1XC6UmLVtkUOnMrW9Q4r2
+ vUbLn8WJbyWm4Ii1E80P43YlbtJGe7deJk42/qTO+f1lxSthn3k1m4eoR
+ TloBFBJZ8UuprnJLQVkJUfYkXzKwi8zvRJnK9crijG+4QJbWAPYM0bvFi
+ 1roXF1KAuomWfMLPcPLJb/11iUZGL+LQRMTWdl6hEPVXEzzelqR0frLoR
+ 5IDbRgrZHmexxczQNfctzF2jNCJISQ/PoSYSNf2LztryNwSi8dUxRGNan
+ nFSAtSBD6nTO+FYl12HN/jJ2jnw34c/cb4aaeW/WSlCZRJ5LJyGg8c/2+ A==;
+X-CSE-ConnectionGUID: FVU2IqlYQXKX02DONRVjYw==
+X-CSE-MsgGUID: Ix6oWurtRNKN7fqlGPKLmw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11661"; a="68706649"
+X-IronPort-AV: E=Sophos;i="6.21,203,1763452800"; d="scan'208";a="68706649"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Jan 2026 00:41:10 -0800
+X-CSE-ConnectionGUID: 3fGi00+RQSGV1gt+rZCixQ==
+X-CSE-MsgGUID: R+Y6nJxgRQOxiSqIKv4iBw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,203,1763452800"; d="scan'208";a="225867180"
+X-IronPort-AV: E=Sophos;i="6.21,203,1763452800"; d="scan'208";a="206894046"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 05 Jan 2026 00:08:55 -0800
-Date: Mon, 5 Jan 2026 16:34:20 +0800
+ by orviesa004.jf.intel.com with ESMTP; 05 Jan 2026 00:41:07 -0800
+Date: Mon, 5 Jan 2026 17:06:31 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -59,17 +59,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  devel@lists.libvirt.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC 07/10] hw/core/qdev-properties: Allow to mark qdev property
- as deprecated
-Message-ID: <aVt3jJ2JqWI96yZE@intel.com>
+Subject: Re: [RFC 02/10] qom: Add basic object property deprecation hint
+ support
+Message-ID: <aVt/F6qjR+UMfXrO@intel.com>
 References: <20251202170502.3228625-1-zhao1.liu@intel.com>
- <20251202170502.3228625-8-zhao1.liu@intel.com>
- <20260102132717.1211737f@imammedo-mac>
+ <20251202170502.3228625-3-zhao1.liu@intel.com>
+ <20260102130601.0697deeb@imammedo-mac>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260102132717.1211737f@imammedo-mac>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260102130601.0697deeb@imammedo-mac>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -94,45 +95,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > +#define DEFINE_PROP_UNSIGNED_DEPRECATED(_name, _state, _field, \
-> > +                                        _defval, _prop, _type) \
-> > +    DEFINE_PROP(_name, _state, _field, _prop, _type,           \
-> > +                .set_default = true,                           \
-> > +                .defval.u    = (_type)_defval,                 \
-> > +                .flags       = OBJECT_PROPERTY_DEPRECATED)
+On Fri, Jan 02, 2026 at 01:06:01PM +0100, Igor Mammedov wrote:
+> Date: Fri, 2 Jan 2026 13:06:01 +0100
+> From: Igor Mammedov <imammedo@redhat.com>
+> Subject: Re: [RFC 02/10] qom: Add basic object property deprecation hint
+>  support
+> X-Mailer: Claws Mail 3.11.1-67-g0d58c6-dirty (GTK+ 2.24.21;
+>  x86_64-apple-darwin14.0.0)
+> 
+> On Wed,  3 Dec 2025 01:04:54 +0800
+> Zhao Liu <zhao1.liu@intel.com> wrote:
+> 
+> > Now the common (but a bit fragmented) way to mark a property deprecated
+> > is to add the warning in its accssors.
+> > 
+> > But this is pretty inconvenient for such qdev properties, which are
+> > defined via DEFINE_PROP_* macros in the Property array. For qdev
+> > properties, their accessors are provided by pre-defined PropertyInfo, so
+> > that it's possible to modify PropertyInfo for a single "deprecated"
+> > property.
+> > 
+> > Then it's necessary to introduce property flags to mark some properties
+> > as deprecated, and to check the property flags when set the property,
+> > thereby to print a deprecation warning.
+> > 
+> > This not only benefits traditional qdev properties but also helps the
+> > deprecation of generic objects.
+> > 
+> > Note, internal attempt (except the compat case) should not trigger the
+> > deprecation warning but external user should see the deprecation
+> > information. Whether to perform deprecation checks based on property
+> > flags is controlled by the newly added "check" argument in
+> > object_property_try_add_full().
+> 
+> I'd split deprecation warning out for this patch,
+> i.e. make this one "add per object instance flags",
+> and take care of deprecation stuff on top,
+
+Yeah, will do.
+
+> Also, API likely would need set/get/clear calls to operate on object flags.
+
+I see, for dynamic flags ("user set" - you mentioned), these APIs are
+necessary. Will add something like object_property_[set|get|clear]_flags.
+
+> > In subsequent work, the "check" option will be enabled for specific
+> > external property setting paths.
+> > 
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >  include/qom/object.h | 72 ++++++++++++++++++++++++++++++++++++++++++++
+> >  qom/object.c         | 72 +++++++++++++++++++++++++++++++++++---------
+> >  2 files changed, 130 insertions(+), 14 deletions(-)
+> > 
+> > diff --git a/include/qom/object.h b/include/qom/object.h
+> > index 3f807a03f5aa..8f4c2f44d835 100644
+> > --- a/include/qom/object.h
+> > +++ b/include/qom/object.h
+> > @@ -86,6 +86,12 @@ typedef void (ObjectPropertyRelease)(Object *obj,
+> >   */
+> >  typedef void (ObjectPropertyInit)(Object *obj, ObjectProperty *prop);
+> >  
+> > +typedef enum ObjectPropertyFlags {
+> > +    OBJECT_PROPERTY_NO_FLAGS     =                             0,
+> > +    OBJECT_PROPERTY_DEPRECATED   =                        1 << 0,
+> 
+> maybe use BIT() instead of manual shift?
+
+Sure, will do.
+
+> addidtionally given you are going to distinguish external vs internal,
+> perhaps add flags 'default' and 'user set',
+> I think the both could be used to cleanup cpu flags handling where we rely on
+> setting/checking  magic numbers to figure out where value comes from.
+
+Good idea.
+
+I think a "user set" flag is enough. Considerring a property may be set
+multiple timers. In object_property_set_full(), we could add the "user
+set" flag for external setting and clear that flag for internal setting,
+then property's set accessor could know whether the value is from user
+or not.
+
+> > +    OBJECT_PROPERTY_FULL_FLAGS   =    OBJECT_PROPERTY_DEPRECATED,
+> > +} ObjectPropertyFlags;
 > > +
-> >  #define DEFINE_PROP_UNSIGNED_NODEFAULT(_name, _state, _field, _prop, _type) \
+> >  struct ObjectProperty
+> >  {
+> >      char *name;
+> > @@ -98,6 +104,7 @@ struct ObjectProperty
+> >      ObjectPropertyInit *init;
+> >      void *opaque;
+> >      QObject *defval;
+> > +    uint8_t flags;
+> >  };
+> >  
+> >  /**
+> > @@ -1090,6 +1097,41 @@ ObjectProperty *object_property_try_add(Object *obj, const char *name,
+> >                                          ObjectPropertyRelease *release,
+> >                                          void *opaque, Error **errp);
+> >  
+> > +/**
+> > + * object_property_try_add_full:
 > 
-> adding flags to the end of the names, basicaly spawns a lot of vartions of the same macro,
-> 
-> perhaps it's time to just add flags field and consoladate existing 'flag named' variants,
-> the one won't need to introduce DEFINE_PROP_UNSIGNED_DEPRECATED at all,
-> just use appropriate flag(s) when decaring property.
+> what's the reason for adding _full flavour over just modifying existing API?
 
-Good idea, what about this?
-
--#define DEFINE_PROP_UNSIGNED(_name, _state, _field, _defval, _prop, _type) \
--    DEFINE_PROP(_name, _state, _field, _prop, _type,                       \
--                .set_default = true,                                       \
--                .defval.u  = (_type)_defval)
-+#define DEFINE_PROP_UNSIGNED(_name, _state, _field, _defval, _prop, _type, ...) \
-+    DEFINE_PROP(_name, _state, _field, _prop, _type,                            \
-+                .set_default = true,                                            \
-+                .defval.u  = (_type)_defval,                                    \
-+                ##__VA_ARGS__)
-
-...
-
--#define DEFINE_PROP_UINT8(_n, _s, _f, _d)                       \
--    DEFINE_PROP_UNSIGNED(_n, _s, _f, _d, qdev_prop_uint8, uint8_t)
-+#define DEFINE_PROP_UINT8(_n, _s, _f, _d, ...)                       \
-+    DEFINE_PROP_UNSIGNED(_n, _s, _f, _d, qdev_prop_uint8, uint8_t, ##__VA_ARGS__)
-
-Then we can mark a property as deprecated by:
-
-DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_DEF,
-                  .flags = OBJECT_PROPERTY_DEPRECATED),
-
+I was previously concerned about making too many changes to other parts,
+but after re-checking, directly extending the current object_property_try_add()
+is better — there's not too many changes. Thanks for the reminder.
 
 Regards,
 Zhao
