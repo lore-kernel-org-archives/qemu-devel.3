@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A04C2A073
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10F6AC2A073
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcYJS-0002Yu-G0; Sun, 04 Jan 2026 19:19:10 -0500
+	id 1vcYQp-0004C7-No; Sun, 04 Jan 2026 19:26:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYJQ-0002YU-FT
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:19:08 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1vcYQm-0004Bb-P5
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:26:44 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYJO-0007rW-Sa
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:19:08 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-34c84ec3b6eso17216409a91.3
- for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:19:06 -0800 (PST)
+ id 1vcYQk-00006R-FY
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:26:44 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7ba55660769so10247778b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:26:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767572345; x=1768177145; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767572801; x=1768177601; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GRBxSXBDRV/DGi6f4JPRhbP6zaMkeG5We5M1tpm7wPs=;
- b=DO7wf6MvIYC1cDOkjAq//HqHkXjgPK/QIsf3F3rJ+mf50242ClWoh8ORKBHr3kra6q
- zQZL+zuoo8xlFxcPxLiOGYkGmuu9nIgArZn5TsKeNYEOMxBqyGPLCd9AKQunW7MiuB58
- HeqNiYxfZDh0A/sd9SQQS+3ZUJ3aUp/GmNBAptHAFLCULvOH+nu00rKpKLupg3uHZAw9
- 4lpx1pfPKqbOWRnRdR7+tBfGFe6+fDnapvLAEZnbeSLMw3urxpl7pcsWFYqgSG0Xckmg
- PWVxT4DgvdRpCfPTO8xlWf8LTisrkyloWBkfox3fFv/7yvMjZJlr8F3FhdrFgqVLskl5
- wflQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aw+Id6V50lFZ9fv84slTDpy/nQMxE1WQ2x1zFB1IAJM=;
+ b=PHbrh9kTqt+YcwPM4ox1hyDuSp6y4jDs6wYJkDjuxdMw4FAH5Ox6KGLizt91rCgfHN
+ x24DIddlTYH25K+hK8EuBgegqrm02VEncto1EqIs9mb0Hw6MviP/WQrayPvLGbPjMJ/1
+ EPHlPBsTMTt1tk7PBSHVSHNBqglZ4k4AYN4wcp7cVSbHeV0R2VgpkV/FFhVZjLxby71F
+ 7lStjDFG3B+sEq7VOFO8jHeOSx66bW3zvIBsZSCYwGpE2C5vCRXYnFTbtFZwb4vOawj0
+ AAogLE1mwFvXCJrQXLlOrtdbcUo8JgZzQdkCQYHIGNYiRxjKDwiR45xHV0xtlykq84JC
+ I7cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767572345; x=1768177145;
+ d=1e100.net; s=20230601; t=1767572801; x=1768177601;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GRBxSXBDRV/DGi6f4JPRhbP6zaMkeG5We5M1tpm7wPs=;
- b=oIosOUS51qboJbB9zvWLWRvYWeuu7O/45xBkqq+N88rfnJlfWbh7qdp4VqNGDncm/X
- WWBMUT34SuQ9Xd006T937+F5JO1TkWiIbRHwS5pyj1ou3xvAAIDz2YFlejITIvWG/WK7
- ud3q51Gcx6mz4UQcXH8RpvQE4tHyB27SVTGL4XcWqI5Co3e/f47O4o5k4CdeekyOwd4e
- ISwefaNLfLf0NIMbi1iNffLtKota1R8SaHZ7vb7pBDlWT5S515UyaVxUx5ihnrcxpl2w
- GjcIw/9dl+RjrTrVcWFT4HutWqbzoYecHbdlnMwMJihIkrIQuTDyPLnSXWaRiwXuU7PD
- S3sg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWdCpOt78Mv8Y1S7ulaDne4MmFmm4kpbC4me+8/GIAsxC27CzCluY+yChJykAG8L5QhcTcfrMTNqtBf@nongnu.org
-X-Gm-Message-State: AOJu0YzAAUY4jR792pbJqfGJanm8tQkKXtfnyfcnx79+EBWSHqe0EErr
- aj+xgZi0Qzlx9batkOlweSUJ+x91mdvaz6Xjv1yLspt0D+01sychfLjM1QAHffuuSc0=
-X-Gm-Gg: AY/fxX4RH8Hpr1ZKiEFcd6DMjIUeF7gcUugPfU41PKEqKHvH/hW17ewg60R7APx2Qne
- jF7D12sjKRpX65heXLrRBioBfXuv7xv9MSHJb4h4AvxhG8z7iR/TsGrh3UIr/wnRA8jbtUTiP9Q
- MEnmrjCT5Uwk4S5Ofz8DM4tucQK8d4PWuc6f+VUXwgNtafLv4Es9CIEIiIM+G4VeFsQZHqVJbC9
- zC0FO63m59Pun4Mx38JPwQco54Ij9JJ0JPUWPIs9R8igTNJyX/SFvfT2eqASwjbOssGyarjvTJF
- /Y32qaq8WWJMew0Oew1LlOhh87u28HZj/AuGbaRyzXlSFqeLMCcPev0O67FuGQjMAASqXVJ/vrC
- sT+R79VViFLKKbyJQK8Uu6GTIEjMHLnS0zZTS/VVXGIHsCsfaSb2MnBDqtk7UfMSnHbsYDX2I4N
- tXunJx+HWEGN7qKs2oWok8aIFJa3YrbEz3NoZOFsVD
-X-Google-Smtp-Source: AGHT+IENLUtw5DZwQ4rOhILp2R/D9vWIZY07FyjvnkJBJe525111qr6ACtCsfAb9VgGO5Gq9qSJ+3g==
-X-Received: by 2002:a17:90b:224a:b0:34c:99d6:175d with SMTP id
- 98e67ed59e1d1-34e92122004mr35184959a91.2.1767572345239; 
- Sun, 04 Jan 2026 16:19:05 -0800 (PST)
+ bh=aw+Id6V50lFZ9fv84slTDpy/nQMxE1WQ2x1zFB1IAJM=;
+ b=oEhYSYfo07ccJVFT5KIzfa2821dzLAMq4ZxHo0loYwslEAKV9npxCxHCdn1+cWgcWy
+ dF/FHc4nj+Gy+4gf85hQUd+Oi+K6cIAE8lyA01fFKJcyMAkdldpdOXD3sij7sM8EDZnD
+ 6/G8BuLm0SDBFyOfBE5jlYgLlelSQVAVixsy8I2EXoVonEWxIsg1FUefPKdSSA4Rl02R
+ dyT8Vc8Obf5wUi7EZMEdP6hrPCIhnwTjOrqiEUQ+RjgrkN+D0Z1SE/3jzJj63ouOc0tQ
+ WzSm7kyY3L37x+UV80HYidN4MZbxjpsadjUjVasAEDIGzOMpOdwWdgBSIBK7l05SXepg
+ 1MnQ==
+X-Gm-Message-State: AOJu0YwAk9WRc30cngDEqh+9ornftKL6+OJjlcb/Uc90V92JOuyht+KV
+ swSjCiEyqlj6bW5ME1nJUeRiie9p5RvgneOARO6MuJCObibX/9GnclhrQpVlTJYPpCXDx3YdB0L
+ VWKbRnAk=
+X-Gm-Gg: AY/fxX4SnLd4us5MOqyY/Dho5zqOAQuQKTgw5WQcYLpP7NzknChZps0P2IlKfsof3ql
+ SDVibQMwyM0hTc+2x/4wXuqEwSoKryhDQ+UwIGVPC9ujAZeINfsS/DUkO0EZXG5VsEtaxXbQpZA
+ DW5mhfbM6PDzF3KZZRW24UvF5OxLN8ecblX/eTpbpuTZmQAtaJ53fJSSy16HqUim/kekCHRJGLt
+ ItNXX08JTnJsLiyddOdUPgS5j85JTzf3mrO6Ah2XgC+n8nEpG/s28DZSnGqoGvC5KAd9mPlWWb1
+ w3Eu++AR20w14Gz6Fe2k9mvFlrlPPF6XoSF3VaIXgxV6yctL628R6J7ealVF8exjUTVscJKZF60
+ vTDLx+lpw/fmnLMpohMs51aNakFkf1QhSXjYWldfzAOC/TEKEDlfsCJgWHSNLIe2f4YtuHYIz6G
+ Xwo2UDCU9Xj9rHEFjIP6A7DzGfY5TPCw==
+X-Google-Smtp-Source: AGHT+IHxHTUbuSeewI4c1INtVdo0csgdMVSOEBrjEHB5mgyBIgL3oAsL2DCFYAez3JexCcjLK9N3wg==
+X-Received: by 2002:a05:6a21:328b:b0:371:83a0:5b5 with SMTP id
+ adf61e73a8af0-376a77f10c7mr46310435637.12.1767572800779; 
+ Sun, 04 Jan 2026 16:26:40 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f45062d7fsm2783212a91.2.2026.01.04.16.18.59
+ 41be03b00d2f7-c1e7c5307c7sm40420407a12.28.2026.01.04.16.26.39
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Jan 2026 16:19:04 -0800 (PST)
-Message-ID: <f78a4f65-8556-4c09-b1e5-bfdb7572cf5f@linaro.org>
-Date: Mon, 5 Jan 2026 11:18:56 +1100
+ Sun, 04 Jan 2026 16:26:40 -0800 (PST)
+Message-ID: <ef338a7f-b207-4577-bd24-857b8276b675@linaro.org>
+Date: Mon, 5 Jan 2026 11:26:36 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/9] hw/sparc: Mark SPARC-specific peripherals as
- big-endian
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
- <chigot@adacore.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Anton Johansson <anjo@rev.ng>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Frederic Konrad <konrad.frederic@yahoo.fr>
+Subject: Re: [PATCH v3 3/9] target/sparc: Replace MO_TE -> MO_BE
+To: qemu-devel@nongnu.org
 References: <20251224162642.90857-1-philmd@linaro.org>
- <20251224162642.90857-2-philmd@linaro.org>
+ <20251224162642.90857-4-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224162642.90857-2-philmd@linaro.org>
+In-Reply-To: <20251224162642.90857-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,29 +106,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/25/25 03:26, Philippe Mathieu-Daudé wrote:
-> These devices are only used by the SPARC target, which is
-> only built as big-endian. Therefore the DEVICE_NATIVE_ENDIAN
-> definition expand to DEVICE_BIG_ENDIAN (besides, the
-> DEVICE_LITTLE_ENDIAN case isn't tested). Simplify directly
-> using DEVICE_BIG_ENDIAN.
+> We only build the SPARC targets using big endianness order,
+> therefore the MO_TE definitions expand to the big endian
+> one. Use the latter which is more explicit.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Mechanical change running:
+> 
+>    $ sed -i -e s/MO_TE/MO_BE/ \
+>          $(git grep -wl MO_TE target/sparc/)
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/audio/cs4231.c        |  2 +-
->   hw/char/grlib_apbuart.c  |  2 +-
->   hw/display/cg3.c         |  2 +-
->   hw/display/tcx.c         | 14 +++++++-------
->   hw/dma/sparc32_dma.c     |  2 +-
->   hw/intc/grlib_irqmp.c    |  2 +-
->   hw/intc/slavio_intctl.c  |  4 ++--
->   hw/misc/eccmemctl.c      |  2 +-
->   hw/misc/slavio_misc.c    | 16 ++++++++--------
->   hw/rtc/sun4v-rtc.c       |  2 +-
->   hw/timer/grlib_gptimer.c |  2 +-
->   hw/timer/slavio_timer.c  |  2 +-
->   12 files changed, 26 insertions(+), 26 deletions(-)
+>   target/sparc/ldst_helper.c |  6 ++--
+>   target/sparc/translate.c   | 58 +++++++++++++++++++-------------------
+>   2 files changed, 32 insertions(+), 32 deletions(-)
+> 
+> diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+> index 2c63eb9e036..a87a0b3eee0 100644
+> --- a/target/sparc/ldst_helper.c
+> +++ b/target/sparc/ldst_helper.c
+> @@ -1169,7 +1169,7 @@ uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi)
+>           break;
+>       case MO_16:
+>           ret = cpu_ldw_code_mmu(env, addr, oi, ra);
+> -        if ((mop & MO_BSWAP) != MO_TE) {
+> +        if ((mop & MO_BSWAP) != MO_BE) {
+>               ret = bswap16(ret);
+>           }
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This appears to be a bug in one of the previous changes in this area.
+
+Since the endianness is contained in oi, cpu_ld*_code_mmu has already honored it. 
+Swapping again makes no sense.
+
+Everything outside helper_ld_code looks fine.
+
 
 r~
 
