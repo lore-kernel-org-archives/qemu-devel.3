@@ -4,102 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11174C79FBA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAFA2C79FBA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcqPB-0002xg-JN; Mon, 05 Jan 2026 14:38:18 -0500
+	id 1vcqST-0003sO-AE; Mon, 05 Jan 2026 14:41:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcqOu-0002x2-00
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:38:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcqSR-0003s9-Af
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:41:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcqOq-0002gW-B4
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:37:59 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcqSP-0003Z5-1N
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:41:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767641874;
+ s=mimecast20190719; t=1767642094;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MJPHFKoDR9tRYOU2QHaE7Hd/hBSyzoDUSq9VQxCG9CA=;
- b=diCoG/gsvoT8xLmk4u0mJopJ33YKHq3NbUlki3TuQQjPk80vXa1c2X4Rn3tLQuW4zSjMBB
- srCo4eOAmzII/ffNalGMoDshQUuuYGOkYOQDIDmhO9eF//7hO6QRFZqyE2RZY0CTGinaC5
- 9aVp7RAVbqDMzbXApEvaddppPK7CTbM=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zC+u1xwGCJpGKPuWoKniiuLj/lYQcyL8GrqWop7bZdA=;
+ b=IbtkWF9N4yix3IdIst07+LTxwbP075ZGCHIQ3/tufAxWrwoKpDgh1SJ+zJ8t7a2LgYAqPS
+ LO/X/3vspKUT+16no9yicf+iNjSejw6wtKiU9nFb9q5/4JEgJ1EA5VheRrhpWtz7SRFLt2
+ OhHaxHjIbmkWsIPIb1hLdt4YTnuhquA=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-319-YKTqtRpnOBer6ZPl-kDPeA-1; Mon, 05 Jan 2026 14:37:53 -0500
-X-MC-Unique: YKTqtRpnOBer6ZPl-kDPeA-1
-X-Mimecast-MFC-AGG-ID: YKTqtRpnOBer6ZPl-kDPeA_1767641873
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-b6097ca315bso283756a12.3
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 11:37:53 -0800 (PST)
+ us-mta-588-4lUShztCOBmkOvZKrWb7_Q-1; Mon, 05 Jan 2026 14:41:33 -0500
+X-MC-Unique: 4lUShztCOBmkOvZKrWb7_Q-1
+X-Mimecast-MFC-AGG-ID: 4lUShztCOBmkOvZKrWb7_Q_1767642092
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-29f29ae883bso3003165ad.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 11:41:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767641872; x=1768246672; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767642092; x=1768246892; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=MJPHFKoDR9tRYOU2QHaE7Hd/hBSyzoDUSq9VQxCG9CA=;
- b=JyJHvN/jcvLf69oB5R+A9HwCTXpGoGbjcchUTqJbAfoq7nXHI3aAcoERbdwqSnaOPS
- Me8OtSXEqRW1P5U8qtmR/DCs6F1C/1HNM8Wvj3PnSyxpljsk2Qok6+zhH+Ca1TZocy4P
- Q6GYUg5SV7gIDsm1S+l78mDLMW098kHxsh0p+IpdiPV/5sOUmCWqdBUIkH1M+1FJbkPY
- jZ9vWwXWDCk9sGHmNqp/7OuePWhMyOwnOPbFzPkCsCNvh1tPiY98pw2PDYyIbYMlqnI4
- xrOmoYcMUko88HPyMxRCQhGejYMPxss9dGIXobKNyZXEIjswug41AhRVUcTvfpjyCwXF
- umGw==
+ bh=zC+u1xwGCJpGKPuWoKniiuLj/lYQcyL8GrqWop7bZdA=;
+ b=SX9JfF9eQT+FBIkJBDMzUvX9YGZu2inWU9aOSZNckY1OwPn2z3eJ69TRXsbGYyhnhv
+ wTfsoxM+xcWPuLTv7Kk5/3SDLmo3HSdNVEO6lxql0HGHgX7bgYo1nVOZ/xQNXP6RhvRw
+ FWUz8yAUUYmKPHzPiFkNorD0Kfnddb2eSccYfpLWWtA2JrCXqCYP2w2SESx/urOBL8G8
+ nU/JDawN//fCVcYLScp9N+w/I+TVAUfbLD4ZqGrEEReRen1AAIL3PAmbt9OUE/8rkBRj
+ gksEpcmJesXeRt/3IgtMAnxjxQTJDyBTC0UMxssG9PBX9nU9CBzEiHhV01Mj/5dljx12
+ gyNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767641872; x=1768246672;
+ d=1e100.net; s=20230601; t=1767642092; x=1768246892;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MJPHFKoDR9tRYOU2QHaE7Hd/hBSyzoDUSq9VQxCG9CA=;
- b=Y5frxXWoLAfbmWPMg1H9nzWOZ0srwNkb53D/ngRtKmbsBnBxySUKV33rJDtXPJhQ+q
- xdIZbIMKn+5QpkBlXP2s2CqMeJYnTJw9wMxjWPVZ9KM7NQlUt42s0dfJHBSueDnniHzY
- L9KVtMREMsJqyhjSaNCy1TIEbB3+PFeQSBqWac7zhQfzWrF+lUwDzGvZMW11ABTNe5jr
- VnRZSd+dkQUQphMco0lK/dzJp1rEd7yIHWgaYk3u0ZFQlp7wu2r1DDOKh9HaspekwDge
- aajzw+dQdfYWM303wjZljaz8i3q3u2fj7APcjiJMm+oHMP/QLQJsxV3u3q/owWi7veOP
- ZtaQ==
-X-Gm-Message-State: AOJu0YzJzg38DQ1jFqWYPpn1pyFuwf6nuJDutPGMIOivt+y7XOYfdUTs
- us/FqXKuoCa2yrYngaT4vuYntDcnOIqaW3EkugKXK30WYSuUjvaPzV7sFaX+dvTuLROEhT5yWWI
- bw7rWDaVblFgELVUm2DitwJpTj/tL+gbLmnwzFhuWfg2bKPk6jhfyE8VdsSNsgsfZ
-X-Gm-Gg: AY/fxX40hn4ljBWct8qhLmjLObW2doYzdCdWVKxM/tgl/hA1n3RrTEmoFuqdmL3vtF3
- HfR7NIRJAqhLVTg8NkJ8J0HESaTe5R9wC35v4rB9frL5zeg8RNJK2c8Zw+0ddIVasKNiMMKKSwK
- gaU57Yj6j1Ihw8G5AtkJ6rdGnZ7FmmEhe9GQFyPBig8KgYm5ZxdNdL9S11BoB8tpl2XXd9z2Fki
- wVK1IzrURtsRUrXJxcNUkjPCNu5HrzHhycrJQs94ikG/0ugYY2wG/8OR9Q2iHWn0/zEEMo/lggp
- ggTkuubCbTabYKJZEJZ5cRTamU3SfDn4J2mYQoP6qwuIMkIPGKR9jzfZYfwh9oHgojPvofBQxBv
- /qpg=
-X-Received: by 2002:a05:7300:b0aa:b0:2a4:3594:72e3 with SMTP id
- 5a478bee46e88-2b16f880b9amr228158eec.18.1767641872275; 
- Mon, 05 Jan 2026 11:37:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFKKSwvsKbFR19EWFfGo+A80wuv2xImzqVHW7YnHzXQjWLyxatRrxCh9tKs4nnGZXbiwbzRoQ==
-X-Received: by 2002:a05:7300:b0aa:b0:2a4:3594:72e3 with SMTP id
- 5a478bee46e88-2b16f880b9amr228140eec.18.1767641871702; 
- Mon, 05 Jan 2026 11:37:51 -0800 (PST)
+ bh=zC+u1xwGCJpGKPuWoKniiuLj/lYQcyL8GrqWop7bZdA=;
+ b=nE9kWN8tXRu++CERH+LTnY0BePjL1yfKlMOfdW3bu8eWe9M0ygpec+eE3q8CtH3Mcc
+ NMGKnYntp3cL2VSZlmvGgOLbvq4RzfwQxQ4tBPwyGVcIy8Jh7we5gZEALqgEemaYID2Y
+ x9LfYgzMpbCPIc4Pat2cRbc9Oeu6SRL3QP+MMgNDHSQnXgIOHpp9dc473YqJUTKftoR+
+ jP1+wlEV2MikzYfbsthb71Dn+2zlk5DSq71hk4eJgvlpYSB7mdE1FviDPMdDjtnTizSo
+ wVLSPD3ShSL3ZdIRhZGM/bO+rk+hbxLzjb6t/pyN+E/2q+DSQjig5Q6/G2kwrvNRvYJv
+ qPig==
+X-Gm-Message-State: AOJu0YwnVzYwNae/P0OANs8kodtEDIW+p7Ftiw8zfTtQW6su8UdBomui
+ 77CjNjp/zNE1Vr6MFUyk4CuvywCICtYGvGI8smvq5b1uz/Jf1TMupoeCB0KH1aqE/piazNzVsX2
+ 8ZTnZojAV7ohzjHBYlIOFK0YbHq2BGjk0PgiC5d/WsYvIFNMKE/TYx8oU
+X-Gm-Gg: AY/fxX6xxF2m3cX9U1JlOYNyZLXlTv4X8CI3fsQYNuSWlUVKXrvrAJL/r5l8pPtrS/9
+ RkLb3TCGwznr8eiKkaHVp2WYK6hmxJcIw7okquzD2wwNiAJtrJILO2ATCGwTs3FJKyIhNKbiNmW
+ vuPFz7ze0sCpNFOuoDWQFC0QEkgWviIt97piP3VoExnLWi6BmOphpb42EiMrjSY7c2xXsRb641v
+ tKpWgfFZdqsgyT4pXalmz0xc0F454Af0pVzldAapAsTNAQ90/6sbVWt6wP3+CKg6GcSPcs07y2u
+ XPPVKO2PfB8q0Y2hpXBQVqt88TMpRjEXnmzt60CRboZomQnaoD4+EI4tUavIN8fI/kVjte0IRVG
+ fhYE=
+X-Received: by 2002:a05:7022:e995:b0:11b:4351:2687 with SMTP id
+ a92af1059eb24-121f18a8988mr449451c88.17.1767642092353; 
+ Mon, 05 Jan 2026 11:41:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEycWN32bIne/oUNArrIg3310qg0samBYWXB1PIWseZcYNZJrVftRah14Z6g4BzrwU1ICYuNg==
+X-Received: by 2002:a05:7022:e995:b0:11b:4351:2687 with SMTP id
+ a92af1059eb24-121f18a8988mr449421c88.17.1767642091739; 
+ Mon, 05 Jan 2026 11:41:31 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2b17078dd8fsm34424eec.20.2026.01.05.11.37.49
+ 5a478bee46e88-2b1707d60b1sm32987eec.31.2026.01.05.11.41.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Jan 2026 11:37:51 -0800 (PST)
-Date: Mon, 5 Jan 2026 14:37:46 -0500
+ Mon, 05 Jan 2026 11:41:31 -0800 (PST)
+Date: Mon, 5 Jan 2026 14:41:27 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH v2 14/25] migration/rdma: Use common connection paths
-Message-ID: <aVwTCieTljUaG9el@x1.local>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com
+Subject: Re: [PATCH v2 15/25] migration: Start incoming from channel.c
+Message-ID: <aVwT5_Oyq_oxyoti@x1.local>
 References: <20260105190644.14072-1-farosas@suse.de>
- <20260105190644.14072-15-farosas@suse.de>
+ <20260105190644.14072-16-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260105190644.14072-15-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260105190644.14072-16-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,183 +116,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 05, 2026 at 04:06:31PM -0300, Fabiano Rosas wrote:
-> Use the common connection paths for the incoming and outgoing sides of
-> rdma migration. This removes one usage of QEMUFile from rdma.c. It
-> also allows further unification of the connection code in next
-> patches.
-> 
-> Move the channels enum to channel.h so rdma.c can access it. The RDMA
-> channel is considered a CH_MAIN channel.
+On Mon, Jan 05, 2026 at 04:06:32PM -0300, Fabiano Rosas wrote:
+> Leave migration_ioc_process_incoming to do only the channel
+> identification process and move the migration start into
+> channel.c. Both routines will be renamed in the next patches to better
+> reflect their usage.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 
-One nitpick inline.
+One nitpick, as usual.
 
 > ---
->  migration/channel.h   |  7 +++++++
->  migration/migration.c | 13 -------------
->  migration/migration.h |  1 -
->  migration/rdma.c      | 23 +++++++++++------------
->  4 files changed, 18 insertions(+), 26 deletions(-)
+>  migration/channel.c   | 12 ++++++++++--
+>  migration/channel.h   |  1 +
+>  migration/migration.c | 13 +++++--------
+>  migration/migration.h |  2 +-
+>  4 files changed, 17 insertions(+), 11 deletions(-)
 > 
-> diff --git a/migration/channel.h b/migration/channel.h
-> index ccfeaaef18..93dedbf52b 100644
-> --- a/migration/channel.h
-> +++ b/migration/channel.h
-> @@ -18,6 +18,13 @@
->  
->  #include "io/channel.h"
->  
-> +/* Migration channel types */
-> +enum {
-> +    CH_MAIN,
-> +    CH_MULTIFD,
-> +    CH_POSTCOPY
-> +};
-> +
->  void migration_channel_process_incoming(QIOChannel *ioc);
->  
->  void migration_channel_connect(MigrationState *s, QIOChannel *ioc);
-> diff --git a/migration/migration.c b/migration/migration.c
-> index dc8fe80cf8..906f0bdab3 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -91,9 +91,6 @@ enum mig_rp_message_type {
->      MIG_RP_MSG_MAX
->  };
->  
-> -/* Migration channel types */
-> -enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
-> -
->  /* When we add fault tolerance, we could have several
->     migrations at once.  For now we don't need to add
->     dynamic creation of migration */
-> @@ -1021,16 +1018,6 @@ void migration_incoming_process(void)
->      qemu_coroutine_enter(co);
->  }
->  
-> -void migration_fd_process_incoming(QEMUFile *f)
-> -{
-> -    MigrationIncomingState *mis = migration_incoming_get_current();
-> -
-> -    assert(!mis->from_src_file);
-> -    mis->from_src_file = f;
-> -    qemu_file_set_blocking(f, false, &error_abort);
-> -    migration_incoming_process();
-
-This is removed very soon here..  That's OK.
-
-> -}
-> -
->  static bool migration_has_main_and_multifd_channels(void)
+> diff --git a/migration/channel.c b/migration/channel.c
+> index 6acce7b2a2..f1c1341a3e 100644
+> --- a/migration/channel.c
+> +++ b/migration/channel.c
+> @@ -33,6 +33,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
 >  {
 >      MigrationIncomingState *mis = migration_incoming_get_current();
+>      Error *local_err = NULL;
+> +    uint8_t ch;
+>  
+>      trace_migration_set_incoming_channel(
+>          ioc, object_get_typename(OBJECT(ioc)));
+> @@ -41,9 +42,16 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>          migration_tls_channel_process_incoming(ioc, &local_err);
+>      } else {
+>          migration_ioc_register_yank(ioc);
+> -        migration_ioc_process_incoming(ioc, &local_err);
+> -    }
+> +        ch = migration_ioc_process_incoming(ioc, &local_err);
+> +        if (!ch) {
+> +            goto out;
+> +        }
+>  
+> +        if (migration_incoming_setup(ioc, ch, &local_err)) {
+> +            migration_incoming_process();
+> +        }
+> +    }
+> +out:
+>      if (local_err) {
+>          error_report_err(local_err);
+>          migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
+> diff --git a/migration/channel.h b/migration/channel.h
+> index 93dedbf52b..b45e909597 100644
+> --- a/migration/channel.h
+> +++ b/migration/channel.h
+> @@ -20,6 +20,7 @@
+>  
+>  /* Migration channel types */
+>  enum {
+
+typedef enum { ... } MigChannelType;
+
+Then..
+
+> +    CH_NONE,
+>      CH_MAIN,
+>      CH_MULTIFD,
+>      CH_POSTCOPY
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 906f0bdab3..8117c74b52 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1034,10 +1034,10 @@ static bool migration_has_main_and_multifd_channels(void)
+>      return true;
+>  }
+>  
+> -void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+> +uint8_t migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+
+.. use it everywhere, including retval.
+
+>  {
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+> -    uint8_t channel;
+> +    uint8_t channel = CH_NONE;
+>      uint32_t channel_magic = 0;
+>      int ret = 0;
+>  
+> @@ -1056,7 +1056,7 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>              ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
+>                                                sizeof(channel_magic), errp);
+>              if (ret != 0) {
+> -                return;
+> +                goto out;
+>              }
+>  
+>              channel_magic = be32_to_cpu(channel_magic);
+> @@ -1071,7 +1071,6 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>                  channel = CH_MAIN;
+>              } else {
+>                  error_setg(errp, "unknown channel magic: %u", channel_magic);
+> -                return;
+>              }
+>          } else if (mis->from_src_file && migrate_multifd()) {
+>              /*
+> @@ -1083,16 +1082,14 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>              channel = CH_MAIN;
+>          } else {
+>              error_setg(errp, "non-peekable channel used without multifd");
+> -            return;
+>          }
+>      } else {
+>          assert(migrate_postcopy_preempt());
+>          channel = CH_POSTCOPY;
+>      }
+>  
+> -    if (migration_incoming_setup(ioc, channel, errp)) {
+> -        migration_incoming_process();
+> -    }
+> +out:
+> +    return channel;
+>  }
+>  
+>  /**
 > diff --git a/migration/migration.h b/migration/migration.h
-> index 4dcf299719..cd6cfd62ba 100644
+> index cd6cfd62ba..c760349b07 100644
 > --- a/migration/migration.h
 > +++ b/migration/migration.h
-> @@ -527,7 +527,6 @@ struct MigrationState {
+> @@ -527,7 +527,7 @@ struct MigrationState {
 >  void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
 >                         MigrationStatus new_state);
 >  
-> -void migration_fd_process_incoming(QEMUFile *f);
->  void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
+> -void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
+> +uint8_t migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
 >  void migration_incoming_process(void);
 >  bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp);
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 596a1aba0b..788ae183c1 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -15,6 +15,7 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "channel.h"
->  #include "qapi/error.h"
->  #include "qemu/cutils.h"
->  #include "exec/target_page.h"
-> @@ -384,7 +385,6 @@ struct QIOChannelRDMA {
->      QIOChannel parent;
->      RDMAContext *rdmain;
->      RDMAContext *rdmaout;
-> -    QEMUFile *file;
->      bool blocking; /* XXX we don't actually honour this yet */
->  };
->  
-> @@ -3836,32 +3836,30 @@ static void qio_channel_rdma_register_types(void)
->  
->  type_init(qio_channel_rdma_register_types);
->  
-> -static QEMUFile *rdma_new_input(RDMAContext *rdma)
-> +static QIOChannel *rdma_new_input(RDMAContext *rdma)
->  {
->      QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
->  
-> -    rioc->file = qemu_file_new_input(QIO_CHANNEL(rioc));
->      rioc->rdmain = rdma;
->      rioc->rdmaout = rdma->return_path;
->  
-> -    return rioc->file;
-> +    return QIO_CHANNEL(rioc);
->  }
->  
-> -static QEMUFile *rdma_new_output(RDMAContext *rdma)
-> +static QIOChannel *rdma_new_output(RDMAContext *rdma)
->  {
->      QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
->  
-> -    rioc->file = qemu_file_new_output(QIO_CHANNEL(rioc));
->      rioc->rdmaout = rdma;
->      rioc->rdmain = rdma->return_path;
->  
-> -    return rioc->file;
-> +    return QIO_CHANNEL(rioc);
->  }
->  
->  static void rdma_accept_incoming_migration(void *opaque)
->  {
->      RDMAContext *rdma = opaque;
-> -    QEMUFile *f;
-> +    QIOChannel *ioc;
->  
->      trace_qemu_rdma_accept_incoming_migration();
->      if (qemu_rdma_accept(rdma) < 0) {
-> @@ -3875,15 +3873,16 @@ static void rdma_accept_incoming_migration(void *opaque)
->          return;
->      }
->  
-> -    f = rdma_new_input(rdma);
-> -    if (f == NULL) {
-> +    ioc = rdma_new_input(rdma);
-> +    if (ioc == NULL) {
->          error_report("RDMA ERROR: could not open RDMA for input");
->          qemu_rdma_cleanup(rdma);
->          return;
->      }
->  
->      rdma->migration_started_on_destination = 1;
-> -    migration_fd_process_incoming(f);
-> +    migration_incoming_setup(ioc, CH_MAIN, NULL);
-
-Maybe error_abort?
-
-> +    migration_incoming_process();
->  }
->  
->  void rdma_start_incoming_migration(InetSocketAddress *host_port,
-> @@ -3995,8 +3994,8 @@ void rdma_start_outgoing_migration(void *opaque,
->  
->      trace_rdma_start_outgoing_migration_after_rdma_connect();
->  
-> -    s->to_dst_file = rdma_new_output(rdma);
->      s->rdma_migration = true;
-> +    migration_outgoing_setup(rdma_new_output(rdma));
->      migration_connect(s);
->      return;
->  return_path_err:
+>  void migration_outgoing_setup(QIOChannel *ioc);
 > -- 
 > 2.51.0
 > 
