@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE50C79F8C
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DEBFC79F8B
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:09:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vck8u-00043Q-0e; Mon, 05 Jan 2026 07:57:04 -0500
+	id 1vck8u-000444-33; Mon, 05 Jan 2026 07:57:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8e-0003sN-OI
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8l-0003wX-GT
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8b-0007yT-SE
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:48 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8i-00080O-NM
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767617803;
+ s=mimecast20190719; t=1767617812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NkgUOJhTx0F43VwFud6NhxLZPsuw7OTTJNSweLB1+lA=;
- b=epAZjqPJCWDnpugLkUvS9DLaMYFqcZb8VMUK6V/mUjmfBJPUWMNlxJ7pM+qioAqD9M4/t/
- dSnvvpo7qO1KPYiX0E3zdhVA7jRmCgw0wqSpWBZVxLcpIq+L0GQRwp0VgFWDXPV0y/LEzv
- 1vDoiHAhW44Rm+3NWu2e6osZiOtpI5g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HzyOf6WCoRnETebhcLxvKS3EV81G2XXrHR0VELV8rBY=;
+ b=ifkL75zYs4V/KHC7OQWCcMlaxjbI9UyGF0kLCOx4vT5IeaerH0Rv+DtaB1D18M4Z5kw6mb
+ ovs81gTFqeJN5/ZOGfyArNao3d4ArxUOK98QLm3GwkSHjyJpmpNkBme7aLfJK9pvipLkBA
+ TAHWUyoQ4llV1Fu3rQXEGH8x32z8lkQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-656-z1tlVpV9N4a_ahvoii_yTA-1; Mon,
- 05 Jan 2026 07:56:38 -0500
-X-MC-Unique: z1tlVpV9N4a_ahvoii_yTA-1
-X-Mimecast-MFC-AGG-ID: z1tlVpV9N4a_ahvoii_yTA_1767617797
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-343-PcOydyP2O-mGyyd21CDn-A-1; Mon,
+ 05 Jan 2026 07:56:50 -0500
+X-MC-Unique: PcOydyP2O-mGyyd21CDn-A-1
+X-Mimecast-MFC-AGG-ID: PcOydyP2O-mGyyd21CDn-A_1767617809
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 98254195FCE9; Mon,  5 Jan 2026 12:56:37 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 984601956094; Mon,  5 Jan 2026 12:56:49 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0EA76195398A; Mon,  5 Jan 2026 12:56:35 +0000 (UTC)
+ id E794319560A7; Mon,  5 Jan 2026 12:56:47 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+Cc: Patrick Williams <patrick@stwcx.xyz>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 10/36] docs/system/arm/aspeed: Update Aspeed and 2700 family
- boards list
-Date: Mon,  5 Jan 2026 13:55:47 +0100
-Message-ID: <20260105125613.622667-11-clg@redhat.com>
+Subject: [PULL 16/36] hw/arm/aspeed: catalina: add FIO FRU EEPROM
+Date: Mon,  5 Jan 2026 13:55:53 +0100
+Message-ID: <20260105125613.622667-17-clg@redhat.com>
 In-Reply-To: <20260105125613.622667-1-clg@redhat.com>
 References: <20260105125613.622667-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,47 +84,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Patrick Williams <patrick@stwcx.xyz>
 
-Remove the ast2700-evb entry from the Aspeed family boards list in
-the documentation. The AST2700 platform now belongs to the new Aspeed
-2700 family group, which has its own dedicated documentation section
-and board definitions.
+Use ipmitool/frugen tool to generate an FIO image based on a
+sanitized set of data from a real device EEPROM.
 
-Update the Aspeed 2700 family boards list in the documentation to include
-the new ast2700fc board entry.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251112030553.291734-12-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20251217-catalina-eeproms-v1-5-dc7b276efd57@stwcx.xyz
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/system/arm/aspeed.rst | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/arm/aspeed_ast2600_catalina.c | 41 +++++++++++++++++++++++++++++++-
+ 1 file changed, 40 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 6317c0e910a2..81a96994559c 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -1,5 +1,5 @@
--Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
--====================================================================================================================================================================================================================================================================================================================================================================================================================================
-+Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-+===================================================================================================================================================================================================================================================================================================================================================================================================================
+diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
+index c8e62afdfea6..17db9035bda5 100644
+--- a/hw/arm/aspeed_ast2600_catalina.c
++++ b/hw/arm/aspeed_ast2600_catalina.c
+@@ -189,6 +189,44 @@ static const uint8_t osfp_eeprom[] = {
+ };
+ static const size_t osfp_eeprom_len = sizeof(osfp_eeprom);
  
- The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
- Aspeed evaluation boards. They are based on different releases of the
-@@ -274,8 +274,8 @@ configuration file for OTP memory:
-     done > otpmem.img
-   fi
++/*
++ * "Front IO" FRU data. Generated with frugen.
++ *
++ *    {
++ *        "board": {
++ *            "mfg": "Quanta",
++ *            "pname": "Catalina FIO MP (QEMU)",
++ *            "pn": "00000000000",
++ *            "serial": "00000000000000",
++ *            "date": "01/12/2025 00:00",
++ *            "custom": ["19-100290"]
++ *        },
++ *        "product": {
++ *            "mfg": "Quanta",
++ *            "pname": "CI-Catalina",
++ *            "pn": "10000000001",
++ *            "ver": "MP",
++ *            "serial": "10000000000000",
++ *            "atag": "QEMU"
++ *        }
++ *    }
++ */
++static const uint8_t fio_eeprom[] = {
++    0x01, 0x00, 0x00, 0x01, 0x0a, 0x00, 0x00, 0xf4, 0x01, 0x09, 0x19, 0x8c,
++    0x19, 0xf0, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xd6, 0x43, 0x61,
++    0x74, 0x61, 0x6c, 0x69, 0x6e, 0x61, 0x20, 0x46, 0x49, 0x4f, 0x20, 0x4d,
++    0x50, 0x20, 0x28, 0x51, 0x45, 0x4d, 0x55, 0x29, 0x8b, 0x10, 0x04, 0x41,
++    0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x89, 0x10, 0x04, 0x41,
++    0x10, 0x04, 0x41, 0x10, 0x04, 0x01, 0xc0, 0x87, 0x51, 0xd6, 0x44, 0x10,
++    0x24, 0x65, 0x10, 0xc1, 0x00, 0x00, 0x00, 0xbf, 0x01, 0x07, 0x19, 0xc6,
++    0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcb, 0x43, 0x49, 0x2d, 0x43, 0x61,
++    0x74, 0x61, 0x6c, 0x69, 0x6e, 0x61, 0x89, 0x11, 0x04, 0x41, 0x10, 0x04,
++    0x41, 0x10, 0x14, 0x01, 0x82, 0x2d, 0x0c, 0x8b, 0x11, 0x04, 0x41, 0x10,
++    0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x83, 0x71, 0xd9, 0xd6, 0xc0,
++    0xc1, 0x00, 0x00, 0x37
++};
++static const size_t fio_eeprom_len = sizeof(fio_eeprom);
++
+ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+ {
+     /* Reference from v6.16-rc2 aspeed-bmc-facebook-catalina.dts */
+@@ -270,7 +308,8 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
  
--Aspeed 2700 family boards (``ast2700-evb``)
--==================================================================
-+Aspeed 2700 family boards (``ast2700-evb``, ``ast2700fc``)
-+==========================================================
+     /* i2c1mux0ch7 */
+     /* eeprom@53 */
+-    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 7), 0x53, 8 * KiB);
++    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 7), 0x53, 8 * KiB,
++                          fio_eeprom, fio_eeprom_len);
+     /* temperature-sensor@4b - tmp75 */
+     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4b);
  
- The QEMU Aspeed machines model BMCs of Aspeed evaluation boards.
- They are based on different releases of the Aspeed SoC :
 -- 
 2.52.0
 
