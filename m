@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F9EC79F89
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B18DC79F8C
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:01:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vckAi-0005dG-VA; Mon, 05 Jan 2026 07:58:58 -0500
+	id 1vck8v-00048E-1Y; Mon, 05 Jan 2026 07:57:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck9Q-0004e4-5a
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:57:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8g-0003sq-9g
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck9J-00087u-Lh
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:57:32 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8e-0007z1-BY
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767617848;
+ s=mimecast20190719; t=1767617807;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z7PnNdkMr7GqJLMntFWlItt1vMRaPIoDbRubisjevB4=;
- b=jECL6h7EW58y0PbYuwa1u+cDTmE14Szn/FE15Njqq7QXSrRnKe214FUzLwkRtlfrc/LiC4
- k+0GdAW/AZRkun1U1wkJJklvxddgzFhjabJlcNAmFGEamgHjOF46UgBRL+hCgboXTGZxY0
- YQ/2M+5pfVbgAFuteCeVtK2mMCsYRks=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=VkRyG+nuOL2if1Rh7rIC8AA3xkyAH90XSBBfJpYnefc=;
+ b=KbJjfUUQofRnWkyqe1oR3u8Ch5qHZvGuB4rtk09ZekGpRyN6c6DqTOtnSMqRVPM9vALSxv
+ 0ot5aVOempLouxW/OWeP9G7CownmLxJegivyDE3u4XRTnNM4Sc6p/knNdYAR27XOoNe1Vj
+ Z/2cuL1YnnRh7byhYN+rZxzn9XxYj9I=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-379-uuIHRbMkMrGZ0TDMv0ZgFg-1; Mon,
- 05 Jan 2026 07:57:26 -0500
-X-MC-Unique: uuIHRbMkMrGZ0TDMv0ZgFg-1
-X-Mimecast-MFC-AGG-ID: uuIHRbMkMrGZ0TDMv0ZgFg_1767617845
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-f5nJHjXmOLaC4YJzEY5owA-1; Mon,
+ 05 Jan 2026 07:56:46 -0500
+X-MC-Unique: f5nJHjXmOLaC4YJzEY5owA-1
+X-Mimecast-MFC-AGG-ID: f5nJHjXmOLaC4YJzEY5owA_1767617805
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF8FC1956053; Mon,  5 Jan 2026 12:57:25 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78DDD180028B; Mon,  5 Jan 2026 12:56:45 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C77619560A7; Mon,  5 Jan 2026 12:57:24 +0000 (UTC)
+ id 066EF19560A7; Mon,  5 Jan 2026 12:56:43 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+Cc: Patrick Williams <patrick@stwcx.xyz>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 33/36] docs/specs/aspeed-intc: Remove GIC 128 - 136
-Date: Mon,  5 Jan 2026 13:56:10 +0100
-Message-ID: <20260105125613.622667-34-clg@redhat.com>
+Subject: [PULL 14/36] hw/arm/aspeed: catalina: add PDB FRU EEPROM
+Date: Mon,  5 Jan 2026 13:55:51 +0100
+Message-ID: <20260105125613.622667-15-clg@redhat.com>
 In-Reply-To: <20260105125613.622667-1-clg@redhat.com>
 References: <20260105125613.622667-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,139 +84,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Patrick Williams <patrick@stwcx.xyz>
 
-The GIC interrupts 128 - 136 were only used by the AST2700 A0 SoC.
-Since the AST2700 A0 has been deprecated, these interrupt
-definitions are no longer needed. This commit removes them to
-clean up the codebase.
+Use ipmitool/frugen tool to generate a PDB image based on a
+sanitized set of data from a real device EEPROM.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250901040808.1454742-5-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20251217-catalina-eeproms-v1-3-dc7b276efd57@stwcx.xyz
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/specs/aspeed-intc.rst | 92 +++++++++++---------------------------
- 1 file changed, 25 insertions(+), 67 deletions(-)
+ hw/arm/aspeed_ast2600_catalina.c | 51 +++++++++++++++++++++++++++++++-
+ 1 file changed, 50 insertions(+), 1 deletion(-)
 
-diff --git a/docs/specs/aspeed-intc.rst b/docs/specs/aspeed-intc.rst
-index 9cefd7f37f85..892a74a0c357 100644
---- a/docs/specs/aspeed-intc.rst
-+++ b/docs/specs/aspeed-intc.rst
-@@ -47,18 +47,7 @@ Bit   GIC
- 9     201
- ====  ====
+diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
+index 6e8f4d39d97e..2ba2c5c08850 100644
+--- a/hw/arm/aspeed_ast2600_catalina.c
++++ b/hw/arm/aspeed_ast2600_catalina.c
+@@ -103,6 +103,54 @@ static const uint8_t scm_eeprom[] = {
+ };
+ static const size_t scm_eeprom_len = sizeof(scm_eeprom);
  
--AST2700 A0
------------
--It has only one INTC controller, and currently, only GIC 128-136 is supported.
--To support both AST2700 A1 and AST2700 A0, there are 10 OR gates in the INTC,
--with gates 1 to 9 supporting GIC 128-136.
--
--Design for GICINT 132
-----------------------
--The orgate has interrupt sources ranging from 0 to 31, with its output pin
--connected to INTC. The output pin is then connected to GIC 132.
--
--Block Diagram of GICINT 196 for AST2700 A1 and GICINT 132 for AST2700 A0
-+Block Diagram of GICINT 196 for AST2700 A1
- ------------------------------------------------------------------------
++/*
++ * "Power Distribution Board" FRU data. Generated with frugen.
++ *
++ *    {
++ *        "board": {
++ *            "mfg": "Quanta",
++ *            "pname": "Catalina PDB MP (QEMU)",
++ *            "pn": "00000000000",
++ *            "serial": "00000000000000",
++ *            "date": "01/12/2025 00:00",
++ *            "custom": [
++ *                "19-100579",
++ *                "",
++ *                "",
++ *                "hsc-ltc fsc-max vr-delta gndsen-ina p12vsen-ina p12vfan-mps"
++ *            ]
++ *        },
++ *        "product": {
++ *            "mfg": "Quanta",
++ *            "pname": "CI-Catalina",
++ *            "pn": "10000000001",
++ *            "ver": "MP",
++ *            "serial": "10000000000000",
++ *            "atag": "QEMU"
++ *        }
++ *    }
++ */
++static const uint8_t pdb_eeprom[] = {
++    0x01, 0x00, 0x00, 0x01, 0x12, 0x00, 0x00, 0xec, 0x01, 0x11, 0x19, 0x8c,
++    0x19, 0xf0, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xd6, 0x43, 0x61,
++    0x74, 0x61, 0x6c, 0x69, 0x6e, 0x61, 0x20, 0x50, 0x44, 0x42, 0x20, 0x4d,
++    0x50, 0x20, 0x28, 0x51, 0x45, 0x4d, 0x55, 0x29, 0x8b, 0x10, 0x04, 0x41,
++    0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x89, 0x10, 0x04, 0x41,
++    0x10, 0x04, 0x41, 0x10, 0x04, 0x01, 0xc0, 0x87, 0x51, 0xd6, 0x44, 0x10,
++    0x54, 0x5d, 0x19, 0xc0, 0xc0, 0xfb, 0x68, 0x73, 0x63, 0x2d, 0x6c, 0x74,
++    0x63, 0x20, 0x66, 0x73, 0x63, 0x2d, 0x6d, 0x61, 0x78, 0x20, 0x76, 0x72,
++    0x2d, 0x64, 0x65, 0x6c, 0x74, 0x61, 0x20, 0x67, 0x6e, 0x64, 0x73, 0x65,
++    0x6e, 0x2d, 0x69, 0x6e, 0x61, 0x20, 0x70, 0x31, 0x32, 0x76, 0x73, 0x65,
++    0x6e, 0x2d, 0x69, 0x6e, 0x61, 0x20, 0x70, 0x31, 0x32, 0x76, 0x66, 0x61,
++    0x6e, 0x2d, 0x6d, 0x70, 0x73, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x24,
++    0x01, 0x07, 0x19, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcb, 0x43,
++    0x49, 0x2d, 0x43, 0x61, 0x74, 0x61, 0x6c, 0x69, 0x6e, 0x61, 0x89, 0x11,
++    0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x14, 0x01, 0x82, 0x2d, 0x0c, 0x8b,
++    0x11, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x83,
++    0x71, 0xd9, 0xd6, 0xc0, 0xc1, 0x00, 0x00, 0x37
++};
++static const size_t pdb_eeprom_len = sizeof(pdb_eeprom);
++
+ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+ {
+     /* Reference from v6.16-rc2 aspeed-bmc-facebook-catalina.dts */
+@@ -166,7 +214,8 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
  
- .. code-block::
-@@ -68,69 +57,38 @@ Block Diagram of GICINT 196 for AST2700 A1 and GICINT 132 for AST2700 A0
-    |           To GICINT196                                                                                |
-    |                                                                                                       |
-    |   ETH1    |-----------|                    |--------------------------|        |--------------|       |
--   |  -------->|0          |                    |         INTCIO           |        |  orgates[0]  |       |
-+   |   ------->|0          |                    |         INTCIO           |        |  orgates[0]  |       |
-    |   ETH2    |          4|   orgates[0]------>|inpin[0]-------->outpin[0]|------->| 0            |       |
--   |  -------->|1         5|   orgates[1]------>|inpin[1]-------->outpin[1]|------->| 1            |       |
-+   |   ------->|1         5|   orgates[1]------>|inpin[1]-------->outpin[1]|------->| 1            |       |
-    |   ETH3    |          6|   orgates[2]------>|inpin[2]-------->outpin[2]|------->| 2            |       |
--   |  -------->|2        19|   orgates[3]------>|inpin[3]-------->outpin[3]|------->| 3  OR[0:9]   |-----| |
-+   |   ------->|2        19|   orgates[3]------>|inpin[3]-------->outpin[3]|------->| 3  OR[0:9]   |-----| |
-    |   UART0   |         20|-->orgates[4]------>|inpin[4]-------->outpin[4]|------->| 4            |     | |
--   |  -------->|7        21|   orgates[5]------>|inpin[5]-------->outpin[5]|------->| 5            |     | |
-+   |   ------->|7        21|   orgates[5]------>|inpin[5]-------->outpin[5]|------->| 5            |     | |
-    |   UART1   |         22|   orgates[6]------>|inpin[6]-------->outpin[6]|------->| 6            |     | |
--   |  -------->|8        23|   orgates[7]------>|inpin[7]-------->outpin[7]|------->| 7            |     | |
-+   |   ------->|8        23|   orgates[7]------>|inpin[7]-------->outpin[7]|------->| 7            |     | |
-    |   UART2   |         24|   orgates[8]------>|inpin[8]-------->outpin[8]|------->| 8            |     | |
--   |  -------->|9        25|   orgates[9]------>|inpin[9]-------->outpin[9]|------->| 9            |     | |
-+   |   ------->|9        25|   orgates[9]------>|inpin[9]-------->outpin[9]|------->| 9            |     | |
-    |   UART3   |         26|                    |--------------------------|        |--------------|     | |
--   |  ---------|10       27|                                                                             | |
-+   |   ------->|10       27|                                                                             | |
-    |   UART5   |         28|                                                                             | |
--   |  -------->|11       29|                                                                             | |
-+   |   ------->|11       29|                                                                             | |
-    |   UART6   |           |                                                                             | |
--   |  -------->|12       30|     |-----------------------------------------------------------------------| |
-+   |   ------->|12       30|     |-----------------------------------------------------------------------| |
-    |   UART7   |         31|     |                                                                         |
--   |  -------->|13         |     |                                                                         |
--   |   UART8   |  OR[0:31] |     |                |------------------------------|           |----------|  |
--   |  -------->|14         |     |                |            INTC              |           |     GIC  |  |
--   |   UART9   |           |     |                |inpin[0:0]--------->outpin[0] |---------->|192       |  |
--   |  -------->|15         |     |                |inpin[0:1]--------->outpin[1] |---------->|193       |  |
--   |   UART10  |           |     |                |inpin[0:2]--------->outpin[2] |---------->|194       |  |
--   |  -------->|16         |     |                |inpin[0:3]--------->outpin[3] |---------->|195       |  |
--   |   UART11  |           |     |--------------> |inpin[0:4]--------->outpin[4] |---------->|196       |  |
--   |  -------->|17         |                      |inpin[0:5]--------->outpin[5] |---------->|197       |  |
--   |   UART12  |           |                      |inpin[0:6]--------->outpin[6] |---------->|198       |  |
--   |  -------->|18         |                      |inpin[0:7]--------->outpin[7] |---------->|199       |  |
--   |           |-----------|                      |inpin[0:8]--------->outpin[8] |---------->|200       |  |
--   |                                              |inpin[0:9]--------->outpin[9] |---------->|201       |  |
--   |-------------------------------------------------------------------------------------------------------|
--   |-------------------------------------------------------------------------------------------------------|
--   |  ETH1    |-----------|     orgates[1]------->|inpin[1]----------->outpin[10]|---------->|128       |  |
--   | -------->|0          |     orgates[2]------->|inpin[2]----------->outpin[11]|---------->|129       |  |
--   |  ETH2    |          4|     orgates[3]------->|inpin[3]----------->outpin[12]|---------->|130       |  |
--   | -------->|1         5|     orgates[4]------->|inpin[4]----------->outpin[13]|---------->|131       |  |
--   |  ETH3    |          6|---->orgates[5]------->|inpin[5]----------->outpin[14]|---------->|132       |  |
--   | -------->|2        19|     orgates[6]------->|inpin[6]----------->outpin[15]|---------->|133       |  |
--   |  UART0   |         20|     orgates[7]------->|inpin[7]----------->outpin[16]|---------->|134       |  |
--   | -------->|7        21|     orgates[8]------->|inpin[8]----------->outpin[17]|---------->|135       |  |
--   |  UART1   |         22|     orgates[9]------->|inpin[9]----------->outpin[18]|---------->|136       |  |
--   | -------->|8        23|                       |------------------------------|           |----------|  |
--   |  UART2   |         24|                                                                                |
--   | -------->|9        25|                       AST2700 A0 Design                                        |
--   |  UART3   |         26|                                                                                |
--   | -------->|10       27|                                                                                |
--   |  UART5   |         28|                                                                                |
--   | -------->|11       29| GICINT132                                                                      |
--   |  UART6   |           |                                                                                |
--   | -------->|12       30|                                                                                |
--   |  UART7   |         31|                                                                                |
--   | -------->|13         |                                                                                |
--   |  UART8   |  OR[0:31] |                                                                                |
--   | -------->|14         |                                                                                |
--   |  UART9   |           |                                                                                |
--   | -------->|15         |                                                                                |
--   |  UART10  |           |                                                                                |
--   | -------->|16         |                                                                                |
--   |  UART11  |           |                                                                                |
--   | -------->|17         |                                                                                |
--   |  UART12  |           |                                                                                |
--   | -------->|18         |                                                                                |
--   |          |-----------|                                                                                |
-+   |   ------->|13         |     |                                                                         |
-+   |   UART8   |  OR[0:31] |     |                |-----------------------------|          |----------|    |
-+   |   ------->|14         |     |                |            INTC             |          |     GIC  |    |
-+   |   UART9   |           |     |                |inpin[0:0]--------->outpin[0]|--------->|192       |    |
-+   |   ------->|15         |     |                |inpin[0:1]--------->outpin[1]|--------->|193       |    |
-+   |   UART10  |           |     |                |inpin[0:2]--------->outpin[2]|--------->|194       |    |
-+   |   ------->|16         |     |                |inpin[0:3]--------->outpin[3]|--------->|195       |    |
-+   |   UART11  |           |     |--------------> |inpin[0:4]--------->outpin[4]|--------->|196       |    |
-+   |   ------->|17         |                      |inpin[0:5]--------->outpin[5]|--------->|197       |    |
-+   |   UART12  |           |                      |inpin[0:6]--------->outpin[6]|--------->|198       |    |
-+   |   ------->|18         |                      |inpin[0:7]--------->outpin[7]|--------->|199       |    |
-+   |           |-----------|                      |inpin[0:8]--------->outpin[8]|--------->|200       |    |
-+   |                                              |inpin[0:9]--------->outpin[9]|--------->|201       |    |
-+   |                                              |-----------------------------|          |----------|    |
-+   |                                                                                                       |
-    |                                                                                                       |
-    |-------------------------------------------------------------------------------------------------------|
+     /* i2c1mux0ch5 */
+     /* eeprom@54 */
+-    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB);
++    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB,
++                          pdb_eeprom, pdb_eeprom_len);
+     /* tpm75@4f */
+     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
+ 
 -- 
 2.52.0
 
