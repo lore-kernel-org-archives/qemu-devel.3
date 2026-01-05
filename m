@@ -4,73 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0885EC79F9E
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 15:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2551FC79FA5
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 16:03:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcmim-0005HB-0p; Mon, 05 Jan 2026 10:42:16 -0500
+	id 1vcn2w-0005BM-Fv; Mon, 05 Jan 2026 11:03:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vcmiG-0005Cb-8i
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 10:41:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1vcn22-00051I-Im; Mon, 05 Jan 2026 11:02:14 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vcmiA-0005Cj-6R
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 10:41:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767627695;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qYr+u8zztYV6H5gopQk+DG4WhfgUI/kQzpNSda1JA4w=;
- b=c5aVX29XqbWIRHOkX2/CFLvVyd5zQl9i32+eTYRT6Aco9p0I0XYj5dCcL6W5UUEi9w2+cp
- qh5iD0i2USj12OCqydUxe8WXETpW5ru8ZZ1AEvjLpF58OWu2j1317i/PELnI5/UlfmTblR
- s5a6ybJAi1eoMrvxAv3M9/qHcopXIlk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-F2wyhHI4PaiM7aM36ZBv3Q-1; Mon,
- 05 Jan 2026 10:41:32 -0500
-X-MC-Unique: F2wyhHI4PaiM7aM36ZBv3Q-1
-X-Mimecast-MFC-AGG-ID: F2wyhHI4PaiM7aM36ZBv3Q_1767627691
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A1D3180035A; Mon,  5 Jan 2026 15:41:31 +0000 (UTC)
-Received: from gondolin.redhat.com (unknown [10.44.33.132])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 99BC330001A7; Mon,  5 Jan 2026 15:41:29 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH v3 2/2] arm: add DCZID_EL0 to idregs array
-Date: Mon,  5 Jan 2026 16:41:19 +0100
-Message-ID: <20260105154119.59853-3-cohuck@redhat.com>
-In-Reply-To: <20260105154119.59853-1-cohuck@redhat.com>
-References: <20260105154119.59853-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1vcn1w-0001IA-OR; Mon, 05 Jan 2026 11:02:08 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6058QT20022903;
+ Mon, 5 Jan 2026 16:01:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=hgzlkT4TGK48LI1xn
+ xY+B7JxVUQD7CEwUUXrORbz1UY=; b=VU8Awk/i++1gtma16AxJBk2OZW3Dxlt3k
+ czdqvuTzM+5+JqXGvYsdkoSMjpYlKHnRDD2V1I1z4yG7dykuBe0TglzMv9bMOyvf
+ ycJUKsoSC7gErQKuEg87Ru6wSk/r/wpKPudTNSQxXKdb7d1CqLgxUxB2AQaCd5L4
+ ceikwZSyJ9Ujj6cK5OFR2qpk8XiA0kQIGlxdwmjbEVmgNf/b0QszA33E8nTTJn47
+ uBabOE9AO3sPWqKi3pMoCCsUPI/G6ukrlgBHUINx4wnWNoELmzJ8aAcKhTTYbxap
+ dqQfWwsvyL5aIg3jVuwPIJSsiXh759i2wm1Yafu9NDkEB32Ive2+w==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betm702n4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Jan 2026 16:01:55 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 605G1tSb012663;
+ Mon, 5 Jan 2026 16:01:55 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betm702n0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Jan 2026 16:01:55 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 605DmjG2023511;
+ Mon, 5 Jan 2026 16:01:54 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bg3rm39wp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Jan 2026 16:01:54 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 605G1rMZ7078614
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Jan 2026 16:01:53 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E71305805A;
+ Mon,  5 Jan 2026 16:01:52 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 140E458054;
+ Mon,  5 Jan 2026 16:01:52 +0000 (GMT)
+Received: from gfwr532.rchland.ibm.com (unknown [9.10.239.133])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  5 Jan 2026 16:01:51 +0000 (GMT)
+From: Caleb Schlossin <calebs@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, alistair@alistair23.me,
+ chalapathi.v@linux.ibm.com, kowal@linux.ibm.com, angeloj@linux.ibm.com,
+ harshpb@linux.ibm.com, calebs@linux.ibm.com
+Subject: [PATCH v4 3/7] hw/ppc: Add pnv_i2c vmstate support
+Date: Mon,  5 Jan 2026 10:01:34 -0600
+Message-ID: <20260105160138.3242709-4-calebs@linux.ibm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260105160138.3242709-1-calebs@linux.ibm.com>
+References: <20260105160138.3242709-1-calebs@linux.ibm.com>
 MIME-Version: 1.0
-Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=OdmVzxTY c=1 sm=1 tr=0 ts=695be073 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=DGM2Vrrcx73IGRt511UA:9
+X-Proofpoint-GUID: OSnkJtiCsQMPvfhzBys2O1uEpO5Var9V
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDEzOCBTYWx0ZWRfXyG46jCwkZFvi
+ UKCQVRVvNbTRMtWIkhhId0odiYA6qy9PSbig87dVIezuUzmy4WBGJEb1EZ+uwk1cs5w43tm+6A/
+ upLVBB4RFTXTjFQtWYyIRDoEydvcLChGPqj1qCYLlPt3Ney7ILpUQmYrM+8Kts22CrM2aFuqySz
+ QBntZXhuDb0ZSSfvNFD1w8tIVpU7bogO5e4yhXKqb8qDrkeJSHsRQcOhunNBsqWSLpmjUnFmpCf
+ GOj0UZE6jlILW7jztfXvXhTx++r506qHvvS80Jdp2Hs7gU3TjQBqUdHunZyzNz3sjrbZe7CU4tg
+ 4DxwHkvLRkaQiGXXBMnhWawrXmdGSyWnR2P4ExmeKfw8+AWiqNhenZs/FJgF9lSiT+iJGNt2CDV
+ d0HIxCt8OotOtpaKY7zSsiqK4ArAdAi+tsY8Z2XDFhw64YrdBvGhZNBgb4X7CksErAEhwMaotAG
+ ptCS0MkuqQz5IxAlnYg==
+X-Proofpoint-ORIG-GUID: 2d44hpNiy-utypJRcZdipYeYLedTXICT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-05_01,2026-01-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 phishscore=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
+ definitions=main-2601050138
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,98 +127,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Continue moving ID registers to the idregs array, so that we
-eventually can switch to an autogenerated cpu-sysregs.h.inc.
+- Add vmstate support for i2c registers
 
-This requires a bit of care, since we still have to handle the EL
-specific part (DCZID_EL0.DZP). The value previously saved in
-cpu->dcz_blocksize is now kept in DCZID_EL.BS (transparent to
-callers using the wrappers.)
-
-KVM currently does not support DCZID_EL0 via ONE_REG, assert that
-we're not trying to do anything with it until it does.
-
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
 ---
- target/arm/cpu-sysregs.h.inc | 1 +
- target/arm/cpu.h             | 8 ++++----
- target/arm/helper.c          | 4 +++-
- target/arm/tcg/translate.h   | 2 +-
- 4 files changed, 9 insertions(+), 6 deletions(-)
+ hw/ppc/pnv_i2c.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index 2bb2861c6234..7f3aa8b991aa 100644
---- a/target/arm/cpu-sysregs.h.inc
-+++ b/target/arm/cpu-sysregs.h.inc
-@@ -39,3 +39,4 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
- DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
- DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
- DEF(CTR_EL0, 3, 3, 0, 0, 1)
-+DEF(DCZID_EL0, 3, 3, 0, 0, 7)
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index c0dae1a891a7..08b7d3fb936a 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1111,8 +1111,6 @@ struct ArchCPU {
-     bool prop_pauth_qarma5;
-     bool prop_lpa2;
+diff --git a/hw/ppc/pnv_i2c.c b/hw/ppc/pnv_i2c.c
+index c8e90c636f..60f7164a1c 100644
+--- a/hw/ppc/pnv_i2c.c
++++ b/hw/ppc/pnv_i2c.c
+@@ -19,6 +19,7 @@
+ #include "hw/ppc/pnv_i2c.h"
+ #include "hw/ppc/pnv_xscom.h"
+ #include "hw/ppc/fdt.h"
++#include "migration/vmstate.h"
  
--    /* DCZ blocksize, in log_2(words), ie low 4 bits of DCZID_EL0 */
--    uint8_t dcz_blocksize;
-     /* GM blocksize, in log_2(words), ie low 4 bits of GMID_EL0 */
-     uint8_t gm_blocksize;
+ #include <libfdt.h>
  
-@@ -1180,12 +1178,14 @@ struct ARMCPUClass {
+@@ -549,6 +550,15 @@ static const Property pnv_i2c_properties[] = {
+     DEFINE_PROP_UINT32("num-busses", PnvI2C, num_busses, 1),
+ };
  
- static inline uint8_t get_dczid_bs(ARMCPU *cpu)
- {
--    return cpu->dcz_blocksize;
-+    return extract64(cpu->isar.idregs[DCZID_EL0_IDX], 0, 4);
- }
- 
- static inline void set_dczid_bs(ARMCPU *cpu, uint8_t bs)
- {
--    cpu->dcz_blocksize = bs;
-+    /* keep dzp unchanged */
-+    cpu->isar.idregs[DCZID_EL0_IDX] =
-+        deposit64(cpu->isar.idregs[DCZID_EL0_IDX], 0, 4, bs);
- }
- 
- /* Callback functions for the generic timer's timers. */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 61b3b90b63c0..2bcb01e45bbf 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3320,12 +3320,14 @@ static uint64_t aa64_dczid_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     ARMCPU *cpu = env_archcpu(env);
-     int dzp_bit = 1 << 4;
- 
-+    assert(!kvm_enabled());
++static const VMStateDescription pnv_i2c_vmstate = {
++    .name = TYPE_PNV_I2C,
++    .version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(regs, PnvI2C, PNV_I2C_REGS),
++        VMSTATE_END_OF_LIST(),
++    },
++};
 +
-     /* DZP indicates whether DC ZVA access is allowed */
-     if (aa64_zva_access(env, NULL, false) == CP_ACCESS_OK) {
-         dzp_bit = 0;
-     }
+ static void pnv_i2c_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -561,6 +571,7 @@ static void pnv_i2c_class_init(ObjectClass *klass, const void *data)
  
--    return cpu->dcz_blocksize | dzp_bit;
-+    return cpu->isar.idregs[DCZID_EL0_IDX] | dzp_bit;
+     dc->desc = "PowerNV I2C";
+     dc->realize = pnv_i2c_realize;
++    dc->vmsd = &pnv_i2c_vmstate;
+     device_class_set_props(dc, pnv_i2c_properties);
  }
  
- static CPAccessResult sp_el0_access(CPUARMState *env, const ARMCPRegInfo *ri,
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index b62104b4ae88..1e30d7c77c37 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -193,7 +193,7 @@ typedef struct DisasContext {
-      *  < 0, set by the current instruction.
-      */
-     int8_t btype;
--    /* A copy of cpu->dcz_blocksize. */
-+    /* A copy of DCZID_EL0.BS. */
-     uint8_t dcz_blocksize;
-     /* A copy of cpu->gm_blocksize. */
-     uint8_t gm_blocksize;
 -- 
-2.52.0
+2.47.3
 
 
