@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB79C79F8B
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F9EC79F89
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vck8T-0003mk-5j; Mon, 05 Jan 2026 07:56:37 -0500
+	id 1vckAi-0005dG-VA; Mon, 05 Jan 2026 07:58:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8M-0003kz-P5
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:32 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck9Q-0004e4-5a
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:57:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8J-0007nO-Nu
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:30 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck9J-00087u-Lh
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:57:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767617786;
+ s=mimecast20190719; t=1767617848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RyNMoQ9h8mGT+ujBZwuHSSISd4Tl8lptuCjs7agnXO8=;
- b=S4d7wfKW6SrMs1Wm9VB+n5wIW4r0ZPMRTQZk9iecykx4LezYkwOQCvasfzHF7ovSTnO2JH
- N56xAqqlGYxoPhTl760m3iRNyrk32FU0gK7B4F50tbz0Cb98kY+3sc9Za1QX/hxO0Meqjx
- K2RatLwnTVwBdV7mXGb45OMTE3DzjWo=
+ bh=Z7PnNdkMr7GqJLMntFWlItt1vMRaPIoDbRubisjevB4=;
+ b=jECL6h7EW58y0PbYuwa1u+cDTmE14Szn/FE15Njqq7QXSrRnKe214FUzLwkRtlfrc/LiC4
+ k+0GdAW/AZRkun1U1wkJJklvxddgzFhjabJlcNAmFGEamgHjOF46UgBRL+hCgboXTGZxY0
+ YQ/2M+5pfVbgAFuteCeVtK2mMCsYRks=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-MSVmLuNaO4ilv6J_aIPeZA-1; Mon,
- 05 Jan 2026 07:56:23 -0500
-X-MC-Unique: MSVmLuNaO4ilv6J_aIPeZA-1
-X-Mimecast-MFC-AGG-ID: MSVmLuNaO4ilv6J_aIPeZA_1767617782
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-379-uuIHRbMkMrGZ0TDMv0ZgFg-1; Mon,
+ 05 Jan 2026 07:57:26 -0500
+X-MC-Unique: uuIHRbMkMrGZ0TDMv0ZgFg-1
+X-Mimecast-MFC-AGG-ID: uuIHRbMkMrGZ0TDMv0ZgFg_1767617845
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C49D6195605A; Mon,  5 Jan 2026 12:56:21 +0000 (UTC)
+ id BF8FC1956053; Mon,  5 Jan 2026 12:57:25 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5175819560A7; Mon,  5 Jan 2026 12:56:19 +0000 (UTC)
+ id 4C77619560A7; Mon,  5 Jan 2026 12:57:24 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 02/36] hw/misc/aspeed_scu: Fix the revision ID cannot be set in
- the SOC layer for AST2600 and AST1030
-Date: Mon,  5 Jan 2026 13:55:39 +0100
-Message-ID: <20260105125613.622667-3-clg@redhat.com>
+Subject: [PULL 33/36] docs/specs/aspeed-intc: Remove GIC 128 - 136
+Date: Mon,  5 Jan 2026 13:56:10 +0100
+Message-ID: <20260105125613.622667-34-clg@redhat.com>
 In-Reply-To: <20260105125613.622667-1-clg@redhat.com>
 References: <20260105125613.622667-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,52 +86,137 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-According to the design of the AST2600, it has a Silicon Revision ID
-Register, specifically SCU004 and SCU014, to set the Revision ID for the
-AST2600. For the AST2600 A3, SCU004 is set to 0x05030303 and SCU014 is
-set to 0x05030303.
-
-In the "aspeed_ast2600_scu_reset" function, the hardcoded value
-"AST2600_A3_SILICON_REV" was used for SCU004, while "s->silicon_rev" was
-used for SCU014. The value of "s->silicon_rev" is set by the SoC layer
-via the "silicon-rev" property. This patch aligns both SCU004 and SCU014
-to use "s->silicon_rev" for consistency and flexibility.
-
-Similarly, the "aspeed_ast1030_scu_reset" function also used a fixed
-revision constant ("AST1030_A1_SILICON_REV"). This change updates it to
-use the same "s->silicon_rev" property, ensuring that both SoCs follow
-a consistent and configurable revision handling mechanism.
+The GIC interrupts 128 - 136 were only used by the AST2700 A0 SoC.
+Since the AST2700 A0 has been deprecated, these interrupt
+definitions are no longer needed. This commit removes them to
+clean up the codebase.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251112030553.291734-4-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20250901040808.1454742-5-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/misc/aspeed_scu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ docs/specs/aspeed-intc.rst | 92 +++++++++++---------------------------
+ 1 file changed, 25 insertions(+), 67 deletions(-)
 
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index d27e0c7f9158..5bc0b3536f28 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -841,7 +841,7 @@ static void aspeed_ast2600_scu_reset(DeviceState *dev)
-      * of actual revision. QEMU and Linux only support A1 onwards so this is
-      * sufficient.
-      */
--    s->regs[AST2600_SILICON_REV] = AST2600_A3_SILICON_REV;
-+    s->regs[AST2600_SILICON_REV] = s->silicon_rev;
-     s->regs[AST2600_SILICON_REV2] = s->silicon_rev;
-     s->regs[AST2600_HW_STRAP1] = s->hw_strap1;
-     s->regs[AST2600_HW_STRAP2] = s->hw_strap2;
-@@ -1137,7 +1137,7 @@ static void aspeed_ast1030_scu_reset(DeviceState *dev)
+diff --git a/docs/specs/aspeed-intc.rst b/docs/specs/aspeed-intc.rst
+index 9cefd7f37f85..892a74a0c357 100644
+--- a/docs/specs/aspeed-intc.rst
++++ b/docs/specs/aspeed-intc.rst
+@@ -47,18 +47,7 @@ Bit   GIC
+ 9     201
+ ====  ====
  
-     memcpy(s->regs, asc->resets, asc->nr_regs * 4);
+-AST2700 A0
+-----------
+-It has only one INTC controller, and currently, only GIC 128-136 is supported.
+-To support both AST2700 A1 and AST2700 A0, there are 10 OR gates in the INTC,
+-with gates 1 to 9 supporting GIC 128-136.
+-
+-Design for GICINT 132
+----------------------
+-The orgate has interrupt sources ranging from 0 to 31, with its output pin
+-connected to INTC. The output pin is then connected to GIC 132.
+-
+-Block Diagram of GICINT 196 for AST2700 A1 and GICINT 132 for AST2700 A0
++Block Diagram of GICINT 196 for AST2700 A1
+ ------------------------------------------------------------------------
  
--    s->regs[AST2600_SILICON_REV] = AST1030_A1_SILICON_REV;
-+    s->regs[AST2600_SILICON_REV] = s->silicon_rev;
-     s->regs[AST2600_SILICON_REV2] = s->silicon_rev;
-     s->regs[AST2600_HW_STRAP1] = s->hw_strap1;
-     s->regs[AST2600_HW_STRAP2] = s->hw_strap2;
+ .. code-block::
+@@ -68,69 +57,38 @@ Block Diagram of GICINT 196 for AST2700 A1 and GICINT 132 for AST2700 A0
+    |           To GICINT196                                                                                |
+    |                                                                                                       |
+    |   ETH1    |-----------|                    |--------------------------|        |--------------|       |
+-   |  -------->|0          |                    |         INTCIO           |        |  orgates[0]  |       |
++   |   ------->|0          |                    |         INTCIO           |        |  orgates[0]  |       |
+    |   ETH2    |          4|   orgates[0]------>|inpin[0]-------->outpin[0]|------->| 0            |       |
+-   |  -------->|1         5|   orgates[1]------>|inpin[1]-------->outpin[1]|------->| 1            |       |
++   |   ------->|1         5|   orgates[1]------>|inpin[1]-------->outpin[1]|------->| 1            |       |
+    |   ETH3    |          6|   orgates[2]------>|inpin[2]-------->outpin[2]|------->| 2            |       |
+-   |  -------->|2        19|   orgates[3]------>|inpin[3]-------->outpin[3]|------->| 3  OR[0:9]   |-----| |
++   |   ------->|2        19|   orgates[3]------>|inpin[3]-------->outpin[3]|------->| 3  OR[0:9]   |-----| |
+    |   UART0   |         20|-->orgates[4]------>|inpin[4]-------->outpin[4]|------->| 4            |     | |
+-   |  -------->|7        21|   orgates[5]------>|inpin[5]-------->outpin[5]|------->| 5            |     | |
++   |   ------->|7        21|   orgates[5]------>|inpin[5]-------->outpin[5]|------->| 5            |     | |
+    |   UART1   |         22|   orgates[6]------>|inpin[6]-------->outpin[6]|------->| 6            |     | |
+-   |  -------->|8        23|   orgates[7]------>|inpin[7]-------->outpin[7]|------->| 7            |     | |
++   |   ------->|8        23|   orgates[7]------>|inpin[7]-------->outpin[7]|------->| 7            |     | |
+    |   UART2   |         24|   orgates[8]------>|inpin[8]-------->outpin[8]|------->| 8            |     | |
+-   |  -------->|9        25|   orgates[9]------>|inpin[9]-------->outpin[9]|------->| 9            |     | |
++   |   ------->|9        25|   orgates[9]------>|inpin[9]-------->outpin[9]|------->| 9            |     | |
+    |   UART3   |         26|                    |--------------------------|        |--------------|     | |
+-   |  ---------|10       27|                                                                             | |
++   |   ------->|10       27|                                                                             | |
+    |   UART5   |         28|                                                                             | |
+-   |  -------->|11       29|                                                                             | |
++   |   ------->|11       29|                                                                             | |
+    |   UART6   |           |                                                                             | |
+-   |  -------->|12       30|     |-----------------------------------------------------------------------| |
++   |   ------->|12       30|     |-----------------------------------------------------------------------| |
+    |   UART7   |         31|     |                                                                         |
+-   |  -------->|13         |     |                                                                         |
+-   |   UART8   |  OR[0:31] |     |                |------------------------------|           |----------|  |
+-   |  -------->|14         |     |                |            INTC              |           |     GIC  |  |
+-   |   UART9   |           |     |                |inpin[0:0]--------->outpin[0] |---------->|192       |  |
+-   |  -------->|15         |     |                |inpin[0:1]--------->outpin[1] |---------->|193       |  |
+-   |   UART10  |           |     |                |inpin[0:2]--------->outpin[2] |---------->|194       |  |
+-   |  -------->|16         |     |                |inpin[0:3]--------->outpin[3] |---------->|195       |  |
+-   |   UART11  |           |     |--------------> |inpin[0:4]--------->outpin[4] |---------->|196       |  |
+-   |  -------->|17         |                      |inpin[0:5]--------->outpin[5] |---------->|197       |  |
+-   |   UART12  |           |                      |inpin[0:6]--------->outpin[6] |---------->|198       |  |
+-   |  -------->|18         |                      |inpin[0:7]--------->outpin[7] |---------->|199       |  |
+-   |           |-----------|                      |inpin[0:8]--------->outpin[8] |---------->|200       |  |
+-   |                                              |inpin[0:9]--------->outpin[9] |---------->|201       |  |
+-   |-------------------------------------------------------------------------------------------------------|
+-   |-------------------------------------------------------------------------------------------------------|
+-   |  ETH1    |-----------|     orgates[1]------->|inpin[1]----------->outpin[10]|---------->|128       |  |
+-   | -------->|0          |     orgates[2]------->|inpin[2]----------->outpin[11]|---------->|129       |  |
+-   |  ETH2    |          4|     orgates[3]------->|inpin[3]----------->outpin[12]|---------->|130       |  |
+-   | -------->|1         5|     orgates[4]------->|inpin[4]----------->outpin[13]|---------->|131       |  |
+-   |  ETH3    |          6|---->orgates[5]------->|inpin[5]----------->outpin[14]|---------->|132       |  |
+-   | -------->|2        19|     orgates[6]------->|inpin[6]----------->outpin[15]|---------->|133       |  |
+-   |  UART0   |         20|     orgates[7]------->|inpin[7]----------->outpin[16]|---------->|134       |  |
+-   | -------->|7        21|     orgates[8]------->|inpin[8]----------->outpin[17]|---------->|135       |  |
+-   |  UART1   |         22|     orgates[9]------->|inpin[9]----------->outpin[18]|---------->|136       |  |
+-   | -------->|8        23|                       |------------------------------|           |----------|  |
+-   |  UART2   |         24|                                                                                |
+-   | -------->|9        25|                       AST2700 A0 Design                                        |
+-   |  UART3   |         26|                                                                                |
+-   | -------->|10       27|                                                                                |
+-   |  UART5   |         28|                                                                                |
+-   | -------->|11       29| GICINT132                                                                      |
+-   |  UART6   |           |                                                                                |
+-   | -------->|12       30|                                                                                |
+-   |  UART7   |         31|                                                                                |
+-   | -------->|13         |                                                                                |
+-   |  UART8   |  OR[0:31] |                                                                                |
+-   | -------->|14         |                                                                                |
+-   |  UART9   |           |                                                                                |
+-   | -------->|15         |                                                                                |
+-   |  UART10  |           |                                                                                |
+-   | -------->|16         |                                                                                |
+-   |  UART11  |           |                                                                                |
+-   | -------->|17         |                                                                                |
+-   |  UART12  |           |                                                                                |
+-   | -------->|18         |                                                                                |
+-   |          |-----------|                                                                                |
++   |   ------->|13         |     |                                                                         |
++   |   UART8   |  OR[0:31] |     |                |-----------------------------|          |----------|    |
++   |   ------->|14         |     |                |            INTC             |          |     GIC  |    |
++   |   UART9   |           |     |                |inpin[0:0]--------->outpin[0]|--------->|192       |    |
++   |   ------->|15         |     |                |inpin[0:1]--------->outpin[1]|--------->|193       |    |
++   |   UART10  |           |     |                |inpin[0:2]--------->outpin[2]|--------->|194       |    |
++   |   ------->|16         |     |                |inpin[0:3]--------->outpin[3]|--------->|195       |    |
++   |   UART11  |           |     |--------------> |inpin[0:4]--------->outpin[4]|--------->|196       |    |
++   |   ------->|17         |                      |inpin[0:5]--------->outpin[5]|--------->|197       |    |
++   |   UART12  |           |                      |inpin[0:6]--------->outpin[6]|--------->|198       |    |
++   |   ------->|18         |                      |inpin[0:7]--------->outpin[7]|--------->|199       |    |
++   |           |-----------|                      |inpin[0:8]--------->outpin[8]|--------->|200       |    |
++   |                                              |inpin[0:9]--------->outpin[9]|--------->|201       |    |
++   |                                              |-----------------------------|          |----------|    |
++   |                                                                                                       |
+    |                                                                                                       |
+    |-------------------------------------------------------------------------------------------------------|
 -- 
 2.52.0
 
