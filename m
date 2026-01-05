@@ -4,109 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B83AC2A07C
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 09:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E159CC2A07B
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 09:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcgqL-0005pg-W7; Mon, 05 Jan 2026 04:25:42 -0500
+	id 1vcgr8-0006Uk-K6; Mon, 05 Jan 2026 04:26:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vcgqK-0005pF-Bq; Mon, 05 Jan 2026 04:25:40 -0500
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vcgr3-0006MI-Do; Mon, 05 Jan 2026 04:26:26 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vcgqH-0004Sr-Eg; Mon, 05 Jan 2026 04:25:40 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 604NGZC2002431;
- Mon, 5 Jan 2026 09:25:34 GMT
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vcgr1-0004Vd-RB; Mon, 05 Jan 2026 04:26:25 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 604Bj6v5025190;
+ Mon, 5 Jan 2026 09:26:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=69cgyD
- 13Ji3OT9/f8FnxwpO9XE0c404evQnspeu2DiQ=; b=nz+PQ1Qic9HVcLnfNSpOqO
- 8G1i1sgD2+rkq4c/C2qN85HQHrOyX43yDgjEJTkaWq3II6DUm3xKMHdzdURJ4Vux
- xEjgC74KkEWgPDBvhglaNf0m5OJmpIDCCanPlmnQteohkAfvaeYshNy0zYXPKFGa
- 2v41X/bkAdXhypyrzwlo6bvDE2QUHxSMa9J5xuN1EMv/8Ie1OY4htg8dlpM+iG1P
- EEIRbzxqX5Ka/mCGmfAFSOByMlzsq0Pv01rURaj5+wKwxS+oQ2/PKcXR/hZEBMyo
- hH+c8mpyiEH4Ci4In3qX5TZMdD0rNnNzDV9fnIHPHBVyHEx+AaHn2QnEk70WzJWA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=G8AOz4
+ UijTVIPiBlwKYmV4Gw6y2SvdhHLi/xnUwEXIc=; b=nWWxaK/jSvpaWDAJQi/qot
+ wtL7VsWdDLl9YWWXNT0BYC2YC0WtE94abcrunLlv5RrlIKsadwE1r53yNfgGpm5K
+ iyK3vuB2Mu/CRxPZK/3HujvoLSvn2ckjrmbL76Jezdk9id3/E5gVmIhkL5mmmm4l
+ bWVWt22L10CfRIXZKR73KnAfe+G1xGaEZvF0K0tNSpSZq6HUkadq5UNsOE9oG2pg
+ uMq4o+6x8S7HruJA1IJNioQaHzyx0QYVGu443ZYTh5xFgQ7CHYyokGZPZeGLpfpQ
+ Dr1p4kWuaHBGLn2Z2KdlkEuUgsYubY00iNHKQgBh6CIJNj5Dhcy1OXUJ0J1kioBQ
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betspxfsw-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betm6xfu5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Jan 2026 09:25:34 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 6058tYP4000607;
- Mon, 5 Jan 2026 09:25:34 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betspxfss-1
+ Mon, 05 Jan 2026 09:26:21 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 6059DbAv000952;
+ Mon, 5 Jan 2026 09:26:21 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betm6xfu3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Jan 2026 09:25:33 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6056G3us023501;
- Mon, 5 Jan 2026 09:25:32 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bg3rm1jgn-1
+ Mon, 05 Jan 2026 09:26:20 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60585INg019171;
+ Mon, 5 Jan 2026 09:26:20 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bfg50vp7j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Jan 2026 09:25:32 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6059PSWZ42533236
+ Mon, 05 Jan 2026 09:26:20 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6059QJsS19268342
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Jan 2026 09:25:28 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 523EA2004B;
- Mon,  5 Jan 2026 09:25:28 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6D24420040;
- Mon,  5 Jan 2026 09:25:26 +0000 (GMT)
-Received: from [9.109.199.210] (unknown [9.109.199.210])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 Jan 2026 09:25:26 +0000 (GMT)
-Message-ID: <ba5e9f54-568d-4058-8209-0578747dad61@linux.ibm.com>
-Date: Mon, 5 Jan 2026 14:55:25 +0530
+ Mon, 5 Jan 2026 09:26:19 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E9EF958057;
+ Mon,  5 Jan 2026 09:26:18 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 551A058063;
+ Mon,  5 Jan 2026 09:26:16 +0000 (GMT)
+Received: from [9.109.216.92] (unknown [9.109.216.92])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  5 Jan 2026 09:26:16 +0000 (GMT)
+Message-ID: <5b558ade-e712-417e-8d29-866144194454@linux.ibm.com>
+Date: Mon, 5 Jan 2026 14:56:14 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/pnv: Add dummy MMIO support for OCMB chips
-To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, milesg@linux.ibm.com,
- rathc@linux.ibm.com, chalapathi.v@linux.ibm.com
-References: <20251224142249.1356424-1-calebs@linux.ibm.com>
- <41ece6d5-e211-4b32-ab87-d1fe5f359228@linux.ibm.com>
- <9006fe79-1065-464d-bfba-3b9bf5a422b4@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <9006fe79-1065-464d-bfba-3b9bf5a422b4@linux.ibm.com>
+Subject: Re: [PATCH] target/ppc/kvm : Use macro names instead of hardcoded
+ constants as return values
+Content-Language: en-GB
+To: Gautam Menghani <gautam@linux.ibm.com>, npiggin@gmail.com,
+ rathc@linux.ibm.com, pbonzini@redhat.com, sjitindarsingh@gmail.com
+Cc: qemu-ppc@nongnu.org, kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20251202124654.11481-1-gautam@linux.ibm.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20251202124654.11481-1-gautam@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: OqD4rZfJAfvPDAeqTgTLTKM4F9Rlo387
-X-Authority-Analysis: v=2.4 cv=Jvf8bc4C c=1 sm=1 tr=0 ts=695b838e cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=D4yLe6ciAAAA:8 a=VnNF1IyMAAAA:8 a=6bc-nPlps480dDLd2gsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=RJBimmv2CioV9QQA5JKZ:22
-X-Proofpoint-ORIG-GUID: VAVRsOiOWchMyqxtPuv4R4qe9WhOkmtx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDA4MiBTYWx0ZWRfX3uCnXC0fKD+H
- OJmOmCXumZ+PBfkf/bkH3nQ4Nlo2a28b51W6lFxc9wmxELwVrl7lvrdJTqpHdgM/2DViYNyf03W
- SLnaAthIsEMo5COcABRQvqyB0tszNGaqCybPAdv72sQQ86tb+K/EAtq66v2ecYCIoHyNfHPdQBF
- HC2NG7rh+gvGtkEVBUIiguVocgDF7u7cRHl1RDF0h6bulerPkXygGKERu45wxdN3K31tHTGNMAY
- vBLOk+ojUeCW3fcdBmLfbWGeaAQImVbU0qIix/mSr2mkKrsyA5PEddAqCoEAApYDxsjxWMiepJv
- dhTX7Kd7WVXVI3HPm7xTqZ3EB851tTB3L7PsAU+lSzcF3uD8vxE/KNraBOyxslepsflXi6J4CSN
- 3i7i5ng8RKv7wlPH3EVOrHtCFkDlrkC/FunJ+RIAzZYEUcjuKz/HNBxnwMLsou3aVxAZl+GVKef
- plDw471umkOVXp+8MYw==
+X-Authority-Analysis: v=2.4 cv=OdmVzxTY c=1 sm=1 tr=0 ts=695b83bd cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=mtlxwhp4t4fErtxsobUA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: EDhIu4lpWDkpH4EejumgfkQ2xmAZ4NDv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDA4MiBTYWx0ZWRfX2ZXImWrX1bxM
+ BsJ6KCMZALRzR4YfUrqQtYtrmzfFhqb5MF7qqPh0rDF6pwD4SC1R1Ck3NeJAZuXPHxZPMCe/a51
+ JPjWVtVbbw/Zqh0Bcissu7kS8noIVuFTY+l1SRFMmnInI+H5VahaCbscmjla3siUrEndWukiG/m
+ +XnmvlIjvsbMcpBHGOZrsmt1DX5RmQ1C8FXnxWnoP2s2SQl0Fb4bUhX13/EJDna3izdrqdXl6v0
+ E5CWoGBQgOkFNfjtpcqqnpVeFzl/0gdvIDfPEFcyDRCLA/36bHGTzp51ZEQCL3CeiwtCnS4RSjr
+ BeLf0bO/pRwUIO3QeroGi3XEuMv3DVie+VkmxYY1ljm3DewUchozJCev0w6jeX4S/tTVj0qZTWp
+ 1/DPUUGwKm4aMHo4092m/kv6bxLGx4KGp1u+gpkejzFlwNmatgfxzFxMsf/9a5ShvYts84L8vZd
+ vZqXmt+nbrgjhVSVQSQ==
+X-Proofpoint-ORIG-GUID: XyRiKkCmh1xx_rxbZRxRPbpn4BoEd7El
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-05_01,2025-12-31_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 phishscore=0 adultscore=0 spamscore=0 bulkscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ spamscore=0 clxscore=1015 phishscore=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
  definitions=main-2601050082
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -132,59 +131,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 02/01/26 21:31, Caleb Schlossin wrote:
->
-> On 1/1/26 12:45 AM, Aditya Gupta wrote:
->> On 24/12/25 19:52, Caleb Schlossin wrote:
->>
->>> The Power Hypervisor for P10 expects to be able to access certain
->>> Open CAPI Memory Buffer (OCMB) chip registers.  Since QEMU does not
->>> currently support these registers, several access errors are being
->>> posted.  The hypervisor is able to progress despite these errors,
->>> but it does create unwanted noise on the console.  Adding some
->>> dummy MMIO support for this IO region in order to suppress the
->>> error messages.
->> Hi Caleb,
->>
->> If there any public document/spec available that documents these registers ? Can you please point me to it.
->>
->> I don't find any 'ocmb' mention in any docs here: https://computeexpresslink.org/resource/opencapi-specification-archive/
->>
->> Since a new TODO is getting introduced here to implement those register accesses, it can only be done if some public information is available.
->>
->>
->> Thanks,
->> - Aditya G
-> Aditya,
-> I did some searching and couldn't seem to find the registers used in any of the public OpenCAPI documentation. I think the registers being accessed are Vendor-specific and likely not publicly defined. If that is a new requirement, we don't have to proceed with upstreaming of this patch and can keep it private.
 
-Yes makes sense.
+On 02/12/25 6:16 pm, Gautam Menghani wrote:
+> In the parse_* functions used to parse the return values of
+> KVM_PPC_GET_CPU_CHAR ioctl, the return values are hardcoded as numbers.
+> Use the macro names for better readability. No functional change
+> intended.
+> 
+> Signed-off-by: Gautam Menghani<gautam@linux.ibm.com>
+> ---
+>   target/ppc/kvm.c | 18 +++++++++---------
+>   1 file changed, 9 insertions(+), 9 deletions(-)
 
-Having TODOs which cannot be implemented, until information is made 
-public, won't be good.
-
-Thanks for clarifying Caleb.
-
-
-- Aditya G
-
-
->
-> Thanks,
-> Caleb
->
->>
->>> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
->>> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
->>> ---
->>>    hw/ppc/meson.build        |   1 +
->>>    hw/ppc/pnv.c              |  10 ++++
->>>    hw/ppc/pnv_ocmb.c         | 103 ++++++++++++++++++++++++++++++++++++++
->>>    include/hw/ppc/pnv.h      |   3 ++
->>>    include/hw/ppc/pnv_chip.h |   2 +
->>>    include/hw/ppc/pnv_ocmb.h |  38 ++++++++++++++
->>>    6 files changed, 157 insertions(+)
->>>    create mode 100644 hw/ppc/pnv_ocmb.c
->>>    create mode 100644 include/hw/ppc/pnv_ocmb.h
->>>
+Queued.
 
