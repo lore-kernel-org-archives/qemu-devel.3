@@ -4,95 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B07AFC79FB9
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5949C79FBA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:12:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcpzO-0004bY-Nw; Mon, 05 Jan 2026 14:11:38 -0500
+	id 1vcpvp-0007vH-NP; Mon, 05 Jan 2026 14:07:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vcpyc-0003r8-Og
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:10:59 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vcpvD-0007he-HE
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:07:22 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vcpyY-0006Im-FE
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:10:50 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-34c1d84781bso285064a91.2
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 11:10:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767640239; x=1768245039; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dhtgWQS1Vm9zPefCAfHUe6dNgmWecElkjTBpZfot+/o=;
- b=e1rD3kcaJP0d5ixHtc8gSVmvKmYcdEQHX09Kq/ju0Amdk39TxQCh8BSqpZFDiC7sHW
- CEX4SAJXPOcWvva/GzMBfs7GVi96XAsydlbkbkj1Yfca6IPwR1IK7RobUYBao1R+C1GT
- QG9s00uB+kD3dXVFTaxPxE7F1BKvdxVeKw1XgJaa+IT9XXFrrpWvJlUW70krgzsoNUKa
- JWHYH8UQqOAHC2nxbxjzu85tXEJ+ipPdt9kfSddgeZvuXMnPARvVviWg7nYlErpI4liH
- 04UM35zWnpbiBOC50cIY+5oWtpSjfwHTM2U9Eh1K8a44cbfYok1ENaEAzsusaBpS8mKQ
- Gu7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767640239; x=1768245039;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dhtgWQS1Vm9zPefCAfHUe6dNgmWecElkjTBpZfot+/o=;
- b=vMZNP9nq3MBRr7xIC1WLKRKsRt1ZxTegZiu6ATQs3xH8Z2WWYRJ//Wv05WrEZszV4Z
- pvGIywZGiLzck6Q5AxKS//GV7U6dW628sjlMwrm0M4AoH+OBtMO/d/Trb/0c9Ah9nTJo
- VLb2SEAM/xmI9OsBEJs5xO61bhyrx37nEnKLdTcMiGYwpNB4KxDjrZnTXDcjCXzt9aqG
- MnWtxZZBviWsZojWV4J/9iUmVf3yL1kA+pYnBRqi42ZBrmwpzFKKiNZ4iZ+Q26CWiTI4
- LXWG2vTx2EwehHG6jaYvSI33zY2c9wnOhYiYQC4s9ffQL2hW8iphg/HeCP4GUtKsC/X4
- If4w==
-X-Gm-Message-State: AOJu0YxZh3luw6ybwKN3bMzE5kFKOtF64qZ7Yh8TQTPZ9rjNT5czEJpQ
- lCWW+P2Y3PYXtRq2SsNFFFnWU0QMJVWLiiNXNt1Hp5IS7FnBoUt3zuuH7vDYaIYXqe8hhg4uF3y
- UKqyvG3Y=
-X-Gm-Gg: AY/fxX7ZRR5twwPmvQldnu/n4BbyfAiIm4uvx9GB4vK2XMEWh7zorRpnhrQ9s3bmAz/
- uvtV1i5gEhcD+La+25WenF1cAxa98WTlxEhrtLG16S0zvkuW6NRjJ/FYE0Kv7/in78WH+QevX0+
- HGkF0Cpx21zSHUF9uJPWT9rntQB6g1wcs9AJMKqW2o3czMaTeMQvhca1kElvggYuQ67F35kN1PB
- e1VuSoDQDb30wLY+bDDy4Gu/wO097a/JWJMbT2dNkflMIDax0f0mjkR4zIZnocbxmoAH3dUB3ui
- kPgUiC4zMwtDTXTyY5UkGyLHMhdI4JfUvXc2Qhzti3Q1XjRrukjiV9rPGD0zRxlUq2ld9D4ERRr
- vo0cek8jPws/O2gl27wxMDotCoBQ2EnVFwkb27Tu1vFQSgPQyl4V8eOA0ysbirK05vqh0o6qyNw
- 6uOcGM3uH4qEgAne5wlYOOk+X0mCIFvZytFxLdI6JMgaIUBAfKmko+wQqJ
-X-Google-Smtp-Source: AGHT+IEPh1fkRoIZmQn5DssLx+2E862WXaqImyWA7eBRQ/wbj2xNXM3AGempovMPn77eijqwr2hx7g==
-X-Received: by 2002:a17:90b:3f83:b0:34a:b4a2:f0bf with SMTP id
- 98e67ed59e1d1-34f5f291014mr286982a91.16.1767640238754; 
- Mon, 05 Jan 2026 11:10:38 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5f6db356sm123517a91.0.2026.01.05.11.10.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Jan 2026 11:10:38 -0800 (PST)
-Message-ID: <94813024-10f3-4411-8eb8-a221c000d4e5@linaro.org>
-Date: Mon, 5 Jan 2026 11:10:35 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] target/arm: make granule_protection_check usable
- from SMMU
-Content-Language: en-US
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vcpvA-00059u-Qp
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:07:19 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A291C33750;
+ Mon,  5 Jan 2026 19:06:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767640018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mVHzD7zmFjhne5W/RXbNpwoFhZs/1TzOjF6NKcxgmNE=;
+ b=DwEYoFiCGemuRy10jF77UKBvd62hWJMoq6amhNsHGAT8ezL0Z25XDFVjK80dxzRXuNQpCr
+ Z3MTEYfKJ4em0vy2FYO9QAsposp7HPjWlxS8Q/Xmez7J5yEx+88o17ilNmMuAU5PjrNgoS
+ tNAfQko/Z/WIKet4oc9U4yQqAasyp3o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767640018;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mVHzD7zmFjhne5W/RXbNpwoFhZs/1TzOjF6NKcxgmNE=;
+ b=5bggc2pMMJkLPrZ4IHl/RAdQ2Z+lBst3rCiOM3LH3olMBuR8ra1CYdgKQ2UjocqgyHYdmx
+ hcYQyVvy2ijl2eCw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DwEYoFiC;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5bggc2pM
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767640018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mVHzD7zmFjhne5W/RXbNpwoFhZs/1TzOjF6NKcxgmNE=;
+ b=DwEYoFiCGemuRy10jF77UKBvd62hWJMoq6amhNsHGAT8ezL0Z25XDFVjK80dxzRXuNQpCr
+ Z3MTEYfKJ4em0vy2FYO9QAsposp7HPjWlxS8Q/Xmez7J5yEx+88o17ilNmMuAU5PjrNgoS
+ tNAfQko/Z/WIKet4oc9U4yQqAasyp3o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767640018;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mVHzD7zmFjhne5W/RXbNpwoFhZs/1TzOjF6NKcxgmNE=;
+ b=5bggc2pMMJkLPrZ4IHl/RAdQ2Z+lBst3rCiOM3LH3olMBuR8ra1CYdgKQ2UjocqgyHYdmx
+ hcYQyVvy2ijl2eCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5C19613964;
+ Mon,  5 Jan 2026 19:06:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qPmNB9ELXGmSOgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 05 Jan 2026 19:06:57 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Tao Tang <tangtao1634@phytium.com.cn>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Auger <eric.auger@redhat.com>
-References: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Cc: peterx@redhat.com,
+	berrange@redhat.com
+Subject: [PATCH v2 05/25] migration: Move postcopy_try_recover into
+ migration_incoming_process
+Date: Mon,  5 Jan 2026 16:06:22 -0300
+Message-ID: <20260105190644.14072-6-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260105190644.14072-1-farosas@suse.de>
+References: <20260105190644.14072-1-farosas@suse.de>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_NONE(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: A291C33750
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,82 +129,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/15/25 4:01 PM, Pierrick Bouvier wrote:
-> This series prepare granule_protection_check to be usable from SMMU, for
-> implementing RME feature.
-> It's based on Tao's commit [1] extracting ARMSecuritySpace from cpu.h header for
-> convenience.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20251012150701.4127034-5-tangtao1634@phytium.com.cn/
-> 
-> To demonstrate the purpose, this is the (wip) change to use that from SMMU:
-> 
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 80f48df3dda..1acff3bbd66 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1055,12 +1056,36 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
->       }
-> 
->       cached_entry = smmu_translate(bs, cfg, addr, flag, &ptw_info);
->       if (desc_s2_translation) {
->           cfg->asid = asid;
->           cfg->stage = stage;
->       }
-> 
-> +    if (cached_entry) {
-> +        /* The fields in SMMU_ROOT_GPT_BASE_CFG are the same as for GPCCR_EL3,
-> +         * except there is no copy of GPCCR_EL3.GPC. See SMMU_ROOT_CR0.GPCEN. */
-> +        const bool gpc_enabled = FIELD_EX32(s->root.cr0, ROOT_CR0, GPCEN);
-> +        if (gpc_enabled) {
-> +            hwaddr paddress = CACHED_ENTRY_TO_ADDR(cached_entry, addr);
-> +            ARMSecuritySpace pspace = sec_sid_to_security_space(cfg->sec_sid);
-> +            ARMSecuritySpace ss = ARMSS_Root;
-> +            ARMMMUFaultInfo fi;
-> +
-> +            ARMGranuleProtectionConfig config = {
-> +                .gpccr = s->root.gpt_base_cfg,
-> +                .gptbr = s->root.gpt_base >> 12,
-> +                .parange = 6, /* 52 bits */
-> +                .support_sel2 = false,
-> +                .gpt_as = &s->smmu_state.as_secure_memory
-> +            };
-> +            if (!arm_granule_protection_check(config, paddress,
-> +                                              pspace, ss, &fi)) {
-> +                printf("ERROR: fi.type=%d fi.gpcf=%d\n", fi.type, fi.gpcf);
-> +                g_assert_not_reached();
-> +            }
-> +        }
-> +    }
-> +
->       if (!cached_entry) {
->           /* All faults from PTW has S2 field. */
->           event->u.f_walk_eabt.s2 = (ptw_info.stage == SMMU_STAGE_2);
-> 
-> v2
-> --
-> 
-> - remove extra boilerplate/include/line from arm-security.h
-> - use local var gpccr instead of config.gpccr
-> - extract GPC enable check out of arm_granule_protection_check
-> - rename as_secure in gpt_as
-> - use arm_addresspace to retrieve gpt address space
-> 
-> Pierrick Bouvier (1):
->    target/arm/ptw: make granule_protection_check usable without a cpu
-> 
-> Tao Tang (1):
->    target/arm: Move ARMSecuritySpace to a common header
-> 
->   include/hw/arm/arm-security.h | 37 ++++++++++++++++++++++
->   target/arm/cpu.h              | 59 +++++++++++++++++++++--------------
->   target/arm/ptw.c              | 59 ++++++++++++++++++++++-------------
->   3 files changed, 110 insertions(+), 45 deletions(-)
->   create mode 100644 include/hw/arm/arm-security.h
-> 
+The postcopy_try_recover() call doesn't need to be duplicated, move it
+into migration_incoming_process().
 
-Gentle ping on this series. It has been reviewed and can be merged.
+This removes code from migration_fd_process_incoming() so it can be
+removed in the near future.
 
-Regards,
-Pierrick
+(the diff is a bit strange because migration_incoming_process() was
+moved after postcopy_try_recover())
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/migration.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index c45393f40e..4af5baad59 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -943,12 +943,6 @@ static void migration_incoming_setup(QEMUFile *f)
+     qemu_file_set_blocking(f, false, &error_abort);
+ }
+ 
+-void migration_incoming_process(void)
+-{
+-    Coroutine *co = qemu_coroutine_create(process_incoming_migration_co, NULL);
+-    qemu_coroutine_enter(co);
+-}
+-
+ /* Returns true if recovered from a paused migration, otherwise false */
+ static bool postcopy_try_recover(void)
+ {
+@@ -982,12 +976,19 @@ static bool postcopy_try_recover(void)
+     return false;
+ }
+ 
++void migration_incoming_process(void)
++{
++    if (postcopy_try_recover()) {
++        return;
++    }
++
++    Coroutine *co = qemu_coroutine_create(process_incoming_migration_co, NULL);
++    qemu_coroutine_enter(co);
++}
++
+ void migration_fd_process_incoming(QEMUFile *f)
+ {
+     migration_incoming_setup(f);
+-    if (postcopy_try_recover()) {
+-        return;
+-    }
+     migration_incoming_process();
+ }
+ 
+@@ -1087,10 +1088,6 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+     }
+ 
+     if (migration_has_main_and_multifd_channels()) {
+-        /* If it's a recovery, we're done */
+-        if (postcopy_try_recover()) {
+-            return;
+-        }
+         migration_incoming_process();
+     }
+ }
+-- 
+2.51.0
+
 
