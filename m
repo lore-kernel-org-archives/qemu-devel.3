@@ -4,99 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8E8C79FAF
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 18:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71DCC79FAF
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 18:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcp7Z-0001A1-3u; Mon, 05 Jan 2026 13:16:01 -0500
+	id 1vcpcP-00067i-JS; Mon, 05 Jan 2026 13:47:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1vcp7T-00017O-P1
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 13:15:57 -0500
-Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vcpbq-0005eB-Fq
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 13:47:19 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1vcp7P-00036G-E9
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 13:15:54 -0500
-Received: by mail-qv1-xf2a.google.com with SMTP id
- 6a1803df08f44-88860551e39so1144686d6.3
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 10:15:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vcpbo-0000SD-PV
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 13:47:18 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-477632d9326so1508785e9.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 10:47:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767636936; x=1768241736; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sxmWOzIuS7iVVisp5U0jb8AqsMyDZln6Qiom5QmVA/c=;
- b=VEzRtqm2WvqX9SuMMEMoYSdV0PUPECIvcktJ7RLOdw7d2AAZuX/zaq3u7cItfjdKSr
- Gk3AxOwIleS7XJ6XtKklI2TsfDLgqW1ffTWGFLSegTDmOm9GwoqotdXy9jKmk+W0UvlJ
- vkakIURzB/ykPJglWvSmXGYZBB3TfBEXU3VKyiMBFwABn2sHgKRCPFuTHKUGdKot5pie
- CWBcTXT752LQArSpZQCT8B98FjEoDkndmnm+IGOPT9CFj0+FnyXU5+DVdP0qMpEPccGr
- vjyJVD4/ykfXDLqN+0eRh08kMoHEnqxvYXkVNROI4KWnc2+IFbTGlUKj0XVvikTcmxUo
- t5jA==
+ d=linaro.org; s=google; t=1767638835; x=1768243635; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SpDhy8RTo0H6hUNpedWzmERUj4zB9i/oq7zkILxNnFM=;
+ b=fNgzzwcpF52Y4HMIOmaaTFPjOSNpq2b4+FKqXkVHURBXsDtwfc2BVgDEb2EvtFDrSJ
+ CO6UV5c5WH42GH2fSfGq7r3WaE6NQYh6jTOXlLBCd8eA8LvkBjBA28IkHxJmSVhHvDk/
+ yumwS66BXHRq8U3l4UcB+XCucOZ9RLXM1Q7mhf9j/zl4F7+benxc5TPebEbODonYMNSK
+ liWvgR8eu46xvOAk4cnRdxy8Efzh9Xe5FCm0MUO8mn2eh+0iqt5W8wQpyRg5+IqgTZO6
+ Ei1FmcLkxWnCqdeg0GNDQ3SN4nWutK1di00YwfkVbhh2x9ycWSnl+77mirElGutaDrt1
+ RByg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767636936; x=1768241736;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=sxmWOzIuS7iVVisp5U0jb8AqsMyDZln6Qiom5QmVA/c=;
- b=B5GS/Or0UO26EQBJnKNGJdKuB1aVGoYkreZTHDvvjewV+Wq4h8cJvrnvAxL//QXlRU
- zuIw1lJWgFUKIxSjitxMoJ464lBvTwQuwUfQfTp90KJUSpGwvBCZqyXj+54usLvXHNLy
- P1Hrc3JElak3+99lJjkvDV5UG3AuigTpeetIap+5YK5FG41otzPgH5zX1DYEhPrPSZDw
- DAG3uyIzE4pRQ8Md1qEWJAKwuQA98mFhEzIbO2HCMllxN0mg09jsVT1HSqG7+sWVVN94
- wtxEbpav9rcvjZivNG0ET+5qXWT8NJmU8pN5qBBhoxmriT8pFcNftRawXoPmcbKYjRHt
- Vl3Q==
-X-Gm-Message-State: AOJu0YwdnzMIUeGqRq0PlXF5gYGeHynuGQ5rSuyO2NyhU55v95lEPurc
- kebulcxiZOZ7NZvBC995erNvYnld1aX+RBj1jzE/PoCDtztNWw/sC2cKvop50g==
-X-Gm-Gg: AY/fxX5mK9Or3Uvv6ttvQ4/BVBEbW6j2S3+NZu7tajMZ1uItKbYmYgY1HUlbRAub4Ed
- FJLreVJfZz6yqnh3lIMnYBqk0fqnXPVv8G/s30WdqdDuVczinROflmcXHi9az6jdl7WUFvKxvGW
- j/CpKHX5QmAh74Pc9Ndagup/byaU1HW1oXO+VY7AW3WkTzrdGM+GwHeSQormG8C3bcF+1pfOenp
- lCLkKOTYPhLsezYZwzcxA/CCiMfNdydhODqlaHN2AWCWQyD/5KjVMraVYDoz3DIGE8BMFGVPf3s
- FwMtdKR5g5I+ypT96LKQNWzX68wMjPJMiCxBunUS/0wy0NVfqXKyFb6TNta2YsJdROVwsZfqf4+
- LJ6ADtZWpwkRC3zIHtt4jvXzLg+PZOyfGYm5JHO/v9Ts6f9RlEUeSbjHMQObMJaICctaANsk13m
- 2NEJey3F/1t0Y9g+wAXsDmeyHB
-X-Google-Smtp-Source: AGHT+IHRr6WLlgnCzO9QYqt0pvynJC6ksLR5wXMj7GzpWFM9bnE8AUEjslEfz75SIKmHlaUbP8zSPQ==
-X-Received: by 2002:a05:6214:21c7:b0:890:65ee:115b with SMTP id
- 6a1803df08f44-89075ce89aamr7899386d6.5.1767636935635; 
- Mon, 05 Jan 2026 10:15:35 -0800 (PST)
-Received: from [192.168.1.204] ([185.213.193.254])
+ d=1e100.net; s=20230601; t=1767638835; x=1768243635;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SpDhy8RTo0H6hUNpedWzmERUj4zB9i/oq7zkILxNnFM=;
+ b=tJx9xBxSJOuxGFKBXSkvqfxxKxd8cDyw4ECd0LVVBpM6Kn4W6fA+1KL8dtHlQveNpa
+ DBlPVPMiIKK+bI0FgLkIe5PL2n1x0faj+5chM/Gkk8BjBCv3IG41qHQW/DhQtY1s7u6n
+ muXnkkcRDzMJjepXrdDd3RWg91srj+PqRJL2N9vqj6Q+Oe3XmNq5Nvg/CA0IHbKxf0LD
+ eNYI8w6Jx35KeEssaYCBBsPD2DAhfSaF21h2lAsp0OX4W/mB4nffy0Tz+Mej5V/ogtoz
+ 3ql7dUCG0uRCPtV7ED02T+JghLgPEZsqgopcPyPBb+Yjmg66NzJxytXY0+OKq7sd/Ob/
+ Uf5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWG2ZKwbsy/N8umdXb476eroPETLgnqZ4GRrK85l2xIpoXsxrUrNgp8PK57J8TlyhCgC1OkWBZ53uiy@nongnu.org
+X-Gm-Message-State: AOJu0YxdJ2s0c7MLzCdk2k3jUBzXcAtG3SERVfzLZuutG09s4r5M0NDh
+ TLhwCip3k7g1OW5uNte5h/YdCdgV803iWZOQxpaDTk//BIk34uRLJGcUeyitW2wF0CI=
+X-Gm-Gg: AY/fxX4LP9xOjwtKXKhFRya+hojOJ3ZB4BNNZY6IwxiyA4+ZEyVPkZA99wxyAh+RXf2
+ nyKPCZuzQOdVUpGgI5kSjRc8l8Be1v2GMaWWq0Mal5LCpjZWSyTgr/QHQHzTWqEVpI/b9HwgPfW
+ 7JEbwSSmiwIj8AuDMolImzx1AoRN6ekGWDPw2zFyjdPJ+0OVLie9YkJsl17npHvdy4VqEbeTkHq
+ Swzh5ju9T7pNxl8EmJt28ez4jr0FYHy1FD67TodTZrAfxsM4XAsfRx5p3MJgCd0WMxpSyB+cSN8
+ JfadtS9Dz0+GhXDtvWxG3bxfUtGYNwUfe6Yemkqve5kV76pD3rC/r+vshdthlWSN7eKBerUsg8l
+ Y9e9xYLuYwO6Ic+nm+hN4D6jD1hPuGmer6r3+KzpbQUXRpt4bVmtPLlZLfE6/ojH3jSyzi5CxFm
+ fQAFNiYICMJyEP6zGnFpTT84pUY2qMpal3WcXtVUSqBWE3HLNQgWJ0okz0LDTeUzb5TgEZ
+X-Google-Smtp-Source: AGHT+IHN9H9YrstvfBR/GcW4iAzN+UoMyvGONDjc7kReQ+iw1wi67fBpPStECW5snD5k+kjyA13r/w==
+X-Received: by 2002:a05:600c:c494:b0:47d:4047:f377 with SMTP id
+ 5b1f17b1804b1-47d7f0a36b6mr3740885e9.36.1767638834943; 
+ Mon, 05 Jan 2026 10:47:14 -0800 (PST)
+Received: from [10.247.174.66] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8907540e24csm3855706d6.25.2026.01.05.10.15.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Jan 2026 10:15:35 -0800 (PST)
-From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Mon, 05 Jan 2026 11:14:56 -0700
-Subject: [PATCH RFC v3 07/12] target/arm: ldg on canonical tag loads the
- tag
+ 5b1f17b1804b1-47d7f390a69sm2996425e9.0.2026.01.05.10.47.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Jan 2026 10:47:14 -0800 (PST)
+Message-ID: <1752b84f-291b-4f56-9a97-e61163564963@linaro.org>
+Date: Mon, 5 Jan 2026 19:47:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260105-feat-mte4-v3-7-86a0d99ef2e4@gmail.com>
-References: <20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com>
-In-Reply-To: <20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, 
- Gabriel Brookman <brookmangabriel@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1767636923; l=2899;
- i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=tbFNfZyKp+1ZA4wXWb9GVCgQ0bgmepo0KgHb03QDkaY=;
- b=DBg52ZEmwdB093txQCKZWyPSQ5+B0B1+YXDPeTxxaTXLNCqajMRpMMc/RY1NCpFxMrcxZPE8q
- GSwaANEvQGmDlLFpdgxjctAklvHCH25zyK8wJuRSDsTev7O1A21r4/d
-X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
- pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
- envelope-from=brookmangabriel@gmail.com; helo=mail-qv1-xf2a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] target/openrisc: Inline translator_ldl()
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Jia Liu <proljc@gmail.com>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stafford Horne <shorne@gmail.com>
+References: <20251224161804.90064-1-philmd@linaro.org>
+ <20251224161804.90064-4-philmd@linaro.org>
+ <bc66522e-0c13-4c03-a7ec-86ef64a49eb4@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <bc66522e-0c13-4c03-a7ec-86ef64a49eb4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,89 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to ARM ARM, section "Memory Tagging Region Types", loading
-tags from canonically tagged regions should use the canonical tags, not
-allocation tags.
+On 5/1/26 01:11, Richard Henderson wrote:
+> On 12/25/25 03:18, Philippe Mathieu-Daudé wrote:
+>> translator_ldl() is defined in "exec/translator.h" as:
+>>
+>>    198 static inline uint32_t
+>>    199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
+>>    200 {
+>>    201     return translator_ldl_end(env, db, pc, MO_TE);
+>>    202 }
+>>
+>> Directly use the inlined form, expanding MO_TE -> MO_BE
+>> since we only build the OpenRISC targets as big-endian.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/openrisc/translate.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
+>> index 6fa4d6cfa70..a6d550bbc2e 100644
+>> --- a/target/openrisc/translate.c
+>> +++ b/target/openrisc/translate.c
+>> @@ -1558,7 +1558,8 @@ static void 
+>> openrisc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+>>   static void openrisc_tr_translate_insn(DisasContextBase *dcbase, 
+>> CPUState *cs)
+>>   {
+>>       DisasContext *dc = container_of(dcbase, DisasContext, base);
+>> -    uint32_t insn = translator_ldl(cpu_env(cs), &dc->base, dc- 
+>> >base.pc_next);
+>> +    uint32_t insn = translator_ldl_end(cpu_env(cs), &dc->base,
+>> +                                       dc->base.pc_next, MO_BE);
+>>       if (!decode(dc, insn)) {
+>>           gen_illegal_exception(dc);
+> 
+> Use mo_endian().  With that,
 
-Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
----
- target/arm/tcg/mte_helper.c | 35 +++++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+Oops!
 
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index 6827d030dd..795a5ad20b 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -310,9 +310,14 @@ uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt)
-     mem = allocation_tag_mem(env, mmu_idx, ptr, MMU_DATA_LOAD, 1,
-                              MMU_DATA_LOAD, GETPC());
- 
--    /* Load if page supports tags. */
-+    /* Load if page supports tags. Set to canonical value if MTX is set. */
-     if (mem) {
--        rtag = load_tag1(ptr, mem);
-+        uint64_t bit55 = extract64(ptr, 55, 1);
-+        if (mtx_check(env, bit55)) {
-+            rtag = 0xF * bit55;
-+        } else {
-+            rtag = load_tag1(ptr, mem);
-+        }
-     }
- 
-     return address_with_allocation_tag(xt, rtag);
-@@ -463,8 +468,10 @@ uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
-     void *tag_mem;
-     uint64_t ret;
-     int shift;
-+    bool bit55;
- 
-     ptr = QEMU_ALIGN_DOWN(ptr, gm_bs_bytes);
-+    bit55 = extract64(ptr, 55, 1);
- 
-     /* Trap if accessing an invalid page.  */
-     tag_mem = allocation_tag_mem(env, mmu_idx, ptr, MMU_DATA_LOAD,
-@@ -490,19 +497,35 @@ uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
-     switch (gm_bs) {
-     case 3:
-         /* 32 bytes -> 2 tags -> 8 result bits */
--        ret = *(uint8_t *)tag_mem;
-+        if (mtx_check(env, bit55)) {
-+            ret = -(uint8_t)bit55;
-+        } else {
-+            ret = *(uint8_t *)tag_mem;
-+        }
-         break;
-     case 4:
-         /* 64 bytes -> 4 tags -> 16 result bits */
--        ret = cpu_to_le16(*(uint16_t *)tag_mem);
-+        if (mtx_check(env, bit55)) {
-+            ret = -(uint16_t)bit55;
-+        } else {
-+            ret = cpu_to_le16(*(uint16_t *)tag_mem);
-+        }
-         break;
-     case 5:
-         /* 128 bytes -> 8 tags -> 32 result bits */
--        ret = cpu_to_le32(*(uint32_t *)tag_mem);
-+        if (mtx_check(env, bit55)) {
-+            ret = -(uint32_t)bit55;
-+        } else {
-+            ret = cpu_to_le32(*(uint32_t *)tag_mem);
-+        }
-         break;
-     case 6:
-         /* 256 bytes -> 16 tags -> 64 result bits */
--        return cpu_to_le64(*(uint64_t *)tag_mem);
-+        if (mtx_check(env, bit55)) {
-+            return -(uint64_t)bit55;
-+        } else {
-+            return cpu_to_le64(*(uint64_t *)tag_mem);
-+        }
-     default:
-         /*
-          * CPU configured with unsupported/invalid gm blocksize.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
--- 
-2.52.0
-
+Thanks!
 
