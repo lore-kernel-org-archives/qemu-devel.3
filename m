@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8622CD040C
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 21:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF40CD0412
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 21:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcsCp-0007CF-8S; Mon, 05 Jan 2026 16:33:39 -0500
+	id 1vcsQp-0002R6-GP; Mon, 05 Jan 2026 16:48:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcsCd-00075q-UP
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:33:29 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vcsQP-0002NU-46
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:47:54 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcsCc-0003Kj-E0
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:33:27 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2a1022dda33so2823725ad.2
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 13:33:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vcsQN-0005KD-3b
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:47:40 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-64b4b35c812so600073a12.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 13:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767648805; x=1768253605; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QaRoVS0sZmfqN3jLRtmuEp8o9Uz2j0VWCn7U6l8V5Jo=;
- b=dc3AaN7epaj3fbtv+wNVI59SbPhWiVQ7K5J/DN3GMknt+n9MFhiMpCpDmxnpd36B9g
- Hs56cxsYrp4+bluZAQGDipaTnrqdmSnfspm3fkWh56x0luJAnOL7lUuR8bYhbgS+gdQC
- ou+EWvdhnOE5HjWcVOH+Swd7Vmw/jLIg5s3x7aj1U2L2UtJzsFafTDpH+4ULmIZEg8+w
- U0sbjUJll9d8IuC5SmI1T4CV812ncB/K20p8pjP8GQRSZyoCeoBhd6dX2LKx/ZVrZuZK
- 0bc+dvkmkoiF/j1NIqvZRH8wYsrVih9/bwvX5RfOxl/P/ClIOX+PSzxyq+DGpLc7zK8c
- 55sw==
+ d=gmail.com; s=20230601; t=1767649655; x=1768254455; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=xwq/+u1snyOM2qlXuEWFVd7bVZejAJMruGaE8Htw3t4=;
+ b=QufII6KHv+LKZKCxrCcjYNC3wEiDR0LUBA9wExqQgO+ZZ4tllDw9Kb66BsHlSYVfXy
+ 82/saSr9xQ++9yCPoZVUi4DJluizViDSa0ERYZSmEpDS9vcQcfLYC7b4Jm1+mkZXq4+B
+ ii4wS1uW4uVohWtuamI1Rs6dnRa2Yg3jgnZeYnFQucft+wIBdxOH8dt10GFgS9qmWVQg
+ Ptz8e+WVUfChGFz3V3zHHfJfc9Hqu91qjjYc4yyLexoK6ezqfWYEEWYMsG5WqUxcZFgT
+ 6U5xEBfXTW2x+RpQ23efv64z9p0F9s36+7h/bLzWAge1FYWMwXyTj5qzLidmb5MdNbvK
+ l7Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767648805; x=1768253605;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QaRoVS0sZmfqN3jLRtmuEp8o9Uz2j0VWCn7U6l8V5Jo=;
- b=wKlqBIJqHJd1FpZrvIbNM4aOk/IsdTUzmTaF2EF2cd/R8XRSGamcKZ5lRM+bKlo8Uc
- sCHRpGFY0XEJV6s/nMOpkEH21eh7wG6bxzMWmyEY7y8U0g/zBLE5Dq5EBZkT3024Px4l
- v/WpLg+swaCJsX79vsG0GOypz/aXAilVom1UQo0gvETQHtEgtq4NnekImTlllf+SfEu9
- cFAEza8FgjO7mvf02vuToJtthbDQHhjA4hoXiui68gidGF48qwLBM/+zwBCwz3f4EVWx
- BKTQ0dKRUKwN0RXq4dy5H6ied+v0+OduGwFn1FwpiXBIF96rCXoCDRxWBm7g0a4tXA91
- UPCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSw5Ybh8JCTHrDd2HChenOVWYShmffAXR2kbQx73BDuJb/F7Qxl6SEjek9f/XcP6Rq0iNgV9KkjDbF@nongnu.org
-X-Gm-Message-State: AOJu0Yzo25riknkWlO2kBFa+7q/OQCopoAYpk+tSWE3g0EslDrohQM+r
- YMJ9obXNbH+GLjRSumonBswysFaBGvPRNZ6wPYkB0gNHjRsUEkqxTGMz4Azn3sf2yrU=
-X-Gm-Gg: AY/fxX7Yi6wc5G2iMx4VcekWuRbsC7WCw/wYqT47DHvuXZME3IxKFNsnmq10k70WRvw
- Zr186S4Wl0Lrj20ReojHiBJJSLi7lU3b77EBq0MT8vSPhM/3VQLB+5pV4oJY/HYFVfojBhBh1tS
- z1RLb1QkAMAtTZ4aksC0QyLCzvDxJq4zUtfjV5ZPvANX4aDtBdNChetrOaKU+YfYmP0zBjvRuBX
- FG48yLcjBHagwjL8dxahSfF2JBaYYmU4pqAmSb/033pnArULqxYDh02/HbLZ+WcbeJpaxd2tK+d
- Ttm77xjSGSlj7K0agdCFERpeib8nuvg9mCTgkRC5jIznQ+E3bA/knzNm+6PE8SN7HmzzyZlIMy3
- KyR7cRtGLexxbeSLmKM/u5RZXPhJVsRkLYp4XrQoREBzH8osBAC2wOzYxsJgfG20nxQ3zcwqing
- PEiQGlnF6e9QTy5z+hKqV3yF0aFp+7yA==
-X-Google-Smtp-Source: AGHT+IGWHTXoXkpcOI/OdGXuw2mE9tqFjWdhBWc5BaAnWFHWJE0s0HyAzYbOc8qxXwpYIQ7mIZWDeA==
-X-Received: by 2002:a17:902:c403:b0:2a0:c1ed:c8c2 with SMTP id
- d9443c01a7336-2a3e2d36061mr8961905ad.55.1767648804719; 
- Mon, 05 Jan 2026 13:33:24 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cbf28f6cdsm279764a12.6.2026.01.05.13.33.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Jan 2026 13:33:24 -0800 (PST)
-Message-ID: <fc94c263-81eb-4013-9fa1-5259b37e3d76@linaro.org>
-Date: Tue, 6 Jan 2026 08:33:18 +1100
+ d=1e100.net; s=20230601; t=1767649655; x=1768254455;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xwq/+u1snyOM2qlXuEWFVd7bVZejAJMruGaE8Htw3t4=;
+ b=h38kyi9cAyzJrRWTlLdpb/vUSzO2+I/WnX5h4y86LBGAKNj86MmaWgScKwaXKjs6lr
+ IcluJleR1z2rBEWrCikQt7mE+n81fW/+chFSm76T+L3kSQXN2Bd7+Nr1R+Pmi4ebbW8X
+ uCxa560CvgxxpjRzlZIMM7NgS/EEi2/ZursEutK4XlU+TXffsEG3dXoVX2oCxkwWY1FC
+ l+1DuVtkk5JeHPFjlPNNYI+6YrnYGhA9Fc0iTdIfN2Z2q6X3Z/LM31Twz0r+dKirsN93
+ 7+Z4ra9GPJbGSOCCIJbw9Q6EMW9eKRwJ8LkXQpn8xZrY9h6xNTW7Zik/6pFwepwjQY+G
+ ijsw==
+X-Gm-Message-State: AOJu0Ywpu6uE4y+FTZgOArNYi7JCTpCgA4QrOGPnaEbdE9oc//0QqCbY
+ FrBl4CLSy+9su/juKWUOzSVIlIt6yc1HRDK0OYhwum6BkDWkac7PvOxzvXk5cMgT+7TUdUHm05o
+ UqceoL0pM7Dagmrz0uUOz+S7KAH8Y5kqoVA==
+X-Gm-Gg: AY/fxX4CX6YhaxE3gYOJdtqoH3oYOvoGcr3mJhDyaXfJ35OIJFhANGL+qIh37A8l6oH
+ bqNf2yglfLd4PCOdZVaywYsFewE5UCMkV7HNTpHCuGzgJksZCt6dBvVPdC2HyHbBWzMmu3YwS+3
+ 725vYYLwUXAWmrg+lWshK6TcI/eBz8r/Dkz0uhhyu0Zbvgb4hqroIofp/TkalOPIeVU+5EdBZOC
+ btCBpdZ4t+VmlvKBwhfmSmqG7d4wDbv9FLVDv7BSfUFr/WiL3WUwNyfJt/0FPvROeNGPw==
+X-Google-Smtp-Source: AGHT+IGzqMPIvjpm/BPRALlmRdcbNGNJ9j3aeCDnc9DqBiLhI9CAlWRiqsR+98pXwIxsqy5E6mdSnJ1nvl71RajfhBE=
+X-Received: by 2002:a05:6402:2792:b0:641:2cf3:ec3e with SMTP id
+ 4fb4d7f45d1cf-6507931fd53mr740163a12.11.1767649654614; Mon, 05 Jan 2026
+ 13:47:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 02/12] target/arm: add TCSO bitmasks to SCTLR
-To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com>
- <20260105-feat-mte4-v3-2-86a0d99ef2e4@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260105-feat-mte4-v3-2-86a0d99ef2e4@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 5 Jan 2026 16:47:22 -0500
+X-Gm-Features: AQt7F2rKVguptLS0_HGBM_cWisOO9Z59HcS_ZCk33hJtwl63lB_QQNWyrYq4Wfo
+Message-ID: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+Subject: Call for GSoC internship project ideas
+To: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>
+Cc: Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, danpb@redhat.com, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,69 +100,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/6/26 05:14, Gabriel Brookman wrote:
-> These are the bitmasks used to control the FEAT_MTE_STORE_ONLY feature.
-> They are now named and setting these fields of SCTLR is ignored if MTE
-> or MTE4 is disabled, as per convention.
-> 
-> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-> ---
->   target/arm/cpu-features.h |  5 +++++
->   target/arm/cpu.h          |  2 ++
->   target/arm/helper.c       | 11 +++++++++--
->   3 files changed, 16 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 48009b5a66..3473787ab8 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -1144,6 +1144,11 @@ static inline bool isar_feature_aa64_mteperm(const ARMISARegisters *id)
->       return FIELD_EX64_IDREG(id, ID_AA64PFR2, MTEPERM) == 1;
->   }
->   
-> +static inline bool isar_feature_aa64_mte4(const ARMISARegisters *id)
-> +{
-> +    return FIELD_EX64_IDREG(id, ID_AA64PFR2, MTEFAR) == 1;
-> +}
+Dear QEMU and KVM communities,
+QEMU will apply for the Google Summer of Code internship
+program again this year. Regular contributors can submit project
+ideas that they'd like to mentor by replying to this email by
+January 30th.
 
-There is no ID register field for FEAT_MTE4.
+About Google Summer of Code
+-----------------------------------------
+GSoC (https://summerofcode.withgoogle.com/) offers paid open
+source remote work internships to eligible people wishing to participate
+in open source development. QEMU has been doing internship for
+many years. Our mentors have enjoyed helping talented interns make
+their first open source contributions and some former interns continue
+to participate today.
 
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 263ca29d92..4086423b6f 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -3364,10 +3364,17 @@ static void sctlr_write(CPUARMState *env, const ARMCPRegInfo *ri,
->   
->       if (ri->state == ARM_CP_STATE_AA64 && !cpu_isar_feature(aa64_mte, cpu)) {
->           if (ri->opc1 == 6) { /* SCTLR_EL3 */
-> -            value &= ~(SCTLR_ITFSB | SCTLR_TCF | SCTLR_ATA);
-> +            value &= ~(SCTLR_ITFSB | SCTLR_TCF | SCTLR_ATA | SCTLR_TCSO);
->           } else {
->               value &= ~(SCTLR_ITFSB | SCTLR_TCF0 | SCTLR_TCF |
-> -                       SCTLR_ATA0 | SCTLR_ATA);
-> +                       SCTLR_ATA0 | SCTLR_ATA | SCTLR_TCSO | SCTLR_TCSO0);
-> +        }
-> +    } else if (ri->state == ARM_CP_STATE_AA64
-> +            && !cpu_isar_feature(aa64_mte4, cpu)) { /* mte but not mte4 */
-> +        if (ri->opc1 == 6) { /* SCTLR_EL3 */
-> +            value &= ~SCTLR_TCSO;
-> +        } else {
-> +            value &= ~(SCTLR_TCSO | SCTLR_TCSO0);
->           }
+Who can mentor
+----------------------
+Regular contributors to QEMU and KVM can participate as mentors.
+Mentorship involves about 5 hours of time commitment per week to
+communicate with the intern, review their patches, etc. Time is also
+required during the intern selection phase to communicate with
+applicants. Being a mentor is an opportunity to help someone get
+started in open source development, will give you experience with
+managing a project in a low-stakes environment, and a chance to
+explore interesting technical ideas that you may not have time to
+develop yourself.
 
-(1) Better to refactor to eliminate duplicate checks.
-(2) These bits are explicitly vs FEAT_MTE_STORE_ONLY not FEAT_MTE4.
+How to propose your idea
+------------------------------
+Reply to this email with the following project idea template filled in:
 
-Thus
+=== TITLE ===
 
-     if (ri->state == ARM_CP_STATE_AA64) {
-         if (!cpu_isar_feature(aa64_mte, cpu)) {
-             ...
-         } else if (!cpu_isar_feature(aa64_mte_store_only, cpu)) {
-             ...
-         }
-     }
+'''Summary:''' Short description of the project
 
+Detailed description of the project that explains the general idea,
+including a list of high-level tasks that will be completed by the
+project, and provides enough background for someone unfamiliar with
+the code base to research the idea. Typically 2 or 3 paragraphs.
 
-r~
+'''Links:'''
+* Links to mailing lists threads, git repos, or web sites
+
+'''Details:'''
+* Skill level: beginner or intermediate or advanced
+* Language: C/Python/Rust/etc
+
+More information
+----------------------
+You can find out about the process we follow here:
+Video: https://www.youtube.com/watch?v=xNVCX7YMUL8
+Slides (PDF): https://vmsplice.net/~stefan/stefanha-kvm-forum-2016.pdf
+
+The QEMU wiki page for GSoC 2026 is now available:
+https://wiki.qemu.org/Google_Summer_of_Code_2026
+
+Thanks,
+Stefan
 
