@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5E3C2A070
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Jan 2026 23:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A9DC2A062
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcXmo-0002gO-Qn; Sun, 04 Jan 2026 18:45:26 -0500
+	id 1vcY1t-0005FI-RU; Sun, 04 Jan 2026 19:01:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcXml-0002fs-Oz
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 18:45:25 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1vcY1k-0005Ec-B2
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:00:57 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcXmj-0003h0-O7
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 18:45:23 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2a0c09bb78cso9071885ad.0
- for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 15:45:21 -0800 (PST)
+ id 1vcY1i-0005qQ-LE
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:00:51 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2a110548cdeso181585745ad.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:00:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767570320; x=1768175120; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767571249; x=1768176049; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5Ldq22cQzenKIc+XVXMbmrdzI3fIf0MLJBNY87E6Cyo=;
- b=N3gUYGVT9E8jrTQIGVp2PTK/L2dIDN0237MJGCxN2/hSdW+Ch7k4WInV9zzrviGwa6
- fQx4ylPzYkjtSO/tFyKMW9gvk+gf4vPddSXp9XYBZc9xEoMVqcP6WSKfNKCmqW+B9gZJ
- 5OXkx1IP9Ig2GiIrS9PmtUXbAq9YzCCNqkS/dlpdRzJGpVgXw895a+zo1cnAMt+YWL+9
- Dj4XyUfVVmxS367oKVcRMHuYsizGpgfbvLO61kV5by0hsAWKw2UppCmOxSYd0nwEjgdF
- 9WtuEhcep1zv5v0BN0xhcuKTSGEVJQxeiOUHecFAncKS8RoUzcUChK6E2KrQ9MbXPWFO
- Marw==
+ bh=DsQF0cRXv3d7BSGA/ghAlxSb/S8HYBmdwaqoNGzeu8Q=;
+ b=EN1sPWIh4MCqpaZuyuIvnHIbMY9KSsFzALg+V7F8sdM76wAZWSVp4qILAblEmbT/VQ
+ tlMHRwauc/b1bOL8hgucnIJgfJIid0c9R0bO1KIDq32eFpmOxJYLROYDOE0j5RkuDPNL
+ pl5eZZ0AXwBv6JjTVrLCmh1+VQPyWFrGeVv1pP3Udl0r0PWc9PFhWq1QVRaB8DIFCxnj
+ pgxJQBlwwUV4l+PelnsMYrKUSTQ5TpBKUqcgttuaYpH3Fg6ACM4Ty3LCwDv3a1f/+bLL
+ 941yAGs739mfo4jw1OmzAnDEyD6J9VDjd84Dky/M27Jf+aLHr5eV0vFwWay6EoEzNk35
+ +12A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767570320; x=1768175120;
+ d=1e100.net; s=20230601; t=1767571249; x=1768176049;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5Ldq22cQzenKIc+XVXMbmrdzI3fIf0MLJBNY87E6Cyo=;
- b=n5NbNTXTkCNcyvKaVu/qsYL1pEiXQtF7Imuymke/IGcnyRMPPjC5pHoMJVsyOW1Djo
- 7rDbd6bY3+LQR39wmIOOrl/A0epqwsMFcCTECr0RdAdefwxvNOzz3NOTLzq2v8vNbssF
- U5fCPXvtH3drt8QINeT/vnICyjGolyUfazyH0gYB250ZH1QMaev0KR2DvzXvaJ59Iuvg
- tXPLIL1rUC+5Hw8Dye/j/8bKKDmd4/ieqkBacLj79k0tsPs0nb3f1JMfCgiDBw1p547B
- REgMv3N94Tf0ze3izAcYGwPUf6zK3AEkUyeTKFzU8sa+qjHnXumwTq2sE8OOPaxOw080
- ttvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZuYbaUEwBvTdOV1icmatQHAckj5/MkceLV4rmdUhyV3tU91w8KGgjIIX5waNcli1gGRAEYf40/ane@nongnu.org
-X-Gm-Message-State: AOJu0Yy3vV3bUC4Pgis6PTOFXZLsg9oqfOWwNm3mO0WCn/NuaNHF8WuN
- /buCbgRlRN8K2VjKyxHH39z3k1HznEqwW1P0e4NU7zUqymIzyo1tjFQFUwPX9uWp+ZojpPVJpZa
- drqCcQaM=
-X-Gm-Gg: AY/fxX7IAohl9wrsIISNHLpuPI80Q62/68Wsp8TkFV3M6yLj0dsc54sUjq1OiBnDE/B
- CyVsM8OWPr5rAzFoKAzbeCq+1YwbqrU3FpS0b9qu0xZ/WTpRlVOJl5gSKTLOhGdKLMHlx4+fPN1
- FTgcyGGuOtdIxIlqcOd49214X5QygF74JUdf9Qu1j2oUiJyir1qQFY7MBva2bgoV++gpRXTV16R
- nMTCx5JsNGWz1dGx0UI1+8E28jrIFaDubGQF2jN3/G4aD5SwEiebxVRsQF4wuWdDo8xAtulGrnd
- pMZR2EgG4vMJMK2VjSmTsGjf4t5SQqDuw1GAvMno8K7vBBwjzLkLJ4T/CuyW+GfRPszka7e4/fq
- anQ81HCcmFvUA9GJ4fa2/1HYJQn3pzqJz0WmMYEP7xdVDZXgrwjcZ3XSaw3TE7GJpNyrjCV1hy8
- gqifp0PmxOC8nPswiT1Qh7/X0WUh2Keg==
-X-Google-Smtp-Source: AGHT+IGsch2w0m/4kBoB30cf1T85LLN4GkYvZA5ImWj99M63mncBFnxk1AfsXFYJ+wJPQhjb+rdAcg==
-X-Received: by 2002:a17:903:196b:b0:295:55fc:67a0 with SMTP id
- d9443c01a7336-2a3c0940c78mr55161505ad.2.1767570319663; 
- Sun, 04 Jan 2026 15:45:19 -0800 (PST)
+ bh=DsQF0cRXv3d7BSGA/ghAlxSb/S8HYBmdwaqoNGzeu8Q=;
+ b=K4Xy8wCHaOxE3ykUs1RlWSxtZwX3ClPpcZvEtDFUUxiq52Y6msFb6WXSQpK/BbqvQs
+ teQGMu7heAYlYPyfqbeHJBktu1KsidtFUEvMynaRZyPOfliyqgbOLm/pZ9jr2qo+/9cJ
+ UMCXBCWoSXzIW6i6O8lJjuMH9QDhzGQwqex3DftAOEUFCIQGhl8vxjWya6jeEr0uRsOe
+ 8j7kGGQ+CUkhKyfsrlxSzfJw9F2jlgfpMfDSBdcCz/BTSGmz9LT6R51G/y3jWiGJUPSS
+ 7Fu2+Fs+uN0yPwpWYB28BrOMGtb3T8ooGQPRvhJk8YbxzxO2stVzIXW7ecRx/h9JMTJ6
+ 9F/A==
+X-Gm-Message-State: AOJu0Yxqpg/8QZzkLvfukVc0bP6NZ2xD8ylQBXUR1U/ytJa0CCm1bGpO
+ 87PrLkhMGRkJsk+zu1HjbApF9NCrHKczgfPZBGm9bgPC3KxYWvLjKdZizuBkM8wQg0pQ9mVVwXx
+ i1Nd64/E=
+X-Gm-Gg: AY/fxX6gFcodu1TeIUWVXmY6quIUOIoHIYw3BGO74I56p+JmEHphADHznoMKSp6Pimk
+ n+4J+i5Q+ra32Ni25S/lUomY2QnYN7lq5gltxNlAYhFwmDwIU6frHg45RTMioRF0GrVSRS+sGaO
+ E+cDSaHO1bqIH+0TCVcgs/5Oc7ycj3qHdQq9JyiOTRR7K+N2++ZhKeSO5zXSHx0yx25TLonEhTl
+ vdKIr6rnu2ZbTSqfhouxLaYVQjFDLcD9YKlcFnKOqyrNmr4o//5vZTf3+NL8R5cgTJRMEe5FzVF
+ x+nmkGpfME4mLCgfHkB546CLNUeSsBRoniBvI7ArLu0PqATJkc4oe253wScc/b3WMbvkE2OUOBO
+ xClXi2af/S56fkyuhGyfT5bkvqFoXdGpTCPQvtENPGs3fYbRGYbNQv6GGV3a3BEmBU1rwFx8O1X
+ fzw4ws6oFpwm6JcMX276wSZuP0I2bq+A==
+X-Google-Smtp-Source: AGHT+IFPPjadwu0R1VH9leUzQXygDshUlVIx8IabRAIIXiWezDNtREPgNMtpco3kKDqNGX3U0UeDmw==
+X-Received: by 2002:a17:902:ec8b:b0:2a2:c1a3:63df with SMTP id
+ d9443c01a7336-2a2f2830da5mr487703165ad.31.1767571248798; 
+ Sun, 04 Jan 2026 16:00:48 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3d4cbe5sm437139555ad.60.2026.01.04.15.45.17
+ d9443c01a7336-2a2f3c83961sm435086985ad.38.2026.01.04.16.00.47
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Jan 2026 15:45:19 -0800 (PST)
-Message-ID: <c5650230-d14a-4e6e-a5a4-e26ca4c5b2b6@linaro.org>
-Date: Mon, 5 Jan 2026 10:45:14 +1100
+ Sun, 04 Jan 2026 16:00:48 -0800 (PST)
+Message-ID: <c69a083e-0705-4a7b-9588-bf5e26544d1d@linaro.org>
+Date: Mon, 5 Jan 2026 11:00:44 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] m68k: fix CAS2 writeback when Dc1==Dc2
-To: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
-References: <20251226213707.331741-1-laurent@vivier.eu>
- <1c2fc596-7196-4901-b9aa-91a1a6efd71d@linaro.org>
- <46bee198-d686-48a8-8353-201b7729fb29@vivier.eu>
+Subject: Re: [PATCH v2] tcg/risc-v: Fix clobbering of TCG_REG_TMP0 (t6) in
+ vector code generation
+To: qemu-devel@nongnu.org
+References: <5D809A625CAA1DCC+20251229084747.1428-1-zengzhijin@linux.spacemit.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <46bee198-d686-48a8-8353-201b7729fb29@vivier.eu>
+In-Reply-To: <5D809A625CAA1DCC+20251229084747.1428-1-zengzhijin@linux.spacemit.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,50 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/30/25 01:31, Laurent Vivier wrote:
-> Le 29/12/2025 à 00:13, Richard Henderson a écrit :
->> On 12/27/25 08:37, Laurent Vivier wrote:
->>> According to Programmer's Reference Manual, if Dc1 and Dc2 specify the
->>> same data register and the comparison fails, memory operand 1 is stored
->>> in the data register.
->>
->> Where does it say that?
->>
->> All I see is the pseudocode
->>
->> CAS2
->> Destination 1 – Compare 1 → cc;
->> If Z, Destination 2 – Compare 2 → cc
->> If Z, Update 1 → Destination 1; Update 2 → Destination 2
->> Else Destination 1 → Compare 1; Destination 2 → Compare 2
->>
->> which *suggests* that Dc2 is the final store.
->>
+On 12/29/25 19:47, zengzhijin@linux.spacemit.com wrote:
+> From: Zhijin Zeng <zengzhijin@linux.spacemit.com>
 > 
-> This suggests but later it's explicit:
+> The RISC-V target currently uses register t6 as the destination for vsetvli and
+> vsetvl instructions to capture the resulting vector length (vl).
 > 
-> MP68000PA/AD REV.1
-> MOTOROLA M68000 FAMILY Programmer’s Reference Manual
-> (Includes CPU32 Instructions)
-> https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf
+> However, in the tcg_out_dupm_vec function, t6 is also used as a temporary
+> register. Since tcg_out_dup_vec may emit a vsetvli or vsetvl instruction
+> internally, the value previously written to t6 (e.g., by an earlier ld in
+> the same translation block) can be unintentionally overwritten.
 > 
-> CAS/CAS2 Compare and Swap with Operand
+> This patch reserves the t3 register to be used as the destination for vsetvli
+> and vsetvl instructions.
 > 
-> P 4-68
-> 
-> Instuction Fields:
-> 
-> Dc1, Dc2 fields — Specify the data registers that contain the test values to be compared
-> to the first and second memory operands, respectively. If Dc1 and Dc2 specify the
-> same data register and the comparison fails, memory operand 1 is stored in the
-> data register.
-> 
-> Thanks,
-> Laurent
+> Signed-off-by: Zhijin Zeng <zengzhijin@linux.spacemit.com>
 
-Right you are.
+You don't need to reserve a new register.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+There are only two places where a tmp register is live across set_vtype: dupm and dupi. 
+Both of those places can be changed to use TCG_REG_TMP1 instead, with a comment.
+
 
 r~
 
