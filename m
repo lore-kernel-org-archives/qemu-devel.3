@@ -4,102 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B17C79FBB
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDCBDC79FBA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:11:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcpws-0001Er-49; Mon, 05 Jan 2026 14:09:02 -0500
+	id 1vcpzT-0004pm-38; Mon, 05 Jan 2026 14:11:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vcpvx-0007zv-Jr
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:08:07 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vcpzM-0004UG-LD
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:11:36 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vcpvv-0005bL-Ja
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:08:05 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9AF4133769;
- Mon,  5 Jan 2026 19:07:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767640044; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=G2b9JEsbabxQXPEjgwCwHEO0tBtofIMWlZReL6Obrk0=;
- b=a3u1Xzu0BS4olpgedjUyt754IXAhhzdZ35W2I3Vgg5Uip5oLyeB8LVTJ63ZMGUJUCyAdnu
- 3Kx96g7IojYLzKje3WVmezh2i0/0qId6MU59IDXjAHeJhpChD+WB7PEab6QHQz5FUiNudD
- lSZMwkdwjC82OCwLkUGphsM/15eshVE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767640044;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=G2b9JEsbabxQXPEjgwCwHEO0tBtofIMWlZReL6Obrk0=;
- b=vk7mrxj9XuRqMbB08/SCgyQvmlBfis31Mp3i/XHHjn9yrj9Ov0m/rBRTAg9y2avosgbDSu
- YjyzQN2z8YEbljCg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767640044; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=G2b9JEsbabxQXPEjgwCwHEO0tBtofIMWlZReL6Obrk0=;
- b=a3u1Xzu0BS4olpgedjUyt754IXAhhzdZ35W2I3Vgg5Uip5oLyeB8LVTJ63ZMGUJUCyAdnu
- 3Kx96g7IojYLzKje3WVmezh2i0/0qId6MU59IDXjAHeJhpChD+WB7PEab6QHQz5FUiNudD
- lSZMwkdwjC82OCwLkUGphsM/15eshVE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767640044;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=G2b9JEsbabxQXPEjgwCwHEO0tBtofIMWlZReL6Obrk0=;
- b=vk7mrxj9XuRqMbB08/SCgyQvmlBfis31Mp3i/XHHjn9yrj9Ov0m/rBRTAg9y2avosgbDSu
- YjyzQN2z8YEbljCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 16A3813964;
- Mon,  5 Jan 2026 19:07:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mBgnMuoLXGmSOgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 05 Jan 2026 19:07:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, berrange@redhat.com, Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH v2 18/25] migration: Move channel code to channel.c
-Date: Mon,  5 Jan 2026 16:06:35 -0300
-Message-ID: <20260105190644.14072-19-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260105190644.14072-1-farosas@suse.de>
-References: <20260105190644.14072-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vcpzK-0006OW-6a
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:11:36 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-34c708702dfso276922a91.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 11:11:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767640290; x=1768245090; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FhSHiaUAmchznQpwn/zLomPV++UqAw2HPkNHjU5ciQk=;
+ b=e1FKKSDGFTVinc/kLyElFd07GxIbh9gW50raP9VVVGTHlEZpdxvsMz5oIMyuDtLK9g
+ OP5E8M3/dZBhpIjMaKfD4n4CvmxQmSUZ5uv56Exbi47WrWqyS2GRisdUIkPhRld+rK6n
+ T297uN2Bl0ZJJaHDaVya17JWoVzHR4lMIKu/fJQZSgqJAsvA4LThcdCs6RrOG81xhLh4
+ TWZL5nhNuZpXLrqmUTLzNzvLSX2UIMZCKW75WxctZ8Xh0JPwftCHViCGqHnVk4TX+Vk+
+ LBaIC0ZyuXgU6TAOYP/8Y1plDCoBZDY8jLHWc3h+aJGom2G47tbXCHCTDJR+fa/jpX9B
+ ZC0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767640290; x=1768245090;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FhSHiaUAmchznQpwn/zLomPV++UqAw2HPkNHjU5ciQk=;
+ b=qXNdSDK4kN9iBEMdj3fu4u1qN809/z3ATVJBMX6Zwj9vYDKYrHw2yaq8ySva9WmHht
+ nbdrmp8rIWvrKRrxdu5NgH79raUawcC0k9M5GxasJJeSBPeQ5Rj4l5CcT3jt3S27ej93
+ DfzBt0zffJpmndktqn3beGLm/dmvVz2cmkuwto8H4DmP9WJ8gNI5+7dBJWnVs+D6LodV
+ EyUVvKnx0eHLsbPyLmMNasXwzmtLHZRdF1GaE4PEiuRc8kUKYV9eC77ybe5/dLoSnDmi
+ 1YmqcSl787rWYDGDntDEh6scWY9iGRHjB7X8nEMKWm/+o8XEW1bWHQKvV+GboQoxR9P+
+ c/jg==
+X-Gm-Message-State: AOJu0YzEIkWkkT4WKwh9hbHc+XwIynEDeJ8wBY8vu7RM8U+W4YVgU3iw
+ P1BQdIY7VGnE926QTkunHOgs5H+KUPBzkWEtoU4gtIIe7mNUcV7IusnrCrNev0Z5sgjvsB/EjKN
+ tt7NLecY=
+X-Gm-Gg: AY/fxX46bNJe2mbUpDnD5WPjI5FmQeF7b7Z0exmOm801q3AT4kQx6eeD8PIdKaC42Jt
+ B2QY0ijDU6a5+mN9QasAsNW6/GG1WtO8bWuo21r2sYb5iFieFlxlTUD6H7P6e3EFAjIoYVMU1t1
+ fdywZxxyK9RFhGtYwVMpvOv310jlETxvnmxPuhqQIBK/UiHQKNlhXLu0kW0egqutOFva2GTCW8M
+ Zcacw/SIJyf3TOOu3HNza39swQXb/JE3WjAoXV3TJF95uXbdDHWmbYvhZXtwQZcawW+vPJW+fwi
+ V9ZNcuLLOmS6fm4sn7dqUR6xt7n63wmbDw6wzNr81Ndy6t0e15VTUxffSkPtij8tbi7AoIcq5ko
+ b6gXZQU1qIDBSzGRWgqhZ8Pb/zNLWWWeaNRy2x1vLK7HPbVdHxWRjrt/1UOrJkBhrqH0O9WoYAm
+ Y+f81EoiOKJY0CNzg/W6C7HAuZ7nGFXl2YZn26ejS0XR1SD/Q/38CGYL/9
+X-Google-Smtp-Source: AGHT+IFAa/xJ33Kf7LBFZnR4htuVhvTIbaoMejmPyEziTeQ5F8S0JcJg4efLuA3GUddWuvOfqO7jWA==
+X-Received: by 2002:a17:90b:1c07:b0:341:2b78:61b8 with SMTP id
+ 98e67ed59e1d1-34f5f301a25mr232360a91.20.1767640290054; 
+ Mon, 05 Jan 2026 11:11:30 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34f5fa78f4asm92364a91.3.2026.01.05.11.11.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Jan 2026 11:11:29 -0800 (PST)
+Message-ID: <5cab6793-7bb5-4272-83e0-9dd7a73188b3@linaro.org>
+Date: Mon, 5 Jan 2026 11:11:26 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.991];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] hw/arm/smmu: add memory regions as property for an
+ SMMU instance
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, Radoslaw Biernacki <rad@semihalf.com>,
+ tangtao1634@phytium.com.cn, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Eric Auger <eric.auger@redhat.com>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+References: <20251216235731.1793908-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20251216235731.1793908-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,300 +109,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the code responsible for the various channels connection into
-channel.c. This is all executed before the migration_thread and
-process_incoming_migration_co are running, so it helps the reasoning
-to have them out of migration.c.
+On 12/16/25 3:57 PM, Pierrick Bouvier wrote:
+> This will be used to access non-secure and secure memory. Secure support
+> and Granule Protection Check (for RME) for SMMU need to access secure
+> memory.
+> 
+> As well, it allows to remove usage of global address_space_memory,
+> allowing different SMMU instances to have a specific view of memory.
+> 
+> User creatable SMMU are handled as well for virt machine,
+> by setting the memory properties when device is plugged in.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   include/hw/arm/smmu-common.h |  4 ++++
+>   include/hw/arm/virt.h        |  2 ++
+>   hw/arm/sbsa-ref.c            | 16 ++++++++++++----
+>   hw/arm/smmu-common.c         | 25 +++++++++++++++++++++++++
+>   hw/arm/virt.c                | 13 +++++++++++--
+>   5 files changed, 54 insertions(+), 6 deletions(-)
+Gentle ping on this patch that was not yet reviewed.
 
-migration_ioc_process_incoming becomes migration_channel_identify
-which is more in line with what the function does.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/channel.c   | 99 ++++++++++++++++++++++++++++++++++++++++++-
- migration/channel.h   |  4 ++
- migration/migration.c | 96 -----------------------------------------
- migration/migration.h |  2 -
- migration/rdma.c      |  1 +
- 5 files changed, 103 insertions(+), 99 deletions(-)
-
-diff --git a/migration/channel.c b/migration/channel.c
-index 8abcb54447..a6608c5f08 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -14,13 +14,110 @@
- #include "channel.h"
- #include "tls.h"
- #include "migration.h"
-+#include "multifd.h"
-+#include "savevm.h"
- #include "trace.h"
-+#include "options.h"
- #include "qapi/error.h"
- #include "io/channel-tls.h"
- #include "io/channel-socket.h"
- #include "qemu/yank.h"
- #include "yank_functions.h"
- 
-+bool migration_has_main_and_multifd_channels(void)
-+{
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+    if (!mis->from_src_file) {
-+        /* main channel not established */
-+        return false;
-+    }
-+
-+    if (migrate_multifd() && !multifd_recv_all_channels_created()) {
-+        return false;
-+    }
-+
-+    /* main and all multifd channels are established */
-+    return true;
-+}
-+
-+/**
-+ * @migration_has_all_channels: We have received all channels that we need
-+ *
-+ * Returns true when we have got connections to all the channels that
-+ * we need for migration.
-+ */
-+bool migration_has_all_channels(void)
-+{
-+    if (!migration_has_main_and_multifd_channels()) {
-+        return false;
-+    }
-+
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+    if (migrate_postcopy_preempt() && !mis->postcopy_qemufile_dst) {
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
-+static int migration_channel_identify(MigrationIncomingState *mis,
-+                                      QIOChannel *ioc, Error **errp)
-+{
-+    int channel = CH_NONE;
-+    uint32_t channel_magic = 0;
-+    int ret = 0;
-+
-+    if (!migration_has_main_and_multifd_channels()) {
-+        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
-+            /*
-+             * With multiple channels, it is possible that we receive channels
-+             * out of order on destination side, causing incorrect mapping of
-+             * source channels on destination side. Check channel MAGIC to
-+             * decide type of channel. Please note this is best effort,
-+             * postcopy preempt channel does not send any magic number so
-+             * avoid it for postcopy live migration. Also tls live migration
-+             * already does tls handshake while initializing main channel so
-+             * with tls this issue is not possible.
-+             */
-+            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
-+                                              sizeof(channel_magic), errp);
-+            if (ret != 0) {
-+                goto out;
-+            }
-+
-+            channel_magic = be32_to_cpu(channel_magic);
-+            if (channel_magic == QEMU_VM_FILE_MAGIC) {
-+                channel = CH_MAIN;
-+            } else if (channel_magic == MULTIFD_MAGIC) {
-+                assert(migrate_multifd());
-+                channel = CH_MULTIFD;
-+            } else if (!mis->from_src_file &&
-+                        mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
-+                /* reconnect main channel for postcopy recovery */
-+                channel = CH_MAIN;
-+            } else {
-+                error_setg(errp, "unknown channel magic: %u", channel_magic);
-+            }
-+        } else if (mis->from_src_file && migrate_multifd()) {
-+            /*
-+             * Non-peekable channels like tls/file are processed as
-+             * multifd channels when multifd is enabled.
-+             */
-+            channel = CH_MULTIFD;
-+        } else if (!mis->from_src_file) {
-+            channel = CH_MAIN;
-+        } else {
-+            error_setg(errp, "non-peekable channel used without multifd");
-+        }
-+    } else {
-+        assert(migrate_postcopy_preempt());
-+        channel = CH_POSTCOPY;
-+    }
-+
-+out:
-+    return channel;
-+}
-+
- /**
-  * @migration_channel_process_incoming - Create new incoming migration channel
-  *
-@@ -42,7 +139,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
-         migration_tls_channel_process_incoming(ioc, &local_err);
-     } else {
-         migration_ioc_register_yank(ioc);
--        ch = migration_ioc_process_incoming(ioc, &local_err);
-+        ch = migration_channel_identify(mis, ioc, &local_err);
-         if (!ch) {
-             goto out;
-         }
-diff --git a/migration/channel.h b/migration/channel.h
-index 0e189c4325..59d169e095 100644
---- a/migration/channel.h
-+++ b/migration/channel.h
-@@ -34,4 +34,8 @@ int migration_channel_read_peek(QIOChannel *ioc,
-                                 const char *buf,
-                                 const size_t buflen,
-                                 Error **errp);
-+
-+bool migration_has_main_and_multifd_channels(void);
-+bool migration_has_all_channels(void);
-+
- #endif
-diff --git a/migration/migration.c b/migration/migration.c
-index 5f444958ef..540b419cda 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -927,8 +927,6 @@ out:
-     migrate_incoming_unref_outgoing_state();
- }
- 
--static bool migration_has_main_and_multifd_channels(void);
--
- bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp)
- {
-     MigrationIncomingState *mis = migration_incoming_get_current();
-@@ -1018,100 +1016,6 @@ void migration_start_incoming(void)
-     qemu_coroutine_enter(co);
- }
- 
--static bool migration_has_main_and_multifd_channels(void)
--{
--    MigrationIncomingState *mis = migration_incoming_get_current();
--    if (!mis->from_src_file) {
--        /* main channel not established */
--        return false;
--    }
--
--    if (migrate_multifd() && !multifd_recv_all_channels_created()) {
--        return false;
--    }
--
--    /* main and all multifd channels are established */
--    return true;
--}
--
--uint8_t migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
--{
--    MigrationIncomingState *mis = migration_incoming_get_current();
--    uint8_t channel = CH_NONE;
--    uint32_t channel_magic = 0;
--    int ret = 0;
--
--    if (!migration_has_main_and_multifd_channels()) {
--        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
--            /*
--             * With multiple channels, it is possible that we receive channels
--             * out of order on destination side, causing incorrect mapping of
--             * source channels on destination side. Check channel MAGIC to
--             * decide type of channel. Please note this is best effort,
--             * postcopy preempt channel does not send any magic number so
--             * avoid it for postcopy live migration. Also tls live migration
--             * already does tls handshake while initializing main channel so
--             * with tls this issue is not possible.
--             */
--            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
--                                              sizeof(channel_magic), errp);
--            if (ret != 0) {
--                goto out;
--            }
--
--            channel_magic = be32_to_cpu(channel_magic);
--            if (channel_magic == QEMU_VM_FILE_MAGIC) {
--                channel = CH_MAIN;
--            } else if (channel_magic == MULTIFD_MAGIC) {
--                assert(migrate_multifd());
--                channel = CH_MULTIFD;
--            } else if (!mis->from_src_file &&
--                        mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
--                /* reconnect main channel for postcopy recovery */
--                channel = CH_MAIN;
--            } else {
--                error_setg(errp, "unknown channel magic: %u", channel_magic);
--            }
--        } else if (mis->from_src_file && migrate_multifd()) {
--            /*
--             * Non-peekable channels like tls/file are processed as
--             * multifd channels when multifd is enabled.
--             */
--            channel = CH_MULTIFD;
--        } else if (!mis->from_src_file) {
--            channel = CH_MAIN;
--        } else {
--            error_setg(errp, "non-peekable channel used without multifd");
--        }
--    } else {
--        assert(migrate_postcopy_preempt());
--        channel = CH_POSTCOPY;
--    }
--
--out:
--    return channel;
--}
--
--/**
-- * @migration_has_all_channels: We have received all channels that we need
-- *
-- * Returns true when we have got connections to all the channels that
-- * we need for migration.
-- */
--bool migration_has_all_channels(void)
--{
--    if (!migration_has_main_and_multifd_channels()) {
--        return false;
--    }
--
--    MigrationIncomingState *mis = migration_incoming_get_current();
--    if (migrate_postcopy_preempt() && !mis->postcopy_qemufile_dst) {
--        return false;
--    }
--
--    return true;
--}
--
- int migrate_send_rp_switchover_ack(MigrationIncomingState *mis)
- {
-     return migrate_send_rp_message(mis, MIG_RP_MSG_SWITCHOVER_ACK, 0, NULL);
-diff --git a/migration/migration.h b/migration/migration.h
-index b852464197..7689c97051 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -532,8 +532,6 @@ void migration_incoming_process(void);
- bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp);
- void migration_outgoing_setup(QIOChannel *ioc);
- 
--bool  migration_has_all_channels(void);
--
- void migration_connect_error_propagate(MigrationState *s, Error *error);
- void migrate_error_propagate(MigrationState *s, Error *error);
- bool migrate_has_error(MigrationState *s);
-diff --git a/migration/rdma.c b/migration/rdma.c
-index ef95ce440d..582e0651d4 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -18,6 +18,7 @@
- #include "channel.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
-+#include "channel.h"
- #include "exec/target_page.h"
- #include "rdma.h"
- #include "migration.h"
--- 
-2.51.0
-
+Regards,
+Pierrick
 
