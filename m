@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BBBDC2A074
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 11:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5827FC2A074
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 11:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vciJn-00012H-2h; Mon, 05 Jan 2026 06:00:11 -0500
+	id 1vciJg-0000yk-C5; Mon, 05 Jan 2026 06:00:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kito.cheng@sifive.com>)
- id 1vciJe-0000yA-8M
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 06:00:02 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1vciJZ-0000tZ-3e
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 05:59:58 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kito.cheng@sifive.com>)
- id 1vciJb-0001og-Mc
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 06:00:01 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2a0833b5aeeso187801545ad.1
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 02:59:59 -0800 (PST)
+ id 1vciJV-0001nB-FQ
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 05:59:56 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a0d6f647e2so226188745ad.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 02:59:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1767610798; x=1768215598; darn=nongnu.org;
+ d=sifive.com; s=google; t=1767610792; x=1768215592; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ItC8uyuV9MEuPPK+zE/fnv1fLQkursu/U/pJyg29yX0=;
- b=f/1mQs60mavIxsOsOeap9l7PetIlTSCW2EQ1UobsIsZ8WvaX/WZqqshyGzpMCq7i/d
- BEGvISzmjWIvHGHzKUInipnbVCgBi5zFz+9XqV3hOgbZ8puIywL+XvXq94T7y7EQ3yIJ
- aQwX6LZuE6DLHY6btcwtruSXUc1t+FlMZN0/a4hyL/o2Ljvppv2tSKwXEa188q62gQXS
- /Agt7FqXXI0Ib6qUv+4fa8qApqiRCrP8vPI/EBsHcPHR5iMhlGjKwsWyegZhUTKV3Q0E
- S6RyFu2nVrTHauHSXR7uqQk3Vr1n6B3YcsYjmq+Sa7vh0HLYvb0BwH1Mh2AK0Ijz17p7
- x+mg==
+ bh=BiKcOcTTz94ABpJ/GtmfSGPNcCi/kbiWMe2ly8GnX9Q=;
+ b=lts3tBiUF1T2bqKHb4qZOPzZ45xrpEqJ4jVj9cWLmOOEXNGF3lfNSkJEM3Rn5Cstok
+ lVdt935zxodHLh8hjsHjn1YBNloLxLTbM8F+cUPAQTlZ+aahoGiDqyoPgq9B9ovq2cok
+ 5UFv6MGBwZ6czgLqbIwEcnN2d/EVVXaJ9XmMnZXrn9ZryNhjNCJc7mRrx+Nuxm2NjAqD
+ XvuEHd23sj8Ckh/NnjMqQHVIj5Mmdn13Wrn6ZWh9oCBuk7JJRO3ssxbumeiiPbEbsWTi
+ 0teIUpxyitE0CexXi7DLBdQuwPdHNIvaJFm17uJs+5Q9WlSyhRALnKa2ZX9yYgYXuNoI
+ YGJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767610798; x=1768215598;
+ d=1e100.net; s=20230601; t=1767610792; x=1768215592;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ItC8uyuV9MEuPPK+zE/fnv1fLQkursu/U/pJyg29yX0=;
- b=kL+hY8owmzDai07uyeFcRNH19YH+BCFHOz3iSNIs6z4cJ3hkCokjdtua3Rz87+4Q7u
- rzTRX6fXyhe39rZMtFt9kP2ZM7C+cRXrhPIRRD+1YKq9+FqBhwAF79BfkEQ143yaTMc9
- VgoB1hSUFrKG6ZbLg2/IQBzsxV6eIwreu6AifpPhdiK20hEuPIBwxnLvs33ouO/ut9/b
- /JkDCqRsZPE5WPmoh7QPA3YI47GHkLdGq0/eAqjQGw3t4AxZVusqwjV/gGd9T5sxrORH
- l+GQQK95AekayYT1uTzDAySxaklsdy/SyZc+coCY/ESn0wFJ4E2LGRYGSrImX4WpRtTY
- 0g4w==
+ bh=BiKcOcTTz94ABpJ/GtmfSGPNcCi/kbiWMe2ly8GnX9Q=;
+ b=uDau51IkVa6dWs0V8MvHhR36JLo02JYl9I7wj+86P1q6Es+zUB6nd/4D1LxA3oJIQa
+ UfO/AKrLCjysYIh6ScCj9v1ql31wd8cUTwI9dtvC3+gaMA3mZShCw6+f2sNlBgbdGKO7
+ sMmWH/CweUgt00SiLf9A2MehQfkoFH9ldTza32XI80TP+8mv4fc3kRhyASBjlzF8rPP8
+ zsP0moiWtZketUJk6jcAT2kqCNk1Y3bkknVueBfIkavVQ1kjc+vtLeZEMN7dG43ZxF48
+ KfUUDjY5nD/hwK6YlcjnoCnnaK3IYAjXeFIVesiwYnqAMExIwz+8jmHC1eHdEyhVcGpg
+ I2Sg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUqHKydlJybUI4q39Jtcudy7vFrbbhkxsusyTwXt6yvE2u3jOzrcrGGMFdSP6VqXEA19RJmmXxnsolh@nongnu.org
-X-Gm-Message-State: AOJu0YyxH3keqGfBgKkZWQESrha5EYp1rydsSSrrNeZcyiQCaIkDwR42
- vZjuvQ1mc4+wn4q73Kskl1vtCjWRZw92GDg6CA8usZ8xm5mLTJTWuEljbFHqk3BY4EA=
-X-Gm-Gg: AY/fxX6c1ag/9NneK/fvRr7JyOniiXEsKno+GTZcFWv1gOBhTngcFXB3OGT+jhONFG5
- hQKGWAdEJHg8QiEV6MsUkd9M30b6vXHBYll5W0/p2cvsErvvecM+4QYtzuXDTMTuOahtFQZDOhH
- t2/eZE4hFUKJqHuuARN7l9iExpE9JXbV228ks3aRFvMdQup7wSxG+HKNygB3XDttdQEMoFIedfB
- aAb72RFX+PfBa6xcOOTmV6HWb44mNcJ39e22RErDOQZ9TTTsQRt9QwAml58epJGp6KYWzF7Gnfh
- LA6PlMj2o2+6xOBUXrGMB0HXtFQ9gf2J5zMzZ155wjio+hVvHpTpUopPThn6HoDQ01XFA+tp/rK
- wSnk9RRegt//ZWr+DsgEczvMjQioWHJvnr6vVt9gEDyDgwc11CRayhQSAFsTWrJ1beJvtcBOlT5
- rSVNb989I/IMJd8gMwK0zu+vvSk1agYYW6WzmM1t3ybOQ87BQ=
-X-Google-Smtp-Source: AGHT+IH2dAOgb7q5OjCkQW0AFKUJuQJSmLdQx7ODCszegrKc/2QxebCubAWcPbTE9NXD5UL9YKwchA==
-X-Received: by 2002:a17:903:b90:b0:29f:301a:f6da with SMTP id
- d9443c01a7336-2a2f2a34f54mr488443665ad.43.1767610798421; 
- Mon, 05 Jan 2026 02:59:58 -0800 (PST)
+ AJvYcCUkw9lspZYA86kaD/toJeIILtLQPr8byg7TSlaH1ujbfecNWJlfyr+VWFUPsqgp7kZ5Yazn1wQCNgLl@nongnu.org
+X-Gm-Message-State: AOJu0Yw2vdAuNRJp5Pq3tdzQzwv4cOOdhdATb9eahunkUQ1uhknWovPS
+ qPqRF3YSAbk5bnonuL0O2+tyJGiN0rISvLSahP+IXnMO0nE/i+8a0yYxSxAS03bV5Fg=
+X-Gm-Gg: AY/fxX5K69oI9YVeNPe6hplYhr2PUd6U7AjZBnFZgi9hvBrhPK9iuCINLX+EG5YxTaH
+ R8ptBf+dUM1oOHY+vNWQPubAl7HOJnNI33/rOVwj5fhEpztEWwTrE0cwLoUQRmHUcIYn13Gi4AQ
+ Mr1rhTaWQVS82rWDveMUl5iFkSvDxvMCIwyoPP9OoPLg1+AE0KIptgPkOJZ4uVwlKRuZRNIRDc9
+ 2ZUq3OvljQWvavVzw2j4WGdkBPfspRjSi5ympLnT05G+IF7zhSylvOIZ3kfkKCE7sFiQGQltE2o
+ iWRCm9ujP05Wyjs0b5EWmesMh7CwkJU5vUQbPG8siKj55xTipPmgloSxwb6CZXj7IeydOMh0AnP
+ y3L5xZGgtjSXkB5pFOAQ9ADPQ66cGLBsRHBpCvvk4omr/XTq7Z5kriBT2f0PeJdoDuNj2x2sn/8
+ hDqckwZALV7NNjgmJAbaxH6FCk74yJH0jADF3TsEv6gPwBIMI=
+X-Google-Smtp-Source: AGHT+IHlfQV5bh9Oba/TzK2O6mXkvoZukjO4FsxjfHmysCQLPhMoZzmri8ID+ux2xpIvdYvIw6OfCg==
+X-Received: by 2002:a17:902:f552:b0:2a0:c933:beed with SMTP id
+ d9443c01a7336-2a2f2209461mr486488005ad.4.1767610792036; 
+ Mon, 05 Jan 2026 02:59:52 -0800 (PST)
 Received: from hsinchu18.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3c6661esm440193975ad.2.2026.01.05.02.59.56
+ d9443c01a7336-2a2f3c6661esm440193975ad.2.2026.01.05.02.59.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Jan 2026 02:59:58 -0800 (PST)
+ Mon, 05 Jan 2026 02:59:51 -0800 (PST)
 From: Kito Cheng <kito.cheng@sifive.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
  kito.cheng@gmail.com, Kito Cheng <kito.cheng@sifive.com>
-Subject: [PATCH 4/5] target/riscv: Add arch=PROFILE to configure CPU using
- RISC-V profiles
-Date: Mon,  5 Jan 2026 18:59:39 +0800
-Message-ID: <20260105105940.3567112-5-kito.cheng@sifive.com>
+Subject: [PATCH 1/5] target/riscv: Add arch=dump CPU property for ISA
+ introspection
+Date: Mon,  5 Jan 2026 18:59:36 +0800
+Message-ID: <20260105105940.3567112-2-kito.cheng@sifive.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260105105940.3567112-1-kito.cheng@sifive.com>
 References: <20260105105940.3567112-1-kito.cheng@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=kito.cheng@sifive.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=kito.cheng@sifive.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,316 +106,478 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for configuring RISC-V CPUs using standard RISC-V profiles
-with the arch= property. The format is:
-
-  arch=<profile-name>[_extension]*
-
-Examples:
-  -cpu rv64,arch=rva23u64
-  -cpu rv64,arch=rva22s64
-  -cpu rv64,arch=rva23u64_zbkb_zkne
-
-Key features:
-- Profiles are detected by prefix matching (case-insensitive)
-- Additional extensions can be appended after the profile name
-- Profiles are only available for 64-bit CPUs
-
-Available profiles:
-- rva22u64 - RVA22 User-mode profile
-- rva22s64 - RVA22 Supervisor-mode profile
-- rva23u64 - RVA23 User-mode profile (includes mandatory vector)
-- rva23s64 - RVA23 Supervisor-mode profile
-
-Profiles automatically enable all mandatory extensions defined by the
-RISC-V profile specification. Additional extensions can be appended
-after the profile name using underscores (following the RISC-V toolchain
-convention).
-
-The arch=help command now lists available profiles in addition to
-extensions.
-
-Signed-off-by: Kito Cheng <kito.cheng@sifive.com>
 ---
- docs/system/target-riscv.rst              |  24 +++++
- target/riscv/cpu.c                        |   8 ++
- target/riscv/tcg/tcg-cpu.c                | 103 +++++++++++++++++++++-
- tests/functional/riscv64/test_cpu_arch.py |  72 +++++++++++++++
- 4 files changed, 203 insertions(+), 4 deletions(-)
+ docs/system/target-riscv.rst              |  60 ++++++++++
+ target/riscv/cpu.c                        | 128 ++++++++++++++++++++++
+ target/riscv/cpu_cfg_fields.h.inc         |   3 +
+ target/riscv/tcg/tcg-cpu.c                |  33 ++++++
+ tests/functional/riscv32/meson.build      |   4 +
+ tests/functional/riscv32/test_cpu_arch.py |  61 +++++++++++
+ tests/functional/riscv64/meson.build      |   4 +
+ tests/functional/riscv64/test_cpu_arch.py |  80 ++++++++++++++
+ 8 files changed, 373 insertions(+)
+ create mode 100644 tests/functional/riscv32/test_cpu_arch.py
+ create mode 100644 tests/functional/riscv64/test_cpu_arch.py
 
 diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-index a16c17a22c2..12807974a8a 100644
+index 89b2cb732c2..3ec53dbf9e5 100644
 --- a/docs/system/target-riscv.rst
 +++ b/docs/system/target-riscv.rst
-@@ -167,6 +167,30 @@ extensions:
+@@ -73,6 +73,66 @@ undocumented; you can get a complete list by running
+    riscv/virt
+    riscv/xiangshan-kunminghu
  
-     $ qemu-riscv64 -cpu rv64,arch=rv64gc_zba_zbb,arch=dump /bin/true
- 
-+* ``arch=<PROFILE-NAME>[_extension]*``
++RISC-V CPU options
++------------------
 +
-+  Configure the CPU using a standard RISC-V profile, optionally with additional
-+  extensions. Profiles define sets of mandatory extensions for specific use
-+  cases. Available profiles (64-bit only):
++RISC-V CPUs support various options to configure ISA extensions and other
++features. These options can be specified using the ``-cpu`` command line
++option.
 +
-+  - ``rva22u64`` - RVA22 User-mode profile
-+  - ``rva22s64`` - RVA22 Supervisor-mode profile
-+  - ``rva23u64`` - RVA23 User-mode profile (includes mandatory vector)
-+  - ``rva23s64`` - RVA23 Supervisor-mode profile
++ISA extension configuration
++^^^^^^^^^^^^^^^^^^^^^^^^^^^
 +
-+  Examples::
++Individual ISA extensions can be enabled or disabled using boolean properties::
 +
-+    $ qemu-riscv64 -cpu rv64,arch=rva23u64 /bin/true
-+    $ qemu-riscv64 -cpu rv64,arch=rva22s64,arch=dump /bin/true
-+    $ qemu-riscv64 -cpu rv64,arch=rva23u64_zbkb_zkne /bin/true
++  $ qemu-system-riscv64 -M virt -cpu rv64,v=true,zba=false
 +
-+  Profiles automatically enable all mandatory extensions defined by the RISC-V
-+  profile specification. For example, RVA23 profiles enable the vector extension
-+  (V) which was optional in RVA22. Additional extensions can be appended after
-+  the profile name using underscores (following the RISC-V toolchain convention).
++The ``arch`` property
++^^^^^^^^^^^^^^^^^^^^^
 +
-+  Use ``arch=help`` to see all available profiles.
++The ``arch`` property provides a convenient way to inspect the current ISA
++configuration:
 +
- Privilege-implied extensions
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++* ``arch=dump``
++
++  Print the current ISA configuration and exit. This shows the full ISA string
++  and the status of all supported extensions::
++
++    $ qemu-system-riscv64 -M virt -cpu rv64,arch=dump
++    $ qemu-riscv64 -cpu rv64,v=true,arch=dump /bin/true
++
++  The dump shows the final configuration after all CPU properties are applied,
++  regardless of where ``arch=dump`` appears in the option list. For example,
++  both of the following commands show the same result with vector extension
++  enabled::
++
++    $ qemu-riscv64 -cpu rv64,v=true,arch=dump /bin/true
++    $ qemu-riscv64 -cpu rv64,arch=dump,v=true /bin/true
++
++Privilege-implied extensions
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++Some RISC-V extensions cannot be individually enabled or disabled. These
++extensions are automatically enabled based on the privilege specification
++version configured for the CPU. Examples include:
++
++- ``shcounterenw``, ``shgatpa``, ``shtvala``, ``shvsatpa``, ``shvstvala``,
++  ``shvstvecd`` - Enabled when privilege spec 1.12 or later is supported
++- ``ssccptr``, ``sscounterenw``, ``ssstrict``, ``sstvala``, ``sstvecd``,
++  ``ssu64xl`` - Enabled when privilege spec 1.12 or later is supported
++- ``ziccamoa``, ``ziccif``, ``zicclsm``, ``za64rs`` - Enabled when
++  privilege spec 1.12 or later is supported
++
++These extensions appear in the ``arch=dump`` output under "Privilege Implied
++Extensions" section. To control these extensions, use the ``priv_spec``
++property to set the privilege specification version::
++
++  $ qemu-riscv64 -cpu rv64,h=false,priv_spec=v1.11.0,arch=dump /bin/true
++
++Note: Some extensions like H (Hypervisor) require a minimum privilege spec
++version. When lowering the privilege spec, you may need to disable such
++extensions first.
++
+ RISC-V CPU firmware
+ -------------------
  
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index b1d8438cd14..092635b1050 100644
+index 8f26d8b8b07..2886b7ebcdd 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -1028,7 +1028,15 @@ G_NORETURN void riscv_cpu_list_supported_extensions(void)
-     riscv_cpu_help_multiext("Experimental Extensions",
-                             riscv_cpu_experimental_exts);
+@@ -896,6 +896,129 @@ static void riscv_cpu_satp_mode_finalize(RISCVCPU *cpu, Error **errp)
+ }
+ #endif
  
-+    /* Print available profiles */
-+    qemu_printf("Profiles (64-bit only):\n");
-+    for (int i = 0; riscv_profiles[i] != NULL; i++) {
-+        qemu_printf("  %s\n", riscv_profiles[i]->name);
++static inline const char *riscv_ext_status_str(bool enabled)
++{
++    return enabled ? "enabled" : "disabled";
++}
++
++/*
++ * Helper function to print multi-letter extension entries for arch=dump.
++ * Does not print section header.
++ */
++static void riscv_cpu_dump_multiext_entries(RISCVCPU *cpu,
++                                            const RISCVCPUMultiExtConfig *exts)
++{
++    for (const RISCVCPUMultiExtConfig *prop = exts;
++         prop && prop->name; prop++) {
++        bool enabled = isa_ext_is_enabled(cpu, prop->offset);
++        qemu_printf("  %-20s  %-8s\n",
++                    prop->name,
++                    riscv_ext_status_str(enabled));
++    }
++}
++
++/*
++ * Helper function to print multi-letter extensions for arch=dump.
++ */
++static void riscv_cpu_dump_multiext(RISCVCPU *cpu, const char *title,
++                                    const RISCVCPUMultiExtConfig *exts)
++{
++    qemu_printf("%s:\n", title);
++    qemu_printf("  %-20s  %-8s\n", "Name", "Status");
++    qemu_printf("  %-20s  %-8s\n", "----", "------");
++
++    riscv_cpu_dump_multiext_entries(cpu, exts);
++    qemu_printf("\n");
++}
++
++/*
++ * Check if an extension offset corresponds to a privilege-implied extension.
++ * These are extensions that map to has_priv_1_11, has_priv_1_12, or
++ * has_priv_1_13 instead of individual ext_* fields.
++ */
++static bool riscv_ext_is_priv_implied(uint32_t offset)
++{
++    return offset == CPU_CFG_OFFSET(has_priv_1_11) ||
++           offset == CPU_CFG_OFFSET(has_priv_1_12) ||
++           offset == CPU_CFG_OFFSET(has_priv_1_13);
++}
++
++/*
++ * Helper function to print privilege-implied extensions for arch=dump.
++ * These are extensions that are automatically enabled based on the
++ * privilege specification version.
++ */
++static void riscv_cpu_dump_priv_implied_exts(RISCVCPU *cpu)
++{
++    qemu_printf("Privilege Implied Extensions:\n");
++    qemu_printf("  %-20s  %-8s\n", "Name", "Status");
++    qemu_printf("  %-20s  %-8s\n", "----", "------");
++
++    for (const RISCVIsaExtData *edata = isa_edata_arr; edata->name; edata++) {
++        if (riscv_ext_is_priv_implied(edata->ext_enable_offset)) {
++            bool enabled = isa_ext_is_enabled(cpu, edata->ext_enable_offset);
++            qemu_printf("  %-20s  %-8s\n",
++                        edata->name,
++                        riscv_ext_status_str(enabled));
++        }
++    }
++    qemu_printf("\n");
++}
++
++/*
++ * Print detailed ISA configuration and exit.
++ * Called when arch=dump is specified.
++ */
++static G_NORETURN void riscv_cpu_dump_isa_config(RISCVCPU *cpu)
++{
++    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
++    CPURISCVState *env = &cpu->env;
++    g_autofree char *isa_str = riscv_isa_string(cpu);
++    int xlen = riscv_cpu_max_xlen(mcc);
++
++    qemu_printf("\n");
++    qemu_printf("RISC-V ISA Configuration (arch=dump)\n");
++    qemu_printf("=====================================\n\n");
++
++    /* Print full ISA string */
++    qemu_printf("Full ISA string: %s\n\n", isa_str);
++
++    /* Print base information */
++    qemu_printf("Base: RV%d\n", xlen);
++    qemu_printf("Privilege spec: %s\n\n", priv_spec_to_str(env->priv_ver));
++
++    /* Print single-letter extensions */
++    qemu_printf("Standard Extensions (single-letter):\n");
++    qemu_printf("  %-20s  %-8s\n", "Name", "Status");
++    qemu_printf("  %-20s  %-8s\n", "----", "------");
++
++    for (int i = 0; misa_bits[i] != 0; i++) {
++        uint32_t bit = misa_bits[i];
++        const char *name = riscv_get_misa_ext_name(bit);
++        bool enabled = env->misa_ext & bit;
++
++        qemu_printf("  %-20s  %-8s\n",
++                    name,
++                    riscv_ext_status_str(enabled));
 +    }
 +    qemu_printf("\n");
 +
-     qemu_printf("Use '-cpu <cpu>,<ext>=true' to enable an extension.\n");
-+    qemu_printf("Use '-cpu <cpu>,arch=<profile>' to enable a profile.\n");
-     qemu_printf("Use '-cpu <cpu>,arch=dump' to show current configuration.\n");
++    /* Print multi-letter standard extensions (including named features) */
++    qemu_printf("Standard Extensions (multi-letter):\n");
++    qemu_printf("  %-20s  %-8s\n", "Name", "Status");
++    qemu_printf("  %-20s  %-8s\n", "----", "------");
++    riscv_cpu_dump_multiext_entries(cpu, riscv_cpu_extensions);
++    riscv_cpu_dump_multiext_entries(cpu, riscv_cpu_named_features);
++    qemu_printf("\n");
++
++    riscv_cpu_dump_multiext(cpu, "Vendor Extensions", riscv_cpu_vendor_exts);
++    riscv_cpu_dump_multiext(cpu, "Experimental Extensions",
++                            riscv_cpu_experimental_exts);
++    riscv_cpu_dump_priv_implied_exts(cpu);
++
++    exit(0);
++}
++
+ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+ {
+     Error *local_err = NULL;
+@@ -943,6 +1066,11 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+         return;
+     }
  
-     exit(0);
++    /* Check for arch=dump request after all features are finalized */
++    if (cpu->cfg.arch_dump_requested) {
++        riscv_cpu_dump_isa_config(cpu);
++    }
++
+     riscv_cpu_register_gdb_regs_for_features(cs);
+ 
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index a154ecdc792..87ef228a17d 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -155,6 +155,9 @@ BOOL_FIELD(misa_w)
+ 
+ BOOL_FIELD(short_isa_string)
+ 
++/* arch= property flags */
++BOOL_FIELD(arch_dump_requested)
++
+ TYPED_FIELD(uint32_t, mvendorid, 0)
+ TYPED_FIELD(uint64_t, marchid, 0)
+ TYPED_FIELD(uint64_t, mimpid, 0)
 diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 87f1a5c9c73..aa947337cf1 100644
+index bb03f8dc0ca..f7187472cd2 100644
 --- a/target/riscv/tcg/tcg-cpu.c
 +++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1725,9 +1725,99 @@ static bool riscv_cpu_parse_isa_string(RISCVCPU *cpu, const char *isa_str,
-     return true;
- }
- 
-+/*
-+ * Find a profile by prefix (case-insensitive).
-+ * The profile name must be followed by end of string or underscore.
-+ * Returns the profile and sets *end_ptr to point after the profile name.
-+ */
-+static RISCVCPUProfile *riscv_find_profile_by_prefix(const char *str,
-+                                                      const char **end_ptr)
-+{
-+    for (int i = 0; riscv_profiles[i] != NULL; i++) {
-+        size_t len = strlen(riscv_profiles[i]->name);
-+        if (g_ascii_strncasecmp(str, riscv_profiles[i]->name, len) == 0) {
-+            char next_char = str[len];
-+            if (next_char == '\0' || next_char == '_') {
-+                if (end_ptr) {
-+                    *end_ptr = str + len;
-+                }
-+                return riscv_profiles[i];
-+            }
-+        }
-+    }
-+    return NULL;
-+}
-+
-+/*
-+ * Parse profile string with optional extensions.
-+ * Format: <profile-name>[_<extension>]*
-+ * Examples: rva23u64, rva23u64_zbkb_zkne
-+ */
-+static bool riscv_cpu_parse_profile_string(RISCVCPU *cpu, const char *str,
-+                                           Error **errp)
-+{
-+    const char *p;
-+    RISCVCPUProfile *profile;
-+
-+    profile = riscv_find_profile_by_prefix(str, &p);
-+    if (profile == NULL) {
-+        error_setg(errp, "unknown profile in '%s'", str);
-+        return false;
-+    }
-+
-+    /* Check CPU compatibility */
-+    if (riscv_cpu_is_vendor(OBJECT(cpu))) {
-+        error_setg(errp, "Profile %s is not available for vendor CPUs",
-+                   profile->name);
-+        return false;
-+    }
-+    if (riscv_cpu_is_32bit(cpu)) {
-+        error_setg(errp, "Profile %s is only available for 64-bit CPUs",
-+                   profile->name);
-+        return false;
-+    }
-+
-+    /* Enable the profile */
-+    profile->user_set = true;
-+    riscv_cpu_set_profile(cpu, profile, true);
-+
-+    /* Parse additional extensions after the profile name */
-+    while (*p == '_') {
-+        p++;  /* Skip underscore */
-+
-+        if (*p == '\0') {
-+            break;  /* Trailing underscore is ok */
-+        }
-+
-+        /* Find the end of this extension name */
-+        const char *ext_start = p;
-+        while (*p && *p != '_') {
-+            p++;
-+        }
-+
-+        /* Extract extension name */
-+        size_t ext_len = p - ext_start;
-+        g_autofree char *ext_name = g_strndup(ext_start, ext_len);
-+
-+        /* Look up the extension */
-+        const RISCVIsaExtData *edata = riscv_find_ext_data(ext_name);
-+        if (edata == NULL) {
-+            error_setg(errp, "unknown extension '%s' in profile string",
-+                       ext_name);
-+            return false;
-+        }
-+
-+        /* Enable the extension */
-+        isa_ext_update_enabled(cpu, edata->ext_enable_offset, true);
-+    }
-+
-+    return true;
-+}
-+
- /*
-  * arch= property handler for ISA configuration.
-- * Supports: dump, help, or an ISA string like rv64gc_zba_zbb.
-+ * Supports: dump, help, ISA string (rv64gc_zba_zbb),
-+ * or profile with optional extensions (rva23u64, rva23u64_zbkb_zkne).
-  */
- static void cpu_set_arch(Object *obj, Visitor *v, const char *name,
-                          void *opaque, Error **errp)
-@@ -1743,13 +1833,17 @@ static void cpu_set_arch(Object *obj, Visitor *v, const char *name,
-         cpu->cfg.arch_dump_requested = true;
-     } else if (g_strcmp0(value, "help") == 0) {
-         riscv_cpu_list_supported_extensions();
-+    } else if (riscv_find_profile_by_prefix(value, NULL) != NULL) {
-+        /* Parse as profile with optional extensions */
-+        riscv_cpu_parse_profile_string(cpu, value, errp);
-     } else if (g_ascii_strncasecmp(value, "rv", 2) == 0) {
-         /* Parse as ISA string */
-         riscv_cpu_parse_isa_string(cpu, value, errp);
-     } else {
-         error_setg(errp, "unknown arch option '%s'. "
--                   "Supported options: dump, help, or ISA string (e.g., "
--                   "rv64gc_zba_zbb)", value);
-+                   "Supported options: dump, help, ISA string (e.g., "
-+                   "rv64gc_zba_zbb), or profile (e.g., rva23u64, "
-+                   "rva23u64_zbkb)", value);
+@@ -1551,6 +1551,37 @@ static void riscv_cpu_add_multiext_prop_array(Object *obj,
      }
  }
  
-@@ -1761,7 +1855,8 @@ static void riscv_cpu_add_arch_property(Object *obj)
-     object_property_set_description(obj, "arch",
-         "ISA configuration (write-only). "
-         "Use 'help' to list extensions, 'dump' to show current config, "
--        "or provide an ISA string (e.g., rv64gc_zba_zbb).");
-+        "provide an ISA string (e.g., rv64gc_zba_zbb), "
-+        "or use a profile (e.g., rva23u64).");
++/*
++ * arch= property handler for ISA string configuration.
++ * This is a write-only property used to trigger actions like arch=dump.
++ */
++static void cpu_set_arch(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++    g_autofree char *value = NULL;
++
++    if (!visit_type_str(v, name, &value, errp)) {
++        return;
++    }
++
++    if (g_strcmp0(value, "dump") == 0) {
++        cpu->cfg.arch_dump_requested = true;
++    } else {
++        error_setg(errp, "unknown arch option '%s'. "
++                   "Supported options: dump", value);
++    }
++}
++
++static void riscv_cpu_add_arch_property(Object *obj)
++{
++    object_property_add(obj, "arch", "str",
++                        NULL, cpu_set_arch,
++                        NULL, NULL);
++    object_property_set_description(obj, "arch",
++        "ISA configuration string (write-only). Use 'dump' to print ISA config.");
++}
++
+ /*
+  * Add CPU properties with user-facing flags.
+  *
+@@ -1570,6 +1601,8 @@ static void riscv_cpu_add_user_properties(Object *obj)
+     riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_experimental_exts);
+ 
+     riscv_cpu_add_profiles(obj);
++
++    riscv_cpu_add_arch_property(obj);
  }
  
  /*
-diff --git a/tests/functional/riscv64/test_cpu_arch.py b/tests/functional/riscv64/test_cpu_arch.py
-index 204247cdb73..c12e1c7fce4 100644
---- a/tests/functional/riscv64/test_cpu_arch.py
-+++ b/tests/functional/riscv64/test_cpu_arch.py
-@@ -266,6 +266,78 @@ def test_arch_isa_string_underscore_separated_single(self):
-         self.assertRegex(res.stdout, r'd\s+enabled')
-         self.assertRegex(res.stdout, r'c\s+enabled')
- 
-+    def test_arch_profile_rva23u64(self):
-+        """Test arch=rva23u64 enables RVA23 profile extensions"""
-+        res = self.run_qemu('rv64,arch=rva23u64,arch=dump')
+diff --git a/tests/functional/riscv32/meson.build b/tests/functional/riscv32/meson.build
+index f3ebbb8db5d..a3f7a3dffce 100644
+--- a/tests/functional/riscv32/meson.build
++++ b/tests/functional/riscv32/meson.build
+@@ -8,3 +8,7 @@ tests_riscv32_system_quick = [
+ tests_riscv32_system_thorough = [
+   'tuxrun',
+ ]
 +
-+        self.assertEqual(res.returncode, 0)
++tests_riscv32_linuxuser_quick = [
++  'cpu_arch',
++]
+diff --git a/tests/functional/riscv32/test_cpu_arch.py b/tests/functional/riscv32/test_cpu_arch.py
+new file mode 100644
+index 00000000000..7b2f87cad88
+--- /dev/null
++++ b/tests/functional/riscv32/test_cpu_arch.py
+@@ -0,0 +1,61 @@
++#!/usr/bin/env python3
++#
++# Test RISC-V CPU arch= property
++#
++# Copyright (c) 2026 SiFive, Inc.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+        # RVA23U64 mandates vector extension
-+        self.assertRegex(res.stdout, r'\bv\s+enabled')
++from subprocess import run
 +
-+        # RVA23U64 mandates these extensions
-+        self.assertRegex(res.stdout, r'zicond\s+enabled')
-+        self.assertRegex(res.stdout, r'zimop\s+enabled')
-+        self.assertRegex(res.stdout, r'zcmop\s+enabled')
-+        self.assertRegex(res.stdout, r'zcb\s+enabled')
-+        self.assertRegex(res.stdout, r'zfa\s+enabled')
-+        self.assertRegex(res.stdout, r'zvbb\s+enabled')
++from qemu_test import QemuUserTest
 +
-+    def test_arch_profile_rva22u64(self):
-+        """Test arch=rva22u64 enables RVA22 profile extensions"""
-+        res = self.run_qemu('rv64,arch=rva22u64,arch=dump')
 +
-+        self.assertEqual(res.returncode, 0)
++class RiscvCpuArch(QemuUserTest):
++    """Test RISC-V CPU arch= property"""
 +
-+        # RVA22U64 mandates these MISA extensions
-+        self.assertRegex(res.stdout, r'\bi\s+enabled')
++    def run_qemu(self, cpu_opt, bin_path='/bin/true'):
++        """Run qemu-riscv32 with specified CPU option"""
++        cmd = [self.qemu_bin, '-cpu', cpu_opt, bin_path]
++        return run(cmd, text=True, capture_output=True)
++
++    def test_arch_dump(self):
++        """Test arch=dump prints ISA configuration and exits"""
++        res = self.run_qemu('rv32,arch=dump')
++
++        self.assertEqual(res.returncode, 0,
++                         f"arch=dump should exit with 0, got {res.returncode}")
++
++        # Check for expected output sections
++        self.assertIn('RISC-V ISA Configuration', res.stdout)
++        self.assertIn('Full ISA string:', res.stdout)
++        self.assertIn('Standard Extensions (single-letter):', res.stdout)
++        self.assertIn('Standard Extensions (multi-letter):', res.stdout)
++        self.assertIn('Vendor Extensions:', res.stdout)
++        # Check it's RV32
++        self.assertIn('Base: RV32', res.stdout)
++
++    def test_arch_dump_shows_enabled_extensions(self):
++        """Test arch=dump correctly shows enabled extensions"""
++        res = self.run_qemu('rv32,arch=dump')
++
++        # Default rv32 should have these enabled
++        self.assertRegex(res.stdout, r'i\s+enabled')
 +        self.assertRegex(res.stdout, r'm\s+enabled')
 +        self.assertRegex(res.stdout, r'a\s+enabled')
 +        self.assertRegex(res.stdout, r'f\s+enabled')
 +        self.assertRegex(res.stdout, r'd\s+enabled')
 +        self.assertRegex(res.stdout, r'c\s+enabled')
 +
-+        # RVA22U64 mandates zicsr and zifencei
-+        self.assertRegex(res.stdout, r'zicsr\s+enabled')
-+        self.assertRegex(res.stdout, r'zifencei\s+enabled')
++    def test_arch_invalid_option(self):
++        """Test invalid arch= option shows error with supported options"""
++        res = self.run_qemu('rv32,arch=invalid')
 +
-+    def test_arch_profile_case_insensitive(self):
-+        """Test arch=PROFILE is case-insensitive"""
-+        res = self.run_qemu('rv64,arch=RVA23U64,arch=dump')
++        self.assertNotEqual(res.returncode, 0,
++                            "Invalid arch option should fail")
++        self.assertIn("unknown arch option 'invalid'", res.stderr)
++        self.assertIn("Supported options:", res.stderr)
++
++
++if __name__ == '__main__':
++    QemuUserTest.main()
+diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+index c1704d92751..82a29dcc974 100644
+--- a/tests/functional/riscv64/meson.build
++++ b/tests/functional/riscv64/meson.build
+@@ -13,3 +13,7 @@ tests_riscv64_system_thorough = [
+   'sifive_u',
+   'tuxrun',
+ ]
++
++tests_riscv64_linuxuser_quick = [
++  'cpu_arch',
++]
+diff --git a/tests/functional/riscv64/test_cpu_arch.py b/tests/functional/riscv64/test_cpu_arch.py
+new file mode 100644
+index 00000000000..b0af8991397
+--- /dev/null
++++ b/tests/functional/riscv64/test_cpu_arch.py
+@@ -0,0 +1,80 @@
++#!/usr/bin/env python3
++#
++# Test RISC-V CPU arch= property
++#
++# Copyright (c) 2026 SiFive, Inc.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from subprocess import run
++
++from qemu_test import QemuUserTest
++
++
++class RiscvCpuArch(QemuUserTest):
++    """Test RISC-V CPU arch= property"""
++
++    def run_qemu(self, cpu_opt, bin_path='/bin/true'):
++        """Run qemu-riscv64 with specified CPU option"""
++        cmd = [self.qemu_bin, '-cpu', cpu_opt, bin_path]
++        return run(cmd, text=True, capture_output=True)
++
++    def test_arch_dump(self):
++        """Test arch=dump prints ISA configuration and exits"""
++        res = self.run_qemu('rv64,arch=dump')
++
++        self.assertEqual(res.returncode, 0,
++                         f"arch=dump should exit with 0, got {res.returncode}")
++
++        # Check for expected output sections
++        self.assertIn('RISC-V ISA Configuration', res.stdout)
++        self.assertIn('Full ISA string:', res.stdout)
++        self.assertIn('Standard Extensions (single-letter):', res.stdout)
++        self.assertIn('Standard Extensions (multi-letter):', res.stdout)
++        self.assertIn('Vendor Extensions:', res.stdout)
++
++    def test_arch_dump_shows_enabled_extensions(self):
++        """Test arch=dump correctly shows enabled extensions"""
++        res = self.run_qemu('rv64,arch=dump')
++
++        # Default rv64 should have these enabled
++        self.assertRegex(res.stdout, r'i\s+enabled')
++        self.assertRegex(res.stdout, r'm\s+enabled')
++        self.assertRegex(res.stdout, r'a\s+enabled')
++        self.assertRegex(res.stdout, r'f\s+enabled')
++        self.assertRegex(res.stdout, r'd\s+enabled')
++        self.assertRegex(res.stdout, r'c\s+enabled')
++
++    def test_arch_dump_with_vector(self):
++        """Test arch=dump shows vector extension when enabled"""
++        res = self.run_qemu('rv64,v=true,arch=dump')
 +
 +        self.assertEqual(res.returncode, 0)
-+        # Should enable vector like lowercase version
-+        self.assertRegex(res.stdout, r'\bv\s+enabled')
++        self.assertRegex(res.stdout, r'v\s+enabled')
 +
-+    def test_arch_help_shows_profiles(self):
-+        """Test arch=help lists available profiles"""
-+        res = self.run_qemu('rv64,arch=help')
++    def test_arch_dump_position_independence(self):
++        """Test arch=dump shows final config regardless of position"""
++        # arch=dump before v=true
++        res1 = self.run_qemu('rv64,arch=dump,v=true')
++        # arch=dump after v=true
++        res2 = self.run_qemu('rv64,v=true,arch=dump')
 +
-+        self.assertEqual(res.returncode, 0)
-+        self.assertIn('Profiles', res.stdout)
-+        self.assertIn('rva22u64', res.stdout)
-+        self.assertIn('rva22s64', res.stdout)
-+        self.assertIn('rva23u64', res.stdout)
-+        self.assertIn('rva23s64', res.stdout)
++        self.assertEqual(res1.returncode, 0)
++        self.assertEqual(res2.returncode, 0)
 +
-+    def test_arch_profile_with_extensions(self):
-+        """Test arch=PROFILE_EXT enables profile plus additional extensions"""
-+        res = self.run_qemu('rv64,arch=rva23u64_zbkb_zkne,arch=dump')
++        # Both should show v enabled
++        self.assertRegex(res1.stdout, r'v\s+enabled')
++        self.assertRegex(res2.stdout, r'v\s+enabled')
 +
-+        self.assertEqual(res.returncode, 0)
-+        # Profile extensions should be enabled
-+        self.assertRegex(res.stdout, r'\bv\s+enabled')
-+        # Additional extensions should also be enabled
-+        self.assertRegex(res.stdout, r'zbkb\s+enabled')
-+        self.assertRegex(res.stdout, r'zkne\s+enabled')
++    def test_arch_invalid_option(self):
++        """Test invalid arch= option shows error with supported options"""
++        res = self.run_qemu('rv64,arch=invalid')
 +
-+    def test_arch_profile_with_unknown_extension(self):
-+        """Test arch=PROFILE_EXT rejects unknown extensions"""
-+        res = self.run_qemu('rv64,arch=rva23u64_unknown')
++        self.assertNotEqual(res.returncode, 0,
++                            "Invalid arch option should fail")
++        self.assertIn("unknown arch option 'invalid'", res.stderr)
++        self.assertIn("Supported options:", res.stderr)
 +
-+        self.assertNotEqual(res.returncode, 0)
-+        self.assertIn("unknown extension 'unknown'", res.stderr)
 +
- 
- if __name__ == '__main__':
-     QemuUserTest.main()
++if __name__ == '__main__':
++    QemuUserTest.main()
 -- 
 2.52.0
 
