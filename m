@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C83C2A062
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94808C2A073
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 00:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcYbq-0007ss-MQ; Sun, 04 Jan 2026 19:38:10 -0500
+	id 1vcYcL-0008Qc-VW; Sun, 04 Jan 2026 19:38:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYbo-0007rj-G9
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:38:08 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1vcYcK-0008QH-Hq
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:38:40 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vcYbm-0000rc-UD
- for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:38:08 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2a110548cdeso181794075ad.0
- for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:38:06 -0800 (PST)
+ id 1vcYcH-0000t6-9o
+ for qemu-devel@nongnu.org; Sun, 04 Jan 2026 19:38:39 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7b9215e55e6so8221867b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 16:38:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767573485; x=1768178285; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767573515; x=1768178315; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zNVkkkA9MGF/ped4nZC8MUqNrM6qfumeg1TW8aUntjs=;
- b=KVqvOXgkzHf70/pf2A5i8wyZ7VOXTY2jQcI842zRc4k/CfYzE7ukSFHTF/6cDMmu04
- +4PAa9aoW8MAFW+wJM/8c0Qe/zP2N+VF3Jo3ttg5L77TBe0qLvkLN2pSU/RJu5QobveS
- SJhaClsYP8eKACp9Le9Hp3pSx4jpFG6p+blNuMZsijhS+sEkEUXHK9gzCo+DqL8l4TME
- YV4qLQfMkJ8dNJI4iFf3fB0eWDzSLqS93YtIqX9F7pP2FiMwR2kqaatb+q3x+dnxGVkY
- oetXPpwWFUJ++Vj/i0w4XsmRZf+WaIL8SNzTuGX78j/YuL12eFgA1bDTmjl6n/WSuktB
- 9Kvg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aJhN+lvyv71Nrp83Hza0Icjtfk6l02rPippk9Yd6EOY=;
+ b=yp1pDVx6WXjMOTtZgI+fz6VerOOveCu/GzgUoJrIwGcMaXC95l4f6TKaSpbeDTpm5e
+ A72VPbyyyWXVy5nH38uc07Td5nASb8Iz9xRcg4rBIBy/zUIbVFhfpfMIGaU2G3TQHm7l
+ 8n1jYjOwSaZEE6waTUxdy5j1nArKbcnixoo8g8gD3dmS9PFVelPDCDwWdoGz/XXeGQqj
+ mw7Dhajs6UoVjhzrycCcoRRocLhMZsCsSh8Tr0dRfL2RC+lvcMrZymlG/59z2O3utRV9
+ lYYEd8V0AS1E7WvvrScJ8KJ+Gd97MdjQeacVuYxja2yl3efBS7Qvgezt8RffJvJF9Dhw
+ a1kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767573485; x=1768178285;
+ d=1e100.net; s=20230601; t=1767573515; x=1768178315;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zNVkkkA9MGF/ped4nZC8MUqNrM6qfumeg1TW8aUntjs=;
- b=tx5zoGpKiO9l/kacvMMurbAuwYkYs7zuFu8Zp19ose0DM+zV7PXFeUxy0sK/hK9lGG
- MJ/NOaeTihh6Aj4DRKztE2Qqi9MF321w/6CnWwQa5Bdhk8dVMAd9Mtt8W+yuK2N5YdTu
- 4KTQPCi1aqxsrYLdqFp5qX0Y6bUM3IEOGbi6fSYgz6nTIp59KxLG+n8uqGiXAxA7lVFL
- CXrgyPh0dCLU0OuYqrvCKMClGWo928sFloGYsECywreRj/PL4oWB04+aViGd5/XzRRak
- PkSqFHlrdWa9IxMrQI/ojJWw5Q8zqTQbG6e7fFhXmdM+xmQM20FRx/6zGR0Kxgw3hPVr
- vi3A==
+ bh=aJhN+lvyv71Nrp83Hza0Icjtfk6l02rPippk9Yd6EOY=;
+ b=nlB4kiencrpNWNlC2PYLieZtQur/Z5GmYJgV1F0k8vl9GXZCHTIF/x6u+FzuN4hDYE
+ 8UKvTypQnLACcTUt9hhrd6mzOWh+LLKEID7+YDv9NCRqEDNowpDVpy4XnolNSlvaumzq
+ W+z5sfBx2q0hK6Vx1j2JBjQABMyofeu4fue3cB+7YGZIv8ZjFuP1eG73yT76lkkDIadN
+ Ip07+utVOsawXpAfwGA2a4erNkFyJuhkbg6wSPY0p9n09WtWa0wCSuuahNVwdr5IKELP
+ 2WYY8pzBzYD3CO+3CnYmYMqUUVzJmay1ZEXwWn0kZ8Foh0vjKiivjsBUgiSU1ADk3KZf
+ ZG3g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8NpffKZAXiD9NJv9N8m6l22skrzRcA056LzTDjvNBgMc6YXS+r22K8KK36IyXDLZii18qqwUFuTAP@nongnu.org
-X-Gm-Message-State: AOJu0YxaBi/ZZeiToaeXngsK1oHFbXVAyCdSDCKg5+/BDCM3WpZSA3Pe
- SPGKztvKkusPf+BjDsdtAQOu3Mt0yi2Get6buyHU2Fpp+4AKJQSa2Fwt9QdyvXbBv4w=
-X-Gm-Gg: AY/fxX4JzyCrDeM+jirPbcwv99ilbMtmL83LnT+56hdnekwKYEw6bMM6MezmCUiGCdb
- rn1y8LnnTVAuWM+AS1H4IFkqMUtxM8cv40686YsdqVt7pnTJxGVeOUZv0a51G+mR8gNxOZ9HLoE
- VPgLnweGrjk5FXByKS0hrVpw8FLXpJ1Az4s068EJvLVcGI1yvzWv+s0Yk2UG4dYUUTKT19uqMSP
- 618XxokrafkPckOLgf8ZkLTpJEU7KhsszvROPx3Q44YJ+2/rhviMSmAARZ+k92uf3QlFlesta4v
- xf/xO/tktn4uyZiTmaNZuojqWvQ/tgiwmj+vOwmayK2phAiFhZM+GR1QSrykBIjcMSP9QmCdnO2
- BDxKoa9AQs0cIC7eclq1t0/eoA3zEUJoqicaH/ReLAmyWndxC71UBDlM+NyRKJ76G/orfltKUb5
- TGtrLqcSyTY4q5M15urOkYhm7XmyiBmH855oGMtCK5
-X-Google-Smtp-Source: AGHT+IGF03tT4TqGRlX4/6lCfvJC7N3Lu5nHQ65cb0wsNBtW2HLinr/S1tbNwIfizvysUlJ5o4xnqQ==
-X-Received: by 2002:a17:903:228b:b0:2a1:3895:e0d8 with SMTP id
- d9443c01a7336-2a2f2a5934dmr376023065ad.60.1767573485354; 
- Sun, 04 Jan 2026 16:38:05 -0800 (PST)
+ AJvYcCXeY8ZQ39s6iDY9j4++f5+aP7xQcnDpeDmhGn2e7s6Zsdrg1GfL5HwXOKzlVRcFZeZyECgnxzHfe48T@nongnu.org
+X-Gm-Message-State: AOJu0Yxk3JAnOKPQYyKo2/dyWa78069wlD27/h633cgs3007yTivWo65
+ qXe0qbmJ04ttjhDcWIr0QNy/B10OXuFOUptu3oz3tn9iv9OwgmCXCkXdxEe+ZrO1+zSg7eUeD7z
+ ZWxzQGgw=
+X-Gm-Gg: AY/fxX6GPfgl4NcM5mdcN28f+OF6qzKgE48eBPb4tcq7LF9piN/mpyaGlZfMbq3MZNX
+ 3jQs8KJthciE6LyGUB8KOU4GdYn9ygz+hl+d1oU8hecFzzLagD6EACO0SswvHlRhNjxfdtphVqS
+ yZeKKxYHBTx+8Vw9kqiUM37Z4Wo49GVqMhxwu5J3QG1HpjweNobsjvMGobRWzI0xt33mn0xVpVl
+ oxy5Rn6XGVmgZVdKHT/yQiDHcX+yAQo8l979AN4+OXdodp5Q1ERC6z+d6aI11jhgi9mULHkk/wh
+ MVsKwvJjwjQh/oxcei2nf6wPw2INpReUfiVnOJLZnkghnW5f9jOFfkf6IRPT224/Wa5f0pARsCd
+ 7ViZzmAOh/ybv7CbJCOR7gl/nKkgBfstLQNO4MBmcai3B38eX/WjCz1d+M01KWtOpDTG0NeFz5G
+ gEnGhWx3kpqbv/0OmQvyJ9bHR07OzkWw==
+X-Google-Smtp-Source: AGHT+IFRwa+/+bNNOjsMCRars7gev2XORrwQRB0RkldpqFmgGpkW10S4MabyWR5IG2Sd6KWyJOflog==
+X-Received: by 2002:a05:6a00:2e18:b0:7ff:c71d:ad1d with SMTP id
+ d2e1a72fcca58-7ffc71dad4dmr40564146b3a.0.1767573515131; 
+ Sun, 04 Jan 2026 16:38:35 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2f3d4d88asm425051815ad.48.2026.01.04.16.37.59
+ d2e1a72fcca58-7ff7e493123sm46062289b3a.50.2026.01.04.16.38.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Jan 2026 16:38:04 -0800 (PST)
-Message-ID: <4c980190-839b-49af-bcaa-4becefc300e3@linaro.org>
-Date: Mon, 5 Jan 2026 11:37:56 +1100
+ Sun, 04 Jan 2026 16:38:34 -0800 (PST)
+Message-ID: <8a84d206-e807-4515-b20a-f07b0dd2b584@linaro.org>
+Date: Mon, 5 Jan 2026 11:38:30 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] configs/targets: Forbid SPARC to use legacy native
- endianness APIs
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
- <chigot@adacore.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Anton Johansson <anjo@rev.ng>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Frederic Konrad <konrad.frederic@yahoo.fr>
-References: <20251224162642.90857-1-philmd@linaro.org>
- <20251224162642.90857-10-philmd@linaro.org>
+Subject: Re: [PATCH for-11.0] tcg/optimize: do use affected bits
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20251223163720.985578-1-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251224162642.90857-10-philmd@linaro.org>
+In-Reply-To: <20251223163720.985578-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,20 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/25/25 03:26, Philippe Mathieu-Daudé wrote:
-> All SPARC-related binaries are buildable without a single use
-> of the legacy "native endian" API. Unset the transitional
-> TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
-> further uses of the legacy API.
+On 12/24/25 03:37, Paolo Bonzini wrote:
+> Commit 932522a9ddc ("tcg/optimize: Fold and to extract during optimize",
+> 2025-06-30) inadvertently disabled affected bits optimizations on
+> operations that use fold_masks_zosa.  These happen relatively often
+> in x86 code for extract/sextract; for example given the following:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+>     mov %esi, %ebp
+>     xor $0x1, %ebp
+> 
+> the optimizer is able to simplify the "extract_i64 rbp,tmp0,$0x0,$0x20"
+> produced by the second instruction to a move.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   configs/targets/sparc-linux-user.mak       | 1 +
->   configs/targets/sparc-softmmu.mak          | 1 +
->   configs/targets/sparc32plus-linux-user.mak | 1 +
->   configs/targets/sparc64-linux-user.mak     | 1 +
->   configs/targets/sparc64-softmmu.mak        | 1 +
->   5 files changed, 5 insertions(+)
+>   tcg/optimize.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tcg/optimize.c b/tcg/optimize.c
+> index f69702b26e8..c546e8910ba 100644
+> --- a/tcg/optimize.c
+> +++ b/tcg/optimize.c
+> @@ -1102,7 +1102,7 @@ static bool fold_masks_zosa_int(OptContext *ctx, TCGOp *op,
+>   static bool fold_masks_zosa(OptContext *ctx, TCGOp *op, uint64_t z_mask,
+>                               uint64_t o_mask, int64_t s_mask, uint64_t a_mask)
+>   {
+> -    fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, -1);
+> +    fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, a_mask);
+>       return true;
+>   }
+>   
+
+Oops.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
