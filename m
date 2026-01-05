@@ -4,73 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D11BAC79FA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 16:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78121C79FA3
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 16:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcn4d-0006O8-N0; Mon, 05 Jan 2026 11:04:51 -0500
+	id 1vcn3N-0005d7-At; Mon, 05 Jan 2026 11:03:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vcn42-0006CO-I7
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 11:04:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1vcn2A-00052I-1i; Mon, 05 Jan 2026 11:02:31 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vcn40-0001Yp-DZ
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 11:04:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767629050;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=cc30GGOr0KYzUuRX6aINvx68bU34Pn4a22V59/U6nmw=;
- b=e/BOsPM0Wla1kg0M0OGLAFZrg6nsigLiwduQPrd6c8V+iMgFn5Z2Hl/ymc4UhKcTESeDEM
- yBftArXZqOTqukWa4IMvfL8VTO9QHzdnyov/KZwmmd1WEMpyl5O2y96HmReBNBhi+uVI9P
- pBytcYY8LotH3C8Ig0VuarnGUh2d6CU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-FvZkPrN-PO2r-JamSzdpYQ-1; Mon,
- 05 Jan 2026 11:04:07 -0500
-X-MC-Unique: FvZkPrN-PO2r-JamSzdpYQ-1
-X-Mimecast-MFC-AGG-ID: FvZkPrN-PO2r-JamSzdpYQ_1767629044
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24177195FCF6; Mon,  5 Jan 2026 16:04:04 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.53])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9D98619560AB; Mon,  5 Jan 2026 16:04:00 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] tests/functional/arm/aspeed: Update buildroot images to
- 2025.11
-Date: Mon,  5 Jan 2026 17:03:58 +0100
-Message-ID: <20260105160358.771511-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1vcn22-0001J0-Iu; Mon, 05 Jan 2026 11:02:13 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 605AKFRF028393;
+ Mon, 5 Jan 2026 16:02:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=dTwAjVCkao+L39Fcb
+ Vg2fbqRAyzRacYVBrRk6AFr7ac=; b=K0BufWhMtO5wJYDvAUdK821x5Tb5X4UNK
+ ek+Gf93cfE/s+qNZc3ReF8OjIpScfAIKLzhSrk1vK6ujXGG8WVID3+r5LyxKlqVw
+ cwSkl+FvnsYq7o1CWUbKJ8T1skvLuoewRgy7P0xJAZLiTxWbORAr5YKGu2NVruED
+ rOll9Q2cDZTaDckKL/kClAplkIa0ZNbfR40YyoPE6K0QAnmA2GWaKjUNHRie+a+K
+ U7jsuctaqBsKfryofIiONWUDLaWPpeyEkc5J8aHzC9hU5KKXGnEEyxiveCIdP1/V
+ YjUbNVfohzDhdKqrBUTTE2pK6jEZflRDp6SmAb6GFMutA/6yz5nNg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betrtfdbs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Jan 2026 16:02:03 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 605G22oo021369;
+ Mon, 5 Jan 2026 16:02:02 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betrtfdbn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Jan 2026 16:02:02 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 605EJsg9005216;
+ Mon, 5 Jan 2026 16:02:02 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bfexjxm7x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Jan 2026 16:02:02 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 605G20Le9306706
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Jan 2026 16:02:00 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8772D58054;
+ Mon,  5 Jan 2026 16:02:00 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A88AE5805D;
+ Mon,  5 Jan 2026 16:01:59 +0000 (GMT)
+Received: from gfwr532.rchland.ibm.com (unknown [9.10.239.133])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  5 Jan 2026 16:01:59 +0000 (GMT)
+From: Caleb Schlossin <calebs@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, alistair@alistair23.me,
+ chalapathi.v@linux.ibm.com, kowal@linux.ibm.com, angeloj@linux.ibm.com,
+ harshpb@linux.ibm.com, calebs@linux.ibm.com
+Subject: [PATCH v4 7/7] hw/ppc: Add VMSTATE information to PnvPsi
+Date: Mon,  5 Jan 2026 10:01:38 -0600
+Message-ID: <20260105160138.3242709-8-calebs@linux.ibm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260105160138.3242709-1-calebs@linux.ibm.com>
+References: <20260105160138.3242709-1-calebs@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=aaJsXBot c=1 sm=1 tr=0 ts=695be07b cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=oruG57yO5g4gZiaFByIA:9
+X-Proofpoint-GUID: 8r9n8DMYhPBtgFGTWI2hOlPoi0CqurzK
+X-Proofpoint-ORIG-GUID: Y_cMpYYQ6QSaJpAKI0f92GK82ljgK3oD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDEzOCBTYWx0ZWRfX1judwAC2+rSX
+ dxqmUzjan6ADYNID4nIeBGlmbtAeCs+CGq/nuL/5/JPrJU3SeaAM3FYNUBc7FuZrAvTSXC6d1gv
+ 9ZzskPorgH9UYgcsgppQGLn2j9YQOIegb6jk3rVrXwwGYytOtlpy91kat81OibjkAuAPWDsqodt
+ McBSlrHmVHKotA5NsTguZK/1drFji2fOVNYzAq9NQDXzgw9ChXllcwLzap0iSI03hoVIr2nO92d
+ p2MW7wWeamAXYABQMUfsw+GpOIko0pg6/Rhg2x91+lHIBfUZ8Btdwdzv1p71n+Ufn7zwLesnkSh
+ TJ6D4vT5nIaQtG2mJldzOCcWVSfEHy02IATW6YwBkRerZakOPQcypo1tV0aNneMx7TnaysV7zWH
+ qPru/jCijPTuZDkOQkQxKjXl8iclfgPZwMBfb22rMh1YnvmKfKxRl6WlxCyPCdYZkK1NjjKd9uj
+ UveX+dXHP6QaeJgyQnQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-05_01,2026-01-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601050138
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,71 +126,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The main changes compared to upstream 2025.11 buildroot are
+PnvPsi needs to be able to save/load snapshots.  Add VMSTATE information
+to the device class and a post_load() method to restore dynamic data items and
+memory region mappings.
 
-  - Linux v6.18
-  - latest OpenBMC U-Boot
-  - extra packages (ssh, etc.)
-
-See
-
-  https://github.com/legoater/buildroot/commits/aspeed-2025.11
-
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
 ---
- tests/functional/arm/test_aspeed_ast2500.py           | 8 ++++----
- tests/functional/arm/test_aspeed_ast2600_buildroot.py | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ hw/ppc/pnv_psi.c | 36 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/arm/test_aspeed_ast2500.py b/tests/functional/arm/test_aspeed_ast2500.py
-index 5efd104c2b95..ac33c62a9f85 100755
---- a/tests/functional/arm/test_aspeed_ast2500.py
-+++ b/tests/functional/arm/test_aspeed_ast2500.py
-@@ -10,15 +10,15 @@
+diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+index 264568cdfb..e8701c6100 100644
+--- a/hw/ppc/pnv_psi.c
++++ b/hw/ppc/pnv_psi.c
+@@ -25,6 +25,7 @@
+ #include "qemu/module.h"
+ #include "system/reset.h"
+ #include "qapi/error.h"
++#include "migration/vmstate.h"
  
- class AST2500Machine(AspeedTest):
  
--    ASSET_BR2_202411_AST2500_FLASH = Asset(
-+    ASSET_BR2_202511_AST2500_FLASH = Asset(
-         ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
--         'images/ast2500-evb/buildroot-2024.11/flash.img'),
--        '641e6906c18c0f19a2aeb48099d66d4771929c361001d554d0d45c667413e13a')
-+         'images/ast2500-evb/buildroot-2025.11/flash.img'),
-+        '31e5a8e280b982fb0e7c07eb71c94851002f99ac604dfe620e71a5d47cc87e78')
+ #include "hw/ppc/fdt.h"
+@@ -130,12 +131,11 @@ static void pnv_psi_set_bar(PnvPsi *psi, uint64_t bar)
+ {
+     PnvPsiClass *ppc = PNV_PSI_GET_CLASS(psi);
+     MemoryRegion *sysmem = get_system_memory();
+-    uint64_t old = psi->regs[PSIHB_XSCOM_BAR];
  
-     def test_arm_ast2500_evb_buildroot(self):
-         self.set_machine('ast2500-evb')
+     psi->regs[PSIHB_XSCOM_BAR] = bar & (ppc->bar_mask | PSIHB_BAR_EN);
  
--        image_path = self.ASSET_BR2_202411_AST2500_FLASH.fetch()
-+        image_path = self.ASSET_BR2_202511_AST2500_FLASH.fetch()
+     /* Update MR, always remove it first */
+-    if (old & PSIHB_BAR_EN) {
++    if (memory_region_is_mapped(&psi->regs_mr)) {
+         memory_region_del_subregion(sysmem, &psi->regs_mr);
+     }
  
-         self.vm.add_args('-device',
-                          'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
-diff --git a/tests/functional/arm/test_aspeed_ast2600_buildroot.py b/tests/functional/arm/test_aspeed_ast2600_buildroot.py
-index 575a5f64143f..3d130b9fd189 100755
---- a/tests/functional/arm/test_aspeed_ast2600_buildroot.py
-+++ b/tests/functional/arm/test_aspeed_ast2600_buildroot.py
-@@ -16,15 +16,15 @@
+@@ -919,6 +919,37 @@ static const TypeInfo pnv_psi_power9_info = {
+     },
+ };
  
- class AST2600Machine(AspeedTest):
++static int vmstate_pnv_psi_post_load(void *opaque, int version_id)
++{
++    PnvPsi *psi = PNV_PSI(opaque);
++    Pnv9Psi *psi9 = PNV9_PSI(psi);
++    MemoryRegion   *sysmem = get_system_memory();
++    uint64_t esb_bar;
++    hwaddr esb_addr;
++
++    /* Set the ESB MMIO mapping */
++    esb_bar = psi->regs[PSIHB_REG(PSIHB9_ESB_CI_BASE)];
++
++    if (esb_bar & PSIHB9_ESB_CI_VALID) {
++        esb_addr = esb_bar & PSIHB9_ESB_CI_ADDR_MASK;
++        memory_region_add_subregion(sysmem, esb_addr,
++                                    &psi9->source.esb_mmio);
++    }
++
++    return 0;
++}
++
++static const VMStateDescription vmstate_pnv_psi = {
++    .name = TYPE_PNV_PSI,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load = vmstate_pnv_psi_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(regs, PnvPsi, PSIHB_XSCOM_MAX),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static void pnv_psi_power10_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -926,6 +957,7 @@ static void pnv_psi_power10_class_init(ObjectClass *klass, const void *data)
+     static const char compat[] = "ibm,power10-psihb-x\0ibm,psihb-x";
  
--    ASSET_BR2_202411_AST2600_FLASH = Asset(
-+    ASSET_BR2_202511_AST2600_FLASH = Asset(
-         ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
--         'images/ast2600-evb/buildroot-2024.11/flash.img'),
--        '4bb2f3dfdea31199b51d66b42f686dc5374c144a7346fdc650194a5578b73609')
-+         'images/ast2600-evb/buildroot-2025.11/flash.img'),
-+        'c64a0755501393d570ca318e326e1e9f8372edc5a6452cdccc3649bc9fd2c138')
+     dc->desc    = "PowerNV PSI Controller POWER10";
++    dc->vmsd = &vmstate_pnv_psi;
  
-     def test_arm_ast2600_evb_buildroot(self):
-         self.set_machine('ast2600-evb')
- 
--        image_path = self.ASSET_BR2_202411_AST2600_FLASH.fetch()
-+        image_path = self.ASSET_BR2_202511_AST2600_FLASH.fetch()
- 
-         self.vm.add_args('-device',
-                          'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
+     ppc->xscom_pcba = PNV10_XSCOM_PSIHB_BASE;
+     ppc->xscom_size = PNV10_XSCOM_PSIHB_SIZE;
 -- 
-2.52.0
+2.47.3
 
 
