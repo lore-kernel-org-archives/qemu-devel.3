@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48AD5C79F8C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32B6FC79F89
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vck8o-0003yM-Hr; Mon, 05 Jan 2026 07:56:58 -0500
+	id 1vckAY-0005OP-7s; Mon, 05 Jan 2026 07:58:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8e-0003sS-UH
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck9Q-0004e3-4T
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:57:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck8b-0007yV-T1
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:56:48 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vck9J-00087s-VG
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 07:57:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767617804;
+ s=mimecast20190719; t=1767617848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PjGbyXTJjQiByl1WIYDhgkx8UpptFRJQ+nqYwow5KAA=;
- b=iwG4T+/mBJXWq8VFrbto35HV6OlcgTNkHXtHAfd64v9hrTycPiU3WCMSi7g6kgYQBsuTxd
- G7fjQgkHOPipfSiK+Zm2HvOVPoKcKHr7chJmmsDRsb98y1MyHXS+sC4ucY2w7Plxwg/+Nr
- aFr3wpldgY8Xrf9LQU22Q024F0Ak/78=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=4BBX0xO9PwrpS9psekIxnFj2ftX2ME4aNY7RM73Qcr8=;
+ b=iPfFNa7YewUYrfHwf2J3/G84dT3VjYOu+UnWZCVfC9waxOKyqQi3F0Fydo+V4B0FPyeEIn
+ r7E1XTP3EB+tnvuIXvoGsI3kqeJ2PbVoDTi9JRAmzjnNnrRrna/y5Ksvbv8iRvyjjCS6BD
+ IIbTo/M7OxfFhCeaH7eXVmJRQD7n4Ko=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-nnNkOU1JOlesuoy3Px_bng-1; Mon,
- 05 Jan 2026 07:56:42 -0500
-X-MC-Unique: nnNkOU1JOlesuoy3Px_bng-1
-X-Mimecast-MFC-AGG-ID: nnNkOU1JOlesuoy3Px_bng_1767617801
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-WEGfnj4kO-60HQr9kA6lRw-1; Mon,
+ 05 Jan 2026 07:57:24 -0500
+X-MC-Unique: WEGfnj4kO-60HQr9kA6lRw-1
+X-Mimecast-MFC-AGG-ID: WEGfnj4kO-60HQr9kA6lRw_1767617843
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8ED741800378; Mon,  5 Jan 2026 12:56:41 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF8D31956058; Mon,  5 Jan 2026 12:57:23 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E03F119560A7; Mon,  5 Jan 2026 12:56:39 +0000 (UTC)
+ id 2A3611953984; Mon,  5 Jan 2026 12:57:21 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Patrick Williams <patrick@stwcx.xyz>,
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 12/36] hw/arm/aspeed: catalina: add BSM FRU EEPROM
-Date: Mon,  5 Jan 2026 13:55:49 +0100
-Message-ID: <20260105125613.622667-13-clg@redhat.com>
+Subject: [PULL 32/36] hw/intc/aspeed: Remove GIC 128 - 136
+Date: Mon,  5 Jan 2026 13:56:09 +0100
+Message-ID: <20260105125613.622667-33-clg@redhat.com>
 In-Reply-To: <20260105125613.622667-1-clg@redhat.com>
 References: <20260105125613.622667-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -68,7 +68,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,77 +84,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Patrick Williams <patrick@stwcx.xyz>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Use ipmitool/frugen tool to generate a BSM image based on a
-sanitized set of data from a real device EEPROM.
+The GIC interrupts 128 - 136 were only used by the AST2700 A0 SoC.
+Since the AST2700 A0 has been deprecated, these interrupt
+definitions are no longer needed. This commit removes them to
+clean up the codebase.
 
-Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251217-catalina-eeproms-v1-1-dc7b276efd57@stwcx.xyz
+Link: https://lore.kernel.org/qemu-devel/20250901040808.1454742-4-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast2600_catalina.c | 40 +++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ hw/arm/aspeed_ast27x0.c | 47 +++++++++----------------------------
+ hw/intc/aspeed_intc.c   | 51 ++---------------------------------------
+ 2 files changed, 13 insertions(+), 85 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
-index 91977a4d3cc4..0f229f4dc695 100644
---- a/hw/arm/aspeed_ast2600_catalina.c
-+++ b/hw/arm/aspeed_ast2600_catalina.c
-@@ -26,6 +26,44 @@
- #define TYPE_TMP421 "tmp421"
- #define TYPE_DS1338 "ds1338"
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 6d6ffe31272c..d17f44666112 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -153,20 +153,17 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
+     [ASPEED_DEV_SDHCI]     = 197,
+ };
  
-+/*
-+ * "BMC Storage Module" FRU data.  Generated with frugen.
-+ *
-+ *    {
-+ *      "board": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "BMC Storage Module (QEMU)",
-+ *        "pn": "00000000000",
-+ *        "serial": "00000000000000",
-+ *        "date": "01/12/2025 00:00",
-+ *        "custom": ["09-100183"]
-+ *      },
-+ *      "product": {
-+ *        "mfg": "Quanta",
-+ *        "pname": "CI-Catalina",
-+ *        "pn": "10000000001",
-+ *        "ver": "MP",
-+ *        "serial": "10000000000000",
-+ *        "atag": "QEMU"
-+ *      }
-+ *    }
-+ */
-+static const uint8_t bsm_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x0a, 0x00, 0x00, 0xf4, 0x01, 0x09, 0x19, 0x8c,
-+    0x19, 0xf0, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xd9, 0x42, 0x4d,
-+    0x43, 0x20, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x20, 0x4d, 0x6f,
-+    0x64, 0x75, 0x6c, 0x65, 0x20, 0x28, 0x51, 0x45, 0x4d, 0x55, 0x29, 0x8b,
-+    0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x89,
-+    0x10, 0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x01, 0xc0, 0x87, 0x50,
-+    0xd6, 0x44, 0x10, 0x14, 0x61, 0x13, 0xc1, 0x59, 0x01, 0x07, 0x19, 0xc6,
-+    0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcb, 0x43, 0x49, 0x2d, 0x43, 0x61,
-+    0x74, 0x61, 0x6c, 0x69, 0x6e, 0x61, 0x89, 0x11, 0x04, 0x41, 0x10, 0x04,
-+    0x41, 0x10, 0x14, 0x01, 0x82, 0x2d, 0x0c, 0x8b, 0x11, 0x04, 0x41, 0x10,
-+    0x04, 0x41, 0x10, 0x04, 0x41, 0x10, 0x04, 0x83, 0x71, 0xd9, 0xd6, 0xc0,
-+    0xc1, 0x00, 0x00, 0x37
-+};
-+static const size_t bsm_eeprom_len = sizeof(bsm_eeprom);
-+
- static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     /* Reference from v6.16-rc2 aspeed-bmc-facebook-catalina.dts */
-@@ -147,7 +185,7 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
-     /* eeprom@50 */
-     at24c_eeprom_init(i2c[9], 0x50, 8 * KiB);
-     /* eeprom@56 */
--    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
-+    at24c_eeprom_init_rom(i2c[9], 0x56, 8 * KiB, bsm_eeprom, bsm_eeprom_len);
+-/* GICINT 128 */
+ /* GICINT 192 */
+-static const int ast2700_gic128_gic192_intcmap[] = {
++static const int ast2700_gic192_intcmap[] = {
+     [ASPEED_DEV_LPC]       = 0,
+     [ASPEED_DEV_IBT]       = 2,
+     [ASPEED_DEV_KCS]       = 4,
+ };
  
-     /* &i2c10 */
-     /* temperature-sensor@1f - tpm421 */
+-/* GICINT 129 */
+ /* GICINT 193 */
+ 
+-/* GICINT 130 */
+ /* GICINT 194 */
+-static const int ast2700_gic130_gic194_intcmap[] = {
++static const int ast2700_gic194_intcmap[] = {
+     [ASPEED_DEV_I2C]        = 0,
+     [ASPEED_DEV_ADC]        = 16,
+     [ASPEED_DEV_GPIO]       = 18,
+@@ -174,18 +171,16 @@ static const int ast2700_gic130_gic194_intcmap[] = {
+     [ASPEED_DEV_SGPIOM1]    = 24,
+ };
+ 
+-/* GICINT 131 */
+ /* GICINT 195 */
+-static const int ast2700_gic131_gic195_intcmap[] = {
++static const int ast2700_gic195_intcmap[] = {
+     [ASPEED_DEV_I3C]       = 0,
+     [ASPEED_DEV_WDT]       = 16,
+     [ASPEED_DEV_FMC]       = 25,
+     [ASPEED_DEV_PWM]       = 29,
+ };
+ 
+-/* GICINT 132 */
+ /* GICINT 196 */
+-static const int ast2700_gic132_gic196_intcmap[] = {
++static const int ast2700_gic196_intcmap[] = {
+     [ASPEED_DEV_ETH1]      = 0,
+     [ASPEED_DEV_ETH2]      = 1,
+     [ASPEED_DEV_ETH3]      = 2,
+@@ -206,14 +201,12 @@ static const int ast2700_gic132_gic196_intcmap[] = {
+     [ASPEED_DEV_PCIE2]     = 31,
+ };
+ 
+-/* GICINT 133 */
+ /* GICINT 197 */
+-static const int ast2700_gic133_gic197_intcmap[] = {
++static const int ast2700_gic197_intcmap[] = {
+     [ASPEED_DEV_SDHCI]     = 1,
+     [ASPEED_DEV_PECI]      = 4,
+ };
+ 
+-/* GICINT 128 ~ 136 */
+ /* GICINT 192 ~ 201 */
+ struct gic_intc_irq_info {
+     int irq;
+@@ -223,25 +216,16 @@ struct gic_intc_irq_info {
+ };
+ 
+ static const struct gic_intc_irq_info ast2700_gic_intcmap[] = {
+-    {192, 1, 0, ast2700_gic128_gic192_intcmap},
++    {192, 1, 0, ast2700_gic192_intcmap},
+     {193, 1, 1, NULL},
+-    {194, 1, 2, ast2700_gic130_gic194_intcmap},
+-    {195, 1, 3, ast2700_gic131_gic195_intcmap},
+-    {196, 1, 4, ast2700_gic132_gic196_intcmap},
+-    {197, 1, 5, ast2700_gic133_gic197_intcmap},
++    {194, 1, 2, ast2700_gic194_intcmap},
++    {195, 1, 3, ast2700_gic195_intcmap},
++    {196, 1, 4, ast2700_gic196_intcmap},
++    {197, 1, 5, ast2700_gic197_intcmap},
+     {198, 1, 6, NULL},
+     {199, 1, 7, NULL},
+     {200, 1, 8, NULL},
+     {201, 1, 9, NULL},
+-    {128, 0, 1, ast2700_gic128_gic192_intcmap},
+-    {129, 0, 2, NULL},
+-    {130, 0, 3, ast2700_gic130_gic194_intcmap},
+-    {131, 0, 4, ast2700_gic131_gic195_intcmap},
+-    {132, 0, 5, ast2700_gic132_gic196_intcmap},
+-    {133, 0, 6, ast2700_gic133_gic197_intcmap},
+-    {134, 0, 7, NULL},
+-    {135, 0, 8, NULL},
+-    {136, 0, 9, NULL},
+ };
+ 
+ static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
+@@ -285,8 +269,7 @@ static qemu_irq aspeed_soc_ast2700_get_irq_index(AspeedSoCState *s, int dev,
+     }
+ 
+     /*
+-     * Invalid OR gate index, device IRQ should be between 128 to 136
+-     * and 192 to 201.
++     * Invalid OR gate index, device IRQ should be between 192 to 201.
+      */
+     g_assert_not_reached();
+ }
+@@ -701,7 +684,6 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     /* INTC -> GIC192 - GIC201 */
+-    /* INTC -> GIC128 - GIC136 */
+     for (i = 0; i < ic->num_outpins; i++) {
+         sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[0]), i,
+                            qdev_get_gpio_in(DEVICE(&a->gic),
+@@ -901,13 +883,6 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+         /*
+          * The AST2700 I2C controller has one source INTC per bus.
+          *
+-         * For AST2700 A0:
+-         * I2C bus interrupts are connected to the OR gate from bit 0 to bit
+-         * 15, and the OR gate output pin is connected to the input pin of
+-         * GICINT130 of INTC (CPU Die). Then, the output pin is connected to
+-         * the GIC.
+-         *
+-         * For AST2700 A1:
+          * I2C bus interrupts are connected to the OR gate from bit 0 to bit
+          * 15, and the OR gate output pin is connected to the input pin of
+          * GICINT194 of INTCIO (IO Die). Then, the output pin is connected
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index f14c340b602f..ad95d76543f3 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -21,24 +21,6 @@
+  * because its memory region is start at 0x1000
+  *
+  */
+-REG32(GICINT128_EN,         0x000)
+-REG32(GICINT128_STATUS,     0x004)
+-REG32(GICINT129_EN,         0x100)
+-REG32(GICINT129_STATUS,     0x104)
+-REG32(GICINT130_EN,         0x200)
+-REG32(GICINT130_STATUS,     0x204)
+-REG32(GICINT131_EN,         0x300)
+-REG32(GICINT131_STATUS,     0x304)
+-REG32(GICINT132_EN,         0x400)
+-REG32(GICINT132_STATUS,     0x404)
+-REG32(GICINT133_EN,         0x500)
+-REG32(GICINT133_STATUS,     0x504)
+-REG32(GICINT134_EN,         0x600)
+-REG32(GICINT134_STATUS,     0x604)
+-REG32(GICINT135_EN,         0x700)
+-REG32(GICINT135_STATUS,     0x704)
+-REG32(GICINT136_EN,         0x800)
+-REG32(GICINT136_STATUS,     0x804)
+ REG32(GICINT192_201_EN,         0xB00)
+ REG32(GICINT192_201_STATUS,     0xB04)
+ 
+@@ -507,29 +489,9 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
+     trace_aspeed_intc_write(name, offset, size, data);
+ 
+     switch (reg) {
+-    case R_GICINT128_EN:
+-    case R_GICINT129_EN:
+-    case R_GICINT130_EN:
+-    case R_GICINT131_EN:
+-    case R_GICINT132_EN:
+-    case R_GICINT133_EN:
+-    case R_GICINT134_EN:
+-    case R_GICINT135_EN:
+-    case R_GICINT136_EN:
+     case R_GICINT192_201_EN:
+         aspeed_intc_enable_handler(s, offset, data);
+         break;
+-    case R_GICINT128_STATUS:
+-    case R_GICINT129_STATUS:
+-    case R_GICINT130_STATUS:
+-    case R_GICINT131_STATUS:
+-    case R_GICINT132_STATUS:
+-    case R_GICINT133_STATUS:
+-    case R_GICINT134_STATUS:
+-    case R_GICINT135_STATUS:
+-    case R_GICINT136_STATUS:
+-        aspeed_intc_status_handler(s, offset, data);
+-        break;
+     case R_GICINT192_201_STATUS:
+         aspeed_intc_status_handler_multi_outpins(s, offset, data);
+         break;
+@@ -891,15 +853,6 @@ static const TypeInfo aspeed_intc_info = {
+ 
+ static AspeedINTCIRQ aspeed_2700_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
+     {0, 0, 10, R_GICINT192_201_EN, R_GICINT192_201_STATUS},
+-    {1, 10, 1, R_GICINT128_EN, R_GICINT128_STATUS},
+-    {2, 11, 1, R_GICINT129_EN, R_GICINT129_STATUS},
+-    {3, 12, 1, R_GICINT130_EN, R_GICINT130_STATUS},
+-    {4, 13, 1, R_GICINT131_EN, R_GICINT131_STATUS},
+-    {5, 14, 1, R_GICINT132_EN, R_GICINT132_STATUS},
+-    {6, 15, 1, R_GICINT133_EN, R_GICINT133_STATUS},
+-    {7, 16, 1, R_GICINT134_EN, R_GICINT134_STATUS},
+-    {8, 17, 1, R_GICINT135_EN, R_GICINT135_STATUS},
+-    {9, 18, 1, R_GICINT136_EN, R_GICINT136_STATUS},
+ };
+ 
+ static void aspeed_2700_intc_class_init(ObjectClass *klass, const void *data)
+@@ -909,8 +862,8 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, const void *data)
+ 
+     dc->desc = "ASPEED 2700 INTC Controller";
+     aic->num_lines = 32;
+-    aic->num_inpins = 10;
+-    aic->num_outpins = 19;
++    aic->num_inpins = 1;
++    aic->num_outpins = 10;
+     aic->mem_size = 0x4000;
+     aic->nr_regs = 0xB08 >> 2;
+     aic->reg_offset = 0x1000;
 -- 
 2.52.0
 
