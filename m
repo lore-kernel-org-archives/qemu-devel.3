@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDCBDC79FBA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B07AFC79FB9
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 19:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcpzT-0004pm-38; Mon, 05 Jan 2026 14:11:43 -0500
+	id 1vcpzO-0004bY-Nw; Mon, 05 Jan 2026 14:11:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vcpzM-0004UG-LD
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:11:36 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1vcpyc-0003r8-Og
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:10:59 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vcpzK-0006OW-6a
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:11:36 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-34c708702dfso276922a91.1
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 11:11:31 -0800 (PST)
+ id 1vcpyY-0006Im-FE
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 14:10:50 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-34c1d84781bso285064a91.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 11:10:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767640290; x=1768245090; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767640239; x=1768245039; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FhSHiaUAmchznQpwn/zLomPV++UqAw2HPkNHjU5ciQk=;
- b=e1FKKSDGFTVinc/kLyElFd07GxIbh9gW50raP9VVVGTHlEZpdxvsMz5oIMyuDtLK9g
- OP5E8M3/dZBhpIjMaKfD4n4CvmxQmSUZ5uv56Exbi47WrWqyS2GRisdUIkPhRld+rK6n
- T297uN2Bl0ZJJaHDaVya17JWoVzHR4lMIKu/fJQZSgqJAsvA4LThcdCs6RrOG81xhLh4
- TWZL5nhNuZpXLrqmUTLzNzvLSX2UIMZCKW75WxctZ8Xh0JPwftCHViCGqHnVk4TX+Vk+
- LBaIC0ZyuXgU6TAOYP/8Y1plDCoBZDY8jLHWc3h+aJGom2G47tbXCHCTDJR+fa/jpX9B
- ZC0Q==
+ bh=dhtgWQS1Vm9zPefCAfHUe6dNgmWecElkjTBpZfot+/o=;
+ b=e1rD3kcaJP0d5ixHtc8gSVmvKmYcdEQHX09Kq/ju0Amdk39TxQCh8BSqpZFDiC7sHW
+ CEX4SAJXPOcWvva/GzMBfs7GVi96XAsydlbkbkj1Yfca6IPwR1IK7RobUYBao1R+C1GT
+ QG9s00uB+kD3dXVFTaxPxE7F1BKvdxVeKw1XgJaa+IT9XXFrrpWvJlUW70krgzsoNUKa
+ JWHYH8UQqOAHC2nxbxjzu85tXEJ+ipPdt9kfSddgeZvuXMnPARvVviWg7nYlErpI4liH
+ 04UM35zWnpbiBOC50cIY+5oWtpSjfwHTM2U9Eh1K8a44cbfYok1ENaEAzsusaBpS8mKQ
+ Gu7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767640290; x=1768245090;
+ d=1e100.net; s=20230601; t=1767640239; x=1768245039;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FhSHiaUAmchznQpwn/zLomPV++UqAw2HPkNHjU5ciQk=;
- b=qXNdSDK4kN9iBEMdj3fu4u1qN809/z3ATVJBMX6Zwj9vYDKYrHw2yaq8ySva9WmHht
- nbdrmp8rIWvrKRrxdu5NgH79raUawcC0k9M5GxasJJeSBPeQ5Rj4l5CcT3jt3S27ej93
- DfzBt0zffJpmndktqn3beGLm/dmvVz2cmkuwto8H4DmP9WJ8gNI5+7dBJWnVs+D6LodV
- EyUVvKnx0eHLsbPyLmMNasXwzmtLHZRdF1GaE4PEiuRc8kUKYV9eC77ybe5/dLoSnDmi
- 1YmqcSl787rWYDGDntDEh6scWY9iGRHjB7X8nEMKWm/+o8XEW1bWHQKvV+GboQoxR9P+
- c/jg==
-X-Gm-Message-State: AOJu0YzEIkWkkT4WKwh9hbHc+XwIynEDeJ8wBY8vu7RM8U+W4YVgU3iw
- P1BQdIY7VGnE926QTkunHOgs5H+KUPBzkWEtoU4gtIIe7mNUcV7IusnrCrNev0Z5sgjvsB/EjKN
- tt7NLecY=
-X-Gm-Gg: AY/fxX46bNJe2mbUpDnD5WPjI5FmQeF7b7Z0exmOm801q3AT4kQx6eeD8PIdKaC42Jt
- B2QY0ijDU6a5+mN9QasAsNW6/GG1WtO8bWuo21r2sYb5iFieFlxlTUD6H7P6e3EFAjIoYVMU1t1
- fdywZxxyK9RFhGtYwVMpvOv310jlETxvnmxPuhqQIBK/UiHQKNlhXLu0kW0egqutOFva2GTCW8M
- Zcacw/SIJyf3TOOu3HNza39swQXb/JE3WjAoXV3TJF95uXbdDHWmbYvhZXtwQZcawW+vPJW+fwi
- V9ZNcuLLOmS6fm4sn7dqUR6xt7n63wmbDw6wzNr81Ndy6t0e15VTUxffSkPtij8tbi7AoIcq5ko
- b6gXZQU1qIDBSzGRWgqhZ8Pb/zNLWWWeaNRy2x1vLK7HPbVdHxWRjrt/1UOrJkBhrqH0O9WoYAm
- Y+f81EoiOKJY0CNzg/W6C7HAuZ7nGFXl2YZn26ejS0XR1SD/Q/38CGYL/9
-X-Google-Smtp-Source: AGHT+IFAa/xJ33Kf7LBFZnR4htuVhvTIbaoMejmPyEziTeQ5F8S0JcJg4efLuA3GUddWuvOfqO7jWA==
-X-Received: by 2002:a17:90b:1c07:b0:341:2b78:61b8 with SMTP id
- 98e67ed59e1d1-34f5f301a25mr232360a91.20.1767640290054; 
- Mon, 05 Jan 2026 11:11:30 -0800 (PST)
+ bh=dhtgWQS1Vm9zPefCAfHUe6dNgmWecElkjTBpZfot+/o=;
+ b=vMZNP9nq3MBRr7xIC1WLKRKsRt1ZxTegZiu6ATQs3xH8Z2WWYRJ//Wv05WrEZszV4Z
+ pvGIywZGiLzck6Q5AxKS//GV7U6dW628sjlMwrm0M4AoH+OBtMO/d/Trb/0c9Ah9nTJo
+ VLb2SEAM/xmI9OsBEJs5xO61bhyrx37nEnKLdTcMiGYwpNB4KxDjrZnTXDcjCXzt9aqG
+ MnWtxZZBviWsZojWV4J/9iUmVf3yL1kA+pYnBRqi42ZBrmwpzFKKiNZ4iZ+Q26CWiTI4
+ LXWG2vTx2EwehHG6jaYvSI33zY2c9wnOhYiYQC4s9ffQL2hW8iphg/HeCP4GUtKsC/X4
+ If4w==
+X-Gm-Message-State: AOJu0YxZh3luw6ybwKN3bMzE5kFKOtF64qZ7Yh8TQTPZ9rjNT5czEJpQ
+ lCWW+P2Y3PYXtRq2SsNFFFnWU0QMJVWLiiNXNt1Hp5IS7FnBoUt3zuuH7vDYaIYXqe8hhg4uF3y
+ UKqyvG3Y=
+X-Gm-Gg: AY/fxX7ZRR5twwPmvQldnu/n4BbyfAiIm4uvx9GB4vK2XMEWh7zorRpnhrQ9s3bmAz/
+ uvtV1i5gEhcD+La+25WenF1cAxa98WTlxEhrtLG16S0zvkuW6NRjJ/FYE0Kv7/in78WH+QevX0+
+ HGkF0Cpx21zSHUF9uJPWT9rntQB6g1wcs9AJMKqW2o3czMaTeMQvhca1kElvggYuQ67F35kN1PB
+ e1VuSoDQDb30wLY+bDDy4Gu/wO097a/JWJMbT2dNkflMIDax0f0mjkR4zIZnocbxmoAH3dUB3ui
+ kPgUiC4zMwtDTXTyY5UkGyLHMhdI4JfUvXc2Qhzti3Q1XjRrukjiV9rPGD0zRxlUq2ld9D4ERRr
+ vo0cek8jPws/O2gl27wxMDotCoBQ2EnVFwkb27Tu1vFQSgPQyl4V8eOA0ysbirK05vqh0o6qyNw
+ 6uOcGM3uH4qEgAne5wlYOOk+X0mCIFvZytFxLdI6JMgaIUBAfKmko+wQqJ
+X-Google-Smtp-Source: AGHT+IEPh1fkRoIZmQn5DssLx+2E862WXaqImyWA7eBRQ/wbj2xNXM3AGempovMPn77eijqwr2hx7g==
+X-Received: by 2002:a17:90b:3f83:b0:34a:b4a2:f0bf with SMTP id
+ 98e67ed59e1d1-34f5f291014mr286982a91.16.1767640238754; 
+ Mon, 05 Jan 2026 11:10:38 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5fa78f4asm92364a91.3.2026.01.05.11.11.27
+ 98e67ed59e1d1-34f5f6db356sm123517a91.0.2026.01.05.11.10.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Jan 2026 11:11:29 -0800 (PST)
-Message-ID: <5cab6793-7bb5-4272-83e0-9dd7a73188b3@linaro.org>
-Date: Mon, 5 Jan 2026 11:11:26 -0800
+ Mon, 05 Jan 2026 11:10:38 -0800 (PST)
+Message-ID: <94813024-10f3-4411-8eb8-a221c000d4e5@linaro.org>
+Date: Mon, 5 Jan 2026 11:10:35 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] hw/arm/smmu: add memory regions as property for an
- SMMU instance
+Subject: Re: [PATCH v2 0/2] target/arm: make granule_protection_check usable
+ from SMMU
 Content-Language: en-US
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Radoslaw Biernacki <rad@semihalf.com>,
- tangtao1634@phytium.com.cn, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Eric Auger <eric.auger@redhat.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-References: <20251216235731.1793908-1-pierrick.bouvier@linaro.org>
+Cc: Tao Tang <tangtao1634@phytium.com.cn>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>
+References: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251216235731.1793908-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,26 +109,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/25 3:57 PM, Pierrick Bouvier wrote:
-> This will be used to access non-secure and secure memory. Secure support
-> and Granule Protection Check (for RME) for SMMU need to access secure
-> memory.
+On 12/15/25 4:01 PM, Pierrick Bouvier wrote:
+> This series prepare granule_protection_check to be usable from SMMU, for
+> implementing RME feature.
+> It's based on Tao's commit [1] extracting ARMSecuritySpace from cpu.h header for
+> convenience.
 > 
-> As well, it allows to remove usage of global address_space_memory,
-> allowing different SMMU instances to have a specific view of memory.
+> [1] https://lore.kernel.org/qemu-devel/20251012150701.4127034-5-tangtao1634@phytium.com.cn/
 > 
-> User creatable SMMU are handled as well for virt machine,
-> by setting the memory properties when device is plugged in.
+> To demonstrate the purpose, this is the (wip) change to use that from SMMU:
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   include/hw/arm/smmu-common.h |  4 ++++
->   include/hw/arm/virt.h        |  2 ++
->   hw/arm/sbsa-ref.c            | 16 ++++++++++++----
->   hw/arm/smmu-common.c         | 25 +++++++++++++++++++++++++
->   hw/arm/virt.c                | 13 +++++++++++--
->   5 files changed, 54 insertions(+), 6 deletions(-)
-Gentle ping on this patch that was not yet reviewed.
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 80f48df3dda..1acff3bbd66 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1055,12 +1056,36 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
+>       }
+> 
+>       cached_entry = smmu_translate(bs, cfg, addr, flag, &ptw_info);
+>       if (desc_s2_translation) {
+>           cfg->asid = asid;
+>           cfg->stage = stage;
+>       }
+> 
+> +    if (cached_entry) {
+> +        /* The fields in SMMU_ROOT_GPT_BASE_CFG are the same as for GPCCR_EL3,
+> +         * except there is no copy of GPCCR_EL3.GPC. See SMMU_ROOT_CR0.GPCEN. */
+> +        const bool gpc_enabled = FIELD_EX32(s->root.cr0, ROOT_CR0, GPCEN);
+> +        if (gpc_enabled) {
+> +            hwaddr paddress = CACHED_ENTRY_TO_ADDR(cached_entry, addr);
+> +            ARMSecuritySpace pspace = sec_sid_to_security_space(cfg->sec_sid);
+> +            ARMSecuritySpace ss = ARMSS_Root;
+> +            ARMMMUFaultInfo fi;
+> +
+> +            ARMGranuleProtectionConfig config = {
+> +                .gpccr = s->root.gpt_base_cfg,
+> +                .gptbr = s->root.gpt_base >> 12,
+> +                .parange = 6, /* 52 bits */
+> +                .support_sel2 = false,
+> +                .gpt_as = &s->smmu_state.as_secure_memory
+> +            };
+> +            if (!arm_granule_protection_check(config, paddress,
+> +                                              pspace, ss, &fi)) {
+> +                printf("ERROR: fi.type=%d fi.gpcf=%d\n", fi.type, fi.gpcf);
+> +                g_assert_not_reached();
+> +            }
+> +        }
+> +    }
+> +
+>       if (!cached_entry) {
+>           /* All faults from PTW has S2 field. */
+>           event->u.f_walk_eabt.s2 = (ptw_info.stage == SMMU_STAGE_2);
+> 
+> v2
+> --
+> 
+> - remove extra boilerplate/include/line from arm-security.h
+> - use local var gpccr instead of config.gpccr
+> - extract GPC enable check out of arm_granule_protection_check
+> - rename as_secure in gpt_as
+> - use arm_addresspace to retrieve gpt address space
+> 
+> Pierrick Bouvier (1):
+>    target/arm/ptw: make granule_protection_check usable without a cpu
+> 
+> Tao Tang (1):
+>    target/arm: Move ARMSecuritySpace to a common header
+> 
+>   include/hw/arm/arm-security.h | 37 ++++++++++++++++++++++
+>   target/arm/cpu.h              | 59 +++++++++++++++++++++--------------
+>   target/arm/ptw.c              | 59 ++++++++++++++++++++++-------------
+>   3 files changed, 110 insertions(+), 45 deletions(-)
+>   create mode 100644 include/hw/arm/arm-security.h
+> 
+
+Gentle ping on this series. It has been reviewed and can be merged.
 
 Regards,
 Pierrick
