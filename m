@@ -4,105 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC2D1CD0406
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 21:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A89ECD0407
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 21:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcrk4-0000xc-W8; Mon, 05 Jan 2026 16:03:57 -0500
+	id 1vcrl9-0001fL-Hn; Mon, 05 Jan 2026 16:05:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcrjy-0000tp-HK
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:03:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vcrjx-0003aQ-1f
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:03:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767647028;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MlMTSoAiQ8gEDlqYVx547vNWomrXHtU184/JsmW9UZc=;
- b=NTP2C4lm6fcz+19WQQAwrLFb6pBo4xixsyYXkogDVO/ZcfMi0gmHIwzptHMt33nm61mykB
- J8TtG1WPnhDDMBdjhsFjZ7rN8moc/TC7yM0Kgog/TDnPoQJ2gr6HbJsUKP0OdxPTJBDKXA
- FR3jwqzmtHolWpz8npDF+MpmSvCojJ0=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-43-arkXXBSuMvad-bjcXM49nQ-1; Mon, 05 Jan 2026 16:03:45 -0500
-X-MC-Unique: arkXXBSuMvad-bjcXM49nQ-1
-X-Mimecast-MFC-AGG-ID: arkXXBSuMvad-bjcXM49nQ_1767647023
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8b259f0da04so73955985a.0
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 13:03:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vcrl8-0001em-9R
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:05:02 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vcrl6-0003po-CP
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:05:01 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7aab7623f42so398651b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 13:04:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767647023; x=1768251823; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=MlMTSoAiQ8gEDlqYVx547vNWomrXHtU184/JsmW9UZc=;
- b=fEIqS3HahvoJkcnMtCn0shryR5nr51y9uP7hnlNIwfqdI3qxllsYLQV9HG3u4TpVy3
- GCfRXHo0ioycBpQ0MkV0+k7JRttpTjf6CVacLS7QBkJ9LDX2fe0o6o7+tZB0nlqPBD2y
- vl201w+q3ROKIQDgngpwOjUPyDYJvxxIhodtSA4AhAP6VSH+91wS6e+xm2BxK879Glg3
- ygaw7ruIIICPdH/8M1mPoi6FGqvBX9HM6ehl4saU29fpy+EgnjR6xWZmXBkxbGxOjFCR
- h63w3mae9gTT1cGDoR0lEcF7Y/yt1oHjmceRZVgcRVUiy22vUT2i1+VpPEvs85Rkq42g
- n7Eg==
+ d=linaro.org; s=google; t=1767647099; x=1768251899; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oojgqbVZJFnZ71rWhStDXV6ptsmCZnMfdxVeg3Qc5V8=;
+ b=ailwJBD2h7GqY/FPCJ5982jXD4kV4YHeokCzAOJPmuvND0tneMeQoUa9BR9vJsfCVd
+ aV7wo7UPphK2s+3kHZekFgdded+5rJ9m9bWb9Wn35vy1A55xbK0g3LLycOGTnv5glNQy
+ jR32rtI/J4eD8dPrKm4abwZsJKa5q6GzTUP9HXR0DefS+pxiS03WHHri0gmumeHGckfk
+ FVjoKNNDL+fBEz0fODOgG8WQVWDk7agywqfJB9n1Ckxz2N5R7bUlm19VXaQ0QAqoChWi
+ +O2QafLb6/j5OFo1Wdtf2Sgaf43ilvds+e7yBPRhhIYaNDMXJ7LDm19nTxzSua9hyHD1
+ LkaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767647023; x=1768251823;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MlMTSoAiQ8gEDlqYVx547vNWomrXHtU184/JsmW9UZc=;
- b=eVZiBs8jQ6BJ35qUekDErfLN3to5cC7IiBcYe/JMLfliwMzdCktN3LLzKoPju3gF2M
- fT3PScuRgYtvpSrTDW9qkxEcIZavo5uZ8O49l5VC92t0IKttweNn3ttSUhQZ7WZ2NkBK
- fUgyWx4nQgQhPba+J2kCq1WlFiCFc2Io4diTjq/nc2xdKyvbUKqpmXdDMUKBEQyVQYBQ
- aRnR8fSV0nFDOqYTyKTGMr4g52fH1opwhhKNICddRPEZW8nUYAEynTXNQ1J2J3VE7vpz
- cH8iKc/I4KgDavBz8h6vy/lesCA+b+x4XyeGiQYyCVs+qnRIGna20OmVWqtU2u6r/h2E
- WYFQ==
-X-Gm-Message-State: AOJu0YzsznGG/eswJW1xCDD2huUpLkKEvjGrmwK9735AEclEJ2bUWgJw
- M/T/F8m5Q8u/ryHZB2mzFZf9vqcT9C/KmEyw503X43ZfvqOCEXLJK8L7x1yGAOtmhk5j0kKYQmm
- kQqcIMP8Q+TMOu/3zVkqlsUJtpqlOE/Cn8r2CxVxHianFGgokpYWFjfL3
-X-Gm-Gg: AY/fxX7UXJSW5aIGkKpzWsmYTCFpKM+4u/g821mr3uyvA/Nb9h29yc5mM0jvDLoXXRI
- QSJ5WBdTE0t/uL7kXxDhQyAB4qZKJprU2CiVMiCrMzUL2sHj8EARRdA/uX4gFMjfxtDKXYM25eP
- PzLlleirtKqOInVCkmm7TyzpaU58rxUHaL3bSEYBMEnQwkG6k8a/LkFPh3iChokMzGnQkUAfInp
- qDKuBqEV4C0zSMBhqkQrBvcoZtYUY7sC8xqrfyRqfLwX7R6LbHo9Geh4cZhGL1l7VOihcHpQY76
- Wm2uCHUY9u+vY9csyokkgNxMRC9gGvnpyP8BTyAo+nsKPGNVQvj7lor/9FlKJZVV0gmjrr8cIEq
- EnRA=
-X-Received: by 2002:a05:620a:1791:b0:8b2:6a4f:ba70 with SMTP id
- af79cd13be357-8c37ebdc4dcmr117441885a.76.1767647023156; 
- Mon, 05 Jan 2026 13:03:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IERBFydtNkGQ9I2PCSoZzT5vCKXKmQWNEcFVIp5ymGNot4Ujd+4T7aIZ+GWrZCSUFMcvy711g==
-X-Received: by 2002:a05:620a:1791:b0:8b2:6a4f:ba70 with SMTP id
- af79cd13be357-8c37ebdc4dcmr117439085a.76.1767647022730; 
- Mon, 05 Jan 2026 13:03:42 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c37f4b92a0sm31238885a.13.2026.01.05.13.03.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Jan 2026 13:03:42 -0800 (PST)
-Date: Mon, 5 Jan 2026 16:03:41 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>
-Subject: Re: [PATCH v2 22/25] migration: Free cpr-transfer MigrationAddress
- along with gsource
-Message-ID: <aVwnLQ-4Hp8NGdbR@x1.local>
-References: <20260105190644.14072-1-farosas@suse.de>
- <20260105190644.14072-23-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1767647099; x=1768251899;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oojgqbVZJFnZ71rWhStDXV6ptsmCZnMfdxVeg3Qc5V8=;
+ b=rNJjgWFOSEyHgwOufgNR5tYwr4D4SBmc8izbBvPvome6f4uyHsI+OqcfPBi4qeG4Z1
+ eRQVpOEJFlZpIFc+kE+ZIjKCduJ2HnL44trfynBZCjgd4lCeR9eLFn652ikM2wS5MaGW
+ XCCHUvhz27CkFZRdIGmBiboBIJYdI+taU1pRnpGLnuEMNGPafSlUf5fcb865iksTThdO
+ FiN0xpoHCjNajbx60QLFpkAkLwdQcH9qNWVfbnq3GULXqQipsq1noNFaLo5gAp5AjW38
+ xKTio3w/zBkpCF01vNPHsDl1YMh+w/UO0KnxCg7g/RTLgfpqSYRspGfQ9y74ZLIo1mGz
+ AcVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLts6i/M7Gr8Iq8bn4pt95hRdRrzC3K5r2mBpYNJSHMBDhzlbFMN3FBnj8U0q58XxvaPujvGFw1Yb4@nongnu.org
+X-Gm-Message-State: AOJu0Yw3tIMGBRMXrHVM28F9U6+UmQTcVX+V7ypKyxyJUbVDEP0JDfm4
+ y2mXbETbVVSnVObUfBZcXxOJxCBd1mlGjw1LhzJN0UWDWLyVE6xV3MvD3V0+4zRAyFFPePyNEWz
+ 2bvOjbGA=
+X-Gm-Gg: AY/fxX7peZMyKQXTYdCYfSGCLMwqcGKrpYavltRvOOp4rw3UP87avi8ZsapJ0Ruy24W
+ 7yjdRfF6mfLBTyUwJ5jDBLTTvny0pWSUOCo/K6VlVniHj+m3sIGtesh8cuX4Ct5JWyqDUSPb7AW
+ 2hcXiYqIUvqqjNXsAf1qbsHApCURHc2Ti7iY3XNo0q8qTOPCjXP3BE/AeYGn4TwYL1h81tNMBQQ
+ hOmO3b0BDbT6q0akghGMp3AlnGM+uVdsfNh67Q4zzfScSwJsgvudPNhjjjue0Tu0q3Y2HE5bLsB
+ pWOeAIOGMNPTRNHD/fd36xbFX9DhAGXgfcNUeLp8FCiDrFfkUXZSEvuCmZ8n0OZf/mvR9Bb3oKj
+ 4EGcFLkGJFFWdZrY8qRlRJBRKerLG3sF2w7pyLusZymk+1A6AgmP4Kl98H36maFig5BXYUrBydP
+ N9N7K9mtyiL8np5vD5fmzIBmw67Kqc8azfmn6hNxU8
+X-Google-Smtp-Source: AGHT+IHlWpvGcF/N+VYlYrplC0gLzwQ1oIes7bqBd1+6Y9c6fEmXx5MrSy9tOfZtf546r6EMe11uIQ==
+X-Received: by 2002:a05:6a00:1d9f:b0:7e8:4433:8fa0 with SMTP id
+ d2e1a72fcca58-818825f39d5mr794022b3a.40.1767647098693; 
+ Mon, 05 Jan 2026 13:04:58 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-819c52f8952sm63461b3a.39.2026.01.05.13.04.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Jan 2026 13:04:58 -0800 (PST)
+Message-ID: <b83b2bbe-4cf3-487f-9a46-11487db8c062@linaro.org>
+Date: Tue, 6 Jan 2026 08:04:52 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260105190644.14072-23-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v3 01/12] target/arm: implement MTE_PERM
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com>
+ <20260105-feat-mte4-v3-1-86a0d99ef2e4@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260105-feat-mte4-v3-1-86a0d99ef2e4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,26 +109,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 05, 2026 at 04:06:39PM -0300, Fabiano Rosas wrote:
-> When setting a callback on a Glib source and giving it a data pointer,
-> it's natural to also provide the destructor for the data in question.
+On 1/6/26 05:14, Gabriel Brookman wrote:
+> Introduces a new stage 2 memory attribute, NoTagAccess, that raises a
+> stage 2 data abort on a tag check, tag read, or tag write.
 > 
-> Since migrate_hup_add() already needs to clone the MigrationAddress
-> when setting the qmp_migrate_finish_cb callback, also pass the
-> qapi_free_MigrationAddress as the GDestroyNotify callback.
+> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+> ---
+>   target/arm/cpu-features.h   |  5 +++++
+>   target/arm/ptw.c            | 17 ++++++++++++++++-
+>   target/arm/tcg/mte_helper.c | 31 +++++++++++++++++++++++++++++++
+>   3 files changed, 52 insertions(+), 1 deletion(-)
 > 
-> With this the address doesn't need to be freed at the callback body,
-> making the management of that memory slight simpler.
-> 
-> (also fix the indentation of migrate_hup_add)
-> 
-> Cc: Mark Kanda <mark.kanda@oracle.com>
-> Cc: Ben Chaney <bchaney@akamai.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index c86a4e667d..48009b5a66 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -1139,6 +1139,11 @@ static inline bool isar_feature_aa64_mte3(const ARMISARegisters *id)
+>       return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) >= 3;
+>   }
+>   
+> +static inline bool isar_feature_aa64_mteperm(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR2, MTEPERM) == 1;
+> +}
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Per the Arm ARM re future expansion, this should be true for any non-zero value.
+See "D24.1.3 Principles of the ID scheme for fields in ID registers".
 
--- 
-Peter Xu
+> @@ -3403,6 +3403,18 @@ static ARMCacheAttrs combine_cacheattrs(uint64_t hcr,
+>           s1.attrs = 0xff;
+>       }
+>   
+> +    if (hcr & HCR_FWB) {
+> +        if (s2.attrs >= 0xe) {
+> +            notagaccess = true;
+> +            s2.attrs = 0x7;
+> +        }
+> +    } else {
+> +        if (s2.attrs == 0x4) {
+> +            notagaccess = true;
+> +            s2.attrs = 0xf;
+> +        }
+> +    }
+> +
+>       /* Combine shareability attributes (table D4-43) */
+>       if (s1.shareability == 2 || s2.shareability == 2) {
+>           /* if either are outer-shareable, the result is outer-shareable */
+> @@ -3437,6 +3449,9 @@ static ARMCacheAttrs combine_cacheattrs(uint64_t hcr,
+>       /* TODO: CombineS1S2Desc does not consider transient, only WB, RWA. */
+>       if (tagged && ret.attrs == 0xff) {
+>           ret.attrs = 0xf0;
+> +        if (notagaccess) {
+> +            ret.attrs = 0xe0;
+> +        }
+>       }
 
+Better as
+
+     ret.attrs = notagaccess ? 0xe0 : 0xf0;
+
+Given that this hunk corresponds to J1.3.5.2 EncodePARAttrs, I think it would be worth a 
+comment that FEAT_MTE_PERM is checked in allocation_tag_mem_probe and that the attr 
+encoding is otherwise RESERVED.
+
+
+> diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+> index bb48fe359b..942bd4103d 100644
+> --- a/target/arm/tcg/mte_helper.c
+> +++ b/target/arm/tcg/mte_helper.c
+> @@ -57,6 +57,28 @@ static int choose_nonexcluded_tag(int tag, int offset, uint16_t exclude)
+>       return tag;
+>   }
+>   
+> +#ifdef CONFIG_USER_ONLY
+> +#else
+
+#ifndef
+
+
+> +/*
+> + * Constructs S2 Permission Fault as described in ARM ARM "Stage 2 Memory
+> + * Tagging Attributes".
+> + */
+> +static void mte_perm_check_fail(CPUARMState *env, uint64_t dirty_ptr,
+> +                                uintptr_t ra, bool is_write)
+> +{
+> +    uint64_t syn;
+> +
+> +    env->exception.vaddress = dirty_ptr;
+> +
+> +    syn = syn_data_abort_no_iss(0, 0, 0, 0, 0, is_write, 0);
+> +
+> +    syn |= BIT_ULL(42); /* TnD is bit 42 */
+
+Surely (32 + 9) == 41 for the TagAccess bit.
+
+> +
+> +    raise_exception_ra(env, EXCP_DATA_ABORT, syn, 2, ra);
+> +    g_assert_not_reached();
+> +}
+> +#endif
+> +
+>   uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
+>                                     uint64_t ptr, MMUAccessType ptr_access,
+>                                     int ptr_size, MMUAccessType tag_access,
+> @@ -116,6 +138,15 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
+>       }
+>       assert(!(flags & TLB_INVALID_MASK));
+>   
+> +    /*
+> +     * If the virtual page MemAttr == Tagged NoTagAccess, throw S2 permission
+> +     * fault (conditional on mteperm being implemented and RA != 0).
+> +     */
+> +    if (ra && cpu_isar_feature(aa64_mteperm, env_archcpu(env))
+> +        && full->extra.arm.pte_attrs == 0xe0) {
+> +        mte_perm_check_fail(env, ptr, ra, tag_access == 1);
+> +    }
+> +
+>       /* If the virtual page MemAttr != Tagged, access unchecked. */
+>       if (full->extra.arm.pte_attrs != 0xf0) {
+>           return NULL;
+> 
+
+
+r~
 
