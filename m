@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF40CD0412
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 21:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B426CCD0412
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 21:55:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcsQp-0002R6-GP; Mon, 05 Jan 2026 16:48:07 -0500
+	id 1vcsXV-0006IY-2o; Mon, 05 Jan 2026 16:55:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1vcsQP-0002NU-46
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:47:54 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1vcsQN-0005KD-3b
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 16:47:40 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-64b4b35c812so600073a12.0
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 13:47:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767649655; x=1768254455; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=xwq/+u1snyOM2qlXuEWFVd7bVZejAJMruGaE8Htw3t4=;
- b=QufII6KHv+LKZKCxrCcjYNC3wEiDR0LUBA9wExqQgO+ZZ4tllDw9Kb66BsHlSYVfXy
- 82/saSr9xQ++9yCPoZVUi4DJluizViDSa0ERYZSmEpDS9vcQcfLYC7b4Jm1+mkZXq4+B
- ii4wS1uW4uVohWtuamI1Rs6dnRa2Yg3jgnZeYnFQucft+wIBdxOH8dt10GFgS9qmWVQg
- Ptz8e+WVUfChGFz3V3zHHfJfc9Hqu91qjjYc4yyLexoK6ezqfWYEEWYMsG5WqUxcZFgT
- 6U5xEBfXTW2x+RpQ23efv64z9p0F9s36+7h/bLzWAge1FYWMwXyTj5qzLidmb5MdNbvK
- l7Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767649655; x=1768254455;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xwq/+u1snyOM2qlXuEWFVd7bVZejAJMruGaE8Htw3t4=;
- b=h38kyi9cAyzJrRWTlLdpb/vUSzO2+I/WnX5h4y86LBGAKNj86MmaWgScKwaXKjs6lr
- IcluJleR1z2rBEWrCikQt7mE+n81fW/+chFSm76T+L3kSQXN2Bd7+Nr1R+Pmi4ebbW8X
- uCxa560CvgxxpjRzlZIMM7NgS/EEi2/ZursEutK4XlU+TXffsEG3dXoVX2oCxkwWY1FC
- l+1DuVtkk5JeHPFjlPNNYI+6YrnYGhA9Fc0iTdIfN2Z2q6X3Z/LM31Twz0r+dKirsN93
- 7+Z4ra9GPJbGSOCCIJbw9Q6EMW9eKRwJ8LkXQpn8xZrY9h6xNTW7Zik/6pFwepwjQY+G
- ijsw==
-X-Gm-Message-State: AOJu0Ywpu6uE4y+FTZgOArNYi7JCTpCgA4QrOGPnaEbdE9oc//0QqCbY
- FrBl4CLSy+9su/juKWUOzSVIlIt6yc1HRDK0OYhwum6BkDWkac7PvOxzvXk5cMgT+7TUdUHm05o
- UqceoL0pM7Dagmrz0uUOz+S7KAH8Y5kqoVA==
-X-Gm-Gg: AY/fxX4CX6YhaxE3gYOJdtqoH3oYOvoGcr3mJhDyaXfJ35OIJFhANGL+qIh37A8l6oH
- bqNf2yglfLd4PCOdZVaywYsFewE5UCMkV7HNTpHCuGzgJksZCt6dBvVPdC2HyHbBWzMmu3YwS+3
- 725vYYLwUXAWmrg+lWshK6TcI/eBz8r/Dkz0uhhyu0Zbvgb4hqroIofp/TkalOPIeVU+5EdBZOC
- btCBpdZ4t+VmlvKBwhfmSmqG7d4wDbv9FLVDv7BSfUFr/WiL3WUwNyfJt/0FPvROeNGPw==
-X-Google-Smtp-Source: AGHT+IGzqMPIvjpm/BPRALlmRdcbNGNJ9j3aeCDnc9DqBiLhI9CAlWRiqsR+98pXwIxsqy5E6mdSnJ1nvl71RajfhBE=
-X-Received: by 2002:a05:6402:2792:b0:641:2cf3:ec3e with SMTP id
- 4fb4d7f45d1cf-6507931fd53mr740163a12.11.1767649654614; Mon, 05 Jan 2026
- 13:47:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vcsXS-0006HL-VW; Mon, 05 Jan 2026 16:54:59 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vcsXP-0006Ca-3T; Mon, 05 Jan 2026 16:54:58 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 3BEB86013C;
+ Mon,  5 Jan 2026 21:54:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D215EC19424;
+ Mon,  5 Jan 2026 21:54:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1767650091;
+ bh=87yUqJH6aCJ3Tzr0TY4MD9gaivxrl+oPobd3+WA3yRw=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=BjwJ41T2NaEfHEbf9IyqvzC54fMtvDdm5Kx0SL5FqyGx34USd1LHa4u2sRDZMcQx4
+ HxrxEkVjo4hyQbWCYIm6dSFbG3NwxSVHCA9aIIGcfrxd++FQyVZjNFTk9mcdGxezOo
+ t/cGr0qp/NJEWANg/V4DpeLWZYeLRG7m7oLlb91cvTwVguUeNlXojammpKkH9oa96H
+ dMpSvmzC8KFKm1Hw8Pnxm/NJBbqoctXAjNxkYJOy2XYQtmu8bj5W+P8ZDb9LGb9v6T
+ seUx83FluArlR6YZHnyQr25kGQMD7hiZm8EDFBz3Oxo6n1hNG+9ZSaploPEffWujQ8
+ 6mAP/crg092Gg==
+From: Drew Fustini <fustini@kernel.org>
+Date: Mon, 05 Jan 2026 13:54:20 -0800
+Subject: [PATCH v4 2/6] hw/riscv: define capabilities of CBQRI controllers
 MIME-Version: 1.0
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 5 Jan 2026 16:47:22 -0500
-X-Gm-Features: AQt7F2rKVguptLS0_HGBM_cWisOO9Z59HcS_ZCk33hJtwl63lB_QQNWyrYq4Wfo
-Message-ID: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
-Subject: Call for GSoC internship project ideas
-To: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>
-Cc: Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, danpb@redhat.com, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alex Bennee <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x534.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260105-riscv-ssqosid-cbqri-v4-2-9ad7671dde78@kernel.org>
+References: <20260105-riscv-ssqosid-cbqri-v4-0-9ad7671dde78@kernel.org>
+In-Reply-To: <20260105-riscv-ssqosid-cbqri-v4-0-9ad7671dde78@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>, 
+ =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
+ Atish Kumar Patra <atishp@rivosinc.com>, 
+ Atish Patra <atish.patra@linux.dev>, 
+ Vasudevan Srinivasan <vasu@rivosinc.com>, 
+ =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>, 
+ yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
+ guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
+ Drew Fustini <fustini@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4086; i=fustini@kernel.org;
+ h=from:subject:message-id; bh=DEQYQbjVSlboGU+BOdVfGwtVHZcRjAKo5oA3AsVDxuE=;
+ b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWTGGGsePTUjqY1v5sJL+5dkPOXvztixrmGVifE/5sUn1
+ n1VneS1u6OUhUGMi0FWTJFl04e8C0u8Qr8umP9iG8wcViaQIQxcnAIwkem3GBney0r4FXEd91s9
+ W4lVpCRs96dkvnV6UX0f9vv9+Mo7xWQWI8NmsaiQmPeTsqd1Je9pPqnYy/shdnJOb/K/Ve4Hp6z
+ eoMgPAA==
+X-Developer-Key: i=fustini@kernel.org; a=openpgp;
+ fpr=1B6F948213EA489734F3997035D5CD577C1E6010
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=fustini@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,62 +90,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear QEMU and KVM communities,
-QEMU will apply for the Google Summer of Code internship
-program again this year. Regular contributors can submit project
-ideas that they'd like to mentor by replying to this email by
-January 30th.
+From: Nicolas Pitre <npitre@baylibre.com>
 
-About Google Summer of Code
------------------------------------------
-GSoC (https://summerofcode.withgoogle.com/) offers paid open
-source remote work internships to eligible people wishing to participate
-in open source development. QEMU has been doing internship for
-many years. Our mentors have enjoyed helping talented interns make
-their first open source contributions and some former interns continue
-to participate today.
+Define structs to represent the hardware capabilities of capacity and
+bandwidth controllers according to the RISC-V Capacity and Bandwidth QoS
+Register Interface (CBQRI).
 
-Who can mentor
-----------------------
-Regular contributors to QEMU and KVM can participate as mentors.
-Mentorship involves about 5 hours of time commitment per week to
-communicate with the intern, review their patches, etc. Time is also
-required during the intern selection phase to communicate with
-applicants. Being a mentor is an opportunity to help someone get
-started in open source development, will give you experience with
-managing a project in a low-stakes environment, and a chance to
-explore interesting technical ideas that you may not have time to
-develop yourself.
+Link: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
+Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Drew Fustini <fustini@kernel.org>
+---
+ MAINTAINERS              |  7 +++++
+ include/hw/riscv/cbqri.h | 82 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 89 insertions(+)
 
-How to propose your idea
-------------------------------
-Reply to this email with the following project idea template filled in:
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cbae7c26f83e..9d1b2b411010 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -357,6 +357,13 @@ F: target/riscv/XVentanaCondOps.decode
+ F: target/riscv/insn_trans/trans_xventanacondops.c.inc
+ F: disas/riscv-xventana*
+ 
++RISC-V QoS (Ssqosid ext and CBQRI spec)
++M: Nicolas Pitre <npitre@baylibre.com>
++M: Drew Fustini <fustini@kernel.org>
++L: qemu-riscv@nongnu.org
++S: Supported
++F: include/hw/riscv/cbqri.h
++
+ RENESAS RX CPUs
+ R: Yoshinori Sato <yoshinori.sato@nifty.com>
+ S: Orphan
+diff --git a/include/hw/riscv/cbqri.h b/include/hw/riscv/cbqri.h
+new file mode 100644
+index 000000000000..a07f1e3a2dde
+--- /dev/null
++++ b/include/hw/riscv/cbqri.h
+@@ -0,0 +1,82 @@
++/*
++ * RISC-V Capacity and Bandwidth QoS Register Interface
++ * URL: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
++ *
++ * Copyright (c) 2023 BayLibre SAS
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef HW_RISCV_CBQRI_H
++#define HW_RISCV_CBQRI_H
++
++#include "qemu/typedefs.h"
++
++#define RISCV_CBQRI_VERSION_MAJOR   0
++#define RISCV_CBQRI_VERSION_MINOR   1
++
++#define TYPE_RISCV_CBQRI_CC         "riscv.cbqri.capacity"
++#define TYPE_RISCV_CBQRI_BC         "riscv.cbqri.bandwidth"
++
++/* Capacity Controller hardware capabilities */
++typedef struct RiscvCbqriCapacityCaps {
++    uint16_t nb_mcids;
++    uint16_t nb_rcids;
++
++    uint16_t ncblks;
++
++    bool supports_at_data:1;
++    bool supports_at_code:1;
++
++    bool supports_alloc_op_config_limit:1;
++    bool supports_alloc_op_read_limit:1;
++    bool supports_alloc_op_flush_rcid:1;
++
++    bool supports_mon_op_config_event:1;
++    bool supports_mon_op_read_counter:1;
++
++    bool supports_mon_evt_id_none:1;
++    bool supports_mon_evt_id_occupancy:1;
++} RiscvCbqriCapacityCaps;
++
++/* Bandwidth Controller hardware capabilities */
++typedef struct RiscvCbqriBandwidthCaps {
++    uint16_t nb_mcids;
++    uint16_t nb_rcids;
++
++    uint16_t nbwblks;
++    uint16_t mrbwb;
++
++    bool supports_at_data:1;
++    bool supports_at_code:1;
++
++    bool supports_alloc_op_config_limit:1;
++    bool supports_alloc_op_read_limit:1;
++
++    bool supports_mon_op_config_event:1;
++    bool supports_mon_op_read_counter:1;
++
++    bool supports_mon_evt_id_none:1;
++    bool supports_mon_evt_id_rdwr_count:1;
++    bool supports_mon_evt_id_rdonly_count:1;
++    bool supports_mon_evt_id_wronly_count:1;
++} RiscvCbqriBandwidthCaps;
++
++DeviceState *riscv_cbqri_cc_create(hwaddr addr,
++                                   const RiscvCbqriCapacityCaps *caps,
++                                   const char *target_name);
++DeviceState *riscv_cbqri_bc_create(hwaddr addr,
++                                   const RiscvCbqriBandwidthCaps *caps,
++                                   const char *target_name);
++#endif
 
-=== TITLE ===
+-- 
+2.43.0
 
-'''Summary:''' Short description of the project
-
-Detailed description of the project that explains the general idea,
-including a list of high-level tasks that will be completed by the
-project, and provides enough background for someone unfamiliar with
-the code base to research the idea. Typically 2 or 3 paragraphs.
-
-'''Links:'''
-* Links to mailing lists threads, git repos, or web sites
-
-'''Details:'''
-* Skill level: beginner or intermediate or advanced
-* Language: C/Python/Rust/etc
-
-More information
-----------------------
-You can find out about the process we follow here:
-Video: https://www.youtube.com/watch?v=xNVCX7YMUL8
-Slides (PDF): https://vmsplice.net/~stefan/stefanha-kvm-forum-2016.pdf
-
-The QEMU wiki page for GSoC 2026 is now available:
-https://wiki.qemu.org/Google_Summer_of_Code_2026
-
-Thanks,
-Stefan
 
