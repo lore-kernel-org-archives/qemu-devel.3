@@ -4,76 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55223C79F8C
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2FD7C79F90
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 13:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcklx-0000UY-N0; Mon, 05 Jan 2026 08:37:25 -0500
+	id 1vckt3-0003HF-NG; Mon, 05 Jan 2026 08:44:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vcklv-0000U3-Ke
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 08:37:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vcklt-00068j-AL
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 08:37:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767620238;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=buN8vjK1AU9q5IgTliu5eCeFgf7FvxKFDf+YQUK2gtA=;
- b=bFMifDpb0jeBKxhmua/VPQr9XQ3Y1q+z+38Ze5oaDpZXapD2JhgeqBR0tLTWFNcSnt3LWG
- RNJE7VwyZS06q/fJSuMnq+qA3RnASsccH7mMj8wI599Kmww17VjXGIz/k/kIH3eSUMF+Td
- OEKNpSONrZa47kGC9trFXeo4+At/mMo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-tOYGJgMhPAuXcSdPUhyjVQ-1; Mon,
- 05 Jan 2026 08:37:15 -0500
-X-MC-Unique: tOYGJgMhPAuXcSdPUhyjVQ-1
-X-Mimecast-MFC-AGG-ID: tOYGJgMhPAuXcSdPUhyjVQ_1767620234
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD56519560A2; Mon,  5 Jan 2026 13:37:13 +0000 (UTC)
-Received: from localhost (unknown [10.44.33.132])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D9BD0180035A; Mon,  5 Jan 2026 13:37:12 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Eric Auger
- <eric.auger@redhat.com>
-Subject: Re: [PATCH for-11.0 v2] arm: add DCZID_EL0 to idregs array
-In-Reply-To: <40954ada-f7b5-4709-b5ac-a6711d503015@linaro.org>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20251127170657.3335112-1-cohuck@redhat.com>
- <40954ada-f7b5-4709-b5ac-a6711d503015@linaro.org>
-User-Agent: Notmuch/0.39 (https://notmuchmail.org)
-Date: Mon, 05 Jan 2026 14:37:10 +0100
-Message-ID: <87wm1w9o55.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <kito.cheng@sifive.com>)
+ id 1vcksH-00035q-LZ
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 08:43:57 -0500
+Received: from mail-qv1-xf2f.google.com ([2607:f8b0:4864:20::f2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kito.cheng@sifive.com>)
+ id 1vcksF-0007Fl-0H
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 08:43:57 -0500
+Received: by mail-qv1-xf2f.google.com with SMTP id
+ 6a1803df08f44-888310b91c5so15025976d6.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 05:43:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1767620633; x=1768225433; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ukVIvuBiKsEjyg12crAnHzqmC6Yi4Ie1ngM/NlsLTmI=;
+ b=gv4Ay/VnGWhuLVtBbvSrgJv1VA6wtMlEHh9O4wC7x1592viQ/Qw+ZJLWukguTD//LY
+ cfL7FO/rogRHGlw+m773JafsitW+DB9WwuttLoxUTRwtE2OVZIqammyAEcr+c7s76ll6
+ JW4MC+u+GNxKDmhKEZTMmPCKTwNmZp/35tFDDmLM0Tx6NRT0msTfbAsBXpS5YFSLO00O
+ 1Gx6eTAnR3pP2QREheG7W1tnSW7Q8dzge2Lvg7dMcwzMMIDiMPsZ6kqUILKZ3r/fkGui
+ KJzMNXVReri2q850tqYUxvvh89XFs2ZAQIgcS5a+h1DW7gUwRr5awKQywTdenKDKzapy
+ lIng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767620633; x=1768225433;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ukVIvuBiKsEjyg12crAnHzqmC6Yi4Ie1ngM/NlsLTmI=;
+ b=a8kSZkUbhj96wHeV/ZP/2rAEHk5E7/m62HLen3rOJrKkNsF69FWS2AwTaZddBporo7
+ v9DW3o7G8otqRraMa2WQC6TyhoYM+ntt+Ql8Cfv3QcuJqncLxGxaQymFCwO0E7Qarinm
+ bONRc6Z3vwP80oczMtLPrJj9YDNpjACGF09q3P8tVohg1gnRBd/HfCQBiTrSDcFTqlyE
+ b+Ivs/7yzqq7UcOH0BWaceALpM7iZBSQ0akuQCKKeIfqGgrlUuAfhdLg1LAQLBrvGCpe
+ Cmk1LT8M+eJvMJBJPQjEmLExSV73fYVPgBsb0335srbSOB7wfPsty6ixnUDZ8KJKK3pN
+ OE1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWe4RoY5T3cA5o2wYqbUwGd8ZxC/4xjYMvBoRDbHDVBJdl0P4UpQAz7GwcZVG/T50w5g7NX66or2bmq@nongnu.org
+X-Gm-Message-State: AOJu0YwpXToTzTQr6ItSfwhfZKX//zEO/R6XC4wN7cvmODPbv07gYhe2
+ 5nVXMb855aPYHdQ59SwCIJHdOy7iugF+tOJ8hYjAJzgln0te910W7cdxjirmyEx47Duvp9jx3MS
+ 3xNnXJdc8V3U3YVSPbx1v0YfyjYyhVDKFU4lgwtl8cA==
+X-Gm-Gg: AY/fxX4zm9jG2soTnx+RlbZe088DdOn60n6P6QMf6KLw8tsU8wyI2BhzTVaH1sUFeyz
+ pjcom/wa/lohPfeWjp2Z9UzZhSuUR/IB4QV+QD8F5BYom42A96ENpXPB9URFzz2SURRMkAvtcHN
+ bbd4Z1s1zueGGJYBVnqtewmY89UfWpmt3BkTcaOrFPKcm21i9B1TaZaooZOjBULep5Xz6l5Lhi/
+ YVla18DNegZqfCRbTlxPiTUuva882OmxTFaR0VXw7IB7gKAT42siuplQ0WAIk9UyqrymX4YlQ==
+X-Google-Smtp-Source: AGHT+IHE+NKFLzhS5Pwiw2sy41yqos7Y6s58F9cE/PxSZ96a2cfUjct/kaV8IKjG7MyyXssbN8SuyfNNFxlxFv9myYo=
+X-Received: by 2002:a05:622a:4d2:b0:4ee:1ec6:aeda with SMTP id
+ d75a77b69052e-4ff472d336amr119416151cf.34.1767620633164; Mon, 05 Jan 2026
+ 05:43:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260105105940.3567112-1-kito.cheng@sifive.com>
+ <bc812773-1a09-4541-ae6d-7a6d7327b6a5@ventanamicro.com>
+In-Reply-To: <bc812773-1a09-4541-ae6d-7a6d7327b6a5@ventanamicro.com>
+From: Kito Cheng <kito.cheng@sifive.com>
+Date: Mon, 5 Jan 2026 21:43:42 +0800
+X-Gm-Features: AQt7F2o20FzBcZD6L3GYMPqSg0smuPIV672ETs2QDkC3wVJgx1WifpPCgtgoAu0
+Message-ID: <CALLt3Tig9WLNxfHDKKBzpHz908mZWRACioQWoxfjMk5p7eVVbQ@mail.gmail.com>
+Subject: Re: [PATCH 0/5] target/riscv: Add arch= CPU property for ISA
+ configuration
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ kito.cheng@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2f;
+ envelope-from=kito.cheng@sifive.com; helo=mail-qv1-xf2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,100 +98,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 05 2026, Richard Henderson <richard.henderson@linaro.org> wrote:
+Hi Daniel:
 
-> On 11/28/25 04:06, Cornelia Huck wrote:
->> This requires a bit of care, since we still have to handle the EL
->> specific part (DCZID_EL0.DZP). Callers can set/access dcz_blocksize
->> via a wrapper working on DCZID_EL.BS.
->> 
->> KVM currently does not support DCZID_EL0 via ONE_REG, assert that
->> we're not trying to do anything with it until it does.
->> 
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> ---
->> Changes v1 -> v2:
->> - use extract64/deposit64, tweak helper names
->> - assert that we're not using the reg while running under kvm, instead
->>    of providing an incorrect dummy value
->> ---
->>   target/arm/cpu-sysregs.h.inc   |  1 +
->>   target/arm/cpu.c               |  2 +-
->>   target/arm/cpu.h               | 14 ++++++++++++--
->>   target/arm/cpu64.c             |  4 ++--
->>   target/arm/helper.c            |  5 ++++-
->>   target/arm/tcg/cpu64.c         | 22 +++++++++++-----------
->>   target/arm/tcg/helper-a64.c    |  2 +-
->>   target/arm/tcg/mte_helper.c    |  4 ++--
->>   target/arm/tcg/translate-a64.c |  2 +-
->>   target/arm/tcg/translate.h     |  2 +-
->>   10 files changed, 36 insertions(+), 22 deletions(-)
->> 
->> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
->> index 2bb2861c6234..7f3aa8b991aa 100644
->> --- a/target/arm/cpu-sysregs.h.inc
->> +++ b/target/arm/cpu-sysregs.h.inc
->> @@ -39,3 +39,4 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
->>   DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
->>   DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
->>   DEF(CTR_EL0, 3, 3, 0, 0, 1)
->> +DEF(DCZID_EL0, 3, 3, 0, 0, 7)
->> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
->> index 39292fb9bc1f..557af43a9709 100644
->> --- a/target/arm/cpu.c
->> +++ b/target/arm/cpu.c
->> @@ -2184,7 +2184,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
->>   #endif
->>   
->>       if (tcg_enabled()) {
->> -        int dcz_blocklen = 4 << cpu->dcz_blocksize;
->> +        int dcz_blocklen = 4 << get_dczid_bs(cpu);
->>   
->>           /*
->>            * We only support DCZ blocklen that fits on one page.
->> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
->> index 39f2b2e54deb..32f003705551 100644
->> --- a/target/arm/cpu.h
->> +++ b/target/arm/cpu.h
->> @@ -1111,8 +1111,6 @@ struct ArchCPU {
->>       bool prop_pauth_qarma5;
->>       bool prop_lpa2;
->>   
->> -    /* DCZ blocksize, in log_2(words), ie low 4 bits of DCZID_EL0 */
->> -    uint8_t dcz_blocksize;
->>       /* GM blocksize, in log_2(words), ie low 4 bits of GMID_EL0 */
->>       uint8_t gm_blocksize;
->>   
->> @@ -1178,6 +1176,18 @@ struct ARMCPUClass {
->>       ResettablePhases parent_phases;
->>   };
->>   
->> +static inline uint8_t get_dczid_bs(ARMCPU *cpu)
->> +{
->> +    return extract64(cpu->isar.idregs[DCZID_EL0_IDX], 0, 4);
->> +}
->> +
->> +static inline void set_dczid_bs(ARMCPU *cpu, uint8_t bs)
->> +{
->> +    /* keep dzp unchanged */
->> +    cpu->isar.idregs[DCZID_EL0_IDX] =
->> +        deposit64(cpu->isar.idregs[DCZID_EL0_IDX], 0, 4, bs);
->> +}
+Thanks for your reply, and here is my response :)
+
+> > 1. How do you run RISC-V QEMU with a specific extension configuration?
+> >     Please try to configure an rv64im user mode QEMU before you answer
+> >     this question.
 >
-> Given that dzp is always computed, I don't see the point of this.  Or... is the point that 
-> KVM *will* eventually support DCZID_EL0, and we won't be computing DZP along the KVM 
-> trap-and-read path?
+> I would use the 'rv64i' bare CPU that we introduced a few releases ago
+> and enable just 'm':
+>
+> qemu-riscv64 -cpu rv64i,m=on
+>
+>
+> It gives you a bare bones CPU with only "RVI" enabled. We added this CPU
+> specifically to support the use case you mentioned: users that want to
+> have full control of what is enabled in the CPU.
 
-The idea was to move all of the ID registers into the idregs array
-eventually, to be prepared for switching to an automatically generated
-cpu-sysregs.h.inc. (Still remaining after this patch are CCSIDR* and
-friends.) I'm not sure if KVM will support DCZID_EL0 anytime soon, but
-if that happens, it will be easier to integrate.
+Oh, thanks for this info, my impression of this is stuck in my memory of 2022,
+which is the time I wrote the qemu wrapper for riscv-gnu-toolchain,
+So I'm still using a rather clumsy way to play with qemu.
+
+It's really good to know this, and I definitely need to update the
+script in riscv-gnu-toolchain :)
+
+> We can't control how riscv-gnu-toolchain and others implement their scripts and
+> wrappers. These are the kind of thing that people write once and never look it
+> back, and that's fine.
+>
+> That said, we have 'rv64i' and other bare CPUs since QEMU 9.0, released in April
+> 24. We don't need to do this kind of massive extension disablement to get a
+> clean CPU for almost 2 years.
+>
+> I advise to not take QEMU wrappers, scripts and etc from other projects as a sort
+> of proof of what QEMU is currently capable. They're usually outdated.
+
+Yeah, I admit that, I always spend time updating the script for
+mapping extension to
+extension to qemu option...and it's hard to always be up to date.
+
+> > So how do other tools/simulators address these problems? Toolchains like
+> > Clang and GCC use -march with an arch string to configure, and Spike uses
+> > --isa=<ISA-string> to configure.
+> >
+> > Could we introduce a similar way to configure QEMU? Yes, I think we can.
+> > That's what this patch set does.
+> >
+> >    -cpu rv64,arch=<ISA-string>
+>
+> I don't mind the 'arch' property if users find it easier to enable extensions with
+> it rather than the boolean properties, but it should be used on top of bare CPUs
+> only. Otherwise the 'arch' property would include the already enabled extensions
+> from 'rv64' and others.
+>
+> And we would need to be okay with the fact that this is redundant to what we already
+> can do with bare CPUs + manual extension enablement.
+
+One point here is that the ISA string is the official way to represent
+the ISA configuration in RISC-V, it would be simpler if we can use the
+same string to set up every tool.
+
+> We have profile CPUs for this use case:
+>
+> $ ./qemu-riscv64 -cpu help
+> Available CPUs:
+>    max
+>    rv64
+>    rv64e
+>    rv64i
+>    rva22s64
+>    rva22u64
+>    rva23s64
+>    rva23u64
+> (...)
+>
+>
+> So 'qemu-riscv64 -cpu rva23u64'  creates an user mode QEMU with RVA23.
+
+To be honest, I was a little hesitant about adding the `arch=<profile>` syntax,
+because as you said, `-cpu` is already supported.
+
+My final decision was to add it for alignment with the toolchain interface,
+but that's because I'm a toolchain developer.
+
+> > 5. zvl*b extensions
+> >     Specify vector length (VLEN) in bits using zvl<N>b where N is a power
+> >     of 2 (32-65536). Requires v or zve* extension.
+> >
+> >     Examples:
+> >       $ qemu-riscv64 -cpu rv64,arch=rv64gcv_zvl256b /bin/true
+> >       $ qemu-riscv64 -cpu rv64,arch=rv64i_zve64f_zvl128b /bin/true
+>
+> We already have vlen and elen properties. Not sure if we need another way to set
+> the same stuff.
+>
+> I'll give a closer look later at the first 2 patches (arch=dump and arch=help)
+> since these are nice additions for the user experience.
+
+The first two patches should be less controversial, so I'm okay with
+that if we decide to get the first two first :)
 
 >
-> You could usefully split this patch, introducing the get/set helpers before changing the 
-> representation.
+> I would like to hear other opinions about arch=<ISA_STRING> because it would be
+> just another way (probably an easier way) of doing what we already support with
+> bare CPUs + manual extension enablement.
+>
+> I don't see the need to support arch=PROFILE given that we have profile CPUs
+> that does exactly that. Same thing for the 'vlen' setting.
 
-Can do that.
-
+The primary motivation for supporting zvl*b/VLEN syntax is to align
+with the toolchain interface, allowing users to process both qemu and
+the toolchain using a single string, and again, that is the official
+way to describe that info in RISC-V ISA spec, so I adding this syntax
+sugar in arch=<isa-str>.
 
