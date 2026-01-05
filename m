@@ -4,65 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 360A2C2A062
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 06:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E2EC2A062
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Jan 2026 06:26:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcdqU-0005Wa-EF; Mon, 05 Jan 2026 01:13:39 -0500
+	id 1vce2S-0002il-38; Mon, 05 Jan 2026 01:26:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangruikang@iscas.ac.cn>)
- id 1vcdqR-0005WN-1d
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 01:13:35 -0500
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangruikang@iscas.ac.cn>)
- id 1vcdqN-000562-Aa
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 01:13:34 -0500
-Received: from [192.168.0.121] (unknown [114.241.82.145])
- by APP-03 (Coremail) with SMTP id rQCowADH4dh+Vltpmcx+Aw--.11847S2;
- Mon, 05 Jan 2026 14:13:18 +0800 (CST)
-Message-ID: <f3ca72d8-5df3-4b20-b171-cb326a3976ae@iscas.ac.cn>
-Date: Mon, 5 Jan 2026 14:13:18 +0800
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vce2M-0002i8-Om
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 01:25:56 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vce2G-000708-MA
+ for qemu-devel@nongnu.org; Mon, 05 Jan 2026 01:25:52 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-34c5f0222b0so11014949a91.3
+ for <qemu-devel@nongnu.org>; Sun, 04 Jan 2026 22:25:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767594347; x=1768199147; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+jbDHBAgGymjbmjV0kCzVLxXci80MxgTcwZZUJVNz5Q=;
+ b=KYNswlklKYqIrC25yDUEjqu+pV9klOt0E4TGRj+0M4sT9IzlbWDhatUdyM+MUbJa+/
+ GgFg0nktIWQN59sYNets+lzo6be1yRYygSannbtN9FlOfIYin9vO76m6kvE/HpNS5wS6
+ eHSaIpYj/BIDbt48rFhH3yIswreD8PZM5SsRujsXjU5aW7Mk1A+do4EnkGboXqViKMJ1
+ GJhMoz58zGKvWc8irQDpYd4h8w+6JuuMdtaqowhJ7rIWyyln4brMT4gzomEB57d9MBVi
+ f5ncavdjvnht5Qr9rl3qybX1wE1/bxz0wdKZEfRPLUh8xJmRvxEule6SFPDFpfsqR6L2
+ oJ3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767594347; x=1768199147;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+jbDHBAgGymjbmjV0kCzVLxXci80MxgTcwZZUJVNz5Q=;
+ b=Hjoa+pWmCubFGwX+M2kZaPNPpkCOX6U+XQpifgzF9V0dUB2Bmk3s62R3/jFTwiZvhg
+ GkIf/1tutOto3fex06m0m1y6d2d+U8biVtKlye9qMni1na5VzMEuq+UGOARPrCG7uLgJ
+ 9fHBRMSqy+8+t90UNiNhTvPefuIjts2UVAlnzgIJEOzm3Lv1Ec7500PNtCmHoPQTlxjy
+ FKxtEtq3Ks/H+/nUk5iLucJ9oEw/6e3rFSYNK5eGKtzBHHsVG9lB4MaQQEDLlhNYUe1X
+ k+ISBgi4550k1dpGeQpoXj0MufLZ/Jozh7GNOC5aTRe6RLIHJ3pqKfl0ZYka9jVdbH+/
+ znbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCeFx+iwh5JWndayXp/T25PxOAr3Fy8aVjR23+TyMECKinrKlGDoYSZak0juTfXbss1Od2EMZfDXJr@nongnu.org
+X-Gm-Message-State: AOJu0YwpQ3zDdQs1i9iG0gGWBrxKnwYuIS1QMv1x4B365Rc4+tTs1pip
+ gz8YWqVMlCY3RYqevRgypZoHL4U3GJEg+u66fb/NAGTB5iLue9KkcoEPsK7okFKfres=
+X-Gm-Gg: AY/fxX6bMmk+i1wPGwnMwFEe1rHNYYixKRw6V6QmCXR1BcVFGTwhVbttyG9QLFQbD19
+ 60ESAWEUFQ0koxTCscsqQUgjc4duMKKMp0RuNnwk7SokyrQtP1yK0gMIVtwyVq6MjJC6cTRO4Pt
+ /zvB+z4jXOkmmNusRk14UpUS1Bus+Go8QwNra1/JvmnVSy5dJlUJ+SeYjLRg1nFq99v4P/WY0qc
+ BKEhotuzrLXhuG58/y8JjWeLt/aGCWhmtYFpLsDUhtVFwTb5b3Pjbd7/Jh4i/BxMi9IilFufuPr
+ H1KDJ9/Zi8ICdwx+FrwBWSYUBl6yLFPx4ot2v+dM3YPTR+HHlUS7nRGxuCLOxausrzzjv3hw8dV
+ FQ2iCc6Kx0MgopQRdZ2tw6x16Jww4JreDXwy0HBVBrjN8g7P4dbuAII8pCKwtO9yB/x0jynZtGK
+ ZigFrUim91vMpzgwm12g7H5mOK7LN9Tw==
+X-Google-Smtp-Source: AGHT+IEwplOoD7lxh4cD1vSn4qsUjOo5mOvJWnu1g/PIfZT1R81WFjoo8lq09ZsSjLz5/Y9baV+jEg==
+X-Received: by 2002:a17:90b:2e0c:b0:343:edb0:1012 with SMTP id
+ 98e67ed59e1d1-34e921ac620mr37361230a91.21.1767594346649; 
+ Sun, 04 Jan 2026 22:25:46 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34f45cad3c0sm2948353a91.3.2026.01.04.22.25.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 04 Jan 2026 22:25:46 -0800 (PST)
+Message-ID: <d5ec2589-a831-4f4b-86e5-a4ca1ce443dc@linaro.org>
+Date: Mon, 5 Jan 2026 17:25:39 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] linux-user: Add missing termios baud rates
-To: =?UTF-8?Q?Andreas_K=2E_H=C3=BCttel?= <dilfridge@gentoo.org>,
- qemu-devel@nongnu.org
-References: <20260103153239.15787-1-dilfridge@gentoo.org>
- <20260103153239.15787-8-dilfridge@gentoo.org>
+Subject: Re: [PATCH v3 2/4] target/i386: Add a _MAX sentinel to X86ASIdx enum
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org,
+ peter.maydell@linaro.org
+References: <20251223222649.187935-1-gustavo.romero@linaro.org>
+ <20251223222649.187935-3-gustavo.romero@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20260103153239.15787-8-dilfridge@gentoo.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowADH4dh+Vltpmcx+Aw--.11847S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrtFWUXr48Cw47Ww4xGF4kJFb_yoWxKFg_uF
- s7AFZ5CryxGFnrKFnxtFsxCF1rt34kWa15ur9Fqrsak34fZF9Igan7GFn5uF15Xw48Zrn3
- K34j93yfXrnI9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUbrxYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I
- 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
- 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0
- cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
- A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
- w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
- vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCF
- s4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r
- 1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWU
- JVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r
- 1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUv
- cSsGvfC2KfnxnUUI43ZEXa7IU8v_M3UUUUU==
-X-Originating-IP: [114.241.82.145]
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
-Received-SPF: pass client-ip=159.226.251.81;
- envelope-from=wangruikang@iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20251223222649.187935-3-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,24 +107,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/3/26 23:25, Andreas K. Hüttel wrote:
+On 12/24/25 09:26, Gustavo Romero wrote:
+> Add a sentinel to the X86ASIdx enum so it can be used when the total
+> number of address spaces is required.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   target/i386/cpu.h | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index cee1f692a1..ba0c4fa548 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2600,6 +2600,8 @@ void cpu_sync_avx_hflag(CPUX86State *env);
+>   typedef enum X86ASIdx {
+>       X86ASIdx_MEM = 0,
+>       X86ASIdx_SMM = 1,
+> +    X86ASIdx_MAX = X86ASIdx_SMM
+> +#define X86ASIdx_COUNT (X86ASIdx_MAX + 1)
+>   } X86ASIdx;
+>   
+>   #ifndef CONFIG_USER_ONLY
 
-> From: Vivian Wang <wangruikang@iscas.ac.cn>
->
-> Add several missing baud rates and inputs baud rates in cflag_tbl.
->
-> Add these missing definitions in termbits.h:
->
-> - TARGET_BOTHER for alpha, hppa, ppc, sh4, sparc
-> - TARGET_IBSHIFT for hppa, mips, ppc, sh4, sparc
-> - Missing standard baud rates for hppa
->
-> These are required for the glibc test tst-termios-linux.
->
-> Link: https://lore.kernel.org/qemu-devel/20251203-linux-user-higher-baud-rates-v2-1-e45b35224437@iscas.ac.cn
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+But... it's _COUNT that matters, and that doesn't seem to get a mention.
+I don't see the point in adding _MAX.
 
-I'm not sure how this kind of situations usually goes, but in case this
-matters: I am OK with my patch being here.
 
+r~
 
