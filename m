@@ -4,53 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A6E5CEFCF5
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 19:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C11CCEFD01
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 19:49:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdCcW-00082a-HC; Tue, 06 Jan 2026 14:21:32 -0500
+	id 1vdD2c-00042O-Dd; Tue, 06 Jan 2026 14:48:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vdCcS-00080R-SS
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:21:29 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdD2b-000425-FP
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:48:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vdCcQ-0000xo-H5
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:21:28 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 93D58596A0B;
- Tue, 06 Jan 2026 20:21:23 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 46AbPfzoeGsC; Tue,  6 Jan 2026 20:21:21 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 942C0596A0A; Tue, 06 Jan 2026 20:21:21 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 927B15969F6;
- Tue, 06 Jan 2026 20:21:21 +0100 (CET)
-Date: Tue, 6 Jan 2026 20:21:21 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 8/9] ati-vga: Implement HOST_DATA register writes
-In-Reply-To: <20260106185700.2102742-9-chad@jablonski.xyz>
-Message-ID: <bcce15ee-9f83-128a-0894-2e7c87ceff8c@eik.bme.hu>
-References: <20260106185700.2102742-1-chad@jablonski.xyz>
- <20260106185700.2102742-9-chad@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdD2Y-0001f4-No
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:48:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767728904;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sQM0QAPX/R4gKXcAVQ0nMKr+SQR2xWZtsSLrMCxsukM=;
+ b=LntnnBSdbAdBuC24oC0qezqYi10AD5ODCIUKefgSMwsQ4kKdim8LcNbR149pcmdZkyhh5F
+ DlautogvZJhaez7NNhFSPKA2/bDRCBsEDaBQufW7MdULbeXmUF8sh0sgsB7roqC/wZDxgF
+ Wuq23cBP3litOpPjnZutsOMHC/qJUcg=
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com
+ [74.125.82.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-647-7xiHp4NmOiS_NLMmrCBLAw-1; Tue, 06 Jan 2026 14:48:23 -0500
+X-MC-Unique: 7xiHp4NmOiS_NLMmrCBLAw-1
+X-Mimecast-MFC-AGG-ID: 7xiHp4NmOiS_NLMmrCBLAw_1767728902
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-11dd10b03c6so868260c88.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 11:48:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767728902; x=1768333702; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=sQM0QAPX/R4gKXcAVQ0nMKr+SQR2xWZtsSLrMCxsukM=;
+ b=s2k1Zd6IyomB422viHsuuB87F1w9QXFCGVNU0dRdXEj07nH/M8edb+1swTqXfkMSgL
+ SzejlwfreY0Lq10+yyhBSDofyQHVz7rYlXkK5Gcc8XmZc1Uz54YxaHECk02lKkaobVFk
+ 4yFAqtpuWf4tSM3ro8QDsqr1hlnve32qBmKstaI25GCyzm2g/u3Vg6Vl4Zc1ILMZqjCS
+ gFrYdarP1kqtZcH1XacUyJg6tu83JKdydRznqZvSWOHUjMiV9nzThzTbxHooI7waTePu
+ iSS/2AAowgUV7wevJDzy2WTKaWiHc+dLksFTcKKa+5rk9rxn3Aaty2kw0tSW7gZ9RhfG
+ TOlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767728902; x=1768333702;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sQM0QAPX/R4gKXcAVQ0nMKr+SQR2xWZtsSLrMCxsukM=;
+ b=KZ6jctKMDIb8yrcxB1sEg9Cy57njfCAjJDZzUNQBU25xhW2q+ugeL2RItXQPG9gDcJ
+ kitgZ/kaZJvrQDmxcRB7s/D4RV5iKAyk2N6XByK+EJzyTv7CU+Qsj3VgHTC80kbV87Wu
+ Sob3CIiS7qQfoCoEE+L3ksGM7qskcrNoWzBeB8+PUKZWa73e3QKr2nvqoqO+RjAWqxoU
+ FSBgMZGRbUkK8ONRZkUGM+RGXDcccY+m3uN2SzSHlqEPK6qrm/O4hv6ZDTOm2Og0xmuE
+ w2ZdVCFlLp8rAkAI1f/pL9VVtvu6RvFAqFYsUlhgPJ6WeaShxR9THf33sW6fA1uqg2Rw
+ WDaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXGIqJxorcuO1DQBXlFtl7cj1i3tJ4oQ8q4yJ92n6hnd6wg+kyCZl/KSBNNFnec7d8GOXQBQ/D+KmD@nongnu.org
+X-Gm-Message-State: AOJu0YzIzyrboTVkuILqCz7G2xH3tuLueRN8l69syCGXnx7th4ao0MTt
+ vZ/ujtKLiPZw+TK8aNNjdxtzueGAHuMlnFS7ZVpD634agIz62GFmlyZJ4yL7wds/lRNgDVDePss
+ ZqFP3SA60PoFs072Qsa1YaQHan81XtxperUYG+6V9YIsSlC09HHyfsEEl
+X-Gm-Gg: AY/fxX6OQKsXKrE5gyJn57dyDFE4pDYxwTzq8K+FAF/40QqBb/IGNWQUhoWSWS/MjnD
+ cX8YamHOcVL+aktmpbxgDVPusmCGp/JcvX2f/iILoIr5nnNia9i+dFOsrRfd0vo+1Kpz+k3tPsV
+ Wc98g1MR2i988KuZtRIMmmW7O8c6cjcBp+sLCuL2ddZukkyCwzMnS5UqUzjVIjssZ8c0f1Krl+R
+ 7RPgOIMhic1V9mRxECmZz19KaJkdZWYOCDZznrbd2pUw0v4jDS6OOleMTmMJr4lj+9WY4NP6End
+ 8niVmHG/TU1Bqk6y+9hmKOT/NSEQr+kmp0WBzl0Frzga1sDr/AF7KdITsQGMIqOv69FzE6khIPG
+ QeaQ=
+X-Received: by 2002:a05:7022:927:b0:11b:9386:826b with SMTP id
+ a92af1059eb24-121f8b9cf08mr47977c88.48.1767728901865; 
+ Tue, 06 Jan 2026 11:48:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFyoslrf2j6jB+78/YYaXaPKDg12pp2k3aSTCyFUoKi9E3Js2jubsZFQduK8wESR5wLrOe2fQ==
+X-Received: by 2002:a05:7022:927:b0:11b:9386:826b with SMTP id
+ a92af1059eb24-121f8b9cf08mr47955c88.48.1767728901238; 
+ Tue, 06 Jan 2026 11:48:21 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-121f24984a3sm7435636c88.13.2026.01.06.11.48.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Jan 2026 11:48:20 -0800 (PST)
+Date: Tue, 6 Jan 2026 14:48:14 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Juan Quintela <quintela@trasno.org>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>
+Subject: Re: [PATCH 0/3] migration: Add COLO multifd support and COLO
+ migration unit test
+Message-ID: <aV1m_vneDzI_5WDV@x1.local>
+References: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
+ <aVPpg_LwlGFIPfen@x1.local>
+ <CAK3tnv+f8b9fd_n9_6Od3f__ZuNUtuT2Q_MXszam_k=ooRPqyQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAK3tnv+f8b9fd_n9_6Od3f__ZuNUtuT2Q_MXszam_k=ooRPqyQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,191 +126,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Jan 2026, Chad Jablonski wrote:
-> Writing to any of the HOST_DATA0-7 registers pushes the written data
-> into a 128-bit accumulator. When the accumulator is full a flush is
-> triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
-> will also initiate a flush. The flush itself is left for the next patch.
->
-> Unaligned HOST_DATA* writes result in, from what I can tell, undefined
-> behavior on real hardware. A well-behaved driver shouldn't be doing this
-> anyway. For that reason they are not handled here at all.
->
-> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-> ---
-> hw/display/ati.c      | 32 ++++++++++++++++++++++++++++++++
-> hw/display/ati_dbg.c  |  9 +++++++++
-> hw/display/ati_int.h  |  9 +++++++++
-> hw/display/ati_regs.h |  9 +++++++++
-> 4 files changed, 59 insertions(+)
->
-> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index 04f1c3c790..88d30bf532 100644
-> --- a/hw/display/ati.c
-> +++ b/hw/display/ati.c
-> @@ -567,6 +567,13 @@ static inline void ati_reg_write_offs(uint32_t *reg, int offs,
->     }
-> }
->
-> +static void ati_host_data_reset(ATIHostDataState *hd)
-> +{
-> +    hd->next = 0;
-> +    hd->row = 0;
-> +    hd->col = 0;
-> +}
-> +
-> static void ati_mm_write(void *opaque, hwaddr addr,
->                            uint64_t data, unsigned int size)
-> {
-> @@ -842,6 +849,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
->         break;
->     case DST_WIDTH:
->         s->regs.dst_width = data & 0x3fff;
-> +        ati_host_data_reset(&s->host_data);
->         ati_2d_blt(s);
->         break;
->     case DST_HEIGHT:
-> @@ -892,6 +900,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
->     case DST_HEIGHT_WIDTH:
->         s->regs.dst_width = data & 0x3fff;
->         s->regs.dst_height = (data >> 16) & 0x3fff;
-> +        ati_host_data_reset(&s->host_data);
->         ati_2d_blt(s);
->         break;
->     case DP_GUI_MASTER_CNTL:
-> @@ -929,6 +938,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
->     case DST_WIDTH_X:
->         s->regs.dst_x = data & 0x3fff;
->         s->regs.dst_width = (data >> 16) & 0x3fff;
-> +        ati_host_data_reset(&s->host_data);
->         ati_2d_blt(s);
->         break;
->     case SRC_X_Y:
-> @@ -942,6 +952,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
->     case DST_WIDTH_HEIGHT:
->         s->regs.dst_height = data & 0x3fff;
->         s->regs.dst_width = (data >> 16) & 0x3fff;
-> +        ati_host_data_reset(&s->host_data);
+On Sun, Jan 04, 2026 at 01:44:52PM +0800, Zhang Chen wrote:
+> On Tue, Dec 30, 2025 at 11:02 PM Peter Xu <peterx@redhat.com> wrote:
+> >
+> > On Tue, Dec 30, 2025 at 03:05:43PM +0100, Lukas Straub wrote:
+> > > Hello everyone,
+> > > This adds COLO multifd support and migration unit tests for COLO migration
+> > > and failover.
+> >
+> > Hi, Lukas,
+> >
+> > I'll review the series after the new year.
+> >
+> > Could you still introduce some background on how you're deploying COLO?  Do
+> > you use it in production, or for fun?
+> >
+> > COLO is still a nice and interesting feature, said that, COLO has quite a
+> > lot of code plugged into migration core.  I wished it's like a multifd
+> > compressor which was much more self-contained, but it's not.  I wished we
+> > can simplify the code in QEMU migration.
+> >
+> > We've talked it through before with current COLO maintainers, it looks to
+> > me there aren't really much users using it in production, meanwhile COLO
+> > doesn't look like a feature to benefit individual QEMU users either.
+> >
+> > I want to study the use case of COLO in status quo, and evaluate how much
+> > effort we should put on it in the future.  Note that if it's for fun we can
+> > always use a stable branch which will be there forever.  We'll need to
+> > think about QEMU evolving in the future, and what's best for QEMU.
+> >
+> > Thanks,
+> >
+> 
+> Hi Lukas and Peter,
 
-Is it documented somewhere that writing these registers reset the host 
-data or is it from experiments? Are there any other registers that may 
-need to reset or are these the only place (apart from HOST_DATA_LAST) that 
-terminate host data?
+Hi, Chen,
 
-Regards,
-BALATON Zoltan
+> 
+> Thanks for this series, I will support for background info if Peter
+> have any questions.
 
->         ati_2d_blt(s);
->         break;
->     case DST_HEIGHT_Y:
-> @@ -1043,6 +1054,25 @@ static void ati_mm_write(void *opaque, hwaddr addr,
->     case SRC_SC_BOTTOM:
->         s->regs.src_sc_bottom = data & 0x3fff;
->         break;
-> +    case HOST_DATA0:
-> +    case HOST_DATA1:
-> +    case HOST_DATA2:
-> +    case HOST_DATA3:
-> +    case HOST_DATA4:
-> +    case HOST_DATA5:
-> +    case HOST_DATA6:
-> +    case HOST_DATA7:
-> +        s->host_data.acc[s->host_data.next++] = data;
-> +        if (s->host_data.next >= 4) {
-> +            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-> +            s->host_data.next = 0;
-> +        }
-> +        break;
-> +    case HOST_DATA_LAST:
-> +        s->host_data.acc[s->host_data.next] = data;
-> +        qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-> +        ati_host_data_reset(&s->host_data);
-> +        break;
->     default:
->         break;
->     }
-> @@ -1136,6 +1166,8 @@ static void ati_vga_reset(DeviceState *dev)
->     /* reset vga */
->     vga_common_reset(&s->vga);
->     s->mode = VGA_MODE;
-> +
-> +    ati_host_data_reset(&s->host_data);
-> }
->
-> static void ati_vga_exit(PCIDevice *dev)
-> diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
-> index 3ffa7f35df..5c799d540a 100644
-> --- a/hw/display/ati_dbg.c
-> +++ b/hw/display/ati_dbg.c
-> @@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
->     {"MC_SRC1_CNTL", 0x19D8},
->     {"TEX_CNTL", 0x1800},
->     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
-> +    {"HOST_DATA0", 0x17c0},
-> +    {"HOST_DATA1", 0x17c4},
-> +    {"HOST_DATA2", 0x17c8},
-> +    {"HOST_DATA3", 0x17cc},
-> +    {"HOST_DATA4", 0x17d0},
-> +    {"HOST_DATA5", 0x17d4},
-> +    {"HOST_DATA6", 0x17d8},
-> +    {"HOST_DATA7", 0x17dc},
-> +    {"HOST_DATA_LAST", 0x17e0},
->     {NULL, -1}
-> };
->
-> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-> index d9ac8ee135..3029dc7e3c 100644
-> --- a/hw/display/ati_int.h
-> +++ b/hw/display/ati_int.h
-> @@ -14,6 +14,7 @@
-> #include "hw/i2c/bitbang_i2c.h"
-> #include "vga_int.h"
-> #include "qom/object.h"
-> +#include "qemu/units.h"
->
-> /*#define DEBUG_ATI*/
->
-> @@ -97,6 +98,13 @@ typedef struct ATIVGARegs {
->     uint16_t src_sc_right;
-> } ATIVGARegs;
->
-> +typedef struct ATIHostDataState {
-> +    uint32_t row;
-> +    uint32_t col;
-> +    uint32_t next;
-> +    uint32_t acc[4];
-> +} ATIHostDataState;
-> +
-> struct ATIVGAState {
->     PCIDevice dev;
->     VGACommonState vga;
-> @@ -113,6 +121,7 @@ struct ATIVGAState {
->     MemoryRegion io;
->     MemoryRegion mm;
->     ATIVGARegs regs;
-> +    ATIHostDataState host_data;
-> };
->
-> const char *ati_reg_name(int num);
-> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-> index 9c638314f0..c8bbafe1c6 100644
-> --- a/hw/display/ati_regs.h
-> +++ b/hw/display/ati_regs.h
-> @@ -252,6 +252,15 @@
-> #define DP_T12_CNTL                             0x178c
-> #define DST_BRES_T1_LNTH                        0x1790
-> #define DST_BRES_T2_LNTH                        0x1794
-> +#define HOST_DATA0                              0x17c0
-> +#define HOST_DATA1                              0x17c4
-> +#define HOST_DATA2                              0x17c8
-> +#define HOST_DATA3                              0x17cc
-> +#define HOST_DATA4                              0x17d0
-> +#define HOST_DATA5                              0x17d4
-> +#define HOST_DATA6                              0x17d8
-> +#define HOST_DATA7                              0x17dc
-> +#define HOST_DATA_LAST                          0x17e0
-> #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
-> #define SCALE_OFFSET_0                          0x1998
-> #define SCALE_PITCH                             0x199c
->
+Thanks, I believe my major question so far was, whether we should deprecate
+COLO in migration framework. :)
+
+The netfilters and rest can be discussed separately.
+
+Now looking back at my initial ask in Zhijian's fix, I still agree with
+Zhijian on these two points mentioned:
+
+https://lore.kernel.org/all/b2eadde7-57e9-426c-8487-e500ba06410e@fujitsu.com/
+
+That is:
+
+        - Active users who depend on it.
+        - A unit test for the COLO framework.
+
+Meanwhile, I can't see how COLO would win if to be compared with some
+app-level HA infrastructure.. considering the overhead it requires on
+running two VMs and compare every packet.
+
+Lukas, thanks for trying to fix the 2nd.  I apologize that I still
+requested you to send these patches, without further raising the attention
+that I still want to discuss deprecation.  I don't think anyone yet proved
+we should keep COLO.  I do plan to send one patch adding COLO framework to
+deprecation, if nobody would stop me in a week justifying question 1 above.
+
+We kind of proved almost nobody is actively using COLO anymore in the past
+few releases.  If nobody is using COLO, we should simply drop it.
+
+> And CC Hailiang Zhang, although he hasn't replied to emails for a long time.
+> If no one objects, I think Lukas can replease Hailiang for COLO Framework.
+> 
+> COLO Framework
+> M: Hailiang Zhang <zhanghailiang@xfusion.com>
+> S: Maintained
+> F: migration/colo*
+> F: include/migration/colo.h
+> F: include/migration/failover.h
+> F: docs/COLO-FT.txt
+
+Right, this is also another reason why I think we may want to deprecate
+COLO framework.
+
+Since I requested this series (sorry again, Lukas), I'll review it today no
+matter if we decide to merge this series at last, or deprecate COLO
+framework.
+
+Thanks,
+
+> 
+> Thanks
+> Chen
+> 
+> > >
+> > > Regards,
+> > > Lukas
+> > >
+> > > Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+> > > ---
+> > > Lukas Straub (3):
+> > >       multifd: Add colo support
+> > >       migration-test: Add -snapshot option for COLO
+> > >       migration-test: Add COLO migration unit test
+> > >
+> > >  migration/meson.build              |   2 +-
+> > >  migration/multifd-colo.c           |  57 ++++++++++++++++++
+> > >  migration/multifd-colo.h           |  26 +++++++++
+> > >  migration/multifd.c                |  14 ++++-
+> > >  tests/qtest/meson.build            |   7 ++-
+> > >  tests/qtest/migration-test.c       |   1 +
+> > >  tests/qtest/migration/colo-tests.c | 115 +++++++++++++++++++++++++++++++++++++
+> > >  tests/qtest/migration/framework.c  |  69 +++++++++++++++++++++-
+> > >  tests/qtest/migration/framework.h  |  10 ++++
+> > >  9 files changed, 294 insertions(+), 7 deletions(-)
+> > > ---
+> > > base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
+> > > change-id: 20251230-colo_unit_test_multifd-8bf58dcebd46
+> > >
+> > > Best regards,
+> > > --
+> > > Lukas Straub <lukasstraub2@web.de>
+> > >
+> >
+> > --
+> > Peter Xu
+> >
+> 
+
+-- 
+Peter Xu
+
 
