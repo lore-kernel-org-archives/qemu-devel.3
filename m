@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E54ACD043F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE4BCD043E
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 06:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd0LO-0004xQ-H0; Tue, 06 Jan 2026 01:15:03 -0500
+	id 1vd0KV-0003Na-Jk; Tue, 06 Jan 2026 01:14:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vd0Kn-0004HY-4i
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:14:28 -0500
+ id 1vd0KU-0003Mm-D5
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:14:06 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vd0Kl-0007KE-IB
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:14:24 -0500
+ id 1vd0KQ-0007J8-TK
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:14:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767680064; x=1799216064;
+ t=1767680043; x=1799216043;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1j2XPGhWMf3qhGvRwJmZwvU1wHOP9IAgJszP6UNK7NM=;
- b=mTszGFQ/HNa4LJb2yMRmRaZo0/Y+2DObFNiY5b7xXDueo+yXqIdA0pbS
- fTqIOzaja8knz6nQL6NxlZo0A37kYjiJo7Qk3H6JF4KqLQzg6MzHLH0c9
- I8WN2v8LT7BxhWtePOuJyz/Atr4XmNXMtVMjs5Cn2TKlcXSQN55g5UAMR
- b9wosBses+OA/rQIlspfehmJImUZIf1EpBiU68HpHZcNgLS06mwiWHCqd
- sT/b2OKOT/iZEisNRINzlOtPqbC1MXAO65UtVxHzxtCrmAZL1afVgqEWs
- 1wKK5UUFh4KiaEUpNlXvJcfntMf1pX/IcTvhcT42JMTTP0MpDkQxValbR A==;
-X-CSE-ConnectionGUID: rcNSgTLeSpaL18Jg9qrsbw==
-X-CSE-MsgGUID: vHzIFNuFSVOeUJwSe1BGJw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11662"; a="69094064"
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="69094064"
+ bh=1ygu3CRxj06O9rmnUnTm9Hgrynjbm0C12ZyY7mRQhOg=;
+ b=aS/S5hzyiKlPUqSupwpDb8erRW0XEVfe17LZZT9yE8LysujLBCK8F6t7
+ Ocz8LdFX/UjzAnfJ5BZYUY4z2MIU4bMqp/lhd0ypEObOdHrXbvk5lXE3d
+ y+Pw/jxcV6F2yThq829pKXEQj3EXtQlfmzUVJHMYrscYvQRHu636cK08s
+ 3DSNLiwOkY9YUE5BATvAQGgYUGR5tyavjL2qCSiPzqJC1/3M6Z8uY5qki
+ qRV5wQ2IYS6dV3Lr9FRrmzy6viftSQhqqwtd3QzE7l+zQtmr9u8K2Jg6z
+ ToUq00R0sTZEP0nT6bt4tjnDROzlDPbtieyP6Gs62cVmT8O6+2EeI28tL A==;
+X-CSE-ConnectionGUID: tJ87pmOYQ7+k/+Nua34aJA==
+X-CSE-MsgGUID: PBvWhg1vTdasjAVJ7bGJBw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11662"; a="69094017"
+X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="69094017"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 22:14:23 -0800
-X-CSE-ConnectionGUID: mHMlmKKuQeOSeRmnxkJoIA==
-X-CSE-MsgGUID: Wq8zODl0RPOwA3IOAWxm7A==
+ 05 Jan 2026 22:14:00 -0800
+X-CSE-ConnectionGUID: kU7FO+TWQIyNRJU74FskIQ==
+X-CSE-MsgGUID: o9QGi8+TRqae2R0+B81Y0Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="202588900"
+X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="202588828"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 22:14:19 -0800
+ 05 Jan 2026 22:13:55 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,10 +53,10 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v10 15/19] intel_iommu: Replay all pasid bindings when either
- SRTP or TE bit is changed
-Date: Tue,  6 Jan 2026 01:12:57 -0500
-Message-ID: <20260106061304.314546-16-zhenzhong.duan@intel.com>
+Subject: [PATCH v10 10/19] intel_iommu_accel: Fail passthrough device under
+ PCI bridge if x-flts=on
+Date: Tue,  6 Jan 2026 01:12:52 -0500
+Message-ID: <20260106061304.314546-11-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260106061304.314546-1-zhenzhong.duan@intel.com>
 References: <20260106061304.314546-1-zhenzhong.duan@intel.com>
@@ -87,63 +87,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+Currently we don't support nested translation for passthrough device with
+emulated device under same PCI bridge, because they require different address
+space when x-flts=on.
 
-When either 'Set Root Table Pointer' or 'Translation Enable' bit is changed,
-all pasid bindings on host side become stale and need to be updated.
+In theory, we do support if devices under same PCI bridge are all passthrough
+devices. But emulated device can be hotplugged under same bridge. To simplify,
+just forbid passthrough device under PCI bridge no matter if there is, or will
+be emulated devices under same bridge. This is acceptable because PCIE bridge
+is more popular than PCI bridge now.
 
-Introduce a helper function vtd_replay_pasid_bindings_all() to go through all
-pasid entries in all passthrough devices to update host side bindings.
-
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- hw/i386/intel_iommu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/i386/intel_iommu_accel.h |  4 ++--
+ hw/i386/intel_iommu.c       |  7 ++++---
+ hw/i386/intel_iommu_accel.c | 12 +++++++++++-
+ 3 files changed, 17 insertions(+), 6 deletions(-)
 
+diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
+index 472ae109e2..76e0d26942 100644
+--- a/hw/i386/intel_iommu_accel.h
++++ b/hw/i386/intel_iommu_accel.h
+@@ -13,11 +13,11 @@
+ #include CONFIG_DEVICES
+ 
+ #ifdef CONFIG_VTD_ACCEL
+-bool vtd_check_hiod_accel(IntelIOMMUState *s, HostIOMMUDevice *hiod,
++bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+                           Error **errp);
+ #else
+ static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
+-                                        HostIOMMUDevice *hiod,
++                                        VTDHostIOMMUDevice *vtd_hiod,
+                                         Error **errp)
+ {
+     error_setg(errp, "host IOMMU cannot be checked!");
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 2889c29102..3241af811c 100644
+index b11798d4b7..0817b17772 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -76,6 +76,7 @@ struct vtd_iotlb_key {
+@@ -4570,9 +4570,10 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+     return vtd_dev_as;
+ }
  
- static void vtd_address_space_refresh_all(IntelIOMMUState *s);
- static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
-+static void vtd_replay_pasid_bindings_all(IntelIOMMUState *s);
- 
- static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
+-static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
++static bool vtd_check_hiod(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+                            Error **errp)
  {
-@@ -2629,6 +2630,7 @@ static void vtd_handle_gcmd_srtp(IntelIOMMUState *s)
-     vtd_set_clear_mask_long(s, DMAR_GSTS_REG, 0, VTD_GSTS_RTPS);
-     vtd_reset_caches(s);
-     vtd_address_space_refresh_all(s);
-+    vtd_replay_pasid_bindings_all(s);
++    HostIOMMUDevice *hiod = vtd_hiod->hiod;
+     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+     int ret;
+ 
+@@ -4596,7 +4597,7 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+         return true;
+     }
+ 
+-    return vtd_check_hiod_accel(s, hiod, errp);
++    return vtd_check_hiod_accel(s, vtd_hiod, errp);
  }
  
- /* Set Interrupt Remap Table Pointer */
-@@ -2663,6 +2665,7 @@ static void vtd_handle_gcmd_te(IntelIOMMUState *s, bool en)
+ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+@@ -4632,7 +4633,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+     vtd_hiod->iommu_state = s;
+     vtd_hiod->hiod = hiod;
  
-     vtd_reset_caches(s);
-     vtd_address_space_refresh_all(s);
-+    vtd_replay_pasid_bindings_all(s);
- }
+-    if (!vtd_check_hiod(s, hiod, errp)) {
++    if (!vtd_check_hiod(s, vtd_hiod, errp)) {
+         g_free(vtd_hiod);
+         vtd_iommu_unlock(s);
+         return false;
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 6846c6ec4d..ead6c42879 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -12,12 +12,16 @@
+ #include "system/iommufd.h"
+ #include "intel_iommu_internal.h"
+ #include "intel_iommu_accel.h"
++#include "hw/pci/pci_bus.h"
  
- /* Handle Interrupt Remap Enable/Disable */
-@@ -3162,6 +3165,13 @@ static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-     vtd_iommu_unlock(s);
- }
- 
-+static void vtd_replay_pasid_bindings_all(IntelIOMMUState *s)
-+{
-+    VTDPASIDCacheInfo pc_info = { .type = VTD_INV_DESC_PASIDC_G_GLOBAL };
-+
-+    vtd_pasid_cache_sync(s, &pc_info);
-+}
-+
- static bool vtd_process_pasid_desc(IntelIOMMUState *s,
-                                    VTDInvDesc *inv_desc)
+-bool vtd_check_hiod_accel(IntelIOMMUState *s, HostIOMMUDevice *hiod,
++bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+                           Error **errp)
  {
++    HostIOMMUDevice *hiod = vtd_hiod->hiod;
+     struct HostIOMMUDeviceCaps *caps = &hiod->caps;
+     struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
++    PCIBus *bus = vtd_hiod->bus;
++    PCIDevice *pdev = bus->devices[vtd_hiod->devfn];
+ 
+     if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+         error_setg(errp, "Need IOMMUFD backend when x-flts=on");
+@@ -36,6 +40,12 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+         return false;
+     }
+ 
++    if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
++        error_setg(errp, "Host device downstream to a PCI bridge is "
++                   "unsupported when x-flts=on");
++        return false;
++    }
++
+     error_setg(errp,
+                "host IOMMU is incompatible with guest first stage translation");
+     return false;
 -- 
 2.47.1
 
