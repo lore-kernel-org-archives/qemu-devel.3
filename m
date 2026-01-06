@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28934CEFD01
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 19:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8593CCEFD01
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 20:04:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdD95-0000mt-KQ; Tue, 06 Jan 2026 14:55:11 -0500
+	id 1vdDH4-0007Op-PV; Tue, 06 Jan 2026 15:03:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdD93-0000mc-Pt
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:55:09 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdDH3-0007Ml-FS
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 15:03:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdD90-0003dC-UL
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:55:09 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdDH0-00082L-Pt
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 15:03:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767729305;
+ s=mimecast20190719; t=1767729801;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JLBYuCbGJX4wvpyfGEJZxJ88C6iaQlO+DitG52afzqY=;
- b=H9Yi6AWHeMshsAp1mRRhHoUWTDd7QcY3C81qQvmY37Sq1asAQ1hEhiHacCqq1i+LCoIfT1
- bmgJby+eVzUosF6DZ2jETNKdPvwx6tvkkWo1bfb1wZMQXgoNrMX9aWXY6ayZMWMpk8BWXQ
- C37WyT8uBObcj47YSShOIsF++vqiNi0=
+ bh=2Tr3Itbay5CNkSJrflt3NWi/9kjWFQPrmrTW87LXHfY=;
+ b=Z2/fWn3MLuQZ4pUTxxiHIfgPvNUxXo7JXm/xrjhWej9PRkjtsO/Pd49pio4TK/vaaDkoo5
+ A+ZcWojomqOkyvrQnlnwaAy0hS4WumR5e3MYCSgyPf6fOQxprjKpdGFa6ymH/k+dke9Jco
+ Utk1kywCngARmBabUT6zW0K3Umllz6o=
 Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
  [74.125.82.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-gDHB52W_PjKFUjGL24mAZA-1; Tue, 06 Jan 2026 14:55:03 -0500
-X-MC-Unique: gDHB52W_PjKFUjGL24mAZA-1
-X-Mimecast-MFC-AGG-ID: gDHB52W_PjKFUjGL24mAZA_1767729302
+ us-mta-582-OLg8lCMIOcO19NxksL8CpQ-1; Tue, 06 Jan 2026 15:03:19 -0500
+X-MC-Unique: OLg8lCMIOcO19NxksL8CpQ-1
+X-Mimecast-MFC-AGG-ID: OLg8lCMIOcO19NxksL8CpQ_1767729799
 Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-2ae25c02e7bso1656036eec.0
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 11:55:03 -0800 (PST)
+ 5a478bee46e88-2ae29a21e7eso118179eec.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 12:03:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767729302; x=1768334102; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767729798; x=1768334598; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JLBYuCbGJX4wvpyfGEJZxJ88C6iaQlO+DitG52afzqY=;
- b=M8/aH9hjRLEHUAtCsSGoU9OeCcTx7hOYVvr8CXeB/wSOGLLZ78NCoHei8odG1N8BX0
- FaedWbH4TqsyQ4apgSmL2Pp+CLqrzBp9z3rrxf6TfiXp7hCcTlCqKv8qAa4RxtqBXHa7
- sG2VCSxGdMLBlv7JBja0457/jBXOK//rA9CfOvTDV+Lapuk2HZTjfyv7XZJGGv2iBN07
- ejueU54IZTZ/CQJqLf5WmQIWy12mc+jLsgVYTOM2U2iHHCFfwPxDi2GOyXqjCyC8ZvOM
- p6TZXORs/xyxX7Fac3WaS+Wcjrfype+i0TuCVGw4XjRjsXRjz8lr5jtLrn06MpqXLEif
- SsQQ==
+ bh=2Tr3Itbay5CNkSJrflt3NWi/9kjWFQPrmrTW87LXHfY=;
+ b=MOxIX3hULnoS/RmNclU8j3mg3JmiqIdGSTJD7wTcqUYqQnyBf/Mk55rYJQpkxuVBi5
+ 7v2yseYQGMhEFXUbQaFHQbDghGtQyvZfpou2bsfOvu2QxmlPUqtnaSJGf2e4Ka7FdgBx
+ tltJHXdXA8LqUtk5qY5ZSus2G0U9nkZ9xPOSVS0LjDUJtmgzHhX8QwVdU66Rp/Y3MfLH
+ WSmhsCQZEFHr3dHr/YW77wCG+rSBCfpyF/JGpLrkdWjEjCj857T+qiAEpRJDwqQ1nqZH
+ Mt9XLYDmmgq9ZyqBizeqWOxHcbq2A2rxhNBZx4jTbgYdKYIXDzwaNOVTZdU8oDVfvizg
+ 9kuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767729302; x=1768334102;
+ d=1e100.net; s=20230601; t=1767729798; x=1768334598;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JLBYuCbGJX4wvpyfGEJZxJ88C6iaQlO+DitG52afzqY=;
- b=XITR3d4mgqlhln1jeqLUluAuN2Wz0JvWQxlbeTQ5jkVfWkT/JmMQHIg39AVBK2DIAq
- ibYaDH/NDS5F9WvcxkcJrbDtKZ0GmiZPFRJ9E0H/ZTkloqIAj9Zj/QCmVUN4nf4tiOoY
- +97BwSAldhXQc++mnXHDYlFKvEsJqCpbJyn6vPV6wSzzFfmuK4Yyv9uUqJq/dY3waZwE
- LENOtDp+aFoqCatsXCMEHOqm3DSj3v6byxOtS7heWe32LKgWzZetU5JE7lRt7s09pLPl
- FEVwg5MorZpzPCzvPGOdQw6z/P37l5FASrA3Ttll4tQTcRBhfoGH2d1BlV+A9LytWd7J
- 3Ppw==
-X-Gm-Message-State: AOJu0YyfpELN2GocUYGPT+yCX3i/qHS5BVhM53tp08pTNZRteNgzJ3O9
- CJUVmjZvgqPaTixTp8NYUP6hgO+bcNYuWyOwxF3ba3fHdNOH0n5X811LKyXBJv2BGEf2k0JikxF
- jWvR9WtL8gbqylCIonRyKt8tm523cBE30ACTUAbJvvxcH7R3XDHn2TcAS
-X-Gm-Gg: AY/fxX6ZRo5bdMOWaqliC0tS6hLLrEku2mr5yZxruweci3wpHc2673kovHh2/FtB6Xt
- Oj8jjBoc9O6wohkyBFyIXWtb7m4PAywqicyFU/eNwY1u/i0xkhAc6mdu7vcbPlFKjzZh9WzDrNF
- SGsXnKhrfCHV46ph564fv/4839ZkJTYicmXCdFEGRkFhe15krjdr9azLdIDxscR4ojUSX1PKPY0
- OdMm5r6faC7GaKSpNtYL3iKal4+CpgIZuDrbjgDx19a4cgfeim8sOe3I1pXQ/n2Fp9r5zkFbDAp
- UPyj9j2puxqC/OpZAbNJ0XS6YH967TOsdPsK8cBBC9YC/VjMfifkE10nL82HjO37q+lL8/k4ASP
- pSDw=
-X-Received: by 2002:a05:7300:f187:b0:2b0:310c:529 with SMTP id
- 5a478bee46e88-2b17d24cbdamr83390eec.14.1767729302357; 
- Tue, 06 Jan 2026 11:55:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGFIu02HwAcCxhs/vLcklLEDBeI8ft93+dvOf5ig54+hXRsbgVNgDubZ19BfGYjZS430Yl+FA==
-X-Received: by 2002:a05:7300:f187:b0:2b0:310c:529 with SMTP id
- 5a478bee46e88-2b17d24cbdamr83374eec.14.1767729301800; 
- Tue, 06 Jan 2026 11:55:01 -0800 (PST)
+ bh=2Tr3Itbay5CNkSJrflt3NWi/9kjWFQPrmrTW87LXHfY=;
+ b=mB9cMyiEg53Gaguzob0BsBhxr8EAi2uQaXbwvBZqvpxNkq2padXU0Bt0nX4Mw/MxTi
+ L40tzyhpoX+FmpUKmW/STd7VVXqq6rASXA4OW2tjzsmrKk+SWK+MFzHzuay/RCrHXvUe
+ zENByIJzjlRM8H+OuTDYa2V3U5r5IXuYJYIHHP2wo7M0D5fBuVusEI93GdWiez5ZEytC
+ rrQB/v/CUvLiLNfnvKK0hnV0D1rtpDGxSI6Zx5YDE/CNf6922eAdQW3W2R2zdkzSHMil
+ FC5Nt9PuQybXcdUrejH0KjGXbgvLW9G0tQkZGj2c8pGt1LAlCJ5+4OMU4kxlzUCccstv
+ GwkA==
+X-Gm-Message-State: AOJu0YwKQTwVOJ0uIcZvMyDxUtzTgMlMoHtuvqEWX0JcluOestLhX6eM
+ vhX8i3aoQXCKfHL4VkWlqo8dBxNV/ybWZM+7xd6+vPcVywa5unBKN4JBWPswUCBChamyfnZZcWT
+ AQZqKwtWif5Au5uponsRcYBGgRe7B+H4RX/uAq/pxmrqjkiitnLxHiJ3C
+X-Gm-Gg: AY/fxX4nnlAMNmpgf0VhhRC8w9wAQtZUiTzomYjYAtjA3KkKYvUzn7rjIuZPrb4lFWF
+ b3pBIGPifqLJjdPbwXQyT1VdBWYQD4vZMmB+B568YCnbI4dOv9oW2gQL4eMTJ+mGn+DoEndtHKC
+ GEEGHfzvgkWXgH3bMfdMDunZuU+HJJNst2821DqDfRLmjOrMPimV8tYg1sqv4CXh20uc/5EHqKt
+ z0maEDLYQf/7NfA/Wt6ok/VYz20EVbCjE0H0fTNhGb0uOJf2bqS/iT3iO4Rg8UKVQzBjgwoZk3r
+ qNJAJcK1fwwGqVICnZF+fbCdv63XgzvSAX4Y90BsD52iRXNEnCaIm8sb+DecEQ+VtblDd6n2E+m
+ gtJ8=
+X-Received: by 2002:a05:7301:2989:b0:2a4:3593:cca7 with SMTP id
+ 5a478bee46e88-2b16fd7c7e9mr2310926eec.4.1767729797908; 
+ Tue, 06 Jan 2026 12:03:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFoX3O1pkDK1aaklzduHqfKlIMkpyTf5nMwGSC/aonNHKn9Pe59VGnEcy5ZUd0vsrdQRrr2/w==
+X-Received: by 2002:a05:7301:2989:b0:2a4:3593:cca7 with SMTP id
+ 5a478bee46e88-2b16fd7c7e9mr2310910eec.4.1767729797326; 
+ Tue, 06 Jan 2026 12:03:17 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2b1707d57aasm4518557eec.30.2026.01.06.11.54.58
+ 5a478bee46e88-2b1707b16e4sm4805756eec.26.2026.01.06.12.03.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Jan 2026 11:55:01 -0800 (PST)
-Date: Tue, 6 Jan 2026 14:54:55 -0500
+ Tue, 06 Jan 2026 12:03:16 -0800 (PST)
+Date: Tue, 6 Jan 2026 15:03:11 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Lukas Straub <lukasstraub2@web.de>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>, Juan Quintela <quintela@trasno.org>
-Subject: Re: [PATCH 1/3] multifd: Add colo support
-Message-ID: <aV1oj75xvV8IfrU8@x1.local>
+ Zhang Chen <zhangckid@gmail.com>
+Subject: Re: [PATCH 3/3] migration-test: Add COLO migration unit test
+Message-ID: <aV1qf5uDYYiGrqR_@x1.local>
 References: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
- <20251230-colo_unit_test_multifd-v1-1-f9734bc74c71@web.de>
+ <20251230-colo_unit_test_multifd-v1-3-f9734bc74c71@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251230-colo_unit_test_multifd-v1-1-f9734bc74c71@web.de>
+In-Reply-To: <20251230-colo_unit_test_multifd-v1-3-f9734bc74c71@web.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -118,180 +118,314 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 30, 2025 at 03:05:44PM +0100, Lukas Straub wrote:
-> Like in the normal ram_load() path, put the received pages into the
-> colo cache and mark the pages in the bitmap so that they will be
-> flushed to the guest later.
+On Tue, Dec 30, 2025 at 03:05:46PM +0100, Lukas Straub wrote:
+> Add a COLO migration test for COLO migration and failover.
 > 
-> Signed-off-by: Juan Quintela <quintela@redhat.com>
+> COLO does not support q35 machine at this time.
+> 
 > Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 > ---
->  migration/meson.build    |  2 +-
->  migration/multifd-colo.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++
->  migration/multifd-colo.h | 26 ++++++++++++++++++++++
->  migration/multifd.c      | 14 +++++++++---
->  4 files changed, 95 insertions(+), 4 deletions(-)
+>  tests/qtest/meson.build            |   7 ++-
+>  tests/qtest/migration-test.c       |   1 +
+>  tests/qtest/migration/colo-tests.c | 115 +++++++++++++++++++++++++++++++++++++
+>  tests/qtest/migration/framework.c  |  65 ++++++++++++++++++++-
+>  tests/qtest/migration/framework.h  |   9 +++
+>  5 files changed, 195 insertions(+), 2 deletions(-)
 > 
-> diff --git a/migration/meson.build b/migration/meson.build
-> index 16909d54c5110fc5d8187fd3a68c4a5b08b59ea7..1e59fe4f1f0bbfffed90df38e8f39fa87bceb9b9 100644
-> --- a/migration/meson.build
-> +++ b/migration/meson.build
-> @@ -40,7 +40,7 @@ system_ss.add(files(
->  ), gnutls, zlib)
->  
->  if get_option('replication').allowed()
-> -  system_ss.add(files('colo-failover.c', 'colo.c'))
-> +  system_ss.add(files('colo-failover.c', 'colo.c', 'multifd-colo.c'))
->  else
->    system_ss.add(files('colo-stubs.c'))
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 08fba9695b9813dc0b6b6554ef8c40c9615918fa..e68ce6c193ce2a2c244fa072ebb24738380f844a 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -366,6 +366,11 @@ if gnutls.found()
+>    endif
 >  endif
-> diff --git a/migration/multifd-colo.c b/migration/multifd-colo.c
+>  
+> +migration_colo_files = []
+> +if get_option('replication').allowed()
+> +  migration_colo_files = [files('migration/colo-tests.c')]
+> +endif
+> +
+>  qtests = {
+>    'aspeed_hace-test': files('aspeed-hace-utils.c', 'aspeed_hace-test.c'),
+>    'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
+> @@ -377,7 +382,7 @@ qtests = {
+>                               'migration/migration-util.c') + dbus_vmstate1,
+>    'erst-test': files('erst-test.c'),
+>    'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
+> -  'migration-test': test_migration_files + migration_tls_files,
+> +  'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
+>    'pxe-test': files('boot-sector.c'),
+>    'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
+>                            'pnv-xive2-nvpg_bar.c'),
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index 08936871741535c926eeac40a7d7c3f461c72fd0..e582f05c7dc2673dbd05a936df8feb6c964b5bbc 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -55,6 +55,7 @@ int main(int argc, char **argv)
+>      migration_test_add_precopy(env);
+>      migration_test_add_cpr(env);
+>      migration_test_add_misc(env);
+> +    migration_test_add_colo(env);
+>  
+>      ret = g_test_run();
+>  
+> diff --git a/tests/qtest/migration/colo-tests.c b/tests/qtest/migration/colo-tests.c
 > new file mode 100644
-> index 0000000000000000000000000000000000000000..05a81e57b2bda517cbc0844b4f03dc78453f6af8
+> index 0000000000000000000000000000000000000000..adec41c1c0473539d02e488b1d0baa663d7743b1
 > --- /dev/null
-> +++ b/migration/multifd-colo.c
-> @@ -0,0 +1,57 @@
+> +++ b/tests/qtest/migration/colo-tests.c
+> @@ -0,0 +1,115 @@
 > +/*
 > + * SPDX-License-Identifier: GPL-2.0-or-later
 > + *
-> + * multifd colo implementation
+> + * QTest testcases for COLO migration
 > + *
-> + * Copyright (c) Lukas Straub <lukasstraub2@web.de>
+> + * Copyright (c) 2025 Lukas Straub <lukasstraub2@web.de>
 > + *
 > + * This work is licensed under the terms of the GNU GPL, version 2 or later.
 > + * See the COPYING file in the top-level directory.
+> + *
 > + */
 > +
 > +#include "qemu/osdep.h"
-> +#include "exec/target_page.h"
-> +#include "qemu/error-report.h"
-> +#include "qapi/error.h"
-> +#include "ram.h"
-> +#include "multifd.h"
-> +#include "options.h"
-> +#include "io/channel-socket.h"
-> +#include "migration/colo.h"
-> +#include "multifd-colo.h"
-> +#include "system/ramblock.h"
+> +#include "libqtest.h"
+> +#include "migration/framework.h"
+> +#include "migration/migration-qmp.h"
+> +#include "migration/migration-util.h"
+> +#include "qemu/module.h"
 > +
-> +void multifd_colo_prepare_recv(MultiFDRecvParams *p)
+> +static void test_colo_plain_primary_failover(char *name, MigrateCommon *args)
 > +{
-> +    if (!migrate_colo()) {
-
-We should avoid invoking *_colo_*() function, then check COLO enabled or
-not only reaching here.  Instead, we'd check "migrate_colo()" first and
-invoke it only if it's enabled.
-
-> +        return;
-> +    }
+> +    args->listen_uri = "tcp:127.0.0.1:0";
+> +    args->colo_primary_failover = true;
 > +
-> +    assert(p->block->colo_cache);
-> +
-> +    /*
-> +     * While we're still in precopy state (not yet in colo state), we copy
-> +     * received pages to both guest and cache. No need to set dirty bits,
-> +     * since guest and cache memory are in sync.
-> +     */
-> +    if (migration_incoming_in_colo_state()) {
-> +        colo_record_bitmap(p->block, p->normal, p->normal_num);
-> +    }
-> +    p->host = p->block->colo_cache;
-
-May want to update the comment of "host" then, because it isn't always
-pointing to ramblock's buffer now when COLO is enabled.
-
+> +    test_colo_common(args);
 > +}
 > +
-> +void multifd_colo_process_recv(MultiFDRecvParams *p)
+> +static void test_colo_plain_secondary_failover(char *name, MigrateCommon *args)
 > +{
-> +    if (!migrate_colo()) {
-
-Same here.
-
+> +    args->listen_uri = "tcp:127.0.0.1:0";
+> +
+> +    test_colo_common(args);
+> +}
+> +
+> +static void *hook_start_multifd(QTestState *from, QTestState *to)
+> +{
+> +    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "none");
+> +}
+> +
+> +static void test_colo_multifd_primary_failover(char *name, MigrateCommon *args)
+> +{
+> +    args->listen_uri = "defer";
+> +    args->start_hook = hook_start_multifd;
+> +    args->colo_primary_failover = true;
+> +    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+> +
+> +    test_colo_common(args);
+> +}
+> +
+> +static void test_colo_multifd_secondary_failover(char *name,
+> +                                                 MigrateCommon *args)
+> +{
+> +    args->listen_uri = "defer";
+> +    args->start_hook = hook_start_multifd;
+> +    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+> +
+> +    test_colo_common(args);
+> +}
+> +
+> +static void test_colo_plain_primary_failover_checkpoint(char *name,
+> +                                                        MigrateCommon *args)
+> +{
+> +    args->colo_failover_during_checkpoint = true;
+> +    test_colo_plain_primary_failover(name, args);
+> +}
+> +
+> +static void test_colo_plain_secondary_failover_checkpoint(char *name,
+> +                                                          MigrateCommon *args)
+> +{
+> +    args->colo_failover_during_checkpoint = true;
+> +    test_colo_plain_secondary_failover(name, args);
+> +}
+> +
+> +static void test_colo_multifd_primary_failover_checkpoint(char *name,
+> +                                                          MigrateCommon *args)
+> +{
+> +    args->colo_failover_during_checkpoint = true;
+> +    test_colo_multifd_primary_failover(name, args);
+> +}
+> +
+> +static void test_colo_multifd_secondary_failover_checkpoint(char *name,
+> +                                                            MigrateCommon *args)
+> +{
+> +    args->colo_failover_during_checkpoint = true;
+> +    test_colo_multifd_secondary_failover(name, args);
+> +}
+> +
+> +void migration_test_add_colo(MigrationTestEnv *env)
+> +{
+> +    migration_test_add("/migration/colo/plain/secondary_failover",
+> +                       test_colo_plain_secondary_failover);
+> +
+> +    migration_test_add("/migration/colo/multifd/secondary_failover",
+> +                       test_colo_multifd_secondary_failover);
+> +
+> +    if (!env->full_set) {
 > +        return;
 > +    }
-> +
-> +    if (!migration_incoming_in_colo_state()) {
-> +        for (int i = 0; i < p->normal_num; i++) {
-> +            void *guest = p->block->host + p->normal[i];
-> +            void *cache = p->host + p->normal[i];
-> +            memcpy(guest, cache, multifd_ram_page_size());
-> +        }
-> +    }
-> +    p->host = p->block->host;
-> +}
-> diff --git a/migration/multifd-colo.h b/migration/multifd-colo.h
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..82eaf3f48c47de2f090f9de52f9d57a337d4754a
-> --- /dev/null
-> +++ b/migration/multifd-colo.h
-> @@ -0,0 +1,26 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * multifd colo header
-> + *
-> + * Copyright (c) Lukas Straub <lukasstraub2@web.de>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#ifndef QEMU_MIGRATION_MULTIFD_COLO_H
-> +#define QEMU_MIGRATION_MULTIFD_COLO_H
-> +
-> +#ifdef CONFIG_REPLICATION
-> +
-> +void multifd_colo_prepare_recv(MultiFDRecvParams *p);
-> +void multifd_colo_process_recv(MultiFDRecvParams *p);
-> +
-> +#else
-> +
-> +static inline void multifd_colo_prepare_recv(MultiFDRecvParams *p) {}
-> +static inline void multifd_colo_process_recv(MultiFDRecvParams *p) {}
-> +
-> +#endif
-> +#endif
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index bf6da85af8a1e207235ce06b8dbace33beded6d8..9006f73cc5b52e8814da107c0b5c867ee6d03a95 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -29,6 +29,7 @@
->  #include "qemu-file.h"
->  #include "trace.h"
->  #include "multifd.h"
-> +#include "multifd-colo.h"
->  #include "threadinfo.h"
->  #include "options.h"
->  #include "qemu/yank.h"
-> @@ -1398,11 +1399,18 @@ static void *multifd_recv_thread(void *opaque)
->              if (is_device_state) {
->                  assert(use_packets);
->                  ret = multifd_device_state_recv(p, &local_err);
-> +                if (ret != 0) {
-> +                    break;
-> +                }
->              } else {
-> +                multifd_colo_prepare_recv(p);
-> +
->                  ret = multifd_recv_state->ops->recv(p, &local_err);
-> -            }
-> -            if (ret != 0) {
-> -                break;
-> +                if (ret != 0) {
-> +                    break;
-> +                }
-> +
-> +                multifd_colo_process_recv(p);
 
-Personally I'd suggest we introduce multifd_ram_state_recv() and put
-everything there.
+IMHO we can skip all COLO tests in full_set.  Don't worry, if it's merged
+at least Fabiano and myself will always run it, making sure migration
+patches will be smoked.
+
+Here it's about whether we will run it in everyone's CI.
+
+> +
+> +    migration_test_add("/migration/colo/plain/primary_failover",
+> +                       test_colo_plain_primary_failover);
+> +
+> +    migration_test_add("/migration/colo/multifd/primary_failover",
+> +                       test_colo_multifd_primary_failover);
+> +
+> +    migration_test_add("/migration/colo/plain/primary_failover_checkpoint",
+> +                       test_colo_plain_primary_failover_checkpoint);
+> +    migration_test_add("/migration/colo/plain/secondary_failover_checkpoint",
+> +                       test_colo_plain_secondary_failover_checkpoint);
+> +
+> +    migration_test_add("/migration/colo/multifd/primary_failover_checkpoint",
+> +                       test_colo_multifd_primary_failover_checkpoint);
+> +    migration_test_add("/migration/colo/multifd/secondary_failover_checkpoint",
+> +                       test_colo_multifd_secondary_failover_checkpoint);
+> +}
+> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> index 8c1fc6e009f16dc05a47e917167f62e0250ca992..08bca49a8980f9988be9447acf54b17acd56da94 100644
+> --- a/tests/qtest/migration/framework.c
+> +++ b/tests/qtest/migration/framework.c
+> @@ -315,7 +315,7 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+>      if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
+>          memory_size = "150M";
+>  
+> -        if (g_str_equal(arch, "i386")) {
+> +        if (g_str_equal(arch, "i386") || args->is_colo) {
+
+OK, one more reference..
+
+I'm curious, why Q35 is not supported?
+
+>              machine_alias = "pc";
+>          } else {
+>              machine_alias = "q35";
+> @@ -1068,6 +1068,69 @@ void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
+>      return NULL;
+>  }
+>  
+> +int test_colo_common(MigrateCommon *args)
+> +{
+> +    QTestState *from, *to;
+> +    void *data_hook = NULL;
+> +
+> +    args->start.oob = true;
+> +    args->start.is_colo = true;
+> +    args->start.caps[MIGRATION_CAPABILITY_X_COLO] = true;
+> +
+> +    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+> +        return -1;
+> +    }
+> +
+> +    migrate_set_parameter_int(from, "x-checkpoint-delay", 300);
+> +
+> +    if (args->start_hook) {
+> +        data_hook = args->start_hook(from, to);
+> +    }
+> +
+> +    migrate_ensure_converge(from);
+> +    wait_for_serial("src_serial");
+> +
+> +    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
+> +
+> +    wait_for_migration_status(from, "colo", NULL);
+> +    wait_for_resume(to, &dst_state);
+> +
+> +    wait_for_serial("src_serial");
+> +    wait_for_serial("dest_serial");
+> +
+> +    /* wait for 3 checkpoints */
+> +    for (int i = 0; i < 3; i++) {
+> +        qtest_qmp_eventwait(to, "RESUME");
+> +        wait_for_serial("src_serial");
+> +        wait_for_serial("dest_serial");
+> +    }
+> +
+> +    if (args->colo_failover_during_checkpoint) {
+> +        qtest_qmp_eventwait(to, "STOP");
+> +    }
+> +    if (args->colo_primary_failover) {
+> +        qtest_qmp_assert_success(from, "{'exec-oob': 'yank', 'id': 'yank-cmd', "
+> +                                            "'arguments': {'instances':"
+> +                                                "[{'type': 'migration'}]}}");
+> +        qtest_qmp_assert_success(from, "{'execute': 'x-colo-lost-heartbeat'}");
+> +        wait_for_serial("src_serial");
+> +    } else {
+> +        qtest_qmp_assert_success(to, "{'exec-oob': 'yank', 'id': 'yank-cmd', "
+> +                                        "'arguments': {'instances':"
+> +                                            "[{'type': 'migration'}]}}");
+> +        qtest_qmp_assert_success(to, "{'execute': 'x-colo-lost-heartbeat'}");
+> +        wait_for_serial("dest_serial");
+> +    }
+> +
+> +    if (args->end_hook) {
+> +        args->end_hook(from, to, data_hook);
+> +    }
+> +
+> +    migrate_end(from, to, !args->colo_primary_failover);
+> +
+> +    return 0;
+> +}
+> +
+>  QTestMigrationState *get_src(void)
+>  {
+>      return &src_state;
+> diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+> index 2ea13e7758697550b5531737e66d6d939dd800d1..1da532569d8c5941c99d83ae7da88ccab2bdcbe2 100644
+> --- a/tests/qtest/migration/framework.h
+> +++ b/tests/qtest/migration/framework.h
+> @@ -230,6 +230,9 @@ typedef struct {
+>       */
+>      bool live;
+>  
+> +    bool colo_primary_failover;
+> +    bool colo_failover_during_checkpoint;
+
+Let's try to not add more per-feature fields here into the test framework
+struct.  My bad to have started doing this for postcopy tests..  I'll
+prepare patches to remove the postcopy ones.  These parameters can be
+passed from the test callers, afaict.
 
 Thanks,
 
->              }
->          } else if (is_device_state) {
->              error_setg(&local_err,
+> +
+>      /* Postcopy specific fields */
+>      void *postcopy_data;
+>      PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
+> @@ -248,6 +251,7 @@ void test_postcopy_common(MigrateCommon *args);
+>  void test_postcopy_recovery_common(MigrateCommon *args);
+>  int test_precopy_common(MigrateCommon *args);
+>  void test_file_common(MigrateCommon *args, bool stop_src);
+> +int test_colo_common(MigrateCommon *args);
+>  void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
+>                                                      QTestState *to,
+>                                                      const char *method);
+> @@ -267,5 +271,10 @@ void migration_test_add_file(MigrationTestEnv *env);
+>  void migration_test_add_precopy(MigrationTestEnv *env);
+>  void migration_test_add_cpr(MigrationTestEnv *env);
+>  void migration_test_add_misc(MigrationTestEnv *env);
+> +#ifdef CONFIG_REPLICATION
+> +void migration_test_add_colo(MigrationTestEnv *env);
+> +#else
+> +static inline void migration_test_add_colo(MigrationTestEnv *env) {};
+> +#endif
+>  
+>  #endif /* TEST_FRAMEWORK_H */
 > 
 > -- 
 > 2.39.5
