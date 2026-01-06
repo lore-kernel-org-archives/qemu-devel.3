@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E81CE9D70
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19314CE9D70
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd9Rn-0003Ia-Lf; Tue, 06 Jan 2026 10:58:15 -0500
+	id 1vd9Rh-0003Ht-03; Tue, 06 Jan 2026 10:58:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vd9Rm-0003IS-He
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:58:14 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vd9Rf-0003Hk-O2
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:58:07 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vd9Rk-0006Tb-Vj
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:58:14 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-4327555464cso641737f8f.1
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 07:58:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vd9Re-0006TC-6F
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:58:07 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-42fb5810d39so647541f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 07:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767715091; x=1768319891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767715084; x=1768319884; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O3ZOyyrZ+O3zgjlLHnoxYf+lt/LGps43wfGqI92W+nU=;
- b=zqZlQuR2M6DPRpw+NNJB65gyZ5+j6Iqj8UznTXqGIiPiSF7UMJg9GRG1usAs81hd08
- Ctj0Dq1tMENoS9OuCRuYHgM+KKQmkb0KxZdQXh+iYKfme6Eiv3jLMqUybFiTeul8F22O
- k8hWF6YIed254x6MPgouuGdp2kPmJ4IjhOBqGvuC0Acaj4hhE6iqXN7m+HLetPhEj64F
- 07kelXx3/7ZENWvm49IO/N84u7550yq5xAjTqqOFWOsETJfWaGFkesBTMh/G/PjMzREp
- B1Vf6r2ELd+0GoFGQ0gBLAIVG0O0GFPRHepjGvAy/klelnshRzNZjWrzzQwLsB89hkCP
- 4Udw==
+ bh=E5roLA89uLgbVSNGHvODMTx5DI2hyxThnFPheFtSmSs=;
+ b=ZgKCUYJzNsrjk+hQDSwH89xprHuKIf3bouvvHS+ZdN+Ap0TR1/S5CRluc92rQl2xoA
+ 82kUEm7WT2lfAbEZ0KVL+mxgGguaTtHY2a0im+cYppypjEYZ/wGXIrFCY2wTbL5YIWlA
+ +XVrFQ0taUNO5yCLOVi4bm1fAt/JdZs+2pZ5ZEsD/OFhWvPHrXntPDrdOV6r63Kkd6ii
+ +LB0HHNH5xXvZvp1VmMSfdg8/uJdpk+P6qK3fh/T4w91WG6DWEFo+5ANFGiYNnNkkrzF
+ dXNGvaL5UfFdEUF98cQobAk9uCSOe9yWY75f1WxgxhmG0TEbvIksL2Jhf/BIm+KEUKsa
+ E5Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767715091; x=1768319891;
+ d=1e100.net; s=20230601; t=1767715084; x=1768319884;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=O3ZOyyrZ+O3zgjlLHnoxYf+lt/LGps43wfGqI92W+nU=;
- b=uhCVw3/ZhY+8oXFuQPcSrqJbHAKoy1AZBVI7KPkVVeb5PJfvb9P3+lNGTTGZHqAXuG
- h1R/+U4ztzoZWkXqHyZH/Y9bV5n9Oiw3X1jTfFSZYNvelhXbdqjZRcWqavivykBCByTy
- /mNVuX2sH50XB49/Fe6pKMGVZC2G/8lfX9Nv7+FjJm2fiUabgkasJ+51cTnduPJdNvMH
- 7RZpkawWtEGvSdFrKfkTV/0FKfG2tCIfjHA5JjtU7ydYtq7RoXB/euAVbdxXfFdzUP8T
- c5+gEn4scwhbtPAsw8ZCiqEES60gv6MEMwkaw51PpjiLw1a8GAMSVRplHsIw2jIXS9dW
- Bv+Q==
-X-Gm-Message-State: AOJu0Ywq9GaPisEpQBBsUFx2kRNPMEW1waK+RAGtVz2064lloN1Qecob
- 4hsjbbib745NuKAhP8a+hfZ7vE34ts5Fm7qm3sh5XDbekYRbhfGKfdbmZH7fm9SYjjoocnGLOIU
- hO/4Zddg=
-X-Gm-Gg: AY/fxX48nCk62jNWl9JiCCvGEU0cGOWagwL7zsScN2CTvJ4C+RW1YZ8RaNzrW+WYWjt
- EaGbe7/D6IVPuyMMcPOBBiu2MJPOJ033K+vCoAVsNeIRDkpdYHn4KbdAcrZgXm2kCtRGCu2E9D7
- REqJwh/zgUHR23WJ1R4dQf3uvc5OFqEXK+0dJmyoH1fwX9sIJFgXVvzaPnjuUX0fJ/9rk1lc0R0
- Ef0lsYATGF/DiDJKXwLapGscyKcZarZWFQ55LDH4lYrQVil6Eh6oRVolYvIaJ9kD1CBnS6H2xlR
- LIzfY1xT0OAOVtclrG5Ms16I/xpIVFTCLhA592Ljm8YNqF1F9G+BmNo/HdfOB5c6yOyKkNUUQLl
- SFEe8DtP6XQWJhfDXCzHivjfxbIv6gjR+lsym0kgYKqMdsX1twUyf0o7oHCkLMUXJKv3KhUdeIL
- +GXxpFh+oAsjN+9Ujn7FEZpB0VYB9WPBC3bk3Z7tMsaygIfKEuN1+8MAdafFtS
-X-Google-Smtp-Source: AGHT+IEZ86I3WcEW/eKZMbQiX9Fc+OHHuEzEwEvc5KzfTW8G9rLRJ+YDP9TFcDEeEapQkZPdunuQ6w==
-X-Received: by 2002:a05:6000:26cd:b0:430:feb3:f5bb with SMTP id
- ffacd0b85a97d-432bca5227fmr4838632f8f.60.1767715090978; 
- Tue, 06 Jan 2026 07:58:10 -0800 (PST)
+ bh=E5roLA89uLgbVSNGHvODMTx5DI2hyxThnFPheFtSmSs=;
+ b=nAFLjhJtq29ZP8N9F+poaohigUKBeSRLK3rAVMIuc2P01PF1CNVWlOiM1XbWhQkdtn
+ BfcdqnWbtuSIEh+nrlDlZPNwymoZ3U6xY4ln1D1EF+InXb7RvZgfdzJK1we3PSPVYbUg
+ JTG09IF+KouzM6c+ZdSyKLpdpPtYoBWu2FXx5wydUuonDEOmOR22z/pY+cEwH0JyXIde
+ hNn9qOY9R4OYWLg4Qtcgw/Ia6YWowxcQv3Q9agL35EuGgDzW+FZ50Eslvxlebj5K9K9k
+ sGr0mmNhHRcsf8VJ14TDvFtVRySGxyn2k2rYr5lnCqn5i3ghtYGLLqu4ywglRkvbgEAT
+ Vo/g==
+X-Gm-Message-State: AOJu0YxHjq7nfYxDcxuTvdjjzU36hXhddVngkYnYbQ6IK236c740RVuz
+ 8xgZMaNzM8sipET5+YLJPIObu5kBvfK8AZXCAvZ5ig6Yi4ZKLkPkKHp67BG4+ZMz/lnUaA0RdNA
+ LrWony1U=
+X-Gm-Gg: AY/fxX5HTFjGJ/EJQJvaOMshk5XIcypx55Ya/nvH3dND72b5e8cmW3xDYv12TztdXvS
+ EiN6xyF53p3TmKSXUheSVOUsgUhn07mB4csL2qsQDqAEqKEDgHCFurgy+ZHhMrw1AjBM4ciqpYf
+ hrIevGGw0wsZ/Vh190tmxqXCq8+UecN0d+9DNDWL7EaNHC2ScenbKNIbFvJ90jVRd/Mae7ZsKds
+ IVq3LGF5TgGgrwOI7ySXmN37HmSRhEvMLHwRn3XdR1Rtdz3qFWgaCfsicUuL7m4iN7ICvbo/TM2
+ 3z+SUYtKIqS2a24HKNiyBf9nW7dyk9oYIC+cJr/NAK+9N6NlR1XxQ6zwxlXFmrGKeMbjZ3T/389
+ 9gVKToG899BDyW/E1JENeyw+we2Rec3GW6u+y9vpOo84RK5+wdtmoYf9/pdUv3OBfM1AVJ1Lncp
+ sikH58S5hV1hAeLsg1f6xS/0bZGNiFTxjG0v9EZZizXbROGH1YxLz03BWwK6/ovGUgg9W4L6E=
+X-Google-Smtp-Source: AGHT+IE15yS0TX56lvaufPD4IOv+N3Eu6w+89GICp6O6msnA0bjYS1nfSQif+7WSefs+LtLeWUL3tQ==
+X-Received: by 2002:a05:6000:2204:b0:430:f704:4ef with SMTP id
+ ffacd0b85a97d-432bca58d28mr4124477f8f.61.1767715084064; 
+ Tue, 06 Jan 2026 07:58:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e175csm5161993f8f.14.2026.01.06.07.58.09
+ ffacd0b85a97d-432bd0e180csm4967390f8f.10.2026.01.06.07.58.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Jan 2026 07:58:10 -0800 (PST)
+ Tue, 06 Jan 2026 07:58:03 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
@@ -72,17 +72,17 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/8] target/alpha: Use explicit little-endian LD/ST API
-Date: Tue,  6 Jan 2026 16:57:48 +0100
-Message-ID: <20260106155755.53646-3-philmd@linaro.org>
+Subject: [PATCH v2 1/8] hw/alpha: Use explicit little-endian LD/ST API
+Date: Tue,  6 Jan 2026 16:57:47 +0100
+Message-ID: <20260106155755.53646-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106155755.53646-1-philmd@linaro.org>
 References: <20260106155755.53646-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,60 +112,54 @@ Mechanical change running:
 
   $ for a in uw w l q; do \
       sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
-        $(git grep -wlE '(ld|st)u?[wlq]_p' target/alpha/);
+        $(git grep -wlE '(ld|st)u?[wlq]_p' hw/alpha/);
     done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/alpha/helper.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ hw/alpha/dp264.c   | 11 +++++------
+ hw/alpha/typhoon.c |  4 ++--
+ 2 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index a9af52a928f..80542cb0665 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
-@@ -214,17 +214,18 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
+index cddd94fec82..5e64528431e 100644
+--- a/hw/alpha/dp264.c
++++ b/hw/alpha/dp264.c
+@@ -194,12 +194,11 @@ static void clipper_init(MachineState *machine)
+             load_image_targphys(initrd_filename, initrd_base,
+                                 ram_size - initrd_base, NULL);
  
-     pt = env->ptbr;
+-            address_space_stq(&address_space_memory, param_offset + 0x100,
+-                              initrd_base + 0xfffffc0000000000ULL,
+-                              MEMTXATTRS_UNSPECIFIED,
+-                              NULL);
+-            address_space_stq(&address_space_memory, param_offset + 0x108,
+-                              initrd_size, MEMTXATTRS_UNSPECIFIED, NULL);
++            address_space_stq_le(&address_space_memory, param_offset + 0x100,
++                                 initrd_base + 0xfffffc0000000000ULL,
++                                 MEMTXATTRS_UNSPECIFIED, NULL);
++            address_space_stq_le(&address_space_memory, param_offset + 0x108,
++                                 initrd_size, MEMTXATTRS_UNSPECIFIED, NULL);
+         }
+     }
+ }
+diff --git a/hw/alpha/typhoon.c b/hw/alpha/typhoon.c
+index 01fda4b1c8a..7722d4fd009 100644
+--- a/hw/alpha/typhoon.c
++++ b/hw/alpha/typhoon.c
+@@ -622,8 +622,8 @@ static bool make_iommu_tlbe(hwaddr taddr, hwaddr mask, IOMMUTLBEntry *ret)
+    translation, given the address of the PTE.  */
+ static bool pte_translate(hwaddr pte_addr, IOMMUTLBEntry *ret)
+ {
+-    uint64_t pte = address_space_ldq(&address_space_memory, pte_addr,
+-                                     MEMTXATTRS_UNSPECIFIED, NULL);
++    uint64_t pte = address_space_ldq_le(&address_space_memory, pte_addr,
++                                        MEMTXATTRS_UNSPECIFIED, NULL);
  
--    /* TODO: rather than using ldq_phys() to read the page table we should
-+    /*
-+     * TODO: rather than using ldq_phys_le() to read the page table we should
-      * use address_space_ldq() so that we can handle the case when
-      * the page table read gives a bus fault, rather than ignoring it.
--     * For the existing code the zero data that ldq_phys will return for
-+     * For the existing code the zero data that ldq_phys_le will return for
-      * an access to invalid memory will result in our treating the page
-      * table as invalid, which may even be the right behaviour.
-      */
- 
-     /* L1 page table read.  */
-     index = (addr >> (TARGET_PAGE_BITS + 20)) & 0x3ff;
--    L1pte = ldq_phys(cs->as, pt + index*8);
-+    L1pte = ldq_phys_le(cs->as, pt + index * 8);
- 
-     if (unlikely((L1pte & PTE_VALID) == 0)) {
-         ret = MM_K_TNV;
-@@ -237,7 +238,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
- 
-     /* L2 page table read.  */
-     index = (addr >> (TARGET_PAGE_BITS + 10)) & 0x3ff;
--    L2pte = ldq_phys(cs->as, pt + index*8);
-+    L2pte = ldq_phys_le(cs->as, pt + index * 8);
- 
-     if (unlikely((L2pte & PTE_VALID) == 0)) {
-         ret = MM_K_TNV;
-@@ -250,7 +251,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
- 
-     /* L3 page table read.  */
-     index = (addr >> TARGET_PAGE_BITS) & 0x3ff;
--    L3pte = ldq_phys(cs->as, pt + index*8);
-+    L3pte = ldq_phys_le(cs->as, pt + index * 8);
- 
-     phys = L3pte >> 32 << TARGET_PAGE_BITS;
-     if (unlikely((L3pte & PTE_VALID) == 0)) {
+     /* Check valid bit.  */
+     if ((pte & 1) == 0) {
 -- 
 2.52.0
 
