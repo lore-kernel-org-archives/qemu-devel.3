@@ -4,107 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54167CEFD01
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 20:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7191CEFD08
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 20:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdDkS-00089Q-MH; Tue, 06 Jan 2026 15:33:48 -0500
+	id 1vdE2C-0005aL-9J; Tue, 06 Jan 2026 15:52:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdDkI-00084j-Hn
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 15:33:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1vdE2B-0005a8-Cu
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 15:52:07 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdDkG-0006oB-NP
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 15:33:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767731616;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=B+bbNT2SHlvLODHqdtEMfBZv1WYjcGKdKT9Qdi22zKg=;
- b=Ev4Te8hozsqm8C6WZp49O5UQOyvZhLxVEL+XSSR9vZQgl8zIXcCdCHEqANqOClGrN++qhx
- 1PEt9Q3dtl5O4TWVnvIXzSQj9n4ohsyj0TqR9PyhOm2uNax6soeVTqg2PSch+KHd38ucXJ
- XlgVtN/9ywsr8xpvlu3Nt+sWIil8sxk=
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-qn44PJ7DOPS2oaYviz45sA-1; Tue, 06 Jan 2026 15:33:33 -0500
-X-MC-Unique: qn44PJ7DOPS2oaYviz45sA-1
-X-Mimecast-MFC-AGG-ID: qn44PJ7DOPS2oaYviz45sA_1767731613
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-2ae6ef97ac5so1785964eec.1
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 12:33:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1vdE29-0006I6-5E
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 15:52:07 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 606IVeGh1462299
+ for <qemu-devel@nongnu.org>; Tue, 6 Jan 2026 20:52:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=tW6E527H9gCcSV7p6lhDR3jvyfmsoah/VJw
+ O7DQjv9Y=; b=ApIDLx5cLiEUbFZR/pKvntDkHmi31Q/xq7Qhl/oOBKiXKS15Ira
+ vQkoPdLoZf9h4SDGpETIPsr/JqmhUMA95ho1uUIjn/np35pglcNMRLu1qq5YZ1vB
+ UDecmTxsgcizY9uK84w5IMv7nAZ99kMSgcVn2kYbvpE79dU/07oJO83Euy+9gJXy
+ PXTlrV2024S/WnD0FmNwEd/9qN96D3SeC60nrUV/M8D8SrTtH3/03M7Z502CuMuf
+ gDVo5gzi/vag/rIM4HUb2twbiAfdHLsgSsHF0sWBEcMSFuxyXMxt++IdGEtiiqrZ
+ fKnqmr2HrRBft376VUi9CDKXpkATuJWQXgg==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bh0vm1rva-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 20:52:00 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2b0588c6719so65469eec.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 12:52:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767731612; x=1768336412; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B+bbNT2SHlvLODHqdtEMfBZv1WYjcGKdKT9Qdi22zKg=;
- b=hiQ06PCMoqhJRrQevkKrzj0m8RJaJ+uIUv7KFpUhFTQDJUC8SrPKoZirxOjIe9mIOm
- kSr3XvAj2QTDzVJlNkNj45ecOyE3G4SRI/yWjbLP8RBURrrGNCHYAY4l8QtAE7ZO8jjy
- RgOoGw7hViMJcer5sj/1a8pL1Y802G+YD/nL2mxl9O/xlV6p1QOfI4X4WzlpBEdMm3pp
- T/PIjIISg6/hGiABkCFtxDkfGQv1iW/rS12rUiRfJmzbLOc4PzL6UB6QOBtw8pC8bc8t
- VHVFO1Z8mBkUyxxc9ugb8tx2lz/qDv6rZhdzgPGgVoEAGz8BipfPefPCysLwhk9OgJyt
- l91Q==
+ d=oss.qualcomm.com; s=google; t=1767732719; x=1768337519; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tW6E527H9gCcSV7p6lhDR3jvyfmsoah/VJwO7DQjv9Y=;
+ b=NUBBpm4A3h6oZlUuWLDhYdzAaYvNo++yvyj0OEDEAJhpXoBRelQNEfBl+PdSiygm+I
+ sACqE1jboVxduyomowzZxN1g8JJ7z79iEMNoMLNL/qqjllliBrHg/aKY1EpWUHaqiWCx
+ 8dVI518EjmMxDxJHn2CcUeXtXezGWfgnvIHsPAkScVYtgQ643Ch1tMk5XNVnISOf5e9r
+ MiouPwkwiY47CvE/YCjptUgSWAp/GGk1i6NEn+Xn4yJA+X96npODLH49jjC9dqCiIVJb
+ Prb4gBJkDZFb3EmZojpCSEvWNnOyggSNxbSblSAUD0nkQT4BgUnlrU1iQAbtIxO+vWg2
+ buNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767731612; x=1768336412;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=B+bbNT2SHlvLODHqdtEMfBZv1WYjcGKdKT9Qdi22zKg=;
- b=MlyOo/TtG5oRhojMO+afDQYsfWXdVWXBwfJvavuTUAkKBITbZBaGUH01gjUy1sjrR+
- DDv4SYhB0aYC630MLD1nypLzyTzG9DCKUUmWbfYMC0zZJZZOW5o0tYYYm5ciE9DVjLj6
- 6SHDb0LIBgZK7G/LShiRXTlWxFLffjEUg3K8qmO0o/OLP2zlJP9DjWe3Xbm4d182belj
- WEYgTMlxYyFQDjxfOd7YbAfjtKEDZurgV2w1Jiuz/qZO9d2MR6d3HcGP3mvgnmtsY5Ce
- MZzT9Fr4skPkQHcWNjgog77Z8eBMFmyMtQp24WQpwrTmcUhoRVtGQ+VIyOl9Ni5lBVYh
- WiHQ==
-X-Gm-Message-State: AOJu0YxEu7KyaQYBLyLnBAFuxIuAxzZMTCIb+sFP+TqKN1ngRMtAnVg2
- lhxjBN1UjFbLdswlmvs1p+XVYAbSVbzYSgumlR9oU6Mwbe/JGn8bBgkNfEmuHo25iUGn725Z6io
- sUTgjXCUaG/aBiniHCIVeWn+xlP5jLAWQoAzZB7Bm/uEzsAdqz8JV7yh+cPsXA9Eynht3Cu9Srv
- OwT1EXwXfXGjVvkyzyUOXAC8ZZ5Rd4qQ6tLvbspw==
-X-Gm-Gg: AY/fxX7xJZ6aSNb5+tj5XxTC+9e0DFojD6DFg7BhN7at2tb1W4f7i1iAYULI5G9Pslr
- yfGPR5Bkolldzuf03nWpcG+YzwFRW2ZMcwuVyYn99ZjRSkUMVouPHoCyYYIaajKKZE3EEppYXTa
- wptp1Y936xuQCeeTTNoXsFKZ4D6pRfgXnU+2AGlepoFf5W0Iex4JUxBD6JxvrCwXRoCZDSKvzJm
- ZnRQXEY8DUc4qY8kc6vmgt26C0dKMyv6xiHTFQNTFyvm0MW1JRUsvbPdMIbgXxYSeQZAfUGZ1rf
- 2QuQBt26VlMIHwKINQp/ear/d00d21c2B8F4EgJSzzLTDKCZUkqjsSYhlf09A7QcwZBT8teBeKr
- L
-X-Received: by 2002:a05:693c:8391:20b0:2ac:21bf:e937 with SMTP id
- 5a478bee46e88-2b17d0ca4c4mr152253eec.0.1767731612310; 
- Tue, 06 Jan 2026 12:33:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGgSpV6dnm5T4IzlBiPVkNezpU0qWso8Wm5FOQAxw1QL1FWdyGIFreSKrR5ItRt2yy3w9X6Qw==
-X-Received: by 2002:a05:693c:8391:20b0:2ac:21bf:e937 with SMTP id
- 5a478bee46e88-2b17d0ca4c4mr152232eec.0.1767731611774; 
- Tue, 06 Jan 2026 12:33:31 -0800 (PST)
-Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2b17078dd84sm4819273eec.17.2026.01.06.12.33.29
+ d=1e100.net; s=20230601; t=1767732719; x=1768337519;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tW6E527H9gCcSV7p6lhDR3jvyfmsoah/VJwO7DQjv9Y=;
+ b=bpjg45vihcSZUbDpBcU/wD2LyVqq37az8V5KY8FKvYBm+Sg70i4+svadZJ/DqcRBDX
+ 33SkyL6Mk/BiF37mVJzD1hWoUjQdq6h2fsRegVZ6NrHRqtcEOCEpiU2RwvrS9FoE0hD+
+ BtWXsLfVbU4QEDE4I4a4cQDiwnBYRYNe1natlU/8qJMmep0C/YJTnZIxPb4XcN802L3Z
+ 3Ut2LpjcovTwEsLcrtnpbMMBavREBLxKNA8Zz3kJNvIh2Qx8BM7yUbxNqO0L2DEyRZrY
+ HA1HtnAbgmW1NtVe3POiT8CUD8NApCyHgDKmtmk6PrMUs1G62kelQLLPTWgkgQaEFQUB
+ gnDA==
+X-Gm-Message-State: AOJu0Ywg8iXxnc1PuPRQQfGHq6K6cGd0CxRq3cQcKSGiIp2NdKrd6Dwe
+ ggWFweriJHrQHkj/0akqqSbprHN8an9k33dcBvJ7znhCE1jOJrE3Z8uygBShOdCMN+1781Klpsc
+ 2hnyJVh9WhcJ545DSEdLEYGkmfuW9MFFdGnBehuVE063EjBgNnZwsGNSH+gKkjHG+UQ==
+X-Gm-Gg: AY/fxX6FG+Q1pXadNjVtbAgfxMEGQafXrjF798OAVpfxXfb4y/HQTVFAoUYwDGfkKbY
+ ws9eKI/iob9vmF/sUfaJyF5cbuAPRr31StIJ1SLsTTwrU5sbhJjh8FRqGYEVR9IbEOfP6b/RnVX
+ K1kbGCKgfkywTBB39Uz9g8Ti+IzeshrBPVtJC+5v6R5BgXIkYs2J0zbCsGoBe9FrsZxvoL5Na4L
+ 4F9Tmnuqgh/MvyPlovGFiYxFv7ZBn5AuHGjlSqn8Y4BYSslSkV3MrrHIlwHKZ1ebmk42Ng0PSyC
+ EsePdXGn22FczNxXgB4JObqzl/kiyrLSLkdtzyuMe62yW0W4ciNKkL8tLHuw8prm3pcl37P/kV7
+ xsXz4pxnNtFdXFCtFuZvr6Xa3DcgQObnvlQNTqkXTg0G7ZvaJCvPZKhckj8xKdWRwdqkecKE97/
+ k9AOixXkTOxxwEiOQP
+X-Received: by 2002:a05:7300:2303:b0:2ae:5022:fe7c with SMTP id
+ 5a478bee46e88-2b16fd7d297mr3104152eec.1.1767732719427; 
+ Tue, 06 Jan 2026 12:51:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEkA2kI9SH8ozi0AzfnlDntM8TuNGh6cFflnkTpB7YFY4FRu3dMF/WSFDyo8smT4nFyJZ8dww==
+X-Received: by 2002:a05:7300:2303:b0:2ae:5022:fe7c with SMTP id
+ 5a478bee46e88-2b16fd7d297mr3104125eec.1.1767732718851; 
+ Tue, 06 Jan 2026 12:51:58 -0800 (PST)
+Received: from grind.dc1.ventanamicro.com
+ (200-162-225-127.static-corp.ajato.com.br. [200.162.225.127])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2b17052dbc7sm5015443eec.0.2026.01.06.12.51.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Jan 2026 12:33:31 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
+ Tue, 06 Jan 2026 12:51:58 -0800 (PST)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Lukas Straub <lukasstraub2@web.de>,
- peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH 2/2] tests/migration-test: Remove postcopy_recovery_fail_stage
- from MigrateCommon
-Date: Tue,  6 Jan 2026 15:33:20 -0500
-Message-ID: <20260106203320.2110372-3-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260106203320.2110372-1-peterx@redhat.com>
-References: <20260106203320.2110372-1-peterx@redhat.com>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Thomas Perrot <thomas.perrot@bootlin.com>,
+ Anup Patel <anup.patel@oss.qualcomm.com>
+Subject: [PATCH] target/riscv/cpu.c: enable PMP by default for profile CPUs
+Date: Tue,  6 Jan 2026 17:51:52 -0300
+Message-ID: <20260106205152.3654975-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.51.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=Pa3yRyhd c=1 sm=1 tr=0 ts=695d75f0 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ewOVoc8TSmC0cCmMeNMfEg==:17
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=JfrnYn6hAAAA:8 a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8 a=vUWGTd5KPtm7CJsda8kA:9
+ a=mH4BKZv_3NcA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=1CNFftbPRP8L7MoqJWF3:22
+ a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-GUID: 3Hf-I19AegBBY2fEBA-lSCMeqt9x5joj
+X-Proofpoint-ORIG-GUID: 3Hf-I19AegBBY2fEBA-lSCMeqt9x5joj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDE3OSBTYWx0ZWRfXxIqvJzXm3BoR
+ cTcRubvSKTLXGH2nm2bTRwZqdN/gc2KzVN+Tv5KbTsRlmWtKK1TqzH0WKvQzv9krCg4CFOUFa6X
+ yxuXq1zes6HymqE2fQc/BcctsKlPazjLSSZAZwaPhEUy95oYJE+TEC/GYD03ocJAIl8czFJMWog
+ 1+Cd5i1xTfOahjhBsLauwC6pXIvBMkuDXbI7Bw0HhqxdJM3PP6rBq4Ox6D67nS2pVJavJB9qYK7
+ BTit1q03pqThlECI4aHAMRR2kVZbTI+GuHB4Evdov3v51krXXRVBwTecUcXUYDNH9FrzefHdQsI
+ SY5YxbrVC5gbgdcYn1mVks1kuETtBkh/w55ctLmT158/feNcdPHCJoyj9C9de3/OJR/z95ixSgu
+ PFT3SIIMEi6hz3Oo32mo9qtc8N7DF5nIliwS2qDvH3Z+kBo1UXv4+SXeftaolhvtoF8coY4dqcO
+ H2parUCKgvUaX0THUpA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 adultscore=0 suspectscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601060179
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,149 +150,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The parameter can be instead passed into the function.
+The new OpenSBI v1.8 release is not happy about PMP being disabled in
+the profile CPUs [1], showing a:
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
+init_coldboot: hart isolation configure failed (error -3)
+
+error when booting. It seems benign given that it doesn't affect
+anything else during boot, but still a rather unpleasant message.
+
+We do not have RISC-V profiles that mandates PMP to be enabled. That
+said, most of our other CPUs enables PMP by default. Setting it to 'on'
+for profile CPUs allows for a more standard experience between CPUs. And
+it's not like enabling PMP will bring any additional extensions to the
+CPU either, meaning that we can still claim a certain level of design
+purity for our profile CPUs.
+
+[1] https://lists.infradead.org/pipermail/opensbi/2026-January/009307.html
+
+Reported-by: Thomas Perrot <thomas.perrot@bootlin.com>
+Reported-by: Anup Patel <anup.patel@oss.qualcomm.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- tests/qtest/migration/framework.h      |  6 ++----
- tests/qtest/migration/framework.c      |  7 ++++---
- tests/qtest/migration/postcopy-tests.c | 12 ++++--------
- tests/qtest/migration/tls-tests.c      |  8 ++++----
- 4 files changed, 14 insertions(+), 19 deletions(-)
+ target/riscv/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 0d39bb0d3c..bc6cf6040f 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -228,9 +228,6 @@ typedef struct {
-      * refer to existing ones with live=true), or use live=off by default.
-      */
-     bool live;
--
--    /* Postcopy specific fields */
--    PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
- } MigrateCommon;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ffd98e8eed..a26e547a38 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2955,7 +2955,8 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
  
- void wait_for_serial(const char *side);
-@@ -243,7 +240,8 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
- void migrate_end(QTestState *from, QTestState *to, bool test_dest);
+ #define DEFINE_PROFILE_CPU(type_name, parent_type_name, profile_)    \
+     DEFINE_RISCV_CPU(type_name, parent_type_name,             \
+-        .profile = &(profile_))
++        .profile = &(profile_), \
++        .cfg.pmp = true)
  
- void test_postcopy_common(MigrateCommon *args);
--void test_postcopy_recovery_common(MigrateCommon *args);
-+void test_postcopy_recovery_common(MigrateCommon *args,
-+                                   PostcopyRecoveryFailStage fail_stage);
- int test_precopy_common(MigrateCommon *args);
- void test_file_common(MigrateCommon *args, bool stop_src);
- void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 4f46cf8629..d7a5ae56f9 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -739,7 +739,8 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to,
- #endif
- }
- 
--void test_postcopy_recovery_common(MigrateCommon *args)
-+void test_postcopy_recovery_common(MigrateCommon *args,
-+                                   PostcopyRecoveryFailStage fail_stage)
- {
-     QTestState *from, *to;
-     g_autofree char *uri = NULL;
-@@ -784,12 +785,12 @@ void test_postcopy_recovery_common(MigrateCommon *args)
-     wait_for_postcopy_status(to, "postcopy-paused");
-     wait_for_postcopy_status(from, "postcopy-paused");
- 
--    if (args->postcopy_recovery_fail_stage) {
-+    if (fail_stage) {
-         /*
-          * Test when a wrong socket specified for recover, and then the
-          * ability to kick it out, and continue with a correct socket.
-          */
--        postcopy_recover_fail(from, to, args->postcopy_recovery_fail_stage);
-+        postcopy_recover_fail(from, to, fail_stage);
-         /* continue with a good recovery */
-     }
- 
-diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
-index 7ae4d765d7..13a5759655 100644
---- a/tests/qtest/migration/postcopy-tests.c
-+++ b/tests/qtest/migration/postcopy-tests.c
-@@ -41,30 +41,26 @@ static void test_postcopy_preempt(char *name, MigrateCommon *args)
- 
- static void test_postcopy_recovery(char *name, MigrateCommon *args)
- {
--    test_postcopy_recovery_common(args);
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
- }
- 
- static void test_postcopy_recovery_fail_handshake(char *name,
-                                                   MigrateCommon *args)
- {
--    args->postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY;
--
--    test_postcopy_recovery_common(args);
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_RECOVERY);
- }
- 
- static void test_postcopy_recovery_fail_reconnect(char *name,
-                                                   MigrateCommon *args)
- {
--    args->postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH;
--
--    test_postcopy_recovery_common(args);
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_CHANNEL_ESTABLISH);
- }
- 
- static void test_postcopy_preempt_recovery(char *name, MigrateCommon *args)
- {
-     args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
- 
--    test_postcopy_recovery_common(args);
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
- }
- 
- static void migration_test_add_postcopy_smoke(MigrationTestEnv *env)
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index 6a20c65104..bf0bb06a29 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -385,7 +385,7 @@ static void test_postcopy_recovery_tls_psk(char *name, MigrateCommon *args)
-     args->start_hook = migrate_hook_start_tls_psk_match;
-     args->end_hook = migrate_hook_end_tls_psk;
- 
--    test_postcopy_recovery_common(args);
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
- }
- 
- static void test_multifd_postcopy_recovery_tls_psk(char *name,
-@@ -396,7 +396,7 @@ static void test_multifd_postcopy_recovery_tls_psk(char *name,
- 
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
- 
--    test_postcopy_recovery_common(args);
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
- }
- 
- /* This contains preempt+recovery+tls test altogether */
-@@ -407,7 +407,7 @@ static void test_postcopy_preempt_all(char *name, MigrateCommon *args)
- 
-     args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
- 
--    test_postcopy_recovery_common(args);
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
- }
- 
- static void test_multifd_postcopy_preempt_recovery_tls_psk(char *name,
-@@ -419,7 +419,7 @@ static void test_multifd_postcopy_preempt_recovery_tls_psk(char *name,
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-     args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
- 
--    test_postcopy_recovery_common(args);
-+    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
- }
- 
- static void test_precopy_unix_tls_psk(char *name, MigrateCommon *args)
+ static const TypeInfo riscv_cpu_type_infos[] = {
+     {
 -- 
-2.50.1
+2.51.1
 
 
