@@ -4,73 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6803CEFCEB
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 18:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805F5CEFCF1
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 18:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdBwZ-00081U-Ut; Tue, 06 Jan 2026 13:38:11 -0500
+	id 1vdCFR-0004VM-U5; Tue, 06 Jan 2026 13:57:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vdBwU-00080t-Ve
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:38:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vdCEz-0004GJ-M7
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:57:17 -0500
+Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vdBwS-0002uN-Cp
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:38:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767724682;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Cs0d/Whb67p4rhqOVd8pNKSJF4qon8ztCFF10BlCZRI=;
- b=feeXyMTUB8L0QONGKTCGA7MMKk4Nu3FI/3ZZarTV1EJ8RADuxPgKbS9Vylr4Or5qd4YxFH
- IxBR+fD6uyNf3SGjhYw/puDZfoe+WOPWH8FJgnYFEoUR6Qu1+81/YdKEtlYybktf4u6sB7
- 66asBSSopqytTcuU8ZyWMs0GVt07w9s=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-5nMqeKUNO7yu3Gh36mD6JQ-1; Tue,
- 06 Jan 2026 13:36:27 -0500
-X-MC-Unique: 5nMqeKUNO7yu3Gh36mD6JQ-1
-X-Mimecast-MFC-AGG-ID: 5nMqeKUNO7yu3Gh36mD6JQ_1767724586
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 20A24195609D; Tue,  6 Jan 2026 18:36:26 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CCEAA30001B9; Tue,  6 Jan 2026 18:36:24 +0000 (UTC)
-From: marcandre.lureau@redhat.com
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vdCEx-0001wm-Dr
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:57:12 -0500
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 9E47B7A0119;
+ Tue,  6 Jan 2026 13:57:10 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-11.internal (MEProxy); Tue, 06 Jan 2026 13:57:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1767725830; x=
+ 1767812230; bh=XzcloEx4suAvbayAGcs/lKC5IRMyfGFpLSKmtIsKdzI=; b=m
+ xRYVRlKnPuRph1G4TGXsWEq2251waxIwcEW3rqceEE2QOAvjDD67MFXYe0c5+O4t
+ fFmLF5ZV3q9rewln0KiquaZPK20Rr8sBFBfZpxwBPRWx2Tcow6d5LNQGEfhOiDi7
+ fcdqH1xlYkk5DxnGiQvdNl11JiIxKcepklGSO7OCj3TCkd9TXKXx0IV5ZT+//BId
+ MVY3VPaDPaRCYGgFdc0+ZWgdZq+cQLe42N3Y/Rq1qS0PDnnyzaY2b5zgV3f7alvG
+ I3XhbOZLm0rAVC0kBQd3a24SqNiZfPBE2GGlKTskBZpwzg1nXmSTj9+d45aLCrNW
+ hP5LpGFpXq5jPJMR1nOKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; t=1767725830; x=1767812230; bh=X
+ zcloEx4suAvbayAGcs/lKC5IRMyfGFpLSKmtIsKdzI=; b=zpyMqRSsqmEQ33rqQ
+ vifwLguwmMjLzuDwKb+eJJxpfD5f9THTVuXA5JgQnGuYSeJE1hmEAkFWQJvipwdR
+ ulWD0kdxbpDxAQe1nM30zTnalxZGFjB6cKTm6KmA5lNCSiU8bJEBrsfJPKJdglCd
+ g1zpp9w4maAWwQG/lBArDRKMtlDI61VGzH5e77JMHdsVkg1uTBRzBmLIZBX2NSso
+ 7SRrk+EU25kNcx5ysRnRSAFc7GwXn7BXCiQm5TqT4NyWouQn2lNBlaQGutEPsGOP
+ 4K0qH/wLyAnTt0J9tN+MUIrRY+tioEGmUlrtM1B8kodj8Yi/pny/QQJ5ixPVaIX2
+ 7wH3A==
+X-ME-Sender: <xms:BltdaQF9-BRHaupdZ93AiUN58iAHEK5miaaEN4vL62dTQ_OLdlYmKQ>
+ <xme:BltdaQwX2vopY4VSXAkOj-aZxYRzyf8mAmBbBxt2K34fDz-9nvxhzfe5bjFbdrUS_
+ PJO-XERv_27DBfO4g6MiLw_QuAoq-ojtouM1imXgz8TPEvg6r81ow>
+X-ME-Received: <xmr:BltdaXigHpsCxvE-8b1ytuJCsy6pP4boZoKKf9Q2b9iRB5ABbkllzGYqsofZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddtleejucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
+ ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
+ ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
+ eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
+ gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+ thdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhope
+ hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheptghhrggusehj
+ rggslhhonhhskhhirdighiii
+X-ME-Proxy: <xmx:BltdabymoHeDEx4gXljJGL-mOOEOsczgCzR_ia_hMFvNMQFsoULCwg>
+ <xmx:BltdaaJh5WzjbiYHs5E8ebHJWnzzMZDJyy1zFZR1V3F_62QMiGWOHQ>
+ <xmx:BltdaSSfS_vqAS-WKvCb0P61kTGK_tVSCaUZe1nQmVRAg4ODwRyITw>
+ <xmx:BltdaSokMEshIKMVvVNUPMOuN4fdcbticpURT-pgXZcVxLglUJVc4g>
+ <xmx:BltdaWdUChp3FTaWF8BPtSfzbaokyMBGfLIZf7C8FnNqI_3-LCPnhJab>
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Jan 2026 13:57:10 -0500 (EST)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id 019e273d;
+ Tue, 6 Jan 2026 18:57:07 +0000 (UTC)
+From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org (open list:X86 KVM CPUs)
-Subject: [PATCH] Add query-tdx-capabilities
-Date: Tue,  6 Jan 2026 22:36:20 +0400
-Message-ID: <20260106183620.2144309-1-marcandre.lureau@redhat.com>
+Cc: balaton@eik.bme.hu,
+	Chad Jablonski <chad@jablonski.xyz>
+Subject: [PATCH v4 2/9] ati-vga: Fix DST_PITCH and SRC_PITCH reads
+Date: Tue,  6 Jan 2026 13:56:53 -0500
+Message-ID: <20260106185700.2102742-3-chad@jablonski.xyz>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20260106185700.2102742-1-chad@jablonski.xyz>
+References: <20260106185700.2102742-1-chad@jablonski.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=202.12.124.157; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-b6-smtp.messagingengine.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,153 +113,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reading DST_PITCH and SRC_PITCH on the Rage 128 is broken. The read
+handlers attempt to construct the value from pitch and tile bits in
+the register state but mistakenly AND them instead of ORing them. This
+means the pitch is always zero on read.
 
-Return an empty TdxCapability struct, for extensibility and matching
-query-sev-capabilities return type.
-
-Fixes: https://issues.redhat.com/browse/RHEL-129674
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- qapi/misc-i386.json        | 30 ++++++++++++++++++++++++++++++
- target/i386/kvm/kvm_i386.h |  1 +
- target/i386/kvm/kvm.c      |  5 +++++
- target/i386/kvm/tdx-stub.c |  8 ++++++++
- target/i386/kvm/tdx.c      | 21 +++++++++++++++++++++
- 5 files changed, 65 insertions(+)
+ hw/display/ati.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-index 05a94d6c416..f10e4338b48 100644
---- a/qapi/misc-i386.json
-+++ b/qapi/misc-i386.json
-@@ -225,6 +225,36 @@
- ##
- { 'command': 'query-sev-capabilities', 'returns': 'SevCapability' }
- 
-+##
-+# @TdxCapability:
-+#
-+# The struct describes capability for Intel Trust Domain Extensions
-+# (TDX) feature.
-+#
-+# Since: 11.0
-+##
-+{ 'struct': 'TdxCapability',
-+  'data': { } }
-+
-+##
-+# @query-tdx-capabilities:
-+#
-+# Get TDX capabilities.
-+#
-+# This is only supported on Intel X86 platforms with KVM enabled.
-+#
-+# Errors:
-+#     - If TDX is not available on the platform, GenericError
-+#
-+# Since: 11.0
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-tdx-capabilities" }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'query-tdx-capabilities', 'returns': 'TdxCapability' }
-+
- ##
- # @sev-inject-launch-secret:
- #
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index 2b653442f4d..71dd45be47a 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -61,6 +61,7 @@ void kvm_put_apicbase(X86CPU *cpu, uint64_t value);
- 
- bool kvm_has_x2apic_api(void);
- bool kvm_has_waitpkg(void);
-+bool kvm_has_tdx(void);
- 
- uint64_t kvm_swizzle_msi_ext_dest_id(uint64_t address);
- void kvm_update_msi_routes_all(void *private, bool global,
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 7b9b740a8e5..8ce25d7e785 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -6582,6 +6582,11 @@ bool kvm_has_waitpkg(void)
-     return has_msr_umwait;
- }
- 
-+bool kvm_has_tdx(void)
-+{
-+    return kvm_is_vm_type_supported(KVM_X86_TDX_VM);
-+}
-+
- #define ARCH_REQ_XCOMP_GUEST_PERM       0x1025
- 
- void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask)
-diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
-index 1f0e108a69e..c4e7f2c58c8 100644
---- a/target/i386/kvm/tdx-stub.c
-+++ b/target/i386/kvm/tdx-stub.c
-@@ -1,6 +1,8 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
- 
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-misc-i386.h"
- 
- #include "tdx.h"
- 
-@@ -30,3 +32,9 @@ void tdx_handle_get_tdvmcall_info(X86CPU *cpu, struct kvm_run *run)
- void tdx_handle_setup_event_notify_interrupt(X86CPU *cpu, struct kvm_run *run)
- {
- }
-+
-+TdxCapability *qmp_query_tdx_capabilities(Error **errp)
-+{
-+    error_setg(errp, "TDX is not available in this QEMU");
-+    return NULL;
-+}
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 01619857685..b5ee3b1ab92 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -14,6 +14,7 @@
- #include "qemu/base64.h"
- #include "qemu/mmap-alloc.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-commands-misc-i386.h"
- #include "qapi/qapi-visit-sockets.h"
- #include "qom/object_interfaces.h"
- #include "crypto/hash.h"
-@@ -1537,6 +1538,26 @@ static void tdx_guest_finalize(Object *obj)
- {
- }
- 
-+static TdxCapability *tdx_get_capabilities(Error **errp)
-+{
-+    if (!kvm_enabled()) {
-+        error_setg(errp, "TDX is not available without KVM");
-+        return NULL;
-+    }
-+
-+    if (!kvm_has_tdx()) {
-+        error_setg(errp, "TDX is not supported by this host");
-+        return NULL;
-+    }
-+
-+    return g_new0(TdxCapability, 1);
-+}
-+
-+TdxCapability *qmp_query_tdx_capabilities(Error **errp)
-+{
-+    return tdx_get_capabilities(errp);
-+}
-+
- static void tdx_guest_class_init(ObjectClass *oc, const void *data)
- {
-     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 0bbe8915f1..2f919bcd22 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -438,7 +438,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case DST_PITCH:
+         val = s->regs.dst_pitch;
+         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            val &= s->regs.dst_tile << 16;
++            val |= s->regs.dst_tile << 16;
+         }
+         break;
+     case DST_WIDTH:
+@@ -475,7 +475,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case SRC_PITCH:
+         val = s->regs.src_pitch;
+         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            val &= s->regs.src_tile << 16;
++            val |= s->regs.src_tile << 16;
+         }
+         break;
+     case DP_BRUSH_BKGD_CLR:
 -- 
-2.52.0
+2.51.2
 
 
