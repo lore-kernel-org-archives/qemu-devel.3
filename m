@@ -4,69 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 636E9C47BE0
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 10:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31E6C47BE2
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 10:50:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd4Qz-0004sl-HT; Tue, 06 Jan 2026 05:37:05 -0500
+	id 1vd4dl-00061h-6Y; Tue, 06 Jan 2026 05:50:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vd4Qw-0004rR-OT
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 05:37:02 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vd4dh-0005lb-1n
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 05:50:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vd4Qu-0005Qp-QW
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 05:37:02 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vd4df-0003Dm-00
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 05:50:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767695818;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=scbGoCiGuXqnVAnFisQnAT8pgOMnEQNLFv8NMO2gxR8=;
- b=fElHzRCaUkjDCR2k7nXPtD2k8CejplwD2hS2yQUAIL8QPaIn6rBGfixjsItxDwxvYu9XQJ
- pCWF07pzhGQ7I6jAGGMgH1N0QR+RKXHhboEsE+1UQiy6UEHmnJIgkqDu1C2ZFUeLMSkZtj
- ylEAQbBKNERcTJzMy9x5ksf2Q38YhZM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-uPojwUPnNgC4Z-XHTLPPUw-1; Tue,
- 06 Jan 2026 05:36:56 -0500
-X-MC-Unique: uPojwUPnNgC4Z-XHTLPPUw-1
-X-Mimecast-MFC-AGG-ID: uPojwUPnNgC4Z-XHTLPPUw_1767695816
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEA48195605A; Tue,  6 Jan 2026 10:36:55 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.217])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D6A761800577; Tue,  6 Jan 2026 10:36:53 +0000 (UTC)
-Date: Tue, 6 Jan 2026 10:36:30 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org,
- Kashyap Chamarthy <kchamart@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 2/2] docs/interop/firmware: Introduce extended syntax for
- FirmwareMappingMemory
-Message-ID: <aVzliFd70KWKcMJR@redhat.com>
-References: <20251228232649.1708400-1-abologna@redhat.com>
- <20251228232649.1708400-3-abologna@redhat.com>
- <aVvNV0X0uZ4lVBWv@redhat.com>
- <aVzbqk5FSrG9rSuM@dobby.home.kraxel.org>
+ s=mimecast20190719; t=1767696605;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=41vxE4MdIUc3xUg0yLsWnj6aiPZAPPHhdKczgbm9A20=;
+ b=B1ux1qfv2+poV33lOvPZMN+IgKH+eVTtmXLn7HURQ1E9vSlYOnA3fqUjXLObvwdlIvHigL
+ ftH+qxzAXlnAbNzmKJS4Z9oV7llte7BMgtTlZzc+D0gRhGq/j3mRMHA3/GHEREdZ+HPU92
+ Wi53eyTFjV6QZSnPyHsUczNdcgFbli4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-56-3cw6X2nSPXi-ACtEGG-jsg-1; Tue, 06 Jan 2026 05:50:04 -0500
+X-MC-Unique: 3cw6X2nSPXi-ACtEGG-jsg-1
+X-Mimecast-MFC-AGG-ID: 3cw6X2nSPXi-ACtEGG-jsg_1767696603
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47d62cc05daso5311145e9.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 02:50:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767696603; x=1768301403; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=41vxE4MdIUc3xUg0yLsWnj6aiPZAPPHhdKczgbm9A20=;
+ b=msaDDubJrRMFj8AAosXSBgrnR2a6vownDOwx8r2n0lvvOky6AwKwgBEw7588Ip3XIz
+ 0T3f62sRtVVLRVW/gvZ4+69F4pD9eYi8CG4tJLgrvSKkHEX8vbRPq1CGV/dbqNN3u7JV
+ 3fm8JOq+XZfxvA4ocASkjfrO/Yj0yICbW53zn0HPCVAitRxLVxOz5RWfPtsTskhZCh0L
+ oJeHBKRdjvf64nFwpF6OcXb4YOgcV79+g7pbNIo35EICKHfmmBSlSoEXrGexR9v9ZuXB
+ QWCnwZNX56SLRy50Rdp/6TGWRfStrIZCjVEdUj/V39VYUFk8MSwACEwjNE0w2PLwYXfV
+ px9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767696603; x=1768301403;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=41vxE4MdIUc3xUg0yLsWnj6aiPZAPPHhdKczgbm9A20=;
+ b=o4LUzuCclTQSkqUxo4Gh4J3hgqsxtLvxUQiSXkpl0GfA41KLWk2bZ1gvasmh/OJ2Cq
+ IRJHSj/nCxjpR0iDnZohqGUHUVopqVRbrTld5WBJB6My4UFkK3Vx1pU7yfgwdK3GqTmz
+ BRfFculjTlNDDzqW4dykN8B50NhTC+l2b+BDsPkoCGqu1+MN+8hWCBYA3mW7zbuauQJe
+ rE3ZyYhbTMUinljoi3tJn1iYBIq2ILmtRvgjdhzLHjX5FwQxyeU9G/THfsVwt7Gs2dNn
+ G0Czj7U1Q0++GKPgjRhom1vjmbv0kGWf8gDd0JK3xaK/I4umUwjGWAavwxhY61li4Vnl
+ PpoQ==
+X-Gm-Message-State: AOJu0YzCFva9Lwn5rQ62lTuhId/M1Z5GXOFzZohRCMcwYkOqQ5HKliii
+ Ye+bZPYnKUSCpk8pB6pNKE7GqD29qQn6W8YA3OkJWerXxwHTnWki9lUVjTz4hdJTbOLXxp6BzLI
+ ILKU6AdAYTRjNXSLHMTQKfz2pTuaY8P6ASe/MLZlb/EYXbgSDUD5eIP5j/WmwWEenwAB+WM2APx
+ 1z4/FqIAUaykmNyESpHvMsX/KJixLpg9E=
+X-Gm-Gg: AY/fxX6x/AQdRTmkuJkhTOL+a7Ijo2czWkArvRlFjTYTF1IC4/caFMVSiYJtMZjjFrA
+ KjNOPHKaE3aMuzMdvs/rPqxDd1Fo211O5HuWSeS1xObNiVK0p3Klb9uj56Opx5XCKx7/I+xl96V
+ pGCI15WJlvp8kH3fZrAtTBx6hoQaFNVvOXhI7YoeSFyKD6hbPHwAaxdxlKjVTVqzWXZ7Y=
+X-Received: by 2002:a05:600c:a41:b0:477:7d94:5d0e with SMTP id
+ 5b1f17b1804b1-47d7f09b48emr30595395e9.27.1767696602627; 
+ Tue, 06 Jan 2026 02:50:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGJXSOaeQmdU1+pFB//BgOybMYyk4KMwGoAqxy8gHE7gtE48dF+rZ1x3dHXjogwfnno5i+LVNO4oaR/jwbvgI0=
+X-Received: by 2002:a05:600c:a41:b0:477:7d94:5d0e with SMTP id
+ 5b1f17b1804b1-47d7f09b48emr30595095e9.27.1767696602228; Tue, 06 Jan 2026
+ 02:50:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aVzbqk5FSrG9rSuM@dobby.home.kraxel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+References: <20251222114822.327623-1-ppandit@redhat.com>
+ <aUqyfkOtXwl6cy9A@x1.local>
+In-Reply-To: <aUqyfkOtXwl6cy9A@x1.local>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 6 Jan 2026 16:19:44 +0530
+X-Gm-Features: AQt7F2rrrUxyQ8vHZTrYR3P_3pJqssutDmppANt9joAhX1HwnU1GMXUtINAceuE
+Message-ID: <CAE8KmOwnPYoK0i53LB8nO95gC53QK4FoNvMrbb9anR3OB+RS4Q@mail.gmail.com>
+Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,72 +110,201 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 06, 2026 at 11:13:33AM +0100, Gerd Hoffmann wrote:
->   Hi,
-> 
-> > IMHO we could add merely a new "uefi-vars-service" such that it looks
-> > like this:
-> > 
-> >      {
-> >          "mapping: {
-> >              "device": "memory",
-> >              "filename": "/path/to/firmware.bin",
-> > 	     "uefi-vars-service": {
-> > 	       "template": "/path/to/firmware.json",
-> > 	     }
-> >          }
-> >      }
-> 
-> I'm wondering whenever it makes sense to put this into the firmware
-> description at all?  The reason this is done for flash images is that
-> code and vars can not be matched freely.  This is simply not the case
-> with host-managed variable stores.
+Hello Peter, Fabiano,
 
-True, though our schema of course allows us to list the exact same
-json file against multiple firmware binaries. The more significant
-problem is probably in the opposite direction - there are can
-arbitrarily many json vars files that are valid for use with any
-single firmware binary. This would require us to have multiple
-firmware descriptors pointing to the same binary, each with a
-differnt json file. Essentially the descriptors need to define
-the combinatorial expansion of firmware + json files, and this
-feels like it is getting a bit silly.
+* Thank you for the comments.
 
-> Maybe have separate json files describing the variable store template
-> only, and expect libvirt searching for one in case the firmware
-> descriptor has the 'host-uefi-vars' feature flag set?
+On Tue, 23 Dec 2025 at 20:47, Peter Xu <peterx@redhat.com> wrote:
+> I raised a request while I was discussing with you internally, I didn't see
+> this, I will request again:
+>
+> Would you please list where you decided to switch from FAILED -> FAILING,
+> and where you decided not, with justifications for each of them?
+>
+> Let me give a detailed example in this patch, please see below.
+> This is the first real change that we'll switch to FAILING when
+> migration_connect_set_error() is invoked and migration failed.
+>
+> Please justify why setting FAILING is correct here.
+>
+> This function is invoked in three callers:
+>
+> qmp_migrate[2302]              migration_connect_set_error(s, local_err);
+> qmp_migrate_finish[2347]       migration_connect_set_error(s, local_err);
+> migration_connect[4047]        migration_connect_set_error(s, error_in);
+>
+> At least from the initial two callers, I don't see migration_cleanup()
+> invoked after setting FAILING.  Could this cause migration to get into
+> FAILING status forever without finally move to FAILED?
 
-Or just have the host-uefi-vars feature flag alone, and then libvirt
-can just invoke virt-firmware in whatever way it needs to create the
-json templates and not worry about providing any pre-defined json
-files.  All the default microsoft CAs are ultimately embedded in
-virt-firmware and spat out when given the right args.
+* Ah, sorry about this; I missed removing this and
+qmp_migrate_finish() change from this patch. Idea was to switch to the
+interim FAILING state wherever execution follows the
+migration_iteration_finish() OR bg_migration_iteration_finish() path
+and leads to migration_cleanup() setting the final state to FAILED. (I
+create/test patches on a pair of machines and then copy them to the
+local repository on my laptop to send upstream, can not do git
+send-email from test machines, these discrepancies fall through at
+times)
 
-If libvirt doesn't want to run  virt-firmware every time, libvirt
-could cache some common templates itself.
+* As you requested, please see below the list of calls where the
+change was applied and where it was not. Justification for changing to
+the interim 'FAILING' state is that execution follows through to
+migration_cleanup() path. And Justification for not changing the state
+is that execution does not follow through to the migration_cleanup()
+path.
+===
+01  void migration_channel_process_incoming(QIOChannel *ioc)
+      ...
+        error_report_err(local_err);
+        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
 
-> Many fields of the firmware descriptor format continue to make sense
-> in that case.  Description obviously.  Architecture too (the dbx
-> revocation list is arch specific, so x86 / arm need different
-> templates).  Also some features, specifically 'enrolled-keys'.
-> 
-> For the template filename we could use mapping->device = 'hostvars' with
-> mapping->filenname (somewhat quirky), or simply replace mapping with
-> something else.
-> 
-> I think this also fits better with the long-term plan that libvirt can
-> generate distro-specific variable stores based on libosinfo information
-> instead of using some template file.
+02  static void cpr_exec_cb(void *opaque)
+      ...
+        error_report_err(error_copy(err));
+        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+03  static void coroutine_fn process_incoming_migration_co(void *opaque)
+      ...
+      fail:
+         migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+                           MIGRATION_STATUS_FAILED);
+         migrate_error_propagate(s, local_err);
+
+04  static void migration_connect_error_propagate(MigrationState *s,
+Error *error)
+      ...
+        case MIGRATION_STATUS_SETUP:
+            next = MIGRATION_STATUS_FAILED;
+            break;
+        migrate_error_propagate(s, error);
+
+05  static void qmp_migrate_finish(MigrationAddress *addr, ...)
+      ...
+        else {
+            error_setg(&local_err, "uri is not a valid migration protocol");
+            migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+                              MIGRATION_STATUS_FAILED);
+
+06  static void multifd_recv_terminate_threads(Error *err)
+      ...
+        if (s->state == MIGRATION_STATUS_SETUP ||
+            s->state == MIGRATION_STATUS_ACTIVE) {
+            migrate_set_state(&s->state, s->state,
+                              MIGRATION_STATUS_FAILED);
+
+07  static void *postcopy_listen_thread(void *opaque)
+      ...
+        error_report_err(local_err);
+        migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
+        goto out;
+
+08  static int qemu_savevm_state(QEMUFile *f, Error **errp)
+      ...
+      cleanup:
+        if (ret != 0) {
+          status = MIGRATION_STATUS_FAILED;
+        } else {
+          status = MIGRATION_STATUS_COMPLETED;
+        }
+        migrate_set_state(&ms->state, MIGRATION_STATUS_SETUP, status);
+
+* Above MIGRATION_STATUS_FAILED instances are _not_ changed because
+they do not follow the migration_cleanup() path. The instances below
+are changed to the interim FAILING state because execution follows
+through the migration_cleanup() path, wherein the interim state
+changes to the FAILED state.
+
+09  static int postcopy_start(MigrationState *ms, Error **errp)
+      ...
+        if (ms->state != MIGRATION_STATUS_CANCELLING) {
+           migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+
+      ...
+      fail:
+        if (ms->state != MIGRATION_STATUS_CANCELLING) {
+            migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+        }
+
+10  static void migration_completion(MigrationState *s)
+      ...
+      fail:
+        if (s->state != MIGRATION_STATUS_CANCELLING) {
+            migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+        }
+
+11  static void bg_migration_completion(MigrationState *s)
+      ...
+      fail:
+        migrate_set_state(&s->state, current_active_state,
+MIGRATION_STATUS_FAILED);
+
+12  static MigThrError migration_detect_error(MigrationState *s)
+      ...
+        migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILED);
+        /* Time to stop the migration, now. */
+        return MIG_THR_ERR_FATAL;
+
+13  static void *migration_thread(void *opaque)
+      ...
+        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+MIGRATION_STATUS_FAILED);
+        goto out;
+
+14  static void *bg_migration_thread(void *opaque)
+      ...
+        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+MIGRATION_STATUS_FAILED);
+        goto fail_setup;
+
+      fail:
+        if (early_fail) {
+            migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+MIGRATION_STATUS_FAILED);
+        }
+      fail_setup:
+        bg_migration_iteration_finish(s);
+
+15  void migration_connect(MigrationState *s, Error *error_in)
+      ...
+        if (s->state != MIGRATION_STATUS_CANCELLING) {
+            migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+        }
+        migration_cleanup(s);
+
+16  static void multifd_send_error_propagate(Error *err)
+      ...
+        s->state == MIGRATION_STATUS_DEVICE ||
+        s->state == MIGRATION_STATUS_ACTIVE) {
+            migrate_set_state(&s->state, s->state,
+                              MIGRATION_STATUS_FAILED);
+
+17  bool multifd_send_setup(void)
+      ...
+      err:
+        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+                      MIGRATION_STATUS_FAILED);
+      return false;
+===
+
+* As proposed earlier, I'll request to divide this patchset into two
+(or even) more patches as:
+    - One patch to fix the race condition issue at hand, by way of
+introducing the interim FAILING state.
+    - One or more patches to use the interim FAILING state, where we
+currently set the FAILED state.
+That should help us to do/test/review these changes. It is complicated
+how this state change is done/handled and IIUC, migration code seems
+to serve multiple use cases: one is live VM migration between two
+machines, second is taking snapshots of a VM, third is migrating a VM
+to a new QEMU process in the same host. Doing such a change in a
+single large patch seems risky.
+
+Thank you.
+---
+  - Prasad
 
 
