@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A1AC47BFD
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 14:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43B13C47BFD
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 14:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd810-0000VZ-6l; Tue, 06 Jan 2026 09:26:30 -0500
+	id 1vd80z-0000UE-QP; Tue, 06 Jan 2026 09:26:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
- id 1vd7LK-0001Bo-Fq
+ id 1vd7LK-0001Bq-IB
  for qemu-devel@nongnu.org; Tue, 06 Jan 2026 08:43:26 -0500
-Received: from mail-out-1a.itc.rwth-aachen.de ([2a00:8a60:1:e501::5:44])
+Received: from mail-out-4.itc.rwth-aachen.de ([2a00:8a60:1:e501::5:49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
- id 1vd7LH-0006Qb-DS
+ id 1vd7LH-0006Qa-DE
  for qemu-devel@nongnu.org; Tue, 06 Jan 2026 08:43:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=rwth-aachen.de; i=@rwth-aachen.de; q=dns/txt;
  s=20240516-RWTH; t=1767707004; x=1799243004;
- h=from:date:subject:mime-version:content-transfer-encoding:
- message-id:references:in-reply-to:to:cc;
- bh=73vdagFbM4n4jkzeLYOfs3VbsPjQUH/AUGdhSoTmT20=;
- b=rrMSFNSODa5EoT6KkDyYyuAkRdat4f16Wuscax/H5DJq/Hbc/tqaeyQE
- fVtOd/PgyI0Empp1eJwyUbUYRjdUKi6AOliSsqT5HZkW+9D/jaaMaD9/V
- gwdildNqAgC5IRMzVrUsJjTO5i21VmQNAYw8CmnNRdewxKXRVAdJRAUn/
- 9aeJVxifYcHDDYY/ek9es9wv5cZg8nESgmGYL8Zx0CTOyY5mjW8ua/oWI
- OgksR96BqkIStxdaNbTET4972TLJNKZefK7rdxkKfFT4v2DORMNNWbGrH
- BY6LOkD4Qn8usU8bhUYpgNSyfbGJYHQWtM2O8vxgosJELJf4q3QVvpMST A==;
-X-CSE-ConnectionGUID: UOMlYq4fQK+PghE2fu9AtA==
-X-CSE-MsgGUID: SCv7MWGnSuWukpVkt2OgSg==
-X-IPAS-Result: =?us-ascii?q?A2BNAwByEF1p/5oagoZagQmEJ4JbhFeyEA8BAQEBAQEBA?=
- =?us-ascii?q?QEIAVEEAQGFBwKMbCg4EwECBAEBAQEDAgMBAQEBAQEBAQEBAQsBAQYBAQEBA?=
- =?us-ascii?q?QEGBYEhhglThlsGIw8BRhAlAiYCAkYQBg4FgwKCdLBOgTKBAYR82gSBHwELC?=
- =?us-ascii?q?QEKAYEKLohTAYFvhACEeIJPgUqCPXaFEIMOgmkEgzCLRwaJQwk/gQJ4LAFVE?=
- =?us-ascii?q?w0KCwcFYYEFAzUSKhVuMh2BIz4XPmMhCQWCbAaJAA+JWoEVAwsYDUgRLDcUG?=
- =?us-ascii?q?0MBbgeQCoJ3gQ6CBmOXG69WB4I4gWehcgEyl2CTCy6YWKRZhD0CBAIEBQIYg?=
- =?us-ascii?q?X+BfnGDNlIXAg+OLRbGdXcCOgIHAQoBAQMJgjmRLgEB?=
-IronPort-Data: A9a23:xPvMNKx80DjcFYzOGVx6t+dFxyrEfRIJ4+MujC+fZmUNrF6WrkVUy
- WIWDG+CP6qPNzP9eNFyboS3oxgG6sXcxoNnSVdupFhgHilAwSbn6XV1DW+tZX/Ifp2bJK5Dx
- 59DAjUVBJlsFhcwnj/0bP656yI6jf3ULlbFILasEjhrQgN5QzsWhxtmmuoo6qZlmtHR7zml4
- LsemOWBfgX8s9JIGjhMsfzb8Usx5K2aVA4w5zTSW9ga5DcyqFFIVPrzFYnpR1PkT49dGPKNR
- uqr5NmR4mPD8h4xPcium7D9f1diaua60d+m0yc+twCK23CulwRqukoJHKN0hXR/111lq+tMJ
- OBl7vRcfy90ZPGWyLRFO/VvO3oW0aVuoNcrKJUk2CCZ5xWun3DEm52CAKyqVGEV0r4fPI1Ay
- RAXAA0qSxSynr64+ZH4cuZsq54tMZjCIKpK7xmMzRmBZRonaYrcX6XH9ZpDhnI5wNpRAfabb
- sZfZTcHgBboOkYTfA5MUNRkwqHx2yWXnz5w8Tp5oYIy6nLPzQo306LqPdzUfNOiSMJTk1yT4
- HjZ42S8CxgRNNGZjzaImp6prraRzXOnA99LTNVU8NZRq0PM41M8DiYLaka4uce6lhSZVOlQf
- hl8Fi0G6PJaGFaQZsDwWgD9rHOasxo0Xd1WHOsnrgaXxcL86gKUFi4OQzhHZdEOsM4wTCYtk
- FiTkLvU6SdHqqKJSX+Ns6zO6Dr0IzcJLSoLaWkIQGPp/uXenW36tTqXJv4LLUJ/poSd9e3Yq
- 9xSkBUDug==
-IronPort-HdrOrdr: A9a23:k/U2q6sBPXWjhZIQDNbV39Pl7skDgNV00zEX/kB9WHVpm5Sj5q
- STdYcgpHjJYVcqKQwdcL+7WJVoLUmwyXcx2/h1AV7AZnibhILLFvAA0WKK+VSJcEfDH6xmpM
- VdmsNFZ+EYeGIasS+M2meF+rgbrOVvu5rY49s2h00dND2DQMlbnn9EIxfeFlczSBhNBJI/Gp
- bZ/MtOvDasfXwWa8+8Fz0fWfTfp9rEnJzrZgNDHgUg4gWVlz+kgYSKaSRw8C1uKA9y/Q==
-X-Talos-CUID: 9a23:2Rr6cW+Uqi4S8qhgKjqVv3MzP8QUayHT9VSTG0C4JDxnVey8VXbFrQ==
-X-Talos-MUID: 9a23:6pX6nwk2oNBWDEAUinM7dnpZH9k3xpuBDnsQrogFo/eHKXZXNAyS2WE=
+ h=from:subject:date:message-id:mime-version:
+ content-transfer-encoding:to:cc;
+ bh=bIUt6HthtoUVrCyiDset73BSbw6CTuDs9QMbkQTNoNY=;
+ b=Ck+kdWyv0ailV8LOLJYEJCngDMDbh4TjEbNcb3nouf74/jP28+OUzpUl
+ N8lW3sQ9/1xnP6LFQMCrNusS4XCkpg8EnOJRcejnXxf6NSagA6m0G4icv
+ GhxUbboKuZtBCw0Iwl+OHRO2BfTnarugpBa+cmNCpe5oZKc46k3JP8mxP
+ GOmst1dDgEK8ZIWdmAPlq3s09PIvuxjOUmLLAPATx7ZUN69q4DaNy1Ad3
+ REJmlX9Re0ydcHs0oABWpWMdqI6JTyThuAReO9NInCrRxXmigEXOPmqVA
+ SB05xgIlMSQ1igKIiz60zkjpNEFo1R2ck8wyO/1WBr4BAqMNHsjO6nj5B A==;
+X-CSE-ConnectionGUID: kBYqsiqWRYqaHTiXB+Ia4Q==
+X-CSE-MsgGUID: 79laH8xbRuGkOS2DKkoXoQ==
+X-IPAS-Result: =?us-ascii?q?A2BdBQD6D11p/5oagoZagQmFGIFqCIRPkXSaGIYEDwEBA?=
+ =?us-ascii?q?QEBAQEBAQgBSgcEAQGCE4IuRoxuKDgTAQIEAQEBAQMCAwEBAQEBAQEBAQEBC?=
+ =?us-ascii?q?wEBBgEBAQEBAQYFgSGGCUYNhwQPAUY1AiYCSBYOBYMCAYJzFAawM4EygQGEf?=
+ =?us-ascii?q?NoEgSUGCQELgQouiFMBgW+EAIdHgRU1gzOCYQICgiuDDoJpBIEOgRSBDo8Oh?=
+ =?us-ascii?q?gIJP4ECeCwBVRMNCgsHBWGBBQM1EioVbjIdgSM+Fz5jIQkFgmwGiQAPiVqBF?=
+ =?us-ascii?q?QMLGA1IESw3FBtDAW4HkAqCdgGBDysigTiBHZZhr1YHgjiBZ4welVQBMoQEj?=
+ =?us-ascii?q?ROGSZMLmQaKCoN/llCEPQIEAgQFAhiBf4FpDgdxgzZSFwIPjioZHINCwxd3A?=
+ =?us-ascii?q?joCBwEKAQEDCYI5hA+NHwEB?=
+IronPort-Data: A9a23:R+b6W67zjRBDHteRbodBQAxRtEvGchMFZxGqfqrLsTDasY5as4F+v
+ mcYX2+APfjeMWGme95wbISz80oFuZ7Xm4dnTldt/39kZn8b8sCt6fZ1j6vTF37IcpeTHBoPA
+ +E2MISowBUcFyeEzvuVGuG/6yE6jufQGuaU5NfsYkhZXRVjRDoqlSVtkus4hp8AqdWiCmthg
+ /uryyHkEAHjgWcc3l48sfrZ9ks25Kqq4Vv0g3RnDRx1lA6G/5UqJM9HTU2BByOQapVZGOe8W
+ 9HCwNmRlkvF/w0gA8+Sib3ydEsHWNb6ZWBiXVIPBsBOKjAbzsAD+v5T2Mg0MC+7uB3V9zxF8
+ +ihgLTrIesfFvCWxL5NA0Ew/xZWZsWq8JefSZS2XFf6I0fuKxMAyN02ZK060BFxFutfWQlzG
+ fIkxD8lbTqynvm32Y2Be/BlpvgiHOOoHYpDgyQ1pd3ZJa5OrZHrWbrW5dJImSxqw8kIB+nCZ
+ 48QZXxjYXwsYTUWYQtRUclm2r32wCCiL1W0q3rMzUYzy23a1hBw1v7uKt3YfN2MSu1YmUCVv
+ GmA5XvlAlQTPdefxDzD/n/EaurnxH2hCN9IRefQGvhC3wyXz0xDGBcsSHS4hsLjpm29XOJYE
+ hlBksYphe1onKCxdfHkUhil5XKJoBMYc9xXFeI89UeK0KW8yw+dC3hCRDNHbtErnMs3QzUw0
+ RmOhdyBONB0mKeKVXKQ5vKP93a7fzIKMW9HbCNCQQZtD8TfnbzfRynnFr5LeJNZRPWscd0s6
+ 1hmdBQDuog=
+IronPort-HdrOrdr: A9a23:JW2sLa9wF4GIRbA3phRuk+AuI+orL9Y04lQ7vn2ZESYlFvBw5P
+ re+8jztCWE9Qr5N0tBpTntAsS9qDbnhPtICOoqTMuftWvdyQiVxehZhOOIqQEIWReOlNK1vp
+ 0OT0EKMrzN5C9B4/oSjjPVLz9q+qjgzEnhv5am859HJTsaE51I/kN8EEKWA0d2TA5JCd4iFZ
+ KG6sdCrzqkcnIHKt+8GmQEWObKqdHNidb+ehgNCwQ85ATmt0LT1FfVKWni4isj
+X-Talos-CUID: =?us-ascii?q?9a23=3AMUkjLWsje6PBb/mx/JinV7pl6IsmWEzE13bJHHW?=
+ =?us-ascii?q?JEG9JdLylYxyx8f9dxp8=3D?=
+X-Talos-MUID: 9a23:cHXnIQVM9v2xx2rq/GC9gDhCZNdi2bmBC2c2y7kluM60MhUlbg==
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-AV: E=Sophos;i="6.21,204,1763420400"; d="scan'208";a="168843510"
+X-IronPort-AV: E=Sophos;i="6.21,204,1763420400"; d="scan'208";a="16285292"
 Received: from rwthex-s2-a.rwth-ad.de ([134.130.26.154])
- by mail-in-1a.itc.rwth-aachen.de with ESMTP; 06 Jan 2026 14:43:18 +0100
+ by mail-in-4.itc.rwth-aachen.de with ESMTP; 06 Jan 2026 14:43:18 +0100
 Received: from mkroening-ud22.fritz.box (2a0a:a54a:c75:0:1df6:38e8:59e6:777c)
  by rwthex-s2-a.rwth-ad.de (2a00:8a60:1:e500::26:154) with Microsoft
  SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.2.2562.35; Tue, 6 Jan 2026 14:43:17 +0100
-Date: Tue, 6 Jan 2026 14:43:05 +0100
-Subject: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+Subject: [PATCH 0/2] semihosting/uaccess: Swap bytes based on
+ runtime-configurable endianness
+Date: Tue, 6 Jan 2026 14:43:04 +0100
+Message-ID: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-ID: <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
-References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
-In-Reply-To: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MOwqAMBBF0a3I1A7EIApuRSw0PnUKY8j4A3HvB
+ stT3PuQIgqUmuyhiFNUNp9Q5Bm5pfczWMZkssZWpjAVK1ZZNt3Fz+zCwbtefeChrEcMsHUJS6k
+ NEZPc/7ft3vcDDIOwMWcAAAA=
+X-Change-ID: 20260106-semihosting-cpu-tswap-b47debe274e2
 To: <qemu-devel@nongnu.org>
 CC: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?utf-8?q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>
@@ -83,15 +88,15 @@ X-Mailer: b4 0.14.3
 X-Originating-IP: [2a0a:a54a:c75:0:1df6:38e8:59e6:777c]
 X-ClientProxiedBy: RWTHEX-W2-A.rwth-ad.de (2a00:8a60:1:e500::26:158) To
  rwthex-s2-a.rwth-ad.de (2a00:8a60:1:e500::26:154)
-Received-SPF: pass client-ip=2a00:8a60:1:e501::5:44;
+Received-SPF: pass client-ip=2a00:8a60:1:e501::5:49;
  envelope-from=martin.kroening@eonerc.rwth-aachen.de;
- helo=mail-out-1a.itc.rwth-aachen.de
+ helo=mail-out-4.itc.rwth-aachen.de
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
 X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 06 Jan 2026 09:26:27 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,72 +115,45 @@ From:  =?utf-8?q?Martin_Kr=C3=B6ning?= via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These functions are needed for CPUs that support runtime-configurable endianness.
-In those cases, components such as semihosting need to perform
-runtime-dependent byte swaps.
+Hi all,
+
+This series adds cpu_tswap() functions and then uses them in semihosting
+to properly swap bytes based on the runtime-configurable endianness.
+
+The semihosting ABI [1] states:
+> Multi-byte values in memory must be formatted as pure little-endian or pure
+> big-endian to match the endianness mapping configuration of the processor.
+
+This series ensures that semihosting data is properly byte-swapped if
+the guest's CPU is currently in a different runtime-configurable
+endianness than the host's CPU.
+
+This is my first series submitted to QEMU, so please tell me if I have
+overlooked anything or should squash the two commits.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3258
+Buglink: https://github.com/taiki-e/semihosting/issues/18
+
+[1]: https://github.com/ARM-software/abi-aa/blob/2025Q1/semihosting/semihosting.rst#the-semihosting-interface
+
+Thanks for your work!
+Martin Kröning
 
 Signed-off-by: Martin Kröning <martin.kroening@eonerc.rwth-aachen.de>
 ---
- include/exec/tswap.h | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+Martin Kröning (2):
+      include/exec: Provide the cpu_tswap() functions
+      semihosting/uaccess: Use the cpu_tswap() functions
 
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 72219e2c43..9aaafb12f3 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -10,6 +10,7 @@
- 
- #include "qemu/bswap.h"
- #include "qemu/target-info.h"
-+#include "hw/core/cpu.h"
- 
- /*
-  * If we're in target-specific code, we can hard-code the swapping
-@@ -21,6 +22,8 @@
- #define target_needs_bswap()  (HOST_BIG_ENDIAN != target_big_endian())
- #endif /* COMPILING_PER_TARGET */
- 
-+#define cpu_needs_bswap(cpu)  (HOST_BIG_ENDIAN != cpu_virtio_is_big_endian(cpu))
-+
- static inline uint16_t tswap16(uint16_t s)
- {
-     if (target_needs_bswap()) {
-@@ -48,6 +51,33 @@ static inline uint64_t tswap64(uint64_t s)
-     }
- }
- 
-+static inline uint16_t cpu_tswap16(CPUState *cpu, uint16_t s)
-+{
-+    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
-+        return bswap16(s);
-+    } else {
-+        return s;
-+    }
-+}
-+
-+static inline uint32_t cpu_tswap32(CPUState *cpu, uint32_t s)
-+{
-+    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
-+        return bswap32(s);
-+    } else {
-+        return s;
-+    }
-+}
-+
-+static inline uint64_t cpu_tswap64(CPUState *cpu, uint64_t s)
-+{
-+    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
-+        return bswap64(s);
-+    } else {
-+        return s;
-+    }
-+}
-+
- static inline void tswap16s(uint16_t *s)
- {
-     if (target_needs_bswap()) {
+ include/exec/tswap.h          | 30 ++++++++++++++++++++++++++++++
+ include/semihosting/uaccess.h |  8 ++++----
+ 2 files changed, 34 insertions(+), 4 deletions(-)
+---
+base-commit: 0fc482b73d8e085d1375b4e17b0647fd2e6fe8f0
+change-id: 20260106-semihosting-cpu-tswap-b47debe274e2
 
+Best regards,
 -- 
-Git-155)
+Martin Kröning <martin.kroening@eonerc.rwth-aachen.de>
 
 
