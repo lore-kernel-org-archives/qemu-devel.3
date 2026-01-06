@@ -4,94 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2557BCDC188
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 12:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08797CDC192
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 12:42:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd6Ix-0002Oy-ET; Tue, 06 Jan 2026 07:36:55 -0500
+	id 1vd6Na-0005KT-9y; Tue, 06 Jan 2026 07:41:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vd6ID-00023c-Ke
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 07:36:15 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vd6NV-0005Gq-DD
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 07:41:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vd6IB-00083q-C1
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 07:36:09 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vd6NT-0001iV-87
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 07:41:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767702961;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NlIz06HimcRKrcTL59LtIUjVhECwh7CIycf4p26cex0=;
- b=Ru918cJI1UGF3WSqfoWr+Tjp32finSJ/jUtdBvXOlOvQopDIDCRlrNs5K+4kuMRbkGryg3
- xr5z7HSr+kbTt3FCFm34fhKl3IRpLiZyq71Cc8XQ2lD+90LnRcMJPICjgfPXftKg1B5htH
- xXs6akB/vrEx5aGx76Ej/v136vqXkeE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-284-0A1Vyr_dOIOsGpVHqfttUA-1; Tue, 06 Jan 2026 07:36:00 -0500
-X-MC-Unique: 0A1Vyr_dOIOsGpVHqfttUA-1
-X-Mimecast-MFC-AGG-ID: 0A1Vyr_dOIOsGpVHqfttUA_1767702959
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4775e00b16fso6066555e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 04:35:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767702959; x=1768307759; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=NlIz06HimcRKrcTL59LtIUjVhECwh7CIycf4p26cex0=;
- b=iv4NXeQIOaUUXZKYtXAr54+9vJbb9Wh6p1AMT4dJIJSveHa3QKiqDw0xfsb+n/u614
- WdPWlG9v45wMDka5YtbN+FnHMRq5Z/udGy1BFHML0QapBa2OXQwaaov1AUOpprvrZ+ez
- XX5fd8o8Y5H3E4rpemBEQAMO+f0yn5tH3Hav7vwbd2hYq7pXjNKTDWIb/6o0+/Lxao14
- 2/G4vCzAgw/CyxDJPz15T+odglkm/VLALmd+FWHJSg690SYzDfkYf8CRnM7fBd/XDOJP
- oWuSt+MmynwDahipVDQyjKe6qOqFKlnZCk2YIrXrTQPRq6VsrGTosTslX5IvSwgsuJ9j
- N/lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767702959; x=1768307759;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NlIz06HimcRKrcTL59LtIUjVhECwh7CIycf4p26cex0=;
- b=DS4NDQku/DgVqlHh4qsgmzmbabzzwGSXneLuwkFDPWGjut52DMlhTbPdkbdjFYC1pQ
- /9ZVigAZtLAvk/N8BDOgWJ878DATD7GhojJoQRPR2XTvCRXA7chtMpux7EQ0Z4q+z3Lg
- 4MQVrNhdliL3AKeucrpokxYLJIfVwOG5czu9TlR9OTZy/k8UvfHxQ9iqgR0BGq3AWCyh
- EQibNUj4HOfa4W6XN4wBfS37XrZqVk8m3M0MtQM6CZIv7/3WXmUfBK6quwEexZNSx66s
- NDFo7H/LzinVugcjP6RAxB464J5plmE1gcrJRG4EPS46tC98HNU/GFFOuw8wEmOlvgU7
- hRZQ==
-X-Gm-Message-State: AOJu0YzK/6kroupgSYD9hIy1h2JGK7HLdVTMeaY1zpTRY4DuGLLSyJBG
- WdMJ+JTaRjkqtLlY1kmPPI07V7QlFaTrrLDT5WsTdW4pe+pnb2j+KZgb1YRP+HB+BGZCpoCG5SJ
- nVeQVVNVC995etvFYExUAdjrG6DgZmmZg4rXEUOJxD2fJ13bQ4rvqtFOl
-X-Gm-Gg: AY/fxX7GFj5vS6YKpe7+tK56FKxBF0JAUMsSahu74gVqUWGWcjWSdWm2z566OCsLObB
- GmYAag1eSI5KpqwrQU1PHqdx2dKMutL3p1Zk4Zr8RxRm7XLA0PfY0VibENlqz2aeLieSLoHxmoA
- 4AlFK+KRwL6hmKm2+bP78ruygradbaUVnxXCfgQU8M8LDKGgWoQTbpJz2pTpI0GcomJl/pVB1hD
- lwKe7hfaTeWImckJHHrBXP6MiAllL7QFrpKln+GTeKT8Zg+tIMxz+M6hjdRNnamYllTbSUGnbcU
- VVFE/mcqBIj9PaB6aNHr73Ynldo6dOMdILGuYpN7E/0PFAiEYC+Tvv1XdMVvneSh2xuO0KUxN8D
- saX2QA3mW3SfvJZ1MGU445rB6sugh6bPcsg==
-X-Received: by 2002:a05:600c:138f:b0:471:700:f281 with SMTP id
- 5b1f17b1804b1-47d7f09ab57mr28571445e9.25.1767702958649; 
- Tue, 06 Jan 2026 04:35:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHfCrkXPywX5t3tgo5jHdzvpn188uxPRCsKOOvDem9Q4wZYtMVglnbBx5ZiZWRSub1NpJoaMg==
-X-Received: by 2002:a05:600c:138f:b0:471:700:f281 with SMTP id
- 5b1f17b1804b1-47d7f09ab57mr28571095e9.25.1767702957967; 
- Tue, 06 Jan 2026 04:35:57 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-31-118.inter.net.il. [80.230.31.118])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5df90dsm4029383f8f.20.2026.01.06.04.35.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Jan 2026 04:35:57 -0800 (PST)
-Date: Tue, 6 Jan 2026 07:35:55 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Li Chen <me@linux.beauty>
+ s=mimecast20190719; t=1767703293;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=2jtZLrqQ4QNSFAn6GuOeEC9yVTMIwp3/FYOJPoTM6gc=;
+ b=PvfxGM26xE+8l8Rer+lDmLcRdjnkdDTerT06zZ691FeT4gKcAcGHoTZgl0aaICcqPfNHo8
+ cNv46DO3KjggOjtNPR5I3jiWI3PjwiphWjp87cEUBK5HF4bqj8wwoWUJe7eeeUPLJueqI2
+ p2QbWwvWtGYYLbxEw6UosmCr85N9U2Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-WNQV9t0LN3CgS4Uy8HKGPA-1; Tue,
+ 06 Jan 2026 07:41:29 -0500
+X-MC-Unique: WNQV9t0LN3CgS4Uy8HKGPA-1
+X-Mimecast-MFC-AGG-ID: WNQV9t0LN3CgS4Uy8HKGPA_1767703289
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E2441955F3F; Tue,  6 Jan 2026 12:41:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.217])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D31A919560AB; Tue,  6 Jan 2026 12:41:27 +0000 (UTC)
+Date: Tue, 6 Jan 2026 12:41:24 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] virtio-pmem: ignore empty queue notifications
-Message-ID: <20260106073549-mutt-send-email-mst@kernel.org>
-References: <20260106083859.380338-1-me@linux.beauty>
+Subject: Re: [RFC PATCH v1] io/channel-socket: abort socket reads after a
+ force shutdown request
+Message-ID: <aV0C9J7086dvHYoE@redhat.com>
+References: <20250910085006.69790-1-d-tatianin@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260106083859.380338-1-me@linux.beauty>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20250910085006.69790-1-d-tatianin@yandex-team.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,42 +82,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 06, 2026 at 04:38:59PM +0800, Li Chen wrote:
-> From: Li Chen <chenl311@chinatelecom.cn>
+On Wed, Sep 10, 2025 at 11:50:06AM +0300, Daniil Tatianin wrote:
+> When a user chooses to force shutdown QEMU by pressing ^C or sending a
+> SIGINT otherwise, we want to shutdown as soon as possible, and entering
+> a blocking read which happens in the main thread seems like the opposite
+> of that.
 > 
-> virtio_pmem_flush() treats a NULL return from virtqueue_pop() as a fatal
-> error and calls virtio_error(), which puts the device into NEEDS_RESET.
+> This may seem like a rare case, but it is actually not when using
+> vhost-user devices, which usually have the control plane working via
+> UNIX sockets.
 > 
-> However, virtqueue handlers can be invoked when no element is available,
-> so an empty queue should be handled as a benign no-op.
+> The way the code is currently written, all vhost-user devices are
+> serviced in the main thread and thus block each other, as well as other
+> things that happen in the QEMU's main thread, including QMP, and even
+> network devices that are not vhost-net.
 > 
-> With a Linux guest this avoids spurious NEEDS_RESET and the resulting
-> -EIO propagation (e.g. EXT4 journal abort and remount-ro).
+> In case the vhost-user backend servicing a device decides to hang for
+> whatever reason, any control plane request in QEMU will also hang the
+> main loop until the backend either dies or ends up replying.
 > 
-> Signed-off-by: Li Chen <me@linux.beauty>
+> Ideally the vhost-user handling code should be rewritten to work
+> asynchronously, or to support io-threads or similar, but that seems like
+> a giant undertaking and we would like to at least be able to make QEMU
+> shutdown no matter if a vhost-user backend is currently able to service
+> the control plane or not.
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+This sounds like rather a major impl flaw in the vhost-user code
+IMHO. Anything that is running in the main thread needs to have
+very fast execution times, without any blocking on I/O, to avoid
+starving the main event loop. The event loop starvation is really
+a much bigger problem than the delayed shutdown on ctrl-c.
 
+I'm not familiar with the vhost-user code, but can you share an
+example of the stack trace you see when it is blocked on an I/O
+op and preventing shutdown ?
+
+I'm very dis-inclined to special case the channel-socket.c code
+to workaruond a bug in a single part of qemu, given that this
+code is used universally across everything doing socket I/O.
+
+Some of these parts of QEMU potentially want to be able to do
+a clean shutdown of their I/O layer when QEMU exit, and not
+restarting on EINTR might negatively impact them. IOW, this
+proposed workaround may well simply move the brokness from
+one place to another place and not leave us better overall.
+
+> Luckily for us, SIGINT or similar causes the kernel to cancel (almost)
+> all blocking syscalls with EINTR, which we can utilize to check whether
+> a shutdown was requested while we were blocked in the syscall, which is
+> what this commit does. The check is performed even on the first attempt,
+> not only retries after EINTR. This is intentional to avoid race
+> conditions where QEMU may decide to perform a control plane request
+> before the shutdown event is checked for thus forcing the user to send
+> SIGINT at least 2 times.
+> 
+> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 > ---
->  hw/virtio/virtio-pmem.c | 1 -
->  1 file changed, 1 deletion(-)
+> v0 -> v1:
+> - Fix code alignment
+> - Fix included header
+> ---
+>  io/channel-socket.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
-> diff --git a/hw/virtio/virtio-pmem.c b/hw/virtio/virtio-pmem.c
-> index 3416ea1827..cec1072f78 100644
-> --- a/hw/virtio/virtio-pmem.c
-> +++ b/hw/virtio/virtio-pmem.c
-> @@ -74,7 +74,6 @@ static void virtio_pmem_flush(VirtIODevice *vdev, VirtQueue *vq)
->      trace_virtio_pmem_flush_request();
->      req_data = virtqueue_pop(vq, sizeof(VirtIODeviceRequest));
->      if (!req_data) {
-> -        virtio_error(vdev, "virtio-pmem missing request data");
->          return;
+> diff --git a/io/channel-socket.c b/io/channel-socket.c
+> index 3b7ca924ff..74238b511a 100644
+> --- a/io/channel-socket.c
+> +++ b/io/channel-socket.c
+> @@ -26,10 +26,20 @@
+>  #include "io/channel-watch.h"
+>  #include "trace.h"
+>  #include "qapi/clone-visitor.h"
+> +#include "system/runstate.h"
+>  #ifdef CONFIG_LINUX
+>  #include <linux/errqueue.h>
+>  #include <sys/socket.h>
+>  
+> +/*
+> + * This function is not available when io links against qemu-img etc.,
+> + * in this case just pretend it always returns false.
+> + */
+> +__attribute__((weak)) bool qemu_force_shutdown_requested(void)
+> +{
+> +    return false;
+> +}
+> +
+>  #if (defined(MSG_ZEROCOPY) && defined(SO_ZEROCOPY))
+>  #define QEMU_MSG_ZEROCOPY
+>  #endif
+> @@ -541,6 +551,12 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
 >      }
 >  
+>   retry:
+> +    if (qemu_force_shutdown_requested()) {
+> +        error_setg_errno(errp, ECANCELED,
+> +                         "Socket read aborted due to force shutdown");
+> +        return -1;
+> +    }
+> +
+>      ret = recvmsg(sioc->fd, &msg, sflags);
+>      if (ret < 0) {
+>          if (errno == EAGAIN) {
 > -- 
-> 2.52.0
+> 2.34.1
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
