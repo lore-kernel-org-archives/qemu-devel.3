@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C4DCE9D75
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 16:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466EFCE9D78
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 16:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd9hy-0002Wb-P9; Tue, 06 Jan 2026 11:14:58 -0500
+	id 1vd9nT-0004Gt-68; Tue, 06 Jan 2026 11:20:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vd9hw-0002Ts-FQ; Tue, 06 Jan 2026 11:14:56 -0500
+ id 1vd9mj-00043u-V2; Tue, 06 Jan 2026 11:19:55 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vd9hu-0001ZT-Mn; Tue, 06 Jan 2026 11:14:56 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dlx865Z4TzHnH9T;
- Wed,  7 Jan 2026 00:14:46 +0800 (CST)
+ id 1vd9mh-0004aa-Gl; Tue, 06 Jan 2026 11:19:53 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dlxFr5cdpzJ46dj;
+ Wed,  7 Jan 2026 00:19:44 +0800 (CST)
 Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 3D2DB4056A;
- Wed,  7 Jan 2026 00:14:51 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 9587B40569;
+ Wed,  7 Jan 2026 00:19:46 +0800 (CST)
 Received: from localhost (10.195.245.156) by dubpeml100005.china.huawei.com
  (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 6 Jan
- 2026 16:14:50 +0000
-Date: Tue, 6 Jan 2026 16:14:48 +0000
+ 2026 16:19:45 +0000
+Date: Tue, 6 Jan 2026 16:19:42 +0000
 To: Alireza Sanaee <alireza.sanaee@huawei.com>
 CC: <qemu-devel@nongnu.org>, <gustavo.romero@linaro.org>,
  <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
@@ -38,12 +38,11 @@ CC: <qemu-devel@nongnu.org>, <gustavo.romero@linaro.org>,
  <peter.maydell@linaro.org>, <philmd@linaro.org>, <qemu-arm@nongnu.org>,
  <richard.henderson@linaro.org>, <shannon.zhaosl@gmail.com>,
  <yangyicong@hisilicon.com>, <linuxarm@huawei.com>, <zhao1.liu@intel.com>
-Subject: Re: [PATCH v17 2/8] hw/core/machine: topology functions
- capabilities added
-Message-ID: <20260106161448.000006e4@huawei.com>
-In-Reply-To: <20260106155828.643-3-alireza.sanaee@huawei.com>
+Subject: Re: [PATCH v17 5/8] acpi: add caches to ACPI build_pptt table function
+Message-ID: <20260106161942.00000aa6@huawei.com>
+In-Reply-To: <20260106155828.643-6-alireza.sanaee@huawei.com>
 References: <20260106155828.643-1-alireza.sanaee@huawei.com>
- <20260106155828.643-3-alireza.sanaee@huawei.com>
+ <20260106155828.643-6-alireza.sanaee@huawei.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -77,17 +76,22 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Jan 2026 15:58:21 +0000
+On Tue, 6 Jan 2026 15:58:24 +0000
 Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
 
-> Add two functions one of which finds the lowest cache level defined in
-> the cache description input, and the other checks if a given cache
-> topology is defined at a particular cache level
+> Add caches to build_pptt table function in ACPI for both ARM and
+> Loongarch.
+
+I'd reword both title
+Add parameters to pass cache descriptions to ACPI build_pptt()
+
+and description to something like:
+
+Add optional parameters to pass cache descriptions to build_pptt().
+Update ARM and Loongarch callers to pass none for now.
+
 > 
 > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-
-Power of assumptions. I thought I'd tagged all these already so stopped
-looking at new versions :(
-
+With those tweaks or something along those lines,
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
