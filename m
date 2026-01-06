@@ -4,207 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51DDCE9D47
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B8ACE9D53
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd8pu-0002BW-9Q; Tue, 06 Jan 2026 10:19:06 -0500
+	id 1vd8uQ-0005K4-RJ; Tue, 06 Jan 2026 10:23:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1vd8ps-0002B0-0F
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:19:04 -0500
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vd8uP-0005JH-K7
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:23:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1vd8pp-00049L-Mg
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:19:03 -0500
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 606AXcCK838756; Tue, 6 Jan 2026 07:18:58 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=LkAGPVg8W9mLpWhZ92px2q24xwccgxtjF+Y18qbjn
- 7Q=; b=ioSUIHxXMEj6jpszJ3YdYuJieUcOBD9Az7EEPnbl84spMDTrZEOvihrg9
- Syrq7TnnyXXvE4p8Xbu4vtVwY00ykGaW1634TLkMmUmqhCz0iRiIAleavsmln5ok
- 49KUhfs6mrAlYtX+76vAOrGIISLmalybDmlJ7cnqUnALtTAaiMgodIo+nwXx9PF+
- Tw/X5a5WNoCAUsjxnveQhB14joQ6sJvr9YHkzRIo33ragtoG2UwsHHiLH5rnA6Qe
- k21LshB47s6uJw7EdT6HWR0HmmstD/23cjXlkaQ09MlFKorAKPiyztX3gMO8HMVK
- 91WFcRLY4BPIOe+68j5C4V7GvX4tQ==
-Received: from byapr05cu005.outbound.protection.outlook.com
- (mail-westusazon11020095.outbound.protection.outlook.com [52.101.85.95])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4bgqg81trn-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 06 Jan 2026 07:18:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K9wcQoqhgULMWJTb+uAVgqW/wZ2yKoF1qY6q6JwfEmXRpUq+uRRCp1hHxqP2BCimRsOZbuLIhknIApPoXUesFjgzmWKBj7goWoLxQllJICEMDymLifx02eK6/+3QG1+Kev2iDrgrK8ybfADEtvYXDAG7XVFKR0I4+NL1o8/COxT2VtHvIVlZc1j8dQQXSUdXXXjZdFHHx8ioi2XGosKDOKbvSdDkTCWKN3u8DzwoyYnjmk9aWsyWZsJRgi7sCdElRwujtla7TxR01/0k5H/f4fDDfxH5zutxb92qZleFF9aOodNXNInDE+xv18+0MIagZMTtf/th3oJF63DCWmDmDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LkAGPVg8W9mLpWhZ92px2q24xwccgxtjF+Y18qbjn7Q=;
- b=nQoPgaDlnYbVvSjxiZl7R5Q/aVKEgjHcXfoJwz+HWU6M1kzfmAL4CzMBei4YRLAZ6EzChZLnXcTT7Dk7XurReL7NHdbuBEu1pbflecarsomUVAZMcnfxVC/FcJeI3RlkJa004ajMYUwZ+KNoRLXXR9osXEdnRFWhAKjzZryIs9Ioi9JYW9BODucw2tXAB4bCc+nap2++gx+TD/gj1mKZM3OqN2ijKxAHS6yTfGkffnBGojV8+PBIoZ+eePDIx89eWLyNPd7WD0sabKvVRKUsKxctw2YQlKJzaPYPcni8iSvBHY+AttkzdrpFahKPn3qDoF/bMjqri7HDwuDo9mOGbg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LkAGPVg8W9mLpWhZ92px2q24xwccgxtjF+Y18qbjn7Q=;
- b=jlzAMVh8jvWdbzvBjQIuYPLJpJkHlkq/OpHvpDiuYNIKCwi/v5QeObhzGqWevu+hLmuafoXaG6F+VsbziYeYU49fu1Ip4Mp21LGHMzttMlHKPl2EwhK8r7IDul06BP9YDs9h2xsXU3cbO0M5eA/A5rc+CmNk14+59+YHcwHZNPWnepxxadD35dKaGYCSpAEwfs2YcdO7teWmxDieuspziHj0vjNlHZ0oEoNs6lDA1pcHgzr/t1AyaMWJ6MVwQJSNAaPkYrRX32PPSZ3SpfYTO49l49blWIKpmPFwBzyBzvt1j+RKk1YZV/5UkHf9MNi/Q0VtTD7NU4YUhVo+/7RJrQ==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by SA2PR02MB7578.namprd02.prod.outlook.com (2603:10b6:806:135::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.4; Tue, 6 Jan
- 2026 15:18:55 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%6]) with mapi id 15.20.9478.004; Tue, 6 Jan 2026
- 15:18:55 +0000
-Message-ID: <2ebaf5b2-1845-4af6-9da1-e4eb59fec0c3@nutanix.com>
-Date: Tue, 6 Jan 2026 15:18:52 +0000
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/18] target/i386/tcg: update cc_op after PUSHF
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20251210131653.852163-1-pbonzini@redhat.com>
- <20251210131653.852163-4-pbonzini@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <20251210131653.852163-4-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA0PR11CA0096.namprd11.prod.outlook.com
- (2603:10b6:806:d1::11) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vd8uM-0004rQ-Tb
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:23:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767713021;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tTTO7AOu9FF2/HVYbaAgd9OXok0a5uAww2mRR/B3sdk=;
+ b=VWANCdkD2AlerTJgV4KRaZvtG8DizSw8RbgMcbE6o0oqwh/Sv4kiryEWkaf5d35WTo4Ujj
+ zPXdbzvCKfWX+IiYi3m6VqjrfKunDwDgPcbpR7gLEKDL2O7bl1WSj5SwWM34KgFY/3DkbL
+ mHEmzwBPWQVBp2kaPBJcMcTho8WfE+k=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-GlDAVlq1MqeLL88OWDT1Xg-1; Tue, 06 Jan 2026 10:23:39 -0500
+X-MC-Unique: GlDAVlq1MqeLL88OWDT1Xg-1
+X-Mimecast-MFC-AGG-ID: GlDAVlq1MqeLL88OWDT1Xg_1767713019
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-88a25a341ebso25881186d6.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 07:23:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767713019; x=1768317819; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=tTTO7AOu9FF2/HVYbaAgd9OXok0a5uAww2mRR/B3sdk=;
+ b=Bl05g+ny/Oy9wk1tIzvct6TOrCHRtxZ/BdrCmk/7MnHw/Y0I5mUWr0/WVdEMKWA5dt
+ yScczrJ4XS70VwJZd7rvaM/lDnMo9ROg2ap+CHqQKNy+RGxWBTO6KOiy3TdQlca16R0k
+ wn6SP40eSGoUZHKTI7Xk3JmGO7AKaGPOqcTcZsMNw9cynwlag6uyJUko3CgK7m5Ecnf0
+ FoERs2O1uPWUTM7emT+q74dF2+28im/udLeSWRvLflanzOXKhwXgTSq3qWoKcGiSnTcT
+ hxDrc60TEF8Dg9JbbFQIcOQTpLMVerENO1DQ7tC5QziQcz8164Q+0m3ritTzQ0Uvf131
+ D4WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767713019; x=1768317819;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tTTO7AOu9FF2/HVYbaAgd9OXok0a5uAww2mRR/B3sdk=;
+ b=Ok65sdxs+h+BKCjsNjPDjwOUUdU0rZCpprQlCFtdPjrzggzLuSBEy5yrBRPUwmp7Rx
+ sdSeCoJY/I+U0gMyDP5cuby72p/uKYBeAWqY/w6dZg5Uhne+hpEJ9yOsQIUwtYW/G7Oq
+ yDJxvprOUZZIEWeLkonLsHm0I5n5qgsYbeb6/6NQUdNqN2FMbsDF9wB6u0xfIpbbhoLy
+ v/JGKEhu7Frm48gBdC9N3SCnaL+jF+gayYSRvdzvGIQ4WJ0WfjAEfkPYrUG3o63xmfH8
+ bq5iWEaFgP0G2XAzjrrGlj5rTfkHdqCfQ+Q1xnOXzz0GuR/DQNp/Jed3tIB4bxxwzOhT
+ 0uhA==
+X-Gm-Message-State: AOJu0YxMLBFBN+TbnGDKT2M3qj9T0exWJ/NFsoSwcLWhYyzVD3PdWqEt
+ 8fVxysVWajbsyUMyt1qBEF06m4irk0OdIdjAAsZ5aA6Ly6zVF9dsIjnRph6gEqPE28on+YfPRAe
+ llErwDx1N7gVWNxG3u6ibzhqgNdZme36aeR5fzPArFj75/nTE6ns+Mwg1
+X-Gm-Gg: AY/fxX65rmov9rSQjPyxHqPdXtQqjxnM5LWl8l2QywKIi2vrJjuw2KEJJOsp5G0jPFg
+ fXUsS92gq7WXkA1VCrSr+yF+5n2s32KKWHLhyueldHVtwXitxUD4kIh4ei5R7rGXtbcvvdKKUTX
+ QBd5Bx4GjODkhaP5XMHsVV6rTfA6rRoJZlCm48icNudowujH8bfJfzbcFriH6AYZo2gGzbG/YwQ
+ BJLuRsn5fKc10i9MYbz5CBi9u5kQuEag2eEsk+hb+2xzQMweyKSHnPF/zfbk8HuxCaOV0LGloEf
+ Ohd6JetdPTxEJu2eFbdyBCfeEFacF3dVISy+07BYpE1uc/IX2SU+eCySSkaq6WrW+puOuDbIukM
+ s2fc=
+X-Received: by 2002:a05:6214:2b88:b0:882:4572:19b4 with SMTP id
+ 6a1803df08f44-89075ed022fmr42599146d6.58.1767713018679; 
+ Tue, 06 Jan 2026 07:23:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFJwYNmpi9wAGKaE2BS+0kOq+b0bpzrseG5/Y4N31kAZHof79o6hqIgha9/gp+VqioRdywbUQ==
+X-Received: by 2002:a05:6214:2b88:b0:882:4572:19b4 with SMTP id
+ 6a1803df08f44-89075ed022fmr42598586d6.58.1767713017952; 
+ Tue, 06 Jan 2026 07:23:37 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-89077234ca1sm14957966d6.36.2026.01.06.07.23.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Jan 2026 07:23:37 -0800 (PST)
+Date: Tue, 6 Jan 2026 10:23:36 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
+Message-ID: <aV0o-EYEC-4rvdSz@x1.local>
+References: <20251222114822.327623-1-ppandit@redhat.com>
+ <aUqyfkOtXwl6cy9A@x1.local>
+ <CAE8KmOwnPYoK0i53LB8nO95gC53QK4FoNvMrbb9anR3OB+RS4Q@mail.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SA2PR02MB7578:EE_
-X-MS-Office365-Filtering-Correlation-Id: c21b7c01-3208-497b-4915-08de4d36e833
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|10070799003|376014|1800799024|366016|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Snc2eUlsRVNWa0RSOUlveFovZVFiSHNhZnBPendlbWhZSEJzdE1hWGxFTlo4?=
- =?utf-8?B?TmN6Q1lQaXNSWThiSFpuQmlFRExaamNiRUUyNTdPZCtNOTNiVk1pUTV4Z2Zj?=
- =?utf-8?B?S2crT0lzQ3Q3R2ZXVlpsdjRpTmRaZTdGSzdmV2RHQVBBbGN1QnVyN1VwSHpJ?=
- =?utf-8?B?eHVHOXRaN3dNbUUrdUlhWVBjS0hFMHZVeEtyVHJRMS9SK3FaRmRiZGNmVnh2?=
- =?utf-8?B?SzZabEhBaktqNmwzbXJlQ0ZxZlZiaVg0c0tEMlVUbXdINk95Vlg0YWdHUDNY?=
- =?utf-8?B?dlZyWU1mdzVMSkpmMVNGWDhNZC9lVEtVU2t0bTBxWnVSeCs1WStJd2w2VFNl?=
- =?utf-8?B?dzhVQ2V5NEFsdUFON0IrTkEzM3lYcFcwQUJiT1BqNWxaR3BEOWkyUHRJTGY1?=
- =?utf-8?B?QmYzSzdpd0JrdThnVVNwRmZkYmdvR3A3YUQ3ajBMeVU1TVVLd2Uvamd2d0pT?=
- =?utf-8?B?RnI0SHdLazdqR2czRm9Lc3NoNXFjVkFBT2FOYko3eDBuRjZpZVlRenc4U0VN?=
- =?utf-8?B?Rkxqa2JQWCtRZzV0UTFXRDdLUTBuSm9UTUJvcm9BdXMwbkEyOGxWNUtzcWsr?=
- =?utf-8?B?djI5NkRibDVKR0NHdWNsbTFWeTlEUHZVem1UazZvcXViWGZBRTJQWmFwN2Fw?=
- =?utf-8?B?RVpTYWo5NHVxRy9BQWFOdUVJLy9LUE1SVGN5SU5vL203TVRIRG0wMkFXMzdZ?=
- =?utf-8?B?ZklhclloZ2lURSt1R3lvSURPMDVFc1BBN2NWT0RqMitsUmNOTjgrVUhYRktD?=
- =?utf-8?B?c3Z2MkdIaFliU0Exc3pyNWJtTTlqRWoyRTdIM09GeWdQd2xDb3ZnSENTamlo?=
- =?utf-8?B?RmxEUXRoMFEvNW1LSHlWOXFNK0FDaC9SR2FvTHMvMlZhSDFSeVZ1Slp5SkVX?=
- =?utf-8?B?bURBOEdMbjNqNnk3ZHE4RjJMcjhKQUVxOEgxQldycGxDRytWMlQzMGw5ODN3?=
- =?utf-8?B?VzdzY0l1ZFRrc3pGeHVOK01memJVNVVxY2xQcDd4YmNNaU01aHN4OXQvZGph?=
- =?utf-8?B?RWpQVFJyaHFNQU9CVFhDQlg5eVRnSHB2RGllY2c3YlduTE9SQXBvRExFUXVY?=
- =?utf-8?B?WGJQYzhxNGFBN0U0U0FVWVZkRVlPZlhRN21iTmIzWWhBVjVoa3VaMXVOMjFY?=
- =?utf-8?B?ZzBQV1NxZkdoUUticGNrK3NuMVBWZTEySEVZTE9ZMlIwR2ZLSlRTdFMyQ0ZM?=
- =?utf-8?B?Mk4yY00zNEg2a0ZnU0JFRFEyMmgzdE5VYXA1a1luRWRLdFFMWm9JVG5WYVFw?=
- =?utf-8?B?bUNRbTUvdnJUV0RFdEdIZzh6UjN4NGJyYlFZekp2WFI1OXpuU0VGNHMyZHp1?=
- =?utf-8?B?Y1RWYnU3d1JJVHNlRS8xbXZnSmlzbXUzRHZwak5BR2s5ekdEVDBvTU5yZHpu?=
- =?utf-8?B?MnN1VVdIS3BPRVBTUmZGRzc3bXo2SmtEbFFXdXRzTjNnbjRMaFQzbkJ2NEIy?=
- =?utf-8?B?S0x3WEZUYVFrUXkwcVM4MWF0NmZmcnJjSUNNQTdpS2Y0RkdSN0l2S2dlMi9t?=
- =?utf-8?B?aHJueEF5L1JJUWs1cjdOYUNPcGdHNWdENkY1TDB4enVvNFJwWlNHbnE1eDdW?=
- =?utf-8?B?SE16eXNyNm1mcHhwNisyZWJHZTQ1N2sxSTNjUkFkNERQWmpHTWZBQmF3N0xL?=
- =?utf-8?B?ZHpIdDUxQkYrMDNOeVk5RUxZZ1A0cXE1TlpoOWxNcjBpcTB2OHM5a1lxOExn?=
- =?utf-8?B?WHZOenpIeEZOdXBkSDFOb1lMbjFMZlpmUndZbE1jR25QdFc4bVl5cVZCQUVG?=
- =?utf-8?B?RDZpUHR0Z0xxWWZaR3RMRjl2VU9yOTZybXFsb1BWWG45aHFydmVTWEdiWmhT?=
- =?utf-8?B?eHZ1b2VuMkQxTFRWNUcvUHRUSDF4b1MweG5EODJLdVIvL2kwVzA2RG90VGk1?=
- =?utf-8?B?a1EwNUxqVmticSt2d3laRjlOeFk3NnByZmpBbzlvcjE1UDRnRVFkeTgrL0t0?=
- =?utf-8?Q?MJRe+7HGS+wgcx0W2EcfAKqBFOUnj78Z?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(10070799003)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q09aNjZQVFZFVmNoZGFGWTh0TVNqeUJLL01tZ08rNDZ2MVhxeCtLY08rT0Js?=
- =?utf-8?B?TlRFdnR0Z25JdFkrV0NJWU0xTFk1NVhPa3dFUHJ1NlVRcnNDVURYRnJ1M0dW?=
- =?utf-8?B?aFpLMVZpbGJMczVwSTZsTEpnSWVYL2Jwd3ZHb3JjaDNDNDVkSm03TmhkakQy?=
- =?utf-8?B?bjk4Rkp3L3pmYUl2OS9HTzd6ekxTc0NKMm9WSm0yM3A1VWozTDlIVStzNFFB?=
- =?utf-8?B?Z1JkMWwwRnA1bTgrNzdoNnduK1IyY3NMd3Vid282ZFVDR3E2L3haRHFMZlYy?=
- =?utf-8?B?MnAybkZ6SExvL0xEaGZ4Y1pEZmlLMFowMHBYOUV3Z3g4aHdqRDhqTzFqd0tz?=
- =?utf-8?B?djY2Y1lxMjhNcnlKZEhIYXF4dXFwenRXNFFGRnpadHU4NWxGS2Y2VUtFSXlq?=
- =?utf-8?B?dzM1OW9WNkZVcmtXWFJYZHJVU2U1aFU2ang5RTNhdnFYZmhNcGZiYzFBQzFU?=
- =?utf-8?B?b3djQUh1ZVFkVnVaOFVCQVFPZ3dNbTUwdURwZjJ0SExYNWJCRU16cy9ON1ZJ?=
- =?utf-8?B?UGl0Z1d5T0tZaHNHYUNvQys5aFhuTkx0bncyWUdvT1JIZzZDK3VaZ1dRZnJC?=
- =?utf-8?B?cHp5cGVLMkFXVWttdm1yTzg4bHplVWQveE5IZlhoallWblNsUnNnQWFjZVJM?=
- =?utf-8?B?THl3MzJFNjN4MW8zZjdUTExuVE8vUHhjcDhBb1pKMm80UlR1dnFlNW5KcGV0?=
- =?utf-8?B?ajlyd1ZlRExKSFNHR01vNzBpLzNtQjBEQUlTZm1iczhYTnV5L2o0eEtrazNp?=
- =?utf-8?B?TGM0b0pnaEp0YmNmbkhIaGxiZURUUzZYWlZrbU5acU4ySDZuaFB3V0dZa1cy?=
- =?utf-8?B?VTNScm9zU0N4QWJGOEZZWEFIaTk5MmYva2FaekxlQ041SHp1OGMxMmZPZmpB?=
- =?utf-8?B?NHArRHhsN0dDZmNGVWtFOUNMUHJzM0hEMVV5N0tPb1B3UWVUOHJmdmRDWW16?=
- =?utf-8?B?L0E2TVozaHlUbzlLSjl2OW5CQytSWEIyV08zZld3alIzUHhYb20vNno3Y0lv?=
- =?utf-8?B?RktBeWlsZi9QVlBtTHVsYXIzMkRqYTJhLzFQeTRJRE96bkY3OHNUT01ya2lU?=
- =?utf-8?B?ZjMxbDlrTGNScVFyelIzNGQxUHZOTm1QV1NEb0xIemxYSllyajE2eVhZWTY0?=
- =?utf-8?B?NXQrYlBLZXNpS0RhRmNCMHZ6K3hpcEpuQWJpOWMvaDhRK3M2bC9vYW45UGN1?=
- =?utf-8?B?TUpvQjRmOGNNazJQWEppMVRxQng5aXpRRGZLcHZvT1Z4Y2dKSlJEdkZidThv?=
- =?utf-8?B?WG9DeW80SFpvMk0rRlRGNys5bjlVVVQwUG1UMnpHbWwrU3ZPckxLQnFra2hO?=
- =?utf-8?B?NU1TMGVDMko5dmF1YnUwOEEyY3BxbndUdzJDRzlqTy81RGx5K2xhTUV3ZlAz?=
- =?utf-8?B?TVo5bFNFZDh1QnMzQ0p0aE4yR1N2dlJabEpVT3pTeWtmbVF1VHNHSENERWt6?=
- =?utf-8?B?a2xDVDc3aXJIUGxubzZ1VkZoZzJ6NUtDWnFDTXZjVEhBZi93cDY2cXlsNERL?=
- =?utf-8?B?SWJLbURuM1I1Q0xIK2c2ZHVsY2NsTkFlaG5RdzNTUmlRWmdORWNCSE4wNDhM?=
- =?utf-8?B?aW5CS1oyMjMxWjljVmJvZW96Z1dMdUVCLythVEVxaWVQNVROeXJRblg4L1Bm?=
- =?utf-8?B?enFtMUdNMFpkT3o1MWRZamZSQ3Q2QXJaczlTYmJXVG5BMk5HK0pWYzhQNUkw?=
- =?utf-8?B?ZVByZGNZU0NRcVFSREwvWFBQeUFvUWd3SFVTR3BzdFZmcCthdWlLakZPQjA2?=
- =?utf-8?B?TVlqZFlEWDNYakQzbWJwOGFORVlBL3dHN2xCcFZkRzNBbnRkWUV1bjdjQktm?=
- =?utf-8?B?V2YwNTl6T1NpTTlXUjE3OXNrNFI1WU5nYW9zQXJyWHp4QnNYZTBXQjFhQzhY?=
- =?utf-8?B?bHd0Z3hMTkVBYVZQcXpEclRaelZjTFpyallLWS9Ud1J1Zll1aVZuKzg2OUZ2?=
- =?utf-8?B?ZlB0dENVRUFSamN3S1Ria3pGeHVhVU9uVFR2OVAyT0RnYXYvcTh6R2FJcGhF?=
- =?utf-8?B?NVRuUStlYUp4NDVBYWdPekJuQzdyTG11KzNiSEo0YTF1M0I3bFpXSHUwbVRF?=
- =?utf-8?B?MXlPbmtjcTdGbVRKMTl1QWRJYUpLMGVXbTM5dFordnBEeU9GRHdLOEJxb1Nq?=
- =?utf-8?B?eUd0MHIxdXNRUHBySHlpSnp2VGZLU24vQTliUFRTL0hMeCtsZkFOOS8yMjR6?=
- =?utf-8?B?UmVIMmdPODg1OU9uMUtTWVF3bEdxdFprU0JXNnJoVDhtYzNOYkQ3UE80SlJE?=
- =?utf-8?B?SFVGVDhtZ282cG1NWjVLK0E0b29HWG5LRVRaUU1jT253Q3dSeGhBeXpQMTVa?=
- =?utf-8?B?YnU0UjR5MURsTDV5c0FFNXRacVVyZW5scDE4WDUvMTVYaU9wUE5XQmpJTDBs?=
- =?utf-8?Q?OqgHewyKe4EpEGj9mSPJlZkis0XEz7ONzNmI5vRKryBlk?=
-X-MS-Exchange-AntiSpam-MessageData-1: tExucWVm4J4nOfgazMw0h2i6mBIn5xQFHlw=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c21b7c01-3208-497b-4915-08de4d36e833
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jan 2026 15:18:55.3920 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vapvYxf7s2Q9m/sU4Qc5IOf6/euieahA6hUaVz1+kvE0ddxkMqlc8DH2Quxp7XA0/0u4mV18GEGgZXGQXf9iJGeyNRy869LNcm1Bb8q04Hg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR02MB7578
-X-Proofpoint-GUID: d1qs_dU90W7vREP-7vk2ObChLXaSJB43
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDEzMyBTYWx0ZWRfX3YmMKA1/lCAm
- KdyPtYvO3f8RQKZdMqECWAFHquPACx3eHbN20mVfcaNQ2QETHgEuglPdZpCDWXD10oW7IzuJwLn
- 8PLbw6lMJY95WsiGLifl95TsflxsGoEyBFp/6RQx/Obb/aOmqWsbTJ/ZxfuFPaPRlMmVagfGErM
- 9Am05+YqCj8uy0x84Au2SL4O8m8k/6gfERYwSq/djBO7oK7z5lJR5o4j3eNFx6BexS9A6CO2E71
- xkGXNN9EnfINVVtgPaNrfNcT3uy75a8UzpZzNSkhon6ugKt4hMajirM9CW55l80dtXhaAPhnIje
- u59XLmGCFx4FCJkXcRSIYeQAr1pazNZLHhfeNJERJMSYkYpRrqu+9RPkHt4Dy1+Q9vHxsb1DwhV
- 7CLyS0IS0IH06hTRW2EHzXP23Bixs6AS0MsLMfzzhvTX+mW5MeNdi7XpjAA3mWnhUzTVCQO893w
- I6cfVXbKAE24NjXorlg==
-X-Authority-Analysis: v=2.4 cv=BaHVE7t2 c=1 sm=1 tr=0 ts=695d27e2 cx=c_pps
- a=ws69a72eWNNXWagsEosLDA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=20KFwNOVAAAA:8 a=Dm4J884ULPpXfFezsFYA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: d1qs_dU90W7vREP-7vk2ObChLXaSJB43
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOwnPYoK0i53LB8nO95gC53QK4FoNvMrbb9anR3OB+RS4Q@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -220,40 +118,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/2025 13:16, Paolo Bonzini wrote:
-
-> PUSHF needs to compute the full eflags, set the cc_op to
-> CC_OP_EFLAGS.
+On Tue, Jan 06, 2026 at 04:19:44PM +0530, Prasad Pandit wrote:
+> Hello Peter, Fabiano,
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/tcg/emit.c.inc | 2 ++
->   1 file changed, 2 insertions(+)
+> * Thank you for the comments.
 > 
-> diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-> index 1a7fab9333a..22e53f5b000 100644
-> --- a/target/i386/tcg/emit.c.inc
-> +++ b/target/i386/tcg/emit.c.inc
-> @@ -3250,6 +3250,8 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
->       gen_update_cc_op(s);
->       gen_helper_read_eflags(s->T0, tcg_env);
->       gen_push_v(s, s->T0);
-> +    decode->cc_src = s->T0;
-> +    decode->cc_op = CC_OP_EFLAGS;
->   }
->   
->   static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+> On Tue, 23 Dec 2025 at 20:47, Peter Xu <peterx@redhat.com> wrote:
+> > I raised a request while I was discussing with you internally, I didn't see
+> > this, I will request again:
+> >
+> > Would you please list where you decided to switch from FAILED -> FAILING,
+> > and where you decided not, with justifications for each of them?
+> >
+> > Let me give a detailed example in this patch, please see below.
+> > This is the first real change that we'll switch to FAILING when
+> > migration_connect_set_error() is invoked and migration failed.
+> >
+> > Please justify why setting FAILING is correct here.
+> >
+> > This function is invoked in three callers:
+> >
+> > qmp_migrate[2302]              migration_connect_set_error(s, local_err);
+> > qmp_migrate_finish[2347]       migration_connect_set_error(s, local_err);
+> > migration_connect[4047]        migration_connect_set_error(s, error_in);
+> >
+> > At least from the initial two callers, I don't see migration_cleanup()
+> > invoked after setting FAILING.  Could this cause migration to get into
+> > FAILING status forever without finally move to FAILED?
+> 
+> * Ah, sorry about this; I missed removing this and
+> qmp_migrate_finish() change from this patch. Idea was to switch to the
+> interim FAILING state wherever execution follows the
+> migration_iteration_finish() OR bg_migration_iteration_finish() path
+> and leads to migration_cleanup() setting the final state to FAILED. (I
+> create/test patches on a pair of machines and then copy them to the
+> local repository on my laptop to send upstream, can not do git
+> send-email from test machines, these discrepancies fall through at
+> times)
+> 
+> * As you requested, please see below the list of calls where the
+> change was applied and where it was not. Justification for changing to
+> the interim 'FAILING' state is that execution follows through to
+> migration_cleanup() path. And Justification for not changing the state
+> is that execution does not follow through to the migration_cleanup()
+> path.
+> ===
+> 01  void migration_channel_process_incoming(QIOChannel *ioc)
+>       ...
+>         error_report_err(local_err);
+>         migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+> 
+> 02  static void cpr_exec_cb(void *opaque)
+>       ...
+>         error_report_err(error_copy(err));
+>         migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+> 
+> 03  static void coroutine_fn process_incoming_migration_co(void *opaque)
+>       ...
+>       fail:
+>          migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>                            MIGRATION_STATUS_FAILED);
+>          migrate_error_propagate(s, local_err);
+> 
+> 04  static void migration_connect_error_propagate(MigrationState *s,
+> Error *error)
+>       ...
+>         case MIGRATION_STATUS_SETUP:
+>             next = MIGRATION_STATUS_FAILED;
+>             break;
+>         migrate_error_propagate(s, error);
+> 
+> 05  static void qmp_migrate_finish(MigrationAddress *addr, ...)
+>       ...
+>         else {
+>             error_setg(&local_err, "uri is not a valid migration protocol");
+>             migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+>                               MIGRATION_STATUS_FAILED);
+> 
+> 06  static void multifd_recv_terminate_threads(Error *err)
+>       ...
+>         if (s->state == MIGRATION_STATUS_SETUP ||
+>             s->state == MIGRATION_STATUS_ACTIVE) {
+>             migrate_set_state(&s->state, s->state,
+>                               MIGRATION_STATUS_FAILED);
+> 
+> 07  static void *postcopy_listen_thread(void *opaque)
+>       ...
+>         error_report_err(local_err);
+>         migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
+>         goto out;
+> 
+> 08  static int qemu_savevm_state(QEMUFile *f, Error **errp)
+>       ...
+>       cleanup:
+>         if (ret != 0) {
+>           status = MIGRATION_STATUS_FAILED;
+>         } else {
+>           status = MIGRATION_STATUS_COMPLETED;
+>         }
+>         migrate_set_state(&ms->state, MIGRATION_STATUS_SETUP, status);
+> 
+> * Above MIGRATION_STATUS_FAILED instances are _not_ changed because
+> they do not follow the migration_cleanup() path. The instances below
+> are changed to the interim FAILING state because execution follows
+> through the migration_cleanup() path, wherein the interim state
+> changes to the FAILED state.
+> 
+> 09  static int postcopy_start(MigrationState *ms, Error **errp)
+>       ...
+>         if (ms->state != MIGRATION_STATUS_CANCELLING) {
+>            migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+> 
+>       ...
+>       fail:
+>         if (ms->state != MIGRATION_STATUS_CANCELLING) {
+>             migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+>         }
+> 
+> 10  static void migration_completion(MigrationState *s)
+>       ...
+>       fail:
+>         if (s->state != MIGRATION_STATUS_CANCELLING) {
+>             migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+>         }
+> 
+> 11  static void bg_migration_completion(MigrationState *s)
+>       ...
+>       fail:
+>         migrate_set_state(&s->state, current_active_state,
+> MIGRATION_STATUS_FAILED);
+> 
+> 12  static MigThrError migration_detect_error(MigrationState *s)
+>       ...
+>         migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILED);
+>         /* Time to stop the migration, now. */
+>         return MIG_THR_ERR_FATAL;
+> 
+> 13  static void *migration_thread(void *opaque)
+>       ...
+>         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+> MIGRATION_STATUS_FAILED);
+>         goto out;
+> 
+> 14  static void *bg_migration_thread(void *opaque)
+>       ...
+>         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+> MIGRATION_STATUS_FAILED);
+>         goto fail_setup;
+> 
+>       fail:
+>         if (early_fail) {
+>             migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+> MIGRATION_STATUS_FAILED);
+>         }
+>       fail_setup:
+>         bg_migration_iteration_finish(s);
+> 
+> 15  void migration_connect(MigrationState *s, Error *error_in)
+>       ...
+>         if (s->state != MIGRATION_STATUS_CANCELLING) {
+>             migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+>         }
+>         migration_cleanup(s);
+> 
+> 16  static void multifd_send_error_propagate(Error *err)
+>       ...
+>         s->state == MIGRATION_STATUS_DEVICE ||
+>         s->state == MIGRATION_STATUS_ACTIVE) {
+>             migrate_set_state(&s->state, s->state,
+>                               MIGRATION_STATUS_FAILED);
+> 
+> 17  bool multifd_send_setup(void)
+>       ...
+>       err:
+>         migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+>                       MIGRATION_STATUS_FAILED);
+>       return false;
+> ===
 
-Hi Paolo,
+Yes, something like this would be more than welcomed, thanks.  You can
+provide a simplified version in the commit log when repost.
 
-I noticed that my WFW 3.11 test image stopped working with master, and a 
-quick session with git bisect pointed me towards this patch.
+Note that I'm not reading carefully into each of them, because we have
+concurrent changes from Fabiano recently, essentially it'll change when
+migration_cleanup() will be used in above examples:
 
-I'll see if I can dig further into it.
+https://lore.kernel.org/r/20260105190644.14072-12-farosas@suse.de
 
+So we'll need to be careful landing these two changes.
 
-ATB,
+Considering that the other series was close to landing, IMHO it might be
+good idea to have your patch (when reposted) based on that series.  Please
+have a look.
 
-Mark.
+> 
+> * As proposed earlier, I'll request to divide this patchset into two
+> (or even) more patches as:
+>     - One patch to fix the race condition issue at hand, by way of
+> introducing the interim FAILING state.
+>     - One or more patches to use the interim FAILING state, where we
+> currently set the FAILED state.
+> That should help us to do/test/review these changes. It is complicated
+> how this state change is done/handled and IIUC, migration code seems
+> to serve multiple use cases: one is live VM migration between two
+> machines, second is taking snapshots of a VM, third is migrating a VM
+> to a new QEMU process in the same host. Doing such a change in a
+> single large patch seems risky.
+
+I still think FAILING isn't such a huge change so it needs to be split into
+multiple patches.  It's a new status and we need to review every spot of
+FAILED status change, in which case one patch is very well self contained.
+
+Even in a backport I think we should backport all relevant changes about
+FAILING when necessary.  We should not backport part of it, causing FAILING
+status to behave different over different paths.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
