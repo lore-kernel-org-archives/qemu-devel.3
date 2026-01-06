@@ -4,58 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A36EACE9D7F
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 16:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C86ACE9D7B
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 16:50:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdA8c-0001AB-Cq; Tue, 06 Jan 2026 11:42:30 -0500
+	id 1vdAFw-0006oD-Di; Tue, 06 Jan 2026 11:50:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vdA8W-00015q-EC; Tue, 06 Jan 2026 11:42:24 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vdAFe-0006mK-SF; Tue, 06 Jan 2026 11:49:47 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vdA8S-0007iM-Si; Tue, 06 Jan 2026 11:42:24 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dlxlp5XLSzJ46nx;
- Wed,  7 Jan 2026 00:42:14 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 9783E40571;
- Wed,  7 Jan 2026 00:42:16 +0800 (CST)
-Received: from localhost (10.195.245.156) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 6 Jan
- 2026 16:42:15 +0000
-Date: Tue, 6 Jan 2026 16:42:11 +0000
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-CC: <qemu-devel@nongnu.org>, <gustavo.romero@linaro.org>,
- <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
- <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
- <farman@linux.ibm.com>, <imammedo@redhat.com>, <jiangkunkun@huawei.com>,
- <maobibo@loongson.cn>, <mst@redhat.com>, <mtosatti@redhat.com>,
- <peter.maydell@linaro.org>, <philmd@linaro.org>, <qemu-arm@nongnu.org>,
- <richard.henderson@linaro.org>, <shannon.zhaosl@gmail.com>,
- <yangyicong@hisilicon.com>, <linuxarm@huawei.com>, <zhao1.liu@intel.com>
-Subject: Re: [PATCH v17 6/8] hw/acpi: add cache hierarchy to pptt table
-Message-ID: <20260106164211.00006f95@huawei.com>
-In-Reply-To: <20260106155828.643-7-alireza.sanaee@huawei.com>
-References: <20260106155828.643-1-alireza.sanaee@huawei.com>
- <20260106155828.643-7-alireza.sanaee@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vdAFd-00019E-Ag; Tue, 06 Jan 2026 11:49:46 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 606FbdI7014492;
+ Tue, 6 Jan 2026 16:49:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=HAQDruIQG50MDb/0eeir+YYjMQxAaAvVkoAEnzPBK1c=; b=LIk0mzi8CqjD
+ C5siak0KZtH37U3T0ZPeOTF1qyV54kEmHnwenkrZx70+tLABMZ4JoHPKP9f1NLLJ
+ mqr/oSiZFyNJYQrkzZ+gwXt0ZJyMffO1A1O9TqlDr1bianu5cdoMqUM9gT8ukzA8
+ AXkdlQ1Vjg6L2lso9PptG0T1YTuwMvh1YjhzM4pv1hA7qozyom70dTg36zGTw/p8
+ cUyr6J8Wm6IdDeOL74jMoTnkLuXZYlRkGGS9oapcD5cCwrp1E41PiEfUkJ9kHR2f
+ tyQ47nQlYvsBORW6QRkOElkqqdzNQ2v1Dg3SR4iK4MaOeTT7ZarRa6xaVyeKQMH0
+ PYOGEA/eRg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4beshev467-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Jan 2026 16:49:43 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 606GjELS007034;
+ Tue, 6 Jan 2026 16:49:42 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4beshev465-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Jan 2026 16:49:42 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 606FXLnR015202;
+ Tue, 6 Jan 2026 16:49:41 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bfdescn6y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Jan 2026 16:49:41 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 606GneZv30868030
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 Jan 2026 16:49:40 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1262D58052;
+ Tue,  6 Jan 2026 16:49:40 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9FE2758056;
+ Tue,  6 Jan 2026 16:49:39 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  6 Jan 2026 16:49:39 +0000 (GMT)
+Message-ID: <1fa38659565cf4dc1dfe24cc365d685554faecf0.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/4] ppc/pnv: Suppress some "pnv_chiptod unimplemented
+ register" messages
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ chalapathi.v@linux.ibm.com
+Date: Tue, 06 Jan 2026 10:49:39 -0600
+In-Reply-To: <20251218200353.301866-2-calebs@linux.ibm.com>
+References: <20251218200353.301866-1-calebs@linux.ibm.com>
+ <20251218200353.301866-2-calebs@linux.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.195.245.156]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDE0NiBTYWx0ZWRfX1U8Xt9YlxDcV
+ TnGoJV5+L9+QN3oa9qZ3UCxn6C0dioIWAFmi1MSAmQ4QYG/sItp8BMDC6CoLnBqSFAHQZGmlL4x
+ kIf1MDkB0l/dwPCIj9aGua1O5L5W3QCOhJCbwBthgtrFuLXkLglnPw9adj0VNIxkuFvLsaEf4Bd
+ urfvdv0JOUQ9m9GBUmGuOYdYcFff+xi9JfJ0DDAEwakaNPydxVgryhGYOt+YajKx0OR2frDrHJn
+ Dy6ClBC3eVS67vTFuxIGZw51yGBx8U8HUyD0e2rs2aOX+jBCb+QkcOeRCrSvnavGDfdmV2Aw1wg
+ U8NojC6B7cONMdqDyr82Uqlpbrzi5WXEzZr2TdHr+IlhlGWLAkpBDBjEALxVQdcX7QHyZXBYPxr
+ Roa4Mz2VqGLIVdOxagWp0j+xNsmEuO4Glt1xBPfgw/8HWOB14M3QZndvf6qLjyvyfM5J/HzmCHC
+ 1fTIy4eriDIKdeNYxEQ==
+X-Proofpoint-GUID: BIYX7HO8aVmZFzdw1C1D2V-HVg018kGW
+X-Proofpoint-ORIG-GUID: zh_vrevsFoncoyAvbnQIf80yJwldy7Tc
+X-Authority-Analysis: v=2.4 cv=AOkvhdoa c=1 sm=1 tr=0 ts=695d3d27 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=uM3lmRkaaUgqgqTTx18A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601060146
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -71,151 +126,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Jan 2026 15:58:25 +0000
-Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+Hi Caleb.  I wonder if it makes sense to upstream this commit since I
+suspect that most upstream users will not have the "unimp" log messages
+enabled unless they are debugging a problem and in that case, we would
+be erroneously masking these unimplemented registers from the logged
+output.
 
-> Add cache topology to PPTT table.
+Thanks,
+
+Glenn
+
+On Thu, 2025-12-18 at 14:03 -0600, Caleb Schlossin wrote:
+> This commit suppresses the following informational messages
+> regarding unimplemented pnv_chiptod registers:
 > 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-
-Some trivial stuff inline around an error message that I think wants a tiny
-tweak, mostly because I missunderstood it when rereading this!
-
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
+> pnv_chiptod: unimplemented register: Ox0
+> pnv_chiptod: unimplemented register: Ox1
+> pnv_chiptod: unimplemented register: Ox2
+> pnv_chiptod: unimplemented register: Ox3
+> pnv_chiptod: unimplemented register: Ox4
+> pnv_chiptod: unimplemented register: Ox5
+> pnv_chiptod: unimplemented register: Ox13
+> 
+> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
 > ---
->  hw/acpi/aml-build.c      | 200 +++++++++++++++++++++++++++++++++++++--
->  hw/arm/virt-acpi-build.c |   8 +-
->  include/hw/acpi/cpu.h    |  10 ++
->  3 files changed, 209 insertions(+), 9 deletions(-)
+>  hw/ppc/pnv_chiptod.c | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 > 
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index a711a9600e..580eceb24a 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-
->   * ACPI spec, Revision 6.3
->   * 5.2.29 Processor Properties Topology Table (PPTT)
-> @@ -2150,11 +2249,32 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->  {
->      MachineClass *mc = MACHINE_GET_CLASS(ms);
->      CPUArchIdList *cpus = ms->possible_cpus;
-> -    int64_t socket_id = -1, cluster_id = -1, core_id = -1;
-> -    uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
-> +    uint32_t core_data_offset = 0;
-> +    uint32_t core_instr_offset = 0;
-> +    uint32_t cluster_instr_offset = 0;
-> +    uint32_t cluster_data_offset = 0;
-> +    uint32_t node_data_offset = 0;
-> +    uint32_t node_instr_offset = 0;
-> +    int top_node = 3;
-> +    int top_cluster = 3;
-> +    int top_core = 3;
-> +    int bottom_node = 3;
-> +    int bottom_cluster = 3;
-> +    int bottom_core = 3;
-> +    int64_t socket_id = -1;
-> +    int64_t cluster_id = -1;
-> +    int64_t core_id = -1;
-> +    uint32_t socket_offset = 0;
-> +    uint32_t cluster_offset = 0;
-> +    uint32_t core_offset = 0;
->      uint32_t pptt_start = table_data->len;
->      uint32_t root_offset;
->      int n;
-> +    uint32_t priv_rsrc[2];
-> +    uint32_t num_priv = 0;
-> +    bool cache_available;
-> +    bool llevel;
-> +
->      AcpiTable table = { .sig = "PPTT", .rev = 2,
->                          .oem_id = oem_id, .oem_table_id = oem_table_id };
->  
-> @@ -2184,11 +2304,30 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->              socket_id = cpus->cpus[n].props.socket_id;
->              cluster_id = -1;
->              core_id = -1;
-> +            bottom_node = top_node;
-> +            num_priv = 0;
-> +            cache_available = machine_defines_cache_at_topo_level(
-> +                ms, CPU_TOPOLOGY_LEVEL_SOCKET);
-> +            llevel = machine_find_lowest_level_cache_at_topo_level(
-> +                ms, &bottom_node, CPU_TOPOLOGY_LEVEL_SOCKET);
-> +            if (cache_available && llevel) {
-> +                build_caches(table_data, pptt_start, num_caches, caches,
-> +                             top_node, bottom_node, &node_data_offset,
-> +                             &node_instr_offset);
-> +                priv_rsrc[0] = node_instr_offset;
-> +                priv_rsrc[1] = node_data_offset;
-> +                if (node_instr_offset || node_data_offset) {
-> +                    num_priv = node_instr_offset == node_data_offset ? 1 : 2;
-> +                }
-> +
-> +                top_cluster = bottom_node - 1;
-> +            }
-> +
->              socket_offset = table_data->len - pptt_start;
->              build_processor_hierarchy_node(table_data,
->                  (1 << 0) | /* Physical package */
->                  (1 << 4), /* Identical Implementation */
-> -                root_offset, socket_id, NULL, 0);
-> +                root_offset, socket_id, priv_rsrc, num_priv);
+> diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
+> index f887a18cde..cd9b8ee348 100644
+> --- a/hw/ppc/pnv_chiptod.c
+> +++ b/hw/ppc/pnv_chiptod.c
+> @@ -145,6 +145,15 @@ static uint64_t pnv_chiptod_xscom_read(void *opaque, hwaddr addr,
+>              val |= PPC_BIT(4);
 >          }
->  
->          if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
-> @@ -2196,21 +2335,68 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->                  assert(cpus->cpus[n].props.cluster_id > cluster_id);
->                  cluster_id = cpus->cpus[n].props.cluster_id;
->                  core_id = -1;
-> +                bottom_cluster = top_cluster;
-> +                num_priv = 0;
-> +                cache_available = machine_defines_cache_at_topo_level(
-> +                    ms, CPU_TOPOLOGY_LEVEL_CLUSTER);
-> +                llevel = machine_find_lowest_level_cache_at_topo_level(
-> +                    ms, &bottom_cluster, CPU_TOPOLOGY_LEVEL_CLUSTER);
-> +
-Trivial consistency thing, but in the equivalent socket block above you don't
-have a blank line here.
+>          break;
+> +    case TOD_M_PATH_CTRL_REG:
+> +    case TOD_PRI_PORT_0_CTRL_REG:
+> +    case TOD_PRI_PORT_1_CTRL_REG:
+> +    case TOD_SEC_PORT_0_CTRL_REG:
+> +    case TOD_SEC_PORT_1_CTRL_REG:
+> +    case TOD_S_PATH_CTRL_REG:
+> +    case TOD_TX_TTYPE_2_REG:
+> +        /* unimplemented, but suppressing logging for now */
+> +        break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP, "pnv_chiptod: unimplemented register: Ox%"
+>                        HWADDR_PRIx "\n", addr >> 3);
+> @@ -420,6 +429,15 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
+>      case TOD_TX_TTYPE_5_REG:
+>          pctc->broadcast_ttype(chiptod, offset);
+>          break;
+> +    case TOD_M_PATH_CTRL_REG:
+> +    case TOD_PRI_PORT_0_CTRL_REG:
+> +    case TOD_PRI_PORT_1_CTRL_REG:
+> +    case TOD_SEC_PORT_0_CTRL_REG:
+> +    case TOD_SEC_PORT_1_CTRL_REG:
+> +    case TOD_S_PATH_CTRL_REG:
+> +    case TOD_TX_TTYPE_2_REG:
+> +        /* unimplemented, but suppressing logging for now */
+> +        break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP, "pnv_chiptod: unimplemented register: Ox%"
+>                        HWADDR_PRIx "\n", addr >> 3);
 
-> +                if (cache_available && llevel) {
-> +                    build_caches(table_data, pptt_start, num_caches, caches,
-> +                                 top_cluster, bottom_cluster,
-> +                                 &cluster_data_offset, &cluster_instr_offset);
-> +                    priv_rsrc[0] = cluster_instr_offset;
-> +                    priv_rsrc[1] = cluster_data_offset;
-> +                    if (cluster_instr_offset || cluster_data_offset) {
-> +                        num_priv =
-> +                            cluster_instr_offset == cluster_data_offset ? 1 : 2;
-> +                    }
-> +                    top_core = bottom_cluster - 1;
-> +                } else if (top_cluster == bottom_node - 1) {
-> +                    /* socket cache but no cluster cache */
-> +                    top_core = bottom_node - 1;
-> +                }
-> +
->                  cluster_offset = table_data->len - pptt_start;
->                  build_processor_hierarchy_node(table_data,
->                      (0 << 0) | /* Not a physical package */
->                      (1 << 4), /* Identical Implementation */
-> -                    socket_offset, cluster_id, NULL, 0);
-> +                    socket_offset, cluster_id, priv_rsrc, num_priv);
->              }
->          } else {
-> +            if (machine_defines_cache_at_topo_level(
-> +                    ms, CPU_TOPOLOGY_LEVEL_CLUSTER)) {
-> +                error_setg(&error_fatal, "Not clusters found for the cache");
-
-I'd rewrite this error message as something like
-"Cache specified for cluster level but no clusters in topology"
-
-> +                return;
-> +            }
-> +
->              cluster_offset = socket_offset;
-> +            top_core = bottom_node - 1; /* there is no cluster */
 
