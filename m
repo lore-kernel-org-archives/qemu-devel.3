@@ -4,82 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F81ACD042C
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 01:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37544CD0421
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 05:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vcwC3-0007i2-K5; Mon, 05 Jan 2026 20:49:07 -0500
+	id 1vczXT-0004hG-0M; Tue, 06 Jan 2026 00:23:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vcwBw-0007gB-78
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 20:49:00 -0500
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vcwBs-00063x-MZ
- for qemu-devel@nongnu.org; Mon, 05 Jan 2026 20:48:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767664136; x=1799200136;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=oQw37mrPeKCONvqxalv6NuwWIUs2ilGsowyaUG3DAlI=;
- b=N2Gb3MQCoJ9rVdjKVt4CV7OYV+T6PfVkl2yYNS83oKIO+B+SEm/MRwFF
- 4dErb+37uQzioW175Clw3QB2DtSdEYxZD4ECgP4jfMzSuor6mgwqZoQmT
- ar0HqqQWlwyackfin3AQdzdCpTCCubG/pG2hKDihuHPJBvDWXpo82rM5G
- sqVSqIedeSuuq9FFxpnsPbCWhAsiD980f4QGVS5S83AlbwL/z7lzC+seA
- In39ECE0MbLFCkBFn/8n187lbutEyvhgap43E2Tj151iEwrcVDCGl6+Zf
- EVXkpvKCcS4vMdTXSe+Mt3JSuSI5OPCA6SFCKXdUFFevoPXSmhRDyfTLp A==;
-X-CSE-ConnectionGUID: s+o/Q5sUTCqFZnMjfb95dQ==
-X-CSE-MsgGUID: 7dMn8AzNSROYQRTGIFffPg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11662"; a="69191602"
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="69191602"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 17:48:52 -0800
-X-CSE-ConnectionGUID: wxjDbLhHQkKH49kU/7tWmA==
-X-CSE-MsgGUID: NTUsodWlTYC5Pp26oSc7YQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="207007568"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 05 Jan 2026 17:48:50 -0800
-Date: Tue, 6 Jan 2026 10:14:15 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- devel@lists.libvirt.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC 01/10] qom: Rename ObjectPropertyFlags to
- ObjectPropertyAccessorFlags
-Message-ID: <aVxv9zfg1S1CVNcW@intel.com>
-References: <20251202170502.3228625-1-zhao1.liu@intel.com>
- <20251202170502.3228625-2-zhao1.liu@intel.com>
- <20260102131253.5b60853b@imammedo-mac> <aVtuOHU6xmhuDx5v@intel.com>
- <20260105132820.4a411827@imammedo-mac>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vczXQ-0004gU-Ft
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:23:24 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vczXO-0005qT-VK
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:23:24 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7bb710d1d1dso934011b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 21:23:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767677000; x=1768281800; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W4U7GKAOi+DBgNgFxG6tVG9Jdw7fSE/UlxtvmwWvK5g=;
+ b=QwDcacedoht68mHcQyuXMn5RjHVIcXJS+g7jJsACFM+I/cZiBHz8GnjLUnqsHh5pD2
+ quwb3sCQ6ijSdJEDVKfN2mF3S7xCxfNb/opprNO4xwegKD8dSVkYvmPhsuPYFXRrW78e
+ vwWwBzy32JR6KQXrkIHW3ptaxRd4QPCWvm4ezcIIgsdAp+1X6i9NxGzmdTgGk5DkvHZB
+ X8wxLlt8Yvl0m7UOaZGd/fS2xNrabRjuME/6KW8kIbdkb3GwVD91CUNEQJip35naGGTz
+ xdcbWodo0U91kAsl6HNJEJTlLe/HRjiHZCEKl96nugkVC75P0d0tun9rczHMLF7MPjTX
+ A6RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767677000; x=1768281800;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=W4U7GKAOi+DBgNgFxG6tVG9Jdw7fSE/UlxtvmwWvK5g=;
+ b=pv417DfgcAEZzRymB+k+mKDjWiVpbN/ubBY1VHGFrjvC6gkqlWxn7Z6KOh7+DwjuHP
+ FeyYX4yvrEag/oPGoSJswH1GCp+RjtaCz5Ok/cjsN+iUGc93ZI7LRlQcegZMWO7tmOun
+ SuxiP+iZAxTN/L4j/oE+wx8xK+1gPNJKKlqeMc5HN4Tm+zn84qmRBWRc7XagUJ+ivVvH
+ 7fxUpjr2Kg9zUVmQ30TP1hezldnYVG+hbbljW/O+H7+AzLCW+BPfU2c5hrUPogABj9Tw
+ tKu8cxNJP0hIqf6KnuuSaTVsKDyalU0mb8jhcdA3xfrqCPIf3WBPNnktkHOXEOn2OOtm
+ 5vaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWPC9d+kyFBWOn6hwJ3gcusZBz8je5U/v886e+Cd4TN3W9FDZoHjU+7wYkrWrD2xbUCTiT9RIGmIpEt@nongnu.org
+X-Gm-Message-State: AOJu0Yyte6Zw9zgxQ+AP5eOm5Uo+rzuRjSNZWpwlizzl9Vc9WMc+5eRN
+ OLpzMCj/zZ+n0oM6hGJwj8ngE8oMTJMWhTRfuf9OLvJcr7yiHzHEzJfNtuEiz5OskCg=
+X-Gm-Gg: AY/fxX7SReBC5GR/dbb12OIWLDKSGqOT5BHvNKNm/hQ+iW7OVRm1xNNV+zRWfNLNeoS
+ nQNPeCdi+RvKp1pWW90uqYKXDkiXJzozsqipIuFkI3xhbYKVqfycTsz4w1Ql33BNGNEQlXZHkzz
+ VZq6GGZj40lm86w1d7LegK+bGcp2w5rUWn7qXwsZ0uA5Lmhgbd0UMGMG1JsX3qtCqaIpCa+VZVD
+ Pz+cHP2ENjBDRB1ax49Crgg2iVTO6QWmeMjjrM0dZC9FzNDrpTdsSIHgQOdIewRlKATFd2AYbcH
+ EGI++qadh5G0eyFoS6pYYs+zZUHJzihMcikpEMiv9Sk9sTaouqSt424NmKZnx3jM66IT3m6B2KT
+ 9Gbhh6xzT1/L+3WoNyzAMt09gxSHwbj6lTjwAPWF13lqCEB0I54GGNluN9RgMNjGuK2scm9JZKp
+ 4V0unFpBfZNOB0wnJTnmipfLTmftoh6g==
+X-Google-Smtp-Source: AGHT+IHnWIB5IIfaV32AyO9rAeD20DYGknObQ53/TXEKe9RJaxWf5+Jg6LwjDNHWWbKNhMlx7Jyvyw==
+X-Received: by 2002:a05:6a00:e8c:b0:7b8:16af:3bbc with SMTP id
+ d2e1a72fcca58-81881e0b984mr1551960b3a.31.1767677000465; 
+ Mon, 05 Jan 2026 21:23:20 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-819baa195e4sm793887b3a.3.2026.01.05.21.23.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Jan 2026 21:23:19 -0800 (PST)
+Message-ID: <165e6b10-97f2-4b15-a38c-a7df17c75e11@linaro.org>
+Date: Tue, 6 Jan 2026 16:23:13 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260105132820.4a411827@imammedo-mac>
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v3 12/12] tests/tcg: add test for MTE_STORE_ONLY
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com>
+ <20260105-feat-mte4-v3-12-86a0d99ef2e4@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260105-feat-mte4-v3-12-86a0d99ef2e4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,36 +108,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > I'm not sure about this. Currently, these read/write flags are actually
-> > specific to pointer properties (as showed by the changes in this patch,
-> > which all involve object_property_add_*_ptr() / object_class_property_add_*_ptr()).
-> > 
-> > Other property types doesn't yet support flag parameters, so additional
-> > interface modifications are still needed.
-> > 
-> > And for now other property types either need to explicitly specify get/set
-> > accessors (e.g., object_property_add_bool()) or directly use the default
-> > get/set methods (e.g., object_property_add_link()).
-> > 
-> > If we extend read/write flags to other property types, such as adding
-> > "flags" argument to object_property_add_bool(), we must ensure the
-> > OBJ_PROP_FLAG_READ flag align with "get" argument and OBJ_PROP_FLAG_WRITE
-> > flag align with "set" parameters.
-> 
-> Ain't thouse accessors callbacks?
-> /I mean to you still can check flags inside of generic object property code
-> without touching setter/getter./
+On 1/6/26 05:15, Gabriel Brookman wrote:
+> --- a/tests/tcg/aarch64/mte.h
+> +++ b/tests/tcg/aarch64/mte.h
+> @@ -51,6 +51,18 @@ static void enable_mte(int tcf)
+>       }
+>   }
+>   
+> +static void enable_mte_store_only(int tcf)
+> +{
+> +    int r = prctl(PR_SET_TAGGED_ADDR_CTRL,
+> +                  PR_TAGGED_ADDR_ENABLE | PR_MTE_STORE_ONLY | tcf |
+> +                  (0xfffe << PR_MTE_TAG_SHIFT),
+> +                  0, 0, 0);
 
-Ah, I see, the default flags is OBJ_PROP_FLAG_READWRITE and I can check
-them before calling setter/getter.
+Just rename the parameter for enable_mte() to 'flags'
+and use 'PR_MTE_TCF_SYNC | PR_MTE_STORE_ONLY' in the new test.
 
-> >This would introduces additional complexity.
-> 
-> it still might be woth considering to compare this series with alternative approach.
+With that,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Yes, will try to reuse current ObjectPropertyFlags.
 
-Thanks,
-Zhao
-
+r~
 
