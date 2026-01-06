@@ -4,109 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53001CEFD0C
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 20:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F6CCEFD10
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 21:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdE5M-0006k8-GH; Tue, 06 Jan 2026 15:55:24 -0500
+	id 1vdEDk-0004yv-22; Tue, 06 Jan 2026 16:04:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vdE5I-0006hr-Iz; Tue, 06 Jan 2026 15:55:20 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1vdEDh-0004yS-K3
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 16:04:01 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vdE5G-0006uV-CJ; Tue, 06 Jan 2026 15:55:19 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 606JBUN0003620;
- Tue, 6 Jan 2026 20:55:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=J448+z
- OkvqrpWI0+AnkCjRUBil43U6dyNnn4MnOYjhU=; b=laLyn282yBsSPOCR9cgmv1
- yPmmXVvb9yCHQN81SEtLUcu05iVHv/mCkaEy217bndIovqp6B0a6ZNY/8sasqeU4
- 5Wllylaj08VSmpYjoBW/9ynoOL5iFuublRCXhpW3XhUJLsxvOfaoSoNwo7H9jsv8
- yXnZnnMiFuvXphw98RLUdnXKroKM9q0GhvrsMQqNwKQxne+uBKkjQJsizC/9q5Ft
- wXSjqs8Cd+U9nN6V2nrZ6vbbi0vYFnalzNVtndNTKVUjwXFBc++f7r/H26r8XX1q
- n9m3b9oILsKkQFSpMZkFiZjmp/SRr52VqpglSIAzEvuKRTkXWM4548La6csriPMg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4berhk5550-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Jan 2026 20:55:16 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 606JVq62005264;
- Tue, 6 Jan 2026 20:55:16 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bfexk5gyt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Jan 2026 20:55:16 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 606KtEhX262716
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 6 Jan 2026 20:55:15 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D9DE058059;
- Tue,  6 Jan 2026 20:55:14 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D7F4058058;
- Tue,  6 Jan 2026 20:55:13 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.132.176]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  6 Jan 2026 20:55:13 +0000 (GMT)
-Message-ID: <b0cdc4cad25956348b40498d3fd5cff0a6e49d3f.camel@linux.ibm.com>
-Subject: Re: [PATCH 01/10] pc-bios/s390-ccw: Fix misattributed function
- prototypes
-From: Eric Farman <farman@linux.ibm.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- thuth@redhat.com, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
- zycai@linux.ibm.com
-Date: Tue, 06 Jan 2026 15:55:13 -0500
-In-Reply-To: <20251210205449.2783111-2-jrossi@linux.ibm.com>
-References: <20251210205449.2783111-1-jrossi@linux.ibm.com>
- <20251210205449.2783111-2-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1vdEDe-0002G7-LP
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 16:04:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1767733439; x=1799269439;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=0Mpby0dh9MMSR13M59qLjEHM8s7pdUBODbXo9EKiM2k=;
+ b=CulhY5RMnp3lzIpH9+BldY2vovJt3bpyb2x5fNkZcl06zUTA5GlfUJCe
+ 5lNjDxcD8dpZmhrBgtY2u4VUg8wHo18HQjb2OgnaUcoVJagB9tSKYwqam
+ R8cKIQ9n6NCM+DyU1PnoH+pGmmBVf64uoT9MWI6WX+rFUpXukYIBSCrd3
+ 32feHQF45Hl7Q+c5I7j0FMTfP+810rvA5iIc8mGUN77PPv6wsiEMicmu8
+ j5IVRNIQpVsp+QMOpaQRhi39UskQscCRABCbJBS2GUolsr8iiTewzI8DE
+ ZoHPPMIlP9yBoiAAafzjcnwR2whtcmkFDdng4pl8MOBQ4DP4vOF2Zk5hy g==;
+X-CSE-ConnectionGUID: AdNaS7qARsqZig3lj0BTTg==
+X-CSE-MsgGUID: uf2kTV74S82xqk+ZB9EXwA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11663"; a="69179167"
+X-IronPort-AV: E=Sophos;i="6.21,206,1763452800"; d="scan'208";a="69179167"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2026 13:03:54 -0800
+X-CSE-ConnectionGUID: zW80d5AASpWUX08HJVoptQ==
+X-CSE-MsgGUID: wBiWR5PiRZOzr01nqyI3eQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,206,1763452800"; d="scan'208";a="202651604"
+Received: from unknown (HELO [10.241.241.119]) ([10.241.241.119])
+ by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2026 13:03:53 -0800
+Message-ID: <e9762b91-175e-444d-b64c-dcded943b312@intel.com>
+Date: Tue, 6 Jan 2026 13:03:53 -0800
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=P4s3RyAu c=1 sm=1 tr=0 ts=695d76b4 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=v8kHORh2FYsROd1Kk18A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: AH0hfR22c591QA0ThAzfCEgxI4GSGVsO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDE4MCBTYWx0ZWRfX24h661xgc2eR
- pVUlLBMSAw6IzvmP8OVG1TzAqDCuhWYuFcPGuetdFZdlfxG2iRRph6TpxkZNX+qAe53fFZgwkMt
- X8d8ZEZSgxZuzhXmyhgne/yt2FMok+wtKdf01jVgzaistIKVKfCGn4JxHvY3kXN3nha+yI+m0y1
- QLprthZ/SMLOVQEAJph4fewS6PmWzaW4LUZOEToQdX1hWOh1Ab1E74bsuTY/lI5PKwJOYOXupz+
- 1UwPz131cHQBz0ve2UOS/kAlF/aXwLFmhFfvdw8/m05m0EzqZA6dbhM+VwJoQCDZ2vQVtn7zbAm
- 3EGV9WqLOcCKx3eryxDplaWqqICielV0BQ4ZZ1XFH3Pvk1daVdIE/iEi4710eMkNZhKANK66UiJ
- Y5fklXQDdQHp30necxmvMLrEfImX0FPkLPGD4oaPV07RqjjX2R64VfG6b38pGW45BQ/Kdyr0/Rd
- LGnZ7esao6omidjw+sw==
-X-Proofpoint-GUID: AH0hfR22c591QA0ThAzfCEgxI4GSGVsO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- phishscore=0 adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601060180
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 4/7] target/i386/kvm: query kvm.enable_pmu parameter
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, groug@kaod.org, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com
+References: <20251230074354.88958-1-dongli.zhang@oracle.com>
+ <20251230074354.88958-5-dongli.zhang@oracle.com>
+ <b6c531d4-328d-48a7-856b-051c918c24ae@intel.com>
+ <29969c2f-d71f-4952-9ab4-4ba8f69e1514@oracle.com>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <29969c2f-d71f-4952-9ab4-4ba8f69e1514@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zide.chen@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,97 +94,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-12-10 at 15:54 -0500, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
->=20
-> The virtio-blkdev functions are incorrectly listed in s390-ccw.h as belon=
-ging to
-> virtio.c.  Additionally, virtio_load_direct() has an unused subchan_id ar=
-gument.
->=20
-> Remove the unused argument and move the prototypes to virtio.h so that th=
-ey are
-> independent from the CCW bus.
->=20
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->  pc-bios/s390-ccw/s390-ccw.h      | 4 ----
->  pc-bios/s390-ccw/virtio.h        | 7 +++++++
->  pc-bios/s390-ccw/bootmap.c       | 2 +-
->  pc-bios/s390-ccw/virtio-blkdev.c | 2 +-
->  4 files changed, 9 insertions(+), 6 deletions(-)
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
->=20
-> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-> index b1dc35cded..47ea66bd4d 100644
-> --- a/pc-bios/s390-ccw/s390-ccw.h
-> +++ b/pc-bios/s390-ccw/s390-ccw.h
-> @@ -67,11 +67,7 @@ void sclp_get_loadparm_ascii(char *loadparm);
->  int sclp_read(char *str, size_t count);
-> =20
->  /* virtio.c */
-> -unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long =
-rec_list2,
-> -                                 unsigned long subchan_id, void *load_ad=
-dr);
->  bool virtio_is_supported(SubChannelId schid);
-> -int virtio_blk_setup_device(SubChannelId schid);
-> -int virtio_read(unsigned long sector, void *load_addr);
-> =20
->  /* bootmap.c */
->  void zipl_load(void);
-> diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-> index 5c5e808a50..597bd42358 100644
-> --- a/pc-bios/s390-ccw/virtio.h
-> +++ b/pc-bios/s390-ccw/virtio.h
-> @@ -277,7 +277,14 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)=
-;
->  int virtio_reset(VDev *vdev);
->  int virtio_setup_ccw(VDev *vdev);
-> =20
-> +/* virtio-net.c */
->  int virtio_net_init(void *mac_addr);
->  void virtio_net_deinit(void);
-> =20
-> +/* virtio-blkdev.c */
-> +int virtio_blk_setup_device(SubChannelId schid);
-> +int virtio_read(unsigned long sector, void *load_addr);
-> +unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long =
-rec_list2,
-> +                                 void *load_addr);
+On 1/5/2026 12:21 PM, Dongli Zhang wrote:
+> Hi Zide,
+> 
+> On 1/2/26 2:59 PM, Chen, Zide wrote:
+>>
+>>
+>> On 12/29/2025 11:42 PM, Dongli Zhang wrote:
+> 
+> [snip]
+> 
+>>>  
+>>>  static struct kvm_cpuid2 *cpuid_cache;
+>>>  static struct kvm_cpuid2 *hv_cpuid_cache;
+>>> @@ -2068,23 +2072,30 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+>>>      if (first) {
+>>>          first = false;
+>>>  
+>>> -        /*
+>>> -         * Since Linux v5.18, KVM provides a VM-level capability to easily
+>>> -         * disable PMUs; however, QEMU has been providing PMU property per
+>>> -         * CPU since v1.6. In order to accommodate both, have to configure
+>>> -         * the VM-level capability here.
+>>> -         *
+>>> -         * KVM_PMU_CAP_DISABLE doesn't change the PMU
+>>> -         * behavior on Intel platform because current "pmu" property works
+>>> -         * as expected.
+>>> -         */
+>>> -        if ((pmu_cap & KVM_PMU_CAP_DISABLE) && !X86_CPU(cpu)->enable_pmu) {
+>>> -            ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
+>>> -                                    KVM_PMU_CAP_DISABLE);
+>>> -            if (ret < 0) {
+>>> -                error_setg_errno(errp, -ret,
+>>> -                                 "Failed to set KVM_PMU_CAP_DISABLE");
+>>> -                return ret;
+>>> +        if (X86_CPU(cpu)->enable_pmu) {
+>>> +            if (kvm_pmu_disabled) {
+>>> +                warn_report("Failed to enable PMU since "
+>>> +                            "KVM's enable_pmu parameter is disabled");
+>>
+>> I'm wondering about the intended value of this patch?
+>>
+>> If enable_pmu is true in QEMU but the corresponding KVM parameter is
+>> false, then KVM_GET_SUPPORTED_CPUID or KVM_GET_MSRS should be able to
+>> tell that the PMU feature is not supported by host.
+>>
+>> The logic implemented in this patch seems somewhat redundant.
+> 
+> For Intel, the QEMU userspace can determine if the vPMU is disabled by KVM
+> through the use of KVM_GET_SUPPORTED_CPUID.
+> 
+> However, this approach does not apply to AMD. Unlike Intel, AMD does not rely on
+> CPUID to detect whether PMU is supported. By default, we can assume that PMU is
+> always available, except for the recent PerfMonV2 feature.
+> 
+> The main objective of this PATCH 4/7 is to introduce the variable
+> 'kvm_pmu_disabled', which will be reused in PATCH 5/7 to skip any PMU
+> initialization if the parameter is set to 'N'.
+> 
+> +static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
+> +{
+> +    CPUX86State *env = &cpu->env;
 > +
->  #endif /* VIRTIO_H */
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index 0f8baa0198..420ee32eff 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -662,7 +662,7 @@ static int zipl_load_segment(ComponentEntry *entry)
->                   */
->                  break;
->              }
-> -            address =3D virtio_load_direct(cur_desc[0], cur_desc[1], 0,
-> +            address =3D virtio_load_direct(cur_desc[0], cur_desc[1],
->                                           (void *)address);
->              if (!address) {
->                  puts("zIPL load segment failed");
-> diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-b=
-lkdev.c
-> index 7b2d1e20f4..4b819dd80f 100644
-> --- a/pc-bios/s390-ccw/virtio-blkdev.c
-> +++ b/pc-bios/s390-ccw/virtio-blkdev.c
-> @@ -64,7 +64,7 @@ int virtio_read_many(unsigned long sector, void *load_a=
-ddr, int sec_num)
->  }
-> =20
->  unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long =
-rec_list2,
-> -                                 unsigned long subchan_id, void *load_ad=
-dr)
-> +                                 void *load_addr)
->  {
->      u8 status;
->      int sec =3D rec_list1;
+> +    /*
+> +     * The PMU virtualization is disabled by kvm.enable_pmu=N.
+> +     */
+> +    if (kvm_pmu_disabled) {
+> +        return;
+> +    }
+
+Thanks for explanation.
+
+> The 'kvm_pmu_disabled' variable is used to differentiate between the following
+> two scenarios on AMD:
+> 
+> (1) A newer KVM with KVM_PMU_CAP_DISABLE support, but explicitly disabled via
+> the KVM parameter ('N').
+> 
+> (2) An older KVM without KVM_CAP_PMU_CAPABILITY support.
+> 
+> In both cases, the call to KVM_CAP_PMU_CAPABILITY extension support check may
+> return 0.
+> 
+> By reading the file "/sys/module/kvm/parameters/enable_pmu", we can distinguish
+> between these two scenarios.
+
+As described in PATCH 1/7, without issuing KVM_PMU_CAP_DISABLE, KVM has
+no way to know that userspace does not intend to enable vPMU in AMD
+platforms, and therefore does not fault guest accesses to PMU MSRs.
+
+My understanding is that the issue being addressed here is basically the
+opposite: QEMU does not know that vPMU is disabled by KVM.
+
+IIUC, one difference between Intel and AMD is that AMD lacks a CPUID
+leaf to indicate the availability of PMU version 1. But Intel
+potentially could be in the same situation that KVM advertises PMU
+availability but it's not actually supported. (e.g. kvm->arch.enable_pmu
+is false while modules parameter enable_pmu is true).
+
+From the guest’s point of view, it probes PMU MSRs to determine whether
+PMU support is present and it's fine in this situation.
+
+In userspace, QEMU may issue KVM_SET_MSRS / KVM_GET_MSRS to KVM without
+knowing that vPMU has been disabled by KVM.  I think these IOCTLs should
+not fail, since KVM states that “Userspace is allowed to read MSRs, and
+write ‘0’ to MSRs, that KVM advertises to userspace, even if an MSR
+isn’t fully supported.”
+
+My current understanding is that AMD should be fine even without
+kvm_pmu_disabled, but I may be missing some context here.
+
+The bottom line is this patch doesn't handle the cases that KVM still
+could disable vPMU support even if enable_pmu is true.
+
+
+> As you mentioned, another approach would be to use KVM_GET_MSRS to specifically
+> probe for AMD during QEMU initialization. In this case, we can set
+> 'kvm_pmu_disabled' to true if reading the AMD PMU MSR registers fails.
+> 
+> To implement this, we may need to:
+> 
+> 1. Turn this patch to be AMD specific by probing the AMD PMU registers during
+> initialization. We may need go create a new function in QEMU to use KVM_GET_MSRS
+> for probing only, or we may re-use kvm_arch_get_supported_msr_feature() or
+> kvm_get_one_msr(). I may change in the next version.
+> 
+> 2. Limit the usage of 'kvm_pmu_disabled' to be AMD specific in PATCH 5/7.
+
+I guess this might make things more complicated.
+
+>>
+>> Additionally, in this scenario — where the user intends to enable a
+>> feature but the host cannot support it — normally no warning is emitted
+>> by QEMU.
+> 
+> According to the usage of QEMU, may I assume QEMU already prints warning logs
+> for unsupported features? The below is an example.
+> 
+> QEMU 10.2.50 monitor - type 'help' for more information
+> qemu-system-x86_64: warning: host doesn't support requested feature:
+> CPUID[eax=07h,ecx=00h].EBX.hle [bit 4]
+> qemu-system-x86_64: warning: host doesn't support requested feature:
+> CPUID[eax=07h,ecx=00h].EBX.rtm [bit 11]
+> 
+>>
+>>> +            }
+>>> +        } else {
+>>> +            /*
+>>> +             * Since Linux v5.18, KVM provides a VM-level capability to easily
+>>> +             * disable PMUs; however, QEMU has been providing PMU property per
+>>> +             * CPU since v1.6. In order to accommodate both, have to configure
+>>> +             * the VM-level capability here.
+>>> +             *
+>>> +             * KVM_PMU_CAP_DISABLE doesn't change the PMU
+>>> +             * behavior on Intel platform because current "pmu" property works
+>>> +             * as expected.
+>>> +             */
+>>> +            if (pmu_cap & KVM_PMU_CAP_DISABLE) {
+>>> +                ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
+>>> +                                        KVM_PMU_CAP_DISABLE);
+>>> +                if (ret < 0) {
+>>> +                    error_setg_errno(errp, -ret,
+>>> +                                     "Failed to set KVM_PMU_CAP_DISABLE");
+>>> +                    return ret;
+>>> +                }
+>>>              }
+>>>          }
+>>>      }
+>>> @@ -3302,6 +3313,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>>>      int ret;
+>>>      struct utsname utsname;
+>>>      Error *local_err = NULL;
+>>> +    g_autofree char *kvm_enable_pmu;
+>>>  
+>>>      /*
+>>>       * Initialize confidential guest (SEV/TDX) context, if required
+>>> @@ -3437,6 +3449,21 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>>>  
+>>>      pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
+>>>  
+>>> +    /*
+>>> +     * The enable_pmu parameter is introduced since Linux v5.17,
+>>> +     * give a chance to provide more information about vPMU
+>>> +     * enablement.
+>>> +     *
+>>> +     * The kvm.enable_pmu's permission is 0444. It does not change
+>>> +     * until a reload of the KVM module.
+>>> +     */
+>>> +    if (g_file_get_contents("/sys/module/kvm/parameters/enable_pmu",
+>>> +                            &kvm_enable_pmu, NULL, NULL)) {
+>>> +        if (*kvm_enable_pmu == 'N') {
+>>> +            kvm_pmu_disabled = true;
+>>
+>> It’s generally better not to rely on KVM’s internal implementation
+>> unless really necessary.
+>>
+>> For example, in the new mediated vPMU framework, even if the KVM module
+>> parameter enable_pmu is set, the per-guest kvm->arch.enable_pmu could
+>> still be cleared.
+>>
+>> In such a case, the logic here might not be correct.
+> 
+> Would the Mediated vPMU set KVM_PMU_CAP_DISABLE to clear per-VM enable_pmu even
+> when the global KVM parameter enable_pmu=N is set?
+> 
+> In this scenario, we plan to rely on KVM_PMU_CAP_DISABLE only when the value of
+> "/sys/module/kvm/parameters/enable_pmu" is not equal to N.
+> 
+> Can I assume that this will work with Mediated vPMU?
+> 
+> 
+> Is there any possibility to follow the current approach before Mediated vPMU is
+> finalized for mainline, and later introduce an incremental change using
+> KVM_GET_MSRS probing? The current approach is straightforward and can work with
+> existing Linux kernel source code.
+
+Apologies for the incorrect statement I made earlier regarding mediated
+vPMU.
+
+According to the mediated vPMU v6, the only behavior specific to
+mediated vPMU is that kvm->arch.enable_pmu may be cleared when
+irqchip_in_kernel() is not true:
+https://lore.kernel.org/all/20251206001720.468579-17-seanjc@google.com/
+
+However, this does not imply that mediated vPMU requires any special
+handling here. In theory, KVM could clear kvm->arch.enable_pmu in the
+future for other reasons.
+
+
+> For quite some time, QEMU has lacked support for disabling or resetting AMD PMU
+> registers. If we could add this feature before Mediated vPMU is finalized, it
+> would benefit many existing kernel versions. This patchset solves production bugs.
+> 
+> 
+> Feel free to let me know your thought, while I would starting working on next
+> version now.
+> 
+> Thank you very much!
+> 
+> Dongli Zhang
+> 
+> 
+
 
