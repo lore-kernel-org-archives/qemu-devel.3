@@ -4,94 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20BC8CEFCFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 20:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEAD3CEFD03
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 20:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdDJS-000248-4Y; Tue, 06 Jan 2026 15:05:54 -0500
+	id 1vdDe4-0002N0-JU; Tue, 06 Jan 2026 15:27:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdDJP-0001zj-Qb
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 15:05:52 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdDJO-0000ZJ-7q
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 15:05:51 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-477770019e4so11446975e9.3
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 12:05:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767729948; x=1768334748; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pWDpdQA31alZgSKJxXmD24ihSckz9ErDDAbZjXFU90E=;
- b=AKQj6NhzrDZzGaHxXKS0i6Ut8niPy0wsW5PIay5qBj/pICPnCj/Us4RTOiuGZqdQtw
- kiv4lGDq7z6/4ozPz5pe0FclL9ydcn83ABB6dsG4hBoeFPj4ZuWicfz0kzUE593dfm+j
- m7wB9KsvH3HAUE1fFtN0PeIZHqFafq86l8Ze34kAJ8RwqTsNjGOkl5OwfOy4ouu3dQ2r
- a1sBkBOYc2PxWORzWIx77HSunV5GKo6HHww0RmjWmZzu0nKG4gVH4nlzvFOOKU9Hrpdy
- gTCvCb2Iz5FBF2w67J8jiruPCCTrwdXG45Btz0EnPWYwK7gScBcX5Q/4HHeqpIEJi0lK
- EfZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767729948; x=1768334748;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pWDpdQA31alZgSKJxXmD24ihSckz9ErDDAbZjXFU90E=;
- b=gLu9xZWHfYwa8km+eWhZg/JotbEGcMALswSyVkAjh/4qcVxnIDyxZvmzoLbUK6lXUn
- D7fzT62wNTl0rd0k6KzqKqcWkn+7gg0KD+oi6LsetiId3IFjIVjPWARo5EtEoaHHmZG9
- El8hjDWa8jyJUHTsRRn2q4q4YeUGpyJN3FkaRb/d8kNm+qu9bqeJi3CalqOP6dw/NNB9
- xKRizlvr0THshcMkCzd7tqAKDunH7+l+3Tl3YM/g0iegICshGpdDxwKB5I05AVl73I6q
- UQuo/c6iw81g8lrTzVxsR3PjMC2a+QuVgNa/L1BU+HiRjInScIM4EL2rEHIDOpNmlKqH
- rJgA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW0SmiICA+8UMa8p20hM5fdNgll41n2dr87SnNMg6kOT9zeMVEwK+EiWgZoM0z7XA8O6kgbkAq4JdW6@nongnu.org
-X-Gm-Message-State: AOJu0YxI65rIVBQYsaoK8tmh76R1FNffMTggD5tlPT+D+Gnh9lyM//18
- /cIakD9EGEIpyF+2EDBq+FjKWoTUmvfhg8tKLPPqv7wXfCyTmPOFLeenC8qrNWKn9qE=
-X-Gm-Gg: AY/fxX56YUwuKFcCAbw4b4IKTwWodwtG/Z1VB+6ZRICLrvVogZj8blIOKJNly8IraL/
- nf27h+WJYAiZfneRwVtl9QLiynempQGGb6XtmF3qYAwKhSOrvu8RIx69PIYGNiZcRmClbCXzi76
- yPxB5Y5Sh0MGCMCcPjd5Zm0OOmxu6k5yb6DAY79w1c27LY48qf/GEFYYGeZOlqXjGKoUbOCbkdU
- 6NXK89L7NCprteLZW3ksoE8pxyq86FK6yjB520IpLGLKl8rV/I2pubRNS9ifqIxh441EsaFmniu
- GWYuXqCOnqtqtQCdZencxy7Cm6zO2FlsGu51sFHZ6tz/QwC+Uews6YRSY6fLt64CFsuLWsPsbgn
- SFKIonkLNHVm0VDluqN7WYv4TX8tBcuVaqwLJJLjoR9c4iSf1pAyAL1sz9GvLXb+Xml2nbi2jHx
- K9SYVd8PdMM6lte+eeyDQzPTvTRNOeRyLLyua4BjKT3og12Ve6oSOWxg==
-X-Google-Smtp-Source: AGHT+IGegEfsnhYQZ0CkPFvNbI1orVI+KJ8AgF/c7EMw7yO0JW+hkl50dqCMg5fb73kXkLnNj/IERA==
-X-Received: by 2002:a05:600c:3b90:b0:45d:d8d6:7fcc with SMTP id
- 5b1f17b1804b1-47d84b3864cmr1290975e9.27.1767729947551; 
- Tue, 06 Jan 2026 12:05:47 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f69e802sm61025315e9.8.2026.01.06.12.05.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Jan 2026 12:05:46 -0800 (PST)
-Message-ID: <72543341-2fea-448d-a610-76e1003778a2@linaro.org>
-Date: Tue, 6 Jan 2026 21:05:46 +0100
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vdDe1-0002Kw-Tv; Tue, 06 Jan 2026 15:27:09 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vdDdz-0005Y1-PX; Tue, 06 Jan 2026 15:27:09 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 606IjBMD016351;
+ Tue, 6 Jan 2026 20:27:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=cb2WxN
+ LuWw2dQ63QmN3BfiF8rhlsfuGYQu9vaDnlXGE=; b=mzG32giV9LTuouNnWfCXw9
+ 0zT1tZ8cQScKxvV6tIrdzNQf3o8pz71SCuHprzXA+tOfbcHNZyG0FiG/RjL68C56
+ 68ESKDj7YeYO+35FuHull2k/4GhNe8WSw6khiKifTaunwfYQhVA2szVUQ9LEKWCz
+ F7KqhI0MtLvvnnF8z1mGxtA43PgMzjAuYw2Vcj9F+5aw5yrav7iY05oxVMUESKzz
+ +DMcaROYJRtEEFI/m0jjab69ELxYyQJeKcQaA7KUweiQ/QeK+B6Ia36sPaAx+kXP
+ 8LGaQuiUpWtPK0iwmkUBU4k2xwe+StyFpCCovFeSFuvzpfd3mAZpc120dr84iTpw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betu65pww-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Jan 2026 20:27:00 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 606K4YMI012581;
+ Tue, 6 Jan 2026 20:26:59 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bffnjd94b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Jan 2026 20:26:59 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 606KQvha31064666
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 Jan 2026 20:26:58 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E373E5805A;
+ Tue,  6 Jan 2026 20:26:57 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2F4645805D;
+ Tue,  6 Jan 2026 20:26:56 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.132.176]) by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  6 Jan 2026 20:26:56 +0000 (GMT)
+Message-ID: <a769b0f810374aaf527aeeb8b89cae2f6ad1cade.camel@linux.ibm.com>
+Subject: Re: [PATCH 0/8] target/s390x: Use explicit big-endian LD/ST API
+From: Eric Farman <farman@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ David Hildenbrand <david@kernel.org>, Thomas Huth <thuth@redhat.com>,
+ Ilya Leoshkevich	 <iii@linux.ibm.com>, Manos
+ Pitsidianakis <manos.pitsidianakis@linaro.org>, Halil Pasic
+ <pasic@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier	 <laurent@vivier.eu>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, Farhan Ali	 <alifm@linux.ibm.com>, Cornelia Huck
+ <cohuck@redhat.com>, Anton Johansson	 <anjo@rev.ng>, "Michael S. Tsirkin"
+ <mst@redhat.com>
+Date: Tue, 06 Jan 2026 15:26:55 -0500
+In-Reply-To: <20251224162036.90404-1-philmd@linaro.org>
+References: <20251224162036.90404-1-philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] target/alpha: Factor mo_endian() helper out
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson
- <anjo@rev.ng>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20260106155755.53646-1-philmd@linaro.org>
- <20260106155755.53646-6-philmd@linaro.org>
- <f465bc94-4343-47f7-8526-3fb63eed54cd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f465bc94-4343-47f7-8526-3fb63eed54cd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=QbNrf8bv c=1 sm=1 tr=0 ts=695d7014 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=p0WdMEafAAAA:8 a=VnNF1IyMAAAA:8 a=panRrKRUgiQaOmd9SNUA:9
+ a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: YGtAKjXqKzM5aI9OFvLzdLoN0hxqhz4t
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDE3NiBTYWx0ZWRfX11nIDdD1bs64
+ n0rmzmQTx73/mLjHTotNG9ph2lV1rNjLOBGDtigS1z0BG1iYXdkEHIVxwGkn5Cre0YTmV2psDsF
+ UYm7mgW9zyM2bbPqZ4nrcqdQATCHYpRDi0KI1pGyzwzREobiCQXoctJ747MAnIiR7Hxhio7m2IO
+ b71U5jF/QM+q2MwAXQA8zZVpznxhy3nDGrPt9QDuHgq3vo0dEKZGUIrEs83xoFD+M5VnntJzX0o
+ TcyqvjQAEsIZljQJ6CjyQ5EztkzXP/fn8YVvOGt7D6A5X4A2w5tvb9luXGsHA4Zklpo6tWu/874
+ lh+sLIBc0tNrjstWtFgO2TQZXSdSq8pzQKvrzTNwd74WL8wiVkSqdofya6H0LIxdSj6+ntplJS4
+ KMKaieGuERmHfEE/WmDBetuP7umb+8kDvM0Bxq6dNLtmEdgOruZZMLXI068FikQBqD7YoB6Zb8Q
+ F+P9vir4IMAuAJ+KC3g==
+X-Proofpoint-GUID: YGtAKjXqKzM5aI9OFvLzdLoN0hxqhz4t
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1011 bulkscore=0 suspectscore=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601060176
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +129,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/1/26 20:00, Richard Henderson wrote:
-> On 1/7/26 02:57, Philippe Mathieu-Daudé wrote:
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/alpha/translate.c | 7 ++++++-
->>   1 file changed, 6 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/alpha/translate.c b/target/alpha/translate.c
->> index 3be97057465..4f918cbfe63 100644
->> --- a/target/alpha/translate.c
->> +++ b/target/alpha/translate.c
->> @@ -96,6 +96,11 @@ static TCGv cpu_lock_value;
->>   static TCGv cpu_pal_ir[31];
->>   #endif
->> +static inline MemOp mo_endian(DisasContext *dc)
->> +{
->> +    return MO_TE;
->> +}
->> +
->>   void alpha_translate_init(void)
->>   {
->>   #define DEF_VAR(V)  { &cpu_##V, #V, offsetof(CPUAlphaState, V) }
->> @@ -2905,7 +2910,7 @@ static void 
->> alpha_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
->>   {
->>       DisasContext *ctx = container_of(dcbase, DisasContext, base);
->>       uint32_t insn = translator_ldl_end(cpu_env(cpu), &ctx->base,
->> -                                       ctx->base.pc_next, MO_TE);
->> +                                       ctx->base.pc_next, 
->> mo_endian(ctx));
->>       ctx->base.pc_next += 4;
->>       ctx->base.is_jmp = translate_one(ctx, insn);
-> 
-> I don't think we need this or the next.
+On Wed, 2025-12-24 at 17:20 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
+> S390x is big-endian. Use the explicit 'big'
+> endianness instead of the 'native' one.
+> Forbid further uses of legacy APIs.
+>=20
+> tag: https://gitlab.com/philmd/qemu/-/tags/endian_s390x-v1
+> CI: https://gitlab.com/philmd/qemu/-/pipelines/2231223066
+>=20
+> Philippe Mathieu-Daud=C3=A9 (8):
+>   hw/s390x: Use explicit big-endian LD/ST API
+>   target/s390x: Use explicit big-endian LD/ST API
+>   target/s390x: Replace gdb_get_regl() -> gdb_get_reg64()
+>   target/s390x: Replace MO_TE -> MO_BE
+>   target/s390x: Inline cpu_ld{uw,l}_code() calls in EX opcode helper
+>   target/s390x: Use big-endian variant of cpu_ld/st_data*()
+>   target/s390x: Inline translator_lduw() and translator_ldl()
+>   configs/targets: Forbid S390x to use legacy native endianness APIs
 
-Shouldn't we define mo_endian() for each target for consistency?
+For the series:
 
-> The note about big-endian cray alpha was a mere curiosity.
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
-Well, I like it and it doesn't hurt :)
+>=20
+>  configs/targets/s390x-linux-user.mak |   1 +
+>  configs/targets/s390x-softmmu.mak    |   1 +
+>  target/s390x/tcg/insn-data.h.inc     |  54 +++++-----
+>  hw/s390x/css.c                       |  24 ++---
+>  hw/s390x/s390-pci-bus.c              |   4 +-
+>  hw/s390x/virtio-ccw.c                |  24 ++---
+>  target/s390x/cpu-system.c            |   2 +-
+>  target/s390x/gdbstub.c               |  26 ++---
+>  target/s390x/kvm/kvm.c               |   8 +-
+>  target/s390x/mmu_helper.c            |   3 +-
+>  target/s390x/tcg/excp_helper.c       |  16 +--
+>  target/s390x/tcg/mem_helper.c        |  71 +++++++------
+>  target/s390x/tcg/translate.c         | 144 +++++++++++++--------------
+>  target/s390x/tcg/vec_helper.c        |   8 +-
+>  target/s390x/tcg/translate_vx.c.inc  |  38 +++----
+>  15 files changed, 215 insertions(+), 209 deletions(-)
 
