@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466EFCE9D78
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 16:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39EACE9D7D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 16:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd9nT-0004Gt-68; Tue, 06 Jan 2026 11:20:42 -0500
+	id 1vdA5O-0005fc-JY; Tue, 06 Jan 2026 11:39:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vd9mj-00043u-V2; Tue, 06 Jan 2026 11:19:55 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vdA5K-0005U8-E7; Tue, 06 Jan 2026 11:39:07 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vd9mh-0004aa-Gl; Tue, 06 Jan 2026 11:19:53 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dlxFr5cdpzJ46dj;
- Wed,  7 Jan 2026 00:19:44 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 9587B40569;
- Wed,  7 Jan 2026 00:19:46 +0800 (CST)
-Received: from localhost (10.195.245.156) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 6 Jan
- 2026 16:19:45 +0000
-Date: Tue, 6 Jan 2026 16:19:42 +0000
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-CC: <qemu-devel@nongnu.org>, <gustavo.romero@linaro.org>,
- <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
- <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
- <farman@linux.ibm.com>, <imammedo@redhat.com>, <jiangkunkun@huawei.com>,
- <maobibo@loongson.cn>, <mst@redhat.com>, <mtosatti@redhat.com>,
- <peter.maydell@linaro.org>, <philmd@linaro.org>, <qemu-arm@nongnu.org>,
- <richard.henderson@linaro.org>, <shannon.zhaosl@gmail.com>,
- <yangyicong@hisilicon.com>, <linuxarm@huawei.com>, <zhao1.liu@intel.com>
-Subject: Re: [PATCH v17 5/8] acpi: add caches to ACPI build_pptt table function
-Message-ID: <20260106161942.00000aa6@huawei.com>
-In-Reply-To: <20260106155828.643-6-alireza.sanaee@huawei.com>
-References: <20260106155828.643-1-alireza.sanaee@huawei.com>
- <20260106155828.643-6-alireza.sanaee@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vdA5J-0005u5-0B; Tue, 06 Jan 2026 11:39:06 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 217D660008;
+ Tue,  6 Jan 2026 16:38:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C700BC116C6;
+ Tue,  6 Jan 2026 16:38:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1767717535;
+ bh=cM8YRPJPOKFd2VKH1gGQHoFMqoOIVItkmOBM/MudydA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=b34ykouhmQ3GCRioZyIw4vXF4y58G12vE9l+tq3SbSZAl/roy3jpyqaY3PZ5yS/4P
+ ly15uLOOaH+tf3VHATYHDEl95d85Be69zm5yl4pyK3k93h/buVBDrg7X3CAzGCh8MU
+ gAW6Ucel1ImPMC6SxxFn+mrHiEAoQG2MRPVD+59pcQOu3oMuZNAWKBmeaN0Lrn2kp9
+ oFYEHqXIplA/Q6vqmTfiohtTZEfFUrvKsGRCFXF57Z41szwWJnMLChF2zlM4iMyerd
+ ApLSOHEuMIder8LwJFh1WQ0I1KLNN0m1i5A+W6CU3J3H9StstGlYBae1Usk2Bk86Uq
+ 8cFkoDb57MkJw==
+Received: from mchehab by mail.kernel.org with local (Exim 4.99)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vdA57-00000000Nwg-2qIo; Tue, 06 Jan 2026 17:38:53 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 0/1] Sync kernel-doc.py with Linux upstream
+Date: Tue,  6 Jan 2026 17:38:18 +0100
+Message-ID: <cover.1767716928.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.195.245.156]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,27 +70,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Jan 2026 15:58:24 +0000
-Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+Hi Peter/John,
 
-> Add caches to build_pptt table function in ACPI for both ARM and
-> Loongarch.
+There were several updates at kernel-doc upstream fixing bugs,
+doing cleanups and a couple of improvements.
 
-I'd reword both title
-Add parameters to pass cache descriptions to ACPI build_pptt()
+Better to keep QEMU in sync with such changes.
 
-and description to something like:
+Worth mentioning that we did some changes on Linux at the
+kernel-doc.py script itself, to avoid Kernel build to crash
+with too old Python versions, as there docs build is a
+separate target, and python >= 3.6 is a new requirement
+there.
 
-Add optional parameters to pass cache descriptions to build_pptt().
-Update ARM and Loongarch callers to pass none for now.
+On kernel, if python < 3.6, it will simply ignore docs
+build (emitting a warning).
 
-> 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-With those tweaks or something along those lines,
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+I opted to not backport such changes, but if you prefer
+doing that, I can do that on a v2.
+
+---
+
+For now, I opted to keep kernel-doc libraries at the same
+directory as before - e.g. at scripts/lib/kdoc. On Linux,
+we ended moving it to tools/lib/python/kdoc. It could make
+sense to move it on QEMU too, as it makes a little bit
+easier to keep things in sync.
+
+What do you think?
+
+Mauro Carvalho Chehab (1):
+  kernel-doc.py: sync with upstream Kernel v6.19-rc4
+
+ scripts/lib/kdoc/kdoc_files.py  |  11 +-
+ scripts/lib/kdoc/kdoc_item.py   |   3 +-
+ scripts/lib/kdoc/kdoc_output.py |  93 +++-
+ scripts/lib/kdoc/kdoc_parser.py | 897 ++++++++++++++++----------------
+ scripts/lib/kdoc/kdoc_re.py     |  24 +-
+ 5 files changed, 554 insertions(+), 474 deletions(-)
+
+-- 
+2.52.0
+
 
