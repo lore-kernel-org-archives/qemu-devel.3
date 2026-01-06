@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37544CD0421
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 05:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F98CCD0438
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 05:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vczXT-0004hG-0M; Tue, 06 Jan 2026 00:23:27 -0500
+	id 1vczZg-0005V4-Dd; Tue, 06 Jan 2026 00:25:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vczXQ-0004gU-Ft
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:23:24 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1vczZe-0005Ug-Uu
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:25:43 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vczXO-0005qT-VK
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:23:24 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7bb710d1d1dso934011b3a.1
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 21:23:22 -0800 (PST)
+ id 1vczZd-0007Hv-9K
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:25:42 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2a0c20ee83dso7474805ad.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 21:25:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767677000; x=1768281800; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767677140; x=1768281940; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W4U7GKAOi+DBgNgFxG6tVG9Jdw7fSE/UlxtvmwWvK5g=;
- b=QwDcacedoht68mHcQyuXMn5RjHVIcXJS+g7jJsACFM+I/cZiBHz8GnjLUnqsHh5pD2
- quwb3sCQ6ijSdJEDVKfN2mF3S7xCxfNb/opprNO4xwegKD8dSVkYvmPhsuPYFXRrW78e
- vwWwBzy32JR6KQXrkIHW3ptaxRd4QPCWvm4ezcIIgsdAp+1X6i9NxGzmdTgGk5DkvHZB
- X8wxLlt8Yvl0m7UOaZGd/fS2xNrabRjuME/6KW8kIbdkb3GwVD91CUNEQJip35naGGTz
- xdcbWodo0U91kAsl6HNJEJTlLe/HRjiHZCEKl96nugkVC75P0d0tun9rczHMLF7MPjTX
- A6RA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OagJyw204oOcrZ3boHqyagBPaZ+eBts0fowwxGClcUo=;
+ b=VjLJzHrfHiaEcnnCALA1NZdhya58D+2AnjFPLIlQ1m/nvuqKQoKxbTSe6XY8t0G2lI
+ ko8eM0CAlKhL2Nwwi0kUGkPkTruYSnhQh052FezR8ZZ+ykQnRAMWHsMH8DLJL4hrFwjD
+ jALlleH1C8AwZXrHjSTZrMCj7gA1nXzOKD9RaAFxSbRT8TD4gkT/W+0H5eJcGLsRbQi+
+ h0PAXHbhmlFS7ZiMgewLgaO6VVDB9U1Ubykp3J/FiqTLTPpytMVVYKjfM/1eVMLCz21D
+ wo7tULeQ86yxjiy3C+oDa6U+QD/FzVv4kkLqJWCHYC+yYI2fFuVdgvPqOlIaYKyeTV/+
+ itnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767677000; x=1768281800;
+ d=1e100.net; s=20230601; t=1767677140; x=1768281940;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=W4U7GKAOi+DBgNgFxG6tVG9Jdw7fSE/UlxtvmwWvK5g=;
- b=pv417DfgcAEZzRymB+k+mKDjWiVpbN/ubBY1VHGFrjvC6gkqlWxn7Z6KOh7+DwjuHP
- FeyYX4yvrEag/oPGoSJswH1GCp+RjtaCz5Ok/cjsN+iUGc93ZI7LRlQcegZMWO7tmOun
- SuxiP+iZAxTN/L4j/oE+wx8xK+1gPNJKKlqeMc5HN4Tm+zn84qmRBWRc7XagUJ+ivVvH
- 7fxUpjr2Kg9zUVmQ30TP1hezldnYVG+hbbljW/O+H7+AzLCW+BPfU2c5hrUPogABj9Tw
- tKu8cxNJP0hIqf6KnuuSaTVsKDyalU0mb8jhcdA3xfrqCPIf3WBPNnktkHOXEOn2OOtm
- 5vaQ==
+ bh=OagJyw204oOcrZ3boHqyagBPaZ+eBts0fowwxGClcUo=;
+ b=Hwb6rSLUfcA/Q2KqhiP4mMnb8SIBz+FQYEM9jDorD0iKSNBFQwZRIBUTWZLAqPobBF
+ 8agw+ml21hCYP57CqmnD+3pzZdA5xk1bKPXSePNgIPg0p8PvkIqVN5+QLATDId/Nw9l+
+ M0FWR1pUr4+ON1BXLpq1bz70+5QXsKKzrR1d0fM1OyWY49tXjBSaHhEt9VPq0LqnJF5N
+ U0XdH04i8BqGWeNu2s9MpP7ODrpS8OJGUQGU3H2CGwrC0R5De9XTfsFnaV8nfq5Tgjpo
+ qzN/7iXOdZYGT66Q8MY6fqVxIEFxscaWlgiud749dLjiYJHHJm2wOQTEF4IlM0mxypTu
+ jmOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWPC9d+kyFBWOn6hwJ3gcusZBz8je5U/v886e+Cd4TN3W9FDZoHjU+7wYkrWrD2xbUCTiT9RIGmIpEt@nongnu.org
-X-Gm-Message-State: AOJu0Yyte6Zw9zgxQ+AP5eOm5Uo+rzuRjSNZWpwlizzl9Vc9WMc+5eRN
- OLpzMCj/zZ+n0oM6hGJwj8ngE8oMTJMWhTRfuf9OLvJcr7yiHzHEzJfNtuEiz5OskCg=
-X-Gm-Gg: AY/fxX7SReBC5GR/dbb12OIWLDKSGqOT5BHvNKNm/hQ+iW7OVRm1xNNV+zRWfNLNeoS
- nQNPeCdi+RvKp1pWW90uqYKXDkiXJzozsqipIuFkI3xhbYKVqfycTsz4w1Ql33BNGNEQlXZHkzz
- VZq6GGZj40lm86w1d7LegK+bGcp2w5rUWn7qXwsZ0uA5Lmhgbd0UMGMG1JsX3qtCqaIpCa+VZVD
- Pz+cHP2ENjBDRB1ax49Crgg2iVTO6QWmeMjjrM0dZC9FzNDrpTdsSIHgQOdIewRlKATFd2AYbcH
- EGI++qadh5G0eyFoS6pYYs+zZUHJzihMcikpEMiv9Sk9sTaouqSt424NmKZnx3jM66IT3m6B2KT
- 9Gbhh6xzT1/L+3WoNyzAMt09gxSHwbj6lTjwAPWF13lqCEB0I54GGNluN9RgMNjGuK2scm9JZKp
- 4V0unFpBfZNOB0wnJTnmipfLTmftoh6g==
-X-Google-Smtp-Source: AGHT+IHnWIB5IIfaV32AyO9rAeD20DYGknObQ53/TXEKe9RJaxWf5+Jg6LwjDNHWWbKNhMlx7Jyvyw==
-X-Received: by 2002:a05:6a00:e8c:b0:7b8:16af:3bbc with SMTP id
- d2e1a72fcca58-81881e0b984mr1551960b3a.31.1767677000465; 
- Mon, 05 Jan 2026 21:23:20 -0800 (PST)
+ AJvYcCUWWorH9XaERGoJCH2OLOGelE3TzpZB/QIsY+c4AIju/REfyhCODHdabG3dMdl49eJIaDzYjYdHwTKQ@nongnu.org
+X-Gm-Message-State: AOJu0YwvZRECVJzH6x0HG/dqBU2P2th08xBd1h+oTVpElEV29v5Lf6UD
+ skdWmRsHFbQcU3sUuJsaVqtdEjxM1M3OlURYbekTxO6fTsttIgcNYLiCbN10izbKT/s=
+X-Gm-Gg: AY/fxX7Lencf+ZCEQmEFYJ6IVuo+7XLjY7VX2LniSiakA2FtzfHeaxss2bGV2g4KNNF
+ WZmI0MBQ/3+x0U20uRub8vsc4BehB7upkdwv4qm8nQsn4p3gdoNMrtvGFgoU0kRGJS84n+g8yjX
+ QRpVKphhtNe7c56GqCAjKufzIl4uxFqI/MTXaWit+/eWK3GV5qTCVIbeAQ213WGQNQg3V+0CM+s
+ J6A1INYK9PJXH3bI/4Xg89qpS+pDv/+LQTnHCEkpIC3rR3qWpKXEaJi4YLrHCTbZ5sUMMk5o8/Y
+ oRoDSx+fKPGdPq5UGLuI+AhCtviOw5fh5iNZ60eFt8nR7GxiS2Mvo1vWmPnJEEkzDaD00TsXbfN
+ tWBEkzD4WY8br4sTcwwWhPJL70Qgb2znNtYhkcvA2Qhtsx38Y2vuB4urn2F++moAkPq0NWX8RWE
+ jIoUe8jvI7HOJWhWn5glR1jQH5KI3ZOQ==
+X-Google-Smtp-Source: AGHT+IHMoQArOgOcd3HvdbkaScaTxW8IzpTJsi4ern51FMAMQDEw+SUZ9D4Su7MM9cAoQWJpJL2xPA==
+X-Received: by 2002:a17:903:950:b0:290:ac36:2ed6 with SMTP id
+ d9443c01a7336-2a3e2d5b815mr21229995ad.14.1767677139587; 
+ Mon, 05 Jan 2026 21:25:39 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-819baa195e4sm793887b3a.3.2026.01.05.21.23.17
+ d9443c01a7336-2a3e3c47390sm8624125ad.25.2026.01.05.21.25.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Jan 2026 21:23:19 -0800 (PST)
-Message-ID: <165e6b10-97f2-4b15-a38c-a7df17c75e11@linaro.org>
-Date: Tue, 6 Jan 2026 16:23:13 +1100
+ Mon, 05 Jan 2026 21:25:39 -0800 (PST)
+Message-ID: <3647fe54-7a2a-4ec3-ade5-2cbb23e395aa@linaro.org>
+Date: Tue, 6 Jan 2026 16:25:35 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 12/12] tests/tcg: add test for MTE_STORE_ONLY
-To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com>
- <20260105-feat-mte4-v3-12-86a0d99ef2e4@gmail.com>
+Subject: Re: [PULL 00/36] aspeed queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260105125613.622667-1-clg@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260105-feat-mte4-v3-12-86a0d99ef2e4@gmail.com>
+In-Reply-To: <20260105125613.622667-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,26 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/6/26 05:15, Gabriel Brookman wrote:
-> --- a/tests/tcg/aarch64/mte.h
-> +++ b/tests/tcg/aarch64/mte.h
-> @@ -51,6 +51,18 @@ static void enable_mte(int tcf)
->       }
->   }
->   
-> +static void enable_mte_store_only(int tcf)
-> +{
-> +    int r = prctl(PR_SET_TAGGED_ADDR_CTRL,
-> +                  PR_TAGGED_ADDR_ENABLE | PR_MTE_STORE_ONLY | tcf |
-> +                  (0xfffe << PR_MTE_TAG_SHIFT),
-> +                  0, 0, 0);
+On 1/5/26 23:55, Cédric Le Goater wrote:
+> The following changes since commit 159107e390609f71b78268a4888563dcdce6ac65:
+> 
+>    Merge tag 'pull-hex-20260102' ofhttps://github.com/quic/qemu into staging (2026-01-05 07:35:40 +1100)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/legoater/qemu/ tags/pull-aspeed-20260105
+> 
+> for you to fetch changes up to 9cbd8ee7f67fceee51d3c993a282e5adc397b6b9:
+> 
+>    hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when I2CM_DMA_TX/RX_ADDR set first (2026-01-05 10:38:02 +0100)
+> 
+> ----------------------------------------------------------------
+> aspeed queue:
+> 
+> * Removed the ast2700-a0 SoC and ast2700a0-evb machine.
+> * Added SGPIO support to the ast2700 SoC, including unit tests.
+> * Added several FRU EEPROMs to the Catalina board.
+> * Added support for the new AST1060 SoC and ast1060-evb machine,
+>    including functional tests.
+> * Fixed the silicon revision ID register for AST2600 and AST1030 SoCs.
+> * Added an SFDP table for a Winbond flash chip.
+> * Updated documentation for Aspeed boards.
 
-Just rename the parameter for enable_mte() to 'flags'
-and use 'PR_MTE_TCF_SYNC | PR_MTE_STORE_ONLY' in the new test.
-
-With that,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
 r~
 
