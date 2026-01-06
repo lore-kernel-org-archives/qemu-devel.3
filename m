@@ -4,84 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDEDCEFCEC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 19:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A6E5CEFCF5
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 19:22:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdCM9-0006zZ-Qd; Tue, 06 Jan 2026 14:04:37 -0500
+	id 1vdCcW-00082a-HC; Tue, 06 Jan 2026 14:21:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vdCM8-0006yG-JU
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:04:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vdCcS-00080R-SS
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:21:29 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vdCM6-0003py-2x
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:04:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767726272;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6B2GOa8sk2YJRGgj/5Cgjht+D/XHmdiUp+JGwX9fpZc=;
- b=Pes83GzOYrVHMrhxlIrbYNzmjWeevz+2RK/KBN7yEwoBHaDyp4MvJiD8QFaGi7G8yJirj0
- JT/byNy4ItSEmZM9xiQ+6+nC04wA/Sx+OF5lpx+rqzLcADEH/V1z7HliLq5iLyK+hSFPiV
- gkd+874+Y9gLJagY3M6iyCjQSasXFfU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-Lri2g7bTMhagO-KH9BmRuA-1; Tue,
- 06 Jan 2026 14:04:29 -0500
-X-MC-Unique: Lri2g7bTMhagO-KH9BmRuA-1
-X-Mimecast-MFC-AGG-ID: Lri2g7bTMhagO-KH9BmRuA_1767726268
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7F291800669; Tue,  6 Jan 2026 19:04:26 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.158])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 93D4E30001B9; Tue,  6 Jan 2026 19:04:23 +0000 (UTC)
-Date: Tue, 6 Jan 2026 14:04:22 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- mzamazal@redhat.com, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v4 0/5] support inflight migration
-Message-ID: <20260106190422.GB123256@fedora>
-References: <20251229102107.1291790-1-dtalexundeer@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vdCcQ-0000xo-H5
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 14:21:28 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 93D58596A0B;
+ Tue, 06 Jan 2026 20:21:23 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 46AbPfzoeGsC; Tue,  6 Jan 2026 20:21:21 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 942C0596A0A; Tue, 06 Jan 2026 20:21:21 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 927B15969F6;
+ Tue, 06 Jan 2026 20:21:21 +0100 (CET)
+Date: Tue, 6 Jan 2026 20:21:21 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 8/9] ati-vga: Implement HOST_DATA register writes
+In-Reply-To: <20260106185700.2102742-9-chad@jablonski.xyz>
+Message-ID: <bcce15ee-9f83-128a-0894-2e7c87ceff8c@eik.bme.hu>
+References: <20260106185700.2102742-1-chad@jablonski.xyz>
+ <20260106185700.2102742-9-chad@jablonski.xyz>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="lR1D359lv927RKOO"
-Content-Disposition: inline
-In-Reply-To: <20251229102107.1291790-1-dtalexundeer@yandex-team.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,151 +66,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---lR1D359lv927RKOO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Dec 29, 2025 at 03:21:03PM +0500, Alexandr Moshkov wrote:
-> v4:
-> While testing inflight migration, I notices a problem with the fact that
-> GET_VRING_BASE is needed during migration, so the back-end stops
-> dirtying pages and synchronizes `last_avail` counter with QEMU. So after
-> migration in-flight I/O requests will be looks like resubmited on destina=
-tion vm.
->=20
-> However, in new logic, we no longer need to wait for in-flight requests
-> to be complete at GET_VRING_BASE message. So support new parameter
-> `should_drain` in the GET_VRING_BASE to allow back-end stop vrings
-> immediately without waiting for in-flight I/O requests to complete.
->=20
-> Also:
-> - modify vhost-user rst
-> - refactor on vhost-user-blk.c, now `should_drain` is based on
->   device parameter `inflight-migration`
->=20
-> v3:
-> - use pre_load_errp instead of pre_load in vhost.c
-> - change vhost-user-blk property to
->   "skip-get-vring-base-inflight-migration"
-> - refactor vhost-user-blk.c, by moving vhost_user_blk_inflight_needed() h=
-igher
->=20
-> v2:
-> - rewrite migration using VMSD instead of qemufile API
-> - add vhost-user-blk parameter instead of migration capability
->=20
-> I don't know if VMSD was used cleanly in migration implementation, so
-> feel free for comments.
->=20
-> Based on Vladimir's work:
-> [PATCH v2 00/25] vhost-user-blk: live-backend local migration
->   which was based on:
->     - [PATCH v4 0/7] chardev: postpone connect
->       (which in turn is based on [PATCH 0/2] remove deprecated 'reconnect=
-' options)
->     - [PATCH v3 00/23] vhost refactoring and fixes
->     - [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
->=20
-> Based-on: <20250924133309.334631-1-vsementsov@yandex-team.ru>
-> Based-on: <20251015212051.1156334-1-vsementsov@yandex-team.ru>
-> Based-on: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
-> Based-on: <20251015132136.1083972-15-vsementsov@yandex-team.ru>
-> Based-on: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
->=20
+On Tue, 6 Jan 2026, Chad Jablonski wrote:
+> Writing to any of the HOST_DATA0-7 registers pushes the written data
+> into a 128-bit accumulator. When the accumulator is full a flush is
+> triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
+> will also initiate a flush. The flush itself is left for the next patch.
+>
+> Unaligned HOST_DATA* writes result in, from what I can tell, undefined
+> behavior on real hardware. A well-behaved driver shouldn't be doing this
+> anyway. For that reason they are not handled here at all.
+>
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 > ---
->=20
-> Hi!
->=20
-> During inter-host migration, waiting for disk requests to be drained
-> in the vhost-user backend can incur significant downtime.
->=20
-> This can be avoided if QEMU migrates the inflight region in vhost-user-bl=
-k.
-> Thus, during the qemu migration, the vhost-user backend can cancel all in=
-flight requests and
-> then, after migration, they will be executed on another host.
+> hw/display/ati.c      | 32 ++++++++++++++++++++++++++++++++
+> hw/display/ati_dbg.c  |  9 +++++++++
+> hw/display/ati_int.h  |  9 +++++++++
+> hw/display/ati_regs.h |  9 +++++++++
+> 4 files changed, 59 insertions(+)
+>
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index 04f1c3c790..88d30bf532 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -567,6 +567,13 @@ static inline void ati_reg_write_offs(uint32_t *reg, int offs,
+>     }
+> }
+>
+> +static void ati_host_data_reset(ATIHostDataState *hd)
+> +{
+> +    hd->next = 0;
+> +    hd->row = 0;
+> +    hd->col = 0;
+> +}
+> +
+> static void ati_mm_write(void *opaque, hwaddr addr,
+>                            uint64_t data, unsigned int size)
+> {
+> @@ -842,6 +849,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>         break;
+>     case DST_WIDTH:
+>         s->regs.dst_width = data & 0x3fff;
+> +        ati_host_data_reset(&s->host_data);
+>         ati_2d_blt(s);
+>         break;
+>     case DST_HEIGHT:
+> @@ -892,6 +900,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>     case DST_HEIGHT_WIDTH:
+>         s->regs.dst_width = data & 0x3fff;
+>         s->regs.dst_height = (data >> 16) & 0x3fff;
+> +        ati_host_data_reset(&s->host_data);
+>         ati_2d_blt(s);
+>         break;
+>     case DP_GUI_MASTER_CNTL:
+> @@ -929,6 +938,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>     case DST_WIDTH_X:
+>         s->regs.dst_x = data & 0x3fff;
+>         s->regs.dst_width = (data >> 16) & 0x3fff;
+> +        ati_host_data_reset(&s->host_data);
+>         ati_2d_blt(s);
+>         break;
+>     case SRC_X_Y:
+> @@ -942,6 +952,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>     case DST_WIDTH_HEIGHT:
+>         s->regs.dst_height = data & 0x3fff;
+>         s->regs.dst_width = (data >> 16) & 0x3fff;
+> +        ati_host_data_reset(&s->host_data);
 
-I'm surprised by this statement because cancellation requires
-communication with the disk. If in-flight requests are slow to drain,
-then I would expect cancellation to be slow too. What kind of storage
-are you using?
+Is it documented somewhere that writing these registers reset the host 
+data or is it from experiments? Are there any other registers that may 
+need to reset or are these the only place (apart from HOST_DATA_LAST) that 
+terminate host data?
 
->=20
-> At first, I tried to implement migration for all vhost-user devices that =
-support inflight at once,
-> but this would require a lot of changes both in vhost-user-blk (to transf=
-er it to the base class) and
-> in the vhost-user-base base class (inflight implementation and remodeling=
- + a large refactor).
->=20
-> Therefore, for now I decided to leave this idea for later and
-> implement the migration of the inflight region first for vhost-user-blk.
+Regards,
+BALATON Zoltan
 
-Sounds okay to me.
-
-I'm not sure about the change to GET_VRING_BASE. A new parameter is
-added without a feature bit, so there is no way to detect this feature
-at runtime. Maybe a VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT
-feature bit should be added?
-
-Once a feature bit exists, it may not even be necessary to add the
-parameter to GET_VRING_BASE:
-
-When VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT is zero,
-GET_VRING_BASE drains in-flight I/O before completing. When
-VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT is one, the backend may
-leave requests in-flight (but host I/O requests must be cancelled in
-order to comply with the "Suspended device state" semantics) when
-GET_VRING_BASE completes.
-
-What do you think?
-
->=20
-> Alexandr Moshkov (5):
->   vhost-user.rst: specify vhost-user back-end action on GET_VRING_BASE
->   vhost-user: introduce should_drain on GET_VRING_BASE
->   vmstate: introduce VMSTATE_VBUFFER_UINT64
->   vhost: add vmstate for inflight region with inner buffer
->   vhost-user-blk: support inter-host inflight migration
->=20
->  backends/cryptodev-vhost.c         |  2 +-
->  backends/vhost-user.c              |  2 +-
->  docs/interop/vhost-user.rst        |  8 +++-
->  hw/block/vhost-user-blk.c          | 28 ++++++++++++-
->  hw/net/vhost_net.c                 |  9 ++--
->  hw/scsi/vhost-scsi-common.c        |  2 +-
->  hw/virtio/vdpa-dev.c               |  2 +-
->  hw/virtio/vhost-user-base.c        |  2 +-
->  hw/virtio/vhost-user-fs.c          |  2 +-
->  hw/virtio/vhost-user-scmi.c        |  2 +-
->  hw/virtio/vhost-vsock-common.c     |  2 +-
->  hw/virtio/vhost.c                  | 66 ++++++++++++++++++++++++++----
->  include/hw/virtio/vhost-user-blk.h |  1 +
->  include/hw/virtio/vhost.h          | 13 +++++-
->  include/migration/vmstate.h        | 10 +++++
->  15 files changed, 125 insertions(+), 26 deletions(-)
->=20
-> --=20
-> 2.34.1
->=20
-
---lR1D359lv927RKOO
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmldXLYACgkQnKSrs4Gr
-c8g6gAf/VL4ZomBb6GATtXAkile4plROc2EAm17yF8OUMCF+Y/sBupMJ+nCRORDh
-598RhQDUsrQUszNA6htXaS003iFbSR12wvkPWHeyrdf3SRwPio3k37sBM/rLA/8n
-GaVs+C8MFxe0GURE0ahhZzX93OOiMKUWnCir94hOuvUC5/WZ857qoqZ50tkTqctf
-IgLrI8HA4vrYKwBGpPWb+yWcJyCc7uXc4mNGJat/ekKTpuftM3Z7YTNPTFrzPFMu
-biFYr524xA+LQhJhKCthlMGrkrl5xp6kRSbd5v+5QIlNvS40/8K+cdlILuowf9jN
-0Z39sDza3pystM5JcGJ3M6QONtY9UA==
-=ME9P
------END PGP SIGNATURE-----
-
---lR1D359lv927RKOO--
-
+>         ati_2d_blt(s);
+>         break;
+>     case DST_HEIGHT_Y:
+> @@ -1043,6 +1054,25 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>     case SRC_SC_BOTTOM:
+>         s->regs.src_sc_bottom = data & 0x3fff;
+>         break;
+> +    case HOST_DATA0:
+> +    case HOST_DATA1:
+> +    case HOST_DATA2:
+> +    case HOST_DATA3:
+> +    case HOST_DATA4:
+> +    case HOST_DATA5:
+> +    case HOST_DATA6:
+> +    case HOST_DATA7:
+> +        s->host_data.acc[s->host_data.next++] = data;
+> +        if (s->host_data.next >= 4) {
+> +            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
+> +            s->host_data.next = 0;
+> +        }
+> +        break;
+> +    case HOST_DATA_LAST:
+> +        s->host_data.acc[s->host_data.next] = data;
+> +        qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
+> +        ati_host_data_reset(&s->host_data);
+> +        break;
+>     default:
+>         break;
+>     }
+> @@ -1136,6 +1166,8 @@ static void ati_vga_reset(DeviceState *dev)
+>     /* reset vga */
+>     vga_common_reset(&s->vga);
+>     s->mode = VGA_MODE;
+> +
+> +    ati_host_data_reset(&s->host_data);
+> }
+>
+> static void ati_vga_exit(PCIDevice *dev)
+> diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
+> index 3ffa7f35df..5c799d540a 100644
+> --- a/hw/display/ati_dbg.c
+> +++ b/hw/display/ati_dbg.c
+> @@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
+>     {"MC_SRC1_CNTL", 0x19D8},
+>     {"TEX_CNTL", 0x1800},
+>     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
+> +    {"HOST_DATA0", 0x17c0},
+> +    {"HOST_DATA1", 0x17c4},
+> +    {"HOST_DATA2", 0x17c8},
+> +    {"HOST_DATA3", 0x17cc},
+> +    {"HOST_DATA4", 0x17d0},
+> +    {"HOST_DATA5", 0x17d4},
+> +    {"HOST_DATA6", 0x17d8},
+> +    {"HOST_DATA7", 0x17dc},
+> +    {"HOST_DATA_LAST", 0x17e0},
+>     {NULL, -1}
+> };
+>
+> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+> index d9ac8ee135..3029dc7e3c 100644
+> --- a/hw/display/ati_int.h
+> +++ b/hw/display/ati_int.h
+> @@ -14,6 +14,7 @@
+> #include "hw/i2c/bitbang_i2c.h"
+> #include "vga_int.h"
+> #include "qom/object.h"
+> +#include "qemu/units.h"
+>
+> /*#define DEBUG_ATI*/
+>
+> @@ -97,6 +98,13 @@ typedef struct ATIVGARegs {
+>     uint16_t src_sc_right;
+> } ATIVGARegs;
+>
+> +typedef struct ATIHostDataState {
+> +    uint32_t row;
+> +    uint32_t col;
+> +    uint32_t next;
+> +    uint32_t acc[4];
+> +} ATIHostDataState;
+> +
+> struct ATIVGAState {
+>     PCIDevice dev;
+>     VGACommonState vga;
+> @@ -113,6 +121,7 @@ struct ATIVGAState {
+>     MemoryRegion io;
+>     MemoryRegion mm;
+>     ATIVGARegs regs;
+> +    ATIHostDataState host_data;
+> };
+>
+> const char *ati_reg_name(int num);
+> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+> index 9c638314f0..c8bbafe1c6 100644
+> --- a/hw/display/ati_regs.h
+> +++ b/hw/display/ati_regs.h
+> @@ -252,6 +252,15 @@
+> #define DP_T12_CNTL                             0x178c
+> #define DST_BRES_T1_LNTH                        0x1790
+> #define DST_BRES_T2_LNTH                        0x1794
+> +#define HOST_DATA0                              0x17c0
+> +#define HOST_DATA1                              0x17c4
+> +#define HOST_DATA2                              0x17c8
+> +#define HOST_DATA3                              0x17cc
+> +#define HOST_DATA4                              0x17d0
+> +#define HOST_DATA5                              0x17d4
+> +#define HOST_DATA6                              0x17d8
+> +#define HOST_DATA7                              0x17dc
+> +#define HOST_DATA_LAST                          0x17e0
+> #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
+> #define SCALE_OFFSET_0                          0x1998
+> #define SCALE_PITCH                             0x199c
+>
 
