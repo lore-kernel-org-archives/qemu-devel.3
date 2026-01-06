@@ -4,60 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A47CE9D71
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED0DCE9D70
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd9Sm-0005KZ-8y; Tue, 06 Jan 2026 10:59:16 -0500
+	id 1vd9SG-0003dx-Hg; Tue, 06 Jan 2026 10:58:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vd9Sh-00056W-GQ; Tue, 06 Jan 2026 10:59:12 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vd9Sg-0006n8-0M; Tue, 06 Jan 2026 10:59:11 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dlwp06k9JzJ46Dc;
- Tue,  6 Jan 2026 23:59:04 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id B644740569;
- Tue,  6 Jan 2026 23:59:06 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.47.31.135) by
- dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 6 Jan 2026 15:59:05 +0000
-To: <qemu-devel@nongnu.org>, <gustavo.romero@linaro.org>
-CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
- <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
- <farman@linux.ibm.com>, <imammedo@redhat.com>, <jiangkunkun@huawei.com>,
- <maobibo@loongson.cn>, <mst@redhat.com>, <mtosatti@redhat.com>,
- <peter.maydell@linaro.org>, <philmd@linaro.org>, <qemu-arm@nongnu.org>,
- <richard.henderson@linaro.org>, <shannon.zhaosl@gmail.com>,
- <yangyicong@hisilicon.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <zhao1.liu@intel.com>
-Subject: [PATCH v17 1/8] target/arm/tcg: increase cache level for cpu=max
-Date: Tue, 6 Jan 2026 15:58:20 +0000
-Message-ID: <20260106155828.643-2-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.51.0.windows.2
-In-Reply-To: <20260106155828.643-1-alireza.sanaee@huawei.com>
-References: <20260106155828.643-1-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vd9SF-0003Xz-4J
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:58:43 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vd9SD-0006jw-MB
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:58:42 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4327555464cso642043f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 07:58:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767715120; x=1768319920; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jPPHx6tYO5HdcZWsR0MQu0bzC+/0x4C/yY9Fp2J0+/k=;
+ b=BvVZuUIECh5mjbjnxsVEK58OXkVYtzG8AvadA+Q96h0kbW/gTFr5ox5HVv+wYRgpsQ
+ OIax54S0GCLSNOQi9i/9beNvN3WMYCJ/MwubNFEmRoUYWhWqGCbD8aebpqcUMvSKTyM5
+ 8R9qgNIyiAvbV+hGQw+GcSxmQBh5UgIngqt0Cc/RGTyPzGEHp4R2DVdmi1O6NfH8oHOZ
+ QLt2lCL9/dv2US5VOOosgiJiI1X/DrckgOVWa6S/8/qKTUHFi/NL1E6PQlR1nHrue08n
+ I9m0EeNANiVFBu4eDx/lOxgRru91HIMrQEu4fFJl+wBfV+i52fOMoxf8fgZKnuT7AzL3
+ 6y9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767715120; x=1768319920;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jPPHx6tYO5HdcZWsR0MQu0bzC+/0x4C/yY9Fp2J0+/k=;
+ b=jTzZF8v45T7YgDqsX3Jae/kqsJrb57Q6j1CAozCeJHtKkg/vSUmnaijZhu2X1Sr5ev
+ rfn3Y5LCs0XP84w2L4xnX38DlGc7gEnZKJffJTTuoSTOVPBi6X/0pbx1fGVqb3A4UcGx
+ MV6U4AWW8oy/2+5SXWiODRbl24Z0/IWwp6otYRd6aRdcdwTUxx1mruxmi1stt76DEX5H
+ 55KwnPmlikAjVZn4k+Py5d2YlA7ZA1gktj5IsaWmqfmAeG5RQ1Ips66xh5lmk4lbYg4l
+ iq5f0EBWyrnYtsjxNOCLiW0xauRbkTuI/BUKnN3tyYdnQTTOJdzs/E9m2/g6RKmNv19E
+ +BqQ==
+X-Gm-Message-State: AOJu0YxrPfBuyO4fabAgGMkUzF8RwA3ssYloJuakMhR8JIL85g7Nrgmg
+ n8bO1Rp3eM4F8TT6HixA+SfRwMvdtVq3akOYYt7Tl6yW6crkMNITYT2oujsg8wcyDBy5rHd59Qk
+ hZTfdY7Y=
+X-Gm-Gg: AY/fxX7G74pYaOVNqivyDdj4bmOuGj323pT5nNw9SvpVTIqLTs3P8ZTVQ8ckpS5ccDG
+ vzbd39DWea1phRdDtB/UwKkUOnQcPfMMIfdpe8oThzGYy+1M2IEdOJuM6G5MJwwY1PiE9X/dNMx
+ ZH7Iyeo+bRIgnm4hGPHfAPpMu+yksX+aKLagxMiBZ+Ag3lR1vNMPVJ1AR0rt5S+RsjJ/UbiEzln
+ BJJiHzEQZ2aogdZWURGvccsr+1uRBaHGgQpHyGQQ9lIPwAnEQF+dF49ypD/A/h7v8Xpkws9av3Z
+ +dR2stutTEioOVnCJ/wFEeFzHHjSLPvKkPYXSaRymHUZAqd49v+JU655G6woKNgfUiL8S5fTD7W
+ Mk6EcboaPWlBwePO5ofy+eqmveKmlx6BVlK4iTqiEn3PQ1XAgALs2uoZk/AGUdUINYi0n5hEg5H
+ 6ltN181uo+6Wf5C7+VmYQsu1lGZrwoeoGG/CJGyDjRM4axxkEURHuPkboP06hv
+X-Google-Smtp-Source: AGHT+IEh8/7VbkJDHrdMj/Nd0SzC9jWMWgrNKyKsvOfoVcx7tJ790onUyIqo3aw+CZh7YNL5xtajww==
+X-Received: by 2002:a5d:5888:0:b0:42b:2ac7:7942 with SMTP id
+ ffacd0b85a97d-432bca168c4mr5129097f8f.5.1767715119898; 
+ Tue, 06 Jan 2026 07:58:39 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd5df96asm4952247f8f.28.2026.01.06.07.58.38
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 06 Jan 2026 07:58:39 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 6/8] target/alpha: Replace MO_TE -> MO_LE
+Date: Tue,  6 Jan 2026 16:57:52 +0100
+Message-ID: <20260106155755.53646-7-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260106155755.53646-1-philmd@linaro.org>
+References: <20260106155755.53646-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.47.31.135]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,43 +102,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch addresses cache description in the `aarch64_max_tcg_initfn`
-function for cpu=max. It introduces three levels of caches and modifies
-the cache description registers accordingly.
+We only build the Alpha targets using little endianness order:
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+  $ git grep -L TARGET_BIG_ENDIAN configs/targets/alpha-*
+  configs/targets/alpha-linux-user.mak
+  configs/targets/alpha-softmmu.mak
+
+Therefore the MO_TE definition always expands to MO_LE. Use the
+latter to simplify.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/tcg/cpu64.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ target/alpha/translate.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 917db5bb09..be192d62ff 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1167,6 +1167,16 @@ void aarch64_max_tcg_initfn(Object *obj)
-     uint64_t t;
-     uint32_t u;
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index 4f918cbfe63..d9248e54eb6 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -98,7 +98,11 @@ static TCGv cpu_pal_ir[31];
  
-+    SET_IDREG(isar, CLIDR, 0x8200123);
-+    /* 64KB L1 dcache */
-+    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
-+    /* 64KB L1 icache */
-+    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 2);
-+    /* 1MB L2 unified cache */
-+    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 1 * MiB, 7);
-+    /* 2MB L3 unified cache */
-+    cpu->ccsidr[4] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 2 * MiB, 7);
-+
-     /*
-      * Unset ARM_FEATURE_BACKCOMPAT_CNTFRQ, which we would otherwise default
-      * to because we started with aarch64_a57_initfn(). A 'max' CPU might
+ static inline MemOp mo_endian(DisasContext *dc)
+ {
+-    return MO_TE;
++    /*
++     * Technically, Alpha can be run in big-endian mode, but we don't bother.
++     * This was only ever used for the Cray T3[DE] machines.  :-)
++     */
++    return MO_LE;
+ }
+ 
+ void alpha_translate_init(void)
 -- 
-2.43.0
+2.52.0
 
 
