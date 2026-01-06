@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE614C2A073
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 06:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF75EC47BC2
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 07:36:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd0gt-0005ZC-Bm; Tue, 06 Jan 2026 01:37:15 -0500
+	id 1vd1bG-0007mR-47; Tue, 06 Jan 2026 02:35:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vd0gr-0005Yt-QF
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:37:13 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1vd1bB-0007lk-MP
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 02:35:26 -0500
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vd0gq-0006tI-2d
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:37:13 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7f121c00dedso901495b3a.0
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 22:37:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1vd1b9-0002AB-Gc
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 02:35:25 -0500
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-78f99901ed5so7811407b3.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 23:35:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767681430; x=1768286230; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BpSHIWQQ8x9eIJTo+o+MCuWeunb6JYZPGxKktINRqfc=;
- b=PM6g5FxvW8VU9TomaPrKiKhtb1MA7O2DF0Ve9LAWt7skT834vLC7v+HROPE9aGhQJV
- 9xwpm7QJ1d0gUkNOtwo+5WwRZDOJzWuwg7F6vnWqT3xEx9BRJ30tlQFuU7jWIH0p6vov
- sjdpfFMl1vB+xP/zbgDsKw7YuIgUtb1WmRiBuSVhdNO82ARgXOQhnPseeXVZ3QK/y4qV
- 3FA/ybAGTrGMJsfz56bao3dQY7FNOFo58TmF6K8LBQoDnLJVyKV8mpW3eXRzeUVHArMK
- w1ehwDPxMb6OxtD/nov+5kwjUFt3IRVDTtcRKutGVmfwRsrN7khF4zxI8pzm0Rz0HSs5
- NeMQ==
+ d=jms.id.au; s=google; t=1767684922; x=1768289722; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HrpAM8PPAYXD3CaG+xN7uoTPiVzRPR4/77s+xJAdYlc=;
+ b=MtGrL7HM/bMJTyGGatIwoOqRA70WBMkRn77MlHmI8mUOyiggcsuPJos7j/cAMy5Km0
+ I77vB/xgsHuYqJsSdSctlsuqRgw9XcVJ7G8auzXywJges2ZzkWue7luqOqXwiP75Kqlg
+ 1l5U8OamyvbSWHEuGlAH6NZY23H9YbXXg5744=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767681430; x=1768286230;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1767684922; x=1768289722;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BpSHIWQQ8x9eIJTo+o+MCuWeunb6JYZPGxKktINRqfc=;
- b=G7ZEsjmjyJZ+S2Ks+CZvUYYrmc7iZ2DooZaM1MvM6Zosw23qFJZLtEAe0vII4o6os7
- 4cGQC+roRAgsfdmZlHXWu2Un/SfnHvs1me09n0V9l55yKw1Yn2UA3d9ZDg7ogTJ1UvA6
- pJ/a3G6+DLMHpDTd//vDtZaRlmPM/RUiuxWkNy84ZPZ6ssHHGNy59oiQQ3j9ipJBZaCf
- g4HKNOYmNnBOKa7MU+olPDzyNw2BgPX2RjaOi7X4d5JXYz0r7gv7yaJ/GyhHi65+hLJ2
- pPCmJ5GK8vt1w4znFVdjxBTB/dbVkt8lQXOmpPUpJv5fYblQjdUhbBswepnNT3GVTrF3
- dYCw==
-X-Gm-Message-State: AOJu0YxLXPH35/Nhpovd3hImNJW6Fp1geAbGt1gYtD4VT6WUdmDxd2Jw
- uuyvamsjq73XcblSn+NRLNUGaiBQ33zXi52HRKsfeZLeHNABUrS9s41lkUvi99FT4xiEWBpKDLy
- Us1wdKUs=
-X-Gm-Gg: AY/fxX5B7Zyb3Erv93C7fYBcUaXxXzvLAe1VkL6wUk8OosKIg8Di5e6d3LzKYp1/kp/
- DORMBpu6JZMOQuv5cC8iDvFyyaW4AQ3iavZcENCzxeE5Z0fKdKtdAKE6eW07Lb9Xa4M3pKuupLg
- lOOteawAiJxK+a6luX7frTEQoL4Ga3n6/VS4vyvMOdhbaz7PQVYuUyXjLYEgfWd3jQwKtep3yDQ
- rDdm5fdmxpvy0OR45Tfmg3m0BmDkd/zvor6JEKEKhAFt96lHxEhBHOjuJYNitT0KaZIaDwtw2H/
- 8/Aibp5AJ8DsZAaBVcgUNYhbRUrA4TkGf1X3odQOwUfwxSPpo5Kh6hM+1oVt6dvc//fuOoPCasz
- 6SxySl9jR3jTzIZn/Pjh5khn79ziehLtTUdj15p7OAqZjr5hpfBYNgF43rDE460iikFD3U26PQ3
- 57lipDMkuCwMyKP4UnQXmF0aHhkE4u
-X-Google-Smtp-Source: AGHT+IF4cX2W1reaFPvi9Tl5h0mYtAk/J69aTnoOtr6ykIGHztljV8lVqM+TXGEXIvQhgo6j8kU6vA==
-X-Received: by 2002:a05:6a00:90a6:b0:7b8:ac7f:5969 with SMTP id
- d2e1a72fcca58-8188115eefemr2033426b3a.4.1767681430183; 
- Mon, 05 Jan 2026 22:37:10 -0800 (PST)
-Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-819c5edcf34sm1001613b3a.67.2026.01.05.22.37.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Jan 2026 22:37:09 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Zhijin Zeng <zengzhijin@linux.spacemit.com>
-Subject: [PATCH] tcg/riscv: Fix TCG_REG_TMP0 clobber in tcg_gen_dup{m,i}
-Date: Tue,  6 Jan 2026 17:37:04 +1100
-Message-ID: <20260106063704.244300-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ bh=HrpAM8PPAYXD3CaG+xN7uoTPiVzRPR4/77s+xJAdYlc=;
+ b=YWde2pwJPXU1DLQsxAGzAAkSD8MT+HKTNs/zfADZuzbIv6/yeG4tGJRRYXFezC2B2n
+ lkvytbx7lVhqSQxdZQTjz4yBsCuBEoPxqhwXLLBt2Nqir3g5Oz2wQEucMz8tIOgQLITS
+ gbnFC4ITN6IfOlyoIZHj+zfuphJtjb+9R7GdvUgWh9WDahAYHRVksLDQTEgExsO95mCc
+ xjwxGRqVNz28nrXTuPdR7/Yiuey1/e9nDGr2fQQ4ubwZzjrYH2JYKCI1NsFyjIi1JkYw
+ vVFbk5tjmhxWGCkCNnnQbdvnoCrnHM2iVuRqHthFM/cx0i216LI/pMaudK7SWBtJjtcx
+ +u8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUI+Y4+Zq5JwVkIztO5Y0FiAc3XZxjwiQwgSyrDcDXnT4saav/FSKMq/wy8Lcrh/g5VtYmmzqNtLS8@nongnu.org
+X-Gm-Message-State: AOJu0YzZpjv4ZiOa4I98u2QWnX2fLOCvajEP4P+G4NP1Z4B9OsClYdaL
+ CzYUr6Ve3GIhFll9l9UflQaOhMwAXWSV6uGHtQpHPczPr9PumF7FA726Ldi2fduUSqgt/Kcc3EY
+ TpYwuqgXhvXUahdawpEbYtllpdWb3pnA=
+X-Gm-Gg: AY/fxX7K9xfISX/mzE4+pNj9zVSRCO7Yv3QsEMfpurVM/u4PI5pgXzyG059sEsi3nNf
+ rHSVjsNEBjHmER4gzhXoL3zFgnhNRQg/V1+SrehfDyaAPH/pW1I65Se5oq24RaKZIeeXNtLbQPa
+ +8Ut04efoBCRPG3miZkhUNbY7YtCf0Ba/+d6jrY42YMCuYMGAq4Mj+yL/nrjt+ah4M+epWu74+F
+ voRDLB3Zx1ahKkgutX9wvQ1qjHV444fdLDEgfAoTctzTZRKyKEDKFWntmwUwJfmNDRvUCs=
+X-Google-Smtp-Source: AGHT+IFGKZ8TQn+HvvvVcZ0l+iGaaWXmSCfskRQR1W38NUTaH4+hIChH5MlQkupEQgo0l3f8W5JtCKMfQej4oTCZDV4=
+X-Received: by 2002:a05:690e:1501:b0:645:55a2:be64 with SMTP id
+ 956f58d0204a3-6470c86ae80mr1817769d50.30.1767684922311; Mon, 05 Jan 2026
+ 23:35:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260106055658.209029-1-joel@jms.id.au>
+In-Reply-To: <20260106055658.209029-1-joel@jms.id.au>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 6 Jan 2026 18:05:09 +1030
+X-Gm-Features: AQt7F2oOcSR5FpX9BvHd7BXSeOwOkPt_9vCeeWSk18DtcRyfw8K2aM5R7stP4MU
+Message-ID: <CACPK8XdxvLLsQxPqSyakxh2GeK2AcGeukcerswB2eyTfeghOGQ@mail.gmail.com>
+Subject: Re: [PATCH 00/16] hw/riscv: Add the Tenstorrent Atlantis machine
+To: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Chris Rauer <crauer@google.com>, Vijai Kumar K <vijai@behindbytes.com>, 
+ Sunil V L <sunilvl@ventanamicro.com>, Ran Wang <wangran@bosc.ac.cn>, 
+ Michael Ellerman <mpe@oss.tenstorrent.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>, 
+ Nick Piggin <npiggin@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=joel.stan@gmail.com; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,80 +100,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TCG_REG_TMP0 may be used by set_vtype* to load the vtype
-parameter, so delay any other use of TCG_REG_TMP0 until
-the correct vtype has been installed.
+On Tue, 6 Jan 2026 at 16:27, Joel Stanley <joel@jms.id.au> wrote:
+>
+> Introducing Tenstorrent Atlantis!
 
-Cc: qemu-stable@nongnu.org
-Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
-Reported-by: Zhijin Zeng <zengzhijin@linux.spacemit.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/riscv/tcg-target.c.inc | 33 +++++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+Note that this was based on v10.2.0 and passed CI before I sent it:
 
-diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index 31b9f7d87a..0967a445a3 100644
---- a/tcg/riscv/tcg-target.c.inc
-+++ b/tcg/riscv/tcg-target.c.inc
-@@ -1074,7 +1074,7 @@ static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
- }
- 
- static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
--                                   TCGReg dst, TCGReg src)
-+                            TCGReg dst, TCGReg src)
- {
-     set_vtype_len_sew(s, type, vece);
-     tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, src);
-@@ -1082,29 +1082,34 @@ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
- }
- 
- static bool tcg_out_dupm_vec(TCGContext *s, TCGType type, unsigned vece,
--                                    TCGReg dst, TCGReg base, intptr_t offset)
-+                             TCGReg dst, TCGReg base, intptr_t offset)
- {
-+    /* Note set_vtype* may clobber TMP0, so do that first. */
-+    set_vtype_len_sew(s, type, vece);
-     tcg_out_ld(s, TCG_TYPE_REG, TCG_REG_TMP0, base, offset);
--    return tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
-+    tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, TCG_REG_TMP0);
-+    return true;
- }
- 
- static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
--                                    TCGReg dst, int64_t arg)
-+                             TCGReg dst, int64_t arg)
- {
-     /* Arg is replicated by VECE; extract the highest element. */
-     arg >>= (-8 << vece) & 63;
- 
--    if (arg >= -16 && arg < 16) {
--        if (arg == 0 || arg == -1) {
--            set_vtype_len(s, type);
--        } else {
--            set_vtype_len_sew(s, type, vece);
--        }
--        tcg_out_opc_vi(s, OPC_VMV_V_I, dst, 0, arg);
--        return;
-+    /* Note set_vtype* may clobber TMP0, so do that first. */
-+    if (arg == 0 || arg == -1) {
-+        set_vtype_len(s, type);
-+    } else {
-+        set_vtype_len_sew(s, type, vece);
-+    }
-+
-+    if (arg >= -16 && arg < 16) {
-+        tcg_out_opc_vi(s, OPC_VMV_V_I, dst, 0, arg);
-+    } else {
-+        tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, arg);
-+        tcg_out_opc_vx(s, OPC_VMV_V_X, dst, 0, TCG_REG_TMP0);
-     }
--    tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, arg);
--    tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
- }
- 
- static void tcg_out_br(TCGContext *s, TCGLabel *l)
--- 
-2.43.0
+  https://gitlab.com/shenki/qemu/-/pipelines/2246526243
 
+However master has moved along and there are now some merge conflicts.
+I'll hold off sending a v2 for now, but in case anyone is trying to
+test, a rebased tree is here:
+
+  https://gitlab.com/shenki/qemu/-/tree/tt-atlantis
+
+Cheers,
+
+Joel
 
