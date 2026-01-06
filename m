@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D92BEC47BEA
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 11:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E12C47BEA
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 11:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd58s-0001l5-J9; Tue, 06 Jan 2026 06:22:26 -0500
+	id 1vd5F3-0004Ar-0B; Tue, 06 Jan 2026 06:28:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vd58j-0001k1-3v
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:22:18 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vd5F1-00049g-GM
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:28:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vd58g-0007UW-C1
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:22:15 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vd5Ez-00007J-En
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:28:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767698533;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=SO2gaarkPhvYTN8ofdsxA/9VmNgtd0v3O3fIEwCd9vE=;
- b=UsDSFoxj7v8urOZBacRhhP+M/HLZoiId7oT5sVBOqeDdFTpoOQbWi93DLq9VUfVJ5xpnvO
- UDYcFFoAwURSfRMbCv1D+ZgWZK+0d5hD5XjhbZ6lD4H94lyKWDsa19cywKgJbA3/MpESGy
- zxQx9IQQNiXzC517kx9F2MnkwjY4v9E=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1767698924;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zMwEua+98XF9igP68OY/Yae7V3fSQ4wuzTGsqccIc8E=;
+ b=cfiXCEaO5M6OAy18ONHIobnBT+9p0XF7o5okLzYkcMkN1AQRzN7aiHRGUioyPQLSDFutpc
+ P/yrvJl0dcNolVpoVmmCwzaIOUmKA9VaJHswoVqZcfvVaXgWNz4QR368iAtdMb/G0+S/8v
+ Lh8Yw9RUegbsetVRTPI4tll6CR+boGw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-f-B61mhIMA-N1ztse98c9g-1; Tue,
- 06 Jan 2026 06:22:12 -0500
-X-MC-Unique: f-B61mhIMA-N1ztse98c9g-1
-X-Mimecast-MFC-AGG-ID: f-B61mhIMA-N1ztse98c9g_1767698530
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-xsDbrfHcP8eJbpjSc1FC6g-1; Tue,
+ 06 Jan 2026 06:28:43 -0500
+X-MC-Unique: xsDbrfHcP8eJbpjSc1FC6g-1
+X-Mimecast-MFC-AGG-ID: xsDbrfHcP8eJbpjSc1FC6g_1767698922
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D224819560B6; Tue,  6 Jan 2026 11:22:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.217])
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07D601956058; Tue,  6 Jan 2026 11:28:42 +0000 (UTC)
+Received: from dobby.home.kraxel.org (unknown [10.44.32.173])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39F091800667; Tue,  6 Jan 2026 11:22:09 +0000 (UTC)
-Date: Tue, 6 Jan 2026 11:22:05 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Xudong Hao <xudong.hao@intel.com>, Yu Chen <yu.c.chen@intel.com>
-Subject: Re: [PATCH 10/10] dosc/cpu-models-x86: Add documentation for
- DiamondRapids
-Message-ID: <aVzwXfbHVUpx1FQx@redhat.com>
-References: <20251120071030.961230-1-zhao1.liu@intel.com>
- <20251120071030.961230-11-zhao1.liu@intel.com>
+ id 503CC180035A; Tue,  6 Jan 2026 11:28:41 +0000 (UTC)
+Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
+ id A554F620790; Tue, 06 Jan 2026 12:28:38 +0100 (CET)
+Date: Tue, 6 Jan 2026 12:28:38 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org, 
+ Kashyap Chamarthy <kchamart@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 2/2] docs/interop/firmware: Introduce extended syntax for
+ FirmwareMappingMemory
+Message-ID: <aVzs_6lD5XJhCn0H@dobby.home.kraxel.org>
+References: <20251228232649.1708400-1-abologna@redhat.com>
+ <20251228232649.1708400-3-abologna@redhat.com>
+ <aVvNV0X0uZ4lVBWv@redhat.com>
+ <aVzbqk5FSrG9rSuM@dobby.home.kraxel.org>
+ <aVzliFd70KWKcMJR@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251120071030.961230-11-zhao1.liu@intel.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
+In-Reply-To: <aVzliFd70KWKcMJR@redhat.com>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,63 +88,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In $SUBJECT   s/dosc/docs/
+  Hi,
 
-On Thu, Nov 20, 2025 at 03:10:30PM +0800, Zhao Liu wrote:
-> Current DiamondRapids hasn't supported cache model. Instead, document
-> its special CPU & cache topology to allow user emulate with "-smp" &
-> "-machine smp-cache".
+> > Maybe have separate json files describing the variable store template
+> > only, and expect libvirt searching for one in case the firmware
+> > descriptor has the 'host-uefi-vars' feature flag set?
 > 
-> Cc: Yu Chen <yu.c.chen@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->  docs/system/cpu-models-x86.rst.inc | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/docs/system/cpu-models-x86.rst.inc b/docs/system/cpu-models-x86.rst.inc
-> index 6a770ca8351c..c4c8fc67a562 100644
-> --- a/docs/system/cpu-models-x86.rst.inc
-> +++ b/docs/system/cpu-models-x86.rst.inc
-> @@ -71,6 +71,26 @@ mixture of host CPU models between machines, if live migration
->  compatibility is required, use the newest CPU model that is compatible
->  across all desired hosts.
->  
-> +``DiamondRapids``
-> +    Intel Xeon Processor.
-> +
-> +    Diamond Rapids product has a topology which differs from previous Xeon
-> +    products. It does not support SMT, but instead features a dual core
-> +    module (DCM) architecture. It also has core building blocks (CBB - die
-> +    level in CPU topology). The cache hierarchy is organized as follows:
-> +    L1 i/d cache is per thread, L2 cache is per DCM, and L3 cache is per
-> +    CBB. This cache topology can be emulated for DiamondRapids CPU model
-> +    using the smp-cache configuration as shown below:
-> +
-> +    Example:
-> +
-> +        ::
-> +
-> +            -machine smp-cache.0.cache=l1d,smp-cache.0.topology=thread,\
-> +                     smp-cache.1.cache=l1i,smp-cache.1.topology=thread,\
-> +                     smp-cache.2.cache=l2,smp-cache.2.topology=module,\
-> +                     smp-cache.3.cache=l3,smp-cache.3.topology=die\
-> +
->  ``ClearwaterForest``
->      Intel Xeon Processor (ClearwaterForest, 2025)
->  
-> -- 
-> 2.34.1
-> 
+> Or just have the host-uefi-vars feature flag alone, and then libvirt
+> can just invoke virt-firmware in whatever way it needs to create the
+> json templates and not worry about providing any pre-defined json
+> files.  All the default microsoft CAs are ultimately embedded in
+> virt-firmware and spat out when given the right args.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Makes sense too, given that the long-term plan is to do that anyway to
+allow distro-specific varstore setups.  So doing that right from the
+start, only without the certificate configuration part which comes
+later, looks like good approach too.
+
+BTW: virt-firmware-rs.rpm has a utility (virt-fw-vars-setup) which can
+do exactly that without pulling in python as dependency.
+
+Question is how we enable/disable secure boot then ... 
+
+One option would be to special-case the enrolled-keys feature for the
+host-uefi-vars.  A little bit hackish, but with the advantage that the
+switch would be transparent for libvirt users, existing xml syntax
+continues to work.
+
+Another option would be to add xml syntax for varstore setup, which will
+be needed anyway in the future for the custom certificate setup.
+
+take care,
+  Gerd
 
 
