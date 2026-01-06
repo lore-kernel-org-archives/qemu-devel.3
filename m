@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B7CC47BE6
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 11:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D92BEC47BEA
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 11:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd57f-0001MG-9G; Tue, 06 Jan 2026 06:21:11 -0500
+	id 1vd58s-0001l5-J9; Tue, 06 Jan 2026 06:22:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vd57d-0001Ih-JS
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:21:09 -0500
+ id 1vd58j-0001k1-3v
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:22:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vd57b-0007Ld-G5
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:21:09 -0500
+ id 1vd58g-0007UW-C1
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:22:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767698465;
+ s=mimecast20190719; t=1767698533;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=6TSnBYpu77LgY4uEe3T1qDQ876+0AwDSHt8tLb+vo0g=;
- b=JN/3mkxpYZ4d7FugFaZCvmttsyArTQpM+BuDclZbEP++obGkev6RjxEbojs9YVCDjq/fvn
- Z7Qjb2taEmzVUHUT95rgXax9sBup36lcRQ/r0ziWeX+NQESAWk+rVR5OnGeW8QZDgxKctI
- MWO8I9N6Oeq1/cMjzG5owFhLOXeKRNw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=SO2gaarkPhvYTN8ofdsxA/9VmNgtd0v3O3fIEwCd9vE=;
+ b=UsDSFoxj7v8urOZBacRhhP+M/HLZoiId7oT5sVBOqeDdFTpoOQbWi93DLq9VUfVJ5xpnvO
+ UDYcFFoAwURSfRMbCv1D+ZgWZK+0d5hD5XjhbZ6lD4H94lyKWDsa19cywKgJbA3/MpESGy
+ zxQx9IQQNiXzC517kx9F2MnkwjY4v9E=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-0FAolGA2PleQ0SscAu4T7g-1; Tue,
- 06 Jan 2026 06:21:03 -0500
-X-MC-Unique: 0FAolGA2PleQ0SscAu4T7g-1
-X-Mimecast-MFC-AGG-ID: 0FAolGA2PleQ0SscAu4T7g_1767698462
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-f-B61mhIMA-N1ztse98c9g-1; Tue,
+ 06 Jan 2026 06:22:12 -0500
+X-MC-Unique: f-B61mhIMA-N1ztse98c9g-1
+X-Mimecast-MFC-AGG-ID: f-B61mhIMA-N1ztse98c9g_1767698530
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E65FB195605A; Tue,  6 Jan 2026 11:21:01 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D224819560B6; Tue,  6 Jan 2026 11:22:10 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.217])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F04C19560AB; Tue,  6 Jan 2026 11:20:59 +0000 (UTC)
-Date: Tue, 6 Jan 2026 11:20:56 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39F091800667; Tue,  6 Jan 2026 11:22:09 +0000 (UTC)
+Date: Tue, 6 Jan 2026 11:22:05 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Zhao Liu <zhao1.liu@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  Xudong Hao <xudong.hao@intel.com>, Yu Chen <yu.c.chen@intel.com>
 Subject: Re: [PATCH 10/10] dosc/cpu-models-x86: Add documentation for
  DiamondRapids
-Message-ID: <aVzwGBeRaNWC3-s7@redhat.com>
+Message-ID: <aVzwXfbHVUpx1FQx@redhat.com>
 References: <20251120071030.961230-1-zhao1.liu@intel.com>
  <20251120071030.961230-11-zhao1.liu@intel.com>
 MIME-Version: 1.0
@@ -61,7 +61,7 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20251120071030.961230-11-zhao1.liu@intel.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -87,6 +87,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+In $SUBJECT   s/dosc/docs/
 
 On Thu, Nov 20, 2025 at 03:10:30PM +0800, Zhao Liu wrote:
 > Current DiamondRapids hasn't supported cache model. Instead, document
@@ -117,24 +119,22 @@ On Thu, Nov 20, 2025 at 03:10:30PM +0800, Zhao Liu wrote:
 > +    L1 i/d cache is per thread, L2 cache is per DCM, and L3 cache is per
 > +    CBB. This cache topology can be emulated for DiamondRapids CPU model
 > +    using the smp-cache configuration as shown below:
-
-Can I request a slight rewording to simplify this:
-
-  ``DiamondRapids``
-     Intel Xeon Processor (DiamondRapids, 2025). This does not include SMT
-     but allows the module and die topology levels. The cache hierarchy is
-     L1 i/d cache per thread, L2 cache per module, and L3 cache per die,
-     which can be emulated using using the smp-cache option:
-
-     Example:
-
-        ::
-
-            -machine smp-cache.0.cache=l1d,smp-cache.0.topology=thread,\
-                     smp-cache.1.cache=l1i,smp-cache.1.topology=thread,\
-                     smp-cache.2.cache=l2,smp-cache.2.topology=module,\
-                     smp-cache.3.cache=l3,smp-cache.3.topology=die,\
-                     ...
+> +
+> +    Example:
+> +
+> +        ::
+> +
+> +            -machine smp-cache.0.cache=l1d,smp-cache.0.topology=thread,\
+> +                     smp-cache.1.cache=l1i,smp-cache.1.topology=thread,\
+> +                     smp-cache.2.cache=l2,smp-cache.2.topology=module,\
+> +                     smp-cache.3.cache=l3,smp-cache.3.topology=die\
+> +
+>  ``ClearwaterForest``
+>      Intel Xeon Processor (ClearwaterForest, 2025)
+>  
+> -- 
+> 2.34.1
+> 
 
 With regards,
 Daniel
