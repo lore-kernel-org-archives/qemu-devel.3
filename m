@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B3EBCE9D63
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A1C0CE9D5B
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:45:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd9Bf-00021n-GB; Tue, 06 Jan 2026 10:41:36 -0500
+	id 1vd9Eu-0003jJ-D7; Tue, 06 Jan 2026 10:44:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vd9BF-0001r7-Cj
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:41:11 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vd9Ej-0003hF-8t
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:44:45 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vd9BB-0003N8-Qg
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:41:09 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47d3ffa6720so10903305e9.0
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 07:41:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vd9Eh-0003lS-Nk
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:44:45 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-477a219dbcaso9190735e9.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 07:44:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767714062; x=1768318862; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=4raLPLwDw2qVhH4Xs42DMzR/cpvh3kuQQFmsJx9X4dw=;
- b=q3M3dOAKxXaXq3kbf1BEYogFfBqYtsDmvwWZBzg7yQIMcS5MGvSdYPoXeBWX2fNpcT
- +y1tKxrrUMvVUPzkETujZ8cI50q1JFQVQ1BSvozQHzmtEaTHThX1iG1dtimWV5Dheh3j
- F7qsxPLibDpdSi2Si8Hjf5OhD56pN6y6fvtQigELrwv9dQD0oZmF1x78TjAUdE8vrNaH
- qeVQvIrPtn9hqq3M6jF8NWf3cPEFp3lLd4xEFydZBFlISR/6mXFOiFV+Muujzsn2ltTB
- gOfFEH1BNh/bg2lJ5rghfLv009kxDJrWhWAbg8JxLW+JIADHWrUlfjOn1zt8P1dggNAB
- 3S1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767714062; x=1768318862;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1767714282; x=1768319082; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4raLPLwDw2qVhH4Xs42DMzR/cpvh3kuQQFmsJx9X4dw=;
- b=I4sReeVIcfNHsIkjF1PdAo9oC0nuWLoY0Eawm+vlO6z2gzOYakfljevAeZ0ZO6Wvgb
- wsKYjSc0jXWsxwmH3ZEDo9NjwhNN0VuumpaHOxm86lkcBM64+RZtzGZZPfRKaJ/cHSRw
- jPnwGmtJiq/Sy9ZXHXm4lpkVO9uNgPh02IJHc+rOIwRMRNwKrD/W9F447jCkK8kyEwoU
- H0cthp5nc+QaiIOtKd5z+qhRN/XEQSE82TFH9LzmQHbypPIPdTLuB5enTx/BdHT5HtXS
- lxCP2ADKO5fmGVeZA8+h/zm2t2q/0sTN7CwEYULTSsDI9Zumr4VjmJgtEZTbk8YZnrFT
- p6Bw==
-X-Gm-Message-State: AOJu0Yz+sZ17GHMfv27nMzSHMEZonSECgonqgaP16u9Pt6omBiKMjL3z
- +DvxRmqxNd6S+r0fuuS+d+cByKiPQ6qRqX6B1EJoEOo56+2rvybj3TCLyBpxIZE6ZhdL73nzM+b
- mUdSr8BU=
-X-Gm-Gg: AY/fxX7WbBiJrmcePRFya/1sN9Ln5qDyrKtNbiKaZk52xl0smx9LS8pnMi+pXWb3GYh
- o5qoDPEJep0pbBzXRQTcVNOXJPoqzetr4Ev3j+kqI9ngsagJdR5YGfxnLKYMEiWYBs3y69qWFzv
- PuGqZUV0T9fy8dXqIKdop1SE/X3pqug102bXo7YxACBkTZEevc1HW21ukyq3rDEzMl/ZjUS3dRU
- PXkRQ45EdXaSPLwLLSIloudQl8hWQQcg91eMCVmkFrTB2ul9epTnMSEeuNpcKj2Y3jsWKvyhCqa
- /CgbtvsRWc4K5fBbJxXdfthsVKLVURj828poW+WM8haHE+59P5cUqRs6gP+3nMOmGJmEmJvHwiH
- Y8u9o4NChZzgLEk+YaeWctHLNP9qIVbfYUH59mW3vC30/R52iD9I+WZdk0QmgBwj/9hVAhnVR5o
- +s6V9ZQ9vf0LKH3uE=
-X-Google-Smtp-Source: AGHT+IHIrvW9FE2+jYcDrPhMYZRQLNv+9WKs776WoIo6kaye4XpQSA1DfxfWrp2lXpnx92xKVjdd5Q==
-X-Received: by 2002:a5d:5f55:0:b0:432:5bac:391c with SMTP id
- ffacd0b85a97d-432bc9f6541mr4400960f8f.52.1767714062436; 
- Tue, 06 Jan 2026 07:41:02 -0800 (PST)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:f4c7:3474:b1ea:cee2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5edd51sm4841351f8f.29.2026.01.06.07.41.02
+ bh=C4uN5uXdoTBE7EsXhGHtQaJDgdbOeDQnOa3KpE6/cks=;
+ b=uqhBF84HndJ8ezPkUgg53FnxQ8C0swy/omPAfH7GruaLr1OPUeqQizP1VKFr1qiSSa
+ mUQjtbSvKBhSEejBZj0o4KrMS8ywciEHOZqw1YUiGsenUUCiE4YC+wVEVD6q56cR/zRt
+ ops2mPihnkCGx2xG+qx877js4SVFrL1VEvQWDd3L0+M2jBHvS9zQFtaAOYJGpJE+K4D6
+ 0mdo6ewiIoyD+Oim6TlkvMGHagSpR5rRMof/ugkv38LJpHZoYzFGJj4jES2n/shkQqIx
+ 0awq6IsMZEe2S8nrhF0T8eKhUTy6yL2IIb8Gp95IMkTW3oWF3nVxN8uwtBI0XAXxQfuK
+ SUow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767714282; x=1768319082;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=C4uN5uXdoTBE7EsXhGHtQaJDgdbOeDQnOa3KpE6/cks=;
+ b=oZioRBZRN1VvhvMttcoeMPqHKtfZrvM5EjCKI2LFhNVpjI5BLV6tKNC1Ys0l+24Pz9
+ 5dbejCvqzZXqmkPMZy9Q7GGrYZTAyRyVxddemdVCUdfF/ugwlzeqnNGw0NZAX1SmoyPR
+ OpS1jqq68JaUVoU/D7TE879nWo0acvYHhI0OS5DTigZKhPQqXOvMXukm5ifSKR/cPykk
+ nP3T38MP7xEo4ZkOEIKlbFHL9+KA8CC/ywErCTYEL0w7lZdvLEunhl2NDuE51qamMlLX
+ jvWDpton/9sVkYUE44CGVgP3LAtm4yJOQkiFCNBM0jCCjEdztQ9WKqkXcssl2J+Ik2lN
+ vRMA==
+X-Gm-Message-State: AOJu0Yzn3GbyyyF6nRCq7hgf214zJ9HjTnzKQR9hXuy0Kp8fHx1Qr/Aw
+ geHELuGboVDqdRm0NHlLdvgSNkmeYGRMhUF6Zn+g1k4Qo4Kx/7DrN8yWdUP3rWaKAF6KV2Aihp+
+ xntBB
+X-Gm-Gg: AY/fxX6489cukJ9WySsMqfcjce1zxLA4iBgEfzBgGSOnWxyyH5N808oAF6BKz3LZFi3
+ lmXwcedjOV3IJbah75wOzMWwpGKj5A86qBYalkkwWgokpPrAmcsi9jN95uaqm/gGxKPBzO8GPOa
+ 0SIJbEg0df1r+TH/Hf3utBMOAyCF4KB2CPzq7SMFvnvmgq1zJ8dbkBh9/7fCDBrDSxQ5RqJUDmG
+ tBMwXHozPa2wC59hSWqbkif8nq/HQu8uk7AJEjEcgw5idiHShKy/dq+8DT5/K5ASZ3RydgztuNt
+ OMZUURi5LIRrMO941He3BtOGx6oKUYJNAEU+Whdz0OnmL6GZZ4ENMAbkl4Dg2U0Wbv2oqDBdKkm
+ pNIbUSv/OuDCJQ1eX3xHRX3t3IplIEn+arO1IUYfk09srfvIlxHl0YEOQ3oOgNCfIY1QOWsSmPy
+ WOr2L+ss6ztwQ=
+X-Google-Smtp-Source: AGHT+IFALDbOY7xpNzg74Vwmldt6+UDHQH7oZiRymlJYNkZi673P3qGJPj6l0SHIcSPAo4aUJYfWKQ==
+X-Received: by 2002:a05:6000:220e:b0:42b:39ee:2858 with SMTP id
+ ffacd0b85a97d-432bc9fac71mr4683400f8f.42.1767714281992; 
+ Tue, 06 Jan 2026 07:44:41 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd5df96asm4890060f8f.28.2026.01.06.07.44.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Jan 2026 07:41:02 -0800 (PST)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Tue, 06 Jan 2026 15:40:48 +0000
-Subject: [PATCH] linux-user/elfload.c: Correction to HWCAP2 accessor
+ Tue, 06 Jan 2026 07:44:41 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B0EFF5F87A;
+ Tue, 06 Jan 2026 15:44:40 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Martin =?utf-8?Q?Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>
+Cc: <qemu-devel@nongnu.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+In-Reply-To: <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
+ ("Martin =?utf-8?Q?Kr=C3=B6ning=22's?= message of "Tue, 6 Jan 2026 14:43:05
+ +0100")
+References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
+ <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
+User-Agent: mu4e 1.12.14; emacs 30.1
+Date: Tue, 06 Jan 2026 15:44:40 +0000
+Message-ID: <87y0maagpj.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260106-fix-hwcap2-sve2-v1-1-1d70dff63370@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAP8sXWkC/x2MywqAIBAAfyX23IIKmfUr0cHHWnupULBA+vek4
- 8DMVMiUmDLMXYVEhTOfRwPZd+B3e2yEHBqDEkoLKTRGfnC/vb0U5kIKTQjOx0E6M07QqitRU/7
- jsr7vBy0BWrFhAAAA
-To: qemu-devel@nongnu.org
-Cc: Jim MacArthur <jim.macarthur@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,35 +108,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-get_elf_hwcap was used when get_elf_hwcap2 should have been.
+Martin Kr=C3=B6ning <martin.kroening@eonerc.rwth-aachen.de> writes:
 
-Fixes: fcac98d0ba8b ("linux-user: Remove ELF_HWCAP2")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3259
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
- linux-user/elfload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+(adding Philippe to CC)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0002d5be2f..35471c0c9a 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -708,7 +708,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
-     NEW_AUX_ENT(AT_EXECFN, info->file_string);
- 
-     if (HAVE_ELF_HWCAP2) {
--        NEW_AUX_ENT(AT_HWCAP2, get_elf_hwcap(thread_cpu));
-+        NEW_AUX_ENT(AT_HWCAP2, get_elf_hwcap2(thread_cpu));
-     }
-     if (u_base_platform) {
-         NEW_AUX_ENT(AT_BASE_PLATFORM, u_base_platform);
+> These functions are needed for CPUs that support runtime-configurable end=
+ianness.
+> In those cases, components such as semihosting need to perform
+> runtime-dependent byte swaps.
+>
+> Signed-off-by: Martin Kr=C3=B6ning <martin.kroening@eonerc.rwth-aachen.de>
+> ---
+>  include/exec/tswap.h | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
+>
+> diff --git a/include/exec/tswap.h b/include/exec/tswap.h
+> index 72219e2c43..9aaafb12f3 100644
+> --- a/include/exec/tswap.h
+> +++ b/include/exec/tswap.h
+> @@ -10,6 +10,7 @@
+>=20=20
+>  #include "qemu/bswap.h"
+>  #include "qemu/target-info.h"
+> +#include "hw/core/cpu.h"
+>=20=20
+>  /*
+>   * If we're in target-specific code, we can hard-code the swapping
+> @@ -21,6 +22,8 @@
+>  #define target_needs_bswap()  (HOST_BIG_ENDIAN !=3D target_big_endian())
+>  #endif /* COMPILING_PER_TARGET */
+>=20=20
+> +#define cpu_needs_bswap(cpu)  (HOST_BIG_ENDIAN !=3D cpu_virtio_is_big_en=
+dian(cpu))
+> +
 
----
-base-commit: 0fc482b73d8e085d1375b4e17b0647fd2e6fe8f0
-change-id: 20260106-fix-hwcap2-sve2-8ddbcf51b879
+Hmm looking at the description:
 
-Best regards,
--- 
-Jim MacArthur <jim.macarthur@linaro.org>
+    /**
+     * @virtio_is_big_endian: Callback to return %true if a CPU which suppo=
+rts
+     * runtime configurable endianness is currently big-endian.
+     * Non-configurable CPUs can use the default implementation of this met=
+hod.
+     * This method should not be used by any callers other than the pre-1.0
+     * virtio devices.
+     */
+    bool (*virtio_is_big_endian)(CPUState *cpu);
 
+I'm not sure if we want to expand the usage of this hack. I think
+Philippe is hoping to get rid of these warts eventually. Of course we
+could rename the method and just provide a way to get the current
+systems endianess.
+
+
+>  static inline uint16_t tswap16(uint16_t s)
+>  {
+>      if (target_needs_bswap()) {
+> @@ -48,6 +51,33 @@ static inline uint64_t tswap64(uint64_t s)
+>      }
+>  }
+>=20=20
+> +static inline uint16_t cpu_tswap16(CPUState *cpu, uint16_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
+> +        return bswap16(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
+> +
+> +static inline uint32_t cpu_tswap32(CPUState *cpu, uint32_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
+> +        return bswap32(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
+> +
+> +static inline uint64_t cpu_tswap64(CPUState *cpu, uint64_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
+> +        return bswap64(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
+> +
+>  static inline void tswap16s(uint16_t *s)
+>  {
+>      if (target_needs_bswap()) {
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
