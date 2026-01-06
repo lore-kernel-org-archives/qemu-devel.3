@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67081CD0437
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 06:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B244CD043D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 06:17:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd0LU-0005RB-96; Tue, 06 Jan 2026 01:15:08 -0500
+	id 1vd0Jr-0002qp-Md; Tue, 06 Jan 2026 01:13:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vd0L4-0004Z9-W1
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:14:48 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
+ id 1vd0Jp-0002oy-6g
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:13:25 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vd0L0-0007KE-BG
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:14:42 -0500
+ id 1vd0Jm-0007Eu-Fv
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:13:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767680079; x=1799216079;
+ t=1767680002; x=1799216002;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=FF9x/Ip7iFJCv2UXPRRqxfSQ8WgyjtutSEexjOCvvXg=;
- b=iN89343z83MPel0X1z0+umtt0qD17pCI+/Lhhc8Ph/Icr+VwzhhPruAg
- d+ZH9m21HWa8slbKv0Hv11U2x6ZLi0XXkhsWJHgxNfmw8dmtGczOHRP1z
- 30y7VUKfIyvIgiOD93Y0yc/pnHrj/O1L0K6TjNoUZtuJvqbKmEGeQwOJv
- 3SNL1W7/6uWNr+0VJZ7lJyrgI8Qiop1fLSdclXL2LT6B9h7paU1I7uJqH
- 9Fnf0Y6a9BtPcA1wzji1Pxt4dXmiAOgvK27uqcB2tSsHeMMsDR3h/4NGF
- 8GJhsJ6z5oL+BXxV3T0KQSUsZ45oALGMHlJMiBqd1MCXBYs9zAH+7ByI5 w==;
-X-CSE-ConnectionGUID: SOnP6Ai0SYWZSwvwAWMG0A==
-X-CSE-MsgGUID: fSKUjnt7QLasXmtU7KGeYw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11662"; a="69094082"
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="69094082"
+ bh=58C3G5aICs9jd2BUr/6PqNHQFhem1VZRnT0X4zuPIxs=;
+ b=llMlnfLmntBTeENxwF2FnB70DwSLg6AiohegO7QfMLrA34HM8+colVby
+ In41MDetD/Yfeb+9Zw/0BNSk846g76JZYBHvrVpdOiu8PSwbQ2O4fuAum
+ cyhUWGHiEB/eZ1YiMbPkuYyB8twEpSOVW4i2uZhs+/ynLNTnj5MwIzx9r
+ CEfnJjPIF0w3qnZ9AKuvo+X9f0ZKLeiruHYOefsOkL19bWizlECcHduNt
+ xRdEnzBDpsY/mGzyCqq/BuI5qlpR8uoiFpiKNFOEfLuYwRLjuWBSiswW8
+ jRX/LoHJkcyTNWaUrqMNNYQ7CCj2Ph66e4zGwafuIlrdkXZwmBXzbaLef g==;
+X-CSE-ConnectionGUID: cJUPNhxdRhyNkIeeMBzXOg==
+X-CSE-MsgGUID: WvTgQuy0QpyhloMWGOTTQg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11662"; a="69087544"
+X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="69087544"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 22:14:32 -0800
-X-CSE-ConnectionGUID: 9WQBuvz8QzCsOMW/4hjrfw==
-X-CSE-MsgGUID: Myj8NlxkRNWUmf1XEtV8pw==
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Jan 2026 22:13:20 -0800
+X-CSE-ConnectionGUID: I3PTbNLVTYayBcrfiPemrA==
+X-CSE-MsgGUID: 27O1sOsoR6+a7qSzW0fx3w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="202588928"
+X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="202588681"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 22:14:27 -0800
+ 05 Jan 2026 22:13:17 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,15 +53,17 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v10 17/19] intel_iommu: Add migration support with x-flts=on
-Date: Tue,  6 Jan 2026 01:12:59 -0500
-Message-ID: <20260106061304.314546-18-zhenzhong.duan@intel.com>
+Subject: [PATCH v10 01/19] intel_iommu: Rename vtd_ce_get_rid2pasid_entry to
+ vtd_ce_get_pasid_entry
+Date: Tue,  6 Jan 2026 01:12:43 -0500
+Message-ID: <20260106061304.314546-2-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260106061304.314546-1-zhenzhong.duan@intel.com>
 References: <20260106061304.314546-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18;
+Received-SPF: pass client-ip=192.198.163.14;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -86,35 +88,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When x-flts=on, we set up bindings to nested HWPT in host, after
-migration, VFIO device binds to nesting parent HWPT by default.
-We need to re-establish the bindings to nested HWPT, or else device
-DMA will break.
+In early days vtd_ce_get_rid2pasid_entry() was used to get pasid entry
+of rid2pasid, then it was extended to get any pasid entry. So a new name
+vtd_ce_get_pasid_entry is better to match what it actually does.
+
+No functional change intended.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 ---
- hw/i386/intel_iommu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/i386/intel_iommu.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 08236b85ee..f971cdd14c 100644
+index 224b7b9479..436a30288b 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -4090,6 +4090,13 @@ static int vtd_post_load(void *opaque, int version_id)
-      */
-     vtd_switch_address_space_all(iommu);
- 
-+    /*
-+     * Bindings to nested HWPT in host is set up dynamically depending
-+     * on pasid entry configuration from guest. After migration, we
-+     * need to re-establish the bindings before restoring device's DMA.
-+     */
-+    vtd_replay_pasid_bindings_all(iommu);
-+
+@@ -954,10 +954,8 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
      return 0;
  }
  
+-static int vtd_ce_get_rid2pasid_entry(IntelIOMMUState *s,
+-                                      VTDContextEntry *ce,
+-                                      VTDPASIDEntry *pe,
+-                                      uint32_t pasid)
++static int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
++                                  VTDPASIDEntry *pe, uint32_t pasid)
+ {
+     dma_addr_t pasid_dir_base;
+     int ret = 0;
+@@ -1035,7 +1033,7 @@ static uint32_t vtd_get_iova_level(IntelIOMMUState *s,
+     VTDPASIDEntry pe;
+ 
+     if (s->root_scalable) {
+-        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
++        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
+         if (s->flts) {
+             return VTD_PE_GET_FL_LEVEL(&pe);
+         } else {
+@@ -1058,7 +1056,7 @@ static uint32_t vtd_get_iova_agaw(IntelIOMMUState *s,
+     VTDPASIDEntry pe;
+ 
+     if (s->root_scalable) {
+-        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
++        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
+         return 30 + ((pe.val[0] >> 2) & VTD_SM_PASID_ENTRY_AW) * 9;
+     }
+ 
+@@ -1126,7 +1124,7 @@ static dma_addr_t vtd_get_iova_pgtbl_base(IntelIOMMUState *s,
+     VTDPASIDEntry pe;
+ 
+     if (s->root_scalable) {
+-        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
++        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
+         if (s->flts) {
+             return pe.val[2] & VTD_SM_PASID_ENTRY_FLPTPTR;
+         } else {
+@@ -1532,7 +1530,7 @@ static int vtd_ce_rid2pasid_check(IntelIOMMUState *s,
+      * has valid rid2pasid setting, which includes valid
+      * rid2pasid field and corresponding pasid entry setting
+      */
+-    return vtd_ce_get_rid2pasid_entry(s, ce, &pe, PCI_NO_PASID);
++    return vtd_ce_get_pasid_entry(s, ce, &pe, PCI_NO_PASID);
+ }
+ 
+ /* Map a device to its corresponding domain (context-entry) */
+@@ -1621,7 +1619,7 @@ static uint16_t vtd_get_domain_id(IntelIOMMUState *s,
+     VTDPASIDEntry pe;
+ 
+     if (s->root_scalable) {
+-        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
++        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
+         return VTD_SM_PASID_ENTRY_DID(pe.val[1]);
+     }
+ 
+@@ -1697,7 +1695,7 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
+     int ret;
+ 
+     if (s->root_scalable) {
+-        ret = vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
++        ret = vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
+         if (ret) {
+             /*
+              * This error is guest triggerable. We should assumt PT
+@@ -3083,7 +3081,7 @@ static inline int vtd_dev_get_pe_from_pasid(VTDAddressSpace *vtd_as,
+         return ret;
+     }
+ 
+-    return vtd_ce_get_rid2pasid_entry(s, &ce, pe, vtd_as->pasid);
++    return vtd_ce_get_pasid_entry(s, &ce, pe, vtd_as->pasid);
+ }
+ 
+ static int vtd_pasid_entry_compare(VTDPASIDEntry *p1, VTDPASIDEntry *p2)
+@@ -5161,7 +5159,7 @@ static int vtd_pri_perform_implicit_invalidation(VTDAddressSpace *vtd_as,
+     if (ret) {
+         return -EINVAL;
+     }
+-    ret = vtd_ce_get_rid2pasid_entry(s, &ce, &pe, vtd_as->pasid);
++    ret = vtd_ce_get_pasid_entry(s, &ce, &pe, vtd_as->pasid);
+     if (ret) {
+         return -EINVAL;
+     }
 -- 
 2.47.1
 
