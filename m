@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8ECFCD043D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 06:14:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16AB7CD043B
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 06:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd0Jq-0002p8-2H; Tue, 06 Jan 2026 01:13:26 -0500
+	id 1vd0K6-00035E-IX; Tue, 06 Jan 2026 01:13:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vd0Jn-0002nQ-HO
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:13:23 -0500
+ id 1vd0K4-00033f-Qb
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:13:41 -0500
 Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vd0Jk-0007Ed-JZ
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:13:23 -0500
+ id 1vd0K3-0007Gj-3U
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 01:13:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767680000; x=1799216000;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=i7AMha/Ri/atfwjBWKv1K2mOg5F1eHz84D/xRvFSpAM=;
- b=S4qSnXg4VJ8vv6fGmCkEuB1/4l9iiwu/YnQxMc01+6NYKweK6rhlYMXp
- hCPh2uvxhmaL6qW0oo5pbe6AHd7bBCqEbTzxuZdckg60MTZqnlgqPSo6x
- 01FpAF/Cebo1QjBaTvxe2nXJ+KbpmeRIso1B94YuM8gX2MuE6RD7Nbl7x
- AkCJDtoWQfl3GnGXDEUNtjIgw9mhgHqZW/Dur/V5wzGu3MGHkySCYN/w6
- u7cp2k483MXWAUnssV4HKCCfiK3O16jOkqc5X8JG0eHSO4n1klARxQjd6
- qJvKnLYrLtKSi75v0oY6VJOUHa24om55aDL8KP2uKzFFhPz7ULB0uplna g==;
-X-CSE-ConnectionGUID: t7+RwJeISLG1G7H7Huz+TA==
-X-CSE-MsgGUID: d+eSM2iERnes9ye2Z4NMGw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11662"; a="69087539"
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="69087539"
+ t=1767680019; x=1799216019;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=SJwkG6jprhXCx9m9N8APQS6VlGcs6X1xwcFvQGBX1lI=;
+ b=YBwt1tL+tZ33nHO4Rm6EEUa75d3yr41eEzDBp8MuskU4xgUg7m6qnuLe
+ 7cTK5nOX+UmxkRehUcv+t7FUfJvSFnN0YZKQc7Cy6mdu+v28wHrZ7rMBV
+ 68AQ2w+iQovF8qpurB0QomYxeSh1wNcenZN1vMQyjrGJp+mXlzprdIFiR
+ v2zHHcRyjygYumwIbSPEClcz9McWptVhLDuABk23BsYl498OkNWFkckN+
+ FMyks0rA7eGv9BTGfjr0rOKekee/Iaue/XAUWwg17ThhktAEuTzuoKUJE
+ H1phCM8YapYlb/+JZpwmHU6pk6TibePZNbK3NUTAMOJzBtcVjLCS1qc6t Q==;
+X-CSE-ConnectionGUID: iTnYYkYcSFCRv4peBkcfvg==
+X-CSE-MsgGUID: tqODPQ3ESBGmlE1b7vC+kw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11662"; a="69087586"
+X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="69087586"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 22:13:16 -0800
-X-CSE-ConnectionGUID: +LPa/C27SJCy0QtzBkDMUQ==
-X-CSE-MsgGUID: dp2H+9pIS+iA+cE48trdMA==
+ 05 Jan 2026 22:13:37 -0800
+X-CSE-ConnectionGUID: DvUetZwARCeVoAIjpe/g9A==
+X-CSE-MsgGUID: veD2H1OpRRiNKUGwkP+qmg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="202588674"
+X-IronPort-AV: E=Sophos;i="6.21,204,1763452800"; d="scan'208";a="202588731"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jan 2026 22:13:12 -0800
+ 05 Jan 2026 22:13:34 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,11 +53,12 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v10 00/19] intel_iommu: Enable first stage translation for
- passthrough device
-Date: Tue,  6 Jan 2026 01:12:42 -0500
-Message-ID: <20260106061304.314546-1-zhenzhong.duan@intel.com>
+Subject: [PATCH v10 05/19] hw/pci: Introduce pci_device_get_viommu_flags()
+Date: Tue,  6 Jan 2026 01:12:47 -0500
+Message-ID: <20260106061304.314546-6-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260106061304.314546-1-zhenzhong.duan@intel.com>
+References: <20260106061304.314546-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,245 +87,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Introduce a new PCIIOMMUOps optional callback, get_viommu_flags() which
+allows to retrieve flags exposed by a vIOMMU. The first planned vIOMMU
+device flag is VIOMMU_FLAG_WANT_NESTING_PARENT that advertises the
+support of HW nested stage translation scheme and wants other sub-system
+like VFIO's cooperation to create nesting parent HWPT.
 
-Based on Cédric's suggestions[1], The nesting series v8 is split to
-"base nesting series" + "ERRATA_772415_SPR17 quirk series", this is the
-base nesting series.
+pci_device_get_viommu_flags() is a wrapper that can be called on a PCI
+device potentially protected by a vIOMMU.
 
-For passthrough device with intel_iommu.x-flts=on, we don't do shadowing of
-guest page table but pass first stage page table to host side to construct a
-nested HWPT. There was some effort to enable this feature in old days, see
-[2] for details.
+get_viommu_flags() is designed to return 64bit bitmap of purely vIOMMU
+flags which are only determined by user's configuration, no host
+capabilities involved. Reasons are:
 
-The key design is to utilize the dual-stage IOMMU translation (also known as
-IOMMU nested translation) capability in host IOMMU. As the below diagram shows,
-guest I/O page table pointer in GPA (guest physical address) is passed to host
-and be used to perform the first stage address translation. Along with it,
-modifications to present mappings in the guest I/O page table should be followed
-with an IOTLB invalidation.
+1. host may has heterogeneous IOMMUs, each with different capabilities
+2. this is migration friendly, return value is consistent between source
+   and target.
 
-        .-------------.  .---------------------------.
-        |   vIOMMU    |  | Guest I/O page table      |
-        |             |  '---------------------------'
-        .----------------/
-        | PASID Entry |--- PASID cache flush --+
-        '-------------'                        |
-        |             |                        V
-        |             |           I/O page table pointer in GPA
-        '-------------'
-    Guest
-    ------| Shadow |---------------------------|--------
-          v        v                           v
-    Host
-        .-------------.  .-----------------------------.
-        |   pIOMMU    |  | First stage for GIOVA->GPA  |
-        |             |  '-----------------------------'
-        .----------------/  |
-        | PASID Entry |     V (Nested xlate)
-        '----------------\.--------------------------------------------.
-        |             |   | Second stage for GPA->HPA, unmanaged domain|
-        |             |   '--------------------------------------------'
-        '-------------'
-<Intel VT-d Nested translation>
+Note that this op will be invoked at the attach_device() stage, at which
+point host IOMMU capabilities are not yet forwarded to the vIOMMU through
+the set_iommu_device() callback that will be after the attach_device().
 
-This series reuse VFIO device's default HWPT as nesting parent instead of
-creating new one. This way avoids duplicate code of a new memory listener,
-all existing feature from VFIO listener can be shared, e.g., ram discard,
-dirty tracking, etc. Two limitations are: 1) not supporting VFIO device
-under a PCI bridge with emulated device, because emulated device wants
-IOMMU AS and VFIO device stick to system AS; 2) not supporting kexec or
-reboot from "intel_iommu=on,sm_on" to "intel_iommu=on,sm_off" on platform
-with ERRATA_772415_SPR17, because VFIO device's default HWPT is created
-with NEST_PARENT flag, kernel inhibit RO mappings when switch to shadow
-mode.
+See below sequence:
 
-This series is also a prerequisite work for vSVA, i.e. Sharing guest
-application address space with passthrough devices.
+  vfio_device_attach():
+      iommufd_cdev_attach():
+          pci_device_get_viommu_flags() for HW nesting cap
+          create a nesting parent HWPT
+          attach device to the HWPT
+          vfio_device_hiod_create_and_realize() creating hiod
+  ...
+  pci_device_set_iommu_device(hiod)
 
-There are some interactions between VFIO and vIOMMU
-* vIOMMU registers PCIIOMMUOps [set|unset]_iommu_device to PCI
-  subsystem. VFIO calls them to register/unregister HostIOMMUDevice
-  instance to vIOMMU at vfio device realize stage.
-* vIOMMU registers PCIIOMMUOps get_viommu_flags to PCI subsystem.
-  VFIO calls it to get vIOMMU exposed flags.
-* vIOMMU calls HostIOMMUDeviceIOMMUFD interface [at|de]tach_hwpt
-  to bind/unbind device to IOMMUFD backed domains, either nested
-  domain or not.
-
-See below diagram:
-
-        VFIO Device                                 Intel IOMMU
-    .-----------------.                         .-------------------.
-    |                 |                         |                   |
-    |       .---------|PCIIOMMUOps              |.-------------.    |
-    |       | IOMMUFD |(set/unset_iommu_device) || Host IOMMU  |    |
-    |       | Device  |------------------------>|| Device list |    |
-    |       .---------|(get_viommu_flags)       |.-------------.    |
-    |                 |                         |       |           |
-    |                 |                         |       V           |
-    |       .---------|  HostIOMMUDeviceIOMMUFD |  .-------------.  |
-    |       | IOMMUFD |            (attach_hwpt)|  | Host IOMMU  |  |
-    |       | link    |<------------------------|  |   Device    |  |
-    |       .---------|            (detach_hwpt)|  .-------------.  |
-    |                 |                         |       |           |
-    |                 |                         |       ...         |
-    .-----------------.                         .-------------------.
-
-Below is an example to enable first stage translation for passthrough device:
-
-    -M q35,...
-    -device intel-iommu,x-scalable-mode=on,x-flts=on...
-    -object iommufd,id=iommufd0 -device vfio-pci,iommufd=iommufd0,...
-
-Test done:
-- VFIO devices hotplug/unplug
-- different VFIO devices linked to different iommufds
-- vhost net device ping test
-- migration with QAT passthrough
-
-PATCH01-08: Some preparing work
-PATCH09-10: Compatibility check between vIOMMU and Host IOMMU
-PATCH11-16: Implement first stage translation for passthrough device
-PATCH17:    Add migration support and optimization
-PATCH18:    Enable first stage translation for passthrough device
-PATCH19:    Add doc
-
-Qemu code can be found at [3], it's based on master 159107e.
-
-Fault event injection to guest isn't supported in this series, we presume guest
-kernel always construct correct first stage page table for passthrough device.
-For emulated devices, the emulation code already provided first stage fault
-injection.
-
-TODO:
-- Fault event injection to guest when HW first stage page table faults
-
-[1] https://lore.kernel.org/qemu-devel/bbc8412b-25c3-4c95-9fde-a1c9c29b54ce@redhat.com/
-[2] https://patchwork.kernel.org/project/kvm/cover/20210302203827.437645-1-yi.l.liu@intel.com/
-[3] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting.v10
-
-Thanks
-Zhenzhong
-
-Changelog:
-v10:
-- All headers under include/hw/ have been moved to include/hw/core/, do
-  the same for iommu.h (Cédric)
-
-v9:
-- split v8 to base nesting series + ERRATA_772415_SPR17 series (Cédric)
-- s/fs_hwpt/fs_hwpt_id, s/vtd_bind_guest_pasid/vtd_propagate_guest_pasid (Eric)
-- polish error msg when CONFIG_VTD_ACCEL isn't defined (Eric)
-- refactor hwpt_id assignment in vtd_device_attach_iommufd() (Eric)
-
-v8:
-- add hw/i386/intel_iommu_accel.[hc] to hold accel code (Eric)
-- return bool for all vtd accel related functions (Cédric, Eric)
-- introduce a new PCIIOMMUOps::get_host_iommu_quirks() (Eric, Nicolin)
-- minor polishment to comment and code (Cédric, Eric)
-- drop some R-b as they have changes needing review again
-
-v7:
-- s/host_iommu_extract_vendor_caps/host_iommu_extract_quirks (Nicolin)
-- s/RID_PASID/PASID_0 (Eric)
-- drop rid2pasid check in vtd_do_iommu_translate (Eric)
-- refine DID check in vtd_pasid_cache_sync_locked (Liuyi)
-- refine commit log (Nicolin, Eric, Liuyi)
-- Fix doc build (Cédric)
-- add migration support
-
-v6:
-- delete RPS capability related supporting code (Eric, Yi)
-- use terminology 'first/second stage' to replace 'first/second level" (Eric, Yi)
-- use get_viommu_flags() instead of get_viommu_caps() (Nicolin)
-- drop non-RID_PASID related code and simplify pasid invalidation handling (Eric, Yi)
-- drop the patch that handle pasid replay when context invalidation (Eric)
-- move vendor specific cap check from VFIO core to backend/iommufd.c (Nicolin)
-
-v5:
-- refine commit log of patch2 (Cédric, Nicolin)
-- introduce helper vfio_pci_from_vfio_device() (Cédric)
-- introduce helper vfio_device_viommu_get_nested() (Cédric)
-- pass 'bool bypass_ro' argument to vfio_listener_valid_section() instead of 'VFIOContainerBase *' (Cédric)
-- fix a potential build error reported by Jim Shu
-
-v4:
-- s/VIOMMU_CAP_STAGE1/VIOMMU_CAP_HW_NESTED (Eric, Nicolin, Donald, Shameer)
-- clarify get_viommu_cap() return pure emulated caps and explain reason in commit log (Eric)
-- retrieve the ce only if vtd_as->pasid in vtd_as_to_iommu_pasid_locked (Eric)
-- refine doc comment and commit log in patch10-11 (Eric)
-
-v3:
-- define enum type for VIOMMU_CAP_* (Eric)
-- drop inline flag in the patch which uses the helper (Eric)
-- use extract64 in new introduced MACRO (Eric)
-- polish comments and fix typo error (Eric)
-- split workaround patch for ERRATA_772415_SPR17 to two patches (Eric)
-- optimize bind/unbind error path processing
-
-v2:
-- introduce get_viommu_cap() to get STAGE1 flag to create nesting parent HWPT (Liuyi)
-- reuse VFIO's default HWPT as parent HWPT of nested translation (Nicolin, Liuyi)
-- abandon support of VFIO device under pcie-to-pci bridge to simplify design (Liuyi)
-- bypass RO mapping in VFIO's default HWPT if ERRATA_772415_SPR17 (Liuyi)
-- drop vtd_dev_to_context_entry optimization (Liuyi)
-
-v1:
-- simplify vendor specific checking in vtd_check_hiod (Cédric, Nicolin)
-- rebase to master
-
-
-Yi Liu (3):
-  intel_iommu_accel: Propagate PASID-based iotlb invalidation to host
-  intel_iommu: Replay all pasid bindings when either SRTP or TE bit is
-    changed
-  intel_iommu: Replay pasid bindings after context cache invalidation
-
-Zhenzhong Duan (16):
-  intel_iommu: Rename vtd_ce_get_rid2pasid_entry to
-    vtd_ce_get_pasid_entry
-  intel_iommu: Delete RPS capability related supporting code
-  intel_iommu: Update terminology to match VTD spec
-  hw/pci: Export pci_device_get_iommu_bus_devfn() and return bool
-  hw/pci: Introduce pci_device_get_viommu_flags()
-  intel_iommu: Implement get_viommu_flags() callback
-  intel_iommu: Introduce a new structure VTDHostIOMMUDevice
-  vfio/iommufd: Force creating nesting parent HWPT
-  intel_iommu_accel: Check for compatibility with IOMMUFD backed device
-    when x-flts=on
-  intel_iommu_accel: Fail passthrough device under PCI bridge if
-    x-flts=on
-  intel_iommu_accel: Stick to system MR for IOMMUFD backed host device
-    when x-flts=on
-  intel_iommu: Add some macros and inline functions
-  intel_iommu_accel: Bind/unbind guest page table to host
-  intel_iommu: Add migration support with x-flts=on
-  intel_iommu: Enable host device when x-flts=on in scalable mode
-  docs/devel: Add IOMMUFD nesting documentation
-
- MAINTAINERS                    |   2 +
- docs/devel/vfio-iommufd.rst    |  17 ++
- hw/i386/intel_iommu_accel.h    |  51 ++++
- hw/i386/intel_iommu_internal.h | 155 +++++++---
- include/hw/core/iommu.h        |  25 ++
- include/hw/i386/intel_iommu.h  |   6 +-
- include/hw/pci/pci.h           |  24 ++
- include/hw/vfio/vfio-device.h  |   2 +
- hw/i386/intel_iommu.c          | 528 +++++++++++++++++++--------------
- hw/i386/intel_iommu_accel.c    | 251 ++++++++++++++++
- hw/pci/pci.c                   |  23 +-
- hw/vfio/device.c               |  12 +
- hw/vfio/iommufd.c              |   9 +
- tests/qtest/intel-iommu-test.c |   4 +-
- hw/i386/Kconfig                |   5 +
- hw/i386/meson.build            |   1 +
- hw/i386/trace-events           |   4 +
- 17 files changed, 833 insertions(+), 286 deletions(-)
- create mode 100644 hw/i386/intel_iommu_accel.h
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ MAINTAINERS             |  1 +
+ include/hw/core/iommu.h | 25 +++++++++++++++++++++++++
+ include/hw/pci/pci.h    | 22 ++++++++++++++++++++++
+ hw/pci/pci.c            | 11 +++++++++++
+ 4 files changed, 59 insertions(+)
  create mode 100644 include/hw/core/iommu.h
- create mode 100644 hw/i386/intel_iommu_accel.c
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cca9b57c02..3ff0d3a4da 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2346,6 +2346,7 @@ F: include/system/iommufd.h
+ F: backends/host_iommu_device.c
+ F: include/system/host_iommu_device.h
+ F: include/qemu/chardev_open.h
++F: include/hw/core/iommu.h
+ F: util/chardev_open.c
+ F: docs/devel/vfio-iommufd.rst
+ 
+diff --git a/include/hw/core/iommu.h b/include/hw/core/iommu.h
+new file mode 100644
+index 0000000000..9b8bb94fc2
+--- /dev/null
++++ b/include/hw/core/iommu.h
+@@ -0,0 +1,25 @@
++/*
++ * General vIOMMU flags
++ *
++ * Copyright (C) 2025 Intel Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_IOMMU_H
++#define HW_IOMMU_H
++
++#include "qemu/bitops.h"
++
++/*
++ * Theoretical vIOMMU flags. Only determined by the vIOMMU device properties and
++ * independent on the actual host IOMMU capabilities they may depend on. Each
++ * flag can be an expectation or request to other sub-system or just a pure
++ * vIOMMU capability. vIOMMU can choose which flags to expose.
++ */
++enum viommu_flags {
++    /* vIOMMU needs nesting parent HWPT to create nested HWPT */
++    VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
++};
++
++#endif /* HW_IOMMU_H */
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index b22d350ba2..868817cc05 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -462,6 +462,18 @@ typedef struct PCIIOMMUOps {
+      * @devfn: device and function number of the PCI device.
+      */
+     void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
++    /**
++     * @get_viommu_flags: get vIOMMU flags
++     *
++     * Optional callback, if not implemented, then vIOMMU doesn't support
++     * exposing flags to other sub-system, e.g., VFIO.
++     *
++     * @opaque: the data passed to pci_setup_iommu().
++     *
++     * Returns: bitmap with each bit representing a vIOMMU flag defined in
++     * enum viommu_flags.
++     */
++    uint64_t (*get_viommu_flags)(void *opaque);
+     /**
+      * @get_iotlb_info: get properties required to initialize a device IOTLB.
+      *
+@@ -644,6 +656,16 @@ bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
+                                  Error **errp);
+ void pci_device_unset_iommu_device(PCIDevice *dev);
+ 
++/**
++ * pci_device_get_viommu_flags: get vIOMMU flags.
++ *
++ * Returns: bitmap with each bit representing a vIOMMU flag defined in
++ * enum viommu_flags. Or 0 if vIOMMU doesn't report any.
++ *
++ * @dev: PCI device pointer.
++ */
++uint64_t pci_device_get_viommu_flags(PCIDevice *dev);
++
+ /**
+  * pci_iommu_get_iotlb_info: get properties required to initialize a
+  * device IOTLB.
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 0d4cf906f0..a136e772a3 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -3021,6 +3021,17 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
+     }
+ }
+ 
++uint64_t pci_device_get_viommu_flags(PCIDevice *dev)
++{
++    PCIBus *iommu_bus;
++
++    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
++    if (iommu_bus && iommu_bus->iommu_ops->get_viommu_flags) {
++        return iommu_bus->iommu_ops->get_viommu_flags(iommu_bus->iommu_opaque);
++    }
++    return 0;
++}
++
+ int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
+                          bool exec_req, hwaddr addr, bool lpig,
+                          uint16_t prgi, bool is_read, bool is_write)
 -- 
 2.47.1
 
