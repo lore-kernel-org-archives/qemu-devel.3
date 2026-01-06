@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788ECCEFD0C
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 23:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E65ECCEFD0C
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 23:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdGKr-0005Dk-TR; Tue, 06 Jan 2026 18:19:36 -0500
+	id 1vdGKz-0005I9-Lj; Tue, 06 Jan 2026 18:19:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdGKj-00057h-Tv
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdGKj-00057d-Sw
  for qemu-devel@nongnu.org; Tue, 06 Jan 2026 18:19:26 -0500
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdGKg-000114-Ry
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 18:19:25 -0500
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-42fbc305882so764223f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 15:19:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdGKf-0000xl-B3
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 18:19:23 -0500
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-47a8195e515so10450205e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 15:19:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767741561; x=1768346361; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5MSw6pM1Isj343x+S0mtnkdkQ6xtf+8KOtUuCijJ/iM=;
- b=PzNDPchUgvW134bzM3ckY+qeoHrqdn/y5ajzMreWVujfLLDWwmnLsUyNICcFrSbXyV
- YSfI6sIcIEkGqnnvplNEC3PzdSB15WwYxGbYgTj5J3uUvR30VuRFd1WDuvAaAddUSWQQ
- 9GXBVoo8QxGOspsRR62JrmQY69IIKbrTmI1foGIJALXEk8svnFOEID+2G97+PX5uqZXr
- 53mAq/rmmbeWVOLHOP4dJGJfPSwDnFwSLOh9Gon4ChxZReKDxYnRfTkE2io2+ByYeu+V
- +y/UTogdPVu4Otm9bxlgVWXGfoTVwa7FDrF2iyPM2zcLVk0+IiwWcb1siua4VjoAL5Pv
- I+mw==
+ d=linaro.org; s=google; t=1767741553; x=1768346353; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+9w7thfu5c3pBXFtSWKIvBi4Bj0QrdvceYXlmaBg92w=;
+ b=RRQM22XPTcjDc3mvwJ6YMxL056wPsCo/nmUw+i3LFy2CrwZPKZIH18Wv4vGWpEFsZV
+ XEhfcPrPO8fRljIT5pH3fYGzJGFO/FrrVFV6eD8AfI4VXQhW2em9qZM9PYBV8U6SlQkA
+ hjjn6/xTgFgpv4C3KqPnsqesFqAFAu3vrmq+4z9GmIHWsZyjOB+AwSTq+iP73V42m602
+ SAXv/2DcMZowhdxnyYRUAkGgzIBk0Fuqa8kabRN8WphQwUoRcrwfoFV0q79Zy8fOZx2w
+ cAxc0IDHvVfiAkfvueBYSx/inmUIV5ktkOYcTWxamcONEd9yg1IcTG+AFuCWjvztwl/S
+ Xoqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767741561; x=1768346361;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5MSw6pM1Isj343x+S0mtnkdkQ6xtf+8KOtUuCijJ/iM=;
- b=DvHgbUf8q1n/rj6xbOJUM32MZ3nCedXH1lqDX0fWyRuQSVRcwNFxBDzscaJBZHwKhD
- fxp9t+l5A2FyfEL3ODMBkjfLVYECKEZ98NM6fBJ6Dh+1NiFFfNqCOe+jhyM0/IldIqFk
- TVLGhJHRyFr2P9rE8xIs2rmmUFewa1BAP/f64t+PvLG8X1gby9AT4M6UShlvahPkSkFD
- JIdiy2X77xU1ehQOC/pH5YScyBGpsoZ55O8ZknMNQ77cLMkZqGIt/OrWlgWjY/oayNjH
- bPbOxOyTGNgef6QKMzmqzRa1aHI/JQRXEsrScaXnWRhD1YzLJt9MHMvYdV8mU1WAwjxm
- OctQ==
-X-Gm-Message-State: AOJu0YxWMJ5xd8O2FG5udvgCARAa3a6Esu/pQ6prEqMUMnNLB+URWOlU
- 87p0WtoyrG6lolkXRBX+wpIlTlLIUM/0BFvCcl5Gj1GlIW02Dukp25GheT608IlrMyEWNPwVidr
- 7e27r5qVDuw==
-X-Gm-Gg: AY/fxX44yVGQ3lRz0vP/XNI3s5hxu3hUjWZnEmO8Z58ECuZF6HxD9mhEGvYU965KKpp
- nGkuHYOu1vwZI9oQojqyqumpcp+v/buCF7YVLEvIEsysNZbUElj5pOqF3TvFs6u3zkjNJBJ7BIW
- TEkbEETWGC9T0VqiKKh4u42esQYsLxkR+isVXId0vffadw5BPSe517M+DwBTevBn2PUXHPwYi7B
- M5OTkeIzCq/T1rB2YCiQKcupXYH1s0oC2fuYi6ag7YPdm7/VV9WWcazp2NuBNNd5ST/aFwTRG7+
- oRF01qmCQed9ZyQvjd3M/XEzoPMcIJG3bfYDq7RHpEDCC8eJwp80PHGQsYRqUOE6i3lUHbwAiox
- G63mutAVk20eYAB/UXDDBgFQ4vXMeX0G5ltIGu6O+H1xrNPCeFjf/oNJHy2awDNxvdxkBX4xqNh
- P5QMLCzCkX6++5CJdVNl34XWP7RR55h8nnJ1GuvmrXv6O0Z/21Naq7mLk24hrD
-X-Google-Smtp-Source: AGHT+IFhOTFzCPaSSO0jICAUELJTem7A365yBYeKRFZ6R0EZuKOxmdBZJj7PGcudVsIGaP1SPOx2kA==
-X-Received: by 2002:a05:6000:2dc6:b0:431:1d4:3a8a with SMTP id
- ffacd0b85a97d-432c3628301mr754519f8f.7.1767741560904; 
- Tue, 06 Jan 2026 15:19:20 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5df91fsm7184522f8f.23.2026.01.06.15.19.19
+ d=1e100.net; s=20230601; t=1767741553; x=1768346353;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+9w7thfu5c3pBXFtSWKIvBi4Bj0QrdvceYXlmaBg92w=;
+ b=GI+eEv9ioElcfIrIG4EUgTllW8oiM8lO1kX9SnkUfhtAB5oFcc91t88nXmzdc6nREx
+ f1RrQ6x4rXv22VL2dbXpPYxFfk/aDRSeowG2V6LC1TIhvxs7/ejFaWYHIIceIVubuHs4
+ 7VRm7C/qrdnP7B6sAoAPYSLWp8rcBm65Brp9PrZmJvKGn4pdgYIFpyoR3Oq+iP9E2o4e
+ 8KNvigrxcNZm0ICuHgQXYVTBsFGn24kUMgQHEdVPVCCglk3Tu5KV+6d7CCD4at83AG87
+ Vy29mKbxerKcK1kdmaZa7R606BhszE2Tsk6OgXkkbJtOM8LWcJ22bKX8ZCh8dYPgU1e+
+ ns4w==
+X-Gm-Message-State: AOJu0YwGna5g3CEnKuleXXkLealfs5qPO2dHsSCognO0/cPtRrX0mj/D
+ hKwze+YkBEYD5E2/Y/t5nCrUy5uFT+2gN9HBggr0H+nONZREzflHNgcaLlVZcj3sw+V/Qn9TSK2
+ huHwLFtDlpw==
+X-Gm-Gg: AY/fxX4AFYFnz/e4SJ8cyjYAWPngUGm/wlAy0CpGYbr436RolR9+O1JZ7WA9990hLpz
+ COXOgoU5+xGOxsoRuL4XzwwYwxTo3LiQH8UIrFP+dK1zgY47lyejgo62PwFPt+1XF7mcOQzW+5C
+ snL9f/Sh+9BoA2f5brCObomMDsHTCWcgj/HE219Lc2/fKI090ZTEDYjNGPhO++vPzK0aL3OFoaZ
+ GKzacQDikQzw25l5mLcGDo207ILmQ6+luNfIo8IdbnU/UXNDmX0qrqrr+Fy8jWTHLF84Xe3OzUk
+ luGro46HVk6sPL0XkDVM+Th3W2kb1n0KYAO/eB0Mlmn47MLodL5V2HPoLXTQIPjuVD+h8k6dhzT
+ IaqTuWMQOz4zGf2xBgatr2z5x4DAJBj5vTKn7jDDkIo21lyfmqxIECCcf8Dc8b7tLVpMHpNSBwo
+ mEKn7Nz+vqrIM5BHEtqbwENqB1HHSJEg==
+X-Google-Smtp-Source: AGHT+IGKemZnXUO7w171dckeaPrAX6sBe/uM+eCTVeuDrhKx3ZsU5uJ4Apmrg3wNyTOvH/FWj6k3RQ==
+X-Received: by 2002:a05:600c:1385:b0:477:582e:7a81 with SMTP id
+ 5b1f17b1804b1-47d84b0a227mr5217845e9.4.1767741553173; 
+ Tue, 06 Jan 2026 15:19:13 -0800 (PST)
+Received: from localhost.localdomain ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d7fb4c451sm30263405e9.5.2026.01.06.15.19.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Jan 2026 15:19:20 -0800 (PST)
+ Tue, 06 Jan 2026 15:19:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 1/5] target/i386: Restrict WatchPoint API to TCG
-Date: Wed,  7 Jan 2026 00:19:03 +0100
-Message-ID: <20260106231908.16756-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/5] accel/tcg: Restrict WatchPoint API to TCG
+Date: Wed,  7 Jan 2026 00:19:02 +0100
+Message-ID: <20260106231908.16756-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260106231908.16756-1-philmd@linaro.org>
-References: <20260106231908.16756-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,29 +101,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Watchpoints are specific to the TCG accelerator. Restrict
-the cpu_watchpoint_remove_all() call.
+Hi,
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/i386/cpu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+This series is related to single binary, where we want
+to build compilation units once. Headers using the
+'CONFIG_USER_ONLY' definition are "poisoned", except if
+we duplicate the meson source set, in that case we define
+COMPILING_SYSTEM_VS_USER and CONFIG_USER_ONLY is no more
+poisoned.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 37803cd7249..9831e2bc210 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9184,7 +9184,9 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
-     env->dr[6] = DR6_FIXED_1;
-     env->dr[7] = DR7_FIXED_1;
-     cpu_breakpoint_remove_all(cs, BP_CPU);
--    cpu_watchpoint_remove_all(cs, BP_CPU);
-+    if (tcg_enabled()) {
-+        cpu_watchpoint_remove_all(cs, BP_CPU);
-+    }
- 
-     cr4 = 0;
-     xcr0 = XSTATE_FP_MASK;
+Looking at the watchpoint API, CONFIG_USER_ONLY is only
+used to avoid stubs, so it can easily be reworked to avoid
+the need of duplicated source set.
+
+Since here, we also restrict the API to TCG, and unify it
+in a single header: "accel/tcg/watchpoint.h", since it is
+distinct to the BreakPoint API which can be used by hardware
+accelerators.
+
+Philippe Mathieu-Daudé (5):
+  target/i386: Restrict WatchPoint API to TCG
+  target/ppc: Restrict WatchPoint API to TCG
+  target/s390x: Restrict WatchPoint API to TCG
+  accel/tcg: Un-inline WatchPoint API user-emulation stubs
+  accel/tcg: Unify watchpoint API
+
+ MAINTAINERS                         |   1 -
+ include/accel/tcg/cpu-ops.h         |  45 +-----------
+ include/accel/tcg/watchpoint.h      |  57 ++++++++++++++++
+ include/exec/breakpoint.h           |  10 ---
+ include/exec/watchpoint.h           |  41 -----------
+ include/hw/core/cpu.h               |   3 +-
+ target/arm/internals.h              |   2 +-
+ target/ppc/internal.h               |   2 +-
+ target/riscv/debug.h                |   2 +-
+ target/s390x/s390x-internal.h       |   1 -
+ target/s390x/tcg/tcg_s390x.h        |   4 ++
+ accel/tcg/cputlb.c                  |   1 +
+ accel/tcg/tcg-accel-ops.c           |   2 +-
+ accel/tcg/user-exec-stub.c          |  32 +++++++++
+ accel/tcg/watchpoint.c              |  83 +++++++++++++++++++++-
+ system/watchpoint.c                 | 102 ----------------------------
+ target/arm/debug_helper.c           |   2 +-
+ target/arm/tcg/mte_helper.c         |   2 +-
+ target/arm/tcg/sve_helper.c         |   2 +-
+ target/i386/cpu.c                   |   6 +-
+ target/i386/machine.c               |   2 +-
+ target/i386/tcg/system/bpt_helper.c |   2 +-
+ target/ppc/cpu.c                    |  83 +---------------------
+ target/ppc/cpu_init.c               |   2 +-
+ target/ppc/watchpoint.c             |  93 +++++++++++++++++++++++++
+ target/riscv/cpu_helper.c           |   2 +-
+ target/riscv/debug.c                |   2 +-
+ target/s390x/cpu.c                  |  30 ++++----
+ target/s390x/helper.c               |  40 +----------
+ target/s390x/tcg/debug.c            |  53 +++++++++++++++
+ target/s390x/tcg/excp_helper.c      |   2 +-
+ target/s390x/tcg/mem_helper.c       |   1 +
+ target/xtensa/dbg_helper.c          |   2 +-
+ system/meson.build                  |   1 -
+ target/ppc/meson.build              |   1 +
+ target/s390x/tcg/meson.build        |   3 +
+ 36 files changed, 366 insertions(+), 353 deletions(-)
+ create mode 100644 include/accel/tcg/watchpoint.h
+ delete mode 100644 include/exec/watchpoint.h
+ delete mode 100644 system/watchpoint.c
+ create mode 100644 target/ppc/watchpoint.c
+ create mode 100644 target/s390x/tcg/debug.c
+
 -- 
 2.52.0
 
