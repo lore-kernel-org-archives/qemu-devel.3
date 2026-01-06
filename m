@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805F5CEFCF1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4C0CEFCF0
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 18:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdCFR-0004VM-U5; Tue, 06 Jan 2026 13:57:41 -0500
+	id 1vdCFA-0004Ju-QG; Tue, 06 Jan 2026 13:57:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vdCEz-0004GJ-M7
+ id 1vdCF1-0004Gb-L5
  for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:57:17 -0500
-Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vdCEx-0001wm-Dr
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:57:12 -0500
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 9E47B7A0119;
+ id 1vdCEx-0001wr-UT
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:57:14 -0500
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfout.stl.internal (Postfix) with ESMTP id DA9DE1D00108;
  Tue,  6 Jan 2026 13:57:10 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-11.internal (MEProxy); Tue, 06 Jan 2026 13:57:10 -0500
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-01.internal (MEProxy); Tue, 06 Jan 2026 13:57:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to; s=fm1; t=1767725830; x=
- 1767812230; bh=XzcloEx4suAvbayAGcs/lKC5IRMyfGFpLSKmtIsKdzI=; b=m
- xRYVRlKnPuRph1G4TGXsWEq2251waxIwcEW3rqceEE2QOAvjDD67MFXYe0c5+O4t
- fFmLF5ZV3q9rewln0KiquaZPK20Rr8sBFBfZpxwBPRWx2Tcow6d5LNQGEfhOiDi7
- fcdqH1xlYkk5DxnGiQvdNl11JiIxKcepklGSO7OCj3TCkd9TXKXx0IV5ZT+//BId
- MVY3VPaDPaRCYGgFdc0+ZWgdZq+cQLe42N3Y/Rq1qS0PDnnyzaY2b5zgV3f7alvG
- I3XhbOZLm0rAVC0kBQd3a24SqNiZfPBE2GGlKTskBZpwzg1nXmSTj9+d45aLCrNW
- hP5LpGFpXq5jPJMR1nOKA==
+ 1767812230; bh=ut2udhF3CUgUMd6ohcEEQWOpiLUh6wpefY5CsdjkC0w=; b=Q
+ ZxejkKHBn32qbL3aYZTOZVWUA8VnSEqXgYJYM+HDhda0x88e+xwdygS507pPcCmM
+ FHWKyf6dZQeqJddY9jRSo4MMQ0c5hvWhBEDhvWvwVP5e07tepq4EcXhRR2gOuaNb
+ RmW/FM71iCl/iyjaFPrixiigI0RssLfeCz6dojKvEaCSBUAL9bfgr9D2H3eem0Wo
+ tSWreYjAt8zp96a02DYse1bJmMuD6Dj36dH2Sv2Xu5WK9B2Jaf40rpaXy4J2WVnl
+ IgGB84ndcv1bzCQoTqz7VdASxqnBhhkseI+9mzkk84ikz1gXKwY4lZQR65GKhEmi
+ k5+YmgxSm+Y4VHOh8sXtA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1767725830; x=1767812230; bh=X
- zcloEx4suAvbayAGcs/lKC5IRMyfGFpLSKmtIsKdzI=; b=zpyMqRSsqmEQ33rqQ
- vifwLguwmMjLzuDwKb+eJJxpfD5f9THTVuXA5JgQnGuYSeJE1hmEAkFWQJvipwdR
- ulWD0kdxbpDxAQe1nM30zTnalxZGFjB6cKTm6KmA5lNCSiU8bJEBrsfJPKJdglCd
- g1zpp9w4maAWwQG/lBArDRKMtlDI61VGzH5e77JMHdsVkg1uTBRzBmLIZBX2NSso
- 7SRrk+EU25kNcx5ysRnRSAFc7GwXn7BXCiQm5TqT4NyWouQn2lNBlaQGutEPsGOP
- 4K0qH/wLyAnTt0J9tN+MUIrRY+tioEGmUlrtM1B8kodj8Yi/pny/QQJ5ixPVaIX2
- 7wH3A==
-X-ME-Sender: <xms:BltdaQF9-BRHaupdZ93AiUN58iAHEK5miaaEN4vL62dTQ_OLdlYmKQ>
- <xme:BltdaQwX2vopY4VSXAkOj-aZxYRzyf8mAmBbBxt2K34fDz-9nvxhzfe5bjFbdrUS_
- PJO-XERv_27DBfO4g6MiLw_QuAoq-ojtouM1imXgz8TPEvg6r81ow>
-X-ME-Received: <xmr:BltdaXigHpsCxvE-8b1ytuJCsy6pP4boZoKKf9Q2b9iRB5ABbkllzGYqsofZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddtleejucetufdoteggodetrf
+ :x-me-sender:x-sasl-enc; s=fm2; t=1767725830; x=1767812230; bh=u
+ t2udhF3CUgUMd6ohcEEQWOpiLUh6wpefY5CsdjkC0w=; b=ai6wH344Xn1/kvG/T
+ P5MdQ7BfTJb2h4qWLpEtb3hH4HTh+uZXhteRlCdJdEcIFYDX0Ey8IEZFVSZx5McQ
+ 9c1CKwCdYHfJ1dLhkR7jBoOpIGJUmOfiXEZvdt7AruT+6QwBy+QQVwXR5TUQTENB
+ /LBtPUD7pGnm2BMwbAYNDrOt1R2E8+4Liti7J8+BN6X6mqvXxObjP1h1CMUkifPs
+ C4hQdRpN2fQCrXaLgFjyNBwNAvQZCIC+vcr2i4nJmVvs9/mHU789EMlZR7JYLic4
+ AuH0p/oeqSishZnvEkcUDxxNu3FSwivYPLkX6X6UoWfYvguvzXTilEOTezUSvS/A
+ I/HoA==
+X-ME-Sender: <xms:BltdaT5IhuQzqqaurAhRkJwsNPGubaCXozGsXpCuZ4a5j5Q7bXmutA>
+ <xme:BltdaQVuDgEs-sP2O3xOPtg_BSK88K3SiIQ3yxfT8W9rpAu_-rnco6gi7q8aPtS_D
+ eczRoMAz4DkdrmdRdDZK3R5dNKtIFl01UBwsseHyPUkrMg0H_nvCA>
+X-ME-Received: <xmr:BltdaX1eF2GBlR4qYLpv1tLOYBbTwcJ3mOGEYZlqlmwSDCncpldX82bb7JfZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddtleeiucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
  ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
@@ -61,34 +61,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutddtleejucetufdote
  eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
  uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
  gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhope
- hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheptghhrggusehj
- rggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:BltdabymoHeDEx4gXljJGL-mOOEOsczgCzR_ia_hMFvNMQFsoULCwg>
- <xmx:BltdaaJh5WzjbiYHs5E8ebHJWnzzMZDJyy1zFZR1V3F_62QMiGWOHQ>
- <xmx:BltdaSSfS_vqAS-WKvCb0P61kTGK_tVSCaUZe1nQmVRAg4ODwRyITw>
- <xmx:BltdaSokMEshIKMVvVNUPMOuN4fdcbticpURT-pgXZcVxLglUJVc4g>
- <xmx:BltdaWdUChp3FTaWF8BPtSfzbaokyMBGfLIZf7C8FnNqI_3-LCPnhJab>
+ thdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhope
+ hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepsggrlhgrthho
+ nhesvghikhdrsghmvgdrhhhu
+X-ME-Proxy: <xmx:Bltdad0M3r-JEIjwhEqqlss825--ASvZewl62wwLLNChdj2G8uabrQ>
+ <xmx:Bltdaa-DNx3L3GlWzq7aVxchiTNJLut0ltgx1sT7hRcusmUfoejRBw>
+ <xmx:Bltdaa3M14I4l2L3P6gyB4WL9QCu9ItDgI5nZWmMllBDoCGaxPz-jQ>
+ <xmx:BltdaX-dFLvAiTIkxN03_Wb2S4dZOGaPhc2IpMLnE4sIE_FIAglNCw>
+ <xmx:BltdaRjIoLG_zG_2V53lFYQJ62NxSqhLDKrKIfZ9bTzjhvMoNy3qFvV->
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
  6 Jan 2026 13:57:10 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 019e273d;
+ by chomposaur (OpenSMTPD) with ESMTPA id 81f78c11;
  Tue, 6 Jan 2026 18:57:07 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v4 2/9] ati-vga: Fix DST_PITCH and SRC_PITCH reads
-Date: Tue,  6 Jan 2026 13:56:53 -0500
-Message-ID: <20260106185700.2102742-3-chad@jablonski.xyz>
+Subject: [PATCH v4 3/9] ati-vga: Add scissor clipping register support
+Date: Tue,  6 Jan 2026 13:56:54 -0500
+Message-ID: <20260106185700.2102742-4-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20260106185700.2102742-1-chad@jablonski.xyz>
 References: <20260106185700.2102742-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.157; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b6-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.149; envelope-from=chad@jablonski.xyz;
+ helo=fout-b6-smtp.messagingengine.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
@@ -113,39 +113,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reading DST_PITCH and SRC_PITCH on the Rage 128 is broken. The read
-handlers attempt to construct the value from pitch and tile bits in
-the register state but mistakenly AND them instead of ORing them. This
-means the pitch is always zero on read.
+Implement read and write operations on SC_TOP_LEFT, SC_BOTTOM_RIGHT,
+and SRC_SC_BOTTOM_RIGHT registers. These registers are also updated
+when the src and/or dst clipping fields on DP_GUI_MASTER_CNTL are set
+to default clipping.
+
+Scissor clipping is used when rendering text in X.org. The r128 driver
+sends host data much wider than is necessary to draw a glyph and cuts it
+down to size using clipping before rendering. The actual clipping
+implementation follows in a future patch.
+
+This also includes a very minor refactor of the combined
+default_sc_bottom_right field in the registers struct to
+default_sc_bottom and default_sc_right. This was done to
+stay consistent with the other scissor registers and prevent repeated
+masking and extraction.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/ati.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/display/ati.c      | 71 +++++++++++++++++++++++++++++++++++++++++--
+ hw/display/ati_int.h  |  9 +++++-
+ hw/display/ati_regs.h |  2 ++
+ 3 files changed, 79 insertions(+), 3 deletions(-)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 0bbe8915f1..2f919bcd22 100644
+index 2f919bcd22..bbae5455d0 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -438,7 +438,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-     case DST_PITCH:
-         val = s->regs.dst_pitch;
-         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--            val &= s->regs.dst_tile << 16;
-+            val |= s->regs.dst_tile << 16;
+@@ -520,7 +520,32 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+         val |= s->regs.default_tile << 16;
+         break;
+     case DEFAULT_SC_BOTTOM_RIGHT:
+-        val = s->regs.default_sc_bottom_right;
++        val = (s->regs.default_sc_bottom << 16) |
++              s->regs.default_sc_right;
++        break;
++    case SC_TOP:
++        val = s->regs.sc_top;
++        break;
++    case SC_LEFT:
++        val = s->regs.sc_left;
++        break;
++    case SC_BOTTOM:
++        val = s->regs.sc_bottom;
++        break;
++    case SC_RIGHT:
++        val = s->regs.sc_right;
++        break;
++    case SRC_SC_BOTTOM:
++        val = s->regs.src_sc_bottom;
++        break;
++    case SRC_SC_RIGHT:
++        val = s->regs.src_sc_right;
++        break;
++    case SC_TOP_LEFT:
++    case SC_BOTTOM_RIGHT:
++    case SRC_SC_BOTTOM_RIGHT:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Read from write-only register 0x%x\n", (unsigned)addr);
+         break;
+     default:
+         break;
+@@ -881,6 +906,17 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         /* DP_MIX fields */
+         s->regs.dp_rop3 = (data & GMC_ROP3_MASK) >> 16;
+         s->regs.dp_src_source = (data & GMC_SRC_SOURCE_MASK) >> 24;
++
++        if (!(data & GMC_SRC_CLIPPING)) {
++            s->regs.src_sc_right = s->regs.default_sc_right;
++            s->regs.src_sc_bottom = s->regs.default_sc_bottom;
++        }
++        if (!(data & GMC_DST_CLIPPING)) {
++            s->regs.sc_top = 0;
++            s->regs.sc_left = 0;
++            s->regs.sc_right = s->regs.default_sc_right;
++            s->regs.sc_bottom = s->regs.default_sc_bottom;
++        }
+         break;
+     case DST_WIDTH_X:
+         s->regs.dst_x = data & 0x3fff;
+@@ -960,7 +996,38 @@ static void ati_mm_write(void *opaque, hwaddr addr,
          }
          break;
-     case DST_WIDTH:
-@@ -475,7 +475,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-     case SRC_PITCH:
-         val = s->regs.src_pitch;
-         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--            val &= s->regs.src_tile << 16;
-+            val |= s->regs.src_tile << 16;
-         }
+     case DEFAULT_SC_BOTTOM_RIGHT:
+-        s->regs.default_sc_bottom_right = data & 0x3fff3fff;
++        s->regs.default_sc_right = data & 0x3fff;
++        s->regs.default_sc_bottom = (data >> 16) & 0x3fff;
++        break;
++    case SC_TOP_LEFT:
++        s->regs.sc_left = data & 0x3fff;
++        s->regs.sc_top = (data >> 16) & 0x3fff;
++        break;
++    case SC_LEFT:
++        s->regs.sc_left = data & 0x3fff;
++        break;
++    case SC_TOP:
++        s->regs.sc_top = data & 0x3fff;
++        break;
++    case SC_BOTTOM_RIGHT:
++        s->regs.sc_right = data & 0x3fff;
++        s->regs.sc_bottom = (data >> 16) & 0x3fff;
++        break;
++    case SC_RIGHT:
++        s->regs.sc_right = data & 0x3fff;
++        break;
++    case SC_BOTTOM:
++        s->regs.sc_bottom = data & 0x3fff;
++        break;
++    case SRC_SC_BOTTOM_RIGHT:
++        s->regs.src_sc_right = data & 0x3fff;
++        s->regs.src_sc_bottom = (data >> 16) & 0x3fff;
++        break;
++    case SRC_SC_RIGHT:
++        s->regs.src_sc_right = data & 0x3fff;
++        break;
++    case SRC_SC_BOTTOM:
++        s->regs.src_sc_bottom = data & 0x3fff;
          break;
-     case DP_BRUSH_BKGD_CLR:
+     default:
+         break;
+diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+index 59a1812034..d9ac8ee135 100644
+--- a/hw/display/ati_int.h
++++ b/hw/display/ati_int.h
+@@ -79,7 +79,6 @@ typedef struct ATIVGARegs {
+     uint32_t default_offset;
+     uint32_t default_pitch;
+     uint32_t default_tile;
+-    uint32_t default_sc_bottom_right;
+     uint8_t dp_src_source;
+     uint8_t dp_rop3;
+     uint8_t dp_dst_datatype;
+@@ -88,6 +87,14 @@ typedef struct ATIVGARegs {
+     bool host_big_endian_en;
+     bool byte_pix_order;
+     bool conversion_temp;
++    uint16_t default_sc_bottom;
++    uint16_t default_sc_right;
++    uint16_t sc_top;
++    uint16_t sc_left;
++    uint16_t sc_bottom;
++    uint16_t sc_right;
++    uint16_t src_sc_bottom;
++    uint16_t src_sc_right;
+ } ATIVGARegs;
+ 
+ struct ATIVGAState {
+diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+index fce9270635..9c638314f0 100644
+--- a/hw/display/ati_regs.h
++++ b/hw/display/ati_regs.h
+@@ -405,6 +405,8 @@
+ #define GMC_SRC_DATATYPE_MASK                   0x00003000
+ #define GMC_BYTE_PIX_ORDER                      0x00004000
+ #define GMC_CONVERSION_TEMP                     0x00008000
++#define GMC_SRC_CLIPPING                        0x00000004
++#define GMC_DST_CLIPPING                        0x00000008
+ #define GMC_BRUSH_SOLIDCOLOR                    0x000000d0
+ #define GMC_SRC_DSTCOLOR                        0x00003000
+ #define GMC_BYTE_ORDER_MSB_TO_LSB               0x00000000
 -- 
 2.51.2
 
