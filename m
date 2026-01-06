@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E12C47BEA
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 11:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D2CC47BE2
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 11:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd5F3-0004Ar-0B; Tue, 06 Jan 2026 06:28:49 -0500
+	id 1vd5LC-0007Tq-9y; Tue, 06 Jan 2026 06:35:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vd5F1-00049g-GM
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:28:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vd5L1-0007HV-8o
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:35:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vd5Ez-00007J-En
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:28:47 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vd5Kw-0002X5-Nq
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 06:34:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767698924;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zMwEua+98XF9igP68OY/Yae7V3fSQ4wuzTGsqccIc8E=;
- b=cfiXCEaO5M6OAy18ONHIobnBT+9p0XF7o5okLzYkcMkN1AQRzN7aiHRGUioyPQLSDFutpc
- P/yrvJl0dcNolVpoVmmCwzaIOUmKA9VaJHswoVqZcfvVaXgWNz4QR368iAtdMb/G0+S/8v
- Lh8Yw9RUegbsetVRTPI4tll6CR+boGw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1767699293;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=KDZmh+xwzd1Fc6RGZTKoOvczlf/09LR5G399WdgAuZA=;
+ b=IW1krogTndJbbUNNe7W/DzkQZGoicEKF+e7/gD5ycPW+Ww/9V7QrBv73gb4rklcbh4Vfd0
+ OI21/qp3tMTw392FNOdBGDDRULGmhbtt/RiAoNAAA3SzAgzcBHLVAiZ04K/KPOcvttuO4N
+ YLLUURn8JWrkNtMCyRiEp7U+ej9yId8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-xsDbrfHcP8eJbpjSc1FC6g-1; Tue,
- 06 Jan 2026 06:28:43 -0500
-X-MC-Unique: xsDbrfHcP8eJbpjSc1FC6g-1
-X-Mimecast-MFC-AGG-ID: xsDbrfHcP8eJbpjSc1FC6g_1767698922
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-532-pV_ygE-6Nyy2QxnvZd5FgQ-1; Tue,
+ 06 Jan 2026 06:34:51 -0500
+X-MC-Unique: pV_ygE-6Nyy2QxnvZd5FgQ-1
+X-Mimecast-MFC-AGG-ID: pV_ygE-6Nyy2QxnvZd5FgQ_1767699291
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07D601956058; Tue,  6 Jan 2026 11:28:42 +0000 (UTC)
-Received: from dobby.home.kraxel.org (unknown [10.44.32.173])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 503CC180035A; Tue,  6 Jan 2026 11:28:41 +0000 (UTC)
-Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
- id A554F620790; Tue, 06 Jan 2026 12:28:38 +0100 (CET)
-Date: Tue, 6 Jan 2026 12:28:38 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org, 
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 094D6180062F; Tue,  6 Jan 2026 11:34:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.217])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A2A319560A7; Tue,  6 Jan 2026 11:34:48 +0000 (UTC)
+Date: Tue, 6 Jan 2026 11:34:45 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Andrea Bolognani <abologna@redhat.com>, qemu-devel@nongnu.org,
  Kashyap Chamarthy <kchamart@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
 Subject: Re: [PATCH 2/2] docs/interop/firmware: Introduce extended syntax for
  FirmwareMappingMemory
-Message-ID: <aVzs_6lD5XJhCn0H@dobby.home.kraxel.org>
+Message-ID: <aVzzVZxZDWMDZjXs@redhat.com>
 References: <20251228232649.1708400-1-abologna@redhat.com>
  <20251228232649.1708400-3-abologna@redhat.com>
  <aVvNV0X0uZ4lVBWv@redhat.com>
  <aVzbqk5FSrG9rSuM@dobby.home.kraxel.org>
  <aVzliFd70KWKcMJR@redhat.com>
+ <aVzs_6lD5XJhCn0H@dobby.home.kraxel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aVzliFd70KWKcMJR@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+In-Reply-To: <aVzs_6lD5XJhCn0H@dobby.home.kraxel.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,40 +90,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
-
-> > Maybe have separate json files describing the variable store template
-> > only, and expect libvirt searching for one in case the firmware
-> > descriptor has the 'host-uefi-vars' feature flag set?
+On Tue, Jan 06, 2026 at 12:28:38PM +0100, Gerd Hoffmann wrote:
+>   Hi,
 > 
-> Or just have the host-uefi-vars feature flag alone, and then libvirt
-> can just invoke virt-firmware in whatever way it needs to create the
-> json templates and not worry about providing any pre-defined json
-> files.  All the default microsoft CAs are ultimately embedded in
-> virt-firmware and spat out when given the right args.
+> > > Maybe have separate json files describing the variable store template
+> > > only, and expect libvirt searching for one in case the firmware
+> > > descriptor has the 'host-uefi-vars' feature flag set?
+> > 
+> > Or just have the host-uefi-vars feature flag alone, and then libvirt
+> > can just invoke virt-firmware in whatever way it needs to create the
+> > json templates and not worry about providing any pre-defined json
+> > files.  All the default microsoft CAs are ultimately embedded in
+> > virt-firmware and spat out when given the right args.
+> 
+> Makes sense too, given that the long-term plan is to do that anyway to
+> allow distro-specific varstore setups.  So doing that right from the
+> start, only without the certificate configuration part which comes
+> later, looks like good approach too.
+> 
+> BTW: virt-firmware-rs.rpm has a utility (virt-fw-vars-setup) which can
+> do exactly that without pulling in python as dependency.
+> 
+> Question is how we enable/disable secure boot then ... 
+> 
+> One option would be to special-case the enrolled-keys feature for the
+> host-uefi-vars.  A little bit hackish, but with the advantage that the
+> switch would be transparent for libvirt users, existing xml syntax
+> continues to work.
 
-Makes sense too, given that the long-term plan is to do that anyway to
-allow distro-specific varstore setups.  So doing that right from the
-start, only without the certificate configuration part which comes
-later, looks like good approach too.
+Currently the libvirt XML features are matched to firmware descriptor
+features, but that's just an internal implementation detail for libvirt.
+We can have our impl match XML features to virt-fw-var-setup flags
+instead where appropriate for the firmware.
 
-BTW: virt-firmware-rs.rpm has a utility (virt-fw-vars-setup) which can
-do exactly that without pulling in python as dependency.
+> 
+> Another option would be to add xml syntax for varstore setup, which will
+> be needed anyway in the future for the custom certificate setup.
+> 
+> take care,
+>   Gerd
+> 
 
-Question is how we enable/disable secure boot then ... 
-
-One option would be to special-case the enrolled-keys feature for the
-host-uefi-vars.  A little bit hackish, but with the advantage that the
-switch would be transparent for libvirt users, existing xml syntax
-continues to work.
-
-Another option would be to add xml syntax for varstore setup, which will
-be needed anyway in the future for the custom certificate setup.
-
-take care,
-  Gerd
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
