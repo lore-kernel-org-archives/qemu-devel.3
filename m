@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E1DCD0438
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 05:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CAFCCD0437
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 05:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd04e-0003tK-N2; Tue, 06 Jan 2026 00:57:46 -0500
+	id 1vd04T-0003l0-Sr; Tue, 06 Jan 2026 00:57:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1vd04b-0003q0-8Q
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:57:41 -0500
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1vd04S-0003jQ-3v
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:57:32 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1vd04X-0001mw-Bj
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:57:41 -0500
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-34c2f52585fso695055a91.1
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 21:57:36 -0800 (PST)
+ id 1vd04Q-0001m5-NF
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:57:31 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7baf61be569so724704b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 21:57:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767679056; x=1768283856; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1767679049; x=1768283849; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E2mJj4mfMvlWpf/+iqVC0nzsDjwQbsvp2SDdkZaYSgQ=;
- b=h6ePvNfK3FkWz4+7Uo+IDSCKQsRpEGqlj4q71ODFz6xwo224FwrfFagK+R5owHj19b
- adwWcdds9nRgUJhajKC3EZ1WbJcekQox724HpSlPHAnv8uRJNbE3j6RLlkMr0xKV0DBc
- usxwNd5LczmYaZ5MR5MHaQ/CzcH5nbLPayugK6cM4s3NOlG8/t/8MaC1FMa/suFO9BT3
- GO5vuRafdsZIJ5pI/rZN0ZqzeliJDwrlJloeHWx//UplHkcnHi9hHg8cWvE5RyFkbDg/
- HaBPUNa0yw4G7LBKFblvDyOrrDfaKWZ6vHGf6MLFnuzGiHNL0w6P27aOp5moMgmt5aVM
- w7TA==
+ bh=etIVLC6L7mo/66z2SyCuVLxVt9Sh/37Vs1ku8vb9LDk=;
+ b=BFon2xvV1/uqj7P34WYUqwoGu1PcQIPScpXSZO0CHicjE/fzRtz8RBuSXIbfyBj5Vl
+ 4Rar4spuin5+ndtMZl49SQpFIh03uzXcQ1RcDjKsm+zIoh/Fs098fWsFp3H8nry6sNiv
+ N90ba/wM6BYL+VmTSALoK5TMHv5H1BRAbSEYIwwkEWL/m0g3/Wb4gBqaInsEc7Nwuyza
+ 3HWqCLbfpC35oB7PQZYmjHEJ1504lDMcCIJ0ddE3DtLMXoxA6Zz9UG0/j93/wHSVtjqQ
+ YGyDFTMiURSahlIUgHC1tXyljnITxpyhpU+64HOxWIRiHkfib2q6EKL4JXP5km+YMea3
+ Fjhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767679056; x=1768283856;
+ d=1e100.net; s=20230601; t=1767679049; x=1768283849;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E2mJj4mfMvlWpf/+iqVC0nzsDjwQbsvp2SDdkZaYSgQ=;
- b=C2jHIuq9PEqFzNuAmEnFUOXFmqGusfoqDrV67woqpx0HAt1yuxUcQkBqLuRmw+9WQM
- C/9cgHyXDOx+t7xVtaG/h1NRlcl88q95dhso71/aQ1eAyDZKBrO8n/fBNVLl23zI+8Gq
- 1piaG62pkQTIm19uhnnRDrHKVkLTYzUVT8Bgb4Je+7Ex7UUHzpZcIoHQUOCf2O+poEGF
- biJsaz1yfa+2ie3+EF7k25aPrmI8cY4fxX5tyWdQj07/E2Sf/XGi/mrFKf9APA/x1tz+
- LOYgszrAhq6K5FMGuGITSrdl8V/+ISdVKuGkiE0mIb/QbTH6KmwfSBR+qNYivN9oEx16
- aS4w==
+ bh=etIVLC6L7mo/66z2SyCuVLxVt9Sh/37Vs1ku8vb9LDk=;
+ b=Qx9PXAzdIUmTVs9PzRjZ478/FMkpm6QHlWysatPa3PZwYoR6mfw5dXEP0ZCcXQUbAO
+ jKCNBINOktzpeoQ/gW747S5jTNOOH+F3/cxk3NNU1F+oY/B14nTaWU+vSUeWatfufyU6
+ zL7QIdqPy/Pf8KE7Sa/QBKTChskXDuknWtrRk+E535J3V4defWdQ2H6Yq8SdAkX5FbA/
+ vcFJ7AHqAbvH9PWfwAoF6wuVVK++Ylfy6roNt1X7U6UFcGLG++jmzTWFJzdCEKG5gdGc
+ Xv7tBdowtL9uICA3YbISR5cCCpvhAcSCxvJeM5zOIelGUhDkvXuvLZ04QI+OIZPv52yZ
+ ulrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4xkxc33kSywYFx276ogY1V2lKQfzQw5kG88bEoHn0Aok1nD8KYQ5Q8lRzyWXSxruPhsxCxKT0J3KJ@nongnu.org
-X-Gm-Message-State: AOJu0Yynv7MwtDnTCShCN0sGy6a+CQKlusz+Ao9CpTvDZJBgLmyztxPZ
- plYOHVwZ4yTrGm5RXrOEjez6dHTxdZLsyLTchDXMyuL1AA1h+JUrfeFh
-X-Gm-Gg: AY/fxX6R/soCA1OQJbPdTlrkUC+QSKmY6bPUxfaoScSAGdMZYBxw4fEr9icFR+kt2pU
- RFJBrQeZDkKa3tv7a+gr+YfOTSwjcV1zxyPnvT6kS5deGB57C6MchMrPnY4tyK3QnUz6NRkCmnE
- lZVj6NoAf8TkNcaOLA5UCxbuqOhLyJ4DVPaVCsi8OFalg0oGAgd3EENxar6gP22aSzv0Vkb/KTP
- RFghd6tVT+Q5umQnh87CNW+cnHAq+YmRPhGhu0++Xi63+rgjvo8eR9a61WcLoVfjliTNheyxrUF
- 3xkbYzKqsRdjARaf80h1AzChQ0LDGcLW6+OogU4XdwLjJcC/MFz5WMmw+zvWBrD30yk0JzrjD62
- 9yKeDFcolKXfiBZM2gBWCbzJaN6KK2gPNgsdGpzXtgbjJsneU3xbgNMDSRvd6u2/uiwBUNVKUlV
- 5NMvwxfa3TEQklPYAKvBkQ6SCfxXCll5Y=
-X-Google-Smtp-Source: AGHT+IHZRoG8jgazJ9eB6+r2zc5nPNOLouSzC+bQVqM3FoBLvfLX7ge0cCTB38fEjo4J7kMYhkcYvQ==
-X-Received: by 2002:a17:90b:58d0:b0:341:8bda:d0ae with SMTP id
- 98e67ed59e1d1-34f5f3079d3mr1406295a91.20.1767679055735; 
- Mon, 05 Jan 2026 21:57:35 -0800 (PST)
+ AJvYcCXzyPEgtoGWOrPRCkXb9WTT08ZPMa6jT6gmJRaDv8Ag/h5rpsmuDVoK7I/3/2U870OV6y7XofXNjDc1@nongnu.org
+X-Gm-Message-State: AOJu0Yy2RKv8Vd1Mvf9r9AUtmR8fFHdxqpI5mPCcyNp9Gv/yQ1NpJdyy
+ KZQRBE6Ig65+9PmA43nrGOTh8MUJj8oHBjPdpiz2JVMDK5fP7AggPWty
+X-Gm-Gg: AY/fxX5v/YUrIm2+T59t8LQ4AO6qc9oF5/QB1scuxwQqMzx8eFJ/SbF3/JHIPLoaWD/
+ 6QErMXSTqI2QkwsaEevdrADSuYjt0uZIDpC9CGOmqyJbbP9k/Ch0P0n3QGIJldiCkwHFDFy+2rN
+ eIcphLUUALTkhsGDgrNAViCYGAoK5t/KieSxRsd7lnZmhhn/UjntGA4qKO4RBOMMwQZoyxBIofS
+ cJucFcqEII9v94OSrbd8kTZvUSJEjWgXMZzcBQeE4ETO68xXtzFaciAaVZJfHGHHOjjoXhBZvPv
+ alDvYvaeIqJ6akoG4IWfQK7tEzL9fhIljWkztK7JPQnRy5aBre/zNOo1kTTEyYpO3YYAVGi6aJ5
+ KE9L/w3EwzNLnM+y0M9wfKDYqTKVTiOoaug8L4uXNesx3a1o4z90oIxA8b1umnO/XvjVYuzUIMA
+ OjeAmLtbYOV3Xa8DltPl/3
+X-Google-Smtp-Source: AGHT+IGrB+kiK1RF72xLNXdHZRVfFJCUN6f0JdD3GUo5K5pWCW54GrV1ymfNOVgL0jNsQMtaXjLuEw==
+X-Received: by 2002:a05:6a21:9989:b0:352:eede:89cd with SMTP id
+ adf61e73a8af0-38982277ec2mr1642800637.17.1767679049353; 
+ Mon, 05 Jan 2026 21:57:29 -0800 (PST)
 Received: from donnager-debian.. ([45.124.203.19])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f60178af5sm460222a91.3.2026.01.05.21.57.29
+ 98e67ed59e1d1-34f60178af5sm460222a91.3.2026.01.05.21.57.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Jan 2026 21:57:35 -0800 (PST)
+ Mon, 05 Jan 2026 21:57:28 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Chris Rauer <crauer@google.com>,
  Vijai Kumar K <vijai@behindbytes.com>,
  Sunil V L <sunilvl@ventanamicro.com>, Ran Wang <wangran@bosc.ac.cn>,
@@ -79,16 +79,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Joel Stanley <jms@oss.tenstorrent.com>,
  Nick Piggin <npiggin@oss.tenstorrent.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Subject: [PATCH 04/16] riscv/boot: Describe discontiguous memory in boot_info
-Date: Tue,  6 Jan 2026 16:26:44 +1030
-Message-ID: <20260106055658.209029-5-joel@jms.id.au>
+Subject: [PATCH 03/16] target/riscv: tt-ascalon: Add Tenstorrent mvendorid
+Date: Tue,  6 Jan 2026 16:26:43 +1030
+Message-ID: <20260106055658.209029-4-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260106055658.209029-1-joel@jms.id.au>
 References: <20260106055658.209029-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=joel.stan@gmail.com; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=joel.stan@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -112,72 +112,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+JEP106 has two vendor IDs for Tenstorrent. We will use Bank 16, hex 0xa1:
 
-Machines that have discontiguous memory may need to adjust where
-firmware and images are loaded at boot. Provide an interfaces for
-machines to describe a discontiguous low/high RAM scheme for this
-purpose.
+ ((16 - 1) << 7) | (0xa1 & ~0x80) = 0x7a1
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Add it to the Ascalon CPU definition as the mvendorid CSR.
+
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- include/hw/riscv/boot.h |  7 +++++++
- hw/riscv/boot.c         | 11 +++++++++++
- 2 files changed, 18 insertions(+)
+ target/riscv/cpu_vendorid.h | 2 ++
+ target/riscv/cpu.c          | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index 51b0e13bd3ea..f53531fc0bd5 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -28,6 +28,10 @@
- #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
+diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
+index 96b6b9c2cb58..6a5c2491b923 100644
+--- a/target/riscv/cpu_vendorid.h
++++ b/target/riscv/cpu_vendorid.h
+@@ -7,4 +7,6 @@
+ #define VEYRON_V1_MIMPID        0x111
+ #define VEYRON_V1_MVENDORID     0x61f
  
- typedef struct RISCVBootInfo {
-+    /* First contiguous RAM region. If size is zero then assume entire RAM */
-+    hwaddr ram_low_start;
-+    hwaddr ram_low_size;
++#define TENSTORRENT_VENDOR_ID   0x7a1
 +
-     ssize_t kernel_size;
-     hwaddr image_low_addr;
-     hwaddr image_high_addr;
-@@ -43,6 +47,9 @@ bool riscv_is_32bit(RISCVHartArrayState *harts);
- char *riscv_plic_hart_config_string(int hart_count);
+ #endif /*  TARGET_RISCV_CPU_VENDORID_H */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 01bd522f9189..b8b64284a281 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3187,6 +3187,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_svnapot = true,
+         .cfg.ext_svpbmt = true,
  
- void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
-+void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
-+                                        RISCVHartArrayState *harts,
-+                                        hwaddr start, hwaddr size);
- hwaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-                                     hwaddr firmware_end_addr);
- hwaddr riscv_find_and_load_firmware(MachineState *machine,
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 75f34287ff1b..e3292e75ed80 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -69,11 +69,22 @@ char *riscv_plic_hart_config_string(int hart_count)
- 
- void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
- {
-+    info->ram_low_start = 0;
-+    info->ram_low_size = 0;
-     info->kernel_size = 0;
-     info->initrd_size = 0;
-     info->is_32bit = riscv_is_32bit(harts);
- }
- 
-+void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
-+                                        RISCVHartArrayState *harts,
-+                                        hwaddr start, hwaddr size)
-+{
-+    riscv_boot_info_init(info, harts);
-+    info->ram_low_start = start;
-+    info->ram_low_size = size;
-+}
++        .cfg.mvendorid = TENSTORRENT_VENDOR_ID,
 +
- hwaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-                                     hwaddr firmware_end_addr) {
-     if (info->is_32bit) {
+         .cfg.max_satp_mode = VM_1_10_SV57,
+     ),
+ 
 -- 
 2.47.3
 
