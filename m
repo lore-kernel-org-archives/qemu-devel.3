@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5A6CEFD1E
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 23:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E33FCEFD0C
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 23:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdGL6-0005UK-7y; Tue, 06 Jan 2026 18:19:48 -0500
+	id 1vdGL2-0005Mb-8Q; Tue, 06 Jan 2026 18:19:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdGL4-0005PG-46
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 18:19:46 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdGKq-0005DS-Dh
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 18:19:33 -0500
 Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdGL1-0001ID-2L
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 18:19:45 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdGKn-0001E4-LK
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 18:19:32 -0500
 Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-477a219dbcaso12265075e9.3
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 15:19:36 -0800 (PST)
+ 5b1f17b1804b1-47774d3536dso2601655e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 15:19:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767741575; x=1768346375; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767741568; x=1768346368; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oG31mHt5hAIZAFs8E2PvTGlNRu+jO6SBveBnHl2PbaQ=;
- b=KDsowzACBzNDP1btWKFX6Crj4B+d6KUej2Fw5vX6HeA+oN2wYXFarJhxxXkVJAo86d
- razN6GdbmJ06zMrXoGs1kdg1ODDPSNfpgsqdO+Ryb1smFjonw/TX97vvGjnDJxL9YCvh
- FgFZDCHCdQC6r5/QlPtT7Izn+LRi+IoIvbF0hXr9QBTiHDqZvBVuR23x+iDHyUzVds6D
- ANnTwogi8z7bbir+nFV2o2XZrxZiM9JksPUbGt1A7iAgMiOq7gzCcljMa4tWKrpY+bmk
- T0alW2+qNgtzVxkHWh0KLAwzJiGEABQclyfbGEwZ7KUflUCiyDvqEIJGev9xv4jNajD9
- JEUQ==
+ bh=pD7Mewu4hIr0e5mQRsO3Q7vuGfas+TRDeUMaumdJ2i8=;
+ b=zqlJY8J11XygWbrubH0Nl9791TmzdUAFMWub8Y3scWjKxIJK4IwjDng4XaknIbNHst
+ E1Ws3U+oM2rcO7F+MXcoiWrTmsSyJYuJJ1fT8sjnoyaNqq5V9G/wOIuakuOuIifgaPXb
+ Y6jcOajI2Ynux8YQbCWqNH+kyYajsxT+dQIGVxsXj4fh3hE0JzK9b36RQ20sGjVwmikB
+ A/HOskHgacZIw4Lo/eFYAIVnmzf6LLD/y7XuMK5j9PjmLLymujFOwWKqWyMlRSX7JDMw
+ tdSXmwBSXIvR2Pdv0WwGNWBuXRjBWga7WMscWz50vk2CbUhVW7nNmH/zwkXV+CkJoS5v
+ RBkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767741575; x=1768346375;
+ d=1e100.net; s=20230601; t=1767741568; x=1768346368;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=oG31mHt5hAIZAFs8E2PvTGlNRu+jO6SBveBnHl2PbaQ=;
- b=TPZKTf7U7elDYm7Tzam55RiwuReQkQ6JjbtsR/4b1lxKlGMe2U9BXAsnQQC7EDftUs
- p9j8sCphG5n10GxLj84e9+9/z27uIuqNfgAqKs5FCVz4I4FlsvZSKAALEU5z+RQMjeBC
- 1SBpyyiLZskbtzn35Gi6WiIOOLY+UdHZKVhfIGDXJ7ro5DRFS/VcKsMs4TmQviU2j5+R
- YRosiCDcfz3/dvzfbxfk1LGE7HDZmdFQb3ubDByEHac0fDjEuMeewp6HNdPkTBCqyV5z
- ys/+x/8PN45nnYwh84pRbTaegeKA2DBuMjrn09UHXeeEPNc8i8QaE3nmhoLYqzns+vCm
- aP0w==
-X-Gm-Message-State: AOJu0Yy9v+JYlMeD3BZtvr7P8/U5dZRs8XS5kc9NmOrl9jKnOrLhnYwU
- +j59DC0od2QMkwe+sYC9BDaoAMPnXW3M8KVCybgBUWzyVNbKWguqleOnoWXPBAN7Z5gLi/s1Q1e
- OtNb1HYDgxg==
-X-Gm-Gg: AY/fxX4Gsfe7cIAORwXNDG+qf4wB48egJW3Df63e6ZkcKkj8oGfKWR67kvEFgVw+p25
- 5NfAVer5sqgJXYU9vesrHB9oLM4229oqvXjlSTyYXudU1SbC2JfFUXZ2XZaHDIiU+Gf8xMrrmOF
- C7Wka4c/YKbnnlw2WQ9RhjU3dm2VE2a7/Xg8yns1Y71JDULFXVaueUkft1SvTctK/L4RRhOY6gY
- jPY442BJsbi4hBWTUW5nNFOUjDUBn4XtBAuksWQgsqmJhv2bcVkiz4ALa6AdYJhJQJkuVFEwYfR
- hjlYNeD8JggRYTtoeTdOEZJUWVEzQc/Q40o0IxUOy+zsqkYXU5hJquTX9UOi2o2DOM3pOHUTgj5
- jsJ+s+hPQiumJBnyQ6OsKMD87HVZUW4Vmucltd/vn85wOmE3yCE3ZTu+31Hcz734gBaLMAqo4AF
- Hw9OtK/DJtFj9G6JDAg6s7ZKAZPF9SHQdOoKY+p4IP7XSbuVmWJpBAk5V3tXBl
-X-Google-Smtp-Source: AGHT+IGBPiN9OqBj4AH4ZXKOokhRaGavV0ccTGCcgU3wTU3oFvnnQPhzCH6bETDOH9hik64M1OyyWw==
-X-Received: by 2002:a05:600c:8506:b0:477:9ce2:a0d8 with SMTP id
- 5b1f17b1804b1-47d849bd201mr4901385e9.0.1767741575049; 
- Tue, 06 Jan 2026 15:19:35 -0800 (PST)
+ bh=pD7Mewu4hIr0e5mQRsO3Q7vuGfas+TRDeUMaumdJ2i8=;
+ b=b/75BeLl32d4v/83pY3inkHPak+7ZXQQXwqgdEQ0qodS736Hc0caqxpx97MhANxc2h
+ jSc1c164DgTOXgEp9yLc6SSgMzTjCRkIR/dIdUlMMUZRD4ybdpp1+NxgrHcrnkZbsyIU
+ 0z6IejPqqKkaYs6RNACzP2wCaHywPSvzxTQtSOILnmsmRe4ddZ37a5umCQYGvMVPKBhC
+ Glve6CJIvPtJRTxB+cGxnM2WbFk/jhXH3vft9o4ATDvkzTesTcgKKn7BpVEsO8iGIj8O
+ dkbJpbF4S7hVDtlnOvEqC3Vx0QqSi5f7rQqlUzMQzf5xIAl39adG6exFgpcI+83jwW6k
+ jwLg==
+X-Gm-Message-State: AOJu0YxvrHofGbjBAR80avAi/HP3aDMMk7mWoWASfvLj3wPqqTkx/Z+q
+ XDnmk7egagflCQqTfC61Hmbawy68H57EFeAU5mumwE047zJjB5bISX4DdydGpZh6px4a99d8qQc
+ y9v40LHxJCQ==
+X-Gm-Gg: AY/fxX4qitVBW5UtLU0kqfniIPnkQdwFJAPxkQ1gWNLRFfNKev3X2Ucm41RV4TqiOZ1
+ wLJBLd/p4ZOdIvA4dE7f7455N7yKU371/s4GIQl8JxmCbmNjWP/OFCxIOL9elGoiyDNHeyqFHAr
+ VItW87eQY1mEB/iI2zlsNoJdHNiUak0efs4k0Zh2kXtsFQZoDZYTBaQVFngto36flCv3P/d3MX3
+ 1sId2jj//zqrc48v/zy3bZH71zxSUuEL4hYj285nywOu3KVlL9yqvjPpj319+BNXM60c3kf7rQU
+ jb5PdnPc+f0zYQ2AzHnQBHtdZUF1timfKeobkMmchp6jHUfxnk8gO39RCQzhX0D2mbBargoKUXG
+ 9kAVFu53dYy+4u9ZBFsq6yWZs2bu1ZOAbh90BxuFXMrrCGHz4KDNw3D2mmrpFPlMvdhvRRhcLKt
+ WS6E+iwqmTWWXUEtRd2M2MTLLK6ErOy+ImopFZaPabBi+MzCbyhEsjxzEzD3t/
+X-Google-Smtp-Source: AGHT+IECKEgzr3dFU2uBOsccVLYHAGq2i0VVMFPo8p+dDkAVSg+JZ8APSzHetbY3BlHIFmu7xBbk5Q==
+X-Received: by 2002:a05:600c:3ba9:b0:477:9d88:2da6 with SMTP id
+ 5b1f17b1804b1-47d847d0f30mr8777615e9.0.1767741567887; 
+ Tue, 06 Jan 2026 15:19:27 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7faedd57sm27435795e9.5.2026.01.06.15.19.33
+ 5b1f17b1804b1-47d7fb2a0fbsm28778325e9.8.2026.01.06.15.19.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Jan 2026 15:19:34 -0800 (PST)
+ Tue, 06 Jan 2026 15:19:27 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,11 +71,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>
-Subject: [PATCH 3/5] target/s390x: Restrict WatchPoint API to TCG
-Date: Wed,  7 Jan 2026 00:19:05 +0100
-Message-ID: <20260106231908.16756-4-philmd@linaro.org>
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PATCH 2/5] target/ppc: Restrict WatchPoint API to TCG
+Date: Wed,  7 Jan 2026 00:19:04 +0100
+Message-ID: <20260106231908.16756-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260106231908.16756-1-philmd@linaro.org>
 References: <20260106231908.16756-1-philmd@linaro.org>
@@ -106,217 +105,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By inverting the 'tcg_enabled()' check in s390_cpu_set_psw()
-we can let the compiler elide the s390_cpu_recompute_watchpoints()
-call when TCG is not available. Move it to a TCG specific
-file to avoid compiling dead code on KVM. This restricts the
-WatchPoint API calls to TCG.
+Watchpoints are specific to the TCG accelerator. Since the
+Data Address Watchpoint helpers are only called from
+translated code, move them to a new 'watchpoint.c' file,
+specific to TCG. Thus restricting the WatchPoint API to TCG.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/s390x-internal.h |  1 -
- target/s390x/tcg/tcg_s390x.h  |  4 +++
- target/s390x/cpu.c            | 30 ++++++++++----------
- target/s390x/helper.c         | 38 -------------------------
- target/s390x/tcg/debug.c      | 53 +++++++++++++++++++++++++++++++++++
- target/s390x/tcg/meson.build  |  3 ++
- 6 files changed, 75 insertions(+), 54 deletions(-)
- create mode 100644 target/s390x/tcg/debug.c
+ target/ppc/cpu.c        | 81 +----------------------------------
+ target/ppc/watchpoint.c | 93 +++++++++++++++++++++++++++++++++++++++++
+ target/ppc/meson.build  |  1 +
+ 3 files changed, 96 insertions(+), 79 deletions(-)
+ create mode 100644 target/ppc/watchpoint.c
 
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index 9691366ec91..c4cd17d4d7d 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -317,7 +317,6 @@ void s390_cpu_gdb_init(CPUState *cs);
- void s390_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
- void do_restart_interrupt(CPUS390XState *env);
- #ifndef CONFIG_USER_ONLY
--void s390_cpu_recompute_watchpoints(CPUState *cs);
- void s390x_tod_timer(void *opaque);
- void s390x_cpu_timer(void *opaque);
- void s390_handle_wait(S390CPU *cpu);
-diff --git a/target/s390x/tcg/tcg_s390x.h b/target/s390x/tcg/tcg_s390x.h
-index 78558912f99..33f26f26c0f 100644
---- a/target/s390x/tcg/tcg_s390x.h
-+++ b/target/s390x/tcg/tcg_s390x.h
-@@ -21,4 +21,8 @@ G_NORETURN void tcg_s390_data_exception(CPUS390XState *env, uint32_t dxc,
- G_NORETURN void tcg_s390_vector_exception(CPUS390XState *env, uint32_t vxc,
-                                           uintptr_t ra);
- 
-+#ifndef CONFIG_USER_ONLY
-+void s390_cpu_recompute_watchpoints(CPUState *cs);
-+#endif
-+
- #endif /* TCG_S390X_H */
-diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-index 6c4198eb1b1..f68b288e364 100644
---- a/target/s390x/cpu.c
-+++ b/target/s390x/cpu.c
-@@ -40,6 +40,7 @@
- #include "system/reset.h"
- #endif
- #include "hw/s390x/cpu-topology.h"
-+#include "tcg/tcg_s390x.h"
- 
- #define CR0_RESET       0xE0UL
- #define CR14_RESET      0xC2000000UL;
-@@ -74,26 +75,25 @@ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr)
-     env->psw.mask = mask;
- 
-     /* KVM will handle all WAITs and trigger a WAIT exit on disabled_wait */
--    if (!tcg_enabled()) {
--        return;
--    }
--    env->cc_op = (mask >> 44) & 3;
-+    if (tcg_enabled()) {
-+        env->cc_op = (mask >> 44) & 3;
- 
- #ifndef CONFIG_USER_ONLY
--    if (is_early_exception_psw(mask, addr)) {
--        env->int_pgm_ilen = 0;
--        trigger_pgm_exception(env, PGM_SPECIFICATION);
--        return;
--    }
-+        if (is_early_exception_psw(mask, addr)) {
-+            env->int_pgm_ilen = 0;
-+            trigger_pgm_exception(env, PGM_SPECIFICATION);
-+            return;
-+        }
- 
--    if ((old_mask ^ mask) & PSW_MASK_PER) {
--        s390_cpu_recompute_watchpoints(env_cpu(env));
--    }
-+        if ((old_mask ^ mask) & PSW_MASK_PER) {
-+            s390_cpu_recompute_watchpoints(env_cpu(env));
-+        }
- 
--    if (mask & PSW_MASK_WAIT) {
--        s390_handle_wait(env_archcpu(env));
--    }
-+        if (mask & PSW_MASK_WAIT) {
-+            s390_handle_wait(env_archcpu(env));
-+        }
- #endif
-+    }
+diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
+index 4d8faaddee2..9cb3f00aa88 100644
+--- a/target/ppc/cpu.c
++++ b/target/ppc/cpu.c
+@@ -131,85 +131,8 @@ void ppc_store_ciabr(CPUPPCState *env, target_ulong val)
+     ppc_update_ciabr(env);
  }
  
- uint64_t s390_cpu_get_psw_mask(CPUS390XState *env)
-diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-index 184428c6d9d..8d1e03f6768 100644
---- a/target/s390x/helper.c
-+++ b/target/s390x/helper.c
-@@ -143,41 +143,3 @@ void do_restart_interrupt(CPUS390XState *env)
- 
-     s390_cpu_set_psw(env, mask, addr);
- }
--
--void s390_cpu_recompute_watchpoints(CPUState *cs)
+-void ppc_update_daw(CPUPPCState *env, int rid)
 -{
--    const int wp_flags = BP_CPU | BP_MEM_WRITE | BP_STOP_BEFORE_ACCESS;
--    CPUS390XState *env = cpu_env(cs);
+-    CPUState *cs = env_cpu(env);
+-    int spr_dawr = rid ? SPR_DAWR1 : SPR_DAWR0;
+-    int spr_dawrx = rid ? SPR_DAWRX1 : SPR_DAWRX0;
+-    target_ulong deaw = env->spr[spr_dawr] & PPC_BITMASK(0, 60);
+-    uint32_t dawrx = env->spr[spr_dawrx];
+-    int mrd = extract32(dawrx, PPC_BIT_NR(48), 54 - 48);
+-    bool dw = extract32(dawrx, PPC_BIT_NR(57), 1);
+-    bool dr = extract32(dawrx, PPC_BIT_NR(58), 1);
+-    bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
+-    bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
+-    bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
+-    vaddr len;
+-    int flags;
 -
--    /* We are called when the watchpoints have changed. First
--       remove them all.  */
--    cpu_watchpoint_remove_all(cs, BP_CPU);
+-    if (env->dawr_watchpoint[rid]) {
+-        cpu_watchpoint_remove_by_ref(cs, env->dawr_watchpoint[rid]);
+-        env->dawr_watchpoint[rid] = NULL;
+-    }
 -
--    /* Return if PER is not enabled */
--    if (!(env->psw.mask & PSW_MASK_PER)) {
+-    if (!dr && !dw) {
 -        return;
 -    }
 -
--    /* Return if storage-alteration event is not enabled.  */
--    if (!(env->cregs[9] & PER_CR9_EVENT_STORE)) {
+-    if (!hv && !sv && !pr) {
 -        return;
 -    }
 -
--    if (env->cregs[10] == 0 && env->cregs[11] == -1LL) {
--        /* We can't create a watchoint spanning the whole memory range, so
--           split it in two parts.   */
--        cpu_watchpoint_insert(cs, 0, 1ULL << 63, wp_flags, NULL);
--        cpu_watchpoint_insert(cs, 1ULL << 63, 1ULL << 63, wp_flags, NULL);
--    } else if (env->cregs[10] > env->cregs[11]) {
--        /* The address range loops, create two watchpoints.  */
--        cpu_watchpoint_insert(cs, env->cregs[10], -env->cregs[10],
--                              wp_flags, NULL);
--        cpu_watchpoint_insert(cs, 0, env->cregs[11] + 1, wp_flags, NULL);
--
--    } else {
--        /* Default case, create a single watchpoint.  */
--        cpu_watchpoint_insert(cs, env->cregs[10],
--                              env->cregs[11] - env->cregs[10] + 1,
--                              wp_flags, NULL);
+-    len = (mrd + 1) * 8;
+-    flags = BP_CPU | BP_STOP_BEFORE_ACCESS;
+-    if (dr) {
+-        flags |= BP_MEM_READ;
 -    }
+-    if (dw) {
+-        flags |= BP_MEM_WRITE;
+-    }
+-
+-    cpu_watchpoint_insert(cs, deaw, len, flags, &env->dawr_watchpoint[rid]);
 -}
-diff --git a/target/s390x/tcg/debug.c b/target/s390x/tcg/debug.c
+-
+-void ppc_store_dawr0(CPUPPCState *env, target_ulong val)
+-{
+-    env->spr[SPR_DAWR0] = val;
+-    ppc_update_daw(env, 0);
+-}
+-
+-static void ppc_store_dawrx(CPUPPCState *env, uint32_t val, int rid)
+-{
+-    int hrammc = extract32(val, PPC_BIT_NR(56), 1);
+-
+-    if (hrammc) {
+-        /* This might be done with a second watchpoint at the xor of DEAW[0] */
+-        qemu_log_mask(LOG_UNIMP, "%s: DAWRX%d[HRAMMC] is unimplemented\n",
+-                      __func__, rid);
+-    }
+-
+-    env->spr[rid ? SPR_DAWRX1 : SPR_DAWRX0] = val;
+-    ppc_update_daw(env, rid);
+-}
+-
+-void ppc_store_dawrx0(CPUPPCState *env, uint32_t val)
+-{
+-    ppc_store_dawrx(env, val, 0);
+-}
+-
+-void ppc_store_dawr1(CPUPPCState *env, target_ulong val)
+-{
+-    env->spr[SPR_DAWR1] = val;
+-    ppc_update_daw(env, 1);
+-}
+-
+-void ppc_store_dawrx1(CPUPPCState *env, uint32_t val)
+-{
+-    ppc_store_dawrx(env, val, 1);
+-}
+-
+-#endif
+-#endif
++#endif /* TARGET_PPC64 */
++#endif /* !CONFIG_USER_ONLY */
+ 
+ static inline void fpscr_set_rounding_mode(CPUPPCState *env)
+ {
+diff --git a/target/ppc/watchpoint.c b/target/ppc/watchpoint.c
 new file mode 100644
-index 00000000000..12ae95d4fe8
+index 00000000000..c71dd4550b7
 --- /dev/null
-+++ b/target/s390x/tcg/debug.c
-@@ -0,0 +1,53 @@
++++ b/target/ppc/watchpoint.c
+@@ -0,0 +1,93 @@
 +/*
-+ * QEMU S/390 debug routines
++ * PowerPC watchpoint routines for QEMU
 + *
-+ * Copyright (c) 2009 Ulrich Hecht
-+ * Copyright (c) 2011 Alexander Graf
-+ * Copyright (c) 2012 SUSE LINUX Products GmbH
-+ * Copyright (c) 2012 IBM Corp.
++ * Copyright (c) 2017 Nikunj A Dadhania, IBM Corporation.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "exec/watchpoint.h"
-+#include "target/s390x/cpu.h"
-+#include "tcg_s390x.h"
++#include "exec/log.h"
++#include "accel/tcg/watchpoint.h"
++#include "target/ppc/cpu.h"
 +
-+void s390_cpu_recompute_watchpoints(CPUState *cs)
++#if defined(TARGET_PPC64)
++
++void ppc_update_daw(CPUPPCState *env, int rid)
 +{
-+    const int wp_flags = BP_CPU | BP_MEM_WRITE | BP_STOP_BEFORE_ACCESS;
-+    CPUS390XState *env = cpu_env(cs);
++    CPUState *cs = env_cpu(env);
++    int spr_dawr = rid ? SPR_DAWR1 : SPR_DAWR0;
++    int spr_dawrx = rid ? SPR_DAWRX1 : SPR_DAWRX0;
++    target_ulong deaw = env->spr[spr_dawr] & PPC_BITMASK(0, 60);
++    uint32_t dawrx = env->spr[spr_dawrx];
++    int mrd = extract32(dawrx, PPC_BIT_NR(48), 54 - 48);
++    bool dw = extract32(dawrx, PPC_BIT_NR(57), 1);
++    bool dr = extract32(dawrx, PPC_BIT_NR(58), 1);
++    bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
++    bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
++    bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
++    vaddr len;
++    int flags;
 +
-+    /* We are called when the watchpoints have changed. First
-+       remove them all.  */
-+    cpu_watchpoint_remove_all(cs, BP_CPU);
++    if (env->dawr_watchpoint[rid]) {
++        cpu_watchpoint_remove_by_ref(cs, env->dawr_watchpoint[rid]);
++        env->dawr_watchpoint[rid] = NULL;
++    }
 +
-+    /* Return if PER is not enabled */
-+    if (!(env->psw.mask & PSW_MASK_PER)) {
++    if (!dr && !dw) {
 +        return;
 +    }
 +
-+    /* Return if storage-alteration event is not enabled.  */
-+    if (!(env->cregs[9] & PER_CR9_EVENT_STORE)) {
++    if (!hv && !sv && !pr) {
 +        return;
 +    }
 +
-+    if (env->cregs[10] == 0 && env->cregs[11] == -1LL) {
-+        /* We can't create a watchoint spanning the whole memory range, so
-+           split it in two parts.   */
-+        cpu_watchpoint_insert(cs, 0, 1ULL << 63, wp_flags, NULL);
-+        cpu_watchpoint_insert(cs, 1ULL << 63, 1ULL << 63, wp_flags, NULL);
-+    } else if (env->cregs[10] > env->cregs[11]) {
-+        /* The address range loops, create two watchpoints.  */
-+        cpu_watchpoint_insert(cs, env->cregs[10], -env->cregs[10],
-+                              wp_flags, NULL);
-+        cpu_watchpoint_insert(cs, 0, env->cregs[11] + 1, wp_flags, NULL);
-+
-+    } else {
-+        /* Default case, create a single watchpoint.  */
-+        cpu_watchpoint_insert(cs, env->cregs[10],
-+                              env->cregs[11] - env->cregs[10] + 1,
-+                              wp_flags, NULL);
++    len = (mrd + 1) * 8;
++    flags = BP_CPU | BP_STOP_BEFORE_ACCESS;
++    if (dr) {
++        flags |= BP_MEM_READ;
 +    }
++    if (dw) {
++        flags |= BP_MEM_WRITE;
++    }
++
++    cpu_watchpoint_insert(cs, deaw, len, flags, &env->dawr_watchpoint[rid]);
 +}
-diff --git a/target/s390x/tcg/meson.build b/target/s390x/tcg/meson.build
-index ee4e8fec77c..515cb8b473d 100644
---- a/target/s390x/tcg/meson.build
-+++ b/target/s390x/tcg/meson.build
-@@ -12,3 +12,6 @@ s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'vec_int_helper.c',
-   'vec_string_helper.c',
++
++void ppc_store_dawr0(CPUPPCState *env, target_ulong val)
++{
++    env->spr[SPR_DAWR0] = val;
++    ppc_update_daw(env, 0);
++}
++
++static void ppc_store_dawrx(CPUPPCState *env, uint32_t val, int rid)
++{
++    int hrammc = extract32(val, PPC_BIT_NR(56), 1);
++
++    if (hrammc) {
++        /* This might be done with a second watchpoint at the xor of DEAW[0] */
++        qemu_log_mask(LOG_UNIMP, "%s: DAWRX%d[HRAMMC] is unimplemented\n",
++                      __func__, rid);
++    }
++
++    env->spr[rid ? SPR_DAWRX1 : SPR_DAWRX0] = val;
++    ppc_update_daw(env, rid);
++}
++
++void ppc_store_dawrx0(CPUPPCState *env, uint32_t val)
++{
++    ppc_store_dawrx(env, val, 0);
++}
++
++void ppc_store_dawr1(CPUPPCState *env, target_ulong val)
++{
++    env->spr[SPR_DAWR1] = val;
++    ppc_update_daw(env, 1);
++}
++
++void ppc_store_dawrx1(CPUPPCState *env, uint32_t val)
++{
++    ppc_store_dawrx(env, val, 1);
++}
++
++#endif
+diff --git a/target/ppc/meson.build b/target/ppc/meson.build
+index 8eed1fa40ca..d354c3240a2 100644
+--- a/target/ppc/meson.build
++++ b/target/ppc/meson.build
+@@ -43,6 +43,7 @@ ppc_system_ss.add(files(
+   'ppc-qmp-cmds.c',
  ))
-+s390x_system_ss.add(when: 'CONFIG_TCG', if_true: files(
-+  'debug.c',
-+))
+ ppc_system_ss.add(when: 'CONFIG_TCG', if_true: files(
++  'watchpoint.c',
+   'mmu_helper.c',
+ ), if_false: files(
+   'tcg-stub.c',
 -- 
 2.52.0
 
