@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6834CD043B
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 06:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD49CD0421
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 06:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd05Z-0005c1-Rm; Tue, 06 Jan 2026 00:58:41 -0500
+	id 1vd05U-00051h-6k; Tue, 06 Jan 2026 00:58:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1vd05Y-0005Pd-3I
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:58:40 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1vd05A-0004Yj-7l
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:58:16 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1vd05W-0002cu-CI
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:58:39 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-34f634dbfd6so4086a91.2
- for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 21:58:37 -0800 (PST)
+ id 1vd058-0001rn-BG
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 00:58:15 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-34c84dc332cso714628a91.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Jan 2026 21:58:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767679117; x=1768283917; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1767679093; x=1768283893; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aPjM/mNyxZhExOHgixfVJoXuZ2ToFw6rHXAzW208+YI=;
- b=f+3gMRJHK+4k6B8mK2mnR7eBhdwmM6nXREM0KVQvt6NbR7rnTW2WJdm8uIs6x8FylH
- qwH6sGH0CbBjJt8lSnf3BLdvwJ6U6uGheauftPLkPjmclbgny2OqOJMuTTe84YUPaceN
- 1a96apzZMl7AfqotCao2z7SP03Bvxjm2+6KbbUkPe2vqkJAL7T7IXz3nQSkYXJEfGzA1
- IooRoINU4/jAiW7hEiFf0sKUhDch9wIWtijM3oOm0juX6DTyJCLeC3R7f/bMz2mN9rEY
- OfYahjP5uj2L6GGNBnsrPDdcNMix4b9ZKu4nXem2dmVTN3Z2TLwtpGLtYST6Jmx9Uy7x
- ZUpA==
+ bh=vv8gsGomA/loU05EEpIQ2SGJs0ppGtppGMsdkJPddME=;
+ b=hPG4jZatES/XAAdUJrBLgtfUP1Kh3Uq1HHboxSARR6DS7hlvYqPxwhCQu/lRAr0XXB
+ SquXBGXHY64PQpgPXrl04oKHJU0EtM47mt+NQTFGuA18jMFS9dJSM3yn+ljf4M/Dp6EH
+ S6tlQtZIaSzcEd9Vi07g07o+qTtvK4c6k/EYGKap43Humt7NP6y6A1jaJVIbcO4FnwCz
+ HZ3vSGpEYzVk7cWEyX+l09WRiU6XjQwWn4IlW1gNPbNXFVnb7KXBT7+lYSAUH6/D+oNQ
+ eDh/q8zj3y+FIB4fy8qbNpp01zNY6TQz8WlMKNyrclsJgFU1aDboSIo8831RBSqlq/RR
+ 62JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767679117; x=1768283917;
+ d=1e100.net; s=20230601; t=1767679093; x=1768283893;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aPjM/mNyxZhExOHgixfVJoXuZ2ToFw6rHXAzW208+YI=;
- b=Amfc8kF0Y/LzLJCFMitqNMcE+RShYYTx5F2l62/bgHGo7sPEU3tajNqQJfFdm7Ogfk
- y2vWLFylIrM5bxomRM/l2Bl8hGu/eVzZLO8PALAD7jIrFpzGjG3sBy3lx9OSMkzwWR9W
- OyaZx7yk8GhdbB1Iv9gT/oN4piTGjwZkVayrB0q+K5dIYQPXv8Y7D/Ibm+SPzTvp95UH
- q71UCnCZJo/kv9Om6xXcvfroMuCUftQau4qKlXJqJjXISFYAc1vFk6LDGTYhjVdgAju/
- CpuSygjzfalQyHYlM6CfKL1vd+aiW5IN0ZMOpeR6IQlmLqct/EuEkUAPxpcEWqT7e79n
- INrg==
+ bh=vv8gsGomA/loU05EEpIQ2SGJs0ppGtppGMsdkJPddME=;
+ b=TIEFkWBqeWgdRErdI+4dHSRDWyV8mJvVs2xOGpZNP7peBSW1m7M26afX5z4J5dn+eG
+ sZr+N6iHqBEuBNfH4kkeqgj6RwfQknytolmsfsblcBYutOWS6WADKrDbRhGCcber/qQ7
+ in3TwP/2Zn/DwXEXqJYX1VIHMcJt1xeghjRR9x5KhGuSpUz2K8j14xbQ2BkPduy5Dc/C
+ SpDGRTQj+WXrs71BGylDYFnKfQXRYsemaFyqLKWTN0fQaAwJDKhd4a320udn1at88q5B
+ ge0m0fg8fvaN9EI9CEE+enMO+TJlpY+fO3TTas9FduAZGQ7g6cxPSE7C0Flt+23LzG1/
+ tWjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXP+KUQTsJYYFvbgfv/NoYt5+1BabGMA6J4M3GPiNqZ58Gja7IU/oSn1fF1439VdE4sBCNSBNLlj/wM@nongnu.org
-X-Gm-Message-State: AOJu0YyDh5SxQFxRQQwc/Zabuq8eLAWsmFIhaDAh90PKYdmbgt77tyUT
- hQ4DuiSXnI9T69sE3WpuEX9B8+sgt4lOzLCBF0mNDN4Ab8H3NC0Ar3Ks
-X-Gm-Gg: AY/fxX5tHU8AwrBJWYa5GTKYDooZ1F+Rbyuo8p/k9trgGrulsP9apSuRm9QxMagTi0F
- xVAZHG2tubI54FFqKIVtaaCkuaNiMgsps5GPAmtsSFLQss6IkUeUihEi8D45Y5yUVyE4u4IFbk1
- pHZ1qJLFCVrZQdEcIEbsbke97NHT8km0Y8wGQzFPBKObZ2hoXin8ieAdselRa3of30kNZ9f0Qty
- vnspFx9eSWbMYyldx4alfPPXB/bMo/3yduh0J/x7QyZ/mW8fUS27T2z7CPjXvRUtVWGVTSwREiI
- QEr8Arg5YeB81u2Goe/qNaEZRpr/sQ+wTe31ibQgXofM2GuIlqX0walH76dU/Lpmop1aDBJjB+j
- 0cewUeOTJ+RRLFQyxoftOE7OyyDXNI/N4mH0lbNaoGvnV8D9WbENkI5BK00NvOcKx+FpRugRGaf
- Css9ZOGAn8ExPEpGJjLRVDdQsil3bUnMA=
-X-Google-Smtp-Source: AGHT+IG15ub/u40jpDBsW4flt0eqMTrpOCPVkrdlJqIU/B64ZiDEtfAyxrkT9anpV3ytNglLgjxhUQ==
-X-Received: by 2002:a17:90b:2245:b0:339:ec9c:b275 with SMTP id
- 98e67ed59e1d1-34f5f26df4emr1761597a91.6.1767679117044; 
- Mon, 05 Jan 2026 21:58:37 -0800 (PST)
+ AJvYcCX5akTfdpt7ge5vf25WS84iDuhv7mm9TJuX76swl8EJc5ToWHVO2oWaTbtkNJ8VzMFyWzQQEimo0W9j@nongnu.org
+X-Gm-Message-State: AOJu0YwCYimTSG618fHS94v4wlUetr/V2rXI5mcFVU22y4M4eJbCkTVt
+ 9lsooYvL3MV6seDrpheH1NMABeDSpgqOOSjkpD/FXVasOiD54XthPOmS
+X-Gm-Gg: AY/fxX59N/IWYH5YBHgiuqLkE2R1/m+FMhNTDPCKC3XPA2DK6CeX92M8AQUAEg61wdC
+ OZRxJiM21FrXYIxpzzr8J1DBuQmg8aBacz9Wr2uzFKXW/Zq2z4dl/oSMTwpveR7fZ4Td8bqd5F0
+ Wyi1XM71l+N+VJIOHNvGXtDL4DMIumstgOKCRnftKBr1BD29TuNc999qzPbP5MAp5kxbpQlNgCt
+ M5faWYRJZIT/miPjJcMP93qExBxtXu7l4KkBfONliY1q41mcX0bZrxvED7ZWX6rv94WcGbyvety
+ DtwKHznL0ffBx/ogsWW+xLKxEv1oNd9mp0V8fuphiXBzv+GQKo6VuB1RbYKMdAPdJhKdoZMwRD7
+ o2+3WBi4j2nqu5dZuyn/bFhhXG4uW1nv6y5xhtUPWqaBtLkzocSjDIdwfLz53ggNWdD9EZcf8n3
+ A3Em2s++pa//WvAD19CYMf
+X-Google-Smtp-Source: AGHT+IGNgd0nCN95bmxIOyBl6HehRr4qwFcofTuATPYRpDq91rsSDhL5mXV0lJxNK6QxIqi85NPqRQ==
+X-Received: by 2002:a17:90b:2d4e:b0:34a:a1c1:90a0 with SMTP id
+ 98e67ed59e1d1-34f5f333222mr1488555a91.28.1767679092918; 
+ Mon, 05 Jan 2026 21:58:12 -0800 (PST)
 Received: from donnager-debian.. ([45.124.203.19])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f60178af5sm460222a91.3.2026.01.05.21.58.31
+ 98e67ed59e1d1-34f60178af5sm460222a91.3.2026.01.05.21.58.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Jan 2026 21:58:36 -0800 (PST)
+ Mon, 05 Jan 2026 21:58:12 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
@@ -79,17 +79,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Joel Stanley <jms@oss.tenstorrent.com>,
  Nick Piggin <npiggin@oss.tenstorrent.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Subject: [PATCH 14/16] hw/riscv/boot: Warn if a ELF format file is loaded as a
- binary
-Date: Tue,  6 Jan 2026 16:26:54 +1030
-Message-ID: <20260106055658.209029-15-joel@jms.id.au>
+Subject: [PATCH 10/16] tests/functional/riscv64: Add tt-atlantis tests
+Date: Tue,  6 Jan 2026 16:26:50 +1030
+Message-ID: <20260106055658.209029-11-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260106055658.209029-1-joel@jms.id.au>
 References: <20260106055658.209029-1-joel@jms.id.au>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=joel.stan@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=joel.stan@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -115,62 +115,130 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nicholas Piggin <npiggin@gmail.com>
 
-It is possible that an ELF file can not be loaded, in that
-case the loader falls back to loading the file as a binary
-blob. Print a warning in this case because it is likely that
-it is not intended.
+Add OpenSBI and Linux boot tests for the tt-atlantis machine.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- hw/riscv/boot.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ MAINTAINERS                                  |  1 +
+ tests/functional/riscv64/meson.build         |  1 +
+ tests/functional/riscv64/test_opensbi.py     |  4 ++
+ tests/functional/riscv64/test_tt_atlantis.py | 68 ++++++++++++++++++++
+ 4 files changed, 74 insertions(+)
+ create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index ef9751730ee1..9f940c915620 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -179,13 +179,27 @@ hwaddr riscv_load_firmware(MachineState *machine,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4ae05f7e8d00..ece904fedccb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1731,6 +1731,7 @@ S: Supported
+ F: docs/system/riscv/tt_*.rst
+ F: hw/riscv/tt_*.c
+ F: include/hw/riscv/tt_*.h
++F: tests/functional/test_riscv64_tt_*.py
  
-     g_assert(firmware_filename != NULL);
+ AMD Microblaze-V Generic Board
+ M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+index c1704d92751b..52d5cb117a39 100644
+--- a/tests/functional/riscv64/meson.build
++++ b/tests/functional/riscv64/meson.build
+@@ -11,5 +11,6 @@ tests_riscv64_system_quick = [
  
--    if (load_elf_ram_sym(firmware_filename, NULL, NULL, NULL,
--                         &firmware_entry, NULL, &firmware_end, NULL,
--                         0, EM_RISCV, 1, 0, NULL, true, sym_cb) > 0) {
-+    firmware_size = load_elf_ram_sym(firmware_filename, NULL, NULL, NULL,
-+                                     &firmware_entry, NULL, &firmware_end,
-+                                     NULL, 0, EM_RISCV, 1, 0, NULL, false,
-+                                     sym_cb);
-+    if (firmware_size > 0) {
-         *firmware_load_addr = firmware_entry;
-         return firmware_end;
-     }
+ tests_riscv64_system_thorough = [
+   'sifive_u',
++  'tt_atlantis',
+   'tuxrun',
+ ]
+diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
+index d077e40f4278..0f8beb7e7a8c 100755
+--- a/tests/functional/riscv64/test_opensbi.py
++++ b/tests/functional/riscv64/test_opensbi.py
+@@ -28,6 +28,10 @@ def test_riscv_sifive_u(self):
+         self.set_machine('sifive_u')
+         self.boot_opensbi()
  
-+    if (firmware_size != ELF_LOAD_NOT_ELF) {
-+        /*
-+         * If the user specified an ELF format firmware that could not be
-+         * loaded as an ELF, it's possible that loading it as a binary is
-+         * not what was intended.
-+         */
-+        warn_report("could not load ELF format firmware '%s' (%s). "
-+                    "Attempting to load as binary.",
-+                    firmware_filename,
-+                    load_elf_strerror(firmware_size));
-+    }
++    def test_riscv_tt_atlantis(self):
++        self.set_machine('tt-atlantis')
++        self.boot_opensbi()
 +
-     firmware_size = load_image_targphys_as(firmware_filename,
-                                            *firmware_load_addr,
-                                            mem_size, NULL,
-@@ -195,7 +209,8 @@ hwaddr riscv_load_firmware(MachineState *machine,
-         return *firmware_load_addr + firmware_size;
-     }
- 
--    error_report("could not load firmware '%s'", firmware_filename);
-+    error_report("could not load firmware '%s': %s", firmware_filename,
-+                 load_elf_strerror(firmware_size));
-     exit(1);
- }
- 
+     def test_riscv_virt(self):
+         self.set_machine('virt')
+         self.boot_opensbi()
+diff --git a/tests/functional/riscv64/test_tt_atlantis.py b/tests/functional/riscv64/test_tt_atlantis.py
+new file mode 100755
+index 000000000000..fb6943509c28
+--- /dev/null
++++ b/tests/functional/riscv64/test_tt_atlantis.py
+@@ -0,0 +1,68 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel on a Tenstorrent Atlantis machine
++# and checks the console
++#
++# Copyright (c) Linaro Ltd.
++#
++# Author:
++#  Philippe Mathieu-Daudé
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++
++from qemu_test import Asset, LinuxKernelTest
++from qemu_test import skipIfMissingCommands
++
++
++class TTAtlantis(LinuxKernelTest):
++
++    ASSET_KERNEL = Asset(
++        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
++        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
++    ASSET_ROOTFS = Asset(
++        ('https://github.com/groeck/linux-build-test/raw/'
++         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
++         'rootfs.ext2.gz'),
++        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
++
++    def do_test_riscv64_tt_atlantis(self, connect_disk):
++        self.set_machine('tt-atlantis')
++        kernel_path = self.ASSET_KERNEL.fetch()
++        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
++
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               'earlycon=sbi '
++                               'root=/dev/vda ')
++
++        if connect_disk:
++            kernel_command_line += 'root=/dev/vda panic=-1 noreboot rootwait '
++            self.vm.add_args('-device',
++                             'virtio-blk,drive=drive0,serial=0x1234,bus=pcie.0')
++            self.vm.add_args('-drive',
++                             f'file={rootfs_path},if=none,id=drive0,format=raw')
++            pattern = 'Boot successful.'
++        else:
++            kernel_command_line += 'panic=0 noreboot '
++            pattern = 'Cannot open root device'
++
++        self.vm.add_args('-kernel', kernel_path,
++                         '-append', kernel_command_line,
++                         '-no-reboot')
++
++        self.vm.launch()
++        self.wait_for_console_pattern(pattern)
++
++        os.remove(rootfs_path)
++
++    def test_riscv64_tt_atlantis(self):
++        self.do_test_riscv64_tt_atlantis(False)
++
++    def test_riscv64_tt_atlantis_disk(self):
++        self.do_test_riscv64_tt_atlantis(True)
++
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.47.3
 
