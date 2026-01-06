@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398EDCEFCE7
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 18:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6803CEFCEB
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 18:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdBkb-0003h3-Ay; Tue, 06 Jan 2026 13:25:50 -0500
+	id 1vdBwZ-00081U-Ut; Tue, 06 Jan 2026 13:38:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vdBkY-0003go-PI
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:25:48 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vdBwU-00080t-Ve
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:38:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vdBkV-0006md-Pt
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:25:45 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vdBwS-0002uN-Cp
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 13:38:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767723942;
+ s=mimecast20190719; t=1767724682;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TwRJoFRSitRzN9HI4DwvLuKCAa7C5OtBgphQUXvIZss=;
- b=aoVFaB+nY5SqnF80FCRhzldlP5UTtsKRcQSCMEmkQk6c+acL3UuMNEGCIHqea35l4B/KoN
- 1Fzgot2z2jrAusf/m5PZkPtXF06ZrbyvUhOB2ii92XQ3aWnjNOJjCd3XikIL41lDPIfroi
- K2bCnGjQcTXqWvcqREosou/LJdubLpM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Cs0d/Whb67p4rhqOVd8pNKSJF4qon8ztCFF10BlCZRI=;
+ b=feeXyMTUB8L0QONGKTCGA7MMKk4Nu3FI/3ZZarTV1EJ8RADuxPgKbS9Vylr4Or5qd4YxFH
+ IxBR+fD6uyNf3SGjhYw/puDZfoe+WOPWH8FJgnYFEoUR6Qu1+81/YdKEtlYybktf4u6sB7
+ 66asBSSopqytTcuU8ZyWMs0GVt07w9s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-PuJxPF0WOYKEG0et2d70cw-1; Tue,
- 06 Jan 2026 13:25:41 -0500
-X-MC-Unique: PuJxPF0WOYKEG0et2d70cw-1
-X-Mimecast-MFC-AGG-ID: PuJxPF0WOYKEG0et2d70cw_1767723940
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-5nMqeKUNO7yu3Gh36mD6JQ-1; Tue,
+ 06 Jan 2026 13:36:27 -0500
+X-MC-Unique: 5nMqeKUNO7yu3Gh36mD6JQ-1
+X-Mimecast-MFC-AGG-ID: 5nMqeKUNO7yu3Gh36mD6JQ_1767724586
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A798B18002C1; Tue,  6 Jan 2026 18:25:39 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.158])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5D551180044F; Tue,  6 Jan 2026 18:25:38 +0000 (UTC)
-Date: Tue, 6 Jan 2026 13:25:37 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, peterx@redhat.com,
- vsementsov@yandex-team.ru, den@virtuozzo.com
-Subject: Re: [PATCH v3 0/4] Fixes and improvements for scripts/qemugdb commands
-Message-ID: <20260106182537.GA123256@fedora>
-References: <20251204105019.455060-1-andrey.drobyshev@virtuozzo.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 20A24195609D; Tue,  6 Jan 2026 18:36:26 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.7])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CCEAA30001B9; Tue,  6 Jan 2026 18:36:24 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org (open list:X86 KVM CPUs)
+Subject: [PATCH] Add query-tdx-capabilities
+Date: Tue,  6 Jan 2026 22:36:20 +0400
+Message-ID: <20260106183620.2144309-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="JKOtNYY37FfzrvBy"
-Content-Disposition: inline
-In-Reply-To: <20251204105019.455060-1-andrey.drobyshev@virtuozzo.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,73 +86,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
---JKOtNYY37FfzrvBy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Return an empty TdxCapability struct, for extensibility and matching
+query-sev-capabilities return type.
 
-On Thu, Dec 04, 2025 at 12:50:15PM +0200, Andrey Drobyshev wrote:
-> v2 -> v3:
->=20
->   * Use atexit.register() instead of gdb.events.exited.connect() for
->     registering a cleanup callback.  That way it's called upon both
->     normal and abnormal exit;
->   * Wrap code in invoke() methods in try-finally block, so that
->     restore_regs() is called unconditionally even we caught an exception;
->   * Restore registers in cleanup;
->   * Set dirty flag early on in patch_regs() to make sure registers get
->     restored if we failed while patching.
->=20
-> v1 -> v2:
->=20
->   * Use pty module instead of script(1) for producing colored output;
->   * Patch coredump file in place instead of full copy;
->   * Save and restore original pt_regs values in a separate file;
->   * Wrap this logic in a separate class.
->=20
-> v2: https://lore.kernel.org/qemu-devel/20251202163119.363969-1-andrey.dro=
-byshev@virtuozzo.com/
-> v1: https://lore.kernel.org/qemu-devel/20251125142105.448289-1-andrey.dro=
-byshev@virtuozzo.com/
->=20
-> Andrey Drobyshev (4):
->   scripts/qemugdb: mtree: Fix OverflowError in mtree with 128-bit
->     addresses
->   scripts/qemugdb: timers: Fix KeyError in 'qemu timers' command
->   scripts/qemugdb: timers: Improve 'qemu timers' command readability
->   scripts/qemugdb: coroutine: Add option for obtaining detailed trace in
->     coredump
->=20
->  scripts/qemugdb/coroutine.py | 257 +++++++++++++++++++++++++++++++++--
->  scripts/qemugdb/mtree.py     |   2 +-
->  scripts/qemugdb/timers.py    |  54 ++++++--
->  3 files changed, 289 insertions(+), 24 deletions(-)
->=20
-> --=20
-> 2.43.5
->=20
+Fixes: https://issues.redhat.com/browse/RHEL-129674
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ qapi/misc-i386.json        | 30 ++++++++++++++++++++++++++++++
+ target/i386/kvm/kvm_i386.h |  1 +
+ target/i386/kvm/kvm.c      |  5 +++++
+ target/i386/kvm/tdx-stub.c |  8 ++++++++
+ target/i386/kvm/tdx.c      | 21 +++++++++++++++++++++
+ 5 files changed, 65 insertions(+)
 
-Thanks, applied to my block tree:
-https://gitlab.com/stefanha/qemu/commits/block
-
-Stefan
-
---JKOtNYY37FfzrvBy
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmldU6EACgkQnKSrs4Gr
-c8h6hAf+LF5LvYqzPMJuQ53Btaa5WrQ8digQOrRhfE3gPBRC/rpdfTOIiApipS/v
-bpPZz5uZpRmsu+ehhidL/B8gXFohcEdqk6cur8Kcvwj/+cN9w42Ye5WY33H7fv2j
-W601btaN+NgH4jjF6ipsLCfWab/ExL3EBy9CqqbF88AjYX9xy9tS915z2euIwRUu
-to/7UqLqmuZkOVD7tvUB/9T30Sg6tSeJmpy7q3V3Phe9TgWBjMCEeFSN0qxhp1eE
-rMuXJa3lJHPbCA7aCvFwoPNBeD+R+TLEC4MRwAShnR4nT7LpvO1aUjUii4I8TQ1P
-dWhJPjFFabKqGiuq80v8+s8VwbR0Mw==
-=hM9H
------END PGP SIGNATURE-----
-
---JKOtNYY37FfzrvBy--
+diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
+index 05a94d6c416..f10e4338b48 100644
+--- a/qapi/misc-i386.json
++++ b/qapi/misc-i386.json
+@@ -225,6 +225,36 @@
+ ##
+ { 'command': 'query-sev-capabilities', 'returns': 'SevCapability' }
+ 
++##
++# @TdxCapability:
++#
++# The struct describes capability for Intel Trust Domain Extensions
++# (TDX) feature.
++#
++# Since: 11.0
++##
++{ 'struct': 'TdxCapability',
++  'data': { } }
++
++##
++# @query-tdx-capabilities:
++#
++# Get TDX capabilities.
++#
++# This is only supported on Intel X86 platforms with KVM enabled.
++#
++# Errors:
++#     - If TDX is not available on the platform, GenericError
++#
++# Since: 11.0
++#
++# .. qmp-example::
++#
++#     -> { "execute": "query-tdx-capabilities" }
++#     <- { "return": {} }
++##
++{ 'command': 'query-tdx-capabilities', 'returns': 'TdxCapability' }
++
+ ##
+ # @sev-inject-launch-secret:
+ #
+diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+index 2b653442f4d..71dd45be47a 100644
+--- a/target/i386/kvm/kvm_i386.h
++++ b/target/i386/kvm/kvm_i386.h
+@@ -61,6 +61,7 @@ void kvm_put_apicbase(X86CPU *cpu, uint64_t value);
+ 
+ bool kvm_has_x2apic_api(void);
+ bool kvm_has_waitpkg(void);
++bool kvm_has_tdx(void);
+ 
+ uint64_t kvm_swizzle_msi_ext_dest_id(uint64_t address);
+ void kvm_update_msi_routes_all(void *private, bool global,
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 7b9b740a8e5..8ce25d7e785 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -6582,6 +6582,11 @@ bool kvm_has_waitpkg(void)
+     return has_msr_umwait;
+ }
+ 
++bool kvm_has_tdx(void)
++{
++    return kvm_is_vm_type_supported(KVM_X86_TDX_VM);
++}
++
+ #define ARCH_REQ_XCOMP_GUEST_PERM       0x1025
+ 
+ void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask)
+diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
+index 1f0e108a69e..c4e7f2c58c8 100644
+--- a/target/i386/kvm/tdx-stub.c
++++ b/target/i386/kvm/tdx-stub.c
+@@ -1,6 +1,8 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+ 
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qapi/qapi-commands-misc-i386.h"
+ 
+ #include "tdx.h"
+ 
+@@ -30,3 +32,9 @@ void tdx_handle_get_tdvmcall_info(X86CPU *cpu, struct kvm_run *run)
+ void tdx_handle_setup_event_notify_interrupt(X86CPU *cpu, struct kvm_run *run)
+ {
+ }
++
++TdxCapability *qmp_query_tdx_capabilities(Error **errp)
++{
++    error_setg(errp, "TDX is not available in this QEMU");
++    return NULL;
++}
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 01619857685..b5ee3b1ab92 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -14,6 +14,7 @@
+ #include "qemu/base64.h"
+ #include "qemu/mmap-alloc.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-commands-misc-i386.h"
+ #include "qapi/qapi-visit-sockets.h"
+ #include "qom/object_interfaces.h"
+ #include "crypto/hash.h"
+@@ -1537,6 +1538,26 @@ static void tdx_guest_finalize(Object *obj)
+ {
+ }
+ 
++static TdxCapability *tdx_get_capabilities(Error **errp)
++{
++    if (!kvm_enabled()) {
++        error_setg(errp, "TDX is not available without KVM");
++        return NULL;
++    }
++
++    if (!kvm_has_tdx()) {
++        error_setg(errp, "TDX is not supported by this host");
++        return NULL;
++    }
++
++    return g_new0(TdxCapability, 1);
++}
++
++TdxCapability *qmp_query_tdx_capabilities(Error **errp)
++{
++    return tdx_get_capabilities(errp);
++}
++
+ static void tdx_guest_class_init(ObjectClass *oc, const void *data)
+ {
+     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
+-- 
+2.52.0
 
 
