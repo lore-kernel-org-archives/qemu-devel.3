@@ -4,109 +4,207 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 241F4CE9D46
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51DDCE9D47
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 15:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd8gQ-00053E-1g; Tue, 06 Jan 2026 10:09:18 -0500
+	id 1vd8pu-0002BW-9Q; Tue, 06 Jan 2026 10:19:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vd8gL-00052m-QJ
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:09:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vd8ps-0002B0-0F
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:19:04 -0500
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vd8gI-0001Ps-BK
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:09:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767712148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xrSwysaoKjRrChvVhXeVHkuJCC81jdU1vkBJVfDedM0=;
- b=A2qw1nNrifFql7hkOnyLosWrdBzQbQpzFDkjuS5Zg4msZS2XtBUJXp9evGAkqHdEnYSwcW
- UskuFlwZvs04uNutTZDptQMVVF4K0TQl9oDhqF2oaZUdbNT5q4nCRgEtiQiR5wW52tIy8n
- FBAjx/CLEg6mebOdmKfQV+/KfYkgBV4=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-3qk2HKKrOta37LXRZfzMrQ-1; Tue, 06 Jan 2026 10:09:06 -0500
-X-MC-Unique: 3qk2HKKrOta37LXRZfzMrQ-1
-X-Mimecast-MFC-AGG-ID: 3qk2HKKrOta37LXRZfzMrQ_1767712146
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8b2e235d4d2so421697485a.3
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 07:09:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767712146; x=1768316946; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=xrSwysaoKjRrChvVhXeVHkuJCC81jdU1vkBJVfDedM0=;
- b=ZQjmoEta9qUiEaIGGkr/dzktrfSCRzSI8GCe7ItP9GJMLTRQtpUNfM5AVkFyRSMqbG
- DoWLqJul7t8GUlH+p/e4GEqXTjTpwws7YICPDYXvpmy2AZ41XZhyKq+PmSvZh772JjHl
- Vf+KNP90tb2Rq03q6Vd/togOn1QnQlZl+wh/+LczqsBrQxxmuM/DaHKpZKL5s8dpXl/Q
- MTIA/2iLVzhRNStxNDFx5G1aK5d0OMvf7TVEOi327np0GrbotPiD0RJgzOvPUqyjwpkq
- zy67J+zPK476MYf7eb2kg4QO37oTc2bnO20e9RExVj4yUQnM2wUneWthQu3ABCzbjAPF
- RVNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767712146; x=1768316946;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xrSwysaoKjRrChvVhXeVHkuJCC81jdU1vkBJVfDedM0=;
- b=agIki/r+TQB0aTyJKOvvE8ZoqFwro+nqu3l8GL5lsxhjN1Xu/HtmOvibwvUjvgRn64
- F7ws7dZ3vBiXScv0jyS2KVrdy1myzWL4IXjgzyt8pmkQ/Rc6dOMrWvpvu3/KqPJvBRh3
- spy+Z+EUq88o48/O4mh357iemqCm8iXuwtbqDRVM60uc43ipqmfA511aqCTLZjHh79/O
- 0UjcxLjVOFDdX/SOcCiH83wRPOH32fNDkbh2fyetCBjodFj0SRzKwvfmC8KSLUmlP47y
- zPzxN7XekJ6BPXiGOTk6GP3lysSPupTo1S0D6UbR1kwekcQJkSNoLqApDIEOzr7L8+k2
- IZPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW0YYvLVuacEFNwxrQj94a752dt1CSSszTiYLFwJOiu4tH/Ba+8meb5aJR00zc6b7z/qlYWdEVU9ITv@nongnu.org
-X-Gm-Message-State: AOJu0YzVuMsiyJfsfnEIzjVKwyDE0QBsG7tF27sOIZQx2g1XsJfHkpez
- e1Hj+A9Sr0+6dMSAG+0aClezO6EC8ESA1oy+V1SY6DSJRqB4SewaysiqwVzugO6eZjPJg0D5VNX
- lZLY1zyU2EsF0Qh1xeC/mqh8WX8Y9ZaHVIo5w3aKCy7IQqpMXlDV56dE0
-X-Gm-Gg: AY/fxX5kZCt9Le7MEDmwg/F/7YOggCgyxOa94JSCYsDXqVf/PcceEeNMCdh7qBTuDkV
- ozcLMkHFSTWz0sAMz9DheJwodCXAx9K1S27xXRCrO0coPt/PBkwcHT2an6cxYmAZ/nUfwhxcmb6
- N1PMmtX9DU1X7sTsbTjJKueKkYhRogM0iUJ3V1icfv6TAHpuS0JQMu2XuK6j2k3tlPB++uisHAC
- br1mFJwrimr9Xq59ZdLRXWXO0r340ybwLxTY+m3kanIw5H0tbwOTD+apv3bMH2x83juq4tzAd8w
- QMb3EPFVrAG8vLGVbO3+KWj407uW4oExl7vibvan47RRgraW6Cxg651y0arwjsUTtj8KT3njxo9
- K3po=
-X-Received: by 2002:a05:620a:7105:b0:8be:e044:8cfa with SMTP id
- af79cd13be357-8c37eb8143fmr451491585a.40.1767712145921; 
- Tue, 06 Jan 2026 07:09:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGXqMF6ohqBu5lKv1ctXyoyDQHjGnhT0bMmVZX6S0LHwaux4hC+x5RHuG0GIy+oVYOXVMPIzQ==
-X-Received: by 2002:a05:620a:7105:b0:8be:e044:8cfa with SMTP id
- af79cd13be357-8c37eb8143fmr451482185a.40.1767712145199; 
- Tue, 06 Jan 2026 07:09:05 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c37f54427esm185918585a.48.2026.01.06.07.09.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Jan 2026 07:09:04 -0800 (PST)
-Date: Tue, 6 Jan 2026 10:09:03 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Prasad Pandit <pjp@fedoraproject.org>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Jiri Denemark <jdenemar@redhat.com>
-Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
-Message-ID: <aV0lj8ShJufwRY8z@x1.local>
-References: <20251222114822.327623-1-ppandit@redhat.com>
- <87h5tilhcq.fsf@suse.de> <aUq1oA73W9rAdCgG@x1.local>
- <CAE8KmOzcOdYhnxpDr8BMV8zjixpEh9r+COe=xyLfXCVWKD0CRw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1vd8pp-00049L-Mg
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 10:19:03 -0500
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 606AXcCK838756; Tue, 6 Jan 2026 07:18:58 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=LkAGPVg8W9mLpWhZ92px2q24xwccgxtjF+Y18qbjn
+ 7Q=; b=ioSUIHxXMEj6jpszJ3YdYuJieUcOBD9Az7EEPnbl84spMDTrZEOvihrg9
+ Syrq7TnnyXXvE4p8Xbu4vtVwY00ykGaW1634TLkMmUmqhCz0iRiIAleavsmln5ok
+ 49KUhfs6mrAlYtX+76vAOrGIISLmalybDmlJ7cnqUnALtTAaiMgodIo+nwXx9PF+
+ Tw/X5a5WNoCAUsjxnveQhB14joQ6sJvr9YHkzRIo33ragtoG2UwsHHiLH5rnA6Qe
+ k21LshB47s6uJw7EdT6HWR0HmmstD/23cjXlkaQ09MlFKorAKPiyztX3gMO8HMVK
+ 91WFcRLY4BPIOe+68j5C4V7GvX4tQ==
+Received: from byapr05cu005.outbound.protection.outlook.com
+ (mail-westusazon11020095.outbound.protection.outlook.com [52.101.85.95])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4bgqg81trn-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 06 Jan 2026 07:18:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=K9wcQoqhgULMWJTb+uAVgqW/wZ2yKoF1qY6q6JwfEmXRpUq+uRRCp1hHxqP2BCimRsOZbuLIhknIApPoXUesFjgzmWKBj7goWoLxQllJICEMDymLifx02eK6/+3QG1+Kev2iDrgrK8ybfADEtvYXDAG7XVFKR0I4+NL1o8/COxT2VtHvIVlZc1j8dQQXSUdXXXjZdFHHx8ioi2XGosKDOKbvSdDkTCWKN3u8DzwoyYnjmk9aWsyWZsJRgi7sCdElRwujtla7TxR01/0k5H/f4fDDfxH5zutxb92qZleFF9aOodNXNInDE+xv18+0MIagZMTtf/th3oJF63DCWmDmDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LkAGPVg8W9mLpWhZ92px2q24xwccgxtjF+Y18qbjn7Q=;
+ b=nQoPgaDlnYbVvSjxiZl7R5Q/aVKEgjHcXfoJwz+HWU6M1kzfmAL4CzMBei4YRLAZ6EzChZLnXcTT7Dk7XurReL7NHdbuBEu1pbflecarsomUVAZMcnfxVC/FcJeI3RlkJa004ajMYUwZ+KNoRLXXR9osXEdnRFWhAKjzZryIs9Ioi9JYW9BODucw2tXAB4bCc+nap2++gx+TD/gj1mKZM3OqN2ijKxAHS6yTfGkffnBGojV8+PBIoZ+eePDIx89eWLyNPd7WD0sabKvVRKUsKxctw2YQlKJzaPYPcni8iSvBHY+AttkzdrpFahKPn3qDoF/bMjqri7HDwuDo9mOGbg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LkAGPVg8W9mLpWhZ92px2q24xwccgxtjF+Y18qbjn7Q=;
+ b=jlzAMVh8jvWdbzvBjQIuYPLJpJkHlkq/OpHvpDiuYNIKCwi/v5QeObhzGqWevu+hLmuafoXaG6F+VsbziYeYU49fu1Ip4Mp21LGHMzttMlHKPl2EwhK8r7IDul06BP9YDs9h2xsXU3cbO0M5eA/A5rc+CmNk14+59+YHcwHZNPWnepxxadD35dKaGYCSpAEwfs2YcdO7teWmxDieuspziHj0vjNlHZ0oEoNs6lDA1pcHgzr/t1AyaMWJ6MVwQJSNAaPkYrRX32PPSZ3SpfYTO49l49blWIKpmPFwBzyBzvt1j+RKk1YZV/5UkHf9MNi/Q0VtTD7NU4YUhVo+/7RJrQ==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by SA2PR02MB7578.namprd02.prod.outlook.com (2603:10b6:806:135::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.4; Tue, 6 Jan
+ 2026 15:18:55 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%6]) with mapi id 15.20.9478.004; Tue, 6 Jan 2026
+ 15:18:55 +0000
+Message-ID: <2ebaf5b2-1845-4af6-9da1-e4eb59fec0c3@nutanix.com>
+Date: Tue, 6 Jan 2026 15:18:52 +0000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/18] target/i386/tcg: update cc_op after PUSHF
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20251210131653.852163-1-pbonzini@redhat.com>
+ <20251210131653.852163-4-pbonzini@redhat.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <20251210131653.852163-4-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA0PR11CA0096.namprd11.prod.outlook.com
+ (2603:10b6:806:d1::11) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOzcOdYhnxpDr8BMV8zjixpEh9r+COe=xyLfXCVWKD0CRw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SA2PR02MB7578:EE_
+X-MS-Office365-Filtering-Correlation-Id: c21b7c01-3208-497b-4915-08de4d36e833
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|10070799003|376014|1800799024|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Snc2eUlsRVNWa0RSOUlveFovZVFiSHNhZnBPendlbWhZSEJzdE1hWGxFTlo4?=
+ =?utf-8?B?TmN6Q1lQaXNSWThiSFpuQmlFRExaamNiRUUyNTdPZCtNOTNiVk1pUTV4Z2Zj?=
+ =?utf-8?B?S2crT0lzQ3Q3R2ZXVlpsdjRpTmRaZTdGSzdmV2RHQVBBbGN1QnVyN1VwSHpJ?=
+ =?utf-8?B?eHVHOXRaN3dNbUUrdUlhWVBjS0hFMHZVeEtyVHJRMS9SK3FaRmRiZGNmVnh2?=
+ =?utf-8?B?SzZabEhBaktqNmwzbXJlQ0ZxZlZiaVg0c0tEMlVUbXdINk95Vlg0YWdHUDNY?=
+ =?utf-8?B?dlZyWU1mdzVMSkpmMVNGWDhNZC9lVEtVU2t0bTBxWnVSeCs1WStJd2w2VFNl?=
+ =?utf-8?B?dzhVQ2V5NEFsdUFON0IrTkEzM3lYcFcwQUJiT1BqNWxaR3BEOWkyUHRJTGY1?=
+ =?utf-8?B?QmYzSzdpd0JrdThnVVNwRmZkYmdvR3A3YUQ3ajBMeVU1TVVLd2Uvamd2d0pT?=
+ =?utf-8?B?RnI0SHdLazdqR2czRm9Lc3NoNXFjVkFBT2FOYko3eDBuRjZpZVlRenc4U0VN?=
+ =?utf-8?B?Rkxqa2JQWCtRZzV0UTFXRDdLUTBuSm9UTUJvcm9BdXMwbkEyOGxWNUtzcWsr?=
+ =?utf-8?B?djI5NkRibDVKR0NHdWNsbTFWeTlEUHZVem1UazZvcXViWGZBRTJQWmFwN2Fw?=
+ =?utf-8?B?RVpTYWo5NHVxRy9BQWFOdUVJLy9LUE1SVGN5SU5vL203TVRIRG0wMkFXMzdZ?=
+ =?utf-8?B?ZklhclloZ2lURSt1R3lvSURPMDVFc1BBN2NWT0RqMitsUmNOTjgrVUhYRktD?=
+ =?utf-8?B?c3Z2MkdIaFliU0Exc3pyNWJtTTlqRWoyRTdIM09GeWdQd2xDb3ZnSENTamlo?=
+ =?utf-8?B?RmxEUXRoMFEvNW1LSHlWOXFNK0FDaC9SR2FvTHMvMlZhSDFSeVZ1Slp5SkVX?=
+ =?utf-8?B?bURBOEdMbjNqNnk3ZHE4RjJMcjhKQUVxOEgxQldycGxDRytWMlQzMGw5ODN3?=
+ =?utf-8?B?VzdzY0l1ZFRrc3pGeHVOK01memJVNVVxY2xQcDd4YmNNaU01aHN4OXQvZGph?=
+ =?utf-8?B?RWpQVFJyaHFNQU9CVFhDQlg5eVRnSHB2RGllY2c3YlduTE9SQXBvRExFUXVY?=
+ =?utf-8?B?WGJQYzhxNGFBN0U0U0FVWVZkRVlPZlhRN21iTmIzWWhBVjVoa3VaMXVOMjFY?=
+ =?utf-8?B?ZzBQV1NxZkdoUUticGNrK3NuMVBWZTEySEVZTE9ZMlIwR2ZLSlRTdFMyQ0ZM?=
+ =?utf-8?B?Mk4yY00zNEg2a0ZnU0JFRFEyMmgzdE5VYXA1a1luRWRLdFFMWm9JVG5WYVFw?=
+ =?utf-8?B?bUNRbTUvdnJUV0RFdEdIZzh6UjN4NGJyYlFZekp2WFI1OXpuU0VGNHMyZHp1?=
+ =?utf-8?B?Y1RWYnU3d1JJVHNlRS8xbXZnSmlzbXUzRHZwak5BR2s5ekdEVDBvTU5yZHpu?=
+ =?utf-8?B?MnN1VVdIS3BPRVBTUmZGRzc3bXo2SmtEbFFXdXRzTjNnbjRMaFQzbkJ2NEIy?=
+ =?utf-8?B?S0x3WEZUYVFrUXkwcVM4MWF0NmZmcnJjSUNNQTdpS2Y0RkdSN0l2S2dlMi9t?=
+ =?utf-8?B?aHJueEF5L1JJUWs1cjdOYUNPcGdHNWdENkY1TDB4enVvNFJwWlNHbnE1eDdW?=
+ =?utf-8?B?SE16eXNyNm1mcHhwNisyZWJHZTQ1N2sxSTNjUkFkNERQWmpHTWZBQmF3N0xL?=
+ =?utf-8?B?ZHpIdDUxQkYrMDNOeVk5RUxZZ1A0cXE1TlpoOWxNcjBpcTB2OHM5a1lxOExn?=
+ =?utf-8?B?WHZOenpIeEZOdXBkSDFOb1lMbjFMZlpmUndZbE1jR25QdFc4bVl5cVZCQUVG?=
+ =?utf-8?B?RDZpUHR0Z0xxWWZaR3RMRjl2VU9yOTZybXFsb1BWWG45aHFydmVTWEdiWmhT?=
+ =?utf-8?B?eHZ1b2VuMkQxTFRWNUcvUHRUSDF4b1MweG5EODJLdVIvL2kwVzA2RG90VGk1?=
+ =?utf-8?B?a1EwNUxqVmticSt2d3laRjlOeFk3NnByZmpBbzlvcjE1UDRnRVFkeTgrL0t0?=
+ =?utf-8?Q?MJRe+7HGS+wgcx0W2EcfAKqBFOUnj78Z?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(10070799003)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q09aNjZQVFZFVmNoZGFGWTh0TVNqeUJLL01tZ08rNDZ2MVhxeCtLY08rT0Js?=
+ =?utf-8?B?TlRFdnR0Z25JdFkrV0NJWU0xTFk1NVhPa3dFUHJ1NlVRcnNDVURYRnJ1M0dW?=
+ =?utf-8?B?aFpLMVZpbGJMczVwSTZsTEpnSWVYL2Jwd3ZHb3JjaDNDNDVkSm03TmhkakQy?=
+ =?utf-8?B?bjk4Rkp3L3pmYUl2OS9HTzd6ekxTc0NKMm9WSm0yM3A1VWozTDlIVStzNFFB?=
+ =?utf-8?B?Z1JkMWwwRnA1bTgrNzdoNnduK1IyY3NMd3Vid282ZFVDR3E2L3haRHFMZlYy?=
+ =?utf-8?B?MnAybkZ6SExvL0xEaGZ4Y1pEZmlLMFowMHBYOUV3Z3g4aHdqRDhqTzFqd0tz?=
+ =?utf-8?B?djY2Y1lxMjhNcnlKZEhIYXF4dXFwenRXNFFGRnpadHU4NWxGS2Y2VUtFSXlq?=
+ =?utf-8?B?dzM1OW9WNkZVcmtXWFJYZHJVU2U1aFU2ang5RTNhdnFYZmhNcGZiYzFBQzFU?=
+ =?utf-8?B?b3djQUh1ZVFkVnVaOFVCQVFPZ3dNbTUwdURwZjJ0SExYNWJCRU16cy9ON1ZJ?=
+ =?utf-8?B?UGl0Z1d5T0tZaHNHYUNvQys5aFhuTkx0bncyWUdvT1JIZzZDK3VaZ1dRZnJC?=
+ =?utf-8?B?cHp5cGVLMkFXVWttdm1yTzg4bHplVWQveE5IZlhoallWblNsUnNnQWFjZVJM?=
+ =?utf-8?B?THl3MzJFNjN4MW8zZjdUTExuVE8vUHhjcDhBb1pKMm80UlR1dnFlNW5KcGV0?=
+ =?utf-8?B?ajlyd1ZlRExKSFNHR01vNzBpLzNtQjBEQUlTZm1iczhYTnV5L2o0eEtrazNp?=
+ =?utf-8?B?TGM0b0pnaEp0YmNmbkhIaGxiZURUUzZYWlZrbU5acU4ySDZuaFB3V0dZa1cy?=
+ =?utf-8?B?VTNScm9zU0N4QWJGOEZZWEFIaTk5MmYva2FaekxlQ041SHp1OGMxMmZPZmpB?=
+ =?utf-8?B?NHArRHhsN0dDZmNGVWtFOUNMUHJzM0hEMVV5N0tPb1B3UWVUOHJmdmRDWW16?=
+ =?utf-8?B?L0E2TVozaHlUbzlLSjl2OW5CQytSWEIyV08zZld3alIzUHhYb20vNno3Y0lv?=
+ =?utf-8?B?RktBeWlsZi9QVlBtTHVsYXIzMkRqYTJhLzFQeTRJRE96bkY3OHNUT01ya2lU?=
+ =?utf-8?B?ZjMxbDlrTGNScVFyelIzNGQxUHZOTm1QV1NEb0xIemxYSllyajE2eVhZWTY0?=
+ =?utf-8?B?NXQrYlBLZXNpS0RhRmNCMHZ6K3hpcEpuQWJpOWMvaDhRK3M2bC9vYW45UGN1?=
+ =?utf-8?B?TUpvQjRmOGNNazJQWEppMVRxQng5aXpRRGZLcHZvT1Z4Y2dKSlJEdkZidThv?=
+ =?utf-8?B?WG9DeW80SFpvMk0rRlRGNys5bjlVVVQwUG1UMnpHbWwrU3ZPckxLQnFra2hO?=
+ =?utf-8?B?NU1TMGVDMko5dmF1YnUwOEEyY3BxbndUdzJDRzlqTy81RGx5K2xhTUV3ZlAz?=
+ =?utf-8?B?TVo5bFNFZDh1QnMzQ0p0aE4yR1N2dlJabEpVT3pTeWtmbVF1VHNHSENERWt6?=
+ =?utf-8?B?a2xDVDc3aXJIUGxubzZ1VkZoZzJ6NUtDWnFDTXZjVEhBZi93cDY2cXlsNERL?=
+ =?utf-8?B?SWJLbURuM1I1Q0xIK2c2ZHVsY2NsTkFlaG5RdzNTUmlRWmdORWNCSE4wNDhM?=
+ =?utf-8?B?aW5CS1oyMjMxWjljVmJvZW96Z1dMdUVCLythVEVxaWVQNVROeXJRblg4L1Bm?=
+ =?utf-8?B?enFtMUdNMFpkT3o1MWRZamZSQ3Q2QXJaczlTYmJXVG5BMk5HK0pWYzhQNUkw?=
+ =?utf-8?B?ZVByZGNZU0NRcVFSREwvWFBQeUFvUWd3SFVTR3BzdFZmcCthdWlLakZPQjA2?=
+ =?utf-8?B?TVlqZFlEWDNYakQzbWJwOGFORVlBL3dHN2xCcFZkRzNBbnRkWUV1bjdjQktm?=
+ =?utf-8?B?V2YwNTl6T1NpTTlXUjE3OXNrNFI1WU5nYW9zQXJyWHp4QnNYZTBXQjFhQzhY?=
+ =?utf-8?B?bHd0Z3hMTkVBYVZQcXpEclRaelZjTFpyallLWS9Ud1J1Zll1aVZuKzg2OUZ2?=
+ =?utf-8?B?ZlB0dENVRUFSamN3S1Ria3pGeHVhVU9uVFR2OVAyT0RnYXYvcTh6R2FJcGhF?=
+ =?utf-8?B?NVRuUStlYUp4NDVBYWdPekJuQzdyTG11KzNiSEo0YTF1M0I3bFpXSHUwbVRF?=
+ =?utf-8?B?MXlPbmtjcTdGbVRKMTl1QWRJYUpLMGVXbTM5dFordnBEeU9GRHdLOEJxb1Nq?=
+ =?utf-8?B?eUd0MHIxdXNRUHBySHlpSnp2VGZLU24vQTliUFRTL0hMeCtsZkFOOS8yMjR6?=
+ =?utf-8?B?UmVIMmdPODg1OU9uMUtTWVF3bEdxdFprU0JXNnJoVDhtYzNOYkQ3UE80SlJE?=
+ =?utf-8?B?SFVGVDhtZ282cG1NWjVLK0E0b29HWG5LRVRaUU1jT253Q3dSeGhBeXpQMTVa?=
+ =?utf-8?B?YnU0UjR5MURsTDV5c0FFNXRacVVyZW5scDE4WDUvMTVYaU9wUE5XQmpJTDBs?=
+ =?utf-8?Q?OqgHewyKe4EpEGj9mSPJlZkis0XEz7ONzNmI5vRKryBlk?=
+X-MS-Exchange-AntiSpam-MessageData-1: tExucWVm4J4nOfgazMw0h2i6mBIn5xQFHlw=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c21b7c01-3208-497b-4915-08de4d36e833
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jan 2026 15:18:55.3920 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vapvYxf7s2Q9m/sU4Qc5IOf6/euieahA6hUaVz1+kvE0ddxkMqlc8DH2Quxp7XA0/0u4mV18GEGgZXGQXf9iJGeyNRy869LNcm1Bb8q04Hg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR02MB7578
+X-Proofpoint-GUID: d1qs_dU90W7vREP-7vk2ObChLXaSJB43
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDEzMyBTYWx0ZWRfX3YmMKA1/lCAm
+ KdyPtYvO3f8RQKZdMqECWAFHquPACx3eHbN20mVfcaNQ2QETHgEuglPdZpCDWXD10oW7IzuJwLn
+ 8PLbw6lMJY95WsiGLifl95TsflxsGoEyBFp/6RQx/Obb/aOmqWsbTJ/ZxfuFPaPRlMmVagfGErM
+ 9Am05+YqCj8uy0x84Au2SL4O8m8k/6gfERYwSq/djBO7oK7z5lJR5o4j3eNFx6BexS9A6CO2E71
+ xkGXNN9EnfINVVtgPaNrfNcT3uy75a8UzpZzNSkhon6ugKt4hMajirM9CW55l80dtXhaAPhnIje
+ u59XLmGCFx4FCJkXcRSIYeQAr1pazNZLHhfeNJERJMSYkYpRrqu+9RPkHt4Dy1+Q9vHxsb1DwhV
+ 7CLyS0IS0IH06hTRW2EHzXP23Bixs6AS0MsLMfzzhvTX+mW5MeNdi7XpjAA3mWnhUzTVCQO893w
+ I6cfVXbKAE24NjXorlg==
+X-Authority-Analysis: v=2.4 cv=BaHVE7t2 c=1 sm=1 tr=0 ts=695d27e2 cx=c_pps
+ a=ws69a72eWNNXWagsEosLDA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=20KFwNOVAAAA:8 a=Dm4J884ULPpXfFezsFYA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: d1qs_dU90W7vREP-7vk2ObChLXaSJB43
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,141 +220,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 06, 2026 at 05:15:23PM +0530, Prasad Pandit wrote:
-> Hi,
-> 
-> On Tue, 23 Dec 2025 at 21:00, Peter Xu <peterx@redhat.com> wrote:
-> > One thing good about exposing such status via QAPI is, it can help us
-> > diagnose issues by seeing CANCELLING / FAILING even looking at
-> > query-migrate results (as normally when bug happens we can't see the
-> > internal status..), so that we know either it's explicitly cancelled, or
-> > something went wrong.
-> >
-> > If it's a completely hidden / internal status, we may see ACTIVE even if
-> > something wrong happened..
-> 
-> * Both process state and reason(s) for the state change needs to be
-> visible to the user. But states like cancelling/failing are redundant,
-> users would derive the same conclusion from CANCELLED and CANCELLING
-> OR FAILED AND FAILING. Besides, migration_cleanup() does exactly the
-> same steps irrespective of whether migration is failing or cancelling
-> or failed or cancelled.
-> 
-> > My current hope is any mgmt should normally by default ignore new migration
-> > states..  If that's always achieved, it looks to me adding FAILING directly
-> > into migration status would still have some benefits on debugging.
-> 
-> * libvirtd(8) complains about unknown states multiple times:
->       libvirtd[2194267]: unknown status 'failing' in migration event
->       libvirtd[2194267]: unknown status 'failing' in migration event
->       libvirtd[2194267]: unknown status 'failing' in migration event
+On 10/12/2025 13:16, Paolo Bonzini wrote:
 
-IIUC these are benign warnings, so should be fine. We'll need one entry for
-libvirt ultimately to avoid this warning.  Copying Dan and Jiri in case I
-am wrong.
-
+> PUSHF needs to compute the full eflags, set the cc_op to
+> CC_OP_EFLAGS.
 > 
-> 
-> > > > @@ -2907,7 +2914,7 @@ fail_closefb:
-> > > >      qemu_fclose(fb);
-> > > >  fail:
-> > > >      if (ms->state != MIGRATION_STATUS_CANCELLING) {
-> > > > -        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
-> > > > +        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILING);
-> > > >      }
-> > >
-> > > This is a good example where having MigrationStatus makes the code more
-> > > complicated. This could be exiting=true, running=false, etc. It
-> > > shouldn't matter why this routine failed. If we reach
-> > > migration_cleanup() and, at the very end, state is CANCELLING, then we
-> > > know the cancel command has caused this and set the state to
-> > > CANCELLED. If the state was something else, then it's unintended and we
-> > > set FAILED.
-> >
-> > If it'll be an internal status, we'll still need to identify if someone
-> > already have cancelled it, right?
-> >
-> > Assuming we introduce stop_reason flag, making it:
-> >
-> > enum {
-> >     MIG_STOP_REASON_CANCEL,
-> >     MIG_STOP_REASON_FAIL,
-> > } MigrationStopReason;
-> >
-> > Then we can switch to CANCELLED / FAILED when cleanup from those reasons.
-> >
-> > Then here, logically we also need logic like:
-> >
-> >     if (stop_reason != MIG_STOP_REASON_CANCEL) {
-> >         stop_reason = MIG_STOP_REASON_FAIL;
-> >     }
-> >
-> > Because we want to make sure when the user already triggered cancel, it
-> > won't show FAILED but only show CANCELLED at last?
-> 
-> * I think the way we are setting/changing these states in as many
-> locations is only adding to the complications. Do we have to
-> explicitly set these states like this? What if migration_cleanup()
-> always sets the state to 'STOP'. Similarly other places set the state
-> to a predefined state. OR
-> ===
->     struct {
->         current_state;
->         old_state;
->         event/trigger;
->         reason[];
->     } MigrationState s;
-> 
->     migration_change_state(s) {
->           s->old_state = s->current_state;
->           if (s->current_state == START && s->trigger ==
-> 'connections-established') {
->               s->current_state = ACTIVE;
->               s->reason = "connections-established, migration starting"
->           } else if (s->current_state == ACTIVE && s->trigger == 'completed') {
->               s->current_state = STOP
->               s->reason = "migration completed"
->           } else if (s->current_state == ACTIVE  && s->trigger == 'pause') {
->               s->current_state = PAUSE
->               s->reason = "pause, migration paused"
->           } else if (s->current_state == ACTIVE && s->trigger ==
-> 'error-occurred') {
->               s->current_state = STOP
->               s->reason = "Error occurred, migration failed"
-
-We can't change status that were already used, like FAILED.  Libvirt and
-all mgmt may rely on it.
-
->           } else if (s->current_state == ACTIVE && s->trigger ==
-> 'user-cancel') {
->               s->current_state = STOP
->               s->reason = "user-cancel, migration cancelled"
->          } else {
->               s->current_state = s->current_state;
->               warn_msg("unknown combination, maybe define a new rule?");
->          }
->     }
-> ===
-> * We define explicit rules for the state change and accordingly we
-> only call migration_change_state() at any point and it'll change to an
-> appropriate next state, recording the due reason for the change.
-> 
-> Wdyt...?
-
-Personally I don't see much benefit on adding a new "trigger" internal API.
-If we want to forbid some state machine transitions, we can use a
-transition map.  Said that, IMHO it's separate from what we're discussing
-here.
-
-Thanks,
-
-> 
-> Thank you.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   - Prasad
+>   target/i386/tcg/emit.c.inc | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
+> diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+> index 1a7fab9333a..22e53f5b000 100644
+> --- a/target/i386/tcg/emit.c.inc
+> +++ b/target/i386/tcg/emit.c.inc
+> @@ -3250,6 +3250,8 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
+>       gen_update_cc_op(s);
+>       gen_helper_read_eflags(s->T0, tcg_env);
+>       gen_push_v(s, s->T0);
+> +    decode->cc_src = s->T0;
+> +    decode->cc_op = CC_OP_EFLAGS;
+>   }
+>   
+>   static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
 
--- 
-Peter Xu
+Hi Paolo,
+
+I noticed that my WFW 3.11 test image stopped working with master, and a 
+quick session with git bisect pointed me towards this patch.
+
+I'll see if I can dig further into it.
+
+
+ATB,
+
+Mark.
 
 
