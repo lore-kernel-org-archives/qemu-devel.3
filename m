@@ -4,168 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BCB9CF6C00
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 08:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F6E1CF6C00
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 08:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdOnM-0006q6-Ai; Wed, 07 Jan 2026 03:21:32 -0500
+	id 1vdOvk-0003vO-T7; Wed, 07 Jan 2026 03:30:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vdOnE-0006pX-In
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 03:21:26 -0500
-Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vdOnB-0002Nx-Ep
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 03:21:23 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Lms0aFH6hJ8LDAJgEwHBsWFG/nwb4Vr5xmLxDO6CgCwwKGVK3iWJGZAP2KxNt+D8A2JNZKcsUQt9JCfDVdtHVJ3ghiZs/MqhZS4oc7r90V9RuaA7awUYlaEDQ8gjjPgCi/vLlSByfGIlld/XfbtkW2LAgq63c7mlO9I6R42ab3VEnnMFdl9sewhBLN0JbwFIlsfgolew8tj/BgmrvdjVGt27su2YJQ8QUdtqXp6ooHQcPrerJ1kkP0+tgzY/Xiss/P6QBMAJlqU37XWb8OMCEm6C9BQmEDr70QAf7o93DCnGJVSqzHAS3VMeaqSBAcTkxlIsCuNhKmlsHjMB0LsyVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Q5Xx883rPNUghjqyORtC3GWCOx1nI8NNHFNZ8ewfXUY=;
- b=nfTSbl6GjedWceDv1lT4251XV5fWfaxIsElaqDjncTema0iYxASkYn1av0gGVlOqndjP1qFglmixafiDlBwMJu4m+0854C6qWHm5MF9UWwjmciecGK5xheFevBE+zqAbY6tKaCH3ag0qHsXxwk6tXSArxe4xngzDsddSKwTWa/eu+m9zBvw7ngapsp6h1de3894Gp4Dw1WHdF4lJyqRtdpZCGVMbQJ1ZLpiy2r64w843nZ5mVN+8g4u+p9LWx95OH/rEBerwLf4fGzVyrSR2k5VzRPWwH0peZjJSAPzmKMg1SyKSabFee8BI146/g47anXdlnl2bAyze1pBe/mk47g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Q5Xx883rPNUghjqyORtC3GWCOx1nI8NNHFNZ8ewfXUY=;
- b=xp2dvKHqMFnhCHd0SPxXkTVMZ1gWOAemcJPrPi/bR7naB44oOWTE4hfzK93Zt9hSN4DR24EKhGBDco7ml1fTXaIh61SQKT2CuVDGLMD+XX7Fdp0BdZZh2jndQl3idAtp+z2LCN11NsbQ5p74hnQP/Me+r6wnJB4iE3tUgUAOZDM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CY5PR12MB6430.namprd12.prod.outlook.com (2603:10b6:930:3a::12)
- by SA1PR12MB7173.namprd12.prod.outlook.com (2603:10b6:806:2b4::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.4; Wed, 7 Jan
- 2026 08:21:13 +0000
-Received: from CY5PR12MB6430.namprd12.prod.outlook.com
- ([fe80::2f12:4575:25ab:c44b]) by CY5PR12MB6430.namprd12.prod.outlook.com
- ([fe80::2f12:4575:25ab:c44b%4]) with mapi id 15.20.9499.002; Wed, 7 Jan 2026
- 08:21:13 +0000
-Message-ID: <6cdbcacc-84de-4710-b85f-c877be6ca243@amd.com>
-Date: Wed, 7 Jan 2026 16:21:04 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] virtio-gpu: Add ROCm capability support
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: alex.bennee@linaro.org, Ray.Huang@amd.com, dmitry.osipenko@collabora.com, 
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org
-References: <20260107071858.3452614-1-honghuan@amd.com>
- <20260107071858.3452614-4-honghuan@amd.com>
- <aab424e2-a763-4d4a-ab73-62dd9b570b7f@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: Honglei Huang <honghuan@amd.com>
-In-Reply-To: <aab424e2-a763-4d4a-ab73-62dd9b570b7f@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2PR04CA0167.apcprd04.prod.outlook.com (2603:1096:4::29)
- To IA1PR12MB6435.namprd12.prod.outlook.com (2603:10b6:208:3ad::10)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vdOvj-0003up-3N
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 03:30:11 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vdOvh-0005AT-4q
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 03:30:10 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-64b9b0b4d5dso3690923a12.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 00:30:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1767774606; x=1768379406; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RqWPNul5hnbcIZ6LSpMbQYu7eMRnWXA+MM+Sjnx6BtE=;
+ b=d5JJfPQoYjHouKRIK1VnsN6onxy8309OxUMSdTA1G3y8Cg7pydj7rNU0vhQzHk+TSx
+ Rfk8/fV8AWos0BU+/j0eiJDhS9HMKnelIuZ9wK41XYmYLH0oYzO8y64uR/SUbCcu+KQ3
+ iQLuVSgtVBzr45IuZyx65F/LUE3HUT2f8BCx6yOn+iSoAdrgAUcUi3S0V+VXcgzktunZ
+ UVD2GAfCN1ok7ULJAivpJPLJVQKoanRIMnSaKbu0NvS65UXyJlK7+vXvUT7ZcntHAhXi
+ hyFQ5KeEX0nsfJwmAn/7EIMTrvdm+LU9H2iPTUdux3NHDED1rFGrcE7AixgomhY17qEa
+ Sf/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767774606; x=1768379406;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RqWPNul5hnbcIZ6LSpMbQYu7eMRnWXA+MM+Sjnx6BtE=;
+ b=dCRGCjPKgkJkKjStz/hIGsTI4YmK7qwij+dT8yjeNteFeJYYUJr8lWNpO/gUSc4hc3
+ Ir4fpYeqnjWdZ0zjzau7FI2395I4VUmMn4qHB192W4U0hmcX2rI0ab8IAUAYHw6jpiY4
+ 1CQ2VMiqpjUPkN3lO9fXN6rB4D+iLT2uBHND2GNfAy6+ORdyJDzUANPdbCAr+08ryuev
+ cXpBMoIDbb16GWfJwNToSeGSSykP0i1zbt3dB/OJ0YRdtlZuJ6EYC4YQgxIOcflUXUZ9
+ m2E39RVNYciGOJj7kLID5mUh0yT8+dAIENJSWUjJg1Hh3BcroMNliwrTORPZTIqfVqFd
+ ptBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUw6Zq0z9obwoFGuHOBl4rilbPSGpldbK8OibhxhzRYzopUYOUAT/3rWTp8pKfZeNvmYAyGdzCjx4YI@nongnu.org
+X-Gm-Message-State: AOJu0YzsSyYYP+wYcj8MHBxjGDHen3SHxbdZ6VdEmP5Y9b2islOLzymp
+ VdOiA5j3bqKaLlSk/9jq84APEIJ3g4BpaIqvWf8J23HZgyslQQVgQrBPafLM+A9NfzddX/xE5t+
+ a8aVB2lveLkX3hjHzLkto6O71s5uaYNY=
+X-Gm-Gg: AY/fxX4DOTz0Ia1Pe7NLxzXotCDcM7qorYiq7bw0tikWR9k9sbGYyshkgVfATQdX5t1
+ nWSPJY13h8eGeQCTEfem/mY9UkdrxLl2tP9Uw9tk4FtwBRDFWiL5G6ZEuJe7l5aJMYUG94eOiOc
+ nMq6ofPSGr1krit6B7jQ6sKhArisbOfv2JjMEqCfEK4aDEB1jHzIjqYXBmV3x32tCmfE7vgzJy5
+ MZV/Nub7zWhtPeEUHW001blzValRDiaCzK7H287bbvvNcZp7dyJakv2R+dW36xxOxd//ZHi5ORl
+ mAevq5I=
+X-Google-Smtp-Source: AGHT+IGo4GID7wrju5wCF+dKTXS0ffNCmCFh68Riq+9HUPYZH36MGE8J/QEIinUDwLW2MG3xmRG5Co5l5uoUl513dss=
+X-Received: by 2002:a17:907:d09:b0:b72:ddfd:bca7 with SMTP id
+ a640c23a62f3a-b84453385d8mr171140566b.35.1767774605982; Wed, 07 Jan 2026
+ 00:30:05 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR12MB6430:EE_|SA1PR12MB7173:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1890b8c9-fa3a-4dea-305d-08de4dc5b746
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SnlDdTgzQmJ1c3R6dStMSlBLL0dMSGc3RUt0YTM0SUV2VHFhazJaZHBmMnRt?=
- =?utf-8?B?Nytmc0M3UC92cHBWNzBMdzZiM0hCTVA3b1dhMVhIZi9IM05sT0tZZEZFQ3o0?=
- =?utf-8?B?c1NBQlNrSEZPdm5sa2pTUXUwa0ovTFhWbEZvRVJOUTY0VmJLTjM4N21LWC82?=
- =?utf-8?B?eFgrNUtCdHN2ZW80ZVJocmw0azRwMWhJaVlEYzUxQytWMDVmOXNIcjhieXh4?=
- =?utf-8?B?U2lZQmN3dmpJUk1vcG5zeHRGU2ZlSTRuSGVYaUlmN3BObFp1Nkx0NDdON3Nh?=
- =?utf-8?B?eEJmMTFWN1lkNFZmdE5UUGYzVTdhK2k2eDM0NTJCL2hsMC9ZREw3ckFVL1Rn?=
- =?utf-8?B?RlhxNlo1NDVrNzJNTEdCWjd6Nis2eVYwZ0czZ2JJSFdUU1ZCMVFtbVVpdVpL?=
- =?utf-8?B?YzRoR2p6N3RQby9tVldpSytaaDBWNWxNK3dSeVovZnZ3ZEkvRk12alNjRmZF?=
- =?utf-8?B?SmtWd2NWam9ZQ3k4L2R4REl2TzErWlJYMUoyUm8zU3lEYmR6QkEzRThzMjhB?=
- =?utf-8?B?THFocEF4bW9BbUhDRHpnS0hYODZ1QXl2czBaNWU5YVJIRkYwNVJPMXh6YXhL?=
- =?utf-8?B?bXZ1M1B1cXRRU1JlU1hGQ1oySFpsbTZ4Uk9YOStJeFlHUm56N0U5aHVxc2lh?=
- =?utf-8?B?bllTTHhyN1kxTGlyYkJjUzJDTTI4bHpleUVaNjBrMjgyY3lMMS9lbUc4eXR0?=
- =?utf-8?B?c25IQlBXbmtOZ2VWbVR0R01ITWYxK3NlQktjSlFFb1BkQVp5VDY4RlVtM0Vo?=
- =?utf-8?B?RGVPV3l6WWVydDVjaHpvK2VDT1JucWhRcHRHZEw0WVZvbWdQejRpY2xzRTh2?=
- =?utf-8?B?cWljUk82R3RrQm1TaXN6UFZCRWhnMUdGYStKU3Z5OFVRcUpvVFpHL3YzYkJW?=
- =?utf-8?B?NVhaSmR4dHM2YUhoT2RIUUp2WlZDWHNsSFR5MmQrTHBTdDQyU1JrRFlkTnJI?=
- =?utf-8?B?VWJlTSt0WW42UE04QUpldElRWVdCeXlJSlAvTGQrSVJkcVI5K2VHMXZGNUQ0?=
- =?utf-8?B?RVBoWDBMOXRZOFgyVFIxMmY1UkNzb2NIbE15TXMrUWgrVndkVDFYRmNoZVlY?=
- =?utf-8?B?eUZNTjIzNExGYlVlMnlCRTRFMHZNa0h6K2NaS09GRG8xK2YvbUpUaVVhcHZu?=
- =?utf-8?B?QjJUV2VvN1JObzNMTUtGNE9lRWJFUW5VejgzS0ZPVFU5Q0xxMU9rU1ZYSU13?=
- =?utf-8?B?alcvcnU4WHovYzI5V2V4YTAzY0dYcE4vMktWM0g0cEVsMy9rNDBudGgvbjRw?=
- =?utf-8?B?NHVrbUdjekI4ajZnVjRvNUdtT2JSZGcwMXpHUm5rajUvUnBIN0p6MHdEMHln?=
- =?utf-8?B?Uy94SzVmMitBOTlTT0ZwZEIxYm9BRk9UWWJ6OUZURmtESDBhblAwNlRTSkFQ?=
- =?utf-8?B?eG02dnBHTkNlV2pvb3F3MGgza0I0OFNXRzQxaUE4eGQ4OHppc3pZV2NlVEV6?=
- =?utf-8?B?T0NXSEU3WVRxVHZlT0QzNklONlJLcTdBMzJRMHplM3RtMmpjdzBZL1lVUXdN?=
- =?utf-8?B?cE52VHVGVCtBMVNjSTM5UTl5NjhlcldyM2lhNk1TbjlNZkFWaVdqN3QzTDNk?=
- =?utf-8?B?NCtNZFo1N3Y4KzFsMkJ6U2tlbkgwdjBTMko3eXM0M3ZJSDlNcXE3OTNrQk1N?=
- =?utf-8?B?TE1KdmRDTVVoblFOYkN4UFIxUEg3QjR5T0dVR2pYUmRnTXZsaG5sOU1vM2Ev?=
- =?utf-8?B?TlFhV1gyZmRzdVJDeW5wRlM5QllZMm5TeENUYzk0OVpkZmhWU1NtR1Q1bzhh?=
- =?utf-8?B?WU5VRG9rZzdMVFhSdjhpTFJuMktxTFFtd0JnVVllU1A4U2pUR1ZwN0FNMms2?=
- =?utf-8?B?dmw1eCtQL0NWVzd5QVNNaUp0TThJNnJhdjg5c1BMVEJYRWdiclRQSDluSUo4?=
- =?utf-8?B?eXUrblNhQ1BSaVZkdjR4M3c3WGNKMk52cGljc2NBV1NldTErdlRSTUVha2Y1?=
- =?utf-8?Q?cg2llFwor5+cdaZFo/zx3Ir04J35VtW+?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CY5PR12MB6430.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U0hFcW1tZ0pmOGFDWnJVZVJDdWpEN09wTk1XRVJheVo3NHVMclRpc1Q3RVVq?=
- =?utf-8?B?TnpCT0RMYWVlNi9MVTkwUHNldnZxTVlWaFhjN25KWkx1ZHBNUG9CZ2pBMlpY?=
- =?utf-8?B?RmRrbXB1Rzg2enRSdGlFNlJMRk9SWWxINmM1M0pzVW5raC9sZ2tJU2M1clJ2?=
- =?utf-8?B?YmczcnE2YWsySnVKT1dnVmRqSjk5Z0F4UjE0YkdTTEorVHFZU0tpcTJsMFN5?=
- =?utf-8?B?c0dEY1VHS2pxWTFYbzJTK0xIc1dxbXBZMVdLcTZYOS9WY0kxaU4xcCtQOE1Y?=
- =?utf-8?B?TW8rSHdEZkxvYktsRUU3RmROZ1dhU3B3NEZxMWFNdlp3SXJZaHMwanlUeDh3?=
- =?utf-8?B?M2dBT0NNYjZ6YU5pVFhPN0M5OW5VOWNHVG9wSFhWNXN5THZmS3BvajVaamll?=
- =?utf-8?B?TXdyMkkyR2JEN2lFczBLQmtsVklUNkE3QWV4ZmozQjlTN0QxYXJxUHNnSGcy?=
- =?utf-8?B?dnkwNnpNaGZyTnNNYlpLc2tsVTY3bStMd1lZc3FBWlJlUGFWaVFvYlVyc29T?=
- =?utf-8?B?STZITGZyeGF0eTVVbndneFJ1ZkVTa0FSOElTTXlYcWM0NW1KNmRsM1FjRG9m?=
- =?utf-8?B?VzR0ZXR3b2xpZWljOUJaRG0zYzV3N2V3NWlRNTM2cXRIU1lsL2QwQWFuZUpv?=
- =?utf-8?B?ZUJTVG9VNkVaVitSK2RWMjh1NHhrR3g2bzg2TWFNUlgxTk9OWGpkbWFmWndC?=
- =?utf-8?B?UWZ3QmhlaWYxNGFrSTBVWHEzUkpnTTJCenR5RERRYUFzRW1jRkIwVDkzaFNK?=
- =?utf-8?B?ekpTbDdvZTZsT2FrcXExSmFOemNMN2c4L0hXVm8rSUhFTjgzM21NUG1xQkk1?=
- =?utf-8?B?YWVoazhQUW1MQzNuNStsZytDYmNXQlZYMVdUNjJzWnFmSDMxR0RUVGl4QzYr?=
- =?utf-8?B?TVNoUHQ2NWcyRE5pZERSLzA1ZFBCV3JiZkFOYVhKZVBhakFIK3dyamFiMHdG?=
- =?utf-8?B?akVIdnJjOHd2VDh0UVNSSlp5Q1FXZkExdWp6U0FWc3MwSEJYZzN0NkNvb3po?=
- =?utf-8?B?T2tFOVltSy9RVU5LZDFLdGk0QzRMNTZCMVMydE5NeVJNNkFMUHBBaDI1OFRP?=
- =?utf-8?B?aDFyalcrV1RQTzFqNG40SGg3cHFKckkySG5BNUJOWGJFV3loQ29OaWVDYU1y?=
- =?utf-8?B?MzhDNmozeHM3VWRuZUdwLzV4NlNKck0ybytKZW1tTnJyaFBFWDM2blVvcFZV?=
- =?utf-8?B?RXp3ZExUNXNiUkhBVnR5WkxTYXBPMW5FcWdGSDFwMFVrbHJscCtmUFA4bXdG?=
- =?utf-8?B?cTNiYk5GUStYZVJoQzI1QnUrMkxHa0t0KzQ1bDlLcWpEM3BIN1VPRStUZmo4?=
- =?utf-8?B?aTlZa3BEVHlYWlhML21lTzUyMVkyeSsyVmtKSm1NMnlIL1VrbEp0eFVZY1hv?=
- =?utf-8?B?WTdVeFVFaktkSGpJVUpVZ3dJLzZadEg4YnZROTROMGZCS2RJM3BzZVpBcU1S?=
- =?utf-8?B?b25DQTcyVHBEQndYVk1qaEJUbkZFTmpPOWNQRndCdTNHV2VlMnNDb1hLYXEv?=
- =?utf-8?B?RTNZNHVxZElPaS9JUXZuekh2czF6bXJYM0V5Q0pZLzk0bkVFM0MweG5NRmhi?=
- =?utf-8?B?VnlrTFoxd3VEeHNSU2ZqKzdaSDA4Z1RkRHRObXkrNGpMWldmR1NVQWVBdEFr?=
- =?utf-8?B?c1ZJamZrZzhaVVlJTEpnQVNlZzE1Y3ZqdW1HVW1WdEZpT0dGWWlwOTVLTWEr?=
- =?utf-8?B?d3U2cUc2aVFDdVBhYmV6WlhBMnhOSVlBVjg2UkVCazhpMitwNCs2bE5hY0Jn?=
- =?utf-8?B?M1NUcVkrWnlnYm1hK1poVGtpakltemdPRFQyZ2FILy9nZHUxNHlXa0pBd09H?=
- =?utf-8?B?Z2VLNWllZ2h5YjltdEFXbkM5eXdTempWVmxXWUFVTmhVZjN2UXFuRm5ESHF6?=
- =?utf-8?B?YzNnQjNWdlN0blo4U1QwQlFsVWZrV3VyV3FidnRxQlU5L0p6VXRmN0RIcXkx?=
- =?utf-8?B?Z3k1bkhlQlNEQzQ1RGE2Wnh6andJbHBGTFZiRzlCaWpIQ2hNeVp0QXNtQ3k0?=
- =?utf-8?B?U2R2eVY5T3FvQ3ZFeFFzL0N1Nm9Nc09HSXFJZWxOT0NHYjJ1akc3WjI0UFpa?=
- =?utf-8?B?NEtFY053N2dOT01Yc3lUK1JOMWVaNnYzT2pIaTZYVDlpMGVXdko4bUxUUXBS?=
- =?utf-8?B?K2Y5N1pyV0d1eFNUTTJGVjNVSzc3YXpJRUVoSWdCQm1BRkJrYUlDSzRoSDdx?=
- =?utf-8?B?OE1yTmh6V2VxUll3dlg3aTFqd2d1anFMWXp0NWpkQWpzczZNZDJiVG5WdHRV?=
- =?utf-8?B?d1BySEVpOXdoN05mY2JBbE1hK1J3Tko3ZWVGQ2g1WlJlMjBwdW42L1RIRXBF?=
- =?utf-8?B?M1dJS0JGMGhoTWkyTnRzWU9aRzlFUHlxRlE2ekcvMVBxVEVDeGRkdz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1890b8c9-fa3a-4dea-305d-08de4dc5b746
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6435.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jan 2026 08:21:13.0400 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SVMCAnphmM49x1QyKFu4KbB6m5cD7o8FBrWR+GQB+1Hx7DceYj8p7jZYdulOVhe0eC+1c0yc+ISF6YunqetvXw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7173
-Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
- envelope-from=Honglei1.Huang@amd.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
+References: <20260104075412.1262-1-jasowang@redhat.com>
+ <20260104075412.1262-2-jasowang@redhat.com>
+ <CAK3tnv+97kgSAt-do3BwhzFewy+A3rcMrJj8K5r7hvSJag_tgA@mail.gmail.com>
+ <CACGkMEsA4hoTWqetffmfJEZ7Jq5=6gQ1ik+UznXgSGiyhE_Hqw@mail.gmail.com>
+In-Reply-To: <CACGkMEsA4hoTWqetffmfJEZ7Jq5=6gQ1ik+UznXgSGiyhE_Hqw@mail.gmail.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Wed, 7 Jan 2026 16:29:28 +0800
+X-Gm-Features: AQt7F2rIKG_0egWBEiizv-TZqoCyZnMx8XQol1KMOo94fjsrYnSGRTuUqCe1Lf8
+Message-ID: <CAK3tnvLhpG2KkAbP0vKse=p35NjwDecfcBPqW2qJ-cuSje=QPw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] net/filter-redirector: add support for dynamic status
+ on/off switching
+To: Jason Wang <jasowang@redhat.com>
+Cc: lizhijian@fujitsu.com, qemu-devel@nongnu.org, lulu@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,31 +101,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Jan 6, 2026 at 4:10=E2=80=AFPM Jason Wang <jasowang@redhat.com> wro=
+te:
+>
+> On Mon, Jan 5, 2026 at 9:19=E2=80=AFPM Zhang Chen <zhangckid@gmail.com> w=
+rote:
+> >
+> > On Sun, Jan 4, 2026 at 3:54=E2=80=AFPM Jason Wang <jasowang@redhat.com>=
+ wrote:
+> > >
+> > > Currently, filter-redirector does not implement the status_changed
+> > > callback, which means the 'status' property cannot be used to
+> > > dynamically enable/disable the filter at runtime. When status is
+> > > set to 'off' via QMP/HMP, the filter still receives data from the
+> > > indev chardev because the chardev handlers remain registered.
+> > >
+> > > This patch adds proper support for the 'status' property:
+> > >
+> > > 1. Implement filter_redirector_status_changed() callback:
+> > >    - When status changes to 'off': remove chardev read handlers
+> > >    - When status changes to 'on': re-register chardev handlers
+> > >      (only if chardev is already open)
+> > >
+> > > 2. Update filter_redirector_setup() to respect initial status:
+> > >    - If filter is created with status=3Doff, do not register handlers
+> > >    - This allows creating disabled filters via command line or QMP
+> > >
+> > > 3. Handle chardev OPENED/CLOSED events to re-arm handlers on reconnec=
+t:
+> > >    - Keep the chr_event callback installed on CLOSE so a later OPENED
+> > >      can re-register the read handlers when nf->on
+> > >    - Use qemu_chr_fe_set_handlers_full(..., set_open=3Dfalse, sync_st=
+ate=3Dfalse)
+> > >      instead of qemu_chr_fe_set_handlers() because the latter forces
+> > >      sync_state=3Dtrue and may emit CHR_EVENT_OPENED for an already-o=
+pen
+> > >      backend. Doing that from inside the chr_event callback would cau=
+se
+> > >      recursive/re-entrant OPENED handling.
+> > >
+> > > Signed-off-by: Jason Wang <jasowang@redhat.com>
+> > > ---
+> > >  net/filter-mirror.c | 38 +++++++++++++++++++++++++++++++++-----
+> > >  1 file changed, 33 insertions(+), 5 deletions(-)
+> > >
+> > > diff --git a/net/filter-mirror.c b/net/filter-mirror.c
+> > > index 8e01e98f40..aa2ab452fd 100644
+> > > --- a/net/filter-mirror.c
+> > > +++ b/net/filter-mirror.c
+> > > @@ -179,9 +179,16 @@ static void redirector_chr_event(void *opaque, Q=
+EMUChrEvent event)
+> > >      MirrorState *s =3D FILTER_REDIRECTOR(nf);
+> > >
+> > >      switch (event) {
+> > > +    case CHR_EVENT_OPENED:
+> > > +        if (nf->on) {
+> > > +            qemu_chr_fe_set_handlers_full(&s->chr_in, redirector_chr=
+_can_read,
+> > > +                                          redirector_chr_read, redir=
+ector_chr_event,
+> > > +                                          NULL, nf, NULL, false, fal=
+se);
+> > > +        }
+> > > +        break;
+> > >      case CHR_EVENT_CLOSED:
+> > > -        qemu_chr_fe_set_handlers(&s->chr_in, NULL, NULL, NULL,
+> > > -                                 NULL, NULL, NULL, true);
+> > > +        qemu_chr_fe_set_handlers_full(&s->chr_in, NULL, NULL, redire=
+ctor_chr_event,
+> > > +                                      NULL, nf, NULL, false, false);
+> > >          break;
+> > >      default:
+> > >          break;
+> > > @@ -306,9 +313,11 @@ static void filter_redirector_setup(NetFilterSta=
+te *nf, Error **errp)
+> > >              return;
+> > >          }
+> > >
+> > > -        qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_read=
+,
+> > > -                                 redirector_chr_read, redirector_chr=
+_event,
+> > > -                                 NULL, nf, NULL, true);
+> > > +        if (nf->on) {
+> > > +            qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_=
+read,
+> > > +                                     redirector_chr_read, redirector=
+_chr_event,
+> > > +                                     NULL, nf, NULL, true);
+> > > +        }
+> > >      }
+> > >
+> > >      if (s->outdev) {
+> > > @@ -324,6 +333,24 @@ static void filter_redirector_setup(NetFilterSta=
+te *nf, Error **errp)
+> > >      }
+> > >  }
+> > >
+> > > +static void filter_redirector_status_changed(NetFilterState *nf, Err=
+or **errp)
+> > > +{
+> > > +    MirrorState *s =3D FILTER_REDIRECTOR(nf);
+> > > +
+> > > +    if (!s->indev) {
+> >
+> > It's better to add a error here, for example:
+> >
+> >         error_setg(errp,  "filter_redirector_status_changed failed for
+> > the s->indev cleared" );
+>
+> Will do.
+>
+> >
+> >
+> > > +        return;
+> > > +    }
+> > > +
+> > > +    if (nf->on) {
+> > > +        qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_read=
+,
+> > > +                                 redirector_chr_read, redirector_chr=
+_event,
+> > > +                                 NULL, nf, NULL, true);
+> > > +    } else {
+> > > +        qemu_chr_fe_set_handlers(&s->chr_in, NULL, NULL, NULL,
+> > > +                                 NULL, NULL, NULL, true);
+> >
+> > It seems like we need to keep the "redirector_chr_event" here?
+>
+> Since the filter is disabled I think we probably don't care about the
+> event in that case.
 
+OK.
 
-On 2026/1/7 15:44, Akihiko Odaki wrote:
-> On 2026/01/07 16:18, Honglei Huang wrote:
->> Add support for ROCm (Radeon Open Compute) capability in virtio-gpu.
->> This enables GPU compute workloads using AMD's ROCm platform through
->> the virtio-gpu interface.
->>
->> Changes include:
->> - Add "rocm" property to virtio-gpu-gl device
->> - Define VIRTIO_GPU_FLAG_ROCM_ENABLED flag
->> - Enable VIRGL_RENDERER_USE_ROCM flag when ROCm is enabled
->> - Register VIRTIO_GPU_CAPSET_ROCM (capset 8) capability
->> - Add virtio_gpu_rocm_enabled() helper macro
->>
->> This allows guests to detect and utilize ROCm capabilities through
->> the virtio-gpu device when the feature is enabled.
->>
->> Signed-off-by: Honglei Huang <honghuan@amd.com>
-> 
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+> >
+> > And another thing, this series focus on indev, should we need to do
+> > the same thing for outdev?
+>
+> We don't poll outdev, if we get something to send to outdev it's the
+> bug of other filters or networking core.
 
-Really thanks for the review!
-Will add RB in next version.
+OK.
 
-Regards,
-Honglei
+Thanks
+Chen
+
+>
+> Thanks
+>
+> >
+> > Thanks
+> > Chen
+> >
+> > > +    }
+> > > +}
+> > > +
+> > >  static char *filter_redirector_get_indev(Object *obj, Error **errp)
+> > >  {
+> > >      MirrorState *s =3D FILTER_REDIRECTOR(obj);
+> > > @@ -440,6 +467,7 @@ static void filter_redirector_class_init(ObjectCl=
+ass *oc, const void *data)
+> > >      nfc->setup =3D filter_redirector_setup;
+> > >      nfc->cleanup =3D filter_redirector_cleanup;
+> > >      nfc->receive_iov =3D filter_redirector_receive_iov;
+> > > +    nfc->status_changed =3D filter_redirector_status_changed;
+> > >  }
+> > >
+> > >  static void filter_mirror_init(Object *obj)
+> > > --
+> > > 2.34.1
+> > >
+> >
+>
 
