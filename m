@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74CDCF6C04
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 08:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED5FCF6C10
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 08:50:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdPEH-0008KE-0s; Wed, 07 Jan 2026 03:49:21 -0500
+	id 1vdPEC-000893-Ev; Wed, 07 Jan 2026 03:49:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vdPDs-0007qW-H8
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 03:48:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vdPDr-0007oL-Dv
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 03:48:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vdPDq-0008HU-9B
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 03:48:56 -0500
+ id 1vdPDp-0008H4-2o
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 03:48:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767775733;
+ s=mimecast20190719; t=1767775731;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5po6tsrt4IQ0D/x9eF96zQfTjykL6tNnFFFoC5rONSQ=;
- b=OiS9jAS3X9W6Kdl7IPHWxhsQIiKxRTPyxPIdI8L4agETlGeeiYsLzdAN0gMExCoUIC8inf
- zFADMUIGAFe2sZmABMiwwgDaYtbNvstnDcXlNUQG8pL0IWU8rIWVvQoCIFGv+qjW8bBlyi
- 2KGVUkmudoLTMhr5WbG+9ZjNNaLweUI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ysXu2nTAR4iWJ0hU03xZoojklQ6UiTmsXyuyw3CSLDU=;
+ b=M1f4HG/dix7W1AF2DTYHo7VPrximsUH0vkH+0HlXbGlYpy8NaOuU9bEnwKqKq7hh1/F8G2
+ NNbbx1boYKnnKAdFuHv3PuVWKzeMQlb56speexhLAZwtIwO84XeXDAeJP6sSg+kXEtE9K8
+ SOZ1/PRmxqCtFgqUPg4pfHQ1C8hAyG8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-FZPFTHJ-OjaGdJ5-lG7PLg-1; Wed, 07 Jan 2026 03:48:52 -0500
-X-MC-Unique: FZPFTHJ-OjaGdJ5-lG7PLg-1
-X-Mimecast-MFC-AGG-ID: FZPFTHJ-OjaGdJ5-lG7PLg_1767775731
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4779edba8f3so13748195e9.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 00:48:52 -0800 (PST)
+ us-mta-179-VefmtilNNouMPuP4tOxtlg-1; Wed, 07 Jan 2026 03:48:50 -0500
+X-MC-Unique: VefmtilNNouMPuP4tOxtlg-1
+X-Mimecast-MFC-AGG-ID: VefmtilNNouMPuP4tOxtlg_1767775729
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47a83800743so2684775e9.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 00:48:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767775730; x=1768380530; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767775728; x=1768380528; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5po6tsrt4IQ0D/x9eF96zQfTjykL6tNnFFFoC5rONSQ=;
- b=fwsku4m0OLIl9ranVXIuh8hxgTNsAXbkv2pec31G8NbHqJI3B1+soGsF4N7eeQ65ty
- YrY1vQh7AzJoE2B/KOKlCELChY+eR1KiMuNLXOJowxi/KRO68tGLYBmvlfgD0hjmgEKo
- eQlOQWG3h98fpJvfq/akIMTkGbzKr0stzUAyO0XS3bwoXtQaL0ziNvJ2V3hxbDcrLjdH
- bbZYWWdu4JlVBEGM2pab47KBqZwrLfCGmBNu5N5FiUc1Co4hoKpHIdsO5N7PqPdzZ7rH
- f+FtnDTFqs5EhFGWrdlqW51HydFWLqcE8dNK6r3NcbcvOw1VaOUGU6RlXKfZcOt54jwc
- cCjw==
+ bh=ysXu2nTAR4iWJ0hU03xZoojklQ6UiTmsXyuyw3CSLDU=;
+ b=JMQgrmI3PzscLd1UxV3s0Kfzxbmadh+nco/uq/jTPf/a+EAyw5Eg7mh+xdksXrhhZq
+ pRh+3kHGnQtio737/yEUbdHeuEklENJZKJu7ZZvfcvL142PUy0a8BU2OOJyo+rw6Ap5g
+ z7qLCHNpzi1lNLjUnf4shSbcFOsUrJyGODcUoNGBwclftA02KEUkJsMfsdxBVHCsBIo5
+ aeFxKlAvk+1pJGM9SzhIeqA7qjJEBzN0VJCCuCBI04ZSmDFOT1BWVJL2azaoioCJ24j2
+ 8Mk9wVfXdk+D/2Z3bxq/1/wiLg6+IKjGPX3yy3yig+qFc8HylxB7T1oi2+lFPhdFKVJP
+ 0Dlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767775730; x=1768380530;
+ d=1e100.net; s=20230601; t=1767775728; x=1768380528;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5po6tsrt4IQ0D/x9eF96zQfTjykL6tNnFFFoC5rONSQ=;
- b=sc8zk8nZVB5psNf25EYS8pQdgMjIPr41utBEjU4f0o5fI08B93f9oiZfud0LWZSAi8
- epM1Zwt7UBNim930Blu8dCrSywszc2Ylr9DIuc4YefCSzz4PArb7PgBZxjKf1JugQRqs
- fSiN1RCg43i5feeLkp2Mx46gvsoDYFASCZ9IdUN1s7PTc9TK4XLjhX75zWakXbeKoojv
- 87kkxsCYTbzYHgTEpLlXfFKiuHLZ4Omh9Qd3M5oySH9nlH7VkrC8qpp8Io/5w4AkGAu+
- FN9PvLzeEtipdb4S3uwDwGbCil3kvt5M3UNY1IHyz2DwU6uea5VtURiqgYEW8M3s67HP
- U0JQ==
-X-Gm-Message-State: AOJu0Yw6BqWnvVLJoZkcW9tNdxry8YqGT8x0kqQ305o4GlHjSqbUEv+v
- +kQnx8YOBNE9THBkNeFEN6W2pyFRB6kEe+D9dgpMinP1vAJka8U8fLy7XcoawQwAK4NYJxj5/5d
- cMSkgu42qkJbsoOH7Q2QrJaCUwsgLpNliccF65hwo74+rBOBP+ZyH6ZmUCbCHpmXwIcIutnyTz1
- sODG38mJR6FvTg/mYxrS/trVnEE5ogvC/h7xtJ/9eU
-X-Gm-Gg: AY/fxX4kaab5dLu7N53nkNZFpbN4bndmFClt92e44jD8qNqB5ji/O6wkYPdjrBEoRxs
- eNvGkPLQo91QmlcsbiOJIpWHvGXJXJNQq5kjwNRGeMNxY8UDF71T2GTL3y0etM0FLcDlWLNYZfT
- eNRvhojL5Azc3zy/yHWVaCNIAhF/oeaKoCyTMxfkV/afefsYpALFISzIdXFIqhtiONaXVQ4Sbfm
- Ewr1mUs0eGanurn/MHoO0kPjVn4Nn4gXtUskd1OyR4Vz8tFd66myN+ehY9tpIKA5cyneLEXBoQU
- tRX2Ta/QmlLN2DO+GLzFLlfGzpyeCRsWedwwodRzd33/NBT5Wnptw550Wjutiio+o13x1Ywu3iP
- N7wBsN4CBLNGvVEGafEsWWunYV8Y2mXujkOq2m/eLx0TKA4cvjY6T3QpXs/BXu+Wj9FTbu4N8j9
- j53QEfBAjxfUVBUA==
-X-Received: by 2002:a05:600c:1385:b0:477:9cdb:e337 with SMTP id
- 5b1f17b1804b1-47d84b0a929mr13878255e9.7.1767775730285; 
- Wed, 07 Jan 2026 00:48:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/RsxVjTpz3FafFQPpLvfcqF3PTXEKnv4NXhyKWXjD18PJUmNPcJM8hpJG4DFcpIfizDcUtA==
-X-Received: by 2002:a05:600c:1385:b0:477:9cdb:e337 with SMTP id
- 5b1f17b1804b1-47d84b0a929mr13877975e9.7.1767775729819; 
- Wed, 07 Jan 2026 00:48:49 -0800 (PST)
+ bh=ysXu2nTAR4iWJ0hU03xZoojklQ6UiTmsXyuyw3CSLDU=;
+ b=AoVZsr+qBIIuonqmuovp0VI3zDfBjSrJwCVDpXtCZn6fY3w2R3x2B8xA8D06z/jYLX
+ GEJHTP04F0QJ2VI0HRFmb7DTL0A9LYC0uGdjUR1N0ol1NCuD9q7xzPGUzUbsZZMy7WMH
+ 1djqc8IaPrcQa/mSTYuB/OZmn12+fj5QFMMv5eX3fbnYmedVxGGdzSGARHg9DrNrvnZx
+ POEbzxV4CnVlrhnW5n3/QOI8ROrXA+hTJ1pe2g699PBEWSi56LbSNehmjYpFpLYoCGSh
+ lH7N1VgfOOWoWpvQgGmN+bOh64j5ZbcxEJm98nUe3d6AVwDHCoXD49KU7siUqX+YhS6z
+ IUCA==
+X-Gm-Message-State: AOJu0Yy/xxLG6TlvWcDxaQgiLp5qGVVH4q4I/RFSdOKqkNEj8XEqLtvp
+ lZ8CLduqgGNQK50VdCJ+ljJC9fp56zE0RnnQg3DL4wCqs2NcxbQYK0tnsyiSCmrBbYDygZ5vrIn
+ BYcEni36iGxvmNlF0ELR6NOZr2jExsPOfeQBBh4wJOOzF7s7f/LhkvYOQB+V9uJEgl+1xSoGHAx
+ 4XzIbrGJwEUk8Txhb3Wu+95322VgveZbtQGBDJH11M
+X-Gm-Gg: AY/fxX7g1M91mfJ3EDQb1b17/H6bkc8s/qRenuteZeCy9/h1WFv1Cmz+sABQ1qydACL
+ w74eteQkeBd9EAm8lsO7hTdOGUExvB7LvDBYydPB7I+++kBEA2QSpIz6hoCYuYG+CYzgi6TzN24
+ E4DhV/CmxGHdH+CXGKY8jqXypA8PHKxUzDfTztIkbISWOEBUyc3iSiC+MkFD6gMWL4BwZqNN0No
+ kEi009cRR0oivuJg7dHUbafqYZfcNcWPopnRIlZhIENYIYmw+G46IVA/00FX5FeyVcmwZTjuWUF
+ fl+yu6c1y6cMmCKKs5wzzBnPpfJYEbcAnh3OFbULtlvQSx230ZSM0elTEktxX3bBOIvU71dcMyz
+ Qnw3+lPLgdSOB2s+b4YxfU52MRRkGzG2nZX7p8QkctRy60u5vEgxsyKAdkp4ryooSq1jpi9wNZp
+ Juo2qBMolzlbrGiQ==
+X-Received: by 2002:a05:600c:6749:b0:471:5c0:94fc with SMTP id
+ 5b1f17b1804b1-47d84849fb2mr18833185e9.6.1767775727633; 
+ Wed, 07 Jan 2026 00:48:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG+Zw68NHZ1mOI8/cfZZMV3aA55FoGtdU7S7MOIYSXWN4AEGA/P5F9Z+HXBpOYCfir8YyN8sQ==
+X-Received: by 2002:a05:600c:6749:b0:471:5c0:94fc with SMTP id
+ 5b1f17b1804b1-47d84849fb2mr18832935e9.6.1767775727065; 
+ Wed, 07 Jan 2026 00:48:47 -0800 (PST)
 Received: from [192.168.10.48] ([151.61.26.160])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d86c6ff40sm15191825e9.2.2026.01.07.00.48.49
+ 5b1f17b1804b1-47d7f68f4ddsm89106815e9.2.2026.01.07.00.48.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 00:48:49 -0800 (PST)
+ Wed, 07 Jan 2026 00:48:45 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com
-Subject: [PATCH 4/5] json-streamer: do not heap-allocate JSONToken
-Date: Wed,  7 Jan 2026 09:48:39 +0100
-Message-ID: <20260107084840.150843-5-pbonzini@redhat.com>
+Subject: [PATCH 2/5] json-parser: replace with a push parser
+Date: Wed,  7 Jan 2026 09:48:37 +0100
+Message-ID: <20260107084840.150843-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260107084840.150843-1-pbonzini@redhat.com>
 References: <20260107084840.150843-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,101 +122,599 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is not needed with a push parser.  Since it processes tokens
-immediately, the JSONToken can be created directly on the stack
-and does not need to copy the lexer's string data.
+In order to avoid stashing all the tokens corresponding to a JSON value,
+embed the parsing stack and state machine in JSONParser.  This is more
+efficient and allows for more prompt error recovery; it also does not
+make the code substantially larger than the current recursive descent
+parser, though the state machine is probably a bit harder to follow.
+
+The stack consists of QLists and QDicts corresponding to open
+brackets and braces, plus optionally a QString with the current
+key on top of each QDict.
+
+After each value is parsed, it is added to the top array or dictionary
+or, if the stack is empty, json_parser_feed returns the complete
+QObject.
+
+For now, json-streamer.c keeps tracking the tokens up until braces
+and brackets are balanced, and then shoves the whole queue of tokens
+into the push parser.  The only logic change is that JSON_END_OF_INPUT
+always triggers the emptying of the queue; the parser takes notice and
+checks that there is nothing on the stack.  Not using brace_count
+and bracket_count for this is the first step towards improved separation
+of concerns between json-parser.c and json-streamer.c.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qobject/json-parser-int.h |  8 ++++++--
- qobject/json-parser.c     | 18 ------------------
- qobject/json-streamer.c   |  4 ++--
- 3 files changed, 8 insertions(+), 22 deletions(-)
+ include/qobject/json-parser.h |   6 +
+ qobject/json-parser-int.h     |   4 +-
+ qobject/json-parser.c         | 430 +++++++++++++++++-----------------
+ qobject/json-streamer.c       |  21 +-
+ 4 files changed, 245 insertions(+), 216 deletions(-)
 
+diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
+index 7345a9bd5cb..05346fa816b 100644
+--- a/include/qobject/json-parser.h
++++ b/include/qobject/json-parser.h
+@@ -20,6 +20,12 @@ typedef struct JSONLexer {
+     int x, y;
+ } JSONLexer;
+ 
++typedef struct JSONParserContext {
++    Error *err;
++    GQueue *stack;
++    va_list *ap;
++} JSONParserContext;
++
+ typedef struct JSONMessageParser {
+     void (*emit)(void *opaque, QObject *json, Error *err);
+     void *opaque;
 diff --git a/qobject/json-parser-int.h b/qobject/json-parser-int.h
-index 1f435cb8eb2..5a6b5c9af90 100644
+index 8c01f236276..05e2e8e1831 100644
 --- a/qobject/json-parser-int.h
 +++ b/qobject/json-parser-int.h
-@@ -35,7 +35,12 @@ typedef enum json_token_type {
-     JSON_MAX = JSON_END_OF_INPUT
- } JSONTokenType;
- 
--typedef struct JSONToken JSONToken;
-+typedef struct JSONToken {
-+    JSONTokenType type;
-+    int x;
-+    int y;
-+    char *str;
-+} JSONToken;
- 
- /* json-lexer.c */
- void json_lexer_init(JSONLexer *lexer, bool enable_interpolation);
-@@ -48,7 +53,6 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
-                                 JSONTokenType type, int x, int y);
+@@ -49,6 +49,8 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
  
  /* json-parser.c */
--JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
- void json_parser_init(JSONParserContext *ctxt, va_list *ap);
- void json_parser_reset(JSONParserContext *ctxt);
- QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
+ JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
+-QObject *json_parser_parse(GQueue *tokens, va_list *ap, Error **errp);
++void json_parser_init(JSONParserContext *ctxt, va_list *ap);
++QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
++void json_parser_destroy(JSONParserContext *ctxt);
+ 
+ #endif
 diff --git a/qobject/json-parser.c b/qobject/json-parser.c
-index 7abdea4dacb..2fede59842f 100644
+index eabc9f8358c..338f0c5aae6 100644
 --- a/qobject/json-parser.c
 +++ b/qobject/json-parser.c
-@@ -24,13 +24,6 @@
- #include "qobject/qstring.h"
- #include "json-parser-int.h"
+@@ -31,12 +31,36 @@ struct JSONToken {
+     char str[];
+ };
  
--struct JSONToken {
--    JSONTokenType type;
--    int x;
--    int y;
--    char str[];
--};
--
- /*
-  * Objects: { } | { members }
-  * - Empty: { -> AFTER_LCURLY -> }
-@@ -529,17 +522,6 @@ static QObject *json_parser_parse_token(JSONParserContext *ctxt, const JSONToken
+-typedef struct JSONParserContext {
+-    Error *err;
+-    JSONToken *current;
+-    GQueue *buf;
+-    va_list *ap;
+-} JSONParserContext;
++/*
++ * Objects: { } | { members }
++ * - Empty: { -> AFTER_LCURLY -> }
++ * - Non-empty: { -> AFTER_LCURLY -> BEFORE_KEY -> string -> END_OF_KEY -> : ->
++ *              BEFORE_VALUE -> value -> END_OF_VALUE -> , -> BEFORE_KEY -> ... -> }
++ *
++ * Arrays: [ ] | [ elements ]
++ * - Empty: [ -> AFTER_LSQUARE -> ]
++ * - Non-empty: [ -> AFTER_LSQUARE -> BEFORE_VALUE -> value -> END_OF_VALUE -> , ->
++ *              BEFORE_VALUE -> ... -> ]
++ *
++ * The two cases for END_OF_VALUE are distinguished based on the type of QObject at
++ * top-of-stack.
++ */
++typedef enum JSONParserState {
++    AFTER_LCURLY,
++    AFTER_LSQUARE,
++    BEFORE_KEY,
++    BEFORE_VALUE,
++    END_OF_KEY,
++    END_OF_VALUE,
++} JSONParserState;
++
++typedef struct JSONParserStackEntry {
++    /* A QString with the last parsed key, or a QList/QDict for the current container.  */
++    QObject *partial;
++
++    /* Needed to distinguish whether the parser is waiting for a colon or comma.  */
++    JSONParserState state;
++} JSONParserStackEntry;
+ 
+ #define BUG_ON(cond) assert(!(cond))
+ 
+@@ -49,7 +73,29 @@ typedef struct JSONParserContext {
+  * 4) deal with premature EOI
+  */
+ 
+-static QObject *parse_value(JSONParserContext *ctxt, const JSONToken *token);
++static inline JSONParserStackEntry *current_entry(JSONParserContext *ctxt)
++{
++    return g_queue_peek_tail(ctxt->stack);
++}
++
++static void push_entry(JSONParserContext *ctxt, QObject *partial, JSONParserState state)
++{
++    JSONParserStackEntry *entry = g_new(JSONParserStackEntry, 1);
++    entry->partial = partial;
++    entry->state = state;
++    g_queue_push_tail(ctxt->stack, entry);
++}
++
++/* Note that entry->partial does *not* lose its reference count even if value == NULL.  */
++static JSONParserStackEntry *pop_entry(JSONParserContext *ctxt, QObject **value)
++{
++    JSONParserStackEntry *entry = g_queue_pop_tail(ctxt->stack);
++    if (value) {
++        *value = entry->partial;
++    }
++    g_free(entry);
++    return current_entry(ctxt);
++}
+ 
+ /**
+  * Error handler
+@@ -235,189 +281,7 @@ out:
      return NULL;
  }
  
--JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
+-/* Note: the token object returned by parser_context_pop_token is
+- * deleted as soon as parser_context_pop_token is called again.
+- */
+-static const JSONToken *parser_context_pop_token(JSONParserContext *ctxt)
 -{
--    JSONToken *token = g_malloc(sizeof(JSONToken) + tokstr->len + 1);
--
--    token->type = type;
--    memcpy(token->str, tokstr->str, tokstr->len);
--    token->str[tokstr->len] = 0;
--    token->x = x;
--    token->y = y;
--    return token;
+-    g_free(ctxt->current);
+-    ctxt->current = g_queue_pop_head(ctxt->buf);
+-    return ctxt->current;
 -}
+-
+-/**
+- * Parsing rules
+- */
+-static int parse_pair(JSONParserContext *ctxt, const JSONToken *token, QDict *dict)
+-{
+-    QObject *key_obj = NULL;
+-    QString *key;
+-    QObject *value;
+-
+-    key_obj = parse_value(ctxt, token);
+-    key = qobject_to(QString, key_obj);
+-    if (!key) {
+-        parse_error(ctxt, token, "key is not a string in object");
+-        goto out;
+-    }
+-
+-    token = parser_context_pop_token(ctxt);
+-    if (token == NULL) {
+-        parse_error(ctxt, NULL, "premature EOI");
+-        goto out;
+-    }
+-
+-    if (token->type != JSON_COLON) {
+-        parse_error(ctxt, token, "missing : in object pair");
+-        goto out;
+-    }
+-
+-    token = parser_context_pop_token(ctxt);
+-    if (token == NULL) {
+-        parse_error(ctxt, NULL, "premature EOI");
+-        goto out;
+-    }
+-
+-    value = parse_value(ctxt, token);
+-    if (value == NULL) {
+-        parse_error(ctxt, token, "Missing value in dict");
+-        goto out;
+-    }
+-
+-    if (qdict_haskey(dict, qstring_get_str(key))) {
+-        parse_error(ctxt, token, "duplicate key");
+-        goto out;
+-    }
+-
+-    qdict_put_obj(dict, qstring_get_str(key), value);
+-
+-    qobject_unref(key_obj);
+-    return 0;
+-
+-out:
+-    qobject_unref(key_obj);
+-    return -1;
+-}
+-
+-static QObject *parse_object(JSONParserContext *ctxt)
+-{
+-    QDict *dict = NULL;
+-    const JSONToken *token;
+-
+-    dict = qdict_new();
+-
+-    token = parser_context_pop_token(ctxt);
+-    if (token == NULL) {
+-        parse_error(ctxt, NULL, "premature EOI");
+-        goto out;
+-    }
+-
+-    if (token->type != JSON_RCURLY) {
+-        if (parse_pair(ctxt, token, dict) == -1) {
+-            goto out;
+-        }
+-
+-        token = parser_context_pop_token(ctxt);
+-        if (token == NULL) {
+-            parse_error(ctxt, NULL, "premature EOI");
+-            goto out;
+-        }
+-
+-        while (token->type != JSON_RCURLY) {
+-            if (token->type != JSON_COMMA) {
+-                parse_error(ctxt, token, "expected separator in dict");
+-                goto out;
+-            }
+-
+-            token = parser_context_pop_token(ctxt);
+-            if (token == NULL) {
+-                parse_error(ctxt, NULL, "premature EOI");
+-                goto out;
+-            }
+-
+-            if (parse_pair(ctxt, token, dict) == -1) {
+-                goto out;
+-            }
+-
+-            token = parser_context_pop_token(ctxt);
+-            if (token == NULL) {
+-                parse_error(ctxt, NULL, "premature EOI");
+-                goto out;
+-            }
+-        }
+-    }
+-
+-    return QOBJECT(dict);
+-
+-out:
+-    qobject_unref(dict);
+-    return NULL;
+-}
+-
+-static QObject *parse_array(JSONParserContext *ctxt)
+-{
+-    QList *list = NULL;
+-    const JSONToken *token;
+-
+-    list = qlist_new();
+-
+-    token = parser_context_pop_token(ctxt);
+-    if (token == NULL) {
+-        parse_error(ctxt, NULL, "premature EOI");
+-        goto out;
+-    }
+-
+-    if (token->type != JSON_RSQUARE) {
+-        QObject *obj;
+-
+-        obj = parse_value(ctxt, token);
+-        if (obj == NULL) {
+-            parse_error(ctxt, token, "expecting value");
+-            goto out;
+-        }
+-
+-        qlist_append_obj(list, obj);
+-
+-        token = parser_context_pop_token(ctxt);
+-        if (token == NULL) {
+-            parse_error(ctxt, NULL, "premature EOI");
+-            goto out;
+-        }
+-
+-        while (token->type != JSON_RSQUARE) {
+-            if (token->type != JSON_COMMA) {
+-                parse_error(ctxt, token, "expected separator in list");
+-                goto out;
+-            }
+-
+-            token = parser_context_pop_token(ctxt);
+-            if (token == NULL) {
+-                parse_error(ctxt, NULL, "premature EOI");
+-                goto out;
+-            }
+-
+-            obj = parse_value(ctxt, token);
+-            if (obj == NULL) {
+-                parse_error(ctxt, token, "expecting value");
+-                goto out;
+-            }
+-
+-            qlist_append_obj(list, obj);
+-
+-            token = parser_context_pop_token(ctxt);
+-            if (token == NULL) {
+-                parse_error(ctxt, NULL, "premature EOI");
+-                goto out;
+-            }
+-        }
+-    }
+-
+-    return QOBJECT(list);
+-
+-out:
+-    qobject_unref(list);
+-    return NULL;
+-}
++/* Terminals  */
  
- void json_parser_reset(JSONParserContext *ctxt)
+ static QObject *parse_keyword(JSONParserContext *ctxt, const JSONToken *token)
  {
+@@ -516,13 +380,17 @@ static QObject *parse_literal(JSONParserContext *ctxt, const JSONToken *token)
+     }
+ }
+ 
+-static QObject *parse_value(JSONParserContext *ctxt, const JSONToken *token)
++/* Parsing state machine  */
++
++static QObject *parse_begin_value(JSONParserContext *ctxt, const JSONToken *token)
+ {
+     switch (token->type) {
+     case JSON_LCURLY:
+-        return parse_object(ctxt);
++        push_entry(ctxt, QOBJECT(qdict_new()), AFTER_LCURLY);
++        return NULL;
+     case JSON_LSQUARE:
+-        return parse_array(ctxt);
++        push_entry(ctxt, QOBJECT(qlist_new()), AFTER_LSQUARE);
++        return NULL;
+     case JSON_INTERP:
+         return parse_interpolation(ctxt, token);
+     case JSON_INTEGER:
+@@ -537,6 +405,130 @@ static QObject *parse_value(JSONParserContext *ctxt, const JSONToken *token)
+     }
+ }
+ 
++static QObject *json_parser_parse_token(JSONParserContext *ctxt, const JSONToken *token)
++{
++    JSONParserStackEntry *entry;
++    JSONParserState state;
++    QString *key;
++    QObject *value = NULL;
++
++    entry = current_entry(ctxt);
++    state = entry ? entry->state : BEFORE_VALUE;
++    switch (state) {
++    case AFTER_LCURLY:
++        /* Grab '}' for empty object or fall through to BEFORE_KEY */
++        if (token->type == JSON_RCURLY) {
++            entry = pop_entry(ctxt, &value);
++            break;
++        }
++        entry->state = BEFORE_KEY;
++        /* fall through */
++
++    case BEFORE_KEY:
++        /* Expecting object key */
++        if (token->type == JSON_STRING) {
++            key = parse_string(ctxt, token);
++            if (!key) {
++                return NULL;
++            }
++
++            /* Store key in a special entry on the stack */
++            push_entry(ctxt, QOBJECT(key), END_OF_KEY);
++        } else {
++            parse_error(ctxt, token, "expecting key");
++        }
++        return NULL;
++
++    case END_OF_KEY:
++        /* Expecting ':' after key */
++        if (token->type == JSON_COLON) {
++            entry->state = BEFORE_VALUE;
++        } else {
++            parse_error(ctxt, token, "expecting ':'");
++        }
++        return NULL;
++
++    case AFTER_LSQUARE:
++        /* Grab ']' for empty array or fall through to BEFORE_VALUE */
++        if (token->type == JSON_RSQUARE) {
++            entry = pop_entry(ctxt, &value);
++            break;
++        }
++        entry->state = BEFORE_VALUE;
++        /* fall through */
++
++    case BEFORE_VALUE:
++        /* Expecting value */
++        value = parse_begin_value(ctxt, token);
++        if (!value) {
++            /* Error or '['/'{' */
++            return NULL;
++        }
++        /* Return value or insert it into a container */
++        break;
++
++    case END_OF_VALUE:
++        /* Grab ',' or ']' for array; ',' or '}' for object */
++        if (qobject_to(QList, entry->partial)) {
++            /* Array */
++            if (token->type != JSON_RSQUARE) {
++                if (token->type == JSON_COMMA) {
++                    entry->state = BEFORE_VALUE;
++                } else {
++                    parse_error(ctxt, token, "expected ',' or ']'");
++                }
++                return NULL;
++            }
++        } else if (qobject_to(QDict, entry->partial)) {
++            /* Object */
++            if (token->type != JSON_RCURLY) {
++                if (token->type == JSON_COMMA) {
++                    entry->state = BEFORE_KEY;
++                } else {
++                    parse_error(ctxt, token, "expected ',' or '}'");
++                }
++                return NULL;
++            }
++        } else {
++            g_assert_not_reached();
++        }
++
++        /* Got ']' or '}', return value or insert into parent container */
++        entry = pop_entry(ctxt, &value);
++        break;
++    }
++
++    assert(value);
++    if (entry == NULL) {
++        /* The toplevel value is complete.  */
++        return value;
++    }
++
++    key = qobject_to(QString, entry->partial);
++    if (key) {
++        const char *key_str;
++        QDict *dict;
++
++        entry = pop_entry(ctxt, NULL);
++        dict = qobject_to(QDict, entry->partial);
++        assert(dict);
++        key_str = qstring_get_str(key);
++        if (qdict_haskey(dict, key_str)) {
++            parse_error(ctxt, token, "duplicate key");
++            qobject_unref(value);
++            return NULL;
++        }
++        qdict_put_obj(dict, key_str, value);
++        qobject_unref(key);
++    } else {
++        /* Add to array */
++        qlist_append_obj(qobject_to(QList, entry->partial), value);
++    }
++
++    entry->state = END_OF_VALUE;
++    return NULL;
++}
++
+ JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
+ {
+     JSONToken *token = g_malloc(sizeof(JSONToken) + tokstr->len + 1);
+@@ -549,27 +541,43 @@ JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr)
+     return token;
+ }
+ 
+-QObject *json_parser_parse(GQueue *tokens, va_list *ap, Error **errp)
++void json_parser_init(JSONParserContext *ctxt, va_list *ap)
+ {
+-    JSONParserContext ctxt = { .buf = tokens, .ap = ap };
+-    QObject *result;
+-    const JSONToken *token;
++    ctxt->err = NULL;
++    ctxt->stack = g_queue_new();
++    ctxt->ap = ap;
++}
+ 
+-    token = parser_context_pop_token(&ctxt);
+-    if (token == NULL) {
+-        parse_error(&ctxt, NULL, "premature EOI");
+-        return NULL;
++void json_parser_destroy(JSONParserContext *ctxt)
++{
++    JSONParserStackEntry *entry;
++
++    while ((entry = g_queue_pop_tail(ctxt->stack)) != NULL) {
++        qobject_unref(entry->partial);
++        g_free(entry);
++    }
++    g_queue_free(ctxt->stack);
++    ctxt->stack = NULL;
++}
++
++QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp)
++{
++    QObject *result = NULL;
++
++    assert(!ctxt->err);
++    switch (token->type) {
++    case JSON_END_OF_INPUT:
++        /* Check for premature end of input */
++        if (!g_queue_is_empty(ctxt->stack)) {
++            parse_error(ctxt, token, "premature end of input");
++        }
++        break;
++
++    default:
++        result = json_parser_parse_token(ctxt, token);
++        break;
+     }
+ 
+-    result = parse_value(&ctxt, token);
+-    assert(ctxt.err || g_queue_is_empty(ctxt.buf));
+-
+-    error_propagate(errp, ctxt.err);
+-
+-    while (!g_queue_is_empty(ctxt.buf)) {
+-        parser_context_pop_token(&ctxt);
+-    }
+-    g_free(ctxt.current);
+-
++    error_propagate(errp, ctxt->err);
+     return result;
+ }
 diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
-index a1210128ac1..07e0ef51ce3 100644
+index b93d97b995f..6c93e6fd78d 100644
 --- a/qobject/json-streamer.c
 +++ b/qobject/json-streamer.c
-@@ -23,7 +23,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+@@ -32,6 +32,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
                                  JSONTokenType type, int x, int y)
  {
      JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
--    g_autofree JSONToken *token = json_token(type, x, y, input);
-+    JSONToken token = (JSONToken) { .type = type, .x = x, .y = y, .str = input->str };
++    JSONParserContext ctxt;
+     QObject *json = NULL;
      Error *err = NULL;
+     JSONToken *token;
+@@ -56,8 +57,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+         if (g_queue_is_empty(&parser->tokens)) {
+             return;
+         }
+-        json = json_parser_parse(&parser->tokens, parser->ap, &err);
+-        goto out_emit;
++        break;
+     default:
+         break;
+     }
+@@ -85,11 +85,24 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+     g_queue_push_tail(&parser->tokens, token);
  
-     parser->token_size += input->len;
-@@ -64,7 +64,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
-         } else if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
-             error_setg(&err, "JSON nesting depth limit exceeded");
-         } else {
--            QObject *json = json_parser_feed(&parser->parser, token, &err);
-+            QObject *json = json_parser_feed(&parser->parser, &token, &err);
-             if (json) {
-                 parser->emit(parser->opaque, json, NULL);
-             }
+     if ((parser->brace_count > 0 || parser->bracket_count > 0)
+-        && parser->brace_count >= 0 && parser->bracket_count >= 0) {
++        && parser->brace_count >= 0 && parser->bracket_count >= 0
++        && type != JSON_END_OF_INPUT) {
+         return;
+     }
+ 
+-    json = json_parser_parse(&parser->tokens, parser->ap, &err);
++    json_parser_init(&ctxt, parser->ap);
++
++    /* Process all tokens in the queue */
++    while (!g_queue_is_empty(&parser->tokens)) {
++        token = g_queue_pop_head(&parser->tokens);
++        json = json_parser_feed(&ctxt, token, &err);
++        g_free(token);
++        if (json || err) {
++            break;
++        }
++    }
++
++    json_parser_destroy(&ctxt);
+ 
+ out_emit:
+     parser->brace_count = 0;
 -- 
 2.52.0
 
