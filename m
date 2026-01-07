@@ -4,61 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9C9CD585E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8EF2CE9D48
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 12:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdSJp-0003vY-D1; Wed, 07 Jan 2026 07:07:17 -0500
+	id 1vdSJb-0003s8-Eb; Wed, 07 Jan 2026 07:07:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdSJf-0003tS-Q5
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 07:07:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdSJU-0003ra-VT
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 07:06:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdSJY-00029n-SE
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 07:07:06 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdSJM-00027H-7E
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 07:06:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767787618;
+ s=mimecast20190719; t=1767787606;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MfiJBRSHKWd6uUsqcK6dtBKc4aUeaTwvVHsNFr2yqLg=;
- b=SA6XnBm5TFeZd22+H3Y4L35sr7nMh1fB+13bxuuWhYj2OLCbWd3HC/83PtziEkZrU03ECb
- /Q3imqSX1zrWIlCrQAPAtX8XB9ia6rRuZ7VihUKl4Xp92OKy3OYtvYzfHARrSOIu0m1gqL
- 0c3CD6NdZNc3258Lx862HIlvlh6ZmZw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=A8jtFfWEnrXsdxJwtHJj5VeC+95moyNsGdOAbR+Kn64=;
+ b=OX4pG6iJMNTXfvaeEXRQb4nFP/H+aqo+48Kcwq76+QgaaBChVcT1aTBw4plJ0p+JZV/Rju
+ nG9kVMTWbRjkobuyTvj5RlW/a/E6U1x5J/A3n0fGpZX6mzP49vQHPXIPoTUjFwU12W2tgK
+ +08HWlJ+KJwvXPb60xF+Zt2Gd18jEK0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-2Dk1ajVmO964o88oGs9TjQ-1; Wed,
- 07 Jan 2026 07:06:55 -0500
-X-MC-Unique: 2Dk1ajVmO964o88oGs9TjQ-1
-X-Mimecast-MFC-AGG-ID: 2Dk1ajVmO964o88oGs9TjQ_1767787614
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-175-vrgBzPJ6MbaaS56AO1PScQ-1; Wed,
+ 07 Jan 2026 07:06:44 -0500
+X-MC-Unique: vrgBzPJ6MbaaS56AO1PScQ-1
+X-Mimecast-MFC-AGG-ID: vrgBzPJ6MbaaS56AO1PScQ_1767787604
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0397C1800473; Wed,  7 Jan 2026 12:06:54 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E90AF18005B8; Wed,  7 Jan 2026 12:06:43 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
  [10.33.192.176])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A173F1956053; Wed,  7 Jan 2026 12:06:52 +0000 (UTC)
+ id E3ADF1956048; Wed,  7 Jan 2026 12:06:42 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 08/14] target/s390x: Replace gdb_get_regl() -> gdb_get_reg64()
-Date: Wed,  7 Jan 2026 13:06:32 +0100
-Message-ID: <20260107120638.56735-9-thuth@redhat.com>
+ Cornelia Huck <cohuck@redhat.com>
+Subject: [PULL 02/14] hw: add compat machines for 11.0
+Date: Wed,  7 Jan 2026 13:06:26 +0100
+Message-ID: <20260107120638.56735-3-thuth@redhat.com>
 In-Reply-To: <20260107120638.56735-1-thuth@redhat.com>
 References: <20260107120638.56735-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -86,100 +83,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Cornelia Huck <cohuck@redhat.com>
 
-We only build s390x targets as 64-bit:
+Add 11.0 machine types for arm/i440fx/m68k/q35/s390x/spapr.
 
-  $ git grep BIT configs/targets/s390x-*
-  configs/targets/s390x-linux-user.mak:6:TARGET_LONG_BITS=64
-  configs/targets/s390x-softmmu.mak:5:TARGET_LONG_BITS=64
-
-Therefore gdb_get_regl() expands to gdb_get_reg64(). Use
-the latter which is more explicit.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251224162036.90404-4-philmd@linaro.org>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251112130031.2484181-1-cohuck@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/gdbstub.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ include/hw/core/boards.h   |  3 +++
+ include/hw/i386/pc.h       |  3 +++
+ hw/arm/virt.c              |  9 ++++++++-
+ hw/core/machine.c          |  3 +++
+ hw/i386/pc.c               |  3 +++
+ hw/i386/pc_piix.c          | 13 +++++++++++--
+ hw/i386/pc_q35.c           | 13 +++++++++++--
+ hw/m68k/virt.c             |  9 ++++++++-
+ hw/ppc/spapr.c             | 15 +++++++++++++--
+ hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+ 10 files changed, 76 insertions(+), 9 deletions(-)
 
-diff --git a/target/s390x/gdbstub.c b/target/s390x/gdbstub.c
-index 6bca376f2b6..d1f02ea5ce4 100644
---- a/target/s390x/gdbstub.c
-+++ b/target/s390x/gdbstub.c
-@@ -34,11 +34,11 @@ int s390_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 815845207b0..07f89387525 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -798,6 +798,9 @@ struct MachineState {
+         } \
+     } while (0)
  
-     switch (n) {
-     case S390_PSWM_REGNUM:
--        return gdb_get_regl(mem_buf, s390_cpu_get_psw_mask(env));
-+        return gdb_get_reg64(mem_buf, s390_cpu_get_psw_mask(env));
-     case S390_PSWA_REGNUM:
--        return gdb_get_regl(mem_buf, env->psw.addr);
-+        return gdb_get_reg64(mem_buf, env->psw.addr);
-     case S390_R0_REGNUM ... S390_R15_REGNUM:
--        return gdb_get_regl(mem_buf, env->regs[n - S390_R0_REGNUM]);
-+        return gdb_get_reg64(mem_buf, env->regs[n - S390_R0_REGNUM]);
-     }
-     return 0;
++extern GlobalProperty hw_compat_10_2[];
++extern const size_t hw_compat_10_2_len;
++
+ extern GlobalProperty hw_compat_10_1[];
+ extern const size_t hw_compat_10_1_len;
+ 
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index b3a45ab71a8..1890c61a387 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -214,6 +214,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
+ 
++extern GlobalProperty pc_compat_10_2[];
++extern const size_t pc_compat_10_2_len;
++
+ extern GlobalProperty pc_compat_10_1[];
+ extern const size_t pc_compat_10_1_len;
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index fd0e28f030a..9d0568a7d56 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3533,10 +3533,17 @@ static void machvirt_machine_init(void)
  }
-@@ -190,7 +190,7 @@ static int cpu_read_c_reg(CPUState *cs, GByteArray *buf, int n)
+ type_init(machvirt_machine_init);
  
-     switch (n) {
-     case S390_C0_REGNUM ... S390_C15_REGNUM:
--        return gdb_get_regl(buf, env->cregs[n]);
-+        return gdb_get_reg64(buf, env->cregs[n]);
-     default:
-         return 0;
-     }
-@@ -227,13 +227,13 @@ static int cpu_read_virt_reg(CPUState *cs, GByteArray *mem_buf, int n)
++static void virt_machine_11_0_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(11, 0)
++
+ static void virt_machine_10_2_options(MachineClass *mc)
+ {
++    virt_machine_11_0_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_10_2, hw_compat_10_2_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
++DEFINE_VIRT_MACHINE(10, 2)
  
-     switch (n) {
-     case S390_VIRT_CKC_REGNUM:
--        return gdb_get_regl(mem_buf, env->ckc);
-+        return gdb_get_reg64(mem_buf, env->ckc);
-     case S390_VIRT_CPUTM_REGNUM:
--        return gdb_get_regl(mem_buf, env->cputm);
-+        return gdb_get_reg64(mem_buf, env->cputm);
-     case S390_VIRT_BEA_REGNUM:
--        return gdb_get_regl(mem_buf, env->gbea);
-+        return gdb_get_reg64(mem_buf, env->gbea);
-     case S390_VIRT_PREFIX_REGNUM:
--        return gdb_get_regl(mem_buf, env->psa);
-+        return gdb_get_reg64(mem_buf, env->psa);
-     default:
-         return 0;
-     }
-@@ -279,13 +279,13 @@ static int cpu_read_virt_kvm_reg(CPUState *cs, GByteArray *mem_buf, int n)
+ static void virt_machine_10_1_options(MachineClass *mc)
+ {
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 51c28468ff9..6411e68856b 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -38,6 +38,9 @@
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
  
-     switch (n) {
-     case S390_VIRT_KVM_PP_REGNUM:
--        return gdb_get_regl(mem_buf, env->pp);
-+        return gdb_get_reg64(mem_buf, env->pp);
-     case S390_VIRT_KVM_PFT_REGNUM:
--        return gdb_get_regl(mem_buf, env->pfault_token);
-+        return gdb_get_reg64(mem_buf, env->pfault_token);
-     case S390_VIRT_KVM_PFS_REGNUM:
--        return gdb_get_regl(mem_buf, env->pfault_select);
-+        return gdb_get_reg64(mem_buf, env->pfault_select);
-     case S390_VIRT_KVM_PFC_REGNUM:
--        return gdb_get_regl(mem_buf, env->pfault_compare);
-+        return gdb_get_reg64(mem_buf, env->pfault_compare);
-     default:
-         return 0;
-     }
-@@ -330,7 +330,7 @@ static int cpu_read_gs_reg(CPUState *cs, GByteArray *buf, int n)
-     S390CPU *cpu = S390_CPU(cs);
-     CPUS390XState *env = &cpu->env;
++GlobalProperty hw_compat_10_2[] = {};
++const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
++
+ GlobalProperty hw_compat_10_1[] = {
+     { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
+     { TYPE_VIRTIO_NET, "host_tunnel", "off" },
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 1478a26f11b..5cb074c0a08 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -81,6 +81,9 @@
+     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
  
--    return gdb_get_regl(buf, env->gscb[n]);
-+    return gdb_get_reg64(buf, env->gscb[n]);
++GlobalProperty pc_compat_10_2[] = {};
++const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
++
+ GlobalProperty pc_compat_10_1[] = {
+     { "mch", "extended-tseg-mbytes", "16" },
+ };
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 2e2671d6050..fea158fc4bf 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -438,12 +438,21 @@ static void pc_i440fx_machine_options(MachineClass *m)
+                      pc_piix_compat_defaults, pc_piix_compat_defaults_len);
  }
  
- static int cpu_write_gs_reg(CPUState *cs, uint8_t *mem_buf, int n)
+-static void pc_i440fx_machine_10_2_options(MachineClass *m)
++static void pc_i440fx_machine_11_0_options(MachineClass *m)
+ {
+     pc_i440fx_machine_options(m);
+ }
+ 
+-DEFINE_I440FX_MACHINE_AS_LATEST(10, 2);
++DEFINE_I440FX_MACHINE_AS_LATEST(11, 0);
++
++static void pc_i440fx_machine_10_2_options(MachineClass *m)
++{
++    pc_i440fx_machine_11_0_options(m);
++    compat_props_add(m->compat_props, hw_compat_10_2, hw_compat_10_2_len);
++    compat_props_add(m->compat_props, pc_compat_10_2, pc_compat_10_2_len);
++}
++
++DEFINE_I440FX_MACHINE(10, 2);
+ 
+ static void pc_i440fx_machine_10_1_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 18158ad15e4..4d6046e47b0 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -374,12 +374,21 @@ static void pc_q35_machine_options(MachineClass *m)
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+ 
+-static void pc_q35_machine_10_2_options(MachineClass *m)
++static void pc_q35_machine_11_0_options(MachineClass *m)
+ {
+     pc_q35_machine_options(m);
+ }
+ 
+-DEFINE_Q35_MACHINE_AS_LATEST(10, 2);
++DEFINE_Q35_MACHINE_AS_LATEST(11, 0);
++
++static void pc_q35_machine_10_2_options(MachineClass *m)
++{
++    pc_q35_machine_11_0_options(m);
++    compat_props_add(m->compat_props, hw_compat_10_2, hw_compat_10_2_len);
++    compat_props_add(m->compat_props, pc_compat_10_2, pc_compat_10_2_len);
++}
++
++DEFINE_Q35_MACHINE(10, 2);
+ 
+ static void pc_q35_machine_10_1_options(MachineClass *m)
+ {
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index 7be3a248000..e67900c727d 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -367,10 +367,17 @@ type_init(virt_machine_register_types)
+ #define DEFINE_VIRT_MACHINE(major, minor) \
+     DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
+ 
++static void virt_machine_11_0_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(11, 0)
++
+ static void virt_machine_10_2_options(MachineClass *mc)
+ {
++    virt_machine_11_0_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_10_2, hw_compat_10_2_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
++DEFINE_VIRT_MACHINE(10, 2)
+ 
+ static void virt_machine_10_1_options(MachineClass *mc)
+ {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index bcf6aa560f3..3d87450be53 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4751,15 +4751,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+ #define DEFINE_SPAPR_MACHINE(major, minor) \
+     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
+ 
++/*
++ * pseries-11.0
++ */
++static void spapr_machine_11_0_class_options(MachineClass *mc)
++{
++    /* Defaults for the latest behaviour inherited from the base class */
++}
++
++DEFINE_SPAPR_MACHINE_AS_LATEST(11, 0);
++
+ /*
+  * pseries-10.2
+  */
+ static void spapr_machine_10_2_class_options(MachineClass *mc)
+ {
+-    /* Defaults for the latest behaviour inherited from the base class */
++    spapr_machine_11_0_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_10_2, hw_compat_10_2_len);
+ }
+ 
+-DEFINE_SPAPR_MACHINE_AS_LATEST(10, 2);
++DEFINE_SPAPR_MACHINE(10, 2);
+ 
+ /*
+  * pseries-10.1
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 05aa6e15c38..5e9bab2ee7e 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -890,14 +890,26 @@ static const TypeInfo ccw_machine_info = {
+     DEFINE_CCW_MACHINE_IMPL(false, major, minor)
+ 
+ 
++static void ccw_machine_11_0_instance_options(MachineState *machine)
++{
++}
++
++static void ccw_machine_11_0_class_options(MachineClass *mc)
++{
++}
++DEFINE_CCW_MACHINE_AS_LATEST(11, 0);
++
+ static void ccw_machine_10_2_instance_options(MachineState *machine)
+ {
++    ccw_machine_11_0_instance_options(machine);
+ }
+ 
+ static void ccw_machine_10_2_class_options(MachineClass *mc)
+ {
++    ccw_machine_11_0_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_10_2, hw_compat_10_2_len);
+ }
+-DEFINE_CCW_MACHINE_AS_LATEST(10, 2);
++DEFINE_CCW_MACHINE(10, 2);
+ 
+ static void ccw_machine_10_1_instance_options(MachineState *machine)
+ {
 -- 
 2.52.0
 
