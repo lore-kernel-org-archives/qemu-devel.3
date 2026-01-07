@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 995E4CFD626
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074D7CFD626
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdTH6-0000Yn-QL; Wed, 07 Jan 2026 08:08:32 -0500
+	id 1vdTI4-0002hX-1m; Wed, 07 Jan 2026 08:09:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdTGw-0000Ot-Gp
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:08:22 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdTI2-0002SX-DX
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:09:30 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdTGs-0008ME-QF
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:08:20 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-47d1d8a49f5so13821955e9.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 05:08:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdTI0-0008UY-AB
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:09:30 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-477a219dbcaso17219025e9.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 05:09:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767791297; x=1768396097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767791366; x=1768396166; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mkuAkGIrYoWFyIDgqIBN9F37U9+A9epUfwbwl3z+CUI=;
- b=d4m1S82w0vYlJxDO9ApvnOYyvwHNCVKVE4NHaLY6AkaA82Q2w7L2S9/Y3KOyKBVKQt
- rQfGj79mxZXBD+QoD5wcLAgjz058S+WDrhpfE7EHp7d4NU4Fwz9VSiRemP9ZzLW2cUvA
- qgnqKCpd+GUWhqBDh9HQXeGG+oV6MxnuvWVa5q/dd1zdmYt9QyOkT4uCkQVv2iHDqx/X
- 1gjrOIQj34xCq2G01/VkH85P0XUlB0DDuKnyTfcIkAbvlsdfAtaW7Z7HHc2QAgcXCoas
- hTMsx2NrZkvBufIFPjeyURG+DhWSc3x+biSwXvuEWs96WvH43bDBO1ssyNQThJ767+vo
- UPEg==
+ bh=MCaTjNyAElQFuFaR8j3JF4/CT8EzoT5R+7ooDRWgoUg=;
+ b=zV+Gwa5/0KqySKpL2x95VaM6PtKSS9EzlUhqruwF7WDHQFaF6Y8ND5X0fY+GC1qqog
+ lxkCfwlIo2tedF4plivJq6WWt9efKJSbZOowvpZSIVINhvlZiHvVNaO0AXg+2ynwTB8p
+ XdOVtt7/K3mymi+MT9rcqJtwnrFdjQnNmOD4SUwDLV2W84PmZZ6wZV9yv4G7mQppbhmi
+ GNutqPp5ivIP6bGIyGxzBKHPyUaS6xxI60XzFbWa+slgpyZ4qq1XZcIRiuqIS2c7ulIV
+ gfjtr1tnPMV8vzTXAs7KV9RdHzqKIfEG6uvqrJDFig04ZM7Imn/1Hke6YxMlIxNuA3GZ
+ qkzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767791297; x=1768396097;
+ d=1e100.net; s=20230601; t=1767791366; x=1768396166;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mkuAkGIrYoWFyIDgqIBN9F37U9+A9epUfwbwl3z+CUI=;
- b=aqW7TNyeT4RiylpHR4hijp0bKgZdAMq+OFT0q92mEIQN3kj/G01L3G7lW+kUKz9mwl
- 0Iv6N3YeVs0d75PH1lhB/QwikmhUIK92LhNP0XkEs9WwVXzPC/6Lu5/Wv/GN+c2xmG5A
- z2oBvJQjTxbEn5nieAcYNt0YFYpb6I65k5vxuOAoxoW0jXzQ9v/20bhz2iaRCYFJ6Syg
- RHjXIgKXH+tfKPAnl1ax6rlkXe/s2RXjwRrktgh8u2ht9RMHz8UqqjJFpM4aYGztUXbG
- BBHCfFlcoRLRy7d/7jT+jgQO+DwPkSZYyahJOYZyzyGhYjmL/+gipZJKh0xGKZQ2E5Ue
- JGDw==
-X-Gm-Message-State: AOJu0YxcoGWTmYWjFePpIMRhOfnePk1/M2ro1/lvDpbMlVS0Z8gQlNhH
- RyahI0LjHxUcfNGgBJSrZ5r02XRGLhR8tHKi2mcFrIRoFeSbi+CzQSmkvr3cYGbB2/gKEudCjM2
- AGk+zox6GyQ==
-X-Gm-Gg: AY/fxX6CiSmdJ88mdfmYkkYsBdIuYLGqz61/J9fiAzfYfM7gLrAyWfECu8AeKm1YJq5
- ew9qHEKYeIh7brLnSAJ+zvBMjeBLVJCmb/6EUvho8Zm2mcPIvyWhPSOvYK6R5XCB9Rh236a4cEj
- WAsFvldwlaZ7BH63x4qVWI54Y5yeFi7DJI25eEzFOwtfTZF8IJP99oIULe3fVCgnXKQ95naoSEQ
- nFigKX9OF4wA3nQntOmJlLtGWo6fYvgyy0lkY2a8Df7E3rpmZ8XWRsEmiszBGe/rdeQzIj91E3z
- Y1UPZhAgIjw3OvFwkY2h0Y+U6/pSf8YY507ffh4GyX2kT69oY9mP34Y8djtJsTLErWXLUSveI/1
- V6UHbYxa3mGGwcDqDKs+irGnvpRhHvzY4sAFDVMs8ecvLDgdYQmFbhWRDK5IMHjoO5GA9OwRF+J
- UjSZUM6o29MLDwJMWlFsbGpyJBFsMwWGItXybWtbveQO4mYoNQ3KDb4q8LoDnGHexIUo4ut+w=
-X-Google-Smtp-Source: AGHT+IGIE3yR0kLLyXHjtztnslOGCnLgJbzMCSblwxgjTHE0NeqPrgnr1d+hENwFoZ7Drqzb7wV6xg==
-X-Received: by 2002:a05:600c:1d0c:b0:471:700:f281 with SMTP id
- 5b1f17b1804b1-47d84b4093cmr26647095e9.25.1767791296772; 
- Wed, 07 Jan 2026 05:08:16 -0800 (PST)
+ bh=MCaTjNyAElQFuFaR8j3JF4/CT8EzoT5R+7ooDRWgoUg=;
+ b=f5pGbex8yMWGMtSgP+60Ui9TgOIHduzviIDQVosFKNhCBlvBa8MolSVQ33rHrMcLuE
+ DdRHeCd4RYH8XaU3zNuSC9lRa+m4Rs8MbK0eAOcAT8T6wFF/r+juAT5ILpxF0iZe+uRc
+ VlPh3RQG68E4fndvAUrVH8bmp8meZZFrtSWvc8k7+0JXHbp0S1KB4gKnx/ZH2Ugv2B03
+ SBoycfhLEGHo4eNIU4wZDY1Nqn5OyAJQKgURsRtX8GvhpGcQGE7L+BnunFdlogXomywq
+ d2KiVk7jSOl5JgtUa4kc3DR7ljuO/f3HUjjmJE/Chra1oV+w9/585amUyaYBvbhptde9
+ 12GA==
+X-Gm-Message-State: AOJu0YwaMzUz157MlQYk1PKe7s+RA/YSs/cbTYyiYBiMsrMLFMLzvAas
+ uQ1q42XgoKh8Viuts4gAS9cyuvMMHOc4dDDfzDFOU/T9+tY91TWm0Riq4IsCd1xzYYAtlomSkav
+ k5ftFwek=
+X-Gm-Gg: AY/fxX6ypnqsXZg9NH4JwcEnRJHYYaxszAhB+hSkcQAyDspISwfnDyfAKoYes25Dz+J
+ qezm+d8UUHVmpHa5M4bpkKyPx+Ioc8NKrN5JAc5vqzfQbhNVnmc4dEAIb5yd9gsdW2nv6PyfDWI
+ OvBcf6bBShwwktCz1gBTTUlVdUwXsnMGQXjH55Sxnic/18oMVDOs0/m5W17KWboJKY2X5DG+DkG
+ wtFX3AEk6CcmUMFN7jI/dC6o2M+22vnQATYSdg3RLfT6dCCLGqwERDR3NSsa3vxoJR8/cjexcPI
+ YJQfOSHF1S76pXHoSagwvNrNneK0CCtPLI0gFkp6rhCTqzjaHTJR12xLTFj5JHenH3k+75hqy3M
+ F2s7tbCAd6riTo4Os9h10bttujDHqBgoK10QuYqJ6t44huf5HU6v8ePRTNydEK070jETdVMB8Sw
+ bc1UuH+WpFilkTGjyBnvFwxksKJk4+X/6kF7nJraO3KtNxdk2niVFH9xiPpj4N
+X-Google-Smtp-Source: AGHT+IGstuoxk93f01RZYxKuCOEX0adEmlTV3HCkPoAnZ51DRU8HM7FJmp0RtPZo2emeBonYGlOYxA==
+X-Received: by 2002:a05:600c:5490:b0:471:1717:411 with SMTP id
+ 5b1f17b1804b1-47d84b33bc0mr31711575e9.24.1767791366401; 
+ Wed, 07 Jan 2026 05:09:26 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f661a03sm105305525e9.13.2026.01.07.05.08.15
+ 5b1f17b1804b1-47d7f69e802sm98419495e9.8.2026.01.07.05.09.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Jan 2026 05:08:16 -0800 (PST)
+ Wed, 07 Jan 2026 05:09:25 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
@@ -72,17 +72,17 @@ Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
  David Hildenbrand <david@kernel.org>
-Subject: [PATCH 01/18] target/s390x: Restrict WatchPoint API to TCG
-Date: Wed,  7 Jan 2026 14:07:49 +0100
-Message-ID: <20260107130807.69870-2-philmd@linaro.org>
+Subject: [PATCH 11/18] target/s390x: Use hwaddr in translate_pages()
+Date: Wed,  7 Jan 2026 14:07:59 +0100
+Message-ID: <20260107130807.69870-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260107130807.69870-1-philmd@linaro.org>
 References: <20260107130807.69870-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,311 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By inverting the 'tcg_enabled()' check in s390_cpu_set_psw()
-we can let the compiler elide the s390_cpu_recompute_watchpoints()
-call when TCG is not available. Move this function -- along with
-s390x_cpu_debug_excp_handler() which was introduced in the same
-commit 311918b979c ("target-s390x: PER storage-alteration event
-support") -- to a TCG specific file to avoid compiling dead code
-on KVM. This restricts the WatchPoint API calls to TCG.
+translate_pages() returns absolute addresses, which are physcal ones.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/s390x-internal.h  |  2 -
- target/s390x/tcg/tcg_s390x.h   |  5 ++
- target/s390x/cpu.c             | 30 ++++++------
- target/s390x/helper.c          | 38 ---------------
- target/s390x/tcg/debug.c       | 85 ++++++++++++++++++++++++++++++++++
- target/s390x/tcg/excp_helper.c | 32 -------------
- target/s390x/tcg/meson.build   |  3 ++
- 7 files changed, 108 insertions(+), 87 deletions(-)
- create mode 100644 target/s390x/tcg/debug.c
+ target/s390x/mmu_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index 9691366ec91..a4b54dc441c 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -259,7 +259,6 @@ ObjectClass *s390_cpu_class_by_name(const char *name);
+diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+index 5a613b33150..abf8da28ea5 100644
+--- a/target/s390x/mmu_helper.c
++++ b/target/s390x/mmu_helper.c
+@@ -472,7 +472,7 @@ nodat:
+  * the MEMOP interface.
+  */
+ static int translate_pages(S390CPU *cpu, vaddr addr, int nr_pages,
+-                           target_ulong *pages, bool is_write, uint64_t *tec)
++                           hwaddr *pages, bool is_write, uint64_t *tec)
+ {
+     uint64_t asc = cpu->env.psw.mask & PSW_MASK_ASC;
+     CPUS390XState *env = &cpu->env;
+@@ -523,7 +523,7 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
+ {
+     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     int currlen, nr_pages, i;
+-    target_ulong *pages;
++    hwaddr *pages;
+     uint64_t tec;
+     int ret;
  
- 
- /* excp_helper.c */
--void s390x_cpu_debug_excp_handler(CPUState *cs);
- void s390_cpu_do_interrupt(CPUState *cpu);
- bool s390_cpu_exec_interrupt(CPUState *cpu, int int_req);
- 
-@@ -317,7 +316,6 @@ void s390_cpu_gdb_init(CPUState *cs);
- void s390_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
- void do_restart_interrupt(CPUS390XState *env);
- #ifndef CONFIG_USER_ONLY
--void s390_cpu_recompute_watchpoints(CPUState *cs);
- void s390x_tod_timer(void *opaque);
- void s390x_cpu_timer(void *opaque);
- void s390_handle_wait(S390CPU *cpu);
-diff --git a/target/s390x/tcg/tcg_s390x.h b/target/s390x/tcg/tcg_s390x.h
-index 78558912f99..7c8aede80d2 100644
---- a/target/s390x/tcg/tcg_s390x.h
-+++ b/target/s390x/tcg/tcg_s390x.h
-@@ -21,4 +21,9 @@ G_NORETURN void tcg_s390_data_exception(CPUS390XState *env, uint32_t dxc,
- G_NORETURN void tcg_s390_vector_exception(CPUS390XState *env, uint32_t vxc,
-                                           uintptr_t ra);
- 
-+#ifndef CONFIG_USER_ONLY
-+void s390_cpu_recompute_watchpoints(CPUState *cs);
-+void s390x_cpu_debug_excp_handler(CPUState *cs);
-+#endif
-+
- #endif /* TCG_S390X_H */
-diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-index 6c4198eb1b1..f68b288e364 100644
---- a/target/s390x/cpu.c
-+++ b/target/s390x/cpu.c
-@@ -40,6 +40,7 @@
- #include "system/reset.h"
- #endif
- #include "hw/s390x/cpu-topology.h"
-+#include "tcg/tcg_s390x.h"
- 
- #define CR0_RESET       0xE0UL
- #define CR14_RESET      0xC2000000UL;
-@@ -74,26 +75,25 @@ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr)
-     env->psw.mask = mask;
- 
-     /* KVM will handle all WAITs and trigger a WAIT exit on disabled_wait */
--    if (!tcg_enabled()) {
--        return;
--    }
--    env->cc_op = (mask >> 44) & 3;
-+    if (tcg_enabled()) {
-+        env->cc_op = (mask >> 44) & 3;
- 
- #ifndef CONFIG_USER_ONLY
--    if (is_early_exception_psw(mask, addr)) {
--        env->int_pgm_ilen = 0;
--        trigger_pgm_exception(env, PGM_SPECIFICATION);
--        return;
--    }
-+        if (is_early_exception_psw(mask, addr)) {
-+            env->int_pgm_ilen = 0;
-+            trigger_pgm_exception(env, PGM_SPECIFICATION);
-+            return;
-+        }
- 
--    if ((old_mask ^ mask) & PSW_MASK_PER) {
--        s390_cpu_recompute_watchpoints(env_cpu(env));
--    }
-+        if ((old_mask ^ mask) & PSW_MASK_PER) {
-+            s390_cpu_recompute_watchpoints(env_cpu(env));
-+        }
- 
--    if (mask & PSW_MASK_WAIT) {
--        s390_handle_wait(env_archcpu(env));
--    }
-+        if (mask & PSW_MASK_WAIT) {
-+            s390_handle_wait(env_archcpu(env));
-+        }
- #endif
-+    }
- }
- 
- uint64_t s390_cpu_get_psw_mask(CPUS390XState *env)
-diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-index 184428c6d9d..8d1e03f6768 100644
---- a/target/s390x/helper.c
-+++ b/target/s390x/helper.c
-@@ -143,41 +143,3 @@ void do_restart_interrupt(CPUS390XState *env)
- 
-     s390_cpu_set_psw(env, mask, addr);
- }
--
--void s390_cpu_recompute_watchpoints(CPUState *cs)
--{
--    const int wp_flags = BP_CPU | BP_MEM_WRITE | BP_STOP_BEFORE_ACCESS;
--    CPUS390XState *env = cpu_env(cs);
--
--    /* We are called when the watchpoints have changed. First
--       remove them all.  */
--    cpu_watchpoint_remove_all(cs, BP_CPU);
--
--    /* Return if PER is not enabled */
--    if (!(env->psw.mask & PSW_MASK_PER)) {
--        return;
--    }
--
--    /* Return if storage-alteration event is not enabled.  */
--    if (!(env->cregs[9] & PER_CR9_EVENT_STORE)) {
--        return;
--    }
--
--    if (env->cregs[10] == 0 && env->cregs[11] == -1LL) {
--        /* We can't create a watchoint spanning the whole memory range, so
--           split it in two parts.   */
--        cpu_watchpoint_insert(cs, 0, 1ULL << 63, wp_flags, NULL);
--        cpu_watchpoint_insert(cs, 1ULL << 63, 1ULL << 63, wp_flags, NULL);
--    } else if (env->cregs[10] > env->cregs[11]) {
--        /* The address range loops, create two watchpoints.  */
--        cpu_watchpoint_insert(cs, env->cregs[10], -env->cregs[10],
--                              wp_flags, NULL);
--        cpu_watchpoint_insert(cs, 0, env->cregs[11] + 1, wp_flags, NULL);
--
--    } else {
--        /* Default case, create a single watchpoint.  */
--        cpu_watchpoint_insert(cs, env->cregs[10],
--                              env->cregs[11] - env->cregs[10] + 1,
--                              wp_flags, NULL);
--    }
--}
-diff --git a/target/s390x/tcg/debug.c b/target/s390x/tcg/debug.c
-new file mode 100644
-index 00000000000..01fd4b67442
---- /dev/null
-+++ b/target/s390x/tcg/debug.c
-@@ -0,0 +1,85 @@
-+/*
-+ * QEMU S/390 debug routines
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "exec/breakpoint.h"
-+#include "exec/watchpoint.h"
-+#include "target/s390x/cpu.h"
-+#include "target/s390x/s390x-internal.h"
-+#include "tcg_s390x.h"
-+
-+void s390_cpu_recompute_watchpoints(CPUState *cs)
-+{
-+    const int wp_flags = BP_CPU | BP_MEM_WRITE | BP_STOP_BEFORE_ACCESS;
-+    CPUS390XState *env = cpu_env(cs);
-+
-+    /* We are called when the watchpoints have changed. First
-+       remove them all.  */
-+    cpu_watchpoint_remove_all(cs, BP_CPU);
-+
-+    /* Return if PER is not enabled */
-+    if (!(env->psw.mask & PSW_MASK_PER)) {
-+        return;
-+    }
-+
-+    /* Return if storage-alteration event is not enabled.  */
-+    if (!(env->cregs[9] & PER_CR9_EVENT_STORE)) {
-+        return;
-+    }
-+
-+    if (env->cregs[10] == 0 && env->cregs[11] == -1LL) {
-+        /* We can't create a watchoint spanning the whole memory range, so
-+           split it in two parts.   */
-+        cpu_watchpoint_insert(cs, 0, 1ULL << 63, wp_flags, NULL);
-+        cpu_watchpoint_insert(cs, 1ULL << 63, 1ULL << 63, wp_flags, NULL);
-+    } else if (env->cregs[10] > env->cregs[11]) {
-+        /* The address range loops, create two watchpoints.  */
-+        cpu_watchpoint_insert(cs, env->cregs[10], -env->cregs[10],
-+                              wp_flags, NULL);
-+        cpu_watchpoint_insert(cs, 0, env->cregs[11] + 1, wp_flags, NULL);
-+
-+    } else {
-+        /* Default case, create a single watchpoint.  */
-+        cpu_watchpoint_insert(cs, env->cregs[10],
-+                              env->cregs[11] - env->cregs[10] + 1,
-+                              wp_flags, NULL);
-+    }
-+}
-+
-+void s390x_cpu_debug_excp_handler(CPUState *cs)
-+{
-+    CPUS390XState *env = cpu_env(cs);
-+    CPUWatchpoint *wp_hit = cs->watchpoint_hit;
-+
-+    if (wp_hit && wp_hit->flags & BP_CPU) {
-+        /*
-+         * FIXME: When the storage-alteration-space control bit is set,
-+         * the exception should only be triggered if the memory access
-+         * is done using an address space with the storage-alteration-event
-+         * bit set.  We have no way to detect that with the current
-+         * watchpoint code.
-+         */
-+        cs->watchpoint_hit = NULL;
-+
-+        env->per_address = env->psw.addr;
-+        env->per_perc_atmid |= PER_CODE_EVENT_STORE | get_per_atmid(env);
-+        /*
-+         * FIXME: We currently no way to detect the address space used
-+         * to trigger the watchpoint.  For now just consider it is the
-+         * current default ASC. This turn to be true except when MVCP
-+         * and MVCS instrutions are not used.
-+         */
-+        env->per_perc_atmid |= env->psw.mask & (PSW_MASK_ASC) >> 46;
-+
-+        /*
-+         * Remove all watchpoints to re-execute the code.  A PER exception
-+         * will be triggered, it will call s390_cpu_set_psw which will
-+         * recompute the watchpoints.
-+         */
-+        cpu_watchpoint_remove_all(cs, BP_CPU);
-+        cpu_loop_exit_noexc(cs);
-+    }
-+}
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index d4a096f5998..019eb4fba1f 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -24,7 +24,6 @@
- #include "exec/helper-proto.h"
- #include "exec/cputlb.h"
- #include "exec/target_page.h"
--#include "exec/watchpoint.h"
- #include "s390x-internal.h"
- #include "tcg_s390x.h"
- #ifndef CONFIG_USER_ONLY
-@@ -607,37 +606,6 @@ bool s390_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-     return false;
- }
- 
--void s390x_cpu_debug_excp_handler(CPUState *cs)
--{
--    CPUS390XState *env = cpu_env(cs);
--    CPUWatchpoint *wp_hit = cs->watchpoint_hit;
--
--    if (wp_hit && wp_hit->flags & BP_CPU) {
--        /* FIXME: When the storage-alteration-space control bit is set,
--           the exception should only be triggered if the memory access
--           is done using an address space with the storage-alteration-event
--           bit set.  We have no way to detect that with the current
--           watchpoint code.  */
--        cs->watchpoint_hit = NULL;
--
--        env->per_address = env->psw.addr;
--        env->per_perc_atmid |= PER_CODE_EVENT_STORE | get_per_atmid(env);
--        /* FIXME: We currently no way to detect the address space used
--           to trigger the watchpoint.  For now just consider it is the
--           current default ASC. This turn to be true except when MVCP
--           and MVCS instrutions are not used.  */
--        env->per_perc_atmid |= env->psw.mask & (PSW_MASK_ASC) >> 46;
--
--        /*
--         * Remove all watchpoints to re-execute the code.  A PER exception
--         * will be triggered, it will call s390_cpu_set_psw which will
--         * recompute the watchpoints.
--         */
--        cpu_watchpoint_remove_all(cs, BP_CPU);
--        cpu_loop_exit_noexc(cs);
--    }
--}
--
- void s390x_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                    MMUAccessType access_type,
-                                    int mmu_idx, uintptr_t retaddr)
-diff --git a/target/s390x/tcg/meson.build b/target/s390x/tcg/meson.build
-index ee4e8fec77c..515cb8b473d 100644
---- a/target/s390x/tcg/meson.build
-+++ b/target/s390x/tcg/meson.build
-@@ -12,3 +12,6 @@ s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'vec_int_helper.c',
-   'vec_string_helper.c',
- ))
-+s390x_system_ss.add(when: 'CONFIG_TCG', if_true: files(
-+  'debug.c',
-+))
 -- 
 2.52.0
 
