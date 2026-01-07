@@ -4,110 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94342D0D141
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 16:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B6DD0D141
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 17:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdWap-0007au-T9; Wed, 07 Jan 2026 11:41:08 -0500
+	id 1vdWxW-0003Gv-OP; Wed, 07 Jan 2026 12:04:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vdWah-0007Hs-Er; Wed, 07 Jan 2026 11:40:59 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdWx5-00036F-Lm
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:04:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vdWaf-0004W6-Hx; Wed, 07 Jan 2026 11:40:59 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6079OliW020721;
- Wed, 7 Jan 2026 16:40:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=tv76nK
- UtBJWxlJBMS7yXTHdQ2mEd1Co96XCPLEF5Do4=; b=fTrSR/qYr2o0KZIq4WrUT0
- PEPLt5ZxIJqHmfqPEibbUOaGWBWkLr6DkN327YSKwNGEV+seL/4K6xNHFdYymWTe
- p0hMnoWEucjjIHprLI8+nMt+CuGNlAuG6PwLvh6lsGN4eT7vLsXO8eixd1FAGiQw
- vntyHWOM0c5SzheJwrR16o93v/7YMPjKexMi9Vkc/3kdvKHgMuytvWmrNAkjRuXn
- Y/vsxeHnV2KAofgaPPJOS23tW+7rr+datMghOL5FlSsQtShG0EJ7SEn3ugUGbu+K
- 9JU6YEYshYYwmNjx5PUkvlNi5QgGtBeOHPzhtndC81ADQp7x/kjp4b7Ape4+xIFA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betu6a34r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Jan 2026 16:40:55 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 607FLYJq012604;
- Wed, 7 Jan 2026 16:40:54 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bffnjhyjg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Jan 2026 16:40:54 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 607GerkT64487750
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 7 Jan 2026 16:40:53 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7EAEC5805B;
- Wed,  7 Jan 2026 16:40:53 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9AC3F58055;
- Wed,  7 Jan 2026 16:40:52 +0000 (GMT)
-Received: from [9.61.39.95] (unknown [9.61.39.95])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed,  7 Jan 2026 16:40:52 +0000 (GMT)
-Message-ID: <07abe281-2917-408e-b6c1-2f97994cf426@linux.ibm.com>
-Date: Wed, 7 Jan 2026 11:40:51 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdWx3-00022V-Ow
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:04:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767805442;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Yi8fk6uLzMfWcy7sQTZ+gleUSPTFLfeFBLKKnPjcPUI=;
+ b=QESXqna0Xi+7iFfkctGT8zCFH8PY8ND4cbXf72HQCQcmOjCOFCPCpAGyxhmF2ukFBm9s5a
+ BdabXmoMS4q+8JGMQOhcyityufKR8tyuFzlNNDSN36WyFqznrNj+aLLnRzEBOWJD+JsFQc
+ UnbBWA3irW/8wCcXkUFixR+sjP/Btk8=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-390-lKnUUICLP7igfkbXle6Lbw-1; Wed, 07 Jan 2026 12:04:00 -0500
+X-MC-Unique: lKnUUICLP7igfkbXle6Lbw-1
+X-Mimecast-MFC-AGG-ID: lKnUUICLP7igfkbXle6Lbw_1767805440
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-88a43d4cd2bso30492346d6.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 09:04:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767805440; x=1768410240; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Yi8fk6uLzMfWcy7sQTZ+gleUSPTFLfeFBLKKnPjcPUI=;
+ b=alUnANLb3M6bK2rOO2K3qsA/vBm+IGG2K0sw/yTAriNYlNzfMidiIKH/Z7wlHbYY7e
+ TzmjsIbOoTMEycT3HmYmEADqMQ5LlqJmGo4jyPD1f2+wYAtuGYbVh47QBvBdWUCaPZf7
+ 0veIWG8zc4vRnwqFh5bcci9L++IwttKdjhaqwfyck+BGpYy554AGppWqJ1BewPokfgLZ
+ 1u4xzHsD+7BfdW4D89WogfLm+aGf8ZTzPBXd0MFDjuFQTypZmvt5c/jVhGHGO1vxqPV6
+ YWTTjFJA8dYeRHsouQXkdi+MwzhRdsDbUOXSCXmybWuI0JDAE3TQSW+14yEclFbpE0wj
+ SaZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767805440; x=1768410240;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Yi8fk6uLzMfWcy7sQTZ+gleUSPTFLfeFBLKKnPjcPUI=;
+ b=psAFq57MdUZtihWMIwBDIAzNtbdY7EZb+XHEKQ43ZdGXOhlPAr0cYI1N2C6qZOZz4O
+ HAUgAPbwLMx2qnzy6NChL2DBZ0sZDhDmaHjfKYbtILy83/NIVVp7TtEV0zkftY6JY8Lb
+ Xj0rKE3qD65s1rxcgX9abQ9YdZk8+k9B7BEJzDhjynNhQ89QL4H5aTTPsqFyg7+TUA47
+ phe4wP500RqUfT3S2iCvVvfgwjBsA4il70GR5VCcE+Va6Pi6IVG9wIOtj/Ql6/KErGCP
+ SR25VoDET+KRUREnh7ZSPishIvIgvE7K/JB941bRSANpIfdyoH2//ztsa/VW6LY2cbjl
+ ncmw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtX6ijHH4X6dM6xDjyMOVuskRxweAtJuCx9ipFGs5LJmvB7dJ7sCPg1S44y6DtdMNgyEzoF/SpYWnT@nongnu.org
+X-Gm-Message-State: AOJu0YxRA8VyFcJjwOuOsTHhovzK1yd4judmlGpQsuDxX0is3hwcDoHp
+ G6MqZKNyYcHbSSh9XBrnURnZdIiT6U7Y3agu39lzIH7aggOrWAHacosIJy34Czo5h1StQ4SpzyA
+ BksbgpAqaesTPkLu2w0Szy+GP5dOv+ONz6RlUcrwEcPndILca2hTHQaBS
+X-Gm-Gg: AY/fxX4GscxlN1gY/12xR+P2HL+PratTBgcpFir9x/6CANM15YVm4aq63NgvxLcGc31
+ 2NnfvZUMwooKH0Q0UTDag7lbuenTZBQqKrUQrJ3EEEhDEOKou3juka6/tw28l1la7evxJ8xA+1R
+ CiFx0YuycbLYPPoNCCvCUJ3vCCWO11TeLs8mxNloyH5QjMNPQoECbZ72qjV3AYaGphH5iJ5A/aj
+ GJ8aqCZKTKI4NzcNQhjet12/Umz7YHi9UP1l17p5VGUcfTO2o0s7wIvyFmQtN9At9rcSyq5iq9Q
+ RIDjjbwtlbKLEVvFwiKMu0ysQE3q4+JUflLQPj/wE5p9bhG2FZUghM2PiXRBY2b9ATqlFwSEmG2
+ PxuY=
+X-Received: by 2002:a05:6214:5a13:b0:88a:3113:3abf with SMTP id
+ 6a1803df08f44-890842a38edmr39912956d6.52.1767805440153; 
+ Wed, 07 Jan 2026 09:04:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEyWOODm8xCdif3ZiNiNpPkGdlUlrUEZVmloj3K5gzjYYi5fVrrwu6coaYr0ifm35VuUCeXeg==
+X-Received: by 2002:a05:6214:5a13:b0:88a:3113:3abf with SMTP id
+ 6a1803df08f44-890842a38edmr39912296d6.52.1767805439558; 
+ Wed, 07 Jan 2026 09:03:59 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-890770ce99dsm36653166d6.3.2026.01.07.09.03.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Jan 2026 09:03:59 -0800 (PST)
+Date: Wed, 7 Jan 2026 12:03:58 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Prasad Pandit <pjp@fedoraproject.org>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Jiri Denemark <jdenemar@redhat.com>
+Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
+Message-ID: <aV6R_hADWPz1yr2E@x1.local>
+References: <20251222114822.327623-1-ppandit@redhat.com>
+ <87h5tilhcq.fsf@suse.de> <aUq1oA73W9rAdCgG@x1.local>
+ <CAE8KmOzcOdYhnxpDr8BMV8zjixpEh9r+COe=xyLfXCVWKD0CRw@mail.gmail.com>
+ <aV0lj8ShJufwRY8z@x1.local>
+ <CAE8KmOw+0dXcON1_VTBY2i6aE0So-MGDtxLmhvtLZWGM6TPxQA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] pc-bios/s390-ccw: Introduce CLP Architecture
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20251210205449.2783111-1-jrossi@linux.ibm.com>
- <20251210205449.2783111-6-jrossi@linux.ibm.com>
- <3a30e4c5-24be-449d-ac9f-16ce2096b31c@redhat.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <3a30e4c5-24be-449d-ac9f-16ce2096b31c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=QbNrf8bv c=1 sm=1 tr=0 ts=695e8c97 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=nqNlaSPBC5J-8UOOWoMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: M5CAEPyMsrfsOUDyiid9-8xdJnAMPZUZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDEyOCBTYWx0ZWRfXz+YAvOi/EIQi
- OlOT+2RrdsdYQ32Oo3a18rkalXiFs2+qw4eKqtVTi1Sz94YCNELfaVz72qmrr0RbKSryZmFHo/r
- 8pJv6EKwV7iLfYvVH/pc2NJyX90RUt9ZcqmcxDqN4qfu1FuPh1Wqcyy8ygStYZl7+SxAtotNMSo
- 1kN9UDdwaZn3XgX98/Hv+5gp1jTgvdjV9dceuCaNxzBcoHb6SJoRJeq0vBKARSnwGwLh0meKxYF
- 4tC4ZmQxjy5JQ6N8UI8sUEFNsYbFY3AXl9vJ3NyZKIS7nabHskLJEwVB9vRpazOHigp/dy7L8jB
- rQ/6LY2aFhgN0WSZsHqtoi/obaBX7eMOFYQZnB1huGrAzLT/NsQMY27qjxIUIyiyIV4QINorZhB
- LJRCGXrN0kMQew2QAxls95TQXZW9YqlBZaDEzKrrgLEXom7gK1piyKnwRGstFqmqIC1ad+8519e
- UOItqmsjDkW6LCFLfvA==
-X-Proofpoint-GUID: M5CAEPyMsrfsOUDyiid9-8xdJnAMPZUZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-07_02,2026-01-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 bulkscore=0 suspectscore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601070128
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOw+0dXcON1_VTBY2i6aE0So-MGDtxLmhvtLZWGM6TPxQA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,193 +124,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
+On Wed, Jan 07, 2026 at 04:41:09PM +0530, Prasad Pandit wrote:
+> On Tue, 6 Jan 2026 at 20:39, Peter Xu <peterx@redhat.com> wrote:
+> > Copying Dan and Jiri in case ...
+> 
+> * Thank you for copying.
+> 
+> >>           } else if (s->current_state == ACTIVE && s->trigger == 'error-occurred') {
+> >>               s->current_state = STOP
+> >>               s->reason = "Error occurred, migration failed"
+> >
+> > We can't change status that were already used, like FAILED.  Libvirt and
+> > all mgmt may rely on it.
+> 
+> * True; If we decide to go in that direction, we'll have to tell
+> libvirtd(8) and others about new states.
+> 
+> > Personally I don't see much benefit on adding a new "trigger" internal API.
+> > If we want to forbid some state machine transitions, we can use a
+> > transition map.  Said that, IMHO it's separate from what we're discussing
+> > here.
+> 
+> * If we can reduce/rationalise the current 17-18 states and related
+> complexity, it'll help to simplify things.
 
-All of the comments below raise good points, I'll fix them in the next 
-version.
+Personally I still don't see the benefit of doing so.
 
-Thanks for your reviews.
+I agree MIGRATION_STATUS_CANCELLING isn't a must to have, but since we have
+it already and libvirt should treat it almost the same as ACTIVE we don't
+have problem with it either.  It doesn't sound like a big issue.
 
-Regards,
-Jared Rossi
+I don't see how we can shrink the rest of status otherwise, or what would
+you propose for removal?
 
-On 1/7/26 5:25 AM, Thomas Huth wrote:
-> On 10/12/2025 21.54, jrossi@linux.ibm.com wrote:
->> From: Jared Rossi <jrossi@linux.ibm.com>
->>
->> Call Logical Processor (CLP) Architecture is used for managing PCI 
->> functions on
->> s390x. Define and include the structures and routines needed to 
->> interact with
->> PCI devices during IPL.
->>
->> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->> ---
->>   pc-bios/s390-ccw/clp.h    | 24 ++++++++++
->>   pc-bios/s390-ccw/clp.c    | 96 +++++++++++++++++++++++++++++++++++++++
->>   pc-bios/s390-ccw/Makefile |  2 +-
->>   3 files changed, 121 insertions(+), 1 deletion(-)
->>   create mode 100644 pc-bios/s390-ccw/clp.h
->>   create mode 100644 pc-bios/s390-ccw/clp.c
->>
->> diff --git a/pc-bios/s390-ccw/clp.h b/pc-bios/s390-ccw/clp.h
->> new file mode 100644
->> index 0000000000..1ac2f8c177
->> --- /dev/null
->> +++ b/pc-bios/s390-ccw/clp.h
->> @@ -0,0 +1,24 @@
->> +/*
->> + * Call Logical Processor (CLP) architecture definitions
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef CLP_H
->> +#define CLP_H
->> +
->> +#ifndef QEMU_PACKED
->> +#define QEMU_PACKED __attribute__((packed))
->> +#endif
->> +
->> +#include <stdint.h>
->> +#include <s390-pci-clp.h>
->> +
->> +int clp_pci(void *data);
->> +int find_pci_function(uint32_t fid, ClpFhListEntry *entry);
->> +int enable_pci_function(uint32_t *fhandle);
->> +
->> +#endif
->> diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
->> new file mode 100644
->> index 0000000000..6dc72c685c
->> --- /dev/null
->> +++ b/pc-bios/s390-ccw/clp.c
->> @@ -0,0 +1,96 @@
->> +/*
->> + * Call Logical Processor (CLP) architecture
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "clp.h"
->> +#include <stdio.h>
->> +#include <string.h>
->> +
->> +int clp_pci(void *data)
->> +{
->> +    struct { uint8_t _[2048]; } *req = data;
->> +    int cc = 3;
->> +
->> +    asm volatile (
->> +        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
->> +        "     ipm     %[cc]\n"
->> +        "     srl     %[cc],28\n"
->> +        : [cc] "+d" (cc), "+m" (*req)
->> +        : [req] "a" (req)
->> +        : "cc");
->> +    return cc;
->> +}
->> +
->> +/*
->> + * Get the PCI function entry for a given function ID
->> + * Return 0 on success, 1 if the FID is not found, or a negative RC 
->> on error
->> + */
->> +int find_pci_function(uint32_t fid, ClpFhListEntry *entry)
->> +{
->> +    int count = 0;
->> +    int limit = PCI_MAX_FUNCTIONS;
->> +    ClpReqRspListPci rrb;
->> +
->> +    rrb.request.hdr.len = 32;
->> +    rrb.request.hdr.cmd = 0x02;
->> +    rrb.request.resume_token = 0;
->> +    rrb.response.hdr.len = sizeof(ClpRspListPci);
->> +
->> +    do {
->> +        if (clp_pci(&rrb) || (rrb.response.hdr.rsp != 0x0010)) {
->
-> You could drop the parentheses around rrb.response.hdr.rsp != 0x0010 
-> here.
->
->> +            puts("Failed to list PCI functions");
->> +            return -1;
->> +        }
->> +
->> +        /* Resume token set when max enteries are returned */
->> +        if (rrb.response.resume_token) {
->> +            count = CLP_FH_LIST_NR_ENTRIES;
->> +            rrb.request.resume_token = rrb.response.resume_token;
->> +        } else {
->> +            count = (rrb.response.hdr.len - 32) / 
->> sizeof(ClpFhListEntry);
->> +        }
->> +
->> +        limit -= count;
->> +
->> +        for (int i = 0; i < count; i++) {
->> +            if (rrb.response.fh_list[i].fid == fid) {
->> +                memcpy(entry, &rrb.response.fh_list[i], 
->> sizeof(ClpFhListEntry));
->> +                return 0;
->> +            }
->> +        }
->> +
->> +    } while (rrb.request.resume_token && limit);
->
-> Maybe check for "limit > 0", just in case... ?
->
->> +    puts("No function entry found for FID!");
->> +
->> +    return 1;
->> +}
->> +
->> +/*
->> + * Enable the PCI function associated with a given handle
->> + * Return 0 on success or a negative RC on error
->> + */
->> +int enable_pci_function(uint32_t *fhandle)
->> +{
->> +    ClpReqRspSetPci rrb;
->> +
->> +    rrb.request.hdr.len = 32;
->> +    rrb.request.hdr.cmd = 0x05;
->> +    rrb.request.fh = *fhandle;
->> +    rrb.request.oc = 0;
->> +    rrb.request.ndas = 1;
->> +    rrb.response.hdr.len = 32;
->> +
->> +    if (clp_pci(&rrb) || (rrb.response.hdr.rsp != 0x0010)) {
->
-> Drop parentheses, please.
->
->> +        puts("Failed to enable PCI function");
->> +        return -1;
->> +    }
->> +
->> +    *fhandle = rrb.response.fh;
->> +    return 0;
->> +}
->> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
->> index 259cff09db..9c29548f84 100644
->> --- a/pc-bios/s390-ccw/Makefile
->> +++ b/pc-bios/s390-ccw/Makefile
->> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
->>     OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o 
->> netmain.o \
->>         virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o 
->> dasd-ipl.o \
->> -      virtio-ccw.o
->> +      virtio-ccw.o clp.o
->>     SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
->
->  Thomas
->
+Thanks,
+
+-- 
+Peter Xu
 
 
