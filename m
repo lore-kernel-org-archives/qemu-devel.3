@@ -4,82 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5728CD5858
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 11:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C886CD585A
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 11:38:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdRjX-00038c-0x; Wed, 07 Jan 2026 06:29:47 -0500
+	id 1vdRri-0003Pi-GK; Wed, 07 Jan 2026 06:38:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <buenocalvachejoel@gmail.com>)
- id 1vdRjV-000387-OT
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 06:29:45 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <buenocalvachejoel@gmail.com>)
- id 1vdRjU-0002P9-0E
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 06:29:45 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-34f634a01e1so126711a91.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 03:29:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vdRrY-0003P2-LH
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 06:38:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vdRrW-0003hV-Cg
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 06:38:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767785880;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=h6Jjvzha3sCghhGu4p/aQhLm4x/ikNHp0yR8Loy0/sA=;
+ b=GXXgaXq8Rv7LsLtIUXN9zU7rwiVfqV7/wmKVvj0JMN1v4NIhFQrzW92TfzpwS3vw6pd4Py
+ LkBsoJkmsXZgz+GqyzXpvUyhzyQ+qRZgAnmzGOePd1tvHuxhjurZx1ISNsyWuh8x8948iH
+ ijJhQpIv/irERyOGmrmCfTx9ED+OBIc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-576-1FsI7oG8O62AKLahM9QCFg-1; Wed, 07 Jan 2026 06:37:58 -0500
+X-MC-Unique: 1FsI7oG8O62AKLahM9QCFg-1
+X-Mimecast-MFC-AGG-ID: 1FsI7oG8O62AKLahM9QCFg_1767785878
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4779edba8f3so15152945e9.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 03:37:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767785382; x=1768390182; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767785877; x=1768390677; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ra2VNP09MDv+TkpTI8FRcFKf7IxfmzJhhAYA1pL3Avc=;
- b=kpmhIQH9Zp6WQiW0avR5E1LzI6QBCXKdp8PWokR3WUncFfFIJJ6DYUzjNUqAiXWEAT
- mnoHmEPZM0vwTs7bnwcbvSrI9XGY4112MlXOU+ff0eHr0QLNDo9TN/ylmie6E9iOWMs8
- gAFJlyM5J1tzXP4wWKrFV7gcAK0yc1+y6rI/18qY0LJsKyxQAOAsKVO06iVBHbNBSz1q
- DzgB6h31qLQs3exIp/0/AwVhfce3Ghy/ZFcIQDpMO0w981/B5UDkqE8kZ0k1a/m4Xc4b
- aBxilmBQ41qZ/QmUj64OyKFunCdNfWd98ALNRTAFmQfe+u6PQ3hI6X3L4WxN/+CxKbNG
- RI/w==
+ bh=h6Jjvzha3sCghhGu4p/aQhLm4x/ikNHp0yR8Loy0/sA=;
+ b=WOIoyRRZh2PoZChVZzO09S+crcm7B74KTaDkK/kIc1ub8wc1OGP4UW1u4UYWENB3Kl
+ NeF3AciKZm8MdRM8qinc33WbSj6W5JhjEcjb8HJpuxg75cGNmzV/bC1rHqT4Vg1RtT92
+ 38UcDGVajvfn5j9op31RUHspJJdC9bB3SjNrRjOGPUWCQZwsotDcE+3+9ezBLv+IDD3H
+ 9HARIX0nsJZgj+8t/pF7+q1Pb8ZgEjN2JsorYhHTCV048I14sVo+rfwPBxwX4BPwueRV
+ 9Lju7+opS8swU15mXz13+FVL0Ty2UW2KHvkeVr3Gk+DcaxhEJEgcFJrwRQvg3yz0DAns
+ HiAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767785382; x=1768390182;
+ d=1e100.net; s=20230601; t=1767785877; x=1768390677;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ra2VNP09MDv+TkpTI8FRcFKf7IxfmzJhhAYA1pL3Avc=;
- b=YuV7v4KGZkU9EzSKeih+QRUANZuD+2jXxzgs9y1ahmOXktCyYgmoXXsntv6EvNKlxk
- EjFPqQXxErquoxlol7k+ATytieqT3DkEnVu7f92I4e80YEJ3iFO4otEoqt7rwHPMEZe5
- qnPrt6xY1vPZF5QsEPFgGon2lYpqlOHWlme5J7naaDGCHd95x/SPBHe/NLUowdxruTVr
- 95FiabTVkwZh6JyQDhgR1XROoAGBcJUQwMINqEibwezV1ze13GX596RpjxeGgisyrZoe
- wF5IlOs3RbcbpbOer1TP1BYLxGjRBjWVZmKOAYRZCRJVZUSLhLyEk3K4UjGJoDhdEgbi
- wHBg==
-X-Gm-Message-State: AOJu0Yx9LGuekrA4e7iE8h6D8NAynafmhPnl/uMaXZB3Q4anM0Dp/1LW
- SVcbth6/Rq0rdoWNez1DCF2eIxZegu2HfCwxdcXTCZbITPZ6ZCItvmHDyAY0SvZzi0LS3ZCKbHf
- Hog3OhM05dXUv9GgZNz004B3PZJu2tl8NBzu6nwA=
-X-Gm-Gg: AY/fxX4INSmZ5HkqRhmhUNWcZc7Jt7UhvxWXdrockWD+M85CCksqZp9DuJf1mieRvDf
- xmmAqM33ugIwb9YMaTxuSywzD1+HSKLwqmF34jsaMy8EfyhLxMadN0a3Qgnt0B+a+/+Yox/2a3b
- 3BMaAA7FuKC0yDWP1HSa0w+zFTd6+5RYmWUmF82TEYFnz7MCZZQpkktY7DYCxHMVMEAjDMAFbTp
- Lb1wqmEu+gPqDUfQxDQfkz2tZrp3DtTyomqrT2r9L+9Aj4M1DAWamHAIvW9Cy5FZ5AdWZVtAer+
- J9eGfpMB1NkCjKDIlJrmD99SKpRkKOm0uvScYtef
-X-Google-Smtp-Source: AGHT+IE9aK5sis7NoZzjVjNVqGGYnuRXIdzm3oZI3dUDllbVlw7ef6pmk/Ee4m8e2yG0hV1JlT7A0bHdEYEgqFT7jvo=
-X-Received: by 2002:a17:90a:fc46:b0:340:b8f2:250c with SMTP id
- 98e67ed59e1d1-34f68b47b08mr1516549a91.1.1767785382003; Wed, 07 Jan 2026
- 03:29:42 -0800 (PST)
+ bh=h6Jjvzha3sCghhGu4p/aQhLm4x/ikNHp0yR8Loy0/sA=;
+ b=vPXrRZJ1cq0sQutJpacnQVb2n8IEsWZTK2LyoDY5d9An0Zz3ICwBzxgt8wjm7Pr/it
+ kTtZtry/Bj0IcyvrUrCwBqszizeL/JA8hjnOJ56z7tcw8JC+u9a1ayFt5XRdLlUF3LFo
+ 73zsswbkprY79QydoDitu59vT8u75P7ItaiSj9QCHXwYy7GcjUAUtNhMZhpNaCcTIeTZ
+ occUdGulTWHtFLmn3a4UBZiKbqYn+Nr8fK/es2W0zQM7ZxtniVCV6psqaRzl2ecaAkot
+ /Bo+YCzat4Qobq15ZnJa3rVJgemP7HYIc5CajpZ8SZQDjLJv+7sH14UB4ATnowRgaayZ
+ wWEw==
+X-Gm-Message-State: AOJu0Yxrv6MttOLKbzcux/5zR/R+Uh6pmqhTLP6viohXtfCeISnZCDwY
+ 64XmlZMwoYFpcrtn+VECkqOFgFzWFYnZ4K6/6JVZ9pI2LC93dOYZ9SNzswGb12bMkFSpzFoLvKO
+ M8w9yQGcn0wTtxOmifWct1FCLL2+o2ydDbIzkX/LqITXJl9yQpP2hiOSGTfzfn9oqmcsyEVnqG2
+ G5L2tNTi0gkql/dTPFEAhQiznab2SRBsA=
+X-Gm-Gg: AY/fxX6uxBSp7L1IFEFpGbRhx+jtN7pVwWRtYjcZ03wpezfBjQ8MTjNjBAbxt7hA21r
+ 6aaz3MyAzqaeiwxC5lZbjfX/nvTILDZ85hXbsEcbLf7emOo1o15/Wl05c9lifsOKtj3EqUT1UCt
+ Frl9GMBQdYkiZfyhbll+ZpqPdbzpjtPrR2w7t6774dIr9JchoqX/yOJXdy9aJe/qftXFM=
+X-Received: by 2002:a05:600c:83c9:b0:47b:e2a9:2bd9 with SMTP id
+ 5b1f17b1804b1-47d84b3b719mr27726615e9.31.1767785877595; 
+ Wed, 07 Jan 2026 03:37:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IERCi8KAhcoMxFYioFbooiyPdhqlEMacPfRtkolvWRC6PQxGDxC3UYeUin34AVkwurl+zIseHXAbdSQ1JesCso=
+X-Received: by 2002:a05:600c:83c9:b0:47b:e2a9:2bd9 with SMTP id
+ 5b1f17b1804b1-47d84b3b719mr27726255e9.31.1767785877191; Wed, 07 Jan 2026
+ 03:37:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20251221105340.2699327-1-buenocalvachejoel@gmail.com>
-In-Reply-To: <20251221105340.2699327-1-buenocalvachejoel@gmail.com>
-From: Joel Bueno <buenocalvachejoel@gmail.com>
-Date: Wed, 7 Jan 2026 12:29:31 +0100
-X-Gm-Features: AQt7F2qR6rT7-6OMQrmy-quNF3S_-Tq5nZHVLxw0Jo_TxmWx2e_Tjs4P6QxDQ2o
-Message-ID: <CAPDLHD5HGNAu1=JD=V-9YQMpR_8-tWjONex2jj4ZFHbNe9qVcg@mail.gmail.com>
-Subject: Re: [PATCH] hw/block/m25p80: Fix Winbond Fast Read dummy cycles
-To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- "open list:Block layer core" <qemu-block@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000bbc78c0647ca9b22"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=buenocalvachejoel@gmail.com; helo=mail-pj1-x102f.google.com
+References: <20260106203320.2110372-1-peterx@redhat.com>
+ <20260106203320.2110372-3-peterx@redhat.com>
+In-Reply-To: <20260106203320.2110372-3-peterx@redhat.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Wed, 7 Jan 2026 17:07:40 +0530
+X-Gm-Features: AQt7F2oV4ReTQSCoOunHFxC8J0o_QQbmVXgY9gnjQT3YUToMSW0fmg6hgE_8laQ
+Message-ID: <CAE8KmOz9XtaEY+LMD9CCCR_bMXe04chGHdvuwVqsYRNe+AtUJg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tests/migration-test: Remove
+ postcopy_recovery_fail_stage from MigrateCommon
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,93 +114,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bbc78c0647ca9b22
-Content-Type: text/plain; charset="UTF-8"
+On Wed, 7 Jan 2026 at 02:04, Peter Xu <peterx@redhat.com> wrote:
+> The parameter can be instead passed into the function.
 
-Is there any feedback on this patch series?
+* It'll help to include - why? pass the parameter instead.
 
-On Sun, Dec 21, 2025 at 11:53 Joel Bueno <buenocalvachejoel@gmail.com>
-wrote:
-
-> The Fast Read (0Bh) instruction requires 8 dummy clock cycles
-> according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).
-> However, the current code adds 8 to needed_bytes, which represents
-> bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI
-> communication (1 bit per clock edge), this results in 64 dummy
-> clock cycles instead of 8.
->
-> Change the Winbond case to add 1 byte (8 clocks) instead of 8 bytes
-> (64 clocks), matching the existing implementation for SST flash and
-> the datasheet specifications.
->
-> Signed-off-by: Joel Bueno <buenocalvachejoel@gmail.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  hw/block/m25p80.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  tests/qtest/migration/framework.h      |  6 ++----
+>  tests/qtest/migration/framework.c      |  7 ++++---
+>  tests/qtest/migration/postcopy-tests.c | 12 ++++--------
+>  tests/qtest/migration/tls-tests.c      |  8 ++++----
+>  4 files changed, 14 insertions(+), 19 deletions(-)
 >
-> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-> index a5336d92ff..21c2118b33 100644
-> --- a/hw/block/m25p80.c
-> +++ b/hw/block/m25p80.c
-> @@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)
->          s->needed_bytes += 1;
->          break;
->      case MAN_WINBOND:
-> -        s->needed_bytes += 8;
-> +        s->needed_bytes += 1;
->          break;
->      case MAN_NUMONYX:
->          s->needed_bytes += numonyx_extract_cfg_num_dummies(s);
-> --
-> 2.51.0
+> diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+> index 0d39bb0d3c..bc6cf6040f 100644
+> --- a/tests/qtest/migration/framework.h
+> +++ b/tests/qtest/migration/framework.h
+> @@ -228,9 +228,6 @@ typedef struct {
+>       * refer to existing ones with live=true), or use live=off by default.
+>       */
+>      bool live;
+> -
+> -    /* Postcopy specific fields */
+> -    PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
+>  } MigrateCommon;
 >
+>  void wait_for_serial(const char *side);
+> @@ -243,7 +240,8 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+>  void migrate_end(QTestState *from, QTestState *to, bool test_dest);
 >
+>  void test_postcopy_common(MigrateCommon *args);
+> -void test_postcopy_recovery_common(MigrateCommon *args);
+> +void test_postcopy_recovery_common(MigrateCommon *args,
+> +                                   PostcopyRecoveryFailStage fail_stage);
+>  int test_precopy_common(MigrateCommon *args);
+>  void test_file_common(MigrateCommon *args, bool stop_src);
+>  void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
+> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> index 4f46cf8629..d7a5ae56f9 100644
+> --- a/tests/qtest/migration/framework.c
+> +++ b/tests/qtest/migration/framework.c
+> @@ -739,7 +739,8 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to,
+>  #endif
+>  }
+>
+> -void test_postcopy_recovery_common(MigrateCommon *args)
+> +void test_postcopy_recovery_common(MigrateCommon *args,
+> +                                   PostcopyRecoveryFailStage fail_stage)
+===
+    static void postcopy_recover_fail(QTestState *from, QTestState
+*to,
+                                       PostcopyRecoveryFailStage stage)
+===
 
---000000000000bbc78c0647ca9b22
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+* To keep it consistent, maybe we can call the variable 'stage' as above?
 
-<div dir=3D"auto">Is there any feedback on this patch series?</div><div><br=
-><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Sun, Dec 21, 2025 at 11:53 Joel Bueno &lt;<a href=3D"mailto=
-:buenocalvachejoel@gmail.com">buenocalvachejoel@gmail.com</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
-left:1px #ccc solid;padding-left:1ex">The Fast Read (0Bh) instruction requi=
-res 8 dummy clock cycles<br>
-according to Winbond datasheets (e.g., W25Q256JV Section 8.2.12).<br>
-However, the current code adds 8 to needed_bytes, which represents<br>
-bytes, not clock cycles. Since 8 clock cycles equals 1 byte in SPI<br>
-communication (1 bit per clock edge), this results in 64 dummy<br>
-clock cycles instead of 8.<br>
-<br>
-Change the Winbond case to add 1 byte (8 clocks) instead of 8 bytes<br>
-(64 clocks), matching the existing implementation for SST flash and<br>
-the datasheet specifications.<br>
-<br>
-Signed-off-by: Joel Bueno &lt;<a href=3D"mailto:buenocalvachejoel@gmail.com=
-" target=3D"_blank">buenocalvachejoel@gmail.com</a>&gt;<br>
----<br>
-=C2=A0hw/block/m25p80.c | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-<br>
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c<br>
-index a5336d92ff..21c2118b33 100644<br>
---- a/hw/block/m25p80.c<br>
-+++ b/hw/block/m25p80.c<br>
-@@ -1001,7 +1001,7 @@ static void decode_fast_read_cmd(Flash *s)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;needed_bytes +=3D 1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0case MAN_WINBOND:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needed_bytes +=3D 8;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;needed_bytes +=3D 1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0case MAN_NUMONYX:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;needed_bytes +=3D numonyx_extract_c=
-fg_num_dummies(s);<br>
--- <br>
-2.51.0<br>
-<br>
-</blockquote></div></div>
+>  {
+>      QTestState *from, *to;
+>      g_autofree char *uri = NULL;
+> @@ -784,12 +785,12 @@ void test_postcopy_recovery_common(MigrateCommon *args)
+>      wait_for_postcopy_status(to, "postcopy-paused");
+>      wait_for_postcopy_status(from, "postcopy-paused");
+>
+> -    if (args->postcopy_recovery_fail_stage) {
+> +    if (fail_stage) {
+>          /*
+>           * Test when a wrong socket specified for recover, and then the
+>           * ability to kick it out, and continue with a correct socket.
+>           */
+> -        postcopy_recover_fail(from, to, args->postcopy_recovery_fail_stage);
+> +        postcopy_recover_fail(from, to, fail_stage);
+>          /* continue with a good recovery */
+>      }
+>
+> diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+> index 7ae4d765d7..13a5759655 100644
+> --- a/tests/qtest/migration/postcopy-tests.c
+> +++ b/tests/qtest/migration/postcopy-tests.c
+> @@ -41,30 +41,26 @@ static void test_postcopy_preempt(char *name, MigrateCommon *args)
+>
+>  static void test_postcopy_recovery(char *name, MigrateCommon *args)
+>  {
+> -    test_postcopy_recovery_common(args);
+> +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+>  }
+>
+>  static void test_postcopy_recovery_fail_handshake(char *name,
+>                                                    MigrateCommon *args)
+>  {
+> -    args->postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY;
+> -
+> -    test_postcopy_recovery_common(args);
+> +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_RECOVERY);
+>  }
+>
+>  static void test_postcopy_recovery_fail_reconnect(char *name,
+>                                                    MigrateCommon *args)
+>  {
+> -    args->postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH;
+> -
+> -    test_postcopy_recovery_common(args);
+> +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_CHANNEL_ESTABLISH);
+>  }
+>
+>  static void test_postcopy_preempt_recovery(char *name, MigrateCommon *args)
+>  {
+>      args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
+>
+> -    test_postcopy_recovery_common(args);
+> +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+>  }
+>
+>  static void migration_test_add_postcopy_smoke(MigrationTestEnv *env)
+> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+> index 6a20c65104..bf0bb06a29 100644
+> --- a/tests/qtest/migration/tls-tests.c
+> +++ b/tests/qtest/migration/tls-tests.c
+> @@ -385,7 +385,7 @@ static void test_postcopy_recovery_tls_psk(char *name, MigrateCommon *args)
+>      args->start_hook = migrate_hook_start_tls_psk_match;
+>      args->end_hook = migrate_hook_end_tls_psk;
+>
+> -    test_postcopy_recovery_common(args);
+> +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+>  }
+>
+>  static void test_multifd_postcopy_recovery_tls_psk(char *name,
+> @@ -396,7 +396,7 @@ static void test_multifd_postcopy_recovery_tls_psk(char *name,
+>
+>      args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+>
+> -    test_postcopy_recovery_common(args);
+> +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+>  }
+>
+>  /* This contains preempt+recovery+tls test altogether */
+> @@ -407,7 +407,7 @@ static void test_postcopy_preempt_all(char *name, MigrateCommon *args)
+>
+>      args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
+>
+> -    test_postcopy_recovery_common(args);
+> +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+>  }
+>
+>  static void test_multifd_postcopy_preempt_recovery_tls_psk(char *name,
+> @@ -419,7 +419,7 @@ static void test_multifd_postcopy_preempt_recovery_tls_psk(char *name,
+>      args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+>      args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
+>
+> -    test_postcopy_recovery_common(args);
+> +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+>  }
+>
+>  static void test_precopy_unix_tls_psk(char *name, MigrateCommon *args)
 
---000000000000bbc78c0647ca9b22--
+* Change looks okay otherwise.
+
+Thank you.
+---
+  - Prasad
+
 
