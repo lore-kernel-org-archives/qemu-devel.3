@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B96C5CF6BE2
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 04:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB9C9CF6BE9
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 04:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdKxW-000809-2X; Tue, 06 Jan 2026 23:15:46 -0500
+	id 1vdL13-0006jd-4E; Tue, 06 Jan 2026 23:19:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vdKxL-0007t7-Ts; Tue, 06 Jan 2026 23:15:35 -0500
+ id 1vdL11-0006j4-Cz
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 23:19:23 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vdKxJ-0006Ed-Le; Tue, 06 Jan 2026 23:15:35 -0500
+ id 1vdL0z-0007P3-QM
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 23:19:23 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 39DA95969FD;
- Wed, 07 Jan 2026 05:15:29 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id B79A0596A0A;
+ Wed, 07 Jan 2026 05:19:20 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id ylxzH9K2T50N; Wed,  7 Jan 2026 05:15:27 +0100 (CET)
+ id rLsqVngGMbyS; Wed,  7 Jan 2026 05:19:18 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 36523596A0A; Wed, 07 Jan 2026 05:15:27 +0100 (CET)
+ id AAE2C5969FD; Wed, 07 Jan 2026 05:19:18 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 34AFA5969F6;
- Wed, 07 Jan 2026 05:15:27 +0100 (CET)
-Date: Wed, 7 Jan 2026 05:15:27 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id A348E5969F6;
+ Wed, 07 Jan 2026 05:19:18 +0100 (CET)
+Date: Wed, 7 Jan 2026 05:19:18 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, qemu-devel-bounces+chad=jablonski.xyz@nongnu.org
-Subject: Re: [PATCH v4 9/9] ati-vga: Implement HOST_DATA flush to VRAM
-In-Reply-To: <DFHZZ37UW2LJ.6K5XDSBLC354@jablonski.xyz>
-Message-ID: <45b2b112-ce4d-2cfa-1e48-1b30b4a09589@eik.bme.hu>
+cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 1/9] ati-vga: Store DP_DATATYPE and DP_MIX fields
+ independently
+In-Reply-To: <20260106185700.2102742-2-chad@jablonski.xyz>
+Message-ID: <e42c1494-118f-f608-d9a5-2b1d72977c6f@eik.bme.hu>
 References: <20260106185700.2102742-1-chad@jablonski.xyz>
- <20260106185700.2102742-10-chad@jablonski.xyz>
- <246c8b76-7a62-7dc0-1f5e-52402e2ef53d@eik.bme.hu>
- <DFHZZ37UW2LJ.6K5XDSBLC354@jablonski.xyz>
+ <20260106185700.2102742-2-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
@@ -66,73 +67,98 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 6 Jan 2026, Chad Jablonski wrote:
->> I wonder if we could reuse the existing blt function here and keep pixman
->> optimisations and avoid duplicating code by filling a src buffer with the
->> expanded data after we accumulated the 128 bits and we need to flush and
->> then call ati_2d_blt with that as src and dst modified to match where it
->> should go instead of the full blit area that the registers describe. That
->> needs to split ati_2d_blt or it should take a blit state instead of
->> ATIVGAState that can either be filled from regs for a regular blit or for
->> a smaller part for a host data blit so that way host data is just split
->> into smaller 128 bit blits which I think is how the actual GPU works as
->> well. Does that make sense? Do you think that could work?
->>
+> DP_GUI_MASTER_CNTL accesses the same values as DP_DATATYPE and DP_MIX.
+> This was not reflected in how we stored register state. This meant that
+> you could easily end up with stale state in one or the other register.
 >
-> I considered this. I initially rolled this back into the standard ati_2d_blt
-> function but when I discovered the accumulator behavior it changed things a
-> bit. The thing that seemed off to me was that you can end up with "jagged"
-> blits from the accumulator. Meaning if you have a host_data blit with a width
-> of 100px and you flush the accumulator you don't end up with a rectangular
-> region to blit with pixman. You have a 100px line and then a 28px line that
-> you need to initiate two separate blits via pixman for. My gut told me that
-> the overhead of breaking things up and potentially making multiple calls to
-> pixman per flush would make it not worth it. But I admit I never tested it!
+> This stores each field directly instead of packing them into a field
+> named after the register. The register handlers then shift bits around
+> if needed. This not only keeps things in sync but means less shifting
+> and masking when using these values internally.
+>
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+> ---
+> hw/display/ati.c      | 41 +++++++++++++++++++++++++++++++++--------
+> hw/display/ati_2d.c   | 12 ++++++------
+> hw/display/ati_int.h  | 10 ++++++++--
+> hw/display/ati_regs.h | 33 +++++++++++++++++++++++++++++----
+> 4 files changed, 76 insertions(+), 20 deletions(-)
+[...]
+> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+> index d7127748ff..fce9270635 100644
+> --- a/hw/display/ati_regs.h
+> +++ b/hw/display/ati_regs.h
+> @@ -381,6 +381,12 @@
+> #define PM4_BUFFER_CNTL_NONPM4                  0x00000000
+>
+> /* DP_DATATYPE bit constants */
+> +#define DP_DATATYPE_DST_DATATYPE_MASK           0x0000000f
+> +#define DP_DATATYPE_BRUSH_DATATYPE_MASK         0x00000f00
+> +#define DP_DATATYPE_SRC_DATATYPE_MASK           0x00030000
+> +#define DP_DATATYPE_HOST_BE_EN                  0x20000000
+> +#define DP_DATATYPE_BYTE_PIX_ORDER              0x40000000
+> +#define DP_DATATYPE_CONVERSION_TEMP             0x80000000
+> #define DST_8BPP                                0x00000002
+> #define DST_15BPP                               0x00000003
+> #define DST_16BPP                               0x00000004
+> @@ -394,6 +400,11 @@
+> #define GMC_DST_PITCH_OFFSET_CNTL               0x00000002
+> #define GMC_SRC_CLIP_DEFAULT                    0x00000000
+> #define GMC_DST_CLIP_DEFAULT                    0x00000000
+> +#define GMC_BRUSH_DATATYPE_MASK                 0x000000f0
+> +#define GMC_DST_DATATYPE_MASK                   0x00000f00
+> +#define GMC_SRC_DATATYPE_MASK                   0x00003000
 
-We have fallbacks in the ati_2d_blt function so if pixman does not help 
-it's easy to call the function with parameters that make it use the fall 
-back. I just think it would be better to have the part that writes to the 
-frame buffer at one place so the checks for writing outside the valid 
-memory and doing all the pixel combining is not duplicated. So even if we 
-don't use pixman it may be better to do the actual blit with the same 
-function that does normal blits. I did not consider combining flushes just 
-calling the same function for each line when flushing and if pixman proves 
-to be an overhead we can use the fallback instead.
-
-> Another thing that isn't a problem in this patch but will complicate things
-> in the future is transparency (bg pixel leave alone). I get the impression
-
-Isn't that some ROP which we need to implement for blits using 
-transparency anyway? I think the host data gets either straight pixels 
-that we need to copy or some bitmask that need to be extended either with 
-fg bg or fg over existing image. The latter could be implemented by not 
-starting with empty row buffer but getting the row from the frame buffer 
-then masking and ORing or whatever combining is needed. But if we have a 
-ROP for that even for normal blits we'll need that anyway in the blit 
-function.
-
-> there may be some way to handle this with pixman using masks to avoid breaking
-> blits up even more but I haven't fully investigated that. Actually as I type
-> this I wonder if that same sort of masking could be used to avoid multiple
-> calls in the current implementation.
-
-This could be investigated later as possible optimisation but maybe not 
-needed at first.
-
-> I may be totally off on how we could do this with pixman though too. I'm new to
-> it so I may not be aware of everything it can do.
-
-Pixman has no documentation so the only info is looking at the source. But 
-maybe we don't need to change anything if the host data flush prepares the 
-source buffer by either using the data for datatype 3, adding bg/fg for 
-mono extract and either copying the dest row first into the buffer then do 
-the fg with transparency from host data bits then finally in all 3 cases 
-just call ati_2d_blt with the prepared source buffer. That way no changes 
-to ati_2d_blt is needed other than allowing it to take a state with the 
-source and dest data rather than getting it from registers. The part that 
-gets data from regs can be split out then what's left is what we need for 
-host data. I haven't thought through it in detail but I think it could 
-work and avoid duplicating the part that writes pixels to frame buffer.
+This will probably be gone in next version but for naming I'd stick to the 
+docs and use the names that it calls the fields as so no need to add _MASK 
+as these names seem to be meant for the field so we can name the mask that 
+extract that field like that so would just be GMC_SRC_DATATYPE and so on.
 
 Regards,
 BALATON Zoltan
+
+> +#define GMC_BYTE_PIX_ORDER                      0x00004000
+> +#define GMC_CONVERSION_TEMP                     0x00008000
+> #define GMC_BRUSH_SOLIDCOLOR                    0x000000d0
+> #define GMC_SRC_DSTCOLOR                        0x00003000
+> #define GMC_BYTE_ORDER_MSB_TO_LSB               0x00000000
+> @@ -404,12 +415,24 @@
+> #define GMC_WRITE_MASK_SET                      0x40000000
+> #define GMC_DP_CONVERSION_TEMP_6500             0x00000000
+>
+> +/* DP_GUI_MASTER_CNTL DP_SRC_DATATYPE named constants */
+> +#define GMC_SRC_DATATYPE_MASK                   0x00003000
+> +#define GMC_SRC_DATATYPE_MONO_FRGD_BKGD         0
+> +#define GMC_SRC_DATATYPE_MONO_FRGD              1
+> +#define GMC_SRC_DATATYPE_COLOR                  3
+> +
+> +/* DP_GUI_MASTER_CNTL DP_SRC_SOURCE named constants */
+> +#define GMC_SRC_SOURCE_MASK                     0x07000000
+> +#define GMC_SRC_SOURCE_MEMORY                   2
+> +#define GMC_SRC_SOURCE_HOST_DATA                3
+> +#define GMC_SRC_SOURCE_HOST_DATA_ALIGNED        4
+> +
+> /* DP_GUI_MASTER_CNTL ROP3 named constants */
+> #define GMC_ROP3_MASK                           0x00ff0000
+> -#define ROP3_BLACKNESS                          0x00000000
+> -#define ROP3_SRCCOPY                            0x00cc0000
+> -#define ROP3_PATCOPY                            0x00f00000
+> -#define ROP3_WHITENESS                          0x00ff0000
+> +#define ROP3_BLACKNESS                          0
+> +#define ROP3_SRCCOPY                            0xcc
+> +#define ROP3_PATCOPY                            0xf0
+> +#define ROP3_WHITENESS                          0xff
+>
+> #define SRC_DSTCOLOR                            0x00030000
+>
+> @@ -434,6 +457,8 @@
+> #define DST_POLY_EDGE                           0x00040000
+>
+> /* DP_MIX bit constants */
+> +#define DP_MIX_SRC_SOURCE_MASK                  0x00000700
+> +#define DP_MIX_ROP3_MASK                        0x00ff0000
+> #define DP_SRC_RECT                             0x00000200
+> #define DP_SRC_HOST                             0x00000300
+> #define DP_SRC_HOST_BYTEALIGN                   0x00000400
+>
 
