@@ -4,93 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C91D0D17D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 23:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2293AD0D17C
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 23:41:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdd47-0001TL-0R; Wed, 07 Jan 2026 18:35:47 -0500
+	id 1vdd9K-0003Ip-LO; Wed, 07 Jan 2026 18:41:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdd44-0001Sb-UF
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 18:35:44 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdd43-0006Ai-Ci
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 18:35:44 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2a0c09bb78cso11587625ad.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 15:35:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767828942; x=1768433742; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X1qaQcjWL2FbDLkZT6AfsCPWIpiqgsUWirQIvVNBFqg=;
- b=N8/ALyRu+Z6pS8Yj8wstITBg/RWB5LSJSYI31dGLP/XX/gufik8xX92RWRz8TqqEg7
- l38LrQxmlUi1OdoD1TlEedbGvOnLgyji26QrgtCCmHT1DFCsvVdfAjXdYSBu3jC5TN6v
- 1eESAutyHrj06zIHU/Xt6xOTo2S+C7hUjcaqpjodmEZsiWlW2Dtu2AvPeBFpDV3e4TIc
- 23lGZniCaRp0j39jVIek2Ow0QeqN/KnTt2RiGwISUcOA/PvbGo9VpsUOKa5Xr8AyjU4H
- dlaNLDszQHOcUCm9M6OUY7k6wHz/hHokBvc1MENhFkKvt5NdPJrwdXQYZIufo6zJ4Ov5
- QGVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767828942; x=1768433742;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=X1qaQcjWL2FbDLkZT6AfsCPWIpiqgsUWirQIvVNBFqg=;
- b=Y8k0KvX35OgTNj7uJL+eCpwEz+WG7E6yTJXJ2/zLq3IBVfygjeL2pI0zzHA2m4y5BG
- AR1Yte82Y94tpCyNFqhlp45Xp4quRDc3x1QtaegMAeZqwDxZIaIBdLcxcCjwQjD1PdOH
- ZnMXD+GoQyKL2uOI9Avlvo1Tv8ZfKMjbt0UEE0ZFAMMmcfPmcgSLa05b4H37/rVTNvga
- kyvrbcabLoYuDwBW//ikvRHI6J3i7s1/otFBqoGdiuh6prLRiKcLYLE5N6jgHGxYdCQf
- GcL+UwEtkZlVweaATJlqhc7b+Lo17KuRt2xzP4newRnZZUATl3lFlo8DuUCvzfGFjbEr
- wmUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfqY2j+46g1uOAR1FZ16G5uI5AJDSJ4kO//MoHhEfvIQdRpddrtl/4cTN2bHK4ADf9PccqQfLkvbUh@nongnu.org
-X-Gm-Message-State: AOJu0YxRe3ov4fTOaYytXn25R+B0veiMdO0Fqdb7VDH/nFc2OCUNO38X
- YlmTGdHkBm/sDwkaRCKlyFCRezY6rQaL0ASTct/AgmYvvGDcTfUR4a0+qZmr3hsNdDM=
-X-Gm-Gg: AY/fxX5cLOJCYFxstXnEu0/mCNiBuDLPlb96+gR9Vfol9d2BvTfV5e2GZVKDa2M1dXG
- cLdg3292oPfJpx7ikfZdr1kI95qMW7BqaSfpdKNmh+1ztekAeWf0yOVGYPH4IHWqiD2ojWM0+Ec
- mdxQzjZ66R42w01ql16+Gd+gUIo1DniE9gjDIJSke0tdcV6L7mhNWA0R3DUyT5xphD+v0xZ+7KE
- ADRAVT0LnSGLX0StidlLKFKaxJGAgPoWt9pKAnzcjd3b7yklfk0oFXUHvJgcdLGhmqY5Smb0qes
- 21jodOlM1erNelr0/Ph5vTQCRsXnxbn+9nzmeaLcZKiJf5L0OVErBV14pkzTKOgBi+n41mqT/tI
- 0+5+dMVVeSP7g3ifAk+A7Ib6I+Q0QNsNKcItueL2KwbabJMMqVhcdMKQST3SWmapYHyTOgwhqYq
- fjzTCc0v3BNxJV9LU1RAMKv9T1sgZiEw==
-X-Google-Smtp-Source: AGHT+IHKr0yx+S2zsrxxulFt4z1yBMyGztvUDkqPecmCsv3uBtA7il1qCs8k9VjpId01jy+5pFrUuw==
-X-Received: by 2002:a17:903:124b:b0:294:8c99:f318 with SMTP id
- d9443c01a7336-2a3edb0d9d6mr46701775ad.3.1767828941724; 
- Wed, 07 Jan 2026 15:35:41 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cd4401sm60538725ad.92.2026.01.07.15.35.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 15:35:41 -0800 (PST)
-Message-ID: <a8683e8b-faad-4600-842e-c486c2876257@linaro.org>
-Date: Thu, 8 Jan 2026 10:35:37 +1100
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1vdd9G-0003HU-El; Wed, 07 Jan 2026 18:41:06 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1vdd9E-00075G-01; Wed, 07 Jan 2026 18:41:06 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 607B1VZZ011311;
+ Wed, 7 Jan 2026 23:41:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=AWQeR0
+ 8eS+qjEWs3qLqJOePwwyLDyCXmQMfSpgVY+hM=; b=hyDBX/BXgSqmUjfIn3nhsd
+ UPdN1xtqOgfudK55epO/c9Y1FJvbtOLYCn3oOaBcyKYk+eSBDPGPNSnDp3I8u5rz
+ GCh2/UVnKKnqYM+64JihtdstJw+4/e6WVBAguLc1swEHwQB994IG21Kb2aOlUnOI
+ Iou514jel+z37jkTt3S7xFdxzyouxV0sF46DL5y6uUnJcjihE1Hm10156C6JnYqz
+ zt+/cElJ5JJ3NF22D54Ca0P6iEsvI4fNwOGTzcgLhgEMUVZ66oSzwSfH3K/MvVnm
+ FMYq6wdRJeUKv/tau+HbAWC65nJffMQTZYU8qCvFvJWoQxNrgH9vCxluED52EwEg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4berhkanej-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 07 Jan 2026 23:41:02 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 607K7kQK015233;
+ Wed, 7 Jan 2026 23:41:01 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bfdesm6yh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 07 Jan 2026 23:41:01 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 607NexG222414044
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 7 Jan 2026 23:40:59 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9ECEC58063;
+ Wed,  7 Jan 2026 23:40:59 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A86F95804B;
+ Wed,  7 Jan 2026 23:40:58 +0000 (GMT)
+Received: from [9.61.39.95] (unknown [9.61.39.95])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed,  7 Jan 2026 23:40:58 +0000 (GMT)
+Message-ID: <01e4f382-91f4-4011-a0b7-e769722e5e52@linux.ibm.com>
+Date: Wed, 7 Jan 2026 18:40:57 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] target/i386/tcg: allow VEX in 16-bit protected mode
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20260107151400.273916-1-pbonzini@redhat.com>
- <20260107151400.273916-5-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 07/10] pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com
+References: <20251210205449.2783111-1-jrossi@linux.ibm.com>
+ <20251210205449.2783111-8-jrossi@linux.ibm.com>
+ <fb11a282-6100-4c4b-9899-6ec332e58ba0@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260107151400.273916-5-pbonzini@redhat.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <fb11a282-6100-4c4b-9899-6ec332e58ba0@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=P4s3RyAu c=1 sm=1 tr=0 ts=695eef0e cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=bUZr9uQWIr9c-ZKH2N8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: WRRlZDbFrZSA3vdaADMhNpMnBvqQSn3l
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDE4NiBTYWx0ZWRfX0Zp1aMUD090U
+ QHfskVRZmEObzkCXHvT72T4QIyUib1yC8MpgD3IyDKlYQj5mybWeul7xDIw3UiNJeMQ+2DsJ0My
+ 6omwa11ZuOgUEN8mVTiLcsdNm55Tc+sUQlP2PdWkEzR5UKfWuv5ZkYcQ+k0C+y32nPfA98Q60hW
+ lduaneih1avSjy6IheuIBICQPW2OGmy1P/giy/yy6XU/2hk0bd61p95bkuWYIciegKBdg4xEWqz
+ q99P/HCKsfE0KSXbun0i5EcppNBElldbMjQ+eUlLVD0seIJEHpJq/AMEaLDO1qZR9P9IJ3+XTyy
+ lvAtf69k3L/KRD3uMUfy9aAGWFMil1Yhawy0h4xuFL9jYPNh2S4pw+GXXWeDILSwcTbPnZa+MFl
+ L0ZxyLc0si+Y1dXmIC80Qtu6pAYoOsPELU/JAPXAHZuGsheo1YQYuV3gxAdREUKsa+2aycwYTMH
+ hiQv/HVU5ItXeoQlMSw==
+X-Proofpoint-GUID: WRRlZDbFrZSA3vdaADMhNpMnBvqQSn3l
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-07_04,2026-01-07_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
+ phishscore=0 adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601070186
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,34 +123,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 02:13, Paolo Bonzini wrote:
-> VEX is only forbidden in real and vm86 mode; 16-bit protected mode supports
-> it for some unfathomable reason.
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/tcg/decode-new.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-> index f662364c600..243df7e3735 100644
-> --- a/target/i386/tcg/decode-new.c.inc
-> +++ b/target/i386/tcg/decode-new.c.inc
-> @@ -2875,7 +2875,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
->            * VEX prefixes cannot be used except in 32-bit mode.
->            * Otherwise the instruction is LES or LDS.
->            */
-> -        if (CODE32(s) && !VM86(s)) {
-> +        if (PE(s) && !VM86(s)) {
->               static const int pp_prefix[4] = {
->                   0, PREFIX_DATA, PREFIX_REPZ, PREFIX_REPNZ
->               };
-
-With the comment updated as you say,
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
-r~
+On 1/7/26 3:39 PM, Zhuoying Cai wrote:
+> On 12/10/25 3:54 PM, jrossi@linux.ibm.com wrote:
+>> +
+>> +    rc = pci_read_bswap32(vdev->pci_fh, pos + VPCI_N_CAP_MULT, PCI_CFGBAR, &notify_mult);
+>> +    if (rc || pci_read_bswap16(vdev->pci_fh, d_cap.off + VPCI_C_OFFSET_Q_NOFF,
+>> +                               d_cap.bar, &q_notify_offset)) {
+> Hi Jared, I think this came up in the previous version -- should
+> q_notify_offset be taken from the common configuration structure?
+>
+
+Ah, you are correct.  I've missed fixing it.  My bad...  Thanks.
+
+Regards,
+Jared Rossi
 
