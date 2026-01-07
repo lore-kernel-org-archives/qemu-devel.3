@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F42CF6BEB
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 05:18:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 003CCCF6BEA
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 05:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdLvZ-0005b1-Md; Wed, 07 Jan 2026 00:17:49 -0500
+	id 1vdM6H-0003x1-Dx; Wed, 07 Jan 2026 00:28:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdLvY-0005aT-He
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 00:17:48 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdM6E-0003vh-6H
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 00:28:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdLvX-0004Es-2W
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 00:17:48 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdM6C-00081I-2C
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 00:28:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767763065;
+ s=mimecast20190719; t=1767763727;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qeIjYaEb+mbMDPoiXw5nFZ1DrnW1AbKMoBvjS2g65mw=;
- b=TEMwWIzfwZwyIOLn2Q0mkTEaCbA0IkCO3AwddaMpquwI8jarsVM8SyFKLuY/qR0de/askE
- cK7mnFyna2oWWbXnvghVc8hCmtJDefFNRx0dvEGFJLgFYdu4qeso71DlZfG14LlrbcA1ea
- 9k9x0ANxT+DYJ9WzGsUeDpkJgKJkhF4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5C+u1mLqaXDB1dZr0w8v+YMNQBZDSHCnHi/uCTcqSTo=;
+ b=IzK6Eygr/184fu7CoDNmzTp2RyFqzf6sUJ55AdZVNGezZMmFxCsTr5zi9akXA3dsFEnCHd
+ dsyH856N75D4Wour1oMv7deVsjidrQC2wfTS069oiD1jYUNeeg1RAI1Jq+SRVTDETg/krz
+ GZ7l9jeD6uPlwwFWgG254jRDLI9wLEM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-QGgDL2lIOImA_pRJZVYmTA-1; Wed, 07 Jan 2026 00:17:43 -0500
-X-MC-Unique: QGgDL2lIOImA_pRJZVYmTA-1
-X-Mimecast-MFC-AGG-ID: QGgDL2lIOImA_pRJZVYmTA_1767763061
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4775d110fabso15360375e9.1
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 21:17:41 -0800 (PST)
+ us-mta-100-ebMLVGebOu6ijfx0PYDTzQ-1; Wed, 07 Jan 2026 00:28:45 -0500
+X-MC-Unique: ebMLVGebOu6ijfx0PYDTzQ-1
+X-Mimecast-MFC-AGG-ID: ebMLVGebOu6ijfx0PYDTzQ_1767763724
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4325aa61c6bso852598f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 21:28:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767763061; x=1768367861; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767763724; x=1768368524; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=qeIjYaEb+mbMDPoiXw5nFZ1DrnW1AbKMoBvjS2g65mw=;
- b=bMluIMNWoVsTHTv8qMGs9F6N8BXguK7Th7zMDoj85Gtcj84DuD0Su6QFnP+rWS8YeO
- i2hfD6l9quwCTnmlS/iYIdOx0eDx6cBVBwF5XXsPYV7bm57rvx6vZumPQ3KynAQcxHiu
- ZsQyiyxQDvudPo2iDOdhJjQxn+q0AjFd98KhUdGPdO149zF5ZYfrHWfeW7gtHYGXqMd1
- kCu9DOuqY3ZAiNdy9xIxo9PWE9dgpGMRf7TiRfrGlHLkEyImP5zHkNcsi1AjbjdANeAY
- WJGlyhu7Rr1bqvUxAXm7eLe+nwy/ZXORF489DJnGW6RSypMShRCgSoklMiCBNPyYayQj
- ziDQ==
+ bh=5C+u1mLqaXDB1dZr0w8v+YMNQBZDSHCnHi/uCTcqSTo=;
+ b=MwKA7sywcuQaeYUazNMx0PVWfLunkGUFlOd70kr2VszV58njmb+oTZZYp1FzZoXzVp
+ YPRsvcK0VfzY41TnHSgi/tlmIGoFwr8C/brBCSi5o2kOsJbtO1OAEvObpNoIUST9QCj2
+ yjRx92hu53KOBgreU10Aa/KgI7dIF3qNm316gm1iS5rpEuy1MzVrYe+QFPO9tVIlv+gO
+ 1Ake7LHKZhvbYc1TbCZc4bprBKKMA7KYmgY2d0V0gRT0j1M0/uzLUJCG+xUKrWingi8p
+ GG3rn60mpvhBuxcgzBsp7Oaek9UjMnwOjI7KmX/qhqxKcbzm3/4BB/Upn/vtvJoohWqz
+ a5og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767763061; x=1768367861;
+ d=1e100.net; s=20230601; t=1767763724; x=1768368524;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qeIjYaEb+mbMDPoiXw5nFZ1DrnW1AbKMoBvjS2g65mw=;
- b=qcbxRlbbF6lsBXHaePMhWJtXdd1oR6vtbL6KVsps59WXPCjZRhONZJu/xEXJG5hMsu
- CO+4FibsqK/DNGKtWFd+Fgbqyg7OmM/qXbaOQH4qyXamlHYiPs5osFw3ffh6NCTy6ea1
- 5TjLkT5kyCnXDaPIjs29IWmdVHs61psUhCX9LnqsXSpMWU9jnfEtEJ2RNoqSPMc7otRK
- qlm5QJ66KRl5v8z+KqFldyBiv9QHl/6kuh40/p1k1oSUu2Br8CKlPpE6gQEYLDqgThQS
- NxzBVftUotgNh9eM174u4QyZW2CnAfvYPCEUIvUDnLZllzhNoinQFbqsMxvwn6wPZ/pl
- /psA==
+ bh=5C+u1mLqaXDB1dZr0w8v+YMNQBZDSHCnHi/uCTcqSTo=;
+ b=SnyoHDsTEpCGI0H0+zfgcpRIzFiJ73afzaWd+thWPmYLGbLzLjni9LR9nakEGjGaUI
+ t39nmSWMktDWQjQok5DKhFViajCJmwqA+puSG+52PaFxyeOHay2YHIr2Jxv6Dl713GR2
+ fNwyMYfODkq2Y2+IZguEO4cbBaWmBXU6GK5Z/hYPPT+Vz53B10c2Sc8m5hxCSxjDE5h/
+ 926GPpOy+GmzXAYnmYwUk5e0hqWODu7oNU/J1IzGE5rnevZonA3OoiVZ3Vpt88igkTmG
+ 1FUQYlQ0Mogev2GpSzYrwbGY/0Azn+vSiGBTQItNRfK5YiE+NJevZebjTNf/PfxVyzew
+ VlCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNJHA0luvl5wmyZ0GUQjWqVkptsT3/SpHC/qhkBpeRzpx7gx1QjM6dujNIENZRsG3bW0F4EoceH9Q+@nongnu.org
-X-Gm-Message-State: AOJu0YwAxF57OeULxsdmaOBn7OGLgoYRUL8U5feY5AhFRXg7cQPoMd4u
- 5nr/Cdk+FVlV13PQb+MqjTak2c0jZCbTILQ3bidvvdjvccFjYBZig227IVXYys1xbcEx1uxeATn
- /4ysINfZWRg5vOEqUmCBVJICX3rTVqKyfzG/E4rDmQDUuQ0gpC9I2ango
-X-Gm-Gg: AY/fxX5c54bkmmA1hob4W0+VekLOHjg9H40URcIDhntE+ItANwnIH6VMaZ+T0jZH6b3
- RjCLQdcgLv77c015WcM61D5NNbsSmPV89RMrloBVIzqU2bKdYXN9G1KyHF+cJTd+gFbH537JzIS
- LEbcUocz/bTib28etUn4rxATegOXn/d6kjAiDro+jAUAXJG/Q3hidDKdtSQC6/6bUD6wYMkp4sm
- iwH5U3/2klboFKLtS6Xs5DfpGys7ChhJv4IyfMwe4JBEQgFvQVCZcLsNBOcf2vvspTvl468eL7t
- JXkP9tcEwXyze/Ew4M0p3bM7a8oosEmuVhG5mwjb6NIGU6jkip6ylyXvkehlEQCFRauyipsJH17
- l/emyBZE=
-X-Received: by 2002:a05:600c:a102:b0:477:7a53:f493 with SMTP id
- 5b1f17b1804b1-47d84b32793mr8374525e9.23.1767763060724; 
- Tue, 06 Jan 2026 21:17:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG8pHV2doW0GsrviBZTauDNHcFyB0ObZZUYADFZofHOd+Ed2duFfdHEfJiaSVVcdMTKZdiIdA==
-X-Received: by 2002:a05:600c:a102:b0:477:7a53:f493 with SMTP id
- 5b1f17b1804b1-47d84b32793mr8374365e9.23.1767763060353; 
- Tue, 06 Jan 2026 21:17:40 -0800 (PST)
+ AJvYcCVCZA1xVEHxbLAA9/1h64OB1BgCATf4FrNXooDCy9QOgfgcjA9Ykrdz6fPdbfemwOdfMzFC8kopd+XL@nongnu.org
+X-Gm-Message-State: AOJu0YxKjCksU/O4mnrnuUQ4aqqrzaLpYuPL6hzhubfb+2MlasmJ/ZeP
+ Bx/x5un4cM+ly36j0CUsIrjzsSo8OdXRPU9lGEB5mUkgQrNTR/SutKqkV/VyTMXeCYhR/dDXher
+ fwKp7oebTFBb2Qidb24axaLH6CXh4Q9iU+BA5XsggW+5vfGmLVu1qzQY3
+X-Gm-Gg: AY/fxX5+vSDnaWQpkKdzt5xIg8UhuKaYmeOckIcTQfupa7X7qgwOZ+ZfXJIWWxY2IrV
+ ZNgwOTEhoL4oZSITFdHsOkXKQTXWJSdesojyk77kKh5ieBXwEXPETdEu5M2Wynl/RuMvLOjzuKR
+ Xm861SMniuno//RfWdIbeHY+rqMR4/4WIKedQpPP1Ajbitl3B2XywQx/2VmMqhDage7sZDoIIea
+ lx0ldX/xZtQGAfdrBi4gIYUPNXNTvg0kE15oXtJ+QEVZFeMQ5pVxCBIvpohKvw+I0gOcsihO7ko
+ eNpoocQbeL9UauEsDbh/EkXAVOWTT3ZuCaASxtbxhJTXbSY0NO1lEQHwHqhbudcaaOttTAASji+
+ rNBSdzx0=
+X-Received: by 2002:a05:6000:288b:b0:431:16d:63d7 with SMTP id
+ ffacd0b85a97d-432c37615a2mr1400340f8f.47.1767763723887; 
+ Tue, 06 Jan 2026 21:28:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEPnu3xCEnyl/w+vA1PsSrrJlWeB6dppMWTitzA4siF5QXSHwDei98ywiWRUO+KGYMHqoMtMw==
+X-Received: by 2002:a05:6000:288b:b0:431:16d:63d7 with SMTP id
+ ffacd0b85a97d-432c37615a2mr1400328f8f.47.1767763723387; 
+ Tue, 06 Jan 2026 21:28:43 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f653c78sm79724135e9.11.2026.01.06.21.17.38
+ ffacd0b85a97d-432bd5df9afsm8777266f8f.24.2026.01.06.21.28.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Jan 2026 21:17:39 -0800 (PST)
-Message-ID: <5e1a3a65-26bd-4965-a224-0dbe73ae274a@redhat.com>
-Date: Wed, 7 Jan 2026 06:17:38 +0100
+ Tue, 06 Jan 2026 21:28:42 -0800 (PST)
+Message-ID: <5938bf19-ad4d-42a3-95e5-235b277aba21@redhat.com>
+Date: Wed, 7 Jan 2026 06:28:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/qemu_test/testcase: Fix mismatched
- quotations
-To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20260106220319.74785-1-yodel.eldar@yodel.dev>
+Subject: Re: [PATCH 3/5] target/s390x: Restrict WatchPoint API to TCG
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Aurelien Jarno <aurelien@aurel32.net>
+References: <20260106231908.16756-1-philmd@linaro.org>
+ <20260106231908.16756-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -140,9 +144,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260106220319.74785-1-yodel.eldar@yodel.dev>
+In-Reply-To: <20260106231908.16756-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -168,28 +172,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/01/2026 23.03, Yodel Eldar wrote:
-> A debug string incorrectly mixes single-quotes with double-quotes,
-> causing the variable within to be treated as a literal. Fix it.
+On 07/01/2026 00.19, Philippe Mathieu-Daudé wrote:
+> By inverting the 'tcg_enabled()' check in s390_cpu_set_psw()
+> we can let the compiler elide the s390_cpu_recompute_watchpoints()
+> call when TCG is not available. Move it to a TCG specific
+> file to avoid compiling dead code on KVM. This restricts the
+> WatchPoint API calls to TCG.
 > 
-> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   tests/functional/qemu_test/testcase.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/s390x/s390x-internal.h |  1 -
+>   target/s390x/tcg/tcg_s390x.h  |  4 +++
+>   target/s390x/cpu.c            | 30 ++++++++++----------
+>   target/s390x/helper.c         | 38 -------------------------
+>   target/s390x/tcg/debug.c      | 53 +++++++++++++++++++++++++++++++++++
+>   target/s390x/tcg/meson.build  |  3 ++
+>   6 files changed, 75 insertions(+), 54 deletions(-)
+>   create mode 100644 target/s390x/tcg/debug.c
 > 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 58f2740100..ff86c9d187 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -349,7 +349,7 @@ def require_netdev(self, netdevname):
->           helptxt = run([self.qemu_bin, '-M', 'none', '-netdev', 'help'],
->                         capture_output=True, check=True, encoding='utf8').stdout
->           if helptxt.find('\n' + netdevname + '\n') < 0:
-> -            self.skipTest('no support for " + netdevname + " networking')
-> +            self.skipTest('no support for ' + netdevname + ' networking')
+> diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+> index 9691366ec91..c4cd17d4d7d 100644
+> --- a/target/s390x/s390x-internal.h
+> +++ b/target/s390x/s390x-internal.h
+> @@ -317,7 +317,6 @@ void s390_cpu_gdb_init(CPUState *cs);
+>   void s390_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+>   void do_restart_interrupt(CPUS390XState *env);
+>   #ifndef CONFIG_USER_ONLY
+> -void s390_cpu_recompute_watchpoints(CPUState *cs);
+>   void s390x_tod_timer(void *opaque);
+>   void s390x_cpu_timer(void *opaque);
+>   void s390_handle_wait(S390CPU *cpu);
+> diff --git a/target/s390x/tcg/tcg_s390x.h b/target/s390x/tcg/tcg_s390x.h
+> index 78558912f99..33f26f26c0f 100644
+> --- a/target/s390x/tcg/tcg_s390x.h
+> +++ b/target/s390x/tcg/tcg_s390x.h
+> @@ -21,4 +21,8 @@ G_NORETURN void tcg_s390_data_exception(CPUS390XState *env, uint32_t dxc,
+>   G_NORETURN void tcg_s390_vector_exception(CPUS390XState *env, uint32_t vxc,
+>                                             uintptr_t ra);
+>   
+> +#ifndef CONFIG_USER_ONLY
+> +void s390_cpu_recompute_watchpoints(CPUState *cs);
+> +#endif
+> +
+>   #endif /* TCG_S390X_H */
+> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+> index 6c4198eb1b1..f68b288e364 100644
+> --- a/target/s390x/cpu.c
+> +++ b/target/s390x/cpu.c
+> @@ -40,6 +40,7 @@
+>   #include "system/reset.h"
+>   #endif
+>   #include "hw/s390x/cpu-topology.h"
+> +#include "tcg/tcg_s390x.h"
+>   
+>   #define CR0_RESET       0xE0UL
+>   #define CR14_RESET      0xC2000000UL;
+> @@ -74,26 +75,25 @@ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr)
+>       env->psw.mask = mask;
+>   
+>       /* KVM will handle all WAITs and trigger a WAIT exit on disabled_wait */
+> -    if (!tcg_enabled()) {
+> -        return;
+> -    }
+> -    env->cc_op = (mask >> 44) & 3;
+> +    if (tcg_enabled()) {
+> +        env->cc_op = (mask >> 44) & 3;
+>   
+>   #ifndef CONFIG_USER_ONLY
+> -    if (is_early_exception_psw(mask, addr)) {
+> -        env->int_pgm_ilen = 0;
+> -        trigger_pgm_exception(env, PGM_SPECIFICATION);
+> -        return;
+> -    }
+> +        if (is_early_exception_psw(mask, addr)) {
+> +            env->int_pgm_ilen = 0;
+> +            trigger_pgm_exception(env, PGM_SPECIFICATION);
+> +            return;
+> +        }
+>   
+> -    if ((old_mask ^ mask) & PSW_MASK_PER) {
+> -        s390_cpu_recompute_watchpoints(env_cpu(env));
+> -    }
+> +        if ((old_mask ^ mask) & PSW_MASK_PER) {
+> +            s390_cpu_recompute_watchpoints(env_cpu(env));
+> +        }
+>   
+> -    if (mask & PSW_MASK_WAIT) {
+> -        s390_handle_wait(env_archcpu(env));
+> -    }
+> +        if (mask & PSW_MASK_WAIT) {
+> +            s390_handle_wait(env_archcpu(env));
+> +        }
+>   #endif
+> +    }
+>   }
+>   
+>   uint64_t s390_cpu_get_psw_mask(CPUS390XState *env)
+> diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+> index 184428c6d9d..8d1e03f6768 100644
+> --- a/target/s390x/helper.c
+> +++ b/target/s390x/helper.c
+> @@ -143,41 +143,3 @@ void do_restart_interrupt(CPUS390XState *env)
+>   
+>       s390_cpu_set_psw(env, mask, addr);
+>   }
+> -
+> -void s390_cpu_recompute_watchpoints(CPUState *cs)
+> -{
+> -    const int wp_flags = BP_CPU | BP_MEM_WRITE | BP_STOP_BEFORE_ACCESS;
+> -    CPUS390XState *env = cpu_env(cs);
+> -
+> -    /* We are called when the watchpoints have changed. First
+> -       remove them all.  */
+> -    cpu_watchpoint_remove_all(cs, BP_CPU);
+> -
+> -    /* Return if PER is not enabled */
+> -    if (!(env->psw.mask & PSW_MASK_PER)) {
+> -        return;
+> -    }
+> -
+> -    /* Return if storage-alteration event is not enabled.  */
+> -    if (!(env->cregs[9] & PER_CR9_EVENT_STORE)) {
+> -        return;
+> -    }
+> -
+> -    if (env->cregs[10] == 0 && env->cregs[11] == -1LL) {
+> -        /* We can't create a watchoint spanning the whole memory range, so
+> -           split it in two parts.   */
+> -        cpu_watchpoint_insert(cs, 0, 1ULL << 63, wp_flags, NULL);
+> -        cpu_watchpoint_insert(cs, 1ULL << 63, 1ULL << 63, wp_flags, NULL);
+> -    } else if (env->cregs[10] > env->cregs[11]) {
+> -        /* The address range loops, create two watchpoints.  */
+> -        cpu_watchpoint_insert(cs, env->cregs[10], -env->cregs[10],
+> -                              wp_flags, NULL);
+> -        cpu_watchpoint_insert(cs, 0, env->cregs[11] + 1, wp_flags, NULL);
+> -
+> -    } else {
+> -        /* Default case, create a single watchpoint.  */
+> -        cpu_watchpoint_insert(cs, env->cregs[10],
+> -                              env->cregs[11] - env->cregs[10] + 1,
+> -                              wp_flags, NULL);
+> -    }
+> -}
+> diff --git a/target/s390x/tcg/debug.c b/target/s390x/tcg/debug.c
+> new file mode 100644
+> index 00000000000..12ae95d4fe8
+> --- /dev/null
+> +++ b/target/s390x/tcg/debug.c
+> @@ -0,0 +1,53 @@
+> +/*
+> + * QEMU S/390 debug routines
+> + *
+> + * Copyright (c) 2009 Ulrich Hecht
+> + * Copyright (c) 2011 Alexander Graf
+> + * Copyright (c) 2012 SUSE LINUX Products GmbH
+> + * Copyright (c) 2012 IBM Corp.
 
-Ooops, good catch!
+Looking at "git blame," the code has been introduced in commit 
+311918b979c5364c30392c1054ed77d047a83953, so none of the above 
+people/companies has been involved.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+That original commit also introduced another function called 
+s390x_cpu_debug_excp_handler() which now resides in 
+target/s390x/tcg/excp_helper.c ... so maybe s390_cpu_recompute_watchpoints() 
+should simply be moved there, too, instead?
+
+  Thomas
 
 
