@@ -4,97 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B6FCFD63A
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93918CFD63F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 14:04:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdTy1-0006fE-8o; Wed, 07 Jan 2026 08:52:53 -0500
+	id 1vdU8m-0004Ym-4j; Wed, 07 Jan 2026 09:04:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cuiyunhui@bytedance.com>)
- id 1vdO87-0000lv-2W
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 02:38:55 -0500
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cuiyunhui@bytedance.com>)
- id 1vdO82-0000Lu-CS
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 02:38:54 -0500
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-459a258561cso405117b6e.0
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 23:38:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1767771526; x=1768376326; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PrTDVaGhmCs4Aaj1D9bnz1MnrGGVDBkTwhwy74ACSzA=;
- b=Ru4C+c8ev5MiHEy0ARt0Kr9ovmTt2wd4fI5qtR5fMY96URp0qGS4L+Gd7oOq956Pp8
- OjxAoKqVGotDbTSRL8hY3T/fF1+FrZS10Ea73PtfQRMrcDYqHy4R30H/M6ebpcpxeLxV
- KDts+JuyImck5vRQZWeCcVFDlekhbfdEoZ3FeXZ//bsAzKhKKn8VNatIJ7MVALzPHNhZ
- z9rBXS+DQ09WR0Ucl3kiM3HvsEozxyw3dwhpjsv1K21aqckUbgsl4c1T1nPUzJv/pNYB
- Pit3Za3Bqgjr03O+k0DJnd0EXVDouValiCF718UrKEKtXlI6N0W31Eg0WjDvaJGIQhK6
- Ip4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767771526; x=1768376326;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PrTDVaGhmCs4Aaj1D9bnz1MnrGGVDBkTwhwy74ACSzA=;
- b=tSR2Kxq5vvkplbpAJIS9yT0vBnpiAoprULDoHypxr4AVdUC8ooulMV1BX053NbpqBa
- wmZ7PJgEcJxVy1cSI+exwY+fOv3ZRM6wTzob3FDje1flCiLRT5On0p9IfeybvzwZwyk1
- 84eTAUJ/m7CkrYSZbdQtmOuNBNyOd6EeR/kxyMRAyeZ6KqWeCa4yaoAhH1Qri4KoOl4d
- OgW58O9+P2DxwHMXvfMgQyvfGgP0eGw/sj1b/YMNCtS5T4ajjGo2tzaoj4AdFcDtdYb4
- w35WdKEN9C0/t8BI5jo3pgI3gQ1LC54YsGK3agm0ToI6SJqaY8jXYnnms/Q0/78Cjx3W
- uJFw==
-X-Gm-Message-State: AOJu0Yx1bf5/XHyar84mKfgjj/WqneQ+FLmJQmP7MC47ZiLrmJGTxbG8
- kr3UVhZswH75TQRAiorh3PEDTnsXnTvK9IHEciA9hDcb8mHdY2jkJTBKTPi/lF4iK0add3qetEd
- eLdr8KtghYGcAMurBlLThogsNiKLp9hSBUf+3/e3H9w==
-X-Gm-Gg: AY/fxX7SVb5cokjpUkmbLzEdJjnIepSyFKy7HwGxRt06QY2dd1t8yLkoUQq+nPnjwO3
- TrESGIwTZfICcxhDcVugBpIsvlfadQ2lLR9MVo/uBfgAwYMQVUClVmJ7mcjkKHyN4OV1XWFJMqd
- 9mbS3ZjVeUksKVAN5Kb6bc+tcVhuzkBSKeB6BVLKYSOsLBKKEWWiIuM6Ynstg13cOE+VkzAuTKR
- vuICx4fTOI29jfVp/Fm1z1jSqG350+HjlTVMcBHkj0TLOPj7fk1s06xGFcYyoCoH8R0nybyqRM2
- Lg==
-X-Google-Smtp-Source: AGHT+IEKlF01qnE9rGAWC03SkBk71wolanMtWoHqX/0yuwIKdLFq6pZmXBTrJ5kSLeMaM7yG894uT6uOmDGpWf3dUVw=
-X-Received: by 2002:a05:6808:3096:b0:455:eba2:9efa with SMTP id
- 5614622812f47-45a6b7371e4mr812668b6e.4.1767771525678; Tue, 06 Jan 2026
- 23:38:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ross.lagerwall@citrix.com>)
+ id 1vdU8X-0004RH-8G
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 09:03:49 -0500
+Received: from mail-westus3azon11012060.outbound.protection.outlook.com
+ ([40.107.209.60] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ross.lagerwall@citrix.com>)
+ id 1vdU8U-0006ka-4B
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 09:03:45 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ekgeob9TFiCGaL2QsvTfYKTtY2/Qlbm7P29IqxoisgLxK4FPrqJi5/GUM/y+kMToYixXRSqd0mtMawIJryuLPDK/G10UR2WGpWSM7O44/LWR116J67rBmrFIjRHd3NCNzVJfzScoVrjZAmv1De4jJ5IAEdibPe5Ejm8ZJWnfak6I2a8jKx2x32v1042TsxpPslY+Os5CJkUkvecXhVj1rgIwAvjjVmiTSdaHdljY+4DDPwOi9NcOE0aWSxot/CW1mKE1mo1wdAViQmfYQfCXnkShxie1HqmlFfJv2JesOlOfk0DwisIMb2ln4n8JK60dcXBdq2nrQF/rIz+u0grd5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=z4g+OMB2hoB04Q8s1UR6ygmglzWkbkXoxJ3gcWDOVZw=;
+ b=WVJWvE80gNPLnduv+RZEDc6ZcJjcCzJJf1T88ObtBol9CMJlMdk2RnGqq/MMR4o0t5t8pQPt2WpVdrJnEPcURHOFF+b5wH4+m5ZsEUViFT7Cq5Jo6H2TUUjDbw8pDcLbaIPhpMoWNPJkbGnzuu4BIw6i+eW4y94OXKJVaFbHluawCFcSyYgXA1uhmceXXb646Mi0ooEr4/kRzXECfPGFiGysN1UW8df6pWj0Hua470355aXVs6XyMPnVEB+hGDPZ1Df8G5G6kdS7h1FTh6DFT/r3v8nM+KeJZQ1BuC26A4aA4McZn/OXPmOO2aJp1ri3k+lNCbDD7+cWasgHoWd3FA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=citrix.com; dmarc=pass action=none header.from=citrix.com;
+ dkim=pass header.d=citrix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=citrix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=z4g+OMB2hoB04Q8s1UR6ygmglzWkbkXoxJ3gcWDOVZw=;
+ b=MNxKnhg1qGkduPQHWf3NaXlLjbAbM1RtdQkvyS0WfG5M5rE53YLHa8h+JG0pZbF7R/MD7WmSP9gglBnGc9HYUi4sBQTN7cMdBcyBKWNJWD32MrL5NgJiCdP0EGhxxzuhJ2QMZ0m64QQeOLWXQ9n5ITlaBZtnASa0aj1mchJpQu4=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=citrix.com;
+Received: from CH8PR03MB8274.namprd03.prod.outlook.com (2603:10b6:610:2ba::5)
+ by DS7PR03MB5624.namprd03.prod.outlook.com (2603:10b6:5:2d1::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.2; Wed, 7 Jan
+ 2026 13:58:34 +0000
+Received: from CH8PR03MB8274.namprd03.prod.outlook.com
+ ([fe80::ebe2:32c1:d2be:a096]) by CH8PR03MB8274.namprd03.prod.outlook.com
+ ([fe80::ebe2:32c1:d2be:a096%6]) with mapi id 15.20.9499.002; Wed, 7 Jan 2026
+ 13:58:34 +0000
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Ross Lagerwall <ross.lagerwall@citrix.com>
+Subject: [PATCH] qmp: Fix race causing events to be sent during negotiation
+Date: Wed,  7 Jan 2026 13:58:24 +0000
+Message-ID: <20260107135824.1681685-1-ross.lagerwall@citrix.com>
+X-Mailer: git-send-email 2.52.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: LO6P123CA0021.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:313::12) To CH8PR03MB8274.namprd03.prod.outlook.com
+ (2603:10b6:610:2ba::5)
 MIME-Version: 1.0
-References: <20260105-riscv-ssqosid-cbqri-v4-0-9ad7671dde78@kernel.org>
-In-Reply-To: <20260105-riscv-ssqosid-cbqri-v4-0-9ad7671dde78@kernel.org>
-From: yunhui cui <cuiyunhui@bytedance.com>
-Date: Wed, 7 Jan 2026 15:38:34 +0800
-X-Gm-Features: AQt7F2qTK3rZjh59Qtkvhac4HUpvBw3FtSJL58r8F3k_L6920G893yy8NpkKl_U
-Message-ID: <CAEEQ3wkM9h0kJNE4yTtN5ms2JgRBp6b_530KM8irbGKzjMkrgg@mail.gmail.com>
-Subject: Re: [External] [PATCH v4 0/6] riscv: implement Ssqosid extension and
- CBQRI controllers
-To: Drew Fustini <fustini@kernel.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicolas Pitre <npitre@baylibre.com>,
- =?UTF-8?Q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
- Atish Kumar Patra <atishp@rivosinc.com>, Atish Patra <atish.patra@linux.dev>, 
- Vasudevan Srinivasan <vasu@rivosinc.com>,
- =?UTF-8?B?UmFkaW0gS3LEjW3DocWZ?= <rkrcmar@ventanamicro.com>, 
- Chen Pei <cp0613@linux.alibaba.com>, guo.wenjia23@zte.com.cn,
- liu.qingtao2@zte.com.cn
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=cuiyunhui@bytedance.com; helo=mail-oi1-x235.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH8PR03MB8274:EE_|DS7PR03MB5624:EE_
+X-MS-Office365-Filtering-Correlation-Id: e0aa0721-e136-4d8a-fc16-08de4df4d917
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?8Uv+PU/4DEtGUDumWQSVUS2gFi9bCW3HzvdFg4vUlQfn415dmnvbyrq8q7Vz?=
+ =?us-ascii?Q?dpBwwi3H3+XypAZ3yl5Yi94NTFI3K1yCXoDizXScwHS5M6f9BwvFu9uRnN+w?=
+ =?us-ascii?Q?W17jEuHonjwIz20VMVnaprVhqF/y2VvKFQEwFMCdyNLV5sxsvZiP191V+55Z?=
+ =?us-ascii?Q?MytUNT/IrQmubhp5aDCI9ViHZGQT5ZXHPwPXI8hs6RCg/e2X7Uy3qPMzzGju?=
+ =?us-ascii?Q?ykpOge7TiblSuSBwJdfVPkHy3S4dguy8PA3JSxYYO+E+LGELIhuYcMJFrTpQ?=
+ =?us-ascii?Q?1Xo5iZBceQ3QqfgagrtzPMR/wSd5bLzuwmN1icR/869A4Fw6ar+CS7Ikcy2O?=
+ =?us-ascii?Q?8ozWzYLSnyvtQwzqfbE18vIyAOf9idOfznFSNTY6acDtdC4HxelR0syFodCo?=
+ =?us-ascii?Q?h+EgFA8A0nKfKfJ8xE28znODAOQ4R0tfEfat2Ui1/ewg8UtEG7VMcvzvXbX2?=
+ =?us-ascii?Q?IEtdvRuNtpFz9WkRDkLa6d1LO0kJDektqVgjlmblZazq/WBONyuuwW2Uoab6?=
+ =?us-ascii?Q?g/zEzQlnLUsNAskL0eyVupcq0OqFuv5Rr70Gn7g399dBRxXAymLTORHTOv0p?=
+ =?us-ascii?Q?EGf2i4rt4/h3x+aNIa00cuPVK5Tcu0xnb3Bpao7rrDTA/NbsFlb7PYKMngWa?=
+ =?us-ascii?Q?i4E7xo/H07EmmHHzT+LJziX5nugoCkgp2RHsknNCim9cfROK+BrvtMC+W0iH?=
+ =?us-ascii?Q?+qi37vPCFbd1BlN7lk0jYIq9FytTLwoNHAFDICgdgpV25Tv0TapT+g5yAGjK?=
+ =?us-ascii?Q?Lmg1IyEw0Dy7BzbQk5uKYrS+iOE/b13ioYOOlayRy/T0hZIyU/cHoo53RK2n?=
+ =?us-ascii?Q?jiY+F0TwTA/ylP8Px5gLeYZIWk6iKBxNKJrZhe/dDeNxUie5SFi7PkrDeChG?=
+ =?us-ascii?Q?JnoYGpIKD8bcPFl8kfZ2BCSqV2xSuOG7ou6Hhogu3QN+KoQs1+EckcqF+5ae?=
+ =?us-ascii?Q?ivXkp2bBS2CCun/CyzrPSHOoGvksFYxmJ3GEspvbwSQTruQ31UUc6BmAqz9g?=
+ =?us-ascii?Q?S4Y84nO3AGo8lBPTeJfd92JC57BNLIZxfmniNb5G6ge1Ni3KzIyMIvCmu2yo?=
+ =?us-ascii?Q?hQ9EA3FAUf/G1pOFOq0hPp27Wkc6Zudw57aa/aS00H+NAkYMPDv6lTj6UKxp?=
+ =?us-ascii?Q?wWMjWyVcRCnApmHBEQrYzfKxrv1uHyjMjJ9RAVAgF3qmeqC0K1GoPv5O1/O1?=
+ =?us-ascii?Q?cf96kNHLtBe3EERvnBjWwBjnJIW0UhWk1XTloSvSbtiVBpG9yD4Q/61h8LJG?=
+ =?us-ascii?Q?4R8Y0XHZeJDEcGnkEJtWGDI+XcMNY6SnqmOohFVZmiwSKbvbNIhjm+g11kGT?=
+ =?us-ascii?Q?FNWXTzu+a+qihuN6KPAbRWYmGuCTvgomRB6LrD2lWSWTTHh4NzXZCYLX2xeY?=
+ =?us-ascii?Q?aGFFGk44PtaSSHkSlMU0Trbu+JjYMD0c0zMGFow6AlhpPfDBlYbJZ/0r6D7H?=
+ =?us-ascii?Q?RaDyqtcjpPgHsMDKzkb+7eVRdVmaYyGp?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH8PR03MB8274.namprd03.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?KpM3LKNdoDpz+G8JmLstTHjwN7CCDcSID6Ey/3+g7gFvXkboSkB9dWmuEz/8?=
+ =?us-ascii?Q?tHPSqSzR7juJEPIjwxQ3Y0nrakXv6s73LSeH2OLKqWf7u8iNnODKa/0+4puK?=
+ =?us-ascii?Q?aQ4IkpnxFKutE8Au+/Iri1q0u2zj1U0WXFPZQuCY9Gl+3v8k9JH89G9P2t7W?=
+ =?us-ascii?Q?cUlRqhHZkSSKhLXYN17UXvqt26rn/9AgzuE1lMWnbtS8LEXarTmcmJX8rCkI?=
+ =?us-ascii?Q?VldEYj0JquetpekWMZ5Pu0SA0nMGasKbZo2dm3Y+yuHH3dByJ1DDntN+3WEY?=
+ =?us-ascii?Q?UQccFXOVayb3sS+O3j8GPPB6yFfA/PcBqH84egDuAJa1Ut9KZfFVPWmf0Xy+?=
+ =?us-ascii?Q?G3jbhj6JCyEQFImsFvd5YJWJd6jTE6/JGPId8T0R41w4lnfGNCAaKSEd68mg?=
+ =?us-ascii?Q?LA0lBSsqPbQNbUOYlThBxXzaH5GLwnYsFiUWP6aDBqS/ODYk4jhg8YmjTiOL?=
+ =?us-ascii?Q?7FNi+6DnJKEgGQUtx0QjmhZk2pyoIaLPiE6vWMfI7BUbwl6Y7EIvZwdaxqWu?=
+ =?us-ascii?Q?4DU+0MrdQqummCrPqmXy47o4jfMsWBM/E6o7/vlz9GPdtyoVodwId50WYMvf?=
+ =?us-ascii?Q?zyFlQX/Mx9tJs1U9DBR23QkE3jWr1RqGi7qJbFGXHp1y2d1nun84r0TUML1H?=
+ =?us-ascii?Q?haXvVVZMiX+NcCa6vywojNrBkx1HIdEFh1TcNm5n099vfNrXB5dlsBCwu/RP?=
+ =?us-ascii?Q?PtKRpc75OWZGj/fjmXNNUjsOi01q41UEXbvbtq8DqrEztvcqUmdLu2p9INmN?=
+ =?us-ascii?Q?tISYzOlU8grXwb+b9ogFXUT1CbAbfSzI5hDC1vJCfsYhlJs4lOG1Meesvt2j?=
+ =?us-ascii?Q?5/FVkRzCWr2+kV5/F2p7StHz8IdHzPoGaSJ5v+Cy3+3KpS76kf8fhM9K3FO5?=
+ =?us-ascii?Q?Ia0fv3BqvHAIIbq2yYab+CAv8tcKlAT7uylPUqhNq28U8LVWJ5lM+TbIVGy6?=
+ =?us-ascii?Q?/w5EoFNpMKp1lo+IvjD3v9IpDPLydAkZznEqyrZo5eS9cWg3IL6nUvPDWz66?=
+ =?us-ascii?Q?Q1IO75l5qJ+P7NJMmCJQpB63QuDpWjRXaQ+6rcV2DDM1t4N66JuqT6ApvTpK?=
+ =?us-ascii?Q?17J4dQtqBSDJbP3L4rFvR7gOtk41LUFl497iA3JsTiPvXWwcchdWCic6cdh5?=
+ =?us-ascii?Q?KxvrmA5PjjQ7eU1aQZIpFn+zzae+dDciBr8ALktgmtC5xSsAFVmvuC+VrWOs?=
+ =?us-ascii?Q?Ja9YDVnemIzVKauTDynap+P8Lh+H7TPpJP278wuz23QjrVUIg9DNX8l5NY9c?=
+ =?us-ascii?Q?vY8RMTsaLACv05Yw22X/zZUUrGTkndme7XrTpNz9uXrFz64SYYcg2mVERBrX?=
+ =?us-ascii?Q?4nCSU8EepsHqdVUtET6KeveOCZreU1ZDWHeUZ2JH0p74teHioiHNaHrlTrYI?=
+ =?us-ascii?Q?A4r2qJbkqZcmG1sKVhZRf/ksGosK8GRIUN1vjjxEc4dlFirbDMb+fIBaVWGf?=
+ =?us-ascii?Q?w6rgT5rN2nM8FyMr3rsaKs4kRTyj99PGrebOIEOck+fe3RQ/CJWpGABOkJ3Q?=
+ =?us-ascii?Q?yeYyC7Loq1y2ooDMBIJl5x2/ejHGxN/+t0m1HxLrfxZKkkOnslSZNcJWzMaP?=
+ =?us-ascii?Q?/k/vEJpzEJSeA3C7KaCJy9w38MfdpGbouL75Xb1QBCDftuG1pICht0bsdX9N?=
+ =?us-ascii?Q?BmLcwSr1Q5enjDMr03bg4b3y46asnr30omdy5oNfui1rDf9iWQHcuFpXp7iJ?=
+ =?us-ascii?Q?91+ZvpCmeY1ZIFwKZHpQnEKaH4RzP0r++i9ktW+qqaxx47aWm+FuXj6rQaZj?=
+ =?us-ascii?Q?TSbeRfCNTG1uJAzUB2J6GRQSqHLpPwg=3D?=
+X-OriginatorOrg: citrix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e0aa0721-e136-4d8a-fc16-08de4df4d917
+X-MS-Exchange-CrossTenant-AuthSource: CH8PR03MB8274.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jan 2026 13:58:34.4323 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 335836de-42ef-43a2-b145-348c2ee9ca5b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qSrSfUcsrhoFKpYO5teGQ8QX4AHmrIoX8zj84ROw2OzT6nGqu6bTq7aUAnv4ts8X20teFdwDR6eC2N2uMB7l6NZbNfi/ALj6tH5E+1BLXV8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR03MB5624
+Received-SPF: pass client-ip=40.107.209.60;
+ envelope-from=ross.lagerwall@citrix.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 07 Jan 2026 08:52:50 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,304 +162,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Drew,
+As per the QMP spec, asynchronous messages should not be sent during
+negotiation.
 
-On Tue, Jan 6, 2026 at 5:55=E2=80=AFAM Drew Fustini <fustini@kernel.org> wr=
-ote:
->
-> This series implements the RISC-V Quality-of-Service Identifiers
-> (Ssqosid) extension [1] which adds the srmcfg register. It also
-> implements the RISC-V Capacity and Bandwidth Controller QoS Register
-> Interface (CBQRI) specification [2]. Quality of Service (QoS) in this
-> context is concerned with shared resources on an SoC such as cache
-> capacity and memory bandwidth.
->
-> Sssqosid srmcfg CSR
-> -------------------
-> The srmcfg CSR configures a hart with two identifiers:
->
->  - Resource Control ID (RCID)
->  - Monitoring Counter ID (MCID)
->
-> These identifiers accompany each request issued by the hart to shared
-> resource controllers. This allows the capacity and bandwidth resources
-> used by a software workload (e.g. a process or a set of processes) to be
-> controlled and monitored.
+The event sending code checks if the monitor is in the negotiation phase
+by checking for mon->commands != qmp_cap_negotiation_commands. However,
+events may be incorrectly sent from the point the connection is opened
+to when monitor_qmp_event() sets the negotiation phase.
 
-1. The CBQRI specification does not mandate 64-byte access width for
-its registers. Therefore, is it necessary to add a field in the ACPI
-RQSC table?
-2. In addition, although CBQRI does not require configuring a specific
-number of RMIDs for each CLOSID like MPAM does, creating a control
-group will by default create a monitoring group. So on RISC-V, the
-number of MCIDs should be at least no less than that of RCIDs, right?
-3. By the way, for Linux, could you also release a version of the
-CBQRI/Ssqosid patchset with ACPI support?
+Ensure it is always in the negotiation phase when a connection is opened
+by initializing it during monitor init and close.
 
->
-> CBQRI controllers
-> -----------------
-> CBQRI defines operations to configure resource usage limits, in the form
-> of capacity or bandwidth, for an RCID. CBQRI also defines operations to
-> configure counters to track the resource utilization per MCID.
->
-> This series implements an CBQRI capacity controller and an CBQRI
-> bandwidth controller which can be configured from the command line:
->
->   $ qemu-system-riscv64 -M virt ... \
->       -device riscv.cbqri.capacity,mmio_base=3D0x04828000[,...] \
->       -device riscv.cbqri.bandwidth,mmio_base=3D0x04829000[,...]
->
-> The mmio_base option is mandatory, the others are optional.
->
-> As many -device arguments as wanted can be provided as long as their
-> mmio regions don't conflict.
->
-> To see all possible options:
->
->   $ qemu-system-riscv64 -device riscv.cbqri.capacity,help
->   riscv.cbqri.capacity options:
->     alloc_op_config_limit=3D<bool> -  (default: true)
->     alloc_op_flush_rcid=3D<bool> -  (default: true)
->     alloc_op_read_limit=3D<bool> -  (default: true)
->     at_code=3D<bool>         -  (default: true)
->     at_data=3D<bool>         -  (default: true)
->     max_mcids=3D<uint16>     -  (default: 256)
->     max_rcids=3D<uint16>     -  (default: 64)
->     mmio_base=3D<uint64>     -  (default: 0)
->     mon_evt_id_none=3D<bool> -  (default: true)
->     mon_evt_id_occupancy=3D<bool> -  (default: true)
->     mon_op_config_event=3D<bool> -  (default: true)
->     mon_op_read_counter=3D<bool> -  (default: true)
->     ncblks=3D<uint16>        -  (default: 16)
->     target=3D<str>
->
->   $ qemu-system-riscv64 -device riscv.cbqri.bandwidth,help
->   riscv.cbqri.bandwidth options:
->     alloc_op_config_limit=3D<bool> -  (default: true)
->     alloc_op_read_limit=3D<bool> -  (default: true)
->     at_code=3D<bool>         -  (default: true)
->     at_data=3D<bool>         -  (default: true)
->     max_mcids=3D<uint16>     -  (default: 256)
->     max_rcids=3D<uint16>     -  (default: 64)
->     mmio_base=3D<uint64>     -  (default: 0)
->     mon_evt_id_none=3D<bool> -  (default: true)
->     mon_evt_id_rdonly_count=3D<bool> -  (default: true)
->     mon_evt_id_rdwr_count=3D<bool> -  (default: true)
->     mon_evt_id_wronly_count=3D<bool> -  (default: true)
->     mon_op_config_event=3D<bool> -  (default: true)
->     mon_op_read_counter=3D<bool> -  (default: true)
->     nbwblks=3D<uint16>       -  (default: 1024)
->     target=3D<str>
->
-> Boolean options correspond to hardware capabilities that can be disabled
->
-> Example SoC for CBQRI
-> ---------------------
-> An example SoC with the following CBQRI controller configuration can be
-> used to test the implementation:
->
->   - L2 cache controllers
->     - Resource type: Capacity
->     - Number of capacity blocks (NCBLKS): 12
->         - In the context of a set-associative cache, the number of
->           capacity blocks can be thought of as the number of ways
->     - Number of access types: 2 (code and data)
->     - Usage monitoring not supported
->     - Capacity allocation operations: CONFIG_LIMIT, READ_LIMIT
->
->   - Last-level cache (LLC) controller
->     - Resource type: Capacity
->     - Number of capacity blocks (NCBLKS): 16
->     - Number of access types: 2 (code and data)
->     - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
->     - Event IDs supported: None, Occupancy
->     - Capacity allocation ops: CONFIG_LIMIT, READ_LIMIT, FLUSH_RCID
->
->   - Memory controllers
->     - Resource type: Bandwidth
->     - Number of bandwidth blocks (NBWBLKS): 1024
->        - Bandwidth blocks do not have a unit but instead represent a
->          portion of the total bandwidth resource. For NWBLKS of 1024,
->          each block represents about 0.1% of the bandwidth resource.
->     - Maximum reserved bandwidth blocks (MRBWB): 819 [80% of NBWBLKS]
->     - Number of access types: 1 (no code/data differentiation)
->     - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
->     - Event IDs supported: None, Total read/write byte count, Total
->                            read byte count, Total write byte count
->     - Bandwidth allocation operations: CONFIG_LIMIT, READ_LIMIT
->
-> The memory map used for the example SoC:
->
->   Base addr  Size
->   0x4820000  4KB  Cluster 0 L2 cache controller
->   0x4821000  4KB  Cluster 1 L2 cache controller
->   0x4828000  4KB  Memory controller 0
->   0x4829000  4KB  Memory controller 1
->   0x482a000  4KB  Memory controller 2
->   0x482b000  4KB  Shared LLC cache controller
->
-> This configuration is meant to provide a "concrete" example for software
-> (like Linux) to test against. It represents just one of many possible
-> ways for hardware to implement the CBQRI spec.
->
-> The example SoC configuration is created with the following:
->
->   qemu-system-riscv64 \
->         -M virt \
->         -nographic \
->         -smp 8 \
->         -device riscv.cbqri.capacity,max_mcids=3D256,max_rcids=3D64,ncblk=
-s=3D12,alloc_op_flush_rcid=3Dfalse,mon_op_config_event=3Dfalse,mon_op_read_=
-counter=3Dfalse,mon_evt_id_none=3Dfalse,mon_evt_id_occupancy=3Dfalse,mmio_b=
-ase=3D0x04820000 \
->         -device riscv.cbqri.capacity,max_mcids=3D256,max_rcids=3D64,ncblk=
-s=3D12,alloc_op_flush_rcid=3Dfalse,mon_op_config_event=3Dfalse,mon_op_read_=
-counter=3Dfalse,mon_evt_id_none=3Dfalse,mon_evt_id_occupancy=3Dfalse,mmio_b=
-ase=3D0x04821000 \
->         -device riscv.cbqri.capacity,max_mcids=3D256,max_rcids=3D64,ncblk=
-s=3D16,mmio_base=3D0x0482B000 \
->         -device riscv.cbqri.bandwidth,max_mcids=3D256,max_rcids=3D64,nbwb=
-lks=3D1024,mrbwb=3D819,mmio_base=3D0x04828000 \
->         -device riscv.cbqri.bandwidth,max_mcids=3D256,max_rcids=3D64,nbwb=
-lks=3D1024,mrbwb=3D819,mmio_base=3D0x04829000 \
->         -device riscv.cbqri.bandwidth,max_mcids=3D256,max_rcids=3D64,nbwb=
-lks=3D1024,mrbwb=3D819,mmio_base=3D0x0482a000
->
-> In addition, please note that this series only implements the register
-> interface that CBQRI specifies. It does not attempt to emulate the
-> performance impact of configuring limits on shared resources like cache
-> and memory bandwidth. Similarly, the code does not attempt to emulate
-> cache and memory bandwidth utilization, like what would be observed on a
-> real hardware system implementing CBQRI.
->
-> There is a branch of Linux [3] which adds support for Ssqosid and CBQRI
-> along with resctrl integration. I still need to do some more cleanup of
-> the code and intend to post the Linux patch series soon.
->
-> Open issue:
->  - Support 32-bit operation as the spec states that "CBQRI registers are
->    defined so that software can perform two individual 4 byte accesses."
->    The MemoryRegionOps have .valid.min_access_size =3D 4 but the read and
->    write hooks have assert(size =3D=3D 8). I need to figure out how to
->    correctly handle accesses of size 4.
->
-> Despite the open issue above, I am sending out this new revision as I
-> believe I have addressed all the other feedback.
->
-> Changes since v3:
->  - NOTE: I should have used version v3 for the previous version posted
->    on Nov 19, 2025 given there was already v1/v2 back in 2023. Therefore
->    I am using v4 in this new revision.
->  - Rebase on current master as of Dec 29 (942b0d378a1d) and update
->    include paths for qdev-properties.h and sysbus.h
->  - Add Rb tags from Daniel
->  - Squash the Kconfig and meson.build patches together per Daniel
->  - Use riscv_cpu_cfg() instead of env_archcpu() in check_srmcfg()
->  - Add check for mstateen0.SRMCFG in check_srmcfg()
->  - Increase ISA_EXT_DATA_ENTRY() for ssqosid from PRIV_VERSION_1_12_0
->    to PRIV_VERSION_1_13_0 as it was added in Privileged Arch 1.13
->  - Calculate the size of the capacity controller MMIO space based on
->    on cc->ncblks and roundup to be aligned to the 4KB page boundary.
->  - Remove rpfx, p and cunits properties that were added in the previous
->    revision as I have decided to not support those optional features in
->    this capacity controller implementation.
->  - Update riscv_cbqri_cc_read to set 0 for RPFX, P and CUNITS in
->    cc_capabilities. This indicates that this capacity controller
->    implementation does not support RCID-prefixed mode and nor does it
->    support capacity unit limits.
->  - Add cc_cunits register after cc_block_mask register in the
->    alloc_blockmasks array and adjust logic in get_blockmask_offset,
->    riscv_cbqri_cc_read, riscv_cbqri_cc_write. Since capacity units is
->    not supported, the cc_cunits register will always be 0.
->  - Only assign capacity for rcid 0 in riscv_cbqri_cc_reset and do not
->    touch allocation for other rcid values as they are unspecified
->    following a reset.
->  - Change CC_ALLOC_OP_FLUSH_RCID to be a no-op instead of calling
->    alloc_blockmask_init() as the spec states that the configured
->    capacity block allocation or the capacity unit limit is not
->    changed by the flush operation.
->  - Add comment to explain that, while the spec only requires the busy
->    field to be reset to 0, the entire contents of the cc->cc_mon_ctl
->    abd cc->cc_alloc_ctl registers are set to 0 simplify the code in
->    riscv_cbqri_cc_reset().
->  - Simplify the access type logic for blockmask initialization in
->    riscv_cbqri_cc_reset().
->  - Add static inline helpers get_bmw() and get_slots().
->  - Add check to bandwidth_config() that rbwb is not greater than mrbwb.
->  - Link to v3: https://lore.kernel.org/qemu-devel/20251119-riscv-ssqosid-=
-cbqri-v1-0-3392fc760e48@kernel.org
->
-> Changes since v2:
->  - NOTE: I should have used version v3 for this version posted on Nov 19
->    as there were already v1 and v2 back in 2023.
->  - Rebase on master which is currently at version v10.1.50
->  - Add fields that were not in the draft used for the proof of concept
->    and introduced in final CBQRI 1.0 spec: capacity units (cunits) and
->    RCID-prefixed mode (RPFX) along with parameter P (prefixed bits)
->  - Fix check_srmcfg() to check if virtualization is enabled, and if so,
->    return virt instruction fault, otherwise return smode()
->  - Fix indentation in read_srmcfg()
->  - Add SPDX headers
->  - Add MAINTAINERS enteries
->  - Link to v2: https://lore.kernel.org/qemu-devel/20230425203834.1135306-=
-1-dfustini@baylibre.com/
->
-> Changes since v1:
->  - Rebase on current master (8.0.50) instead of 8.0.0-rc4
->  - Configure CBQRI controllers based on device properties in command
->    line arguments instead of a fixed example SoC configuration.
->  - Move TYPE_RISCV_CBQRI_BC and TYPE_RISCV_CBQRI_CC into header so that
->    machines may use it (suggested by Alistair).
->  - Change 'select RISC_CBQRI' to 'imply RISCV_CBQRI' for RISCV_VIRT.
->  - Patches 8/9 could be dropped as they are not needed for the CBQRI
->    proof-of-concept to work. They are only meant to serve as an example
->    for those implementing new machines.
->  - Link to v1: https://lore.kernel.org/qemu-devel/20230416232050.4094820-=
-1-dfustini@baylibre.com/
->
-> [1] https://github.com/riscv/riscv-ssqosid/releases/tag/v1.0
-> [2] https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
-> [3] https://git.kernel.org/pub/scm/linux/kernel/git/fustini/linux.git/log=
-/?h=3Db4/ssqosid-cbqri
->
-> Signed-off-by: Drew Fustini <fustini@kernel.org>
-> ---
-> Kornel Dul=C4=99ba (1):
->       riscv: implement Ssqosid extension and srmcfg CSR
->
-> Nicolas Pitre (5):
->       hw/riscv: define capabilities of CBQRI controllers
->       hw/riscv: implement CBQRI capacity controller
->       hw/riscv: implement CBQRI bandwidth controller
->       hw/riscv: add CBQRI to Kconfig and build if enabled
->       hw/riscv: add CBQRI controllers to virt machine
->
->  MAINTAINERS                       |   9 +
->  disas/riscv.c                     |   1 +
->  hw/riscv/Kconfig                  |   4 +
->  hw/riscv/cbqri_bandwidth.c        | 612 ++++++++++++++++++++++++++++++++=
-+
->  hw/riscv/cbqri_capacity.c         | 706 ++++++++++++++++++++++++++++++++=
-++++++
->  hw/riscv/meson.build              |   1 +
->  hw/riscv/virt.c                   |   3 +
->  include/hw/riscv/cbqri.h          |  82 +++++
->  target/riscv/cpu.c                |   2 +
->  target/riscv/cpu.h                |   3 +
->  target/riscv/cpu_bits.h           |   9 +
->  target/riscv/cpu_cfg_fields.h.inc |   1 +
->  target/riscv/csr.c                |  37 ++
->  13 files changed, 1470 insertions(+)
-> ---
-> base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
-> change-id: 20251229-riscv-ssqosid-cbqri-aee2271532ff
->
-> Best regards,
-> --
-> Drew Fustini <fustini@kernel.org>
->
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+---
+ monitor/qmp.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-Thanks,
-Yunhui
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index e1419a9efa39..187a5d7477c9 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -462,15 +462,15 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+ 
+     switch (event) {
+     case CHR_EVENT_OPENED:
+-        WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
+-            mon->commands = &qmp_cap_negotiation_commands;
+-            monitor_qmp_caps_reset(mon);
+-        }
+         data = qmp_greeting(mon);
+         qmp_send_response(mon, data);
+         qobject_unref(data);
+         break;
+     case CHR_EVENT_CLOSED:
++        WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
++            mon->commands = &qmp_cap_negotiation_commands;
++            monitor_qmp_caps_reset(mon);
++        }
+         /*
+          * Note: this is only useful when the output of the chardev
+          * backend is still open.  For example, when the backend is
+@@ -527,6 +527,7 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+     monitor_data_init(&mon->common, true, false,
+                       qemu_chr_has_feature(chr, QEMU_CHAR_FEATURE_GCONTEXT));
+ 
++    mon->commands = &qmp_cap_negotiation_commands;
+     mon->pretty = pretty;
+ 
+     qemu_mutex_init(&mon->qmp_queue_lock);
+-- 
+2.52.0
+
 
