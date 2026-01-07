@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C28CFD62B
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5977CFD626
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdTTO-0003B3-T9; Wed, 07 Jan 2026 08:21:14 -0500
+	id 1vdTUC-0003mc-F6; Wed, 07 Jan 2026 08:22:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdTTL-0003A3-AD
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:21:11 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdTUA-0003bp-CZ
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:22:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdTTH-0004Qb-Sq
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:21:11 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdTU8-0004xm-Ql
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:22:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767792064;
+ s=mimecast20190719; t=1767792120;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:resent-to:
- resent-from:resent-message-id; bh=oNgIaYQyO2UqvL7DSHOna+Kqe2GfGDXPZ0YYVVLKDTM=;
- b=gua1/BVSsgaSMlRAL1QJWnTZmfHW6ZHJNm1hje8YHNROE7UzguZ6Njfgut9OJME8kxrMSu
- W9cVPzrlTdi9QG1D+ZsEKS2k7oUSA+U2rNS69RrpWg9JATboL2+inNjxBrymZiKx7tprqv
- DJ306VupDN889Pye9gOnlBWUEiiBAoc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=Y4a0cYuav1Vio+9dWkD0CtDvJQ580nj+0sRoB4k30nI=;
+ b=gENmgjCoJxInq+o2HkltS6p3oqP7zQDCREsuti6Q0PPHk9flLE2Qeu+N6fiqzT4pVfdTZr
+ nVR5P7rZp+g9HBadU/5uCDEwKjQccmk7LULBTznDo5i69axisMYsMzDcR70fJ2l55zPdFl
+ ZLsnQ1IJWl/i+zFLk0WUHL1KjoPhXGo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-FQeJz54uPn-SwDfKhiS7pw-1; Wed,
- 07 Jan 2026 08:21:02 -0500
-X-MC-Unique: FQeJz54uPn-SwDfKhiS7pw-1
-X-Mimecast-MFC-AGG-ID: FQeJz54uPn-SwDfKhiS7pw_1767792062
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-NeI4mHd3OHy7nJ7_IUfzWQ-1; Wed,
+ 07 Jan 2026 08:21:56 -0500
+X-MC-Unique: NeI4mHd3OHy7nJ7_IUfzWQ-1
+X-Mimecast-MFC-AGG-ID: NeI4mHd3OHy7nJ7_IUfzWQ_1767792115
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA740180034A; Wed,  7 Jan 2026 13:21:01 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FA961956094; Wed,  7 Jan 2026 13:21:55 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7BBF30002D1; Wed,  7 Jan 2026 13:21:01 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 060A91956048; Wed,  7 Jan 2026 13:21:55 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3910C21E6934; Wed, 07 Jan 2026 14:20:59 +0100 (CET)
-Resent-To: richard.henderson@linaro.org, qemu-devel@nongnu.org
+ id DA14121E6937; Wed, 07 Jan 2026 14:21:52 +0100 (CET)
+Resent-To: luc.michel@amd.com, zhao1.liu@intel.com,
+ richard.henderson@linaro.org, qemu-devel@nongnu.org,
+ vsementsov@yandex-team.ru
 Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Wed, 07 Jan 2026 14:20:59 +0100
-Resent-Message-ID: <87ikddk18k.fsf@pond.sub.org>
+Resent-Date: Wed, 07 Jan 2026 14:21:52 +0100
+Resent-Message-ID: <87a4ypk173.fsf@pond.sub.org>
 X-From-Line: armbru@redhat.com  Wed Jan  7 13:43:41 2026
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3013921E6937; Wed, 07 Jan 2026 13:43:41 +0100 (CET)
+ id 36F3F21E61A8; Wed, 07 Jan 2026 13:43:41 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-Subject: [PULL 00/17] Error reporting patches for 2026-01-07
-Date: Wed,  7 Jan 2026 13:43:24 +0100
-Message-ID: <20260107124341.1093312-1-armbru@redhat.com>
+Cc: richard.henderson@linaro.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>, Luc Michel <luc.michel@amd.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 02/17] hw/nvram/xlnx-bbram: More idiomatic and simpler error
+ reporting
+Date: Wed,  7 Jan 2026 13:43:26 +0100
+Message-ID: <20260107124341.1093312-3-armbru@redhat.com>
+In-Reply-To: <20260107124341.1093312-1-armbru@redhat.com>
+References: <20260107124341.1093312-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,97 +96,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 0fc482b73d8e085d1375b4e17b0647fd2e6fe8f0:
+bbram_bdrv_error() interpolates a "detail" string into a template with
+error_setg_errno(), then reports the result with error_report().
+Produces error messages with an unwanted '.':
 
-  Merge tag 'pull-aspeed-20260105' of https://github.com/legoater/qemu into staging (2026-01-06 06:52:47 +1100)
+    BLK-NAME: BBRAM backstore DETAIL failed.: STERROR
 
-are available in the Git repository at:
+Replace both calls of bbram_bdrv_error() by straightforward
+error_report(), and drop the function.  This is less code, easier to
+read, and the error message is more greppable.
 
-  https://repo.or.cz/qemu/armbru.git tags/pull-error-2026-01-07
+Also delete the unwanted '.'.
 
-for you to fetch changes up to fefb4605b37fd59b53ae9cf89d6beedaab72f640:
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20251119130855.105479-3-armbru@redhat.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ hw/nvram/xlnx-bbram.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-  block/file-win32: Improve an error message (2026-01-07 13:25:01 +0100)
-
-----------------------------------------------------------------
-Error reporting patches for 2026-01-07
-
-----------------------------------------------------------------
-Markus Armbruster (17):
-      hw/core/loader: Make load_elf_hdr() return bool, simplify caller
-      hw/nvram/xlnx-bbram: More idiomatic and simpler error reporting
-      nbd/client-connection: Replace error_propagate() by assignment
-      error: error_free(NULL) is safe, drop unnecessary conditionals
-      error: Consistently name Error * objects err, and not errp
-      error: Strip trailing '\n' from error string arguments (again)
-      ui: Convert to qemu_create() for simplicity and consistency
-      tap-solaris: Use error_setg_file_open() for better error messages
-      qga: Use error_setg_file_open() for better error messages
-      net/tap: Use error_setg_file_open() for a better error message
-      blkdebug: Use error_setg_file_open() for a better error message
-      error: Use error_setg_file_open() for simplicity and consistency
-      net/slirp: Improve file open error message
-      error: Use error_setg_errno() to improve error messages
-      error: Use error_setg_errno() for simplicity and consistency
-      qga/commands-win32: Use error_setg_win32() for better error messages
-      block/file-win32: Improve an error message
-
- include/hw/core/loader.h    |  4 +++-
- backends/cryptodev-lkcf.c   |  2 +-
- backends/spdm-socket.c      |  4 ++--
- backends/tpm/tpm_emulator.c | 13 +++++--------
- block/blkdebug.c            |  2 +-
- block/crypto.c              |  8 ++++----
- block/file-win32.c          |  2 +-
- hw/9pfs/9p-local.c          |  2 +-
- hw/9pfs/9p.c                |  3 +--
- hw/acpi/core.c              |  5 ++---
- hw/acpi/ghes.c              |  8 ++++----
- hw/acpi/pcihp.c             |  4 +---
- hw/arm/boot.c               |  6 +-----
- hw/audio/es1370.c           |  2 +-
- hw/core/loader.c            | 10 +++++++---
- hw/intc/openpic_kvm.c       |  3 +--
- hw/intc/xics_kvm.c          |  5 +++--
- hw/nvram/xlnx-bbram.c       | 18 ++++--------------
- hw/pci-host/xen_igd_pt.c    |  2 +-
- hw/ppc/spapr.c              | 22 +++++++++++-----------
- hw/remote/vfio-user-obj.c   | 18 +++++++++---------
- hw/riscv/spike.c            | 10 +---------
- hw/sensor/emc141x.c         |  4 ++--
- hw/sensor/tmp421.c          |  4 ++--
- hw/smbios/smbios.c          |  4 ++--
- hw/vfio/migration-multifd.c |  5 +++--
- hw/virtio/vdpa-dev.c        |  4 ++--
- hw/xen/xen-pvh-common.c     | 13 ++++++++++---
- io/channel-websock.c        |  4 +---
- io/task.c                   |  4 +---
- migration/migration.c       |  6 ++----
- migration/postcopy-ram.c    | 10 +++++-----
- migration/rdma.c            |  3 +--
- monitor/hmp-cmds.c          |  2 +-
- nbd/client-connection.c     |  3 +--
- nbd/common.c                |  6 +++---
- net/dump.c                  |  2 +-
- net/l2tpv3.c                |  6 ++----
- net/slirp.c                 |  9 ++++++---
- net/tap-bsd.c               |  6 +++---
- net/tap-linux.c             |  2 +-
- net/tap-solaris.c           |  6 +++---
- net/tap.c                   |  3 +--
- qga/commands-linux.c        | 11 ++++++-----
- qga/commands-posix-ssh.c    | 23 +++++++++++++----------
- qga/commands-win32.c        | 16 ++++++++--------
- system/vl.c                 |  2 +-
- target/i386/sev.c           |  6 ++----
- target/ppc/kvm.c            |  5 ++---
- target/riscv/kvm/kvm-cpu.c  | 11 ++++++-----
- tests/unit/test-smp-parse.c |  5 +----
- ui/gtk.c                    |  2 +-
- ui/ui-qmp-cmds.c            |  4 +---
- util/vfio-helpers.c         |  5 ++---
- 54 files changed, 161 insertions(+), 188 deletions(-)
-
+diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
+index 60ede7e40f..edfb592a5e 100644
+--- a/hw/nvram/xlnx-bbram.c
++++ b/hw/nvram/xlnx-bbram.c
+@@ -88,18 +88,6 @@ static bool bbram_pgm_enabled(XlnxBBRam *s)
+     return ARRAY_FIELD_EX32(s->regs, BBRAM_STATUS, PGM_MODE) != 0;
+ }
+ 
+-static void bbram_bdrv_error(XlnxBBRam *s, int rc, gchar *detail)
+-{
+-    Error *errp = NULL;
+-
+-    error_setg_errno(&errp, -rc, "%s: BBRAM backstore %s failed.",
+-                     blk_name(s->blk), detail);
+-    error_report("%s", error_get_pretty(errp));
+-    error_free(errp);
+-
+-    g_free(detail);
+-}
+-
+ static void bbram_bdrv_read(XlnxBBRam *s, Error **errp)
+ {
+     uint32_t *ram = &s->regs[R_BBRAM_0];
+@@ -162,7 +150,8 @@ static void bbram_bdrv_sync(XlnxBBRam *s, uint64_t hwaddr)
+     offset = hwaddr - A_BBRAM_0;
+     rc = blk_pwrite(s->blk, offset, 4, &le32, 0);
+     if (rc < 0) {
+-        bbram_bdrv_error(s, rc, g_strdup_printf("write to offset %u", offset));
++        error_report("%s: BBRAM backstore write to offset %u failed: %s",
++                     blk_name(s->blk), offset, strerror(-rc));
+     }
+ }
+ 
+@@ -178,7 +167,8 @@ static void bbram_bdrv_zero(XlnxBBRam *s)
+ 
+     rc = blk_make_zero(s->blk, 0);
+     if (rc < 0) {
+-        bbram_bdrv_error(s, rc, g_strdup("zeroizing"));
++        error_report("%s: BBRAM backstore zeroizing failed: %s",
++                     blk_name(s->blk), strerror(-rc));
+     }
+ 
+     /* Restore bbram8 if it is non-zero */
 -- 
 2.52.0
 
