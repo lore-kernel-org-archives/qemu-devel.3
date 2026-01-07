@@ -4,103 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89FABCFD626
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D03CFD624
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdT5q-0003Ej-Sx; Wed, 07 Jan 2026 07:56:54 -0500
+	id 1vdTBC-00050P-MZ; Wed, 07 Jan 2026 08:02:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vdT5V-0003CY-W7
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 07:56:34 -0500
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vdT5O-0006R3-I1
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 07:56:31 -0500
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-2abe15d8a4bso2875964eec.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 04:56:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1767790584; x=1768395384; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8EJ/8UO5yAHkGYW0pSPwXOZvLsa/TxganG/Gr4V707g=;
- b=Mw8yHKV3d3ByU7YUOtHk5B7E2dxu79h+Iu8qAnF9hizOhfyjvPTmurWVCseJeCX/Dw
- G69lS7GOfrx0v9Tm8oAVLxOYVqxBNB47zDV7qNL9tBKIfF7H9k+8TRJ7uwwBrm6Ij1IZ
- 0pe2bXD2UDQoW56GCf9D+afKEGcXxw0F0TPn6MdXzewkIilRbp91jxfCnElhFnzan4ZY
- 01SVVTxW+zELbLwg+gkAlYQOBpqUbCHpUq0ObVibBr3DW+ztQ1uf/0JvY+7hTRO2xzqw
- nhj6rXY/tRNKIYJuJeMfGMUd9m6DrZkVtDT9Ju0VGFaOADCJ1orR4lUtrURQVYKddo/W
- YywA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767790584; x=1768395384;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8EJ/8UO5yAHkGYW0pSPwXOZvLsa/TxganG/Gr4V707g=;
- b=RXU0qRPr4yeTuEktC9MooNa8FGSngP7BUofaUqe1BspbzVArOWetODtVJGH2Vzlt6c
- i8fZ/H1v1AiyxNk4sOZE58P6v2K2nDSPkvJx47nlKgOHr5NX0xxQYx0zqSayMKTe1KHT
- D+vH7+DFUBUaFOmbyy2R/CwyC1WpF/IWeYuYyOMtRduJLb0lAFzvGZMQsYGcwJpGrjim
- 16ZTTXwjtdSlByrtMQyfMaaFgSWP9wwSvSEVFnoWV64BVKVGkNc7NiIBLU3ySZGZRnDr
- Vc0jwAEoWzrkO5oAzexJb1iFZfyJntVX9P2pkLanfDHNrAoVMgsxKhp1U+giaq8zZARH
- ekWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWn/2Xcbvr+qSMpyeJPRsR/ezpZEeJRDKI5LVo7UB4kzc1r38Vr4Y4U7bg0fh/bpGBLc+k/ZolmBReS@nongnu.org
-X-Gm-Message-State: AOJu0Yy3RxfMw5hvRtyufZhjsOWy+ZCdRV5uLNHMAdNi7Y6Vmb+fMMH7
- nxkhV2DdVWInu5YPHPRptaCvoFVYAttfSnmmyi5s3wR+O6MwbhUSHblTNZ46tja73/FsCP1L2e9
- lzUTv2IU=
-X-Gm-Gg: AY/fxX5gg5+hf1tTtGhDLXXXN8HM8av2+q7/zzauvQxUVaPGDO7l8kVeDWFY0DQR5SX
- ybF4HehCqWOHNkRcy/UnZg5SY5ThONWsC9pzfn51T5gLqzLWIVUDuNerIl7oolubEiLje5G9Tsc
- tku4OqW/95Osp9Y10ye3Es8brQ4W1tUwT+V8tUjZxyUTgkWI2YcJNKi0IfhjkMGCApyQp0MvQfl
- Zcamf/5PLX1oHoAiQIcrqdSXIXKX6TlBFv86lxiMyt5IbN12GEEaI1h1H6g5mF8l73mFSkJ+EVx
- FYAbvAho0pOmhUL2RsCpUNBbEmmjsKII4z7vjNeTpXCezScWYkffXpstXk+k/irUdZHoC81+Gvp
- CeK2FarGcwtCviLISkk7n3ILZ++Bl+j2XMtrf98I8IgqdSBVKL/gQVhcVKqkBSMZg14D/tnxwBf
- +jW47OAffuymL0NCZ749wIl2ZbkFzxvJ4bB8dDLVm1Swn8nUkDIrV4hEYXUHxUg8N5sV6AZtQSZ
- atAFndCoL8=
-X-Google-Smtp-Source: AGHT+IEHYybT0Qug4hifoehb7IHw4YWYOSZQYYOdcrgPhJXcZmHG/2IkEsILeTOj8FhGFDHCWHbQzw==
-X-Received: by 2002:a05:7300:2141:b0:2ae:5ffa:8da4 with SMTP id
- 5a478bee46e88-2b17d200d87mr1711592eec.1.1767790583642; 
- Wed, 07 Jan 2026 04:56:23 -0800 (PST)
-Received: from [192.168.68.110] (200-162-225-127.static-corp.ajato.com.br.
- [200.162.225.127]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2b1706a1383sm6420530eec.9.2026.01.07.04.56.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 04:56:23 -0800 (PST)
-Message-ID: <ba2d7b5c-dd6d-4b0f-b7cc-ef2d78bc0341@ventanamicro.com>
-Date: Wed, 7 Jan 2026 09:56:17 -0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vdTAk-0004vg-8u
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:02:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vdTAi-0007Bs-LL
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:01:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767790915;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=31aPuuD3PU7TZIw48kRji4jd9O4iQc8f9NEiWcxMzF0=;
+ b=YnIGdC64BsiMIDaksxxv83yoga1+EIm3H+g9nhPooj4l2n9whKPvk2P+sEddsWL3LX6u8v
+ CZkxFO7p5FpmcSATb+UYlYDvqcpovpRYLTZ3/nPXHRL1BnJmH1DSOUaAxT8hmCi/9XRJBD
+ Ci5+xCK0BIX85hHb+mee3LkNuKDXQ84=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-gw8mIWIGPKGrwjbYXUdmAQ-1; Wed,
+ 07 Jan 2026 08:01:51 -0500
+X-MC-Unique: gw8mIWIGPKGrwjbYXUdmAQ-1
+X-Mimecast-MFC-AGG-ID: gw8mIWIGPKGrwjbYXUdmAQ_1767790910
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 64D1F19560B6; Wed,  7 Jan 2026 13:01:50 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.169])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AD80419560A2; Wed,  7 Jan 2026 13:01:48 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 1/4] tests/docker: improve handling of docker probes
+Date: Wed,  7 Jan 2026 13:01:42 +0000
+Message-ID: <20260107130145.1495219-2-berrange@redhat.com>
+In-Reply-To: <20260107130145.1495219-1-berrange@redhat.com>
+References: <20260107130145.1495219-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/16] hw/riscv: Add the Tenstorrent Atlantis machine
-To: Joel Stanley <joel@jms.id.au>, Alistair Francis
- <alistair.francis@wdc.com>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Chris Rauer <crauer@google.com>,
- Vijai Kumar K <vijai@behindbytes.com>, Sunil V L <sunilvl@ventanamicro.com>,
- Ran Wang <wangran@bosc.ac.cn>, Michael Ellerman <mpe@oss.tenstorrent.com>,
- Joel Stanley <jms@oss.tenstorrent.com>,
- Nick Piggin <npiggin@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-References: <20260106055658.209029-1-joel@jms.id.au>
- <CACPK8XdxvLLsQxPqSyakxh2GeK2AcGeukcerswB2eyTfeghOGQ@mail.gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <CACPK8XdxvLLsQxPqSyakxh2GeK2AcGeukcerswB2eyTfeghOGQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-dy1-x132c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,43 +88,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey!
+The docker.py script has logic to guess the container command and
+detects one of
 
-On 1/6/26 4:35 AM, Joel Stanley wrote:
-> On Tue, 6 Jan 2026 at 16:27, Joel Stanley <joel@jms.id.au> wrote:
->>
->> Introducing Tenstorrent Atlantis!
-> 
-> Note that this was based on v10.2.0 and passed CI before I sent it:
-> 
->    https://gitlab.com/shenki/qemu/-/pipelines/2246526243
-> 
-> However master has moved along and there are now some merge conflicts.
-> I'll hold off sending a v2 for now, but in case anyone is trying to
-> test, a rebased tree is here:
-> 
->    https://gitlab.com/shenki/qemu/-/tree/tt-atlantis
+  * docker
+  * sudo -n docker
+  * podman
 
-In fact the (non-documented) practice in qemu-riscv is to send patches based on the
-maintainer's tree (https://github.com/alistair23/qemu.git) branch 'riscv-to-apply.next'.
+but the "docker.py probe" command then throws away the detected argv
+and prints a slightly different argv based soley on the detected
+argv[0]. The result is that 'probe' will print
 
-The patches don't apply in that tree too btw, but it's fine to wait for code reviews
-before re-sending it.
+  * docker
+  * sudo docker
+  * podman
 
+which means that if sudo was detected & the result of 'probe' were
+used direclty, it would end up prompting for password interaction
+every time.
 
-Thanks,
+The 'configure' script, however, runs 'probe' and then throws away
+the printed argv again, reporting only 'podman' or 'docker', which
+is used to set the $(RUNC) variable for tests/docker/Makefile.include
+which is in turn used to pass --engine to docker.py. So the docker.py
+command will re-detect the need for 'sudo -n' and use it correctly
 
-Daniel
+The problem with this is that some commands in Makefile.include do
+not call docker.py at all, they invoke $(RUNC) directly. Since
+configure threw away the 'sudo' command prefix Makefile.in won't
+be adding either 'sudo' or 'sudo -n', it'll just run plani 'docker'
+which is wrong.
 
+This commit sanitizes things so that the 'docker.py probe' prints
+out the exact detected ARGV, and configure fully preserves this
+ARGV when setting $(RUNC). Since "$(RUNC)" is no longer just a bare
+engine name, however, we must now also set the $(CONTAINER_ENGINE)
+variable for Makefile.include so it can pass something sane to
+the --engine arg for docker.py
 
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ configure                     | 19 +++++++------------
+ tests/docker/Makefile.include |  5 +++--
+ tests/docker/docker.py        |  7 +------
+ 3 files changed, 11 insertions(+), 20 deletions(-)
 
-
-
-
-
-> 
-> Cheers,
-> 
-> Joel
+diff --git a/configure b/configure
+index 55e0bd3425..1adbb357df 100755
+--- a/configure
++++ b/configure
+@@ -1316,17 +1316,11 @@ fi
+ ##########################################
+ # functions to probe cross compilers
+ 
+-container="no"
+-runc=""
++runc="no"
+ if test $use_containers = "yes" && (has "docker" || has "podman"); then
+-    case $($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe) in
+-        *docker) container=docker ;;
+-        podman) container=podman ;;
+-        no) container=no ;;
+-    esac
+-    if test "$container" != "no"; then
+-        docker_py="$python $source_path/tests/docker/docker.py --engine $container"
+-        runc=$container
++    runc=$($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe)
++    if test "$runc" != "no"; then
++        docker_py="$python $source_path/tests/docker/docker.py --engine $container_engine"
+     fi
+ fi
+ 
+@@ -1446,7 +1440,7 @@ probe_target_compiler() {
+   esac
+ 
+   for host in $container_hosts; do
+-    test "$container" != no || continue
++    test "$runc" != no || continue
+     test "$host" = "$cpu" || continue
+     case $target_arch in
+       # debian-all-test-cross architectures
+@@ -1775,8 +1769,9 @@ echo all: >> $config_host_mak
+ echo "SRC_PATH=$source_path" >> $config_host_mak
+ echo "TARGET_DIRS=$target_list" >> $config_host_mak
+ echo "GDB=$gdb_bin" >> $config_host_mak
+-if test "$container" != no; then
++if test "$runc" != no; then
+     echo "RUNC=$runc" >> $config_host_mak
++    echo "CONTAINER_ENGINE=$container_engine" >> $config_host_mak
+ fi
+ echo "SUBDIRS=$subdirs" >> $config_host_mak
+ if test "$rust" != disabled; then
+diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+index 38467cca61..7d4582b6a8 100644
+--- a/tests/docker/Makefile.include
++++ b/tests/docker/Makefile.include
+@@ -16,8 +16,9 @@ DOCKER_DEFAULT_REGISTRY := registry.gitlab.com/qemu-project/qemu
+ endif
+ DOCKER_REGISTRY := $(if $(REGISTRY),$(REGISTRY),$(DOCKER_DEFAULT_REGISTRY))
+ 
+-RUNC ?= $(if $(shell command -v docker), docker, podman)
+-DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --engine $(RUNC)
++CONTAINER_ENGINE = auto
++DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --engine $(CONTAINER_ENGINE)
++RUNC ?= $(shell $(DOCKER_SCRIPT) probe)
+ 
+ CUR_TIME := $(shell date +%Y-%m-%d-%H.%M.%S.$$$$)
+ DOCKER_SRC_COPY := $(BUILD_DIR)/docker-src.$(CUR_TIME)
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index 3b8a26704d..ff68c7bf6f 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -618,12 +618,7 @@ class ProbeCommand(SubCommand):
+     def run(self, args, argv):
+         try:
+             docker = Docker()
+-            if docker._command[0] == "docker":
+-                print("docker")
+-            elif docker._command[0] == "sudo":
+-                print("sudo docker")
+-            elif docker._command[0] == "podman":
+-                print("podman")
++            print(" ".join(docker._command))
+         except Exception:
+             print("no")
+ 
+-- 
+2.52.0
 
 
