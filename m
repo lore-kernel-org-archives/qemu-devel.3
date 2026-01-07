@@ -4,111 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B5BD0D141
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 17:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD5D2D0D145
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 17:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdWz3-0004d1-TR; Wed, 07 Jan 2026 12:06:14 -0500
+	id 1vdWzI-0004pv-Jy; Wed, 07 Jan 2026 12:06:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vdWyi-0004Y0-3U
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:05:49 -0500
+ id 1vdWyw-0004e9-QI
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:06:10 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vdWyg-0002tm-Hr
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:05:47 -0500
+ id 1vdWys-00037S-0z
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:06:00 -0500
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6079ehYX2988614
- for <qemu-devel@nongnu.org>; Wed, 7 Jan 2026 17:05:42 GMT
+ 6079ewkI2988925
+ for <qemu-devel@nongnu.org>; Wed, 7 Jan 2026 17:05:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=RtCW7I1q9ze034KTpj1/imWx
- OwDBeM+T62crw9vYBOE=; b=H85netOEZdcmglN17Fbe1OfFvmurqmhotUax4HP0
- nabKTcRIpzgkFLHLRTN7Rqx2yqtwGvzySLNZ3CBfzekFrC4MwO/Fk3dQPVEtp8Bo
- uiNPW3Cx21VPsSJt1mk1CW6+5r6Gl7x/0RQvJOOlvQ8tKpml304CWTbvgwyNlcAu
- i9y52HnHK+C5vxamyp09tt6sazrAF1qhrkaMCCCwUbODms45zlWpMecnzwkyg+pH
- h+DUgS0nZ+d7e/OJ7hgoXQwESMGuDpVDkR5CjbWgHzUdXNeW7kncomlkG0iQgqq3
- otHTwRDC5phSkUeAyBFmtkPBK3dVdS2bWaCSSmp8FyeZXQ==
-Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
- [74.125.224.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bhn2nscgu-1
+ :references:subject:to; s=qcppdkim1; bh=vxxmsJELyjPy6QHQv3H2P6Eu
+ LJGJb9EtQu5xOYP9QrY=; b=l25d0fvkMdI/jcXKT13NCGDWu+c5c7+mlJBS5Gcz
+ 5etc7ksXyKDK4za3Kcqv8WudpJ4Hk1PsZB554DAB+sv6pkGSAY6F50BjakQOPgDE
+ KeX6O3ocK5uytaXxZA8bvFcYXQyAPCuqI+QUclvIl3BFtg9PbQQqu6Och/FcILxC
+ 4IgNTIO9+gpq+xG3udkMj54NH6tYYNblL18b7CQobK/ZSov9vZAPGL5OEOfXap7K
+ xeVxHwBmbH9NbPdsppkCOWQs5XWRLfA/kX+e/d+1hpo0O0iT1vGcqOclzYcEqh/1
+ UrVzy/1O68oRO0hyXcqJs2A3F2Nl4BBk8iy1/J8Juqn9oA==
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
+ [74.125.224.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bhn2nscj9-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 17:05:41 +0000 (GMT)
-Received: by mail-yx1-f70.google.com with SMTP id
- 956f58d0204a3-63e32e1737aso3166766d50.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 09:05:40 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 17:05:57 +0000 (GMT)
+Received: by mail-yx1-f69.google.com with SMTP id
+ 956f58d0204a3-63e0c5c5faeso3114284d50.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 09:05:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1767805540; x=1768410340; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1767805557; x=1768410357; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=RtCW7I1q9ze034KTpj1/imWxOwDBeM+T62crw9vYBOE=;
- b=iOiFm4MIwEVKGk/Usl43CJnxWJMdaX6UPNF3qlq+x1P1NDHDlau5vwX6WZlNo50xAp
- NGVeWSsFc8IworGRZDAbrPKR7HglAdioQmxgH8kG72RSCQpXBs3ehhMtys5qfyqKGH/r
- HZ2e/DOj32PgGLeOib7OlBWDoSc4geNYa0ufx0mZRHanhVtAwqCPp9tngZ7hgifoYOrb
- sfLF7nPZSg3OcU2u0W4dhPkI2AVVrh1/ZWGVpa3XFH5GkAAhEU3dBikDFwn5LAJwVg7x
- kY1xyu5izivdpvgnQEoD0NHl2MSsgNBzB1lJvpVJ27F4NWptgPMlxxkC2SPixtkAp8AR
- +7jg==
+ bh=vxxmsJELyjPy6QHQv3H2P6EuLJGJb9EtQu5xOYP9QrY=;
+ b=Yer7PJe7Pdts+uKxtPXnyRaS9uhBY4Cy7XS3N42S4lYBfomNrFWgvpe13chUe5FOLi
+ +i+e8/HsnrjYIhd5DVyh9eV4If1PSyL0Q7lW5/nkxeHia95+csXb5Rsg5qzRicDoPv3b
+ sJD4e7HbeehfdGTqvJA7vyQKfiMvII+0gKtFXd/U5yIxvzD1HhGvX1/Ov6VqjakieQOs
+ eT/cb1H+lKcm42DoLvhKI9ErhE9/yIN29+rfgL71REu5mTzQK5lpfGmmHJRvbi4axin7
+ oaPuW6dftgpMQ8IAMp4cuRc2MgWwmrUrhXHVHA01c8E/5ZSta4pO7ypO4XZPJbURjNHE
+ q7SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767805540; x=1768410340;
+ d=1e100.net; s=20230601; t=1767805557; x=1768410357;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RtCW7I1q9ze034KTpj1/imWxOwDBeM+T62crw9vYBOE=;
- b=Hs2zn1ayWVy1shbgz/uCz5y8hTV3rZmEMn5qPdF+/VgIBWJBOHrZkw/AfSw7sDksMB
- AeqS7GZuN8aWHB448zTLvwptMWu4tAUZOTXZ8XZfJP70cgWD/N9rsIrcsEyiMUaGGKX4
- arydEKd9TEgGNbnFESSD1gs856ccgEdYmvuPVr8g75J9NWoKfCC+JcBsYEleHOjNcERz
- rr00Jm17Y449nwuhTDPvCKSnRIgAIQQLYnbP0iu6qRNCTZ25R88OC/0Y216o57aFmz+q
- POch0vzjyAAfnl653/6KVNt7OxgTqdy5SpGi07jGzQsqQ2wkWTR191mV8aNwormNUoJ7
- 7x7g==
-X-Gm-Message-State: AOJu0YyyhRV20rLS80k6LTDXQJqr4ykowEDR5moD7jB2ULDI1KXCM6B6
- MU7nOV3nR99IzqI53YguHqrpxgoRe+bRO+EUx5qHh+0to5fWWCaRDXH0iwcdsVwr61fpiPfAqLH
- LXPVjgT9m5GtGey1imWIviQ5PeOulzT9bb9ZfkQID8QXAmSw4Hwfrkp5zgvgxvCtE3Nm0Ji1ocX
- BV2VndyblEl30Y9jzxTpizAi6PAawC1QRr
-X-Gm-Gg: AY/fxX4ZztHIxowlJ/WwmewXclYvp+ufrQzlbriGWYU0aqq4aNFb4xhnPXpCwhOg9UZ
- bv7NX9+d1jVmKKTZvtsWfZzawPWP3ftIXTu9+Mhdir84rU0+DqM05AYBI1eXS/Y9IC9p8mRuPrH
- M6nS3HMijDcRKQZ+N5Zgtp7R183oqxs9xwgzCvBimjzuLEt1D0TDKXif2eKhl5DRF+xrbr
-X-Received: by 2002:a53:de4b:0:b0:644:4986:4559 with SMTP id
- 956f58d0204a3-64716b75d59mr2107103d50.22.1767805540378; 
- Wed, 07 Jan 2026 09:05:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEzlI9sBqmhpZxGgDnYi/s+Alsfg+xuIUrHyc8RzA5iHx3RD4MlnQP2B+XQFPu/RRO5xahL5og6OHx67/7j6pU=
-X-Received: by 2002:a53:de4b:0:b0:644:4986:4559 with SMTP id
- 956f58d0204a3-64716b75d59mr2107085d50.22.1767805539868; Wed, 07 Jan 2026
- 09:05:39 -0800 (PST)
+ bh=vxxmsJELyjPy6QHQv3H2P6EuLJGJb9EtQu5xOYP9QrY=;
+ b=tsCIfbsYBqj3iAmRHajo2F3Uz+bLiSwcl7v1wkfglyamfoQolEqR9BocGRkdSgva1O
+ mco/27qWWMiZ8YtE/DFxpK0/QLJoK2JPtHke/ztp+T9f7Ay2ENnDhMradNVWjrblmt8e
+ yO2oAKNSNtssGkx4p8cy51UjRBo++t0su3hSTXvl9FN25pSFnyLO939Q8HgczTttq6Yc
+ wf8qqoLEIw4awHncFFWJNf9Tq1LWyHl6G1PIRIDMIkIf8+bQsmWSzPjSc0p2SnaQIy4N
+ uAtcrIjPnANVBauTWguAsqT7vFP7C786qv4mLtWTm99D1P7LAKqQnyMQzP1awzr4amvB
+ SUGA==
+X-Gm-Message-State: AOJu0YyaCyfUtPA3mhXZ5kubcwOzhKJa9xpVEFyd5I0bJYtJo4wLEJOF
+ Aw0spo9DS0blrHNmuN1LrjeH749VjbNj4eY5bRA1JQhxSz4FNo4q2BPk4PfJJYkvNyHqfbUuNVZ
+ 8c2btjkGemaMXA4HsUhcipo1zXXi5Rk48w6uLyoelmy38LgcYZIZiRALycbFbVAx57jraAbkQMf
+ e2Jp3t8rwFHIPE0r7/1oJcpAuQm6xsOrJ0
+X-Gm-Gg: AY/fxX7OmyriDEVajc4QoJO2MgqmknW6DCESWb6weP/zEcBeq1Ql3zj7sxqx0MsPmjg
+ MszBO8p3GcvJIXhtrmOoigVKiZNYpoynxuyFAzhpmK6ri/r15x5ZljizjiGPBWPIcqjAvJvUUL1
+ TAC+6F8xt3ZwiWzc5bXmrPKtDlzUyYAMoI841nKDlAmNA2ne9hdcJNZP2F0+TI8Mo//24g
+X-Received: by 2002:a05:690e:140f:b0:646:518b:8df3 with SMTP id
+ 956f58d0204a3-64716b35e7bmr2821804d50.4.1767805556551; 
+ Wed, 07 Jan 2026 09:05:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF4QhwH/Jkh4NGOyFa1xzAHbRlluCXY/W5oH9+9FJ771m0Z8xKTtBF8YExjPch8O9H7fUtwgoMmQdXPua6eFtw=
+X-Received: by 2002:a05:690e:140f:b0:646:518b:8df3 with SMTP id
+ 956f58d0204a3-64716b35e7bmr2821790d50.4.1767805556172; Wed, 07 Jan 2026
+ 09:05:56 -0800 (PST)
 MIME-Version: 1.0
 References: <20251224160708.89085-1-philmd@linaro.org>
- <20251224160708.89085-4-philmd@linaro.org>
-In-Reply-To: <20251224160708.89085-4-philmd@linaro.org>
+ <20251224160708.89085-2-philmd@linaro.org>
+In-Reply-To: <20251224160708.89085-2-philmd@linaro.org>
 From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Wed, 7 Jan 2026 11:05:24 -0600
-X-Gm-Features: AQt7F2rdZW8XIrOBYEFdgChl9GPlArQoVDZjLqwS7MamZ9hoAWgY2AVDt_lQlFU
-Message-ID: <CAEqNhNZnpuXo5fKJFg_9ig8gw4Hgx4kPgY2dGSzdG5KAHKKbhA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] configs/targets: Forbid Hexagon to use legacy
- native endianness API
+Date: Wed, 7 Jan 2026 11:05:40 -0600
+X-Gm-Features: AQt7F2oSPxLXuNgx6tmhFIv4TCfC54RoQTauyhQITDS9GMuSTc1dNCXrKGxf9no
+Message-ID: <CAEqNhNZt3aGo9NyZqboyRrPz9DK6rG3V718V_imiGi=XqD5RyQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] target/hexagon: Inline translator_ldl()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>, Laurent Vivier <laurent@vivier.eu>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000003c76d30647cf4de2"
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDEzNSBTYWx0ZWRfX4z0dm2Jk4ZaT
- ovEM7+2PwooUV8B85YleEqdEiVqFaPVTPR1lDPm4lFMpVGhfYVv3ddV4u19wJkAjsJf25ahtgjR
- PR67xO5Nulan7BqFtaEkHgKg4A9p8ZT5DWPnKeJ5PN7roaJt5epaGfy1YJ3kY1wy02lfNGORk3w
- ZX9tRah6fLgwWeRc5XNVRHCMqYMKgqIR7R36ZOaztrlCa5nbmh3aOzDTpyuTD7gceUgvo0oXgdb
- 5WvYKWM7+X9GVoxXtJhqKIcSji34ACpOE+pylOvk94CIYBiRrO3LZ/03tNqPv6RkXqIKFZrW6Ud
- J5AtY5jcQwJ0RDJtmO/m5xdWSe4ohVQg65P3aFvOSZKd8mbhfUkWaJmPMFnxirYkhh8Nt+CD9dV
- GZvdn6BmXPIJpzOLhjcfmPsYQs87nhuELyXduEVlwHQQ2lK6WrG4Ldss199WUkFzZ4yQE/uHKq8
- QNsdsJQESPJmcfoWB2Q==
-X-Authority-Analysis: v=2.4 cv=CYEFJbrl c=1 sm=1 tr=0 ts=695e9265 cx=c_pps
- a=S/uc88zpIJVNbziUnJ6G4Q==:117 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+Content-Type: multipart/alternative; boundary="000000000000353aec0647cf4ee0"
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDEzNSBTYWx0ZWRfXxS4ElshUvBo7
+ fZew8tJ3g/NLj1j0LFLE5FyUESJlyd+c4nUVcRq3cInOWZONdbg1JZq1J7cPhZRveC4BZyuhjDq
+ oMjw2CvN1ajXvqNhzO8qCJM9IcQDNfStx1hXhBsfhOh02zgIWnh6AjTX94kak8gkT9+NB7PR03B
+ hHNLe54ZMOEnYvTeBKQbjcXyQlTsc3ftTAUyRTTj6sJwjRAaB0cbeRtSnyF60pP5UjNZJ4Qz5Aj
+ 6C/lkNPCfSFPo13mJe8ZfGWaqxFsr1vpOW1eQOvAR9zgJS9hOjwiyTB9gXjIRNZmjXZwNI06Ty1
+ ALlwmpYPqVcHyfjmOEswy5K7ZMqKPKdUVDs5lWQ7uyi6hh+YdSAh2bjEiwH8dowamM3QACtePSN
+ Y/DGjKdaB4yhklF4+2SF3BvB5xxL7KyKuogLHVVBoADsooGqSQrzOz0ZWGjeLunGFeAkZrM7jkL
+ so2gUMdc430G0qXwnnA==
+X-Authority-Analysis: v=2.4 cv=CYEFJbrl c=1 sm=1 tr=0 ts=695e9275 cx=c_pps
+ a=J+5FMm3BkXb42VdG8aMU9w==:117 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=CjeyidwC-jpWUi_oe4sA:9 a=QEXdDO2ut3YA:10 a=P42SzZsFAkGMRQW4UBoA:9
- a=8d9DbF3GtaKlsBmb:21 a=lqcHg5cX4UMA:10 a=nd2WpGr1bMy9NW-iytEl:22
+ a=fIa1KnOOv_DP7zG4_SMA:9 a=QEXdDO2ut3YA:10 a=4dN6xpogHmLD9u_Te1kA:9
+ a=PbZoswaFZibY5DkV:21 a=lqcHg5cX4UMA:10 a=Epx66wHExT0cjJnnR-oj:22
  a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: g5rBlaydYD5vl1Lug6_qWman71L2NCci
-X-Proofpoint-ORIG-GUID: g5rBlaydYD5vl1Lug6_qWman71L2NCci
+X-Proofpoint-GUID: L1RMJBEz_Ceot1N1_zjRYRmtrs2tPhcX
+X-Proofpoint-ORIG-GUID: L1RMJBEz_Ceot1N1_zjRYRmtrs2tPhcX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-07_03,2026-01-06_01,2025-10-01_01
@@ -143,7 +142,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003c76d30647cf4de2
+--000000000000353aec0647cf4ee0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -151,15 +150,16 @@ On Wed, Dec 24, 2025 at 10:07=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philm=
 d@linaro.org>
 wrote:
 
-> The qemu-hexagon binary is buildable without a single use
-> of the legacy "native endian" API. Unset the transitional
-> TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
-> further uses of the legacy API.
+> translator_ldl() is defined in "exec/translator.h" as:
 >
-> Preliminary commits allowing this final change:
+>   198 static inline uint32_t
+>   199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
+>   200 {
+>   201     return translator_ldl_end(env, db, pc, MO_TE);
+>   202 }
 >
->   - beb38fda0f0 target/hexagon: Replace MO_TE -> MO_LE
->   - fdcb7483ae0 target/hexagon: Explode MO_TExx -> MO_TE | MO_xx
+> Directly use the inlined form, expanding MO_TE -> MO_LE
+> since Hexagon use little-endian order.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
@@ -167,26 +167,52 @@ wrote:
 
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
- configs/targets/hexagon-linux-user.mak | 1 +
->  1 file changed, 1 insertion(+)
+ target/hexagon/translate.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
 >
-> diff --git a/configs/targets/hexagon-linux-user.mak
-> b/configs/targets/hexagon-linux-user.mak
-> index aec1a04d1b4..6763e2111d5 100644
-> --- a/configs/targets/hexagon-linux-user.mak
-> +++ b/configs/targets/hexagon-linux-user.mak
-> @@ -3,3 +3,4 @@ TARGET_XML_FILES=3Dgdb-xml/hexagon-core.xml
-> gdb-xml/hexagon-hvx.xml
->  TARGET_SYSTBL=3Dsyscall.tbl
->  TARGET_SYSTBL_ABI=3Dcommon,32,hexagon,time32,stat64,rlimit,renameat
->  TARGET_LONG_BITS=3D32
-> +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index 8fce219c0de..c37035c4774 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -203,8 +203,9 @@ static int read_packet_words(CPUHexagonState *env,
+> DisasContext *ctx,
+>      memset(words, 0, PACKET_WORDS_MAX * sizeof(uint32_t));
+>      for (nwords =3D 0; !found_end && nwords < PACKET_WORDS_MAX; nwords++=
+) {
+>          words[nwords] =3D
+> -            translator_ldl(env, &ctx->base,
+> -                           ctx->base.pc_next + nwords * sizeof(uint32_t)=
+);
+> +            translator_ldl_end(env, &ctx->base,
+> +                               ctx->base.pc_next + nwords *
+> sizeof(uint32_t),
+> +                               MO_LE);
+>          found_end =3D is_packet_end(words[nwords]);
+>      }
+>      if (!found_end) {
+> @@ -966,8 +967,10 @@ static bool pkt_crosses_page(CPUHexagonState *env,
+> DisasContext *ctx)
+>      int nwords;
+>
+>      for (nwords =3D 0; !found_end && nwords < PACKET_WORDS_MAX; nwords++=
+) {
+> -        uint32_t word =3D translator_ldl(env, &ctx->base,
+> -                            ctx->base.pc_next + nwords *
+> sizeof(uint32_t));
+> +        uint32_t word =3D translator_ldl_end(env, &ctx->base,
+> +                                           ctx->base.pc_next
+> +                                           + nwords * sizeof(uint32_t),
+> +                                           MO_LE);
+>          found_end =3D is_packet_end(word);
+>      }
+>      uint32_t next_ptr =3D  ctx->base.pc_next + nwords * sizeof(uint32_t)=
+;
 > --
 > 2.52.0
 >
 >
 
---0000000000003c76d30647cf4de2
+--000000000000353aec0647cf4ee0
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -196,17 +222,19 @@ te_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Dec 24, 2025 at=
  10:07=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@=
 linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"=
 gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">The qemu-hexagon binary is buildable without a=
- single use<br>
-of the legacy &quot;native endian&quot; API. Unset the transitional<br>
-TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid<br>
-further uses of the legacy API.<br>
+4,204,204);padding-left:1ex">translator_ldl() is defined in &quot;exec/tran=
+slator.h&quot; as:<br>
 <br>
-Preliminary commits allowing this final change:<br>
+=C2=A0 198 static inline uint32_t<br>
+=C2=A0 199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc=
+)<br>
+=C2=A0 200 {<br>
+=C2=A0 201=C2=A0 =C2=A0 =C2=A0return translator_ldl_end(env, db, pc, MO_TE)=
+;<br>
+=C2=A0 202 }<br>
 <br>
-=C2=A0 - beb38fda0f0 target/hexagon: Replace MO_TE -&gt; MO_LE<br>
-=C2=A0 - fdcb7483ae0 target/hexagon: Explode MO_TExx -&gt; MO_TE | MO_xx<br=
->
+Directly use the inlined form, expanding MO_TE -&gt; MO_LE<br>
+since Hexagon use little-endian order.<br>
 <br>
 Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
 aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
@@ -216,25 +244,66 @@ in@oss.qualcomm.com">brian.cain@oss.qualcomm.com</a>&gt;</div><div class=3D=
 "gmail_default" style=3D"font-family:monospace"><br></div><blockquote class=
 =3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
 b(204,204,204);padding-left:1ex">
-=C2=A0configs/targets/hexagon-linux-user.mak | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
+=C2=A0target/hexagon/translate.c | 11 +++++++----<br>
+=C2=A01 file changed, 7 insertions(+), 4 deletions(-)<br>
 <br>
-diff --git a/configs/targets/hexagon-linux-user.mak b/configs/targets/hexag=
-on-linux-user.mak<br>
-index aec1a04d1b4..6763e2111d5 100644<br>
---- a/configs/targets/hexagon-linux-user.mak<br>
-+++ b/configs/targets/hexagon-linux-user.mak<br>
-@@ -3,3 +3,4 @@ TARGET_XML_FILES=3Dgdb-xml/hexagon-core.xml gdb-xml/hexagon=
--hvx.xml<br>
-=C2=A0TARGET_SYSTBL=3Dsyscall.tbl<br>
-=C2=A0TARGET_SYSTBL_ABI=3Dcommon,32,hexagon,time32,stat64,rlimit,renameat<b=
-r>
-=C2=A0TARGET_LONG_BITS=3D32<br>
-+TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=3Dy<br>
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c<br>
+index 8fce219c0de..c37035c4774 100644<br>
+--- a/target/hexagon/translate.c<br>
++++ b/target/hexagon/translate.c<br>
+@@ -203,8 +203,9 @@ static int read_packet_words(CPUHexagonState *env, Disa=
+sContext *ctx,<br>
+=C2=A0 =C2=A0 =C2=A0memset(words, 0, PACKET_WORDS_MAX * sizeof(uint32_t));<=
+br>
+=C2=A0 =C2=A0 =C2=A0for (nwords =3D 0; !found_end &amp;&amp; nwords &lt; PA=
+CKET_WORDS_MAX; nwords++) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0words[nwords] =3D<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 translator_ldl(env, &amp;ctx-&gt=
+;base,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0ctx-&gt;base.pc_next + nwords * sizeof(uint32_t));<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 translator_ldl_end(env, &amp;ctx=
+-&gt;base,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ctx-&gt;base.pc_next + nwords * sizeo=
+f(uint32_t),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MO_LE);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0found_end =3D is_packet_end(words[nwords]=
+);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0if (!found_end) {<br>
+@@ -966,8 +967,10 @@ static bool pkt_crosses_page(CPUHexagonState *env, Dis=
+asContext *ctx)<br>
+=C2=A0 =C2=A0 =C2=A0int nwords;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0for (nwords =3D 0; !found_end &amp;&amp; nwords &lt; PA=
+CKET_WORDS_MAX; nwords++) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t word =3D translator_ldl(env, &amp;ctx=
+-&gt;base,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 ctx-&gt;base.pc_next + nwords * sizeof(uint32_t));=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t word =3D translator_ldl_end(env, &amp=
+;ctx-&gt;base,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0ctx-&gt;base.pc_next<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0+ nwords * sizeof(uint32_t),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0MO_LE);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0found_end =3D is_packet_end(word);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0uint32_t next_ptr =3D=C2=A0 ctx-&gt;base.pc_next + nwor=
+ds * sizeof(uint32_t);<br>
 -- <br>
 2.52.0<br>
 <br>
 </blockquote></div></div>
 
---0000000000003c76d30647cf4de2--
+--000000000000353aec0647cf4ee0--
 
