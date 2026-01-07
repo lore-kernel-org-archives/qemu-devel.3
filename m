@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7907CFD626
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F9FCFD62A
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdTUu-0004Qn-Fj; Wed, 07 Jan 2026 08:22:49 -0500
+	id 1vdTVG-0004gT-GN; Wed, 07 Jan 2026 08:23:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdTUV-0004OA-VN
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:22:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdTUw-0004Td-1B
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:22:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdTUU-000521-BY
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:22:23 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdTUu-00055W-DG
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:22:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767792140;
+ s=mimecast20190719; t=1767792167;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:resent-to:
  resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=2eQIJicwswPhegRn6v45nU97TjUCKBDRACnnAImYw58=;
- b=K6lu57BJaCX7kWWtBwLfnHBU3BPYM4hZWMzMCy6Kd+v09Gd7JRxvWqAXClY8M4b00liGVE
- ThG8EynnLWyvh9ONaIlJuw3ODZiHCbCz1Qo3CJQublvrBibaymTyA4qnA1oudPO4B7MXNQ
- ZgH9COCCXFIgIb+lJ1H9Bh3Jw3SQ//c=
+ bh=qkfNWyL3vVuiztaDBd6iakYD+1JHNCPUXMngEiTpW8k=;
+ b=BZ1hihbXLD0VPag6GJgyiB5IsPk97UF6TOmaGYlYlCWBDuVuLfzFFwhdZlrUQ90VOPnD9i
+ n+siTB5GHpDV3aLtQMaoS+SwCKcAUpmwuIiXjCKh+Xe6xKCJzy8US+8uxH7CRorgmV4WCx
+ qLLkXSpfs37djhiSDex2gOhirH6o9i4=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-9muwXhahPl6V8QVpuTsGgA-1; Wed,
- 07 Jan 2026 08:22:15 -0500
-X-MC-Unique: 9muwXhahPl6V8QVpuTsGgA-1
-X-Mimecast-MFC-AGG-ID: 9muwXhahPl6V8QVpuTsGgA_1767792134
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-HjIBPxnbMH2r1PnEecifkA-1; Wed,
+ 07 Jan 2026 08:22:44 -0500
+X-MC-Unique: HjIBPxnbMH2r1PnEecifkA-1
+X-Mimecast-MFC-AGG-ID: HjIBPxnbMH2r1PnEecifkA_1767792163
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00C06195608D; Wed,  7 Jan 2026 13:22:14 +0000 (UTC)
+ id B3776195609E; Wed,  7 Jan 2026 13:22:43 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B25791800B7F; Wed,  7 Jan 2026 13:22:13 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3102530002D1; Wed,  7 Jan 2026 13:22:43 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5733121E6934; Wed, 07 Jan 2026 14:22:11 +0100 (CET)
+ id E7B0121E6937; Wed, 07 Jan 2026 14:22:40 +0100 (CET)
 Resent-To: zhao1.liu@intel.com, richard.henderson@linaro.org,
- qemu-devel@nongnu.org, vsementsov@yandex-team.ru
+ qemu-devel@nongnu.org
 Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Wed, 07 Jan 2026 14:22:11 +0100
-Resent-Message-ID: <875x9dk16k.fsf@pond.sub.org>
+Resent-Date: Wed, 07 Jan 2026 14:22:40 +0100
+Resent-Message-ID: <87wm1timlb.fsf@pond.sub.org>
 X-From-Line: armbru@redhat.com  Wed Jan  7 13:43:41 2026
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3B19421E61A9; Wed, 07 Jan 2026 13:43:41 +0100 (CET)
+ id 4316F21E61AD; Wed, 07 Jan 2026 13:43:41 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Xu <peterx@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 03/17] nbd/client-connection: Replace error_propagate() by
- assignment
-Date: Wed,  7 Jan 2026 13:43:27 +0100
-Message-ID: <20260107124341.1093312-4-armbru@redhat.com>
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 05/17] error: Consistently name Error * objects err, and not
+ errp
+Date: Wed,  7 Jan 2026 13:43:29 +0100
+Message-ID: <20260107124341.1093312-6-armbru@redhat.com>
 In-Reply-To: <20260107124341.1093312-1-armbru@redhat.com>
 References: <20260107124341.1093312-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,33 +93,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-connect_thread_func() sets a variable to null, then error_propagate()s
-an Error * to it.  This is a roundabout way to assign the Error * to
-it, so replace it by just that.
+This touches code in xen_enable_tpm() that is obviously wrong.  Since
+I don't know how to fix it properly, I'm adding a FIXME there.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20251119130855.105479-4-armbru@redhat.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-ID: <20251119130855.105479-6-armbru@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- nbd/client-connection.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ block/crypto.c          |  8 ++++----
+ hw/acpi/ghes.c          |  8 ++++----
+ hw/ppc/spapr.c          | 16 ++++++++--------
+ hw/xen/xen-pvh-common.c | 13 ++++++++++---
+ nbd/common.c            |  6 +++---
+ 5 files changed, 29 insertions(+), 22 deletions(-)
 
-diff --git a/nbd/client-connection.c b/nbd/client-connection.c
-index 79ea97e4cc..6a4f080717 100644
---- a/nbd/client-connection.c
-+++ b/nbd/client-connection.c
-@@ -207,8 +207,7 @@ static void *connect_thread_func(void *opaque)
-         qemu_mutex_lock(&conn->mutex);
+diff --git a/block/crypto.c b/block/crypto.c
+index b97d027444..36abb7af46 100644
+--- a/block/crypto.c
++++ b/block/crypto.c
+@@ -938,14 +938,14 @@ static void GRAPH_RDLOCK
+ block_crypto_amend_cleanup(BlockDriverState *bs)
+ {
+     BlockCrypto *crypto = bs->opaque;
+-    Error *errp = NULL;
++    Error *err = NULL;
  
-         error_free(conn->err);
--        conn->err = NULL;
--        error_propagate(&conn->err, local_err);
-+        conn->err = local_err;
+     /* release exclusive read/write permissions to the underlying file */
+     crypto->updating_keys = false;
+-    bdrv_child_refresh_perms(bs, bs->file, &errp);
++    bdrv_child_refresh_perms(bs, bs->file, &err);
  
-         if (ret < 0) {
-             object_unref(OBJECT(conn->sioc));
+-    if (errp) {
+-        error_report_err(errp);
++    if (err) {
++        error_report_err(err);
+     }
+ }
+ 
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 365156dff9..5445dc11bd 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -564,7 +564,7 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+     const uint8_t guid[] =
+           UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
+                   0xED, 0x7C, 0x83, 0xB1);
+-    Error *errp = NULL;
++    Error *err = NULL;
+     int data_length;
+     GArray *block;
+ 
+@@ -584,12 +584,12 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+     acpi_ghes_build_append_mem_cper(block, physical_address);
+ 
+     /* Report the error */
+-    ghes_record_cper_errors(ags, block->data, block->len, source_id, &errp);
++    ghes_record_cper_errors(ags, block->data, block->len, source_id, &err);
+ 
+     g_array_free(block, true);
+ 
+-    if (errp) {
+-        error_report_err(errp);
++    if (err) {
++        error_report_err(err);
+         return -1;
+     }
+ 
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index bcf6aa560f..b3c5097bf8 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2848,7 +2848,7 @@ static void spapr_machine_init(MachineState *machine)
+     int i;
+     MemoryRegion *sysmem = get_system_memory();
+     long load_limit, fw_size;
+-    Error *errp = NULL;
++    Error *err = NULL;
+     NICInfo *nd;
+ 
+     if (!filename) {
+@@ -2872,7 +2872,7 @@ static void spapr_machine_init(MachineState *machine)
+     /* Determine capabilities to run with */
+     spapr_caps_init(spapr);
+ 
+-    kvmppc_check_papr_resize_hpt(&errp);
++    kvmppc_check_papr_resize_hpt(&err);
+     if (spapr->resize_hpt == SPAPR_RESIZE_HPT_DEFAULT) {
+         /*
+          * If the user explicitly requested a mode we should either
+@@ -2880,10 +2880,10 @@ static void spapr_machine_init(MachineState *machine)
+          * it's not set explicitly, we reset our mode to something
+          * that works
+          */
+-        if (errp) {
++        if (err) {
+             spapr->resize_hpt = SPAPR_RESIZE_HPT_DISABLED;
+-            error_free(errp);
+-            errp = NULL;
++            error_free(err);
++            err = NULL;
+         } else {
+             spapr->resize_hpt = smc->resize_hpt_default;
+         }
+@@ -2891,14 +2891,14 @@ static void spapr_machine_init(MachineState *machine)
+ 
+     assert(spapr->resize_hpt != SPAPR_RESIZE_HPT_DEFAULT);
+ 
+-    if ((spapr->resize_hpt != SPAPR_RESIZE_HPT_DISABLED) && errp) {
++    if ((spapr->resize_hpt != SPAPR_RESIZE_HPT_DISABLED) && err) {
+         /*
+          * User requested HPT resize, but this host can't supply it.  Bail out
+          */
+-        error_report_err(errp);
++        error_report_err(err);
+         exit(1);
+     }
+-    error_free(errp);
++    error_free(err);
+ 
+     spapr->rma_size = spapr_rma_size(spapr, &error_fatal);
+ 
+diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
+index f365222019..1381310fc7 100644
+--- a/hw/xen/xen-pvh-common.c
++++ b/hw/xen/xen-pvh-common.c
+@@ -101,7 +101,7 @@ static void xen_create_virtio_mmio_devices(XenPVHMachineState *s)
+ #ifdef CONFIG_TPM
+ static void xen_enable_tpm(XenPVHMachineState *s)
+ {
+-    Error *errp = NULL;
++    Error *err = NULL;
+     DeviceState *dev;
+     SysBusDevice *busdev;
+ 
+@@ -111,8 +111,15 @@ static void xen_enable_tpm(XenPVHMachineState *s)
+         return;
+     }
+     dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
+-    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
+-    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
++    /*
++     * FIXME This use of &err is is wrong.  If both calls fail, the
++     * second will trip error_setv()'s assertion.  If just one call
++     * fails, we leak an Error object.  Setting the same property
++     * twice (first to a QOM path, then to an ID string) is almost
++     * certainly wrong, too.
++     */
++    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &err);
++    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &err);
+     busdev = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, s->cfg.tpm.base);
+diff --git a/nbd/common.c b/nbd/common.c
+index 2a133a66c3..f43cbaa15b 100644
+--- a/nbd/common.c
++++ b/nbd/common.c
+@@ -282,10 +282,10 @@ void nbd_set_socket_send_buffer(QIOChannelSocket *sioc)
+ #ifdef UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE
+     if (sioc->localAddr.ss_family == AF_UNIX) {
+         size_t size = UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE;
+-        Error *errp = NULL;
++        Error *err = NULL;
+ 
+-        if (qio_channel_socket_set_send_buffer(sioc, size, &errp) < 0) {
+-            warn_report_err(errp);
++        if (qio_channel_socket_set_send_buffer(sioc, size, &err) < 0) {
++            warn_report_err(err);
+         }
+     }
+ #endif /* UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE */
 -- 
 2.52.0
 
