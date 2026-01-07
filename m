@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 664C0D0D145
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 17:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C39AFD0D143
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 17:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdX5Q-0006EY-0R; Wed, 07 Jan 2026 12:12:44 -0500
+	id 1vdX7l-0006tw-Ua; Wed, 07 Jan 2026 12:15:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdX5G-0006Bp-8t
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:12:36 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdX7U-0006rY-AU
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:14:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdX5C-0004do-1a
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:12:32 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vdX7S-0005Cy-4f
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 12:14:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767805948;
+ s=mimecast20190719; t=1767806088;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Fl8OoEB6ymyDAmvKR4gB28r6fFjQq90VwYdwgydSsu8=;
- b=Ra5yko4wUTZj4IS8XDWiVxQTBSU59FDlKSOyOkKA7mD79Nq7xtPcLBCALlpHyLe4KQX0wC
- W+klTVi4V0MEl0pjT5WZzLUZKvNqGWtM69BVx0fmnZNngG6BBdn3iHuvZvWTvmP0vWKcOU
- fwOU+qi9DFTbe+/NLh/QeUJDxT8GYdE=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=s7R7mEoVz559+pUzC2DlMmB9UCaLtYyTfUVcfnw+FhU=;
+ b=P+jjWTbrQAS9M+309UAORR6x0LxhhQjGO4w0UIpki6EAt9cEFJLbf46vpHDkSVvTefdS02
+ RWjX6N5Q8oWgsp7qKjTpQym0eQk07iN5K7BWpRnNpNxRC4JqM5OE4CVHPH6vss3SzHHZqt
+ jOqeQX3mlej5vje/l1DstNxj54swnjI=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364-OChKf6PDPEmvQWElujiN1w-1; Wed, 07 Jan 2026 12:12:27 -0500
-X-MC-Unique: OChKf6PDPEmvQWElujiN1w-1
-X-Mimecast-MFC-AGG-ID: OChKf6PDPEmvQWElujiN1w_1767805946
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-88a366fa140so28264616d6.1
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 09:12:27 -0800 (PST)
+ us-mta-494-82670iIZNo2TBQU995TGxA-1; Wed, 07 Jan 2026 12:14:47 -0500
+X-MC-Unique: 82670iIZNo2TBQU995TGxA-1
+X-Mimecast-MFC-AGG-ID: 82670iIZNo2TBQU995TGxA_1767806087
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8bbe16e0a34so382677985a.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 09:14:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767805946; x=1768410746; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767806087; x=1768410887; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Fl8OoEB6ymyDAmvKR4gB28r6fFjQq90VwYdwgydSsu8=;
- b=IeBsyg9Xm/6YwWt4xjK6/EXaTa2TJ7Aq72PYHIyehDxq/4hdqG9eSJztKvsVJc1CQq
- cPpmcC4Jihl3PzzcYm1AXyaWEwbtn8IMAE9iAkqYo7Of9GavZfr6yvUAI8twR+uezUnT
- skfGyvvOFWl0XxxC1KvdqGk6X3Y9Qy53lEHprVt3inJFIyREWh3Q5khcguoLNdcntyWH
- SS3bjSQT+pCswNJ2NRUqWrZl3vYywYXhE0u9xQa9/AzhXEzGlXz7XtMXu0NdXRFS5eL3
- T4YOmYOUCrjVl65Kb2kajNwrfU9nMesleXEQLilF35qotuQP49acCx2h09iHguPGR5py
- yTbQ==
+ bh=s7R7mEoVz559+pUzC2DlMmB9UCaLtYyTfUVcfnw+FhU=;
+ b=TPn9ssXxwLK5Yxo9e13q+DAmmEYbNA0tnwDOHdFuRyZoB7kustonyUHoxRHx+g+Fqh
+ SrFZmQY8OE54iDM1un9ZXOwKX6OFTw8iX6r0I8Ry33Hd9Mfsh4dRYZqtot6T7Xvskbsf
+ sFl6bCtytEe0w+UJmEYT0Y2OiwDVuRQa7pAG30scJEJZkbsi7Z9wwGNvoV5ww3RPjqP1
+ sEY9YIdzeVSXanxv0W/spPd9W9ZGrVtkp1n8qWK2At7mVISVaJLeg+68foIZz/sPkrQy
+ +GVA808wx/cwftlSxzUIYo4f/izmTRJxrOBtFPBf2W4FWM+67XA/lmzD+pmkNiu8Kd6G
+ A8sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767805946; x=1768410746;
+ d=1e100.net; s=20230601; t=1767806087; x=1768410887;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Fl8OoEB6ymyDAmvKR4gB28r6fFjQq90VwYdwgydSsu8=;
- b=NSs373a9Hs5p6iSuWZkIwVLladBj7R2gyhrVEuIlRWepKmG6FOQFpYbZX6iDH4nAzx
- s2m676PqedFjrDox9Aaj3qOzaCOqD8YJbdzWdclCXC3LFTU13aUFQBUi7Z7ZU+bHk58L
- XuqG+buZ4cH4rx613fQnDEDETKMgiP6v7QIupRnNEk3rjEWy6qG7rEDaxB+Z6FWj6s21
- fEA9EDcAss7iBsIdhxGUdoQc8uheZSKtjg2OPe+OQpPxTF+H0ICYbQsA1wuikzwvDq+6
- NvZB1nUWdG85ANbwZNVWnX7uKdyxFxgty3GRzdDk+bgnHKgH4CVxSWi+sxKy/oHCkrY5
- 4fIQ==
-X-Gm-Message-State: AOJu0YwLzGuUWVCrCAJtv8kN+YhWelqqkUFxM6/TEsQL30LZz0uujAWO
- ed1tJCWXGF1LNiQKN5/odj544JDZTaP6Nd5N9TecIUoL3doEI00FaQaVfRd9WQdr15dEt23bhmj
- N6l5dRgLA/zNKyHfsDMCT8jSmUUKJYoQzuDCrk5scEwSQjs/Ds6i87kdRGd4v0ACk
-X-Gm-Gg: AY/fxX7YBHyl5tjQuLDPPavItPArvteYGgRc3GvhGx9ipMASuxt3J5a0fBBdK2ugnD2
- 9TBLOp6KcZotlbf2HDMeo5PDlYGAJ3mZU2NqxxpgTqy46Fe0uUMdsRU6veN1r+gSEyWtwS/fRqE
- m7sNDf9NlnenP11QhLHmfRUBS3Hqw0K5nqncW7XNu/4hfCTGKctk+h5irbndDQe6eF3XZuWt35r
- zbuW3tDi6ET49I+meS2jyttvcHDgjWVzV4hoH5CEUcAbCf/dSZQm+2kgNshUbIPfg0URa952093
- JcdZK+MdQQZMxjaQQY7js5eV11vWs3CIRRbUsf4CbpzesnmG/gRxMKm8KDCvpcww4mHS8Eou0YW
- C/Sg=
-X-Received: by 2002:a05:6214:21c3:b0:880:3e92:3d33 with SMTP id
- 6a1803df08f44-89084255090mr44803106d6.34.1767805946099; 
- Wed, 07 Jan 2026 09:12:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHW0t6QXUjb83V5NW+JpP/lqNjdARqCfdtCyX82IOmqpxY2Onfjoe3lIKGIbXEOC62LzugJog==
-X-Received: by 2002:a05:6214:21c3:b0:880:3e92:3d33 with SMTP id
- 6a1803df08f44-89084255090mr44802586d6.34.1767805945558; 
- Wed, 07 Jan 2026 09:12:25 -0800 (PST)
+ bh=s7R7mEoVz559+pUzC2DlMmB9UCaLtYyTfUVcfnw+FhU=;
+ b=gKxA+Rh/LTA5W5yueEdSl+qtQLuAvfcXQgACar0i6w1UTzhHUuwmMKtAJPLZQlPAZH
+ 2jj5/8NI/e8poE1ACK2qqM6PT9EUOt3eUZKNQYNUmPWvmMQ4OuZSqbWlwRlnvC3+lJmf
+ no+fnl9ar8nrFpmkN8NUKq+yQlY7ceyUq6ARQ+UhqqHhQl3z+jmBeVJnu6l+4F/waQnr
+ Hul1YbnItho7mcMgYch7pHE+4AZWat5VmEe9hohyXHx4cvjja8G5W/YAaHhHt8YFTmFj
+ CLVvLWynpi+k0K2KsSMVXDhSo4VgeiqW/EK5zk6CzVN0IUiFS18tEgtQZPzDpGEBrSqt
+ oYyA==
+X-Gm-Message-State: AOJu0YyJoEwUqSUktK14SV1jbiLunCO4yza6jQpxKC796K8M001g4j4S
+ aA1IKE+byEF113x6MtKVCKezrnDuO2BznZRKvgy2S3f3Fo2UzVJl4gFwH5UfxzH35CWoXqKIyaW
+ rk3Q8sZkZK5jrfOsWAGgs9ipKdorJ7DPaW1cANn/gjX5g+pUO1udNNsfF
+X-Gm-Gg: AY/fxX4Pfvo66WmLsU+HPuecasbCKw6EzKIl4BwBPod3aElIRcGbibnF/csUlp9DUbt
+ 5HcQM098QRl47RbGjZKAygzLpK/0MITYPLY8V24ztah+xhouJWjEumm9GQE2CWypGhuEITJQxPJ
+ khqSCOUsGgml+4BN6D+NNbwM5anKv1hyDw4TlVv5r+p0ZLQCQp/CaYvQbviRb+3U+0KK5QHQNyp
+ mn7xEfo+ZKqfSveyxpQ7I133TqIXEEV+sSErS5FTJe6MPOsYg6fEwXX90KAEKVGBY7FSVv3XUGT
+ 6Jh02Tg//TdH+pPPPRK162ToxuIa1Fn98eCJeLEScRPu4nBre8cU0TjzJ5pUOc70h1qLYX89RBp
+ Kdbk=
+X-Received: by 2002:a05:620a:1a24:b0:8bb:a037:fd90 with SMTP id
+ af79cd13be357-8c388b7f4bbmr436797485a.12.1767806086782; 
+ Wed, 07 Jan 2026 09:14:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG1YV480F68kczEtVI/cm3nsOEVbi340L3pTWb0uq+RKvEuT1Xl08NF8UHbYKQFS5cz72GX2g==
+X-Received: by 2002:a05:620a:1a24:b0:8bb:a037:fd90 with SMTP id
+ af79cd13be357-8c388b7f4bbmr436792285a.12.1767806086181; 
+ Wed, 07 Jan 2026 09:14:46 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4ffaac486efsm31480841cf.27.2026.01.07.09.12.24
+ af79cd13be357-8c37f4b917dsm428385285a.17.2026.01.07.09.14.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 09:12:25 -0800 (PST)
-Date: Wed, 7 Jan 2026 12:12:24 -0500
+ Wed, 07 Jan 2026 09:14:45 -0800 (PST)
+Date: Wed, 7 Jan 2026 12:14:44 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Prasad Pandit <ppandit@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 1/2] tests/migration-test: Remove postcopy_data from
- MigrateCommon
-Message-ID: <aV6T-JDXv3wa7tdc@x1.local>
+Subject: Re: [PATCH 2/2] tests/migration-test: Remove
+ postcopy_recovery_fail_stage from MigrateCommon
+Message-ID: <aV6UhNJzQLnDaJvO@x1.local>
 References: <20260106203320.2110372-1-peterx@redhat.com>
- <20260106203320.2110372-2-peterx@redhat.com>
- <CAE8KmOwA-SVy1tQOzAKpa6B4uoVw=veMcn3qzkF0KJ8Cq0C_8w@mail.gmail.com>
+ <20260106203320.2110372-3-peterx@redhat.com>
+ <CAE8KmOz9XtaEY+LMD9CCCR_bMXe04chGHdvuwVqsYRNe+AtUJg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAE8KmOwA-SVy1tQOzAKpa6B4uoVw=veMcn3qzkF0KJ8Cq0C_8w@mail.gmail.com>
+In-Reply-To: <CAE8KmOz9XtaEY+LMD9CCCR_bMXe04chGHdvuwVqsYRNe+AtUJg@mail.gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -119,127 +119,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 07, 2026 at 04:53:17PM +0530, Prasad Pandit wrote:
+On Wed, Jan 07, 2026 at 05:07:40PM +0530, Prasad Pandit wrote:
 > On Wed, 7 Jan 2026 at 02:04, Peter Xu <peterx@redhat.com> wrote:
-> > Now postcopy is not the only user of start_hook / end_hook that will pass
-> > in a opaque pointer.  It doesn't need to be defined in MigrateCommon as
-> > part of the framework, as all other hook users can pass hook_data around.
-> > Do it too for postcopy.
-> >
+> > The parameter can be instead passed into the function.
+> 
+> * It'll help to include - why? pass the parameter instead.
+
+I want to remove special and unnecessary fields in MigrateCommon struct.
+
+I'll add a sentence when repost.
+
+> 
 > > Signed-off-by: Peter Xu <peterx@redhat.com>
 > > ---
-> >  tests/qtest/migration/framework.h |  1 -
-> >  tests/qtest/migration/framework.c | 18 ++++++++++--------
-> >  2 files changed, 10 insertions(+), 9 deletions(-)
+> >  tests/qtest/migration/framework.h      |  6 ++----
+> >  tests/qtest/migration/framework.c      |  7 ++++---
+> >  tests/qtest/migration/postcopy-tests.c | 12 ++++--------
+> >  tests/qtest/migration/tls-tests.c      |  8 ++++----
+> >  4 files changed, 14 insertions(+), 19 deletions(-)
 > >
 > > diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-> > index ed85ed502d..0d39bb0d3c 100644
+> > index 0d39bb0d3c..bc6cf6040f 100644
 > > --- a/tests/qtest/migration/framework.h
 > > +++ b/tests/qtest/migration/framework.h
-> > @@ -230,7 +230,6 @@ typedef struct {
+> > @@ -228,9 +228,6 @@ typedef struct {
+> >       * refer to existing ones with live=true), or use live=off by default.
+> >       */
 > >      bool live;
-> >
-> >      /* Postcopy specific fields */
-> > -    void *postcopy_data;
-> >      PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
+> > -
+> > -    /* Postcopy specific fields */
+> > -    PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
 > >  } MigrateCommon;
 > >
+> >  void wait_for_serial(const char *side);
+> > @@ -243,7 +240,8 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+> >  void migrate_end(QTestState *from, QTestState *to, bool test_dest);
+> >
+> >  void test_postcopy_common(MigrateCommon *args);
+> > -void test_postcopy_recovery_common(MigrateCommon *args);
+> > +void test_postcopy_recovery_common(MigrateCommon *args,
+> > +                                   PostcopyRecoveryFailStage fail_stage);
+> >  int test_precopy_common(MigrateCommon *args);
+> >  void test_file_common(MigrateCommon *args, bool stop_src);
+> >  void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
 > > diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-> > index e35839c95f..4f46cf8629 100644
+> > index 4f46cf8629..d7a5ae56f9 100644
 > > --- a/tests/qtest/migration/framework.c
 > > +++ b/tests/qtest/migration/framework.c
-> > @@ -541,6 +541,7 @@ void migrate_end(QTestState *from, QTestState *to, bool test_dest)
-> >
-> >  static int migrate_postcopy_prepare(QTestState **from_ptr,
-> >                                      QTestState **to_ptr,
-> > +                                    void **hook_data,
-> >                                      MigrateCommon *args)
-> >  {
-> >      QTestState *from, *to;
-> > @@ -554,7 +555,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
-> >      }
-> >
-> >      if (args->start_hook) {
-> > -        args->postcopy_data = args->start_hook(from, to);
-> > +        *hook_data = args->start_hook(from, to);
-> >      }
-> >      migrate_ensure_non_converge(from);
-> > @@ -582,7 +583,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+> > @@ -739,7 +739,8 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to,
+> >  #endif
 > >  }
 > >
-> >  static void migrate_postcopy_complete(QTestState *from, QTestState *to,
-> > -                                      MigrateCommon *args)
-> > +                                      void *hook_data, MigrateCommon *args)
-> >  {
-> >      MigrationTestEnv *env = migration_get_env();
-> >
-> > @@ -601,8 +602,7 @@ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
-> >      }
-> >
-> >      if (args->end_hook) {
-> > -        args->end_hook(from, to, args->postcopy_data);
-> > -        args->postcopy_data = NULL;
-> > +        args->end_hook(from, to, hook_data);
-> >      }
-> >
-> >      migrate_end(from, to, true);
-> > @@ -610,13 +610,14 @@ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
-> >
-> >  void test_postcopy_common(MigrateCommon *args)
-> >  {
-> > +    void *hook_data = NULL;
-> >      QTestState *from, *to;
-> >
-> > -    if (migrate_postcopy_prepare(&from, &to, args)) {
-> > +    if (migrate_postcopy_prepare(&from, &to, &hook_data, args)) {
-> >          return;
-> >      }
-> >      migrate_postcopy_start(from, to, &src_state);
-> > -    migrate_postcopy_complete(from, to, args);
-> > +    migrate_postcopy_complete(from, to, hook_data, args);
-> >  }
-> >
-> >  static void wait_for_postcopy_status(QTestState *one, const char *status)
-> > @@ -742,6 +743,7 @@ void test_postcopy_recovery_common(MigrateCommon *args)
+> > -void test_postcopy_recovery_common(MigrateCommon *args)
+> > +void test_postcopy_recovery_common(MigrateCommon *args,
+> > +                                   PostcopyRecoveryFailStage fail_stage)
+> ===
+>     static void postcopy_recover_fail(QTestState *from, QTestState
+> *to,
+>                                        PostcopyRecoveryFailStage stage)
+> ===
+> 
+> * To keep it consistent, maybe we can call the variable 'stage' as above?
+
+Personally I prefer fail_stage, e.g. fail_stage=NONE means it never fails.
+stage==NONE is less clear.
+
+Thanks,
+
+> 
 > >  {
 > >      QTestState *from, *to;
 > >      g_autofree char *uri = NULL;
-> > +    void *hook_data = NULL;
-> 
-> * Should 'hook_data' pointer be g_autofree too? Where is it free'd otherwise?
-
-hook_data is freed in end_hook().  This patch doesn't change that fact for
-postcopy.  It's the smae to non-postcopy tests.
-
-> 
-> >      /*
-> >       * Always enable OOB QMP capability for recovery tests, migrate-recover is
-> > @@ -752,7 +754,7 @@ void test_postcopy_recovery_common(MigrateCommon *args)
-> >      /* Always hide errors for postcopy recover tests since they're expected */
-> >      args->start.hide_stderr = true;
+> > @@ -784,12 +785,12 @@ void test_postcopy_recovery_common(MigrateCommon *args)
+> >      wait_for_postcopy_status(to, "postcopy-paused");
+> >      wait_for_postcopy_status(from, "postcopy-paused");
 > >
-> > -    if (migrate_postcopy_prepare(&from, &to, args)) {
-> > +    if (migrate_postcopy_prepare(&from, &to, &hook_data, args)) {
-> >          return;
+> > -    if (args->postcopy_recovery_fail_stage) {
+> > +    if (fail_stage) {
+> >          /*
+> >           * Test when a wrong socket specified for recover, and then the
+> >           * ability to kick it out, and continue with a correct socket.
+> >           */
+> > -        postcopy_recover_fail(from, to, args->postcopy_recovery_fail_stage);
+> > +        postcopy_recover_fail(from, to, fail_stage);
+> >          /* continue with a good recovery */
 > >      }
 > >
-> > @@ -808,7 +810,7 @@ void test_postcopy_recovery_common(MigrateCommon *args)
-> >      /* Restore the postcopy bandwidth to unlimited */
-> >      migrate_set_parameter_int(from, "max-postcopy-bandwidth", 0);
+> > diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+> > index 7ae4d765d7..13a5759655 100644
+> > --- a/tests/qtest/migration/postcopy-tests.c
+> > +++ b/tests/qtest/migration/postcopy-tests.c
+> > @@ -41,30 +41,26 @@ static void test_postcopy_preempt(char *name, MigrateCommon *args)
 > >
-> > -    migrate_postcopy_complete(from, to, args);
-> > +    migrate_postcopy_complete(from, to, hook_data, args);
+> >  static void test_postcopy_recovery(char *name, MigrateCommon *args)
+> >  {
+> > -    test_postcopy_recovery_common(args);
+> > +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
 > >  }
 > >
-> >  int test_precopy_common(MigrateCommon *args)
+> >  static void test_postcopy_recovery_fail_handshake(char *name,
+> >                                                    MigrateCommon *args)
+> >  {
+> > -    args->postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY;
+> > -
+> > -    test_postcopy_recovery_common(args);
+> > +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_RECOVERY);
+> >  }
+> >
+> >  static void test_postcopy_recovery_fail_reconnect(char *name,
+> >                                                    MigrateCommon *args)
+> >  {
+> > -    args->postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH;
+> > -
+> > -    test_postcopy_recovery_common(args);
+> > +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_CHANNEL_ESTABLISH);
+> >  }
+> >
+> >  static void test_postcopy_preempt_recovery(char *name, MigrateCommon *args)
+> >  {
+> >      args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
+> >
+> > -    test_postcopy_recovery_common(args);
+> > +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+> >  }
+> >
+> >  static void migration_test_add_postcopy_smoke(MigrationTestEnv *env)
+> > diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+> > index 6a20c65104..bf0bb06a29 100644
+> > --- a/tests/qtest/migration/tls-tests.c
+> > +++ b/tests/qtest/migration/tls-tests.c
+> > @@ -385,7 +385,7 @@ static void test_postcopy_recovery_tls_psk(char *name, MigrateCommon *args)
+> >      args->start_hook = migrate_hook_start_tls_psk_match;
+> >      args->end_hook = migrate_hook_end_tls_psk;
+> >
+> > -    test_postcopy_recovery_common(args);
+> > +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+> >  }
+> >
+> >  static void test_multifd_postcopy_recovery_tls_psk(char *name,
+> > @@ -396,7 +396,7 @@ static void test_multifd_postcopy_recovery_tls_psk(char *name,
+> >
+> >      args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+> >
+> > -    test_postcopy_recovery_common(args);
+> > +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+> >  }
+> >
+> >  /* This contains preempt+recovery+tls test altogether */
+> > @@ -407,7 +407,7 @@ static void test_postcopy_preempt_all(char *name, MigrateCommon *args)
+> >
+> >      args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
+> >
+> > -    test_postcopy_recovery_common(args);
+> > +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+> >  }
+> >
+> >  static void test_multifd_postcopy_preempt_recovery_tls_psk(char *name,
+> > @@ -419,7 +419,7 @@ static void test_multifd_postcopy_preempt_recovery_tls_psk(char *name,
+> >      args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+> >      args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true;
+> >
+> > -    test_postcopy_recovery_common(args);
+> > +    test_postcopy_recovery_common(args, POSTCOPY_FAIL_NONE);
+> >  }
+> >
+> >  static void test_precopy_unix_tls_psk(char *name, MigrateCommon *args)
 > 
-> * The changes look okay; But if tests define hook_data = NULL; Where
-> does it get populated?
-
-It's populated in start_hook() conditionally.  When populated, it is always
-(and a must) to be released in end_hook().
-
-Thanks,
+> * Change looks okay otherwise.
+> 
+> Thank you.
+> ---
+>   - Prasad
+> 
 
 -- 
 Peter Xu
