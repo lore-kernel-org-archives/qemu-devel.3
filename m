@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 860CACF6BF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 07:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F85CF6BF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 07:46:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdO6t-0007eU-6H; Wed, 07 Jan 2026 02:37:39 -0500
+	id 1vdOF4-0004bO-TL; Wed, 07 Jan 2026 02:46:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vdO6q-0007bJ-DL
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 02:37:36 -0500
+ id 1vdOEd-0004X3-9I
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 02:45:44 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vdO6m-0000CA-P1
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 02:37:36 -0500
+ id 1vdOEY-0002eu-G9
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 02:45:36 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6077amr3053070
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6077iXnB056946
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 7 Jan 2026 16:37:07 +0900 (JST)
+ Wed, 7 Jan 2026 16:45:21 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=YSfv4WmEUy21O5hDYaFe5LA68PhJWMP8F5+/SoA3fRI=; 
+DKIM-Signature: a=rsa-sha256; bh=8LqQRAhedECX0k+LVAQkCgtwPmQobEqQdKN8XCQxZu8=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1767771427; v=1;
- b=NTNtsoiJJ0yjW6boItsTpVee1bM2MvcFwo5jFJrI9INo93Q41yF5BSobU37qyWy0
- oqUuz7g2WLqwryrDBvWvpOqL5kEanERWWvOtMNsrWQQKRzEKDmF6IZDUsH/sHuJS
- uVGBz4digezpi5HiiZXwYf8aJKDn0FSs4qF98t+GmseMxsRFMxfe1OEooBslmeTK
- FSc+Do3XIkzAGfErXfqLh9MQnN+VFofbcfBpsMD0607ZG6jnJ8YMWS+7CRoEdQzS
- 3wZUWuFeG8F+JamRH878pPMlsu+zUAmwQG7TgseGLA2kkSsBH3qplAv9+V6mrZIT
- sVOwwagSwKuc6MCrJZK3QQ==
-Message-ID: <7eec42f0-a622-4383-99e4-c99e51f7439c@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 7 Jan 2026 16:36:47 +0900
+ s=rs20250326; t=1767771921; v=1;
+ b=ixKJfGF8IRvN6Hh7ctc9V09huECM11Okvr5gv+kkdg5dBNIOgVWPRN7FQt1rnGmw
+ Ux+vYSuKQfG4fElXav7DVlQJB0e7QgTgSROYKQ/KA3eK8JWxltpZuyk5M5Dpe61s
+ z5OBb0U131ZraIgSLh/KNltxM8AX7DwDzj6f94DcUQ/Lz/c61Q4P7qWm8X9budiW
+ jck3RKYvhKrFHSIGUAxTbqRxKoNz5ORjhzNJ1h91Vf/v2kOJhQgKfQk+EpOOrLNb
+ RW5NBYebFzwQUbqX1b/gTkFVr0wbD8HzC13gSMYNmV0hvNcYkGBG2+nMzmHAo/4P
+ oe4+YFtqS0vw3/+gPyghbQ==
+Message-ID: <aab424e2-a763-4d4a-ab73-62dd9b570b7f@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 7 Jan 2026 16:44:33 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] virtio-gpu: Add user pointer and ROCm support
- enhancements
+Subject: Re: [PATCH v3 3/3] virtio-gpu: Add ROCm capability support
 To: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
  dmitry.osipenko@collabora.com, Ray.Huang@amd.com
 Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
  qemu-devel@nongnu.org
 References: <20260107071858.3452614-1-honghuan@amd.com>
+ <20260107071858.3452614-4-honghuan@amd.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260107071858.3452614-1-honghuan@amd.com>
+In-Reply-To: <20260107071858.3452614-4-honghuan@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -77,63 +77,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/01/07 16:18, Honglei Huang wrote:
-> This patch series introduces enhancements to virtio-gpu to improve
-> memory management and GPU virtualization capabilities for ROCm workloads.
+> Add support for ROCm (Radeon Open Compute) capability in virtio-gpu.
+> This enables GPU compute workloads using AMD's ROCm platform through
+> the virtio-gpu interface.
 > 
-> The series includes:
+> Changes include:
+> - Add "rocm" property to virtio-gpu-gl device
+> - Define VIRTIO_GPU_FLAG_ROCM_ENABLED flag
+> - Enable VIRGL_RENDERER_USE_ROCM flag when ROCm is enabled
+> - Register VIRTIO_GPU_CAPSET_ROCM (capset 8) capability
+> - Add virtio_gpu_rocm_enabled() helper macro
 > 
-> 1. VIRTIO_GPU_BLOB_FLAG_USE_USERPTR support: Enables user pointer mapping
->     for blob resources, allowing guest applications to use user-allocated
->     memory for GPU resources more efficiently.
+> This allows guests to detect and utilize ROCm capabilities through
+> the virtio-gpu device when the feature is enabled.
 > 
-> 2. VIRTIO_GPU_F_RESOURCE_USERPTR feature support: Introduces a new virtio-gpu
->     feature flag with configurable "userptr=on" device property to enable
->     user pointer resources for enhanced memory management.
-> 
-> 3. ROCm capability support: Adds native support for AMD's ROCm (Radeon Open
->     Compute) platform through a new "rocm=on" device property and
->     VIRTIO_GPU_CAPSET_ROCM capability. This enables GPU compute
->     workloads using the ROCm stack through virtio-gpu.
-> 
-> Changes in v3:
-> - Renamed HSAKMT-related functionality to ROCm for better clarity and
->    alignment with the ROCm ecosystem terminology
-> - Changed device property from "hsakmt=on" to "rocm=on"
-> - Changed flag from VIRTIO_GPU_FLAG_HSAKMT_ENABLED to
->    VIRTIO_GPU_FLAG_ROCM_ENABLED
-> - Changed renderer flag from VIRGL_RENDER_USE_HSAKMT to
->    VIRGL_RENDERER_USE_ROCM
-> - Updated capset handling to use VIRTIO_GPU_CAPSET_ROCM (8) instead of
->    VIRTIO_GPU_CAPSET_HSAKMT (8)
-> - Removed the error handling fix from patch 1 (virtio-gpu-virgl.c) into
->    another thread
-> 
-> These patches work together to provide more flexible and efficient memory
-> management between guest and host in GPU virtualization scenarios, with
-> enhanced support for AMD ROCm compute workloads. The changes are backward
-> compatible and controlled by new device properties.
-> 
-> Usage examples:
->    -device virtio-gpu-gl,rocm=on,userptr=on
-> 
-> The series has been tested with ROCm GPU compute workloads requiring
-> advanced memory management capabilities.
-> 
-> TODO:
-> - Unify and simplify the handling path for userptr resources.
->    This improvement requires coordinated changes across multiple components
->    (virglrenderer and virtio-gpu driver), and will be implemented once the
->    approach is finalized with other component maintainers.
+> Signed-off-by: Honglei Huang <honghuan@amd.com>
 
-Apparently this series still does not explain the utility of
-VIRTIO_GPU_BLOB_FLAG_USE_USERPTR, which I have a doubt about:
-https://lore.kernel.org/qemu-devel/35a8add7-da49-4833-9e69-d213f52c771a@amd.com/
-
-I suspect this TODO points to that or maybe something else, but either 
-way I think this should have a RFC tag for now. After all, the 
-corresponding change of virglrenderer has not merged and there is no 
-explicit agreement on the QEMU-facing interface yet.
-
-Regards,
-Akihiko Odaki
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
