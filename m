@@ -4,99 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A6AD0D14B
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 18:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28444D0D14B
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 18:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdXsW-0007pe-O8; Wed, 07 Jan 2026 13:03:28 -0500
+	id 1vdXut-0000aG-9g; Wed, 07 Jan 2026 13:05:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdXs1-0007e0-Av
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:02:57 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdXrz-0000zO-JG
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:02:56 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-bc29d64b39dso989476a12.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 10:02:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767808974; x=1768413774; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4Am2/Nuw3aRl/UlKx93MkIvwIzCrCKfg4v9OKCoZibY=;
- b=LkA2mBcdnSZxbUXlZdICBxHvW7aSfNVqF0U+Y0xgpbqdVWobUfScnoGB5XLJDIRgKk
- 7XA49TGa3cvA7TDzCedgdHh511T06oivtmQQ0ysbumJ+HL/7KtWAD8V70COzts9YU0wu
- YKKB57cnVpsHau84wNOYcEVhyWiYM713WM5KgPkQtBLT2TNXtXQQrohc4btboUHA4Wkj
- PqNfM2EZBcJG0RR5sR5TStu/TDqVVfQIuyJa7869Cox/cVYycFZPjuCMPPOXdqkSH5nV
- oRN2zoSzHUA9Lfzb1ijLofMlh5B9dpVK3sO2goWXPhJO2/v1I+coZkeLVwn+7IfMqYId
- qFkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767808974; x=1768413774;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4Am2/Nuw3aRl/UlKx93MkIvwIzCrCKfg4v9OKCoZibY=;
- b=vJDilo4jtF590aIOBOS/W0WYLVK4Hmy+H2LVwpJVfW4cI/4UYQHTO8ZP7VXGtTz+2C
- TWQL7jMgybK8MH+zLkxAqVQR11vzqaCxe/HppwrNnOsy1Wuo/YSgnx4Zsc22DEjPh/VU
- deysRLsm8ka4REgRtqwNZxLAKDIVo2w+oIIgsHcjwkV4lRcxxntuIEaKy//nVzoAQ+uF
- oLc5IQi7FdIbOQat0g0r44vvCH4V6WY5jOGRplzcrIAfrWvn+Fk9Iw1OyQ+FVubt08Qj
- v+trCNE1/WxXRwM8WDqJRiBwUf1P9jvEDpJF2ASXu2NQq8OcENhK5Ljp9QrmbH3GCoRX
- y7MQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMhDg8zPHfqEOoNEtfx2PEsjYYbfXWf3aoIbveTjWA6lQ3YhaFA1Jzp6GwiwPMXxN+osQCIsndIEUB@nongnu.org
-X-Gm-Message-State: AOJu0YzIJNVneuIxkfdArVLIk64XI0LU0oIJ7hVUspaePN69GeFS1wot
- AqPlVKMOwGnFMHL+dgP88umW6tOme/qNPRMCJVnNGFqN54RsAzNGiL/Vtl+VxIRg5HI=
-X-Gm-Gg: AY/fxX7UEFemTuqs/GsxCNpwDtw14YLGybPyhpA3GWC87LIRx53Fwf/grftCs+flDqQ
- 4KiHcGr/Br3g9wX7A3xwP8JowXDir1TCSZysEmW4yCdzR406kgX72pMbIaUp4Evb/1izwwcEpB6
- vS0CqBzMd/7Ae6D97014dw60CBFL50XWewT5V8Cj5kKLpSTvs62UlZzQBJFj9a/7/BptkeeFXZa
- g07KXe4495T+thrm2iq3I9ygEumPK2wgL7luLuYDpUxxQHHTNN3zTZ6ZFZOSYTN8WHfPFvLlw8H
- M1mIXLRE+Cu5ImleIIxhSs5clPYQValZc9x3GOfj2pu3n/c4Q1vYIYUvnNaYZeBrM2U1GdMSkVw
- Vse0FPBQYN2yLeiaKjSfL+mmAUsdvgwha2rvOgkgcvL9FkO551s2dFE7E9k1NITRX5x98h0Hpwf
- XAzCJ6tHvqjSDPtLao7LqhVuTONNQtVk6OHrBbJxy7vxct4Wqos5jaCLrBw1h2EZKS7wI=
-X-Google-Smtp-Source: AGHT+IH8aPTYs6XRRRulPemcTtz32Ztck/GgkW8GnKBxQwTFE0ZbBgWBSmpqd1UaxDQepOxefZrULQ==
-X-Received: by 2002:a17:90b:1643:b0:340:bc27:97b8 with SMTP id
- 98e67ed59e1d1-34f68c4ffd5mr2702717a91.10.1767808973347; 
- Wed, 07 Jan 2026 10:02:53 -0800 (PST)
-Received: from ?IPV6:2001:569:6fb1:810d:63cb:57dc:3bf7:ccf8?
- ([2001:569:6fb1:810d:63cb:57dc:3bf7:ccf8])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5f88e95dsm5617132a91.12.2026.01.07.10.02.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 10:02:53 -0800 (PST)
-Message-ID: <ea63e54b-adf0-4ab5-88ac-d522d578ab58@linaro.org>
-Date: Wed, 7 Jan 2026 10:02:46 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] hw/arm/smmu: add memory regions as property for an
- SMMU instance
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Radoslaw Biernacki <rad@semihalf.com>,
- tangtao1634@phytium.com.cn, Eric Auger <eric.auger@redhat.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-References: <20251216235731.1793908-1-pierrick.bouvier@linaro.org>
- <a8afadf0-fcec-444a-86d8-a75676f8bd76@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <a8afadf0-fcec-444a-86d8-a75676f8bd76@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vdXtc-00006R-DV; Wed, 07 Jan 2026 13:04:40 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vdXta-00019H-MH; Wed, 07 Jan 2026 13:04:36 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6078I1bL022403;
+ Wed, 7 Jan 2026 18:04:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=97eWPKBR0yzobe0YrSurqBSbPCZc9mlmQEHnr5sWks8=; b=T2vpZAOyUzMS
+ y7DA3NbOl6Tx/aRhFcEZE1JYPArCuqMKtS4+WioM+JL1dIlfgnUMcpcMi5/jli3i
+ xOVNOs4breo09EdcSq91mxxLTCeAZIZT/QZ6ROhk4ltFDdzwjOTcz0kDens/djYc
+ irb2nL7qdjF8wRk6aLF7Kd+IXi/qtRFezp/mkaXkYMOExEnGpzKhpw+/mKB61HGh
+ qKJWenRzW+j4MhWhUhdKHnMmvGGM9DO9jmHsesHriHKpaiCWAGyYUXm0Ymq+F1e+
+ 7eacFUpnr1J9nvt+1o1jonSD05VbnZGP2xx7DIafLL7poRmSiNaSLEBhEd/6dILq
+ PUqjhtvzvw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betrts8yx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 07 Jan 2026 18:04:31 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 607HwCnX021093;
+ Wed, 7 Jan 2026 18:04:31 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betrts8yw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 07 Jan 2026 18:04:31 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 607HsR82014523;
+ Wed, 7 Jan 2026 18:04:30 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bfeen2knx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 07 Jan 2026 18:04:30 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 607I4TgZ5112510
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 7 Jan 2026 18:04:29 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 572325805D;
+ Wed,  7 Jan 2026 18:04:29 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EEB9F58043;
+ Wed,  7 Jan 2026 18:04:28 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  7 Jan 2026 18:04:28 +0000 (GMT)
+Message-ID: <6ef45b8e11cf23582ae44e31cec7438fde9234ea.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/4] ppc/pnv: Suppress some "pnv_chiptod unimplemented
+ register" messages
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ chalapathi.v@linux.ibm.com
+Date: Wed, 07 Jan 2026 12:04:28 -0600
+In-Reply-To: <5e13f2c3-2075-4d31-bddc-06dcc31f6eae@linux.ibm.com>
+References: <20251218200353.301866-1-calebs@linux.ibm.com>
+ <20251218200353.301866-2-calebs@linux.ibm.com>
+ <1fa38659565cf4dc1dfe24cc365d685554faecf0.camel@linux.ibm.com>
+ <5e13f2c3-2075-4d31-bddc-06dcc31f6eae@linux.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=aaJsXBot c=1 sm=1 tr=0 ts=695ea02f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=geCvSiIGcsAKCeZvhHgA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: aela2Lw7en7eZtXPsvpaT51PqEZ1Is7C
+X-Proofpoint-ORIG-GUID: 9tePUnW4z2HdIg9KfcNE3qukwlVOFl6F
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDE0MCBTYWx0ZWRfX6U+Z87Hw6oCs
+ +aXFO9Q02R7GijoqSvHO4iq207HXtzeDezuIVqoqXLdhl3ctcizoJtW06tvy9zAnCvSgu0Yodrg
+ UTrwdA71znjBTSVrrXxF4zy82s2AcW95cPlfCrIfGv/s7mu5oXeeetvNRT455p/e100sKlGj8X8
+ eAuzBfVberKl9gP8ptvVfuTciH+XWdwIA81A8CX8Z9QDpNl+MQVBOBlPniZ9bRLMuEDE74Tgnyp
+ Y8fwFfE7F2sZUO91yDJswbAoP5GSUEAaud1P+2nluvjP8oCGe6enaopSOX/8fcqoThDhMJbHEdX
+ l+FR4WrzOvCd0JdVI+mbbugBoF8jxr0boXSC3CF0dh0zUaPG40yPNHaB+B7ldgy5B56iJBM3OIp
+ rh3m30uS6e4hswKKV501FkpvX0HPUefpRBHTXQzw1zHqpSv1G+KQP5MKmd0fmq1T/Ina8seXzfQ
+ 8f/DK/iOHJKifCFwv+g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-07_03,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601070140
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,100 +128,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-01-05 12:05, Philippe Mathieu-Daudé wrote:
-> On 17/12/25 00:57, Pierrick Bouvier wrote:
->> This will be used to access non-secure and secure memory. Secure support
->> and Granule Protection Check (for RME) for SMMU need to access secure
->> memory.
->>
->> As well, it allows to remove usage of global address_space_memory,
->> allowing different SMMU instances to have a specific view of memory.
->>
->> User creatable SMMU are handled as well for virt machine,
->> by setting the memory properties when device is plugged in.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    include/hw/arm/smmu-common.h |  4 ++++
->>    include/hw/arm/virt.h        |  2 ++
->>    hw/arm/sbsa-ref.c            | 16 ++++++++++++----
->>    hw/arm/smmu-common.c         | 25 +++++++++++++++++++++++++
->>    hw/arm/virt.c                | 13 +++++++++++--
->>    5 files changed, 54 insertions(+), 6 deletions(-)
-> 
-> 
->> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->> index 62a76121841..9a67ce857fe 100644
->> --- a/hw/arm/smmu-common.c
->> +++ b/hw/arm/smmu-common.c
->> @@ -944,6 +944,13 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
->>            return;
->>        }
->>    
->> +    g_assert(s->memory);
->> +    address_space_init(&s->memory_as, s->memory, "smmu-memory-view");
->> +    if (s->secure_memory) {
->> +        address_space_init(&s->secure_memory_as, s->secure_memory,
->> +                           "smmu-secure-memory-view");
-> 
-> Else, are we sure the SMMU implementations will behave correctly?
-> 
->> +    }
->> +
->>        /*
->>         * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
->>         * root complexes to be associated with SMMU.
->> @@ -1008,10 +1015,28 @@ static void smmu_base_class_init(ObjectClass *klass, const void *data)
->>        rc->phases.exit = smmu_base_reset_exit;
->>    }
->>    
->> +static void smmu_base_instance_init(Object *obj)
->> +{
->> +    SMMUState *s = ARM_SMMU(obj);
->> +
->> +    object_property_add_link(obj, "memory",
->> +                             TYPE_MEMORY_REGION,
->> +                             (Object **)&s->memory,
->> +                             qdev_prop_allow_set_link_before_realize,
->> +                             OBJ_PROP_LINK_STRONG);
->> +
->> +    object_property_add_link(obj, "secure-memory",
->> +                             TYPE_MEMORY_REGION,
->> +                             (Object **)&s->secure_memory,
->> +                             qdev_prop_allow_set_link_before_realize,
->> +                             OBJ_PROP_LINK_STRONG);
-> 
-> Why can't we use device_class_set_props(&static_properties)
-> in smmu_base_class_init()?
->
+Ok, I can't say I have a strong opinion on this either way, so...
 
-To be honest, I simply duplicated what was done on cpu side, without 
-thinking too much about it.
-I thought there was something about passing a memory region that 
-requires this, compared to having a simple property.
-
-If you think it's important, I can try to use the function you mentioned 
-above.
-
->> +}
->> +
->>    static const TypeInfo smmu_base_info = {
->>        .name          = TYPE_ARM_SMMU,
->>        .parent        = TYPE_SYS_BUS_DEVICE,
->>        .instance_size = sizeof(SMMUState),
->> +    .instance_init = smmu_base_instance_init,
->>        .class_data    = NULL,
->>        .class_size    = sizeof(SMMUBaseClass),
->>        .class_init    = smmu_base_class_init,
-> 
-> Anyhow this is functional and I suppose this can be improved on top, so:
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 Thanks,
-Pierrick
+
+Glenn
+
+On Tue, 2026-01-06 at 11:07 -0600, Caleb Schlossin wrote:
+> 
+> On 1/6/26 10:49 AM, Miles Glenn wrote:
+> > Hi Caleb.  I wonder if it makes sense to upstream this commit since I
+> > suspect that most upstream users will not have the "unimp" log messages
+> > enabled unless they are debugging a problem and in that case, we would
+> > be erroneously masking these unimplemented registers from the logged
+> > output.
+> > 
+> > Thanks,
+> > 
+> > Glenn
+> 
+> I understand your point. Here are my thoughts:
+> - Cleaning up these logs for valid accesses (PowerVM bringup and development) reduces the overall log output and helps find real errors
+> - In the future, there may be a customer that wants to run PowerVM with upstream QEMU. The more we upstream, the easier that will be.
+> - In the future, we are going to have a number of cases like this where we accept accesses and don't log for every unimp access (to clean up log output). If we choose to keep those patches private and don't upstream them it's going to increase the number of private patches we keep, making future rebasing more difficult.
+> - I'd prefer to upstream more patches, and focus on keeping only the patches we need to private (for confidentiality or other reasons). To make future rebasing easier.
+> 
+> Feel free to contact me offline, if you'd like to discuss this further.
+> 
+> Thanks,
+> Caleb
+> 
+> > On Thu, 2025-12-18 at 14:03 -0600, Caleb Schlossin wrote:
+> > > This commit suppresses the following informational messages
+> > > regarding unimplemented pnv_chiptod registers:
+> > > 
+> > > pnv_chiptod: unimplemented register: Ox0
+> > > pnv_chiptod: unimplemented register: Ox1
+> > > pnv_chiptod: unimplemented register: Ox2
+> > > pnv_chiptod: unimplemented register: Ox3
+> > > pnv_chiptod: unimplemented register: Ox4
+> > > pnv_chiptod: unimplemented register: Ox5
+> > > pnv_chiptod: unimplemented register: Ox13
+> > > 
+> > > Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> > > Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+> > > ---
+> > >  hw/ppc/pnv_chiptod.c | 18 ++++++++++++++++++
+> > >  1 file changed, 18 insertions(+)
+> > > 
+> > > diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
+> > > index f887a18cde..cd9b8ee348 100644
+> > > --- a/hw/ppc/pnv_chiptod.c
+> > > +++ b/hw/ppc/pnv_chiptod.c
+> > > @@ -145,6 +145,15 @@ static uint64_t pnv_chiptod_xscom_read(void *opaque, hwaddr addr,
+> > >              val |= PPC_BIT(4);
+> > >          }
+> > >          break;
+> > > +    case TOD_M_PATH_CTRL_REG:
+> > > +    case TOD_PRI_PORT_0_CTRL_REG:
+> > > +    case TOD_PRI_PORT_1_CTRL_REG:
+> > > +    case TOD_SEC_PORT_0_CTRL_REG:
+> > > +    case TOD_SEC_PORT_1_CTRL_REG:
+> > > +    case TOD_S_PATH_CTRL_REG:
+> > > +    case TOD_TX_TTYPE_2_REG:
+> > > +        /* unimplemented, but suppressing logging for now */
+> > > +        break;
+> > >      default:
+> > >          qemu_log_mask(LOG_UNIMP, "pnv_chiptod: unimplemented register: Ox%"
+> > >                        HWADDR_PRIx "\n", addr >> 3);
+> > > @@ -420,6 +429,15 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
+> > >      case TOD_TX_TTYPE_5_REG:
+> > >          pctc->broadcast_ttype(chiptod, offset);
+> > >          break;
+> > > +    case TOD_M_PATH_CTRL_REG:
+> > > +    case TOD_PRI_PORT_0_CTRL_REG:
+> > > +    case TOD_PRI_PORT_1_CTRL_REG:
+> > > +    case TOD_SEC_PORT_0_CTRL_REG:
+> > > +    case TOD_SEC_PORT_1_CTRL_REG:
+> > > +    case TOD_S_PATH_CTRL_REG:
+> > > +    case TOD_TX_TTYPE_2_REG:
+> > > +        /* unimplemented, but suppressing logging for now */
+> > > +        break;
+> > >      default:
+> > >          qemu_log_mask(LOG_UNIMP, "pnv_chiptod: unimplemented register: Ox%"
+> > >                        HWADDR_PRIx "\n", addr >> 3);
+
 
