@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E567D0D16D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 20:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EB60D0D16D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 20:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdZpA-0002AQ-9K; Wed, 07 Jan 2026 15:08:08 -0500
+	id 1vdZqa-0004Se-UZ; Wed, 07 Jan 2026 15:09:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZp7-0001xn-VS
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:08:05 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZqU-00049Z-K2
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:09:32 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZp4-0002GW-7Y
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:08:04 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso26772955e9.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 12:08:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZqS-0002LZ-5M
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:09:30 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47a8195e515so17908815e9.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 12:09:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767816480; x=1768421280; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Tpd/l84XrVzBPcf0urzMcll6yyS6LWFj3wm0Rd/I+6E=;
- b=hCBSv81akcrhyXCs/zQ4zi733AuovHpyn6C7oC++g+wFh/bE9rtuLV4wYqQcNFxDe+
- V9XQts4AIt7q5xmg4xlh4AnrUBSXS+fY30Bs6QtIFJDmHk/Se0ZG6EjvPtMZlrCLcSgF
- PeX14HNXnqsePBfbbRbFUtA3nSGu/T4Bfgk4FOtddClrHQjQ7e8v67TAn8EYkc73ZSUy
- 6rYH51EKmSYomCXY3ux5xas+MxAZrzl7Nji97oEuEegJ6WFHL8RgbU6oFEI7MT0TZgVR
- dVMxeiy1c1slo0F8kIq1GhcjvoTl0CWObf/6Xpu3rwPhfiA714Xy8OuvxryO0NVLCPKw
- XFZg==
+ d=linaro.org; s=google; t=1767816566; x=1768421366; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JZ7L3Pf178vwFuizAo3o2FgCHyg5vMUBww1QiJ0Hq3c=;
+ b=H9KzQcsS14V1j/RI7zRfta70hnVxl4Y96bjXXL6WNwc7rM0tr0EKVC2sG4jtKfQtum
+ vAGX3pBYS02KGYceMLwDpD8H6QSUR3dHsEo4P1nK4lPCOjrP8ib/eJei5CQSLAJlKs0c
+ EROrKBt8ppUbdm7dTcEH5TouN36LEsF9C34RfCKGXFN22cbnlqMWdjH621yZ9HIiwT4U
+ p5ZfoBIZf4oZh+Z/jUhVc4SFrjaVEgCOv5idUDH1IONEwqhi/FC/1vzenhxnELL2e8lM
+ 7ZQ0win6Xl+8/gdLlsdp/e4vlZliHihyJ1TFzubBbigYXPuNyuF9BnMTUdU9gAhA9njY
+ TDSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767816480; x=1768421280;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Tpd/l84XrVzBPcf0urzMcll6yyS6LWFj3wm0Rd/I+6E=;
- b=j8oOGdK9NftyMX2Kd9wWPXZYO8ave4Kc/qB6XOyOJqBRRYtnlyYcEBZgUzx7H/IHDf
- msAJzaPDFYGfXAUPyGEOP34u+w2Ryf69luos4ENswZHTaHLFGtaujkkFO76CMSn5Lbja
- cULMIO0sfgJ/UDGdYHyL/uy3zpdUR6to3tTCClYaG0YxelHkbzOxzBehZ8Eaun+ito6Z
- kKrc238NCcCUNkE8LpYkyJTgyP9cTFZ2sYvDCuHd67WlRGtKhwmyQnYEpXvZbHRTjzL1
- hCLpSN/SfSEsWbK1LCMzF5b7sGHbQgastdsPtVuNTpt5PmiKdc2zdFg7+mtgJAjIlGLM
- mjwA==
-X-Gm-Message-State: AOJu0Yyu0X7zsIhBvUbKO60IC6vkt/CQfOWkbC2Y4Tf+MdiMr4AlFibN
- C7VdxfOgOC79kVT/TRzdk5LiE5QIpEycIW3phycey33XnX0G7P9nJ+k+vyeRKRYRUSlBmpOn02N
- oOfxIifY=
-X-Gm-Gg: AY/fxX5NwN5KyIk7NTgZL84I+5lvPz8m3GnAN9ufiGdZzrFee2hya6RmiKZ/4TYA3jC
- kDU+fetdg71TKbjnHiRqsOm8n1WVueFMiAZoacY73EGftmB/M3pz/LIF5qXv1NryRFEEAjL1rEQ
- fQcM/j9ok3RC2OP9/NPsd42XWFI65nZ1r8jFL/YY51lpLW3T7+B9zpsQgbEdZreb73tCWkeSo7s
- MmijNLZb1VV4qKpfCXbA/PJM+jeKD/VYjqWOJ4fh9xSS9sVxFvXAp63maMZvtgGOT24AEZ/1t1v
- HQAmIQ9mNWHiVOhuhv8x2fVPWXY1sX0nbR3WPOfLDnftYjAchqpBst3lJbUIPxf8ol46MF9yDSl
- LAgygOzSTHcizQx4OMLUmYnTIgCydRN6T5yJe5rz1Y8jSGyXEFQkOkuwJF+nGVsEJ0NuUxB89F4
- TpZavkbQ2H1HLQdbxUegxaNFgC53E+glIdxRmgGFEj5LbnR4LA5MP0gJsgYgiL
-X-Google-Smtp-Source: AGHT+IEEo18OU6MPrOvLfD48XWigK9dJiCmyH8tRi4Vv2kC8GLRHl7K7Go3bBrDZDWobCvDGmGBf7g==
-X-Received: by 2002:a05:600c:1d04:b0:46e:35a0:3587 with SMTP id
- 5b1f17b1804b1-47d84b3a06fmr53318475e9.27.1767816480523; 
- Wed, 07 Jan 2026 12:08:00 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1767816566; x=1768421366;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JZ7L3Pf178vwFuizAo3o2FgCHyg5vMUBww1QiJ0Hq3c=;
+ b=gNAjL9JWsYGIttepZxgUEU+cCr2ZC6pyz1yaeQiMGohyey8VmPHDI0lh/zXFlUAlWL
+ M6ikLAUU4yJZkvk+q73c9YIS+MkTRFvzn/v9ixjCTPpNfaCBarr8Qwkdc5Qv71IVBYB2
+ EHZ6q+vc5Qh7bHh4ZrCfJzh4wNtcyW6t5vxitsVeQxa3IZyLO/xUQR/2UXjYsVbrRC0h
+ L60tGhJtZiDDvIdVDk9aNWHgWr94j+VJTFalC1Er3lV1gdWIc13R+SBeOeM5Vy1IZ+WA
+ qJS+dyvJOlRFV72SFi/ZNQYl2dUR3GOmCS24eeICQL+S0BuWCsYYCX9oS8gKbtsvqsXu
+ vssA==
+X-Gm-Message-State: AOJu0Yx2UIxFsQxazqRPzJfII6thADrrX1cN+QZdT5fXHjK3ZER4OUfD
+ yO5KuQc/++B/Q6Sh9+4im9Oj2Og6AcWQq1BI4uWwkEUqg/pW/IcglFZnnQGnl4QTEIdyqRdAGs/
+ 72e0Bk6k=
+X-Gm-Gg: AY/fxX4t7LnI21NI2lkBsMkZGMH6WFIpCaS1JRwHGwB4URFN881uZ6gRlvvEwTXc7vj
+ Ex4N4QwS1w3GIkz1lE1SMYWeF/dmwb4d2tXVytEyBmi0SncO7sDKmVPsn81UaxK8mmwSWd5HwkK
+ Ij8MWK2bNvf3BPXL3TbbW0gn341oPlMIMETBDtXJN0OxaWumSRUbqbfK/AEI+u1xRlsyuf++Q0d
+ O+Gk2cHptqYcv/7ija/YW96tFH1I0X/En7NqV6qOaMdMGAN0rr/lkVFfjk6WHe11LG8kKgtZZ1g
+ m7kutzBcB6Yc2o7gkw52iBAwBTPKdwmT5zBP1MEJhPhAv93YE7POcX/ydGMt9rHKhoL9DXkSqVB
+ nyTUewroQdBEFl9qeyTIA6HbJjZ6PXn5v7uNoWK26pAnjHo0J+97OxptXfHk7JyaY2sqQsnious
+ cLyqFrGjZs/u/8AAbQL4qj7wWZ+QRCpn4zJcbAvY5mhATVYHsgn9gX2w==
+X-Google-Smtp-Source: AGHT+IHDU+TAjiZjunK5ROmrOlO650ARChGdt5hWHVa0PjK1J7vDPI6PuMKd4+Oz6nNX3nysNiEzYQ==
+X-Received: by 2002:a05:600c:1e1c:b0:477:561f:6fc8 with SMTP id
+ 5b1f17b1804b1-47d84b0a211mr39126245e9.5.1767816565867; 
+ Wed, 07 Jan 2026 12:09:25 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5df9afsm13322083f8f.24.2026.01.07.12.07.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Jan 2026 12:08:00 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>,
- Bastian Koppelmann <kbastian@rumtueddeln.de>,
- Stafford Horne <shorne@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 8/9] target/hppa: Remove target_ulong use in disas_log()
- handler
-Date: Wed,  7 Jan 2026 21:07:01 +0100
-Message-ID: <20260107200702.54582-9-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260107200702.54582-1-philmd@linaro.org>
-References: <20260107200702.54582-1-philmd@linaro.org>
+ 5b1f17b1804b1-47d7f41f5e0sm112120065e9.8.2026.01.07.12.09.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Jan 2026 12:09:25 -0800 (PST)
+Message-ID: <9eec8c4a-c6fb-4c47-8701-1afec420f5b7@linaro.org>
+Date: Wed, 7 Jan 2026 21:09:23 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/18] target/s390x: Remove unused 'gdbstub/helpers.h'
+ header in helper.c
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>, Thomas Huth <thuth@redhat.com>
+References: <20260107130807.69870-1-philmd@linaro.org>
+ <20260107130807.69870-6-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260107130807.69870-6-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,29 +107,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 85c19af63e7 ("include/exec: Use vaddr in DisasContextBase
-virtual addresses") the DisasContextBase::pc_first field is a vaddr
-type.
+On 7/1/26 14:07, Philippe Mathieu-Daudé wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/hppa/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Updated description:
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 0b7074649b7..0f8a66f7732 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -4864,7 +4864,7 @@ static void hppa_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
- static bool hppa_tr_disas_log(const DisasContextBase *dcbase,
-                               CPUState *cs, FILE *logfile)
- {
--    target_ulong pc = dcbase->pc_first;
-+    vaddr pc = dcbase->pc_first;
- 
-     switch (pc) {
-     case 0x00:
--- 
-2.52.0
+     "gdbstub/helpers.h" uses target-specific symbols, but we don't
+     need it, so remove it.
+
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/helper.c | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+> index 8d1e03f6768..a6c89ed0af3 100644
+> --- a/target/s390x/helper.c
+> +++ b/target/s390x/helper.c
+> @@ -21,7 +21,6 @@
+>   #include "qemu/osdep.h"
+>   #include "cpu.h"
+>   #include "s390x-internal.h"
+> -#include "gdbstub/helpers.h"
+>   #include "qemu/timer.h"
+>   #include "hw/s390x/ioinst.h"
+>   #include "system/hw_accel.h"
 
 
