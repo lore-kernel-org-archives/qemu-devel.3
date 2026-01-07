@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D99ACD0D171
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 20:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 424A6D0D16D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 20:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdZoE-0000ag-UE; Wed, 07 Jan 2026 15:07:12 -0500
+	id 1vdZov-0001ct-Vg; Wed, 07 Jan 2026 15:07:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZoC-0000Xz-OQ
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:07:08 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZos-0001Zr-IX
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:07:50 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZoB-0002Cu-3q
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:07:08 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47d5e021a53so18402695e9.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 12:07:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZoq-0002FZ-ML
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:07:49 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47d3ffb0f44so16436235e9.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 12:07:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767816425; x=1768421225; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zQsfOcBtztkKTS8NBf1eTI+RcbLFjbRfS/iwerIX93o=;
- b=knZLu2nw6kq3ICiYpdG2Z1mPNYUKZqTl1B/0x7RIfC7rHI0+twLq7r3nzwdvdG0dL1
- FfG6ijMM86yEDkiM3A0nO10HYcmtS5gHZQeR+joRfT20DTS+o3qln4kjUGh9vmwRbaY2
- wV8isuXP0CDBGmLrxpnLASXmD6kKjhIRi2DoI4WLm/hWieUxDEBIlPod/r2nqyTNNule
- /I0a6QTdXc0SUDGbc48xXTeSqp4tcDdklHvnoc/COcN/+13+bdLywkexuN6e7zQhDuvb
- vOl4o15Elzp2TbGsNENLvBszR8f7jaWUpUOYo3uo64lB2tW55RWnuWLz1KlB1nyhN+oW
- iaiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767816425; x=1768421225;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1767816466; x=1768421266; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zQsfOcBtztkKTS8NBf1eTI+RcbLFjbRfS/iwerIX93o=;
- b=e4AQnKUKq/MEDVtyeQ4IvRXviOlukEMZWWzle+Qpig2DbgmVWPzcRDn//ioJgBLAqt
- PUpg908xQhkUo1AOFy0a2xtsXhSvbZbf1qGOoMUW9zrRbZBX4dO4GuexPUwxnjoN80sB
- vMDmpum0fjr0EhaH2AFgQ1OBLYlxZFluWe9gQlVBcc7PkegG9NznNn7kkobiabuNunGB
- KKWbXHxRz9DZo0gJJascPS22XYhgIEnGclk/RBU0abtdhqaBA1chE0eIsOyaq+6GygzV
- 5uZ1xXqR61C3ERvOLFOa6zvNU2AOmWNIMXTHfvMMU0ep4VjidIajGEYyKubjgQipdItk
- O0Xw==
-X-Gm-Message-State: AOJu0Yx8ZD8b6J1m7gKqkZlihy8d4quKv5ClFsiVaGBtSg06ruGP5rEo
- 4TStxpdXKp7lZvc76zF9HoWZ/gSHE0gnml14J/oXW/MmBh/4vP1fEFQfmtwL6E7WV3fxbzAuV8r
- UIJjg9SU=
-X-Gm-Gg: AY/fxX7YGHFQB0HdFnGuNX7/zDQdNwIcbWkvRjcEGNOFr2ZIyDZOkOXtOOrR9b7MbGS
- PrD8TTuw+R7VqtPNsn7iz5dHVcCjFj9AURMH6qMuBaJNuUyYyRdQ4XKFp1JHUoxwI2Y+LOyPpL4
- Dk1QwdYgZc9h5Zm4DjBU4OL/0djy6+SZQkd0DQF79Z3rWT+NkK/OwPgBjSaMSSLQlaJdyVwg+fs
- 6Grjqbdtwp3iLLH8D1vmxqVZSmXzF88q+cUjKnVJvTnm6pbfrbzvFTKHzqwQTyeIfs4fUlO6fQb
- kFw7tnpu5gK48iMMmdxB3HA05DGdy5cLJcYj2jrc0ltmDyUNgxpjYGuUw1lNYf6eIdST6C+BRbO
- lJPLxTjTYkPjcIo7Ug/XBErb7NEPzah8/zP5PRPb2HCYMoUhjql0gCjbCBNJL0dNpzcH1B8JnAI
- DeYpVqTFyfmbX1QIbj0niW4++FIX4mwwpqZrcOyUx10n2jkyXk0CRiMUjsDzMm
-X-Google-Smtp-Source: AGHT+IFa1VrsuClRRrkscZkuyD26uOls4IADvkCuaU8/QvJWqi9TuCEat2lOuJkkyFtodV1OJq8jZg==
-X-Received: by 2002:a05:600c:a08:b0:479:3a86:dc1f with SMTP id
- 5b1f17b1804b1-47d84b41012mr40452955e9.37.1767816424687; 
- Wed, 07 Jan 2026 12:07:04 -0800 (PST)
+ bh=Fa5NrbzDfN4jB45m8/tRLk36haRcKLwCy8459c3N8EQ=;
+ b=z7cprh9ClWte7P1Gb2i69/tkdY7r/o5hjvIHmoko0iN2nxg/EkjYJWXq1cBx5X9Jdp
+ q7yBrhTRsL5GytSUJAXwz4hNsHZZrMdYWM0P+SaVZEWE7sOklxyxU1JMROrRg/avrU2M
+ WuNha/QIqtz9K8liA9sdWX9b6ezmKvYSPPRj7xJh88xwNvruyNtP5ZzesbDGFlTp/Acx
+ 0v2JTAcFTawVV7gi6uMFXQ+DjYcCew0YxXw0+0gMAf6wYM+spvogvZ6LeCWSlQ5rzWcR
+ UB27xWAVlRpBgOQgrw6xyhePiIFdxmOtwaT8ObF1Ge6/Nn4fmhX6ED9FBjQ9EQ1xsKQ8
+ Iv+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767816466; x=1768421266;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Fa5NrbzDfN4jB45m8/tRLk36haRcKLwCy8459c3N8EQ=;
+ b=ZlrptIDjIDrbHlosFqEtR3VollX+CMkHJ8ZAHlQZkbEl61vZKRurILHNG9/H1XPIG4
+ qeByefUHVlel8jArY8XowNuIjHo+8YV+QCKyw1Sv0qaQK1YHoeUJuDY4Q/dAkNQJwhcP
+ 7H11rbj+CcBq6bfhn5WQkdjeiz4pdYngNjyKslhT0bH6WlB8EJrctsbUH7agcb9vqIPf
+ sYbemvOqUwBm5R5KWqIzs57QUVU/izf//D4/5y/OKsC+paVkrzhIwdY14FEwv0LI9hd/
+ 1xraLiLEzJ05J4Mya1I1VjOtObObOhAnfYt1jH+NRlfkC9wRwHTSymwu9nDICv7YZfBZ
+ AcDw==
+X-Gm-Message-State: AOJu0YzCirhWVfQXkTrbEAhYvKqQzTzJXfATg00Nir8nwIpJR4dBtO55
+ sx6ratJANWaC752SRfY1u+PzWXMS1nBQ8uuerMlbeC2JTdtk0vhFC8xvVvQkp0OI5cs/91GEdI2
+ Fe8yit/k=
+X-Gm-Gg: AY/fxX5Q0TfVB2bHZ34GDsW7JTCRstPrCANgD+i60C8FVD2o1B8GfcnAr8AOOAtSI+r
+ hfsoAGxz/sRKIOS1OM0WWZNNT7wEjrttDnudLGR2ReE3fHGBwPOGfuWr9fw6rKxNAMFvOAcO4Fq
+ japh+ilINgWMM8VXzv+U24SCbZIKfhYYd5MtGgdUMOroo0SmREYhw2a7tWw+XPGiGe8uNHod5WU
+ GJ7yjgerTGlb84O+rhT7dvnA6l9MnERbRwLjQu+PKgtpC5Ef60v6CHiCzhVORZ0YiywRNoM412D
+ vPW4BtZMI6lemkNN7H3YM1bfY5qkP+9Pmse3FigUMcgT1WZ1luP5szcx1H9VrY5eT91glU2qR2w
+ gLH0HJes3UMi22eNC+fdza4GF/KDiiDEdCGQgxx4Xe20oYqR40zkbFMMurTcwnvWsGW+FcFL6Jd
+ 17A/yevxqiZeaaM5uwJLhv8ClA9VD6b8Lt9ga81A3NgQ7QusbQ8Dqw0O3P/Qky
+X-Google-Smtp-Source: AGHT+IFMTvqxuW+wSdFbZUnnBRIVryoR+Q+ih2+fhPFFWvQHYNxMYM22C15VzPL1tN/2SGQiMwTyTQ==
+X-Received: by 2002:a05:600c:3152:b0:47a:940a:c972 with SMTP id
+ 5b1f17b1804b1-47d84b18752mr44204945e9.4.1767816465855; 
+ Wed, 07 Jan 2026 12:07:45 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f6ef868sm113078665e9.11.2026.01.07.12.07.03
+ 5b1f17b1804b1-47d7f6ef885sm114577875e9.9.2026.01.07.12.07.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Jan 2026 12:07:04 -0800 (PST)
+ Wed, 07 Jan 2026 12:07:45 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>,
@@ -72,16 +73,17 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/9] target/misc: Protect few system binaries for target_ulong
- use
-Date: Wed,  7 Jan 2026 21:06:53 +0100
-Message-ID: <20260107200702.54582-1-philmd@linaro.org>
+Subject: [PATCH 6/9] target/openrisc: Build system units in common source set
+Date: Wed,  7 Jan 2026 21:06:59 +0100
+Message-ID: <20260107200702.54582-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260107200702.54582-1-philmd@linaro.org>
+References: <20260107200702.54582-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,38 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Omnibus series for architectures with few maintainers.
+Since previous 2 commits and range 2795bc52af4..5b67dbf1dc3 we
+remove all uses of the target_ulong type in target/rx/. Use the
+meson target_common_system_arch[] source set to prevent further
+uses of target-specific types.
 
-It took some time but to remove the target_[u]long uses but we
-now have some system files in target/ clean of it (rx, sh4,
-tricore and openrisc).
-Move the source files to the meson target_common_system_arch[]
-array to forbid further uses to creep in.
-Keep cleaning hppa & m68k. More to come.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/openrisc/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Philippe Mathieu-Daudé (9):
-  target/rx: Build system units in common source set
-  target/sh4: Build system units in common source set
-  target/tricore: Build system units in common source set
-  target/openrisc: Remove unused 'gdbstub/helpers.h' header in helper.c
-  target/openrisc: Avoid target-specific migration headers in machine.c
-  target/openrisc: Build system units in common source set
-  target/hppa: Avoid target-specific migration headers in machine.c
-  target/hppa: Remove target_ulong use in disas_log() handler
-  target/m68k: Replace MD_TLONG -> MD_I32 in monitor.c
-
- target/hppa/machine.c       |  3 +-
- target/hppa/translate.c     |  2 +-
- target/m68k/monitor.c       | 60 ++++++++++++++++++-------------------
- target/openrisc/interrupt.c |  1 -
- target/openrisc/machine.c   |  3 +-
- target/openrisc/mmu.c       |  1 -
- target/openrisc/meson.build |  2 +-
- target/rx/meson.build       |  2 +-
- target/sh4/meson.build      |  2 +-
- target/tricore/meson.build  |  2 +-
- 10 files changed, 39 insertions(+), 39 deletions(-)
-
+diff --git a/target/openrisc/meson.build b/target/openrisc/meson.build
+index 31608b6dc7f..d51ea1ab753 100644
+--- a/target/openrisc/meson.build
++++ b/target/openrisc/meson.build
+@@ -22,4 +22,4 @@ openrisc_system_ss.add(files(
+ ))
+ 
+ target_arch += {'openrisc': openrisc_ss}
+-target_system_arch += {'openrisc': openrisc_system_ss}
++target_common_system_arch += {'openrisc': openrisc_system_ss}
 -- 
 2.52.0
 
