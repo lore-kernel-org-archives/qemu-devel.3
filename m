@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF74D0D16F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 20:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8904D0D16D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 20:09:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdZpk-0002q6-H3; Wed, 07 Jan 2026 15:08:45 -0500
+	id 1vdZoT-0000oN-E0; Wed, 07 Jan 2026 15:07:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZpC-0002XL-VL
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:08:12 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZoQ-0000nX-TK
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:07:23 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZpB-0002HC-4w
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:08:10 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47d5e021a53so18407935e9.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 12:08:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdZoO-0002Dv-Of
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 15:07:21 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47aa03d3326so21227915e9.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 12:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767816487; x=1768421287; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767816438; x=1768421238; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5iItJ0aNB9FO1EI6E9PzkONwwdwGsq32voTruVa/n7o=;
- b=V7mBY/9/IhLDT51eTfekeYrSVaZFOyMrVzW9pe+q4QMUSaZm8tp62K6uHKP/nQeUVs
- fSHQ6l7Vd95cXtG+m84YhVFn3B7DJwmon81sAjrCRHkpP7WHkdYgvLpgf1AXxeeAX/Y8
- ZxzXiywl/qYB8a6JcvH91JvSJXsRIHyeKgb/YOC9lE4Mizg0PkK+bdIYb8LhC0z9we/A
- BqXv4ogmW95TPv4W2ds4Qh93GhUQPACD9E6xsV/dRp+j7B9tf1ZjgYr3ZaikntKyZDHE
- 7qiP3RkhmJfZZwZDbFiYIwl+rACJycaz7K0O465ISGr95Wd71pHpIXdyU6IByZ7qfv9n
- cWgA==
+ bh=Y77AJCQerUsc6vJoOGDSRwakqxaj1xNXQN0kQZ4hBPY=;
+ b=C1ymKC+os1tgj05mu8FrUabHfNqnHBYauOCwV1AN+/uD7UtzH8RqMCE9kTwULAgr4v
+ PXsGgij++yutzpWk3x5lPN6R4RGyyGUHTZotOToMrc7k7fD0RNNXpuurjgWaRujUOFdT
+ /y8dNr0KSKSpEiBfiv0ylklnGrhC1ztohVkfLZAnRTao5fytHETj/OcLL/lztRiCsB/Q
+ V4gjO5+VmylJZVgigRN/BlInou/p9y3rH7/QW+zs9EB3TZ4CcFhZk5ReGin56fBXKP3w
+ WZzmQ3rqLq1esgEWPJKs9mZrCL9fx5m+9SVwZvkTDeydbd7lVrJAC1NhH0kBjTC0c5GF
+ mBpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767816487; x=1768421287;
+ d=1e100.net; s=20230601; t=1767816438; x=1768421238;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5iItJ0aNB9FO1EI6E9PzkONwwdwGsq32voTruVa/n7o=;
- b=uiW5X79z+sb741Qul1pDtAwtMxyDESBlwFigmYyI84UignZVC43MPgZwcUT+kki6Eu
- JFA79jcbjdwmfgAbnh33tY4WFL5oLG439zgHEvW2EckTOnJiAF904k2/OtG9P02EsS2C
- yQYsjok8sCVAC6DrYNLaYywSNYF+G4tCR23+QD4dr1dcdgLmd/NHUIVjaBqWzHxiezMx
- KhhJQTI+E6Mfe9+yA//fTYPeRujgZ6KgeN+4O2rbpzxBaeCy544BQ1B7svN1P7x/uqKD
- ya/qn6colwv9izLnDfFyQt8f8dK5BV5j02X6MqLuc/6WJ833IGIBPOh/gQkVnJcXWwQ4
- +4fA==
-X-Gm-Message-State: AOJu0Ywh96ovE8tf4rxVJXk0V5T0Dh/r5OvwNYhRksroXYCbJNp6rgtL
- X1sL5OcQ++K846FYvbiI0XJQ59Zv/W8Rctd1jrR9MD46lJIuQUU+Keo4lba+5HnoJ7Yu9fdbTEo
- iaWQK3jw=
-X-Gm-Gg: AY/fxX6IioA4/SScGeFd6m5oHK9YkONwPewSSAxffSBbmABy75wJ8/9w9M5aSf0benJ
- iox934uAa39ehr8DWa54y6akyu4CJfg/WZgrzrlj5d+yeARqK5RmpOU0/SZpWzsMquGVeHqyWMK
- lsA5sAiU4wesqy6O6HCwsnq1NOAnFsFTkRSROeWG0S/NEBgG+pgpTBPf6PD86NstGD99uH9ATIA
- 3v1/Wj72vZ3VmHSvHBgFKu1968YZgWpTqVjM9u7mI3nCW0+VOJ6uJtm/VMieSwV71AfQiosMmgz
- +zYOGHmaIXeWIk0DtWaO0Yf2MJD/IhLD4tHT4KYRpqMTgPwRabXB2goV6MPPF73B/ec4hDB6sO/
- W7md60sXzRKONa3Nr/ZunFMm49xMMJu+OssyKdPkwgjBZnwkGYapVSbXPLoiSc0V7g7IKx9QGaG
- vTtsSvQCL82lY3qZfphroEjhkGNtnV1grapdpFPuvLNC1OChX6xrRHRht3tIzB
-X-Google-Smtp-Source: AGHT+IGxkzcD2untQl3FisMXX8HQ9tKuPqCIASx199WBoQYsJ5dsoXDFpAHYGLNRGBzITS91gi/8eQ==
-X-Received: by 2002:a05:600c:3483:b0:47d:6c69:bf28 with SMTP id
- 5b1f17b1804b1-47d84b3476fmr49874335e9.24.1767816487370; 
- Wed, 07 Jan 2026 12:08:07 -0800 (PST)
+ bh=Y77AJCQerUsc6vJoOGDSRwakqxaj1xNXQN0kQZ4hBPY=;
+ b=LHu7c+sZbqjfFhRfSRdAuHkvWimCuuGAwvqm9uzrGVJ9u+SwU/C30CE12ysfpSb+mh
+ HDRJmGk1aksZgQUuIZtQ67nJD6rZv+Yt/xWIfIsZ6S24Tbkh++UlrSJ6z9Lmp8dmyAUo
+ GtP8KwgmNEkkWJxrM2cPVCJf5jJM0xN2BJ3bBkpPGsphPxe5MS8mV35dNP/dEjnzyGmu
+ mbNELxs7e1WN96CQXpPDwUYTUnCKuB2wW8Wx8y5Ps1Fqnfw5s2FHk1TOBnwapnvtld56
+ XinXaTteKo5TfEdnoss2Ny2srjEJFdBw5geaDD131PKjBibZNbF0I45dBx+elNc9BoxH
+ 8cIw==
+X-Gm-Message-State: AOJu0Yy1nUBOBJWD8gaOqedMUNi7yOa2InJ1wPpSUhBzoc7/mm/SwEsE
+ keWI75JHZt66wOvGOpa7w0kfWTTfxExb+6NkecpfLfvT9ISRktZF52oWnmF5gXK5yxHJBnTNjdB
+ bDIw1+Nc=
+X-Gm-Gg: AY/fxX78lpC0088leS6Ds3BqZPWtT88Nszib7YYSlY3HmeyZiZqfeMdFCwWGIq6Xrj1
+ rXC68gCAUzm4a4N9gFSmlbTmxd7QnLyvxjxG5E/G6Yd9p5yZyrZMymPxNVnxlnXofRokNFRJ4S1
+ Fykqy15clzTxhHUT/+J2+3hjxOjc2VWugICxM04rMan/6VVJ3YsXRYTAf2id3UMaTcNtyBmMvoR
+ fTpoaz6q83jc9mosETiLvtWwSNHEO3EeYwycgFMLWLvSBQM9CLIwAWda6K9o/eWX0VxQiAGKORq
+ 8AbhDUimkfENKV7Mao9XGOUR99BaM2S23z1tyXMhxxEptMpUz+U3ZRVca6bt5RfD8srEMFhb6tZ
+ yM6XwBe0vjpbEb8nxO5imwsI1+hFnbbzGyDeCLX2QePGQUTgZOMHxzrp/w/jHTrGHpqI/BmhlNW
+ iAUcWfvAByz+SYYP2EXwheVCCQMiMNr5woEjQwwg6NsYErxny89B0dGkogGWR3
+X-Google-Smtp-Source: AGHT+IGPTY1pI3aco6cVqsvQGnrWlWXM4LYVfxMWw7DNKUl8H5skynBQXYEG4nqwfBPI7sV/YYdZjw==
+X-Received: by 2002:a05:600c:3556:b0:477:63b5:6f3a with SMTP id
+ 5b1f17b1804b1-47d84b3bc7amr43508015e9.27.1767816438342; 
+ Wed, 07 Jan 2026 12:07:18 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d8636c610sm20729075e9.0.2026.01.07.12.08.06
+ 5b1f17b1804b1-47d7f390a69sm115593655e9.0.2026.01.07.12.07.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Jan 2026 12:08:06 -0800 (PST)
+ Wed, 07 Jan 2026 12:07:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>,
@@ -73,17 +73,17 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 9/9] target/m68k: Replace MD_TLONG -> MD_I32 in monitor.c
-Date: Wed,  7 Jan 2026 21:07:02 +0100
-Message-ID: <20260107200702.54582-10-philmd@linaro.org>
+Subject: [PATCH 2/9] target/sh4: Build system units in common source set
+Date: Wed,  7 Jan 2026 21:06:55 +0100
+Message-ID: <20260107200702.54582-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260107200702.54582-1-philmd@linaro.org>
 References: <20260107200702.54582-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,87 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-m68k's monitor_defs[] array implicitly uses type=MD_TLONG for
-all its entries. Since we only build this target as 32-bit,
-use the explicit MD_I32 type to avoid an indirect target_long
-use.
+Since commit range 42c90609b8f..82a1e739010 we remove all
+uses of the target_ulong type in target/rx/. Use the meson
+target_common_system_arch[] source set to prevent further
+uses of target-specific types.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/monitor.c | 60 +++++++++++++++++++++----------------------
- 1 file changed, 30 insertions(+), 30 deletions(-)
+ target/sh4/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
-index 784f5730919..6d101c75df0 100644
---- a/target/m68k/monitor.c
-+++ b/target/m68k/monitor.c
-@@ -24,36 +24,36 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
- }
+diff --git a/target/sh4/meson.build b/target/sh4/meson.build
+index fe09f96684b..221700bcf8c 100644
+--- a/target/sh4/meson.build
++++ b/target/sh4/meson.build
+@@ -11,4 +11,4 @@ sh4_system_ss = ss.source_set()
+ sh4_system_ss.add(files('monitor.c'))
  
- static const MonitorDef monitor_defs[] = {
--    { "d0", offsetof(CPUM68KState, dregs[0]) },
--    { "d1", offsetof(CPUM68KState, dregs[1]) },
--    { "d2", offsetof(CPUM68KState, dregs[2]) },
--    { "d3", offsetof(CPUM68KState, dregs[3]) },
--    { "d4", offsetof(CPUM68KState, dregs[4]) },
--    { "d5", offsetof(CPUM68KState, dregs[5]) },
--    { "d6", offsetof(CPUM68KState, dregs[6]) },
--    { "d7", offsetof(CPUM68KState, dregs[7]) },
--    { "a0", offsetof(CPUM68KState, aregs[0]) },
--    { "a1", offsetof(CPUM68KState, aregs[1]) },
--    { "a2", offsetof(CPUM68KState, aregs[2]) },
--    { "a3", offsetof(CPUM68KState, aregs[3]) },
--    { "a4", offsetof(CPUM68KState, aregs[4]) },
--    { "a5", offsetof(CPUM68KState, aregs[5]) },
--    { "a6", offsetof(CPUM68KState, aregs[6]) },
--    { "a7", offsetof(CPUM68KState, aregs[7]) },
--    { "pc", offsetof(CPUM68KState, pc) },
--    { "sr", offsetof(CPUM68KState, sr) },
--    { "ssp", offsetof(CPUM68KState, sp[0]) },
--    { "usp", offsetof(CPUM68KState, sp[1]) },
--    { "isp", offsetof(CPUM68KState, sp[2]) },
--    { "sfc", offsetof(CPUM68KState, sfc) },
--    { "dfc", offsetof(CPUM68KState, dfc) },
--    { "urp", offsetof(CPUM68KState, mmu.urp) },
--    { "srp", offsetof(CPUM68KState, mmu.srp) },
--    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]) },
--    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]) },
--    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]) },
--    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]) },
--    { "mmusr", offsetof(CPUM68KState, mmu.mmusr) },
-+    { "d0", offsetof(CPUM68KState, dregs[0]), NULL, MD_I32 },
-+    { "d1", offsetof(CPUM68KState, dregs[1]), NULL, MD_I32 },
-+    { "d2", offsetof(CPUM68KState, dregs[2]), NULL, MD_I32 },
-+    { "d3", offsetof(CPUM68KState, dregs[3]), NULL, MD_I32 },
-+    { "d4", offsetof(CPUM68KState, dregs[4]), NULL, MD_I32 },
-+    { "d5", offsetof(CPUM68KState, dregs[5]), NULL, MD_I32 },
-+    { "d6", offsetof(CPUM68KState, dregs[6]), NULL, MD_I32 },
-+    { "d7", offsetof(CPUM68KState, dregs[7]), NULL, MD_I32 },
-+    { "a0", offsetof(CPUM68KState, aregs[0]), NULL, MD_I32 },
-+    { "a1", offsetof(CPUM68KState, aregs[1]), NULL, MD_I32 },
-+    { "a2", offsetof(CPUM68KState, aregs[2]), NULL, MD_I32 },
-+    { "a3", offsetof(CPUM68KState, aregs[3]), NULL, MD_I32 },
-+    { "a4", offsetof(CPUM68KState, aregs[4]), NULL, MD_I32 },
-+    { "a5", offsetof(CPUM68KState, aregs[5]), NULL, MD_I32 },
-+    { "a6", offsetof(CPUM68KState, aregs[6]), NULL, MD_I32 },
-+    { "a7", offsetof(CPUM68KState, aregs[7]), NULL, MD_I32 },
-+    { "pc", offsetof(CPUM68KState, pc), NULL, MD_I32 },
-+    { "sr", offsetof(CPUM68KState, sr), NULL, MD_I32 },
-+    { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_I32 },
-+    { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_I32 },
-+    { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_I32 },
-+    { "sfc", offsetof(CPUM68KState, sfc), NULL, MD_I32 },
-+    { "dfc", offsetof(CPUM68KState, dfc), NULL, MD_I32 },
-+    { "urp", offsetof(CPUM68KState, mmu.urp), NULL, MD_I32 },
-+    { "srp", offsetof(CPUM68KState, mmu.srp), NULL, MD_I32 },
-+    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]), NULL, MD_I32 },
-+    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]), NULL, MD_I32 },
-+    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]), NULL, MD_I32 },
-+    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]), NULL, MD_I32 },
-+    { "mmusr", offsetof(CPUM68KState, mmu.mmusr), NULL, MD_I32 },
-     { NULL },
- };
- 
+ target_arch += {'sh4': sh4_ss}
+-target_system_arch += {'sh4': sh4_system_ss}
++target_common_system_arch += {'sh4': sh4_system_ss}
 -- 
 2.52.0
 
