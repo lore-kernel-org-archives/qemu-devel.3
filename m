@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DFACD0D151
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 18:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73375D0D14B
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 18:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdXvW-0001Bk-FU; Wed, 07 Jan 2026 13:06:34 -0500
+	id 1vdXyc-0003FO-3Q; Wed, 07 Jan 2026 13:09:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdXun-0000d9-8u
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:05:51 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdXuk-0001WM-VP
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:05:48 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4779cc419b2so20941045e9.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 10:05:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767809137; x=1768413937; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EU979OOA11vwfaGt246n4U8ewDaOQgWEOM4SzB3CSP0=;
- b=ii61CgJaVLllAOefgHv6ArQWDEjJDFmvyt5g2Ycw/Et/R/c/wel+Nz3ctsxq8oTst5
- YgZLrM3ZqvHJitjSv9U91sb/7FehaetqdUTFzDi4YChMRZNVeB3+VsfJF9uzlRXf1GdQ
- 93K4y85M/iOP4RGsESZmCEie3sFYhX3p8eCfQjVf3hOipFFRyXzMHc4wHVLxSk+K7CxM
- /GzXu8OPW3p7oBAQPnubkHItNGcfE8L8FMRwQBaSi0uRHBL9xYC6dsC4e34L5yBPS27F
- B49V20qBS8aaZNPeHsORGwvD7nPWASmHX6Fq3diN15P+RxNxipd2VacLCIEQk9rX8POJ
- jiwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767809137; x=1768413937;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=EU979OOA11vwfaGt246n4U8ewDaOQgWEOM4SzB3CSP0=;
- b=uoZCyx2wAUSBSUIK3SfP6HKNcOvp3uatrItg0hsf0NyhhCtWxffBtJmznrl8tKuBIF
- 0usqEGAQGB9+J6nJj7tggG8oox9Fc7wzmON/ZJ2eb0mONb3Pm4KR0GJlGd8apd7mVxMR
- O8SRW1dCetRhaVCX8fu5n5Avf6DEN0o4XXaE68ICPa85uBOeaXbBBQHgmzPvM8G1oX0f
- l2t7yRdoLUj5GfcLHhdzB+2UvyAYjf8+mCpOIhMjG/WT+Rl6bkF+9C/BULP7t8wT1Kr8
- /FSRbvlYvQHYs1JwY84ZL/4jCL4nFnDWSIWbQKLqnyM4zbGIfIQAlW/g9ZOSRjocyC6R
- N4+g==
-X-Gm-Message-State: AOJu0YwM4laFR/trZA6zZkfiyBOkTyCDtundvWk1bvmWy9IDXd3vN5V2
- XR5yDL24Pi0Gp7zv2DA5rS4qzcwb/mRj1Rp+3i11vC7kaS5y7EAdWVvSRIjUskj1AjytYNlPVcc
- N5EyrdGc=
-X-Gm-Gg: AY/fxX5MgJszLqAzMMTjENDcdxcB6hu9RE90Gxr/rizc30JFkmdJAWyTgoG5qq+fwpB
- KWgUaYoGGjN18YVCEtPjKmPluGSVt1hpWd9IMpUDmGMNRxVlAFKi5hMj6BhiMpgWqPYDoY36vQM
- gZlok1G+U+ltkhpfdooq/er5BxhXsXqsBkPGJ1RSgmBOzhCwcZYYi1lfRyi8JrFx1qrtdCKaGWU
- bI6gZaJBCqqqZEi0/E2dAS1coQwboHjr+QJaE83D6OPrV7cl9vVfx/lwXYkSm6i5gI5JuoFbwFJ
- 77UdA47oLcxD88NnlTH8xF0wr1MNYYhEiePImZ9SPEH4emjQKdIiwtiiFGgeLSwQjc1yBpQittU
- 5RSVeDx38neVKHSDPYpmwJqOkwIT12GvW1cNhJjwHwDwCNb2rydPSlr+OaZlaBDBK/PF8eXKsnX
- Ev0nKPloykN4/vlsM0SC95lSgWlfofLKm/7hCtaxZn2LGwPzaAVhKCAy8ipuc7
-X-Google-Smtp-Source: AGHT+IGqEa+zTFF8xgbeKwVtKwooYQoG+996GL0Ry8vTUKi8E5GmSsf5CEug22hZbIMekpwRimpI7g==
-X-Received: by 2002:a05:600c:190e:b0:479:3a88:de60 with SMTP id
- 5b1f17b1804b1-47d84b3fa79mr34558745e9.37.1767809137158; 
- Wed, 07 Jan 2026 10:05:37 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f68f4ddsm114653225e9.2.2026.01.07.10.05.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Jan 2026 10:05:36 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/2] dump/win_dump: Use stubs on non-Windows hosts like POSIX
-Date: Wed,  7 Jan 2026 19:05:19 +0100
-Message-ID: <20260107180519.50820-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260107180519.50820-1-philmd@linaro.org>
-References: <20260107180519.50820-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1vdXyW-0003F4-SB
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:09:40 -0500
+Received: from mgamail.intel.com ([198.175.65.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1vdXyT-00026X-8Q
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:09:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1767809377; x=1799345377;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Te+EVbCr+LtmUhn8fT5sGp91OOQeOi2uLfD+WI4BDak=;
+ b=jQxi242sPyyidGAix7uDn3RQku59g6s1WNvHfJ+AY9jUiXlanLL0g8LV
+ IMx87oH4f81xDSM7s4iMvHTioEAIFPt153nNu57oqvGS2DT/M/S3p1jfy
+ B96o6RzRuYEgNh0lxuO0UIpr/UnK5VFGtGKMDdN7XUoJ3FHQRmvB+G6Qk
+ /NzJzWb5SWr71+ydj6TCnxZeWdDWuF4u+sBdb3/9RZLNFwYp63HLA3Upv
+ bHRs1XORfykqESz/rwk70l2SljHfSE63PKS7GaoKmc41fdDhCc7CcX08y
+ RprHHlJkFbn8pc1j8LlV1Sa0P8CpVcuoaJAkGmWa94hBFwV1eu2k/TmI4 w==;
+X-CSE-ConnectionGUID: H7k1qkVYRgeY02re0PBuIw==
+X-CSE-MsgGUID: wsYOS4IqQR+w81akh5qHfw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="68921541"
+X-IronPort-AV: E=Sophos;i="6.21,208,1763452800"; d="scan'208";a="68921541"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Jan 2026 10:09:34 -0800
+X-CSE-ConnectionGUID: 57jk7SQlSkSo2JrKS2KCUw==
+X-CSE-MsgGUID: 0Kx3BIrcSpmW6t9WqENhKw==
+X-ExtLoop1: 1
+Received: from unknown (HELO [10.241.241.128]) ([10.241.241.128])
+ by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Jan 2026 10:09:33 -0800
+Message-ID: <25077c70-127c-4bf9-893d-470ab5216f84@intel.com>
+Date: Wed, 7 Jan 2026 10:09:32 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 4/7] target/i386/kvm: query kvm.enable_pmu parameter
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, groug@kaod.org, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com
+References: <20251230074354.88958-1-dongli.zhang@oracle.com>
+ <20251230074354.88958-5-dongli.zhang@oracle.com>
+ <b6c531d4-328d-48a7-856b-051c918c24ae@intel.com>
+ <29969c2f-d71f-4952-9ab4-4ba8f69e1514@oracle.com>
+ <e9762b91-175e-444d-b64c-dcded943b312@intel.com>
+ <1a5e1552-0e61-4829-b6db-99914184eb7a@oracle.com>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <1a5e1552-0e61-4829-b6db-99914184eb7a@oracle.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zide.chen@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,93 +95,338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than compiling the same content for all targets (unused
-most of the time, i.e. qemu-system-avr ...), build it once per
-POSIX hosts. Check Windows host (less likely) before x86 host.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- dump/win_dump-stubs.c | 21 +++++++++++++++++++++
- dump/win_dump.c       | 12 ++++++++----
- dump/meson.build      |  6 +++++-
- 3 files changed, 34 insertions(+), 5 deletions(-)
- create mode 100644 dump/win_dump-stubs.c
 
-diff --git a/dump/win_dump-stubs.c b/dump/win_dump-stubs.c
-new file mode 100644
-index 00000000000..722c66740a2
---- /dev/null
-+++ b/dump/win_dump-stubs.c
-@@ -0,0 +1,21 @@
-+/*
-+ * Windows crashdump stubs
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "win_dump.h"
-+
-+bool win_dump_available(Error **errp)
-+{
-+    error_setg(errp, "Windows dump is only available on Windows");
-+
-+    return false;
-+}
-+
-+void create_win_dump(DumpState *s, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/dump/win_dump.c b/dump/win_dump.c
-index 6e07913dfb4..5b2b55d9ff7 100644
---- a/dump/win_dump.c
-+++ b/dump/win_dump.c
-@@ -12,14 +12,16 @@
- #include "system/dump.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "win_dump.h"
-+
-+#ifdef CONFIG_WIN32
-+#if defined(TARGET_X86_64)
-+
- #include "exec/cpu-defs.h"
- #include "hw/core/cpu.h"
- #include "qemu/win_dump_defs.h"
--#include "win_dump.h"
- #include "cpu.h"
- 
--#if defined(TARGET_X86_64)
--
- bool win_dump_available(Error **errp)
- {
-     return true;
-@@ -478,7 +480,9 @@ out_cr3:
-     first_x86_cpu->env.cr[3] = saved_cr3;
- }
- 
--#else /* !TARGET_X86_64 */
-+#endif /* !TARGET_X86_64 */
-+
-+#else /* !CONFIG_WIN32 */
- 
- bool win_dump_available(Error **errp)
- {
-diff --git a/dump/meson.build b/dump/meson.build
-index 4277ce9328a..0aaf3f65d9c 100644
---- a/dump/meson.build
-+++ b/dump/meson.build
-@@ -1,2 +1,6 @@
- system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
--specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: files('win_dump.c'))
-+if host_os == 'windows'
-+  system_ss.add(files('win_dump.c'))
-+else
-+  system_ss.add(files('win_dump-stubs.c'))
-+endif
--- 
-2.52.0
+On 1/7/2026 12:05 AM, Dongli Zhang wrote:
+> Hi Zide,
+> 
+> On 1/6/26 1:03 PM, Chen, Zide wrote:
+>>
+>>
+>> On 1/5/2026 12:21 PM, Dongli Zhang wrote:
+>>> Hi Zide,
+>>>
+>>> On 1/2/26 2:59 PM, Chen, Zide wrote:
+>>>>
+>>>>
+>>>> On 12/29/2025 11:42 PM, Dongli Zhang wrote:
+>>>
+>>> [snip]
+>>>
+>>>>>  
+>>>>>  static struct kvm_cpuid2 *cpuid_cache;
+>>>>>  static struct kvm_cpuid2 *hv_cpuid_cache;
+>>>>> @@ -2068,23 +2072,30 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+>>>>>      if (first) {
+>>>>>          first = false;
+>>>>>  
+>>>>> -        /*
+>>>>> -         * Since Linux v5.18, KVM provides a VM-level capability to easily
+>>>>> -         * disable PMUs; however, QEMU has been providing PMU property per
+>>>>> -         * CPU since v1.6. In order to accommodate both, have to configure
+>>>>> -         * the VM-level capability here.
+>>>>> -         *
+>>>>> -         * KVM_PMU_CAP_DISABLE doesn't change the PMU
+>>>>> -         * behavior on Intel platform because current "pmu" property works
+>>>>> -         * as expected.
+>>>>> -         */
+>>>>> -        if ((pmu_cap & KVM_PMU_CAP_DISABLE) && !X86_CPU(cpu)->enable_pmu) {
+>>>>> -            ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
+>>>>> -                                    KVM_PMU_CAP_DISABLE);
+>>>>> -            if (ret < 0) {
+>>>>> -                error_setg_errno(errp, -ret,
+>>>>> -                                 "Failed to set KVM_PMU_CAP_DISABLE");
+>>>>> -                return ret;
+>>>>> +        if (X86_CPU(cpu)->enable_pmu) {
+>>>>> +            if (kvm_pmu_disabled) {
+>>>>> +                warn_report("Failed to enable PMU since "
+>>>>> +                            "KVM's enable_pmu parameter is disabled");
+>>>>
+>>>> I'm wondering about the intended value of this patch?
+>>>>
+>>>> If enable_pmu is true in QEMU but the corresponding KVM parameter is
+>>>> false, then KVM_GET_SUPPORTED_CPUID or KVM_GET_MSRS should be able to
+>>>> tell that the PMU feature is not supported by host.
+>>>>
+>>>> The logic implemented in this patch seems somewhat redundant.
+>>>
+>>> For Intel, the QEMU userspace can determine if the vPMU is disabled by KVM
+>>> through the use of KVM_GET_SUPPORTED_CPUID.
+>>>
+>>> However, this approach does not apply to AMD. Unlike Intel, AMD does not rely on
+>>> CPUID to detect whether PMU is supported. By default, we can assume that PMU is
+>>> always available, except for the recent PerfMonV2 feature.
+>>>
+>>> The main objective of this PATCH 4/7 is to introduce the variable
+>>> 'kvm_pmu_disabled', which will be reused in PATCH 5/7 to skip any PMU
+>>> initialization if the parameter is set to 'N'.
+>>>
+>>> +static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
+>>> +{
+>>> +    CPUX86State *env = &cpu->env;
+>>> +
+>>> +    /*
+>>> +     * The PMU virtualization is disabled by kvm.enable_pmu=N.
+>>> +     */
+>>> +    if (kvm_pmu_disabled) {
+>>> +        return;
+>>> +    }
+>>
+>> Thanks for explanation.
+>>
+>>> The 'kvm_pmu_disabled' variable is used to differentiate between the following
+>>> two scenarios on AMD:
+>>>
+>>> (1) A newer KVM with KVM_PMU_CAP_DISABLE support, but explicitly disabled via
+>>> the KVM parameter ('N').
+>>>
+>>> (2) An older KVM without KVM_CAP_PMU_CAPABILITY support.
+>>>
+>>> In both cases, the call to KVM_CAP_PMU_CAPABILITY extension support check may
+>>> return 0.
+>>>
+>>> By reading the file "/sys/module/kvm/parameters/enable_pmu", we can distinguish
+>>> between these two scenarios.
+>>
+>> As described in PATCH 1/7, without issuing KVM_PMU_CAP_DISABLE, KVM has
+>> no way to know that userspace does not intend to enable vPMU in AMD
+>> platforms, and therefore does not fault guest accesses to PMU MSRs.
+>>
+>> My understanding is that the issue being addressed here is basically the
+>> opposite: QEMU does not know that vPMU is disabled by KVM.
+> 
+> Exactly.
+> 
+> Otherwise, QEMU issues unwanted MSR writes for every vCPU during QEMU reset.
+> 
+>>
+>> IIUC, one difference between Intel and AMD is that AMD lacks a CPUID
+>> leaf to indicate the availability of PMU version 1. But Intel
+>> potentially could be in the same situation that KVM advertises PMU
+>> availability but it's not actually supported. (e.g. kvm->arch.enable_pmu
+>> is false while modules parameter enable_pmu is true).
+>>
+>> From the guest’s point of view, it probes PMU MSRs to determine whether
+>> PMU support is present and it's fine in this situation.
+>>
+>> In userspace, QEMU may issue KVM_SET_MSRS / KVM_GET_MSRS to KVM without
+>> knowing that vPMU has been disabled by KVM.  I think these IOCTLs should
+>> not fail, since KVM states that “Userspace is allowed to read MSRs, and
+>> write ‘0’ to MSRs, that KVM advertises to userspace, even if an MSR
+>> isn’t fully supported.”
+>>
+>> My current understanding is that AMD should be fine even without
+>> kvm_pmu_disabled, but I may be missing some context here.
+>>
+>> The bottom line is this patch doesn't handle the cases that KVM still
+>> could disable vPMU support even if enable_pmu is true.
+> 
+> Yes. There are still unwanted PMU MSR writes from QEMU. This just seems odd.
+> 
+> The concern with unwanted MSR writes was initially raised by Maksim Davydov:
+> 
+> https://lore.kernel.org/qemu-devel/a7f9c3c9-09af-4941-b137-2cb83ef8ceb3@yandex-team.ru/
+> 
+> As shown below on the v6.0 KVM hypervisor (AMD), while there are no errors from
+> QEMU, numerous annoying warnings are generated. (If I recall correctly, this can
+> also be triggered from the VM itself.)
+> 
+> However, here the logs are not only due to vcpu0, but indeed every vcpu.
+> 
+> [  280.802976] kvm_set_msr_common: 1910 callbacks suppressed
+> [  280.802981] kvm [18411]: vcpu0, guest rIP: 0xffffffffa4c97844 disabled
+> perfctr wrmsr: 0xc0010007 data 0xffff
+> [  295.345747] kvm [18411]: vcpu0, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010004 data 0x0
+> [  295.355379] kvm [18411]: vcpu0, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010005 data 0x0
+> [  295.364997] kvm [18411]: vcpu0, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010006 data 0x0
+> [  295.374618] kvm [18411]: vcpu0, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010007 data 0x0
+> [  295.385048] kvm [18411]: vcpu1, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010004 data 0x0
+> [  295.394694] kvm [18411]: vcpu1, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010005 data 0x0
+> [  295.404317] kvm [18411]: vcpu1, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010006 data 0x0
+> [  295.413928] kvm [18411]: vcpu1, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010007 data 0x0
+> [  295.424319] kvm [18411]: vcpu2, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010004 data 0x0
+> [  295.433963] kvm [18411]: vcpu2, guest rIP: 0xfff0 disabled perfctr wrmsr:
+> 0xc0010005 data 0x0
+> [  301.966571] kvm_set_msr_common: 1910 callbacks suppressed
+> [  301.966577] kvm [18411]: vcpu0, guest rIP: 0xffffffff8ac97844 disabled
+> perfctr wrmsr: 0xc0010007 data 0xffff
+
+In e76ae52747a8 ("KVM: x86/pmu: Gate all "unimplemented MSR" prints on
+report_ignored_msrs"), in "disabled perfctr wrmsr" case, vcpu_unimpl()
+is no longer forced for counter MSRs, so most of the above warnings go away.
+
+For the remaining warnings, vcpu_unimpl() is ratelimitedm and plus all
+these logs can be removed by setting report_ignored_msrs=false.
+
+So, it should be not that bad now.
+
+>>
+>>
+>>> As you mentioned, another approach would be to use KVM_GET_MSRS to specifically
+>>> probe for AMD during QEMU initialization. In this case, we can set
+>>> 'kvm_pmu_disabled' to true if reading the AMD PMU MSR registers fails.
+>>>
+>>> To implement this, we may need to:
+>>>
+>>> 1. Turn this patch to be AMD specific by probing the AMD PMU registers during
+>>> initialization. We may need go create a new function in QEMU to use KVM_GET_MSRS
+>>> for probing only, or we may re-use kvm_arch_get_supported_msr_feature() or
+>>> kvm_get_one_msr(). I may change in the next version.
+>>>
+>>> 2. Limit the usage of 'kvm_pmu_disabled' to be AMD specific in PATCH 5/7.
+>>
+>> I guess this might make things more complicated.
+>>
+>>>>
+>>>> Additionally, in this scenario — where the user intends to enable a
+>>>> feature but the host cannot support it — normally no warning is emitted
+>>>> by QEMU.
+>>>
+>>> According to the usage of QEMU, may I assume QEMU already prints warning logs
+>>> for unsupported features? The below is an example.
+>>>
+>>> QEMU 10.2.50 monitor - type 'help' for more information
+>>> qemu-system-x86_64: warning: host doesn't support requested feature:
+>>> CPUID[eax=07h,ecx=00h].EBX.hle [bit 4]
+>>> qemu-system-x86_64: warning: host doesn't support requested feature:
+>>> CPUID[eax=07h,ecx=00h].EBX.rtm [bit 11]
+>>>
+>>>>
+>>>>> +            }
+>>>>> +        } else {
+>>>>> +            /*
+>>>>> +             * Since Linux v5.18, KVM provides a VM-level capability to easily
+>>>>> +             * disable PMUs; however, QEMU has been providing PMU property per
+>>>>> +             * CPU since v1.6. In order to accommodate both, have to configure
+>>>>> +             * the VM-level capability here.
+>>>>> +             *
+>>>>> +             * KVM_PMU_CAP_DISABLE doesn't change the PMU
+>>>>> +             * behavior on Intel platform because current "pmu" property works
+>>>>> +             * as expected.
+>>>>> +             */
+>>>>> +            if (pmu_cap & KVM_PMU_CAP_DISABLE) {
+>>>>> +                ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
+>>>>> +                                        KVM_PMU_CAP_DISABLE);
+>>>>> +                if (ret < 0) {
+>>>>> +                    error_setg_errno(errp, -ret,
+>>>>> +                                     "Failed to set KVM_PMU_CAP_DISABLE");
+>>>>> +                    return ret;
+>>>>> +                }
+>>>>>              }
+>>>>>          }
+>>>>>      }
+>>>>> @@ -3302,6 +3313,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>>>>>      int ret;
+>>>>>      struct utsname utsname;
+>>>>>      Error *local_err = NULL;
+>>>>> +    g_autofree char *kvm_enable_pmu;
+>>>>>  
+>>>>>      /*
+>>>>>       * Initialize confidential guest (SEV/TDX) context, if required
+>>>>> @@ -3437,6 +3449,21 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>>>>>  
+>>>>>      pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
+>>>>>  
+>>>>> +    /*
+>>>>> +     * The enable_pmu parameter is introduced since Linux v5.17,
+>>>>> +     * give a chance to provide more information about vPMU
+>>>>> +     * enablement.
+>>>>> +     *
+>>>>> +     * The kvm.enable_pmu's permission is 0444. It does not change
+>>>>> +     * until a reload of the KVM module.
+>>>>> +     */
+>>>>> +    if (g_file_get_contents("/sys/module/kvm/parameters/enable_pmu",
+>>>>> +                            &kvm_enable_pmu, NULL, NULL)) {
+>>>>> +        if (*kvm_enable_pmu == 'N') {
+>>>>> +            kvm_pmu_disabled = true;
+>>>>
+>>>> It’s generally better not to rely on KVM’s internal implementation
+>>>> unless really necessary.
+>>>>
+>>>> For example, in the new mediated vPMU framework, even if the KVM module
+>>>> parameter enable_pmu is set, the per-guest kvm->arch.enable_pmu could
+>>>> still be cleared.
+>>>>
+>>>> In such a case, the logic here might not be correct.
+>>>
+>>> Would the Mediated vPMU set KVM_PMU_CAP_DISABLE to clear per-VM enable_pmu even
+>>> when the global KVM parameter enable_pmu=N is set?
+>>>
+>>> In this scenario, we plan to rely on KVM_PMU_CAP_DISABLE only when the value of
+>>> "/sys/module/kvm/parameters/enable_pmu" is not equal to N.
+>>>
+>>> Can I assume that this will work with Mediated vPMU?
+>>>
+>>>
+>>> Is there any possibility to follow the current approach before Mediated vPMU is
+>>> finalized for mainline, and later introduce an incremental change using
+>>> KVM_GET_MSRS probing? The current approach is straightforward and can work with
+>>> existing Linux kernel source code.
+>>
+>> Apologies for the incorrect statement I made earlier regarding mediated
+>> vPMU.
+>>
+>> According to the mediated vPMU v6, the only behavior specific to
+>> mediated vPMU is that kvm->arch.enable_pmu may be cleared when
+>> irqchip_in_kernel() is not true:
+>> https://urldefense.com/v3/__https://lore.kernel.org/all/20251206001720.468579-17-seanjc@google.com/__;!!ACWV5N9M2RV99hQ!IS8XQG3Zx84utP2QScNlxp-0H5JAgr89lBb1j2oGVJJop3WMyK6X2I5mlerMPA06wkJy8VFd1x6XGEHc6kWn$ 
+>>
+>> However, this does not imply that mediated vPMU requires any special
+>> handling here. In theory, KVM could clear kvm->arch.enable_pmu in the
+>> future for other reasons.
+>>
+> 
+> While "KVM could clear kvm->arch.enable_pmu in the future," I don't think KVM
+> may set kvm->arch.enable_pmu if the global enable_pmu is set to 'N'.
+> 
+> Taking Intel VMX EPT as an example, once "/sys/module/kvm_intel/parameters/ept"
+> is globally disabled, there's no way within KVM software to enable it for any
+> guest VM **after** 'ept' is set to N.
+> 
+> Similarly, "/sys/module/kvm/parameters/enable_pmu=N" indicates that this KVM
+> host will not support PMU virtualization in any way. Therefore, there should be
+> no way to enable vPMU for any guest VM if the global parameter is set to 'N'.
+> Here we read from ths parameter only during QEMU initialization.
+> 
+> That's why I believe it's reliable to trust the setting when
+> "/sys/module/kvm/parameters/enable_pmu=N".
+> 
+> In this way, we can avoid many unnecessary MSR writes, especially in cases where
+> a VM has 300+ vCPUs, even though these may be equivalent to NOPs with
+> optimizations in more recent KVM versions.
+> 
+> The objective isn't to improve performance. Minimizing the number of unwanted
+> MSR writes from QEMU reduces the chances of failure (e.g., due to any QEMU
+> software bug). We can simply avoid those unwanted MSR/NOPs by reading from a KVM
+> parameter.
+> 
+> From a user's perspective, this just seems odd.
+> "/sys/module/kvm/parameters/enable_pmu=N" is a reliable setting. If there's a
+> configuration mismatch between QEMU and KVM, a warning could alert the user.
+> 
+> I can remove this patch, along with the 'kvm_pmu_disabled' variable.
+
+
+Even with /sys/module/kvm/parameters/enable_pmu=Y, theoretically it's
+possible for kvm->arch.enable_pmu to be false. In such a case, vPMU
+could still be advertised, and QEMU doens't know that vPMU is not
+supported by KVM, on either Intel or AMD platforms.
+
+Anyway, this is likely only a theoretical scenario and may not actually
+happens in practice.
+
+
+> Thank you very much!
+> 
+> Dongli Zhang
 
 
