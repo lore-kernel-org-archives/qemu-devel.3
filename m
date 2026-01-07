@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ACA2CFD62A
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A642CFD629
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 13:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdTIG-0003fL-V4; Wed, 07 Jan 2026 08:09:45 -0500
+	id 1vdTIc-0006MX-Iw; Wed, 07 Jan 2026 08:10:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdTIB-0003ML-0h
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:09:40 -0500
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdTIU-0005Vf-5W
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:09:58 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdTI8-0008VZ-3y
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:09:38 -0500
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-42fbad1fa90so1661981f8f.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 05:09:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdTIS-0000KA-7D
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 08:09:57 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-477bf34f5f5so16759475e9.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 05:09:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767791373; x=1768396173; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767791394; x=1768396194; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iTd24fuLkUcPdtjlQ0PktHxm0veo9AVLLnZX4UIhnN8=;
- b=Wrq+YNp5LKubCBonlG1lUMYzG5QgkxRrPScAhptwQCFlnb7r7hzB8E2CLR58KEqa8S
- PP0B+3DiylUw8Nq+eclOE6AU0jCtkPBaP8wrvkF00V/ig5J+r77wgHeSzJ9U7HtEd4aj
- iLO8QAdDwSa+XYG1MySEQihWMAQJmxbiGYEc72Hv9fIAQNPdV/4DrzNCfNFGpDn7RGEp
- /FQcLJqd7CNfdxDCtA+qkZ6Mb4RVgELUhEPh7iP+2r1y26t5oT0P3vgz5ZFaWAbIyJ2R
- PWseihTUHF4zOp1xvKgMPj6q5VoxL8Ky1X7i/kEy/b91KFNmBo7ny5By/rN6Xk26Tb/Y
- QDQw==
+ bh=3jPdNmZA8j/yx5+vAulTL2BlPCCMjWRZMdn4TN5f6yU=;
+ b=Fb7HMmuN8L2uGlxkNwEU/BTCeTBxNO3Zl0OFTEHFDYjpf+hxNVdJ4MTt6lRcvYSBmR
+ RqxdCS6grGSCX16Zfx1sAKdg74cApAeo03/Qyhb9Qzb+UbtpXtsRuIgJny4R6qc00ic1
+ gL8VMpLZA86gwSRnZBO499YnYviEF89TwdpC6BnerzyfMNj1pjXBAvC9BFDFmyDJnXpo
+ dSJ2r8AZoZRTJO+hbVLEUV5DjGXuU1xYWBiMwWUmm6O5oTZy/atiNzmjzuAqqiHKcjKY
+ IAxmJ7GhJ2C3cV8u0QtMJbheQV+bUxfoxIzGh6jErVYlPlQWR//tKRAkhDbpEvh7Ggcs
+ 8sfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767791373; x=1768396173;
+ d=1e100.net; s=20230601; t=1767791394; x=1768396194;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iTd24fuLkUcPdtjlQ0PktHxm0veo9AVLLnZX4UIhnN8=;
- b=O0Yss/1TDmg2cqYW+iqYu7zu5VoYCruLQ3r51M+VHo73p5R3Aw2UUX1vwa+Cud4g99
- 3wCN+UnxDgM8nMTmtyseG/SoVZsE9ZIJNfsdw5B8rsjPR2E2SN/qDcMf5AEA7ENcKQh9
- sQnMS/WAvOSoySdvGbwPTI0KkyCTfr5T+QRIKnZyhtmV9nDaq1PVyAQRezPdiSA/zdO8
- YIMzxJYd4PEVXwAZt+jxUP761IsCizPdwATpPKgbCpQcwUcXAi7Q44iZKM4UarpAWnmz
- tX8mt/GGhDLe2A3+ufgVxPP/dqUnC+XK1P09ymagoxuRZWXvGliAua+YsXowV1PS9sDL
- DhWA==
-X-Gm-Message-State: AOJu0YwRYXaTOc1qXENxX4+ZFF+QbUY/wSqxGMfdIKi9EQjLQGwxKV4j
- 56mU1Z+AV+jabERhkrQ/qcwqjRfcVJL7fsJECQBo6QzVuM2dow9YZTxN505J6+D4rvdpsi9h/B6
- 5rmH9FX5XIA==
-X-Gm-Gg: AY/fxX6vbbTFb4xszI0LkpeGO5H4cUiWePDwvsV5NY/U0jIws+xo0bkNpjeXNMsRu7Q
- l3YiB5XaszGBUtisPGxIoctC77HYF1nx7FpuZlOacEhH8sIijzDCwVWmGCTB4bx7an2jYJ0ctO1
- 6cLuDGWvLX7HSBmLjEJJNoJUK1Mcwyhlh4YTnCsfI3nMSblsUDUahSM3t5hIYpjyB0+oDxJXuGP
- t65Y8rZSDAwcUprHeMz3ayLd789kvShPM96tVWwkt35QcV1XH2chj2IOlF/AuGDq7NSEdiIc42J
- 2/W1oJwCTdoJPqwkv1D5fFgEATaduUnOO4gS52WMSP/DCq8t6BMTIPNuGL6ym8FE0/QBXcrBAcd
- VH4iSxfwX/d78LtUllidWBtmoO47IV9a65rgcxx1uPMVNebJRcdR5fAje+J5kCCVR7BPKcOCBtr
- cf06rJV4gIzv/C0QRyKWrJlYUyblEKthRBQvv0YzyMGMWZjvhTl1AFTsI62NSo
-X-Google-Smtp-Source: AGHT+IGadna+9SAN7jsZbhy6tNNiM2SRz2B81Q7enodwT/gTLfrAxYwgMHsmoQ9iwXym0C6/XQcKFA==
-X-Received: by 2002:a05:6000:1a8e:b0:432:5d73:79a1 with SMTP id
- ffacd0b85a97d-432c38d0f49mr2711098f8f.55.1767791373285; 
- Wed, 07 Jan 2026 05:09:33 -0800 (PST)
+ bh=3jPdNmZA8j/yx5+vAulTL2BlPCCMjWRZMdn4TN5f6yU=;
+ b=tRx0NqsR2hY/4FRqel+QWfabqhFDNyOspARAXxG3VXbTZXl/Kg7Kx+oopIiyn+eD1P
+ C4z95ITW0MpAj/jLre2Sgdh1KpcQzhk7MYTJQWkvq5g2CwhdPb2871AgBGYKxmHOsf5j
+ QrO+Rb7ciHd7/iMW2PUSmjtnSKt1AE7wU502YlCN8GfzlRKLwcrvtBZm6xiws4PYIP1J
+ nySftGvGwsLIuHcSDx86eo9GTwWXesFfNS0I/NHtGCopt2qkIjnX3XC+zFoSRzQ77xg4
+ BRDfQ2MjWIktqr1DWKp6ra6FBFhmI3oC6X+JM1CZz3z3Xf6zwxgSohox+W3XrN1oN+xO
+ RR+g==
+X-Gm-Message-State: AOJu0Yx9U9Yo5upBk7NWBGo8CNYh5o50Zk9LUqDGDYhRmkNOF1KACKPL
+ ChrTZ4hlUFnDKo5SolyynJ0m6hl+xQLuAzr9gdB7zwJCXdispxIuhs57hGDvkyVDLPw/10Zfxj4
+ XEv1dZaI=
+X-Gm-Gg: AY/fxX6kmq9USdVybfZsMS3EnYnLeTZBcxsEnj4WJIkqaPogeOOUQW6wh+qF3kWGtn0
+ ZEG8PI1vQIIfKzFcPMrtgpJjF5vRgcGaWmKx2ZPirlSOqucLQkm9DCGo+gxkuzPjoVjiFYRn4ES
+ QaXGtxM2G64LSyUxLgCpGrmWIaPgp1Eb7JN3ckE8SNnUhmHLePpqhjm607Rs5Yb6e8ClZgY5KEd
+ Na6zZ7TgxG+TDbChY2q1WG8wXGLgfsa1CO6MUQ2eNJ/lMKi9C6q490WQ0TYPYJrQWpHdO0Nkped
+ eQV7XNDtf8QJZW5neMbvHDEgzmA4CiCPo3F6ddoeJ5XKyJJLNHc1JLVogkp3W9G+YBV6Oj1hZI9
+ TMJDK+k9OyhosEZnW6TljSCmquX34hvYNtz3BFlzk52J38NMG0e4Pois/ETlaHyDHZ4Sjva+fMa
+ m5Id34HOg8xZhiLlJ/t9lQmFZctdh7/DvJgYNrEmDQD9ZPTpW22mTn3gGJtdqO
+X-Google-Smtp-Source: AGHT+IHUcVoHsJscuUkeklzlrCou0jEKNLzVM2+UxDiyT70o7uW2ieghcTDKA/AwpRfSSq42vphleg==
+X-Received: by 2002:a05:600c:4fc3:b0:477:569c:34e9 with SMTP id
+ 5b1f17b1804b1-47d84b3b9e6mr33890795e9.23.1767791394366; 
+ Wed, 07 Jan 2026 05:09:54 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0860f5sm10069642f8f.0.2026.01.07.05.09.32
+ ffacd0b85a97d-432bd5dfa07sm10377345f8f.25.2026.01.07.05.09.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Jan 2026 05:09:32 -0800 (PST)
+ Wed, 07 Jan 2026 05:09:53 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>
-Subject: [PATCH 12/18] target/s390x: Pass vaddr/hwaddr types to
- mmu_translate*()
-Date: Wed,  7 Jan 2026 14:08:00 +0100
-Message-ID: <20260107130807.69870-13-philmd@linaro.org>
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>
+Subject: [PATCH 15/18] target/s390x: Un-inline s390_is_pv()
+Date: Wed,  7 Jan 2026 14:08:03 +0100
+Message-ID: <20260107130807.69870-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260107130807.69870-1-philmd@linaro.org>
 References: <20260107130807.69870-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,83 +108,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mmu_translate() and mmu_translate_real() translate virtual
-addresses to physical ones.
+Inlining a method which use a static variable is really a
+bad idea, as it totally defeats the point of both concepts.
 
+Currently we have 12 + 4 = 16 static 'ccw' variables...:
+
+  $ git grep -wl target/s390x/kvm/pv.h | fgrep .h
+  hw/s390x/ipl.h
+  $ git grep -wl target/s390x/kvm/pv.h | fgrep .c | wc -l
+        12
+  $ git grep -wl hw/s390x/ipl.h | fgrep .c | wc -l
+         4
+
+Fixes: c3347ed0d2e ("s390x: protvirt: Support unpack facility")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/s390x-internal.h  | 9 +++++----
- target/s390x/mmu_helper.c      | 8 ++++----
- target/s390x/tcg/excp_helper.c | 3 ++-
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ target/s390x/kvm/pv.h | 24 +-----------------------
+ target/s390x/kvm/pv.c | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 23 deletions(-)
 
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index dfc95702c51..790cd688762 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -11,6 +11,7 @@
- #define S390X_INTERNAL_H
+diff --git a/target/s390x/kvm/pv.h b/target/s390x/kvm/pv.h
+index 94e885e9335..e266fc3d545 100644
+--- a/target/s390x/kvm/pv.h
++++ b/target/s390x/kvm/pv.h
+@@ -12,8 +12,6 @@
+ #ifndef HW_S390_PV_H
+ #define HW_S390_PV_H
  
- #include "exec/hwaddr.h"
-+#include "exec/vaddr.h"
- #include "cpu.h"
- #include "fpu/softfloat.h"
+-#include "qapi/error.h"
+-#include "system/kvm.h"
+ #include "hw/s390x/s390-virtio-ccw.h"
  
-@@ -377,10 +378,10 @@ hwaddr mmu_real2abs(CPUS390XState *env, hwaddr raddr);
- bool mmu_absolute_addr_valid(hwaddr addr, bool is_write);
- /* Special access mode only valid for mmu_translate() */
- #define MMU_S390_LRA        -1
--int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64_t asc,
--                  target_ulong *raddr, int *flags, uint64_t *tec);
--int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
--                       target_ulong *addr, int *flags, uint64_t *tec);
-+int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t asc,
-+                  hwaddr *raddr, int *flags, uint64_t *tec);
-+int mmu_translate_real(CPUS390XState *env, vaddr raddr, int rw,
-+                       hwaddr *addr, int *flags, uint64_t *tec);
+ struct S390PVResponse {
+@@ -23,27 +21,7 @@ struct S390PVResponse {
+ };
  
+ #ifdef CONFIG_KVM
+-#include "cpu.h"
+-
+-static inline bool s390_is_pv(void)
+-{
+-    static S390CcwMachineState *ccw;
+-    Object *obj;
+-
+-    if (ccw) {
+-        return ccw->pv;
+-    }
+-
+-    /* we have to bail out for the "none" machine */
+-    obj = object_dynamic_cast(qdev_get_machine(),
+-                              TYPE_S390_CCW_MACHINE);
+-    if (!obj) {
+-        return false;
+-    }
+-    ccw = S390_CCW_MACHINE(obj);
+-    return ccw->pv;
+-}
+-
++bool s390_is_pv(void);
+ int s390_pv_query_info(void);
+ int s390_pv_vm_enable(void);
+ void s390_pv_vm_disable(void);
+diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+index 2bc916a5455..3d508165f34 100644
+--- a/target/s390x/kvm/pv.c
++++ b/target/s390x/kvm/pv.c
+@@ -25,6 +25,24 @@
+ #include "target/s390x/kvm/kvm_s390x.h"
+ #include "target/s390x/kvm/pv.h"
  
- /* misc_helper.c */
-diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-index abf8da28ea5..9295a9d8dae 100644
---- a/target/s390x/mmu_helper.c
-+++ b/target/s390x/mmu_helper.c
-@@ -381,8 +381,8 @@ static void mmu_handle_skey(hwaddr addr, int rw, int *flags)
-  *               there is an exception to raise
-  * @return       0 = success, != 0, the exception to raise
-  */
--int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64_t asc,
--                  target_ulong *raddr, int *flags, uint64_t *tec)
-+int mmu_translate(CPUS390XState *env, vaddr vaddr, int rw, uint64_t asc,
-+                  hwaddr *raddr, int *flags, uint64_t *tec)
- {
-     uint64_t asce;
-     int r;
-@@ -584,8 +584,8 @@ void s390_cpu_virt_mem_handle_exc(S390CPU *cpu, uintptr_t ra)
-  * @param flags  the PAGE_READ/WRITE/EXEC flags are stored to this pointer
-  * @return       0 = success, != 0, the exception to raise
-  */
--int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
--                       target_ulong *addr, int *flags, uint64_t *tec)
-+int mmu_translate_real(CPUS390XState *env, vaddr raddr, int rw,
-+                       hwaddr *addr, int *flags, uint64_t *tec)
- {
-     const bool lowprot_enabled = env->cregs[0] & CR0_LOWPROT;
- 
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index 019eb4fba1f..41b0017d767 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -147,7 +147,8 @@ bool s390_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                        bool probe, uintptr_t retaddr)
- {
-     CPUS390XState *env = cpu_env(cs);
--    target_ulong vaddr, raddr;
-+    vaddr vaddr;
-+    hwaddr raddr;
-     uint64_t asc, tec;
-     int prot, excp;
- 
++bool s390_is_pv(void)
++{
++    static S390CcwMachineState *ccw;
++    Object *obj;
++
++    if (ccw) {
++        return ccw->pv;
++    }
++
++    /* we have to bail out for the "none" machine */
++    obj = object_dynamic_cast(qdev_get_machine(), TYPE_S390_CCW_MACHINE);
++    if (!obj) {
++        return false;
++    }
++    ccw = S390_CCW_MACHINE(obj);
++    return ccw->pv;
++}
++
+ static bool info_valid;
+ static struct kvm_s390_pv_info_vm info_vm;
+ static struct kvm_s390_pv_info_dump info_dump;
 -- 
 2.52.0
 
