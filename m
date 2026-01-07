@@ -4,85 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC945CF6C17
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 09:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED8C1CF6C18
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 09:09:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdPWZ-0000LN-KK; Wed, 07 Jan 2026 04:08:17 -0500
+	id 1vdPXE-0000cU-EV; Wed, 07 Jan 2026 04:08:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vdPWR-0000Jx-NV
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 04:08:09 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vdPWP-0005C6-Rt
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 04:08:07 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b79ea617f55so379651466b.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 01:08:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767776884; x=1768381684; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rlPckZkY7dGKX6Oi9Su2GDQPw/qgAi9Qu0+6VKP72xM=;
- b=VwFyHznA7h1AZGdY58OiWZVI86ihxeyXxVB48MtBcyCLC9Ikvzokr+kGpK1SRqsqes
- YreAxV8IpxfV2KXZvEVOjyjdTiaLXJ+/P+czgvNd6u8z+3NBv9Cu7/PsIb/GBKDOGmLT
- XiwUGxtUzWUVJk1o84J6IYi9St16p2HQ96/RetGooS+cuQooLj1+iCPw67/dZY/eIZkA
- 98ww3nT7g1OaK8ubVaXwwbK8mtN4HjbjUembyICOrkFVdMrNk20y6M14VISJe9w3IQKb
- bQKECYLGsfVdbs9/tuxr8YzUkPWiyB5672gd0oTfI6kh1s7gAOaLRRoTLGEAyBjCqTPJ
- I18g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767776884; x=1768381684;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rlPckZkY7dGKX6Oi9Su2GDQPw/qgAi9Qu0+6VKP72xM=;
- b=NPBUJ+dbEJPCipjvkXgLtFjrM9vMgMs80RirX8gMo0pOOQsEbGHnutXPtJvffWp9Ea
- 0jOqGH/tOFs4IWFoZbUhVyiUPpyDjM3R6rPEhHx0L43ACyDHePRsdmsw1mN6UR0hRSRV
- sEgcpul/TNDQC/nhtjcLWPAfr5EIzUn3AniGGb0E9KyUEfwFBEFfI/8K6KwDJGYmO3Nr
- 8Oc8IxRiUyNDmISp75GeC+hcOsBJn0EbSP+nGGsR9GOazz1oJZ7DffPZbuyc09BkyTnt
- EIUows2sJWiyasGF3vMwHEi3srHsWLpZTsAMQzn/WWFqD37xv2PnK21jIEQ0Dp24AfZO
- UILA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXit31fvYPP4jp8k3hY5yl0BTJxbZMvJXSQ+eJRIcsuDPMYpj7yiW/cGFF2LNVDoJna0vKttCRE7M0M@nongnu.org
-X-Gm-Message-State: AOJu0YyFKD/uEADkrtDGJHG5KfPypxYk4wlxnPkH+T8AZo2PCi8lakWX
- idNxOoF8liOS5eL9iS/PhqjKhGQLTp47PdnQxXlf5ZvAzB1kyqAlXLtv9Z8dxmGJn95ftfdA9pe
- 0kw6vyalGqdQlpLVIvi/fJsAyi4VbydtoYBmQ
-X-Gm-Gg: AY/fxX7Bw4BI07URNhcd12rhEag9KVZKhrFpPsTf/gw/LsI8Ss/lnv/8ivr6lgR432b
- Ps3bVB662p3lsbil74/61SRWv0hOvqXIt3vRAuvBGSrqGps10RyQGCLa6Q20P+aeyLTEiee0yDc
- 93srBXgVsbtqOxVvE3jePunv08uclwKKSWKxvqislymM2i9RvgjCq+0p2Y4gwoUYJIv2QfY5IT4
- b86MQSoZDBGtv4B8cjuiIqiaR1l/LHwKJ6AG0UyAOP/gVHzou7TKdRMG6o/gTmE5VADzJcACou6
- tYC+1Q==
-X-Google-Smtp-Source: AGHT+IHMn6kYlhP+HGuvYChVaHkmZTHiP+bKbajoT2U+gEgIBteyWmWJtHqd3er1YZDXT/W+W/qC8HDpglQEzwDHA8Y=
-X-Received: by 2002:a17:907:a0e:b0:b84:2fe8:b5d6 with SMTP id
- a640c23a62f3a-b8444f2a1bcmr165260766b.23.1767776883750; Wed, 07 Jan 2026
- 01:08:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vdPX9-0000ZO-SA
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 04:08:52 -0500
+Received: from mail-westus3azon11012013.outbound.protection.outlook.com
+ ([40.107.209.13] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vdPX6-0005Ev-J7
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 04:08:51 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wcdxDcX3ZVEnyXCmfTSKiYTNVdzV7NNaEcFZ3SePIibtJTAx3k5gu4vvhDxnGZb1eApUivRp/RGsVhPeHHNw1XImzdPwYh5H/Hovdx26uIz8LkuUtO+mE3QvYYNOqgdMJdhA+gcLX3IMy9KrAl2ee+1n4QSmJEHXormcYiPEZfw/LezClo/INszNBAac3tW2xpl4qGXw1Ya8tDLsXYWncW6ThJOtfduJ35ARBEsuP49ihUkmZQIe9nQpJ/wONbJ5LjNzqq8/zN0qQ5qWB0lAbOQDBG7Id7rOxvjuOGELQ4ZY0oeqPEmB47f970UDePAPPNjuoW/K5W+YW6Per+3/qg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sg9ZTmRfyv9Bh5kJA60/hjxOaDf9SDf/rFy0QiaxGdo=;
+ b=p/rB9pcW9jsEhIEX2d2zG7zN14m4T+JJynSqJVOtRjvW77HlU5XgBbOz+JQR/2Dfs0+Qns04xFotj5vLYuCv4I+SIpGDbdxiEixOIdff0QxzU0/4ct0bw0loEuGlwDGJOYdxfTJTSFnlPqKF2/xj2njrrA7mJ+fr6T1VwO70sD2Eqs0sNZ6E5Zr0jp2m5jYeX2nNRpZbV97dLBPFhnahwIPLg8SOMcfE5M0gSp7bSL89gDKnAwjOZFfmw8DhcGIchEDf23IxvedWLFUGzUk85mtcOovGn+QINRTN8LUozXsY3XaO0HwzIWbGm3J2UpWPf1XXnyh1V/x95idaCXSB5g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sg9ZTmRfyv9Bh5kJA60/hjxOaDf9SDf/rFy0QiaxGdo=;
+ b=5XfEWBm/e4x0UcDqINZGmg5iGtFlEC3MwhiWDwcYnyOrK08yIcMgS0Zt1E8DnWeFxOHOKjFzQD13a//DikZFVhcdMyXM7enLuHwZ2tohJKltdso+PqTFujTYebxaorjXgQA2vdEdrDsz6zH/PCc8tmBuF1w+mtnr+TqS2olu/4A=
+Received: from BL1P221CA0043.NAMP221.PROD.OUTLOOK.COM (2603:10b6:208:5b5::13)
+ by DM3PR12MB9287.namprd12.prod.outlook.com (2603:10b6:8:1ac::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.2; Wed, 7 Jan
+ 2026 09:03:39 +0000
+Received: from BL6PEPF00020E62.namprd04.prod.outlook.com
+ (2603:10b6:208:5b5:cafe::e0) by BL1P221CA0043.outlook.office365.com
+ (2603:10b6:208:5b5::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9499.2 via Frontend Transport; Wed, 7
+ Jan 2026 09:03:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL6PEPF00020E62.mail.protection.outlook.com (10.167.249.23) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9499.1 via Frontend Transport; Wed, 7 Jan 2026 09:03:38 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 7 Jan
+ 2026 03:03:38 -0600
+Received: from [10.65.97.122] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Wed, 7 Jan 2026 03:03:36 -0600
+Message-ID: <9442044f-5cfc-4068-971e-9184bcfd3c76@amd.com>
+Date: Wed, 7 Jan 2026 17:03:36 +0800
 MIME-Version: 1.0
-References: <20260104075412.1262-1-jasowang@redhat.com>
- <20260104075412.1262-3-jasowang@redhat.com>
-In-Reply-To: <20260104075412.1262-3-jasowang@redhat.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Wed, 7 Jan 2026 17:07:27 +0800
-X-Gm-Features: AQt7F2oRARLMOtMlFm4diwMVBGMR0i12WOpBMt57GHe9CPIIv0VUZsXM2VlUNn8
-Message-ID: <CAK3tnvK_NL4QyRUKqinUbAwiYuPKxr7dbai7bn5dkENFvC-2UA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] qtest: add a test to test redirector status change
-To: Jason Wang <jasowang@redhat.com>
-Cc: lizhijian@fujitsu.com, qemu-devel@nongnu.org, lulu@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x631.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/1] numa: add 'spm' option for Specific Purpose Memory
+To: "David Hildenbrand (Red Hat)" <david@kernel.org>, Gregory Price
+ <gourry@gourry.net>
+CC: <qemu-devel@nongnu.org>, <imammedo@redhat.com>,
+ <jonathan.cameron@huawei.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+References: <20251209093841.2250527-1-FangSheng.Huang@amd.com>
+ <aVfyl8sylMICO4mc@gourry-fedora-PF4VCD3F>
+ <1b2acdb2-ad9d-4fdc-bd3b-a13249cc0ab9@kernel.org>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <1b2acdb2-ad9d-4fdc-bd3b-a13249cc0ab9@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF00020E62:EE_|DM3PR12MB9287:EE_
+X-MS-Office365-Filtering-Correlation-Id: d5ed3b1e-17c7-4a05-d550-08de4dcba5de
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|82310400026|1800799024|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eWdZTCtJeU1rYjVSRkErZHFXQ1drbjNsVHVJRERNVWFLRlFzSDZkL1MwR3V4?=
+ =?utf-8?B?Yk5ZVnVHOTRCcFVwVkhjQWd3QURHMis5aVphYkxRTUhkZHZJbUROS3EzVTVK?=
+ =?utf-8?B?eGNUVkUvRVQ4Y1JSVFhFaURDZDYvSGVES1dkZEFJVnhiSm9XQlRvUExvYW1z?=
+ =?utf-8?B?LzlHNElIUjRiUXNsRFMveDhKSUIzekFSaVdXdXI0bHJKQXpnSGpQS1VvUzRS?=
+ =?utf-8?B?alpFZFl4WkV0MGpoRWZmWUc5bkFTOUJoSlF2NmdVb1ZRdVB1bHBVRjRhZTlZ?=
+ =?utf-8?B?VDJlRDBCVGxrL200Wi83SFoxdFJ0TjAvSDl1ZjRFSlRIYkdKSkJyT3pTaVVl?=
+ =?utf-8?B?YjhLb1Z3Smp0Q3UyOFpET3JJNC9IamQ5T1h0OVhlcjJOdlo4aU1kcUpVNDlM?=
+ =?utf-8?B?T1dMSWJVMlZVWEphYkVVWUlsKzJWUTJ4M2o0a0F3VWFwSnorbEx5SFpHbGpt?=
+ =?utf-8?B?MDZoQjRaTVZMckh5M1ZvY0dvc0JtT3ROY0dlcWJkemtPd2FnTkN5bUpKWUtn?=
+ =?utf-8?B?KzdsN1NpaFdLOFlIVHBPNUtFTHJhcVY5UjZmUUw1TGMveUxleDJZWVp2LzVB?=
+ =?utf-8?B?RFh5NFZaZVpsblBaL0RHL2lsYVArRFVzRTY3ZkNlTmx2ZStLb1ZseWN0b2ND?=
+ =?utf-8?B?akxsZWl3ZHlBRVNBWTlUZy90enowWU9IWjgwYTFSN1M0YTJ0Y1JRZWlneDFJ?=
+ =?utf-8?B?MG1HQXJvZFNkU3hqbTZ0NUxMMVBRNFVLaUFZazFTaVUvaVo1UnNPZE5vU0xr?=
+ =?utf-8?B?VXU5a1hleDYwSi9SSVNhdUllSGZPTTNYYzMxbi95RWplU1hqRUFIQ0o1MkRI?=
+ =?utf-8?B?eUhNVFFtZjgzYjMzN0pKbXFIVDQxMFN3V0cxNG01d2NVb25XL0NRT0xWdE5o?=
+ =?utf-8?B?czNCK3ZKQ3A2c0ZuQzZGNDRiNHNNQnZvbkJIaHFKeDZocllhdzJoSVA5NzRm?=
+ =?utf-8?B?VVZ2V0RCMlVaZWh0THZpL0lndTdZRnJQWFVvd0tPRGRRSUJNRFJVR0dUODNp?=
+ =?utf-8?B?RXRJa2ZHdmpMTEVmZ25nV1YrbHo2SS9QZVF2elBpaEdDQU50Y2JiSHFrTmhI?=
+ =?utf-8?B?K3R0cTdEcm1tR1kyRE9BVUZzWitlTUUveGYrOGszSDVHbHBlQXhqSlk0M1FX?=
+ =?utf-8?B?NGdQR1dhc0c0QVN1N1NXUStlcjZUZVBoUzdLSlMydHc2d2VWL0J5L3ZpRGpl?=
+ =?utf-8?B?MXBDcUdDSGdNWWErM2p1aUZNY3hnOHVIMUJydDl4RG4xTCtyTHRMSk50KzZX?=
+ =?utf-8?B?dzNiMnorU294U2FlM3VQNlJjcUhWOUJCUC9kWHVTNjdEazlZUmh2bXNOZEpz?=
+ =?utf-8?B?UDNJaVQ5RXBIcnFuUEtNMUpockFSQTJMTUhuaE1BZjh5LzhIbEZtTGxRSEgr?=
+ =?utf-8?B?OVpxb1VoYjVZWjZoV0NPQ1RXMTBtRmVnUWZRR0l1dmt4S05wWnNISG9mcExv?=
+ =?utf-8?B?VmExR3E3RG5wc2NhSkRFYzA2OXJHeC9xMTBuSkhQSVp0NDliY2JSYkdhYWx2?=
+ =?utf-8?B?bzd2RWVGd1ZEUHhhSzFFSmJEZEh5dW53eXB0bzU4ZFhxNkhaalFwajNlZGxI?=
+ =?utf-8?B?OTRBbzBTYWFXQ3l5YkdhU2lCZHFnWUlaMXRtYUhzbGszdlBjZjNzYTRJczRO?=
+ =?utf-8?B?eDN5aGNMUzBDNlhmUGNvbGtpd1FkckdGbU1neUhxdHVLdnVZTlVQaU92UEkx?=
+ =?utf-8?B?UEY0R2dCUk1EMzNNVVdCTVkrVjZVREwwQ2p3T0x0Vi9TMXh2YStOSENXSjRL?=
+ =?utf-8?B?cHpoYUhUL0ZUbFdYdTUrQXR5dk13aFZQSU5nUzY4OElHcnhoZWNPaHpjeDRw?=
+ =?utf-8?B?T25WYkZ5RTMxU0FvU0UwanBtYkZhMXJISDhxNWVlNEx5MHBRbk0zOXJVWjgy?=
+ =?utf-8?B?Y214cHg3RUtaaTBBcERaTUpsY0FSR2NTUi9ZcHNDMVJpSlRPMWU5ZGtJKzdz?=
+ =?utf-8?B?cGpHSzlDZmJvb3JJY1p2NlF4UEVZeVVsK2F2bWlIc2FsYktUT203dDM0RVdy?=
+ =?utf-8?B?SmNsSm9SQXc1NUVYNEpwUW1HYVNUbDIvRFJaVE1QVTdBd1R1TGdBSFVpenZG?=
+ =?utf-8?B?Kzk3ekdsRTZHSGZTNDQ0VUxZenZTV2pEN2x4RDJUSGY2dkxBS1dUU21QNVRp?=
+ =?utf-8?Q?yGMQ=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jan 2026 09:03:38.9303 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d5ed3b1e-17c7-4a05-d550-08de4dcba5de
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E62.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9287
+Received-SPF: permerror client-ip=40.107.209.13;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,258 +163,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jan 4, 2026 at 3:54=E2=80=AFPM Jason Wang <jasowang@redhat.com> wro=
-te:
->
-> This patch adds a qtest to test the status change of
-> filter-redirector. Two subtests were added:
->
-> - test_redirector_status: tests dynamic on/off switching at runtime
->   using qom-set QMP command
->
-> - test_redirector_init_status_off: tests creating filter-redirector
->   with status=3Doff from the start via command line
->
-> Both tests verify that:
->
-> 1. When status is off, data from indev chardev is not received
-> 2. When status is switched to on, data is received correctly
->
-> Signed-off-by: Jason Wang <jasowang@redhat.com>
 
-LGTM.
 
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+On 1/5/2026 11:29 PM, David Hildenbrand (Red Hat) wrote:
+> On 1/2/26 17:30, Gregory Price wrote:
+>> On Tue, Dec 09, 2025 at 05:38:40PM +0800, fanhuang wrote:
+>>>    -numa node,nodeid=0,memdev=m0
+>>>    -numa node,nodeid=1,memdev=m1,spm=on
+>>>
+>>
+>> Should discussion with Jonathan - whatever form this ends up taking, can
+>> we change this from [on,off] to [normal,spm,reserved] and apply the
+>> appropriate types accordingly?
+>>
+>> don't know what to name the tag in that case, something like..
+>>
+>> memmap_type=[normal,spm,reserved] ?
+> 
+> That looks more extensible indeed.
+> 
+> The semantics would be unchanged compared to spm=on: only applies to 
+> boot memory. Although, as discussed, mixing and matching types per node 
+> should be avoided either way.
+> 
+Hi Gregory, David,
 
-Thanks
-Chen
+Thank you for the suggestion on making this more extensible.
 
-> ---
->  tests/qtest/test-filter-redirector.c | 192 +++++++++++++++++++++++++++
->  1 file changed, 192 insertions(+)
->
-> diff --git a/tests/qtest/test-filter-redirector.c b/tests/qtest/test-filt=
-er-redirector.c
-> index a996a80c1c..da0c126314 100644
-> --- a/tests/qtest/test-filter-redirector.c
-> +++ b/tests/qtest/test-filter-redirector.c
-> @@ -196,10 +196,202 @@ static void test_redirector_rx(void)
->      qtest_quit(qts);
->  }
->
-> +/*
-> + * Test filter-redirector status on/off switching.
-> + *
-> + * This test verifies that:
-> + * 1. When status is set to "off", the filter stops receiving data from =
-indev
-> + * 2. When status is set back to "on", the filter resumes receiving data
-> + */
-> +static void test_redirector_status(void)
-> +{
-> +    int backend_sock[2], send_sock;
-> +    uint32_t ret =3D 0, len =3D 0;
-> +    char send_buf[] =3D "Hello!!";
-> +    char sock_path0[] =3D "filter-redirector0.XXXXXX";
-> +    char *recv_buf;
-> +    uint32_t size =3D sizeof(send_buf);
-> +    size =3D htonl(size);
-> +    QTestState *qts;
-> +    struct timeval tv;
-> +    fd_set rfds;
-> +
-> +    ret =3D socketpair(PF_UNIX, SOCK_STREAM, 0, backend_sock);
-> +    g_assert_cmpint(ret, !=3D, -1);
-> +
-> +    ret =3D mkstemp(sock_path0);
-> +    g_assert_cmpint(ret, !=3D, -1);
-> +
-> +    /*
-> +     * Setup a simple rx path:
-> +     * chardev (sock_path0) -> filter-redirector -> socket backend
-> +     */
-> +    qts =3D qtest_initf(
-> +        "-nic socket,id=3Dqtest-bn0,fd=3D%d "
-> +        "-chardev socket,id=3Dredirector0,path=3D%s,server=3Don,wait=3Do=
-ff "
-> +        "-object filter-redirector,id=3Dqtest-f0,netdev=3Dqtest-bn0,"
-> +        "queue=3Drx,indev=3Dredirector0 ",
-> +        backend_sock[1], sock_path0);
-> +
-> +    send_sock =3D unix_connect(sock_path0, NULL);
-> +    g_assert_cmpint(send_sock, !=3D, -1);
-> +
-> +    /* send a qmp command to guarantee that 'connected' is setting to tr=
-ue. */
-> +    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
-> +
-> +    struct iovec iov[] =3D {
-> +        {
-> +            .iov_base =3D &size,
-> +            .iov_len =3D sizeof(size),
-> +        }, {
-> +            .iov_base =3D send_buf,
-> +            .iov_len =3D sizeof(send_buf),
-> +        },
-> +    };
-> +
-> +    /*
-> +     * Test 1: Set status to "off" and verify data is not received
-> +     */
-> +    qtest_qmp_assert_success(qts,
-> +        "{ 'execute': 'qom-set', 'arguments': "
-> +        "{ 'path': '/objects/qtest-f0', 'property': 'status', 'value': '=
-off' }}");
-> +
-> +    ret =3D iov_send(send_sock, iov, 2, 0, sizeof(size) + sizeof(send_bu=
-f));
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf) + sizeof(size));
-> +
-> +    /*
-> +     * Use select with timeout to check if data arrives.
-> +     * When status is off, no data should arrive.
-> +     */
-> +    FD_ZERO(&rfds);
-> +    FD_SET(backend_sock[0], &rfds);
-> +    tv.tv_sec =3D 0;
-> +    tv.tv_usec =3D 500000;  /* 500ms timeout */
-> +    ret =3D select(backend_sock[0] + 1, &rfds, NULL, NULL, &tv);
-> +    g_assert_cmpint(ret, =3D=3D, 0);  /* Should timeout, no data */
-> +
-> +    /*
-> +     * Test 2: Set status back to "on" and verify data is received
-> +     */
-> +    qtest_qmp_assert_success(qts,
-> +        "{ 'execute': 'qom-set', 'arguments': "
-> +        "{ 'path': '/objects/qtest-f0', 'property': 'status', 'value': '=
-on' }}");
-> +
-> +    ret =3D iov_send(send_sock, iov, 2, 0, sizeof(size) + sizeof(send_bu=
-f));
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf) + sizeof(size));
-> +
-> +    ret =3D recv(backend_sock[0], &len, sizeof(len), 0);
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(len));
-> +    len =3D ntohl(len);
-> +
-> +    g_assert_cmpint(len, =3D=3D, sizeof(send_buf));
-> +    recv_buf =3D g_malloc(len);
-> +    ret =3D recv(backend_sock[0], recv_buf, len, 0);
-> +    g_assert_cmpint(ret, =3D=3D, len);
-> +    g_assert_cmpstr(recv_buf, =3D=3D, send_buf);
-> +
-> +    g_free(recv_buf);
-> +    close(send_sock);
-> +    unlink(sock_path0);
-> +    qtest_quit(qts);
-> +}
-> +
-> +/*
-> + * Test filter-redirector created with status=3Doff.
-> + *
-> + * This test verifies that when a filter-redirector is created with
-> + * status=3Doff, it does not receive data until status is set to on.
-> + */
-> +static void test_redirector_init_status_off(void)
-> +{
-> +    int backend_sock[2], send_sock;
-> +    uint32_t ret =3D 0, len =3D 0;
-> +    char send_buf[] =3D "Hello!!";
-> +    char sock_path0[] =3D "filter-redirector0.XXXXXX";
-> +    char *recv_buf;
-> +    uint32_t size =3D sizeof(send_buf);
-> +    size =3D htonl(size);
-> +    QTestState *qts;
-> +    struct timeval tv;
-> +    fd_set rfds;
-> +
-> +    ret =3D socketpair(PF_UNIX, SOCK_STREAM, 0, backend_sock);
-> +    g_assert_cmpint(ret, !=3D, -1);
-> +
-> +    ret =3D mkstemp(sock_path0);
-> +    g_assert_cmpint(ret, !=3D, -1);
-> +
-> +    /*
-> +     * Create filter-redirector with status=3Doff from the start
-> +     */
-> +    qts =3D qtest_initf(
-> +        "-nic socket,id=3Dqtest-bn0,fd=3D%d "
-> +        "-chardev socket,id=3Dredirector0,path=3D%s,server=3Don,wait=3Do=
-ff "
-> +        "-object filter-redirector,id=3Dqtest-f0,netdev=3Dqtest-bn0,"
-> +        "queue=3Drx,indev=3Dredirector0,status=3Doff ",
-> +        backend_sock[1], sock_path0);
-> +
-> +    send_sock =3D unix_connect(sock_path0, NULL);
-> +    g_assert_cmpint(send_sock, !=3D, -1);
-> +
-> +    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
-> +
-> +    struct iovec iov[] =3D {
-> +        {
-> +            .iov_base =3D &size,
-> +            .iov_len =3D sizeof(size),
-> +        }, {
-> +            .iov_base =3D send_buf,
-> +            .iov_len =3D sizeof(send_buf),
-> +        },
-> +    };
-> +
-> +    /*
-> +     * Test 1: Filter was created with status=3Doff, data should not be =
-received
-> +     */
-> +    ret =3D iov_send(send_sock, iov, 2, 0, sizeof(size) + sizeof(send_bu=
-f));
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf) + sizeof(size));
-> +
-> +    FD_ZERO(&rfds);
-> +    FD_SET(backend_sock[0], &rfds);
-> +    tv.tv_sec =3D 0;
-> +    tv.tv_usec =3D 500000;
-> +    ret =3D select(backend_sock[0] + 1, &rfds, NULL, NULL, &tv);
-> +    g_assert_cmpint(ret, =3D=3D, 0);  /* Should timeout, no data */
-> +
-> +    /*
-> +     * Test 2: Set status to "on" and verify data is received
-> +     */
-> +    qtest_qmp_assert_success(qts,
-> +        "{ 'execute': 'qom-set', 'arguments': "
-> +        "{ 'path': '/objects/qtest-f0', 'property': 'status', 'value': '=
-on' }}");
-> +
-> +    ret =3D iov_send(send_sock, iov, 2, 0, sizeof(size) + sizeof(send_bu=
-f));
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf) + sizeof(size));
-> +
-> +    ret =3D recv(backend_sock[0], &len, sizeof(len), 0);
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(len));
-> +    len =3D ntohl(len);
-> +
-> +    g_assert_cmpint(len, =3D=3D, sizeof(send_buf));
-> +    recv_buf =3D g_malloc(len);
-> +    ret =3D recv(backend_sock[0], recv_buf, len, 0);
-> +    g_assert_cmpint(ret, =3D=3D, len);
-> +    g_assert_cmpstr(recv_buf, =3D=3D, send_buf);
-> +
-> +    g_free(recv_buf);
-> +    close(send_sock);
-> +    unlink(sock_path0);
-> +    qtest_quit(qts);
-> +}
-> +
->  int main(int argc, char **argv)
->  {
->      g_test_init(&argc, &argv, NULL);
->      qtest_add_func("/netfilter/redirector_tx", test_redirector_tx);
->      qtest_add_func("/netfilter/redirector_rx", test_redirector_rx);
-> +    qtest_add_func("/netfilter/redirector_status", test_redirector_statu=
-s);
-> +    qtest_add_func("/netfilter/redirector_init_status_off",
-> +                   test_redirector_init_status_off);
->      return g_test_run();
->  }
-> --
-> 2.34.1
->
+I agree that `memmap_type=[normal,spm,reserved]` is a better approach
+than the simple boolean `spm=on|off`.
+
+I've analyzed the required changes and will prepare an updated patch
+implementing this. However, I need to go through an internal review
+process before submitting to the community, which may take some time.
+
+In the meantime, any feedback or suggestions on the design
+are welcome.
+
+Best Regards,
+Jerry Huang
 
