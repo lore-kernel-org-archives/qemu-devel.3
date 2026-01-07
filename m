@@ -4,77 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC04BCD5822
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 10:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91314CD5822
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 10:28:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdQlL-0000yx-8T; Wed, 07 Jan 2026 05:27:35 -0500
+	id 1vdQlE-0000db-T3; Wed, 07 Jan 2026 05:27:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdQlI-0000qL-U4
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 05:27:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdQlH-0005t3-3t
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 05:27:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767781649;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LkLBY3b4HKc7Dnp8QpnTuvCHtXY90DZNUs/UBD3mHQQ=;
- b=OH+CllYprKZRVgVM65XGc1WTfyDQ8rcsYlosz/dj7qYSxlrgYiHX40TJg4A0eSckKyJu5l
- J3xvrVrx71FdYObH5CsAx0ofxJ+upqTRZL1E91eKWpmFfO1vt8bfD4bwLImVpVfWPsrrWV
- /M9O+rjFkJWwI4Nvf45PrlBo/bMHh4s=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-6r35nsC_MvODcA2Kzr8G8g-1; Wed,
- 07 Jan 2026 05:27:28 -0500
-X-MC-Unique: 6r35nsC_MvODcA2Kzr8G8g-1
-X-Mimecast-MFC-AGG-ID: 6r35nsC_MvODcA2Kzr8G8g_1767781647
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E19B18002C5; Wed,  7 Jan 2026 10:27:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.169])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3633218007D2; Wed,  7 Jan 2026 10:27:24 +0000 (UTC)
-Date: Wed, 7 Jan 2026 10:27:21 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "open list:X86 KVM CPUs" <kvm@vger.kernel.org>
-Subject: Re: [PATCH] Add query-tdx-capabilities
-Message-ID: <aV41CQP0JODTdRqy@redhat.com>
-References: <20260106183620.2144309-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vdQlB-0000Og-Fy
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 05:27:25 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vdQlA-0005sb-0m
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 05:27:25 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-43260a5a096so1259393f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 02:27:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767781641; x=1768386441; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rvZqZpwzW04v4tSp8tuCASnRPcPT5TqGG1EZoVmDGtM=;
+ b=Xbt7I8a8fScBAjjMGHkKlL7ESgnw3KETJ5QSbI/RpEqpNAWAZsxt8KSVWYrzwDi62/
+ igaR95rzx6D6yGcpbVr9xKZ4ifTNglsKcRXehSWUOqDD/T74Bl7FT4hPaLNx4PHqfIME
+ ngqnQE6XNSjOZK7M071E9aFpSLimXwgI2ARtDYudFLinNndL1TIFNxbpoKLlhtNn6ot5
+ HETxU4W0Io8xLN4rshv9bAGy+1xldNbPndNxevhkdRCJ4MTirm0cJRipAQmDepfcmTZN
+ 1HbKVXNRyRKS5JW6lWMauHWwUQkhr5cp4nc+K0ibCv0nm3cw8MAZJtzfWJugNvRowb0C
+ 3RWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767781641; x=1768386441;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rvZqZpwzW04v4tSp8tuCASnRPcPT5TqGG1EZoVmDGtM=;
+ b=CtBo4ewTaAJqtgxHB43wbRFtxgCHGS2MwDxIvYB6D2QtLtXbrpcd4ECk4QDe4XNIl+
+ XwCDO7A+ARyHP3z8o2vdHZ6da5zUb8PWnuu5gbCHekDHWc6kGYfMfdubF2ZHnfwf78no
+ dVqGb4P7zBP4nATYXLE3e15kkw8FddroIs7O7gMsh1WS2mxMrJThXws2606dk8/d+du+
+ +XCjvt+AFi4dmL8yG3gJrJrOdk8HgT2iflF33cYurUia2BjAMql30Tf8XtLJD4E3JJVX
+ I2716f2nOBTqAR4hI3t7oG8o2nG/FEg4F2Jw/P11Xf3KYUuS/jJHmr58FmyTbDp0SI//
+ 4I3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjkDx2jWydPnYqss4A64EDZc96Xje+WOis4e5Rqvhr3aP0w5ZcYwbN/wbyZCSb0B/DiHtg41gVf0Q5@nongnu.org
+X-Gm-Message-State: AOJu0Yw3AtMrqLhahOjbB0x86FkOroZr6TY0ndMf9s0gHMFwlYq4Wr1A
+ cDQWFO125JmunJcp/TX3g1gbaOBilt7Fs0572Lz8QnEfHG8DS0iL8XyLBgqmvevyI8w=
+X-Gm-Gg: AY/fxX7xK22PQDqXvKBP7wKu92OSl4FP8XNDpltS0cSJ4PckT2NCJ4KHDr80gQKkHHc
+ SLG/NM4G99XuTegbtrfiAJXi+0nu46ndYtp8iRsd4VGoS0GCy3c5oEfq2xVTEq8oGRhYsZ1uQkr
+ BTWRL9kXL2TbZMIVKztE5uiy7eh0Y5TF5dHVPJC5bOR/ZxSqCEA1yJThww3/Ab+PlUgIb3lZhhu
+ 1J3nfCMsickB5uJMEwtU8+a7sqeSrLL2Kw/hqIG1Asdmdteqf7ipEOTHl2Pgrdt5VdvzxscS6/P
+ IsSVLM92UtyvZZRTJRyQe3In1JbC/QMinPUbWbmvR9i/AHI4lxnxCBwFghhdyno+gw8k27V+178
+ /h7/GwCHk1MLK24L0ePG1OTqq+pEr0rbse9YCXlkFWlLBuOH1Jq24XmC7Ez0xLnrvyI1t6e931f
+ uV4vxqkPMG3+0=
+X-Google-Smtp-Source: AGHT+IEHWzw7EoE8O7WZbRGm1UJ6PRmLKJfImhyLqixpTfPXtfF7oGe3DDs44ZtWnx63qbg8072XHg==
+X-Received: by 2002:a05:6000:2881:b0:430:fdfc:7ddf with SMTP id
+ ffacd0b85a97d-432c37d2db0mr2422141f8f.42.1767781641059; 
+ Wed, 07 Jan 2026 02:27:21 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd5ee243sm9362186f8f.31.2026.01.07.02.27.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Jan 2026 02:27:20 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 764305F88E;
+ Wed, 07 Jan 2026 10:27:19 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: John Snow <jsnow@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ qemu-trivial@nongnu.org,  qemu-devel@nongnu.org
+Subject: Re: [PATCH] docs: update copyright year to 2026
+In-Reply-To: <20260107045250.34420-1-anisinha@redhat.com> (Ani Sinha's message
+ of "Wed, 7 Jan 2026 10:22:50 +0530")
+References: <20260107045250.34420-1-anisinha@redhat.com>
+User-Agent: mu4e 1.12.14; emacs 30.1
+Date: Wed, 07 Jan 2026 10:27:19 +0000
+Message-ID: <87eco1afaw.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260106183620.2144309-1-marcandre.lureau@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,193 +105,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 06, 2026 at 10:36:20PM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Return an empty TdxCapability struct, for extensibility and matching
-> query-sev-capabilities return type.
-> 
-> Fixes: https://issues.redhat.com/browse/RHEL-129674
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  qapi/misc-i386.json        | 30 ++++++++++++++++++++++++++++++
->  target/i386/kvm/kvm_i386.h |  1 +
->  target/i386/kvm/kvm.c      |  5 +++++
->  target/i386/kvm/tdx-stub.c |  8 ++++++++
->  target/i386/kvm/tdx.c      | 21 +++++++++++++++++++++
->  5 files changed, 65 insertions(+)
-> 
-> diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-> index 05a94d6c416..f10e4338b48 100644
-> --- a/qapi/misc-i386.json
-> +++ b/qapi/misc-i386.json
-> @@ -225,6 +225,36 @@
->  ##
->  { 'command': 'query-sev-capabilities', 'returns': 'SevCapability' }
->  
-> +##
-> +# @TdxCapability:
-> +#
-> +# The struct describes capability for Intel Trust Domain Extensions
-> +# (TDX) feature.
-> +#
-> +# Since: 11.0
-> +##
-> +{ 'struct': 'TdxCapability',
-> +  'data': { } }
-> +
-> +##
-> +# @query-tdx-capabilities:
-> +#
-> +# Get TDX capabilities.
-> +#
-> +# This is only supported on Intel X86 platforms with KVM enabled.
-> +#
-> +# Errors:
-> +#     - If TDX is not available on the platform, GenericError
-> +#
-> +# Since: 11.0
-> +#
-> +# .. qmp-example::
-> +#
-> +#     -> { "execute": "query-tdx-capabilities" }
-> +#     <- { "return": {} }
-> +##
-> +{ 'command': 'query-tdx-capabilities', 'returns': 'TdxCapability' }
+Ani Sinha <anisinha@redhat.com> writes:
 
-This matches the conceptual design used with query-sev-capabilities,
-where the lack of SEV support has to be inferred from the command
-returning "GenericError". On the one hand this allows the caller to
-distinguish different scenarios - unsupported due to lack of HW
-support, vs unsupported due to lack of KVM support. On the other
-hand 'GenericError' might reflect other things that should be
-considered fatal errors, rather than indicitive of lack of support
-in the host.
+> We are already in 2026. Update docs to update copyright info to year 2026.
+>
+> Cc: peter.maydell@linaro.org
+> Cc: qemu-trivial@nongnu.org
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 
-With the other 'query-sev' command, we have "enabled: bool" field,
-and when enabled == false, the other fields are documented to have
-undefined values.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-I tend towards suggesting that 'query-sev-capabilities' (and thus
-also this new query-tdx-capabilities) should have been more like
-query-sev,  and had a a "supported: bool" field to denote the lack
-of support in the host.
-
-This would not have allowed callers to disinguish the reason why
-SEV/TDX is not supported (hardware vs KVM), but I'm not sure that
-reason matters for callers - lack of KVM support is more of an
-OS integration problem.
-
-
-
-
-> +
->  ##
->  # @sev-inject-launch-secret:
->  #
-> diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-> index 2b653442f4d..71dd45be47a 100644
-> --- a/target/i386/kvm/kvm_i386.h
-> +++ b/target/i386/kvm/kvm_i386.h
-> @@ -61,6 +61,7 @@ void kvm_put_apicbase(X86CPU *cpu, uint64_t value);
->  
->  bool kvm_has_x2apic_api(void);
->  bool kvm_has_waitpkg(void);
-> +bool kvm_has_tdx(void);
->  
->  uint64_t kvm_swizzle_msi_ext_dest_id(uint64_t address);
->  void kvm_update_msi_routes_all(void *private, bool global,
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 7b9b740a8e5..8ce25d7e785 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -6582,6 +6582,11 @@ bool kvm_has_waitpkg(void)
->      return has_msr_umwait;
->  }
->  
-> +bool kvm_has_tdx(void)
-> +{
-> +    return kvm_is_vm_type_supported(KVM_X86_TDX_VM);
-> +}
-> +
->  #define ARCH_REQ_XCOMP_GUEST_PERM       0x1025
->  
->  void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask)
-> diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
-> index 1f0e108a69e..c4e7f2c58c8 100644
-> --- a/target/i386/kvm/tdx-stub.c
-> +++ b/target/i386/kvm/tdx-stub.c
-> @@ -1,6 +1,8 @@
->  /* SPDX-License-Identifier: GPL-2.0-or-later */
->  
->  #include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qapi/qapi-commands-misc-i386.h"
->  
->  #include "tdx.h"
->  
-> @@ -30,3 +32,9 @@ void tdx_handle_get_tdvmcall_info(X86CPU *cpu, struct kvm_run *run)
->  void tdx_handle_setup_event_notify_interrupt(X86CPU *cpu, struct kvm_run *run)
->  {
->  }
-> +
-> +TdxCapability *qmp_query_tdx_capabilities(Error **errp)
-> +{
-> +    error_setg(errp, "TDX is not available in this QEMU");
-> +    return NULL;
-> +}
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index 01619857685..b5ee3b1ab92 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-> @@ -14,6 +14,7 @@
->  #include "qemu/base64.h"
->  #include "qemu/mmap-alloc.h"
->  #include "qapi/error.h"
-> +#include "qapi/qapi-commands-misc-i386.h"
->  #include "qapi/qapi-visit-sockets.h"
->  #include "qom/object_interfaces.h"
->  #include "crypto/hash.h"
-> @@ -1537,6 +1538,26 @@ static void tdx_guest_finalize(Object *obj)
->  {
->  }
->  
-> +static TdxCapability *tdx_get_capabilities(Error **errp)
-> +{
-> +    if (!kvm_enabled()) {
-> +        error_setg(errp, "TDX is not available without KVM");
-> +        return NULL;
-> +    }
-> +
-> +    if (!kvm_has_tdx()) {
-> +        error_setg(errp, "TDX is not supported by this host");
-> +        return NULL;
-> +    }
-> +
-> +    return g_new0(TdxCapability, 1);
-> +}
-> +
-> +TdxCapability *qmp_query_tdx_capabilities(Error **errp)
-> +{
-> +    return tdx_get_capabilities(errp);
-> +}
-> +
->  static void tdx_guest_class_init(ObjectClass *oc, const void *data)
->  {
->      ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-> -- 
-> 2.52.0
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
