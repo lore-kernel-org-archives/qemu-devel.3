@@ -4,85 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE89CCD585A
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 11:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49416CE9D48
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 12:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdRuC-0004gO-DB; Wed, 07 Jan 2026 06:40:48 -0500
+	id 1vdSJh-0003uH-Sl; Wed, 07 Jan 2026 07:07:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vdRuA-0004fx-HA
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 06:40:46 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vdRu8-0004JZ-RD
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 06:40:46 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b8010b8f078so318319166b.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 03:40:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767786043; x=1768390843; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bio3I+oN+xeX+wDsKlhhmMv3fGe4z0OAOkp0Yrtp37c=;
- b=ZpOLlHUUAVR7nnQvLQyORWWjGErzwIkymo0ciZEUTXdZCEY8Hbj1uinKG+Vkprr9Cf
- qrwzOi7KivsOmsglgr8mC8beK0etedt4+Z0pPf1FKV12GCKBXVDCoCiwH6dVerBD95rp
- 0MkE8nhL+ki8JFa2mIIuCx4wKQdem8idzUSIlUW74ELCxs3SmgNeUSvORr7MXEts1I/+
- vZQKKXKiHogi5g+GNA7vXQIZHET/x0hVvenA0UnHx9tKaDOMShtmSGP+84CmCOIlglkg
- A2M1um+JDu85no0/4sykG1qrhts9oR22nUZTUps4ZnkVen92QNTHyws5pDh0yH07+ATg
- XEmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767786043; x=1768390843;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bio3I+oN+xeX+wDsKlhhmMv3fGe4z0OAOkp0Yrtp37c=;
- b=ryyVR+1CeaPN9/3INvX6EHYmHvUuVwZSqjIhysxBYG+xNfioSF2AZqJzJQK4c3Ky8t
- s3Kna/OPjZwrx8jykjC4sWH/QqWyIjVfJy0/0s+s+gi9WDeXKXNWkeQqnU1vCOZDegq0
- F0xkVyPvK3HiwspsGxClyHupe9f3tQbbdANozdz0aFSgxvUEnVE+sJtJG62hwcTEKf1h
- GhMxjh/XH5szAjEJCvcCKoMJs4l33RIFKFM/I2J+7LNYlgIXYwIAFxhaOh6ZNDqev+Zp
- dSNyDLwyxJgvbsAKOTKeR5D+cNuK4v93cMOfOyJdpSxU/hxnMqmoXLKfsZ9ihm9bXz/5
- BHuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/3KUepg4s3WamVmsnfiNHFFBI9/sb1LFi3DVI5w9VGsxlRCZDtKgb+6J6PQAAAJx2juSzHfSojj69@nongnu.org
-X-Gm-Message-State: AOJu0Yw/YL4r4kyKjbpbkuvY4nqg9PFb8blJLNaWpLc95PfL0V8K3GCF
- gSvfUeCkHKyYicsiy6l7v1gOslXjW9crkz469MOo1PKviTBXN6YtbrosKoGLKOgTEdkARGclP4C
- 0hF7cQf0BvCiCXBJzYUxYOMP4Tnw3zxA=
-X-Gm-Gg: AY/fxX6mtheWrWV/5o/e9MTtfwkvThitFDp/iraI4l3M6oYGN0x2SXkOSjx3qq8EqWd
- ku/IdEVUX/per4EbkLQ9qZH1MFfxYbhPGXOtL65RVFV+whaYtMW5+IV2KqNeJHm8xFsMnufSwhG
- xC5kOIi+ziRMqJxmbZrz/CdQitgjQl38hsQC2BT1ZE4c794ABZO2bIb3vKZkK257J7/nT+A8Cke
- 5gCpPllu2QCsuhPtLYi2qeM1Hi7vYFcF2zGugpWJhsiu/I2SbR9m6lcIHcaWnQvv5ZUQqA=
-X-Google-Smtp-Source: AGHT+IGlTmpXOmCXpBGlQM+JpXa3GhsLXMEV31i46dzjQMpqybneGadkdIdl+Z91uXfk3OovJuIY70tMcPnsZ8BoFaw=
-X-Received: by 2002:a17:906:c146:b0:b76:277b:9a5b with SMTP id
- a640c23a62f3a-b8444d4eb4amr202974866b.6.1767786042685; Wed, 07 Jan 2026
- 03:40:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdSJX-0003ry-BR
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 07:07:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdSJP-00027k-4U
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 07:06:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767787609;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zQRZiqjXcBFWqyw3b1/BFnsZJznbwLCPmyD6ECZ8mCI=;
+ b=iP+1ismfudI/dUMOC2/O8POA8s8m9K9CCjlJBUwNsSINuUBPOQyAnzNDbNHbeRzVVUuaGn
+ 7g4kAz0CQR4GWdOBqTA3Cv3EjTOqZoBcKIuRfaqu0il5KrMK+sn4gtWbBe3Nt8xo9UIe8A
+ JCe63DsX7lSc+X0nb/wySSjJgh5r0sk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-VgU7_k1uN6SqJtgGo10sPA-1; Wed,
+ 07 Jan 2026 07:06:41 -0500
+X-MC-Unique: VgU7_k1uN6SqJtgGo10sPA-1
+X-Mimecast-MFC-AGG-ID: VgU7_k1uN6SqJtgGo10sPA_1767787601
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9DD11956094; Wed,  7 Jan 2026 12:06:40 +0000 (UTC)
+Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
+ [10.33.192.176])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 098FB1956048; Wed,  7 Jan 2026 12:06:39 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 00/14] First set of s390x and functional test patches in 2026
+Date: Wed,  7 Jan 2026 13:06:24 +0100
+Message-ID: <20260107120638.56735-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20260104075412.1262-1-jasowang@redhat.com>
- <20260104075412.1262-4-jasowang@redhat.com>
-In-Reply-To: <20260104075412.1262-4-jasowang@redhat.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Wed, 7 Jan 2026 19:40:06 +0800
-X-Gm-Features: AQt7F2rYZ8J-EL5iXOr63ZKOVeADHjhBy4XnnQ0FjmJizqVSwPjCr-uagXrgZEY
-Message-ID: <CAK3tnvJwUfEUEVxLVoo_wvZPO7aizF6bL+ivQA18aZxzRk2fPQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] tests/qtest: Add test for filter-redirector rx event
- opened
-To: Jason Wang <jasowang@redhat.com>
-Cc: lizhijian@fujitsu.com, qemu-devel@nongnu.org, lulu@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,156 +80,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jan 4, 2026 at 3:54=E2=80=AFPM Jason Wang <jasowang@redhat.com> wro=
-te:
->
-> Add a new test case 'test_redirector_rx_event_opened' to verify the
-> handling of the CHR_EVENT_OPENED event in filter-redirector.
->
-> The test simulates a scenario where the backend character device (socket)
-> is disconnected and then reconnected. It works by:
-> 1. Connecting to the redirector's socket (triggers CHR_EVENT_OPENED).
-> 2. Sending a packet to verify initial connectivity.
-> 3. Disconnecting (triggers CHR_EVENT_CLOSED).
-> 4. Reconnecting (triggers CHR_EVENT_OPENED again).
-> 5. Sending another packet to verify that the redirector correctly
->    re-registers its handlers and resumes passing traffic.
->
-> This ensures that the filter-redirector can recover and function correctl=
-y
-> after a backend reconnection.
->
-> Signed-off-by: Jason Wang <jasowang@redhat.com>
+ Happy new year!
 
-Very meaningful detailed description.
+The following changes since commit 0fc482b73d8e085d1375b4e17b0647fd2e6fe8f0:
 
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+  Merge tag 'pull-aspeed-20260105' of https://github.com/legoater/qemu into staging (2026-01-06 06:52:47 +1100)
 
+are available in the Git repository at:
 
-> ---
->  tests/qtest/test-filter-redirector.c | 96 ++++++++++++++++++++++++++++
->  1 file changed, 96 insertions(+)
->
-> diff --git a/tests/qtest/test-filter-redirector.c b/tests/qtest/test-filt=
-er-redirector.c
-> index da0c126314..5540c232c0 100644
-> --- a/tests/qtest/test-filter-redirector.c
-> +++ b/tests/qtest/test-filter-redirector.c
-> @@ -385,6 +385,100 @@ static void test_redirector_init_status_off(void)
->      qtest_quit(qts);
->  }
->
-> +static void test_redirector_rx_event_opened(void)
-> +{
-> +    int backend_sock[2], send_sock;
-> +    uint32_t ret =3D 0, len =3D 0;
-> +    char send_buf[] =3D "Hello!!";
-> +    char send_buf2[] =3D "Hello2!!";
-> +    char sock_path0[] =3D "filter-redirector0.XXXXXX";
-> +    char *recv_buf;
-> +    uint32_t size =3D sizeof(send_buf);
-> +    uint32_t size2 =3D sizeof(send_buf2);
-> +    size =3D htonl(size);
-> +    size2 =3D htonl(size2);
-> +    QTestState *qts;
-> +
-> +    ret =3D socketpair(PF_UNIX, SOCK_STREAM, 0, backend_sock);
-> +    g_assert_cmpint(ret, !=3D, -1);
-> +
-> +    ret =3D mkstemp(sock_path0);
-> +    g_assert_cmpint(ret, !=3D, -1);
-> +
-> +    qts =3D qtest_initf(
-> +        "-nic socket,id=3Dqtest-bn0,fd=3D%d "
-> +        "-chardev socket,id=3Dredirector0,path=3D%s,server=3Don,wait=3Do=
-ff "
-> +        "-object filter-redirector,id=3Dqtest-f0,netdev=3Dqtest-bn0,"
-> +        "queue=3Drx,indev=3Dredirector0 ",
-> +        backend_sock[1], sock_path0);
-> +
-> +    struct iovec iov[] =3D {
-> +        {
-> +            .iov_base =3D &size,
-> +            .iov_len =3D sizeof(size),
-> +        }, {
-> +            .iov_base =3D send_buf,
-> +            .iov_len =3D sizeof(send_buf),
-> +        },
-> +    };
-> +
-> +    struct iovec iov2[] =3D {
-> +        {
-> +            .iov_base =3D &size2,
-> +            .iov_len =3D sizeof(size2),
-> +        }, {
-> +            .iov_base =3D send_buf2,
-> +            .iov_len =3D sizeof(send_buf2),
-> +        },
-> +    };
-> +
-> +    /* First connection */
-> +    send_sock =3D unix_connect(sock_path0, NULL);
-> +    g_assert_cmpint(send_sock, !=3D, -1);
-> +    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
-> +
-> +    ret =3D iov_send(send_sock, iov, 2, 0, sizeof(size) + sizeof(send_bu=
-f));
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf) + sizeof(size));
-> +
-> +    ret =3D recv(backend_sock[0], &len, sizeof(len), 0);
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(len));
-> +    len =3D ntohl(len);
-> +    g_assert_cmpint(len, =3D=3D, sizeof(send_buf));
-> +    recv_buf =3D g_malloc(len);
-> +    ret =3D recv(backend_sock[0], recv_buf, len, 0);
-> +    g_assert_cmpint(ret, =3D=3D, len);
-> +    g_assert_cmpstr(recv_buf, =3D=3D, send_buf);
-> +    g_free(recv_buf);
-> +
-> +    close(send_sock);
-> +
-> +    /* Verify disconnection handling if needed, but mainly we want to te=
-st Reconnection */
-> +    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
-> +
-> +    /* Second connection */
-> +    send_sock =3D unix_connect(sock_path0, NULL);
-> +    g_assert_cmpint(send_sock, !=3D, -1);
-> +    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
-> +
-> +    ret =3D iov_send(send_sock, iov2, 2, 0, sizeof(size2) + sizeof(send_=
-buf2));
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(send_buf2) + sizeof(size2));
-> +
-> +    ret =3D recv(backend_sock[0], &len, sizeof(len), 0);
-> +    g_assert_cmpint(ret, =3D=3D, sizeof(len));
-> +    len =3D ntohl(len);
-> +    g_assert_cmpint(len, =3D=3D, sizeof(send_buf2));
-> +    recv_buf =3D g_malloc(len);
-> +    ret =3D recv(backend_sock[0], recv_buf, len, 0);
-> +    g_assert_cmpint(ret, =3D=3D, len);
-> +    g_assert_cmpstr(recv_buf, =3D=3D, send_buf2);
-> +    g_free(recv_buf);
-> +
-> +    close(send_sock);
-> +    unlink(sock_path0);
-> +    qtest_quit(qts);
-> +    close(backend_sock[0]);
-> +}
-> +
->  int main(int argc, char **argv)
->  {
->      g_test_init(&argc, &argv, NULL);
-> @@ -393,5 +487,7 @@ int main(int argc, char **argv)
->      qtest_add_func("/netfilter/redirector_status", test_redirector_statu=
-s);
->      qtest_add_func("/netfilter/redirector_init_status_off",
->                     test_redirector_init_status_off);
-> +    qtest_add_func("/netfilter/redirector_rx_event_opened",
-> +                   test_redirector_rx_event_opened);
->      return g_test_run();
->  }
-> --
-> 2.34.1
->
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2026-01-07
+
+for you to fetch changes up to 80802278817770783a07eebc06adc157df89d827:
+
+  tests/functional/qemu_test/testcase: Fix mismatched quotations (2026-01-07 10:41:40 +0100)
+
+----------------------------------------------------------------
+* Compat machines for 11.0
+* Add some more files to the MAINTAINERS file
+* Use explicit big-endian API calls in the s390x code
+* Add the possibility to run sub-tests manually in the functional test suite
+
+----------------------------------------------------------------
+Cornelia Huck (1):
+      hw: add compat machines for 11.0
+
+Fabiano Rosas (1):
+      tests/functional: Allow tests to be run individually
+
+Philippe Mathieu-Daudé (8):
+      hw/s390x/ccw: Remove deprecated s390-ccw-virtio-5.0 machine
+      hw/s390x: Use explicit big-endian LD/ST API
+      target/s390x: Use explicit big-endian LD/ST API
+      target/s390x: Replace gdb_get_regl() -> gdb_get_reg64()
+      target/s390x: Replace MO_TE -> MO_BE
+      target/s390x: Inline cpu_ld{uw, l}_code() calls in EX opcode helper
+      target/s390x: Use big-endian variant of cpu_ld/st_data*()
+      target/s390x: Inline translator_lduw() and translator_ldl()
+
+Thomas Huth (3):
+      hw/s390x: Un-inline the s390_do_cpu_*() functions
+      MAINTAINERS: Add util/s390x_pci_mmio.c to the S390 PCI section
+      MAINTAINERS: Add configs/targets/s390x-softmmu.mak to the S390 general section
+
+Yodel Eldar (1):
+      tests/functional/qemu_test/testcase: Fix mismatched quotations
+
+ MAINTAINERS                            |   2 +
+ docs/devel/testing/functional.rst      |  15 ++++
+ include/hw/core/boards.h               |   3 +
+ include/hw/i386/pc.h                   |   3 +
+ target/s390x/cpu.h                     |  24 +-----
+ target/s390x/tcg/insn-data.h.inc       |  54 ++++++-------
+ hw/arm/virt.c                          |   9 ++-
+ hw/core/machine.c                      |   3 +
+ hw/i386/pc.c                           |   3 +
+ hw/i386/pc_piix.c                      |  13 ++-
+ hw/i386/pc_q35.c                       |  13 ++-
+ hw/m68k/virt.c                         |   9 ++-
+ hw/ppc/spapr.c                         |  15 +++-
+ hw/s390x/css.c                         |  24 +++---
+ hw/s390x/s390-pci-bus.c                |   4 +-
+ hw/s390x/s390-virtio-ccw.c             |  45 +++++++----
+ hw/s390x/virtio-ccw.c                  |  24 +++---
+ target/s390x/cpu-system.c              |   2 +-
+ target/s390x/cpu.c                     |   5 ++
+ target/s390x/gdbstub.c                 |  26 +++---
+ target/s390x/kvm/kvm.c                 |   8 +-
+ target/s390x/mmu_helper.c              |   3 +-
+ target/s390x/tcg/excp_helper.c         |  16 ++--
+ target/s390x/tcg/mem_helper.c          |  71 ++++++++--------
+ target/s390x/tcg/translate.c           | 144 ++++++++++++++++-----------------
+ target/s390x/tcg/vec_helper.c          |   8 +-
+ target/s390x/tcg/translate_vx.c.inc    |  38 ++++-----
+ tests/functional/qemu_test/testcase.py |   9 +--
+ 28 files changed, 334 insertions(+), 259 deletions(-)
+
 
