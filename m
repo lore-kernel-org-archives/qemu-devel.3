@@ -4,94 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A44BCF6BE9
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 04:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 125F6CF6BE4
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 04:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdLPb-00014H-G1; Tue, 06 Jan 2026 23:44:47 -0500
+	id 1vdLXS-00073A-Mm; Tue, 06 Jan 2026 23:52:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1vdLPZ-00013K-I9
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 23:44:45 -0500
-Received: from mx1.zhaoxin.com ([210.0.225.12])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vdLXR-00072b-Tc
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 23:52:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1vdLPW-0003Pa-Jz
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 23:44:45 -0500
-X-ASG-Debug-ID: 1767761068-086e2306f805e50001-jgbH7p
-Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
- mx1.zhaoxin.com with ESMTP id JMYcxbz2YPWb45vE (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Wed, 07 Jan 2026 12:44:28 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX2.zhaoxin.com
- (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Wed, 7 Jan
- 2026 12:44:27 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85]) by
- ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85%7]) with mapi id
- 15.01.2507.059; Wed, 7 Jan 2026 12:44:27 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from ewan-server.zhaoxin.com (10.28.44.15) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Wed, 7 Jan
- 2026 11:36:30 +0800
-Received: from [10.28.44.6] (EwanHaiuntuMini.zhaoxin.com [10.28.44.6])
- by ewan-server.zhaoxin.com (Postfix) with ESMTP id 158112D02719;
- Tue,  6 Jan 2026 22:36:30 -0500 (EST)
-Message-ID: <a7a26e68-5a90-49ac-90b9-6cc8dc96ef39@zhaoxin.com>
-Date: Wed, 7 Jan 2026 11:36:29 +0800
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vdLXQ-0005mb-A0
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 23:52:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767761567;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=L1ipOddK14ruNLkuMSUgqvjUQnelCDaxp1SObaYsrog=;
+ b=WDFkZjnJHd65ueGalOvz/3kGeGVmott19ZdoY04NiZA0QIsmDziH1xyShRoOkvRfdkeXdT
+ S4wwrnmWXcRW3nvnza7FozAiOsIXSbjVV4BjniIPGDvYIF+Sv+E+Pp/6SaEF/aHipXn1MH
+ UVUzzGGTKUwdG/I2OKlKred1HhZ8Q60=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-246-fvbCa4KjNmiFn5uJuNSPQw-1; Tue, 06 Jan 2026 23:52:42 -0500
+X-MC-Unique: fvbCa4KjNmiFn5uJuNSPQw-1
+X-Mimecast-MFC-AGG-ID: fvbCa4KjNmiFn5uJuNSPQw_1767761558
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47d3ffa98fcso11855435e9.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 20:52:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767761557; x=1768366357; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=L1ipOddK14ruNLkuMSUgqvjUQnelCDaxp1SObaYsrog=;
+ b=ckXSmJVGC1Lz2w/VfqRjuUMGHl3HXil+hxnnqwjIHCAvKb3Cn+g+/nIDfkT5+7CJUA
+ qj0sPvYVaTbYkB4cBM1vSGreSE/Bvj66bzD25GMnDAa6UrfBDmJTfhb01aVHD6ZFIahM
+ 9MZ3vt2MVBa5hkrd9b3MgS4pGgATv+Yzbd2MiUwgI2YPCLKAQnIOY5mP4ej3ZLyqrELZ
+ 6dzBQE+/Y92YXDx9KdlWFO+Dg9Y9lfdbwdHCxmFH6n5xjSZiq1E1Pqyt/+mwpyLyNC6g
+ W/2bGpV0HfIpWxfzqAlWAiVA5ylMy82ZkDHbe6Q3HwiTz0Fc4iBQoWRr0oWlYO1zQ+7n
+ 3PEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767761557; x=1768366357;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L1ipOddK14ruNLkuMSUgqvjUQnelCDaxp1SObaYsrog=;
+ b=NoyNAF5q3jYZ16kqJddi6XkX0Tn80VuTGrgJeWzm1LDLBYUhkoVFn+L3kCEQQo5kog
+ 9p6zoLwmWw7xw76O2dypm1cHqF3T9xBRg5zKdJFOQrSwiiz6emlTApXRUXk+DXTUC1h8
+ 7mioakRZT5ZMWvYr+nIHYaO3Y5scm0PEMuFvO0Q4/rpin6ddTwG9knAYAbGRNROM6BLa
+ NVoC+Yla5Osn1nKoE1w4qqbQdycq9FEdsXyujPwTVU4FnN4H9q6KK2mEpeE5OdhPeEbJ
+ kHaEdMh+4jhZKblTIfupFM+x2nWSqWlxfMFDsGtQWdOgqMSZRJsO+RRPJV+qQS+n8LXB
+ +ncw==
+X-Gm-Message-State: AOJu0YxInQbf6zBQR+3FZc1AZixXoyIKyIet1J3+UZqmNCL53mgBol0J
+ b8Pm+QJEZvv91jF+dJECE4TwkiHAq0uoZbBofbK204v5MQ4FziAKrrf75wwj9svufw5k1A+3VoK
+ vioitnNP1F89J0rjcHpibxDjMp9vlTxn229/WQ3Xew9FFsyw3SzZbkhH1L3B+HGldAL16ApTE6f
+ PVTktQWzDN0IipdAEvKk5QbRNAtJ5fg/a9ahMbBn9y
+X-Gm-Gg: AY/fxX4BtZ7S54vmZiJ2DxpfThtum3kRrKRDpBGkDKGSaExOolPeeHzNTMTHq338WVG
+ cSstJb6sVGfhJsvkR2ngcVCVHhajiXCdqwnom4IsBjuF8j4q4G+XXegi0Uv0pr0l17C6BzO3uKy
+ 3rFcIgg/OD+E9EUYDVIKY1H15XXhPN3BxHhp11NSxW/rcbOsBrvH2MRd/mzQqBgmn8rPRgarT7U
+ eYUVBYaZ0OG/9msJ/mf2bWldDJGuInCPGrKBYMWoxAxjIV8l/yjc3yP59p6WW/OWC3IH3l+8I1o
+ sCcErsR6Sbjue2QXi0/K+b/90Vg7Yxd2cHOuDRpPKRCPGUo1MUTpdM85rzzdYoNYq4oLuoB1p13
+ lInHJhDOVvvhKW8vAbkJ8J9zeTvMODTg3SKq9ACqTTjrPtd2qyjFkFxlvug0Hv1jwtkgJPgW0NR
+ wtWwZZOlmeYUxqYg==
+X-Received: by 2002:a05:600c:8484:b0:47a:8cce:2940 with SMTP id
+ 5b1f17b1804b1-47d84b1a095mr9112355e9.14.1767761557276; 
+ Tue, 06 Jan 2026 20:52:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGA0YCZevNqMudE++7YosyBxCLX27FBuA1uI5YmIgQFml6gvnYIK+jJmp6jGVDtpSWHSGLQXg==
+X-Received: by 2002:a05:600c:8484:b0:47a:8cce:2940 with SMTP id
+ 5b1f17b1804b1-47d84b1a095mr9112185e9.14.1767761556691; 
+ Tue, 06 Jan 2026 20:52:36 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d8660be14sm4098035e9.1.2026.01.06.20.52.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Jan 2026 20:52:36 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: [PATCH] target/i386/tcg: do not leave non-arithmetic flags in CC_SRC
+ after PUSHF
+Date: Wed,  7 Jan 2026 05:52:35 +0100
+Message-ID: <20260107045235.94348-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] target/i386: Introduce Zhaoxin Shijidadao-Client
- CPU model
-To: Zhao Liu <zhao1.liu@intel.com>
-X-ASG-Orig-Subj: Re: [PATCH v2 3/4] target/i386: Introduce Zhaoxin
- Shijidadao-Client CPU model
-CC: <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>,
- <cobechen@zhaoxin.com>, <TonyWWang@zhaoxin.com>
-References: <20251027102139.270662-1-ewanhai-oc@zhaoxin.com>
- <20251027102139.270662-4-ewanhai-oc@zhaoxin.com> <aSVcOX5WvJYjIEbM@intel.com>
- <d20164c5-291c-4646-86cb-fddc69542599@zhaoxin.com>
- <aT/O1u22C1o3p5sn@intel.com>
- <a8516d27-0ee9-4139-9d47-51eda832c219@zhaoxin.com>
- <aV3ZKFlCGFyeZ0wh@intel.com>
-Content-Language: en-US
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <aV3ZKFlCGFyeZ0wh@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.44.15]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 1/7/2026 12:44:26 PM
-X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
-X-Barracuda-Start-Time: 1767761068
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://mx2.zhaoxin.com:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 2443
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.152672
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
- helo=mx1.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,67 +119,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/26 11:55 AM, Zhao Liu wrote:
-> 
-> 
->>>> As background, current Zhaoxin CPUs implement several CPUID.(EAX=0xC0000001,
->>>> ECX=0):EDX feature bits that are not yet defined in the Linux kernel, for
->>>> example SM2/SM2_EN, SM3/SM4 and their enable bits, PARALLAX/PARALLAX_EN,
->>>> TM3/TM3_EN, RNG2/RNG2_EN, PHE2/PHE2_EN, and RSA/RSA_EN.
->>>>
->>>> We previously tried to upstream all these extra feature bits in one
->>>> patch(https://lore.kernel.org/all/20230414095334.8743-1-TonyWWang-oc@zhaoxin.com/),
->>>> but the maintainer rejected it because there was no in-tree code using these
->>>> features yet. So our current plan is to add the CPUID bits together with real
->>>> kernel users step by step.
->>>
->>> I see. I think it's enough to document missing CPUIDs in comment.
->>>
->>
->> Would the following comment be acceptable?
->>
->> /*
->>  * missing: SM2/SM2_EN, CCS/CCS_EN, PARALLAX/PARALLAX_EN,
->>  * TM3/TM3_EN, RNG2/RNG2_EN, PHE2/PHE2_EN, RSA/RSA_EN
->>  */
-> 
-> Yes, look good to me.
-> 
->> Do you think I should also include the lore link in the commit message/cover
->> letter for additional context?
-> 
-> Yes, mentioning the link in commit message is good. More information is
-> helpful.
-> 
->>> Could we make Shijidadao-Client as a v2 of Shijidadao-Server, and create an
->>> alias for this v2?
->>>
->>> .alias = "Shijidadao-Client"
->>>
->>> Then we could rename Shijidadao-Server to Shijidadao, and its v2 is for
->>> client.
->>>
->>>> This is also aligned with how QEMU models other vendors' micro-architectures
->>>> where client and server products have slightly different feature sets.
->>>
->>> The main use case for CPU models is to easy migration across mixed CPU
->>> clusters [*]. So, IMO, not all products require a model.
->>
->> For the CPU model naming/versioning, my plan is:
->> The current Shijidadao will be equivalent to the old Shijidadao-Client-v2, drop
->> the old Shijidadao-Client-v1 according to your advice, Shijidadao-v1 will have
->> the alias Shijidadao-Client, and Shijidadao-v2 will have the alias
->> Shijidadao-Server.
-> 
-> Migration should have more use cases for the server. Personally, I feel
-> using the server version as the base model might be more convenient?
-> Anyway, it's up to you. Overall, these are fine for me.
+The value that is pushed by PUSHF is the full EFLAGS, while CC_OP_EFLAGS
+only wants arithmetic flags in CC_SRC.  To avoid this, follow what other
+helpers to and set CC_SRC/CC_OP directly in helper_read_eflags.  This
+is basically free and fixes an issue booting Windows 3.11.
 
-I hadn't considered that server-side migration is a more common use case, thanks
-a lot. See you in v3.
+Reported-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Fixes: e661e2d7a37 ("target/i386/tcg: update cc_op after PUSHF", 2025-12-27)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/cc_helper.c | 4 +++-
+ target/i386/tcg/emit.c.inc  | 3 +--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-Best wishes,
-Ewan.
-
+diff --git a/target/i386/tcg/cc_helper.c b/target/i386/tcg/cc_helper.c
+index 91e492196af..6ddd64fcb07 100644
+--- a/target/i386/tcg/cc_helper.c
++++ b/target/i386/tcg/cc_helper.c
+@@ -414,7 +414,9 @@ target_ulong helper_read_eflags(CPUX86State *env)
+ {
+     uint32_t eflags;
+ 
+-    eflags = cpu_cc_compute_all(env);
++    CC_SRC = eflags = cpu_cc_compute_all(env);
++    CC_OP = CC_OP_EFLAGS;
++
+     eflags |= (env->df & DF_MASK);
+     eflags |= env->eflags & ~(VM_MASK | RF_MASK);
+     return eflags;
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 0fde3d669d9..e55b65176fc 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -3253,8 +3253,7 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
+     gen_update_cc_op(s);
+     gen_helper_read_eflags(s->T0, tcg_env);
+     gen_push_v(s, s->T0);
+-    decode->cc_src = s->T0;
+-    decode->cc_op = CC_OP_EFLAGS;
++    assume_cc_op(s, CC_OP_EFLAGS);
+ }
+ 
+ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+-- 
+2.52.0
 
 
