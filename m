@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D00D5CF6BEC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 16:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94342D0D141
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 16:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdWYR-0003if-UC; Wed, 07 Jan 2026 11:38:39 -0500
+	id 1vdWap-0007au-T9; Wed, 07 Jan 2026 11:41:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vdWYK-0003a5-B6; Wed, 07 Jan 2026 11:38:33 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1vdWah-0007Hs-Er; Wed, 07 Jan 2026 11:40:59 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vdWYF-0003s1-Tu; Wed, 07 Jan 2026 11:38:30 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6079Cm8j025314;
- Wed, 7 Jan 2026 16:38:25 GMT
+ id 1vdWaf-0004W6-Hx; Wed, 07 Jan 2026 11:40:59 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6079OliW020721;
+ Wed, 7 Jan 2026 16:40:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=eYTSNW
- 7SnBMQsMUVnddI5Ufn7Cay/9pY21JLAq6ylVg=; b=sx0aPX4YtXipaiEgvsv6aA
- cQoIs8RHfnaLkyDk2uop98Le8zaH0l8LJyDbJjg9C6Qa3kN7gS1mxOqWOSdBiPt7
- p5Piy4Mhkq8g8mix2XVzG72ubieK85JmafuHv6YViXHdh7CgeX2J40lYF5FiSXBM
- IVdm8+/qztzOTck25jPRrZCCxhEDeYZJPVOqWQOd37J0mCa5OVcSv1kN7QJcJTt8
- 8Y0LVN4Q5nArYSX9w6wXZB4wKhZrOUZHycQuYFxgk6iGYH7nEpK1VIWSf6BV1IDz
- bro2XzcENkIqrwLrmHK6sMg8stB1KKNPnEieqjs3OdMQ9JnzdPLYaw5jbpQx2Bhg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=tv76nK
+ UtBJWxlJBMS7yXTHdQ2mEd1Co96XCPLEF5Do4=; b=fTrSR/qYr2o0KZIq4WrUT0
+ PEPLt5ZxIJqHmfqPEibbUOaGWBWkLr6DkN327YSKwNGEV+seL/4K6xNHFdYymWTe
+ p0hMnoWEucjjIHprLI8+nMt+CuGNlAuG6PwLvh6lsGN4eT7vLsXO8eixd1FAGiQw
+ vntyHWOM0c5SzheJwrR16o93v/7YMPjKexMi9Vkc/3kdvKHgMuytvWmrNAkjRuXn
+ Y/vsxeHnV2KAofgaPPJOS23tW+7rr+datMghOL5FlSsQtShG0EJ7SEn3ugUGbu+K
+ 9JU6YEYshYYwmNjx5PUkvlNi5QgGtBeOHPzhtndC81ADQp7x/kjp4b7Ape4+xIFA
  ==
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betrtruec-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betu6a34r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Jan 2026 16:38:25 +0000 (GMT)
+ Wed, 07 Jan 2026 16:40:55 +0000 (GMT)
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 607FZAOv012572;
- Wed, 7 Jan 2026 16:38:24 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bffnjhy6d-1
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 607FLYJq012604;
+ Wed, 7 Jan 2026 16:40:54 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bffnjhyjg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Jan 2026 16:38:24 +0000
+ Wed, 07 Jan 2026 16:40:54 +0000
 Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
  [10.39.53.228])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 607GcMXk48431360
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 607GerkT64487750
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 7 Jan 2026 16:38:23 GMT
+ Wed, 7 Jan 2026 16:40:53 GMT
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DEE1858063;
- Wed,  7 Jan 2026 16:38:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7EAEC5805B;
+ Wed,  7 Jan 2026 16:40:53 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 01F2C58068;
- Wed,  7 Jan 2026 16:38:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9AC3F58055;
+ Wed,  7 Jan 2026 16:40:52 +0000 (GMT)
 Received: from [9.61.39.95] (unknown [9.61.39.95])
  by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed,  7 Jan 2026 16:38:21 +0000 (GMT)
-Message-ID: <bbb1ec46-3e59-4bfb-b656-7f07570ab981@linux.ibm.com>
-Date: Wed, 7 Jan 2026 11:38:21 -0500
+ Wed,  7 Jan 2026 16:40:52 +0000 (GMT)
+Message-ID: <07abe281-2917-408e-b6c1-2f97994cf426@linux.ibm.com>
+Date: Wed, 7 Jan 2026 11:40:51 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] pc-bios/s390-ccw: Split virtio-ccw and generic
- virtio
+Subject: Re: [PATCH 05/10] pc-bios/s390-ccw: Introduce CLP Architecture
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org, mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, zycai@linux.ibm.com
 References: <20251210205449.2783111-1-jrossi@linux.ibm.com>
- <20251210205449.2783111-4-jrossi@linux.ibm.com>
- <1a5926ec-8bf5-49de-9228-595d3910275f@redhat.com>
+ <20251210205449.2783111-6-jrossi@linux.ibm.com>
+ <3a30e4c5-24be-449d-ac9f-16ce2096b31c@redhat.com>
 Content-Language: en-US
 From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <1a5926ec-8bf5-49de-9228-595d3910275f@redhat.com>
+In-Reply-To: <3a30e4c5-24be-449d-ac9f-16ce2096b31c@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=aaJsXBot c=1 sm=1 tr=0 ts=695e8c01 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=QbNrf8bv c=1 sm=1 tr=0 ts=695e8c97 cx=c_pps
  a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=ctsVLiZ_AAAA:8 a=8W_F8a7B4bqVqd1cZ4AA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=3VCIHQLkQthbvTRuo98s:22
-X-Proofpoint-GUID: Yz-LNm3z6Ll27hh3c-gM4975kJ4TIj8X
-X-Proofpoint-ORIG-GUID: Yz-LNm3z6Ll27hh3c-gM4975kJ4TIj8X
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDEyOCBTYWx0ZWRfX/74hhH8dTixB
- zjFcF/fYoiDejjXVgB5iU6dVZM+luZ23mvR7epFDSbtMZ8N0iEpKVySm+8quImkansOjp0wJBUs
- 4sBSFOOFgcuIL/mzC0WoQDptBjBeYsvM74PySl2TxofnMpGWTZFE3gSWDI/1Hl30ZHN9Bf257IE
- s2IkeIcdJ8mZ6rL8p7GqUJ2ZDJdWoxP5CTjZX+mD/JwIiLdNEghQNB5dxd2Ni6cu47+DkLgGyyb
- oqvwd1212areXvICRWCQZBR6Upo2c3YlWNsd7OB7Gp5lPT/aUFVXLjXgd1szateEkaw6RxXNSNm
- vgVCW+yEhX/wiBOxgLs9jN3sxUuWxTHqztdnAZTRCRiPLGxAEdxSv7Q9kFmSpCMVN12fjasoucJ
- XtSvRMoCCuvpUFA9WZH9uzRuzBUOSyvruH+iYm9eEJCNV4qD3tfCwAlnGbRyIAwlsLGD2mw+amf
- Xs+yfsZMzMQuGlXLwJA==
+ a=VnNF1IyMAAAA:8 a=nqNlaSPBC5J-8UOOWoMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: M5CAEPyMsrfsOUDyiid9-8xdJnAMPZUZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDEyOCBTYWx0ZWRfXz+YAvOi/EIQi
+ OlOT+2RrdsdYQ32Oo3a18rkalXiFs2+qw4eKqtVTi1Sz94YCNELfaVz72qmrr0RbKSryZmFHo/r
+ 8pJv6EKwV7iLfYvVH/pc2NJyX90RUt9ZcqmcxDqN4qfu1FuPh1Wqcyy8ygStYZl7+SxAtotNMSo
+ 1kN9UDdwaZn3XgX98/Hv+5gp1jTgvdjV9dceuCaNxzBcoHb6SJoRJeq0vBKARSnwGwLh0meKxYF
+ 4tC4ZmQxjy5JQ6N8UI8sUEFNsYbFY3AXl9vJ3NyZKIS7nabHskLJEwVB9vRpazOHigp/dy7L8jB
+ rQ/6LY2aFhgN0WSZsHqtoi/obaBX7eMOFYQZnB1huGrAzLT/NsQMY27qjxIUIyiyIV4QINorZhB
+ LJRCGXrN0kMQew2QAxls95TQXZW9YqlBZaDEzKrrgLEXom7gK1piyKnwRGstFqmqIC1ad+8519e
+ UOItqmsjDkW6LCFLfvA==
+X-Proofpoint-GUID: M5CAEPyMsrfsOUDyiid9-8xdJnAMPZUZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-07_02,2026-01-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 impostorscore=0
+ spamscore=0 clxscore=1015 bulkscore=0 suspectscore=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601070128
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -125,291 +123,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Thomas,
 
+All of the comments below raise good points, I'll fix them in the next 
+version.
 
-On 1/7/26 4:40 AM, Thomas Huth wrote:
+Thanks for your reviews.
+
+Regards,
+Jared Rossi
+
+On 1/7/26 5:25 AM, Thomas Huth wrote:
 > On 10/12/2025 21.54, jrossi@linux.ibm.com wrote:
 >> From: Jared Rossi <jrossi@linux.ibm.com>
 >>
->> Separate the CCW specific virtio routines and create generic wrappers 
->> for easier
->> reuse of existing virtio functions with non-CCW devices.
+>> Call Logical Processor (CLP) Architecture is used for managing PCI 
+>> functions on
+>> s390x. Define and include the structures and routines needed to 
+>> interact with
+>> PCI devices during IPL.
 >>
 >> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 >> ---
-> ...
->> diff --git a/pc-bios/s390-ccw/virtio-ccw.c 
->> b/pc-bios/s390-ccw/virtio-ccw.c
+>>   pc-bios/s390-ccw/clp.h    | 24 ++++++++++
+>>   pc-bios/s390-ccw/clp.c    | 96 +++++++++++++++++++++++++++++++++++++++
+>>   pc-bios/s390-ccw/Makefile |  2 +-
+>>   3 files changed, 121 insertions(+), 1 deletion(-)
+>>   create mode 100644 pc-bios/s390-ccw/clp.h
+>>   create mode 100644 pc-bios/s390-ccw/clp.c
+>>
+>> diff --git a/pc-bios/s390-ccw/clp.h b/pc-bios/s390-ccw/clp.h
 >> new file mode 100644
->> index 0000000000..e121826625
+>> index 0000000000..1ac2f8c177
 >> --- /dev/null
->> +++ b/pc-bios/s390-ccw/virtio-ccw.c
->> @@ -0,0 +1,242 @@
+>> +++ b/pc-bios/s390-ccw/clp.h
+>> @@ -0,0 +1,24 @@
 >> +/*
->> + * Virtio functionality for CCW devices
+>> + * Call Logical Processor (CLP) architecture definitions
 >> + *
->> + * Copyright (c) 2013 Alexander Graf <agraf@suse.de>
->> + * Copyright 2025 IBM Corp. Author(s): Jared Rossi 
->> <jrossi@linux.ibm.com>
+>> + * Copyright 2025 IBM Corp.
+>> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
 >> + *
->> + * This work is licensed under the terms of the GNU GPL, version 2 
->> or (at
->> + * your option) any later version. See the COPYING file in the 
->> top-level
->> + * directory.
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
 >> + */
 >> +
+>> +#ifndef CLP_H
+>> +#define CLP_H
+>> +
+>> +#ifndef QEMU_PACKED
+>> +#define QEMU_PACKED __attribute__((packed))
+>> +#endif
+>> +
+>> +#include <stdint.h>
+>> +#include <s390-pci-clp.h>
+>> +
+>> +int clp_pci(void *data);
+>> +int find_pci_function(uint32_t fid, ClpFhListEntry *entry);
+>> +int enable_pci_function(uint32_t *fhandle);
+>> +
+>> +#endif
+>> diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
+>> new file mode 100644
+>> index 0000000000..6dc72c685c
+>> --- /dev/null
+>> +++ b/pc-bios/s390-ccw/clp.c
+>> @@ -0,0 +1,96 @@
+>> +/*
+>> + * Call Logical Processor (CLP) architecture
+>> + *
+>> + * Copyright 2025 IBM Corp.
+>> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "clp.h"
+>> +#include <stdio.h>
 >> +#include <string.h>
->> +#include "s390-ccw.h"
->> +#include "cio.h"
->> +#include "virtio.h"
->> +#include "virtio-ccw.h"
->> +#include "virtio-scsi.h"
->> +#include "bswap.h"
->> +#include "helper.h"
->> +#include "s390-time.h"
 >> +
->> +/* virtio spec v1.0 para 4.3.3.2 */
->> +static long kvm_hypercall(unsigned long nr, unsigned long param1,
->> +                          unsigned long param2, unsigned long param3)
+>> +int clp_pci(void *data)
 >> +{
->> +    register unsigned long r_nr asm("1") = nr;
->> +    register unsigned long r_param1 asm("2") = param1;
->> +    register unsigned long r_param2 asm("3") = param2;
->> +    register unsigned long r_param3 asm("4") = param3;
->> +    register long retval asm("2");
+>> +    struct { uint8_t _[2048]; } *req = data;
+>> +    int cc = 3;
 >> +
->> +    asm volatile ("diag %%r2,%%r4,0x500"
->> +                  : "=d" (retval)
->> +                  : "d" (r_nr), "0" (r_param1), "r"(r_param2), 
->> "d"(r_param3)
->> +                  : "memory", "cc");
->> +
->> +    return retval;
+>> +    asm volatile (
+>> +        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
+>> +        "     ipm     %[cc]\n"
+>> +        "     srl     %[cc],28\n"
+>> +        : [cc] "+d" (cc), "+m" (*req)
+>> +        : [req] "a" (req)
+>> +        : "cc");
+>> +    return cc;
 >> +}
 >> +
->> +static int run_ccw(VDev *vdev, int cmd, void *ptr, int len, bool sli)
+>> +/*
+>> + * Get the PCI function entry for a given function ID
+>> + * Return 0 on success, 1 if the FID is not found, or a negative RC 
+>> on error
+>> + */
+>> +int find_pci_function(uint32_t fid, ClpFhListEntry *entry)
 >> +{
->> +    Ccw1 ccw = {};
+>> +    int count = 0;
+>> +    int limit = PCI_MAX_FUNCTIONS;
+>> +    ClpReqRspListPci rrb;
 >> +
->> +    ccw.cmd_code = cmd;
->> +    ccw.cda = (long)ptr;
->> +    ccw.count = len;
+>> +    rrb.request.hdr.len = 32;
+>> +    rrb.request.hdr.cmd = 0x02;
+>> +    rrb.request.resume_token = 0;
+>> +    rrb.response.hdr.len = sizeof(ClpRspListPci);
 >> +
->> +    if (sli) {
->> +        ccw.flags |= CCW_FLAG_SLI;
->> +    }
+>> +    do {
+>> +        if (clp_pci(&rrb) || (rrb.response.hdr.rsp != 0x0010)) {
+>
+> You could drop the parentheses around rrb.response.hdr.rsp != 0x0010 
+> here.
+>
+>> +            puts("Failed to list PCI functions");
+>> +            return -1;
+>> +        }
 >> +
->> +    return do_cio(vdev->schid, vdev->senseid.cu_type, ptr2u32(&ccw), 
->> CCW_FMT1);
+>> +        /* Resume token set when max enteries are returned */
+>> +        if (rrb.response.resume_token) {
+>> +            count = CLP_FH_LIST_NR_ENTRIES;
+>> +            rrb.request.resume_token = rrb.response.resume_token;
+>> +        } else {
+>> +            count = (rrb.response.hdr.len - 32) / 
+>> sizeof(ClpFhListEntry);
+>> +        }
+>> +
+>> +        limit -= count;
+>> +
+>> +        for (int i = 0; i < count; i++) {
+>> +            if (rrb.response.fh_list[i].fid == fid) {
+>> +                memcpy(entry, &rrb.response.fh_list[i], 
+>> sizeof(ClpFhListEntry));
+>> +                return 0;
+>> +            }
+>> +        }
+>> +
+>> +    } while (rrb.request.resume_token && limit);
+>
+> Maybe check for "limit > 0", just in case... ?
+>
+>> +    puts("No function entry found for FID!");
+>> +
+>> +    return 1;
 >> +}
 >> +
->> +bool virtio_ccw_is_supported(SubChannelId schid)
+>> +/*
+>> + * Enable the PCI function associated with a given handle
+>> + * Return 0 on success or a negative RC on error
+>> + */
+>> +int enable_pci_function(uint32_t *fhandle)
 >> +{
->> +    VDev *vdev = virtio_get_device();
-> > +    vdev->schid = schid;
+>> +    ClpReqRspSetPci rrb;
+>> +
+>> +    rrb.request.hdr.len = 32;
+>> +    rrb.request.hdr.cmd = 0x05;
+>> +    rrb.request.fh = *fhandle;
+>> +    rrb.request.oc = 0;
+>> +    rrb.request.ndas = 1;
+>> +    rrb.response.hdr.len = 32;
+>> +
+>> +    if (clp_pci(&rrb) || (rrb.response.hdr.rsp != 0x0010)) {
 >
-> At the calling site (virtio_ccw_setup), you're doing:
+> Drop parentheses, please.
 >
->  if (!virtio_ccw_is_supported(vdev->schid)) ...
->
-> i.e. vdev->schid is already set up, and you already have a pointer to 
-> vdev there. So I think it would make more sense to replace the "schid" 
-> parameter of this function here to a "vdev" pointer, and drop the call 
-> to virtio_get_device() here, and not to re-assign vdev->schid here.
-
-I will work on cleaning up the vdev->schid assignments and accesses 
-throughout.  Eric pointed out several areas that it seems to be 
-redundant also.
-
->
->> +    memset(&vdev->senseid, 0, sizeof(vdev->senseid));
->> +
->> +    /*
->> +     * Run sense id command.
->> +     * The size of the senseid data differs between devices (notably,
->> +     * between virtio devices and dasds), so specify the largest 
->> possible
->> +     * size and suppress the incorrect length indication for smaller 
->> sizes.
->> +     */
->> +    if (run_ccw(vdev, CCW_CMD_SENSE_ID, &vdev->senseid, 
->> sizeof(vdev->senseid),
->> +                true)) {
->> +        return false;
+>> +        puts("Failed to enable PCI function");
+>> +        return -1;
 >> +    }
 >> +
->> +    vdev->dev_type = vdev->senseid.cu_model;
->> +
->> +    if (vdev->senseid.cu_type == 0x3832) {
->> +        switch (vdev->dev_type) {
->> +        case VIRTIO_ID_BLOCK:
->> +        case VIRTIO_ID_SCSI:
->> +        case VIRTIO_ID_NET:
->> +            return true;
->> +        default:
->> +            return false;
->> +        }
->> +    }
->> +    return false;
->> +}
-> ...
->> +int virtio_ccw_setup(VDev *vdev)
->> +{
->> +    int i, cfg_size = 0;
->> +    uint8_t status;
->> +    struct VirtioFeatureDesc {
->> +        uint32_t features;
->> +        uint8_t index;
->> +    } __attribute__((packed)) feats;
->> +
->> +    if (!virtio_ccw_is_supported(vdev->schid)) {
->> +        puts("Virtio unsupported for this device ID");
->> +        return -ENODEV;
->> +    }
->> +    /* device ID has been established now */
->> +
->> +    vdev->config.blk.blk_size = 0; /* mark "illegal" - setup 
->> started... */
->> +    vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
->> +
->> +    virtio_reset(vdev);
->> +
->> +    status = VIRTIO_CONFIG_S_ACKNOWLEDGE;
->> +    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), 
->> false)) {
->> +        puts("Could not write ACKNOWLEDGE status to host");
->> +        return -EIO;
->> +    }
->> +
->> +    switch (vdev->dev_type) {
->> +    case VIRTIO_ID_NET:
->> +        vdev->nr_vqs = 2;
->> +        vdev->cmd_vr_idx = 0;
->> +        cfg_size = sizeof(vdev->config.net);
->> +        break;
->> +    case VIRTIO_ID_BLOCK:
->> +        vdev->nr_vqs = 1;
->> +        vdev->cmd_vr_idx = 0;
->> +        cfg_size = sizeof(vdev->config.blk);
->> +        break;
->> +    case VIRTIO_ID_SCSI:
->> +        vdev->nr_vqs = 3;
->> +        vdev->cmd_vr_idx = VR_REQUEST;
->> +        cfg_size = sizeof(vdev->config.scsi);
->> +        break;
->> +    default:
->> +        puts("Unsupported virtio device");
->> +        return -ENODEV;
->> +    }
->> +
->> +    status |= VIRTIO_CONFIG_S_DRIVER;
->> +    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), 
->> false)) {
->> +        puts("Could not write DRIVER status to host");
->> +        return -EIO;
->> +    }
->> +
->> +    /* Feature negotiation */
->> +    for (i = 0; i < ARRAY_SIZE(vdev->guest_features); i++) {
->> +        feats.features = 0;
->> +        feats.index = i;
->> +        if (run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), 
->> false)) {
->> +            puts("Could not get features bits");
->> +            return -EIO;
->> +        }
->> +
->> +        vdev->guest_features[i] &= bswap32(feats.features);
->> +        feats.features = bswap32(vdev->guest_features[i]);
->> +        if (run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), 
->> false)) {
->> +            puts("Could not set features bits");
->> +            return -EIO;
->> +        }
->> +    }
->> +
->> +    if (run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, 
->> false)) {
->> +        puts("Could not get virtio device configuration");
->> +        return -EIO;
->> +    }
->> +
->> +    for (i = 0; i < vdev->nr_vqs; i++) {
->> +        VqInfo info = {
->> +            .queue = (unsigned long long) virtio_get_ring_area() + 
->> (i * VIRTIO_RING_SIZE),
->
-> Would it make sense to add a "ring_num" parameter to 
-> virtio_get_ring_area(), so that you could call virtio_get_ring_area(i) 
-> here instead?
->
-> virtio_get_ring_area() would then look like this:
->
-> char *virtio_get_ring_area(int ring_num)
-> {
->     return ring_area + ring_num * VIRTIO_RING_SIZE;
-> }
->
-> ?
-
-That makes sense to me.  I'll change it.
-
->
->> +            .align = KVM_S390_VIRTIO_RING_ALIGN,
->> +            .index = i,
->> +            .num = 0,
->> +        };
->> +        VqConfig config = {
->> +            .index = i,
->> +            .num = 0,
->> +        };
->> +
->> +        if (run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, 
->> sizeof(config),
->> +                false)) {
->> +            puts("Could not get virtio device VQ config");
->> +            return -EIO;
->> +        }
->> +        info.num = config.num;
->> +        vring_init(&vdev->vrings[i], &info);
->> +        vdev->vrings[i].schid = vdev->schid;
->> +        if (run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), 
->> false)) {
->> +            puts("Cannot set VQ info");
->> +            return -EIO;
->> +        }
->> +    }
->> +
->> +    status |= VIRTIO_CONFIG_S_DRIVER_OK;
->> +    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), 
->> false)) {
->> +        puts("Could not write DRIVER_OK status to host");
->> +        return -EIO;
->> +    }
->> +
+>> +    *fhandle = rrb.response.fh;
 >> +    return 0;
 >> +}
-> ...
->> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
->> index 0f4f201038..0488b3a07e 100644
->> --- a/pc-bios/s390-ccw/virtio.c
->> +++ b/pc-bios/s390-ccw/virtio.c
->> @@ -2,6 +2,7 @@
->>    * Virtio driver bits
->>    *
->>    * Copyright (c) 2013 Alexander Graf <agraf@suse.de>
->> + * Copyright 2025 IBM Corp. Author(s): Jared Rossi 
->> <jrossi@linux.ibm.com>
+>> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+>> index 259cff09db..9c29548f84 100644
+>> --- a/pc-bios/s390-ccw/Makefile
+>> +++ b/pc-bios/s390-ccw/Makefile
+>> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+>>     OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o 
+>> netmain.o \
+>>         virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o 
+>> dasd-ipl.o \
+>> -      virtio-ccw.o
+>> +      virtio-ccw.o clp.o
+>>     SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
 >
-> I assume you wanted to put Authors on a separate line?
+>  Thomas
+>
 
-I don't quite understand what you are asking about here.  Or maybe I 
-don't understand how to attribute the authors in this case?
-
-Much of this was just copy/pasted to the new file, so I included the 
-existing byline too.  Should I format things differently?
-
-Thanks,
-Jared Rossi
 
