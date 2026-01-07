@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32A8CFD647
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 15:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2E1CFD647
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 15:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdVFN-0007zD-Sy; Wed, 07 Jan 2026 10:14:53 -0500
+	id 1vdVFK-0007wM-Lk; Wed, 07 Jan 2026 10:14:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vdVEn-0007mS-Ko
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 10:14:18 -0500
+ id 1vdVEp-0007n2-Q7
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 10:14:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vdVEl-0007O8-GN
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 10:14:17 -0500
+ id 1vdVEn-0007Ol-Cv
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 10:14:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767798854;
+ s=mimecast20190719; t=1767798856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CnZA0IHH2GsMAGJ/CguzzLpofX9iu8pWCGdVSHIMEvU=;
- b=MlEqKFWG8gvx89i4fWBbATez9xmEdOWBqBpZF5cK60uY7qSoHXFYQfc38JvW7LoNRmKoMi
- eS3tqMZh2yRKMzXBOdG/4mOhna1GyCj1izJP8dJZx9UfK6AJyZgnKwa+M9bh9TJ5WZXXsC
- Pg9VyeSY3JF8aRfUkOE7vyreBlpZzuo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=y+b6NAkRwc1jIzqS3KyEOjNsfNtfzRZdJR3QGZ1FAac=;
+ b=cX0AIviPZjIye3Gp12UcLlGxJRae93+49Dx/pfdFI/7+Hgko3fA4j8i5r8qqSsBfYx7b6k
+ pcBwSG7luTo8Hb3a6OTSRu9PMy6sm9WPEHoB0UlYiG9Jb13+upoj+uJtYgjolG/8QU6sW/
+ zG7TgnZs70Son1B/Pm0RDmd5yluWOVE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-Aus9TCpXPfW205L6DGAdQQ-1; Wed, 07 Jan 2026 10:14:13 -0500
-X-MC-Unique: Aus9TCpXPfW205L6DGAdQQ-1
-X-Mimecast-MFC-AGG-ID: Aus9TCpXPfW205L6DGAdQQ_1767798852
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43284edbbc8so1450284f8f.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 07:14:13 -0800 (PST)
+ us-mta-464-msVfdpDgPqKKN6777D8cUw-1; Wed, 07 Jan 2026 10:14:15 -0500
+X-MC-Unique: msVfdpDgPqKKN6777D8cUw-1
+X-Mimecast-MFC-AGG-ID: msVfdpDgPqKKN6777D8cUw_1767798854
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-430fcf10287so1622079f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 07:14:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767798852; x=1768403652; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767798854; x=1768403654; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CnZA0IHH2GsMAGJ/CguzzLpofX9iu8pWCGdVSHIMEvU=;
- b=dnNLjp9KJS/HPPiHdkMNjLcdLNOxZPJfHVF6YRwA3+OIm7Avykgwoe4iodpkZ9/89/
- X+IlMbXatPIdpvvrUdtGmeKnGgDLf41AwSeHs2DwrD4BFuIWNKSR3CpgG+bU2nIowbeW
- U0gC5jSF3ECLkJAnc02r+obYURRnmWT5OX1hb74bHDqFuYo0RWL/ZQTFfFo/eVJBmz1W
- L9G5RzARRjemfWxdsljLbajvtKB8lNSEeJoRhQ5aIog0m05vD2R1pGVaIfjs+izO3h4j
- c4GJXbzg14DTJByMmov25eaHn1pAfjR7CtaEUKTT4H9vNKaanxF/AV+gqvCvh608m7Ni
- GIuw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=y+b6NAkRwc1jIzqS3KyEOjNsfNtfzRZdJR3QGZ1FAac=;
+ b=a5PjIHDceP7qkFHPLbnVCmiKpF6N6cvyC9k5HFzvnxxlw8lJvUO01s7VBfCzI7B55y
+ DkEnPZhYdjNxUOA4NqlJsrDJed4H26JSdIDT/CS+8nwoqhxKxrU9Y8ihjUwIDyYjudLf
+ SNhzTpO89TcoWQDoSeJdi7VSYsoJu7F9FnLE+gD4KlcdDZ4nO/9WEWACcDllCei+mPhw
+ PZY7k6IkAjzlZSyJkq4KDRBuJ7d3AKZ5xuS35GWZ0T4VjEmeEn4xS6etfM4mnFbFhj8A
+ oy7eg3dNoR5WTIZB1FsMwF8C5U9H5QcILvUY+6xlcddx4AmhiBbkY9aWMvH5GQwSLymV
+ c8gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767798852; x=1768403652;
+ d=1e100.net; s=20230601; t=1767798854; x=1768403654;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CnZA0IHH2GsMAGJ/CguzzLpofX9iu8pWCGdVSHIMEvU=;
- b=OYnkcKxB/RcLUUh2bhyOgN1OpfatLPnnj+rXTxwiB0UMIyyd0p9ko81k4bZvyWjbjH
- sdSNT3N3kQJgztY+GFM+zvNg1u7WHNgZ+M8SpjtaHWbFH5PiyhW95+j9qCtc0V7RH4ub
- 82vKaYyjehzImxz6lsBeEELtovywOPsrK5p5/RN6gNGKWoNfpZ/1FYy6PRJJ2df6kmrn
- gEVq7zkoyCLcbiDSyz1yX8pCmrsn8KJvwJzqKa/0PQSaAWQUlYJmZ71l1TSQQy8rnFrN
- niZ5mOo7HX3pAiPv/RyZ8OCV0D0SwVuN6WZ8490X3tE1bF+hNT9dzLlDHTtCP/Lme9QG
- EtAg==
-X-Gm-Message-State: AOJu0Yzhti+HJsGYIqIyemKn3nTS++jDZ5R8/UyKYZfAqeFfw3rNTWOw
- BGPhwiadDe/TKmiHhQCeOqoCSzpGmy13z1rvrzMO9lWyZwoqqdQrT3MuH2ZQg/PtaC0KVwMYpuR
- TJTgoanDCj4LItYuo/KAEytEN2Ggw6SWj5aA+tQ75Lmvi5yiYoW7SR+opZXSkV9h/RY9T07nLlH
- bgYSXIO7eRz0zuWtQOeh3Q/YxZ1/7L911uJyCQu7P1
-X-Gm-Gg: AY/fxX7+7LoArm2k0rZf9QFCZDATF2QNoQ27k13wTLXl4eSxuk8HhBzhxXEWly3C1WB
- cKrnYbE6su0JT+Gu+XLkiqrmT8gpBkCT0sydysxhxFEW1JngRDIZRZmmRljgN+LWa5WTcDTyLWX
- 42V52pttmXKRl7kxE6QuTC2IXrf0rRNi2AiQ5UGHTxgaRrjTChn9RwPCGdA9hWffl559K0D5x8u
- dk9wpKIiYQWxkJxHf/5ws6h34kH/KmyJmBYUa1JEI/RqBjduaJbvCKMqP6LX3+XSY3B0rFVT256
- YF+9XPU7nMmb3jpU+dtyo2dmug5dNLL9UdQuUriOW1qP7yDxrc4zE3hK07f+3jDvx8PpnFvI7HG
- NtG65IvGUR+JPfD++Os4C9n7OwVbpGil4X5npTUewMi8lnNcSzzHg6DsU1wdYSxD8ZjJ7l5KHtB
- 0ie7+iVFzAVf+AyQ==
-X-Received: by 2002:a5d:5d0e:0:b0:42b:3b62:cd86 with SMTP id
- ffacd0b85a97d-432c378a8bamr3246269f8f.6.1767798851951; 
- Wed, 07 Jan 2026 07:14:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IESAIrbAialmUD2EWrg2OCUpdekMaqKCZ5bX5RJPsm3INv5CyaxKtutBPbrjHvhzmLnVz01Jw==
-X-Received: by 2002:a5d:5d0e:0:b0:42b:3b62:cd86 with SMTP id
- ffacd0b85a97d-432c378a8bamr3246228f8f.6.1767798851410; 
- Wed, 07 Jan 2026 07:14:11 -0800 (PST)
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=y+b6NAkRwc1jIzqS3KyEOjNsfNtfzRZdJR3QGZ1FAac=;
+ b=W5h/W38aOWzSOfz3i4ItOta/I6eSM6TDngWkv86ZIB2Kc+CxdxdPe+4gDTEqGgab3e
+ xtlOuHXs6iRC710VVAjaXku5lV9Yv6tm++Bp6mLDdE1CNB3Dfc4ECCks/G5NDo3y7fF2
+ ncPwY7OMq8/1ZOxt0b7pbXH4tr63VYj11kwxReFxV2B07RFfe9ZajJiSCVtKYiyp9nOb
+ wAqMfSG4VVGcSnRv9b4ExXD7NxGhH15cIInTC6YgDevR25bTba1RxGqT6y9AJ/YlGGkD
+ MBfqxdrIMLoNPMk2153oaLKohNsj/PfqMXHNkTY4pZPB198fdP0F9LERJJ9kEytslPU+
+ 4b6A==
+X-Gm-Message-State: AOJu0YyOste84Xo0DaKaSbKdGfr/Ti6W0bbphX40ntYhyxdF0/MJ3N7S
+ YC5cDYZfdz6lBgj4k4jc8MXUqcQxRIhtEGZQ13Ddf8ldYRrQ3/eqUgLGAch0VKZhBUeJEFC+7mP
+ WLCA/DFRxfcI2FnW01jYHNPL3k1dmpoGWdp344d5Z5t6dSzwqQH3et+m3PFe8DS0ynf7g6p8YlW
+ +Cdm7z8JQciU0d6dih4dL6mXiiXzkGcr8YthIxdITP
+X-Gm-Gg: AY/fxX4ZCC8vDYY4zzWB0mQ6YrZIH17c/r//nvtYVrjAUiCn+szLtsKxleNjcq1PCYk
+ 3yQAZMadeXNAWNdKcTw5wFw5koqUccbZrrkrrFjKaa/h+kMHFihWn89ARLa8yJy68ZNMOX00/0n
+ phHMdavI3KEL+rd/kaie5E6UoIFFJoJinb5QBw1WwL2TBvGJul6w3OTkG/vypqfWOo+pMPBjRLi
+ d3IdWw+8DhuRqBOgx+WjIbcO/1p+veLyDlMM7sKVxTV7/pepa/ks3Cp7scZG7mzxRT6iiDL1HiN
+ AW2A3y78la84z3WzvXOXuko6tnfKz9AmhkSPBR4UDxdV243WmYi5/obiGk4OHz+A3qMKh1ZBaf0
+ BYvN6S8Qq29LsnXCaQscpXHC5lYBlWCZrZcqHPYEL5ww/gPHH25xcVZudNQOH0xo8BCmOVCVB1V
+ IuUj1UtcQcbZmK8w==
+X-Received: by 2002:a05:6000:1865:b0:432:857d:e42c with SMTP id
+ ffacd0b85a97d-432c37c87famr3349081f8f.34.1767798853789; 
+ Wed, 07 Jan 2026 07:14:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHCjI8Gk0XNVxZKgswRiO/IDOGImv9C2X1KUlOFYTPsFxGLKRxlDH5LKsr6XWWfEOU+sTiUNQ==
+X-Received: by 2002:a05:6000:1865:b0:432:857d:e42c with SMTP id
+ ffacd0b85a97d-432c37c87famr3349035f8f.34.1767798853323; 
+ Wed, 07 Jan 2026 07:14:13 -0800 (PST)
 Received: from [192.168.10.48] ([151.61.26.160])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5edb7esm10475826f8f.30.2026.01.07.07.14.09
+ ffacd0b85a97d-432bd5ff0b2sm10763196f8f.42.2026.01.07.07.14.12
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 07:14:09 -0800 (PST)
+ Wed, 07 Jan 2026 07:14:12 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH 4/5] target/i386/tcg: allow VEX in 16-bit protected mode
-Date: Wed,  7 Jan 2026 16:13:59 +0100
-Message-ID: <20260107151400.273916-5-pbonzini@redhat.com>
+Subject: [PATCH 5/5] target/i386/tcg: remove register case from
+ decode_modrm_address
+Date: Wed,  7 Jan 2026 16:14:00 +0100
+Message-ID: <20260107151400.273916-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260107151400.273916-1-pbonzini@redhat.com>
 References: <20260107151400.273916-1-pbonzini@redhat.com>
@@ -122,28 +122,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VEX is only forbidden in real and vm86 mode; 16-bit protected mode supports
-it for some unfathomable reason.
+Unlike the older code in translate.c, mod=11b *is* filtered out earlier
+by decode_modrm.
 
-Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/tcg/decode-new.c.inc | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index f662364c600..243df7e3735 100644
+index 243df7e3735..7b595607fa7 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -2875,7 +2875,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-          * VEX prefixes cannot be used except in 32-bit mode.
-          * Otherwise the instruction is LES or LDS.
-          */
--        if (CODE32(s) && !VM86(s)) {
-+        if (PE(s) && !VM86(s)) {
-             static const int pp_prefix[4] = {
-                 0, PREFIX_DATA, PREFIX_REPZ, PREFIX_REPNZ
-             };
+@@ -2024,12 +2024,6 @@ static AddressParts decode_modrm_address(CPUX86State *env, DisasContext *s,
+     rm = modrm & 7;
+     base = rm | REX_B(s);
+ 
+-    if (mod == 3) {
+-        /* Normally filtered out earlier, but including this path
+-           simplifies multi-byte nop, as well as bndcl, bndcu, bndcn.  */
+-        goto done;
+-    }
+-
+     switch (s->aflag) {
+     case MO_64:
+     case MO_32:
+@@ -2127,7 +2121,6 @@ static AddressParts decode_modrm_address(CPUX86State *env, DisasContext *s,
+         g_assert_not_reached();
+     }
+ 
+- done:
+     return (AddressParts){ def_seg, base, index, scale, disp };
+ }
+ 
 -- 
 2.52.0
 
