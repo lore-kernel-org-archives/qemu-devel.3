@@ -4,112 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE58D0D178
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 22:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0747DD0D17E
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 23:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdcDG-000815-FH; Wed, 07 Jan 2026 17:41:10 -0500
+	id 1vdcvh-0006wt-Nn; Wed, 07 Jan 2026 18:27:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1vdcDE-0007ro-Mn; Wed, 07 Jan 2026 17:41:08 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1vdcDA-000520-El; Wed, 07 Jan 2026 17:41:08 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 607ILnpP011316;
- Wed, 7 Jan 2026 22:41:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=IighSi
- 2Y01/+R9IxddofvkM8PuqsaY7Za2lwHOVUjQc=; b=N/cGWE8uTWW2vYXX5prQ2B
- xWWMXo5vogmwNmyT/o06HMhIyL+bWMrbG8u1wzft1FCFweZ+7wwmuoj6ujY66D0g
- Op4ifzLg+RP660DU+pq0zArQSSnR5wXB9Pcf6iGIH0Mshx9yx+UVJS0VrlZuC05k
- 9pvZVJZukldmN2/pRAQ29IT5hl/mMYdaW4yOtlq+ZNxJxRZumQMWg2l2YWUwmcRS
- ERQzPrs4JKfuqC98ax34jfj5UntR/ZoJxDqV2J0EggZjpWSZ4jVr869J9xstMx1D
- Z460emHruKEddDLe3gXq/nLXw2KlP2AAlaKY1cVSOGarzFBGOQv8WnxtSO0b3i2Q
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4berhkagy5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Jan 2026 22:41:02 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 607LH8GS012568;
- Wed, 7 Jan 2026 22:41:01 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bffnjkmxh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Jan 2026 22:41:01 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 607Mf00x30147192
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 7 Jan 2026 22:41:00 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 23C3358055;
- Wed,  7 Jan 2026 22:41:00 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7D3075804B;
- Wed,  7 Jan 2026 22:40:58 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed,  7 Jan 2026 22:40:58 +0000 (GMT)
-Message-ID: <865377a5-5b82-425e-a564-62f26ebbcdb2@linux.ibm.com>
-Date: Wed, 7 Jan 2026 17:40:57 -0500
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vdcve-0006w5-5K
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 18:27:02 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vdcvc-0004mk-GN
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 18:27:01 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-29f0f875bc5so25184725ad.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 15:26:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767828417; x=1768433217; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GIzwcNfYvu5EJRSG9kzfYF+RXja7NfhMzY0q4WYCaIg=;
+ b=W9g/XvKbt55gJgwb91Hn2yLT0Ejo1homL7X+K23VrgGqjOciB13KB9md28L9WZ10g4
+ RzZjKBswGY+5s/b0vfGmWPePp3UqQKSFgVD4VRf7KKrcu7BOSHlIKkDX1P8JgC9AVgNs
+ kn/PvMFnaTjWag33fXLMNSGXkichQ4UcYRsGL5x428mGNBZyK/5EB1ksns3+0GPNJYIB
+ WJqppjBq2IDj9IIdsBl0VTQgEVHTCieb7kSpe8cssmeJZ1culX0bzcYc8A7KQ7MZBWU4
+ 94Pb/8wBF5KCXWZfwRrbJV4rCE5IxMC0dcb1nYLQ8PxQjfIH8BFuwInduyiyQn4/xf8I
+ O3Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767828417; x=1768433217;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GIzwcNfYvu5EJRSG9kzfYF+RXja7NfhMzY0q4WYCaIg=;
+ b=Kf155u0iE0vkx/sN1f2qG+dtjZzfzVVCl8k9HejDPBynRHo8qW4gSK2tMkZMJfrtfU
+ D49D2qCnFzH71tD0hVb+nyt9QyWAjULukgR4x1rrZksduVdjIHPnIoskCrjhOhSGjfNU
+ HL1aLiaI3he6TDkUW1dLQqN5KvT2m3nJ2lkUkKKbpgv4452l3AGhkBSDNWMBBipP+9ML
+ jXmy3DA4Rmb5xi2c7W/727HAmB4sn/u+XBPZIx1FV9oHEJYWbguszWwfUOTIBw0We4Uk
+ zi5sWlhnNezfUBb4UkWtshEFXCc+tW2Mxh1wh+mC3kj+ZkPK+DN48h6RFYWozgXQoVLP
+ O3lQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxDIFe45h7+ODUANy5f988S4bhh1m/IzGXJR/xGfJiu/eTElgCVThhbuUMqxgLu6LDRrAvo6+vymp5@nongnu.org
+X-Gm-Message-State: AOJu0YxxsnUYIIaaLQ+7mlwiBe8xmyU98/6xYY8SpmtCR5lE6YdNaI50
+ PKduCPisAvPHDfFvEM5GPl6+wOy3xLDCyd4ihncRMgOJ38eV1pTk4ke66XMW5D58MVc=
+X-Gm-Gg: AY/fxX5JawWBV8fPbcLkUW4jxSMK8u1ABCqCWze66++XC/AMkl0N8JvKfDfyBDtu2Oz
+ P8WEHOZy0fyqi2Uieu0jiif3NcXNal5jYpVtUebLpmZiZRuSdJ4oFkpxqhxS/rbuJ8Ai46w72+z
+ 4eb06H5Bldk07IwsdhFm3NnVpqf6AJ829NEaL7K2uBe1c3v3dx8+hdULnF3xg6HXqkjZy1MWdd2
+ 13v8UuE2fRAL3sCBkK/Iq5FOk74bkC/JN6F4aAiqAN/DQFJQMJWAnsaLxvO6bNfZ1Bm1HkxWT6U
+ z9VeYEapXeRMQWq5Pjuzxmb3KVNNnyEbDcH9m/l7utoB1rCByfIeViy8PsG6eG61FmK+au7FczA
+ nXapHFp9NgIgUINShXoid5y5RIBHSrve9UmXDSgcOkypgEMCB5ndrzA3vOy+FiNQgZWzGV1UY0a
+ G88St4X7BxRMrvqdCwsn59GltUbTGhvQ==
+X-Google-Smtp-Source: AGHT+IHz/pRLdNdHEgWMdo0gCkuduGvy/vvofcg5pm5HGODMufSVjGHB6FZa4RbogY6U0DYRrd96WQ==
+X-Received: by 2002:a17:902:d4c8:b0:297:ebb2:f4a1 with SMTP id
+ d9443c01a7336-2a3ee4e82efmr34094315ad.38.1767828416706; 
+ Wed, 07 Jan 2026 15:26:56 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a3e7a3c6fdsm49943715ad.15.2026.01.07.15.26.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Jan 2026 15:26:56 -0800 (PST)
+Message-ID: <6d2af03d-db4e-48d1-a4ed-0b9a8969e7ba@linaro.org>
+Date: Thu, 8 Jan 2026 10:26:52 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 05/29] s390x/diag: Introduce DIAG 320 for Certificate
- Store Facility
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-6-zycai@linux.ibm.com>
+Subject: Re: [PATCH 1/5] target/i386/tcg: remove dead code
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260107151400.273916-1-pbonzini@redhat.com>
+ <20260107151400.273916-2-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20251208213247.702569-6-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260107151400.273916-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=P4s3RyAu c=1 sm=1 tr=0 ts=695ee0fe cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=9sbbnPnA3YTnYZ4fKE8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: tyekEp5zESVgSovMPQVtWuqStUsfO2ct
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDE3NyBTYWx0ZWRfX8UqpU2u18dYi
- FId8oqrwY2MJxmCgVYtQzqlMTqI4Fiu814gKZjFco+plRk4pGg4oL81A0zTfYQGHmrMKLn1EcVc
- d9UOQklxprKYYl4N5eWakNHREq1ww8RBbDjoJIVVoD4qKm/ExAaxF90Hjz7VvoUNw/ggn3QstD1
- ocq/pvBrjKFnH5nIKQyEfg4kUZagBnCQ4gjst4zKS4VZcIyT/uFojbggYF+eada8dRm6Z86vjPQ
- QYPGbVqPDt5V+2Q5edh6UspGPfU1tabpiR+ILxc6eMCd4s88ZON7H449yVt0bO5yR+MzFkHoKit
- oPne4F1dVR4NDnR6xmG93TjnmqKnahlXp6XKIsxkCUUAtagMnwi7E8fH0a8qu4rTMCszimh817Q
- Sn8ahDu6Gy5TLzpCObz7pHpx9EjLAI6Zc2hgJxRMLyOEW7wUFci8xUvHgN+uclMWb4fvId+i22e
- LkUDarNUNnEkAZnYNWA==
-X-Proofpoint-GUID: tyekEp5zESVgSovMPQVtWuqStUsfO2ct
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-07_04,2026-01-07_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- phishscore=0 adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601070177
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,63 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/8/25 16:32, Zhuoying Cai wrote:
-> DIAGNOSE 320 is introduced to support Certificate Store (CS)
-> Facility, which includes operations such as query certificate
-> storage information and provide certificates in the certificate
-> store.
+On 1/8/26 02:13, Paolo Bonzini wrote:
+> Remove dead code; it arose when I noticed that, because 0x3? opcodes do
+> have a pop, case 0x32 works just fine as fcomp (even though 0x?2 is fcom):
+> there is no need to hack the op to 0x03.
 > 
-> Currently, only subcode 0 is supported with this patch, which is
-> used to query the Installed Subcodes Mask (ISM).
+> Reported by Coverity as CID 1643922.
 > 
-> This subcode is only supported when the CS facility is enabled.
-> 
-> Availability of CS facility is determined by byte 134 bit 5 of the
-> SCLP Read Info block. Byte 134's facilities cannot be represented
-> without the availability of the extended-length-SCCB, so add it as
-> a check for consistency.
-> 
-> Note: secure IPL is not available for Secure Execution (SE) guests,
-> as their images are already integrity protected, and an additional
-> protection of the kernel by secure IPL is not necessary.
-> 
-> This feature is available starting with the gen16 CPU model.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Collin Walling <walling@linux.ibm.com>
-> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
+>   target/i386/tcg/translate.c | 3 ---
+>   1 file changed, 3 deletions(-)
+> 
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index 7c444d5006d..460848e4223 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -2543,9 +2543,6 @@ static void gen_x87(DisasContext *s, X86DecodedInsn *decode)
+>                   break;
+>               }
+>               break;
+> -            /* map to fcomp; op & 7 == 2 would not pop  */
+> -            op = 0x03;
+> -            /* fallthrough */
+>           case 0x00 ... 0x07: /* fxxx st, sti */
+>           case 0x22 ... 0x23: /* fcom2 and fcomp3, undocumented ops */
+>           case 0x32: /* fcomp5, undocumented op */
 
-[...]
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> +
-> +void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
-> +{
-> +    S390CPU *cpu = env_archcpu(env);
-> +    uint64_t subcode = env->regs[r3];
-> +    uint64_t addr = env->regs[r1];
-> +
-> +    if (env->psw.mask & PSW_MASK_PSTATE) {
-> +        s390_program_interrupt(env, PGM_PRIVILEGED, ra);
-> +        return;
-> +    }
-> +
-> +    if (!s390_has_feat(S390_FEAT_CERT_STORE)) {
-> +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> +        return;
-> +    }
-> +
-> +    if ((subcode & ~0x000ffULL) || (r1 & 1)) {
-> +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> +        return;
-> +    }
-> +
-
-Nit: merge the above two ifs since they both have the same output.
-
-This does not bar my r-b, but wanted to make note of it.
-
--- 
-Regards,
-  Collin
+r~
 
