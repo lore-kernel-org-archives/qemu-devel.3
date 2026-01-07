@@ -4,108 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4368CCF6BE4
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 05:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F42CF6BEB
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 05:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdLpz-0002Ja-59; Wed, 07 Jan 2026 00:12:03 -0500
+	id 1vdLvZ-0005b1-Md; Wed, 07 Jan 2026 00:17:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdLps-0002Cz-FX
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 00:11:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdLvY-0005aT-He
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 00:17:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdLpq-0002b1-Ht
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 00:11:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdLvX-0004Es-2W
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 00:17:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767762713;
+ s=mimecast20190719; t=1767763065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Vp9h5EhGAEo2Y0ttLXTZsC5v7qZvrK8vJlBC5NtKS+M=;
- b=VsqeHLFYXPNapfTPK9xI4H2AR0l5i6PAgAm0xylHfGYetSIacGCS1f4CI4HfTZ5meT49/J
- XvNNI9osoABeRqNH2cMREEsFgHKstUwV2Po/uL3+ooKvJC56ZMbtGF4kk0bjBhjwAA0Q7k
- ofGeTN3oVAfFF90DlZz1xI01PaeC5NU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qeIjYaEb+mbMDPoiXw5nFZ1DrnW1AbKMoBvjS2g65mw=;
+ b=TEMwWIzfwZwyIOLn2Q0mkTEaCbA0IkCO3AwddaMpquwI8jarsVM8SyFKLuY/qR0de/askE
+ cK7mnFyna2oWWbXnvghVc8hCmtJDefFNRx0dvEGFJLgFYdu4qeso71DlZfG14LlrbcA1ea
+ 9k9x0ANxT+DYJ9WzGsUeDpkJgKJkhF4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-TRzQ5X83Ni2N16up2kMlEg-1; Wed, 07 Jan 2026 00:11:51 -0500
-X-MC-Unique: TRzQ5X83Ni2N16up2kMlEg-1
-X-Mimecast-MFC-AGG-ID: TRzQ5X83Ni2N16up2kMlEg_1767762710
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4779b3749a8so13055435e9.1
- for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 21:11:51 -0800 (PST)
+ us-mta-224-QGgDL2lIOImA_pRJZVYmTA-1; Wed, 07 Jan 2026 00:17:43 -0500
+X-MC-Unique: QGgDL2lIOImA_pRJZVYmTA-1
+X-Mimecast-MFC-AGG-ID: QGgDL2lIOImA_pRJZVYmTA_1767763061
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4775d110fabso15360375e9.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Jan 2026 21:17:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767762710; x=1768367510; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767763061; x=1768367861; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Vp9h5EhGAEo2Y0ttLXTZsC5v7qZvrK8vJlBC5NtKS+M=;
- b=K6xTwhFUOuMXDZJtnPPN81ZgjVm/ePWtNxrzc0rkCU2AoaM0ChqiANgWPLBWDDM9dx
- V+wUyZsh/AbDuXsnMGpbFNHQD1xP5AOsaL2maDnZdZUdESWIcITrz0EyJ8lxF588lYax
- o4D7hushRnvyPyCI2OxnMuNhb0KKsWCfCKqSdwkgR+YWaGLwGc/JBHUkpKdD9u2DGEYH
- 9Nxvin8O2rGCM0Ha2rWUY+UtcZPLesIq9fBiOr4YD1v9Dh1cfgJ40M31R27Pe3GEXbKT
- uGapREm17AiinuI8OqYtvs2rjV0tSunz6g6I0M10nTm3OTCE9StpGhTLow8m3nDP06/N
- ZrkQ==
+ bh=qeIjYaEb+mbMDPoiXw5nFZ1DrnW1AbKMoBvjS2g65mw=;
+ b=bMluIMNWoVsTHTv8qMGs9F6N8BXguK7Th7zMDoj85Gtcj84DuD0Su6QFnP+rWS8YeO
+ i2hfD6l9quwCTnmlS/iYIdOx0eDx6cBVBwF5XXsPYV7bm57rvx6vZumPQ3KynAQcxHiu
+ ZsQyiyxQDvudPo2iDOdhJjQxn+q0AjFd98KhUdGPdO149zF5ZYfrHWfeW7gtHYGXqMd1
+ kCu9DOuqY3ZAiNdy9xIxo9PWE9dgpGMRf7TiRfrGlHLkEyImP5zHkNcsi1AjbjdANeAY
+ WJGlyhu7Rr1bqvUxAXm7eLe+nwy/ZXORF489DJnGW6RSypMShRCgSoklMiCBNPyYayQj
+ ziDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767762710; x=1768367510;
+ d=1e100.net; s=20230601; t=1767763061; x=1768367861;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Vp9h5EhGAEo2Y0ttLXTZsC5v7qZvrK8vJlBC5NtKS+M=;
- b=ZveEf9IqPY51mk6sXO83c/3D9UZlyeuPC0B3ZonxA5RmsSk276kDo/00dHaQeXewSm
- 32R7ihnCfkqfEjA9iHBC22n+4juJ6TMrwnxkWQ3NBISzc3fBGTrZzgBgeHwjTdPLSYMW
- Cg5aD13cZvgp/wcMLa3NzCt4AQ+VZiBfdj1otPLbz9NtQiA/F81zOP2TegUCxstgABbT
- yqX7GQHkFfoWYQv78/wYE56AOwkVPIUNkUdJQjixpjFJFyAbW82JKeLTVEkJWRiKDLEg
- dvweDXeo9qHi3Fkythi5fU31fXUt4Vc7z+7qrjFEaP06+F0wrJDCfj9eMV2nT3VyMAvO
- ZeYQ==
+ bh=qeIjYaEb+mbMDPoiXw5nFZ1DrnW1AbKMoBvjS2g65mw=;
+ b=qcbxRlbbF6lsBXHaePMhWJtXdd1oR6vtbL6KVsps59WXPCjZRhONZJu/xEXJG5hMsu
+ CO+4FibsqK/DNGKtWFd+Fgbqyg7OmM/qXbaOQH4qyXamlHYiPs5osFw3ffh6NCTy6ea1
+ 5TjLkT5kyCnXDaPIjs29IWmdVHs61psUhCX9LnqsXSpMWU9jnfEtEJ2RNoqSPMc7otRK
+ qlm5QJ66KRl5v8z+KqFldyBiv9QHl/6kuh40/p1k1oSUu2Br8CKlPpE6gQEYLDqgThQS
+ NxzBVftUotgNh9eM174u4QyZW2CnAfvYPCEUIvUDnLZllzhNoinQFbqsMxvwn6wPZ/pl
+ /psA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWMQdY7+hmKkohU6XbU7ZZYDm2ermdK+PRk9h9OqRJsuj1I55lMREYk2j+8Jis3YiRmrHX4cztdINc/@nongnu.org
-X-Gm-Message-State: AOJu0YxbDO8dD6+hTRO4axCVH21dH8r8ty1uMjhQhMJo+1YQKqGGPN2R
- jKwDg1sry4Xcl45JopFdXt8Jv9NtTx2FwaosadkLhsZyJyKJ+FLeRAooghafzD+RM7SOQOtzala
- h/qUjtpvFoZOS0I2R0eeFnKzlCnF301nrehi8r4Dq8Q1xkdahBqtetQdX
-X-Gm-Gg: AY/fxX63yPPW5vFKQdB1PQ+NOZ/FLxxRldY6ldkFjT+LTwCMGoJLKYljcMp5p/0h7E+
- 6Q2eCKdp7YvbFuXEELwPhiDAPszZj7/xfiB6hjE91ridSoQ4hrPaZjWU17hYM5OZJnvFjw56+hm
- /FCKS+vr7o26g7pWwgsJa1I9UnXY2Nhy63ILcwXkx0GmTSkr1U9pJ73mvc1Oz9J25awmSXVKdLF
- n1vbKXeXhkyP79WllHH5m3rlsGUY2GVcxur/luj48MUoBLZzSRmduLjjsZtrxxe2Ei6j8k/TbSZ
- baRatRO4VXtSMsU2fAmOETXqQ3fixAzDs1AlQWL1FNLzdiWXVNl6K0t6aNJ2erwagDoe6JQ8AGI
- tqphGKRQ=
-X-Received: by 2002:a05:600c:a10a:b0:477:7bd2:693f with SMTP id
- 5b1f17b1804b1-47d869a6980mr3457225e9.6.1767762710469; 
- Tue, 06 Jan 2026 21:11:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH1gOr9C4T1FpxRgsV3wClZhg3G6J8HAbv/DLFavKJFfPDjg9E44QkGGb2I4Ik1Avtar9cMeQ==
-X-Received: by 2002:a05:600c:a10a:b0:477:7bd2:693f with SMTP id
- 5b1f17b1804b1-47d869a6980mr3457085e9.6.1767762710121; 
- Tue, 06 Jan 2026 21:11:50 -0800 (PST)
+ AJvYcCVNJHA0luvl5wmyZ0GUQjWqVkptsT3/SpHC/qhkBpeRzpx7gx1QjM6dujNIENZRsG3bW0F4EoceH9Q+@nongnu.org
+X-Gm-Message-State: AOJu0YwAxF57OeULxsdmaOBn7OGLgoYRUL8U5feY5AhFRXg7cQPoMd4u
+ 5nr/Cdk+FVlV13PQb+MqjTak2c0jZCbTILQ3bidvvdjvccFjYBZig227IVXYys1xbcEx1uxeATn
+ /4ysINfZWRg5vOEqUmCBVJICX3rTVqKyfzG/E4rDmQDUuQ0gpC9I2ango
+X-Gm-Gg: AY/fxX5c54bkmmA1hob4W0+VekLOHjg9H40URcIDhntE+ItANwnIH6VMaZ+T0jZH6b3
+ RjCLQdcgLv77c015WcM61D5NNbsSmPV89RMrloBVIzqU2bKdYXN9G1KyHF+cJTd+gFbH537JzIS
+ LEbcUocz/bTib28etUn4rxATegOXn/d6kjAiDro+jAUAXJG/Q3hidDKdtSQC6/6bUD6wYMkp4sm
+ iwH5U3/2klboFKLtS6Xs5DfpGys7ChhJv4IyfMwe4JBEQgFvQVCZcLsNBOcf2vvspTvl468eL7t
+ JXkP9tcEwXyze/Ew4M0p3bM7a8oosEmuVhG5mwjb6NIGU6jkip6ylyXvkehlEQCFRauyipsJH17
+ l/emyBZE=
+X-Received: by 2002:a05:600c:a102:b0:477:7a53:f493 with SMTP id
+ 5b1f17b1804b1-47d84b32793mr8374525e9.23.1767763060724; 
+ Tue, 06 Jan 2026 21:17:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG8pHV2doW0GsrviBZTauDNHcFyB0ObZZUYADFZofHOd+Ed2duFfdHEfJiaSVVcdMTKZdiIdA==
+X-Received: by 2002:a05:600c:a102:b0:477:7a53:f493 with SMTP id
+ 5b1f17b1804b1-47d84b32793mr8374365e9.23.1767763060353; 
+ Tue, 06 Jan 2026 21:17:40 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f70bc4fsm75696895e9.15.2026.01.06.21.11.48
+ 5b1f17b1804b1-47d7f653c78sm79724135e9.11.2026.01.06.21.17.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Jan 2026 21:11:49 -0800 (PST)
-Message-ID: <8cd94520-8f57-4e03-be16-b2dbda276ba2@redhat.com>
-Date: Wed, 7 Jan 2026 06:11:47 +0100
+ Tue, 06 Jan 2026 21:17:39 -0800 (PST)
+Message-ID: <5e1a3a65-26bd-4965-a224-0dbe73ae274a@redhat.com>
+Date: Wed, 7 Jan 2026 06:17:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] configs/targets: Forbid S390x to use legacy native
- endianness APIs
-To: Eric Farman <farman@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- David Hildenbrand <david@kernel.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Anton Johansson <anjo@rev.ng>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20251224162036.90404-1-philmd@linaro.org>
- <20251224162036.90404-9-philmd@linaro.org>
- <41ab3dd6807e59420117f200b390be3544735347.camel@linux.ibm.com>
+Subject: Re: [PATCH] tests/functional/qemu_test/testcase: Fix mismatched
+ quotations
+To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20260106220319.74785-1-yodel.eldar@yodel.dev>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -150,17 +140,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <41ab3dd6807e59420117f200b390be3544735347.camel@linux.ibm.com>
+In-Reply-To: <20260106220319.74785-1-yodel.eldar@yodel.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -178,23 +168,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/01/2026 21.29, Eric Farman wrote:
-> On Wed, 2025-12-24 at 17:20 +0100, Philippe Mathieu-Daudé wrote:
->> All S390x-related binaries are buildable without a single use
->> of the legacy "native endian" API. Unset the transitional
->> TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
->> further uses of the legacy API.
+On 06/01/2026 23.03, Yodel Eldar wrote:
+> A debug string incorrectly mixes single-quotes with double-quotes,
+> causing the variable within to be treated as a literal. Fix it.
 > 
-> One nit is that this text confuses me, because the code below sets
-> TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API rather than unsetting TARGET_USE_LEGACY_NATIVE_ENDIAN_API.
+> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+> ---
+>   tests/functional/qemu_test/testcase.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> End goal seems the same though.
-By the way, both definitions seem to be completely unused in QEMU currently, 
-so this patch is currently for no real use yet? Unless some more 
-infrastructure gets merged that consumes this setting, I think we should 
-rather not merge this patch yet. I'll queue patches 1-7 for my next pull 
-request.
+> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+> index 58f2740100..ff86c9d187 100644
+> --- a/tests/functional/qemu_test/testcase.py
+> +++ b/tests/functional/qemu_test/testcase.py
+> @@ -349,7 +349,7 @@ def require_netdev(self, netdevname):
+>           helptxt = run([self.qemu_bin, '-M', 'none', '-netdev', 'help'],
+>                         capture_output=True, check=True, encoding='utf8').stdout
+>           if helptxt.find('\n' + netdevname + '\n') < 0:
+> -            self.skipTest('no support for " + netdevname + " networking')
+> +            self.skipTest('no support for ' + netdevname + ' networking')
 
-  Thomas
+Ooops, good catch!
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
