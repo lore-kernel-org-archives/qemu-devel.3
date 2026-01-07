@@ -4,56 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42BECF6C1F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 09:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C26CDC198
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 09:43:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdQ2C-0006Dp-Sx; Wed, 07 Jan 2026 04:40:56 -0500
+	id 1vdQ3y-0000lk-M5; Wed, 07 Jan 2026 04:42:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1vdQ2A-0006B1-MH
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 04:40:55 -0500
-Received: from out30-113.freemail.mail.aliyun.com ([115.124.30.113])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vdQ3x-0000jj-Jh
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 04:42:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1vdQ28-0004NT-3g
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 04:40:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1767778831; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
- bh=kYSUVZIE46z3x5l35MgLCd8cxsJeQVmII4C9Tok+Zn0=;
- b=nLWMkA66aK8ZEzXXTICnCJksEwuN8LA9iYAC+8lo4+lL3Bq4QPMGusmxl9cxKhSPka6yAGvK5pDKEiYm9u2F4TPJwgKU5O/J1GTeLxSV38n+EsFy4V7EcByvv+dATfl2+1AH8/Rsi2Y0w0oW04brpg6Gq6jj9nv/71L3SAS1B0g=
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0WwYRKKh_1767778820 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 07 Jan 2026 17:40:30 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: berrange@redhat.com
-Cc: qemu-devel@nongnu.org,
-	pbonzini@redhat.com,
-	philmd@linaro.org
-Subject: Re: Re: [PATCH] monitor: disable "info kvm" if !KVM
-Date: Wed,  7 Jan 2026 17:40:20 +0800
-Message-ID: <20260107094020.21819-1-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <aVuUXHT9dt9-ytkG@redhat.com>
-References: <aVuUXHT9dt9-ytkG@redhat.com>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vdQ3w-0004mf-6M
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 04:42:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767778962;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jQDx2T+HeKKnkQIuqHHC20iDo5Rh3611LRambLEaoOw=;
+ b=WxIT3z1zmrF2C5MTXC+68vCRQVsJ+LV81fAEcppY65HyRADnhPMGqzD5Cfiscf/p/ZV0kv
+ FcecPp3sdqpZInjqWotz1LG/BVefZdNGVmZRkez2PDiMJOrxtz2aabUWRLsJmrT4hG6C9k
+ Foakv8dFHsFjZhHIZN7yCspEhBZBgyQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-o5EdkVpPPEOaXlvRhvmxJQ-1; Wed,
+ 07 Jan 2026 04:42:39 -0500
+X-MC-Unique: o5EdkVpPPEOaXlvRhvmxJQ-1
+X-Mimecast-MFC-AGG-ID: o5EdkVpPPEOaXlvRhvmxJQ_1767778957
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70BDB19560AD; Wed,  7 Jan 2026 09:42:37 +0000 (UTC)
+Received: from localhost (dhcp-192-224.str.redhat.com [10.33.192.224])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 421EA1800285; Wed,  7 Jan 2026 09:42:36 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
+ dmitry.osipenko@collabora.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
+ Ray.Huang@amd.com
+Cc: mst@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org,
+ honghuan@amd.com
+Subject: Re: [PATCH RFC v4 1/3] virtio-gpu: Add support for
+ VIRTIO_GPU_BLOB_FLAG_USE_USERPTR flag
+In-Reply-To: <20260107075030.3453924-2-honghuan@amd.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260107075030.3453924-1-honghuan@amd.com>
+ <20260107075030.3453924-2-honghuan@amd.com>
+User-Agent: Notmuch/0.39 (https://notmuchmail.org)
+Date: Wed, 07 Jan 2026 10:42:33 +0100
+Message-ID: <87tswxahdi.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.113;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-113.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,23 +91,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrangé wrote on Mon, 5 Jan 2026 10:37:16 +0000:
+On Wed, Jan 07 2026, Honglei Huang <honghuan@amd.com> wrote:
 
-> Missing commit message explaining why we should do this ?
+> Add support for the USE_USERPTR blob flag in virtio-gpu to enable
+> user pointer mapping for blob resources. This allows guest applications
+> to use user-allocated memory for GPU resources more efficiently.
+>
+> Changes include:
+> - Add VIRTIO_GPU_BLOB_FLAG_USE_USERPTR flag definition
+> - Enhance blob resource creation to handle userptr flag properly
+> - Remove arbitrary nr_entries limit (16384) in mapping creation
+> - Add conditional handling for userptr vs regular blob mapping
+> - Support guest_blob_mapped parameter for virgl renderer
+> - Fix value check issue in virtio-gpu
+>
+> This enables more flexible memory management between guest and host
+> for GPU virtualization scenarios.
+>
+> Signed-off-by: Honglei Huang <honghuan@amd.com>
+> ---
+>  hw/display/virtio-gpu.c                     | 7 -------
+>  include/standard-headers/linux/virtio_gpu.h | 1 +
+>  2 files changed, 1 insertion(+), 7 deletions(-)
 
-The reason for submitting this patch is that the newly supported 
-'info accelerators' command can provide a more comprehensive view
-of the accelerator's status.
+Please split out any updates to the imported Linux headers into a
+separate patch to be replaced by a headers sync (I thought checkpatch
+would warn about that?)
 
-> 
-> The 'hmp_info_kvm' implementation is unconditionally built and this patch
-> isn't changing that, so this result in building unused code.
-> 
-> Conceptually even if KVM is not built, it makes sense to have an
-> 'info kvm' command to tell the user that KVM is not available.
-
-I agree with you, we can skip this patch.
-
-With regards,
-Bin Guo
 
