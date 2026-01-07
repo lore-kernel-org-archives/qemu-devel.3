@@ -4,109 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F7E5D0D160
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 18:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9980D0D15D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 18:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdY8X-00065E-R9; Wed, 07 Jan 2026 13:20:04 -0500
+	id 1vdY9F-0006L0-NS; Wed, 07 Jan 2026 13:20:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vdY8T-00064r-HQ
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:19:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vdY8R-0005SH-6f
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:19:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767809993;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fg2WR8dBX0ScLKVdoI25zHLaG0FcHwau7AjGKIeWRBI=;
- b=X6C0DLb3Bx6gUcLFl86tyAzYBOlQSEi8H1E2xPB3mzT1rYpZXpZBFVi1xlW0lu9T0MFOAG
- zcYPcZr7ndNw7NnrGtqdmgDLhFYQj2vnIy4rlikbAmVXo94p30i2Ib6xAA0unbsFvhQ1KF
- AejVXD8j4e1p6P5Zy71yoCD45XqN750=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-520-REWa-6jnOp-SVrbt7eHnTg-1; Wed, 07 Jan 2026 13:19:51 -0500
-X-MC-Unique: REWa-6jnOp-SVrbt7eHnTg-1
-X-Mimecast-MFC-AGG-ID: REWa-6jnOp-SVrbt7eHnTg_1767809991
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43101a351c7so1914215f8f.2
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 10:19:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767809990; x=1768414790;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdY9C-0006KD-8Z
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:20:42 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdY98-0005kR-0j
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 13:20:40 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-477563e28a3so8935715e9.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 10:20:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767810036; x=1768414836; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fg2WR8dBX0ScLKVdoI25zHLaG0FcHwau7AjGKIeWRBI=;
- b=SuPYPiWZLS9y/e2KVGd7OxDhw/qUyhWO8t5mQ5ZZhHDJ/I68+lDvej34G2S1XKTerO
- rdTyo4Du8gh5MhcCQDlYcU7r5RHLL6anbKTVLf0uFdwXtvMqAigyW3NDvRgW7tS1uU9n
- cmLUy37/Se+YWxBLsI0L5ZdYjjPnGj2xl7JkQHs/4UK4KV+i5zcOb6XUAdK9OdSaYPFW
- Adr9NXoKyWP+e4mjZmQk7JBIwlIttypNH+Dw4NtmSj65c7zYFU7/x5wf6dAdUla9273w
- GgESnmFp9ZOSnww5vQ7Xv/L08Gn2agLDwWw3YsX2t9wTieZPYa1ZMT+XBrP+1kRSTO4r
- thqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKn2P8Hb7DoSlXoUvG/q9Hvsd9Q7dVNUBqLTjbhkGK/F3V7HJnkVYDeOt23pfReM8gZPYBCO2yHf+T@nongnu.org
-X-Gm-Message-State: AOJu0Yx1HRGLct07vm8JGLXGlfcfun/1bENx6GDV0hAvBgTLqn/n6KhU
- z3U2LCpr1DWCkFbsZDBKeYzgXWS0EfS1jyjLaHU/RkSzGKbLe1ztSzEEGtCAZmkR6Uo0FkNA+g7
- AcfF3lAyropqdw4l2UfoZv6wfVVypixYLW/SGkWALBmEEgdRASXMIiPXKu2Vweisd
-X-Gm-Gg: AY/fxX4kEzLTSo+5y7s/GJvRsZief9pkS7awO6h6DdlfHgqpS/E2BVKp4UaGdyjE7Lq
- FMcrIv3ThD502CU1TaOWSWM+mKZCVThP1Xh2Zybk/kkftMfLqlr0nvXB1BXDRt842VhK7RLmUtc
- UVw9JVKS67qm3tkO13/qVXZe6bCjiNomtXqMNcbbWGHb2ZBF1pFcOZYJb8UZLN2hqGYpKnBnOC4
- 1xTFJlft+ub3UTh/yKNBxfRxbGdZOtWtL4myWMNOkhW2dy2jtJT2RYsvsEBmaqO+J3Y+aYxMWjb
- wVo5sZUXnyPaIMFLaI7hSAran0vrOUVRuvC8RPavlX3a7j/eXuklOruZ8zUL5UQ6Zqk/KdzpGWO
- aNTDGlHFNxhEI/WPrH6a28HHLNdIm0+9nAvkZbCMX3JU+z03DlIKgu/q93A==
-X-Received: by 2002:a05:6000:1845:b0:430:fb00:108f with SMTP id
- ffacd0b85a97d-432c3790884mr3897166f8f.18.1767809990161; 
- Wed, 07 Jan 2026 10:19:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHzqKsoiiBQ+AxPD3xyAhWhD4y0+utYBIMKcPNEBY/RrmR2/r5lJRjGVZkfLl/SuFZm1rqkHA==
-X-Received: by 2002:a05:6000:1845:b0:430:fb00:108f with SMTP id
- ffacd0b85a97d-432c3790884mr3897128f8f.18.1767809989670; 
- Wed, 07 Jan 2026 10:19:49 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0dabcbsm10961767f8f.7.2026.01.07.10.19.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 10:19:49 -0800 (PST)
-Message-ID: <ac45067d-b125-4a10-b132-9d4bc01569b3@redhat.com>
-Date: Wed, 7 Jan 2026 19:19:47 +0100
+ bh=c5vUbPm6z1uOCPE8G5muzfEnqNfVl9U7aMx0sRH9rCw=;
+ b=xHl2v+6rC8aF2FC2zRHJF4FNb8CdYKgljbA4GDGAcfWSt/XlUqOJuKpYrvo8inKxQ5
+ szgWqtwzowdjq/QcrsTxk+dpecUbTNHSSIt0lOtigqCyL0csMzwcZNr4wsXUJ1UfOH6W
+ mMu1UvZzDPnGps0Wi12REmOL3zP0RdbZdQUNVoUfO6wiq3U7jlPT5zkblgsBFfjWKnmX
+ wR2sQ6+jaqb6x/VxPlhQn4SmGemmmO97F45WgqThqlo4CgI1XXhae1AbX8EzQHUVKe6z
+ KiTazyFUPbCTafB6M0A0qAsDE/HQ0Fv/q7Y8tqUajjryqYMiIx7IEdj2Ps3KUsxTFa4D
+ XrCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767810036; x=1768414836;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=c5vUbPm6z1uOCPE8G5muzfEnqNfVl9U7aMx0sRH9rCw=;
+ b=sE9G1humENaTQB++2TTLNP+7WZRuGlJ063FvMGvDsgL8Avs10Ae+iBoNb1uWh+YMbP
+ aapkNZvfvK9C0sha48+cQcRLkvad2NErqkWjUynvbLyaxIgdsP9ESlVXcHs6H4x8GTjl
+ GaAOc83RX9PG17aqCZt26EuI/GisS3QuWP7QDrp8Fj8F6IrrLyRi/6nuRAC3mZ4u2UHe
+ MrqKkTrP4xzUWfrVRBKtVQ0JEVT11lGMsdA3VjuvPdFOZ40cWE1UjKxkgxYcUfYkAEPg
+ /H7IK+GKR5KDXUP4u7uBcgID327x5pBT0GgMffgsks4gkmsa794IVxCO8Mf3ZKEv/+mF
+ 3FUg==
+X-Gm-Message-State: AOJu0Yx5kYhKE7velVpsDvKx6SO1Yieer23JkfzKUhJwOhHCvaKbRwBr
+ itToyEPC74xpanwtRsy12chAnPVpprilxcL6EwgIRtTW6fIwOwLZSOCOWJb1VAj92Wt9fFCgCRG
+ /w9oM3vU=
+X-Gm-Gg: AY/fxX48Xtq/iu16ODHn+7s6ARlU6rrKFdpTTjLdJvMM9zkAirimdftUaMmjceb/2O5
+ NrOgv9IPbiqtSoJpBDAJ+O5GaHLVpVYEhCfBoXHOF+ix/wHRsi6ix/EATQ7NQo9KI6Z6AHDR/aq
+ GJe+VPyCHLQAMVlIjy2DdceVKrt8Ly8t5ONVbX8Es8LfjZ3fN2lpp80HHUhnPnu/VHdXM+KHYUx
+ RCucUdtbsik1tQx0jM3ZzERoqjFMu3DDD35fJBf8CPYDjeR8CDKFH9pHy0rf3HO/7dix8OYGAx+
+ J9wJHlujmdzPueptxYJa/iXKmAjzaJuZ6baecniLdMyQOzdmhB+ODx+8VMhYCcKZrWsm80WExCb
+ 44tO7lkZmahCTX7NgnooDjAPYbCEsrqDXZLEKjcmLQJd13XMYdqGYjS7xuHhvfVnE6VfIHTB5S/
+ ocpKyk9hvRisjjmgIgLqBkSgQQRprdbPweRPqkYKEMRNyjPlE7FOS67AtVeSP7
+X-Google-Smtp-Source: AGHT+IH35LX58d6iyis4US3zlff2ddmvK+Kej9v1Ob5JXh2aZ9aKF+hD5J/dRbIVvn6vm/UBgCxgjA==
+X-Received: by 2002:a05:600c:a30c:b0:479:13e9:3d64 with SMTP id
+ 5b1f17b1804b1-47d848787eemr36087415e9.15.1767810035952; 
+ Wed, 07 Jan 2026 10:20:35 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d7f620ac8sm107925335e9.0.2026.01.07.10.20.34
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 07 Jan 2026 10:20:35 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, kvm@vger.kernel.org
+Subject: [PATCH 2/2] monitor/hmp: Reduce target-specific definitions
+Date: Wed,  7 Jan 2026 19:20:19 +0100
+Message-ID: <20260107182019.51769-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260107182019.51769-1-philmd@linaro.org>
+References: <20260107182019.51769-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] hw/arm/smmu: add memory regions as property for an
- SMMU instance
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Tao Tang <tangtao1634@phytium.com.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Radoslaw Biernacki <rad@semihalf.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-References: <20251216235731.1793908-1-pierrick.bouvier@linaro.org>
- <051851b8-24ef-4ffc-a0d8-9894fe50d398@phytium.com.cn>
- <1552ca0d-eb85-475d-84d7-046e92de20bd@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <1552ca0d-eb85-475d-84d7-046e92de20bd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,312 +112,249 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick
+From "monitor/hmp-target.h", only the MonitorDef structure
+is target specific (by using the 'target_long' type). All
+the rest (even target_monitor_defs and target_get_monitor_def)
+can be exposed to target-agnostic units, allowing to build
+some of them in meson common source set.
 
-On 12/18/25 6:51 PM, Pierrick Bouvier wrote:
-> On 12/18/25 7:51 AM, Tao Tang wrote:
->> Hi Pierrick,
->>
->> On 2025/12/17 07:57, Pierrick Bouvier wrote:
->>> This will be used to access non-secure and secure memory. Secure
->>> support
->>> and Granule Protection Check (for RME) for SMMU need to access secure
->>> memory.
->>>
->>> As well, it allows to remove usage of global address_space_memory,
->>> allowing different SMMU instances to have a specific view of memory.
->>>
->>> User creatable SMMU are handled as well for virt machine,
->>> by setting the memory properties when device is plugged in.
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>    include/hw/arm/smmu-common.h |  4 ++++
->>>    include/hw/arm/virt.h        |  2 ++
->>>    hw/arm/sbsa-ref.c            | 16 ++++++++++++----
->>>    hw/arm/smmu-common.c         | 25 +++++++++++++++++++++++++
->>>    hw/arm/virt.c                | 13 +++++++++++--
->>>    5 files changed, 54 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/include/hw/arm/smmu-common.h
->>> b/include/hw/arm/smmu-common.h
->>> index 80d0fecfde8..d9bade3c803 100644
->>> --- a/include/hw/arm/smmu-common.h
->>> +++ b/include/hw/arm/smmu-common.h
->>> @@ -162,6 +162,10 @@ struct SMMUState {
->>>        uint8_t bus_num;
->>>        PCIBus *primary_bus;
->>>        bool smmu_per_bus; /* SMMU is specific to the primary_bus */
->>> +    MemoryRegion *memory;
->>> +    AddressSpace memory_as;
->>> +    MemoryRegion *secure_memory;
->>> +    AddressSpace secure_memory_as;
->>>    };
->>>       struct SMMUBaseClass {
->>> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
->>> index c77a33f6df2..d3743810338 100644
->>> --- a/include/hw/arm/virt.h
->>> +++ b/include/hw/arm/virt.h
->>> @@ -180,6 +180,8 @@ struct VirtMachineState {
->>>        bool ns_el2_virt_timer_irq;
->>>        CXLState cxl_devices_state;
->>>        bool legacy_smmuv3_present;
->>> +    MemoryRegion *sysmem;
->>> +    MemoryRegion *secure_sysmem;
->>>    };
->>>       #define VIRT_ECAM_ID(high) (high ? VIRT_HIGH_PCIE_ECAM :
->>> VIRT_PCIE_ECAM)
->>> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
->>> index 2205500a8da..cc9d4385826 100644
->>> --- a/hw/arm/sbsa-ref.c
->>> +++ b/hw/arm/sbsa-ref.c
->>> @@ -613,7 +613,9 @@ static void create_xhci(const SBSAMachineState
->>> *sms)
->>>        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
->>> qdev_get_gpio_in(sms->gic, irq));
->>>    }
->>>    -static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
->>> +static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
->>> +                        MemoryRegion *sysmem,
->>> +                        MemoryRegion *secure_sysmem)
->>>    {
->>>        hwaddr base = sbsa_ref_memmap[SBSA_SMMU].base;
->>>        int irq =  sbsa_ref_irqmap[SBSA_SMMU];
->>> @@ -625,6 +627,10 @@ static void create_smmu(const SBSAMachineState
->>> *sms, PCIBus *bus)
->>>        object_property_set_str(OBJECT(dev), "stage", "nested",
->>> &error_abort);
->>>        object_property_set_link(OBJECT(dev), "primary-bus",
->>> OBJECT(bus),
->>>                                 &error_abort);
->>> +    object_property_set_link(OBJECT(dev), "memory", OBJECT(sysmem),
->>> +                             &error_abort);
->>> +    object_property_set_link(OBJECT(dev), "secure-memory",
->>> OBJECT(secure_sysmem),
->>
->>
->> ......
->>
->>> +                             &error_abort);
->>>        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>>        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
->>>        for (i = 0; i < NUM_SMMU_IRQS; i++) {
->>> @@ -633,7 +639,9 @@ static void create_smmu(const SBSAMachineState
->>> *sms, PCIBus *bus)
->>>        }
->>>    }
->>>    -static void create_pcie(SBSAMachineState *sms)
->>> +static void create_pcie(SBSAMachineState *sms,
->>> +                        MemoryRegion *sysmem,
->>> +                        MemoryRegion *secure_sysmem)
->>>    {
->>>        hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
->>>        hwaddr size_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].size;
->>> @@ -689,7 +697,7 @@ static void create_pcie(SBSAMachineState *sms)
->>>           pci_create_simple(pci->bus, -1, "bochs-display");
->>>    -    create_smmu(sms, pci->bus);
->>> +    create_smmu(sms, pci->bus, sysmem, secure_sysmem);
->>>    }
->>>       static void *sbsa_ref_dtb(const struct arm_boot_info *binfo,
->>> int *fdt_size)
->>> @@ -825,7 +833,7 @@ static void sbsa_ref_init(MachineState *machine)
->>>           create_xhci(sms);
->>>    -    create_pcie(sms);
->>> +    create_pcie(sms, sysmem, secure_sysmem);
->>>           create_secure_ec(secure_sysmem);
->>>    diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->>> index 62a76121841..9a67ce857fe 100644
->>> --- a/hw/arm/smmu-common.c
->>> +++ b/hw/arm/smmu-common.c
->>> @@ -944,6 +944,13 @@ static void smmu_base_realize(DeviceState *dev,
->>> Error **errp)
->>>            return;
->>>        }
->>>    +    g_assert(s->memory);
->>> +    address_space_init(&s->memory_as, s->memory, "smmu-memory-view");
->>> +    if (s->secure_memory) {
->>> +        address_space_init(&s->secure_memory_as, s->secure_memory,
->>> +                           "smmu-secure-memory-view");
->>> +    }
->>> +
->>>        /*
->>>         * We only allow default PCIe Root Complex(pcie.0) or
->>> pxb-pcie based extra
->>>         * root complexes to be associated with SMMU.
->>> @@ -1008,10 +1015,28 @@ static void smmu_base_class_init(ObjectClass
->>> *klass, const void *data)
->>>        rc->phases.exit = smmu_base_reset_exit;
->>>    }
->>>    +static void smmu_base_instance_init(Object *obj)
->>> +{
->>> +    SMMUState *s = ARM_SMMU(obj);
->>> +
->>> +    object_property_add_link(obj, "memory",
->>> +                             TYPE_MEMORY_REGION,
->>> +                             (Object **)&s->memory,
->>> +                             qdev_prop_allow_set_link_before_realize,
->>> +                             OBJ_PROP_LINK_STRONG);
->>> +
->>> +    object_property_add_link(obj, "secure-memory",
->>> +                             TYPE_MEMORY_REGION,
->>> +                             (Object **)&s->secure_memory,
->>> +                             qdev_prop_allow_set_link_before_realize,
->>> +                             OBJ_PROP_LINK_STRONG);
->>> +}
->>> +
->>>    static const TypeInfo smmu_base_info = {
->>>        .name          = TYPE_ARM_SMMU,
->>>        .parent        = TYPE_SYS_BUS_DEVICE,
->>>        .instance_size = sizeof(SMMUState),
->>> +    .instance_init = smmu_base_instance_init,
->>>        .class_data    = NULL,
->>>        .class_size    = sizeof(SMMUBaseClass),
->>>        .class_init    = smmu_base_class_init,
->>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->>> index 25fb2bab568..603f4b6a1d7 100644
->>> --- a/hw/arm/virt.c
->>> +++ b/hw/arm/virt.c
->>> @@ -1514,8 +1514,7 @@ static void
->>> create_smmuv3_dev_dtb(VirtMachineState *vms,
->>>                               0x0, vms->iommu_phandle, 0x0, 0x10000);
->>>    }
->>>    -static void create_smmu(const VirtMachineState *vms,
->>> -                        PCIBus *bus)
->>> +static void create_smmu(const VirtMachineState *vms, PCIBus *bus)
->>>    {
->>>        VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>>        int irq =  vms->irqmap[VIRT_SMMU];
->>> @@ -1535,6 +1534,10 @@ static void create_smmu(const
->>> VirtMachineState *vms,
->>>        }
->>>        object_property_set_link(OBJECT(dev), "primary-bus",
->>> OBJECT(bus),
->>>                                 &error_abort);
->>> +    object_property_set_link(OBJECT(dev), "memory",
->>> OBJECT(vms->sysmem),
->>> +                             &error_abort);
->>> +    object_property_set_link(OBJECT(dev), "secure-memory",
->>> OBJECT(vms->secure_sysmem),
->>> +                             &error_abort);
->>
->>
->> I noticed this line is over 80 characters and the corresponding one in
->> hw/arm/sbsa-ref.c also seems to exceed 80 characters. I’m not fully sure
->> whether QEMU expects us to strictly keep every line under 80 characters,
->> but when I ran scripts/checkpatch.pl I did see two warnings.
->>
->
-> Thanks for reporting, it's a warning, not a hard error (90 char).
-> From what I understood, I think it's ok to go over a few characters
-> for cases like this, to keep code with same layout as lines around. 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/monitor/hmp-target.h  | 28 +++++-----------------------
+ include/monitor/hmp.h         | 23 +++++++++++++++++++++++
+ hw/i386/sgx-stub.c            |  2 +-
+ hw/i386/sgx.c                 |  1 -
+ monitor/hmp-cmds.c            |  1 -
+ stubs/target-monitor-defs.c   |  2 +-
+ target/i386/cpu-apic.c        |  2 +-
+ target/i386/sev-system-stub.c |  2 +-
+ target/i386/sev.c             |  1 -
+ target/m68k/monitor.c         |  1 +
+ target/riscv/monitor.c        |  1 +
+ target/sh4/monitor.c          |  1 -
+ target/xtensa/monitor.c       |  1 -
+ 13 files changed, 34 insertions(+), 32 deletions(-)
 
-yes as long as it is a warning it is OK
-
-Thanks
-
-Eric
->
->>
->> ```
->>
->> WARNING: line over 80 characters
->> #47: FILE: hw/arm/sbsa-ref.c:632:
->> +    object_property_set_link(OBJECT(dev), "secure-memory",
->> OBJECT(secure_sysmem),
->>
->> WARNING: line over 80 characters
->> #148: FILE: hw/arm/virt.c:1539:
->> +    object_property_set_link(OBJECT(dev), "secure-memory",
->> OBJECT(vms->secure_sysmem),
->>
->> total: 0 errors, 2 warnings, 148 lines checked
->>
->> ```
->>
->>
->> Just flagging this in case you’d like to adjust it before the next
->> revision.
->>
->>
->> Besides, I tested the SMMU-related MemoryRegion and AddressSpace
->> instantiation for both user-creatable and machine-wide SMMUv3 devices.
->> As shown in the info mtree output below, everything looks fine on my
->> side.
->>
->>
->> ```
->>
->> (QEMU) info mtree
->> address-space: cpu-secure-memory-0
->> address-space: smmu-secure-memory-view
->>     0000000000000000-ffffffffffffffff (prio 0, i/o): secure-memory
->>       0000000000000000-0000000003ffffff (prio 0, romd): virt.flash0
->>
->> ....
->>
->> address-space: cpu-memory-0
->> address-space: gicv3-its-sysmem
->> address-space: memory
->> address-space: smmu-memory-view
->>     0000000000000000-ffffffffffffffff (prio -1, i/o): system
->>       0000000004000000-0000000007ffffff (prio 0, romd): virt.flash1
->>       0000000008000000-000000000800ffff (prio 0, i/o): gicv3_dist
->>
->> ```
->>
->
-> Thanks for testing :)!
->
->>
->>
->> Regards,
->> Tao
->>
->>>        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>>        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
->>>        for (i = 0; i < NUM_SMMU_IRQS; i++) {
->>> @@ -1609,6 +1612,7 @@ static void create_pcie(VirtMachineState *vms)
->>>        memory_region_init_alias(ecam_alias, OBJECT(dev), "pcie-ecam",
->>>                                 ecam_reg, 0, size_ecam);
->>>        memory_region_add_subregion(get_system_memory(), base_ecam,
->>> ecam_alias);
->>> +    vms->sysmem = get_system_memory();
->>>           /* Map the MMIO window into system address space so as to
->>> expose
->>>         * the section of PCI MMIO space which starts at the same
->>> base address
->>> @@ -2256,6 +2260,7 @@ static void machvirt_init(MachineState *machine)
->>>             * devices go in at higher priority and take precedence.
->>>             */
->>>            secure_sysmem = g_new(MemoryRegion, 1);
->>> +        vms->secure_sysmem = secure_sysmem;
->>>            memory_region_init(secure_sysmem, OBJECT(machine),
->>> "secure-memory",
->>>                               UINT64_MAX);
->>>            memory_region_add_subregion_overlap(secure_sysmem, 0,
->>> sysmem, -1);
->>> @@ -3051,6 +3056,10 @@ static void
->>> virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->>>            } else if (vms->iommu == VIRT_IOMMU_NONE) {
->>>                /* The new SMMUv3 device is specific to the PCI bus */
->>>                object_property_set_bool(OBJECT(dev), "smmu_per_bus",
->>> true, NULL);
->>> +            object_property_set_link(OBJECT(dev), "memory",
->>> +                                     OBJECT(vms->sysmem), NULL);
->>> +            object_property_set_link(OBJECT(dev), "secure-memory",
->>> +                                     OBJECT(vms->secure_sysmem),
->>> NULL);
->>>            }
->>>        }
->>>    }
->>
->
-> Cheers,
-> Pierrick
->
+diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+index b679aaebbff..d39d8c8abe1 100644
+--- a/include/monitor/hmp-target.h
++++ b/include/monitor/hmp-target.h
+@@ -25,9 +25,12 @@
+ #ifndef MONITOR_HMP_TARGET_H
+ #define MONITOR_HMP_TARGET_H
+ 
+-typedef struct MonitorDef MonitorDef;
++#include "monitor/hmp.h"
++
++#ifndef COMPILING_PER_TARGET
++#error hmp-target.h included from common code
++#endif
+ 
+-#ifdef COMPILING_PER_TARGET
+ #include "cpu.h"
+ struct MonitorDef {
+     const char *name;
+@@ -36,29 +39,8 @@ struct MonitorDef {
+                              int val);
+     int type;
+ };
+-#endif
+ 
+ #define MD_TLONG 0
+ #define MD_I32   1
+ 
+-const MonitorDef *target_monitor_defs(void);
+-int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
+-
+-CPUArchState *mon_get_cpu_env(Monitor *mon);
+-CPUState *mon_get_cpu(Monitor *mon);
+-
+-void hmp_info_mem(Monitor *mon, const QDict *qdict);
+-void hmp_info_tlb(Monitor *mon, const QDict *qdict);
+-void hmp_mce(Monitor *mon, const QDict *qdict);
+-void hmp_info_local_apic(Monitor *mon, const QDict *qdict);
+-void hmp_info_sev(Monitor *mon, const QDict *qdict);
+-void hmp_info_sgx(Monitor *mon, const QDict *qdict);
+-void hmp_info_via(Monitor *mon, const QDict *qdict);
+-void hmp_memory_dump(Monitor *mon, const QDict *qdict);
+-void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
+-void hmp_info_registers(Monitor *mon, const QDict *qdict);
+-void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
+-void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
+-void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
+-
+ #endif /* MONITOR_HMP_TARGET_H */
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 83721b5ffc6..48cd8cefe98 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -17,6 +17,29 @@
+ #include "qemu/readline.h"
+ #include "qapi/qapi-types-common.h"
+ 
++typedef struct MonitorDef MonitorDef;
++
++const MonitorDef *target_monitor_defs(void);
++
++int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
++
++CPUArchState *mon_get_cpu_env(Monitor *mon);
++CPUState *mon_get_cpu(Monitor *mon);
++
++void hmp_info_mem(Monitor *mon, const QDict *qdict);
++void hmp_info_tlb(Monitor *mon, const QDict *qdict);
++void hmp_mce(Monitor *mon, const QDict *qdict);
++void hmp_info_local_apic(Monitor *mon, const QDict *qdict);
++void hmp_info_sev(Monitor *mon, const QDict *qdict);
++void hmp_info_sgx(Monitor *mon, const QDict *qdict);
++void hmp_info_via(Monitor *mon, const QDict *qdict);
++void hmp_memory_dump(Monitor *mon, const QDict *qdict);
++void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
++void hmp_info_registers(Monitor *mon, const QDict *qdict);
++void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
++void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
++void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
++
+ bool hmp_handle_error(Monitor *mon, Error *err);
+ void hmp_help_cmd(Monitor *mon, const char *name);
+ strList *hmp_split_at_comma(const char *str);
+diff --git a/hw/i386/sgx-stub.c b/hw/i386/sgx-stub.c
+index d295e54d239..6e82773a86d 100644
+--- a/hw/i386/sgx-stub.c
++++ b/hw/i386/sgx-stub.c
+@@ -1,6 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
++#include "monitor/hmp.h"
+ #include "hw/i386/pc.h"
+ #include "hw/i386/sgx-epc.h"
+ #include "qapi/qapi-commands-misc-i386.h"
+diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
+index e2801546ad6..54d2cae36d8 100644
+--- a/hw/i386/sgx.c
++++ b/hw/i386/sgx.c
+@@ -16,7 +16,6 @@
+ #include "hw/mem/memory-device.h"
+ #include "monitor/qdev.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qapi/qapi-commands-misc-i386.h"
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index f7ff6ec90ec..1ab789ff468 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -21,7 +21,6 @@
+ #include "gdbstub/enums.h"
+ #include "monitor/hmp.h"
+ #include "qemu/help_option.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/monitor-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
+diff --git a/stubs/target-monitor-defs.c b/stubs/target-monitor-defs.c
+index 35a0a342772..0dd4cdb34f6 100644
+--- a/stubs/target-monitor-defs.c
++++ b/stubs/target-monitor-defs.c
+@@ -1,5 +1,5 @@
+ #include "qemu/osdep.h"
+-#include "monitor/hmp-target.h"
++#include "monitor/hmp.h"
+ 
+ const MonitorDef *target_monitor_defs(void)
+ {
+diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+index eeee62b52a2..3b73a04597f 100644
+--- a/target/i386/cpu-apic.c
++++ b/target/i386/cpu-apic.c
+@@ -10,7 +10,7 @@
+ #include "qobject/qdict.h"
+ #include "qapi/error.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
++#include "monitor/hmp.h"
+ #include "system/hw_accel.h"
+ #include "system/kvm.h"
+ #include "system/xen.h"
+diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
+index 7c5c02a5657..f799a338d60 100644
+--- a/target/i386/sev-system-stub.c
++++ b/target/i386/sev-system-stub.c
+@@ -13,7 +13,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
++#include "monitor/hmp.h"
+ #include "qapi/error.h"
+ #include "sev.h"
+ 
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index fb5a3b5d778..7e2a5df8867 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -36,7 +36,6 @@
+ #include "migration/blocker.h"
+ #include "qom/object.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
+ #include "qapi/qapi-commands-misc-i386.h"
+ #include "confidential-guest.h"
+ #include "hw/i386/pc.h"
+diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+index 2bdf6acae0a..784f5730919 100644
+--- a/target/m68k/monitor.c
++++ b/target/m68k/monitor.c
+@@ -7,6 +7,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "cpu.h"
++#include "monitor/hmp.h"
+ #include "monitor/hmp-target.h"
+ #include "monitor/monitor.h"
+ 
+diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+index 8a77476db93..478fd392ac6 100644
+--- a/target/riscv/monitor.c
++++ b/target/riscv/monitor.c
+@@ -22,6 +22,7 @@
+ #include "cpu.h"
+ #include "cpu_bits.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "monitor/hmp-target.h"
+ #include "system/memory.h"
+ 
+diff --git a/target/sh4/monitor.c b/target/sh4/monitor.c
+index 2da6a5426eb..50324d3600c 100644
+--- a/target/sh4/monitor.c
++++ b/target/sh4/monitor.c
+@@ -24,7 +24,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ 
+ static void print_tlb(Monitor *mon, int idx, tlb_t *tlb)
+diff --git a/target/xtensa/monitor.c b/target/xtensa/monitor.c
+index fbf60d55530..2af84934f83 100644
+--- a/target/xtensa/monitor.c
++++ b/target/xtensa/monitor.c
+@@ -24,7 +24,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ 
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+-- 
+2.52.0
 
 
