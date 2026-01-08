@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FBDD1D461
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:37:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53EABD1D460
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdr6A-0007CP-W2; Thu, 08 Jan 2026 09:34:51 -0500
+	id 1vdr6I-0007S9-9E; Thu, 08 Jan 2026 09:34:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5x-00072E-8b
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:38 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1vdr5u-00071k-1P
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:36 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5t-0000hm-Qs
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:37 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-47d3ffa6720so33702405e9.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:31 -0800 (PST)
+ id 1vdr5q-0000h7-7D
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:32 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-432d256c2e6so442256f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767882870; x=1768487670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767882869; x=1768487669; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CJzuVbaZdIwgkAzM484kEZrNbs3ZhkcE6xTd5j2Mceg=;
- b=HYygImr4GhSEdt1R/SIEM+pDUdO/MLWXiAIlyg60A2D7iOkfkyc+ASIL8LdRoUyDcX
- o0tlFgzlwHsAcuL+6svx36tTurp4oJbD5AwEwF1b4tnT3Ztmg26+4tylczwPC7/DZkWo
- g+wvu/DnzehhcreiVR+HKqquU9LSuThe1cbe9WmhDhmbM02/MjiMZB0BqlqHeHf4I1LN
- Bz8QVfTJ5uDtnB/dU78Z/2rRjqJR3FzIKZ5aJry44ap4HoabZiuX1pflO4X3ba8x29mh
- 2fmwqDYHlZrq9nhuxnwER9w4dPt5ABrQbU2BII4x8QRvE7yi7w8BH9OLbEokVvvoLq5+
- O/wQ==
+ bh=ksGvb6tIIoBcL19IyLaGN8z74U9Al+XLv7vvohNmR5E=;
+ b=jP8iKv3th8Ojq91UcBlmWn5SJwEbvAktG1okFdHG7u8ImnyvHIDSOIuolDIZ0430rc
+ k4uG/cpCwizDxcrzG+aga2NNc5oZEU9g7t+p5rVP+sfL8XIXiP48MHQener4TXo6i9pR
+ bwrVSv+zdsnFBOqRxo05eTsurTlx5jqDpMHlcR5GtA5KUkhd+Oy2fiYTFFI491YA3tnC
+ zKSNviIp7Qhs42z0BUzeOuuNgdUeZ7KE/JGHHIrdRf77V/6qZe9pClom8kZ0Wq4xFJ9i
+ lgLpibx+jW+ZdrELtqdRQNuXOC/ALxMkW5b0PvG5d3CqAsr9u9RaUGoMBZ3ax4n4Ebe2
+ yFuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767882870; x=1768487670;
+ d=1e100.net; s=20230601; t=1767882869; x=1768487669;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CJzuVbaZdIwgkAzM484kEZrNbs3ZhkcE6xTd5j2Mceg=;
- b=RsbbPRQVmWdKcPFr6WilXGcXf0oPwccDb/VoazdDCpUQBCMbboXaJpt1K8tYwgeSoA
- RFGxv4uZ+5FIQ9RLG6cIxNxIO8b7TgklraROg75EfNIcBhf7CxC4adiuGxHu0jAZB3xN
- WUTdvam9K6nmr4YCB/T7+NpbxqUhw8oy4mZCCxeY68jcAo8LrH6XcebsggzAFmVm2kKT
- TfxufNYL0rjwneRXuv4GacKfnMpvM+BkgqTGVxd0HpmzyCWadBChHeEy2o/g/GHPgwuI
- sVtvEUyiNsaGynAgKUowIltbaQ8R8CwwbAq9Xn7tpoDxBUS7eQyv7FWSQSLuoIbw4RCN
- q+Tw==
-X-Gm-Message-State: AOJu0YyLQeHTLDmUXh37qU5fRPc9bY0FkIlL87a+OG3WT5YX+TnGrL+/
- s4drb2oL6GJGS7NY6BTh4hs4md5MdpIqlJLJ4lzhcaFaFHOu3ImZyT4r1rz69b0pTHI=
-X-Gm-Gg: AY/fxX6QYuO6wGfiu1Kc2EJY7QJmv8/ZNvlxCaZvhlWAwN5KaAVDCagPCo1h6giddGS
- VtDze67LYqOl9mzQ75of1ao5WqQw5O2m84i9RL1wydfgLkAGCkqwNkM9Tkt/k50eSKZXZRWxEVp
- NYTTSWRZNAVgOaEgJfVvXfcJDkoygeZIQInescgCpdN5H9DOjPVT/FFOMgtCwbzznDO36vn2SN+
- ttCTt2KWdGKy5CUDICClwjfkdMH2VHrpH1J7loBsIkE5km3gaHBXk4wyRF2BXtDjZyCtkJkcNB1
- qt4R5dhEqK2AwEl6fWXDKfDqdth1KGqfcfOuPBq4hKepyyBbKxAbURQm+2V9lLwbeSJ0lwqTwgR
- L48T3Jx9qD1bo4LL9XmCVyqzUIoj9hcwoKzaeNh6JcynDerZz/yuqAYUiAf6wMK45MRFfMjon2p
- PooPW5B6P33AOvP7Sl2G83eQ==
-X-Google-Smtp-Source: AGHT+IEszrccpcodAmK2Okm4qvXdSHUt71l38BB9KgWymhwhe6pMkgAQT1Emcr+HTay4HgOGZdg82w==
-X-Received: by 2002:a05:600c:4fc6:b0:477:5ad9:6df1 with SMTP id
- 5b1f17b1804b1-47d84b0aaa3mr69677235e9.3.1767882870170; 
- Thu, 08 Jan 2026 06:34:30 -0800 (PST)
+ bh=ksGvb6tIIoBcL19IyLaGN8z74U9Al+XLv7vvohNmR5E=;
+ b=JuqN0y3yV8rWuPYwuG90LMpO/hzgNNzwbAVoRYdytLFQpvC4Vk/OqLXajzULat4xjm
+ 4XPqzDwLvZPfy0dlgpL3XrJDF4n6hLMTTuD4jSl4W6X2br9FPPf9P767hl4GzSeVqcTM
+ kwZolvhn3j2V3hOK72PyeZqngEc7ivg9F5syDZK+VW5vH632VuSP9QsiMEIoVa0CVxKR
+ lJe6XI3ZRmZitS87OYeXMN8hqZHgHvBGMtwdxVPnJ5gMRtj6uQrrJI/jpB9IkKycmFth
+ IfdKTFrRbyj+W1BvfubDua8Focwk4IPaV7IfFPBdGzJO1OL+Ys4jvEP25vdB4fwRDXIa
+ pdKA==
+X-Gm-Message-State: AOJu0Yx+tEl79LO1bXjBxDL2qSoaneSxQgDwk51UrZNdPtSSgmS/yol2
+ dk/ixPMMiNKUquOB7S4p/YX/awIxzhMaMHEG7616bGoqEkPh83cqZwrzpQuapYHL4B4=
+X-Gm-Gg: AY/fxX4CJKQ05jLKLbqp77DapZlT++Rx1TWxik9lKPGXodcLlxwujlD1EopnSSdZN79
+ 13NwR3b0o2ADU3OGnoq65azMqSPnvm2900FkMcnhZuUgdiAwMXg9+RrI8B8wHVGrd9WC2c9Q6yM
+ BVa3a/BSdHbm+4VJiotnh7RFio22TEeMkGl+lGYuiejBvYlLkrTtkTBdOJgGjGvsWpGG5KRivP0
+ D6a+fhCeXPCGGBh9OX4CBzHUYmyPg1AXof3NVCyVbc94U91gv3uNVVoVjAeOXSPm7r12D1gVidA
+ pTC3ZLI7+HLA/3fZ4S7kyrZr0VPZkt62J0M4TAF+UDvsU/Q3fsZJk8NVze8efDHki/bW6C7wXpC
+ It4QL2IUvBgv5waZPukQ9zkSRRrY7rM83nNR6GlIwPJpVPq89zr5s+r73l+M+YDG3Y4D1CyM2iY
+ /b6KzaNe1afO8=
+X-Google-Smtp-Source: AGHT+IFVmLmMizmNB2LIXR8Xv3q2Sppf9Sh1lb/5R/XMq5lNlyeZkdJf+M6Qph5BQgNY23BgFi5Zzg==
+X-Received: by 2002:a05:6000:3104:b0:432:7068:17d with SMTP id
+ ffacd0b85a97d-432c3775aa7mr8314435f8f.20.1767882868653; 
+ Thu, 08 Jan 2026 06:34:28 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d8719e695sm37602105e9.17.2026.01.08.06.34.25
+ ffacd0b85a97d-432bd5edd51sm16659017f8f.29.2026.01.08.06.34.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 08 Jan 2026 06:34:27 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6156D5F943;
+ by draig.lan (Postfix) with ESMTP id 74F565F94A;
  Thu, 08 Jan 2026 14:34:24 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,17 +80,17 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>,
  Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 06/12] hw/m68k: just use reset_pc for virt platform
-Date: Thu,  8 Jan 2026 14:34:17 +0000
-Message-ID: <20260108143423.1378674-7-alex.bennee@linaro.org>
+Subject: [RFC PATCH 07/12] target/m68k: drop cpu_reset on realizefn
+Date: Thu,  8 Jan 2026 14:34:18 +0000
+Message-ID: <20260108143423.1378674-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260108143423.1378674-1-alex.bennee@linaro.org>
 References: <20260108143423.1378674-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,78 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We never actually set initial_stack so revert to the previous
-behaviour and stash pc in the common env->reset_pc holding place.
+Now all the m68k machines have cpu reset handlers we can drop this
+extra case here.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/m68k/virt.c | 24 +++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+ target/m68k/cpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index e67900c727d..6af74b7ba1d 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -87,21 +87,14 @@
- #define VIRT_VIRTIO_MMIO_BASE 0xff010000     /* MMIO: 0xff010000 - 0xff01ffff */
- #define VIRT_VIRTIO_IRQ_BASE  PIC_IRQ(2, 1)  /* PIC: 2, 3, 4, 5, IRQ: ALL */
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index f1b673119d6..a540a754969 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -392,7 +392,6 @@ static void m68k_cpu_realizefn(DeviceState *dev, Error **errp)
  
--typedef struct {
--    M68kCPU *cpu;
--    hwaddr initial_pc;
--    hwaddr initial_stack;
--} ResetInfo;
--
- static void main_cpu_reset(void *opaque)
- {
--    ResetInfo *reset_info = opaque;
--    M68kCPU *cpu = reset_info->cpu;
-+    M68kCPU *cpu = opaque;
-     CPUState *cs = CPU(cpu);
+     m68k_cpu_init_gdb(cpu);
  
-     cpu_reset(cs);
--    cpu->env.aregs[7] = reset_info->initial_stack;
--    cpu->env.pc = reset_info->initial_pc;
-+    cpu->env.aregs[7] = ldl_phys(cs->as, 0);
-+    cpu->env.pc = cpu->env.reset_pc;
- }
+-    cpu_reset(cs);
+     qemu_init_vcpu(cs);
  
- static void rerandomize_rng_seed(void *opaque)
-@@ -129,8 +122,8 @@ static void virt_init(MachineState *machine)
-     SysBusDevice *sysbus;
-     hwaddr io_base;
-     int i;
--    ResetInfo *reset_info;
-     uint8_t rng_seed[32];
-+    CPUM68KState *env;
- 
-     if (ram_size > 3399672 * KiB) {
-         /*
-@@ -142,13 +135,10 @@ static void virt_init(MachineState *machine)
-         exit(1);
-     }
- 
--    reset_info = g_new0(ResetInfo, 1);
--
-     /* init CPUs */
-     cpu = M68K_CPU(cpu_create(machine->cpu_type));
--
--    reset_info->cpu = cpu;
--    qemu_register_reset(main_cpu_reset, reset_info);
-+    qemu_register_reset(main_cpu_reset, cpu);
-+    env = &cpu->env;
- 
-     /* RAM */
-     memory_region_add_subregion(get_system_memory(), 0, machine->ram);
-@@ -235,7 +225,7 @@ static void virt_init(MachineState *machine)
-             error_report("could not load kernel '%s'", kernel_filename);
-             exit(1);
-         }
--        reset_info->initial_pc = elf_entry;
-+        env->reset_pc = elf_entry;
-         parameters_base = (high + 1) & ~1;
-         param_ptr = param_blob;
- 
+     mcc->parent_realize(dev, errp);
 -- 
 2.47.3
 
