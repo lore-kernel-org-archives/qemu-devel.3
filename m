@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 338EFD1D494
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C29D1D493
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:30:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwdU-00036a-Rq; Thu, 08 Jan 2026 15:29:37 -0500
+	id 1vdweE-0004dI-DM; Thu, 08 Jan 2026 15:30:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwdR-000315-K9
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:29:34 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1vdweA-0004bG-Jb
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:30:18 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwdQ-0005Av-3H
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:29:33 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-81c5ff546f6so689858b3a.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:29:31 -0800 (PST)
+ id 1vdwe8-0005Rh-Jd
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:30:17 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a07f8dd9cdso27186975ad.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:30:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767904170; x=1768508970; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767904215; x=1768509015; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jW3LWGwMwgEozNO1PkbqsGNfqsVIRo3SkKhO12bp0Xg=;
- b=PdUxvlZ+YCP+0wp+599rwjuskXiLe9KGtgsY6lGFo7Ni+JC+KVyJquV/gxDUaB6ef4
- 9yx3+yHMR/Seh6UUXrifOBd6hV6cEp9l8veDad5XOjUCqqbZrMM/OuNibmXIkjplNEkE
- UCBPud2nkPapz6JiSdVVmhd4D0luCY+5ABpws4k01VvZFhFfcMNGXv8aaXUaye+mIaQy
- xsQ8dEW6A5JQ43VX/ghAnm8wB3IrUA4+TdCpkmg1bi99cVETTKU/Wq73uf0xx8KzV35w
- VuOhjTWv9xHdnlgfmvmZAgu5ugncKrHdBoJZFu989PgJJwYfY0kSbHs5JRdnmR2eU7j6
- ys5Q==
+ bh=4QsFoHppP+UKBgxOVKmvRxqOsUmnLNyygUI5t2IzMYg=;
+ b=Dg3ZIbgpX1T864amDC7urVkPANNH7lY7Wk8RVn+64avxB2PMFzlZ8XSrh0Bnz7tSmk
+ IsCb5nASbnJjJyVA/TFErNYbiVXbZ8hZt1jYT5Jwi+TzOtjrLXLy1BExWBT+IF0i52Lf
+ rmi9WHr6gx1qKutKwB+YJa6u1zJvCYTQGU68OTqnoy9avaHoGPafqh50hl/v5h3+tunm
+ XLXptEN9woYTO3ZVSS14ejZ0UNMiTNY7riI9cnBlMdCs8ZtFRwltI+kJQuG2wgfLN4Em
+ WKqRuCFf+yrZ1KiQIVA1Q16gQ8NqCGORuPw/KE0ndB7JWiUw484wwZDrFRWT/sKFQmn/
+ VSTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767904170; x=1768508970;
+ d=1e100.net; s=20230601; t=1767904215; x=1768509015;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jW3LWGwMwgEozNO1PkbqsGNfqsVIRo3SkKhO12bp0Xg=;
- b=OJtfC8VwrHtuwFqMLAkX3Os0pvQktD1yZN6tSyejg7iuNvI65H+iBE3Y6CWE1bl19q
- +rrDxrxaVp56QGXLXj0BhJa/ZvW/D3X1L6WAqUOiWzaGr9zXdA+r+aDMIYXysnYt/TW8
- ohynoH6cYC3Sd0TgLVMdYEAutzzY0mhaLab/J9gOyB/LW0L6SOTqxODPPbC7ljFY846/
- 0zJKD4NiN+JVuIkiY9Z9ZuA2Oi1dd1gAIXAYdU9b+uXvmMVZrR8XN4nJema3DAviOLCs
- sa2LPAP9DE6w7HPRgaE4hl/XKtY5J0+Jqthj5ye98pCKmioU/XzGA45n9Kz/vmOhoPmt
- 3TLw==
+ bh=4QsFoHppP+UKBgxOVKmvRxqOsUmnLNyygUI5t2IzMYg=;
+ b=jxVPhJUljAFkrn0i15XTJ+Ke7cnn971uKkJH0QylLTpWt8YV4auxRls7Botxlvv8K3
+ TVfGbhT4B9ayQ43yPMsrh6RRWl5CN3NYPZjtqexYILpIHwCNOFfby8wtNUIbyJ+Mnxei
+ AEWphrdT059fLTAyiRd3bxz4+HVWoUBFPn5WueG12oIvsVD8whGQA7XDHjkxMuEGNG2s
+ nu7N6Ej5+CNrV7wA19F9bAMV7CZxzwzd1J70qOygcRTqZbvVlrKzzqiAC11QEiPBAw69
+ PMfj/4aS8ZlDzrHmCWhDqBj8FZB532auP06Fqxq8QEhBaGQI8VIEp1s7aW/I5WSVL1R0
+ 3OoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhdXCL2NomDI0GR9+sDvvWXAZy7a42QjrBhLiCmA6U1IJ1ahNGJXeno/eGbzfUF2psO1JXfA8x7ntN@nongnu.org
-X-Gm-Message-State: AOJu0Yx0h6N/i+OzaGRAUlOZnglWWwrt/UDAXxuUObgZxt1N9XDN8dCf
- V5Br/pIg/Sqs1fpdsL9UZuZEa4LgRdzPZrmpu7rgH/zZ/nUoTnR8lJBASEDiCwewwqc=
-X-Gm-Gg: AY/fxX5Dc+EVWYZJNvFSP6U4FczIrYm2Q1/c7UG5mLD38cMYutFpb42E77tIb2S2oEy
- 1egMlP4+etur/QA5R8kujH00nQwPuXQrh3keQ02PhE++CZDZ9cxRJ52h2s3ZesoM5XnhtqgJ5MJ
- prq+yib6OEwyviP18qbjIbo1htjuynn1cGP35Nsw4ogcabqxPWoH+bS1vjQFe2AVIg2za1nwBtl
- RIYD2dI0rK2wXkm7L0ZaAcoVQ+jC4xH+XTH+QKhHDwczVU8DWPWdtD5cmsFhE8ntn5YNuPTwN0z
- G6uqTMciM5Fu3KanDH2U2zW9ZtA6auNyyfRxmYkUnNpg0XAIl4+7AAcyDCO2cVk2lBIgC0uG8zr
- /ZPowjxYUt6qLrn0gB1XRdWS4zSkEPlunmUJI+d9eWA6R3/wkoqfhFmfHPHhxeko6MmrBg+/V6l
- uNn+YscDEJghsTuJE+mL35v6Wy4rC09lHpSXP01NjzHKxm0NrYMRRCbkXW
-X-Google-Smtp-Source: AGHT+IFM50YujG19DwdgHjwTTZEj+HylH87oUQJNs3rUmFJ8xCLfJfF7WxE/nmAvPlnrhsroepwyKQ==
-X-Received: by 2002:a05:6a00:4390:b0:7e8:3fcb:bc4d with SMTP id
- d2e1a72fcca58-81b78e9a2femr7234949b3a.34.1767904170378; 
- Thu, 08 Jan 2026 12:29:30 -0800 (PST)
+ AJvYcCVRiDDuU7hLvrcNmIYZsFCki6mkVEKLVx6y2kyRB4SpdroX59tdnHyDTCOgzGSMwnuW54zkQvZLwF16@nongnu.org
+X-Gm-Message-State: AOJu0YzMY0QIWBIo/3hRUIeMz75vCFlgtJRqxuG8MOKupYQAfLK+3nH4
+ ujreid8+WTINZUwqGEH93ZQi1f5+//sb5XBUYyTO+JKS83jVLA95eG0415Qm6pwej+xiw0xk6hy
+ i18he
+X-Gm-Gg: AY/fxX4mKeRtX1Tmme5jcCCzW9dsuS88DvfqubswkaYiYZ3Ews0v8oUmjqb8RVUAnfm
+ QobQGLMamnCwKBxhPcnsW4TTlUlRgqlF6cxyd/LCqeShhYwleYzshlaGlJ3ShbVf/2wYV/lEyIj
+ VdObNMUXpst1jp5I+j5YkaFZ7qVotJ0YbgF83br86UtdK2eFlOiyz0mKp4Y2srhPfDbcRoHZUQK
+ pCxkcOwfeVDQ+deYJFMjRnfFhGA9KDN/oVX+glK4nJTJ7XQW4kMCrjlA1SXb9LUKIdXAIYJH85v
+ 7EZrop7wTYm70+h5ehBZcWNV7Whl5iOMPz82VIddqaSGuifK5idg7Q7tjMoRkZcStak2+PMMFR1
+ SIZBjBdm+p5R50Hx1xIHnDeKSWuiviZmVMS1t8Hs7h4SdbnwQ1/+YAtxikLW8Juy10P22BkU/9k
+ UEmnkJyu0spMGeXcu/PQbBN7Mpe7nszxWjlg5QQiEstpf7y99mcn3qNo1FGpKJ214x8dg=
+X-Google-Smtp-Source: AGHT+IG6zfRUi56iEzOjnxTsJ7K8xpsIKVkGASaGXjHxQU2cyYDg9CkGemIaTlwYWBwKLCp71I2OGA==
+X-Received: by 2002:a17:903:2ec6:b0:2a1:388d:8ef5 with SMTP id
+ d9443c01a7336-2a3ee424ad7mr67530795ad.19.1767904215035; 
+ Thu, 08 Jan 2026 12:30:15 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-819c52fc9bdsm8439456b3a.32.2026.01.08.12.29.29
+ d9443c01a7336-2a3e3cd2acdsm85490565ad.89.2026.01.08.12.30.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 12:29:30 -0800 (PST)
-Message-ID: <32de5a38-9e9b-474c-b0e7-1f63e197433d@linaro.org>
-Date: Thu, 8 Jan 2026 12:29:29 -0800
+ Thu, 08 Jan 2026 12:30:14 -0800 (PST)
+Message-ID: <e548ccc7-8c2e-4882-a490-03891def10d7@linaro.org>
+Date: Thu, 8 Jan 2026 12:30:14 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 20/50] tcg: Remove INDEX_op_setcond2_i32
+Subject: Re: [PATCH 21/50] tcg: Remove INDEX_op_dup2_vec
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-21-richard.henderson@linaro.org>
+ <20260108053018.626690-22-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108053018.626690-21-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-22-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,14 +111,11 @@ On 1/7/26 9:29 PM, Richard Henderson wrote:
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/tcg/tcg-opc.h    |   2 -
->   tcg/optimize.c           | 205 ---------------------------------------
->   tcg/tcg-op.c             |  47 +--------
->   tcg/tcg.c                |  32 ------
->   tcg/tci.c                |  10 --
->   docs/devel/tcg-ops.rst   |  27 +-----
->   tcg/tci/tcg-target.c.inc |  16 ---
->   7 files changed, 8 insertions(+), 331 deletions(-)
+>   include/tcg/tcg-opc.h |  1 -
+>   tcg/optimize.c        | 18 ---------
+>   tcg/tcg-op-vec.c      | 14 +------
+>   tcg/tcg.c             | 94 -------------------------------------------
+>   4 files changed, 2 insertions(+), 125 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
