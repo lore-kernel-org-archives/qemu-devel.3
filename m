@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE227D1D48A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CA9D1D48A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwGU-00085m-Rm; Thu, 08 Jan 2026 15:05:50 -0500
+	id 1vdwHh-0000lw-Un; Thu, 08 Jan 2026 15:07:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwGT-000850-28
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:05:49 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vdwHh-0000lj-1e
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:07:05 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwGR-0007o4-IR
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:05:48 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2a2ea96930cso26746675ad.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:05:47 -0800 (PST)
+ id 1vdwHf-0007u2-Er
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:07:04 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7b80fed1505so2505235b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:07:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767902746; x=1768507546; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767902822; x=1768507622; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Eca1/bTgJm0CzM7sCdiqvzs9RLCU4xA44/QNJhBl5Gk=;
- b=EOAJfMLXiaQLc7Df2GJndCAqGen1khmdP/nCSVanpQis0xOz/2ouE7UGMj81wZPpJq
- TA6fwWo9VdwAYo8GCHOK4bk5pGqfSz9STcebkPYSTP72GFS3tWBYnKFt9Z86C8boJqpR
- ofWW/Img6uXpajhg1/XkZ8Wivio5hsnF5roZ63d6FMhp01FWKZKPXlUFP0h12tk8cOw9
- dpRb20ByZeU+E0+Oe9UWqmKB4f37n5La+ORXMk/nEWPy9A346lagclJiTh1qGEnBLkI5
- XssCk7rMOS8f7JiWW8rHTizriLf8n6w+tsFNcOVvykM0nSmPTHnln/IeKWn6HcUzIezT
- F1cA==
+ bh=EyJ6ymGFAf1tjZakj3TPH/Wtg30m8FQO39obk0lxSso=;
+ b=bYXzGKpgraJAgEmDqM05qW9aA7hYV0voXNBRbBCpsWjU3gNTTbNnk7z79g/2Vkh3pI
+ Bk8y62FyUJ0l4bUL048oyKw34L8Nouc9PXCeIzHmK4sntY57acfo6zhvT8neoacLDkvv
+ vilbSvkwKQRvwrdp/khIsIoIp13aJAdoCZnGsylDHYR9QSgFCTcFmYEROoPqdAA7M000
+ O9/esTdPCl4Gzft+2CjKoeeN3y8MxVZBhZYDtJmgTW2u8CYuGmC1SLGckHCmEtl+xxg8
+ aDqwI1IS0ogKsmlx5JENGQteS+cB+zShsLy5JrsUySd8GjApLDeBg0DI5DMvtWUAJCIv
+ CGQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767902746; x=1768507546;
+ d=1e100.net; s=20230601; t=1767902822; x=1768507622;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Eca1/bTgJm0CzM7sCdiqvzs9RLCU4xA44/QNJhBl5Gk=;
- b=a8WKka7wMqYDEzWQUmysAlJZL8t2jlljNK9nMcKD7YNbnlACPbB3U8w3LSDIf3d8zs
- rgFX5XfmJWNxniYMU420msTHFewqHy9Nej54mgmBd5wFnNBRbpI4jwsBo14r8+qDnb1q
- NERjZLABui1TH8J45qOizYhh8FA6sG1Azd4JRZXVWQ7S73QbnIS3VjS88qY0ixxOg/xO
- tKOX/x6oKfuP4P4VtblxUbiXmYnILgmL3v+cu3xsho+P8XCZI+H7pYiJB4e0mDUUbnqx
- iuBY0SFLHx80UdBf37q8DrNGHFj91wHR/owk9lUUin6TdX7mk/Hy5zuuX9en3kAUVmTJ
- t/cA==
+ bh=EyJ6ymGFAf1tjZakj3TPH/Wtg30m8FQO39obk0lxSso=;
+ b=Pzyp4dELMlsAn8xSsJU/NYW98Abg4+rf3OBgqHJYAb3m6gTsmrbR3HkS1fPXm9lASm
+ 842niJPksC0rgd2vpSKvYnVy/qzMht0b9Blf3fSG3e5K5f9cQ1N5DE0Cct3DUOZRCjCJ
+ /8rRZCHylnfHFxuck1T+exKLehx5a5NvMUNrE3NeDZ9vwKmCBIQXT9X95AySk0dmyCQp
+ oV3/zR3gS6na1FuUhhHll/E7KtVxTlQivg0siMj0E7FBsII5IktfQlhYzue+bZMH4KNn
+ qaPvdEVyY4Oan6LvtNAoiMTsuTPziIUW8qs4moSP9xjguU8q+0K2Si237vEybBpy7sV4
+ seyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUqCroo1j5HFpQ2tA9kE5wFyrF2pdqMqnWCZUK7ni3CtqMn/pTlksgsRBi1b7gOfs4X3wvrirtAAjoO@nongnu.org
-X-Gm-Message-State: AOJu0Ywy5W4+HSo/wV7uuUplja3kbS+T9JpWG7eNpMF1gfSca0oMiHEN
- Z05gL5n2Tg56WaGW4uqg2ad+E5wXMlpKu/+7coefXxt1zp29AJR/GsstzFV1dNT33s8=
-X-Gm-Gg: AY/fxX7nrU2uddbBkea5g1vrBcPJUR4s8W5TCGiG5u3O4LETk9Tx3OKLVWNxnbKVYiq
- secdB1MSwNSULSo/p5hLMz1BGXP8aMu4lW86zJQgavkW6z4pccmR4DzJFzUsn+C9MYsWI8skLuS
- WCQBpz5fbCqYyzm5FV0oU4F/vaFqYBe/3udEEJbfyXNDsrgQuO8g/Fnr7uUtDXx/+SpwV2DDZVb
- +ruXijMi7MJXrG7JKKIrMdFN8qrJmWp7RyhB/bv/y1cQ6lFN9LatPNKMGbOBAI88jatDgvZDma6
- wPU3HJAbepA+OjUuzh/o/Qk6ShjB5yFlAcllJ7vbRe4Uam2yXTM0SijiKHKX19kZKAdGKFBW7OI
- g3dHdB+vU+rU5CnvGo1FNxjk0WfwoboWaQKAJ+O+odQTr/0ibQIUOGnmYUsidQWGJGi0es38i2t
- XQaZWr9KoBWaXQcXSWylj0Ge8yD4NYSpNrsZA5zvq/bpegdodK/3+rMWYL
-X-Google-Smtp-Source: AGHT+IF7gC9/C/38ySSpllApSZgmo7/5TVFAbBhdcMaNMKTRsIPZOrhUTx4serN5fUQWyKICU+y7Zw==
-X-Received: by 2002:a17:902:f54b:b0:2a0:a9f8:48f7 with SMTP id
- d9443c01a7336-2a3ee513ce6mr64555425ad.55.1767902745968; 
- Thu, 08 Jan 2026 12:05:45 -0800 (PST)
+ AJvYcCXX10r6S6OeluMS+7l5eCCbrsSqzh3O0surbPoWQGXxyhBirfjSFyN65TJkYl+NrFee99y46MgEnb01@nongnu.org
+X-Gm-Message-State: AOJu0YzfzTD0vw2jGZmcL0M8WOhB7rPauNgPE4xdRhbc7NpBlzu4P17i
+ vbpmnbCnlEm6IpxThY1DejOKrLvxOAdU9j1IcXIGh+AhOWmLXDaLO3ALmkRAON4ZQJ8=
+X-Gm-Gg: AY/fxX5nr3tgSk+3ZeWe1lq5jJQfsQKaInfAZFm4Nhroux3+m4dJH4EARXTILP1brRm
+ Tj1c6IuCdmZjU7I6CsNXBNDMDz2Pmschguu87KCtGTWo4ktsAhm8cGXBpQU+4NyzMef/56RMGQ+
+ TLcaAYyDLXVVIyB1vimH2lyS/aYcTIuZlHh4M5kmThfGMjnx0IAgp1y88XpzeyUMuTO1+BL8ffO
+ Ec1G1TpbYBTqaWAyounRcgPB1N0+3VOYCYJP+wL+caQvs3Bi3wpQ7D+xW6zWOEuxyarb1n9ABYh
+ uhUqyn5gFe2JJNhCvuxbmDtsLKQa/MLfzSVyK5IZwUZbsb825s8yi9/3nmo9f3V/WLvcHe406oS
+ M+87t8CM9RdyBjN31YkGmbvRmMi/PJ5jwXMDOXtwbRVv2gyQx/jAFc4Gcik9B4FIeJ3vH2dNqdu
+ mdTUOeT4kU4tCbF64/x96qifEJSNxTldhPYrClOUJW3FfjwWMXyFloy+lX
+X-Google-Smtp-Source: AGHT+IGxGGi5AQqoLVkNgff4o1qRtj+UAWEaHGgAYNEq9og1F0x2eKCOc9vRCtgUXm++hBEX2y6zyg==
+X-Received: by 2002:a05:6a00:f86:b0:7ff:a5d0:f8e4 with SMTP id
+ d2e1a72fcca58-81b7f7e2053mr6983841b3a.33.1767902821764; 
+ Thu, 08 Jan 2026 12:07:01 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c4796asm87072055ad.34.2026.01.08.12.05.45
+ d2e1a72fcca58-819bafe96absm8412118b3a.17.2026.01.08.12.07.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 12:05:45 -0800 (PST)
-Message-ID: <9408ea62-ae35-4d49-ad79-739c1f3952dd@linaro.org>
-Date: Thu, 8 Jan 2026 12:05:45 -0800
+ Thu, 08 Jan 2026 12:07:01 -0800 (PST)
+Message-ID: <ae3a0a28-aafc-4710-89e8-04047fc929ec@linaro.org>
+Date: Thu, 8 Jan 2026 12:07:00 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/50] *: Remove __i386__ tests
+Subject: Re: [PATCH 06/50] *: Remove i386 host support
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-6-richard.henderson@linaro.org>
+ <20260108053018.626690-7-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108053018.626690-6-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-7-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,24 +106,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/7/26 9:29 PM, Richard Henderson wrote:
-> Remove instances of __i386__, except from tests and imported headers.
+> Move the files from host/include/i386 to host/include/x86_64,
+> replacing the stub headers that redirected to i386.
+> 
+> Remove linux-user/include/host/i386.
+> Remove common-user/host/i386.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/qemu/atomic.h     |  4 ++--
->   include/qemu/cacheflush.h |  2 +-
->   include/qemu/osdep.h      |  4 +---
->   include/qemu/processor.h  |  2 +-
->   include/qemu/timer.h      |  9 ---------
->   tcg/tci/tcg-target-mo.h   |  2 +-
->   accel/kvm/kvm-all.c       |  2 +-
->   disas/disas-host.c        |  6 ------
->   hw/display/xenfb.c        | 10 +---------
->   linux-user/syscall.c      |  9 ---------
->   target/i386/cpu.c         | 10 ----------
->   util/cacheflush.c         |  2 +-
->   configure                 |  2 --
->   13 files changed, 9 insertions(+), 55 deletions(-)
+>   host/include/i386/host/cpuinfo.h            |  41 ------
+>   host/include/i386/host/crypto/aes-round.h   | 152 -------------------
+>   host/include/i386/host/crypto/clmul.h       |  29 ----
+>   host/include/x86_64/host/cpuinfo.h          |  42 +++++-
+>   host/include/x86_64/host/crypto/aes-round.h | 153 +++++++++++++++++++-
+>   host/include/x86_64/host/crypto/clmul.h     |  30 +++-
+>   linux-user/include/host/i386/host-signal.h  |  38 -----
+>   common-user/host/i386/safe-syscall.inc.S    | 127 ----------------
+>   host/include/i386/host/bufferiszero.c.inc   | 125 ----------------
+>   host/include/x86_64/host/bufferiszero.c.inc | 126 +++++++++++++++-
+>   10 files changed, 347 insertions(+), 516 deletions(-)
+>   delete mode 100644 host/include/i386/host/cpuinfo.h
+>   delete mode 100644 host/include/i386/host/crypto/aes-round.h
+>   delete mode 100644 host/include/i386/host/crypto/clmul.h
+>   delete mode 100644 linux-user/include/host/i386/host-signal.h
+>   delete mode 100644 common-user/host/i386/safe-syscall.inc.S
+>   delete mode 100644 host/include/i386/host/bufferiszero.c.inc
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
