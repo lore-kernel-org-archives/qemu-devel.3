@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C6B4D14899
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5254CD1489A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:11:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdgPo-0008UH-9t; Wed, 07 Jan 2026 22:10:24 -0500
+	id 1vdgPv-00013o-23; Wed, 07 Jan 2026 22:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgOh-0005mY-BE; Wed, 07 Jan 2026 22:09:16 -0500
+ id 1vdgP0-0006JM-5q; Wed, 07 Jan 2026 22:09:35 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgOf-0005YH-N2; Wed, 07 Jan 2026 22:09:15 -0500
+ id 1vdgOy-0005cZ-DN; Wed, 07 Jan 2026 22:09:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767841753; x=1799377753;
+ t=1767841772; x=1799377772;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=kNYkiaNSgjNxHBpmze7LKKP0q9ceZ2SXtXvlRLGlXSo=;
- b=FextAjlPKUJ5Rw3lP4xiM51Er8D3VJi/l+OE+51WrkI0NuTZBwzqEi4u
- 3Y8bf9mHv8vgFH+YXpC31ZWcLXTd6TBfQV9t+mkwgo4IHfZey1AtvJmKg
- CBH0iPbpSxFQhYrS69Tezn9nOjVozB1M487RAsU5ZJFhwLRAb6+I5ukWS
- kXHcukyROwX79XkvuVjQ9jjyxT3+R7u+p9PFvBcszR1CtlOcUuY1IXb9C
- n4LcBhdE1FzwmLmocnk1rpBW9KT6olT4uRHX66zviO59QuCtKokYHNuZK
- ns9xJbvsBhH5N7mTNgzrkfntJrqu3f7LMd18P1TOMC3nKAYmX+OhLZ5VS Q==;
-X-CSE-ConnectionGUID: BbsCl4e8TDWqjHxyF/uB3g==
-X-CSE-MsgGUID: kKFX1X2SQJe6mWW9hG5MOw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877570"
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877570"
+ bh=WW3wMknALm2VrUHqeXw0nKdOWnuxpJr1LWEuBqml9t8=;
+ b=fRS5/2vkNx+hdp8gT8YJiT7N5ds7cZydY7YIspEb1RzNn/JQeySwnU2h
+ d/uaEqwiXo2DFBLwXENTPwhtwaoOzgAAqpR8sAwyzEkLqY8rAwDi7JiWJ
+ dXwQu78Nh2/6PW6HpuxRWg6S9s6MMrfjWiO44SAiTJfFqYHu6LWqGb9iv
+ XSIh8w04cW/qsGur+l0kfUrmHE3SduZbZT7dyXjH2YH0FUodecwEpDiBJ
+ xHLdXh2sYLAwhV0yHPuzJXYoW6fPM4z+dTrKp8XXWXgQt9ILj25inDH55
+ a+YMEiZvtWF19gW/5KRCzClgef0Fluu02P/ynifeNf9PibMlz4qva7m4c g==;
+X-CSE-ConnectionGUID: k7sMdwwUSO67ifpYpQWC+Q==
+X-CSE-MsgGUID: 9PBjpPODR26ybmSPbNJbZg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877657"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877657"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2026 19:09:11 -0800
-X-CSE-ConnectionGUID: tPOD766tROaPRuJG7KUpiQ==
-X-CSE-MsgGUID: lx/Vopy/STe1TSWeU+qq0w==
+ 07 Jan 2026 19:09:29 -0800
+X-CSE-ConnectionGUID: 6t31tzR6R2qxCswGscTRbw==
+X-CSE-MsgGUID: lL6gXO/EQgeFpv2jqTmjHg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211235"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211253"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:09:02 -0800
+ by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:09:21 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,9 +72,10 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 23/27] hw/audio/pcspk: Remove PCSpkState::migrate field
-Date: Thu,  8 Jan 2026 11:30:47 +0800
-Message-Id: <20260108033051.777361-24-zhao1.liu@intel.com>
+Subject: [PATCH v6 25/27] hw/i386/intel_iommu: Remove
+ IntelIOMMUState::buggy_eim field
+Date: Thu,  8 Jan 2026 11:30:49 +0800
+Message-Id: <20260108033051.777361-26-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260108033051.777361-1-zhao1.liu@intel.com>
 References: <20260108033051.777361-1-zhao1.liu@intel.com>
@@ -108,60 +109,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The PCSpkState::migrate boolean was only set in the
-pc_compat_2_7[] array, via the 'migrate=off' property.
-We removed all machines using that array, lets remove
-that property, simplifying vmstate_spk[].
+The IntelIOMMUState::buggy_eim boolean was only set in
+the hw_compat_2_7[] array, via the 'x-buggy-eim=true'
+property. We removed all machines using that array, lets
+remove that property, simplifying vtd_decide_config().
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/audio/pcspk.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ hw/i386/intel_iommu.c         | 5 ++---
+ include/hw/i386/intel_iommu.h | 1 -
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index 916c56fa4c0a..0b01544941cb 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -57,7 +57,6 @@ struct PCSpkState {
-     unsigned int play_pos;
-     uint8_t data_on;
-     uint8_t dummy_refresh_clock;
--    bool migrate;
- };
- 
- static const char *s_spk = "pcspk";
-@@ -202,18 +201,10 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 224b7b947906..2ed64bc6d968 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4092,7 +4092,6 @@ static const Property vtd_properties[] = {
+     DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
+     DEFINE_PROP_ON_OFF_AUTO("eim", IntelIOMMUState, intr_eim,
+                             ON_OFF_AUTO_AUTO),
+-    DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false),
+     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
+                       VTD_HOST_ADDRESS_WIDTH),
+     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
+@@ -5359,11 +5358,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
      }
- }
  
--static bool migrate_needed(void *opaque)
--{
--    PCSpkState *s = opaque;
--
--    return s->migrate;
--}
--
- static const VMStateDescription vmstate_spk = {
-     .name = "pcspk",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .needed = migrate_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT8(data_on, PCSpkState),
-         VMSTATE_UINT8(dummy_refresh_clock, PCSpkState),
-@@ -224,7 +215,6 @@ static const VMStateDescription vmstate_spk = {
- static const Property pcspk_properties[] = {
-     DEFINE_AUDIO_PROPERTIES(PCSpkState, audio_be),
-     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
--    DEFINE_PROP_BOOL("migrate", PCSpkState, migrate,  true),
-     DEFINE_PROP_LINK("pit", PCSpkState, pit, TYPE_PIT_COMMON, PITCommonState *),
- };
- 
+     if (s->intr_eim == ON_OFF_AUTO_AUTO) {
+-        s->intr_eim = (kvm_irqchip_in_kernel() || s->buggy_eim)
++        s->intr_eim = kvm_irqchip_in_kernel()
+                       && x86_iommu_ir_supported(x86_iommu) ?
+                                               ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+     }
+-    if (s->intr_eim == ON_OFF_AUTO_ON && !s->buggy_eim) {
++    if (s->intr_eim == ON_OFF_AUTO_ON) {
+         if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
+             error_setg(errp, "eim=on requires support on the KVM side"
+                              "(X2APIC_API, first shipped in v4.7)");
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index ca7f7bb6618a..34ba13ffa8de 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -310,7 +310,6 @@ struct IntelIOMMUState {
+     uint32_t intr_size;             /* Number of IR table entries */
+     bool intr_eime;                 /* Extended interrupt mode enabled */
+     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
+-    bool buggy_eim;                 /* Force buggy EIM unless eim=off */
+     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
+     bool dma_drain;                 /* Whether DMA r/w draining enabled */
+     bool pasid;                     /* Whether to support PASID */
 -- 
 2.34.1
 
