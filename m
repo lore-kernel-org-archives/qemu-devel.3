@@ -4,106 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996D8D185E8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD0D6D185DD
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 12:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdomv-0001zy-Tr; Thu, 08 Jan 2026 07:06:49 -0500
+	id 1vdon0-0002aw-0U; Thu, 08 Jan 2026 07:06:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vdomj-0001bu-NL
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:06:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdomw-000260-4V
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:06:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vdomi-0003jQ-7a
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:06:37 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdomu-0003lK-CH
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:06:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767873991;
+ s=mimecast20190719; t=1767874007;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=P75vqgH2JGmyjPiVf4WrlChqenNybJ2egsWzv8PKRY4=;
- b=JLNQfKyqCJ0CZxa88HrjF2vlrjbySRnDJFuN5INKpc6k00MqiVoBUylC0RhsEgoBZN935E
- ooT01UDGTCEyRO7qnDGVtqtqCYLZt7mpm9z/EDcxezdGMXlkjnDwShRTUcQVQJnNtdeIpx
- xVhDaKaZ4PxvF0qscN7ZY4lKAgcG1nI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-62-gP9xYlE2N5q9bXuicMqLwA-1; Thu, 08 Jan 2026 07:06:30 -0500
-X-MC-Unique: gP9xYlE2N5q9bXuicMqLwA-1
-X-Mimecast-MFC-AGG-ID: gP9xYlE2N5q9bXuicMqLwA_1767873989
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47a83800743so10122165e9.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 04:06:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767873988; x=1768478788; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=P75vqgH2JGmyjPiVf4WrlChqenNybJ2egsWzv8PKRY4=;
- b=jEfR7uivIyRJb50zxueowXTtLvqaxJAgot8a2Bn2CEkwERmRWxDdgizfPNpjvsbpPJ
- 6semYZskF4Q+YB95QvI1CKQv2KRiRbSN8Ygre4EgiE6P3bfqVK3r1XubCr3g/tJ0aKHV
- P+J6UeBV0kcP6wBXsqb02+cdG7svzS/bcI+RZUBSfc/HNR18fTcYrI91YhkRWQV9QWz+
- +gZKcrX7ygv4N5SAUEHNJivsjYtQUGmzfdCE05HwlDvhaQtLqw3SugIQpT946SkXRTg7
- EE3lzM2bXZMrpaKhT5X9h1uOXjIc0q2cpNYK7C0BEIHw9XsWcNoBLU90geKadbet/dNv
- T2Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767873988; x=1768478788;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=P75vqgH2JGmyjPiVf4WrlChqenNybJ2egsWzv8PKRY4=;
- b=nqhwsxt6LUTVwlG865r0qL8cQzro349ZwSyi2ZO9s6bYxgWgwqCddd5EPYB+qzMxYU
- bRQwO0cAAFFLa6UsbV26ntnG8Dv/OhrCzIzP5JSiBCsTr9rBYbVhETFvmRLh5AGDDW2o
- cKlKlsq26jGO6witKXxNBfPey8gbvpKpxDmrNJO0TkI/aAEWjns7O4xzV72XiaUdMBM4
- sdZk3VD6yOpaL/k/f/Z8BE4Vd1kUSebkq+ZvVzH21DlaxxaYL+RXIYW60ChWinLM2UdZ
- xJSYYZFCpyWN96iHpNZ5RqKzFYPONb6UxOAd/RjpfmqMoUfqikEYLwMWmCaNu/BVf6De
- l20w==
-X-Gm-Message-State: AOJu0Yz47brZw6EaqHffno8+9bZklh0seYI85tMM1GVjKNEee8udRaOI
- IjGsFwqMvMPPfLoFkCBoCcqUJswse5M+Ud5vZjdIrmqU0xTre3bMBQrZOE6AeWHhO6ERFUxdWZ5
- J7jkZTklEsvtlr7fUc2+Glkh5Dcr8M4+prwOqDuxl1sljeaMsSMaB+mINUIqiYbGgX+w4HelJB0
- 4gcosvnIMIP0mThwvh7qZGxbztIPIIML1s0eRS3W8FRg==
-X-Gm-Gg: AY/fxX5ECLP8mcccElF5XpkGLR+8mkGZsAaNFBkxhe485Jt7Cp1I4IwwAHiQtKYjrEF
- GbiebSSBLhNy6BWtgJXvqc4GyO34rZEkHgg0PhCTXZOSFfcUYSs1WiZn8ZKASWf+CyuUYP7JIs2
- 7vivc1kZGnbcdoFAf8jTfPygy6FwRyujCyUpZG5qrOSXldYOcIVSyfe07akX5pyNxNd0Y=
-X-Received: by 2002:a05:600d:41c9:b0:45d:5c71:769d with SMTP id
- 5b1f17b1804b1-47d8484a4e7mr66678795e9.8.1767873987910; 
- Thu, 08 Jan 2026 04:06:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGXT2uRbpYUMw+wlEh00XI8AvuVA/Y/+0WsqJLeJ71xzaUziW8JJHVvPuKn7BEYQza1T/arWAyNCY63KzfmNLA=
-X-Received: by 2002:a05:600d:41c9:b0:45d:5c71:769d with SMTP id
- 5b1f17b1804b1-47d8484a4e7mr66678505e9.8.1767873987511; Thu, 08 Jan 2026
- 04:06:27 -0800 (PST)
+ bh=3UhWHJ6TYDhANns7ZSH9ItR0KO1XhOLNd//NrO4DGwU=;
+ b=W6dJm6EJudVpSgddRorqkwy/vYEoWwQ/oqb8/JGmT+Hp5vnKIA4/uCNJkbWqJGlOAYFvY7
+ Pt0WJ4cPNRcQ2fJ3ebSvoljWcHA+Zj7DwJbCXo6TpQjLjDR8MNjuTrH7bQMkuJWUjJOXse
+ 1ZNpu0Q0C7iLPUJ064TjYjmfJajeJKM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-DIcwJhV8MyueE426-5ns5w-1; Thu,
+ 08 Jan 2026 07:06:44 -0500
+X-MC-Unique: DIcwJhV8MyueE426-5ns5w-1
+X-Mimecast-MFC-AGG-ID: DIcwJhV8MyueE426-5ns5w_1767874003
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40B30195608D; Thu,  8 Jan 2026 12:06:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7A0641955F1C; Thu,  8 Jan 2026 12:06:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id F122321E6937; Thu, 08 Jan 2026 13:06:39 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 1/3] qapi/misc: Fix missed query-iothreads items
+In-Reply-To: <20251229103859.98777-1-zhangckid@gmail.com> (Zhang Chen's
+ message of "Mon, 29 Dec 2025 18:38:57 +0800")
+References: <20251229103859.98777-1-zhangckid@gmail.com>
+Date: Thu, 08 Jan 2026 13:06:39 +0100
+Message-ID: <87bjj48g1c.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260107200702.54582-1-philmd@linaro.org>
- <20260107200702.54582-6-philmd@linaro.org>
-In-Reply-To: <20260107200702.54582-6-philmd@linaro.org>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 8 Jan 2026 17:36:10 +0530
-X-Gm-Features: AQt7F2ogQO7OcCzMJqituu9atiWvQPtpqnfvPUZIJetL2OPoAk3n0pmukpUAYjE
-Message-ID: <CAE8KmOzxmM0NVSAJWHjyUgRg8=3C48-sbVnaTxg4u8GyoDnJtQ@mail.gmail.com>
-Subject: Re: [PATCH 5/9] target/openrisc: Avoid target-specific migration
- headers in machine.c
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>, 
- Anton Johansson <anjo@rev.ng>, Richard Henderson <richard.henderson@linaro.org>,
- Bastian Koppelmann <kbastian@rumtueddeln.de>, Stafford Horne <shorne@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Helge Deller <deller@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,37 +85,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 8 Jan 2026 at 01:41, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
-> machine.c doesn't use any target-specific macro defined by
-> the "migration/cpu.h" header. Use the minimum header requiered:
+Zhang Chen <zhangckid@gmail.com> writes:
 
-* requiered -> required
+> As the struct IOThreadInfo definition:
+> { 'struct': 'IOThreadInfo',
+>   'data': {'id': 'str',
+>            'thread-id': 'int',
+>            'poll-max-ns': 'int',
+>            'poll-grow': 'int',
+>            'poll-shrink': 'int',
+>            'aio-max-batch': 'int' } }
 
-> "migration/qemu-file-types.h" and "migration/vmstate.h", which are not ta=
-rget-specific.
+Suggest:
 
-* They are included via migration/cpu.h too; Still the change looks fine.
+  The example is incomplete: it misses members @poll-max-ns, @poll-grow,
+  @poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
+  (monitor: add poll-* properties into query-iothreads result) and
+  commit 1793ad0247c (iothread: add aio-max-batch parameter).
 
-> diff --git a/target/openrisc/machine.c b/target/openrisc/machine.c
-> index f2853674f0f..2d5ca16c511 100644
-> --- a/target/openrisc/machine.c
-> +++ b/target/openrisc/machine.c
-> @@ -19,7 +19,8 @@
+  Cc: qemu-stable@nongnu.org
+
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  qapi/misc.json | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
 >
->  #include "qemu/osdep.h"
->  #include "cpu.h"
-> -#include "migration/cpu.h"
-> +#include "migration/qemu-file-types.h"
-> +#include "migration/vmstate.h"
->
->  static const VMStateDescription vmstate_tlb_entry =3D {
->      .name =3D "tlb_entry",
+> diff --git a/qapi/misc.json b/qapi/misc.json
+> index 28c641fe2f..6153ed3d04 100644
+> --- a/qapi/misc.json
+> +++ b/qapi/misc.json
+> @@ -117,11 +117,19 @@
+>  #     <- { "return": [
+>  #              {
+>  #                 "id":"iothread0",
+> -#                 "thread-id":3134
+> +#                 "thread-id":3134,
+> +#                 'poll-max-ns':0,
 
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Double quotes, please.
 
-Thank you.
----
-  - Prasad
+The default value appears to be 32768.  Maybe show that?
+
+> +#                 "poll-grow":0,
+> +#                 "poll-shrink":0,
+> +#                 "aio-max-batch":0
+>  #              },
+>  #              {
+>  #                 "id":"iothread1",
+> -#                 "thread-id":3135
+> +#                 "thread-id":3135,
+> +#                 'poll-max-ns':0,
+
+Likewise.
+
+> +#                 "poll-grow":0,
+> +#                 "poll-shrink":0,
+> +#                 "aio-max-batch":0
+>  #              }
+>  #           ]
+>  #        }
 
 
