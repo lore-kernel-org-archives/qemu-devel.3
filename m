@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63EBD148A1
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:38:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A2B2D1489F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdibm-0005Ho-VG; Thu, 08 Jan 2026 00:30:55 -0500
+	id 1vdic0-0006Ek-5U; Thu, 08 Jan 2026 00:31:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdibc-00057R-CA
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:30:46 -0500
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1vdiby-00060I-PI
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:06 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdibW-0005JG-IQ
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:30:42 -0500
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-ba599137cf8so595881a12.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:30:38 -0800 (PST)
+ id 1vdibv-0005Pj-LN
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:06 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2a07fac8aa1so23293885ad.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:31:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767850237; x=1768455037; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767850262; x=1768455062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sio0sPTwm8SZWW8xUuOuvoZjmMp3BooKmkrPUh029to=;
- b=WsfF2b/LwhSYuO2xtXbnesSS1oLdnvTUn9cU2Kuo5NZZOgAn7YQ+l2Ilt7g44ZTzff
- wlRdf2tPLpAPCp/PHaHucpDTD48DM6/qUQk1dxMEiF+p6Ad4dXD+0W6SKfgJFd4aysMt
- w+zkNp3u72mcDxq5qi7H2T/JuEa4FUILdao95kJ3BSHm/RpzQQO0Kw9ZLRspX+PqA/jC
- 9me1gKJ+lSriMcWbPKX+oUEl0/E3TdFIv7OhQSjJiPdEqqezJWmn2XS7l0+C0fCoqVqZ
- a15uQJuuP4ARrXtnMGrOfj7ZjBzOqvt0Mt/m1nrZmvJp7q6pL8d9n0J/4NlHm7lh2nIQ
- D5Xw==
+ :reply-to; bh=Ra+tq2dnV1r5tktTIuyThBKxcQyRuJw07u29XoBH9N8=;
+ b=TCteDR97LoX3/Q77Ifpv2p+kNP7AXo5bO1AEXJw1H4ocEG/LaiWE5y06c/SpR1p9+a
+ 65km07g86rrA3OoZ8VmLwzuW+4/HeKsurgbYE9jLUMASM094XXRzLaXJhOFzdr0dG0hY
+ 87FNbMoR6x1qaeOfzBuXdiRe9FqyRXcRBiHPpA4UzD9CPaVceJjZl3wWYLZQx94OppyY
+ ScunBo9xk6NGOsg3re1pyA/YdB3t0AF2l1N2V+DZ6XWGlhLUdQ3QyDQtjUSO3o39mnzw
+ OUOUJj34hbrHS37zWDAiq8av4XodVB6uLStxVg7drt6n9yUUaUmstcdLZzvDcRv+ovc6
+ AWBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767850237; x=1768455037;
+ d=1e100.net; s=20230601; t=1767850262; x=1768455062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=sio0sPTwm8SZWW8xUuOuvoZjmMp3BooKmkrPUh029to=;
- b=McvdJ8Ku00cXjtUcsItLJuNzZTsrPLPje7EKMbYEqdtuerMQ68FnoxyrQihGs4IfZ2
- 6NG73JRqowsrfJwMNV1ZzuXdGGpDCWM65okhLOTnAzqDUYVsEN9AT5AW2lcNNsZVMBoD
- 5/+cdAE3lvPo8K2JgzuJsqHV3nwzC9+YT1BkatsDzM8L8Gu1F7hUpziktRFewx0YWH23
- 3bNOSUPjK/aaPNrcE6hRgp2Pl8uZA9HyMUAhmLLQ3S7oHT16PHZ/NurMekdtAyWWCqzN
- nUBUIb6UXyeDdW0SeEE8caKVmln6YuJ13FS5LxsFmkmp0rGn0EmCp72hr4AdpOPj2Lpk
- jv2Q==
-X-Gm-Message-State: AOJu0YwWoDN9pqMlQ7B/4oO+MfArfTDXSrUPvTdbAVJFEnEVMu/yyYfF
- oe1fnpC7v5RWmDRk+SFNet/R2uO3aD6hN/wkpQWRioBEp0oI0dA2LXEdVIfnKg7/lX5gOY/MzRc
- ahwPiFXo=
-X-Gm-Gg: AY/fxX6N6oSiBbt1uTGEtd2eGSXj3WCL9r+tTaToNTrVEc+Z68R42kU8J73LaxTp3sa
- 1ZEbuS7vV1nNNDxFh1ASQs4yFjdFpPlgek8Jb/wnLibT3fXSshbtMjH8ydeVqC2+9ZWrCKt9j+6
- N69WaaZHG2EgXH888/2WVBzhPMbsFbb2g2LZKmJvrl5DsyuFwhiNhGw+iedsRI9nw8hygRp1Hsz
- fYsMQk+f46PZI62k23dCFWsQY9rsCLcpJGkDO/HBncLXNO90NAc31+HWOpRcZcePVljM6F71Zhr
- 8O9aPLSld3D5QLm9wLGuiRKLHW6H6JnNJnP0wZcqPqxUvNYrgx9HyV6Bs7qXi9YVCTDztMSbbpc
- 4zKQXZstKxte8Ur+lzEMrN9c0W+awNrFBJqMcoq1sC8zbH8ol2244Lwd9iATbmJBRDzbNKHvNbQ
- o7qBdSk1DXfhtJ1NaIOItjH4uGvB+x
-X-Google-Smtp-Source: AGHT+IHWGk3Gzm3xrX8VtV8aIZnjZvnw97HzGyt4QgIyEw5TPH3kdDT8UWmp9amdKODzxDT62drV3A==
-X-Received: by 2002:a05:6a21:62ca:b0:37d:e26a:bff2 with SMTP id
- adf61e73a8af0-38982b1ffbbmr8406301637.20.1767850236466; 
- Wed, 07 Jan 2026 21:30:36 -0800 (PST)
+ bh=Ra+tq2dnV1r5tktTIuyThBKxcQyRuJw07u29XoBH9N8=;
+ b=BEwGU8ABHqle1m5Ysnmwi5ctpHpR4ko6pg3cb58stHEOHWHqpnvjz8uHZ+2DLCQN0q
+ teqpiQm18LauEaYsA5mP6sQUQL+fW+naWHEat+gFRSNsp7IKpz4FAiy31jWrQu47BlyM
+ G73ecBfyw4Ks3/QiSCpw99UkX/zs35xhW4bodUqhMQoFZfaEs+J9UfwIa2E3AxqXhiD2
+ 7IgGiGERBR+9jSq5RwsA2S14rPX5eknE2GUmKyrUY+gIw7PReVEwUcreMc3kpjBmKuW3
+ w28/KRvOsQ/wyobowuXTuO7JGgspeN7xzygR8ur38GNLEg6imB50sFZ2nkI2pE1/vXWu
+ tHqA==
+X-Gm-Message-State: AOJu0YyL4TKqlpibCbJ8XOCqqQYirwhk0OE4lSr89GK7N3HBeOnqek/1
+ uifHY3EjzKyAYu3xwyeS1oGzHdOp6mP6dvtWjo06E03Lme5IjFGI2R8OtwuQhAgfmcmX1EUu9uh
+ anIUdsR4=
+X-Gm-Gg: AY/fxX4lBfoX5DbggX4IrRAxgNMBJ430JfUAeixGagpW9/ACT2qXeFDostM+zEGoHlq
+ N2jqc5vk72nvLnGG8VfctG194qmZ0s6teXec+bE5RB+OVs/AFVtgTl50pbCBDz1zwe8AQbUHseF
+ BIxGrUFExc4OMEVVNyCFabI+EzrRPC9PR65SQ9TzXviDLEAPqI4sDs9Zum808Hd7vzicddb4rMr
+ HYt6RYtITOfwe0XpVh7G37Uh8Z36SGSougZdQems0+nF+nuAwoHac0jJhvqkPmr7i9udRr4lgnj
+ nrvUqppaXwSgItgoAceuTFiED7AYKC/ltYeUsjYXKW5KtourBDQJYiGY/Er9mUjTLmcjv3Lwxi+
+ KDms/UN7tGDytrIf3RItthWN2wIibC+cmCLacUqrMRUZw0dObmTfU5Le/rN3hoQsAY2ttsbz0gj
+ o4fy4lHiFlkU2H/CHrNg==
+X-Google-Smtp-Source: AGHT+IGtxEOH5KLRcwVmw2XUk5FnReSQqJ8jUqn8FqvU5L2/AETB85sOK9nKw5ZPLImMRxHqJ6vfqw==
+X-Received: by 2002:a17:90b:2251:b0:33e:30e8:81cb with SMTP id
+ 98e67ed59e1d1-34f68b65ff0mr4555616a91.13.1767850261766; 
+ Wed, 07 Jan 2026 21:31:01 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.30.35
+ 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.31.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 21:30:36 -0800 (PST)
+ Wed, 07 Jan 2026 21:31:01 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 06/50] *: Remove i386 host support
-Date: Thu,  8 Jan 2026 16:29:34 +1100
-Message-ID: <20260108053018.626690-7-richard.henderson@linaro.org>
+Subject: [PATCH 20/50] tcg: Remove INDEX_op_setcond2_i32
+Date: Thu,  8 Jan 2026 16:29:48 +1100
+Message-ID: <20260108053018.626690-21-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108053018.626690-1-richard.henderson@linaro.org>
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,951 +99,542 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the files from host/include/i386 to host/include/x86_64,
-replacing the stub headers that redirected to i386.
-
-Remove linux-user/include/host/i386.
-Remove common-user/host/i386.
+This opcode was exclusively for 32-bit hosts.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- host/include/i386/host/cpuinfo.h            |  41 ------
- host/include/i386/host/crypto/aes-round.h   | 152 -------------------
- host/include/i386/host/crypto/clmul.h       |  29 ----
- host/include/x86_64/host/cpuinfo.h          |  42 +++++-
- host/include/x86_64/host/crypto/aes-round.h | 153 +++++++++++++++++++-
- host/include/x86_64/host/crypto/clmul.h     |  30 +++-
- linux-user/include/host/i386/host-signal.h  |  38 -----
- common-user/host/i386/safe-syscall.inc.S    | 127 ----------------
- host/include/i386/host/bufferiszero.c.inc   | 125 ----------------
- host/include/x86_64/host/bufferiszero.c.inc | 126 +++++++++++++++-
- 10 files changed, 347 insertions(+), 516 deletions(-)
- delete mode 100644 host/include/i386/host/cpuinfo.h
- delete mode 100644 host/include/i386/host/crypto/aes-round.h
- delete mode 100644 host/include/i386/host/crypto/clmul.h
- delete mode 100644 linux-user/include/host/i386/host-signal.h
- delete mode 100644 common-user/host/i386/safe-syscall.inc.S
- delete mode 100644 host/include/i386/host/bufferiszero.c.inc
+ include/tcg/tcg-opc.h    |   2 -
+ tcg/optimize.c           | 205 ---------------------------------------
+ tcg/tcg-op.c             |  47 +--------
+ tcg/tcg.c                |  32 ------
+ tcg/tci.c                |  10 --
+ docs/devel/tcg-ops.rst   |  27 +-----
+ tcg/tci/tcg-target.c.inc |  16 ---
+ 7 files changed, 8 insertions(+), 331 deletions(-)
 
-diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
-deleted file mode 100644
-index 93d029d499..0000000000
---- a/host/include/i386/host/cpuinfo.h
-+++ /dev/null
-@@ -1,41 +0,0 @@
--/*
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- * Host specific cpu identification for x86.
-- */
+diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+index 55283af326..fc1270f01e 100644
+--- a/include/tcg/tcg-opc.h
++++ b/include/tcg/tcg-opc.h
+@@ -103,8 +103,6 @@ DEF(subb1o, 1, 2, 0, TCG_OPF_INT | TCG_OPF_CARRY_OUT)
+ DEF(subbi, 1, 2, 0, TCG_OPF_INT | TCG_OPF_CARRY_IN)
+ DEF(subbio, 1, 2, 0, TCG_OPF_INT | TCG_OPF_CARRY_IN | TCG_OPF_CARRY_OUT)
+ 
+-DEF(setcond2_i32, 1, 4, 1, 0)
 -
--#ifndef HOST_CPUINFO_H
--#define HOST_CPUINFO_H
--
--/* Digested version of <cpuid.h> */
--
--#define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
--#define CPUINFO_OSXSAVE         (1u << 1)
--#define CPUINFO_MOVBE           (1u << 2)
--#define CPUINFO_LZCNT           (1u << 3)
--#define CPUINFO_POPCNT          (1u << 4)
--#define CPUINFO_BMI1            (1u << 5)
--#define CPUINFO_BMI2            (1u << 6)
--#define CPUINFO_SSE2            (1u << 7)
--#define CPUINFO_AVX1            (1u << 9)
--#define CPUINFO_AVX2            (1u << 10)
--#define CPUINFO_AVX512F         (1u << 11)
--#define CPUINFO_AVX512VL        (1u << 12)
--#define CPUINFO_AVX512BW        (1u << 13)
--#define CPUINFO_AVX512DQ        (1u << 14)
--#define CPUINFO_AVX512VBMI2     (1u << 15)
--#define CPUINFO_ATOMIC_VMOVDQA  (1u << 16)
--#define CPUINFO_ATOMIC_VMOVDQU  (1u << 17)
--#define CPUINFO_AES             (1u << 18)
--#define CPUINFO_PCLMUL          (1u << 19)
--#define CPUINFO_GFNI            (1u << 20)
--
--/* Initialized with a constructor. */
--extern unsigned cpuinfo;
--
--/*
-- * We cannot rely on constructor ordering, so other constructors must
-- * use the function interface rather than the variable above.
-- */
--unsigned cpuinfo_init(void);
--
--#endif /* HOST_CPUINFO_H */
-diff --git a/host/include/i386/host/crypto/aes-round.h b/host/include/i386/host/crypto/aes-round.h
-deleted file mode 100644
-index 59a64130f7..0000000000
---- a/host/include/i386/host/crypto/aes-round.h
-+++ /dev/null
-@@ -1,152 +0,0 @@
--/*
-- * x86 specific aes acceleration.
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- */
--
--#ifndef X86_HOST_CRYPTO_AES_ROUND_H
--#define X86_HOST_CRYPTO_AES_ROUND_H
--
--#include "host/cpuinfo.h"
--#include <immintrin.h>
--
--#if defined(__AES__) && defined(__SSSE3__)
--# define HAVE_AES_ACCEL  true
--# define ATTR_AES_ACCEL
--#else
--# define HAVE_AES_ACCEL  likely(cpuinfo & CPUINFO_AES)
--# define ATTR_AES_ACCEL  __attribute__((target("aes,ssse3")))
--#endif
--
--static inline __m128i ATTR_AES_ACCEL
--aes_accel_bswap(__m128i x)
+ /* size changing ops */
+ DEF(ext_i32_i64, 1, 1, 0, 0)
+ DEF(extu_i32_i64, 1, 1, 0, 0)
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 61f729e5be..995e26f0bb 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -764,22 +764,6 @@ static bool swap_commutative(TCGArg dest, TCGArg *p1, TCGArg *p2)
+     return false;
+ }
+ 
+-static bool swap_commutative2(TCGArg *p1, TCGArg *p2)
 -{
--    return _mm_shuffle_epi8(x, _mm_set_epi8(0, 1, 2, 3, 4, 5, 6, 7, 8,
--                                            9, 10, 11, 12, 13, 14, 15));
--}
--
--static inline void ATTR_AES_ACCEL
--aesenc_MC_accel(AESState *ret, const AESState *st, bool be)
--{
--    __m128i t = (__m128i)st->v;
--    __m128i z = _mm_setzero_si128();
--
--    if (be) {
--        t = aes_accel_bswap(t);
--        t = _mm_aesdeclast_si128(t, z);
--        t = _mm_aesenc_si128(t, z);
--        t = aes_accel_bswap(t);
--    } else {
--        t = _mm_aesdeclast_si128(t, z);
--        t = _mm_aesenc_si128(t, z);
+-    int sum = 0;
+-    sum += pref_commutative(arg_info(p1[0]));
+-    sum += pref_commutative(arg_info(p1[1]));
+-    sum -= pref_commutative(arg_info(p2[0]));
+-    sum -= pref_commutative(arg_info(p2[1]));
+-    if (sum > 0) {
+-        TCGArg t;
+-        t = p1[0], p1[0] = p2[0], p2[0] = t;
+-        t = p1[1], p1[1] = p2[1], p2[1] = t;
+-        return true;
 -    }
--    ret->v = (AESStateVec)t;
+-    return false;
 -}
 -
--static inline void ATTR_AES_ACCEL
--aesenc_SB_SR_AK_accel(AESState *ret, const AESState *st,
--                      const AESState *rk, bool be)
+ /*
+  * Return -1 if the condition can't be simplified,
+  * and the result of the condition (0 or 1) if it can.
+@@ -844,108 +828,6 @@ static int do_constant_folding_cond1(OptContext *ctx, TCGOp *op, TCGArg dest,
+     return -1;
+ }
+ 
+-static int do_constant_folding_cond2(OptContext *ctx, TCGOp *op, TCGArg *args)
 -{
--    __m128i t = (__m128i)st->v;
--    __m128i k = (__m128i)rk->v;
+-    TCGArg al, ah, bl, bh;
+-    TCGCond c;
+-    bool swap;
+-    int r;
 -
--    if (be) {
--        t = aes_accel_bswap(t);
--        k = aes_accel_bswap(k);
--        t = _mm_aesenclast_si128(t, k);
--        t = aes_accel_bswap(t);
--    } else {
--        t = _mm_aesenclast_si128(t, k);
+-    swap = swap_commutative2(args, args + 2);
+-    c = args[4];
+-    if (swap) {
+-        args[4] = c = tcg_swap_cond(c);
 -    }
--    ret->v = (AESStateVec)t;
--}
 -
--static inline void ATTR_AES_ACCEL
--aesenc_SB_SR_MC_AK_accel(AESState *ret, const AESState *st,
--                         const AESState *rk, bool be)
--{
--    __m128i t = (__m128i)st->v;
--    __m128i k = (__m128i)rk->v;
+-    al = args[0];
+-    ah = args[1];
+-    bl = args[2];
+-    bh = args[3];
 -
--    if (be) {
--        t = aes_accel_bswap(t);
--        k = aes_accel_bswap(k);
--        t = _mm_aesenc_si128(t, k);
--        t = aes_accel_bswap(t);
--    } else {
--        t = _mm_aesenc_si128(t, k);
--    }
--    ret->v = (AESStateVec)t;
--}
+-    if (arg_is_const(bl) && arg_is_const(bh)) {
+-        tcg_target_ulong blv = arg_const_val(bl);
+-        tcg_target_ulong bhv = arg_const_val(bh);
+-        uint64_t b = deposit64(blv, 32, 32, bhv);
 -
--static inline void ATTR_AES_ACCEL
--aesdec_IMC_accel(AESState *ret, const AESState *st, bool be)
--{
--    __m128i t = (__m128i)st->v;
+-        if (arg_is_const(al) && arg_is_const(ah)) {
+-            tcg_target_ulong alv = arg_const_val(al);
+-            tcg_target_ulong ahv = arg_const_val(ah);
+-            uint64_t a = deposit64(alv, 32, 32, ahv);
 -
--    if (be) {
--        t = aes_accel_bswap(t);
--        t = _mm_aesimc_si128(t);
--        t = aes_accel_bswap(t);
--    } else {
--        t = _mm_aesimc_si128(t);
--    }
--    ret->v = (AESStateVec)t;
--}
--
--static inline void ATTR_AES_ACCEL
--aesdec_ISB_ISR_AK_accel(AESState *ret, const AESState *st,
--                        const AESState *rk, bool be)
--{
--    __m128i t = (__m128i)st->v;
--    __m128i k = (__m128i)rk->v;
--
--    if (be) {
--        t = aes_accel_bswap(t);
--        k = aes_accel_bswap(k);
--        t = _mm_aesdeclast_si128(t, k);
--        t = aes_accel_bswap(t);
--    } else {
--        t = _mm_aesdeclast_si128(t, k);
--    }
--    ret->v = (AESStateVec)t;
--}
--
--static inline void ATTR_AES_ACCEL
--aesdec_ISB_ISR_AK_IMC_accel(AESState *ret, const AESState *st,
--                            const AESState *rk, bool be)
--{
--    __m128i t = (__m128i)st->v;
--    __m128i k = (__m128i)rk->v;
--
--    if (be) {
--        t = aes_accel_bswap(t);
--        k = aes_accel_bswap(k);
--        t = _mm_aesdeclast_si128(t, k);
--        t = _mm_aesimc_si128(t);
--        t = aes_accel_bswap(t);
--    } else {
--        t = _mm_aesdeclast_si128(t, k);
--        t = _mm_aesimc_si128(t);
--    }
--    ret->v = (AESStateVec)t;
--}
--
--static inline void ATTR_AES_ACCEL
--aesdec_ISB_ISR_IMC_AK_accel(AESState *ret, const AESState *st,
--                            const AESState *rk, bool be)
--{
--    __m128i t = (__m128i)st->v;
--    __m128i k = (__m128i)rk->v;
--
--    if (be) {
--        t = aes_accel_bswap(t);
--        k = aes_accel_bswap(k);
--        t = _mm_aesdec_si128(t, k);
--        t = aes_accel_bswap(t);
--    } else {
--        t = _mm_aesdec_si128(t, k);
--    }
--    ret->v = (AESStateVec)t;
--}
--
--#endif /* X86_HOST_CRYPTO_AES_ROUND_H */
-diff --git a/host/include/i386/host/crypto/clmul.h b/host/include/i386/host/crypto/clmul.h
-deleted file mode 100644
-index dc3c814797..0000000000
---- a/host/include/i386/host/crypto/clmul.h
-+++ /dev/null
-@@ -1,29 +0,0 @@
--/*
-- * x86 specific clmul acceleration.
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- */
--
--#ifndef X86_HOST_CRYPTO_CLMUL_H
--#define X86_HOST_CRYPTO_CLMUL_H
--
--#include "host/cpuinfo.h"
--#include <immintrin.h>
--
--#if defined(__PCLMUL__)
--# define HAVE_CLMUL_ACCEL  true
--# define ATTR_CLMUL_ACCEL
--#else
--# define HAVE_CLMUL_ACCEL  likely(cpuinfo & CPUINFO_PCLMUL)
--# define ATTR_CLMUL_ACCEL  __attribute__((target("pclmul")))
--#endif
--
--static inline Int128 ATTR_CLMUL_ACCEL
--clmul_64_accel(uint64_t n, uint64_t m)
--{
--    union { __m128i v; Int128 s; } u;
--
--    u.v = _mm_clmulepi64_si128(_mm_set_epi64x(0, n), _mm_set_epi64x(0, m), 0);
--    return u.s;
--}
--
--#endif /* X86_HOST_CRYPTO_CLMUL_H */
-diff --git a/host/include/x86_64/host/cpuinfo.h b/host/include/x86_64/host/cpuinfo.h
-index 67debab9a0..93d029d499 100644
---- a/host/include/x86_64/host/cpuinfo.h
-+++ b/host/include/x86_64/host/cpuinfo.h
-@@ -1 +1,41 @@
--#include "host/include/i386/host/cpuinfo.h"
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Host specific cpu identification for x86.
-+ */
-+
-+#ifndef HOST_CPUINFO_H
-+#define HOST_CPUINFO_H
-+
-+/* Digested version of <cpuid.h> */
-+
-+#define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
-+#define CPUINFO_OSXSAVE         (1u << 1)
-+#define CPUINFO_MOVBE           (1u << 2)
-+#define CPUINFO_LZCNT           (1u << 3)
-+#define CPUINFO_POPCNT          (1u << 4)
-+#define CPUINFO_BMI1            (1u << 5)
-+#define CPUINFO_BMI2            (1u << 6)
-+#define CPUINFO_SSE2            (1u << 7)
-+#define CPUINFO_AVX1            (1u << 9)
-+#define CPUINFO_AVX2            (1u << 10)
-+#define CPUINFO_AVX512F         (1u << 11)
-+#define CPUINFO_AVX512VL        (1u << 12)
-+#define CPUINFO_AVX512BW        (1u << 13)
-+#define CPUINFO_AVX512DQ        (1u << 14)
-+#define CPUINFO_AVX512VBMI2     (1u << 15)
-+#define CPUINFO_ATOMIC_VMOVDQA  (1u << 16)
-+#define CPUINFO_ATOMIC_VMOVDQU  (1u << 17)
-+#define CPUINFO_AES             (1u << 18)
-+#define CPUINFO_PCLMUL          (1u << 19)
-+#define CPUINFO_GFNI            (1u << 20)
-+
-+/* Initialized with a constructor. */
-+extern unsigned cpuinfo;
-+
-+/*
-+ * We cannot rely on constructor ordering, so other constructors must
-+ * use the function interface rather than the variable above.
-+ */
-+unsigned cpuinfo_init(void);
-+
-+#endif /* HOST_CPUINFO_H */
-diff --git a/host/include/x86_64/host/crypto/aes-round.h b/host/include/x86_64/host/crypto/aes-round.h
-index 2773cc9f10..59a64130f7 100644
---- a/host/include/x86_64/host/crypto/aes-round.h
-+++ b/host/include/x86_64/host/crypto/aes-round.h
-@@ -1 +1,152 @@
--#include "host/include/i386/host/crypto/aes-round.h"
-+/*
-+ * x86 specific aes acceleration.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef X86_HOST_CRYPTO_AES_ROUND_H
-+#define X86_HOST_CRYPTO_AES_ROUND_H
-+
-+#include "host/cpuinfo.h"
-+#include <immintrin.h>
-+
-+#if defined(__AES__) && defined(__SSSE3__)
-+# define HAVE_AES_ACCEL  true
-+# define ATTR_AES_ACCEL
-+#else
-+# define HAVE_AES_ACCEL  likely(cpuinfo & CPUINFO_AES)
-+# define ATTR_AES_ACCEL  __attribute__((target("aes,ssse3")))
-+#endif
-+
-+static inline __m128i ATTR_AES_ACCEL
-+aes_accel_bswap(__m128i x)
-+{
-+    return _mm_shuffle_epi8(x, _mm_set_epi8(0, 1, 2, 3, 4, 5, 6, 7, 8,
-+                                            9, 10, 11, 12, 13, 14, 15));
-+}
-+
-+static inline void ATTR_AES_ACCEL
-+aesenc_MC_accel(AESState *ret, const AESState *st, bool be)
-+{
-+    __m128i t = (__m128i)st->v;
-+    __m128i z = _mm_setzero_si128();
-+
-+    if (be) {
-+        t = aes_accel_bswap(t);
-+        t = _mm_aesdeclast_si128(t, z);
-+        t = _mm_aesenc_si128(t, z);
-+        t = aes_accel_bswap(t);
-+    } else {
-+        t = _mm_aesdeclast_si128(t, z);
-+        t = _mm_aesenc_si128(t, z);
-+    }
-+    ret->v = (AESStateVec)t;
-+}
-+
-+static inline void ATTR_AES_ACCEL
-+aesenc_SB_SR_AK_accel(AESState *ret, const AESState *st,
-+                      const AESState *rk, bool be)
-+{
-+    __m128i t = (__m128i)st->v;
-+    __m128i k = (__m128i)rk->v;
-+
-+    if (be) {
-+        t = aes_accel_bswap(t);
-+        k = aes_accel_bswap(k);
-+        t = _mm_aesenclast_si128(t, k);
-+        t = aes_accel_bswap(t);
-+    } else {
-+        t = _mm_aesenclast_si128(t, k);
-+    }
-+    ret->v = (AESStateVec)t;
-+}
-+
-+static inline void ATTR_AES_ACCEL
-+aesenc_SB_SR_MC_AK_accel(AESState *ret, const AESState *st,
-+                         const AESState *rk, bool be)
-+{
-+    __m128i t = (__m128i)st->v;
-+    __m128i k = (__m128i)rk->v;
-+
-+    if (be) {
-+        t = aes_accel_bswap(t);
-+        k = aes_accel_bswap(k);
-+        t = _mm_aesenc_si128(t, k);
-+        t = aes_accel_bswap(t);
-+    } else {
-+        t = _mm_aesenc_si128(t, k);
-+    }
-+    ret->v = (AESStateVec)t;
-+}
-+
-+static inline void ATTR_AES_ACCEL
-+aesdec_IMC_accel(AESState *ret, const AESState *st, bool be)
-+{
-+    __m128i t = (__m128i)st->v;
-+
-+    if (be) {
-+        t = aes_accel_bswap(t);
-+        t = _mm_aesimc_si128(t);
-+        t = aes_accel_bswap(t);
-+    } else {
-+        t = _mm_aesimc_si128(t);
-+    }
-+    ret->v = (AESStateVec)t;
-+}
-+
-+static inline void ATTR_AES_ACCEL
-+aesdec_ISB_ISR_AK_accel(AESState *ret, const AESState *st,
-+                        const AESState *rk, bool be)
-+{
-+    __m128i t = (__m128i)st->v;
-+    __m128i k = (__m128i)rk->v;
-+
-+    if (be) {
-+        t = aes_accel_bswap(t);
-+        k = aes_accel_bswap(k);
-+        t = _mm_aesdeclast_si128(t, k);
-+        t = aes_accel_bswap(t);
-+    } else {
-+        t = _mm_aesdeclast_si128(t, k);
-+    }
-+    ret->v = (AESStateVec)t;
-+}
-+
-+static inline void ATTR_AES_ACCEL
-+aesdec_ISB_ISR_AK_IMC_accel(AESState *ret, const AESState *st,
-+                            const AESState *rk, bool be)
-+{
-+    __m128i t = (__m128i)st->v;
-+    __m128i k = (__m128i)rk->v;
-+
-+    if (be) {
-+        t = aes_accel_bswap(t);
-+        k = aes_accel_bswap(k);
-+        t = _mm_aesdeclast_si128(t, k);
-+        t = _mm_aesimc_si128(t);
-+        t = aes_accel_bswap(t);
-+    } else {
-+        t = _mm_aesdeclast_si128(t, k);
-+        t = _mm_aesimc_si128(t);
-+    }
-+    ret->v = (AESStateVec)t;
-+}
-+
-+static inline void ATTR_AES_ACCEL
-+aesdec_ISB_ISR_IMC_AK_accel(AESState *ret, const AESState *st,
-+                            const AESState *rk, bool be)
-+{
-+    __m128i t = (__m128i)st->v;
-+    __m128i k = (__m128i)rk->v;
-+
-+    if (be) {
-+        t = aes_accel_bswap(t);
-+        k = aes_accel_bswap(k);
-+        t = _mm_aesdec_si128(t, k);
-+        t = aes_accel_bswap(t);
-+    } else {
-+        t = _mm_aesdec_si128(t, k);
-+    }
-+    ret->v = (AESStateVec)t;
-+}
-+
-+#endif /* X86_HOST_CRYPTO_AES_ROUND_H */
-diff --git a/host/include/x86_64/host/crypto/clmul.h b/host/include/x86_64/host/crypto/clmul.h
-index f25eced416..dc3c814797 100644
---- a/host/include/x86_64/host/crypto/clmul.h
-+++ b/host/include/x86_64/host/crypto/clmul.h
-@@ -1 +1,29 @@
--#include "host/include/i386/host/crypto/clmul.h"
-+/*
-+ * x86 specific clmul acceleration.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef X86_HOST_CRYPTO_CLMUL_H
-+#define X86_HOST_CRYPTO_CLMUL_H
-+
-+#include "host/cpuinfo.h"
-+#include <immintrin.h>
-+
-+#if defined(__PCLMUL__)
-+# define HAVE_CLMUL_ACCEL  true
-+# define ATTR_CLMUL_ACCEL
-+#else
-+# define HAVE_CLMUL_ACCEL  likely(cpuinfo & CPUINFO_PCLMUL)
-+# define ATTR_CLMUL_ACCEL  __attribute__((target("pclmul")))
-+#endif
-+
-+static inline Int128 ATTR_CLMUL_ACCEL
-+clmul_64_accel(uint64_t n, uint64_t m)
-+{
-+    union { __m128i v; Int128 s; } u;
-+
-+    u.v = _mm_clmulepi64_si128(_mm_set_epi64x(0, n), _mm_set_epi64x(0, m), 0);
-+    return u.s;
-+}
-+
-+#endif /* X86_HOST_CRYPTO_CLMUL_H */
-diff --git a/linux-user/include/host/i386/host-signal.h b/linux-user/include/host/i386/host-signal.h
-deleted file mode 100644
-index e2b64f077f..0000000000
---- a/linux-user/include/host/i386/host-signal.h
-+++ /dev/null
-@@ -1,38 +0,0 @@
--/*
-- * host-signal.h: signal info dependent on the host architecture
-- *
-- * Copyright (c) 2003-2005 Fabrice Bellard
-- * Copyright (c) 2021 Linaro Limited
-- *
-- * This work is licensed under the terms of the GNU LGPL, version 2.1 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--#ifndef I386_HOST_SIGNAL_H
--#define I386_HOST_SIGNAL_H
--
--/* The third argument to a SA_SIGINFO handler is ucontext_t. */
--typedef ucontext_t host_sigcontext;
--
--static inline uintptr_t host_signal_pc(host_sigcontext *uc)
--{
--    return uc->uc_mcontext.gregs[REG_EIP];
--}
--
--static inline void host_signal_set_pc(host_sigcontext *uc, uintptr_t pc)
--{
--    uc->uc_mcontext.gregs[REG_EIP] = pc;
--}
--
--static inline void *host_signal_mask(host_sigcontext *uc)
--{
--    return &uc->uc_sigmask;
--}
--
--static inline bool host_signal_write(siginfo_t *info, host_sigcontext *uc)
--{
--    return uc->uc_mcontext.gregs[REG_TRAPNO] == 0xe
--        && (uc->uc_mcontext.gregs[REG_ERR] & 0x2);
--}
--
--#endif
-diff --git a/common-user/host/i386/safe-syscall.inc.S b/common-user/host/i386/safe-syscall.inc.S
-deleted file mode 100644
-index db2ed09839..0000000000
---- a/common-user/host/i386/safe-syscall.inc.S
-+++ /dev/null
-@@ -1,127 +0,0 @@
--/*
-- * safe-syscall.inc.S : host-specific assembly fragment
-- * to handle signals occurring at the same time as system calls.
-- * This is intended to be included by common-user/safe-syscall.S
-- *
-- * Written by Richard Henderson <rth@twiddle.net>
-- * Copyright (C) 2016 Red Hat, Inc.
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--        .global safe_syscall_base
--        .global safe_syscall_start
--        .global safe_syscall_end
--        .type   safe_syscall_base, @function
--
--        /* This is the entry point for making a system call. The calling
--         * convention here is that of a C varargs function with the
--         * first argument an 'int *' to the signal_pending flag, the
--         * second one the system call number (as a 'long'), and all further
--         * arguments being syscall arguments (also 'long').
--         */
--safe_syscall_base:
--        .cfi_startproc
--        push    %ebp
--        .cfi_adjust_cfa_offset 4
--        .cfi_rel_offset ebp, 0
--        push    %esi
--        .cfi_adjust_cfa_offset 4
--        .cfi_rel_offset esi, 0
--        push    %edi
--        .cfi_adjust_cfa_offset 4
--        .cfi_rel_offset edi, 0
--        push    %ebx
--        .cfi_adjust_cfa_offset 4
--        .cfi_rel_offset ebx, 0
--
--        /* The syscall calling convention isn't the same as the C one:
--         * we enter with 0(%esp) == return address
--         *               4(%esp) == &signal_pending
--         *               8(%esp) == syscall number
--         *               12(%esp) ... 32(%esp) == syscall arguments
--         *               and return the result in eax
--         * and the syscall instruction needs
--         *               eax == syscall number
--         *               ebx, ecx, edx, esi, edi, ebp == syscall arguments
--         *               and returns the result in eax
--         * Shuffle everything around appropriately.
--         * Note the 16 bytes that we pushed to save registers.
--         */
--        mov     12+16(%esp), %ebx       /* the syscall arguments */
--        mov     16+16(%esp), %ecx
--        mov     20+16(%esp), %edx
--        mov     24+16(%esp), %esi
--        mov     28+16(%esp), %edi
--        mov     32+16(%esp), %ebp
--
--        /* This next sequence of code works in conjunction with the
--         * rewind_if_safe_syscall_function(). If a signal is taken
--         * and the interrupted PC is anywhere between 'safe_syscall_start'
--         * and 'safe_syscall_end' then we rewind it to 'safe_syscall_start'.
--         * The code sequence must therefore be able to cope with this, and
--         * the syscall instruction must be the final one in the sequence.
--         */
--safe_syscall_start:
--        /* if signal_pending is non-zero, don't do the call */
--        mov     4+16(%esp), %eax        /* signal_pending */
--        cmpl    $0, (%eax)
--        jnz     2f
--        mov     8+16(%esp), %eax        /* syscall number */
--        int     $0x80
--safe_syscall_end:
--
--        /* code path for having successfully executed the syscall */
--#if defined(__linux__)
--        /* Linux kernel returns (small) negative errno. */
--        cmp     $-4095, %eax
--        jae     0f
--#elif defined(__FreeBSD__)
--        /* FreeBSD kernel returns positive errno and C bit set. */
--        jc      1f
--#else
--#error "unsupported os"
--#endif
--        pop     %ebx
--        .cfi_remember_state
--        .cfi_adjust_cfa_offset -4
--        .cfi_restore ebx
--        pop     %edi
--        .cfi_adjust_cfa_offset -4
--        .cfi_restore edi
--        pop     %esi
--        .cfi_adjust_cfa_offset -4
--        .cfi_restore esi
--        pop     %ebp
--        .cfi_adjust_cfa_offset -4
--        .cfi_restore ebp
--        ret
--        .cfi_restore_state
--
--#if defined(__linux__)
--0:      neg     %eax
--        jmp     1f
--#endif
--
--        /* code path when we didn't execute the syscall */
--2:      mov     $QEMU_ERESTARTSYS, %eax
--
--        /* code path setting errno */
--1:      pop     %ebx
--        .cfi_adjust_cfa_offset -4
--        .cfi_restore ebx
--        pop     %edi
--        .cfi_adjust_cfa_offset -4
--        .cfi_restore edi
--        pop     %esi
--        .cfi_adjust_cfa_offset -4
--        .cfi_restore esi
--        pop     %ebp
--        .cfi_adjust_cfa_offset -4
--        .cfi_restore ebp
--        mov     %eax, 4(%esp)
--        jmp     safe_syscall_set_errno_tail
--
--        .cfi_endproc
--        .size   safe_syscall_base, .-safe_syscall_base
-diff --git a/host/include/i386/host/bufferiszero.c.inc b/host/include/i386/host/bufferiszero.c.inc
-deleted file mode 100644
-index 74ae98580f..0000000000
---- a/host/include/i386/host/bufferiszero.c.inc
-+++ /dev/null
-@@ -1,125 +0,0 @@
--/*
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- * buffer_is_zero acceleration, x86 version.
-- */
--
--#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
--#include <immintrin.h>
--
--/* Helper for preventing the compiler from reassociating
--   chains of binary vector operations.  */
--#define SSE_REASSOC_BARRIER(vec0, vec1) asm("" : "+x"(vec0), "+x"(vec1))
--
--/* Note that these vectorized functions may assume len >= 256.  */
--
--static bool __attribute__((target("sse2")))
--buffer_zero_sse2(const void *buf, size_t len)
--{
--    /* Unaligned loads at head/tail.  */
--    __m128i v = *(__m128i_u *)(buf);
--    __m128i w = *(__m128i_u *)(buf + len - 16);
--    /* Align head/tail to 16-byte boundaries.  */
--    const __m128i *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
--    const __m128i *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16);
--    __m128i zero = { 0 };
--
--    /* Collect a partial block at tail end.  */
--    v |= e[-1]; w |= e[-2];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-3]; w |= e[-4];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-5]; w |= e[-6];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-7]; v |= w;
--
--    /*
--     * Loop over complete 128-byte blocks.
--     * With the head and tail removed, e - p >= 14, so the loop
--     * must iterate at least once.
--     */
--    do {
--        v = _mm_cmpeq_epi8(v, zero);
--        if (unlikely(_mm_movemask_epi8(v) != 0xFFFF)) {
--            return false;
+-            r = do_constant_folding_cond_64(a, b, c);
+-            if (r >= 0) {
+-                return r;
+-            }
 -        }
--        v = p[0]; w = p[1];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[2]; w |= p[3];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[4]; w |= p[5];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[6]; w |= p[7];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= w;
--        p += 8;
--    } while (p < e - 7);
 -
--    return _mm_movemask_epi8(_mm_cmpeq_epi8(v, zero)) == 0xFFFF;
--}
--
--#ifdef CONFIG_AVX2_OPT
--static bool __attribute__((target("avx2")))
--buffer_zero_avx2(const void *buf, size_t len)
--{
--    /* Unaligned loads at head/tail.  */
--    __m256i v = *(__m256i_u *)(buf);
--    __m256i w = *(__m256i_u *)(buf + len - 32);
--    /* Align head/tail to 32-byte boundaries.  */
--    const __m256i *p = QEMU_ALIGN_PTR_DOWN(buf + 32, 32);
--    const __m256i *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 32);
--    __m256i zero = { 0 };
--
--    /* Collect a partial block at tail end.  */
--    v |= e[-1]; w |= e[-2];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-3]; w |= e[-4];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-5]; w |= e[-6];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-7]; v |= w;
--
--    /* Loop over complete 256-byte blocks.  */
--    for (; p < e - 7; p += 8) {
--        /* PTEST is not profitable here.  */
--        v = _mm256_cmpeq_epi8(v, zero);
--        if (unlikely(_mm256_movemask_epi8(v) != 0xFFFFFFFF)) {
--            return false;
+-        if (b == 0) {
+-            switch (c) {
+-            case TCG_COND_LTU:
+-            case TCG_COND_TSTNE:
+-                return 0;
+-            case TCG_COND_GEU:
+-            case TCG_COND_TSTEQ:
+-                return 1;
+-            default:
+-                break;
+-            }
 -        }
--        v = p[0]; w = p[1];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[2]; w |= p[3];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[4]; w |= p[5];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[6]; w |= p[7];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= w;
+-
+-        /* TSTNE x,-1 -> NE x,0 */
+-        if (b == -1 && is_tst_cond(c)) {
+-            args[3] = args[2] = arg_new_constant(ctx, 0);
+-            args[4] = tcg_tst_eqne_cond(c);
+-            return -1;
+-        }
+-
+-        /* TSTNE x,sign -> LT x,0 */
+-        if (b == INT64_MIN && is_tst_cond(c)) {
+-            /* bl must be 0, so copy that to bh */
+-            args[3] = bl;
+-            args[4] = tcg_tst_ltge_cond(c);
+-            return -1;
+-        }
 -    }
 -
--    return _mm256_movemask_epi8(_mm256_cmpeq_epi8(v, zero)) == 0xFFFFFFFF;
--}
--#endif /* CONFIG_AVX2_OPT */
+-    if (args_are_copies(al, bl) && args_are_copies(ah, bh)) {
+-        r = do_constant_folding_cond_eq(c);
+-        if (r >= 0) {
+-            return r;
+-        }
 -
--static biz_accel_fn const accel_table[] = {
--    buffer_is_zero_int_ge256,
--    buffer_zero_sse2,
--#ifdef CONFIG_AVX2_OPT
--    buffer_zero_avx2,
+-        /* TSTNE x,x -> NE x,0 */
+-        if (is_tst_cond(c)) {
+-            args[3] = args[2] = arg_new_constant(ctx, 0);
+-            args[4] = tcg_tst_eqne_cond(c);
+-            return -1;
+-        }
+-    }
+-
+-    /* Expand to AND with a temporary if no backend support. */
+-    if (!TCG_TARGET_HAS_tst && is_tst_cond(c)) {
+-        TCGOp *op1 = opt_insert_before(ctx, op, INDEX_op_and, 3);
+-        TCGOp *op2 = opt_insert_before(ctx, op, INDEX_op_and, 3);
+-        TCGArg t1 = arg_new_temp(ctx);
+-        TCGArg t2 = arg_new_temp(ctx);
+-
+-        op1->args[0] = t1;
+-        op1->args[1] = al;
+-        op1->args[2] = bl;
+-        fold_and(ctx, op1);
+-
+-        op2->args[0] = t2;
+-        op2->args[1] = ah;
+-        op2->args[2] = bh;
+-        fold_and(ctx, op1);
+-
+-        args[0] = t1;
+-        args[1] = t2;
+-        args[3] = args[2] = arg_new_constant(ctx, 0);
+-        args[4] = tcg_tst_eqne_cond(c);
+-    }
+-    return -1;
+-}
+-
+ static void init_arguments(OptContext *ctx, TCGOp *op, int nb_args)
+ {
+     for (int i = 0; i < nb_args; i++) {
+@@ -2502,90 +2384,6 @@ static bool fold_negsetcond(OptContext *ctx, TCGOp *op)
+     return fold_masks_s(ctx, op, -1);
+ }
+ 
+-static bool fold_setcond2(OptContext *ctx, TCGOp *op)
+-{
+-    TCGCond cond;
+-    int i, inv = 0;
+-
+-    i = do_constant_folding_cond2(ctx, op, &op->args[1]);
+-    cond = op->args[5];
+-    if (i >= 0) {
+-        goto do_setcond_const;
+-    }
+-
+-    switch (cond) {
+-    case TCG_COND_LT:
+-    case TCG_COND_GE:
+-        /*
+-         * Simplify LT/GE comparisons vs zero to a single compare
+-         * vs the high word of the input.
+-         */
+-        if (arg_is_const_val(op->args[3], 0) &&
+-            arg_is_const_val(op->args[4], 0)) {
+-            goto do_setcond_high;
+-        }
+-        break;
+-
+-    case TCG_COND_NE:
+-        inv = 1;
+-        QEMU_FALLTHROUGH;
+-    case TCG_COND_EQ:
+-        /*
+-         * Simplify EQ/NE comparisons where one of the pairs
+-         * can be simplified.
+-         */
+-        i = do_constant_folding_cond(TCG_TYPE_I32, op->args[1],
+-                                     op->args[3], cond);
+-        switch (i ^ inv) {
+-        case 0:
+-            goto do_setcond_const;
+-        case 1:
+-            goto do_setcond_high;
+-        }
+-
+-        i = do_constant_folding_cond(TCG_TYPE_I32, op->args[2],
+-                                     op->args[4], cond);
+-        switch (i ^ inv) {
+-        case 0:
+-            goto do_setcond_const;
+-        case 1:
+-            goto do_setcond_low;
+-        }
+-        break;
+-
+-    case TCG_COND_TSTEQ:
+-    case TCG_COND_TSTNE:
+-        if (arg_is_const_val(op->args[3], 0)) {
+-            goto do_setcond_high;
+-        }
+-        if (arg_is_const_val(op->args[4], 0)) {
+-            goto do_setcond_low;
+-        }
+-        break;
+-
+-    default:
+-        break;
+-
+-    do_setcond_low:
+-        op->args[2] = op->args[3];
+-        op->args[3] = cond;
+-        op->opc = INDEX_op_setcond;
+-        return fold_setcond(ctx, op);
+-
+-    do_setcond_high:
+-        op->args[1] = op->args[2];
+-        op->args[2] = op->args[4];
+-        op->args[3] = cond;
+-        op->opc = INDEX_op_setcond;
+-        return fold_setcond(ctx, op);
+-    }
+-
+-    return fold_masks_z(ctx, op, 1);
+-
+- do_setcond_const:
+-    return tcg_opt_gen_movi(ctx, op, op->args[0], i);
+-}
+-
+ static bool fold_sextract(OptContext *ctx, TCGOp *op)
+ {
+     uint64_t z_mask, o_mask, s_mask, a_mask;
+@@ -3201,9 +2999,6 @@ void tcg_optimize(TCGContext *s)
+         case INDEX_op_negsetcond:
+             done = fold_negsetcond(&ctx, op);
+             break;
+-        case INDEX_op_setcond2_i32:
+-            done = fold_setcond2(&ctx, op);
+-            break;
+         case INDEX_op_cmp_vec:
+             done = fold_cmp_vec(&ctx, op);
+             break;
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index 61f6fd9095..d20888dd8f 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -1884,33 +1884,14 @@ void tcg_gen_setcond_i64(TCGCond cond, TCGv_i64 ret,
+     } else if (cond == TCG_COND_NEVER) {
+         tcg_gen_movi_i64(ret, 0);
+     } else {
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            tcg_gen_op6i_i32(INDEX_op_setcond2_i32, TCGV_LOW(ret),
+-                             TCGV_LOW(arg1), TCGV_HIGH(arg1),
+-                             TCGV_LOW(arg2), TCGV_HIGH(arg2), cond);
+-            tcg_gen_movi_i32(TCGV_HIGH(ret), 0);
+-        } else {
+-            tcg_gen_op4i_i64(INDEX_op_setcond, ret, arg1, arg2, cond);
+-        }
++        tcg_gen_op4i_i64(INDEX_op_setcond, ret, arg1, arg2, cond);
+     }
+ }
+ 
+ void tcg_gen_setcondi_i64(TCGCond cond, TCGv_i64 ret,
+                           TCGv_i64 arg1, int64_t arg2)
+ {
+-    if (TCG_TARGET_REG_BITS == 64) {
+-        tcg_gen_setcond_i64(cond, ret, arg1, tcg_constant_i64(arg2));
+-    } else if (cond == TCG_COND_ALWAYS) {
+-        tcg_gen_movi_i64(ret, 1);
+-    } else if (cond == TCG_COND_NEVER) {
+-        tcg_gen_movi_i64(ret, 0);
+-    } else {
+-        tcg_gen_op6i_i32(INDEX_op_setcond2_i32, TCGV_LOW(ret),
+-                         TCGV_LOW(arg1), TCGV_HIGH(arg1),
+-                         tcg_constant_i32(arg2),
+-                         tcg_constant_i32(arg2 >> 32), cond);
+-        tcg_gen_movi_i32(TCGV_HIGH(ret), 0);
+-    }
++    tcg_gen_setcond_i64(cond, ret, arg1, tcg_constant_i64(arg2));
+ }
+ 
+ void tcg_gen_negsetcondi_i64(TCGCond cond, TCGv_i64 ret,
+@@ -1926,14 +1907,8 @@ void tcg_gen_negsetcond_i64(TCGCond cond, TCGv_i64 ret,
+         tcg_gen_movi_i64(ret, -1);
+     } else if (cond == TCG_COND_NEVER) {
+         tcg_gen_movi_i64(ret, 0);
+-    } else if (TCG_TARGET_REG_BITS == 64) {
+-        tcg_gen_op4i_i64(INDEX_op_negsetcond, ret, arg1, arg2, cond);
+     } else {
+-        tcg_gen_op6i_i32(INDEX_op_setcond2_i32, TCGV_LOW(ret),
+-                         TCGV_LOW(arg1), TCGV_HIGH(arg1),
+-                         TCGV_LOW(arg2), TCGV_HIGH(arg2), cond);
+-        tcg_gen_neg_i32(TCGV_LOW(ret), TCGV_LOW(ret));
+-        tcg_gen_mov_i32(TCGV_HIGH(ret), TCGV_LOW(ret));
++        tcg_gen_op4i_i64(INDEX_op_negsetcond, ret, arg1, arg2, cond);
+     }
+ }
+ 
+@@ -2777,22 +2752,8 @@ void tcg_gen_movcond_i64(TCGCond cond, TCGv_i64 ret, TCGv_i64 c1,
+         tcg_gen_mov_i64(ret, v1);
+     } else if (cond == TCG_COND_NEVER) {
+         tcg_gen_mov_i64(ret, v2);
+-    } else if (TCG_TARGET_REG_BITS == 64) {
+-        tcg_gen_op6i_i64(INDEX_op_movcond, ret, c1, c2, v1, v2, cond);
+     } else {
+-        TCGv_i32 t0 = tcg_temp_ebb_new_i32();
+-        TCGv_i32 zero = tcg_constant_i32(0);
+-
+-        tcg_gen_op6i_i32(INDEX_op_setcond2_i32, t0,
+-                         TCGV_LOW(c1), TCGV_HIGH(c1),
+-                         TCGV_LOW(c2), TCGV_HIGH(c2), cond);
+-
+-        tcg_gen_movcond_i32(TCG_COND_NE, TCGV_LOW(ret), t0, zero,
+-                            TCGV_LOW(v1), TCGV_LOW(v2));
+-        tcg_gen_movcond_i32(TCG_COND_NE, TCGV_HIGH(ret), t0, zero,
+-                            TCGV_HIGH(v1), TCGV_HIGH(v2));
+-
+-        tcg_temp_free_i32(t0);
++        tcg_gen_op6i_i64(INDEX_op_movcond, ret, c1, c2, v1, v2, cond);
+     }
+ }
+ 
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 0521767c46..b6a65fe224 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1088,12 +1088,6 @@ typedef struct TCGOutOpSetcond {
+                     TCGReg ret, TCGReg a1, tcg_target_long a2);
+ } TCGOutOpSetcond;
+ 
+-typedef struct TCGOutOpSetcond2 {
+-    TCGOutOp base;
+-    void (*out)(TCGContext *s, TCGCond cond, TCGReg ret, TCGReg al, TCGReg ah,
+-                TCGArg bl, bool const_bl, TCGArg bh, bool const_bh);
+-} TCGOutOpSetcond2;
+-
+ typedef struct TCGOutOpStore {
+     TCGOutOp base;
+     void (*out_r)(TCGContext *s, TCGType type, TCGReg data,
+@@ -1240,9 +1234,6 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+ 
+     [INDEX_op_goto_ptr] = &outop_goto_ptr,
+ 
+-#if TCG_TARGET_REG_BITS == 32
+-    OUTOP(INDEX_op_setcond2_i32, TCGOutOpSetcond2, outop_setcond2),
+-#else
+     OUTOP(INDEX_op_bswap64, TCGOutOpUnary, outop_bswap64),
+     OUTOP(INDEX_op_ext_i32_i64, TCGOutOpUnary, outop_exts_i32_i64),
+     OUTOP(INDEX_op_extu_i32_i64, TCGOutOpUnary, outop_extu_i32_i64),
+@@ -1251,7 +1242,6 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+     OUTOP(INDEX_op_ld32u, TCGOutOpLoad, outop_ld32u),
+     OUTOP(INDEX_op_ld32s, TCGOutOpLoad, outop_ld32s),
+     OUTOP(INDEX_op_st32, TCGOutOpStore, outop_st),
 -#endif
+ };
+ 
+ #undef OUTOP
+@@ -2482,9 +2472,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_xor:
+         return has_type;
+ 
+-    case INDEX_op_setcond2_i32:
+-        return TCG_TARGET_REG_BITS == 32;
+-
+     case INDEX_op_ld32u:
+     case INDEX_op_ld32s:
+     case INDEX_op_st32:
+@@ -3013,7 +3000,6 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+             case INDEX_op_setcond:
+             case INDEX_op_negsetcond:
+             case INDEX_op_movcond:
+-            case INDEX_op_setcond2_i32:
+             case INDEX_op_cmp_vec:
+             case INDEX_op_cmpsel_vec:
+                 if (op->args[k] < ARRAY_SIZE(cond_name)
+@@ -5269,7 +5255,6 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+         op_cond = op->args[3];
+         break;
+     case INDEX_op_movcond:
+-    case INDEX_op_setcond2_i32:
+     case INDEX_op_cmpsel_vec:
+         op_cond = op->args[5];
+         break;
+@@ -5869,23 +5854,6 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+         }
+         break;
+ 
+-#if TCG_TARGET_REG_BITS == 32
+-    case INDEX_op_setcond2_i32:
+-        {
+-            const TCGOutOpSetcond2 *out = &outop_setcond2;
+-            TCGCond cond = new_args[5];
+-
+-            tcg_debug_assert(!const_args[1]);
+-            tcg_debug_assert(!const_args[2]);
+-            out->out(s, cond, new_args[0], new_args[1], new_args[2],
+-                     new_args[3], const_args[3], new_args[4], const_args[4]);
+-        }
+-        break;
+-#else
+-    case INDEX_op_setcond2_i32:
+-        g_assert_not_reached();
+-#endif
+-
+     case INDEX_op_goto_ptr:
+         tcg_debug_assert(!const_args[0]);
+         tcg_out_goto_ptr(s, new_args[0]);
+diff --git a/tcg/tci.c b/tcg/tci.c
+index e15d4e8e08..7f3ba9b5da 100644
+--- a/tcg/tci.c
++++ b/tcg/tci.c
+@@ -418,14 +418,6 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+             tci_args_l(insn, tb_ptr, &ptr);
+             tb_ptr = ptr;
+             continue;
+-#if TCG_TARGET_REG_BITS == 32
+-        case INDEX_op_setcond2_i32:
+-            tci_args_rrrrrc(insn, &r0, &r1, &r2, &r3, &r4, &condition);
+-            regs[r0] = tci_compare64(tci_uint64(regs[r2], regs[r1]),
+-                                     tci_uint64(regs[r4], regs[r3]),
+-                                     condition);
+-            break;
+-#elif TCG_TARGET_REG_BITS == 64
+         case INDEX_op_setcond:
+             tci_args_rrrc(insn, &r0, &r1, &r2, &condition);
+             regs[r0] = tci_compare64(regs[r1], regs[r2], condition);
+@@ -435,7 +427,6 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+             tmp32 = tci_compare64(regs[r1], regs[r2], condition);
+             regs[r0] = regs[tmp32 ? r3 : r4];
+             break;
+-#endif
+         case INDEX_op_mov:
+             tci_args_rr(insn, &r0, &r1);
+             regs[r0] = regs[r1];
+@@ -1040,7 +1031,6 @@ int print_insn_tci(bfd_vma addr, disassemble_info *info)
+ 
+     case INDEX_op_tci_movcond32:
+     case INDEX_op_movcond:
+-    case INDEX_op_setcond2_i32:
+         tci_args_rrrrrc(insn, &r0, &r1, &r2, &r3, &r4, &c);
+         info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s, %s, %s",
+                            op_name, str_r(r0), str_r(r1), str_r(r2),
+diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
+index 10d5edb4ca..fd3a50bf4c 100644
+--- a/docs/devel/tcg-ops.rst
++++ b/docs/devel/tcg-ops.rst
+@@ -696,21 +696,6 @@ Memory Barrier support
+        | Please see :ref:`atomics-ref` for more information on memory barriers.
+ 
+ 
+-64-bit guest on 32-bit host support
+------------------------------------
+-
+-The following opcodes are internal to TCG.  Thus they are to be implemented by
+-32-bit host code generators, but are not to be emitted by guest translators.
+-They are emitted as needed by inline functions within ``tcg-op.h``.
+-
+-.. list-table::
+-
+-   * - setcond2_i32 *dest*, *t1_low*, *t1_high*, *t2_low*, *t2_high*, *cond*
+-
+-     - | Similar to setcond, except that the 64-bit values *t1* and *t2* are
+-         formed from two 32-bit arguments. The result is a 32-bit value.
+-
+-
+ QEMU specific operations
+ ------------------------
+ 
+@@ -930,15 +915,11 @@ than being a standalone C file.
+ Assumptions
+ -----------
+ 
+-The target word size (``TCG_TARGET_REG_BITS``) is expected to be 32 bit or
+-64 bit. It is expected that the pointer has the same size as the word.
++The target word size (``TCG_TARGET_REG_BITS``) is expected to be 64 bit.
++It is expected that the pointer has the same size as the word.
+ 
+-On a 32 bit target, all 64 bit operations are converted to 32 bits.
+-A few specific operations must be implemented to allow it
+-(see setcond2_i32).
+-
+-On a 64 bit target, the values are transferred between 32 and 64-bit
+-registers using the following ops:
++Values are transferred between 32 and 64-bit registers using the
++following ops:
+ 
+ - extrl_i64_i32
+ - extrh_i64_i32
+diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
+index 1756ffc59c..8bd8db4401 100644
+--- a/tcg/tci/tcg-target.c.inc
++++ b/tcg/tci/tcg-target.c.inc
+@@ -1047,22 +1047,6 @@ static const TCGOutOpMovcond outop_movcond = {
+     .out = tgen_movcond,
+ };
+ 
+-static void tgen_setcond2(TCGContext *s, TCGCond cond, TCGReg ret,
+-                          TCGReg al, TCGReg ah,
+-                          TCGArg bl, bool const_bl,
+-                          TCGArg bh, bool const_bh)
+-{
+-    tcg_out_op_rrrrrc(s, INDEX_op_setcond2_i32, ret, al, ah, bl, bh, cond);
+-}
+-
+-#if TCG_TARGET_REG_BITS != 32
+-__attribute__((unused))
+-#endif
+-static const TCGOutOpSetcond2 outop_setcond2 = {
+-    .base.static_constraint = C_O1_I4(r, r, r, r, r),
+-    .out = tgen_setcond2,
 -};
 -
--static unsigned best_accel(void)
--{
--    unsigned info = cpuinfo_init();
--
--#ifdef CONFIG_AVX2_OPT
--    if (info & CPUINFO_AVX2) {
--        return 2;
--    }
--#endif
--    return info & CPUINFO_SSE2 ? 1 : 0;
--}
--
--#else
--# include "host/include/generic/host/bufferiszero.c.inc"
--#endif
-diff --git a/host/include/x86_64/host/bufferiszero.c.inc b/host/include/x86_64/host/bufferiszero.c.inc
-index 1d3f1fd6f5..74ae98580f 100644
---- a/host/include/x86_64/host/bufferiszero.c.inc
-+++ b/host/include/x86_64/host/bufferiszero.c.inc
-@@ -1 +1,125 @@
--#include "host/include/i386/host/bufferiszero.c.inc"
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * buffer_is_zero acceleration, x86 version.
-+ */
-+
-+#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
-+#include <immintrin.h>
-+
-+/* Helper for preventing the compiler from reassociating
-+   chains of binary vector operations.  */
-+#define SSE_REASSOC_BARRIER(vec0, vec1) asm("" : "+x"(vec0), "+x"(vec1))
-+
-+/* Note that these vectorized functions may assume len >= 256.  */
-+
-+static bool __attribute__((target("sse2")))
-+buffer_zero_sse2(const void *buf, size_t len)
-+{
-+    /* Unaligned loads at head/tail.  */
-+    __m128i v = *(__m128i_u *)(buf);
-+    __m128i w = *(__m128i_u *)(buf + len - 16);
-+    /* Align head/tail to 16-byte boundaries.  */
-+    const __m128i *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
-+    const __m128i *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16);
-+    __m128i zero = { 0 };
-+
-+    /* Collect a partial block at tail end.  */
-+    v |= e[-1]; w |= e[-2];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-3]; w |= e[-4];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-5]; w |= e[-6];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-7]; v |= w;
-+
-+    /*
-+     * Loop over complete 128-byte blocks.
-+     * With the head and tail removed, e - p >= 14, so the loop
-+     * must iterate at least once.
-+     */
-+    do {
-+        v = _mm_cmpeq_epi8(v, zero);
-+        if (unlikely(_mm_movemask_epi8(v) != 0xFFFF)) {
-+            return false;
-+        }
-+        v = p[0]; w = p[1];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[2]; w |= p[3];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[4]; w |= p[5];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[6]; w |= p[7];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= w;
-+        p += 8;
-+    } while (p < e - 7);
-+
-+    return _mm_movemask_epi8(_mm_cmpeq_epi8(v, zero)) == 0xFFFF;
-+}
-+
-+#ifdef CONFIG_AVX2_OPT
-+static bool __attribute__((target("avx2")))
-+buffer_zero_avx2(const void *buf, size_t len)
-+{
-+    /* Unaligned loads at head/tail.  */
-+    __m256i v = *(__m256i_u *)(buf);
-+    __m256i w = *(__m256i_u *)(buf + len - 32);
-+    /* Align head/tail to 32-byte boundaries.  */
-+    const __m256i *p = QEMU_ALIGN_PTR_DOWN(buf + 32, 32);
-+    const __m256i *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 32);
-+    __m256i zero = { 0 };
-+
-+    /* Collect a partial block at tail end.  */
-+    v |= e[-1]; w |= e[-2];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-3]; w |= e[-4];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-5]; w |= e[-6];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-7]; v |= w;
-+
-+    /* Loop over complete 256-byte blocks.  */
-+    for (; p < e - 7; p += 8) {
-+        /* PTEST is not profitable here.  */
-+        v = _mm256_cmpeq_epi8(v, zero);
-+        if (unlikely(_mm256_movemask_epi8(v) != 0xFFFFFFFF)) {
-+            return false;
-+        }
-+        v = p[0]; w = p[1];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[2]; w |= p[3];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[4]; w |= p[5];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[6]; w |= p[7];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= w;
-+    }
-+
-+    return _mm256_movemask_epi8(_mm256_cmpeq_epi8(v, zero)) == 0xFFFFFFFF;
-+}
-+#endif /* CONFIG_AVX2_OPT */
-+
-+static biz_accel_fn const accel_table[] = {
-+    buffer_is_zero_int_ge256,
-+    buffer_zero_sse2,
-+#ifdef CONFIG_AVX2_OPT
-+    buffer_zero_avx2,
-+#endif
-+};
-+
-+static unsigned best_accel(void)
-+{
-+    unsigned info = cpuinfo_init();
-+
-+#ifdef CONFIG_AVX2_OPT
-+    if (info & CPUINFO_AVX2) {
-+        return 2;
-+    }
-+#endif
-+    return info & CPUINFO_SSE2 ? 1 : 0;
-+}
-+
-+#else
-+# include "host/include/generic/host/bufferiszero.c.inc"
-+#endif
+ static void tcg_out_mb(TCGContext *s, unsigned a0)
+ {
+     tcg_out_op_v(s, INDEX_op_mb);
 -- 
 2.43.0
 
