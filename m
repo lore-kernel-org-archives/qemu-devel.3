@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53EABD1D460
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EE6D1D462
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdr6I-0007S9-9E; Thu, 08 Jan 2026 09:34:58 -0500
+	id 1vdr6E-0007Lz-L6; Thu, 08 Jan 2026 09:34:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5u-00071k-1P
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:36 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1vdr5y-00074P-Hn
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:38 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5q-0000h7-7D
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:32 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-432d256c2e6so442256f8f.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:29 -0800 (PST)
+ id 1vdr5v-0000jT-AL
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:38 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-47bdbc90dcaso24184475e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767882869; x=1768487669; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767882874; x=1768487674; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ksGvb6tIIoBcL19IyLaGN8z74U9Al+XLv7vvohNmR5E=;
- b=jP8iKv3th8Ojq91UcBlmWn5SJwEbvAktG1okFdHG7u8ImnyvHIDSOIuolDIZ0430rc
- k4uG/cpCwizDxcrzG+aga2NNc5oZEU9g7t+p5rVP+sfL8XIXiP48MHQener4TXo6i9pR
- bwrVSv+zdsnFBOqRxo05eTsurTlx5jqDpMHlcR5GtA5KUkhd+Oy2fiYTFFI491YA3tnC
- zKSNviIp7Qhs42z0BUzeOuuNgdUeZ7KE/JGHHIrdRf77V/6qZe9pClom8kZ0Wq4xFJ9i
- lgLpibx+jW+ZdrELtqdRQNuXOC/ALxMkW5b0PvG5d3CqAsr9u9RaUGoMBZ3ax4n4Ebe2
- yFuA==
+ bh=M6tH0CF/GJKELoBmGqjsJGSOS1a50aHiTGJ/qCRa94o=;
+ b=HS4Qf1jSb82GjuDAbydiaDt/Eq83vsu8awTfomJ+OQlCi5rZ4LJO5j4enPSPWw1NGe
+ LoYslHzbFB8ymK5PDtr4jTT1NtotBfSCKaeKCgscWJCiaBm+ZcngXPW52j9w7+6X0tbA
+ OVI+wDDJNxFdsWqhEvkQjv99ew0h4psNfVy6TfuLvIA9Wclst9gNFKMF8P781IXVUqMQ
+ 9P0VK20EmFroxRNesi4s/3FBteuw+f8db1HkOE9C4q3I5DJvMga2tr2xBINGSFDnJg4s
+ Dhlninp/BZwvgo9gqhR5I9tdSbD510fzE091ytZALInU9KXEBuBKDntjibtrBIRQrtvA
+ qDoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767882869; x=1768487669;
+ d=1e100.net; s=20230601; t=1767882874; x=1768487674;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ksGvb6tIIoBcL19IyLaGN8z74U9Al+XLv7vvohNmR5E=;
- b=JuqN0y3yV8rWuPYwuG90LMpO/hzgNNzwbAVoRYdytLFQpvC4Vk/OqLXajzULat4xjm
- 4XPqzDwLvZPfy0dlgpL3XrJDF4n6hLMTTuD4jSl4W6X2br9FPPf9P767hl4GzSeVqcTM
- kwZolvhn3j2V3hOK72PyeZqngEc7ivg9F5syDZK+VW5vH632VuSP9QsiMEIoVa0CVxKR
- lJe6XI3ZRmZitS87OYeXMN8hqZHgHvBGMtwdxVPnJ5gMRtj6uQrrJI/jpB9IkKycmFth
- IfdKTFrRbyj+W1BvfubDua8Focwk4IPaV7IfFPBdGzJO1OL+Ys4jvEP25vdB4fwRDXIa
- pdKA==
-X-Gm-Message-State: AOJu0Yx+tEl79LO1bXjBxDL2qSoaneSxQgDwk51UrZNdPtSSgmS/yol2
- dk/ixPMMiNKUquOB7S4p/YX/awIxzhMaMHEG7616bGoqEkPh83cqZwrzpQuapYHL4B4=
-X-Gm-Gg: AY/fxX4CJKQ05jLKLbqp77DapZlT++Rx1TWxik9lKPGXodcLlxwujlD1EopnSSdZN79
- 13NwR3b0o2ADU3OGnoq65azMqSPnvm2900FkMcnhZuUgdiAwMXg9+RrI8B8wHVGrd9WC2c9Q6yM
- BVa3a/BSdHbm+4VJiotnh7RFio22TEeMkGl+lGYuiejBvYlLkrTtkTBdOJgGjGvsWpGG5KRivP0
- D6a+fhCeXPCGGBh9OX4CBzHUYmyPg1AXof3NVCyVbc94U91gv3uNVVoVjAeOXSPm7r12D1gVidA
- pTC3ZLI7+HLA/3fZ4S7kyrZr0VPZkt62J0M4TAF+UDvsU/Q3fsZJk8NVze8efDHki/bW6C7wXpC
- It4QL2IUvBgv5waZPukQ9zkSRRrY7rM83nNR6GlIwPJpVPq89zr5s+r73l+M+YDG3Y4D1CyM2iY
- /b6KzaNe1afO8=
-X-Google-Smtp-Source: AGHT+IFVmLmMizmNB2LIXR8Xv3q2Sppf9Sh1lb/5R/XMq5lNlyeZkdJf+M6Qph5BQgNY23BgFi5Zzg==
-X-Received: by 2002:a05:6000:3104:b0:432:7068:17d with SMTP id
- ffacd0b85a97d-432c3775aa7mr8314435f8f.20.1767882868653; 
- Thu, 08 Jan 2026 06:34:28 -0800 (PST)
+ bh=M6tH0CF/GJKELoBmGqjsJGSOS1a50aHiTGJ/qCRa94o=;
+ b=FcLidnFQC4a6i5yQvCRnE3GMkeG7FykVcdySpXqkr8yA3WulHGd1NBDcicPgqt3VOD
+ dy/HYg/dEAfkXBMhnq4nxuS+spBo81bF5SzregST//GbfdM+iqm9cEcV5lke/Qdv5ltx
+ fRVxRwnxkOMKtymnV2UTCwmp4dm1gQfUtBxm5epdA6TN0TaQkeHAHb+SQSc/l3ngC9Ui
+ 2i3BDcOmsaFogf6A7jumy61ErvvmtKr9rCr84xJqrZUSWLPGWq2oFf5sjMozGbw9QFps
+ 4WvXKp9nTklOsV8f44sahXRAkZtaM3RB9Z2iLXPjqLWWk+8dZN8fDAnAsJ8LT7BOXRaw
+ 9+gQ==
+X-Gm-Message-State: AOJu0YzkaMWPUdkmr3nkvFuPUtfVgjutbv640kBcxlh/d1D1inojtwPF
+ MOVdoDcMd85Fh59MfckfWG23IpMLLQUTfLr1IlLhX5kXImR1gPDZchCtJQ6VWURycTM=
+X-Gm-Gg: AY/fxX6rwKDUzSSkRg59VLPy4WvnNWe7XuY55yntWtmxUt6RRkm6zUOsU/uIz5xsPoi
+ 69fdUNi27TUqi87uhgIiFIQUa9cZJjvb2ApnEvpp/7j4Y9p5KmDR1HhD3gIdD3iHJYkP8wBySfM
+ 2WDk5MKtQbq5R3ebStBt5h2iYyJUZkpcXvNtdZRVHRaBX7dwrPO2yRtIOSIuSsPI6Fhbw8oe08V
+ pZDRzwVETnFtZJ31Nbq9YzlPumn3n5pFrWHBVyADpIIrR2xv2zTJ+OGbR8B+JaZhcrFFDCxJkjK
+ G0AihDNvEP8/san3jdpAOic4fizl4AdTdAtIPqkOLAXuIH8zAzArgm5OLBWRO7WZgm70BjHcgTX
+ rW3/cjFjkLM/vv3ChGOjkOcL/aRJggWEuRWV7zEZCC4o5lrUm8mG/7ReoDv5Lc/DB9H5KJ+muIw
+ Kytg08dJQpJDo=
+X-Google-Smtp-Source: AGHT+IFQ2b7jHgSZCCtLDyudNjBkpAYBfcgv7i5tpvjUUC07gUibqxAEQZnVr+TfhdHtcSVluMmqnQ==
+X-Received: by 2002:a05:600c:1392:b0:477:6d96:b3c8 with SMTP id
+ 5b1f17b1804b1-47d84b34673mr79074405e9.23.1767882873727; 
+ Thu, 08 Jan 2026 06:34:33 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5edd51sm16659017f8f.29.2026.01.08.06.34.26
+ ffacd0b85a97d-432bd0e16d2sm17391256f8f.13.2026.01.08.06.34.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 06:34:27 -0800 (PST)
+ Thu, 08 Jan 2026 06:34:32 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 74F565F94A;
+ by draig.lan (Postfix) with ESMTP id E9D995FADF;
  Thu, 08 Jan 2026 14:34:24 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,17 +80,17 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>,
  Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 07/12] target/m68k: drop cpu_reset on realizefn
-Date: Thu,  8 Jan 2026 14:34:18 +0000
-Message-ID: <20260108143423.1378674-8-alex.bennee@linaro.org>
+Subject: [RFC PATCH 12/12] include/hw: expand cpu_reset function docs
+Date: Thu,  8 Jan 2026 14:34:23 +0000
+Message-ID: <20260108143423.1378674-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260108143423.1378674-1-alex.bennee@linaro.org>
 References: <20260108143423.1378674-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,26 +113,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now all the m68k machines have cpu reset handlers we can drop this
-extra case here.
+Add a hint to the developer that this should only be called from a
+reset chain.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/m68k/cpu.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/hw/core/cpu.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index f1b673119d6..a540a754969 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -392,7 +392,6 @@ static void m68k_cpu_realizefn(DeviceState *dev, Error **errp)
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index f6f17df9e64..9f938e00492 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -811,6 +811,9 @@ void cpu_list_remove(CPUState *cpu);
+ /**
+  * cpu_reset:
+  * @cpu: The CPU whose state is to be reset.
++ *
++ * You should refrain from calling this during CPU realization and
++ * make sure this is called from the reset logic instead.
+  */
+ void cpu_reset(CPUState *cpu);
  
-     m68k_cpu_init_gdb(cpu);
- 
--    cpu_reset(cs);
-     qemu_init_vcpu(cs);
- 
-     mcc->parent_realize(dev, errp);
 -- 
 2.47.3
 
