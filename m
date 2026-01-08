@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E843D185CC
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1960ED185CC
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 11:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdnjL-00068B-8a; Thu, 08 Jan 2026 05:59:03 -0500
+	id 1vdnk8-0000A4-4K; Thu, 08 Jan 2026 05:59:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnjJ-00060q-Jj
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:59:01 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnjt-0008GR-0M
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:59:40 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnjI-0007q8-0a
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:59:01 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2a3e76d0f64so8073365ad.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:58:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnjo-0007wG-Tm
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:59:36 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-47796a837c7so22627365e9.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:59:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767869938; x=1768474738; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767869971; x=1768474771; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0xDsYsZqUfSPlkLSnrNhGJEtuejn3vFQzjuYwP/y/zg=;
- b=Oly+GUl/ZWSMEhvb8iPae8QCxLI1VzB7hIxl0hn64kqeyIJgpaoT6SKqltIue10hZq
- dx5DE1xWqFnnGePLrR7ySnNkFViwC9k//eP27E4Zrq/f64Y4mkWlnWBzf896yqeoXaio
- dMQzfF5spw5t2pjyKdYAO8QxWsROkYmrKQFJEQ73lZw9LJ56pJgqVWOxcS4HlSSDUoso
- kVL1p0C0/Au5hkXCMw6hfvAxhRB+Uvblop+ZVRknxaTUGZcowN3wxHWX3zc8xEzaKqUn
- wKl9GHA4fy2SWqydtuUxEKhiLvbplwCgB8o8MixSKl2D3BBxrCTXQ58fpVHnLIycpHH8
- cjCA==
+ bh=uPkq2uCPddWLRCB7GHxXQIPqCZLxd0Z99+zsQFO7ivA=;
+ b=xX//3Ha5SBIoDrdw+XmsCPW4UicnoOGEziQRjUVXreSlpHIbU926vCxJS+l1tETAen
+ 6XfdsNoUHZhCruve4/TkzUg5PdfAA9QonhRK/x6shHbGSjhO4DsDIf432yZSOkcXfoRv
+ LKWpAl8RlO1p6nQ9wx0nvh8W9Re+5Dn/VotxWgdq9RvjJ7JxahJzRHnPRUR0X3SzTwDI
+ AjF5S3BDuoPaU7w5rC+rWXIrybZJojuIQYVFwwQysAXbxqYaSgbkjrQW5mY5d4DZt6n/
+ 0GWEsHmiZa4YCyg96itwdBoWMYyXV3QSUrtcCCJp0iLWuIth7cfRQ8CQbpC/T7IFkalf
+ xNkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767869938; x=1768474738;
+ d=1e100.net; s=20230601; t=1767869971; x=1768474771;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0xDsYsZqUfSPlkLSnrNhGJEtuejn3vFQzjuYwP/y/zg=;
- b=lpv/BlzIYBJnkBR9y0FlKWtRW8gLPMsM6780+0uKKqihvfWgFKvkb8EP1zmAg/SFpk
- HBCdeoaEJmDDZ6wOPqtTfajsDfqQjxYbGtluiaYfmRku5/1Xita3LrG0fKz8r9y8JK96
- AyviALrHoeY7W4yA/MGbv3OHpaZ/I+4FyOz4hAdoWhZL0zmF89fVtaIbG4W5bKMd7RvC
- dMYLQQBUyMhH3Cu3qRVnuoNasBPTVCW2Xdn6JNTuc9HvCfSzowzauBab5H+QU1miXpvj
- zGccId0rVs1yXXL4fez8at2qb+kTilcIi3hl2PeRojDReC7DOShAUgflGQZ9SB8Ic2Ur
- umbA==
+ bh=uPkq2uCPddWLRCB7GHxXQIPqCZLxd0Z99+zsQFO7ivA=;
+ b=cxeHoyuqZ6jnkUZkoeBSUMQuZkaIZAplMxZpWP+ciigrePE93apbB0JsCtyVX+37Yj
+ A2SaYKLntIxCXLR0jZQbk9btn+9I1NFzNcrxokdlfibT46jb4dgYcmMjLPgcBtrYCfWJ
+ 5XcNyywPuLUxIxrfQRkoVHKn09TsH61DqoNr0xwUkpiJ1IibtC+in5l85bkzVtuZza91
+ cEAT5WWvT1bzAVtiBNXcEYh6beo88/EozNtCui7jt1hmxAy+cE7H6d2ucJ4URVWyb2Xr
+ 0SiH/zIXPdCxx/esgEUYXBhLv8JB2wMvFdvJWdiFDylNbtT7awmje+uRnbPei40V5Skz
+ fLdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNdUkUCoy1XOENrhGRWdnSCi/iXv56FHUoyw4mouWU09X+t5/V7bGR/hSVhvwzCEx83gC+DdZooUaf@nongnu.org
-X-Gm-Message-State: AOJu0Yx7Ew4F5HZFR+e9mFAS0T72JnPDeboPmANCJiA0kTGd5jqIpAsq
- hfgaQSj4tYQqA8PzvYxAcTZYFXBLBFEvM3d0yL7aP8Rf/fkpLFw7WPnhaABlaNqW7W8=
-X-Gm-Gg: AY/fxX7IHz7CyANb7v3RISK/1v7HfjBk9oIf5lvIH3ICMDc/cKdLeDQkGfqjwFJsadK
- asLaVeiaIMwQuVbrCw4HaedjV+o1Lqv2O34EUP59Dt5wqMGPcppkAjveGt+mLP+KcjnZhZjilgv
- 7/7pDxiMyChyM50Ulsbk4T4T1oMSuQPohN9lAKEnqqrDD9MjLCZTXLJwUIr3AG9axJXJpt+/lbq
- oCNJVN5rDaqJxgsD/X7jSgGsPpnFtbu1ojrt6LbKVk3GLejmV7iwOtsOyIkxQDzXhdjpB6zysOv
- ywikZBqPYP8xYzatiElIoak64x5qaciVV6lIMPRlIYcNC2magQpcltmd1n2xYsbU4RTw3IQczME
- 0R0NqQ9iPdtrBcQgS2l8rLl3FckMT9FuayQMj3mMK0oGoBlaYIcJk6/n5kUEC/v2RtnmVWBJazS
- 31IyIfr2L6q6mZK3tbH37bh2Fm/x8FLcf7rfxeKq7e/FlnXSdKKSe5rQ==
-X-Google-Smtp-Source: AGHT+IHufp0AXd6x+4xv7BHp2/WJL9nBKNxOm+7kFC9pDNrDDqSeURzCPKVK4OM8SIQUuAu9+yuilw==
-X-Received: by 2002:a17:903:fa7:b0:2a0:97ea:b1bd with SMTP id
- d9443c01a7336-2a3e390f68cmr95019855ad.0.1767869938087; 
- Thu, 08 Jan 2026 02:58:58 -0800 (PST)
+ AJvYcCVOnqYM/atIbivIDdEAcV0WntNGyerEZt2nUs0mGSEElO76XjTdkDCfsBvBv44dsjFncLAyZNQGRwCN@nongnu.org
+X-Gm-Message-State: AOJu0YxRX1IIv4T4lsXAJGamX9vNLIhkxcvXNxUzTqPmeP84U1vmPm7Z
+ d0cJRVEKQPpyf8lRVa3BUIrBocQP/43tv+b3xFj+iQRfnTXC1dBa/HbdsQ3lTIMoUy8=
+X-Gm-Gg: AY/fxX4nRwt1BJc4MoILll/wqf1z/bO0FOe5MkPMScd3PJp9YiHArjRBKcO4WlE3qxL
+ ay270eh4nhF6e/0YLK0T7FaK/iNS8LY7ohQIoiw+yOa6UZK4xigZ8N6ELsxRy1YsNfmfjRJZiJh
+ lZQ5qUURYv2ry94fAvt1zvwlEQe8X+Jj8UryIieUQNesA4eCadcSgG0VP29TpCobUN7g+AqEM8B
+ L649pnzJ9WSlb5ixMyroKuL+/IjJI4Lf4+4iTVTP9vcldZohcTLGFRt/ozpCtDGC4M8r19/3edK
+ 3Q0WPj6RzqLbcc7sJ4WP+GSpPHXjIWk5vvmVcUqP1+EM8eocLQa7iVF1U9hh8GmGXwspaQr5IYc
+ QKnRELV2C+iblgSiQTcoRXySiDBYhk1jVCGg9klTIM/Gu57HIE8pjPmCA6AGdXjPD0+yEJLzXt7
+ kcKpCI7AuXmW3Sy7xa1p2I2pVztb/K6btgLKP0pHTBTmIKQHNbILgLAA==
+X-Google-Smtp-Source: AGHT+IHQjvwUisRXtb7UJbiI0GG0a9/E5n+I2sjbofPrD+Wiw08uTG7CRW9sEnTmg2SQ+C9X63mQkg==
+X-Received: by 2002:a05:600c:8b57:b0:477:73e9:dbe7 with SMTP id
+ 5b1f17b1804b1-47d84b61399mr61345555e9.35.1767869970673; 
+ Thu, 08 Jan 2026 02:59:30 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cd46a9sm77070005ad.93.2026.01.08.02.58.56
+ 5b1f17b1804b1-47d8636c610sm34989985e9.0.2026.01.08.02.59.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 02:58:57 -0800 (PST)
-Message-ID: <f5675177-1c71-4ee4-9947-5f55760b4143@linaro.org>
-Date: Thu, 8 Jan 2026 11:58:53 +0100
+ Thu, 08 Jan 2026 02:59:30 -0800 (PST)
+Message-ID: <9b3f6725-a5d5-4348-a1f7-cf7448ad19d8@linaro.org>
+Date: Thu, 8 Jan 2026 11:59:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/50] tcg/ppc64: Rename from ppc
+Subject: Re: [PATCH 13/50] meson: Drop host_arch rename for mips64
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-13-richard.henderson@linaro.org>
+ <20260108053018.626690-14-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260108053018.626690-13-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-14-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,30 +104,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/1/26 06:29, Richard Henderson wrote:
-> Emphasize that we're generating 64-bit code.
-> Drop the explicit rename from meson's cpu.
+> This requires renaming several directories:
+> tcg/mips, linux-user/include/host/mips, and
+> common-user/host/mips.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/{ppc => ppc64}/tcg-target-con-set.h  | 0
->   tcg/{ppc => ppc64}/tcg-target-con-str.h  | 0
->   tcg/{ppc => ppc64}/tcg-target-has.h      | 0
->   tcg/{ppc => ppc64}/tcg-target-mo.h       | 0
->   tcg/{ppc => ppc64}/tcg-target-reg-bits.h | 0
->   tcg/{ppc => ppc64}/tcg-target.h          | 0
->   MAINTAINERS                              | 2 +-
->   meson.build                              | 2 --
->   tcg/{ppc => ppc64}/tcg-target-opc.h.inc  | 0
->   tcg/{ppc => ppc64}/tcg-target.c.inc      | 0
->   10 files changed, 1 insertion(+), 3 deletions(-)
->   rename tcg/{ppc => ppc64}/tcg-target-con-set.h (100%)
->   rename tcg/{ppc => ppc64}/tcg-target-con-str.h (100%)
->   rename tcg/{ppc => ppc64}/tcg-target-has.h (100%)
->   rename tcg/{ppc => ppc64}/tcg-target-mo.h (100%)
->   rename tcg/{ppc => ppc64}/tcg-target-reg-bits.h (100%)
->   rename tcg/{ppc => ppc64}/tcg-target.h (100%)
->   rename tcg/{ppc => ppc64}/tcg-target-opc.h.inc (100%)
->   rename tcg/{ppc => ppc64}/tcg-target.c.inc (100%)
+>   linux-user/include/host/{mips => mips64}/host-signal.h | 0
+>   tcg/{mips => mips64}/tcg-target-con-set.h              | 0
+>   tcg/{mips => mips64}/tcg-target-con-str.h              | 0
+>   tcg/{mips => mips64}/tcg-target-has.h                  | 0
+>   tcg/{mips => mips64}/tcg-target-mo.h                   | 0
+>   tcg/{mips => mips64}/tcg-target-reg-bits.h             | 0
+>   tcg/{mips => mips64}/tcg-target.h                      | 0
+>   MAINTAINERS                                            | 2 +-
+>   common-user/host/{mips => mips64}/safe-syscall.inc.S   | 0
+>   configure                                              | 8 +++-----
+>   meson.build                                            | 2 --
+>   tcg/{mips => mips64}/tcg-target-opc.h.inc              | 0
+>   tcg/{mips => mips64}/tcg-target.c.inc                  | 0
+>   13 files changed, 4 insertions(+), 8 deletions(-)
+>   rename linux-user/include/host/{mips => mips64}/host-signal.h (100%)
+>   rename tcg/{mips => mips64}/tcg-target-con-set.h (100%)
+>   rename tcg/{mips => mips64}/tcg-target-con-str.h (100%)
+>   rename tcg/{mips => mips64}/tcg-target-has.h (100%)
+>   rename tcg/{mips => mips64}/tcg-target-mo.h (100%)
+>   rename tcg/{mips => mips64}/tcg-target-reg-bits.h (100%)
+>   rename tcg/{mips => mips64}/tcg-target.h (100%)
+>   rename common-user/host/{mips => mips64}/safe-syscall.inc.S (100%)
+>   rename tcg/{mips => mips64}/tcg-target-opc.h.inc (100%)
+>   rename tcg/{mips => mips64}/tcg-target.c.inc (100%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
