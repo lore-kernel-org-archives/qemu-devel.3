@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53340D1D48A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA147D1D48A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:13:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwNE-00032z-MF; Thu, 08 Jan 2026 15:12:48 -0500
+	id 1vdwNN-0003BC-7V; Thu, 08 Jan 2026 15:12:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdwNC-00031l-MS
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:12:46 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vdwNK-00039N-EE
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:12:54 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdwNA-0000jC-UP
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:12:46 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-34c84dc332cso2163308a91.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:12:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vdwNI-0000js-Uk
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:12:54 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-29f1bc40b35so41712885ad.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:12:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767903163; x=1768507963; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RudaXk6Q5sdMKRR1y0TJ2yEtQLKOGVfHwuB+Wp4A9lE=;
- b=W/h2jSXs/tgHT4GE0fW/1uZjOEvp7NU3AjPRouKhjZtGSivGK7z6nS3FgJiz+VgUh/
- WnRIXg0QW28Cc0tzczBvg5LCQ8fZYJ8lH0Vy1Nx3iai5UoOW0P4Gd5jSSvuSiMpI2Om7
- plimGcaeJgiGP2KW7dPXJig4GByBZZmzOQJ+GAsuJhYf9r13H0qaCPiUGVsDBSjMGk5R
- uggC0n2boVvMe6Kc4IkXz3/2XqDEOILGs25eKD4HIEMYfAVpWRP4F2RQ9/o/ul4C99sH
- jpzowrWnVdcWa9lWHXQpm1Xw/1L9nYQzajwBbb8VcidFudxhyTG4m26eC1/h7XXCcLtp
- Zk8w==
+ d=linaro.org; s=google; t=1767903171; x=1768507971; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KhMfWxqSZzlJtBxKgXeqxk2yt3R16sJrE7uipa2FreU=;
+ b=vDTqqVwll8XIclUO+qGpQND1xL1d1t5i/YMlwOHAzbvAFxyu6rhZGRzbCEKtqNwxar
+ +uZplrQRDzdS6xfDkSQKjqK5s+BF7K/FnRwa8P8Dm7ZmtZeKY0dPHUX9d8g2mU9p6tIh
+ TZqUdy+cFw690SaJ4oxaJ9cIlV9K6/IQgYHTm+PVPT2c3bZILfZ2OgalsSAEWkNhyqfS
+ YHKD/EJ6r1OFPTLCRBTDOT10gVsHGx52iNb6jDB6mP0AiSTRZ9GEKl30FpVF3UHZuUi9
+ mvb2AYEXotGggsGNQolKWpM94m7bgVKxgoJ/cmVC1IRm7QgJ1JHkQ1hcwpqpTeoqAWlt
+ MNOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767903163; x=1768507963;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1767903171; x=1768507971;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RudaXk6Q5sdMKRR1y0TJ2yEtQLKOGVfHwuB+Wp4A9lE=;
- b=sbczFeUaiNazkBWK1dOkDP6EjjffJ+pYVmbaDeDuj8sDx5CaBW2VqK9UOk1c84TTri
- 2eTLu3/0jAntwEI5s3R8XiP2KaABtIv1fIavv2oQb9Ab97w7rNancOcjiPOW639jWE8u
- 6tg6ScIgpYwaf3r4IsiZcercIpFcmNoz+xSEKoL8P6Na6Hw0sazxSkpEkyiFU4yE4vf+
- UZVsC2/M9/Id8RXh7bW5RGU7ZHS12BS3Eax9/GeaCFHI16rA3tf1y6x4z5LtQYhUquHa
- JCmhh5vq1kdhv+3HvIyBB0B8/mm7E3ajG3zp/NTrZUCSJxG5bhaWxTAHruCJA8uSET9O
- hbZA==
+ bh=KhMfWxqSZzlJtBxKgXeqxk2yt3R16sJrE7uipa2FreU=;
+ b=pNAeHvTWO3/cKEsObQvnz1qWl6taHO57ar9RXTX9Ncdk2UraRjlzQrRaF1oBlibVxd
+ dnrb2uRRGd4pbGDU6x0cKMOSu/GeiTJmZFBv72DWP8nhdkXCHqd5wzsFLtuBasmOk623
+ 3J3kC92NX2Z98XxMs2KLTMizxEX9BYjsgAU/DuLnGcE+daRR42UMMx4kCDCDdlVMmYAR
+ 2q2+m95d3z/uU9jrpv5a6g0ubj9t/t1gukxm4SpRDJ0y+gmiSR28QBeyaK+g2HIhD8EV
+ 1ANSlNMqe17v4UcCpVBw+xyOZAUfST54C6SSNQt9QABgjhQPU7GPd3/YJTtjw3eTTy22
+ b0CA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpxqdpq4pEr5fuULcp+AL/KaU5tawnhTXSYzbzRrjVrBOrgHGxU7Cg2eYFnW0tjevvK66J9UhSJSr1@nongnu.org
-X-Gm-Message-State: AOJu0Ywx5N7fzEhU1ZQbLVUZDUjPEw7ZmpWagF6NSTOKn9oNY4bEKavU
- 8gThXiZDB89zY05iNJ68858v0dfY78p+FgQNlg6bjXOXX9RHFFsDRrKWjGMRgnMlJan/7PexC6i
- jrUXzF0A=
-X-Gm-Gg: AY/fxX6KjMjNGJllDSydP5nqxQhdsefPXFfd3y5PNRJZSmlVPZhoKK8agY88YHaVf1t
- qa1xcK3uuDyUQycE+gp9l3VFA75UP6X89uI3Qn5hB34grMH83LE8N7/23jw9IZiMiD2Y2jm+YfF
- hQIAITL7s4S1iHPtluLVngxr30lVJ/2GWQM/dxF+76Wie0n8GDUc7llRo6hwtwYAX7ZuvHTog+N
- JMrqZqIoJ6G8ipKff9NWqAmeHv8MBFoNHEpF1DJME5oxP67s6AZVOJlccSzmdu9iWFfEFnURssT
- xtFa7T7OXoWUt0ITVF9c3TAqF3uU6SomShoTnIe9vcaKGlAufOjZBpSCAIOsC/idCQJpQBGcUP5
- 1ZW8dzr4+Cxgl6geZJhDKsp7gYMxlOJucK3ZzdNBVqrk/iGN85WWtxgm3PR4ShCKrTbuSIKVEu6
- KXUInYnSsCrYpsAotqxzGBd+Vj8N3GWFJaYkhfOb1u
-X-Google-Smtp-Source: AGHT+IEgfcVtoMIvtu5T7ptlalzu2Prp5P/4D+VJ1qClnB7oVB+4Q9HzgZrh2KWnB6eaBDPQQWtg8g==
-X-Received: by 2002:a17:90b:5823:b0:34e:6b7b:ded4 with SMTP id
- 98e67ed59e1d1-34f68ccceb1mr6152952a91.36.1767903163191; 
- Thu, 08 Jan 2026 12:12:43 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
+ AJvYcCXIOZfD7RG8JdPCBaKY416ATG1d42bf3Uf7lgnC3sG/bo6Yqo52rjQTQLLk619MfUUa22uKmVrhD0Ff@nongnu.org
+X-Gm-Message-State: AOJu0Yyxl+zWZuupZWr8E0oULXGbZG4rgfmdunJpMEJmyC66ynmz2OWm
+ CH8TFC+9GHg9THcR3TVYu4ioHSd7zn3DDSbyBVgU0/TOlX+KHv5/u/m/sRaVA0zDdtY=
+X-Gm-Gg: AY/fxX6fy4BM+ymPgWhs34OoEsgq5p8qhKgQ2pm+Z87JGytVkxfey9uP3FwAIGbGVe2
+ sJ0yxzPJ0ICy+rUb9mt8z4+NR5e1oHVul8ozg2dqLcoha03leME/QlSIH0NRVAPr7U+1HXLI5l4
+ jS0Txs0QhB1X+pHbLskuQag8B6OD7xyt7pefYFW12oPTNs+p22gRx2rf8lwjke0iHIlhaHd+V5r
+ pJQCahLVRECY6vBDKh2LU7TOU1/5E9IZJeXdd+Qj+Ref+Ix8qSjt9AGwCfzVYETWXcIhUOebEdd
+ lzL1aECk/UJ+6KrX2svUY1xz1hrlUHyRDcZZSEhBg6C0n8fxJkYANep1DBIsVfmScsASj9+GaRI
+ /NRBj3FIFQns59D6Q14qcZifZ0Ju7PCHSU6T8PnqK71GDpcgudIOlNcbH+J68D+qNHiycEcBzNv
+ 3h/kN2d9H8MLnpqmrq0VbNjD3mydZdBPeIejcSUiwHA0fKeMr+o6Xkotbh
+X-Google-Smtp-Source: AGHT+IGQsL6fAyHTQEvW/1DqR/7JfpECjtA7HNp9Jy4x90mi51JszynWL7izXmS7T53Ub2kghFOs4A==
+X-Received: by 2002:a17:902:cecb:b0:29f:2b84:652b with SMTP id
+ d9443c01a7336-2a3ee484c56mr75763695ad.29.1767903171405; 
+ Thu, 08 Jan 2026 12:12:51 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5fa947ecsm8619830a91.6.2026.01.08.12.12.41
+ d9443c01a7336-2a3e3cc8d76sm85778335ad.84.2026.01.08.12.12.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 12:12:42 -0800 (PST)
-Message-ID: <8215be4b-7896-4bb0-8b51-373b7c8eeee6@linaro.org>
-Date: Fri, 9 Jan 2026 07:12:39 +1100
+ Thu, 08 Jan 2026 12:12:51 -0800 (PST)
+Message-ID: <90150853-24b3-43f7-a50d-400293cfc8d7@linaro.org>
+Date: Thu, 8 Jan 2026 12:12:50 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] target/i386/tcg: remove register case from
- decode_modrm_address
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20260107151400.273916-1-pbonzini@redhat.com>
- <20260107151400.273916-6-pbonzini@redhat.com>
- <9a0b5cc2-fddc-4c9d-a310-4ff4bc785c7c@linaro.org>
- <41a78ed4-8dba-4a8e-a33a-7b3dbd1b2af2@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 08/50] meson: Remove cpu == x86 tests
 Content-Language: en-US
-In-Reply-To: <41a78ed4-8dba-4a8e-a33a-7b3dbd1b2af2@redhat.com>
+To: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260108053018.626690-1-richard.henderson@linaro.org>
+ <20260108053018.626690-9-richard.henderson@linaro.org>
+ <fe780bfb-11f4-46f6-a40b-4aa5e233f88d@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <fe780bfb-11f4-46f6-a40b-4aa5e233f88d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,78 +107,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 00:28, Paolo Bonzini wrote:
-> On 1/8/26 00:44, Richard Henderson wrote:
->> On 1/8/26 02:14, Paolo Bonzini wrote:
->>> Unlike the older code in translate.c, mod=11b *is* filtered out earlier
->>> by decode_modrm.
->>>
->>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->>> ---
->>>   target/i386/tcg/decode-new.c.inc | 7 -------
->>>   1 file changed, 7 deletions(-)
->>>
->>> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/ decode-new.c.inc
->>> index 243df7e3735..7b595607fa7 100644
->>> --- a/target/i386/tcg/decode-new.c.inc
->>> +++ b/target/i386/tcg/decode-new.c.inc
->>> @@ -2024,12 +2024,6 @@ static AddressParts decode_modrm_address(CPUX86State *env, 
->>> DisasContext *s,
->>>       rm = modrm & 7;
->>>       base = rm | REX_B(s);
->>> -    if (mod == 3) {
->>> -        /* Normally filtered out earlier, but including this path
->>> -           simplifies multi-byte nop, as well as bndcl, bndcu, bndcn.  */
->>> -        goto done;
->>> -    }
->>> -
+On 1/8/26 1:50 AM, Thomas Huth wrote:
+> On 08/01/2026 06.29, Richard Henderson wrote:
+>> The 32-bit x86 host is no longer supported.
 >>
->> I can see that this is true, but one has to dig around to see that it's so.
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>    configure   | 16 +---------------
+>>    meson.build | 49 ++++++++++---------------------------------------
+>>    2 files changed, 11 insertions(+), 54 deletions(-)
 >>
->> There's enough prep code duplicated between decode_modrm and decode_modrm_address that I 
->> think it would be worthwhile to merge the two functions and simplify.
+>> diff --git a/configure b/configure
+>> index 00e455be57..846fab904e 100755
+>> --- a/configure
+>> +++ b/configure
+>> @@ -440,13 +440,6 @@ case "$cpu" in
+>>        linux_arch=arm64
+>>        ;;
+>>    
+>> -  i386|i486|i586|i686)
+>> -    cpu="i386"
+>> -    host_arch=i386
+>> -    linux_arch=x86
+>> -    CPU_CFLAGS="-m32"
+>> -    ;;
 > 
-> Is there really so much?  I guess you could write the combined function like so:
+> Ah, it's removed here, please forget my previous related comment about this
+> in an earlier partch!
 > 
->      int modrm = get_modrm(s, env);
->      int mod = (s->modrm >> 6) & 3;
->      int rm = s->modrm & 7;
->      if (mod == 3) {
->          op->n = (rm | REX_B(s)) & reg_nb_mask(s, op->unit);
->          return;
->      }
+>> @@ -300,9 +296,7 @@ else
+>>    endif
+>>    accelerator_targets = { 'CONFIG_KVM': kvm_targets }
+>>    
+>> -if cpu == 'x86'
+>> -  xen_targets = ['i386-softmmu']
+>> -elif cpu == 'x86_64'
+>> +if cpu == 'x86_64'
+>>      xen_targets = ['i386-softmmu', 'x86_64-softmmu']
 > 
->      int def_seg = R_DS;
->      int base = rm | REX_B(s);
->      int index = -1;
->      int scale = 0;
->      targe_long disp = 0;
->      bool is_vsib = decode->e.vex_class == 12;
->      switch(s->aflag) {
->          ...
->      }
+> I wonder whether we should limit xen_targets to x86_64-softmmu now?
+>
+
+The i386 target still exists, and it can be run with xen on a x86_64 
+machine, so I think it's supposed to stay.
+
+> Anyway:
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > 
->      op->has_ea = true;
->      op->n = -1;
->      decode->mem = (AddressParts){ def_seg, base, index, scale, disp };
+> 
 
-Yes, this is the sort of thing that I was thinking.
-
-Where, in particular, the compiler gets to see that bounds of mod were [0-3], and that mod 
-== 3 had been eliminated, so that later in the function the bounds of mod are [0-2] for 
-those later switch statements.
-
-
-> but it does not seem so much better...  I guess I could do the modrm
-> split just once:
-I suppose the compiler would be able to do the same bounds discovery with that, since 
-it'll definitely inline the single-use function.  So at least that's an improvement over 
-the current situation, where I think the two shift + mask extractions from a memory 
-operand probably aren't CSE'd.
-
-But the fact that you felt the need to add an assert there at the beginning suggests to me 
-that it really is clearer as a single function.
-
-
-r~
 
