@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E71C7D148A0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FDCD1489F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdieU-0001DR-EA; Thu, 08 Jan 2026 00:33:42 -0500
+	id 1vdifu-0004nu-Ot; Thu, 08 Jan 2026 00:35:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdicQ-00084l-Sp
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:39 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1vdifi-0004c9-L4
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:35:00 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdicO-0005Zr-0B
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:33 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c47ee987401so714935a12.1
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:31:31 -0800 (PST)
+ id 1vdifg-0005yi-VA
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:34:58 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2a0833b5aeeso31473655ad.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:34:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767850291; x=1768455091; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767850496; x=1768455296; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=egVbNojwa9yrj9wN1HcbccivbDY9V6hFbtE9omsyoj8=;
- b=gpel02JbgAfioRtaOmDLdvkrPnggH3jFNP7KD7hC/tqQtBFUt6CYVG0pE2H4eUymEq
- +riipawhp5FD+TTVUNgbzv3g4pICQUhNkBeRAUG2HOgjW271Frd/wHcr3IocSlVMB0Ya
- AAdb2zKZ5xYL2ij3G5wXYtlZ/D8/bQwhYwIiURrQCaKbliL7rY2HsOqjn1t8l1nqK/Tg
- I9ZCaFqzqhTOnf/jLJaChW7S9fv2xcE8KMFj0VeGaB1SZIxPZSv1OfL/ahQ8ULPbMDP9
- CQDS7jlsb5FiRDgDBaTNaeSUDdhgeFiCYb833oHIty+J6wQgRzJ4cyca00dZdpJpV2k2
- N8jQ==
+ :reply-to; bh=JH+Dy4yoeNETpN5WiSsY0opPeGAFrG8nwZJ4mKF1IoY=;
+ b=ly8GGS5ULuOUsaMVNElS+c5SHkKiHa9r9NINqaXUNl1s5msqmnfrrsBKgktMkfN1Sv
+ pysZvCJaBUv3kaLNqE7XS2oygUUDJbmVG1RF5f1UffPuaYXdv2eyIkZDb1DuInpJprAq
+ 9w7Dijk2cF3UjM64Le9sMbC5oR+EB8lJTBvRThBTuxdy3DpNf7wmuihe1meuNu8VNT9I
+ i2igf/e+GvWWeKE9BG7Zk/hBdrDuHfDGdt4KDiN3h+tQSa6ZOGWp38BXsoLc+urtM25N
+ LvKhhJu5PxXG7jTyLxUONa7iieQMOuq5KuDKdt4VOt+iC10pjCUxBmouco3kif0d9uVu
+ Fhvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767850291; x=1768455091;
+ d=1e100.net; s=20230601; t=1767850496; x=1768455296;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=egVbNojwa9yrj9wN1HcbccivbDY9V6hFbtE9omsyoj8=;
- b=HFiPbzLd3K5LYzKzLuqkpK8as3CgZvTRg/7JEx2Be8nz2yPa4p4/brq0TnEos5gsvJ
- 1yCsw6GI47SIoirVcNw4QMli3pzMh4d4NAmE7DjKcbYU+vgHadM2SS00m8ARYf1Jommy
- jgAjk/KlVkCDIhNYDxMtZ+kXBa2Y9fmE09JlxvGrLujM6tQWWbwWKD8ZmpmpsLYcY6OV
- /6P6jyB3vh0INTnmQZdByPzEhi9Bya4MrZ4zMQLpiCmwN6uEJZ/3wItHEtY49SrKYX+u
- KIXO7nDBvihD+JRM5yHK8wsZCWV8f7hz3bQUYBbbmeQmgRU89ThqWPKgjX9AGy3H4vxJ
- WcDA==
-X-Gm-Message-State: AOJu0Yz/xSPFbhob+KIkCQVm8h0HrHGspmR3T0cXPBOS4KMQkA3VEMBE
- 6rPm1QJpAnqCK61qG3U0X6bmvJQVfUI1xN1coXHl+L21D8uK2qrlflYLim4J1IS0Btb/e28icoF
- PR34xhfY=
-X-Gm-Gg: AY/fxX51A9KMdulRoiEkaXnS1pynRTi20lNaj17rIK92aiFyCCf3hGRXNGTYthfI9/9
- TfizMNeaKweLoMubD3+PwXi3obgJ/u4Q0GjCAN+1eEJSERVCgoATucLHhWHxnzGvx+zAS+2qV58
- FJtrR8BW+VxGz6tvK8r9srP5uRNH97R/RNI2pfERsVfSxnPZx9sJmkkBnrOvX50biIrCiVkV/Aa
- mODOtCrbzIAXOvbUwAv/p/dRGVJ+Xox8qq0p97MNz5wPuSXpFWujJ9KR7o4gBywON1ptfwxlC4O
- MTTBqZ8D9Rd1bKUZosZCsQwwPuJeOD+OcQbGuaukR7cX+GaYt1IpdXWBTgDIveEcdyKTpMzKR2x
- UvAkciIGIb6aPwNoeSDZ3/Pf+rR2Sbn/95lMv51S8hLw0L0p5BFf4Qd2+jvnLM+TJrSq7zkYu9D
- pgks7cHKpL27RpAf5hiw==
-X-Google-Smtp-Source: AGHT+IGZnZJUUMyBL/j0Kg9POXXNUURNrALphRiO1WSyoCgblBX7/4kCv9kYCUNYO4OuBrzLBrd/LA==
-X-Received: by 2002:a05:6a20:94c7:b0:366:14b0:4b18 with SMTP id
- adf61e73a8af0-3898eb0ac5cmr4981015637.35.1767850290482; 
- Wed, 07 Jan 2026 21:31:30 -0800 (PST)
+ bh=JH+Dy4yoeNETpN5WiSsY0opPeGAFrG8nwZJ4mKF1IoY=;
+ b=DOJQrLZ+a3aVme51lMa41csh093Nh/3mfzCQdlvgbLVsjr/vqv6OxJaHJ+J3YzxVRu
+ UrBQEEMijCDrGGUaDgXqwTquls97OtopJRQDD0IHdtCa/w4pjnrXqcvrGkWhvFVy0NR+
+ ODxY50VW19LV4sZHKyc2p91tUGaguj0YZEYe04Y6F9Lm4rtK886IOoKkRxDwZ848UcnJ
+ 0sxsWWqCm1Nkf2c1GHeYIkcBOqUW0jrovzvg2yVBOu5GApvvNeMvK5/bHEbzAgkUDBuE
+ 2WHggWgpaC/PXByYrphWFH5DY1iEhnWF+xSOmAIiFQzWYLA30bB4u9mkQLAiIStMEnNq
+ QtbQ==
+X-Gm-Message-State: AOJu0Ywl3V4DdeLYH1YtrAoHbBc63F+Kb1Xbre8zWXkRmuaTA9E3eL5r
+ lkXWJTgj/eGh9ghuPkMTJWyPIKIBoTcB6DNPFVm6ACW9SZgucvS+MZQ8UPQWf30ZL4Qe2G+cosX
+ V5ekjSHs=
+X-Gm-Gg: AY/fxX6Z6rCP5OYKzSZlgqkj2TGdaruXlgUTs1ztRzOLUpGedTMRgUNmcj+5bPjuOjB
+ ugzqilZQKTE+XldbWfsNWB80ELXRjefRTyDIC4HYHIiDu1w8T9SLmHn06MjAni8Yd3YKC0fCuPf
+ Iw7ztdiCuOyPPvG9md1RfIN0zzWi9jruJ/BCrKfjPB2n2e9zC06rZEGyUS2gAk/uoPnWmtWp2jF
+ clnTVjYeKZH65UkWuxwwPDuReX4uLRZTJkcSoZnyGZJ5hpDHMeXuUGgc9NerlOjoaBlZk/nfYoj
+ piWPfv3izGYJf5KNhhZSe4ej1+OItRpFlx/zhV2Kec3Aahu1qIXTNv5YVD9rRUwhs1ylvrY8sEb
+ pP+7WZDNLDixqcD1Medf1nK+Lma6WhQBVFnbDs9QfzbT6J2xwGgvE2zdyiLycctd9VUhDW7Bv+i
+ a8qB878691EB4di891ZQ==
+X-Google-Smtp-Source: AGHT+IFdw/8bwv6pjDs9LnC6r/TdWiGAsnyRp6X2M39e/jmgtW1ygRMUtEGV92GaBpmNkcRULJ4Piw==
+X-Received: by 2002:a17:902:ce87:b0:2a0:c1f6:6bc2 with SMTP id
+ d9443c01a7336-2a3ee4c1b37mr50973485ad.59.1767850495493; 
+ Wed, 07 Jan 2026 21:34:55 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.31.28
+ d9443c01a7336-2a3e3cb2d93sm66341465ad.63.2026.01.07.21.34.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 21:31:29 -0800 (PST)
+ Wed, 07 Jan 2026 21:34:55 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 34/50] accel/tcg/runtime: Remove 64-bit shift helpers
-Date: Thu,  8 Jan 2026 16:30:02 +1100
-Message-ID: <20260108053018.626690-35-richard.henderson@linaro.org>
+Subject: [PATCH 46/50] block: Drop use of Stat64
+Date: Thu,  8 Jan 2026 16:30:14 +1100
+Message-ID: <20260108053018.626690-47-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108053018.626690-1-richard.henderson@linaro.org>
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,55 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These were only required for some 32-bit hosts.
+The Stat64 structure is an aid for 32-bit hosts, and
+is no longer required.  Use plain 64-bit types.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tcg-runtime.h |  4 ----
- accel/tcg/tcg-runtime.c | 15 ---------------
- 2 files changed, 19 deletions(-)
+ include/block/block_int-common.h |  3 +--
+ block/io.c                       | 10 +++++++++-
+ block/qapi.c                     |  2 +-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/accel/tcg/tcg-runtime.h b/accel/tcg/tcg-runtime.h
-index 8436599b9f..698e9baa29 100644
---- a/accel/tcg/tcg-runtime.h
-+++ b/accel/tcg/tcg-runtime.h
-@@ -8,10 +8,6 @@ DEF_HELPER_FLAGS_2(rem_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
- DEF_HELPER_FLAGS_2(divu_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(remu_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 6d0898e53d..9324af903d 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -30,7 +30,6 @@
+ #include "qemu/aiocb.h"
+ #include "qemu/iov.h"
+ #include "qemu/rcu.h"
+-#include "qemu/stats64.h"
  
--DEF_HELPER_FLAGS_2(shl_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--DEF_HELPER_FLAGS_2(shr_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
--DEF_HELPER_FLAGS_2(sar_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
--
- DEF_HELPER_FLAGS_2(mulsh_i64, TCG_CALL_NO_RWG_SE, s64, s64, s64)
- DEF_HELPER_FLAGS_2(muluh_i64, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ #define BLOCK_FLAG_LAZY_REFCOUNTS   8
  
-diff --git a/accel/tcg/tcg-runtime.c b/accel/tcg/tcg-runtime.c
-index fa7ed9739c..f483c9c2ba 100644
---- a/accel/tcg/tcg-runtime.c
-+++ b/accel/tcg/tcg-runtime.c
-@@ -55,21 +55,6 @@ uint32_t HELPER(remu_i32)(uint32_t arg1, uint32_t arg2)
+@@ -1246,7 +1245,7 @@ struct BlockDriverState {
+     QLIST_HEAD(, BdrvDirtyBitmap) dirty_bitmaps;
  
- /* 64-bit helpers */
+     /* Offset after the highest byte written to */
+-    Stat64 wr_highest_offset;
++    uint64_t wr_highest_offset;
  
--uint64_t HELPER(shl_i64)(uint64_t arg1, uint64_t arg2)
--{
--    return arg1 << arg2;
--}
--
--uint64_t HELPER(shr_i64)(uint64_t arg1, uint64_t arg2)
--{
--    return arg1 >> arg2;
--}
--
--int64_t HELPER(sar_i64)(int64_t arg1, int64_t arg2)
--{
--    return arg1 >> arg2;
--}
--
- int64_t HELPER(div_i64)(int64_t arg1, int64_t arg2)
- {
-     return arg1 / arg2;
+     /*
+      * If true, copy read backing sectors into image.  Can be >1 if more
+diff --git a/block/io.c b/block/io.c
+index cace297f22..e8fb4ede4d 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -39,6 +39,7 @@
+ #include "qemu/main-loop.h"
+ #include "system/replay.h"
+ #include "qemu/units.h"
++#include "qemu/atomic.h"
+ 
+ /* Maximum bounce buffer for copy-on-read and write zeroes, in bytes */
+ #define MAX_BOUNCE_BUFFER (32768 << BDRV_SECTOR_BITS)
+@@ -2044,7 +2045,14 @@ bdrv_co_write_req_finish(BdrvChild *child, int64_t offset, int64_t bytes,
+     if (req->bytes) {
+         switch (req->type) {
+         case BDRV_TRACKED_WRITE:
+-            stat64_max(&bs->wr_highest_offset, offset + bytes);
++            {
++                uint64_t new = offset + bytes;
++                uint64_t old = qatomic_read(&bs->wr_highest_offset);
++
++                while (old < new) {
++                    old = qatomic_cmpxchg(&bs->wr_highest_offset, old, new);
++                }
++            }
+             /* fall through, to set dirty bits */
+         case BDRV_TRACKED_DISCARD:
+             bdrv_set_dirty(bs, offset, bytes);
+diff --git a/block/qapi.c b/block/qapi.c
+index 9f5771e019..27e0ac6a32 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -651,7 +651,7 @@ bdrv_query_bds_stats(BlockDriverState *bs, bool blk_level)
+         s->node_name = g_strdup(bdrv_get_node_name(bs));
+     }
+ 
+-    s->stats->wr_highest_offset = stat64_get(&bs->wr_highest_offset);
++    s->stats->wr_highest_offset = qatomic_read(&bs->wr_highest_offset);
+ 
+     s->driver_specific = bdrv_get_specific_stats(bs);
+ 
 -- 
 2.43.0
 
