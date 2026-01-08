@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4D5D185C0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12F9D185C7
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdnMW-0005GL-E4; Thu, 08 Jan 2026 05:35:28 -0500
+	id 1vdnUt-0003TA-96; Thu, 08 Jan 2026 05:44:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdnMU-0005EH-U8
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:35:26 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vdnUp-0003Si-8j
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:44:03 -0500
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdnMT-0004KJ-BZ
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:35:26 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2a09d981507so14584305ad.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:35:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vdnUn-0005D9-Jz
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:44:02 -0500
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-4ed9c19248bso27785641cf.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767868524; x=1768473324; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sVKuaB0eJyj9RF6Q3YqtGhwJutdZsC2H2sheNvi2Ngw=;
- b=ZCZHkCFwNoLqVpRUCJ/lvpS8BDGZ7pp8Ql9SSzvTvS0GtJJMvRVuBXlqKCAKTH9VSK
- /t5AcVo7EAFwBkufDH8ns/Uy6ILxRiZXoIAksiKEgCzOQ/F7qaT0yHRIuMMwCuYURXpB
- f/erbvJNNapNMHMVUari3XLePxnVyoBx35nqhHdUvyj6/exvxdYkJalHGHztKcXKvSXd
- YNgb2DS6TG4udKYAcXXh3OAWN86iV0Lbs509np1WpgWYWzV5/4mi8TFZTT6i/R/UBbXE
- SN5pZcdLLIXlQuT0mIXQGr1quxVRjkTOIeuGb4Vw+kC/gV0pqWT3r5iW9+KIdAH4lO1W
- mWmQ==
+ d=gmail.com; s=20230601; t=1767869041; x=1768473841; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dgYotXXtObFxgCVFHPqJttcufA+Um/2+QnysSMYb0mo=;
+ b=DmG4Rfs3rdJDT9AOh0Y2FT3aQw66EuqyQfiM7BnNSAWi4NJXEjuihGnNZmcYnEM8MN
+ jFBgAmRvBJSEGmrF2iESFee4bPlBBH1FeL0w8mrCfeNINUiBJRpb5ki14WbKf8x6YjKR
+ CXvsYWVdg833+0IPeJJ0bdsXplEQ40ne5YxNBtPkuU2NW03x2m9NycwNx32wzOT4Dpe8
+ pb4a/C/87t4trZ87migPLxQ2/VCt5hqSOvxjg4emiEiCOtFtmbqZLpVqHA+bbBB4ajQX
+ HjjVSaU21YUz1K3/AaDWDSuQ/3w8HvK0heLCrmTW5gGaKCByd/pK/XfUbI/LA1FUxMeI
+ MF0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767868524; x=1768473324;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sVKuaB0eJyj9RF6Q3YqtGhwJutdZsC2H2sheNvi2Ngw=;
- b=h6jsVzWlOShCJpa2gw9lK0BAZR3SXZoZSDwhAsvMNkLjMZQ+20kBqmMgThm4NcIhlQ
- nMGWr19TJV6p1IYKWV23JJVdHzWGGbfVCvJF+VvufBu+AZy+Gc28EfAYNnP75UOl2h3e
- dfR69+yhea2lTpkATynHhOhe+dNNsDs9DMwh0N6KudbRbi3e8LZh2ImmnZvQOOvzM/sn
- q6f0mTM4EikCY0ITd6HIpoc/kXByax1uRXNXxu0qsq+Ul9jRTo/hs0hCbnuo6SKRTSRt
- SPSArmzoTkoL8p1nnGCloHDrOmiVJtGKM8FQyqGvPzUIsGAYp8/vXjnw9Nj+Af2c580C
- t0Ng==
-X-Gm-Message-State: AOJu0Yzsws3UyhYaBtnswQl7z9rn83QMs+Fgq1nL5ybuERyJkXIEQYW/
- oIxKqKjc1Fh8jMTw/pQBGaU0aPoXUe6Jqabu2YtKyY766crjPWHynyqgtM38G2WK/RI=
-X-Gm-Gg: AY/fxX6LU+PZ528jFFUF2puXCGhPDrWYPD4CM1N02QxKkfNYNpVr6AprywTp/1qN6cc
- d9A/dkYUY5PzgOzH1lR9hs7jegUaiVVtGLO8OfLusZ/urQZsL/bvRPNk28Brv46UbeClpqfe9v4
- GhRhtN1B+7qDS9Z2G9DgI/6bSCQp5uVzC6ZPj2qIK59LYhtz6iR4qnZg7gCUUD2qlD3nJNwIwvG
- wbYeLs5Tz6MyHZRdlR+wW42Os5W0/mUwa8/vaOApqprmDsRIWMHXdhDBVEFojeHHrAD9GoBejit
- 9fYU6bJem7gg36mOiHRxLMLYZ577FwJO+hmyBHXbhgD4j4/UzOXC2p1V9QPYKY4LgmA4sLin/DE
- e2JGgcsSQGsY6d3blV8+Z2NUzmBuopcLruxS231K8t9ur28zdgQHuXrhU/l7UqAyp0MnyDqndUG
- sgXL5tS0IafPcs7Q2ncqZHEKZDigylCAcQO1EUkwkW
-X-Google-Smtp-Source: AGHT+IFS6QZi50cDgYmkvY6AD6gm1Z8xed1bc3rcwZrIrESSYnrk5qtEBWvY71DwyfXmSZPIyWAT8g==
-X-Received: by 2002:a17:902:d511:b0:295:50f5:c0e3 with SMTP id
- d9443c01a7336-2a3edb775b6mr57995795ad.14.1767868523730; 
- Thu, 08 Jan 2026 02:35:23 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-819bab0da0bsm7259019b3a.13.2026.01.08.02.35.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 02:35:23 -0800 (PST)
-Message-ID: <4df07fa5-f12d-4df5-9b59-0a2fce44b236@linaro.org>
-Date: Thu, 8 Jan 2026 21:35:18 +1100
+ d=1e100.net; s=20230601; t=1767869041; x=1768473841;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dgYotXXtObFxgCVFHPqJttcufA+Um/2+QnysSMYb0mo=;
+ b=WYFK6vrWQNkpmv+6q+LUcEOrbsL0fREtdXYktywDT7X99WRksCxjLv3pqK8voAswdN
+ dP89u4KXJDdZ55mGPcetc+kA9n1ZYe83Kv0BxESoJZWixWRL1KPb9/JHUkI7YeXnyQEe
+ ERrPj3ADnN34xzza5tYQLCS2XjmzYEJ2yz/joIwpobcrQ3RJ7TIgtTyqXEkKdYNxJeHx
+ LjFD9sDIklmZNskrPUdMmP3wvu+LZc8RGd0uEUQGUm47WaRaSFiWaj6+cV7u0nIOk4Qj
+ LDK0yg+0qSE950UmE0FV7FiasL2lW+WWexDHybMOS83kuXXHgQaMbZAytISPC6cqp/ZK
+ tdJw==
+X-Gm-Message-State: AOJu0YxHKEOlcxbnDO9Q+gHY9WPeN596MrOadsQyqJoyltuXtMTTYx/H
+ s6ZrtbJWmpZPQi7raOvs7kSAcRbQfTMkNzJ1rTWJPbecJOmjhL7v2lyrFOD0J67chNBKAt6gn5x
+ 6nILsFS0+k2Nrd23J8yyMrfMBU/LRRyM=
+X-Gm-Gg: AY/fxX5ZLmTBdc9LgfY4Cu8ipXANg8b3byLTAvL/Fbng3dZ9D9078IarPcrRV+jHiD1
+ U+9yTiqfbrDTv1gc/s1qEe3ugh5GZkZEzYwQXqoP4+ECRiWrXUiSa2aIZnpS3IZowuf2oFMItu9
+ J011ef4TmXRTRvqWdAUPFFniePnn9OeIv0/0uyNcAX8p0WVeunL9B4RLjbGyDDhAn5pulTr8Qts
+ lzk6v1KyEmeKxzaQN0MF+f31UfUxuAG34/WjAMv2ES4OnQ7nU1K4/w0ZMShiML3GaYiojXzH7Bu
+ XTR+nPkDSLclsyvWsn30nlfrBx9YwxP4XmyOQA==
+X-Google-Smtp-Source: AGHT+IGtNPmN3+OgGiTfsoSAfYB+Z5T0j1fZb6J/smenKckzfMuy0dLNtdmCSA8Wa8gjtwAqQSHtnl4ShHi2tqQrcBk=
+X-Received: by 2002:ac8:7d47:0:b0:4ed:67bc:50de with SMTP id
+ d75a77b69052e-4ffb4958b63mr78277801cf.24.1767869040557; Thu, 08 Jan 2026
+ 02:44:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/50] gitlab: Remove 32-bit host testing
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Cc: qemu-devel@nongnu.org
-References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-2-richard.henderson@linaro.org>
- <aV9y9b2-XRvNOYTG@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <aV9y9b2-XRvNOYTG@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+References: <20260107153442.1832957-1-berrange@redhat.com>
+ <20260107153442.1832957-4-berrange@redhat.com>
+In-Reply-To: <20260107153442.1832957-4-berrange@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 8 Jan 2026 14:43:49 +0400
+X-Gm-Features: AQt7F2r6SLUDn88dz_-XQeKYBNrY-JLZL-n0AXweBpd730PTraO9AuoJTFLlPtE
+Message-ID: <CAJ+F1CK5cPXWhLhspPDFKRsxGPAG4TB_12hqmdaJ6PSMmFEQ2Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] io: fix cleanup for websock I/O source data on
+ cancellation
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, zoudongjie@huawei.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,35 +97,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 20:03, Daniel P. Berrangé wrote:
-> On Thu, Jan 08, 2026 at 04:29:29PM +1100, Richard Henderson wrote:
->> These deprecated builds will be disabled.
->> Remove testing of armhf, i686, and wasm32.
-> 
-> CC'ing the wasm maintainer.
-> 
-> This patch is removing our only CI testing of wasm.  Is there any
-> 64-bit container image that can be used to test wasm instead ?
+On Wed, Jan 7, 2026 at 7:36=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> The websock code will create a GSource for tracking completion of the
+> handshake process, passing a QIOTask which is freed by the callback
+> when it completes, which means when a source is cancelled, nothing is
+> free'ing the task.
+>
+> Switch to provide a data free callback to the GSource, which ensures
+> the QIOTask is always freed even when the main event callback never
+> fires.
+>
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Ah, right.  Yesterday I remembered that I should include this in the cover letter, but 
-then today when I actually posted it I forgot.
-
-There are two sets of wasm64 patches; the simple one uses TCI, just like the existing 
-wasm32 code:
-
-https://lore.kernel.org/qemu-devel/cover.1754494089.git.ktokunaga.mail@gmail.com/
-
-I attempted to incorporate these patches, but there were too many conflicts.
-
-The complex wasm64 patch set includes a complete tcg backend:
-
-https://lore.kernel.org/qemu-devel/cover.1756724464.git.ktokunaga.mail@gmail.com/
-
-I really need to study that more before I'm willing to accept the core tcg changes required.
-
-Anyway, I meant to cc Kohei about this, to see if he would revive the TCI patch set in the 
-short term.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 
-r~
+> ---
+>  io/channel-websock.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/io/channel-websock.c b/io/channel-websock.c
+> index b4f96a0af4..6d92be4fa1 100644
+> --- a/io/channel-websock.c
+> +++ b/io/channel-websock.c
+> @@ -545,7 +545,6 @@ static gboolean qio_channel_websock_handshake_send(QI=
+OChannel *ioc,
+>          trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(e=
+rr));
+>          qio_task_set_error(task, err);
+>          qio_task_complete(task);
+> -        qio_task_free(task);
+>          wioc->hs_io_tag =3D 0;
+>          return FALSE;
+>      }
+> @@ -562,7 +561,6 @@ static gboolean qio_channel_websock_handshake_send(QI=
+OChannel *ioc,
+>              trace_qio_channel_websock_handshake_complete(ioc);
+>              qio_task_complete(task);
+>          }
+> -        qio_task_free(task);
+>          wioc->hs_io_tag =3D 0;
+>          return FALSE;
+>      }
+> @@ -590,7 +588,6 @@ static gboolean qio_channel_websock_handshake_io(QIOC=
+hannel *ioc,
+>          trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(e=
+rr));
+>          qio_task_set_error(task, err);
+>          qio_task_complete(task);
+> -        qio_task_free(task);
+>          wioc->hs_io_tag =3D 0;
+>          return FALSE;
+>      }
+> @@ -918,7 +915,7 @@ void qio_channel_websock_handshake(QIOChannelWebsock =
+*ioc,
+>          G_IO_IN,
+>          qio_channel_websock_handshake_io,
+>          task,
+> -        NULL);
+> +        (GDestroyNotify)qio_task_free);
+>  }
+>
+>
+> --
+> 2.52.0
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
