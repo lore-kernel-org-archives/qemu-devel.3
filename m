@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5254CD1489A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC71D1489A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:11:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdgPv-00013o-23; Wed, 07 Jan 2026 22:10:31 -0500
+	id 1vdgPu-0000xn-5P; Wed, 07 Jan 2026 22:10:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgP0-0006JM-5q; Wed, 07 Jan 2026 22:09:35 -0500
+ id 1vdgP9-0006ZH-Fy; Wed, 07 Jan 2026 22:09:44 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgOy-0005cZ-DN; Wed, 07 Jan 2026 22:09:33 -0500
+ id 1vdgP7-0005e1-OP; Wed, 07 Jan 2026 22:09:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767841772; x=1799377772;
+ t=1767841781; x=1799377781;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=WW3wMknALm2VrUHqeXw0nKdOWnuxpJr1LWEuBqml9t8=;
- b=fRS5/2vkNx+hdp8gT8YJiT7N5ds7cZydY7YIspEb1RzNn/JQeySwnU2h
- d/uaEqwiXo2DFBLwXENTPwhtwaoOzgAAqpR8sAwyzEkLqY8rAwDi7JiWJ
- dXwQu78Nh2/6PW6HpuxRWg6S9s6MMrfjWiO44SAiTJfFqYHu6LWqGb9iv
- XSIh8w04cW/qsGur+l0kfUrmHE3SduZbZT7dyXjH2YH0FUodecwEpDiBJ
- xHLdXh2sYLAwhV0yHPuzJXYoW6fPM4z+dTrKp8XXWXgQt9ILj25inDH55
- a+YMEiZvtWF19gW/5KRCzClgef0Fluu02P/ynifeNf9PibMlz4qva7m4c g==;
-X-CSE-ConnectionGUID: k7sMdwwUSO67ifpYpQWC+Q==
-X-CSE-MsgGUID: 9PBjpPODR26ybmSPbNJbZg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877657"
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877657"
+ bh=/2b3kXmiCRa/BYYzO/hHr0chSCEMHL45PiGF0m8kKTY=;
+ b=H8A2LBHOe8/XWsbSUMqrjg+a5JnJSQBmSlgrFEzlNFkOTx6vRrzXK09I
+ z8vOgcJfcYKdmZGSWER1nfakAve9ud+octXD9uKkAgJDqUNtCN+KeTdY9
+ ob9RnP2ZGHhx5jwxc5SUDtSJYauO2+NI4Gy2kL4tGqWe2jsCM/Pj03L8u
+ cz4JiEg0IfMnE016dhnMn2LOnYoTRByms/tKq5BBah/pGLyCxcUdb+X/l
+ LWr/Ro77yRdXD5BmImp9QeZWPdUnPvqITUe+rbwDuelMJEdxPTgIVf24X
+ WoLOKOJdsH1Lb8f4ULTCNrJ18AJqIXhe9myRANGr/F8q+srTNlLCJOQ6g Q==;
+X-CSE-ConnectionGUID: NFKr0luTTie7hZtZ65lHmA==
+X-CSE-MsgGUID: 0WJTnsVKRTOYcNqNAeMYVw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877696"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877696"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2026 19:09:29 -0800
-X-CSE-ConnectionGUID: 6t31tzR6R2qxCswGscTRbw==
-X-CSE-MsgGUID: lL6gXO/EQgeFpv2jqTmjHg==
+ 07 Jan 2026 19:09:39 -0800
+X-CSE-ConnectionGUID: s23i9cu5TrGrYQuG6Kc3Eg==
+X-CSE-MsgGUID: xPA6wA+1S4qpU2au1duTiA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211253"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211269"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:09:21 -0800
+ by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:09:30 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,10 +72,10 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 25/27] hw/i386/intel_iommu: Remove
- IntelIOMMUState::buggy_eim field
-Date: Thu,  8 Jan 2026 11:30:49 +0800
-Message-Id: <20260108033051.777361-26-zhao1.liu@intel.com>
+Subject: [PATCH v6 26/27] hw/virtio/virtio-pci: Remove
+ VirtIOPCIProxy::ignore_backend_features field
+Date: Thu,  8 Jan 2026 11:30:50 +0800
+Message-Id: <20260108033051.777361-27-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260108033051.777361-1-zhao1.liu@intel.com>
 References: <20260108033051.777361-1-zhao1.liu@intel.com>
@@ -109,10 +109,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The IntelIOMMUState::buggy_eim boolean was only set in
-the hw_compat_2_7[] array, via the 'x-buggy-eim=true'
-property. We removed all machines using that array, lets
-remove that property, simplifying vtd_decide_config().
+The VirtIOPCIProxy::ignore_backend_features boolean was only set
+in the hw_compat_2_7[] array, via the 'x-ignore-backend-features=on'
+property. We removed all machines using that array, lets remove
+that property, simplify by only using the default version.
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
@@ -120,48 +120,45 @@ Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/i386/intel_iommu.c         | 5 ++---
- include/hw/i386/intel_iommu.h | 1 -
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ hw/virtio/virtio-pci.c         | 5 +----
+ include/hw/virtio/virtio-pci.h | 1 -
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 224b7b947906..2ed64bc6d968 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4092,7 +4092,6 @@ static const Property vtd_properties[] = {
-     DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
-     DEFINE_PROP_ON_OFF_AUTO("eim", IntelIOMMUState, intr_eim,
-                             ON_OFF_AUTO_AUTO),
--    DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false),
-     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
-                       VTD_HOST_ADDRESS_WIDTH),
-     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
-@@ -5359,11 +5358,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-     }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index b273eb269196..e2a3dcc5b631 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2040,8 +2040,7 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
+      * Virtio capabilities present without
+      * VIRTIO_F_VERSION_1 confuses guests
+      */
+-    if (!proxy->ignore_backend_features &&
+-            !virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
++    if (!virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
+         virtio_pci_disable_modern(proxy);
  
-     if (s->intr_eim == ON_OFF_AUTO_AUTO) {
--        s->intr_eim = (kvm_irqchip_in_kernel() || s->buggy_eim)
-+        s->intr_eim = kvm_irqchip_in_kernel()
-                       && x86_iommu_ir_supported(x86_iommu) ?
-                                               ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-     }
--    if (s->intr_eim == ON_OFF_AUTO_ON && !s->buggy_eim) {
-+    if (s->intr_eim == ON_OFF_AUTO_ON) {
-         if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-             error_setg(errp, "eim=on requires support on the KVM side"
-                              "(X2APIC_API, first shipped in v4.7)");
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index ca7f7bb6618a..34ba13ffa8de 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -310,7 +310,6 @@ struct IntelIOMMUState {
-     uint32_t intr_size;             /* Number of IR table entries */
-     bool intr_eime;                 /* Extended interrupt mode enabled */
-     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
--    bool buggy_eim;                 /* Force buggy EIM unless eim=off */
-     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
-     bool dma_drain;                 /* Whether DMA r/w draining enabled */
-     bool pasid;                     /* Whether to support PASID */
+         if (!legacy) {
+@@ -2441,8 +2440,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+     DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
+-    DEFINE_PROP_BOOL("x-ignore-backend-features", VirtIOPCIProxy,
+-                     ignore_backend_features, false),
+     DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 639752977ee8..581bb830b792 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -150,7 +150,6 @@ struct VirtIOPCIProxy {
+     uint16_t last_pcie_cap_offset;
+     uint32_t flags;
+     bool disable_modern;
+-    bool ignore_backend_features;
+     OnOffAuto disable_legacy;
+     /* Transitional device id */
+     uint16_t trans_devid;
 -- 
 2.34.1
 
