@@ -4,71 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 327B5D185E8
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 12:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60949D185DD
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 12:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdosG-0005ZN-5F; Thu, 08 Jan 2026 07:12:20 -0500
+	id 1vdotT-00062y-EB; Thu, 08 Jan 2026 07:13:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdosE-0005Z7-A8
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:12:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vdotJ-000603-7R
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:13:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdosA-0005Bi-Si
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:12:17 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vdotG-0005Dr-VN
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:13:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767874333;
+ s=mimecast20190719; t=1767874401;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VBiQ372Yp611HcJjI0MS7+eo0ZjF5++swn5BALlKPoE=;
- b=YiPAUf1VBk9swDmI+C7o7BsnURGbudYSy94Q/hUTHEW17meYxZVgEmGDjbWOUkmzqwAV1I
- kkhXD6yKuF5F64vdr0Q5xA7mdoyl423oLS8qX+xbKFmAFz+FpvjVAEFGYMR4bMdP3KXxxU
- HGNO9QTjxvVBnxO1y1zbXaInDUOFzVw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-1QxGD1YLPdeIv99LpY9GZw-1; Thu,
- 08 Jan 2026 07:12:09 -0500
-X-MC-Unique: 1QxGD1YLPdeIv99LpY9GZw-1
-X-Mimecast-MFC-AGG-ID: 1QxGD1YLPdeIv99LpY9GZw_1767874329
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BBDB919560B7; Thu,  8 Jan 2026 12:12:08 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 616DD30002D1; Thu,  8 Jan 2026 12:12:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E63E721E6937; Thu, 08 Jan 2026 13:12:05 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 3/3] qapi: Add thread_status flag for iothreads
-In-Reply-To: <20251229103859.98777-3-zhangckid@gmail.com> (Zhang Chen's
- message of "Mon, 29 Dec 2025 18:38:59 +0800")
-References: <20251229103859.98777-1-zhangckid@gmail.com>
- <20251229103859.98777-3-zhangckid@gmail.com>
-Date: Thu, 08 Jan 2026 13:12:05 +0100
-Message-ID: <877bts8fsa.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=afEvXB26Ewj5l0Ksf8Kd7PefTO7e/dCkUEQv3gAnKco=;
+ b=UJ776i+4zMfc5cPr+EsQmaebDqn/aQWpYo3DkrSbJFiyWSvNIfQKAYll83sqY5G/6nrDZk
+ m8xBlLRKU1MkxLyxVqI1p8ytT44BSvIL8aJT2XSxiwhlskk4I9CR1oMo44ThfrLC2OaUej
+ aNeH35o9v/6q7sdtIh9X2zvN605rmE0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-404-iEGUdafJNk6Cv8gMHSJdbA-1; Thu, 08 Jan 2026 07:13:18 -0500
+X-MC-Unique: iEGUdafJNk6Cv8gMHSJdbA-1
+X-Mimecast-MFC-AGG-ID: iEGUdafJNk6Cv8gMHSJdbA_1767874397
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477c49f273fso31742525e9.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 04:13:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767874397; x=1768479197; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=afEvXB26Ewj5l0Ksf8Kd7PefTO7e/dCkUEQv3gAnKco=;
+ b=bNnAd8p5Klhjv6uVdBe3tIOWaOdp/9t1GxhJlW+h5zUFR29cXSCSKgYDv8I5BK+cPf
+ ZVaSsux2KWcbzDVq2rG4BauwwawwFgbTo2OsCzd/TfFoeDaeIH7ALUnx+b5vM8dRTUkb
+ GE/CyY9v0hizM06oN9WolfXonFacQ9Xi5yMWBfEGHvxZc0PjtHegSSzwAULKGBRIA0HN
+ HS2ykFQiOTPfyHdDI1fK1oOInLLFiCVgf/C8MInjSCiyx3kaA6+ghuAH2ebE2LEN1t07
+ HZukYc3Vmp1Kov0dwTeLzGN9VifBODKiR0OkJb9rfWyFjQihaKiBST+9WID/skos/sIb
+ 3euQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767874397; x=1768479197;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=afEvXB26Ewj5l0Ksf8Kd7PefTO7e/dCkUEQv3gAnKco=;
+ b=cfgv/7CIqS04Gx8t3MDQ1z5YK6zIgkuRtc5ZB1FeCRe32igmnH+5/eSmpf459uVNC1
+ rY9Ou1+zLBUCbVmix/ikqvxbBiZlEfu8+4MpYJ1QWpau+VDyYpJRSehfEosGvPA9P8gF
+ Rsj8nNjTrE6RUVgVqBALIs7PGCaKmqRNWsrw67t4bZmLE3NKGtkJmPFDm65oOY6lq7a4
+ ktfBfrgYzOI4aFxWpdPcww1AUGbRkAXR/bTSDeKJb5tNSF6mIEL4xNZ663zHw06vBD5g
+ uE0h+oR5fL/ji3Zot2P7/vi3aExMrk3h2aRvuo6+d6WUph74vyJR1FkJPiykHdxMMII5
+ rJmQ==
+X-Gm-Message-State: AOJu0YypCi7DbWhiCTuY1Pempoi04L3vC6lnZvm7qUanXL5kr/PNDnVd
+ I9Gq588CckFxod3a7hA6eRgzoAldKdLLHCsAcsH8CCBQs/QlURBs2xFw9jIOEafxkLjfCXYDYf1
+ GKfa2xkQjb0fy6TruHvNkUwKVPoYjZ4RBPbmTwzHg/bMP1fFuhiO8XppRsQ3PWC1K4x/rpfJWus
+ MC84HVA5cPVhQGamBTnHREbCvzUFumuwk=
+X-Gm-Gg: AY/fxX4bRBFB0aOtomFPwNCgna/dP3e1I756mbCQigDTFbxVMu31TMNasz+CTdF1waR
+ wxiEKxnihjS2Wm7GiFCtKD/6sddL/DrPI3/KT2GMB97DHZDvZL+MD/28d5ERnatyLo3bgXMMpOd
+ OO0ZvRJMFpaOEmyUORdCcCe8lt3Mw6e7xHLvyoabaZVULiNAWQpXVE2iR9HbP06FkN74U=
+X-Received: by 2002:a05:600c:4f53:b0:479:1a09:1c4a with SMTP id
+ 5b1f17b1804b1-47d84b3b389mr74259585e9.31.1767874396851; 
+ Thu, 08 Jan 2026 04:13:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWrTxf6G5hNqrr9JxRiBDZl20cUNHbJhrGx/8zgEa3Q6ahwq4MXm2aWKwmMaFoZ+rZv32w5bPpA4Zp37FtTk4=
+X-Received: by 2002:a05:600c:4f53:b0:479:1a09:1c4a with SMTP id
+ 5b1f17b1804b1-47d84b3b389mr74259395e9.31.1767874396441; Thu, 08 Jan 2026
+ 04:13:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+References: <20260107200702.54582-1-philmd@linaro.org>
+ <20260107200702.54582-8-philmd@linaro.org>
+In-Reply-To: <20260107200702.54582-8-philmd@linaro.org>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Thu, 8 Jan 2026 17:42:59 +0530
+X-Gm-Features: AQt7F2pL2YJvmwfjrszehYvuZaybmJrKz6PoXN0SRaxKU4X399-Qp_6Z-X-QFe8
+Message-ID: <CAE8KmOyPTqYau3OOAKVE05f40Y9oyLjsycc6mVAkzWiJEaU+hQ@mail.gmail.com>
+Subject: Re: [PATCH 7/9] target/hppa: Avoid target-specific migration headers
+ in machine.c
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Anton Johansson <anjo@rev.ng>, Richard Henderson <richard.henderson@linaro.org>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, Stafford Horne <shorne@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Helge Deller <deller@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,100 +121,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+On Thu, 8 Jan 2026 at 01:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+> machine.c doesn't use any target-specific macro defined by
+> the "migration/cpu.h" header. Use the minimum header requiered:
 
-> The thread_status depends on struct IOThreadInfo's
-> 'attached': 'bool'. Show in the qmp/hmp CMD with
-> 'attached' or 'detached'.
+* requiered -> required
+
+> "migration/qemu-file-types.h" and "migration/vmstate.h", which are not ta=
+rget-specific.
+
+* They are included via migration/cpu.h; Still the change looks okay.
+
+> diff --git a/target/hppa/machine.c b/target/hppa/machine.c
+> index 13e555151a6..6a143cf8df2 100644
+> --- a/target/hppa/machine.c
+> +++ b/target/hppa/machine.c
+> @@ -19,7 +19,8 @@
 >
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> ---
->  iothread.c         | 1 +
->  monitor/hmp-cmds.c | 2 ++
->  qapi/misc.json     | 6 ++++++
->  3 files changed, 9 insertions(+)
->
-> diff --git a/iothread.c b/iothread.c
-> index 38e38fb44d..fb4898e491 100644
-> --- a/iothread.c
-> +++ b/iothread.c
-> @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, void *opaque)
->      info = g_new0(IOThreadInfo, 1);
->      info->id = iothread_get_id(iothread);
->      info->thread_id = iothread->thread_id;
-> +    info->attached = iothread->attached;
->      info->poll_max_ns = iothread->poll_max_ns;
->      info->poll_grow = iothread->poll_grow;
->      info->poll_shrink = iothread->poll_shrink;
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index 33a88ce205..84b01737cf 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict *qdict)
->          value = info->value;
->          monitor_printf(mon, "%s:\n", value->id);
->          monitor_printf(mon, "  thread_id=%" PRId64 "\n", value->thread_id);
-> +        monitor_printf(mon, "  thread_status=%s" "\n",
-> +                       value->attached ? "attached" : "detached");
->          monitor_printf(mon, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
->          monitor_printf(mon, "  poll-grow=%" PRId64 "\n", value->poll_grow);
->          monitor_printf(mon, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index 6153ed3d04..2eea920bd2 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -76,6 +76,9 @@
->  #
->  # @thread-id: ID of the underlying host thread
->  #
-> +# @attached: flag to show current iothread attached status
+>  #include "qemu/osdep.h"
+>  #include "cpu.h"
+> -#include "migration/cpu.h"
+> +#include "migration/qemu-file-types.h"
+> +#include "migration/vmstate.h"
 
-What does "attached status" actually mean?
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 
-> +#            (since 10.3.0)
-
-(since 12.0)
-
-> +#
->  # @poll-max-ns: maximum polling time in ns, 0 means polling is
->  #     disabled (since 2.9)
->  #
-> @@ -93,6 +96,7 @@
->  { 'struct': 'IOThreadInfo',
->    'data': {'id': 'str',
->             'thread-id': 'int',
-> +           'attached': 'bool',
->             'poll-max-ns': 'int',
->             'poll-grow': 'int',
->             'poll-shrink': 'int',
-> @@ -118,6 +122,7 @@
->  #              {
->  #                 "id":"iothread0",
->  #                 "thread-id":3134,
-> +#                 'thread_status':"attached",
-
-I believe this is actually
-
-                     "attached": true
-
-and ...
-
->  #                 'poll-max-ns':0,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
-> @@ -126,6 +131,7 @@
->  #              {
->  #                 "id":"iothread1",
->  #                 "thread-id":3135,
-> +#                 'thread_status':"detached",
-
-                     "attached": false
-
-Recommend to create example output by running a test instead of making
-it up, because making it up likely screws it up :)
-
->  #                 'poll-max-ns':0,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
+Thank you.
+---
+  - Prasad
 
 
