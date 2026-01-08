@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 388A6D1489A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97773D1489A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdgMn-0000eh-Db; Wed, 07 Jan 2026 22:07:17 -0500
+	id 1vdgNa-0003Ql-6y; Wed, 07 Jan 2026 22:08:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgMk-0000VW-PF; Wed, 07 Jan 2026 22:07:14 -0500
+ id 1vdgNV-0002yO-GK; Wed, 07 Jan 2026 22:08:01 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgMj-00058c-24; Wed, 07 Jan 2026 22:07:14 -0500
+ id 1vdgNT-0005Eu-0I; Wed, 07 Jan 2026 22:08:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767841634; x=1799377634;
+ t=1767841680; x=1799377680;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=+W2nuu0RATsALTShNsBWCjQLHRQFKTYW61n5Szq2eRA=;
- b=mOjSiVVmLFBNe5Q3L/oCk09Tesj3KmNSi9ws73DLg25tW6Nk9NKPyfnk
- vEOVNOKIRjbrqRbc+8CjMP0+P9oBGziMmH+2HnmyPgADT4z3itvxfnajd
- WjWD+Q2Y2SfOQp86T4KKSQn6zxOsJsJQHKCkY6UdZw79V3OZCEhAkYO5c
- qYit9NU9WwGptiJxou4elziM5pqS5jxoV6b9XzRLAXG2yHsW3wHP6ynD0
- K0t6xA3EULs0jDUFLictJ0N7FrUruECiXqy94H3nSt4XLlsrnYpQ0M63b
- PwKoWEusEPG0555QU6yser8U2Pag5jhyuYNlIuVdw+TDIrunvx0DtbabG Q==;
-X-CSE-ConnectionGUID: f8ujD27RS76r86nY/5cS7A==
-X-CSE-MsgGUID: PPDGTK4HSTGGeiK63x4+NQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877192"
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877192"
+ bh=ewMdi3J36bgoZApjfpJ73KEayVLziVNcREWFVjth8/s=;
+ b=ACQ7m4T5Kj43ntzbSNhkEOcMpZuvxYwjH31ezL+YkuRfVkmCOEYSi7Od
+ oaF4Xvh1VDozVEg9jPoq2Dg7jCSwTnOUhBooWMRwuQpsBJYqVWldCkPS9
+ h2JE9gjRp5cUdEkEW3uod/tyx7vwdo8KzXt0UO7Y/p2P9zkPWO9Dyv2rt
+ 1y79wtfEHe0q0nhl822RUin7KsoZPWeuGzaFSncs9bKYvcobfKqHi0EX/
+ Tptd66Rb9ITuiV4fNEF7mFjsxJM1EjohpxwCiLvi/FY6KrhcLPR4A9fvG
+ Fqn1u4DqokVMfsYihAMMFhBSkDz4MzD1ZrxCjQ/1TsoN5QV2tz1zSoME7 Q==;
+X-CSE-ConnectionGUID: oXDpNee7RDqU2oi/vc3mIQ==
+X-CSE-MsgGUID: Akvwrn7zR2etu+XoRUMnhQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877344"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877344"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2026 19:07:11 -0800
-X-CSE-ConnectionGUID: 1axfT+9ORDaOUvqICDifyQ==
-X-CSE-MsgGUID: xBlaUGDlSmWMvr0XoQBtsA==
+ 07 Jan 2026 19:07:58 -0800
+X-CSE-ConnectionGUID: muyk1UiNQFSNyc9Nq0qsSw==
+X-CSE-MsgGUID: HyOsGDbcSkO6Sy0E3UOWgQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202210810"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211021"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:07:01 -0800
+ by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:07:48 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,10 +72,9 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 10/27] hw/nvram/fw_cfg: Factor fw_cfg_init_mem_internal()
- out
-Date: Thu,  8 Jan 2026 11:30:34 +0800
-Message-Id: <20260108033051.777361-11-zhao1.liu@intel.com>
+Subject: [PATCH v6 15/27] hw/i386: Remove linuxboot.bin
+Date: Thu,  8 Jan 2026 11:30:39 +0800
+Message-Id: <20260108033051.777361-16-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260108033051.777361-1-zhao1.liu@intel.com>
 References: <20260108033051.777361-1-zhao1.liu@intel.com>
@@ -84,14 +83,14 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ LOTS_OF_MONEY=0.001, MONEY_NOHTML=2.091, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,60 +108,265 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Factor fw_cfg_init_mem_internal() out of fw_cfg_init_mem_wide().
-In fw_cfg_init_mem_wide(), assert DMA arguments are provided.
-Callers without DMA have to use the fw_cfg_init_mem() helper.
+All machines now use the linuxboot_dma.bin binary, so it's safe to
+remove the non-DMA version (linuxboot.bin).
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Suggested-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes since v4:
- * Fix a "typo" argument in fw_cfg_init_mem_wide().
+ * Update commit message: not only pc, but also microvm enables
+   DMA for FwCfgState (in microvm_memory_init).
 ---
- hw/nvram/fw_cfg.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ hw/i386/pc.c                  |   3 +-
+ pc-bios/meson.build           |   1 -
+ pc-bios/optionrom/Makefile    |   2 +-
+ pc-bios/optionrom/linuxboot.S | 195 ----------------------------------
+ 4 files changed, 2 insertions(+), 199 deletions(-)
+ delete mode 100644 pc-bios/optionrom/linuxboot.S
 
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index a0315ea9ae6b..3c1d0b9c1d09 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1054,9 +1054,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
-     return s;
- }
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index f029c7323bcb..4783216c5e09 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -666,8 +666,7 @@ void xen_load_linux(PCMachineState *pcms)
  
--FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
--                                 hwaddr data_addr, uint32_t data_width,
--                                 hwaddr dma_addr, AddressSpace *dma_as)
-+static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
-+                                            hwaddr data_addr, uint32_t data_width,
-+                                            hwaddr dma_addr, AddressSpace *dma_as)
- {
-     DeviceState *dev;
-     SysBusDevice *sbd;
-@@ -1088,10 +1088,19 @@ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-     return s;
- }
+     x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, pcmc->pvh_enabled);
+     for (i = 0; i < nb_option_roms; i++) {
+-        assert(!strcmp(option_rom[i].name, "linuxboot.bin") ||
+-               !strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
++        assert(!strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
+                !strcmp(option_rom[i].name, "pvh.bin") ||
+                !strcmp(option_rom[i].name, "multiboot_dma.bin"));
+         rom_add_option(option_rom[i].name, option_rom[i].bootindex);
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index efe45c16705d..2f470ed12942 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -63,7 +63,6 @@ blobs = [
+   'efi-vmxnet3.rom',
+   'qemu-nsis.bmp',
+   'multiboot_dma.bin',
+-  'linuxboot.bin',
+   'linuxboot_dma.bin',
+   'kvmvapic.bin',
+   'pvh.bin',
+diff --git a/pc-bios/optionrom/Makefile b/pc-bios/optionrom/Makefile
+index 1183ef889228..e694c7aac007 100644
+--- a/pc-bios/optionrom/Makefile
++++ b/pc-bios/optionrom/Makefile
+@@ -2,7 +2,7 @@ include config.mak
+ SRC_DIR := $(TOPSRC_DIR)/pc-bios/optionrom
+ VPATH = $(SRC_DIR)
  
-+FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-+                                 hwaddr data_addr, uint32_t data_width,
-+                                 hwaddr dma_addr, AddressSpace *dma_as)
-+{
-+    assert(dma_addr && dma_as);
-+    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width,
-+                                    dma_addr, dma_as);
-+}
-+
- FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-                                   unsigned data_width)
- {
--    return fw_cfg_init_mem_wide(ctl_addr, data_addr, data_width, 0, NULL);
-+    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width, 0, NULL);
- }
+-all: multiboot_dma.bin linuxboot.bin linuxboot_dma.bin kvmvapic.bin pvh.bin
++all: multiboot_dma.bin linuxboot_dma.bin kvmvapic.bin pvh.bin
+ # Dummy command so that make thinks it has done something
+ 	@true
  
- 
+diff --git a/pc-bios/optionrom/linuxboot.S b/pc-bios/optionrom/linuxboot.S
+deleted file mode 100644
+index ba821ab922da..000000000000
+--- a/pc-bios/optionrom/linuxboot.S
++++ /dev/null
+@@ -1,195 +0,0 @@
+-/*
+- * Linux Boot Option ROM
+- *
+- * This program is free software; you can redistribute it and/or modify
+- * it under the terms of the GNU General Public License as published by
+- * the Free Software Foundation; either version 2 of the License, or
+- * (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License
+- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+- *
+- * Copyright Novell Inc, 2009
+- *   Authors: Alexander Graf <agraf@suse.de>
+- *
+- * Based on code in hw/pc.c.
+- */
+-
+-#include "optionrom.h"
+-
+-#define BOOT_ROM_PRODUCT "Linux loader"
+-
+-BOOT_ROM_START
+-
+-run_linuxboot:
+-
+-	cli
+-	cld
+-
+-	jmp		copy_kernel
+-boot_kernel:
+-
+-	read_fw		FW_CFG_SETUP_ADDR
+-
+-	mov		%eax, %ebx
+-	shr		$4, %ebx
+-
+-	/* All segments contain real_addr */
+-	mov		%bx, %ds
+-	mov		%bx, %es
+-	mov		%bx, %fs
+-	mov		%bx, %gs
+-	mov		%bx, %ss
+-
+-	/* CX = CS we want to jump to */
+-	add		$0x20, %bx
+-	mov		%bx, %cx
+-
+-	/* SP = cmdline_addr-real_addr-16 */
+-	read_fw		FW_CFG_CMDLINE_ADDR
+-	mov		%eax, %ebx
+-	read_fw		FW_CFG_SETUP_ADDR
+-	sub		%eax, %ebx
+-	sub		$16, %ebx
+-	mov		%ebx, %esp
+-
+-	/* Build indirect lret descriptor */
+-	pushw		%cx		/* CS */
+-	xor		%ax, %ax
+-	pushw		%ax		/* IP = 0 */
+-
+-	/* Clear registers */
+-	xor		%eax, %eax
+-	xor		%ebx, %ebx
+-	xor		%ecx, %ecx
+-	xor		%edx, %edx
+-	xor		%edi, %edi
+-	xor		%ebp, %ebp
+-
+-	/* Jump to Linux */
+-	lret
+-
+-
+-copy_kernel:
+-	/* Read info block in low memory (0x10000 or 0x90000) */
+-	read_fw		FW_CFG_SETUP_ADDR
+-	shr		$4, %eax
+-	mov		%eax, %es
+-	xor		%edi, %edi
+-	read_fw_blob_addr32_edi(FW_CFG_SETUP)
+-
+-	cmpw            $0x203, %es:0x206      // if protocol >= 0x203
+-	jae             1f                     // have initrd_max
+-	movl            $0x37ffffff, %es:0x22c // else assume 0x37ffffff
+-1:
+-
+-	/* Check if using kernel-specified initrd address */
+-	read_fw		FW_CFG_INITRD_ADDR
+-	mov		%eax, %edi             // (load_kernel wants it in %edi)
+-	read_fw		FW_CFG_INITRD_SIZE     // find end of initrd
+-	add		%edi, %eax
+-	xor		%es:0x22c, %eax        // if it matches es:0x22c
+-	and		$-4096, %eax           // (apart from padding for page)
+-	jz		load_kernel            // then initrd is not at top
+-					       // of memory
+-
+-	/* pc.c placed the initrd at end of memory.  Compute a better
+-	 * initrd address based on e801 data.
+-	 */
+-	mov		$0xe801, %ax
+-	xor		%cx, %cx
+-	xor		%dx, %dx
+-	int		$0x15
+-
+-	/* Output could be in AX/BX or CX/DX */
+-	or		%cx, %cx
+-	jnz		1f
+-	or		%dx, %dx
+-	jnz		1f
+-	mov		%ax, %cx
+-	mov		%bx, %dx
+-1:
+-
+-	or		%dx, %dx
+-	jnz		2f
+-	addw		$1024, %cx            /* add 1 MB */
+-	movzwl		%cx, %edi
+-	shll		$10, %edi             /* convert to bytes */
+-	jmp		3f
+-
+-2:
+-	addw		$16777216 >> 16, %dx  /* add 16 MB */
+-	movzwl		%dx, %edi
+-	shll		$16, %edi             /* convert to bytes */
+-
+-3:
+-	read_fw         FW_CFG_INITRD_SIZE
+-	subl            %eax, %edi
+-	andl            $-4096, %edi          /* EDI = start of initrd */
+-	movl		%edi, %es:0x218       /* put it in the header */
+-
+-load_kernel:
+-	/* We need to load the kernel into memory we can't access in 16 bit
+-	   mode, so let's get into 32 bit mode, write the kernel and jump
+-	   back again. */
+-
+-	/* Reserve space on the stack for our GDT descriptor. */
+-	mov             %esp, %ebp
+-	sub             $16, %esp
+-
+-	/* Now create the GDT descriptor */
+-	movw		$((3 * 8) - 1), -16(%bp)
+-	mov		%cs, %eax
+-	movzwl		%ax, %eax
+-	shl		$4, %eax
+-	addl		$gdt, %eax
+-	movl		%eax, -14(%bp)
+-
+-	/* And load the GDT */
+-	data32 lgdt	-16(%bp)
+-	mov		%ebp, %esp
+-
+-	/* Get us to protected mode now */
+-	mov		$1, %eax
+-	mov		%eax, %cr0
+-
+-	/* So we can set ES to a 32-bit segment */
+-	mov		$0x10, %eax
+-	mov		%eax, %es
+-
+-	/* We're now running in 16-bit CS, but 32-bit ES! */
+-
+-	/* Load kernel and initrd */
+-	read_fw_blob_addr32_edi(FW_CFG_INITRD)
+-	read_fw_blob_addr32(FW_CFG_KERNEL)
+-	read_fw_blob_addr32(FW_CFG_CMDLINE)
+-
+-	/* And now jump into Linux! */
+-	mov		$0, %eax
+-	mov		%eax, %cr0
+-
+-	/* ES = CS */
+-	mov		%cs, %ax
+-	mov		%ax, %es
+-
+-	jmp		boot_kernel
+-
+-/* Variables */
+-
+-.align 4, 0
+-gdt:
+-	/* 0x00 */
+-.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+-
+-	/* 0x08: code segment (base=0, limit=0xfffff, type=32bit code exec/read, DPL=0, 4k) */
+-.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9a, 0xcf, 0x00
+-
+-	/* 0x10: data segment (base=0, limit=0xfffff, type=32bit data read/write, DPL=0, 4k) */
+-.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0xcf, 0x00
+-
+-BOOT_ROM_END
 -- 
 2.34.1
 
