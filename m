@@ -4,99 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C32E6D1D478
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 19:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923C3D1D478
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 19:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdvJA-0004a9-9K; Thu, 08 Jan 2026 14:04:32 -0500
+	id 1vdvkD-0000Lk-P6; Thu, 08 Jan 2026 14:32:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdvJ3-0004ZB-NO
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 14:04:27 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdvIz-00025u-Mt
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 14:04:23 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7bab7c997eeso2695182b3a.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 11:04:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767899060; x=1768503860; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IJAd3A7sc1bs3tGkitGFBFkL6F3glP55XDyOfLrD+rQ=;
- b=nFkDgxBwwFkDPJC3X6NUmsgT4iKkXEjpR2lP5u3vNbn/DjCo8jTgUAtFs7v+xJUMTm
- XLcoUgo+TBuOwRJhUia/ytLSu3W9OHmzuGas1cGQhyYfU1t6cP1ZnhmhSyyKF10aFMJn
- 6hlVavfjZv4h1eTNEQ8IuLMNZvHtrM6MO0TslWtFgC2SjK86DoAJsS91+ay+u1v8ILWF
- WqO3OKa/OMQoiYXBb831fYM7qSdltAcTVIX18ed77wH7HT5s8sJQWYuZQz4pfR7zNP0Z
- G3PfIGzh8QfV9GrRiJuKmmTGNnPevrDsQVGvk0W8vbRJh8hOpYNvNFzS51OtdCKhL9FH
- tZmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767899060; x=1768503860;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IJAd3A7sc1bs3tGkitGFBFkL6F3glP55XDyOfLrD+rQ=;
- b=s7n4bHFvFDrC6qxqngt7surITYlkxoV+hk8vC2+gHqp4Qsh94zJ8pH/II6ix9K9T09
- Abj6Azh/Rge3gbigizj6McIyHxZ8ah7Q3639ePyv9/eRo3NToMlRQiddIeAJ8fTF5grZ
- jH2xDkPwgO1N33ISPfwAtYAk+ngGtD7OUlVAaTcoSz83FD5Cr08wyxQgTNdy4rOiFK7k
- l03X14kQAHJJisOa4R0Nn+Oukqao/CELKv7h01Yejk+pYCAUsFb2emHZYPdQRuofuvIj
- vnPgx3CaCNQF1A4BWN/Jq+4KSJFuJGZkd7JkJE8MowrlMZWdGEnlaJlAQs6gHxvD1rVI
- f5iw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVaQien/9GKpj2XsfRt9HRJCU6TC2ISqltkkdbmeZMqffQi3r5YkfCR8TJV5PvTJVpZrtTeLZLHpy1Q@nongnu.org
-X-Gm-Message-State: AOJu0YynAQ5I4It0uSTHIc5uCqfgsEItAUTDbBbax+sE34rWTBbT2TeA
- Nv6UOHtdqSLFNXKTNH3Af6EnKSsqK0x/hkscGC/ZyblfCTdlF3CLgPcM/3VgDOD9gtw=
-X-Gm-Gg: AY/fxX7BBl9K+04Hjr+JNBvr6q3HxSj4gZu5OlNTX/BtqKNvPDZDygv+BLCx2IFpO4E
- O0pvarAidY77mmizLqsjYG0RiNKN2Yp1P+zYxEM3iW0g9/ycy3ftJ3nqfEb4SOv5RucQRRYeWAz
- fzmuaBEGmssfcGf3p8ic4+9Ikumg/53py25fdlaQOW4ZJeSHN/P5N/o40ACzxOL6xA94EHWGTuo
- +9zI/Q1xzqrQztcii8sm12o6I+RIfth9ympQrgl/NomzrXYyeIj8zjT7pLhwXLyrfjcjIj2c2RS
- Z2T/pvVtK0Yh17LVQT0Wabs7/6PsgP0mZIYigzWdjlOejNv2FRMGztK6cPIckvxyE6iR3511JY7
- tT5q/WI7AImP7nYDcnU7MIb070TDg51uCeh6g/G2xZLuDktqRQxV58dkRzhvyl1gm+jUHPVRQI+
- jRPLbpUlxYV1YgXmvoRccxKc2KVMlKjqUWlzsMXL1SH7D4k1DxGcf2sdFU/CrYEyJRqzk=
-X-Google-Smtp-Source: AGHT+IEbaFFnJe5pNBtv7W5I684Wl8LSwqHvyfimH+5nY+MZYVQphpvuPABlyMzPiTjCCsD0ydvtZQ==
-X-Received: by 2002:a17:90b:3bcf:b0:340:54a1:d6fe with SMTP id
- 98e67ed59e1d1-34f68b67f8bmr6795558a91.15.1767899059730; 
- Thu, 08 Jan 2026 11:04:19 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cb5352268sm8426568a12.0.2026.01.08.11.04.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 11:04:19 -0800 (PST)
-Message-ID: <28be2419-8e13-4605-bf66-b0b23d90fb42@linaro.org>
-Date: Thu, 8 Jan 2026 11:04:18 -0800
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vdvk9-00007m-0Y; Thu, 08 Jan 2026 14:32:25 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vdvk5-0000N4-Hg; Thu, 08 Jan 2026 14:32:24 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 608A8IZo002998;
+ Thu, 8 Jan 2026 19:32:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=FNKBYW
+ 1ttYfNlZI8/9c2VfLu8QO6jvvs8SxwTGS2JBs=; b=esO18d1xFyEB/L83NAxGeQ
+ HmRgkoRDIOPWiYMk6spCsfqotQMFMc2QDDhlScOqsWWLwuiw0Cc+se3Uov4MNgvU
+ hoZg03pUMXCWUBwJ5BTawGfZgEAY5Grh5TLP+A3Jkfy72AXHP3mEQjtw/jKx3yk1
+ yIbwY0KxrAS2z63UAFE8xko2DQB797JM+5VWpih2C3GiTKHSzwvPEB/R4Y5TQL+q
+ 6eueZ+o3meOSj98Y16w1eLp0YzK+UJ3qkK7xR+cuPvrPriEVTXK/E4+QAYs8wlQV
+ XziAEAV+cOLKe3gKE4eYEN+cf6KDUHErTNvj+utq762sZMEC6Rgi133EDqcsKKKA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4beshf6ney-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 08 Jan 2026 19:32:18 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 608I7NTN015656;
+ Thu, 8 Jan 2026 19:32:17 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bfdess4by-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 08 Jan 2026 19:32:17 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 608JWFxI28508700
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 8 Jan 2026 19:32:15 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6692858045;
+ Thu,  8 Jan 2026 19:32:15 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A8E6B58054;
+ Thu,  8 Jan 2026 19:32:13 +0000 (GMT)
+Received: from [9.61.253.86] (unknown [9.61.253.86])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  8 Jan 2026 19:32:13 +0000 (GMT)
+Message-ID: <c721a64e-fc9d-4abd-842d-934fe3311793@linux.ibm.com>
+Date: Thu, 8 Jan 2026 11:32:13 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] hw/arm/smmu: add memory regions as property for an
- SMMU instance
+Subject: Re: [PATCH v7 08/29] crypto/x509-utils: Add helper functions for DIAG
+ 320 subcode 2
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20251208213247.702569-1-zycai@linux.ibm.com>
+ <20251208213247.702569-9-zycai@linux.ibm.com>
 Content-Language: en-US
-To: eric.auger@redhat.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Radoslaw Biernacki <rad@semihalf.com>,
- tangtao1634@phytium.com.cn, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-References: <20251216235731.1793908-1-pierrick.bouvier@linaro.org>
- <a8afadf0-fcec-444a-86d8-a75676f8bd76@linaro.org>
- <023c6dba-e9d0-46c1-8503-c65ec6df2821@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <023c6dba-e9d0-46c1-8503-c65ec6df2821@redhat.com>
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20251208213247.702569-9-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDE0NCBTYWx0ZWRfXwM54YBFBJ0Qq
+ Cp7uEUtEXJJZaYsLZ5iZXpn7JODrkg7ZydIUWpOlRzQw9Jca+6DuA2cJGx+jDtdBpgFnvZu2uG7
+ a9Me+Qpt4Rl/EkPi/e/3yzzQ8NIRfIhyMEAChcD65fW8QelaMsDproOpMR1hRR1mdrYa9YFv7IS
+ yb/ZYVxoBWGQ6zDx4VygTu8HmN/p/Shtn1ysrSKVOTR2EYeKp2cNMQy+YiZRZyDCtP1XZISo3eH
+ KQ3z/Ma5EslEyPA6dsc0e1Pjctv1hk+Vcit8ZQOt0mnhDpzJDICFTKNUiG6W+yCJT5Nh+Xp3hP/
+ /NV8QyZNU76SFpNKDSjE5dkYBvQ313mbXA/CqPhMxO0273h473BoXkUf1nPDwDv+DvK3ajLLlUk
+ zAd96QzmsL4xgz2vTTptCdmr35t3fg51Hxf/NC58EJQhWeoJWE00gfj4xQJpNHJGZl2/WrLBbtV
+ Gpu9OwLukR3rpQwdI+w==
+X-Proofpoint-GUID: 95kPO4j0FxVwjrOWKdXOevx8ax1sgwUA
+X-Proofpoint-ORIG-GUID: 95kPO4j0FxVwjrOWKdXOevx8ax1sgwUA
+X-Authority-Analysis: v=2.4 cv=AOkvhdoa c=1 sm=1 tr=0 ts=69600642 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=j3SwWdo30wvGsQaUlywA:9 a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-08_03,2026-01-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601080144
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,106 +126,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 1:20 AM, Eric Auger wrote:
-> 
-> 
-> On 1/5/26 9:05 PM, Philippe Mathieu-Daudé wrote:
->> On 17/12/25 00:57, Pierrick Bouvier wrote:
->>> This will be used to access non-secure and secure memory. Secure support
->>> and Granule Protection Check (for RME) for SMMU need to access secure
->>> memory.
->>>
->>> As well, it allows to remove usage of global address_space_memory,
->>> allowing different SMMU instances to have a specific view of memory.
->>>
->>> User creatable SMMU are handled as well for virt machine,
->>> by setting the memory properties when device is plugged in.
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>    include/hw/arm/smmu-common.h |  4 ++++
->>>    include/hw/arm/virt.h        |  2 ++
->>>    hw/arm/sbsa-ref.c            | 16 ++++++++++++----
->>>    hw/arm/smmu-common.c         | 25 +++++++++++++++++++++++++
->>>    hw/arm/virt.c                | 13 +++++++++++--
->>>    5 files changed, 54 insertions(+), 6 deletions(-)
->>
->>
->>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->>> index 62a76121841..9a67ce857fe 100644
->>> --- a/hw/arm/smmu-common.c
->>> +++ b/hw/arm/smmu-common.c
->>> @@ -944,6 +944,13 @@ static void smmu_base_realize(DeviceState *dev,
->>> Error **errp)
->>>            return;
->>>        }
->>>    +    g_assert(s->memory);
->>> +    address_space_init(&s->memory_as, s->memory, "smmu-memory-view");
->>> +    if (s->secure_memory) {
->>> +        address_space_init(&s->secure_memory_as, s->secure_memory,
->>> +                           "smmu-secure-memory-view");
->>
->> Else, are we sure the SMMU implementations will behave correctly?
->>
->>> +    }
->>> +
->>>        /*
->>>         * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie
->>> based extra
->>>         * root complexes to be associated with SMMU.
->>> @@ -1008,10 +1015,28 @@ static void smmu_base_class_init(ObjectClass
->>> *klass, const void *data)
->>>        rc->phases.exit = smmu_base_reset_exit;
->>>    }
->>>    +static void smmu_base_instance_init(Object *obj)
->>> +{
->>> +    SMMUState *s = ARM_SMMU(obj);
->>> +
->>> +    object_property_add_link(obj, "memory",
->>> +                             TYPE_MEMORY_REGION,
->>> +                             (Object **)&s->memory,
->>> +                             qdev_prop_allow_set_link_before_realize,
->>> +                             OBJ_PROP_LINK_STRONG);
->>> +
->>> +    object_property_add_link(obj, "secure-memory",
->>> +                             TYPE_MEMORY_REGION,
->>> +                             (Object **)&s->secure_memory,
->>> +                             qdev_prop_allow_set_link_before_realize,
->>> +                             OBJ_PROP_LINK_STRONG);
->>
->> Why can't we use device_class_set_props(&static_properties)
->> in smmu_base_class_init()?
-> 
-> We have smmu_dev_properties with a DEFINE_PROP_LINK
-> Couldn't we add the new links there?
+
+On 12/8/2025 1:32 PM, Zhuoying Cai wrote:
+> Introduce new helper functions to extract certificate metadata:
 >
+> qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
+> qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
+> qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
+> qcrypto_x509_is_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
 
-After checking, yes, DEFINE_PROP_LINK could be used for definition.
+I think this function name has changed to qcrypto_x509_check_ecc_curve_p521?
 
-The important bit is that DEFINE_PROP_LINK uses create_link_property 
-which uses qdev_prop_allow_set_link_before_realize, and we really need that.
+> These functions provide support for metadata extraction and validity checking
+> for X.509 certificates.
+>
+> Signed-off-by: Zhuoying Cai<zycai@linux.ibm.com>
+> ---
 
-I'll switch to that in next version, thanks.
+The patch LGTM
 
-Pierrick
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 
-> Eric
->>
->>> +}
->>> +
->>>    static const TypeInfo smmu_base_info = {
->>>        .name          = TYPE_ARM_SMMU,
->>>        .parent        = TYPE_SYS_BUS_DEVICE,
->>>        .instance_size = sizeof(SMMUState),
->>> +    .instance_init = smmu_base_instance_init,
->>>        .class_data    = NULL,
->>>        .class_size    = sizeof(SMMUBaseClass),
->>>        .class_init    = smmu_base_class_init,
->>
->> Anyhow this is functional and I suppose this can be improved on top, so:
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
-> 
 
 
