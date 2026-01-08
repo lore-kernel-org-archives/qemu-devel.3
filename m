@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8199BD1489F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:31:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD66DD148A0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdibP-00050Z-4D; Thu, 08 Jan 2026 00:30:31 -0500
+	id 1vdiby-0005yd-L5; Thu, 08 Jan 2026 00:31:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdibN-0004zl-CU
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:30:29 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1vdibx-0005p0-1E
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:05 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdibL-0005Gu-IN
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:30:29 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7f0da2dfeaeso2460957b3a.1
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:30:27 -0800 (PST)
+ id 1vdibt-0005PO-Ue
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:04 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b553412a19bso1490623a12.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:31:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767850226; x=1768455026; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767850260; x=1768455060; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rVsBcnPsfvmZvQdij3NSQo+uhfcRf83AZzrXvhkPZQ4=;
- b=Fl/rbIS7gClwzJPXqC4kV49ShQ8LLxiand1uDuJNazjWPp6NZRYYgem7GTy9ccHsSj
- 3T3A/s29zgzWF0KRv15Vu1oaOkUj0L5wSuZkRjpZi/vPjxpiu0X58yuf9YnK/pGy7aJr
- IsYZageHnQdmuiyjUxYCy0fe+8I5jgJQ7pLMSqJvs2Rq0ZsrEtIpm+WV/1BObfMK9QGJ
- 6PPvYdkVjXfzbIufmHoKwjoqnrTyMZ0lgLN8Q78d0AW60uEn9sjFpsoIZ8OZzdvfPTQW
- 9byyej2aIta+jbhSCm8ldscfOESYRzUQXVJa5KANRuYIRIag7Kdv9kg9ceqLrijOy5O5
- wyFw==
+ :reply-to; bh=gtmv0XKofBnBUSMtkD8ZFmrMZXywN4gg18TPjM1aIDI=;
+ b=TX4uggs5Ny1sL38bDJx0lrMqDp27dLqdmcRA6mRVNJN9p+T+dm4xTviFNEU0ygBtxK
+ VlcG0dtWMFX3UYGjoBjs7HNh8BBXJZ2GTvveqQO1dYkyqShVelTrKjU86+Qk0bOjkNh9
+ e/U22VI1ZC5UI8gNygLNS+rqE1v13tg3JKlcJaaoDH7yxYr2a/oAzWRH8LXm+qgZ6RhW
+ JpPaZYYPE2jj7hz9oR1Y2uPuoNH+LngeAJIrDuyjiH2y1i+vaB6uY0AClfBjKbVCYTvD
+ 2qlAG++3/mrs6MBuwkADl9ipbMLw6rHBZac4ngftTjEecJ46GdUC3WixRpm0uv0j0f04
+ 9OxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767850226; x=1768455026;
+ d=1e100.net; s=20230601; t=1767850260; x=1768455060;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rVsBcnPsfvmZvQdij3NSQo+uhfcRf83AZzrXvhkPZQ4=;
- b=OsH4gqQAKPtLe9/9pBRR1oVuX1mJJEOkwFUSsm2fG6qMn1rXPqAnJVqWRfbZKp7JgS
- H24xofC3uRTlEtVxlbhSpzyWO6iqWFHoGX6k19KxuGvCNZx4oc+jbTl2fR/H54Z0mqBg
- NxmD+XdUNniWQs9cpax0n1ek7KIp95uX/suil1CZ2yeUI5fcpZFcu4kgByi9VFzJYOs1
- rFJXzheh4kAUfa1ocJNac8lrftB0zYyYMb4/op5o9AKapdgpmnWDW8G6bkW8+2FWr5PL
- qvkGgP0TLUUoeKukS4C4KhFoWmATuAMajvFgUs3Stsctlpx+N82aTq9JZffVzfS7AYM2
- lJQw==
-X-Gm-Message-State: AOJu0Yxxf07CsAqO6fVqYjjUB1tPo0RQGK+5Az0eQNKfWU03USIB/Ezf
- tdFF6hC/uvdEN6p43HKeYwFcnrUu1U3M8sEFZLgpedcm8E3/ImS8Hw/24+tTaEaafo1x78QTKDb
- T7oZHVb8=
-X-Gm-Gg: AY/fxX7Zv/J8D0TgqWjXVuKyXhlPb4HgIGsYFcjmwyZd6iVUxldT+NRGIoOlx/IskMn
- 9Nvvrt3TE9UauhkkkkuXiEjd3sACq+7j+xpT0iQy8L8Ba6F/OefI5m5KsU3SzVDYloxu1UhnqF/
- R20mApQB/UT4DITI2sF2CZAddPhKQqJC7dO8Ea4+Dco7SOLrYHu1JX0jhJk2CDDyCA4Va/VGWRa
- YMYKE6DIuGymkQRdnHmftsDkSqeJ5yAWDqxlE2FNvB9g8tGgWQL5lzqGEHn3250iw0VK7VcVV2Q
- 3JJpwhDJ4vvsxHF879V/kg2oBgEyjsW8IZ4chfscZJrEcSK7S/IYu3fEYjNk+hk4339EE5zfJko
- JiatIfPUbKJsUt82CqYdfRRYqrX7yP9/CH9xz4kIQxaPv6mmFBkfyD1KPoKlPBj74Nzv6WWiVAw
- o4rBtqsNcIH0maOKeuiQ==
-X-Google-Smtp-Source: AGHT+IGYEvbXQjjeOaWhwde2tqnDDR1eqrV2JkhTPk6CCGLAAnjFhk+Qf0D+NXWgQkb727VRojjm6Q==
-X-Received: by 2002:a05:6a20:6a2b:b0:366:14ac:e1dc with SMTP id
- adf61e73a8af0-3898f9db6f7mr5113319637.66.1767850225673; 
- Wed, 07 Jan 2026 21:30:25 -0800 (PST)
+ bh=gtmv0XKofBnBUSMtkD8ZFmrMZXywN4gg18TPjM1aIDI=;
+ b=O+cavSQYYrq/a4/hkkAjokn9I2Txto86/2XpNIMl5zrQLpYw0I99b+9tkRUI6W/iCm
+ XM5x6/aw/RXB+IZLNbwX61VnGa6XNitxXJO2EMepq4sa99SRqP1jASb7IYKt2czAN/cV
+ evSwW2ENUGLjEMzW/Gw5NZSn62Eo105KJSDXvPtkr/X9GL2y0VLrm6YUism5zT/YSNwu
+ xGE9DZMBMKhrOQeU0pLhOtYcnetuUJScTnxq6vAfp4oObRye2tsdN/dSKOmAhft0vahG
+ pJID0XWSD9eV24qsn5ICepLgDAxjm4GKN2rcb2UAZd1v2UzlQ3wUsSYQhJQ06YVEMati
+ PwjA==
+X-Gm-Message-State: AOJu0Yw1l2Hm6yOYewpjehvpXhb+kyula4JTu3wzxCazBQFB+KFMEpOm
+ EYqEN2yden1TLekMEQCzJdzwxys+U6M5oQbg5/do66OC7tbaKBmsCEEmd45AMwNZvbRjpDsL7UO
+ 683LfuEQ=
+X-Gm-Gg: AY/fxX5sHH8MJ70RZLp6R6lv7eYOirZ7Cl/QXUJHAlsQMrErKv/+bIfJeZs+5dr8B3d
+ rjokernys6YNzQavY9BL11L4wHppM9BjRHlbfVhfzVzPsRrdD2xXw5eOTedhTGmWpq4AzmMaL59
+ y11+a7yuisGNFwkiE9egSxs+Xtw6s4SkYHN938RoVAMr6i23pyf6EMwogUyEA5VDtbJ9P9zA0yA
+ Qg8ygrn1S+c5VxpCIY8rZwfhEcl+H8spKGSS11gdF1VbHKHlBzOpznC+5ho3HaREpWNQgO1pj1e
+ qfiU/4pxbduHbI8qhZpLPL0S0hqGle3lMlCWK9nUk9Ks47Zp77IDBOiktnSvL0CrousEvzZIFV9
+ Yu5TrJ3umi+2brjI/AufVnfakwlDZoXpxTsliuHzDMPjFcpXjoU56pM3CxOEz1FPIn3ogeban0U
+ aJac/PaT+WBvDPxOMsoA==
+X-Google-Smtp-Source: AGHT+IEBkraE8vFNj0b/YLPvKWfPN26stUfl9oLFq8yGaiVT43+ZC+iS2ETXZNb2oiDYJpmLmKkm5Q==
+X-Received: by 2002:a05:6a20:3d86:b0:35d:d477:a7d8 with SMTP id
+ adf61e73a8af0-3898f9399f6mr4633004637.36.1767850260037; 
+ Wed, 07 Jan 2026 21:31:00 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.30.24
+ 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.30.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 21:30:25 -0800 (PST)
+ Wed, 07 Jan 2026 21:30:59 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 01/50] gitlab: Remove 32-bit host testing
-Date: Thu,  8 Jan 2026 16:29:29 +1100
-Message-ID: <20260108053018.626690-2-richard.henderson@linaro.org>
+Subject: [PATCH 19/50] tcg: Remove INDEX_op_brcond2_i32
+Date: Thu,  8 Jan 2026 16:29:47 +1100
+Message-ID: <20260108053018.626690-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108053018.626690-1-richard.henderson@linaro.org>
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,195 +99,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These deprecated builds will be disabled.
-Remove testing of armhf, i686, and wasm32.
+This opcode was exclusively for 32-bit hosts.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- .gitlab-ci.d/buildtest-template.yml | 27 -----------------
- .gitlab-ci.d/buildtest.yml          |  9 ------
- .gitlab-ci.d/container-cross.yml    | 17 -----------
- .gitlab-ci.d/containers.yml         |  3 --
- .gitlab-ci.d/crossbuilds.yml        | 45 -----------------------------
- 5 files changed, 101 deletions(-)
+ include/tcg/tcg-opc.h    |  1 -
+ tcg/optimize.c           | 99 ----------------------------------------
+ tcg/tcg-op.c             | 32 ++-----------
+ tcg/tcg.c                | 34 --------------
+ docs/devel/tcg-ops.rst   |  7 +--
+ tcg/tci/tcg-target.c.inc | 17 -------
+ 6 files changed, 4 insertions(+), 186 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index d866cb12bb..9c2ae39ddd 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -123,30 +123,3 @@
-     - du -chs ${CI_PROJECT_DIR}/*-cache
-   variables:
-     QEMU_JOB_FUNCTIONAL: 1
--
--.wasm_build_job_template:
--  extends: .base_job_template
--  stage: build
--  image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
--  before_script:
--    - source scripts/ci/gitlab-ci-section
--    - section_start setup "Pre-script setup"
--    - JOBS=$(expr $(nproc) + 1)
--    - section_end setup
--  script:
--    - du -sh .git
--    - mkdir build
--    - cd build
--    - section_start configure "Running configure"
--    - emconfigure ../configure --disable-docs
--          ${TARGETS:+--target-list="$TARGETS"}
--          $CONFIGURE_ARGS ||
--      { cat config.log meson-logs/meson-log.txt && exit 1; }
--    - if test -n "$LD_JOBS";
--      then
--        pyvenv/bin/meson configure . -Dbackend_max_links="$LD_JOBS" ;
--      fi || exit 1;
--    - section_end configure
--    - section_start build "Building QEMU"
--    - emmake make -j"$JOBS"
--    - section_end build
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index dfe954fe3c..1d4b8a030a 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -784,12 +784,3 @@ coverity:
-       when: never
-     # Always manual on forks even if $QEMU_CI == "2"
-     - when: manual
--
--build-wasm:
--  extends: .wasm_build_job_template
--  timeout: 2h
--  needs:
--    - job: wasm-emsdk-cross-container
--  variables:
--    IMAGE: emsdk-wasm32-cross
--    CONFIGURE_ARGS: --static --disable-tools --enable-debug --enable-tcg-interpreter
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index 0fd7341afa..044795d9ff 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -22,12 +22,6 @@ arm64-debian-cross-container:
-   variables:
-     NAME: debian-arm64-cross
+diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+index e988edd93a..55283af326 100644
+--- a/include/tcg/tcg-opc.h
++++ b/include/tcg/tcg-opc.h
+@@ -103,7 +103,6 @@ DEF(subb1o, 1, 2, 0, TCG_OPF_INT | TCG_OPF_CARRY_OUT)
+ DEF(subbi, 1, 2, 0, TCG_OPF_INT | TCG_OPF_CARRY_IN)
+ DEF(subbio, 1, 2, 0, TCG_OPF_INT | TCG_OPF_CARRY_IN | TCG_OPF_CARRY_OUT)
  
--armhf-debian-cross-container:
--  extends: .container_job_template
--  stage: containers
--  variables:
--    NAME: debian-armhf-cross
--
- hexagon-cross-container:
-   extends: .container_job_template
-   stage: containers
-@@ -40,12 +34,6 @@ loongarch-debian-cross-container:
-   variables:
-     NAME: debian-loongarch-cross
+-DEF(brcond2_i32, 0, 4, 2, TCG_OPF_BB_END | TCG_OPF_COND_BRANCH)
+ DEF(setcond2_i32, 1, 4, 1, 0)
  
--i686-debian-cross-container:
--  extends: .container_job_template
--  stage: containers
--  variables:
--    NAME: debian-i686-cross
--
- mips64el-debian-cross-container:
-   extends: .container_job_template
-   stage: containers
-@@ -85,8 +73,3 @@ win64-fedora-cross-container:
-   extends: .container_job_template
-   variables:
-     NAME: fedora-win64-cross
--
--wasm-emsdk-cross-container:
--  extends: .container_job_template
--  variables:
--    NAME: emsdk-wasm32-cross
-diff --git a/.gitlab-ci.d/containers.yml b/.gitlab-ci.d/containers.yml
-index f7d3e7205d..222522ca16 100644
---- a/.gitlab-ci.d/containers.yml
-+++ b/.gitlab-ci.d/containers.yml
-@@ -47,10 +47,8 @@ weekly-container-builds:
-     - amd64-debian-user-cross-container
-     - amd64-debian-legacy-cross-container
-     - arm64-debian-cross-container
--    - armhf-debian-cross-container
-     - hexagon-cross-container
-     - loongarch-debian-cross-container
--    - i686-debian-cross-container
-     - mips64el-debian-cross-container
-     - ppc64el-debian-cross-container
-     - riscv64-debian-cross-container
-@@ -58,7 +56,6 @@ weekly-container-builds:
-     - tricore-debian-cross-container
-     - xtensa-debian-cross-container
-     - win64-fedora-cross-container
--    - wasm-emsdk-cross-container
-     # containers
-     - amd64-alpine-container
-     - amd64-debian-container
-diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-index 99dfa7eea6..59ff8b1d87 100644
---- a/.gitlab-ci.d/crossbuilds.yml
-+++ b/.gitlab-ci.d/crossbuilds.yml
-@@ -1,13 +1,6 @@
- include:
-   - local: '/.gitlab-ci.d/crossbuild-template.yml'
+ /* size changing ops */
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index f69702b26e..61f729e5be 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1596,102 +1596,6 @@ static bool fold_brcond(OptContext *ctx, TCGOp *op)
+     return true;
+ }
  
--cross-armhf-user:
--  extends: .cross_user_build_job
--  needs:
--    - job: armhf-debian-cross-container
--  variables:
--    IMAGE: debian-armhf-cross
+-static bool fold_brcond2(OptContext *ctx, TCGOp *op)
+-{
+-    TCGCond cond;
+-    TCGArg label;
+-    int i, inv = 0;
 -
- cross-arm64-system:
-   extends: .cross_system_build_job
-   needs:
-@@ -30,44 +23,6 @@ cross-arm64-kvm-only:
-     IMAGE: debian-arm64-cross
-     EXTRA_CONFIGURE_OPTS: --disable-tcg --without-default-features
+-    i = do_constant_folding_cond2(ctx, op, &op->args[0]);
+-    cond = op->args[4];
+-    label = op->args[5];
+-    if (i >= 0) {
+-        goto do_brcond_const;
+-    }
+-
+-    switch (cond) {
+-    case TCG_COND_LT:
+-    case TCG_COND_GE:
+-        /*
+-         * Simplify LT/GE comparisons vs zero to a single compare
+-         * vs the high word of the input.
+-         */
+-        if (arg_is_const_val(op->args[2], 0) &&
+-            arg_is_const_val(op->args[3], 0)) {
+-            goto do_brcond_high;
+-        }
+-        break;
+-
+-    case TCG_COND_NE:
+-        inv = 1;
+-        QEMU_FALLTHROUGH;
+-    case TCG_COND_EQ:
+-        /*
+-         * Simplify EQ/NE comparisons where one of the pairs
+-         * can be simplified.
+-         */
+-        i = do_constant_folding_cond(TCG_TYPE_I32, op->args[0],
+-                                     op->args[2], cond);
+-        switch (i ^ inv) {
+-        case 0:
+-            goto do_brcond_const;
+-        case 1:
+-            goto do_brcond_high;
+-        }
+-
+-        i = do_constant_folding_cond(TCG_TYPE_I32, op->args[1],
+-                                     op->args[3], cond);
+-        switch (i ^ inv) {
+-        case 0:
+-            goto do_brcond_const;
+-        case 1:
+-            goto do_brcond_low;
+-        }
+-        break;
+-
+-    case TCG_COND_TSTEQ:
+-    case TCG_COND_TSTNE:
+-        if (arg_is_const_val(op->args[2], 0)) {
+-            goto do_brcond_high;
+-        }
+-        if (arg_is_const_val(op->args[3], 0)) {
+-            goto do_brcond_low;
+-        }
+-        break;
+-
+-    default:
+-        break;
+-
+-    do_brcond_low:
+-        op->opc = INDEX_op_brcond;
+-        op->args[1] = op->args[2];
+-        op->args[2] = cond;
+-        op->args[3] = label;
+-        return fold_brcond(ctx, op);
+-
+-    do_brcond_high:
+-        op->opc = INDEX_op_brcond;
+-        op->args[0] = op->args[1];
+-        op->args[1] = op->args[3];
+-        op->args[2] = cond;
+-        op->args[3] = label;
+-        return fold_brcond(ctx, op);
+-
+-    do_brcond_const:
+-        if (i == 0) {
+-            tcg_op_remove(ctx->tcg, op);
+-            return true;
+-        }
+-        op->opc = INDEX_op_br;
+-        op->args[0] = label;
+-        finish_ebb(ctx);
+-        return true;
+-    }
+-
+-    finish_bb(ctx);
+-    return true;
+-}
+-
+ static bool fold_bswap(OptContext *ctx, TCGOp *op)
+ {
+     uint64_t z_mask, o_mask, s_mask;
+@@ -3162,9 +3066,6 @@ void tcg_optimize(TCGContext *s)
+         case INDEX_op_brcond:
+             done = fold_brcond(&ctx, op);
+             break;
+-        case INDEX_op_brcond2_i32:
+-            done = fold_brcond2(&ctx, op);
+-            break;
+         case INDEX_op_bswap16:
+         case INDEX_op_bswap32:
+         case INDEX_op_bswap64:
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index ab7b409be6..61f6fd9095 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -265,14 +265,6 @@ static void DNI tcg_gen_op6i_i64(TCGOpcode opc, TCGv_i64 a1, TCGv_i64 a2,
+                 tcgv_i64_arg(a3), tcgv_i64_arg(a4), tcgv_i64_arg(a5), a6);
+ }
  
--cross-i686-system:
--  extends:
--    - .cross_system_build_job
--    - .cross_test_artifacts
--  needs:
--    - job: i686-debian-cross-container
--  variables:
--    IMAGE: debian-i686-cross
--    EXTRA_CONFIGURE_OPTS: --disable-kvm
--    MAKE_CHECK_ARGS: check-qtest
+-static TCGOp * DNI tcg_gen_op6ii_i32(TCGOpcode opc, TCGv_i32 a1, TCGv_i32 a2,
+-                                     TCGv_i32 a3, TCGv_i32 a4,
+-                                     TCGArg a5, TCGArg a6)
+-{
+-    return tcg_gen_op6(opc, TCG_TYPE_I32, tcgv_i32_arg(a1), tcgv_i32_arg(a2),
+-                       tcgv_i32_arg(a3), tcgv_i32_arg(a4), a5, a6);
+-}
 -
--cross-i686-user:
--  extends:
--    - .cross_user_build_job
--    - .cross_test_artifacts
--  needs:
--    - job: i686-debian-cross-container
--  variables:
--    IMAGE: debian-i686-cross
--    MAKE_CHECK_ARGS: check
+ /* Generic ops.  */
+ 
+ void gen_set_label(TCGLabel *l)
+@@ -1873,33 +1865,15 @@ void tcg_gen_brcond_i64(TCGCond cond, TCGv_i64 arg1, TCGv_i64 arg2, TCGLabel *l)
+     if (cond == TCG_COND_ALWAYS) {
+         tcg_gen_br(l);
+     } else if (cond != TCG_COND_NEVER) {
+-        TCGOp *op;
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            op = tcg_gen_op6ii_i32(INDEX_op_brcond2_i32, TCGV_LOW(arg1),
+-                                   TCGV_HIGH(arg1), TCGV_LOW(arg2),
+-                                   TCGV_HIGH(arg2), cond, label_arg(l));
+-        } else {
+-            op = tcg_gen_op4ii_i64(INDEX_op_brcond, arg1, arg2, cond,
+-                                   label_arg(l));
+-        }
++        TCGOp *op = tcg_gen_op4ii_i64(INDEX_op_brcond, arg1, arg2, cond,
++                                      label_arg(l));
+         add_as_label_use(l, op);
+     }
+ }
+ 
+ void tcg_gen_brcondi_i64(TCGCond cond, TCGv_i64 arg1, int64_t arg2, TCGLabel *l)
+ {
+-    if (TCG_TARGET_REG_BITS == 64) {
+-        tcg_gen_brcond_i64(cond, arg1, tcg_constant_i64(arg2), l);
+-    } else if (cond == TCG_COND_ALWAYS) {
+-        tcg_gen_br(l);
+-    } else if (cond != TCG_COND_NEVER) {
+-        TCGOp *op = tcg_gen_op6ii_i32(INDEX_op_brcond2_i32,
+-                                      TCGV_LOW(arg1), TCGV_HIGH(arg1),
+-                                      tcg_constant_i32(arg2),
+-                                      tcg_constant_i32(arg2 >> 32),
+-                                      cond, label_arg(l));
+-        add_as_label_use(l, op);
+-    }
++    tcg_gen_brcond_i64(cond, arg1, tcg_constant_i64(arg2), l);
+ }
+ 
+ void tcg_gen_setcond_i64(TCGCond cond, TCGv_i64 ret,
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index fbf09f5c82..0521767c46 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1010,13 +1010,6 @@ typedef struct TCGOutOpBrcond {
+                    TCGReg a1, tcg_target_long a2, TCGLabel *label);
+ } TCGOutOpBrcond;
+ 
+-typedef struct TCGOutOpBrcond2 {
+-    TCGOutOp base;
+-    void (*out)(TCGContext *s, TCGCond cond, TCGReg al, TCGReg ah,
+-                TCGArg bl, bool const_bl,
+-                TCGArg bh, bool const_bh, TCGLabel *l);
+-} TCGOutOpBrcond2;
 -
--cross-i686-tci:
--  extends:
--    - .cross_accel_build_job
--    - .cross_test_artifacts
--  timeout: 60m
--  needs:
--    - job: i686-debian-cross-container
--  variables:
--    IMAGE: debian-i686-cross
--    ACCEL: tcg-interpreter
--    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,arm-softmmu,arm-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
--    # Force tests to run with reduced parallelism, to see whether this
--    # reduces the flakiness of this CI job. The CI
--    # environment by default shows us 8 CPUs and so we
--    # would otherwise be using a parallelism of 9.
--    MAKE_CHECK_ARGS: check check-tcg -j2
+ typedef struct TCGOutOpBswap {
+     TCGOutOp base;
+     void (*out_rr)(TCGContext *s, TCGType type,
+@@ -1248,7 +1241,6 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+     [INDEX_op_goto_ptr] = &outop_goto_ptr,
+ 
+ #if TCG_TARGET_REG_BITS == 32
+-    OUTOP(INDEX_op_brcond2_i32, TCGOutOpBrcond2, outop_brcond2),
+     OUTOP(INDEX_op_setcond2_i32, TCGOutOpSetcond2, outop_setcond2),
+ #else
+     OUTOP(INDEX_op_bswap64, TCGOutOpUnary, outop_bswap64),
+@@ -2490,7 +2482,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_xor:
+         return has_type;
+ 
+-    case INDEX_op_brcond2_i32:
+     case INDEX_op_setcond2_i32:
+         return TCG_TARGET_REG_BITS == 32;
+ 
+@@ -3022,7 +3013,6 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+             case INDEX_op_setcond:
+             case INDEX_op_negsetcond:
+             case INDEX_op_movcond:
+-            case INDEX_op_brcond2_i32:
+             case INDEX_op_setcond2_i32:
+             case INDEX_op_cmp_vec:
+             case INDEX_op_cmpsel_vec:
+@@ -3106,7 +3096,6 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+             case INDEX_op_set_label:
+             case INDEX_op_br:
+             case INDEX_op_brcond:
+-            case INDEX_op_brcond2_i32:
+                 col += ne_fprintf(f, "%s$L%d", k ? "," : "",
+                                   arg_label(op->args[k])->id);
+                 i++, k++;
+@@ -3563,9 +3552,6 @@ void tcg_op_remove(TCGContext *s, TCGOp *op)
+     case INDEX_op_brcond:
+         remove_label_use(op, 3);
+         break;
+-    case INDEX_op_brcond2_i32:
+-        remove_label_use(op, 5);
+-        break;
+     default:
+         break;
+     }
+@@ -3664,9 +3650,6 @@ static void move_label_uses(TCGLabel *to, TCGLabel *from)
+         case INDEX_op_brcond:
+             op->args[3] = label_arg(to);
+             break;
+-        case INDEX_op_brcond2_i32:
+-            op->args[5] = label_arg(to);
+-            break;
+         default:
+             g_assert_not_reached();
+         }
+@@ -5285,9 +5268,6 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+     case INDEX_op_cmp_vec:
+         op_cond = op->args[3];
+         break;
+-    case INDEX_op_brcond2_i32:
+-        op_cond = op->args[4];
+-        break;
+     case INDEX_op_movcond:
+     case INDEX_op_setcond2_i32:
+     case INDEX_op_cmpsel_vec:
+@@ -5890,19 +5870,6 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+         break;
+ 
+ #if TCG_TARGET_REG_BITS == 32
+-    case INDEX_op_brcond2_i32:
+-        {
+-            const TCGOutOpBrcond2 *out = &outop_brcond2;
+-            TCGCond cond = new_args[4];
+-            TCGLabel *label = arg_label(new_args[5]);
 -
- cross-mips64el-system:
-   extends: .cross_system_build_job
-   needs:
+-            tcg_debug_assert(!const_args[0]);
+-            tcg_debug_assert(!const_args[1]);
+-            out->out(s, cond, new_args[0], new_args[1],
+-                     new_args[2], const_args[2],
+-                     new_args[3], const_args[3], label);
+-        }
+-        break;
+     case INDEX_op_setcond2_i32:
+         {
+             const TCGOutOpSetcond2 *out = &outop_setcond2;
+@@ -5915,7 +5882,6 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+         }
+         break;
+ #else
+-    case INDEX_op_brcond2_i32:
+     case INDEX_op_setcond2_i32:
+         g_assert_not_reached();
+ #endif
+diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
+index f26b837a30..10d5edb4ca 100644
+--- a/docs/devel/tcg-ops.rst
++++ b/docs/devel/tcg-ops.rst
+@@ -705,11 +705,6 @@ They are emitted as needed by inline functions within ``tcg-op.h``.
+ 
+ .. list-table::
+ 
+-   * - brcond2_i32 *t0_low*, *t0_high*, *t1_low*, *t1_high*, *cond*, *label*
+-
+-     - | Similar to brcond, except that the 64-bit values *t0* and *t1*
+-         are formed from two 32-bit arguments.
+-
+    * - setcond2_i32 *dest*, *t1_low*, *t1_high*, *t2_low*, *t2_high*, *cond*
+ 
+      - | Similar to setcond, except that the 64-bit values *t1* and *t2* are
+@@ -940,7 +935,7 @@ The target word size (``TCG_TARGET_REG_BITS``) is expected to be 32 bit or
+ 
+ On a 32 bit target, all 64 bit operations are converted to 32 bits.
+ A few specific operations must be implemented to allow it
+-(see brcond2_i32, setcond2_i32).
++(see setcond2_i32).
+ 
+ On a 64 bit target, the values are transferred between 32 and 64-bit
+ registers using the following ops:
+diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
+index 532f87262c..1756ffc59c 100644
+--- a/tcg/tci/tcg-target.c.inc
++++ b/tcg/tci/tcg-target.c.inc
+@@ -1047,23 +1047,6 @@ static const TCGOutOpMovcond outop_movcond = {
+     .out = tgen_movcond,
+ };
+ 
+-static void tgen_brcond2(TCGContext *s, TCGCond cond, TCGReg al, TCGReg ah,
+-                         TCGArg bl, bool const_bl,
+-                         TCGArg bh, bool const_bh, TCGLabel *l)
+-{
+-    tcg_out_op_rrrrrc(s, INDEX_op_setcond2_i32, TCG_REG_TMP,
+-                      al, ah, bl, bh, cond);
+-    tcg_out_op_rl(s, INDEX_op_brcond, TCG_REG_TMP, l);
+-}
+-
+-#if TCG_TARGET_REG_BITS != 32
+-__attribute__((unused))
+-#endif
+-static const TCGOutOpBrcond2 outop_brcond2 = {
+-    .base.static_constraint = C_O0_I4(r, r, r, r),
+-    .out = tgen_brcond2,
+-};
+-
+ static void tgen_setcond2(TCGContext *s, TCGCond cond, TCGReg ret,
+                           TCGReg al, TCGReg ah,
+                           TCGArg bl, bool const_bl,
 -- 
 2.43.0
 
