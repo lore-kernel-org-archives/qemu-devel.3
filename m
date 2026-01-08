@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E0ACF6ABC
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 09:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E97CF6ABC
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 09:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdmhX-0006ox-44; Thu, 08 Jan 2026 04:53:07 -0500
+	id 1vdmmF-000850-JM; Thu, 08 Jan 2026 04:57:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmhU-0006og-Lx
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:53:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmmE-00084r-RJ
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:57:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmhS-0003OX-GY
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:53:04 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmmD-0004AV-AL
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:57:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767865981;
+ s=mimecast20190719; t=1767866276;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6iAEi6+b7bJDK+thsNNc3DxtT0WAWpgLi7SoNplnUB0=;
- b=ZFjyGzoED6O0K67U0oKhRLmS2M4c1X8SQwR5o1NbFiO2U1prdW67lP+2OADAWneYtwlC0s
- SDm9TqPjQNANoHS92AzXwlV4hNzyKiMamDw6os2xT2O+jfRE5iiX1xdjLXqHuwKjG4ZUWG
- PU8Smwcq1nowQh6FC1foewfyhb/gbUI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8ozBYcaTQh+M3nATsqJ5ysW/UgDVM7knZ+0JKV686JA=;
+ b=KvMSFI0PZiSEQd+7Sj+Z6n8Esv8Xt7dO9bwxsVIS+wWRYiKrrNmjJnpDHjld3rbvnz4gdH
+ 6FvW4bRQDs59iAljnYnuoUUclXyw+LQX6JDE0RImczWHL7DLz1ktuSOiA96gdKQVty8P9Q
+ VgN1/GnxMg7U2OkKHPEPK3TjEBDVd58=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-673UMr3SMTyivWte2l9lLA-1; Thu, 08 Jan 2026 04:52:59 -0500
-X-MC-Unique: 673UMr3SMTyivWte2l9lLA-1
-X-Mimecast-MFC-AGG-ID: 673UMr3SMTyivWte2l9lLA_1767865978
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4325b81081aso2151666f8f.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 01:52:59 -0800 (PST)
+ us-mta-412-Bt2vuW3IN_WOChOnaRjYcA-1; Thu, 08 Jan 2026 04:57:55 -0500
+X-MC-Unique: Bt2vuW3IN_WOChOnaRjYcA-1
+X-Mimecast-MFC-AGG-ID: Bt2vuW3IN_WOChOnaRjYcA_1767866274
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-432c05971c6so1255948f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 01:57:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767865978; x=1768470778; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767866274; x=1768471074; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6iAEi6+b7bJDK+thsNNc3DxtT0WAWpgLi7SoNplnUB0=;
- b=YMxurSkfzg8tfv8kytHDj33i0IxoMp1SX0yWc9OjZJyJiQ4xYAtlBhHXK/71uy7Lc+
- MVNxt3AxP0pcBsmyksxJ/5a0El/TbRUREulRF5ssJ8m79A8OraUB+/303k6G2ipwVmC2
- EOiBDLv3TXVCXViI/lEWg3jph5RbPmtIQ5ZBFECQTPxm2wcD7R2b8g0oMzict9Wxah3t
- lyrPyVWB2WmUxWQQlSvc9+msBPtcJaC+soQijJp922ZGjCLVEnQifRhvkBaDi1onkHRz
- U3lYTj1SqOWULQxqTVXvyskKQIPLRYconCqGRIUlNxmSdtGAmSxClJmj4VRqXplbIC8H
- 3ULA==
+ bh=8ozBYcaTQh+M3nATsqJ5ysW/UgDVM7knZ+0JKV686JA=;
+ b=CJ5npvBms9v4/afnpjm8QvfU7dijsJcJ1qbd3jlRqM2Qs3mCzrumIHuxrZA+0/KjxG
+ G5u/Bg65tL0nYPXgHlsdaWxy+t4wowHAJjRqxWorXf+tH4fZBx8qOBeKgSUX0jKd1YQd
+ DkmAI1ZdpFrCshrxlpdPmxFhjnEBkK6Zn+libzuR8GUSI3TZq9uKD5kDHZUQ+e6sIB+D
+ onqCpfJsKHrERddrS+XjjGnwG7q6iaHPWFfji0a4byO+Q4NrVKmb/Pnsna0mIouTIYyw
+ ckHTLutJ9lBcbABsQpHnlNF7uql/vaaBFGIWBghW9/4q+AKXs1yzpUyN2dVRV2d/3piy
+ GBKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767865978; x=1768470778;
+ d=1e100.net; s=20230601; t=1767866274; x=1768471074;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6iAEi6+b7bJDK+thsNNc3DxtT0WAWpgLi7SoNplnUB0=;
- b=TTZV/Nvjkgq2I8e54JA03lCTXvYAsyCo3S312nccGXm+b0JecFGKUoGWO0kaut/MRe
- d28EWBBto5v+PRAq0ep0lq2OIKZzm1A+VPpGIreyr1PboYiy6iSDv1UV12SfavJWyTQh
- 29z/hFWdnpbrmd/JI8K+W/V/7Inybbevv9fd/LEe+4RJVHnOevYnbdThrXgpwpkS7L0f
- MyGmu4I6PoF0MkZQ+S0YEuj90bHXoN5q6zpPR4ASLKTg7l4ErhMMwChiamjfbICkDT55
- dyeRM8i5uh86R99m2axdnoE+KIHVGCMZEdDyRqefCeCTxyp7GNtGgALcDm1nSRz8cbnX
- R5qw==
+ bh=8ozBYcaTQh+M3nATsqJ5ysW/UgDVM7knZ+0JKV686JA=;
+ b=G5wYceQSBb0CoJ4XN+K9jYPt6rBm32/014njX3W8jNdyfG7ZynjcYfCWf43EcvqzFf
+ kCmGAVg2hHez4v+7NBjS8wKBI/SPG4b5Eu2n9gu/OVOAWlENpL3ncH4J61b/HCaweOxU
+ bHH8AYEV2M53puze0fXI2kRSl3DJ9gEvIsiIuh4odF4ZFg9rw5+0D2rW7K0G1TSusAsy
+ B8vVjzr96wHosGB+WYRRUPlq9VUrGvFv/ekj29z1cMcWt2IOxnqbVXuaZBT3I9nZjcaF
+ W/XHHA1DY3IDZ8HZ0DK8FR7CAHKFvR2xBcTXWragLJ2ioOHoBjX4mwfzI1zFw0XrbMUL
+ 4Xzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGF8AYNWNoKKZBSGe/CTycYGH4u6NshOTqn2i98o6sny1SVPs/jp3jgOkp4wdtPpdyZjh48XFeUO9m@nongnu.org
-X-Gm-Message-State: AOJu0Yy2qzDIR5nizYPCM2NaQaX1Qpj+I8UWEcmei/ZT+ax6gW/O7IDX
- zM1KNpZwYtM66teKwgK0LK7KnziVHz/yLbIGFsrjeglucNcoF3avxTiPACbWm6K//V6fi4JgId8
- lH9yWW0FF4Tgm+cSDXyqSrxiUm4QGerPMwzja6nEu+JXlYfHLiy59Zko+g4d0Bze3
-X-Gm-Gg: AY/fxX7jRT87N3UQT88I4NiGU4AmxbE7t7+8bQJD4aHnaz2o+/mLvuF+oc3kIeCZ+iP
- 6fFVcYCWoxQeQgLM1OxRMYVIZp/4gD7Ker+vKQuQ1KHkJKGge1rOUKLYQZAEG+/q9g1+1VWq1FV
- E5hNrJJRZDEcWow6GyLqx5AiTW1fao0Z/QK/+KiXgoxxQbnjgL0YEQXna+Y7iZ3UazTC3akrgsQ
- HwM4AzN3tWcXvnKWyM5+0mk/nZVwnQ9QFwdu2l5hgOZZCanVJ19fp54ogJpU74foG1EN60ThPbN
- 2PLn/IjXSQJ8KypjbJIsGwOpr7ljZzYrTnoVfZe5HxrqpYFcORWMWH05DTEID+7FWEQ4xWarlXX
- /RPBktAA=
-X-Received: by 2002:adf:fe8f:0:b0:430:f97a:6f43 with SMTP id
- ffacd0b85a97d-432c379f3c9mr6318953f8f.53.1767865978494; 
- Thu, 08 Jan 2026 01:52:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGvIZIWwLCFjsuRJ05k1OpRBC/ThbAqNRVPm+11RchNqI9DYXOijh75+X0eGsVsU4nrOsMXlA==
-X-Received: by 2002:adf:fe8f:0:b0:430:f97a:6f43 with SMTP id
- ffacd0b85a97d-432c379f3c9mr6318928f8f.53.1767865978110; 
- Thu, 08 Jan 2026 01:52:58 -0800 (PST)
+ AJvYcCXQIwIf6GXN1s1cyH1XAyDNA9OOHRFNJ876qjvOM04VYJ16965Sbmpua+1uy6n1yCoL1pcpeoVzsfjl@nongnu.org
+X-Gm-Message-State: AOJu0YzZM4W5TC4fXdzt2VcxG63BWWBEwJ1wXrPsvRfw6jWO/QpDicU2
+ xZXbfbdcZn5e8kxjO2R+AfRQMnZc3E/A9OXg/dW5rsyYkY8sA3CtW1OwidTx9eCLIhc/foUJHmk
+ /ug5YFjlApcQ03WgkP/DSMjvM2la0MvgMNRRghGk9l0ZCdMeHdavTm1n+qTV4L9EH
+X-Gm-Gg: AY/fxX7NMTbBsFrReDODSdWn0cPQdBNLwWJCiaru60MdOVn+LMDWGA+57RA8FIUAPCs
+ 4Aiy3JgZQzunXbCAXvoASFaQX9j+dFnQ6rDdGULcMb5ubGOhoGkevMicUaTeTN53PxHpjrdoHh9
+ 4luniIL7D80xkwbDDQESjJ9ev4t1VzQr9/YaYhnKL81GmmKAbd/xCAz2yBDAYBvXkAFlCohcPvh
+ XotWIxID88NDXDTcUYmVmGWliCfGnO3PtaqxCRGM7PexMxIrLBuTL83wkepiKTcguJ+T2YneFoD
+ CjyUS8/7py8XV/AUDHCnx0kplmwp1rxy9ERs0CQE5z339NwDmN14N9PObICwj5VjgUuODlIVDQG
+ hbGjAeHY=
+X-Received: by 2002:a05:6000:a88:b0:432:c0b8:ee42 with SMTP id
+ ffacd0b85a97d-432c0b8ef25mr7659577f8f.11.1767866273706; 
+ Thu, 08 Jan 2026 01:57:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFtEd+ifRilVsRx0W6T2oQvlVN1olr45AiFkLf/Tv8TNGKYjp2DMfki1haE9JXFHPgHjW9lxA==
+X-Received: by 2002:a05:6000:a88:b0:432:c0b8:ee42 with SMTP id
+ ffacd0b85a97d-432c0b8ef25mr7659565f8f.11.1767866273341; 
+ Thu, 08 Jan 2026 01:57:53 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0860f5sm15158847f8f.0.2026.01.08.01.52.57
+ ffacd0b85a97d-432bd0e180csm15162616f8f.10.2026.01.08.01.57.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 01:52:57 -0800 (PST)
-Message-ID: <27dc6f18-c4db-4f34-97eb-78987bc70edc@redhat.com>
-Date: Thu, 8 Jan 2026 10:52:56 +0100
+ Thu, 08 Jan 2026 01:57:53 -0800 (PST)
+Message-ID: <3b2fba2c-456c-4c8e-9f8f-3aa63aa9a0af@redhat.com>
+Date: Thu, 8 Jan 2026 10:57:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/50] host/include/x86_64/bufferiszero: Remove no SSE2
- fallback
+Subject: Re: [PATCH 06/50] *: Remove i386 host support
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-8-richard.henderson@linaro.org>
+ <20260108053018.626690-7-richard.henderson@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -138,17 +137,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260108053018.626690-8-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-7-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -167,34 +166,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/01/2026 06.29, Richard Henderson wrote:
-> Since x86_64 always has SSE2, we can remove the fallback
-> that was present for i686.
+> Move the files from host/include/i386 to host/include/x86_64,
+> replacing the stub headers that redirected to i386.
+> 
+> Remove linux-user/include/host/i386.
+> Remove common-user/host/i386.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   host/include/x86_64/host/bufferiszero.c.inc | 5 -----
->   1 file changed, 5 deletions(-)
-> 
-> diff --git a/host/include/x86_64/host/bufferiszero.c.inc b/host/include/x86_64/host/bufferiszero.c.inc
-> index 74ae98580f..7e9d896a8d 100644
-> --- a/host/include/x86_64/host/bufferiszero.c.inc
-> +++ b/host/include/x86_64/host/bufferiszero.c.inc
-> @@ -3,7 +3,6 @@
->    * buffer_is_zero acceleration, x86 version.
->    */
->   
-> -#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
->   #include <immintrin.h>
->   
->   /* Helper for preventing the compiler from reassociating
-> @@ -119,7 +118,3 @@ static unsigned best_accel(void)
->   #endif
->       return info & CPUINFO_SSE2 ? 1 : 0;
->   }
-> -
-> -#else
-> -# include "host/include/generic/host/bufferiszero.c.inc"
-> -#endif
+>   host/include/i386/host/cpuinfo.h            |  41 ------
+>   host/include/i386/host/crypto/aes-round.h   | 152 -------------------
+>   host/include/i386/host/crypto/clmul.h       |  29 ----
+>   host/include/x86_64/host/cpuinfo.h          |  42 +++++-
+>   host/include/x86_64/host/crypto/aes-round.h | 153 +++++++++++++++++++-
+>   host/include/x86_64/host/crypto/clmul.h     |  30 +++-
+>   linux-user/include/host/i386/host-signal.h  |  38 -----
+>   common-user/host/i386/safe-syscall.inc.S    | 127 ----------------
+>   host/include/i386/host/bufferiszero.c.inc   | 125 ----------------
+>   host/include/x86_64/host/bufferiszero.c.inc | 126 +++++++++++++++-
+>   10 files changed, 347 insertions(+), 516 deletions(-)
+>   delete mode 100644 host/include/i386/host/cpuinfo.h
+>   delete mode 100644 host/include/i386/host/crypto/aes-round.h
+>   delete mode 100644 host/include/i386/host/crypto/clmul.h
+>   delete mode 100644 linux-user/include/host/i386/host-signal.h
+>   delete mode 100644 common-user/host/i386/safe-syscall.inc.S
+>   delete mode 100644 host/include/i386/host/bufferiszero.c.inc
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
