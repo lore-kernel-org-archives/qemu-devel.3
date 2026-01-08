@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C22E5D1D463
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67461D1D461
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdr5y-00075D-WE; Thu, 08 Jan 2026 09:34:39 -0500
+	id 1vdr6B-0007DZ-Dd; Thu, 08 Jan 2026 09:34:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5q-000710-Q6
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:33 -0500
+ id 1vdr5v-000722-Gg
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:38 -0500
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5o-0000gI-1V
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:30 -0500
+ id 1vdr5t-0000hh-KR
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:34 -0500
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47d5e021a53so24563505e9.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:26 -0800 (PST)
+ 5b1f17b1804b1-477a219dbcaso27021955e9.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767882866; x=1768487666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767882870; x=1768487670; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/KVOlUvDlycuELIbU/nTcJH/sre0/0JiNhQLMY+dTJQ=;
- b=Y0G/a6s9bVo8awMVDkA/4gEmiSGYAYwEiw5uLNqsYQKRABJ/1u+cgLdbdXpeDgyBj9
- ui439s1DAwjhoKbCsxBCCdZwiNsXhSmLUfW3IrD64oLGwydK6Ye84P+tmr2lAZ1vpHVM
- uAJcXlKole2GP+/gb8HP5R3TRMQ8fp5Ic3XJOYOlhGyg1IvBRsOrG+bdm1bK5Pt0AJCd
- uXxxjQP9ujtjowymT2NdxxhE2dNqlfD5dR6q7QM0DMNqc0fTpeejhPic73ifvf49Ciwt
- jFw+jNjhjW3pAk3lAT3w+e/d4BBvktcHTn5gQkFmjHqyz+AO5TXjJKQvbHXQ85S6DWct
- qibw==
+ bh=jIBuc/mkbQabpqpdJIoXotFl/D1JCK+3Ji0AYvgjRGo=;
+ b=feYKpyncOSjWQgbNZEDUbr4+fJYTWJpDqocXnl606LQP6zZECIxtcch9zEtHv58bST
+ ypsYqPYnBzy3EJ5+FFMgtga2/ZUE6UrTdEB5BV2WTkAK7HSNX6DCfP5CqEwQBh62hChA
+ UWsOrPtZRJQlN2vMHcvcHIT3MJdB3dVkcsQxAd3oxrxNWKNgo2QUeE/wdVdW/sQaHNw7
+ rp3U0EFOcfpOVXIuguZJlCF4GRSFaiJQrAXP/nKueJhh+2rHEaPGRv1nQB/Q9Vj+Axxe
+ 6FCXOy6FwacV+AWlpMzXesO05oG+T4uIJQHN4tPoTiAIY5SSbnmMCaoNbAU6Q3i9jAh+
+ n+6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767882866; x=1768487666;
+ d=1e100.net; s=20230601; t=1767882870; x=1768487670;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/KVOlUvDlycuELIbU/nTcJH/sre0/0JiNhQLMY+dTJQ=;
- b=XV691YzLNtg6NXiPjtmNSGyjGWYxNi0TBZeL3vphlHo57AUjD600P3Oep0xjs0mrdS
- yUTiWC1Py5T9t9WV+JVFcekVmLdFCM2hH3oO6PHcwNcN4fnnUX3c83xGlpzmnYrMNTtv
- LIiTHL4gS6ZHkFhGUhPcnSMfSH2hQoqmEdRJaU9ENSHyU8MKaq55TCFLbhr3ow4NMQ4N
- HjCvXmYcmY8M6j/XqROpx1IMHhjFqEiFTD/kSNY8zVWGv+tQdGb/aN/T/cniN7icf/DT
- syevfyf2DUTX0X3RcEaKZGmoNQV2Orxd5OF8zBgMjJnnjwYcyZQ35LK3wjftA6pf61fW
- sFww==
-X-Gm-Message-State: AOJu0Yx5MRH1WfGnDIu23pWtf/bhBZ5crPjq7pO5aErFl49oJk5lipVx
- jkRbVWJOWkmH3xeScPSbHjGhHRGtsER1780KXzHdUNoeSfAk+A9wwtB5H/UajGjbF/s=
-X-Gm-Gg: AY/fxX7IlSFrYrfm8UlSf9ViR1d6Xm+sU1W8DkJP53g/a7Rltb8dgsjGfvfBWvobGA3
- d6BtiOsJmR/RLj1u6yQCQOmYkvXsXKuTbgtLFup/bP6saWgisKX3d0dSUsBfgrZFUycm+RtazDX
- E7+yEFaSg+U7v6hwX+lPVR9c5NY1X+YMuEVokXp/uE5GV2iqlz+8LB+3s7cfnOGxqhRecXiHre6
- vQ36eR19RjG/L6UQUN8T8Vp/29d4k0v+LGcHthMabwhqU9+ZrLtgebj8ZGrzdzBl9DTozDVrwlw
- qDC8nbWcd/Jf2UpIAYIxc/R0XC4pdWXokDoNwVxY2F3vtAvMoGA0qh4aJzFS/EjZUtVU0ViixLw
- COQMIPx8b7C4yCH4MXGiE/MwYAaNJdRI9g4tYyyLNOOFH2ruxCVIuw2NG3qH1so+Gll/m7gCG99
- ejh4muZ/8UAWQ=
-X-Google-Smtp-Source: AGHT+IFrigIMRj1Fu7UQDZqoA4+G8mVP/VMqzMDX7eqsu7W3FCGzgFfrtVM8wmwRw8nFA5cmiRpzNA==
-X-Received: by 2002:a05:6000:4284:b0:432:bc90:2cfa with SMTP id
- ffacd0b85a97d-432c374f5b2mr8866039f8f.33.1767882865561; 
- Thu, 08 Jan 2026 06:34:25 -0800 (PST)
+ bh=jIBuc/mkbQabpqpdJIoXotFl/D1JCK+3Ji0AYvgjRGo=;
+ b=pZenxUPqM2NeAb3GxC3DAxu/Syimri2+nCTmx2DkNBbq7vW23n8V/kIR6whw8BEpJQ
+ Se9CbnqlfK9FN8I8EzPR5Lj3fHnLKFO1vW+8VC8Kv84s2ktMYxR56CvbHhu/n1MffxmI
+ DN/XveDBXSVG5AwPeG9P9mLhcunKLihki2f0jGR4WU9nz4mwatTXh6l4+TotU0PRljhr
+ 1PbNgCb8posOmCcwEFzmFqXN5kQeDhf8FvrURtv8xTM5HiVLmYpYIqkoLI6k6ZcSd2r2
+ 56pY5hheBFfXJ/PNAwpGV4pYBIvf1j1zhaaf7BkfUQcK1OGJKYvSlIgHAArHkXyLtjU5
+ ysIQ==
+X-Gm-Message-State: AOJu0Ywwvx4zjwrkYFjcHdVZiLkkGrdR4od+f91IjXmNmSsBXN6ag1Bd
+ i1j2CLjEKOJ5/3jU4cBCYetttq8D4JS6JhkuJ93ADjf3miizUNv1eoRg4j4rP5Z4DZo=
+X-Gm-Gg: AY/fxX74UPpIm1hCf2egxaQURDa3LuivRW58TXQav6jJtsYclD84s+yP7yz6QMoUp5I
+ ddP7raeM2z0UAFnQU9MJHIN+HVIl+RHrcN5TpS4iPbk7mfrRkO1ZKGaQ5Ue7vfGkGMKmCAHwjNq
+ uUm0BCcJK0loSHOJn/JetP8TQxioHEtgBh522IqqncE4Pc1A4JKw3ky5QLh9wtDyvcpqWRCePCD
+ 3xb8f+i9AqMUTAt9o02b/gF1j6I1x8MPZWR8AsiR68kIAU9MgmnUKJzAmDOMuE2LC3nCqWGI6Eo
+ uyRN5ijUV7vJHLo1pGQAaHPtgIzatiXS4HyBh6YYujUSMlBJcFgc3YzNMY/r2XEtkDN6i1sErmp
+ ATNnt0lNP9rRSfI4okH5bxiI5bQucUoC2NNLSbVuTN8SL37X8fPVjjWObuLi09L9OewjrQKPNqb
+ v2piSqAgJwL0E=
+X-Google-Smtp-Source: AGHT+IEYWVBCrSY/JFej/cH3QHt7HU4nTfQ1442Rqd9guEJxuXvZ3FOOtY3PLbbYmA2SO9ig+kmt0Q==
+X-Received: by 2002:a05:600c:444f:b0:477:df3:1453 with SMTP id
+ 5b1f17b1804b1-47d8a177307mr34722715e9.28.1767882869557; 
+ Thu, 08 Jan 2026 06:34:29 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5feaf8sm16663691f8f.39.2026.01.08.06.34.24
+ 5b1f17b1804b1-47d7f68f686sm155235405e9.3.2026.01.08.06.34.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 06:34:24 -0800 (PST)
+ Thu, 08 Jan 2026 06:34:27 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0C5A15F8DF;
+ by draig.lan (Postfix) with ESMTP id A84B85FA2E;
  Thu, 08 Jan 2026 14:34:24 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,9 +80,9 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>,
  Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 02/12] target/m68k: introduce env->reset_pc
-Date: Thu,  8 Jan 2026 14:34:13 +0000
-Message-ID: <20260108143423.1378674-3-alex.bennee@linaro.org>
+Subject: [RFC PATCH 09/12] hw/mips: drop cpu_reset in mips_cpu_realizefn
+Date: Thu,  8 Jan 2026 14:34:20 +0000
+Message-ID: <20260108143423.1378674-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260108143423.1378674-1-alex.bennee@linaro.org>
 References: <20260108143423.1378674-1-alex.bennee@linaro.org>
@@ -113,28 +113,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To transition CPUs to use the multi-phase resettable logic we need to
-stash some information for the reset handlers. Arm does this with
-arm_boot_info but for m68k all we really need is the PC we should
-reset to.
+We will always do a cpu_reset during mips_cpu_reset_hold().
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/m68k/cpu.h | 1 +
- 1 file changed, 1 insertion(+)
+ target/mips/cpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index d9db6a486a8..fda015c4b7b 100644
---- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -155,6 +155,7 @@ typedef struct CPUArchState {
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index f74a9d5f615..e61497c0f6b 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -485,7 +485,6 @@ static void mips_cpu_realizefn(DeviceState *dev, Error **errp)
+     fpu_init(env, env->cpu_model);
+     mvp_init(env);
  
-     /* Fields from here on are preserved across CPU reset. */
-     uint64_t features;
-+    uint32_t reset_pc;
- } CPUM68KState;
+-    cpu_reset(cs);
+     qemu_init_vcpu(cs);
  
- /*
+     mcc->parent_realize(dev, errp);
 -- 
 2.47.3
 
