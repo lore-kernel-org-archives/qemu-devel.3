@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C918D1D480
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 16:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 217C0D1D478
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 16:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdsdF-0007kK-Ie; Thu, 08 Jan 2026 11:13:05 -0500
+	id 1vdscs-0006KQ-T1; Thu, 08 Jan 2026 11:12:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdsd9-000700-GB
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:12:59 -0500
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdscl-0005r3-8W
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:12:35 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdsd5-0002vu-Qf
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:12:58 -0500
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-4779adb38d3so23774095e9.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 08:12:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdscj-0002q8-Od
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:12:35 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6c56so31739715e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 08:12:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767888773; x=1768493573; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767888751; x=1768493551; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3PK+zL9VijewfOEn/KKAzudCPx9ckXj3dsbGsolAKk8=;
- b=sxYGZz3TpXzmAYOlXNnePii6DEfK9oIOruY488LE95ngqmH78ycOS0VmqUCbEDJO4b
- bkjpvyjO0bs+dgDXrhGCKDNMieBsim/r+dqiLnIh4MOjFgCrLhNIS//wlCyPpL8rR0Tb
- qtUeZ530QsbSNbBh5liNyU2Cb9cYT4JGP1m5+v5Se/RxxXnjiJKDTlPM4kvMyU3TCjU8
- 2IuOFEitKfG8qmNh2cg3gM/DuqoEBbv8mHkKFm6U37EWfPycxhCeGshVi8WrHmWxUIhv
- g1wIJNSRwno6Yy3db8xVzyf0UtUpGZirR4abL7aC2MzaLyvit6rn/lSSDnxlCQTMujpM
- 2+kg==
+ bh=ll5Z0TF4oGkzy7B80cNHq3j/2a/mLD66y7IXpt23arc=;
+ b=SS7LUIxIKC+LstP7IOa0bqRr3gXkJ4Wp42R1c1G3KzDIoVH55L+NxVFbyGVZ/NvAnM
+ rK1LA3CkPbyAlRetl+k51TYsazjd2eS+wRK2Ww6IAjYoMmNFLqyDM4JfzjGMIIlZo1AT
+ f9t86DcZXeMVmMM7Y5Wbjy+/gY394qd6HfuqS5PkbsWDYmgrlj7Sg5a2i46xK7bYTnXF
+ R6dJd/+yoqVInHohKLOx79YgMYhONVPxTQjjbOlQJ/lgqCj+pzXrc/I6zwAJIisXFOE/
+ 37I5+tgBOJUrN45Pj26cWKU1wp7fL+/ohhCWdamBy+9mPFgFG7kx1oaIIJ0IImx060a0
+ 1Suw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767888773; x=1768493573;
+ d=1e100.net; s=20230601; t=1767888751; x=1768493551;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3PK+zL9VijewfOEn/KKAzudCPx9ckXj3dsbGsolAKk8=;
- b=uTfte2ehGNcOetYO5OnvGVoncsv6AYVXac7fVbg0ttKa9fd2VL8ldqKhtPmJ0/kDpE
- j8VH1OEX1MlxLBUE6Wy4QT2ztCcyMVUbiK6OatJzIQwfHAwH4H1F0OOhzsOHXp+Ag8M5
- TKPLwhYYiX10YWhE2k58hm3Eet0TEUkzNwPoYHSBVZ8U3vwecqO2hVhKV40XNjy0x27j
- /B5DidwNCbIx07aL12H7DySwcMzCS14oU/YbPYay8MdWPhEAg1eNuj/p7Of79UALsumR
- jjnYcBipkVWETBGZlQFQnVE+clmQOWDpix0dDzovc6wKL68wdh6OwgcVvMkDaHRkgkkt
- DK3g==
-X-Gm-Message-State: AOJu0YygJgZ4IS3EdOYLjAp8gdp41FdbX7/PCNgf/zcCNepDk3D/N4Ez
- I0Tr47redi9tTgiMChYO0aIHtQAuOEp5dIBh0R0UNjD19CvUo9smfAxfKPMRKzn9O1p0ZX/3N5/
- darukdE4=
-X-Gm-Gg: AY/fxX4/JXUKUIVBxMlJ6URncZelz1rRTRKH4Mlf0SgTXpfjx0AHH7ZUQdnON43elPx
- 5o7K4SY1oakTYSPNgoE0XKhLbyICn77IgOw+CIxEd3vZ0QddLQ8N7SKorPcs60KuR6pjK8t1Io0
- 4WRZbBxgHQEMLDyAr5+Gf7kyMFlW5Dm764gI6JTloRjRkRuU1jYgpjCuN17QED1DEpVXqZtuw4k
- Smpte+MD80W3wwJl2E8xdvrzcYp5uXxpBYkbshFb322RdevCht73D1niqmYODKc3hErZhvqSrGb
- kHFXVHFZSL+m5hpqUk0DUdFPwHyZFP+ZyKtYAzoevomGKOuS1BqjKGdZEDilv0gUC0Q1/JxzZUe
- ssh8Q7VqAMYGSi01GqwstySt4We3jOnrVhBTLjqGclPumjb5wcVdVY7wFue32ZBOeut8upTl92A
- vmLjYZIlqPS3eNuLxGn4RHK9LcWj8tex9aziTinvVQ1RQ31tG3Ujc+fdlwfkvb
-X-Google-Smtp-Source: AGHT+IGQKi2Xh4akMjOmnIdNPDmoNJbrSgOUjVVEkZMWj28ZHTLugqlvxnfjzKNAeqPOHExakGxqdw==
-X-Received: by 2002:a05:600c:8b09:b0:458:a7fa:211d with SMTP id
- 5b1f17b1804b1-47d8f284036mr10302735e9.29.1767888773044; 
- Thu, 08 Jan 2026 08:12:53 -0800 (PST)
+ bh=ll5Z0TF4oGkzy7B80cNHq3j/2a/mLD66y7IXpt23arc=;
+ b=c4fDhxTQDMFjcAVbZUmofLBdYy39H/JGmgbSvhBa06pZ0pf/b0qIAkxjtV1N1TMKKz
+ sAxBMKeV/J6zEHzn8YhZQqFxT+AN4mcrVam8ofoATCs4A61ERny0Mqktcu6UgWG+ceyh
+ iHOp5Ai94NcRRx/pYtwO2A/LOMMGT1wcMle+AL3Cz2ET9l6cAL27eM5j5VwIcIjmzxuD
+ fYtUawPZNMJCD4yqlhYv7egWSgVJaosmJxeinQhGKR9akS4XpHcWuoQFixijFvhekDwg
+ +9ahNg4ZRGITo8zXJ9WZ84RdoW483Sn3b5Ql4m/jwOeYfKDkjR7IrdShTaTMeOn47aqM
+ JtPw==
+X-Gm-Message-State: AOJu0YxsqAp8ZYInSDunGeFFUsoETaCKweDP588bIXobhwZWzUoxnkTb
+ HMWJ9cHZz9RF928bkNOaLvJgTSC5RM7cQ4KYB8BqRxF7XFnT2z3S6Sr4dO/a71Z+YytjANuFLz0
+ vcAGZlxU=
+X-Gm-Gg: AY/fxX6eNx4rxQMaVB2zi3Lqco8ZqBOsExxS2oJbHiPZxHyDCkoZhG4vyyq0BGg7nXM
+ oBWd4yf0Zl8vGd9AtuJ3RHwIgc3KZbAu0KYvqSqwlF6wdwnzSVwwV1M2+bQy4DboqMbWrWs4Rgg
+ 1eU2+1ieJaCpGQSyWfcWnd4kbi0gS4/fK+M1mq47GKJIuDjNxa5ZZVRNV7X1HeD5fxa2vkhhIss
+ 9kCXnyyPFyruaZIj/xs+52bWoX00dpe5OU9CryDlRA+oc3YDP6aygnYmB7+dA5QeYE4LsOtd7XG
+ 0zN7vePptJ8uMu0/HL3+mYOhfcgJs1igNOEix3MAACJe+RI8YO3zjmlU0YRWyaX0L2tiPgTBKcM
+ 50m6wLh+5MDeJxfu2wdN/loihwGRpPEnywLZ0xZLFFRUjvpI6rPaYmDbivkSakZwCsI3Q1YP7Ux
+ wbKOgP19M1xUAmaCuoTAuz5lN4iT6BTybymK8LEtZzRdBbkSCuv2HPGXv86adK
+X-Google-Smtp-Source: AGHT+IHFGXc4mukeq5RNPsADO6B35bkk+ZyfOOFCLxPjoaE1cnugpKhlWv4bO9VyYsbnMwirST0N7g==
+X-Received: by 2002:a05:600c:190e:b0:477:9aeb:6a8f with SMTP id
+ 5b1f17b1804b1-47d84b1faffmr84855705e9.9.1767888750917; 
+ Thu, 08 Jan 2026 08:12:30 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0dadcfsm17075386f8f.3.2026.01.08.08.12.52
+ 5b1f17b1804b1-47d7f41f5e0sm155546005e9.8.2026.01.08.08.12.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 08 Jan 2026 08:12:52 -0800 (PST)
+ Thu, 08 Jan 2026 08:12:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>,
@@ -71,18 +71,19 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Nikolai Barybin <nikolai.barybin@virtuozzo.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 4/4] dump: Build stubs once for non-x86 targets
-Date: Thu,  8 Jan 2026 17:12:19 +0100
-Message-ID: <20260108161220.15146-5-philmd@linaro.org>
+Subject: [PATCH v2 1/4] dump: enhance dump_state_prepare fd initialization
+Date: Thu,  8 Jan 2026 17:12:16 +0100
+Message-ID: <20260108161220.15146-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260108161220.15146-1-philmd@linaro.org>
 References: <20260108161220.15146-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,126 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than compiling the same content for all targets (unused
-most of the time, i.e. qemu-system-avr ...), extract the non
-x86 specific parts to a stub file and build it once for all
-non-x86 targets.
-Add a Kconfig symbol to only select the target-specific file
-with the x86 target (rename this file with '-x86' suffix).
+From: Nikolai Barybin <nikolai.barybin@virtuozzo.com>
 
+Initializing descriptor with zero is unsafe: during cleanup we risk to
+unconditional close of fd == 0 in case dump state wasn't fully
+initialized. Thus, let's init fd with -1 value and check its value
+before closing it.
+
+Signed-off-by: Nikolai Barybin <nikolai.barybin@virtuozzo.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250911123656.413160-2-nikolai.barybin@virtuozzo.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- dump/win_dump-stubs.c               | 21 +++++++++++++++++++++
- dump/{win_dump.c => win_dump-x86.c} | 20 +-------------------
- Kconfig                             |  1 +
- dump/Kconfig                        |  4 ++++
- dump/meson.build                    |  3 ++-
- 5 files changed, 29 insertions(+), 20 deletions(-)
- create mode 100644 dump/win_dump-stubs.c
- rename dump/{win_dump.c => win_dump-x86.c} (97%)
- create mode 100644 dump/Kconfig
+ dump/dump.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/dump/win_dump-stubs.c b/dump/win_dump-stubs.c
-new file mode 100644
-index 00000000000..07d1a0c5ea9
---- /dev/null
-+++ b/dump/win_dump-stubs.c
-@@ -0,0 +1,21 @@
-+/*
-+ * Windows crashdump stubs
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "win_dump.h"
-+
-+bool win_dump_available(DumpState *s, Error **errp)
-+{
-+    error_setg(errp, "x86-64 Windows guest dump not built-in");
-+
-+    return false;
-+}
-+
-+void create_win_dump(DumpState *s, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/dump/win_dump.c b/dump/win_dump-x86.c
-similarity index 97%
-rename from dump/win_dump.c
-rename to dump/win_dump-x86.c
-index e5fdc12ad34..4f8bcc356fc 100644
---- a/dump/win_dump.c
-+++ b/dump/win_dump-x86.c
-@@ -1,5 +1,5 @@
- /*
-- * Windows crashdump (target specific implementations)
-+ * Windows crashdump (x86 specific implementations)
-  *
-  * Copyright (c) 2018 Virtuozzo International GmbH
-  *
-@@ -18,8 +18,6 @@
- #include "win_dump.h"
- #include "cpu.h"
+diff --git a/dump/dump.c b/dump/dump.c
+index f7a99a7af2e..016a7d7b970 100644
+--- a/dump/dump.c
++++ b/dump/dump.c
+@@ -104,7 +104,10 @@ static int dump_cleanup(DumpState *s)
  
--#if defined(TARGET_X86_64)
--
- static bool check_header(WinDumpHeader *h, bool *x64, Error **errp);
+     guest_phys_blocks_free(&s->guest_phys_blocks);
+     memory_mapping_list_free(&s->list);
+-    close(s->fd);
++    if (s->fd != -1) {
++        close(s->fd);
++    }
++    s->fd = -1;
+     g_free(s->guest_note);
+     g_clear_pointer(&s->string_table_buf, g_array_unref);
+     s->guest_note = NULL;
+@@ -1709,8 +1712,8 @@ static DumpState dump_state_global = { .status = DUMP_STATUS_NONE };
  
- bool win_dump_available(DumpState *s, Error **errp)
-@@ -494,19 +492,3 @@ out_free:
- out_cr3:
-     first_x86_cpu->env.cr[3] = saved_cr3;
+ static void dump_state_prepare(DumpState *s)
+ {
+-    /* zero the struct, setting status to active */
+-    *s = (DumpState) { .status = DUMP_STATUS_ACTIVE };
++    /* zero the struct, setting status to active and fd to -1 */
++    *s = (DumpState) { .fd = -1, .status = DUMP_STATUS_ACTIVE };
  }
--
--#else /* !TARGET_X86_64 */
--
--bool win_dump_available(DumpState *s, Error **errp)
--{
--    error_setg(errp, "Windows dump is only available for x86-64");
--
--    return false;
--}
--
--void create_win_dump(DumpState *s, Error **errp)
--{
--    g_assert_not_reached();
--}
--
--#endif
-diff --git a/Kconfig b/Kconfig
-index 63ca7f46df7..26388c12838 100644
---- a/Kconfig
-+++ b/Kconfig
-@@ -1,6 +1,7 @@
- source Kconfig.host
- source backends/Kconfig
- source accel/Kconfig
-+source dump/Kconfig
- source target/Kconfig
- source hw/Kconfig
- source semihosting/Kconfig
-diff --git a/dump/Kconfig b/dump/Kconfig
-new file mode 100644
-index 00000000000..99f99ff4a4f
---- /dev/null
-+++ b/dump/Kconfig
-@@ -0,0 +1,4 @@
-+config WINDUMP
-+    bool
-+    default y if I386
-+    depends on I386
-diff --git a/dump/meson.build b/dump/meson.build
-index 4277ce9328a..26e1561ed48 100644
---- a/dump/meson.build
-+++ b/dump/meson.build
-@@ -1,2 +1,3 @@
- system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
--specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: files('win_dump.c'))
-+specific_ss.add(when: 'CONFIG_WINDUMP', if_true: files('win_dump-x86.c'))
-+system_ss.add(when: 'CONFIG_WINDUMP', if_false: files('win_dump-stubs.c'))
+ 
+ bool qemu_system_dump_in_progress(void)
 -- 
 2.52.0
 
