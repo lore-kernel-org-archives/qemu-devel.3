@@ -4,151 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12E3D1D46A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 437B8D1D475
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdrju-0000Dm-7Z; Thu, 08 Jan 2026 10:15:54 -0500
+	id 1vdrl1-0000i3-7S; Thu, 08 Jan 2026 10:17:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vdrjp-0000Cb-Ol
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:15:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vdrjn-00033x-Iu
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:15:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767885345;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mTFK/zGjf96JqQXGTDkWieXJ16Vk4rooWLMwnkM5sbo=;
- b=HygbCKaCRcYknwsOmAhOZobfQRs7aJvyRW/PYw1Yd6AEwYJa0v0zyIpHgbSPfpyFTTe4z9
- X29gG1CoaXDpSP2LPw4pRnIGJrhxnjoFBg5JwfNZAaNIgYRSOlT+qgfXvx38Va29k0Teo8
- v7CRKRQBHDPT97t/zj/tBN8rU/R635Y=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-5KWLAnb7OaCXXEEddwQb_A-1; Thu, 08 Jan 2026 10:15:43 -0500
-X-MC-Unique: 5KWLAnb7OaCXXEEddwQb_A-1
-X-Mimecast-MFC-AGG-ID: 5KWLAnb7OaCXXEEddwQb_A_1767885342
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-64db7bc9921so6125003a12.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:15:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vdrky-0000aU-Aq
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:00 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vdrkw-0003Fb-88
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:00 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7b9387df58cso3573632b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:16:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767885342; x=1768490142; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mTFK/zGjf96JqQXGTDkWieXJ16Vk4rooWLMwnkM5sbo=;
- b=KcdVNW1Fo2N0OlWJ7rSE3VFbjSk9KWm8kK+w0A/phrWP/a+ti0gYYWdHM+DB5V4V9b
- I+focvQ1iYIxoifIXxHi1FdN32T6wfbMRpB9EGCqvt3aPbtIOkwq6RqVkiJFzGobV2b4
- lwfvIDJC0XNMwBUEfM30Cvz0jDAvUtzQ2j7yG83FUZy/ZmqYs6xg1Sgc/+b6U2hq7eH0
- apFyG8BukcxEBNGNOMZ3llg/aWJvDuBTBfoW6UjJ9NKdgmVpJC5yN2gZ4basU5KuYYRr
- wLHS8V8V24R9/IDO5vihpnP7Se5Evd6eKkEXcGI/HFkZ1ReBPwLRUxMByV1H3BAMxzdg
- kDHA==
+ d=sifive.com; s=google; t=1767885416; x=1768490216; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=W70TEI13sFZN3wMttx5Ga5KvzSN37elQyVYzPJvoqAM=;
+ b=h+1wEdPIKr7pkLPWOeAN6SjjdCumSR8t7p9lK3xIDPS24PZJKOhTqXnSnLimRCbZ2P
+ rPnQQSjPGpOi4fIRrU/mAlGXXpGhCYBQ+GFePF1SobRXULE0TBucXc4WK4L0ENEJRPgn
+ qH1oJhlgkJfjAAxfwUhxM106J44mBfEmwqS9KKIOM03ztB+1pddG1XET0nf235exoet8
+ H2Q4fFtprOANSp1uTMHyyi+bDTVjGZQiSIaf6HrzucdR44nSBGyWe841/FU7glw1KSFC
+ m9YbF9+Pk84sa3ju0zYG63mH+r15uTu9gXY0A5nDOY1gaOeHczb/Xm3cICWyLn5XKY4E
+ Sfxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767885342; x=1768490142;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1767885416; x=1768490216;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mTFK/zGjf96JqQXGTDkWieXJ16Vk4rooWLMwnkM5sbo=;
- b=GrGETcHAf8qZon7tblwjgJlLLytObTZWKukjmFB312ENVJJWk65LA8fRpTuUZoJu1O
- 75Exh6gKmuZpEnkWL/N+XMjICCtmw1SHhXMSO0O3/8YrXKDay3+UhoM7KCBXIRoZdwkO
- 6IAarsKgDiLyMc2YWU0CSLPnvnumyomZoGLPFsKEX22ovW6OB9SIDtlGVSWRk8OfZblZ
- LDoTtu3Dm7CtMX/1EgEDJD+wVxOEuu2cxa5yHRN6LsanXEDFn84ilPH1OFfI4HnGA34O
- T8eguMRemOn5JsnY0w1xObJFKlcpqBfekIFmC+uFDL9oWmQFYn3OA6WutcApkU+KuSvX
- WVvA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUlMVOJublGRnmd7qJWvs9dJQcf/yVG3Ccekv/+uVFB8TR+ahfdQLVyYWKyai+WOvi2KoVQgkfusD/Z@nongnu.org
-X-Gm-Message-State: AOJu0YzW4aN28K2QoceJJgW8mkyGErzM0BRpYeaoJfzpZV8blF7uJ7Cx
- SDiEp7nJOl4mOdvf6z3kDMasA34SLFaNO9jLUyhazezRBzqaJf84chudKBMZuh+IBYXWR1CfF0Q
- wx7puF+o4J80MMLB53cZum8yNlXlflimqsJxZlE+dS7BfmWakirB2sSIQ
-X-Gm-Gg: AY/fxX5C5CH5exYKT51pMuPnBgpnQfim18drIfSBAcYHmVxy+uAD1RzRAr8zatoqoLB
- HQRz09nFxBeVPNE2KHz9RCy9QCTeXCEeKylNNEI1+UamG0VO5ZUOwGX7p8WHXJJ1pxxjZeYtUZw
- kZ2sbmogR97sTf7mfjvNpi0wAQNnYFt7StAibp/vxhJ2K0R8n7fnv6l97pqgAwEYp7xZVQUc/jK
- n4OwZQqCVinS3glLK4CnBDnftpu1FdKy4pI4BEUAfMz+kI5NxwC9rzmySv1i+ZR+92uEqyXKUla
- aa2iyPyTFTI7ZDa0kc77QxPU68naiqFhkolIG2IbfRoX8xGIvWHfKX5n/17qmjAk8Gu2825rxeG
- flrYpTzyEjBlE6ghKYqupDa3WAZcYDa7DKCrAPJ/Wx6cCMXns/lZxr6OzYqvGiQbln4e68mhQ39
- RhpekFgKYwuX0=
-X-Received: by 2002:a17:906:4fc9:b0:b79:ecb0:db74 with SMTP id
- a640c23a62f3a-b844540607dmr667842166b.59.1767885341948; 
- Thu, 08 Jan 2026 07:15:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF4C5pLM/KeLxHB/T9VSPlHVnCV16pCrOHeogApUnGMq6/YaQLCsGOT+55qE+xtsdH1DzSPYQ==
-X-Received: by 2002:a17:906:4fc9:b0:b79:ecb0:db74 with SMTP id
- a640c23a62f3a-b844540607dmr667839966b.59.1767885341523; 
- Thu, 08 Jan 2026 07:15:41 -0800 (PST)
-Received: from [192.168.1.84] ([93.56.161.93])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b842a2ab77bsm869146366b.25.2026.01.08.07.15.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 07:15:40 -0800 (PST)
-Message-ID: <56548949-8afd-4bcc-b539-bfb1a28c3987@redhat.com>
-Date: Thu, 8 Jan 2026 16:15:38 +0100
+ bh=W70TEI13sFZN3wMttx5Ga5KvzSN37elQyVYzPJvoqAM=;
+ b=aWksc6H4OzGGiyjHGajxP2pq3U5hWO4yEdgB2N3zFv3AvM2giRIQyXVp/OVby7nxro
+ ah5DrDtLWFE96B1SP2vTxEmTDANuXclFK6URDPl8dZTQtUEFYYjoFJmjAPsZ/s1Pkmep
+ yXljivgM9Erd+AO9HRJ6EVyk2MhmgvRH3hVYqSpkJlD4JKllVvfvsfkF7tYREVv6r/uw
+ 8vPWz4GAs0Bl5N3UrC5FGqpbXRoznllpUAoK7FihqumuctRDVAC/FSbm0P+Vhwv0xUrI
+ hKRMqNAVa+b43OJSaF6so6mNA1FDkhuEo04rmTrI6FEO2Fi/XFh0AqdB4jaSAXex56kn
+ vF4A==
+X-Gm-Message-State: AOJu0Yz9RfgExN2DpCEo2TZuV9aBUID0UUUIpDpYzl3gyYgI5j/AkklS
+ HECprIyRBW7prqY9EX/xjCinluq9mOmZ/uxO3wpTH99KFAsYfeb22fO4tJh3tyiBvizj+e2ubaa
+ Xh4o3T7PF0M87/jkLe/L94+S0iVI3/J8c1KqHzLvT92ltQ2yowYN60LvMmPl8SvmbW/+MPCSaaJ
+ XpufURxBhpgNFfYCXfAGtC5hAOuoIQG+wp5W96Dpo=
+X-Gm-Gg: AY/fxX7n5GkEdUdTj/PvlSJKglQk5egO0C7TjBukGgwzw+8PMB1K71vBT8tjJGs+gfj
+ YEQbjiPvhs1UXLEWN8cFY8crLLTTsyjqD+0/gWuy+AFvSdS3vMF1uhe11qAAU5v6eafYl/+IwPz
+ yMntI0Mogfynl8fRdHuacTqSSRRmIAjphdDt0fTYGU4u5pu1dIMycFTGROsu5BQuwc9xwrcXr8i
+ he57pziP+q0yRWWONnPj422bGFoOTvJrXKJkYG31EHAtQlWpjLbVczme4PB6SugMZG87E3g3vrC
+ iqJ3AU0V5o2sR8j9RdERGTsbwM5KutWq6FH3uJvZ3lgHDL0bpHB6JZHg3lsPFpEUYjPST8egpW6
+ gQ8LO/lp/a8wXzj52VJZYIIZ4aRr8R+I+Yg0VbEpht/HxFbRBWTNY6xjMyw6lRxtYsQsBH1VwXJ
+ qAIi3bUnlRMBfpK7xthogQiz5YpeNOQWB3u5EscBfS9NCuLGiWYcSOrb0=
+X-Google-Smtp-Source: AGHT+IEBKu1MN/dSTWgjXQpght8xOwQZLaHo3Uue5okacR4xQ/nUuhlm0GOdZMHvDBCQ6CI92qi7EA==
+X-Received: by 2002:a05:6a00:770f:b0:81c:4a92:25a2 with SMTP id
+ d2e1a72fcca58-81c4a922872mr3283597b3a.46.1767885416062; 
+ Thu, 08 Jan 2026 07:16:56 -0800 (PST)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-81d87955bb6sm1060239b3a.50.2026.01.08.07.16.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Jan 2026 07:16:55 -0800 (PST)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH 00/18] Add OCP FP8/FP4 and RISC-V Zvfofp8min/Zvfofp4min
+ extension support
+Date: Thu,  8 Jan 2026 23:16:31 +0800
+Message-ID: <20260108151650.16329-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: disable libatomic with GCC >= 16
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260108141407.2151817-1-berrange@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260108141407.2151817-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,57 +108,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 15:14, Daniel P. Berrangé wrote:
-> Historically it was required to ask for libatomic explicitly with
-> -latomic, but with GCC >= 16 apps will get linked to libatomic
-> whether they ask for it or not.
-> 
-> This invalidates QEMU's check for atomic op support for int128
-> which explicitly does NOT want to use the libatomic impl. As a
-> result with GCC >= 16, QEMU is now getting linked to libatomic
-> and is activating CONFIG_ATOMIC128. This in turn exposes a bug
-> in GCC's libatomic.a static buld which is incompatible with the
-> use of -static-pie leading to build failures like:
-> 
->      /usr/bin/ld: /usr/lib/gcc/x86_64-redhat-linux/16/libatomic.a(cas_16_.o): relocation R_X86_64_32 against hidden symbol `libat_compare_exchange_16_i1' can not be used when making a PIE object
->      /usr/bin/ld: failed to set dynamic section sizes: bad value
-> collect2: error: ld returned 1 exit status
-> 
-> The newly introduced -fno-link-libatomic flag can be used to
-> disable the new automatic linking of libatomic. Setting this in
-> qemu_isa_flags early on ensures that the check for CONFIG_ATOMIC128
-> still works correctly.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   meson.build | 9 +++++++++
->   1 file changed, 9 insertions(+)
-> 
-> diff --git a/meson.build b/meson.build
-> index db87358d62..56df08c10e 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -445,6 +445,15 @@ if host_arch in ['i386', 'x86_64']
->     endif
->   endif
->   
-> +# GCC >= 16 automatically tries to link libatomic for all programs.
-> +#
-> +# QEMU explicitly does NOT want to use libatomic for int128 types.
-> +#
-> +# Later checks assume we won't get atomic ops for int128 without
-> +# explicitly asking for -latomic, so we must disable GCC's new
-> +# automatic linking with the new -fno-link-libatomic flag
-> +qemu_isa_flags += cc.get_supported_arguments('-fno-link-libatomic')
-> +
->   qemu_common_flags = qemu_isa_flags + qemu_common_flags
->   
->   if get_option('prefer_static')
+This patchset adds support for the OCP (Open Compute Project) 8-bit and
+4-bit floating-point formats, along with the RISC-V Zvfofp8min and
+Zvfofp4min vector extensions that provide conversion operations for
+these formats.
 
-Great. :/  Is there a bug reported for the -static-pie issue?
+OCP Floating-Point Formats
+* The OCP FP8 specification defines two 8-bit floating-point formats:
+  - E4M3: 4-bit exponent, 3-bit mantissa
+    * No infinity representation; only 0x7f and 0xff are NaN
+  - E5M2: 5-bit exponent, 2-bit mantissa
+    * IEEE-like format with infinity representation
+    * Multiple NaN encodings supported
+* The OCP FP4 specification defines the E2M1 format:
+  - E2M1: 2-bit exponent, 1-bit mantissa
+    * No NaN representation
 
-Acked-by: Paolo Bonzini <pbonzini@redhat.com>
+RISC-V ISA Extensions
+* Zvfofp8min (Version 0.2.1):
+  The Zvfofp8min extension provides minimal vector conversion support
+  for OFP8 formats. It requires the Zve32f extension and leverages the
+  altfmt field in the VTYPE CSR (introduced by Zvfbfa) to select between
+  E4M3 (altfmt=0) and E5M2 (altfmt=1) formats.
+  - Canonical NaN for both E4M3 and E5M2 is 0x7f
+  - All NaNs are treated as quiet NaNs
+  Instructions added/extended:
+  - vfwcvtbf16.f.f.v: OFP8 to BF16 widening conversion
+  - vfncvtbf16.f.f.w: BF16 to OFP8 narrowing conversion
+  - vfncvtbf16.sat.f.f.w: BF16 to OFP8 with saturation (new)
+  - vfncvt.f.f.q: FP32 to OFP8 quad-narrowing conversion (new)
+  - vfncvt.sat.f.f.q: FP32 to OFP8 with saturation (new)
 
-Paolo
+* Zvfofp4min (Version 0.1):
+  The Zvfofp4min extension provides minimal vector conversion support
+  for the OFP4 E2M1 format. It requires the Zve32f extension.
+  Instructions added:
+  - vfext.vf2: OFP4 E2M1 to OFP8 E4M3 widening conversion
+
+Modifications
+* Softfloat library:
+  - New float8_e4m3 and float8_e5m2 types with NaN checking functions
+  - New float4_e2m1 type for OFP4 support
+  - Conversion functions: bfloat16/float32 <-> float8_e4m3/float8_e5m2
+  - Conversion function: float4_e2m1 -> float8_e4m3
+  - Implementation-defined behavior flags in float_status:
+    * ocp_fp8e5m2_no_signal_nan: Treat all E5M2 NaNs as quiet
+    * ocp_fp8_same_canonical_nan: Use 0x7f as canonical NaN for all OFP8
+* RISC-V target:
+  - CPU configuration properties for Zvfofp8min and Zvfofp4min
+  - Extension implied rules (Zvfofp8min requires Zve32f and Zvfbfa)
+  - Vector helper functions for OFP8/OFP4 conversion instructions
+  - Disassembler support for new instructions
+
+References
+* OCP FP8 specification:
+  https://www.opencompute.org/documents/ocp-8-bit-floating-point-specification-ofp8-revision-1-0-2023-12-01-pdf-1
+* Zvfofp8min specification (v0.2.1 commit e1e20a7):
+  https://github.com/aswaterman/riscv-misc/blob/main/isa/zvfofp8min.adoc
+* Zvfofp4min specification (v0.1 commit e1e20a7):
+  https://github.com/aswaterman/riscv-misc/blob/main/isa/zvfofp4min.adoc
+
+PS: This series depends on the Zvfbfa extension patchset which introduces:
+  - The altfmt field in VTYPE CSR
+  - BF16 vector operations infrastructure
+  - vfwcvtbf16.f.f.v and vfncvtbf16.f.f.w base instructions
+
+Based-on: 20260108132631.9429-1-max.chou@sifive.com
+
+Max Chou (18):
+  target/riscv: rvv: Fix NOP_UU_B vs2 width
+  fpu/softfloat: Add OCP(Open Compute Project) OFP8 data type
+  fpu/softfloat: Add convert operations(bf16, fp32) for OFP8 data types
+  fpu/softfloat: Add OCP(Open Compute Project) OFP4 data type
+  fpu/softfloat: Add OCP FP4 E2M1 to OCP FP8 E4M3 convert operation
+  target/riscv: Add cfg properity for Zvfofp8min extension
+  target/riscv: Add implied rules for Zvfofp8min extension
+  target/riscv: rvv: Make vfwcvtbf16.f.f.v support OFP8 to BF16
+    conversion for Zvfofp8min extension
+  target/riscv: rvv: Make vfncvtbf16.f.f.w support BF16 to OFP8
+    conversion for Zvfofp8min extension
+  target/riscv: rvv: Add vfncvtbf16.sat.f.f.w instruction for Zvfofp8min
+    extension
+  target/riscv: rvv: Add vfncvt.f.f.q and vfncvt.sat.f.f.q instructions
+    for Zvfofp8min extension
+  target/riscv: Expose Zvfofp8min properity
+  disas/riscv: Add support of Zvfofp8min extension
+  target/riscv: Add cfg properity for Zvfofp4min extension
+  target/riscv: Add implied rules for Zvfofp4min extension
+  target/riscv: rvv: Add vfext.vf2 instruction for Zvfofp4min extension
+  target/riscv: Expose Zvfofp4min properity
+  disas/riscv: Add support of Zvfofp4min extension
+
+ disas/riscv.c                              |  12 +
+ fpu/softfloat-parts.c.inc                  |  77 +++++-
+ fpu/softfloat-specialize.c.inc             |  57 ++++-
+ fpu/softfloat.c                            | 274 +++++++++++++++++++++
+ include/fpu/softfloat-helpers.h            |  20 ++
+ include/fpu/softfloat-types.h              |  28 +++
+ include/fpu/softfloat.h                    | 124 ++++++++++
+ target/riscv/cpu.c                         |  35 ++-
+ target/riscv/cpu_cfg_fields.h.inc          |   2 +
+ target/riscv/helper.h                      |  15 ++
+ target/riscv/insn32.decode                 |   8 +
+ target/riscv/insn_trans/trans_rvbf16.c.inc |  32 ++-
+ target/riscv/insn_trans/trans_rvofp4.c.inc |  54 ++++
+ target/riscv/insn_trans/trans_rvofp8.c.inc | 115 +++++++++
+ target/riscv/insn_trans/trans_rvv.c.inc    |  39 +++
+ target/riscv/tcg/tcg-cpu.c                 |  15 ++
+ target/riscv/translate.c                   |   2 +
+ target/riscv/vector_helper.c               | 131 +++++++++-
+ 18 files changed, 1022 insertions(+), 18 deletions(-)
+ create mode 100644 target/riscv/insn_trans/trans_rvofp4.c.inc
+ create mode 100644 target/riscv/insn_trans/trans_rvofp8.c.inc
+
+-- 
+2.43.7
 
 
