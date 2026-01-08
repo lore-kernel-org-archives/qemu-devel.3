@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E109DD1D47C
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F885D1D47C
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdrzW-0006gs-W1; Thu, 08 Jan 2026 10:32:03 -0500
+	id 1vds3b-0001ri-2P; Thu, 08 Jan 2026 10:36:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdrzT-0006fs-6f
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:32:01 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vds3P-0001jr-IN
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:36:05 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdrzP-0008BI-OE
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:31:58 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-477ba2c1ca2so36275705e9.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:31:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vds3N-0001BI-3C
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:36:02 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-477619f8ae5so26630175e9.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:36:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767886313; x=1768491113; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767886559; x=1768491359; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gR9txCIB0ux64fgXeZ/Chimfnw3NnD3GofqzeO2GPi8=;
- b=jPOhkC9BMHOrghi7Wk/QNJljcQBs0ky8uZdJ+cIKqufFTgOmW5+zka8H1UsZAYVzgD
- TxUjG7f808uD4fOmMi2LbKLq2Ss/RllxsUFNE4iT8VJcxxQXXb+lgZVM8pFhwu/aWHKZ
- zAGrwUr+S1EkNdiWuK5jaAA0kKUnNrTUgQwvwYK60fU6gix2EDXVL0SAaF8auAI6VSSI
- GxqhoySPpaF9CVMrBapLPEUxg1GMhMV/gW45SyDVthKrig3oG4p/4b/r0f3yZTBqEtEx
- YGJTCjSZcgGUf7YphtUTuIwnhcsdqog3ciE0qB4nJMhnTb+2/uRqY/wYLxuag5rdLnUQ
- 28QA==
+ bh=zSoCNwBpRlL92nFJXOyPw4jCaks9/29Zvzq+h2UIRrM=;
+ b=hZdWCdd9GzvLlGUw8Y7D7Xe6N0btzRensshcNZQRdmE4dVb4x88/rLGFWSWsEt2cjQ
+ e/AIJ1tZXwSGcClj1KbzQU1EyrISQN1k3KWcOgR2OnX8pcAFwcKhgEYvGTVPuiEQ20wS
+ Gxi/66v/4QCIwsSq9DOeQJqZiNG4VNV7LFin6fXyf8kqmUMvCv4XlkFDl9GEVckKIzc8
+ hM+mNTpfZTzLHgT/mYWC6ikNPPnhKzi7LaqVG7xgIyoycTWUff3L1L7FQNu6hSwvUKsi
+ QNjfEZ2ondnUpOWjSn4JdR/dGL2gKTMLfNymrTnNCXwuJ7JXAdI0Vq+m51NBLsSMsLrl
+ 3CMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767886313; x=1768491113;
+ d=1e100.net; s=20230601; t=1767886559; x=1768491359;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gR9txCIB0ux64fgXeZ/Chimfnw3NnD3GofqzeO2GPi8=;
- b=F6Hye4DcsRuzrRYLRua32FpAn66TeLX/6qyWCGIVoqVdpdaAqKUFr/EKYMhY4RoZ4C
- BUyC1pdOYswSKbzhGlJ1KNxLFlEpHzzzRuz896XsNXnz0lzLdkq3CrwxqkBr6yB86JkK
- xFefeZO5RPh7LjmNPmpqDDnBCR/l9Or27KfRH2NFzdONre6Kpnh8n/H34h/WDfg4pZBn
- JqUt6DWhnKUft77B/CWoWxmivXyuyAdLcLJhdQ8/Ulpx8pLzkmLIZRPGN4DQvV8FKSWR
- K6MwARbJ4rN8f8WyLYmq0/lYj6+pnZVnayPwMyT/c2m1PbSZInKjVrGWrQQQW1nWiPh5
- o05g==
+ bh=zSoCNwBpRlL92nFJXOyPw4jCaks9/29Zvzq+h2UIRrM=;
+ b=B8pwMMZV8nKAyeRA0loABl+wrWN7cir0w/IeQ7Ykae7sDwSTx49ojTUYuH2H5eR67N
+ l34sauNKLG+c4P2Te5kiZe+8Q28jfRK4rw2nwS1KBsV9/fVzfHf4m4G+Pj3ellnLTbSJ
+ cD602ZQ3kEP4Yj2qxJJVHqR7l+uQPQ143olpMefWZAfzszHvRvsgEgJRUV6NfixLscfJ
+ HtGQgsT9g1SsYZwh7UWxqHpsoYB6KmC5Qd3oZdGbHSilalByg+mLfX0F5NSS2B0Blc1w
+ 3MNg6I/eVTuIWy09vsnjYODB7hXWyf5k9YtBRDxQny2GFf5HfhNN0UKn+D0dc4Mfdoli
+ jzrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgm1btEg+LqVRK6GYMFcfo/nmFyhDaiAMF5q0bpQ8Fv00UJmb8Sr+zS76Q9IYDr7CUuqWqXNDGT8Z+@nongnu.org
-X-Gm-Message-State: AOJu0YwEVYjdhuRMT4i39Yu0Pxav0ZciowIh9YaeSSR4r3OLQyTFGTZN
- UUW8K6K6QrKnIbLwVfpqC4b4I79Wj+W777yUBwHvfyigztNYpnvSivmL4CueiFsQbMA=
-X-Gm-Gg: AY/fxX5ovVpejgo0f1cDIhhR3WSj83VmwEb8Wt/e9mKBbOaScIkYIcsKY1DXRJIdeau
- Dba4zmvP3OS+6m2TCiGtG3HBJ9vk+P7xPb8tDGWGfgX3qIpUINGSbumNuVn5qU0oJg9DYETDury
- X+SE5TwDI9joQ5/MPkfVvG0PBzxXHczta4a7uf/N+CGJidZgVTuswkLFaamuO6gIv1gbJ7sNRWI
- LoUhOMF7mataNxEf0J3JLwdRIp6UDv8zb3bAfsDf5yk1W7NYktpxKxux98WYzXvR9iuxG/3jIaQ
- 5FuZS4z8C1x+uGHvV/ogx3AP7MxWtkU9aQKwF+7pla3IpG7lERaJOQSRsVM9fb3OGM+q8EFAEl3
- qJ1fzR08QQti+DGNuONkSMls9F129x5jo7X58aOwqsyB8kwHKzGsxZGUzdmo0Lg57zwbfP39nof
- 4lz5FJQjjH9SrkSOQNftg3lC2S279+bYI36TFjy+Qxf5JIIeACicvcXQ==
-X-Google-Smtp-Source: AGHT+IGUtjdPNkY7Uyxd7uEFkyOa7ZO0VS7VrhSqFG3aSJxQD5dKdXAicSbx4zsD0kmB+q1wTVDkQQ==
-X-Received: by 2002:a05:600c:1d19:b0:47d:5089:a476 with SMTP id
- 5b1f17b1804b1-47d84b386fdmr89898065e9.31.1767886313262; 
- Thu, 08 Jan 2026 07:31:53 -0800 (PST)
+ AJvYcCWGnVv4iMf+5LKrGlPryKzdous4zgbOsudp/n8RWEwszU7aCWQzpCUrfab8gNB0gu58aRmRxFDH/LmU@nongnu.org
+X-Gm-Message-State: AOJu0Yw0G7gB9pZAvjczh0OhlOlQGQI0tRlEeoS3ygFddkkBBaS+fbUR
+ arbVhfSClJY56TTshddWCQC9B7CeyzT54ybw1Zk7awAOC5NmDruBLDhK5a9HbiqPFXo=
+X-Gm-Gg: AY/fxX7B/zTLoZIMTHq0POBM+c6Ezk8LKvUvbLPpAtVh47uqX/f/ul6LpS5gK4jPJrq
+ CWXYSPeCZFTjsfm09tRIrInYIXk8toFTViG57AG7vdCpw+mk1BkygWIO15UzgTpxI6KHMGD38t6
+ 1dCYKzXgnbgRfBJZvit2IhaNfnqOqi0j4A1bmMh356fBKryAG3fH0UbbBNIedCkVWimYGoS4Tyl
+ IWT/bmct+Be5MgDF1WC2FR8ahLTOycC59xRM5gIdOtg0Jadk6KeIjWU/Vz8ZiLNEUh5XTgj5opB
+ I2/DlyOfSZUZfn12qYRhrNN8VSqWGlLVueV9Y7Bj/JTNGQns5PH9C75bq5vWBPtRfnT58G0AuNj
+ l2z+U9LaMYEz0CJuyZfRVFNVi+CY79EX4fxLWrp7z4Lgs8qQ2RUiUyp4ZXqi5DQZI02Dq0vgFAg
+ yEtRYWt4spy9qRCWf9jFUx5g1P+J80TLTRqtJs1hrGW9dlOG2p/srAFA==
+X-Google-Smtp-Source: AGHT+IEjBKuzgIKF0EtLjzJYOi1kUF6JYm1RVNOxAJ80hha2Fzla8pKv0ahB2igKlvY0G24ZdmYfEA==
+X-Received: by 2002:a05:600c:4fc3:b0:479:3a2a:94e7 with SMTP id
+ 5b1f17b1804b1-47d84b2cd24mr90226275e9.10.1767886558773; 
+ Thu, 08 Jan 2026 07:35:58 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f668e03sm164827665e9.14.2026.01.08.07.31.52
+ 5b1f17b1804b1-47d7f41f5e0sm154130115e9.8.2026.01.08.07.35.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 07:31:52 -0800 (PST)
-Message-ID: <7515c883-1e0f-4a23-b65c-e63067737aea@linaro.org>
-Date: Thu, 8 Jan 2026 16:31:51 +0100
+ Thu, 08 Jan 2026 07:35:58 -0800 (PST)
+Message-ID: <79bd03ad-3fc5-4d83-ab4f-55f8f840cc6c@linaro.org>
+Date: Thu, 8 Jan 2026 16:35:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 00/12] riscv: Add support for MIPS P8700 CPU
+Subject: Re: [RFC PATCH 00/12] cpu_reset clean-ups for arm, sh4, mips, m68k
+ and tricore
 Content-Language: en-US
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "alistair23@gmail.com" <alistair23@gmail.com>,
- "thuth@redhat.com" <thuth@redhat.com>
-References: <20260108134128.2218102-1-djordje.todorovic@htecgroup.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-arm@nongnu.org,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20260108143423.1378674-1-alex.bennee@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260108134128.2218102-1-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260108143423.1378674-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,24 +114,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/26 14:41, Djordje Todorovic wrote:
-> Rebased again on top of very latest master branch by resolving
-> build issues occured due to the changes in the code organization.
+On 8/1/26 15:34, Alex Bennée wrote:
+> We tend to apply cpu_reset inconsistently throughout our various
+> models which leads to unintended ordering dependencies. This got in
+> the way in my last plugins series:
+> 
+>    https://patchew.org/QEMU/20251219190849.238323-1-alex.bennee@linaro.org/
+> 
+> where I needed to shuffle things around to ensure that gdb register
+> creation was done after dependant peripherals had created their cpu
+> interfaces.
+> 
+> Regardless of that we do have a proper reset interface now and most
+> architectures have moved to it. This series attempts to clean-up the
+> remaining cases with proper qemu_register_reset() calls so reset is
+> called when we intend to.
 
-I'm sorry for the unfortunate workflow pain you had with this series :(
+Last time I was blocked at this comment:
+https://lore.kernel.org/qemu-devel/20231128170008.57ddb03e@imammedo.users.ipa.redhat.com/
 
-> Djordje Todorovic (12):
->    target/riscv: Add cpu_set_exception_base
->    target/riscv: Add MIPS P8700 CPU
->    target/riscv: Add MIPS P8700 CSRs
->    target/riscv: Add mips.ccmov instruction
->    target/riscv: Add mips.pref instruction
->    target/riscv: Add Xmipslsp instructions
->    hw/misc: Add RISC-V CMGCR device implementation
->    hw/misc: Add RISC-V CPC device implementation
->    hw/riscv: Add support for RISCV CPS
->    hw/riscv: Add support for MIPS Boston-aia board mode
->    riscv/boston-aia: Add an e1000e NIC in slot 0 func 1
->    test/functional: Add test for boston-aia board
+> Alex Bennée (12):
+>    target/sh4: drop cpu_reset from realizefn
+>    target/m68k: introduce env->reset_pc
+>    hw/m68k: register a nextcube_cpu_reset handler
+>    hw/m68k: register a mcf5208evb_cpu_reset handler
+>    hw/m68k: register a an5206_cpu_reset handler
+>    hw/m68k: just use reset_pc for virt platform
+>    target/m68k: drop cpu_reset on realizefn
+>    hw/mips: defer finalising gcr_base until reset time
+>    hw/mips: drop cpu_reset in mips_cpu_realizefn
+>    target/tricore: move cpu_reset from tricore_cpu_realizefn
+>    target/arm: remove extraneous cpu_reset from realizefn
+>    include/hw: expand cpu_reset function docs
 
 
