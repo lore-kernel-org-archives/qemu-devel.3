@@ -4,91 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88EA9D1D48D
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4976D1D493
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwWk-0005Am-6b; Thu, 08 Jan 2026 15:22:38 -0500
+	id 1vdwbj-0000cL-HP; Thu, 08 Jan 2026 15:27:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwWi-00055G-4N
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:22:36 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vdwbh-0000X8-Rw
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:27:45 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwWg-0003rr-Om
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:22:35 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a0d0788adaso25514035ad.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:22:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767903753; x=1768508553; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9NBrbjDRVXTDmJRT3xpB2IbPXUFDe3vBC3CLXWuK37I=;
- b=mrzSSmUANbOfR2fzF5lFVL0o7kjDc2LyulFj/hnYOrKFUozCaPyWBU5r6Ku0nkGXwM
- swFJmu74nxvDPdLrnUm+DusvLUBoJPYH9g2gND360DQm0YuhkfbHIXVTuJtNSb/q6gG6
- ss7HZotzHovkFQtsKQ1hDlOZoV1sXqiVbOy2ScAWw1OClz/+7OGt7TeOdU5xDdj3HOTK
- d10qA5nV6tJh1tUrfmObAaRWZflL9TxX1GMHJiVbAiixT3kRcB4PzQT2Ak0RM1o2wsyC
- iLmSSmUcb31kRhWzvG8ZiXcSc5JMxOgw45xcotbg7ke8ivFEcJpUa0OhaJnKraGn7SKw
- X0LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767903753; x=1768508553;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9NBrbjDRVXTDmJRT3xpB2IbPXUFDe3vBC3CLXWuK37I=;
- b=nDhOSe942WaVeTB+tsdOIy07+9b4NJup4wh1n89YbJKKFDPsBrQ5NH887JCi3aJ2/H
- XGJjqFQe/6s4UhTCEg9rAQGvqiW3+2rXB80wzrFq6nNFwUkyZ7hbDHrSP6nhF5tBDVNA
- ORceg35QwPg/8n61GIxxxKcxEfTT3BUIxMLnIY8Gi3Vu2OKnGdqXjPkIYUcH6YCA0H1i
- GmxnWJ/DBUOCvzAKxfVrNM4bH6zJDfqmozDy3mjiGKhSPm3lj8fBeG7Lyvu/U8KxY0dy
- n0EZzg5J9DCMfZXv7k+YbB2fW+eZqxENQbl4+Dp1Ran4hGSMAOmKvHNC1Wi0N9vXWiOV
- KDnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWaedqg3doq/amArw0CVx7bS8x8V47NNDPOrj18V0s1Hizor7btaRKFqNzIR/MC2zdHshRmNpJIPBYA@nongnu.org
-X-Gm-Message-State: AOJu0YwdZhfdTVTOM4MvzvREzKq8t5H2kiZiG0QEYnDH1fdVgB10bGS7
- suypznIqNEQAOocn9TQARj9F/Sp7hVKktul4fVhi6kcH218RJI4PZoqTpZJCeM/44lo=
-X-Gm-Gg: AY/fxX6I+/iOdtVTcy7oCgY7qZEgU1+IMXddEQjXAxOzz/mXipILQdgTEFwXZE4k91O
- kZx7mI4E97C4m+GP6WFvnZ1L16Ev9RCFfqYtjj2DNOe219Ci2A1lZ1PfRBrylRmmcUG40+LVqde
- 6GajKguRZY5ZIxTzfsz4b1YVyVm8kgPsgeeQPPmt6ZNcnF0OYTXA7ho3Mjf9eGqEjNm4I7u2uqS
- hDWhXbpPjbi9y/CRJ6yN/6TK8LsOdfdc2A4DNL01kF98UaMxILGhQs2R3leYmoPR1tfhFYVKuoW
- 6rB0f74eCBPWWQObmKhKpNLYvnTc45IunZrEKYbkIqoFbTa9Xx6nP75ur2aCcTYDc2/ELXDIhhr
- GW6fU/gNf9Ghg5CNvpvPfD8Z0OEhu9oQCW+Ze90qTeB8MzMrWQG7ui78JSlJd9IkwOd9DU69H2H
- zCfwFIrvhQK2HHURohpPXCuQ6O5igJayoTUnB7+TiHkeRRRKBDnlwRdgHL
-X-Google-Smtp-Source: AGHT+IEdj0Dat0MdhgnA3OB+bL304O8BbfzYVhkEggwom+jqeWNpnPXtuy+MspT1r2WSzhwCv3cQUQ==
-X-Received: by 2002:a17:902:cf42:b0:297:f0a8:e84c with SMTP id
- d9443c01a7336-2a3ee4b06d0mr72096585ad.52.1767903753217; 
- Thu, 08 Jan 2026 12:22:33 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cb2ea0sm88202845ad.62.2026.01.08.12.22.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 12:22:32 -0800 (PST)
-Message-ID: <9172bfb9-e53a-417d-a7ed-9c1ba6dc976b@linaro.org>
-Date: Thu, 8 Jan 2026 12:22:32 -0800
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vdwbf-0004v3-W9
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:27:45 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E413634567;
+ Thu,  8 Jan 2026 20:27:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767904061; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PZFXne9Uo/30v0glti/DB7GOOHyo5QUtF0aKbQ+/AME=;
+ b=bz361fnhch4OKHQMJgHw8Mh3S+Dz9+6tcOxyI0ADwnjml8dOznPcpD59YQO5smsvIHYO41
+ uTIIAu4BU4OSmwF8KtcQMYvCwRkSPD6VrLnlrSrwb1uiE5EKgrwYztHqWsCqcwmMZX330L
+ LdnNDIeCEEShH+HiqTKJEkUeDEyeG0g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767904061;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PZFXne9Uo/30v0glti/DB7GOOHyo5QUtF0aKbQ+/AME=;
+ b=9sNVP+uQ7sEfdNSiEEU1YNh4WIEho3jLjewAgJOdLUbywTrQWNttZdgEGrvJWfh34dGHuX
+ xNOPrngwzhKc2aCw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=D71dqzp1;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="MW/Ag3Eq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1767904060; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PZFXne9Uo/30v0glti/DB7GOOHyo5QUtF0aKbQ+/AME=;
+ b=D71dqzp1Y08tTC0jeruZoxrr8DLpnK3liw0mdPcZUkB0IFi9aPcIInE/X7emN+RGqwGhlP
+ Ib43dl38pjEVtOyBNH3ALZxfF6qSWRTVWEe+0sVB7GloMGU2dv5IJaqFtXam8DV2G3org8
+ t/kys+d8BYa86vRogL8E7OlTqV6wBfI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1767904060;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PZFXne9Uo/30v0glti/DB7GOOHyo5QUtF0aKbQ+/AME=;
+ b=MW/Ag3EqcYAvecwewmOSqgWm+doc5vgu+K7mjdvo3n78grHT615C+iJ5ZP+5raKEZcJ/BR
+ 2F00P6xqKslFm9CA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 55EDC3EA63;
+ Thu,  8 Jan 2026 20:27:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id bC3tBTwTYGmUIwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 08 Jan 2026 20:27:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Li Zhijian <lizhijian@fujitsu.com>, Hailiang Zhang
+ <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com,
+ =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Zhang Chen
+ <zhangckid@gmail.com>, "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 08/13] migration: Thread-ify precopy vmstate load process
+In-Reply-To: <20251022192612.2737648-9-peterx@redhat.com>
+References: <20251022192612.2737648-1-peterx@redhat.com>
+ <20251022192612.2737648-9-peterx@redhat.com>
+Date: Thu, 08 Jan 2026 17:27:37 -0300
+Message-ID: <87y0m7df46.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/50] tcg: Replace TCG_TARGET_REG_BITS / 8
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-18-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108053018.626690-18-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCPT_COUNT_TWELVE(0.00)[14]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_CC(0.00)[fujitsu.com,xfusion.com,redhat.com,yandex-team.ru,gmail.com,treblig.org];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: E413634567
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,17 +134,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/26 9:29 PM, Richard Henderson wrote:
-> Use sizeof(tcg_target_long) instead of division.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/tcg-op-gvec.c                | 2 +-
->   tcg/loongarch64/tcg-target.c.inc | 4 ++--
->   tcg/ppc64/tcg-target.c.inc       | 2 +-
->   tcg/riscv64/tcg-target.c.inc     | 4 ++--
->   4 files changed, 6 insertions(+), 6 deletions(-)
-> 
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Migration module was there for 10+ years.  Initially, it was in most cases
+> based on coroutines.  As more features were added into the framework, like
+> postcopy, multifd, etc.. it became a mixture of threads and coroutines.
+>
+> I'm guessing coroutines just can't fix all issues that migration want to
+> resolve.
+>
+> After all these years, migration is now heavily based on a threaded model.
+>
+> Now there's still a major part of migration framework that is still not
+> thread-based, which is precopy load.  We do load in a separate thread in
+> postcopy since the 1st day postcopy was introduced, however that requires a
+> separate state transition from precopy loading all devices first, which
+> still happens in the main thread of a coroutine.
+>
+> This patch tries to move the migration incoming side to be run inside a
+> separate thread (mig/dst/main) just like the src (mig/src/main).  The
+> entrance to be migration_incoming_thread().
+>
+> Quite a few things are needed to make it fly..  One note here is we need to
+> change all these things in one patch to not break anything.  The other way
+> to do this is add code to make all paths (that this patch touched) be ready
+> for either coroutine or thread.  That may cause confusions in another way.
+> So reviewers, please take my sincere apology on the hardness of reviewing
+> this patch: it covers a few modules at the same time, and with some risky
+> changes.
+>
+> BQL Analysis
+> ============
+>
+> Firstly, when moving it over to the thread, it means the thread cannot take
+> BQL during the whole process of loading anymore, because otherwise it can
+> block main thread from using the BQL for all kinds of other concurrent
+> tasks (for example, processing QMP / HMP commands).
+>
+> Here the first question to ask is: what needs BQL during precopy load, and
+> what doesn't?
+>
+
+I just noticed that the BQL held at process_incoming_migration_co is
+also responsible for stopping qmp_migrate_set_capabilities from being
+dispatched.
+
+Any point during incoming migration when BQL is unlocked we have a
+window where a capability could be changed. Same for parameters, for
+that matter.
+
+To make matters worse, the -incoming cmdline will trigger
+qmp_migrate_incoming->...->migration_transport_compatible early on, but
+until the channels finally connect and process_incoming_migration_co
+starts it's possible to just change a capability in an incompatible way
+and the transport will never be validated again.
+
+One example:
+
+-- >8 --
+From 99bd88aa0a8b6d4e7c52196f25d344a2800b3d89 Mon Sep 17 00:00:00 2001
+From: Fabiano Rosas <farosas@suse.de>
+Date: Thu, 8 Jan 2026 17:21:20 -0300
+Subject: [PATCH] tmp
+
+---
+ tests/qtest/migration/precopy-tests.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index aca7ed51ef..3f1a2870ee 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -158,6 +158,13 @@ static int new_rdma_link(char *buffer, bool ipv6)
+     return -1;
+ }
+ 
++static void *migrate_rdma_set_caps(QTestState *from, QTestState *to)
++{
++    migrate_set_capability(to, "mapped-ram", true);
++
++    return NULL;
++}
++
+ static void __test_precopy_rdma_plain(MigrateCommon *args, bool ipv6)
+ {
+     char buffer[128] = {};
+@@ -185,6 +192,7 @@ static void __test_precopy_rdma_plain(MigrateCommon *args, bool ipv6)
+ 
+     args->listen_uri = uri;
+     args->connect_uri = uri;
++    args->start_hook = migrate_rdma_set_caps;
+ 
+     test_precopy_common(args);
+ }
+-- 
+2.51.0
 
