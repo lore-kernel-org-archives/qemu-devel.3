@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2F1D1D48A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 21:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2956ED1D48A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 21:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdxVj-00063p-EI; Thu, 08 Jan 2026 16:25:39 -0500
+	id 1vdxWX-0007Wj-5c; Thu, 08 Jan 2026 16:26:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vdxVW-0005rs-9c; Thu, 08 Jan 2026 16:25:28 -0500
+ id 1vdxWU-0007Jm-7Y; Thu, 08 Jan 2026 16:26:26 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vdxVU-00074G-MF; Thu, 08 Jan 2026 16:25:26 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 608C4Z8M016351;
- Thu, 8 Jan 2026 21:25:19 GMT
+ id 1vdxWR-0007G3-PX; Thu, 08 Jan 2026 16:26:25 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 608Dmdac004343;
+ Thu, 8 Jan 2026 21:26:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=LiSzdr
- v0qNm2UbdsMTKIvcZg9MnvbqU+T/8QGc7P7YA=; b=ghn8slW+2BD+L3zOie86e3
- 4tDg4FKNVIDnwaQiJecc/qu6i3YMZOpsnZFrvKmyweiRPNIcnBCIP1phQCDv7swm
- c7QC23NPoW91vIHaVoDtuAcQwLvArx4Qmwb5RsFAWN5cw61Y7r91nYp8hQVfVBFE
- O9kScs1T4PhQzFxWYhTZsime+AQbDBw4IzZa7iMNk2X4jCFHN51RUORkrhheTGCg
- PAKkyExRaX03Pr3HNJQFEKEBgN901VHlbnkqDVyLkNgjfCGPoaL/QlewmM03Y8v4
- tUMZIjHvligwQmD0dWPQVmuiw+q0n1eqsdK6uCqUmGo98uEI/LOvq/85Twz6MjYg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=fgMU4y
+ RIgG/1kGsQn2Jua1qrh1oKWEgyIgvnGsdOMwk=; b=AdAr05Qxv3Fnn5ZTrUHKft
+ ulojfEmrKAiuCkYLBJ/s+bLR5pZf+yWyv2y5SW9xOj0X6OGvvEExNFALsJT56nGs
+ z1CCapBxIW7nKtSIeq6Ff8RDsnRNufYCKluX6fSBbpq3cI3IkMsSBzONwxi8+9Uk
+ 5gPQ1N4NBjsOfaLOoH2TlK3XUTC5GyPN3gyyAoqtB/fi80ldqRCOCUfgjvIvRBIR
+ +B2kXGFRfkAfXwLo1lp7faCSEyDY9pWnqJRGwnZmUS1yWsNRxb2xL25a9x3/qrsQ
+ jtS0rVGQhmFFlR3zNvp+VGa/4RBGS1M49k8anW90vXOM62GhEFcqEFupxsibE3Fg
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betu6gcx5-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betm7gg33-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Jan 2026 21:25:19 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 608KrKAq023487;
- Thu, 8 Jan 2026 21:25:18 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bg3rmp3a7-1
+ Thu, 08 Jan 2026 21:26:20 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 608J79kg014528;
+ Thu, 8 Jan 2026 21:26:19 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bfeen9cv6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 Jan 2026 21:25:18 +0000
+ Thu, 08 Jan 2026 21:26:19 +0000
 Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
  [10.241.53.102])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 608LPGR428246764
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 608LPxDo61735176
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 Jan 2026 21:25:16 GMT
+ Thu, 8 Jan 2026 21:26:00 GMT
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 687E15803F;
- Thu,  8 Jan 2026 21:25:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 829C358063;
+ Thu,  8 Jan 2026 21:26:17 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 624E358056;
- Thu,  8 Jan 2026 21:25:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 77F1F5803F;
+ Thu,  8 Jan 2026 21:26:16 +0000 (GMT)
 Received: from [9.61.151.176] (unknown [9.61.151.176])
  by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 Jan 2026 21:25:15 +0000 (GMT)
-Message-ID: <a4d55c63-e5ba-4664-bad5-1dc17363d5d1@linux.ibm.com>
-Date: Thu, 8 Jan 2026 16:25:14 -0500
+ Thu,  8 Jan 2026 21:26:16 +0000 (GMT)
+Message-ID: <fe035311-cc17-41fe-aad8-cec5c37a5d03@linux.ibm.com>
+Date: Thu, 8 Jan 2026 16:26:16 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/29] crypto/x509-utils: Add helper functions for DIAG
- 320 subcode 2
-To: Farhan Ali <alifm@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com,
+From: Zhuoying Cai <zycai@linux.ibm.com>
+Subject: Re: [PATCH v7 04/29] hw/s390x/ipl: Create certificate store
+To: Thomas Huth <thuth@redhat.com>, berrange@redhat.com,
  richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
 Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
+ armbru@redhat.com, alifm@linux.ibm.com
 References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-9-zycai@linux.ibm.com>
- <c721a64e-fc9d-4abd-842d-934fe3311793@linux.ibm.com>
+ <20251208213247.702569-5-zycai@linux.ibm.com>
+ <f96fdca3-f660-496a-8a81-2d922d0ddfdb@redhat.com>
 Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <c721a64e-fc9d-4abd-842d-934fe3311793@linux.ibm.com>
+In-Reply-To: <f96fdca3-f660-496a-8a81-2d922d0ddfdb@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=QbNrf8bv c=1 sm=1 tr=0 ts=696020bf cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=OdmVzxTY c=1 sm=1 tr=0 ts=696020fc cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=yPBx-lMp1vgs5263aUkA:9 a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10
-X-Proofpoint-ORIG-GUID: Qzcz2bFDHyX_xxZutBufjQTlR_226s37
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDE2MCBTYWx0ZWRfX16+M+s7KG8cI
- nEYtIW7iGGUtjWdlYqdVVwbrhXZ6dLqyYOcIVBwRqU4PATRR53QXHIafSYblaXtskmAS25DMqis
- lAQEzMX6JnNYRl7dQ5nNBp7oXh7BKiime3OagNkgkY2ocYKOBwBbffm96P1KUvhCjpKF75Gaad5
- wCEBV6e/zXhPKl/TWpok3VBM1zdHzO7a7kuAo6OrxUAuElnry+u7Kfn0QZDmHeZOlczdyx8tTzr
- cxhnLuWk0Qre8xVSXDvcmsN8b9n0rQRjLsNmYilo2+ZhwOpOzKWTFzgwcOnrwKBJGMOCzK3bVWb
- R5rFL2lQVJ2vHSdYJYxWXagUFJE1JffhZiSqmLKtBo3q2nkp6/bOzg2XsSXSm1Of9FKAICR3ZSH
- co2tydvTuHfBhm3KCZ4omZekjZfrd4eRoPpXAQoFbxVI30ggCPlvyEOwbT8H7QrscO6+XhBgeja
- nRKnzslPOjXrN/HIOgQ==
-X-Proofpoint-GUID: Qzcz2bFDHyX_xxZutBufjQTlR_226s37
+ a=VnNF1IyMAAAA:8 a=j22drBIyGsQcwlkiSw0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: LDRr6TouLcZkRFXE6i1YYrGKQAdgnn9V
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDE2MCBTYWx0ZWRfX9UZxSzjZ7N9d
+ wor2NrSoZD2OIjEG2UAktXaW20nrlemkKT8Bya6FdXdJC8fXdkM7Nvp5rLVkNay8IExYEHVZnc0
+ INvWovNqGm81JIxJ2CtuyQTpiEj4htnGHGg6maCX87PMEFo0HZldVFA2Fn+Ifoix2okg01E626Q
+ 6W1Aw4oCVgkRIG4hSGsY4DNIkNaXsY4F/3mg03kXS50hB9rztPhpmxgY40UrJVznkw3cKLPRv6Z
+ rREGZRb6WGvwpEyU+GaD+9GUuWyZ2vpWvLbqCfVn54GzrxqWZ840jW4WxJ59R0e1ifOfBl2Gg9U
+ 10FRGoUA6X82NaDEjJ7REImoI/DFmT5iruztbwQk6Lxxifk3ab5VtXf5HoovjTmkPFEUT9Y29hn
+ coJo3/Oz2n7LCqqUC6JrF0Gp2rSZEwJMBSWACsX5d2V9NQZSsxeIYhKpQBmP4yClOlnBuEB9AFu
+ QKIpZWKJq4AGz/Nb/hQ==
+X-Proofpoint-ORIG-GUID: LDRr6TouLcZkRFXE6i1YYrGKQAdgnn9V
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-08_04,2026-01-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 bulkscore=0 suspectscore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601080160
+ spamscore=0 clxscore=1015 phishscore=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
+ definitions=main-2601080160
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -127,31 +127,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 2:32 PM, Farhan Ali wrote:
-> 
-> On 12/8/2025 1:32 PM, Zhuoying Cai wrote:
->> Introduce new helper functions to extract certificate metadata:
+On 1/8/26 7:28 AM, Thomas Huth wrote:
+> On 08/12/2025 22.32, Zhuoying Cai wrote:
+>> Create a certificate store for boot certificates used for secure IPL.
 >>
->> qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
->> qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
->> qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
->> qcrypto_x509_is_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
+>> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
+>> machine type option into the cert store.
+>>
+>> Currently, only X.509 certificates in PEM format are supported, as the
+>> QEMU command line accepts certificates in PEM format only.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+> ...
+>> diff --git a/hw/s390x/cert-store.c b/hw/s390x/cert-store.c
+>> new file mode 100644
+>> index 0000000000..cf16911d09
+>> --- /dev/null
+>> +++ b/hw/s390x/cert-store.c
+>> @@ -0,0 +1,211 @@
+>> +/*
+>> + * S390 certificate store implementation
+>> + *
+>> + * Copyright 2025 IBM Corp.
+>> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "cert-store.h"
+>> +#include "qapi/error.h"
+>> +#include "qemu/error-report.h"
+>> +#include "qemu/option.h"
+>> +#include "qemu/config-file.h"
+>> +#include "hw/s390x/ebcdic.h"
+>> +#include "hw/s390x/s390-virtio-ccw.h"
+>> +#include "qemu/cutils.h"
+>> +#include "crypto/x509-utils.h"
+>> +#include "qapi/qapi-types-machine-s390x.h"
+>> +
+>> +static BootCertificatesList *s390_get_boot_certs(void)
+>> +{
+>> +    return S390_CCW_MACHINE(qdev_get_machine())->boot_certs;
+>> +}
+>> +
+>> +static S390IPLCertificate *init_cert_x509(size_t size, uint8_t *raw, Error **errp)
+>> +{
+>> +    S390IPLCertificate *cert = NULL;
+>> +    g_autofree uint8_t *cert_der = NULL;
+>> +    size_t der_len = size;
+>> +    int rc;
+>> +
+>> +    rc = qcrypto_x509_convert_cert_der(raw, size, &cert_der, &der_len, errp);
+>> +    if (rc != 0) {
+>> +        return NULL;
+>> +    }
+>> +
+>> +    cert = g_new0(S390IPLCertificate, 1);
+>> +    cert->size = size;
+>> +    cert->der_size = der_len;
 > 
-> I think this function name has changed to qcrypto_x509_check_ecc_curve_p521?
+> Why is only der_len stored here, but cert_der is silently discarded? Could 
+> you please add a comment explaining this?
 >
 
-Thanks for pointing it out! I'll fix it in the next version.
+Sure, I will add comments to explain this.
 
->> These functions provide support for metadata extraction and validity checking
->> for X.509 certificates.
->>
->> Signed-off-by: Zhuoying Cai<zycai@linux.ibm.com>
->> ---
-> 
-> The patch LGTM
-> 
-> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
-> 
-> 
+To elaborate, cert_der is only used once in handle_cert()
+(target/s390x/diag.c) when populating the Verification Certificate Entry
+(VCE), and it can be easily regenerated by calling
+qcrypto_x509_convert_cert_der(). Most other operations on the
+certificate can be performed using the raw certificate in PEM format.
 
+For this reason, storing cert_der in S390IPLCertificate seemed
+unnecessary, whereas der_len is required in several places during
+certificate store setup, including when calculating the total size of
+S390IPLCertificateStore and the VCE length.
+
+>> +    /* store raw pointer - ownership transfers to cert */
+>> +    cert->raw = raw;
+>> +
+>> +    return cert;
+>> +}
+>> +
+
+[...]
+
+Thanks for the feedback!
 
