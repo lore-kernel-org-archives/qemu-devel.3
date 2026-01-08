@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A297CF6A80
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 08:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E24CF6A80
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 08:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdlM7-000600-KD; Thu, 08 Jan 2026 03:26:55 -0500
+	id 1vdlNC-0006s1-On; Thu, 08 Jan 2026 03:28:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vdlM6-0005yy-5B
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 03:26:54 -0500
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vdlM4-00046W-MU
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 03:26:53 -0500
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-8907ec50855so30895126d6.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 00:26:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767860809; x=1768465609; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=s2X/0t+GD0P49YT5CQj4W4mS1CPEHkXOQaQyAY6I1A8=;
- b=O+iRt7SxDqOYadfuiZONDDPXr7ZzCV4NQr2dbteny1Saobcm2omRPplynINLS9l3er
- +LXyDDloPYx7urKFgNp6KT2iZzOy98XNmU1X3ffEbyrsPtyt50emYTup9TQDdWq0rVn0
- Cj8+KmbnT8X7+LgQKQNh94q140VojA9tgog8dMV++E1WnQRRp4nNJI+opGK602wWrKA7
- 8wcZirKPQyEYpsQLMi90wm6hytwyTgW8TvlTgSCtmxVnH6Iun9vFSMIE4GUYrzQRaeG5
- 65nF74iEZ9sTfti92zXvq+4Kmcik5PTmcozvCzN/Q9u9nZ9lqvBnXdzKux8I391VlOO0
- 83cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767860809; x=1768465609;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=s2X/0t+GD0P49YT5CQj4W4mS1CPEHkXOQaQyAY6I1A8=;
- b=I+/xwy5EWi45B46oH+khYCygLUzyuTIGZqrmRjgjhUAdt+ru7LMaevqgbkVCySk/QO
- 1re2vrzqHIY4NVDrkccfRKorP/OygSgSCxpQaWFWjleUzrQ+LKSvj627Csz7wQXjGRtE
- MZmu27lU/gKuuim079i/Ac5uBt/wVvF1oPCjnBDK00mkduBpJ5udhXjIHRfAvUCFXJlB
- aWOTO/vAGR5Fk1NQ0zXXY/xM2waeFqYy3XzRtqd4FYjeGSE3hJCa7YSyZ8mSOeNn+R4l
- m6cxsHDVLjrNpjroxFi/9EKxTUmqdDhQUtCM2DlkLCcsT4SdPd0Yr1ZI2D10aaQigPiR
- fmLA==
-X-Gm-Message-State: AOJu0YytiSuhW2jVLm3sBpb8cbaqQyb/gS++Lgo1mjOhWOACYCkRXsv8
- AjKNCbU3KnfdOSvjIIXXp+2f25Qixz8vfCrfWqkFVHjEO6QVRTAqEoiGjX6kZSmvpkqAH4b3EO8
- c0WLVqZyVf1tJJYTjF6zRUWsUjQb55Lw=
-X-Gm-Gg: AY/fxX4ZLpI2sxsI3/rQHz1UqnPNQanMwrHbXGjaVmWfdQpsYDa+4qDC5w2I8L5tuHH
- kWZ4zXmOP8oVMbZucP6hdeyg7n36QGPZvDl1BGXvAbKAKzHK7osCKH/Zi5cux91lhwWeqPUAloN
- pX4cWXHRELsjuJxMn31VFJx5hcQUfbbn9D2L3tlDlbgRQhzXZuDhb6iV4w/326r9PDlyXh7hKBk
- Si5ZJFDFOE+cyRFpekr+8/FGkn4JObd7L0k1XPI/ArR6d5I1EwR38jTvTjE3Bpx35lP84TXfRV7
- vl+4a8oacNNMuuEsIZ+8ldEIrFJU6pnjgGvXhQ==
-X-Google-Smtp-Source: AGHT+IE2ITyRuhLkQNfSFf0ym/pR7I4ZtBx13/L/Jdqoeaha3v7RsVdIFSMX7HtRIotcJWPUP05KQeQOc+PQprH4VB8=
-X-Received: by 2002:ad4:5ccc:0:b0:890:195c:9626 with SMTP id
- 6a1803df08f44-890842935dfmr73272626d6.50.1767860808666; Thu, 08 Jan 2026
- 00:26:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vdlN8-0006pq-8L
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 03:27:58 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vdlN5-00048Y-6r
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 03:27:58 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6088RLni053125
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 8 Jan 2026 17:27:23 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=K3EbJJaipXU9ivTnjFtr9gCEY+XFN5f9eyS2HZMAAu0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1767860843; v=1;
+ b=sw9+JH9MWfBz8kivcVIuq10tTPbJqUtE54iqBrVTg4/HOYTtzCmlV1ite0P0/EFv
+ dTAC4jDxpBoKhOXJDtlnAk8ZyEfHsuT0Or2b/jQdoGdUF7rRKYcdPSTMGBfO3e4x
+ zFlc2fuy6YKhOL4tVqWDEMVSYGwDWL9DNSJXG/PUuoAn8dB04eKYuwn3m+NsVPy6
+ AB4xbVd1ieX4eLcOHcKX9BC9zxvTkizgRuQDz9FPlBNDkKAOaCuQ5c1rStRKr7Pk
+ 4RAADq1f4a3DklAJfjVGl3JdQIwBSV5o5IW1R9ndgQtQonwY9gMbkhjfCvTOk4lr
+ celQL6Vd5UWvj3PYN4yXew==
+Message-ID: <a0eda677-55f4-4588-896b-58b7afbee9b4@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 8 Jan 2026 17:27:21 +0900
 MIME-Version: 1.0
-References: <20260107180519.50820-1-philmd@linaro.org>
- <20260107180519.50820-3-philmd@linaro.org>
-In-Reply-To: <20260107180519.50820-3-philmd@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 8 Jan 2026 12:26:37 +0400
-X-Gm-Features: AQt7F2rH36qTl1gKUlfMSkZshU-s1aM57FmJcC9Ez35KZLSuWzNjXiAhBtZUNgU
-Message-ID: <CAJ+F1CLbggv90Dk7+nrqGVh+1G66s-Qr+dk5xKpT_6zOM-gmbw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] dump/win_dump: Use stubs on non-Windows hosts like
- POSIX
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v8 3/4] virtio-gpu: Destroy virgl resources on
+ virtio-gpu reset
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20260108061146.95497-1-dmitry.osipenko@collabora.com>
+ <20260108061146.95497-4-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260108061146.95497-4-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,107 +93,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Wed, Jan 7, 2026 at 10:08=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Rather than compiling the same content for all targets (unused
-> most of the time, i.e. qemu-system-avr ...), build it once per
-> POSIX hosts. Check Windows host (less likely) before x86 host.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 2026/01/08 15:11, Dmitry Osipenko wrote:
+> Properly destroy virgl resources on virtio-gpu reset to not leak resources
+> on a hot reboot of a VM.
+> 
+> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > ---
->  dump/win_dump-stubs.c | 21 +++++++++++++++++++++
->  dump/win_dump.c       | 12 ++++++++----
->  dump/meson.build      |  6 +++++-
->  3 files changed, 34 insertions(+), 5 deletions(-)
->  create mode 100644 dump/win_dump-stubs.c
->
-> diff --git a/dump/win_dump-stubs.c b/dump/win_dump-stubs.c
-> new file mode 100644
-> index 00000000000..722c66740a2
-> --- /dev/null
-> +++ b/dump/win_dump-stubs.c
-> @@ -0,0 +1,21 @@
-> +/*
-> + * Windows crashdump stubs
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "win_dump.h"
-> +
-> +bool win_dump_available(Error **errp)
-> +{
-> +    error_setg(errp, "Windows dump is only available on Windows");
-> +
-> +    return false;
-> +}
-> +
-> +void create_win_dump(DumpState *s, Error **errp)
-> +{
-> +    g_assert_not_reached();
-> +}
-> diff --git a/dump/win_dump.c b/dump/win_dump.c
-> index 6e07913dfb4..5b2b55d9ff7 100644
-> --- a/dump/win_dump.c
-> +++ b/dump/win_dump.c
-> @@ -12,14 +12,16 @@
->  #include "system/dump.h"
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
-> +#include "win_dump.h"
-> +
-> +#ifdef CONFIG_WIN32
-
-Why check CONFIG_WIN32 in a windows-only file?
-
-> +#if defined(TARGET_X86_64)
-> +
->  #include "exec/cpu-defs.h"
->  #include "hw/core/cpu.h"
->  #include "qemu/win_dump_defs.h"
-> -#include "win_dump.h"
->  #include "cpu.h"
->
-> -#if defined(TARGET_X86_64)
+>   hw/display/virtio-gpu-gl.c     |  18 +-----
+>   hw/display/virtio-gpu-virgl.c  | 115 +++++++++++++++++++++++++++------
+>   include/hw/virtio/virtio-gpu.h |   6 +-
+>   3 files changed, 101 insertions(+), 38 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index b941e9a4b789..8b71dd6fc26f 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -63,29 +63,14 @@ static void virtio_gpu_gl_flushed(VirtIOGPUBase *b)
+>   static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+>   {
+>       VirtIOGPU *g = VIRTIO_GPU(vdev);
+> -    VirtIOGPUGL *gl = VIRTIO_GPU_GL(vdev);
+>       struct virtio_gpu_ctrl_command *cmd;
+>   
+>       if (!virtio_queue_ready(vq)) {
+>           return;
+>       }
+>   
+> -    switch (gl->renderer_state) {
+> -    case RS_RESET:
+> -        virtio_gpu_virgl_reset(g);
+> -        /* fallthrough */
+> -    case RS_START:
+> -        if (virtio_gpu_virgl_init(g)) {
+> -            gl->renderer_state = RS_INIT_FAILED;
+> -            return;
+> -        }
 > -
->  bool win_dump_available(Error **errp)
->  {
->      return true;
-> @@ -478,7 +480,9 @@ out_cr3:
->      first_x86_cpu->env.cr[3] =3D saved_cr3;
->  }
->
-> -#else /* !TARGET_X86_64 */
-> +#endif /* !TARGET_X86_64 */
+> -        gl->renderer_state = RS_INITED;
+> -        break;
+> -    case RS_INIT_FAILED:
+> +    if (!virtio_gpu_virgl_update_render_state(g)) {
+>           return;
+> -    case RS_INITED:
+> -        break;
+>       }
+>   
+>       cmd = virtqueue_pop(vq, sizeof(struct virtio_gpu_ctrl_command));
+> @@ -201,6 +186,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+>       vgc->process_cmd = virtio_gpu_virgl_process_cmd;
+>       vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+>   
+> +    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
+>       vdc->realize = virtio_gpu_gl_device_realize;
+>       vdc->unrealize = virtio_gpu_gl_device_unrealize;
+>       vdc->reset = virtio_gpu_gl_reset;
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 6a2aac0b6e5c..867cb43ea2a8 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -80,10 +80,41 @@ to_hostmem_region(MemoryRegion *mr)
+>       return container_of(mr, struct virtio_gpu_virgl_hostmem_region, mr);
+>   }
+>   
+> +bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g)
+> +{
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
 > +
-> +#else /* !CONFIG_WIN32 */
->
->  bool win_dump_available(Error **errp)
->  {
-> diff --git a/dump/meson.build b/dump/meson.build
-> index 4277ce9328a..0aaf3f65d9c 100644
-> --- a/dump/meson.build
-> +++ b/dump/meson.build
-> @@ -1,2 +1,6 @@
->  system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
-> -specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: files('win_dump.c')=
-)
-> +if host_os =3D=3D 'windows'
-> +  system_ss.add(files('win_dump.c'))
-> +else
-> +  system_ss.add(files('win_dump-stubs.c'))
-> +endif
-> --
-> 2.52.0
->
->
+> +    switch (gl->renderer_state) {
+> +    case RS_RESET:
+> +        if (virtio_gpu_virgl_reset(g)) {
+> +            return false;
+> +        }
+> +        /* fallthrough */
+> +    case RS_START:
+> +        if (virtio_gpu_virgl_init(g)) {
+> +            gl->renderer_state = RS_INIT_FAILED;
+> +            return false;
+> +        }
+> +
+> +        gl->renderer_state = RS_INITED;
+> +        break;
+> +    case RS_INIT_FAILED:
+> +        return false;
+> +    case RS_INITED:
+> +        break;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+>   {
+>       VirtIOGPU *g = opaque;
+>   
+> +    if (!virtio_gpu_virgl_update_render_state(g)) {
+> +        return;
+> +    }
+> +
+>       virtio_gpu_process_cmdq(g);
+>   }
+>   
+> @@ -304,14 +335,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+>       virgl_renderer_resource_create(&args, NULL, 0);
+>   }
+>   
+> +static int
+> +virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
+> +                                struct virtio_gpu_virgl_resource *res,
+> +                                bool *suspended)
+> +{
+> +    struct iovec *res_iovs = NULL;
+> +    int num_iovs = 0;
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +    int ret;
+> +
+> +    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, suspended);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +    if (*suspended) {
+> +        return 0;
+> +    }
+> +#endif
+> +
+> +    virgl_renderer_resource_detach_iov(res->base.resource_id,
+> +                                       &res_iovs,
+> +                                       &num_iovs);
+> +    if (res_iovs != NULL && num_iovs != 0) {
+> +        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+> +    }
+> +    virgl_renderer_resource_unref(res->base.resource_id);
+> +
+> +    QTAILQ_REMOVE(&g->reslist, &res->base, next);
+> +
+> +    g_free(res);
+> +
+> +    return 0;
+> +}
+> +
+>   static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>                                        struct virtio_gpu_ctrl_command *cmd,
+>                                        bool *cmd_suspended)
+>   {
+>       struct virtio_gpu_resource_unref unref;
+>       struct virtio_gpu_virgl_resource *res;
+> -    struct iovec *res_iovs = NULL;
+> -    int num_iovs = 0;
+>   
+>       VIRTIO_GPU_FILL_CMD(unref);
+>       trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+> @@ -324,27 +387,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>           return;
+>       }
+>   
+> -#if VIRGL_VERSION_MAJOR >= 1
+> -    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
+> -        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+> -        return;
+> -    }
+> -    if (*cmd_suspended) {
+> -        return;
+> -    }
+> -#endif
+> +    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
+> +}
+>   
+> -    virgl_renderer_resource_detach_iov(unref.resource_id,
+> -                                       &res_iovs,
+> -                                       &num_iovs);
+> -    if (res_iovs != NULL && num_iovs != 0) {
+> -        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+> -    }
+> -    virgl_renderer_resource_unref(unref.resource_id);
+> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> +                                       struct virtio_gpu_simple_resource *base,
+> +                                       Error **errp)
+> +{
+> +    struct virtio_gpu_virgl_resource *res;
+> +    bool suspended = false;
+>   
+> -    QTAILQ_REMOVE(&g->reslist, &res->base, next);
+> +    res = container_of(base, struct virtio_gpu_virgl_resource, base);
+>   
+> -    g_free(res);
+> +    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
+> +        error_setg(errp, "failed to destroy virgl resource");
+> +    }
+>   }
+>   
+>   static void virgl_cmd_context_create(VirtIOGPU *g,
+> @@ -1273,11 +1330,27 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>       }
+>   }
+>   
+> -void virtio_gpu_virgl_reset(VirtIOGPU *g)
+> +int virtio_gpu_virgl_reset(VirtIOGPU *g)
+>   {
+> +    struct virtio_gpu_simple_resource *res, *tmp;
+> +
+> +    /*
+> +     * Virgl blob resource unmapping can be suspended and
+> +     * deferred on unref, ensure that destruction is completed.
+> +     */
+> +    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
+> +        virtio_gpu_virgl_resource_destroy(g, res, NULL);
+> +    }
+> +
+> +    if (!QTAILQ_EMPTY(&g->reslist)) {
+> +        return -EBUSY;
+> +    }
+> +
+>       virgl_renderer_reset();
+>   
+>       virtio_gpu_virgl_reset_async_fences(g);
+> +
+> +    return 0;
+>   }
+>   
+>   int virtio_gpu_virgl_init(VirtIOGPU *g)
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 718332284305..a0d83943b6ad 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -389,9 +389,13 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                     struct virtio_gpu_ctrl_command *cmd);
+>   void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+> -void virtio_gpu_virgl_reset(VirtIOGPU *g);
+> +int virtio_gpu_virgl_reset(VirtIOGPU *g);
+>   int virtio_gpu_virgl_init(VirtIOGPU *g);
+>   GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> +                                       struct virtio_gpu_simple_resource *res,
+> +                                       Error **errp);
+> +bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g);
 
+virtio_gpu_virgl_update_render_state() and virtio_gpu_virgl_reset() 
+return values basically for the same purpose, but the values are 
+different, and I find it confusing. Personally I prefer both to have bool.
 
---=20
-Marc-Andr=C3=A9 Lureau
+>   
+>   #endif
+
 
