@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07A3D1489F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EE9FD1489F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:39:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdifi-0004al-Px; Thu, 08 Jan 2026 00:35:00 -0500
+	id 1vdidM-00005H-Pr; Thu, 08 Jan 2026 00:32:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdifd-0004SC-67
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:34:53 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vdicN-00082Z-JT
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:38 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdifb-0005xP-Iu
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:34:52 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a137692691so21562955ad.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:34:51 -0800 (PST)
+ id 1vdicL-0005XY-WF
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:31 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b553412a19bso1490706a12.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:31:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767850490; x=1768455290; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767850289; x=1768455089; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iPCUPgmqCPlQV857vKt3p+PMVqLWxwQcBCKjihbg3eo=;
- b=mEbB5duMqLYoefUX+m80lEYOWKTp+QLJ8O9krBcTRQP5n1PYcDWWIQdjRw3cE9h3rk
- yiH/B1ybR02i0N13X5ICmxFiv3XXjdbiTj6jOy9xGbXQiyrd1wz62NZXsk5LJfhEdZED
- tJf1e7Ekto6hKpfCPrNTEbIxkLmn23Zw7vkNMobwORQZx213Fdzwzs2NSQl7P4bTlSIj
- 6KPcY+p8y6cfDIrOC42pmiYhB3AXT+d43zoKOVrCuz8qU4D3XzlDy9YZpELWjPjj0jUa
- KnKM4TeaIkGuNexmOkwV1amg5pIWbO6T7UbttyCR+1nh+mOuJOS+o2ExCBmYYLK4+dIU
- m9oQ==
+ :reply-to; bh=MdgLoN6x1cBTaJH7gh4cM0KUMVcgp66uVrMpd4cKO/c=;
+ b=togyrYYbYTg8M7H4I5U4TX5d1C+uEfbEP7WykSSmEnMY1t91Ty0dzT0sMHAJecyIG6
+ NWMpGqbf6BrzJdGq9GBltB/V1swFsOqmAk8eyPIvUQ6vvJ/tsf4xcCik0PVPg2+fcH46
+ mb4S5J+A/umFq0cpe38UBqoCHMmBtG14R7D27xlEQuCKrXIBkRZ7I10fKAfTsGrKOh3C
+ faIvOge7fh9uJWtBLC/S1tKBwIRxGs6vjRNOwd89otCdjXqAXFjKRHsMNMJHpsLkwync
+ K4blhQHcvm06a+bHIiloucpivbWV6XD9QUdF8FZtmJrSbczotuuCXnaJpFnOHObBXqQ9
+ AKdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767850490; x=1768455290;
+ d=1e100.net; s=20230601; t=1767850289; x=1768455089;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=iPCUPgmqCPlQV857vKt3p+PMVqLWxwQcBCKjihbg3eo=;
- b=rAtFcSsazQvtz39ykXv1+Dirgsc2XpkTdxqaq0ing4u+aU4P8I0+mwUs6YpSxyMOgR
- tXW4GogU7glikBpCUDZz3gohi54BfFVLNtVZ3sIoVMuj5jSZX2VdIYnJS98EhegC1Akn
- cOiebtyLJGMGmEPAYA54k1c+n4KWcRToUlMDIoQvMNf+JGFAQAg1YpEcO+RjG+/Otcts
- 3BhKOtUzLKewMe8PQiDvjX2nyaNzFwLH6lXD4iZzOOApCFpLw8H0/CVK1TY0sA0QSmYt
- QqdpSGgD/lq08+JlKwzewkA0BGQ3IdbgoC44Tnb5ZtMqxnkB89dJlGHOV7TTQ5wQVULI
- oVPw==
-X-Gm-Message-State: AOJu0Ywjn+hueLl66Tt4PRA0gNX3NXIKWMqohmnL9WNT/ETH1iyzoEaL
- Nut6HKZ0mTO2M3r3kN3YrDOxHA1NYENSM4ZFtBP+yu73fi3GqmejWuU+6lzfff/xJOOZgQSyRCa
- p3wWgiKk=
-X-Gm-Gg: AY/fxX60VSwsGWcKtuR0tDvLUXdReQFkk8jwNrb8tNzgBrDatY4y+oyPOyOkiu+1tom
- 9ER8LiSCF/Qc3pCclhUJ7P0zcrcYlBes/7g+nEZUyO3iJWtoShNpgDE8t6EC5pwt43gGZrCfCZ3
- Ty0RtPK1kfIN9qorRs8tvLn8OLvQ2BgHhoeHYcIwm/BD2irFr2twS6NcZhorNdmQC5j43cwc65Q
- Rop1pwO5fotq0HXv7kx+SbsqFn8YZH7wf311WGiek4J3hKHrjHtccQVzAyr3oCd4yb+0MWFXLnm
- 9Xl5dilOrQbUHrk2zDpBJzRQEY0gCk0uwBksPmXmBtwmwMOFVftHx2yijY+h9mV2hyKztrFQ6pD
- AOTLERCeHEO4rEHl/IO1KSaAoJbU0uyLcWir6We25goQeXvQ2umFNMCZns7rzeiroIqfKBcOtTQ
- k5cqe7qbjjHDyUi1RJmA==
-X-Google-Smtp-Source: AGHT+IHbUBkF+rrIgYIe/bh0oGoGWNs4Rwo953FbBBm0DV3FvD0lWrhTGy9tc+Zfzr7tHj/d0Ld30A==
-X-Received: by 2002:a17:903:478d:b0:2a0:b438:fc15 with SMTP id
- d9443c01a7336-2a3ee468407mr47089545ad.11.1767850489855; 
- Wed, 07 Jan 2026 21:34:49 -0800 (PST)
+ bh=MdgLoN6x1cBTaJH7gh4cM0KUMVcgp66uVrMpd4cKO/c=;
+ b=UPV230MXtpSGKVHyEj6mOdBwgZgqy8yaNZk9GUo6lodUht8IKbhLf7wR2LRDptFS1q
+ lkYd1zeWzbfUC8Jq8RnG6zZwhViZpDucbVCBK3yUw0nKV2GgSWyXp2msRTcoRrIqY4FJ
+ y//Yb/RgvABX/hOJGnLUPGZGjDfUHGUFmxx+pgKuGscsUWo+Izrv5KuewdOBNg80TW5p
+ a2p7Xc2oZ8Nz3yuyecDAKP4ojwxS4AeinNC4ddkGcU9NV8M+blNNZk8DY3DGKVHLIlJh
+ o9XvNiGYBpK+No9crYVDKnrUwcVZc6Ngmi76xNR/dMZ/JoXCgIho/sty4THEM4hZlU0k
+ Ysmg==
+X-Gm-Message-State: AOJu0Yz4HzjTUqkfVAslVTRRJdPOz43TvHzjTu33zTDDJZjFepoXqMhH
+ IQbCiRNM+k3qC/4dQyZBaVi+xrKGSquzKbw5E7YxoBOWh5u+BGS1Cipkaeo0nBdwXHCi8xzsUYk
+ WOSR9Yn0=
+X-Gm-Gg: AY/fxX6Bm9MyxcZpGNSwDWWqSLxNyaqyU8TQtlg0wndUp4Q3flmHlYEBNTnPiQwsDKo
+ I0YYonLZXFsX8RP02hxbGiQrDboX+H7Z+vfODjYXMssqdY5J+vsj8iHwEpm47Tm30E4GI/ZBJMg
+ ES15l01Thodz9K18EfzjhUgRG3wDv9Fm9dGgVU5qXtbPDu7HjZ1+o7gqWDcCQPFQDnju1tFRxpE
+ AB0tac9m7UOVZW46qeFW2rvRgR2pxztx5Aua1SyEGJiA0zP2pB6Egpz093RjfUFQZuKQekN4tKU
+ MG5KpkiXi2H/AKmS3BP5L0qDnfZfRv76lpBQ8eJm6vZQHRiH8e4gZl/0yFmgKBshXQ9jJhZMENb
+ LMdFKt5mSbwb9k5loVLfy1FlozaKg6T8f51eNHrd7RC/EPHWy+dSNvrh6SlFZoPTPIfh/rcSn1h
+ Urdkvx5x7qeApjieOZGg==
+X-Google-Smtp-Source: AGHT+IE1lNqfrhZIVuysOhSuDhmwiG+Ku6HG1cA8XpV6Zg49P0r0+xZiqA8J8TZOCl8KOvCGqploLg==
+X-Received: by 2002:a05:6a21:27a2:b0:366:1926:1e1d with SMTP id
+ adf61e73a8af0-3898f8f578amr3583919637.4.1767850288609; 
+ Wed, 07 Jan 2026 21:31:28 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cb2d93sm66341465ad.63.2026.01.07.21.34.48
+ 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.31.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 21:34:49 -0800 (PST)
+ Wed, 07 Jan 2026 21:31:28 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 43/50] target/m68k: Drop CONFIG_ATOMIC64 tests
-Date: Thu,  8 Jan 2026 16:30:11 +1100
-Message-ID: <20260108053018.626690-44-richard.henderson@linaro.org>
+Subject: [PATCH 33/50] target/riscv: Drop TCG_TARGET_REG_BITS test
+Date: Thu,  8 Jan 2026 16:30:01 +1100
+Message-ID: <20260108053018.626690-34-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108053018.626690-1-richard.henderson@linaro.org>
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,39 +101,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/op_helper.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ target/riscv/insn_trans/trans_rvv.c.inc | 54 ++++++-------------------
+ 1 file changed, 13 insertions(+), 41 deletions(-)
 
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index e9c20a8e03..3f1d943afe 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -816,14 +816,11 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
-     uint32_t u2 = env->dregs[Du2];
-     uint32_t l1, l2;
-     uintptr_t ra = GETPC();
--#if defined(CONFIG_ATOMIC64)
-     int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
-     MemOpIdx oi = make_memop_idx(MO_BEUQ, mmu_idx);
--#endif
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index caefd38216..4df9a40b44 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -1181,60 +1181,32 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+      * Update vstart with the number of processed elements.
+      * Use the helper function if either:
+      * - vstart is not 0.
+-     * - the target has 32 bit registers and we are loading/storing 64 bit long
+-     *   elements. This is to ensure that we process every element with a single
+-     *   memory instruction.
+      */
  
-     if (parallel) {
-         /* We're executing in a parallel context -- must be atomic.  */
--#ifdef CONFIG_ATOMIC64
-         uint64_t c, u, l;
-         if ((a1 & 7) == 0 && a2 == a1 + 4) {
-             c = deposit64(c2, 32, 32, c1);
-@@ -837,9 +834,7 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
-             l = cpu_atomic_cmpxchgq_be_mmu(env, a2, c, u, oi, ra);
-             l2 = l >> 32;
-             l1 = l;
--        } else
--#endif
--        {
-+        } else {
-             /* Tell the main loop we need to serialize this insn.  */
-             cpu_loop_exit_atomic(env_cpu(env), ra);
+-    bool use_helper_fn = !(s->vstart_eq_zero) ||
+-                          (TCG_TARGET_REG_BITS == 32 && log2_esz == 3);
++    bool use_helper_fn = !s->vstart_eq_zero;
+ 
+     if (!use_helper_fn) {
+-        TCGv addr = tcg_temp_new();
+         uint32_t size = s->cfg_ptr->vlenb * nf;
+         TCGv_i64 t8 = tcg_temp_new_i64();
+-        TCGv_i32 t4 = tcg_temp_new_i32();
+         MemOp atomicity = MO_ATOM_NONE;
+         if (log2_esz == 0) {
+             atomicity = MO_ATOM_NONE;
+         } else {
+             atomicity = MO_ATOM_IFALIGN_PAIR;
          }
+-        if (TCG_TARGET_REG_BITS == 64) {
+-            for (int i = 0; i < size; i += 8) {
+-                addr = get_address(s, rs1, i);
+-                if (is_load) {
+-                    tcg_gen_qemu_ld_i64(t8, addr, s->mem_idx,
+-                            MO_LE | MO_64 | atomicity);
+-                    tcg_gen_st_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
+-                } else {
+-                    tcg_gen_ld_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
+-                    tcg_gen_qemu_st_i64(t8, addr, s->mem_idx,
+-                            MO_LE | MO_64 | atomicity);
+-                }
+-                if (i == size - 8) {
+-                    tcg_gen_movi_tl(cpu_vstart, 0);
+-                } else {
+-                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 8 >> log2_esz);
+-                }
++        for (int i = 0; i < size; i += 8) {
++            TCGv addr = get_address(s, rs1, i);
++            if (is_load) {
++                tcg_gen_qemu_ld_i64(t8, addr, s->mem_idx, MO_LEUQ | atomicity);
++                tcg_gen_st_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
++            } else {
++                tcg_gen_ld_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
++                tcg_gen_qemu_st_i64(t8, addr, s->mem_idx, MO_LEUQ | atomicity);
+             }
+-        } else {
+-            for (int i = 0; i < size; i += 4) {
+-                addr = get_address(s, rs1, i);
+-                if (is_load) {
+-                    tcg_gen_qemu_ld_i32(t4, addr, s->mem_idx,
+-                            MO_LE | MO_32 | atomicity);
+-                    tcg_gen_st_i32(t4, tcg_env, vreg_ofs(s, vd) + i);
+-                } else {
+-                    tcg_gen_ld_i32(t4, tcg_env, vreg_ofs(s, vd) + i);
+-                    tcg_gen_qemu_st_i32(t4, addr, s->mem_idx,
+-                            MO_LE | MO_32 | atomicity);
+-                }
+-                if (i == size - 4) {
+-                    tcg_gen_movi_tl(cpu_vstart, 0);
+-                } else {
+-                    tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 4 >> log2_esz);
+-                }
++            if (i == size - 8) {
++                tcg_gen_movi_tl(cpu_vstart, 0);
++            } else {
++                tcg_gen_addi_tl(cpu_vstart, cpu_vstart, 8 >> log2_esz);
+             }
+         }
+     } else {
 -- 
 2.43.0
 
