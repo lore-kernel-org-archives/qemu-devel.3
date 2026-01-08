@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E97CF6ABC
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 09:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBAFCF6AB6
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdmmF-000850-JM; Thu, 08 Jan 2026 04:57:59 -0500
+	id 1vdmob-0000Lq-W9; Thu, 08 Jan 2026 05:00:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmmE-00084r-RJ
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:57:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmoW-0000LJ-5p
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:00:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmmD-0004AV-AL
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:57:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmoT-0004g1-Gv
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:00:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767866276;
+ s=mimecast20190719; t=1767866416;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8ozBYcaTQh+M3nATsqJ5ysW/UgDVM7knZ+0JKV686JA=;
- b=KvMSFI0PZiSEQd+7Sj+Z6n8Esv8Xt7dO9bwxsVIS+wWRYiKrrNmjJnpDHjld3rbvnz4gdH
- 6FvW4bRQDs59iAljnYnuoUUclXyw+LQX6JDE0RImczWHL7DLz1ktuSOiA96gdKQVty8P9Q
- VgN1/GnxMg7U2OkKHPEPK3TjEBDVd58=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QXLtBCTYSaQpgBaPW8Jq7zciX4McxnJpkA483ULdM+I=;
+ b=gyQvnIZ5dMDnTQzR1EAZbo8VA+hs7rmt8969pUcdaTIsGUhCZf2atc8jBhY8wKZAfGfJPr
+ Drlo3vJWtnE0DFM5ysSwl9GacgXcCSGGSCtVBtluJaxKqf7STu2U00WTGdRzl0afsonqgj
+ PRbxOj+4JBxUBI8LEqwIP8ZKZ6LSvNA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412-Bt2vuW3IN_WOChOnaRjYcA-1; Thu, 08 Jan 2026 04:57:55 -0500
-X-MC-Unique: Bt2vuW3IN_WOChOnaRjYcA-1
-X-Mimecast-MFC-AGG-ID: Bt2vuW3IN_WOChOnaRjYcA_1767866274
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-432c05971c6so1255948f8f.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 01:57:54 -0800 (PST)
+ us-mta-57-B3afab_jPZypkfKFbar6Fg-1; Thu, 08 Jan 2026 05:00:14 -0500
+X-MC-Unique: B3afab_jPZypkfKFbar6Fg-1
+X-Mimecast-MFC-AGG-ID: B3afab_jPZypkfKFbar6Fg_1767866413
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477bf8c1413so20723955e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:00:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767866274; x=1768471074; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767866413; x=1768471213; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8ozBYcaTQh+M3nATsqJ5ysW/UgDVM7knZ+0JKV686JA=;
- b=CJ5npvBms9v4/afnpjm8QvfU7dijsJcJ1qbd3jlRqM2Qs3mCzrumIHuxrZA+0/KjxG
- G5u/Bg65tL0nYPXgHlsdaWxy+t4wowHAJjRqxWorXf+tH4fZBx8qOBeKgSUX0jKd1YQd
- DkmAI1ZdpFrCshrxlpdPmxFhjnEBkK6Zn+libzuR8GUSI3TZq9uKD5kDHZUQ+e6sIB+D
- onqCpfJsKHrERddrS+XjjGnwG7q6iaHPWFfji0a4byO+Q4NrVKmb/Pnsna0mIouTIYyw
- ckHTLutJ9lBcbABsQpHnlNF7uql/vaaBFGIWBghW9/4q+AKXs1yzpUyN2dVRV2d/3piy
- GBKw==
+ bh=QXLtBCTYSaQpgBaPW8Jq7zciX4McxnJpkA483ULdM+I=;
+ b=ALP3+bW3wfDQlvvPBcWdTY6StbKXeT/ZVLYitjcMUpHD3mnrDi2+TjHvyWP4iZXRwr
+ 4aulbXVNgNB41TmzLMS7mZ886p0GEdNmOk0+vqM5FFxEP5tIjRQgBEdC+GqejzYCyJob
+ 15+KDD253YTB0RaCOe/de1jZpjod/ySWdyLhFKOcxDmTjEZ0PW5Ng+pz68iWmRZ5bcYJ
+ +TNyPm0mnWGs1fUPlW8ZxvgUYNhdW3MVrLDiE/ZMhv0XjKwI8uEvkMc/DToM4Drmcq0v
+ PA2nuCLzn0h5GKS1pGC7P4tbBsruKpANrBYAmvRCKuAjXt938EcW0iQTFekxHQ0U4gJ4
+ XlDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767866274; x=1768471074;
+ d=1e100.net; s=20230601; t=1767866413; x=1768471213;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8ozBYcaTQh+M3nATsqJ5ysW/UgDVM7knZ+0JKV686JA=;
- b=G5wYceQSBb0CoJ4XN+K9jYPt6rBm32/014njX3W8jNdyfG7ZynjcYfCWf43EcvqzFf
- kCmGAVg2hHez4v+7NBjS8wKBI/SPG4b5Eu2n9gu/OVOAWlENpL3ncH4J61b/HCaweOxU
- bHH8AYEV2M53puze0fXI2kRSl3DJ9gEvIsiIuh4odF4ZFg9rw5+0D2rW7K0G1TSusAsy
- B8vVjzr96wHosGB+WYRRUPlq9VUrGvFv/ekj29z1cMcWt2IOxnqbVXuaZBT3I9nZjcaF
- W/XHHA1DY3IDZ8HZ0DK8FR7CAHKFvR2xBcTXWragLJ2ioOHoBjX4mwfzI1zFw0XrbMUL
- 4Xzw==
+ bh=QXLtBCTYSaQpgBaPW8Jq7zciX4McxnJpkA483ULdM+I=;
+ b=Ak9vpQoiccSfLSGi8uDtKslTkIDWodMlmodww/rTJeqOgPNmXpwuiRQgRUq5UyZYvt
+ 1HnSXuKoqYpwhil0JBbFrEZRh1Fl03zr0UT7H2E0XBQ2oiIIuTydCzY5Hl65r5j+5ez+
+ VLAjrxEmtpmy3LuEcNIpxkPRM75peOYo1jadHsjIxWZ94DkUy7F5Z/MlEzm/FjpovLVA
+ mSvGDgZ6j2xDpL/EJRnyq2Gdd70WB08mhqvQGSfxdPUrtOvofXBig9cv633qXsEp1lkr
+ MGTbCLQVQfpDQ5ctuufZfJSlFIr3JXs/dAt1cQJbS/i5l9urmr0hHYnTysmNsPwv/xN7
+ LbKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQIwIf6GXN1s1cyH1XAyDNA9OOHRFNJ876qjvOM04VYJ16965Sbmpua+1uy6n1yCoL1pcpeoVzsfjl@nongnu.org
-X-Gm-Message-State: AOJu0YzZM4W5TC4fXdzt2VcxG63BWWBEwJ1wXrPsvRfw6jWO/QpDicU2
- xZXbfbdcZn5e8kxjO2R+AfRQMnZc3E/A9OXg/dW5rsyYkY8sA3CtW1OwidTx9eCLIhc/foUJHmk
- /ug5YFjlApcQ03WgkP/DSMjvM2la0MvgMNRRghGk9l0ZCdMeHdavTm1n+qTV4L9EH
-X-Gm-Gg: AY/fxX7NMTbBsFrReDODSdWn0cPQdBNLwWJCiaru60MdOVn+LMDWGA+57RA8FIUAPCs
- 4Aiy3JgZQzunXbCAXvoASFaQX9j+dFnQ6rDdGULcMb5ubGOhoGkevMicUaTeTN53PxHpjrdoHh9
- 4luniIL7D80xkwbDDQESjJ9ev4t1VzQr9/YaYhnKL81GmmKAbd/xCAz2yBDAYBvXkAFlCohcPvh
- XotWIxID88NDXDTcUYmVmGWliCfGnO3PtaqxCRGM7PexMxIrLBuTL83wkepiKTcguJ+T2YneFoD
- CjyUS8/7py8XV/AUDHCnx0kplmwp1rxy9ERs0CQE5z339NwDmN14N9PObICwj5VjgUuODlIVDQG
- hbGjAeHY=
-X-Received: by 2002:a05:6000:a88:b0:432:c0b8:ee42 with SMTP id
- ffacd0b85a97d-432c0b8ef25mr7659577f8f.11.1767866273706; 
- Thu, 08 Jan 2026 01:57:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFtEd+ifRilVsRx0W6T2oQvlVN1olr45AiFkLf/Tv8TNGKYjp2DMfki1haE9JXFHPgHjW9lxA==
-X-Received: by 2002:a05:6000:a88:b0:432:c0b8:ee42 with SMTP id
- ffacd0b85a97d-432c0b8ef25mr7659565f8f.11.1767866273341; 
- Thu, 08 Jan 2026 01:57:53 -0800 (PST)
+ AJvYcCWTBr4g+eXBijZ5HQbpVhrG+6XTS0rcl9Mq3hZBdDZ99gro4cRznzh0BISC4Xm6cRwD0UhnGgj90mkR@nongnu.org
+X-Gm-Message-State: AOJu0YwZX7KubfIrISYQfrA/DdIhzx/2myrKGexq25atYA24YLhcxv2/
+ md7C7+umracL+l8DFGXGRdh1mCKBMYh9cRvHlDdosv1W13vK/Pw4yal1g3qz/iRvbBedWp3WJ7P
+ BlegrREulJJqcFXXInywVl5o1uh+s/89xPrgeCDPuwF9XmetpLACBZFNE
+X-Gm-Gg: AY/fxX6QZTUzAvu+xXWqxfWTchoPTC9BeMiEpjfTHzQO5Kn5P+sGqpFgtirkD9Qtc5Z
+ 5omS6MzXRNlfc6vfkJVF7L8/oQDn6ZsTtz1bK666Jcq2MAIi+QST/RWAbNbsN8GgctWOqqxFgmg
+ 991sRYNnNMpxtmjcHYi6zA79GWxicSlHUxrmDTLHn3WJDuOtISMYCdtAD59RC1K3ZGBhDXFQuRg
+ JFJsumx7NqEuyFxItBbSGLPXYiJjnh4HuDVWmlOEREFfdiZ6zpZXPCFHT/JoZkawXDxX7jBXc3v
+ GdVGlNCg06zAJgJR1dFiPylLc7nRBAp/Te3Qf80hoNPcBPzY/sYFTlja9an0JtlyV5/RhVDnGdX
+ WWGEbWH8=
+X-Received: by 2002:a05:6000:2085:b0:430:f1e8:ed86 with SMTP id
+ ffacd0b85a97d-432c36280afmr6872780f8f.4.1767866413123; 
+ Thu, 08 Jan 2026 02:00:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGSqtRBunMUUjWcSZPhmpVqsDMegmROLY3bLTrYHOHconUaRp6s99bTc06SjYpSkhgxKu+K0g==
+X-Received: by 2002:a05:6000:2085:b0:430:f1e8:ed86 with SMTP id
+ ffacd0b85a97d-432c36280afmr6872736f8f.4.1767866412670; 
+ Thu, 08 Jan 2026 02:00:12 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e180csm15162616f8f.10.2026.01.08.01.57.52
+ ffacd0b85a97d-432bd0dadcfsm15408754f8f.3.2026.01.08.02.00.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 01:57:53 -0800 (PST)
-Message-ID: <3b2fba2c-456c-4c8e-9f8f-3aa63aa9a0af@redhat.com>
-Date: Thu, 8 Jan 2026 10:57:51 +0100
+ Thu, 08 Jan 2026 02:00:12 -0800 (PST)
+Message-ID: <7280f6c9-413f-4886-81e4-7d4b374d6ea2@redhat.com>
+Date: Thu, 8 Jan 2026 11:00:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/50] *: Remove i386 host support
+Subject: Re: [PATCH 44/50] target/s390x: Drop CONFIG_ATOMIC64 tests
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-7-richard.henderson@linaro.org>
+ <20260108053018.626690-45-richard.henderson@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -137,17 +137,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260108053018.626690-7-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-45-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -165,32 +165,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/01/2026 06.29, Richard Henderson wrote:
-> Move the files from host/include/i386 to host/include/x86_64,
-> replacing the stub headers that redirected to i386.
-> 
-> Remove linux-user/include/host/i386.
-> Remove common-user/host/i386.
-> 
+On 08/01/2026 06.30, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   host/include/i386/host/cpuinfo.h            |  41 ------
->   host/include/i386/host/crypto/aes-round.h   | 152 -------------------
->   host/include/i386/host/crypto/clmul.h       |  29 ----
->   host/include/x86_64/host/cpuinfo.h          |  42 +++++-
->   host/include/x86_64/host/crypto/aes-round.h | 153 +++++++++++++++++++-
->   host/include/x86_64/host/crypto/clmul.h     |  30 +++-
->   linux-user/include/host/i386/host-signal.h  |  38 -----
->   common-user/host/i386/safe-syscall.inc.S    | 127 ----------------
->   host/include/i386/host/bufferiszero.c.inc   | 125 ----------------
->   host/include/x86_64/host/bufferiszero.c.inc | 126 +++++++++++++++-
->   10 files changed, 347 insertions(+), 516 deletions(-)
->   delete mode 100644 host/include/i386/host/cpuinfo.h
->   delete mode 100644 host/include/i386/host/crypto/aes-round.h
->   delete mode 100644 host/include/i386/host/crypto/clmul.h
->   delete mode 100644 linux-user/include/host/i386/host-signal.h
->   delete mode 100644 common-user/host/i386/safe-syscall.inc.S
->   delete mode 100644 host/include/i386/host/bufferiszero.c.inc
+>   target/s390x/tcg/mem_helper.c | 7 -------
+>   1 file changed, 7 deletions(-)
+> 
+> diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+> index 9e5bd3ed07..cc0755c91f 100644
+> --- a/target/s390x/tcg/mem_helper.c
+> +++ b/target/s390x/tcg/mem_helper.c
+> @@ -1814,9 +1814,7 @@ static uint32_t do_csst(CPUS390XState *env, uint32_t r3, uint64_t a1,
+>        */
+>       if (parallel) {
+>           uint32_t max = 2;
+> -#ifdef CONFIG_ATOMIC64
+>           max = 3;
+> -#endif
+>           if ((HAVE_CMPXCHG128 ? 0 : fc + 2 > max) ||
+>               (HAVE_ATOMIC128_RW ? 0 : sc > max)) {
+>               cpu_loop_exit_atomic(env_cpu(env), ra);
+> @@ -1855,12 +1853,7 @@ static uint32_t do_csst(CPUS390XState *env, uint32_t r3, uint64_t a1,
+>               uint64_t ov;
+>   
+>               if (parallel) {
+> -#ifdef CONFIG_ATOMIC64
+>                   ov = cpu_atomic_cmpxchgq_be_mmu(env, a1, cv, nv, oi8, ra);
+> -#else
+> -                /* Note that we asserted !parallel above.  */
+> -                g_assert_not_reached();
+> -#endif
+>               } else {
+>                   ov = cpu_ldq_mmu(env, a1, oi8, ra);
+>                   cpu_stq_mmu(env, a1, (ov == cv ? nv : ov), oi8, ra);
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
