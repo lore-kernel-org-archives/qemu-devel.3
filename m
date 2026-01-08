@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4F6D1489A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D3ED14899
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:08:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdgNS-0002Sv-C5; Wed, 07 Jan 2026 22:07:58 -0500
+	id 1vdgNS-0002ZJ-U9; Wed, 07 Jan 2026 22:07:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgN5-0001Vw-3S; Wed, 07 Jan 2026 22:07:42 -0500
+ id 1vdgND-0001Ww-CA; Wed, 07 Jan 2026 22:07:48 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgN1-0005BC-CD; Wed, 07 Jan 2026 22:07:32 -0500
+ id 1vdgNA-0005BC-CF; Wed, 07 Jan 2026 22:07:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767841652; x=1799377652;
+ t=1767841661; x=1799377661;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=H2ATAxl6nc2NxJwHUemV2+/REmRtA2iQc1/q560G/jk=;
- b=JAanG+nKw3hpdovR3xqAAGduVghOps4NukZi/4C67GCsUZDWHT3HufKk
- +ea6xQw2rLgU/QL6c9CETjMdtNTDrUWSOFgZjb7GNpjd7za2KaHFr6pgH
- t+qtAnMgf0ZetkxS+PMXuNfMT64wIViUK5C49m/t6lUYSfCgCt6SHHFuo
- 4PaYoWF5sWuy4iWcOEE3egGVcmmG2bhanK/jymz7NZmqRNa3Yxgq25x/M
- p7LXCVGE5lOPQ49AiYyXg3yys96fZSGDmy3L3cDLtR9rIZN4UgBJkKv2t
- 3YJPS3z7HEV3JG9/zYmmPCYTXni/2J36GNaSL/SPbXO2DwMFf9pWfUB7r Q==;
-X-CSE-ConnectionGUID: djbX56+aQ26P4b2hJhHNxg==
-X-CSE-MsgGUID: 6vpBdsNXQA+mJxB5TWjmKQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877262"
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877262"
+ bh=AR+Wp6UKB7SJ4nqL3Yl+vvfJ3RhdOxcACo1tEj8qpxU=;
+ b=RB955fSVJVz7ZPv/MqIWbyCFjzH20c7OnugLYc2kk9qHPeTbntGWDdHw
+ fiEC44RWN4u0+RgMBaiU9cgn0H5xNe4TFTPA7flrxpDrY+7xshNq1/Whf
+ S2CkfOJFEXTguoGXASGAp5RzJHkJOkhf+cCBYzbEtv8a7UlxFvw8dkerZ
+ Z+oQhhey0cagEF1pfFGLp2uC0xBB+LXTtCjMJ2dHXW4vXC0bmamzmIasB
+ oQ7A1OLMmdyF7umb43ZG8xI4tCwY4FvrIDvVQ1HWkAPH5F2QUGxkgL3re
+ b8JkH2QPsRk+WTeFCktPXw2wm3lot05rEt57p4gddVUWPcIJZeecQBm4z g==;
+X-CSE-ConnectionGUID: DkPja5gdSjOfXzQbzxMnwg==
+X-CSE-MsgGUID: YldL59ngTxexRY9brrP31Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877278"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877278"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2026 19:07:30 -0800
-X-CSE-ConnectionGUID: X3UNGXX6S7e/WJqtSXmOhQ==
-X-CSE-MsgGUID: ASqkVwIvSP2kfXhBiioB+g==
+ 07 Jan 2026 19:07:39 -0800
+X-CSE-ConnectionGUID: dMClpFwLQQyMV646nNSndQ==
+X-CSE-MsgGUID: n7nEDXnlQ5qAHwPoBtjQlg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202210880"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202210970"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:07:20 -0800
+ by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:07:29 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,10 +72,9 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 12/27] hw/i386/x86: Remove
- X86MachineClass::fwcfg_dma_enabled field
-Date: Thu,  8 Jan 2026 11:30:36 +0800
-Message-Id: <20260108033051.777361-13-zhao1.liu@intel.com>
+Subject: [PATCH v6 13/27] hw/i386/pc: Remove multiboot.bin
+Date: Thu,  8 Jan 2026 11:30:37 +0800
+Message-Id: <20260108033051.777361-14-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260108033051.777361-1-zhao1.liu@intel.com>
 References: <20260108033051.777361-1-zhao1.liu@intel.com>
@@ -109,124 +108,585 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The X86MachineClass::fwcfg_dma_enabled boolean was only used
-by the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
-removed. Remove it and simplify.
+All PC machines now use the multiboot_dma.bin binary,
+we can remove the non-DMA version (multiboot.bin).
 
-'multiboot.bin' isn't used anymore, we'll remove it in the
-next commit.
+This doesn't change multiboot_dma binary file.
 
+Suggested-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/i386/microvm.c     | 3 ---
- hw/i386/multiboot.c   | 7 +------
- hw/i386/x86-common.c  | 3 +--
- hw/i386/x86.c         | 2 --
- include/hw/i386/x86.h | 2 --
- 5 files changed, 2 insertions(+), 15 deletions(-)
+Changes since v4:
+ * There's a recent change for multiboot.S: commit 4c8f69b94839.
+   Rebase this patch on that.
+---
+ hw/i386/pc.c                      |   1 -
+ pc-bios/meson.build               |   1 -
+ pc-bios/multiboot.bin             | Bin 1024 -> 0 bytes
+ pc-bios/optionrom/Makefile        |   2 +-
+ pc-bios/optionrom/multiboot.S     | 232 -----------------------------
+ pc-bios/optionrom/multiboot_dma.S | 234 +++++++++++++++++++++++++++++-
+ pc-bios/optionrom/optionrom.h     |   4 -
+ 7 files changed, 233 insertions(+), 241 deletions(-)
+ delete mode 100644 pc-bios/multiboot.bin
+ delete mode 100644 pc-bios/optionrom/multiboot.S
 
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 8cf99ad66237..7ff205126365 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -640,7 +640,6 @@ GlobalProperty microvm_properties[] = {
- 
- static void microvm_class_init(ObjectClass *oc, const void *data)
- {
--    X86MachineClass *x86mc = X86_MACHINE_CLASS(oc);
-     MicrovmMachineClass *mmc = MICROVM_MACHINE_CLASS(oc);
-     MachineClass *mc = MACHINE_CLASS(oc);
-     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
-@@ -674,8 +673,6 @@ static void microvm_class_init(ObjectClass *oc, const void *data)
-     hc->unplug_request = microvm_device_unplug_request_cb;
-     hc->unplug = microvm_device_unplug_cb;
- 
--    x86mc->fwcfg_dma_enabled = true;
--
-     object_class_property_add(oc, MICROVM_MACHINE_RTC, "OnOffAuto",
-                               microvm_machine_get_rtc,
-                               microvm_machine_set_rtc,
-diff --git a/hw/i386/multiboot.c b/hw/i386/multiboot.c
-index 8b6acfee9ba8..0e960a15dda4 100644
---- a/hw/i386/multiboot.c
-+++ b/hw/i386/multiboot.c
-@@ -153,7 +153,6 @@ int load_multiboot(X86MachineState *x86ms,
-                    int kernel_file_size,
-                    uint8_t *header)
- {
--    bool multiboot_dma_enabled = X86_MACHINE_GET_CLASS(x86ms)->fwcfg_dma_enabled;
-     int i, is_multiboot = 0;
-     uint32_t flags = 0;
-     uint32_t mh_entry_addr;
-@@ -402,11 +401,7 @@ int load_multiboot(X86MachineState *x86ms,
-     fw_cfg_add_bytes(fw_cfg, FW_CFG_INITRD_DATA, mb_bootinfo_data,
-                      sizeof(bootinfo));
- 
--    if (multiboot_dma_enabled) {
--        option_rom[nb_option_roms].name = "multiboot_dma.bin";
--    } else {
--        option_rom[nb_option_roms].name = "multiboot.bin";
--    }
-+    option_rom[nb_option_roms].name = "multiboot_dma.bin";
-     option_rom[nb_option_roms].bootindex = 0;
-     nb_option_roms++;
- 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 85b90ff43248..192e91042f22 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -645,7 +645,6 @@ void x86_load_linux(X86MachineState *x86ms,
-                     int acpi_data_size,
-                     bool pvh_enabled)
- {
--    bool linuxboot_dma_enabled = X86_MACHINE_GET_CLASS(x86ms)->fwcfg_dma_enabled;
-     uint16_t protocol;
-     int setup_size, kernel_size, cmdline_size;
-     int dtb_size, setup_data_offset;
-@@ -1004,7 +1003,7 @@ void x86_load_linux(X86MachineState *x86ms,
- 
-     option_rom[nb_option_roms].bootindex = 0;
-     option_rom[nb_option_roms].name = "linuxboot.bin";
--    if (linuxboot_dma_enabled && fw_cfg_dma_enabled(fw_cfg)) {
-+    if (fw_cfg_dma_enabled(fw_cfg)) {
-         option_rom[nb_option_roms].name = "linuxboot_dma.bin";
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 15d21f380c43..f029c7323bcb 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -669,7 +669,6 @@ void xen_load_linux(PCMachineState *pcms)
+         assert(!strcmp(option_rom[i].name, "linuxboot.bin") ||
+                !strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
+                !strcmp(option_rom[i].name, "pvh.bin") ||
+-               !strcmp(option_rom[i].name, "multiboot.bin") ||
+                !strcmp(option_rom[i].name, "multiboot_dma.bin"));
+         rom_add_option(option_rom[i].name, option_rom[i].bootindex);
      }
-     nb_option_roms++;
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index c29856c810a5..01872cba0733 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -375,14 +375,12 @@ static void x86_machine_initfn(Object *obj)
- static void x86_machine_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
--    X86MachineClass *x86mc = X86_MACHINE_CLASS(oc);
-     NMIClass *nc = NMI_CLASS(oc);
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index 9260aaad78e8..efe45c16705d 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -62,7 +62,6 @@ blobs = [
+   'efi-e1000e.rom',
+   'efi-vmxnet3.rom',
+   'qemu-nsis.bmp',
+-  'multiboot.bin',
+   'multiboot_dma.bin',
+   'linuxboot.bin',
+   'linuxboot_dma.bin',
+diff --git a/pc-bios/multiboot.bin b/pc-bios/multiboot.bin
+deleted file mode 100644
+index e772713c95749bee82c20002b50ec6d05b2d4987..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 1024
+zcmeHFF-Tic6utlZQ$OjD#Hxcx2u0GNQv6GySOkZR(ulaX<>%N!Y#>cWhY}nf36J7X
+zN(%*X6NHY>xcqO11dG^02a8L@B~ihln|%1*|7(haWa`)l@80w7;U4Ziyv0rZ8{K-w
+zX(Ib3tLZ)RgZ}w1ei{~QEqQq9q1J-iHc<Nk_t=0qf%XfPZVHw2DY#ujc2P|}*P%6X
+z5J{pPlX4<yP&N5pXK;s@UhB~&!E&UdqEwGZF6xQMIcu9YL#zeSRCoLGt{Nh+08t>}
+z{m%E-b32A??+@XljSYirtWObwngi<ymS1Ta*dFGMp;8@=_3Z52!v09{UU~`QnFsB_
+z7BiEC)uZxH%SW9kPWCicN{_iUjmk<~D^H|R%@|m9%43Woc(Pkeq%n{&8ND5Z*tPt#
+zJua+xXAQhN4K(1MMs0{u_6sp>l#NmvPZ7KC<lsLdQgMFC@A6POvMoDMgW=M+K;T<o
+zTkpnNq6x*`vM0CGE>t40l-CQ}*)y<y--c)(x}o&1TMzwX+ToGS@VER4zR&s70fl+(
+qI)9<-H_-!n#lLJmGq*^~<$US&%R-@)$`@YPx#A6#|L`9<;9UXPG71m?
+
+diff --git a/pc-bios/optionrom/Makefile b/pc-bios/optionrom/Makefile
+index 30d07026c790..1183ef889228 100644
+--- a/pc-bios/optionrom/Makefile
++++ b/pc-bios/optionrom/Makefile
+@@ -2,7 +2,7 @@ include config.mak
+ SRC_DIR := $(TOPSRC_DIR)/pc-bios/optionrom
+ VPATH = $(SRC_DIR)
  
-     mc->cpu_index_to_instance_props = x86_cpu_index_to_props;
-     mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
-     mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
-     mc->kvm_type = x86_kvm_type;
--    x86mc->fwcfg_dma_enabled = true;
-     nc->nmi_monitor_handler = x86_nmi;
+-all: multiboot.bin multiboot_dma.bin linuxboot.bin linuxboot_dma.bin kvmvapic.bin pvh.bin
++all: multiboot_dma.bin linuxboot.bin linuxboot_dma.bin kvmvapic.bin pvh.bin
+ # Dummy command so that make thinks it has done something
+ 	@true
  
-     object_class_property_add(oc, X86_MACHINE_SMM, "OnOffAuto",
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index 0dffba95f9a4..23be62743774 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -30,8 +30,6 @@
- struct X86MachineClass {
-     MachineClass parent;
+diff --git a/pc-bios/optionrom/multiboot.S b/pc-bios/optionrom/multiboot.S
+deleted file mode 100644
+index c95e35c9cb62..000000000000
+--- a/pc-bios/optionrom/multiboot.S
++++ /dev/null
+@@ -1,232 +0,0 @@
+-/*
+- * Multiboot Option ROM
+- *
+- * This program is free software; you can redistribute it and/or modify
+- * it under the terms of the GNU General Public License as published by
+- * the Free Software Foundation; either version 2 of the License, or
+- * (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License
+- * along with this program; if not, see <http://www.gnu.org/licenses/>.
+- *
+- * Copyright Novell Inc, 2009
+- *   Authors: Alexander Graf <agraf@suse.de>
+- */
+-
+-#include "optionrom.h"
+-
+-#define BOOT_ROM_PRODUCT "multiboot loader"
+-
+-#define MULTIBOOT_MAGIC		0x2badb002
+-
+-#define GS_PROT_JUMP		0
+-#define GS_GDT_DESC		6
+-
+-
+-BOOT_ROM_START
+-
+-run_multiboot:
+-
+-	cli
+-	cld
+-
+-	mov		%cs, %eax
+-	shl		$0x4, %eax
+-
+-	/* set up a long jump descriptor that is PC relative */
+-
+-	/* move stack memory to %gs */
+-	mov		%ss, %ecx
+-	shl		$0x4, %ecx
+-	mov		%esp, %ebx
+-	add		%ebx, %ecx
+-	sub		$0x20, %ecx
+-	sub		$0x30, %esp
+-	shr		$0x4, %ecx
+-	mov		%cx, %gs
+-
+-	/* now push the indirect jump descriptor there */
+-	mov		(prot_jump), %ebx
+-	add		%eax, %ebx
+-	movl		%ebx, %gs:GS_PROT_JUMP
+-	mov		$8, %bx
+-	movw		%bx, %gs:GS_PROT_JUMP + 4
+-
+-	/* fix the gdt descriptor to be PC relative */
+-	movw		(gdt_desc), %bx
+-	movw		%bx, %gs:GS_GDT_DESC
+-	movl		(gdt_desc+2), %ebx
+-	add		%eax, %ebx
+-	movl		%ebx, %gs:GS_GDT_DESC + 2
+-
+-	xor		%eax, %eax
+-	mov		%eax, %es
+-
+-	/* Read the bootinfo struct into RAM */
+-	read_fw_blob_dma(FW_CFG_INITRD)
+-
+-	/* FS = bootinfo_struct */
+-	read_fw		FW_CFG_INITRD_ADDR
+-	shr		$4, %eax
+-	mov		%ax, %fs
+-
+-	/* Account for the EBDA in the multiboot structure's e801
+-	 * map.
+-	 */
+-	int		$0x12
+-	cwtl
+-	movl		%eax, %fs:4
+-
+-	/* ES = mmap_addr */
+-	mov 		%fs:48, %eax
+-	shr		$4, %eax
+-	mov		%ax, %es
+-
+-	/* Initialize multiboot mmap structs using int 0x15(e820) */
+-	xor		%ebx, %ebx
+-	/* Start storing mmap data at %es:0 */
+-	xor		%edi, %edi
+-
+-mmap_loop:
+-	/* The multiboot entry size has offset -4, so leave some space */
+-	add		$4, %di
+-	/* entry size (mmap struct) & max buffer size (int15) */
+-	movl		$20, %ecx
+-	/* e820 */
+-	movl		$0x0000e820, %eax
+-	/* 'SMAP' magic */
+-	movl		$0x534d4150, %edx
+-	int		$0x15
+-
+-mmap_check_entry:
+-	/* Error or last entry already done? */
+-	jb		mmap_done
+-
+-mmap_store_entry:
+-	/* store entry size */
+-	/* old as(1) doesn't like this insn so emit the bytes instead:
+-	movl		%ecx, %es:-4(%edi)
+-	*/
+-	.dc.b		0x26,0x67,0x66,0x89,0x4f,0xfc
+-
+-	/* %edi += entry_size, store as mbs_mmap_length */
+-	add		%ecx, %edi
+-	movw		%di, %fs:0x2c
+-
+-	/* Continuation value 0 means last entry */
+-	test		%ebx, %ebx
+-	jnz		mmap_loop
+-
+-mmap_done:
+-	/* Calculate upper_mem field: The amount of memory between 1 MB and
+-	   the first upper memory hole. Get it from the mmap. */
+-	xor		%di, %di
+-	mov		$0x100000, %edx
+-upper_mem_entry:
+-	cmp		%fs:0x2c, %di
+-	je		upper_mem_done
+-	add		$4, %di
+-
+-	/* Skip if type != 1 */
+-	cmpl		$1, %es:16(%di)
+-	jne		upper_mem_next
+-
+-	/* Skip if > 4 GB */
+-	movl		%es:4(%di), %eax
+-	test		%eax, %eax
+-	jnz		upper_mem_next
+-
+-	/* Check for contiguous extension (base <= %edx < base + length) */
+-	movl		%es:(%di), %eax
+-	cmp		%eax, %edx
+-	jb		upper_mem_next
+-	addl		%es:8(%di), %eax
+-	cmp		%eax, %edx
+-	jae		upper_mem_next
+-
+-	/* If so, update %edx, and restart the search (mmap isn't ordered) */
+-	mov		%eax, %edx
+-	xor		%di, %di
+-	jmp		upper_mem_entry
+-
+-upper_mem_next:
+-	addl		%es:-4(%di), %edi
+-	jmp		upper_mem_entry
+-
+-upper_mem_done:
+-	sub		$0x100000, %edx
+-	shr		$10, %edx
+-	mov		%edx, %fs:0x8
+-
+-real_to_prot:
+-	/* Load the GDT before going into protected mode */
+-lgdt:
+-	data32 lgdt	%gs:GS_GDT_DESC
+-
+-	/* get us to protected mode now */
+-	movl		$1, %eax
+-	movl		%eax, %cr0
+-
+-	/* the LJMP sets CS for us and gets us to 32-bit */
+-ljmp:
+-	data32 ljmp	*%gs:GS_PROT_JUMP
+-
+-prot_mode:
+-.code32
+-
+-	/* initialize all other segments */
+-	movl		$0x10, %eax
+-	movl		%eax, %ss
+-	movl		%eax, %ds
+-	movl		%eax, %es
+-	movl		%eax, %fs
+-	movl		%eax, %gs
+-
+-	/* Read the kernel and modules into RAM */
+-	read_fw_blob_dma(FW_CFG_KERNEL)
+-
+-	/* Jump off to the kernel */
+-	read_fw		FW_CFG_KERNEL_ENTRY
+-	mov		%eax, %ecx
+-
+-	/* EBX contains a pointer to the bootinfo struct */
+-	read_fw		FW_CFG_INITRD_ADDR
+-	movl		%eax, %ebx
+-
+-	/* EAX has to contain the magic */
+-	movl		$MULTIBOOT_MAGIC, %eax
+-ljmp2:
+-	jmp		*%ecx
+-
+-/* Variables */
+-.align 4, 0
+-prot_jump:	.long prot_mode
+-		.short 8
+-
+-.align 8, 0
+-gdt:
+-	/* 0x00 */
+-.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+-
+-	/* 0x08: code segment (base=0, limit=0xfffff, type=32bit code exec/read, DPL=0, 4k) */
+-.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9a, 0xcf, 0x00
+-
+-	/* 0x10: data segment (base=0, limit=0xfffff, type=32bit data read/write, DPL=0, 4k) */
+-.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0xcf, 0x00
+-
+-	/* 0x18: code segment (base=0, limit=0x0ffff, type=16bit code exec/read/conf, DPL=0, 1b) */
+-.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9e, 0x00, 0x00
+-
+-	/* 0x20: data segment (base=0, limit=0x0ffff, type=16bit data read/write, DPL=0, 1b) */
+-.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0x00, 0x00
+-
+-gdt_desc:
+-.short	(5 * 8) - 1
+-.long	gdt
+-
+-BOOT_ROM_END
+diff --git a/pc-bios/optionrom/multiboot_dma.S b/pc-bios/optionrom/multiboot_dma.S
+index d809af3e23fc..c95e35c9cb62 100644
+--- a/pc-bios/optionrom/multiboot_dma.S
++++ b/pc-bios/optionrom/multiboot_dma.S
+@@ -1,2 +1,232 @@
+-#define USE_FW_CFG_DMA 1
+-#include "multiboot.S"
++/*
++ * Multiboot Option ROM
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, see <http://www.gnu.org/licenses/>.
++ *
++ * Copyright Novell Inc, 2009
++ *   Authors: Alexander Graf <agraf@suse.de>
++ */
++
++#include "optionrom.h"
++
++#define BOOT_ROM_PRODUCT "multiboot loader"
++
++#define MULTIBOOT_MAGIC		0x2badb002
++
++#define GS_PROT_JUMP		0
++#define GS_GDT_DESC		6
++
++
++BOOT_ROM_START
++
++run_multiboot:
++
++	cli
++	cld
++
++	mov		%cs, %eax
++	shl		$0x4, %eax
++
++	/* set up a long jump descriptor that is PC relative */
++
++	/* move stack memory to %gs */
++	mov		%ss, %ecx
++	shl		$0x4, %ecx
++	mov		%esp, %ebx
++	add		%ebx, %ecx
++	sub		$0x20, %ecx
++	sub		$0x30, %esp
++	shr		$0x4, %ecx
++	mov		%cx, %gs
++
++	/* now push the indirect jump descriptor there */
++	mov		(prot_jump), %ebx
++	add		%eax, %ebx
++	movl		%ebx, %gs:GS_PROT_JUMP
++	mov		$8, %bx
++	movw		%bx, %gs:GS_PROT_JUMP + 4
++
++	/* fix the gdt descriptor to be PC relative */
++	movw		(gdt_desc), %bx
++	movw		%bx, %gs:GS_GDT_DESC
++	movl		(gdt_desc+2), %ebx
++	add		%eax, %ebx
++	movl		%ebx, %gs:GS_GDT_DESC + 2
++
++	xor		%eax, %eax
++	mov		%eax, %es
++
++	/* Read the bootinfo struct into RAM */
++	read_fw_blob_dma(FW_CFG_INITRD)
++
++	/* FS = bootinfo_struct */
++	read_fw		FW_CFG_INITRD_ADDR
++	shr		$4, %eax
++	mov		%ax, %fs
++
++	/* Account for the EBDA in the multiboot structure's e801
++	 * map.
++	 */
++	int		$0x12
++	cwtl
++	movl		%eax, %fs:4
++
++	/* ES = mmap_addr */
++	mov 		%fs:48, %eax
++	shr		$4, %eax
++	mov		%ax, %es
++
++	/* Initialize multiboot mmap structs using int 0x15(e820) */
++	xor		%ebx, %ebx
++	/* Start storing mmap data at %es:0 */
++	xor		%edi, %edi
++
++mmap_loop:
++	/* The multiboot entry size has offset -4, so leave some space */
++	add		$4, %di
++	/* entry size (mmap struct) & max buffer size (int15) */
++	movl		$20, %ecx
++	/* e820 */
++	movl		$0x0000e820, %eax
++	/* 'SMAP' magic */
++	movl		$0x534d4150, %edx
++	int		$0x15
++
++mmap_check_entry:
++	/* Error or last entry already done? */
++	jb		mmap_done
++
++mmap_store_entry:
++	/* store entry size */
++	/* old as(1) doesn't like this insn so emit the bytes instead:
++	movl		%ecx, %es:-4(%edi)
++	*/
++	.dc.b		0x26,0x67,0x66,0x89,0x4f,0xfc
++
++	/* %edi += entry_size, store as mbs_mmap_length */
++	add		%ecx, %edi
++	movw		%di, %fs:0x2c
++
++	/* Continuation value 0 means last entry */
++	test		%ebx, %ebx
++	jnz		mmap_loop
++
++mmap_done:
++	/* Calculate upper_mem field: The amount of memory between 1 MB and
++	   the first upper memory hole. Get it from the mmap. */
++	xor		%di, %di
++	mov		$0x100000, %edx
++upper_mem_entry:
++	cmp		%fs:0x2c, %di
++	je		upper_mem_done
++	add		$4, %di
++
++	/* Skip if type != 1 */
++	cmpl		$1, %es:16(%di)
++	jne		upper_mem_next
++
++	/* Skip if > 4 GB */
++	movl		%es:4(%di), %eax
++	test		%eax, %eax
++	jnz		upper_mem_next
++
++	/* Check for contiguous extension (base <= %edx < base + length) */
++	movl		%es:(%di), %eax
++	cmp		%eax, %edx
++	jb		upper_mem_next
++	addl		%es:8(%di), %eax
++	cmp		%eax, %edx
++	jae		upper_mem_next
++
++	/* If so, update %edx, and restart the search (mmap isn't ordered) */
++	mov		%eax, %edx
++	xor		%di, %di
++	jmp		upper_mem_entry
++
++upper_mem_next:
++	addl		%es:-4(%di), %edi
++	jmp		upper_mem_entry
++
++upper_mem_done:
++	sub		$0x100000, %edx
++	shr		$10, %edx
++	mov		%edx, %fs:0x8
++
++real_to_prot:
++	/* Load the GDT before going into protected mode */
++lgdt:
++	data32 lgdt	%gs:GS_GDT_DESC
++
++	/* get us to protected mode now */
++	movl		$1, %eax
++	movl		%eax, %cr0
++
++	/* the LJMP sets CS for us and gets us to 32-bit */
++ljmp:
++	data32 ljmp	*%gs:GS_PROT_JUMP
++
++prot_mode:
++.code32
++
++	/* initialize all other segments */
++	movl		$0x10, %eax
++	movl		%eax, %ss
++	movl		%eax, %ds
++	movl		%eax, %es
++	movl		%eax, %fs
++	movl		%eax, %gs
++
++	/* Read the kernel and modules into RAM */
++	read_fw_blob_dma(FW_CFG_KERNEL)
++
++	/* Jump off to the kernel */
++	read_fw		FW_CFG_KERNEL_ENTRY
++	mov		%eax, %ecx
++
++	/* EBX contains a pointer to the bootinfo struct */
++	read_fw		FW_CFG_INITRD_ADDR
++	movl		%eax, %ebx
++
++	/* EAX has to contain the magic */
++	movl		$MULTIBOOT_MAGIC, %eax
++ljmp2:
++	jmp		*%ecx
++
++/* Variables */
++.align 4, 0
++prot_jump:	.long prot_mode
++		.short 8
++
++.align 8, 0
++gdt:
++	/* 0x00 */
++.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
++
++	/* 0x08: code segment (base=0, limit=0xfffff, type=32bit code exec/read, DPL=0, 4k) */
++.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9a, 0xcf, 0x00
++
++	/* 0x10: data segment (base=0, limit=0xfffff, type=32bit data read/write, DPL=0, 4k) */
++.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0xcf, 0x00
++
++	/* 0x18: code segment (base=0, limit=0x0ffff, type=16bit code exec/read/conf, DPL=0, 1b) */
++.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9e, 0x00, 0x00
++
++	/* 0x20: data segment (base=0, limit=0x0ffff, type=16bit data read/write, DPL=0, 1b) */
++.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0x00, 0x00
++
++gdt_desc:
++.short	(5 * 8) - 1
++.long	gdt
++
++BOOT_ROM_END
+diff --git a/pc-bios/optionrom/optionrom.h b/pc-bios/optionrom/optionrom.h
+index 7bcdf0eeb240..2e6e2493f83f 100644
+--- a/pc-bios/optionrom/optionrom.h
++++ b/pc-bios/optionrom/optionrom.h
+@@ -117,16 +117,12 @@
+  *
+  * Clobbers: %eax, %edx, %es, %ecx, %edi and adresses %esp-20 to %esp
+  */
+-#ifdef USE_FW_CFG_DMA
+ #define read_fw_blob_dma(var)                           \
+         read_fw         var ## _SIZE;                   \
+         mov             %eax, %ecx;                     \
+         read_fw         var ## _ADDR;                   \
+         mov             %eax, %edi ;                    \
+         read_fw_dma     var ## _DATA, %ecx, %edi
+-#else
+-#define read_fw_blob_dma(var) read_fw_blob(var)
+-#endif
  
--    /* use DMA capable linuxboot option rom */
--    bool fwcfg_dma_enabled;
-     /* CPU and apic information: */
-     bool apic_xrupt_override;
- };
+ #define read_fw_blob_pre(var)                           \
+         read_fw         var ## _SIZE;                   \
 -- 
 2.34.1
 
