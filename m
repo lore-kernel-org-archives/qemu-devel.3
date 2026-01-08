@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2CF9D1489A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C6B4D14899
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:11:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdgPx-0001Kp-8d; Wed, 07 Jan 2026 22:10:33 -0500
+	id 1vdgPo-0008UH-9t; Wed, 07 Jan 2026 22:10:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgPI-0006gX-Pb; Wed, 07 Jan 2026 22:09:56 -0500
+ id 1vdgOh-0005mY-BE; Wed, 07 Jan 2026 22:09:16 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgPG-0005gA-NS; Wed, 07 Jan 2026 22:09:52 -0500
+ id 1vdgOf-0005YH-N2; Wed, 07 Jan 2026 22:09:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767841790; x=1799377790;
+ t=1767841753; x=1799377753;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=eQl80wcJOArtg5jzbHQMtHiWAJNWb57OsGNNd3OKlKw=;
- b=IpSS62znFYZ1GWG0lhmvp0HUxkvIUpKepUHrDjx8nX2lte02XSmPfhPP
- EJwms6A8S0IrBt3ukg6KUMRtTyp2/jNzSUHESwnBSADla4ECy+y4euBng
- opiZwa5r8/We0UC1ChCByfKvbKiXuuI3n51qOTDuYStML1Bt03PFgokqY
- 2111YStZl7HB9yWLhlKM54jaBceA/k8/7/7x3Y8GNqqRhBFGcwHS4J5m0
- FKruMIiCkOafUZpBWkmC9kNOcgLNDMrhKk/D5kqsdUotj5xp55zQ+E3W6
- jabUmxPDGJMspR5e17MIk7+mb/aVtTFV12mVrtRDotH46HI2Sshs4AIwF A==;
-X-CSE-ConnectionGUID: V584+F/tSuOgOWXxD9fCOA==
-X-CSE-MsgGUID: /9KAUKlwTuOBUOIZLtLyxw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877724"
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877724"
+ bh=kNYkiaNSgjNxHBpmze7LKKP0q9ceZ2SXtXvlRLGlXSo=;
+ b=FextAjlPKUJ5Rw3lP4xiM51Er8D3VJi/l+OE+51WrkI0NuTZBwzqEi4u
+ 3Y8bf9mHv8vgFH+YXpC31ZWcLXTd6TBfQV9t+mkwgo4IHfZey1AtvJmKg
+ CBH0iPbpSxFQhYrS69Tezn9nOjVozB1M487RAsU5ZJFhwLRAb6+I5ukWS
+ kXHcukyROwX79XkvuVjQ9jjyxT3+R7u+p9PFvBcszR1CtlOcUuY1IXb9C
+ n4LcBhdE1FzwmLmocnk1rpBW9KT6olT4uRHX66zviO59QuCtKokYHNuZK
+ ns9xJbvsBhH5N7mTNgzrkfntJrqu3f7LMd18P1TOMC3nKAYmX+OhLZ5VS Q==;
+X-CSE-ConnectionGUID: BbsCl4e8TDWqjHxyF/uB3g==
+X-CSE-MsgGUID: kKFX1X2SQJe6mWW9hG5MOw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877570"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877570"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2026 19:09:48 -0800
-X-CSE-ConnectionGUID: kIWWhqTxQGmT66gxvRoqEQ==
-X-CSE-MsgGUID: KlFeMH7URR2pjppFfeN6xA==
+ 07 Jan 2026 19:09:11 -0800
+X-CSE-ConnectionGUID: tPOD766tROaPRuJG7KUpiQ==
+X-CSE-MsgGUID: lx/Vopy/STe1TSWeU+qq0w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211287"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211235"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:09:39 -0800
+ by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:09:02 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,10 +72,9 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 27/27] hw/char/virtio-serial: Do not expose the
- 'emergency-write' property
-Date: Thu,  8 Jan 2026 11:30:51 +0800
-Message-Id: <20260108033051.777361-28-zhao1.liu@intel.com>
+Subject: [PATCH v6 23/27] hw/audio/pcspk: Remove PCSpkState::migrate field
+Date: Thu,  8 Jan 2026 11:30:47 +0800
+Message-Id: <20260108033051.777361-24-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260108033051.777361-1-zhao1.liu@intel.com>
 References: <20260108033051.777361-1-zhao1.liu@intel.com>
@@ -109,77 +108,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The VIRTIO_CONSOLE_F_EMERG_WRITE feature bit was only set
-in the hw_compat_2_7[] array, via the 'emergency-write=off'
-property. We removed all machines using that array, lets remove
-that property. All instances have this feature bit set and
-it can not be disabled. VirtIOSerial::host_features mask is
-now unused, remove it.
+The PCSpkState::migrate boolean was only set in the
+pc_compat_2_7[] array, via the 'migrate=off' property.
+We removed all machines using that array, lets remove
+that property, simplifying vmstate_spk[].
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/char/virtio-serial-bus.c       | 9 +++------
- include/hw/virtio/virtio-serial.h | 2 --
- 2 files changed, 3 insertions(+), 8 deletions(-)
+ hw/audio/pcspk.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index 5ec5f5313b21..b7c57ea9678c 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -557,7 +557,7 @@ static uint64_t get_features(VirtIODevice *vdev, uint64_t features,
- 
-     vser = VIRTIO_SERIAL(vdev);
- 
--    features |= vser->host_features;
-+    features |= BIT_ULL(VIRTIO_CONSOLE_F_EMERG_WRITE);
-     if (vser->bus.max_nr_ports > 1) {
-         virtio_add_feature(&features, VIRTIO_CONSOLE_F_MULTIPORT);
-     }
-@@ -587,8 +587,7 @@ static void set_config(VirtIODevice *vdev, const uint8_t *config_data)
-     VirtIOSerialPortClass *vsc;
-     uint8_t emerg_wr_lo;
- 
--    if (!virtio_has_feature(vser->host_features,
--        VIRTIO_CONSOLE_F_EMERG_WRITE) || !config->emerg_wr) {
-+    if (!config->emerg_wr) {
-         return;
-     }
- 
-@@ -1040,7 +1039,7 @@ static void virtio_serial_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    if (!virtio_has_feature(vser->host_features,
-+    if (!virtio_has_feature(vdev->host_features,
-                             VIRTIO_CONSOLE_F_EMERG_WRITE)) {
-         config_size = offsetof(struct virtio_console_config, emerg_wr);
-     }
-@@ -1156,8 +1155,6 @@ static const VMStateDescription vmstate_virtio_console = {
- static const Property virtio_serial_properties[] = {
-     DEFINE_PROP_UINT32("max_ports", VirtIOSerial, serial.max_virtserial_ports,
-                                                   31),
--    DEFINE_PROP_BIT64("emergency-write", VirtIOSerial, host_features,
--                      VIRTIO_CONSOLE_F_EMERG_WRITE, true),
+diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
+index 916c56fa4c0a..0b01544941cb 100644
+--- a/hw/audio/pcspk.c
++++ b/hw/audio/pcspk.c
+@@ -57,7 +57,6 @@ struct PCSpkState {
+     unsigned int play_pos;
+     uint8_t data_on;
+     uint8_t dummy_refresh_clock;
+-    bool migrate;
  };
  
- static void virtio_serial_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/virtio/virtio-serial.h b/include/hw/virtio/virtio-serial.h
-index 60641860bf83..da0c91e1a403 100644
---- a/include/hw/virtio/virtio-serial.h
-+++ b/include/hw/virtio/virtio-serial.h
-@@ -186,8 +186,6 @@ struct VirtIOSerial {
-     struct VirtIOSerialPostLoad *post_load;
+ static const char *s_spk = "pcspk";
+@@ -202,18 +201,10 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
+     }
+ }
  
-     virtio_serial_conf serial;
+-static bool migrate_needed(void *opaque)
+-{
+-    PCSpkState *s = opaque;
 -
--    uint64_t host_features;
+-    return s->migrate;
+-}
+-
+ static const VMStateDescription vmstate_spk = {
+     .name = "pcspk",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = migrate_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT8(data_on, PCSpkState),
+         VMSTATE_UINT8(dummy_refresh_clock, PCSpkState),
+@@ -224,7 +215,6 @@ static const VMStateDescription vmstate_spk = {
+ static const Property pcspk_properties[] = {
+     DEFINE_AUDIO_PROPERTIES(PCSpkState, audio_be),
+     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
+-    DEFINE_PROP_BOOL("migrate", PCSpkState, migrate,  true),
+     DEFINE_PROP_LINK("pit", PCSpkState, pit, TYPE_PIT_COMMON, PITCommonState *),
  };
  
- /* Interface to the virtio-serial bus */
 -- 
 2.34.1
 
