@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326BDD148A0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07A3D1489F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdicr-00086V-0Z; Thu, 08 Jan 2026 00:32:02 -0500
+	id 1vdifi-0004al-Px; Thu, 08 Jan 2026 00:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdicG-0007o4-V8
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:28 -0500
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1vdifd-0004SC-67
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:34:53 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdicF-0005Tv-1j
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:31:24 -0500
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-bc0d7255434so1381209a12.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:31:22 -0800 (PST)
+ id 1vdifb-0005xP-Iu
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:34:52 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a137692691so21562955ad.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:34:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767850281; x=1768455081; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767850490; x=1768455290; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IDSBq+h5586T4AWBNgU7jaX6pgnbIRhxB8J2QcVJ9c8=;
- b=e5djzzaHUevMKvQdU4MqC7YjrZ1yW5Zxtybu4NjBMaVxG0SiU/1wj7NF79pmAsuT1b
- YoEoW8ArxQrLU6fx0Gyu5Rn1MF4ohvJqL5ZRSllLDacztMZxhJkPvp0X+OxwW56oeMe1
- OdwFgx1THlDjOxFeWUC+gp40dzDlIqxATVMc1LUYBm0fpo+QCLOjO3nt8/8Zbw7ptlgm
- /xkMs96QwUgGSBO7b+vcSGNEAZeXq8VaYja6LHXOyLDS9GDutfd091dyFYYXzowvJvWw
- Q1Wrt0Pm6Ddg57QdlJyp1/fJSH8gSwwC8rCMoLZH15/yTYx78By4UX2LPnffvh7jSG1R
- LlNw==
+ :reply-to; bh=iPCUPgmqCPlQV857vKt3p+PMVqLWxwQcBCKjihbg3eo=;
+ b=mEbB5duMqLYoefUX+m80lEYOWKTp+QLJ8O9krBcTRQP5n1PYcDWWIQdjRw3cE9h3rk
+ yiH/B1ybR02i0N13X5ICmxFiv3XXjdbiTj6jOy9xGbXQiyrd1wz62NZXsk5LJfhEdZED
+ tJf1e7Ekto6hKpfCPrNTEbIxkLmn23Zw7vkNMobwORQZx213Fdzwzs2NSQl7P4bTlSIj
+ 6KPcY+p8y6cfDIrOC42pmiYhB3AXT+d43zoKOVrCuz8qU4D3XzlDy9YZpELWjPjj0jUa
+ KnKM4TeaIkGuNexmOkwV1amg5pIWbO6T7UbttyCR+1nh+mOuJOS+o2ExCBmYYLK4+dIU
+ m9oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767850281; x=1768455081;
+ d=1e100.net; s=20230601; t=1767850490; x=1768455290;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IDSBq+h5586T4AWBNgU7jaX6pgnbIRhxB8J2QcVJ9c8=;
- b=DaG+iru+DZ4EHDqQXpOb++sOXxyB9o+VFTdrGMv7Yd64QeP7vx+oTKLMOQll0eCh/i
- PAjpV5jvSABCNjdleCDsoU8/Z0D0EAWaz/plJfCxwmuZz5e5Ci6G7RdheIU6vhZ7qKNr
- BSzE4Cp5RgEBc3wPKPHBkdvAeJl+xgDHO3sxF3Xk6jfw+8jqPfOZuNbcwwvVkVZX+exu
- 6JzmyYXDO1i+F9Wur/l89f+10izUmVq5J1aTQEQ7ucFJLpVCC+J1F/DMeGkIh+lCVpkz
- ymm+Y7IUHh0f/rI1kBGJEgq4wgA1nybuqYZRCT7ueF5gA+pv1i6irHMaGDyOPZfrskfm
- w/Uw==
-X-Gm-Message-State: AOJu0Ywj1clLv969tGkzu1rUp7AWC5D9f1YHubsZecUUW2u6SBeAWEsm
- W0LVQraBP1T76Z+9EP3HobkRG4ghjybAjGtdpBRemEaIQABtHIx+BjEMf8K0Bwsjev6CGF3F7T0
- ZaUyJRbA=
-X-Gm-Gg: AY/fxX5DPfdDUPpECGKlFyFB0sPBDNInTGSDqyLOVva5IHHG/MijRTyM6ugvzGRH+dw
- R3WvGnAioTiMD/9DFcOVrK3t0MW6qsAbW41H5Bhny0zR9R/hhj/fQFU3LhPWnXF1nM3iSH+XCk3
- rOR/F1cupVg6lG8cSWo8OyfR5fdFy6+b/S+1IcgV8wrKz9hLijb4pnjpjEXZlJds72VdS5kJSpL
- eUzgNcUWlCLPpF4FP2zsUrFBwmIH0oI+/E2c7q2U/neG+Oo4DvDgYhV6bb75q/Ubk/FKGe3GL7D
- V3vRP9HTLqbwaVY39HhPeFWMOxhZYRjHW0NUKb+8vdAzavqXYFGlG+yCujQyiz25mLugx851FRy
- oTEauaG8CRRfRpCkwD1zrJYezAIjbcBTk7ydx+yaqjO6jXrXSKcPv4/CcgQOzuKMSp9w31E97Ls
- aP3P+2VvXISdbMIbNbgB7YR1xj7goj
-X-Google-Smtp-Source: AGHT+IFlgTQ4CsaiMhvuHDBMPqnkQSneAIG38URT9sRm/344tiwe5OUEvHZ+78vEWf5DIgIhMX3g2Q==
-X-Received: by 2002:a05:6a20:7fa9:b0:359:62f0:574 with SMTP id
- adf61e73a8af0-3898f9cd3f3mr4759867637.41.1767850281375; 
- Wed, 07 Jan 2026 21:31:21 -0800 (PST)
+ bh=iPCUPgmqCPlQV857vKt3p+PMVqLWxwQcBCKjihbg3eo=;
+ b=rAtFcSsazQvtz39ykXv1+Dirgsc2XpkTdxqaq0ing4u+aU4P8I0+mwUs6YpSxyMOgR
+ tXW4GogU7glikBpCUDZz3gohi54BfFVLNtVZ3sIoVMuj5jSZX2VdIYnJS98EhegC1Akn
+ cOiebtyLJGMGmEPAYA54k1c+n4KWcRToUlMDIoQvMNf+JGFAQAg1YpEcO+RjG+/Otcts
+ 3BhKOtUzLKewMe8PQiDvjX2nyaNzFwLH6lXD4iZzOOApCFpLw8H0/CVK1TY0sA0QSmYt
+ QqdpSGgD/lq08+JlKwzewkA0BGQ3IdbgoC44Tnb5ZtMqxnkB89dJlGHOV7TTQ5wQVULI
+ oVPw==
+X-Gm-Message-State: AOJu0Ywjn+hueLl66Tt4PRA0gNX3NXIKWMqohmnL9WNT/ETH1iyzoEaL
+ Nut6HKZ0mTO2M3r3kN3YrDOxHA1NYENSM4ZFtBP+yu73fi3GqmejWuU+6lzfff/xJOOZgQSyRCa
+ p3wWgiKk=
+X-Gm-Gg: AY/fxX60VSwsGWcKtuR0tDvLUXdReQFkk8jwNrb8tNzgBrDatY4y+oyPOyOkiu+1tom
+ 9ER8LiSCF/Qc3pCclhUJ7P0zcrcYlBes/7g+nEZUyO3iJWtoShNpgDE8t6EC5pwt43gGZrCfCZ3
+ Ty0RtPK1kfIN9qorRs8tvLn8OLvQ2BgHhoeHYcIwm/BD2irFr2twS6NcZhorNdmQC5j43cwc65Q
+ Rop1pwO5fotq0HXv7kx+SbsqFn8YZH7wf311WGiek4J3hKHrjHtccQVzAyr3oCd4yb+0MWFXLnm
+ 9Xl5dilOrQbUHrk2zDpBJzRQEY0gCk0uwBksPmXmBtwmwMOFVftHx2yijY+h9mV2hyKztrFQ6pD
+ AOTLERCeHEO4rEHl/IO1KSaAoJbU0uyLcWir6We25goQeXvQ2umFNMCZns7rzeiroIqfKBcOtTQ
+ k5cqe7qbjjHDyUi1RJmA==
+X-Google-Smtp-Source: AGHT+IHbUBkF+rrIgYIe/bh0oGoGWNs4Rwo953FbBBm0DV3FvD0lWrhTGy9tc+Zfzr7tHj/d0Ld30A==
+X-Received: by 2002:a17:903:478d:b0:2a0:b438:fc15 with SMTP id
+ d9443c01a7336-2a3ee468407mr47089545ad.11.1767850489855; 
+ Wed, 07 Jan 2026 21:34:49 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.31.18
+ d9443c01a7336-2a3e3cb2d93sm66341465ad.63.2026.01.07.21.34.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 21:31:21 -0800 (PST)
+ Wed, 07 Jan 2026 21:34:49 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 29/50] tcg: Drop TCG_TARGET_REG_BITS tests in tcg-internal.h
-Date: Thu,  8 Jan 2026 16:29:57 +1100
-Message-ID: <20260108053018.626690-30-richard.henderson@linaro.org>
+Subject: [PATCH 43/50] target/m68k: Drop CONFIG_ATOMIC64 tests
+Date: Thu,  8 Jan 2026 16:30:11 +1100
+Message-ID: <20260108053018.626690-44-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108053018.626690-1-richard.henderson@linaro.org>
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,47 +101,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg-internal.h | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+ target/m68k/op_helper.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
-index d6a12afe06..2cbfb5d5ca 100644
---- a/tcg/tcg-internal.h
-+++ b/tcg/tcg-internal.h
-@@ -54,31 +54,14 @@ static inline unsigned tcg_call_flags(TCGOp *op)
-     return tcg_call_info(op)->flags;
- }
- 
--#if TCG_TARGET_REG_BITS == 32
--static inline TCGv_i32 TCGV_LOW(TCGv_i64 t)
--{
--    return temp_tcgv_i32(tcgv_i64_temp(t) + HOST_BIG_ENDIAN);
--}
--static inline TCGv_i32 TCGV_HIGH(TCGv_i64 t)
--{
--    return temp_tcgv_i32(tcgv_i64_temp(t) + !HOST_BIG_ENDIAN);
--}
--#else
--TCGv_i32 TCGV_LOW(TCGv_i64) QEMU_ERROR("32-bit code path is reachable");
--TCGv_i32 TCGV_HIGH(TCGv_i64) QEMU_ERROR("32-bit code path is reachable");
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index e9c20a8e03..3f1d943afe 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -816,14 +816,11 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
+     uint32_t u2 = env->dregs[Du2];
+     uint32_t l1, l2;
+     uintptr_t ra = GETPC();
+-#if defined(CONFIG_ATOMIC64)
+     int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
+     MemOpIdx oi = make_memop_idx(MO_BEUQ, mmu_idx);
 -#endif
--
- static inline TCGv_i64 TCGV128_LOW(TCGv_i128 t)
- {
--    /* For 32-bit, offset by 2, which may then have TCGV_{LOW,HIGH} applied. */
--    int o = HOST_BIG_ENDIAN ? 64 / TCG_TARGET_REG_BITS : 0;
--    return temp_tcgv_i64(tcgv_i128_temp(t) + o);
-+    return temp_tcgv_i64(tcgv_i128_temp(t) + HOST_BIG_ENDIAN);
- }
  
- static inline TCGv_i64 TCGV128_HIGH(TCGv_i128 t)
- {
--    int o = HOST_BIG_ENDIAN ? 0 : 64 / TCG_TARGET_REG_BITS;
--    return temp_tcgv_i64(tcgv_i128_temp(t) + o);
-+    return temp_tcgv_i64(tcgv_i128_temp(t) + !HOST_BIG_ENDIAN);
- }
- 
- bool tcg_target_has_memory_bswap(MemOp memop);
+     if (parallel) {
+         /* We're executing in a parallel context -- must be atomic.  */
+-#ifdef CONFIG_ATOMIC64
+         uint64_t c, u, l;
+         if ((a1 & 7) == 0 && a2 == a1 + 4) {
+             c = deposit64(c2, 32, 32, c1);
+@@ -837,9 +834,7 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
+             l = cpu_atomic_cmpxchgq_be_mmu(env, a2, c, u, oi, ra);
+             l2 = l >> 32;
+             l1 = l;
+-        } else
+-#endif
+-        {
++        } else {
+             /* Tell the main loop we need to serialize this insn.  */
+             cpu_loop_exit_atomic(env_cpu(env), ra);
+         }
 -- 
 2.43.0
 
