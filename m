@@ -4,95 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7747D1D469
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 549EBD1D467
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdrMa-0006DN-FZ; Thu, 08 Jan 2026 09:51:48 -0500
+	id 1vdrOT-0004aO-9Y; Thu, 08 Jan 2026 09:53:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vdrMZ-00065G-0Y; Thu, 08 Jan 2026 09:51:47 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vdrMW-0004Ny-Rk; Thu, 08 Jan 2026 09:51:46 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DE9C917C017;
- Thu, 08 Jan 2026 17:50:03 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DCB3E34859F;
- Thu, 08 Jan 2026 17:51:03 +0300 (MSK)
-Message-ID: <3719bb72-4b15-4af5-8c55-46cf9a064918@tls.msk.ru>
-Date: Thu, 8 Jan 2026 17:51:03 +0300
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1vdrOQ-0004UK-Ti
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:53:42 -0500
+Received: from mail-dl1-x122f.google.com ([2607:f8b0:4864:20::122f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1vdrON-0004mC-1l
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:53:40 -0500
+Received: by mail-dl1-x122f.google.com with SMTP id
+ a92af1059eb24-11df4458a85so4725039c88.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:53:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1767884014; x=1768488814; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9WukLj5oPC1UOqySO4IjN3CGVMJRRnobzH9yHdqM9ho=;
+ b=MhESZizkbeWTfrf19tJd4uYJU+TbxopQ4KHO6P5qe4xeyR7MM8lZjkoNKd9a0xftKx
+ KgveiqeBl7IFu5Lpdwhzzl4LtxLakqUGC4njBptSx5gYB4wxxuAsh6YXOxOEB2UzB0Re
+ EWZqSD+S7MZ5+S1Dz5uvDLnOjh9x+Cn5YmCyOt7dDUoK7HQu8Dtxlfg0Wg+hW9JDLZL0
+ T50pIiMQWpv1DH4bz/WsnWnChBRq96lOd8sMk9SkggPyzE1oj8wqWKcXg5irb8xq9Yy4
+ qgXqfIEu4RW4mZO0OrumYaI74zXXiEafW4GBCvtPDRJvun30wf+LWl5w/ghiwJeLiBst
+ 1s1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767884014; x=1768488814;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9WukLj5oPC1UOqySO4IjN3CGVMJRRnobzH9yHdqM9ho=;
+ b=sfdIJjfX+ZkEGJOKQcu3tBIdkwynh67YvfoSPQz1BPDkIAH0zLMuuF0dH5EycAHyBx
+ bNExaIp0sgslIY3e8vm4c87ahKxu02M406BtfgglMLpOyPDXtlvIzjW4a1b/iXvTn8jY
+ vPTXyUhKdKlHQZkZF7AwlhsNNN0wC/mP0CMaW5yFTPOGtNG9/hklXTKPLeyzR6qYGAd6
+ yU4Satd8XRHWWTsHE0Hd7APKzkqx+z5EgNFjc4ISwryT0QZZ34mQXPtx1a/BRKcqCBiY
+ IyZsm+zvbytwu5o9An1IT+b7tuIlEPaoFBBy5kC+sjRIzE1qZd1QkgznAohAJEa2NuQK
+ 7xDA==
+X-Gm-Message-State: AOJu0YwiTHzV5BzkWMgn745G9ewzhdLdU3HQz9LrprNnLfj8NzdycVFv
+ glOjj6PZfy3oQwIqVduZ6oZf864DxEFugcCUWXb1FEspgZOLNzAP7QkJQURMi6KKLYpakgIfm5L
+ K39Nnp5YGXb09/M80EKu+hT3n4JMyO9c=
+X-Gm-Gg: AY/fxX6UjvkxNhZerbs9n3yfEXhU/TuA9qeS/oC7dECEXCeuYsxpzn3cE1QbaBKU+m5
+ d6rk5Pt+7evygH/NWR4toABow1u3lCUrr33Y1x0dbbYUjN8DmO+aW7bqdP5SIyqz0sTDVScHLuH
+ WNcCJRBXAvKAUjtJtEELBIokB7i1FM+ptZYZ/UFurTV/CimXp5A/kKxg3t+5OLBAI3YA9u2xJbP
+ 5p1ssE/BolS9K15WTu/srEPGqrCtUdFcRiKEidWMIemyLXwhPWVpRdTeBHrXt2vxR8k0ccLlsAg
+ y5J2NmQxXbpjwiOak1OV3PMFh3KOUTBnghyf
+X-Google-Smtp-Source: AGHT+IEwK6kmGZy57hz/2vuGShGNRO25XIv6D+9rgK4BuQZ6RbtUBflIJUcDVMG69jL2gxZD1ZEoR/faPhF9ZD44TUI=
+X-Received: by 2002:a05:7022:e21:b0:119:e569:fba9 with SMTP id
+ a92af1059eb24-121f8b40a97mr5771722c88.24.1767884014390; Thu, 08 Jan 2026
+ 06:53:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] monitor/qmp: cleanup SocketChardev listener sources
- early to avoid fd handling race
-To: Jie Song <mail@jiesong.me>, marcandre.lureau@gmail.com,
- eblake@redhat.com, armbru@redhat.com, berrange@redhat.com,
- qemu-devel@nongnu.org
-Cc: songjie_yewu@cmss.chinamobile.com,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20251125140706.114197-1-mail@jiesong.me>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251125140706.114197-1-mail@jiesong.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260108053018.626690-1-richard.henderson@linaro.org>
+ <20260108053018.626690-2-richard.henderson@linaro.org>
+ <aV9y9b2-XRvNOYTG@redhat.com>
+ <4df07fa5-f12d-4df5-9b59-0a2fce44b236@linaro.org>
+In-Reply-To: <4df07fa5-f12d-4df5-9b59-0a2fce44b236@linaro.org>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Thu, 8 Jan 2026 23:53:21 +0900
+X-Gm-Features: AQt7F2p69J1zEDqD9dXHkNWFyWWt_b0oq1Exn7MCMXCG4dTBVPGnONJDJqM2aB4
+Message-ID: <CAEDrbUbqV3Zev8sfYvW1uCBF-4ONVqPvJdCgNDepHTXu2LzFCQ@mail.gmail.com>
+Subject: Re: [PATCH 01/50] gitlab: Remove 32-bit host testing
+To: Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000ae8f390647e192c5"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122f;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-dl1-x122f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,32 +97,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/25/25 17:07, Jie Song wrote:
-> From: Jie Song <songjie_yewu@cmss.chinamobile.com>
-> 
-> When starting a dummy QEMU process with virsh version, monitor_init_qmp()
-> enables IOThread monitoring of the QMP fd by default. However, a race
-> condition exists during the initialization phase: the IOThread only removes
-> the main thread's fd watch when it reaches qio_net_listener_set_client_func_full(),
-> which may be delayed under high system load.
-> 
-> This creates a window between monitor_qmp_setup_handlers_bh() and
-> qio_net_listener_set_client_func_full() where both the main thread and
-> IOThread are simultaneously monitoring the same fd and processing events.
-> This race can cause either the main thread or the IOThread to hang and
-> become unresponsive.
-> 
-> Fix this by proactively cleaning up the listener's IO sources in
-> monitor_init_qmp() before the IOThread initializes QMP monitoring,
-> ensuring exclusive fd ownership and eliminating the race condition.
+--000000000000ae8f390647e192c5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'm picking this up for qemu-stable series (10.0.x, 10.1.x, 10.2.x),
-for now.  Please let me know if I shouldn't.
+Hi Daniel and Richard,
 
-Yes I've seen this change has a breakage potential, too -- let's see
-how it works out.
+Thank you for pinging me.
 
-Thanks,
+> On 1/8/26 20:03, Daniel P. Berrang=C3=A9 wrote:
+> > On Thu, Jan 08, 2026 at 04:29:29PM +1100, Richard Henderson wrote:
+> >> These deprecated builds will be disabled.
+> >> Remove testing of armhf, i686, and wasm32.
+> >
+> > CC'ing the wasm maintainer.
+> >
+> > This patch is removing our only CI testing of wasm.  Is there any
+> > 64-bit container image that can be used to test wasm instead ?
+>
+> Ah, right.  Yesterday I remembered that I should include this in the
+cover letter, but
+> then today when I actually posted it I forgot.
+>
+> There are two sets of wasm64 patches; the simple one uses TCI, just like
+the existing
+> wasm32 code:
+>
+>
+https://lore.kernel.org/qemu-devel/cover.1754494089.git.ktokunaga.mail@gmai=
+l.com/
+>
+> I attempted to incorporate these patches, but there were too many
+conflicts.
+>
+> The complex wasm64 patch set includes a complete tcg backend:
+>
+>
+https://lore.kernel.org/qemu-devel/cover.1756724464.git.ktokunaga.mail@gmai=
+l.com/
+>
+> I really need to study that more before I'm willing to accept the core
+tcg changes required.
+>
+> Anyway, I meant to cc Kohei about this, to see if he would revive the TCI
+patch set in the
+> short term.
 
-/mjt
+I'm rebasing the wasm64 TCI patch series and will post it to the mailing
+list
+when it's ready.
+
+Regards,
+Kohei
+
+--000000000000ae8f390647e192c5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hi Daniel and Richard,</=
+div><br>Thank you for pinging me.<br><br>&gt; On 1/8/26 20:03, Daniel P. Be=
+rrang=C3=A9 wrote:<br>&gt; &gt; On Thu, Jan 08, 2026 at 04:29:29PM +1100, R=
+ichard Henderson wrote:<br>&gt; &gt;&gt; These deprecated builds will be di=
+sabled.<br>&gt; &gt;&gt; Remove testing of armhf, i686, and wasm32.<br>&gt;=
+ &gt;<br>&gt; &gt; CC&#39;ing the wasm maintainer.<br>&gt; &gt;<br>&gt; &gt=
+; This patch is removing our only CI testing of wasm.=C2=A0 Is there any<br=
+>&gt; &gt; 64-bit container image that can be used to test wasm instead ?<b=
+r>&gt; <br>&gt; Ah, right.=C2=A0 Yesterday I remembered that I should inclu=
+de this in the cover letter, but<br>&gt; then today when I actually posted =
+it I forgot.<br>&gt; <br>&gt; There are two sets of wasm64 patches; the sim=
+ple one uses TCI, just like the existing<br>&gt; wasm32 code:<br>&gt; <br>&=
+gt; <a href=3D"https://lore.kernel.org/qemu-devel/cover.1754494089.git.ktok=
+unaga.mail@gmail.com/">https://lore.kernel.org/qemu-devel/cover.1754494089.=
+git.ktokunaga.mail@gmail.com/</a><br>&gt; <br>&gt; I attempted to incorpora=
+te these patches, but there were too many conflicts.<br>&gt; <br>&gt; The c=
+omplex wasm64 patch set includes a complete tcg backend:<br>&gt; <br>&gt; <=
+a href=3D"https://lore.kernel.org/qemu-devel/cover.1756724464.git.ktokunaga=
+.mail@gmail.com/">https://lore.kernel.org/qemu-devel/cover.1756724464.git.k=
+tokunaga.mail@gmail.com/</a><br>&gt; <br>&gt; I really need to study that m=
+ore before I&#39;m willing to accept the core tcg changes required.<br>&gt;=
+ <br>&gt; Anyway, I meant to cc Kohei about this, to see if he would revive=
+ the TCI patch set in the<br>&gt; short term.<br><br>I&#39;m rebasing the w=
+asm64 TCI patch series and will post it to the mailing list<br>when it&#39;=
+s ready.<br><br>Regards,<br>Kohei</div>
+</div>
+
+--000000000000ae8f390647e192c5--
 
