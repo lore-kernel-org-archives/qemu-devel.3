@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B73A5D1489B
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3459D14898
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdgMd-0000KK-BT; Wed, 07 Jan 2026 22:07:07 -0500
+	id 1vdgMF-0007ah-8m; Wed, 07 Jan 2026 22:06:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgMb-0000C7-Bf; Wed, 07 Jan 2026 22:07:05 -0500
+ id 1vdgMA-0007OX-2W; Wed, 07 Jan 2026 22:06:38 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgMZ-00057Q-NR; Wed, 07 Jan 2026 22:07:05 -0500
+ id 1vdgM6-0004y8-Ra; Wed, 07 Jan 2026 22:06:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767841624; x=1799377624;
+ t=1767841595; x=1799377595;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1/clFgKnxvuTgv4B7v21QOPZa4daiWEdepWxe7LIQyg=;
- b=SVx0l9HafD8FvvXIOd/iykSJhFHrEt78wnNtqbACy6f3grWy83gpCT58
- bBkHPCVhvF0sbYhmLneQp/ShZXpkVE1LjAUo7HvOgB6uIrXQZVtNJNm3o
- fKo+dlq5EVchJ9mS4uxDfKIxcq6b9L2Vg2R5i5rGBDddvoI55pTVYgBRD
- 98r+n2URBFwHkq3bjxynrTjeSm/MFJfUybe9pvykEvD0YV8Vqt/I1JPkT
- 21gG25l+QoW91Qn2/Q/3+QL+2rKK5gbzoovrVmPSc2dqL3HTKTHULrPsC
- dLxUKsvxdNIBTUcTFeSrK1jUJt1uu//re7m8pOvJxiYSRPxljdC7r85qn g==;
-X-CSE-ConnectionGUID: DRowqGEjTHG7hIvtyNdPVw==
-X-CSE-MsgGUID: 62DyH/MKT4KuR+KJCDoIeQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877163"
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877163"
+ bh=ELgJcv3mEZ+O8nlcj6D4atKRvgJj+dX2pFI7N//FqfA=;
+ b=TTTFQEj/K0lFQoiIRZvpMzSPe6DWVtsWVX0+BNRZYWhGEvjODccNPUOb
+ JkaKIcWJ9Pjtd62wQ8AMDs4B367BtzSMy+BmtUTpZ5lJRaqFYbtGTVEsH
+ HRrb9harLdN6xacWeQB/7APTMLoVgvk0/SZyIEA+YcaiNs0ux4IHJif1Z
+ U/Ll2U4K+J7d9jnV1IbJMtt+7HKe9LhP4jmFP6/V9G4Ax1iFhWB2mj7tP
+ yjZdiC2hFLPrXFGWTp8qyXbakYFAaihrBXRH0jV1kqExGkJjnTOMXJSxL
+ tMNZo990qPz9ZvqcX6ghSzxF/9fC4f/aK9h74QJ7/br6F1de1lNslw2AF A==;
+X-CSE-ConnectionGUID: ytoP9lIiRuGIgB/vDUet0A==
+X-CSE-MsgGUID: 28nYi4uhS9K8uqxaYJha7Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877069"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877069"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2026 19:07:02 -0800
-X-CSE-ConnectionGUID: o5e9JpS9TMW3BVsb5Hosng==
-X-CSE-MsgGUID: 9O8QOvoPQVazEAcMzpIAOw==
+ 07 Jan 2026 19:06:34 -0800
+X-CSE-ConnectionGUID: ysNjkMk7Qa2NK3bUI/dGfg==
+X-CSE-MsgGUID: 5ZJVjVQ3SiySuCabFlUuFw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202210784"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202210652"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:06:52 -0800
+ by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:06:24 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,15 +72,14 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 09/27] hw/mips/loongson3_virt: Prefer using
- fw_cfg_init_mem_nodma()
-Date: Thu,  8 Jan 2026 11:30:33 +0800
-Message-Id: <20260108033051.777361-10-zhao1.liu@intel.com>
+Subject: [PATCH v6 06/27] docs/specs/acpi_cpu_hotplug: Remove legacy cpu
+ hotplug descriptions
+Date: Thu,  8 Jan 2026 11:30:30 +0800
+Message-Id: <20260108033051.777361-7-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260108033051.777361-1-zhao1.liu@intel.com>
 References: <20260108033051.777361-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -107,33 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Legacy cpu hotplug has been removed totally and machines start with
+modern cpu hotplug interface directly.
 
-fw_cfg_init_mem_wide() is prefered to initialize fw_cfg
-with DMA support. Without DMA, use fw_cfg_init_mem_nodma().
+Therefore, update the documentation to describe current QEMU cpu hotplug
+logic.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/mips/loongson3_virt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes since v4:
+ * New patch.
+---
+ docs/specs/acpi_cpu_hotplug.rst | 28 +++-------------------------
+ 1 file changed, 3 insertions(+), 25 deletions(-)
 
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index fe51fb66f6f2..cd94e9f5f77e 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -287,7 +287,7 @@ static void fw_conf_init(void)
-     FWCfgState *fw_cfg;
-     hwaddr cfg_addr = virt_memmap[VIRT_FW_CFG].base;
+diff --git a/docs/specs/acpi_cpu_hotplug.rst b/docs/specs/acpi_cpu_hotplug.rst
+index 351057c96761..f49678100044 100644
+--- a/docs/specs/acpi_cpu_hotplug.rst
++++ b/docs/specs/acpi_cpu_hotplug.rst
+@@ -8,22 +8,6 @@ ACPI BIOS GPE.2 handler is dedicated for notifying OS about CPU hot-add
+ and hot-remove events.
  
--    fw_cfg = fw_cfg_init_mem_wide(cfg_addr, cfg_addr + 8, 8, 0, NULL);
-+    fw_cfg = fw_cfg_init_mem_nodma(cfg_addr, cfg_addr + 8, 8);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)current_machine->smp.cpus);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, (uint16_t)current_machine->smp.max_cpus);
-     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, loaderparams.ram_size);
+ 
+-Legacy ACPI CPU hotplug interface registers
+--------------------------------------------
+-
+-CPU present bitmap for:
+-
+-- ICH9-LPC (IO port 0x0cd8-0xcf7, 1-byte access)
+-- PIIX-PM  (IO port 0xaf00-0xaf1f, 1-byte access)
+-- One bit per CPU. Bit position reflects corresponding CPU APIC ID. Read-only.
+-- The first DWORD in bitmap is used in write mode to switch from legacy
+-  to modern CPU hotplug interface, write 0 into it to do switch.
+-
+-QEMU sets corresponding CPU bit on hot-add event and issues SCI
+-with GPE.2 event set. CPU present map is read by ACPI BIOS GPE.2 handler
+-to notify OS about CPU hot-add events. CPU hot-remove isn't supported.
+-
+-
+ Modern ACPI CPU hotplug interface registers
+ -------------------------------------------
+ 
+@@ -189,20 +173,14 @@ Typical usecases
+ (x86) Detecting and enabling modern CPU hotplug interface
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+-QEMU starts with legacy CPU hotplug interface enabled. Detecting and
+-switching to modern interface is based on the 2 legacy CPU hotplug features:
+-
+-#. Writes into CPU bitmap are ignored.
+-#. CPU bitmap always has bit #0 set, corresponding to boot CPU.
+-
+-Use following steps to detect and enable modern CPU hotplug interface:
++QEMU starts with modern CPU hotplug interface enabled. Use following steps to
++detect modern CPU hotplug interface:
+ 
+-#. Store 0x0 to the 'CPU selector' register, attempting to switch to modern mode
+ #. Store 0x0 to the 'CPU selector' register, to ensure valid selector value
+ #. Store 0x0 to the 'Command field' register
+ #. Read the 'Command data 2' register.
+    If read value is 0x0, the modern interface is enabled.
+-   Otherwise legacy or no CPU hotplug interface available
++   Otherwise no CPU hotplug interface available
+ 
+ Get a cpu with pending event
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 -- 
 2.34.1
 
