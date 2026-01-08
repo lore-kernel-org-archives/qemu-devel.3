@@ -4,97 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82897D185CC
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 11:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA9AD185E9
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 12:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdoUU-00081s-D8; Thu, 08 Jan 2026 06:47:47 -0500
+	id 1vdomv-0001yI-Jl; Thu, 08 Jan 2026 07:06:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdoUO-0007hX-Cw
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 06:47:41 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdomc-00019a-TL
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:06:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdoUL-0008Bg-Ni
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 06:47:40 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdomb-0003ih-G6
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 07:06:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767872856;
+ s=mimecast20190719; t=1767873981;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SaI/aL8I0FpGZJhJPB9AdwRHxp4ofIUJYepRqrYR+uY=;
- b=ZMPtrNLwCptsoMgxws3EDC1kHiQuYT5hUBQ+ImuVJAkUViz/s076ujhUWeoXudKs8Xa+PJ
- W+EmekabcSbtTzOcQR8iMWJgLZwRYVYO35cYYNvDBLVuFLBwI4VHdXhe6SSjpGiVCKeOP9
- LbWQQKHUtq/++XdFhOYp/XprZAslBVc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ObzYSWyPozb3cNU//aVG7ZEbY5iCX98l1YJCEPJpLpc=;
+ b=gAGztgMP5Md+hlMd9QE9dYUt1/cDZekW6UpKS4BeeqHmiW+Whk/icLipyQew7/dCRYPY/X
+ dXJZKgreftbsVZEGKSy9AqaA8hQ5aTEAgcRLGA1UtmyPy+xZJg1vIHgwNbf2tyS/Hla7hE
+ rPOTdyI7SRv4iNAJ2jGvDqpV1ouQM/c=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-yBuRgS4bNWO4121etA78Ig-1; Thu, 08 Jan 2026 06:47:35 -0500
-X-MC-Unique: yBuRgS4bNWO4121etA78Ig-1
-X-Mimecast-MFC-AGG-ID: yBuRgS4bNWO4121etA78Ig_1767872854
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47a97b785bdso24945245e9.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 03:47:35 -0800 (PST)
+ us-mta-10-xSnOL2gEPkq0dfHBY2-hRA-1; Thu, 08 Jan 2026 07:06:20 -0500
+X-MC-Unique: xSnOL2gEPkq0dfHBY2-hRA-1
+X-Mimecast-MFC-AGG-ID: xSnOL2gEPkq0dfHBY2-hRA_1767873979
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-430f8866932so2346674f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 04:06:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767872854; x=1768477654; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
+ d=redhat.com; s=google; t=1767873979; x=1768478779; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=SaI/aL8I0FpGZJhJPB9AdwRHxp4ofIUJYepRqrYR+uY=;
- b=AUeR+XonWBkcL8Cu5cVfxOW3An54P60Ao9XkUmRpXhLiowZtIlfQRzDovSwA14sK3h
- +yi0k7ZeUgop+1nTDc5cpOzgZ2mIK90DBu/ccj+uq3438HFgG3svaTlppvtNtfME1lf+
- qBi8mpNpx1Vmbiz6MUGg0cLCq4CRrXM+rscGz0VmlYn9P8Er/R/pFCMFxxZW/5SdqwD7
- cFsmO/n1YrrgkhgzVFrW+zFy8ja+gIU4rHuFWUQYXH77BrtDan3TzXdx/5Ft2fsiSzvd
- Fps8pKEjYa7WDC5aJ7o9TtfIJ82pqSU7lzIjbo5oMgyKgUEzhKJUvCSTYx74Kfgvl42t
- ww9w==
+ bh=ObzYSWyPozb3cNU//aVG7ZEbY5iCX98l1YJCEPJpLpc=;
+ b=TL+UzBHrAfaT68NirFCJK25lnykemi7xhg6vo7tXPUmX005LmYUNYcjbusLgj4zybF
+ DkJ2zS8E/xqjbV91uIXVe0/mxo43rTlvtZikkBHFPaok+qpmcvAlJX1KVBjN7bLlrFEc
+ Sx5cd0rdll9jpzt9FPpjQeXrFWqKLuc5naDORM9+WDQNTZOamKD1rWjikbyirf7WVS2f
+ 8Is8CQFlaIvveWcm0axpIPRhTEmhQP3EpAaUu5Y7HZdJPTCvebBAP3DtXUTphXQ/LlNn
+ rVNIjUe5kmrMhlyjmGKn3KeMUwasRVGIdwAxef6tCvQ6rPNkTchfmV2JzaO35Pr52tK+
+ P3CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767872854; x=1768477654;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20230601; t=1767873979; x=1768478779;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SaI/aL8I0FpGZJhJPB9AdwRHxp4ofIUJYepRqrYR+uY=;
- b=MHWQ9h3UHxweKY1jYWmakb7TXBLvn7K6XjtFWO4r9NALegng+b179O6rk0ldZ1EZ47
- K9UqOEJfTY7Wf3Uf4QVxgGVeEEP699W8NH2Ua41yedOZtANNXKUZ/GY6V2ysz6HNVUfU
- +zvek8BJoB/ryLpUGmvL2QVjVtrqtJs8OKuw6k/MlfR0+v4WkAeCuFHA1AIGAv0e9j75
- AgCozS92tTtu/09LzWscaNXOnI6obvA2HWjiyQwyzERdL488/RDx7AivWTBswzAkTsXN
- PMIHrppLwZradgZP3PzYlL3RcVFyR6K2YpHz0mAUJIepJ9aki+nvWeZtVAmGHvjBdGtZ
- BIFg==
+ bh=ObzYSWyPozb3cNU//aVG7ZEbY5iCX98l1YJCEPJpLpc=;
+ b=g2xZp/OkWg1K9Ozjv38MnLMMhfU26oS/xUJLXzKA1XuKlmHOro4E+xxctl9PEh10v7
+ Z4l5ylmcdsoSFe8lF3iyT2maqRchKkM2XCplF2hcfJ3EvuE9Uo6UJyUKM4FO3fHZd3Eu
+ +q23Q3EJNbKCU7tWzbB3sVYX79j219r8MSEoJF+lZNnS+iYh2vdkjyZLxxAUV1L+0G3w
+ N5UqIH5MkYbzcj3NbVC8I9HpZNjaT3DshR3qm8o3LhkfZEzx/U68EJpoBxlSF7oTfb99
+ 0/FPFoKf520MhOVkcZmEKaTy0JWh9/PYc/+eW+HQrBr8Zamlw95vfviWiNyUUMUw+YSM
+ kSww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJ5O0GEh9EdsA/G5PXRkHtIH6/Fc0/wybhszYv6OLjKdkRUqa/ipwk8vvT3v9bDOEz7F2ZK1ycW+t5@nongnu.org
-X-Gm-Message-State: AOJu0Yypvnuq2vy2kxBAPPDmL8f4XPYL+NV5PEbB+yVmhnaeA3vXh6z+
- dU828YTZTZ2vb8cNhndbkoCWDDv+NEArKJpQsGj5BGRWz4i34A8wOYUNmrAsq+V6kUx4gmLGi+s
- UMQLwt5DeE05n0oK9jETyw/f5y3VwVZnnwapfOx3GI091OHg3bu7PqF94iU7WOwOA
-X-Gm-Gg: AY/fxX5nLcnu94/DSkKnJvuhe0RNT3wVgkaeRRqmKtgJUNsJxhKGGXp3ttfv+tLy7zV
- mcTIikcba5mE5ROrlvMbnoad9CUJWrQYVVH/Bh5Ve/tXOjuVX2TNiEWJY222+ptpAqosim+zpDr
- yKp/TA3DzLeqVfGZiI4/aKhM4limegCgmDyvck1IxGIBKxSn3qyiDZffJNXDiifYv4BGmmnnRpu
- nsm+itue9ZgwU3NDR2CfhoQNKDwEQdlY5e3H48ZqfgxIU3qG6pCJdVCL6gluFytWhmXID4DSBVS
- Ys50y6GwN1EPFCy+q/Fr4wrK4yV/jfiiHCjSlJQyYGv4cEVogX5l9TjlbjbXqJNavutImiH3CpS
- 1wyIVXOg=
-X-Received: by 2002:a05:600c:1e24:b0:46e:4a13:e6c6 with SMTP id
- 5b1f17b1804b1-47d84b32efemr64595715e9.19.1767872854248; 
- Thu, 08 Jan 2026 03:47:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGUuQW8UftEXOc07AkZEKSvIjlsaBHFjgtc7WZkwc5Wp7cqH69ZqPsn55Wegb/l22Cm7ey7fQ==
-X-Received: by 2002:a05:600c:1e24:b0:46e:4a13:e6c6 with SMTP id
- 5b1f17b1804b1-47d84b32efemr64595535e9.19.1767872853864; 
- Thu, 08 Jan 2026 03:47:33 -0800 (PST)
+ AJvYcCXHTJwEkrQnwc45LHA9yC86lHVO6KxavwFR6zdQpaWFzYFXKdh4ZqFZ4l5SyyYo5k55WtIS0k+3Ph+5@nongnu.org
+X-Gm-Message-State: AOJu0YzlBBwi3tOn4+Q+F50zPFxSOqnEAFmxWA3pE4atd8lS+KbvowT6
+ Dm6qy9zRHKE3PWtiZf+6dx8CfOk0ME6AEySxMVAApeZKX0Er3AnuJZteGD+fCv5YQivUv6eNXT0
+ 8iDr0aPUC9vh6pJfgx54PV+rUEGPURjBWY8Mmb+UnHwhuZ6lQsaZgL0+v
+X-Gm-Gg: AY/fxX7aMORYiJ94e0n8g3mau5Pi+R/NBBI3YFKdLhXzp4iQ5k6y0HRUiuZE2uybi0s
+ yQSEfL8MHOV2eeUckbIZGTRQSL6NhD8fHuMbVz/PIqEWXlOw4xMMOcvpSTTnf+5qj+sbywr2U8N
+ 0Bnv3tAfagFknPQmiMAWRODgoYAk/XM8+G4ezlPs2djS9BeE2Q2RBxyl1F944NJNCsSacgiisDE
+ j/oSnpQ8vzagtkftXXaUWJIwvPugeltO0xqFy8CYsS3d4xKr2zYxiUDUl/tuQyzUt6MX/esEGo8
+ fmwwI1JxQeqPsCQ7Ku2hKqY4ExWpPh2zKgbRnr4ge2PmnkUQH9D6eLRqHBpuVL7YUG8rC/45rpA
+ /e5gwYl0=
+X-Received: by 2002:a05:600c:4f53:b0:477:7991:5d1e with SMTP id
+ 5b1f17b1804b1-47d84b3860fmr61006335e9.25.1767873978736; 
+ Thu, 08 Jan 2026 04:06:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrY+X3yPqlbA86VDSKym/jPwMB2tD/BGJs0vls0ClQzS4P7eW0sAkdBB/zyxFQN3Cr/UXNdA==
+X-Received: by 2002:a05:600c:4f53:b0:477:7991:5d1e with SMTP id
+ 5b1f17b1804b1-47d84b3860fmr61006125e9.25.1767873978365; 
+ Thu, 08 Jan 2026 04:06:18 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f695956sm149986985e9.6.2026.01.08.03.47.33
+ 5b1f17b1804b1-47d8678cad8sm38969765e9.3.2026.01.08.04.06.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 03:47:33 -0800 (PST)
-Message-ID: <0b2810e9-0cfc-4229-858b-0ae2a4514018@redhat.com>
-Date: Thu, 8 Jan 2026 12:47:32 +0100
+ Thu, 08 Jan 2026 04:06:17 -0800 (PST)
+Message-ID: <c4e89cc0-56f7-40c3-9396-6a9d910079c1@redhat.com>
+Date: Thu, 8 Jan 2026 13:06:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 20/50] tcg: Remove INDEX_op_setcond2_i32
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-21-richard.henderson@linaro.org>
-Content-Language: en-US
+Subject: Re: [PATCH v7 03/29] crypto/x509-utils: Add helper functions for
+ certificate store
+To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
+References: <20251208213247.702569-1-zycai@linux.ibm.com>
+ <20251208213247.702569-4-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -137,9 +143,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260108053018.626690-21-richard.henderson@linaro.org>
+In-Reply-To: <20251208213247.702569-4-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -149,7 +155,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,19 +171,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/01/2026 06.29, Richard Henderson wrote:
-> This opcode was exclusively for 32-bit hosts.
+On 08/12/2025 22.32, Zhuoying Cai wrote:
+> Introduce new helper functions for x509 certificate, which will be used
+> by the certificate store:
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
+> 
+> These functions provide support for certificate format conversion.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 > ---
->   include/tcg/tcg-opc.h    |   2 -
->   tcg/optimize.c           | 205 ---------------------------------------
->   tcg/tcg-op.c             |  47 +--------
->   tcg/tcg.c                |  32 ------
->   tcg/tci.c                |  10 --
->   docs/devel/tcg-ops.rst   |  27 +-----
->   tcg/tci/tcg-target.c.inc |  16 ---
->   7 files changed, 8 insertions(+), 331 deletions(-)
+>   crypto/x509-utils.c         | 49 +++++++++++++++++++++++++++++++++++++
+>   include/crypto/x509-utils.h | 21 ++++++++++++++++
+>   2 files changed, 70 insertions(+)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
