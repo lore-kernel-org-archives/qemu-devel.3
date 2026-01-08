@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FFFAD1D48A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 21:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4806D1D494
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 21:20:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdxPo-0000pj-6N; Thu, 08 Jan 2026 16:19:32 -0500
+	id 1vdxQd-0001Lp-Ra; Thu, 08 Jan 2026 16:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdxPm-0000pZ-GF
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 16:19:30 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdxPl-0005fH-4X
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 16:19:30 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-81db1530173so249349b3a.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 13:19:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767907168; x=1768511968; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FO50iimhZ21DstKTVyAjmBYCGviuu7Xy6azG/1/SSJE=;
- b=QQJgd8ododBv/k0eket+URg5HSNgE5i1WfnwC9worL9pW5w94KwOkf0NHA4h5hNAZh
- woJh9Ez738zQIA50HTRJ0djzWjIO75JyrGLH+QlTbb+5Hwsn9EFPzC7ShEi062jtSCiY
- e86I3Oy41/4+sOFxM43CwjcP6/YtIV3zOD9QSxjv+PQ29ZqYvP93GGDNwWqs9YNtL8CK
- MB7jvFO5IPd3lCuTOM1DmpLPXREbJxWIfQpJqxy2Hd5+xhVN4cgOfZZgF7rQlgEP0Uy1
- jHZqAWonYN7bgnZ69FMfwSs9td52tqRELngkB2Arp3GAUPnZVcCOHsELq0xLzzNmyMpc
- ZBBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767907168; x=1768511968;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FO50iimhZ21DstKTVyAjmBYCGviuu7Xy6azG/1/SSJE=;
- b=tg49bP3kpY/v+Rpw8L1gtZ/55kWaEqlMRJY4gLybgTkriB+ERh5XUZBNY9hpUIewgZ
- h/N6oDfHp3/tIo002iDp/rIwYFusIGhUlgksQdzI3uXIivc5cuY9dpg1+fBWG7FmMN+c
- APoPBvW2fVFTSqdtbBE+LS0IBNcl5d4kBpxfF/jjM1XrXnq0IHC7YudW1nYGnD8x9wYQ
- xi8mC0Q+0EovjtZ9tY7GgCUnNAhKrZDutiZli/fiGnFpyZoc0sCSyad6aGgsjMmbcLWw
- 5Od6rjfxbrJdgD3Ze1lft6jC9/CXLvBXVRU+/4hQmrV4yXejl+d53ufdcCK6xPkdhntC
- SXNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX50WxxS+/PBRLVHLwZQxUMvPm0CLcb9G3MYMQikzpQxb+5ao6tJIpIdpcvfHEISc2i6IY0vFhEs75M@nongnu.org
-X-Gm-Message-State: AOJu0YzjSrPZ7eIRBW1kWVrPnSUSKYj/GT6/koqCNo+Q2ZBs8srSOfkg
- TfLxsL7IPIkMte5pGPXNrRnH64nL95vFLnwuTXC4aOxgr56DTnNUgBDbvhlXJl0zh3g=
-X-Gm-Gg: AY/fxX7yD6Po9rv+CcPJ5OzOtDiF5xqabVckX2AO07ukEvCEPG6RfvF2BgqD2AhUzlx
- QpjxPmOw6RsItWAn8TJKnaG3WazBLpS/zmqtBpwYBFWKdVaWdxXJdYC+sxdv8Lw1FYH93t0y6nA
- K9jUtFHO3x9DrNXrn5qdJs+fGqjo+8x/afYOqoMcokiSwsGRY21mqgChDTKcAEhhSjKnc9BcdDG
- wj+ayMJBKYtkKemQW161vw84nvmAo4bgjWgjdvtCR0b4PnF/7EO5Ik2c+8+tPS0fH32v1NV3/uH
- yuJbui0n83vG2REVIalQcpr9tDAQtsDCIvz+yykDpzLho20Ry/b8iI3O+yxb+kDAzCaX82I5ZoP
- X6KDmf+beMVe2QyW1LwzbJiAWhUovDKxCEPN8SxQ2obdwwn1ZIo6sG068dAsF05MUv6JjN1VT9/
- VxBw0/F6QfdNJAKXJJ0KuqM0s3JZmCM9q+tmHiiASvjp79ghkYEeXOeKsY
-X-Google-Smtp-Source: AGHT+IElQNdGre2M/W0s3JYzhdB5QiwVQrOSounUZAMpBIZTFoMm7Mb9sQHRwywxAu1AyeTvdIgtWA==
-X-Received: by 2002:a05:6a00:3be2:b0:81b:cd16:7f44 with SMTP id
- d2e1a72fcca58-81bcd167fdemr4391520b3a.45.1767907167726; 
- Thu, 08 Jan 2026 13:19:27 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81dab89f2a5sm986645b3a.56.2026.01.08.13.19.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 13:19:27 -0800 (PST)
-Message-ID: <5fea4af5-88ce-47fc-950f-2449250ae7fd@linaro.org>
-Date: Thu, 8 Jan 2026 13:19:26 -0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vdxQb-0001KJ-Hn
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 16:20:21 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vdxQY-00061J-Ug
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 16:20:20 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 59B9917C157;
+ Fri, 09 Jan 2026 00:19:15 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E8324348739;
+ Fri, 09 Jan 2026 00:20:15 +0300 (MSK)
+Message-ID: <ee159c29-25d6-43f1-82e7-0f77356147d3@tls.msk.ru>
+Date: Fri, 9 Jan 2026 00:20:14 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 50/50] include/qemu/atomic: Drop aligned_{u}int64_t
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-51-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108053018.626690-51-richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/2] linux-user: cleanup epoll_pwait ifdeff'ery
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <20260108174317.239955-1-mjt@tls.msk.ru>
+ <20260108174317.239955-2-mjt@tls.msk.ru>
+ <f2ecbe03-a172-4c48-aec4-0a1e4eb3be2d@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <f2ecbe03-a172-4c48-aec4-0a1e4eb3be2d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,19 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/26 9:30 PM, Richard Henderson wrote:
-> As we no longer support i386 as a host architecture,
-> this abstraction is no longer required.
+On 1/8/26 22:52, Pierrick Bouvier wrote:
+> On 1/8/26 9:43 AM, Michael Tokarev wrote:
+>> All linux targets these days have epoll_pwait system call
+>> (while some miss epoll_wait, which is less generic).  And
+>> all linux targets definitely has one or another epoll_*wait*
+>> system call - so whole code block dealing with this system
+>> call should always be present.
+>>
+>> Remove the now-unneeded ifdeff'ery.
+>>
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+>>   linux-user/syscall.c | 8 +-------
+>>   1 file changed, 1 insertion(+), 7 deletions(-)
+>>
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   accel/tcg/atomic_template.h          |  4 ++--
->   include/qemu/atomic.h                | 13 -------------
->   include/system/cpu-timers-internal.h |  2 +-
->   linux-user/hppa/cpu_loop.c           |  2 +-
->   util/qsp.c                           |  4 ++--
->   5 files changed, 6 insertions(+), 19 deletions(-)
+> Makes sense:
 > 
+>         epoll_wait()
+>                Linux 2.6, glibc 2.3.2.
+> 
+>         epoll_pwait()
+>                Linux 2.6.19, glibc 2.6.
+> 
+> Which has made this available for 9 years.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This is not it, Pierrick :)
+
+qemu ships its own copy of linux headers with all these
+__NR_foo definitions.  We don't have to deal with local
+linux headers, we know exactly and precisely what we ship
+and which targets defines which syscalls.  Once all arches
+has __NR_epoll_wait *in our copy of linux-headers*, we're
+all set.  No matter if it was 9 years ago or yesterday.
+TARGET_NR_foo is what *we* know, - and it might be much
+more fresh than the host kernel we're running on.
+
+Thanks,
+
+/mjt
 
