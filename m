@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12F9D185C7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7090D185C2
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdnUt-0003TA-96; Thu, 08 Jan 2026 05:44:07 -0500
+	id 1vdnUg-0003RA-ND; Thu, 08 Jan 2026 05:43:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vdnUp-0003Si-8j
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:44:03 -0500
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ id 1vdnUc-0003Qs-DU
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:43:50 -0500
+Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vdnUn-0005D9-Jz
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:44:02 -0500
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-4ed9c19248bso27785641cf.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:44:01 -0800 (PST)
+ id 1vdnUa-0005CF-Jb
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:43:50 -0500
+Received: by mail-qv1-xf32.google.com with SMTP id
+ 6a1803df08f44-88a2d21427dso30849966d6.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:43:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767869041; x=1768473841; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1767869028; x=1768473828; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dgYotXXtObFxgCVFHPqJttcufA+Um/2+QnysSMYb0mo=;
- b=DmG4Rfs3rdJDT9AOh0Y2FT3aQw66EuqyQfiM7BnNSAWi4NJXEjuihGnNZmcYnEM8MN
- jFBgAmRvBJSEGmrF2iESFee4bPlBBH1FeL0w8mrCfeNINUiBJRpb5ki14WbKf8x6YjKR
- CXvsYWVdg833+0IPeJJ0bdsXplEQ40ne5YxNBtPkuU2NW03x2m9NycwNx32wzOT4Dpe8
- pb4a/C/87t4trZ87migPLxQ2/VCt5hqSOvxjg4emiEiCOtFtmbqZLpVqHA+bbBB4ajQX
- HjjVSaU21YUz1K3/AaDWDSuQ/3w8HvK0heLCrmTW5gGaKCByd/pK/XfUbI/LA1FUxMeI
- MF0A==
+ bh=tvq+1doVaK1AzVvsl5AbNK7unrNAD2j+RT253YHeijM=;
+ b=nEAUxyB0RlObbPsLdogk2fI/KlQiaBHanpnn3eW5tAp24XGhArtW8H75iCUZOcIJpa
+ x2leBB9IEhAY/o+1e8gkEYCI4+33Wy06H/2tV2tR15Ybcsw0na5irapT0K3Pf9zVgtLh
+ stUlO6DzkAgUMha/QUDD4V8CVwK5rLacaRoDRET2LQcB7I5TIWEagBSYq2tvieHcGMEl
+ FTxKqQOHBxtXB8dc7w0YRV7Ef0e6P3FqBoc/nW0s/rV018LaixyFuIJ2jm8+lKATN+NI
+ KCoLsxBRdtp5fFnVZygD9wa23Ve3TsC8rD5tsQUPs14n7CY9nGrJWbjcX3kNzGq/SoRK
+ XNyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767869041; x=1768473841;
+ d=1e100.net; s=20230601; t=1767869028; x=1768473828;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dgYotXXtObFxgCVFHPqJttcufA+Um/2+QnysSMYb0mo=;
- b=WYFK6vrWQNkpmv+6q+LUcEOrbsL0fREtdXYktywDT7X99WRksCxjLv3pqK8voAswdN
- dP89u4KXJDdZ55mGPcetc+kA9n1ZYe83Kv0BxESoJZWixWRL1KPb9/JHUkI7YeXnyQEe
- ERrPj3ADnN34xzza5tYQLCS2XjmzYEJ2yz/joIwpobcrQ3RJ7TIgtTyqXEkKdYNxJeHx
- LjFD9sDIklmZNskrPUdMmP3wvu+LZc8RGd0uEUQGUm47WaRaSFiWaj6+cV7u0nIOk4Qj
- LDK0yg+0qSE950UmE0FV7FiasL2lW+WWexDHybMOS83kuXXHgQaMbZAytISPC6cqp/ZK
- tdJw==
-X-Gm-Message-State: AOJu0YxHKEOlcxbnDO9Q+gHY9WPeN596MrOadsQyqJoyltuXtMTTYx/H
- s6ZrtbJWmpZPQi7raOvs7kSAcRbQfTMkNzJ1rTWJPbecJOmjhL7v2lyrFOD0J67chNBKAt6gn5x
- 6nILsFS0+k2Nrd23J8yyMrfMBU/LRRyM=
-X-Gm-Gg: AY/fxX5ZLmTBdc9LgfY4Cu8ipXANg8b3byLTAvL/Fbng3dZ9D9078IarPcrRV+jHiD1
- U+9yTiqfbrDTv1gc/s1qEe3ugh5GZkZEzYwQXqoP4+ECRiWrXUiSa2aIZnpS3IZowuf2oFMItu9
- J011ef4TmXRTRvqWdAUPFFniePnn9OeIv0/0uyNcAX8p0WVeunL9B4RLjbGyDDhAn5pulTr8Qts
- lzk6v1KyEmeKxzaQN0MF+f31UfUxuAG34/WjAMv2ES4OnQ7nU1K4/w0ZMShiML3GaYiojXzH7Bu
- XTR+nPkDSLclsyvWsn30nlfrBx9YwxP4XmyOQA==
-X-Google-Smtp-Source: AGHT+IGtNPmN3+OgGiTfsoSAfYB+Z5T0j1fZb6J/smenKckzfMuy0dLNtdmCSA8Wa8gjtwAqQSHtnl4ShHi2tqQrcBk=
-X-Received: by 2002:ac8:7d47:0:b0:4ed:67bc:50de with SMTP id
- d75a77b69052e-4ffb4958b63mr78277801cf.24.1767869040557; Thu, 08 Jan 2026
- 02:44:00 -0800 (PST)
+ bh=tvq+1doVaK1AzVvsl5AbNK7unrNAD2j+RT253YHeijM=;
+ b=jpG9uTmcLESAEOD2xWqcLEPaz+GAljbgG8I1+a1leWQlQuSgS5VB6Bd3NKjl6ifQD8
+ qff9xvptqICYgOQSO01W7rGJRRK9Wk6QDVPdqETfGj3Ft7M4PPzIdFKTQjZ1U0GdijL/
+ G2+/KaddowdySqHdFNNo4tiVG8BZvYAk5Ag7Z3aapQmLPMn6DbmFeG2oZj6iy7TQpkMC
+ rGX50cI5TYcx1knxUSowtHll1n+5YkDLdNyeyx3QcAQodILsFkuRzLz8NV7evPGTkaLv
+ 3PLPv5ttrp4A0MEsGtOMhgHiMLNujCdUWx/7HZUCQL+DwAVK9yoPj5a0xuInWfmkNEF3
+ QvXw==
+X-Gm-Message-State: AOJu0YwxYXRQoRUgBTTPD/feCdF59bCZcGYAgT9XvIlyioytqd4Lcu76
+ FNNaW48SCNZPKUs24x41U3E/kTHkIWQA5G+wQcYl5soi9EmSjeYR1Dp/YPyo2dPQGbKDW75riu9
+ 6GGnvkQeCgk0OsqV7gfPp/yTtuLsmSbE=
+X-Gm-Gg: AY/fxX7cCWmxZecpEzynwK3Ak+FpMm8dJNBxfjzsUCw3boRMjZrDoy6OqXWYOwBCK10
+ KrFd8KsiPRMsMbX+MNm+YDi5e3kjBOD18Vb7CcKHDA5pt5L/00inkonBrAL0iP2Qft9LibySX3B
+ ocXvp7jDPA5q/qvnFlVTyhCLWSgjIhxQQrR2+U4+XQ+PvUoLWFqVJwOBQZZOEETLl2mz+QZqvWd
+ eB1/O+eJzblRF5zBVZ9RofStDDVsWCRGWVT6jpDrbVi+kqaS7Y9iXRzjp90RXYxTZh0UtrRJAkx
+ LQRC9ETi7NSpUseEAPstw7PJ9b6vOgveZWQIrw==
+X-Google-Smtp-Source: AGHT+IFy0tsK+IJ+E3IpJd0kktlRgHxG/JkL7Ga8WfLHY/u++sA6dFXurUtsItsf4tRf+MmZdaf8j62D1PTx/Khxf3s=
+X-Received: by 2002:a05:6214:e6c:b0:882:52fc:9acc with SMTP id
+ 6a1803df08f44-890842770femr81205676d6.52.1767869027615; Thu, 08 Jan 2026
+ 02:43:47 -0800 (PST)
 MIME-Version: 1.0
 References: <20260107153442.1832957-1-berrange@redhat.com>
- <20260107153442.1832957-4-berrange@redhat.com>
-In-Reply-To: <20260107153442.1832957-4-berrange@redhat.com>
+ <20260107153442.1832957-3-berrange@redhat.com>
+In-Reply-To: <20260107153442.1832957-3-berrange@redhat.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 8 Jan 2026 14:43:49 +0400
-X-Gm-Features: AQt7F2r6SLUDn88dz_-XQeKYBNrY-JLZL-n0AXweBpd730PTraO9AuoJTFLlPtE
-Message-ID: <CAJ+F1CK5cPXWhLhspPDFKRsxGPAG4TB_12hqmdaJ6PSMmFEQ2Q@mail.gmail.com>
-Subject: Re: [PATCH 3/3] io: fix cleanup for websock I/O source data on
+Date: Thu, 8 Jan 2026 14:43:35 +0400
+X-Gm-Features: AQt7F2qcwpotJA6wpshf4mUd083qkxuFTtFbQw4CO3MC8AYD_3S_mwaXMAhnJj8
+Message-ID: <CAJ+F1C+zQHyyTmf8CKdvZHyJb-tT2wcyP5kUD5xWYvaT706XDw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] io: fix cleanup for TLS I/O source data on
  cancellation
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, zoudongjie@huawei.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,68 +100,177 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Jan 7, 2026 at 7:36=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
 dhat.com> wrote:
 >
-> The websock code will create a GSource for tracking completion of the
-> handshake process, passing a QIOTask which is freed by the callback
-> when it completes, which means when a source is cancelled, nothing is
-> free'ing the task.
+> The TLS code will create a GSource for tracking completion of the
+> handshake process, passing a QIOChannelTLSData struct that contains
+> various data items. The data struct is freed by the callback when
+> it completes, which means when a source is cancelled, nothing is
+> free'ing the data struct or its contents.
 >
 > Switch to provide a data free callback to the GSource, which ensures
-> the QIOTask is always freed even when the main event callback never
-> fires.
+> the QIOChannelTLSData struct is always freed even when the main event
+> callback never fires.
 >
 > Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-
 > ---
->  io/channel-websock.c | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+>  io/channel-tls.c | 64 ++++++++++++++++++++++++++++++------------------
+>  1 file changed, 40 insertions(+), 24 deletions(-)
 >
-> diff --git a/io/channel-websock.c b/io/channel-websock.c
-> index b4f96a0af4..6d92be4fa1 100644
-> --- a/io/channel-websock.c
-> +++ b/io/channel-websock.c
-> @@ -545,7 +545,6 @@ static gboolean qio_channel_websock_handshake_send(QI=
-OChannel *ioc,
->          trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(e=
-rr));
+> diff --git a/io/channel-tls.c b/io/channel-tls.c
+> index 07274c12df..8b70e95a4b 100644
+> --- a/io/channel-tls.c
+> +++ b/io/channel-tls.c
+> @@ -153,13 +153,32 @@ struct QIOChannelTLSData {
+>  };
+>  typedef struct QIOChannelTLSData QIOChannelTLSData;
+>
+> +static void qio_channel_tls_io_data_free(gpointer user_data)
+> +{
+> +    QIOChannelTLSData *data =3D user_data;
+> +    /*
+> +     * Usually 'task' will be NULL since the GSource
+> +     * callback will either complete the task or pass
+> +     * it on to a new GSource. We'll see a non-NULL
+> +     * task here only if the GSource was released before
+> +     * its callback triggers
+> +     */
+> +    if (data->task) {
+> +        qio_task_free(data->task);
+> +    }
+> +    if (data->context) {
+> +        g_main_context_unref(data->context);
+> +    }
+> +    g_free(data);
+> +}
+> +
+>  static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
+>                                               GIOCondition condition,
+>                                               gpointer user_data);
+>
+> -static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+> -                                           QIOTask *task,
+> -                                           GMainContext *context)
+> +static gboolean qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+> +                                               QIOTask *task,
+> +                                               GMainContext *context)
+>  {
+>      Error *err =3D NULL;
+>      int status;
+> @@ -170,8 +189,7 @@ static void qio_channel_tls_handshake_task(QIOChannel=
+TLS *ioc,
+>          trace_qio_channel_tls_handshake_fail(ioc);
 >          qio_task_set_error(task, err);
 >          qio_task_complete(task);
 > -        qio_task_free(task);
->          wioc->hs_io_tag =3D 0;
->          return FALSE;
+> -        return;
+> +        return TRUE;
 >      }
-> @@ -562,7 +561,6 @@ static gboolean qio_channel_websock_handshake_send(QI=
-OChannel *ioc,
->              trace_qio_channel_websock_handshake_complete(ioc);
->              qio_task_complete(task);
+>
+>      if (status =3D=3D QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
+> @@ -184,7 +202,7 @@ static void qio_channel_tls_handshake_task(QIOChannel=
+TLS *ioc,
+>              trace_qio_channel_tls_credentials_allow(ioc);
 >          }
+>          qio_task_complete(task);
 > -        qio_task_free(task);
->          wioc->hs_io_tag =3D 0;
->          return FALSE;
+> +        return TRUE;
+>      } else {
+>          GIOCondition condition;
+>          QIOChannelTLSData *data =3D g_new0(typeof(*data), 1);
+> @@ -208,8 +226,9 @@ static void qio_channel_tls_handshake_task(QIOChannel=
+TLS *ioc,
+>                                         condition,
+>                                         qio_channel_tls_handshake_io,
+>                                         data,
+> -                                       NULL,
+> +                                       qio_channel_tls_io_data_free,
+>                                         context);
+> +        return FALSE;
 >      }
-> @@ -590,7 +588,6 @@ static gboolean qio_channel_websock_handshake_io(QIOC=
-hannel *ioc,
->          trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(e=
-rr));
+>  }
+>
+> @@ -225,11 +244,9 @@ static gboolean qio_channel_tls_handshake_io(QIOChan=
+nel *ioc,
+>          qio_task_get_source(task));
+>
+>      tioc->hs_ioc_tag =3D 0;
+> -    g_free(data);
+> -    qio_channel_tls_handshake_task(tioc, task, context);
+> -
+> -    if (context) {
+> -        g_main_context_unref(context);
+> +    if (!qio_channel_tls_handshake_task(tioc, task, context)) {
+> +        /* task is kept by new GSource so must not be released yet */
+> +        data->task =3D NULL;
+>      }
+>
+>      return FALSE;
+> @@ -258,8 +275,8 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
+>  static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition con=
+dition,
+>                                         gpointer user_data);
+>
+> -static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+> -                                     GMainContext *context)
+> +static gboolean qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *ta=
+sk,
+> +                                         GMainContext *context)
+>  {
+>      GIOCondition condition;
+>      QIOChannelTLSData *data;
+> @@ -272,14 +289,12 @@ static void qio_channel_tls_bye_task(QIOChannelTLS =
+*ioc, QIOTask *task,
+>          trace_qio_channel_tls_bye_fail(ioc);
 >          qio_task_set_error(task, err);
 >          qio_task_complete(task);
 > -        qio_task_free(task);
->          wioc->hs_io_tag =3D 0;
->          return FALSE;
+> -        return;
+> +        return TRUE;
 >      }
-> @@ -918,7 +915,7 @@ void qio_channel_websock_handshake(QIOChannelWebsock =
-*ioc,
->          G_IO_IN,
->          qio_channel_websock_handshake_io,
->          task,
-> -        NULL);
-> +        (GDestroyNotify)qio_task_free);
+>
+>      if (status =3D=3D QCRYPTO_TLS_BYE_COMPLETE) {
+>          qio_task_complete(task);
+> -        qio_task_free(task);
+> -        return;
+> +        return TRUE;
+>      }
+>
+>      data =3D g_new0(typeof(*data), 1);
+> @@ -299,7 +314,10 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *=
+ioc, QIOTask *task,
+>      trace_qio_channel_tls_bye_pending(ioc, status);
+>      ioc->bye_ioc_tag =3D qio_channel_add_watch_full(ioc->master, conditi=
+on,
+>                                                    qio_channel_tls_bye_io=
+,
+> -                                                  data, NULL, context);
+> +                                                  data,
+> +                                                  qio_channel_tls_io_dat=
+a_free,
+> +                                                  context);
+> +    return FALSE;
 >  }
 >
 >
+> @@ -312,11 +330,9 @@ static gboolean qio_channel_tls_bye_io(QIOChannel *i=
+oc, GIOCondition condition,
+>      QIOChannelTLS *tioc =3D QIO_CHANNEL_TLS(qio_task_get_source(task));
+>
+>      tioc->bye_ioc_tag =3D 0;
+> -    g_free(data);
+> -    qio_channel_tls_bye_task(tioc, task, context);
+> -
+> -    if (context) {
+> -        g_main_context_unref(context);
+> +    if (!qio_channel_tls_bye_task(tioc, task, context)) {
+> +        /* task is kept by new GSource so must not be released yet */
+> +        data->task =3D NULL;
+>      }
+>
+>      return FALSE;
 > --
 > 2.52.0
 >
