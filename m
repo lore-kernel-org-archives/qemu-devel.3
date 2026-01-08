@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6824D1489F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00AFDD148A0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:34:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdibo-0005Iq-Gh; Thu, 08 Jan 2026 00:30:56 -0500
+	id 1vdibs-0005Pg-UU; Thu, 08 Jan 2026 00:31:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdibn-0005Hz-3x
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:30:55 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1vdibo-0005If-5L
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:30:56 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdibl-0005N1-5x
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:30:54 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-34c708702dfso1923505a91.1
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:30:52 -0800 (PST)
+ id 1vdibm-0005Nb-Jh
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:30:55 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a07fac8aa1so23292715ad.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:30:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767850251; x=1768455051; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767850253; x=1768455053; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zEhE/QDquATFicjc9bVbC0uSox54fmfzVQ70vflQr6E=;
- b=XV+paVssuO4lS4gVwKuZZflyhdo5H+YRJfJ5vKUsnTOwfDjR4M1fKDiN6SbACZT5y+
- LfG5ZVPe4iId27HB8hjH6KPiom+y+Oxh6FM17DVvuqDw0bXOEY1oDMO2gq69EihKUTGW
- cJQqdAINtIsUAyRzTCY3jsRNsBGxiBg24QfdB8S5hFF7+Dn+yIXxrC8dNk/8wFzUUEaO
- Dp7/33ntD65dvu/cj8t3nxs5BClDFsmEDx21wbIoxo7der1B5M1BL/rsYCEDqw10XCEd
- Q5kFfDdbhSHkbg47+L/0/siZyS2UwVlta8UTeicwpXXE1gy51L1vO1DVHbRCXIxnlgoX
- +iIQ==
+ :reply-to; bh=6d4jiRagzBQQHiEnfwjlRKGs6G39EMUaQpWILpAj3V8=;
+ b=K6Ac1Ut3PDa5wRbQC+GnTM/QCPSDUzYUuwxKfYWCBsyWhSWrlYKeWeXdWYlFdhMOOY
+ 373wnxlBl8siAw4QBweiz0hf7CJSGvRFaM2exCA4pQSXBmAA2QELsiQsJDxlZVgQIf0F
+ KQPGEOoXdlQrBV4qP+ZbQYcX32uj944z25A5/iBEAnnKLK83v/rJxMH4ldxAgP4ZfUpF
+ VJCbmdHsYH7uUd+Tu3x4lNuo+uYaH6HFjfyeTXQ+W+aJYYKuTeL3axczJcoKEZse8sjm
+ 8nqjw19lcRXGFg7dHNSQAteePeO2kl1cojV53Fi+aYTGkcDr6ZbLgM3yVH1xM71A7IgM
+ 4hLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767850251; x=1768455051;
+ d=1e100.net; s=20230601; t=1767850253; x=1768455053;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zEhE/QDquATFicjc9bVbC0uSox54fmfzVQ70vflQr6E=;
- b=ns+G0kmjP/gYVXV/PUu6TdKs9r92ERZRveeW5mTbCfAgE0f7VwS/9vbYyVKnlVdgZ8
- 1jUeJ83NZTk1eIlFCTJaAQfhdZmDbeTrVzlep8+mjpU4u44PYJwyxFb2SlbOpuvlMaia
- 1H4tzYQTBajqu0zG+vvn3WK0Y/vbSi0e8ne90hyjqfgq0Sy8B+AbHLbeY5+tRrxpQ8vX
- sND5MwRiQ4chIU+ZFklAfSBZdFj2Ac4fZ7OUBxKGP4wSkPihxbz+1I/oS3jMtmLfYDI+
- WxwpSA9icPmFwf1I2PfpZBhhNJVCZUK6XzHwDOX4shhwKJdJ1tniTy5289fc8TOMgV4n
- Kw8g==
-X-Gm-Message-State: AOJu0YylJiYEaPCHOUQrFpziZ5sbeA/dJJgC1XruemdUh/490C035VCU
- 14pv9Dl+nd11NyV2FfmQEpKQpCjlzQEDnvHegmYx/3aWLi0xULOLPwnWGenldK3j1ETZ1ArZdPK
- BrmUejWs=
-X-Gm-Gg: AY/fxX6HH2AVgdxqQiD+I/2Dr2LWXMJsSHo6OU9YhGTGZJMdVWsiowwcwxIA3paQvDA
- sD6ERImRtxM44+Y5GEgrwqS3PAg8sxh3ciF1mGXIkcWuh64PzRZXsHjpUw5zS7k6kbhm84GhNKi
- u6HBAI4Yb+uJBHr18/8Gv8Zw5ECHHyvi9bgZry50CDerDFAzjJQeiIAI9sf/M5wX30QJ4hPWHDZ
- uVrn+s2wnrsaK76rUn/fuuGagJ6kLYQsKgDDoom/8GZ3YBOtScd9eur7tiMJmVGy7xSpr/QciUO
- EH3lnSFUO4+QVMD0iGikDUvho+6zoTIWwZXnVu3WckyRCdZChb0JLGu3vdBaY6Jt+SU80t9OmkG
- Kum7oLvj++UnqQoiqk4uyAzUwRBATATax0v+LA7DLzICx6C+IscFZ7pvrGHNHyueSjR2FHBJgRs
- HUBIbwNa8EMaap3kPmHNNncj50ffaL
-X-Google-Smtp-Source: AGHT+IECwd30O5w+7BTQWtRwzChNw7jHDSPvPj92USPEfzS1IAF3jNmsoYXG9WGQU5Vm78eoQU12tA==
-X-Received: by 2002:a17:90b:3c45:b0:339:eff5:ef26 with SMTP id
- 98e67ed59e1d1-34f68cb94f4mr4625233a91.30.1767850251165; 
- Wed, 07 Jan 2026 21:30:51 -0800 (PST)
+ bh=6d4jiRagzBQQHiEnfwjlRKGs6G39EMUaQpWILpAj3V8=;
+ b=CfT+o0fS5j6958teo0iBxZbZ6ou41d0As5a/iom9lX3ZF5i70i9SETmeh99ACn3ME/
+ ZaQgiQdCflak5/u19mLq5GO6nFIaBaw9X1L3iqmzFibxa2nkQUGsBpx4o6zgOpJUXmiC
+ wydS1og6KXWLFL6EKpL+tWp9u4+FAMIQpPSEHu1+CJ25a0whj8qKYkrTfNVB0i46hS94
+ aPrK62iDlWGVgVgP5wP/u458gffHOXZsoRhNflJFJhhySWnYUghSgyqX9zTijdZSTqH8
+ zEOglzoxkbEGgUviB2YhjmQruK2Kz4K+BvFwd256nHJw+8rBqSPoinmhZd2loPQczjHU
+ iEog==
+X-Gm-Message-State: AOJu0YzMiPBFGNffmZltY4Y4Tk3pWTP8MTQnAcC1Tb1FX/bWbvIUGz2b
+ VTMZ0fIu8qscaWoWHGBWFaIPPCZEB0eyTO37PeCF4xn6G32RS7Sgbir7X8tc5DHsRAWoqrMHAe/
+ ByocXSJ8=
+X-Gm-Gg: AY/fxX4M6fa+gqWhkqSymnvmwAhKhLYq/9hGNc2ByOM0QnYu+wLRQ6nAZqWXjsN8f9u
+ ZXuSGUHeIWYgrWnKva+66LMDbGBKCwfzok96qAhFqgypEzoGSwJFaW+QMcBhrKocvTICd0Qa1X1
+ 6dPPzgEJBYJWk7UZfw1eCXOuVBkVO9t4W/k5P1apnldWt0roVYc+LEKis5D/RTb1MTx5tTa/S7G
+ H17d5XmBybuTDIfetFdIKrPZb86T1l/X+oPLxhWk2Ckw4z8eHoNxdavbjC0M8/+CSSpFEqzueyt
+ GhP0qWZOymK8bN8uDLVMukbhUE+P+hxlPok1eNZKAc03FWJ68tEBiA4k20/pk4hOIVTBrAvt8tS
+ XW5KGjZiAoKcdad2Sj/3xNRp+OJn7xwimGbJQHVbdLMVqXRmm5YiESFktSfjQSyyn8AhoY6C3Vz
+ g8P0wBYdWWwLxcDeaNYg==
+X-Google-Smtp-Source: AGHT+IEqJc+w3iumYWc8sS9dhg7P1xNSOt15iqnpql2U51Q1zGFE3LlhLURCcXygVkmTOSnsa7vbDw==
+X-Received: by 2002:a17:90b:3a8d:b0:34a:adf1:677d with SMTP id
+ 98e67ed59e1d1-34f68b64d7cmr4144509a91.9.1767850252921; 
+ Wed, 07 Jan 2026 21:30:52 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.30.49
+ 41be03b00d2f7-c4cc05cd9d9sm7036552a12.16.2026.01.07.21.30.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Jan 2026 21:30:50 -0800 (PST)
+ Wed, 07 Jan 2026 21:30:52 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 14/50] meson: Drop host_arch rename for riscv64
-Date: Thu,  8 Jan 2026 16:29:42 +1100
-Message-ID: <20260108053018.626690-15-richard.henderson@linaro.org>
+Subject: [PATCH 15/50] meson: Remove cpu == riscv32 tests
+Date: Thu,  8 Jan 2026 16:29:43 +1100
+Message-ID: <20260108053018.626690-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108053018.626690-1-richard.henderson@linaro.org>
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,124 +99,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This requires renaming several directories:
-tcg/riscv, linux-user/include/host/riscv, and
-common-user/host/riscv.
+The 32-bit riscv host is no longer supported.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- host/include/{riscv => riscv64}/host/cpuinfo.h           | 0
- linux-user/include/host/{riscv => riscv64}/host-signal.h | 0
- tcg/{riscv => riscv64}/tcg-target-con-set.h              | 0
- tcg/{riscv => riscv64}/tcg-target-con-str.h              | 0
- tcg/{riscv => riscv64}/tcg-target-has.h                  | 0
- tcg/{riscv => riscv64}/tcg-target-mo.h                   | 0
- tcg/{riscv => riscv64}/tcg-target-reg-bits.h             | 0
- tcg/{riscv => riscv64}/tcg-target.h                      | 0
- MAINTAINERS                                              | 2 +-
- common-user/host/{riscv => riscv64}/safe-syscall.inc.S   | 0
- configure                                                | 4 ++--
- meson.build                                              | 2 --
- tcg/{riscv => riscv64}/tcg-target-opc.h.inc              | 0
- tcg/{riscv => riscv64}/tcg-target.c.inc                  | 0
- 14 files changed, 3 insertions(+), 5 deletions(-)
- rename host/include/{riscv => riscv64}/host/cpuinfo.h (100%)
- rename linux-user/include/host/{riscv => riscv64}/host-signal.h (100%)
- rename tcg/{riscv => riscv64}/tcg-target-con-set.h (100%)
- rename tcg/{riscv => riscv64}/tcg-target-con-str.h (100%)
- rename tcg/{riscv => riscv64}/tcg-target-has.h (100%)
- rename tcg/{riscv => riscv64}/tcg-target-mo.h (100%)
- rename tcg/{riscv => riscv64}/tcg-target-reg-bits.h (100%)
- rename tcg/{riscv => riscv64}/tcg-target.h (100%)
- rename common-user/host/{riscv => riscv64}/safe-syscall.inc.S (100%)
- rename tcg/{riscv => riscv64}/tcg-target-opc.h.inc (100%)
- rename tcg/{riscv => riscv64}/tcg-target.c.inc (100%)
+ configure   | 10 +++-------
+ meson.build |  4 +---
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/host/include/riscv/host/cpuinfo.h b/host/include/riscv64/host/cpuinfo.h
-similarity index 100%
-rename from host/include/riscv/host/cpuinfo.h
-rename to host/include/riscv64/host/cpuinfo.h
-diff --git a/linux-user/include/host/riscv/host-signal.h b/linux-user/include/host/riscv64/host-signal.h
-similarity index 100%
-rename from linux-user/include/host/riscv/host-signal.h
-rename to linux-user/include/host/riscv64/host-signal.h
-diff --git a/tcg/riscv/tcg-target-con-set.h b/tcg/riscv64/tcg-target-con-set.h
-similarity index 100%
-rename from tcg/riscv/tcg-target-con-set.h
-rename to tcg/riscv64/tcg-target-con-set.h
-diff --git a/tcg/riscv/tcg-target-con-str.h b/tcg/riscv64/tcg-target-con-str.h
-similarity index 100%
-rename from tcg/riscv/tcg-target-con-str.h
-rename to tcg/riscv64/tcg-target-con-str.h
-diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv64/tcg-target-has.h
-similarity index 100%
-rename from tcg/riscv/tcg-target-has.h
-rename to tcg/riscv64/tcg-target-has.h
-diff --git a/tcg/riscv/tcg-target-mo.h b/tcg/riscv64/tcg-target-mo.h
-similarity index 100%
-rename from tcg/riscv/tcg-target-mo.h
-rename to tcg/riscv64/tcg-target-mo.h
-diff --git a/tcg/riscv/tcg-target-reg-bits.h b/tcg/riscv64/tcg-target-reg-bits.h
-similarity index 100%
-rename from tcg/riscv/tcg-target-reg-bits.h
-rename to tcg/riscv64/tcg-target-reg-bits.h
-diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv64/tcg-target.h
-similarity index 100%
-rename from tcg/riscv/tcg-target.h
-rename to tcg/riscv64/tcg-target.h
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4a79947ba3..2b9354757e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4054,7 +4054,7 @@ M: Palmer Dabbelt <palmer@dabbelt.com>
- M: Alistair Francis <Alistair.Francis@wdc.com>
- L: qemu-riscv@nongnu.org
- S: Maintained
--F: tcg/riscv/
-+F: tcg/riscv64/
- F: disas/riscv.[ch]
- 
- S390 TCG target
-diff --git a/common-user/host/riscv/safe-syscall.inc.S b/common-user/host/riscv64/safe-syscall.inc.S
-similarity index 100%
-rename from common-user/host/riscv/safe-syscall.inc.S
-rename to common-user/host/riscv64/safe-syscall.inc.S
 diff --git a/configure b/configure
-index fab9a45531..2d9a603ee8 100755
+index 2d9a603ee8..06a1b441ff 100755
 --- a/configure
 +++ b/configure
-@@ -462,8 +462,8 @@ case "$cpu" in
-     CPU_CFLAGS="-m64 -mlittle-endian"
+@@ -403,12 +403,8 @@ elif check_define __s390__ ; then
+   else
+     cpu="s390"
+   fi
+-elif check_define __riscv ; then
+-  if check_define _LP64 ; then
+-    cpu="riscv64"
+-  else
+-    cpu="riscv32"
+-  fi
++elif check_define __riscv && check_define _LP64 ; then
++  cpu="riscv64"
+ elif check_define __aarch64__ ; then
+   cpu="aarch64"
+ elif check_define __loongarch64 ; then
+@@ -1269,7 +1265,7 @@ EOF
+     test "$bigendian" = no && rust_arch=${rust_arch}el
      ;;
  
--  riscv32 | riscv64)
--    host_arch=riscv
+-  riscv32|riscv64)
 +  riscv64)
-+    host_arch=riscv64
-     linux_arch=riscv
+     # e.g. riscv64gc-unknown-linux-gnu, but riscv64-linux-android
+     test "$android" = no && rust_arch=${rust_arch}gc
      ;;
- 
 diff --git a/meson.build b/meson.build
-index 6896c7a64f..b0fe798ee2 100644
+index b0fe798ee2..a18b3a5657 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -265,8 +265,6 @@ enable_modules = get_option('modules') \
+@@ -50,7 +50,7 @@ qapi_trace_events = []
  
- if cpu not in supported_cpus
-   host_arch = 'unknown'
--elif cpu in ['riscv32', 'riscv64']
--  host_arch = 'riscv'
- else
-   host_arch = cpu
- endif
-diff --git a/tcg/riscv/tcg-target-opc.h.inc b/tcg/riscv64/tcg-target-opc.h.inc
-similarity index 100%
-rename from tcg/riscv/tcg-target-opc.h.inc
-rename to tcg/riscv64/tcg-target-opc.h.inc
-diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-similarity index 100%
-rename from tcg/riscv/tcg-target.c.inc
-rename to tcg/riscv64/tcg-target.c.inc
+ bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
+ supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
+-supported_cpus = ['ppc64', 's390x', 'riscv32', 'riscv64', 'x86_64',
++supported_cpus = ['ppc64', 's390x', 'riscv64', 'x86_64',
+   'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm32']
+ 
+ cpu = host_machine.cpu_family()
+@@ -279,8 +279,6 @@ elif cpu == 'ppc64'
+   kvm_targets = ['ppc-softmmu', 'ppc64-softmmu']
+ elif cpu == 'mips64'
+   kvm_targets = ['mips-softmmu', 'mipsel-softmmu', 'mips64-softmmu', 'mips64el-softmmu']
+-elif cpu == 'riscv32'
+-  kvm_targets = ['riscv32-softmmu']
+ elif cpu == 'riscv64'
+   kvm_targets = ['riscv64-softmmu']
+ elif cpu == 'loongarch64'
 -- 
 2.43.0
 
