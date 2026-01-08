@@ -4,122 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5129CF6ABF
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A52CF6C15
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdnBw-0007Iy-R0; Thu, 08 Jan 2026 05:24:32 -0500
+	id 1vdnGP-0003Dm-FS; Thu, 08 Jan 2026 05:29:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vdnBv-0007ID-65
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:24:31 -0500
-Received: from 10.mo548.mail-out.ovh.net ([46.105.77.235])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdnGL-00036F-BB
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:29:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vdnBr-00027L-T4
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:24:30 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.231.159])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dn1Gt6dqBz5vqP;
- Thu,  8 Jan 2026 10:24:22 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG3EX1.mxp5.local (172.16.2.21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Thu, 8 Jan
- 2026 11:24:21 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-108S0027da31559-35ac-4fcd-8d66-2eb9b74e98d0,
- 149C89F7FC287B932C0337C7351631586067857D) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <6f0e285f-4921-4b18-8dac-f80b435dc1b4@kaod.org>
-Date: Thu, 8 Jan 2026 11:24:21 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdnGJ-0002Z8-DB
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:29:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767868141;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9kWCKOgBTcPmlaqvdmrrppIwZKxO1HqvB5UU4UDFwM0=;
+ b=ge6m0vcmrKin1+QyH4CNVcw3/ZzByj44IbsdIYDwTTWqCNHR5/+WfwMyer3jd+AM+rDxJj
+ Iys5CiZpuwbNOE6z+35eFhLMsFJjZUoNXpiJrh2HDL7UxO5riy7CeW5XVC3PHd1DH8yG2W
+ 8VS080BebtLexIrKsBH5zi5lnOMqst4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-413-qCDVNqHwMrSzz0750ZYfyA-1; Thu, 08 Jan 2026 05:28:59 -0500
+X-MC-Unique: qCDVNqHwMrSzz0750ZYfyA-1
+X-Mimecast-MFC-AGG-ID: qCDVNqHwMrSzz0750ZYfyA_1767868138
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4779b3749a8so24600705e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:28:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767868138; x=1768472938; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9kWCKOgBTcPmlaqvdmrrppIwZKxO1HqvB5UU4UDFwM0=;
+ b=H31KiHVldlY4zWT5ldkV35sh9PhAeDIvG0YYGDyCKSczRJ8nsXPj4xuUzXzX1w0bJ3
+ PbQlpvFjCoLOaEXjZ9oDwr7z2xUf99cj16Dd8uiSZXRS5QSvZLYjg1FsIfReE/rIGHN7
+ pYTVJTeh4b/TC8kbs3a5Zto2gWncVap5xghIc74jvxKP9X9ZB6ZNBY+RXn1EVHvt3ULI
+ ttHfFlFxP+7UZM5TaMggIIV71NnwWm0CrgJSYuxaaaigIeCT4+3uYz+IM2BDGoLP2AF0
+ jmd12gHyjqmibYPso2h3tCCM8MULH7rDnn84GVuTALGOSooh5av8eTpLR3i3wt8pkzuc
+ zk+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767868138; x=1768472938;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9kWCKOgBTcPmlaqvdmrrppIwZKxO1HqvB5UU4UDFwM0=;
+ b=mvP0OifX8yL00usPpq9jBdTAp70fRM44HXFBnKKy+M/blOS/o9E5lnpu8G7pxsBtEp
+ bPmDd0yufjQkgmHC2bRtebCdLt1Gx6jjsca+N2f2cPbD1LksIsvWCBu8rhhfcaHHfePA
+ 95QQVae40knG8wzx5WXKdwRloknC89YdcGjfSdXR+uwVgGaKfNSd4u6bJ68jWOCELaxq
+ 7g+9SuwmECOqagj86hgmWe6V6o0Q4FQ17krYBKgaE5spzPhviG+oJPpnO/IMhRGgB+nI
+ JLJZVN/yK7cOswC49lFYn2Iu3t6waPfnpA2htXlNTRDVbi/+gZxkmZnE725Xyd4zfu9k
+ GhMw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7e+HKJrbzkFcxMY+ExR1g/ShED152Ykl7A1bFlavtKOljDsT8VYg9WCC2ra3bY/KuJ/2zx5VjZ5+F@nongnu.org
+X-Gm-Message-State: AOJu0Yztrdx6e7y4Sr6RJdq7mPzQHXPS0QfH9aVA02b/WRT7drRjR2NN
+ FHS2aBJbqrvmOe18OaWTze4QmGGXIhznkhieta9Oo1Mx0JHsv6cQT/mC7Sb58ta+kTBHfyxRZ69
+ KM3QR4bquqAwIolWstCqkFexPzR9C6sOkl+P3wC0oEb4LKlYw4ko7AUmh
+X-Gm-Gg: AY/fxX4ueyREpBNy0R/hkwrjqMFX20ZGir5amJCtbcmkSI5zy9GQCyi9hNEfMRqOKXg
+ uH607HYvpR31oyfZ+41QKk/nwRz+u8CKNXl1xnuVNEHZZEFh+OlbF5D3ea4TSnWgTooPWZkSoB+
+ LPePlGl+3+Rwr/zYgIroNnaC4bqckbHG6Ls4r+7cEUM0nNXPPdFC6pjvBIub7fRNC2233DksKBa
+ NSYzIWOm9Jv7lhqaxsS0nBA/vvAcoBwPuD4qWl8ZhhYp0H4ELvv5RIs9dfqa62xZpj0GU78oW1h
+ S2Akx8D16fOVr0DArInB+1/Mi2ubIwtCuByjRNjOILG7yJB0rTxdmT2pdrOfWt5j/1m3Hr4A4+d
+ Z0ghodO4=
+X-Received: by 2002:a05:600c:6096:b0:477:97ca:b727 with SMTP id
+ 5b1f17b1804b1-47d8e4a3c5dmr8851545e9.19.1767868138248; 
+ Thu, 08 Jan 2026 02:28:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFfsGLKIiESQ0amnD6MSGEAYpfb4naOG+SbkdwR+E38PtO01AequLWyukny66LPyhvhfsX1zA==
+X-Received: by 2002:a05:600c:6096:b0:477:97ca:b727 with SMTP id
+ 5b1f17b1804b1-47d8e4a3c5dmr8851295e9.19.1767868137851; 
+ Thu, 08 Jan 2026 02:28:57 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.114.194])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d8660be14sm36403115e9.1.2026.01.08.02.28.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Jan 2026 02:28:57 -0800 (PST)
+Message-ID: <9e012be5-742e-4040-a8ae-534a97411074@redhat.com>
+Date: Thu, 8 Jan 2026 11:28:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 14/19] hw/arm/aspeed: attach I2C device to AST1700 model
-To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "nabihestefan@google.com"
- <nabihestefan@google.com>
-References: <20251224014203.756264-1-kane_chen@aspeedtech.com>
- <20251224014203.756264-15-kane_chen@aspeedtech.com>
- <1a3595d9-eac7-4575-a31f-1b869c6175f3@kaod.org>
- <5af965b1-d4f2-4b5f-b339-a3ca1ec1905d@kaod.org>
- <SI6PR06MB76312CC4E874C642DA879F11F785A@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI6PR06MB76312CC4E874C642DA879F11F785A@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG3EX1.mxp5.local
- (172.16.2.21)
-X-Ovh-Tracer-GUID: b97eb05a-5209-45f6-a12e-347277b838f8
-X-Ovh-Tracer-Id: 9643895654039915509
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEIZ7KaFB4bLIPpihfZ03QTYxGuPB/VcbybNWEb0k7vs5DMxZE5AA8HT+YuCeCE3H1Rdvs0M9KUjdp4jLNmWGZwqFOgAUm6pK7hq8QQtbAEHubyNUiDXq+kICNHP539Mhde0+lMVwvd/DpvnmknSNbKK+uwtwd4jEOjgQvBQ2etzEaaLR203iau2KtjGO4vgvtNIvnZoJJ2QId40cGlSOWKGi6pSi8f2lT2cM/E6DqhT7gHIryN/ETylWngdCuAaezsSbpbaxBO6ncHgR6w/2YUSEor4b8rEEvCwDPXzbt/UG8r0fG5E7Md5a6N7zi/z+w4IYQeDWNX9lcyRlQbay3TKP+K8ypFhOCyLUuHhvrT4xPn/Igu1Em1/miN7Kxy4Od9z2XhE1hp8NAFFqCZJYNROKHWYA8vvzP0AxZ4bKFc6i07aQDw0MDy/cXoczZB4lyZS9zJC/3IE3QvmH0t/IEBx3XqlGT/W5NaV5HPxVBJ7eM9DLqwFsHV5w5uUKXJVvRXA3dfQbyzs6DQEWrsvi5smpfANerJJT54dX3U5o2ydWJ+5SvSG0z+eH1YnsfaJ9HaSlxAU+wJiGItBzDjK+iRaaQoAcM8lknqlwMK9cKONVsttPdQ16jQWg3e1UFtl9OZ+sdkr+q8HyMV2oc/GhIjMorBALsGw10mSgd2wGYQnw
-DKIM-Signature: a=rsa-sha256; bh=E6F+QTIjepG/DbnH3kyuSWJpmWLzJurUZYAOPTEQRJo=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1767867864; v=1;
- b=D23MQiuBmcUqIr3NhNQ0pIh5OldBVIt/kaExXa46PaSXE8F2Ei7533Wa/VJU2MW+vVYBU4nE
- RCKiML7LivTG9U5aVIJGqTnsuH1IbkUF+mk6HzWDexQY49GFt0UzJa3RZ7k9hCYVJKC/5uNktGv
- gY/O+AxwSMWqGJOhhSMrhK2JoiMiQx0ATztr44lHRCExVhqSde59Fz0A/WIrIjIOErjWnrefE/2
- J59XsTRXSfyeIvdx20zsDn7f8pPCzIKT+tVuNrCMaCFTZcglGhkMF7Zh2k6gyKF+NicyCrAaxfP
- 7JmjaeyGdYywRTIckNJ3ZWrGIcJleSp9nTOy9pcS/37wA==
-Received-SPF: pass client-ip=46.105.77.235; envelope-from=clg@kaod.org;
- helo=10.mo548.mail-out.ovh.net
+Subject: Re: [PATCH 05/50] *: Remove __i386__ tests
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260108053018.626690-1-richard.henderson@linaro.org>
+ <20260108053018.626690-6-richard.henderson@linaro.org>
+ <d59e4ffe-87e5-42fd-b803-7c0092b062ce@redhat.com>
+ <f4e95447-941e-47d8-8923-3817cbd4bf5b@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <f4e95447-941e-47d8-8923-3817cbd4bf5b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,42 +167,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kane,
-
-> Thanks for your suggestions. I have refactored the bus naming logic to align with
-> your comments. The decision making for the bus name has been moved up to the
-> SoC level, and the redundant "aspeed" prefix has been removed.
+On 08/01/2026 11.21, Richard Henderson wrote:
+> On 1/8/26 20:47, Thomas Huth wrote:
+>> On 08/01/2026 06.29, Richard Henderson wrote:
+>>> Remove instances of __i386__, except from tests and imported headers.
+>>>
+>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>> ---
+>> ...
+>>> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+>>> index 2060e561a2..63713f1992 100644
+>>> --- a/linux-user/syscall.c
+>>> +++ b/linux-user/syscall.c
+>>> @@ -7449,15 +7449,6 @@ void syscall_init(void)
+>>>                                 ~(TARGET_IOC_SIZEMASK << 
+>>> TARGET_IOC_SIZESHIFT)) |
+>>>                   (size << TARGET_IOC_SIZESHIFT);
+>>>           }
+>>> -
+>>> -        /* automatic consistency check if same arch */
+>>> -#if (defined(__i386__) && defined(TARGET_I386) && defined(TARGET_ABI32)) 
+>>> || \
+>>> -    (defined(__x86_64__) && defined(TARGET_X86_64))
+>>
+>> This looks like we should keep the x86_64 part?
+>>
+>>> -        if (unlikely(ie->target_cmd != ie->host_cmd)) {
+>>> -            fprintf(stderr, "ERROR: ioctl(%s): target=0x%x host=0x%x\n",
+>>> -                    ie->name, ie->target_cmd, ie->host_cmd);
+>>> -        }
+>>> -#endif
 > 
-> Here is a summary of the changes:
-> 1. Added a bus-label property to AspeedAST1700SoCState. This allows the top-level
->    SoC (e.g., AST2700) to define the label during its initialization or realize phase.
-> 2. The bus-label is passed from aspeed_ast1700_realize to the I2C controller
->    (AspeedI2CState).
-> 3. In aspeed_i2c_realize, the controller generates unique names using the bus-label.
->    These names are passed to the AspeedI2CBus through a new bus-name property
->    during the initialization of the buses.
-> 
-> With these changes, the new object hierarchies and bus names are as follows:
-> BMC: /i2c/bus[0]/aspeed.i2c.bus.0
-> IOEXP0 (LTPI0): /ioexp[0]/ioexp-i2c[0]/bus[0]/ioexp0.0
-> IOEXP1 (LTPI1): /ioexp[1]/ioexp-i2c[0]/bus[0]/ioexp1.0
+> The block doesn't look worthwhile to keep, IMO.
 
-The names in the object hierarchy should not have changed, only
-the bus names exposed to the user are impacted.
+Ok, fine for me. Maybe mention it in the patch description, though, since 
+this was not obvious (at least not to me).
 
-> I have also verified that this naming convention does not require changes to existing
-> test scripts, and all functional tests passed successfully.
-> 
-> If you have no further concerns regarding this approach, I will submit the updated patch
-> series.
-
-Please separate the bus-label change from the rest. I am expecting
-a functional test case too, maybe we should update the sdk version
-to v10.00 first ?
-
-Thanks,
-
-C.
-
+  Thomas
 
 
