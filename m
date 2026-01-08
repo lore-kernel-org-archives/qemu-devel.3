@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C03D7D1D495
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1309AD1D48A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwpV-0006nH-Fy; Thu, 08 Jan 2026 15:42:01 -0500
+	id 1vdwzD-0001QV-PM; Thu, 08 Jan 2026 15:52:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwpT-0006mQ-Bk
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:41:59 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1vdwzB-0001Ps-Qn
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:52:01 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwpS-0008Cf-1G
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:41:59 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c13771b2cf9so2591605a12.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:41:57 -0800 (PST)
+ id 1vdwzA-00022x-44
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:52:01 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-81df6a302b1so190747b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:51:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767904916; x=1768509716; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767905518; x=1768510318; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JtyQ115NrIQL1bkFu6JJ3tDIj4YisNNisgq46FvkCFo=;
- b=edJEwgOD50zFWni4YeKeiz3k6yMjAJubg2Tp981F3OyhwydESSYefvncR8pNzQoO//
- qzUCQDYcyjn3Fr5crnn/U8wgDiZO96kOtRQpl7YmwEmyWmOgYDS4mJqeeTIPldFBg3q8
- 6c5tXJUzQWmOYKy+Kd2VgGGGmLCW9E058KkxX/VpWF4gO3xjfCa5sLkc1RpuRYkORUfO
- 7yQ/SKW0AqvrdlnW6BA39Df5rc9IKvbxvvqJ/jsH8z5h0hNPOm+mtLWYMURhLm+Cbci0
- 1eiBzWWygzf4/jisTvaofjHg9FD5NhKWllweAEwDU+TZug+Ev3FyImyawsgpO+7tPbp7
- qSgg==
+ bh=WduuRd1zBnSprL751T9lZwTYZxTtQikxVMMFcslllPk=;
+ b=UKDjq0qDmyaWY3t/WeXWiceyvH9yJ5wAE5b/aQMu+LGwxeIDf8GFoaAM7x47T59CU+
+ LrSYK8SHUT4qFI6kcWkqhsPvGDLS/ojAN8cAkQDKnjRmZ6hxHBmxBmOYqvHYGfZ5WHMb
+ JoeRpiAbKryoxd2CTFnGyQXMNVmtFsP1uqmBjLyrVgnxyL6HQS8+3TAEvSZPSMR3NRy5
+ r4TkGj+iRgyKrikjb73k78hQCMFqBctQprAYpA+HRs6C66ijdkHiDDQ4YUuphjYqmZT1
+ 2zycffGREW0gBYng47xcFOkSAvrsnK9FBH4DPsNGSkboPiL7wlsW5Ti8GRQMWqTeEZ0x
+ XYlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767904916; x=1768509716;
+ d=1e100.net; s=20230601; t=1767905518; x=1768510318;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JtyQ115NrIQL1bkFu6JJ3tDIj4YisNNisgq46FvkCFo=;
- b=UAF5fH73c/S67nsGbYT6UGG3DjtVekMJqfv6ymJm6IeOatdZoDiSwO30LjTXhcyBRX
- TpJDEyirRo4ZTowAJf5HYZQaw1Yip/f9VXAP8aGJRgOzAHf1th6/hUu0wqiFtkDDWyA9
- KzdISGRSa2A1p8Yuhj1RkNwzy6xkI5J+v+hzND1YF5WiV5v3Y6j7ngQgi+tg76bKzVlj
- U1y3RFrNhpFUx2160ftM5qbM3viOHKtv4PQcoGG3zxhFsLYI9EPvIOSS8VoYKGLw4JDe
- sWYAnFAXniJzyBG8WkqWukneYEqewgILgGI0Zmxkvz7ufhRJdwjOY3ffGvngCcmGVUCQ
- 8/2g==
+ bh=WduuRd1zBnSprL751T9lZwTYZxTtQikxVMMFcslllPk=;
+ b=Pj9RrGYwD0dVLBzbVFNUWHhvv4RUtddZWpszg+Z8mr47fLbyNHGod2qcb+wKZpBW6i
+ mdhbc+lC2AT8PKTK5vUBz2Cd7qeX/fJxyszZbkrqcIja3/Y7WUwk/Lrd/1UPKvtexYoo
+ r/zcX0XHn8u4/GxC/HYl/HHoiSGvcAZPyvJunWO7FUprt0sgKvirYTn19nn8Dr28pOXd
+ cF4P0jj9iZHVHnJNl66iKqsQsSPlmSfCGlD6fQ6VA7UKgJNjSdSRtwNCO4DF/So8T3bU
+ 30aS+RWolMr8FHJhh+MDkqcMUMWocVizJHd/BaFM4e0zcyPiMenkQF7KDjTJ/Yp1Spxc
+ AG+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWe2gGlfZGhStekwZfxDOnH3jFceINrhQCu+QOdficPHHgEY6K9AmmFE8TcE3hzlVZkSNwCa299RCqk@nongnu.org
-X-Gm-Message-State: AOJu0YwvpsnT0g5Ve7SELNvROD/h5p0F/mZUFbxEujERzpRT73HGGjzX
- rhEYg0MvOGTUFcWyMC22DbrDWBMMhmgJXQv7joPY7gDl6rkTsN5lnVH6/FmJYCWcJsI=
-X-Gm-Gg: AY/fxX6hNZPH8BB1tofPRZFDA7EzekTcoIdiofeGf9mt+sahC+N/cmQpKFwaB/C5AxX
- KkDNltjkORb8sg2yDmfEqV2wbySibFEI/mBm6NgYtawKR+YYdE2WAa0oA2sorf/0dBiU3EfbvV3
- Ul9m9qnQnIU4Yxxf3699nLKWnzo9+uXdUD04f919PnT48li5mxeCrNWQwkUgB1dVG2Aw1KSppQ2
- 2l0mbG9xPp0pKEbCsi4tBKtiBXJDjYzTGTKgi10mUJ9pTm0yxyw9ZSb19ZPx5CKq5zbCD56LwR6
- H+uL9wHm11VR4fsNU5N5PQg4XW6Tl35k8zP6ebUEYoGqY9stHBbvE03DGCh3PPq6pOe3HaP4Q9P
- 9AoxHEjiqhgWcFfeaGi1EHXqKBnJdbFoylIJ8/Xp1HrTb2gl5VpKka3yS1J+yn4CSvG3owF8XlT
- yEHaaidnfJVCbcHFPu19rGGUJ0EulYqIkTtXoHTCsQwS/bDzJC9vbx0I0C
-X-Google-Smtp-Source: AGHT+IH+un/DeJTx2RuHpFWqeXO8j/1lGHDiMlolA8JB99nCG6Pei5f5xHdCWcmTRIzenk6eW/WzFw==
-X-Received: by 2002:a17:903:15ce:b0:295:62d:5004 with SMTP id
- d9443c01a7336-2a3ee456360mr69343895ad.26.1767904915796; 
- Thu, 08 Jan 2026 12:41:55 -0800 (PST)
+ AJvYcCUPxXx5xeBQzti37Z0z111cksm36VkKwEmP6Lbe4wZtWaTR+PD5HBe3kkZOQ2zwWPjFIeQRRiaoxNaM@nongnu.org
+X-Gm-Message-State: AOJu0YzbSxr5cmcAcynNw20UkQ453+HMYBHr/mM9Bkvroe0xqOQVWEsg
+ /WB4kr2EwVP5ypLtW39ynytkF7I9Ehr+6VcWjq5lO84IepWSXzCp5i7ua3A2jDq3Vbln57efWUi
+ 9WT/X
+X-Gm-Gg: AY/fxX6zGH290+aZsdchWImwXBYD4irvsmi/ornOI9a1DtljqTeTtRE+5ZPNtZFUUiW
+ zH0z+VGZVIhgO0vQIuIkF+7ho5zdT4vyRDmGMztmbHhGtpLdxyg3ZCulMV44RM/+mEyY5x+zi5A
+ M0rjIPV3Nbag2WLmCqC1EXXNOt2qYfQrQwAcSsGqOSSQKc9KXKNbYB1Dy6pBsvI7FGUhS7E3MrU
+ Kf6txPEAwLQsTx/aLikasfaZ/a3TtSvoun7QKhG5SHkXBFh7lLEH3s2Hr5TwykJb4IsKt9bx+N5
+ JZFEEIJG0wEs+u845aYGJtiAyUV/fSw8aMe9lMt4ASEMiMqSrFVh7UQ0Js7uTXFrM1g+UNQxyjX
+ FKFBvJJHAMKyyVLTbhrXwnKXxkwR5HzAS76NPDQyzxsG7CwCokBxk/2syAXVWJa3400Q6UP6qNW
+ 5QDJXvv4grC8orbDmmgIJsewplHuwga/jmjzRLPkiBe9IDZSILxe3ZFaEQ
+X-Google-Smtp-Source: AGHT+IF37dwW1XI5WKygiZ0jxWbh59SKGcNWpszAJNZKwWluCvxNwGIdFJtLscAkrcPo/2a3ajgaDg==
+X-Received: by 2002:a05:6a00:3286:b0:7aa:4f1d:c458 with SMTP id
+ d2e1a72fcca58-81b7d85635emr6694239b3a.19.1767905518354; 
+ Thu, 08 Jan 2026 12:51:58 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cb2df6sm87248645ad.61.2026.01.08.12.41.55
+ 41be03b00d2f7-c4cc02ecfaasm8985488a12.14.2026.01.08.12.51.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 12:41:55 -0800 (PST)
-Message-ID: <d0f6a8c9-a11b-4164-a949-a33a5a568e69@linaro.org>
-Date: Thu, 8 Jan 2026 12:41:54 -0800
+ Thu, 08 Jan 2026 12:51:57 -0800 (PST)
+Message-ID: <b654f3ac-acc8-418f-b7f2-2de27b1f14d9@linaro.org>
+Date: Thu, 8 Jan 2026 12:51:57 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/50] tcg/tci: Drop TCG_TARGET_REG_BITS tests
+Subject: Re: [PATCH 24/50] tcg: Drop TCG_TARGET_REG_BITS test in region.c
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-23-richard.henderson@linaro.org>
+ <20260108053018.626690-25-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108053018.626690-23-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-25-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,10 +109,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 1/7/26 9:29 PM, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/tci/tcg-target-has.h |  2 --
->   tcg/tci.c                | 50 ++-------------------------------------
->   tcg/tci/tcg-target.c.inc | 51 ++++++----------------------------------
->   3 files changed, 9 insertions(+), 94 deletions(-)
+>   tcg/region.c | 12 ------------
+>   1 file changed, 12 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
