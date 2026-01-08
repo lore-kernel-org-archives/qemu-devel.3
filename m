@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E86D1D478
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 17:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E453D1D483
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 17:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdtSE-000811-7I; Thu, 08 Jan 2026 12:05:46 -0500
+	id 1vdtRA-000556-D2; Thu, 08 Jan 2026 12:04:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdtS2-0007ZP-Ho
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 12:05:36 -0500
+ id 1vdtR8-0004rx-Kw
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 12:04:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdtS0-0007MX-K9
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 12:05:34 -0500
+ id 1vdtR6-0006x1-6J
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 12:04:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767891931;
+ s=mimecast20190719; t=1767891875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hs7w5e8PYkWEToas8zAGloctBGVW9BJyZ/k9qigqvuY=;
- b=jKa8ppb4HNK4t2pNpM19uFFyxSHcEsebgwRB/CJMA7nuxci07zJXR1ljkuSezjAV6eTYxn
- XxifYrxMj/rdZXXyYNOQJpsQB4jJVyyy4eVlf8zKDhqac0VILBiw25XAncMqjFwZ5qq+YJ
- 6/zVW86zJRz6biwTeOxbMlVkJBHbh7o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HxGVmRFJHg5nVJLz1ZBLMXtrHWLvPyZOpW/EMNXCgvE=;
+ b=C+HzvvqXjXqpXpz8NKqNV8f1yAz0W9Dcl4JfdR+ty2PeFHWgsxHZyjlbCBIruRqSewJjGm
+ Qe82pP63c7wAiOmdxMkXCnKqhOI8UqX71BXsK4CQ027eY1Ycjd9zmS3heWtcswsXCOB8ps
+ 162SNQPtgmZN7GiGplYKNgrOM1FTOGE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-XMtLEhKDOjOfc2P8lVtwiw-1; Thu,
- 08 Jan 2026 12:05:25 -0500
-X-MC-Unique: XMtLEhKDOjOfc2P8lVtwiw-1
-X-Mimecast-MFC-AGG-ID: XMtLEhKDOjOfc2P8lVtwiw_1767891922
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-7Dq-fzMjNdiY-xTC6wq9gg-1; Thu,
+ 08 Jan 2026 12:04:31 -0500
+X-MC-Unique: 7Dq-fzMjNdiY-xTC6wq9gg-1
+X-Mimecast-MFC-AGG-ID: 7Dq-fzMjNdiY-xTC6wq9gg_1767891870
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB6C21956050; Thu,  8 Jan 2026 17:05:22 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 118C719560A5; Thu,  8 Jan 2026 17:04:30 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.44])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CB24E19560A2; Thu,  8 Jan 2026 17:05:18 +0000 (UTC)
+ id 0C79B19560A2; Thu,  8 Jan 2026 17:04:25 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -61,10 +61,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
  Kevin Wolf <kwolf@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 22/24] util: add support for formatting a program name in
- messages
-Date: Thu,  8 Jan 2026 17:03:36 +0000
-Message-ID: <20260108170338.2693853-23-berrange@redhat.com>
+Subject: [PATCH v5 10/24] util: avoid repeated prefix on incremental qemu_log
+ calls
+Date: Thu,  8 Jan 2026 17:03:24 +0000
+Message-ID: <20260108170338.2693853-11-berrange@redhat.com>
 In-Reply-To: <20260108170338.2693853-1-berrange@redhat.com>
 References: <20260108170338.2693853-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -96,193 +96,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The error_report function can include the program name in any
-messages it prints. The qemu_log function has no equivalent
-behaviour.
+There are three general patterns to QEMU log output
 
-This introduces support for a "program name" in the new
-messages API, which will be included by default for all
-binaries.
+ 1. Single complete message calls
 
-This change tweaks the output of the error_report function,
-adding a space between the program name and the location
-info. The qemu_log function will gain the program name. This
-can be easily seen with the 'log' trace backend, and how it
-is now more closely matching error_report output.
+      qemu_log("Some message\n");
 
-Before:
+ 2. Direct use of fprintf
 
-  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
-  qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5584e13937f0 dir=fish
-  qcrypto_tls_creds_get_path TLS creds path creds=0x5584e13937f0 filename=ca-cert.pem path=<none>
-  qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+      FILE *f = qemu_log_trylock()
+      fprintf(f, "...");
+      fprintf(f, "...");
+      fprintf(f, "...\n");
+      qemu_log_unlock(f)
 
-After:
+ 3. Mixed use of qemu_log_trylock/qemu_log()
 
-  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
-  qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5584e13937f0 dir=fish
-  qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=0x5584e13937f0 filename=ca-cert.pem path=<none>
-  qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+      FILE *f = qemu_log_trylock()
+      qemu_log("....");
+      qemu_log("....");
+      qemu_log("....\n");
+      qemu_log_unlock(f)
 
-When adding this the '-msg program-name=on|off' option is
-introduced, so that the program name (which is enabled by
-default) can be supressed if desired. This could be useful
-if '-msg guest-name=on' is being used as a more informative
-identifier.
+When message prefixes are enabled, the timestamp will be
+unconditionally emitted for all qemu_log() calls. This
+works fine in the 1st case, and has no effect in the 2nd
+case. In the 3rd case, however, we get the timestamp
+printed over & over in each fragment.
 
+One can suggest that pattern (3) is pointless as it is
+functionally identical to (2) but with extra indirection
+and overhead. None the less we have a fair bit of code
+that does this.
+
+The qemu_log() call itself is nothing more than a wrapper
+which does pattern (2) with a single fprintf() call.
+
+One might question whether (2) should include the message
+prefix in the same way that (1), but there are scenarios
+where this could be inappropriate / unhelpful such as the
+CPU register dumps or linux-user strace output.
+
+This patch fixes the problem in pattern (3) by keeping
+track of the call depth of qemu_log_trylock() and then
+only emitting the the prefix when the starting depth
+was zero. In doing this qemu_log_trylock_context() is
+also introduced as a variant of qemu_log_trylock()
+that emits the prefix. Callers doing to batch output
+can thus choose whether a prefix is appropriate or
+not.
+
+Fixes: 012842c07552 (log: make '-msg timestamp=on' apply to all qemu_log usage)
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/message.h         |  1 +
- qemu-options.hx                |  9 +++++++--
- system/vl.c                    | 11 ++++++++++-
- tests/unit/test-error-report.c |  5 +++--
- util/error-report.c            |  4 ----
- util/message.c                 | 10 +++++++++-
- 6 files changed, 30 insertions(+), 10 deletions(-)
+ include/qemu/log.h |  7 +++++++
+ util/log.c         | 49 ++++++++++++++++++++++++++--------------------
+ 2 files changed, 35 insertions(+), 21 deletions(-)
 
-diff --git a/include/qemu/message.h b/include/qemu/message.h
-index cfc3c92648..b8518d06be 100644
---- a/include/qemu/message.h
-+++ b/include/qemu/message.h
-@@ -6,6 +6,7 @@
- enum QMessageFormatFlags {
-     QMESSAGE_FORMAT_TIMESTAMP = (1 << 0),
-     QMESSAGE_FORMAT_WORKLOAD_NAME = (1 << 1),
-+    QMESSAGE_FORMAT_PROGRAM_NAME = (1 << 2),
- };
+diff --git a/include/qemu/log.h b/include/qemu/log.h
+index e9d3c6806b..95f417c2b7 100644
+--- a/include/qemu/log.h
++++ b/include/qemu/log.h
+@@ -69,6 +69,13 @@ bool qemu_log_separate(void);
+  */
+ FILE *qemu_log_trylock(void) G_GNUC_WARN_UNUSED_RESULT;
  
++/**
++ * As qemu_log_trylock(), but will also print the message
++ * context, if any is configured and this caused the
++ * acquisition of the FILE lock
++ */
++FILE *qemu_log_trylock_context(void) G_GNUC_WARN_UNUSED_RESULT;
++
  /**
-diff --git a/qemu-options.hx b/qemu-options.hx
-index e8057fdcc9..e58b55d1f7 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -5515,13 +5515,15 @@ ERST
+  * Releases the lock on the log output, previously
+  * acquired by qemu_log_trylock().
+diff --git a/util/log.c b/util/log.c
+index c44d66b5ce..2ce7286f31 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -127,13 +127,39 @@ static FILE *qemu_log_trylock_with_err(Error **errp)
+     return logfile;
+ }
  
- DEF("msg", HAS_ARG, QEMU_OPTION_msg,
-     "-msg [timestamp=on|off][,guest-name=on|off]\n"
-+    "     [,program-name=on|off]\n"
-     "                control error message format\n"
-     "                timestamp=on enables timestamps (default: off)\n"
-     "                guest-name=on enables guest name prefix but only if\n"
--    "                              -name guest option is set (default: off)\n",
-+    "                              -name guest option is set (default: off)\n"
-+    "                program-name=off disables program name prefix (default: on)\n",
-     QEMU_ARCH_ALL)
- SRST
--``-msg [timestamp=on|off][,guest-name=on|off]``
-+``-msg [timestamp=on|off][,guest-name=on|off][,program-name=on|off]``
-     Control error message format.
- 
-     ``timestamp=on|off``
-@@ -5530,6 +5532,9 @@ SRST
-     ``guest-name=on|off``
-         Prefix messages with guest name but only if -name guest option is set
-         otherwise the option is ignored. Default is off.
++/*
++ * Zero if there's been no opening qemu_log_trylock call,
++ * indicating the need for message context to be emitted
++ *
++ * Non-zero if we're in the middle of printing a message,
++ * possibly over multiple lines and must skip further
++ * message context
++ */
++static __thread uint log_depth;
 +
-+    ``program-name=on|off``
-+        Prefix messages with the program name. Default is on.
- ERST
- 
- DEF("dump-vmstate", HAS_ARG, QEMU_OPTION_dump_vmstate,
-diff --git a/system/vl.c b/system/vl.c
-index 5f3b5436a6..503b0dcc24 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -381,6 +381,12 @@ static QemuOptsList qemu_msg_opts = {
-             .help = "Prepends guest name for error messages but only if "
-                     "-name guest is set otherwise option is ignored\n",
-         },
-+        {
-+            .name = "program-name",
-+            .type = QEMU_OPT_BOOL,
-+            .help = "Prepends program name for error messages (enabled "
-+                    "by default)\n",
-+        },
-         { /* end of list */ }
-     },
- };
-@@ -819,13 +825,16 @@ static void realtime_init(void)
- 
- static void configure_msg(QemuOpts *opts)
+ FILE *qemu_log_trylock(void)
  {
--    int flags = 0;
-+    int flags = QMESSAGE_FORMAT_PROGRAM_NAME;
-     if (qemu_opt_get_bool(opts, "timestamp", false)) {
-         flags |= QMESSAGE_FORMAT_TIMESTAMP;
-     }
-     if (qemu_opt_get_bool(opts, "guest-name", false)) {
-         flags |= QMESSAGE_FORMAT_WORKLOAD_NAME;
-     }
-+    if (!qemu_opt_get_bool(opts, "program-name", true)) {
-+        flags &= ~QMESSAGE_FORMAT_PROGRAM_NAME;
+-    return qemu_log_trylock_with_err(NULL);
++    FILE *f = qemu_log_trylock_with_err(NULL);
++    log_depth++;
++    return f;
++}
++
++FILE *qemu_log_trylock_context(void)
++{
++    FILE *f = qemu_log_trylock();
++    if (log_depth == 1 && message_with_timestamp) {
++        g_autofree const char *timestr = NULL;
++        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
++        timestr = g_date_time_format_iso8601(dt);
++        fprintf(f, "%s ", timestr);
 +    }
-     qmessage_set_format(flags);
++    return f;
  }
  
-diff --git a/tests/unit/test-error-report.c b/tests/unit/test-error-report.c
-index 9c63019694..714eafc51e 100644
---- a/tests/unit/test-error-report.c
-+++ b/tests/unit/test-error-report.c
-@@ -47,7 +47,7 @@ test_error_report_loc(void)
-     g_test_trap_subprocess(NULL, 0, 0);
-     g_test_trap_assert_passed();
-     g_test_trap_assert_stderr("\
--test-error-report:some-file.c:7717: test error1*\
-+test-error-report: some-file.c:7717: test error1*\
- test-error-report: test error2*\
- ");
- }
-@@ -90,7 +90,8 @@ static void
- test_error_report_timestamp(void)
+ void qemu_log_unlock(FILE *logfile)
  {
-     if (g_test_subprocess()) {
--        qmessage_set_format(QMESSAGE_FORMAT_TIMESTAMP);
-+        qmessage_set_format(QMESSAGE_FORMAT_TIMESTAMP |
-+                            QMESSAGE_FORMAT_PROGRAM_NAME);
-         warn_report("warn");
-         error_report("err");
-         return;
-diff --git a/util/error-report.c b/util/error-report.c
-index 313c2d6055..4c82d10a36 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -176,10 +176,6 @@ static void print_loc(Monitor *cur)
-     int i;
-     const char *const *argp;
++    assert(log_depth);
++    log_depth--;
+     if (logfile) {
+         fflush(logfile);
+         qemu_funlockfile(logfile);
+@@ -145,28 +171,9 @@ void qemu_log_unlock(FILE *logfile)
  
--    if (!cur && g_get_prgname()) {
--        fprintf(stderr, "%s:", g_get_prgname());
--        sep = " ";
+ void qemu_log(const char *fmt, ...)
+ {
+-    FILE *f;
+-    g_autofree const char *timestr = NULL;
+-
+-    /*
+-     * Prepare the timestamp *outside* the logging
+-     * lock so it better reflects when the message
+-     * was emitted if we are delayed acquiring the
+-     * mutex
+-     */
+-    if (message_with_timestamp) {
+-        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+-        timestr = g_date_time_format_iso8601(dt);
 -    }
-     switch (cur_loc->kind) {
-     case LOC_CMDLINE:
-         argp = cur_loc->ptr;
-diff --git a/util/message.c b/util/message.c
-index fb2c947153..dd01bf7462 100644
---- a/util/message.c
-+++ b/util/message.c
-@@ -5,7 +5,7 @@
- #include "qemu/message.h"
- #include "monitor/monitor.h"
- 
--static int message_format;
-+static int message_format = QMESSAGE_FORMAT_PROGRAM_NAME;
- static char *message_workloadname;
- 
- void qmessage_set_format(int flags)
-@@ -32,4 +32,12 @@ void qmessage_context_print(FILE *fp)
-         fputs(message_workloadname, fp);
-         fputc(' ', fp);
-     }
-+
-+    if (message_format & QMESSAGE_FORMAT_PROGRAM_NAME) {
-+        const char *pgnamestr = g_get_prgname();
-+        if (pgnamestr) {
-+            fputs(pgnamestr, fp);
-+            fputs(": ", fp);
-+        }
-+    }
- }
+-
+-    f = qemu_log_trylock();
++    FILE *f = qemu_log_trylock_context();
+     if (f) {
+         va_list ap;
+-
+-        if (timestr) {
+-            fprintf(f, "%s ", timestr);
+-        }
+-
+         va_start(ap, fmt);
+         vfprintf(f, fmt, ap);
+         va_end(ap);
 -- 
 2.52.0
 
