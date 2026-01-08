@@ -4,101 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78360D1489F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 06:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73655D1489E
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 06:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdj6n-0006Hc-Vi; Thu, 08 Jan 2026 01:02:58 -0500
+	id 1vdjB9-0001sS-Eg; Thu, 08 Jan 2026 01:07:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdj6m-0006Gs-H0
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:02:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdjB7-0001rq-Mj
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:07:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdj6k-0003nU-OJ
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:02:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdjB5-0004Vf-Sl
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:07:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767852173;
+ s=mimecast20190719; t=1767852442;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UumluzB9OTvJ8TqvPvDcp4SS+M5rPxnHW6q0l/SWAm4=;
- b=RBnttcn3WAq8x7k9MlxbhKt+l4Dtc6ccNLm38Tqx9qSGKdylyDI2aIP90dO4ivOI0BccXQ
- ylubXV50TKRlgdEVnnRCF+JVPirKHpIiBs6BuuFvxYOgmGiWs5ny+V5O3xY8QcBrXHhQGz
- uJHr3dXs213KYPODzwtwwiqufONnk3U=
+ bh=RJUUY64kVWoX/4RPmptEtLxV18bmxi9plGKbGrYd9xc=;
+ b=EqlDOQwAg/MiG7JZBfWAAqe0Em9wI4VwGiY7c3dH6YSOV/mFH9+vhONEYfvd2FZ8hevVzr
+ 5DMndnEEW7xTYlLZ9pgnScC1AHSC5MiTJyMko96RSFvEmuartGzhzNLWK9hZoEV+b+7rQQ
+ txVdF97Nkeo7GdDMEGfJvI+ta7DprVk=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-7ke0qpE9MIiwlkoo0RcsCA-1; Thu, 08 Jan 2026 01:02:50 -0500
-X-MC-Unique: 7ke0qpE9MIiwlkoo0RcsCA-1
-X-Mimecast-MFC-AGG-ID: 7ke0qpE9MIiwlkoo0RcsCA_1767852169
+ us-mta-149-iiK5sOVfMCeMtHHsheiakg-1; Thu, 08 Jan 2026 01:07:21 -0500
+X-MC-Unique: iiK5sOVfMCeMtHHsheiakg-1
+X-Mimecast-MFC-AGG-ID: iiK5sOVfMCeMtHHsheiakg_1767852440
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b7cea4b3f15so436286366b.3
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 22:02:50 -0800 (PST)
+ a640c23a62f3a-b79ff60ed8eso114176266b.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 22:07:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767852169; x=1768456969; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767852440; x=1768457240; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=UumluzB9OTvJ8TqvPvDcp4SS+M5rPxnHW6q0l/SWAm4=;
- b=ijjMEmHZjU3Sn004ScGKbwa+8r1RVouaCaPDM5cg+0g5i1v9dBHhn0sn3+UmbTwX3D
- CzRlju0yFO1bu8psyp9KtF29UXsBIScSQT9BKcXbIYJOl++VIp4ZiyHeptxvzWdoxxM/
- EuYC7zfBETlaFYuRnelxEzD8GbFH7q86b6cmTuOEMCQFD2hBpr0hOJ3yd1UGWk6JqdgF
- 0yJTNi1tIhkgNgBtQyBkIJvg7XpJ4U6aAnp0n7oBsnPvDg6GtYmUwTpBlU8Uk2fiuX7h
- F6q2h9MjKH2ejuYMklcNPpFbtenvQMm/ujg86B/1Unr7GkGhJyX6tJxgGpz+cQraXcX9
- V3xQ==
+ bh=RJUUY64kVWoX/4RPmptEtLxV18bmxi9plGKbGrYd9xc=;
+ b=iXkSOfDuNGKbsnugFo2ChRhwoBtrGADfJMJvjjS278kqN73c0SHvG30w39F6tFUoMJ
+ 7xdOgKzubo9OnkYIyoWiCfKeMD6bC+aN9qtVW0RK8FSa4/SxvlGdBKt0oG0bViDvlXcd
+ oWT3tcNk72zdiozCjlH7g2vrb6FzDwGxBKJYbd1lnQskisWB/sXZGxvGQ6pgf76HgNl+
+ D2bZG+WamBjeOIGxQSsPkfsDC1BP91Sm1/+voc/sstzc1vRUsKqX0PvwQLh7Nxfok4PT
+ 8fT8srEVp1Y37t6rJeFQKXdGSt5S53XauPCAvjs+u3FGDX+HwiRX/Gu1sRpzD4c+QfHo
+ mgXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767852169; x=1768456969;
+ d=1e100.net; s=20230601; t=1767852440; x=1768457240;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UumluzB9OTvJ8TqvPvDcp4SS+M5rPxnHW6q0l/SWAm4=;
- b=V5RdOoJvrbfZMOhCuj7TfzxAZQEsJXSY92mpK6QvZSCsK1nr53KrstOfEeUdcc05hh
- Opu1KyUhtfUVOKbWNF80a9M96wNMWuO/WeXDY0VpRMWpLr53URm0lRJNq/8cU1BGYrht
- 9ouP/8z+wSJxSutHO4Pm10HCvhKCZuj/nqCSl3d3PmE7ljhwaKPf+1YVdZRPM1jATp+N
- B6/nzb5OTxWdAIc0forrzEuFud3tsCy2UpHWYYGmIl/Rzdvl7n0wGJxZIlYdzVtCrHCh
- VD0SJ7TsUUG3GCsLzMbZ4WkO03qXLc6tBoCUUpGnxf3Dgf+HfSLeC0QT+1uJVNivYvyy
- imrA==
+ bh=RJUUY64kVWoX/4RPmptEtLxV18bmxi9plGKbGrYd9xc=;
+ b=ELuOvrdsiljoevQfucwk0988z7qkIX2aPqmHDnAd4yRByl/7u9y8Tm/35RLyLtDSVK
+ WVyFjZ7iObNPaES0y+oYoDj+aavceEgLE2VYuhLtbZl4aJ89o4xuGLLUi9L9qp+Wwic4
+ 0tybvHMbtVPIAY1EmoFW56IQqPi3VkeMlZrDjrrXkoNAkDXhqn5a5jd1e7gSbR3vaccu
+ jYtTEkg4x2EJzkBo1WF4XBZ3fGE4FjhZr3vxEWiD+wlzCFdxjaWTlUqpjNSmhqwrzWDQ
+ j9p56pZd4JBjzCtl0s0PZvkQlP45YzuudrGywmpNkdJEMBZL7lpgOz4IK8BJF2/SzXfg
+ 4hTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1DqIZOf1JGzgTia5LZRqkOp4Fv0orKX9CLxKMO9rC7pwnhSZ+zDfvkEvOAio0pYlbSk65V5vSJqZk@nongnu.org
-X-Gm-Message-State: AOJu0YxxGu6S6O+aVuO1mGnCoZyg5K7sP1D0v2vr/eG/ZL/qIS83dfgz
- tt2PQm3wEEeUGax9t8ZyA0rHhOWdJUTwyNxxETxesxovaEOTZauM1zmC2y3D8QpNMpe3mVbKkze
- rK0u+oT2iGG5Ikne+au8olAqNComcpV+R+x0Cv1p13Inkkf3jYCyT6RO9
-X-Gm-Gg: AY/fxX508dgq2rE4RgD/rDI8fPpFgQPIdKzeXk+YDHOGC2AhAQ6nUJG9l2xWsL8XQkN
- AIhyi0gDFwyzzgJmPC7UsmjYSNEelsGqIyEziqc1L8VrMS94Q3Mv1BS0lerItPZjQ+cup9ucgVs
- AfloAt/XTxjU4AfmfjTXnwQJsiZx0O8DZdC6ErqkepEl0oF14YUtzabvqCCVuVQ5Wm7jr8rNoyo
- yZI6M9zZ8zNDeyjCjSi9VODItODTDjRZT99TlHciAgXi2LM0c87wQiRZnPWIxhoMj47i5mKgVTL
- NdmkDQLpDw+C9YLLIN8D6+SiEnt9McZKjPTDav/R7H50yRmr9Efl2pAhVCwWORDUobf5Igw++1t
- lZx1J0u0=
-X-Received: by 2002:a17:906:d54b:b0:b73:5d8c:dd0d with SMTP id
- a640c23a62f3a-b8444fd4a55mr441474866b.52.1767852169404; 
- Wed, 07 Jan 2026 22:02:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGzFP2pONUSHkpZqzMUjlUss/ncFRuoMND+5Q1S11r/v83ZJMQp2fSSOV1pYiluwWYLsKELvA==
-X-Received: by 2002:a17:906:d54b:b0:b73:5d8c:dd0d with SMTP id
- a640c23a62f3a-b8444fd4a55mr441472166b.52.1767852168890; 
- Wed, 07 Jan 2026 22:02:48 -0800 (PST)
+ AJvYcCW7vHyrbe2znF/FRAwqBX7Bk0182MIK0vEYYxQlM8APYabGnHazZhitJXtfFkSo45neoOIgw/b6/hu4@nongnu.org
+X-Gm-Message-State: AOJu0Yz4000jdmjh9HFW+8jrnCpWoad9PtjjIzRwj3PBmiiETFZu74aI
+ Fhmn6+9Vl7YHY766cS1EXniEcOjktXAv1RnEiCaSmN78LAX0R7kJfdcC6Z21KvPg89h3diZZ4D7
+ vLwrEnX16DNLvt9TAd7j7uILSbKVkqYfLunuen9res5zuorPWcBJuDyKf
+X-Gm-Gg: AY/fxX7Tgi48jLsWpz4Qh/zx5RFyRkWmZswIPHWvXlHFUkHHsJcTcPnYm0Z3EdmPshR
+ bRDS3pvvjl3kHEu5wIABuOQ+B7Hb4g7Q4QSDrCN5iDXLJLqXyRBFjPMPjqYw2VJNRdNCZXMKYA9
+ I+3HrFMDaneefKtlcDTAdgx68Idw/wq1iZ7oKnA5EmwAoA7wIxhIE2poLnqUKpZRvXji62zqcAQ
+ JklN0OrZmU70dCp8Nc4f2v1ry+Xy5+xdRsppdFbOB/H57cYrui1Fy1qbwEB6evQgDUqBTJL0kw9
+ SlujREs3PGcSip2cUC83ACBWnDmmwMISoypP44CnogPPBnym9PYNAvOMM6gBjej+caWmtk6iiUp
+ kgvw078k=
+X-Received: by 2002:a17:907:3e95:b0:b7a:39a2:7f50 with SMTP id
+ a640c23a62f3a-b8445179f83mr514757566b.39.1767852440111; 
+ Wed, 07 Jan 2026 22:07:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFsRdQFL7KUmF5d1aoWobZZVfErk7OCX9sWWC5umqjpVqh3tHJqlaTPoyVdKuoGBnKTD8D4Hw==
+X-Received: by 2002:a17:907:3e95:b0:b7a:39a2:7f50 with SMTP id
+ a640c23a62f3a-b8445179f83mr514755366b.39.1767852439721; 
+ Wed, 07 Jan 2026 22:07:19 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b842a4d311esm699534066b.38.2026.01.07.22.02.47
+ a640c23a62f3a-b842a4d1c61sm702763366b.35.2026.01.07.22.07.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 22:02:48 -0800 (PST)
-Message-ID: <8d4d72e3-b4f5-40bd-9676-b14150f8daf8@redhat.com>
-Date: Thu, 8 Jan 2026 07:02:47 +0100
+ Wed, 07 Jan 2026 22:07:19 -0800 (PST)
+Message-ID: <09e21b07-922f-4829-8184-ba7dbcf7e838@redhat.com>
+Date: Thu, 8 Jan 2026 07:07:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] pc-bios/s390-ccw: Split virtio-ccw and generic
- virtio
+Subject: Re: [PATCH 09/10] hw: Add "loadparm" property to PCI devices for
+ booting on s390x
 To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org, mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, zycai@linux.ibm.com
 References: <20251210205449.2783111-1-jrossi@linux.ibm.com>
- <20251210205449.2783111-4-jrossi@linux.ibm.com>
- <1a5926ec-8bf5-49de-9228-595d3910275f@redhat.com>
- <bbb1ec46-3e59-4bfb-b656-7f07570ab981@linux.ibm.com>
+ <20251210205449.2783111-10-jrossi@linux.ibm.com>
+ <5e764e58-022c-4d0b-81d3-0564a15dea41@redhat.com>
+ <689115e6-c88d-4a43-81a2-a71180263bee@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -143,17 +143,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <bbb1ec46-3e59-4bfb-b656-7f07570ab981@linux.ibm.com>
+In-Reply-To: <689115e6-c88d-4a43-81a2-a71180263bee@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -171,34 +171,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/01/2026 17.38, Jared Rossi wrote:
+On 07/01/2026 19.46, Jared Rossi wrote:
 > 
 > 
-> On 1/7/26 4:40 AM, Thomas Huth wrote:
+> On 1/7/26 10:50 AM, Thomas Huth wrote:
 >> On 10/12/2025 21.54, jrossi@linux.ibm.com wrote:
 >>> From: Jared Rossi <jrossi@linux.ibm.com>
-...
->>> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
->>> index 0f4f201038..0488b3a07e 100644
->>> --- a/pc-bios/s390-ccw/virtio.c
->>> +++ b/pc-bios/s390-ccw/virtio.c
->>> @@ -2,6 +2,7 @@
->>>    * Virtio driver bits
->>>    *
->>>    * Copyright (c) 2013 Alexander Graf <agraf@suse.de>
->>> + * Copyright 2025 IBM Corp. Author(s): Jared Rossi <jrossi@linux.ibm.com>
+>>>
+>>> The loadparm is required on s390x to pass the information to the boot loader
+>>> such as which kernel should be started or whether the boot menu should be 
+>>> shown.
+>>>
+>>> Because PCI devices do not naturally allocate space for this, the 
+>>> property is
+>>> added on an architecture specific basis.
+>>>
+>>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>>> ---
+>>>   include/hw/pci/pci_device.h |  3 +++
+>>>   hw/pci/pci.c                | 39 +++++++++++++++++++++++++++++++++++++
+>>>   hw/s390x/ipl.c              | 11 +++++++++--
+>>>   3 files changed, 51 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+>>> index 88ccea5011..5cac6e1688 100644
+>>> --- a/include/hw/pci/pci_device.h
+>>> +++ b/include/hw/pci/pci_device.h
+>>> @@ -62,6 +62,9 @@ struct PCIDevice {
+>>>       bool partially_hotplugged;
+>>>       bool enabled;
+>>>   +    /* only for s390x */
+>>> +    char *loadparm;
+>>> +
+>>>       /* PCI config space */
+>>>       uint8_t *config;
+>>>   diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>>> index b1eba348e0..1ea0d7c54c 100644
+>>> --- a/hw/pci/pci.c
+>>> +++ b/hw/pci/pci.c
+>>> @@ -36,6 +36,7 @@
+>>>   #include "migration/qemu-file-types.h"
+>>>   #include "migration/vmstate.h"
+>>>   #include "net/net.h"
+>>> +#include "system/arch_init.h"
+>>>   #include "system/numa.h"
+>>>   #include "system/runstate.h"
+>>>   #include "system/system.h"
+>>> @@ -2825,6 +2826,43 @@ int pci_qdev_find_device(const char *id, PCIDevice 
+>>> **pdev)
+>>>       return rc;
+>>>   }
+>>>   +static char *pci_qdev_property_get_loadparm(Object *obj, Error **errp)
+>>> +{
+>>> +    return g_strdup(PCI_DEVICE(obj)->loadparm);
+>>> +}
+>>> +
+>>> +static void pci_qdev_property_set_loadparm(Object *obj, const char *value,
+>>> +                                       Error **errp)
+>>> +{
+>>> +    void *lp_str;
+>>> +
+>>> +    if (object_property_get_int(obj, "bootindex", NULL) < 0) {
+>>> +        error_setg(errp, "'loadparm' is only valid for boot devices");
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    lp_str = g_malloc0(strlen(value) + 1);
+>>> +    if (!qdev_prop_sanitize_s390x_loadparm(lp_str, value, errp)) {
+>>> +        g_free(lp_str);
+>>> +        return;
+>>> +    }
+>>> +    PCI_DEVICE(obj)->loadparm = lp_str;
+>>> +}
+>>> +
+>>> +static void pci_qdev_property_add_specifics(DeviceClass *dc)
+>>> +{
+>>> +    ObjectClass *oc = OBJECT_CLASS(dc);
+>>> +
+>>> +    /* The loadparm property is only supported on s390x */
+>>> +    if (qemu_arch_available(QEMU_ARCH_S390X)) {
+>>> +        object_class_property_add_str(oc, "loadparm",
+>>> + pci_qdev_property_get_loadparm,
+>>> + pci_qdev_property_set_loadparm);
+>>> +        object_class_property_set_description(oc, "loadparm",
+>>> +                                              "load parameter (s390x 
+>>> only)");
+>>> +    }
+>>> +}
 >>
->> I assume you wanted to put Authors on a separate line?
+>> Adding this unconditionally to each and every PCI device is a little bit 
+>> ugly ... could we please limit this to virtio-blk-pci devices for now?
+>> (or maybe check if there is a bootindex property, and only add it for 
+>> devices with a bootindex property?)
+>>
+>>  Thomas
+>>
 > 
-> I don't quite understand what you are asking about here.  Or maybe I don't 
-> understand how to attribute the authors in this case?
+> Maybe I'm missing some nuance, but won't the check in 
+> pci_qdev_property_set_loadparm() already enforce that this is only added to 
+> boot devices?
 > 
-> Much of this was just copy/pasted to the new file, so I included the 
-> existing byline too.  Should I format things differently?
+> Hmm... on second though, I guess the problem is that a loadparm property 
+> will still be added (but not necessarily set) for all PCI devices?  I agree 
+> that is not good.  I will limit what qualifies for the property to be added 
+> in the first place.
 
-No, you don't have to change it, I was just surprised to see "Copyright" and 
-"Author(s):" in the same line. People normally put it on separate lines, see 
-e.g. cio.c, menu.c or virtio-scsi.c in the pc-ios/s390-ccw/ directory.
+Yes, the problem is that this shows up in the user interface, e.g. if you 
+run QEMU with "-device qemu-xhci,help" to show the properties of the 
+qemu-xhci device. Having a "loadparm" property there could cause quite some 
+confusion for the users.
 
   Thomas
 
