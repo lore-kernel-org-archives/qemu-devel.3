@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4806D1D494
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 21:20:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2344FD1D48A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 21:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdxQd-0001Lp-Ra; Thu, 08 Jan 2026 16:20:24 -0500
+	id 1vdxRc-000208-90; Thu, 08 Jan 2026 16:21:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vdxQb-0001KJ-Hn
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 16:20:21 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vdxQY-00061J-Ug
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 16:20:20 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 59B9917C157;
- Fri, 09 Jan 2026 00:19:15 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E8324348739;
- Fri, 09 Jan 2026 00:20:15 +0300 (MSK)
-Message-ID: <ee159c29-25d6-43f1-82e7-0f77356147d3@tls.msk.ru>
-Date: Fri, 9 Jan 2026 00:20:14 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vdxRa-0001zs-QV
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 16:21:22 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vdxRZ-0006JH-AS
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 16:21:22 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a0bae9aca3so25879595ad.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 13:21:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767907280; x=1768512080; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yF/8qe1ax2t2PVDAt9yS+dIpA3BjKdig7t3Adu/PwTQ=;
+ b=mupcQ5ZdU2HPoy9Vrwi+XUyL9Uo8QzKrjnksAEg8sMdOZaQQVb9nwSfKNPDb9AhFlj
+ kLx3WxywRy5HFsTpaHrWsjqG376ipktUbh8rLNYfOowPA2XmyEcZyqwEs8ewV7nIpHE+
+ /Qf51c8fNam7IskawbgbkCc/yjM7atWr67O4YSXVW45zosQl86YTr8xJecV/QJulm1wN
+ JVbtHotBFRevIGUMNLEPbDdVnaPbN/Op8473HoJur3FpJC6UkBmf4iDlkBdpyWROm8ex
+ 3l8eD/5vlvFrGYH+9cncghOz0iKagD5G8TICR1guwcYCZFn9ppb3gXLIr00mcLg9hf7Z
+ xjGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767907280; x=1768512080;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yF/8qe1ax2t2PVDAt9yS+dIpA3BjKdig7t3Adu/PwTQ=;
+ b=XKyyl+/pGbtZDfDXjyrMEJqze7eU6o8oKy5CNg6GsViIJ4GfnsRdYrbVReG2hLsVjM
+ OX7kx30t1/fV/REuQI2cQb/DWgZQSRXymvrDO0NFeMvvkycQ/bUduGDPZs5G8Jh/cNhF
+ W8eXiFzynnbXsxhKXPwdG6UMvv4f/Q2vCfaaosPVG64UGWZn5aBEDiF8Ztc7Y0sXpF3F
+ F5H9z22vJRyy61Q6CeZE4ljN3v0OcNkXlrpmG7X3r3cpfYiyeVuI2ktleawB1uU6sXIU
+ JQ/pA93Ox4HxDq4c+Eioz5SmeTNnjT1Nq5Ji+lKY5PFLkgqmkFj/CNIKWOGX+Iug1aCl
+ y8gw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUv3eIZulV2oSsu1Cu4rUdJiJgTg0tSJeF3huPmz3DdqbDpbmZo0M2IXr2FWi6p6jg4xQlBRh6KhMRg@nongnu.org
+X-Gm-Message-State: AOJu0YzgejZRT6R6pEBIUVgXN1ztoV3PWGwagU79SIgWy9btDCxMHZPx
+ C9z9PMgfHdZVZrtC8MV+JQ6kuVoRDRSShtqscvlls/sZY89SZOYCK5n4bUYBzqBJkuPRLaxfoiN
+ uEcko
+X-Gm-Gg: AY/fxX7c1wPEe9IB9UYxTJ2p7fLn5UWGcT+lKSlGf615FaGzunlzV5i4yA3XwD3bNtE
+ etMxWYkW154zDNZFqRYgd0dU77O3ku3av8Ip0Hbdn3vXfXIBJLLPpWfeTmAUQJ/oG0pFshbGaUB
+ WXWMzHOTAiZTS8xeE0h2Iz5e53MNxMjsH49EvZMR48Ysz9ZVNCzXILYA3gYciAIdodRBVggTIDz
+ lwimHoi3Qu1YM36IbYsLMQ1E9ln+BcUsEUsMa/AJlwG8KuOpty8SRZj3xSgg9AZApzp7lf0zXvk
+ iE8Tfq66Y3apqHMEgjcAMg7KSxWgawWTcFen+VTC4srddwiyWRXBGLsKFMnsbOXW3ktT2t/wNhP
+ dLRmFaxFMKFe0tvKkW6IVV+k35+qhlq+EPCUcxON5L/KyNflpXY2Nb4chkc/xeqY/RSbum4gQ87
+ D74OmeT0fuVsQVc6ce6DNa/KkhCPjqK1ofnmJg7IJ7q3Es5wO4b3qiGJR7
+X-Google-Smtp-Source: AGHT+IF1gg2hl2nlaAGDm62IfSDjkLE71nUWrpMZOOYs+TgLOHvC5+jUyH16dPEIlR7IZZvOdnS8rA==
+X-Received: by 2002:a17:902:c945:b0:2a3:6b54:5d42 with SMTP id
+ d9443c01a7336-2a3ee5072a4mr77453055ad.59.1767907279722; 
+ Thu, 08 Jan 2026 13:21:19 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a3e3cb2c0fsm87103555ad.66.2026.01.08.13.21.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Jan 2026 13:21:19 -0800 (PST)
+Message-ID: <b9adb8ff-29a1-4575-8efe-076566c23701@linaro.org>
+Date: Thu, 8 Jan 2026 13:21:18 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] linux-user: cleanup epoll_pwait ifdeff'ery
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-References: <20260108174317.239955-1-mjt@tls.msk.ru>
- <20260108174317.239955-2-mjt@tls.msk.ru>
- <f2ecbe03-a172-4c48-aec4-0a1e4eb3be2d@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <f2ecbe03-a172-4c48-aec4-0a1e4eb3be2d@linaro.org>
+Subject: Re: [PATCH 45/50] migration: Drop use of Stat64
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260108053018.626690-1-richard.henderson@linaro.org>
+ <20260108053018.626690-46-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20260108053018.626690-46-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,44 +106,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 22:52, Pierrick Bouvier wrote:
-> On 1/8/26 9:43 AM, Michael Tokarev wrote:
->> All linux targets these days have epoll_pwait system call
->> (while some miss epoll_wait, which is less generic).  And
->> all linux targets definitely has one or another epoll_*wait*
->> system call - so whole code block dealing with this system
->> call should always be present.
->>
->> Remove the now-unneeded ifdeff'ery.
->>
->> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
->> ---
->>   linux-user/syscall.c | 8 +-------
->>   1 file changed, 1 insertion(+), 7 deletions(-)
->>
+On 1/7/26 9:30 PM, Richard Henderson wrote:
+> The Stat64 structure is an aid for 32-bit hosts, and
+> is no longer required.  Use plain 64-bit types.
 > 
-> Makes sense:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   migration/migration-stats.h   | 36 ++++++++++++++++-------------------
+>   migration/cpu-throttle.c      |  4 ++--
+>   migration/migration-stats.c   | 16 ++++++++--------
+>   migration/migration.c         | 24 +++++++++++------------
+>   migration/multifd-nocomp.c    |  2 +-
+>   migration/multifd-zero-page.c |  4 ++--
+>   migration/multifd.c           | 12 ++++--------
+>   migration/qemu-file.c         |  6 +++---
+>   migration/ram.c               | 30 ++++++++++++++---------------
+>   migration/rdma.c              |  8 ++++----
+>   10 files changed, 67 insertions(+), 75 deletions(-)
 > 
->         epoll_wait()
->                Linux 2.6, glibc 2.3.2.
-> 
->         epoll_pwait()
->                Linux 2.6.19, glibc 2.6.
-> 
-> Which has made this available for 9 years.
 
-This is not it, Pierrick :)
-
-qemu ships its own copy of linux headers with all these
-__NR_foo definitions.  We don't have to deal with local
-linux headers, we know exactly and precisely what we ship
-and which targets defines which syscalls.  Once all arches
-has __NR_epoll_wait *in our copy of linux-headers*, we're
-all set.  No matter if it was 9 years ago or yesterday.
-TARGET_NR_foo is what *we* know, - and it might be much
-more fresh than the host kernel we're running on.
-
-Thanks,
-
-/mjt
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
