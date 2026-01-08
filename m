@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93BA7D14899
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B73A5D1489B
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdgMU-0008Kj-E2; Wed, 07 Jan 2026 22:06:58 -0500
+	id 1vdgMd-0000KK-BT; Wed, 07 Jan 2026 22:07:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgMR-0008Ai-H9; Wed, 07 Jan 2026 22:06:55 -0500
+ id 1vdgMb-0000C7-Bf; Wed, 07 Jan 2026 22:07:05 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgMP-00053Y-R0; Wed, 07 Jan 2026 22:06:55 -0500
+ id 1vdgMZ-00057Q-NR; Wed, 07 Jan 2026 22:07:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767841614; x=1799377614;
+ t=1767841624; x=1799377624;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=b/VvOTmSsTsHQIUNmpCbf1CcDqdp6ofz5OlRdJdvB0w=;
- b=fwX7KRM3ccBMQKWTPKBWzHp11m4cGHKGRai5qYOauzcdk4404VuYPA80
- 7Ag+k9anX3E8rrhDgTLnzTbmkeBr9v8XbZGj844GAPEy8nQZ4yDFBRQrr
- dHJN9m+Bg5k0stg4xsCGhX2URFaxPWVc0FmjXL6GxL7FCEAVZO6plmgej
- 2U9+VN27PraDvCxVqh+cZXu1bIDKf41ECX4SaOPFBj7VeukpjiEgPlf8x
- v23LtDiNePz8/RO/R8xYtZ1m4GR1fZyAYdBtKz8i2SC91TH0bHgXj0vOj
- Ip7P/fQ6G0Eo4gVkNtIkpntwzx2UOM769B5nBIBaLcy2xzjyCOtcEPb4f Q==;
-X-CSE-ConnectionGUID: LYXoQqEuRkqXLskhLW2upA==
-X-CSE-MsgGUID: zAwwCrr8Qly6tpisrXca5w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877121"
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877121"
+ bh=1/clFgKnxvuTgv4B7v21QOPZa4daiWEdepWxe7LIQyg=;
+ b=SVx0l9HafD8FvvXIOd/iykSJhFHrEt78wnNtqbACy6f3grWy83gpCT58
+ bBkHPCVhvF0sbYhmLneQp/ShZXpkVE1LjAUo7HvOgB6uIrXQZVtNJNm3o
+ fKo+dlq5EVchJ9mS4uxDfKIxcq6b9L2Vg2R5i5rGBDddvoI55pTVYgBRD
+ 98r+n2URBFwHkq3bjxynrTjeSm/MFJfUybe9pvykEvD0YV8Vqt/I1JPkT
+ 21gG25l+QoW91Qn2/Q/3+QL+2rKK5gbzoovrVmPSc2dqL3HTKTHULrPsC
+ dLxUKsvxdNIBTUcTFeSrK1jUJt1uu//re7m8pOvJxiYSRPxljdC7r85qn g==;
+X-CSE-ConnectionGUID: DRowqGEjTHG7hIvtyNdPVw==
+X-CSE-MsgGUID: 62DyH/MKT4KuR+KJCDoIeQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877163"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877163"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2026 19:06:53 -0800
-X-CSE-ConnectionGUID: VCEccqDXTEGKZ5ge85DhpQ==
-X-CSE-MsgGUID: 7kla7+1uSwSEW+2RpO0MCQ==
+ 07 Jan 2026 19:07:02 -0800
+X-CSE-ConnectionGUID: o5e9JpS9TMW3BVsb5Hosng==
+X-CSE-MsgGUID: 9O8QOvoPQVazEAcMzpIAOw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202210746"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202210784"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:06:43 -0800
+ by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:06:52 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,10 +72,10 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 08/27] hw/nvram/fw_cfg: Rename fw_cfg_init_mem() with
- '_nodma' suffix
-Date: Thu,  8 Jan 2026 11:30:32 +0800
-Message-Id: <20260108033051.777361-9-zhao1.liu@intel.com>
+Subject: [PATCH v6 09/27] hw/mips/loongson3_virt: Prefer using
+ fw_cfg_init_mem_nodma()
+Date: Thu,  8 Jan 2026 11:30:33 +0800
+Message-Id: <20260108033051.777361-10-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260108033051.777361-1-zhao1.liu@intel.com>
 References: <20260108033051.777361-1-zhao1.liu@intel.com>
@@ -109,68 +109,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Rename fw_cfg_init_mem() as fw_cfg_init_mem_nodma()
-to distinct with the DMA version (currently named
-fw_cfg_init_mem_wide).
+fw_cfg_init_mem_wide() is prefered to initialize fw_cfg
+with DMA support. Without DMA, use fw_cfg_init_mem_nodma().
 
-Suggested-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/hppa/machine.c         | 2 +-
- hw/nvram/fw_cfg.c         | 7 +++----
- include/hw/nvram/fw_cfg.h | 3 ++-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ hw/mips/loongson3_virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 960aefc9e262..c3680667aee5 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -208,7 +208,7 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
-     int btlb_entries = HPPA_BTLB_ENTRIES(&cpu[0]->env);
-     int len;
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index fe51fb66f6f2..cd94e9f5f77e 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -287,7 +287,7 @@ static void fw_conf_init(void)
+     FWCfgState *fw_cfg;
+     hwaddr cfg_addr = virt_memmap[VIRT_FW_CFG].base;
  
--    fw_cfg = fw_cfg_init_mem(addr, addr + 4);
-+    fw_cfg = fw_cfg_init_mem_nodma(addr, addr + 4, 1);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, ms->smp.cpus);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, HPPA_MAX_CPUS);
-     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, ms->ram_size);
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 437ab6e210fc..a0315ea9ae6b 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1088,11 +1088,10 @@ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-     return s;
- }
- 
--FWCfgState *fw_cfg_init_mem(hwaddr ctl_addr, hwaddr data_addr)
-+FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-+                                  unsigned data_width)
- {
--    return fw_cfg_init_mem_wide(ctl_addr, data_addr,
--                                fw_cfg_data_mem_ops.valid.max_access_size,
--                                0, NULL);
-+    return fw_cfg_init_mem_wide(ctl_addr, data_addr, data_width, 0, NULL);
- }
- 
- 
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index a29a5d55eab5..510b227b7ef1 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -307,7 +307,8 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
- 
- FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
-                                 AddressSpace *dma_as);
--FWCfgState *fw_cfg_init_mem(hwaddr ctl_addr, hwaddr data_addr);
-+FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-+                                  unsigned data_width);
- FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-                                  hwaddr data_addr, uint32_t data_width,
-                                  hwaddr dma_addr, AddressSpace *dma_as);
+-    fw_cfg = fw_cfg_init_mem_wide(cfg_addr, cfg_addr + 8, 8, 0, NULL);
++    fw_cfg = fw_cfg_init_mem_nodma(cfg_addr, cfg_addr + 8, 8);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)current_machine->smp.cpus);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, (uint16_t)current_machine->smp.max_cpus);
+     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, loaderparams.ram_size);
 -- 
 2.34.1
 
