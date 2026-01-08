@@ -4,84 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 549EBD1D467
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12E3D1D46A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdrOT-0004aO-9Y; Thu, 08 Jan 2026 09:53:46 -0500
+	id 1vdrju-0000Dm-7Z; Thu, 08 Jan 2026 10:15:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vdrOQ-0004UK-Ti
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:53:42 -0500
-Received: from mail-dl1-x122f.google.com ([2607:f8b0:4864:20::122f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vdrON-0004mC-1l
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:53:40 -0500
-Received: by mail-dl1-x122f.google.com with SMTP id
- a92af1059eb24-11df4458a85so4725039c88.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:53:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vdrjp-0000Cb-Ol
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:15:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vdrjn-00033x-Iu
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:15:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767885345;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mTFK/zGjf96JqQXGTDkWieXJ16Vk4rooWLMwnkM5sbo=;
+ b=HygbCKaCRcYknwsOmAhOZobfQRs7aJvyRW/PYw1Yd6AEwYJa0v0zyIpHgbSPfpyFTTe4z9
+ X29gG1CoaXDpSP2LPw4pRnIGJrhxnjoFBg5JwfNZAaNIgYRSOlT+qgfXvx38Va29k0Teo8
+ v7CRKRQBHDPT97t/zj/tBN8rU/R635Y=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-540-5KWLAnb7OaCXXEEddwQb_A-1; Thu, 08 Jan 2026 10:15:43 -0500
+X-MC-Unique: 5KWLAnb7OaCXXEEddwQb_A-1
+X-Mimecast-MFC-AGG-ID: 5KWLAnb7OaCXXEEddwQb_A_1767885342
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-64db7bc9921so6125003a12.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:15:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767884014; x=1768488814; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9WukLj5oPC1UOqySO4IjN3CGVMJRRnobzH9yHdqM9ho=;
- b=MhESZizkbeWTfrf19tJd4uYJU+TbxopQ4KHO6P5qe4xeyR7MM8lZjkoNKd9a0xftKx
- KgveiqeBl7IFu5Lpdwhzzl4LtxLakqUGC4njBptSx5gYB4wxxuAsh6YXOxOEB2UzB0Re
- EWZqSD+S7MZ5+S1Dz5uvDLnOjh9x+Cn5YmCyOt7dDUoK7HQu8Dtxlfg0Wg+hW9JDLZL0
- T50pIiMQWpv1DH4bz/WsnWnChBRq96lOd8sMk9SkggPyzE1oj8wqWKcXg5irb8xq9Yy4
- qgXqfIEu4RW4mZO0OrumYaI74zXXiEafW4GBCvtPDRJvun30wf+LWl5w/ghiwJeLiBst
- 1s1A==
+ d=redhat.com; s=google; t=1767885342; x=1768490142; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=mTFK/zGjf96JqQXGTDkWieXJ16Vk4rooWLMwnkM5sbo=;
+ b=KcdVNW1Fo2N0OlWJ7rSE3VFbjSk9KWm8kK+w0A/phrWP/a+ti0gYYWdHM+DB5V4V9b
+ I+focvQ1iYIxoifIXxHi1FdN32T6wfbMRpB9EGCqvt3aPbtIOkwq6RqVkiJFzGobV2b4
+ lwfvIDJC0XNMwBUEfM30Cvz0jDAvUtzQ2j7yG83FUZy/ZmqYs6xg1Sgc/+b6U2hq7eH0
+ apFyG8BukcxEBNGNOMZ3llg/aWJvDuBTBfoW6UjJ9NKdgmVpJC5yN2gZ4basU5KuYYRr
+ wLHS8V8V24R9/IDO5vihpnP7Se5Evd6eKkEXcGI/HFkZ1ReBPwLRUxMByV1H3BAMxzdg
+ kDHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767884014; x=1768488814;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1767885342; x=1768490142;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9WukLj5oPC1UOqySO4IjN3CGVMJRRnobzH9yHdqM9ho=;
- b=sfdIJjfX+ZkEGJOKQcu3tBIdkwynh67YvfoSPQz1BPDkIAH0zLMuuF0dH5EycAHyBx
- bNExaIp0sgslIY3e8vm4c87ahKxu02M406BtfgglMLpOyPDXtlvIzjW4a1b/iXvTn8jY
- vPTXyUhKdKlHQZkZF7AwlhsNNN0wC/mP0CMaW5yFTPOGtNG9/hklXTKPLeyzR6qYGAd6
- yU4Satd8XRHWWTsHE0Hd7APKzkqx+z5EgNFjc4ISwryT0QZZ34mQXPtx1a/BRKcqCBiY
- IyZsm+zvbytwu5o9An1IT+b7tuIlEPaoFBBy5kC+sjRIzE1qZd1QkgznAohAJEa2NuQK
- 7xDA==
-X-Gm-Message-State: AOJu0YwiTHzV5BzkWMgn745G9ewzhdLdU3HQz9LrprNnLfj8NzdycVFv
- glOjj6PZfy3oQwIqVduZ6oZf864DxEFugcCUWXb1FEspgZOLNzAP7QkJQURMi6KKLYpakgIfm5L
- K39Nnp5YGXb09/M80EKu+hT3n4JMyO9c=
-X-Gm-Gg: AY/fxX6UjvkxNhZerbs9n3yfEXhU/TuA9qeS/oC7dECEXCeuYsxpzn3cE1QbaBKU+m5
- d6rk5Pt+7evygH/NWR4toABow1u3lCUrr33Y1x0dbbYUjN8DmO+aW7bqdP5SIyqz0sTDVScHLuH
- WNcCJRBXAvKAUjtJtEELBIokB7i1FM+ptZYZ/UFurTV/CimXp5A/kKxg3t+5OLBAI3YA9u2xJbP
- 5p1ssE/BolS9K15WTu/srEPGqrCtUdFcRiKEidWMIemyLXwhPWVpRdTeBHrXt2vxR8k0ccLlsAg
- y5J2NmQxXbpjwiOak1OV3PMFh3KOUTBnghyf
-X-Google-Smtp-Source: AGHT+IEwK6kmGZy57hz/2vuGShGNRO25XIv6D+9rgK4BuQZ6RbtUBflIJUcDVMG69jL2gxZD1ZEoR/faPhF9ZD44TUI=
-X-Received: by 2002:a05:7022:e21:b0:119:e569:fba9 with SMTP id
- a92af1059eb24-121f8b40a97mr5771722c88.24.1767884014390; Thu, 08 Jan 2026
- 06:53:34 -0800 (PST)
+ bh=mTFK/zGjf96JqQXGTDkWieXJ16Vk4rooWLMwnkM5sbo=;
+ b=GrGETcHAf8qZon7tblwjgJlLLytObTZWKukjmFB312ENVJJWk65LA8fRpTuUZoJu1O
+ 75Exh6gKmuZpEnkWL/N+XMjICCtmw1SHhXMSO0O3/8YrXKDay3+UhoM7KCBXIRoZdwkO
+ 6IAarsKgDiLyMc2YWU0CSLPnvnumyomZoGLPFsKEX22ovW6OB9SIDtlGVSWRk8OfZblZ
+ LDoTtu3Dm7CtMX/1EgEDJD+wVxOEuu2cxa5yHRN6LsanXEDFn84ilPH1OFfI4HnGA34O
+ T8eguMRemOn5JsnY0w1xObJFKlcpqBfekIFmC+uFDL9oWmQFYn3OA6WutcApkU+KuSvX
+ WVvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlMVOJublGRnmd7qJWvs9dJQcf/yVG3Ccekv/+uVFB8TR+ahfdQLVyYWKyai+WOvi2KoVQgkfusD/Z@nongnu.org
+X-Gm-Message-State: AOJu0YzW4aN28K2QoceJJgW8mkyGErzM0BRpYeaoJfzpZV8blF7uJ7Cx
+ SDiEp7nJOl4mOdvf6z3kDMasA34SLFaNO9jLUyhazezRBzqaJf84chudKBMZuh+IBYXWR1CfF0Q
+ wx7puF+o4J80MMLB53cZum8yNlXlflimqsJxZlE+dS7BfmWakirB2sSIQ
+X-Gm-Gg: AY/fxX5C5CH5exYKT51pMuPnBgpnQfim18drIfSBAcYHmVxy+uAD1RzRAr8zatoqoLB
+ HQRz09nFxBeVPNE2KHz9RCy9QCTeXCEeKylNNEI1+UamG0VO5ZUOwGX7p8WHXJJ1pxxjZeYtUZw
+ kZ2sbmogR97sTf7mfjvNpi0wAQNnYFt7StAibp/vxhJ2K0R8n7fnv6l97pqgAwEYp7xZVQUc/jK
+ n4OwZQqCVinS3glLK4CnBDnftpu1FdKy4pI4BEUAfMz+kI5NxwC9rzmySv1i+ZR+92uEqyXKUla
+ aa2iyPyTFTI7ZDa0kc77QxPU68naiqFhkolIG2IbfRoX8xGIvWHfKX5n/17qmjAk8Gu2825rxeG
+ flrYpTzyEjBlE6ghKYqupDa3WAZcYDa7DKCrAPJ/Wx6cCMXns/lZxr6OzYqvGiQbln4e68mhQ39
+ RhpekFgKYwuX0=
+X-Received: by 2002:a17:906:4fc9:b0:b79:ecb0:db74 with SMTP id
+ a640c23a62f3a-b844540607dmr667842166b.59.1767885341948; 
+ Thu, 08 Jan 2026 07:15:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF4C5pLM/KeLxHB/T9VSPlHVnCV16pCrOHeogApUnGMq6/YaQLCsGOT+55qE+xtsdH1DzSPYQ==
+X-Received: by 2002:a17:906:4fc9:b0:b79:ecb0:db74 with SMTP id
+ a640c23a62f3a-b844540607dmr667839966b.59.1767885341523; 
+ Thu, 08 Jan 2026 07:15:41 -0800 (PST)
+Received: from [192.168.1.84] ([93.56.161.93])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b842a2ab77bsm869146366b.25.2026.01.08.07.15.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Jan 2026 07:15:40 -0800 (PST)
+Message-ID: <56548949-8afd-4bcc-b539-bfb1a28c3987@redhat.com>
+Date: Thu, 8 Jan 2026 16:15:38 +0100
 MIME-Version: 1.0
-References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-2-richard.henderson@linaro.org>
- <aV9y9b2-XRvNOYTG@redhat.com>
- <4df07fa5-f12d-4df5-9b59-0a2fce44b236@linaro.org>
-In-Reply-To: <4df07fa5-f12d-4df5-9b59-0a2fce44b236@linaro.org>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Thu, 8 Jan 2026 23:53:21 +0900
-X-Gm-Features: AQt7F2p69J1zEDqD9dXHkNWFyWWt_b0oq1Exn7MCMXCG4dTBVPGnONJDJqM2aB4
-Message-ID: <CAEDrbUbqV3Zev8sfYvW1uCBF-4ONVqPvJdCgNDepHTXu2LzFCQ@mail.gmail.com>
-Subject: Re: [PATCH 01/50] gitlab: Remove 32-bit host testing
-To: Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000ae8f390647e192c5"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122f;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-dl1-x122f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson: disable libatomic with GCC >= 16
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260108141407.2151817-1-berrange@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260108141407.2151817-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,89 +164,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ae8f390647e192c5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 1/8/26 15:14, Daniel P. Berrangé wrote:
+> Historically it was required to ask for libatomic explicitly with
+> -latomic, but with GCC >= 16 apps will get linked to libatomic
+> whether they ask for it or not.
+> 
+> This invalidates QEMU's check for atomic op support for int128
+> which explicitly does NOT want to use the libatomic impl. As a
+> result with GCC >= 16, QEMU is now getting linked to libatomic
+> and is activating CONFIG_ATOMIC128. This in turn exposes a bug
+> in GCC's libatomic.a static buld which is incompatible with the
+> use of -static-pie leading to build failures like:
+> 
+>      /usr/bin/ld: /usr/lib/gcc/x86_64-redhat-linux/16/libatomic.a(cas_16_.o): relocation R_X86_64_32 against hidden symbol `libat_compare_exchange_16_i1' can not be used when making a PIE object
+>      /usr/bin/ld: failed to set dynamic section sizes: bad value
+> collect2: error: ld returned 1 exit status
+> 
+> The newly introduced -fno-link-libatomic flag can be used to
+> disable the new automatic linking of libatomic. Setting this in
+> qemu_isa_flags early on ensures that the check for CONFIG_ATOMIC128
+> still works correctly.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   meson.build | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index db87358d62..56df08c10e 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -445,6 +445,15 @@ if host_arch in ['i386', 'x86_64']
+>     endif
+>   endif
+>   
+> +# GCC >= 16 automatically tries to link libatomic for all programs.
+> +#
+> +# QEMU explicitly does NOT want to use libatomic for int128 types.
+> +#
+> +# Later checks assume we won't get atomic ops for int128 without
+> +# explicitly asking for -latomic, so we must disable GCC's new
+> +# automatic linking with the new -fno-link-libatomic flag
+> +qemu_isa_flags += cc.get_supported_arguments('-fno-link-libatomic')
+> +
+>   qemu_common_flags = qemu_isa_flags + qemu_common_flags
+>   
+>   if get_option('prefer_static')
 
-Hi Daniel and Richard,
+Great. :/  Is there a bug reported for the -static-pie issue?
 
-Thank you for pinging me.
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
 
-> On 1/8/26 20:03, Daniel P. Berrang=C3=A9 wrote:
-> > On Thu, Jan 08, 2026 at 04:29:29PM +1100, Richard Henderson wrote:
-> >> These deprecated builds will be disabled.
-> >> Remove testing of armhf, i686, and wasm32.
-> >
-> > CC'ing the wasm maintainer.
-> >
-> > This patch is removing our only CI testing of wasm.  Is there any
-> > 64-bit container image that can be used to test wasm instead ?
->
-> Ah, right.  Yesterday I remembered that I should include this in the
-cover letter, but
-> then today when I actually posted it I forgot.
->
-> There are two sets of wasm64 patches; the simple one uses TCI, just like
-the existing
-> wasm32 code:
->
->
-https://lore.kernel.org/qemu-devel/cover.1754494089.git.ktokunaga.mail@gmai=
-l.com/
->
-> I attempted to incorporate these patches, but there were too many
-conflicts.
->
-> The complex wasm64 patch set includes a complete tcg backend:
->
->
-https://lore.kernel.org/qemu-devel/cover.1756724464.git.ktokunaga.mail@gmai=
-l.com/
->
-> I really need to study that more before I'm willing to accept the core
-tcg changes required.
->
-> Anyway, I meant to cc Kohei about this, to see if he would revive the TCI
-patch set in the
-> short term.
+Paolo
 
-I'm rebasing the wasm64 TCI patch series and will post it to the mailing
-list
-when it's ready.
-
-Regards,
-Kohei
-
---000000000000ae8f390647e192c5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hi Daniel and Richard,</=
-div><br>Thank you for pinging me.<br><br>&gt; On 1/8/26 20:03, Daniel P. Be=
-rrang=C3=A9 wrote:<br>&gt; &gt; On Thu, Jan 08, 2026 at 04:29:29PM +1100, R=
-ichard Henderson wrote:<br>&gt; &gt;&gt; These deprecated builds will be di=
-sabled.<br>&gt; &gt;&gt; Remove testing of armhf, i686, and wasm32.<br>&gt;=
- &gt;<br>&gt; &gt; CC&#39;ing the wasm maintainer.<br>&gt; &gt;<br>&gt; &gt=
-; This patch is removing our only CI testing of wasm.=C2=A0 Is there any<br=
->&gt; &gt; 64-bit container image that can be used to test wasm instead ?<b=
-r>&gt; <br>&gt; Ah, right.=C2=A0 Yesterday I remembered that I should inclu=
-de this in the cover letter, but<br>&gt; then today when I actually posted =
-it I forgot.<br>&gt; <br>&gt; There are two sets of wasm64 patches; the sim=
-ple one uses TCI, just like the existing<br>&gt; wasm32 code:<br>&gt; <br>&=
-gt; <a href=3D"https://lore.kernel.org/qemu-devel/cover.1754494089.git.ktok=
-unaga.mail@gmail.com/">https://lore.kernel.org/qemu-devel/cover.1754494089.=
-git.ktokunaga.mail@gmail.com/</a><br>&gt; <br>&gt; I attempted to incorpora=
-te these patches, but there were too many conflicts.<br>&gt; <br>&gt; The c=
-omplex wasm64 patch set includes a complete tcg backend:<br>&gt; <br>&gt; <=
-a href=3D"https://lore.kernel.org/qemu-devel/cover.1756724464.git.ktokunaga=
-.mail@gmail.com/">https://lore.kernel.org/qemu-devel/cover.1756724464.git.k=
-tokunaga.mail@gmail.com/</a><br>&gt; <br>&gt; I really need to study that m=
-ore before I&#39;m willing to accept the core tcg changes required.<br>&gt;=
- <br>&gt; Anyway, I meant to cc Kohei about this, to see if he would revive=
- the TCI patch set in the<br>&gt; short term.<br><br>I&#39;m rebasing the w=
-asm64 TCI patch series and will post it to the mailing list<br>when it&#39;=
-s ready.<br><br>Regards,<br>Kohei</div>
-</div>
-
---000000000000ae8f390647e192c5--
 
