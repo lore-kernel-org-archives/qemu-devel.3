@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8029FD1D48A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 19:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D62AD1D489
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwAN-0002Pr-Lv; Thu, 08 Jan 2026 14:59:31 -0500
+	id 1vdwCT-00035B-Lp; Thu, 08 Jan 2026 15:01:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwA8-0002Oc-VG
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 14:59:20 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1vdwCM-00034f-9b
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:01:35 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwA7-0006Sp-CO
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 14:59:16 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-81df6a302b1so154419b3a.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 11:59:14 -0800 (PST)
+ id 1vdwCK-0006z7-KT
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:01:33 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-29f2676bb21so31643795ad.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:01:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767902353; x=1768507153; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767902491; x=1768507291; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Asl3CeIcooj0xTHeOm+T6f+HfUc07vLWUNKAXBpKEYA=;
- b=C0ulm7gt45OdlfqGThG4kW7CXU8plhZtWAfT9ojKpd/98pNTk7gebtSqWW9K7cwqDS
- mnUG5KyQZ8HlEmd7Zmg6n8msfhVa8jxDfro+rkF8YLXWJcsBcWZDPVJrgu5Mdw6V8nN+
- wagjKQFTSqSP/fwOzzgWxm+7mxaaoTrfLleHBAG1TlEEAHqlbzmed6jKn8eChnJfhRY0
- w6p2+S0UkWvJxZTHK8FBbpqqq8IW2uJsnTMufzIEfGjvzeC12kqji5Rq0pMPsi56PuTz
- bTd+qo/T4gBhWtf/LpWO1joQvNwFMXnY+jqW2ctYGYtR0xh4sl/vtQTm9na5gnfn/gP/
- J4rg==
+ bh=57/WsTqKcMS3SEon625XD3BEwNkw+/VwPtndEefknIc=;
+ b=E5em02WXLbGQ0Dn19lh//H7sk7vuDpFgt79jOdI0vC6sYZ0U8vxJqESbzWIZO6dzwC
+ sLPy40MCe3UNP4YyIXObDqr0VKDkI3S0z0JfDNL/bdtQAeLkKrLPHrAwaO0KF8T+2NRo
+ 8ymMP494QI+S+brsKMIqNEHqDhP1ujSEDkhSkjOXojhwrdRCwpl/dmHEKacCZdf16qyB
+ gtBgBrHru9TN+rEEjAGQbDeBEUSmxkpRYlHDuLvAE8gxaTby5sR2VYHQTZ24gq4zsn4/
+ 7+ROYmS68c5ySU+9dH0LK7BrfQ2rL4EZ049LnAcjQKtjzhwWC0TOkaEMRobT6xvw5LNA
+ gjSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767902353; x=1768507153;
+ d=1e100.net; s=20230601; t=1767902491; x=1768507291;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Asl3CeIcooj0xTHeOm+T6f+HfUc07vLWUNKAXBpKEYA=;
- b=ln7yHJUWDhRtnRwrWEAPGgncvYu1l/xGN3DIsuSnrO0wHxiITLGFl3ep68nRvZX+Pz
- 8VGKkpwElxz6GeMcrSPArAQMXVCFOtFQ6M0j19ym3folRu6JUrIR384yB9lBdXsfDyHS
- 8hNdDtGtr9Nkoa7fmZO40x+SxI3/0V0dr72x5GaHLIy9/Hx0pktp1X8c2tV6OvcydG9t
- 1PYf5AR4aaRbF9WzuIemc8nfZ5Mcev3qNTER16sMAS4XBL+a5LXeWafwFNuBnxbTsOBu
- qSooGkYpVjDNOeDDaZr3IziD9BWMjEuFD4a705PapsfVv1GdUEVzLrbVerEh6hA8vbip
- yAdg==
+ bh=57/WsTqKcMS3SEon625XD3BEwNkw+/VwPtndEefknIc=;
+ b=BXKOrgGVMCT6BU1QcED1RuXXBJpUsBk3vQfX6VvJmTgeIuhioKUVHKWrudYWbwj33V
+ JxbvzCClt+OsHlQfJ03PYQ+ZeMENRfDgYul8IngOexh9RiOzsLHy/AiRJs4ZOMxQxIqi
+ MHGIZ8c512kO/EZ9okVof12D80sZuvbk0EzoJ5kBhiso2VHKaz/eQdybjeFwTtsqOSVO
+ MOtcl7tKjfsWDCQea1263YVNNWXRAT2/7OA3z1tG9uiO0KFgFrPfCkXAxKnXRL6AwtNF
+ qWnHGduBFitxedn+p9EQaLgggZF57r0QQL/QcfISFwdP9GyOIo9HKouHMnqbiXjAczPc
+ IPLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXK/L6+r5HYXggo89LHS7HVSDo1lr1naB7z+ac5NW8tY47u3A/y5roFtcN1NlyJ0FeLNlM4N3BEs8dL@nongnu.org
-X-Gm-Message-State: AOJu0Ywe1xALcnSBOx6qncpxhlKGSStfIxvlHtgbCXtymu5AnkgV4Srv
- WeJVDjSrUlwXr17+c1WV6eRWHrODCzzJCX/nEi6NtXAQG8shpS1sRUsWgiNDKL8yl4ZFy3gZj+I
- wqBaS
-X-Gm-Gg: AY/fxX6p7bwU76LKxkr8sdarDcEFhtLM7ZrzhRAetNQpBSwpN9vXxHqJF3xKW8LQ8r3
- TIJ6e25G6C9liI57QkrGE/mhqxTj3K4uD4EC3i3yrJQdbRvyWWM6DzNG6Ckbrj2XyLLnhDCZ6PU
- 7bCRfjqEk7bne0lytDlAGHIr+zdvPBjxOp8mwiiIM3Z+uiPTjg8HID/GlWRDIYdkxNd7O//OaQh
- xJoTIwGnsN51vCZfLhBzQpkMij2lMyOaTCnRuT9u7YYclKCwLMgeVCfUwbazBUr1XCQMpdf5KPo
- 8Fl2O/j2GC00vHoF7m+EFwESxJyOiUs/u0NaVP/TTvowc9LJNZwN7ivmNA/5amAO5eOeU++fAFS
- rkcD6jyt4Bi+u3YEb05Sj6wjBy455ScJCrKvsvF/UGyUMqoCRz/SKZbwpQgQo4AGwNc+nrpTp8f
- CzNTnTtHTkAl+NSMFNchZ8UJ8or95dvQMNawPz6TzLPEgvVe13WNTgTD2Z
-X-Google-Smtp-Source: AGHT+IGiRgudW9a7O6opYuRv/nmZfnfD1U7oZ5ZWY1DdJljbhttBi6Om8NobIbR+GOFtDJLjL6QWmg==
-X-Received: by 2002:a05:6a20:a10f:b0:370:73c1:6a87 with SMTP id
- adf61e73a8af0-3898f9bc643mr7657737637.58.1767902352687; 
- Thu, 08 Jan 2026 11:59:12 -0800 (PST)
+ AJvYcCXZ+5lH0bI8vzaAkGgU4YirHW9V9HFQTqqtuooEMGy+DTKXvBAQQ4imZgctiTwd/2aF8LVOnrQDZlF7@nongnu.org
+X-Gm-Message-State: AOJu0YzWbiLLwOCOrcS0cWiyYbTLk0O1IxUyROroDms/mhkN0oMjrIQ3
+ +T8EHYpc52xCERtlzWVTYS+L6Nj3A2uCVy7pUi7exuGC0abWP6PpKFfx09LVdpv+mLQ=
+X-Gm-Gg: AY/fxX4VsEgb9SAb/XuDedh7/GGDRWwPypmmaqJxCD38zUhA5QjbRGgbgnTt5dp5nTj
+ f8+ChMqaqbOiFEKVf+8/bg+uOZamyH5KkqLKKadtqdsaIPgcDE6huUkiZl/6e35HC9RHA+FoyxX
+ d6ob4nGx3k/GR5SnEOHLFsgvtu5szrIg6NtpkMeFV2F71/FWf2404ywEyGU4RZiDUhIoxsnqIAd
+ yOZocT67dkFQCYcGmK324SMkw47cTG8B80zokpFxAM9JWt7R+7T0Aqzn/fRzF0syqbyw3oBfz/X
+ NMpOjKMZamMnNEcFeriHt/wn4Sv6m1xRiJl6alnl91YcpulyKiEXz0kz9STFFcOOx08ZnsljsHa
+ 72ZFFihQWCxaSpaoZS2zsnn0qg6xJ/VyKZhQjayIOCWEYy2KU28mknO2oPtrbueB0/TsOH+zPn/
+ ESaEDkSwouB+032fg7vJW+XAM2n0838hYIRhCaHDgPqtoIL8lua8T+T3RPQBP1O/syIFk=
+X-Google-Smtp-Source: AGHT+IH7UR9OalIownM85qMq4r/ZRftrDhcPLD9NnqkuwAFCgI0JFvdTwjPpruyw22I6YqC3ETh6Fw==
+X-Received: by 2002:a17:903:2301:b0:29f:1bf:642a with SMTP id
+ d9443c01a7336-2a3ee424c2dmr63257635ad.12.1767902490716; 
+ Thu, 08 Jan 2026 12:01:30 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cbf29086esm8839647a12.1.2026.01.08.11.59.12
+ d9443c01a7336-2a3e3c3a507sm84697365ad.3.2026.01.08.12.01.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 11:59:12 -0800 (PST)
-Message-ID: <0e3fd137-8535-415b-9520-8291d27b20f9@linaro.org>
-Date: Thu, 8 Jan 2026 11:59:11 -0800
+ Thu, 08 Jan 2026 12:01:30 -0800 (PST)
+Message-ID: <757e9a62-bb53-4029-b166-cbfafc6b6def@linaro.org>
+Date: Thu, 8 Jan 2026 12:01:29 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] linux-user: implement epoll_pwait2 syscall
+Subject: Re: [PATCH 02/50] meson: Reject 32-bit hosts
 Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-References: <20260108174317.239955-1-mjt@tls.msk.ru>
- <20260108174317.239955-3-mjt@tls.msk.ru>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260108053018.626690-1-richard.henderson@linaro.org>
+ <20260108053018.626690-3-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108174317.239955-3-mjt@tls.msk.ru>
+In-Reply-To: <20260108053018.626690-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,15 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 9:43 AM, Michael Tokarev wrote:
-> epoll_pwait2 is the same as epoll_pwait but with timeout being
-> (a pointer to) struct timespec instead of an integer.
+On 1/7/26 9:29 PM, Richard Henderson wrote:
+> 32-bit hosts have been deprecated since 10.0.
+> As the first step, disable any such at configuration time.
+> Further patches will remove the dead code.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3210
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   linux-user/syscall.c | 29 +++++++++++++++++++++++------
->   1 file changed, 23 insertions(+), 6 deletions(-)
+>   docs/about/deprecated.rst       | 29 -----------------------------
+>   docs/about/removed-features.rst |  6 ++++++
+>   meson.build                     | 17 ++++-------------
+>   3 files changed, 10 insertions(+), 42 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
