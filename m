@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CA9D1D48A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B956D1D48C
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwHh-0000lw-Un; Thu, 08 Jan 2026 15:07:05 -0500
+	id 1vdwKX-0001Jt-66; Thu, 08 Jan 2026 15:10:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwHh-0000lj-1e
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:07:05 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1vdwKV-0001Jh-LT
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:09:59 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwHf-0007u2-Er
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:07:04 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7b80fed1505so2505235b3a.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:07:03 -0800 (PST)
+ id 1vdwKU-0008N9-5r
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:09:59 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-29f0f875bc5so32077215ad.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:09:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767902822; x=1768507622; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767902996; x=1768507796; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EyJ6ymGFAf1tjZakj3TPH/Wtg30m8FQO39obk0lxSso=;
- b=bYXzGKpgraJAgEmDqM05qW9aA7hYV0voXNBRbBCpsWjU3gNTTbNnk7z79g/2Vkh3pI
- Bk8y62FyUJ0l4bUL048oyKw34L8Nouc9PXCeIzHmK4sntY57acfo6zhvT8neoacLDkvv
- vilbSvkwKQRvwrdp/khIsIoIp13aJAdoCZnGsylDHYR9QSgFCTcFmYEROoPqdAA7M000
- O9/esTdPCl4Gzft+2CjKoeeN3y8MxVZBhZYDtJmgTW2u8CYuGmC1SLGckHCmEtl+xxg8
- aDqwI1IS0ogKsmlx5JENGQteS+cB+zShsLy5JrsUySd8GjApLDeBg0DI5DMvtWUAJCIv
- CGQQ==
+ bh=glgd198IHOY9fDavoyv8VTQTXXmTaRrEfkfN6XtmF/0=;
+ b=a4LBIchcHrGZmNk4ToSZeQOKhZry1xDPPcGWOHnKcizKu2cQHP1uTeYxyfnDHt8r1C
+ /UYogIISvD6toXw3a5B2bfrIuJ07Mtq2dAJtfr5inWC9Iib6+vxr9M+sFYENhBeAg2TM
+ iPtqlt/vWajDPaqa3KFtk1Sd0tJBvdwgOhb80orQuQnF3vIRJX10xVrfxVoBix/IK7Cg
+ DyxBg3S1EGFbkFupRo8MD5OppTSP8O16DsAURptBx33c9F872tXlcIWhKktlfciP8J8E
+ YllU9WI14XrUVoyK8kenPyebzpnCSI+ZMiqdwNzMfjIxhhvv9VbTPppkk8lewWa1Zw6a
+ kLrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767902822; x=1768507622;
+ d=1e100.net; s=20230601; t=1767902996; x=1768507796;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EyJ6ymGFAf1tjZakj3TPH/Wtg30m8FQO39obk0lxSso=;
- b=Pzyp4dELMlsAn8xSsJU/NYW98Abg4+rf3OBgqHJYAb3m6gTsmrbR3HkS1fPXm9lASm
- 842niJPksC0rgd2vpSKvYnVy/qzMht0b9Blf3fSG3e5K5f9cQ1N5DE0Cct3DUOZRCjCJ
- /8rRZCHylnfHFxuck1T+exKLehx5a5NvMUNrE3NeDZ9vwKmCBIQXT9X95AySk0dmyCQp
- oV3/zR3gS6na1FuUhhHll/E7KtVxTlQivg0siMj0E7FBsII5IktfQlhYzue+bZMH4KNn
- qaPvdEVyY4Oan6LvtNAoiMTsuTPziIUW8qs4moSP9xjguU8q+0K2Si237vEybBpy7sV4
- seyQ==
+ bh=glgd198IHOY9fDavoyv8VTQTXXmTaRrEfkfN6XtmF/0=;
+ b=gfjHPv7AFdyhdbmgfoQn+N8Pm2Hz6evoeLLOx3jZ9+KGwyTZ9Sxvl8WUa1N1S/5/9X
+ HXfHnZkWubvLY1t/2ffto0AGxtLRyZdqvtfz1qQFZBYnJmp1RGaZrKxyB01/QEBSojfj
+ Uvq1HVKUMAR1rOfrrBZDXCj3OJ5Bu6H240KoQM4s97xPSYEF7GIvL+W35rgh0P8iCaC+
+ npeQgxhRqX2BPxLOrEvftfu/A2lRAoSfmUQJGDPyxEp/Rk2zr4oPq+hCYtEmZKpSNWT8
+ 3V9vYm1MQIUX7AtbgWnTI3KU8mm+wDV+CqUT8uofZPC+YsgoyhrKLsSsRRN3R+y/v14k
+ Ipxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXX10r6S6OeluMS+7l5eCCbrsSqzh3O0surbPoWQGXxyhBirfjSFyN65TJkYl+NrFee99y46MgEnb01@nongnu.org
-X-Gm-Message-State: AOJu0YzfzTD0vw2jGZmcL0M8WOhB7rPauNgPE4xdRhbc7NpBlzu4P17i
- vbpmnbCnlEm6IpxThY1DejOKrLvxOAdU9j1IcXIGh+AhOWmLXDaLO3ALmkRAON4ZQJ8=
-X-Gm-Gg: AY/fxX5nr3tgSk+3ZeWe1lq5jJQfsQKaInfAZFm4Nhroux3+m4dJH4EARXTILP1brRm
- Tj1c6IuCdmZjU7I6CsNXBNDMDz2Pmschguu87KCtGTWo4ktsAhm8cGXBpQU+4NyzMef/56RMGQ+
- TLcaAYyDLXVVIyB1vimH2lyS/aYcTIuZlHh4M5kmThfGMjnx0IAgp1y88XpzeyUMuTO1+BL8ffO
- Ec1G1TpbYBTqaWAyounRcgPB1N0+3VOYCYJP+wL+caQvs3Bi3wpQ7D+xW6zWOEuxyarb1n9ABYh
- uhUqyn5gFe2JJNhCvuxbmDtsLKQa/MLfzSVyK5IZwUZbsb825s8yi9/3nmo9f3V/WLvcHe406oS
- M+87t8CM9RdyBjN31YkGmbvRmMi/PJ5jwXMDOXtwbRVv2gyQx/jAFc4Gcik9B4FIeJ3vH2dNqdu
- mdTUOeT4kU4tCbF64/x96qifEJSNxTldhPYrClOUJW3FfjwWMXyFloy+lX
-X-Google-Smtp-Source: AGHT+IGxGGi5AQqoLVkNgff4o1qRtj+UAWEaHGgAYNEq9og1F0x2eKCOc9vRCtgUXm++hBEX2y6zyg==
-X-Received: by 2002:a05:6a00:f86:b0:7ff:a5d0:f8e4 with SMTP id
- d2e1a72fcca58-81b7f7e2053mr6983841b3a.33.1767902821764; 
- Thu, 08 Jan 2026 12:07:01 -0800 (PST)
+ AJvYcCUgs9g1SJrRU5oNM7Or/c5eBBlKzLZPYjBZ8hRwozzK8qaL1YxSlBC94czs+4XBgX0S5fLh2UgfyOiL@nongnu.org
+X-Gm-Message-State: AOJu0YxnWfkyavDFNmUh0h5s4dHuKxw9yx3RBJWcRO4IfO5SJqd24wWg
+ PbCHFVJe9RHlC8PqqGNvmPu7w1ZkwEUtQVG0KGSgspY6jFBuvHKZDqgezZmPSuP0LNA=
+X-Gm-Gg: AY/fxX7bhdoblHZDP3puqgm1R11v/LuETpkVoJMt0/mw2oFhRU5wtqqa/s80K2efcVQ
+ pyS8sHrJfljsozD3COJkFneHt1z3BNODEbpOnTCKVW+gbc057Bym62OtDzj1gokNFmxkZNnmO3Z
+ 1GgyTuUWkxInCUHa129hycu+vDy39SosrlcYBdZLKLTDoYtxS6X5ZnWouD/g+Askar3qeyp6TXD
+ E1b1hI8QZptXxV0hN5xsmSkddloA1AQlKPRrIEw3tB8Oj3d+ew05P/F2+7IAqdEBoTu81Y78sgv
+ cw2aDtWBAJEycE2x8LPsNnH1uGulNGH5S0yMmfkkCQDmdHQlLcEnK6yLHEHjB4xjl7MwF6Ycu9i
+ OlQA4i9J8K86+Z4bYUa9SceO1qXgOIXT9FqWwieuTVLBE+yeYPwkoZrQUs0WKy6OnG9nF9r/kXT
+ NcL4fR5qSun2Sna/zTfDSYtXVNnsaxqhvZ/H9V1/1VIGsSXdNOwXYqThDc
+X-Google-Smtp-Source: AGHT+IG2N3J5N1Cs6xNWoTJROJDlk4Ab6hhz2JO8XAvtZwDfk3W5qnQ/fy1Vn7FY40x95SDRgZ07Vg==
+X-Received: by 2002:a17:903:3806:b0:2a1:3dae:8f22 with SMTP id
+ d9443c01a7336-2a3ee5211demr67541875ad.61.1767902996366; 
+ Thu, 08 Jan 2026 12:09:56 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-819bafe96absm8412118b3a.17.2026.01.08.12.07.01
+ d9443c01a7336-2a3e3cc8dd2sm85394355ad.82.2026.01.08.12.09.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 12:07:01 -0800 (PST)
-Message-ID: <ae3a0a28-aafc-4710-89e8-04047fc929ec@linaro.org>
-Date: Thu, 8 Jan 2026 12:07:00 -0800
+ Thu, 08 Jan 2026 12:09:55 -0800 (PST)
+Message-ID: <1928a9b9-aa81-49a8-844b-18617cc966ce@linaro.org>
+Date: Thu, 8 Jan 2026 12:09:55 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/50] *: Remove i386 host support
+Subject: Re: [PATCH 07/50] host/include/x86_64/bufferiszero: Remove no SSE2
+ fallback
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-7-richard.henderson@linaro.org>
+ <20260108053018.626690-8-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108053018.626690-7-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-8-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,32 +107,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/7/26 9:29 PM, Richard Henderson wrote:
-> Move the files from host/include/i386 to host/include/x86_64,
-> replacing the stub headers that redirected to i386.
-> 
-> Remove linux-user/include/host/i386.
-> Remove common-user/host/i386.
+> Since x86_64 always has SSE2, we can remove the fallback
+> that was present for i686.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   host/include/i386/host/cpuinfo.h            |  41 ------
->   host/include/i386/host/crypto/aes-round.h   | 152 -------------------
->   host/include/i386/host/crypto/clmul.h       |  29 ----
->   host/include/x86_64/host/cpuinfo.h          |  42 +++++-
->   host/include/x86_64/host/crypto/aes-round.h | 153 +++++++++++++++++++-
->   host/include/x86_64/host/crypto/clmul.h     |  30 +++-
->   linux-user/include/host/i386/host-signal.h  |  38 -----
->   common-user/host/i386/safe-syscall.inc.S    | 127 ----------------
->   host/include/i386/host/bufferiszero.c.inc   | 125 ----------------
->   host/include/x86_64/host/bufferiszero.c.inc | 126 +++++++++++++++-
->   10 files changed, 347 insertions(+), 516 deletions(-)
->   delete mode 100644 host/include/i386/host/cpuinfo.h
->   delete mode 100644 host/include/i386/host/crypto/aes-round.h
->   delete mode 100644 host/include/i386/host/crypto/clmul.h
->   delete mode 100644 linux-user/include/host/i386/host-signal.h
->   delete mode 100644 common-user/host/i386/safe-syscall.inc.S
->   delete mode 100644 host/include/i386/host/bufferiszero.c.inc
+>   host/include/x86_64/host/bufferiszero.c.inc | 5 -----
+>   1 file changed, 5 deletions(-)
 > 
+> diff --git a/host/include/x86_64/host/bufferiszero.c.inc b/host/include/x86_64/host/bufferiszero.c.inc
+> index 74ae98580f..7e9d896a8d 100644
+> --- a/host/include/x86_64/host/bufferiszero.c.inc
+> +++ b/host/include/x86_64/host/bufferiszero.c.inc
+> @@ -3,7 +3,6 @@
+>    * buffer_is_zero acceleration, x86 version.
+>    */
+>   
+> -#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
+>   #include <immintrin.h>
+>   
+>   /* Helper for preventing the compiler from reassociating
+> @@ -119,7 +118,3 @@ static unsigned best_accel(void)
+>   #endif
+>       return info & CPUINFO_SSE2 ? 1 : 0;
+>   }
+> -
+> -#else
+> -# include "host/include/generic/host/bufferiszero.c.inc"
+> -#endif
+
+The only other user for this file is now
+host/include/aarch64/host/bufferiszero.c.inc.
+
+Code could be directly moved there instead, so 
+host/include/generic/host/bufferiszero.c.inc can be removed.
+
+It can be done in another commit though.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
