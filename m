@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8C2D1488B
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBB5D1D460
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdr6G-0007QY-H9; Thu, 08 Jan 2026 09:34:56 -0500
+	id 1vdr6B-0007Ct-5v; Thu, 08 Jan 2026 09:34:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5x-00072S-Uf
+ id 1vdr5w-00072A-VZ
  for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:38 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5u-0000in-36
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:37 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47d3ffb0f44so21690025e9.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:33 -0800 (PST)
+ id 1vdr5t-0000iC-Oh
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:35 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4779cc419b2so28521765e9.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767882873; x=1768487673; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767882871; x=1768487671; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Sbu0M+maxtcRxXrgLFp4j1Dj8ytESdyrwiWOp43GF9w=;
- b=gn2BDc8Db/3PE20HBSfrSfyEvv3tAhXbrAG/OBYrOiM5avEcOWyluVpQGLhNojzbqb
- cfN5hBYcIylkU6EgI/uj3/t76/2lZlZ7lEIhsXGINzU9DEJy1G4RYd9vCgBAXygjpksl
- KFcufQ5o14E6fHG5uxPAPn3eW2CFLK4okQfeikOcL/7SVmFgoQApfDZpdusRI1JHBfBK
- TZlDmZPdadJLVwTywwL/yL2+m3lwVCEP7UiLIKW9qQexx1XB5d3kdRTUdyRs2i5BsTCu
- 58z9eZXmTOgrVJzO1krHiM+/Qcbc7C8yD7LG9X9GYR0ktJGD7g55pQydDfN33PRhtqge
- HUdg==
+ bh=4tMArHc3fpfAyjhrmZC/JPcKIoMMLYn+9tiOMpEVPwg=;
+ b=rsPqBg7z/CpNF7p0A9Fq7t17E39KhznUwiz8jAoiGu0fn38vV2DRtT9UOwyAHhv66g
+ OsAt+j9yocxJXgAY5nma9YBEv0jqcNFlzKdvoZbwj10ZDM3RvLEOdPy4LNY8RGJCVk6Z
+ 9W1F57tl3pKvOvO43+vM1A5CynjliboQoOodlj6gKLsJxya4Y+7/bE4g9hqPJVELkooh
+ 2axeuO4mWGJt+5jAQkGzeD8zGHh4s4u0YPHYszXFbx2Rty/JtXNi4fe6sqG5vKS6TRVe
+ e/IGSIh9iUHjYCiipogHGPXXC8WnVkvZv0V0VOsQYuW/9NmqCtzoSdQFciJz/w4ZDsdf
+ mnvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767882873; x=1768487673;
+ d=1e100.net; s=20230601; t=1767882871; x=1768487671;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Sbu0M+maxtcRxXrgLFp4j1Dj8ytESdyrwiWOp43GF9w=;
- b=ftlkGJW+faMXGgSLKaVhMMCFghlDG0kYaoNwJuVrSN+Gc+2QCD/DhZjUgkTf8/XO/i
- WJqWIn5cPVo92AlaCHesZvzz35aCg/ps/qOFDnVb4kWjIzZqGeqPuZPLA/Gn/1aw+JG/
- SuhA7Ty98qotVTT65++hpm35mXMX9k4wty01+7J4rtI6TjzddsXPiThzWu74I79U4I/J
- 7u1/zTMbss4wvxAGICG0p+xxgWQ7Y7awc9Uw2jjtg0tDEnN2GJSZqhbqEVK1KFUfbXKU
- k0x8oa/CXCkzyc9QPTyZRF6tNcBINJyEW7BvDqaI+VPESVqjT47piXbMADGL/VHYDXUu
- DBjA==
-X-Gm-Message-State: AOJu0Yx0/iQ4OjcdheiPfkKHxiUT66aSdFTPwhMq1CTlj0Fm4FxOxmQj
- B/hemHKj6MSYXaE4Iuu/7nDN5DQD4VrtrACMoKzlP3+fMq+PBdgn2qGNd9RhJqj4eSysHmB0DPp
- eIx8u
-X-Gm-Gg: AY/fxX4iX2J7sp45ocV31BBOG5ShGu9IRGNqOPhQNBG+CUa/J7hiO9J5nAlsjtjrfCb
- GLNVrt2xgultecGn2bD9UjH3TItgOUAbPUrbtFXtmeoiD8Y8kH4z3qNaFiXqU4l5tVCqPEkYPP2
- vJRVMU4jhIkXoP0Cb3RtEGZ1Kvie1CDWXQa53fnnejNg9kjyIMPnRWBxCBa45DmMZPFB0i4Crs3
- Rh27uVG1LPq/Ja16I6fMvEBczSU0gm5Q3SldiUgwOYlYXj7JJzrzoTrfcSAeInwXvAQ116NYlFu
- B6VgOV5vY9QhL3oWa7SsQLmvORrtUxVTwlhqD65LxRI/+yPGtQs8O3DceL4wcrA5xVK1wjkAdib
- /lH1G5a70oBqZrzZYCrR9J8IkZrY5NGQhuSrAV6mZInBJxJn7sZPi+OQlca4hhB0v0kRwsZI1a+
- IjMYRSucu0Czyf7mxkNB/Msw==
-X-Google-Smtp-Source: AGHT+IHHSKKF+8FsIcUnpmA+HxWnW4K6jZYoR2rUxPtSe+qc42mC3oncWJhn1rGbKjit/NRtcIjHyw==
-X-Received: by 2002:a05:600c:620f:b0:477:9fcf:3fe3 with SMTP id
- 5b1f17b1804b1-47d8f34f2e2mr6490295e9.0.1767882872578; 
- Thu, 08 Jan 2026 06:34:32 -0800 (PST)
+ bh=4tMArHc3fpfAyjhrmZC/JPcKIoMMLYn+9tiOMpEVPwg=;
+ b=gdLylH3Ttk7fUbQWIlDUna4Yxi2yivLFzcO/LA6sxjw2Lz/+9tOvFtJ1Kqwm5zWzUl
+ 8EFoFQ02Wps60KdP/ItqacK4s4/BzUUVYWbndHUDsylSwBQxfXtVD8sL+2y6kGfGR2NL
+ de+YSvxJAVz6FR3kQdUPVbv5cbDWr9+V9VY2OUjQL+Qedq1svM/a0DAhWQoehH5o819a
+ 0Q2Jrsf2cWS99cha3g3xk81yFfv8PJkYrf89K1zqI1aa3PX5zzJZkJ5B38qMrqrekAa3
+ Dv3k/z6inGs2FC6gUA26QtT4TG80kNUXsKANt+HdjwkncRASb8DCmb0c90ZRLak7H+q+
+ +i0g==
+X-Gm-Message-State: AOJu0YyEs/s5Yov+UKZFxpUzS42FuMN5at/XPqt5Nw5ijKay3nzJmO1Z
+ e4+Twc8Kh5k9cOnExHAN38etAgsoJ8uzCvK5DVc7NDzRVcUeF3u82LqoEr/dNWEno/s=
+X-Gm-Gg: AY/fxX57vizSFTsKp6/Hp/AlOz6GZK8I0uG69WlkFKmEFTL8hSAzOTbp4xl9qFu3qYy
+ gbvalwSEj7c2eGqUrluVh4n7Hen0D3pMhaljOo2A9ag+QazAtAITziuoNJYE4bpfNUJsHSHK/Gh
+ 1zIgxba5twabMvdxsRZ7s8jZ56x1p+S4LeUtf6F6RXqqsEQgVhRaEUvaRFyUVEyAGPYTfDiIefN
+ 3uivNgVAiTi2ptZmU9Qerwoazf7JT0zwE2l6OvYNe+nHfVYJYfZh0pjosthiBUy8eNZC2CE1pnO
+ Wk1geyUmsE16IWyPaT10wpfI7yM7gj6bubqy1QwcJWxpbsoPT4/p2K/ZQawXMw30EdTiby35A/Y
+ B/l/MHIdVYwn3DtSo8FWu6790InX01kirUV6l8mhZPo41eFcWpG1kAaQZOCDbQzBGBpxICSmXPn
+ 4yrNbxtMdHCOU=
+X-Google-Smtp-Source: AGHT+IHVOmi2wf66jvsMbt43DmnepHxzKqyfjk3Ie12Q2wlyN40HtlHxf0wwxQZu/Pawgbt1iVWkJg==
+X-Received: by 2002:a05:600c:c0ca:b0:47d:87ac:73b8 with SMTP id
+ 5b1f17b1804b1-47d87ac7a94mr50207325e9.27.1767882870776; 
+ Thu, 08 Jan 2026 06:34:30 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d86637b90sm42599195e9.2.2026.01.08.06.34.25
+ 5b1f17b1804b1-47d7f6f0e15sm151880935e9.10.2026.01.08.06.34.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 08 Jan 2026 06:34:27 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 48F365F917;
+ by draig.lan (Postfix) with ESMTP id BADCF5FA43;
  Thu, 08 Jan 2026 14:34:24 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,24 +80,25 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>,
  Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 05/12] hw/m68k: register a an5206_cpu_reset handler
-Date: Thu,  8 Jan 2026 14:34:16 +0000
-Message-ID: <20260108143423.1378674-6-alex.bennee@linaro.org>
+Subject: [RFC PATCH 10/12] target/tricore: move cpu_reset from
+ tricore_cpu_realizefn
+Date: Thu,  8 Jan 2026 14:34:21 +0000
+Message-ID: <20260108143423.1378674-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260108143423.1378674-1-alex.bennee@linaro.org>
 References: <20260108143423.1378674-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,70 +114,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As the mbar/rambar0 values are currently fixed we can migrate the
-setting of them to the reset handler as well.
+Implement a proper cpu reset handler for tricore cpus.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/m68k/an5206.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ target/tricore/cpu.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/m68k/an5206.c b/hw/m68k/an5206.c
-index f92a5d6a339..918c376a384 100644
---- a/hw/m68k/an5206.c
-+++ b/hw/m68k/an5206.c
-@@ -15,11 +15,26 @@
- #include "elf.h"
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index 04319e107ba..c3dda9f6a54 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -24,6 +24,7 @@
  #include "qemu/error-report.h"
- #include "system/qtest.h"
+ #include "tcg/debug-assert.h"
+ #include "accel/tcg/cpu-ops.h"
 +#include "system/reset.h"
  
- #define KERNEL_LOAD_ADDR 0x10000
- #define AN5206_MBAR_ADDR 0x10000000
- #define AN5206_RAMBAR_ADDR 0x20000000
- 
-+static void an5206_cpu_reset(void *opaque)
-+{
-+    M68kCPU *cpu = opaque;
-+    CPUM68KState *env = &cpu->env;
-+    CPUState *cs = CPU(cpu);
-+
-+    cpu_reset(cs);
-+    cpu->env.vbr = 0;
-+    cpu->env.mbar = AN5206_MBAR_ADDR | 1;
-+    cpu->env.rambar0 = AN5206_RAMBAR_ADDR | 1;
-+
-+    cpu->env.pc = env->reset_pc;
-+}
-+
- static void mcf5206_init(M68kCPU *cpu, MemoryRegion *sysmem, uint32_t base)
+ static inline void set_feature(CPUTriCoreState *env, int feature)
  {
-     DeviceState *dev;
-@@ -47,14 +62,9 @@ static void an5206_init(MachineState *machine)
-     MemoryRegion *sram = g_new(MemoryRegion, 1);
- 
-     cpu = M68K_CPU(cpu_create(machine->cpu_type));
-+    qemu_register_reset(an5206_cpu_reset, cpu);
-     env = &cpu->env;
- 
--    /* Initialize CPU registers.  */
--    env->vbr = 0;
--    /* TODO: allow changing MBAR and RAMBAR.  */
--    env->mbar = AN5206_MBAR_ADDR | 1;
--    env->rambar0 = AN5206_RAMBAR_ADDR | 1;
--
-     /* DRAM at address zero */
-     memory_region_add_subregion(address_space_mem, 0, machine->ram);
- 
-@@ -90,7 +100,7 @@ static void an5206_init(MachineState *machine)
-         exit(1);
-     }
- 
--    env->pc = entry;
-+    env->reset_pc = entry;
+@@ -81,6 +82,12 @@ static void tricore_cpu_reset_hold(Object *obj, ResetType type)
+     cpu_state_reset(cpu_env(cs));
  }
  
- static void an5206_machine_init(MachineClass *mc)
++static void tricore_cpu_reset(void *opaque)
++{
++    CPUState *cs = opaque;
++    cpu_reset(cs);
++}
++
+ static bool tricore_cpu_has_work(CPUState *cs)
+ {
+     return true;
+@@ -120,8 +127,8 @@ static void tricore_cpu_realizefn(DeviceState *dev, Error **errp)
+     if (tricore_has_feature(env, TRICORE_FEATURE_131)) {
+         set_feature(env, TRICORE_FEATURE_13);
+     }
+-    cpu_reset(cs);
+     qemu_init_vcpu(cs);
++    qemu_register_reset(tricore_cpu_reset, cs);
+ 
+     tcc->parent_realize(dev, errp);
+ }
 -- 
 2.47.3
 
