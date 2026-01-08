@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1E2CF6AB9
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 09:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0B99CF6ABB
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 09:51:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdmbu-0004mz-FJ; Thu, 08 Jan 2026 04:47:18 -0500
+	id 1vdmfC-0005Rb-W7; Thu, 08 Jan 2026 04:50:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmbt-0004mj-1B
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:47:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmfB-0005RI-Pl
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:50:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmbr-0002HH-K7
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:47:16 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdmfA-00039o-4q
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 04:50:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767865633;
+ s=mimecast20190719; t=1767865839;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iubvZWe3vTAhSYO9BRUbW857U8xtndQNBimfOMg+aZs=;
- b=BEp5jpBkkXa8wcNa5A5POmOrkF183Tkye78TTchL0Kh1ev02b+1eYZFrXWU7xXxTa7Gnha
- nbUlUphXHFL9FqMOMKoA9XK9j8ZNLzZdV1ZbOb2uy8Vc74KsWMK7/r+WErfIkuZ1EIfR1g
- s4z3c6uTFZQawQNh+1UMToHCqQoMEkQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ze3vpZ2b4SmHIOIleYpU5/AWnZrUK/Yj48Co88KXJy4=;
+ b=MacQekwE4K2TOE9tz3dJ5Z2DLfnJLXeIE5Cp1YU/IHerylQhXpO3hXSkoWd1zCk/+PRNua
+ pFDPITv3Uo8lJlt3ap5POGVpoqteibzxkxYgYHH1EO37OQ8UDgmK2vqpufIU5ZLYdWT163
+ 7gBPdJ1pejvrcG0rkfC5UzLJZBj98ls=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-191-biS_90UoOr2bYyFt586cqA-1; Thu, 08 Jan 2026 04:47:12 -0500
-X-MC-Unique: biS_90UoOr2bYyFt586cqA-1
-X-Mimecast-MFC-AGG-ID: biS_90UoOr2bYyFt586cqA_1767865631
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47775585257so20497225e9.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 01:47:12 -0800 (PST)
+ us-mta-494-CXDpb2xXPGi6FPKUipdjyg-1; Thu, 08 Jan 2026 04:50:36 -0500
+X-MC-Unique: CXDpb2xXPGi6FPKUipdjyg-1
+X-Mimecast-MFC-AGG-ID: CXDpb2xXPGi6FPKUipdjyg_1767865836
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-477a11d9e67so20959285e9.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 01:50:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767865631; x=1768470431; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767865835; x=1768470635; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=iubvZWe3vTAhSYO9BRUbW857U8xtndQNBimfOMg+aZs=;
- b=Cu+evYJACoBuqWzKKJ4pmX0vnKHoUNLno/0bYVc86EtXCMWk0pufCaeZontERp4W/0
- XCG049HXZZaMoT4XWXNWullhplaVNtPuuPXO+1GOQZCvkgLUdNZoDM+rc1/vInhwIKna
- GpTPCV171CzEC0PpGY9+Y5FLwU6T/ZE2JZAx2RYJTRl7DxPBz6krB+SSLqOE4DNR+j6f
- MfXuGhV1ILObEhZTIUf6Yr4uQj79a1vDG1VkYZXd7990fN/As7aMcImy1h3DBhdGXNAW
- O2sb202+DtJpGXYs1gcyN+7/JMq/bQ2I4QNcF0haEaNkg41WCF7G+WJ/boQFqqZcMFoZ
- FdGw==
+ bh=Ze3vpZ2b4SmHIOIleYpU5/AWnZrUK/Yj48Co88KXJy4=;
+ b=krzRnTKAk2cObQsIkZa+4K5qfA9NrLjMOtC1vIWABzvXp7N8jX3AyL/7zpxIQSroyZ
+ tu1fyCPSvHmu4OI4N2vW5+83Ne50AQrGtkaA+mA6q3OlicSe9fTRPVy3vFJJZThXgLEs
+ vrlXsxHF6TtvRWSStLmQTXoEMucZQzWz24e0Wv2wXXjFFn7DB3Sq0234lDURb2ymhRDp
+ r8BmPgeN9KooodJHo6wDF83AgMHDYZXFEcuWhvEr2772qvCy23RblZXvh8p4YG5v/VmJ
+ 3f2IwKvkhYRBRfPfRbzZgEpeJBctCrDrRSXXXOGdMZq9xUNZte6UO4OzK1Ziuv2xs/Xr
+ VHNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767865631; x=1768470431;
+ d=1e100.net; s=20230601; t=1767865835; x=1768470635;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=iubvZWe3vTAhSYO9BRUbW857U8xtndQNBimfOMg+aZs=;
- b=JfZpLKh0qRlZCQHHd9dyGAI+xsM220+1vmqiRpPdVUCF26Sdh+3ZLzX2u3NLvju017
- 0i85yNtcvfai1xJnIpW4SbvSufEAgQFBR/1dd+/fqi34XoGT9SP7HjOomN5610msMDK9
- 7S+aQ+93Lo2ctTXKhI0/eV6XwN5J2kPZQNT+9ofvhEAMBDnYJE45/LRpq+GozH5sEV8D
- 6Iyi4igSd3E5Cym1WWI4kRcT7Sbyge4JzqI2hSEtuNPfPt0HJBTxjPnnjS8bDDOJvgJT
- 1O2+quxPoArRLSsCqIciORYDgc9NMn+B1WbFpF9YZE4fw92TDOeU1tUqNislzDHGjNxB
- OHBg==
+ bh=Ze3vpZ2b4SmHIOIleYpU5/AWnZrUK/Yj48Co88KXJy4=;
+ b=X4RtPfR9Pv8Uydz921Ev+PO7GUkV/M/L3P/Ir1mDESeGlXIWFpHGtyFYARkhUyzvPl
+ Imny3PRNZxn7Zw59rEpVu0gmaRCS/Q+Dznuq9VIRV+YlBFwM3A896XbG9uWu0nMRMF87
+ hQqmfYimN4xD4HQNwcB2Ot5oLh5aj/al5pM1HfQTPYtIheWJdhmCD/eOrUOciKxGvfKs
+ ybnxu3yWBt/R6rN7mEuGp9azaXc24I7ndeOMdNGfjtcEURC59DelgQoFcLB4MGrBfK4l
+ nRjJ4qyUz44nr9rWNFoOzEK0vQwG5pC+Jzxqh4Y+kYQJINxh7IagQDjCen7WMthOmZhO
+ 8S4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXyT30/oPbNq3DnFOTtBv65EnXsvCZRJBkwK1z88svA2XZ1mEdN7GoIKvFEweQ214lUjwNcOwgDrUfk@nongnu.org
-X-Gm-Message-State: AOJu0Yy8nAvvqDCDvkpbcYUIF93YkneNtBCryzPD7/XvnCdsHaQKuv9n
- flMnfshot9QV80UAKuEWmQ0lA0KjiegSltNDI+t4mpM7wqN/ifZTWNlgCngXbjKiQUvQ/fIRvvR
- ntJyNvnwWRLlfRQICHbvynOFBPXnFmdrzxO3E3x/v32tQrCBL5fD95Eg6
-X-Gm-Gg: AY/fxX6q9h7w3AuuyD6t8zsVBl97abv/dBTocFrAtX68OkdtO54n2BORQ89U5cK31e6
- za7rnnuQ6zfqwdkwD59rjhcbY7i3QPxC3uh3KIulgLYr8yyjjrM9YbSc62Sktm56masNt+1k72a
- KqNgFxLavnwbC7GLyxkSoTnHkNhjRUMktm0bhPoEUzjSq8cYh4UgxOXvHpLdC6lyfbUkaVGKgh1
- hRbQJPbNTdnI7UvUHGDg6s2G93wF3w++r36iMtM7DR684KvW48T/wv9FnbuXoUODH9d4hm9I3rM
- nJhIo2Y0S5t6lEBBaP1aQeXHiq25JPZ3jPaLhg29c/msNhCQKFSE4Pl2B/WNWOkitT1onuKzyft
- zuhyXXGo=
-X-Received: by 2002:a05:600c:c8a:b0:479:3a88:de5e with SMTP id
- 5b1f17b1804b1-47d84b4a079mr61579845e9.37.1767865631009; 
- Thu, 08 Jan 2026 01:47:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/A1C9bk3KVGPosFfySjiR5LT3QyvIinEiKHJBsGJvmzQx7hoHDri95Z7jHKZd073S9iWhIw==
-X-Received: by 2002:a05:600c:c8a:b0:479:3a88:de5e with SMTP id
- 5b1f17b1804b1-47d84b4a079mr61579585e9.37.1767865630633; 
- Thu, 08 Jan 2026 01:47:10 -0800 (PST)
+ AJvYcCV5OZE5dmpAvu2DFtVB4pW3dzvGdbLTb411InjoA5uJMqftRRY+CUN222PM9gTtFVEG9zRYw49GdWU6@nongnu.org
+X-Gm-Message-State: AOJu0YzGueL/V4lVsTgekCI7wSfx1VgKQXOt+WGQOdwb+vrY0FQ3t7sh
+ LUez+rWUm6KRnhC09ehV6uKUswBh7QO3Xa5Uwah2s5dSUQ+hbhIpeB2rfb3UXqLlj5Dpdsotnnw
+ c80i7bWAjedXgmCBkXpay1VJ5Hr3oqmDa/mlmAmy2IWRBUfIWC7vg7hqE
+X-Gm-Gg: AY/fxX6kYq1VCL6FYj49X7A+He/nNWsoUKvnLfrCXTIYF1PMULrLB78xI/tG02ppobh
+ N+OPkT4vTzeKodFAGwiFLprs4/xcLlcnmI8yU2surg4b+AeUXA6gzWGwX+qnwGkKl/YO16mA5/Z
+ iX4TZTFVsQqfltIC7Oi19Qqa5rByqzjSrgWQQSU0i4nn9F1YTxRNUSTtJfsM6qW/u9Txculc3fv
+ GGwtKzDgEQoxx2APoGEKqBdFpfjEjg/ydY+is3kWzMmJhH//wXIsLEsMxHPP61ns/3RjSniCFdU
+ 2hpre+4DtW8oMvmvDhJ8Nm1UYxmIJTOSgytV/is1pBa+avqZBOAWdqJJT9K+N2IVYoovwxXN3vC
+ h518a2Q0=
+X-Received: by 2002:a05:600c:b86:b0:47a:7aa0:175a with SMTP id
+ 5b1f17b1804b1-47d84b3bc85mr61028165e9.26.1767865835517; 
+ Thu, 08 Jan 2026 01:50:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHY/LQNdNaO9dy3Kq0ZLjBQK8JizEOJK1ehBd1qEeocPWukLTpQVhXWbUgMLSBn7Mf2ECQbXg==
+X-Received: by 2002:a05:600c:b86:b0:47a:7aa0:175a with SMTP id
+ 5b1f17b1804b1-47d84b3bc85mr61027985e9.26.1767865835165; 
+ Thu, 08 Jan 2026 01:50:35 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5df939sm15109601f8f.21.2026.01.08.01.47.09
+ 5b1f17b1804b1-47d7f6ef885sm142813935e9.9.2026.01.08.01.50.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 01:47:10 -0800 (PST)
-Message-ID: <d59e4ffe-87e5-42fd-b803-7c0092b062ce@redhat.com>
-Date: Thu, 8 Jan 2026 10:47:09 +0100
+ Thu, 08 Jan 2026 01:50:34 -0800 (PST)
+Message-ID: <fe780bfb-11f4-46f6-a40b-4aa5e233f88d@redhat.com>
+Date: Thu, 8 Jan 2026 10:50:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/50] *: Remove __i386__ tests
+Subject: Re: [PATCH 08/50] meson: Remove cpu == x86 tests
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-6-richard.henderson@linaro.org>
+ <20260108053018.626690-9-richard.henderson@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -137,17 +137,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260108053018.626690-6-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-9-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -166,61 +166,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/01/2026 06.29, Richard Henderson wrote:
-> Remove instances of __i386__, except from tests and imported headers.
+> The 32-bit x86 host is no longer supported.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-...
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 2060e561a2..63713f1992 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -7449,15 +7449,6 @@ void syscall_init(void)
->                                 ~(TARGET_IOC_SIZEMASK << TARGET_IOC_SIZESHIFT)) |
->                   (size << TARGET_IOC_SIZESHIFT);
->           }
-> -
-> -        /* automatic consistency check if same arch */
-> -#if (defined(__i386__) && defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-> -    (defined(__x86_64__) && defined(TARGET_X86_64))
-
-This looks like we should keep the x86_64 part?
-
-> -        if (unlikely(ie->target_cmd != ie->host_cmd)) {
-> -            fprintf(stderr, "ERROR: ioctl(%s): target=0x%x host=0x%x\n",
-> -                    ie->name, ie->target_cmd, ie->host_cmd);
-> -        }
-> -#endif
->           ie++;
->       }
->   }
-...
+>   configure   | 16 +---------------
+>   meson.build | 49 ++++++++++---------------------------------------
+>   2 files changed, 11 insertions(+), 54 deletions(-)
+> 
 > diff --git a/configure b/configure
-> index 2016062492..00e455be57 100755
+> index 00e455be57..846fab904e 100755
 > --- a/configure
 > +++ b/configure
-> @@ -377,8 +377,6 @@ fi
->   if test ! -z "$cpu" ; then
->     # command line argument
->     :
-> -elif check_define __i386__ ; then
-> -  cpu="i386"
->   elif check_define __x86_64__ ; then
->     if check_define __ILP32__ ; then
->       cpu="x32"
+> @@ -440,13 +440,6 @@ case "$cpu" in
+>       linux_arch=arm64
+>       ;;
+>   
+> -  i386|i486|i586|i686)
+> -    cpu="i386"
+> -    host_arch=i386
+> -    linux_arch=x86
+> -    CPU_CFLAGS="-m32"
+> -    ;;
 
-Aren't there some more spots in configure that could be removed now?
-e.g.:
+Ah, it's removed here, please forget my previous related comment about this 
+in an earlier partch!
 
-   i386|i486|i586|i686)
-     cpu="i386"
-     host_arch=i386
-     linux_arch=x86
-     CPU_CFLAGS="-m32"
-     ;;
+> @@ -300,9 +296,7 @@ else
+>   endif
+>   accelerator_targets = { 'CONFIG_KVM': kvm_targets }
+>   
+> -if cpu == 'x86'
+> -  xen_targets = ['i386-softmmu']
+> -elif cpu == 'x86_64'
+> +if cpu == 'x86_64'
+>     xen_targets = ['i386-softmmu', 'x86_64-softmmu']
 
-Or is this removed in a later patch?
+I wonder whether we should limit xen_targets to x86_64-softmmu now?
 
-  Thomas
+Anyway:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
