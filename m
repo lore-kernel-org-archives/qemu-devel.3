@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826BCD185F3
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 13:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FB2AD185F6
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 13:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdq2M-0000cI-9K; Thu, 08 Jan 2026 08:26:50 -0500
+	id 1vdq2O-0000dr-OZ; Thu, 08 Jan 2026 08:26:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vdq2K-0000bM-QF
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 08:26:48 -0500
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1vdq2N-0000cq-55
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 08:26:51 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vdq2J-0003VG-3x
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 08:26:48 -0500
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-bc274b8b15bso2094234a12.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 05:26:46 -0800 (PST)
+ id 1vdq2L-0003Vb-KD
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 08:26:50 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b4755f37c3eso1953237a12.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 05:26:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1767878806; x=1768483606; darn=nongnu.org;
+ d=sifive.com; s=google; t=1767878808; x=1768483608; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hUjBC9iK/AQDQc/SPGCkS6zufkBrrvUHdIbr52+DJOg=;
- b=giMOl71/UNIKXZRuwdLreNsgYzyoFZC4bGgxTKsFOrFZH3FtUpYGWkq5b45WPn0WN/
- ezifgZXMdQN/8IF/kvTaUXxukkMBH9ebLEkMwcfFfDxyYzC+1Kxabg53xaBS+TRMVMQX
- 1bCvIPUs+Mi0wUuR3uT8/JmTzYl5N+bsvy83uTfI2Z2iuY49wDbf7uNZ86n1yjT9owpx
- 7yY8ov8lNLMVMqdu46eYQrqtxyFxx7O9n9Rxx6F3VC8EfNrq4/pxVWsMx2ckKjXMk9Tc
- LJXT7E0ZAp8eB7oHTo/C+C3Co0/7RTIn6ka7K4FhaCoKy2IQTcdwqcn8vAYG8Z1DrfwO
- oQNA==
+ bh=HAts/Z0FTNhdHhzy/9PWHFjxTqh27BRSBirl8Gv16LA=;
+ b=IE18EAf143cMglQIDdFNITukRd+rtbommwr/BUVdxWVPWd7b/IxFwR9c/lmx11/ma2
+ iU+vOBTFVwFBe7S9lbPBOChe6loBtRp4mSJajN58UMCetXUK8svbVdCmaGLoJr0FWThs
+ dC4w7tRLGuu7b1xIjBPuf6jHr64DuFg+NNumcd8QBEj/jk8237DXtYEITA2d5Cv9xYp7
+ VuERO9fSxM4F5X75Pv+8R8ucEkg6DyhELPHxYZSnjjsbGqm12LCPTIlhmtXtThSgD8t8
+ pIbUznkAgYA8/OspkG1m7HyATZD+Xo48DFUVu/8wk9LMwzBts1Lc++1fGejPnlYxtpq8
+ SekA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767878806; x=1768483606;
+ d=1e100.net; s=20230601; t=1767878808; x=1768483608;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hUjBC9iK/AQDQc/SPGCkS6zufkBrrvUHdIbr52+DJOg=;
- b=rGGIUgFBSv/WgIYw7YQgfrYG222XRkuDaq6myoIBCGnzYZsJ/EDO9DMS2Ork4m4EtB
- LWBwwbpR9pUETtHPTgEdzgXRsSBLiS+oO9LD7PNyojFjwcvIobxW5vdt2xR5ajn05WGz
- pXZD5UjcOGSBWCvDhmK9QGrgD2M93sd06CZ98ndx23sprvPRRAJ9taQKAePdHSsWyOQC
- 5SFOHNn/SNfoxOcqkKiccRBG4rX47crpC3YHdke7AGRC5Le/wMCgRErXno69HDEVwruV
- 8II74cZrTGtJEr20oSQvMNFaQ/4oZ1hkttdJHV94/S1TAheH3lwkjnAtxEgZfCn9mF4z
- VViQ==
-X-Gm-Message-State: AOJu0YylEU/rzOYOdYHWWD61q6TnkUAvQhOA9kY9TVQ+HK5ce5g6eLsK
- 1QpuGwFmeiDpBlXYWV15Hq8LSFteSfasx8GjVavj2qW0KlCS7SCZpE+4qiaEfyfjAjtSxj/C5S6
- LgI0oYIF965c9jE8Pwm+4WpVZZKYa6W3VqN/eSNs2E+XPIbXdQ2TsPzdQFIi3YylR+NurqA+DKs
- w4KAUMsSp6K7cKms8za5+ud+2a5+CdWpmN+M3AEPs=
-X-Gm-Gg: AY/fxX42a2GHzDhrXm0XZpLA7E22ydCifv9JSuo2tuxaa+1nHLXCQyTxk/zjIcZBFEv
- ETBW0rjmSa+ij1Q8RuLHaufgRXLKHw/GV/N+qJa/AEKjXM2uKgQN1aFgQH6pq0KEIXGldr5U+4g
- Lcklzo/fyr6e5Ntfz9Sui6bkX1BKcuZ5UHEF2KsJX8PPm5A54y8UlvKgvq8rI2xsCDfAkF2xbPn
- ID/zED5KmIl7VjxDlQNlgu1GR7Ycsutof2RqXQJmPIJXcu/HDm3t3C3/6PKRq55Yau9LMwesdVx
- f/Spwaek+3tlL/bQKfuptsJZs+VedSfIYLIduS9pMn9rqaonjxy8IwFQAk05MJf0h7dkzVaZluG
- aQT2sjD1GtE1Yyw3ZcB8YwJ9sEPzKX9RHbTPycO21x2crREICVTW7ZLyutTRMppuoYfBubSuVck
- 3+tm4LxwJtcnC4cdLu5+lmKoXPDiM6FbmsL+2RyyBQohz7mTStlWN+HJo=
-X-Google-Smtp-Source: AGHT+IEey6A4OBBU/hchk93LEnDm89WzuCHBkqpAmpJUEUEOz8CAHQzPLhWg+AbHadQni9mveOZtAQ==
-X-Received: by 2002:a17:90b:3d08:b0:33b:be31:8194 with SMTP id
- 98e67ed59e1d1-34f68cea72fmr5775330a91.34.1767878805546; 
- Thu, 08 Jan 2026 05:26:45 -0800 (PST)
+ bh=HAts/Z0FTNhdHhzy/9PWHFjxTqh27BRSBirl8Gv16LA=;
+ b=PGtK+lDOM+noGmAP+/pi52FBHh2OOuhSYPVrxE8TrmEZmGo6n5gC745bhsk3xBPZQH
+ fSqKlvmKua9z3/+Ypsr9rMulIGvfA8gSpOO01wbT2JvBgltT2+NL9ZLW2YY/nroo+KYU
+ G16yEPG2BWUN/yYAtp4QvsYhd+C2N7/yM1ouWpz48+ULgwiK8X4eOzynAkU4FDq/83rx
+ dJcU1NXu8vk9QAqqykC5S6gf2kNMgn8BJBYOzdEPpsEY5JASxt45x94wciWrneukWw6z
+ A6NCUnG3Vfy4ZToiIcAf2gICxZQEc5oHI/TwYjxZlNOhcckjjTW56RquFFdGpuQZTaSp
+ XeCg==
+X-Gm-Message-State: AOJu0YyVH+3cZndn8I5ubq1bvp5ZS6rgnZJqTjjdxWU0MSKsuqWprNm+
+ gwzd2LhayXqTXc2QMaUdBoZP9wPkAIkhdHS1gVGtHpaFXxEio6ddGX3fLaxcb9lpvG13hKmQJTJ
+ RS3Zn/142kuW8nbV0Y7haiPniBcLchq5e8wH+w6U2vOaCYu7ndVAFvw4unHE1PomWaZejB+Xspw
+ RDJYUSrF+VAQXsjLnFsSORE2UZds01azKeikRt7T0=
+X-Gm-Gg: AY/fxX5buda9FzJsVQWk0Tuf1vFMN6uK4jwtlom0xaQWWDQHIAZLXK4yc5oLU9xCAfd
+ 9ZR0YfXGuXyCReQp1ouGuGEFPfEbLB4XwX7Dxv3cA84foY26NXCb5QGebpjbh60gjhihF5XG/C7
+ y2366tISSJGA7gMJiJ4Wx40hgV5bJBXjgY37iRfmG27bIXbJgqjcgM86ORgxBQpdwD+wttVvOIx
+ HbZH9xEZcgqR4EGfqY8hnYCAOUA7tDSKkR/iSuV6DnIB5lzo+vf5JFxsB7PKK/4LXEY9SyTnmT9
+ R4VpZDn9wnv65nPLSpfW3TRU3+mZ2ON7yd/ejwttT+VDPfbg8I6YVaRrALsHZJ0Pc98Qxhi7r8d
+ XXT/n12phpza+IufWq9a8UtxxV9XUJA9ES16CugtGfgifSoUAop1WAf5YP6dNH2mAAIo5pA9sZE
+ dNiXIqPriDzdJKsGcwgoxn/ZJZNGR1qNI79oBmIhAqFe/xwQeAgXLA/876UM1PCp2Ybw==
+X-Google-Smtp-Source: AGHT+IGOdt5QoC6tHghoIWvdp433TsIthVXqrPSqRXDkYClPLK16BMzkAPuAXVA5nC6Rm23XMBNIKA==
+X-Received: by 2002:a17:90b:528e:b0:349:5b1b:78bf with SMTP id
+ 98e67ed59e1d1-34f68d0bc85mr5969734a91.23.1767878808092; 
+ Thu, 08 Jan 2026 05:26:48 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f6ae3f033sm2298787a91.0.2026.01.08.05.26.43
+ 98e67ed59e1d1-34f6ae3f033sm2298787a91.0.2026.01.08.05.26.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 05:26:45 -0800 (PST)
+ Thu, 08 Jan 2026 05:26:47 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -75,23 +75,24 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH v2 3/9] target/riscv: rvv: Add new VTYPE CSR field - altfmt
-Date: Thu,  8 Jan 2026 21:26:24 +0800
-Message-ID: <20260108132631.9429-4-max.chou@sifive.com>
+Subject: [PATCH v2 4/9] target/riscv: rvv: Introduce reset_ill_vtype to reset
+ illegal vtype CSR
+Date: Thu,  8 Jan 2026 21:26:25 +0800
+Message-ID: <20260108132631.9429-5-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108132631.9429-1-max.chou@sifive.com>
 References: <20260108132631.9429-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=max.chou@sifive.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=max.chou@sifive.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,100 +108,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the Zvfbfa ISA spec v0.1, the vtype CSR adds a new field:
-altfmt for BF16 support.
-This update changes the layout of the vtype CSR fields.
+Replace the same vill reset flow by reset_ill_vtype function.
 
-- Removed VEDIV field (bits 8-9) since EDIV extension is not planned to
-  be part of the base V extension
-- Added ALTFMT field at bit 8
-- Changed RESERVED field to start from bit 9 instead of bit 10
-
-When Zvfbfa is disabled, bits 8+ are treated as reserved (preserving
-existing behavior for altfmt bit). When Zvfbfa is enabled, only bits 9+
-are reserved.
-
-Reference:
-- https://github.com/riscvarchive/riscv-v-spec/blob/master/ediv.adoc
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/cpu.h           |  4 ++--
- target/riscv/vector_helper.c | 29 ++++++++++++++++++++++++-----
- 2 files changed, 26 insertions(+), 7 deletions(-)
+ target/riscv/vector_helper.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 35d1f6362c..962cc45073 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -191,8 +191,8 @@ FIELD(VTYPE, VLMUL, 0, 3)
- FIELD(VTYPE, VSEW, 3, 3)
- FIELD(VTYPE, VTA, 6, 1)
- FIELD(VTYPE, VMA, 7, 1)
--FIELD(VTYPE, VEDIV, 8, 2)
--FIELD(VTYPE, RESERVED, 10, sizeof(target_ulong) * 8 - 11)
-+FIELD(VTYPE, ALTFMT, 8, 1)
-+FIELD(VTYPE, RESERVED, 9, sizeof(target_ulong) * 8 - 10)
- 
- typedef struct PMUCTRState {
-     /* Current value of a counter */
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 2de3358ee8..525a47bf66 100644
+index 525a47bf66..c7b9d6b467 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
-@@ -33,6 +33,22 @@
- #include "vector_internals.h"
- #include <math.h>
+@@ -49,6 +49,15 @@ static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
+     return reserved;
+ }
  
-+static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
++static inline void reset_ill_vtype(CPURISCVState *env)
 +{
-+    int xlen = riscv_cpu_xlen(env);
-+    target_ulong reserved = 0;
-+
-+    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
-+        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-+                                           xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-+    } else {
-+        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_ALTFMT_SHIFT,
-+                                           xlen - 1 - R_VTYPE_ALTFMT_SHIFT);
-+    }
-+
-+    return reserved;
++    /* only set vill bit. */
++    env->vill = 1;
++    env->vtype = 0;
++    env->vl = 0;
++    env->vstart = 0;
 +}
 +
  target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
                              target_ulong s2, target_ulong x0)
  {
-@@ -41,12 +57,9 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-     uint64_t vlmul = FIELD_EX64(s2, VTYPE, VLMUL);
-     uint8_t vsew = FIELD_EX64(s2, VTYPE, VSEW);
-     uint16_t sew = 8 << vsew;
--    uint8_t ediv = FIELD_EX64(s2, VTYPE, VEDIV);
-+    uint8_t altfmt = FIELD_EX64(s2, VTYPE, ALTFMT);
-     int xlen = riscv_cpu_xlen(env);
-     bool vill = (s2 >> (xlen - 1)) & 0x1;
--    target_ulong reserved = s2 &
--                            MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
--                                            xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-     uint16_t vlen = cpu->cfg.vlenb << 3;
-     int8_t lmul;
- 
-@@ -63,7 +76,13 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-         }
+@@ -83,11 +92,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
      }
  
--    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0)) {
-+    if (cpu->cfg.ext_zvfbfa) {
-+        if (altfmt == 1 && vsew >= MO_32) {
-+            vill = true;
-+        }
-+    }
-+
-+    if ((sew > cpu->cfg.elen) || vill || (vtype_reserved(env, s2) != 0)) {
-         /* only set vill bit. */
-         env->vill = 1;
-         env->vtype = 0;
+     if ((sew > cpu->cfg.elen) || vill || (vtype_reserved(env, s2) != 0)) {
+-        /* only set vill bit. */
+-        env->vill = 1;
+-        env->vtype = 0;
+-        env->vl = 0;
+-        env->vstart = 0;
++        reset_ill_vtype(env);
+         return 0;
+     }
+ 
+@@ -103,11 +108,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     }
+ 
+     if (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl != vl)) {
+-        /* only set vill bit. */
+-        env->vill = 1;
+-        env->vtype = 0;
+-        env->vl = 0;
+-        env->vstart = 0;
++        reset_ill_vtype(env);
+         return 0;
+     }
+ 
 -- 
 2.43.7
 
