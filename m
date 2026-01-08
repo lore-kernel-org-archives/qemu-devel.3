@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC71D1489A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5A7D1489A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 03:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdgPu-0000xn-5P; Wed, 07 Jan 2026 22:10:30 -0500
+	id 1vdgPr-0000Uq-3R; Wed, 07 Jan 2026 22:10:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgP9-0006ZH-Fy; Wed, 07 Jan 2026 22:09:44 -0500
+ id 1vdgON-0005YL-Mi; Wed, 07 Jan 2026 22:08:57 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vdgP7-0005e1-OP; Wed, 07 Jan 2026 22:09:43 -0500
+ id 1vdgOM-0005U3-3G; Wed, 07 Jan 2026 22:08:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1767841781; x=1799377781;
+ t=1767841735; x=1799377735;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=/2b3kXmiCRa/BYYzO/hHr0chSCEMHL45PiGF0m8kKTY=;
- b=H8A2LBHOe8/XWsbSUMqrjg+a5JnJSQBmSlgrFEzlNFkOTx6vRrzXK09I
- z8vOgcJfcYKdmZGSWER1nfakAve9ud+octXD9uKkAgJDqUNtCN+KeTdY9
- ob9RnP2ZGHhx5jwxc5SUDtSJYauO2+NI4Gy2kL4tGqWe2jsCM/Pj03L8u
- cz4JiEg0IfMnE016dhnMn2LOnYoTRByms/tKq5BBah/pGLyCxcUdb+X/l
- LWr/Ro77yRdXD5BmImp9QeZWPdUnPvqITUe+rbwDuelMJEdxPTgIVf24X
- WoLOKOJdsH1Lb8f4ULTCNrJ18AJqIXhe9myRANGr/F8q+srTNlLCJOQ6g Q==;
-X-CSE-ConnectionGUID: NFKr0luTTie7hZtZ65lHmA==
-X-CSE-MsgGUID: 0WJTnsVKRTOYcNqNAeMYVw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877696"
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877696"
+ bh=xejOAq+bFW6xoyJ41YFTEFZRpWNzRTBD9POBrU3YhrA=;
+ b=IMkDWkAX0ngLRlxgmh36M9XFL7mNTCp/oIYiQY+SROh7xqOBcA0JoABS
+ AzCBNP6BVOo1EQy3YvuSS3my9ZAch+eM6bjuJbZcr14hN2dtZPJ5AJBe2
+ Ohnk2cA1q3PZ4BKqK8LxfkYdOK249vxkC0E7WFVE793/f7XsdJxPFc5Pn
+ Da/kFw10s/j4sK84jO2MieCpqsIROwCc/2vYhDQYaQTvJg/Ua3ZV915f9
+ JbCdEQvlAGuWPa7P+7069izYGvs5LoaRU7TpsE8KUdmsMBOBNnEniA9ga
+ J6uXuyB5MYROOFAs14VGC/wHv93OcSmhp997zFSAdJBZQ67Ytp4ZURrsk A==;
+X-CSE-ConnectionGUID: r1yTFqcHRfqyXRuj+3ZY2w==
+X-CSE-MsgGUID: i36SkxgiSFGauR4F7h05pw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="91877516"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="91877516"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2026 19:09:39 -0800
-X-CSE-ConnectionGUID: s23i9cu5TrGrYQuG6Kc3Eg==
-X-CSE-MsgGUID: xPA6wA+1S4qpU2au1duTiA==
+ 07 Jan 2026 19:08:53 -0800
+X-CSE-ConnectionGUID: QeaaR3ZcS/GCyk4pHbqDXA==
+X-CSE-MsgGUID: QP/qxYHGQt2VmzYGLblkNA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211269"
+X-IronPort-AV: E=Sophos;i="6.21,209,1763452800"; d="scan'208";a="202211209"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:09:30 -0800
+ by orviesa006.jf.intel.com with ESMTP; 07 Jan 2026 19:08:43 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,10 +72,9 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 26/27] hw/virtio/virtio-pci: Remove
- VirtIOPCIProxy::ignore_backend_features field
-Date: Thu,  8 Jan 2026 11:30:50 +0800
-Message-Id: <20260108033051.777361-27-zhao1.liu@intel.com>
+Subject: [PATCH v6 21/27] hw/i386/pc: Remove pc_compat_2_7[] array
+Date: Thu,  8 Jan 2026 11:30:45 +0800
+Message-Id: <20260108033051.777361-22-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260108033051.777361-1-zhao1.liu@intel.com>
 References: <20260108033051.777361-1-zhao1.liu@intel.com>
@@ -109,56 +108,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The VirtIOPCIProxy::ignore_backend_features boolean was only set
-in the hw_compat_2_7[] array, via the 'x-ignore-backend-features=on'
-property. We removed all machines using that array, lets remove
-that property, simplify by only using the default version.
+The pc_compat_2_7[] array was only used by the pc-q35-2.7
+and pc-i440fx-2.7 machines, which got removed. Remove it.
 
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/virtio/virtio-pci.c         | 5 +----
- include/hw/virtio/virtio-pci.h | 1 -
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ hw/i386/pc.c         | 10 ----------
+ include/hw/i386/pc.h |  3 ---
+ 2 files changed, 13 deletions(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index b273eb269196..e2a3dcc5b631 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2040,8 +2040,7 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-      * Virtio capabilities present without
-      * VIRTIO_F_VERSION_1 confuses guests
-      */
--    if (!proxy->ignore_backend_features &&
--            !virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
-+    if (!virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
-         virtio_pci_disable_modern(proxy);
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 4b5b7f24d7de..4dfdd040fb13 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -253,16 +253,6 @@ GlobalProperty pc_compat_2_8[] = {
+ };
+ const size_t pc_compat_2_8_len = G_N_ELEMENTS(pc_compat_2_8);
  
-         if (!legacy) {
-@@ -2441,8 +2440,6 @@ static const Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
-     DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
--    DEFINE_PROP_BOOL("x-ignore-backend-features", VirtIOPCIProxy,
--                     ignore_backend_features, false),
-     DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_ATS_BIT, false),
-     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index 639752977ee8..581bb830b792 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -150,7 +150,6 @@ struct VirtIOPCIProxy {
-     uint16_t last_pcie_cap_offset;
-     uint32_t flags;
-     bool disable_modern;
--    bool ignore_backend_features;
-     OnOffAuto disable_legacy;
-     /* Transitional device id */
-     uint16_t trans_devid;
+-GlobalProperty pc_compat_2_7[] = {
+-    { TYPE_X86_CPU, "l3-cache", "off" },
+-    { TYPE_X86_CPU, "full-cpuid-auto-level", "off" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "family", "15" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "model", "6" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "stepping", "1" },
+-    { "isa-pcspk", "migrate", "off" },
+-};
+-const size_t pc_compat_2_7_len = G_N_ELEMENTS(pc_compat_2_7);
+-
+ /*
+  * @PC_FW_DATA:
+  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 0f7d656b3f3b..5d698d024258 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -292,9 +292,6 @@ extern const size_t pc_compat_2_9_len;
+ extern GlobalProperty pc_compat_2_8[];
+ extern const size_t pc_compat_2_8_len;
+ 
+-extern GlobalProperty pc_compat_2_7[];
+-extern const size_t pc_compat_2_7_len;
+-
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+                                                  const void *data) \
 -- 
 2.34.1
 
