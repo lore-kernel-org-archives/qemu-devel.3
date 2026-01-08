@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C00D148A3
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 07:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2A1D148B7
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 07:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdkal-0004rt-1T; Thu, 08 Jan 2026 02:37:59 -0500
+	id 1vdke5-0006w5-MP; Thu, 08 Jan 2026 02:41:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdkai-0004rG-Hd
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:37:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdke4-0006sZ-2z
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:41:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdkag-0003UR-9X
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:37:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdke2-0004MT-P3
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:41:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767857872;
+ s=mimecast20190719; t=1767858082;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1JjnyJUuQPrBbVHtMi7IR73hwL1c6pzSdtaPxMsyUUA=;
- b=EhNKAziDj7jpIIz9R62GTvyslzSy1JPj44KtuWQD3MRFsK/2Ac3P4UnuHAgyjgvkaMOhzP
- sqaMubCzGllfQjeHr+4Qs7xrgijgBCvFnrGLprYJU7nXiFnLjVna8t4+3hoztMgeGbP1PB
- TNPOgkyDVd9gZ4kv2lkPvZVUN+sxNdc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W0KTzkiiDgXQG/gI9Es9R6bIt0ngSZRtrWFRtG9y2hY=;
+ b=VDYPv6nin7JRUqXsBQu+hElcpS1SqZ/+LSRLJ3SzRrfFwaeKYb0Rvrj33ydvSBK0cA8x0Z
+ KT/WF4iOWp3SL5vDXAmhvruslToh9Pc1QvYGXA6WKDNRzOklAAnDRueOyL3NZvjJuVHRx+
+ Oe9dl8tE19ZGP8C7Mir+WgPP4ia/ot0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-YAFRE-dPP0aYvgALWvmlIg-1; Thu, 08 Jan 2026 02:37:50 -0500
-X-MC-Unique: YAFRE-dPP0aYvgALWvmlIg-1
-X-Mimecast-MFC-AGG-ID: YAFRE-dPP0aYvgALWvmlIg_1767857870
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4325b182e3cso1375591f8f.2
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 23:37:50 -0800 (PST)
+ us-mta-307-xBwB8wh6P2u0hnwF-tam6w-1; Thu, 08 Jan 2026 02:41:18 -0500
+X-MC-Unique: xBwB8wh6P2u0hnwF-tam6w-1
+X-Mimecast-MFC-AGG-ID: xBwB8wh6P2u0hnwF-tam6w_1767858077
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47d1622509eso18062975e9.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 23:41:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767857869; x=1768462669; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767858076; x=1768462876; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=1JjnyJUuQPrBbVHtMi7IR73hwL1c6pzSdtaPxMsyUUA=;
- b=cAiVTxdwm7U+OAMNjKgb5P0vtC8zQElYsQ+Gj/HtE0jb2ty4j2LXsotoJ7Ii+wPH6A
- GVg8N0FUDubZ01lzQ/aUIzsav5oxtT4WAOxFY70RVx4hqlLF6Pv3grHUe2TACLCrsaSM
- oBhIx+tlLYR5/OL3QEyk/vs2L28g7vvpZ8ZYmCZTPJ2hl/cb8GXqIGoDWjlLYhvD5ido
- j8wor5oPl4WcIPpQQpMFb3HMRhuJ5ZIiAf/PmPS0S2hhCyCx3zfSsLn9jlyz4HosrxUb
- o8WpAQul+eguhwJqOdWKoMAXBpa9GexP7dcPS98qO7TSrg/euzxFRTjsekr7epatTRBl
- 0CXw==
+ bh=W0KTzkiiDgXQG/gI9Es9R6bIt0ngSZRtrWFRtG9y2hY=;
+ b=BHSod0eh9EvhbJmIx6o/ZO8bbDs5+3p8p3eHcuqSTErNiuTD9SuFUhBQoNg8uu0CJ3
+ vCrnLb0QtkmGrOTc+i7dultzJgAxi+Tw91yE6/n8KS0vwjJQgUTi2dyDkKMoNcvO549u
+ tutnKZjFk8HmMem5EQOyPev7U6bUhTbVhNJuc5vFEv5VuUW8N/sVMlt/RS9eZHdtMU0W
+ 0+HSAu18PVYIswa8YTcCp4Ec2cuCyT85ZRFo/uknqCjaoCTWnN/b+cjSasuP27LvYkMs
+ KzYA1cEuWWMKSPCN4WlGCidSZWpdwBlWnf5vwPjEzurzLG0BtXaSkHKdEAdmXu6CCyrn
+ snmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767857869; x=1768462669;
+ d=1e100.net; s=20230601; t=1767858076; x=1768462876;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1JjnyJUuQPrBbVHtMi7IR73hwL1c6pzSdtaPxMsyUUA=;
- b=FEVaqXnPGUlL/jZWx48dBmo1EH168E48GyKo+GGdQne+qZytOC8GVekKilPQ+rrZRd
- NB7hJ/XQcVKYE1OD8Sm5lW/byNJhwgsg+/9mNZiicWApcviQuB5Vc868t9wf3cmNdOOD
- af1mj0ZaMwnweSE0xeBk+Mn13/gWHj/l7w7laZnM/5UkQT3W+lHx3QYsfdi57ZU8bc3e
- fTK6xfI3Y/ppK/1yGRFe8K/gHp4TyN94gV0nNzP/KBZMNU+CUMq3M6eGoZep4s4nRiKj
- U8I8qhs2K8ym6xwnGTRUYY0PJLlxknmMSHLlMs94NLBoGrz0gvvE+9WG9r4BWUz73CO/
- pbfw==
+ bh=W0KTzkiiDgXQG/gI9Es9R6bIt0ngSZRtrWFRtG9y2hY=;
+ b=vnrNQh1wAEfq+QKg/IxPHeuDr5iTp7Wv3P0YcqhtDz/IJevAF9WygVQE6HSJISTXM0
+ kTdasA5mHtAp2Ps1nouQFjCZWKCBoUVpfO67fQdXCqvwx9OyyspEyBgllZhG/4XhjPe9
+ 5wWxdwaz8uH842mpIKLENUCrd44X6gQm5zSBsBwtqJjALzQmHull0cofn0QFpLdJYiss
+ 6lupYmef4q0iaWROlHCYHGntF+e4ADhqog4BIQJldGIISp/x/hYnehFcStPJMpTa1Ezr
+ iIXUUUxRTBdismzggFBOV4tU02c7Agyr5IS2v1hBaTr8ybDcH6Oj7pwJ6k0nPPs6dIQI
+ CfWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWItmZQ54XXcq9VKH8DbbBgkpZF3AvJS/oFoafd8Ce2UIZjvt0niyP+jhfery+cD7QLzcXVaeSc6Owd@nongnu.org
-X-Gm-Message-State: AOJu0Yzw3wUPYRWNdBu7VVrw7rrKej3C3zjwWi4SUjI3a/TovxPLdxPD
- 5MPnS4rsMQ43AuVnpg7/Z4ZLWslr0XqceQ+kGs8k/i7DgZZ8j4Tvf8LjruRaTttkCr5YcP5iw4l
- bg75hg3b1vgi9tJaFy/S+GlFkUD9m5dDkhJbmMDPol7G12nfXdMyIEY09
-X-Gm-Gg: AY/fxX7eQOeQHVcpRT/Bu17HUOsSlCj0XUYRbD1F6IS997nHOM82RAcRy+tIn9VPaYQ
- xbmWX1HG8YKn1GyfvF6XQ61XfOgyPbFSXNi3epcfHNxWZSyqcNQCvcQgmNoa1+N0lxvA4oa5FK3
- i+fnEUGdfA/AJ5aAoAZd++WSiWEA2iH3wk4ogFcjsPnu3eCkf8EF52VfQbi6hVGMlqdzSGY+UfM
- gC70/cgKRfQvYgvd3nsasggnaCvjwrn9EC73SMhV35zFhk7LzoZ4TZgLCsc+W8pxdGoEVN6wj+Q
- SD+62CeEO0yZBRHqNLrTvwzB58f1rwcafohZAqLAnOEXCfek2AUIC7Gq8gUWBqgieWfZbcQUrPl
- oJ6FMoNs=
-X-Received: by 2002:a05:600c:3110:b0:47d:3ffa:980e with SMTP id
- 5b1f17b1804b1-47d84b4101dmr52878645e9.28.1767857869536; 
- Wed, 07 Jan 2026 23:37:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFoLSYV7FCUXa15np/P1ZuydXJERldLS3ZLavYgACD0uHsx9FSskXfi/whQP+zQWC2ah2Xmug==
-X-Received: by 2002:a05:600c:3110:b0:47d:3ffa:980e with SMTP id
- 5b1f17b1804b1-47d84b4101dmr52878475e9.28.1767857869194; 
- Wed, 07 Jan 2026 23:37:49 -0800 (PST)
+ AJvYcCUHPFtAOC4BkvmAVkN34NoKZkLrPsuLm18mwJWIDGoca3dkA75jJCbyPyLcbf1rKk+YC3TXav4Ld1XH@nongnu.org
+X-Gm-Message-State: AOJu0YxIp9pL80n/34uH3niYE5ZSUUOXsXXzf0sZSUxeyeQtJ92PD1xy
+ GtQEE8m6jPhnoaLAFecQH/+E0P7iv5y02aAPOQSLb6Ffl+Sgi3oZMK/gnM3oScJlszFF95LWhDS
+ PxyVQuqwpyX626YRNXnTxVoX0Gx9c5rrZ3woXnKeVNtc2l73UNOSccKt/5H1K3icq
+X-Gm-Gg: AY/fxX4Sy0bniBGkt9wtUvjR3b60gz7DutaYIfu06LcSQMfYW/P1l/h/BBbMyOfEHfm
+ kbatndGBpJ5ZtHfHynrO5Lr9csvTzlZamhv1JoUbEME5raOsS86q46Tut9yEgTPE6IQokm2Da15
+ jP90XWoSwPLbGMDdrDRf66JBRXqSDK6EWwMyLzVkPGOtu8JPdJBA02DH2DJ6sxkpMhb1JVJo+H3
+ ZC+XtqqxIbNuGnCKhtPMVMi8sIirfkZi2ImyvsJkkvs+HKGQbTRPkfk7yi9iApTxqy2Ffrm9EmN
+ 1gwXkwqzpgEvUwj8wp7AqVZi+i2XbmDpSU74Eg0ETSIMbaGI5Zntc04grafGVew7Z0tEBZOD2Zg
+ vEJfIp64=
+X-Received: by 2002:a05:600c:4fc6:b0:477:7b9a:bb0a with SMTP id
+ 5b1f17b1804b1-47d84b54c52mr60359555e9.21.1767858076211; 
+ Wed, 07 Jan 2026 23:41:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHIL178Rq1+aDb/3sweIJBWsDOHArYkNO7tqNabdZL3laU+p8KyZJ8LSHXib4u0aVZ4rtyBHg==
+X-Received: by 2002:a05:600c:4fc6:b0:477:7b9a:bb0a with SMTP id
+ 5b1f17b1804b1-47d84b54c52mr60359365e9.21.1767858075864; 
+ Wed, 07 Jan 2026 23:41:15 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f70bc4fsm134081635e9.15.2026.01.07.23.37.48
+ 5b1f17b1804b1-47d7f410c6csm148587825e9.1.2026.01.07.23.41.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 23:37:48 -0800 (PST)
-Message-ID: <d14892bf-a2f3-40e2-910c-a1898ede74d7@redhat.com>
-Date: Thu, 8 Jan 2026 08:37:47 +0100
+ Wed, 07 Jan 2026 23:41:15 -0800 (PST)
+Message-ID: <ff7ec647-64fa-4392-b4e6-a912e777e292@redhat.com>
+Date: Thu, 8 Jan 2026 08:41:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/18] target/s390x: Replace target_ulong -> hwaddr in
- get_phys_page_debug()
+Subject: Re: [PATCH 07/18] target/s390x: Pass vaddr/hwaddr types to
+ mmu_translate_asce()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
@@ -98,7 +98,7 @@ Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  <pierrick.bouvier@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
  David Hildenbrand <david@kernel.org>
 References: <20260107130807.69870-1-philmd@linaro.org>
- <20260107130807.69870-7-philmd@linaro.org>
+ <20260107130807.69870-8-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -143,19 +143,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260107130807.69870-7-philmd@linaro.org>
+In-Reply-To: <20260107130807.69870-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,36 +172,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/01/2026 14.07, Philippe Mathieu-Daudé wrote:
-> mmu_translate() fills a hwaddr type.
-
-Does this depend on another patch series again? Currently mmu_translate is 
-still defined like this:
-
-int mmu_translate(CPUS390XState *env, target_ulong vaddr, int rw, uint64_t asc,
-                   target_ulong *raddr, int *flags, uint64_t *tec)
-
-i.e. the "raddr" parameter is still a target_ulong pointer.
-
-  Thomas
-
-
+> mmu_translate_asce() translates virtual address to physical one.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/s390x/mmu_helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-> index a6c89ed0af3..59e1fd0c4fe 100644
-> --- a/target/s390x/helper.c
-> +++ b/target/s390x/helper.c
-> @@ -43,7 +43,7 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cs, vaddr vaddr)
->   {
->       S390CPU *cpu = S390_CPU(cs);
->       CPUS390XState *env = &cpu->env;
-> -    target_ulong raddr;
-> +    hwaddr raddr;
->       int prot;
->       uint64_t asc = env->psw.mask & PSW_MASK_ASC;
->       uint64_t tec;
+> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+> index 9ee1d778876..ccb53e99ebd 100644
+> --- a/target/s390x/mmu_helper.c
+> +++ b/target/s390x/mmu_helper.c
+> @@ -122,8 +122,8 @@ static inline bool read_table_entry(CPUS390XState *env, hwaddr gaddr,
+>       return ret == MEMTX_OK;
+>   }
+>   
+> -static int mmu_translate_asce(CPUS390XState *env, target_ulong vaddr,
+> -                              uint64_t asc, uint64_t asce, target_ulong *raddr,
+> +static int mmu_translate_asce(CPUS390XState *env, vaddr vaddr,
+> +                              uint64_t asc, uint64_t asce, hwaddr *raddr,
+>                                 int *flags)
+
+I'm ok with the change to vaddr, but with regards to raddr, I think you 
+should rather change all of these in mmu_helper.c in one go. Otherwise this 
+is a mix of hwaddr pointers and target_ulong pointers while the change is 
+going on, and that is rather bad.
+
+  Thomas
 
 
