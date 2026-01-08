@@ -4,101 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73655D1489E
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 06:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5EA0D148A3
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 06:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdjB9-0001sS-Eg; Thu, 08 Jan 2026 01:07:27 -0500
+	id 1vdjEY-0002t3-2x; Thu, 08 Jan 2026 01:10:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdjB7-0001rq-Mj
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:07:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdjEW-0002sD-86
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:10:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdjB5-0004Vf-Sl
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:07:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdjET-00055G-I5
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:10:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767852442;
+ s=mimecast20190719; t=1767852652;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RJUUY64kVWoX/4RPmptEtLxV18bmxi9plGKbGrYd9xc=;
- b=EqlDOQwAg/MiG7JZBfWAAqe0Em9wI4VwGiY7c3dH6YSOV/mFH9+vhONEYfvd2FZ8hevVzr
- 5DMndnEEW7xTYlLZ9pgnScC1AHSC5MiTJyMko96RSFvEmuartGzhzNLWK9hZoEV+b+7rQQ
- txVdF97Nkeo7GdDMEGfJvI+ta7DprVk=
+ bh=GqqoIUnlcs+Zjb3qCkKwSMLUW1dKlhjaUAgjxZyVoPI=;
+ b=dRxuyV4nu2QHKDyrDb/YbUPxkkaH+tAOa90RvOIfjQXAFgnPmjrk6PtXGmhdaJl930kVen
+ BeTsyEffMFMgeoeR5qneJphgtyKMX8kOs6ZsOqJxjxwmWCiwoqZdWN1vj1K68wxA7jdRsG
+ jHmHYte5D2PFUyjYGpaXubA2/Pbq0Mk=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-149-iiK5sOVfMCeMtHHsheiakg-1; Thu, 08 Jan 2026 01:07:21 -0500
-X-MC-Unique: iiK5sOVfMCeMtHHsheiakg-1
-X-Mimecast-MFC-AGG-ID: iiK5sOVfMCeMtHHsheiakg_1767852440
+ us-mta-395-7jCSYwwbP7OBiqSfLNv9eQ-1; Thu, 08 Jan 2026 01:10:50 -0500
+X-MC-Unique: 7jCSYwwbP7OBiqSfLNv9eQ-1
+X-Mimecast-MFC-AGG-ID: 7jCSYwwbP7OBiqSfLNv9eQ_1767852649
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b79ff60ed8eso114176266b.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 22:07:21 -0800 (PST)
+ a640c23a62f3a-b763b24f223so420434366b.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 22:10:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767852440; x=1768457240; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767852649; x=1768457449; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=RJUUY64kVWoX/4RPmptEtLxV18bmxi9plGKbGrYd9xc=;
- b=iXkSOfDuNGKbsnugFo2ChRhwoBtrGADfJMJvjjS278kqN73c0SHvG30w39F6tFUoMJ
- 7xdOgKzubo9OnkYIyoWiCfKeMD6bC+aN9qtVW0RK8FSa4/SxvlGdBKt0oG0bViDvlXcd
- oWT3tcNk72zdiozCjlH7g2vrb6FzDwGxBKJYbd1lnQskisWB/sXZGxvGQ6pgf76HgNl+
- D2bZG+WamBjeOIGxQSsPkfsDC1BP91Sm1/+voc/sstzc1vRUsKqX0PvwQLh7Nxfok4PT
- 8fT8srEVp1Y37t6rJeFQKXdGSt5S53XauPCAvjs+u3FGDX+HwiRX/Gu1sRpzD4c+QfHo
- mgXA==
+ bh=GqqoIUnlcs+Zjb3qCkKwSMLUW1dKlhjaUAgjxZyVoPI=;
+ b=U4R+vYLYowUFGVvFRQZfK06PMbQFkwuKKPktTyV1WKJt/7ZJI4DKgov4KD6pw4j5fE
+ COXsxUv8rJues0yq9s/KrBEnevTRhKKCemSNn16vZkgA/XpBNKnUE/eXK0ROw4KCXhon
+ 7LlPTdMPqsa4a96jpTKYK1PRnm90gDKP+7paf8nMdpmmQI9+LJRY7voP8b0GOPWL19/j
+ 4u6V2wxmDR0OSwjPHluYi08+T0CExjlDT0ylpdtosVjYbGAhN4oZx9x797sI7yjkCqYP
+ DzezduSW3l3QBVnT5LC4+ZsAub43ZYUds+XTgMfvTToxXPACMfeDnKNqQ5PaiCl83JMR
+ REsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767852440; x=1768457240;
+ d=1e100.net; s=20230601; t=1767852649; x=1768457449;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RJUUY64kVWoX/4RPmptEtLxV18bmxi9plGKbGrYd9xc=;
- b=ELuOvrdsiljoevQfucwk0988z7qkIX2aPqmHDnAd4yRByl/7u9y8Tm/35RLyLtDSVK
- WVyFjZ7iObNPaES0y+oYoDj+aavceEgLE2VYuhLtbZl4aJ89o4xuGLLUi9L9qp+Wwic4
- 0tybvHMbtVPIAY1EmoFW56IQqPi3VkeMlZrDjrrXkoNAkDXhqn5a5jd1e7gSbR3vaccu
- jYtTEkg4x2EJzkBo1WF4XBZ3fGE4FjhZr3vxEWiD+wlzCFdxjaWTlUqpjNSmhqwrzWDQ
- j9p56pZd4JBjzCtl0s0PZvkQlP45YzuudrGywmpNkdJEMBZL7lpgOz4IK8BJF2/SzXfg
- 4hTw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW7vHyrbe2znF/FRAwqBX7Bk0182MIK0vEYYxQlM8APYabGnHazZhitJXtfFkSo45neoOIgw/b6/hu4@nongnu.org
-X-Gm-Message-State: AOJu0Yz4000jdmjh9HFW+8jrnCpWoad9PtjjIzRwj3PBmiiETFZu74aI
- Fhmn6+9Vl7YHY766cS1EXniEcOjktXAv1RnEiCaSmN78LAX0R7kJfdcC6Z21KvPg89h3diZZ4D7
- vLwrEnX16DNLvt9TAd7j7uILSbKVkqYfLunuen9res5zuorPWcBJuDyKf
-X-Gm-Gg: AY/fxX7Tgi48jLsWpz4Qh/zx5RFyRkWmZswIPHWvXlHFUkHHsJcTcPnYm0Z3EdmPshR
- bRDS3pvvjl3kHEu5wIABuOQ+B7Hb4g7Q4QSDrCN5iDXLJLqXyRBFjPMPjqYw2VJNRdNCZXMKYA9
- I+3HrFMDaneefKtlcDTAdgx68Idw/wq1iZ7oKnA5EmwAoA7wIxhIE2poLnqUKpZRvXji62zqcAQ
- JklN0OrZmU70dCp8Nc4f2v1ry+Xy5+xdRsppdFbOB/H57cYrui1Fy1qbwEB6evQgDUqBTJL0kw9
- SlujREs3PGcSip2cUC83ACBWnDmmwMISoypP44CnogPPBnym9PYNAvOMM6gBjej+caWmtk6iiUp
- kgvw078k=
-X-Received: by 2002:a17:907:3e95:b0:b7a:39a2:7f50 with SMTP id
- a640c23a62f3a-b8445179f83mr514757566b.39.1767852440111; 
- Wed, 07 Jan 2026 22:07:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFsRdQFL7KUmF5d1aoWobZZVfErk7OCX9sWWC5umqjpVqh3tHJqlaTPoyVdKuoGBnKTD8D4Hw==
-X-Received: by 2002:a17:907:3e95:b0:b7a:39a2:7f50 with SMTP id
- a640c23a62f3a-b8445179f83mr514755366b.39.1767852439721; 
- Wed, 07 Jan 2026 22:07:19 -0800 (PST)
+ bh=GqqoIUnlcs+Zjb3qCkKwSMLUW1dKlhjaUAgjxZyVoPI=;
+ b=Ydtr97+Nk/qy2wPnb/T4GKPwOja/xK3v3+CIBFzuUAUMlipeHks6E43TZtVknA1jpV
+ fa84ZYPdq57sFP/qUqjUisbztSWXgPk+QDlSsyAaXPFw6p6dYjqd7HNj479loqWgWYH6
+ Kkz4sjrV1HeC5D1sg2B5vrYPpPpLpHtlP8zPhE0GsmKYZm5HZ4SuRerepmXYBOopt5s4
+ 9BJZ9aF7yvzcJl3WOOogCVoeHp0EodDXcMTvN0qJW38Lavnh1CUiWSjQTjG84zNMBBVS
+ KpVHS1bCc0/SwKYsGzA+RMB7ezHFffUYtZFx0vSxp7rn2pbd8DfXpXk6/WmbYd45sO3o
+ 62Iw==
+X-Gm-Message-State: AOJu0YwyPRSrpwdMSrWpcUwd16TLt8POaK+BK82kKDPj8luklhSD+14s
+ C4zjzV2KpeYMseT6w/4COR2xZBuqKLVyfkw/C8nGsrHHuGOcwhxPOYDTYyTk4hwvQwv9xAsNO5a
+ zeCQyHikJiYF6qXfF3w78J10XVftCF508rSbgo/if9AG7Czr7YZnoMQA3
+X-Gm-Gg: AY/fxX5hI7BOCNduoSWaDTW1wAoAecRxO7ra+vg7gUJcuizBEc8G1TGFxqiVFPqUjkH
+ Qjoa4ilo+SaDhJ1ppOA6lyF3+gVuHc6XilxaGpbr8RSkh7Y/rqNfSZwkZECyabPU4TSSDBSgUhq
+ wrWtF7u7iBAf9W7lw7rrmBOLRmA+knmkeCLSi+cEZg0iGuDtvMYLHi6qiVCq5Z76lj+paLN8D/n
+ xEeToY6yioxhddJCUrcfjfCyPyPEp5VM1w2ZeyUIgUFA3wjycEZNgy5iUISuMZfRT0+GX3CxF0p
+ /W696Nkz7qJzO+LQFqzmG9cQon33C7S3HJTrlY8gZUxiX4czbRbtclW2fx/Iu9KfiaMmCtotcJm
+ B0YsCgbE=
+X-Received: by 2002:a17:907:3da0:b0:b83:95c7:e984 with SMTP id
+ a640c23a62f3a-b84453ab79emr460302366b.49.1767852649297; 
+ Wed, 07 Jan 2026 22:10:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHYdqj39oEPTJdzVEMg8TkaPsz+8ATfse0lKQJoqTGKvMVG2VGHcHoGM4ob2+mdqAIIhK9ksA==
+X-Received: by 2002:a17:907:3da0:b0:b83:95c7:e984 with SMTP id
+ a640c23a62f3a-b84453ab79emr460299266b.49.1767852648854; 
+ Wed, 07 Jan 2026 22:10:48 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b842a4d1c61sm702763366b.35.2026.01.07.22.07.18
+ a640c23a62f3a-b842a51577bsm702015666b.56.2026.01.07.22.10.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 22:07:19 -0800 (PST)
-Message-ID: <09e21b07-922f-4829-8184-ba7dbcf7e838@redhat.com>
-Date: Thu, 8 Jan 2026 07:07:18 +0100
+ Wed, 07 Jan 2026 22:10:48 -0800 (PST)
+Message-ID: <bc31cc25-ce64-4954-b896-ba9f30c041ac@redhat.com>
+Date: Thu, 8 Jan 2026 07:10:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] hw: Add "loadparm" property to PCI devices for
- booting on s390x
-To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20251210205449.2783111-1-jrossi@linux.ibm.com>
- <20251210205449.2783111-10-jrossi@linux.ibm.com>
- <5e764e58-022c-4d0b-81d3-0564a15dea41@redhat.com>
- <689115e6-c88d-4a43-81a2-a71180263bee@linux.ibm.com>
+Subject: Re: [PATCH v6 15/27] hw/i386: Remove linuxboot.bin
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
+ <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Amit Shah <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
+ Jiri Denemark <jdenemar@redhat.com>
+References: <20260108033051.777361-1-zhao1.liu@intel.com>
+ <20260108033051.777361-16-zhao1.liu@intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -143,7 +160,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <689115e6-c88d-4a43-81a2-a71180263bee@linux.ibm.com>
+In-Reply-To: <20260108033051.777361-16-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -155,7 +172,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,116 +188,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/01/2026 19.46, Jared Rossi wrote:
+On 08/01/2026 04.30, Zhao Liu wrote:
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
+> All machines now use the linuxboot_dma.bin binary, so it's safe to
+> remove the non-DMA version (linuxboot.bin).
 > 
-> On 1/7/26 10:50 AM, Thomas Huth wrote:
->> On 10/12/2025 21.54, jrossi@linux.ibm.com wrote:
->>> From: Jared Rossi <jrossi@linux.ibm.com>
->>>
->>> The loadparm is required on s390x to pass the information to the boot loader
->>> such as which kernel should be started or whether the boot menu should be 
->>> shown.
->>>
->>> Because PCI devices do not naturally allocate space for this, the 
->>> property is
->>> added on an architecture specific basis.
->>>
->>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->>> ---
->>>   include/hw/pci/pci_device.h |  3 +++
->>>   hw/pci/pci.c                | 39 +++++++++++++++++++++++++++++++++++++
->>>   hw/s390x/ipl.c              | 11 +++++++++--
->>>   3 files changed, 51 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
->>> index 88ccea5011..5cac6e1688 100644
->>> --- a/include/hw/pci/pci_device.h
->>> +++ b/include/hw/pci/pci_device.h
->>> @@ -62,6 +62,9 @@ struct PCIDevice {
->>>       bool partially_hotplugged;
->>>       bool enabled;
->>>   +    /* only for s390x */
->>> +    char *loadparm;
->>> +
->>>       /* PCI config space */
->>>       uint8_t *config;
->>>   diff --git a/hw/pci/pci.c b/hw/pci/pci.c
->>> index b1eba348e0..1ea0d7c54c 100644
->>> --- a/hw/pci/pci.c
->>> +++ b/hw/pci/pci.c
->>> @@ -36,6 +36,7 @@
->>>   #include "migration/qemu-file-types.h"
->>>   #include "migration/vmstate.h"
->>>   #include "net/net.h"
->>> +#include "system/arch_init.h"
->>>   #include "system/numa.h"
->>>   #include "system/runstate.h"
->>>   #include "system/system.h"
->>> @@ -2825,6 +2826,43 @@ int pci_qdev_find_device(const char *id, PCIDevice 
->>> **pdev)
->>>       return rc;
->>>   }
->>>   +static char *pci_qdev_property_get_loadparm(Object *obj, Error **errp)
->>> +{
->>> +    return g_strdup(PCI_DEVICE(obj)->loadparm);
->>> +}
->>> +
->>> +static void pci_qdev_property_set_loadparm(Object *obj, const char *value,
->>> +                                       Error **errp)
->>> +{
->>> +    void *lp_str;
->>> +
->>> +    if (object_property_get_int(obj, "bootindex", NULL) < 0) {
->>> +        error_setg(errp, "'loadparm' is only valid for boot devices");
->>> +        return;
->>> +    }
->>> +
->>> +    lp_str = g_malloc0(strlen(value) + 1);
->>> +    if (!qdev_prop_sanitize_s390x_loadparm(lp_str, value, errp)) {
->>> +        g_free(lp_str);
->>> +        return;
->>> +    }
->>> +    PCI_DEVICE(obj)->loadparm = lp_str;
->>> +}
->>> +
->>> +static void pci_qdev_property_add_specifics(DeviceClass *dc)
->>> +{
->>> +    ObjectClass *oc = OBJECT_CLASS(dc);
->>> +
->>> +    /* The loadparm property is only supported on s390x */
->>> +    if (qemu_arch_available(QEMU_ARCH_S390X)) {
->>> +        object_class_property_add_str(oc, "loadparm",
->>> + pci_qdev_property_get_loadparm,
->>> + pci_qdev_property_set_loadparm);
->>> +        object_class_property_set_description(oc, "loadparm",
->>> +                                              "load parameter (s390x 
->>> only)");
->>> +    }
->>> +}
->>
->> Adding this unconditionally to each and every PCI device is a little bit 
->> ugly ... could we please limit this to virtio-blk-pci devices for now?
->> (or maybe check if there is a bootindex property, and only add it for 
->> devices with a bootindex property?)
->>
->>  Thomas
->>
-> 
-> Maybe I'm missing some nuance, but won't the check in 
-> pci_qdev_property_set_loadparm() already enforce that this is only added to 
-> boot devices?
-> 
-> Hmm... on second though, I guess the problem is that a loadparm property 
-> will still be added (but not necessarily set) for all PCI devices?  I agree 
-> that is not good.  I will limit what qualifies for the property to be added 
-> in the first place.
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changes since v4:
+>   * Update commit message: not only pc, but also microvm enables
+>     DMA for FwCfgState (in microvm_memory_init).
+> ---
+>   hw/i386/pc.c                  |   3 +-
+>   pc-bios/meson.build           |   1 -
+>   pc-bios/optionrom/Makefile    |   2 +-
+>   pc-bios/optionrom/linuxboot.S | 195 ----------------------------------
+>   4 files changed, 2 insertions(+), 199 deletions(-)
+>   delete mode 100644 pc-bios/optionrom/linuxboot.S
 
-Yes, the problem is that this shows up in the user interface, e.g. if you 
-run QEMU with "-device qemu-xhci,help" to show the properties of the 
-qemu-xhci device. Having a "loadparm" property there could cause quite some 
-confusion for the users.
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
