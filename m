@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22049D148B3
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 07:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CBA1D148B3
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 07:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdkJX-0007qL-LP; Thu, 08 Jan 2026 02:20:11 -0500
+	id 1vdkNq-0003IY-1O; Thu, 08 Jan 2026 02:24:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdkJV-0007ou-TO
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:20:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdkNm-0003GA-OT
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:24:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdkJS-0000Ik-Id
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:20:09 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdkNk-0001iU-9v
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:24:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767856802;
+ s=mimecast20190719; t=1767857071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+sagmGHkSM0ihRxuTwd+fjwrPEC78hUQNuRhuNd37yY=;
- b=DDhLa4BVxO826ExFTL6GwVga/uW/dPrhIt+ihY1KbNlaKF3KavqEfIE9GaEdI1Cs1lmI3R
- E/1Z1JF4sM+7488QTGlLc//skqftZ/jQJw++vXvdtfKZ7MUjK1nf3jCp29chBxgoOfX4z9
- fJOS5B5QBiquSF6CQ/TP/TI+eEPSX6Q=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4KLP8vZO0iY7Bp22e40wtc84wAgqb/ruKYyUz9MmTLw=;
+ b=KJ7mb9x5R/kgU7FnjGENlzkHaCserJJuD2YKFifc5E3lXCsvPJ28oHuDoMYrTuZ1AhYdbF
+ tROb5CmDUHUA21qE1TQ0NGRBF5CHg/0owMqD1Yz50A12DKdS7uxNQORJiXx0zK/EnqmCku
+ mc0roRTVSFPTlaKrVo1Mz+8GlQIkzxg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-ma862l9XPxap9f-lvFM-lg-1; Thu, 08 Jan 2026 02:20:01 -0500
-X-MC-Unique: ma862l9XPxap9f-lvFM-lg-1
-X-Mimecast-MFC-AGG-ID: ma862l9XPxap9f-lvFM-lg_1767856800
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-42fd46385c0so1603833f8f.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 23:20:01 -0800 (PST)
+ us-mta-577-LIXDnGK-P_ea7xP3NLmGsg-1; Thu, 08 Jan 2026 02:24:28 -0500
+X-MC-Unique: LIXDnGK-P_ea7xP3NLmGsg-1
+X-Mimecast-MFC-AGG-ID: LIXDnGK-P_ea7xP3NLmGsg_1767857067
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-430fe16b481so1509153f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 23:24:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767856800; x=1768461600; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767857067; x=1768461867; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=+sagmGHkSM0ihRxuTwd+fjwrPEC78hUQNuRhuNd37yY=;
- b=flodSHnheA5Jtga+dC1VfSUUFiS6GKR/95VwhoNAhoEvPRKf2eGpcOHLn0ukqfwhXS
- 3DCTmzXXfPYGoAHpxjwI1alyP3O2PMN81aVYmSclA5TTaD+4KEao7SiDLD5HaQWwn+8M
- 8r3LVtZkAdechBi4XuBN+8jFoXmH3z+psRP4OPlDM8e3IiSM0Sd9pyM/yCv+LDXYTDiB
- H1wXYMZjRDmqsILl8PXVuzrWdCdSdJDcaLYcVZZXSb/kc/OovZDwmOm58EtgbswM2gdM
- 0B4ezyoGI71jmViltBtOXkw7/McDnnixPRt/KH0+zLFmIGhluPRGvhlLEWCACLPOQRL/
- w8QQ==
+ bh=4KLP8vZO0iY7Bp22e40wtc84wAgqb/ruKYyUz9MmTLw=;
+ b=XP2Hw436Higd8gll3t1C4y5DmpuRWzT7gIkNqSEhhNzWgrpYstVs9DcNvkwH2kLWGk
+ z/HwCPtfKOuc4xUZ/3r9e7i+kkQGHoOh22gIghGiVcV3zH1VcM2twcBtu/imBdjlG4Uq
+ cMA4Rw4Hb58H64dNnUEJ3k7D421qZBGne4m9Gzy+y2fFBq6pjL9NeGgOtfZCh87mBh4C
+ 0XobNzGHwh5XpR2ODQcETRicMiWnijes/vH7mdQIkA9YBVOtj+GFwI8fnXsb/IfbU3+n
+ qvjvvscNSW4C8g1dIlkbILrS0u0FGhw+7soPIAtu8EDaDOb+c/ydQVHhfGlVcu1H1/55
+ /jvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767856800; x=1768461600;
+ d=1e100.net; s=20230601; t=1767857067; x=1768461867;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+sagmGHkSM0ihRxuTwd+fjwrPEC78hUQNuRhuNd37yY=;
- b=YgYFsdjDbX/oK2/7n2QQ06LZlF3CqXAWRvv77NRAaBLLLgNAJmqyLbsq5WLfL5ZU5N
- xLb6EfyoaGs4uzwcZz7g8sHCJnlEcF4gQkpxa5bZyx/+E+AB7RI/9Fmwp2HfzjeATBJv
- Ut7iMFkkoKJJUndQd11JhCLqqCcNszT0MvAXsnnOCxMylIbU63K6IRoWc2BtyPRL6GKC
- bUJ8ltYGsn8iLK/RTbyvq97+j6zTg2tTReUZ2nd1noSaMOZBIyrju0uXDGmYJTM1Boc2
- Vq27JMWgCMtTaH3H6IQ6HOwRgZeRYP2JwNOa0J4e578DnXAHYdEdnxtwIFHyl0N0ssa9
- wlQQ==
+ bh=4KLP8vZO0iY7Bp22e40wtc84wAgqb/ruKYyUz9MmTLw=;
+ b=HiLx4T3M2Gw9EkFG2ynMuYuS4ETfF5W2oy4PK+rjLD1q4EgW4N+eb/X463njRXVxq4
+ 06ibPkp+sqM3N9M0jVKrawVikE+evc98GCfmxPknetXBVlAM7uqwZGeF4pXZaYqh2Svh
+ hLwf3oMBB7CaOSgsChM+4371IpG7vP4PMrp4/kWRN61JExVEFVbLTkeUgctUrc4FXgwo
+ KeGlge5Ko1HucFqEbXeZjtdMCjPjAoincnu6+wuIZYrAIJzVjx2zHjX54pqXwHbc5h4t
+ yfdrva7K9U2X7RrTdsF7C+nzAxUbUwZKEB3WWirCzEpw2zKv7J+hqSAReIHMuu0tmGi6
+ ryyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1Kbgin08W8Q6QDWQCy+OtEQ2L8Rknniu0ujByH2X3GVl1Vey5/HVyTVKJYH4sMD6yFf09cz3sG62z@nongnu.org
-X-Gm-Message-State: AOJu0YwwfObVVyqtpLpiIDxUKrx1aTwe8mimPZc1Lqvp/HwvHhsbYlsX
- d3A5hi5IauMQ96ECrPyMCEJfZaVfOUtABxMHX8AJ3t5MrC6O83Z8VwFE9M7IPmon4VIf1l99+m/
- YunXckNTY1Bhz70lsw0TrLULMva/YnBmmmDR24weOELSn9+hu2c5hE2YW
-X-Gm-Gg: AY/fxX49i5jFw1JgDFSMdHbhxy7s/bYF0+IgeMhYZXu6BEn3LB19hacCftcIUMQBL4R
- SU2/rrAXcxnm7p26Vwge5KEIGJuHq/THWjWgtGXzU6gtMDJ+D+biWYCa1qTb9Yqv/Fuvhja737a
- hA3kYLxrA7xkrj6GnsvyfVEAolIaOYlsRy5pgcI9+k57ovgrjvtQRbwTO6tqIPCw6ywU2IhuDYm
- hePRz9tG9GVcFPtsVHevbTAxtIi9zSHKzua67oLzOHcVX28p1lXwBCjreOFXcr+9agYd9eFHZdy
- 7OuqnOOIvN751oi8Nmh8t16G/jQna02ox5z2x/Wbie06WnjN6z9cw9e3GTZvPXW8GWnzJharjVZ
- GQjevRO4=
-X-Received: by 2002:a05:6000:40dc:b0:430:f790:99d7 with SMTP id
- ffacd0b85a97d-432c3643478mr6969577f8f.27.1767856799974; 
- Wed, 07 Jan 2026 23:19:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHAbBt/hmwnpFekBInE/hXqdCfZF5flSYhyWnVyeL3vXCUjlekhUWRRZkOODGJuRMCv0ulZDA==
-X-Received: by 2002:a05:6000:40dc:b0:430:f790:99d7 with SMTP id
- ffacd0b85a97d-432c3643478mr6969551f8f.27.1767856799580; 
- Wed, 07 Jan 2026 23:19:59 -0800 (PST)
+ AJvYcCWeJ0wOltmhkV51S95QOLRYyP5qlzIacYFEVj6LeFFgvSo6BOAwF5YAO6ZBTwRDz6tfZXNW3g2JrbcB@nongnu.org
+X-Gm-Message-State: AOJu0YwekIL05vxkoBDgg14ZiAXnvL6IxAYFZk0P5EqQ7WTi9Lp5fN7x
+ kyRKhcx0WEz2NBmLhx7sbuVfW5vNxhsIBhFN/W1AaJ7+nEdAYqV7bjVps9Bnf532Fq+gvr1i5QP
+ XX+Eh3KrtaUQh9TFlDee2G1rhXYnLeAC35ykPe65LCcm40d0XPNdNeipY
+X-Gm-Gg: AY/fxX7HRzt5YzpmdfqEwVjAqTucNOstFF/Mnu2l0RG3se+Zhmb2gtqOdANiPh/mMKy
+ nfTZyTQYiRrZ7OC5JNRtVADDQRNhz6ptpjbx9mrjVTFvNtEBEKm+gC4KXeve3vkyYfoNDRuDxt2
+ 0yu6K9xByOkQk91gcaweEszo6P1GhaufBvCYKpM/S+u8g14V1IY/3bfnjlLlaQf3WIr0oNeJ+hZ
+ X0rqcKy0Syhn9e4ffFD8cgDjgyzP2ZbD074Qs/oL62ALjABk0Ad4I1k4paAylfOgBFQk1GfoFM0
+ esOYDEEQXmUIqh0c5xNv2b3yBOhTFSTldhzylAnWzg+RpU8nh5qfm6NlTN11KD9xB2olHVCCZbD
+ NlkWwAqY=
+X-Received: by 2002:a05:6000:310d:b0:431:4b7:a309 with SMTP id
+ ffacd0b85a97d-432c377cea4mr7184572f8f.20.1767857067465; 
+ Wed, 07 Jan 2026 23:24:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFkCO6NMUu4qIm4S0cYKa30wmD8qtkkZwnzo446wBL21F+bqsKqrppD7GlA9kwg4yF+Zn2uBA==
+X-Received: by 2002:a05:6000:310d:b0:431:4b7:a309 with SMTP id
+ ffacd0b85a97d-432c377cea4mr7184555f8f.20.1767857067119; 
+ Wed, 07 Jan 2026 23:24:27 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e175csm14633564f8f.14.2026.01.07.23.19.58
+ ffacd0b85a97d-432bd5edd51sm14582962f8f.29.2026.01.07.23.24.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 23:19:59 -0800 (PST)
-Message-ID: <65855c31-482b-4a36-8666-8d2a44ec3cd1@redhat.com>
-Date: Thu, 8 Jan 2026 08:19:58 +0100
+ Wed, 07 Jan 2026 23:24:26 -0800 (PST)
+Message-ID: <4f742d66-5c08-4f5c-9df4-2c8e19da600e@redhat.com>
+Date: Thu, 8 Jan 2026 08:24:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/18] target/s390x: Restrict WatchPoint API to TCG
+Subject: Re: [PATCH 02/18] target/s390x: Use address_space_ldl_be() in
+ read_table_entry()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
@@ -97,7 +98,7 @@ Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  <pierrick.bouvier@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
  David Hildenbrand <david@kernel.org>
 References: <20260107130807.69870-1-philmd@linaro.org>
- <20260107130807.69870-2-philmd@linaro.org>
+ <20260107130807.69870-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,19 +143,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260107130807.69870-2-philmd@linaro.org>
+In-Reply-To: <20260107130807.69870-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,26 +172,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/01/2026 14.07, Philippe Mathieu-Daudé wrote:
-> By inverting the 'tcg_enabled()' check in s390_cpu_set_psw()
-> we can let the compiler elide the s390_cpu_recompute_watchpoints()
-> call when TCG is not available. Move this function -- along with
-> s390x_cpu_debug_excp_handler() which was introduced in the same
-> commit 311918b979c ("target-s390x: PER storage-alteration event
-> support") -- to a TCG specific file to avoid compiling dead code
-> on KVM. This restricts the WatchPoint API calls to TCG.
+> Keep address_space_read/write() API to access blob of memory.
+
+Maybe rather: "address_space_read/write() is meant for accessing random 
+amount of memory blobs"? ... the "Keep" initially confused me here, since 
+you don't keep it in this patch.
+
+> When the access size is known, use the address_space_ld/st()
+> API which can directly swap endianness.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/s390x-internal.h  |  2 -
->   target/s390x/tcg/tcg_s390x.h   |  5 ++
->   target/s390x/cpu.c             | 30 ++++++------
->   target/s390x/helper.c          | 38 ---------------
->   target/s390x/tcg/debug.c       | 85 ++++++++++++++++++++++++++++++++++
->   target/s390x/tcg/excp_helper.c | 32 -------------
->   target/s390x/tcg/meson.build   |  3 ++
->   7 files changed, 108 insertions(+), 87 deletions(-)
->   create mode 100644 target/s390x/tcg/debug.c
+>   target/s390x/mmu_helper.c | 11 ++++-------
+>   1 file changed, 4 insertions(+), 7 deletions(-)
 
+Anyway:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
