@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 437B8D1D475
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EFDBD1D477
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdrl1-0000i3-7S; Thu, 08 Jan 2026 10:17:03 -0500
+	id 1vdrlB-0000op-A7; Thu, 08 Jan 2026 10:17:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vdrky-0000aU-Aq
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:00 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1vdrl7-0000mP-0h
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:09 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vdrkw-0003Fb-88
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:00 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7b9387df58cso3573632b3a.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:16:57 -0800 (PST)
+ id 1vdrl2-0003HN-Hv
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:07 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7d26a7e5639so2343367b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:17:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1767885416; x=1768490216; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=W70TEI13sFZN3wMttx5Ga5KvzSN37elQyVYzPJvoqAM=;
- b=h+1wEdPIKr7pkLPWOeAN6SjjdCumSR8t7p9lK3xIDPS24PZJKOhTqXnSnLimRCbZ2P
- rPnQQSjPGpOi4fIRrU/mAlGXXpGhCYBQ+GFePF1SobRXULE0TBucXc4WK4L0ENEJRPgn
- qH1oJhlgkJfjAAxfwUhxM106J44mBfEmwqS9KKIOM03ztB+1pddG1XET0nf235exoet8
- H2Q4fFtprOANSp1uTMHyyi+bDTVjGZQiSIaf6HrzucdR44nSBGyWe841/FU7glw1KSFC
- m9YbF9+Pk84sa3ju0zYG63mH+r15uTu9gXY0A5nDOY1gaOeHczb/Xm3cICWyLn5XKY4E
- Sfxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767885416; x=1768490216;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=sifive.com; s=google; t=1767885423; x=1768490223; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=W70TEI13sFZN3wMttx5Ga5KvzSN37elQyVYzPJvoqAM=;
- b=aWksc6H4OzGGiyjHGajxP2pq3U5hWO4yEdgB2N3zFv3AvM2giRIQyXVp/OVby7nxro
- ah5DrDtLWFE96B1SP2vTxEmTDANuXclFK6URDPl8dZTQtUEFYYjoFJmjAPsZ/s1Pkmep
- yXljivgM9Erd+AO9HRJ6EVyk2MhmgvRH3hVYqSpkJlD4JKllVvfvsfkF7tYREVv6r/uw
- 8vPWz4GAs0Bl5N3UrC5FGqpbXRoznllpUAoK7FihqumuctRDVAC/FSbm0P+Vhwv0xUrI
- hKRMqNAVa+b43OJSaF6so6mNA1FDkhuEo04rmTrI6FEO2Fi/XFh0AqdB4jaSAXex56kn
- vF4A==
-X-Gm-Message-State: AOJu0Yz9RfgExN2DpCEo2TZuV9aBUID0UUUIpDpYzl3gyYgI5j/AkklS
- HECprIyRBW7prqY9EX/xjCinluq9mOmZ/uxO3wpTH99KFAsYfeb22fO4tJh3tyiBvizj+e2ubaa
- Xh4o3T7PF0M87/jkLe/L94+S0iVI3/J8c1KqHzLvT92ltQ2yowYN60LvMmPl8SvmbW/+MPCSaaJ
- XpufURxBhpgNFfYCXfAGtC5hAOuoIQG+wp5W96Dpo=
-X-Gm-Gg: AY/fxX7n5GkEdUdTj/PvlSJKglQk5egO0C7TjBukGgwzw+8PMB1K71vBT8tjJGs+gfj
- YEQbjiPvhs1UXLEWN8cFY8crLLTTsyjqD+0/gWuy+AFvSdS3vMF1uhe11qAAU5v6eafYl/+IwPz
- yMntI0Mogfynl8fRdHuacTqSSRRmIAjphdDt0fTYGU4u5pu1dIMycFTGROsu5BQuwc9xwrcXr8i
- he57pziP+q0yRWWONnPj422bGFoOTvJrXKJkYG31EHAtQlWpjLbVczme4PB6SugMZG87E3g3vrC
- iqJ3AU0V5o2sR8j9RdERGTsbwM5KutWq6FH3uJvZ3lgHDL0bpHB6JZHg3lsPFpEUYjPST8egpW6
- gQ8LO/lp/a8wXzj52VJZYIIZ4aRr8R+I+Yg0VbEpht/HxFbRBWTNY6xjMyw6lRxtYsQsBH1VwXJ
- qAIi3bUnlRMBfpK7xthogQiz5YpeNOQWB3u5EscBfS9NCuLGiWYcSOrb0=
-X-Google-Smtp-Source: AGHT+IEBKu1MN/dSTWgjXQpght8xOwQZLaHo3Uue5okacR4xQ/nUuhlm0GOdZMHvDBCQ6CI92qi7EA==
-X-Received: by 2002:a05:6a00:770f:b0:81c:4a92:25a2 with SMTP id
- d2e1a72fcca58-81c4a922872mr3283597b3a.46.1767885416062; 
- Thu, 08 Jan 2026 07:16:56 -0800 (PST)
+ bh=O2TvGLUiQmS6w2bEPRWD0JAGFqr/HoBLP/tFQJIaudY=;
+ b=IDFL1usjbr7D0Mb/NN79Lp4h2t2JBI1Ih2QetOqpl/JR/nwvF7LxZiIKLx6FY048xj
+ 1OD9yPn+uhRA5+cLMRkOxd7cQgeT6ytMZCcm6t2QIBDhy87ULNCASu2zB4aZ5yYI8Pmg
+ hBI+UwsGGsOEFtFwroyLBA+IBX5Y+ICFNGC7vjz35KkUEk6eetIPbj3e4XkX/vb047nd
+ P7yQ513L280mixcdlWudzwpuKhfIwgQN2AW1DrMUGIZ4WNvYWFS6VFW37jNsEVmgjYuC
+ x8BHJpTyP4ITm/Hq8gK2tPGMT3GGY0yMDGi49FOlvhIXyxolif4HSPEzv/N2s9rM3I8Z
+ HUNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767885423; x=1768490223;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=O2TvGLUiQmS6w2bEPRWD0JAGFqr/HoBLP/tFQJIaudY=;
+ b=QQKi+wVF1yC9k9WX1BlmHV5OhNGoB0CbbOs1MS4/8M5Nv95E8DhI42ixT1H05vk2Fo
+ 7CT7WsPJxJG/4FIiqBpjFA9gVXIySdnbdXhP7kEF5vWnMvcqnKVMfprGJlXNZ+qAzwq3
+ 382bBhf/HitNoy/urZkRjnbo/UP9acA/wNDutnPsgPgKQ1txLn2DJeZWzffzt0Dr6coR
+ SqxTNiN4ULpay4Cirp1KQpCebXk57Dl/oFpKQD3thkROD1QkWdQ5AIMIGjoCLzdLpat3
+ cJTVQHfIQcrkQOJeKy8D+pez9S68ft98Z++7pGoEFRh4hzPUtAjEN1J6eAbb8+V52nFV
+ YwTg==
+X-Gm-Message-State: AOJu0YxgpmJ86b9MppaAVHs3JnQ0bZHHOt40mid+65p3rOlB+UgGXVDk
+ YkjJW3QD4/V/UbTH1+9AXN4z6nKHYjjmg/hyxRVLxDFK09EmKc8aHbtN+Ov66mwqXKc6JmTOVJs
+ R6Ph+givOEDzDhOa6rGT8cpCxg6kdss7CjjwpX5BNcVUpJKWRJxxM76y0XhOUSY9g7G5d97c65a
+ Gsptbk5i/Woh8gf0swp1iLtHpCkfF2EwhdegS0YYM=
+X-Gm-Gg: AY/fxX7OP/K2DHClncjZDLBRWbN/iEpzwzUjKg6FRit0j/vnOe3gFk1IGRZFqpJ9zCW
+ ocLL198S8XlLmM3dJrYrr9p6XvD4gnrv4n4giM/6yZ+jm41X0umzCH73wDtIJ8mS6fCVnmIWTYh
+ h45dwi0L4cNO8THkigei6/1aooasA1AQks+16Evmf67P60F70mAxNGHEQc8gWZ/TpdgDUau7DdR
+ 5kHs4gMCFzEEQslhnfPMsyKTBhaw52joSRw4ce+yxOIJLrBi12XIGsnlAGKNJFObdsVsbQIXTfU
+ 77uFbHIBgURD/nNtbck01RYCmk9/henl6edDJx9fnQ7M/a//Ajh2+5ki+uxmKbkaQV8Wg+/qTBr
+ gevEYcPEFkLCSS5ZLeSsB/rXjIaMp0APM3WYzLE4EDkhRPf20a2iKQcerI3S8odsslmv5LpaQ+U
+ 4jyD3yEe9sB1bkgir9Mb3FcqSPhV2Hff+7IBzxzOaF3OhOpiMszNuVW/k=
+X-Google-Smtp-Source: AGHT+IGJlaYNE3Fe64+zL/cigyMVcnIVvWgNRIq1PQMdnR9tNTI/cyZOT3IlkR03unWR/RgiECptcw==
+X-Received: by 2002:a05:6a00:13aa:b0:81b:c1d9:d266 with SMTP id
+ d2e1a72fcca58-81bc1d9d36emr4852945b3a.62.1767885422784; 
+ Thu, 08 Jan 2026 07:17:02 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81d87955bb6sm1060239b3a.50.2026.01.08.07.16.53
+ d2e1a72fcca58-81d87955bb6sm1060239b3a.50.2026.01.08.07.17.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 07:16:55 -0800 (PST)
+ Thu, 08 Jan 2026 07:17:02 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -77,15 +78,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH 00/18] Add OCP FP8/FP4 and RISC-V Zvfofp8min/Zvfofp4min
- extension support
-Date: Thu,  8 Jan 2026 23:16:31 +0800
-Message-ID: <20260108151650.16329-1-max.chou@sifive.com>
+Subject: [PATCH 02/18] fpu/softfloat: Add OCP(Open Compute Project) OFP8 data
+ type
+Date: Thu,  8 Jan 2026 23:16:33 +0800
+Message-ID: <20260108151650.16329-3-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260108151650.16329-1-max.chou@sifive.com>
+References: <20260108151650.16329-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,119 +111,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset adds support for the OCP (Open Compute Project) 8-bit and
-4-bit floating-point formats, along with the RISC-V Zvfofp8min and
-Zvfofp4min vector extensions that provide conversion operations for
-these formats.
+This commit provides the implementation defined behavior flags and the basic
+operation support for the OCP float8 data types(E4M3 & E5M2).
 
-OCP Floating-Point Formats
-* The OCP FP8 specification defines two 8-bit floating-point formats:
-  - E4M3: 4-bit exponent, 3-bit mantissa
-    * No infinity representation; only 0x7f and 0xff are NaN
-  - E5M2: 5-bit exponent, 2-bit mantissa
-    * IEEE-like format with infinity representation
-    * Multiple NaN encodings supported
-* The OCP FP4 specification defines the E2M1 format:
-  - E2M1: 2-bit exponent, 1-bit mantissa
-    * No NaN representation
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ fpu/softfloat-specialize.c.inc  | 57 ++++++++++++++++++++++++++-
+ include/fpu/softfloat-helpers.h | 20 ++++++++++
+ include/fpu/softfloat-types.h   | 23 +++++++++++
+ include/fpu/softfloat.h         | 70 +++++++++++++++++++++++++++++++++
+ 4 files changed, 169 insertions(+), 1 deletion(-)
 
-RISC-V ISA Extensions
-* Zvfofp8min (Version 0.2.1):
-  The Zvfofp8min extension provides minimal vector conversion support
-  for OFP8 formats. It requires the Zve32f extension and leverages the
-  altfmt field in the VTYPE CSR (introduced by Zvfbfa) to select between
-  E4M3 (altfmt=0) and E5M2 (altfmt=1) formats.
-  - Canonical NaN for both E4M3 and E5M2 is 0x7f
-  - All NaNs are treated as quiet NaNs
-  Instructions added/extended:
-  - vfwcvtbf16.f.f.v: OFP8 to BF16 widening conversion
-  - vfncvtbf16.f.f.w: BF16 to OFP8 narrowing conversion
-  - vfncvtbf16.sat.f.f.w: BF16 to OFP8 with saturation (new)
-  - vfncvt.f.f.q: FP32 to OFP8 quad-narrowing conversion (new)
-  - vfncvt.sat.f.f.q: FP32 to OFP8 with saturation (new)
-
-* Zvfofp4min (Version 0.1):
-  The Zvfofp4min extension provides minimal vector conversion support
-  for the OFP4 E2M1 format. It requires the Zve32f extension.
-  Instructions added:
-  - vfext.vf2: OFP4 E2M1 to OFP8 E4M3 widening conversion
-
-Modifications
-* Softfloat library:
-  - New float8_e4m3 and float8_e5m2 types with NaN checking functions
-  - New float4_e2m1 type for OFP4 support
-  - Conversion functions: bfloat16/float32 <-> float8_e4m3/float8_e5m2
-  - Conversion function: float4_e2m1 -> float8_e4m3
-  - Implementation-defined behavior flags in float_status:
-    * ocp_fp8e5m2_no_signal_nan: Treat all E5M2 NaNs as quiet
-    * ocp_fp8_same_canonical_nan: Use 0x7f as canonical NaN for all OFP8
-* RISC-V target:
-  - CPU configuration properties for Zvfofp8min and Zvfofp4min
-  - Extension implied rules (Zvfofp8min requires Zve32f and Zvfbfa)
-  - Vector helper functions for OFP8/OFP4 conversion instructions
-  - Disassembler support for new instructions
-
-References
-* OCP FP8 specification:
-  https://www.opencompute.org/documents/ocp-8-bit-floating-point-specification-ofp8-revision-1-0-2023-12-01-pdf-1
-* Zvfofp8min specification (v0.2.1 commit e1e20a7):
-  https://github.com/aswaterman/riscv-misc/blob/main/isa/zvfofp8min.adoc
-* Zvfofp4min specification (v0.1 commit e1e20a7):
-  https://github.com/aswaterman/riscv-misc/blob/main/isa/zvfofp4min.adoc
-
-PS: This series depends on the Zvfbfa extension patchset which introduces:
-  - The altfmt field in VTYPE CSR
-  - BF16 vector operations infrastructure
-  - vfwcvtbf16.f.f.v and vfncvtbf16.f.f.w base instructions
-
-Based-on: 20260108132631.9429-1-max.chou@sifive.com
-
-Max Chou (18):
-  target/riscv: rvv: Fix NOP_UU_B vs2 width
-  fpu/softfloat: Add OCP(Open Compute Project) OFP8 data type
-  fpu/softfloat: Add convert operations(bf16, fp32) for OFP8 data types
-  fpu/softfloat: Add OCP(Open Compute Project) OFP4 data type
-  fpu/softfloat: Add OCP FP4 E2M1 to OCP FP8 E4M3 convert operation
-  target/riscv: Add cfg properity for Zvfofp8min extension
-  target/riscv: Add implied rules for Zvfofp8min extension
-  target/riscv: rvv: Make vfwcvtbf16.f.f.v support OFP8 to BF16
-    conversion for Zvfofp8min extension
-  target/riscv: rvv: Make vfncvtbf16.f.f.w support BF16 to OFP8
-    conversion for Zvfofp8min extension
-  target/riscv: rvv: Add vfncvtbf16.sat.f.f.w instruction for Zvfofp8min
-    extension
-  target/riscv: rvv: Add vfncvt.f.f.q and vfncvt.sat.f.f.q instructions
-    for Zvfofp8min extension
-  target/riscv: Expose Zvfofp8min properity
-  disas/riscv: Add support of Zvfofp8min extension
-  target/riscv: Add cfg properity for Zvfofp4min extension
-  target/riscv: Add implied rules for Zvfofp4min extension
-  target/riscv: rvv: Add vfext.vf2 instruction for Zvfofp4min extension
-  target/riscv: Expose Zvfofp4min properity
-  disas/riscv: Add support of Zvfofp4min extension
-
- disas/riscv.c                              |  12 +
- fpu/softfloat-parts.c.inc                  |  77 +++++-
- fpu/softfloat-specialize.c.inc             |  57 ++++-
- fpu/softfloat.c                            | 274 +++++++++++++++++++++
- include/fpu/softfloat-helpers.h            |  20 ++
- include/fpu/softfloat-types.h              |  28 +++
- include/fpu/softfloat.h                    | 124 ++++++++++
- target/riscv/cpu.c                         |  35 ++-
- target/riscv/cpu_cfg_fields.h.inc          |   2 +
- target/riscv/helper.h                      |  15 ++
- target/riscv/insn32.decode                 |   8 +
- target/riscv/insn_trans/trans_rvbf16.c.inc |  32 ++-
- target/riscv/insn_trans/trans_rvofp4.c.inc |  54 ++++
- target/riscv/insn_trans/trans_rvofp8.c.inc | 115 +++++++++
- target/riscv/insn_trans/trans_rvv.c.inc    |  39 +++
- target/riscv/tcg/tcg-cpu.c                 |  15 ++
- target/riscv/translate.c                   |   2 +
- target/riscv/vector_helper.c               | 131 +++++++++-
- 18 files changed, 1022 insertions(+), 18 deletions(-)
- create mode 100644 target/riscv/insn_trans/trans_rvofp4.c.inc
- create mode 100644 target/riscv/insn_trans/trans_rvofp8.c.inc
-
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index ba4fa08b7b..3a3bcd22ae 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -226,6 +226,30 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
+     return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
+ }
+ 
++/*----------------------------------------------------------------------------
++| Returns 1 if the OCP(Open Compute Platform) FP8 value `a' is a quiet NaN;
++| otherwise returns 0.
++*----------------------------------------------------------------------------*/
++
++bool float8_e4m3_is_quiet_nan(float8_e4m3 a_, float_status *status)
++{
++    return float8_e4m3_is_any_nan(a_);
++}
++
++bool float8_e5m2_is_quiet_nan(float8_e5m2 a_, float_status *status)
++{
++    if (no_signaling_nans(status) || status->ocp_fp8e5m2_no_signal_nan) {
++        return float8_e5m2_is_any_nan(a_);
++    } else {
++        uint8_t a = float8_e5m2_val(a_);
++        if (snan_bit_is_one(status)) {
++            return (((a >> 1) & 0x3F) == 0x3E) && (a & 0x1);
++        } else {
++            return ((a >> 1) & 0x3F) == 0x3F;
++        }
++    }
++}
++
+ /*----------------------------------------------------------------------------
+ | Returns 1 if the half-precision floating-point value `a' is a quiet
+ | NaN; otherwise returns 0.
+@@ -240,7 +264,6 @@ bool float16_is_quiet_nan(float16 a_, float_status *status)
+         if (snan_bit_is_one(status)) {
+             return (((a >> 9) & 0x3F) == 0x3E) && (a & 0x1FF);
+         } else {
+-
+             return ((a >> 9) & 0x3F) == 0x3F;
+         }
+     }
+@@ -265,6 +288,38 @@ bool bfloat16_is_quiet_nan(bfloat16 a_, float_status *status)
+     }
+ }
+ 
++/*----------------------------------------------------------------------------
++| Returns 1 if the OCP(Open Compute Platform) FP8 value `a' is a signaling NaN;
++| otherwise returns 0.
++*----------------------------------------------------------------------------*/
++
++bool float8_e4m3_is_signaling_nan(float8_e4m3 a_, float_status *status)
++{
++    if (no_signaling_nans(status)) {
++        return false;
++    } else {
++        if (snan_bit_is_one(status)) {
++            return float8_e4m3_is_any_nan(a_);
++        } else {
++            return false;
++        }
++    }
++}
++
++bool float8_e5m2_is_signaling_nan(float8_e5m2 a_, float_status *status)
++{
++    if (no_signaling_nans(status)) {
++        return false;
++    } else {
++        uint8_t a = float8_e5m2_val(a_);
++        if (snan_bit_is_one(status)) {
++            return ((a >> 1) & 0x3F) == 0x3F;
++        } else {
++            return (((a >> 1) & 0x3F) == 0x3E && (a & 0x1));
++        }
++    }
++}
++
+ /*----------------------------------------------------------------------------
+ | Returns 1 if the half-precision floating-point value `a' is a signaling
+ | NaN; otherwise returns 0.
+diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
+index 90862f5cd2..4e278a3ee3 100644
+--- a/include/fpu/softfloat-helpers.h
++++ b/include/fpu/softfloat-helpers.h
+@@ -136,6 +136,26 @@ static inline void set_no_signaling_nans(bool val, float_status *status)
+     status->no_signaling_nans = val;
+ }
+ 
++static inline void set_ocp_fp8e5m2_no_signal_nan(bool val, float_status *status)
++{
++    status->ocp_fp8e5m2_no_signal_nan = val;
++}
++
++static inline bool get_ocp_fp8e5m2_no_signal_nan(const float_status *status)
++{
++    return status->ocp_fp8e5m2_no_signal_nan;
++}
++
++static inline void set_ocp_fp8_same_canonical_nan(bool val, float_status *status)
++{
++    status->ocp_fp8_same_canonical_nan = val;
++}
++
++static inline bool get_ocp_fp8_same_canonical_nan(const float_status *status)
++{
++    return status->ocp_fp8_same_canonical_nan;
++}
++
+ static inline bool get_float_detect_tininess(const float_status *status)
+ {
+     return status->tininess_before_rounding;
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index 8f82fdfc97..835dd33bf1 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -119,6 +119,18 @@ typedef struct {
+  */
+ typedef uint16_t bfloat16;
+ 
++/*
++ * Software OCP(Open Compute Project) 8-bit floating point types
++ */
++typedef uint8_t float8_e4m3;
++typedef uint8_t float8_e5m2;
++#define float8_e4m3_val(x) (x)
++#define float8_e5m2_val(x) (x)
++#define make_float8_e4m3(x) (x)
++#define make_float8_e5m2(x) (x)
++#define const_float8_e4m3(x) (x)
++#define const_float8_e5m2(x) (x)
++
+ /*
+  * Software IEC/IEEE floating-point underflow tininess-detection mode.
+  */
+@@ -410,6 +422,17 @@ typedef struct float_status {
+      */
+     bool snan_bit_is_one;
+     bool no_signaling_nans;
++    /*
++     * When true, OCP FP8 E5M2 format does not generate signaling NaNs.
++     * RISC-V uses only quiet NaNs in its OCP FP8 implementation.
++     */
++    bool ocp_fp8e5m2_no_signal_nan;
++    /*
++     * When true, OCP FP8 formats use the same canonical NaN representation
++     * (0x7F) for all NaN outputs. RISC-V specifies a single canonical NaN
++     * for both E4M3 and E5M2.
++     */
++    bool ocp_fp8_same_canonical_nan;
+     /* should overflowed results subtract re_bias to its exponent? */
+     bool rebias_overflow;
+     /* should underflowed results add re_bias to its exponent? */
+diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+index c18ab2cb60..6f7259f9dd 100644
+--- a/include/fpu/softfloat.h
++++ b/include/fpu/softfloat.h
+@@ -189,6 +189,76 @@ float128 int128_to_float128(Int128, float_status *status);
+ float128 uint64_to_float128(uint64_t, float_status *status);
+ float128 uint128_to_float128(Int128, float_status *status);
+ 
++/*----------------------------------------------------------------------------
++| Software OCP FP8 operations.
++*----------------------------------------------------------------------------*/
++
++bool float8_e4m3_is_quiet_nan(float8_e4m3, float_status *status);
++bool float8_e4m3_is_signaling_nan(float8_e4m3, float_status *status);
++bool float8_e5m2_is_quiet_nan(float8_e5m2, float_status *status);
++bool float8_e5m2_is_signaling_nan(float8_e5m2, float_status *status);
++
++static inline bool float8_e4m3_is_any_nan(float8_e4m3 a)
++{
++    return ((float8_e4m3_val(a) & ~0x80) == 0x7f);
++}
++
++static inline bool float8_e5m2_is_any_nan(float8_e5m2 a)
++{
++    return ((float8_e5m2_val(a) & ~0x80) > 0x7c);
++}
++
++static inline bool float8_e4m3_is_neg(float8_e4m3 a)
++{
++    return float8_e4m3_val(a) >> 7;
++}
++
++static inline bool float8_e5m2_is_neg(float8_e5m2 a)
++{
++    return float8_e5m2_val(a) >> 7;
++}
++
++static inline bool float8_e4m3_is_infinity(float8_e4m3 a)
++{
++    return false;
++}
++
++static inline bool float8_e5m2_is_infinity(float8_e5m2 a)
++{
++    return (float8_e5m2_val(a) & 0x7f) == 0x7c;
++}
++
++static inline bool float8_e4m3_is_zero(float8_e4m3 a)
++{
++    return (float8_e4m3_val(a) & 0x7f) == 0;
++}
++
++static inline bool float8_e5m2_is_zero(float8_e5m2 a)
++{
++    return (float8_e5m2_val(a) & 0x7f) == 0;
++}
++
++static inline bool float8_e4m3_is_zero_or_denormal(float8_e4m3 a)
++{
++    return (float8_e4m3_val(a) & 0x78) == 0;
++}
++
++static inline bool float8_e5m2_is_zero_or_denormal(float8_e5m2 a)
++{
++    return (float8_e5m2_val(a) & 0x7c) == 0;
++}
++
++static inline bool float8_e4m3_is_normal(float8_e4m3 a)
++{
++    uint8_t em = float8_e4m3_val(a) & 0x7f;
++    return em >= 0x8 && em <= 0x7e;
++}
++
++static inline bool float8_e5m2_is_normal(float8_e5m2 a)
++{
++    return (((float8_e5m2_val(a) >> 2) + 1) & 0x1f) >= 2;
++}
++
+ /*----------------------------------------------------------------------------
+ | Software half-precision conversion routines.
+ *----------------------------------------------------------------------------*/
 -- 
 2.43.7
 
