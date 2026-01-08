@@ -4,94 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3016D14893
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 04:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699ACD1489F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 05:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdhRQ-0006Lk-1n; Wed, 07 Jan 2026 23:16:08 -0500
+	id 1vdi8j-0007UQ-Nl; Thu, 08 Jan 2026 00:00:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdhRO-0006Kx-2e
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 23:16:06 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1vdi8Z-0007Rq-O0
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:00:45 -0500
+Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vdhRL-0002vx-9m
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 23:16:05 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-ba599137cf8so573913a12.0
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 20:16:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1vdi8V-0006zG-Op
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 00:00:42 -0500
+Received: by mail-qv1-xf33.google.com with SMTP id
+ 6a1803df08f44-88a26ce6619so27095976d6.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 21:00:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767845761; x=1768450561; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=okHBr9RCrk54qnEKOp1eWuBaR7NgAz7iUu5BQAD/6OQ=;
- b=h6g8fqtGQ9q4EuTxQDXhZK5pIVLl+5RT/dJTA4HvcJbYEmu9rdxpo6IQEndZ3vVEi0
- GX7h8SHPExo0aQWJZ8V7r4oiDKaMeLVT6O7uBXgcGYdjSVH7JeRzZsc5n4bwOxTdhgrH
- TF9wLw4z8fUiRP+Zv+80lbpAFsezpwlmqCgMob7TXRQyYmxyZpbHmQXBAtPCvIou6q3p
- S6TMYcWma8Dm+VnM3eH3XgdXo9OniV5fWnei0ZzMxEVtNccEpwPtXKAviRX418njzaMi
- BwA0LDdLx+wqVn5a+pNKIX546YVN9yCnjPU4p6bjMQ+iKSbSj5wYYigOByEy2FiZTTMM
- qKXA==
+ d=gmail.com; s=20230601; t=1767848438; x=1768453238; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=G3vcNVxoQ86ms0LQI7aA3LODs0+8eM4a/ySAjtj1Ku0=;
+ b=idphcu4NRj8UfskmqRIg0jrkB0O8/LeJ88axe9yvUcI3hPrp4S9diuZIGjGVa666Z8
+ M5po7NBr7W7ZVLkzZkpOQDpd0qDoDiIeyGR1fzDq5yEKT2f8aTMM7MKxMRYWzNKztkbS
+ yUPsAhYD9JlqEQJOQLZLn+NAS9LgJvvy4f8Aq9OocU2S7dpn+aUiJ0tnJw9ochAl6uMM
+ mpbieFoGxrzUVhqn3SAwqjArJGo+ay6RC57afeps1HQFMdr+Go5mpnewCJzpbXrxF39c
+ meuBSsAtjncij1k/HSEA+YpSfczxmV+6tdiUe+ocabs3JklDioXYPL3/QVu0pVdaugAu
+ qblw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767845761; x=1768450561;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=okHBr9RCrk54qnEKOp1eWuBaR7NgAz7iUu5BQAD/6OQ=;
- b=gugbqAOStwiIDE6RAiaOEgXRcFl3xA3R/jchjpATJgCUJdrWxPxhUP3apmwMQucIum
- f3vh8ZJ+/+AdtvhgWx+E85pPVmizBXxQJsh8FbhKS0EE7pM/6pfPmDwQZuVVwUARokE5
- 4BCBkFrTji4hxRsX+WQlCXoRAbeHzaMqojwiv6GIOJ0zrRsbPGib9XuyrTh98dOiNDoz
- /dJy81gBS2dHFCiaOQGmk2/q2QhRfH2rbV+Gh05HQ7/cGyCT39eLjAZEMrn7xslP9SGp
- 9qSDemcOfPUZBbR9G0pMrnuPztl/pLdmo+dGlVkZwMCZ3i7w5QGku9tZfeqLJxBUt625
- Z+dA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV53IMJ/KXjglqYUNzeMliK3JPzb73O2ICnOf3I3SuTYVv8xGBiXCAlUccOr/zIFXO+09mrDKZg+Vod@nongnu.org
-X-Gm-Message-State: AOJu0Yyfr6dhx/1OyB3zlPa3w4C4cyKMiwDZAqiev5orOTECaJZJBn4G
- wCm9JuDQaxT808wDevfaerQS1dpS8KRatOSyMMRuRbe6DVTljJKONw6NCkfpdXsgPb0=
-X-Gm-Gg: AY/fxX51V4vwReC6s7P3LjkbnJCKkcHlUFhtYQYeK+kIyvSwLX49Fd7R+E4U3WwkDe0
- LGDVgnjUFu3NJVHnzDu8lLBmmIfO170DTcHjl+9zy6CGRZ54bCVBKoWrhF/aISBqmYNlWqH7ESr
- smIwFAw9ovCnGnclAIlAKr+Sgbc5FFwyjmW92qL4YdKokQ3r2QuErXIktWu1aA9VbJLfuDmeAsx
- 9bjddkTcc3lPS78ByyH0E1AUCkXxjT6DhNaZw2PvoRS52gIgY45tnbEKtb8NeAaYWbmBBHjNPxD
- OqyyDXWHOFoT7E5G1Nw8mA+O6v9CmK5hTaZmPYoRCu4zS84Knng2R5yeNCggNoDl/DwENE8Mu41
- Qv44qEB4ZGgeiwzFKjtE6Dr3eJuo7L2GTEilZFgmbtlRctENgWKcLwNWFJVOumI77GT7H+6IeQl
- RvwcFO2JGnPBgblJJ7DAmUwskraxWdU9K7Mk/16cEV
-X-Google-Smtp-Source: AGHT+IHGdoE4gW24l36tdfZNHGV6OsNl0JiwCHKPXjIeIOmda3U92B6P3p3AdFP9P74bfNa1R7sxqQ==
-X-Received: by 2002:a05:6a21:3281:b0:371:7666:648c with SMTP id
- adf61e73a8af0-3898eaae00dmr4813913637.24.1767845761375; 
- Wed, 07 Jan 2026 20:16:01 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc95d5c66sm6411640a12.24.2026.01.07.20.15.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 20:16:00 -0800 (PST)
-Message-ID: <4e1b7b58-9598-4914-9a21-de71c465d5ca@linaro.org>
-Date: Thu, 8 Jan 2026 15:15:57 +1100
+ d=1e100.net; s=20230601; t=1767848438; x=1768453238;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=G3vcNVxoQ86ms0LQI7aA3LODs0+8eM4a/ySAjtj1Ku0=;
+ b=CHDdFSBJS/+s+KF5lSJvXt/+nbIX1i9R7dPaU35FRkVefRrMG4NzecsSfOaS896wac
+ vMEelZNwR0SkspoqN86rWccdaOy8pO/XjRl8VJ4u/4qFwiN4iUmY2KkAYuDBrHYDqBVw
+ v4ab8y6ssbMeHQVSSGjUTsOwZxoxlv0mUyxe4liwJ3lyCdhjf5URtYVF8Y7A+4eHMgXV
+ xTMavrnizxUG6PleFZD0AZ+tGSehOJgRYVglzdU4cvZhpBN2WNq92uVYPrG+TcEufot2
+ 9sNP/XlO7sOqdG5ZGZmrrrEyfsgSJ7Yn9PWbsSWFyeIEGzgRfFc0jAQaiXU1++Gduuoa
+ 4iNg==
+X-Gm-Message-State: AOJu0Yw9bk0pSsY4Wsn2kfMc3MK2GmeaxwDpa35Xu3b4N0JB+CL7UEfP
+ dHOvVeFyUOZbv7w2zltFQjT8fLu1wCkCPjnrGsHavQqzCG4rVNQerEVoCf4FYOkqJCR5bbiIzHT
+ UWoy3TLM/RXzVgAckp7QJEGcp7jB42S0=
+X-Gm-Gg: AY/fxX6/DqW+pReFtRyw5Rb4EvqzEZrxI67L2Q0v/rEUgJGvPmsDWWTu55o8sjh/2bN
+ 1x//OQAfZr/DDTTeNGrN5E+FNBQa/9SOWTYlLBkhNoRa4ahbWN7Ta248cr80i6ympiKDzyc7Dev
+ sN9WplPNGCslBr2UFI/Zg4UEaWIzhX6jiY+vMwLiy2WeabWOVEEhRdE2J4ga+liVaTM1IWYvcjq
+ L8Qj5VJ6fe1JyVcrMchMTUl01pc+Yz7qA3f1frPYtiDTN0luNp0Vw4vic/zI4ZMHc2wTOS5bk7o
+ tpTp
+X-Google-Smtp-Source: AGHT+IFl6bDgO568patCV6DFce1DRqzkOSIlCkVJGwUy0z9zr/iwrm5ODEj4p4vWhAOLTRfHh/8bxpAfo8e92BnpsH8=
+X-Received: by 2002:ad4:5ae5:0:b0:888:7db7:b3e with SMTP id
+ 6a1803df08f44-890841ad256mr76418526d6.18.1767848437548; Wed, 07 Jan 2026
+ 21:00:37 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 14/17] error: Use error_setg_errno() to improve error
- messages
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260107124341.1093312-1-armbru@redhat.com>
- <20260107124341.1093312-15-armbru@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260107124341.1093312-15-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20260107202556.55787-1-philmd@linaro.org>
+ <20260107202556.55787-2-philmd@linaro.org>
+In-Reply-To: <20260107202556.55787-2-philmd@linaro.org>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Wed, 7 Jan 2026 21:00:26 -0800
+X-Gm-Features: AQt7F2pTZqVLfpu1BNNvHfiHddvh5HWOxZSrJip2uIP0ZLXYbcfDw6PJcp37wgo
+Message-ID: <CAMo8BfJjkdd87=50tm+dfBgix79quNCqy4b0sC=YO2XcT1xHjA@mail.gmail.com>
+Subject: Re: [PATCH 1/7] target/xtensa: Convert XTENSA_DEFAULT_CPU_MODEL to
+ runtime helper (MMU)
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Anton Johansson <anjo@rev.ng>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-qv1-xf33.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,33 +99,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/26 23:43, Markus Armbruster wrote:
-> @@ -2032,7 +2032,8 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
->           reg.addr = (uint64_t)&val;
->           ret = ioctl(kvmcpu.cpufd, KVM_GET_ONE_REG, &reg);
->           if (ret != 0) {
-> -            error_setg(errp, "Unable to read cbom_blocksize, error %d", errno);
-> +            error_setg(errp, errno,
-> +                       "Unable to read cbom_blocksize");
->               return;
->           }
->   
+On Wed, Jan 7, 2026 at 12:26=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> In order to remove the TARGET_BIG_ENDIAN use in "cpu.h",
+> introduce the xtensa_default_cpu_model() helper which
+> returns the current XTENSA_DEFAULT_CPU_MODEL but evaluating
+> endianness at runtime. Update the machines using it.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  target/xtensa/cpu-qom.h     |  2 ++
+>  target/xtensa/cpu.h         |  4 ----
+>  hw/xtensa/sim.c             | 10 ++++++++--
+>  hw/xtensa/virt.c            | 11 +++++++++--
+>  hw/xtensa/xtfpga.c          | 17 +++++++++--------
+>  linux-user/xtensa/elfload.c |  4 ++--
+>  target/xtensa/cpu.c         |  5 +++++
+>  7 files changed, 35 insertions(+), 18 deletions(-)
+>
+> diff --git a/target/xtensa/cpu-qom.h b/target/xtensa/cpu-qom.h
+> index d932346b5fe..66992d08c2e 100644
+> --- a/target/xtensa/cpu-qom.h
+> +++ b/target/xtensa/cpu-qom.h
+> @@ -38,4 +38,6 @@ OBJECT_DECLARE_CPU_TYPE(XtensaCPU, XtensaCPUClass, XTEN=
+SA_CPU)
+>  #define XTENSA_CPU_TYPE_SUFFIX "-" TYPE_XTENSA_CPU
+>  #define XTENSA_CPU_TYPE_NAME(model) model XTENSA_CPU_TYPE_SUFFIX
+>
+> +const char *xtensa_default_cpu_model(void);
+> +
+>  #endif
+> diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
+> index 22192924841..fe2f25e527c 100644
+> --- a/target/xtensa/cpu.h
+> +++ b/target/xtensa/cpu.h
+> @@ -606,14 +606,10 @@ G_NORETURN void xtensa_cpu_do_unaligned_access(CPUS=
+tate *cpu, vaddr addr,
+>  #define CPU_RESOLVING_TYPE TYPE_XTENSA_CPU
+>
+>  #if TARGET_BIG_ENDIAN
+> -#define XTENSA_DEFAULT_CPU_MODEL "fsf"
+>  #define XTENSA_DEFAULT_CPU_NOMMU_MODEL "fsf"
+>  #else
+> -#define XTENSA_DEFAULT_CPU_MODEL "dc232b"
+>  #define XTENSA_DEFAULT_CPU_NOMMU_MODEL "de212"
+>  #endif
+> -#define XTENSA_DEFAULT_CPU_TYPE \
+> -    XTENSA_CPU_TYPE_NAME(XTENSA_DEFAULT_CPU_MODEL)
+>  #define XTENSA_DEFAULT_CPU_NOMMU_TYPE \
+>      XTENSA_CPU_TYPE_NAME(XTENSA_DEFAULT_CPU_NOMMU_MODEL)
+>
+> diff --git a/hw/xtensa/sim.c b/hw/xtensa/sim.c
+> index 994460d0414..03dbe69c2d4 100644
+> --- a/hw/xtensa/sim.c
+> +++ b/hw/xtensa/sim.c
+> @@ -36,6 +36,7 @@
+>  #include "qemu/error-report.h"
+>  #include "xtensa_memory.h"
+>  #include "xtensa_sim.h"
+> +#include "target/xtensa/cpu-qom.h"
+>
+>  static uint64_t translate_phys_addr(void *opaque, uint64_t addr)
+>  {
+> @@ -119,12 +120,17 @@ static void xtensa_sim_init(MachineState *machine)
+>
+>  static void xtensa_sim_machine_init(MachineClass *mc)
+>  {
+> -    mc->desc =3D "sim machine (" XTENSA_DEFAULT_CPU_MODEL ")";
+> +    if (target_big_endian()) {
+> +        mc->default_cpu_type =3D XTENSA_CPU_TYPE_NAME("fsf");
+> +        mc->desc =3D "sim machine (fsf)";
+> +    } else {
+> +        mc->default_cpu_type =3D XTENSA_CPU_TYPE_NAME("dc232b");
+> +        mc->desc =3D "sim machine (dc232b)";
+> +    }
+>      mc->is_default =3D true;
+>      mc->init =3D xtensa_sim_init;
+>      mc->max_cpus =3D 4;
+>      mc->no_serial =3D 1;
+> -    mc->default_cpu_type =3D XTENSA_DEFAULT_CPU_TYPE;
+>  }
+>
+>  DEFINE_MACHINE("sim", xtensa_sim_machine_init)
+> diff --git a/hw/xtensa/virt.c b/hw/xtensa/virt.c
+> index 271f06e0953..2275953ce67 100644
+> --- a/hw/xtensa/virt.c
+> +++ b/hw/xtensa/virt.c
+> @@ -35,8 +35,10 @@
+>  #include "elf.h"
+>  #include "system/memory.h"
+>  #include "qemu/error-report.h"
+> +#include "qemu/target-info.h"
+>  #include "xtensa_memory.h"
+>  #include "xtensa_sim.h"
+> +#include "target/xtensa/cpu-qom.h"
+>
+>  static void create_pcie(MachineState *ms, CPUXtensaState *env, int irq_b=
+ase,
+>                          hwaddr addr_base)
+> @@ -117,10 +119,15 @@ static void xtensa_virt_init(MachineState *machine)
+>
+>  static void xtensa_virt_machine_init(MachineClass *mc)
+>  {
+> -    mc->desc =3D "virt machine (" XTENSA_DEFAULT_CPU_MODEL ")";
+> +    if (target_big_endian()) {
+> +        mc->default_cpu_type =3D XTENSA_CPU_TYPE_NAME("fsf");
+> +        mc->desc =3D "virt machine (fsf)";
+> +    } else {
+> +        mc->default_cpu_type =3D XTENSA_CPU_TYPE_NAME("dc232b");
+> +        mc->desc =3D "virt machine (dc232b)";
+> +    }
+>      mc->init =3D xtensa_virt_init;
+>      mc->max_cpus =3D 32;
+> -    mc->default_cpu_type =3D XTENSA_DEFAULT_CPU_TYPE;
+>      mc->default_nic =3D "virtio-net-pci";
+>  }
+>
+> diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+> index d427d68e505..5fd4d655557 100644
+> --- a/hw/xtensa/xtfpga.c
+> +++ b/hw/xtensa/xtfpga.c
+> @@ -51,6 +51,7 @@
+>  #include "hw/xtensa/mx_pic.h"
+>  #include "exec/cpu-common.h"
+>  #include "migration/vmstate.h"
+> +#include "target/xtensa/cpu-qom.h"
+>
+>  typedef struct XtfpgaFlashDesc {
+>      hwaddr base;
+> @@ -591,10 +592,10 @@ static void xtfpga_lx60_class_init(ObjectClass *oc,=
+ const void *data)
+>  {
+>      MachineClass *mc =3D MACHINE_CLASS(oc);
+>
+> -    mc->desc =3D "lx60 EVB (" XTENSA_DEFAULT_CPU_MODEL ")";
+> +    mc->desc =3D g_strdup_printf("lx60 EVB (%s)", xtensa_default_cpu_mod=
+el());
+>      mc->init =3D xtfpga_lx60_init;
+>      mc->max_cpus =3D 32;
+> -    mc->default_cpu_type =3D XTENSA_DEFAULT_CPU_TYPE;
+> +    mc->default_cpu_type =3D xtensa_default_cpu_model();
 
-Missed changing the function.
+Type was expected here, but model is supplied instead.
+I wonder why xtfpga and sim/virt are done differently?
 
-../target/riscv/kvm/kvm-cpu.c:2035:13: error: passing argument 5 of ‘error_setg_internal’ 
-makes pointer from integer without a cast [-Wint-conversion]
-  2035 |             error_setg(errp, errno,
-       |             ^~~~~~~~~~
-       |             |
-       |             int
-In file included from ../target/riscv/kvm/kvm-cpu.c:26:
-../include/qapi/error.h:322:38: note: expected ‘const char *’ but argument is of type ‘int’
-   322 |                          const char *fmt, ...)
-       |                          ~~~~~~~~~~~~^~~
+>      mc->default_ram_size =3D 64 * MiB;
+>  }
+>
+> @@ -625,10 +626,10 @@ static void xtfpga_lx200_class_init(ObjectClass *oc=
+, const void *data)
+>  {
+>      MachineClass *mc =3D MACHINE_CLASS(oc);
+>
+> -    mc->desc =3D "lx200 EVB (" XTENSA_DEFAULT_CPU_MODEL ")";
+> +    mc->desc =3D g_strdup_printf("lx200 EVB (%s)", xtensa_default_cpu_mo=
+del());
+>      mc->init =3D xtfpga_lx200_init;
+>      mc->max_cpus =3D 32;
+> -    mc->default_cpu_type =3D XTENSA_DEFAULT_CPU_TYPE;
+> +    mc->default_cpu_type =3D xtensa_default_cpu_model();
 
-https://gitlab.com/qemu-project/qemu/-/jobs/12639739827
+Same here.
 
+>      mc->default_ram_size =3D 96 * MiB;
+>  }
+>
+> @@ -659,10 +660,10 @@ static void xtfpga_ml605_class_init(ObjectClass *oc=
+, const void *data)
+>  {
+>      MachineClass *mc =3D MACHINE_CLASS(oc);
+>
+> -    mc->desc =3D "ml605 EVB (" XTENSA_DEFAULT_CPU_MODEL ")";
+> +    mc->desc =3D g_strdup_printf("ml605 EVB (%s)", xtensa_default_cpu_mo=
+del());
+>      mc->init =3D xtfpga_ml605_init;
+>      mc->max_cpus =3D 32;
+> -    mc->default_cpu_type =3D XTENSA_DEFAULT_CPU_TYPE;
+> +    mc->default_cpu_type =3D xtensa_default_cpu_model();
 
-r~
+And here.
+
+>      mc->default_ram_size =3D 512 * MiB - XTFPGA_MMU_RESERVED_MEMORY_SIZE=
+;
+>  }
+>
+> @@ -693,10 +694,10 @@ static void xtfpga_kc705_class_init(ObjectClass *oc=
+, const void *data)
+>  {
+>      MachineClass *mc =3D MACHINE_CLASS(oc);
+>
+> -    mc->desc =3D "kc705 EVB (" XTENSA_DEFAULT_CPU_MODEL ")";
+> +    mc->desc =3D g_strdup_printf("kc705 EVB (%s)", xtensa_default_cpu_mo=
+del());
+>      mc->init =3D xtfpga_kc705_init;
+>      mc->max_cpus =3D 32;
+> -    mc->default_cpu_type =3D XTENSA_DEFAULT_CPU_TYPE;
+> +    mc->default_cpu_type =3D xtensa_default_cpu_model();
+
+And here.
+
+--=20
+Thanks.
+-- Max
 
