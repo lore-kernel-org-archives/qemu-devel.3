@@ -4,157 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D527AD1D478
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 16:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C359D1D478
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 16:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdsSD-0001OA-S6; Thu, 08 Jan 2026 11:01:41 -0500
+	id 1vdsZ0-0003BY-BJ; Thu, 08 Jan 2026 11:08:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdsS7-0001NF-72
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:01:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1vdsYu-0003B8-Lv
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:08:36 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdsS5-0000Zs-2T
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:01:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767888091;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CNGBI8FvGLRZDhlmj3LctnpObhZk9L0uydjHPHBfV8s=;
- b=SNtuQR0p0UCLLhfFje8lIlc04qsUiiPy3Rhe0LLA5RKCkNmtHLfBHz2VAPilSFHw4Ml2RN
- YuXT3LXEnmcRzuWty345IWjI9WYMY8edN8aIkbhm27Px8n4IKTH0HjwZ8dKSxBVJ4AihFS
- OInjokEEvVO87uxDHD0fSoMQQXMtnIA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-217-7DlQbrkiOQm5WHu-A3fOtg-1; Thu, 08 Jan 2026 11:01:28 -0500
-X-MC-Unique: 7DlQbrkiOQm5WHu-A3fOtg-1
-X-Mimecast-MFC-AGG-ID: 7DlQbrkiOQm5WHu-A3fOtg_1767888086
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47d3c9b8c56so34951075e9.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 08:01:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1vdsYs-0001po-PL
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:08:36 -0500
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6088wA5b1570684
+ for <qemu-devel@nongnu.org>; Thu, 8 Jan 2026 16:08:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=GF1iMDgQdkbluEyyapk5jvTB1KeW4yIhMBT
+ 0dL+M+VE=; b=atbA5Z5PZ+6NifxDBaijwWwaEl8dts8W9Qpi6TJXNTNtjoci2p7
+ oZhGFrgQKITIkZUUA8g6VgnA9GoiCV5EFOKqCGeE4qhXMXcuy390R2wcZV9OA6PX
+ rpJ//l3U7B/0gkuA4r3xFNBb1nNjPcWGXEqMnr1vCFViW2G1KxRV7HPubGeBg3HT
+ TxQSWdl9exM9ApMHaRd9CUgg01xciGiKkTa2TLBRe1jHWOAemfGtKO+l2SM6H4uZ
+ FqcbleBRXhTVkV1D0spLkTqLp7SWGIfm/xYXkviDmpkH/2TVLsf2cOFWx8vh9Cxy
+ YWOw7xxfpaaNSRjtr0ejjhrG172/5zoJFGw==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bj9hqsafa-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 16:08:32 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-11b9786fb51so15587552c88.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 08:08:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767888086; x=1768492886; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=CNGBI8FvGLRZDhlmj3LctnpObhZk9L0uydjHPHBfV8s=;
- b=ERf5w0RqNAcCNSw+3ofggkyi3/CkXO7LY6a4VUpsASFs6grEhcalMpnKF9KGPT0wZE
- 4DAQmZlu1ZwzzVZn37bpu5VFDlgRYvjJi/aEJmYjO1S1t5CNagGK1p8fJqKHtD/JQzVl
- Td0Xa1ZWEReQIbq0NgY5LDhbWvfONVzfpPXQ1qKvd9Sz6GC1GfG+qBdaiTujopU1xzxp
- DDLAawsZR9TuAM1pw08dY3b+PvlQ+DSTDRVyPx9NrRpDPdtKnOUETKnAKEuz7PtB70h6
- GFvzE/GBQwP6Fs+sm4cjAcYRIhJpLuB9OW0OzSFEuUuI0GQP5MnLk4K1Rp/ZJchNId7C
- f14A==
+ d=oss.qualcomm.com; s=google; t=1767888512; x=1768493312; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GF1iMDgQdkbluEyyapk5jvTB1KeW4yIhMBT0dL+M+VE=;
+ b=WkVPv2vN0/lLCqxu3LABz2iYOUSn0q7hJgUOY00D2hw1pEGQWD8KZPUQLLplbUofta
+ t0nMDmeI56G6orvJpsePDKdUse0/qq90/k1NI6B+kr9CfI237U7q6vesgmxQGgw21Qc0
+ eRhzh+v9Ny9pNW3C028NyxBoy1QiQ3I5HpmQgvKnHaA8vG+1kX5ddEG1w/4Gjl1W5sze
+ gwEWW62CNzoP2tiCw5KbxSefP0eFaQGRAjw9+3SqToh1RGW8tLiguP9eIl88flh9keLr
+ 7ky6Ycypu2dgXX07K2z30p1ziTwZhH8+p3RY6t/3r371QNTEprQHAm857pBo3gZ/Kkan
+ LNug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767888086; x=1768492886;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1767888512; x=1768493312;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CNGBI8FvGLRZDhlmj3LctnpObhZk9L0uydjHPHBfV8s=;
- b=sYa3eGDh9xyUI0HJl9hYDLBqFCGjxtwaExZDrkzLod5E9wW4JsfvmQR+gnggcvPfv6
- uJtvZaelCyUOMooOW6IrVar8uEDDlk+G0tg4hhHzZ8MD04nxZcStqCYZfL5KyLR5h9cg
- s7AN58y2GrGy5yBsp3k9q2aHjJg9VJbz0sv8trLhbhlKhHu8LA6p+vZotFh31KRFR/JD
- XNoZ0pyGCqD0RZvxIxxwMsrx6WIomFfZ1dQDoFMGy4Sn5On8hh/6hJ/Pdull88PRfXsM
- aRjehvQ7VOdDHEv0+XxZ9OQ2RWm+5gihuecX7OoJu8crgFLD4vr2vCa5ZPVYPkUYJv3S
- WlHQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUA34jY7B2B2qtyJPc9YhaSav5a11c7LDG7E/M0FPZ+laTHCNjxqnrJjOr6PjXNr9Egzve3IuL/Ecrr@nongnu.org
-X-Gm-Message-State: AOJu0Yx3Y9Pto0H55U0EFzfXF7U+N8OYiiGbJHoKdtxmh6AtiawUQlHr
- AHEJg82J9ly3Cang6AQCBgsxVrAOtpV07tdywJTehdLrp2c5x9T/mrPaeiMCYviQ6sSSAJM3MT+
- UD4wk00qdh6owC+MXa2+NQ7dl4QM5b3p08F20CELcB63Oczn8FKU7C9Ar
-X-Gm-Gg: AY/fxX7uG1g/+OZWmVmfykiwpV7t1nevUYYKUzI4vQWCXxLy9WQjZ8sjehKj66BMYuf
- tiLqFHsxUO9/zNAXnIhiFf22gg7Vh7bmXkREksDFFlgLYrLpvOxNwYZC7HCa6uoFpBp0zoKcphO
- xJXwPh1yR+adne6xpKUMRZ4sTLEKUAxiZUaSB458epNniGwOTfLhBiDJe8P7RNWP/N0qyMBdNOU
- azQhMysxBN0Abg1J+Xisbi/u6d4+nsmVS5+0AdTmOneeejZy+s5xsUN5mxnNft8nZ9LSS8LrKrO
- 0RZXbYbKdRmDZgIwF7F4UFR8uv+mjPwNa7uKU7//Lzd1cvdQHJPsCPcHr9G38j9hF97GVM00gLY
- yaJ+zxF4=
-X-Received: by 2002:a05:600c:3555:b0:46e:4b79:551 with SMTP id
- 5b1f17b1804b1-47d84b3b692mr93244335e9.31.1767888085858; 
- Thu, 08 Jan 2026 08:01:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGsH2U1iuocBbwACXUcygCeUEFVCKWqsOGbfyd0JpdQ/eiojSn3N7c51svqIU5LP1hZZt2KuQ==
-X-Received: by 2002:a05:600c:3555:b0:46e:4b79:551 with SMTP id
- 5b1f17b1804b1-47d84b3b692mr93243535e9.31.1767888085065; 
- Thu, 08 Jan 2026 08:01:25 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.114.194])
+ bh=GF1iMDgQdkbluEyyapk5jvTB1KeW4yIhMBT0dL+M+VE=;
+ b=wgSlD66t5lBA6GTfvNl7fLHIA5DOAmZh5bl7ItupHJGnIhnIsg34h+5LSKXzy68YHX
+ aySBkf6W8y9AJsmaTK7TqYdS5BI4yc0EuGg0+FvmAgagWA+M7yJTncqB/76GTn8mcEiX
+ gdDx8fpKO/AdYku/+ewV+rniMnJCgipbqyMqEe2Ay0Xw237qSQ4wo7seFnkCqbqCrc0A
+ z2ZoZ2CIAAx+oVbWGdURZpbDhMalfWk5x72+KL+UUw7eVf3Rhj/0kQ7JaIDnwzp+xGyY
+ K8tGLPC4N3E1nCnASMTpToD93DZB91Et07o4CPdXu8R2Wu0J4pKDHG0lLLYVs+ZuG8oU
+ rWdg==
+X-Gm-Message-State: AOJu0YwXi6DDy7ZvFSyY4JiLwNr8BoczhAWYtGoxqxM9/K/1wc1tsk7K
+ rGZKNSLnlB2zyTEb4d0xM4yoA4DH/n0wfRYfAtIXrLMr7cB2MWciOgTm2/+q8IyB6nJ01WacGdm
+ n0YItMMo4PPnqAD9brKm/2m3soxr4oKPWGkWA6N8uxLPs10yq7zIflVt+JJmqdzHX4Q==
+X-Gm-Gg: AY/fxX5r5jRcOOnv3Sy3i5hYJFP0xGB1Hm8L6M+oqIpc8N2oBwDejh60DTxX6PY9k6j
+ hbv/R1WcvDW36YR7O+HMSmmggxQtOc90oKvSjV+Gotjv8GMwo1ksioIffLejY93BOxP4G9uVLNC
+ k88JAQ6jjLplLKC5psRj3ZoV671G/dr3V/qAzJ/f9zpHONxuNlFQVbAaKawZvVNnaubY7jMxpET
+ P62bmeiXYTOCt/g2Jmvq4i4UJhPAUzT4VjAS+SBhlUzX/xIZYgU2C6EuJLyc7O1aQhgV6OIK/po
+ mHQbGKn7Ri9Zb7h3m23FL+ZAFfKRDadWw12PQNdOhfrsDYfMLAQyalStwXfyHwvOBK8FKj7xIWe
+ sCFQEeXH/WKbegAffZTg6hSYYCKHTYZhSCwbPmFO+w1M3hWPkxmuisi+MmW93U1FleXyqJYZcGQ
+ RhZ8qjHWu4ZklpgxZQ
+X-Received: by 2002:a05:7022:a84:b0:11b:9386:825c with SMTP id
+ a92af1059eb24-121f8b68c16mr6180142c88.41.1767888511536; 
+ Thu, 08 Jan 2026 08:08:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEvqNPlhMuBcJS/Y016hz1jb6rnX1Pvps3TEK3S/BqtSjH9o3HiPp0a6lSM4eR83QvCG/kqXQ==
+X-Received: by 2002:a05:7022:a84:b0:11b:9386:825c with SMTP id
+ a92af1059eb24-121f8b68c16mr6180093c88.41.1767888510828; 
+ Thu, 08 Jan 2026 08:08:30 -0800 (PST)
+Received: from grind.dc1.ventanamicro.com
+ (200-162-225-127.static-corp.ajato.com.br. [200.162.225.127])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d870dd5b1sm44657845e9.4.2026.01.08.08.01.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 08:01:24 -0800 (PST)
-Message-ID: <099574bf-8817-4c73-9d55-53e571bf8fad@redhat.com>
-Date: Thu, 8 Jan 2026 17:01:22 +0100
+ a92af1059eb24-121f2434abesm14166184c88.4.2026.01.08.08.08.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Jan 2026 08:08:30 -0800 (PST)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH] roms/opensbi: Update to v1.8.1
+Date: Thu,  8 Jan 2026 13:08:25 -0300
+Message-ID: <20260108160825.171794-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.51.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 04/29] hw/s390x/ipl: Create certificate store
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-5-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251208213247.702569-5-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=GN8F0+NK c=1 sm=1 tr=0 ts=695fd680 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ewOVoc8TSmC0cCmMeNMfEg==:17
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=HQSy5ryYd6bnL6R2S-4A:9
+ a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-GUID: gHEVrm2NXvYvhSu3b6bz97JROwjSq_22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDExOCBTYWx0ZWRfX8xGSjKeY2B9G
+ NvfE25ODLipQO/x6aPRVmgTtqHfORwvlus6hp2I4RBhVZvax+SPQcoLpDxv7Oq9jk7Ax3FQy619
+ KJ05eaod6LtUgdMzXdBcqXVe0kz9KOUuVkTcdKC3L3Zu/xE7wnT56fPN/efAQOZecEAX1MKNWUY
+ XbyHw5YV0aAEQkcVEGBO+K5h0TxK3dLZ+ItasNd8ftzwgH1DNjG5VHKMYAg/1mDXb19tYWD6RhV
+ +ykg0yOS/RPw8JiAzGMhu2Ezrukl7uofQOJy0nE44b/vEFv2dnSeVt9QpuJeWaMZM1VMPNwpZu2
+ U77raBoHlPAuSHtcL0ZYL7qf5mreT0//qNlNCLJJGGXtEOUaCeOv2aOHJIEeNlOsJtlw9TE6zm3
+ mDIdlVAzhsnA54DRRscC/p4vRtN75ssHGs/XWAiuYHp725yrrXG6UpZpft4/1gPyFBpXkTVWfRa
+ U999BqZ2II46eA9qGew==
+X-Proofpoint-ORIG-GUID: gHEVrm2NXvYvhSu3b6bz97JROwjSq_22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-08_03,2026-01-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0 lowpriorityscore=0
+ bulkscore=0 spamscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601080118
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,89 +145,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/12/2025 22.32, Zhuoying Cai wrote:
-> Create a certificate store for boot certificates used for secure IPL.
-> 
-> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
-> machine type option into the cert store.
-> 
-> Currently, only X.509 certificates in PEM format are supported, as the
-> QEMU command line accepts certificates in PEM format only.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
+Update OpenSBI and the pre-built opensbi32 and opensbi64 images to
+version 1.8.1. We're going for the intermediate/bug fix release 1.8.1
+directly due to a PMP related fix that was impacting QEMU profile CPUs.
 
-Claude just spotted a possible memory leak:
+Changelog for v1.8.1:
 
-...
-> +static void update_cert_store(S390IPLCertificateStore *cert_store,
-> +                              S390IPLCertificate *cert)
-> +{
-> +    size_t data_buf_size;
-> +    size_t keyid_buf_size;
-> +    size_t hash_buf_size;
-> +    size_t cert_buf_size;
-> +
-> +    /* length field is word aligned for later DIAG use */
-> +    keyid_buf_size = ROUND_UP(CERT_KEY_ID_LEN, 4);
-> +    hash_buf_size = ROUND_UP(CERT_HASH_LEN, 4);
-> +    cert_buf_size = ROUND_UP(cert->der_size, 4);
-> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
-> +
-> +    if (cert_store->max_cert_size < data_buf_size) {
-> +        cert_store->max_cert_size = data_buf_size;
-> +    }
-> +
-> +    cert_store->certs[cert_store->count] = *cert;
+* Typo fix in comments of sbi_hartindex_to_hartid()
+* Fix hart protection abstraction for platforms without PMP
 
-This copies the cert by value (instead of storing the pointer only), so the 
-original buffer is not used anymore afterwards ... (see below)
+Changelog for v1.8 includes, among other things:
 
-> +    cert_store->total_bytes += data_buf_size;
-> +    cert_store->count++;
-> +}
-...
-> +void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
-> +{
-> +    GPtrArray *cert_path_builder;
-> +    Error *err = NULL;
-> +
-> +    cert_path_builder = get_cert_paths(&err);
-> +    if (cert_path_builder == NULL) {
-> +        error_report_err(err);
-> +        exit(1);
-> +    }
-> +
-> +    if (cert_path_builder->len == 0) {
-> +        g_ptr_array_free(cert_path_builder, TRUE);
-> +        return;
-> +    }
-> +
-> +    if (cert_path_builder->len > MAX_CERTIFICATES - 1) {
-> +        error_report("Cert store exceeds maximum of %d certificates", MAX_CERTIFICATES);
-> +        g_ptr_array_free(cert_path_builder, TRUE);
-> +        exit(1);
-> +    }
-> +
-> +    cert_store->max_cert_size = 0;
-> +    cert_store->total_bytes = 0;
-> +
-> +    for (int i = 0; i < cert_path_builder->len; i++) {
-> +        S390IPLCertificate *cert = init_cert((char *) cert_path_builder->pdata[i], &err);
-> +        if (!cert) {
-> +            error_report_err(err);
-> +            g_ptr_array_free(cert_path_builder, TRUE);
-> +            exit(1);
-> +        }
-> +
-> +        update_cert_store(cert_store, cert);
+* IPI device ratings
+* SiFive CLINT v2 support
+* SiFive PL2 cache controller driver
+* SiFive Extensible Cache (EC) driver
+* SiFive TMC0 based HSM driver
+* SiFive SMC0 based system suspend driver
+* MPXY RPMI mailbox driver for voltage service group
+* MPXY RPMI mailbox driver for device power service group
+* MPXY RPMI mailbox driver for performance service group
 
-... so you should free cert here to avoid leaking memory!
+Check out the full release log at [1] for more info.
 
-> +    }
-> +
-> +    g_ptr_array_free(cert_path_builder, TRUE);
-> +}
-  Thomas
+[1] https://github.com/riscv-software-src/opensbi/releases/tag/v1.8
+
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+
+Alistair,
+
+Please fetch the images from:
+
+
+https://gitlab.com/danielhb/qemu/-/tree/opensbi_v1.8.1
+
+
+Thanks!
+
+
+ .../opensbi-riscv32-generic-fw_dynamic.bin    | Bin 268752 -> 270384 bytes
+ .../opensbi-riscv64-generic-fw_dynamic.bin    | Bin 273048 -> 275928 bytes
+ roms/opensbi                                  |   2 +-
+ 3 files changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin b/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin
+index 02be3a72a8..530709633c 100644
+Binary files a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin and b/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin differ
+diff --git a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin b/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin
+index cce35c65c2..fea7d35cee 100644
+Binary files a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin and b/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin differ
+diff --git a/roms/opensbi b/roms/opensbi
+index a32a910691..74434f2558 160000
+--- a/roms/opensbi
++++ b/roms/opensbi
+@@ -1 +1 @@
+-Subproject commit a32a91069119e7a5aa31e6bc51d5e00860be3d80
++Subproject commit 74434f255873d74e56cc50aa762d1caf24c099f8
+-- 
+2.51.1
 
 
