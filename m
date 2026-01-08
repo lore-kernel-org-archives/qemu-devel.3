@@ -4,94 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808A4D185F6
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 13:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 742B3D185F7
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 13:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdq2K-0000bJ-5y; Thu, 08 Jan 2026 08:26:48 -0500
+	id 1vdq3K-0002oT-71; Thu, 08 Jan 2026 08:27:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vdq2I-0000Zm-6f
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 08:26:46 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vdq2G-0003Ur-O7
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 08:26:45 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7b75e366866so870842b3a.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 05:26:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1767878803; x=1768483603; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hlp0cLmJus0NWdWxkzfURjwPNijmFYD3iP511oRuVM4=;
- b=e2tnKVFTQvDnlDOVkxaFLXq+cRBmb+PCMpefQjNcXHIXHRz8rLTf41H3rr+EgzVr4w
- zewb1CGk8BOYCoRJz0YwAI7UIOze6f8wtKbOppHQbhPMrs60tSK0Hx7uJ0v0AlL0ACZ0
- CLI2lRUY3SJibDC93V7s6e4M7FXfrkfPchqlD9s9AOallhpn5m/Qx9Vb3u1syEd7Xo3g
- 2EbQley9TmT4YZ6XUwQmVyXFdy5baK8cf8SKORKhV4/Ba+17OzdRsQlc/+1tGvKHEW7L
- QOrdiXG8+PQpWS2u0dnR0I95pGSqAIG8LBtUHVfRFIyBrV0hyhzhvRr2jFk+o4tC2998
- mY7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767878803; x=1768483603;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hlp0cLmJus0NWdWxkzfURjwPNijmFYD3iP511oRuVM4=;
- b=Z1pZqKgyl48MO7aTowtcJehCJ7H8Uli00bVf7ZZ07h1NQ0NBmKQalj5ytxhhk+Qmvw
- 1JKXqeml8Cd6j8/Jy5/25xUk/8d/ND7uXrtedQpdCuOZ6dLCvUr//MDN2TQABBD+JdXb
- EIb0Kudw4bqeidf8RlwL9W1beRqlmFBwdOoQorNqtyI4e5mcfm2qLwzhxXwBJD/u7kiZ
- 2u8swaZFV4tWQ+9EUcvrMKXPyT4vPXpD+8PKP6ROgBnmH4eoD+pH3BUNdkY24kXFuD2k
- eo0oYQkw4O3GAtaHmTeLeWwTKlMSi1sGpYyqo+t7wzdvfoFmxBB9DwIl2n+Ft3eWx2/V
- ZscA==
-X-Gm-Message-State: AOJu0Yx/+2YFjwt6Tmr4s3Okj2PB1IHddh7nqlNlQRKD11KpYZHZ6miw
- fvxUJMqAEZLWEr5V2OPdCySdQ2S/04xKHvLzUX1HIufV91xvduoEwAjJw9kvZ3dNpsjAL//BjqH
- I8k9W+1NEekfmoWPH5pJDeIbNb+zmOfctkEdcjE1YNfpjhhJmz1qOX95iqg7l6uzHj5IWAuokuQ
- ceVV4hHraLzU0mJSnvHi+WDFDZrYIDRZa5wn0mtkQ=
-X-Gm-Gg: AY/fxX4aFm1NZ/jvFQeybnD9m/ig6fVPE/B1b8VRn2txrflfCtM0d4/4DP9ZdONPZDy
- 0G0RA12zhIrx34fBvDG4SLYVxLVDeEQiACMUSFtJJ7YbgmCkxm+ZjjDytt2ShiReyGpG2NglRFo
- br0svMV7Rdv+8vlI5/moPCD/PNrkzJdyuoDk1u9A2wbcgRAc0vlgcIzEYNgRVjqdVyBZRhEaoHt
- F78VzTnoj5S7VuUEx70SPQ5pNkgpO8EDkpWvUodC5z5K1JaITDcHq+OA5ijmwnRKqxKsVErOW8b
- KfLHCQnUCJImJ7ECDovFMMccZHhqZYZCCsXOYZdtXct+NXWveJVbbKZRtRlrOiiaFpVrWm7PoZX
- XkDsvYYcsvvm0k3MNkVwxBaZwMX5l9h3lbL7LPYdK+cs2Suw4XSMD9Qk9eT19Jcu99OE2x7T8Hb
- UANU5sdqpRM4AssHB+Lg+Rn0OIa45NWOjL8erVVj+6iHyvfoZ+5pWErBc=
-X-Google-Smtp-Source: AGHT+IE+Ot3AaOtkTJWmqHHDqqs/vL5fKGaG3WCP6T/jl3AuljdcDEdc5KkF+uueJlX5EJ7VT/BgIA==
-X-Received: by 2002:a05:6a21:6da7:b0:360:b941:9907 with SMTP id
- adf61e73a8af0-3898f91b4b5mr6050725637.24.1767878802982; 
- Thu, 08 Jan 2026 05:26:42 -0800 (PST)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f6ae3f033sm2298787a91.0.2026.01.08.05.26.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 05:26:42 -0800 (PST)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH v2 2/9] target/riscv: Add the Zvfbfa extension implied rule
-Date: Thu,  8 Jan 2026 21:26:23 +0800
-Message-ID: <20260108132631.9429-3-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260108132631.9429-1-max.chou@sifive.com>
-References: <20260108132631.9429-1-max.chou@sifive.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vdq3E-0002bI-ER
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 08:27:46 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vdq3B-0003aI-Nf
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 08:27:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=XjnjC2LOeofvcD4YqjqJ341kVgYB6lNl4JQeQHegUMQ=; b=aEd2UNBUBiawTndy
+ ciCoilcDNXZN4Vz4TR/Pg0VgBT/T4yQHXLw6+HEkxv8WTtGVVk2MQp0ha0yuKolrtrFdh1moIhxyQ
+ 7VLH3O3QAkGOreDh7/9dlIWhwFgGjg4nuj8/ty3qpC022wvy5mbBaZ1s9UTnTxfSb5jy0kb7+PUkE
+ yoxSSdcXm83da+fCYY2zI64jAJWrDHmi3/va2reG4KNuGQMmdrVfOHXfw+f/uPY7CTfvufa4rqdZn
+ eJS8kqKhZyJ+FuGmpn+g3xrEoRAvIedvIwBeyLNxetcxvkEQpMU6BLlanEFqpDzgspAA41qyygitA
+ WvCjE0p3pfuRgRcPEg==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1vdq39-0000000DGC5-3EA6;
+ Thu, 08 Jan 2026 13:27:39 +0000
+Date: Thu, 8 Jan 2026 13:27:39 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ philmd@linaro.org
+Subject: Re: [PATCH] hmp-commands-info.hx: Move definition of "info accel"
+Message-ID: <aV-wy_jOgzzHsu8t@gallifrey>
+References: <20260108083249.1602654-1-armbru@redhat.com>
+ <aV91daSxVxvCGMCa@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42d.google.com
+In-Reply-To: <aV91daSxVxvCGMCa@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
+X-Uptime: 13:15:45 up 73 days, 12:52,  2 users,  load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +71,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+* Daniel P. Berrangé (berrange@redhat.com) wrote:
+> On Thu, Jan 08, 2026 at 09:32:49AM +0100, Markus Armbruster wrote:
+> > Commit c10eb740108 (accel/system: Add 'info accel' on human monitor)
+> > inserted "info accel" in the middle of "info sync-profile".  Move it
+> > behind "info sync-profile".
+> 
+> Opps, we have this kind of mistake over & over again. The .hx format
+> is really horrible and easy to make this mistake with, and makes me
+> rather wish we could eliminate it :-(
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d8e2a7ced5..b3caf26704 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2617,6 +2617,15 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
-     },
- };
- 
-+static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_zvfbfa),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_zve32f), CPU_CFG_OFFSET(ext_zfbfmin),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
-     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
-     &RVM_IMPLIED, &RVV_IMPLIED, NULL
-@@ -2630,8 +2639,8 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZHINX_IMPLIED, &ZHINXMIN_IMPLIED, &ZICNTR_IMPLIED,
-     &ZIHPM_IMPLIED, &ZK_IMPLIED, &ZKN_IMPLIED,
-     &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
--    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED,
--    &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
-+    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED, &ZVE64X_IMPLIED,
-+    &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
-     &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
-     &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
-     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
+Yeh; would the tools need any change at all if we were to change it 
+
+ from:  --------------->
+    {
+        .name       = "accel",
+        .args_type  = "",
+        .params     = "",
+        .help       = "show accelerator statistics",
+    },
+    
+SRST
+  ``info accel``
+    Show accelerator statistics.
+ERST
+
+
+ to:  --------------->
+    {
+        .name       = "accel",
+        .args_type  = "",
+        .params     = "",
+        .help       = "show accelerator statistics",
+SRST
+  ``info accel``
+    Show accelerator statistics.
+ERST
+    },
+
+ --------------------
+    
+
+which might stop them separating from each other?
+
+I can also imagine we could pretty easily add a check for a
+definition that's missing an SRST/ERST section or an SRST/ERST
+section that's missing a .name entry.
+
+It also feels like it wouldn't be that hard to do:
+
+s/SRST/#ifdef SRST/
+s/ERST/#endif/
+s@HXCOMM@//@
+
+and then we can just #include the .hx files directly as headers
+and fix up the docs script.
+
+Dave
+
+> 
+> 
+> > 
+> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> > ---
+> >  hmp-commands-info.hx | 24 ++++++++++++------------
+> >  1 file changed, 12 insertions(+), 12 deletions(-)
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> > 
+> > diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> > index 41674dcbe1..74c741f80e 100644
+> > --- a/hmp-commands-info.hx
+> > +++ b/hmp-commands-info.hx
+> > @@ -267,18 +267,6 @@ ERST
+> >          .cmd        = hmp_info_sync_profile,
+> >      },
+> >  
+> > -    {
+> > -        .name       = "accel",
+> > -        .args_type  = "",
+> > -        .params     = "",
+> > -        .help       = "show accelerator statistics",
+> > -    },
+> > -
+> > -SRST
+> > -  ``info accel``
+> > -    Show accelerator statistics.
+> > -ERST
+> > -
+> >  SRST
+> >    ``info sync-profile [-m|-n]`` [*max*]
+> >      Show synchronization profiling info, up to *max* entries (default: 10),
+> > @@ -294,6 +282,18 @@ SRST
+> >      being coalesced.
+> >  ERST
+> >  
+> > +    {
+> > +        .name       = "accel",
+> > +        .args_type  = "",
+> > +        .params     = "",
+> > +        .help       = "show accelerator statistics",
+> > +    },
+> > +
+> > +SRST
+> > +  ``info accel``
+> > +    Show accelerator statistics.
+> > +ERST
+> > +
+> >      {
+> >          .name       = "kvm",
+> >          .args_type  = "",
+> > -- 
+> > 2.52.0
+> > 
+> > 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
 -- 
-2.43.7
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
