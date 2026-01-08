@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2497AD1D482
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C9DCD1D478
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 17:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdtR1-0004S6-JL; Thu, 08 Jan 2026 12:04:32 -0500
+	id 1vdtRy-0007T3-HG; Thu, 08 Jan 2026 12:05:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdtQv-0004I2-M3
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 12:04:25 -0500
+ id 1vdtRd-0006Hx-TI
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 12:05:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdtQu-0006vL-DD
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 12:04:25 -0500
+ id 1vdtRb-0007Cy-QE
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 12:05:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767891863;
+ s=mimecast20190719; t=1767891905;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o4SBR89h6eLwGZj35KLKhD3YguhrIDbrsbofZdkSSws=;
- b=JWWbSw5kwpGhlk5tb9oB0WB/LKYsBDsmtIHKlrGRSmrdssf5r2FRNBPbGasRaTI+GUAqVx
- JKacWlmrIasTCKEt1FWmjnZB6pmXTCuG0+G3UbNPcUsr7lYxymRZnIMqd2AX6sWiv7wiRk
- fgBtnnWOX+5uuatkZPQmutygF1TjagA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ADQ88xDE2rpP46nxPCt+L4D0RKvsTUELfinlYd9oUZ4=;
+ b=NOufkiitbdz2IBw046ipTf4zx+BMesgf/9QRLnVUu4rKRlTEAgI9+8tWomm7oufacKAHsk
+ cQYI8yfvG0NXEth0mK9afskM7YSl0ImqJ+WE+8U1uvqyNSUN6LmVdaBnEWg33ZlVDj3eHa
+ KOGT1B8wBLxLTp2MmuzAQjiKlwNhwlM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-226-Z6uoXxfuMeW7Wx2dfdB1EA-1; Thu,
- 08 Jan 2026 12:04:18 -0500
-X-MC-Unique: Z6uoXxfuMeW7Wx2dfdB1EA-1
-X-Mimecast-MFC-AGG-ID: Z6uoXxfuMeW7Wx2dfdB1EA_1767891856
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-8UCTbOYhMLaThzENuCpmPw-1; Thu,
+ 08 Jan 2026 12:05:01 -0500
+X-MC-Unique: 8UCTbOYhMLaThzENuCpmPw-1
+X-Mimecast-MFC-AGG-ID: 8UCTbOYhMLaThzENuCpmPw_1767891896
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6DB2E19560B7; Thu,  8 Jan 2026 17:04:16 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C089219560AF; Thu,  8 Jan 2026 17:04:56 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.44])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 99C031955F44; Thu,  8 Jan 2026 17:04:12 +0000 (UTC)
+ id 8A39419560A2; Thu,  8 Jan 2026 17:04:52 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -61,9 +61,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
  Kevin Wolf <kwolf@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 07/24] util: set the name for the 'main' thread
-Date: Thu,  8 Jan 2026 17:03:21 +0000
-Message-ID: <20260108170338.2693853-8-berrange@redhat.com>
+Subject: [PATCH v5 16/24] util: don't skip error prefixes when QMP is active
+Date: Thu,  8 Jan 2026 17:03:30 +0000
+Message-ID: <20260108170338.2693853-17-berrange@redhat.com>
 In-Reply-To: <20260108170338.2693853-1-berrange@redhat.com>
 References: <20260108170338.2693853-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -95,53 +95,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default main thread name is undefined, so use a constructor to
-explicitly set it to 'main'. This constructor is marked to run early
-as the thread name is intended to be used in error reporting / logs
-which may be triggered very early in QEMU execution.
+The vreport() function will print to HMP if available, otherwise
+to stderr. In the event that vreport() is called during execution
+of a QMP command, it will print to stderr, but mistakenly omit the
+message prefixes (timestamp, guest name, program name).
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/qemu-thread-posix.c | 6 ++++++
- util/qemu-thread-win32.c | 6 ++++++
- 2 files changed, 12 insertions(+)
+ util/error-report.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index b1c127dbe3..afeac9ecad 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -22,6 +22,12 @@
- #include <pthread_np.h>
- #endif
+diff --git a/util/error-report.c b/util/error-report.c
+index b262ad01cb..872158ad90 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -159,7 +159,7 @@ static void print_loc(void)
+     int i;
+     const char *const *argp;
  
-+static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-+qemu_thread_init(void)
-+{
-+    qemu_thread_set_name("main");
-+}
-+
- static void error_exit(int err, const char *msg)
+-    if (!monitor_cur() && g_get_prgname()) {
++    if (!monitor_cur_is_hmp() && g_get_prgname()) {
+         error_printf("%s:", g_get_prgname());
+         sep = " ";
+     }
+@@ -203,14 +203,14 @@ static void vreport(report_type type, const char *fmt, va_list ap)
  {
-     fprintf(stderr, "qemu: %s: %s\n", msg, strerror(err));
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index 4d2d663a9a..8ca6429ad3 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -22,6 +22,12 @@ typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
- static pSetThreadDescription SetThreadDescriptionFunc;
- static HMODULE kernel32_module;
+     gchar *timestr;
  
-+static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-+qemu_thread_init(void)
-+{
-+    qemu_thread_set_name("main");
-+}
-+
- static bool load_set_thread_description(void)
- {
-     static gsize _init_once = 0;
+-    if (message_with_timestamp && !monitor_cur()) {
++    if (message_with_timestamp && !monitor_cur_is_hmp()) {
+         timestr = real_time_iso8601();
+         error_printf("%s ", timestr);
+         g_free(timestr);
+     }
+ 
+     /* Only prepend guest name if -msg guest-name and -name guest=... are set */
+-    if (error_with_guestname && error_guest_name && !monitor_cur()) {
++    if (error_with_guestname && error_guest_name && !monitor_cur_is_hmp()) {
+         error_printf("%s ", error_guest_name);
+     }
+ 
 -- 
 2.52.0
 
