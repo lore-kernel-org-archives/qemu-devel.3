@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6CBD148A3
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 07:17:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5213CD148B3
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 07:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdk6V-0006ur-Aw; Thu, 08 Jan 2026 02:06:43 -0500
+	id 1vdk6V-0006up-AF; Thu, 08 Jan 2026 02:06:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdk6S-0006pM-OR
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:06:41 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdk6R-0006mR-AJ
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:06:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdk6Q-0006cQ-Dl
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:06:40 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vdk6O-0006bk-SV
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 02:06:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767855997;
+ s=mimecast20190719; t=1767855996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kHXcfqUpdUadtzjstg1lmm3/GgEIWG1dn0oWD2mhTp0=;
- b=LIfR2MDRAok5wog110Q9w2tR3ry/BvsbbyCtT6QRmYuznY5IH0KV3fW+3WPVt7q/W5xYH/
- nXy/mx0DRz6QGWsebc97cAYzkQaNhkV74lO84UKkidIajwv7EEmg4QVewTSxLb79t0zD+c
- sIjImupBYW+6nzPhEIMAzrfTqeAE6+c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=5rBT0wM/0nCOtv8moP8RiQX1LfyxaSmtC3iGS80HRSU=;
+ b=WtitmyUvUHqqVCFnDX7qigs8lrlEguT6JM0v8XOBLQnp2cMnhRhEmKPV8mGSrxEeJJEumq
+ uU/zfR16FHl3AKGPhROA5j0kgwYQL6/Hm0tu/sPdMsItTEb9dYXjhLZqyh4yb5BUaEGPZG
+ QCQt5BBjf9Q2Xx+71mTAIcQlF8TlfFI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-4v7DRzduPa2bXC5MBjGXfA-1; Thu,
- 08 Jan 2026 02:06:33 -0500
-X-MC-Unique: 4v7DRzduPa2bXC5MBjGXfA-1
-X-Mimecast-MFC-AGG-ID: 4v7DRzduPa2bXC5MBjGXfA_1767855992
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-mcXG55-WNfOiC5_Cnq892A-1; Thu,
+ 08 Jan 2026 02:06:32 -0500
+X-MC-Unique: mcXG55-WNfOiC5_Cnq892A-1
+X-Mimecast-MFC-AGG-ID: mcXG55-WNfOiC5_Cnq892A_1767855992
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D9C71800357; Thu,  8 Jan 2026 07:06:32 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C280B1956080; Thu,  8 Jan 2026 07:06:31 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7DF141800240; Thu,  8 Jan 2026 07:06:31 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73FB830002D2; Thu,  8 Jan 2026 07:06:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 20B6321E61BB; Thu, 08 Jan 2026 08:06:26 +0100 (CET)
+ id 14ECB21E61B5; Thu, 08 Jan 2026 08:06:26 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL v2 12/17] error: Use error_setg_file_open() for simplicity and
- consistency
-Date: Thu,  8 Jan 2026 08:06:20 +0100
-Message-ID: <20260108070625.1586474-13-armbru@redhat.com>
+Cc: richard.henderson@linaro.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PULL v2 09/17] qga: Use error_setg_file_open() for better error
+ messages
+Date: Thu,  8 Jan 2026 08:06:17 +0100
+Message-ID: <20260108070625.1586474-10-armbru@redhat.com>
 In-Reply-To: <20260108070625.1586474-1-armbru@redhat.com>
 References: <20260108070625.1586474-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -84,208 +85,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace
+Error messages change from
 
-    error_setg_errno(errp, errno, MSG, FNAME);
+    open("FNAME"): REASON
 
-by
+to
 
-    error_setg_file_open(errp, errno, FNAME);
-
-where MSG is "Could not open '%s'" or similar.
-
-Also replace equivalent uses of error_setg().
-
-A few messages lose prefixes ("net dump: ", "SEV: ", __func__ ": ").
-We could put them back with error_prepend().  Not worth the bother.
+    Could not open 'FNAME': REASON
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Message-ID: <20251121121438.1249498-11-armbru@redhat.com>
-[Conflict with commit 26b4a6ffe7f (monitor/hmp: Merge
-hmp-cmds-target.c within hmp-cmds.c) resolved]
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Message-ID: <20251121121438.1249498-6-armbru@redhat.com>
 ---
- hw/9pfs/9p-local.c       | 2 +-
- hw/acpi/core.c           | 2 +-
- hw/core/loader.c         | 2 +-
- hw/pci-host/xen_igd_pt.c | 2 +-
- monitor/hmp-cmds.c       | 2 +-
- net/dump.c               | 2 +-
- net/tap-bsd.c            | 6 +++---
- net/tap-linux.c          | 2 +-
- target/i386/sev.c        | 6 ++----
- util/vfio-helpers.c      | 5 ++---
- 10 files changed, 14 insertions(+), 17 deletions(-)
+ qga/commands-linux.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 31e216227c..376b377698 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1456,7 +1456,7 @@ static int local_init(FsContext *ctx, Error **errp)
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index c639a60a94..ae2c4d442a 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -1503,14 +1503,15 @@ static void transfer_vcpu(GuestLogicalProcessor *vcpu, bool sys2vcpu,
  
-     data->mountfd = open(ctx->fs_root, O_DIRECTORY | O_RDONLY);
-     if (data->mountfd == -1) {
--        error_setg_errno(errp, errno, "failed to open '%s'", ctx->fs_root);
-+        error_setg_file_open(errp, errno, ctx->fs_root);
-         goto err;
+     dirfd = open(dirpath, O_RDONLY | O_DIRECTORY);
+     if (dirfd == -1) {
+-        error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
++        error_setg_file_open(errp, errno, dirpath);
+         return;
      }
  
-diff --git a/hw/acpi/core.c b/hw/acpi/core.c
-index 2b74bed882..4e030d8e3b 100644
---- a/hw/acpi/core.c
-+++ b/hw/acpi/core.c
-@@ -277,7 +277,7 @@ void acpi_table_add(const QemuOpts *opts, Error **errp)
-         int fd = open(*cur, O_RDONLY | O_BINARY);
- 
-         if (fd < 0) {
--            error_setg(errp, "can't open file %s: %s", *cur, strerror(errno));
-+            error_setg_file_open(errp, errno, *cur);
-             goto out;
-         }
- 
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 89d67d2760..16c11a4643 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -380,7 +380,7 @@ bool load_elf_hdr(const char *filename, void *hdr, bool *is64, Error **errp)
- 
-     fd = open(filename, O_RDONLY | O_BINARY);
-     if (fd < 0) {
--        error_setg_errno(errp, errno, "Failed to open file: %s", filename);
-+        error_setg_file_open(errp, errno, filename);
-         return false;
-     }
-     if (read(fd, hdr, EI_NIDENT) != EI_NIDENT) {
-diff --git a/hw/pci-host/xen_igd_pt.c b/hw/pci-host/xen_igd_pt.c
-index 5dd17ef236..f6016f2cd5 100644
---- a/hw/pci-host/xen_igd_pt.c
-+++ b/hw/pci-host/xen_igd_pt.c
-@@ -55,7 +55,7 @@ static void host_pci_config_read(int pos, int len, uint32_t *val, Error **errp)
- 
-     config_fd = open(path, O_RDWR);
-     if (config_fd < 0) {
--        error_setg_errno(errp, errno, "Failed to open: %s", path);
-+        error_setg_file_open(errp, errno, path);
-         goto out;
-     }
- 
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index f7ff6ec90e..5a673cddb2 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -740,7 +740,7 @@ static uint64_t vtop(void *ptr, Error **errp)
- 
-     fd = open("/proc/self/pagemap", O_RDONLY);
+     fd = openat(dirfd, fn, sys2vcpu ? O_RDONLY : O_RDWR);
      if (fd == -1) {
--        error_setg_errno(errp, errno, "Cannot open /proc/self/pagemap");
-+        error_setg_file_open(errp, errno, "/proc/self/pagemap");
-         return -1;
-     }
+         if (errno != ENOENT) {
+-            error_setg_errno(errp, errno, "open(\"%s/%s\")", dirpath, fn);
++            error_setg_errno(errp, errno, "could not open %s/%s",
++                             dirpath, fn);
+         } else if (sys2vcpu) {
+             vcpu->online = true;
+             vcpu->can_offline = false;
+@@ -1712,7 +1713,7 @@ static void transfer_memory_block(GuestMemoryBlock *mem_blk, bool sys2memblk,
+     dirfd = open(dirpath, O_RDONLY | O_DIRECTORY);
+     if (dirfd == -1) {
+         if (sys2memblk) {
+-            error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
++            error_setg_file_open(errp, errno, dirpath);
+         } else {
+             if (errno == ENOENT) {
+                 result->response = GUEST_MEMORY_BLOCK_RESPONSE_TYPE_NOT_FOUND;
+@@ -1937,7 +1938,7 @@ static GuestDiskStatsInfoList *guest_get_diskstats(Error **errp)
  
-diff --git a/net/dump.c b/net/dump.c
-index 581234b775..0c39f09892 100644
---- a/net/dump.c
-+++ b/net/dump.c
-@@ -111,7 +111,7 @@ static int net_dump_state_init(DumpState *s, const char *filename,
- 
-     fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | O_BINARY, 0644);
-     if (fd < 0) {
--        error_setg_errno(errp, errno, "net dump: can't open %s", filename);
-+        error_setg_file_open(errp, errno, filename);
-         return -1;
-     }
- 
-diff --git a/net/tap-bsd.c b/net/tap-bsd.c
-index bbf84d1828..3fd300d46f 100644
---- a/net/tap-bsd.c
-+++ b/net/tap-bsd.c
-@@ -68,7 +68,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
-         }
-     }
-     if (fd < 0) {
--        error_setg_errno(errp, errno, "could not open %s", dname);
-+        error_setg_file_open(errp, errno, dname);
-         return -1;
-     }
- 
-@@ -118,7 +118,7 @@ static int tap_open_clone(char *ifname, int ifname_size, Error **errp)
- 
-     fd = RETRY_ON_EINTR(open(PATH_NET_TAP, O_RDWR));
-     if (fd < 0) {
--        error_setg_errno(errp, errno, "could not open %s", PATH_NET_TAP);
-+        error_setg_file_open(errp, errno, PATH_NET_TAP);
-         return -1;
-     }
- 
-@@ -166,7 +166,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
-         snprintf(dname, sizeof dname, "/dev/%s", ifname);
-         fd = RETRY_ON_EINTR(open(dname, O_RDWR));
-         if (fd < 0 && errno != ENOENT) {
--            error_setg_errno(errp, errno, "could not open %s", dname);
-+            error_setg_file_open(errp, errno, dname);
-             return -1;
-         }
-     }
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index 2a90b58467..909c4f1fcf 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -57,7 +57,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
-     if (fd < 0) {
-         fd = RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
-         if (fd < 0) {
--            error_setg_errno(errp, errno, "could not open %s", PATH_NET_TUN);
-+            error_setg_file_open(errp, errno, PATH_NET_TUN);
-             return -1;
-         }
-     }
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index fb5a3b5d77..1d70f96ec1 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -892,8 +892,7 @@ static SevCapability *sev_get_capabilities(Error **errp)
- 
-     fd = open(sev_device, O_RDWR);
-     if (fd < 0) {
--        error_setg_errno(errp, errno, "SEV: Failed to open %s",
--                         sev_device);
-+        error_setg_file_open(errp, errno, sev_device);
-         g_free(sev_device);
+     fp = fopen(diskstats, "r");
+     if (fp  == NULL) {
+-        error_setg_errno(errp, errno, "open(\"%s\")", diskstats);
++        error_setg_file_open(errp, errno, diskstats);
          return NULL;
      }
-@@ -1820,8 +1819,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-     devname = object_property_get_str(OBJECT(sev_common), "sev-device", NULL);
-     sev_common->sev_fd = open(devname, O_RDWR);
-     if (sev_common->sev_fd < 0) {
--        error_setg(errp, "%s: Failed to open %s '%s'", __func__,
--                   devname, strerror(errno));
-+        error_setg_file_open(errp, errno, devname);
-         g_free(devname);
-         return -1;
-     }
-diff --git a/util/vfio-helpers.c b/util/vfio-helpers.c
-index 44b457c442..c619516163 100644
---- a/util/vfio-helpers.c
-+++ b/util/vfio-helpers.c
-@@ -309,7 +309,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
-     s->container = open("/dev/vfio/vfio", O_RDWR);
  
-     if (s->container == -1) {
--        error_setg_errno(errp, errno, "Failed to open /dev/vfio/vfio");
-+        error_setg_file_open(errp, errno, "/dev/vfio/vfio");
-         return -errno;
-     }
-     if (ioctl(s->container, VFIO_GET_API_VERSION) != VFIO_API_VERSION) {
-@@ -333,8 +333,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
+@@ -2048,7 +2049,7 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
  
-     s->group = open(group_file, O_RDWR);
-     if (s->group == -1) {
--        error_setg_errno(errp, errno, "Failed to open VFIO group file: %s",
--                         group_file);
-+        error_setg_file_open(errp, errno, group_file);
-         g_free(group_file);
-         ret = -errno;
-         goto fail_container;
+     fp = fopen(cpustats, "r");
+     if (fp  == NULL) {
+-        error_setg_errno(errp, errno, "open(\"%s\")", cpustats);
++        error_setg_file_open(errp, errno, cpustats);
+         return NULL;
+     }
+ 
 -- 
 2.52.0
 
