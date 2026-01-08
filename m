@@ -4,80 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 189EED185CC
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCB5D185CC
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdneQ-0005ig-7s; Thu, 08 Jan 2026 05:53:58 -0500
+	id 1vdngI-0001qJ-S9; Thu, 08 Jan 2026 05:55:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdneO-0005d5-83
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:53:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdneL-0006wz-Rb
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:53:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767869632;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5CfPftgw3Q+8eTMwFXc2clAAbcNS49rqxgbg8VwT4Ac=;
- b=jCRmbYZSqTqyMAuHsdHXSSY+mBH5OSzNDJgJNeLpmFuHwTvAeJFILNj35W6wyiVAJa0o2a
- LvVADwUPOhVTgUYzXiXOqrwViGymj+xoMdBlPqgsTJ4AbTdLrCYFjvRe9LyZhEbK7oTrGI
- HAQaYausZft7Vbw3bnENQoqfXSm8C2Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-f1tYI80MNlSxCMK99AghQQ-1; Thu,
- 08 Jan 2026 05:53:49 -0500
-X-MC-Unique: f1tYI80MNlSxCMK99AghQQ-1
-X-Mimecast-MFC-AGG-ID: f1tYI80MNlSxCMK99AghQQ_1767869628
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C04971956053; Thu,  8 Jan 2026 10:53:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.44])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4A641956048; Thu,  8 Jan 2026 10:53:44 +0000 (UTC)
-Date: Thu, 8 Jan 2026 10:53:39 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 2/2] dump/win_dump: Use stubs on non-Windows hosts like
- POSIX
-Message-ID: <aV-Ms5PQDCiIA86v@redhat.com>
-References: <20260107180519.50820-1-philmd@linaro.org>
- <20260107180519.50820-3-philmd@linaro.org>
- <aV902eZnijhEnONE@redhat.com>
- <0438ddd7-6061-4b7b-a995-0ec32f250f95@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdngE-0001jm-Oz
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:55:53 -0500
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdngC-0007LR-RA
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:55:50 -0500
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-432d28870ddso211267f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:55:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767869747; x=1768474547; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fbHVa2zMXmTT23KDs5oE7gtAg08fYL8bf/s51vxqAms=;
+ b=oTD5Bzv871ADSGvtccwYTs+UwIsQIMWlp/ZA8EJwXx7yBkXzwO+QUy9+key7ojmr1+
+ ZuWe1CyoJg2K/DOxcNmRPjjE7M7pWeBdEUB5vA7WXBgnR3slF/J+FqQNXBEMaGDCw2JM
+ msMn5RBA30tbAbAtFr7KoAiFm/USqsIhiLcOaCsHUqIOYhzME7SsjRat9zKUQ7oh4QQ9
+ AirdHj2JzwGneeEautDzSx3y+zT3dg9rofhHaL69+k1WTW0AH5jYtI9eV3qRJ1bzzxDK
+ gG6W61rDrmn/BiF/EWn1hhr2GO2ZcfPOFwUVOsy7JQ8UYLVXNd+Rgl+4XOhaxY/JsLik
+ c5VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767869747; x=1768474547;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fbHVa2zMXmTT23KDs5oE7gtAg08fYL8bf/s51vxqAms=;
+ b=dJaX2rryM+QB7djWPQzjDNUhXVPMi3Z+I44mv8lt3lfgMxvqmoqRoE7zYDG7XKnlg0
+ BnnM+HE2AGUaPlPr5FoMtscehbq1n5YwDSVOaI+28xiI+Gk14PjQLlJzrUfyh6BtaV2H
+ P3waFBR7wMkNxcKjRP4uDVLFa+y+Gh4EIP4YXk/ZoYVKAEuXlDbaBg8ZFEoCoLYu6ok2
+ A2U78NW8U5Vevl+MrYBsocicjhD2ni1NyV6NOR72OKff0woK15OSDLrjasPiXurNVZcG
+ Ay2gA5UwcvXNDDYnP0AmEoeLxJMwQvv2tUPIbsQLJ9evOqLNAUG2UUDs6CMNeJO4qvMq
+ NJsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVz8UK3xs10vV6ADAVfUiQCAsEGHPeReoLIII9NyLJoMgN+GGypAM7jgizDW9tDjo+bHHwqlz3tuEGP@nongnu.org
+X-Gm-Message-State: AOJu0YxVwze1pxt+mqlzMktajErqdGwq/TTJpG/3atDmduE6KmZaMtGS
+ izM9DUP9KBZbu73UKJLJ/8y1vws8HiGE42CVrRRpu0Vv3EHkdIiqaQclg3lW3NGWZAQ=
+X-Gm-Gg: AY/fxX5UEQ850tOzWNHNOIOpENtCQQHfZyefME7i5cVI5nLtoPDtj38g/NE9AX87AHL
+ wiQE1QudZ0+JeKYagkTUSifHE0IIveQ8Xub0+FPJtj0sf9tmPKpotPRPsUEdPOn24mb6FI0mVmd
+ mMyo87zR9sma6E0V+9D4uRi/ZFtMxa/Lb0BYD8nyLJ0SydsWHbcgBxWpLhK+uh0tLKgVnPxGZBC
+ 1TLGEWJMJLwnYLt2A43e2HzcT116z2efkkKFSK1BH3aLsWlIbmgZ9AhKrL1deY/w+0Fr8djsf9e
+ KqTvRz6u4FWP6WUpBtr1ARkFl1psJaWhjYezy5N18yo/lu328T09Uc6XM+HuZA5AtOAr0tB1543
+ XSKvCcnRtpXyqTkrDkREiBR2BrscocLQHoxSFqhol3owcM6bIFvrDRIW6piSP+E8/sPofIXuEHV
+ Pwq/aoX3uXVR9+Zyd55h45VIW4eY7nzCpb8JTt60GP3i9jZGW1rr+wpQ==
+X-Google-Smtp-Source: AGHT+IFulqlBStm6OV5CAndDzBCDFiMnNgKs86HMu0FaixJPDboTe2cBAx+ttiqN1lYiSoVyzinySA==
+X-Received: by 2002:a05:6000:40df:b0:431:a63:d3d3 with SMTP id
+ ffacd0b85a97d-432c3632b3dmr7483939f8f.24.1767869746745; 
+ Thu, 08 Jan 2026 02:55:46 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd0e16f4sm16174930f8f.11.2026.01.08.02.55.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Jan 2026 02:55:46 -0800 (PST)
+Message-ID: <1dcc1199-26c1-45f0-8cc8-548f1ae82041@linaro.org>
+Date: Thu, 8 Jan 2026 11:55:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/50] bsd-user: Fix __i386__ test for
+ TARGET_HAS_STAT_TIME_T_EXT
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
+References: <20260108053018.626690-1-richard.henderson@linaro.org>
+ <20260108053018.626690-5-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260108053018.626690-5-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0438ddd7-6061-4b7b-a995-0ec32f250f95@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,68 +102,19 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 08, 2026 at 11:51:00AM +0100, Philippe Mathieu-Daudé wrote:
-> On 8/1/26 10:11, Daniel P. Berrangé wrote:
-> > On Wed, Jan 07, 2026 at 07:05:19PM +0100, Philippe Mathieu-Daudé wrote:
-> > > Rather than compiling the same content for all targets (unused
-> > > most of the time, i.e. qemu-system-avr ...), build it once per
-> > > POSIX hosts. Check Windows host (less likely) before x86 host.
-> > > 
-> > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > ---
-> > >   dump/win_dump-stubs.c | 21 +++++++++++++++++++++
-> > >   dump/win_dump.c       | 12 ++++++++----
-> > >   dump/meson.build      |  6 +++++-
-> > >   3 files changed, 34 insertions(+), 5 deletions(-)
-> > >   create mode 100644 dump/win_dump-stubs.c
-> > 
-> > snip
-> > 
-> > > diff --git a/dump/meson.build b/dump/meson.build
-> > > index 4277ce9328a..0aaf3f65d9c 100644
-> > > --- a/dump/meson.build
-> > > +++ b/dump/meson.build
-> > > @@ -1,2 +1,6 @@
-> > >   system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
-> > > -specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: files('win_dump.c'))
-> > > +if host_os == 'windows'
-> > > +  system_ss.add(files('win_dump.c'))
-> > > +else
-> > > +  system_ss.add(files('win_dump-stubs.c'))
-> > > +endif
-> > 
-> > This is very wrong.
-> > 
-> > The win_dump.c  file has no association with Windows hosts. It is about
-> > creating crash dumps of Windows *guests* in the Windows dump format. The
-> > current conditional which builds it on TARGET_X86_64 is correct.
+On 8/1/26 06:29, Richard Henderson wrote:
+> The target test is TARGET_I386, not __i386__.
 > 
-> Great to know this is a *guest* feature and not a *host* one.
-> 
-> Something else is currently wrong, because this file is built with
-> qemu-system-avr on macOS.
+> Cc: Warner Losh <imp@bsdimp.com>
+> Cc: Kyle Evans <kevans@freebsd.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   bsd-user/syscall_defs.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Why is that a problem ? The entire file content is surrounded with
-
-  #if defined(TARGET_X86_64)
-  ...the impl...
-  #else
-  ...stubs...
-  #endif
-
-soo qemu-system-avr will be building the stubs which is fine. macOS
-is not a factor, since QEMU is fine to emulate Windows guests on
-macOS hosts and thus Win dump is in scope for macOS
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
