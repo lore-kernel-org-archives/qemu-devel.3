@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99413D0D146
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Jan 2026 23:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A472FCD585E
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 00:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vddCa-00059g-IH; Wed, 07 Jan 2026 18:44:32 -0500
+	id 1vde1D-000197-5k; Wed, 07 Jan 2026 19:36:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vddCY-00050y-82
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 18:44:30 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vde1C-00018z-GX
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 19:36:50 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vddCV-0007e5-UZ
- for qemu-devel@nongnu.org; Wed, 07 Jan 2026 18:44:29 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2a1022dda33so16984325ad.2
- for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 15:44:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vde1A-0008N8-Is
+ for qemu-devel@nongnu.org; Wed, 07 Jan 2026 19:36:50 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7bb710d1d1dso2905777b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Jan 2026 16:36:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767829466; x=1768434266; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2xsSiA6IJiYIuZkZVeO4oiNpAiKFrrFc6oCDea+yLas=;
- b=Mw/cvm+DhHEYVogE285agkI5qorbkhY0RahPz3g1Y55AmxWLXbjWDe41+KVfxmfcfs
- k8Pk8x2syjQ3VnzCLTm/AhdrKEJlQAXRsbFYLJ8NA/nABK8JKakIIMqXxVWuE5zgn8Si
- xi+WlLh+42cY/8StIKlC6qrS+XL8TyT3vzZeQnvTCIZObKV0IumtIr3a7wcb+1NkpdJU
- EZCwIjj5C8ivIK055dXziz4zthRSDDIiYmCtXurWFdxpQElUSZvuaQAEYYIQR3xRQ7Gs
- X2DNjcD/rZKgkDpOk2bOySi7ushW/RnN+UO/UsVO+l2FUaq+C9U81duKrZKAF5JKipse
- 0QKg==
+ d=linaro.org; s=google; t=1767832606; x=1768437406; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=c8+xGVAIC4XK4G9ltEpkv7lw24oL73nwTjDALAdlg50=;
+ b=OopGhyuA+NaV6plv47o4wQsntCWhvuS2q3x1PRpGKWT7rNp93lDAvKTRrUYvXALGRd
+ kynJOtWbe5W58xDbrqoXnisBUOsKZ56FIPSEcgOFJCaFAj+LzydKi1oEg6/aEvYBhHLJ
+ ameSsZuM8GSvPLUPja0TnKyB7FLNJG5k83qO90XWwcwlXAjZYsCLr0lI+w1+dQAqXb1p
+ PJOb0X9Y/btjGwhH5BILZ08sgpfTfOvaLgpX2A8BTkORNbSx6W5wahTLj7DZE5UJkfOy
+ OHsZycm+2jnCBHaOV7dUWDbQ6JVaAeOVK6Q0gKNZZYUXxrDbZrWYYoy4efcXjU+qE/fZ
+ pnoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767829466; x=1768434266;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1767832606; x=1768437406;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2xsSiA6IJiYIuZkZVeO4oiNpAiKFrrFc6oCDea+yLas=;
- b=S7I0VjFCqT11QNtPD2Wduc3zuYMwrY3tqG1IFiUS/pTSGCB5J5zelydc8IoUIfweG8
- EX5z9E3FqvxIMjzh4XzxfMq3A1tlZ4F7PjelBtv3Z1QqZ7EldqVtmh8rOp6vO+w/FePz
- KyFjawea4bKZQU/pMRTs6bRAMYpbZG7VLizkSeYAai2yduQY71FeAwn++KfCw3976W05
- wlYYqcvIFSPfiCUmhuEhSYFcUrO1FscTRD81uv8kRo+Fe3dyCY7NyHUVzd/w1Jf+oWly
- 59dvuUvxdvO1n32pnCa4mslELOuZKTBIdrd1FQgRTqr3P7aWJ7ktwkd852l+4zZCU87s
- NUYQ==
+ bh=c8+xGVAIC4XK4G9ltEpkv7lw24oL73nwTjDALAdlg50=;
+ b=uaAAni+GknHoPFzLa9Vo6CpatsRowPOJcIOzTw9lcsm6pahPC2Hyu9bancan2+BwHU
+ ZomCxo5BOuB96YGZERg1wWqXO2msbn2ngY8rmVlu0pyE0WBukfdqHwvficXRPoMy70A7
+ AgpVRW06ON1uVEqESQ5DW6PILF7PFmyd1coKoaBxsGBVdWz+pzRzhpiX+IjrvWAjo2L8
+ i4apakyyfkVQXSs6a+hlh/SJAxd1Ahi7fjTAF9hfT9KFFV1/gM+9F69BfTIFLxtixrk1
+ pPznDj1wbv6ZC335OmDT+2EfWTZZew5MFiUwEnDTGevRUKbOlB7deujlC2YZtzgahN8Q
+ WR6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMG4d14/TjPgiE/oPUCrWBD4qokcY187WCd3u+i5cjmotoM0hiB/OscXQyipMrdCDORdWf2qqSmD0r@nongnu.org
-X-Gm-Message-State: AOJu0YxkYVV0qaG2FjATr1vd7csnCVMSGsK3cx0FbmJyyBREWJKZl8rN
- QwLsfR7RM3DRIGuauXdzCqfnQTT4kI+pdIuX4VcT8xfk3eN0zlEHFLsmeaQNW5DZISvuXVf3K4Z
- JocR2ZdE=
-X-Gm-Gg: AY/fxX5nioM991COlYxpHlNA4fBkbW2JroimLDt22SUwDJ0dWmXQgOuNn3gjzfXRkIr
- L52IVo1GrIq4hrtbj7OGMlMEoVxQwYkg/Y+OrQdTcGyzp88sKaL5uNr+F7/HDvg7b5A+O4RO+GL
- NhSooDz2JBKEuAdpPAdzSUMzeQVs3YWXooDOMM8nfoUc+3vZPgihPEE0Hn/Cy9t3KNoR9OA/SHC
- nFT0QFcMS382edY7YaEfvQuvM+2NAV4o2zXvYeq0GKwFkywBAuzmekCyhinI7M5zAWuy1p2DNju
- 3EaoX/wQoQM+yssy4xQxqcZGt9rLtlSYAsGg8HlQsoAWjbT0vaQ9jSHkanlrdh30Qm+GsnugnXV
- q2lp2Lii0T/c3ID3mwlco0H/bs2IU4gbKpp2qc2ifvUswp7UEhIX8tVSnTeQrFr/k2N0igjTlZj
- h8KCCb1TCuG/ui99wYK1WlrfZER8eL0g==
-X-Google-Smtp-Source: AGHT+IGnz9/XsliFcL8J3M5pgSKU4Q163xKpx+sE+r/5EAmtnZWDiWn2LzDfYUag2m4tDJdunt8Ghg==
-X-Received: by 2002:a17:903:32c9:b0:296:2aed:4fab with SMTP id
- d9443c01a7336-2a3ee43595bmr36668585ad.23.1767829465738; 
- Wed, 07 Jan 2026 15:44:25 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
+ AJvYcCVCEkEvQiYQ9XDIxLFCSXbOTS42j0cdBmTbpBluWKVgzAgjfg/AEN7cToJGeliCnfRRcrf944dkos3q@nongnu.org
+X-Gm-Message-State: AOJu0Yz0jqFokELY5RiwiII5/AWDSUDqPVztGSsDhlEXT7yTeiYvsgf+
+ UNLfl2DfjKHeTkBf80Ls1tv21ZRiA159JOEGrhvh+IJHYPOOA7k08/leuMSZ9uPvVeQ=
+X-Gm-Gg: AY/fxX4FCD4DCA9/0NNKDVo8R6NiEy/tGoCtZY+fpHZeu5uAe6/hwYaqFxOGPQZT5TN
+ 32pv122P0xwrq69d7rUUpTDniuxlSGxBPnDQ7KiHyi4u1q9CjQPLSX6iDaDpiOwr7ZUAXxlZipm
+ YRjUjRJeumlVKrNnmsCBCZHq3IxMLCbGBpeX28/pfyXL6hYjB0B5fAZro7D2k7eQ/fxkLdhIGEy
+ jSmSjzMQzOVIUQ1TT4Hr8BBZtsZR9Os2lhSifIwbAcPeDwfMUi7DL+Vn9/t7RjmvEdnZgXZQAfu
+ rVfhpPK6JKNxQV5qGi75nz+b4KdUnxX45cDsqhayz+o3ABi6m/iNm5MtBTjOG5C/4Q4hdhHVMDY
+ /iV05Z9n/xG90tDcv+ARX88BS9QEKJtDkzr9vGPCHlV01o0lNkFGBPdD1k27PzYsroiqcyQCZgY
+ LvKXb0aj5q9D2iOAJTMGEc54Oh5ImidWKR2Zoydy3esVKGP9xVG0kFZZzo3s93IXXmuIE=
+X-Google-Smtp-Source: AGHT+IELCnjdeTJv6wehHYlQ6UNfSITbY2OprrmfY4/iO8CiomvXXx4rAiqYcSudjcGVxBFgyZJdGA==
+X-Received: by 2002:a05:6a00:12cd:b0:7f7:5d81:172b with SMTP id
+ d2e1a72fcca58-81b7f6ec17emr4213429b3a.42.1767832606363; 
+ Wed, 07 Jan 2026 16:36:46 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cb2fe3sm60423105ad.59.2026.01.07.15.44.24
+ d2e1a72fcca58-819baa195fasm5897429b3a.1.2026.01.07.16.36.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Jan 2026 15:44:25 -0800 (PST)
-Message-ID: <9a0b5cc2-fddc-4c9d-a310-4ff4bc785c7c@linaro.org>
-Date: Thu, 8 Jan 2026 10:44:21 +1100
+ Wed, 07 Jan 2026 16:36:45 -0800 (PST)
+Message-ID: <9910e23d-b0ed-4211-994f-3fe97cc2d204@linaro.org>
+Date: Wed, 7 Jan 2026 16:36:45 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] target/i386/tcg: remove register case from
- decode_modrm_address
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20260107151400.273916-1-pbonzini@redhat.com>
- <20260107151400.273916-6-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] system: Convert qemu_arch_available() to TargetInfo API
 Content-Language: en-US
-In-Reply-To: <20260107151400.273916-6-pbonzini@redhat.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260107181025.51276-1-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20260107181025.51276-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,44 +108,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 02:14, Paolo Bonzini wrote:
-> Unlike the older code in translate.c, mod=11b *is* filtered out earlier
-> by decode_modrm.
+On 1/7/26 10:10 AM, Philippe Mathieu-Daudé wrote:
+> Get the base arch_mask from the current SysEmuTarget,
+> making qemu_arch_available() target-agnostic.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> We don't need the per-target QEMU_ARCH definition anymore,
+> remove it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/tcg/decode-new.c.inc | 7 -------
->   1 file changed, 7 deletions(-)
+>   meson.build        |  2 --
+>   system/arch_init.c | 30 ------------------------------
+>   target-info.c      | 41 +++++++++++++++++++++++++++++++++++++++++
+>   system/meson.build |  1 -
+>   4 files changed, 41 insertions(+), 33 deletions(-)
+>   delete mode 100644 system/arch_init.c
 > 
-> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-> index 243df7e3735..7b595607fa7 100644
-> --- a/target/i386/tcg/decode-new.c.inc
-> +++ b/target/i386/tcg/decode-new.c.inc
-> @@ -2024,12 +2024,6 @@ static AddressParts decode_modrm_address(CPUX86State *env, DisasContext *s,
->       rm = modrm & 7;
->       base = rm | REX_B(s);
+> diff --git a/meson.build b/meson.build
+> index 734c801cc77..435dc6e3c8e 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3419,8 +3419,6 @@ foreach target : target_dirs
+>         config_target_data.set(k, v)
+>       endif
+>     endforeach
+> -  config_target_data.set('QEMU_ARCH',
+> -                         'QEMU_ARCH_' + config_target['TARGET_BASE_ARCH'].to_upper())
+>     config_target_h += {target: configure_file(output: target + '-config-target.h',
+>                                                  configuration: config_target_data)}
 >   
-> -    if (mod == 3) {
-> -        /* Normally filtered out earlier, but including this path
-> -           simplifies multi-byte nop, as well as bndcl, bndcu, bndcn.  */
-> -        goto done;
-> -    }
+> diff --git a/system/arch_init.c b/system/arch_init.c
+> deleted file mode 100644
+> index e85736884c9..00000000000
+> --- a/system/arch_init.c
+> +++ /dev/null
+> @@ -1,30 +0,0 @@
+> -/*
+> - * QEMU System Emulator
+> - *
+> - * Copyright (c) 2003-2008 Fabrice Bellard
+> - *
+> - * Permission is hereby granted, free of charge, to any person obtaining a copy
+> - * of this software and associated documentation files (the "Software"), to deal
+> - * in the Software without restriction, including without limitation the rights
+> - * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> - * copies of the Software, and to permit persons to whom the Software is
+> - * furnished to do so, subject to the following conditions:
+> - *
+> - * The above copyright notice and this permission notice shall be included in
+> - * all copies or substantial portions of the Software.
+> - *
+> - * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> - * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> - * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+> - * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> - * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> - * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> - * THE SOFTWARE.
+> - */
+> -#include "qemu/osdep.h"
+> -#include "system/arch_init.h"
 > -
+> -bool qemu_arch_available(unsigned qemu_arch_mask)
+> -{
+> -    return qemu_arch_mask & QEMU_ARCH;
+> -}
+> diff --git a/target-info.c b/target-info.c
+> index 24696ff4111..4d38767d214 100644
+> --- a/target-info.c
+> +++ b/target-info.c
+> @@ -11,6 +11,7 @@
+>   #include "qemu/target-info-qapi.h"
+>   #include "qemu/target-info-impl.h"
+>   #include "qapi/error.h"
+> +#include "system/arch_init.h"
+>   
+>   const char *target_name(void)
+>   {
+> @@ -33,6 +34,46 @@ SysEmuTarget target_arch(void)
+>       return arch;
+>   }
+>   
+> +bool qemu_arch_available(unsigned qemu_arch_mask)
+> +{
+> +    static const unsigned base_arch_mask[SYS_EMU_TARGET__MAX] = {
+> +        [SYS_EMU_TARGET_AARCH64]        = QEMU_ARCH_ARM,
+> +        [SYS_EMU_TARGET_ALPHA]          = QEMU_ARCH_ALPHA,
+> +        [SYS_EMU_TARGET_ARM]            = QEMU_ARCH_ARM,
+> +        [SYS_EMU_TARGET_AVR]            = QEMU_ARCH_AVR,
+> +        /*
+> +        [SYS_EMU_TARGET_HEXAGON]        = QEMU_ARCH_HEXAGON,
+> +        */
+> +        [SYS_EMU_TARGET_HPPA]           = QEMU_ARCH_HPPA,
+> +        [SYS_EMU_TARGET_I386]           = QEMU_ARCH_I386,
+> +        [SYS_EMU_TARGET_LOONGARCH64]    = QEMU_ARCH_LOONGARCH,
+> +        [SYS_EMU_TARGET_M68K]           = QEMU_ARCH_M68K,
+> +        [SYS_EMU_TARGET_MICROBLAZE]     = QEMU_ARCH_MICROBLAZE,
+> +        [SYS_EMU_TARGET_MICROBLAZEEL]   = QEMU_ARCH_MICROBLAZE,
+> +        [SYS_EMU_TARGET_MIPS]           = QEMU_ARCH_MIPS,
+> +        [SYS_EMU_TARGET_MIPS64]         = QEMU_ARCH_MIPS,
+> +        [SYS_EMU_TARGET_MIPS64EL]       = QEMU_ARCH_MIPS,
+> +        [SYS_EMU_TARGET_MIPSEL]         = QEMU_ARCH_MIPS,
+> +        [SYS_EMU_TARGET_OR1K]           = QEMU_ARCH_OPENRISC,
+> +        [SYS_EMU_TARGET_PPC]            = QEMU_ARCH_PPC,
+> +        [SYS_EMU_TARGET_PPC64]          = QEMU_ARCH_PPC,
+> +        [SYS_EMU_TARGET_RISCV32]        = QEMU_ARCH_RISCV,
+> +        [SYS_EMU_TARGET_RISCV64]        = QEMU_ARCH_RISCV,
+> +        [SYS_EMU_TARGET_RX]             = QEMU_ARCH_RX,
+> +        [SYS_EMU_TARGET_S390X]          = QEMU_ARCH_S390X,
+> +        [SYS_EMU_TARGET_SH4]            = QEMU_ARCH_SH4,
+> +        [SYS_EMU_TARGET_SH4EB]          = QEMU_ARCH_SH4,
+> +        [SYS_EMU_TARGET_SPARC]          = QEMU_ARCH_SPARC,
+> +        [SYS_EMU_TARGET_SPARC64]        = QEMU_ARCH_SPARC,
+> +        [SYS_EMU_TARGET_TRICORE]        = QEMU_ARCH_TRICORE,
+> +        [SYS_EMU_TARGET_X86_64]         = QEMU_ARCH_I386,
+> +        [SYS_EMU_TARGET_XTENSA]         = QEMU_ARCH_XTENSA,
+> +        [SYS_EMU_TARGET_XTENSAEB]       = QEMU_ARCH_XTENSA,
+> +    };
+> +
 
-I can see that this is true, but one has to dig around to see that it's so.
+Just a remark: is that worth having the "static const" array approach 
+when we could have a proper switch than can be checked for 
+exhaustiveness with compiler warnings instead?
 
-There's enough prep code duplicated between decode_modrm and decode_modrm_address that I 
-think it would be worthwhile to merge the two functions and simplify.
-
-Also, not do things like
-
-         switch (mod) {
-...
-         default:
-         case 2:
-
-where the default isn't reachable.
-
-
-r~
+Beyond that,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
