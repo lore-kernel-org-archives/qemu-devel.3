@@ -4,78 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21724D1D478
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:27:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E109DD1D47C
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdrvN-0007M7-2e; Thu, 08 Jan 2026 10:27:45 -0500
+	id 1vdrzW-0006gs-W1; Thu, 08 Jan 2026 10:32:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdrvL-0007Lr-01
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:27:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vdrvJ-0006m0-C5
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:27:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767886060;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fZ136qR++A81Z/l2i0a5iNWWybBYz7B5WJ5N14ilHyI=;
- b=iiva22GEvYJewa67KBB/qZoAobogIrqv4BtnuqUsm0qmUxZKvtICSj5UUBhINW+qVi9iIc
- bQOWU5NjJyI8on/RakFDz6jmFiUFavcJBakiT2h/GI7W8fRZDxrNllkTml5ObAp34imiP/
- 1/SJxIDf68jlDz3ahtzOE/l4wI0ujyM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-422-b0hN_5KMNQO69LQ6kF-Urw-1; Thu,
- 08 Jan 2026 10:27:38 -0500
-X-MC-Unique: b0hN_5KMNQO69LQ6kF-Urw-1
-X-Mimecast-MFC-AGG-ID: b0hN_5KMNQO69LQ6kF-Urw_1767886057
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 515391955DC7; Thu,  8 Jan 2026 15:27:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.44])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5508C180066A; Thu,  8 Jan 2026 15:27:35 +0000 (UTC)
-Date: Thu, 8 Jan 2026 15:27:32 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] meson: disable libatomic with GCC >= 16
-Message-ID: <aV_M5KbihAMR48zn@redhat.com>
-References: <20260108141407.2151817-1-berrange@redhat.com>
- <56548949-8afd-4bcc-b539-bfb1a28c3987@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdrzT-0006fs-6f
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:32:01 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdrzP-0008BI-OE
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:31:58 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-477ba2c1ca2so36275705e9.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:31:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767886313; x=1768491113; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gR9txCIB0ux64fgXeZ/Chimfnw3NnD3GofqzeO2GPi8=;
+ b=jPOhkC9BMHOrghi7Wk/QNJljcQBs0ky8uZdJ+cIKqufFTgOmW5+zka8H1UsZAYVzgD
+ TxUjG7f808uD4fOmMi2LbKLq2Ss/RllxsUFNE4iT8VJcxxQXXb+lgZVM8pFhwu/aWHKZ
+ zAGrwUr+S1EkNdiWuK5jaAA0kKUnNrTUgQwvwYK60fU6gix2EDXVL0SAaF8auAI6VSSI
+ GxqhoySPpaF9CVMrBapLPEUxg1GMhMV/gW45SyDVthKrig3oG4p/4b/r0f3yZTBqEtEx
+ YGJTCjSZcgGUf7YphtUTuIwnhcsdqog3ciE0qB4nJMhnTb+2/uRqY/wYLxuag5rdLnUQ
+ 28QA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767886313; x=1768491113;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gR9txCIB0ux64fgXeZ/Chimfnw3NnD3GofqzeO2GPi8=;
+ b=F6Hye4DcsRuzrRYLRua32FpAn66TeLX/6qyWCGIVoqVdpdaAqKUFr/EKYMhY4RoZ4C
+ BUyC1pdOYswSKbzhGlJ1KNxLFlEpHzzzRuz896XsNXnz0lzLdkq3CrwxqkBr6yB86JkK
+ xFefeZO5RPh7LjmNPmpqDDnBCR/l9Or27KfRH2NFzdONre6Kpnh8n/H34h/WDfg4pZBn
+ JqUt6DWhnKUft77B/CWoWxmivXyuyAdLcLJhdQ8/Ulpx8pLzkmLIZRPGN4DQvV8FKSWR
+ K6MwARbJ4rN8f8WyLYmq0/lYj6+pnZVnayPwMyT/c2m1PbSZInKjVrGWrQQQW1nWiPh5
+ o05g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVgm1btEg+LqVRK6GYMFcfo/nmFyhDaiAMF5q0bpQ8Fv00UJmb8Sr+zS76Q9IYDr7CUuqWqXNDGT8Z+@nongnu.org
+X-Gm-Message-State: AOJu0YwEVYjdhuRMT4i39Yu0Pxav0ZciowIh9YaeSSR4r3OLQyTFGTZN
+ UUW8K6K6QrKnIbLwVfpqC4b4I79Wj+W777yUBwHvfyigztNYpnvSivmL4CueiFsQbMA=
+X-Gm-Gg: AY/fxX5ovVpejgo0f1cDIhhR3WSj83VmwEb8Wt/e9mKBbOaScIkYIcsKY1DXRJIdeau
+ Dba4zmvP3OS+6m2TCiGtG3HBJ9vk+P7xPb8tDGWGfgX3qIpUINGSbumNuVn5qU0oJg9DYETDury
+ X+SE5TwDI9joQ5/MPkfVvG0PBzxXHczta4a7uf/N+CGJidZgVTuswkLFaamuO6gIv1gbJ7sNRWI
+ LoUhOMF7mataNxEf0J3JLwdRIp6UDv8zb3bAfsDf5yk1W7NYktpxKxux98WYzXvR9iuxG/3jIaQ
+ 5FuZS4z8C1x+uGHvV/ogx3AP7MxWtkU9aQKwF+7pla3IpG7lERaJOQSRsVM9fb3OGM+q8EFAEl3
+ qJ1fzR08QQti+DGNuONkSMls9F129x5jo7X58aOwqsyB8kwHKzGsxZGUzdmo0Lg57zwbfP39nof
+ 4lz5FJQjjH9SrkSOQNftg3lC2S279+bYI36TFjy+Qxf5JIIeACicvcXQ==
+X-Google-Smtp-Source: AGHT+IGUtjdPNkY7Uyxd7uEFkyOa7ZO0VS7VrhSqFG3aSJxQD5dKdXAicSbx4zsD0kmB+q1wTVDkQQ==
+X-Received: by 2002:a05:600c:1d19:b0:47d:5089:a476 with SMTP id
+ 5b1f17b1804b1-47d84b386fdmr89898065e9.31.1767886313262; 
+ Thu, 08 Jan 2026 07:31:53 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d7f668e03sm164827665e9.14.2026.01.08.07.31.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Jan 2026 07:31:52 -0800 (PST)
+Message-ID: <7515c883-1e0f-4a23-b65c-e63067737aea@linaro.org>
+Date: Thu, 8 Jan 2026 16:31:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <56548949-8afd-4bcc-b539-bfb1a28c3987@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 00/12] riscv: Add support for MIPS P8700 CPU
+Content-Language: en-US
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260108134128.2218102-1-djordje.todorovic@htecgroup.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260108134128.2218102-1-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,69 +106,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 08, 2026 at 04:15:38PM +0100, Paolo Bonzini wrote:
-> On 1/8/26 15:14, Daniel P. Berrangé wrote:
-> > Historically it was required to ask for libatomic explicitly with
-> > -latomic, but with GCC >= 16 apps will get linked to libatomic
-> > whether they ask for it or not.
-> > 
-> > This invalidates QEMU's check for atomic op support for int128
-> > which explicitly does NOT want to use the libatomic impl. As a
-> > result with GCC >= 16, QEMU is now getting linked to libatomic
-> > and is activating CONFIG_ATOMIC128. This in turn exposes a bug
-> > in GCC's libatomic.a static buld which is incompatible with the
-> > use of -static-pie leading to build failures like:
-> > 
-> >      /usr/bin/ld: /usr/lib/gcc/x86_64-redhat-linux/16/libatomic.a(cas_16_.o): relocation R_X86_64_32 against hidden symbol `libat_compare_exchange_16_i1' can not be used when making a PIE object
-> >      /usr/bin/ld: failed to set dynamic section sizes: bad value
-> > collect2: error: ld returned 1 exit status
-> > 
-> > The newly introduced -fno-link-libatomic flag can be used to
-> > disable the new automatic linking of libatomic. Setting this in
-> > qemu_isa_flags early on ensures that the check for CONFIG_ATOMIC128
-> > still works correctly.
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   meson.build | 9 +++++++++
-> >   1 file changed, 9 insertions(+)
-> > 
-> > diff --git a/meson.build b/meson.build
-> > index db87358d62..56df08c10e 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -445,6 +445,15 @@ if host_arch in ['i386', 'x86_64']
-> >     endif
-> >   endif
-> > +# GCC >= 16 automatically tries to link libatomic for all programs.
-> > +#
-> > +# QEMU explicitly does NOT want to use libatomic for int128 types.
-> > +#
-> > +# Later checks assume we won't get atomic ops for int128 without
-> > +# explicitly asking for -latomic, so we must disable GCC's new
-> > +# automatic linking with the new -fno-link-libatomic flag
-> > +qemu_isa_flags += cc.get_supported_arguments('-fno-link-libatomic')
-> > +
-> >   qemu_common_flags = qemu_isa_flags + qemu_common_flags
-> >   if get_option('prefer_static')
-> 
-> Great. :/  Is there a bug reported for the -static-pie issue?
+On 8/1/26 14:41, Djordje Todorovic wrote:
+> Rebased again on top of very latest master branch by resolving
+> build issues occured due to the changes in the code organization.
 
-GCC maintainers tell me that -static-pie is unsupported for anything
-except libgcc.a / libstdc++.a:
+I'm sorry for the unfortunate workflow pain you had with this series :(
 
-  https://bugzilla.redhat.com/show_bug.cgi?id=2427891#c10
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> Djordje Todorovic (12):
+>    target/riscv: Add cpu_set_exception_base
+>    target/riscv: Add MIPS P8700 CPU
+>    target/riscv: Add MIPS P8700 CSRs
+>    target/riscv: Add mips.ccmov instruction
+>    target/riscv: Add mips.pref instruction
+>    target/riscv: Add Xmipslsp instructions
+>    hw/misc: Add RISC-V CMGCR device implementation
+>    hw/misc: Add RISC-V CPC device implementation
+>    hw/riscv: Add support for RISCV CPS
+>    hw/riscv: Add support for MIPS Boston-aia board mode
+>    riscv/boston-aia: Add an e1000e NIC in slot 0 func 1
+>    test/functional: Add test for boston-aia board
 
 
