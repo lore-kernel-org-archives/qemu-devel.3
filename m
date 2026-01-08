@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB0BCD1D482
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 16:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08EF0D1D482
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 16:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdsxm-0006e5-ST; Thu, 08 Jan 2026 11:34:18 -0500
+	id 1vdszZ-0007or-Gf; Thu, 08 Jan 2026 11:36:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdsxl-0006aA-FR
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:34:17 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdszX-0007oa-41
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:36:07 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdsxi-0001YQ-SX
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:34:16 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-432777da980so1858307f8f.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 08:34:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdszV-0001zK-9X
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:36:06 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4779a4fc95aso11162665e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 08:36:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767890053; x=1768494853; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wncA/0B9sgl5uEU7J4z03kPWj2ZDnbUF6l+a/mPs1fQ=;
- b=gTsFZ4xZqZMFfvfmQS/C9Ou6J00x5SHXHnz6nUoZ2ed0eYIhag1YATPnAnsnpB9ejc
- X5nLkn1/TSZf/9Q1O0gP4jkKvzPxBPUSWRj1pVP8Yx6PhPVUU5f1mxr3/3OwkwfhpuJ9
- 64OcuN/qFDTW/DYvvbfy8TyixHFN13NiPTPCLSSLg3Pm46ktLrolzcbOSt9NXSrYpjDG
- F7gDs8kvjd+hMCLbJ6SZB1jFI8MtOpKLMA9mjVY8suLE40Ka86hzgm3E56Hy3ULSILrI
- V+WUjLTloOIK8k1X/WlMllFKB0pBARcUgRca9D5f4QE0NvUYXqjam6Vnovo7w5drKyX+
- icmw==
+ d=linaro.org; s=google; t=1767890163; x=1768494963; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bqu5mbThPK8II2QofeZ3rou6aM6XvJX4mkgKq5nFj4E=;
+ b=iPOSFqKy+Ur0FvLnhYLjaEsnfvNT/Wyf98avHBY6y945rO7wFKzgkU6BCmo6wpj9Km
+ luZu5zQDzZz6UX2GECVZoS18MzEPF3p5e+FWH7Nf7agHhUOw3JKIYmJIVVrh3yv/VcCj
+ Bs7w8ERxaET/SzDDEAkG2D3i9gEk0JJEhL4dmn4liwJRBRdOIW1/WmAiZ7d+wiAbZlJI
+ OuUN9kirYQmW2ox3nNrrLuMvpLEN8FG31E6+9uJuWlhq84suiZIXhhx3vzYMEzihMJQX
+ Kkbmen9C/qvURfTx8l4zVXTal9kZRkeJnwnmxBCCthBVWw/6ezlRj47M+3jjl9q5Bp0a
+ ZOkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767890053; x=1768494853;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wncA/0B9sgl5uEU7J4z03kPWj2ZDnbUF6l+a/mPs1fQ=;
- b=TQtOhzQMiPwcOlxeVMqTsUToB4qNcgvmNcLjLrNaU654kafcaxzp9VW2m1gsW7ps8d
- BKL9teZqAWvwlFa8KRmMBUY9g8GeSByW9AB1OaTIcQ02jEGWs4ZQ5RHeBwI9uHzLfED+
- 5/PJp9fygJcz2s0XjzuDU6KW0Nj230ARUojjEDle1zM4OKQQsrTC+J1cOyFmxLyK53Qt
- /G8CRvBLN+HVuBF+V3iuMyMXvLfDW1IOKqFv7gD94RiQEHyvBiHyWxikJTkKejk4lu2l
- oLuwY0Yh3nNxd9WiklGi+r27+IFIPEMjqQZO2al8TL/EHkC00UBOJog6B+ICttUw1dM9
- oKZQ==
-X-Gm-Message-State: AOJu0YyG2rGedmqllK+DpYxmoSkXD80ofwDYG8nrpG3Kbg65X1qqrO1S
- ppUL66lcQ4UIL65jXfdrxy836J86iREDpt2vtSyY1d2VvnZ6SgsvGCFOPPlVLmaKDnY=
-X-Gm-Gg: AY/fxX5VbmBb0KRf6mhZ8W1v8NH7OQpCRMIqe7xRdpCqWM0fPqfFRxCW5Xv0zZq2rqr
- 2zeqG0c+i8cVwbohasMdngPZAbjJoMSB162xrtuCxE7KhxmcXCgUYp/OsnfS71tvWjeN5tDJh0i
- ahAciNtsoUp2m75GT8v1z1wrHS1q2NIhvVkuAjGBLpXWZQ57AXosdDaeaK8AxC+Evi1JRbtrY+p
- 3sAtEFIG7xAHllubfIwy+lFT3A4ly4tHOna2LWJcSIEeG/TxQK+D1ty8Umu4loGwaEM4OfU0nkQ
- Ri9PI/7iYy49jY/PzUcxmzxuLKAkK1XIqD/0uBCeWVVz8vER0I37pYbIWeYJITxmjClBmEGie8F
- Q5C3PYxnfpMiAZtEqEaJi7UfCWd6rvNkv6Lkrt+8987dFa1ni8qSW2sPmhcKHMCSGA294xjgncE
- 1wGTGfu/97VlQ=
-X-Google-Smtp-Source: AGHT+IErwJT/c8y8fIHVz0jcyjWsx9XPglphWLWJvWwjjnQ5t8C73F+OvbeaRIGebdmWfkZSlQw5Yw==
-X-Received: by 2002:a05:6000:40df:b0:431:a63:d3d3 with SMTP id
- ffacd0b85a97d-432c3632b3dmr8688961f8f.24.1767890053113; 
- Thu, 08 Jan 2026 08:34:13 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5fe67csm17023929f8f.40.2026.01.08.08.34.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 08:34:12 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7584A5F804;
- Thu, 08 Jan 2026 16:34:11 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Aurelien Jarno <aurelien@aurel32.net>,  Jiaxun
- Yang <jiaxun.yang@flygoat.com>,  Bastian Koppelmann
- <kbastian@rumtueddeln.de>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- qemu-arm@nongnu.org,  Yoshinori Sato <yoshinori.sato@nifty.com>,  Yanan
- Wang <wangyanan55@huawei.com>,  Aleksandar Rikalo <arikalo@gmail.com>,
- Thomas Huth <huth@tuxfamily.org>,  Eduardo Habkost <eduardo@habkost.net>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: Re: [RFC PATCH 00/12] cpu_reset clean-ups for arm, sh4, mips, m68k
- and tricore
-In-Reply-To: <79bd03ad-3fc5-4d83-ab4f-55f8f840cc6c@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 8 Jan 2026 16:35:56
- +0100")
-References: <20260108143423.1378674-1-alex.bennee@linaro.org>
- <79bd03ad-3fc5-4d83-ab4f-55f8f840cc6c@linaro.org>
-User-Agent: mu4e 1.12.14; emacs 30.1
-Date: Thu, 08 Jan 2026 16:34:11 +0000
-Message-ID: <87wm1s83ng.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1767890163; x=1768494963;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bqu5mbThPK8II2QofeZ3rou6aM6XvJX4mkgKq5nFj4E=;
+ b=pMDCnf1bVzK/ubfiWYrNIJH7mHhOH65RruhyC8midQ3qGNoeSNrWsQeTz0Q1834sfW
+ AU7TrTdWPSjVMD9LhtybXzTTH7VXW4N1JGAs4yttluwamJBz2aTXySXzpWKNuRZvI/n9
+ nvMa8UCYUJVTGMrx1ob8ZfePHR69fRtayOt3M5j/kjV0RR/Nmsh+FMRHjpPeeg6bbyVq
+ F5/CD6ekWHxAi6L+rLHfxjZ2Mq/HgtMBlhIDQRSsGTgSEVfXP//M9205NURyxwX1usf3
+ 8vN0DIHakQrHRLNV8mVo5EBCTrVJf0S9iHm60Ps1kI3XtKcweNBilvqeKruLESWaUc+q
+ /E5w==
+X-Gm-Message-State: AOJu0Yz6Ip/7UFB9zJZjQqnU8+Lcmbm6AqeS7MpuhdSeystlGjISEq+U
+ UNewAclhKc1+pfLwExJkpFpSf3IkiIMfCIEwkp6TvJ1GgouIkVPg+nuD0VbDnf67fKkQPDH/zqt
+ mEXDzOH4=
+X-Gm-Gg: AY/fxX4neR0JXoPD9laQi8wZiUsPqfQUuXbeyDu97rkHBkc/RzUDj4iyRuhuIx5mDyf
+ c2xSzJWtX/EwvZOdSehmrkChap0gdy1+1UYgVNklxQq0Vr6t+Aj+2SrTmfibbug/v0Kcwsi3xNd
+ KAi4F4G2rF4YTlNG+XJMr1mxdvK5//dHO3AHinF/JCPS2gbSkq4HZPFPj5wwmsA9r+66EGD3oyC
+ HcJ4LVCb8GzIX6Rx6DmO1iOGERc120Is6Hu3KE09tGGZ/E1/yZrQISI1kSOdzfrGT62LjxfLQ3r
+ 08Vcn5tO3absSYSX9mOORNgekQWxqaDMrXHNznjcDSad0OFbhcdHjQrjgVBryPHhGY4WWwutNh+
+ gE2jdMLRugWpixMeCDv9lIZsVseEpK8u5y07Bo0r2DzE6RT+ii7vZQuHBk2BVDghwM5FO12UJ3X
+ ht/zXcF3P2pVTWg3a416il4XEjL0JCoMBKwH+P68WAccphlepTuYDPrDaOU6MO
+X-Google-Smtp-Source: AGHT+IEW0quElwILXT2Q+B3CAxeVPFjNPmJ8lSXb0Ki7qQ45iTGTucx7oeOz/LizFakHfT6/JUFi+w==
+X-Received: by 2002:a05:600c:a30c:b0:479:13e9:3d64 with SMTP id
+ 5b1f17b1804b1-47d848787eemr64246995e9.15.1767890163098; 
+ Thu, 08 Jan 2026 08:36:03 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d7f69e13bsm158806355e9.7.2026.01.08.08.36.01
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 08 Jan 2026 08:36:02 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v3] system: Convert qemu_arch_available() to TargetInfo API
+Date: Thu,  8 Jan 2026 17:36:00 +0100
+Message-ID: <20260108163601.18676-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,101 +103,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Get the base arch_mask from the current SysEmuTarget,
+making qemu_arch_available() target-agnostic.
 
-> On 8/1/26 15:34, Alex Benn=C3=A9e wrote:
->> We tend to apply cpu_reset inconsistently throughout our various
->> models which leads to unintended ordering dependencies. This got in
->> the way in my last plugins series:
->>    https://patchew.org/QEMU/20251219190849.238323-1-alex.bennee@linaro.o=
-rg/
->> where I needed to shuffle things around to ensure that gdb register
->> creation was done after dependant peripherals had created their cpu
->> interfaces.
->> Regardless of that we do have a proper reset interface now and most
->> architectures have moved to it. This series attempts to clean-up the
->> remaining cases with proper qemu_register_reset() calls so reset is
->> called when we intend to.
->
-> Last time I was blocked at this comment:
-> https://lore.kernel.org/qemu-devel/20231128170008.57ddb03e@imammedo.users=
-.ipa.redhat.com/
+We don't need the per-target QEMU_ARCH definition anymore,
+remove it.
 
-From that:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+v3: Return directly within switch
+v2: Prefer switch over array (pbo)
+---
+ meson.build        |  2 --
+ system/arch_init.c | 30 -----------------------
+ target-info.c      | 60 ++++++++++++++++++++++++++++++++++++++++++++++
+ system/meson.build |  1 -
+ 4 files changed, 60 insertions(+), 33 deletions(-)
+ delete mode 100644 system/arch_init.c
 
- --cpu_reset()  <- brings cpu to known (after reset|poweron) state
-   cpu_common_realizefn()
-       if (dev->hotplugged) {=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-           cpu_synchronize_post_init(cpu);=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20
-           cpu_resume(cpu);=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-       }
- ++cpu_reset()  <-- looks to be too late, we already told hypervisor to run=
- undefined CPU, didn't we?
+diff --git a/meson.build b/meson.build
+index 734c801cc77..435dc6e3c8e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3419,8 +3419,6 @@ foreach target : target_dirs
+       config_target_data.set(k, v)
+     endif
+   endforeach
+-  config_target_data.set('QEMU_ARCH',
+-                         'QEMU_ARCH_' + config_target['TARGET_BASE_ARCH'].to_upper())
+   config_target_h += {target: configure_file(output: target + '-config-target.h',
+                                                configuration: config_target_data)}
+ 
+diff --git a/system/arch_init.c b/system/arch_init.c
+deleted file mode 100644
+index e85736884c9..00000000000
+--- a/system/arch_init.c
++++ /dev/null
+@@ -1,30 +0,0 @@
+-/*
+- * QEMU System Emulator
+- *
+- * Copyright (c) 2003-2008 Fabrice Bellard
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-#include "qemu/osdep.h"
+-#include "system/arch_init.h"
+-
+-bool qemu_arch_available(unsigned qemu_arch_mask)
+-{
+-    return qemu_arch_mask & QEMU_ARCH;
+-}
+diff --git a/target-info.c b/target-info.c
+index 24696ff4111..774fdcd2c46 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -11,6 +11,7 @@
+ #include "qemu/target-info-qapi.h"
+ #include "qemu/target-info-impl.h"
+ #include "qapi/error.h"
++#include "system/arch_init.h"
+ 
+ const char *target_name(void)
+ {
+@@ -33,6 +34,65 @@ SysEmuTarget target_arch(void)
+     return arch;
+ }
+ 
++bool qemu_arch_available(unsigned qemu_arch_mask)
++{
++    switch (target_arch()) {
++    case SYS_EMU_TARGET_ALPHA:
++        return qemu_arch_mask & QEMU_ARCH_ALPHA;
++    case SYS_EMU_TARGET_ARM:
++    case SYS_EMU_TARGET_AARCH64:
++        return qemu_arch_mask & QEMU_ARCH_ARM;
++    case SYS_EMU_TARGET_I386:
++    case SYS_EMU_TARGET_X86_64:
++        return qemu_arch_mask & QEMU_ARCH_I386;
++    case SYS_EMU_TARGET_M68K:
++        return qemu_arch_mask & QEMU_ARCH_M68K;
++    case SYS_EMU_TARGET_MICROBLAZE:
++    case SYS_EMU_TARGET_MICROBLAZEEL:
++        return qemu_arch_mask & QEMU_ARCH_MICROBLAZE;
++    case SYS_EMU_TARGET_MIPS:
++    case SYS_EMU_TARGET_MIPSEL:
++    case SYS_EMU_TARGET_MIPS64:
++    case SYS_EMU_TARGET_MIPS64EL:
++        return qemu_arch_mask & QEMU_ARCH_MIPS;
++    case SYS_EMU_TARGET_PPC:
++    case SYS_EMU_TARGET_PPC64:
++        return qemu_arch_mask & QEMU_ARCH_PPC;
++    case SYS_EMU_TARGET_S390X:
++        return qemu_arch_mask & QEMU_ARCH_S390X;
++    case SYS_EMU_TARGET_SH4:
++    case SYS_EMU_TARGET_SH4EB:
++        return qemu_arch_mask & QEMU_ARCH_SH4;
++    case SYS_EMU_TARGET_SPARC:
++    case SYS_EMU_TARGET_SPARC64:
++        return qemu_arch_mask & QEMU_ARCH_SPARC;
++    case SYS_EMU_TARGET_XTENSA:
++    case SYS_EMU_TARGET_XTENSAEB:
++        return qemu_arch_mask & QEMU_ARCH_XTENSA;
++    case SYS_EMU_TARGET_OR1K:
++        return qemu_arch_mask & QEMU_ARCH_OPENRISC;
++    case SYS_EMU_TARGET_TRICORE:
++        return qemu_arch_mask & QEMU_ARCH_TRICORE;
++    case SYS_EMU_TARGET_HPPA:
++        return qemu_arch_mask & QEMU_ARCH_HPPA;
++    case SYS_EMU_TARGET_RISCV32:
++    case SYS_EMU_TARGET_RISCV64:
++        return qemu_arch_mask & QEMU_ARCH_RISCV;
++    case SYS_EMU_TARGET_RX:
++        return qemu_arch_mask & QEMU_ARCH_RX;
++    case SYS_EMU_TARGET_AVR:
++        return qemu_arch_mask & QEMU_ARCH_AVR;
++    /*
++    case SYS_EMU_TARGET_HEXAGON:
++        return qemu_arch_mask & QEMU_ARCH_HEXAGON;
++    */
++    case SYS_EMU_TARGET_LOONGARCH64:
++        return qemu_arch_mask & QEMU_ARCH_LOONGARCH;
++    default:
++        g_assert_not_reached();
++    };
++}
++
+ const char *target_cpu_type(void)
+ {
+     return target_info()->cpu_type;
+diff --git a/system/meson.build b/system/meson.build
+index 4b69ef0f5fb..66e16db55ce 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -1,5 +1,4 @@
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+-  'arch_init.c',
+   'globals-target.c',
+ )])
+ 
+-- 
+2.52.0
 
-I would posit that the hotplug path is different as we online the CPU as
-soon as its ready. Maybe that is just special cased as:
-
-       if (dev->hotplugged) {
-           cpu_reset(cpu);
-           cpu_synchronize_post_init(cpu);=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20
-           cpu_resume(cpu);=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-       }
-
-Unless hotplug should also honour the reset tree in which case that
-logic could be moved:
-
-  void cpu_reset(CPUState *cpu)
-  {
-      DeviceState *dev =3D DEVICE(cpu);
-
-      if (!dev->hotplugged) {
-          device_cold_reset(DEVICE(cpu));
-      } else {
-          /* hotplugging implies we should know how to setup */
-          cpu_synchronize_post_init(cpu);=20=20=20=20
-      }
-      trace_cpu_reset(cpu->cpu_index);
-
-  #ifdef CONFIG_TCG
-      /*
-       * Because vCPUs get "started" before the machine is ready we often
-       * can't provide all the information plugins need during
-       * cpu_common_initfn. However the vCPU will be reset a few times
-       * before we eventually set things going giving plugins an
-       * opportunity to update things.
-       */
-      qemu_plugin_vcpu_reset_hook(cpu);
-  #endif
-  }
-
-Do we have test cases for hotplugging CPUs?
-
->
->> Alex Benn=C3=A9e (12):
->>    target/sh4: drop cpu_reset from realizefn
->>    target/m68k: introduce env->reset_pc
->>    hw/m68k: register a nextcube_cpu_reset handler
->>    hw/m68k: register a mcf5208evb_cpu_reset handler
->>    hw/m68k: register a an5206_cpu_reset handler
->>    hw/m68k: just use reset_pc for virt platform
->>    target/m68k: drop cpu_reset on realizefn
->>    hw/mips: defer finalising gcr_base until reset time
->>    hw/mips: drop cpu_reset in mips_cpu_realizefn
->>    target/tricore: move cpu_reset from tricore_cpu_realizefn
->>    target/arm: remove extraneous cpu_reset from realizefn
->>    include/hw: expand cpu_reset function docs
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
