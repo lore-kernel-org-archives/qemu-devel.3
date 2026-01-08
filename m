@@ -4,78 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 312CCD148AF
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 06:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD831D148A3
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 06:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdjWI-0002j8-Gn; Thu, 08 Jan 2026 01:29:18 -0500
+	id 1vdjlf-0005IH-Su; Thu, 08 Jan 2026 01:45:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vdjW2-0002er-1r
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:29:05 -0500
-Received: from k57.kb8c70eb.use4.send.mailgun.net ([204.220.184.57])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vdjVz-0007x4-DO
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 01:29:01 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- d1940bba7f4d820794934e8eafa5ae865da5eadaa6b460ba89d92ec392a33e08 with SMTP id
- 695f4ea201e51b67bb2a9091; Thu, 08 Jan 2026 06:28:50 GMT
-X-Mailgun-Sending-Ip: 204.220.184.57
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1767853729;
- bh=RrIcgIXwW4oZ3nYG55Edpvg0ttKKcm0NvnpIyceA/VU=;
- h=Message-ID:Date:MIME-Version:Subject:To:References:X-Mailgun-Dkim:
- From:In-Reply-To:Content-Type:Content-Transfer-Encoding:From:
- Reply-to:Subject:Date:Message-id:To:Cc:Mime-version:Content-type:
- Content-transfer-encoding:In-reply-to:References;
- b=kzbyUgOEb2JL6zevBGy3J9M7rhLBzcSHAHW9jrrFvHNYOYNBdJbD6zlyscz6Vyu/Y
- 04NT1qwnswDxgRt39+f9oYHruXpppcGqHCOXZ0BID/Lcwp8l7agusigQt6a9rJoR5Q
- GyhYzHPg7+TQXKK1za7QcVtgor1z4mL3PgQg73KOyPxxSBExdmVdKJf57jRp64UCyx
- wPPg2huayDGm3NyNJ44TSWrtB4UMkREn34S6dPcD4t4fW+pxBwik9YxX9JlrAYqP++
- FFBvEprpD8N0chUymEPxxYToIdxRWmdrR7JU/0zawc3rnZt5X2QgTkIAFyfnUnfe7M
- pwkxcS6Zvb6hA==
-Message-ID: <40108175-e1aa-4f51-b395-4444d5e8b885@yodel.dev>
-Date: Thu, 8 Jan 2026 00:28:46 -0600
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vdjld-0005HD-HR; Thu, 08 Jan 2026 01:45:09 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vdjla-0003RQ-OC; Thu, 08 Jan 2026 01:45:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1767854707; x=1799390707;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=ZdjK3CN3w2PQzyiNpSWvDzi9Dfm/4LQykNr7WIiHgKw=;
+ b=YtS+R3vcRTtg8Ntrr2pH4b57ydNEwZIH56/847u2da2EagWBgbIGsuH/
+ IK3CsQDaWvhEWGTWEHPoPSCkQxqrAW822MZUNln75xKPf4/toYZc3k2hM
+ 9K0rbDT8hv/a+l2Bsq4BeStqmw8dYd4I7VJQ26adGFoWP11l9pH+VJ1Qd
+ qIw5GMkgP/p5Dwxi1A4YAQTMuE/flPjcLZw50s0nkq2NuCAR+8oJBBpfQ
+ ux4cAApRjCOUyK2l15Rx2nkWh0nPtusNs1M1WUt9NKETOaq4J20fFVvBx
+ Pf2KRQ8Mc/r/Vyd+efgVaIIOH6ttlesJXpDd2XhK0vLMiKGKSWaav8uBe Q==;
+X-CSE-ConnectionGUID: LUVShMRFS/GqcPmuteH9CQ==
+X-CSE-MsgGUID: E/+vyHjBSVSzqoaC17HinQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="69388293"
+X-IronPort-AV: E=Sophos;i="6.21,210,1763452800"; d="scan'208";a="69388293"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Jan 2026 22:45:01 -0800
+X-CSE-ConnectionGUID: 1u9ug1S3Rl6Y8I31eJbghg==
+X-CSE-MsgGUID: Q6s4aJWSTumCIgTiOhXtEw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,210,1763452800"; d="scan'208";a="203145748"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 07 Jan 2026 22:44:58 -0800
+Date: Thu, 8 Jan 2026 15:10:24 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-s390x@nongnu.org, qemu-arm@nongnu.org
+Subject: Re: [PATCH 1/5] target/i386: Restrict WatchPoint API to TCG
+Message-ID: <aV9YYE3Yind7Y/Nc@intel.com>
+References: <20260106231908.16756-1-philmd@linaro.org>
+ <20260106231908.16756-2-philmd@linaro.org>
 MIME-Version: 1.0
-Subject: Re: [RFC PATCH] tests/functional/x86_64: Add vhost-user-bridge test
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20251230002604.113632-1-yodel.eldar@yodel.dev>
- <6157618c-5454-457e-b65e-d9c16c428aaf@redhat.com>
- <93fe1ce9-6dc4-4c19-840d-9b1ad613c31c@yodel.dev>
- <30844b70-218e-41f5-a033-9956901d9189@redhat.com>
-Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <30844b70-218e-41f5-a033-9956901d9189@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.57;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k57.kb8c70eb.use4.send.mailgun.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+In-Reply-To: <20260106231908.16756-2-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,238 +85,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/01/2026 23:52, Thomas Huth wrote:
-> On 07/01/2026 18.32, Yodel Eldar wrote:
->>
->> On 06/01/2026 22:52, Thomas Huth wrote:
->>> On 30/12/2025 01.25, Yodel Eldar wrote:
->>>> This introduces a functional test of vhost-user-bridge.
->>>>
->>>> The test runs vhost-user-bridge and launches a guest VM that connects
->>>> to the internet through it. The test succeeds if and only if an attempt
->>>> to connect to a hard-coded well-known URL succeeds.
->>>>
->>>> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
->>>> ---
->>>>
->>>> This patch introduces a functional test of vhost-user-bridge by
->>>> automating the testing described in its initial commit, 8e3b0cbb72,
->>>> with adjustments like using hubports (formerly the vlan parameter) and
->>>> memfd for the memory backend; hugepages are also omitted to avoid
->>>> requiring root privileges on the host.
->>>>
->>>> The test configures networking within the guest by invoking udhcpc, 
->>>> then
->>>> makes an http request via wget to a well-known URL, example.org, that
->>>> has a low risk of requiring https for connections (a limitation of the
->>>> the test). An assert on the retcode of wget determines success/failure.
->>>>
->>>> Please let me know if there are objections to the use of wget's retcode
->>>> as the test's condition; determining wget success through its output is
->>>> straightforward ("remote file exists"), but out of concern of some
->>>> unknown failure message (besides "bad address") locking up the test,
->>>> I've resorted to checking the retcode instead; perhaps, this violates
->>>> some convention?
->>>>
->>>> Also, I figured checking for memfd support on the host was unnecessary
->>>> in 2026 for the intended users of the test, but perhaps not?
->>>>
->>>> The guest's kernel contains an integrated initramfs and was built with
->>>> buildroot; an attempt to ensure bit-for-bit reproducibility was made by
->>>> building it via Containerfile based on a snapshot container image and
->>>> use of the BR2_REPRODUCIBLE option of buildroot, but the latter feature
->>>> is "experimental," so future builds may differ slightly (though the
->>>> image in the repo will be left untouched). The image and associated
->>>> build files are hosted on my personal account here:
->>>>     https://github.com/yodel/vhost-user-bridge-test
->>>> and will continue to be well into the future, but if there's some other
->>>> preferred location for the asset, please let me know?
->>>>
->>>> Lastly, special thanks to Cédric for inspiring me to write the test in
->>>> "<11454796-30d2-4a57-85a5-d42ff0dce2e6@redhat.com>".
->>>>
->>>> Thanks,
->>>> Yodel
->>>>
->>>>   .../x86_64/test_vhost_user_bridge.py          | 124 ++++++++++++++ 
->>>> ++++
->>>>   1 file changed, 124 insertions(+)
->>>>   create mode 100755 tests/functional/x86_64/test_vhost_user_bridge.py
->>>>
->>>> diff --git a/tests/functional/x86_64/test_vhost_user_bridge.py b/ 
->>>> tests/ functional/x86_64/test_vhost_user_bridge.py
->>>> new file mode 100755
->>>> index 0000000000..61afdbceec
->>>> --- /dev/null
->>>> +++ b/tests/functional/x86_64/test_vhost_user_bridge.py
->>>> @@ -0,0 +1,124 @@
->>>> +#!/usr/bin/env python3
->>>> +#
->>>> +# Copyright (c) 2025 Software Freedom Conservancy, Inc.
->>>> +#
->>>> +# Author: Yodel Eldar <yodel.eldar@yodel.dev>
->>>> +#
->>>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>>> +"""
->>>> +Test vhost-user-bridge (vubr) functionality:
->>>> +
->>>> +    1) Run vhost-user-bridge on the host.
->>>> +    2) Launch a guest VM:
->>>> +        a) Instantiate a unix domain socket to the vubr-created path
->>>> +        b) Instantiate a vhost-user net backend on top of that socket
->>>> +        c) Expose vhost-user with a virtio-net-pci interface
->>>> +        d) Instantiate UDP socket and user-mode net backends
->>>> +        e) Hub the UDP and user-mode backends
->>>> +    3) Run udhcpc in the guest to auto-configure networking.
->>>> +    4) Run wget in the guest and check its retcode to test internet 
->>>> connectivity
->>>> +
->>>> +The test fails if wget returns 1 and succeeds on 0.
->>>> +"""
->>>> +
->>>> +import os
->>>> +import subprocess
->>>> +from qemu_test import Asset, QemuSystemTest, which
->>>> +from qemu_test import exec_command_and_wait_for_pattern
->>>> +from qemu_test import is_readable_executable_file
->>>> +from qemu_test import wait_for_console_pattern
->>>> +from qemu_test.ports import Ports
->>>> +
->>>> +class VhostUserBridge(QemuSystemTest):
->>>> +
->>>> +    ASSET_KERNEL_INITRAMFS = Asset(
->>>> +        "https://github.com/yodel/vhost-user-bridge-test/raw/refs/ 
->>>> heads/main/bzImage",
->>>> + "3790bf35e4ddfe062425bca45e923df5a5ee4de44e456d6b00cf47f04991d549")
->>>> +
->>>> +    def configure_vm(self, ud_socket_path, lport, rport):
->>>> +        kernel_path = self.ASSET_KERNEL_INITRAMFS.fetch()
->>>> +
->>>> +        self.require_accelerator("kvm")
->>>> +        self.require_netdev("vhost-user")
->>>> +        self.require_netdev("socket")
->>>> +        self.require_netdev("hubport")
->>>> +        self.require_netdev("user")
->>>> +        self.require_device("virtio-net-pci")
->>>> +        self.set_machine("q35")
->>>> +        self.vm.set_console()
->>>> +        self.vm.add_args(
->>>> +            "-cpu",      "host",
->>>> +            "-accel",    "kvm",
->>>> +            "-kernel",   kernel_path,
->>>> +            "-append",   "console=ttyS0",
->>>> +            "-smp",      "2",
->>>> +            "-m",        "128M",
->>>> +            "-object",   "memory-backend-memfd,id=mem0,"
->>>> +                         "size=128M,share=on,prealloc=on",
->>>> +            "-numa",     "node,memdev=mem0",
->>>> +            "-chardev", f"socket,id=char0,path={ud_socket_path}",
->>>> +            "-netdev",   "vhost- 
->>>> user,id=vhost0,chardev=char0,vhostforce=on",
->>>> +            "-device",   "virtio-net-pci,netdev=vhost0",
->>>> +            "-netdev",  f"socket,id=udp0,udp=localhost:{lport},"
->>>> +                        f"localaddr=localhost:{rport}",
->>>> +            "-netdev",   "hubport,id=hub0,hubid=0,netdev=udp0",
->>>> +            "-netdev",   "user,id=user0",
->>>> +            "-netdev",   "hubport,id=hub1,hubid=0,netdev=user0"
->>>> +        )
->>>> +
->>>> +    def assemble_vubr_args(self, vubr_path, ud_socket_path, lport, 
->>>> rport):
->>>> +        vubr_args = []
->>>> +
->>>> +        if (stdbuf_path := which("stdbuf")) is None:
->>>> +            self.log.info("Could not find stdbuf: vhost-user-bridge "
->>>> +                          "log lines may appear out of order")
->>>> +        else:
->>>> +            vubr_args += [stdbuf_path, "-o0", "-e0"]
->>>> +
->>>> +        vubr_args += [vubr_path, "-u", f"{ud_socket_path}",
->>>> +                      "-l", f"127.0.0.1:{lport}", "-r", 
->>>> f"127.0.0.1: {rport}"]
->>>> +
->>>> +        return vubr_args
->>>> +
->>>> +    def test_vhost_user_bridge(self):
->>>> +        prompt = "~ # "
->>>> +
->>>> +        vubr_path = self.build_file("tests", "vhost-user-bridge")
->>>> +        if is_readable_executable_file(vubr_path) is None:
->>>> +            self.skipTest("Could not find a readable and executable "
->>>> +                          "vhost-user-bridge")
->>>> +
->>>> +        with Ports() as ports:
->>>> +            sock_dir = self.socket_dir()
->>>> +            ud_socket_path = os.path.join(sock_dir.name, "vubr- 
->>>> test.sock")
->>>> +            lport, rport = ports.find_free_ports(2)
->>>> +
->>>> +            self.configure_vm(ud_socket_path, lport, rport)
->>>> +
->>>> +            vubr_log_path = self.log_file("vhost-user-bridge.log")
->>>> +            self.log.info("For the vhost-user-bridge application log,"
->>>> +                         f" see: {vubr_log_path}")
->>>> +
->>>> +            vubr_args = self.assemble_vubr_args(vubr_path, 
->>>> ud_socket_path,
->>>> +                                                lport, rport)
->>>> +
->>>> +            with open(vubr_log_path, "w") as vubr_log, \
->>>> +                 subprocess.Popen(vubr_args, stdin=subprocess.DEVNULL,
->>>> +                                  stdout=vubr_log, 
->>>> stderr=subprocess.STDOUT):
->>>> +                self.vm.launch()
->>>> +
->>>> +                wait_for_console_pattern(self, prompt)
->>>> +                exec_command_and_wait_for_pattern(self, "udhcpc -nt 
->>>> 1", prompt)
->>>> +                exec_command_and_wait_for_pattern(self,
->>>> +                    "wget -qT 2 --spider example.org", prompt)
->>>
->>> If you've got python in the guest, you could maybe also do it the 
->>> other way round and host a httpd server in the guest, and download 
->>> something to the host. See check_http_download in tests/functional/ 
->>> qemu_test/ linuxkernel.py for the helper function. That way you don't 
->>> depend on any external host.
->>>
->>>   Thomas
->>>
->>
->> Thanks for the suggestion and that gem of a helper; I had missed that
->> module when going over the framework.
->>
->> I switched to using a ping pattern and checking vhost-user-bridge's log
->> for the payload, but I don't like how brittle that is, because even
->> though the log prints are hard-coded on right now, they might not be
->> later, so having the guest serve a file's a welcome option, although the
->> guest currently lacks python (and just about everything else).
+On Wed, Jan 07, 2026 at 12:19:03AM +0100, Philippe Mathieu-Daud� wrote:
+> Date: Wed,  7 Jan 2026 00:19:03 +0100
+> From: Philippe Mathieu-Daud� <philmd@linaro.org>
+> Subject: [PATCH 1/5] target/i386: Restrict WatchPoint API to TCG
+> X-Mailer: git-send-email 2.52.0
 > 
-> I never tried, but maybe it's also possible the other way round: Use 
-> python on the host to simulate a httpd server, and then use wget in the 
-> guest to download a file from the host?
+> Watchpoints are specific to the TCG accelerator. Restrict
+> the cpu_watchpoint_remove_all() call.
 > 
+> Signed-off-by: Philippe Mathieu-Daud� <philmd@linaro.org>
+> ---
+>  target/i386/cpu.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-Thread on an HTTPServer with a SimpleHTTPRequestHandler is what I had in
-mind, too, for guest downloading from host.
-
-For host downloading from guest, I went with check_http_download that
-you mentioned, but I was wondering if we could pull it up into
-QemuSystemTest? I've got the test inheriting from LinuxKernelTest now,
-but it's not exactly "testing the boot process of a Linux kernel" as in
-the class description in its header.
-
-> Another idea, if you happen to have a "tftp" binary in the guest, use 
-> that to download a file from the built-in tftpd server from QEMU, see 
-> e.g. do_xmaton_le_test in tests/functional/microblaze/test_s3adsp1800.py 
-> as an example.
-> 
-
-I will definitely check this out tomorrow; thanks for telling me about
-it, and for all of your suggestions. Could I add a Suggested-by?
-
-Yodel
->   Thomas
-> 
-> 
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
