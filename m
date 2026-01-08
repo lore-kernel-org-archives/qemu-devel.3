@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7E50D1D478
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B910D1D47A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdrlG-0000so-Uz; Thu, 08 Jan 2026 10:17:18 -0500
+	id 1vdrlD-0000pw-37; Thu, 08 Jan 2026 10:17:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vdrlB-0000pV-Eb
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:13 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1vdrl7-0000mO-0c
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:09 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vdrl9-0003J8-A4
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:13 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7ade456b6abso2244517b3a.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:17:10 -0800 (PST)
+ id 1vdrl2-0003GX-8k
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:17:06 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-81c5ff546f6so534949b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:17:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1767885429; x=1768490229; darn=nongnu.org;
+ d=sifive.com; s=google; t=1767885420; x=1768490220; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vyktvm0RmttvVgoRBYPAO0Ic1eC1BnrJQnOZaxYFalU=;
- b=Thu1a4dlT1fsODptS2XxUMJVUfzpjieIfnN/+RUD34ACG6tcqGi1rLcK66ch7SAepX
- i7ZM2Z2VY/Rv/ES9Q3VjOwV+DMTkVvSLwF1mXor2DpsZuJXRrQ5mKodloI/usHDNmsks
- zkrYhFPp/jOp51jk6Zu99h6dNQsclFYIlE1U0IQ4V8ttVq9jU3vvsFFZ8f4+A7D1X6rt
- cuV3CoOGTluyuKtqTK05CrDnenuYSH8ryGlRNgIfxLLKsRItUqAVsSOvGCfxRA1Y3ANk
- uI6RQAJrTXn0GjCEGA2b5Bd2AfWQNEvTIks6f9U3BNkkK7Z3+xG0jXkIxEittv0wtFTX
- 2XaA==
+ bh=1oyWOE9FTY5wDFOOIfe8Q8KJTIOjdixF1m00Y/7PqF8=;
+ b=MqzV2QMuctWKkXCzqHluDGJwYkVucFhaP8RlYw/Erf4ODPalQ1jQos8pgAwFEeVo2I
+ d7EYOuXBGtqCJxKMHvlLaiOK0ZJIDO70djcCp9updE5tE9EdvLGxMqyq/hhH5jzg0lwW
+ DQG5yrTL/E1XCKA7nxLXcJ+qz1Hhv2nKxYxAAYDmSjqDS0AT0t3FwRj2hYNx+14g7k1o
+ jfYf+LP2mQ714BitITOYJnlCnTi3COBY343IKs5uwTIMugoohyJK54/vrBt/uKXufrRY
+ j5wUWvxypHR9YlafLiT/l2lIjvPFgbU472oWu0KJdVwYnNT3Ns1bJB79KqhUGgLgap8Y
+ dnGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767885429; x=1768490229;
+ d=1e100.net; s=20230601; t=1767885420; x=1768490220;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vyktvm0RmttvVgoRBYPAO0Ic1eC1BnrJQnOZaxYFalU=;
- b=QO/BWFbWC1K1nHGyhWiXejdO4ufkKwfYp/YExQsQZRJeyA404Y+qMypvHXHpDTBg/F
- 0U6ytsp5BBdBpYCJUfcMNL8o0Iid43WdOLZG3ijrxmh1KkdTy1YLalolkOoUMW0oui9R
- 6D3RSaWvBlLmJ2dLI5Bv3SOapmBZala0HhQ0wq8yPauLjBV/GL2eSfoo2eicgC+JEmwS
- KVV5dFEmQ3tL8Rraf2lb86O38GeRPx5U25fjUuWZggcK6SHNzcRPoERFzlOs+8y38625
- qORJ57wp06lIZEC5C7Y/NCAJHVqX7eWN7npzvL4NzaAYKV+4TebZGguGM7s3a/2ENqMg
- RZ9A==
-X-Gm-Message-State: AOJu0Yyge4JHdeQK9xxENdKgdDeLMmk7DYWqsYd7EkMWVcI4mCQUjxpE
- OalAEvKPNVQC9GiWCqji0gIfIZMaAWe6VgMhFFN8TnkNwWMBQpe5RehXxwxIRWBd/q1B4r+BYt0
- K8IOJA5ZUtQMB4LfXxgwUWBHI3uHbU4dnxsYV2k23RIZJullrzFvOriIG6YVT8ne4DhVP2CPq1H
- BHuyzI5+iLZZcyFUZMG9715VjYktDUjoAoC6jYmqI=
-X-Gm-Gg: AY/fxX5D3gX+XqJC6qbvLyS1+5fDOhQCGH+ve7O+74qoK6xAjlB8sxg1zZmo/bSoI2Y
- Dv97uSJkJP0wv/i1kAs6QyK/lK+gjbPm6Mjq7JXlh077wWUTUFivC5tGBlOkztWRZArvO1LKa5h
- JynR094qI7Kte2jlQ5Lg/VN07i5AWQB+PHv3YbmPYLvNE6c07HJOaNn6+P4C6tDjhf3TO5NUtWF
- 5yIhG4gw/1ZnfkLn2DQ8CjHObW7msya5s3rdpu/n4w0dVGSS05MsCjraMhPnhbEVvwzSAdKogcF
- cMXjZPXIVyP2Rt7K8cmuhfjhebj8dK5LtrY97bh9CROcF8p/eqbKDl+1LMfEmx9X2ywhWirLpVA
- PhFXsl8pbI70ru2heHIWCZBfkaWrnYq0pA73kd2I7Erxlv3+H7qMXMcScuPTuqiLWroAw3yQzrp
- k2QUvRN8Th07eA9iPh2HGsxLFqnHpuHlOw99aNG6CcFd83BoNwwbYA4Ko=
-X-Google-Smtp-Source: AGHT+IEC24OWiX2NyG0T3pT6AEVygdtU7ucwuC4lvBktpU7qQ2CmD/A/689X356OBP7EkJUXyq+n5g==
-X-Received: by 2002:a05:6a00:1d19:b0:7e8:4471:8cf with SMTP id
- d2e1a72fcca58-81b7f6df21dmr5956743b3a.48.1767885428881; 
- Thu, 08 Jan 2026 07:17:08 -0800 (PST)
+ bh=1oyWOE9FTY5wDFOOIfe8Q8KJTIOjdixF1m00Y/7PqF8=;
+ b=ZnkywtZIdQZcn3fsAjuhKzpw0Qsx79hfDOrpoTCkxBGNeJeZNe6yinRy/fFnlXPZPF
+ 20AasD3aY3PsKaMFTNGVtqCXYYi//IRZbNw8DZelenbwvbOIsBpq3EJuElml3zxFKT8r
+ pIZUH7g5cuQeQDrJGsiKRIRemw8HqRrK6VHDANn5LKFYPoaDsTldJXRMfL7CTqOvUyYo
+ Uc7vR0digrOOT9/dSsQgizQzhzRtnoTOrT3olHS9UD4Ex93E4459sKdP/1JOLySxox/X
+ uE7yeYfnX2EPeuNzY0TI6V9iGnlox/eJH+G0EfvlNJTnDbPvSZe9P5ObQ1wot0+EYL4w
+ jndw==
+X-Gm-Message-State: AOJu0YzRByj1FWeBIts6w+ioS3eUzBvhp+mwx/kcjyirEMH8GQCS9Xvw
+ zH/wh/xgPg0iHxZygJlT+woWdWu8TFz/L8+d/T0/U6ovUM3u1sJB3Je1mRJAb9xQ3TNiYoDCpme
+ us8ZdnXkH2OEgkMpXep3L/B+5oeW6HkvuQKdkq+3y31SzhJAZFNGjIRuJKs7V1C3RVOic08T/Lh
+ hrtquCKnRTBYsjpoxEgEbU/3uck/xVGeC49cdubaM=
+X-Gm-Gg: AY/fxX4Dt5tAEivD22WgOvYX6c4zPPj6if4HPNGtOm3z462TiySMJ2C4q0pbqkDckjS
+ pq0omZ4Ng1oBrj219GgDfsvcfmjUKnfnPCQyEYaVtoyQLxy2drjDPS0mzmPac0ylV3PaSmOW/Ii
+ 7eUqyIr8ycDj49rHmXKIkuUcHN+WzbgXKw/ZiT22SnKHRIwJil326dWZhQnO9ePP5uU/0xcSX1O
+ Byb5CcrVzg4R9Rgqz5HvGmIK0AqS49I+/22by8LjCzFjNdNo0PlzJptOyv1DYdcAGw6VvpB6hNM
+ xwGtipmBATZus351V3BO6AiJbQRUK8HtSH7AceXt4uUjSRveM8Vw+uw1UaYIbgIDF89xhfhsGXZ
+ DZ5eroxfA7TKoOvj+y45VpyXinIwwbp6l6eRxbk931MfmqToA0AwGAtawISGdzI2S9E3DqVEvAi
+ oMIh5KNHTa/d4ShNyNU6zEi87t+Jj8nF9f+eVBDNYyY8veLJURtnAqSi4=
+X-Google-Smtp-Source: AGHT+IGsDvOdYUDmXWsgQGS+hEvssHYXHYNvYG2nu+ExMq0KuswCtKHu1qj+tfcvZD3Ui5ILSpT1Eg==
+X-Received: by 2002:a05:6a00:4ac3:b0:7e8:3fcb:bc4a with SMTP id
+ d2e1a72fcca58-81b789aa6d9mr6046624b3a.31.1767885419555; 
+ Thu, 08 Jan 2026 07:16:59 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81d87955bb6sm1060239b3a.50.2026.01.08.07.17.06
+ d2e1a72fcca58-81d87955bb6sm1060239b3a.50.2026.01.08.07.16.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 07:17:08 -0800 (PST)
+ Thu, 08 Jan 2026 07:16:59 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -77,18 +77,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH 04/18] fpu/softfloat: Add OCP(Open Compute Project) OFP4 data
- type
-Date: Thu,  8 Jan 2026 23:16:35 +0800
-Message-ID: <20260108151650.16329-5-max.chou@sifive.com>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 01/18] target/riscv: rvv: Fix NOP_UU_B vs2 width
+Date: Thu,  8 Jan 2026 23:16:32 +0800
+Message-ID: <20260108151650.16329-2-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260108151650.16329-1-max.chou@sifive.com>
 References: <20260108151650.16329-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,110 +111,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit provides the basic operation support for the OCP float4 data
-type(e2m1).
-
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- include/fpu/softfloat-types.h |  7 +++++-
- include/fpu/softfloat.h       | 45 +++++++++++++++++++++++++++++++++--
- 2 files changed, 49 insertions(+), 3 deletions(-)
+ target/riscv/vector_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-index 835dd33bf1..82a54e9e6d 100644
---- a/include/fpu/softfloat-types.h
-+++ b/include/fpu/softfloat-types.h
-@@ -120,7 +120,7 @@ typedef struct {
- typedef uint16_t bfloat16;
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 5aea553814..ec0ea4c143 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -4972,7 +4972,7 @@ GEN_VEXT_V_ENV(vfwcvtbf16_f_f_v, 4)
  
- /*
-- * Software OCP(Open Compute Project) 8-bit floating point types
-+ * Software OCP(Open Compute Project) floating point types
-  */
- typedef uint8_t float8_e4m3;
- typedef uint8_t float8_e5m2;
-@@ -131,6 +131,11 @@ typedef uint8_t float8_e5m2;
- #define const_float8_e4m3(x) (x)
- #define const_float8_e5m2(x) (x)
- 
-+typedef uint8_t float4_e2m1;
-+#define float4_e2m1_val(x) (x & 0xf)
-+#define make_float4_e2m1(x) (x & 0xf)
-+#define const_float4_e2m1(x) (x & 0xf)
-+
- /*
-  * Software IEC/IEEE floating-point underflow tininess-detection mode.
-  */
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index 7ab585bfc8..13b882bc67 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -190,7 +190,7 @@ float128 uint64_to_float128(uint64_t, float_status *status);
- float128 uint128_to_float128(Int128, float_status *status);
- 
- /*----------------------------------------------------------------------------
--| Software OCP FP8 conversion routines.
-+| Software OCP FP conversion routines.
- *----------------------------------------------------------------------------*/
- 
- bfloat16 float8_e4m3_to_bfloat16(float8_e4m3, float_status *status);
-@@ -201,7 +201,7 @@ float8_e4m3 float32_to_float8_e4m3(float32, bool saturate, float_status *status)
- float8_e5m2 float32_to_float8_e5m2(float32, bool saturate, float_status *status);
- 
- /*----------------------------------------------------------------------------
--| Software OCP FP8 operations.
-+| Software OCP FP operations.
- *----------------------------------------------------------------------------*/
- 
- bool float8_e4m3_is_quiet_nan(float8_e4m3, float_status *status);
-@@ -270,6 +270,47 @@ static inline bool float8_e5m2_is_normal(float8_e5m2 a)
-     return (((float8_e5m2_val(a) >> 2) + 1) & 0x1f) >= 2;
- }
- 
-+static inline bool float4_e2m1_is_quiet_nan(float4_e2m1 a, float_status *status)
-+{
-+    return false;
-+}
-+
-+static inline bool float4_e2m1_is_signaling_nan(float4_e2m1 a, float_status *status)
-+{
-+    return false;
-+}
-+
-+static inline bool float4_e2m1_is_any_nan(float4_e2m1 a)
-+{
-+    return false;
-+}
-+
-+static inline bool float4_e2m1_is_neg(float4_e2m1 a)
-+{
-+    return float4_e2m1_val(a) >> 3;
-+}
-+
-+static inline bool float4_e2m1_is_infinity(float4_e2m1 a)
-+{
-+    return false;
-+}
-+
-+static inline bool float4_e2m1_is_zero(float4_e2m1 a)
-+{
-+    return (float4_e2m1_val(a) & 0x7) == 0;
-+}
-+
-+static inline bool float4_e2m1_is_zero_or_denormal(float4_e2m1 a)
-+{
-+    return (float4_e2m1_val(a) & 0x6) == 0;
-+}
-+
-+static inline bool float4_e2m1_is_normal(float4_e2m1 a)
-+{
-+    uint8_t em = float4_e2m1_val(a) & 0x7;
-+    return em >= 0x2 && em <= 0x7;
-+}
-+
- /*----------------------------------------------------------------------------
- | Software half-precision conversion routines.
- *----------------------------------------------------------------------------*/
+ /* Narrowing Floating-Point/Integer Type-Convert Instructions */
+ /* (TD, T2, TX2) */
+-#define NOP_UU_B uint8_t,  uint16_t, uint32_t
++#define NOP_UU_B uint8_t,  uint16_t, uint16_t
+ #define NOP_UU_H uint16_t, uint32_t, uint32_t
+ #define NOP_UU_W uint32_t, uint64_t, uint64_t
+ /* vfncvt.xu.f.v vd, vs2, vm # Convert float to unsigned integer. */
 -- 
 2.43.7
 
