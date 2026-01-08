@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F9F3D185D5
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E843D185CC
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 10:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdniu-0003rq-2K; Thu, 08 Jan 2026 05:58:36 -0500
+	id 1vdnjL-00068B-8a; Thu, 08 Jan 2026 05:59:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnin-0003kq-QG
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:58:29 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnjJ-00060q-Jj
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:59:01 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnil-0007oq-JZ
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:58:28 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43277900fb4so789772f8f.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:58:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnjI-0007q8-0a
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 05:59:01 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a3e76d0f64so8073365ad.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 02:58:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767869906; x=1768474706; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767869938; x=1768474738; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=43m4t4DwfMUg2vdVTMu9rnuHYQKnOxaB4pb7pw//f6g=;
- b=jMNDvEz+o+RIBgy//mXEhixlB6g/12xNXOHU5xsI6PDrEc2CkCvbcXbeW4HqDmmrFJ
- XBCB48W0lkRxoCcRVgi8V7QpvRlBd1cgpnxgLzFWb2hDoi1K23TGyrXY2qquFEUS2n3a
- mgrkmmLE+YGRNmDRBK67InB2UV9LLAxinEGr+Ci+jrVXjP97xc1Fy7QBiDEngkJBZIUl
- PPFw4C2vZphWPRpIvoRdRlvusGREwiPkMtv/LACfdIAh+W0Q3l0hbi4Kg0/vWMgA4IoZ
- J/h00KEbcoPLF/89r6pd20BANWqXDcB6mSwygKeY05gZHufsunQEVscuEBN5HZNTckr3
- 6Afw==
+ bh=0xDsYsZqUfSPlkLSnrNhGJEtuejn3vFQzjuYwP/y/zg=;
+ b=Oly+GUl/ZWSMEhvb8iPae8QCxLI1VzB7hIxl0hn64kqeyIJgpaoT6SKqltIue10hZq
+ dx5DE1xWqFnnGePLrR7ySnNkFViwC9k//eP27E4Zrq/f64Y4mkWlnWBzf896yqeoXaio
+ dMQzfF5spw5t2pjyKdYAO8QxWsROkYmrKQFJEQ73lZw9LJ56pJgqVWOxcS4HlSSDUoso
+ kVL1p0C0/Au5hkXCMw6hfvAxhRB+Uvblop+ZVRknxaTUGZcowN3wxHWX3zc8xEzaKqUn
+ wKl9GHA4fy2SWqydtuUxEKhiLvbplwCgB8o8MixSKl2D3BBxrCTXQ58fpVHnLIycpHH8
+ cjCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767869906; x=1768474706;
+ d=1e100.net; s=20230601; t=1767869938; x=1768474738;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=43m4t4DwfMUg2vdVTMu9rnuHYQKnOxaB4pb7pw//f6g=;
- b=WpvUGWGiodAGrmueZCq6RDlIHm9xdRKAa87R4SQ3e08tJl/qxKEdJay4Ye9uyRZ8qo
- nnNPbl7LIWn5MbBN7mV9dRf5gDrncSEH+bmKBUOktMuewlznv0d721iSeQirtWQE8coR
- Lnot6FjSFm3KKTXz12Y3wUhqRTuJJVEkpoS7Dr293PYt1VwaJgzBnn2Ui1AMZgZ6ExjE
- W078VqauWn1nfzWBPpNG/vbVEmph7IAAm3PipO4VZgRJd0ki0jEiXb6IshmV9vem+054
- gYYmAb8YTNqLdpsLi4VsTelioSUemPrp9ZTL+aKWXmbnMISRGdpPyfxZ7n5ZLrsY2eaD
- qHXQ==
+ bh=0xDsYsZqUfSPlkLSnrNhGJEtuejn3vFQzjuYwP/y/zg=;
+ b=lpv/BlzIYBJnkBR9y0FlKWtRW8gLPMsM6780+0uKKqihvfWgFKvkb8EP1zmAg/SFpk
+ HBCdeoaEJmDDZ6wOPqtTfajsDfqQjxYbGtluiaYfmRku5/1Xita3LrG0fKz8r9y8JK96
+ AyviALrHoeY7W4yA/MGbv3OHpaZ/I+4FyOz4hAdoWhZL0zmF89fVtaIbG4W5bKMd7RvC
+ dMYLQQBUyMhH3Cu3qRVnuoNasBPTVCW2Xdn6JNTuc9HvCfSzowzauBab5H+QU1miXpvj
+ zGccId0rVs1yXXL4fez8at2qb+kTilcIi3hl2PeRojDReC7DOShAUgflGQZ9SB8Ic2Ur
+ umbA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUldLDZ40JG1j2PUHkomq4MuQQyQjZ+UbowgRwwItgarasGEzf/JWqZ3LG7xI5Qg09pfIlbf4nBDImz@nongnu.org
-X-Gm-Message-State: AOJu0YxX4criHMp8kmlWPoApZulf4iZYBh/4K43nMF5/xz6Ut09EyxsH
- +BpfWuBQVORAng911daQMdKXt5RizA/2+aylaFRp7XbDS3lgQkZl44HonsDl78fBdVIHSCRExko
- cvj+UR5w=
-X-Gm-Gg: AY/fxX6x3ZqsAP+bI7wooKQHpz+vtvWcfjTZ6/eqCS1/vZtGCX6IFoEQ5SJIzdGdGV+
- rGf/Sn/6WgtBnZwib9YuCQQeSBe0TPaYq7SXK+BSNtj7sBkhUZRBiMXYTJNV3TdgYiVboPXLsNv
- D5tCvYWAmyS79T9rWMYgvMyA1KQXO+RluzYfJNf44Ykq7MgtbKdDsGfhzd5ZD27Rabri0Bzk+uz
- yJ6HHrfEvnvfIQLM8dOnmkZu/DprAdFb1ceEmdRYshi4jKzVmRMJbEz6cBK5JeOEpCLhPAP+FTR
- QQx/RPKrnM85ldXRMCbMx/aWbwyZgozwT2nbu403rKScERofwzbOikHeKT23AcUc2OUptHL3qxE
- X947O1TjtN7m9xfmo35z8KE5SX2uT/Ws+sYDhPR6D6XoYcqdhAcBnM0T/oypYUQWadZEBG+V4xB
- 6vUX/frf/2HZFy+/j1d1eDIHbteryWxomqJ9NCa6sQ694FanFSAHcg2w==
-X-Google-Smtp-Source: AGHT+IGRKPGXRJ4a3xcHbzOBCybX/eivKYl/EjOBa5tswpa8ZOR8SJNfkpPcVmHMX8QQtBYw+NWElA==
-X-Received: by 2002:a05:6000:1ac8:b0:432:88c4:e180 with SMTP id
- ffacd0b85a97d-432bcfd3d4bmr13124697f8f.15.1767869906061; 
- Thu, 08 Jan 2026 02:58:26 -0800 (PST)
+ AJvYcCVNdUkUCoy1XOENrhGRWdnSCi/iXv56FHUoyw4mouWU09X+t5/V7bGR/hSVhvwzCEx83gC+DdZooUaf@nongnu.org
+X-Gm-Message-State: AOJu0Yx7Ew4F5HZFR+e9mFAS0T72JnPDeboPmANCJiA0kTGd5jqIpAsq
+ hfgaQSj4tYQqA8PzvYxAcTZYFXBLBFEvM3d0yL7aP8Rf/fkpLFw7WPnhaABlaNqW7W8=
+X-Gm-Gg: AY/fxX7IHz7CyANb7v3RISK/1v7HfjBk9oIf5lvIH3ICMDc/cKdLeDQkGfqjwFJsadK
+ asLaVeiaIMwQuVbrCw4HaedjV+o1Lqv2O34EUP59Dt5wqMGPcppkAjveGt+mLP+KcjnZhZjilgv
+ 7/7pDxiMyChyM50Ulsbk4T4T1oMSuQPohN9lAKEnqqrDD9MjLCZTXLJwUIr3AG9axJXJpt+/lbq
+ oCNJVN5rDaqJxgsD/X7jSgGsPpnFtbu1ojrt6LbKVk3GLejmV7iwOtsOyIkxQDzXhdjpB6zysOv
+ ywikZBqPYP8xYzatiElIoak64x5qaciVV6lIMPRlIYcNC2magQpcltmd1n2xYsbU4RTw3IQczME
+ 0R0NqQ9iPdtrBcQgS2l8rLl3FckMT9FuayQMj3mMK0oGoBlaYIcJk6/n5kUEC/v2RtnmVWBJazS
+ 31IyIfr2L6q6mZK3tbH37bh2Fm/x8FLcf7rfxeKq7e/FlnXSdKKSe5rQ==
+X-Google-Smtp-Source: AGHT+IHufp0AXd6x+4xv7BHp2/WJL9nBKNxOm+7kFC9pDNrDDqSeURzCPKVK4OM8SIQUuAu9+yuilw==
+X-Received: by 2002:a17:903:fa7:b0:2a0:97ea:b1bd with SMTP id
+ d9443c01a7336-2a3e390f68cmr95019855ad.0.1767869938087; 
+ Thu, 08 Jan 2026 02:58:58 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5df8besm15062550f8f.26.2026.01.08.02.58.25
+ d9443c01a7336-2a3e3cd46a9sm77070005ad.93.2026.01.08.02.58.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 02:58:25 -0800 (PST)
-Message-ID: <52ebe0e9-338f-4b96-9a26-6dda66db8f41@linaro.org>
-Date: Thu, 8 Jan 2026 11:58:24 +0100
+ Thu, 08 Jan 2026 02:58:57 -0800 (PST)
+Message-ID: <f5675177-1c71-4ee4-9947-5f55760b4143@linaro.org>
+Date: Thu, 8 Jan 2026 11:58:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/50] tcg/x86_64: Rename from i386
+Subject: Re: [PATCH 12/50] tcg/ppc64: Rename from ppc
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-12-richard.henderson@linaro.org>
+ <20260108053018.626690-13-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260108053018.626690-12-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-13-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,25 +109,25 @@ On 8/1/26 06:29, Richard Henderson wrote:
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/{i386 => x86_64}/tcg-target-con-set.h  | 0
->   tcg/{i386 => x86_64}/tcg-target-con-str.h  | 0
->   tcg/{i386 => x86_64}/tcg-target-has.h      | 0
->   tcg/{i386 => x86_64}/tcg-target-mo.h       | 0
->   tcg/{i386 => x86_64}/tcg-target-reg-bits.h | 0
->   tcg/{i386 => x86_64}/tcg-target.h          | 0
->   MAINTAINERS                                | 4 ++--
->   meson.build                                | 2 --
->   tcg/{i386 => x86_64}/tcg-target-opc.h.inc  | 0
->   tcg/{i386 => x86_64}/tcg-target.c.inc      | 0
->   10 files changed, 2 insertions(+), 4 deletions(-)
->   rename tcg/{i386 => x86_64}/tcg-target-con-set.h (100%)
->   rename tcg/{i386 => x86_64}/tcg-target-con-str.h (100%)
->   rename tcg/{i386 => x86_64}/tcg-target-has.h (100%)
->   rename tcg/{i386 => x86_64}/tcg-target-mo.h (100%)
->   rename tcg/{i386 => x86_64}/tcg-target-reg-bits.h (100%)
->   rename tcg/{i386 => x86_64}/tcg-target.h (100%)
->   rename tcg/{i386 => x86_64}/tcg-target-opc.h.inc (100%)
->   rename tcg/{i386 => x86_64}/tcg-target.c.inc (100%)
+>   tcg/{ppc => ppc64}/tcg-target-con-set.h  | 0
+>   tcg/{ppc => ppc64}/tcg-target-con-str.h  | 0
+>   tcg/{ppc => ppc64}/tcg-target-has.h      | 0
+>   tcg/{ppc => ppc64}/tcg-target-mo.h       | 0
+>   tcg/{ppc => ppc64}/tcg-target-reg-bits.h | 0
+>   tcg/{ppc => ppc64}/tcg-target.h          | 0
+>   MAINTAINERS                              | 2 +-
+>   meson.build                              | 2 --
+>   tcg/{ppc => ppc64}/tcg-target-opc.h.inc  | 0
+>   tcg/{ppc => ppc64}/tcg-target.c.inc      | 0
+>   10 files changed, 1 insertion(+), 3 deletions(-)
+>   rename tcg/{ppc => ppc64}/tcg-target-con-set.h (100%)
+>   rename tcg/{ppc => ppc64}/tcg-target-con-str.h (100%)
+>   rename tcg/{ppc => ppc64}/tcg-target-has.h (100%)
+>   rename tcg/{ppc => ppc64}/tcg-target-mo.h (100%)
+>   rename tcg/{ppc => ppc64}/tcg-target-reg-bits.h (100%)
+>   rename tcg/{ppc => ppc64}/tcg-target.h (100%)
+>   rename tcg/{ppc => ppc64}/tcg-target-opc.h.inc (100%)
+>   rename tcg/{ppc => ppc64}/tcg-target.c.inc (100%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
