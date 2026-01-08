@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9100FD1D48A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1400AD1D48C
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwNl-0003w1-3Z; Thu, 08 Jan 2026 15:13:21 -0500
+	id 1vdwPj-0006Kt-KN; Thu, 08 Jan 2026 15:15:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwNj-0003tu-Sw
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:13:19 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vdwPc-0006GQ-FV
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:15:17 -0500
+Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwNh-0000nC-Tm
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:13:19 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7bb710d1d1dso3782846b3a.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:13:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vdwPZ-0001Li-Vt
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:15:15 -0500
+Received: by mail-pg1-x543.google.com with SMTP id
+ 41be03b00d2f7-c13771b2cf9so2577017a12.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:15:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767903196; x=1768507996; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vrm2mV3IiS5qG7ZLmnCuOyy//Qd/VeBtpKd/WeSU5qM=;
- b=alWOjdbDCUkY0BcgOKGYeRnvkkCVKZM2Aj+RgtS9KYmb5AUHYb2TuSLfqH31tAqGDl
- ZBELTjSdjFVVVNt3k/ptrycmQVareTm4cjfx6qZI1fyR3qEoCJ5H1O6rfxP9X+t/z1/Q
- 7XMHhIFwXXgl9exs1bvB6DARLFbdSY5Hy5asJZjPWa1k1R95mAcgbJmV3sIbIezVbTEG
- EWSk7L0cdJQtfUCI0AEexZEkqmVnmaZVvBp6ucDRHmqYAQWc2NI9z3Eyu8aYQoihoGgO
- bRxqQ8wzKizXJ836IFUM/9KY6FavDE3urVeiJjwwIzNVKxruZA3zsVyzAWaYZ1kwLKgF
- I2dA==
+ d=linaro.org; s=google; t=1767903312; x=1768508112; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=r/FIof0CkpaoXxGLitfqWpYgvt9zO1PQH0geDkZpq2k=;
+ b=exFNFwcAfpkKir4a36qCwdVfJkJsNc2Khvaa7B+UNfuwYXhuhyDk9nhuzpHCTb8qn8
+ GVXI1UxsAhopnXnZNFokrlEeyO2Q2eQq9FpaJNFlWASu5fyZGMpdHHs9zxCxaQJru5ok
+ zFlwXTiakHbuB2RptrhOIONEyhDNxG71JxKfNUx5HdolP3lW+VEqOHNIpsIq9Ao/Bf04
+ YGmNVp0PH49/CLqJfOoPjB0PzFQrwKldlnJxGzvCP/r7lPflYIgLpy4jW4VkvHKSbyZj
+ 8/V3+wI+EURWTjGg0bG53TnmYO1xD9oO8G0YKqRF/sa1u37kFwZoMHI4U9CKA1L6Mzd9
+ rrLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767903196; x=1768507996;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vrm2mV3IiS5qG7ZLmnCuOyy//Qd/VeBtpKd/WeSU5qM=;
- b=IHTRZXjWBnsoP7LIBTrkHyx8xFcMXSw0SklGsxN2BDngsioyKzoC3hZ2bHfMQBAjF6
- Kx7sxkNBuOriWPAIV06X2Pm7GYRGX3J8tUEvTAhvErBBiMPUL3RZdaoKndnWut27CIOh
- Hwca9ejFHmZHy/pExhQM6phXxTSwozwwanNHzkDOfKDInK6ZcGF9rlYDCJlrBCPmVbwJ
- 0GSRZtJsHyMq6zR0Ut1ddN++UutdjMkcGVHrl3rT8dPCy05oNBBLmXLwT1GQ6YAqd/JF
- wv16+EWmqcWUzOTSiDnBJlFOD6nyN5eyospORQogdTAFzY916aj4D9D5cnBImJVEkHyr
- lDQA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViPNJmad2HIm0x0hyiwhGbaUuYPoprdl6pgMrz5v6F9JlXfC1zM1PyM1UjENNfprDj52fcXRug9TXr@nongnu.org
-X-Gm-Message-State: AOJu0YzwrEqe18uaObr3/HTe4Ago4YIbmdJgJ5M0FVetq8Z4vrp32ZVK
- AM/pLjBQiZCetcZs3npCumvR9qlIJKudKcKozNJcl2/c3eS4OsSq4XvpZVDAt6rHag8=
-X-Gm-Gg: AY/fxX7d0xINXdvbTxmIVIH0uYstv77uIwsTPaW+qK0ZfkTZ0/j7Ly1Am/yEaxgiWdS
- 1TFRLblRlD+Qq22KWSTg/xDfS4C3YkCbgOUs11kLn0yp3NkoVU3jZhSUaflHONqzhPJeGHSZ3cd
- dhBnwCMnYrOlqJ6z6HY8ipTWDD4CfSRtXvXwgtyMyJ5SPq/ODuNNTKxNfFW6Y3j1ztCxnPcqCX6
- 35B2K8XhZQmtO8w1ZB/CBFkMQB9KmVrQ/DkBpeo6I30yKL3rGfPfSywGdogUwJl0ym8sJneEsdg
- LhOBT7RHqmb7Mm2YGWeQ+1+EDviNq73yCKqHpWF6UydhaXcgMeTaFRHyqhWA5FRJADV6ei9qH/8
- Yi4cRE9Ze+A5sjiRKu6juxNb6kbpfAywr6Sx2QZPRn0XabXCmILQqLxEUqXSS6+ThM5QXK4Rh0j
- PKAEE48ko92o/A31pWJgIaukL8hYCg/pImo3RVsgLME2ACN07OAJG5EDu4
-X-Google-Smtp-Source: AGHT+IFtAlFBlpQnnYQE3jtAbhG4zEd7uNEZ/hZ9KPpnD0n/BfJrka3zn+nfce4G0g9jSE8riuT/lg==
-X-Received: by 2002:a05:6a00:a883:b0:7ad:386e:3b6d with SMTP id
- d2e1a72fcca58-81b7de5aaadmr6536502b3a.21.1767903196295; 
- Thu, 08 Jan 2026 12:13:16 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ d=1e100.net; s=20230601; t=1767903312; x=1768508112;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=r/FIof0CkpaoXxGLitfqWpYgvt9zO1PQH0geDkZpq2k=;
+ b=Nd2JesrYGd3t5FpEa679UO328PPimYZ/lnTaGH0FIO3nNMxFGp0ekuSctcI7tjRe4U
+ jzI/YJQEXIPnCzt9VkoW3soXumarVn3GhaJKLCbpBXHp4omrPg4pIfleu4Yhd90uJfGJ
+ BZ8wEOxgYWzGwCU6l2uZ7C5fKKMb4UyxYVL544z2gtFQzOUuv39HUaljA4w4jCQrv36O
+ dBiVvJ9X/1sySdMhqVgQiaCXNqQTFLRQQRFl5Q2ZUILAqNXeg6ZtgFd61+PRzeviLGS1
+ fiwNvX0ONKtO9U97xOFeQpOa+wjGojDk66MJaYlXwtR/9DQTB2yovMuv1olwU8i7tMLe
+ 1Caw==
+X-Gm-Message-State: AOJu0YxSpFf07rek+jmRaxaPHQrg5r18nE2qyl0uvr6XQryMNWMIpwbG
+ TCi+1RtAhYstF5Wc1pbF558q4gKHIUuj5R8RfNvnjDEi7Dp63lSmx9wNsPCHmgqb4K8TO9nJnUg
+ daKWzJcJ7rA==
+X-Gm-Gg: AY/fxX7EbQ4G418EI/g2SySn4iCXJoc9L2PZN1bgyLZFHbUxw6DQ52AfNq83idb3obM
+ 24/tLv9P+gcC1DmtMih/gOxt+aykeKO0SwuvKxeOAi1ahH+zTSap9591pp9wlagrzgnplial12R
+ R+V1mil9B9Ux2q1P2pDdL2Ar0iFl7SCQvK1nLnIWF8yPxJgNVaeGY0rDg+jjO7ItshOXbtqjQeK
+ XsfKxsXQLJ3mOiBnkyh12YzH1V/y6Gxc47att1oD7wu6cW4JnAaixABJ2iRLjtLqM+szDyl7bkL
+ CdJLPJR1wdBa3Yln6wMaEZyEcjSdBJFk3zsWMFEZfiHJ4eOSgk7K7i/yOOVLqVeuqvzIuKrSbkp
+ lg+8/Y0Nq2mXTJrcu3MOOF11s/d0PX9dgj4yhpVRgr+J1ycKCLYy15PDmRCxXodlUeV3dUXVO7f
+ ORk2HxJ/+V4jRMCXqGaL6Vq+dMUt/Wew==
+X-Google-Smtp-Source: AGHT+IEGDqtxwlCsHa+Cg4Xl9/fdjsVZB02bzazXlDc/15WPeKeQE26SM8H2ra/IguQkE9b/nklSfg==
+X-Received: by 2002:a05:6a20:258e:b0:352:d5b:c427 with SMTP id
+ adf61e73a8af0-3898f88f227mr6914189637.3.1767903311982; 
+ Thu, 08 Jan 2026 12:15:11 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-819c59e0531sm8389380b3a.49.2026.01.08.12.13.15
+ d9443c01a7336-2a3e3c3a560sm85337995ad.21.2026.01.08.12.15.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 12:13:15 -0800 (PST)
-Message-ID: <b174a3e8-6c87-4a0d-a879-66a148052446@linaro.org>
-Date: Thu, 8 Jan 2026 12:13:15 -0800
+ Thu, 08 Jan 2026 12:15:11 -0800 (PST)
+Message-ID: <fee59a5f-e917-488d-a89a-1e5cc264fa0b@linaro.org>
+Date: Fri, 9 Jan 2026 07:15:06 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/50] *: Remove ppc host support
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 04/50] bsd-user: Fix __i386__ test for
+ TARGET_HAS_STAT_TIME_T_EXT
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-10-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108053018.626690-10-richard.henderson@linaro.org>
+ <20260108053018.626690-5-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260108053018.626690-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x543.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,29 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/26 9:29 PM, Richard Henderson wrote:
-> Move the files from host/include/ppc to host/include/ppc64,
-> replacing the stub headers that redirected to ppc.
+On 1/8/26 16:29, Richard Henderson wrote:
+> The target test is TARGET_I386, not __i386__.
 > 
-> Remove linux-user/include/host/ppc.
-> Remove common-user/host/ppc.
-> Remove cpu == ppc tests from meson.
-> 
+> Cc: Warner Losh <imp@bsdimp.com>
+> Cc: Kyle Evans <kevans@freebsd.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   host/include/ppc/host/cpuinfo.h            |  30 ----
->   host/include/ppc/host/crypto/aes-round.h   | 182 --------------------
->   host/include/ppc64/host/cpuinfo.h          |  31 +++-
->   host/include/ppc64/host/crypto/aes-round.h | 183 ++++++++++++++++++++-
->   linux-user/include/host/ppc/host-signal.h  |  39 -----
->   common-user/host/ppc/safe-syscall.inc.S    | 107 ------------
->   meson.build                                |   4 +-
->   7 files changed, 213 insertions(+), 363 deletions(-)
->   delete mode 100644 host/include/ppc/host/cpuinfo.h
->   delete mode 100644 host/include/ppc/host/crypto/aes-round.h
->   delete mode 100644 linux-user/include/host/ppc/host-signal.h
->   delete mode 100644 common-user/host/ppc/safe-syscall.inc.S
+>   bsd-user/syscall_defs.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
+> diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+> index 52f84d5dd1..68b7860e30 100644
+> --- a/bsd-user/syscall_defs.h
+> +++ b/bsd-user/syscall_defs.h
+> @@ -247,7 +247,7 @@ struct target_freebsd11_stat {
+>       unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
+>   } __packed;
+>   
+> -#if defined(__i386__)
+> +#if TARGET_I386
+>   #define TARGET_HAS_STAT_TIME_T_EXT       1
+>   #endif
+>   
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Gah. #ifdef.
+
+r~
 
