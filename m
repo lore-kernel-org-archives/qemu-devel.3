@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A43D1D48A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31985D1D48A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 20:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdwEj-0005Wo-Rc; Thu, 08 Jan 2026 15:04:01 -0500
+	id 1vdwF3-0005rB-2B; Thu, 08 Jan 2026 15:04:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwEe-0005WN-PN
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:03:56 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1vdwEt-0005gN-3U
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:04:11 -0500
+Received: from mail-pg1-x544.google.com ([2607:f8b0:4864:20::544])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vdwEd-0007F8-40
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:03:56 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2a09d981507so17998625ad.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:03:54 -0800 (PST)
+ id 1vdwEq-0007GG-V8
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 15:04:10 -0500
+Received: by mail-pg1-x544.google.com with SMTP id
+ 41be03b00d2f7-bc4b952cc9dso1703959a12.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 12:04:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767902633; x=1768507433; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1767902647; x=1768507447; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZsML9o1KVU5Ixosvlqx1nPbMxFCZKYm1S6FdLQlKDFg=;
- b=e8hM64VS4hSQwjzkEB+YMiU1ULdDwWLBF7TpEAWCdRKX69RouohEYf3gPvqDnuunQt
- 8cNO8lUJfwtl34AOUmWOYnh6C9Ok331PSLRrCQnEU3gpec0D/r8W8+Yx6VOhq21dHuIl
- VA3pLIp1pxs+8SK+CB1coUtI3czoyOyiWdmAC2QT27JvDaiGrmD63RrnzQTiZgZmvlz8
- 9AQS4AuLuyQqYvKKAqMw+0w0KpkaCoy9EsHWlP+fk96xfPQkoh2YrnF/YT4ySmH+tMJW
- stLEW5QSDgRq/oQ0LT3PHklNUlJQUSpIl2h95tOmxufMIYVBquTQSRtsaY+wGL5GeFrh
- WiPQ==
+ bh=QPG2tyQK+5rN3V2tF3uxAgiVPsBjUV/hvNBEvwv8D7I=;
+ b=qwDpkBGDcpv8vgtGuwTHqioO4GT3sxPJtMjV5Tj4H7e94BjnNO8BWLtgvfKbbgtSKb
+ gRfj/UDpvbLmvqbLMvrFCjbShWVjLUG+WBbef6+B/aWPncu10bUsa4egIh2smEH6p2vp
+ uCCFn9LApFXYuAe8HNPcWmrbyDKpC2FCiV+Nd6qaSLzmq9TQUEyvjYl068qz9oQkofbE
+ Pp7CSlXORTCBUDqunOS5BCmGTmhLXqEqafTX6Ut5ReIwNV7t+x3tRufb3gt7QyBfqvzZ
+ 8ABgAt72Kkq3Kz8ZIGl5N2HwWI4d5I1UWEui3TVMKQBK71lOwXml95+mGvSI58lzS1ZH
+ hnXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767902633; x=1768507433;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1767902647; x=1768507447;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZsML9o1KVU5Ixosvlqx1nPbMxFCZKYm1S6FdLQlKDFg=;
- b=CsSu/4IXkT4ktHBLBbgUDLhxxg9x0uR3/gqbAeQA73+r0EULlWfGgQRj4jXv6v4qzz
- MQU48qd+dWBPUyaR8gJJYqBtBZ/in9F98+EiLw6T9agxf/HJq2UftwxOD+gfFLf4h+B0
- 7gYV57dylxhWw57nAXOnrOPuhPYo3F9S/pyA4x0zlNfJZ32DXi9O84i6QvzdVVTIXE9Y
- hCgQbFEhqV4IiicjfVTdLD7Py9MjUB4cAA6W1C54oe7f0TXJfgEkoYrI2tav4KJkhfPC
- Dr36qEm1ihX9CsmjLdkFWY7m0xNMRiyXrLZI4THIFF9RGiMwo7IFr4J0Ld8rSPNJjTII
- C0KA==
+ bh=QPG2tyQK+5rN3V2tF3uxAgiVPsBjUV/hvNBEvwv8D7I=;
+ b=XKdrIdIqP/2RJBhzmqMnHf59X8R3XEG6kJz/VGWVjW3Zl1+Wb43ZSWRLYzdHYYAeFY
+ 35STw5gohE8KbQxLceiyRBvQwPWMD+EjaUlfnZxxsXck00mrm3lXV8zTtD9hLi4RmwPm
+ EFeJ0BnBMzyCUJd7E+p7ba+DKy+B0+FplufgEq3l48N+5D7McMI64emBiFeBOG+6197C
+ oNYeZOhvXFdG4KP/ey4juW3YrA6vbxZJZC9XuEQmZ2uv0acTRgOFZrfDDU5uMM78yuA4
+ xGCryTMMvv5Ef8m0FR3z71C2o+5m3vgaEBv7kSha4mrTuOgm1lcAydvVb5x4c6dZzw/W
+ mCzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3M6BmkaFy+GD3F43lQV+7y8rfDtndC6m24e/3/71+1U7QzCStyqCOL7Kx/4ZlHxQIuwhVzVhXz41a@nongnu.org
-X-Gm-Message-State: AOJu0YyI3pnqe7LVAMoQWiHgrZyHnm5MVpjjxufaYvIF8HUrDt/70DHn
- NV2f1sGbHL0ljbVYX9rhP8/PZ++t/BFEoWXuV2qdR0+8MDkvTHx62+w6Wz7IY87HAd0=
-X-Gm-Gg: AY/fxX5I5pg3WJbIJ32QwKIIxqsB3QmELx4QyE/2xLv56+SpeDndV8DJoAqtEowSuyM
- uyQNrHHxn2UrEDNIaopV6kQimw87uolQsl6Bm++GsCxQgm9V/Mc/M1/vL0W94NQRJqcSYtiljR7
- Htsc0IakrbT853FsVd2+Lx3u/AsekVB2p9/EAMxXgHREqgLy1qRpfzJTMfzTZzCSHw5I9xHgmS2
- f+VS0GJhsC7KJm2pce/vEZtxaCGQKQnx93hhPY9+eaQDGZfNbZJmn+HIwTWtqvsJ4JFPEXXaBy5
- Qg6edMhoPH0nV5Cq4LtUxjPFFDtb89ueSLoSxYgJf8LQD1OiqARxwveBXCtwJuIfQz+VTem3BqS
- wQtdLTvmT0LsoNsWanp1fmZL7KEINo/iDWQp1MvbXN5s3plZoNTPB5C3cHUT7RaBUT05QCxQj6Q
- p3ggJZbi1ZfqSUQ6kTpgWNnmBrAWPTZbvWLFF41poWFfvKcqrKeAX8DaHL
-X-Google-Smtp-Source: AGHT+IH8QJVGuhN2PHdds5LqVK4JaB9DhwJD10V+uX46zC0iqYWQvMcmCq6FcE1GO2i5w0w5QqqUsg==
-X-Received: by 2002:a17:903:2346:b0:24b:1585:6350 with SMTP id
- d9443c01a7336-2a3edb26007mr80090515ad.11.1767902633059; 
- Thu, 08 Jan 2026 12:03:53 -0800 (PST)
+ AJvYcCWkyQ6FfwY/YMiWwqSB4mN7IOerGvYbgsDTLuLr8FmeKouGR1F7wLO47FuOcKslMN8zcDlBHgZReddF@nongnu.org
+X-Gm-Message-State: AOJu0Yzyx4c9mB+LWhPcVd36o/FHDWADrR3WoltsG5TB77syGugYmRX4
+ b4VoZG4ByjTlln4bA2rPcqfH5mAkOYxz2gV4XV7c1M/e0uMvDZrV2Fw7FplL66eiXYci+mokXcs
+ kvCz6Qo0=
+X-Gm-Gg: AY/fxX5a909ivcctazgfsUlJCTevyqSX4SXut2GCRxOplTIc2GZkqxrnvxOx9DNxCt0
+ sLtaTVLUlJ3bryqJC+gpe1UjSDzAJO9t2LDJb0KAXF9rYF8FmaahH8qSOBc0jz4zcmIlYavAWfr
+ V6xKa5jZd0R4Enp2LvPQonxaxweJoNvmlT/48Jle98gvucALX8vJYg5vXdacAJA8dpNN5BzYSQy
+ DLjWG6qBUkcfS7NRHpzFLcbh598LUI7HWOtcpZlWmx6CBbbGLiqWnj3Ngi1k2el0SyScI5iVSgZ
+ YNHd2VywonBKJRYX6TqwEOcBlqHDNor+l6Cy4zRNyRAMXtHovjgequ+ZHsaPTXvF2+azexm6iuU
+ AK1hHSAt4eWJ8V+PCCfuTM3KtKEo5Cwncy4/NlZbHnMPS+3inKC5wiFADii/rYRYr/g9kndFPVB
+ Ru5d0I0lL3w6nW5XHwSlWV/kEHIgRimCUPrfvherCrWr+8/gTr3pIXRBvC
+X-Google-Smtp-Source: AGHT+IEWW4B9WbYBWVIhVhWkyiEwUd0LCFA186+cJRVN/mpRfdkxKevvzIlhIz+Rky2ph0K1ko0nBw==
+X-Received: by 2002:a17:903:291:b0:2a0:afeb:fbb2 with SMTP id
+ d9443c01a7336-2a3ee4f5a79mr62208465ad.60.1767902647235; 
+ Thu, 08 Jan 2026 12:04:07 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c3abb0sm87410215ad.11.2026.01.08.12.03.52
+ 98e67ed59e1d1-34f5f88e968sm8716117a91.9.2026.01.08.12.04.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 12:03:52 -0800 (PST)
-Message-ID: <aed0102c-3e42-4286-99ce-a86ca967f21a@linaro.org>
-Date: Thu, 8 Jan 2026 12:03:52 -0800
+ Thu, 08 Jan 2026 12:04:06 -0800 (PST)
+Message-ID: <b60ca17e-aef7-446e-9aec-8d9e8eba208e@linaro.org>
+Date: Thu, 8 Jan 2026 12:04:06 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/50] *: Remove arm host support
+Subject: Re: [PATCH 04/50] bsd-user: Fix __i386__ test for
+ TARGET_HAS_STAT_TIME_T_EXT
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
 References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-4-richard.henderson@linaro.org>
+ <20260108053018.626690-5-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260108053018.626690-4-richard.henderson@linaro.org>
+In-Reply-To: <20260108053018.626690-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::544;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x544.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,42 +109,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/7/26 9:29 PM, Richard Henderson wrote:
-> Remove tcg/arm.
-> Remove instances of __arm__, except from tests and imported headers.
-> Remove arm from supported_cpus.
-> Remove linux-user/include/host/arm.
-> Remove common-user/host/arm.
+> The target test is TARGET_I386, not __i386__.
 > 
+> Cc: Warner Losh <imp@bsdimp.com>
+> Cc: Kyle Evans <kevans@freebsd.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/qemu/osdep.h                      |    2 +-
->   linux-user/include/host/arm/host-signal.h |   43 -
->   tcg/arm/tcg-target-con-set.h              |   47 -
->   tcg/arm/tcg-target-con-str.h              |   26 -
->   tcg/arm/tcg-target-has.h                  |   73 -
->   tcg/arm/tcg-target-mo.h                   |   13 -
->   tcg/arm/tcg-target-reg-bits.h             |   12 -
->   tcg/arm/tcg-target.h                      |   73 -
->   disas/disas-host.c                        |    3 -
->   hw/virtio/virtio-mem.c                    |    2 +-
->   linux-user/mmap.c                         |    2 +-
->   MAINTAINERS                               |    6 -
->   common-user/host/arm/safe-syscall.inc.S   |  108 -
->   configure                                 |    7 -
->   meson.build                               |    7 +-
->   tcg/arm/tcg-target-opc.h.inc              |   16 -
->   tcg/arm/tcg-target.c.inc                  | 3489 ---------------------
->   17 files changed, 5 insertions(+), 3924 deletions(-)
->   delete mode 100644 linux-user/include/host/arm/host-signal.h
->   delete mode 100644 tcg/arm/tcg-target-con-set.h
->   delete mode 100644 tcg/arm/tcg-target-con-str.h
->   delete mode 100644 tcg/arm/tcg-target-has.h
->   delete mode 100644 tcg/arm/tcg-target-mo.h
->   delete mode 100644 tcg/arm/tcg-target-reg-bits.h
->   delete mode 100644 tcg/arm/tcg-target.h
->   delete mode 100644 common-user/host/arm/safe-syscall.inc.S
->   delete mode 100644 tcg/arm/tcg-target-opc.h.inc
->   delete mode 100644 tcg/arm/tcg-target.c.inc
+>   bsd-user/syscall_defs.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
