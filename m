@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22486D185C6
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 11:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8B7D185C6
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 11:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdns7-0002Xk-MU; Thu, 08 Jan 2026 06:08:09 -0500
+	id 1vdnwb-0007VV-U0; Thu, 08 Jan 2026 06:12:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnrw-00025Z-G5
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 06:07:57 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnwY-0007FY-2f
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 06:12:42 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnru-0002B4-BW
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 06:07:55 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso16709535e9.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 03:07:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vdnwV-0002nY-FS
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 06:12:41 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-432d256c2a9so258990f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 03:12:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767870473; x=1768475273; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1767870757; x=1768475557; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uRip2Y1kz9dmZv5gRfsGtCgtZE0Vbf32ZYEnS0IMC+A=;
- b=xZBW1/Do3H3/gtBs/uj441TtS0+qEX1mSjX7sgPF/yYC1PWL+vqGQM+DXjU0zcVdRy
- aTOjzObMcQoB2iPmwsDWTut+cpCR0SGm+7fJ2q8VG6ewBSc8znLU6txEtNCxVdMJPG/2
- DaB8XzYM+LvWpgMrkpzw0ZsSDyUIDZ3zADG2sK9MXdDFMbxIgybOHV97CETIP/8L/jV4
- l2l9GXnPe9gGS3Iix+dJ8LqDReu5/sH+e0jM0CsPOygWfA3c7xs5E3la0Q/os41J+zvq
- pv0/Wn0SJR00uCIIGV4FHyNJBXprowncbu12KcouVs1r46LQdJ3wpt3J1AAJzO95Vu4T
- tp3w==
+ bh=TBWieyjSjK6kUF+L1ENlfdWC1Zj92QFEivNqpA8mNPA=;
+ b=QTueLOkc/D2SThHuJxuYywbyO/hgyRipdj0OxUCskU0k6twmBXoNyEZbehvdXd2ZdM
+ LV05gB8Dy9DxHmaAB5LRWAgN+L6TOpA5mWdBUNYgjdV/vME8JWVtl79cyMqNRvFCqD45
+ DQOzG+QMCpAwcWyU1pDNWloOpBrkPN4kD5lsw6XR/saO5c1m3udzOj4Y8J/VXTjt8E38
+ PNKtiRop6pi6T2MJRNJ22kYjpvNs5tzrAXCO891WaCsm3NM9ZHVezAXTITIYg7JVh73+
+ E/uY/C8DLRcI4AMMvPFN/cIxY1PDiqSjmkLWkvf7wuQnrz9c+kpALbBg143b4yvOqYkz
+ aqtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767870473; x=1768475273;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1767870757; x=1768475557;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uRip2Y1kz9dmZv5gRfsGtCgtZE0Vbf32ZYEnS0IMC+A=;
- b=eBSm9jIxJKvI8JtE89rZEVZ3cMGLCLrnDeRuXgghX3P1cfJOklFX+UME9j8J/kw91h
- /LUod8RNm/ISOm2FRuuDQm0b8lGPltgxPf2ABB8/iMVa42CiRHbOphmBTS82QseJOwbT
- VsMeeed2VusrFvE7+7IAGul6XqJgcm+qgs/ldPWqD3tK3/sWBW+U0KEMqBV32HWVMKAy
- 0W8lNfOHvBk9Uld2GW1Dxtf3kilXqnFQ6MxZPNQUSluauZEJobo3ot1CPJoLcX3jfVvn
- BoQDifdWV7Nb5sMFFsJCn/O5RKoRVKm0H00ptBwx5nORhbcoN4O+RWtOyXrpNIkxiozP
- EMqQ==
+ bh=TBWieyjSjK6kUF+L1ENlfdWC1Zj92QFEivNqpA8mNPA=;
+ b=Iy14huX4g9I4Xl9eDv6ea26Jtifk/hXRsvFd0p02JNAqaqKa+nkJYaL5ooka2/dmHq
+ U75wN9D8k4jMhcDVYZ+XTLLn4tWX5W9IxvCv36YLPpJXErN4Nul0Zki3lEj6K7RvyFLe
+ ZiVF5cElbkBFzLeij3lyjsnWsABcweQZXzgt9TTB8jJ2lok2hK6M8/+p4PUPaNIH3a04
+ CIs7PPrfK1n9NCVErrfAiOhWSSiZGxXUb5xFSpeTq8hE+TARxbRsA9wfbBUfDouvJnlx
+ tbOpisVgKncZKJXqRaDnsuyHrkN5K+u6ggXQEUG834UC08M3N2jk6SRbdh7GfG0vhZdV
+ 5p8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHvprcVdMEC3YE0xBHxazB1g24INbHeNFyqouuyp5QmjBgOqV4Ull0vV45YliO4StauIE2nrb9CtWq@nongnu.org
-X-Gm-Message-State: AOJu0YwG92B61M4mkkDAtpp0oy1IlNFY7n7AesfFmQd2yGQ2NnwIK7WL
- wMVE9AQts5SRgv9HB5Pc0YCLPamXW1Uh6s6RK2qMa4uxkkYiThsvl1a7X05Mh7X/rhW6BKocbk8
- HF0pmMm8=
-X-Gm-Gg: AY/fxX4zHNHeqpySFRmgncNP+kHY0OzOudlDT7ZPKnWk7IIQptjWJVUZJGSWp8t2KmA
- qYgQ5QlJLC2w+R1LN79qGZJeCz1YHNYiykXrzA5VkIuqCSTZXJm5OiabnMUlYg8fSxYQQO+xjdW
- 3t9UQs8jOwRWP5G4f7qi35rC4IAQ8092dKgOWzHbwpkAT/WcCsr0EFcEF41vuGDjbrhFMObIWnq
- RTd6qFDPG7FjGfxYmpAlWVdBJPJXwVHmo1S8A0w8Cc/ObXXgTdRBqKH/zlmNXqqcfi9CmdoWllM
- kmCn6cjmxYQfdHXBl0fbEtn36Zwf7VeJEgBQ8Xq8x+VEAt+EcfGc6Pf/d2GWgps0MjJwHrNwO9j
- TkomGkAxZi2nPCKVwPbB67pUcvBemEKaVOz05YKkPJqU6G+a1YtDTENixIxZwczgfoE88TUUtBr
- N4f056jeBjl4Sgo3AMYhxo0QpsM9ql8NP4cvPjc9W9ekO9O6RSncRY5g==
-X-Google-Smtp-Source: AGHT+IF1CdFLOgPw4Nq+lc44j25cYIoxi8igfUTUeN+6Ke57Kzg4LXjaN7GaVrvbu7dmsQbn9soeXg==
-X-Received: by 2002:a05:600c:4ec7:b0:477:9e0c:f59 with SMTP id
- 5b1f17b1804b1-47d8483cc5cmr77303125e9.2.1767870472780; 
- Thu, 08 Jan 2026 03:07:52 -0800 (PST)
+ AJvYcCUVOqqS2EuxeyN+6JsJ7XrILot7Uo/l3f6iLwHF8kdUmvotOaSVtN/yjamrewIFA7k+Mkom/ff8kRaW@nongnu.org
+X-Gm-Message-State: AOJu0Yx9c0SzhU/3ytv79l+x3g4faTUAASfgTjgwXJSkL1SMwsP5eWPC
+ tfSsRYhDnRvm//kMd+CtLU/AwsOnyxMT6dxgj+HNPYm2dWHIKPrla9nqrc2Nkxlp3tkAfVIcKuD
+ /vlpxwJA=
+X-Gm-Gg: AY/fxX4D+w4fOB8qzBc1ct3I1PmNugdQfjfZZjwnfNnoDHsKa6dcTFwQ8+zeKwNdp1E
+ dOSZvAqBZ4/CfvMKxaKiUIphdfOKtc6geavSnGox1/rXCQjGhAC6ME4dKYIpeqbqaYJSTBK5SZb
+ 5ZaWCWZ/kUbvz4O0BOxZcv+pxJNI30ImHkOFM6x4YLLVDfFpBahGKJRdG+EGH1xApS2FrRAXp74
+ Tzd39wdmtvnhneGJCTfuvjzd8srYMRs0iD3v0eMDLp1hKwhOsyebxoX+uNbIt8TGrCXnW3UiFsP
+ 76FtGEvh9GFSpM/SJ1+Xjg4sacEJzw0XUDHNPXAVK7uRfOnTOu45Qs21saMjQWsxdyW//QAP4Ph
+ Hms8YqkxgVRXz6pwh02OK/aqun5XmJONXZXWQ+gdEYEX+8A6doy3ympAYIuVYVQb4jMKisBs/q3
+ sI2MRCTkaDsqRTtTcbFXukUoSPP+ha595ZsVcckCZdQnc0IPOnTbgW7tMdrVrPT4tB
+X-Google-Smtp-Source: AGHT+IHR8kiGjChw4O7v2CV23EZ+g+HcsA39PvW9kc4HYL/EZ505jiIjAbNBQZF1evhjjZ8Qh4WCcw==
+X-Received: by 2002:a5d:64e7:0:b0:430:f5ed:83ee with SMTP id
+ ffacd0b85a97d-432c374f583mr6925089f8f.7.1767870757095; 
+ Thu, 08 Jan 2026 03:12:37 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d8678cad8sm37801155e9.3.2026.01.08.03.07.52
+ ffacd0b85a97d-432bd5feaf8sm15715001f8f.39.2026.01.08.03.12.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 03:07:52 -0800 (PST)
-Message-ID: <5b140dce-b98b-4990-8fef-f48aae59f517@linaro.org>
-Date: Thu, 8 Jan 2026 12:07:51 +0100
+ Thu, 08 Jan 2026 03:12:36 -0800 (PST)
+Message-ID: <e964263d-f5b0-410b-a17d-b49cd755d7fe@linaro.org>
+Date: Thu, 8 Jan 2026 12:12:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 50/50] include/qemu/atomic: Drop aligned_{u}int64_t
+Subject: Re: [PATCH 16/18] target/s390x: Un-inline KVM Protected
+ Virtualization stubs
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260108053018.626690-1-richard.henderson@linaro.org>
- <20260108053018.626690-51-richard.henderson@linaro.org>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>
+References: <20260107130807.69870-1-philmd@linaro.org>
+ <20260107130807.69870-17-philmd@linaro.org>
+ <def072a9-bab0-44ff-919d-a294adc8e03e@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260108053018.626690-51-richard.henderson@linaro.org>
+In-Reply-To: <def072a9-bab0-44ff-919d-a294adc8e03e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,19 +112,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/26 06:30, Richard Henderson wrote:
-> As we no longer support i386 as a host architecture,
-> this abstraction is no longer required.
+On 8/1/26 09:51, Thomas Huth wrote:
+> On 07/01/2026 14.08, Philippe Mathieu-Daudé wrote:
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/s390x/kvm/pv.h    | 27 ------------
+>>   target/s390x/kvm/stubs.c | 94 ++++++++++++++++++++++++++++++++++++++++
+>>   2 files changed, 94 insertions(+), 27 deletions(-)
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   accel/tcg/atomic_template.h          |  4 ++--
->   include/qemu/atomic.h                | 13 -------------
->   include/system/cpu-timers-internal.h |  2 +-
->   linux-user/hppa/cpu_loop.c           |  2 +-
->   util/qsp.c                           |  4 ++--
->   5 files changed, 6 insertions(+), 19 deletions(-)
+> Please add a reasoning as patch description.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+By removing the target-specific 'CONFIG_KVM' definition this header
+can be used by files in meson common_ss[].
 
+I'll update.
 
