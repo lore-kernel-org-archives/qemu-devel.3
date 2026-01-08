@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B813D1D47D
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 15:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D527AD1D478
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 16:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdsKZ-0006iG-4H; Thu, 08 Jan 2026 10:53:47 -0500
+	id 1vdsSD-0001OA-S6; Thu, 08 Jan 2026 11:01:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdsKX-0006fI-Cv
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:53:45 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdsS7-0001NF-72
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:01:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdsKU-00070X-E9
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 10:53:45 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vdsS5-0000Zs-2T
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 11:01:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767887620;
+ s=mimecast20190719; t=1767888091;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gbPzLpA8WLhv4/kp5p6zTSvOtxHMBETIlFMofmkM/oE=;
- b=NJ+STSKBgeBnqBT+YtZHsTuRVR6ZrZ39ewGVaBDcHH4bsuTGUa2xLMv2OJPikpGy203Mll
- HBDo+EG4wnhjhv5uWqmVgM/gq/K4DNnyyRXg2nN+RKvowc888HnXrcl3aVLIwWIeHmu3nH
- zdoZfOsYsxkz0gxnNG0CrJuApdmK4lo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CNGBI8FvGLRZDhlmj3LctnpObhZk9L0uydjHPHBfV8s=;
+ b=SNtuQR0p0UCLLhfFje8lIlc04qsUiiPy3Rhe0LLA5RKCkNmtHLfBHz2VAPilSFHw4Ml2RN
+ YuXT3LXEnmcRzuWty345IWjI9WYMY8edN8aIkbhm27Px8n4IKTH0HjwZ8dKSxBVJ4AihFS
+ OInjokEEvVO87uxDHD0fSoMQQXMtnIA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-X-9WXAwaPN-P2Ioak6xMXQ-1; Thu, 08 Jan 2026 10:53:39 -0500
-X-MC-Unique: X-9WXAwaPN-P2Ioak6xMXQ-1
-X-Mimecast-MFC-AGG-ID: X-9WXAwaPN-P2Ioak6xMXQ_1767887618
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-430fc153d50so2439395f8f.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 07:53:38 -0800 (PST)
+ us-mta-217-7DlQbrkiOQm5WHu-A3fOtg-1; Thu, 08 Jan 2026 11:01:28 -0500
+X-MC-Unique: 7DlQbrkiOQm5WHu-A3fOtg-1
+X-Mimecast-MFC-AGG-ID: 7DlQbrkiOQm5WHu-A3fOtg_1767888086
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47d3c9b8c56so34951075e9.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 08:01:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767887618; x=1768492418; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767888086; x=1768492886; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=gbPzLpA8WLhv4/kp5p6zTSvOtxHMBETIlFMofmkM/oE=;
- b=Un6MBmR7H+suTSvbIUH0IXnXlZRd9OzbNKWmz5nZIkPFbbPjTvO69W4YfWlMVVAiAj
- vE6ua2Reae0kh0yiarZUx89VnQbeAY5Aa9Y8686aS6rgaieDY+7u6xbnyyubNdzTxk51
- vcqgq2pBZSzr0fNXnTyv5o+GVHCetNQfQLJPlcqXzPUNqBMbE5okC30r4Khlk6N+Iajl
- AnV7HMQ8ZN71b6xrfX9nN5XOJEd29OMYKlpru119XSjbIyxqPr95G8bHGvHJ54i2/Wz0
- uEw1y+Na8cnusDqxb9gIjpfJH1gqBwQ+XvxcEvHfPdwTDe4h/lR/dnCvg6gj6OGHE5tn
- jRbQ==
+ bh=CNGBI8FvGLRZDhlmj3LctnpObhZk9L0uydjHPHBfV8s=;
+ b=ERf5w0RqNAcCNSw+3ofggkyi3/CkXO7LY6a4VUpsASFs6grEhcalMpnKF9KGPT0wZE
+ 4DAQmZlu1ZwzzVZn37bpu5VFDlgRYvjJi/aEJmYjO1S1t5CNagGK1p8fJqKHtD/JQzVl
+ Td0Xa1ZWEReQIbq0NgY5LDhbWvfONVzfpPXQ1qKvd9Sz6GC1GfG+qBdaiTujopU1xzxp
+ DDLAawsZR9TuAM1pw08dY3b+PvlQ+DSTDRVyPx9NrRpDPdtKnOUETKnAKEuz7PtB70h6
+ GFvzE/GBQwP6Fs+sm4cjAcYRIhJpLuB9OW0OzSFEuUuI0GQP5MnLk4K1Rp/ZJchNId7C
+ f14A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767887618; x=1768492418;
+ d=1e100.net; s=20230601; t=1767888086; x=1768492886;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gbPzLpA8WLhv4/kp5p6zTSvOtxHMBETIlFMofmkM/oE=;
- b=r+k9UurLpUDMNh6iwunndOdafqtfkv9jlodgeFay/fHFa9EsLtCHK3vUFX0wsB85LH
- 2DLCx01QeSRvbgCvmS0TL/fLV8uTE2jjmPkHhOr2JV+Qpyty2tbJMkFZhya2rP7C3HLF
- ZbQiDapx21TTpPYzc5/wqt/wFTewK+Vn2OHbEHDK4Bc4bUBI3rq4wsHMpddhmz/p4h4H
- 7s1DkPSvPPStTgSmr7hcOSNer5bF9Ema38RR5Ak/KQa3zXjSQ1ll7lRe1TKpU3FFjRef
- +WWFpDfvcxcS254g210HEIiYnLuZX5XqdIbuUYHkP9NsuR8JKZbIRMrvtWG1a624y5Ms
- bujA==
+ bh=CNGBI8FvGLRZDhlmj3LctnpObhZk9L0uydjHPHBfV8s=;
+ b=sYa3eGDh9xyUI0HJl9hYDLBqFCGjxtwaExZDrkzLod5E9wW4JsfvmQR+gnggcvPfv6
+ uJtvZaelCyUOMooOW6IrVar8uEDDlk+G0tg4hhHzZ8MD04nxZcStqCYZfL5KyLR5h9cg
+ s7AN58y2GrGy5yBsp3k9q2aHjJg9VJbz0sv8trLhbhlKhHu8LA6p+vZotFh31KRFR/JD
+ XNoZ0pyGCqD0RZvxIxxwMsrx6WIomFfZ1dQDoFMGy4Sn5On8hh/6hJ/Pdull88PRfXsM
+ aRjehvQ7VOdDHEv0+XxZ9OQ2RWm+5gihuecX7OoJu8crgFLD4vr2vCa5ZPVYPkUYJv3S
+ WlHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJ/rD0Ma9SLUK7/yINYKNS9VdpLCMupxZ1W3gwh0NGnNBaPOnfAqD8zVHBCFNY8LSSnfAwUA/vS65Q@nongnu.org
-X-Gm-Message-State: AOJu0YxrlEvXUIU0abTwRc3WxSueBxAmPqlGxDdGo4ZNkSRpfT1j4Rzm
- rkY0zgPc2vQ4vBa+wODkbpAhyk13FpL6KIRQnql7FGxODcASA5XmtbN/o0a8mPQVhv3X/s1OMw4
- o5syKa4N7iSxeETX+PQtTWBvoEsNndUMyW5WerBb71a8GTE0jnQzwKjC3
-X-Gm-Gg: AY/fxX7SiHoFZQWNvL2rLgk8y36KCU40EnC+GnyGfa0u8l1sWQmqThVsjgjtDphzdXc
- 7BQYF61Ybi43yqXct24IP7+tYXYhnktUFpx4glq1wRm/xjRq9VRzXlHG6vWpDzIDxrbw4N5tpb0
- RiPb7y/7i8yQpXq+NoEui0GsSj2iqOMPULI8nk/JKzs72zg/hVDlPSY6IvHWzUqlJOJO6osZZSK
- YXspxo4GsdxbPiyIFaBvasEasTCHGvk3xR6wENqUoambwWXSYOMxg6+JdqyhkjjzL3HQlY011rC
- oFA/y8IDojdpLtK8CXtUSi3S0IV78HCY6DUrh+pkF0mb1wjhxl03lcuIdjKK2Q5I6svcHzWOz1B
- IiFgWaw0=
-X-Received: by 2002:a05:6000:3102:b0:429:c851:69ab with SMTP id
- ffacd0b85a97d-432c38d22e5mr6749649f8f.55.1767887617851; 
- Thu, 08 Jan 2026 07:53:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IES7jTbCg1Cvffxs23iKAbbs981yryRhOGHdPSwRX+Sx1PzfdoBLc67NPKiRv9IdL9K2wkgVg==
-X-Received: by 2002:a05:6000:3102:b0:429:c851:69ab with SMTP id
- ffacd0b85a97d-432c38d22e5mr6749629f8f.55.1767887617369; 
- Thu, 08 Jan 2026 07:53:37 -0800 (PST)
+ AJvYcCUA34jY7B2B2qtyJPc9YhaSav5a11c7LDG7E/M0FPZ+laTHCNjxqnrJjOr6PjXNr9Egzve3IuL/Ecrr@nongnu.org
+X-Gm-Message-State: AOJu0Yx3Y9Pto0H55U0EFzfXF7U+N8OYiiGbJHoKdtxmh6AtiawUQlHr
+ AHEJg82J9ly3Cang6AQCBgsxVrAOtpV07tdywJTehdLrp2c5x9T/mrPaeiMCYviQ6sSSAJM3MT+
+ UD4wk00qdh6owC+MXa2+NQ7dl4QM5b3p08F20CELcB63Oczn8FKU7C9Ar
+X-Gm-Gg: AY/fxX7uG1g/+OZWmVmfykiwpV7t1nevUYYKUzI4vQWCXxLy9WQjZ8sjehKj66BMYuf
+ tiLqFHsxUO9/zNAXnIhiFf22gg7Vh7bmXkREksDFFlgLYrLpvOxNwYZC7HCa6uoFpBp0zoKcphO
+ xJXwPh1yR+adne6xpKUMRZ4sTLEKUAxiZUaSB458epNniGwOTfLhBiDJe8P7RNWP/N0qyMBdNOU
+ azQhMysxBN0Abg1J+Xisbi/u6d4+nsmVS5+0AdTmOneeejZy+s5xsUN5mxnNft8nZ9LSS8LrKrO
+ 0RZXbYbKdRmDZgIwF7F4UFR8uv+mjPwNa7uKU7//Lzd1cvdQHJPsCPcHr9G38j9hF97GVM00gLY
+ yaJ+zxF4=
+X-Received: by 2002:a05:600c:3555:b0:46e:4b79:551 with SMTP id
+ 5b1f17b1804b1-47d84b3b692mr93244335e9.31.1767888085858; 
+ Thu, 08 Jan 2026 08:01:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGsH2U1iuocBbwACXUcygCeUEFVCKWqsOGbfyd0JpdQ/eiojSn3N7c51svqIU5LP1hZZt2KuQ==
+X-Received: by 2002:a05:600c:3555:b0:46e:4b79:551 with SMTP id
+ 5b1f17b1804b1-47d84b3b692mr93243535e9.31.1767888085065; 
+ Thu, 08 Jan 2026 08:01:25 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e17aasm17377334f8f.15.2026.01.08.07.53.35
+ 5b1f17b1804b1-47d870dd5b1sm44657845e9.4.2026.01.08.08.01.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 07:53:36 -0800 (PST)
-Message-ID: <a360963c-62be-4b5c-bf0c-ea5f89809048@redhat.com>
-Date: Thu, 8 Jan 2026 16:53:35 +0100
+ Thu, 08 Jan 2026 08:01:24 -0800 (PST)
+Message-ID: <099574bf-8817-4c73-9d55-53e571bf8fad@redhat.com>
+Date: Thu, 8 Jan 2026 17:01:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 07/29] s390x/diag: Implement DIAG 320 subcode 1
+Subject: Re: [PATCH v7 04/29] hw/s390x/ipl: Create certificate store
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
@@ -97,7 +97,7 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
  iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
 References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-8-zycai@linux.ibm.com>
+ <20251208213247.702569-5-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,7 +142,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251208213247.702569-8-zycai@linux.ibm.com>
+In-Reply-To: <20251208213247.702569-5-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -154,7 +154,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,103 +171,88 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/12/2025 22.32, Zhuoying Cai wrote:
-> DIAG 320 subcode 1 provides information needed to determine
-> the amount of storage to store one or more certificates from the
-> certificate store.
+> Create a certificate store for boot certificates used for secure IPL.
 > 
-> Upon successful completion, this subcode returns information of the current
-> cert store, such as the number of certificates stored and allowed in the cert
-> store, amount of space may need to be allocate to store a certificate,
-> etc for verification-certificate blocks (VCBs).
+> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
+> machine type option into the cert store.
 > 
-> The subcode value is denoted by setting the left-most bit
-> of an 8-byte field.
-> 
-> The verification-certificate-storage-size block (VCSSB) contains
-> the output data when the operation completes successfully. A VCSSB
-> length of 4 indicates that no certificate are available in the cert
-> store.
+> Currently, only X.509 certificates in PEM format are supported, as the
+> QEMU command line accepts certificates in PEM format only.
 > 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 > ---
->   docs/specs/s390x-secure-ipl.rst | 12 +++++++
->   include/hw/s390x/ipl/diag320.h  | 22 ++++++++++++
->   target/s390x/diag.c             | 59 ++++++++++++++++++++++++++++++++-
->   3 files changed, 92 insertions(+), 1 deletion(-)
-> 
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> index c2e8f7aba5..d3ece8a82d 100644
-> --- a/docs/specs/s390x-secure-ipl.rst
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -26,3 +26,15 @@ Subcode 0 - query installed subcodes
->       Returns a 256-bit installed subcodes mask (ISM) stored in the installed
->       subcodes block (ISB). This mask indicates which subcodes are currently
->       installed and available for use.
-> +
-> +Subcode 1 - query verification certificate storage information
-> +    Provides the information required to determine the amount of memory needed
-> +    to store one or more verification-certificates (VCs) from the certificate
-> +    store (CS).
-> +
-> +    Upon successful completion, this subcode returns various storage size values
-> +    for verification-certificate blocks (VCBs).
-> +
-> +    The output is returned in the verification-certificate-storage-size block
-> +    (VCSSB). A VCSSB length of 4 indicates that no certificates are available
-> +    in the CS.
+
+Claude just spotted a possible memory leak:
+
 ...
-> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-> index a347be7633..0e1897e03d 100644
-> --- a/target/s390x/diag.c
-> +++ b/target/s390x/diag.c
-> @@ -197,11 +197,50 @@ out:
->       }
->   }
->   
-> +static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
-> +                                     uintptr_t ra, S390IPLCertificateStore *qcs)
+> +static void update_cert_store(S390IPLCertificateStore *cert_store,
+> +                              S390IPLCertificate *cert)
 > +{
-> +    g_autofree VCStorageSizeBlock *vcssb = NULL;
+> +    size_t data_buf_size;
+> +    size_t keyid_buf_size;
+> +    size_t hash_buf_size;
+> +    size_t cert_buf_size;
 > +
-> +    vcssb = g_new0(VCStorageSizeBlock, 1);
-> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcssb, sizeof(*vcssb))) {
-> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
-> +        return -1;
-> +    }
+> +    /* length field is word aligned for later DIAG use */
+> +    keyid_buf_size = ROUND_UP(CERT_KEY_ID_LEN, 4);
+> +    hash_buf_size = ROUND_UP(CERT_HASH_LEN, 4);
+> +    cert_buf_size = ROUND_UP(cert->der_size, 4);
+> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
 > +
-> +    if (be32_to_cpu(vcssb->length) < VCSSB_MIN_LEN) {
-> +        return DIAG_320_RC_INVAL_VCSSB_LEN;
-> +    }
-
-Do we maybe also need to check for an upper limit for vcssb->length ? (see 
-below...)
-
-> +    if (!qcs->count) {
-> +        vcssb->length = cpu_to_be32(VCSSB_NO_VC);
-> +    } else {
-> +        vcssb->version = 0;
-> +        vcssb->total_vc_ct = cpu_to_be16(qcs->count);
-> +        vcssb->max_vc_ct = cpu_to_be16(MAX_CERTIFICATES);
-> +        vcssb->max_single_vcb_len = cpu_to_be32(VCB_HEADER_LEN + VCE_HEADER_LEN +
-> +                                                qcs->max_cert_size);
-> +        vcssb->total_vcb_len = cpu_to_be32(VCB_HEADER_LEN + qcs->count * VCE_HEADER_LEN +
-> +                                           qcs->total_bytes);
+> +    if (cert_store->max_cert_size < data_buf_size) {
+> +        cert_store->max_cert_size = data_buf_size;
 > +    }
 > +
-> +    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcssb, be32_to_cpu(vcssb->length))) {
+> +    cert_store->certs[cert_store->count] = *cert;
 
-So this uses vcssb as source, but the length is controlled by a value that 
-is provided by the guest? ... this sounds dangerous, I think we should 
-definitely limit vcssb->length to be <= sizeof(*vcssb) !
+This copies the cert by value (instead of storing the pointer only), so the 
+original buffer is not used anymore afterwards ... (see below)
 
-> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
-> +        return -1;
-> +    }
-> +    return DIAG_320_RC_OK;
+> +    cert_store->total_bytes += data_buf_size;
+> +    cert_store->count++;
 > +}
+...
+> +void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
+> +{
+> +    GPtrArray *cert_path_builder;
+> +    Error *err = NULL;
+> +
+> +    cert_path_builder = get_cert_paths(&err);
+> +    if (cert_path_builder == NULL) {
+> +        error_report_err(err);
+> +        exit(1);
+> +    }
+> +
+> +    if (cert_path_builder->len == 0) {
+> +        g_ptr_array_free(cert_path_builder, TRUE);
+> +        return;
+> +    }
+> +
+> +    if (cert_path_builder->len > MAX_CERTIFICATES - 1) {
+> +        error_report("Cert store exceeds maximum of %d certificates", MAX_CERTIFICATES);
+> +        g_ptr_array_free(cert_path_builder, TRUE);
+> +        exit(1);
+> +    }
+> +
+> +    cert_store->max_cert_size = 0;
+> +    cert_store->total_bytes = 0;
+> +
+> +    for (int i = 0; i < cert_path_builder->len; i++) {
+> +        S390IPLCertificate *cert = init_cert((char *) cert_path_builder->pdata[i], &err);
+> +        if (!cert) {
+> +            error_report_err(err);
+> +            g_ptr_array_free(cert_path_builder, TRUE);
+> +            exit(1);
+> +        }
+> +
+> +        update_cert_store(cert_store, cert);
 
+... so you should free cert here to avoid leaking memory!
+
+> +    }
+> +
+> +    g_ptr_array_free(cert_path_builder, TRUE);
+> +}
   Thomas
-
 
 
