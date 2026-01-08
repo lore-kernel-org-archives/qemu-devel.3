@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5BE6D1488B
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A38D148A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdr61-00076E-Mz; Thu, 08 Jan 2026 09:34:42 -0500
+	id 1vdr6B-0007D1-8V; Thu, 08 Jan 2026 09:34:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5q-000711-Vx
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:33 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1vdr5w-000729-V9
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:38 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5n-0000gM-Vr
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:30 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-47d1d8a49f5so21974595e9.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:27 -0800 (PST)
+ id 1vdr5t-0000iS-Kd
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:35 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-47d493a9b96so19642295e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767882866; x=1768487666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767882871; x=1768487671; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xegit4ejNTk5f0W5DGBT7IrkTCynuOYYrskO3sfAUpw=;
- b=HLpPbAvlBYEuciJnAg7EivyOW+LuSPk3JAulHjUj09RdTwuxwJqy+ckyKgfQSqm0Mn
- TnHFPRYgvBzvZ69hx8hK/aQMYqiKQYJSuKUUCmSM5neGqYdePXVW2RAKi34QZWX/mf/+
- iEhbUMG61bMt5sVILtbC3+Px55YDKKObMy55yvl4QoE/HEv5S5vJiGjGJAgVnlnKOSKQ
- acPAo34zdYI9oO9wpnb74OzJEXUNLgDAUkRNXBWrXb7G8cpnwwC9bViqQ9L6dBG5B7i+
- /EZKJX4apDSpAUXdWD7z8T5J/kvqGxg81QcBtCWP+jy36vhekb509ezA4eY3repaNxtF
- q3lA==
+ bh=NNPkfTC8hSB2O54A92j5y8SEHslcucm7cyY4HjTcIuM=;
+ b=T7AxQwtwC8nruwByO5sWdmGorgWfAgoaf+r+R6vQbZt/i14b2rgNYsuwCcJYCnWRT9
+ HytQzCigVx3LXpCtQK/eY+2R222cu+WAAlJxlp3Fxdr4Rfl+77RbNyUeyIqzSz+6At2D
+ +AMfhC3RtGB8Rexu+YMgBaPWLHI+7Hu4cUo7eLY3vNmGpXifDVPQjIS42LlrfL5hzxoT
+ K0BOgyVyfPQnD5OMXA95+AqGnzC/3VQiCV5IeVzPEuYDS7SkEA+RQYlUci1STyuXYIDT
+ 1ZeQTWGVxEOf0iJ2m3o63oGXdh84+S4Dv2UPIP062YRmD0ZhZuWitXjPetTbqVihjpR8
+ 7t+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767882866; x=1768487666;
+ d=1e100.net; s=20230601; t=1767882871; x=1768487671;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xegit4ejNTk5f0W5DGBT7IrkTCynuOYYrskO3sfAUpw=;
- b=cI3xcjyGDZkKoJdmyPF4Mx9krWfeVAtousE8kwKrDI14m0TVgB5XL+P5apckwKUGxJ
- 2S6Bg65OOf0rRWKKAlTbVlNGfTfKEsbAIUsk+44tIpYSjKvMr7vPjaJEgBMSKVaTyLe6
- 4xFiZA4S4MUzTBjEnXcgX2jydHysobNrUIAPX2RrgYf6o7eiyMgK2IBwaPgGHZS3tvB1
- 17ZbVZhzEBC5Yi+Zz0pQuY8nvadxmAqqLqKoweNDHYzB3165/OxpzUEX0qFeHr6ckX5V
- fk5H1a78mu0x7ByPo4R/Er0Xnx4TOmyiAqXXwON/XHPedFwRpVuGjHLr8JonM2teIe7r
- 79Iw==
-X-Gm-Message-State: AOJu0Yx/E1zFn0KCkPw80pJcPOMu9SJvnGnPLiZYRq7clpDWBt0EtzyB
- LeEPwxOLXePy4cMplIgmNiANjGnEzyqplruDyymbSucHPmmLlAezIFXCUjGQXqROJII=
-X-Gm-Gg: AY/fxX6SKOt7paLH8DV4UX+uEryHnqQTZotUqPwuNv5KcuuOw9i5Lv4KFKALXk/LrJC
- x0QfP2LYjz0Egz/V/o2BdxxaC/pPenAUB1duCckL0kJGD8MTD/q/wIkuy5uTNSzztQ++9epFmfS
- f0o2cG8h/JH2HiBTYAuOXrGnyPIM9+1/rgQy7wAY2QCeyPxdxPKg6iQkbzafhJlQYFdrGkAE1nL
- XSzkL62ZUQzro9ocly5MoJ65/levl3o7+utvXgb0ZmfEaXr/0cz0rTu85jnzB/ZZ7KgsITdAEWt
- CRaxnAhSoEP674fg6YwS0mrr8ye8HmrUBuFVHN1Nz+mT5o2kEVbcoxWpoyVOwCfnQ1kYrHLFtUk
- KdWN7+Rx//V3W0iy0ARXOc57MLhbc4waRRc7JWBwMDSDB9utfJo9R1aF1SRunT+ih4OE3SZTZz3
- +t9KBHyPr7Sdc=
-X-Google-Smtp-Source: AGHT+IEx+WjdFSQNuvpe/UppetDTRNkYuwVaL12fCmNTmDl4lE5Wr+4Uohf6JheTbqrvNh2aXPuT0A==
-X-Received: by 2002:a05:600c:470c:b0:477:79f8:da9d with SMTP id
- 5b1f17b1804b1-47d84b3b522mr82961925e9.24.1767882865921; 
- Thu, 08 Jan 2026 06:34:25 -0800 (PST)
+ bh=NNPkfTC8hSB2O54A92j5y8SEHslcucm7cyY4HjTcIuM=;
+ b=jAReXz/qdFxXz44yTK+nOxdbPttcdVtIagvywWDNWX3IHxGtqz8dDtgZQCygWrtglL
+ mecgVoN+AlMZlB8owIPTRaCrJ2XiN4NNl/xhliYPt55Hyq1KbTI5e5bizNgof2ptPDEe
+ wBq2yc0MHEjfnPq4x39mV32veubDTCSLV8q9OJfA4r+L2ogerjAryO8bQ/TIcycaqdrl
+ L2AE8Gs+/N9LebfErf67BHU/KJB3X+I2To2M7lY8Zz4y8XkKeAXQFlbJ3GwXwR7JDkar
+ +mFhgRm7QfqT5c3pUO7GqwyS2Vy5WU5jjG7FN3PraqB9c+yVC7w+RZKkAvtKT8SyCCei
+ Dibw==
+X-Gm-Message-State: AOJu0YyyLMmxApCfZqHGQ0mUZaxdDk3HfBapcD0RXioqH4BP0wM57yZ0
+ LAEqZ+jwcGSw196WHXs86a6PPK3/GFGcExAIgnnVEr8G1NZZHNvEu1l3Xkv+agnQp2k=
+X-Gm-Gg: AY/fxX4sGqe7FU7MZzOJxdzedF6LAVI1okfT3SJrzHSKbEmbd6NOCQR1qBbEhJ/JZr2
+ Ce5JfH1wDYxHJH5zdQRzNu2WseiS7eEwiaRcDNLEvBV2L7no93K3MsvebqcQ83Jr+R6sKCbknnw
+ HyFo13S0J3CclhQWnb4rsE+5p8BQjbgt9BG12kgnw0H4enIZTgLwyO3nI+3P4ifywfcXF+eeleW
+ fgvw4C1qhl2BoUTgCWt0fisf0Ez49duqTT8Aw7h8ioWS00q2qGiSnkR+8JYWFL7NHEXMnzoguQV
+ eFDyJT9GWNTUjQKa2G77ku/j8LGGmDs3rbZUXE3p4DBHXPl1T9RPFsiW18WbDUzz2SqzaULoRW7
+ nBXmZbs69m0AqAYJ+RulgcNwC+N2TB0B75vAB4UC97usoHw3o5mKwAbpanVzjrYnZnRc6sWGVR+
+ WwcEYazLogPW1dNp8T1lUYVg==
+X-Google-Smtp-Source: AGHT+IGCbmw18fNIwlDNBzWCAdNHDFbb56mz7vbgowQfcwqwBe7oDhevb+s+QGfjbElOCftQfjfsMA==
+X-Received: by 2002:a05:600c:1385:b0:47a:94fc:d057 with SMTP id
+ 5b1f17b1804b1-47d84b0b0e7mr68176435e9.2.1767882871357; 
+ Thu, 08 Jan 2026 06:34:31 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f410c6csm167037385e9.1.2026.01.08.06.34.24
+ 5b1f17b1804b1-47d8715b5f7sm40785975e9.4.2026.01.08.06.34.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 06:34:24 -0800 (PST)
+ Thu, 08 Jan 2026 06:34:27 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 21A055F8ED;
- Thu, 08 Jan 2026 14:34:24 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id ECC525F8D1;
+ Thu, 08 Jan 2026 14:34:23 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Aurelien Jarno <aurelien@aurel32.net>,
@@ -80,17 +80,17 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>,
  Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 03/12] hw/m68k: register a nextcube_cpu_reset handler
-Date: Thu,  8 Jan 2026 14:34:14 +0000
-Message-ID: <20260108143423.1378674-4-alex.bennee@linaro.org>
+Subject: [RFC PATCH 01/12] target/sh4: drop cpu_reset from realizefn
+Date: Thu,  8 Jan 2026 14:34:12 +0000
+Message-ID: <20260108143423.1378674-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260108143423.1378674-1-alex.bennee@linaro.org>
 References: <20260108143423.1378674-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,72 +113,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a fairly simple migration to the handler. Alternatively we
-could eschew stashing the value in reset_pc and just re-read the ROM
-on reset.
-
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/m68k/next-cube.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ target/sh4/cpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 26177c7b867..3d66f5e7607 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -16,6 +16,7 @@
- #include "exec/cpu-interrupt.h"
- #include "system/system.h"
- #include "system/qtest.h"
-+#include "system/reset.h"
- #include "hw/core/irq.h"
- #include "hw/m68k/next-cube.h"
- #include "hw/core/boards.h"
-@@ -1249,6 +1250,19 @@ static const TypeInfo next_pc_info = {
-     .class_init = next_pc_class_init,
- };
- 
-+static void nextcube_cpu_reset(void *opaque)
-+{
-+    M68kCPU *cpu = opaque;
-+    CPUM68KState *env = &cpu->env;
-+    CPUState *cs = CPU(cpu);
-+
-+    cpu_reset(cs);
-+    /* Initialize CPU registers.  */
-+    env->vbr = 0;
-+    env->sr  = 0x2700;
-+    env->pc = env->reset_pc;
-+}
-+
- static void next_cube_init(MachineState *machine)
- {
-     NeXTState *m = NEXT_MACHINE(machine);
-@@ -1264,12 +1278,9 @@ static void next_cube_init(MachineState *machine)
-         error_report("Unable to find m68k CPU definition");
-         exit(1);
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index 21ccb86df48..1dd21ad9ed6 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -255,7 +255,6 @@ static void superh_cpu_realizefn(DeviceState *dev, Error **errp)
+         return;
      }
-+    qemu_register_reset(nextcube_cpu_reset, cpu);
-     env = &cpu->env;
  
--    /* Initialize CPU registers.  */
--    env->vbr = 0;
--    env->sr  = 0x2700;
--
-     /* Peripheral Controller */
-     pcdev = qdev_new(TYPE_NEXT_PC);
-     object_property_set_link(OBJECT(pcdev), "cpu", OBJECT(cpu), &error_abort);
-@@ -1335,8 +1346,8 @@ static void next_cube_init(MachineState *machine)
-         /* Initial PC is always at offset 4 in firmware binaries */
-         ptr = rom_ptr(0x01000004, 4);
-         g_assert(ptr != NULL);
--        env->pc = ldl_be_p(ptr);
--        if (env->pc >= 0x01020000) {
-+        env->reset_pc = ldl_be_p(ptr);
-+        if (env->reset_pc >= 0x01020000) {
-             error_report("'%s' does not seem to be a valid firmware image.",
-                          bios_name);
-             exit(1);
+-    cpu_reset(cs);
+     qemu_init_vcpu(cs);
+ 
+     scc->parent_realize(dev, errp);
 -- 
 2.47.3
 
