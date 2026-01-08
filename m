@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72C2D1488B
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5BE6D1488B
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Jan 2026 14:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vdr61-000768-NA; Thu, 08 Jan 2026 09:34:42 -0500
+	id 1vdr61-00076E-Mz; Thu, 08 Jan 2026 09:34:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5t-00071Q-TH
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:36 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1vdr5q-000711-Vx
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:33 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vdr5p-0000gu-RY
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:32 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-432d2670932so449727f8f.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:29 -0800 (PST)
+ id 1vdr5n-0000gM-Vr
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 09:34:30 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47d1d8a49f5so21974595e9.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 06:34:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767882868; x=1768487668; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767882866; x=1768487666; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Iroa14hBK2LVpeSpQfZj+3dFVlP7qrWupPJPhYrPWjw=;
- b=ESCndYqRS41Cbbtxt2Guiqz5CYulL46Oh7+0bPwD8bR+sHEV2PiLHqp5/T4TyB5gSf
- mmgkGPYONjSNLWfRfWZREWkxerwcxYM5yYjTfuzaEGMZclXRZGl0M/XbzQlrHZcfb25f
- 70yaK5pu6uV0Pv268jgUkdLUCsTAKEZyLWXRu9Jb66eVI6ydc3BBWaWAqjDmJboeMf8S
- gZ5o0wuyHcWH8gyKeAohaAL4eJqXz/JtXJqzoNR+uoCMmqBPs/RCxmGnxGP1VMrf/Cg0
- 3JrPxSJ2bR8vuLZ8ZZ0AeoToEcAjXvoFCOae/FpXAUifEn+zTOw8s2vxegu3kogjSlow
- ThHA==
+ bh=xegit4ejNTk5f0W5DGBT7IrkTCynuOYYrskO3sfAUpw=;
+ b=HLpPbAvlBYEuciJnAg7EivyOW+LuSPk3JAulHjUj09RdTwuxwJqy+ckyKgfQSqm0Mn
+ TnHFPRYgvBzvZ69hx8hK/aQMYqiKQYJSuKUUCmSM5neGqYdePXVW2RAKi34QZWX/mf/+
+ iEhbUMG61bMt5sVILtbC3+Px55YDKKObMy55yvl4QoE/HEv5S5vJiGjGJAgVnlnKOSKQ
+ acPAo34zdYI9oO9wpnb74OzJEXUNLgDAUkRNXBWrXb7G8cpnwwC9bViqQ9L6dBG5B7i+
+ /EZKJX4apDSpAUXdWD7z8T5J/kvqGxg81QcBtCWP+jy36vhekb509ezA4eY3repaNxtF
+ q3lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767882868; x=1768487668;
+ d=1e100.net; s=20230601; t=1767882866; x=1768487666;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Iroa14hBK2LVpeSpQfZj+3dFVlP7qrWupPJPhYrPWjw=;
- b=Qc49cmOacLUGygwIz0z06OzkLKyVDGS6CvwehVkiiY+y7fEh70RblWiZwAkslY8m0G
- drwT4enyGFwmrbJfCSrAri48dVhfdTjFApTrmgHxr2NQfqr7xAoU3HCpp3GAmfQeIJEa
- e4NkDYEJy+f62vBVpviELdavA80+dRBVWHyHHm7nsTzttyDyLVBVINeyzBY/g+jhRuJD
- K163yBQ19VYn1msbwAEQ1TscNVDich+rZHCM8KRuMCLdzMs3dz6/fKzpua0PRZ5pXa8M
- ejDlUV2kMsqrcgclCiWKNefpRFiFzL2xf7j8JjiFUDkXjA+sOM1Ua/gpuJhkpJYGI5wD
- 42yw==
-X-Gm-Message-State: AOJu0YwE2PscDLnj1FUWYDM5AmkoX9lXvfCY1MDORHhf7l02kiv+qNvq
- 5d70i8fz0HtNX25ng7OBvEn5pt6H6F7EB8LF2Jba9OjzLSZX+XL+GN4Jb1SZGdNbCng=
-X-Gm-Gg: AY/fxX53v6kQqlyiXMYQ0UGPv2OOpMhYfUMHbLqXNRT9ZGRfy07aaJblKAniSwm6oGH
- ULDH//6co/hwBRGVi3PKz/3K0CnKbCDG3S88zzvBZHER9g3nOU+PYfki2bmcrfGjZHZsDR5OPHR
- 63kuxrLjzzRd4H5mYyV3oQiLeDPZtXX+ipSaQheIIpt02HMD8qlvg9IO6KgMiUCxMI6Hureu0bg
- /tI6jXVuaa0vgLWE4Ef6VQgWsDGx0vfBF8RYT1YJAFpvCWgwwrcNUEVx0YFX3rCHx/1EG/kkkfC
- r32YhZj55qmhZw6iTlrVOq6C4m6w+cHpkkG4oxoQoT98yD18xUewy5alORaVFKIoLsL78XQ3yCp
- XrrE8rof5wV0SbMQDWGqdjmC0IDI6r7tDOLZPjh8+EpgPJUKWfQVH8DI4LYnJWq7d140XRTF5YN
- ZwuRYWhKPQ1aFcciw+EnYojw==
-X-Google-Smtp-Source: AGHT+IH8epdayj+gumqDsbORe6YPW9g0b8aY7CGQSZG/pUWsyk8DyQ+Bv3AOBxBD8y9um1EG9+w8og==
-X-Received: by 2002:a05:6000:18a7:b0:432:c092:ee3b with SMTP id
- ffacd0b85a97d-432c38d2696mr9095341f8f.62.1767882868178; 
- Thu, 08 Jan 2026 06:34:28 -0800 (PST)
+ bh=xegit4ejNTk5f0W5DGBT7IrkTCynuOYYrskO3sfAUpw=;
+ b=cI3xcjyGDZkKoJdmyPF4Mx9krWfeVAtousE8kwKrDI14m0TVgB5XL+P5apckwKUGxJ
+ 2S6Bg65OOf0rRWKKAlTbVlNGfTfKEsbAIUsk+44tIpYSjKvMr7vPjaJEgBMSKVaTyLe6
+ 4xFiZA4S4MUzTBjEnXcgX2jydHysobNrUIAPX2RrgYf6o7eiyMgK2IBwaPgGHZS3tvB1
+ 17ZbVZhzEBC5Yi+Zz0pQuY8nvadxmAqqLqKoweNDHYzB3165/OxpzUEX0qFeHr6ckX5V
+ fk5H1a78mu0x7ByPo4R/Er0Xnx4TOmyiAqXXwON/XHPedFwRpVuGjHLr8JonM2teIe7r
+ 79Iw==
+X-Gm-Message-State: AOJu0Yx/E1zFn0KCkPw80pJcPOMu9SJvnGnPLiZYRq7clpDWBt0EtzyB
+ LeEPwxOLXePy4cMplIgmNiANjGnEzyqplruDyymbSucHPmmLlAezIFXCUjGQXqROJII=
+X-Gm-Gg: AY/fxX6SKOt7paLH8DV4UX+uEryHnqQTZotUqPwuNv5KcuuOw9i5Lv4KFKALXk/LrJC
+ x0QfP2LYjz0Egz/V/o2BdxxaC/pPenAUB1duCckL0kJGD8MTD/q/wIkuy5uTNSzztQ++9epFmfS
+ f0o2cG8h/JH2HiBTYAuOXrGnyPIM9+1/rgQy7wAY2QCeyPxdxPKg6iQkbzafhJlQYFdrGkAE1nL
+ XSzkL62ZUQzro9ocly5MoJ65/levl3o7+utvXgb0ZmfEaXr/0cz0rTu85jnzB/ZZ7KgsITdAEWt
+ CRaxnAhSoEP674fg6YwS0mrr8ye8HmrUBuFVHN1Nz+mT5o2kEVbcoxWpoyVOwCfnQ1kYrHLFtUk
+ KdWN7+Rx//V3W0iy0ARXOc57MLhbc4waRRc7JWBwMDSDB9utfJo9R1aF1SRunT+ih4OE3SZTZz3
+ +t9KBHyPr7Sdc=
+X-Google-Smtp-Source: AGHT+IEx+WjdFSQNuvpe/UppetDTRNkYuwVaL12fCmNTmDl4lE5Wr+4Uohf6JheTbqrvNh2aXPuT0A==
+X-Received: by 2002:a05:600c:470c:b0:477:79f8:da9d with SMTP id
+ 5b1f17b1804b1-47d84b3b522mr82961925e9.24.1767882865921; 
+ Thu, 08 Jan 2026 06:34:25 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5edd51sm16659018f8f.29.2026.01.08.06.34.26
+ 5b1f17b1804b1-47d7f410c6csm167037385e9.1.2026.01.08.06.34.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 06:34:27 -0800 (PST)
+ Thu, 08 Jan 2026 06:34:24 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 90AE65F9E0;
+ by draig.lan (Postfix) with ESMTP id 21A055F8ED;
  Thu, 08 Jan 2026 14:34:24 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,24 +80,24 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>,
  Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 08/12] hw/mips: defer finalising gcr_base until reset time
-Date: Thu,  8 Jan 2026 14:34:19 +0000
-Message-ID: <20260108143423.1378674-9-alex.bennee@linaro.org>
+Subject: [RFC PATCH 03/12] hw/m68k: register a nextcube_cpu_reset handler
+Date: Thu,  8 Jan 2026 14:34:14 +0000
+Message-ID: <20260108143423.1378674-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260108143423.1378674-1-alex.bennee@linaro.org>
 References: <20260108143423.1378674-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,115 +113,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the cpu_reset() in mips_cpu_realizefn() hides an implicit
-sequencing requirement when setting gcr_base. Without it we barf
-because we end up setting the region between 0x0-0x000000001fbfffff
-which trips over a qtest that accesses the GCR during "memsave 0 4096
-/dev/null".
-
-By moving to the reset phase we have to drop the property lest we are
-admonished for "Attempting to set...after it was realized" but there
-doesn't seem to be a need to expose the property anyway.
-
-NB: it would be safer if I could guarantee the place in the reset tree
-but I haven't quite grokked how to do that yet. Currently I see this
-sequence when testing:
-
-  ➜  env MALLOC_PERTURB_=43 G_TEST_DBUS_DAEMON=/home/alex/lsrc/qemu.git/tests/dbus-vmstate-daemon.sh UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QTEST_QEMU_IMG=./qemu-img QTEST_QEMU_BINARY=./qemu-system-mips64el SPEED=thorough MESON_TEST_ITERATION=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 PYTHON=/home/alex/lsrc/qemu.git/builds/debug/pyvenv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 G_TEST_SLOW=1 RUST_BACKTRACE=1 /home/alex/lsrc/qemu.git/builds/debug/tests/qtest/test-hmp --tap -p /mips64el/hmp/boston
-  TAP version 14
-  # random seed: R02S89554f0dc696ece515363e554b13b7f9
-  # Start of mips64el tests
-  # Start of hmp tests
-  # starting QEMU: exec ./qemu-system-mips64el -qtest unix:/tmp/qtest-883372.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-883372.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -run-with exit-with-parent=on -S -M boston -accel qtest
-  mips_cpu_reset_hold: dbg
-  mips_gcr_init: 0x5600f2160050 - 0
-  main_cpu_reset: dbg
-  mips_cpu_reset_hold: dbg
-  mps_reset: 000000001fbf8000
-  mips_cpu_reset_hold: dbg
-  ok 1 /mips64el/hmp/boston
-  # End of hmp tests
-  # End of mips64el tests
-  1..1
+This is a fairly simple migration to the handler. Alternatively we
+could eschew stashing the value in reset_pc and just re-read the ROM
+on reset.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/mips/cps.c        | 22 +++++++++++++---------
- hw/misc/mips_cmgcr.c |  1 -
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ hw/m68k/next-cube.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/hw/mips/cps.c b/hw/mips/cps.c
-index 620ee972f8f..c91243599e0 100644
---- a/hw/mips/cps.c
-+++ b/hw/mips/cps.c
-@@ -55,6 +55,18 @@ static void main_cpu_reset(void *opaque)
-     cpu_reset(cs);
- }
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index 26177c7b867..3d66f5e7607 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -16,6 +16,7 @@
+ #include "exec/cpu-interrupt.h"
+ #include "system/system.h"
+ #include "system/qtest.h"
++#include "system/reset.h"
+ #include "hw/core/irq.h"
+ #include "hw/m68k/next-cube.h"
+ #include "hw/core/boards.h"
+@@ -1249,6 +1250,19 @@ static const TypeInfo next_pc_info = {
+     .class_init = next_pc_class_init,
+ };
  
-+static void mps_reset(void *opaque)
++static void nextcube_cpu_reset(void *opaque)
 +{
-+    DeviceState *dev = opaque;
-+    MIPSCPSState *s = MIPS_CPS(dev);
-+    hwaddr gcr_base;
++    M68kCPU *cpu = opaque;
++    CPUM68KState *env = &cpu->env;
++    CPUState *cs = CPU(cpu);
 +
-+    /* Global Configuration Registers - only valid once the CPU has been reset */
-+    gcr_base = MIPS_CPU(first_cpu)->env.CP0_CMGCRBase << 4;
-+    memory_region_add_subregion(&s->container, gcr_base,
-+                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gcr), 0));
++    cpu_reset(cs);
++    /* Initialize CPU registers.  */
++    env->vbr = 0;
++    env->sr  = 0x2700;
++    env->pc = env->reset_pc;
 +}
 +
- static bool cpu_mips_itu_supported(CPUMIPSState *env)
+ static void next_cube_init(MachineState *machine)
  {
-     bool is_mt = (env->CP0_Config5 & (1 << CP0C5_VP)) || ase_mt_available(env);
-@@ -65,7 +77,6 @@ static bool cpu_mips_itu_supported(CPUMIPSState *env)
- static void mips_cps_realize(DeviceState *dev, Error **errp)
- {
-     MIPSCPSState *s = MIPS_CPS(dev);
--    target_ulong gcr_base;
-     bool itu_present = false;
- 
-     if (!clock_get(s->clock)) {
-@@ -144,16 +155,11 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(&s->container, 0,
-                             sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gic), 0));
- 
--    /* Global Configuration Registers */
--    gcr_base = MIPS_CPU(first_cpu)->env.CP0_CMGCRBase << 4;
--
-     object_initialize_child(OBJECT(dev), "gcr", &s->gcr, TYPE_MIPS_GCR);
-     object_property_set_uint(OBJECT(&s->gcr), "num-vp", s->num_vp,
-                             &error_abort);
-     object_property_set_int(OBJECT(&s->gcr), "gcr-rev", 0x800,
-                             &error_abort);
--    object_property_set_int(OBJECT(&s->gcr), "gcr-base", gcr_base,
--                            &error_abort);
-     object_property_set_link(OBJECT(&s->gcr), "gic", OBJECT(&s->gic.mr),
-                              &error_abort);
-     object_property_set_link(OBJECT(&s->gcr), "cpc", OBJECT(&s->cpc.mr),
-@@ -161,9 +167,7 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gcr), errp)) {
-         return;
+     NeXTState *m = NEXT_MACHINE(machine);
+@@ -1264,12 +1278,9 @@ static void next_cube_init(MachineState *machine)
+         error_report("Unable to find m68k CPU definition");
+         exit(1);
      }
--
--    memory_region_add_subregion(&s->container, gcr_base,
--                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gcr), 0));
-+    qemu_register_reset(mps_reset, s);
- }
++    qemu_register_reset(nextcube_cpu_reset, cpu);
+     env = &cpu->env;
  
- static const Property mips_cps_properties[] = {
-diff --git a/hw/misc/mips_cmgcr.c b/hw/misc/mips_cmgcr.c
-index 3e262e828bc..9e1c8d26ea5 100644
---- a/hw/misc/mips_cmgcr.c
-+++ b/hw/misc/mips_cmgcr.c
-@@ -214,7 +214,6 @@ static const VMStateDescription vmstate_mips_gcr = {
- static const Property mips_gcr_properties[] = {
-     DEFINE_PROP_UINT32("num-vp", MIPSGCRState, num_vps, 1),
-     DEFINE_PROP_INT32("gcr-rev", MIPSGCRState, gcr_rev, 0x800),
--    DEFINE_PROP_UINT64("gcr-base", MIPSGCRState, gcr_base, GCR_BASE_ADDR),
-     DEFINE_PROP_LINK("gic", MIPSGCRState, gic_mr, TYPE_MEMORY_REGION,
-                      MemoryRegion *),
-     DEFINE_PROP_LINK("cpc", MIPSGCRState, cpc_mr, TYPE_MEMORY_REGION,
+-    /* Initialize CPU registers.  */
+-    env->vbr = 0;
+-    env->sr  = 0x2700;
+-
+     /* Peripheral Controller */
+     pcdev = qdev_new(TYPE_NEXT_PC);
+     object_property_set_link(OBJECT(pcdev), "cpu", OBJECT(cpu), &error_abort);
+@@ -1335,8 +1346,8 @@ static void next_cube_init(MachineState *machine)
+         /* Initial PC is always at offset 4 in firmware binaries */
+         ptr = rom_ptr(0x01000004, 4);
+         g_assert(ptr != NULL);
+-        env->pc = ldl_be_p(ptr);
+-        if (env->pc >= 0x01020000) {
++        env->reset_pc = ldl_be_p(ptr);
++        if (env->reset_pc >= 0x01020000) {
+             error_report("'%s' does not seem to be a valid firmware image.",
+                          bios_name);
+             exit(1);
 -- 
 2.47.3
 
