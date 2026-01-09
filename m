@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C697BD26D6C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 15:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 332C8D26D6B
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 15:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veEs4-0004Eq-2R; Fri, 09 Jan 2026 10:57:52 -0500
+	id 1veEsk-0004ST-QC; Fri, 09 Jan 2026 10:58:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1veEs2-0004EY-6v
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:57:50 -0500
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1veEs0-0005uP-Lx
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:57:49 -0500
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-34c565b888dso3764653a91.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 07:57:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767974267; x=1768579067; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=K50ZKhdkfR8rYaEc+1+Euk0YNaMcEClcWpeJPGFNzuU=;
- b=MhKVvMt4EkzsP/UEDFmNp6wGA9jLt0uxfwiWo4XTI6ay3/y89w+ZVK3lkVAr3dk7O3
- RRgn1cc2QWGN/ld7DInnVNDRep0q7Wnd7hQRczdqtzJqlzfX4KbHMeZHCzsAea6yFnlv
- t956WN9bYUKoEe3i+7z3IeD8eviRkOOLCK+jMkgLrW1UvwKHPMAXXjT7ojTC8ftUKzH8
- hFBXGj0e16I23P31a/biyn3PS/Dm7nXedz6vZau/EzAyUenBSbkARhQ73qXeQjGDZfQq
- hqO5JYx1CjrOv1TMPg07elbfCiwItvGTug7MKroMRM7AN72kNverEX0KHdam+nqJ5Fpw
- pelQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767974267; x=1768579067;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=K50ZKhdkfR8rYaEc+1+Euk0YNaMcEClcWpeJPGFNzuU=;
- b=jqWEoNeOcNDGASYwFhEwQMCEn1c+JImacqN5npKzZqIlgwlwqHtZwiwiBf44UVv/XQ
- kUBwfV2Xnxe5RtEg5dipmVj8bP2rX/YTIziIilsDlT87HqmzUDCqYtqHE0FgV9cxwK17
- 0g2FZv7zMh6qoAqHFWQrKN9axnJ4A3rxRRXU8R1vmWu+RkwH9saSb7jQ3t8u4SMe16ER
- i5lCfMbG+LNEf6RTkW87pQWF8cze8LydJrhME0fdyfBl2j/qmqjjDbrnGPJWcjXRZwaA
- e76+0hbkxHiBfQTH272nK/aoXyw3wRxtEdYK16HpnvOfB+1Xm+gHNaB1LbibeRworA69
- wuFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLXfwobvtc8U3QLz/h+jCWLkdvHVA/ApKjf3DZ6isYA4CgFtFxdOHsTAAt0F1oGJ5LVyvhCUShOT+e@nongnu.org
-X-Gm-Message-State: AOJu0YwjKsk86qmVQQhqtO11fk/PBOEu6QD5wOq9BV9CBXWXUy0rYoKv
- Xc2N2Nua4sGhXCbFs2LMLXbHh99CTw9ehXt0UtZp8AslPey2IJUivzQcWgxPdaUSvqY=
-X-Gm-Gg: AY/fxX52fsOvl0q+UxzuwxIQKgaEbzqN3Ot01i9LtiMcnATnUxUvScyWz9jGuiJvNej
- N9nDhgLZ8nn2OFNk7JdvXYYRin5Ub1KUkaR4rBR2BULX47DuTUO7ScZWu00uNDregFZFjQgOcxM
- WNpS7DPd2ynR1jqZS/CXOFJ9Ywb0MOthT7pvnUpB8GgQjiyUYaP0J89i2eIuhv7ac3g6IHJnJCK
- 6rjxSlQw3m9Quu5jzo3+L6W+Bb7/tDV9dMk8zj34TJs/XsaXPr+43xb/FtFACfDWGjxY8TCnYHA
- 2RzDftdADUuUT4S6IakoYp+zGuCsFEHq96nPyzdJIByj4Iu8PkNLWiiC4cmkd3aLslPwQvt8dd6
- Hx2hFnf7VnyJaVJT1ConsSu40venX7Ju05olL+Ie+xAejRyacZXwfJEjoPcMtR0AdPr3i1cjCEH
- SHjVXMCtqCgA0Eqoxo96frN9AdO9sNMsFL51rOO3jopD0k0+xoklUl8B7cgw3acov5Ok8=
-X-Google-Smtp-Source: AGHT+IFPNu1xoliq9qwTvrakjKW20akit9uZ+PJ96WYHjqhhHKvBTnfSKRAPm0bATurHLnaW/ZIKLA==
-X-Received: by 2002:a17:90b:1d0d:b0:343:6a79:6c75 with SMTP id
- 98e67ed59e1d1-34f68c62a3emr10043564a91.29.1767974266985; 
- Fri, 09 Jan 2026 07:57:46 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f6b10a44asm3053269a91.5.2026.01.09.07.57.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 07:57:46 -0800 (PST)
-Message-ID: <7c061acd-b1d1-446e-876e-b6c9a3f118b1@linaro.org>
-Date: Fri, 9 Jan 2026 07:57:45 -0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1veEsh-0004QU-Vc
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:58:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1veEsf-00061Q-JE
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:58:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767974307;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ebq5eOcYODOnA3Tdbk039zvtLhwNGEzw910sYbcx4E8=;
+ b=HC33k4jU3RG6r28U3KZR80mLutW8pFJ6B0XR08LqRz2c0Qd4FkZ1wG1xGoLPJM2jC6nXVB
+ oawoGPT59pgaUr4qBebhYl7uG4T+wJNS9yP1RrpFw2wXFx5+3Z6YgVckWlmNNMk8G6kJ+/
+ DseZ6cWLtRChM/s4KvGOSRm9606rBtw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-108-FViR_5TTPRaEoHCqsaZm5A-1; Fri,
+ 09 Jan 2026 10:58:24 -0500
+X-MC-Unique: FViR_5TTPRaEoHCqsaZm5A-1
+X-Mimecast-MFC-AGG-ID: FViR_5TTPRaEoHCqsaZm5A_1767974303
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C132180044D; Fri,  9 Jan 2026 15:58:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.39])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A8C31955F67; Fri,  9 Jan 2026 15:58:18 +0000 (UTC)
+Date: Fri, 9 Jan 2026 15:58:15 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 4/8] hw/pci-host/q35: Remove Q35PCIHost::pci_hole64_fix
+ field
+Message-ID: <aWEll_ENkNVVBbWy@redhat.com>
+References: <20250501223522.99772-1-philmd@linaro.org>
+ <20250501223522.99772-5-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] linux-user: implement epoll_pwait2 syscall
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-References: <20260109090937.599881-1-mjt@tls.msk.ru>
- <20260109090937.599881-3-mjt@tls.msk.ru>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260109090937.599881-3-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250501223522.99772-5-philmd@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,19 +90,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 1:09 AM, Michael Tokarev wrote:
-> epoll_pwait2 is the same as epoll_pwait but with timeout being
-> (a pointer to) struct timespec instead of an integer.
+This patch did not get merged so far, so in case it is resurrected
+I wanted to warn that even though we're going to be removing machine
+types that use it, we might want to keep the property.
+
+In this issue
+
+  https://gitlab.com/qemu-project/qemu/-/issues/1947#note_2994552211
+
+being able to disable the pci_hole64_fix is indicated as a possible
+fix for a Windows XP  BSOD.
+
+Perhaps there is a better way to avoid the root cause of the BSOD,
+but if not this knob would be useful to retain.
+
+
+On Fri, May 02, 2025 at 12:35:18AM +0200, Philippe Mathieu-Daudé wrote:
+> The Q35PCIHost::pci_hole64_fix boolean was only set in
+> the pc_compat_2_10[] array, via the 'x-pci-hole64-fix=off'
+> property. We removed all machines using that array, lets
+> remove that property and all the code around it.
+
+
+
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3210
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   linux-user/syscall.c | 29 +++++++++++++++++++++++------
->   1 file changed, 23 insertions(+), 6 deletions(-)
+>  include/hw/pci-host/q35.h | 1 -
+>  hw/pci-host/q35.c         | 6 ++----
+>  2 files changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
+> index ddafc3f2e3d..75810528205 100644
+> --- a/include/hw/pci-host/q35.h
+> +++ b/include/hw/pci-host/q35.h
+> @@ -63,7 +63,6 @@ struct Q35PCIHost {
+>      PCIExpressHost parent_obj;
+>      /*< public >*/
+>  
+> -    bool pci_hole64_fix;
+>      MCHPCIState mch;
+>  };
+>  
+> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+> index 1951ae440cc..f6e29cc4fc8 100644
+> --- a/hw/pci-host/q35.c
+> +++ b/hw/pci-host/q35.c
+> @@ -116,13 +116,12 @@ static void q35_host_get_pci_hole_end(Object *obj, Visitor *v,
+>  static uint64_t q35_host_get_pci_hole64_start_value(Object *obj)
+>  {
+>      PCIHostState *h = PCI_HOST_BRIDGE(obj);
+> -    Q35PCIHost *s = Q35_HOST_DEVICE(obj);
+>      Range w64;
+>      uint64_t value;
+>  
+>      pci_bus_get_w64_range(h->bus, &w64);
+>      value = range_is_empty(&w64) ? 0 : range_lob(&w64);
+> -    if (!value && s->pci_hole64_fix) {
+> +    if (!value) {
+>          value = pc_pci_hole64_start();
+>      }
+>      return value;
+> @@ -156,7 +155,7 @@ static void q35_host_get_pci_hole64_end(Object *obj, Visitor *v,
+>      pci_bus_get_w64_range(h->bus, &w64);
+>      value = range_is_empty(&w64) ? 0 : range_upb(&w64) + 1;
+>      hole64_end = ROUND_UP(hole64_start + s->mch.pci_hole64_size, 1ULL << 30);
+> -    if (s->pci_hole64_fix && value < hole64_end) {
+> +    if (value < hole64_end) {
+>          value = hole64_end;
+>      }
+>      visit_type_uint64(v, name, &value, errp);
+> @@ -181,7 +180,6 @@ static const Property q35_host_props[] = {
+>                       mch.above_4g_mem_size, 0),
+>      DEFINE_PROP_BOOL(PCI_HOST_PROP_SMM_RANGES, Q35PCIHost,
+>                       mch.has_smm_ranges, true),
+> -    DEFINE_PROP_BOOL("x-pci-hole64-fix", Q35PCIHost, pci_hole64_fix, true),
+>  };
+>  
+>  static void q35_host_class_init(ObjectClass *klass, const void *data)
+> -- 
+> 2.47.1
+> 
 > 
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
