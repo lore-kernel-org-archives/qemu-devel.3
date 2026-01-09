@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C30D277C2
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 22:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9845AD277C4
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 22:51:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veLJG-0000QD-Ln; Fri, 09 Jan 2026 17:50:22 -0500
+	id 1veLKU-0000v3-M9; Fri, 09 Jan 2026 17:51:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veLJC-0000Q2-Fy
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:50:18 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1veLKN-0000uY-1F
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:51:31 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veLJA-0007JM-Vq
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:50:18 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-29f30233d8aso33266155ad.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 14:50:15 -0800 (PST)
+ id 1veLKL-0007pI-Hm
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:51:30 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2a1388cdac3so33410395ad.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 14:51:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767999014; x=1768603814; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767999088; x=1768603888; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0jwvZnE7hr3/vJVVN0dD8ZqYo4m5RG9Zk9Y+669h6Vo=;
- b=W+iWcfLaL13BhjqvqGLszGkqcowb5ilrUczt428E27m/5FtTFezVHZijiqzlGJJOQu
- FYsio80qC4so4pqbRv61r8+xKg7BYQ6yewkE8H4JEHEMJ8YoJdfx01OVDgrZOSup2rOv
- h3EUP8NwoGne4N2UijKh0MR7b5iRDKKZ7zOqJbVEHw62FE9mi8ToyRjyeGg2XvaqpKdy
- zxuUR3BdDgZg1bO4SC0NxP9sr+ZxWiBSiJbKcpjm9o50+pGzx3WwN7LV51kt6YLDELTv
- 1oD50vAeD1DE7oqCsVBqZV0iery9NCILw2h0stuBAP+VddcRYnnvzu41JFXCWkPmhiZ4
- VWpg==
+ bh=cf+VCae0sT6DGfBgzHiFD7j7M+Xvk7A1YorFj6Oku5w=;
+ b=JqQh9uXHHqz/Bd177LE5vPjRbCBcYOOCy5CbHwTz2sAXRwgaVO8M6J+kJzWGE0noGR
+ XNF0BXFycsSL7jSl74AuPeprLtRKivOVZDU9Naooub/+ents79wPm9aJn+qVl7M9SnCo
+ TsSgO9mcO5CbYkFQ6v8oioI+5TgXJ5kwTb8QaKkd6VOULh/o0nZ4rRUV5G4hbsTRPe8n
+ dToezTG1otPRJqdWUOioFz8IInF3iaQAR75NDW0loRM2WQfyOirGrGhGNJZXD9cTXK1p
+ DtPtshRVCSadCeeN/zlJeJEMTNMiUa9ps/dYTgPxu96M6FNVNhNhvMl6gYMovp+jrgpV
+ nBwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767999014; x=1768603814;
+ d=1e100.net; s=20230601; t=1767999088; x=1768603888;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0jwvZnE7hr3/vJVVN0dD8ZqYo4m5RG9Zk9Y+669h6Vo=;
- b=ioiDSFzpClikYsOA+FF6eOoN3o2zgOW5VtYih724hdBVHUIvcDKvz4fsINazKca0Zk
- xI8vapk7d7CHKJXFJ786bmwLHHR7z4hthTTlRvHH8hOjWrTFLSO68UKrcIzDd6R7mDYJ
- wc12Qlx6tpIOkrlMrHqrpAmvSJBaTa06niskMreVpBJNx74FR5cy/iLbVVQfLKrSqdq9
- r7lTQq2Ni80hfwfpLZBfm901E+j7/5v0UXPdY+tggcnYQ7X3wNpWYKavXkeInsff6gu5
- MJBrxHu6//dypyec1XF+f5StHpIYSOqFtDrwCwXc74NWBN8ZGuGj9+Z1M+VAENP024KK
- mEFw==
+ bh=cf+VCae0sT6DGfBgzHiFD7j7M+Xvk7A1YorFj6Oku5w=;
+ b=E5pDP2qqJaxytZbJ2SqnREWIU7xUWfeh0VAFY/zUVEDO3A5lNG+LmEIC6pgIdExFgi
+ p+c0tVagY66GPcnAJflh/Vel6aB/dGwddfOcWliLTSB1FKrng9r0wnVpt4H9Q30ikDFD
+ +sFuKInnuSth2OLRe3C4FIih0Y4aDH4MYqVGnfitcnAaYrO6BD4/3RkdOAzR4ODzWQuA
+ rXF8nwgeLzZBUY8PyHNCIovm8R5obLWrMO3iWYh2HzWx0aZEL1s57gH9enZtwgHVAo4i
+ cYHRjlKL8yUPs36bviZBxFXNxoSd4UXklnuym4HjCYwgT1KF7oKp9HL6RqAamMg5vjJX
+ 13xQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfOe0b607x+bTG4dj4zlgNQT3TZqyaI+Lbeaisgc2pbKI+CC2v9BYJqB8UaDvvdD5/pzlCRknLnZlZ@nongnu.org
-X-Gm-Message-State: AOJu0YwXHoHjPbh7ikiyOxwNFYow9KTHU27QM/+KyGZ5F3qI8YHISm4f
- Jq797BrIZjcD+F6TMRdSEWek4of5vYRaH1+LGMtoiyZZUSJpYt0zQGiL1k0NkPUObgE=
-X-Gm-Gg: AY/fxX6tg9ws1CK2PECe5nXidpeoSzx89EIfdfKFFYU4c2s+tsnsqzLQsVAXAA4yEyx
- B6XXKCqOaWfGijUWf6LvMq1M1nU9qvpu7wi9KzG3jm/QlFry1bKSZZL1Ct4tRhFVKZ1IaHcdnBP
- PIEKdMavwbjJNlV7qrGN22+7TTPAT66F1BFvg4qivFs960ew2e7BsMcY9bCvxLUqte3uE1V6xlR
- 8IRtUnumX1ANuzrf0zxM5AAzDeTmR3dsnLxoSUj93snkr/+mgM3e5IPVViXs/4pS9xLNC2NS0Im
- J8cC7B2qKOuTjm6cEqXp+8K50YXQVx0jSK5hBna2IRgWvmAkWACGEM+8+N7Vy3PDpxQh+XviFba
- ay6bce98Otn2lpJdYQmvKLTHxlmHgqjxc5oI16PKwjpaMqVooXVOPsE03ZPM/hncNj8CMUVfoZl
- 1vaa4fIYSSKikCycRDopOsbkmCUg==
-X-Google-Smtp-Source: AGHT+IFAkDG6ZxbwnWwZ5Cg6Vy9QUVa1KYAA56vMRY9A/Kt/3wWYnJ1V4ehRjNZjmt0DylkacaKv5g==
-X-Received: by 2002:a17:902:ecc5:b0:294:f6b4:9a42 with SMTP id
- d9443c01a7336-2a3ee43315fmr90445055ad.9.1767999014127; 
- Fri, 09 Jan 2026 14:50:14 -0800 (PST)
+ AJvYcCVxkkSIR3H3duW8QRE6og1yqcJGdeYrIa/Qe8Im+WrHq1BFsG3+4sV5VA26cfiC40Nabz15Izl3wQ2a@nongnu.org
+X-Gm-Message-State: AOJu0YzH+Y5DRsaFukiov/TcTp7Z6R3siGI6Yui+BhXBlYUfb7a/BNB8
+ BRo8q1JVxUOn6QT4GqVhXpWnMA4wE98ztwITvFMcsobBZytGiILQI9QjXfUdVUAKe6g=
+X-Gm-Gg: AY/fxX4vlhLAk69kX35F7niGTyhvbd8ngLDahzb6Zb6WcNl4KM9yH4ocnh3BRzVbAtq
+ UrMMN2H35t8JdPQcxM4fcyhiUPm8PQlU7fHAqxrD1naWFxD4IxF4Rpw7mAqH0QoKMhc2QNzh0O+
+ 68qPJVuv3FkljiYBX4lktMHxksXHLdFohmmTi+rViaBsD/tVBZWwFXMZ1uD2UnPofmZ0aZNiHqc
+ YhyLLvpCCl/mlhbdrGivGFIWY+Otu2bdnqNd8hUO1IBxz+OLwjCtLfi6Tj+hwfSnpdsNRKA384f
+ cpy69t0fpDDlZl9utO+LML7YSB/ofQzgPEf7dJaL/+rlVJDfVTLYsS+sI3wJln4Q+PBbOXxU84j
+ bINER1UWJenF0dvScyL0WSt+2FarpfbF3F8UpbIUbHm+NhlGhAbTbwCMuyursJwR0UYImgRFZK9
+ u8dKs8x57NBpmrbZsOMTigJTlb3w==
+X-Google-Smtp-Source: AGHT+IGjhKNjU0EpBC3ETw6AzW4vxuLTsLtys2WQ6URcGK+IHB0G9rbsaY6qEBuwYIi9UkQ57S//Jg==
+X-Received: by 2002:a17:903:354b:b0:2a2:acc7:f1ee with SMTP id
+ d9443c01a7336-2a3ee42b15bmr113329435ad.21.1767999087767; 
+ Fri, 09 Jan 2026 14:51:27 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c49299sm112199855ad.42.2026.01.09.14.50.10
+ d9443c01a7336-2a3e3cd4654sm114827265ad.97.2026.01.09.14.51.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 14:50:13 -0800 (PST)
-Message-ID: <5fc9d07c-cd22-45c0-bb5e-8bf93d20f112@linaro.org>
-Date: Sat, 10 Jan 2026 09:50:07 +1100
+ Fri, 09 Jan 2026 14:51:27 -0800 (PST)
+Message-ID: <7e437f4c-b994-4953-b5e0-b8da7f73a3af@linaro.org>
+Date: Sat, 10 Jan 2026 09:51:20 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 26/29] target/arm/tcg/translate.c: remove MO_TE usage
+Subject: Re: [PATCH 27/29] target/arm/tcg/translate.c: replace target_ulong
+ with uint64_t
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -80,14 +81,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
- <20260109053158.2800705-27-pierrick.bouvier@linaro.org>
+ <20260109053158.2800705-28-pierrick.bouvier@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260109053158.2800705-27-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260109053158.2800705-28-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,33 +112,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/9/26 16:31, Pierrick Bouvier wrote:
-> dc->be_data is already set just above in the same function:
-> ```
->      dc->be_data = EX_TBFLAG_ANY(tb_flags, BE_DATA) ? MO_BE : MO_LE;
-> ```
-> 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   target/arm/tcg/translate.c | 1 -
->   1 file changed, 1 deletion(-)
+>   target/arm/tcg/translate.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 > diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-> index ec4358ba402..55b89817cb1 100644
+> index 55b89817cb1..7128c633290 100644
 > --- a/target/arm/tcg/translate.c
 > +++ b/target/arm/tcg/translate.c
-> @@ -6327,7 +6327,6 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+> @@ -6433,7 +6433,7 @@ static void arm_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+>        * fields here.
+>        */
+>       uint32_t condexec_bits;
+> -    target_ulong pc_arg = dc->base.pc_next;
+> +    uint64_t pc_arg = dc->base.pc_next;
 >   
->       if (arm_feature(env, ARM_FEATURE_M)) {
->           dc->vfp_enabled = 1;
-> -        dc->be_data = MO_TE;
->           dc->v7m_handler_mode = EX_TBFLAG_M32(tb_flags, HANDLER);
->           dc->v8m_secure = EX_TBFLAG_M32(tb_flags, SECURE);
->           dc->v8m_stackcheck = EX_TBFLAG_M32(tb_flags, STACKCHECK);
+>       if (tb_cflags(dcbase->tb) & CF_PCREL) {
+>           pc_arg &= ~TARGET_PAGE_MASK;
+> @@ -6595,7 +6595,7 @@ static void thumb_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+>       bool is_16bit;
+>       /* TCG op to rewind to if this turns out to be an invalid ECI state */
+>       TCGOp *insn_eci_rewind = NULL;
+> -    target_ulong insn_eci_pc_save = -1;
+> +    uint64_t insn_eci_pc_save = -1;
+>   
+>       /* Misaligned thumb PC is architecturally impossible. */
+>       assert((dc->base.pc_next & 1) == 0);
 
-Whoops, yes indeed.
-
-Cc: qemu-stable@nongnu.org
-Fixes: a729a46b05a ("target/arm: Add wrapper macros for accessing tbflags")
+With uint32_t,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
