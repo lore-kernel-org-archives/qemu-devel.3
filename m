@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD1CBD232DF
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 05:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F102AD232DF
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 05:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve56c-0004Fj-DB; Fri, 09 Jan 2026 00:32:14 -0500
+	id 1ve56l-0004S9-Kk; Fri, 09 Jan 2026 00:32:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve56Z-0004DZ-MA
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:11 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1ve56j-0004NG-JV
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:21 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve56X-0003gH-O9
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:11 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-34c9edf63a7so3186935a91.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:08 -0800 (PST)
+ id 1ve56h-0003j8-VZ
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:21 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-ba599137cf8so1033303a12.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767936727; x=1768541527; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=sL03tGGaESXndm6kUpMn5SgemE/66cdQd8FuB2bxMQw=;
- b=vrYz/new0hHShLCnnRR0jqHJUZoCVWqFWrlPCwrhlI9hEwMGRGoHsuwx1v9he1vqyO
- tyEjb9wKPtAnMpzq1Bc5APi38WTh5Pv2yxDhJPnAr2/wK3SHOpSTGAsY6iz/iDpZPcv0
- kXAZ9gOkB73ZLhp5AG87LfFkxks0mhj2Zzu0v0M3qhT+IabCrCF/Bnb1AVRdIE7qOhOe
- 2GnQq+BXZYsiyOUuTjOHAvmQ2UVrFySuFvu4gHw+Pf9N00BKJ8oAFP/1/SeEJu9nctuE
- BuRaRJgMeEnl8bEKfCFyYdlPfvPE/v4E+qr1QwB7/3g+4TxhGcVs6U2Cwe/ghqMk8Scl
- XBOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767936727; x=1768541527;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1767936739; x=1768541539; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sL03tGGaESXndm6kUpMn5SgemE/66cdQd8FuB2bxMQw=;
- b=Bd+pKZ0Fml8nKKF++IWGUwFpuaj6HVgM6pDPFGF8gP56ATInC4vXDzVqkSMonsqqRW
- Ynj1tAGQKTbKNKI0aR4VXoPSrCnalbcyyEOZNzptbmqszPtBDJoUje3ptwMMYmT5MSbS
- 9POwojZEOYRacShGwaycJqgSecDUaC039SAKDsKDM7yk6CnkybdfiEhOoujfyqLdZPk+
- HOTaPFEJLgyuG2QXlYpdPZ90PKERNpGkJLJujWU19gpsDKEiT+v8nfRYvn9IOKS7DA8p
- SVu3QQNfLUTc36tps0UzKZ48Yxi5vozLP3kwmoal9YwIfK/ZJ+pYBVJJp/RLW+d6wYW7
- tK0Q==
-X-Gm-Message-State: AOJu0YxdoqVmngOsq1z7D2VkNh7Fniq6Fxshna2/lbXPslnKeUd27P7T
- N6sqhuVwDrYWDU+xLJEfsBuXMvxBQR+ZQfNBgyUJo6PU22nVWVEldFMvpAwlhkAjfj5baXwXz+t
- UhXF8
-X-Gm-Gg: AY/fxX4vZaVtnKXk6Eilfq6aF47zYvnlfsOMv2/WJVd6R+Mwj9Su0XgBmZhSrpV/Ybq
- ahYnNEMauNMCcDlAEQyra9BMh/n+HH7zLYXD5iHdDy/V3omoltvq3pIFnG2XNVVfly7o6J+0DHF
- eojKiFSvwxs2IYw8fxeKJbSWyV8auQiANMY/wtalyBGvoN6eBnKulRzAewbtESERpZ5qFjEdj8u
- Bmu7g+d0M2GnUsRS1HKWFZ9yIc8xadgcYRyJY4OUL35L1rEpxZF8WgcIEkcUxWedvUkmJ9XhBNU
- q86M97vJfRfUtmaQNeGtZZUW4/ETWVSc7ctliihrkyg09u1ebkGr8kB8g7GtDXsCKcgw+eyV6iK
- Vr274A/XS0uQvDziKZ1zzwCLuCAi5/n7OMlgikW3cnRTg+LQ5kOnLh3OEuXr8dRaR835IiLKg6C
- Pj5diViS5bu4kww/HYmhH/sMx1fGI9c+Vfw9e8Y5dTtUZgS5Ez7c0DY5BQLv19xEY+
-X-Google-Smtp-Source: AGHT+IF2KSt3SVFJSQHp9q7vQqGPJfeOyrE9UndSC1vi8KYkxCmkrny+xEgXUbF9YHuwWm3lO6OBNA==
-X-Received: by 2002:a17:90b:3ecc:b0:340:f009:ca89 with SMTP id
- 98e67ed59e1d1-34f68d0bc11mr7461315a91.22.1767936726997; 
- Thu, 08 Jan 2026 21:32:06 -0800 (PST)
+ bh=1pzH52nruw/NQPCqhWmjdkOJqM8QRb33UktwGYQCddQ=;
+ b=SUqKLBk/adweulHYA5sBKXSIag6gtoknWVge1wTD6Dk8gW7TkEFG9RGdMJ+lji8YlA
+ 9ldffxHKqQq1DsQSCjyULyLj+R6DteM/V4JI1KC278wlUj/50pjxQ85oKTftuD+1eCHE
+ K0iQN3n6VWeled4p4R8ZtqQLIJp6kBASSDtiYbirUFdE26r1XSAk3DiGmcluxKtID6WC
+ Gc6Aq5xZH57Q1BDhHLLX3wlMKjXJmR3Z69L48q/zR/CS/UA/idEimWf0rrUHLXPwP2pg
+ tOnwegQKuhy6kB1g9fy5C3MHHIf8hh6BzuW9+NfZLrgaeZ27+pbS2j0AT2Jkb7baQvg8
+ ez5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767936739; x=1768541539;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1pzH52nruw/NQPCqhWmjdkOJqM8QRb33UktwGYQCddQ=;
+ b=tZ/yRafg7zFqGCiHiCgtzzxtBMdcSO2GuBSsTF0J/LioZv6BOraZ9Q/qpCw/sVIe8N
+ 5Z6Ri+CH2C8wqymnZP2aYrthCSCQqeYoGejcLkTw/mp3mUMcHtIcCz07sTkatechPDn8
+ B0qRchO6timu+dW1lsF2paxeW0flVzFxHmemcJTNe0K0pCHBUIOUZOqfq2VMb1qL0oDi
+ rLuHYJ6Ji/xAKr6MT6f7zWYZjeo4xAxInLkCZBoH8O6+ULq+6VPUdiE6XL4N5BLd9234
+ yjzVV7VmFDQR7n5GXevaM6UPh0FVUpvovaZz35WqijNgsF2fRp3eiSlySiYV+Yam7zB8
+ KyWg==
+X-Gm-Message-State: AOJu0YyXjbOnLCpA13skQL5B3EzW2hUGWSjxLbyYTqO10oQJGE6+EoHz
+ OTHTVcdSlAta7s5EAutVUSx+C4lcKof9or6nJs9A9oeIjnTthnLmqEXV3EouLgHxM0ovWs3U/ed
+ htu7J
+X-Gm-Gg: AY/fxX6X/if5xMi0w9TN8wPhsYXsORadgCmBn/mp5AJHskyvHDqaBRQ/jQpkxXKMnaV
+ DGQJpZ6kgFnTGeBD2YFBMBVs1J8nhFO6abFN4j1tZGVq57H5sRQH2ysWE4u3AzK6hm6lshsZSKp
+ NF/5/mhll402GGFSp3iCS4u+B6eK3N3O5zdC3vqD+v98WECBpKKTC7utnLl4S8XErRbPDnc3khB
+ lpY1xISOKkWkn4U1Q2ZxwXUxEputWrDXYK65+ZUum5t6yVQETyp6NM2TgnHkiMr9ms12TU6BXrX
+ UFsUR8OcXI0/6lw0HQ12LqUIl4lXt1UIbazqTVmnpQPpnWfp7I+UW4hAgC6IjsWKFWAYmEtNuD9
+ 5dBZr5i5b3On7rjC64Ev6psn2A0rEVR10WRiCAp/N0XSZGMh2T+eGM/Oww93tXhAUqPuwYawmlM
+ cqjl0e1D5GvYxsnxeu0DaXzT7dUP35E/IZD7KR4ehL+EaIgQfR1zW0bcbuamKym2ML
+X-Google-Smtp-Source: AGHT+IG5DhFXsHuSJfkCEqhAjL8N3K2UTZP1dj2CMbohoovDrvWhXa/oaAtqmwdUgvwn+JQCw8SP6w==
+X-Received: by 2002:a05:6a20:a105:b0:35f:5896:859b with SMTP id
+ adf61e73a8af0-3898e9c8310mr9649748637.4.1767936738540; 
+ Thu, 08 Jan 2026 21:32:18 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.06
+ 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 21:32:06 -0800 (PST)
+ Thu, 08 Jan 2026 21:32:18 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -74,15 +75,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 00/29] target/arm: single-binary
-Date: Thu,  8 Jan 2026 21:31:29 -0800
-Message-ID: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH 15/29] accel/tcg/translate-all.c: detect addr_type dynamically
+Date: Thu,  8 Jan 2026 21:31:44 -0800
+Message-ID: <20260109053158.2800705-16-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
+References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,149 +107,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series tackles (most of) the rest of target/arm, especially tcg folder.
+With TARGET_ADDRESS_BITS mechanism, it's now possible to specify which
+variant every source file is written for. Compared to before, it means
+that addr_type will now vary per tb translation, where it was constant
+for a given target previously.
 
-It requires to add some mechanics in tcg-op.h to be able to specify which target
-a file is written for, so every definition becomes unique within a given
-compilation unit. In general, and as a note for other architectures,
-target/X/tcg/* files should be written for a single variant (32 vs 64 bit) only,
-which helps to eradicate TCGv usage.
+Instead of introducing a new parameter to translator_loop(), we simply
+add this information in TCGTBCPUState, which is returned by
+get_tb_cpu_state() during the translation, and passed down to
+tb_gen_code().
 
-Initially, I went down the way to have a dynamic definition of TCGv, which
-required much more boilerplate and runtime checks. After discussing with
-Richard, I realized it was not needed, and that could simply split 32 and 64 bit
-properly in different files instead. This might be more tricky with other arch,
-but it's definitely the best way to deal with this.
+To avoid modifying all target with this new field, we simply define a
+default value that is equivalent to current state: use
+target_long_bits(). With this, we can progressively convert new
+architectures.
 
-CI: https://github.com/pbo-linaro/qemu/actions/runs/20837738026/job/59872847031
-CI: https://gitlab.com/pbo-linaro/qemu/-/pipelines/2252803959
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/accel/tcg/tb-cpu-state.h | 12 ++++++++++++
+ accel/tcg/translate-all.c        | 15 ++++++++++++++-
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
-Files left are:
-- target/arm/tcg/mve_helper.c
-- target/arm/tcg/m_helper.c
-- target/arm/tcg/cpu32.c
-They will be converted in a future series (more endian usages, and a few more
-changes required for cpu32).
-
-Pierrick Bouvier (29):
-  include/gdbstub/helpers.h: allow header to be called from common code
-  target/arm/gdbstub: extract aarch64_cpu_register_gdb_regs_for_features
-  target/arm/gdbstub: make compilation unit common
-  target/arm/arm-qmp-cmds.c: make compilation unit common
-  include/exec/helper-{gen,proto}.h: add conditional HAS_HELPER64 define
-  target/arm: extract helper64.h
-  target/arm/tcg/psci.c: make compilation unit common
-  target/arm/tcg/cpu-v7m.c: make compilation unit common
-  target/arm/tcg/vec_helper.c: make compilation unit common
-  target/arm/tcg/translate.h: replace target_ulong with uint64_t
-  target/arm/tcg/translate.h: replace target_long with int64_t
-  include/tcg/tcg-op.h: replace target_ulong with uint64_t
-  include/tcg/tcg-op.h: eradicate TARGET_INSN_START_EXTRA_WORDS
-  include/tcg/tcg-op.h: introduce TARGET_ADDRESS_BITS
-  accel/tcg/translate-all.c: detect addr_type dynamically
-  target/arm/tcg/translate.h: remove TARGET_AARCH64
-  target/arm/tcg/translate-vfp.c: make compilation unit common
-  target/arm/tcg/translate-neon.c: make compilation unit common
-  target/arm/tcg/translate-mve.c: make compilation unit common
-  target/arm/tcg/translate-m-nocp.c: make compilation unit common
-  target/arm/tcg/op_helper.c: make compilation unit common
-  target/arm/tcg/gengvec.c: make compilation unit common
-  target/arm/tcg/translate: extract helper64 info in translate-a64
-  target/arm/tcg/arm_ldst.h: replace target_ulong with uint64_t
-  target/arm/tcg/arm_ldst.h: use translator_ld*_end variants
-  target/arm/tcg/translate.c: remove MO_TE usage
-  target/arm/tcg/translate.c: replace target_ulong with uint64_t
-  target/arm/tcg/translate.c: remove TARGET_AARCH64
-  target/arm/tcg/translate.c: make compilation unit common
-
- include/accel/tcg/tb-cpu-state.h  |  12 ++
- include/exec/helper-gen.h         |   6 +
- include/exec/helper-proto.h       |   6 +
- include/gdbstub/helpers.h         |   9 +-
- include/tcg/tcg-op-address-bits.h |  21 +++
- include/tcg/tcg-op-gvec.h         |  11 +-
- include/tcg/tcg-op.h              |  38 ++---
- target/alpha/cpu-param.h          |   2 -
- target/arm/cpu-param.h            |   7 -
- target/arm/helper.h               |   6 -
- target/arm/helper64.h             |   5 +
- target/arm/internals.h            |   1 +
- target/arm/kvm_arm.h              |   3 +
- target/arm/tcg/arm_ldst.h         |  16 ++-
- target/arm/tcg/translate-a32.h    |   2 +-
- target/arm/tcg/translate.h        |  28 ++--
- target/arm/tcg/vec_internal.h     |  49 +++++++
- target/avr/cpu-param.h            |   2 -
- target/hexagon/cpu-param.h        |   2 -
- target/hppa/cpu-param.h           |   2 -
- target/i386/cpu-param.h           |   2 -
- target/loongarch/cpu-param.h      |   2 -
- target/m68k/cpu-param.h           |   2 -
- target/microblaze/cpu-param.h     |   2 -
- target/mips/cpu-param.h           |   2 -
- target/openrisc/cpu-param.h       |   2 -
- target/ppc/cpu-param.h            |   2 -
- target/riscv/cpu-param.h          |   7 -
- target/rx/cpu-param.h             |   2 -
- target/s390x/cpu-param.h          |   2 -
- target/sh4/cpu-param.h            |   2 -
- target/sparc/cpu-param.h          |   2 -
- target/tricore/cpu-param.h        |   2 -
- target/xtensa/cpu-param.h         |   2 -
- accel/tcg/translate-all.c         |  15 +-
- target/alpha/translate.c          |   4 +-
- target/arm/arm-qmp-cmds.c         |  25 +---
- target/arm/cpu32-stubs.c          |  22 +++
- target/arm/gdbstub.c              |  61 +-------
- target/arm/gdbstub64.c            |  57 ++++++++
- target/arm/kvm-stub.c             |   5 +
- target/arm/kvm.c                  |  21 +++
- target/arm/tcg/gengvec.c          |   3 +-
- target/arm/tcg/gengvec64.c        |   1 +
- target/arm/tcg/helper-a64.c       |   1 +
- target/arm/tcg/hflags.c           |   1 +
- target/arm/tcg/mte_helper.c       |   1 +
- target/arm/tcg/op_helper.c        |   1 -
- target/arm/tcg/pauth_helper.c     |   1 +
- target/arm/tcg/psci.c             |   2 +-
- target/arm/tcg/sme_helper.c       |   1 +
- target/arm/tcg/stubs32.c          |  19 +++
- target/arm/tcg/sve_helper.c       |   1 +
- target/arm/tcg/translate-a64.c    |  10 +-
- target/arm/tcg/translate-m-nocp.c |   2 +
- target/arm/tcg/translate-mve.c    |   2 +
- target/arm/tcg/translate-neon.c   |   2 +
- target/arm/tcg/translate-sme.c    |   1 +
- target/arm/tcg/translate-sve.c    |   1 +
- target/arm/tcg/translate-vfp.c    |   2 +
- target/arm/tcg/translate.c        |  28 ++--
- target/arm/tcg/vec_helper.c       | 222 +++---------------------------
- target/arm/tcg/vec_helper64.c     | 140 +++++++++++++++++++
- target/avr/translate.c            |   2 +-
- target/hexagon/translate.c        |   2 +-
- target/hppa/translate.c           |   2 +-
- target/i386/tcg/translate.c       |   2 +-
- target/loongarch/tcg/translate.c  |   2 +-
- target/m68k/translate.c           |   2 +-
- target/microblaze/translate.c     |   2 +-
- target/mips/tcg/translate.c       |   4 +-
- target/openrisc/translate.c       |   4 +-
- target/ppc/translate.c            |   2 +-
- target/riscv/translate.c          |   2 +-
- target/rx/translate.c             |   2 +-
- target/s390x/tcg/translate.c      |   2 +-
- target/sh4/translate.c            |   4 +-
- target/sparc/translate.c          |   2 +-
- target/tricore/translate.c        |   2 +-
- target/xtensa/translate.c         |   2 +-
- target/arm/meson.build            |  14 +-
- target/arm/tcg/meson.build        |  47 +++++--
- 82 files changed, 548 insertions(+), 466 deletions(-)
- create mode 100644 include/tcg/tcg-op-address-bits.h
- create mode 100644 target/arm/helper64.h
- create mode 100644 target/arm/tcg/stubs32.c
- create mode 100644 target/arm/tcg/vec_helper64.c
-
+diff --git a/include/accel/tcg/tb-cpu-state.h b/include/accel/tcg/tb-cpu-state.h
+index 8f912900ca6..b77c4dd5100 100644
+--- a/include/accel/tcg/tb-cpu-state.h
++++ b/include/accel/tcg/tb-cpu-state.h
+@@ -8,11 +8,23 @@
+ 
+ #include "exec/vaddr.h"
+ 
++/*
++ * Default value 0 means to refer to target_long_bits(). It allows to stay
++ * compatible with architectures that don't yet have varying definition of TCGv
++ * depending on execution mode.
++ */
++typedef enum TCGvType {
++    TCGV_TYPE_TARGET_LONG = 0,
++    TCGV_TYPE_I32,
++    TCGV_TYPE_I64,
++} TCGvType;
++
+ typedef struct TCGTBCPUState {
+     vaddr pc;
+     uint32_t flags;
+     uint32_t cflags;
+     uint64_t cs_base;
++    TCGvType tcgv_type;
+ } TCGTBCPUState;
+ 
+ #endif
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index fba4e9dc21c..bc5d9d74e21 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -257,6 +257,19 @@ static int setjmp_gen_code(CPUArchState *env, TranslationBlock *tb,
+     return tcg_gen_code(tcg_ctx, tb, pc);
+ }
+ 
++static TCGType tcgv_type_to_tcg_type(TCGvType t)
++{
++    switch (t) {
++    case TCGV_TYPE_TARGET_LONG:
++        return target_long_bits() == 64 ? TCG_TYPE_I64 : TCG_TYPE_I32;
++    case TCGV_TYPE_I32:
++        return TCG_TYPE_I32;
++    case TCGV_TYPE_I64:
++        return TCG_TYPE_I64;
++    }
++    g_assert_not_reached();
++}
++
+ /* Called with mmap_lock held for user mode emulation.  */
+ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
+ {
+@@ -316,7 +329,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
+     }
+ 
+     tcg_ctx->gen_tb = tb;
+-    tcg_ctx->addr_type = target_long_bits() == 32 ? TCG_TYPE_I32 : TCG_TYPE_I64;
++    tcg_ctx->addr_type = tcgv_type_to_tcg_type(s.tcgv_type);
+     tcg_ctx->guest_mo = cpu->cc->tcg_ops->guest_default_memory_order;
+ 
+  restart_translate:
 -- 
 2.47.3
 
