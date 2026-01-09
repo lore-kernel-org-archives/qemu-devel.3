@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2247D1A639
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14D6D1A63E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 15:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veDv1-0005Ap-GU; Fri, 09 Jan 2026 09:56:51 -0500
+	id 1veE0J-0006xR-Bk; Fri, 09 Jan 2026 10:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veDuz-0005AR-Nq
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:56:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veE08-0006t9-Cm
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:02:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veDux-0002SE-HF
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:56:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veE03-0003vT-TA
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:02:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767970606;
+ s=mimecast20190719; t=1767970915;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=L0mHEJrgVZY8vvpOU0c7gFI7E7k1cI1lhD9dgspJojE=;
- b=ER21tAraTSJZ9RFCj7ZG7IXe+jH90kKl0Bvr+nD1hZwwK5ioxTRLQdrURtDCQGqjRmmZzS
- q+U0uyu2RCZbHcMsNtPrfrbA1y3gdZXKj3zr+cTrJ8LCd+P/zIZMFf3EaWiSGhfAA38PQ3
- RKVVYVR/yIQaibWZPYx91BkKjphlC4U=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3OmRdB2KSZAZ1bzTFk4iWzfuAfVEAloZNwSSRQo6bjQ=;
+ b=Navn0mcv4068Bapup1zn6sIEmUhf5jlQf8XFAQASIFHCMcr43F2zkszC5JqRE1mn2yFjhf
+ CvHKTvp8CRK/0ATZL7bP0861PUPpunr8eP2p68igWS5na+nCvvYQipX+JqmaluEYtNW2ak
+ 2BTOYTbztcHYg7pItiX7YuiAqCS7TJg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-cZYvQJXqMQKb9BwcLGIaiw-1; Fri, 09 Jan 2026 09:56:44 -0500
-X-MC-Unique: cZYvQJXqMQKb9BwcLGIaiw-1
-X-Mimecast-MFC-AGG-ID: cZYvQJXqMQKb9BwcLGIaiw_1767970603
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-42fdbba545fso1624153f8f.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 06:56:44 -0800 (PST)
+ us-mta-39-j5CN57xtODCeDuMm62R6UA-1; Fri, 09 Jan 2026 10:01:54 -0500
+X-MC-Unique: j5CN57xtODCeDuMm62R6UA-1
+X-Mimecast-MFC-AGG-ID: j5CN57xtODCeDuMm62R6UA_1767970913
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-430f8866932so3467662f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 07:01:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767970603; x=1768575403; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767970913; x=1768575713; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=L0mHEJrgVZY8vvpOU0c7gFI7E7k1cI1lhD9dgspJojE=;
- b=i0cJu8nqyNHSoJnxzmy+Vcm71FIf61XGdLeMDfLEnp377HxsFpB6rLwlVzt1GRk1VQ
- CrDgOAwm+JVOhjA1u/AiC7LMWH7Vag+t9VjxCkFshGYRcLnARrgHDtC8mW2vmR3vTL9E
- ROWcRR6T+A7m5LQtWElenDNsJqaPCGiI+4rxmp4Ps5fXdfTlon+UEyt13peLug2I3+tg
- 1n7aY4L9WnD0f7Ag4yTIQOfqIZsDWtVVt2KSlDdFtDPgTjFpxb8E9IwjwsYjHUKQcAfF
- L+T4Zibhuky+UJ4R2PgL8McDv28WFAxVwSqxogXS+2ckwNcAozP8N9OvfOvcTm/cSb+g
- XWXw==
+ bh=3OmRdB2KSZAZ1bzTFk4iWzfuAfVEAloZNwSSRQo6bjQ=;
+ b=DtrBIulWhLFt45/UKTKt/AC4QejMUk+pb0AxIcm9fmPg19AOKzbrQBqlagKn4UvbxA
+ MOfZ5KqJujzD6uAH9A/EbW+9hAjwkiSB7srMOSonoYXhaAkSwAweqA/nZ/norfzHejfs
+ bk6iMCuEXEtTtj35ecwmTLXahGOhAk7sNmE8fTERCsjWRNLnU0o3gXdsiC0Uxg4joyeY
+ HquKOW+HJ9JF1hlLmIEOToxDeZB22V2piGwFKnMgS1IXfEUMdXmMUGz1dp6aecpGB2wg
+ Whzd9JlwmpRNRQp12sFIhYuwSIj/r7BV6sNHQCxekTRGMGMHdNCw8z1D3li9SZmusffM
+ 3UfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767970603; x=1768575403;
+ d=1e100.net; s=20230601; t=1767970913; x=1768575713;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L0mHEJrgVZY8vvpOU0c7gFI7E7k1cI1lhD9dgspJojE=;
- b=cF0DJd6MX/BCeXgIOpqVwHyZr1o/pok58XtwpCCwAMjFKKVDwLfYemLo9034LnybHK
- JsotnyYA6/b5BJbn5k5VD6PdriVfBdRnJhxrR2RH4U+EHfc9YKemGihx2xLbBnmxLCp4
- 5O65DqlOsXWOJrioBuJOJmq/cjpFrBCqAETSDp+EF6HQwwES6BimZ1kQ7P1lyFvWTzND
- 1lLa74mYIPkR8PnL8zF1LSRBEPMxLbd3+VLomR4AtxVs3rFmuPINoYXI2i+Et/WYVmWl
- Nv8aNoj2+VzsFs26rJmWuMQ/YrfA5pKRpps69LgxZBjSFX4/PVIbHk8EQ8eeOzdcLsbn
- /FKg==
+ bh=3OmRdB2KSZAZ1bzTFk4iWzfuAfVEAloZNwSSRQo6bjQ=;
+ b=Nz4G6GRcgdvflGR28ZNMdVR/o73O/Un05ePuCjUX4DDAemVkFccnjDI7X/0uf5K5m7
+ 4yV+tNQIiRHE9ZeA7JORai95z1D29rfmrd0aeTWVa3O0J6dn38NepSlqMS34f6C0YYK+
+ R7QvP/o4DsqLe6i6ax6YZsxGFTZHVryIyUj4zDX3R8PCCgWEVm5/eSO9/gCu8jCaYYd9
+ Ds5YauF816ru9Q/g48Gxr4D5MakUR8ZIvTKlkNCEpmuIPV6c9BOcnf9ezJLJ8poDte2x
+ 14SFXenL/Mpb8etz6nmBIt/euetG+AGLUApB6uJ9u8FfYOQPEFYWI16NV99SFu2a7OT4
+ OGuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+tkKg0yALogxg8o8vGyXEl905i8pB7yWnbfI05CNKkH0l4RizQWw8DNBXz4v0n2Y+eDtpaWwxZU4g@nongnu.org
-X-Gm-Message-State: AOJu0YxkiiLeOh4gguJ6dP77RnU6hbMy1HTgFH7sZS/b+YkgASgDAcij
- wZcCCW7qVKexddT/1dhvjVer40wIILlkVcpZN2wYDl3g4qdv2z/YCDXqWcxVqY9T0aUpbvkuWB4
- XXuW/VCbUyxCg8Pk6VBn/0FzFGcN1aU/45q5Whfj27tJ8ci27SLWZIU0a
-X-Gm-Gg: AY/fxX4QA486EqRxPV4H41/zESDp1UlCvjuxiCGKgnJYJrEPA+maUMY/RhHZc9i4AaA
- NbH5h16GDC9heLRse01Aiv940ujskUH5t3cU3Hl55vsgtt+JBhIDqwqkN/ZaZLe7YN+XtF5vkGX
- Mdo8EP/HOBW94QQlanDpn7EClwtfReNSViV8aiNcgMuuQ31vOblEawkAiVGMS1YvQa9pbS3eFQr
- vU+9D+flNLdTMHI6cHQTGRgkdeTpiGEXyw7ZnoNsmkxafOtgtIByAyP9b8fboFTUE6qT2UXjDHJ
- 7CtOctUtjC778/QLuRMW+NlMWxnsEnLnCnhCbYgInJXOrtNAMXBlbjx+TfBdDmqoW72yXfVSd90
- wxGi3WWT4zk4GbvnbX6TiNEt48pmO3beNb0UT+SrhOl33xePa
-X-Received: by 2002:a05:6000:4287:b0:430:f74d:6e9f with SMTP id
- ffacd0b85a97d-432bcfd37b3mr17878780f8f.14.1767970603372; 
- Fri, 09 Jan 2026 06:56:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFbCNZvV0m/x9DvKtqS8/GUUGSOusC4M2iV7kpYJiGjYNPtMYk9Kx7DI1yFworcinG9DcmsXQ==
-X-Received: by 2002:a05:6000:4287:b0:430:f74d:6e9f with SMTP id
- ffacd0b85a97d-432bcfd37b3mr17878750f8f.14.1767970602900; 
- Fri, 09 Jan 2026 06:56:42 -0800 (PST)
+ AJvYcCUmMxjG7eRXosm4yEGRotVfQxhh48MwnNCT0eDjNaxaOQdrWA7GnJHz3Q/c2kqWOnxthVpFjDFfU8rR@nongnu.org
+X-Gm-Message-State: AOJu0YxOY2hGGl6xjf2KKiJobk35/WEIMNaO7g5PRUyo6VmtSORVanNg
+ om7g4tGetzOKzQvgkw6zqILN8WV7EeSpHzohmqBC/9a5J+DwXOrxLCmlIPRuTwhDDmeGEAz1yHF
+ uFNqnG4l7g1aTjQs+VRDxm+wZcf1tRXJtzzB4sMGPROutST36GawgoILy
+X-Gm-Gg: AY/fxX5EakkXqZaLjO291ioeOGEDa0H32XQt65glYCd5StnLTLL6FG31eT3gGpLUrpd
+ hq58+0D+3T4jduB6vv4gDE+x584d2ON8M/zaaGGuef+ipTGq24UHxjUSGubZFHWj5YcVS/ph0si
+ esGZb3s8abp2ZeAmb1V3jRvxCIFU77f8GYZIC99NnZh6JkOB1GdK6JOB6xD4kB41U7sF3UiI/W7
+ ofJ1Zjuhks1NwlUXEs0OE3aUuT++btNQXBYOggh9NSYbtAU4AsFL3yOFmwfGGeekmAdr6M/Gtmm
+ Omi3XHf5hkv8BlGXVYHkpQAkq72zy8KPrv/+WJxpIHY8OUtq8owUCGvfXZQOPp4fNWkjO3RhXz4
+ coBoNFI6z9KdnTfoMt5PTZCFgGV4cdB2pO2PUMQ7lJpaXuZsw
+X-Received: by 2002:a05:6000:2384:b0:42b:4185:e58a with SMTP id
+ ffacd0b85a97d-432c37758c0mr11707968f8f.14.1767970912851; 
+ Fri, 09 Jan 2026 07:01:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHw2M+xmrVKkpIJqpqGZydw9FJMxRpyQME3qh1WPhxZq5jlX1XrnwEYLHLdfIQzMQPhadGcMQ==
+X-Received: by 2002:a05:6000:2384:b0:42b:4185:e58a with SMTP id
+ ffacd0b85a97d-432c37758c0mr11707925f8f.14.1767970912346; 
+ Fri, 09 Jan 2026 07:01:52 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5ff0b2sm22837459f8f.42.2026.01.09.06.56.41
+ ffacd0b85a97d-432bd5df9c5sm23712915f8f.22.2026.01.09.07.01.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 06:56:42 -0800 (PST)
-Message-ID: <21e888b2-4051-481e-a384-cad4d1413e99@redhat.com>
-Date: Fri, 9 Jan 2026 15:56:41 +0100
+ Fri, 09 Jan 2026 07:01:50 -0800 (PST)
+Message-ID: <6ac8b1d3-9252-4e63-83b9-c92915a8b78c@redhat.com>
+Date: Fri, 9 Jan 2026 16:01:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 1/1] util/vfio-helper: Fix endianess in PCI config
@@ -144,7 +144,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  uVKe8BVz4atMOoktmt0GWTOC8P4=
 In-Reply-To: <20260105222029.2423-1-alifm@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -154,7 +154,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -179,79 +179,15 @@ On 1/5/26 23:20, Farhan Ali wrote:
 > qemu_vfio_pci_write_config().
 > 
 > Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+> ---
+>   util/vfio-helpers.c | 15 ++++++++++-----
+>   1 file changed, 10 insertions(+), 5 deletions(-)
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Applied v2 to vfio-next.
 
 Thanks,
 
 C.
-
-
-> ---
->   util/vfio-helpers.c | 15 ++++++++++-----
->   1 file changed, 10 insertions(+), 5 deletions(-)
-> 
-> v1 -> v2
-> v1 https://lore.kernel.org/all/20251217184253.1520-1-alifm@linux.ibm.com/
->   - Drop Philipe's r-b as code has changed.
->   - Do endian conversion in  qemu_vfio_pci_read_config() and
-> qemu_vfio_pci_write_config().
-> 
-> 
-> diff --git a/util/vfio-helpers.c b/util/vfio-helpers.c
-> index 44b457c442..5a4169d1b1 100644
-> --- a/util/vfio-helpers.c
-> +++ b/util/vfio-helpers.c
-> @@ -233,31 +233,36 @@ int qemu_vfio_pci_init_irq(QEMUVFIOState *s, EventNotifier *e,
->       return 0;
->   }
->   
-> -static int qemu_vfio_pci_read_config(QEMUVFIOState *s, void *buf,
-> +static int qemu_vfio_pci_read_config(QEMUVFIOState *s, uint32_t *buf,
->                                        int size, int ofs)
->   {
->       int ret;
-> +    uint32_t val_le;
->   
->       trace_qemu_vfio_pci_read_config(buf, ofs, size,
->                                       s->config_region_info.offset,
->                                       s->config_region_info.size);
->       assert(QEMU_IS_ALIGNED(s->config_region_info.offset + ofs, size));
->       ret = RETRY_ON_EINTR(
-> -        pread(s->device, buf, size, s->config_region_info.offset + ofs)
-> +        pread(s->device, &val_le, size, s->config_region_info.offset + ofs)
->       );
-> +
-> +    *buf = le32_to_cpu(val_le);
->       return ret == size ? 0 : -errno;
->   }
->   
-> -static int qemu_vfio_pci_write_config(QEMUVFIOState *s, void *buf, int size, int ofs)
-> +static int qemu_vfio_pci_write_config(QEMUVFIOState *s, uint32_t *buf, int size, int ofs)
->   {
->       int ret;
-> +    uint32_t val_le;
->   
-> +    val_le = cpu_to_le32(*buf);
->       trace_qemu_vfio_pci_write_config(buf, ofs, size,
->                                        s->config_region_info.offset,
->                                        s->config_region_info.size);
->       assert(QEMU_IS_ALIGNED(s->config_region_info.offset + ofs, size));
->       ret = RETRY_ON_EINTR(
-> -        pwrite(s->device, buf, size, s->config_region_info.offset + ofs)
-> +        pwrite(s->device, &val_le, size, s->config_region_info.offset + ofs)
->       );
->       return ret == size ? 0 : -errno;
->   }
-> @@ -296,7 +301,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
->   {
->       int ret;
->       int i;
-> -    uint16_t pci_cmd;
-> +    uint32_t pci_cmd;
->       struct vfio_group_status group_status = { .argsz = sizeof(group_status) };
->       struct vfio_iommu_type1_info *iommu_info = NULL;
->       size_t iommu_info_size = sizeof(*iommu_info);
 
 
