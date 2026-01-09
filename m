@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D74D1A613
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 12:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57943D1A613
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 13:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veBxr-0006x6-UT; Fri, 09 Jan 2026 07:51:39 -0500
+	id 1veC6i-0001Nh-RQ; Fri, 09 Jan 2026 08:00:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veBxn-0006wH-Ak
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:51:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veC6d-0001MP-VJ
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:00:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veBxl-0000Wh-Lp
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:51:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veC6X-0002xK-BY
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:00:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767963092;
+ s=mimecast20190719; t=1767963635;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hKAOQBl4Wv4To7mhUu6OsZ/Jtvw7S2ASbxbwos5UT20=;
- b=TVfdWAQClClOcnS8PwWu6SbrGSN/rQfh+q2qtW4W0qQC3M4l+Ic2DSVWlIOVmZgYQ0nyCN
- IC7CO+lUsA0pzhJFaXsJCVI6kLI2LpqeyZBxT8FmUL230RRmLroopAMV3H12KubmrI9e0j
- 8JJr+BpNBZ+6Mi76vGVJuWJ0ShEG5yA=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0Q6sgWEMAOYhktsAS6QyU6Z296K0kxcSAAgks3nL9Dg=;
+ b=ZWQwUsHGHZkYh9MF+ZHl4jXCNO1qe1d3wLIBaLT/9EKFqkvk9LN2tqz2YStOXypokwoB7A
+ s9Ag1maIr2TgUxEH5IX43+iCcM0aGpdxV/wLQvSMoo99W1kt39TVr4u98uZkxpaaESiafx
+ u1Vi91X4Bfi2i65nAWCbG4VFzJo5r/8=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-GerO6sk5MZa24baBDAdPAw-1; Fri, 09 Jan 2026 07:51:31 -0500
-X-MC-Unique: GerO6sk5MZa24baBDAdPAw-1
-X-Mimecast-MFC-AGG-ID: GerO6sk5MZa24baBDAdPAw_1767963090
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-b7d282ac8aaso609897466b.2
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 04:51:30 -0800 (PST)
+ us-mta-140-8QicU1BfPn64H8-u8LkyRw-1; Fri, 09 Jan 2026 08:00:33 -0500
+X-MC-Unique: 8QicU1BfPn64H8-u8LkyRw-1
+X-Mimecast-MFC-AGG-ID: 8QicU1BfPn64H8-u8LkyRw_1767963633
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b802d6ed5b0so898845166b.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 05:00:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767963090; x=1768567890; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767963632; x=1768568432; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=hKAOQBl4Wv4To7mhUu6OsZ/Jtvw7S2ASbxbwos5UT20=;
- b=Kimzt12VMoUmp3yE6wDvMtdUL/z0eE6wXqTESNrIBVtH+mtEcORPc+DHZcAUTVqchy
- y6d36U319+E4MjkNJvVH1xEdBZymP4BRGBO9icSNZU/Nd+/7hkIuOfk0mgJkUKkoJuaF
- MOmtdJKvDMh5psvJjVsHA0cRSqdIuiB1n6mTLYVS1HfEtMyHaVECc4nzS9vyN3Dct6Bq
- INUHtY7FBPd+9s8b4YjYVx9f07g3eDD+8LJo+Pk0CJCQSThMWYaj391eungOyFN1UQho
- Ggym5NCT4l/J1NbzGCQ4e5VJ/ZOY1GfqwSl80FPG1/8L2s2DvSDsBQPi/UXUgSLQunzi
- CN5A==
+ bh=0Q6sgWEMAOYhktsAS6QyU6Z296K0kxcSAAgks3nL9Dg=;
+ b=EqhcqLdKFwanj7+3oYmQZkwZoJ0DoTrUC/8p+YEAwGY5tv/TxobmVxcdTFvOAe5Yze
+ 04/j0BqfAZkOXR4ZhhZ5AJBLgMRE+SQrWPQe/Jgq6feZ0eByKPRg5ww/nXnhqJPJaUd0
+ 56UCqgBNfTW3O+JjTzaGnlISE5NfZwknbfLdFNy4NMmXE3ZmrpqL4mCP+lnxERKMDrma
+ GDKTTNxhuWZIoeF9Bfd9txvslmx5EW90dD/Cu+ddklv2W9u4B20vgi8q+Bvz/Ebpqq58
+ b7+gCF59SCteG/pVRuI7heh64UfoOwgpoOyupTbMY5wNJLeNfZS5q4WZBbGL5WYku1pl
+ sv6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767963090; x=1768567890;
+ d=1e100.net; s=20230601; t=1767963632; x=1768568432;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hKAOQBl4Wv4To7mhUu6OsZ/Jtvw7S2ASbxbwos5UT20=;
- b=EbPir5P5HVQgTdKWmWUafmIVvX6Z+kiZiMpmAEKTr29ZNEIQQ7ijcJ4gDm6O+mLcLP
- HojLE4AWeeJ+Ry+hzShZPoKCc4RsrR6VH6o5iBo6NCo4+I5AEiMOnvtcaG9SQkDWSI2K
- utKnVK2F0Q8EZDRwXp6D8SM4q5mfgMlZVL5NyWs18/NeWcGilj+jcnPBMii7tiSYuS7g
- u4Y30JPLkG4pV0ch2ZQhvT1cWo9+OcUV3P/1ZaSkNFzky3DrvfoiT4sISQWYBKzwg980
- TbZxz86PEY48tLrQ9WkOctecsvwGJFUTJL3aEPIaTHgolxiGG8WBs8qvQ4wHdFe95yUL
- eJXA==
+ bh=0Q6sgWEMAOYhktsAS6QyU6Z296K0kxcSAAgks3nL9Dg=;
+ b=TC7rwv6jVXVcjMFXJ+OVzGWPT5z6txEZQZISJ8pwGWfUacbcgvCUNaHPFyX1n4alPu
+ 45E9A/UsipBNUOk5l9f0UNqG0CNod2a+c3AYBP4uKOIUVL1tiVgxQdZWxkk7Z5VHq7s1
+ GIt3Jr/5ys7U14vi9C5tIunn2KTVW/amMTUQG+Le4rHWUSm6pXsmej1fY7gmoQLG0dcF
+ 5O1/WyJUj+4IDMAzyYi72fzsgp7LT7cyYXKBtjbGixLwCXTHDrj6y4HElrJujC//mKdP
+ 778go4JYRpSz4cPdbYBb6/X25SXcFaHUgumv4YPOtgfjn2E+oD266Sp00yLeC1eUfFB7
+ KHnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEzqZYYeQp6lB/lSZ6IYcm4xPBr6uPUFL8lAI2ez179a4LkR9L7+k11ml00IcJMGxtOvxqfcGg313h@nongnu.org
-X-Gm-Message-State: AOJu0YwoiDxtcfSYozMPICYZHCKBEbYZsKeI0//DorKYTH5q+S9vsz2h
- 5RL5WTwu0NFud/TJurDTTwIn0BbK1Xb80YTWHLbcHlxbkcD1pDoI3Xw194lbuhSCrbhdjCfLh5Z
- pePLIf6SLtFlBXqR4ys5IulA/y82r1sfxFcQrzqo0DDwT/nYdyq7/cACx
-X-Gm-Gg: AY/fxX622F+oLXk3GMvnxcUh/uyeJFS+wuyx6Ggmengg/e3rlCiV3U3bLkQ0DFkvrwA
- jjo7e29Kbe9+eJCFOn3rAkFs6aUWjpgGUpUUMKMqgvF9C31UyiEl2JQ4RL1R4FNb6949jqea3E5
- rOLCYqi7WSrshwUW5lV4HNLUE+ohSWEYWTd827wivN7rRH4BHkUpOd7Btv+CvxkH2BnZn8/zlKn
- HBPmeZhHUxywNgeJxGAlmTjm87QVmYKG0zGhc5Y1AUL7WFM94+Ng31g38kjThzvilnmpm+r1AFU
- 3akOJ1wlhAzImjBiZvCMpXX1g39muTiCiodJfNtt3RV0ZaAHsAAwG+5XB1ABJdEx1JzfeJjWlkR
- 83MdHeTc=
-X-Received: by 2002:a17:906:9fd1:b0:b83:1433:78de with SMTP id
- a640c23a62f3a-b8444c4d398mr984931566b.12.1767963089846; 
- Fri, 09 Jan 2026 04:51:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHcsoCJssoVYGsV33f6fBe8y8A/A5wwXlMrZSkxy9pY54wENHPUUO5gUwqQVIue6gQFQaxOXg==
-X-Received: by 2002:a17:906:9fd1:b0:b83:1433:78de with SMTP id
- a640c23a62f3a-b8444c4d398mr984927566b.12.1767963089443; 
- Fri, 09 Jan 2026 04:51:29 -0800 (PST)
+ AJvYcCWyJmow0Gkm+WKhFChseyP9fgKBSyM5TFh1KRSxnCJauBQEm/VNZAP+l1HPBQIuGn5tVX2re7w2ik63@nongnu.org
+X-Gm-Message-State: AOJu0Yznc9rP6PiMi1eQ+07zi5vskDhM2ZCWD4/YK5ufp9YkQm4QiVJc
+ yn6/GSWXNsOfhBzKcOc77bLnzAKyLz6yMDNEDwkZMptG35FoZyQL5WN9nfpTd2CMtMLhxQn3dBq
+ P9dLY0zEUX4WrkovK2h/JahR1mXMYb/WV6o4O2eglZ3f8mJ7vUxKHi2zz
+X-Gm-Gg: AY/fxX6zXmCuxRuLePEO4uwc+V4lOeIe1xF6LuDanh+dQgX1GMiLhoKLAsP7V7Kh7vc
+ cxjeQaNUPgTYqI1MMoM7bUPNnszBGGiBiI9AGdUUbIPWGcXcl0/mjK5gSp9tYbtkbP4xVwbkZ8z
+ GTizzRuKMunxldFqLt4d+1EWl7H+69hg8z6BR6iXkrwNXoO23iwdSJvdrP3akrphgeXEtoJo0So
+ XSETUME3EpyIvEbZASWUY8eyF8hdlKMSRDGaUpwgtgNS9aU7f91HzLYKzs3Snb4e023xtJLpPTv
+ O2ynTgzn2fwX0Gs6kF0ry3xCxnEWzTgLAyLK60HuzdIsaBPoOWZJwzDZFyq4VamJt5KaPX9cHLp
+ taWtp7pk=
+X-Received: by 2002:a17:907:3c82:b0:b73:9222:6a64 with SMTP id
+ a640c23a62f3a-b8444c5a808mr1108914666b.3.1767963632392; 
+ Fri, 09 Jan 2026 05:00:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHo29tgSb4FymxZom+1AoeBR3TNlFWFoW6pm/NU056CBF07CsU2bVg9GxVlldoJJru1iSTuwQ==
+X-Received: by 2002:a17:907:3c82:b0:b73:9222:6a64 with SMTP id
+ a640c23a62f3a-b8444c5a808mr1108910266b.3.1767963631888; 
+ Fri, 09 Jan 2026 05:00:31 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b842a230db0sm1123912866b.2.2026.01.09.04.51.28
+ a640c23a62f3a-b842a4cff3fsm1085328266b.33.2026.01.09.05.00.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 04:51:29 -0800 (PST)
-Message-ID: <4b8fa7be-b16e-495d-a7c5-2d3076283f9e@redhat.com>
-Date: Fri, 9 Jan 2026 13:51:27 +0100
+ Fri, 09 Jan 2026 05:00:31 -0800 (PST)
+Message-ID: <36b96f1b-2f85-46c2-b2ad-159838a428b2@redhat.com>
+Date: Fri, 9 Jan 2026 14:00:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 11/29] crypto/x509-utils: Add helper functions for DIAG
- 508 subcode 1
+Subject: Re: [PATCH v7 12/29] s390x/diag: Implement DIAG 508 subcode 1 for
+ signature verification
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
@@ -98,7 +98,7 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
  iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
 References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-12-zycai@linux.ibm.com>
+ <20251208213247.702569-13-zycai@linux.ibm.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -143,17 +143,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251208213247.702569-12-zycai@linux.ibm.com>
+In-Reply-To: <20251208213247.702569-13-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -172,19 +172,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/12/2025 22.32, Zhuoying Cai wrote:
-> Introduce helper functions to support signature verification required by
-> DIAG 508 subcode 1:
+> From: Collin Walling <walling@linux.ibm.com>
 > 
-> qcrypto_pkcs7_convert_sig_pem() – converts a signature from DER to PEM format
-> qcrypto_x509_verify_sig() – verifies the provided data against the given signature
+> DIAG 508 subcode 1 performs signature-verification on signed components.
+> A signed component may be a Linux kernel image, or any other signed
+> binary. **Verification of initrd is not supported.**
 > 
-> These functions enable basic signature verification support.
+> The instruction call expects two item-pairs: an address of a device
+> component, an address of the analogous signature file (in PKCS#7 DER format),
+> and their respective lengths. All of this data should be encapsulated
+> within a Diag508SigVerifBlock.
 > 
+> The DIAG handler will read from the provided addresses
+> to retrieve the necessary data, parse the signature file, then
+> perform the signature-verification. Because there is no way to
+> correlate a specific certificate to a component, each certificate
+> in the store is tried until either verification succeeds, or all
+> certs have been exhausted.
+> 
+> A return code of 1 indicates success, and the index and length of the
+> corresponding certificate will be set in the Diag508SigVerifBlock.
+> The following values indicate failure:
+> 
+> 	0x0102: no certificates are available in the store
+> 	0x0202: component data is invalid
+> 	0x0302: PKCS#7 format signature is invalid
+> 	0x0402: signature-verification failed
+> 	0x0502: length of Diag508SigVerifBlock is invalid
+> 
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   crypto/x509-utils.c         | 108 ++++++++++++++++++++++++++++++++++++
->   include/crypto/x509-utils.h |  41 ++++++++++++++
->   2 files changed, 149 insertions(+)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
