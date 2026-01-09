@@ -4,81 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B40D232DD
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 04:57:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D235FD232DF
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 05:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve4YG-0000z1-El; Thu, 08 Jan 2026 23:56:44 -0500
+	id 1ve56o-0004ay-3y; Fri, 09 Jan 2026 00:32:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1ve4YF-0000xx-4s
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 23:56:43 -0500
-Received: from k57.kb8c70eb.use4.send.mailgun.net ([204.220.184.57])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ve56l-0004TY-VV
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:23 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1ve4YC-0004SS-7d
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 23:56:42 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- a7d9549f5e0afe365d1f106a69b0091329a6d4c01905c8ad1fd778b27cfb5d69 with SMTP id
- 69608a85166005189bb4499b; Fri, 09 Jan 2026 04:56:37 GMT
-X-Mailgun-Sending-Ip: 204.220.184.57
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1767934596;
- bh=dxBJcdCjwu2G8ZhYDSL33ykLTOY+DWvDOB/kFB4Cp7E=;
- h=Message-ID:Date:MIME-Version:Subject:X-Mailgun-Dkim:From:To:
- References:In-Reply-To:Content-Type:Content-Transfer-Encoding:From:
- Reply-to:Subject:Date:Message-id:To:Cc:Mime-version:Content-type:
- Content-transfer-encoding:In-reply-to:References;
- b=mX7cKTAsqV5KBKXyRJJmlVvbp4xwKa8yEH1NOWby8fLaI1CtNQcfci55zQp+Go1cI
- VGafJBTMAHohwEhzng2LcS7jP8iw+x2iOAc5LYeio75m877LGwDRv/sp98go0Ok21K
- XyKFJEGeGWhoj3nDmRODx1znhN83By0nai6lXP+VHWnH6xdulx3dFXF6gD9b+YqXfn
- +lqHHMQsXtPUAvRYc2EfxuZ0lPCPkjAy/oHRgP0rJYvY7b6cRyxFGHwM/wph24Mi0H
- dDC4bca0IgfTxAyNd5O8ck6cT7UHa7k9E6QCj4CqRWabiPoR/LJe8HzlVKO819Cfte
- 68PLatBSNjxNw==
-Message-ID: <1a2914e0-8a13-430f-b535-54ccdffb6229@yodel.dev>
-Date: Thu, 8 Jan 2026 22:56:35 -0600
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ve56j-0003jM-SY
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:23 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-34ccdcbe520so1320371a91.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767936740; x=1768541540; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GsjS+Jk8Rj0Zgp7G4n745Kx7rx1uYWelRSzcJlOLJQg=;
+ b=XQpfz6RUR873WXSbx2UbxzSzFcalkDiJBSWL3xuzdXJmc3HkDCRX84y6lH/ViiGbsh
+ aSh/3lQY2iAucKRC54Kx9EcnXvAZSrodLpU1B+xqG/TCuUofY4M7BWO6SxItmHNnOJ2i
+ pAmO5BOJE3keW5MkB2HD5DugQHE9O16+hGbuXf1gn0B2c/UK/WuBk2z5BPRXzZcviDy0
+ H+fZtehbtrZI7kzqmeq/pJXonRY/pdMT6Ku9h/pRSB3uMIWX+YU7WFxsaufwrjP84bU3
+ g1EMbYq4PR6eXraMYf74JMMV4Q8VnqBPDiclhsjr2baS2IbTU1ILnzUpRuToao91EpPz
+ UVwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767936740; x=1768541540;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GsjS+Jk8Rj0Zgp7G4n745Kx7rx1uYWelRSzcJlOLJQg=;
+ b=F+sKFNH7jJba5C0dsI4UVilY4joTWZHkXnp/h4m3mPqxydFWbVxuBZ+V5VbD6wGciH
+ UJe+45GqGcwQ4P1B61OqlhLXVjVszxPsz2O2el6fnZ0019xwdrDD9ivykoyGuQE1ORT1
+ 3OKTdGUI9n4M/h+xiZ6ayP8lWekFsHd82+iGbXfslOpQIasULDrJ7z7m+Uf8sivTUbH5
+ G9GsvKR+sKTuVywr4fYP4EH75PKYeTzlbnVH0rg9Jz6LV4+HfpIdnpOObIeLR+9pOrTs
+ Isdc244cPhGLCyqjPoaTVr+ZcJZtwLJM9lKSKAEmFFkTG0+4/AQIe9bYI4DPVZn5G1Uq
+ DxFQ==
+X-Gm-Message-State: AOJu0YwCI5GX1jyn+ds1yq6RNWTPFd3GFpHglpDw9vQU+4dZD72VNf66
+ IxIqUGUCmcU/isoRm0PgeviU2i0XiLQTMzXPy04sNg3mgysW8qe/mrO2BUBjWYgH9YyY+zLBt+Q
+ pt6ZU
+X-Gm-Gg: AY/fxX6whE4PMO2irVTTeKeXztdcieqZ0QKfkh+O0Zt6+uimZvP39fVkIoQY6ULzfTT
+ 3AKX5Qj6QZirGcEtwftK1ryw89cm7UFHdjrcfhVPQoljN+LIDfBMAjhDiduMtiVgObkQ0yGbhIQ
+ 3w6goaXlxll+8FXKCuEnYhXHqxBl0O1OwD1uuX2uhq/2WEAi/DeOjIrxw5JnzmGuNjrTn8D3LrZ
+ v2Z5ddoUQl7O+KwX34Nj1ZO7Fv3oU0Bd9w53VTGcXFIOBELOsL2l/+XxGnm6ZU3Stl5By0MiEC2
+ te+b9gYT565agKD5ZqSltW6QOcfkGoMR4/KBnO7fmfBFwjaYTBWK4K8XY1QQkzbMRKr9dth0fMh
+ 0VlWUAKrj8sBUnVOQdzsiNjOMyZKEJ0bI+u5NjQVSdn/TyUEy9gjNiSYXh0guTXSqpFWlMlKm/O
+ G0pc6b5UjsH53qQYgL6X/VV949ag9nlUWxVMNi/AOZz83X9h6dD/e2jTgxFZNas5tEOipIzjwWO
+ A0=
+X-Google-Smtp-Source: AGHT+IGgkSqceuMHLLbp1hiJxUX9hIWbYm+s8dp2eTf2+oVICLByGxUopI2+KWH4ZXHDj9qySQ2gAw==
+X-Received: by 2002:a17:90b:314c:b0:340:b501:7b83 with SMTP id
+ 98e67ed59e1d1-34f68c019c2mr7480998a91.10.1767936737782; 
+ Thu, 08 Jan 2026 21:32:17 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Jan 2026 21:32:17 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 14/29] include/tcg/tcg-op.h: introduce TARGET_ADDRESS_BITS
+Date: Thu,  8 Jan 2026 21:31:43 -0800
+Message-ID: <20260109053158.2800705-15-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
+References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Subject: Re: [RFC PATCH] tests/functional/x86_64: Add vhost-user-bridge test
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20251230002604.113632-1-yodel.eldar@yodel.dev>
- <6157618c-5454-457e-b65e-d9c16c428aaf@redhat.com>
- <93fe1ce9-6dc4-4c19-840d-9b1ad613c31c@yodel.dev>
- <30844b70-218e-41f5-a033-9956901d9189@redhat.com>
- <40108175-e1aa-4f51-b395-4444d5e8b885@yodel.dev>
- <4b3ab72d-381b-4e9f-9fd7-03fbd94ce1fb@yodel.dev>
-Content-Language: en-US
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <4b3ab72d-381b-4e9f-9fd7-03fbd94ce1fb@yodel.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.57;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k57.kb8c70eb.use4.send.mailgun.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,287 +108,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/01/2026 13:55, Yodel Eldar wrote:
-> On 08/01/2026 00:28, Yodel Eldar wrote:
->> On 07/01/2026 23:52, Thomas Huth wrote:
->>> On 07/01/2026 18.32, Yodel Eldar wrote:
->>>>
->>>> On 06/01/2026 22:52, Thomas Huth wrote:
->>>>> On 30/12/2025 01.25, Yodel Eldar wrote:
->>>>>> This introduces a functional test of vhost-user-bridge.
->>>>>>
->>>>>> The test runs vhost-user-bridge and launches a guest VM that connects
->>>>>> to the internet through it. The test succeeds if and only if an 
->>>>>> attempt
->>>>>> to connect to a hard-coded well-known URL succeeds.
->>>>>>
->>>>>> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
->>>>>> ---
->>>>>>
->>>>>> This patch introduces a functional test of vhost-user-bridge by
->>>>>> automating the testing described in its initial commit, 8e3b0cbb72,
->>>>>> with adjustments like using hubports (formerly the vlan parameter) 
->>>>>> and
->>>>>> memfd for the memory backend; hugepages are also omitted to avoid
->>>>>> requiring root privileges on the host.
->>>>>>
->>>>>> The test configures networking within the guest by invoking 
->>>>>> udhcpc, then
->>>>>> makes an http request via wget to a well-known URL, example.org, that
->>>>>> has a low risk of requiring https for connections (a limitation of 
->>>>>> the
->>>>>> the test). An assert on the retcode of wget determines success/ 
->>>>>> failure.
->>>>>>
->>>>>> Please let me know if there are objections to the use of wget's 
->>>>>> retcode
->>>>>> as the test's condition; determining wget success through its 
->>>>>> output is
->>>>>> straightforward ("remote file exists"), but out of concern of some
->>>>>> unknown failure message (besides "bad address") locking up the test,
->>>>>> I've resorted to checking the retcode instead; perhaps, this violates
->>>>>> some convention?
->>>>>>
->>>>>> Also, I figured checking for memfd support on the host was 
->>>>>> unnecessary
->>>>>> in 2026 for the intended users of the test, but perhaps not?
->>>>>>
->>>>>> The guest's kernel contains an integrated initramfs and was built 
->>>>>> with
->>>>>> buildroot; an attempt to ensure bit-for-bit reproducibility was 
->>>>>> made by
->>>>>> building it via Containerfile based on a snapshot container image and
->>>>>> use of the BR2_REPRODUCIBLE option of buildroot, but the latter 
->>>>>> feature
->>>>>> is "experimental," so future builds may differ slightly (though the
->>>>>> image in the repo will be left untouched). The image and associated
->>>>>> build files are hosted on my personal account here:
->>>>>>     https://github.com/yodel/vhost-user-bridge-test
->>>>>> and will continue to be well into the future, but if there's some 
->>>>>> other
->>>>>> preferred location for the asset, please let me know?
->>>>>>
->>>>>> Lastly, special thanks to Cédric for inspiring me to write the 
->>>>>> test in
->>>>>> "<11454796-30d2-4a57-85a5-d42ff0dce2e6@redhat.com>".
->>>>>>
->>>>>> Thanks,
->>>>>> Yodel
->>>>>>
->>>>>>   .../x86_64/test_vhost_user_bridge.py          | 124 ++++++++++++ 
->>>>>> + + ++++
->>>>>>   1 file changed, 124 insertions(+)
->>>>>>   create mode 100755 tests/functional/x86_64/ 
->>>>>> test_vhost_user_bridge.py
->>>>>>
->>>>>> diff --git a/tests/functional/x86_64/test_vhost_user_bridge.py b/ 
->>>>>> tests/ functional/x86_64/test_vhost_user_bridge.py
->>>>>> new file mode 100755
->>>>>> index 0000000000..61afdbceec
->>>>>> --- /dev/null
->>>>>> +++ b/tests/functional/x86_64/test_vhost_user_bridge.py
->>>>>> @@ -0,0 +1,124 @@
->>>>>> +#!/usr/bin/env python3
->>>>>> +#
->>>>>> +# Copyright (c) 2025 Software Freedom Conservancy, Inc.
->>>>>> +#
->>>>>> +# Author: Yodel Eldar <yodel.eldar@yodel.dev>
->>>>>> +#
->>>>>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>>>>> +"""
->>>>>> +Test vhost-user-bridge (vubr) functionality:
->>>>>> +
->>>>>> +    1) Run vhost-user-bridge on the host.
->>>>>> +    2) Launch a guest VM:
->>>>>> +        a) Instantiate a unix domain socket to the vubr-created path
->>>>>> +        b) Instantiate a vhost-user net backend on top of that 
->>>>>> socket
->>>>>> +        c) Expose vhost-user with a virtio-net-pci interface
->>>>>> +        d) Instantiate UDP socket and user-mode net backends
->>>>>> +        e) Hub the UDP and user-mode backends
->>>>>> +    3) Run udhcpc in the guest to auto-configure networking.
->>>>>> +    4) Run wget in the guest and check its retcode to test 
->>>>>> internet connectivity
->>>>>> +
->>>>>> +The test fails if wget returns 1 and succeeds on 0.
->>>>>> +"""
->>>>>> +
->>>>>> +import os
->>>>>> +import subprocess
->>>>>> +from qemu_test import Asset, QemuSystemTest, which
->>>>>> +from qemu_test import exec_command_and_wait_for_pattern
->>>>>> +from qemu_test import is_readable_executable_file
->>>>>> +from qemu_test import wait_for_console_pattern
->>>>>> +from qemu_test.ports import Ports
->>>>>> +
->>>>>> +class VhostUserBridge(QemuSystemTest):
->>>>>> +
->>>>>> +    ASSET_KERNEL_INITRAMFS = Asset(
->>>>>> +        "https://github.com/yodel/vhost-user-bridge-test/raw/ 
->>>>>> refs/ heads/main/bzImage",
->>>>>> + "3790bf35e4ddfe062425bca45e923df5a5ee4de44e456d6b00cf47f04991d549")
->>>>>> +
->>>>>> +    def configure_vm(self, ud_socket_path, lport, rport):
->>>>>> +        kernel_path = self.ASSET_KERNEL_INITRAMFS.fetch()
->>>>>> +
->>>>>> +        self.require_accelerator("kvm")
->>>>>> +        self.require_netdev("vhost-user")
->>>>>> +        self.require_netdev("socket")
->>>>>> +        self.require_netdev("hubport")
->>>>>> +        self.require_netdev("user")
->>>>>> +        self.require_device("virtio-net-pci")
->>>>>> +        self.set_machine("q35")
->>>>>> +        self.vm.set_console()
->>>>>> +        self.vm.add_args(
->>>>>> +            "-cpu",      "host",
->>>>>> +            "-accel",    "kvm",
->>>>>> +            "-kernel",   kernel_path,
->>>>>> +            "-append",   "console=ttyS0",
->>>>>> +            "-smp",      "2",
->>>>>> +            "-m",        "128M",
->>>>>> +            "-object",   "memory-backend-memfd,id=mem0,"
->>>>>> +                         "size=128M,share=on,prealloc=on",
->>>>>> +            "-numa",     "node,memdev=mem0",
->>>>>> +            "-chardev", f"socket,id=char0,path={ud_socket_path}",
->>>>>> +            "-netdev",   "vhost- 
->>>>>> user,id=vhost0,chardev=char0,vhostforce=on",
->>>>>> +            "-device",   "virtio-net-pci,netdev=vhost0",
->>>>>> +            "-netdev",  f"socket,id=udp0,udp=localhost:{lport},"
->>>>>> +                        f"localaddr=localhost:{rport}",
->>>>>> +            "-netdev",   "hubport,id=hub0,hubid=0,netdev=udp0",
->>>>>> +            "-netdev",   "user,id=user0",
->>>>>> +            "-netdev",   "hubport,id=hub1,hubid=0,netdev=user0"
->>>>>> +        )
->>>>>> +
->>>>>> +    def assemble_vubr_args(self, vubr_path, ud_socket_path, 
->>>>>> lport, rport):
->>>>>> +        vubr_args = []
->>>>>> +
->>>>>> +        if (stdbuf_path := which("stdbuf")) is None:
->>>>>> +            self.log.info("Could not find stdbuf: vhost-user- 
->>>>>> bridge "
->>>>>> +                          "log lines may appear out of order")
->>>>>> +        else:
->>>>>> +            vubr_args += [stdbuf_path, "-o0", "-e0"]
->>>>>> +
->>>>>> +        vubr_args += [vubr_path, "-u", f"{ud_socket_path}",
->>>>>> +                      "-l", f"127.0.0.1:{lport}", "-r", 
->>>>>> f"127.0.0.1: {rport}"]
->>>>>> +
->>>>>> +        return vubr_args
->>>>>> +
->>>>>> +    def test_vhost_user_bridge(self):
->>>>>> +        prompt = "~ # "
->>>>>> +
->>>>>> +        vubr_path = self.build_file("tests", "vhost-user-bridge")
->>>>>> +        if is_readable_executable_file(vubr_path) is None:
->>>>>> +            self.skipTest("Could not find a readable and 
->>>>>> executable "
->>>>>> +                          "vhost-user-bridge")
->>>>>> +
->>>>>> +        with Ports() as ports:
->>>>>> +            sock_dir = self.socket_dir()
->>>>>> +            ud_socket_path = os.path.join(sock_dir.name, "vubr- 
->>>>>> test.sock")
->>>>>> +            lport, rport = ports.find_free_ports(2)
->>>>>> +
->>>>>> +            self.configure_vm(ud_socket_path, lport, rport)
->>>>>> +
->>>>>> +            vubr_log_path = self.log_file("vhost-user-bridge.log")
->>>>>> +            self.log.info("For the vhost-user-bridge application 
->>>>>> log,"
->>>>>> +                         f" see: {vubr_log_path}")
->>>>>> +
->>>>>> +            vubr_args = self.assemble_vubr_args(vubr_path, 
->>>>>> ud_socket_path,
->>>>>> +                                                lport, rport)
->>>>>> +
->>>>>> +            with open(vubr_log_path, "w") as vubr_log, \
->>>>>> +                 subprocess.Popen(vubr_args, 
->>>>>> stdin=subprocess.DEVNULL,
->>>>>> +                                  stdout=vubr_log, 
->>>>>> stderr=subprocess.STDOUT):
->>>>>> +                self.vm.launch()
->>>>>> +
->>>>>> +                wait_for_console_pattern(self, prompt)
->>>>>> +                exec_command_and_wait_for_pattern(self, "udhcpc - 
->>>>>> nt 1", prompt)
->>>>>> +                exec_command_and_wait_for_pattern(self,
->>>>>> +                    "wget -qT 2 --spider example.org", prompt)
->>>>>
->>>>> If you've got python in the guest, you could maybe also do it the 
->>>>> other way round and host a httpd server in the guest, and download 
->>>>> something to the host. See check_http_download in tests/functional/ 
->>>>> qemu_test/ linuxkernel.py for the helper function. That way you 
->>>>> don't depend on any external host.
->>>>>
->>>>>   Thomas
->>>>>
->>>>
->>>> Thanks for the suggestion and that gem of a helper; I had missed that
->>>> module when going over the framework.
->>>>
->>>> I switched to using a ping pattern and checking vhost-user-bridge's log
->>>> for the payload, but I don't like how brittle that is, because even
->>>> though the log prints are hard-coded on right now, they might not be
->>>> later, so having the guest serve a file's a welcome option, although 
->>>> the
->>>> guest currently lacks python (and just about everything else).
->>>
->>> I never tried, but maybe it's also possible the other way round: Use 
->>> python on the host to simulate a httpd server, and then use wget in 
->>> the guest to download a file from the host?
->>>
->>
->> Thread on an HTTPServer with a SimpleHTTPRequestHandler is what I had in
->> mind, too, for guest downloading from host.
->>
->> For host downloading from guest, I went with check_http_download that
->> you mentioned, but I was wondering if we could pull it up into
->> QemuSystemTest? I've got the test inheriting from LinuxKernelTest now,
->> but it's not exactly "testing the boot process of a Linux kernel" as in
->> the class description in its header.
->>
->>> Another idea, if you happen to have a "tftp" binary in the guest, use 
->>> that to download a file from the built-in tftpd server from QEMU, see 
->>> e.g. do_xmaton_le_test in tests/functional/microblaze/ 
->>> test_s3adsp1800.py as an example.
->>>
-> 
-> This would have greatly simplified the test, but unfortunately even
-> though the tftp request can be seen in the vhost-user-bridge log, the
-> transfer of the file appears to bypass the bridge as it goes to the
-> guest.
-> 
-> Yodel
-> 
+This define will be used to replace TARGET_LONG_BITS in tcg-op-*
+headers. The goal here is to allow a compilation unit to set explicitely
+which variant of the arch it's targeting (32 vs 64 bits).
 
-Sorry about the confusion, but tftp does go through the bridge after
-all: vhost-user-bridge logs TX but not RX, so when I didn't see the data
-in the log, I thought that meant the tftp feature of the user-mode
-backend achieved transfer via some shortcut.
-In fact, when the guest connects to an http server on the host, the
-request is also logged and the data is not, like tftp, but I must have
-mistaken seeing the data with the http transfer (probably when going the
-other direction where host downloads from guest), hence the wrong
-shortcut assumption.
-Anyway, I've added an RX iov_hexdump to vhost-user-bridge.c and all is
-visible now.
+By default, we simple let it defined as TARGET_LONG_BITS, so existing
+code does not need to be changed, and we can progressively convert new
+files.
 
-Thanks,
-Yodel
+target/arm/tcg/* files are cleanly splitted between 32 and 64 bits (with
+some TARGET_AARCH64 defines). For other arch, this is a work that will
+have to be done before converting them.
 
->>
->> I will definitely check this out tomorrow; thanks for telling me about
->> it, and for all of your suggestions. Could I add a Suggested-by?
->>
->> Yodel
->>>   Thomas
->>>
->>>
->>
->>
-> 
-> 
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/tcg/tcg-op-address-bits.h | 21 +++++++++++++++++++++
+ include/tcg/tcg-op-gvec.h         | 11 +++--------
+ include/tcg/tcg-op.h              | 22 +++++++---------------
+ 3 files changed, 31 insertions(+), 23 deletions(-)
+ create mode 100644 include/tcg/tcg-op-address-bits.h
+
+diff --git a/include/tcg/tcg-op-address-bits.h b/include/tcg/tcg-op-address-bits.h
+new file mode 100644
+index 00000000000..71e9de65280
+--- /dev/null
++++ b/include/tcg/tcg-op-address-bits.h
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#ifndef TCG_OP_ADDRESS_BITS
++#define TCG_OP_ADDRESS_BITS
++
++#ifdef COMPILING_PER_TARGET
++ #include "exec/target_long.h"
++ #ifndef TARGET_ADDRESS_BITS
++  #define TARGET_ADDRESS_BITS TARGET_LONG_BITS
++ #endif
++#else
++ #ifndef TARGET_ADDRESS_BITS
++  #error TARGET_ADDRESS_BITS must be defined for current file
++ #endif
++#endif /* COMPILING_PER_TARGET */
++
++#if TARGET_ADDRESS_BITS != 32 && TARGET_ADDRESS_BITS != 64
++ #error TARGET_ADDRESS_BITS must be 32 or 64
++#endif
++
++#endif /* TCG_OP_ADDRESS_BITS */
+diff --git a/include/tcg/tcg-op-gvec.h b/include/tcg/tcg-op-gvec.h
+index b0a81ad4bf4..422a270b694 100644
+--- a/include/tcg/tcg-op-gvec.h
++++ b/include/tcg/tcg-op-gvec.h
+@@ -8,13 +8,10 @@
+ #ifndef TCG_TCG_OP_GVEC_H
+ #define TCG_TCG_OP_GVEC_H
+ 
++#include "tcg/tcg-op-address-bits.h"
+ #include "tcg/tcg-op-gvec-common.h"
+ 
+-#ifndef TARGET_LONG_BITS
+-#error must include QEMU headers
+-#endif
+-
+-#if TARGET_LONG_BITS == 64
++#if TARGET_ADDRESS_BITS == 64
+ #define tcg_gen_gvec_dup_tl  tcg_gen_gvec_dup_i64
+ #define tcg_gen_vec_add8_tl  tcg_gen_vec_add8_i64
+ #define tcg_gen_vec_sub8_tl  tcg_gen_vec_sub8_i64
+@@ -28,7 +25,7 @@
+ #define tcg_gen_vec_shl16i_tl tcg_gen_vec_shl16i_i64
+ #define tcg_gen_vec_shr16i_tl tcg_gen_vec_shr16i_i64
+ #define tcg_gen_vec_sar16i_tl tcg_gen_vec_sar16i_i64
+-#elif TARGET_LONG_BITS == 32
++#elif TARGET_ADDRESS_BITS == 32
+ #define tcg_gen_gvec_dup_tl  tcg_gen_gvec_dup_i32
+ #define tcg_gen_vec_add8_tl  tcg_gen_vec_add8_i32
+ #define tcg_gen_vec_sub8_tl  tcg_gen_vec_sub8_i32
+@@ -42,8 +39,6 @@
+ #define tcg_gen_vec_shl16i_tl tcg_gen_vec_shl16i_i32
+ #define tcg_gen_vec_shr16i_tl tcg_gen_vec_shr16i_i32
+ #define tcg_gen_vec_sar16i_tl tcg_gen_vec_sar16i_i32
+-#else
+-# error
+ #endif
+ 
+ #endif
+diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
+index bf76749d1c5..9e4e58a2d4b 100644
+--- a/include/tcg/tcg-op.h
++++ b/include/tcg/tcg-op.h
+@@ -8,20 +8,14 @@
+ #ifndef TCG_TCG_OP_H
+ #define TCG_TCG_OP_H
+ 
++#include "tcg/tcg-op-address-bits.h"
+ #include "tcg/tcg-op-common.h"
+ #include "tcg/insn-start-words.h"
+-#include "exec/target_long.h"
+ 
+-#ifndef TARGET_LONG_BITS
+-#error must include QEMU headers
+-#endif
+-
+-#if TARGET_LONG_BITS == 32
++#if TARGET_ADDRESS_BITS == 32
+ # define TCG_TYPE_TL  TCG_TYPE_I32
+-#elif TARGET_LONG_BITS == 64
++#elif TARGET_ADDRESS_BITS == 64
+ # define TCG_TYPE_TL  TCG_TYPE_I64
+-#else
+-# error
+ #endif
+ 
+ #if INSN_START_WORDS != 3
+@@ -56,22 +50,20 @@ static inline void tcg_gen_insn_start2(uint64_t pc, uint64_t a1,
+     tcg_set_insn_start_param(op, 2, a2);
+ }
+ 
+-#if TARGET_LONG_BITS == 32
++#if TARGET_ADDRESS_BITS == 32
+ typedef TCGv_i32 TCGv;
+ #define tcg_temp_new() tcg_temp_new_i32()
+ #define tcg_global_mem_new tcg_global_mem_new_i32
+ #define tcgv_tl_temp tcgv_i32_temp
+ #define tcg_gen_qemu_ld_tl tcg_gen_qemu_ld_i32
+ #define tcg_gen_qemu_st_tl tcg_gen_qemu_st_i32
+-#elif TARGET_LONG_BITS == 64
++#elif TARGET_ADDRESS_BITS == 64
+ typedef TCGv_i64 TCGv;
+ #define tcg_temp_new() tcg_temp_new_i64()
+ #define tcg_global_mem_new tcg_global_mem_new_i64
+ #define tcgv_tl_temp tcgv_i64_temp
+ #define tcg_gen_qemu_ld_tl tcg_gen_qemu_ld_i64
+ #define tcg_gen_qemu_st_tl tcg_gen_qemu_st_i64
+-#else
+-#error Unhandled TARGET_LONG_BITS value
+ #endif
+ 
+ static inline void
+@@ -171,7 +163,7 @@ DEF_ATOMIC2(tcg_gen_atomic_umax_fetch, i64)
+ #undef DEF_ATOMIC2
+ #undef DEF_ATOMIC3
+ 
+-#if TARGET_LONG_BITS == 64
++#if TARGET_ADDRESS_BITS == 64
+ #define tcg_gen_movi_tl tcg_gen_movi_i64
+ #define tcg_gen_mov_tl tcg_gen_mov_i64
+ #define tcg_gen_ld8u_tl tcg_gen_ld8u_i64
+@@ -419,5 +411,5 @@ DEF_ATOMIC2(tcg_gen_atomic_umax_fetch, i64)
+         : (qemu_build_not_reached_always(), 0))                    \
+      :  (target_long)dup_const(VECE, C))
+ 
+-#endif /* TARGET_LONG_BITS == 64 */
++#endif /* TARGET_ADDRESS_BITS == 64 */
+ #endif /* TCG_TCG_OP_H */
+-- 
+2.47.3
 
 
