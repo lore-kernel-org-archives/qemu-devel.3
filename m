@@ -4,155 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 987F5D232F6
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 09:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1598DD232FC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 09:03:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve8N5-00059I-J2; Fri, 09 Jan 2026 04:01:27 -0500
+	id 1ve8OT-0003uV-Ab; Fri, 09 Jan 2026 04:02:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
- id 1ve8Mq-0004lU-JW
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 04:01:17 -0500
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1ve8OQ-0003p0-IF
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 04:02:50 -0500
+Received: from 3.mo552.mail-out.ovh.net ([178.33.254.192])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
- id 1ve8Mn-0007vr-EL
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 04:01:11 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yDVKSO0g1DQ36lHgYs7wEqOINNOKhGB4rFlNoynEDROdqmkc+pgNVwaINSbbblesyjt/IYiAULkOxirC/273AtaPCo/o9c550KO7qoW307w6HEgOOYXX2UXoTLLkKajgdoEcC1Ux1hez77koM1reD3Yf4wvxBhjV7fEXo1q1/jIj0Z84z37nxuZN5C7fPPXBULun1Nqid89GChQbCKmoQrxzj6XPczXKfNL+geWMXkAsfTDtxbhg4y2MOOxw9vm/+m+LFP48vVwJp0wWMsN0sVGZwtji2mQ7GQpTRlw1X2DRil8a2zhvdwqxqL4JeX4g6RJ6aw5o2Vf2ojNYkIU7ZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WYm+OHDA8CRZZcDcwlyqzPzA4uoexBzNbmosm2g7bII=;
- b=y6g8KY5cccQqpq2h0Y2nFwmBqpTCeh/95DHwJ5Olvdm2g4XeYeMSvHdMQ8g96/fm8xweffi4D66PHIy3805LNbQ2+AOqVQjg+EpmQ4bMmzj8tVy+qih2/H5RMpqp/2EWDMx2xoTGzEo9j1ythVmixibOfkC3k9OwGLLzw1kNpuFi4YQnR3EgxbZ3iaQcH3IBg29uilfYu5vzbzHjWW4efarWMEmWjOHaY7cOi7vRcZ1y+jOfblq1ZsLX99Sx6QvYSLrtSDe6UGTuo/oIacGdO0lQAdOwqnVDZfTaBbwnVPHScKgkcRBugthWa6xkIzj1JYdD6g+M1GBMWXSFC7A2YQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=intel.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WYm+OHDA8CRZZcDcwlyqzPzA4uoexBzNbmosm2g7bII=;
- b=hfK79jKJNKyCrCsU3Ma29c3tHVIaSzhSWDpWmwGfoOmAN9tMfWd4onTbweK6rP00n3a+ws+ELPZaYJnfkS6srYD37+uiTf3R1ByfjEddjxzSGCL0nOSSJpZrDJRs4j95yoj1rnIrkfu19Vs0sLXIuJkuTYcuaJl5uzcCM7qm4WY=
-Received: from DS0PR17CA0024.namprd17.prod.outlook.com (2603:10b6:8:191::29)
- by MW4PR12MB5602.namprd12.prod.outlook.com (2603:10b6:303:169::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.2; Fri, 9 Jan
- 2026 09:01:02 +0000
-Received: from DS2PEPF00003445.namprd04.prod.outlook.com
- (2603:10b6:8:191:cafe::80) by DS0PR17CA0024.outlook.office365.com
- (2603:10b6:8:191::29) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9499.5 via Frontend Transport; Fri, 9
- Jan 2026 09:01:02 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- DS2PEPF00003445.mail.protection.outlook.com (10.167.17.72) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9520.1 via Frontend Transport; Fri, 9 Jan 2026 09:01:01 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Fri, 9 Jan
- 2026 03:01:00 -0600
-Received: from satlexmb07.amd.com (10.181.42.216) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 9 Jan
- 2026 03:01:00 -0600
-Received: from [10.136.45.190] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Fri, 9 Jan 2026 01:00:56 -0800
-Message-ID: <8ef42171-5473-449f-bd72-e9874fa6f7f1@amd.com>
-Date: Fri, 9 Jan 2026 14:30:56 +0530
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1ve8ON-000810-DM
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 04:02:50 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.2])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dnbQB2xLKz5vsg;
+ Fri,  9 Jan 2026 09:02:41 +0000 (UTC)
+Received: from kaod.org (37.59.142.95) by DAG3EX1.mxp5.local (172.16.2.21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 9 Jan
+ 2026 10:02:41 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-95G0011411cf05-0c79-40f2-b82e-81c79e90b54d,
+ E09514031C8F96F06A4508024BC0A168B8B405DC) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <f7253eb3-a668-49ad-aa58-63de0f67bfce@kaod.org>
+Date: Fri, 9 Jan 2026 10:02:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] i386: Add CPU property x-force-cpuid-0x80000026
-To: Zhao Liu <zhao1.liu@intel.com>, Shivansh Dhiman <shivansh.dhiman@amd.com>
-CC: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <kvm@vger.kernel.org>,
- <qemu-devel@nongnu.org>, <seanjc@google.com>, <santosh.shukla@amd.com>,
- <nikunj.dadhania@amd.com>, <ravi.bangoria@amd.com>, <babu.moger@amd.com>
-References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
- <20251121083452.429261-3-shivansh.dhiman@amd.com>
- <aV4PgVwYVXHgmCi3@intel.com>
-Content-Language: en-US
-From: Shivansh Dhiman <shivansh.dhiman@amd.com>
-In-Reply-To: <aV4PgVwYVXHgmCi3@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Received-SPF: None (SATLEXMB04.amd.com: shivansh.dhiman@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF00003445:EE_|MW4PR12MB5602:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0052be78-94ed-4e74-e3f5-08de4f5d9d4a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?K0ZXcWlDc2tRSUJxVmhkMW1ia1lUR2UzRjlnazh6d1RQS0s2N2JiNkEvYUR1?=
- =?utf-8?B?bG9Ma0srMVRzb3hSeHlvTzlFQnVzaVNNdzRLVHI5TVZrQnhGYnlmS08xYVo4?=
- =?utf-8?B?V3V2QUliRUV3UHdLelhBd1NKcWZyYitDMXQ5NTFNSC91R1FnSUZYSkYxcEFK?=
- =?utf-8?B?QXU2VWNIYXpnS3ZGU2FZOEYrTW5sdC9qY3o3NS9lVDY5b0hXQ0lBOUo5RTF1?=
- =?utf-8?B?L2ViL0R0d3Z1S3FHZUxiWFhnTnNvWUtGOEJld1cvZXl3T0dyRDhYcjNCdjhJ?=
- =?utf-8?B?T1ErK1dsbzRjSXpqbEo5MjIyNjRTTWdmdFV4R2hYT0IzaUpyMG9nL3ZsUFNO?=
- =?utf-8?B?UGcyeGhUV3BIN3ExdEJyNzJTR2tDMnd2MTA3UVNlL0RtMUhjYUlZK01LTzNu?=
- =?utf-8?B?UWpFMUFuamoycWtXQnFUM1hRcUUxeXJuMzVtWUFmaXExQ25LSGx4cUZaVXZy?=
- =?utf-8?B?UVZENjhYdFNmNzBmNytTTC9FUDN0VTBGNm13UDJEYWd1ZWthWkR5eTIvVDB2?=
- =?utf-8?B?d1RzWDBGSndDanJTYVMwdHNXU0hYTmlQdTdJTXZWOXZTK1RzekRwWXN3Q1M1?=
- =?utf-8?B?cWxMb1BvUjVlTEhBbVFyWFA5bmZEVWlXZlQwYzFkOVNKZmhFaVlBWVBLa0NT?=
- =?utf-8?B?NXdPZktSTHhDQ2czSldQUzlIS1dkVHh3VjBhcFc1VzJmZGs3ZjhGaVhrbmpr?=
- =?utf-8?B?SUF2QTVneDlxR1l5bng5RkVaTkMyK2o0dWJuU0Irc1grV1pjU2lmb0M4N09V?=
- =?utf-8?B?S1ZUN3RjUWhyem43WlhOK05oNFQ0UTQwZjY4bmVPdGN4U2ZpeXdXNGRpYlk4?=
- =?utf-8?B?WllhQnNZbTBNTWRSeXdYcGxuS0VEblRkN1Q4L0hzNVFiK0E1eUQzb0gzbXVH?=
- =?utf-8?B?VUFiTDUwZldGS203bXdIVFk2VnU2U3RDMDlVVXc1V1B4WTc0d2JZVkdYVTgv?=
- =?utf-8?B?TmR4QWwyZU1ZZm5tL3ZnbVB0OG93SDd0VEVLOWNRdnFITlJPanh2bUFVc25U?=
- =?utf-8?B?T28yTmpvVGE5bzViVGN2SFV6NTh3OVA5Z1ljallRd1V3Mi95N1FiLzlnK3FZ?=
- =?utf-8?B?TkhWVmhTekU2d1NWS3pUc09PaXJxUGhUeEhYTDVPcHk5MGNWbU1hYjc5cGVw?=
- =?utf-8?B?VEw2N0FVZ1BVZTZJUXhuTXBoTmxmQllIOWdCdk5VcUUwcVY1V0tiMk1WZmtK?=
- =?utf-8?B?dW9xWXFGeXZzZjNHcnJhYjhaY2R2K0NzT2N3MEN0RDIvSUsya0pWRGt2aS9O?=
- =?utf-8?B?WGdSVk1mSkJWMG43NXJ3anJEbElDSXVoMXdRUUNaK1dGdVR3YWRQaER5ejRE?=
- =?utf-8?B?Y3BzQm40T3lDOVJJc3hROXVPa2VySFJSYUVoVlJxRVZBblZ1L3dtajVHRmRQ?=
- =?utf-8?B?d1Y5M0Yzc0dnTUVUcVBvNXNhb2MweDdpNGdCR1VlWU4rWTBHanYvazBpSklp?=
- =?utf-8?B?UkR5S0sxY0tVdEhZRnI5MURYdXFvTEVDT2ZpeDZaM0psY3lpeEE0NGxCak1Z?=
- =?utf-8?B?U0oxai9CbzFsb0JZVWZ0OUlMclFZZXZxelFnU0dLT2xMdFB3TmRSK3c4UjF4?=
- =?utf-8?B?VUp0UEhYZnNqMXFreVdnR3V0WVlHaDdXRFhGS1RqTjEyK2tKQzVRM2dPRXk0?=
- =?utf-8?B?TFZPMG01OFk0Q3lBeWdVakRETGtFTHh2a1BMdmVDRW5RZ0Y1MC92L2gxUkp0?=
- =?utf-8?B?Vjlad3hMazdKOEg1b0FPbzUrL3hyMGhuS05ERy9xeERPRnhwRDgyZnZ0ZXB5?=
- =?utf-8?B?ZkFRSHlQRjNLVDFPbVJxTUJuNHNRT0Q4K2VKUVZwbm5wN2F3alJFS3lwWkF1?=
- =?utf-8?B?aHB6R2Q1dVVGMGxhREh4OUNRSzBlUTBKbkhyWHdlYTVNRkk3UnYxK29DRkZO?=
- =?utf-8?B?VU8wYVJpMElLc2NDc2xadys3WGQxYWl3Zk9pYlNmTEJFeHE5YW9RWHVSdkdh?=
- =?utf-8?B?Sm55UmFNcWtDWHQyWFhaWVRSYXI2Y2NXbmJuSGczMEp1WUh4VERQbmMxUHpC?=
- =?utf-8?B?bFA3R052dVRHK21mY3JiMUxkWHk3U0dNaE5YejRMZHE0R3VIdW9aeTYzRTZC?=
- =?utf-8?B?SGkxc0J6U2tpRzJVNGpnVy9NeXA5TWZhUk96Yjd6d1BTZHVBK2RWWHdFNFBL?=
- =?utf-8?Q?RhFE=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2026 09:01:01.9747 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0052be78-94ed-4e74-e3f5-08de4f5d9d4a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF00003445.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5602
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
- envelope-from=Shivansh.Dhiman@amd.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
+Subject: Re: [PATCH v4 14/19] hw/arm/aspeed: attach I2C device to AST1700 model
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen
+ <kane_chen@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Steven
+ Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, "nabihestefan@google.com"
+ <nabihestefan@google.com>, Hao Wu <wuhaotsh@google.com>
+References: <20251224014203.756264-1-kane_chen@aspeedtech.com>
+ <20251224014203.756264-15-kane_chen@aspeedtech.com>
+ <1a3595d9-eac7-4575-a31f-1b869c6175f3@kaod.org>
+ <5af965b1-d4f2-4b5f-b339-a3ca1ec1905d@kaod.org>
+ <SI6PR06MB76312CC4E874C642DA879F11F785A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+ <6f0e285f-4921-4b18-8dac-f80b435dc1b4@kaod.org>
+ <TYPPR06MB8206873F6718E29517AEC90BFC82A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <TYPPR06MB8206873F6718E29517AEC90BFC82A@TYPPR06MB8206.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.95]
+X-ClientProxiedBy: DAG6EX2.mxp5.local (172.16.2.52) To DAG3EX1.mxp5.local
+ (172.16.2.21)
+X-Ovh-Tracer-GUID: 3bf65c4c-f505-4df9-9ee0-f24562196d0a
+X-Ovh-Tracer-Id: 14137080707659697144
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEHN2cv1UkWL11yYaIbtiv7mwSVWcOOyqmbA96aPKkZHEux42L8I4/312VA/1nNbSjt/a3GNRLH2B14ZlL4UHBN2Q0EjotlfC5Ne9OSCdDvHBEzhVOiRCNJwuAGeH63F4SvKgXSpnbPSTOcXANcp+VYLyE/ui+8nEDXfF3pjQHIcZJ2VYjQ3nccyhU1mzcreBC6y+/1aSFCG+Pfrs3yz5SvJ710p9Sqyfg3CP0lsdWFCK3CxRLNAGgnRvhh+vtzmDCDdOAsOZNUSa9Imrpb0qzF9pxi3Pnj1KiauyzPnEE+WnSfKd5t+EP6deo/Kda26sfozFAv0GoCLihOUrwBUjRHmSMRVphS5G0YCvi48pHU564oHc6Tnqt/rO1qnVqx/vqbcUM6E+92v7/ckyB7nEdIaTTxt4GR5Y78nG9+PFx12rzq07HHhxrfinqBemgdjExATPBc/UC31vTZRORy1aig5QsrmJs+wWP5dWyFGrJoRby0GaXrwI5NrxsDlEUBLvalNUt0uryHWUB5Osc8jtps/2zFAzJSmArGFj9XbN20rrMK20UPTLUat8Wr3RAlzzeSRV1ym8gWmvLIqM2KTpSCZbLBPi6nD44iBS410mta5AbgqbAJ01ymmam+XGBemVAoHLF+LA0taNjVWMrP/ZWIYJLV0Tc4ecG/IAtSc0TKBg
+DKIM-Signature: a=rsa-sha256; bh=unjoWVBFwa55ud3zRd+q9ON094MpMi9Gq8H05BMnDb8=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1767949363; v=1;
+ b=wLillelY2Seu732IzVCk2HaNOqGM3DJOqR3fsV6nZdxUAdzxvyXUobzs7QG6E6DZlXkRBgIt
+ DNhpAJ2ik7UbUW9fRtp55hkxsvu9PTnGaigGi7fDyIusdV3U2W9kSbfB8DZ3oIwz2wIwji+5Kom
+ z/u14410RxAf0817rjUPmdJhKxSdmK1y4Ur7ZLFytd5oy2zMq6yDi6QfWI/7kjqYEbdUQR51FEL
+ YFQfZ1tAOdvBYBgBJ7hCO5qfaLgUcylTqYz5L/LamEjOtWktKf3brlRyLwgyKUOXjZ1pTmWAPvl
+ bnnJjRI3uppygj/C6LX1isn2I7eXfrXNDtq44WE0gLi2Q==
+Received-SPF: pass client-ip=178.33.254.192; envelope-from=clg@kaod.org;
+ helo=3.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,73 +137,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
+Hello Jamin,
 
-On 07-01-2026 13:17, Zhao Liu wrote:
-> On Fri, Nov 21, 2025 at 08:34:49AM +0000, Shivansh Dhiman wrote:
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index b7827e448aa5..01c4da7cf134 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -9158,6 +9158,12 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
->>          if (env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_SGX) {
->>              x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x12);
->>          }
->> +
->> +        /* Enable CPUID[0x80000026] for AMD Genoa models and above */
->> +        if (cpu->force_cpuid_0x80000026 ||
->> +            (!xcc->model && x86_is_amd_zen4_or_above(cpu))) {
+> ASPEED changed the boot image format starting from SDK v10.00. As a result, vbootrom can no longer boot correctly, and the manual loader command also needs to be updated.
+
+OK. See commit d63961f957ff for the update.
+
+> Specifically, the U-Boot FIT image has been replaced with a legacy U-Boot raw image, so the secondary solution’s manual loader command must be adjusted accordingly.
 > 
-> I understand you want to address max/host CPU case here, but it's still
-> may not guarentee the compatibility with old QEMU PC mahinces, e.g.,
-> boot a old PC machine on v11.0 QEMU, it can still have this leaf.
-
-Wouldn't initializing x-force-cpuid-0x80000026 default to false prevent this?
-Oh, but, this CPUID can still be enabled on an older machine-type with latest
-QEMU with the existing checks. And probably this could also affect live migration.
-
+> I have created a new pull request to google/vbootrom and am currently waiting for review:
+> https://github.com/google/vbootrom/pull/12
 > 
-> So it would be better to add a compat option to disable 0x80000026 for
-> old PC machines by default.
+> I plan to update the functional test SDK v10.00 after this PR is merged.
 
-Does this look fine?
+Sure. The functional test can come later.
 
-GlobalProperty pc_compat_10_2[] = {
-    { TYPE_X86_CPU, "x-force-cpuid-0x80000026", "false" },
-};
-const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
+> Additionally, ASPEED will release SDK v11.00 on January 26, so I am also considering updating directly to v11.00 instead.
+
+Fine. Let's plan the updates for QEMU 11.0.
+
+Thanks,
+
+C.
+
 
 
 > 
-> If needed, to avoid unnecessarily enabling extended CPU topology, I think
-> it's possible to implement a check similar to x86_has_cpuid_0x1f().
-
-Do you mean something like this? I avoided it initially because it is
-functionally same as current one, and a bit lengthy.
-
-/* Enable CPUID[0x80000026] for AMD Genoa models and above */
-static inline bool x86_has_cpuid_0x80000026(X86CPU *cpu) {
-    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
-    return cpu->force_cpuid_0x80000026 ||
-	(!xcc->model && x86_is_amd_zen4_or_above(cpu));
-}
-
-...
-
-if (x86_has_cpuid_0x80000026(cpu))
-    x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x80000026);
-
-
-Thanks for the review.
-Shivansh
-
+> Nabih, Hao
+> Could you please help review this PR when you have time?
 > 
->> +            x86_cpu_adjust_level(cpu, &env->cpuid_min_xlevel, 0x80000026);
->> +        }
->>      }
-> 
-> Thanks,
-> Zhao
-> 
-
+> Thanks in advance for your help.
+> Jamin
 
