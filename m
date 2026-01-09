@@ -4,158 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D59D232E8
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22200D232E9
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6gp-0001oC-FO; Fri, 09 Jan 2026 02:13:43 -0500
+	id 1ve6wt-0007f2-LR; Fri, 09 Jan 2026 02:30:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ve6gm-0001mj-Us
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:13:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ve6gj-0004vD-S0
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:13:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767942817;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RZb7596LX8AwpniZKcpolyIgrqfZ5WC5piRVhMy+MEU=;
- b=QXbxbqT+LHAE5ogSSt19YPj3ZLJx/g0my6n1+5Y7Q5srhk4LdSgWirmPl7PprLEI/kuGih
- YJ7Yr4iGsqh4+9Eq6Vb2laFVBwQGLkWqFToGMjrXy0o/P6s0N1xftxdWoLAykjnHlw2E8J
- F0gGEw7wryxcVMuzbOVqyqW0PmN7fjQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-345-FKdu1tyFOBSlb9wAXJV_WA-1; Fri, 09 Jan 2026 02:13:33 -0500
-X-MC-Unique: FKdu1tyFOBSlb9wAXJV_WA-1
-X-Mimecast-MFC-AGG-ID: FKdu1tyFOBSlb9wAXJV_WA_1767942812
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-64b735f514dso4916834a12.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 23:13:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1ve6wV-0007VS-FV
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:29:58 -0500
+Received: from mail-lj1-x244.google.com ([2a00:1450:4864:20::244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1ve6wR-0007eU-4b
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:29:53 -0500
+Received: by mail-lj1-x244.google.com with SMTP id
+ 38308e7fff4ca-383010b77b8so20040771fa.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 23:29:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767942812; x=1768547612; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=RZb7596LX8AwpniZKcpolyIgrqfZ5WC5piRVhMy+MEU=;
- b=QLJDIrD2EmdU2e3KRU3JaOrjtGP3m6MzWoqxpa8vEYfQcwVU0Bu5XoVLC7GW62ICle
- Y7N59S936xfoo/zkboNXRcl1Ag53pMSRs9cZbflicDzDQHIIVsSSDj8GJV+JbOBgCR4O
- gk/w67lIzLN02BCPgBOKIYLHTP5HrUiTMRj6Pnm2EpBh26VrFh+40zp4eMO84jDH4foX
- dn30M/MC6wOpbE472zGPvd6d0Gc1gq0nWNSuA/vB1u3u5sdRdAkYi3kYMngn9XsZmo02
- D7/CIuIRBzLnsHANaWOqKoDeLJyqba2fijJIz8cpgCn2kKhDSNpHk2ScaZxOwx7T52Tj
- FnBQ==
+ d=gmail.com; s=20230601; t=1767943789; x=1768548589; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=tw7He0vAIQtDRAho29c+8srwuRGz0f4QO1t4OL/3Yuk=;
+ b=Pxbk3YwWECIlvIiHWqPbLWxXu1CALn9wbWtxQDF6GZmyjYhRumHjhJjn8vuQWFqsML
+ 5OS9NUx3jn/JlLkuDHiC5Pimi3qfuSIw+bXd5qYeJtYCrGApICvuKphKkLgSxDKEdbdm
+ Fa+o9/PD7fv1HwlVMuMtnmxw3nOY2XRp2UJWaWIZj64wjiIHG8p0GM/7G9ohNSPGacJ2
+ qLQeKNX9wxS8MJp6UIYLab4frAz5WnAbEV59q5eqfhtuC4ip5vaZFflKBVTlMSd1wc0O
+ LbTp5lgH7V5GX6CA5uKVRWY1pGtHZ/OSKtFAgCdY/MZZqstT39CDFJyljtyFNvxEx9w5
+ eXpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767942812; x=1768547612;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1767943789; x=1768548589;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RZb7596LX8AwpniZKcpolyIgrqfZ5WC5piRVhMy+MEU=;
- b=KyTfICPaTJh5Pru8agRXMAa7EcYHu0xKzRgWhjVElr1JraRT/BRW+dNQnSmiHOBAxE
- vVl+4SzN6P9UwEaUz3FlxkvBQbHzxrM9+fgfanhvCBDUIJU6KH/C3PvX9Rl4OYH7Q9hM
- wMW3RG65nsmrkcVPRKaq8ex82EFhKqXkQzH7jnVPB3rH1PYB5suzdFQtAgk+htJCfjWe
- dBJtT8DpHy4BQ2U58kn9E07Etnk4pinGU2JBJIFayyUU8VAAPvALhbiVbEjCS/p09vKh
- nJeByOS3BzwZlmwCNtFXPrrJvZvkPqkBMv1YWriiAoQDtNcPl87A3TngEMGT5C0mIbMn
- nRKQ==
+ bh=tw7He0vAIQtDRAho29c+8srwuRGz0f4QO1t4OL/3Yuk=;
+ b=wUWOlaODxZqMw7O14+WuZ0HO8D6UbZbPbSI6iqoabD2EbwsAgvK289uvZ0GqNk24RK
+ 5WZxVCWfmOdKuOruUoe6nhTYcfDWEE83ufjce4ntfIAjP/Yk042oH9rh9WnhaAjeWuf5
+ 4NIMy9lK74i8KXONAR3z6JZAr26aujyOU97NIyRdYb8eGs1Cxz/Mv/8+5XidAPD8Bs7v
+ AI/uukH5MHlm6aAvgF2q5mUuNJxw8EZ+30sEvs4b8JbQebGdUCui7FUEPLg1YlyVZ24w
+ 8Ss+pKz3CzFst7zZ1UtDVXz5QkgIT+1F6sGxijYB/RQIwOL7RUVPvUgrUn9d29HTEicL
+ p5Kw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7pIDLsz37yCv+KwmoeRrcMssizxTPpeETjt0e8U48lsADlAx/DmWUmOqQv+OZtS4qRl8/cTUh0Sji@nongnu.org
-X-Gm-Message-State: AOJu0YyoDbNZCQlOY1fS6ZDKRo6U1+EXgTIXmlejSFSzVXVVfPqAe7dw
- Z5/2uv8q+9lhpWCeHtWeP1GnND9wtgXAPxMQJkYXNCOlFbviJMc5O1xj9FboPJu7r7hMZOfE47h
- AZQRRPG0P8JbolIyqf5XQAHb7VjgHliyH+fiVgNYrOo0XFZRFvm/Ob/+H
-X-Gm-Gg: AY/fxX4kxv2E//cj8lajN0GLZ8jRyi2Dj/qRnu4TQG6saufbmiFV9hmivnrJ5cDDlEU
- eEDKruYt0lewNtCmh3scbqmBTSBT8imWPDTb8SsFO3QDUH4Tq3bZp+kTX2CPM1J1d3X3Pn6ewYv
- l3sZfpLbVmR2X2/NRWos6MFc1//vlyfe9BAPjraBvJj+lpLHdToDZQx6d73pNoGf31hlhAW3KCz
- EDP51UkoCtMyhCmoVLfhrv3JL9IdJzXqY5y1LCPojFAgyzKL2X2+c3fBSs1gCVXxANuwXIRtbZX
- ASUK1uM2rPZbu+UXDr+31xfFZSgaCYPzSbTxDFBEWw4eR6cvvqI6Q4CM5Sf1wsM8dOlu5eP8fUb
- o94xBtGo=
-X-Received: by 2002:a05:6402:13ce:b0:64d:1a0f:694b with SMTP id
- 4fb4d7f45d1cf-65097de79a8mr7615189a12.10.1767942812106; 
- Thu, 08 Jan 2026 23:13:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHzSS3Rt/xU0fD+W2RHMA5PbQM5mvdzqmNHJmGCEQKrMmLK7nNp+5Y0Edh1ZwUz2R5DhyzuqA==
-X-Received: by 2002:a05:6402:13ce:b0:64d:1a0f:694b with SMTP id
- 4fb4d7f45d1cf-65097de79a8mr7615156a12.10.1767942811650; 
- Thu, 08 Jan 2026 23:13:31 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.114.194])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6507b22c3absm9547490a12.0.2026.01.08.23.13.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 23:13:30 -0800 (PST)
-Message-ID: <646a8d17-633f-40c0-a5b1-b69d7ed4abcf@redhat.com>
-Date: Fri, 9 Jan 2026 08:13:28 +0100
+ AJvYcCW6pW5wAcEPPHr+0dA9b3wJLO2Yg3p1Pqip276Iv9uZncOKOp37rD3M14ccSvd946Z3jt9GK0iSZ/I1@nongnu.org
+X-Gm-Message-State: AOJu0Yw7Qywye4n6ruWPm9eVfL5jPDzgLHAWAKlHgchizn/CQ9VbMaDZ
+ L2GRBDMRThewF0zwx3XUHvbiCAMqqsxVLmvuXFvA94GivCmDOJ7jspOL2PxX6TdItNFmSRHBMj0
+ 1PuRaAgVSAgMVD7M8eQXzyIcJYV1QuDM=
+X-Gm-Gg: AY/fxX6QrPlvFVvj2M8oCn7VMXZT/R2EfHVltoEjBbdX9F0IHxvwdU/++g17ZEqkME5
+ WoF18aTapoyjP0b4nvSxGZGG330mVYVFTqBTcsh6nSyIaxVXuX+lztjj74SdEhQ6NJOPaoMJTFO
+ 5hPyrIeIZV8HbaAcTk6SGtw+5RymXYc0dFu8AbcFUrET6PPRdrFGqLalu8e4hD7+aXtHNEwqV4u
+ 0xnpQqkbQZAI/7fQP3e6trujqyc015Idb4kAEp9dS8Jr7jZMtrGwUPI6od2NlI+PZ34iUPFyykg
+ jPR8AzPaEzV+C39+8zEAVk0TRWI=
+X-Google-Smtp-Source: AGHT+IHREcClpgOZYWkldUmEW1VeuIHBwN7FcqTiXW5RBfeNgqfuxGV8vxHYXejoW0ZSQb6RmXG6M8MWj2zaaQuUiPM=
+X-Received: by 2002:a05:651c:1986:b0:383:789:3c3 with SMTP id
+ 38308e7fff4ca-3830789111amr25762661fa.2.1767943788890; Thu, 08 Jan 2026
+ 23:29:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 21/29] pc-bios/s390-ccw: Add additional security checks
- for secure boot
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-22-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251208213247.702569-22-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260108151650.16329-1-max.chou@sifive.com>
+ <20260108151650.16329-3-max.chou@sifive.com>
+In-Reply-To: <20260108151650.16329-3-max.chou@sifive.com>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+Date: Fri, 9 Jan 2026 15:29:37 +0800
+X-Gm-Features: AQt7F2qREcIsxFADbn6hZy-AYEJqLKV0LsWe3_6ToBbvB-uP0hlc_irAxphb98I
+Message-ID: <CAGL8uCX46bm9DsT2Tk=roW8VucY--G5fc10PuqJ=aQgo7y5+8g@mail.gmail.com>
+Subject: Re: [PATCH 02/18] fpu/softfloat: Add OCP(Open Compute Project) OFP8
+ data type
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::244;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-lj1-x244.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,85 +104,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/12/2025 22.32, Zhuoying Cai wrote:
-> Add additional checks to ensure that components do not overlap with
-> signed components when loaded into memory.
-> 
-> Add additional checks to ensure the load addresses of unsigned components
-> are greater than or equal to 0x2000.
-> 
-> When the secure IPL code loading attributes facility (SCLAF) is installed,
-> all signed components must contain a secure code loading attributes block
-> (SCLAB).
-> 
-> The SCLAB provides further validation of information on where to load the
-> signed binary code from the load device, and where to start the execution
-> of the loaded OS code.
-> 
-> When SCLAF is installed, its content must be evaluated during secure IPL.
-> However, a missing SCLAB will not be reported in audit mode. The SCALB
-> checking will be skipped in this case.
-> 
-> Add IPL Information Error Indicators (IIEI) and Component Error
-> Indicators (CEI) for IPL Information Report Block (IIRB).
-> 
-> When SCLAF is installed, additional secure boot checks are performed
-> during zipl and store results of verification into IIRB.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Hi, Max:
+
+On 1/8/2026 11:16 PM, Max Chou wrote:
+> This commit provides the implementation defined behavior flags and the basic
+> operation support for the OCP float8 data types(E4M3 & E5M2).
+>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 > ---
-...
-> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
-> index c1c5bc682a..8733254cfb 100644
-> --- a/pc-bios/s390-ccw/secure-ipl.c
-> +++ b/pc-bios/s390-ccw/secure-ipl.c
-> @@ -206,6 +206,12 @@ static bool secure_ipl_supported(void)
->           return false;
->       }
->   
-> +    if (!sclp_is_sclaf_on()) {
-> +        puts("Secure IPL Code Loading Attributes Facility is not supported by"
-> +             " the hypervisor!");
-> +        return false;
-> +    }
+>  fpu/softfloat-specialize.c.inc  | 57 ++++++++++++++++++++++++++-
+>  include/fpu/softfloat-helpers.h | 20 ++++++++++
+>  include/fpu/softfloat-types.h   | 23 +++++++++++
+>  include/fpu/softfloat.h         | 70 +++++++++++++++++++++++++++++++++
+>  4 files changed, 169 insertions(+), 1 deletion(-)
+>
+> diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+> index ba4fa08b7b..3a3bcd22ae 100644
+> --- a/fpu/softfloat-specialize.c.inc
+> +++ b/fpu/softfloat-specialize.c.inc
+> @@ -226,6 +226,30 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
+>      return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
+>  }
+>
+> +/*----------------------------------------------------------------------------
+> +| Returns 1 if the OCP(Open Compute Platform) FP8 value `a' is a quiet NaN;
+Open Compute Platform -> Open Compute Project
+
+> +| otherwise returns 0.
+> +*----------------------------------------------------------------------------*/
 > +
->       return true;
->   }
->   
-> @@ -218,6 +224,402 @@ static void init_lists(IplDeviceComponentList *comps, IplSignatureCertificateLis
->       certs->ipl_info_header.len = sizeof(certs->ipl_info_header);
->   }
->   
-> +static bool is_comp_overlap(SecureIplCompAddrRange *comp_addr_range,
-> +                            int addr_range_index,
-> +                            uint64_t start_addr, uint64_t end_addr)
+> +bool float8_e4m3_is_quiet_nan(float8_e4m3 a_, float_status *status)
 > +{
-> +    /* neither a signed nor an unsigned component can overlap with a signed component */
-> +    for (int i = 0; i < addr_range_index; i++) {
-> +        if ((comp_addr_range[i].start_addr <= end_addr - 1 &&
-> +            start_addr <= comp_addr_range[i].end_addr - 1) &&
-
-Instead of comparing with "<= end_addr - 1", please simply compare with "< 
-end_addr" instead. That's easier to read and avoids bugs like wrong 
-comparisons in case of end_addr accidentally being 0 (so you would get a 
-wrap-around when subtracting 1).
-
-> +            comp_addr_range[i].is_signed) {
-> +            return true;
-> +       }
-> +    }
+> +    return float8_e4m3_is_any_nan(a_);
+> +}
 > +
+...
+> +/*----------------------------------------------------------------------------
+> +| Returns 1 if the OCP(Open Compute Platform) FP8 value `a' is a signaling NaN;
+Open Compute Platform -> Open Compute Project
+
+Thanks,
+Chao
+
+> +| otherwise returns 0.
+> +*----------------------------------------------------------------------------*/
+> +
+> +bool float8_e4m3_is_signaling_nan(float8_e4m3 a_, float_status *status)
+> +{
+> +    if (no_signaling_nans(status)) {
+> +        return false;
+> +    } else {
+> +        if (snan_bit_is_one(status)) {
+> +            return float8_e4m3_is_any_nan(a_);
+> +        } else {
+> +            return false;
+> +        }
+> +    }
+> +}
+> +
+> +bool float8_e5m2_is_signaling_nan(float8_e5m2 a_, float_status *status)
+> +{
+> +    if (no_signaling_nans(status)) {
+> +        return false;
+> +    } else {
+> +        uint8_t a = float8_e5m2_val(a_);
+> +        if (snan_bit_is_one(status)) {
+> +            return ((a >> 1) & 0x3F) == 0x3F;
+> +        } else {
+> +            return (((a >> 1) & 0x3F) == 0x3E && (a & 0x1));
+> +        }
+> +    }
+> +}
+> +
+>  /*----------------------------------------------------------------------------
+>  | Returns 1 if the half-precision floating-point value `a' is a signaling
+>  | NaN; otherwise returns 0.
+> diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
+> index 90862f5cd2..4e278a3ee3 100644
+> --- a/include/fpu/softfloat-helpers.h
+> +++ b/include/fpu/softfloat-helpers.h
+> @@ -136,6 +136,26 @@ static inline void set_no_signaling_nans(bool val, float_status *status)
+>      status->no_signaling_nans = val;
+>  }
+>
+> +static inline void set_ocp_fp8e5m2_no_signal_nan(bool val, float_status *status)
+> +{
+> +    status->ocp_fp8e5m2_no_signal_nan = val;
+> +}
+> +
+> +static inline bool get_ocp_fp8e5m2_no_signal_nan(const float_status *status)
+> +{
+> +    return status->ocp_fp8e5m2_no_signal_nan;
+> +}
+> +
+> +static inline void set_ocp_fp8_same_canonical_nan(bool val, float_status *status)
+> +{
+> +    status->ocp_fp8_same_canonical_nan = val;
+> +}
+> +
+> +static inline bool get_ocp_fp8_same_canonical_nan(const float_status *status)
+> +{
+> +    return status->ocp_fp8_same_canonical_nan;
+> +}
+> +
+>  static inline bool get_float_detect_tininess(const float_status *status)
+>  {
+>      return status->tininess_before_rounding;
+> diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+> index 8f82fdfc97..835dd33bf1 100644
+> --- a/include/fpu/softfloat-types.h
+> +++ b/include/fpu/softfloat-types.h
+> @@ -119,6 +119,18 @@ typedef struct {
+>   */
+>  typedef uint16_t bfloat16;
+>
+> +/*
+> + * Software OCP(Open Compute Project) 8-bit floating point types
+> + */
+> +typedef uint8_t float8_e4m3;
+> +typedef uint8_t float8_e5m2;
+> +#define float8_e4m3_val(x) (x)
+> +#define float8_e5m2_val(x) (x)
+> +#define make_float8_e4m3(x) (x)
+> +#define make_float8_e5m2(x) (x)
+> +#define const_float8_e4m3(x) (x)
+> +#define const_float8_e5m2(x) (x)
+> +
+>  /*
+>   * Software IEC/IEEE floating-point underflow tininess-detection mode.
+>   */
+> @@ -410,6 +422,17 @@ typedef struct float_status {
+>       */
+>      bool snan_bit_is_one;
+>      bool no_signaling_nans;
+> +    /*
+> +     * When true, OCP FP8 E5M2 format does not generate signaling NaNs.
+> +     * RISC-V uses only quiet NaNs in its OCP FP8 implementation.
+> +     */
+> +    bool ocp_fp8e5m2_no_signal_nan;
+> +    /*
+> +     * When true, OCP FP8 formats use the same canonical NaN representation
+> +     * (0x7F) for all NaN outputs. RISC-V specifies a single canonical NaN
+> +     * for both E4M3 and E5M2.
+> +     */
+> +    bool ocp_fp8_same_canonical_nan;
+>      /* should overflowed results subtract re_bias to its exponent? */
+>      bool rebias_overflow;
+>      /* should underflowed results add re_bias to its exponent? */
+> diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+> index c18ab2cb60..6f7259f9dd 100644
+> --- a/include/fpu/softfloat.h
+> +++ b/include/fpu/softfloat.h
+> @@ -189,6 +189,76 @@ float128 int128_to_float128(Int128, float_status *status);
+>  float128 uint64_to_float128(uint64_t, float_status *status);
+>  float128 uint128_to_float128(Int128, float_status *status);
+>
+> +/*----------------------------------------------------------------------------
+> +| Software OCP FP8 operations.
+> +*----------------------------------------------------------------------------*/
+> +
+> +bool float8_e4m3_is_quiet_nan(float8_e4m3, float_status *status);
+> +bool float8_e4m3_is_signaling_nan(float8_e4m3, float_status *status);
+> +bool float8_e5m2_is_quiet_nan(float8_e5m2, float_status *status);
+> +bool float8_e5m2_is_signaling_nan(float8_e5m2, float_status *status);
+> +
+> +static inline bool float8_e4m3_is_any_nan(float8_e4m3 a)
+> +{
+> +    return ((float8_e4m3_val(a) & ~0x80) == 0x7f);
+> +}
+> +
+> +static inline bool float8_e5m2_is_any_nan(float8_e5m2 a)
+> +{
+> +    return ((float8_e5m2_val(a) & ~0x80) > 0x7c);
+> +}
+> +
+> +static inline bool float8_e4m3_is_neg(float8_e4m3 a)
+> +{
+> +    return float8_e4m3_val(a) >> 7;
+> +}
+> +
+> +static inline bool float8_e5m2_is_neg(float8_e5m2 a)
+> +{
+> +    return float8_e5m2_val(a) >> 7;
+> +}
+> +
+> +static inline bool float8_e4m3_is_infinity(float8_e4m3 a)
+> +{
 > +    return false;
 > +}
 > +
-> +static void comp_addr_range_add(SecureIplCompAddrRange *comp_addr_range,
-> +                                int addr_range_index, bool is_signed,
-> +                                uint64_t start_addr, uint64_t end_addr)
+> +static inline bool float8_e5m2_is_infinity(float8_e5m2 a)
 > +{
-> +    if (addr_range_index > MAX_CERTIFICATES - 1) {
-
-">= MAX_CERTIFICATES" without the "- 1"
-
-  Thomas
-
+> +    return (float8_e5m2_val(a) & 0x7f) == 0x7c;
+> +}
+> +
+> +static inline bool float8_e4m3_is_zero(float8_e4m3 a)
+> +{
+> +    return (float8_e4m3_val(a) & 0x7f) == 0;
+> +}
+> +
+> +static inline bool float8_e5m2_is_zero(float8_e5m2 a)
+> +{
+> +    return (float8_e5m2_val(a) & 0x7f) == 0;
+> +}
+> +
+> +static inline bool float8_e4m3_is_zero_or_denormal(float8_e4m3 a)
+> +{
+> +    return (float8_e4m3_val(a) & 0x78) == 0;
+> +}
+> +
+> +static inline bool float8_e5m2_is_zero_or_denormal(float8_e5m2 a)
+> +{
+> +    return (float8_e5m2_val(a) & 0x7c) == 0;
+> +}
+> +
+> +static inline bool float8_e4m3_is_normal(float8_e4m3 a)
+> +{
+> +    uint8_t em = float8_e4m3_val(a) & 0x7f;
+> +    return em >= 0x8 && em <= 0x7e;
+> +}
+> +
+> +static inline bool float8_e5m2_is_normal(float8_e5m2 a)
+> +{
+> +    return (((float8_e5m2_val(a) >> 2) + 1) & 0x1f) >= 2;
+> +}
+> +
+>  /*----------------------------------------------------------------------------
+>  | Software half-precision conversion routines.
+>  *----------------------------------------------------------------------------*/
 
