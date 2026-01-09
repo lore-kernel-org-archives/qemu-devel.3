@@ -4,157 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A974D26D8C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 18:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7597D26D92
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 18:36:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veHCc-00030U-FU; Fri, 09 Jan 2026 13:27:14 -0500
+	id 1veHKZ-0007EL-Ni; Fri, 09 Jan 2026 13:35:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veHCP-0002zO-3v
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 13:27:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veHCM-0004xd-Ad
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 13:27:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767983217;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mgJaePqAmaPjZASouB0iezHnamsQ7IJ1GvoIifrdwJo=;
- b=S/KmNDLYX+7A5QSa7ELU4QDWwi124aDTXwVKiTQDqJVVjHU+DusP9kBgbF39k3AbrelibR
- LAE56EwV3P0VFZnWuuQGxKIjD95QezLYgRHvhjyrz8elw64RI0D4Rz8FQZIqjQJu5kUMTK
- 8d+2ncY/j/4pHh0lyoI6ElYA36fxsGo=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-6v55umKvMFeGCgc6sxZDCg-1; Fri, 09 Jan 2026 13:26:53 -0500
-X-MC-Unique: 6v55umKvMFeGCgc6sxZDCg-1
-X-Mimecast-MFC-AGG-ID: 6v55umKvMFeGCgc6sxZDCg_1767983213
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b8395cae8c8so342523666b.3
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 10:26:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1veHKX-0007Cr-Gr
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 13:35:26 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1veHKV-00077z-Jr
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 13:35:25 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a0ac29fca1so32773185ad.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 10:35:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767983212; x=1768588012; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mgJaePqAmaPjZASouB0iezHnamsQ7IJ1GvoIifrdwJo=;
- b=mfvbNsXVpmvgZ6iItciEv0v82KJQpeE0seqZQTQVYe9y3jEiKZG+oHh2Zz3Ed89j5n
- L7C6G2MaWha8f0vYOHuzC8LBJqJcalZT811XjMSPmImT26838Ds5DFQOIEnlgB5P29UZ
- 6eJRv6rQ/paOzFsLsoGmLc7hTHQWPQV+U8EqJJqVP/KE5XeVcwp0Sat76zP3p2qeLLnO
- xjs0vOILhejtNRHLLlXBNVy/cW12etZhGLoNmlBpO5rMSaxjwGyUPYjTJ7zPw7e5s/19
- vA/6Q7hfvZXHU/Jygt9IJB8xTjbaqZotMfLMcjavL1Jcmo4dPxXZF5/c9V0239UT8/E5
- OckA==
+ d=linaro.org; s=google; t=1767983722; x=1768588522; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/B7FXO9doS4KJrmAFc+kmK6Yc8Xt2URaw1dLL1hS4W4=;
+ b=Zso+t2w1s7eWg0ZBrkM4NfAbgKGwQRq7rmuU30bUpJTixIcomWXzzXy8F6wH6j3iYn
+ 3iTKk5v5eiM7EQCQCSnkTSFHf7wMOVNPpTUg4/TSZhLSc2llviijcCURdtUdHihkj3RZ
+ b04UIi0j6a7eoQ0ZAfaugPMzyUVF34GhF8lQolQqDnvuAQgP55HJxuUvc4esQNZdBuEU
+ ATkENPN4DqjE4qNCvjy/hcZKWH7mVtygZldGNTFL3B/Tq9LFyETW46NrwF7y1A0GBpSZ
+ f1U2ZJ8OBzitSt+yVSo0bKfGwNV93rxXVPWBsrP3Zjdg1baPq4bN9NTCh9xnW0bWhcQa
+ qQ/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767983212; x=1768588012;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mgJaePqAmaPjZASouB0iezHnamsQ7IJ1GvoIifrdwJo=;
- b=ioYcPOP2egSudulg+W02ANT3QYyEY40cNhnrCkFviSeBrn2V+yVOyUJNmU1t1IO5fm
- V81s3SedPV6NK/+R/PNId2rQXASt/erAkUeMWAqwSrX8PH/aETvK+wRTT4HWrNOvwNVU
- Z44nZk17UWRSVIPqpSM80Tl/WVO4WYvlihpMKPRZDuPiVhxWl+fZovHkkV7eldayfAfY
- w4NQ+x7EVYd5tr7xtHsw+mx+N1JYCqkJfKkySDWyuuuURmIDGwiAIqjGEC2qSKonnxg4
- YuLBGIrAJyWEQTdJ7Tnt1sVLYwKm/Kc4OyBksJiqiOh0NFVBKlbm2V/LSt7HqbfF4Y6E
- gH0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpVNgIErlVYUF/a/B/J2plmO+/UAl6p5kB0qFUseeElfPuJlOglgavUwPCg3jmMOSbOrD7dS5RFtgm@nongnu.org
-X-Gm-Message-State: AOJu0YwA7Ar5FP5vZCiRzMQ5QMx5U8Hh3qUgG3ldh2efUWGeGfXyxveQ
- 5fJgMueGI5DVFFLL12eapXX+dk1Qfxt7ZkXmOT52Et6MT2ezvoGBrnfONJSWxoUaXXlFkC/jwKX
- 5Aa4cp/cN/PsyUlhCvdLU2rUKw341k1Bk0oqeSS2j1HW/82Lruu7QoFne
-X-Gm-Gg: AY/fxX691IixinWN/48xm4IffZwwSRMxV2xDVQa7MmoM59bQlknt56SCtjt+3xWsR2e
- WF9Dixkh1vZ73ZIYoniclRpdjrk9k7b1y+BnbzjhYaWVwvPrMXjdkg1suDt56c7uHF56AsE0O30
- s+PLKZ1HDT0swf68dV/VjzaVnoOWETiXYkgDUF8jneJmHlWwtnkTFFgvPU2zbwIssfbsxKur3xB
- gKD/F9MXM97UkmNfRHMRqscjtF5lNhDI9UL6i6IDYqO0aJ+TjXMpOCGr1gdWd8jJUp95B7gPjoQ
- cHKjCruKTX/SkEIIsEcqEUdfP3sVeNIkvt88wKCC9c2aT6pgffyGLwzboPSzgFWKn40lEOq1d6n
- KVW5+p38=
-X-Received: by 2002:a17:907:3c86:b0:b7c:fe7c:e383 with SMTP id
- a640c23a62f3a-b8444f2399cmr1098703566b.22.1767983212611; 
- Fri, 09 Jan 2026 10:26:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHn+2pkPGjCCgAXyKF1IvhdiPt14uLaAZ8UTEE/3xgukEeOvxqMn+y8k8P1aGV5hPeAhfKsTw==
-X-Received: by 2002:a17:907:3c86:b0:b7c:fe7c:e383 with SMTP id
- a640c23a62f3a-b8444f2399cmr1098699366b.22.1767983212160; 
- Fri, 09 Jan 2026 10:26:52 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.114.194])
+ d=1e100.net; s=20230601; t=1767983722; x=1768588522;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/B7FXO9doS4KJrmAFc+kmK6Yc8Xt2URaw1dLL1hS4W4=;
+ b=j8trCj/S3KeW3ao8X5X6kMvKsgN1kJbgWWIUPeeij3VxHHq65EMyljZtq/f2TDsU5n
+ 8j4g8vMLLe+bHv+p1EELgmW9mNf1RvTF5+CSUs1h6tq5vIJF4veBUmCBZI8GIx6aom28
+ DtdlC1l241d4VXDjjxxY+yTVS+mRqDnffS3lBXFP2rVgVnBmUATdxJwNPAq5REKbgwMy
+ GYXUSwDz5ekL2JTEX0KocP3t0E0Xvd72/ZfWfeCLBNEBPGiOYQlnJYhAJjL3TWSPA3ma
+ cqP+blZ/ThgJ3MZUyiAzlQ9w1q3k7sVdrg5FXcWLZrOKIt0/sFYPJGp+XV2i4T+rmHw+
+ o5kA==
+X-Gm-Message-State: AOJu0YyNXFOIozYf6+oI7SDr8ajPuIcVLus3Q1Cytukh+P+agIICI5B8
+ 17m5n4nNW4Go/kajFZEGrMe0+grgyamq8mMtYqAzFfPDJsAklHAbgzF+gDOGnMsRJHI=
+X-Gm-Gg: AY/fxX6CdWXp+H14ohSnTbmV7/qR7Rs4JJ/nclaJNNjngQbDm5cATsaHf8OSKsKe3rb
+ WDiHc9mTYQ4+8iHP7ONt4jzQVoW8SX/L3Wl343HE1FGRzYTCrX+x3eGY4KBFod9MlZwXnBUvsaE
+ KJ7Px/3Twx2NXFVtM8P4ifQ8weiXnKd6ofqC3CpKW9pQmffK1rgj91F1yawb69klr/UWBiHy5rU
+ uYwJ5gJagcCLrjmWY90tXD9gJk0XUu1LGuYtGuPqToCxrpiMzzbQVfGPXifxBUDjwWTrgM2L+WT
+ HXt3V8o9c1TGM7xtl8UWrDNJ8zE5qVfT/QJGNnTMEsYcQBYf0w6PkCSv0Dngk7x+VBzvymNGvYl
+ yNx03XHJFRv/OrEcKoKg+FA2D///REzAgyTsZOZ07vwIY/jyRT+4lDmLkFrPxnooMjfS/iuo11W
+ AwNaOgE0f3s71D+yqCqjRneaWMTWNe+jNR+3ooEbVZhyrtNAJHxACj2osH
+X-Google-Smtp-Source: AGHT+IE/pkes6krTOUdF1ekKTMoenVH3rc8x6lJaEvaydaD2Gd5qII3fy18NoyQFi45tKfZMHe+zCQ==
+X-Received: by 2002:a17:902:ebcb:b0:2a0:c84f:412c with SMTP id
+ d9443c01a7336-2a3ee4e2e12mr106896985ad.57.1767983721641; 
+ Fri, 09 Jan 2026 10:35:21 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b842a517cf1sm1169076466b.59.2026.01.09.10.26.50
+ d9443c01a7336-2a3e3cd46a9sm112685765ad.93.2026.01.09.10.35.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 10:26:51 -0800 (PST)
-Message-ID: <20391bae-fc6e-46e6-add1-add11e35852e@redhat.com>
-Date: Fri, 9 Jan 2026 19:26:50 +0100
+ Fri, 09 Jan 2026 10:35:21 -0800 (PST)
+Message-ID: <7e742b47-7c7c-4d96-9462-2d98d678a62f@linaro.org>
+Date: Fri, 9 Jan 2026 10:35:20 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 17/29] pc-bios/s390-ccw: Refactor zipl_run()
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-18-zycai@linux.ibm.com>
+Subject: Re: [PATCH 14/29] include/tcg/tcg-op.h: introduce TARGET_ADDRESS_BITS
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>, Anton Johansson <anjo@rev.ng>
+References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
+ <20260109053158.2800705-15-pierrick.bouvier@linaro.org>
+ <5883ace8-ec8c-4632-9761-615462582254@redhat.com>
+ <13d81894-53c2-4fda-86da-c9ec484c6ef3@linaro.org>
+ <CABgObfb916FeNESDjOhkGx9wqNXqwovWDVx1breg6E8vF9QYvg@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251208213247.702569-18-zycai@linux.ibm.com>
+In-Reply-To: <CABgObfb916FeNESDjOhkGx9wqNXqwovWDVx1breg6E8vF9QYvg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,15 +112,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/12/2025 22.32, Zhuoying Cai wrote:
-> Refactor to enhance readability before enabling secure IPL in later
-> patches.
+On 1/9/26 9:42 AM, Paolo Bonzini wrote:
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/bootmap.c | 51 ++++++++++++++++++++++++--------------
->   1 file changed, 33 insertions(+), 18 deletions(-)
+> 
+> Il ven 9 gen 2026, 17:21 Pierrick Bouvier <pierrick.bouvier@linaro.org 
+> <mailto:pierrick.bouvier@linaro.org>> ha scritto:
+> 
+>      > For them, the death of target_long/target_ulong is not really
+>     possible,
+>      > because they will have to reinvent include/exec/target_long.h for
+>     their
+>      > CPUStates.
+>      >
+> 
+>     At this time, I don't have a simple solution to provide to workaround
+>     this. As long as compilation units are duplicated, you will have
+>     duplicated symbols for any extern symbol, thus preventing to link the
+>     final qemu-system binary. So duplication has to be eliminated, one way
+>     or another. And multiple type definitions is a barrier for this.
+> 
+> 
+> Yes, the idea is that if the "single binary" will include both i386 and 
+> x86_64 targets, they will both use the TARGET_LONG_BITS==64 version 
+> (using it also for the 32-bit target) of CPUState, of the TCG frontend 
+> and helpers, etc.
+> 
+> IOW the single binary could build a third copy of target/i386, or reuse 
+> the x86_64-softmmu one.
+> 
+>     By making all files for an architecture "common", TARGET_LONG_BITS is
+>     eliminated by design, since it's a poisoned identifier.
+> 
+> 
+> Good point.
+> 
+>      > include/exec/target_long32.h
+>      > ----------------------------
+>      > #ifndef TARGET_LONG_BITS
+>      > #define TARGET_LONG_BITS 32
+>      > #endif
+>      > #define TARGET_ADDRESS_BITS 32
+>      > #define TARGET_LONG_SIZE 4
+>      > typedef int32_t target_long;
+>      > typedef uint32_t target_ulong;
+>      > #define TARGET_FMT_lx "%08x"
+>      > #define TARGET_FMT_ld "%d"
+>      > #define TARGET_FMT_lu "%u"
+>      > #define MO_TL MO_32
+>      >
+>      > include/exec/target_long64.h
+>      > ----------------------------
+>      > #ifndef TARGET_LONG_BITS
+>      > #define TARGET_LONG_BITS 64
+>      > #endif
+>      > #define TARGET_ADDRESS_BITS 64
+>      > #define TARGET_LONG_SIZE 8
+>      > typedef int64_t target_long;
+>      > typedef uint64_t target_ulong;
+>      > #define TARGET_FMT_lx "%016" PRIx64
+>      > #define TARGET_FMT_ld "%" PRId64
+>      > #define TARGET_FMT_lu "%" PRIu64
+>      > #define MO_TL MO_64
+>      >
+>      > ... and use them in include/exec/target_long.h:
+>      >
+>      > include/exec/target_long.h:
+>      > #ifndef TARGET_LONG_BITS
+>      > #error TARGET_LONG_BITS not defined
+>      > #elif TARGET_LONG_BITS == 32
+>      > #include "exec/target_long32.h"
+>      > #elif TARGET_LONG_BITS == 64
+>      > #include "exec/target_long64.h"
+>      > #endif
+>      >
+>      > Then the single-size targets can replace TARGET_LONG_BITS with:
+>      > - a "#define TCG_ADDRESS_BITS" in their translate.c
+>      > - a #include "exec/target_longNN.h" in their cpu.h.
+>      >
+>      > Dual-size targets, instead, can add to their cpu.h an initial stanza
+>      > like this:
+>      >
+>      > #ifdef TARGET_I386
+>      > #include "exec/target_long32.h"
+>      > #else
+>      > #include "exec/target_long64.h" // x86_64 or single binary
+>      > #endif
+>      >
+>      > and keep using target_long.
+>      >
+> 
+>     I'm not sure what we gain from this header mechanics, wouldn't that be
+>     better to eradicate TARGET_LONG_BITS completely instead?
+> 
+> 
+> The problem is that dropping target_long in CPUState would be 
+> inefficient. For example i386 registers occupy 32 bytes vs. 256 for 
+> x86_64. So I would like to keep 32-bit registers for the 32-bit single- 
+> target binary.
+>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I agree, and that's why the current solution is not the final word on 
+this question. My position on the single binary is that runtime 
+compromises can be acceptable on our translation path (since it's not 
+where we spend most of our time anyway), but definitely not on code 
+generated by tcg, which has to be optimal.
+
+In the first version of this series, I defined TCGv as an opaque type 
+(i.e. not typedef to i32 or i64), and wrote wrappers for tcg_gen_* ops 
+that were casting it to appropriate type and called the i32 or i64 
+variants based on current context. After talking with Richard, I 
+understood it was not useful for target/arm, since code has been cleanly 
+splitted between 32/64 bits, so dropped it for the TCG_ADDRESS_BITS 
+approach.
+
+That said, I still think the opaque type + wrapper approach has its 
+place for some architectures. It could be used for code where rewriting 
+is too complicated, and still allow to generate efficient code. The 
+downside is that we need some boilerplate in headers to generate this, 
+but it's not something a macro can't help to deal with.
+
+> Compared to the current mechanism, it decouples the choice of 
+> TARGET_LONG_BITS from configs/targets/ and makes it possible for target/ 
+> */ to pick its preferred length when built for the single binary.
+> 
+> But anyway this was just a brain dump—we are in sync for what is needed 
+> for this series.
+> 
+>     With Philippe, we introduced target-info.h, to precisely find this
+>     information at runtime, with target_long_bits().
+>     As well, as you can see in codebase, target_long_bits() is not used in
+>     many places, and especially, it's not needed anywhere in target/arm. So
+>     it does not seem needed to keep it alive.
+> 
+> 
+> I agree that target_long_bits() should be needed almost nowhere (maybe 
+> it's needed for VMSTATE_UINTTL migration but not much else) because 
+> ideally all use of target_long/ulong would really be confined to target/ 
+> and not be in common code.
+> 
+> It could be called like an x86_ulong, but it would have to be redone 
+> almost the same across all the dual-size targets, hence it's easier to 
+> keep the current name and provide a common mechanism.
+> 
+> Thanks,
+> 
+> Paolo
+> 
+>     Thanks for the feedback,
+>     Pierrick
+> 
 
 
