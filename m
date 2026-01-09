@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A64D1A61E
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 13:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBECD1A61E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 13:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veCNY-00074e-2U; Fri, 09 Jan 2026 08:18:12 -0500
+	id 1veCND-00070c-6g; Fri, 09 Jan 2026 08:17:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1veCN3-0006yB-90
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:17:43 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1veCMp-0006wz-9Z
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:17:30 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1veCMw-0005tH-QJ
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:17:36 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2a0a33d0585so29152045ad.1
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 05:17:30 -0800 (PST)
+ id 1veCMn-0005qz-4a
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:17:27 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a0fe77d141so34183335ad.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 05:17:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767964649; x=1768569449; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bdGoioyK2QiPOyfMp3O2eTqnnXisFArETNv4sYqKAKU=;
- b=mafPjb9lqyHwYP9IlRH6HKtoBif1mqzxYjcps8ylFUTfTU3e5fDZiLQq9JaPayVmv1
- 9oM94ZTaZlX98myjc/DuMeD1Kt8wnkmSdpUi+oxvi6srp13gLVKGQ245s1uSp5HG4kuF
- 4bd3pMsVEulOmrshJkR2SAiL+zsYhjMEz0kpL0PtdT+s0pYbV3vKj4Qk/TXbQPjh7pja
- XK4oXPm3+JxnOI4C1SpjFn9ECMWuQpvwC16lV7EwNI2QrKduXF94Xd0BfvBOTScrRujq
- G1bdyFxyDbS1gBOzWu7pdDuqt5W5asgcoVFC9SHgai9+c8RJdw/6Uknmy1MMfUXEuofk
- 0RmQ==
+ d=gmail.com; s=20230601; t=1767964643; x=1768569443; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=1Iw04MMwLGA6t4YCdXdITwXoYyAryedVdQjv0cAR8/I=;
+ b=WbegU+exTt9p0SDGx15qyCOijBWWwWYBMYO7BYy9EB4Trt3znt2VLfiM+10r8QJs9y
+ FbwtxbyzLISRVH1JF02BYu1EJulvH8mM+ryiq9nMdHaJdBBGKT6geoF/B8XYi6iEiM1f
+ hQHwJM2J7X5tTDpiBTHWloVokRaNB3I2BUMrWHhdA0w0O1qWzJXTI69FRXg4HocqLBMk
+ IGB6F8n04gKJQvursqnL8H6uA5BaNs8DUGa97kzp7vV5F8SECU9VCvwNa3KkIu6r7gxk
+ jXkfEmI/Rn7dHqXTAr3mig8NXAYfb1rAXmqiPnmkkI4+w8dlC0E2DxZ5jH7IeDN5jNv6
+ rVyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767964649; x=1768569449;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bdGoioyK2QiPOyfMp3O2eTqnnXisFArETNv4sYqKAKU=;
- b=reDma1So2/JesRryJX4UZWWJBmQP1jmIbtoaQFD31JS+iyNIMQqm4qi0y4tULeIV2+
- RdkVlxRk2ewI6l9rmz3ebqs8wo5L5oMYHKmBzNxeHoLZZxTVkA/cjTfE92MGxhwGM/Vi
- /8dQo3mT+omUoZDYJcHsnRsk7F8o5aaXMloAQW5gdiWeYJoVcdMkUS/vnCHz6WOj84a4
- 88c+dQBKy4WmA3sb3gwUcGqLIA8mwgbPzAshs2CoA8m66bqcKXqasPmpWVDVIQWZthn8
- kB2EVhZomi7GRY8Lf8A9bhk2rUo326B/O/PqEfdMgO+Tr1G1cdEYD30i94Qj8RY40AFB
- sytw==
+ d=1e100.net; s=20230601; t=1767964643; x=1768569443;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1Iw04MMwLGA6t4YCdXdITwXoYyAryedVdQjv0cAR8/I=;
+ b=j00xSxdePli7/oGvMtWqLtYZpK5BWSHPY7ax44AAcKsqgt5mIzSdu5h6ekCUB63Fs1
+ AIYTTFEjlRqbDSd/SJ+NyBBlk8kgVg4qf68RhRMl+Tl73QsZAV+WSQeP0RThG/i0cBER
+ nIREUn0kJWrJ04k1TYcFCcX6ZfSP1yX6qJPT0mJGUVimYToGoKibYL9zZvE9WNWoaAKr
+ wWyU3pke/sHqODGzNZzC9orsD1TDTibY5sc3MhEdpr2KdiMEBwYri3oSY5QGTYifVK+q
+ Kdab7GBaei6GfxM1KYAA72ZmRnD4Rb3X99wkoxsk9+PDJ1AzaVsSx5lKkAFFDzfvMQAa
+ uGBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWov7QD4KyEWAQQRbj3mrc1ZGzS/6QHy9rk293N73RQp8o9QUk/oT9Y09eWJOEVFraztJAZPsJkVthq@nongnu.org
-X-Gm-Message-State: AOJu0YwpURCgDY7r07Q3jcMz6JMMzAoOKrZgBlvrqBGXalTIkjq3YsZY
- 6MXI59JrvuBoBGOMeSwiA/oWBp8S+a4oUdKi74PJ7KflLgqaKMh6EIPm
-X-Gm-Gg: AY/fxX5uBwNczHeTMCPvBsH24uyxfJ4oWMDgwTAPXZq+y05pEH8R9exVt6fIwL4EKBP
- +o9I95doTN8ltmEpakehRZZsERK0Yldb8XRtFi95GbZ8V+nuD9COjZtZ32ewJYTg+Weg9VdtJ7u
- Eiy4aZNTrwSW50OVwVwG3PiKDEfMX0U+93j+sUaGf3tgMODn9o8OHRRz25L4/ALiQHz9EJ/2g8r
- D3PQfB+FKGt2Zcl2ayeLdHB7ox76X2kRlDK9XTj+E2RpQOPnvfUSfNwpeP/ft/2yNISDkZuAI/K
- NKItoiD+CE2nW4Ct0AAPjBpQZxZmYbojhLGyg/OQCkbqgopmiqQ7N1e+tFw1LvFGliLpsf7Foyt
- 3aA5e1hfRjcO/vCwqeRjYShL8VinExSdUaOJAXusyjq1KaSNB8WB1joxbFspbqg9sFMI3xVY8jx
- /oFqFyow0V9QLTzUPk8gn1
-X-Google-Smtp-Source: AGHT+IEL9n52ei84W9xn7OVtF8WoJOOzh4g541L875Gw/s42e1h6ru0IcBxYJqy7fZ/YPzVGKEj1Ng==
-X-Received: by 2002:a17:902:cf05:b0:2a0:97d2:a264 with SMTP id
- d9443c01a7336-2a3ee49015dmr86832435ad.37.1767964649069; 
- Fri, 09 Jan 2026 05:17:29 -0800 (PST)
+ AJvYcCX2gxMbO1yDA/crAo/IMXu9wEccw0NVnb32UWhFHU348qmCPZAro0rwa/xM74wcBK6cbW3NBdpU0SlT@nongnu.org
+X-Gm-Message-State: AOJu0YyipoWh7oUZD6IKkt282qaJvybEp3TV6N7i9AmFbX8N7gIl0xIE
+ Zx0rt/EQlU/BlpJmjX66BmEHUBNBU+acYgSp/KIi/XjLOzs335aItATR
+X-Gm-Gg: AY/fxX5LPdBHYI4jE/qBxpfNbr6REOp12FjcZeQUjB3N5FjrH07DKlLtDV9f40oLFM6
+ WRvytLRPXRmMo7cru0XvT6KZxCIZpWz/YFisJIzmumYLzhyZOocVAI0s2YdtJqM6OtDdKdiYu18
+ eeJDAqqNWWnr4BlZQkcL4dubWpPEP9DH1WOwgKOJlxJBCAjKXa6qzwMe5+IdyP4VJc2Nvh/6Ks5
+ 484lKkNJKuzkQpmSPGd3d6xjYtcPvBzzp+XstxY6LkEY7gz7QaR9vGtdl3J5oC1Idiqssf0G+Sv
+ TdBUgjaEkUs2g1ox6fNiNZrFLwoy4mfp7cMzVJwdvGfh9uRPYOrOq7YSoh2IfImC0lBpp4vYdV+
+ Au+kJuLI2AMfRnjbb+Z0AWPpH/DJnDA50Gfq1qkEnNmbXoHcpRCqvBZYsuRYPxjyVvLkf8dS3Gs
+ LvvIW64dvPAItS7hJaAJN2
+X-Google-Smtp-Source: AGHT+IEuiBciDSQ9CJri2b+xevRcdp79Xp9/goxv5Ika+HcdkV+8BkMPQQx4w5KFk/ehR9UxJuQVJQ==
+X-Received: by 2002:a17:902:cecd:b0:29f:e787:2b9b with SMTP id
+ d9443c01a7336-2a3ee4da376mr92071185ad.41.1767964643427; 
+ Fri, 09 Jan 2026 05:17:23 -0800 (PST)
 Received: from donnager-debian.. ([45.124.203.15])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c47390sm106103735ad.25.2026.01.09.05.17.24
+ d9443c01a7336-2a3e3c47390sm106103735ad.25.2026.01.09.05.17.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Jan 2026 05:17:28 -0800 (PST)
+ Fri, 09 Jan 2026 05:17:22 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Vijai Kumar K <vijai@behindbytes.com>, Ran Wang <wangran@bosc.ac.cn>,
  Michael Ellerman <mpe@oss.tenstorrent.com>,
  Joel Stanley <jms@oss.tenstorrent.com>,
  Nick Piggin <npiggin@oss.tenstorrent.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Subject: [PATCH 1/4] hw/riscv/boot: Describe discontiguous memory in boot_info
-Date: Fri,  9 Jan 2026 23:46:52 +1030
-Message-ID: <20260109131657.396794-2-joel@jms.id.au>
+Subject: [PATCH 0/4] hw/riscv: Boot setup improvements
+Date: Fri,  9 Jan 2026 23:46:51 +1030
+Message-ID: <20260109131657.396794-1-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260109131657.396794-1-joel@jms.id.au>
-References: <20260109131657.396794-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=joel.stan@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=joel.stan@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -94,7 +90,7 @@ X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
  FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,72 +106,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+The first two patches improve the boot infrastructure for riscv so
+machines with split memory regions can load payloads into the correct
+region. 
 
-Machines that have discontiguous memory may need to adjust where
-firmware and images are loaded at boot. Provide an interfaces for
-machines to describe a discontiguous low/high RAM scheme for this
-purpose.
+The second two patches improve usability when attempting to run opensbi
+in less common situations.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- include/hw/riscv/boot.h |  7 +++++++
- hw/riscv/boot.c         | 11 +++++++++++
- 2 files changed, 18 insertions(+)
+This series are prerequisites for the Atlantis machine.
 
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index f00b3ca12245..115e3222174f 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -28,6 +28,10 @@
- #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
- 
- typedef struct RISCVBootInfo {
-+    /* First contiguous RAM region. If size is zero then assume entire RAM */
-+    hwaddr ram_low_start;
-+    hwaddr ram_low_size;
-+
-     ssize_t kernel_size;
-     hwaddr image_low_addr;
-     hwaddr image_high_addr;
-@@ -43,6 +47,9 @@ bool riscv_is_32bit(RISCVHartArrayState *harts);
- char *riscv_plic_hart_config_string(int hart_count);
- 
- void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
-+void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
-+                                        RISCVHartArrayState *harts,
-+                                        hwaddr start, hwaddr size);
- vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-                                    hwaddr firmware_end_addr);
- hwaddr riscv_find_and_load_firmware(MachineState *machine,
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index e5490beda007..9babb85b0458 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -69,11 +69,22 @@ char *riscv_plic_hart_config_string(int hart_count)
- 
- void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
- {
-+    info->ram_low_start = 0;
-+    info->ram_low_size = 0;
-     info->kernel_size = 0;
-     info->initrd_size = 0;
-     info->is_32bit = riscv_is_32bit(harts);
- }
- 
-+void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
-+                                        RISCVHartArrayState *harts,
-+                                        hwaddr start, hwaddr size)
-+{
-+    riscv_boot_info_init(info, harts);
-+    info->ram_low_start = start;
-+    info->ram_low_size = size;
-+}
-+
- vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-                                    hwaddr firmware_end_addr) {
-     if (info->is_32bit) {
+Nicholas Piggin (4):
+  hw/riscv/boot: Describe discontiguous memory in boot_info
+  hw/riscv/boot: Account for discontiguous memory when loading firmware
+  hw/riscv/boot: Warn if a ELF format file is loaded as a binary
+  hw/riscv/boot: Provide a simple halting payload
+
+ include/hw/riscv/boot.h    | 14 +++++++-
+ hw/riscv/boot.c            | 73 ++++++++++++++++++++++++++++++++------
+ hw/riscv/microchip_pfsoc.c |  6 ++--
+ hw/riscv/opentitan.c       |  6 ++--
+ hw/riscv/shakti_c.c        |  6 +++-
+ hw/riscv/sifive_u.c        |  3 +-
+ hw/riscv/spike.c           |  6 ++--
+ hw/riscv/virt.c            |  7 ++--
+ hw/riscv/xiangshan_kmh.c   |  6 +++-
+ 9 files changed, 104 insertions(+), 23 deletions(-)
+
 -- 
 2.47.3
 
