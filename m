@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F102AD232DF
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 05:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2477D232E1
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 05:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve56l-0004S9-Kk; Fri, 09 Jan 2026 00:32:23 -0500
+	id 1ve56h-0004Lp-HJ; Fri, 09 Jan 2026 00:32:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve56j-0004NG-JV
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:21 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1ve56d-0004GN-I8
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:15 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve56h-0003j8-VZ
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:21 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-ba599137cf8so1033303a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:19 -0800 (PST)
+ id 1ve56b-0003hJ-FC
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:15 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-34ccdcbe520so1320267a91.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767936739; x=1768541539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767936732; x=1768541532; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1pzH52nruw/NQPCqhWmjdkOJqM8QRb33UktwGYQCddQ=;
- b=SUqKLBk/adweulHYA5sBKXSIag6gtoknWVge1wTD6Dk8gW7TkEFG9RGdMJ+lji8YlA
- 9ldffxHKqQq1DsQSCjyULyLj+R6DteM/V4JI1KC278wlUj/50pjxQ85oKTftuD+1eCHE
- K0iQN3n6VWeled4p4R8ZtqQLIJp6kBASSDtiYbirUFdE26r1XSAk3DiGmcluxKtID6WC
- Gc6Aq5xZH57Q1BDhHLLX3wlMKjXJmR3Z69L48q/zR/CS/UA/idEimWf0rrUHLXPwP2pg
- tOnwegQKuhy6kB1g9fy5C3MHHIf8hh6BzuW9+NfZLrgaeZ27+pbS2j0AT2Jkb7baQvg8
- ez5w==
+ bh=GLPfdmhylIgX6nfX4OdRRUnfm7zzB+KSHASixl5iY8Q=;
+ b=InUjiuSxyFED6znf2uW7Cx3EKNg0aDftGWhViONX7RCGBGWbCOpm9gliJFbg/ThMRA
+ oLFV3TgZC7/tVHC42IvUswZNvznRRbVHO2ZZ4aDet8AvfmfC9IdsQhgxvhJkoMN3pOdj
+ Az+7grYJd7RnBhHgKltimpm8nHAYKIXsyLI6gHoQG7VxIvDTip9c3lgvWd6r0km5as5q
+ YlJggr5t39JQylIjDrwZnmofnrLgxR1BnyK3nd0D9pVfrufUPtzS5EYMmnprQ9S0tipR
+ DO7wANcZ2QolF2ruesd84m4dRJaSq/pAJTAVK2XdypZEh9/hPKktlJyFxgnxANX7rGjb
+ C2Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767936739; x=1768541539;
+ d=1e100.net; s=20230601; t=1767936732; x=1768541532;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1pzH52nruw/NQPCqhWmjdkOJqM8QRb33UktwGYQCddQ=;
- b=tZ/yRafg7zFqGCiHiCgtzzxtBMdcSO2GuBSsTF0J/LioZv6BOraZ9Q/qpCw/sVIe8N
- 5Z6Ri+CH2C8wqymnZP2aYrthCSCQqeYoGejcLkTw/mp3mUMcHtIcCz07sTkatechPDn8
- B0qRchO6timu+dW1lsF2paxeW0flVzFxHmemcJTNe0K0pCHBUIOUZOqfq2VMb1qL0oDi
- rLuHYJ6Ji/xAKr6MT6f7zWYZjeo4xAxInLkCZBoH8O6+ULq+6VPUdiE6XL4N5BLd9234
- yjzVV7VmFDQR7n5GXevaM6UPh0FVUpvovaZz35WqijNgsF2fRp3eiSlySiYV+Yam7zB8
- KyWg==
-X-Gm-Message-State: AOJu0YyXjbOnLCpA13skQL5B3EzW2hUGWSjxLbyYTqO10oQJGE6+EoHz
- OTHTVcdSlAta7s5EAutVUSx+C4lcKof9or6nJs9A9oeIjnTthnLmqEXV3EouLgHxM0ovWs3U/ed
- htu7J
-X-Gm-Gg: AY/fxX6X/if5xMi0w9TN8wPhsYXsORadgCmBn/mp5AJHskyvHDqaBRQ/jQpkxXKMnaV
- DGQJpZ6kgFnTGeBD2YFBMBVs1J8nhFO6abFN4j1tZGVq57H5sRQH2ysWE4u3AzK6hm6lshsZSKp
- NF/5/mhll402GGFSp3iCS4u+B6eK3N3O5zdC3vqD+v98WECBpKKTC7utnLl4S8XErRbPDnc3khB
- lpY1xISOKkWkn4U1Q2ZxwXUxEputWrDXYK65+ZUum5t6yVQETyp6NM2TgnHkiMr9ms12TU6BXrX
- UFsUR8OcXI0/6lw0HQ12LqUIl4lXt1UIbazqTVmnpQPpnWfp7I+UW4hAgC6IjsWKFWAYmEtNuD9
- 5dBZr5i5b3On7rjC64Ev6psn2A0rEVR10WRiCAp/N0XSZGMh2T+eGM/Oww93tXhAUqPuwYawmlM
- cqjl0e1D5GvYxsnxeu0DaXzT7dUP35E/IZD7KR4ehL+EaIgQfR1zW0bcbuamKym2ML
-X-Google-Smtp-Source: AGHT+IG5DhFXsHuSJfkCEqhAjL8N3K2UTZP1dj2CMbohoovDrvWhXa/oaAtqmwdUgvwn+JQCw8SP6w==
-X-Received: by 2002:a05:6a20:a105:b0:35f:5896:859b with SMTP id
- adf61e73a8af0-3898e9c8310mr9649748637.4.1767936738540; 
- Thu, 08 Jan 2026 21:32:18 -0800 (PST)
+ bh=GLPfdmhylIgX6nfX4OdRRUnfm7zzB+KSHASixl5iY8Q=;
+ b=HMBKCF4SPQYO9QPl9AzaOL7zCQSH1VHJHg5vAt98lFCV1q/94IBQOaEbs1I1zWRqsx
+ 0OLMWmVcyq3QeFEPYWeWqDoM8OHEGx+z8HbMZwqVkqJfddoHu5zorkxRMGCZYEStni7g
+ bjpJilpHgVkfTVaVmTDFLg+G2azMVXUmCP6AJJPjCLMEZHfCM5QKxmIiaQbEbAfvK1Q0
+ JTYJmbJi7hxIQ0arCU+ZwRYEWLGUygAGe7/E4/5fQEsKGIrreTuL06tPEjxaxht3THeh
+ C4TR1T0nbw0SNCBQNS12xFbZILJJ5MdDVxajGJIvinIv1V+4fIT/dciKdfTzRrZ841U5
+ RIbA==
+X-Gm-Message-State: AOJu0YyxuLFhFxI/KTJsU4KDhl/lxwP1dibHO/t7KBn/onTk/WNFqnaD
+ ECn0kQjs0vzs3cwwWcGjLQZ3B3ZBEGS6OloI323fetdW+R+hoo8XSfattklL9yQJ4/S7IGmxJqe
+ BnWCG
+X-Gm-Gg: AY/fxX7Q70Al+BtahERMReUxPD9ZUs/11dIKYJY+ENfpOpM1+GXQ1sQkf3YdnOXNYAh
+ Gx56yny5v0vLL2eTBf4htFhvXYQSQQYGwnJmCtPP/NEcs9hAMoPOmvCHa40G2/CsXC1IDdCFn6t
+ W8+skT3sBn7ahQSSpPs7MOS6PU2v4cN31AC0VBSj2Y5IKrMk68aP9jluru1RrPJTTf+ziYIzOwC
+ aFoJq5UshZrib9OVqOYVlNdzyk8SvEGwivwTqyJ4iEONDZxaY1Xph9GdTL1qgChRcPLzuftSTW7
+ 9kOLRkw3skcD5TxzsvUnCCOLJ1R6jqBoUggMSZp9A4uTteOxTypy6v16FdV+4ZResxsZk5HnCc2
+ zzXQo8wjd4Bp3RhJrWW2X2X0zfQltSVFYqxrLb6bSQlZ60mc9XYeHlUvfIsB9OGaD6QOxTgkA96
+ A9hYJfvCASh4TjymKt8ZM6CPJ+nd0Lu09l7dVJEbrKeT/kycz0Ha7f8hYdpK4/RLZl
+X-Google-Smtp-Source: AGHT+IFAtwGDvwt/rrtUGU/Z2nvtsH6tyR+ykcMLTn4GR20oHY6xGJoO39+fW4Ay9pKmP83FNqREYg==
+X-Received: by 2002:a17:90b:4f81:b0:34f:5039:5ac7 with SMTP id
+ 98e67ed59e1d1-34f5f84a94dmr11384205a91.6.1767936731542; 
+ Thu, 08 Jan 2026 21:32:11 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.17
+ 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 21:32:18 -0800 (PST)
+ Thu, 08 Jan 2026 21:32:11 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -75,16 +75,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 15/29] accel/tcg/translate-all.c: detect addr_type dynamically
-Date: Thu,  8 Jan 2026 21:31:44 -0800
-Message-ID: <20260109053158.2800705-16-pierrick.bouvier@linaro.org>
+Subject: [PATCH 06/29] target/arm: extract helper64.h
+Date: Thu,  8 Jan 2026 21:31:35 -0800
+Message-ID: <20260109053158.2800705-7-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,88 +107,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With TARGET_ADDRESS_BITS mechanism, it's now possible to specify which
-variant every source file is written for. Compared to before, it means
-that addr_type will now vary per tb translation, where it was constant
-for a given target previously.
-
-Instead of introducing a new parameter to translator_loop(), we simply
-add this information in TCGTBCPUState, which is returned by
-get_tb_cpu_state() during the translation, and passed down to
-tb_gen_code().
-
-To avoid modifying all target with this new field, we simply define a
-default value that is equivalent to current state: use
-target_long_bits(). With this, we can progressively convert new
-architectures.
+This allows to get rid of TARGET_AARCH64 in target/arm/helper.h.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/accel/tcg/tb-cpu-state.h | 12 ++++++++++++
- accel/tcg/translate-all.c        | 15 ++++++++++++++-
- 2 files changed, 26 insertions(+), 1 deletion(-)
+ target/arm/helper.h            | 6 ------
+ target/arm/helper64.h          | 5 +++++
+ target/arm/tcg/gengvec64.c     | 1 +
+ target/arm/tcg/helper-a64.c    | 1 +
+ target/arm/tcg/mte_helper.c    | 1 +
+ target/arm/tcg/pauth_helper.c  | 1 +
+ target/arm/tcg/sme_helper.c    | 1 +
+ target/arm/tcg/sve_helper.c    | 1 +
+ target/arm/tcg/translate-a64.c | 1 +
+ target/arm/tcg/translate-sme.c | 1 +
+ target/arm/tcg/translate-sve.c | 1 +
+ target/arm/tcg/translate.c     | 9 +++++++++
+ target/arm/tcg/vec_helper.c    | 3 +++
+ 13 files changed, 26 insertions(+), 6 deletions(-)
+ create mode 100644 target/arm/helper64.h
 
-diff --git a/include/accel/tcg/tb-cpu-state.h b/include/accel/tcg/tb-cpu-state.h
-index 8f912900ca6..b77c4dd5100 100644
---- a/include/accel/tcg/tb-cpu-state.h
-+++ b/include/accel/tcg/tb-cpu-state.h
-@@ -8,11 +8,23 @@
+diff --git a/target/arm/helper.h b/target/arm/helper.h
+index f340a49a28a..2af4ee4b51b 100644
+--- a/target/arm/helper.h
++++ b/target/arm/helper.h
+@@ -2,10 +2,4 @@
  
- #include "exec/vaddr.h"
+ #include "tcg/helper.h"
  
-+/*
-+ * Default value 0 means to refer to target_long_bits(). It allows to stay
-+ * compatible with architectures that don't yet have varying definition of TCGv
-+ * depending on execution mode.
-+ */
-+typedef enum TCGvType {
-+    TCGV_TYPE_TARGET_LONG = 0,
-+    TCGV_TYPE_I32,
-+    TCGV_TYPE_I64,
-+} TCGvType;
+-#ifdef TARGET_AARCH64
+-#include "tcg/helper-a64.h"
+-#include "tcg/helper-sve.h"
+-#include "tcg/helper-sme.h"
+-#endif
+-
+ #include "tcg/helper-mve.h"
+diff --git a/target/arm/helper64.h b/target/arm/helper64.h
+new file mode 100644
+index 00000000000..b6829779662
+--- /dev/null
++++ b/target/arm/helper64.h
+@@ -0,0 +1,5 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
- typedef struct TCGTBCPUState {
-     vaddr pc;
-     uint32_t flags;
-     uint32_t cflags;
-     uint64_t cs_base;
-+    TCGvType tcgv_type;
- } TCGTBCPUState;
++#include "tcg/helper-a64.h"
++#include "tcg/helper-sve.h"
++#include "tcg/helper-sme.h"
+diff --git a/target/arm/tcg/gengvec64.c b/target/arm/tcg/gengvec64.c
+index 2429cab1b88..e0276426874 100644
+--- a/target/arm/tcg/gengvec64.c
++++ b/target/arm/tcg/gengvec64.c
+@@ -18,6 +18,7 @@
+  */
  
+ #include "qemu/osdep.h"
++#define HAS_HELPER64
+ #include "translate.h"
+ #include "translate-a64.h"
+ 
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index ba1d775d818..e78bc5acaf4 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -21,6 +21,7 @@
+ #include "qemu/units.h"
+ #include "cpu.h"
+ #include "gdbstub/helpers.h"
++#define HAS_HELPER64
+ #include "exec/helper-proto.h"
+ #include "qemu/host-utils.h"
+ #include "qemu/log.h"
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index bb48fe359b8..3b63fd11eb6 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -31,6 +31,7 @@
  #endif
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index fba4e9dc21c..bc5d9d74e21 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -257,6 +257,19 @@ static int setjmp_gen_code(CPUArchState *env, TranslationBlock *tb,
-     return tcg_gen_code(tcg_ctx, tb, pc);
- }
+ #include "accel/tcg/cpu-ldst.h"
+ #include "accel/tcg/probe.h"
++#define HAS_HELPER64
+ #include "exec/helper-proto.h"
+ #include "exec/tlb-flags.h"
+ #include "accel/tcg/cpu-ops.h"
+diff --git a/target/arm/tcg/pauth_helper.c b/target/arm/tcg/pauth_helper.c
+index c591c3052c3..7073023d001 100644
+--- a/target/arm/tcg/pauth_helper.c
++++ b/target/arm/tcg/pauth_helper.c
+@@ -22,6 +22,7 @@
+ #include "internals.h"
+ #include "cpu-features.h"
+ #include "accel/tcg/cpu-ldst.h"
++#define HAS_HELPER64
+ #include "exec/helper-proto.h"
+ #include "tcg/tcg-gvec-desc.h"
+ #include "qemu/xxhash.h"
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 075360d8b8a..0ae0f80a892 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -21,6 +21,7 @@
+ #include "cpu.h"
+ #include "internals.h"
+ #include "tcg/tcg-gvec-desc.h"
++#define HAS_HELPER64
+ #include "exec/helper-proto.h"
+ #include "accel/tcg/cpu-ldst.h"
+ #include "accel/tcg/helper-retaddr.h"
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index c442fcb540d..e432a853d96 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -21,6 +21,7 @@
+ #include "cpu.h"
+ #include "internals.h"
+ #include "exec/page-protection.h"
++#define HAS_HELPER64
+ #include "exec/helper-proto.h"
+ #include "exec/target_page.h"
+ #include "exec/tlb-flags.h"
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index cde22a5cca7..b066da37891 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -18,6 +18,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include "exec/target_page.h"
++#define HAS_HELPER64
+ #include "translate.h"
+ #include "translate-a64.h"
+ #include "qemu/log.h"
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 091c56da4f4..f667b4374f9 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -18,6 +18,7 @@
+  */
  
-+static TCGType tcgv_type_to_tcg_type(TCGvType t)
-+{
-+    switch (t) {
-+    case TCGV_TYPE_TARGET_LONG:
-+        return target_long_bits() == 64 ? TCG_TYPE_I64 : TCG_TYPE_I32;
-+    case TCGV_TYPE_I32:
-+        return TCG_TYPE_I32;
-+    case TCGV_TYPE_I64:
-+        return TCG_TYPE_I64;
-+    }
-+    g_assert_not_reached();
-+}
+ #include "qemu/osdep.h"
++#define HAS_HELPER64
+ #include "translate.h"
+ #include "translate-a64.h"
+ 
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 07b827fa8e8..96bef4bbccd 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -18,6 +18,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#define HAS_HELPER64
+ #include "translate.h"
+ #include "translate-a64.h"
+ #include "fpu/softfloat.h"
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 63735d97898..8988c852983 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -26,6 +26,9 @@
+ #include "arm_ldst.h"
+ #include "semihosting/semihost.h"
+ #include "cpregs.h"
++#ifdef TARGET_AARCH64
++#define HAS_HELPER64
++#endif
+ #include "exec/helper-proto.h"
+ #include "exec/target_page.h"
+ 
+@@ -33,6 +36,12 @@
+ #include "exec/helper-info.c.inc"
+ #undef  HELPER_H
+ 
++#ifdef TARGET_AARCH64
++#define HELPER_H "helper64.h"
++#include "exec/helper-info.c.inc"
++#undef  HELPER_H
++#endif
 +
- /* Called with mmap_lock held for user mode emulation.  */
- TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
- {
-@@ -316,7 +329,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
-     }
+ #define ENABLE_ARCH_4T    arm_dc_feature(s, ARM_FEATURE_V4T)
+ #define ENABLE_ARCH_5     arm_dc_feature(s, ARM_FEATURE_V5)
+ /* currently all emulated v5 cores are also v5TE, so don't bother */
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 33a136b90a6..c85983f5313 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -19,6 +19,9 @@
  
-     tcg_ctx->gen_tb = tb;
--    tcg_ctx->addr_type = target_long_bits() == 32 ? TCG_TYPE_I32 : TCG_TYPE_I64;
-+    tcg_ctx->addr_type = tcgv_type_to_tcg_type(s.tcgv_type);
-     tcg_ctx->guest_mo = cpu->cc->tcg_ops->guest_default_memory_order;
- 
-  restart_translate:
+ #include "qemu/osdep.h"
+ #include "cpu.h"
++#ifdef TARGET_AARCH64
++#define HAS_HELPER64
++#endif
+ #include "exec/helper-proto.h"
+ #include "tcg/tcg-gvec-desc.h"
+ #include "fpu/softfloat.h"
 -- 
 2.47.3
 
