@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F96D277C2
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 22:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA688D277C1
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 22:31:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veKxq-0001xe-Fl; Fri, 09 Jan 2026 17:28:14 -0500
+	id 1veL09-0002wk-6E; Fri, 09 Jan 2026 17:30:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veKxp-0001xE-4T
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:28:13 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1veL07-0002wP-MQ
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:30:35 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veKxn-0006Yk-I2
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:28:12 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2a137692691so33156115ad.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 14:28:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1veL06-0000xu-3B
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:30:35 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-81345800791so2515918b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 14:30:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767997690; x=1768602490; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1767997833; x=1768602633; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GKEKJLLXd3Tl7xrQprnBJZYzTUdArdpKYe80LicB7+k=;
- b=VV0QbE2nauJCyjJ9wYz3qP6Ez65t12+9cckYvEYrdEY23aRMNB9Nm7ckp2dFk6TOAa
- 7G88nhNWgKkq/RmnKFyzOlsgIgrQiZRMsz3bTJdwkK8VdSHPlSkBOD3gzH52pgwVpYGS
- cPg3/hIuIQSDMxP3cxgYNeejbNp1ngp1pckMQ7vsD63u44C960wKnVXtYAM3tj/skzNM
- QhOH5PzCiT9zaaOwZiV/vGHzlIc0a+hn51Lao8BsHtBU3FG1ptQxhPlWOWj8eUaEQXJP
- 4II6fBFV6mVZ8FDDhGbzLfhRQe5NkBq4pI0jYJzfoCb+52mUBExQreU9flTzhjs+Coyw
- rTjA==
+ bh=sW332LLE7l+2cMlX/GQFJAG8A+GZO9XErWOYwgaJiXo=;
+ b=w+GCcthNvOq45araeHJGBuFkhdp/Ox6lwXQxDRGgYONSaYhC1R1XJOHNgRuWrFPHNE
+ 2OqsR0g1SzJodJEqI1foMZpsg8MZ79+pO+xgSQkj/nispwMgNc9M3eHF8+jNxNS6R/RU
+ Ij1nzC2EciSModsV8+FzYA2vA6fSlBSybwQEjFVZuxEcqg+yUH9gzjp9/+pKTgqxpviD
+ 1Rho+I8bObImv8jwAUM11vBRtBSgwhcjcJ1kW8wizZP7VHq58gWbyDgFzzCjufNWVZ0N
+ qYty0kEm5PIKCTtN7vtYD1N0UFabJxWaFJ3fLx6+w92Zr/oRRTj9D+qGRBzTg4eup/Vl
+ egbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767997690; x=1768602490;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1767997833; x=1768602633;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GKEKJLLXd3Tl7xrQprnBJZYzTUdArdpKYe80LicB7+k=;
- b=t41uJUJg5AuZqW0xUMObuZgEdmGYHyFAJgSMBfUKercnr6nz8Z/Ao0quSMv/RWDCzl
- k+mydcymuU/ZYVnmYggCyYYuCYq8rBu5eSvCnKqTNb//7WYrai2RAUm/xuERGieQh4hK
- 1WXMz/GVRKRBmySJWubGYXS2QpTZ/mm3ENPZyJJDXyvAq53/vGDcoEwLzzvcUsNlpumx
- UCpWeNpPdth1eJzuzUgkyDZPqrL9cWI/PXUROKmoCrTEuQMLI1P9cLtGtTpqsnookfVq
- 5Y3qSf5fiFOqzQgfs706Jb4ZkOOUvbUbxn1v12FnvP4+pA7rZfvVTwUJ6FovWTO5gsxF
- DIrw==
+ bh=sW332LLE7l+2cMlX/GQFJAG8A+GZO9XErWOYwgaJiXo=;
+ b=Rnu+VAvpNI+UC0/H3wIqINvhlDDUsMj6h1gXILAUMF/sivZciC9qcXGwzZ6pqa1/WL
+ V43ZRVjwRw95DKKqUNQFQ/Ey0EMOjiblhVndiQiHUTdm02J6mF+WioAHipoy5K7XHdb1
+ 81Mh13tBQsI1OyYAirnjs479qi09gammgfuM9S2jm5ObAfrPkEdM6RrA99Bl2UdYMwf7
+ TJ7lf1XXIhf7BqFInklnpKDXinH6l9nh1zv439cBOjut2Ywixu8Jpj90iz8gMAROyANt
+ nf8GpkINbQHIuD4eJdTqotpODhzbZszntvXPDpoQ2/UwQPxTvurTtgDQrMknkBqV8KC0
+ 8hSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVG0APiGgGNjkbk8T1ZJmVSAJlMI+QV+F18bcFwpvS4RhoMec2tAbQxRxls2gEiujXeXeHlsce9nZe1@nongnu.org
-X-Gm-Message-State: AOJu0YxlxewjG/5qJgJLh0lfiR/OTQG1Kb5yueMXxHteUcxffSp5NVq/
- 8wedxkoPF2087jb828vX1N4TMvmF3t49lD65owQGSt2VyK+WhWUEU5LOyPfHiladf6LRZ0ZTRe5
- 3EJWg/AY=
-X-Gm-Gg: AY/fxX7EXsV+LvKEqDD2zap+uUGDcPgYCumMRHoFXu8Mvn2tL/rvHto9mhWphPWT3Ir
- 3Ds9caSpo2HJGA84ef1jggQitmSweP9Kddyi03DxYke6ZR2lSNiGtplZyv5oty7I6u6ypS+xg3P
- Muvb7IbwTzvlcLOmnHNWPfI9eaufbRvbg2ie8TWPU0lEil94IOIPFbBuJ0UKulAFRJ5HfmyjVD3
- LhythZQQ/AI9UnHbByx5OAUJj95+jMB59r+0DxJM1TBYVZNefxdNVRRjWoIQZBsG7GzY7BNpqBh
- 94i3z2gzWvmNQKsEOgqbd7L5aOJIGxyiN3CL2wJ+LleiLR0vZdCn0oFkpy9319WjOx9wB4JUyqq
- ns/Cft20xcqJ9JRjx+ZAbn/mRuGQEE9i53t+OWjSt8bOz4J9EKICpQ5cU8oCVbXgU+kBEj5s3TH
- IPsvS1KUBhVPOncjIOiUMpJj1raw==
-X-Google-Smtp-Source: AGHT+IFFC11t8J2dG7EdTHy4Oi+24oNiVnrjyopFAcBm/cufc+ha0lKkEYlw48lA9f2jMoFR8Il7gw==
-X-Received: by 2002:a17:902:ea11:b0:2a0:f0e5:9468 with SMTP id
- d9443c01a7336-2a3ee4e8281mr100071165ad.32.1767997689957; 
- Fri, 09 Jan 2026 14:28:09 -0800 (PST)
-Received: from [172.23.81.179] ([202.86.209.61])
+ AJvYcCWJBmV3dbPm802B2Z1+fXFJpPndyLU9CPsEWKaq8OZ9juFvnycSFqBH1mKIG4Ykv2urmIS1nssuo7Vb@nongnu.org
+X-Gm-Message-State: AOJu0YzbQqE/l7D3BC0uvA7DqjEBkcQ0vijD1NZ/f+XZ99kXHIch9DfO
+ Bftg+rrTHpyMmnASevebJQDxujqhDihBm0He0Tj+i/cwrCjAryXyHis8Kj2trRGRYOM=
+X-Gm-Gg: AY/fxX7b7mT6D1aQ+2d6g4w7mflIcKNXMAZgslfZgrxsvVj0+HFkZ9K9Q9KCC4H6HLM
+ sb9Dq6MASgUl2hfcAEyoTIebFQC5OEIKL/LpagqFN+MCnWWROGiEjId6tXOs4uyLnmT2uKcMqjo
+ nJ0yS6uXv/3BaBzvh1ORJjFxBPHSGxFKlaxpuiUGuf4ON3TxXF0vVtijxwgyNvOQzBdbbwkGGCJ
+ DsbLGv+cnp6bcc6rTvAEp7iuy4S7AqpVgczcC944D06xfFJ67fMWnTHxwGK/T9sQSZG2hWpVvPR
+ XmQfEtdVrN4eqxNSbpKiCr/cOdMPgW685ZZXfUI4BNtdC9d+KmihJL4LGUggeFiFDN4rqvuIGkX
+ V5s/VLqKfOE+v+yKbvbC8nw149mg90ufKZyn/nH0s4CWUX0efxIWb2dENNpVv+BscLf9zTeNAFr
+ btNV9nnc8pQpDw4qNgMKhdnDFem6RfLENqJMVY86t05vXnou92GOnC2Bp8U+GxKM4R764=
+X-Google-Smtp-Source: AGHT+IFwhot1T7rMl75XIBbnDSWGkfccZ6XihTiBA62QixTqvNebQLXfavHJuTgCU0YypFAycn5TNg==
+X-Received: by 2002:a05:6a00:f9a:b0:819:9daf:a40e with SMTP id
+ d2e1a72fcca58-81b7f6df1c1mr9071769b3a.46.1767997832471; 
+ Fri, 09 Jan 2026 14:30:32 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cd495dsm114993475ad.96.2026.01.09.14.28.06
+ d2e1a72fcca58-819c52fd904sm11230981b3a.33.2026.01.09.14.30.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 14:28:09 -0800 (PST)
-Message-ID: <6465b320-aedf-4dfe-9562-9a327f84d448@linaro.org>
-Date: Sat, 10 Jan 2026 09:28:03 +1100
+ Fri, 09 Jan 2026 14:30:32 -0800 (PST)
+Message-ID: <0e158c01-3150-43f3-a78a-d77e8b07bc9f@linaro.org>
+Date: Fri, 9 Jan 2026 14:30:31 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/29] target/arm/tcg/translate: extract helper64 info in
- translate-a64
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 15/29] accel/tcg/translate-all.c: detect addr_type
+ dynamically
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
- <20260109053158.2800705-24-pierrick.bouvier@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260109053158.2800705-24-pierrick.bouvier@linaro.org>
+ <20260109053158.2800705-16-pierrick.bouvier@linaro.org>
+ <7fcbddf8-46be-449f-ac20-1caba498be32@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <7fcbddf8-46be-449f-ac20-1caba498be32@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,67 +112,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 16:31, Pierrick Bouvier wrote:
-> Thanks to HAS_HELPER64 mechanism, we can now move helper info generation
-> to a translate-a64 for 64 bits helper.
-> This allows to get rid of TARGET_AARCH64 in translate.c.
+On 1/9/26 2:13 PM, Richard Henderson wrote:
+> On 1/9/26 16:31, Pierrick Bouvier wrote:
+>> With TARGET_ADDRESS_BITS mechanism, it's now possible to specify which
+>> variant every source file is written for. Compared to before, it means
+>> that addr_type will now vary per tb translation, where it was constant
+>> for a given target previously.
+>>
+>> Instead of introducing a new parameter to translator_loop(), we simply
+>> add this information in TCGTBCPUState, which is returned by
+>> get_tb_cpu_state() during the translation, and passed down to
+>> tb_gen_code().
+>>
+>> To avoid modifying all target with this new field, we simply define a
+>> default value that is equivalent to current state: use
+>> target_long_bits(). With this, we can progressively convert new
+>> architectures.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    include/accel/tcg/tb-cpu-state.h | 12 ++++++++++++
+>>    accel/tcg/translate-all.c        | 15 ++++++++++++++-
+>>    2 files changed, 26 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/accel/tcg/tb-cpu-state.h b/include/accel/tcg/tb-cpu-state.h
+>> index 8f912900ca6..b77c4dd5100 100644
+>> --- a/include/accel/tcg/tb-cpu-state.h
+>> +++ b/include/accel/tcg/tb-cpu-state.h
+>> @@ -8,11 +8,23 @@
+>>    
+>>    #include "exec/vaddr.h"
+>>    
+>> +/*
+>> + * Default value 0 means to refer to target_long_bits(). It allows to stay
+>> + * compatible with architectures that don't yet have varying definition of TCGv
+>> + * depending on execution mode.
+>> + */
+>> +typedef enum TCGvType {
+>> +    TCGV_TYPE_TARGET_LONG = 0,
+>> +    TCGV_TYPE_I32,
+>> +    TCGV_TYPE_I64,
+>> +} TCGvType;
+>> +
+>>    typedef struct TCGTBCPUState {
+>>        vaddr pc;
+>>        uint32_t flags;
+>>        uint32_t cflags;
+>>        uint64_t cs_base;
+>> +    TCGvType tcgv_type;
+>>    } TCGTBCPUState;
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/tcg/translate-a64.c | 7 +++++++
->   target/arm/tcg/translate.c     | 9 ---------
->   2 files changed, 7 insertions(+), 9 deletions(-)
+> No need for this.  This state is already present in flags, in a target-specific manner.
+> If you actually needed this information, you'd want a new target hook.  However...
 > 
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index b7a8e94b937..fed2eb18f13 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -26,6 +26,13 @@
->   #include "semihosting/semihost.h"
->   #include "cpregs.h"
->   
-> +#define HAS_HELPER64
-> +#include "exec/helper-proto.h"
-> +
-> +#define HELPER_H "helper64.h"
-> +#include "exec/helper-info.c.inc"
-> +#undef  HELPER_H
-> +
->   static TCGv_i64 cpu_X[32];
->   static TCGv_i64 cpu_gcspr[4];
->   static TCGv_i64 cpu_pc;
-> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-> index 5c496f42c55..ec4358ba402 100644
-> --- a/target/arm/tcg/translate.c
-> +++ b/target/arm/tcg/translate.c
-> @@ -26,9 +26,6 @@
->   #include "arm_ldst.h"
->   #include "semihosting/semihost.h"
->   #include "cpregs.h"
-> -#ifdef TARGET_AARCH64
-> -#define HAS_HELPER64
-> -#endif
->   #include "exec/helper-proto.h"
->   #include "exec/target_page.h"
->   
-> @@ -36,12 +33,6 @@
->   #include "exec/helper-info.c.inc"
->   #undef  HELPER_H
->   
-> -#ifdef TARGET_AARCH64
-> -#define HELPER_H "helper64.h"
-> -#include "exec/helper-info.c.inc"
-> -#undef  HELPER_H
-> -#endif
-> -
->   #define ENABLE_ARCH_4T    arm_dc_feature(s, ARM_FEATURE_V4T)
->   #define ENABLE_ARCH_5     arm_dc_feature(s, ARM_FEATURE_V5)
->   /* currently all emulated v5 cores are also v5TE, so don't bother */
+>> @@ -316,7 +329,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
+>>        }
+>>    
+>>        tcg_ctx->gen_tb = tb;
+>> -    tcg_ctx->addr_type = target_long_bits() == 32 ? TCG_TYPE_I32 : TCG_TYPE_I64;
+>> +    tcg_ctx->addr_type = tcgv_type_to_tcg_type(s.tcgv_type);
+> 
+> I did mention in our discussion that it would be best to set this in translator_loop()
+> instead, via a new parameter.
+> 
 
-This is the sort of thing I envisioned for HELPER_H way back when.
-The patch set could be improved by placing the helper64.h usage into translate-a64.c in 
-the first place, rather than moving it here.
+I went through this, and noticed that crossing layers was not really 
+better than having it there. TCGTBCPUState looked like the best place 
+for it.
+Now if you really prefer having a translator_loop parameter, I don't 
+mind. It will just need a patch for all existing arch.
 
+> This makes it trivial for target/arm/tcg/translate.c to simply tell us that TCG_TYPE_I32
+> is correct, for target/arm/tcg/translate-a64.c to specify TCG_TYPE_I64, and for all other
+> users to use TCG_TYPE_TL.
+>
+> 
+> r~
 
-r~
 
