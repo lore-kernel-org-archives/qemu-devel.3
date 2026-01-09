@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A104ED232D1
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 02:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BF5BD232D1
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 03:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve2h1-0007Zi-M4; Thu, 08 Jan 2026 21:57:39 -0500
+	id 1ve2v4-0001PQ-FD; Thu, 08 Jan 2026 22:12:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1ve2gt-0007ZE-0r
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 21:57:32 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1ve2v1-000120-MK
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 22:12:07 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1ve2gr-0000v0-5u
- for qemu-devel@nongnu.org; Thu, 08 Jan 2026 21:57:30 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-64c893f3a94so4059492a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 18:57:28 -0800 (PST)
+ id 1ve2uz-0003lW-TN
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 22:12:07 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-64b8123c333so6187276a12.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 19:12:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767927447; x=1768532247; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1767928324; x=1768533124; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X7mvmI6H1ea5qLvK1euOE0Qt4XLXyivoLBaeShqxJCw=;
- b=fly7SQ1gOBrqixpyDlq6XVGw5hlMWMMIm1xrJT0LTIsZQlotLenreDj2KporDX45Eq
- aNH8KtTsLNIgudHiOvZAF8HaVV5QhCD4sN9sfQt53Mjd89eVE7Kpd7yqJzSLcsTlx2vq
- tIuGBWD1TtwKd1Q/xgnIlZnv0+QGaOKOvqI+aDUSLocyj4oAJmhD4s0Z7rGNAT/VdyuX
- FrrNuVxSKVKHU04reFl4MDClyed1Tk+kZ3Cf8hjlFsazCcCuB1iYS4L6vVzveM+N/Wud
- J2uaxrB8JKePy+G3XGk3SPHZZncj06G9JdCHzWR9ovNx9w3aoV7U3ps/odKgo2lPtea8
- eQsw==
+ bh=83fCzw6A1q57lVn4iIynanc1Wd+SkGDLiJZF1qYIf8E=;
+ b=BE59NGQuuaNuI+ysXfg0C9YfKnvjwBrReY+KQ2O1Mjyi8AreU8gYLPQICJh10GjkXk
+ wFj1n2LqQVv5i+scBthrM/XsMYYtsdK/nfMMyJ2Clk+i3tgoCVeim4KmabCw+lkqfGlZ
+ q/xr7KWcHzCjtQpjmSWhbMV6N5HFz99L9kHQMJp/TMrlEvFpypDxAeyww0u8EJ/fS+PM
+ eivRB1Sj/BJQ+3BC+XckD/5SoKRt6x+ZLk5fFTm8hycv/S42CNt1geNFFMMktCdKr8az
+ qmbvyb0mH3mIhqFmQ0y6cT4iKBd7zU/IU8BMk4Hr5ODDMRZhLb6B+NoF3VaFRNCg1K50
+ Ffuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767927447; x=1768532247;
+ d=1e100.net; s=20230601; t=1767928324; x=1768533124;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=X7mvmI6H1ea5qLvK1euOE0Qt4XLXyivoLBaeShqxJCw=;
- b=kG5EObJGsoLTdmio9ubzycKRSa14mFI7DDrnKVtoBip1EnKuXQXcpsMrn0AKApd/3Y
- ex/A+zL6r4HJQiOVYCfQ7AgCdXfuCFar9IwPv2vfZcQVDtttZmGveDPIEznhIj/P9Z1V
- HnpCG42OHpHIzh2CY6tI/5SBpXyVloPleVHoilJgiE2O7MkvixgSdRa5kNMTG1flz7hv
- M+XRYfT/9SSbrq6y6lojUqBU14OjYVZyksmEP9smQSOVzDyJokcbAJpghoJB7wZV2r3S
- 6bxWIatwropI/6qpg1xC98/M2IaVeboz70jQ7RpWY1BVgWGSzBPLBqNcv7mo/eyuxSMd
- TlPA==
-X-Gm-Message-State: AOJu0Yyl5GRr/JXW+9enHtv2CLNraQjdzTrKifska8Bni5akkcGMHrGL
- MgPigVpQhNO0TY64Nxz7lIeayKIK9LxbzZVx+3QyCBhHp8MCQz6DXfsOmVpFH72tqC+STMgkc8L
- 4djJiQnUp+FpjhQF0mIYi2T0gd5Q6CNY=
-X-Gm-Gg: AY/fxX5ZDP7r1B+8rqUKFsMIyNuZ3w3ZJqjR4WEq+eE6LtudI5KCXbtQHxjtwtPLRrR
- WD9G6HyxQgU+9/L2GQObWr3CrAQjMnsom5DgwzJb8r5x6r5INNFFCNEWZAN3OzHbNjpUesoJXoT
- TG2zT6v8IRo+TozjrqJcFFBZCX6nvB+RIwBGmQyVUltR0mtxrQ5vWWojBj971PM6Zje3QkI5G3T
- 8dVESfRLljXgVT+6EPbQW7xZSnZzOO9e4r6IMaD8izxG5e5zZ5nh6OE7UpmN5ZoIBI8BEw=
-X-Google-Smtp-Source: AGHT+IFbu6y8Q02NoslK82UEd14wn5IslypM2xV1BU5LNFtDArErYXYwhZOkH1gua3bQ65oljy8663PF9mS6cUA9LOs=
-X-Received: by 2002:a17:906:3187:b0:b73:37aa:87c0 with SMTP id
- a640c23a62f3a-b8429b129cfmr813472166b.23.1767927446779; Thu, 08 Jan 2026
- 18:57:26 -0800 (PST)
+ bh=83fCzw6A1q57lVn4iIynanc1Wd+SkGDLiJZF1qYIf8E=;
+ b=wNxp2zH4+/i9xhn/TB9OAFk5fOPEDHUDmoHb7kEhqxbsSKqcWCJ02LMr1UU0NdpMdb
+ ZARVwJln34amdpCvFDtHlVP9ewCgCGxS8CVD2JUJCoeTzlhFVPkgyOwHNTRfMKgrAPhR
+ pm4Ja7J6fHoJryDsJSD5Ba5alAioI1Mb5bA0glCCZCtzWxKBf5i7mrO5V6jLct3QL+Fg
+ lHFSR5AImaCgMOSQuLqYjlUpnAkGkgxmCCXSoyl8K+JXvmVavZyyaR1p+1DviS7DaqQu
+ r7RpxEkdvuHc9Ovzd1ie+IT+b0RJXgrKI4Rp+8OKGD+bgmDk2mvtSBYlzAVmUvw7cJC9
+ faeQ==
+X-Gm-Message-State: AOJu0YwQXqIB6yJn+UOkZAmlgDwKqO33nrUES2iQGVTBN6g8yRjSJbU7
+ FlAqPEaij6tji6VRQ/HPYZAF5koVvaCRogV9grn8IME+DOWKGN/4vFSJzYDdXgax6M376UfsW2k
+ M3Nz29YtP7GQW1/ox6LelvDZvQtH30uQ=
+X-Gm-Gg: AY/fxX7MmXrd2CUJFFkxi/Jedj4KqejDH1BJ4MsLgrNdCTblywzFGRi+RQ+N7LI3E5+
+ XG2mID83aslofEsPWaaKUI2Vz1aqWdsspEeTPqp6/IHotRywRbYLB8itAs+cGEIk+g0y1zKLfW1
+ HOrAgJhbetsys/hznu633ltGSXeoO+//Q0PbJ29iTeALmCBrHjYly8UaksTwkKXNn5j+QkyI6l7
+ PEnnU4G05U26ug47/c2R5sWaWbyX8gzyvDHyrtFdRKhJTPHNkxZ5FE6YabpY0cuMEquwVq1ma+5
+ qPt4Mw==
+X-Google-Smtp-Source: AGHT+IF572c33GbB85X6QLIUbZ0AjxSjYjVCQyzZppLXSPwjRHpmwVYtHVRgX5FpfRFDC/XysZLYAVHNfGPkLbMGNko=
+X-Received: by 2002:a17:907:3fa7:b0:b73:880a:fde8 with SMTP id
+ a640c23a62f3a-b8444d4eb55mr914047466b.12.1767928324065; Thu, 08 Jan 2026
+ 19:12:04 -0800 (PST)
 MIME-Version: 1.0
 References: <20251229103859.98777-1-zhangckid@gmail.com>
- <87bjj48g1c.fsf@pond.sub.org>
-In-Reply-To: <87bjj48g1c.fsf@pond.sub.org>
+ <20251229103859.98777-3-zhangckid@gmail.com>
+ <877bts8fsa.fsf@pond.sub.org>
+In-Reply-To: <877bts8fsa.fsf@pond.sub.org>
 From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 9 Jan 2026 10:56:49 +0800
-X-Gm-Features: AQt7F2pFvhiwgTaO_WZP2lHW3b7wuz-OHV3prwc0pKY7pEGPu5VPB1y3YC2tr3U
-Message-ID: <CAK3tnv+--WTJ-8jmgaPsUQz4DwoPH2_Z+QgTuzee4TjD1JW5dA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] qapi/misc: Fix missed query-iothreads items
+Date: Fri, 9 Jan 2026 11:11:27 +0800
+X-Gm-Features: AQt7F2oTJffNJ7C5x7Di4q3Eg5ujCP3sUa5kqwvJ64A9QJOJduQTemFtkWnVm7Y
+Message-ID: <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] qapi: Add thread_status flag for iothreads
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>, 
  Eric Blake <eblake@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,80 +99,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 8, 2026 at 8:06=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+On Thu, Jan 8, 2026 at 8:12=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
 > wrote:
 >
 > Zhang Chen <zhangckid@gmail.com> writes:
 >
-> > As the struct IOThreadInfo definition:
-> > { 'struct': 'IOThreadInfo',
-> >   'data': {'id': 'str',
-> >            'thread-id': 'int',
-> >            'poll-max-ns': 'int',
-> >            'poll-grow': 'int',
-> >            'poll-shrink': 'int',
-> >            'aio-max-batch': 'int' } }
->
-> Suggest:
->
->   The example is incomplete: it misses members @poll-max-ns, @poll-grow,
->   @poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
->   (monitor: add poll-* properties into query-iothreads result) and
->   commit 1793ad0247c (iothread: add aio-max-batch parameter).
->
->   Cc: qemu-stable@nongnu.org
-
-Nice description! I will rewrite the commit log next version.
-
->
+> > The thread_status depends on struct IOThreadInfo's
+> > 'attached': 'bool'. Show in the qmp/hmp CMD with
+> > 'attached' or 'detached'.
+> >
 > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 > > ---
-> >  qapi/misc.json | 12 ++++++++++--
-> >  1 file changed, 10 insertions(+), 2 deletions(-)
+> >  iothread.c         | 1 +
+> >  monitor/hmp-cmds.c | 2 ++
+> >  qapi/misc.json     | 6 ++++++
+> >  3 files changed, 9 insertions(+)
 > >
+> > diff --git a/iothread.c b/iothread.c
+> > index 38e38fb44d..fb4898e491 100644
+> > --- a/iothread.c
+> > +++ b/iothread.c
+> > @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, void =
+*opaque)
+> >      info =3D g_new0(IOThreadInfo, 1);
+> >      info->id =3D iothread_get_id(iothread);
+> >      info->thread_id =3D iothread->thread_id;
+> > +    info->attached =3D iothread->attached;
+> >      info->poll_max_ns =3D iothread->poll_max_ns;
+> >      info->poll_grow =3D iothread->poll_grow;
+> >      info->poll_shrink =3D iothread->poll_shrink;
+> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> > index 33a88ce205..84b01737cf 100644
+> > --- a/monitor/hmp-cmds.c
+> > +++ b/monitor/hmp-cmds.c
+> > @@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict *=
+qdict)
+> >          value =3D info->value;
+> >          monitor_printf(mon, "%s:\n", value->id);
+> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->thre=
+ad_id);
+> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
+> > +                       value->attached ? "attached" : "detached");
+> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value->po=
+ll_max_ns);
+> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->poll=
+_grow);
+> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value->po=
+ll_shrink);
 > > diff --git a/qapi/misc.json b/qapi/misc.json
-> > index 28c641fe2f..6153ed3d04 100644
+> > index 6153ed3d04..2eea920bd2 100644
 > > --- a/qapi/misc.json
 > > +++ b/qapi/misc.json
-> > @@ -117,11 +117,19 @@
-> >  #     <- { "return": [
+> > @@ -76,6 +76,9 @@
+> >  #
+> >  # @thread-id: ID of the underlying host thread
+> >  #
+> > +# @attached: flag to show current iothread attached status
+>
+> What does "attached status" actually mean?
+
+This flag means weather the "-object iothread" already been used by a
+real device.
+In hotplug scenario, user can add multiple "-object iothread" and
+multiple devices (like virtio-blk).
+When user hotunplug the devices can keep the iothreads as a thread
+pool, following the new
+hotplug devices can attach to the released iothread.
+
+>
+> > +#            (since 10.3.0)
+>
+> (since 12.0)
+
+OK.
+
+>
+> > +#
+> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+> >  #     disabled (since 2.9)
+> >  #
+> > @@ -93,6 +96,7 @@
+> >  { 'struct': 'IOThreadInfo',
+> >    'data': {'id': 'str',
+> >             'thread-id': 'int',
+> > +           'attached': 'bool',
+> >             'poll-max-ns': 'int',
+> >             'poll-grow': 'int',
+> >             'poll-shrink': 'int',
+> > @@ -118,6 +122,7 @@
 > >  #              {
 > >  #                 "id":"iothread0",
-> > -#                 "thread-id":3134
-> > +#                 "thread-id":3134,
-> > +#                 'poll-max-ns':0,
+> >  #                 "thread-id":3134,
+> > +#                 'thread_status':"attached",
 >
-> Double quotes, please.
+> I believe this is actually
 >
-> The default value appears to be 32768.  Maybe show that?
+>                      "attached": true
+>
+> and ...
 
-Good catch, will fix it next version.
+No, I changed it here for readability:
+> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
+> > +                       value->attached ? "attached" : "detached");
 
+But if you think ""attached": true" is more direct way, I can change
+it next version.
 
 >
-> > +#                 "poll-grow":0,
-> > +#                 "poll-shrink":0,
-> > +#                 "aio-max-batch":0
-> >  #              },
+> >  #                 'poll-max-ns':0,
+> >  #                 "poll-grow":0,
+> >  #                 "poll-shrink":0,
+> > @@ -126,6 +131,7 @@
 > >  #              {
 > >  #                 "id":"iothread1",
-> > -#                 "thread-id":3135
-> > +#                 "thread-id":3135,
-> > +#                 'poll-max-ns':0,
+> >  #                 "thread-id":3135,
+> > +#                 'thread_status':"detached",
 >
-> Likewise.
+>                      "attached": false
+>
+> Recommend to create example output by running a test instead of making
+> it up, because making it up likely screws it up :)
 
-Yes.
+Uh.... This output print is the real test in my machine, maybe you
+missed the previous description.
 
 Thanks
 Chen
 
 >
-> > +#                 "poll-grow":0,
-> > +#                 "poll-shrink":0,
-> > +#                 "aio-max-batch":0
-> >  #              }
-> >  #           ]
-> >  #        }
+> >  #                 'poll-max-ns':0,
+> >  #                 "poll-grow":0,
+> >  #                 "poll-shrink":0,
 >
 
