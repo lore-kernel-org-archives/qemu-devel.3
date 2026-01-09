@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB989D277C2
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 23:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC382D277C1
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 23:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veLY2-0006wf-Ug; Fri, 09 Jan 2026 18:05:39 -0500
+	id 1veLpO-0004Dy-FG; Fri, 09 Jan 2026 18:23:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veLXv-0006uw-NA
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 18:05:31 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1veLpL-0004Bj-Rv
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 18:23:32 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veLXt-0005ET-VE
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 18:05:31 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2a0f3f74587so37884805ad.2
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 15:05:29 -0800 (PST)
+ id 1veLpK-0001uT-CZ
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 18:23:31 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-bc4b952cc9dso2159313a12.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 15:23:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767999928; x=1768604728; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768001009; x=1768605809; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qCUv9czUeR2K8LhSuC6m4+aN4uDmKaMIb0urE5nsXmM=;
- b=H06Xc3T/wAwIQWcUjEjzykiUL1RfFxqRpyHeW+Jpz8aT8XGR3RTxejR01ODom7dTG5
- gDgx33FjDHwlfyxfz4+oj7yRXloHi+/4E9VXpcDktmYRUtkpwmAq/oxd9n0vU8brJBej
- HDWYvunRW4eCudXntD/pDbVZJ9tvPi3edwLVlzqVNQ7hR53gQPq/Cq9OBPb/IZgHYkac
- 056c20wPkAgoUY3huY3+lqQZ/lTQ10/lLHZtW6LI6fUkoT8ZHHL12aN8MjOSuERDcsg8
- eXU3pwFzOqymYmSDEXl6Oi1hvY9LFvgFmdOq/nYaUcoFEworTSqsQTWvu0rmIPCHCSnH
- wCZQ==
+ bh=B7Q9EcfoSmtl5Pc6AtI2VVJgGIqIyZTLMJhUjy5TbVw=;
+ b=qenyUvWUa48IanwiyuJu/feY3zIlsFKfjZ0ECoG8JMenxjIcvGwaDDIRQsmySyObWj
+ 9qMeTXV4+U6r04KIeKN8fKHFy5lvHh92CP86CcS/cO1/R9hs5Gc0FXmmMjBzHxUpvYUe
+ YrBi8oeaghtXK7YLi8rRxY2e702enkZDUB61vWIisIfJ40VGdRvQI7UNlyG+xstwzzUT
+ GTppSbsWvKxiCQMJJMJ6YTlPNa5gabSUl6MmxIxatnvWZBb5Fidpw9W4dEGsB8okaVif
+ HUcB6njfL1AuaGTaKbBMzKHLg4NigeZqhLAGJZUsSo/qHT0ixYvHwYFZUcT5sUQP1H0j
+ 2Rqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767999928; x=1768604728;
+ d=1e100.net; s=20230601; t=1768001009; x=1768605809;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qCUv9czUeR2K8LhSuC6m4+aN4uDmKaMIb0urE5nsXmM=;
- b=hgNT1Zg0kTpsZQ9JIFjJPO3alqn5BmtPOldvg3Fizh5Obmxf/o954f3WWvhepOfYOj
- pMtvpEIg7C09ExTNm83utxPwM1QxqvGVYUnk1HbHaZykUj9vLe78D+1WiXe+uy+YHxcI
- hX8EvcDaSza2sgvhPVQRK1hcNivCC+kqDEh1255aZ77fwP1fWAnsjMsHYeCehC/E5ogG
- xU+cjTpCX40rclP1EX5RcEB6VLweaxLWUlHkmoRJZp5EnpWKNZ366XD83tq7QZxcC8pY
- KT4NJalTX9703Avq2gENkRd3dwCWoJpXo+lwimQBQfkC2aK3nDwzB/v9MM08b/MnhQOE
- 1kWQ==
+ bh=B7Q9EcfoSmtl5Pc6AtI2VVJgGIqIyZTLMJhUjy5TbVw=;
+ b=WXuoANU92cFZ9F7OWltccUurw3uKIv+iF0XuehZa07FRkPS2FpCx93nQTWMvkmxO0S
+ NYWbJ/zWP8aa3I8isXmBGFlhf6ETGYxsM4vMwYbyjgAbHlh1+zg9dDiDVkcf3i98aqpG
+ NUpkJz9xur/J5/4ym06KsSnsgY+lF112vXCDEk2JwfkEj+qOq5KD1Y4i6vLJ0ZHv7+sc
+ n/eop93qVlH5oqJU3XleN3Sl1DB5MxeILKzGCYk9VOmEvtt9JO7iFSEHQB0NDtCm2ZuU
+ zV90lIm4SD0yQPZO2DT9UMTuaZWybQMXjiyVizMcmC6STyWaoBtDNoEL6GN66sRH1iZx
+ SIbA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBgKbGt7G5tBNzcJ3i3WsaJE5xTREuqJFkFLZnhNbU5jqbV5NFj7JJbaCWxvkMRJ/vt9EzaW++mgQA@nongnu.org
-X-Gm-Message-State: AOJu0Yw7Zle6+H4HzmXg0JXkgThkeRTLchiO4qOXBc24kHqRABHzshII
- bl11HRgoHFnK5u3DR9c4XWZYJMYTHdQuaJRDkE/wLcoWx9aPhIoeP1ytFjNk5/mY5WY=
-X-Gm-Gg: AY/fxX4WfiY9mVj8+y9WJ92i6HTerx7LDbkUYgJarMz/19sG/+2LfFkD4oAfFyw4LhM
- O8Gc3qQ4R44ESaBb2sr2e+1HkZdPGSvNKkS4ZWyBzJuQgt+BfthblZso85z5vuSwoM3D0bd9zIl
- a2qdqtLOzp38tIZdNTTxvTxD1Gu5X1ZMPmUVc6aXmHizC2DN3ULYJLbdi3moEsnT9TDaSBUIuOj
- aa+FN7PQcytCdAH73Io+feczhuFR+267yiavrTsaVl8eA+ZBr4Has1fsZFn3kHHC/W7DV4oZ/Ae
- GXFU4SF6K4xyyWfH/Ijx0DvaB63am1amKqNsOFeOCRtmVTcxsKtwfI/aO0/a9y1BxAoqFDUjye6
- uadFlFCGWCN0KhtLu+WMr3eppCZ10LLP+LOpFZPBMoX+FjvJENPjQicxATqR9ow0sdCbixN2yHQ
- Tt3T63jxYnUujjRZpxzIC5rcmKXw==
-X-Google-Smtp-Source: AGHT+IH6m/5dgo2bROo4XWfJE/iL2Z0Xs49Mv7tSp7vC3l3M1CBQod6STdf2CHVz/0JqGXUuK3CUHA==
-X-Received: by 2002:a17:903:2a8c:b0:295:7b89:cb8f with SMTP id
- d9443c01a7336-2a3ee377cbcmr111297555ad.0.1767999928049; 
- Fri, 09 Jan 2026 15:05:28 -0800 (PST)
+ AJvYcCVpkW4S35Yu06WEfSdbk8yzDpuSy/HaY/o8TPs3qHfl092vUXv06Z4LYUnRpCCkUkgrk2rzJjXseDN1@nongnu.org
+X-Gm-Message-State: AOJu0YwIM5UQLhRydHXAWgAQCUIpYCRov9RrZcxneKZpp6y9mqr369En
+ 7o+u1QWlgJMMD4Ps+WzlwXRqk7bbsZdJsNpMzpQ9DUrufpgnPjNkDC+gIBABMLsDPXM=
+X-Gm-Gg: AY/fxX6pxUulb/rxkqpRm0ZF6wA1+HWM2MHwSztYaw2DXSNtAI7pd24r7RW6kFq8yOl
+ esiR95bZc6flxSGAE1fTbp9qQJtCJdcG6K7SiF4vkJMzqbz4gZO8ulhy1rJhgYDP4ZgzmSEJcUn
+ uyDBIoJQs3p19oTbPixBQ4b/TuRcOCmhSVRhxCDz3klfidToZFk/VKi6DLNimfqCug0XcShPzA/
+ TFWgLX50/ctb8CNgnwipnZ8sZCaOHNh4xoT9y8+3/l4j2vxBYTDdOXXRNuiVkwONo/353Pxzcmu
+ tlChFgSoW77m6V3v5igaPTr/AUapBpm7VM2z5mxlK8bKugeBCGxANGRT09QVk18f90yYExjJkZ9
+ t8+xviAXZqZCxscEkTOAxy3ZWIYtVTstohDyRvbRFj12jdobx2u0tL322QDE8aAn8bfMnGGulc5
+ 20ni0BzAj0stA3v/oY3QlZYEyNuA==
+X-Google-Smtp-Source: AGHT+IEUS3cNpQezkoBf+ph6PS4m31BmqqcOPIgSLhbgR/lxXD1DxIRAvcA0yrRdezpw7RZRSW+KKg==
+X-Received: by 2002:a05:6a20:3d86:b0:366:1a31:a70a with SMTP id
+ adf61e73a8af0-3898f888af4mr10566842637.10.1768001008501; 
+ Fri, 09 Jan 2026 15:23:28 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c4795fsm115658615ad.33.2026.01.09.15.05.26
+ 41be03b00d2f7-c4cc95d5f10sm11371693a12.26.2026.01.09.15.23.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 15:05:27 -0800 (PST)
-Message-ID: <37eb6530-3e2d-4455-9905-437753cf4e26@linaro.org>
-Date: Sat, 10 Jan 2026 10:05:22 +1100
+ Fri, 09 Jan 2026 15:23:28 -0800 (PST)
+Message-ID: <0db4b897-7645-43f2-a0e9-9dbe52a2746a@linaro.org>
+Date: Sat, 10 Jan 2026 10:23:21 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] bswap: Consistently use builtin bswap() functions
+Subject: Re: [PATCH v5 02/22] util: Introduce ldm_p() and stm_p() load/store
+ helpers
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20260109164742.58041-1-philmd@linaro.org>
- <20260109164742.58041-5-philmd@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Anton Johansson <anjo@rev.ng>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260109165058.59144-1-philmd@linaro.org>
+ <20260109165058.59144-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260109164742.58041-5-philmd@linaro.org>
+In-Reply-To: <20260109165058.59144-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,19 +111,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/26 03:47, Philippe Mathieu-Daudé wrote:
-> Since these headers use some __builtin_bswap*(), use it
-> consistently in all the cases, allowing to remove the
-> "qemu/bswap.h" inclusion (which only defines bswap* to
-> the builtin equivalent).
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   include/qemu/host-utils.h | 7 +++----
->   include/qemu/int128.h     | 7 +++----
->   2 files changed, 6 insertions(+), 8 deletions(-)
+On 1/10/26 03:50, Philippe Mathieu-Daudé wrote:
+> +uint64_t ldm_p(const void *ptr, MemOp mop)
+> +{
+> +    const unsigned size = memop_size(mop);
+> +    uint64_t val;
+> +    uint8_t *pval = (uint8_t *)&val;
+> +
+> +    if (HOST_BIG_ENDIAN) {
+> +        pval += sizeof(val) - size;
+> +    }
+> +
+> +    __builtin_memcpy(pval, ptr, size);
+> +    if (unlikely(mop & MO_BSWAP)) {
+> +        switch (size) {
+> +        case sizeof(uint16_t):
+> +            val = __builtin_bswap16(val);
+> +            break;
+> +        case sizeof(uint32_t):
+> +            val = __builtin_bswap32(val);
+> +            break;
+> +        case sizeof(uint64_t):
+> +            val = __builtin_bswap64(val);
+> +            break;
+> +        default:
+> +            g_assert_not_reached();
+> +        }
+> +    }
+> +    return val;
+> +}
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I'm not fond of the pointer arithmetic or the code structure.
+
+Perhaps better as
+
+     switch (mop & (MO_BSWAP | MO_SIZE)) {
+     case MO_LEUW:
+         return lduw_le_p(ptr);
+     case MO_BEUW:
+         return lduw_be_p(ptr);
+     ...
+     default:
+         g_assert_not_reached();
+     }
+
+which would hopefully compile to host endian-swapping load insns like
+
+.L1:
+	mov	(ptr), %eax
+	ret
+.L2:
+	movbe	(ptr), %eax
+	ret
+.L3:
+	mov	(ptr), %rax
+	ret
+.L4:
+	movbe	(ptr), %rax
+	ret
+
+etc.
+
+And the default case assert makes sure that we're not passing garbage, or too large MO_SIZE.
+
 
 r~
 
