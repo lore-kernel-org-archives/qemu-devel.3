@@ -4,99 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C81D232E8
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C67D232C8
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6b0-0001pq-Rj; Fri, 09 Jan 2026 02:07:44 -0500
+	id 1ve6QQ-0005AE-Mm; Fri, 09 Jan 2026 01:56:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1ve6Yh-0000su-2P
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:05:23 -0500
-Received: from mail-pj1-x1043.google.com ([2607:f8b0:4864:20::1043])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1ve6Ph-00044j-V8
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:02 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1ve6Yf-00049z-AG
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:05:18 -0500
-Received: by mail-pj1-x1043.google.com with SMTP id
- 98e67ed59e1d1-34ccb7ad166so2340428a91.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 23:05:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1ve6Pg-0002rw-4D
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:01 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-81dbc0a99d2so381826b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767942315; x=1768547115; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1767941757; x=1768546557; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7dnhfBOKf8swJO9zh9EmJRtB1p3BeUYjVTg2cVeC9Dg=;
- b=gdAJHwn25s28Rzsxg+aD0OA+cW7oqRh1VHnyBNZHBsB3TBjIh5gRg+J7VQ3lKzb+P8
- REnt4nsZwEWGGDx2m0XBEPASQsEpui1nFQkSKL/Hkqcu9Cll9LvcQUD8WYAsUraZEQ+3
- p/cv2yBqcymHC6AVXGvxvm6pk16V+h/09EkWpy7IvZMUWeeo2kIH7ozNAxFAqUlcglTx
- 6zRYotcET0Vjo1tRDrrEZi8tIdmNg9clU9MC0N1j08Ds/ZpbC4zgZhj4u34dumpM9lsX
- KgNekX1Es6yCsbfe7ldoRMBN3sg1yFbA81HhRcwq9r2y2TiWPJCpBVad+gvV94eU2ciJ
- MATA==
+ bh=NkrFTEiLemIfD4lfrK8zSoqhMztc5LwCsgR75zu82b4=;
+ b=RiAUR0Tc5qvaY/OYnXmaaS7GM9pAvIaoeBhzC6ULxJccjHDICSd1UpmoxL0NuaguHU
+ mkqaE0e9dMZNho+yvOI04mX7/Cg6pwew9APGwlfy/kwI3F/64fbuSMxLIr79sAlPCdxE
+ ZlAT5Hdjj4YnHWF4C4xt9q4xaf7IBfXWZBGnlgg4lIGgTsk+Y7S9Oz63aCDW9tEIrX58
+ 7V1RsoxmdwLp+1rVUQRkfnvFjKTC+BcQrShxV0SMH6yWRLMAHbKA23JY+RQ5PP3i4a2/
+ 9cQ92MEFcQkNHpnMCgL+8OlYAECVyPTb0SSc1SZKMV2BtVIRDhhE4ufsXOlDGgS2l+pP
+ iVxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767942315; x=1768547115;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7dnhfBOKf8swJO9zh9EmJRtB1p3BeUYjVTg2cVeC9Dg=;
- b=sJ2T16mGHO5YQRGGJu9HCcWx1FE0SIOrpaFzxp0kDo8yxj2vn+ow2hwJIm7OQbMRgH
- 47wXn0a2E4byj1yFTlaqaDuCXTW6Q0r08dw2FbDAV7Nj3C2L3BL1oN3LEMhYHGasFrse
- 5zadNk7bKc0Oh5QhoiGC0dU6mUO2ZxVTDijHUcOoya5mrHoi+emabD/dqvCjUClGsyFt
- 3oAAWzny0T51HAtWKw+JkO6YnEF6vyruOp0E7MGYNwoVZiAuG36zmDTFwgCR3fjRDVqM
- 91Kardm7ay92XLwjlNl7wAg0OIsc9vwUBYQVJEUbl3D9djxso4D6O4d3pq05fI/2Lu73
- D8Tg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjfHs2iwYKFc37Zk09crJwPnXdfDuhAZmZ6B1wWqiLk0B0M5h3usPp48FwqdyeCgCFpQ9n++pDmDLR@nongnu.org
-X-Gm-Message-State: AOJu0Yw4ADGrIL3IKFikIJbJ8VY0m5r5uII9OVfJ7OjU/fxMUfD+PAAf
- bsUwnu6cTW4kdDYePfuqSzEfTpcSF1Kw8Nr6/tS6f9FtvJ87UfXfX/px
-X-Gm-Gg: AY/fxX7V1nTgu5jXTU85nIkvrOT0JbkQ+C/bTVCLsoWExkXiaFkZRMTv7IiC+lkI4h9
- M42h+qXbn1VHaqX2S6zr70+le9wWWiAXgxMFyvdseW66THc6QF40ErbJZ7khneEhPI1b+NKbd+u
- zK5PnWR8fU/1FHdCCfT9/3zBXtWg8kQCFQg4YNGY7kQtV27uxB34dVjdlVne7Ll8XYNipROWEM4
- AJDt/SrqNgPZsDiM2gLJFpA2MrSBMtItCuOTe3daw/GkEoylIP8u/DuFXbgUYt2yamrhIU17p8r
- 1R3UBuf2YunjbLrTntq/A4LLq5D+yrkptw1Yu5huMdCbii+//a7slL18H0NJcx77s60U+ER3AzW
- sqtiwU7FlgKyxvjdMWa5VYkQvtqmgJH/sBe/M2I5v7UAe35fs37VTtCC12Rk8qdE0BJnytYrUQb
- MZ4T3uHJKDzEBZknhKoYXaNMK/QDWqCBGNlA8Wct5udIPyni3njfvmoQH0lZM=
-X-Google-Smtp-Source: AGHT+IFA2Z4sh6s2C75Rj7v90CRb7SjuS8UE9gBk8jDk29IvObEHhvm+YD3tBhto6ph6b1H2WY2iIw==
-X-Received: by 2002:a17:90b:1ccd:b0:32b:baaa:21b0 with SMTP id
- 98e67ed59e1d1-34f68b4ce91mr8906937a91.6.1767942315414; 
- Thu, 08 Jan 2026 23:05:15 -0800 (PST)
-Received: from [127.0.0.1] ([218.81.29.112]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5fb9a45dsm9846882a91.17.2026.01.08.23.05.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 23:05:14 -0800 (PST)
-Message-ID: <59a65f5a-3d77-46af-aff4-8f490441faef@gmail.com>
-Date: Fri, 9 Jan 2026 15:05:09 +0800
+ d=1e100.net; s=20230601; t=1767941757; x=1768546557;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NkrFTEiLemIfD4lfrK8zSoqhMztc5LwCsgR75zu82b4=;
+ b=fdagzOwr/Mn0bBn23UG27rEhlrJCBGMn5Zj6abBe526YV51H/MhDxE2BV2mGHLtt7m
+ YxJsyjbq9UaC9dA9hzO06A91jBgdo+RvaIXAmT89PjFAjEu+WIrM2ssoBjRhKvwOumyD
+ qiS45LS1yLKZt2nLuto/trpfYNspkL+WHadifvXuyIcqb+Rkme03HcoQPiDDHE612qzX
+ I+aWVKrXbDtr8RRZB6fuzm670p/qkvv5LfPNktfVbWiEFe2mueJNAqMpMG2o1eroIgmP
+ Mw68X7MpIMToW+mfd5AmPCr4GkJ72yB3WPzCaAqoKZRYD148pidq2az+O7EW450Kt1xk
+ QiFg==
+X-Gm-Message-State: AOJu0YxWC7c4mpzbdvmjq9K+cRpRoLvMXsEhbs9SMaFvC+hjzj+/Hgm8
+ qMH0lJKweZUVv11WZ4+EtcGKq1uZZtrWcrmVhDWIIgx/iI9FlvKyhU37rjEZ7Q==
+X-Gm-Gg: AY/fxX54fHGwv6wQISSFFFiJUQD+6cMrJYEFVgLBlij+p3xs5hAzB7D2kMAkX4RPdmf
+ vGo1rGsf+uFqMYuqU5WXgz2vaI1ixbcznh/tL2Fl6181LQRh+WUzqrCYzr95tambLF8xPbvgUNr
+ xjH0tlOlTQNkCWvmnC2NJ5rBlZoInseMpFQYskRoFHUGFzTloKHPGpdRQ5LI6eW/HILePpfKUtR
+ gKOuWhUin9sgKQudSi9cqRKkYXKkboUhTPFhPRATAWULD8sCWYi8oW0icRDQnURshr0RJZ7uwph
+ Q/8z57RDTQ1mXs/I/0fapwZfLrU+RB97IN16zesbN4r2f8bgQgibBU9VqrnJMxpVSQop6EaB3Zx
+ ZFw7KuIW942aKwK5urtYRQHR5j7/TLaiOAmRbobNZ2Lt7TK7gJNmCgVwyNKELZE+4oD4n2ztxSC
+ SQS4LXci4YaPY5J60bTIuX/L1MI7bsA1xRULXQxt9+m5vrYQ2uaA/jzwjeX7eidN6yq+tVA+EVV
+ lvxjOWGRDSbFsMzc7M=
+X-Google-Smtp-Source: AGHT+IHmZqtD0uBJhl9OE/1YEwJTnYHzlaVd+RdwHKxO39kMkh1v99s/heSk2DG0EqQWFsUBlRfZVQ==
+X-Received: by 2002:a05:6a21:6d89:b0:37e:8eab:c05f with SMTP id
+ adf61e73a8af0-3898f9e43d8mr9295129637.59.1767941757392; 
+ Thu, 08 Jan 2026 22:55:57 -0800 (PST)
+Received: from toolbx.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.55.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Jan 2026 22:55:56 -0800 (PST)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 15/34] target/riscv: Combine minstretcfg and minstretcfgh
+Date: Fri,  9 Jan 2026 16:54:40 +1000
+Message-ID: <20260109065459.19987-16-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20260109065459.19987-1-alistair.francis@wdc.com>
+References: <20260109065459.19987-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/18] target/riscv: Add cfg properity for Zvfofp8min
- extension
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20260108151650.16329-1-max.chou@sifive.com>
- <20260108151650.16329-7-max.chou@sifive.com>
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-In-Reply-To: <20260108151650.16329-7-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1043;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pj1-x1043.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,93 +107,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Max:
+From: Anton Johansson <anjo@rev.ng>
 
-On 1/8/2026 11:16 PM, Max Chou wrote:
-> According to the ISA spec of Zvfofp8min extension,
-> 
-> "The Zvfofp8min extension requires on the Zve32f extension."
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> ---
->  target/riscv/cpu.c                | 8 ++++++++
->  target/riscv/cpu_cfg_fields.h.inc | 1 +
->  target/riscv/tcg/tcg-cpu.c        | 5 +++++
->  target/riscv/vector_helper.c      | 3 ++-
->  4 files changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 8eab992154..b4b10b52d8 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -193,6 +193,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->      ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
->      ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
->      ISA_EXT_DATA_ENTRY(zvfhmin, PRIV_VERSION_1_12_0, ext_zvfhmin),
-> +    ISA_EXT_DATA_ENTRY(zvfofp8min, PRIV_VERSION_1_12_0, ext_zvfofp8min),
->      ISA_EXT_DATA_ENTRY(zvkb, PRIV_VERSION_1_12_0, ext_zvkb),
->      ISA_EXT_DATA_ENTRY(zvkg, PRIV_VERSION_1_12_0, ext_zvkg),
->      ISA_EXT_DATA_ENTRY(zvkn, PRIV_VERSION_1_12_0, ext_zvkn),
-> @@ -778,6 +779,13 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->      set_default_nan_mode(1, &env->fp_status);
->      /* Default NaN value: sign bit clear, frac msb set */
->      set_float_default_nan_pattern(0b01000000, &env->fp_status);
-> +    /*
-> +     * RISC-V Zvfofp8min extension requires:
-> +     * - Same canonical NaN (0x7F) for both E4M3 and E5M2 formats
-> +     * - E5M2 format does not generate signaling NaNs (all NaNs are quiet)
-> +     */
-> +    set_ocp_fp8_same_canonical_nan(true, &env->fp_status);
-> +    set_ocp_fp8e5m2_no_signal_nan(true, &env->fp_status);
-Should ocp_fp8_* flags be conditional on Zvfofp8min instead of always enabled at
-reset? Better for maintainability.
+According to version 20250508 of the privileged specification,
+minstretcfg is a 64-bit register and minstretcfgh refers to the top
+32 bits of this register when XLEN == 32.  No real advantage is
+gained by keeping them separate, and combining them allows for slight
+simplification.
 
-Thanks,
-Chao
->      env->vill = true;
->  
->  #ifndef CONFIG_USER_ONLY
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index 3696f02ee0..59302894af 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -104,6 +104,7 @@ BOOL_FIELD(ext_zvfbfmin)
->  BOOL_FIELD(ext_zvfbfwma)
->  BOOL_FIELD(ext_zvfh)
->  BOOL_FIELD(ext_zvfhmin)
-> +BOOL_FIELD(ext_zvfofp8min)
->  BOOL_FIELD(ext_smaia)
->  BOOL_FIELD(ext_ssaia)
->  BOOL_FIELD(ext_smctr)
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 378b298886..ba89436f13 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -710,6 +710,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
->          return;
->      }
->  
-> +    if (cpu->cfg.ext_zvfofp8min && !cpu->cfg.ext_zve32f) {
-> +        error_setg(errp, "Zvfofp8min extension depends on Zve32f extension");
-> +        return;
-> +    }
-> +
->      if (cpu->cfg.ext_zvfh && !cpu->cfg.ext_zfhmin) {
->          error_setg(errp, "Zvfh extensions requires Zfhmin extension");
->          return;
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index ec0ea4c143..ee5a1e595b 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -38,7 +38,8 @@ static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
->      int xlen = riscv_cpu_xlen(env);
->      target_ulong reserved = 0;
->  
-> -    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
-> +    if (riscv_cpu_cfg(env)->ext_zvfbfa ||
-> +        riscv_cpu_cfg(env)->ext_zvfofp8min) {
->          reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
->      } else {
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20251027181831.27016-8-anjo@rev.ng>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251103033713.904455-7-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.h |  3 +--
+ target/riscv/csr.c | 18 ++++++++++--------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 2942fc1eda..b94c444678 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -421,8 +421,7 @@ struct CPUArchState {
+ 
+     /* PMU cycle & instret privilege mode filtering */
+     uint64_t mcyclecfg;
+-    target_ulong minstretcfg;
+-    target_ulong minstretcfgh;
++    uint64_t minstretcfg;
+ 
+     /* PMU counter state */
+     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index e9e30384b4..894ae4d7bf 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1116,7 +1116,8 @@ static RISCVException write_mcyclecfgh(CPURISCVState *env, int csrno,
+ static RISCVException read_minstretcfg(CPURISCVState *env, int csrno,
+                                        target_ulong *val)
+ {
+-    *val = env->minstretcfg;
++    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
++    *val = extract64(env->minstretcfg, 0, rv32 ? 32 : 64);
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -1143,7 +1144,7 @@ static RISCVException write_minstretcfg(CPURISCVState *env, int csrno,
+ static RISCVException read_minstretcfgh(CPURISCVState *env, int csrno,
+                                         target_ulong *val)
+ {
+-    *val = env->minstretcfgh;
++    *val = extract64(env->minstretcfg, 32, 32);
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -1160,7 +1161,8 @@ static RISCVException write_minstretcfgh(CPURISCVState *env, int csrno,
+     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
+                        riscv_has_ext(env, RVS)) ? MINSTRETCFGH_BIT_VSINH : 0;
+ 
+-    env->minstretcfgh = val & inh_avail_mask;
++    env->minstretcfg = deposit64(env->minstretcfg, 32, 32,
++                                 val & inh_avail_mask);
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -1247,8 +1249,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
+     if (counter_idx == 0) {
+         cfg_val = env->mcyclecfg;
+     } else if (counter_idx == 2) {
+-        cfg_val = upper_half ? ((uint64_t)env->minstretcfgh << 32) :
+-                  env->minstretcfg;
++        cfg_val = env->minstretcfg;
+     } else {
+         cfg_val = env->mhpmevent_val[counter_idx];
+         cfg_val &= MHPMEVENT_FILTER_MASK;
+@@ -1576,12 +1577,13 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
+         }
+         break;
+     case 2:          /* INSTRETCFGH */
++        cfgh = extract64(env->minstretcfg, 32, 32);
+         if (wr_mask) {
+             wr_mask &= ~MINSTRETCFGH_BIT_MINH;
+-            env->minstretcfgh = (new_val & wr_mask) |
+-                                (env->minstretcfgh & ~wr_mask);
++            cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
++            env->minstretcfg = deposit64(env->minstretcfg, 32, 32, cfgh);
+         } else {
+-            *val = env->minstretcfgh;
++            *val = cfgh;
+         }
+         break;
+     default:
+-- 
+2.52.0
 
 
