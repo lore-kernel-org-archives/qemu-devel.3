@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84709D26D6F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9427D26D71
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 16:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veFet-00084X-6H; Fri, 09 Jan 2026 11:48:19 -0500
+	id 1veFet-00083x-7G; Fri, 09 Jan 2026 11:48:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFeV-00081m-E8
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:47:57 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFeO-0007yY-HC
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:47:50 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFeS-0006ft-Ct
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:47:53 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47bdbc90dcaso32833695e9.1
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 08:47:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFeM-0006eq-QA
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:47:48 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-477770019e4so35182995e9.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 08:47:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767977271; x=1768582071; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=END3tMzR7ssOor5FcuUSvBVigCMVRMcaU3O2EW3YawA=;
- b=n8iPOmoEO+LH77Q8HfOOWMMTWkYGOhf6ysJFsQ/X191ito935KflwcXKIfxaHuMOqH
- Ks/Y8c20jdShGzSSOFHVtBCSnXSUAnFkR/OSfPHnD4bOu+fXrOcpI8FX4XcHq2IT+CkW
- pPsg0sNaTqiSu8VOr75hczillpyZAycM3B3KggTCrJQrbNjAu6iPoK2+zxLys5ulJ2j4
- atOzuQ9VWs+LQwGR6bTfbo61ODNROgjGeW73yol/zq8bt6LmOSyCsmObdyBtOT+CiSG4
- 15MNBW/sLIx175ZJRcoDbrtsyQ1XM+M8QGkbAvs9SkxcZY3kVB9olkyh02DyIZEZ8YQl
- 7a9A==
+ d=linaro.org; s=google; t=1767977264; x=1768582064; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zniQDSXNfJ4pWYDmzLQDIXZeRuLi67mD/NHN29Zhw/U=;
+ b=qQxkv/xzwnU1en1ZsYlNxDAhpNb1yqYK3LTfsfVLzyoc5tPIv7/a/Pgk1FJMDFIFUU
+ U1TeIks/vXdM4brWGc4MrNXJp3RtS34PFtBYED9raXfW1ny/svN61CulaYYntQb61cAM
+ cYtdyP97arigQwWQ23Pri/2dApUBLUPifrNIMo7t/gl7xoyQmIe01ZXJUfWYXRT6PhFH
+ obbAtFFPlN+x+QXLn09nifuqZ4HTzAG4hkwbldFFIltHMyUDbgdzlI6ZJ8msJzo2WUg4
+ eLH/4F4w+8Oap4HkEwqo3Yxu+py9R+nC/wiBkZ8ySC92Ng+oYTuHCNKa4+cKxDR76gGH
+ Vklg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767977271; x=1768582071;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=END3tMzR7ssOor5FcuUSvBVigCMVRMcaU3O2EW3YawA=;
- b=WPyz1aUaoDOQSkThMTAqyutKcp15yBM1IotUcbPmBwJx43SZHfwJGQdifbRDvX2+2e
- 775X8IBwjJtn1ignnljs2+hFDNO88d4Q6/f1detnKjsgy8SWXe/qg/FGJjPskVHlyDvg
- /VhlurdhMqrltpYp1ff1EcXZd3ThF79eaADrFU4myQmqaKZwWJ8kNMNahqo5XPQqURNy
- ZZmQ05wMFriWNWED6NOl98vIy5uyViDYVws9c3VQ+U+6rSpBM3rv06H4B4lP4cNYxUNF
- P41dZKHtE9gnMkD6TuuAz0cU6bGcpEHCsFKMo0vnhgwUdP8uL2lHysNYXBSQl2Ro0a+c
- 8Mdw==
-X-Gm-Message-State: AOJu0YzSHALZD9Ga2yzsXjIk9Eo1MZoTd3lPRArvqLfOXQzupKBizQN+
- g02AqMklvhjMbSwM2Up0QNmkCVvEt5kWkN+KhgeF7UD7YvU0+YwbTmknpD4lYydu+lfE2vFFi+m
- Aj3uuXmE=
-X-Gm-Gg: AY/fxX6vyBaacPgxRqPfPxPe2zzDZRmyvqYB7TtLbTpVKIQeDxmRtP2PROJWzRlHY6u
- /gVFjDcv3g1i9JtiPj/jgm0fekVnu9wfwRX9mBwOqrAHzDRoccWCSFJTYKZwCvwQD8wUxfv2kan
- BmF2XQOopUSvqBlGObqMshdrrt9d8MzttFdXgcg6bPsPIHdxOm4rvhcprJlYYnCuvPPxklyUc8P
- p3QfkPwthLRUDYMbD7TrR9QQZonaHYCbxnihj6rjK/leGvIHyCge6YSJAdwBQ98fSIp9BhJe4Rp
- Q2Du/vpe0BIMk4FHOPXR9N5yKtxUQsznD2FPenNHnvwhohK+8U5aXNNcw7ddiYkp9383CDtBs/W
- muuf85wmn39QYDBZT3RwZYtaZ1FWowjKgo2Q0oMSJhAl5czvPPXwtw6KcsE5KBIOGYT6XETxRNv
- raNE5AdkkpWzYCnx9Zj/vGHPkE4//Saxc4BQFXvcRZUOU58LQtAKoqNk8pn/cF
-X-Google-Smtp-Source: AGHT+IGIKxwPJNkSmcKLtUGHI1seUh2RngrxnMme36+yfsMuOPLnzF85ukGKRclmYDwS+9AG4uRx5Q==
-X-Received: by 2002:a05:600c:4447:b0:477:3e0b:c0e3 with SMTP id
- 5b1f17b1804b1-47d84b3b8b9mr111320605e9.32.1767977270585; 
- Fri, 09 Jan 2026 08:47:50 -0800 (PST)
+ d=1e100.net; s=20230601; t=1767977264; x=1768582064;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zniQDSXNfJ4pWYDmzLQDIXZeRuLi67mD/NHN29Zhw/U=;
+ b=BpnKwAjzGYc44rvG7MQnPYxwDIFKa/HrX/nH4ungFnFj4OOGLk8/MOJZqL88RwFA+m
+ cbcfZ12ojcxZM1DTM8fv3un1xmoKt2ZqdTK0zzOUKEQ8CMeJ8Nyprhe3d7vk1zkhXUzN
+ wNNq+UnbZWQMtRmRsebs2LHkGT6xTRmEsO/nbfQJf88FXSn+CyDJdlA4vDGBJrVXfm6/
+ YNfij51qFzpfiZbJshsiB16beddge6bndOqsb3qIA4o4YVdEDZnkha32/DdKYpoRaAH7
+ Nw6ZbozvzWBIsy3wLaEzQKMM8LFDg5FOzXDkc3fPvvF3wdl1xX/cBDpfxlwlufiikS9W
+ ZbpQ==
+X-Gm-Message-State: AOJu0YxX18YOaIdWE5HOxjeCgcsdgHIn8tU8b0dVU9N1I15h70aRvrc5
+ mLMEFbQbeXYReLWz0KCGKRXRt/yEo97nSu71mVcQEe42nLDLwR1HXjcrBd9AHjz8lAfqSY66TGT
+ 1DhgrxMg=
+X-Gm-Gg: AY/fxX6BHCUI9vxezzSuulfxFUJAQlWKOHpJcb08ED0yEr25ZXE7r332tLlnF6uHm1R
+ Jku3N6qdjm/DadniML7FwFF4r8p+lzoxLDTXv7VruOWsQGNARYG/dRkTYD5uzD7wIXW3WHQyLgV
+ 2sBceStkBPud8MMBP1aOb6TrqOJ5UmmCPh6P0HGNNOfQEqapdA+PD5nDqb8G+0PaLAOPGkFATPs
+ T/Ru9StN5hbFTGhhD7mWJKFBQOCAz80+2lhbB5Dnp55lN1tELF6C94c289p6f6VqNQtQYZrm/I+
+ aUBFDlE/nXILwDqjxlgMgnfzdAwBUNu5i6RRcVxxrr7Xmau+OHzbj3XtxiXMXvmUUpZz2SzlNi5
+ 9DpKi1B7/7KW/UVsk8dcr9HdyUulQtGfw8dAwiRDjGloVloMhroZOfXyipsGli4j8RZlrttQpab
+ OshFVIWXvsxbrBhC8eQkjgNhBW1GxHXGJcGdSWxFusbIz3PRzGbM1i0OJZZy8TGvJwPtFn7SY=
+X-Google-Smtp-Source: AGHT+IFqvzMQwBqNQoEU41pX21AI6Pa2+p5re99CemlH9dTarjKh0LFMISPIcXbUEZKCbzGIl2bqqw==
+X-Received: by 2002:a05:600c:a48:b0:477:9eb8:97d2 with SMTP id
+ 5b1f17b1804b1-47d84b08652mr120437825e9.8.1767977264082; 
+ Fri, 09 Jan 2026 08:47:44 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f68f686sm215771675e9.3.2026.01.09.08.47.49
+ 5b1f17b1804b1-47d87189e54sm65243515e9.12.2026.01.09.08.47.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 Jan 2026 08:47:50 -0800 (PST)
+ Fri, 09 Jan 2026 08:47:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 1/4] tests/qtest: Remove unnecessary 'qemu/bswap.h' include
-Date: Fri,  9 Jan 2026 17:47:39 +0100
-Message-ID: <20260109164742.58041-2-philmd@linaro.org>
+Subject: [PATCH v2 0/4] bswap: Cleanups around 'qemu/bswap.h' header
+Date: Fri,  9 Jan 2026 17:47:38 +0100
+Message-ID: <20260109164742.58041-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260109164742.58041-1-philmd@linaro.org>
-References: <20260109164742.58041-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,94 +98,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-None of these files use API declared in "qemu/bswap.h",
-remove the unnecessary inclusion.
+The point of this cleanup series is to avoid a circular dependency
+problem between "qemu/bswap.h" and "exec/memop.h", since I want
+to add a ld/st variant in "qemu/bswap.h" that takes a MemOp arg.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- tests/qtest/pnv-xive2-common.h     | 1 -
- tests/qtest/aspeed_smc-test.c      | 1 -
- tests/qtest/ast2700-smc-test.c     | 1 -
- tests/qtest/libqos/fw_cfg.c        | 1 -
- tests/qtest/libqos/i2c-omap.c      | 1 -
- tests/qtest/pnv-spi-seeprom-test.c | 1 -
- 6 files changed, 6 deletions(-)
+Otherwise I get:
 
-diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-common.h
-index 2077c05ebc7..3b842274243 100644
---- a/tests/qtest/pnv-xive2-common.h
-+++ b/tests/qtest/pnv-xive2-common.h
-@@ -15,7 +15,6 @@
- #define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
- #define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
-                                  PPC_BIT32(bs))
--#include "qemu/bswap.h"
- #include "hw/intc/pnv_xive2_regs.h"
- #include "hw/ppc/xive_regs.h"
- #include "hw/ppc/xive2_regs.h"
-diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
-index 50a87e62500..39af1df0ed7 100644
---- a/tests/qtest/aspeed_smc-test.c
-+++ b/tests/qtest/aspeed_smc-test.c
-@@ -24,7 +24,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "qemu/bswap.h"
- #include "libqtest-single.h"
- #include "qemu/bitops.h"
- #include "aspeed-smc-utils.h"
-diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-test.c
-index 62d538d8a3a..33fc47230ee 100644
---- a/tests/qtest/ast2700-smc-test.c
-+++ b/tests/qtest/ast2700-smc-test.c
-@@ -7,7 +7,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "qemu/bswap.h"
- #include "libqtest-single.h"
- #include "qemu/bitops.h"
- #include "aspeed-smc-utils.h"
-diff --git a/tests/qtest/libqos/fw_cfg.c b/tests/qtest/libqos/fw_cfg.c
-index 0ab3959171b..8611f648c14 100644
---- a/tests/qtest/libqos/fw_cfg.c
-+++ b/tests/qtest/libqos/fw_cfg.c
-@@ -17,7 +17,6 @@
- #include "malloc-pc.h"
- #include "libqos-malloc.h"
- #include "../libqtest.h"
--#include "qemu/bswap.h"
- #include "hw/nvram/fw_cfg.h"
- 
- void qfw_cfg_select(QFWCFG *fw_cfg, uint16_t key)
-diff --git a/tests/qtest/libqos/i2c-omap.c b/tests/qtest/libqos/i2c-omap.c
-index 6f98f54820b..71f70c64f85 100644
---- a/tests/qtest/libqos/i2c-omap.c
-+++ b/tests/qtest/libqos/i2c-omap.c
-@@ -10,7 +10,6 @@
- #include "i2c.h"
- 
- 
--#include "qemu/bswap.h"
- #include "../libqtest.h"
- 
- enum OMAPI2CRegisters {
-diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
-index 8033261758b..44e0b92730b 100644
---- a/tests/qtest/pnv-spi-seeprom-test.c
-+++ b/tests/qtest/pnv-spi-seeprom-test.c
-@@ -7,7 +7,6 @@
-  */
- #include "qemu/osdep.h"
- #include "libqtest.h"
--#include "qemu/bswap.h"
- #include "hw/ssi/pnv_spi_regs.h"
- #include "pnv-xscom.h"
- 
+    In file included from ../../util/qemu-timer-common.c:25:
+    In file included from include/qemu/timer.h:4:
+    In file included from include/qemu/bitops.h:16:
+    In file included from include/qemu/host-utils.h:33:
+    In file included from include/qemu/bswap.h:6:
+    include/exec/memop.h:182:19: error: call to undeclared function 'ctz32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+      182 |     return (MemOp)ctz32(size);
+          |                   ^
+    In file included from ../../util/qemu-timer-common.c:25:
+    In file included from include/qemu/timer.h:4:
+    In file included from include/qemu/bitops.h:16:
+    include/qemu/host-utils.h:236:19: error: static declaration of 'ctz32' follows non-static declaration
+      236 | static inline int ctz32(uint32_t val)
+          |                   ^
+    include/exec/memop.h:182:19: note: previous implicit declaration is here
+      182 |     return (MemOp)ctz32(size);
+          |                   ^
+    2 errors generated.
+
+Philippe Mathieu-Daudé (4):
+  tests/qtest: Remove unnecessary 'qemu/bswap.h' include
+  bswap: Use 'qemu/bswap.h' instead of 'qemu/host-utils.h'
+  bswap: Include missing 'qemu/bswap.h' header
+  bswap: Consistently use builtin bswap() functions
+
+ block/qcow2.h                         | 1 +
+ include/qemu/host-utils.h             | 7 +++----
+ include/qemu/int128.h                 | 7 +++----
+ tests/qtest/pnv-xive2-common.h        | 1 -
+ audio/audio.c                         | 1 +
+ block/blklogwrites.c                  | 1 +
+ block/export/vduse-blk.c              | 1 +
+ block/export/vhost-user-blk-server.c  | 1 +
+ block/export/virtio-blk-handler.c     | 1 +
+ block/parallels-ext.c                 | 1 +
+ hw/9pfs/9p-local.c                    | 1 +
+ hw/block/cdrom.c                      | 1 +
+ hw/block/hd-geometry.c                | 1 +
+ hw/net/can/ctucan_core.c              | 1 +
+ hw/nvram/xlnx-efuse.c                 | 1 +
+ hw/scsi/scsi-generic.c                | 1 +
+ hw/sd/sd.c                            | 1 +
+ hw/sd/ssi-sd.c                        | 1 +
+ net/l2tpv3.c                          | 1 +
+ qga/commands-linux.c                  | 1 +
+ scsi/pr-manager-helper.c              | 1 +
+ target/arm/tcg/arith_helper.c         | 1 +
+ tests/qtest/acpi-utils.c              | 1 +
+ tests/qtest/ahci-test.c               | 2 +-
+ tests/qtest/aspeed-hace-utils.c       | 1 +
+ tests/qtest/aspeed_smc-test.c         | 1 -
+ tests/qtest/ast2700-smc-test.c        | 1 -
+ tests/qtest/bios-tables-test.c        | 1 +
+ tests/qtest/libqos/ahci.c             | 2 +-
+ tests/qtest/libqos/fw_cfg.c           | 1 -
+ tests/qtest/libqos/generic-pcihost.c  | 2 +-
+ tests/qtest/libqos/i2c-omap.c         | 1 -
+ tests/qtest/libqos/igb.c              | 1 +
+ tests/qtest/libqos/pci-spapr.c        | 2 +-
+ tests/qtest/libqos/virtio-9p-client.c | 1 +
+ tests/qtest/migration/framework.c     | 1 +
+ tests/qtest/npcm7xx_emc-test.c        | 1 +
+ tests/qtest/pnv-spi-seeprom-test.c    | 1 -
+ tests/qtest/tpm-emu.c                 | 1 +
+ tests/qtest/ufs-test.c                | 1 +
+ tests/qtest/vmgenid-test.c            | 1 +
+ tests/unit/test-hbitmap.c             | 1 +
+ util/bitmap.c                         | 1 +
+ util/hbitmap.c                        | 2 +-
+ 44 files changed, 42 insertions(+), 19 deletions(-)
+
 -- 
 2.52.0
 
