@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F39ED232C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 06:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8211ED232C8
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 06:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve65a-0001tp-2k; Fri, 09 Jan 2026 01:35:14 -0500
+	id 1ve65f-0001xf-Go; Fri, 09 Jan 2026 01:35:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ve65Y-0001tN-0n
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:35:12 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ve65e-0001u9-BJ
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:35:18 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ve65W-0007H5-Bt
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:35:11 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-42fb2314f52so2016874f8f.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:35:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ve65c-0007MJ-F2
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:35:18 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4779aa4f928so42375935e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:35:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767940508; x=1768545308; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Vc57H6Wj/i2IihsY5LvmXV7/IJY0oilIjXpTEqMK6Z4=;
- b=ZH5TAq929mXXN2drv6Ig4K33LuJ1CBiSW7Sht4PKOhzSzNKZFCCBpzetC/kNfjKGJh
- 3c34Us15fW0QTaa8IB1hd0WwIMapkheVIujNee4nVw/bdY00tzne7KALEmPcL3nJIdd9
- gZGXvBtUtHzwfcqeiCUUHVHvVsNTxOFAjcbJ1qfwMswFO4fAJUQJAQAKWPWLFSkvAWFM
- qSxA8m9jCkZ9waD6gfPrzakJvZVJwfm3D/6t68cCCcagK+X+WNPrRm/RnW0ezgN1YHGT
- pydcZyoL/A9SiQ7apxIZZnRZ9J9aLBAeMUUXAEEH/UW5iikDzMjXDuUtkg60g/dOXfnS
- x+lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767940508; x=1768545308;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1767940514; x=1768545314; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Vc57H6Wj/i2IihsY5LvmXV7/IJY0oilIjXpTEqMK6Z4=;
- b=vvxhQixkVZeaKGS4DA11CCHPAI9eu6QtTuu2RaIOzREDz328VS6gprPscVVaChdeWM
- xv18woaynQJl3aXcX2ETO/ivCLqXIpq48bk5ejLGtv1mQLfI2DD7salfSPu3azdR1NLi
- 3ceOBJk2/7C0Q1/NhCfMcoYoxh5KEF1heIZQCI7UzUME2o1jqk7e/6g6jhRDn5ghbwsB
- 42tk5vpBRVf2nsIVH7Nc5ayNTn9CEcezFmxE9zJQuXEE2DEKXvzsw0AV5KCSmhV4hgkS
- Cn10s9U/eUYJPzX7ax/0DI8sESwf3o5oxjeO3fRSf7bwf3qjiCB0Qbj82r33+LKKFaI6
- xtHA==
-X-Gm-Message-State: AOJu0YyYNRdzVOUm6YzlM723G42GzCYmyVQ1UWjmE3XhMC9jiWPjuo75
- uMKJEOgPeOtK+uyjKcvAnyv+qKd1d2Ir9WU6TpOWXvxfFRO6AdZ84xZ5t95GNYd/JdhGfaQlWlm
- xhMTn+yk=
-X-Gm-Gg: AY/fxX6ulR4KKnI5EWDKFSy+Drr4Z9af0gsix4u3sv1PsYQ7z5Jumgf1PvpwFk6l97c
- 6D/YxvHTqCjhtjsm7soQTRsc335bzmCpb6kWASdoFmyk3QxW/0kpwfG4xevYPS8QJWYX0SYhAXO
- LWaRTtW6/7A67xh3Ph0YtRaUH+XAPIJMnSMhgEZuwJee9gO6FVPsAgcSRvMxLQ7/Sfc7wc95AQp
- VuCBJ3yJ/v9xQ+3TK/+O2fwamDa8UoFmEbo+a9DeTfUTXzYDjD7wdTfK9QGRQdPXmfMz0CC7qqp
- ec5MCl/oyJQPxJwsIeDzLbbrjt6ECe6euIcFj9sJy/WkUmlijs4GaDL41UPRss48sF7BqDo+aSU
- dv0NbFXBDa7ZrmrEze0W+b4kvh66CKYM0oU9jXHFQJSyqDMUttDUWjgKMKeCwzePtPdjTkkPktn
- 4dM9wlPh0JK4zjAh5ReYYd6ohLrcJ/lmX1lFfcRmYwjzZOUdkToIN48mG5lURB
-X-Google-Smtp-Source: AGHT+IHGv1ROT2uOE1gLfMwrMiHJmcvDuDgCwdleHJhnLXai/tTH4s9x/CR4pOsqZ141OaI3HQC0sA==
-X-Received: by 2002:a05:6000:1862:b0:430:ff81:2947 with SMTP id
- ffacd0b85a97d-432c379dba5mr11427014f8f.40.1767940506921; 
- Thu, 08 Jan 2026 22:35:06 -0800 (PST)
+ bh=lYe5OM9n3hWR6ZPryFp5pgvfiahoglXKqPwtWMRKxsg=;
+ b=KYDEgZ7Kz8rdr6o4c9RwgQN7pnYKVNvqZ/OJ5Ixs/QRFG/Xf76FodM6oN03n5rji05
+ NfaLjicPMDN9/bqA9dl06GgH7CuIJ5vmOhABYrhjcCrreVUDer+c1ZHPsrA7u8Q5pRQt
+ tpzP64VogAINDCJMbWqLda6Uf+S57JVjGwQUoYD+sV37vveOwDoetrW3t0BqsUJIQRwg
+ MTML/MEKqwgiyebGULvRVHVmEKFjnjpOXS123+XS69TTGhdjosUI84W54JP2H1oLrA8O
+ MAa5YvHxXVQD3Iz28Mq7azk0E68fjA24ewZp5s9HxEqYkpbvF2IPoZknrRh/GiCVRqh0
+ ferA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767940514; x=1768545314;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lYe5OM9n3hWR6ZPryFp5pgvfiahoglXKqPwtWMRKxsg=;
+ b=MbtkK8STkaGIo3/k+slhIOYFuNs42KRVOiwZtXNjn323B0dPCoNmw0AL40Pf5mY8hy
+ eL7jBDFkAleRBvPcPNtQ1mKx3hUeHZxgL6HAbvqlxQVfzHeyzuj4Xzctho2KPJ3Yr18j
+ EYu1gCYTfiftkZ/rA/L84qDPrVuuCutKN3hjDF05vlQgJUdwe4RwRe2G5QUxz0b1xgqG
+ xSZpM5aNuU/yQ8oVDuKfFE0CJlTxuTejPCBURtSDqUmRb2nMkQDqQsKjfrHcznynaNQy
+ BMDf7OhhIIshbKQBtEdo/ML3hUVyZcQ73XBEkgNzlD9n+v+4Y5ffEGgz+JAvIeJNoKTJ
+ P04Q==
+X-Gm-Message-State: AOJu0YzqVurUGNUDUeK8ppcaYVgG/ks1T6Tg3B9GKiyP46jshiyhBvSm
+ ySLM0tGuWS5TKbn1/6ldgk67SnrSIotiie0MFxaIWPyhSXKOKQpMrb5lx2kgd/hHs4bH2btrrSs
+ VUd6hFoE=
+X-Gm-Gg: AY/fxX4GC/Yk69fCT9iEpxlRDNKRvIWhxfDjAjgGsEUl+MW+btFCTmc94V9bB3vSIQT
+ eeScQ3mG7uOBp98xNMnvJeGfm96IFAf4EDO+oUwraImuwPEp7/0jp00kRKMoe7B+u6J408uYuls
+ xlVGZPK7mdmZPBtsN9AtZxTl4anAbQzPJdsBxAawOMkJ9dPVrlkmS/ghMNfG4dQGRzWoTixonI0
+ YBG1ksZflVyAqmbTggluwesP4aEKnGL7RxgYrZMMMJw4iFza6DXKNRIlevVUZp/T1rbxYkn4k3s
+ tS+KCSKREomMgNNkWzK5+Qf67V21YdcQpONp9eNiqxeFh0+7c7EFDQogpx7dwrjILwI9CutJrwF
+ ys3UHzJkjM+lk6FTyb8iiwkz9cF/ReyYaZfy6tQQOkMgnVsGhp627k6QX10TxCKYq2pJQ6l9wxr
+ ub/bCY6l+mGgZtvO1q8kZhL5Z1CEPPffH2HLA8W8tAtS4P8tj6pDfCQLQH41s1
+X-Google-Smtp-Source: AGHT+IFqOU8/u+XVqW5AaXsguYp54q742aG4CDHtRjPgeGi4FlEsFtkwyqEWp4ZRAX2+ZAdVLh8qCg==
+X-Received: by 2002:a05:600c:3143:b0:47d:4fbe:e6cc with SMTP id
+ 5b1f17b1804b1-47d84b179f7mr105791515e9.13.1767940513669; 
+ Thu, 08 Jan 2026 22:35:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5df96asm20296704f8f.28.2026.01.08.22.35.05
+ 5b1f17b1804b1-47d7f41f5e0sm186116365e9.8.2026.01.08.22.35.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 08 Jan 2026 22:35:06 -0800 (PST)
+ Thu, 08 Jan 2026 22:35:13 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/4] system/memory: Clarify unaligned load/store API
-Date: Fri,  9 Jan 2026 07:35:00 +0100
-Message-ID: <20260109063504.71576-1-philmd@linaro.org>
+Subject: [PATCH v2 1/4] docs/devel/loads-stores: Clarify regexp are POSIX
+ basic ones
+Date: Fri,  9 Jan 2026 07:35:01 +0100
+Message-ID: <20260109063504.71576-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260109063504.71576-1-philmd@linaro.org>
+References: <20260109063504.71576-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,39 +104,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have been confused by the load/store 'host endian' API
-for years: this is just about unaligned loads/stores.
-Rename to clarify.
+While git-grep uses POSIX basic regexp by default, git-config
+can select a distinct one. Add the '-G' (--basic-regexp)
+argument to be sure our regexps work on first try.
 
-v2:
-- No "memory_" since it's for host pointers and not
-  guest memory addresses (Paolo)
-- Fix regexps
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/devel/loads-stores.rst | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-Philippe Mathieu-Daudé (4):
-  docs/devel/loads-stores: Clarify regexp are POSIX basic ones
-  docs/devel/loads-stores: Fix ld/stn_*_p() regexp
-  system/memory: Extract 'qemu/ldst_unaligned.h' header
-  system/memory: Rename unaligned load/store API
-
- MAINTAINERS                    |  1 +
- docs/devel/loads-stores.rst    | 47 ++++++++---------
- include/qemu/bswap.h           | 96 +++++++---------------------------
- include/qemu/ldst_unaligned.h  | 67 ++++++++++++++++++++++++
- accel/tcg/translator.c         |  7 +--
- hw/display/ati_2d.c            |  3 +-
- hw/display/sm501.c             | 21 ++++----
- hw/remote/vfio-user-obj.c      |  5 +-
- hw/vmapple/virtio-blk.c        |  3 +-
- net/checksum.c                 |  7 +--
- system/memory.c                |  4 +-
- system/physmem.c               |  8 +--
- ui/vnc-enc-tight.c             |  3 +-
- util/bufferiszero.c            |  8 +--
- accel/tcg/ldst_atomicity.c.inc | 10 ++--
- 15 files changed, 153 insertions(+), 137 deletions(-)
- create mode 100644 include/qemu/ldst_unaligned.h
-
+diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
+index c906c6509ee..fc78def0612 100644
+--- a/docs/devel/loads-stores.rst
++++ b/docs/devel/loads-stores.rst
+@@ -63,7 +63,7 @@ which stores ``val`` to ``ptr`` as an ``{endian}`` order value
+ of size ``sz`` bytes.
+ 
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<ld[us]\?[bwlq]\(_[hbl]e\)\?_p\>``
+  - ``\<st[bwlq]\(_[hbl]e\)\?_p\>``
+  - ``\<st24\(_[hbl]e\)\?_p\>``
+@@ -120,7 +120,7 @@ store: ``cpu_st{size}{end}_mmu(env, ptr, val, oi, retaddr)``
+  - ``_be`` : big endian
+  - ``_le`` : little endian
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<cpu_ld[bwlq]\(_[bl]e\)\?_mmu\>``
+  - ``\<cpu_st[bwlq]\(_[bl]e\)\?_mmu\>``
+ 
+@@ -154,7 +154,7 @@ store: ``cpu_st{size}{end}_mmuidx_ra(env, ptr, val, mmuidx, retaddr)``
+  - ``_be`` : big endian
+  - ``_le`` : little endian
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_mmuidx_ra\>``
+  - ``\<cpu_st[bwlq]\(_[bl]e\)\?_mmuidx_ra\>``
+ 
+@@ -192,7 +192,7 @@ store: ``cpu_st{size}{end}_data_ra(env, ptr, val, ra)``
+  - ``_be`` : big endian
+  - ``_le`` : little endian
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_data_ra\>``
+  - ``\<cpu_st[bwlq]\(_[bl]e\)\?_data_ra\>``
+ 
+@@ -231,7 +231,7 @@ store: ``cpu_st{size}{end}_data(env, ptr, val)``
+  - ``_be`` : big endian
+  - ``_le`` : little endian
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_data\>``
+  - ``\<cpu_st[bwlq]\(_[bl]e\)\?_data\+\>``
+ 
+@@ -265,7 +265,7 @@ load: ``cpu_ld{sign}{size}_code(env, ptr)``
+  - ``l`` : 32 bits
+  - ``q`` : 64 bits
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<cpu_ld[us]\?[bwlq]_code\>``
+ 
+ ``translator_ld*``
+@@ -296,7 +296,7 @@ swap: ``translator_ld{sign}{size}_swap(env, ptr, swap)``
+  - ``l`` : 32 bits
+  - ``q`` : 64 bits
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<translator_ld[us]\?[bwlq]\(_swap\)\?\>``
+ 
+ ``helper_{ld,st}*_mmu``
+@@ -325,7 +325,7 @@ store: ``helper_{size}_mmu(env, addr, val, opindex, retaddr)``
+  - ``l`` : 32 bits
+  - ``q`` : 64 bits
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<helper_ld[us]\?[bwlq]_mmu\>``
+  - ``\<helper_st[bwlq]_mmu\>``
+ 
+@@ -382,7 +382,7 @@ succeeded using a MemTxResult return code.
+ 
+ The ``_{endian}`` suffix is omitted for byte accesses.
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<address_space_\(read\|write\|rw\)\>``
+  - ``\<address_space_ldu\?[bwql]\(_[lb]e\)\?\>``
+  - ``\<address_space_st[bwql]\(_[lb]e\)\?\>``
+@@ -400,7 +400,7 @@ Note that portions of the write which attempt to write data to a
+ device will be silently ignored -- only real RAM and ROM will
+ be written to.
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``address_space_write_rom``
+ 
+ ``{ld,st}*_phys``
+@@ -438,7 +438,7 @@ device doing the access has no way to report such an error.
+ 
+ The ``_{endian}_`` infix is omitted for byte accesses.
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<ldu\?[bwlq]\(_[bl]e\)\?_phys\>``
+  - ``\<st[bwlq]\(_[bl]e\)\?_phys\>``
+ 
+@@ -460,7 +460,7 @@ For new code they are better avoided:
+ 
+ ``cpu_physical_memory_write``
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<cpu_physical_memory_\(read\|write\)\>``
+ 
+ ``cpu_memory_rw_debug``
+@@ -495,7 +495,7 @@ make sure our existing code is doing things correctly.
+ 
+ ``dma_memory_rw``
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<dma_memory_\(read\|write\|rw\)\>``
+  - ``\<ldu\?[bwlq]\(_[bl]e\)\?_dma\>``
+  - ``\<st[bwlq]\(_[bl]e\)\?_dma\>``
+@@ -536,7 +536,7 @@ correct address space for that device.
+ 
+ The ``_{endian}_`` infix is omitted for byte accesses.
+ 
+-Regexes for git grep:
++Regexes for git grep -G:
+  - ``\<pci_dma_\(read\|write\|rw\)\>``
+  - ``\<ldu\?[bwlq]\(_[bl]e\)\?_pci_dma\>``
+  - ``\<st[bwlq]\(_[bl]e\)\?_pci_dma\>``
 -- 
 2.52.0
 
