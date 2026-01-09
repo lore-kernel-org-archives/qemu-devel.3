@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0F2D26D7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 17:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C521D26D7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 17:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veGDR-0004iv-HU; Fri, 09 Jan 2026 12:24:01 -0500
+	id 1veGGM-0000X6-Vi; Fri, 09 Jan 2026 12:27:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veGDM-0004ev-I7
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:23:57 -0500
+ id 1veGGD-0000Ty-Kx
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:26:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veGDK-0005xw-4I
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:23:56 -0500
+ id 1veGGA-0006YJ-RK
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:26:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767979431;
+ s=mimecast20190719; t=1767979609;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OY/Ypd6s7CfRZspbd8JoeSX1WqFttTQEESZ9i5D8+rM=;
- b=dMSPfLlAJ2NJmajLWJ1BKXHn5I6BpIkzZXS8JspDXoLb7f1fEuu7IEbs34vAsWIhDk02cA
- I2D7uRBHHUsegLkmtUs5YwGbMfKpiZo38Zezl5u4I2MlJ98avL3ndvitICx3TpNCGKD0M3
- LBCxlCmP0fVIkq3bbA0IoVEdO6RKWzc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BC5/C3Fn9fnvF6/higQNpNdnu7olzzpVNEu7o58VIow=;
+ b=ZRdngEzl5gzKmuCsE/4KDp2rcvM634ztdXumMppM+wf2HZ0XPaHSNQthIY2E8P299/MsPK
+ BUTMJ73sVNdjET4MxYIbyPY2UMDh7GhyUGRva+IDtbT/7FpQXY+QKNc5qtj5ay9ydJ+IQy
+ 3uMyR/I6Nnl7LZq1xE85I58/tXXxVYA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-YoZRZWguNAu0JxSquuHOig-1; Fri, 09 Jan 2026 12:23:47 -0500
-X-MC-Unique: YoZRZWguNAu0JxSquuHOig-1
-X-Mimecast-MFC-AGG-ID: YoZRZWguNAu0JxSquuHOig_1767979426
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477a1e2b372so41714725e9.2
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 09:23:47 -0800 (PST)
+ us-mta-544-XVhuU-9UOnKjEyWPA7I8MA-1; Fri, 09 Jan 2026 12:26:47 -0500
+X-MC-Unique: XVhuU-9UOnKjEyWPA7I8MA-1
+X-Mimecast-MFC-AGG-ID: XVhuU-9UOnKjEyWPA7I8MA_1767979606
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42fb1c2c403so3036798f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 09:26:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767979426; x=1768584226; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767979606; x=1768584406; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OY/Ypd6s7CfRZspbd8JoeSX1WqFttTQEESZ9i5D8+rM=;
- b=leSRx3nyoH6F0kLMSQAXtmpaLz0QqJavV3ENAIfYRpgZvCDx4gopQKVza5vlxssY/q
- BHXQL2zW4HVaou+inAsXwM9MFIzkXrlFYxvRRgktR5wkPW+XW+LlQGTDKANiCYmV7je/
- fbuAycEqMkOzbaDUdUgSP2Bd/GHgmz3d6DQnalkl2AvsUaSNe2gV9Ru/NT/y319baPmv
- 70eWJwMR/C4s9FcFUgoPjxipjfajL8fWDc5AzdXzxef976NVih2qMype1e0TPfE64Uwm
- 4r0AwC8wQJI8n6sdaLBk9o6bRdoVmkS8izt/Fl51gtSHT3QUurVMy0eRSAj/h61aVnvB
- L9lQ==
+ bh=BC5/C3Fn9fnvF6/higQNpNdnu7olzzpVNEu7o58VIow=;
+ b=AMWVXL4P145P+wJtnE/t1sTrTAG/HIFabr0poMHH4lEFrIRraC0ae5c/5O+ijLQeyr
+ iBky/2NMTFBAguaDGbfeBgvu7DFhXXw3fmzEtWDiAN4yojQqpBAetJ14ZLf61kHnuD1+
+ lq+gpe6MAs5XuPadwjHNB2oxNNLuJY9Y1sos96iUCniDRaF/v85IbEIPDxeIB25pXhml
+ USSD4l9H2ywBu4m4gaWCJlkQGXsXW/ihtWqnk9HtfqJ3SAWefy4y9OSgMJITlKfDm8br
+ hmUXvAX4LUgCS5oLG6Zl5mbB/RNmxTHdHHvnJbjlkJllrhy8L8DwDgzvkKP2QkFSgP42
+ TCKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767979426; x=1768584226;
+ d=1e100.net; s=20230601; t=1767979606; x=1768584406;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OY/Ypd6s7CfRZspbd8JoeSX1WqFttTQEESZ9i5D8+rM=;
- b=xCOZYvnOrWphnKx5pxg4hUOi6G0CAHwYm6t88gZ51lhUJPq2wlfK8DTn/RMUFhnGDY
- dDyfYZ+feP9ZJNssP/uY527F+ElJOSuL22rx4/wPX4ujVXYmr89KtLlCS5L3BqxeG908
- eayhMxVAvxOonKKttQz4Nmn0Gn6qfbGmUNDH4KhEwfwEenQQ0AqMN0EEb9qJ4Dwyua16
- 1g+g9ZrFPy6OTgbcAOFBd006Ffjg5z00yGan4mQV1HGVlrCbXvRCzWCeciFhYXdn/Oui
- pPiTPBts+8qn75hoecsH9rxPjJLyaGPRGnPjdbQ7/GKRTjz7q7fQUe/81Sqmt/weElL9
- 933w==
-X-Gm-Message-State: AOJu0YxGWaqGSzkV3n84DU6o3CHYjF+yDn4lsCeqnu1G9pT8j/g0sfwv
- VEBQ9T21PW1pNSpYI+xUlXspa1B86DAKGVh9FPeaSiyuPC4Dn+xJnloAvVu63iZf2ZhrWTr+iUr
- 57n8odfiy+NFawxnoTve+mpQvtbQrdyoU9tP6EBa0OkwPD8KHJesDlEkgw26fF13MjAlyRgCjv3
- witMx4NxHhfFg8A0WevZj2KrJoCywGom4=
-X-Gm-Gg: AY/fxX4h3KGXIa4JFhaLFUd7DC2Zi6QVaIS03L9B9RChJ/kWkb8d4ZD/JIKSWHWq+ko
- RjoCosSSHx93+wKxmWVcvCrFZmnOjZnCgdYksx7JE/ntoxhRd1UTtAedoG5sGTBRsO8nYUa6kSo
- yz8gC7xYQHePyhSWvj5HjeAdlxaZ6TFH8tGaNZSolD09iMtS5kecAnVA4jPSSGk7oH8bOaHBDZg
- 9HxTfcJ6CG+7Y5+t+zEbEv+92zxEXSA9fq8TnqM1M7Z2rko02B1UFopuFpeAkflE0pr9A==
-X-Received: by 2002:a05:6000:2305:b0:431:a33:d872 with SMTP id
- ffacd0b85a97d-432c378a069mr11036636f8f.8.1767979426319; 
- Fri, 09 Jan 2026 09:23:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGOhHzCpBxYS9TnVDb9dTiFvAB6ZyzUZVXoHTdxSLD3iOGMuFXNb7pJHdaYKzdYY6ZDLRcpbcZRr49O0raRSEI=
-X-Received: by 2002:a05:6000:2305:b0:431:a33:d872 with SMTP id
- ffacd0b85a97d-432c378a069mr11036606f8f.8.1767979425838; Fri, 09 Jan 2026
- 09:23:45 -0800 (PST)
+ bh=BC5/C3Fn9fnvF6/higQNpNdnu7olzzpVNEu7o58VIow=;
+ b=qoVJZJcO3gJHa1rdgh99LlJAru4nf9gLjZzHgX9p1oNNSqKB+A1eoa+2Oc3wQJqqPt
+ 3Y1uRO823ATbo5EV7GO+ckcwNKgLIB5IBmTRMhG3Ac3HSk0GesDPF60VyCVHnHW4oiMI
+ zNjlSByVEK0JlwTKRjc3TqmSg2kUlGIlDSqJcbXLuQyTB72Umg/jAPQuCr0bGzUaYqq9
+ 17dPjcqIL5YNQvfQET6tzIM8c317jix380xQyw1ftO/3WhbSE75uSRuaOyaeIcMmWeiW
+ 6LgwWI/DzT2JU94m+jCKZGibQ9dNMY/knJpfyI1xVB/CNcyzp4WCwuvDVU0GKWEe1+bi
+ 2LKQ==
+X-Gm-Message-State: AOJu0YxZgGpPrn49Fw5CVYkyLlp5QNtGNSSO8jEbGHuMaMHNLiM1tybY
+ hgkcIHF7xe/AI7/qfg3EcE7FIyzamqdqowdlbbtIjHItPc3K07+Ic/F7OiECXMPQ/ODP7mNGZVQ
+ CRTxTljxFFpCQ24kk2COyiVmL1AIgdevNQQRESFnio0fGWJhuLAsz4Wn76q1L2LIUz7gzh5l2YF
+ qQgQUx9PJ/POSppylxh0zR7kKX5MqE4AqBdzvQL5s=
+X-Gm-Gg: AY/fxX4/2siU3o+KUV6iSPx0xw7Xtt/Yc+rShUEnFwLgk+6CCYWvR3hXX28tPxGY1nO
+ psoNfpzX4P7QJv0G7aA30GWrOvD2OxC68XvkKD53CpT1Js31QxB2nBSAArLtktUBSikiyN8lw9b
+ BAAdeaH+B5KExh1tvhK1QmWvgSX8DQYHLc4RfpSM0clGkA2IrH/8yBBgx/5tGQKPzM/qLgVYoXy
+ eVNRI3enpxX5gSv6HTx52wBWQIhh+z7XVHRWobLdm3Bk837yqJyVLibUAHEOPhk9EfgwA==
+X-Received: by 2002:a05:6000:4024:b0:430:f59d:4dfc with SMTP id
+ ffacd0b85a97d-432c378a153mr10921904f8f.9.1767979606004; 
+ Fri, 09 Jan 2026 09:26:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHa31tvJsDVw/Ho2P/qsgUz2o9IzqhaqEoCPAiE+87W3tibqX+/AB3WqXHlxr0F1jgkQWuXchHgGHc24m/T1DU=
+X-Received: by 2002:a05:6000:4024:b0:430:f59d:4dfc with SMTP id
+ ffacd0b85a97d-432c378a153mr10921885f8f.9.1767979605548; Fri, 09 Jan 2026
+ 09:26:45 -0800 (PST)
 MIME-Version: 1.0
 References: <20260109165058.59144-1-philmd@linaro.org>
- <20260109165058.59144-3-philmd@linaro.org>
-In-Reply-To: <20260109165058.59144-3-philmd@linaro.org>
+In-Reply-To: <20260109165058.59144-1-philmd@linaro.org>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 9 Jan 2026 18:23:36 +0100
-X-Gm-Features: AZwV_QhZrdvFHiFuQSOcmUQwIHiLcP1eaIILtf9WLN5S3Li28macyjjehYOxDdE
-Message-ID: <CABgObfYYx4-BcN7gbpNNiZi8nQhqYh-fgJ4j=6udogBnpz_7UQ@mail.gmail.com>
-Subject: Re: [PATCH v5 02/22] util: Introduce ldm_p() and stm_p() load/store
- helpers
+Date: Fri, 9 Jan 2026 18:26:35 +0100
+X-Gm-Features: AZwV_Qg4jRWt1sAw0Set4w0GKRNxK_ihEB2td6Q0ZXO_5ew6KFzXE_v_66NaPIg
+Message-ID: <CABgObfaEj8_ssaUhZRpsH1u-wRiPU=V0yj165WRuMBoOy92qBA@mail.gmail.com>
+Subject: Re: [PATCH v5 00/22] system/memory: Clean ups around
+ address_space_ldst() endian variants
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Peter Xu <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000a5cc570647f7c90d"
+Content-Type: multipart/alternative; boundary="0000000000005bfd460647f7d498"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -119,210 +118,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a5cc570647f7c90d
+--0000000000005bfd460647f7d498
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Il ven 9 gen 2026, 17:51 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> ha
 scritto:
 
-> Introduce load/store helpers which take a MemOp argument.
+> Missing review: 2, 12, 20
 >
-> Inspired-by: Paolo Bonzini <pbonzini@redhat.com>
->
-
-That's a new one. :)
-
-I think they should be inline and so should be
-address_space_{ld,st}m_internal (maybe even always_inline). The amount of
-optimization enabled by constant MemOp is huge.
-
-One other small change:
-
-+    const unsigned size =3D memop_size(mop);
-> +    uint64_t val;
+> Since v4:
+> - No change (RESEND)
 >
 
-This must be initialized to zero.
-
-Otherwise the whole series looks great, thanks. Sorry again for delaying my
-review.
+For subpages, are you leaving for later the switch away from
+DEVICE_NATIVE_ENDIAN?
 
 Paolo
 
-+    uint8_t *pval =3D (uint8_t *)&val;
-> +
-> +    if (HOST_BIG_ENDIAN) {
-> +        pval +=3D sizeof(val) - size;
-> +    }
-> +
-> +    __builtin_memcpy(pval, ptr, size);
-> +    if (unlikely(mop & MO_BSWAP)) {
-> +        switch (size) {
-> +        case sizeof(uint16_t):
-> +            val =3D __builtin_bswap16(val);
-> +            break;
-> +        case sizeof(uint32_t):
-> +            val =3D __builtin_bswap32(val);
-> +            break;
-> +        case sizeof(uint64_t):
-> +            val =3D __builtin_bswap64(val);
-> +            break;
-> +        default:
-> +            g_assert_not_reached();
-> +        }
-> +    }
-> +    return val;
-> +}
-> +
-> +void stm_p(void *ptr, MemOp mop, uint64_t val)
-> +{
-> +    const unsigned size =3D memop_size(mop);
-> +    const uint8_t *pval =3D (const uint8_t *)&val;
-> +
-> +    if (HOST_BIG_ENDIAN) {
-> +        pval +=3D sizeof(val) - size;
-> +    }
-> +
-> +    if (unlikely(mop & MO_BSWAP)) {
-> +        switch (size) {
-> +        case sizeof(uint16_t):
-> +            val =3D __builtin_bswap16(val);
-> +            break;
-> +        case sizeof(uint32_t):
-> +            val =3D __builtin_bswap32(val);
-> +            break;
-> +        case sizeof(uint64_t):
-> +            val =3D __builtin_bswap64(val);
-> +            break;
-> +        default:
-> +            g_assert_not_reached();
-> +        }
-> +    }
-> +    __builtin_memcpy(ptr, pval, size);
-> +}
-> diff --git a/util/meson.build b/util/meson.build
-> index 35029380a37..b695b6e4728 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -38,6 +38,7 @@ util_ss.add(files('envlist.c', 'path.c', 'module.c'))
->  util_ss.add(files('event.c'))
->  util_ss.add(files('host-utils.c'))
->  util_ss.add(files('bitmap.c', 'bitops.c'))
-> +util_ss.add(files('ldst.c'))
->  util_ss.add(files('fifo8.c'))
->  util_ss.add(files('cacheflush.c'))
->  util_ss.add(files('error.c', 'error-report.c'))
+Since v3:
+> - Assign device_endian enums (Richard)
+> - Add/use ldm_p() and stm_p() helpers (Paolo)
+>
+> Since v2:
+> - Changed opt-out to opt-in approach (Pierrick)
+> - Split big patches in smaller ones
+> - Mark ioport little-endian
+>
+> Philippe Mathieu-Daud=C3=A9 (22):
+>   MAINTAINERS: Cover 'system/memory_ldst*.h.inc' files
+>   util: Introduce ldm_p() and stm_p() load/store helpers
+>   system/physmem: Inline and remove leul_to_cpu()
+>   system/physmem: Convert DEBUG_SUBPAGE printf() to trace events
+>   system/memory: Split MemoryRegionCache API to 'memory_cached.h'
+>   system/memory: Inline address_space_stq_internal()
+>   system/memory: Define address_space_ldst[W] endian variants via
+>     template
+>   system/memory: Define address_space_ldst[L] endian variants via
+>     template
+>   system/memory: Define address_space_ldst[Q] endian variants via
+>     template
+>   system/memory: Factor address_space_ldst[M]_internal() helper out
+>   system/memory: Pass device_endian argument as MemOp bit
+>   system/memory: Use ldm_p() and stm_p() helpers
+>   system/memory: Directly call address_space_ldst[M]_internal() helper
+>   system: Allow restricting the legacy ld/st_phys() 'native-endian' API
+>   system: Allow restricting legacy address_space_ldst() native-endian
+>     API
+>   system: Allow restricting the legacy cpu_ld/st() 'native-endian' API
+>   system: Allow restricting the legacy translator_ld() 'native-endian'
+>     API
+>   system: Allow restricting the legacy tswap() 'native-endian' API
+>   system: Allow restricting the legacy MO_TE* 'native-endian'
+>     definitions
+>   system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition
+>   system/ioport: Declare x86-specific I/O port in little-endian order
+>   system/ioport: Do not open-code address_space_ld/st_le() methods
+>
+>  MAINTAINERS                                  |   4 +
+>  include/accel/tcg/cpu-ldst.h                 |   2 +
+>  include/exec/memop.h                         |   4 +
+>  include/exec/translator.h                    |   5 +-
+>  include/exec/tswap.h                         |   3 +
+>  include/hw/virtio/virtio-access.h            |   1 +
+>  include/qemu/bswap.h                         |  11 -
+>  include/qemu/ldst_unaligned.h                |  25 ++
+>  include/system/memory.h                      | 193 +-------
+>  include/system/memory_cached.h               | 212 +++++++++
+>  system/memory-internal.h                     |   2 +
+>  include/system/memory_ldst.h.inc             |  52 +--
+>  include/system/memory_ldst_endian.h.inc      |  33 ++
+>  include/system/memory_ldst_phys.h.inc        | 113 +----
+>  include/system/memory_ldst_phys_endian.h.inc |  57 +++
+>  system/ioport.c                              |  34 +-
+>  system/physmem.c                             |  35 +-
+>  tests/qtest/endianness-test.c                |  10 +-
+>  tests/qtest/libqtest.c                       |  13 +-
+>  util/ldst.c                                  |  69 +++
+>  system/memory_ldst.c.inc                     | 449 ++-----------------
+>  system/memory_ldst_endian.c.inc              |  70 +++
+>  scripts/make-config-poison.sh                |   1 +
+>  system/trace-events                          |   6 +
+>  util/meson.build                             |   1 +
+>  25 files changed, 599 insertions(+), 806 deletions(-)
+>  create mode 100644 include/system/memory_cached.h
+>  create mode 100644 include/system/memory_ldst_endian.h.inc
+>  create mode 100644 include/system/memory_ldst_phys_endian.h.inc
+>  create mode 100644 util/ldst.c
+>  create mode 100644 system/memory_ldst_endian.c.inc
+>
 > --
 > 2.52.0
 >
 >
 
---000000000000a5cc570647f7c90d
+--0000000000005bfd460647f7d498
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il ven 9 gen 2026, 17:51 Philipp=
-e Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro=
-.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Introduce load/store helpers which take a MemOp argument.<br>
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il ven 9 gen 2026, 17:51 Philippe Mathieu-Daud=C3=A9 &=
+lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank" rel=3D"noreferrer=
+">philmd@linaro.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">Missing review: 2, 12, 20<br>
 <br>
-Inspired-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br></blockquote=
-></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">That&#39;s a new=
- one. :)</div><div dir=3D"auto"><br></div><div dir=3D"auto">I think they sh=
-ould be inline and so should be address_space_{ld,st}m_internal (maybe even=
- always_inline). The amount of optimization enabled by constant MemOp is hu=
-ge.</div><div dir=3D"auto"><br></div><div dir=3D"auto">One other small chan=
-ge:</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_=
-quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
-ex">+=C2=A0 =C2=A0 const unsigned size =3D memop_size(mop);<br>
-+=C2=A0 =C2=A0 uint64_t val;<br></blockquote></div></div><div dir=3D"auto">=
-<br></div><div dir=3D"auto">This must be initialized to zero.</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">Otherwise the whole series looks grea=
-t, thanks. Sorry again for delaying my review.</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">Paolo=C2=A0</div><div dir=3D"auto"><br></div><div di=
-r=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 uint8_t *pval =3D (uint8_t *)&amp;val;<br>
-+<br>
-+=C2=A0 =C2=A0 if (HOST_BIG_ENDIAN) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 pval +=3D sizeof(val) - size;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 __builtin_memcpy(pval, ptr, size);<br>
-+=C2=A0 =C2=A0 if (unlikely(mop &amp; MO_BSWAP)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 switch (size) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case sizeof(uint16_t):<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D __builtin_bswap16(val);<=
+Since v4:<br>
+- No change (RESEND)<br></blockquote></div></div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">For subpages, are you leaving for later the switch away=
+ from DEVICE_NATIVE_ENDIAN?</div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"=
+gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+Since v3:<br>
+- Assign device_endian enums (Richard)<br>
+- Add/use ldm_p() and stm_p() helpers (Paolo)<br>
+<br>
+Since v2:<br>
+- Changed opt-out to opt-in approach (Pierrick)<br>
+- Split big patches in smaller ones<br>
+- Mark ioport little-endian<br>
+<br>
+Philippe Mathieu-Daud=C3=A9 (22):<br>
+=C2=A0 MAINTAINERS: Cover &#39;system/memory_ldst*.h.inc&#39; files<br>
+=C2=A0 util: Introduce ldm_p() and stm_p() load/store helpers<br>
+=C2=A0 system/physmem: Inline and remove leul_to_cpu()<br>
+=C2=A0 system/physmem: Convert DEBUG_SUBPAGE printf() to trace events<br>
+=C2=A0 system/memory: Split MemoryRegionCache API to &#39;memory_cached.h&#=
+39;<br>
+=C2=A0 system/memory: Inline address_space_stq_internal()<br>
+=C2=A0 system/memory: Define address_space_ldst[W] endian variants via<br>
+=C2=A0 =C2=A0 template<br>
+=C2=A0 system/memory: Define address_space_ldst[L] endian variants via<br>
+=C2=A0 =C2=A0 template<br>
+=C2=A0 system/memory: Define address_space_ldst[Q] endian variants via<br>
+=C2=A0 =C2=A0 template<br>
+=C2=A0 system/memory: Factor address_space_ldst[M]_internal() helper out<br=
+>
+=C2=A0 system/memory: Pass device_endian argument as MemOp bit<br>
+=C2=A0 system/memory: Use ldm_p() and stm_p() helpers<br>
+=C2=A0 system/memory: Directly call address_space_ldst[M]_internal() helper=
+<br>
+=C2=A0 system: Allow restricting the legacy ld/st_phys() &#39;native-endian=
+&#39; API<br>
+=C2=A0 system: Allow restricting legacy address_space_ldst() native-endian<=
 br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case sizeof(uint32_t):<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D __builtin_bswap32(val);<=
+=C2=A0 =C2=A0 API<br>
+=C2=A0 system: Allow restricting the legacy cpu_ld/st() &#39;native-endian&=
+#39; API<br>
+=C2=A0 system: Allow restricting the legacy translator_ld() &#39;native-end=
+ian&#39;<br>
+=C2=A0 =C2=A0 API<br>
+=C2=A0 system: Allow restricting the legacy tswap() &#39;native-endian&#39;=
+ API<br>
+=C2=A0 system: Allow restricting the legacy MO_TE* &#39;native-endian&#39;<=
 br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case sizeof(uint64_t):<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D __builtin_bswap64(val);<=
+=C2=A0 =C2=A0 definitions<br>
+=C2=A0 system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition=
+<br>
+=C2=A0 system/ioport: Declare x86-specific I/O port in little-endian order<=
 br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_not_reached();<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 return val;<br>
-+}<br>
-+<br>
-+void stm_p(void *ptr, MemOp mop, uint64_t val)<br>
-+{<br>
-+=C2=A0 =C2=A0 const unsigned size =3D memop_size(mop);<br>
-+=C2=A0 =C2=A0 const uint8_t *pval =3D (const uint8_t *)&amp;val;<br>
-+<br>
-+=C2=A0 =C2=A0 if (HOST_BIG_ENDIAN) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 pval +=3D sizeof(val) - size;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (unlikely(mop &amp; MO_BSWAP)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 switch (size) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case sizeof(uint16_t):<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D __builtin_bswap16(val);<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case sizeof(uint32_t):<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D __builtin_bswap32(val);<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case sizeof(uint64_t):<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D __builtin_bswap64(val);<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_not_reached();<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 __builtin_memcpy(ptr, pval, size);<br>
-+}<br>
-diff --git a/util/meson.build b/util/meson.build<br>
-index 35029380a37..b695b6e4728 100644<br>
---- a/util/meson.build<br>
-+++ b/util/meson.build<br>
-@@ -38,6 +38,7 @@ util_ss.add(files(&#39;envlist.c&#39;, &#39;path.c&#39;, =
-&#39;module.c&#39;))<br>
-=C2=A0util_ss.add(files(&#39;event.c&#39;))<br>
-=C2=A0util_ss.add(files(&#39;host-utils.c&#39;))<br>
-=C2=A0util_ss.add(files(&#39;bitmap.c&#39;, &#39;bitops.c&#39;))<br>
-+util_ss.add(files(&#39;ldst.c&#39;))<br>
-=C2=A0util_ss.add(files(&#39;fifo8.c&#39;))<br>
-=C2=A0util_ss.add(files(&#39;cacheflush.c&#39;))<br>
-=C2=A0util_ss.add(files(&#39;error.c&#39;, &#39;error-report.c&#39;))<br>
+=C2=A0 system/ioport: Do not open-code address_space_ld/st_le() methods<br>
+<br>
+=C2=A0MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=
+=A04 +<br>
+=C2=A0include/accel/tcg/cpu-ldst.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +<br>
+=C2=A0include/exec/memop.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A04 +<br>
+=C2=A0include/exec/translator.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A05 +-<br>
+=C2=A0include/exec/tswap.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A03 +<br>
+=C2=A0include/hw/virtio/virtio-access.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 |=C2=A0 =C2=A01 +<br>
+=C2=A0include/qemu/bswap.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 11 -<br>
+=C2=A0include/qemu/ldst_unaligned.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 25 ++<br>
+=C2=A0include/system/memory.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 193 +-------<br>
+=C2=A0include/system/memory_cached.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0| 212 +++++++++<br>
+=C2=A0system/memory-internal.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +<br>
+=C2=A0include/system/memory_ldst.h.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0|=C2=A0 52 +--<br>
+=C2=A0include/system/memory_ldst_endian.h.inc=C2=A0 =C2=A0 =C2=A0 |=C2=A0 3=
+3 ++<br>
+=C2=A0include/system/memory_ldst_phys.h.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 11=
+3 +----<br>
+=C2=A0include/system/memory_ldst_phys_endian.h.inc |=C2=A0 57 +++<br>
+=C2=A0system/ioport.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 34 +-<br>
+=C2=A0system/physmem.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 35 +-<br>
+=C2=A0tests/qtest/endianness-test.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 10 +-<br>
+=C2=A0tests/qtest/libqtest.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 13 +-<br>
+=C2=A0util/ldst.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 69 +=
+++<br>
+=C2=A0system/memory_ldst.c.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 449 ++-----------------<br>
+=C2=A0system/memory_ldst_endian.c.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 |=C2=A0 70 +++<br>
+=C2=A0scripts/make-config-poison.sh=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A01 +<br>
+=C2=A0system/trace-events=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A06 +<br>
+=C2=A0util/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
+=C2=A025 files changed, 599 insertions(+), 806 deletions(-)<br>
+=C2=A0create mode 100644 include/system/memory_cached.h<br>
+=C2=A0create mode 100644 include/system/memory_ldst_endian.h.inc<br>
+=C2=A0create mode 100644 include/system/memory_ldst_phys_endian.h.inc<br>
+=C2=A0create mode 100644 util/ldst.c<br>
+=C2=A0create mode 100644 system/memory_ldst_endian.c.inc<br>
+<br>
 -- <br>
 2.52.0<br>
 <br>
 </blockquote></div></div></div>
 
---000000000000a5cc570647f7c90d--
+--0000000000005bfd460647f7d498--
 
 
