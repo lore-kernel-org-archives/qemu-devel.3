@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B44D232E2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A37D232DF
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 05:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve56h-0004MH-TZ; Fri, 09 Jan 2026 00:32:19 -0500
+	id 1ve56t-0004pB-OA; Fri, 09 Jan 2026 00:32:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve56a-0004E5-Ok
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:12 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1ve56n-0004a1-QE
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:25 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve56Y-0003gX-V2
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:12 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7bab7c997eeso2918862b3a.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:10 -0800 (PST)
+ id 1ve56m-0003k8-Cu
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:25 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-81e9d0cd082so36135b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767936729; x=1768541529; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767936743; x=1768541543; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rGO5t6yhWgb8pIauU6B5HnqUDD8NxKcUMjfi55ekFSs=;
- b=UAOJEENAcDhFRK9TL7XgVD7s6eGiZ7zsIQHRBQaiTUvzwu6yeain92x2JZmyD8xmAo
- o106uxv6XyQ5Af1PEEOM0+jQUnPpivv92E9kKk6Ts87Fr6NlCqabQGGxIW+ZgqvM7IzK
- DetbgzpcGsaa2T1H4/xI78mkxJiYlynv3zbcvHJmFfFVXXd3iqUJ7d3zkzq6d+yqh6bN
- mvLef2wmij4QMsuHHZujWAEFxgqlnDR+p56NOSCP//FvBtSy4WL/ytZALcDOF/gZsvb+
- 2OKOMN0PjTRcKScGZwZnoTt3vOq0qnvmeahI921+LKntVvtIDqtX6/+uvyAfVMyWxlb0
- eDLg==
+ bh=ZHEUiKpuUqUI/y97l4DxiEpE1OUXxCDFN/TCDnw/0BU=;
+ b=d9jwhaVd4xfBCVmrI5jFQgIOfZfYaQc+t40fRcpMSJeklOQqFxAM/7yzaFFSGUyZ6o
+ ocYBkep8q9zBynAu9XBb5/e48QUTVpuwzuGwyOLIH2vonUoxUzkKErHT68pzN7twe3Vw
+ Hyg2q7yjD2mXzKt0dmAIez8s2+7MGyLxRi79BFYt92kokF5F70pI7B3eZ/UUg/KXCA9g
+ pCFzs3jbktQzShDY68/yWT0uJoMcNPy/W48XBNmW02yGi2PsDfCelGOZlnYvTLAXMNMa
+ 0jhw5b55DgajoE8Pg5P/Mxa480T2dsGYKOiWPnNnwSjR/aApVpoQPgBzV2sFQwbEZdR3
+ ljBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767936729; x=1768541529;
+ d=1e100.net; s=20230601; t=1767936743; x=1768541543;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rGO5t6yhWgb8pIauU6B5HnqUDD8NxKcUMjfi55ekFSs=;
- b=IETEPPoBmjSy8/TeWSksuoRZAb4fI1BUu44GBd8Nlq+zUtxmmAB/y7IWurMJWyViW9
- BSmAKcWUfDVwIj9r+WSd5pRtYXxj7kPQEY76v/GXKON6zoWFbIo2aAf8bpU5ohcbxovV
- PopgnVruNDK31hCT8K8JSE2f/bMqK9NoSl37iSSV0a2gmvecnB13GJVk6AnLGRekst7r
- ww9QPF87nl7U1eBJPVEZZgBrHijwAjNFuqkLV5fOfql7bkQhDexfpKcwyfrK+iGdjT4U
- Qi4yXimzC1QjmvoQPK00ib5A1YAGdt0rOIITFc07TJS5rBpntPwCfdCPXSGWodECYLia
- 6rEw==
-X-Gm-Message-State: AOJu0YyO9Kqha8Rvz+7aAvClYD5IEJVbWfAKFjiXNwtpb78uGvPvTbUH
- B4LMEdl0oLhCdYos0bV4qotm14KNTZcLXW5gzU/J0fwxsWB85rfD+xOsXSWEUoFwHLa10xj46S3
- ZKSD5
-X-Gm-Gg: AY/fxX6sbhQHpuvjB1Cxrrt3o/sKEtlbo6EFtL+E281e+ayY61gVioefowneaavzRbQ
- 2czXZfTdQJuaLIMWqCO6miDaXJHbRkvTXVmIjyx6p0wRAPm8NGXx8I/QLg0YbEc9j9DTZZE+DNz
- 8CqPTqxmFj2a6juHJGslg7DFfkOjtDKMvj54sHTvF5aWvDsPrMLwxUS5emKjXWCY4Ec6qfbc4GY
- dzIamMvoST8CZTX2LZI04SOQSYI1zdERme9QS21jgdb+luTrvFI3ZZC2BIVqyHZVkv3z+zEfPe5
- QWpqhbFjY3MSfgnlh4yxuxO+of7h9LiiQ6mgI1WgVH+j34q/PeGa+Qrc4gB8cHQsg7+yAeTzjyF
- UqtZzo4b1ly8Yfl+FWIfb8296iAzF1wh8ByY3GP/MVuf+bwCWkPGPmhNV7mhl9kCscSfpjjjjA6
- qjMgTFaekM2nHSayrWIJ4gXezLTD/vFtq5eC/yf3NeNq7ng0l8CTh9VnI6lPbnQahz
-X-Google-Smtp-Source: AGHT+IF/kVHoGU+LDMx5rVKI1zyPjKapv+1iuAXKcjCLoOEJN4Ge52NevQuBECmS129e50pYGm4NPA==
-X-Received: by 2002:a05:6a20:7490:b0:389:8f3f:50ce with SMTP id
- adf61e73a8af0-3898f9af60amr7872544637.56.1767936729246; 
- Thu, 08 Jan 2026 21:32:09 -0800 (PST)
+ bh=ZHEUiKpuUqUI/y97l4DxiEpE1OUXxCDFN/TCDnw/0BU=;
+ b=WQ9NXadW/enY93XYnvwB0AA0T7853LsvLwzEvVhEoA1LvLckySJhTL7JF7lkVkFwA9
+ oUTCAcgjnuCXfdzWnpnSIEGBzsD0PHAP5kMVm1xqZLIgg2jlPUR5X6a3Jvq8Tp4UUiDK
+ MLulV8eANnhV1fRP6Nhmf+TwV7TjTgXSsyBD8qdkLBPQFOWjQ4sFwR1GgmGQxoVheyfC
+ x4oeZMNyUL4+SFsrnYTnlbTLNmGwczmmExDpGruE5gNVhKJdHIAMUr81/Vz14d/GkXfO
+ 7M4eaHO1hwO8sPHFn4l1rEVDaq0JeKpus9NH/c4OTCFHKpQvavCsaCQtZ3G5sDeFXbp4
+ rCOg==
+X-Gm-Message-State: AOJu0YzuLg/fqCbUzFBoXVeOk6Ad4dUtOWwyZXZHcCMbJ6+TigI3T5/V
+ aZ2eOJQqz0z+evDKJNG6j2t+ekwb8XhU0fe441A95LYfgLQ1flR/mN4LbXEBR4EGM0nav38eOv4
+ h8I0E
+X-Gm-Gg: AY/fxX6B1Z9g+SnylNM+W6QaEU04ItoIRHuMdozE3NonyhRrGhnjQ1CZIv2lxK4XXYc
+ s0nYRvkGOe/ju1XZcG/M9bAKcBrSy4vD2GRsiQI/LpRJCpjYLZ5ZQrqSwX3WVpvIfSiLQUELmqu
+ MEKJwGwtVowcIKS2L8CXjPQbUWpGoeJcINPzH3RvVUParNXgKX5+vAlddh4z2JVwXAznroxvcYA
+ HD9pZXNZpgtV1JRnGd6QSE+7XrC7M6WmUG1Av/Uct4fu9jMkGoK97eYzKDrcuKZE8s9Xzk43icf
+ Dg/K4PoUoJFB2qfVrF/RbKuxp86FLlRUEYfaLemGNtSRBJHKm1BqMt5QI8aeVvIXSTXJ4U02TTo
+ j9CqHxVHHdU3+CXAi42g1c3Ml1OhJyclWGsCwbDjtNam0x/VYaJ5pZPXfvHP883yq/AfsxaZURb
+ LtLAEO9fKo/wLVwoMEu4mb7gj84GAjvhfyLIa0sCjAcQ+DAU6aaE2vbd85gBHNXKEcR6E6zO+t/
+ Ag=
+X-Google-Smtp-Source: AGHT+IGU+lTNhfFTFsNWqdWN3z5TMmo2rt11Bl+wx6q2PvLXaLOHCawjrI1ksS0q/hmgL+xgxl4N4g==
+X-Received: by 2002:a05:6a20:7489:b0:35f:68d:431b with SMTP id
+ adf61e73a8af0-3898f9bbd66mr8752720637.55.1767936742918; 
+ Thu, 08 Jan 2026 21:32:22 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.08
+ 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 21:32:08 -0800 (PST)
+ Thu, 08 Jan 2026 21:32:22 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -75,16 +76,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 03/29] target/arm/gdbstub: make compilation unit common
-Date: Thu,  8 Jan 2026 21:31:32 -0800
-Message-ID: <20260109053158.2800705-4-pierrick.bouvier@linaro.org>
+Subject: [PATCH 21/29] target/arm/tcg/op_helper.c: make compilation unit common
+Date: Thu,  8 Jan 2026 21:31:50 -0800
+Message-ID: <20260109053158.2800705-22-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,130 +108,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose and stubs aarch64 functions. All call sites are under a
-"is_aarch64" check.
+Remove unused header accel/tcg/cpu-ldst.h that has target specifics.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/cpu32-stubs.c | 22 ++++++++++++++++++++++
- target/arm/gdbstub.c     |  8 --------
- target/arm/meson.build   | 12 ++++++------
- 3 files changed, 28 insertions(+), 14 deletions(-)
+ target/arm/tcg/op_helper.c | 1 -
+ target/arm/tcg/meson.build | 3 ++-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu32-stubs.c b/target/arm/cpu32-stubs.c
-index 81be44d8462..6c524d84198 100644
---- a/target/arm/cpu32-stubs.c
-+++ b/target/arm/cpu32-stubs.c
-@@ -24,3 +24,25 @@ void arm_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
- {
-     g_assert_not_reached();
- }
-+
-+
-+int aarch64_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int aarch64_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
-+                                       GPtrArray *qtable, GPtrArray *stable)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void aarch64_cpu_register_gdb_regs_for_features(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index 4e8e341cc04..c7d59fd3726 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -44,11 +44,9 @@ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 4fbd219555d..6ebe6721633 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -23,7 +23,6 @@
+ #include "exec/target_page.h"
+ #include "internals.h"
+ #include "cpu-features.h"
+-#include "accel/tcg/cpu-ldst.h"
+ #include "accel/tcg/probe.h"
+ #include "cpregs.h"
  
--#ifdef TARGET_AARCH64
-     if (arm_gdbstub_is_aarch64(cpu)) {
-         return aarch64_cpu_gdb_read_register(cs, mem_buf, n);
-     }
--#endif
- 
-     if (n < 16) {
-         /* Core integer register.  */
-@@ -72,11 +70,9 @@ int arm_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     CPUARMState *env = &cpu->env;
-     uint32_t tmp;
- 
--#ifdef TARGET_AARCH64
-     if (arm_gdbstub_is_aarch64(cpu)) {
-         return aarch64_cpu_gdb_write_register(cs, mem_buf, n);
-     }
--#endif
- 
-     tmp = ldl_p(mem_buf);
- 
-@@ -504,10 +500,8 @@ void arm_cpu_register_gdb_commands(ARMCPU *cpu)
-     g_autoptr(GString) qsupported_features = g_string_new(NULL);
- 
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
--    #ifdef TARGET_AARCH64
-         aarch64_cpu_register_gdb_commands(cpu, qsupported_features, query_table,
-                                           set_table);
--    #endif
-     }
- 
-     /* Set arch-specific handlers for 'q' commands. */
-@@ -536,9 +530,7 @@ void arm_cpu_register_gdb_regs_for_features(ARMCPU *cpu)
-          * The lower part of each SVE register aliases to the FPU
-          * registers so we don't need to include both.
-          */
--#ifdef TARGET_AARCH64
-         aarch64_cpu_register_gdb_regs_for_features(cpu);
--#endif
-     } else {
-         if (arm_feature(env, ARM_FEATURE_NEON)) {
-             gdb_register_coprocessor(cs, vfp_gdb_get_reg, vfp_gdb_set_reg,
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 3df7e03654e..462c71148d2 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -1,8 +1,11 @@
- arm_ss = ss.source_set()
- arm_common_ss = ss.source_set()
--arm_ss.add(files(
--  'gdbstub.c',
--))
-+arm_common_system_ss = ss.source_set()
-+arm_system_ss = ss.source_set()
-+arm_user_ss = ss.source_set()
-+
-+arm_common_system_ss.add(files('gdbstub.c'))
-+arm_user_ss.add(files('gdbstub.c'))
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 318a951e4d9..d435d2e5b72 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -29,7 +29,6 @@ arm_ss.add(files(
+   'translate.c',
+   'm_helper.c',
+   'mve_helper.c',
+-  'op_helper.c',
+ ))
  
  arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
-   'cpu64.c',
-@@ -13,15 +16,12 @@ arm_common_ss.add(files(
-   'mmuidx.c',
- ))
- 
--arm_system_ss = ss.source_set()
--arm_common_system_ss = ss.source_set()
- arm_system_ss.add(files(
-   'arm-qmp-cmds.c',
- ))
- arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
- arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
- 
--arm_user_ss = ss.source_set()
- arm_user_ss.add(files('cpu.c'))
- arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files(
-   'cpu32-stubs.c',
+@@ -68,6 +67,7 @@ arm_common_system_ss.add(
+   'cpregs-at.c',
+   'hflags.c',
+   'neon_helper.c',
++  'op_helper.c',
+   'psci.c',
+   'tlb_helper.c',
+   'tlb-insns.c',
+@@ -81,6 +81,7 @@ arm_common_system_ss.add(
+ arm_user_ss.add(files(
+   'hflags.c',
+   'neon_helper.c',
++  'op_helper.c',
+   'tlb_helper.c',
+   'translate-m-nocp.c',
+   'translate-mve.c',
 -- 
 2.47.3
 
