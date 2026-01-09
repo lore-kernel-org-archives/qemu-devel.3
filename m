@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32885D26D75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D121D26D6F
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 16:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veFUd-0001ZR-Uv; Fri, 09 Jan 2026 11:37:44 -0500
+	id 1veFUa-0001Y5-EV; Fri, 09 Jan 2026 11:37:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFUc-0001YU-9V
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:37:42 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFUW-0001Xm-IW
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:37:36 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFUa-0005CA-Oz
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:37:42 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47d493a9b96so26582265e9.1
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 08:37:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFUU-0005Bd-OT
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:37:36 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-477ba2c1ca2so48626405e9.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 08:37:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767976659; x=1768581459; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RTAOH/xq/3mecKgOFQc299O+6eUqLk/ATHdhAOXEHr4=;
- b=CctMPBhtYjRCwN9Kr5EKxK+eQHboeohynCoMfWQf60pEPXe/i6YpOlyXMhrBXNtOob
- H5VLX6102X25h2b7HMVJbhGFJM3ws5wb3rLuUssnlm/qu8MOKUA2J+NAGPQN4UJ8W1Sk
- IPdnxyU6/HvkyVyQgiXe/5NiOWfDdR9uu5Ah1d+Lr5FhjrkKw8DWKrr/5YTwC6EEDK3z
- ScHe6VlWsJgwImvsznzjAuQfAyYNqCZhUR8Gc2uooPEUP5PoechLbRMj3nle3FW55dPp
- 1XOFfZzV7h1oAnI00KekvnWogJZnuqrWMCXTDKxhlxCTr3MarQKFruN3+t2xabEIMo15
- GKlA==
+ d=linaro.org; s=google; t=1767976652; x=1768581452; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=obcMqHv29tuGOI8j2lUF7M1ixYnUaj96ynlGm9xJmBg=;
+ b=p4fTZI7lPtvIGJI/z86JTTXlxbVt/dq05g3ekspfBNx+EI3CHqVAwN6rB/L+Pg6v41
+ WSU/qay7vFh+uobr7/wc+ABNuTbWTLdHJjZXur74qz280XBu8Kiel4EPDH0EHhJrmKVe
+ qwqjAbiP/sy/XaO+uiTVQ1V5xiAZ20G2k96aqtabna/1aWhKBMLIBCTWOJkeM/iGCt1j
+ MlZOkAAGdFpyxLHVAh9pTf4En5matsewm9W6Ud7aeLRNa3D4ZqBojYmldW3I9h9W0iCg
+ 1L8cvuLT2xYAWEc/RBe0hkYsYmtg8Sk9zwDk9KZUUz4jdYjTyM+dZMmyzNuCeh/pR/2E
+ lJRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767976659; x=1768581459;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RTAOH/xq/3mecKgOFQc299O+6eUqLk/ATHdhAOXEHr4=;
- b=hAW6NBmRnrdzbOMzP9PiEjtjWwqOg6uekzxj7LIDGZCPPBRQ+jZUgVKeeKQzVgRKRq
- 6AzvJXQXtoQ+rtEvl9A3QUvyH1W3fqIO3yzHBttVK467IiLCxrTsfHwlFoXucLQz1TpX
- Q2xyR6MzZDEzix96UeaG6GEzPkjX75+JM6NcJmUGDIGUmSGr8jxsSOHHgFsN6Fnhth8F
- 808P5Y4Mrk0pajBbGLbWsTgpqJtxRCcUlIRyMZ+VD3oqtBpmDWD8C1kCRL5j/YGdGv8W
- PI0fmhbivYXTZ5caDn/qE7bgCbe2aoSxCcyIcMylATWfajAuW4cw6w9pN3lzXMzOeGw4
- lqXA==
-X-Gm-Message-State: AOJu0YwQlZNAEiGs7imODEYh6JL6Sm5RWqvIZfiVNeMMmng9vm2KIqnw
- Ce73+PFJXopkg6BGqocUN2vuR2ZcMMj96a4lq0PqHFBRTiTHRH/2uelSTbEl3tI9ypPxuNb4lVV
- qAUDGmOo=
-X-Gm-Gg: AY/fxX4eN2vwG/76LIvzPbbpZ7N9kK0AHM1PchUTe3H2XBLj6nwPj32HPEfzQfe9g1w
- CkSlxSkJ64Si0sKf9I3stLJloEmi0t9yeQbsapgbscXCtghApLWtDRdE93rnAARmlg+evVcFmtp
- anhMIHbjxYxUs3mQyElIRXTuMh5cl3f+2ZHPC2CnjCNwhc4ViUY83L6WVtO2Zn3ZK0SKbbc9BCR
- QHiPCPOo/+kZGatBiicXoKqJ4MrT4TGDZOW8xPymwwvskUGwX9wbEFVpKgC666v/BdjhOLrZgrV
- IiGbjdkyYtfb9o3ThAXFgdxIOdw+WvTH7eCtD/0rEqACcVjVWf8pZRIC4amC+1mu+0f7CB4HX0I
- nGXfdXfb2GDVrRBM1ND/nzzSIsY1wxJBPvzREVzFnKrR/DPP0GzIdiw0SvJRqLlbv2ClhJLb6zD
- 4FbXtqX3pWoiOSTDiWn8Kq2TsH/DOMov1+NhNO/U1aGmQbOM9W32cMDY2PZF3QRspywCAB6M4=
-X-Google-Smtp-Source: AGHT+IE5cP4wnBd9LPgulSUJJsxRjTphjnG96PHMEZ6Bb70QYqFUNO60OQyKoF0lqqpm7fjdhibohQ==
-X-Received: by 2002:a05:600c:6385:b0:477:632a:fd67 with SMTP id
- 5b1f17b1804b1-47d84b1a166mr125617875e9.12.1767976658916; 
- Fri, 09 Jan 2026 08:37:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1767976652; x=1768581452;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=obcMqHv29tuGOI8j2lUF7M1ixYnUaj96ynlGm9xJmBg=;
+ b=bgDNv1aig3dDewXDD93BJsWKVK+cKR/3QasRHzPTUaNjXpdhtwFodslwGm0BikAbPU
+ /KwFQxJA5t2BaAojMjCY1IWcg4qDXncaVL+504cijdjnmdh/7rlLwdQR3h2V4zX4rnJt
+ z2YvfV8rTrr9x0R/TM7BmyzmjY02WHql0kOewVbYO8CxHkxjZacJV3DqNQz5wQlLyUhA
+ zrhGn7Zjk6t7Mz763amb6C2JQ5UCxyuSuycehAYxe+wvNW5qILLNlBRS4Ei6IIn/E8Io
+ pbZmx43tGLhPFDyQDrlEuBvEXM3eeXg21dLldSdEMrfG/UJQ5Uk4Z6b13KQacq5hIyrw
+ Dqjw==
+X-Gm-Message-State: AOJu0YyG51WrwiPh1tEoueoU6tqa6pxp38n2iLkMRWLf/ejIRUWUDHxX
+ 8Jpf7ivFMB4aLYye8LNKTNVMZ8mMfcHuBAg+7t24s9YJJLBIJnDyLFHh1mdTNtcRma+HNSDHsXQ
+ Iolg7tWw=
+X-Gm-Gg: AY/fxX5maEJvIrae+BzPxEA5FHQquosYntv8xOhpc8vzCljP9Rcp/KVukQRg/n0Soy5
+ gQmxPDSwBGQpsPqC0T/foUPTw9bkiFs1J+nFgTT8sc1Fgdnl17qbXuUVjSEmwVnKynuOandE3uJ
+ MDKXiYfvb7xNWpmANdhMoRfiBbGQuYJ6EP+6n9JNgid+HwHHoBjujjscIWt3hUnk2xs/IiVFUiJ
+ EOnDAP0lKExA79sATK8IfcJ/9f7BMhvWjrnmX7tjuU4kKGKjcUn7BVkZCZHPl3afsIr51WQeKUu
+ lR/7alw2rAF8INMQM0Dr46FipxL8aShZmwy3InbhpB65XQLhJ2cii1IIHceCUBGh0e0nBzRVi4v
+ NwwkCiE0ymwMjQ1E6J9/jbqOofONTl5VWRElcvRQIkusnF34q0Cv2lPFCrlmn0VniaIM2iO/MHS
+ 32Wf0h/TDJmep4ZaKLHpbW27g3TR/wWnTDSOZwaFNGYMB8X8x+ewK8AkHvZpa1
+X-Google-Smtp-Source: AGHT+IFvJaNWjqzeLgkX8XDogLVOcIP5oSgvm/MXU6joOTNaGg6mxX9aZoZXHuQW4452GHk2z7j06g==
+X-Received: by 2002:a05:600c:4fd2:b0:477:58:7cf4 with SMTP id
+ 5b1f17b1804b1-47d84b09145mr105268665e9.4.1767976652389; 
+ Fri, 09 Jan 2026 08:37:32 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f68f686sm215346185e9.3.2026.01.09.08.37.38
+ 5b1f17b1804b1-47d7f4184e1sm210434155e9.4.2026.01.09.08.37.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 Jan 2026 08:37:38 -0800 (PST)
+ Fri, 09 Jan 2026 08:37:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 1/3] bswap: Use 'qemu/bswap.h' instead of 'qemu/host-utils.h'
-Date: Fri,  9 Jan 2026 17:37:28 +0100
-Message-ID: <20260109163730.57087-2-philmd@linaro.org>
+Subject: [PATCH 0/3] bswap: Cleanups around 'qemu/bswap.h' header
+Date: Fri,  9 Jan 2026 17:37:27 +0100
+Message-ID: <20260109163730.57087-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260109163730.57087-1-philmd@linaro.org>
-References: <20260109163730.57087-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,83 +98,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These files only require "qemu/bswap.h", not "qemu/host-utils.h".
+The point of this cleanup series is to avoid a circular dependency
+problem between "qemu/bswap.h" and "exec/memop.h", since I want
+to add a ld/st variant in "qemu/bswap.h" that takes a MemOp arg.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/qtest/ahci-test.c              | 2 +-
- tests/qtest/libqos/ahci.c            | 2 +-
- tests/qtest/libqos/generic-pcihost.c | 2 +-
- tests/qtest/libqos/pci-spapr.c       | 2 +-
- util/hbitmap.c                       | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+Otherwise I get:
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index e8aabfc13f5..5c32ff20029 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -31,7 +31,7 @@
- #include "libqos/pci-pc.h"
- 
- #include "qobject/qdict.h"
--#include "qemu/host-utils.h"
-+#include "qemu/bswap.h"
- 
- #include "hw/pci/pci_ids.h"
- #include "hw/pci/pci_regs.h"
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 34a75b7f43b..0621a6c4775 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -28,7 +28,7 @@
- #include "ahci.h"
- #include "pci-pc.h"
- 
--#include "qemu/host-utils.h"
-+#include "qemu/bswap.h"
- 
- #include "hw/pci/pci_ids.h"
- #include "hw/pci/pci_regs.h"
-diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
-index 4bbeb5ff508..b77617524ca 100644
---- a/tests/qtest/libqos/generic-pcihost.c
-+++ b/tests/qtest/libqos/generic-pcihost.c
-@@ -15,7 +15,7 @@
- #include "generic-pcihost.h"
- #include "qobject/qdict.h"
- #include "hw/pci/pci_regs.h"
--#include "qemu/host-utils.h"
-+#include "qemu/bswap.h"
- 
- #include "qemu/module.h"
- 
-diff --git a/tests/qtest/libqos/pci-spapr.c b/tests/qtest/libqos/pci-spapr.c
-index 0f1023e4a73..3723cbb38db 100644
---- a/tests/qtest/libqos/pci-spapr.c
-+++ b/tests/qtest/libqos/pci-spapr.c
-@@ -13,7 +13,7 @@
- 
- #include "hw/pci/pci_regs.h"
- 
--#include "qemu/host-utils.h"
-+#include "qemu/bswap.h"
- #include "qemu/module.h"
- 
- /*
-diff --git a/util/hbitmap.c b/util/hbitmap.c
-index d9a1dabc630..3525bf7751a 100644
---- a/util/hbitmap.c
-+++ b/util/hbitmap.c
-@@ -10,8 +10,8 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/bswap.h"
- #include "qemu/hbitmap.h"
--#include "qemu/host-utils.h"
- #include "trace.h"
- #include "crypto/hash.h"
- 
+    In file included from ../../util/qemu-timer-common.c:25:
+    In file included from include/qemu/timer.h:4:
+    In file included from include/qemu/bitops.h:16:
+    In file included from include/qemu/host-utils.h:33:
+    In file included from include/qemu/bswap.h:6:
+    include/exec/memop.h:182:19: error: call to undeclared function 'ctz32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+      182 |     return (MemOp)ctz32(size);
+          |                   ^
+    In file included from ../../util/qemu-timer-common.c:25:
+    In file included from include/qemu/timer.h:4:
+    In file included from include/qemu/bitops.h:16:
+    include/qemu/host-utils.h:236:19: error: static declaration of 'ctz32' follows non-static declaration
+      236 | static inline int ctz32(uint32_t val)
+          |                   ^
+    include/exec/memop.h:182:19: note: previous implicit declaration is here
+      182 |     return (MemOp)ctz32(size);
+          |                   ^
+    2 errors generated.
+
+Philippe Mathieu-Daudé (3):
+  bswap: Use 'qemu/bswap.h' instead of 'qemu/host-utils.h'
+  bswap: Include missing 'qemu/bswap.h' header
+  bswap: Consistently use builtin bswap() functions
+
+ block/qcow2.h                         | 1 +
+ include/qemu/host-utils.h             | 7 +++----
+ include/qemu/int128.h                 | 7 +++----
+ audio/audio.c                         | 1 +
+ block/blklogwrites.c                  | 1 +
+ block/export/vduse-blk.c              | 1 +
+ block/export/vhost-user-blk-server.c  | 1 +
+ block/export/virtio-blk-handler.c     | 1 +
+ block/parallels-ext.c                 | 1 +
+ hw/9pfs/9p-local.c                    | 1 +
+ hw/block/cdrom.c                      | 1 +
+ hw/block/hd-geometry.c                | 1 +
+ hw/net/can/ctucan_core.c              | 1 +
+ hw/nvram/xlnx-efuse.c                 | 1 +
+ hw/scsi/scsi-generic.c                | 1 +
+ hw/sd/sd.c                            | 1 +
+ hw/sd/ssi-sd.c                        | 1 +
+ net/l2tpv3.c                          | 1 +
+ scsi/pr-manager-helper.c              | 1 +
+ target/arm/tcg/arith_helper.c         | 1 +
+ tests/qtest/acpi-utils.c              | 1 +
+ tests/qtest/ahci-test.c               | 2 +-
+ tests/qtest/aspeed-hace-utils.c       | 1 +
+ tests/qtest/bios-tables-test.c        | 1 +
+ tests/qtest/libqos/ahci.c             | 2 +-
+ tests/qtest/libqos/generic-pcihost.c  | 2 +-
+ tests/qtest/libqos/igb.c              | 1 +
+ tests/qtest/libqos/pci-spapr.c        | 2 +-
+ tests/qtest/libqos/virtio-9p-client.c | 1 +
+ tests/qtest/migration/framework.c     | 1 +
+ tests/qtest/npcm7xx_emc-test.c        | 1 +
+ tests/qtest/tpm-emu.c                 | 1 +
+ tests/qtest/ufs-test.c                | 1 +
+ tests/qtest/vmcoreinfo-test.c         | 1 +
+ tests/qtest/vmgenid-test.c            | 1 +
+ tests/unit/test-hbitmap.c             | 1 +
+ util/bitmap.c                         | 1 +
+ util/hbitmap.c                        | 2 +-
+ 38 files changed, 42 insertions(+), 13 deletions(-)
+
 -- 
 2.52.0
 
