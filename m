@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F7FD26D9F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4735D1A63D
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veKFU-0007Pr-MN; Fri, 09 Jan 2026 16:42:24 -0500
+	id 1veKFQ-0007Oo-Kx; Fri, 09 Jan 2026 16:42:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1veKFN-0007OQ-32
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1veKFN-0007OR-3J
  for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:42:18 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1veKFK-0005hY-Uv
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1veKFK-0005hX-Ut
  for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:42:16 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 32C2517C4A1
+ by isrv.corpit.ru (Postfix) with ESMTP id 327A417C4A0
  for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 00:40:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B419A348DB2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D8CB348DB1;
  Sat, 10 Jan 2026 00:42:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 1/3] linux-user/syscall.c: statfs: f_flags is always present
-Date: Sat, 10 Jan 2026 00:41:51 +0300
-Message-ID: <20260109214158.726916-2-mjt@tls.msk.ru>
+Subject: [PATCH 0/3] linux-user/syscall.c: consolidate statfs syscalls
+Date: Sat, 10 Jan 2026 00:41:50 +0300
+Message-ID: <20260109214158.726916-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260109214158.726916-1-mjt@tls.msk.ru>
-References: <20260109214158.726916-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -58,42 +56,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-statfs.f_flags is present since linux 2.6.
-There's no need to check for its existance anymore.
+Here's some cleanup for linux-user/syscall.c with an RFC.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- linux-user/syscall.c | 8 --------
- 1 file changed, 8 deletions(-)
+It drops common ("global") `struct statfs` from syscall1()
+function and eliminates an ugly goto into another case label.
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 2060e561a2..d32299dddb 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -11000,11 +11000,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             __put_user(stfs.f_fsid.__val[1], &target_stfs->f_fsid.val[1]);
-             __put_user(stfs.f_namelen, &target_stfs->f_namelen);
-             __put_user(stfs.f_frsize, &target_stfs->f_frsize);
--#ifdef _STATFS_F_FLAGS
-             __put_user(stfs.f_flags, &target_stfs->f_flags);
--#else
--            __put_user(0, &target_stfs->f_flags);
--#endif
-             memset(target_stfs->f_spare, 0, sizeof(target_stfs->f_spare));
-             unlock_user_struct(target_stfs, arg2, 1);
-         }
-@@ -11039,11 +11035,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             __put_user(stfs.f_fsid.__val[1], &target_stfs->f_fsid.val[1]);
-             __put_user(stfs.f_namelen, &target_stfs->f_namelen);
-             __put_user(stfs.f_frsize, &target_stfs->f_frsize);
--#ifdef _STATFS_F_FLAGS
-             __put_user(stfs.f_flags, &target_stfs->f_flags);
--#else
--            __put_user(0, &target_stfs->f_flags);
--#endif
-             memset(target_stfs->f_spare, 0, sizeof(target_stfs->f_spare));
-             unlock_user_struct(target_stfs, arg3, 1);
-         }
+The RFC is for the 3rd patch, which replaces two blocks of
+the smae code for statfs & statfs64 (which only differ in the
+64 suffix) with a common macro.  This way there's a single
+implementation of the code, so we avoid code duplication, but
+the usage of the C preprocessor this way makes the code a bit
+more ugly.
+
+What do you think about this approach?  Using it, a lot of code
+in there can be eliminated.
+
+Michael Tokarev (3):
+  linux-user/syscall.c: statfs: f_flags is always present
+  linux-user/syscall.c: consolidate statfs calls
+  linux-user/syscall.c: consolidate statfs calls further
+
+ linux-user/syscall.c | 114 +++++++++++++++----------------------------
+ 1 file changed, 39 insertions(+), 75 deletions(-)
+
 -- 
 2.47.3
 
