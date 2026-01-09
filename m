@@ -4,104 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F51D1A610
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 12:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5FDD1A616
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 12:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veBnl-0003Oo-TM; Fri, 09 Jan 2026 07:41:15 -0500
+	id 1veBp3-0006cG-N6; Fri, 09 Jan 2026 07:42:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBni-0003N7-L8
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:41:10 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBot-0006W1-D6
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:42:25 -0500
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBnh-0007Ft-7O
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:41:10 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBor-0007Ou-2d
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:42:22 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 277F0337E0;
- Fri,  9 Jan 2026 12:41:02 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 88FD333952;
+ Fri,  9 Jan 2026 12:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767962462; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1767962492; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wFinIpEiQX2ucufqSxxH6/ojsKQaF480Lvpp4gBS564=;
- b=hXNzHYXfLT1PcWt5gCkgZZv2Ih4jPWMw0El0R+YaRP5NseRJi4IszAqXtEtK5SqZyyymOW
- +YRMHh51JDT0JSolxaWHJjSM7SE/g9O3/k+4F9inO5WzV/5/gSpbE/jXOH+yL3HeluyBxJ
- kTWqf1M8RSKBRQ3pcCJdbtsyf7eEoCs=
+ bh=QTqOzInKszdo40jCyS7tieuHtJFHCQHbRnpp3Xczr84=;
+ b=yVKvTUmULRhKvqP6wOMdGWbWMB7lDo8rlp1IIOOfAPRhGZu5ADmIam0dA9g6Y9TJhE88IE
+ aBIgAyhR4xo1jC/rQj/xXGCT/zCn6C2n+xNMHRCo8uPHOw6jL5ZbJDVoW+D7COBupSVmWu
+ C79xbjSKD/1FbP00Qvq9fD+FWp69sMk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767962462;
+ s=susede2_ed25519; t=1767962492;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wFinIpEiQX2ucufqSxxH6/ojsKQaF480Lvpp4gBS564=;
- b=t9yhvEoEf0I9FqluPdUxpi63OjmqK/Chm7JLl2s3VufRs0dwgkG2Z6uzXhCaMgFgrFk7Yy
- BFkyafgBnuiOQyCA==
+ bh=QTqOzInKszdo40jCyS7tieuHtJFHCQHbRnpp3Xczr84=;
+ b=MrZfO1s+kyeI2H3pYUutAnlhzymIX/8fUXp/88SdJ3jZtfxubMUsa0LKZFw3OfVwqRW0W4
+ Ev8dcSZuJpEsYNDw==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hXNzHYXf;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=t9yhvEoE
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yVKvTUmU;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MrZfO1s+
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767962462; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1767962492; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wFinIpEiQX2ucufqSxxH6/ojsKQaF480Lvpp4gBS564=;
- b=hXNzHYXfLT1PcWt5gCkgZZv2Ih4jPWMw0El0R+YaRP5NseRJi4IszAqXtEtK5SqZyyymOW
- +YRMHh51JDT0JSolxaWHJjSM7SE/g9O3/k+4F9inO5WzV/5/gSpbE/jXOH+yL3HeluyBxJ
- kTWqf1M8RSKBRQ3pcCJdbtsyf7eEoCs=
+ bh=QTqOzInKszdo40jCyS7tieuHtJFHCQHbRnpp3Xczr84=;
+ b=yVKvTUmULRhKvqP6wOMdGWbWMB7lDo8rlp1IIOOfAPRhGZu5ADmIam0dA9g6Y9TJhE88IE
+ aBIgAyhR4xo1jC/rQj/xXGCT/zCn6C2n+xNMHRCo8uPHOw6jL5ZbJDVoW+D7COBupSVmWu
+ C79xbjSKD/1FbP00Qvq9fD+FWp69sMk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767962462;
+ s=susede2_ed25519; t=1767962492;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wFinIpEiQX2ucufqSxxH6/ojsKQaF480Lvpp4gBS564=;
- b=t9yhvEoEf0I9FqluPdUxpi63OjmqK/Chm7JLl2s3VufRs0dwgkG2Z6uzXhCaMgFgrFk7Yy
- BFkyafgBnuiOQyCA==
+ bh=QTqOzInKszdo40jCyS7tieuHtJFHCQHbRnpp3Xczr84=;
+ b=MrZfO1s+kyeI2H3pYUutAnlhzymIX/8fUXp/88SdJ3jZtfxubMUsa0LKZFw3OfVwqRW0W4
+ Ev8dcSZuJpEsYNDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CE1FB3EA65;
- Fri,  9 Jan 2026 12:41:00 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 676133EA63;
+ Fri,  9 Jan 2026 12:41:30 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WPbFIlz3YGkkQgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 09 Jan 2026 12:41:00 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SPnXCXr3YGkkQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 09 Jan 2026 12:41:30 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	berrange@redhat.com
-Subject: [PATCH v3 07/25] migration: Free the error earlier in the resume case
-Date: Fri,  9 Jan 2026 09:40:23 -0300
-Message-ID: <20260109124043.25019-8-farosas@suse.de>
+Cc: peterx@redhat.com, berrange@redhat.com, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>
+Subject: [PATCH v3 22/25] migration: Free cpr-transfer MigrationAddress along
+ with gsource
+Date: Fri,  9 Jan 2026 09:40:38 -0300
+Message-ID: <20260109124043.25019-23-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260109124043.25019-1-farosas@suse.de>
 References: <20260109124043.25019-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_NONE(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 277F0337E0
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 88FD333952
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -127,73 +130,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Freeing the error at migration_connect() is redundant in the normal
-migration case. The freeing already happened at migrate_init():
+When setting a callback on a Glib source and giving it a data pointer,
+it's natural to also provide the destructor for the data in question.
 
-qmp_migrate()
--> migrate_prepare()
-   -> migrate_init()
--> qmp_migrate_finish()
-   -> *_start_outgoing_migration()
-   -> migration_channel_connect()
-      -> migration_connect()
+Since migrate_hup_add() already needs to clone the MigrationAddress
+when setting the qmp_migrate_finish_cb callback, also pass the
+qapi_free_MigrationAddress as the GDestroyNotify callback.
 
-For the resume case, migrate_prepare() returns early and doesn't reach
-migrate_init(). Move the extra migrate_error_free() call to
-migrate_prepare() along with the resume check.
+With this the address doesn't need to be freed at the callback body,
+making the management of that memory slight simpler.
 
-Also change migrate_init() to use migrate_error_free(), so it's easier
-to see where are the places the error gets freed.
+(also fix the indentation of migrate_hup_add)
 
+Cc: Mark Kanda <mark.kanda@oracle.com>
+Cc: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ migration/migration.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index 388e0be5a2..9204029c88 100644
+index 52c1bb5da2..5167233f76 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -1811,8 +1811,8 @@ int migrate_init(MigrationState *s, Error **errp)
-     s->setup_time = 0;
-     s->start_postcopy = false;
-     s->migration_thread_running = false;
--    error_free(s->error);
--    s->error = NULL;
-+
-+    migrate_error_free(s);
+@@ -2007,9 +2007,11 @@ static void qmp_migrate_finish(MigrationAddress *addr, Error **errp);
+ static void migrate_hup_add(MigrationState *s, QIOChannel *ioc, GSourceFunc cb,
+                             void *opaque)
+ {
+-        s->hup_source = qio_channel_create_watch(ioc, G_IO_HUP);
+-        g_source_set_callback(s->hup_source, cb, opaque, NULL);
+-        g_source_attach(s->hup_source, NULL);
++    s->hup_source = qio_channel_create_watch(ioc, G_IO_HUP);
++    g_source_set_callback(s->hup_source, cb,
++                          QAPI_CLONE(MigrationAddress, opaque),
++                          (GDestroyNotify)qapi_free_MigrationAddress);
++    g_source_attach(s->hup_source, NULL);
+ }
  
-     if (should_send_vmdesc()) {
-         s->vmdesc = json_writer_new(false);
-@@ -2087,6 +2087,13 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
-         migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
-                           MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+ static void migrate_hup_delete(MigrationState *s)
+@@ -2028,7 +2030,6 @@ static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
+     MigrationAddress *addr = opaque;
  
-+        /*
-+         * If there's a previous error, free it and prepare for
-+         * another one. For the non-resume case, this happens at
-+         * migrate_init() below.
-+         */
-+        migrate_error_free(s);
-+
-         /* This is a resume, skip init status */
-         return true;
-     }
-@@ -4015,13 +4022,6 @@ void migration_connect(MigrationState *s, Error *error_in)
-     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
-     int ret;
+     qmp_migrate_finish(addr, NULL);
+-    qapi_free_MigrationAddress(addr);
+     return G_SOURCE_REMOVE;
+ }
  
--    /*
--     * If there's a previous error, free it and prepare for another one.
--     * Meanwhile if migration completes successfully, there won't have an error
--     * dumped when calling migration_cleanup().
--     */
--    migrate_error_free(s);
--
-     s->expected_downtime = migrate_downtime_limit();
-     if (error_in) {
-         migration_connect_error_propagate(s, error_in);
+@@ -2083,7 +2084,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+      */
+     if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
+         migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
+-                        QAPI_CLONE(MigrationAddress, main_ch->addr));
++                        main_ch->addr);
+ 
+     } else {
+         qmp_migrate_finish(main_ch->addr, errp);
 -- 
 2.51.0
 
