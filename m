@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E245BD26D9C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998BED26D9B
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veJtV-00033f-9e; Fri, 09 Jan 2026 16:19:42 -0500
+	id 1veJx4-0004kx-5M; Fri, 09 Jan 2026 16:23:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veJtH-00032v-RN
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:19:28 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1veJwr-0004k6-V6
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:23:10 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veJtG-0005pr-4U
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:19:27 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-81f3c14027cso38993b3a.1
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 13:19:25 -0800 (PST)
+ id 1veJwq-0000RR-BE
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:23:09 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-34c24f4dfb7so2578613a91.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 13:23:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767993564; x=1768598364; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767993787; x=1768598587; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nXs8thDAEX0T8FwN+HHt4IjEeYjwkoOPzTC5QOie3+s=;
- b=sTsvhklAonECEDETYyayVfdqqVMF6vjME6MR33BjUSvJ0pHH6O8/r09RdIU+SeagGL
- 191o2BcUJSwYWWDSGMka8RGgB6KedrKmzds3xuosmdp/zWSmMfhK7jixtASfZaYfqimS
- bxXENjpoOQmUk6kKCjUkCIrfI/bYL0ooCR3mL+PXCyJm9DYDCr8qYRwZXF95bTffyUsR
- nh7utfEziWSrdEoyTO8QhAfFTpnoz6YSeAzUEZJDEmugyCUBEfTDNW7XCRl03csYnm9+
- 1vGkp4cGOs9oTet6k2rL95hNmYcOYOkBo1kkL237bM4foB9KPHvItGkQAtpRDRhdZcTL
- hyoA==
+ bh=7OnBzU9ZXN/YRo5rwAxYIf8wKTaZfmBk56QO+2TYvoI=;
+ b=mKH3dc2lgT0/3jtFuZHuwxjnXYMa3E7FWA6iUS6qud91+NdfEkqvy8g3NlzNV0nUVp
+ pMsr3tVkSXSxqLbjY2//wR6d2ibvysIHXBJcgcQrjJrI8nu+k9YPFZNRIjVPBWlfeDXC
+ ZPZAXYwVrR2X1JmSSKhxosMUq9R7bcAPKROoybEjKymHOa6z1soV4HUEKZVDfQYulqbk
+ 05yDCPpSzRqFf8Q3aqiK+SZDnNzpdkwweHt6xqRgoe07k3sn9+ybOY4hUhEKv8R8OWEY
+ CvwWvfEcADLH1L3vOXvsLE0CYKrKc7wHymOm689r44P2Vs6q/uRMSNLsT6SqTlHBKuBI
+ jFKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767993564; x=1768598364;
+ d=1e100.net; s=20230601; t=1767993787; x=1768598587;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nXs8thDAEX0T8FwN+HHt4IjEeYjwkoOPzTC5QOie3+s=;
- b=DEZPR182xHc7OeG5+qTWei6VH3BeHUH2qeJIzaPtFn2gXTD2DMMARZh1mikWa0mS2I
- u+FP8bZx3K5FGtpcQEJMG1JU4BBwsbuRtCIobp9lTGwgtstJwN4WWpPcMAuMW3eQ2YbP
- iWJ6Yh1gHKogzwSio0pVesOjnErafDDQ9YRVyzXS7XjC5usEl4iNPTBt1XsRi4SM8lSX
- qUJw1awkpK/PIiVRMvr9GUam1Yz+yqDOTHUj9DzYRxyXE1arxRflEfBmcsopVXeGWY5X
- qOqVmFBA35UtciU3tt1rongUuUlBdi9cInLQf9+ePJvkK87Srt9gIqkLEfkns6kwbxjd
- cSmQ==
+ bh=7OnBzU9ZXN/YRo5rwAxYIf8wKTaZfmBk56QO+2TYvoI=;
+ b=rLLww3p6t1yLZZtKO+U+/e27z+zmnPSiatB9kKgaWdVrtPAq+WK+jKcD+U7T1570TC
+ 9TV8sgi0/u9vS5jTzs0ZxFkmApNnPg09qhSolY7po3q7Wy6+6oStKpYMYRgtoC426iZj
+ suBaRXA9nhQijQbx6no5Aa2k5L0FlvAA+5aAunr7vBEGNYsjWbQTB4g8q6dULZszXRiM
+ ddXF60thNHl8M7HxZGY4GyDsfVdf2EPzfprhEj/1PmHyfjGXUgoc9QLownNpI3SSGNU/
+ 34k5yudLCcxe+U0WDDIld5GrXFjAAh9B+lcsfGLD/uXWP2ISlZSeQ0GAeNzws+obGrFx
+ 0ZsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXyHoHXDuB0epPT/M9JYuZ0RYTyITBEtA53I06ZEDwbeOHeaqWGp/4URrAeynZhQbPlj2OyThehh+P0@nongnu.org
-X-Gm-Message-State: AOJu0Yyb7fxVCylbp1pCw8Id1EN4fWJQ2PPNIlxC/kQXrx9tx5DJbTrz
- 52sqRi0FWaGCa3OUkHRFGm1Lq4sDDHdXA+AeQJYyfL37yaJK7PaHHO0LA7gimpQ4r38=
-X-Gm-Gg: AY/fxX5MdHzpdxlj8RDHuHuwPbmIZ7ivHPnKQmOTlR8VUD+LNpFPQLR6NEQZj26JGsx
- 8xgXqAbgSMn1NUfcbTBoY8A1y0oF42yONJTvcWyiS/u2MjdDZiq9U0eN++lCUPkVF2xNgWwj1VP
- 2lCPnZ8nZ7007sqooUcZhTnu+wG+Gv63j8/X6FZJg37rRrZIMIo/xbrSwNqVu2toJpMe0J5XqQg
- 53rQmj1n0Fa2KAIzyp0fQvkL2PLwyrTyhIxla6u9T9jDjP19yalPw+UEQfYKkTtF31N9uuZdnxd
- d+cSX4yuQ2boQ08PoJF+MeMbL7KkGeLiy3ZrYitG/vL424Oi/A1YJV2GDWQmSaRO4YxF9ssYjbX
- oIcuQT0jY8b8TuBalboPnIV22rKeIGDbSyuQpPMgicowwjqADT5ch5RQmNjtMrHes0DjpYEGVsr
- 2FIctw5SfGFgttM47fAi7dE6KziQ==
-X-Google-Smtp-Source: AGHT+IFZyNZBGiyTr2ozwWAMuU0nvavmm2JqC+DTmcXlBhvgImwWlOChlKfIs0s8VuB15R+KcahCIg==
-X-Received: by 2002:a05:6a00:6ca2:b0:81e:1b77:9e61 with SMTP id
- d2e1a72fcca58-81e1b779ffdmr3398736b3a.25.1767993563873; 
- Fri, 09 Jan 2026 13:19:23 -0800 (PST)
+ AJvYcCUEa/wO9ZwEcifjPyqbSwaHWbG0Hpn5oYhOom/O7BSan0sKsUxkKTVtKBkz+In7CPz1tse24mt2YQl0@nongnu.org
+X-Gm-Message-State: AOJu0Yxj2y5wNo9eSKYCs+XYes2D3ur8M6ryHOgJTk+o6wOwdEHkUINl
+ 5CkC/6XQDzz/TDf4APOM9hOfOzMAJbbf0ZWnclsfp/mEJ4dsEus3yZzvZkY/ctnSs2PfAfcQrzR
+ 04xBMi/A=
+X-Gm-Gg: AY/fxX5qbTUscM9IsHh8BAVNLTnDc3FJJWF+w4yyYbPv1Ioq2Zzn/yi+G/Zek0gtXM8
+ EImf8IxQMRIy1rURc1Y/3SI/3CtU6mod+jzyj3aS0c6s6OKwhKeGzaEtTnOp3La3oQagLY1kJon
+ PG92Xwk3d5yuKewFs44A+e2gJFBrXxWrxUx+z9to3oJ8Yb38dVKS8w6dETDz6YqtXNYoTDa4csO
+ Rq3VlwI3DUK39G2q01iCOVLPNjshA2/mDoiHtcZ0skrKemZmnZSDXXCw+vby/CUq3/IlCN7P2aC
+ v1WPPVMdxQK7sN10WhPAhAbExuXvWCi8pIIXMSXu9OorbjvnN641PVlk2yfR6kbjrL8PAzEwT3I
+ bfBEFI/lh0x5AHLJs5ioxU4dv/eSiT5q2cYMkOND2/YUCXCcLirIUu/F43WytNdlvDtdrfSTSbE
+ sJw6dRCh5QxEuif5jbZz4NUAD5yQ==
+X-Google-Smtp-Source: AGHT+IECd4aZKezI0qKhJfsf9ovg0fUQQzY8Q8F9bSlp0Hnv1t74wCb/A6YumXmqNrmqrBubjx6IIQ==
+X-Received: by 2002:a17:90b:574d:b0:32e:7c34:70cf with SMTP id
+ 98e67ed59e1d1-34f68cf020fmr9251699a91.36.1767993786760; 
+ Fri, 09 Jan 2026 13:23:06 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-819c5edd921sm11105584b3a.69.2026.01.09.13.19.20
+ d2e1a72fcca58-81df6b3bd16sm2996323b3a.25.2026.01.09.13.23.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 13:19:23 -0800 (PST)
-Message-ID: <e6f82d35-41cf-4acf-a47d-6130d5b6cc99@linaro.org>
-Date: Sat, 10 Jan 2026 08:19:17 +1100
+ Fri, 09 Jan 2026 13:23:06 -0800 (PST)
+Message-ID: <bcad5451-4779-4914-9b8f-e63bfe5a2b26@linaro.org>
+Date: Sat, 10 Jan 2026 08:22:58 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/29] target/arm/arm-qmp-cmds.c: make compilation unit
- common
+Subject: Re: [PATCH 05/29] include/exec/helper-{gen, proto}.h: add conditional
+ HAS_HELPER64 define
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -81,14 +82,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
- <20260109053158.2800705-5-pierrick.bouvier@linaro.org>
+ <20260109053158.2800705-6-pierrick.bouvier@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260109053158.2800705-5-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260109053158.2800705-6-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,106 +113,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/9/26 16:31, Pierrick Bouvier wrote:
-> Move gic_cap_kvm_probe to target/arm/kvm.c to remove #ifdef CONFIG_KVM.
+> It allows to include helper for 64 bits variants selectively, by
+> including helper-{gen, proto}.h and defining HAS_HELPER64.
 > 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   target/arm/kvm_arm.h      |  3 +++
->   target/arm/arm-qmp-cmds.c | 25 +------------------------
->   target/arm/kvm-stub.c     |  5 +++++
->   target/arm/kvm.c          | 21 +++++++++++++++++++++
->   target/arm/meson.build    |  2 +-
->   5 files changed, 31 insertions(+), 25 deletions(-)
-> 
-> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-> index 6a9b6374a6d..cc0b374254e 100644
-> --- a/target/arm/kvm_arm.h
-> +++ b/target/arm/kvm_arm.h
-> @@ -11,6 +11,7 @@
->   #ifndef QEMU_KVM_ARM_H
->   #define QEMU_KVM_ARM_H
->   
-> +#include "qapi/qapi-types-misc-arm.h"
->   #include "system/kvm.h"
->   #include "target/arm/cpu-qom.h"
->   
-> @@ -263,4 +264,6 @@ void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
->   
->   void arm_cpu_kvm_set_irq(void *arm_cpu, int irq, int level);
->   
-> +void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
-> +
->   #endif
-> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-> index 45df15de782..29102587bae 100644
-> --- a/target/arm/arm-qmp-cmds.c
-> +++ b/target/arm/arm-qmp-cmds.c
-> @@ -43,29 +43,6 @@ static GICCapability *gic_cap_new(int version)
->       return cap;
->   }
->   
-> -static inline void gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
-> -{
-> -#ifdef CONFIG_KVM
-> -    int fdarray[3];
-> -
-> -    if (!kvm_arm_create_scratch_host_vcpu(fdarray, NULL)) {
-> -        return;
-> -    }
-> -
-> -    /* Test KVM GICv2 */
-> -    if (kvm_device_supported(fdarray[1], KVM_DEV_TYPE_ARM_VGIC_V2)) {
-> -        v2->kernel = true;
-> -    }
-> -
-> -    /* Test KVM GICv3 */
-> -    if (kvm_device_supported(fdarray[1], KVM_DEV_TYPE_ARM_VGIC_V3)) {
-> -        v3->kernel = true;
-> -    }
-> -
-> -    kvm_arm_destroy_scratch_host_vcpu(fdarray);
-> -#endif
-> -}
+>   include/exec/helper-gen.h   | 6 ++++++
+>   include/exec/helper-proto.h | 6 ++++++
+>   2 files changed, 12 insertions(+)
 
-Previously did nothing without kvm, and even with CONFIG_KVM fails silently if kvm can't 
-be used.
+I guess I'll need to read further to find out what you want,
+but you shouldn't need this.
 
-> -
->   GICCapabilityList *qmp_query_gic_capabilities(Error **errp)
->   {
->       GICCapabilityList *head = NULL;
-> @@ -74,7 +51,7 @@ GICCapabilityList *qmp_query_gic_capabilities(Error **errp)
->       v2->emulated = true;
->       v3->emulated = true;
->   
-> -    gic_cap_kvm_probe(v2, v3);
-> +    arm_gic_cap_kvm_probe(v2, v3);
-
-No kvm_enabled check.
-
-
->   
->       QAPI_LIST_PREPEND(head, v2);
->       QAPI_LIST_PREPEND(head, v3);
-> diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-> index c93462c5b9b..ea67deea520 100644
-> --- a/target/arm/kvm-stub.c
-> +++ b/target/arm/kvm-stub.c
-> @@ -124,3 +124,8 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
->   {
->       g_assert_not_reached();
->   }
-> +
-> +void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
-> +{
-> +    g_assert_not_reached();
-> +}
-
-Danger, Will Robinson!
-
-This need only do nothing.
-But you could equivalently add a kvm check to the call, and have the call be removed.
+I've built these headers for multiple inclusion, so that the HELPER_H manipulation can be 
+done by the target.  You shouldn't need to modify the generic headers.
 
 
 r~
+
+> 
+> diff --git a/include/exec/helper-gen.h b/include/exec/helper-gen.h
+> index f7ec1556997..c96e13b835a 100644
+> --- a/include/exec/helper-gen.h
+> +++ b/include/exec/helper-gen.h
+> @@ -13,4 +13,10 @@
+>   #include "exec/helper-gen.h.inc"
+>   #undef  HELPER_H
+>   
+> +#ifdef HAS_HELPER64
+> +#define HELPER_H "helper64.h"
+> +#include "exec/helper-gen.h.inc"
+> +#undef  HELPER_H
+> +#endif
+> +
+>   #endif /* HELPER_GEN_H */
+> diff --git a/include/exec/helper-proto.h b/include/exec/helper-proto.h
+> index 6935cb4f16f..002460722e3 100644
+> --- a/include/exec/helper-proto.h
+> +++ b/include/exec/helper-proto.h
+> @@ -13,4 +13,10 @@
+>   #include "exec/helper-proto.h.inc"
+>   #undef  HELPER_H
+>   
+> +#ifdef HAS_HELPER64
+> +#define HELPER_H "helper64.h"
+> +#include "exec/helper-proto.h.inc"
+> +#undef  HELPER_H
+> +#endif
+> +
+>   #endif /* HELPER_PROTO_H */
+
 
