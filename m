@@ -4,85 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08E0D26D7D
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 19:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47EA3D26D9B
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 20:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veI1C-0001ka-LZ; Fri, 09 Jan 2026 14:19:34 -0500
+	id 1veIiM-0007hH-LM; Fri, 09 Jan 2026 15:04:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tphan@ventanamicro.com>)
- id 1veI0Q-0001gx-TL
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 14:18:45 -0500
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tphan@ventanamicro.com>)
- id 1veI0O-0002yr-Vp
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 14:18:42 -0500
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-5eea6f90d7fso1165992137.3
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 11:18:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1767986311; x=1768591111; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=X3VVui9TiP6wwXvGFG11MrSaNUb0WOIuWjdCNxEa6V4=;
- b=E/auu7/CPnDX6YcNuUKLrQSrQEgnVbWOGTqG3CAcuStNlH+GrifmyZA2zLwAYVBhXB
- bGaQWA9Qg2VY7+2RfXn018dJ4Dz6NZGkJg7nnZarMCtxudPNF2XAzIoRrcjOmLcs4b1O
- RBym/WChex2oWqVMYdTPKMihM/UaLCxoVe3vylemURu/xkaIUPOiZ70dldBOgKN1SGEY
- jQPidE2Zbyxu2lEbgUdVSxwd8QPKRvjeltiKW/dV9kr2603osLdfVuLGnkA9jnCzH9ud
- QoiCWh8sKuCpJbz6BFNNFj07Odf+0hN7VWCI62hGwQ92IXVSa4LmW1gyFfkJNVqlf8ub
- Ieiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767986311; x=1768591111;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X3VVui9TiP6wwXvGFG11MrSaNUb0WOIuWjdCNxEa6V4=;
- b=cat465UGiRgXvzehBQUCdUITei42kaOOLkzBFx7ouyGkYAQsWG7zyww64qOfJf0gHT
- CX/J/2TUmPcPDOFtREc/2/IvwDSmFK7uEidQ9qV/GYumOmYA49VgzBTpLae6eFOrEcoW
- 9TKzIECbNu0wShXvRFZ37y9lSsuAPtHD/yr5MH24xURp8Nbwr5HritGpLAC5r4b0qFKs
- aWnf/RK12Y4Lu1RvEEQK7Q7R0sclJrY6ydkYzvpFTxkQUqznwZzJ5ZilwLZMpTZWXn5y
- FERs2Wt4FXvP5gtPrIrtiy6+xQg9mFv5pqcOePyk1rYu7+jkwC6EbGAxL15aa3AJnM3h
- sLrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWODQOgvlsr7GdNGYdEPZz6d4ZpcZWePLomO8VmcLqD+jIUh2PxXD5ha/fnb0UdhEgArHXIka3tcNcv@nongnu.org
-X-Gm-Message-State: AOJu0YxmVRCMGkIYuapk8CL+fx8j0uh8RHiHnRp/koDHlzpG8hCU7jRu
- Jx/MptApYfOpTRY1Qr9wxLaYMB4A9eNkLj3EeQ3c6xsM7jZVamFdUX2VccrP0I+O6SBudU63icY
- k0Fmy3NK1HkA6DiscDemDzh6xLIE+dJ2O3McgAkgc1Q==
-X-Gm-Gg: AY/fxX64zJX+vkSMM/jp+sU8nczo0oBxf8rrBF8AuRRa+InTfRtASaeKb36ak/Mr1Gv
- phFpsXirarBrFVvnPj7qs1GoNpcbZKmrNAEt6QjNjamOfuWwHYOpo+nJSjxbt4scsnxmo5FTc4x
- RfVm0MGwG4yUtWjvOKUKOBzGx/bTEE4WNDMAQBRzYeMlF8bSUIuuUekamK+bEax1rJM6USdqTf3
- JAs707/b8LCBRkJlx+up699OC0HGUeRXYDmt3B9lqmLPTRXNE+QHK8zTIosd11KdihKmaPiNzmv
- kIY5BEj9dDYpBG6YUs+9q7g=
-X-Google-Smtp-Source: AGHT+IFZwe4VjhZE/j9kZ89wAj0SYYW2pFsLMuksqEDwFiPonDnFibvKNMyQU4uj3rtsayKidA5N8p8y/0o+2gbQdBc=
-X-Received: by 2002:a05:6102:9d7:b0:5db:ebb4:fded with SMTP id
- ada2fe7eead31-5ecb68dbab3mr4471664137.25.1767986311347; Fri, 09 Jan 2026
- 11:18:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1veIhV-0007Sy-E6; Fri, 09 Jan 2026 15:03:18 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1veIhT-0000g7-GY; Fri, 09 Jan 2026 15:03:13 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 6099XWOf007458;
+ Fri, 9 Jan 2026 20:03:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wRK/q0
+ tkw7dkqNRpiYakQEm2ArFMv4vRGjHGjFMWOEw=; b=H/iwQ1OhdXrZkDFjnZQ32R
+ Ss3d1yG1ofbRLlRPfhIvhlVjAYHReHTtjxEo6i6DIkcIf8Xqu4v8+CQC6VsTqG77
+ ThLNEB6qa+CBiGZ4WKyo6vnHhWNVHcKCptSoGzZBFby6NKjpao5KPPKqwT47eRN3
+ yd5B+sqUmIs2aN2hAIbtgrv6l0BbsIwGb3cg9Oe8P+ImPL3WaUdSTjiLIzW5JE4t
+ dS7kOn50b7i16idr1AFY0Tf45hZb6EyPI54ZYKS3hYEJrAPEbylUp69ODVM1vgQS
+ /d4YurAIqzyMiXexqXk39DAPs8w/1al6i7zIHFC+zyOzw/xwSfTqNVfA0Gwa1Few
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4beshfbmky-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 09 Jan 2026 20:03:06 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 609Japwp014542;
+ Fri, 9 Jan 2026 20:03:05 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bfeenevgs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 09 Jan 2026 20:03:05 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 609K33HP30081758
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 9 Jan 2026 20:03:04 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A1B8A58065;
+ Fri,  9 Jan 2026 20:03:03 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6376558052;
+ Fri,  9 Jan 2026 20:03:02 +0000 (GMT)
+Received: from [9.61.246.33] (unknown [9.61.246.33])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  9 Jan 2026 20:03:02 +0000 (GMT)
+Message-ID: <d6fe47aa-6ee7-4ecd-a230-d5ac81b2c837@linux.ibm.com>
+Date: Fri, 9 Jan 2026 12:03:02 -0800
 MIME-Version: 1.0
-References: <20251203002259.2856-1-tphan@ventanamicro.com>
- <5ed187df-61ae-4a59-98b2-cb2cc32b084a@gmail.com>
-In-Reply-To: <5ed187df-61ae-4a59-98b2-cb2cc32b084a@gmail.com>
-From: Tuan Phan <tphan@ventanamicro.com>
-Date: Fri, 9 Jan 2026 11:18:20 -0800
-X-Gm-Features: AZwV_QjnYQ9LyJwlzmF0nbrdofD8wLGGwVqc-IsR9JrvNEvKNy7i4JexXUXvqck
-Message-ID: <CABYABGSmSoMvyHDdy8OHBvVBwMhUNRM8EzO3szDiboeCSeh=Ag@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/virt-acpi-build.c: Add TPM2 device node and ACPI
- table support
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
- palmer@dabbelt.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- sunilvl@ventanamicro.com, zhiwei_liu@linux.alibaba.com
-Content-Type: multipart/alternative; boundary="0000000000000e4bd90647f9644a"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=tphan@ventanamicro.com; helo=mail-vs1-xe2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 11/29] crypto/x509-utils: Add helper functions for DIAG
+ 508 subcode 1
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20251208213247.702569-1-zycai@linux.ibm.com>
+ <20251208213247.702569-12-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20251208213247.702569-12-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDE1MCBTYWx0ZWRfXx4CqTkX3pFUd
+ eTpWeT6MZsquFqriVmCLVLe5gneUmDU3RInpBx+0ZX52MnlIw23eYjujOGX9EfYBWzXlGTJxgGT
+ NlZOVaEs7C1jWRf2YuMYimZZRwpjx6rCVMJKhPG1Xsli8W3NuoiEzgNTXyLRHNQ+B5vDz1oF1UT
+ K5oKczrHhWtKldW0T/k17E0YTUsyoNKcOv8HTiu8ATYelQl0Aq+WQjXYH8KdW2Hx0TLQRBCYXwi
+ xMCBbPD1ZEBZ1A0Bi4RVupmmZmmayJ3S1KpFXZ9RJC8En0wKpv8gUNFbdg641GOwZx1w45OlejQ
+ ifj0tgKz1kGXTrkB1GqStOU/BqgY1t1voA2t3JfiACyAATkscqAr0Mu39YIWoS8QURPKP/OsZJA
+ AV4QvP1tiaPN12yipssAuFIw++urL/9Hcrl1aw1qk9Wi37HJ7IX3wDExNG/nfI7FOBOxxA44uLL
+ y8BcWb3RsCuQ6G+WBcg==
+X-Proofpoint-GUID: CUZ1XwhqznDGKvW9mWmG9aqQ7gCZ3K6J
+X-Proofpoint-ORIG-GUID: CUZ1XwhqznDGKvW9mWmG9aqQ7gCZ3K6J
+X-Authority-Analysis: v=2.4 cv=AOkvhdoa c=1 sm=1 tr=0 ts=69615efa cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=jPPqZkirAdYMJfI717YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zZCYzV9kfG8A:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-09_05,2026-01-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601090150
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,160 +127,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000e4bd90647f9644a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 19, 2025 at 12:30=E2=80=AFAM Chao Liu <chao.liu.zevorn@gmail.co=
-m> wrote:
-
-> On Tue,  2 Dec 2025 16:22:59 -0800, Tuan Phan wrote:
-> > This patch enables TPM2 support in the RISC-V virt machine ACPI builder=
-.
-> >
-> > Signed-off-by: Tuan Phan <tphan@ventanamicro.com>
-> > ---
-> >  hw/riscv/virt-acpi-build.c | 56 ++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 56 insertions(+)
-> >
-> > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> > index f1406cb68339..b5bf812a9d36 100644
-> > --- a/hw/riscv/virt-acpi-build.c
-> > +++ b/hw/riscv/virt-acpi-build.c
-> > @@ -32,6 +32,7 @@
-> >  #include "hw/intc/riscv_aclint.h"
-> >  #include "hw/nvram/fw_cfg_acpi.h"
-> >  #include "hw/pci-host/gpex.h"
-> > +#include "hw/platform-bus.h"
-> >  #include "hw/riscv/virt.h"
-> >  #include "hw/riscv/numa.h"
-> >  #include "hw/virtio/virtio-acpi.h"
-> > @@ -39,6 +40,7 @@
-> >  #include "qapi/error.h"
-> >  #include "qemu/error-report.h"
-> >  #include "system/reset.h"
-> > +#include "system/tpm.h"
-> >
-> >  #define ACPI_BUILD_TABLE_SIZE             0x20000
-> >  #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
-> > @@ -224,6 +226,41 @@ static void acpi_dsdt_add_iommu_sys(Aml *scope,
-> const
-> MemMapEntry *iommu_memmap,
-> >      aml_append(scope, dev);
-> >  }
-> >
-> > +#ifdef CONFIG_TPM
-> > +static void acpi_dsdt_add_tpm(Aml *scope, RISCVVirtState *s)
-> > +{
-> > +    PlatformBusDevice *pbus =3D PLATFORM_BUS_DEVICE(s->platform_bus_de=
-v);
-> > +    hwaddr pbus_base =3D s->memmap[VIRT_PLATFORM_BUS].base;
-> > +    SysBusDevice *sbdev =3D SYS_BUS_DEVICE(tpm_find());
-> > +    MemoryRegion *sbdev_mr;
-> > +    hwaddr tpm_base;
-> > +
-> > +    if (!sbdev) {
-> > +        return;
-> > +    }
-> > +
-> > +    tpm_base =3D platform_bus_get_mmio_addr(pbus, sbdev, 0);
-> > +    assert(tpm_base !=3D -1);
-> > +
-> I suggest reporting an error message when the tpm_base check fails.
+On 12/8/2025 1:32 PM, Zhuoying Cai wrote:
+> Introduce helper functions to support signature verification required by
+> DIAG 508 subcode 1:
 >
->     if (tpm_base =3D=3D -1) {
->         error_report("Failed to get TPM MMIO address");
->         exit(1);
->     }
+> qcrypto_pkcs7_convert_sig_pem() – converts a signature from DER to PEM format
+> qcrypto_x509_verify_sig() – verifies the provided data against the given signature
 >
-> Thanks,
-> Chao
+> These functions enable basic signature verification support.
 >
+> Signed-off-by: Zhuoying Cai<zycai@linux.ibm.com>
 
-Thanks Chao, I will change it as per your suggestion. BTW, I will resend
-this patch from my new email from Qualcomm.
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 
---0000000000000e4bd90647f9644a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Dec 19,=
- 2025 at 12:30=E2=80=AFAM Chao Liu &lt;<a href=3D"mailto:chao.liu.zevorn@gm=
-ail.com">chao.liu.zevorn@gmail.com</a>&gt; wrote:<br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;b=
-order-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"=
->On Tue,=C2=A0 2 Dec 2025 16:22:59 -0800, Tuan Phan wrote:<br>
-&gt; This patch enables TPM2 support in the RISC-V virt machine ACPI builde=
-r.<br>
-&gt;<br>
-&gt; Signed-off-by: Tuan Phan &lt;<a href=3D"mailto:tphan@ventanamicro.com"=
- target=3D"_blank">tphan@ventanamicro.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/riscv/virt-acpi-build.c | 56 ++++++++++++++++++++++++++++++++=
-++++++<br>
-&gt;=C2=A0 1 file changed, 56 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c<b=
-r>
-&gt; index f1406cb68339..b5bf812a9d36 100644<br>
-&gt; --- a/hw/riscv/virt-acpi-build.c<br>
-&gt; +++ b/hw/riscv/virt-acpi-build.c<br>
-&gt; @@ -32,6 +32,7 @@<br>
-&gt;=C2=A0 #include &quot;hw/intc/riscv_aclint.h&quot;<br>
-&gt;=C2=A0 #include &quot;hw/nvram/fw_cfg_acpi.h&quot;<br>
-&gt;=C2=A0 #include &quot;hw/pci-host/gpex.h&quot;<br>
-&gt; +#include &quot;hw/platform-bus.h&quot;<br>
-&gt;=C2=A0 #include &quot;hw/riscv/virt.h&quot;<br>
-&gt;=C2=A0 #include &quot;hw/riscv/numa.h&quot;<br>
-&gt;=C2=A0 #include &quot;hw/virtio/virtio-acpi.h&quot;<br>
-&gt; @@ -39,6 +40,7 @@<br>
-&gt;=C2=A0 #include &quot;qapi/error.h&quot;<br>
-&gt;=C2=A0 #include &quot;qemu/error-report.h&quot;<br>
-&gt;=C2=A0 #include &quot;system/reset.h&quot;<br>
-&gt; +#include &quot;system/tpm.h&quot;<br>
-&gt;<br>
-&gt;=C2=A0 #define ACPI_BUILD_TABLE_SIZE=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A00x20000<br>
-&gt;=C2=A0 #define ACPI_BUILD_INTC_ID(socket, index) ((socket &lt;&lt; 24) =
-| (index))<br>
-&gt; @@ -224,6 +226,41 @@ static void acpi_dsdt_add_iommu_sys(Aml *scope, c=
-onst<br>
-MemMapEntry *iommu_memmap,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 aml_append(scope, dev);<br>
-&gt;=C2=A0 }<br>
-&gt;<br>
-&gt; +#ifdef CONFIG_TPM<br>
-&gt; +static void acpi_dsdt_add_tpm(Aml *scope, RISCVVirtState *s)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 PlatformBusDevice *pbus =3D PLATFORM_BUS_DEVICE(s-&gt;p=
-latform_bus_dev);<br>
-&gt; +=C2=A0 =C2=A0 hwaddr pbus_base =3D s-&gt;memmap[VIRT_PLATFORM_BUS].ba=
-se;<br>
-&gt; +=C2=A0 =C2=A0 SysBusDevice *sbdev =3D SYS_BUS_DEVICE(tpm_find());<br>
-&gt; +=C2=A0 =C2=A0 MemoryRegion *sbdev_mr;<br>
-&gt; +=C2=A0 =C2=A0 hwaddr tpm_base;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!sbdev) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 tpm_base =3D platform_bus_get_mmio_addr(pbus, sbdev, 0)=
-;<br>
-&gt; +=C2=A0 =C2=A0 assert(tpm_base !=3D -1);<br>
-&gt; +<br>
-I suggest reporting an error message when the tpm_base check fails.<br>
-<br>
-=C2=A0 =C2=A0 if (tpm_base =3D=3D -1) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;Failed to get TPM MMIO addre=
-ss&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 exit(1);<br>
-=C2=A0 =C2=A0 }<br>
-<br>
-Thanks,<br>
-Chao<br></blockquote><div><br></div><div>Thanks Chao, I will change it as p=
-er your suggestion. BTW, I will resend this patch from my new email from Qu=
-alcomm.=C2=A0</div></div></div>
-
---0000000000000e4bd90647f9644a--
 
