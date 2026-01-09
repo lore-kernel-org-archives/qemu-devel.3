@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B9DDD26D83
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 18:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A974D26D8C
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 18:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veH1J-0000BJ-Sn; Fri, 09 Jan 2026 13:15:38 -0500
+	id 1veHCc-00030U-FU; Fri, 09 Jan 2026 13:27:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veH16-0000Ar-4S
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 13:15:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veHCP-0002zO-3v
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 13:27:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veH13-0003E0-0p
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 13:15:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veHCM-0004xd-Ad
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 13:27:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767982515;
+ s=mimecast20190719; t=1767983217;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uEo2KtfbrULvmy8Avbqwnqa7VpkKDwgpSMC5zGp9AvY=;
- b=cUv1+aoKHtqypkxU8BV/IY0ocsVetQaCiPfSZLFR4o1BnLu9zwNuaUpIof66r65OuYQhlS
- uExK5v79Mxc2Az8GZtzIj1YNqEa6KrLCrAhjiXVWz5Tc16HC4fRRVaScDHkZP5VwO5V3wm
- ETCldOQ93pW6F1mlQlkG7eyS886s6/E=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mgJaePqAmaPjZASouB0iezHnamsQ7IJ1GvoIifrdwJo=;
+ b=S/KmNDLYX+7A5QSa7ELU4QDWwi124aDTXwVKiTQDqJVVjHU+DusP9kBgbF39k3AbrelibR
+ LAE56EwV3P0VFZnWuuQGxKIjD95QezLYgRHvhjyrz8elw64RI0D4Rz8FQZIqjQJu5kUMTK
+ 8d+2ncY/j/4pHh0lyoI6ElYA36fxsGo=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-soNpwUDTOnSIlBROzSe9Rg-1; Fri, 09 Jan 2026 13:15:14 -0500
-X-MC-Unique: soNpwUDTOnSIlBROzSe9Rg-1
-X-Mimecast-MFC-AGG-ID: soNpwUDTOnSIlBROzSe9Rg_1767982513
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-6509eb7c54dso4324268a12.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 10:15:13 -0800 (PST)
+ us-mta-606-6v55umKvMFeGCgc6sxZDCg-1; Fri, 09 Jan 2026 13:26:53 -0500
+X-MC-Unique: 6v55umKvMFeGCgc6sxZDCg-1
+X-Mimecast-MFC-AGG-ID: 6v55umKvMFeGCgc6sxZDCg_1767983213
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b8395cae8c8so342523666b.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 10:26:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767982513; x=1768587313; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767983212; x=1768588012; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=uEo2KtfbrULvmy8Avbqwnqa7VpkKDwgpSMC5zGp9AvY=;
- b=Njgrw4qx39qx1ILbvRawdfj6gQ/WF5GaB6zB85Gs02lrfNdNJ0mk8quyQYLv4qGh4M
- KPUCYCZnnDVFIee1RbLWaRH710CfQaKMn7z+IBmgVga2mzWRRfr/21ezULgKfQit8oIW
- JS/pFexMN3wVYq6NblTZbm4JBzDwswLktpmo356NLac2riy0OaUlU3c36eoD3+rDfFKY
- ulIFgX/oZXhIjXaYQl6ZAYrIfrCCga6xlP+9sJE7Uz21MZPDrVWfmJXV/rNeGHmz1OWp
- 1iyDIqHBknkwfrgGNhEwrwFTXaejhYcGbZqdvlBI5kSawMNE2H9qA3P6MlpYncUPU9Tj
- zhCg==
+ bh=mgJaePqAmaPjZASouB0iezHnamsQ7IJ1GvoIifrdwJo=;
+ b=mfvbNsXVpmvgZ6iItciEv0v82KJQpeE0seqZQTQVYe9y3jEiKZG+oHh2Zz3Ed89j5n
+ L7C6G2MaWha8f0vYOHuzC8LBJqJcalZT811XjMSPmImT26838Ds5DFQOIEnlgB5P29UZ
+ 6eJRv6rQ/paOzFsLsoGmLc7hTHQWPQV+U8EqJJqVP/KE5XeVcwp0Sat76zP3p2qeLLnO
+ xjs0vOILhejtNRHLLlXBNVy/cW12etZhGLoNmlBpO5rMSaxjwGyUPYjTJ7zPw7e5s/19
+ vA/6Q7hfvZXHU/Jygt9IJB8xTjbaqZotMfLMcjavL1Jcmo4dPxXZF5/c9V0239UT8/E5
+ OckA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767982513; x=1768587313;
+ d=1e100.net; s=20230601; t=1767983212; x=1768588012;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uEo2KtfbrULvmy8Avbqwnqa7VpkKDwgpSMC5zGp9AvY=;
- b=GYLGH7S25GHP9BoCe4Aj6fs2CMne0wQ89iSs1GK7giIhjLqLBG7o6wym1oWWBlvzrR
- 77tvfMFgLgijQj3qENi+6nxTyYL5raizQDWs/M1WmGsWD73wPs+g+DIbLEMSIl8Yq+ox
- EDyZN2ZmhkVHh2JNkQ9n3vleKiZt+RA82mvHmDwt9/PZf9M38ZX9b8f5tIp9SdP5DbYS
- GmFQ5tRfMcji3E8IhUhkrLAqeqxUNF/A0eSymmAFDknqFbyY86IieJPnzCua0Gc7m5By
- kZYIXGpjBzh+krFCdR7Ri/op9B7DirVDOykwn342yTC7IchVL5Ny/Cm6vA2KeC+wy+PS
- hqQw==
+ bh=mgJaePqAmaPjZASouB0iezHnamsQ7IJ1GvoIifrdwJo=;
+ b=ioYcPOP2egSudulg+W02ANT3QYyEY40cNhnrCkFviSeBrn2V+yVOyUJNmU1t1IO5fm
+ V81s3SedPV6NK/+R/PNId2rQXASt/erAkUeMWAqwSrX8PH/aETvK+wRTT4HWrNOvwNVU
+ Z44nZk17UWRSVIPqpSM80Tl/WVO4WYvlihpMKPRZDuPiVhxWl+fZovHkkV7eldayfAfY
+ w4NQ+x7EVYd5tr7xtHsw+mx+N1JYCqkJfKkySDWyuuuURmIDGwiAIqjGEC2qSKonnxg4
+ YuLBGIrAJyWEQTdJ7Tnt1sVLYwKm/Kc4OyBksJiqiOh0NFVBKlbm2V/LSt7HqbfF4Y6E
+ gH0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWU2TgiK50lklxhtl8wzIGKPlmNqy8nwTv2v2jCabLPW7nAhTmaR3ZlsVk+eVpErW7UPh64PKHLeUYD@nongnu.org
-X-Gm-Message-State: AOJu0YxUst6+QatRvLOoNlhPxjWDQ4+TNEWW3LMUJ+3JaOmWRmpzzXwC
- cqEIPIcopixblDzj/3BfGrbMSR8856G05e1O3/u74q1fdDExl5XVcvyTsS1HarIjGqstYkKzwdy
- 7GBzEoD93oxd/GW1FrMrXDOCGzNWH6LBw2y6mDUAlnHZSRABWHaypi5QV
-X-Gm-Gg: AY/fxX6q21aLxXe4oPNzQMaM0R7ZKblMfhv9OOEDKoyb3/dFO7R0QEdc3VDjlreRtm6
- 0bM7BiAiApNw5BvrII4lIqUE4PW16BhwhGBFyVnINULPQsxzPqARoUwTrVmDg/s3//XMoM0l+5a
- NCLFr5VYDiZJWLm6SAmKwj6BdAc1RvlGvO7E874tkrppeZa9TtCfbTr3QQ4/IIiS9C8W0hL7P4b
- FGGENx5YeYNzlwjLhC+BPKDy46cArXcq2SwNA1GNOqfb7J6kPaReX14J1lRrE9VmUdt6sOsjXKO
- DLXEkbelBPnaLePzAorOhhywOHUiVWP0duTa6Or8Nkd44BvVhI3bsHuEVqsinCSUEReflFxgo2p
- z8SUQoxU=
-X-Received: by 2002:aa7:c1d9:0:b0:640:a9b1:870b with SMTP id
- 4fb4d7f45d1cf-65097e0740dmr7251155a12.14.1767982512871; 
- Fri, 09 Jan 2026 10:15:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/Ka7OnJyCDkHK1jve7QKBJftYDPd+odaCaVCHxxlArRnvDSel68uQjFCt5qQPRA9gTjC6ug==
-X-Received: by 2002:aa7:c1d9:0:b0:640:a9b1:870b with SMTP id
- 4fb4d7f45d1cf-65097e0740dmr7251129a12.14.1767982512520; 
- Fri, 09 Jan 2026 10:15:12 -0800 (PST)
+ AJvYcCVpVNgIErlVYUF/a/B/J2plmO+/UAl6p5kB0qFUseeElfPuJlOglgavUwPCg3jmMOSbOrD7dS5RFtgm@nongnu.org
+X-Gm-Message-State: AOJu0YwA7Ar5FP5vZCiRzMQ5QMx5U8Hh3qUgG3ldh2efUWGeGfXyxveQ
+ 5fJgMueGI5DVFFLL12eapXX+dk1Qfxt7ZkXmOT52Et6MT2ezvoGBrnfONJSWxoUaXXlFkC/jwKX
+ 5Aa4cp/cN/PsyUlhCvdLU2rUKw341k1Bk0oqeSS2j1HW/82Lruu7QoFne
+X-Gm-Gg: AY/fxX691IixinWN/48xm4IffZwwSRMxV2xDVQa7MmoM59bQlknt56SCtjt+3xWsR2e
+ WF9Dixkh1vZ73ZIYoniclRpdjrk9k7b1y+BnbzjhYaWVwvPrMXjdkg1suDt56c7uHF56AsE0O30
+ s+PLKZ1HDT0swf68dV/VjzaVnoOWETiXYkgDUF8jneJmHlWwtnkTFFgvPU2zbwIssfbsxKur3xB
+ gKD/F9MXM97UkmNfRHMRqscjtF5lNhDI9UL6i6IDYqO0aJ+TjXMpOCGr1gdWd8jJUp95B7gPjoQ
+ cHKjCruKTX/SkEIIsEcqEUdfP3sVeNIkvt88wKCC9c2aT6pgffyGLwzboPSzgFWKn40lEOq1d6n
+ KVW5+p38=
+X-Received: by 2002:a17:907:3c86:b0:b7c:fe7c:e383 with SMTP id
+ a640c23a62f3a-b8444f2399cmr1098703566b.22.1767983212611; 
+ Fri, 09 Jan 2026 10:26:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHn+2pkPGjCCgAXyKF1IvhdiPt14uLaAZ8UTEE/3xgukEeOvxqMn+y8k8P1aGV5hPeAhfKsTw==
+X-Received: by 2002:a17:907:3c86:b0:b7c:fe7c:e383 with SMTP id
+ a640c23a62f3a-b8444f2399cmr1098699366b.22.1767983212160; 
+ Fri, 09 Jan 2026 10:26:52 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6507bf667fcsm10765944a12.29.2026.01.09.10.15.11
+ a640c23a62f3a-b842a517cf1sm1169076466b.59.2026.01.09.10.26.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 10:15:12 -0800 (PST)
-Message-ID: <6da947aa-7fe1-4e97-a707-2fa3f462a0f6@redhat.com>
-Date: Fri, 9 Jan 2026 19:15:10 +0100
+ Fri, 09 Jan 2026 10:26:51 -0800 (PST)
+Message-ID: <20391bae-fc6e-46e6-add1-add11e35852e@redhat.com>
+Date: Fri, 9 Jan 2026 19:26:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 16/29] s390x: Guest support for Secure-IPL Facility
+Subject: Re: [PATCH v7 17/29] pc-bios/s390-ccw: Refactor zipl_run()
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
@@ -97,7 +97,7 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
  iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
 References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-17-zycai@linux.ibm.com>
+ <20251208213247.702569-18-zycai@linux.ibm.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,19 +142,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251208213247.702569-17-zycai@linux.ibm.com>
+In-Reply-To: <20251208213247.702569-18-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,39 +171,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/12/2025 22.32, Zhuoying Cai wrote:
-> Introduce Secure-IPL (SIPL) facility.
-> 
-> Use fac_ipl to represent bytes 136 and 137 for IPL device facilities
-> of the SCLP Read Info block.
-> 
-> Availability of SIPL facility is determined by byte 136 bit 1 of the
-> SCLP Read Info block. Byte 136's facilities cannot be represented
-> without the availability of the extended-length-SCCB, so add it as a
-> check for consistency.
-> 
-> Secure IPL is not available for guests under protected virtualization.
-> 
-> This feature is available starting with the gen16 CPU model.
+> Refactor to enhance readability before enabling secure IPL in later
+> patches.
 > 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Collin Walling <walling@linux.ibm.com>
 > ---
-...
-> diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
-> index 33f01f85bb..f13d2ac9fc 100644
-> --- a/include/hw/s390x/sclp.h
-> +++ b/include/hw/s390x/sclp.h
-> @@ -136,7 +136,9 @@ typedef struct ReadInfo {
->       uint32_t hmfai;
->       uint8_t  _reserved7[134 - 128];     /* 128-133 */
->       uint8_t  fac134;
-> -    uint8_t  _reserved8[144 - 135];     /* 135-143 */
-> +    uint8_t  _reserved8;
-> +    uint8_t  fac_ipl[2];                /* 136-137 */
-> +    uint8_t  _reserved9[144 - 137];     /* 138-143 */
+>   pc-bios/s390-ccw/bootmap.c | 51 ++++++++++++++++++++++++--------------
+>   1 file changed, 33 insertions(+), 18 deletions(-)
 
-Should that be "[144 - 138]" instead?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
