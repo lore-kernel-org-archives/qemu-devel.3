@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C2D3D232E9
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F02E5D232E9
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve76D-0002Gx-Mm; Fri, 09 Jan 2026 02:39:57 -0500
+	id 1ve78p-0006sS-CZ; Fri, 09 Jan 2026 02:42:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ve75u-0002B6-Ml
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:39:42 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ve78l-0006pT-12
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:42:36 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ve75s-0001Bw-Hp
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:39:38 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso24499805e9.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 23:39:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ve78i-0001dS-UI
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:42:34 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-477770019e4so31619795e9.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 23:42:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767944374; x=1768549174; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767944549; x=1768549349; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=G5fGKxA/bxBWb3z7pbrnmXyDOGX/TWcdTgCuBGyqzN8=;
- b=PiWEDR8iXtf+zFK8UnUdSVcX2+8RO8wlXWK1r7BCDqp8dTY2H+Q+QCvbIsT8eBHBBJ
- bbXjbV1QZSc/XegbrlGPwYjhuzefKq8lmK/2+l7ICgaApFPdPA2G6gGwos7UDy/blIu2
- iHAj2/cZsCnLkRUfkLK9WaS2+3r++vSocvdeQmKk4AhlbqctBuyNsUNCw5o8BK71oE5A
- 66KwlmqpLiLOUk/6l1l44KCVAaCY8Fx5ptxNYvSXir66eOB1oRGt6kqOE7e0f403IHXl
- +4kiPu1IPDHpObz84J+BDrkxACdElxahluOXdvaF9Yc56vU+M6lD3Mi8wJcrNyHC+H+N
- OD7g==
+ bh=hBpfBR/fKWAq2GEGZ2wzyp3b+bV8MVYMqEsaxsqTMGk=;
+ b=UCXGmZJyTGx1nSeFW2yrZFyteDZphE2APFqM/7ygH5Py0G+MjQPSphWOq6n1Rlyj2L
+ FpfuLA/7P95zgrXIQrn7bYlajcpjit/GRMz1488mwDZiDu7cOk04osQ6f760Arn7nBDh
+ WV4NgCRLW/vzwr7Ks279trB8mh5+ahoU/6vlTPH5fTsKAYUnc7N1Jb7lvtAV6vs0lyNg
+ TkimTIQfzFtTvoMF3fp5OxKa3jnIupiEf33WLLC9uPGONF0fUAQr/gLl0KN8q5YgZxj5
+ 5dRVMTilQF4aXeA/ywlgW9LSOxd3HrBM6AR1sGe5TQ2dZOp0MKrwu2T7qo/FQ+DUSKb1
+ RV8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767944374; x=1768549174;
+ d=1e100.net; s=20230601; t=1767944549; x=1768549349;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=G5fGKxA/bxBWb3z7pbrnmXyDOGX/TWcdTgCuBGyqzN8=;
- b=HgLh7d08NAmz5tCNL53z/81PwM7fdByBZG9de7oUXDCg0xz7pzKwK94RVnFwLesWXU
- HOJU2emVJWcvmmpps0ILT3gzCmjIVXJkHDH03U3M96W/cHZc2R0/6aSXNFEe9LGfTKWq
- zn3AyjcR/4AjPasnlkiu9BmlivkmwzgxfDKD7UxjZ7I73TMhYH+PNzyw9ZScJIn18WvM
- 5kYUIBh0E8vISFnCnTlG8Sd6D0coK9hZBSTQv1EngY2PNYbHzB/pNoUPF5cR6uJeys4n
- PFShJnGT6y1Iu+ClJvG09txfR1vdAnyMpkAo2y5/dnVLgiKIOpHJ83aovaCyb/iQ9zAO
- i7Lg==
+ bh=hBpfBR/fKWAq2GEGZ2wzyp3b+bV8MVYMqEsaxsqTMGk=;
+ b=v7N4xhuere71ku/Po+bVRpXL4nKqrQ/rCBOzIkW/OvZRX/J6R+jqAHSHgXd+Mq/5xq
+ VigjmcHW9WDiVMd97XBa5E38k6ZbV+4aKS8td7fs5o/ZoUr84XzCfspnde/ShYRZM0yL
+ qV3qffCU97baSyzDzwbgQXPP/OZEw5WxDHB+Arno7z/eT2AH2kVcHAWo2ToVMul7p5Cn
+ h7b6pN92Wd8FVHhsQnUkCEqN0HSYwvhOYujejTJhYJBMjOObgz26KedQNKNSLIA79grG
+ Th59gz0ZsIZK/LEOfhZU+09e3rGUoaud7SbLpIQFcIzv3wPJiuxTfa1i/V/tdaa9gxWI
+ b6NQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4L94j8BQ949/lGvAhp+SFHIfaGj1lwKpz9YOirMIHA4B1gDE/XfWNA9jMqb/Shn+p6w7vdP0lmTMN@nongnu.org
-X-Gm-Message-State: AOJu0YxHQrdbHe37nvMy6W1gBtY8GwFNUPxl5eW8/uTKIPUWwpMPFAbv
- +k5y77IdmIi7TcUGUcG8O8Q8m0alzZTORFur+SDnn+TRQxfedeY3PINOEHW6SV9BV/Q=
-X-Gm-Gg: AY/fxX5rbkDOCVkTWf1lXzyLhXjYYfEyYnhxt5ulVHn2Xv9w7VzipU5xRBLh8j1+ohX
- UA2wxJ8qugfKru9P/C78Bt5w8YfdbRNKy+JnpoIKjrJtbq7xNJ7jQDNF930uosGBaDFqUnM0crT
- JEhY7hZYF5q8ln0pCYhr7uImRQGsNuoMc8Jx4e9pB9Ukedrbw+wROX5eYCwcNX3sEVf8TBqVDgr
- 5KAOV2IsCWqLRJxC/OkIvJjOrG9Iyi4vw4AeWGbWg+ZLA93Zw2so+mdAkTE8xcNOtrDRuPnjnUt
- SPuU305kC8Y6UonEoFvaQgTzQcToKQHDhJjGqS8UwMLiM55dj6aFm5zobjX760mVTFm2p3sUuh1
- fUgdPAoWP9GHk1VcGBAC8Hu6ji32JEzVU5LJ9HO8QuWxR0Rq83YN2fLGKfTS1oQzCMuSCXqpnqR
- KcpjBiqzOZQDBA7ubJ7xpMuzS9GuHbu63tHUwzB7eFZTevTpQVtY8IydIGhw94uLT6
-X-Google-Smtp-Source: AGHT+IFfbdjITscSrFilabkdYJAvc1/raBGdqqtsUAb/yrjGaLBuzV5jfMI3nCLIO9jT4Wg6jZJAkw==
-X-Received: by 2002:a05:600c:8b37:b0:47d:333d:99c with SMTP id
- 5b1f17b1804b1-47d84881c77mr91909745e9.18.1767944373700; 
- Thu, 08 Jan 2026 23:39:33 -0800 (PST)
+ AJvYcCVZck1+Vj3pbr2ncwgDriSwBPVTvHnh/GLWrL1YJ42GB0DoP8iwTJIjY78zie5mWDgKH+R21Kvi1QK4@nongnu.org
+X-Gm-Message-State: AOJu0Yy10SkWmmKprvCi9FxPvjt9Sz7nh35/yQqGuoZr1lYrUBtO4e2K
+ tH2ouep+PLqZeDjgm1FB6p3FXm92JJP8dxf4X++EDVwWsy+KaArajsG3RIju+cUUGpSbkCOCaE2
+ JP9yA9CE=
+X-Gm-Gg: AY/fxX5lOgzfss1Z+Y46DckBally2fzWvSGQnBiA+ASyzeDXKbCmQKVBAaQ1ZqA2sbs
+ FAPWpiKgq8ue66iVB0AtEaaWwAlAB3GNiYTJk//RRT90ob+tdhfgIdmo59os3DmrEaiYduMtlI/
+ EtbZZhA6AYRwDAHtzosWnsoCSiTunXDodmJW4aRwwdIQ+MI+KO/zLUtN2pVYcHUksOwjHv6bdwz
+ jgeq3jAaPybBS0LshUue4TPhfooLMcw88T+SMCQlOapMxxM6qnpfYT1KjP5cCUH2t/Z0PlY8bEo
+ 2CQKMi+/1AYsTePHh6+1i6PHwpIgcwr5TkhakCLtck7IIFHhulUkmKv6jdqgHcylkJK0+bLcLwg
+ /KGGLTTu8FQgwB7XsXdiWqiRr758XZKMERL8V3d5NI6ITHysPD2lOkojdwKgn5+4b7gMYipzr1h
+ pkBYYbh5YSv1+0lRrSfWrlFzcYAnuP3MDNV1NPYBT9XY+WqOv60J8wAA==
+X-Google-Smtp-Source: AGHT+IGoQ7lj0cwfm8DWyjeVKUw4NAiL6lVZM9nz5gJn5kT40LV06koOHv34lz469KtYAqUHLwUqXQ==
+X-Received: by 2002:a05:600c:a48:b0:477:9eb8:97d2 with SMTP id
+ 5b1f17b1804b1-47d84b08652mr100538315e9.8.1767944549362; 
+ Thu, 08 Jan 2026 23:42:29 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d8717a48asm57442055e9.8.2026.01.08.23.39.32
+ 5b1f17b1804b1-47d7f668e03sm201401515e9.14.2026.01.08.23.42.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 23:39:33 -0800 (PST)
-Message-ID: <d8792a35-340b-4a5b-8349-42ee3d050b2a@linaro.org>
-Date: Fri, 9 Jan 2026 08:39:31 +0100
+ Thu, 08 Jan 2026 23:42:28 -0800 (PST)
+Message-ID: <50a15b2e-dfb5-41d5-b7e8-ed0a74bdc9fd@linaro.org>
+Date: Fri, 9 Jan 2026 08:42:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] system: Convert qemu_arch_available() to TargetInfo API
+Subject: Re: [PATCH 01/29] include/gdbstub/helpers.h: allow header to be
+ called from common code
 Content-Language: en-US
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-References: <20260108163601.18676-1-philmd@linaro.org>
- <f089c7c9-c00f-4c19-b4b5-175873fd8c1e@linaro.org>
- <341da906-68c9-44e9-929b-30760883178e@linaro.org>
- <0e4437cd-0e4d-4e5b-9aac-c882ef1e9214@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Jim MacArthur <jim.macarthur@linaro.org>,
+ anjo@rev.ng
+References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
+ <20260109053158.2800705-2-pierrick.bouvier@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0e4437cd-0e4d-4e5b-9aac-c882ef1e9214@linaro.org>
+In-Reply-To: <20260109053158.2800705-2-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,207 +110,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/26 07:58, Pierrick Bouvier wrote:
-> On 1/8/26 9:53 PM, Philippe Mathieu-Daudé wrote:
->> On 8/1/26 19:57, Pierrick Bouvier wrote:
->>> On 1/8/26 8:36 AM, Philippe Mathieu-Daudé wrote:
->>>> Get the base arch_mask from the current SysEmuTarget,
->>>> making qemu_arch_available() target-agnostic.
->>>>
->>>> We don't need the per-target QEMU_ARCH definition anymore,
->>>> remove it.
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>> v3: Return directly within switch
->>>> v2: Prefer switch over array (pbo)
->>>> ---
->>>>    meson.build        |  2 --
->>>>    system/arch_init.c | 30 -----------------------
->>>>    target-info.c      | 60 +++++++++++++++++++++++++++++++++++++++++ 
->>>> +++++
->>>>    system/meson.build |  1 -
->>>>    4 files changed, 60 insertions(+), 33 deletions(-)
->>>>    delete mode 100644 system/arch_init.c
->>>>
->>>> diff --git a/meson.build b/meson.build
->>>> index 734c801cc77..435dc6e3c8e 100644
->>>> --- a/meson.build
->>>> +++ b/meson.build
->>>> @@ -3419,8 +3419,6 @@ foreach target : target_dirs
->>>>          config_target_data.set(k, v)
->>>>        endif
->>>>      endforeach
->>>> -  config_target_data.set('QEMU_ARCH',
->>>> -                         'QEMU_ARCH_' +
->>>> config_target['TARGET_BASE_ARCH'].to_upper())
->>>>      config_target_h += {target: configure_file(output: target + '-
->>>> config-target.h',
->>>>                                                   configuration:
->>>> config_target_data)}
->>>> diff --git a/system/arch_init.c b/system/arch_init.c
->>>> deleted file mode 100644
->>>> index e85736884c9..00000000000
->>>> --- a/system/arch_init.c
->>>> +++ /dev/null
->>>> @@ -1,30 +0,0 @@
->>>> -/*
->>>> - * QEMU System Emulator
->>>> - *
->>>> - * Copyright (c) 2003-2008 Fabrice Bellard
->>>> - *
->>>> - * Permission is hereby granted, free of charge, to any person
->>>> obtaining a copy
->>>> - * of this software and associated documentation files (the
->>>> "Software"), to deal
->>>> - * in the Software without restriction, including without limitation
->>>> the rights
->>>> - * to use, copy, modify, merge, publish, distribute, sublicense, and/
->>>> or sell
->>>> - * copies of the Software, and to permit persons to whom the 
->>>> Software is
->>>> - * furnished to do so, subject to the following conditions:
->>>> - *
->>>> - * The above copyright notice and this permission notice shall be
->>>> included in
->>>> - * all copies or substantial portions of the Software.
->>>> - *
->>>> - * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
->>>> EXPRESS OR
->>>> - * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
->>>> MERCHANTABILITY,
->>>> - * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
->>>> SHALL
->>>> - * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
->>>> OR OTHER
->>>> - * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
->>>> ARISING FROM,
->>>> - * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
->>>> DEALINGS IN
->>>> - * THE SOFTWARE.
->>>> - */
->>>> -#include "qemu/osdep.h"
->>>> -#include "system/arch_init.h"
->>>> -
->>>> -bool qemu_arch_available(unsigned qemu_arch_mask)
->>>> -{
->>>> -    return qemu_arch_mask & QEMU_ARCH;
->>>> -}
->>>> diff --git a/target-info.c b/target-info.c
->>>> index 24696ff4111..774fdcd2c46 100644
->>>> --- a/target-info.c
->>>> +++ b/target-info.c
->>>> @@ -11,6 +11,7 @@
->>>>    #include "qemu/target-info-qapi.h"
->>>>    #include "qemu/target-info-impl.h"
->>>>    #include "qapi/error.h"
->>>> +#include "system/arch_init.h"
->>>>    const char *target_name(void)
->>>>    {
->>>> @@ -33,6 +34,65 @@ SysEmuTarget target_arch(void)
->>>>        return arch;
->>>>    }
->>>> +bool qemu_arch_available(unsigned qemu_arch_mask)
->>>> +{
->>>> +    switch (target_arch()) {
->>>> +    case SYS_EMU_TARGET_ALPHA:
->>>> +        return qemu_arch_mask & QEMU_ARCH_ALPHA;
->>>> +    case SYS_EMU_TARGET_ARM:
->>>> +    case SYS_EMU_TARGET_AARCH64:
->>>> +        return qemu_arch_mask & QEMU_ARCH_ARM;
->>>> +    case SYS_EMU_TARGET_I386:
->>>> +    case SYS_EMU_TARGET_X86_64:
->>>> +        return qemu_arch_mask & QEMU_ARCH_I386;
->>>> +    case SYS_EMU_TARGET_M68K:
->>>> +        return qemu_arch_mask & QEMU_ARCH_M68K;
->>>> +    case SYS_EMU_TARGET_MICROBLAZE:
->>>> +    case SYS_EMU_TARGET_MICROBLAZEEL:
->>>> +        return qemu_arch_mask & QEMU_ARCH_MICROBLAZE;
->>>> +    case SYS_EMU_TARGET_MIPS:
->>>> +    case SYS_EMU_TARGET_MIPSEL:
->>>> +    case SYS_EMU_TARGET_MIPS64:
->>>> +    case SYS_EMU_TARGET_MIPS64EL:
->>>> +        return qemu_arch_mask & QEMU_ARCH_MIPS;
->>>> +    case SYS_EMU_TARGET_PPC:
->>>> +    case SYS_EMU_TARGET_PPC64:
->>>> +        return qemu_arch_mask & QEMU_ARCH_PPC;
->>>> +    case SYS_EMU_TARGET_S390X:
->>>> +        return qemu_arch_mask & QEMU_ARCH_S390X;
->>>> +    case SYS_EMU_TARGET_SH4:
->>>> +    case SYS_EMU_TARGET_SH4EB:
->>>> +        return qemu_arch_mask & QEMU_ARCH_SH4;
->>>> +    case SYS_EMU_TARGET_SPARC:
->>>> +    case SYS_EMU_TARGET_SPARC64:
->>>> +        return qemu_arch_mask & QEMU_ARCH_SPARC;
->>>> +    case SYS_EMU_TARGET_XTENSA:
->>>> +    case SYS_EMU_TARGET_XTENSAEB:
->>>> +        return qemu_arch_mask & QEMU_ARCH_XTENSA;
->>>> +    case SYS_EMU_TARGET_OR1K:
->>>> +        return qemu_arch_mask & QEMU_ARCH_OPENRISC;
->>>> +    case SYS_EMU_TARGET_TRICORE:
->>>> +        return qemu_arch_mask & QEMU_ARCH_TRICORE;
->>>> +    case SYS_EMU_TARGET_HPPA:
->>>> +        return qemu_arch_mask & QEMU_ARCH_HPPA;
->>>> +    case SYS_EMU_TARGET_RISCV32:
->>>> +    case SYS_EMU_TARGET_RISCV64:
->>>> +        return qemu_arch_mask & QEMU_ARCH_RISCV;
->>>> +    case SYS_EMU_TARGET_RX:
->>>> +        return qemu_arch_mask & QEMU_ARCH_RX;
->>>> +    case SYS_EMU_TARGET_AVR:
->>>> +        return qemu_arch_mask & QEMU_ARCH_AVR;
->>>> +    /*
->>>> +    case SYS_EMU_TARGET_HEXAGON:
->>>> +        return qemu_arch_mask & QEMU_ARCH_HEXAGON;
->>>> +    */
->>>> +    case SYS_EMU_TARGET_LOONGARCH64:
->>>> +        return qemu_arch_mask & QEMU_ARCH_LOONGARCH;
->>>> +    default:
->>>> +        g_assert_not_reached();
->>>
->>> Per explaination on previous version, would be more interesting to have
->>> SYS_EMU_TARGET__MAX instead of default here, so compilation will be
->>> blocked when enum is extended.
->>
->> How compilation can be blocked without using -Wswitch?
->>
+On 9/1/26 06:31, Pierrick Bouvier wrote:
+> Target specific variants can't be used in common code, thus limit their
+> definition to COMPILING_PER_TARGET.
 > 
-> See my previous answer on v1, -Wswitch is used:
-> 
-> Reading the thread above, the only mention I find is the 3rd commit that
-> precisely change definition because -Wswitch is enabled with clang.
-> And it's not only a clang thing, gcc has it in Wall also [1].
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   include/gdbstub/helpers.h | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
 
-Yes I read that, I'd really like we use -Wswitch but IIUC we can not,
-so with that in mind I don't understand your request. Is that for the
-hypothetical case we can use -Wswitch in the future? Sorry I'm not
-trying to be picky here, I just fail to see the problem you raised :(
-
-> I don't mind the array approach, but maybe just add a *static* assert
-> making sure (SYS_EMU_TARGET__MAX-1 == SYS_EMU_TARGET_XTENSAEB) so this
-> file will break as soon as there is a new target added. It's simple and
-> the next developer who won't have to debug this will thank you.
-> 
-> [1] https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Warning-Options.html
-> 
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>
->>>> +    };
->>>> +}
->>>> +
->>>>    const char *target_cpu_type(void)
->>>>    {
->>>>        return target_info()->cpu_type;
->>>> diff --git a/system/meson.build b/system/meson.build
->>>> index 4b69ef0f5fb..66e16db55ce 100644
->>>> --- a/system/meson.build
->>>> +++ b/system/meson.build
->>>> @@ -1,5 +1,4 @@
->>>>    specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
->>>> -  'arch_init.c',
->>>>      'globals-target.c',
->>>>    )])
->>>
->>
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
