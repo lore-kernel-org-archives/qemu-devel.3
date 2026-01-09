@@ -4,60 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B5A6D1A63D
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C9E1D1A63D
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veDm3-0006Oz-Mu; Fri, 09 Jan 2026 09:47:35 -0500
+	id 1veDmV-0006cA-7W; Fri, 09 Jan 2026 09:48:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1veDlo-0006A0-5U
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:47:26 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <vr@darknavy.com>) id 1ve2Nf-000415-KB
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 21:37:41 -0500
+Received: from smtpbguseast1.qq.com ([54.204.34.129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1veDlm-00018H-OZ
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:47:19 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dnl3f6R5XzJ46ck;
- Fri,  9 Jan 2026 22:47:10 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 824C140584;
- Fri,  9 Jan 2026 22:47:17 +0800 (CST)
-Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
- dubpeml100005.china.huawei.com (7.214.146.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.36; Fri, 9 Jan 2026 14:47:16 +0000
-To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>, Davidlohr Bueso
- <dave@stgolabs.net>
-CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, Ravi Shankar
- <venkataravis@micron.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH qemu v5 4/7] hw/cxl: Update CXL Fixed Memory Window ACPI
- description to include Back Invalidate support.
-Date: Fri, 9 Jan 2026 14:45:08 +0000
-Message-ID: <20260109144511.557781-5-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260109144511.557781-1-Jonathan.Cameron@huawei.com>
-References: <20260109144511.557781-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <vr@darknavy.com>) id 1ve2NZ-0007JH-EB
+ for qemu-devel@nongnu.org; Thu, 08 Jan 2026 21:37:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=darknavy.com;
+ s=litx2311; t=1767926236;
+ bh=s9S370S8RXeJ1FD8f8SM/PQYUuYKGXkFVvnBpvOhwFc=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version;
+ b=tgXLIROQo7OXOsELu1MWvuoLe+hmrrHDk50rZT0iQH+aZChHFiXL7yJHpnKPt/Nwk
+ IOMM2yPeackiURxmDR+aeLG0sYjrdIPY5/ylq3urd9DnVCIoYqS+cdVMpS/EJt6WKp
+ lG5V77ZJQ6LpbV4rsmzdLRp8/Llj99n3G7lK6TmQ=
+X-QQ-mid: esmtpsz11t1767926234tec53d6d9
+X-QQ-Originating-IP: G6DeiDrv49mAVVqqRafGQfBkME2meq9SGkuz09YNcN0=
+Received: from localhost.localdomain ( [58.38.42.157])
+ by bizesmtp.qq.com (ESMTP) with 
+ id ; Fri, 09 Jan 2026 10:37:12 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7724640879889572711
+EX-QQ-RecipientCnt: 3
+From: Vulnerability Report <vr@darknavy.com>
+To: qemu-devel@nongnu.org
+Cc: David Woodhouse <dwmw@amazon.co.uk>, Vulnerability Report <vr@darknavy.com>
+Subject: [PATCH] hw/i386/kvm: fix PIRQ bounds check in xen_physdev_map_pirq()
+Date: Fri,  9 Jan 2026 10:35:48 +0800
+Message-ID: <13FE03BE60EA78D6+20260109023548.4047-1-vr@darknavy.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:darknavy.com:qybglogicsvrgz:qybglogicsvrgz5b-2
+X-QQ-XMAILINFO: OVFGYuALQ4aSzCXJvmq8BrCGKSw5DrrGTbEAU2SqGsYPnEo0jHO2c1Cj
+ GkNGpMObkXcQeLmW9dq8NKtdjj/1mmq7lsph9M4JgDkWF63VWYldJiEdfsAhf2MhAzeePfO
+ zEZ/DMARDrKhqk2Ttx/lRRi8sOxDn4+m7zSb1PdOH84iqIFdhxFF2pur2vNOtthSSiQJ/eF
+ IFNabHZ6BgmcRuF7fAzZJoInqfGxj6eR++wxcVy5NpB8qiZq5PEidhazCeM//gyODuFzvDD
+ OoImwOVctb6HNOhkYiX8V3XxKT7JdoDKXBfU89eVR4lTX76tjOBiDEgCfNQrMA2wrQ9iLHp
+ xppNvqGH2E+s3fD0IAFNXlfGi4hJ0I5NIqq2duSr6PztRpY0J1JB8zqVpVWhppxIhzQF7pt
+ fJ5ZBlbLcQGstnV7Hq4j5IKUQ92/g25yTGEfVaY9eR8jNgaZxb9CvV7MwEjZD3XNHI/uHfO
+ 7Bq/5ylRPpKJOrRyflscrJOTKE5QRQUBoKg06CEPt6itSyufmM3rHgUoBwSygECYG8kuKcL
+ 1g4EdPH4OG+BPtN2Opjy3VRNwuNho3sz9j3788+eLThcFVMcretTLoj7H7ijOj0EUml6NbS
+ hJpvU3xa7wCbIKfpHNSbqEw3HvyZUcnOTU+u4RPBsWG3foHNVGwaYS706Tj95k7AIdQkgbr
+ /kBEtMna9WKv+Mi15tJF+5aj6KZTXMoMJC3qb7NxjXShRLoklD0zTmR7dd8OquktEolqAe1
+ xVl2OuPo0WU7UFx1ElJZj5LfmVmjUF6FowZD/4eAt0K8ItYuDRPyhZ7SvmIGQlXdfvlFaAs
+ MaTd6RKMDE8mGEBfyz1fkDhcUuElmDnPyDn2lXTRy5EnXRfYvydISmXS8Ry/D7XCfg5AdE9
+ 5yi9zSilxrgMGKZtGkIc8aYpfe01q/gF0XXt66NcAFmwNV+WiKrhen6duZA98ljslfwCHR2
+ CHQKcS4gsyc+zJmUUj7fl+1BUXOMAfpqtTaFRAYq5Y52kMcH+jVzPDflmwN/rLzahe+wuff
+ rC1JNgAQ==
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
+Received-SPF: pass client-ip=54.204.34.129; envelope-from=vr@darknavy.com;
+ helo=smtpbguseast1.qq.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 09 Jan 2026 09:48:00 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,44 +86,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Defaults for these windows has always been to enable anything QEMU supports.
-With the addition of back invalidate support it is necessary to specify that
-host windows support this.
+Reject pirq == s->nr_pirqs in xen_physdev_map_pirq().
 
-CXL emulation is currently only suitable for software stack verification.
-The relaxation of the restrictions on this window to include BI have no
-affect on the OS until BI capable devices are added and until now these
-have not existed. As such no backwards compatibility impacts are expected
-from this change.
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: aa98ee38a5 ("hw/xen: Implement emulated PIRQ hypercall support")
+Fixes: CVE-2026-0665
+Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
+Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Vulnerability Report <vr@darknavy.com>
 ---
-v5: Equivalent of the default change in the window restrictions patch.
-    That patch isn't ready for upstream just yet, so for now just
-    change the value for everyone.
----
- hw/acpi/cxl.c | 2 +-
+ hw/i386/kvm/xen_evtchn.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
-index 75edb2c0a652..f92f7fa3d558 100644
---- a/hw/acpi/cxl.c
-+++ b/hw/acpi/cxl.c
-@@ -172,7 +172,7 @@ static void cedt_build_cfmws(CXLFixedWindow *fw, Aml *cedt)
-     build_append_int_noprefix(table_data, fw->enc_int_gran, 4);
- 
-     /* Window Restrictions */
--    build_append_int_noprefix(table_data, 0x0f, 2);
-+    build_append_int_noprefix(table_data, 0x2f, 2);
- 
-     /* QTG ID */
-     build_append_int_noprefix(table_data, 0, 2);
+diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
+index dd566c4967..173e0818c7 100644
+--- a/hw/i386/kvm/xen_evtchn.c
++++ b/hw/i386/kvm/xen_evtchn.c
+@@ -1877,7 +1877,7 @@ int xen_physdev_map_pirq(struct physdev_map_pirq *map)
+             return pirq;
+         }
+         map->pirq = pirq;
+-    } else if (pirq > s->nr_pirqs) {
++    } else if (pirq >= s->nr_pirqs) {
+         return -EINVAL;
+     } else {
+         /*
 -- 
-2.48.1
+2.39.5 (Apple Git-154)
 
 
