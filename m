@@ -4,152 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B85BD1681A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23E6D1681A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:47:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veAx9-0006UO-1O; Fri, 09 Jan 2026 06:46:51 -0500
+	id 1veAx2-0006Qf-5K; Fri, 09 Jan 2026 06:46:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
- id 1veAx7-0006Ts-6A
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:46:49 -0500
-Received: from mail-westusazon11010059.outbound.protection.outlook.com
- ([52.101.85.59] helo=BYAPR05CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1veAwy-0006NZ-H9
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:46:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
- id 1veAx4-0005Q5-9Z
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:46:48 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JzUHFBzqwQNSVXjRwG47JW+UarJ9j0rzDtx0PVcvI6Y6HwVHxgFVEHsWifz2wBtad4sdYMRvTjM0k2JgCYhS2JbX84SS7rUco0pyTwcwraeRv6wEf7AVwAd/Chnk6LtpXULZ9D1LibY168xlnQ27EPM/MAiD62eJ7ki+eED/IgAKGaH5mDEPoCgTL7lFD5nsvGDB6VLPPS/eQD8s3G8cvyoCmh+qj25Q8WpgO/LMgphQf0lIPB7Deooqqfo8oA9l5j9u/Hz+rckJhmeaGiIo2Bz0c0zE0Bd1UeuLfJrPAST+eFMCJRh/9kI8kfogy+eDEXgXnzpnvRYzbtF6vzIWbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fufjMx6DZSLdRdkrR83gPsNDsD2VVgHIM9YtAjdKYxM=;
- b=MlgfjvAAbaO8PoXG2wsODFwDRS8vN/JsoIeQzXGgqL9QXpXRrcjy/yo6PFBKAeJat5NP5njHM6kTT+1aon9NysKHEV3Cwj6/DzEXho4p00oU1At74A4DSaS+0VVHm8GQ89ycTDC5TpjD9CYg5yb+QaT68oj3511hza2N5SEjhCBhQVRCtsHNi0Pm2pyok7e2CpC8NddBPMWkZkBaePmueLxaY36znyMu7vB1tkNW3SzZK8V1Tw5O3sVD2OZszlJ4pTRh5lzwTWyIl2XwA5/cuiUTxaTDWN57M67Q3/pHvSOa8tnJVHTuGZMReLXNv7npzsVtfnjDWASOdwd2ppLi3Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=temperror (sender ip
- is 165.204.84.17) smtp.rcpttodomain=intel.com
- smtp.mailfrom=amd.com; 
- dmarc=temperror action=none header.from=amd.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fufjMx6DZSLdRdkrR83gPsNDsD2VVgHIM9YtAjdKYxM=;
- b=bOsvB8KaDF1+gTBYZnsgXAfq655sOUjc1kFxOgdn9pwXwgQl6s7CZbkDi0MtcNSnDtV6/cj1xYCV3VySRfjqytghiq6eUdizD9IrVKIivjGbll1ueOi8urlIhpwah5tEItN16X/WGjX5Z15uzqExs8ooKfFy+DazYEWoKA328Kk=
-Received: from CH2PR03CA0019.namprd03.prod.outlook.com (2603:10b6:610:59::29)
- by SN7PR12MB8602.namprd12.prod.outlook.com (2603:10b6:806:26d::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.2; Fri, 9 Jan
- 2026 11:41:38 +0000
-Received: from CH1PEPF0000AD75.namprd04.prod.outlook.com
- (2603:10b6:610:59:cafe::e6) by CH2PR03CA0019.outlook.office365.com
- (2603:10b6:610:59::29) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9499.5 via Frontend Transport; Fri, 9
- Jan 2026 11:41:18 +0000
-X-MS-Exchange-Authentication-Results: spf=temperror (sender IP is
- 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=temperror action=none header.from=amd.com;
-Received-SPF: TempError (protection.outlook.com: error in processing during
- lookup of amd.com: DNS Timeout)
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CH1PEPF0000AD75.mail.protection.outlook.com (10.167.244.54) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9520.1 via Frontend Transport; Fri, 9 Jan 2026 11:41:36 +0000
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 9 Jan
- 2026 05:41:35 -0600
-Received: from [10.136.45.190] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Fri, 9 Jan 2026 05:41:31 -0600
-Message-ID: <df23391a-599a-495b-a1b2-ed548215e2c5@amd.com>
-Date: Fri, 9 Jan 2026 17:11:29 +0530
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1veAws-0005O5-9k
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:46:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767959192;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sWPj3vU2t3wTODadJPf5AGD901cq/tufjmG+KdpOeVU=;
+ b=ghIKzqUmmuesVe3tkMAZOw8+/j/ZRYZ3+X5U70IpDCUMi/waWFnqPOuo/hMZGYRvY27a2Z
+ cw9yv2E1GdX6RqnFEFgsrH6EGPMDHCCV+BuipKC06BaazsJ/1FUVkIsb71MERaBojJQb5H
+ 025irhwnxzQnkphnLdvOhYkJTuKL62Q=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-iXWbRJSwPmqcpYCpby4cbQ-1; Fri,
+ 09 Jan 2026 06:46:28 -0500
+X-MC-Unique: iXWbRJSwPmqcpYCpby4cbQ-1
+X-Mimecast-MFC-AGG-ID: iXWbRJSwPmqcpYCpby4cbQ_1767959187
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3F4A918005B2; Fri,  9 Jan 2026 11:46:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.39])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2156230002D2; Fri,  9 Jan 2026 11:46:20 +0000 (UTC)
+Date: Fri, 9 Jan 2026 11:46:17 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org, qemu-block@nongnu.org,
+ qemu-rust@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Kevin Wolf <kwolf@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 02/24] include: define constant for early constructor
+ priority
+Message-ID: <aWDqie0eYZ8GeQHF@redhat.com>
+References: <20260108170338.2693853-1-berrange@redhat.com>
+ <20260108170338.2693853-3-berrange@redhat.com>
+ <d3ca3fb5-e972-4446-b32c-f20fd8825cca@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] i386: Implement CPUID 0x80000026
-To: Zhao Liu <zhao1.liu@intel.com>
-CC: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <kvm@vger.kernel.org>,
- <qemu-devel@nongnu.org>, <seanjc@google.com>, <santosh.shukla@amd.com>,
- <nikunj.dadhania@amd.com>, <ravi.bangoria@amd.com>, <babu.moger@amd.com>,
- Shivansh Dhiman <shivansh.dhiman@amd.com>, K Prateek Nayak
- <kprateek.nayak@amd.com>
-References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
- <20251121083452.429261-2-shivansh.dhiman@amd.com>
- <aV4KVjjZXZSB5YGw@intel.com> <eb712000-bc67-468a-b691-097688233659@amd.com>
- <aWDEYEfB4va41+Tv@intel.com>
-Content-Language: en-US
-From: Shivansh Dhiman <shivansh.dhiman@amd.com>
-In-Reply-To: <aWDEYEfB4va41+Tv@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD75:EE_|SN7PR12MB8602:EE_
-X-MS-Office365-Filtering-Correlation-Id: 876f0edb-b172-4fc2-5ef2-08de4f740bfa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?dkZEekx1RTU3WGUzYmJMaHZ6QmFpcVgweERDeU5xYW9wNTArZmw1MUUzNnkz?=
- =?utf-8?B?dTZlUU5DaVB4b3ZYdndhN09XdlFCTThSNGRWWXY1dWZJUW84OThmeTN0Z3Rw?=
- =?utf-8?B?alNvMzVockZVdWZaNTNLTDVlM3dFTC82Z0QwZmtyZjlFaXVYTTVCLzgyWXlB?=
- =?utf-8?B?MUV0MVo4UnA3clg1Q2NNK1JVaGw3Mnd5d0hvdm8xbnFTL2tvYklxQXVsdjk4?=
- =?utf-8?B?ejVZa0FiYUdRWEp3R0ZHY0pMQTdFSVF0UU9McXp0cXpXZ2t6MnpxbzNGaHlj?=
- =?utf-8?B?M2pHRlMyb2ppQVNQcTlBYUttQ1dOc0xML2FWNHU0MWdYS1c0enBqV2dlb0tw?=
- =?utf-8?B?aXFGcmlLWTF3TElmclYzMm0wU2NZd1lMSWpqVm9VOEpLY2VTU2lZeWtNcHgy?=
- =?utf-8?B?dFArZWdVWmpPN1ZwMkdGVTl6bTEvalBnbk52NnYwV0NDS3VneFVhdWtUNmVT?=
- =?utf-8?B?aWhlVVQ2T2hPSlBxY3JIdkZFM2FobHFkdEZ5eE5HNW1ZQWZ1RGgzSDUyR0xV?=
- =?utf-8?B?b2RZU0JZMFlpVDNrNTVjSGdLSWlkenpjQ0IrNUNLU3lqZHVWekFoSDd6RDBz?=
- =?utf-8?B?ellzckZDNG9BbklRVloyV2M1YVpOeXdJWjJZMzFPelVOSDJCUXZldmx3c29N?=
- =?utf-8?B?QnVRZjdsdTV2TzlWdS9CdXNVT05jQUxHeG1aVlQ5UHcxeFQ2UTN0S0plZUYx?=
- =?utf-8?B?RkowZElDcXAvZ2Q5M3pPcXJ0U3lsYzFhR3BBZ3c5ZkNNVVpYU01IR0ozNVBl?=
- =?utf-8?B?Y2tVN1ppd2NVTUFqZU13SzZnamlzRkF4OEZmMUFubGE4UnArMFJIYVhveDFp?=
- =?utf-8?B?cTFSWDc2RDR4VEp2emlMdE80NmowWTljenJmM0luQTBVUUZWbjlybUtMbGhC?=
- =?utf-8?B?czZDeTRLeEtTZVhGbVZMcHRDT0hoQUhtUEU2UFczckk5UUl6bVl6SGs4Z0RI?=
- =?utf-8?B?Z3YvTzVtb2VnNEx0aFA0M2psblVvNTZxWjVnbGdBcTZLMzUrSURROXRCT2s1?=
- =?utf-8?B?bjNxODVNMEcwVkNUV0F2cnY3S2FFR0dQTlBTS0Yza2crLzVhZDd5WkJMTG1O?=
- =?utf-8?B?YXhYM3ZmdHFReWEyeWptdkQ1Q3BIUzVPWlhOL0g3YWJsV3pRZ05qam5NRVZo?=
- =?utf-8?B?WVJGQlRyZ2g4MFFzOTlod1l1OXFqUURDMzVaUm1SbGZQTG1tL3cvRlp6SkYz?=
- =?utf-8?B?QWlPbGFNMmZON1ViU012bGY4UlNNSk05SktVbk12Y2FVays5bXhQaitKYTA3?=
- =?utf-8?B?TUgwWi9zTHl5WDN6ZlZyOXVEOTdRSW9ZVlZnQi8yWWtPaWVYSUU4WHllZjJ1?=
- =?utf-8?B?OFh0S3R0YlJMajFzWllvN3hFU2l1WVB4dFFDWEk0NzZySjZqQVMvT3cySGxK?=
- =?utf-8?B?TUFiS29aVDdKM0xNMnZjYklzZWlmSkNzUDdLRXB3cUFoNGtVTm1VNEJPM0RV?=
- =?utf-8?B?bk1pYnV3RGFxOEQxTngrQk1oQXlNUGFBYllYSExHODgyR3RFRWlINHExMFVv?=
- =?utf-8?B?aEZDcTBROVBWeDhLTjlYTmJtblJubE1VcGx4V0ZlRUc4TWF2d2YvUTdxSXdQ?=
- =?utf-8?B?bzgwQktuN25nUVBVSldnanZQSFdXeWpHVWdFeUlWODZwSzVVMm15d2RabE4r?=
- =?utf-8?B?dUdFWW0yRlVBdHc5TjdScjlaMDQ5M0JpZHIvUHdUMnRnU1l5QlltQUVqVmgz?=
- =?utf-8?B?QjFCRU5jS0FPcjFNeTJ3b3BhbTFDcUhOUUNGNmN1V0x4QjNLVE9nUFhDakt1?=
- =?utf-8?B?RTlQbzVGbzZlUGkzRkJZRHVqV1RiWTBxa0w2OVgvbDdFYjlvMmdneUFLdVow?=
- =?utf-8?B?cDN3OFNvYWtHNVdvd1RwNkhmOGUyOE1obG5TWEE2SFVBZDJCTHNkVnpzMWJz?=
- =?utf-8?B?LzkxSDVOVVE0MmhFMkVhSjBrNlZLRTVRSEJjd1BFVE8rUm1ybkNFWjNrK3hE?=
- =?utf-8?B?MWxNZ2l6bG4xV0tKRVVUaCtnRjdVelU3M1ZFdW9rWjUzZmZ4a1JwOGtsVW9Z?=
- =?utf-8?B?emhuSWlkc2lBM002WWdySnhvZFhqUU91aFdZc1JQVkpIRDBuTlEvOVpKVWc0?=
- =?utf-8?B?d2NVdm1iZ3FBUU1LeDlMLzdOM2dsalJGR0EzNHFrZDFlWjhBUlBQSkRvL3F5?=
- =?utf-8?Q?H1VU=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2026 11:41:36.8341 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 876f0edb-b172-4fc2-5ef2-08de4f740bfa
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD75.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8602
-Received-SPF: permerror client-ip=52.101.85.59;
- envelope-from=Shivansh.Dhiman@amd.com;
- helo=BYAPR05CU005.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d3ca3fb5-e972-4446-b32c-f20fd8825cca@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -164,150 +97,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 09-01-2026 14:33, Zhao Liu wrote:
-> On Thu, Jan 08, 2026 at 04:03:12PM +0530, Shivansh Dhiman wrote:
->> Date: Thu, 8 Jan 2026 16:03:12 +0530
->> From: Shivansh Dhiman <shivansh.dhiman@amd.com>
->> Subject: Re: [PATCH 1/5] i386: Implement CPUID 0x80000026
->>
->> Hi Zhao,
->>
->> On 07-01-2026 12:55, Zhao Liu wrote:
->>> Hi Shivansh,
->>>
->>> Sorry for late reply.
->>>
->>> On Fri, Nov 21, 2025 at 08:34:48AM +0000, Shivansh Dhiman wrote:
->>>> Date: Fri, 21 Nov 2025 08:34:48 +0000
->>>> From: Shivansh Dhiman <shivansh.dhiman@amd.com>
->>>> Subject: [PATCH 1/5] i386: Implement CPUID 0x80000026
->>>> X-Mailer: git-send-email 2.43.0
->>>>
->>>> Implement CPUID leaf 0x80000026 (AMD Extended CPU Topology). It presents the
->>>> complete topology information to guests via a single CPUID with multiple
->>>> subleafs, each describing a specific hierarchy level, viz. core, complex,
->>>> die, socket.
->>>>
->>>> Note that complex/CCX level relates to "die" in QEMU, and die/CCD level is
->>>> not supported in QEMU yet. Hence, use CCX at CCD level until diegroups are
->>>> implemented.
->>>
->>> I'm trying to understand AMD's topology hierarchy by comparing it to the
->>> kernel's arch/x86/kernel/cpu/topology_ext.c file:
->>>
->>> static const unsigned int topo_domain_map_0b_1f[MAX_TYPE_1F] = {
->>> 	[SMT_TYPE]	= TOPO_SMT_DOMAIN,
->>> 	[CORE_TYPE]	= TOPO_CORE_DOMAIN,
->>> 	[MODULE_TYPE]	= TOPO_MODULE_DOMAIN,
->>> 	[TILE_TYPE]	= TOPO_TILE_DOMAIN,
->>> 	[DIE_TYPE]	= TOPO_DIE_DOMAIN,
->>> 	[DIEGRP_TYPE]	= TOPO_DIEGRP_DOMAIN,
->>> };
->>>
->>> static const unsigned int topo_domain_map_80000026[MAX_TYPE_80000026] = {
->>> 	[SMT_TYPE]		= TOPO_SMT_DOMAIN,
->>> 	[CORE_TYPE]		= TOPO_CORE_DOMAIN,
->>> 	[AMD_CCD_TYPE]		= TOPO_TILE_DOMAIN,
->>> 	[AMD_SOCKET_TYPE]	= TOPO_DIE_DOMAIN,
->>> };
->>
->> These mappings reuse some original names (SMT_TYPE and CORE_TYPE) along with the
->> new ones (AMD_CCD_TYPE and AMD_SOCKET_TYPE). I think to avoid defining more AMD
->> specific types the original names are used. So, essentially you can read them
->> like this:
->>
->> static const unsigned int topo_domain_map_80000026[MAX_TYPE_80000026] = {
->> 	[AMD_CORE_TYPE]		= TOPO_SMT_DOMAIN,
->> 	[AMD_CCX_TYPE]		= TOPO_CORE_DOMAIN,
->> 	[AMD_CCD_TYPE]		= TOPO_TILE_DOMAIN,
->> 	[AMD_SOCKET_TYPE]	= TOPO_DIE_DOMAIN,
->> };
+On Fri, Jan 09, 2026 at 12:39:59PM +0100, Paolo Bonzini wrote:
+> On 1/8/26 18:03, Daniel P. Berrangé wrote:
+> > Functions marked with __attribute__((__constructor__)) will be
+> > invoked in linker order. In theory this is well defined, but
+> > in practice, it is hard to determine what this order will be
+> > with the layers of indirection through meson, ninja and the
+> > static libraries QEMU builds.
+> > 
+> > Notably, the order currently appears different between Linux
+> > and Windows (as tested with Wine on Linux). This can cause
+> > problems when certain QEMU constructors have a dependancy on
+> > other QEMU constructors.
 > 
-> Thank you! It's clear and I see the difference.
->  
->>> What particularly puzzles me is that "complex" isn't listed here, yet it
->>> should be positioned between "core" and CCD. Does this mean complex
->>> actually corresponds to kernel's module domain?
->>
->> There is a nuance with CPUID 80000026h related to the shifting of x2APIC ID.
->> According to APM, EAX[4:0] tells us the number of bits to shift x2APIC ID right
->> to get unique topology ID of the next instance of the current level type.
->>
->> So, all logical processors with the same next level ID share current level. This
->> results in mapping the Nth level type to (N-1)th domain. This is unlike Intel's
->> CPUID 0xb which maps Nth level type to Nth domain.
+> What dependency are you seeing, or introducing?
 > 
-> Yes, it's the core difference. I think it's better to have a helper
-> clearly define the mapping between QEMU general topo level v.s. AMD topo
-> types, similar to cpuid1f_topo_type().
+> In theory QEMU constructors should not have any dependency, as we only use
+> them to initialize static data structures (such as the various *_init
+> macros).
+> 
+> Not an objection, but I'd like to understand this better.
 
-Yeah. That can be done.
+See the commit message in patch 2.   Essentially the RCU thread
+gets spawned from a constructor, and if anything it does results
+in an error_report() call, it will trigger use of monitor APIs
+before the monitor constructor has had a chance to run.
+
+IMHO the root problem is that it is pretty dubious for us to be
+spawning the RCU thread from a constructor. Constructors should
+be limited to minimal initialization of state. Spawning threads
+is outside the boundary of what I'd consider reasonable for
+a constructor todo. I didn't want try to tackle refactoring the
+RCU thread creation though, hence this gross workaround.
 
 > 
->> Back to your question, the complex is same as tile since both represent a L3
->> cache boundary.
+> Paolo
 > 
-> Yeah, this makes sense. CCD->die, and CCX->tile.
+> > To address this define a QEMU_CONSTRUCTOR_EARLY constant which
+> > provides a priority value that will run before other default
+> > constructors. This is to be used for QEMU constructors that
+> > are themselves self-contained, but may be relied upon by other
+> > constructors.
+> > 
+> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >   include/qemu/compiler.h | 8 ++++++++
+> >   1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+> > index 1c2b673c05..4c49f52eb0 100644
+> > --- a/include/qemu/compiler.h
+> > +++ b/include/qemu/compiler.h
+> > @@ -194,6 +194,14 @@
+> >   # define QEMU_USED
+> >   #endif
+> > +/*
+> > + * A priority for __attribute__((constructor(...))) that
+> > + * will run earlier than the default constructors. Must
+> > + * only be used for functions that have no dependency
+> > + * on global initialization of other QEMU subsystems.
+> > + */
+> > +#define QEMU_CONSTRUCTOR_EARLY 101
+> > +
+> >   /*
+> >    * Disable -ftrivial-auto-var-init on a local variable.
+> >    *
 > 
->>> Back to QEMU, now CCX is mapped as QEMU's die level, and AMD socket is mapped
->>> to socket level. Should we revisit QEMU's topology level mapping for AMD, to
->>> align with the above topology domain mapping?
->>>
->>> If we want to go further: supporting CCD configuration would be quite
->>> tricky. I feel that adding another new parameter between the smp.dies
->>> and smp.sockets would create significant confusion.
->>
->> The current kernel doesn't have sensitivity to a level between L3 boundary and
->> socket. Also, most production systems in current AMD CPU landscape have CCD=CCX.
->> Only a handful of models feature CCD=2CCX, so this isn't an immediate pressing need.
->>
->> In QEMU's terminology, socket represents an actual socket and die represents the
->> L3 cache boundary. There is no intermediate level between them. Looking ahead,
->> when more granular topology information (like CCD) becomes necessary for VMs,
->> introducing a "diegroup" level would be the logical approach. This level would
->> fit naturally between die and socket, as its role cannot be fulfilled by
->> existing topology levels.
-> 
-> With your nice clarification, I think this problem has become a bit easier.
-> 
-> In fact, we can consider that CCD=CCX=die is currently the default
-> assumption in QEMU. When future implementations require distinguishing between
-> these CCD/CCX concepts, we can simply introduce an additional "smp.tiles" and
-> map CCX to it. This may need a documentation or a compatibility option, but I
-> believe these extra efforts are worthwhile.
-> 
-> And "smp.tiles" means "how many tiles in a die", so I feel it's perfect
-> to describe CCX.
 
-That indeed looks like a cleaner solution. However, I'm concerned about
-retaining compatibility with existing "dies". But yeah, that's a task for a
-later time.
-
-> 
->> Also, I was looking at Intel's SDM Vol. 2A "Instruction Set Reference, A-Z"
->> Table 3-8. "Information Returned by CPUID Instruction". The presence of a
->> "diegrp" level between die and socket suggests Intel has already recognized the
->> need for this intermediate topology level. If this maps to a similar concept as
->> AMD's CCD, it would indeed strengthen the case for introducing a new level in QEMU.
-> 
-> SDM has "diedrp" but currently no product is using it. So it's hard for me
-> to say what this layer will look like in the future, especially with
-> topology-aware features/MSRs. Therefore, I prefer to add the "tile" if
-> needed, as it aligns better with the existing hierarchy definition. Anyway,
-> this is the future topic (though it is related with the last statement in your
-> commit message). At least for now, how to map the AMD hierarchy is fairly
-> clear.
-
-Ack.
-
-> 
-> Thanks,
-> Zhao
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
