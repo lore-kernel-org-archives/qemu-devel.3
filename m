@@ -4,113 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC7CD26D7D
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 18:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08E0D26D7D
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 19:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veHgr-00076q-Ga; Fri, 09 Jan 2026 13:58:29 -0500
+	id 1veI1C-0001ka-LZ; Fri, 09 Jan 2026 14:19:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1veHgX-0006zE-P8; Fri, 09 Jan 2026 13:58:11 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1veHgV-0007bQ-OM; Fri, 09 Jan 2026 13:58:09 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 609AlP57014985;
- Fri, 9 Jan 2026 18:58:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GL9EpF
- qFaVX58LqkSnDxqTjdP5hz9ZJLmTQQDc27O8E=; b=ozRT23QInjBvOl11J4tsNp
- srWm+L4Z3VVAaaaEUowm4dTMynZCHS0os65eBE1DsNv6n+rrF+BvKbUM1CWR9s6W
- nsjFZVBagKEyVv/usijpfz2LxE0JWLd2dndSR7sR1f5bO6OmbZrsauEUKTyqkpuA
- VAPQLwMF5VtBoCG6s10IQ5bIeP+Evfe5Q7QgOohNyyzLl6q2uEcjg+Ll2dApyVT8
- zfa9CGg7rxouL8b16lVhQdOjXyN2zst4HlGoRiW+wJRFd4roxhIMWpe/8xYeAX0J
- hRsC/isNB2o8ctmEx2nghed/DgYghcrka3M9Fs24NpC7iw7eNWYTwGGMPRJ3F8iQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betsqn12t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 Jan 2026 18:58:03 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 609HtwAE019337;
- Fri, 9 Jan 2026 18:58:02 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bfg51pb1h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 Jan 2026 18:58:02 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 609Iw0WT22938206
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 9 Jan 2026 18:58:01 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 954195803F;
- Fri,  9 Jan 2026 18:58:00 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 33E4658060;
- Fri,  9 Jan 2026 18:57:59 +0000 (GMT)
-Received: from [9.67.62.241] (unknown [9.67.62.241])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Fri,  9 Jan 2026 18:57:59 +0000 (GMT)
-Message-ID: <9f7fa1d5-3b70-489a-a743-80ba0bc28986@linux.ibm.com>
-Date: Fri, 9 Jan 2026 13:57:58 -0500
+ (Exim 4.90_1) (envelope-from <tphan@ventanamicro.com>)
+ id 1veI0Q-0001gx-TL
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 14:18:45 -0500
+Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tphan@ventanamicro.com>)
+ id 1veI0O-0002yr-Vp
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 14:18:42 -0500
+Received: by mail-vs1-xe2c.google.com with SMTP id
+ ada2fe7eead31-5eea6f90d7fso1165992137.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 11:18:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1767986311; x=1768591111; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=X3VVui9TiP6wwXvGFG11MrSaNUb0WOIuWjdCNxEa6V4=;
+ b=E/auu7/CPnDX6YcNuUKLrQSrQEgnVbWOGTqG3CAcuStNlH+GrifmyZA2zLwAYVBhXB
+ bGaQWA9Qg2VY7+2RfXn018dJ4Dz6NZGkJg7nnZarMCtxudPNF2XAzIoRrcjOmLcs4b1O
+ RBym/WChex2oWqVMYdTPKMihM/UaLCxoVe3vylemURu/xkaIUPOiZ70dldBOgKN1SGEY
+ jQPidE2Zbyxu2lEbgUdVSxwd8QPKRvjeltiKW/dV9kr2603osLdfVuLGnkA9jnCzH9ud
+ QoiCWh8sKuCpJbz6BFNNFj07Odf+0hN7VWCI62hGwQ92IXVSa4LmW1gyFfkJNVqlf8ub
+ Ieiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767986311; x=1768591111;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X3VVui9TiP6wwXvGFG11MrSaNUb0WOIuWjdCNxEa6V4=;
+ b=cat465UGiRgXvzehBQUCdUITei42kaOOLkzBFx7ouyGkYAQsWG7zyww64qOfJf0gHT
+ CX/J/2TUmPcPDOFtREc/2/IvwDSmFK7uEidQ9qV/GYumOmYA49VgzBTpLae6eFOrEcoW
+ 9TKzIECbNu0wShXvRFZ37y9lSsuAPtHD/yr5MH24xURp8Nbwr5HritGpLAC5r4b0qFKs
+ aWnf/RK12Y4Lu1RvEEQK7Q7R0sclJrY6ydkYzvpFTxkQUqznwZzJ5ZilwLZMpTZWXn5y
+ FERs2Wt4FXvP5gtPrIrtiy6+xQg9mFv5pqcOePyk1rYu7+jkwC6EbGAxL15aa3AJnM3h
+ sLrg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWODQOgvlsr7GdNGYdEPZz6d4ZpcZWePLomO8VmcLqD+jIUh2PxXD5ha/fnb0UdhEgArHXIka3tcNcv@nongnu.org
+X-Gm-Message-State: AOJu0YxmVRCMGkIYuapk8CL+fx8j0uh8RHiHnRp/koDHlzpG8hCU7jRu
+ Jx/MptApYfOpTRY1Qr9wxLaYMB4A9eNkLj3EeQ3c6xsM7jZVamFdUX2VccrP0I+O6SBudU63icY
+ k0Fmy3NK1HkA6DiscDemDzh6xLIE+dJ2O3McgAkgc1Q==
+X-Gm-Gg: AY/fxX64zJX+vkSMM/jp+sU8nczo0oBxf8rrBF8AuRRa+InTfRtASaeKb36ak/Mr1Gv
+ phFpsXirarBrFVvnPj7qs1GoNpcbZKmrNAEt6QjNjamOfuWwHYOpo+nJSjxbt4scsnxmo5FTc4x
+ RfVm0MGwG4yUtWjvOKUKOBzGx/bTEE4WNDMAQBRzYeMlF8bSUIuuUekamK+bEax1rJM6USdqTf3
+ JAs707/b8LCBRkJlx+up699OC0HGUeRXYDmt3B9lqmLPTRXNE+QHK8zTIosd11KdihKmaPiNzmv
+ kIY5BEj9dDYpBG6YUs+9q7g=
+X-Google-Smtp-Source: AGHT+IFZwe4VjhZE/j9kZ89wAj0SYYW2pFsLMuksqEDwFiPonDnFibvKNMyQU4uj3rtsayKidA5N8p8y/0o+2gbQdBc=
+X-Received: by 2002:a05:6102:9d7:b0:5db:ebb4:fded with SMTP id
+ ada2fe7eead31-5ecb68dbab3mr4471664137.25.1767986311347; Fri, 09 Jan 2026
+ 11:18:31 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 04/29] hw/s390x/ipl: Create certificate store
-From: Collin Walling <walling@linux.ibm.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-5-zycai@linux.ibm.com>
- <e28e2492-5a29-4c04-b667-90d4f123acd0@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <e28e2492-5a29-4c04-b667-90d4f123acd0@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: n0KXOa6PbofFVAA9HRpa-50-vf5enN8Y
-X-Authority-Analysis: v=2.4 cv=Jvf8bc4C c=1 sm=1 tr=0 ts=69614fbb cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=oCK7kvAKtVny7xySQqgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: n0KXOa6PbofFVAA9HRpa-50-vf5enN8Y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDE0NSBTYWx0ZWRfX5iHEi35Un6zg
- 3sL4DDk/rWcfB3MAU/WKI2ywCsNj2vVx2FYtAeYF1JjeTkRe5kUdimNkWKjsTi+bAu1rc63Xbyb
- 5n5UYDHoQNsvV8wr6v40rYuyEDocA8ajClHzeAQgBbvYovwLK7wzUt1vV39Y9G/Gs9LA2QvNoxN
- GQ/lYV6nvKi0avvN3nPGfpN4z0nlXOHP6sPJXQVkxND4VEDI6B9328tXrbhJp9AzBpSq8oGsRFA
- kUvgC9oI7n9nKJtxASJAyW95pjm3XrrVkRmQhuG1zfDQcF/uX+GrKQwSflxARRZqpOPvic6lFxp
- Q9F50bh7g9Td3SJX4/cHrKB4XGMMn1aQgqsUz9Sv1fQ7CPUOMo3eNrKW/gx+C1qbPDm/CU+lzw3
- ljW2iwzxkzwXQoGyEoHCBtr+6hyzBBO2DOhXTXwnyKV0wD86H69n8YRgSK3qvi4WweNGzNTj4ki
- oliyqHpAPtZFXugWgnA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-09_05,2026-01-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 phishscore=0 adultscore=0 spamscore=0 bulkscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
- definitions=main-2601090145
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20251203002259.2856-1-tphan@ventanamicro.com>
+ <5ed187df-61ae-4a59-98b2-cb2cc32b084a@gmail.com>
+In-Reply-To: <5ed187df-61ae-4a59-98b2-cb2cc32b084a@gmail.com>
+From: Tuan Phan <tphan@ventanamicro.com>
+Date: Fri, 9 Jan 2026 11:18:20 -0800
+X-Gm-Features: AZwV_QjnYQ9LyJwlzmF0nbrdofD8wLGGwVqc-IsR9JrvNEvKNy7i4JexXUXvqck
+Message-ID: <CABYABGSmSoMvyHDdy8OHBvVBwMhUNRM8EzO3szDiboeCSeh=Ag@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv/virt-acpi-build.c: Add TPM2 device node and ACPI
+ table support
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
+ palmer@dabbelt.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ sunilvl@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Content-Type: multipart/alternative; boundary="0000000000000e4bd90647f9644a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
+ envelope-from=tphan@ventanamicro.com; helo=mail-vs1-xe2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,78 +99,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Err, correction to my cut-off sentence below.  Sorry about that.
+--0000000000000e4bd90647f9644a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 1/7/26 17:18, Collin Walling wrote:
+On Fri, Dec 19, 2025 at 12:30=E2=80=AFAM Chao Liu <chao.liu.zevorn@gmail.co=
+m> wrote:
 
-[...]
+> On Tue,  2 Dec 2025 16:22:59 -0800, Tuan Phan wrote:
+> > This patch enables TPM2 support in the RISC-V virt machine ACPI builder=
+.
+> >
+> > Signed-off-by: Tuan Phan <tphan@ventanamicro.com>
+> > ---
+> >  hw/riscv/virt-acpi-build.c | 56 ++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 56 insertions(+)
+> >
+> > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> > index f1406cb68339..b5bf812a9d36 100644
+> > --- a/hw/riscv/virt-acpi-build.c
+> > +++ b/hw/riscv/virt-acpi-build.c
+> > @@ -32,6 +32,7 @@
+> >  #include "hw/intc/riscv_aclint.h"
+> >  #include "hw/nvram/fw_cfg_acpi.h"
+> >  #include "hw/pci-host/gpex.h"
+> > +#include "hw/platform-bus.h"
+> >  #include "hw/riscv/virt.h"
+> >  #include "hw/riscv/numa.h"
+> >  #include "hw/virtio/virtio-acpi.h"
+> > @@ -39,6 +40,7 @@
+> >  #include "qapi/error.h"
+> >  #include "qemu/error-report.h"
+> >  #include "system/reset.h"
+> > +#include "system/tpm.h"
+> >
+> >  #define ACPI_BUILD_TABLE_SIZE             0x20000
+> >  #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
+> > @@ -224,6 +226,41 @@ static void acpi_dsdt_add_iommu_sys(Aml *scope,
+> const
+> MemMapEntry *iommu_memmap,
+> >      aml_append(scope, dev);
+> >  }
+> >
+> > +#ifdef CONFIG_TPM
+> > +static void acpi_dsdt_add_tpm(Aml *scope, RISCVVirtState *s)
+> > +{
+> > +    PlatformBusDevice *pbus =3D PLATFORM_BUS_DEVICE(s->platform_bus_de=
+v);
+> > +    hwaddr pbus_base =3D s->memmap[VIRT_PLATFORM_BUS].base;
+> > +    SysBusDevice *sbdev =3D SYS_BUS_DEVICE(tpm_find());
+> > +    MemoryRegion *sbdev_mr;
+> > +    hwaddr tpm_base;
+> > +
+> > +    if (!sbdev) {
+> > +        return;
+> > +    }
+> > +
+> > +    tpm_base =3D platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> > +    assert(tpm_base !=3D -1);
+> > +
+> I suggest reporting an error message when the tpm_base check fails.
+>
+>     if (tpm_base =3D=3D -1) {
+>         error_report("Failed to get TPM MMIO address");
+>         exit(1);
+>     }
+>
+> Thanks,
+> Chao
+>
 
->> +    for (list = path_list; list; list = list->next) {
->> +        cert_path = list->value->path;
->> +
->> +        if (g_strcmp0(cert_path, "") == 0) {
->> +            error_setg(errp, "Empty path in certificate path list is not allowed");
->> +            goto fail;
->> +        }
->> +
->> +        if (stat(cert_path, &st) != 0) {
->> +            error_setg(errp, "Failed to stat path '%s': %s",
->> +                       cert_path, g_strerror(errno));
->> +            goto fail;
->> +        }
->> +
->> +        if (S_ISREG(st.st_mode)) {
->> +            if (!g_str_has_suffix(cert_path, ".pem")) {
->> +                error_setg(errp, "Certificate file '%s' must have a .pem extension",
->> +                           cert_path);
->> +                goto fail;
->> +            }
->> +
->> +            g_ptr_array_add(cert_path_builder, g_strdup(cert_path));
->> +        } else if (S_ISDIR(st.st_mode)) {
->> +            dir = g_dir_open(cert_path, 0, &err);
->> +            if (dir == NULL) {
->> +                error_setg(errp, "Failed to open directory '%s': %s",
->> +                           cert_path, err->message);
->> +
->> +                goto fail;
->> +            }
->> +
->> +            while ((filename = g_dir_read_name(dir))) {
->> +                if (g_str_has_suffix(filename, ".pem")) {
->> +                    g_ptr_array_add(cert_path_builder,
->> +                                    g_build_filename(cert_path, filename, NULL));
->> +                }
->> +            }
->> +
->> +            g_dir_close(dir);
+Thanks Chao, I will change it as per your suggestion. BTW, I will resend
+this patch from my new email from Qualcomm.
 
-Does this mean that an empty directory or one that does not contain any
-.pem files is allowed?  Should at least a warning message should be
-printed?  Also, if a file found within the directory is not a .pem,
-should that be reported as well?
+--0000000000000e4bd90647f9644a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Another approach is to first iterate through each directory and resolve
-the path of *every file* and append them to the end of `list` ignoring
-sub directories).  Throw a warn/err if empty dir.  Then continue to
-iterate each file in `list`.
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Dec 19,=
+ 2025 at 12:30=E2=80=AFAM Chao Liu &lt;<a href=3D"mailto:chao.liu.zevorn@gm=
+ail.com">chao.liu.zevorn@gmail.com</a>&gt; wrote:<br></div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;b=
+order-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"=
+>On Tue,=C2=A0 2 Dec 2025 16:22:59 -0800, Tuan Phan wrote:<br>
+&gt; This patch enables TPM2 support in the RISC-V virt machine ACPI builde=
+r.<br>
+&gt;<br>
+&gt; Signed-off-by: Tuan Phan &lt;<a href=3D"mailto:tphan@ventanamicro.com"=
+ target=3D"_blank">tphan@ventanamicro.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 hw/riscv/virt-acpi-build.c | 56 ++++++++++++++++++++++++++++++++=
+++++++<br>
+&gt;=C2=A0 1 file changed, 56 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c<b=
+r>
+&gt; index f1406cb68339..b5bf812a9d36 100644<br>
+&gt; --- a/hw/riscv/virt-acpi-build.c<br>
+&gt; +++ b/hw/riscv/virt-acpi-build.c<br>
+&gt; @@ -32,6 +32,7 @@<br>
+&gt;=C2=A0 #include &quot;hw/intc/riscv_aclint.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/nvram/fw_cfg_acpi.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/pci-host/gpex.h&quot;<br>
+&gt; +#include &quot;hw/platform-bus.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/riscv/virt.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/riscv/numa.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/virtio/virtio-acpi.h&quot;<br>
+&gt; @@ -39,6 +40,7 @@<br>
+&gt;=C2=A0 #include &quot;qapi/error.h&quot;<br>
+&gt;=C2=A0 #include &quot;qemu/error-report.h&quot;<br>
+&gt;=C2=A0 #include &quot;system/reset.h&quot;<br>
+&gt; +#include &quot;system/tpm.h&quot;<br>
+&gt;<br>
+&gt;=C2=A0 #define ACPI_BUILD_TABLE_SIZE=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A00x20000<br>
+&gt;=C2=A0 #define ACPI_BUILD_INTC_ID(socket, index) ((socket &lt;&lt; 24) =
+| (index))<br>
+&gt; @@ -224,6 +226,41 @@ static void acpi_dsdt_add_iommu_sys(Aml *scope, c=
+onst<br>
+MemMapEntry *iommu_memmap,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 aml_append(scope, dev);<br>
+&gt;=C2=A0 }<br>
+&gt;<br>
+&gt; +#ifdef CONFIG_TPM<br>
+&gt; +static void acpi_dsdt_add_tpm(Aml *scope, RISCVVirtState *s)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 PlatformBusDevice *pbus =3D PLATFORM_BUS_DEVICE(s-&gt;p=
+latform_bus_dev);<br>
+&gt; +=C2=A0 =C2=A0 hwaddr pbus_base =3D s-&gt;memmap[VIRT_PLATFORM_BUS].ba=
+se;<br>
+&gt; +=C2=A0 =C2=A0 SysBusDevice *sbdev =3D SYS_BUS_DEVICE(tpm_find());<br>
+&gt; +=C2=A0 =C2=A0 MemoryRegion *sbdev_mr;<br>
+&gt; +=C2=A0 =C2=A0 hwaddr tpm_base;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (!sbdev) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 tpm_base =3D platform_bus_get_mmio_addr(pbus, sbdev, 0)=
+;<br>
+&gt; +=C2=A0 =C2=A0 assert(tpm_base !=3D -1);<br>
+&gt; +<br>
+I suggest reporting an error message when the tpm_base check fails.<br>
+<br>
+=C2=A0 =C2=A0 if (tpm_base =3D=3D -1) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;Failed to get TPM MMIO addre=
+ss&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 exit(1);<br>
+=C2=A0 =C2=A0 }<br>
+<br>
+Thanks,<br>
+Chao<br></blockquote><div><br></div><div>Thanks Chao, I will change it as p=
+er your suggestion. BTW, I will resend this patch from my new email from Qu=
+alcomm.=C2=A0</div></div></div>
 
->> +        } else {
->> +            error_setg(errp, "Path '%s' is neither a file nor a directory", cert_path);
->> +            goto fail;
->> +        }
->> +    }
->> +
->> +    qapi_free_BootCertificatesList(path_list);
->> +    return g_steal_pointer(&cert_path_builder);
->> +
->> +fail:
->> +    qapi_free_BootCertificatesList(path_list);
->> +    return NULL;
->> +}
-
-
--- 
-Regards,
-  Collin
+--0000000000000e4bd90647f9644a--
 
