@@ -4,110 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F99D26D94
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 20:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BB3D26D9B
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 20:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veJCQ-0001CD-Ml; Fri, 09 Jan 2026 15:35:10 -0500
+	id 1veJQE-0007Cd-8g; Fri, 09 Jan 2026 15:49:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veJCN-0001Bw-DN
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 15:35:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veJCL-0004wb-DB
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 15:35:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767990904;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uBgRj/d0NCpsWyyO6BhJdHolKVxgc+AaXa8HEyZ4OMI=;
- b=OywjB73qoIYMiRnjVNfJvmU6edNSJhEsHTl3uBYfzgpsJN/bHijIQ66augem3y7bNW6Vgo
- Ly2BjYJlDJZJb7wrM10Fn0swVZdakGB246xWr25/4B19YuINnl+2zRmcQWVzYC2fvAJzHo
- gkQm6EgXyquZA/azsNBSg1Sn5zOw7NM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-xmS98a_YMe2CG0Zw5sugog-1; Fri, 09 Jan 2026 15:35:02 -0500
-X-MC-Unique: xmS98a_YMe2CG0Zw5sugog-1
-X-Mimecast-MFC-AGG-ID: xmS98a_YMe2CG0Zw5sugog_1767990901
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-432586f2c82so2192265f8f.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 12:35:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1veJQC-0007C4-Nu
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 15:49:24 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1veJQB-00087H-56
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 15:49:24 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-34c1d84781bso2719339a91.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 12:49:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767990901; x=1768595701; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=uBgRj/d0NCpsWyyO6BhJdHolKVxgc+AaXa8HEyZ4OMI=;
- b=V3g1xq+lPyBtDXct2hjOQB86mjO6xwSQzXO2lCs8dnUvTzL904ARQABUiVePfVtOZ5
- SUvYL55qqpkDTMQ0dhYYJfGWssSXwqL8gs5VhlFkXTydv3KHi2ZY5lNygDRRwLl8wDbJ
- RvF+xtA9T02wEvgkuLPxPYfG8Rr7nyd6h+RxjPhKbvZb+JZTcczHEIgziviT8p/lfLSt
- 9CrE8P06NfvKIejibigqEe9mG3ZLf4XyxTa+qhl7udgzWpzQi0LkROmb+bpRYYlNVmOO
- tkDQ+pgmIvSBvzuGUyHlfeAWQXef9Tyexzar81pfGz5C3gxAqiSOIimrgPn8ifzLLSi7
- 2nOw==
+ d=linaro.org; s=google; t=1767991761; x=1768596561; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5zLBkdwX5NmtvgW7FWb6StxtrXev64CqXqSiJ5x04XY=;
+ b=TCs2njUWChuNhHVyt0PUmaKyH5IJnq4obvf1V1hnrtCAd57eUHm92PV+YqsxJ4Dqke
+ Ms9d4+FLlUYcFX+cZQBVZg37XBh6kdUTwz9fGSAzAuzEJA6YwImbpvZ7t/O2NMsoGmU+
+ 3etKHR6AXO7lfoqw1gM20fP4YpLlJtmIhLG8Q3nWHCMqPNKmzIV5mvfXbNqIALyVUyxu
+ ay8X9clyWyhb9W24+dgVwE8I6rWveT6VytTw1Ge9dVu7rbi9sidGyeFaXN11JfmeSpOx
+ Ne0Uak6eNkLhtqWOTIy6jCn2ODU63+VrWVLCQVxI4Ep+IWXC2/IKQe5izqkKthJlD6B+
+ uNMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767990901; x=1768595701;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uBgRj/d0NCpsWyyO6BhJdHolKVxgc+AaXa8HEyZ4OMI=;
- b=N7i5141lhMlZIRKHT7XSPfWojnP2SE1DEE+ODN+mOyWGdJ5jwVhaR99C0+Ub2eGvV4
- E0IGZquarBIilNLp93Gyo8J4qyZ2mKYN4OJffESb9uVpibvQ+KZybqPKStzhlAwzUIeD
- VMw0B+vnyt57KEpLHX6+FYeCHBI1ovKZoihNMPiLvpeMMvGFoY7w5tP/QVkOyuOmvKMf
- EIG+eUsI+IuU66CgR/kP3s/Ks7uqMFFXwITuDJ4Oh9zQmqaQqV/eJo5eXfix+BCtwRxr
- h8tmHA7VV/WgKw/ZaifdxSs5f9BLKXedj3fFv9cJAYBWZhnpKrtwRuh0nagnZ8dy4qCb
- a8tg==
-X-Gm-Message-State: AOJu0YyDomqQNGiiERIZKX1sBOIAHfeiYd74ymAjygB3o/7QBz1wzZQ7
- 6Rolc68rLKlvi7kU2jWJA84T47FBnMLrK7paF/HT2dWkWTohOvtuTYjjQzXIMvNgZJ2z9E9uVKD
- Ipe1ZtQjmULR9/LOcPwNA+Bl12iL5f6lPnzO3jiQnIJ9Ixqz4IixrCKdDiMCJatW/NYbUuBNWqK
- HHbG3oKL41ShGM6Hno+gFeXTUSlT1Dhdo=
-X-Gm-Gg: AY/fxX7sFN2Uap26fjngZGbz2y6HjYitrqiUKQNSZ2z94MTfHot/t1oRwxnQOVCT3r1
- 0FtR/lY9GG0pGe8xaVxkhHAtnXF7H+MrBKt0k4oCFiiSmeNFgHCgUxS36FPWCzMOI5mlul6/hzd
- AwpWuFtMzMvBYwOVofkwNsjvzjFyp8fgLSEbZmZ0zdFaUrWhBAuAJ+gWxZukVbs8t+OfSeSZlxc
- nzQ0HxlS8J4Y+iCozY2wKsKHrNmZywa0vGqYy/XogAUOxmlPJ6lYdFPTEdZNI/X6t5HKQ==
-X-Received: by 2002:a05:6000:2c0f:b0:430:fca5:7353 with SMTP id
- ffacd0b85a97d-432bcfa1031mr18414163f8f.8.1767990901135; 
- Fri, 09 Jan 2026 12:35:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGYZ+g396moRdMy+XdN/Vx1GDjnlOiwhHOTpjQ8PQwnxsRsN0YSb3gAOVs+Z7PhqHMJVqd3bqisoV1HvzfZonQ=
-X-Received: by 2002:a05:6000:2c0f:b0:430:fca5:7353 with SMTP id
- ffacd0b85a97d-432bcfa1031mr18414145f8f.8.1767990900785; Fri, 09 Jan 2026
- 12:35:00 -0800 (PST)
+ d=1e100.net; s=20230601; t=1767991761; x=1768596561;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5zLBkdwX5NmtvgW7FWb6StxtrXev64CqXqSiJ5x04XY=;
+ b=oxpuh8Ikip5IwOiT1Sj25ayu7Ibb4lia0/ypeql7WE1nw3rFZCfAh9DbSGZplEkKm0
+ JPObOV+Ne2OKXAF5vkJxW+z3zvqOe6MjS3YAwbYdtp8o+s/WF7wNHDnJCgvOJok6q/+u
+ mqUV4nr0FA1JmdTxIoOq7lLR7fD6sX8H9fXP08u4ikEPlJ+rtQDeyEtzKqWzW0IjovDZ
+ 6jc20RM21QaMRO5wYJ+pTONp471HHSfIy2si92PZ+CeDEopETKCgwdSDYKQI271l5aPt
+ aPQDFisIjzLWzKhWcSVKGuqhFQpFkrhP+hQDpXwAxkw5RbwAnYuB+qhwaEMyhiS8VVR7
+ fMNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWN+dafvWitC/QKVtDufNSN7YpQswxLMQDVUmIVYNVPiXWJUhFRxSi1y7HX0IABE0VnaK2FgvX/f3IZ@nongnu.org
+X-Gm-Message-State: AOJu0YxkXXL0ZqOm1J792mrMAiPV1iKiFtuCk+7cQ3pIt5PIAKLobm+z
+ RPT2bpAhhHS/EX/EeJPUltEOdFymQRVklnc80tkBh8ziKB9oHd6mZ2VevNvxyRZZFm8=
+X-Gm-Gg: AY/fxX76jvPUQHNNNNzG1ftwpGHcdGfjfyMMRSlwS/H0tvXp5nj5+pz/8qpfQU2d1MN
+ u+638URYdRmLCdHmwdA1jB1YdsBK4n4KC3FlSgXd+7221BagGzvfTF0wYA1F49eqCrGYAPLypH+
+ TxP5aq4LgUQkNY0T+1zpoDeAvldrETqilWY4F6zfdmV2y9oRZicaCJ6IhL8VIjOC4Rl4yDF1+8X
+ JRq76ArQhjG8s16plvvTwRzdBHTU3/H2/8vwbFrqqPoOb5IwgBMG9ThNisEWzq59xaGB7n3KIW1
+ UYl3dtlNNzUtX20PNz7aV89CDfWYSAvP61EaLPjdZkwDrKcPWw28ZFDxgeCJURJ8JUWx0Kzh783
+ huklx8LLhWJFYBW7o+efjFwcYxmqXCjahzVDK42l+z7BBbI1iDLYh2K12D6M0gc7ybxnbRo4kD9
+ PKAVWWjexrKarGxmGS0r5YTvvx5w==
+X-Google-Smtp-Source: AGHT+IECV2Khhb/YZwKyKBCi98XAcg6RA7KWM/+X8KKugGMGzsQMGYDTuy9pqFLTyUGQYiwC9mTyhg==
+X-Received: by 2002:a17:90b:5746:b0:349:8116:a2d8 with SMTP id
+ 98e67ed59e1d1-34f68c02457mr11047172a91.7.1767991760961; 
+ Fri, 09 Jan 2026 12:49:20 -0800 (PST)
+Received: from [172.23.81.179] ([202.86.209.61])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34f5fb74435sm11452787a91.14.2026.01.09.12.49.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Jan 2026 12:49:20 -0800 (PST)
+Message-ID: <23d64b20-01ec-4237-8816-7adb1fa3141b@linaro.org>
+Date: Sat, 10 Jan 2026 07:49:12 +1100
 MIME-Version: 1.0
-References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
- <20260109053158.2800705-16-pierrick.bouvier@linaro.org>
- <73ac5b61-ebd1-4451-884f-0b78eaf0ff02@redhat.com>
- <44f59945-0de8-48e7-91da-6322182b4721@linaro.org>
- <CABgObfZ6qCCS89u7i+QW=FU-_aKe9ytFuwqFHNEqNNLm6=tEEQ@mail.gmail.com>
- <a89124ba-3011-46f9-884e-938586c46955@linaro.org>
-In-Reply-To: <a89124ba-3011-46f9-884e-938586c46955@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 9 Jan 2026 21:34:51 +0100
-X-Gm-Features: AZwV_Qgk-9eGru22W6WLL0t8gv_R1XAtRHrB7bOhh45rpp2yi66Cu46K1yNnvDY
-Message-ID: <CABgObfYdW93DW5m=S-3f9MNZ+ovE+Dx0+=V1wmVzOP6e=UZbLg@mail.gmail.com>
-Subject: Re: [PATCH 15/29] accel/tcg/translate-all.c: detect addr_type
- dynamically
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Jim MacArthur <jim.macarthur@linaro.org>, Anton Johansson <anjo@rev.ng>
-Content-Type: multipart/alternative; boundary="0000000000009b983a0647fa75eb"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/4] dockerfiles: Add support for wasm64 to the wasm
+ Dockerfile
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <cover.1767886100.git.ktokunaga.mail@gmail.com>
+ <bd5596d373b9b801c5ca838d316bea4c5aba4674.1767886100.git.ktokunaga.mail@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <bd5596d373b9b801c5ca838d316bea4c5aba4674.1767886100.git.ktokunaga.mail@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,81 +113,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009b983a0647fa75eb
-Content-Type: text/plain; charset="UTF-8"
+On 1/9/26 04:11, Kohei Tokunaga wrote:
+> @@ -46,6 +49,16 @@ pkgconfig = ['pkg-config', '--static']
+>   EOT
+>   EOF
+>   
+> +FROM build-base-common AS build-base-wasm32
+> +
+> +FROM build-base-common AS build-base-wasm64
+> +ARG WASM64_MEMORY64
+> +ENV CFLAGS="$CFLAGS -sMEMORY64=${WASM64_MEMORY64}"
+> +ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=${WASM64_MEMORY64}"
+> +ENV LDFLAGS="$LDFLAGS -sMEMORY64=${WASM64_MEMORY64}"
 
-Il ven 9 gen 2026, 19:38 Pierrick Bouvier <pierrick.bouvier@linaro.org> ha
-scritto:
+You've added this control as a configure flag.
+Why do you also need it as an environment variable?
 
-> Do you want to see explicitly .addr_type = TCG_ADDR_TYPE_TARGET_LONG
-> everywhere (except arm which specialize this), instead of relying on
-> default value?
->
 
-That would be one way, but in the get_tb_cpu_state function you *could*
-return
-.addr_type = TCG_TYPE_TL, even if it's not constant, couldn't you?
-
-Arm would specialize it, but the other targets don't have their
-get_tb_cpu_state function in a common file.
-
-Paolo
-
-Or do you expect something different?
->
-> >      > Also, please call it addr_type since tcgv_type makes less sense
-> >     in the
-> >      > long run.
-> >      >
-> >
-> >     Ok!
-> >
-> >
-> > Thanks,
-> >
-> > Paolo
->
->
-
---0000000000009b983a0647fa75eb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il ven 9 gen 2026, 19:38 Pierric=
-k Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro.org">pierrick.bouvi=
-er@linaro.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">Do you want to see explicitly .addr_type =3D TCG_ADDR_TYP=
-E_TARGET_LONG <br>
-everywhere (except arm which specialize this), instead of relying on <br>
-default value?<br></blockquote></div></div><div dir=3D"auto"><br></div><div=
- dir=3D"auto">That would be one way, but in the get_tb_cpu_state function y=
-ou *could* return=C2=A0</div><div dir=3D"auto">.addr_type =3D TCG_TYPE_TL, =
-even if it&#39;s not constant, couldn&#39;t you?</div><div dir=3D"auto"><br=
-></div><div dir=3D"auto">Arm would specialize it, but the other targets don=
-&#39;t have their get_tb_cpu_state function in a common file.</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">
-Or do you expect something different?<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Also, please call it addr_type since tcgv_typ=
-e makes less sense<br>
-&gt;=C2=A0 =C2=A0 =C2=A0in the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; long run.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Ok!<br>
-&gt; <br>
-&gt; <br>
-&gt; Thanks,<br>
-&gt; <br>
-&gt; Paolo<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000009b983a0647fa75eb--
-
+r~
 
