@@ -4,116 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5FDD1A616
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 12:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A13CED1A610
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 12:43:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veBp3-0006cG-N6; Fri, 09 Jan 2026 07:42:34 -0500
+	id 1veBoG-0003ty-JA; Fri, 09 Jan 2026 07:41:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBot-0006W1-D6
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:42:25 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBnp-0003St-H8
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:41:18 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBor-0007Ou-2d
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:42:22 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBno-0007J8-1Q
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:41:17 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 88FD333952;
- Fri,  9 Jan 2026 12:41:32 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 121A75BCE7;
+ Fri,  9 Jan 2026 12:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767962492; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1767962464; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QTqOzInKszdo40jCyS7tieuHtJFHCQHbRnpp3Xczr84=;
- b=yVKvTUmULRhKvqP6wOMdGWbWMB7lDo8rlp1IIOOfAPRhGZu5ADmIam0dA9g6Y9TJhE88IE
- aBIgAyhR4xo1jC/rQj/xXGCT/zCn6C2n+xNMHRCo8uPHOw6jL5ZbJDVoW+D7COBupSVmWu
- C79xbjSKD/1FbP00Qvq9fD+FWp69sMk=
+ bh=vbSLZ9QhwAjXPEa9qpVMFQF4TU/S+KhLumEOYL6so0E=;
+ b=q99WOhS0ydTQX9ym+PRArxSKC/8qax/8M5rpYY4xjZA9Wqad4nKxzx5bbfAS68iTtQSZLO
+ PY5PukaFFCyBdAs1ApTiV27zYXWNuPCJHbR7pyrpXqJU8InuqhEAlOvsDuoBRLS1/jkOcl
+ AQAtrC0xKXt+F/u+IglePZwXEQjjYek=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767962492;
+ s=susede2_ed25519; t=1767962464;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QTqOzInKszdo40jCyS7tieuHtJFHCQHbRnpp3Xczr84=;
- b=MrZfO1s+kyeI2H3pYUutAnlhzymIX/8fUXp/88SdJ3jZtfxubMUsa0LKZFw3OfVwqRW0W4
- Ev8dcSZuJpEsYNDw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yVKvTUmU;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MrZfO1s+
+ bh=vbSLZ9QhwAjXPEa9qpVMFQF4TU/S+KhLumEOYL6so0E=;
+ b=WvRf5pzHR0s87ILTpRyOIyRdo/qxayEdHmk3x6292QVkpD/+ct8e0Yk9cUq5R1w1j0vM7b
+ 1KPoWdahwEM+epBw==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767962492; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1767962464; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QTqOzInKszdo40jCyS7tieuHtJFHCQHbRnpp3Xczr84=;
- b=yVKvTUmULRhKvqP6wOMdGWbWMB7lDo8rlp1IIOOfAPRhGZu5ADmIam0dA9g6Y9TJhE88IE
- aBIgAyhR4xo1jC/rQj/xXGCT/zCn6C2n+xNMHRCo8uPHOw6jL5ZbJDVoW+D7COBupSVmWu
- C79xbjSKD/1FbP00Qvq9fD+FWp69sMk=
+ bh=vbSLZ9QhwAjXPEa9qpVMFQF4TU/S+KhLumEOYL6so0E=;
+ b=q99WOhS0ydTQX9ym+PRArxSKC/8qax/8M5rpYY4xjZA9Wqad4nKxzx5bbfAS68iTtQSZLO
+ PY5PukaFFCyBdAs1ApTiV27zYXWNuPCJHbR7pyrpXqJU8InuqhEAlOvsDuoBRLS1/jkOcl
+ AQAtrC0xKXt+F/u+IglePZwXEQjjYek=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767962492;
+ s=susede2_ed25519; t=1767962464;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QTqOzInKszdo40jCyS7tieuHtJFHCQHbRnpp3Xczr84=;
- b=MrZfO1s+kyeI2H3pYUutAnlhzymIX/8fUXp/88SdJ3jZtfxubMUsa0LKZFw3OfVwqRW0W4
- Ev8dcSZuJpEsYNDw==
+ bh=vbSLZ9QhwAjXPEa9qpVMFQF4TU/S+KhLumEOYL6so0E=;
+ b=WvRf5pzHR0s87ILTpRyOIyRdo/qxayEdHmk3x6292QVkpD/+ct8e0Yk9cUq5R1w1j0vM7b
+ 1KPoWdahwEM+epBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 676133EA63;
- Fri,  9 Jan 2026 12:41:30 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A979C3EA63;
+ Fri,  9 Jan 2026 12:41:02 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SPnXCXr3YGkkQgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 09 Jan 2026 12:41:30 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OO4ZGl73YGkkQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 09 Jan 2026 12:41:02 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, berrange@redhat.com, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>
-Subject: [PATCH v3 22/25] migration: Free cpr-transfer MigrationAddress along
- with gsource
-Date: Fri,  9 Jan 2026 09:40:38 -0300
-Message-ID: <20260109124043.25019-23-farosas@suse.de>
+Cc: peterx@redhat.com,
+	berrange@redhat.com
+Subject: [PATCH v3 08/25] migration: Move error reporting out of
+ migration_cleanup
+Date: Fri,  9 Jan 2026 09:40:24 -0300
+Message-ID: <20260109124043.25019-9-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260109124043.25019-1-farosas@suse.de>
 References: <20260109124043.25019-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
+ MIME_GOOD(-0.10)[text/plain];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 88FD333952
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_NONE(0.00)[];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,62 +120,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When setting a callback on a Glib source and giving it a data pointer,
-it's natural to also provide the destructor for the data in question.
+In the next patches migration_cleanup() will be used in qmp_migrate(),
+which currently does not show an error message. Move the error
+reporting out of migration_cleanup() to avoid duplicated messages.
 
-Since migrate_hup_add() already needs to clone the MigrationAddress
-when setting the qmp_migrate_finish_cb callback, also pass the
-qapi_free_MigrationAddress as the GDestroyNotify callback.
-
-With this the address doesn't need to be freed at the callback body,
-making the management of that memory slight simpler.
-
-(also fix the indentation of migrate_hup_add)
-
-Cc: Mark Kanda <mark.kanda@oracle.com>
-Cc: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ migration/migration.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index 52c1bb5da2..5167233f76 100644
+index 9204029c88..7bef787f00 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -2007,9 +2007,11 @@ static void qmp_migrate_finish(MigrationAddress *addr, Error **errp);
- static void migrate_hup_add(MigrationState *s, QIOChannel *ioc, GSourceFunc cb,
-                             void *opaque)
+@@ -1528,10 +1528,6 @@ static void migration_cleanup(MigrationState *s)
+                           MIGRATION_STATUS_CANCELLED);
+     }
+ 
+-    if (s->error) {
+-        /* It is used on info migrate.  We can't free it */
+-        error_report_err(error_copy(s->error));
+-    }
+     type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
+                                      MIG_EVENT_PRECOPY_DONE;
+     migration_call_notifiers(type, NULL);
+@@ -1540,7 +1536,12 @@ static void migration_cleanup(MigrationState *s)
+ 
+ static void migration_cleanup_bh(void *opaque)
  {
--        s->hup_source = qio_channel_create_watch(ioc, G_IO_HUP);
--        g_source_set_callback(s->hup_source, cb, opaque, NULL);
--        g_source_attach(s->hup_source, NULL);
-+    s->hup_source = qio_channel_create_watch(ioc, G_IO_HUP);
-+    g_source_set_callback(s->hup_source, cb,
-+                          QAPI_CLONE(MigrationAddress, opaque),
-+                          (GDestroyNotify)qapi_free_MigrationAddress);
-+    g_source_attach(s->hup_source, NULL);
+-    migration_cleanup(opaque);
++    MigrationState *s = opaque;
++
++    migration_cleanup(s);
++    if (s->error) {
++        error_report_err(error_copy(s->error));
++    }
  }
  
- static void migrate_hup_delete(MigrationState *s)
-@@ -2028,7 +2030,6 @@ static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
-     MigrationAddress *addr = opaque;
+ /*
+@@ -4025,18 +4026,12 @@ void migration_connect(MigrationState *s, Error *error_in)
+     s->expected_downtime = migrate_downtime_limit();
+     if (error_in) {
+         migration_connect_error_propagate(s, error_in);
+-        if (resume) {
+-            /*
+-             * Don't do cleanup for resume if channel is invalid, but only dump
+-             * the error.  We wait for another channel connect from the user.
+-             * The error_report still gives HMP user a hint on what failed.
+-             * It's normally done in migration_cleanup(), but call it here
+-             * explicitly.
+-             */
+-            error_report_err(error_copy(s->error));
+-        } else {
++        if (!resume) {
+             migration_cleanup(s);
+         }
++        if (s->error) {
++            error_report_err(error_copy(s->error));
++        }
+         return;
+     }
  
-     qmp_migrate_finish(addr, NULL);
--    qapi_free_MigrationAddress(addr);
-     return G_SOURCE_REMOVE;
+@@ -4115,8 +4110,10 @@ fail:
+     if (s->state != MIGRATION_STATUS_CANCELLING) {
+         migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+     }
+-    error_report_err(local_err);
+     migration_cleanup(s);
++    if (s->error) {
++        error_report_err(error_copy(s->error));
++    }
  }
  
-@@ -2083,7 +2084,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-      */
-     if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
-         migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
--                        QAPI_CLONE(MigrationAddress, main_ch->addr));
-+                        main_ch->addr);
- 
-     } else {
-         qmp_migrate_finish(main_ch->addr, errp);
+ static void migration_class_init(ObjectClass *klass, const void *data)
 -- 
 2.51.0
 
