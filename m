@@ -4,113 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00304D1A61D
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 13:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A03D1A627
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 13:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veCa8-00046Z-4z; Fri, 09 Jan 2026 08:31:12 -0500
+	id 1veCbA-0004kA-4D; Fri, 09 Jan 2026 08:32:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1veCa0-00044n-Ld; Fri, 09 Jan 2026 08:31:04 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1veCZx-0001w7-LN; Fri, 09 Jan 2026 08:31:04 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 608Le8cD024133;
- Fri, 9 Jan 2026 13:30:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:sender:subject:to; s=pp1; bh=Z473VuK09/6ZCuNeUOUMJD/
- QKcCLw4ICuF6kgtegzGU=; b=VVVlXh7x7Po3OAs3G7IPlC96dlMylhDj8ZytRFQ
- mvnBrLOYN7QzFJCoFdm6yTvEcSxsomsxk9liYsZUxI5tyAzHrempGRApCgHVUsPj
- jQF2yFc1wM0iprt1zWdMCZN1Gecp0/kOHHKxRi33pWTfg+GWJecqnf4DJ5af9yVM
- 1XqpMpZbhg00L2VdeBqiRYgob/9Xn2vt5Ti2kbPC0srkDEEtqm8iTfmumXVy3uEk
- FsiRTa+t0cvBl3EcSuxWPlu2u4t9AqJr1JkbCTV53bj2uD91Dx2VmV6SZcgPMIKO
- EEkDXD/UCFmogR/ba3+7FQJTXloQwswVUyp/HHSGyxN/1UQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4betu6kerh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 Jan 2026 13:30:57 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 609BE9B3019341;
- Fri, 9 Jan 2026 13:30:56 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bfg51mqra-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 Jan 2026 13:30:56 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 609DUqxM34603422
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 9 Jan 2026 13:30:52 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5BBDA2004E;
- Fri,  9 Jan 2026 13:30:52 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 416922004D;
- Fri,  9 Jan 2026 13:30:52 +0000 (GMT)
-Received: from vela (unknown [9.111.82.184])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri,  9 Jan 2026 13:30:52 +0000 (GMT)
-Received: from brueckner by vela with local (Exim 4.99)
- (envelope-from <brueckner@linux.ibm.com>) id 1veCZn-00000000H1C-2nXQ;
- Fri, 09 Jan 2026 14:30:51 +0100
-Date: Fri, 9 Jan 2026 14:30:51 +0100
-From: Hendrik Brueckner <brueckner@linux.ibm.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>
-Cc: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, brueckner@linux.ibm.com, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-Subject: Re: [PATCH v7 06/29] s390x/diag: Refactor address validation check
- from diag308_parm_check
-Message-ID: <aWEDC7pIILszKpdC@linux.ibm.com>
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-7-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1veCb5-0004Xv-42
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:32:11 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1veCb1-0002BN-0d
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:32:10 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2a0d06ffa2aso32054865ad.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 05:32:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1767965524; x=1768570324; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J69jVrVN8QHRP16XQEeaeDfscj8/udVi7hg1VnCnrDw=;
+ b=E8opknuxEzuLUT43pU/r3Qq3tSxKfMY4zgwm/IQ5nHx3p9NXapB/ww4wiBowT+XiGk
+ qE7LCB6sBo/woeBzD3fgu5Wsn4ZBPEPTmo0rHvRmE5ld5AxIieDtdguQAr1herJAIstt
+ xKyav0VDSRmqQn21hMcKrpBZzCvlvUHYKVGSTZ4RD8ZJtWBSUMOjsPLhIs5quM4TqEYu
+ MfpALETkqUfld84ek7SyRoEAkwnMlAuAmZE53edzRI0ZJsFrudNybjw9Fseyt02ZiU9+
+ pzXZ1cFc2pJBCDJZdVgRf8ifTVDnmAjIL2Af/Uvrm0i0cRldaSZ7aLwZJpx/j5lKEcbV
+ qpxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767965524; x=1768570324;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=J69jVrVN8QHRP16XQEeaeDfscj8/udVi7hg1VnCnrDw=;
+ b=XcokyGlScoquB/V50kChO31FEwy+m5QzJIO+8OYFpMPfkaaG9JIJA1wLBkl0S3MiFg
+ dR5Tof7YQwhNRw/miQyTgSLDa95ogwjLK+doksAvV+6FIRLm140zHwRcFu872gWm6Lqy
+ IhKKpI+wv4UXBeoGeowRN6DdSm/1S+g1IjDHp3Pb+VUj8iMDbaGaNPTEvhQA3oLrKJxD
+ BNPlUxnE0cqUyiajawe6psmCZIqL5zZvGpW3VMCVuX7wFgFYZhnkYfePDYGsHdCv+epZ
+ yvUxTjsFwLwUX5CV1TkiPjwDK2WuCZyfhxbBg2ozmylOq1zywwWVogMxTkpVLWcY4gzr
+ KuFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWst7MiHKnRrc3MciEgpewGzZ+qBVsX4j9QENM8S3tOstL9P/lIH3LtQqkXAdVboI//GTtC8dTY+0E8@nongnu.org
+X-Gm-Message-State: AOJu0Ywq7BSH0f8Qc+VmHo7bu0KNwtNzFt3WAMFWIzk8kqjBoSvqlpkG
+ 1IEnzKLOSONa4ZyUFvAL0vEwScIiKapidTGV8T52F7E14ZoFCMySiUQf
+X-Gm-Gg: AY/fxX7wxeRb8EY8Ls4RIxbRBpZjv3DrF+w0ScVT3WCq7MYD0vIwVFJo2m+PoW5GAzO
+ F1GzL5xVYwlAf2Hmjqu4HfLnQsjEENNAc8PUPIPF1KyGhJ6A5iqqPyOqrNKpOgXg61ZKn+t2gfn
+ p2iZCDO3ivEcnqLN5VyYaJZKibXwsSr5M3+GTtPoJz7tLFgjBPUc1NE/OUSCqGQkwWY2avjaVC1
+ vMInw1Cda++R585mngRT37KTQkqWYH+EbElT4a4mXvtXwzFPGuSaOjHNity3BPWnaAsx7C7rm1T
+ N1Ba2+IrPv9K0/plJnOC0luPjfvtQo/ZedTTAmfDQ1l592P5RAKu8ggLZfsVFYg91cEgtFlQV7L
+ tipJaSz37vymMDVMOcJ6Zztmr4+45fBPdw3XYeUznAXzl1uQllKUTThyKAq4oehGP8StgFbxBcM
+ zBFeWZrX++TuXpYyLoRoQm
+X-Google-Smtp-Source: AGHT+IG8Uhe2sqSHO+lh5VjRODHRWZTRbYqCPlwvK7mElvXpgQ9fb7Ww/Ehes6YrBnDRfw55V6exDw==
+X-Received: by 2002:a17:902:cece:b0:298:2afa:796d with SMTP id
+ d9443c01a7336-2a3ee4c432bmr101768145ad.61.1767965524153; 
+ Fri, 09 Jan 2026 05:32:04 -0800 (PST)
+Received: from donnager-debian.. ([45.124.203.15])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a3e3c491e7sm107755535ad.38.2026.01.09.05.31.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Jan 2026 05:32:03 -0800 (PST)
+From: Joel Stanley <joel@jms.id.au>
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Michael Ellerman <mpe@oss.tenstorrent.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+Subject: [PATCH 1/2] hw/riscv/virt: Move AIA initialisation to helper file
+Date: Sat, 10 Jan 2026 00:01:22 +1030
+Message-ID: <20260109133125.397364-2-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260109133125.397364-1-joel@jms.id.au>
+References: <20260109133125.397364-1-joel@jms.id.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251208213247.702569-7-zycai@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=QbNrf8bv c=1 sm=1 tr=0 ts=69610311 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=P_NoP72qeY4FxnBEVQMA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: k7u2GVsLqrbIBsiQOJKJboLz_p1Dxihg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDA5OSBTYWx0ZWRfX9krhlgTNsXWd
- Sjz2etlh65d1x3QglZ1b2+apcY02CT31YqnaCs1cvtd8rZ9R+YjsR2bCF5udtFAKL5DU+LtdaO/
- /Zr0Cwzc5Uc3ccU7ElqZKaz7l+Dd5LO8ozfWd9C8dcnmlJdzWSb0G0Zdmj2+pWZwRJjLLG9ctPF
- v6lgZYo9zOoPO+C4iYHdFLpiJ3SnM4Ch9AzHiihafl8dQdqIKuO9d3YSSh/YWtERjmY3d0HS8QH
- n+PAOcRx0m2hI1dYc78xKbUs/xA20lG4emLA6to49DnPpAaOrDTLWsTSKEtdG9+yZu2UBm0M6Jq
- +FbCc8n1OmC184KBtBOKcxWj7O//FQvtQryTLUbXYr3h/aZhYd59H5StCwqaku0Txj2ctuiOAGY
- NSi0AjjF65qJRu56Z1KGAtiwMsrGYonGUQ0nB7cRozNBIMKPVDzmdIN9y1rmzD0AKbDluKprjux
- M5fzea5qDYdlCL3BBwg==
-X-Proofpoint-GUID: k7u2GVsLqrbIBsiQOJKJboLz_p1Dxihg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-09_04,2026-01-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1011 bulkscore=0 suspectscore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601090099
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=brueckner@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=joel.stan@gmail.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,46 +109,367 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 08, 2025 at 04:32:23PM -0500, Zhuoying Cai wrote:
-> Create a function to validate the address parameter of DIAGNOSE.
-> 
-> Refactor the function for reuse in the next patch, which allows address
-> validation in read or write operation of DIAGNOSE.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-> ---
->  target/s390x/diag.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-> index a35d808fd7..a347be7633 100644
-> --- a/target/s390x/diag.c
-> +++ b/target/s390x/diag.c
-> @@ -26,6 +26,12 @@
->  #include "qemu/error-report.h"
->  
->  
-> +static inline bool diag_parm_addr_valid(uint64_t addr, size_t size, bool write)
-> +{
-> +    return address_space_access_valid(&address_space_memory, addr,
-> +                                      size, write, MEMTXATTRS_UNSPECIFIED);
-> +}
-> +
->  int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3)
->  {
->      uint64_t func = env->regs[r1];
-> @@ -65,9 +71,7 @@ static int diag308_parm_check(CPUS390XState *env, uint64_t r1, uint64_t addr,
->          s390_program_interrupt(env, PGM_SPECIFICATION, ra);
->          return -1;
->      }
-> -    if (!address_space_access_valid(&address_space_memory, addr,
-> -                                    sizeof(IplParameterBlock), write,
-> -                                    MEMTXATTRS_UNSPECIFIED)) {
-> +    if (!diag_parm_addr_valid(addr, sizeof(IplParameterBlock), write)) {
->          s390_program_interrupt(env, PGM_ADDRESSING, ra);
->          return -1;
->      }
+The AIA init will be used by any server class riscv machine. Separate it
+out in order to share code with such systems.
 
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ hw/riscv/aia.h             | 58 +++++++++++++++++++++++++
+ include/hw/riscv/virt.h    | 29 -------------
+ hw/riscv/aia.c             | 88 ++++++++++++++++++++++++++++++++++++++
+ hw/riscv/virt-acpi-build.c |  2 +
+ hw/riscv/virt.c            | 85 ++++--------------------------------
+ hw/riscv/meson.build       |  2 +-
+ 6 files changed, 158 insertions(+), 106 deletions(-)
+ create mode 100644 hw/riscv/aia.h
+ create mode 100644 hw/riscv/aia.c
+
+diff --git a/hw/riscv/aia.h b/hw/riscv/aia.h
+new file mode 100644
+index 000000000000..50c48ea4d79c
+--- /dev/null
++++ b/hw/riscv/aia.h
+@@ -0,0 +1,58 @@
++/*
++ * QEMU RISC-V Advanced Interrupt Architecture (AIA)
++ *
++ * Copyright (C) 2019 Western Digital Corporation or its affiliates.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_RISCV_AIA_H
++#define HW_RISCV_AIA_H
++
++#include "exec/hwaddr.h"
++
++/*
++ * The virt machine physical address space used by some of the devices
++ * namely ACLINT, PLIC, APLIC, and IMSIC depend on number of Sockets,
++ * number of CPUs, and number of IMSIC guest files.
++ *
++ * Various limits defined by VIRT_SOCKETS_MAX_BITS, VIRT_CPUS_MAX_BITS,
++ * and VIRT_IRQCHIP_MAX_GUESTS_BITS are tuned for maximum utilization
++ * of virt machine physical address space.
++ */
++
++#define VIRT_SOCKETS_MAX_BITS          2
++#define VIRT_CPUS_MAX_BITS             9
++#define VIRT_CPUS_MAX                  (1 << VIRT_CPUS_MAX_BITS)
++#define VIRT_SOCKETS_MAX               (1 << VIRT_SOCKETS_MAX_BITS)
++
++#define VIRT_IRQCHIP_NUM_MSIS 255
++#define VIRT_IRQCHIP_NUM_SOURCES 96
++#define VIRT_IRQCHIP_NUM_PRIO_BITS 3
++#define VIRT_IRQCHIP_MAX_GUESTS_BITS 3
++#define VIRT_IRQCHIP_MAX_GUESTS ((1U << VIRT_IRQCHIP_MAX_GUESTS_BITS) - 1U)
++
++
++#define VIRT_IMSIC_GROUP_MAX_SIZE      (1U << IMSIC_MMIO_GROUP_MIN_SHIFT)
++#if VIRT_IMSIC_GROUP_MAX_SIZE < \
++    IMSIC_GROUP_SIZE(VIRT_CPUS_MAX_BITS, VIRT_IRQCHIP_MAX_GUESTS_BITS)
++#error "Can't accommodate single IMSIC group in address space"
++#endif
++
++#define VIRT_IMSIC_MAX_SIZE            (VIRT_SOCKETS_MAX * \
++                                        VIRT_IMSIC_GROUP_MAX_SIZE)
++#if 0x4000000 < VIRT_IMSIC_MAX_SIZE
++#error "Can't accommodate all IMSIC groups in address space"
++#endif
++
++uint32_t imsic_num_bits(uint32_t count);
++
++DeviceState *riscv_create_aia(bool msimode, int aia_guests,
++                             const MemMapEntry *aplic_m,
++                             const MemMapEntry *aplic_s,
++                             const MemMapEntry *imsic_m,
++                             const MemMapEntry *imsic_s,
++                             int socket, int base_hartid, int hart_count);
++
++
++#endif
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 18a2a323a344..25ec5c665780 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -102,12 +102,6 @@ enum {
+ 
+ #define VIRT_PLATFORM_BUS_NUM_IRQS 32
+ 
+-#define VIRT_IRQCHIP_NUM_MSIS 255
+-#define VIRT_IRQCHIP_NUM_SOURCES 96
+-#define VIRT_IRQCHIP_NUM_PRIO_BITS 3
+-#define VIRT_IRQCHIP_MAX_GUESTS_BITS 3
+-#define VIRT_IRQCHIP_MAX_GUESTS ((1U << VIRT_IRQCHIP_MAX_GUESTS_BITS) - 1U)
+-
+ #define VIRT_PLIC_PRIORITY_BASE 0x00
+ #define VIRT_PLIC_PENDING_BASE 0x1000
+ #define VIRT_PLIC_ENABLE_BASE 0x2000
+@@ -135,28 +129,5 @@ enum {
+ bool virt_is_acpi_enabled(RISCVVirtState *s);
+ bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
+ void virt_acpi_setup(RISCVVirtState *vms);
+-uint32_t imsic_num_bits(uint32_t count);
+-
+-/*
+- * The virt machine physical address space used by some of the devices
+- * namely ACLINT, PLIC, APLIC, and IMSIC depend on number of Sockets,
+- * number of CPUs, and number of IMSIC guest files.
+- *
+- * Various limits defined by VIRT_SOCKETS_MAX_BITS, VIRT_CPUS_MAX_BITS,
+- * and VIRT_IRQCHIP_MAX_GUESTS_BITS are tuned for maximum utilization
+- * of virt machine physical address space.
+- */
+-
+-#define VIRT_IMSIC_GROUP_MAX_SIZE      (1U << IMSIC_MMIO_GROUP_MIN_SHIFT)
+-#if VIRT_IMSIC_GROUP_MAX_SIZE < \
+-    IMSIC_GROUP_SIZE(VIRT_CPUS_MAX_BITS, VIRT_IRQCHIP_MAX_GUESTS_BITS)
+-#error "Can't accommodate single IMSIC group in address space"
+-#endif
+-
+-#define VIRT_IMSIC_MAX_SIZE            (VIRT_SOCKETS_MAX * \
+-                                        VIRT_IMSIC_GROUP_MAX_SIZE)
+-#if 0x4000000 < VIRT_IMSIC_MAX_SIZE
+-#error "Can't accommodate all IMSIC groups in address space"
+-#endif
+ 
+ #endif
+diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
+new file mode 100644
+index 000000000000..0a89d7b49b7b
+--- /dev/null
++++ b/hw/riscv/aia.c
+@@ -0,0 +1,88 @@
++/*
++ * QEMU RISC-V Advanced Interrupt Architecture (AIA)
++ *
++ * Copyright (C) 2019 Western Digital Corporation or its affiliates.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "system/kvm.h"
++#include "hw/intc/riscv_aplic.h"
++#include "hw/intc/riscv_imsic.h"
++
++#include "aia.h"
++
++uint32_t imsic_num_bits(uint32_t count)
++{
++    uint32_t ret = 0;
++
++    while (BIT(ret) < count) {
++        ret++;
++    }
++
++    return ret;
++}
++
++DeviceState *riscv_create_aia(bool msimode, int aia_guests,
++                             const MemMapEntry *aplic_m,
++                             const MemMapEntry *aplic_s,
++                             const MemMapEntry *imsic_m,
++                             const MemMapEntry *imsic_s,
++                             int socket, int base_hartid, int hart_count)
++{
++    int i;
++    hwaddr addr = 0;
++    uint32_t guest_bits;
++    DeviceState *aplic_s_dev = NULL;
++    DeviceState *aplic_m_dev = NULL;
++
++    if (msimode) {
++        if (!kvm_enabled()) {
++            /* Per-socket M-level IMSICs */
++            addr = imsic_m->base + socket * VIRT_IMSIC_GROUP_MAX_SIZE;
++            for (i = 0; i < hart_count; i++) {
++                riscv_imsic_create(addr + i * IMSIC_HART_SIZE(0),
++                                   base_hartid + i, true, 1,
++                                   VIRT_IRQCHIP_NUM_MSIS);
++            }
++        }
++
++        /* Per-socket S-level IMSICs */
++        guest_bits = imsic_num_bits(aia_guests + 1);
++        addr = imsic_s->base + socket * VIRT_IMSIC_GROUP_MAX_SIZE;
++        for (i = 0; i < hart_count; i++) {
++            riscv_imsic_create(addr + i * IMSIC_HART_SIZE(guest_bits),
++                               base_hartid + i, false, 1 + aia_guests,
++                               VIRT_IRQCHIP_NUM_MSIS);
++        }
++    }
++
++    if (!kvm_enabled()) {
++        /* Per-socket M-level APLIC */
++        aplic_m_dev = riscv_aplic_create(aplic_m->base +
++                                     socket * aplic_m->size,
++                                     aplic_m->size,
++                                     (msimode) ? 0 : base_hartid,
++                                     (msimode) ? 0 : hart_count,
++                                     VIRT_IRQCHIP_NUM_SOURCES,
++                                     VIRT_IRQCHIP_NUM_PRIO_BITS,
++                                     msimode, true, NULL);
++    }
++
++    /* Per-socket S-level APLIC */
++    aplic_s_dev = riscv_aplic_create(aplic_s->base +
++                                 socket * aplic_s->size,
++                                 aplic_s->size,
++                                 (msimode) ? 0 : base_hartid,
++                                 (msimode) ? 0 : hart_count,
++                                 VIRT_IRQCHIP_NUM_SOURCES,
++                                 VIRT_IRQCHIP_NUM_PRIO_BITS,
++                                 msimode, false, aplic_m_dev);
++
++    if (kvm_enabled() && msimode) {
++        riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s_dev), addr);
++    }
++
++    return kvm_enabled() ? aplic_s_dev : aplic_m_dev;
++}
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index f1406cb68339..b091a9df9e0f 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -40,6 +40,8 @@
+ #include "qemu/error-report.h"
+ #include "system/reset.h"
+ 
++#include "aia.h"
++
+ #define ACPI_BUILD_TABLE_SIZE             0x20000
+ #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
+ 
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index bd8608ea5bfd..01115a0fb946 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -59,6 +59,8 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/uefi/var-service-api.h"
+ 
++#include "aia.h"
++
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+ static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+ {
+@@ -509,17 +511,6 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
+     }
+ }
+ 
+-uint32_t imsic_num_bits(uint32_t count)
+-{
+-    uint32_t ret = 0;
+-
+-    while (BIT(ret) < count) {
+-        ret++;
+-    }
+-
+-    return ret;
+-}
+-
+ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
+                                  uint32_t *intc_phandles, uint32_t msi_phandle,
+                                  bool m_mode, uint32_t imsic_guest_bits)
+@@ -1302,68 +1293,6 @@ static DeviceState *virt_create_plic(const MemMapEntry *memmap, int socket,
+              memmap[VIRT_PLIC].size);
+ }
+ 
+-static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
+-                                    const MemMapEntry *memmap, int socket,
+-                                    int base_hartid, int hart_count)
+-{
+-    int i;
+-    hwaddr addr = 0;
+-    uint32_t guest_bits;
+-    DeviceState *aplic_s = NULL;
+-    DeviceState *aplic_m = NULL;
+-    bool msimode = aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
+-
+-    if (msimode) {
+-        if (!kvm_enabled()) {
+-            /* Per-socket M-level IMSICs */
+-            addr = memmap[VIRT_IMSIC_M].base +
+-                   socket * VIRT_IMSIC_GROUP_MAX_SIZE;
+-            for (i = 0; i < hart_count; i++) {
+-                riscv_imsic_create(addr + i * IMSIC_HART_SIZE(0),
+-                                   base_hartid + i, true, 1,
+-                                   VIRT_IRQCHIP_NUM_MSIS);
+-            }
+-        }
+-
+-        /* Per-socket S-level IMSICs */
+-        guest_bits = imsic_num_bits(aia_guests + 1);
+-        addr = memmap[VIRT_IMSIC_S].base + socket * VIRT_IMSIC_GROUP_MAX_SIZE;
+-        for (i = 0; i < hart_count; i++) {
+-            riscv_imsic_create(addr + i * IMSIC_HART_SIZE(guest_bits),
+-                               base_hartid + i, false, 1 + aia_guests,
+-                               VIRT_IRQCHIP_NUM_MSIS);
+-        }
+-    }
+-
+-    if (!kvm_enabled()) {
+-        /* Per-socket M-level APLIC */
+-        aplic_m = riscv_aplic_create(memmap[VIRT_APLIC_M].base +
+-                                     socket * memmap[VIRT_APLIC_M].size,
+-                                     memmap[VIRT_APLIC_M].size,
+-                                     (msimode) ? 0 : base_hartid,
+-                                     (msimode) ? 0 : hart_count,
+-                                     VIRT_IRQCHIP_NUM_SOURCES,
+-                                     VIRT_IRQCHIP_NUM_PRIO_BITS,
+-                                     msimode, true, NULL);
+-    }
+-
+-    /* Per-socket S-level APLIC */
+-    aplic_s = riscv_aplic_create(memmap[VIRT_APLIC_S].base +
+-                                 socket * memmap[VIRT_APLIC_S].size,
+-                                 memmap[VIRT_APLIC_S].size,
+-                                 (msimode) ? 0 : base_hartid,
+-                                 (msimode) ? 0 : hart_count,
+-                                 VIRT_IRQCHIP_NUM_SOURCES,
+-                                 VIRT_IRQCHIP_NUM_PRIO_BITS,
+-                                 msimode, false, aplic_m);
+-
+-    if (kvm_enabled() && msimode) {
+-        riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s), addr);
+-    }
+-
+-    return kvm_enabled() ? aplic_s : aplic_m;
+-}
+-
+ static void create_platform_bus(RISCVVirtState *s, DeviceState *irqchip)
+ {
+     DeviceState *dev;
+@@ -1625,9 +1554,13 @@ static void virt_machine_init(MachineState *machine)
+             s->irqchip[i] = virt_create_plic(s->memmap, i,
+                                              base_hartid, hart_count);
+         } else {
+-            s->irqchip[i] = virt_create_aia(s->aia_type, s->aia_guests,
+-                                            s->memmap, i, base_hartid,
+-                                            hart_count);
++            s->irqchip[i] = riscv_create_aia(s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC,
++                                             s->aia_guests,
++                                             &s->memmap[VIRT_APLIC_M],
++                                             &s->memmap[VIRT_APLIC_S],
++                                             &s->memmap[VIRT_IMSIC_M],
++                                             &s->memmap[VIRT_IMSIC_S],
++                                             i, base_hartid, hart_count);
+         }
+ 
+         /* Try to use different IRQCHIP instance based device type */
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 533472e22aef..e53c180d0d10 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -1,5 +1,5 @@
+ riscv_ss = ss.source_set()
+-riscv_ss.add(files('boot.c'))
++riscv_ss.add(files('boot.c', 'aia.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+ riscv_ss.add(files('riscv_hart.c'))
+ riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+-- 
+2.47.3
+
 
