@@ -4,45 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B9BD26D9F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD8FD26D9F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veKFY-0007Q1-AA; Fri, 09 Jan 2026 16:42:30 -0500
+	id 1veKI5-0000se-3X; Fri, 09 Jan 2026 16:45:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1veKFS-0007PQ-08
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:42:22 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1veKFP-0005jn-Hl
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:42:21 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 38C8617C4A2
- for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 00:40:59 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C04FF348DB3;
- Sat, 10 Jan 2026 00:42:01 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 2/3] linux-user/syscall.c: consolidate statfs calls
-Date: Sat, 10 Jan 2026 00:41:52 +0300
-Message-ID: <20260109214158.726916-3-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260109214158.726916-1-mjt@tls.msk.ru>
-References: <20260109214158.726916-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1veKHs-0000pB-Mi
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:44:53 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1veKHr-0006PM-1v
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:44:52 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-7b8eff36e3bso4672276b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 13:44:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767995089; x=1768599889; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lBgQoaA8YjVYbZDBGE2PwLchBM0dWMWS7lkPx6KXEd4=;
+ b=jxeijyGm4TBqEsrknWl8O40f6CxMqyYqhvJ8Ga9tpApc1UZ2bKkwUy6aFLFtBXSmeE
+ 1G8lIMqUGnV/xPX+8I+PsDdpPReIT0PsU5IbCX9SVSrsk1JIaFDbTEyU9XK96y67oEAH
+ A0+sFC4XZzRH3i6LUaO7YA6IhmK7ke9EXFNGkaIcueyWDaM8874CaRvRRybyGHy9G7uq
+ gkTG+UEOOPGReRySPloCFH4u9bfiQPEgbvjZU1EjXHwPSNH+oUgyZikyx+DT9TSr12KX
+ DBDWXRhV5h5SfqD6dfQNJpOuVNsc+jtv07qKi4hkdMAzt1rNuL5yhkiLMx99QcAolsCP
+ +hNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767995089; x=1768599889;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lBgQoaA8YjVYbZDBGE2PwLchBM0dWMWS7lkPx6KXEd4=;
+ b=SyQoBJHh58RmGipLswoMeueSjd11n+u4mMDvZp+0GL4fIGy7snBkiwXFUnnC08IfmA
+ 4+zAsXzhqAZEsKvszcxmwmUHrTRYenDbclJ/lqdNIzJKkJMKH74Gxhb1Ek6//aSesRiQ
+ INzuE7MdohuUh8KSC6U1xswhpxzyyk5Vm+DIvaPtMMPKAvBjon6JKMJbeQPUEeAWewaY
+ kDkg571rv4HZKWVt5OB3+y7flK1hdHZUkrD7wUOlOE1pJduynv4M2QwWk7m0HWZES5te
+ DibC1BSdSNsMtzc7j9pJKzQzjpaXvV7lXoa17vxdZpPhyeqAdjRalXNNto90IKHIUftI
+ lQYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWz4NqAPpVFlFisCjXpJIkHlk7Tf7D7KkaZ9iPSizrLYpCVlXo7BhIz3NIEPRPNvYMtmZ4G73D/diTD@nongnu.org
+X-Gm-Message-State: AOJu0YwgfXYC9MaRC6jodJcKmLJZMXKN/MZvGNnEVy47b1Szbh+Sy1UP
+ id2n+fKxv8N1Y7na89gYQeFj/aKEmTMAs5vj8plaHw2W9TFen2QKsXYk2ws0DRHrASA=
+X-Gm-Gg: AY/fxX59037V8fBxnxgPdCEjTbl4n9i+7DkF2slYTrpb0aibqH7/xGep9llz29590AB
+ gNlmrKNIRqqv7Xx4gdQQcHRHP1L7knRkqOajG9Sb2GDQkIiH7dMFGwaV8XV9HRDK1J6HulQzAFx
+ nXUcPBqE1bP7q6XLUVxih/jVUcHYU5WTlFPhNWtgqPqGjX+kmWLzWL68iHz3bHg3E6UCu0hxU/P
+ 6dbzMl/Bc6nFKek0X7hJvNnODIngftRSVOPZbtqOYqC/dYRhEDRulYnrOaZ2B+KTC2GqMFiVcdV
+ y6tzKCcas1UigPUb7NGaKM0DuahWEllU9Ef3uazsM10BfrR6xxFsS4q74IWcKZZ2C4OJZRjB3sQ
+ 6h/26iHFmPLcRCeRuJxavjaZxo85Qs9bbWY52Inm4Pax20zJAGhdCZHbBmVxMZ1X7i+CYC9vVAw
+ nerB85Do6Ul/3wlogo1gpGXDizTw==
+X-Google-Smtp-Source: AGHT+IFaczoDPMX3fo4WNU2CxH4CjhjaUm6L7Sy2vr01cvtw51qM9xNTXKu4hT9YygTo3tPDaEGoow==
+X-Received: by 2002:a05:6a00:f94:b0:81e:f623:ba0c with SMTP id
+ d2e1a72fcca58-81ef623bc8dmr1617066b3a.44.1767995088808; 
+ Fri, 09 Jan 2026 13:44:48 -0800 (PST)
+Received: from [172.23.81.179] ([202.86.209.61])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-81e3eb854e3sm2721092b3a.5.2026.01.09.13.44.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Jan 2026 13:44:48 -0800 (PST)
+Message-ID: <6ceec36f-2059-429a-b59b-1da03b59a49a@linaro.org>
+Date: Sat, 10 Jan 2026 08:44:41 +1100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/29] target/arm/tcg/vec_helper.c: make compilation unit
+ common
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng
+References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
+ <20260109053158.2800705-10-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260109053158.2800705-10-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,122 +111,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-group statfs&fstatfs together, eliminate goto into
-a different case label, eliminate struct statfs global
-to all syscalls.  Ditto for statfs64.
+On 1/9/26 16:31, Pierrick Bouvier wrote:
+> We need to extract 64 bits helper in a new file (vec_helper64.c), and
+> extract some macro definition also, since they will be used in both
+> files.
+> As well, DO_3OP_PAIR was defined twice, so rename the second variant
+> to DO_3OP_PAIR_NO_STATUS to reflect what it does.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   target/arm/tcg/vec_internal.h |  49 ++++++++
+>   target/arm/tcg/vec_helper.c   | 225 +++-------------------------------
+>   target/arm/tcg/vec_helper64.c | 140 +++++++++++++++++++++
+>   target/arm/tcg/meson.build    |   4 +-
+>   4 files changed, 210 insertions(+), 208 deletions(-)
+>   create mode 100644 target/arm/tcg/vec_helper64.c
 
-This makes code more readable and less scattered.
+The whole 32-bit helper vs 64-bit helper thing is a bit of a mess.
 
-While at it, drop `#ifdef TARGET_NR_fstatfs` -- assume fstatfs()
-is present together with statfs() - just like for fstatfs64.
+I think we need to ask if it's worthwhile to separate them, or just always include them 
+all.  I know some of the vec_helper.c ifdeffery is because of the helper-a64.c separation.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- linux-user/syscall.c | 62 +++++++++++++++++++++++---------------------
- 1 file changed, 32 insertions(+), 30 deletions(-)
+On the other hand, since you've now done the work,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d32299dddb..1f84c296d5 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9457,10 +9457,6 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     || defined(TARGET_NR_fstat) || defined(TARGET_NR_fstat64) \
-     || defined(TARGET_NR_statx)
-     struct stat st;
--#endif
--#if defined(TARGET_NR_statfs) || defined(TARGET_NR_statfs64) \
--    || defined(TARGET_NR_fstatfs)
--    struct statfs stfs;
- #endif
-     void *p;
- 
-@@ -10978,15 +10974,22 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return get_errno(setpriority(arg1, arg2, arg3));
- #ifdef TARGET_NR_statfs
-     case TARGET_NR_statfs:
--        if (!(p = lock_user_string(arg1))) {
--            return -TARGET_EFAULT;
--        }
--        ret = get_errno(statfs(path(p), &stfs));
--        unlock_user(p, arg1, 0);
--    convert_statfs:
--        if (!is_error(ret)) {
-+    case TARGET_NR_fstatfs:
-+        {
-+            struct statf stfs;
-             struct target_statfs *target_stfs;
--
-+            if (num == TARGET_NR_statfs) {
-+                if (!(p = lock_user_string(arg1))) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(statfs(path(p), &stfs));
-+                unlock_user(p, arg1, 0);
-+            } else /* if (num == TARGET_NR_fstatfs) */ {
-+                ret = get_errno(fstatfs(arg1, &stfs));
-+            }
-+            if (is_error(ret)) {
-+                return ret;
-+            }
-             if (!lock_user_struct(VERIFY_WRITE, target_stfs, arg2, 0))
-                 return -TARGET_EFAULT;
-             __put_user(stfs.f_type, &target_stfs->f_type);
-@@ -11003,25 +11006,27 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             __put_user(stfs.f_flags, &target_stfs->f_flags);
-             memset(target_stfs->f_spare, 0, sizeof(target_stfs->f_spare));
-             unlock_user_struct(target_stfs, arg2, 1);
-+            return ret;
-         }
--        return ret;
--#endif
--#ifdef TARGET_NR_fstatfs
--    case TARGET_NR_fstatfs:
--        ret = get_errno(fstatfs(arg1, &stfs));
--        goto convert_statfs;
- #endif
- #ifdef TARGET_NR_statfs64
-     case TARGET_NR_statfs64:
--        if (!(p = lock_user_string(arg1))) {
--            return -TARGET_EFAULT;
--        }
--        ret = get_errno(statfs(path(p), &stfs));
--        unlock_user(p, arg1, 0);
--    convert_statfs64:
--        if (!is_error(ret)) {
-+    case TARGET_NR_fstatfs64:
-+        {
-+            struct statfs stfs;
-             struct target_statfs64 *target_stfs;
--
-+            if (num == TARGET_NR_statfs64) {
-+                if (!(p = lock_user_string(arg1))) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(statfs(path(p), &stfs));
-+                unlock_user(p, arg1, 0);
-+                } else /* if (num == TARGET_NR_fstatfs64) */ {
-+                ret = get_errno(fstatfs(arg1, &stfs));
-+            }
-+            if (is_error(ret)) {
-+                return ret;
-+            }
-             if (!lock_user_struct(VERIFY_WRITE, target_stfs, arg3, 0))
-                 return -TARGET_EFAULT;
-             __put_user(stfs.f_type, &target_stfs->f_type);
-@@ -11038,11 +11043,8 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-             __put_user(stfs.f_flags, &target_stfs->f_flags);
-             memset(target_stfs->f_spare, 0, sizeof(target_stfs->f_spare));
-             unlock_user_struct(target_stfs, arg3, 1);
-+            return ret;
-         }
--        return ret;
--    case TARGET_NR_fstatfs64:
--        ret = get_errno(fstatfs(arg1, &stfs));
--        goto convert_statfs64;
- #endif
- #ifdef TARGET_NR_socketcall
-     case TARGET_NR_socketcall:
--- 
-2.47.3
+
+r~
 
 
