@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 165E6D1D48A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84278D1A63D
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 22:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veKTA-0005J4-6r; Fri, 09 Jan 2026 16:56:32 -0500
+	id 1veKZZ-0001sY-A1; Fri, 09 Jan 2026 17:03:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1veKSk-00059y-4X
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:56:09 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1veKYq-0001eN-Ut
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:02:32 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1veKSi-0002JA-A9
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:56:05 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-34f634dbfd6so3160197a91.2
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 13:56:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1veKYp-000877-1c
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 17:02:24 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c525de78ebaso1146189a12.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 14:02:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767995763; x=1768600563; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1767996141; x=1768600941; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WSWn3Ja9IeFXdlijC2lcdso25jSTdWTtI8ox/a2k3LQ=;
- b=z0zOA4aXNBt+1idZMbFn54OlLkYaGHX8rqg52GbZ9qrPHMv0S/kDp/XV8fG9S1YCtm
- 99bBY1qjFG2p9LzDaqP9nL5Rcl1cKEt0xtZ1hzpnT9L9N8Fbu3w9kw18RVnHbI/zLMcO
- vBDc+XlTitTfhuasZHTUmYLs9/bYubh8gEo2GXKdqLZQyYeR2ayIrCF5OMa6XgwYOw3n
- g7C90bO6UbXe3LFt5GnTdEXsomHry3iYh5Aj6t4z5vZXsXDaeuZlcBdkoQRDp2THh4gJ
- I+HEGEUamMfRlMgqCMrtUFhB3BKSay/sQ4lzQoUUoLFLNvw9VjXW+xKZGRW/H5xikwhP
- fMzw==
+ bh=GNH1wx8Folj05gFSm4ZTA/PCXnzQp+Y1pEsYvG4DMxY=;
+ b=jjOCjbNvLNNhQSHy6oUVyRmPDpemc3bELTMxtLnc+e3bk9QyQHUWNPUU5huO3pLK7p
+ R9T7ZUGN3nVQF57XGqtmV9NQDgdUPhiJA4+WwcInQ8oHgDFpJN7zt+bHMeWpMBoFgXLf
+ ej1wF2WDzLs8727Y20Ym+Bd1d5X9I8jgmeT5tU6o5ifBp3wMGlnmoxZTxlPyDVqTLrFz
+ 3Jiq82qVwtIJQHoJ8b6I8r2KInp+JkYqxeGQ1nqav13X18Xp5+xAkLQdxcuCk1fwZoip
+ CBZqcrL8SNmtHavNkt3c5mnfnzEXBWHXBU59NE6r8YQmoA+XLTMv5SVJ//OGlzyKWBy+
+ UDXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767995763; x=1768600563;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1767996141; x=1768600941;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WSWn3Ja9IeFXdlijC2lcdso25jSTdWTtI8ox/a2k3LQ=;
- b=D8HwSH8XH8qMu1PNto83NEpaIwfPijC/Ky5L7Npy4xnlWOkCjN0G32kLS5jkg3J4lz
- xEUhdovC5JBt9giB3aKS5uSmLLHnKO7IUf0ejY0SydEMB7FCauLG2xLhrX9Ol45dgRyu
- iyaEXlm2fIDt3jFrg394jv7BCT/St4oHvaEFsKxIYlphTAo3DTwbMZ8rD8o/aIwyOOE9
- CVyHnFn5bILwlhbkHTL77P5qNVWzKpnrFhaC1lanYo9jxDABykQOd/Ux7anFBO1KiPel
- 9MlwcIkn/9b+8VkffFftcGGdbDj/UvwwZJdXXU6ZJH2JlSgf7jzpcSwQnLHpCSUGJgro
- KFXA==
+ bh=GNH1wx8Folj05gFSm4ZTA/PCXnzQp+Y1pEsYvG4DMxY=;
+ b=PKzj+cp87xeFxDkhMGziucaHteXKvu6OLFu2LdLxspCxpR4ba0rwwuvEcXlMjM8IOc
+ CmxqJTodFCI3a4sPdf1IdPEDe+sTq1QS709/QwN41bfHHlcSk0iAG8t5zR4zj1hfgOR/
+ YJ/EbKp95TYYV+8heuo66Ugj4BJw3ZZtkoyXGIx2wKOBX2BDcu+xOCWTHKhFREZ8gNTj
+ VkwyWA28m1KzzSQqXiWIZ1n0f0pUbduN12FnXLKyUpDx56cha5dBtQadzwjyZa18/7aN
+ 7WDA+fPn2xdgurA4poCr7BJbsSNt7kRqpPymKtGHEvFqp/bZJEsixoQFuWobjH/ve4h3
+ WOAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVaou8TbMvgVSjGnf907N459fJvvSrv1dWPimGRiVh6QhFMs1IG/gOCnkgsKFUR0aiZbZuc98syh9U/@nongnu.org
-X-Gm-Message-State: AOJu0YzmmjtYIFoo5NO+Onvm+QIFJJd9xxhRke9bwj50v4FKtiyVipDC
- RI8ULVqdLyaJKmQe0MNns/tN2fxzeEqHqaMWwCYPg0LAFHW1T5Uxuue/pcxwcRpIrCU=
-X-Gm-Gg: AY/fxX5CWVpTV1eEnyKTAoA9ksD5KDbLToOwOldh4un5trytP5XU4nL+55uVM3ryMBB
- tABrmzdUPn1kA1gXvEykOaD/5dNcyy1nup+MAyu4fhKjpvghSQarS7mkbIM1+ARM9SW6FKNfCM2
- 6MMj74rROIVZY4gBb6I9HP+Jrc517Ak+i+WVJhUqSoCOI0U5M9cSLjb7DZd7403eg79ykQmyfWD
- UnX1fbTnlDBPGKtXknMpqPUpH5svSIkvjkVHGbcUQdMHUCgIr/hYsKVmwa42v9jmvJK6JYXShPp
- 2zNqp0vFO0SXmJ9tr29ReAS7N5RdM45mRejW9MAOgdxS9yO8I4EkbVUbf854MLEpnqVpjv65j53
- HBWqSrNe/jikGx5uiNuUICVC+8Ob1Vh1IhWRV6+PRpEhbxO4idhB/lw1XZQheRFu5pG6qJmZDlk
- jQaWVkH2a+M1opXerFivFKZGhKQW4WoXrPSbRbvmlkuzDxMw+Fy0phxRX/
-X-Google-Smtp-Source: AGHT+IEi8L7BdPcxYOmsBgU/cuqGkhqgroibaPIeOHeg8Dhd2lNMbee003v2FjmQQUZyc/4JwDhIDQ==
-X-Received: by 2002:a17:90b:2711:b0:34f:62e7:4cfd with SMTP id
- 98e67ed59e1d1-34f68cbe5e1mr10412776a91.24.1767995762662; 
- Fri, 09 Jan 2026 13:56:02 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ AJvYcCXi/GtrlaT/HxjV4I52+yRJdeJljKqPft1Vggy9JAW5d9wwBNt6CxYHwWnZ299Lpqf4bsMJPfCU4c19@nongnu.org
+X-Gm-Message-State: AOJu0YwMYDc+AFJbKVOrK1GYOTBg9smTwrOsZYWNeM2Z8bnHFkWE3iPA
+ ltMzxsgdUH/A05Wu2lXRTIxDUOy8RhgU2KFvxr2jPIbVsfLHe2BzDOR3xodDYoYn06M=
+X-Gm-Gg: AY/fxX6/vbLqiKCWcV1rb0Uep8uv8ELH1HPrYPJOHgg24FY6ysZofEVOak/MGbPgauj
+ e8B+9v8A0B9rDuIhpHzsd4uogqlEYIzrCfn227y8LpgR4VSFMBMUqL6z5mocp2UsozR90dNCvxX
+ 8GC4EyaQjx1ckggB/3SzmOeAAZ5rIjySOGSRfgrfOfn4bfEP2w8jj3TEowuNGraK+m5un0xum+e
+ IfT1PrmnWKa38g7qOYoq6xk0YM2sxbH8Va1oS2nmWMj/Vhz7z3EZvAXN/iWRlpNMy2JKDp0MJpT
+ 5ESkTxoGW+ykIpG9hw1/V0fGdKOltgsAL0rGkMSLefL8mbQHqG1guKCsi+9WQszeZoW+yMUZdCT
+ ByQE/dU/mDufeiNQHcH/S49ZLxz76EGfd5bcK7LsaVEPSitKLGbYZqZN1KnvrW+LcaZdFnhg3By
+ lGrUoNpYcPDWU0PnT6WA6TWTIM8g==
+X-Google-Smtp-Source: AGHT+IEsTsFnvHkSOHOnWPH0djY0A3zyz5rnEe9FDiAkGS/kFAqI33z2/004eGgxLZYz0mKwRskaUA==
+X-Received: by 2002:a17:902:dad1:b0:295:99f0:6c66 with SMTP id
+ d9443c01a7336-2a3ee47f311mr98681265ad.36.1767996140759; 
+ Fri, 09 Jan 2026 14:02:20 -0800 (PST)
+Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5f7c4141sm11489842a91.6.2026.01.09.13.56.02
+ d9443c01a7336-2a3e3c5ceeasm112237995ad.45.2026.01.09.14.02.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 13:56:02 -0800 (PST)
-Message-ID: <010c658b-6c96-49bc-807e-67139a7dc198@linaro.org>
-Date: Fri, 9 Jan 2026 13:56:01 -0800
+ Fri, 09 Jan 2026 14:02:20 -0800 (PST)
+Message-ID: <a68321f0-3d54-4909-864c-9793cda05b2a@linaro.org>
+Date: Sat, 10 Jan 2026 09:02:13 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/29] include/tcg/tcg-op.h: eradicate
- TARGET_INSN_START_EXTRA_WORDS
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 14/29] include/tcg/tcg-op.h: introduce TARGET_ADDRESS_BITS
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
- <20260109053158.2800705-14-pierrick.bouvier@linaro.org>
- <70ef91e3-1022-4ff6-a671-5f08f3268aa0@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <70ef91e3-1022-4ff6-a671-5f08f3268aa0@linaro.org>
+ <20260109053158.2800705-15-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260109053158.2800705-15-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,120 +110,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 1:51 PM, Richard Henderson wrote:
-> On 1/9/26 16:31, Pierrick Bouvier wrote:
->> We simply define the 3 variants and call the correct one per arch.
->> Since all arch have a single call site (in translate.c), this is as
->> good documentation as having a single define.
->>
->> The notable exception is target/arm, which has two different translate
->> files for 32/64 bits. Since it's the only one, we accept to have two
->> call sites for this.
->>
->> This is much simpler and safer than trying to define a common functions
->> with variadic or unused parameters. The only risk is calling two
->> different variants for a single arch, but as mentioned in first
->> paragraph, there is no real reason for this to happen.
->>
->> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
->> ---
->>    include/tcg/tcg-op.h             | 16 ++++++----------
->>    target/alpha/cpu-param.h         |  2 --
->>    target/arm/cpu-param.h           |  7 -------
->>    target/avr/cpu-param.h           |  2 --
->>    target/hexagon/cpu-param.h       |  2 --
->>    target/hppa/cpu-param.h          |  2 --
->>    target/i386/cpu-param.h          |  2 --
->>    target/loongarch/cpu-param.h     |  2 --
->>    target/m68k/cpu-param.h          |  2 --
->>    target/microblaze/cpu-param.h    |  2 --
->>    target/mips/cpu-param.h          |  2 --
->>    target/openrisc/cpu-param.h      |  2 --
->>    target/ppc/cpu-param.h           |  2 --
->>    target/riscv/cpu-param.h         |  7 -------
->>    target/rx/cpu-param.h            |  2 --
->>    target/s390x/cpu-param.h         |  2 --
->>    target/sh4/cpu-param.h           |  2 --
->>    target/sparc/cpu-param.h         |  2 --
->>    target/tricore/cpu-param.h       |  2 --
->>    target/xtensa/cpu-param.h        |  2 --
->>    target/alpha/translate.c         |  4 ++--
->>    target/arm/tcg/translate-a64.c   |  2 +-
->>    target/arm/tcg/translate.c       |  2 +-
->>    target/avr/translate.c           |  2 +-
->>    target/hexagon/translate.c       |  2 +-
->>    target/hppa/translate.c          |  2 +-
->>    target/i386/tcg/translate.c      |  2 +-
->>    target/loongarch/tcg/translate.c |  2 +-
->>    target/m68k/translate.c          |  2 +-
->>    target/microblaze/translate.c    |  2 +-
->>    target/mips/tcg/translate.c      |  4 ++--
->>    target/openrisc/translate.c      |  4 ++--
->>    target/ppc/translate.c           |  2 +-
->>    target/riscv/translate.c         |  2 +-
->>    target/rx/translate.c            |  2 +-
->>    target/s390x/tcg/translate.c     |  2 +-
->>    target/sh4/translate.c           |  4 ++--
->>    target/sparc/translate.c         |  2 +-
->>    target/tricore/translate.c       |  2 +-
->>    target/xtensa/translate.c        |  2 +-
->>    40 files changed, 30 insertions(+), 82 deletions(-)
->>
->> diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
->> index f3fe2d9386a..bf76749d1c5 100644
->> --- a/include/tcg/tcg-op.h
->> +++ b/include/tcg/tcg-op.h
->> @@ -28,8 +28,7 @@
->>    # error Mismatch with insn-start-words.h
->>    #endif
->>    
->> -#if TARGET_INSN_START_EXTRA_WORDS == 0
->> -static inline void tcg_gen_insn_start(uint64_t pc)
->> +static inline void tcg_gen_insn_start0(uint64_t pc)
->>    {
->>        TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->>                                INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
->> @@ -37,8 +36,8 @@ static inline void tcg_gen_insn_start(uint64_t pc)
->>        tcg_set_insn_start_param(op, 1, 0);
->>        tcg_set_insn_start_param(op, 2, 0);
->>    }
->> -#elif TARGET_INSN_START_EXTRA_WORDS == 1
->> -static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
->> +
->> +static inline void tcg_gen_insn_start1(uint64_t pc, uint64_t a1)
->>    {
->>        TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->>                                INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
->> @@ -46,9 +45,9 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
->>        tcg_set_insn_start_param(op, 1, a1);
->>        tcg_set_insn_start_param(op, 2, 0);
->>    }
->> -#elif TARGET_INSN_START_EXTRA_WORDS == 2
->> -static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
->> -                                      uint64_t a2)
->> +
->> +static inline void tcg_gen_insn_start2(uint64_t pc, uint64_t a1,
->> +                                       uint64_t a2)
->>    {
->>        TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->>                                INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
->> @@ -56,9 +55,6 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
->>        tcg_set_insn_start_param(op, 1, a1);
->>        tcg_set_insn_start_param(op, 2, a2);
->>    }
->> -#else
->> -#error Unhandled TARGET_INSN_START_EXTRA_WORDS value
->> -#endif
->>    
+On 1/9/26 16:31, Pierrick Bouvier wrote:
+> This define will be used to replace TARGET_LONG_BITS in tcg-op-*
+> headers. The goal here is to allow a compilation unit to set explicitely
+> which variant of the arch it's targeting (32 vs 64 bits).
 > 
-> Eh.  If you're going to change anything here, we might as well force the targets to supply
-> zeros for the unused parameters and move the last 3-argument tcg_gen_insn_start to
-> tcg-op-common.h.
->
-
-Ok, back to having a constant and check it at runtime then...
-
+> By default, we simple let it defined as TARGET_LONG_BITS, so existing
+> code does not need to be changed, and we can progressively convert new
+> files.
 > 
-> r~
+> target/arm/tcg/* files are cleanly splitted between 32 and 64 bits (with
+> some TARGET_AARCH64 defines). For other arch, this is a work that will
+> have to be done before converting them.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   include/tcg/tcg-op-address-bits.h | 21 +++++++++++++++++++++
+>   include/tcg/tcg-op-gvec.h         | 11 +++--------
+>   include/tcg/tcg-op.h              | 22 +++++++---------------
+>   3 files changed, 31 insertions(+), 23 deletions(-)
+>   create mode 100644 include/tcg/tcg-op-address-bits.h
+> 
+> diff --git a/include/tcg/tcg-op-address-bits.h b/include/tcg/tcg-op-address-bits.h
+> new file mode 100644
+> index 00000000000..71e9de65280
+> --- /dev/null
+> +++ b/include/tcg/tcg-op-address-bits.h
+> @@ -0,0 +1,21 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#ifndef TCG_OP_ADDRESS_BITS
+> +#define TCG_OP_ADDRESS_BITS
+> +
+> +#ifdef COMPILING_PER_TARGET
+> + #include "exec/target_long.h"
+> + #ifndef TARGET_ADDRESS_BITS
+> +  #define TARGET_ADDRESS_BITS TARGET_LONG_BITS
+> + #endif
+> +#else
+> + #ifndef TARGET_ADDRESS_BITS
+> +  #error TARGET_ADDRESS_BITS must be defined for current file
+> + #endif
+> +#endif /* COMPILING_PER_TARGET */
+> +
+> +#if TARGET_ADDRESS_BITS != 32 && TARGET_ADDRESS_BITS != 64
+> + #error TARGET_ADDRESS_BITS must be 32 or 64
+> +#endif
+> +
+> +#endif /* TCG_OP_ADDRESS_BITS */
+> diff --git a/include/tcg/tcg-op-gvec.h b/include/tcg/tcg-op-gvec.h
+> index b0a81ad4bf4..422a270b694 100644
+> --- a/include/tcg/tcg-op-gvec.h
+> +++ b/include/tcg/tcg-op-gvec.h
+> @@ -8,13 +8,10 @@
+>   #ifndef TCG_TCG_OP_GVEC_H
+>   #define TCG_TCG_OP_GVEC_H
+>   
+> +#include "tcg/tcg-op-address-bits.h"
+>   #include "tcg/tcg-op-gvec-common.h"
+>   
+> -#ifndef TARGET_LONG_BITS
+> -#error must include QEMU headers
+> -#endif
+> -
+> -#if TARGET_LONG_BITS == 64
+> +#if TARGET_ADDRESS_BITS == 64
+>   #define tcg_gen_gvec_dup_tl  tcg_gen_gvec_dup_i64
+>   #define tcg_gen_vec_add8_tl  tcg_gen_vec_add8_i64
+>   #define tcg_gen_vec_sub8_tl  tcg_gen_vec_sub8_i64
+> @@ -28,7 +25,7 @@
+>   #define tcg_gen_vec_shl16i_tl tcg_gen_vec_shl16i_i64
+>   #define tcg_gen_vec_shr16i_tl tcg_gen_vec_shr16i_i64
+>   #define tcg_gen_vec_sar16i_tl tcg_gen_vec_sar16i_i64
+> -#elif TARGET_LONG_BITS == 32
+> +#elif TARGET_ADDRESS_BITS == 32
+>   #define tcg_gen_gvec_dup_tl  tcg_gen_gvec_dup_i32
+>   #define tcg_gen_vec_add8_tl  tcg_gen_vec_add8_i32
+>   #define tcg_gen_vec_sub8_tl  tcg_gen_vec_sub8_i32
+> @@ -42,8 +39,6 @@
+>   #define tcg_gen_vec_shl16i_tl tcg_gen_vec_shl16i_i32
+>   #define tcg_gen_vec_shr16i_tl tcg_gen_vec_shr16i_i32
+>   #define tcg_gen_vec_sar16i_tl tcg_gen_vec_sar16i_i32
+> -#else
+> -# error
+>   #endif
 
+Not address related.  Not even close.
+
+
+>   
+>   #endif
+> diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
+> index bf76749d1c5..9e4e58a2d4b 100644
+> --- a/include/tcg/tcg-op.h
+> +++ b/include/tcg/tcg-op.h
+> @@ -8,20 +8,14 @@
+>   #ifndef TCG_TCG_OP_H
+>   #define TCG_TCG_OP_H
+>   
+> +#include "tcg/tcg-op-address-bits.h"
+>   #include "tcg/tcg-op-common.h"
+>   #include "tcg/insn-start-words.h"
+> -#include "exec/target_long.h"
+>   
+> -#ifndef TARGET_LONG_BITS
+> -#error must include QEMU headers
+> -#endif
+> -
+> -#if TARGET_LONG_BITS == 32
+> +#if TARGET_ADDRESS_BITS == 32
+>   # define TCG_TYPE_TL  TCG_TYPE_I32
+> -#elif TARGET_LONG_BITS == 64
+> +#elif TARGET_ADDRESS_BITS == 64
+>   # define TCG_TYPE_TL  TCG_TYPE_I64
+> -#else
+> -# error
+>   #endif
+
+Ok, there's been a fundamental misunderstanding about what we discussed.
+
+There should be *no* changes to target_long, TCGv or TCG_TYPE_TL.
+
+There should be a *new* file, include/tcg/tcg-op-mem.h which deals with TCGv_va, 
+TCG_TYPE_VA, and all of the tcg_gen_qemu_{ld,st}* helpers based on that.
+
+The only thing that should happen in tcg-op.h is:
+
+#define TARGET_ADDRESS_BITS  TARGET_LONG_BITS
+#include "tcg-op-mem.h"
+
+
+r~
 
