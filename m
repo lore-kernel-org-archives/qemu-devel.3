@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3342CD26D69
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 15:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E82D2D26D69
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 15:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veEGz-0004pS-7T; Fri, 09 Jan 2026 10:19:33 -0500
+	id 1veEIw-0005vq-Mb; Fri, 09 Jan 2026 10:21:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veEGs-0004n9-AK
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:19:27 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veEIu-0005vC-RA
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:21:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veEGq-0007EF-Gq
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:19:26 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veEIt-0007eA-Ev
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 10:21:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767971963;
+ s=mimecast20190719; t=1767972090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2xr86850F/OF6ecOjTtjAR6GzWbWH+qE5+nHCuR+EuQ=;
- b=X5jwGYRVX1NABcHCA6LBX5Boaa39ifQr83pkc1z9kMfXb5FlADOnMhrkjMD32gMU5Kr1xO
- DHs/1y/QxZNljX1h2p3qtg3MVmsqN9hf7J1FctdGiuEeiMlzKFjQFeg8zd6OSzT4NUcz+z
- x7Ka0hsvJyl5uhqNQUsGybwnIZrk9t8=
+ bh=WeXADwCKomx6ThMO/P01x+k8ewdNDqGQKQbTKENu2gg=;
+ b=Zt/G3RzzAJtsr8YPylx66MmlIQtOJdGfvngeqeO9IijfQMy28rKnReBYWA8hAX/m6HlUh1
+ suYwjZhXfD3mQOSBRSHgiwlnjpEXmdArgNACcA+i3qz2U0IlgGMYETPjlooJxMgGndIaBc
+ eev9EcO1aRXt95ajZ8+S68QDh+FVcK0=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-675-z2FIVoyZMOW71ckMENSI4g-1; Fri, 09 Jan 2026 10:19:20 -0500
-X-MC-Unique: z2FIVoyZMOW71ckMENSI4g-1
-X-Mimecast-MFC-AGG-ID: z2FIVoyZMOW71ckMENSI4g_1767971959
+ us-mta-619-EIjCqLGsMsmYe0efPtKhiA-1; Fri, 09 Jan 2026 10:21:28 -0500
+X-MC-Unique: EIjCqLGsMsmYe0efPtKhiA-1
+X-Mimecast-MFC-AGG-ID: EIjCqLGsMsmYe0efPtKhiA_1767972087
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4779edba8f3so35897765e9.3
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 07:19:19 -0800 (PST)
+ 5b1f17b1804b1-4775e00b16fso31641405e9.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 07:21:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767971959; x=1768576759; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767972087; x=1768576887; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=2xr86850F/OF6ecOjTtjAR6GzWbWH+qE5+nHCuR+EuQ=;
- b=eTpi19wxYga78T26RzwHXh+Vh6ahDPHrJeLMfvr1R0cEIk5H5ygIxzvIDr+zMN5EXq
- CF2FVSP2+C2BBKpat8IjuesDCHGpI9Ib5Gcq41+AS1bkyYhFnN/CCZCJ7beQyKnA6t/N
- hhD3dBBWxkiSBwElwxavatfn9f09k0gs+hcurKQMWilGeCKbNkSEH01rmvuZ3vCdRKl8
- 81Z31Zvz9IYFegyHsujmb/iWjQY7lJ9T9fjS1FGUvUQ5MteuBCpai4SZ8e6iOaSPpUN0
- E071ZOyQqySc4eTs4YmMIf6n+qDVEw5m8r2NaLm5cjrzAYUohk9e4VhQQJ9H81cg2fX0
- QT9Q==
+ bh=WeXADwCKomx6ThMO/P01x+k8ewdNDqGQKQbTKENu2gg=;
+ b=CvPuQH8oDm6SlxV9MO/YaF6mcF+eKoMqswcIjYjRTvPFccH/izsg6XMrwywvUlTuPf
+ 2lJzj/IdOb8Q9k1EPTKWfO8Lded4oWaByUuj5Ier4YdOxW8fOSZwTVWOHwWW7J/Rqx0g
+ 8OG1kT11PNgIxr3IqOTkvKbrlgeLy9G3hxXZsD+ArVX8TAAG94LumpJX043tt8wkVHiP
+ ziHUHwwlpoI4TONqyceDokdKpFWbmCf+RqdepC4RTlGo4KeBFFTLYzAightooYtWk+U6
+ LhB3KTSTAla+vG7YjApjzlpuEDRbXWlBPer8bxbGMIAdjTGjMAGI8F3B25Ouv+jQdxqG
+ Uhvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767971959; x=1768576759;
+ d=1e100.net; s=20230601; t=1767972087; x=1768576887;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2xr86850F/OF6ecOjTtjAR6GzWbWH+qE5+nHCuR+EuQ=;
- b=rsKfLY9Shc9xVGcHhEAFFusD8ASabhHQTPIWsf0sPJevInwc/JVruMopkrR6soW7Cd
- MoZk4jQbUYxbFBVCqtFC/Q4sW9qJ6iP/971xRVuW32GrJN4cBhW6i7EWW67QIyOc//QS
- QVaJ5yQfBpSIkzUdt4aMM5joJL6Op6SVa7ZB+fXtwvgLhN7Z8+VF3ievaESJqZj2787C
- 6l9wabriGAmSASs8nCp0cE8uPDQtj/jpzBzeEMBoHJ46Sssw/nK3O1708E0LlHSOSED7
- +rdkFVIPb/6LPZQbvo0XJ64T66P7DvIYRhuVfM9px3nk0IG65lxm+5JtwCQ32LTGFiFw
- ASBw==
+ bh=WeXADwCKomx6ThMO/P01x+k8ewdNDqGQKQbTKENu2gg=;
+ b=P/W9ltfuZsiSU4Oz77wQlc9dLmp/3jNR94PgLfv9Oj+/OjBxu9mHjrc7lhbuneFm9H
+ slHVn/lb6rAVuP0gx6A4yiLV+s0oB4c/kYGOlHEoYtRdT+fddv5NTiKZ5/IV8joC29zZ
+ 5Kk06k319apg2NtnqR9mFhMkEjdhJ84MMx2KbMEKEuj7fXJnWxNVKDU2aE0JPJDP9Eo5
+ LXEGYGblJbii0BsIgqGgTN4q6KeiPGulYMPhlkymXroIkikT/J570or/G/wfkeD6VSQK
+ j61JOcpFW2UdqJuE2Vch5ItCcUbLyFdOfgM+vH52bkQ4sRT4wYylGUoQxgSQucmaWhO3
+ njZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIgWtDt6WnQ2TZ+yzUOyYgcRkU0+rW8gQygic97xxIUfvJieK1Er/2D6lVU6fGNafDypqA6Td7bLR0@nongnu.org
-X-Gm-Message-State: AOJu0Yw9HV/rTSD86nm/PhKjaVUaW6VqJZWY4E/zwnqgazcVezhxbm9g
- xqEgmvrVS/aWPllSVlrfyBLwSbjtnYtWWYxawlEhfENWjD40aJnFfxeycSw7TDV1gCvVKMVU0YU
- U5h4Fh219ypeWyiSrlj++ovNLrky4mVwvNmGWk5efpqlHV9UMKhEKQFLy
-X-Gm-Gg: AY/fxX7TPr9GNARkBMWNFWw4mi7ul1Gk8j+dBYqvgF/atY4we6TUQB+Sp9aBsV4SRUx
- AoGqEnXTAsW7hvXF2nbAJk2wKNkm/5GAX1ejXJ7Z3h3nEBBis3ISyJsdcLdkBC7znBLe1tG6H5F
- 1+o5iH/FRHY9JXet4MxMC53/niFpyoSfIbS9qOq24X0Dl8wMWAPP2UAZXQfBnNn4YGzyejx8l3U
- /6nyLqN22Kd012V2oNHk0OrxBW+VPpxc6aN7QeEvTf83zUf7QFEtqF9EINItomK7H97obVYeId6
- ZsQupb10v89Jwz+ShAmD+TI2qI595gK/WfnRX+jeTQ6Z42juw9C7qhbZtEHpk9k0BRN2r9Ukn1S
- KQopxQmPQ7PlDyCtKg7wq1g2hivB2ooupm6BxnmbmgvT2fnej
-X-Received: by 2002:a05:600c:8b58:b0:46e:32d4:46a1 with SMTP id
- 5b1f17b1804b1-47d84b369a2mr106356485e9.22.1767971958904; 
- Fri, 09 Jan 2026 07:19:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFet9WeGLjoCSAprV+zPN+xbqVTTNDqz0T6rfYbzSwZGBJYGPr63h6ZeocTsQeiPWuZlb2L/A==
-X-Received: by 2002:a05:600c:8b58:b0:46e:32d4:46a1 with SMTP id
- 5b1f17b1804b1-47d84b369a2mr106356245e9.22.1767971958539; 
- Fri, 09 Jan 2026 07:19:18 -0800 (PST)
+ AJvYcCVjgE0evGTgstUXoK2PFgG4WEWlzJXDdaLoCpYJfdUWPtwtdITEEbhb/54xXOl2y2Pbdnpo656cwN8V@nongnu.org
+X-Gm-Message-State: AOJu0YwldsSdsN1iSExnMwQmUpXyU9jqe2TPLsjxaKwgMwgFSlUdUApR
+ PQi0qLBVEo8u7RksWrqPtvnpegf56bonZcT4fJLiYilo+oTZbJb4uLOEsN9perREsSiAxHGQ6yw
+ 3GlET6lMwRCIzFb8Je+HJZ+QA3dXZOkIchvzgIh7iKAxUrIHsvTnjlaE5AkboRWtc
+X-Gm-Gg: AY/fxX7YZyryOSIsmy+Yh/PjU6hFvMPPQcQ50mApwMhNlM5s3Tbg5TbvAKSygC+b6kX
+ zjl59rW9H8nbLaI/94GHIYwF3CfzFQzwTnW9rPMWSk9llXwoo6U7HJj7J8/GUZJSjV1oaLz2RDR
+ 9+lG+fz8AZi4ALGJ2FCEDXq2Cy/b3Sx0iaV3cUu5Jd5srkbcDO+1H64zDyMRmoEgw6KS6eVNier
+ VUhyMmBa516VAD3kSJ1ckNZ6GHPu8oDKJk3CpRlN3DzN/lwJ7MfA0hPwtNn8IFj0lCyNseQ29z9
+ 1lFTDyZGNp1vsr0oRdl/+7HmgQ2Mtti5hSkPoLL5jn+HDGbbNOqemB4Cog+uYmFrJRuGcZLKExt
+ q0xdocN1Hss5EqE/vUikNMzZV9iOWEy6WXm9+Ijn3+hqgYKLT
+X-Received: by 2002:a05:600c:1991:b0:477:b48d:ba7a with SMTP id
+ 5b1f17b1804b1-47d84b4119amr110449925e9.32.1767972086630; 
+ Fri, 09 Jan 2026 07:21:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFo1DY1Ayr7ErV7H6vhpNJQeztupotoRN/ABLu1fH6CFgdO0HsCpkf4J0lOvlhKiq4uYGzq9g==
+X-Received: by 2002:a05:600c:1991:b0:477:b48d:ba7a with SMTP id
+ 5b1f17b1804b1-47d84b4119amr110449705e9.32.1767972086269; 
+ Fri, 09 Jan 2026 07:21:26 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d87018bbbsm73706255e9.1.2026.01.09.07.19.17
+ 5b1f17b1804b1-47d8719e695sm63549365e9.17.2026.01.09.07.21.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 07:19:18 -0800 (PST)
-Message-ID: <0437191c-8d6c-41ff-9c93-578c8721185d@redhat.com>
-Date: Fri, 9 Jan 2026 16:19:17 +0100
+ Fri, 09 Jan 2026 07:21:25 -0800 (PST)
+Message-ID: <3d0684e6-4a74-412a-b146-ff8241ac46b9@redhat.com>
+Date: Fri, 9 Jan 2026 16:21:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] util/vfio-helper: Fix endianess in PCI config
- read/write functions
+Subject: Re: [PATCH v2] hw/vfio/migration: Check base architecture at runtime
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, thuth@redhat.com, stefanha@redhat.com,
- kwolf@redhat.com, fam@euphon.net, alex@shazbot.org
-References: <20260105222029.2423-1-alifm@linux.ibm.com>
- <6ac8b1d3-9252-4e63-83b9-c92915a8b78c@redhat.com>
- <440f8fcf-9d37-40dd-b487-ead9a6d1190c@linaro.org>
+ qemu-devel@nongnu.org
+Cc: Avihai Horon <avihaih@nvidia.com>, Anton Johansson <anjo@rev.ng>,
+ Alex Williamson <alex.williamson@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>, "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20251021161707.8324-1-philmd@linaro.org>
+ <c5381a4d-74b2-4352-b3f3-c0d39a438dd6@redhat.com>
+ <8afeac41-72ed-4654-827a-771b3119a2e2@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -145,7 +145,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <440f8fcf-9d37-40dd-b487-ead9a6d1190c@linaro.org>
+In-Reply-To: <8afeac41-72ed-4654-827a-771b3119a2e2@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -157,7 +157,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -173,28 +173,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 16:11, Philippe Mathieu-Daudé wrote:
-> On 9/1/26 16:01, Cédric Le Goater wrote:
->> On 1/5/26 23:20, Farhan Ali wrote:
->>> The VFIO pread/pwrite functions use little-endian data format. Currently, the
->>> qemu_vfio_pci_read_config() and qemu_vfio_pci_write_config() don't correctly
->>> convert from CPU native endian format to little-endian (and vice versa) when
->>> using the pread/pwrite functions. Fix this by limiting read/write to 32 bits
->>> and handling endian conversion in qemu_vfio_pci_read_config() and
->>> qemu_vfio_pci_write_config().
->>>
->>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
->>> ---
->>>   util/vfio-helpers.c | 15 ++++++++++-----
->>>   1 file changed, 10 insertions(+), 5 deletions(-)
+On 1/9/26 16:08, Philippe Mathieu-Daudé wrote:
+> On 21/10/25 18:31, Cédric Le Goater wrote:
+>> On 10/21/25 18:17, Philippe Mathieu-Daudé wrote:
+>>> Inline vfio_arch_wants_loading_config_after_iter() and
+>>> replace the compile time check of the TARGET_ARM definition
+>>> by a runtime call to target_base_arm().
 >>
->>
->> Applied v2 to vfio-next.
+>> What's the value of a runtime check of target ARM ? Please explain.
 > 
-> Typo "endianness" in subject.
+> target_base_arm() returns %true when the ARM and AArch64 targets
+> are used.
 > 
+> Runtime check allow compiling this file once for all targets,
+> allowing to eventually have a single binary targetting them once.
 
-Fixed.
+Do you want to update the commit log ?
+
+> Still I expect this function to be problematic on heterogenous
+> emulation, but we are not quite there yet.
+
+ok. So we can still take the patch I guess.
+
+Thanks,
+
 
 C.
 
