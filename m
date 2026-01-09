@@ -4,150 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DBED1681B
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70DE7D1681C
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:52:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veAzi-0007md-JY; Fri, 09 Jan 2026 06:49:30 -0500
+	id 1veB24-00006V-EV; Fri, 09 Jan 2026 06:51:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veAzf-0007m2-0B
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:49:28 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1veB22-00006J-ON
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:51:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veAzd-0005ku-K6
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:49:26 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1veB21-0006Bm-3h
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:51:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767959365;
+ s=mimecast20190719; t=1767959512;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Zhz5CZ/t3Kx0K81Q/q8axY4crGyYZLKFaPYwyEYpmLY=;
- b=Tbwrd3k7RpL5NV5ecev/DIfQTXaWkre7v9nfWepNtfDkZMLJcr+WLnN8Xfywp/37xfQbM7
- Il5b1NG/mCBeTfCKD1y2+V93AcNrsEJruHsD+zFsKHIh/E6MjkMtBkymWg6UlHBkBWfjX6
- QE8aiyu8AUBQSIHgfMunGLkNy7AYomU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=T6cuie97GRK/pCM49JcOHtI+LepKKNQc10AP/xyMvEo=;
+ b=ECYHAUErSMPsrnTCM9AE7y7L+psf5LrG1vnFO6LWIO9uLRd74131koc9SGtef4Q+XRmA7D
+ ZWk9eEV2bbeLXTE3u68GcsYezhLz5/LVvWzrY51nXhnu1/erIzdhrR68g+z935ss8VEJvx
+ K0EHDdeA9OYKq9c4P0Vv7ZknX9eBUQg=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-xZPORgBJN5KjkgGqRUrgFA-1; Fri, 09 Jan 2026 06:49:23 -0500
-X-MC-Unique: xZPORgBJN5KjkgGqRUrgFA-1
-X-Mimecast-MFC-AGG-ID: xZPORgBJN5KjkgGqRUrgFA_1767959363
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47d3ffa98fcso29082555e9.3
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 03:49:23 -0800 (PST)
+ us-mta-340-QxEyM-WaM56MC-EzNc3rKw-1; Fri, 09 Jan 2026 06:51:51 -0500
+X-MC-Unique: QxEyM-WaM56MC-EzNc3rKw-1
+X-Mimecast-MFC-AGG-ID: QxEyM-WaM56MC-EzNc3rKw_1767959510
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b844098867cso567418366b.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 03:51:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767959362; x=1768564162; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Zhz5CZ/t3Kx0K81Q/q8axY4crGyYZLKFaPYwyEYpmLY=;
- b=OGJYyMGIDICw1bi2f2uH4uZW4hkgpEHEFb4BT34bTEDA16KmiAqLVNAXLj2HaCHln+
- E2Syi+7kVxzA1oIo40xF3jMOAnmieE5heYySX5IN4LbXP5/WJIeAEo1Lqm26ueYoXn90
- N8TaqcNU48sYJexRPeoaUpEWxgL2ge7Qp6MTUWlV1I0JKrWnI4XG5v6jroWAS0s6JqrX
- zr2CeElwM7XIGzeiPfR1y02vEBx0an+4lipNdY/xB1ct/bWhg202+n1nYwYopaaDvmfJ
- rfz1zDGqIFL5y2urGwpfHWfI3m7qZHq8bSRedSsmFxkIIvU2oEezYKs+5Yomecbx9sn0
- u7xw==
+ d=redhat.com; s=google; t=1767959510; x=1768564310; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=T6cuie97GRK/pCM49JcOHtI+LepKKNQc10AP/xyMvEo=;
+ b=MHsoX1jEpRL8Ng6vCZ8LDPYhSAuGvl8eibOl9+KJMendOOSdPP0P1DqlBw895HeU26
+ OaLRV7S2yM3yEy6KL9XHpNVzk3cbzKDlHYgUqFU+fU7t1JIBWxTgUsAJcm5+QgjtFM/c
+ ZFepAaisG1SXFx2QhAP58QJSrxsQRBGkK+vpJclynEe7MKucAgW2uonYk/PekrfDq4Fs
+ eJtEv4rKEDxvrnjGxZYElh/LL631JD+QYosjXiGouf6ObNXqVbPD162J7IWipinzN92B
+ L9yDff0F9X6mq2OrKTaoW3bsAulgyh0kne5B+rowLbjhSvcqwpSty2f7drGnemICVlHk
+ kKtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767959362; x=1768564162;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Zhz5CZ/t3Kx0K81Q/q8axY4crGyYZLKFaPYwyEYpmLY=;
- b=bUL/9epmH1EMKZ3jS/tKhhV4UY6Q+pALDI3J9DLVqBMETilJMGS983mw+WQW8Dyp9U
- OFXjXWXLAFvFuLpVKPTw94fGw6ovGYcINRyPfU7d5bKGQM1BdRiJBErW5Y2Axru6V3SN
- 0oxUqWQ70e3hhIc9zwV/pNT6eXyVGF/MEQ0+sFZ/fz/U3ZAQMclUHK//k21ZkFeSVgCm
- XgXiufgyVCcgllZppALQypcwa5cHCUf2GehM2oG/IU8t2bv++44gI6dcRiHPEFKQ7B5W
- VF6coq6b7MPcBCX1WnNM8ePZhvS9cyumnQ/gQwtsjqhWCVGlmRY2FnTdwZvRCIIWe95g
- cBew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/48WIAXdYF5c5EtAvbTagZSat8rVQ5ecieqA8SOe18RRj4PW3rZSmKrPAbnC8CQs4pBVp6RLIyhDe@nongnu.org
-X-Gm-Message-State: AOJu0YznbtB2nxG3gMz4GKoKNoobYu/v/N0hQG7s4TsYNYGGExFKHN2S
- huHznZMLG9lumSM5WmDa3mqJm9ipPG+gSPs2dgNxAcvSTkvzAXffOwV0zPdJv7vUlmdc32Xp6vT
- 9iE6esJyBW8CmA/F1xOSYVto8xnFw704hYKjcMP91V3G5gz+c9NmmV8ji
-X-Gm-Gg: AY/fxX7ubPD35rhVVSDUkxdB5sFdmWJW2hENsAc/NOcyTnlGedDRRxDLh1R6g1iE9e8
- wfIFFE7/NxwOADiOiO6xc1tznebRKu3m17vhytDpuTTsWrrXKI3T0ufd/IdJnhGc1McLH4cBugg
- 45kWYoy3I6y/mk/BoDpNZhdU9l6e5Il1oZtlXtX5KG8zV7u07ROx/VF2bS+dO08wbiM/pg8V+xa
- HjYa7lYtCDlNr9PCFeP3ayD4asj9p67DuRktqaOOlIF0o9rDdY8aUKYaR5gVfn+s+W46yr3tJTP
- KViC+13cpHcEQhthJgLXxzHZWWBqDDAz79yw/sd0OnH/Wjx7SPl/u3WcQK4PSE1u0wcD7ghqOm/
- r52HjzIMIUHMNAnjpbEYLZOEdKE0XjuF3w1/Cm0ZA3VGri/0hdMIlXgiy9FnWps/rJlG5PYxBT6
- flEgCkkBQXwpSuAw==
-X-Received: by 2002:a05:600c:1385:b0:47a:94fc:d057 with SMTP id
- 5b1f17b1804b1-47d84b0b0e7mr96048625e9.2.1767959362516; 
- Fri, 09 Jan 2026 03:49:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEC7TKzBBhJdg/tVaSZWnxMh0VOJxGDBn10kd04vjVF5ezlG6f8rSbseVYuOzCeeYHorlo4pw==
-X-Received: by 2002:a05:600c:1385:b0:47a:94fc:d057 with SMTP id
- 5b1f17b1804b1-47d84b0b0e7mr96048385e9.2.1767959362140; 
- Fri, 09 Jan 2026 03:49:22 -0800 (PST)
-Received: from [192.168.10.48] ([151.61.26.160])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-47d86c6ff40sm133057385e9.2.2026.01.09.03.49.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 03:49:21 -0800 (PST)
-Message-ID: <8867bff0-227f-46b9-b0c6-938fc0d6f625@redhat.com>
-Date: Fri, 9 Jan 2026 12:49:20 +0100
+ d=1e100.net; s=20230601; t=1767959510; x=1768564310;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T6cuie97GRK/pCM49JcOHtI+LepKKNQc10AP/xyMvEo=;
+ b=ZhgHZjLS5bwCPvCOAVfr5qhTAx01Z7ywnS2jS81Y6wXh/AZEPnkdclDycfsasmr14m
+ 7tzA9S+whQfvlZ8ZFdC/hBuji2swYoOmd7IzcltCeHzJiJ6e2jCBa4QjWB+8kZPvpFQd
+ FJSHVS3bodYFXNKnI8NF8RdmJUIkYS6smX4sDzJ0Jb6hpg8mcIee89IoOlSrPepUy5Rs
+ vVe9Yy3xVKjQjSVZmVb+l/IuruB4hI7c9yHwtAXik4GWuICulTWnJaFQGFIanXfIq1zu
+ hf5sB6jg6xVos29ORyL0qi0Im9nrbolufKSMcCJ2dJzKEdqKU1jtnztNiJ1+oblsCORZ
+ 3NRg==
+X-Gm-Message-State: AOJu0YxiTueFt+oLK6u1uNadrupwVHQT+yaDv6yz6anPq665n4pmT/jP
+ qSPkYcx5Mm8h17K4K40KZI9XGiQ8AyEvPrGYdsEiNgmbs5J62xE166Gx/ff99fy6MY1awwIpZbm
+ Bsoae3zVYGvI/EoLmSPyFIgE8xx2zXzeZW82zSq0918v9XYCvYdvt5zCv
+X-Gm-Gg: AY/fxX72RiTw5xF4V30304O7PgDAQpcDkTdwDaXSegbftJY/Rl2i3YxSOJSPfK/xNz+
+ 1FKeINOoN3+UUkx564Au8mAKG+ZX3NFX28Hw+KYUC+IK7Hc7Gp75GcSOI/gecW7mjA0ZsVu3/mq
+ SBdxVBxI7pEYE0jq0iCMcofCqlovBZrsp7xlYssxpnAI7ge/BKulD2IhIcRmuZIjkh3aTu7JUlS
+ KFnGEXspGIoIMDRuDXSI92R8Uf4PUWRXbpFL41uBEABCaSa+Z3R8JZ/r0xZBItErs+vB63TKI5L
+ xducLRWJbQnZeOJ6qZhHvcaJbVVbhfn1uTACzA5xZx5Fp7iP60XKtxpNNvVd3Ce7eoDyuS09sME
+ SEx2ztH0bY6G3pf8Z
+X-Received: by 2002:a17:907:a4a:b0:b79:c879:fe71 with SMTP id
+ a640c23a62f3a-b84451e156bmr831548866b.19.1767959510120; 
+ Fri, 09 Jan 2026 03:51:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEm6p/TD8lBTYAmoRKuzR5IRbh+I8HNyN7OHVU6cq7d4DHab/kBifLO4FejvQ2n2Vms0DrPMQ==
+X-Received: by 2002:a17:907:a4a:b0:b79:c879:fe71 with SMTP id
+ a640c23a62f3a-b84451e156bmr831546366b.19.1767959509510; 
+ Fri, 09 Jan 2026 03:51:49 -0800 (PST)
+Received: from sgarzare-redhat ([193.207.180.225])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6507bf6d683sm10170433a12.34.2026.01.09.03.51.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Jan 2026 03:51:48 -0800 (PST)
+Date: Fri, 9 Jan 2026 12:51:42 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Oliver Steffen <osteffen@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Luigi Leonardi <leonardi@redhat.com>
+Subject: Re: [PATCH v2 3/5] igvm: move file load to complete callback
+Message-ID: <aWDrKDOzwN4qjsVF@sgarzare-redhat>
+References: <20251211105419.3573449-1-kraxel@redhat.com>
+ <20251211105419.3573449-4-kraxel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 08/24] util: add API to fetch the current thread name
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, qemu-block@nongnu.org, qemu-rust@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Kevin Wolf <kwolf@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-9-berrange@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20260108170338.2693853-9-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20251211105419.3573449-4-kraxel@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -172,15 +125,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 18:03, Daniel P. Berrangé wrote:
-> +static __thread char namebuf[PTHREAD_MAX_NAMELEN_NP];
+On Thu, Dec 11, 2025 at 11:54:17AM +0100, Gerd Hoffmann wrote:
+>Add UserCreatableClass->complete callback function for igvm-cfg object.
+>
+>Move file loading and parsing of the igvm file from the process function
+>to the new complete() callback function.  Keep the igvm file loaded
+>after processing, release it in finalize() instead, so we parse it only
+>once.
+>
+>Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+>---
+> include/system/igvm-internal.h |  5 +++++
+> backends/igvm-cfg.c            | 18 ++++++++++++++++++
+> backends/igvm.c                |  9 ++++-----
+> 3 files changed, 27 insertions(+), 5 deletions(-)
 
-... you can instead of the previous patch, add a constructor here that 
-just sets namebuf to "main" with strcpy.
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
-For Windows on the other hand it should be okay to call 
-SetThreadDescription if available.
-
-Paolo
+>
+>diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
+>index e0452080b127..d378d682b0fb 100644
+>--- a/include/system/igvm-internal.h
+>+++ b/include/system/igvm-internal.h
+>@@ -12,6 +12,8 @@
+> #include "qemu/typedefs.h"
+> #include "qom/object.h"
+>
+>+#include <igvm/igvm.h>
+>+
+> struct IgvmCfg {
+>     ObjectClass parent_class;
+>
+>@@ -21,7 +23,10 @@ struct IgvmCfg {
+>      *           format.
+>      */
+>     char *filename;
+>+    IgvmHandle file;
+>     ResettableState reset_state;
+> };
+>
+>+IgvmHandle qigvm_file_init(char *filename, Error **errp);
+>+
+> #endif
+>diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+>index e0df3eaa8efd..4014062e0f22 100644
+>--- a/backends/igvm-cfg.c
+>+++ b/backends/igvm-cfg.c
+>@@ -53,6 +53,13 @@ static void igvm_reset_exit(Object *obj, ResetType type)
+>     trace_igvm_reset_exit(type);
+> }
+>
+>+static void igvm_complete(UserCreatable *uc, Error **errp)
+>+{
+>+    IgvmCfg *igvm = IGVM_CFG(uc);
+>+
+>+    igvm->file = qigvm_file_init(igvm->filename, errp);
+>+}
+>+
+> OBJECT_DEFINE_TYPE_WITH_INTERFACES(IgvmCfg, igvm_cfg, IGVM_CFG, OBJECT,
+>                                    { TYPE_USER_CREATABLE },
+>                                    { TYPE_RESETTABLE_INTERFACE },
+>@@ -62,6 +69,7 @@ static void igvm_cfg_class_init(ObjectClass *oc, const void *data)
+> {
+>     IgvmCfgClass *igvmc = IGVM_CFG_CLASS(oc);
+>     ResettableClass *rc = RESETTABLE_CLASS(oc);
+>+    UserCreatableClass *uc = USER_CREATABLE_CLASS(oc);
+>
+>     object_class_property_add_str(oc, "file", get_igvm, set_igvm);
+>     object_class_property_set_description(oc, "file",
+>@@ -73,14 +81,24 @@ static void igvm_cfg_class_init(ObjectClass *oc, const void *data)
+>     rc->phases.enter = igvm_reset_enter;
+>     rc->phases.hold = igvm_reset_hold;
+>     rc->phases.exit = igvm_reset_exit;
+>+
+>+    uc->complete = igvm_complete;
+> }
+>
+> static void igvm_cfg_init(Object *obj)
+> {
+>+    IgvmCfg *igvm = IGVM_CFG(obj);
+>+
+>+    igvm->file = -1;
+>     qemu_register_resettable(obj);
+> }
+>
+> static void igvm_cfg_finalize(Object *obj)
+> {
+>+    IgvmCfg *igvm = IGVM_CFG(obj);
+>+
+>     qemu_unregister_resettable(obj);
+>+    if (igvm->file >= 0) {
+>+        igvm_free(igvm->file);
+>+    }
+> }
+>diff --git a/backends/igvm.c b/backends/igvm.c
+>index fbb8300b6d01..a01e01a12a60 100644
+>--- a/backends/igvm.c
+>+++ b/backends/igvm.c
+>@@ -869,7 +869,7 @@ static int qigvm_handle_policy(QIgvm *ctx, Error **errp)
+>     return 0;
+> }
+>
+>-static IgvmHandle qigvm_file_init(char *filename, Error **errp)
+>+IgvmHandle qigvm_file_init(char *filename, Error **errp)
+> {
+>     IgvmHandle igvm;
+>     g_autofree uint8_t *buf = NULL;
+>@@ -898,10 +898,11 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
+>     QIgvm ctx;
+>
+>     memset(&ctx, 0, sizeof(ctx));
+>-    ctx.file = qigvm_file_init(cfg->filename, errp);
+>-    if (ctx.file < 0) {
+>+    if (cfg->file < 0) {
+>+        error_setg(errp, "No IGVM file loaded.");
+>         return -1;
+>     }
+>+    ctx.file = cfg->file;
+>
+>     /*
+>      * The ConfidentialGuestSupport object is optional and allows a confidential
+>@@ -992,7 +993,5 @@ cleanup_parameters:
+>     g_free(ctx.id_auth);
+>
+> cleanup:
+>-    igvm_free(ctx.file);
+>-
+>     return retval;
+> }
+>-- 
+>2.52.0
+>
 
 
