@@ -4,151 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3F6D16819
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:45:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B85BD1681A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veAvc-0005dZ-Jb; Fri, 09 Jan 2026 06:45:16 -0500
+	id 1veAx9-0006UO-1O; Fri, 09 Jan 2026 06:46:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veAvX-0005cm-Hp
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:45:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1veAx7-0006Ts-6A
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:46:49 -0500
+Received: from mail-westusazon11010059.outbound.protection.outlook.com
+ ([52.101.85.59] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veAvV-0005GR-GL
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:45:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767959108;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QM1RdZGzRe4uG8Rksl6ygiHz7KGi+nKBhe9Ml2QARXU=;
- b=HW2Oa7jt0W3kFLzAft57G7D6+uVV9cWnuy4agr5wcVxIJJDCMhEYUZM4vixTeXvZ6WBhnH
- WZPGbOSL0/gyVD8bm1TzvdsmTKjGzUZ1bB7PPA8Ib+gsr/xFCYSrWuSX05ZZeK/gZk2WU/
- L6nxkwdkHEGt9peYsfwPEeU055c9X8U=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-413-1DoDLvhEPkmm5TZ56J2l1g-1; Fri, 09 Jan 2026 06:45:06 -0500
-X-MC-Unique: 1DoDLvhEPkmm5TZ56J2l1g-1
-X-Mimecast-MFC-AGG-ID: 1DoDLvhEPkmm5TZ56J2l1g_1767959106
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-430f8866932so3322774f8f.1
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 03:45:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767959106; x=1768563906; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=QM1RdZGzRe4uG8Rksl6ygiHz7KGi+nKBhe9Ml2QARXU=;
- b=ARAIN9wii3Go3TfCuLdpsk2+M7uVrDpfeOS93/qV2p5mlD7pzbdsl1qjabaOcmWoFA
- vBx3AxIMiEpm3eUeWKLg3JVh6xVylix9n8PgSZKdLGOaY9O3+ckh103tZDy2qGYAh2yo
- ATWictoOhasg/MYgH1hVQThK/ZpVhOgPeZ/28RpuveW/91nrJLBL/LCL8XKU5yIK7lEJ
- ft1jtkxvq4HVMhGez6nHeF1Ij8RDSAym81rQxfikFlP1KOji+4ShE2UZcAEURgnSSw86
- 00xjm7MbcKNvpewg5OSwpqth9g52YveIJZo69tlVL8HHAubcjSodam6P6qXjJCW98ccx
- tkkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767959106; x=1768563906;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QM1RdZGzRe4uG8Rksl6ygiHz7KGi+nKBhe9Ml2QARXU=;
- b=ZdLCn8+g7ROHxVXMx2OZsHr/d0S7LuG7R+VvKXDxhb11Yh68InumMm4DSOgRDUE8xn
- ykDBh01djoR/Ky5Fgcv6WZNkfuGk4OsP/V6ekx7TL9zr6YFlPIiwQ2JJLZLMO0E4vCE1
- qWg2VnBvGRWtFEjHPiIco/vrGesu8auWXndaMau1BQPK4Cnw4TOjubf0N1SKqjXUnvRh
- nV5cy+MgIVci/nSJ8s1a9fEFr6xM2uZ/gOatpo5R8wMn8aoQt+iI8jFotf2pvU5NrWSc
- 4U8Z768t3w9g8rdzHNi8MMpdnr2kCanFRac+bQiVMIHpSh//UhucqnsIH5+Nlx4u0byF
- BsCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOnQ6l4Dujl31DNi1gPriDfhqDbcIWUhRPiCvq4/P2VcPyajoGvHAVThkGlYlhyjqrRJS2MUTgumQe@nongnu.org
-X-Gm-Message-State: AOJu0Yx2ZdVKW63BYsOKbr1mr9+AKLqzO2flM+ZbHyFtLrz5F5u64sYX
- ChriLf+NjKTOV0Mj1osp11ndHxjYKr7Dm5LuNLuFzm9maLuUP3qh/XvCSaB7WozWeXJHJF/kt0l
- +UHxcm6hiSUYsUubVrJ8QUR+XPrxxO6m/tnkJCWqwLk5gfrJkmR/xSTM+
-X-Gm-Gg: AY/fxX64AVU5oDiisZEOZ1k3IKEf7IA43Apbo1BEviWlx1XntOFC7wxm/DAn3eTj7XI
- S+jKoidQFtTbFRWf+5tNSbS7rQUY/Pp66DhREpVaDroOewg26gNnl1TzMUnKu/u+2uo1dZbxOTX
- J6DnFZxthDXKPsMopYKB5vbDQchoJH/7hNEyJNlPt444Uv+siXYGlaQSX+KZvNSIRtfT69TSd9h
- G4ggd+It6eGxrsXMFuz7j+p1mLC9piCndNY7AViUNiomOgC9Z+nMOpQ2ZIDlg6XDDY+o3hmdXPJ
- GOxJZbqgcLIrQzVYDgG+zJbyHGXNkY5xMIf4uESSTvocWvmft8ZbglkL7tr+Bo26D0Zi54FIY1R
- iSE7yPeyAPTgz1ETXqiwDKtgCy1eKpwxfj4QRRPcIYL8uVXYudfaKpFjbaUQ5GiJyhYaafb9n2y
- Bcu/kvrj5XV82/oQ==
-X-Received: by 2002:a05:6000:288f:b0:42f:b9c6:c89b with SMTP id
- ffacd0b85a97d-432c379f286mr12324554f8f.50.1767959105698; 
- Fri, 09 Jan 2026 03:45:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFs8qwNwtGLMqmOFoVVJPuJyM+zbpODowggbSi6EBK1Oi8MmiKZOsb05UgnOM/dVVHyGkgTbg==
-X-Received: by 2002:a05:6000:288f:b0:42f:b9c6:c89b with SMTP id
- ffacd0b85a97d-432c379f286mr12324520f8f.50.1767959105306; 
- Fri, 09 Jan 2026 03:45:05 -0800 (PST)
-Received: from [192.168.10.48] ([151.61.26.160])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e19bfsm21566505f8f.18.2026.01.09.03.45.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 03:45:04 -0800 (PST)
-Message-ID: <5cbc1f80-aef8-4bcd-beeb-af9c54eea3c8@redhat.com>
-Date: Fri, 9 Jan 2026 12:45:03 +0100
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1veAx4-0005Q5-9Z
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:46:48 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JzUHFBzqwQNSVXjRwG47JW+UarJ9j0rzDtx0PVcvI6Y6HwVHxgFVEHsWifz2wBtad4sdYMRvTjM0k2JgCYhS2JbX84SS7rUco0pyTwcwraeRv6wEf7AVwAd/Chnk6LtpXULZ9D1LibY168xlnQ27EPM/MAiD62eJ7ki+eED/IgAKGaH5mDEPoCgTL7lFD5nsvGDB6VLPPS/eQD8s3G8cvyoCmh+qj25Q8WpgO/LMgphQf0lIPB7Deooqqfo8oA9l5j9u/Hz+rckJhmeaGiIo2Bz0c0zE0Bd1UeuLfJrPAST+eFMCJRh/9kI8kfogy+eDEXgXnzpnvRYzbtF6vzIWbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fufjMx6DZSLdRdkrR83gPsNDsD2VVgHIM9YtAjdKYxM=;
+ b=MlgfjvAAbaO8PoXG2wsODFwDRS8vN/JsoIeQzXGgqL9QXpXRrcjy/yo6PFBKAeJat5NP5njHM6kTT+1aon9NysKHEV3Cwj6/DzEXho4p00oU1At74A4DSaS+0VVHm8GQ89ycTDC5TpjD9CYg5yb+QaT68oj3511hza2N5SEjhCBhQVRCtsHNi0Pm2pyok7e2CpC8NddBPMWkZkBaePmueLxaY36znyMu7vB1tkNW3SzZK8V1Tw5O3sVD2OZszlJ4pTRh5lzwTWyIl2XwA5/cuiUTxaTDWN57M67Q3/pHvSOa8tnJVHTuGZMReLXNv7npzsVtfnjDWASOdwd2ppLi3Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=temperror (sender ip
+ is 165.204.84.17) smtp.rcpttodomain=intel.com
+ smtp.mailfrom=amd.com; 
+ dmarc=temperror action=none header.from=amd.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fufjMx6DZSLdRdkrR83gPsNDsD2VVgHIM9YtAjdKYxM=;
+ b=bOsvB8KaDF1+gTBYZnsgXAfq655sOUjc1kFxOgdn9pwXwgQl6s7CZbkDi0MtcNSnDtV6/cj1xYCV3VySRfjqytghiq6eUdizD9IrVKIivjGbll1ueOi8urlIhpwah5tEItN16X/WGjX5Z15uzqExs8ooKfFy+DazYEWoKA328Kk=
+Received: from CH2PR03CA0019.namprd03.prod.outlook.com (2603:10b6:610:59::29)
+ by SN7PR12MB8602.namprd12.prod.outlook.com (2603:10b6:806:26d::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.2; Fri, 9 Jan
+ 2026 11:41:38 +0000
+Received: from CH1PEPF0000AD75.namprd04.prod.outlook.com
+ (2603:10b6:610:59:cafe::e6) by CH2PR03CA0019.outlook.office365.com
+ (2603:10b6:610:59::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9499.5 via Frontend Transport; Fri, 9
+ Jan 2026 11:41:18 +0000
+X-MS-Exchange-Authentication-Results: spf=temperror (sender IP is
+ 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=temperror action=none header.from=amd.com;
+Received-SPF: TempError (protection.outlook.com: error in processing during
+ lookup of amd.com: DNS Timeout)
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CH1PEPF0000AD75.mail.protection.outlook.com (10.167.244.54) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9520.1 via Frontend Transport; Fri, 9 Jan 2026 11:41:36 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 9 Jan
+ 2026 05:41:35 -0600
+Received: from [10.136.45.190] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Fri, 9 Jan 2026 05:41:31 -0600
+Message-ID: <df23391a-599a-495b-a1b2-ed548215e2c5@amd.com>
+Date: Fri, 9 Jan 2026 17:11:29 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 07/24] util: set the name for the 'main' thread
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, qemu-block@nongnu.org, qemu-rust@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Kevin Wolf <kwolf@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-8-berrange@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/5] i386: Implement CPUID 0x80000026
+To: Zhao Liu <zhao1.liu@intel.com>
+CC: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <kvm@vger.kernel.org>,
+ <qemu-devel@nongnu.org>, <seanjc@google.com>, <santosh.shukla@amd.com>,
+ <nikunj.dadhania@amd.com>, <ravi.bangoria@amd.com>, <babu.moger@amd.com>,
+ Shivansh Dhiman <shivansh.dhiman@amd.com>, K Prateek Nayak
+ <kprateek.nayak@amd.com>
+References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
+ <20251121083452.429261-2-shivansh.dhiman@amd.com>
+ <aV4KVjjZXZSB5YGw@intel.com> <eb712000-bc67-468a-b691-097688233659@amd.com>
+ <aWDEYEfB4va41+Tv@intel.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260108170338.2693853-8-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+In-Reply-To: <aWDEYEfB4va41+Tv@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD75:EE_|SN7PR12MB8602:EE_
+X-MS-Office365-Filtering-Correlation-Id: 876f0edb-b172-4fc2-5ef2-08de4f740bfa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|376014|82310400026|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?dkZEekx1RTU3WGUzYmJMaHZ6QmFpcVgweERDeU5xYW9wNTArZmw1MUUzNnkz?=
+ =?utf-8?B?dTZlUU5DaVB4b3ZYdndhN09XdlFCTThSNGRWWXY1dWZJUW84OThmeTN0Z3Rw?=
+ =?utf-8?B?alNvMzVockZVdWZaNTNLTDVlM3dFTC82Z0QwZmtyZjlFaXVYTTVCLzgyWXlB?=
+ =?utf-8?B?MUV0MVo4UnA3clg1Q2NNK1JVaGw3Mnd5d0hvdm8xbnFTL2tvYklxQXVsdjk4?=
+ =?utf-8?B?ejVZa0FiYUdRWEp3R0ZHY0pMQTdFSVF0UU9McXp0cXpXZ2t6MnpxbzNGaHlj?=
+ =?utf-8?B?M2pHRlMyb2ppQVNQcTlBYUttQ1dOc0xML2FWNHU0MWdYS1c0enBqV2dlb0tw?=
+ =?utf-8?B?aXFGcmlLWTF3TElmclYzMm0wU2NZd1lMSWpqVm9VOEpLY2VTU2lZeWtNcHgy?=
+ =?utf-8?B?dFArZWdVWmpPN1ZwMkdGVTl6bTEvalBnbk52NnYwV0NDS3VneFVhdWtUNmVT?=
+ =?utf-8?B?aWhlVVQ2T2hPSlBxY3JIdkZFM2FobHFkdEZ5eE5HNW1ZQWZ1RGgzSDUyR0xV?=
+ =?utf-8?B?b2RZU0JZMFlpVDNrNTVjSGdLSWlkenpjQ0IrNUNLU3lqZHVWekFoSDd6RDBz?=
+ =?utf-8?B?ellzckZDNG9BbklRVloyV2M1YVpOeXdJWjJZMzFPelVOSDJCUXZldmx3c29N?=
+ =?utf-8?B?QnVRZjdsdTV2TzlWdS9CdXNVT05jQUxHeG1aVlQ5UHcxeFQ2UTN0S0plZUYx?=
+ =?utf-8?B?RkowZElDcXAvZ2Q5M3pPcXJ0U3lsYzFhR3BBZ3c5ZkNNVVpYU01IR0ozNVBl?=
+ =?utf-8?B?Y2tVN1ppd2NVTUFqZU13SzZnamlzRkF4OEZmMUFubGE4UnArMFJIYVhveDFp?=
+ =?utf-8?B?cTFSWDc2RDR4VEp2emlMdE80NmowWTljenJmM0luQTBVUUZWbjlybUtMbGhC?=
+ =?utf-8?B?czZDeTRLeEtTZVhGbVZMcHRDT0hoQUhtUEU2UFczckk5UUl6bVl6SGs4Z0RI?=
+ =?utf-8?B?Z3YvTzVtb2VnNEx0aFA0M2psblVvNTZxWjVnbGdBcTZLMzUrSURROXRCT2s1?=
+ =?utf-8?B?bjNxODVNMEcwVkNUV0F2cnY3S2FFR0dQTlBTS0Yza2crLzVhZDd5WkJMTG1O?=
+ =?utf-8?B?YXhYM3ZmdHFReWEyeWptdkQ1Q3BIUzVPWlhOL0g3YWJsV3pRZ05qam5NRVZo?=
+ =?utf-8?B?WVJGQlRyZ2g4MFFzOTlod1l1OXFqUURDMzVaUm1SbGZQTG1tL3cvRlp6SkYz?=
+ =?utf-8?B?QWlPbGFNMmZON1ViU012bGY4UlNNSk05SktVbk12Y2FVays5bXhQaitKYTA3?=
+ =?utf-8?B?TUgwWi9zTHl5WDN6ZlZyOXVEOTdRSW9ZVlZnQi8yWWtPaWVYSUU4WHllZjJ1?=
+ =?utf-8?B?OFh0S3R0YlJMajFzWllvN3hFU2l1WVB4dFFDWEk0NzZySjZqQVMvT3cySGxK?=
+ =?utf-8?B?TUFiS29aVDdKM0xNMnZjYklzZWlmSkNzUDdLRXB3cUFoNGtVTm1VNEJPM0RV?=
+ =?utf-8?B?bk1pYnV3RGFxOEQxTngrQk1oQXlNUGFBYllYSExHODgyR3RFRWlINHExMFVv?=
+ =?utf-8?B?aEZDcTBROVBWeDhLTjlYTmJtblJubE1VcGx4V0ZlRUc4TWF2d2YvUTdxSXdQ?=
+ =?utf-8?B?bzgwQktuN25nUVBVSldnanZQSFdXeWpHVWdFeUlWODZwSzVVMm15d2RabE4r?=
+ =?utf-8?B?dUdFWW0yRlVBdHc5TjdScjlaMDQ5M0JpZHIvUHdUMnRnU1l5QlltQUVqVmgz?=
+ =?utf-8?B?QjFCRU5jS0FPcjFNeTJ3b3BhbTFDcUhOUUNGNmN1V0x4QjNLVE9nUFhDakt1?=
+ =?utf-8?B?RTlQbzVGbzZlUGkzRkJZRHVqV1RiWTBxa0w2OVgvbDdFYjlvMmdneUFLdVow?=
+ =?utf-8?B?cDN3OFNvYWtHNVdvd1RwNkhmOGUyOE1obG5TWEE2SFVBZDJCTHNkVnpzMWJz?=
+ =?utf-8?B?LzkxSDVOVVE0MmhFMkVhSjBrNlZLRTVRSEJjd1BFVE8rUm1ybkNFWjNrK3hE?=
+ =?utf-8?B?MWxNZ2l6bG4xV0tKRVVUaCtnRjdVelU3M1ZFdW9rWjUzZmZ4a1JwOGtsVW9Z?=
+ =?utf-8?B?emhuSWlkc2lBM002WWdySnhvZFhqUU91aFdZc1JQVkpIRDBuTlEvOVpKVWc0?=
+ =?utf-8?B?d2NVdm1iZ3FBUU1LeDlMLzdOM2dsalJGR0EzNHFrZDFlWjhBUlBQSkRvL3F5?=
+ =?utf-8?Q?H1VU=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jan 2026 11:41:36.8341 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 876f0edb-b172-4fc2-5ef2-08de4f740bfa
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD75.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8602
+Received-SPF: permerror client-ip=52.101.85.59;
+ envelope-from=Shivansh.Dhiman@amd.com;
+ helo=BYAPR05CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -156,7 +151,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,61 +167,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 18:03, Daniel P. Berrangé wrote:
-> The default main thread name is undefined, so use a constructor to
-> explicitly set it to 'main'. This constructor is marked to run early
-> as the thread name is intended to be used in error reporting / logs
-> which may be triggered very early in QEMU execution.
 
-At least on Linux I don't think we want to call the pthread function.
 
-Since pthread_setname_np writes to /proc/self/task/tid/comm, wouldn't 
-that cause ps to show qemu processes as "main" instead of "qemu" or 
-"qemu-kvm"?
-
-Paolo
-
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   util/qemu-thread-posix.c | 6 ++++++
->   util/qemu-thread-win32.c | 6 ++++++
->   2 files changed, 12 insertions(+)
+On 09-01-2026 14:33, Zhao Liu wrote:
+> On Thu, Jan 08, 2026 at 04:03:12PM +0530, Shivansh Dhiman wrote:
+>> Date: Thu, 8 Jan 2026 16:03:12 +0530
+>> From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+>> Subject: Re: [PATCH 1/5] i386: Implement CPUID 0x80000026
+>>
+>> Hi Zhao,
+>>
+>> On 07-01-2026 12:55, Zhao Liu wrote:
+>>> Hi Shivansh,
+>>>
+>>> Sorry for late reply.
+>>>
+>>> On Fri, Nov 21, 2025 at 08:34:48AM +0000, Shivansh Dhiman wrote:
+>>>> Date: Fri, 21 Nov 2025 08:34:48 +0000
+>>>> From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+>>>> Subject: [PATCH 1/5] i386: Implement CPUID 0x80000026
+>>>> X-Mailer: git-send-email 2.43.0
+>>>>
+>>>> Implement CPUID leaf 0x80000026 (AMD Extended CPU Topology). It presents the
+>>>> complete topology information to guests via a single CPUID with multiple
+>>>> subleafs, each describing a specific hierarchy level, viz. core, complex,
+>>>> die, socket.
+>>>>
+>>>> Note that complex/CCX level relates to "die" in QEMU, and die/CCD level is
+>>>> not supported in QEMU yet. Hence, use CCX at CCD level until diegroups are
+>>>> implemented.
+>>>
+>>> I'm trying to understand AMD's topology hierarchy by comparing it to the
+>>> kernel's arch/x86/kernel/cpu/topology_ext.c file:
+>>>
+>>> static const unsigned int topo_domain_map_0b_1f[MAX_TYPE_1F] = {
+>>> 	[SMT_TYPE]	= TOPO_SMT_DOMAIN,
+>>> 	[CORE_TYPE]	= TOPO_CORE_DOMAIN,
+>>> 	[MODULE_TYPE]	= TOPO_MODULE_DOMAIN,
+>>> 	[TILE_TYPE]	= TOPO_TILE_DOMAIN,
+>>> 	[DIE_TYPE]	= TOPO_DIE_DOMAIN,
+>>> 	[DIEGRP_TYPE]	= TOPO_DIEGRP_DOMAIN,
+>>> };
+>>>
+>>> static const unsigned int topo_domain_map_80000026[MAX_TYPE_80000026] = {
+>>> 	[SMT_TYPE]		= TOPO_SMT_DOMAIN,
+>>> 	[CORE_TYPE]		= TOPO_CORE_DOMAIN,
+>>> 	[AMD_CCD_TYPE]		= TOPO_TILE_DOMAIN,
+>>> 	[AMD_SOCKET_TYPE]	= TOPO_DIE_DOMAIN,
+>>> };
+>>
+>> These mappings reuse some original names (SMT_TYPE and CORE_TYPE) along with the
+>> new ones (AMD_CCD_TYPE and AMD_SOCKET_TYPE). I think to avoid defining more AMD
+>> specific types the original names are used. So, essentially you can read them
+>> like this:
+>>
+>> static const unsigned int topo_domain_map_80000026[MAX_TYPE_80000026] = {
+>> 	[AMD_CORE_TYPE]		= TOPO_SMT_DOMAIN,
+>> 	[AMD_CCX_TYPE]		= TOPO_CORE_DOMAIN,
+>> 	[AMD_CCD_TYPE]		= TOPO_TILE_DOMAIN,
+>> 	[AMD_SOCKET_TYPE]	= TOPO_DIE_DOMAIN,
+>> };
 > 
-> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-> index b1c127dbe3..afeac9ecad 100644
-> --- a/util/qemu-thread-posix.c
-> +++ b/util/qemu-thread-posix.c
-> @@ -22,6 +22,12 @@
->   #include <pthread_np.h>
->   #endif
->   
-> +static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-> +qemu_thread_init(void)
-> +{
-> +    qemu_thread_set_name("main");
-> +}
-> +
->   static void error_exit(int err, const char *msg)
->   {
->       fprintf(stderr, "qemu: %s: %s\n", msg, strerror(err));
-> diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-> index 4d2d663a9a..8ca6429ad3 100644
-> --- a/util/qemu-thread-win32.c
-> +++ b/util/qemu-thread-win32.c
-> @@ -22,6 +22,12 @@ typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
->   static pSetThreadDescription SetThreadDescriptionFunc;
->   static HMODULE kernel32_module;
->   
-> +static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-> +qemu_thread_init(void)
-> +{
-> +    qemu_thread_set_name("main");
-> +}
-> +
->   static bool load_set_thread_description(void)
->   {
->       static gsize _init_once = 0;
+> Thank you! It's clear and I see the difference.
+>  
+>>> What particularly puzzles me is that "complex" isn't listed here, yet it
+>>> should be positioned between "core" and CCD. Does this mean complex
+>>> actually corresponds to kernel's module domain?
+>>
+>> There is a nuance with CPUID 80000026h related to the shifting of x2APIC ID.
+>> According to APM, EAX[4:0] tells us the number of bits to shift x2APIC ID right
+>> to get unique topology ID of the next instance of the current level type.
+>>
+>> So, all logical processors with the same next level ID share current level. This
+>> results in mapping the Nth level type to (N-1)th domain. This is unlike Intel's
+>> CPUID 0xb which maps Nth level type to Nth domain.
+> 
+> Yes, it's the core difference. I think it's better to have a helper
+> clearly define the mapping between QEMU general topo level v.s. AMD topo
+> types, similar to cpuid1f_topo_type().
+
+Yeah. That can be done.
+
+> 
+>> Back to your question, the complex is same as tile since both represent a L3
+>> cache boundary.
+> 
+> Yeah, this makes sense. CCD->die, and CCX->tile.
+> 
+>>> Back to QEMU, now CCX is mapped as QEMU's die level, and AMD socket is mapped
+>>> to socket level. Should we revisit QEMU's topology level mapping for AMD, to
+>>> align with the above topology domain mapping?
+>>>
+>>> If we want to go further: supporting CCD configuration would be quite
+>>> tricky. I feel that adding another new parameter between the smp.dies
+>>> and smp.sockets would create significant confusion.
+>>
+>> The current kernel doesn't have sensitivity to a level between L3 boundary and
+>> socket. Also, most production systems in current AMD CPU landscape have CCD=CCX.
+>> Only a handful of models feature CCD=2CCX, so this isn't an immediate pressing need.
+>>
+>> In QEMU's terminology, socket represents an actual socket and die represents the
+>> L3 cache boundary. There is no intermediate level between them. Looking ahead,
+>> when more granular topology information (like CCD) becomes necessary for VMs,
+>> introducing a "diegroup" level would be the logical approach. This level would
+>> fit naturally between die and socket, as its role cannot be fulfilled by
+>> existing topology levels.
+> 
+> With your nice clarification, I think this problem has become a bit easier.
+> 
+> In fact, we can consider that CCD=CCX=die is currently the default
+> assumption in QEMU. When future implementations require distinguishing between
+> these CCD/CCX concepts, we can simply introduce an additional "smp.tiles" and
+> map CCX to it. This may need a documentation or a compatibility option, but I
+> believe these extra efforts are worthwhile.
+> 
+> And "smp.tiles" means "how many tiles in a die", so I feel it's perfect
+> to describe CCX.
+
+That indeed looks like a cleaner solution. However, I'm concerned about
+retaining compatibility with existing "dies". But yeah, that's a task for a
+later time.
+
+> 
+>> Also, I was looking at Intel's SDM Vol. 2A "Instruction Set Reference, A-Z"
+>> Table 3-8. "Information Returned by CPUID Instruction". The presence of a
+>> "diegrp" level between die and socket suggests Intel has already recognized the
+>> need for this intermediate topology level. If this maps to a similar concept as
+>> AMD's CCD, it would indeed strengthen the case for introducing a new level in QEMU.
+> 
+> SDM has "diedrp" but currently no product is using it. So it's hard for me
+> to say what this layer will look like in the future, especially with
+> topology-aware features/MSRs. Therefore, I prefer to add the "tile" if
+> needed, as it aligns better with the existing hierarchy definition. Anyway,
+> this is the future topic (though it is related with the last statement in your
+> commit message). At least for now, how to map the AMD hierarchy is fairly
+> clear.
+
+Ack.
+
+> 
+> Thanks,
+> Zhao
+> 
 
 
