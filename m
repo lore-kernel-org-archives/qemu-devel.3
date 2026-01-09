@@ -4,94 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C67D232C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6C5D232E8
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6QQ-0005AE-Mm; Fri, 09 Jan 2026 01:56:48 -0500
+	id 1ve6UI-00038O-Sx; Fri, 09 Jan 2026 02:00:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6Ph-00044j-V8
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:02 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1ve6Te-0002Mu-S7
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:00:09 -0500
+Received: from mail-pg1-x544.google.com ([2607:f8b0:4864:20::544])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6Pg-0002rw-4D
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:01 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-81dbc0a99d2so381826b3a.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:55:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1ve6Tc-0003EV-Qx
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:00:06 -0500
+Received: by mail-pg1-x544.google.com with SMTP id
+ 41be03b00d2f7-c2dd0c24e5cso1859592a12.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 23:00:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767941757; x=1768546557; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1767942003; x=1768546803; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NkrFTEiLemIfD4lfrK8zSoqhMztc5LwCsgR75zu82b4=;
- b=RiAUR0Tc5qvaY/OYnXmaaS7GM9pAvIaoeBhzC6ULxJccjHDICSd1UpmoxL0NuaguHU
- mkqaE0e9dMZNho+yvOI04mX7/Cg6pwew9APGwlfy/kwI3F/64fbuSMxLIr79sAlPCdxE
- ZlAT5Hdjj4YnHWF4C4xt9q4xaf7IBfXWZBGnlgg4lIGgTsk+Y7S9Oz63aCDW9tEIrX58
- 7V1RsoxmdwLp+1rVUQRkfnvFjKTC+BcQrShxV0SMH6yWRLMAHbKA23JY+RQ5PP3i4a2/
- 9cQ92MEFcQkNHpnMCgL+8OlYAECVyPTb0SSc1SZKMV2BtVIRDhhE4ufsXOlDGgS2l+pP
- iVxQ==
+ bh=UX0F9wolq2qlTsJ7DjQBEqwZDNKepaas6gp86hYQm4c=;
+ b=EAn9g/BaFOhyknKKS16zRlfJMXfRmKqiD0cFVUoYj2QkLMcSpgFZ8qeif0V53yeyqY
+ GKXZ8QqK3kJLzy/9xrilj5Sxh1xemsCII/DPGJgLZ2SqIk12U74IgA81oDpRvOjiLosi
+ tSaay1iIwIZfFBrsxpjQishctd2chqNTJB+VcExU5RhgWW62HWRIyHmeMxie2c+7G/70
+ ewynxOfgQsyAH5YKpWB52f8xTeYJKEBQ+aPIl+9XuwxnDO8Hs/LSnStFzb5AUg4f4mMG
+ 1NrAir3Whc559HeixrzYIX++cEdljjkki1DePOYDYmoRkwEqGOBsAXlWy/QRVc8DaMmV
+ K12g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767941757; x=1768546557;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NkrFTEiLemIfD4lfrK8zSoqhMztc5LwCsgR75zu82b4=;
- b=fdagzOwr/Mn0bBn23UG27rEhlrJCBGMn5Zj6abBe526YV51H/MhDxE2BV2mGHLtt7m
- YxJsyjbq9UaC9dA9hzO06A91jBgdo+RvaIXAmT89PjFAjEu+WIrM2ssoBjRhKvwOumyD
- qiS45LS1yLKZt2nLuto/trpfYNspkL+WHadifvXuyIcqb+Rkme03HcoQPiDDHE612qzX
- I+aWVKrXbDtr8RRZB6fuzm670p/qkvv5LfPNktfVbWiEFe2mueJNAqMpMG2o1eroIgmP
- Mw68X7MpIMToW+mfd5AmPCr4GkJ72yB3WPzCaAqoKZRYD148pidq2az+O7EW450Kt1xk
- QiFg==
-X-Gm-Message-State: AOJu0YxWC7c4mpzbdvmjq9K+cRpRoLvMXsEhbs9SMaFvC+hjzj+/Hgm8
- qMH0lJKweZUVv11WZ4+EtcGKq1uZZtrWcrmVhDWIIgx/iI9FlvKyhU37rjEZ7Q==
-X-Gm-Gg: AY/fxX54fHGwv6wQISSFFFiJUQD+6cMrJYEFVgLBlij+p3xs5hAzB7D2kMAkX4RPdmf
- vGo1rGsf+uFqMYuqU5WXgz2vaI1ixbcznh/tL2Fl6181LQRh+WUzqrCYzr95tambLF8xPbvgUNr
- xjH0tlOlTQNkCWvmnC2NJ5rBlZoInseMpFQYskRoFHUGFzTloKHPGpdRQ5LI6eW/HILePpfKUtR
- gKOuWhUin9sgKQudSi9cqRKkYXKkboUhTPFhPRATAWULD8sCWYi8oW0icRDQnURshr0RJZ7uwph
- Q/8z57RDTQ1mXs/I/0fapwZfLrU+RB97IN16zesbN4r2f8bgQgibBU9VqrnJMxpVSQop6EaB3Zx
- ZFw7KuIW942aKwK5urtYRQHR5j7/TLaiOAmRbobNZ2Lt7TK7gJNmCgVwyNKELZE+4oD4n2ztxSC
- SQS4LXci4YaPY5J60bTIuX/L1MI7bsA1xRULXQxt9+m5vrYQ2uaA/jzwjeX7eidN6yq+tVA+EVV
- lvxjOWGRDSbFsMzc7M=
-X-Google-Smtp-Source: AGHT+IHmZqtD0uBJhl9OE/1YEwJTnYHzlaVd+RdwHKxO39kMkh1v99s/heSk2DG0EqQWFsUBlRfZVQ==
-X-Received: by 2002:a05:6a21:6d89:b0:37e:8eab:c05f with SMTP id
- adf61e73a8af0-3898f9e43d8mr9295129637.59.1767941757392; 
- Thu, 08 Jan 2026 22:55:57 -0800 (PST)
-Received: from toolbx.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.55.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 22:55:56 -0800 (PST)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 15/34] target/riscv: Combine minstretcfg and minstretcfgh
-Date: Fri,  9 Jan 2026 16:54:40 +1000
-Message-ID: <20260109065459.19987-16-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20260109065459.19987-1-alistair.francis@wdc.com>
-References: <20260109065459.19987-1-alistair.francis@wdc.com>
+ d=1e100.net; s=20230601; t=1767942003; x=1768546803;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UX0F9wolq2qlTsJ7DjQBEqwZDNKepaas6gp86hYQm4c=;
+ b=gd/1DTGKzdcBfzZ7J8hzhLiq+baKP1Vq/5eRYydqVZwrps6WTA/zTA9pXmv8x6Ggdy
+ K6GwyCS+bDrv56Ogfy9QJzdNol2ywPD8X6gJFDtUXU1k01xtMdxkBymc7/ZmeoyaBjpq
+ Udt45kb4uSSQ4lmYotKZdj/YZW/y5/qh7m+XEmHAjyXO2hFc29JzGM6eWsaUFkPxNHQ4
+ sBV+puJvkNpQ9McLxGEGZZ82jK2IJv7Y3SWRYPwQx3mJ02Paa6LteTaajXU2+/hA9Kei
+ 1wCdKZm5eM83kEWhhrqQkKxNr4ORxGnejJ0AieZ3XzxN5cn1BvCWP/Cu00FUjdKaUNi8
+ QLSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrLEufiXcXfQ7Ajk60KCbK2pAL/Ll9CAI0fTLgMhWvZrRRk1rJ7UJtI40opSRJrONRVbK6CS2tNe2U@nongnu.org
+X-Gm-Message-State: AOJu0YxS0NIzCyQS2VpcCPeZxyVRZFAMGleOsZyaZHyUzXTOeHEarHtg
+ uERG0XDrOz0WvTfW2fUlwot6QynUAeBn831Y+2E09h+kZ1MxGGrIR0Bv
+X-Gm-Gg: AY/fxX6b558cjTXFVN/e4SFP4esC9a+atXl9QdEBzUlVS0jl20LpvhY2TDY6F7vE4op
+ rP/wCoqOCUAlWZyno6FOxDfn95N682ZtNzWm8h01I75RTqtpAdP2A4zSIC554E2uXZexXQbbY4g
+ 03cYzlXswv4XjUFhSn3YoURxbthl0ARGQSlfPaxXM/ZLx9x47UHNqb21KMD1nhUSYMAgUbUxRIN
+ MBjR7PMXCiSCsvXMBB0Afo/1zlPVIrde3VUlc6dLeUThAc00o8GRSKsdxVdadNgZ9kjwrnaENM8
+ hifkKJ75LRgjFK//164Vx3l406HrJzV+sYD1LdOXEi32Kw9nYli97NnHVF6rswt6zqI0L0CHNM8
+ 7VD++VXP5stXW7A10nhlKXLU0A/mKrwGSFRszIhof90KE8aReDiObehlyGdNLH5xnHBgK7eVR+9
+ o5h0H31Hzy+AcpC/zN98Bfksd49OC9bWHY3dIX7FB6G59eGeGfmlzqE65wVq4=
+X-Google-Smtp-Source: AGHT+IHPpHELb1Gb0EWXea48XDf1pRP1Ism0vJoQ/Gdhkd1sKm9HH2eS95cxokqN1kylrBGAC9Piug==
+X-Received: by 2002:a05:6a20:1582:b0:351:118a:62b0 with SMTP id
+ adf61e73a8af0-3898f94c264mr8909629637.17.1767942002990; 
+ Thu, 08 Jan 2026 23:00:02 -0800 (PST)
+Received: from [127.0.0.1] ([218.81.29.112]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a3e3cc88e3sm95244725ad.75.2026.01.08.22.59.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Jan 2026 23:00:02 -0800 (PST)
+Message-ID: <d235db23-1c03-4adc-bcb9-e190205f2c74@gmail.com>
+Date: Fri, 9 Jan 2026 14:59:57 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/18] target/riscv: Add cfg properity for Zvfofp4min
+ extension
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20260108151650.16329-1-max.chou@sifive.com>
+ <20260108151650.16329-15-max.chou@sifive.com>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+In-Reply-To: <20260108151650.16329-15-max.chou@sifive.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::544;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pg1-x544.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,101 +112,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+Hi, Max:
 
-According to version 20250508 of the privileged specification,
-minstretcfg is a 64-bit register and minstretcfgh refers to the top
-32 bits of this register when XLEN == 32.  No real advantage is
-gained by keeping them separate, and combining them allows for slight
-simplification.
+On 1/8/2026 11:16 PM, Max Chou wrote:
+> According to the ISA spec of Zvfofp4min extension,
+> "The Zvfofp4min extension requires on the Zve32f extension."
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
+>  target/riscv/cpu.c                |  1 +
+>  target/riscv/cpu_cfg_fields.h.inc |  1 +
+>  target/riscv/tcg/tcg-cpu.c        | 10 ++++++++++
+>  3 files changed, 12 insertions(+)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 081891c97a..9d4fc3ab6b 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -193,6 +193,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>      ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
+>      ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
+>      ISA_EXT_DATA_ENTRY(zvfhmin, PRIV_VERSION_1_12_0, ext_zvfhmin),
+> +    ISA_EXT_DATA_ENTRY(zvfofp4min, PRIV_VERSION_1_12_0, ext_zvfofp4min),
+>      ISA_EXT_DATA_ENTRY(zvfofp8min, PRIV_VERSION_1_12_0, ext_zvfofp8min),
+>      ISA_EXT_DATA_ENTRY(zvkb, PRIV_VERSION_1_12_0, ext_zvkb),
+>      ISA_EXT_DATA_ENTRY(zvkg, PRIV_VERSION_1_12_0, ext_zvkg),
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+> index 59302894af..353a932c36 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -104,6 +104,7 @@ BOOL_FIELD(ext_zvfbfmin)
+>  BOOL_FIELD(ext_zvfbfwma)
+>  BOOL_FIELD(ext_zvfh)
+>  BOOL_FIELD(ext_zvfhmin)
+> +BOOL_FIELD(ext_zvfofp4min)
+>  BOOL_FIELD(ext_zvfofp8min)
+>  BOOL_FIELD(ext_smaia)
+>  BOOL_FIELD(ext_ssaia)
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index ba89436f13..c095bc9efd 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -715,6 +715,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>          return;
+>      }
+>  
+> +    if (cpu->cfg.ext_zvfofp4min && !cpu->cfg.ext_zve32f) {
+> +        error_setg(errp, "Zvfofp4min extension depends on Zve32f extension");
+> +        return;
+> +    }
+> +
+First check.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20251027181831.27016-8-anjo@rev.ng>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251103033713.904455-7-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/cpu.h |  3 +--
- target/riscv/csr.c | 18 ++++++++++--------
- 2 files changed, 11 insertions(+), 10 deletions(-)
+>      if (cpu->cfg.ext_zvfh && !cpu->cfg.ext_zfhmin) {
+>          error_setg(errp, "Zvfh extensions requires Zfhmin extension");
+>          return;
+> @@ -738,6 +743,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>          }
+>      }
+>  
+> +    if (cpu->cfg.ext_zvfofp4min && !cpu->cfg.ext_zve32f) {
+> +        error_setg(errp, "Zvfofp4min extension depends on Zve32f extension");
+> +        return;
+> +    }
+> +
+Re-verified Zvfofp4min -> Zve32f.
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2942fc1eda..b94c444678 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -421,8 +421,7 @@ struct CPUArchState {
- 
-     /* PMU cycle & instret privilege mode filtering */
-     uint64_t mcyclecfg;
--    target_ulong minstretcfg;
--    target_ulong minstretcfgh;
-+    uint64_t minstretcfg;
- 
-     /* PMU counter state */
-     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index e9e30384b4..894ae4d7bf 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1116,7 +1116,8 @@ static RISCVException write_mcyclecfgh(CPURISCVState *env, int csrno,
- static RISCVException read_minstretcfg(CPURISCVState *env, int csrno,
-                                        target_ulong *val)
- {
--    *val = env->minstretcfg;
-+    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
-+    *val = extract64(env->minstretcfg, 0, rv32 ? 32 : 64);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1143,7 +1144,7 @@ static RISCVException write_minstretcfg(CPURISCVState *env, int csrno,
- static RISCVException read_minstretcfgh(CPURISCVState *env, int csrno,
-                                         target_ulong *val)
- {
--    *val = env->minstretcfgh;
-+    *val = extract64(env->minstretcfg, 32, 32);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1160,7 +1161,8 @@ static RISCVException write_minstretcfgh(CPURISCVState *env, int csrno,
-     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                        riscv_has_ext(env, RVS)) ? MINSTRETCFGH_BIT_VSINH : 0;
- 
--    env->minstretcfgh = val & inh_avail_mask;
-+    env->minstretcfg = deposit64(env->minstretcfg, 32, 32,
-+                                 val & inh_avail_mask);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1247,8 +1249,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
-     if (counter_idx == 0) {
-         cfg_val = env->mcyclecfg;
-     } else if (counter_idx == 2) {
--        cfg_val = upper_half ? ((uint64_t)env->minstretcfgh << 32) :
--                  env->minstretcfg;
-+        cfg_val = env->minstretcfg;
-     } else {
-         cfg_val = env->mhpmevent_val[counter_idx];
-         cfg_val &= MHPMEVENT_FILTER_MASK;
-@@ -1576,12 +1577,13 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
-         }
-         break;
-     case 2:          /* INSTRETCFGH */
-+        cfgh = extract64(env->minstretcfg, 32, 32);
-         if (wr_mask) {
-             wr_mask &= ~MINSTRETCFGH_BIT_MINH;
--            env->minstretcfgh = (new_val & wr_mask) |
--                                (env->minstretcfgh & ~wr_mask);
-+            cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
-+            env->minstretcfg = deposit64(env->minstretcfg, 32, 32, cfgh);
-         } else {
--            *val = env->minstretcfgh;
-+            *val = cfgh;
-         }
-         break;
-     default:
--- 
-2.52.0
+Thanks,
+Chao
+>      if ((cpu->cfg.ext_zdinx || cpu->cfg.ext_zhinxmin) && !cpu->cfg.ext_zfinx) {
+>          error_setg(errp, "Zdinx/Zhinx/Zhinxmin extensions require Zfinx");
+>          return;
 
 
