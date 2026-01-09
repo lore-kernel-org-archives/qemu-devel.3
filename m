@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BB3D26D9B
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 20:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C202D26D99
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 20:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veJQE-0007Cd-8g; Fri, 09 Jan 2026 15:49:26 -0500
+	id 1veJTF-0000b7-AE; Fri, 09 Jan 2026 15:52:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veJQC-0007C4-Nu
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 15:49:24 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1veJT5-0000ZB-Jl
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 15:52:24 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veJQB-00087H-56
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 15:49:24 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-34c1d84781bso2719339a91.2
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 12:49:22 -0800 (PST)
+ id 1veJT3-0000by-HG
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 15:52:23 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-34c1d84781bso2720172a91.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 12:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767991761; x=1768596561; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767991938; x=1768596738; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5zLBkdwX5NmtvgW7FWb6StxtrXev64CqXqSiJ5x04XY=;
- b=TCs2njUWChuNhHVyt0PUmaKyH5IJnq4obvf1V1hnrtCAd57eUHm92PV+YqsxJ4Dqke
- Ms9d4+FLlUYcFX+cZQBVZg37XBh6kdUTwz9fGSAzAuzEJA6YwImbpvZ7t/O2NMsoGmU+
- 3etKHR6AXO7lfoqw1gM20fP4YpLlJtmIhLG8Q3nWHCMqPNKmzIV5mvfXbNqIALyVUyxu
- ay8X9clyWyhb9W24+dgVwE8I6rWveT6VytTw1Ge9dVu7rbi9sidGyeFaXN11JfmeSpOx
- Ne0Uak6eNkLhtqWOTIy6jCn2ODU63+VrWVLCQVxI4Ep+IWXC2/IKQe5izqkKthJlD6B+
- uNMg==
+ bh=/WT9KaLRjgWF0WwHsxRCo4jp5NA8MpK0tDWZnGqOrr4=;
+ b=RvlDdFMH50DYm2Ph89wFIDn//y0hoamL+lASqf8BSCOPBTDzTxo/FSIcg+OrPhcLsb
+ ooye/NVNbhDglh7dKza//t8nmPEJogNTrPhAbJMQ/3oH4s1AP5gptg0L3hziw2W8NP+N
+ T4o6QpA2dnRDLFSkXoSn68BV+dfCpCaGHvDtLIBqkOAVPBZw2T47fRngyVPCjG3YCptt
+ AhaQs2LINiRL2WX1lsy8qx0oG5XFR37yVXfQXPu8F+OyKLAyx1G47+He+H6PtQl3Yjfk
+ V2ZrPT2O30VCqU5wWdZ+ji9LKTBzmKfJnaMlTwjbFHIYsCNUjO92kwv+yChzZh4G/3Gm
+ y4hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767991761; x=1768596561;
+ d=1e100.net; s=20230601; t=1767991938; x=1768596738;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5zLBkdwX5NmtvgW7FWb6StxtrXev64CqXqSiJ5x04XY=;
- b=oxpuh8Ikip5IwOiT1Sj25ayu7Ibb4lia0/ypeql7WE1nw3rFZCfAh9DbSGZplEkKm0
- JPObOV+Ne2OKXAF5vkJxW+z3zvqOe6MjS3YAwbYdtp8o+s/WF7wNHDnJCgvOJok6q/+u
- mqUV4nr0FA1JmdTxIoOq7lLR7fD6sX8H9fXP08u4ikEPlJ+rtQDeyEtzKqWzW0IjovDZ
- 6jc20RM21QaMRO5wYJ+pTONp471HHSfIy2si92PZ+CeDEopETKCgwdSDYKQI271l5aPt
- aPQDFisIjzLWzKhWcSVKGuqhFQpFkrhP+hQDpXwAxkw5RbwAnYuB+qhwaEMyhiS8VVR7
- fMNQ==
+ bh=/WT9KaLRjgWF0WwHsxRCo4jp5NA8MpK0tDWZnGqOrr4=;
+ b=rM0fKHZMIybYC+mXixyAqJYHgHKw3RoFGThdTI4a6Im/599mkcI6t1qv+qyTE7UP9w
+ aCfze5bhpV/ao0pTOhj97Vd4lui2tHGbtQqpWl9oPDlO7Uwk/pzI5KPiHgETodlelTNb
+ DbJVc9kkS4PqnPCLXLNTSnD2ZqSlQZ1CeVVPy3X7h/EYqsHKB05VS3J/DiTgpWDhdF3l
+ J+VXysWj4L7MB5RY1ohTTi7s0DoqeQvHsJkaXHLccPknraPLyn2sRuJdjcIEsYXSQsg0
+ OCcGILc+PFDP7AoeNfkX4JzrFBKc4GwqAO2latW15RwkShueDmmBLU/7xdBXrS6grMV5
+ DL1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWN+dafvWitC/QKVtDufNSN7YpQswxLMQDVUmIVYNVPiXWJUhFRxSi1y7HX0IABE0VnaK2FgvX/f3IZ@nongnu.org
-X-Gm-Message-State: AOJu0YxkXXL0ZqOm1J792mrMAiPV1iKiFtuCk+7cQ3pIt5PIAKLobm+z
- RPT2bpAhhHS/EX/EeJPUltEOdFymQRVklnc80tkBh8ziKB9oHd6mZ2VevNvxyRZZFm8=
-X-Gm-Gg: AY/fxX76jvPUQHNNNNzG1ftwpGHcdGfjfyMMRSlwS/H0tvXp5nj5+pz/8qpfQU2d1MN
- u+638URYdRmLCdHmwdA1jB1YdsBK4n4KC3FlSgXd+7221BagGzvfTF0wYA1F49eqCrGYAPLypH+
- TxP5aq4LgUQkNY0T+1zpoDeAvldrETqilWY4F6zfdmV2y9oRZicaCJ6IhL8VIjOC4Rl4yDF1+8X
- JRq76ArQhjG8s16plvvTwRzdBHTU3/H2/8vwbFrqqPoOb5IwgBMG9ThNisEWzq59xaGB7n3KIW1
- UYl3dtlNNzUtX20PNz7aV89CDfWYSAvP61EaLPjdZkwDrKcPWw28ZFDxgeCJURJ8JUWx0Kzh783
- huklx8LLhWJFYBW7o+efjFwcYxmqXCjahzVDK42l+z7BBbI1iDLYh2K12D6M0gc7ybxnbRo4kD9
- PKAVWWjexrKarGxmGS0r5YTvvx5w==
-X-Google-Smtp-Source: AGHT+IECV2Khhb/YZwKyKBCi98XAcg6RA7KWM/+X8KKugGMGzsQMGYDTuy9pqFLTyUGQYiwC9mTyhg==
-X-Received: by 2002:a17:90b:5746:b0:349:8116:a2d8 with SMTP id
- 98e67ed59e1d1-34f68c02457mr11047172a91.7.1767991760961; 
- Fri, 09 Jan 2026 12:49:20 -0800 (PST)
+ AJvYcCVIWoR2my52EcGPKD0aGqPC4ZYAlEL9tEh1G9SP6lza4egc3j9H1Nb9/B8dd3L8zPDdXrDzf3vfLYKq@nongnu.org
+X-Gm-Message-State: AOJu0YzWXt81eGiigP677Q1FsU9og/BnkGt7IK90ydPBWBf23KiOw9o+
+ 2ffnN1LrD1XLtOzFxYddH/VLvt57DEAKYzfh7H1ToJHHG2YHDZ2K7bLR/tBUxX7YGio=
+X-Gm-Gg: AY/fxX45Jk6ZGob3390VK/LT+/kaN2SByg3jmWtDJdpnAyxp5MbvAFQccwJBFHQ32fS
+ QTy1VO/QLWooSKV+AXqLnxbzlHw+xWS0qX+WjisUwDbsbuKwTi84KwQcwzN5Tp32tpMEYpSwdA/
+ 0m1REnZyxiIhXayWDDSNAGkJfi07uzhw75x10z03PBY1Ad7ySQwjz8Krnc1FftK9IYdOPt1F9q7
+ rVuEp/kn763OT/Z1MbEczwrfskKPsePheCfa9fvPsk18yfQJ/3JRBL+wnrw+PlaS91puKi+dL4u
+ DzMiWbgdG5DQUSLFPpbww2iqiEH0JwwjCzcDKVtkCwtf6h9qxHe5YllNaRzjlQyVVnqsXCjrdtA
+ mYSSLb+eVA3Hu3jb0ENRxiKtLWA4uNXUHH9AcRdLSZ/hg9ThzzoXyv784gMJLyOdSTQWgm7spuE
+ 9yZ/bW6v0xVNumabqb4wh9WU62Iw==
+X-Google-Smtp-Source: AGHT+IFe/+mxMAnLvQLcbgOSprpYeHKv0V5aUcI2c1+QJ2UUd0w3B85LlO5+xYNxler/pcUApwhfqA==
+X-Received: by 2002:a17:90b:5708:b0:341:8b2b:43c with SMTP id
+ 98e67ed59e1d1-34f68ca4541mr10622154a91.18.1767991938370; 
+ Fri, 09 Jan 2026 12:52:18 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5fb74435sm11452787a91.14.2026.01.09.12.49.16
+ 41be03b00d2f7-c57ded24df5sm482682a12.1.2026.01.09.12.52.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 12:49:20 -0800 (PST)
-Message-ID: <23d64b20-01ec-4237-8816-7adb1fa3141b@linaro.org>
-Date: Sat, 10 Jan 2026 07:49:12 +1100
+ Fri, 09 Jan 2026 12:52:17 -0800 (PST)
+Message-ID: <a17f477f-bcac-4eac-8fd5-09a6e99c8f30@linaro.org>
+Date: Sat, 10 Jan 2026 07:52:10 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/4] dockerfiles: Add support for wasm64 to the wasm
- Dockerfile
+Subject: Re: [PATCH v4 4/4] .gitlab-ci.d: Add build tests for wasm64
 To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -83,14 +82,14 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <cover.1767886100.git.ktokunaga.mail@gmail.com>
- <bd5596d373b9b801c5ca838d316bea4c5aba4674.1767886100.git.ktokunaga.mail@gmail.com>
+ <79ec37f7fa0352d0463ed6ec5496f6a88f47d111.1767886100.git.ktokunaga.mail@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <bd5596d373b9b801c5ca838d316bea4c5aba4674.1767886100.git.ktokunaga.mail@gmail.com>
+In-Reply-To: <79ec37f7fa0352d0463ed6ec5496f6a88f47d111.1767886100.git.ktokunaga.mail@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,20 +113,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/9/26 04:11, Kohei Tokunaga wrote:
-> @@ -46,6 +49,16 @@ pkgconfig = ['pkg-config', '--static']
->   EOT
->   EOF
->   
-> +FROM build-base-common AS build-base-wasm32
+> +wasm64-64bit-emsdk-cross-container:
+> +  extends: .container_job_template
+> +  variables:
+> +    NAME: emsdk-wasm64-64bit-cross
+> +    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg WASM64_MEMORY64=1
+> +    DOCKERFILE: emsdk-wasm-cross
 > +
-> +FROM build-base-common AS build-base-wasm64
-> +ARG WASM64_MEMORY64
-> +ENV CFLAGS="$CFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-> +ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-> +ENV LDFLAGS="$LDFLAGS -sMEMORY64=${WASM64_MEMORY64}"
+> +wasm64-32bit-emsdk-cross-container:
+> +  extends: .container_job_template
+> +  variables:
+> +    NAME: emsdk-wasm64-32bit-cross
+> +    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg WASM64_MEMORY64=2
+> +    DOCKERFILE: emsdk-wasm-cross
 
-You've added this control as a configure flag.
-Why do you also need it as an environment variable?
+To expand on my question about WASM64_MEMORY64 vs --wasm64-32bit-address-limit, I would 
+expect the two wasm64 build jobs to share the same container.
 
 
 r~
