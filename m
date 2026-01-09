@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C521D26D7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 17:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1633D26D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 17:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veGGM-0000X6-Vi; Fri, 09 Jan 2026 12:27:03 -0500
+	id 1veGRT-00077d-5b; Fri, 09 Jan 2026 12:38:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veGGD-0000Ty-Kx
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:26:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lleonard@redhat.com>)
+ id 1veGRQ-00076p-SU
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:38:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veGGA-0006YJ-RK
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:26:53 -0500
+ (Exim 4.90_1) (envelope-from <lleonard@redhat.com>)
+ id 1veGRO-000265-Ll
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:38:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767979609;
+ s=mimecast20190719; t=1767980305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BC5/C3Fn9fnvF6/higQNpNdnu7olzzpVNEu7o58VIow=;
- b=ZRdngEzl5gzKmuCsE/4KDp2rcvM634ztdXumMppM+wf2HZ0XPaHSNQthIY2E8P299/MsPK
- BUTMJ73sVNdjET4MxYIbyPY2UMDh7GhyUGRva+IDtbT/7FpQXY+QKNc5qtj5ay9ydJ+IQy
- 3uMyR/I6Nnl7LZq1xE85I58/tXXxVYA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nGlJuAECP5RVFOi0B7pIIh4LfZmxJEZfIbuQk0LjIh8=;
+ b=PqZBJIcyFI/1KNP6KlYnYCNdc0DmLjB0nlDj3Irsxx6ohsH7A2NkKy26waUBap7yrjJkdj
+ t1YjNBtG6Jxd34MeP0Dlivq+MJkcs2awik24a59K6bkxWaHKgJ8JXiJY6XaXbm42/VXRGN
+ DuAH8QhZzSBE024X95BuaDGG2kXYYiA=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-544-XVhuU-9UOnKjEyWPA7I8MA-1; Fri, 09 Jan 2026 12:26:47 -0500
-X-MC-Unique: XVhuU-9UOnKjEyWPA7I8MA-1
-X-Mimecast-MFC-AGG-ID: XVhuU-9UOnKjEyWPA7I8MA_1767979606
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-42fb1c2c403so3036798f8f.3
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 09:26:47 -0800 (PST)
+ us-mta-15-IRnpbN6EPASojhBHQb5Nxg-1; Fri, 09 Jan 2026 12:37:15 -0500
+X-MC-Unique: IRnpbN6EPASojhBHQb5Nxg-1
+X-Mimecast-MFC-AGG-ID: IRnpbN6EPASojhBHQb5Nxg_1767980235
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-63e0c5c5faeso6630983d50.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 09:37:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767979606; x=1768584406; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767980235; x=1768585035; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BC5/C3Fn9fnvF6/higQNpNdnu7olzzpVNEu7o58VIow=;
- b=AMWVXL4P145P+wJtnE/t1sTrTAG/HIFabr0poMHH4lEFrIRraC0ae5c/5O+ijLQeyr
- iBky/2NMTFBAguaDGbfeBgvu7DFhXXw3fmzEtWDiAN4yojQqpBAetJ14ZLf61kHnuD1+
- lq+gpe6MAs5XuPadwjHNB2oxNNLuJY9Y1sos96iUCniDRaF/v85IbEIPDxeIB25pXhml
- USSD4l9H2ywBu4m4gaWCJlkQGXsXW/ihtWqnk9HtfqJ3SAWefy4y9OSgMJITlKfDm8br
- hmUXvAX4LUgCS5oLG6Zl5mbB/RNmxTHdHHvnJbjlkJllrhy8L8DwDgzvkKP2QkFSgP42
- TCKw==
+ bh=nGlJuAECP5RVFOi0B7pIIh4LfZmxJEZfIbuQk0LjIh8=;
+ b=i0IOCm21CdktZkEyMc5kbz/d51o0FuT66TkBubPwxS9wW8tKsvD5WxPbyiSvQHfMpe
+ lrmG9I/bCKWRKhlVjGwk9L12qe2eB76uO4OyEflSwKjZQns/Zhiwdyp2ITQnuOdGCfXd
+ pnF7W+3JjinlD2seg4KY1+HomuB2VumM9L7wivWTofdR6S2/vQatUM0yffwvMFsehNuK
+ ubKaEAhdepD44iT6RWNHSxECY2brwTV8skNAqcOTmnIZF9pZKaGO6TPr4KqaBCug8/CL
+ eI3S4t1eLl/TrFVNpSs5cV0doG8alThxzss77Cv41Rc9+HLqkzZmApG8mrU+kNxKKiNw
+ nlkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767979606; x=1768584406;
+ d=1e100.net; s=20230601; t=1767980235; x=1768585035;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BC5/C3Fn9fnvF6/higQNpNdnu7olzzpVNEu7o58VIow=;
- b=qoVJZJcO3gJHa1rdgh99LlJAru4nf9gLjZzHgX9p1oNNSqKB+A1eoa+2Oc3wQJqqPt
- 3Y1uRO823ATbo5EV7GO+ckcwNKgLIB5IBmTRMhG3Ac3HSk0GesDPF60VyCVHnHW4oiMI
- zNjlSByVEK0JlwTKRjc3TqmSg2kUlGIlDSqJcbXLuQyTB72Umg/jAPQuCr0bGzUaYqq9
- 17dPjcqIL5YNQvfQET6tzIM8c317jix380xQyw1ftO/3WhbSE75uSRuaOyaeIcMmWeiW
- 6LgwWI/DzT2JU94m+jCKZGibQ9dNMY/knJpfyI1xVB/CNcyzp4WCwuvDVU0GKWEe1+bi
- 2LKQ==
-X-Gm-Message-State: AOJu0YxZgGpPrn49Fw5CVYkyLlp5QNtGNSSO8jEbGHuMaMHNLiM1tybY
- hgkcIHF7xe/AI7/qfg3EcE7FIyzamqdqowdlbbtIjHItPc3K07+Ic/F7OiECXMPQ/ODP7mNGZVQ
- CRTxTljxFFpCQ24kk2COyiVmL1AIgdevNQQRESFnio0fGWJhuLAsz4Wn76q1L2LIUz7gzh5l2YF
- qQgQUx9PJ/POSppylxh0zR7kKX5MqE4AqBdzvQL5s=
-X-Gm-Gg: AY/fxX4/2siU3o+KUV6iSPx0xw7Xtt/Yc+rShUEnFwLgk+6CCYWvR3hXX28tPxGY1nO
- psoNfpzX4P7QJv0G7aA30GWrOvD2OxC68XvkKD53CpT1Js31QxB2nBSAArLtktUBSikiyN8lw9b
- BAAdeaH+B5KExh1tvhK1QmWvgSX8DQYHLc4RfpSM0clGkA2IrH/8yBBgx/5tGQKPzM/qLgVYoXy
- eVNRI3enpxX5gSv6HTx52wBWQIhh+z7XVHRWobLdm3Bk837yqJyVLibUAHEOPhk9EfgwA==
-X-Received: by 2002:a05:6000:4024:b0:430:f59d:4dfc with SMTP id
- ffacd0b85a97d-432c378a153mr10921904f8f.9.1767979606004; 
- Fri, 09 Jan 2026 09:26:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHa31tvJsDVw/Ho2P/qsgUz2o9IzqhaqEoCPAiE+87W3tibqX+/AB3WqXHlxr0F1jgkQWuXchHgGHc24m/T1DU=
-X-Received: by 2002:a05:6000:4024:b0:430:f59d:4dfc with SMTP id
- ffacd0b85a97d-432c378a153mr10921885f8f.9.1767979605548; Fri, 09 Jan 2026
- 09:26:45 -0800 (PST)
+ bh=nGlJuAECP5RVFOi0B7pIIh4LfZmxJEZfIbuQk0LjIh8=;
+ b=Xdc6SGAytc3tdxOsC3lJnt2IWCYIThivj/kpUX+xoJIlByN9HA+e5kB45vUpfht1cv
+ p3txP+4QCHYp9PdcZhlyULGx3ZGf8Uwos+wSvFONPpJX863zTH3KeAiaXlKaCAbhzf7c
+ QD90xn6403+kpvGetLhar2PDxdDCCnXtL12i+BoppLHuSfq+RimGWX9JxZMygUC8dmjx
+ 6gWIukHQL3cjPoeHI9IQx9G4p0qxq4lrX24FSs3gU8YoWR5XpYExEDEEtJB3DMRCGTgD
+ u4IW5MZY3YaL2lGVbfTLkN/SYOOMG0jlIA57hTXS0Y1Bdo3X+3zFZE14sbt+zgiunL7I
+ SC0Q==
+X-Gm-Message-State: AOJu0Yz6Ng2IUMDL582o+rv6gWuW0YiCO75CrkyDClcSl4YXLoSIsVkC
+ TZfFs44fvXsLUYgKpeCjDKVhpCJmOft4XIF43n55CL7T09dgWzwT/BAqCGjcvtHMcnjz7Laa/Wg
+ TfwIfM7qxX0TJOyIWiF7GoIokDvduP5zkhtHwnm/f7v8dJWL9QxwB4204/1v+siYFnGeDecj6Q2
+ UECgUoOiqA0ibg5vX0qUP4wsZ29JX1LDo=
+X-Gm-Gg: AY/fxX4O2pUDVbGENJ0EVrfxhjDL68pHiPHBxDqEuViREASwrKJHNZup412GE3Oay7o
+ mPF13y/r5rl5rcFgwb4QF4qinBloVx3RislbWgiZMeouSOiz5wTvfiLqR0P4bBFtAhth0rq9NUi
+ XpUEyfOIyX9myJt+dVE40pFwLwGve9MNWFqOJEGwozsobgC/2OmNzJCXzY+PDbTHydWQc=
+X-Received: by 2002:a53:ac52:0:b0:63e:1ee2:eb03 with SMTP id
+ 956f58d0204a3-64716c44ff8mr6829673d50.45.1767980235129; 
+ Fri, 09 Jan 2026 09:37:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFaDuse1smMukXQ1jao6s4JVhTsVE3agPqyNoVuhcornHPk7Oh6l0MSW3HItJpIVH6fuNFbz/OXRwvg9tF/lvk=
+X-Received: by 2002:a53:ac52:0:b0:63e:1ee2:eb03 with SMTP id
+ 956f58d0204a3-64716c44ff8mr6829654d50.45.1767980234802; Fri, 09 Jan 2026
+ 09:37:14 -0800 (PST)
 MIME-Version: 1.0
-References: <20260109165058.59144-1-philmd@linaro.org>
-In-Reply-To: <20260109165058.59144-1-philmd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 9 Jan 2026 18:26:35 +0100
-X-Gm-Features: AZwV_Qg4jRWt1sAw0Set4w0GKRNxK_ihEB2td6Q0ZXO_5ew6KFzXE_v_66NaPIg
-Message-ID: <CABgObfaEj8_ssaUhZRpsH1u-wRiPU=V0yj165WRuMBoOy92qBA@mail.gmail.com>
-Subject: Re: [PATCH v5 00/22] system/memory: Clean ups around
- address_space_ldst() endian variants
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000005bfd460647f7d498"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+References: <20260109143413.293593-1-osteffen@redhat.com>
+ <20260109143413.293593-4-osteffen@redhat.com>
+In-Reply-To: <20260109143413.293593-4-osteffen@redhat.com>
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Fri, 9 Jan 2026 18:37:04 +0100
+X-Gm-Features: AZwV_QhxT8wmn24EHLaBATVAerYOq5e7_fWePbVJH47-tb6Fs0SzPwwIlPTkNZ4
+Message-ID: <CANo9s6muvcOrDH286o1zA06tRUvZBnOBqn03e0RiOEDC60W4sg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/6] igvm: Add missing NULL check
+To: Oliver Steffen <osteffen@redhat.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Joerg Roedel <joerg.roedel@amd.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ kvm@vger.kernel.org, 
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lleonard@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,231 +120,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005bfd460647f7d498
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Il ven 9 gen 2026, 17:51 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> ha
-scritto:
-
-> Missing review: 2, 12, 20
+On Fri, Jan 09, 2026 at 03:34:10PM +0100, Oliver Steffen wrote:
+>Check for NULL pointer returned from igvm_get_buffer().
+>Documentation for that function calls for that unconditionally.
 >
-> Since v4:
-> - No change (RESEND)
+>Signed-off-by: Oliver Steffen <osteffen@redhat.com>
+>---
+> backends/igvm.c | 13 ++++++++++---
+> 1 file changed, 10 insertions(+), 3 deletions(-)
 >
-
-For subpages, are you leaving for later the switch away from
-DEVICE_NATIVE_ENDIAN?
-
-Paolo
-
-Since v3:
-> - Assign device_endian enums (Richard)
-> - Add/use ldm_p() and stm_p() helpers (Paolo)
->
-> Since v2:
-> - Changed opt-out to opt-in approach (Pierrick)
-> - Split big patches in smaller ones
-> - Mark ioport little-endian
->
-> Philippe Mathieu-Daud=C3=A9 (22):
->   MAINTAINERS: Cover 'system/memory_ldst*.h.inc' files
->   util: Introduce ldm_p() and stm_p() load/store helpers
->   system/physmem: Inline and remove leul_to_cpu()
->   system/physmem: Convert DEBUG_SUBPAGE printf() to trace events
->   system/memory: Split MemoryRegionCache API to 'memory_cached.h'
->   system/memory: Inline address_space_stq_internal()
->   system/memory: Define address_space_ldst[W] endian variants via
->     template
->   system/memory: Define address_space_ldst[L] endian variants via
->     template
->   system/memory: Define address_space_ldst[Q] endian variants via
->     template
->   system/memory: Factor address_space_ldst[M]_internal() helper out
->   system/memory: Pass device_endian argument as MemOp bit
->   system/memory: Use ldm_p() and stm_p() helpers
->   system/memory: Directly call address_space_ldst[M]_internal() helper
->   system: Allow restricting the legacy ld/st_phys() 'native-endian' API
->   system: Allow restricting legacy address_space_ldst() native-endian
->     API
->   system: Allow restricting the legacy cpu_ld/st() 'native-endian' API
->   system: Allow restricting the legacy translator_ld() 'native-endian'
->     API
->   system: Allow restricting the legacy tswap() 'native-endian' API
->   system: Allow restricting the legacy MO_TE* 'native-endian'
->     definitions
->   system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition
->   system/ioport: Declare x86-specific I/O port in little-endian order
->   system/ioport: Do not open-code address_space_ld/st_le() methods
->
->  MAINTAINERS                                  |   4 +
->  include/accel/tcg/cpu-ldst.h                 |   2 +
->  include/exec/memop.h                         |   4 +
->  include/exec/translator.h                    |   5 +-
->  include/exec/tswap.h                         |   3 +
->  include/hw/virtio/virtio-access.h            |   1 +
->  include/qemu/bswap.h                         |  11 -
->  include/qemu/ldst_unaligned.h                |  25 ++
->  include/system/memory.h                      | 193 +-------
->  include/system/memory_cached.h               | 212 +++++++++
->  system/memory-internal.h                     |   2 +
->  include/system/memory_ldst.h.inc             |  52 +--
->  include/system/memory_ldst_endian.h.inc      |  33 ++
->  include/system/memory_ldst_phys.h.inc        | 113 +----
->  include/system/memory_ldst_phys_endian.h.inc |  57 +++
->  system/ioport.c                              |  34 +-
->  system/physmem.c                             |  35 +-
->  tests/qtest/endianness-test.c                |  10 +-
->  tests/qtest/libqtest.c                       |  13 +-
->  util/ldst.c                                  |  69 +++
->  system/memory_ldst.c.inc                     | 449 ++-----------------
->  system/memory_ldst_endian.c.inc              |  70 +++
->  scripts/make-config-poison.sh                |   1 +
->  system/trace-events                          |   6 +
->  util/meson.build                             |   1 +
->  25 files changed, 599 insertions(+), 806 deletions(-)
->  create mode 100644 include/system/memory_cached.h
->  create mode 100644 include/system/memory_ldst_endian.h.inc
->  create mode 100644 include/system/memory_ldst_phys_endian.h.inc
->  create mode 100644 util/ldst.c
->  create mode 100644 system/memory_ldst_endian.c.inc
->
-> --
-> 2.52.0
->
+>diff --git a/backends/igvm.c b/backends/igvm.c
+>index a350c890cc..dc1fd026cb 100644
+>--- a/backends/igvm.c
+>+++ b/backends/igvm.c
+>@@ -170,9 +170,16 @@ static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+>                 (int)header_handle);
+>             return -1;
+>         }
+>-        header_data = igvm_get_buffer(ctx->file, header_handle) +
+>-                      sizeof(IGVM_VHS_VARIABLE_HEADER);
+>-        result = handlers[handler].handler(ctx, header_data, errp);
+>+        header_data = igvm_get_buffer(ctx->file, header_handle);
+>+        if (header_data == NULL) {
+>+            error_setg(
+>+                errp,
+>+                "IGVM: Failed to get directive header data (code: %d)",
+>+                (int)header_handle);
+>+            result = -1;
+>+        } else {
+>+            result = handlers[handler].handler(ctx, header_data + sizeof(IGVM_VHS_VARIABLE_HEADER), errp);
+>+        }
+>         igvm_free_buffer(ctx->file, header_handle);
+>         return result;
+>     }
+>-- 2.52.0
 >
 
---0000000000005bfd460647f7d498
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+IMHO this should be sent a separate patch with the Fixes tag as you are
+fixing a bug.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il ven 9 gen 2026, 17:51 Philippe Mathieu-Daud=C3=A9 &=
-lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank" rel=3D"noreferrer=
-">philmd@linaro.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail=
-_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
-,204);padding-left:1ex">Missing review: 2, 12, 20<br>
-<br>
-Since v4:<br>
-- No change (RESEND)<br></blockquote></div></div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">For subpages, are you leaving for later the switch away=
- from DEVICE_NATIVE_ENDIAN?</div><div dir=3D"auto"><br></div><div dir=3D"au=
-to">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"=
-gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-Since v3:<br>
-- Assign device_endian enums (Richard)<br>
-- Add/use ldm_p() and stm_p() helpers (Paolo)<br>
-<br>
-Since v2:<br>
-- Changed opt-out to opt-in approach (Pierrick)<br>
-- Split big patches in smaller ones<br>
-- Mark ioport little-endian<br>
-<br>
-Philippe Mathieu-Daud=C3=A9 (22):<br>
-=C2=A0 MAINTAINERS: Cover &#39;system/memory_ldst*.h.inc&#39; files<br>
-=C2=A0 util: Introduce ldm_p() and stm_p() load/store helpers<br>
-=C2=A0 system/physmem: Inline and remove leul_to_cpu()<br>
-=C2=A0 system/physmem: Convert DEBUG_SUBPAGE printf() to trace events<br>
-=C2=A0 system/memory: Split MemoryRegionCache API to &#39;memory_cached.h&#=
-39;<br>
-=C2=A0 system/memory: Inline address_space_stq_internal()<br>
-=C2=A0 system/memory: Define address_space_ldst[W] endian variants via<br>
-=C2=A0 =C2=A0 template<br>
-=C2=A0 system/memory: Define address_space_ldst[L] endian variants via<br>
-=C2=A0 =C2=A0 template<br>
-=C2=A0 system/memory: Define address_space_ldst[Q] endian variants via<br>
-=C2=A0 =C2=A0 template<br>
-=C2=A0 system/memory: Factor address_space_ldst[M]_internal() helper out<br=
->
-=C2=A0 system/memory: Pass device_endian argument as MemOp bit<br>
-=C2=A0 system/memory: Use ldm_p() and stm_p() helpers<br>
-=C2=A0 system/memory: Directly call address_space_ldst[M]_internal() helper=
-<br>
-=C2=A0 system: Allow restricting the legacy ld/st_phys() &#39;native-endian=
-&#39; API<br>
-=C2=A0 system: Allow restricting legacy address_space_ldst() native-endian<=
-br>
-=C2=A0 =C2=A0 API<br>
-=C2=A0 system: Allow restricting the legacy cpu_ld/st() &#39;native-endian&=
-#39; API<br>
-=C2=A0 system: Allow restricting the legacy translator_ld() &#39;native-end=
-ian&#39;<br>
-=C2=A0 =C2=A0 API<br>
-=C2=A0 system: Allow restricting the legacy tswap() &#39;native-endian&#39;=
- API<br>
-=C2=A0 system: Allow restricting the legacy MO_TE* &#39;native-endian&#39;<=
-br>
-=C2=A0 =C2=A0 definitions<br>
-=C2=A0 system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition=
-<br>
-=C2=A0 system/ioport: Declare x86-specific I/O port in little-endian order<=
-br>
-=C2=A0 system/ioport: Do not open-code address_space_ld/st_le() methods<br>
-<br>
-=C2=A0MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=
-=A04 +<br>
-=C2=A0include/accel/tcg/cpu-ldst.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +<br>
-=C2=A0include/exec/memop.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A04 +<br>
-=C2=A0include/exec/translator.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A05 +-<br>
-=C2=A0include/exec/tswap.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A03 +<br>
-=C2=A0include/hw/virtio/virtio-access.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 |=C2=A0 =C2=A01 +<br>
-=C2=A0include/qemu/bswap.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 11 -<br>
-=C2=A0include/qemu/ldst_unaligned.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 25 ++<br>
-=C2=A0include/system/memory.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 193 +-------<br>
-=C2=A0include/system/memory_cached.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0| 212 +++++++++<br>
-=C2=A0system/memory-internal.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +<br>
-=C2=A0include/system/memory_ldst.h.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 52 +--<br>
-=C2=A0include/system/memory_ldst_endian.h.inc=C2=A0 =C2=A0 =C2=A0 |=C2=A0 3=
-3 ++<br>
-=C2=A0include/system/memory_ldst_phys.h.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 11=
-3 +----<br>
-=C2=A0include/system/memory_ldst_phys_endian.h.inc |=C2=A0 57 +++<br>
-=C2=A0system/ioport.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 34 +-<br>
-=C2=A0system/physmem.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 35 +-<br>
-=C2=A0tests/qtest/endianness-test.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 10 +-<br>
-=C2=A0tests/qtest/libqtest.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 13 +-<br>
-=C2=A0util/ldst.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 69 +=
-++<br>
-=C2=A0system/memory_ldst.c.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 449 ++-----------------<br>
-=C2=A0system/memory_ldst_endian.c.inc=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 |=C2=A0 70 +++<br>
-=C2=A0scripts/make-config-poison.sh=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A01 +<br>
-=C2=A0system/trace-events=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A06 +<br>
-=C2=A0util/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
-=C2=A025 files changed, 599 insertions(+), 806 deletions(-)<br>
-=C2=A0create mode 100644 include/system/memory_cached.h<br>
-=C2=A0create mode 100644 include/system/memory_ldst_endian.h.inc<br>
-=C2=A0create mode 100644 include/system/memory_ldst_phys_endian.h.inc<br>
-=C2=A0create mode 100644 util/ldst.c<br>
-=C2=A0create mode 100644 system/memory_ldst_endian.c.inc<br>
-<br>
--- <br>
-2.52.0<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000005bfd460647f7d498--
+Luigi
 
 
