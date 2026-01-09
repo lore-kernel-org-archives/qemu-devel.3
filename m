@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65158D26D9E
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:25:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 406FBD26D9E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:31:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veJyX-0005EW-EU; Fri, 09 Jan 2026 16:24:57 -0500
+	id 1veK3z-00017K-AI; Fri, 09 Jan 2026 16:30:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1veJxz-00057r-Td
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:24:20 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1veK3t-00016V-RW
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:30:28 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1veJxx-0000dM-Ls
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:24:19 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-81e9d0cd082so640285b3a.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 13:24:17 -0800 (PST)
+ id 1veK3s-0002UR-3D
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:30:25 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-34c868b197eso4077606a91.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 13:30:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767993856; x=1768598656; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767994222; x=1768599022; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ch3XQMXvtmaJOSkZAI0oWyBW1NzCvQKqRz7ePVprClU=;
- b=Injzs66T/mAT8RRG/Cv/si+qH7FJpCDSq5GfxJ0/nAzmhlaxysDP1HcPkoLptBtmux
- q1i6s2kn/D5/nzaNZwYOCwRCjuHtwKaosz04zfPIfGRxqVyYv0joOQ7hgpZVCDhdfhzo
- yEtIiLDXjW5u6hLlxDC15Q45WsvmxFYpciK8UcE63YakXPgjgy3+Wb854iP5KjwMJZ7l
- mqCdjtCn9njHZKyQhk2xbSfW1EuRnJXlXDDw35D3KQmAdAtmqDQ8wP+mQPVBq6ZNuU3V
- EjKmbYJL8EPdDxmrFucESNKeUcCBRWzBqrL18atPKmgsdKfg8urr8y0Xabo8Lh9gKwR6
- fccw==
+ bh=pmLRiJGAe32AZkkzXPXqZG7JFN/54iycc+dJ2yegT6s=;
+ b=yuICwL+jtwJOhb+F+Bfsyl0SMY9w5hxfYoUshwY/ILdtCDkbwNZaCRWyBCEARVWvSc
+ f2xQM0B7KUZvrRLPaUNgRJmHgqWJi+fihVr4E+KixmRg/zXgAnAm/t11fra14xXeSxdi
+ AmUc8lyV9rn0RW6f3Ihmd8snMfVaHAbOEGWUuWHvQSL4BgTGs4svWgTmwZ5I38jkcQs5
+ KMkuyyZrFzhusZ8pK5ZM4D9sCjsA6pLM85lAleP79S+jJwgkOz7S7U2VbTm9THnG/+A2
+ wVc5SHQCPbxzU9xGJvJvgLtBrCOqU6Eu1/Y5kISVpexsyrVn7sa2hm6I+DLD62szDwti
+ 5h+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767993856; x=1768598656;
+ d=1e100.net; s=20230601; t=1767994222; x=1768599022;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ch3XQMXvtmaJOSkZAI0oWyBW1NzCvQKqRz7ePVprClU=;
- b=pw62y70emq22X15eDp4xfzThh2kmUBiUGz80tOnYrLZ1wvw77fays+MF3leh3qWn1I
- wE9hKtYK4sfe+Bddt6SEizR0UdVt1/8PsS2+Wa6Z0nMamksKMNsuySVQW4Gs5PlUSELh
- hTC8Ha3axzOpCQdPxcAKgNTBROXS+IOuwjKc72FRrlCDWLh+iv6eeGLF02zk5vU5AVHh
- HokrUoIjU2lxJl0AnoJCwx7DMKttDyN6Ldg76HHkDUAvjS0F88ejTazR3ye9YCpA79pR
- UbfntXKTGezKh3AycmYK+eqyVMbdxS0rLLlcgvxTLRFx6GpDEoXgn3/k16q5jw1gOVIO
- NpPw==
+ bh=pmLRiJGAe32AZkkzXPXqZG7JFN/54iycc+dJ2yegT6s=;
+ b=rw4YzJet4C38RF7l1yO/NbEzrMB5yEAAndHLXANa+3TfazTZIb4szN4uP2I5bVKBFl
+ yL5UbvFyX17eaoZaN7llnfB9Zt2lERPTdSPNVsxN4Q2LqRfcbFBqE+xRlxmBHModT3zx
+ ogxkJK2VOUTl1OU4P0IUR6AQzSPAnfB14Ra/vbItyFTAOj0gMlyK1PugEK5M+1hji1tu
+ 0nnI6w0iPITq0dgRwT4gacGNjhPrffkyg3WgMJA4EpuemYTryoakI5FG+kRaAySDRJP1
+ CIWfSD4F578VNQ98fA6KwzgYscv93NdP65Ycr1a22HZIcwsFyIdO61P1ugb51JU7/jPA
+ tN9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXG6c4MvDgF0LaCUN3F6l+29o7qI9svHDvbNBp0q96mwG7/xWxboMcopV2kEuK2EDHvfBWXgw6Hn92x@nongnu.org
-X-Gm-Message-State: AOJu0Yw4IC4eatrLjwxnZwMBONShOjm0/NnPP7e758DW3pNwfyn+KnoJ
- mzCytQX6VU0WAjQG73rqxTEP3x7FqKC24PWLEU7/7RbJxwvV2xPzrn3lrjcWQzxOGyc=
-X-Gm-Gg: AY/fxX4lTTHvr5mkcMIMM/lmTng9R9+2DiODq4P11Ge9nIR/XF2As8S3JTBcAsrNbEc
- Idg/pDnYKhQ62uzndug18NabzaYlOY9FIPrR9mVj1HbzS++/ALdyAGFfVqIuf6csrdggiKPsGzE
- 2oM4LCgFRQ1ZgxevjXW7zK0H8KGaePCntEirB4NczIOQdh1ZFWNf7We21uChpuOCbrcLs68dBDc
- U02vBfZzoJM5kdQmlLjzb5Bwg+APJkqmsWKohRbH5Njd95/yjNYebLpRGacpIx7kS7xb+OWu/pK
- WC/+l84QAtAwJdDKmYWKr8qmyBn+wFc22o9lwzaEiR2sUaLaAI+TjcyQrD2bldSII7yDCfdgjEO
- vsxtSSD4O1OpVVW9SrPsQeI+LMqRzMgst/QMRv8m6xuFz1AOzaBIQ6wCuVHmjWkvCpWv0oims7d
- xjmgsLX35LBPROIpWA/JKNsGPtkG8Pwnfv5blRaTn9FNJkRbWFFQQZnJi+
-X-Google-Smtp-Source: AGHT+IE6b5SFxM7hPauceu2OHiBmr2I/qURuZEELlf8IxRm9xcIc81mrXGcJzQqx2gg+99oOu8bn/w==
-X-Received: by 2002:a05:6a00:ad06:b0:81a:857b:f944 with SMTP id
- d2e1a72fcca58-81b7dc5b474mr10231277b3a.26.1767993855990; 
- Fri, 09 Jan 2026 13:24:15 -0800 (PST)
+ AJvYcCX/aC9Fay98x1WF7dCQn1fMoFB7dK3eRVxxKWgdHRHplqSg4mLYCuF+dh46xyZyHS0BQa5PfzxJ9ymC@nongnu.org
+X-Gm-Message-State: AOJu0YwZrtTvHtdv4i8zuCwTagAnVM8XgNYx4IFxIdu4I9VFzLn8IV9t
+ OCb5T7Ybud6p8aYZh7QQ1CaGp6FszyJGvkXGPuO0NXg6a+z8W2WYJrwgnjklRV2nVr4=
+X-Gm-Gg: AY/fxX5yvcXRV3pidZg4/2p0f/uVxaaOASeyPLHlvLYQVaDr/Wy4jmlHvdVU+SQwTDp
+ iygdhGJX3YdeD++uzW6z8fUtO3f+rrfjN63zmB4JK5ZvMCeMuJBBl4ijC09qas8vdTeW/hkp3km
+ P9iHINxT+tAqZ6lWC3pC+OXbPa82uZX9ywvHOoAr1iGjhyh8uzYvzBXtmkkcvBnFaCZNWfm6WOG
+ QYuXRIccPGJOO/3HsJiRSCCXk9UJxwechA6j7zNt7ZhnTjup9UKtS2gangVFow2T3z8IgaNYyCd
+ T4Tyt5veMJefoT8b0cUxm42zGMayJFaHf30oTs1Atbu00n5msA1WdzKLAdwiBGnDoY+FqeWwiQo
+ IRI5Qfl3I/eiC9vLgTZzXpdW1iL+HQfQiQ2US+Y3cCTjT+kPW8jkM2c5+aKSyroFEL9nFTMNH8b
+ 6DrVh0DDoL9xUkWw4YE3uzqPClmwvnzSu63iPTqFN9YhzQM/HV04C84RwM
+X-Google-Smtp-Source: AGHT+IHn3NDOWCdCmWPJvP7a8PcGLrm6YvriYiV30Ahc+eetAo2huFi8+0G+kryF9aTEgSHgePNadw==
+X-Received: by 2002:a17:90b:17cd:b0:340:f05a:3eca with SMTP id
+ 98e67ed59e1d1-34f68c4d69bmr10819362a91.20.1767994222235; 
+ Fri, 09 Jan 2026 13:30:22 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81efe4a95c7sm1014353b3a.37.2026.01.09.13.24.15
+ 98e67ed59e1d1-34f5f7c4141sm11468363a91.6.2026.01.09.13.30.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 13:24:15 -0800 (PST)
-Message-ID: <b78cec6f-7cab-4325-b7f5-722f0fcbf2b3@linaro.org>
-Date: Fri, 9 Jan 2026 13:24:14 -0800
+ Fri, 09 Jan 2026 13:30:21 -0800 (PST)
+Message-ID: <ae624681-1ea4-46b4-9dd2-0f558f2749df@linaro.org>
+Date: Fri, 9 Jan 2026 13:30:21 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/29] include/tcg/tcg-op.h: eradicate
- TARGET_INSN_START_EXTRA_WORDS
+Subject: Re: [PATCH 05/29] include/exec/helper-{gen, proto}.h: add conditional
+ HAS_HELPER64 define
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Jim MacArthur <jim.macarthur@linaro.org>,
- anjo@rev.ng
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
- <20260109053158.2800705-14-pierrick.bouvier@linaro.org>
- <06933b3a-dc90-4332-ba26-66faf2831229@linaro.org>
+ <20260109053158.2800705-6-pierrick.bouvier@linaro.org>
+ <bcad5451-4779-4914-9b8f-e63bfe5a2b26@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <06933b3a-dc90-4332-ba26-66faf2831229@linaro.org>
+In-Reply-To: <bcad5451-4779-4914-9b8f-e63bfe5a2b26@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,82 +112,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 12:00 AM, Philippe Mathieu-Daudé wrote:
-> On 9/1/26 06:31, Pierrick Bouvier wrote:
->> We simply define the 3 variants and call the correct one per arch.
->> Since all arch have a single call site (in translate.c), this is as
->> good documentation as having a single define.
-> 
-> Just wondering, if we define a per-target @inst_start_words
-> constant in TCGCPUOps instead of the INSN_START_WORDS definition,
-> could we 1/ ensure we call the correct tcg_gen_insn_start()
-> in cpu_restore_state_from_tb() and 2/ "optimize" the loop in
-> cpu_unwind_data_from_tb()? Surely not worth it =)
->
-
-I'm not sure. The point of INSN_START_WORDS was to have a constant 
-definition, not target specific.
-Now, could we poke the constant at runtime and optimize. Maybe, but I'm 
-not sure there is a real performance benefit, and surely more complexity 
-since we would need to reflect this through all targets.
-
-As said in commit description, it's not really possible to call the 
-wrong tcg_gen_insn_start() because there is a single call site anyway. 
-Making it a constant or a function call with a specific name has the 
-same benefit, so I would stick to the simpler (latter) solution.
-
->> The notable exception is target/arm, which has two different translate
->> files for 32/64 bits. Since it's the only one, we accept to have two
->> call sites for this.
->>
->> This is much simpler and safer than trying to define a common functions
->> with variadic or unused parameters. The only risk is calling two
->> different variants for a single arch, but as mentioned in first
->> paragraph, there is no real reason for this to happen.
+On 1/9/26 1:22 PM, Richard Henderson wrote:
+> On 1/9/26 16:31, Pierrick Bouvier wrote:
+>> It allows to include helper for 64 bits variants selectively, by
+>> including helper-{gen, proto}.h and defining HAS_HELPER64.
 >>
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>    include/tcg/tcg-op.h             | 16 ++++++----------
->>    target/alpha/cpu-param.h         |  2 --
->>    target/arm/cpu-param.h           |  7 -------
->>    target/avr/cpu-param.h           |  2 --
->>    target/hexagon/cpu-param.h       |  2 --
->>    target/hppa/cpu-param.h          |  2 --
->>    target/i386/cpu-param.h          |  2 --
->>    target/loongarch/cpu-param.h     |  2 --
->>    target/m68k/cpu-param.h          |  2 --
->>    target/microblaze/cpu-param.h    |  2 --
->>    target/mips/cpu-param.h          |  2 --
->>    target/openrisc/cpu-param.h      |  2 --
->>    target/ppc/cpu-param.h           |  2 --
->>    target/riscv/cpu-param.h         |  7 -------
->>    target/rx/cpu-param.h            |  2 --
->>    target/s390x/cpu-param.h         |  2 --
->>    target/sh4/cpu-param.h           |  2 --
->>    target/sparc/cpu-param.h         |  2 --
->>    target/tricore/cpu-param.h       |  2 --
->>    target/xtensa/cpu-param.h        |  2 --
->>    target/alpha/translate.c         |  4 ++--
->>    target/arm/tcg/translate-a64.c   |  2 +-
->>    target/arm/tcg/translate.c       |  2 +-
->>    target/avr/translate.c           |  2 +-
->>    target/hexagon/translate.c       |  2 +-
->>    target/hppa/translate.c          |  2 +-
->>    target/i386/tcg/translate.c      |  2 +-
->>    target/loongarch/tcg/translate.c |  2 +-
->>    target/m68k/translate.c          |  2 +-
->>    target/microblaze/translate.c    |  2 +-
->>    target/mips/tcg/translate.c      |  4 ++--
->>    target/openrisc/translate.c      |  4 ++--
->>    target/ppc/translate.c           |  2 +-
->>    target/riscv/translate.c         |  2 +-
->>    target/rx/translate.c            |  2 +-
->>    target/s390x/tcg/translate.c     |  2 +-
->>    target/sh4/translate.c           |  4 ++--
->>    target/sparc/translate.c         |  2 +-
->>    target/tricore/translate.c       |  2 +-
->>    target/xtensa/translate.c        |  2 +-
->>    40 files changed, 30 insertions(+), 82 deletions(-)
+>>    include/exec/helper-gen.h   | 6 ++++++
+>>    include/exec/helper-proto.h | 6 ++++++
+>>    2 files changed, 12 insertions(+)
+> 
+> I guess I'll need to read further to find out what you want,
+> but you shouldn't need this.
+> 
+> I've built these headers for multiple inclusion, so that the HELPER_H manipulation can be
+> done by the target.  You shouldn't need to modify the generic headers.
+> 
+
+Unfortunately include/exec/helper-gen.h harcodes the name helper.h, so 
+an extension is needed there.
+
+An alternative is to stop using helper-gen.h, and do the include by 
+hand, but it's more verbose in my opinion. For arm, it means moving this 
+to every .c (instead of translate.h), and manually add:
+
+#define HELPER_H "helper.h"
+#include "exec/helper-gen.h.inc"
+#undef  HELPER_H
+#define HELPER_H "helper64.h"
+#include "exec/helper-gen.h.inc"
+#undef  HELPER_H
+
+If you prefer this, I don't mind changing. It just seemed like the right 
+abstraction since most of arch will have the need to define 32 and 64 
+bits helpers.
+
+> 
+> r~
+> 
+>>
+>> diff --git a/include/exec/helper-gen.h b/include/exec/helper-gen.h
+>> index f7ec1556997..c96e13b835a 100644
+>> --- a/include/exec/helper-gen.h
+>> +++ b/include/exec/helper-gen.h
+>> @@ -13,4 +13,10 @@
+>>    #include "exec/helper-gen.h.inc"
+>>    #undef  HELPER_H
+>>    
+>> +#ifdef HAS_HELPER64
+>> +#define HELPER_H "helper64.h"
+>> +#include "exec/helper-gen.h.inc"
+>> +#undef  HELPER_H
+>> +#endif
+>> +
+>>    #endif /* HELPER_GEN_H */
+>> diff --git a/include/exec/helper-proto.h b/include/exec/helper-proto.h
+>> index 6935cb4f16f..002460722e3 100644
+>> --- a/include/exec/helper-proto.h
+>> +++ b/include/exec/helper-proto.h
+>> @@ -13,4 +13,10 @@
+>>    #include "exec/helper-proto.h.inc"
+>>    #undef  HELPER_H
+>>    
+>> +#ifdef HAS_HELPER64
+>> +#define HELPER_H "helper64.h"
+>> +#include "exec/helper-proto.h.inc"
+>> +#undef  HELPER_H
+>> +#endif
+>> +
+>>    #endif /* HELPER_PROTO_H */
 > 
 
 
