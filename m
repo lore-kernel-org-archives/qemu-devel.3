@@ -4,53 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691DED26D71
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 17:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C69D26D7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 17:13:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veG1m-0000Td-E1; Fri, 09 Jan 2026 12:11:58 -0500
+	id 1veG2b-0000kG-06; Fri, 09 Jan 2026 12:12:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1veG1j-0000Sr-Vs; Fri, 09 Jan 2026 12:11:56 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1veG1h-00045D-FI; Fri, 09 Jan 2026 12:11:55 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BE25E596AC0;
- Fri, 09 Jan 2026 18:11:49 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id zwdozPsjLeif; Fri,  9 Jan 2026 18:11:47 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 67E58596ABD; Fri, 09 Jan 2026 18:11:47 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6695A5969E4;
- Fri, 09 Jan 2026 18:11:47 +0100 (CET)
-Date: Fri, 9 Jan 2026 18:11:47 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, qemu-devel-bounces+chad=jablonski.xyz@nongnu.org
-Subject: Re: [RFC PATCH] ati-vga: Refactor ati_2d_blt to accept src and dst
- parameters
-In-Reply-To: <DFK51FL5XBP1.4FSMIWGTP9Z2@jablonski.xyz>
-Message-ID: <d3938061-3dd8-e305-0d33-3f091b66f023@eik.bme.hu>
-References: <20260109045035.2931091-1-chad@jablonski.xyz>
- <3fb14280-960b-d923-dd5d-3748450acc70@eik.bme.hu>
- <DFK51FL5XBP1.4FSMIWGTP9Z2@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1veG2W-0000jS-GE
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:12:44 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1veG2T-0004AL-5O
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 12:12:42 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47d3ffa5f33so21336795e9.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 09:12:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1767978758; x=1768583558; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=67AWTeughWk+XTjbkf90tukpyMx6/QDr7JxjAsH5P4M=;
+ b=kTuX85djO686sEAyeldzTm4y6SRqbPMyXzIv5uVNqKxNDNyrG4rfBlGnXGk2Aidx/u
+ 2gSNOzmubsSz8YYTqEmKjJ2/Q0yfMzNd8eJHEHs1DvaBS1vrcPkKPKXZXAxBrnvvOTpB
+ zm1fBSAJ15vQS2CuoCdf7CwHOLn1OfChGcTs8MrP/HKswFTB0Sf4tDsb44GYWt873ZRa
+ dz5G+EwugpvGY1/6nKdovzpJzlkLmtXBzCCTY6id09vLetxXwkKR+4ZniGGPcU75uZe0
+ ztUn5DqcY3PllNG7Ngq20gjJB25900TP4/6HNR7SCoYKnay5IpBR1tcCLLn03MOdECEp
+ VDGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767978758; x=1768583558;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=67AWTeughWk+XTjbkf90tukpyMx6/QDr7JxjAsH5P4M=;
+ b=Da4w45m7ieiSlLqMgqiVdzuc4i5XcuP+wN0ImrmAlrHPbo1Wir/vuMSpS7ZffMqFrc
+ 1R93xdpt83AVp+uXe/H8zxlEdOMZ71hj24fbUpnBe9gfDjEakKveX/cfOqeQ5tYVKyLp
+ xjG4cV8Du7LPP2ZMyaCxVPxVwx1vsx9LGY/tqTriq/4xis5a5N33+JcQYvQqSnYRRo0J
+ vPyrZKaPpkR4n+9tVcAU4vb90MsCdBQf7dbHrDzLagHyRWg2YXLwfYh1+eV7uQuwUwRg
+ sJNawKy59bF5vcAWWUobD2UQKWPWf4tEnzNbIuGPUrWpOCckTZW6iyEeBgDRYq1eDUvz
+ JhSQ==
+X-Gm-Message-State: AOJu0YyFMe4+th5yh7x7bkIs4wCDPfxSN5dkcVUWZ7fn4OA7ApHnh9QM
+ YjnpwBKZs+ux29FEZwY3sn3tnLFPGWZaiDafMo5lK5qo/XlqQzwuaIXqi9qYRk4POCYquoNvK0T
+ kqOIw
+X-Gm-Gg: AY/fxX46YeHbb9mOel0zZRIygdHjOlOI01zga/2lIc9hhX6BiLbUx3xYWNaOHD4QIV+
+ fF8LjIL7o8BhfEG829a1yKZBOhpSAIeTLNCRLORR3KEMvFdHWMEa3EdR8JNCp5Fiyz6nT7y2vVW
+ mI7aZeTeem+VKvYPA6muOIDnXwaqyBHCSA9yFFCJtsxhTXvm0eOYtQZN0KekNKVG0MsDIawAhLJ
+ z3xGkosAScX0nPxhRhQq21cpLkd3q6vFHslA64oUl1RCFOaYjIxVFrgJeWHzl5sAVjfgYMthoPy
+ FnfzKCtGwSL3BbQhhbTLautzmFrblqf0ccgTSZH5ScHtB0QPWibVo5818p+f2zvT7BRN6w/oCvI
+ aP/OlZe5w3gKobOeaA6+fyt9b9natrmvpZTYkuNlu/RcL/oNSn7zKIRqu0Vfrvw6w0ub2f8Yoa9
+ pTwun4fTXBwK9Rao7QzxPDYBuegeyzblMWn+WoihyDWQqLVyRLca9hhzE=
+X-Google-Smtp-Source: AGHT+IFQjlRpjhJhJOPlnzFXzIx8hGKdmwEMAxyN4W/10M+nvThntCANlyQLFeq82h1BskkQxkXQmA==
+X-Received: by 2002:a05:600c:8119:b0:47b:df60:8a14 with SMTP id
+ 5b1f17b1804b1-47d84b2ccdcmr115854875e9.9.1767978758144; 
+ Fri, 09 Jan 2026 09:12:38 -0800 (PST)
+Received: from ?IPV6:2a10:d582:31e:0:c170:c5f6:f3f7:a97c?
+ ([2a10:d582:31e:0:c170:c5f6:f3f7:a97c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d7f65d9f0sm226040395e9.12.2026.01.09.09.12.37
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Jan 2026 09:12:37 -0800 (PST)
+Message-ID: <922751c7-93ea-4eef-9808-6ef332104468@linaro.org>
+Date: Fri, 9 Jan 2026 17:12:37 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] bswap: Use 'qemu/bswap.h' instead of
+ 'qemu/host-utils.h'
+To: qemu-devel@nongnu.org
+References: <20260109164742.58041-1-philmd@linaro.org>
+ <20260109164742.58041-3-philmd@linaro.org>
+Content-Language: en-US
+From: Jim MacArthur <jim.macarthur@linaro.org>
+In-Reply-To: <20260109164742.58041-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,70 +107,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Jan 2026, Chad Jablonski wrote:
->> https://en.wikipedia.org/wiki/Eastern_name_order#Hungary
->> That's what capitalisation is meant to show but not many seem to know
->> about that convention. No worries though not many got it at first.
->>
+On 1/9/26 16:47, Philippe Mathieu-Daudé wrote:
+> diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
+> index 34a75b7f43b..0621a6c4775 100644
+> --- a/tests/qtest/libqos/ahci.c
+> +++ b/tests/qtest/libqos/ahci.c
+> @@ -28,7 +28,7 @@
+>   #include "ahci.h"
+>   #include "pci-pc.h"
+>   
+> -#include "qemu/host-utils.h"
+> +#include "qemu/bswap.h"
+>   
+>   #include "hw/pci/pci_ids.h"
+>   #include "hw/pci/pci_regs.h"
 >
-> Ah, thanks for the explanation, I had no idea! Should I call you Zoltan?
+I'm getting a compilation error in ahci.c:
 
-I think that's what you meant in the first place so yes Zoltan is my 
-"first" name.
+     ../tests/qtest/libqos/ahci.c: In function ‘ahci_hba_enable’:
+     ../tests/qtest/libqos/ahci.c:252:52: error: implicit declaration of 
+function ‘ctzl’ [-Werror=implicit-function-declaration]
 
->>> +    ATIBlitDst dst = {
->>> +        .valid = false,
->>> +        .bpp = ati_bpp_from_datatype(s),
->>> +        .stride = DEFAULT_CNTL ? s->regs.dst_pitch : s->regs.default_pitch,
->>> +        .left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT,
->>> +        .top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM,
->>> +        .bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
->>> +                s->regs.dst_offset : s->regs.default_offset),
->>> +    };
->>> +    uint8_t *end = s->vga.vram_ptr + s->vga.vram_size;
->>> +    unsigned dst_x = (dst.left_to_right ?
->>> +                     s->regs.dst_x : s->regs.dst_x + 1 - s->regs.dst_width);
->>> +    unsigned dst_y = (dst.top_to_bottom ?
->>> +                     s->regs.dst_y : s->regs.dst_y + 1 - s->regs.dst_height);
->>> +    qemu_rect_init(&dst.rect, dst_x, dst_y,
->>> +                   s->regs.dst_width, s->regs.dst_height);
->>> +
->>> +    if (!dst.bpp) {
->>>         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
->>> -        return;
->>> +        return dst;
->>
->> Does this work? I think you can't return a pointer to a local so this
->> might need to take an ATIBlitDst * and init the struct passed to it by
->> that then it could return bool and remove the valid field from the struct
->> which seems to be confusing and may be better returned directly.
->>
->
-> This is returning by value, so it should. But point taken, accepting a
-> pointer and returning a bool avoids the valid field. I'll go that route.
+ctzl is defined in host-utils.h.  (Build platform is Ubuntu 24.04 x86_64)
 
-Indeed, you are right but maybe less confusing with allocating the struct 
-in caller and returning bool from the init+check function. I'll wait for a 
-v2 with the changes so far or the next version of the whole series with 
-that v2 to look into the rest in detail but I think this goes in the 
-direction I imagined. The point is to try to keep the checks for 
-overflowing the vram area and using pixmap with fallback at one place to 
-avoid duplicating that part and having to check that we got it right at 
-multiple places. It's hard enough to do it right once so better reuse that 
-everywhere. So try to do this first with just calling this extracted 
-do_blt function at every host data flush and see how that works.
+Jim
 
-If this turns out to have performance issues we can think about how to 
-optimise that later. One possibility could be not flushing every 128 bits 
-but coalesce one display line but that may not be needed if we just add a 
-parameter to the do_blt function to control if it uses pixman and call it 
-to use the fallback loop for small blits to avoid the calling overhead of 
-pixman. Coalescing may be more difficult for drivers that don't write LAST 
-as we don't know when to do the final flush but we may know which is the 
-last line so we could revert to not calesce on the last line or something 
-like that. But these get too complex so just forget about it now and go 
-with the naive way first and see if we need more after that.
-
-Regards,
-BALATON Zoltan
 
