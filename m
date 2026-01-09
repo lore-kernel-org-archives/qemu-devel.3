@@ -4,158 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57943D1A613
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 13:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F4BD1A61E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 13:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veC6i-0001Nh-RQ; Fri, 09 Jan 2026 08:00:50 -0500
+	id 1veCNF-00072P-S9; Fri, 09 Jan 2026 08:17:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veC6d-0001MP-VJ
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:00:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veC6X-0002xK-BY
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:00:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767963635;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0Q6sgWEMAOYhktsAS6QyU6Z296K0kxcSAAgks3nL9Dg=;
- b=ZWQwUsHGHZkYh9MF+ZHl4jXCNO1qe1d3wLIBaLT/9EKFqkvk9LN2tqz2YStOXypokwoB7A
- s9Ag1maIr2TgUxEH5IX43+iCcM0aGpdxV/wLQvSMoo99W1kt39TVr4u98uZkxpaaESiafx
- u1Vi91X4Bfi2i65nAWCbG4VFzJo5r/8=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-8QicU1BfPn64H8-u8LkyRw-1; Fri, 09 Jan 2026 08:00:33 -0500
-X-MC-Unique: 8QicU1BfPn64H8-u8LkyRw-1
-X-Mimecast-MFC-AGG-ID: 8QicU1BfPn64H8-u8LkyRw_1767963633
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b802d6ed5b0so898845166b.1
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 05:00:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1veCNC-00070I-90
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:17:50 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1veCN8-0005xK-8A
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 08:17:48 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2a0a95200e8so25768985ad.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 05:17:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767963632; x=1768568432; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=0Q6sgWEMAOYhktsAS6QyU6Z296K0kxcSAAgks3nL9Dg=;
- b=EqhcqLdKFwanj7+3oYmQZkwZoJ0DoTrUC/8p+YEAwGY5tv/TxobmVxcdTFvOAe5Yze
- 04/j0BqfAZkOXR4ZhhZ5AJBLgMRE+SQrWPQe/Jgq6feZ0eByKPRg5ww/nXnhqJPJaUd0
- 56UCqgBNfTW3O+JjTzaGnlISE5NfZwknbfLdFNy4NMmXE3ZmrpqL4mCP+lnxERKMDrma
- GDKTTNxhuWZIoeF9Bfd9txvslmx5EW90dD/Cu+ddklv2W9u4B20vgi8q+Bvz/Ebpqq58
- b7+gCF59SCteG/pVRuI7heh64UfoOwgpoOyupTbMY5wNJLeNfZS5q4WZBbGL5WYku1pl
- sv6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767963632; x=1768568432;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1767964664; x=1768569464; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0Q6sgWEMAOYhktsAS6QyU6Z296K0kxcSAAgks3nL9Dg=;
- b=TC7rwv6jVXVcjMFXJ+OVzGWPT5z6txEZQZISJ8pwGWfUacbcgvCUNaHPFyX1n4alPu
- 45E9A/UsipBNUOk5l9f0UNqG0CNod2a+c3AYBP4uKOIUVL1tiVgxQdZWxkk7Z5VHq7s1
- GIt3Jr/5ys7U14vi9C5tIunn2KTVW/amMTUQG+Le4rHWUSm6pXsmej1fY7gmoQLG0dcF
- 5O1/WyJUj+4IDMAzyYi72fzsgp7LT7cyYXKBtjbGixLwCXTHDrj6y4HElrJujC//mKdP
- 778go4JYRpSz4cPdbYBb6/X25SXcFaHUgumv4YPOtgfjn2E+oD266Sp00yLeC1eUfFB7
- KHnA==
+ bh=dEAkhF7Gs/JkiVXMykS0GnYYtidy6ieqVLgHbEaHLzA=;
+ b=g/AxMIOnENtmIlU2yieKUXctcYoxtdBHHkzwgnBxadNJrNzCQUPTL/H0Pph2tTA6Ok
+ EnJoSEDi3n/m06Y7K25T5W34i0UIP9pz+yRqoeJUcQNWSA40Y5/x95riaobiNhoKOaBO
+ fVMBe3kmg+ijRdkJr6C8xja6lKVXJkD+ZOpKtcz2bfl1WLGkCiG/ibAjfLrP2wFCja4p
+ O37ABzf93Zp9FkvA/acRC0EV64hL0h4iewBTHX2dktNWKwbSJ4cleTUYjjRMHiJBcN5j
+ hlawKBCTZJWuSn9Kzc5XvqHL3zJEBYxbbgo6b2yk3nNLYTLU7lTCpslENtNymdYDABvO
+ tQ2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767964664; x=1768569464;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dEAkhF7Gs/JkiVXMykS0GnYYtidy6ieqVLgHbEaHLzA=;
+ b=TLreDS0J2F+KwWvPYlfkDyte9SQybErbudOIBd+w6jjkr8/IbY73tsUdU9L9CJyXbX
+ ilviINE+vVbuCL/O0PrNsMGE8wXNo+tVlxdQSNDTUjyBLHP1TZRWdPJeTz+zoYwR+Qnq
+ a5L3WiZo+eIENZtn8hDlZT0TYe1a2yO6R8vT7WmCLlmka/LC0uKvCahix8oj70wx4r5U
+ pQQfAs1W/UQ4hTisxbn95fMoCoJMpPqgGupM9beXHnZSmaEUqBPbzJlRrRwgKNUTdeCo
+ /x24dddA4MhA+T2pL5i4Wp5UprwXS86CMzB1z2qCbuBe0q+ggaMNfk0zJnBZD8f7Pajx
+ FRLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyJmow0Gkm+WKhFChseyP9fgKBSyM5TFh1KRSxnCJauBQEm/VNZAP+l1HPBQIuGn5tVX2re7w2ik63@nongnu.org
-X-Gm-Message-State: AOJu0Yznc9rP6PiMi1eQ+07zi5vskDhM2ZCWD4/YK5ufp9YkQm4QiVJc
- yn6/GSWXNsOfhBzKcOc77bLnzAKyLz6yMDNEDwkZMptG35FoZyQL5WN9nfpTd2CMtMLhxQn3dBq
- P9dLY0zEUX4WrkovK2h/JahR1mXMYb/WV6o4O2eglZ3f8mJ7vUxKHi2zz
-X-Gm-Gg: AY/fxX6zXmCuxRuLePEO4uwc+V4lOeIe1xF6LuDanh+dQgX1GMiLhoKLAsP7V7Kh7vc
- cxjeQaNUPgTYqI1MMoM7bUPNnszBGGiBiI9AGdUUbIPWGcXcl0/mjK5gSp9tYbtkbP4xVwbkZ8z
- GTizzRuKMunxldFqLt4d+1EWl7H+69hg8z6BR6iXkrwNXoO23iwdSJvdrP3akrphgeXEtoJo0So
- XSETUME3EpyIvEbZASWUY8eyF8hdlKMSRDGaUpwgtgNS9aU7f91HzLYKzs3Snb4e023xtJLpPTv
- O2ynTgzn2fwX0Gs6kF0ry3xCxnEWzTgLAyLK60HuzdIsaBPoOWZJwzDZFyq4VamJt5KaPX9cHLp
- taWtp7pk=
-X-Received: by 2002:a17:907:3c82:b0:b73:9222:6a64 with SMTP id
- a640c23a62f3a-b8444c5a808mr1108914666b.3.1767963632392; 
- Fri, 09 Jan 2026 05:00:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHo29tgSb4FymxZom+1AoeBR3TNlFWFoW6pm/NU056CBF07CsU2bVg9GxVlldoJJru1iSTuwQ==
-X-Received: by 2002:a17:907:3c82:b0:b73:9222:6a64 with SMTP id
- a640c23a62f3a-b8444c5a808mr1108910266b.3.1767963631888; 
- Fri, 09 Jan 2026 05:00:31 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.114.194])
+ AJvYcCURrd5wU0uDiIjE4fGxyu24R2KRWveL3HcoJy1GxChSrHwLx+TDnd2mLpcNwidnXyWc6gZmS8N6NyNv@nongnu.org
+X-Gm-Message-State: AOJu0YwQ7Tve5EED4w1xSN2W3BC7ODO1DxYpeKSaiasYNDB2nHe+zKQc
+ aNhDf5EzCi7JOz7iZEYP2LsnF6kPw9Q0k1QZw7emJ7WRiU34p49sTvLn
+X-Gm-Gg: AY/fxX7XJRSrfexy1irI9cyfxcyI2+HhuGbdxPkhIo97IuFzUdDYEO8K7IZnMnCd35s
+ lITKctD4unWnL/ozLmDIcrdSJb8tL5ixRj+TbR0JIjtToXI+9ytsWO75A9I+i9bXc6g3ZVRz7pl
+ hdtBVltluaj8IuWRcaMq27O5XJdxnCf00Z/PCxJ9mtnh4MCNDB+sGjXYmbV9VQe59wD5cfRRbL4
+ LNuePOBxdQ8yJYcZRa75izzUyyWSN+pcDPS/NzZjlYnoTgk1Lfiq82Ngs523XwbMLiUXmatth0n
+ sta/I2acvetUaomktLxuXfqOvYrSgWBFIMoDBzukF+OgDnsTaUEbOw3hqKtsnG/Aa3/GlZI6AmC
+ aV0V4YyAewqj5DJztOVBPNNqn0FGbfm0huPth+svpecZEn3TCQnoEy1aoO4EFIDLNIDTd/oBNoy
+ +CxUYUKTXTUcGxH8zJpC42
+X-Google-Smtp-Source: AGHT+IF7ykl69do1dPb+W6el91zat01jqrsDTfEeH7NwkIhso8cO492tTsw1bwTN669PA8gs6P2bRg==
+X-Received: by 2002:a17:902:ea09:b0:295:738f:73fe with SMTP id
+ d9443c01a7336-2a3ee4ab6a2mr100802305ad.30.1767964664442; 
+ Fri, 09 Jan 2026 05:17:44 -0800 (PST)
+Received: from donnager-debian.. ([45.124.203.15])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b842a4cff3fsm1085328266b.33.2026.01.09.05.00.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 05:00:31 -0800 (PST)
-Message-ID: <36b96f1b-2f85-46c2-b2ad-159838a428b2@redhat.com>
-Date: Fri, 9 Jan 2026 14:00:29 +0100
+ d9443c01a7336-2a3e3c47390sm106103735ad.25.2026.01.09.05.17.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Jan 2026 05:17:43 -0800 (PST)
+From: Joel Stanley <joel@jms.id.au>
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Vijai Kumar K <vijai@behindbytes.com>, Ran Wang <wangran@bosc.ac.cn>,
+ Michael Ellerman <mpe@oss.tenstorrent.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+Subject: [PATCH 4/4] hw/riscv/boot: Provide a simple halting payload
+Date: Fri,  9 Jan 2026 23:46:55 +1030
+Message-ID: <20260109131657.396794-5-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260109131657.396794-1-joel@jms.id.au>
+References: <20260109131657.396794-1-joel@jms.id.au>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 12/29] s390x/diag: Implement DIAG 508 subcode 1 for
- signature verification
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-13-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251208213247.702569-13-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=joel.stan@gmail.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,39 +110,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/12/2025 22.32, Zhuoying Cai wrote:
-> From: Collin Walling <walling@linux.ibm.com>
-> 
-> DIAG 508 subcode 1 performs signature-verification on signed components.
-> A signed component may be a Linux kernel image, or any other signed
-> binary. **Verification of initrd is not supported.**
-> 
-> The instruction call expects two item-pairs: an address of a device
-> component, an address of the analogous signature file (in PKCS#7 DER format),
-> and their respective lengths. All of this data should be encapsulated
-> within a Diag508SigVerifBlock.
-> 
-> The DIAG handler will read from the provided addresses
-> to retrieve the necessary data, parse the signature file, then
-> perform the signature-verification. Because there is no way to
-> correlate a specific certificate to a component, each certificate
-> in the store is tried until either verification succeeds, or all
-> certs have been exhausted.
-> 
-> A return code of 1 indicates success, and the index and length of the
-> corresponding certificate will be set in the Diag508SigVerifBlock.
-> The following values indicate failure:
-> 
-> 	0x0102: no certificates are available in the store
-> 	0x0202: component data is invalid
-> 	0x0302: PKCS#7 format signature is invalid
-> 	0x0402: signature-verification failed
-> 	0x0502: length of Diag508SigVerifBlock is invalid
-> 
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+OpenSBI hangs before any console output if the domain init code sees the
+next stage is not in an executable region.
+
+If no kernel payload is provided to QEMU, the next stage address is
+NULL, and the riscv virt machine memory map ends up covering the 0
+address with the catch all S-mode RWX region and so OpenSBI prints
+console messages and does not hang until the next stage boot.
+
+The TT Atlantis address map has RAM starting at 0 and it loads OpenSBI
+there, so it is M-mode and not accessible by S-mode, tripping the early
+check and hang.
+
+Add a helper to set up a simple payload that gets OpenSBI messages
+to console.
+
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ include/hw/riscv/boot.h |  2 ++
+ hw/riscv/boot.c         | 21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
+
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index fb90bf12399e..d1d7258a2179 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -78,6 +78,8 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
+                                hwaddr rom_base, hwaddr rom_size,
+                                uint64_t kernel_entry,
+                                uint64_t fdt_load_addr);
++void riscv_setup_halting_payload(MachineState *machine,
++                                 RISCVBootInfo *info, hwaddr addr);
+ void riscv_rom_copy_firmware_info(MachineState *machine,
+                                   RISCVHartArrayState *harts,
+                                   hwaddr rom_base,
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 3ea95c175c14..fc8a39a8d913 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -518,6 +518,27 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
+                                  kernel_entry);
+ }
+ 
++/* Simple payload so OpenSBI does not hang early with no output */
++void riscv_setup_halting_payload(MachineState *machine,
++                                 RISCVBootInfo *info, hwaddr addr)
++{
++    int i;
++    uint32_t payload_vec[] = {
++        0x10500073,                     /* 1: wfi           */
++        0xffdff06f,                     /* j       1b       */
++    };
++    /* copy in the payload vector in little_endian byte order */
++    for (i = 0; i < ARRAY_SIZE(payload_vec); i++) {
++        payload_vec[i] = cpu_to_le32(payload_vec[i]);
++    }
++    rom_add_blob_fixed_as("mrom.payload", payload_vec, sizeof(payload_vec),
++                          addr, &address_space_memory);
++
++    info->kernel_size = sizeof(payload_vec);
++    info->image_low_addr = addr;
++    info->image_high_addr = info->image_low_addr + info->kernel_size;
++}
++
+ void riscv_setup_direct_kernel(hwaddr kernel_addr, hwaddr fdt_addr)
+ {
+     CPUState *cs;
+-- 
+2.47.3
 
 
