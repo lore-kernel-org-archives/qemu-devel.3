@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D1DD232C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D46D5D232E8
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6RL-0006I8-PU; Fri, 09 Jan 2026 01:57:44 -0500
+	id 1ve6RO-0006SW-Fz; Fri, 09 Jan 2026 01:57:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6QR-0005Gy-5a
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:50 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1ve6Qk-0005SH-0b
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:57:09 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6QP-0002wA-B2
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:46 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7b7828bf7bcso2826232b3a.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:56:44 -0800 (PST)
+ id 1ve6Qi-0002xj-7Y
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:57:05 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-c2dd0c24e5cso1858828a12.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:57:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767941804; x=1768546604; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1767941822; x=1768546622; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4Q481TRTvEXoLqWLHzNjV4ZTKaCxRPnqrOt8ohO8k5Y=;
- b=jT0OVISWqORuwVqO7Ar6q2NhKKEJUY6sXEhKWLf5oWUAWfwm5SUGoHaF0SDNmmTLmu
- rrCQrqkE3gsH0AhOjPXCvimIJhnXM2IzJUaQ4REsqkTV3ncxKPZ9WTnrQ/Qc2UBYx5xp
- hat1f8oyEgYyKV9i9o/Ifu6NqlEhE5dsgOcGGMV1p6GvX4hzyef/PERB3xwmSAr0Wp+w
- Aqz8H4QHfmodtBNjWE0xwtVqtj/0hbDnEO8T+OKl3tss6aAecTElIFKQ8P3Xo2xZghKM
- R2h8gXT9gcWcW2tYG8V/ejDn23t2RfsAuhO+nurm8ufBz/eqIbRNrc/BCf3lhym5Jefh
- 4UKw==
+ bh=4Me4ZBOWrzdKvktUjsLww6TB3oR9WOe6FZHLcDEkUQo=;
+ b=W/XlbNOxYGkeYcLPcLOQgVwD61xzqQvlNpCyyac/BR6QfVvHt37e0Xuucjt91zYshw
+ 5dV/0hC+8+IEMOQHABx3hdSpTlmN+VByp6y62seoV7Hl2+yWZQnEka1vD3sqeRhPE1pV
+ 65wyNvIoIDfwwQ/yzobVEUnZH87uGyx6D5JGUy/JacVMX2zEDfO/5+b5iwUxFDeF1/Dv
+ 2W1KW0Dx0qZlZtRGZBoSbXl1HLPNEs6GOvqfoNDe/mIDrXHvm14Cy6UBWkdFy6jANuxx
+ VC9l73MfOB+oHc69xCJDtlTvbhXWEaHviegG1T6I7u3eHixwDc7OLr4OpmLGvEONbg31
+ wxMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767941804; x=1768546604;
+ d=1e100.net; s=20230601; t=1767941822; x=1768546622;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4Q481TRTvEXoLqWLHzNjV4ZTKaCxRPnqrOt8ohO8k5Y=;
- b=wlitYQDHOpok8Mh8LGJFsxyQOXlnuNBLi4p6ZXVcp922sYyRp9hSvKfEjkYRFNV1iY
- vtkGG48Ij1XfOg6XwK9sP/AOKX/S4twRYj7mB4pXT3VXWMABF2Vhcfqp5ubAD3sqoqZS
- wSA3T2atD4kOVE3UfAHRqgyUvbTbk/qRGEvTuHmSHcJn3phzue5E3Rs54CPTYL0RCVui
- Wogo8vRE60aLy7m3kpOqYT96VU9GKgwXPaYHq96v9yXQVjnVuW9FwhiemPsFlR8crOGA
- Ov7HxK0olG6S1DYmGm/9MlltHWOMsjcXr2YTVkXjZ26LE/q/vO9sobotUdNbNzPCgD5i
- WmFw==
-X-Gm-Message-State: AOJu0YxfDcgiwzx10InNIYxUkig8rCESEG1otyc2ocUucLXztdaP6FY3
- fpleb7JOnrH9uN8dXpDXr3OPgZ3r7DR5fChAvDJ3vqa0BMz1PsYbMPpeztJVmA==
-X-Gm-Gg: AY/fxX4Na2ig5BiZ7cNm2LwYVI2wz88oQRE+myUXLW+dU4QXBzY7P0Zh3LUVGd/W7gO
- 5YqNv+j0mkwDKDmt2FOOAdNMfRRuVNB03wkdHtvBxpYnyu19FEkukdvuXI0VbsjZFRIoIkUCtu4
- X/VGupNoPznt8SJW0HdGZ/kE40lFx2iZcvj3Ft2YzAbdraROiwmegVo4/vJtwdUAYTUT80PfPKz
- jHmnA4C6JonFqXS6qc+lHOD2QLVXhF0+URJnPIvvpo4WWR0JRMwAa0WcLQBn8IJkYgrBvwbLD3X
- 6l311QiVw/Ml0G560B0/bgKtc+QH0FprNpLxGfK5ryD0CMHvKIwilSmGKA1g7CVMhQuz033Y8lF
- NG+miILVVv9okbhv185DLOo3uGXIJvRRwjS18VgV4PK3mILf0YA98euoS4DKUJzY2XXdsRMXNXI
- ttjj3PrXZW80S4xwXsDqWRw6Hc1nd6i7FPoRgoWF/PxcTpL9h/y+UxFV54GIJxgiZKI8fURdfe8
- +D5hg593q04+1fPGX8=
-X-Google-Smtp-Source: AGHT+IFsTjx2UxZ1Zo+RQBBFzfkCjygJrlI4pYZGTSrki0ib8A96/LYc7OWhRVeKcHkNqMtUtu0I3w==
-X-Received: by 2002:a05:6a20:918e:b0:34f:b660:770d with SMTP id
- adf61e73a8af0-3898f9dd14cmr8239983637.55.1767941803596; 
- Thu, 08 Jan 2026 22:56:43 -0800 (PST)
+ bh=4Me4ZBOWrzdKvktUjsLww6TB3oR9WOe6FZHLcDEkUQo=;
+ b=cbD7y17GASwSioxU4xeH+9af8KUfH+Pre+fSDliRYbEPH5lJBMD/LMrs2O4bMIT5t+
+ RjW5zxgGGZMSAKdS6NEtliUk6EOqRK0Y1H65Z+3LLvBKUCR6uIG2GY8y1Tfk3voColUN
+ dcSUIQwGP8Vwok7AunK6zHtnytw/05tPtElVDkwNY06rNsUpjIOZCKsd+MG/Qyewp6lM
+ qqkn8AYYqL+1xOTXH0EM5gZ1Wv5K7/IavNiBxnz9N3AwQcX5jAu+OcsMX2jphx3aVwwf
+ nLzvzqHt520NRmupYd2TjVqP73FKBNlJNxryEGgrKXeDztKG0XXh0VjZlDxTaLv5RpOh
+ jwhQ==
+X-Gm-Message-State: AOJu0Yx4sj3cgug49rn2itmSy+FxV7TOfGM8aPvHJswUZAvAlr+hl939
+ KLzkxN+ZeugKM34qFuih5hSnnquwPRBKADaKbA1QL9bDZaClqc2HmUdX8L3hdQ==
+X-Gm-Gg: AY/fxX4LZb2sgUihRuBBvyFi7piFS+cHtWpqInYdKy3aMizLq2LpDTz4gF6IBL1E304
+ CS7f161zHbtFmS/atrzSv/HMFjWD4IFGnPWVLVpQ3mDd+BBxYpOWV/jUHzcCEYxhA5ZMtGG9EnC
+ qfImXHNgq5NH1VF7BBICxt0cDQYxePKeLZTMuIyUGrMX5gmJNG1nPbNxQJYYWb1vffxORkyYIVR
+ 2OE0ZX0cDteVnIQki2oxl9KYPSeoT+7FOim1u/rMxkgZp+FfvRD8ubve1OLnXcshtoQdGpCpvsY
+ GhjUqQGeVb9vF7EHdN7dZrjvI59YfkHi0hFgDEWvnmEuJmg3/cFr1S339yoYa2bGPV7tUbcH5wj
+ f0EAMxOSR/n2PaYSDh3ZNVNILtE/sLhXqTGhJtABtiF0v3GFTnwS9RBo/zTTwgvw7vzvGkjzHtx
+ OsgauyhNzCX0Y8JPBloFzLLNoxwJr8Lb2fMyLjBdxQK88MHgPNmlgP0LGPdxzVhr+oyCeUgzCCH
+ WMC5VJFyCj9mLUFLX6gS3g05rt4jQ==
+X-Google-Smtp-Source: AGHT+IFMphDaa+YYVImX5ctu0dDOAY96rfa/7okRS9Z/94hQotSxFfrI81s5xiaoFCumesknUaCGWQ==
+X-Received: by 2002:a05:6a21:6d8c:b0:35f:6e12:1862 with SMTP id
+ adf61e73a8af0-3898f94c400mr8279484637.19.1767941822548; 
+ Thu, 08 Jan 2026 22:57:02 -0800 (PST)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.56.40
+ 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.56.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 22:56:42 -0800 (PST)
+ Thu, 08 Jan 2026 22:57:01 -0800 (PST)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
@@ -76,16 +76,16 @@ Cc: alistair23@gmail.com, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  Djordje Todorovic <djordje.todorovic@htecgroup.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 28/34] target/riscv: Add Xmipslsp instructions
-Date: Fri,  9 Jan 2026 16:54:53 +1000
-Message-ID: <20260109065459.19987-29-alistair.francis@wdc.com>
+Subject: [PULL 33/34] riscv/boston-aia: Add an e1000e NIC in slot 0 func 1
+Date: Fri,  9 Jan 2026 16:54:58 +1000
+Message-ID: <20260109065459.19987-34-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20260109065459.19987-1-alistair.francis@wdc.com>
 References: <20260109065459.19987-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -111,214 +111,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 
-Add MIPS P8700 ldp, lwp, sdp, swp instructions.
+The Boston AIA board needs a basic GbE NIC.  There is no PCH GbE
+device emulation, so use an `e1000e` instead.  We place it in
+**slot 0, function 1** in order not to conflict with the existing
+AHCI device in slot 0 func 0.
 
 Signed-off-by: Chao-ying Fu <cfu@mips.com>
 Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-Acked-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260108134128.2218102-7-djordje.todorovic@htecgroup.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20260108134128.2218102-12-djordje.todorovic@htecgroup.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg.h                    |  2 +-
- target/riscv/cpu_cfg_fields.h.inc         |  1 +
- target/riscv/xmips.decode                 | 23 ++++++
- target/riscv/cpu.c                        |  3 +
- target/riscv/insn_trans/trans_xmips.c.inc | 88 +++++++++++++++++++++++
- 5 files changed, 116 insertions(+), 1 deletion(-)
+ hw/riscv/boston-aia.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index e4d5039c49..cd1cba797c 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -38,7 +38,7 @@ static inline bool always_true_p(const RISCVCPUConfig *cfg __attribute__((__unus
+diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
+index 1d9fa868c8..b90da096ea 100644
+--- a/hw/riscv/boston-aia.c
++++ b/hw/riscv/boston-aia.c
+@@ -424,6 +424,11 @@ static void boston_mach_init(MachineState *machine)
+     ide_drive_get(hd, ich9->ahci.ports);
+     ahci_ide_create_devs(&ich9->ahci, hd);
  
- static inline bool has_xmips_p(const RISCVCPUConfig *cfg)
- {
--    return cfg->ext_xmipscbop || cfg->ext_xmipscmov;
-+    return cfg->ext_xmipscbop || cfg->ext_xmipscmov || cfg->ext_xmipslsp;
- }
- 
- static inline bool has_xthead_p(const RISCVCPUConfig *cfg)
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index af92a7e615..70ec650abf 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -152,6 +152,7 @@ BOOL_FIELD(ext_xtheadsync)
- BOOL_FIELD(ext_XVentanaCondOps)
- BOOL_FIELD(ext_xmipscbop)
- BOOL_FIELD(ext_xmipscmov)
-+BOOL_FIELD(ext_xmipslsp)
- 
- BOOL_FIELD(mmu)
- BOOL_FIELD(pmp)
-diff --git a/target/riscv/xmips.decode b/target/riscv/xmips.decode
-index 4215813b32..3174f17aa4 100644
---- a/target/riscv/xmips.decode
-+++ b/target/riscv/xmips.decode
-@@ -8,5 +8,28 @@
- # Reference: MIPS P8700 instructions
- #            (https://mips.com/products/hardware/p8700/)
- 
-+# Fields
-+%rs3       27:5
-+%rs2       20:5
-+%rs1       15:5
-+%rd        7:5
-+%imm_9     20:9
-+%imm_hint  7:5
-+%imm_v     25:2 9:3               !function=ex_shift_2
-+%imm_w     25:2 10:2              !function=ex_shift_3
-+%imm_x     22:5                   !function=ex_shift_2
-+%imm_y     23:4                   !function=ex_shift_3
++    /* Create e1000e using slot 0 func 1 */
++    pci_init_nic_in_slot(&PCI_BRIDGE(&pcie2->root)->sec_bus, "e1000e", NULL,
++                         "00.1");
++    pci_init_nic_devices(&PCI_BRIDGE(&pcie2->root)->sec_bus, "e1000e");
 +
-+# Formats
-+@r4_immv ..... .. ..... ..... ... ... .. ....... %rs2 %rs3 %imm_v %rs1
-+@r4_immw ..... .. ..... ..... ... .. ... ....... %rs2 %rs3 %imm_w %rs1
-+@r4_immx ..... .....  .. ..... ... ..... ....... %rs3 %imm_x %rs1 %rd
-+@r4_immy ..... ....  ... ..... ... ..... ....... %rs3 %imm_y %rs1 %rd
-+
-+# *** RV64 MIPS Extension ***
- ccmov          rs3:5 11 rs2:5 rs1:5 011 rd:5 0001011
- pref        000 imm_9:9 rs1:5 000 imm_hint:5 0001011
-+ldp         ..... .... 000 ..... 100 .....  0001011 @r4_immy
-+lwp         ..... ..... 01 ..... 100 .....  0001011 @r4_immx
-+sdp         ..... .. ..... ..... 101 ..  0000001011 @r4_immw
-+swp         ..... .. ..... ..... 101 ...  010001011 @r4_immv
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 9a27097189..ffd98e8eed 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -254,6 +254,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
-     ISA_EXT_DATA_ENTRY(xmipscbop, PRIV_VERSION_1_12_0, ext_xmipscbop),
-     ISA_EXT_DATA_ENTRY(xmipscmov, PRIV_VERSION_1_12_0, ext_xmipscmov),
-+    ISA_EXT_DATA_ENTRY(xmipslsp, PRIV_VERSION_1_12_0, ext_xmipslsp),
-     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
-     ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-@@ -1367,6 +1368,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
-     MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
-     MULTI_EXT_CFG_BOOL("xmipscbop", ext_xmipscbop, false),
-     MULTI_EXT_CFG_BOOL("xmipscmov", ext_xmipscmov, false),
-+    MULTI_EXT_CFG_BOOL("xmipslsp", ext_xmipslsp, false),
- 
-     { },
- };
-@@ -3319,6 +3321,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.pmp = true,
-         .cfg.ext_zba = true,
-         .cfg.ext_zbb = true,
-+        .cfg.ext_xmipslsp = true,
-         .cfg.ext_xmipscbop = true,
-         .cfg.ext_xmipscmov = true,
-         .cfg.marchid = 0x8000000000000201,
-diff --git a/target/riscv/insn_trans/trans_xmips.c.inc b/target/riscv/insn_trans/trans_xmips.c.inc
-index bfe9046153..9a72f3392f 100644
---- a/target/riscv/insn_trans/trans_xmips.c.inc
-+++ b/target/riscv/insn_trans/trans_xmips.c.inc
-@@ -21,6 +21,12 @@
-     }                                            \
- } while (0)
- 
-+#define REQUIRE_XMIPSLSP(ctx) do {               \
-+    if (!ctx->cfg_ptr->ext_xmipslsp) {           \
-+        return false;                            \
-+    }                                            \
-+} while (0)
-+
- /* Conditional move by MIPS. */
- static bool trans_ccmov(DisasContext *ctx, arg_ccmov *a)
- {
-@@ -38,6 +44,88 @@ static bool trans_ccmov(DisasContext *ctx, arg_ccmov *a)
-     return true;
- }
- 
-+/* Load Doubleword Pair. */
-+static bool trans_ldp(DisasContext *ctx, arg_ldp *a)
-+{
-+    REQUIRE_XMIPSLSP(ctx);
-+    REQUIRE_64_OR_128BIT(ctx);
-+
-+    TCGv src = get_gpr(ctx, a->rs1, EXT_NONE);
-+    TCGv dest0 = dest_gpr(ctx, a->rd);
-+    TCGv dest1 = dest_gpr(ctx, a->rs3);
-+    TCGv addr = tcg_temp_new();
-+
-+    tcg_gen_addi_tl(addr, src, a->imm_y);
-+    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, MO_TESQ);
-+    gen_set_gpr(ctx, a->rd, dest0);
-+
-+    tcg_gen_addi_tl(addr, addr, 8);
-+    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, MO_TESQ);
-+    gen_set_gpr(ctx, a->rs3, dest1);
-+
-+    return true;
-+}
-+
-+/* Load Word Pair. */
-+static bool trans_lwp(DisasContext *ctx, arg_lwp *a)
-+{
-+    REQUIRE_XMIPSLSP(ctx);
-+
-+    TCGv src = get_gpr(ctx, a->rs1, EXT_NONE);
-+    TCGv dest0 = dest_gpr(ctx, a->rd);
-+    TCGv dest1 = dest_gpr(ctx, a->rs3);
-+    TCGv addr = tcg_temp_new();
-+
-+    tcg_gen_addi_tl(addr, src, a->imm_x);
-+    tcg_gen_qemu_ld_tl(dest0, addr, ctx->mem_idx, MO_TESL);
-+    gen_set_gpr(ctx, a->rd, dest0);
-+
-+    tcg_gen_addi_tl(addr, addr, 4);
-+    tcg_gen_qemu_ld_tl(dest1, addr, ctx->mem_idx, MO_TESL);
-+    gen_set_gpr(ctx, a->rs3, dest1);
-+
-+    return true;
-+}
-+
-+/* Store Doubleword Pair. */
-+static bool trans_sdp(DisasContext *ctx, arg_sdp *a)
-+{
-+    REQUIRE_XMIPSLSP(ctx);
-+    REQUIRE_64_OR_128BIT(ctx);
-+
-+    TCGv src = get_gpr(ctx, a->rs1, EXT_NONE);
-+    TCGv data0 = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv data1 = get_gpr(ctx, a->rs3, EXT_NONE);
-+    TCGv addr = tcg_temp_new();
-+
-+    tcg_gen_addi_tl(addr, src, a->imm_w);
-+    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, MO_TEUQ);
-+
-+    tcg_gen_addi_tl(addr, addr, 8);
-+    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, MO_TEUQ);
-+
-+    return true;
-+}
-+
-+/* Store Word Pair. */
-+static bool trans_swp(DisasContext *ctx, arg_swp *a)
-+{
-+    REQUIRE_XMIPSLSP(ctx);
-+
-+    TCGv src = get_gpr(ctx, a->rs1, EXT_NONE);
-+    TCGv data0 = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv data1 = get_gpr(ctx, a->rs3, EXT_NONE);
-+    TCGv addr = tcg_temp_new();
-+
-+    tcg_gen_addi_tl(addr, src, a->imm_v);
-+    tcg_gen_qemu_st_tl(data0, addr, ctx->mem_idx, MO_TESL);
-+
-+    tcg_gen_addi_tl(addr, addr, 4);
-+    tcg_gen_qemu_st_tl(data1, addr, ctx->mem_idx, MO_TESL);
-+
-+    return true;
-+}
-+
- /* Move data from memory into cache. */
- static bool trans_pref(DisasContext *ctx, arg_pref *a)
- {
+     if (machine->firmware) {
+         fw_size = load_image_targphys(machine->firmware,
+                                       0x1fc00000, 4 * MiB, NULL);
 -- 
 2.52.0
 
