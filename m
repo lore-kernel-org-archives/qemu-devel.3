@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46735D232C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F860D232E8
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6RV-0006m3-BP; Fri, 09 Jan 2026 01:57:54 -0500
+	id 1ve6RK-0006CN-6M; Fri, 09 Jan 2026 01:57:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6PY-0003rk-Qc
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:55:54 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1ve6QN-0005E7-Nd
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:46 -0500
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6PV-0002rB-F7
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:55:51 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7f89d0b37f0so1286094b3a.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:55:49 -0800 (PST)
+ id 1ve6QL-0002vJ-Fk
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:43 -0500
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-c2dd0c24e5cso1858745a12.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:56:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767941748; x=1768546548; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1767941800; x=1768546600; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ERlf7UDAtb2XiXyt3aq1BL+KIr1toImgIxxx/WHIU0Q=;
- b=iF69M0uzMeCZCJmCA+GE0C8l5v2+XkyWu2s6+MaquGkES8ncdJIxHNqz/r9FxUVtgk
- epeJeSSmaDf53tegs+9+Qv19YT7eMXjXVUahfLtvM0DWDWjcjlFn7RPP6UirFZz64V/F
- QLRkyhK1N3FTPo6Rx8hz8CqHV6Ks1XgQ+kFBkie9eSFPR4WZS0TxbkFll65xDTjMKrpT
- dhGW1b0MPDc49tkYUfSJUqR+dJsEgiByKEOX5rR2zQA8oQ8JAxOSAcVeNZujoqgkXKVL
- AebufBluT6ltbsQN3WwPjcVz/FL7KCm8tiD6Z+oUQCwLvXpfrmkvOyIfBGDziqBPzuz8
- O4ug==
+ bh=w0GKX/kt0wdDuUaHM/I0P3t8tsMimjTykWNFFF9bH/k=;
+ b=ToX9VDeFaQUgFVjE7lrR/Mrrg/kiyZUsO0vbwrcEqAmmtY9h9BffcN5g3RETZFdktS
+ 8btH7ZNzVkGuEBIXv6Emc3hyiSGVWoDxwmkCf5xxOOcjvMaEatlZKCgTg/CMQDV4BKBa
+ w8BuuKvlVwW1lQz49qimdzJduGAxpTqeGxF1XU4yh20FuUWyWWMo9yHsDludbe7Ub0H6
+ 9U1QLFdQB7TS6ac5acexoyVFrWAvpzwEquyAtBMIxlamNDI/W15zH0VVn9FHdhTw3QQR
+ qU1UbgPNdNFGbFrXD59y3TNpdEeJLLDypJ3vKLvJe22gasly4PbAEnzmlsjZF7J6pyxv
+ Onsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767941748; x=1768546548;
+ d=1e100.net; s=20230601; t=1767941800; x=1768546600;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ERlf7UDAtb2XiXyt3aq1BL+KIr1toImgIxxx/WHIU0Q=;
- b=eMj4eSc7D/BiYGgWxEac3d45wC85WShWXrLcnbHgv90BmJE23bbErLxGRNXExXcwq4
- C01tkD0Tyn08YOfsQHbltUu4mUMA+sDtZU/8oHAOMvLp92BA0NPrWKNUUzT/Ch7A4j7Q
- OoV2/uBRbmFYNIdKIpOKW2FXid3ykW72sEjwOZIphJK5uOTXQbN8QgMjspkGz8QVv0pL
- D77dssNm+YZzD5hbrNW2uk7lFn5cXQQD2XHIjPNwH2B0ECmNLZi/CXA8WDqnkVbF37RG
- 5wTfVOZjN2KMEYkuqMAwJOPCHhRkPlMj/+2vutRMvVYtWd6O6uYk5AfxsCNyTyhtkysO
- 7K2w==
-X-Gm-Message-State: AOJu0YzSNf0ptW8BrvMm42I4ROOcdX5xYhSrTPMnIhqOgcqoSPsXYYoX
- tDYI6A83765pgtUWKrGmM5RINZCfoxrRWdPFRKACa3iMvtW+/ghgiG1GkdMWUQ==
-X-Gm-Gg: AY/fxX5NOiQQ/Wez2EZzkltfTQ0rbTVA3WgZ0CyfZ3aUVS+YnN2WBLThNW6lhZL8N1l
- QALjEwXXm+dwPuUkn4dvaFr/WhOMWUiJ2XzVgpqH4stlFn4CJu4IMNAKoNX9EJIeUITVPXt3/8j
- FqYFcOSCXJiIqPYSWCT2Akk9z+3umb1kzzQAwBkk3UeTjbIWupnIcAfWF0FUTO3oSOsd1sit/n0
- g+tmBmfaAv2DYif3oFHZ7a4kpcNlkQokpHmQrZQxNH5Iqe74SHGWMA4Uh3gKNIO8/HBE3k82c7S
- BJ0rZ9KDd0dvUTgMmmdqDWASR9La+PukItztfPXJbjx2xG/NPgPw/RKOTxxeHz/xOVQOZ3mMpc5
- J+lvEv/PQLxLwgMT6LR1khLIl0SZWNkCRRIlqTVHlulX/LhHXQrHZ4vEj8VioJEb1alg5bw/M2b
- KO+vRpuBidKlChUvCeSB503h1SX5ptY/0iIXg4Ka1cz9PFMQbI9JRmrgeVhiTaok42A2ex9+DqT
- GlZBmNBmWpzUZ2xcsg=
-X-Google-Smtp-Source: AGHT+IG2lQB8TbHNnUpUi7j6tq94s4inCSp9uoAJzq2UmfYBuPJgQcChVmAw43uKcmOtRZPQLGUtkg==
-X-Received: by 2002:a05:6a21:62ca:b0:37d:e26a:bff2 with SMTP id
- adf61e73a8af0-38982b1ffbbmr12199823637.20.1767941747659; 
- Thu, 08 Jan 2026 22:55:47 -0800 (PST)
+ bh=w0GKX/kt0wdDuUaHM/I0P3t8tsMimjTykWNFFF9bH/k=;
+ b=trXy31r62eElg6A3dqQN1M17fsMeQ4iCd/mRYnnu2ZatBtqPf1RG3lSo2wnaHE57nf
+ ptkf+MTUIO6IOwu+tpd3V6acD12iEdF5n1LzDh2xVgZ9kqul04q2FqBYGK/3DolLCjoD
+ efmNiqhW4vx/H+39bYGE2tmrLb0hIdS+8foeyBYfeumze1LSkDKqmYxz9RdxjaSZw0E1
+ HVSuIeQespyTmuwIixltSQLKKx4Gmus/SfZFS9FcTLacGPILKj8x65C3jBg4W3rVfm2b
+ slYCHqNl8yLH0TLckwiWeIyDQqpqFiBUBnapNeWo+D3+TRdOfTuor0eZgQmRx0YmTIe5
+ LN4w==
+X-Gm-Message-State: AOJu0YyHew00kQLtZ/FL2bUzrl2vTg/KBXIjXZzsaRxrv1kBNs2/yVnv
+ SEcwNU0wCrvkd5jvRr2/GyUlk4YPL1g+iSWTKy4gq5KWmJT4v4FqJw1Pkzg7gw==
+X-Gm-Gg: AY/fxX63t2mIpKx2O70X5EztEeCy4FiqFvpG2Uau3oxxGhuFS0LzL2F4hJq47AENHFl
+ hHds3o+8CXSYPrAohpDyT5pCUZJc6SoRPTaBhzaQR4VMGHHX+dZ3iRSttTbGwl4xVUaeBcFTw32
+ fMaM47OyAVMGGG/wQpp5k3oW5YgCkcJl5rDlrJUmu36YP4QyKLNK8t2Vjakyb2D07Z9srHkU/gX
+ m+PRUsE2mq49kHApmmFUX26GgjniXfscMqQHOBCnNI9fdJEzaCXRxIG1DBeKhduEmaYYezieq+F
+ 8sABNo5JbUOl+EvSv1i5kzk0RE9xqn68Bsd/2JpSmw77HtXxzdcFBNpCoASFTw2IrgEKHJNZqVk
+ sj0cNCWOFscJzsoZFM6ZtF67nLtPazFIUN4olC9lZHTMf6MHmBZYD5mKbbMavkUSR5kl4nxMAUe
+ s0gATkZROrUTG2HAqxY19I4HJ0xToUUiFCBkWfkLCi3VYTlXr67FmwJPl+rrXyAZEEfWMsFOO3L
+ aswITFn2ltKH2Bxj5E=
+X-Google-Smtp-Source: AGHT+IFNkvYTAaD2GXsNFc3GMi8I7DTY6cgoZ7MQER2KfjMJR0Ddvc009DW9+90A3zc78hNpKb2drQ==
+X-Received: by 2002:a05:6a20:94c7:b0:35e:3cac:858c with SMTP id
+ adf61e73a8af0-3898f96cc2emr8781244637.33.1767941799800; 
+ Thu, 08 Jan 2026 22:56:39 -0800 (PST)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.55.44
+ 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.56.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 22:55:46 -0800 (PST)
+ Thu, 08 Jan 2026 22:56:39 -0800 (PST)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 12/34] target/riscv: Bugfix make bit 62 read-only 0 for sireg*
- cfg CSR read
-Date: Fri,  9 Jan 2026 16:54:37 +1000
-Message-ID: <20260109065459.19987-13-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Chao-ying Fu <cfu@mips.com>,
+ Djordje Todorovic <djordje.todorovic@htecgroup.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 27/34] target/riscv: Add mips.pref instruction
+Date: Fri,  9 Jan 2026 16:54:52 +1000
+Message-ID: <20260109065459.19987-28-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20260109065459.19987-1-alistair.francis@wdc.com>
 References: <20260109065459.19987-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,45 +109,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 
-According to version 20250508 of the privileged specification, a read of
-cyclecfg or instretcfg through sireg* should make the MINH bit
-read-only 0, currently bit 30 is zeroed.
+Add MIPS P8700 prefetch instruction defined by Xmipscbop.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20251027181831.27016-5-anjo@rev.ng>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251103033713.904455-4-alistair.francis@wdc.com>
+Signed-off-by: Chao-ying Fu <cfu@mips.com>
+Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260108134128.2218102-6-djordje.todorovic@htecgroup.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/cpu_cfg.h                    |  2 +-
+ target/riscv/cpu_cfg_fields.h.inc         |  1 +
+ target/riscv/xmips.decode                 |  1 +
+ target/riscv/cpu.c                        |  3 +++
+ target/riscv/insn_trans/trans_xmips.c.inc | 15 +++++++++++++++
+ 5 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index a69b9a11ab..a34b14c4f0 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1544,7 +1544,7 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
-             wr_mask &= ~MCYCLECFG_BIT_MINH;
-             env->mcyclecfg = (new_val & wr_mask) | (env->mcyclecfg & ~wr_mask);
-         } else {
--            *val = env->mcyclecfg &= ~MHPMEVENTH_BIT_MINH;
-+            *val = env->mcyclecfg &= ~MHPMEVENT_BIT_MINH;
-         }
-         break;
-     case 2:             /* INSTRETCFG */
-@@ -1553,7 +1553,7 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
-             env->minstretcfg = (new_val & wr_mask) |
-                                (env->minstretcfg & ~wr_mask);
-         } else {
--            *val = env->minstretcfg &= ~MHPMEVENTH_BIT_MINH;
-+            *val = env->minstretcfg &= ~MHPMEVENT_BIT_MINH;
-         }
-         break;
-     default:
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index 2db471ad17..e4d5039c49 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -38,7 +38,7 @@ static inline bool always_true_p(const RISCVCPUConfig *cfg __attribute__((__unus
+ 
+ static inline bool has_xmips_p(const RISCVCPUConfig *cfg)
+ {
+-    return cfg->ext_xmipscmov;
++    return cfg->ext_xmipscbop || cfg->ext_xmipscmov;
+ }
+ 
+ static inline bool has_xthead_p(const RISCVCPUConfig *cfg)
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 0b461bb05b..af92a7e615 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -150,6 +150,7 @@ BOOL_FIELD(ext_xtheadmemidx)
+ BOOL_FIELD(ext_xtheadmempair)
+ BOOL_FIELD(ext_xtheadsync)
+ BOOL_FIELD(ext_XVentanaCondOps)
++BOOL_FIELD(ext_xmipscbop)
+ BOOL_FIELD(ext_xmipscmov)
+ 
+ BOOL_FIELD(mmu)
+diff --git a/target/riscv/xmips.decode b/target/riscv/xmips.decode
+index fadcb78470..4215813b32 100644
+--- a/target/riscv/xmips.decode
++++ b/target/riscv/xmips.decode
+@@ -9,3 +9,4 @@
+ #            (https://mips.com/products/hardware/p8700/)
+ 
+ ccmov          rs3:5 11 rs2:5 rs1:5 011 rd:5 0001011
++pref        000 imm_9:9 rs1:5 000 imm_hint:5 0001011
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index d0a6a88a4e..9a27097189 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -252,6 +252,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(svrsw60t59b, PRIV_VERSION_1_13_0, ext_svrsw60t59b),
+     ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
+     ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
++    ISA_EXT_DATA_ENTRY(xmipscbop, PRIV_VERSION_1_12_0, ext_xmipscbop),
+     ISA_EXT_DATA_ENTRY(xmipscmov, PRIV_VERSION_1_12_0, ext_xmipscmov),
+     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
+     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
+@@ -1364,6 +1365,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+     MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
+     MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
+     MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
++    MULTI_EXT_CFG_BOOL("xmipscbop", ext_xmipscbop, false),
+     MULTI_EXT_CFG_BOOL("xmipscmov", ext_xmipscmov, false),
+ 
+     { },
+@@ -3317,6 +3319,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.pmp = true,
+         .cfg.ext_zba = true,
+         .cfg.ext_zbb = true,
++        .cfg.ext_xmipscbop = true,
+         .cfg.ext_xmipscmov = true,
+         .cfg.marchid = 0x8000000000000201,
+         .cfg.mvendorid = MIPS_VENDOR_ID,
+diff --git a/target/riscv/insn_trans/trans_xmips.c.inc b/target/riscv/insn_trans/trans_xmips.c.inc
+index 3202fd9cc0..bfe9046153 100644
+--- a/target/riscv/insn_trans/trans_xmips.c.inc
++++ b/target/riscv/insn_trans/trans_xmips.c.inc
+@@ -9,6 +9,12 @@
+  *            (https://mips.com/products/hardware/p8700/)
+  */
+ 
++#define REQUIRE_XMIPSCBOP(ctx) do {              \
++    if (!ctx->cfg_ptr->ext_xmipscbop) {          \
++        return false;                            \
++    }                                            \
++} while (0)
++
+ #define REQUIRE_XMIPSCMOV(ctx) do {              \
+     if (!ctx->cfg_ptr->ext_xmipscmov) {          \
+         return false;                            \
+@@ -31,3 +37,12 @@ static bool trans_ccmov(DisasContext *ctx, arg_ccmov *a)
+ 
+     return true;
+ }
++
++/* Move data from memory into cache. */
++static bool trans_pref(DisasContext *ctx, arg_pref *a)
++{
++    REQUIRE_XMIPSCBOP(ctx);
++
++    /* Nop */
++    return true;
++}
 -- 
 2.52.0
 
