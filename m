@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB9BD1A63D
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C879ED1A639
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veDpP-0001jO-VB; Fri, 09 Jan 2026 09:51:04 -0500
+	id 1veDpV-0001pM-MO; Fri, 09 Jan 2026 09:51:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veDpL-0001bT-QH
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:51:00 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veDpP-0001jM-Ev
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:51:03 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veDpI-0001px-KG
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:50:59 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veDpO-0001qZ-0h
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:51:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767970253;
+ s=mimecast20190719; t=1767970261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Ja3dFCXFoT/QIhH2mZhtfCuK347Vn2U+zeKS0GAbOrw=;
- b=KjmvSnjq4L2TOpCvk3zbGx9AjTqTLhsXGjikyp5Jj5Doc+iasmi5807dPybZ+MfY3QrrV/
- VoRzXztGW18/Z29g45ChiQLwWSDOg5Nc3dDv5GII/cgxd7QAWaqCemKm11giFIMFQzAkb1
- 7/sm71fCdX7vgYKFm61uXwh9HH4lSjI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zoPi/lIP+MJ17uDKP1XFLGJxC852zFRHKtx2l+q+l8c=;
+ b=apLDiO5NT0J23oeiDZbuxZfGj7vMQFHQwpPLfK+tNneMnZaFxUCOv0EAcb5fCDo40bvK1d
+ xEVXWlT8pLMT3DqEs6p7BaZzsCBq8ttO3v+cJVRugfAKQQogB2M/RijZZQGsg7kaBojr+4
+ OCG2dqW4uS7mvSw61VN0ImfJgcKiUKA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-GaonyNlzNj-I3J0FT7dF0Q-1; Fri, 09 Jan 2026 09:50:52 -0500
-X-MC-Unique: GaonyNlzNj-I3J0FT7dF0Q-1
-X-Mimecast-MFC-AGG-ID: GaonyNlzNj-I3J0FT7dF0Q_1767970251
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-430f4609e80so2271396f8f.3
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 06:50:52 -0800 (PST)
+ us-mta-134-4-gwXQECM0aU5FZq8U8Tkw-1; Fri, 09 Jan 2026 09:51:00 -0500
+X-MC-Unique: 4-gwXQECM0aU5FZq8U8Tkw-1
+X-Mimecast-MFC-AGG-ID: 4-gwXQECM0aU5FZq8U8Tkw_1767970259
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-477563e531cso31804075e9.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 06:50:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767970251; x=1768575051; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767970258; x=1768575058; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Ja3dFCXFoT/QIhH2mZhtfCuK347Vn2U+zeKS0GAbOrw=;
- b=j/ftZaeC0KKZ/1uVv9bZwBsANl4bLv2uuYfWjujioWGAGlxzv4aZ3fb/NjHYrdX8ob
- 6WVSK7fK6YVebEXPGxKdTz4eY6d7t/04qRBZ6Djcqo+QYAu6nMeI6bdLYd8miCoMsG1d
- BaNkmOHWJjJxztF1Jo5qfDXMMfomnjuuErJt7ZfmJZ9AEcQGfaIjbEwuM1Vex38Q7485
- niQuXHFlTlOngZ4DVx1iuTDg49wn/RJLcNGnpOUMG9aFjyxLxycblirHa/3VWRCgAzLi
- bH9HtT27AyOP4D2Qrar1h3exQBgXTDCA2+PHWYJ522UH654Q1VpsiRb7gBkq5pteovuP
- G00w==
+ bh=zoPi/lIP+MJ17uDKP1XFLGJxC852zFRHKtx2l+q+l8c=;
+ b=dPCEvylhkQY4Udfq7snGSpWJfSSKVR1zCRU9x88kK0fTzixGWNvuVHdnDdkvg3bl5w
+ TuvDCbKLhHk4lED2iGjY/xtgt7GBO3y/KsoPYoAuuc1DaDmGDb0bTMxqKvHzEsLpXxy9
+ DnGeB8ffpEoyAVxmPc7UWe+7eo7ap+CIR+yU5FawcYNhw4bee2XPX9dvAdZrwXwhs/by
+ qbQtmyf86VvsoeyqrqWg1QDE1hBeVDxIWZCw4JK5xG/KAB2jSo77g/U5Zw/juGrdjoN9
+ If5kL3RixXcb11wnmNUTG+K0Qmj3FDZJvkd62uhVAoR44M2YIVsqqB2M3GI28nszaOl+
+ 77Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767970251; x=1768575051;
+ d=1e100.net; s=20230601; t=1767970258; x=1768575058;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ja3dFCXFoT/QIhH2mZhtfCuK347Vn2U+zeKS0GAbOrw=;
- b=guPqze+ojqPekOOY1tKt/2Yy0oVrunFcR8h3kdwulXRtoI93BjUnYMmzEHZoWMgE/4
- Vbbonnm2HPKoTtSvAvATlWzp4NTQO2zOHVtshnKjZKtmx9ilvyFQgRmFtpxK2zVLmYoL
- WyWIZeMci7P4NWBV8hEDJjf5xCOd/32tbyUUP9cLgWy1QC06CdsnV5syY1lVrkWFbSN6
- 0EjP25D59HGSvsUQOuovldW4me+10hs8qSV9/bQjNsItsglZSTLQgpFVs3QXv6NarUFL
- t5Omtm9K4zJFfAN0l10Lx5qmYCysCduovQqetOvEbUGUWIYZIyaCZVAUgyP2zl9sd4pf
- ReOw==
+ bh=zoPi/lIP+MJ17uDKP1XFLGJxC852zFRHKtx2l+q+l8c=;
+ b=Ye32ccU/ENstPyyEk58J+K3dVpRpvSCu8t40DkgyNrb8/t3Py3XWvuv9hl1YkDvaz5
+ pyy+jgZJ1fbsMmLRI2WqOKsbfSgBhxh133FFQ3SyGV1e58k+i4n+IlkS6AazrDL0S6ph
+ oXd0GDkOewQcQ7ZkqozLZt02amR6zJwrBwvGTxTckFxX7hGuKd4TE/GqqKs4eY3igYxL
+ 6XBhPlud47A8ACEbHB+TUq51hiGPoSQWkm/qzQei9lrKqiT+y2ihykuN6qmJZO0fiof0
+ I+iK9+8ug+7ps6V2trJfaHwNPUupU5yu5t1Z4Ofqon6DpbCqXsvzv8C6k6j06hVoy6Hz
+ K8FA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8mW9B4ghv+SFJyR+UXVXQfSGxJv0tZDd1eZyTvGh8DtAWwIpAsk9aMXLjjO5RcUGfZlhrbMp5fTnt@nongnu.org
-X-Gm-Message-State: AOJu0Yx4+bewLkh0Er/XmcLZ4UiTCsfCSk1ewa8TLpqGNgzKIqmXPWGF
- EKktVr5evuPiFE7C1CrlTliujQalN8ZZp4Xy6O/BkeAUrtSLdn++quAT+gPj8uTXxKh/KKgk7pV
- lDTj883yGm4m05S0ByP7DB4seKrnpQOcQhJXxwXM8Xg4nfMOS84gTgTGw
-X-Gm-Gg: AY/fxX4DJS5dDtknVN7i0S+J9iVKXlhPNRBYCFJ5XOGhEj90YcRxtXSvjngdEOTVgjv
- DUAM2/PvuUtl/W+Bk9cf9clxs5k234ed7Pnb8OZtmTEcelOFKGrodrIwD6yvhQnyKr98bGuw2Oj
- eUNBQdsywIQJEx3Ym5D/505/s7mSD0OsCJaon+sMtSZqe03nBi4TaCtxOR0hQWOJ9GlxSP+BkqG
- 9dX+VToLcsIujRpQEYMWnJHCAV3aGrVnqiKVU7ojR2HmvVgy6m4tjxaTv6HevbeQnN57Kq2rcIk
- BCMvBG8/d1LP8Zc0wUA7lWPPp7Z1nXOaUf2yVsT28Fhu9n5XDxaU6xFdBZ5MOLJK3rlG0x+lpAz
- rIW56EESGvx9Mq7EqLeAp5sJb6CYteh1cShlT4hRDACQ7P1SI
-X-Received: by 2002:a05:6000:178a:b0:430:f449:5f18 with SMTP id
- ffacd0b85a97d-432c37644b4mr13124630f8f.46.1767970250905; 
- Fri, 09 Jan 2026 06:50:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGkaOPu8Zgx/2miNmt3aV1z117gw7WVrChuwWRIBBS4NNWRRKVTtIRBibO6NFfabPCHAfuU0g==
-X-Received: by 2002:a05:6000:178a:b0:430:f449:5f18 with SMTP id
- ffacd0b85a97d-432c37644b4mr13124591f8f.46.1767970250434; 
- Fri, 09 Jan 2026 06:50:50 -0800 (PST)
+ AJvYcCVZu3YoJK84simNYeCvZU2hwhQOB1rm9R2SJVzvpNqo4ABWxWj9mQQdCF8AygRgIcPq8xNTJuVwop1q@nongnu.org
+X-Gm-Message-State: AOJu0YxlzxAOqQ0zd/6X1NesOA+jTeCjpfx1gG6NukYVG/B1fsCjevGb
+ DgZRO/A8mj5zTfxzz/7fn1FytLebfKXWq+nY3X5bJM6WaigOoXWbMPa7ZQYHduSjllPFt/Ygb2u
+ 4drzmqd+gomPuwEj+RQngTwn9IESFU+VxOaRJ7L75FkjBQ70Ru45SxO+mvtwiMBnX
+X-Gm-Gg: AY/fxX6Qm/ecVwDclcrCmzXwJtfogJ95e0xLmqx5+RmTIMAwmz0VJiDxUVJ+gmB/f5M
+ SIqMLJT0bz+vlpxjLpBzdlbUQzi5jkI7Jrt0O2ZcpAHfSeyi0Fgkyz9VFL4rv8bZsgFDEE+dO2J
+ xFx+Dx2iRKzyq2fc1JljC+VL9/q28S14HQ5PjyiQX9/IQVj0zpbRv8wvjw5oEswszDdH4vv4/i8
+ ydsGivjTB3IedFMkj1VDs0nWfoY/lsNXdn4X9IStQ3Y6lBxDWWJXaPXj+/h/a8Tx/Y00h9qjkxJ
+ rLrmXDShuusRGpy7ojzLZ5TSox7WqwqzXdemianIQjJtZx8igKamr8XOsO+OT4LDQclAgw18SJN
+ X23ZOc1Xky4W+gGfc+KF8lEQzW/R8fWODQPNAcm/7cQWImXQP
+X-Received: by 2002:a05:600c:46ca:b0:477:aed0:f403 with SMTP id
+ 5b1f17b1804b1-47d84b0a288mr114375445e9.8.1767970258420; 
+ Fri, 09 Jan 2026 06:50:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcOnVULgHhci3PnV8MyFg7y3ztP7sGNCkMFVFmwc85TA34mZta1cL39zzT48/7qIiM5yzWqg==
+X-Received: by 2002:a05:600c:46ca:b0:477:aed0:f403 with SMTP id
+ 5b1f17b1804b1-47d84b0a288mr114375185e9.8.1767970258000; 
+ Fri, 09 Jan 2026 06:50:58 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e6784sm22920607f8f.19.2026.01.09.06.50.49
+ 5b1f17b1804b1-47d7f68f686sm210966515e9.3.2026.01.09.06.50.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 06:50:49 -0800 (PST)
-Message-ID: <8085d705-7b62-4098-8ad9-7addc9069a9a@redhat.com>
-Date: Fri, 9 Jan 2026 15:50:48 +0100
+ Fri, 09 Jan 2026 06:50:57 -0800 (PST)
+Message-ID: <1bb7c576-915b-406f-882f-1f33f7b98dbb@redhat.com>
+Date: Fri, 9 Jan 2026 15:50:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 0/4] Implement ERRATA_772415 quirk for VTD
+Subject: Re: [PATCH v2] docs/devel: Remove stale comments related to iommufd
+ dirty tracking
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex@shazbot.org, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20260106062808.316574-1-zhenzhong.duan@intel.com>
+Cc: alex@shazbot.org, eric.auger@redhat.com, yi.l.liu@intel.com,
+ joao.m.martins@oracle.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20251226073007.1139478-1-zhenzhong.duan@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -143,7 +142,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260106062808.316574-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20251226073007.1139478-1-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -171,79 +170,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/6/26 07:28, Zhenzhong Duan wrote:
-> Hi,
+On 12/26/25 08:30, Zhenzhong Duan wrote:
+> IOMMUFD dirty tracking support had be merged in merge commit dd4bc5f1cfe9,
+> the stale comments could be dropped.
 > 
-> Based on Cédric's suggestions[1], The nesting series v8 is split to
-> "base nesting series" + "ERRATA_772415_SPR17 quirk series", this is the
-> ERRATA_772415_SPR17 quirk series.
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   docs/devel/vfio-iommufd.rst | 12 ------------
+>   1 file changed, 12 deletions(-)
 > 
-> On a system influenced by ERRATA_772415, IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
-> is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the readonly
-> range mapped on second stage page table could still be written.
-> 
-> Reference from 4th Gen Intel Xeon Processor Scalable Family Specification
-> Update, Errata Details, SPR17.
-> Link https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/eagle-stream/sapphire-rapids-specification-update/
-> Backup link https://cdrdv2.intel.com/v1/dl/getContent/772415
-> 
-> Also copied the SPR17 details from above link:
-> "Problem: When remapping hardware is configured by system software in
-> scalable mode as Nested (PGTT=011b) and with PWSNP field Set in the
-> PASID-table-entry, it may Set Accessed bit and Dirty bit (and Extended
-> Access bit if enabled) in first-stage page-table entries even when
-> second-stage mappings indicate that corresponding first-stage page-table
-> is Read-Only.
-> 
-> Implication: Due to this erratum, pages mapped as Read-only in second-stage
-> page-tables may be modified by remapping hardware Access/Dirty bit updates.
-> 
-> Workaround: None identified. System software enabling nested translations
-> for a VM should ensure that there are no read-only pages in the
-> corresponding second-stage mappings."
-> 
-> QEMU code can be found at [2], it's based after below two series:
-> 
-> [PATCH v10 00/19] intel_iommu: Enable first stage translation for passthrough device
-> [PATCH v6 0/9] vfio: relax the vIOMMU check
-> 
-> Thanks
-> Zhenzhong
-> 
-> Changelog:
-> v10:
-> - All headers under include/hw/ have been moved to include/hw/core/, do
->    the same for iommu.h (Cédric)
-> 
-> v9:
-> This is a new split from nesting series, see the link[3] for history changelog.
-> 
-> [1] https://lore.kernel.org/qemu-devel/bbc8412b-25c3-4c95-9fde-a1c9c29b54ce@redhat.com/
-> [2] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_ERRATA_772415.v10
-> [3] https://lore.kernel.org/qemu-devel/20251117093729.1121324-1-zhenzhong.duan@intel.com/
-> 
-> 
-> Zhenzhong Duan (4):
->    hw/pci: Introduce pci_device_get_host_iommu_quirks()
->    intel_iommu_accel: Implement get_host_iommu_quirks() callback
->    vfio/listener: Bypass readonly region for dirty tracking
->    Workaround for ERRATA_772415_SPR17
-> 
->   docs/devel/vfio-iommufd.rst      |  9 ++++++
->   hw/i386/intel_iommu_accel.h      |  5 ++++
->   include/hw/core/iommu.h          |  5 ++++
->   include/hw/pci/pci.h             | 31 ++++++++++++++++++++
->   include/hw/vfio/vfio-container.h |  1 +
->   include/hw/vfio/vfio-device.h    |  3 ++
->   hw/i386/intel_iommu.c            |  2 ++
->   hw/i386/intel_iommu_accel.c      | 21 ++++++++++++++
->   hw/pci/pci.c                     | 12 ++++++++
->   hw/vfio/device.c                 | 14 +++++++++
->   hw/vfio/iommufd.c                |  9 +++++-
->   hw/vfio/listener.c               | 50 +++++++++++++++++++++++++-------
->   hw/vfio/trace-events             |  1 +
->   13 files changed, 151 insertions(+), 12 deletions(-)
-> 
+> diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
+> index 3d1c11f175..b37098e1b6 100644
+> --- a/docs/devel/vfio-iommufd.rst
+> +++ b/docs/devel/vfio-iommufd.rst
+> @@ -127,18 +127,6 @@ Supports x86, ARM and s390x currently.
+>   Caveats
+>   =======
+>   
+> -Dirty page sync
+> ----------------
+> -
+> -Dirty page sync with iommufd backend is unsupported yet, live migration is
+> -disabled by default. But it can be force enabled like below, low efficient
+> -though.
+> -
+> -.. code-block:: bash
+> -
+> -    -object iommufd,id=iommufd0
+> -    -device vfio-pci,host=0000:02:00.0,iommufd=iommufd0,enable-migration=on
+> -
+>   P2P DMA
+>   -------
+>   
 
 
 Applied to vfio-next.
