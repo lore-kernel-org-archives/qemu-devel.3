@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4461DD232C8
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28073D232E8
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6RG-0005wK-LB; Fri, 09 Jan 2026 01:57:38 -0500
+	id 1ve6RI-00067R-P4; Fri, 09 Jan 2026 01:57:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6Q5-0004q1-3D
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:28 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1ve6QC-00055Q-0F
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:33 -0500
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6Q2-0002tO-Qg
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:24 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7e1651ae0d5so2435280b3a.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:56:22 -0800 (PST)
+ id 1ve6QA-0002u5-BL
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:31 -0500
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c5513f598c0so347035a12.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:56:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767941781; x=1768546581; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1767941789; x=1768546589; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8OGp2STDkhe7ThW6Dm/4DOuMnh+2aTViHI4xdpXEzOs=;
- b=m8LTQt675IDaXEtQFkE3VbtM7JsJlGjXTZIDP3buD33QgezJsP1Ltq3aiX+rsEBb6K
- tIr/smlZ9S6j2Ta/14VyUgEa855HNbqoq0F8P1aoIGKHwqvoBzjmAVIMNgkenBr1CriD
- /0kl74RQcWxK4ghGqnz/etMHYj6aZoEJtK4mvGP67MPz2w1H78SH1GFYE0H7nmPVkQHb
- tcCtfrDeojS85n9UMQQ4x/f7sjNm6B9XS8HTSFakZtAVLLtCJI+Rl7pWRi8j98TW/MkD
- zakdw/oatvj4XbSwaTelNNYrWsaBrmFsW6uhp6RGxrXyNC5XqauxVfU4Apa1Uivt2v6d
- hPZw==
+ bh=HjFpuKrI65dY4xPj+2D6qx22ukyO0mIgkNS35Pgtsp8=;
+ b=JcePT9hSL630E9fYZC1aKE1ZecixBWJNYZB/NnvkLaPN97NScq24WIBeUL9KdjqnwQ
+ gpvZ5l4hYC3GXgwNfjWG+mPVbleCefBIIWraCSa5BgBO35GlG/XCQb64l2x+hNmMv2Dc
+ a6RYMZ4dKYzPc3zlowbx2X+bwhb6oh80Y26lnnpQ5YwAEgBB2ErIccesr7We77quef6d
+ NZ84BE+9SG4UZIlC+C/1FVqHnj43Nt/qJtIFjC97oTy8E5tBD7tLLGJ79aVsDO7YpOJr
+ hWxyrnEZapqc3NIuZy3muO0yJA+PvI+3anT2dIdaNDVkGqyrhtvCHBB0yhodmdUmFpHy
+ IaCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767941781; x=1768546581;
+ d=1e100.net; s=20230601; t=1767941789; x=1768546589;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8OGp2STDkhe7ThW6Dm/4DOuMnh+2aTViHI4xdpXEzOs=;
- b=HWbJfU2YPMcI7GjDaqsyqvMw7SRPjbJ7BObhCD7LbqLvM+JKiMsSP62gxuelrzKK6S
- 4WXwsyKgR5Rjxc3/RFFMRpdxvju13hEpsi9UeUpnQmAsTQYuUlCagVfyphm9AAYJttZV
- 5iKBTeT1eByLPZ0jingNGCMcDREp99w/WcTyB1zYpeqKt6rQXs+kvr+zXtiLinpEYHdo
- PwxC9g3FmFCrwPhhbMclps5wb0e93a5gGx1Sp5OBU6usEd9R00uDecRveJhSJ2cSdELS
- h8Z2Lv0Xjzuk70FIj/mkIHO1MQbZVqDSnY7s3zvL8Y1j1SBLBDPfDtbkurLC4vsqFIBi
- yicA==
-X-Gm-Message-State: AOJu0YyVSz/JUSjbYFimbBucqsFqqxsK78mWQGpPtlAgwgfGh0Gt7NiE
- U0VOMa91yD4XRTZJr8/7FP1IFC1i+W3kB/HpnMu2Fuv8Uc+b/b5qCbjZDN3p4Q==
-X-Gm-Gg: AY/fxX6xPD1tOdspoBPn76CKH0uYItkuJ6gyZ9oorKpdyBp9KJuH6j0noBYi96qonMk
- sUoQ3Yn+qe3npJ4BTU+yQsZ8Oq5lX79qobyELxRPvqEbjzON3jpvDibsrvPyeQi7xsXWu/Ze60N
- ihnqTvDLuU9PB3o2DHRK6iqsulHmF1JTFO4u0XomGtIMCu0qshqg8TgxapBWBcI4OjgwgJhxIjh
- an2xTi47Mdp5N+JwM6nz7dZeqvwG1IxpukM1nktr9+vrBssxiPYp+WI6IGKzbj+5i/AwVYmt7mA
- 0G9D4tISE9Ij3JACzLAjG+FvTXxK7ClGnWRwM5O/4HBYuQeCi5bQDwsTha3ItoAqmkvrn01M0Lo
- iA/aSED7RX7R+Im+bs4Wak2IqNXlILTvQzTC67pVE8Sa/H/z+NAJ3tDl3t1Z9WKtWSYzA9wqfG2
- amjSXh6SKPlyfxfAKML2SrrOg8u29Bl97TmuMakyjbfoBSVD73sxqKsmw7m1pOSESKI9ECQDUxE
- FwgW10ApGax9eOQfAo=
-X-Google-Smtp-Source: AGHT+IHtFcAcWLqxxC7kCJuVp2/Wjk6TrRkJr5EGjYkQRrRnAkiMY0AZtJHsAHQAEZvenFbFftkGHw==
-X-Received: by 2002:a05:6a21:3291:b0:35f:5fc4:d896 with SMTP id
- adf61e73a8af0-3898f906a35mr8158582637.20.1767941780856; 
- Thu, 08 Jan 2026 22:56:20 -0800 (PST)
+ bh=HjFpuKrI65dY4xPj+2D6qx22ukyO0mIgkNS35Pgtsp8=;
+ b=loqCxkxTrHRz/W5+QSAGznygUSkAJDaK+H0ZbBXlekh9LCUVv39RdcVfJZkFovTTrr
+ MRdQGMD5w+v02oJKOPb19IWk5RTTAFUInW1NpNXp3Y+xuM+Vk3gHlPTslpy4dwB2D8fy
+ lSEovesYb++ZcBESsd9QgG4OalqLIvXwy4v4ZeeMS3faXj01Yv+yVYeD3NnaHaNz01VX
+ qwTfbDEhVrB0H1lUhFCs6KNuzk0HYEkX6FkaRaZ78uz3u8xi/0andUx4w20sHxO7vrz3
+ bL8Ng+95zcHoah3S2ATzQ0VBaGH8nJnlknCPwiZLUpNhTvkaBdkcwUgx26oZMLE2HDcM
+ njsA==
+X-Gm-Message-State: AOJu0YyT8POeAf/eY2SE+CYa4e5pgESIrIdW6eDrXOvhPZv0PSux4hSp
+ Jtx2oArImDOnMh/g5mc1z6/btYTr8uI8dSUkYBGNbYnPDFbR1hKKdoli4MzRuA==
+X-Gm-Gg: AY/fxX6nhLFaVbEg5Rbp3KwlUy9n0LZB1hgp2aQ2NLiTgEMQcJ1oyYvoXd78+PLBj7m
+ LU0jVoKABCLODYK4Ek6fsO5PMgc0q0bPwx59rJfWB1RXIg88FKKBepYbaeKCqZ1mK4n5545+7Uy
+ +lSCWMjDR2Mdt66gbRAq0R6tPslV7kiGO5OH0EsuYPM/DdcPU1RMdcKoPAmcZL6OojWwCcDrnbM
+ q7F3ps3eA8QSBlIFn9pRD7ZGodmYJ1V9MAzE54f+dYtg60khqCdmNgnTaKK6CkLbbc/oemsgfsW
+ 7Ew88AtQoCxYFEp4WMh+Yb4ZAxbSyDRxVGr/V8niuxZCWPaMBH6a5ow6sKEalz+X/iy0610t5e4
+ CKydgLBtOkPd+GXXnNFk87rRPdBW9+GRyOl3hd4cdWisgHOObyvEnwRKJk1d1+vy7uDYeL8n/Ba
+ hbRx9vFKQQn4FRnsA2+QuyS0hMW0GOYdm1lylgX+UARjytFxYZCcFdolXeUIUV4UFCfZFEFgG6Z
+ A1nnrJnMgrOUCbMC/k=
+X-Google-Smtp-Source: AGHT+IGtin0CvCeaGO4MlVwA4gHLFx1xBEQyIebfHdjRRjeJssYoRWEcuHm3gNVHI1MUARnsD9fCKQ==
+X-Received: by 2002:a05:6a20:430f:b0:366:14ac:e20e with SMTP id
+ adf61e73a8af0-3898fa81a6bmr8259141637.76.1767941788404; 
+ Thu, 08 Jan 2026 22:56:28 -0800 (PST)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.56.18
+ 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.56.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 22:56:20 -0800 (PST)
+ Thu, 08 Jan 2026 22:56:27 -0800 (PST)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Roan Richmond <roan.richmond@codethink.co.uk>,
+Cc: alistair23@gmail.com, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Chao-ying Fu <cfu@mips.com>,
+ Djordje Todorovic <djordje.todorovic@htecgroup.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 22/34] Add RISCV ZALASR extension
-Date: Fri,  9 Jan 2026 16:54:47 +1000
-Message-ID: <20260109065459.19987-23-alistair.francis@wdc.com>
+Subject: [PULL 24/34] target/riscv: Add MIPS P8700 CPU
+Date: Fri,  9 Jan 2026 16:54:49 +1000
+Message-ID: <20260109065459.19987-25-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20260109065459.19987-1-alistair.francis@wdc.com>
 References: <20260109065459.19987-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,208 +109,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Roan Richmond <roan.richmond@codethink.co.uk>
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 
-This is based on version v0.9 of the ZALASR specification [1].
-The specification is listed as in Ratified state [2].
+Introduce P8700 CPU by MIPS.
 
-[1]: https://github.com/riscv/riscv-zalasr/tree/v0.9
-[2]: https://lf-riscv.atlassian.net/wiki/spaces/HOME/pages/16154882/All+RISC-V+Specifications+Under+Active+Development
-
+Signed-off-by: Chao-ying Fu <cfu@mips.com>
+Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
-Message-ID: <20251112162923.311714-1-roan.richmond@codethink.co.uk>
+Message-ID: <20260108134128.2218102-3-djordje.todorovic@htecgroup.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg_fields.h.inc            |   1 +
- target/riscv/insn32.decode                   |  10 ++
- target/riscv/cpu.c                           |   2 +
- target/riscv/translate.c                     |   1 +
- target/riscv/insn_trans/trans_rvzalasr.c.inc | 113 +++++++++++++++++++
- 5 files changed, 127 insertions(+)
- create mode 100644 target/riscv/insn_trans/trans_rvzalasr.c.inc
+ target/riscv/cpu-qom.h      |  1 +
+ target/riscv/cpu_vendorid.h |  1 +
+ target/riscv/cpu.c          | 16 ++++++++++++++++
+ 3 files changed, 18 insertions(+)
 
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 0a12ccd6cd..f4ff4f3f96 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -67,6 +67,7 @@ BOOL_FIELD(ext_zaamo)
- BOOL_FIELD(ext_zacas)
- BOOL_FIELD(ext_zama16b)
- BOOL_FIELD(ext_zabha)
-+BOOL_FIELD(ext_zalasr)
- BOOL_FIELD(ext_zalrsc)
- BOOL_FIELD(ext_zawrs)
- BOOL_FIELD(ext_zfa)
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index b341832e41..6e35c4b1e6 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1074,3 +1074,13 @@ amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
- amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
- amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
- amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
-+
-+# *** Zalasr Standard Extension ***
-+lb_aqrl  00110 . . ..... ..... 000 ..... 0101111 @atom_st
-+lh_aqrl  00110 . . ..... ..... 001 ..... 0101111 @atom_st
-+lw_aqrl  00110 . . ..... ..... 010 ..... 0101111 @atom_st
-+ld_aqrl  00110 . . ..... ..... 011 ..... 0101111 @atom_st
-+sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
-+sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
-+sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
-+sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
+diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+index 75f4e43408..30dcdcfaae 100644
+--- a/target/riscv/cpu-qom.h
++++ b/target/riscv/cpu-qom.h
+@@ -56,6 +56,7 @@
+ #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
+ #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
+ #define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-kunminghu")
++#define TYPE_RISCV_CPU_MIPS_P8700       RISCV_CPU_TYPE_NAME("mips-p8700")
+ #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
+ 
+ OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
+diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
+index 96b6b9c2cb..f1ffc66542 100644
+--- a/target/riscv/cpu_vendorid.h
++++ b/target/riscv/cpu_vendorid.h
+@@ -2,6 +2,7 @@
+ #define TARGET_RISCV_CPU_VENDORID_H
+ 
+ #define THEAD_VENDOR_ID         0x5b7
++#define MIPS_VENDOR_ID          0x127
+ 
+ #define VEYRON_V1_MARCHID       0x8000000000010000
+ #define VEYRON_V1_MIMPID        0x111
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d48ff50232..f22b504772 100644
+index c2222228d5..3562cbec32 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -128,6 +128,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
-     ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
-     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
-+    ISA_EXT_DATA_ENTRY(zalasr, PRIV_VERSION_1_12_0, ext_zalasr),
-     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
-     ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
-     ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
-@@ -1230,6 +1231,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zama16b", ext_zama16b, false),
-     MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
-     MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
-+    MULTI_EXT_CFG_BOOL("zalasr", ext_zalasr, false),
-     MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
-     MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
-     MULTI_EXT_CFG_BOOL("zfa", ext_zfa, true),
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 280ce48a1e..0d61420b46 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1199,6 +1199,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- #include "insn_trans/trans_rvzicond.c.inc"
- #include "insn_trans/trans_rvzacas.c.inc"
- #include "insn_trans/trans_rvzabha.c.inc"
-+#include "insn_trans/trans_rvzalasr.c.inc"
- #include "insn_trans/trans_rvzawrs.c.inc"
- #include "insn_trans/trans_rvzicbo.c.inc"
- #include "insn_trans/trans_rvzimop.c.inc"
-diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/insn_trans/trans_rvzalasr.c.inc
-new file mode 100644
-index 0000000000..bf86805cef
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
-@@ -0,0 +1,113 @@
-+/*
-+ * RISC-V translation routines for the ZALASR (Load-Aquire and Store-Release)
-+ * Extension.
-+ *
-+ * Copyright (c) 2025 Roan Richmond, roan.richmond@codethink.co.uk
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * The documentation of the ISA extension can be found here:
-+ *   https://github.com/riscv/riscv-zalasr/tree/v0.9
-+ */
+@@ -3303,6 +3303,22 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.max_satp_mode = VM_1_10_SV48,
+     ),
+ 
++    /* https://mips.com/products/hardware/p8700/ */
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MIPS_P8700, TYPE_RISCV_VENDOR_CPU,
++        .misa_mxl_max = MXL_RV64,
++        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
++        .priv_spec = PRIV_VERSION_1_12_0,
++        .cfg.max_satp_mode = VM_1_10_SV48,
++        .cfg.ext_zifencei = true,
++        .cfg.ext_zicsr = true,
++        .cfg.mmu = true,
++        .cfg.pmp = true,
++        .cfg.ext_zba = true,
++        .cfg.ext_zbb = true,
++        .cfg.marchid = 0x8000000000000201,
++        .cfg.mvendorid = MIPS_VENDOR_ID,
++    ),
 +
-+#define REQUIRE_ZALASR(ctx) do {     \
-+    if (!ctx->cfg_ptr->ext_zalasr) { \
-+        return false;                \
-+    }                                \
-+} while (0)
-+
-+static bool gen_load_acquire(DisasContext *ctx, arg_lb_aqrl *a, MemOp memop)
-+{
-+    decode_save_opc(ctx, 0);
-+
-+    TCGv addr = get_address(ctx, a->rs1, 0);
-+    TCGv dest = get_gpr(ctx, a->rd, EXT_NONE);
-+    TCGBar bar = (a->rl) ? TCG_BAR_STRL : 0;
-+
-+    /* Check that AQ is set, as this is mandatory */
-+    if (!a->aq) {
-+        return false;
-+    }
-+
-+    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-+
-+    tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, memop);
-+    gen_set_gpr(ctx, a->rd, dest);
-+
-+    /* Add a memory barrier implied by AQ (mandatory) and RL (optional) */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ | bar);
-+
-+    return true;
-+}
-+
-+static bool trans_lb_aqrl(DisasContext *ctx, arg_lb_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_SB));
-+}
-+
-+static bool trans_lh_aqrl(DisasContext *ctx, arg_lh_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESW));
-+}
-+
-+static bool trans_lw_aqrl(DisasContext *ctx, arg_lw_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESL));
-+}
-+
-+static bool trans_ld_aqrl(DisasContext *ctx, arg_ld_aqrl *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TEUQ));
-+}
-+
-+static bool gen_store_release(DisasContext *ctx, arg_sb_aqrl *a, MemOp memop)
-+{
-+    decode_save_opc(ctx, 0);
-+
-+    TCGv addr = get_address(ctx, a->rs1, 0);
-+    TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGBar bar = (a->aq) ? TCG_BAR_LDAQ : 0;
-+
-+    /* Check that RL is set, as this is mandatory */
-+    if (!a->rl) {
-+        return false;
-+    }
-+
-+    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-+
-+    /* Add a memory barrier implied by RL (mandatory) and AQ (optional) */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL | bar);
-+
-+    tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
-+    return true;
-+}
-+
-+static bool trans_sb_aqrl(DisasContext *ctx, arg_sb_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_SB));
-+}
-+
-+static bool trans_sh_aqrl(DisasContext *ctx, arg_sh_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESW));
-+}
-+
-+static bool trans_sw_aqrl(DisasContext *ctx, arg_sw_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESL));
-+}
-+
-+static bool trans_sd_aqrl(DisasContext *ctx, arg_sd_aqrl *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TEUQ));
-+}
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+         .cfg.max_satp_mode = VM_1_10_SV57,
 -- 
 2.52.0
 
