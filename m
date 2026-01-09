@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F860D232E8
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56364D232C8
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:01:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6RK-0006CN-6M; Fri, 09 Jan 2026 01:57:42 -0500
+	id 1ve6RN-0006O1-6M; Fri, 09 Jan 2026 01:57:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6QN-0005E7-Nd
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:46 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1ve6QW-0005Ly-Lj
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:56 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ve6QL-0002vJ-Fk
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:43 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c2dd0c24e5cso1858745a12.3
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:56:41 -0800 (PST)
+ id 1ve6QT-0002wT-6l
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:56:51 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-81e8a9d521dso90032b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:56:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767941800; x=1768546600; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1767941807; x=1768546607; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w0GKX/kt0wdDuUaHM/I0P3t8tsMimjTykWNFFF9bH/k=;
- b=ToX9VDeFaQUgFVjE7lrR/Mrrg/kiyZUsO0vbwrcEqAmmtY9h9BffcN5g3RETZFdktS
- 8btH7ZNzVkGuEBIXv6Emc3hyiSGVWoDxwmkCf5xxOOcjvMaEatlZKCgTg/CMQDV4BKBa
- w8BuuKvlVwW1lQz49qimdzJduGAxpTqeGxF1XU4yh20FuUWyWWMo9yHsDludbe7Ub0H6
- 9U1QLFdQB7TS6ac5acexoyVFrWAvpzwEquyAtBMIxlamNDI/W15zH0VVn9FHdhTw3QQR
- qU1UbgPNdNFGbFrXD59y3TNpdEeJLLDypJ3vKLvJe22gasly4PbAEnzmlsjZF7J6pyxv
- Onsg==
+ bh=H0Au3sw3AJ8TUnw2C42QeidnjEPUIHmOI0xqLrHkucE=;
+ b=mhr7Uu7q8A0lKyqYT7uPTNpcjZmc+9WJV5Tl8k0HIMtdTuvpELXRPna0hEtReCEpPU
+ DZPWToXFdCQbPQiPdUQXtLKzp2lBSauBmPCKT2SJEIXHiQZUmw/mVChrr5+8RfAhsOkl
+ /0N/fSGrH+NgewJ6sDzjh7bi98K/Cb9/i/r4oJfPl41YYEeJQ7uL6nnRH8CNSjrx8OBN
+ HOT81sFo6ZC2qdetTMKVSndxqxCKuAqdWdAcc5HoMKzTTbGYu6iqCbmuc5NbK4P/Wn/m
+ MxlFaLJw2rILORo9RjWQ/LOKtz39ZrBzLwiA99YGY64wt18/vIS5L0jyU7H6M9ZvQzMP
+ wKAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767941800; x=1768546600;
+ d=1e100.net; s=20230601; t=1767941807; x=1768546607;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=w0GKX/kt0wdDuUaHM/I0P3t8tsMimjTykWNFFF9bH/k=;
- b=trXy31r62eElg6A3dqQN1M17fsMeQ4iCd/mRYnnu2ZatBtqPf1RG3lSo2wnaHE57nf
- ptkf+MTUIO6IOwu+tpd3V6acD12iEdF5n1LzDh2xVgZ9kqul04q2FqBYGK/3DolLCjoD
- efmNiqhW4vx/H+39bYGE2tmrLb0hIdS+8foeyBYfeumze1LSkDKqmYxz9RdxjaSZw0E1
- HVSuIeQespyTmuwIixltSQLKKx4Gmus/SfZFS9FcTLacGPILKj8x65C3jBg4W3rVfm2b
- slYCHqNl8yLH0TLckwiWeIyDQqpqFiBUBnapNeWo+D3+TRdOfTuor0eZgQmRx0YmTIe5
- LN4w==
-X-Gm-Message-State: AOJu0YyHew00kQLtZ/FL2bUzrl2vTg/KBXIjXZzsaRxrv1kBNs2/yVnv
- SEcwNU0wCrvkd5jvRr2/GyUlk4YPL1g+iSWTKy4gq5KWmJT4v4FqJw1Pkzg7gw==
-X-Gm-Gg: AY/fxX63t2mIpKx2O70X5EztEeCy4FiqFvpG2Uau3oxxGhuFS0LzL2F4hJq47AENHFl
- hHds3o+8CXSYPrAohpDyT5pCUZJc6SoRPTaBhzaQR4VMGHHX+dZ3iRSttTbGwl4xVUaeBcFTw32
- fMaM47OyAVMGGG/wQpp5k3oW5YgCkcJl5rDlrJUmu36YP4QyKLNK8t2Vjakyb2D07Z9srHkU/gX
- m+PRUsE2mq49kHApmmFUX26GgjniXfscMqQHOBCnNI9fdJEzaCXRxIG1DBeKhduEmaYYezieq+F
- 8sABNo5JbUOl+EvSv1i5kzk0RE9xqn68Bsd/2JpSmw77HtXxzdcFBNpCoASFTw2IrgEKHJNZqVk
- sj0cNCWOFscJzsoZFM6ZtF67nLtPazFIUN4olC9lZHTMf6MHmBZYD5mKbbMavkUSR5kl4nxMAUe
- s0gATkZROrUTG2HAqxY19I4HJ0xToUUiFCBkWfkLCi3VYTlXr67FmwJPl+rrXyAZEEfWMsFOO3L
- aswITFn2ltKH2Bxj5E=
-X-Google-Smtp-Source: AGHT+IFNkvYTAaD2GXsNFc3GMi8I7DTY6cgoZ7MQER2KfjMJR0Ddvc009DW9+90A3zc78hNpKb2drQ==
-X-Received: by 2002:a05:6a20:94c7:b0:35e:3cac:858c with SMTP id
- adf61e73a8af0-3898f96cc2emr8781244637.33.1767941799800; 
- Thu, 08 Jan 2026 22:56:39 -0800 (PST)
+ bh=H0Au3sw3AJ8TUnw2C42QeidnjEPUIHmOI0xqLrHkucE=;
+ b=s/t8cnF3SUYHco3+1P0XBtEhCOs1GeMdLZzvYZmFZa283dgGt8Xj0/wvrMyKE8tTBK
+ vYa+z3SECNecggxvticTlHD36J19NBTMyPGRvY3XRMGL8a9nK9VPH+cai6CzcYos+DwU
+ zrk5lV9zLV9XhonR05rgKdYZyu2PQ/QdhBdt+MyaCW4apxmuAt4L6UI5eubFs1lUwb9H
+ iuhZGZ3ax5ChW0/ogG4O1BUeOKn0+yhuhskh+Yri1qWmabxoJnLPFsgMJZO7Wqwo+r+3
+ 6yTzS9Ofst8EdzLSWswz+hnxZIX2ai6QnsjwT6DJLrlQ3NJFeNzbXqpI0msstMrFQzk/
+ CKpQ==
+X-Gm-Message-State: AOJu0YxOSsQ83XnzVILCPZBxgs54rfKBbLYLeGtlL02ToXADQTmslLnu
+ GBpoSItSjHPmejxKEps4fF6O5D7etlCMJ9hooMMoHUK3zHawGddkak2YtsLwJA==
+X-Gm-Gg: AY/fxX6+e2kep11NahPqTy4Uba1+LQb9SR7KLjAfkvPWHomH0vi9nAa8l7EudUqo/4I
+ hYe9mxt3txuJVWnVAmEpCU7AFVSlbXcoMmeGRpCMXfXQmKv26RU6NECOBNZeVd5jmy7byvwv8r8
+ FYDfCkJVPhYN+sM/i0fLTeW9qdhQ2QRkVysbaudyK5gkxkH4X5ELYXMnZamclAe48rajlYrjh/N
+ 0MzXCRC8GEdCdgO4ff1t1LwiNL0wKKC0RE1DqQLGk0YcikWYtIi+6BD3fykDzAUOeI0eQh9kIKJ
+ A8gzrhXRjXHq2Cnn96pAKGjcOOz3SfCjKQJPHqLt3JkW5M6jiKInONXgJcVdnNgdWjeMF3VjvOd
+ ygV/Y80qfZqOtGk5KqSCb0mLX9o2VtKudtvDnmWRoyXTeKgTZTUol3c9L+143hpKL+ULhgB0wn9
+ RU1qWpWnvJTnmh+sRIdEvjCZExJGsipInf64kpQdMECPqKqwX1ENPcFlOTDS0/yb06fN/PfetYl
+ wJg7LmN/ZzJJlJaT9I=
+X-Google-Smtp-Source: AGHT+IF4R6DjiQoDK+FfMVrfOVuERpFz9PAyx2H2uKE6k6VGhAGxtpy1ZQEvzmow7m3BddQnlt0/QA==
+X-Received: by 2002:a05:6a21:6d81:b0:389:8e23:f43a with SMTP id
+ adf61e73a8af0-3898f9dc4d1mr8380363637.73.1767941807401; 
+ Thu, 08 Jan 2026 22:56:47 -0800 (PST)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.56.36
+ 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.56.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 22:56:39 -0800 (PST)
+ Thu, 08 Jan 2026 22:56:46 -0800 (PST)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
@@ -76,16 +76,16 @@ Cc: alistair23@gmail.com, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  Djordje Todorovic <djordje.todorovic@htecgroup.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 27/34] target/riscv: Add mips.pref instruction
-Date: Fri,  9 Jan 2026 16:54:52 +1000
-Message-ID: <20260109065459.19987-28-alistair.francis@wdc.com>
+Subject: [PULL 29/34] hw/misc: Add RISC-V CMGCR device implementation
+Date: Fri,  9 Jan 2026 16:54:54 +1000
+Message-ID: <20260109065459.19987-30-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20260109065459.19987-1-alistair.francis@wdc.com>
 References: <20260109065459.19987-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -111,114 +111,365 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 
-Add MIPS P8700 prefetch instruction defined by Xmipscbop.
+Add RISC-V implementation of the Coherent Manager Global Control
+Register (CMGCR) device. It is based on the existing MIPS CMGCR
+implementation but adapted for RISC-V systems.
+
+The CMGCR device provides global system control for multi-core
+configurations in RISC-V systems.
+
+This is needed for the MIPS BOSTON AIA board.
 
 Signed-off-by: Chao-ying Fu <cfu@mips.com>
 Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260108134128.2218102-6-djordje.todorovic@htecgroup.com>
+Message-ID: <20260108134128.2218102-8-djordje.todorovic@htecgroup.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg.h                    |  2 +-
- target/riscv/cpu_cfg_fields.h.inc         |  1 +
- target/riscv/xmips.decode                 |  1 +
- target/riscv/cpu.c                        |  3 +++
- target/riscv/insn_trans/trans_xmips.c.inc | 15 +++++++++++++++
- 5 files changed, 21 insertions(+), 1 deletion(-)
+ include/hw/misc/riscv_cmgcr.h |  48 +++++++
+ hw/misc/riscv_cmgcr.c         | 243 ++++++++++++++++++++++++++++++++++
+ hw/misc/Kconfig               |   9 ++
+ hw/misc/meson.build           |   2 +
+ 4 files changed, 302 insertions(+)
+ create mode 100644 include/hw/misc/riscv_cmgcr.h
+ create mode 100644 hw/misc/riscv_cmgcr.c
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 2db471ad17..e4d5039c49 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -38,7 +38,7 @@ static inline bool always_true_p(const RISCVCPUConfig *cfg __attribute__((__unus
- 
- static inline bool has_xmips_p(const RISCVCPUConfig *cfg)
- {
--    return cfg->ext_xmipscmov;
-+    return cfg->ext_xmipscbop || cfg->ext_xmipscmov;
- }
- 
- static inline bool has_xthead_p(const RISCVCPUConfig *cfg)
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 0b461bb05b..af92a7e615 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -150,6 +150,7 @@ BOOL_FIELD(ext_xtheadmemidx)
- BOOL_FIELD(ext_xtheadmempair)
- BOOL_FIELD(ext_xtheadsync)
- BOOL_FIELD(ext_XVentanaCondOps)
-+BOOL_FIELD(ext_xmipscbop)
- BOOL_FIELD(ext_xmipscmov)
- 
- BOOL_FIELD(mmu)
-diff --git a/target/riscv/xmips.decode b/target/riscv/xmips.decode
-index fadcb78470..4215813b32 100644
---- a/target/riscv/xmips.decode
-+++ b/target/riscv/xmips.decode
-@@ -9,3 +9,4 @@
- #            (https://mips.com/products/hardware/p8700/)
- 
- ccmov          rs3:5 11 rs2:5 rs1:5 011 rd:5 0001011
-+pref        000 imm_9:9 rs1:5 000 imm_hint:5 0001011
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d0a6a88a4e..9a27097189 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -252,6 +252,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(svrsw60t59b, PRIV_VERSION_1_13_0, ext_svrsw60t59b),
-     ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
-     ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
-+    ISA_EXT_DATA_ENTRY(xmipscbop, PRIV_VERSION_1_12_0, ext_xmipscbop),
-     ISA_EXT_DATA_ENTRY(xmipscmov, PRIV_VERSION_1_12_0, ext_xmipscmov),
-     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
-@@ -1364,6 +1365,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
-     MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
-     MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
-     MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
-+    MULTI_EXT_CFG_BOOL("xmipscbop", ext_xmipscbop, false),
-     MULTI_EXT_CFG_BOOL("xmipscmov", ext_xmipscmov, false),
- 
-     { },
-@@ -3317,6 +3319,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.pmp = true,
-         .cfg.ext_zba = true,
-         .cfg.ext_zbb = true,
-+        .cfg.ext_xmipscbop = true,
-         .cfg.ext_xmipscmov = true,
-         .cfg.marchid = 0x8000000000000201,
-         .cfg.mvendorid = MIPS_VENDOR_ID,
-diff --git a/target/riscv/insn_trans/trans_xmips.c.inc b/target/riscv/insn_trans/trans_xmips.c.inc
-index 3202fd9cc0..bfe9046153 100644
---- a/target/riscv/insn_trans/trans_xmips.c.inc
-+++ b/target/riscv/insn_trans/trans_xmips.c.inc
-@@ -9,6 +9,12 @@
-  *            (https://mips.com/products/hardware/p8700/)
-  */
- 
-+#define REQUIRE_XMIPSCBOP(ctx) do {              \
-+    if (!ctx->cfg_ptr->ext_xmipscbop) {          \
-+        return false;                            \
-+    }                                            \
-+} while (0)
+diff --git a/include/hw/misc/riscv_cmgcr.h b/include/hw/misc/riscv_cmgcr.h
+new file mode 100644
+index 0000000000..1878d98fc6
+--- /dev/null
++++ b/include/hw/misc/riscv_cmgcr.h
+@@ -0,0 +1,48 @@
++/*
++ * Coherent Manager Global Control Register
++ *
++ * Copyright (C) 2015 Imagination Technologies
++ *
++ * Copyright (C) 2025 MIPS
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ */
 +
- #define REQUIRE_XMIPSCMOV(ctx) do {              \
-     if (!ctx->cfg_ptr->ext_xmipscmov) {          \
-         return false;                            \
-@@ -31,3 +37,12 @@ static bool trans_ccmov(DisasContext *ctx, arg_ccmov *a)
- 
-     return true;
- }
++#ifndef RISCV_CMGCR_H
++#define RISCV_CMGCR_H
 +
-+/* Move data from memory into cache. */
-+static bool trans_pref(DisasContext *ctx, arg_pref *a)
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_RISCV_GCR "riscv-gcr"
++OBJECT_DECLARE_SIMPLE_TYPE(RISCVGCRState, RISCV_GCR)
++
++#define GCR_BASE_ADDR           0x1fb80000ULL
++#define GCR_MAX_VPS             256
++
++typedef struct RISCVGCRVPState RISCVGCRVPState;
++struct RISCVGCRVPState {
++    uint64_t reset_base;
++};
++
++typedef struct RISCVGCRState RISCVGCRState;
++struct RISCVGCRState {
++    SysBusDevice parent_obj;
++
++    int32_t gcr_rev;
++    uint32_t cluster_id;
++    uint32_t num_vps;
++    uint32_t num_hart;
++    uint32_t num_core;
++    hwaddr gcr_base;
++    MemoryRegion iomem;
++    MemoryRegion *cpc_mr;
++
++    uint64_t cpc_base;
++
++    /* VP Local/Other Registers */
++    RISCVGCRVPState *vps;
++};
++
++#endif /* RISCV_CMGCR_H */
+diff --git a/hw/misc/riscv_cmgcr.c b/hw/misc/riscv_cmgcr.c
+new file mode 100644
+index 0000000000..b0294e7663
+--- /dev/null
++++ b/hw/misc/riscv_cmgcr.c
+@@ -0,0 +1,243 @@
++/*
++ * Coherent Manager Global Control Register
++ *
++ * Copyright (C) 2015 Imagination Technologies
++ *
++ * Copyright (C) 2025 MIPS
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Reference: MIPS P8700 documentation
++ *            (https://mips.com/products/hardware/p8700/)
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "hw/core/sysbus.h"
++#include "migration/vmstate.h"
++#include "hw/misc/riscv_cmgcr.h"
++#include "hw/core/qdev-properties.h"
++
++#include "cpu.h"
++
++#define CM_RESET_VEC 0x1FC00000
++#define GCR_ADDRSPACE_SZ        0x8000
++
++/* Offsets to register blocks */
++#define RISCV_GCB_OFS        0x0000 /* Global Control Block */
++#define RISCV_CLCB_OFS       0x2000 /* Core Control Block */
++#define RISCV_CORE_REG_STRIDE 0x100 /* Stride between core-specific registers */
++
++/* Global Control Block Register Map */
++#define GCR_CONFIG_OFS      0x0000
++#define GCR_BASE_OFS        0x0008
++#define GCR_REV_OFS         0x0030
++#define GCR_CPC_STATUS_OFS  0x00F0
++#define GCR_L2_CONFIG_OFS   0x0130
++
++/* GCR_L2_CONFIG register fields */
++#define GCR_L2_CONFIG_BYPASS_SHF    20
++#define GCR_L2_CONFIG_BYPASS_MSK    ((0x1ULL) << GCR_L2_CONFIG_BYPASS_SHF)
++
++/* GCR_BASE register fields */
++#define GCR_BASE_GCRBASE_MSK     0xffffffff8000ULL
++
++/* GCR_CPC_BASE register fields */
++#define GCR_CPC_BASE_CPCEN_MSK   1
++#define GCR_CPC_BASE_CPCBASE_MSK 0xFFFFFFFF8000ULL
++#define GCR_CPC_BASE_MSK (GCR_CPC_BASE_CPCEN_MSK | GCR_CPC_BASE_CPCBASE_MSK)
++
++/* GCR_CL_RESETBASE_OFS register fields */
++#define GCR_CL_RESET_BASE_RESETBASE_MSK 0xFFFFFFFFFFFFF000U
++#define GCR_CL_RESET_BASE_MSK GCR_CL_RESET_BASE_RESETBASE_MSK
++
++static inline bool is_cpc_connected(RISCVGCRState *s)
 +{
-+    REQUIRE_XMIPSCBOP(ctx);
-+
-+    /* Nop */
-+    return true;
++    return s->cpc_mr != NULL;
 +}
++
++static inline void update_cpc_base(RISCVGCRState *gcr, uint64_t val)
++{
++    if (is_cpc_connected(gcr)) {
++        gcr->cpc_base = val & GCR_CPC_BASE_MSK;
++        memory_region_transaction_begin();
++        memory_region_set_address(gcr->cpc_mr,
++                                  gcr->cpc_base & GCR_CPC_BASE_CPCBASE_MSK);
++        memory_region_set_enabled(gcr->cpc_mr,
++                                  gcr->cpc_base & GCR_CPC_BASE_CPCEN_MSK);
++        memory_region_transaction_commit();
++    }
++}
++
++static inline void update_gcr_base(RISCVGCRState *gcr, uint64_t val)
++{
++    gcr->gcr_base = val & GCR_BASE_GCRBASE_MSK;
++    memory_region_set_address(&gcr->iomem, gcr->gcr_base);
++
++    /*
++     * For boston-aia, cpc_base is set to gcr_base + 0x8001 to enable
++     * cpc automatically.
++     */
++    update_cpc_base(gcr, val + 0x8001);
++}
++
++/* Read GCR registers */
++static uint64_t gcr_read(void *opaque, hwaddr addr, unsigned size)
++{
++    RISCVGCRState *gcr = (RISCVGCRState *) opaque;
++
++    switch (addr) {
++    /* Global Control Block Register */
++    case GCR_CONFIG_OFS:
++        /* Set PCORES to 0 */
++        return 0;
++    case GCR_BASE_OFS:
++        return gcr->gcr_base;
++    case GCR_REV_OFS:
++        return gcr->gcr_rev;
++    case GCR_CPC_STATUS_OFS:
++        return is_cpc_connected(gcr);
++    case GCR_L2_CONFIG_OFS:
++        /* L2 BYPASS */
++        return GCR_L2_CONFIG_BYPASS_MSK;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Read %d bytes at GCR offset 0x%" HWADDR_PRIx
++                      "\n", size, addr);
++    }
++    return 0;
++}
++
++static inline target_ulong get_exception_base(RISCVGCRVPState *vps)
++{
++    return vps->reset_base & GCR_CL_RESET_BASE_RESETBASE_MSK;
++}
++
++/* Write GCR registers */
++static void gcr_write(void *opaque, hwaddr addr, uint64_t data, unsigned size)
++{
++    RISCVGCRState *gcr = (RISCVGCRState *)opaque;
++    RISCVGCRVPState *current_vps;
++    int cpu_index, c, h;
++
++    for (c = 0; c < gcr->num_core; c++) {
++        for (h = 0; h < gcr->num_hart; h++) {
++            if (addr == RISCV_CLCB_OFS + c * RISCV_CORE_REG_STRIDE + h * 8) {
++                cpu_index = c * gcr->num_hart + h;
++                current_vps = &gcr->vps[cpu_index];
++                current_vps->reset_base = data & GCR_CL_RESET_BASE_MSK;
++                cpu_set_exception_base(cpu_index + gcr->cluster_id *
++                                       gcr->num_core * gcr->num_hart,
++                                       get_exception_base(current_vps));
++                return;
++            }
++        }
++    }
++
++    switch (addr) {
++    case GCR_BASE_OFS:
++        update_gcr_base(gcr, data);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "Write %d bytes at GCR offset 0x%" HWADDR_PRIx
++                      " 0x%" PRIx64 "\n", size, addr, data);
++        break;
++    }
++}
++
++static const MemoryRegionOps gcr_ops = {
++    .read = gcr_read,
++    .write = gcr_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .max_access_size = 8,
++    },
++};
++
++static void riscv_gcr_init(Object *obj)
++{
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++    RISCVGCRState *s = RISCV_GCR(obj);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &gcr_ops, s,
++                          "riscv-gcr", GCR_ADDRSPACE_SZ);
++    sysbus_init_mmio(sbd, &s->iomem);
++}
++
++static void riscv_gcr_reset(DeviceState *dev)
++{
++    RISCVGCRState *s = RISCV_GCR(dev);
++    int i;
++
++    /* Update cpc_base to gcr_base + 0x8001 to enable cpc automatically. */
++    update_cpc_base(s, s->gcr_base + 0x8001);
++
++    for (i = 0; i < s->num_vps; i++) {
++        s->vps[i].reset_base = CM_RESET_VEC & GCR_CL_RESET_BASE_MSK;
++        cpu_set_exception_base(i, get_exception_base(&s->vps[i]));
++    }
++}
++
++static const VMStateDescription vmstate_riscv_gcr = {
++    .name = "riscv-gcr",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT64(cpc_base, RISCVGCRState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static const Property riscv_gcr_properties[] = {
++    DEFINE_PROP_UINT32("cluster-id", RISCVGCRState, cluster_id, 0),
++    DEFINE_PROP_UINT32("num-vp", RISCVGCRState, num_vps, 1),
++    DEFINE_PROP_UINT32("num-hart", RISCVGCRState, num_hart, 1),
++    DEFINE_PROP_UINT32("num-core", RISCVGCRState, num_core, 1),
++    DEFINE_PROP_INT32("gcr-rev", RISCVGCRState, gcr_rev, 0xa00),
++    DEFINE_PROP_UINT64("gcr-base", RISCVGCRState, gcr_base, GCR_BASE_ADDR),
++    DEFINE_PROP_LINK("cpc", RISCVGCRState, cpc_mr, TYPE_MEMORY_REGION,
++                     MemoryRegion *),
++};
++
++static void riscv_gcr_realize(DeviceState *dev, Error **errp)
++{
++    RISCVGCRState *s = RISCV_GCR(dev);
++
++    /* Validate num_vps */
++    if (s->num_vps == 0) {
++        error_setg(errp, "num-vp must be at least 1");
++        return;
++    }
++    if (s->num_vps > GCR_MAX_VPS) {
++        error_setg(errp, "num-vp cannot exceed %d", GCR_MAX_VPS);
++        return;
++    }
++
++    /* Create local set of registers for each VP */
++    s->vps = g_new(RISCVGCRVPState, s->num_vps);
++}
++
++static void riscv_gcr_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    device_class_set_props(dc, riscv_gcr_properties);
++    dc->vmsd = &vmstate_riscv_gcr;
++    device_class_set_legacy_reset(dc, riscv_gcr_reset);
++    dc->realize = riscv_gcr_realize;
++}
++
++static const TypeInfo riscv_gcr_info = {
++    .name          = TYPE_RISCV_GCR,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RISCVGCRState),
++    .instance_init = riscv_gcr_init,
++    .class_init    = riscv_gcr_class_init,
++};
++
++static void riscv_gcr_register_types(void)
++{
++    type_register_static(&riscv_gcr_info);
++}
++
++type_init(riscv_gcr_register_types)
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index fccd735c24..404500979c 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -121,6 +121,15 @@ config MIPS_ITU
+     bool
+     depends on TCG
+ 
++config RISCV_MIPS_CMGCR
++    bool
++
++config MIPS_BOSTON_AIA
++    bool
++    default y
++    depends on RISCV64
++    select RISCV_MIPS_CMGCR
++
+ config MPS2_FPGAIO
+     bool
+     select LED
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index b1d8d8e5d2..489f0f3319 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -157,6 +157,8 @@ specific_ss.add(when: 'CONFIG_MAC_VIA', if_true: files('mac_via.c'))
+ specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_cmgcr.c', 'mips_cpc.c'))
+ specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
+ 
++specific_ss.add(when: 'CONFIG_RISCV_MIPS_CMGCR', if_true: files('riscv_cmgcr.c'))
++
+ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
+ 
+ # HPPA devices
 -- 
 2.52.0
 
