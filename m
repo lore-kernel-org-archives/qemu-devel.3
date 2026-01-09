@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90427D232E1
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 05:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49883D232DF
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 05:39:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve56n-0004Vv-1r; Fri, 09 Jan 2026 00:32:25 -0500
+	id 1ve56n-0004Zo-Np; Fri, 09 Jan 2026 00:32:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve56g-0004KH-3A
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:18 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1ve56j-0004MV-8y
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:21 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve56d-0003hy-Dg
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:17 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-34f634dbfd6so2546911a91.2
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:15 -0800 (PST)
+ id 1ve56g-0003il-FP
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 00:32:20 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-34c30f0f12eso2312658a91.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 21:32:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767936734; x=1768541534; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767936737; x=1768541537; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1Nu35/5J9JSDakO5AdHdmJQosLgZ5xKYhos/7wU4Ss8=;
- b=j463100Ore7cCJPJuJrjyG9XQUy1zNCzkjS/8D0kN+lvyZ6powgol31Tg3rv4bD6QZ
- HU/MqWmOS8gp4kePqNGPuLyFOx7UMwynhqvqYAKDAX1I+5xS3eH+CgCOrvt2Co0selVf
- jIHzFqQWubS2++aJDjuiGLEXb08uSl2SKsKh0mS2ZvsM6UzkmPr5AAc91KD9aBNNqxQy
- /7txm8/sam6TdZS7qmi0Ny3ir3uysS1vSRYhqtSn+cjBenyANbvwLPxJHQjZe+QJQWXY
- dNzntHwagYSq6kSwzIuxdkANflurkvH1BrcR7ITI98F/01llPzW2xzXJFop0tvB152OJ
- 7fWQ==
+ bh=2vSEho0Y68LtAAtpg5jLEdlGVKtAu9LgbZNDJhk9B18=;
+ b=Ey0zjtftMAbO/vpdEz2BluqULIB35gfhRLpEIspGbsGCbKXbyt+O0iRGUSqvBpmuDd
+ +VZGd8IMTToWfUXRF+bm46UFvKqVTLTNkNXFTw4FT1ig51Q555Mt+UgSgkS7KnrS65aO
+ 6DzlNwsegl5O+B3ILhmqgV772qcKaDSfNgcBDq0KgL2nLgUljKBeBb26/zwEszEtk7DJ
+ GFD9CbVgp5V5PV9Ku8WWhiHV+sH4pGuEWHkp1wh1cfMmdAcNzgF4Ai/ioI0e6LRWzqOq
+ A7iEgVdLY/YwI/7e5uj5pTZ1+kSLtGyXp7V8RmV0LsPv+ZrJY354l0TS3Jz0xlOUBRyM
+ sFbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767936734; x=1768541534;
+ d=1e100.net; s=20230601; t=1767936737; x=1768541537;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1Nu35/5J9JSDakO5AdHdmJQosLgZ5xKYhos/7wU4Ss8=;
- b=cjZ0CZ72BL1XDYb6wGNobvQR6esVIDyPrSTHnUllunOsuNze58EyHip4YIhqR8NByG
- wme1nL8dhwwmqs8s91R3hZDOmykNYd0HRLfAK4nbZ08N7kWgkiOCv7rFEaE4usL2OWtl
- 95rfAW8MRmSt9FhRK2yjOyFvaFQcOY2w5wD9IMuOhAxeu9fdYKyOiBydYw/or3WY336c
- v1H1bIECfGZNvwkMhNNFpgivT5Woqh+Wn1PNL9SVkfrMtWrzsSVU2pxpOTm8Vk4q/eJc
- /FNXRSF9OCK1rqixp9GAis/9K0si2wRSUbQ2SeCjdvPPx/NYYtahus6hI4kIaky9e1CL
- PJJg==
-X-Gm-Message-State: AOJu0YwlA7cJyTOd/6HvwjvHIIC0QvJVUXXsJmS3M0EhAEHdtv09T/Fo
- IS2fvgmF638wAsK47Gd4ihN6cmqRfPPJojXrQImiHCWd7uhfu27AXX+ZJvk2nhaPJF2IjGx4+Jg
- eKMRr
-X-Gm-Gg: AY/fxX4KD96H+6YKgNFD2kyVopXvSh/U4ULBaBm+wRyQnVrfIYbwIFnddQrWkZGhyH7
- rBAJDn59pqrMoI/BYm53NV+77zYTOco0b6HnrkC4aZS3l8wk9CL5a4eSoyKdT0YBFZ3/yNR7h1q
- k0u2990Fo/+GM3lpRqXgadMlJbLpAM/uJXFaad67EpBOt+we9oyLe4STAeGtOcOmILY2j65+4Fv
- Q5+kHbyGOPEHM7K/7C8UWwCbd6CNZo6+53uXcqVbNQlxkeKESdXnzQrqdfCH9pew9NJPWNmloAR
- CSn3aQACJiJprA6DHd88cAU/oDn630AOOGDwhiQYylyGjHgTj8g8HSMRTzR+5supic6D2QKTZxb
- sKH/1UvKf4YYIcSWC4CLujX3GyGAVTXxT1RNVtfez5nVTKFOVub9XXqaR6xKf85Aor+SFWcy7gN
- reLTpPNSYlMgNQaVkv0XPe8bK4z0Clo9f2AqSLshhRUyvnudLrJCk3R3QMEOym91Yz
-X-Google-Smtp-Source: AGHT+IGwOJ8tsUCL5o2XMRmJofDul5k10NXw6WKN7hZnPZEHGCwWqd9LmpydJ2SE56Wl1Fe6Djko5Q==
-X-Received: by 2002:a17:90b:5848:b0:34e:5aa2:cf61 with SMTP id
- 98e67ed59e1d1-34f68cd6ab9mr8070262a91.28.1767936733865; 
- Thu, 08 Jan 2026 21:32:13 -0800 (PST)
+ bh=2vSEho0Y68LtAAtpg5jLEdlGVKtAu9LgbZNDJhk9B18=;
+ b=mTMTrCCoFe4SeZi1iUSKBLUDqHojVPFB4cNzmu6Xjz9Rj77X2CI11NzlMIH73ejk77
+ K4zxRICT6TjBp1GEyL/fmIQZVi+rJH9nCNjemRz5cY3kvlzDbnuzXI+A8Y1nazmFCwLU
+ 8HK2kXIrsCfY2U2pIUsuk7niDONK7J1FM3LWZmXLYroKDdB3lG3FhzMRVTGZTjrm7uKd
+ XdtaSL4D00+aGxxwi0FRvv5w2CEYLnDz4msbkVYg5AEnQqFxdEBKSV12zXr8NL4tonNY
+ g7t4dEUmh318UeGNKZMEMFHgdoTgYxtr2+EUo6fEuwTXp8Ps8nyFSVrSecfJME3wjBcM
+ rAug==
+X-Gm-Message-State: AOJu0YwgZqlOfrfcE2BPS5gs13tXp2qvzRIFEfg9CaGphRayXB79A44I
+ gEe3ASxjF25ngcDE8ZedHyZcMk/V9PcU32oj1+ciElP48/L1NIDpj5dfQNKaNBgJBbE/e4KEWgX
+ 9ydZ7
+X-Gm-Gg: AY/fxX504CvAiVkmGzHEa1DvCZg5KWjqu0UWWD4NNiwKXArjsmOdCROCScevIwBjI+o
+ NEOUxIesSIzn1PE23gl7Orc7kkWMuYthx2st9MoS1tINpXYG2eppxvB8+aGNzLC1v6GxqjtSG8Z
+ HqNLbsddZJhA4JYBlApmtnx+evacM+Ufrp5h6VHdcb+K5wQM2QMmLp08Qoz+1A1jQhbiBMWKq3f
+ Y0VlETCdiIgdmV7yFUtg1xf9amPravymSaID8/wadOVfpFzv7IqvPSs2p6s2uYxeiHB9+DSKUmk
+ +vQJ3zKiX4Rprl2TwSDlDf1SmG+rvpOgVuUktVQd1lhwIU96hfvBMA0y2NBXAs3Zx2Bb6BwWZH/
+ 4mPzBUmCfZwRzYY7UMEVDakKJnhyHwKwn20yD/jPej00oYCCjFZl7I60rekCK7DWTf4xvzfS3xp
+ +IEQqah7cM5NMp72RZWKjsd4D3XjFw8XTjg0rAxKD0CCN1ft0LRqTQYLW6tfpd/ickjNLUh3v7g
+ I8=
+X-Google-Smtp-Source: AGHT+IEgrDgZwaT8HyDskX08D8CTY8KsglmPBP4zBXHGj7cQ8GgvIkjMLGLmv/dh7AOZEeTLxlFRGQ==
+X-Received: by 2002:a17:90b:570c:b0:340:c60b:f362 with SMTP id
+ 98e67ed59e1d1-34f68b4e728mr8104767a91.6.1767936736960; 
+ Thu, 08 Jan 2026 21:32:16 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.13
+ 98e67ed59e1d1-34f5fa93f30sm9260137a91.5.2026.01.08.21.32.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jan 2026 21:32:13 -0800 (PST)
+ Thu, 08 Jan 2026 21:32:16 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -75,17 +76,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 09/29] target/arm/tcg/vec_helper.c: make compilation unit
- common
-Date: Thu,  8 Jan 2026 21:31:38 -0800
-Message-ID: <20260109053158.2800705-10-pierrick.bouvier@linaro.org>
+Subject: [PATCH 13/29] include/tcg/tcg-op.h: eradicate
+ TARGET_INSN_START_EXTRA_WORDS
+Date: Thu,  8 Jan 2026 21:31:42 -0800
+Message-ID: <20260109053158.2800705-14-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,571 +109,608 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We need to extract 64 bits helper in a new file (vec_helper64.c), and
-extract some macro definition also, since they will be used in both
-files.
-As well, DO_3OP_PAIR was defined twice, so rename the second variant
-to DO_3OP_PAIR_NO_STATUS to reflect what it does.
+We simply define the 3 variants and call the correct one per arch.
+Since all arch have a single call site (in translate.c), this is as
+good documentation as having a single define.
+
+The notable exception is target/arm, which has two different translate
+files for 32/64 bits. Since it's the only one, we accept to have two
+call sites for this.
+
+This is much simpler and safer than trying to define a common functions
+with variadic or unused parameters. The only risk is calling two
+different variants for a single arch, but as mentioned in first
+paragraph, there is no real reason for this to happen.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/tcg/vec_internal.h |  49 ++++++++
- target/arm/tcg/vec_helper.c   | 225 +++-------------------------------
- target/arm/tcg/vec_helper64.c | 140 +++++++++++++++++++++
- target/arm/tcg/meson.build    |   4 +-
- 4 files changed, 210 insertions(+), 208 deletions(-)
- create mode 100644 target/arm/tcg/vec_helper64.c
+ include/tcg/tcg-op.h             | 16 ++++++----------
+ target/alpha/cpu-param.h         |  2 --
+ target/arm/cpu-param.h           |  7 -------
+ target/avr/cpu-param.h           |  2 --
+ target/hexagon/cpu-param.h       |  2 --
+ target/hppa/cpu-param.h          |  2 --
+ target/i386/cpu-param.h          |  2 --
+ target/loongarch/cpu-param.h     |  2 --
+ target/m68k/cpu-param.h          |  2 --
+ target/microblaze/cpu-param.h    |  2 --
+ target/mips/cpu-param.h          |  2 --
+ target/openrisc/cpu-param.h      |  2 --
+ target/ppc/cpu-param.h           |  2 --
+ target/riscv/cpu-param.h         |  7 -------
+ target/rx/cpu-param.h            |  2 --
+ target/s390x/cpu-param.h         |  2 --
+ target/sh4/cpu-param.h           |  2 --
+ target/sparc/cpu-param.h         |  2 --
+ target/tricore/cpu-param.h       |  2 --
+ target/xtensa/cpu-param.h        |  2 --
+ target/alpha/translate.c         |  4 ++--
+ target/arm/tcg/translate-a64.c   |  2 +-
+ target/arm/tcg/translate.c       |  2 +-
+ target/avr/translate.c           |  2 +-
+ target/hexagon/translate.c       |  2 +-
+ target/hppa/translate.c          |  2 +-
+ target/i386/tcg/translate.c      |  2 +-
+ target/loongarch/tcg/translate.c |  2 +-
+ target/m68k/translate.c          |  2 +-
+ target/microblaze/translate.c    |  2 +-
+ target/mips/tcg/translate.c      |  4 ++--
+ target/openrisc/translate.c      |  4 ++--
+ target/ppc/translate.c           |  2 +-
+ target/riscv/translate.c         |  2 +-
+ target/rx/translate.c            |  2 +-
+ target/s390x/tcg/translate.c     |  2 +-
+ target/sh4/translate.c           |  4 ++--
+ target/sparc/translate.c         |  2 +-
+ target/tricore/translate.c       |  2 +-
+ target/xtensa/translate.c        |  2 +-
+ 40 files changed, 30 insertions(+), 82 deletions(-)
 
-diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
-index cf41b03dbcd..4edd2b4fc18 100644
---- a/target/arm/tcg/vec_internal.h
-+++ b/target/arm/tcg/vec_internal.h
-@@ -450,4 +450,53 @@ static inline void depositn(uint64_t *p, unsigned pos,
+diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
+index f3fe2d9386a..bf76749d1c5 100644
+--- a/include/tcg/tcg-op.h
++++ b/include/tcg/tcg-op.h
+@@ -28,8 +28,7 @@
+ # error Mismatch with insn-start-words.h
+ #endif
+ 
+-#if TARGET_INSN_START_EXTRA_WORDS == 0
+-static inline void tcg_gen_insn_start(uint64_t pc)
++static inline void tcg_gen_insn_start0(uint64_t pc)
+ {
+     TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
+                             INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
+@@ -37,8 +36,8 @@ static inline void tcg_gen_insn_start(uint64_t pc)
+     tcg_set_insn_start_param(op, 1, 0);
+     tcg_set_insn_start_param(op, 2, 0);
+ }
+-#elif TARGET_INSN_START_EXTRA_WORDS == 1
+-static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
++
++static inline void tcg_gen_insn_start1(uint64_t pc, uint64_t a1)
+ {
+     TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
+                             INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
+@@ -46,9 +45,9 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
+     tcg_set_insn_start_param(op, 1, a1);
+     tcg_set_insn_start_param(op, 2, 0);
+ }
+-#elif TARGET_INSN_START_EXTRA_WORDS == 2
+-static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
+-                                      uint64_t a2)
++
++static inline void tcg_gen_insn_start2(uint64_t pc, uint64_t a1,
++                                       uint64_t a2)
+ {
+     TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
+                             INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
+@@ -56,9 +55,6 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
+     tcg_set_insn_start_param(op, 1, a1);
+     tcg_set_insn_start_param(op, 2, a2);
+ }
+-#else
+-#error Unhandled TARGET_INSN_START_EXTRA_WORDS value
+-#endif
+ 
+ #if TARGET_LONG_BITS == 32
+ typedef TCGv_i32 TCGv;
+diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
+index a799f42db31..c9da620ab3e 100644
+--- a/target/alpha/cpu-param.h
++++ b/target/alpha/cpu-param.h
+@@ -24,6 +24,4 @@
+ # define TARGET_VIRT_ADDR_SPACE_BITS  (30 + TARGET_PAGE_BITS)
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
+index 8b46c7c5708..7de0099cbfa 100644
+--- a/target/arm/cpu-param.h
++++ b/target/arm/cpu-param.h
+@@ -32,11 +32,4 @@
+ # define TARGET_PAGE_BITS_LEGACY 10
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-/*
+- * ARM-specific extra insn start words:
+- * 1: Conditional execution bits
+- * 2: Partial exception syndrome for data aborts
+- */
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ #endif
+diff --git a/target/avr/cpu-param.h b/target/avr/cpu-param.h
+index f74bfc25804..ea7887919a7 100644
+--- a/target/avr/cpu-param.h
++++ b/target/avr/cpu-param.h
+@@ -25,6 +25,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 24
+ #define TARGET_VIRT_ADDR_SPACE_BITS 24
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
+index 635d509e743..45ee7b46409 100644
+--- a/target/hexagon/cpu-param.h
++++ b/target/hexagon/cpu-param.h
+@@ -23,6 +23,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 36
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/hppa/cpu-param.h b/target/hppa/cpu-param.h
+index 9bf7ac76d0c..e0b2c7c9157 100644
+--- a/target/hppa/cpu-param.h
++++ b/target/hppa/cpu-param.h
+@@ -19,6 +19,4 @@
+ 
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ #endif
+diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
+index ebb844bcc83..909bc027923 100644
+--- a/target/i386/cpu-param.h
++++ b/target/i386/cpu-param.h
+@@ -22,6 +22,4 @@
+ #endif
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
+index 58cc45a377e..071567712b3 100644
+--- a/target/loongarch/cpu-param.h
++++ b/target/loongarch/cpu-param.h
+@@ -13,6 +13,4 @@
+ 
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
+index 256a2b5f8b2..7afbf6d302d 100644
+--- a/target/m68k/cpu-param.h
++++ b/target/m68k/cpu-param.h
+@@ -17,6 +17,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/microblaze/cpu-param.h b/target/microblaze/cpu-param.h
+index e0a37945136..6a0714bb3d7 100644
+--- a/target/microblaze/cpu-param.h
++++ b/target/microblaze/cpu-param.h
+@@ -27,6 +27,4 @@
+ /* FIXME: MB uses variable pages down to 1K but linux only uses 4k.  */
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
+index 58f450827f7..a71e7383d24 100644
+--- a/target/mips/cpu-param.h
++++ b/target/mips/cpu-param.h
+@@ -20,6 +20,4 @@
+ #endif
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ #endif
+diff --git a/target/openrisc/cpu-param.h b/target/openrisc/cpu-param.h
+index b4f57bbe692..3011bf5fcca 100644
+--- a/target/openrisc/cpu-param.h
++++ b/target/openrisc/cpu-param.h
+@@ -12,6 +12,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
+index e4ed9080ee9..ca7602d8983 100644
+--- a/target/ppc/cpu-param.h
++++ b/target/ppc/cpu-param.h
+@@ -37,6 +37,4 @@
+ # define TARGET_PAGE_BITS 12
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
+index cfdc67c258c..039e877891a 100644
+--- a/target/riscv/cpu-param.h
++++ b/target/riscv/cpu-param.h
+@@ -17,13 +17,6 @@
+ #endif
+ #define TARGET_PAGE_BITS 12 /* 4 KiB Pages */
+ 
+-/*
+- * RISC-V-specific extra insn start words:
+- * 1: Original instruction opcode
+- * 2: more information about instruction
+- */
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ /*
+  * The current MMU Modes are:
+  *  - U mode 0b000
+diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
+index 84934f3bcaf..ef1970a09e9 100644
+--- a/target/rx/cpu-param.h
++++ b/target/rx/cpu-param.h
+@@ -24,6 +24,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
+index abfae3bedfb..a5f798eeae7 100644
+--- a/target/s390x/cpu-param.h
++++ b/target/s390x/cpu-param.h
+@@ -12,6 +12,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 64
+ #define TARGET_VIRT_ADDR_SPACE_BITS 64
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 2
+-
+ #endif
+diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
+index f328715ee86..2b6e11dd0ac 100644
+--- a/target/sh4/cpu-param.h
++++ b/target/sh4/cpu-param.h
+@@ -16,6 +16,4 @@
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/sparc/cpu-param.h b/target/sparc/cpu-param.h
+index 45eea9d6bac..6e8e2a51469 100644
+--- a/target/sparc/cpu-param.h
++++ b/target/sparc/cpu-param.h
+@@ -21,6 +21,4 @@
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 1
+-
+ #endif
+diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
+index eb33a67c419..790242ef3d2 100644
+--- a/target/tricore/cpu-param.h
++++ b/target/tricore/cpu-param.h
+@@ -12,6 +12,4 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/xtensa/cpu-param.h b/target/xtensa/cpu-param.h
+index 7a0c22c9005..06d85218b84 100644
+--- a/target/xtensa/cpu-param.h
++++ b/target/xtensa/cpu-param.h
+@@ -16,6 +16,4 @@
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+-#define TARGET_INSN_START_EXTRA_WORDS 0
+-
+ #endif
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index b1d8a4eb80a..75808795e52 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -2895,9 +2895,9 @@ static void alpha_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+     if (ctx->pcrel) {
+-        tcg_gen_insn_start(dcbase->pc_next & ~TARGET_PAGE_MASK);
++        tcg_gen_insn_start0(dcbase->pc_next & ~TARGET_PAGE_MASK);
+     } else {
+-        tcg_gen_insn_start(dcbase->pc_next);
++        tcg_gen_insn_start0(dcbase->pc_next);
      }
  }
  
-+#define DO_3OP(NAME, FUNC, TYPE) \
-+void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
-+                  float_status * stat, uint32_t desc)                      \
-+{                                                                          \
-+    intptr_t i, oprsz = simd_oprsz(desc);                                  \
-+    TYPE *d = vd, *n = vn, *m = vm;                                        \
-+    for (i = 0; i < oprsz / sizeof(TYPE); i++) {                           \
-+        d[i] = FUNC(n[i], m[i], stat);                                     \
-+    }                                                                      \
-+    clear_tail(d, oprsz, simd_maxsz(desc));                                \
-+}
-+
-+#define DO_3OP_PAIR(NAME, FUNC, TYPE, H) \
-+void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
-+                  float_status * stat, uint32_t desc)                      \
-+{                                                                          \
-+    ARMVectorReg scratch;                                                  \
-+    intptr_t oprsz = simd_oprsz(desc);                                     \
-+    intptr_t half = oprsz / sizeof(TYPE) / 2;                              \
-+    TYPE *d = vd, *n = vn, *m = vm;                                        \
-+    if (unlikely(d == m)) {                                                \
-+        m = memcpy(&scratch, m, oprsz);                                    \
-+    }                                                                      \
-+    for (intptr_t i = 0; i < half; ++i) {                                  \
-+        d[H(i)] = FUNC(n[H(i * 2)], n[H(i * 2 + 1)], stat);                \
-+    }                                                                      \
-+    for (intptr_t i = 0; i < half; ++i) {                                  \
-+        d[H(i + half)] = FUNC(m[H(i * 2)], m[H(i * 2 + 1)], stat);         \
-+    }                                                                      \
-+    clear_tail(d, oprsz, simd_maxsz(desc));                                \
-+}
-+
-+#define DO_FMUL_IDX(NAME, ADD, MUL, TYPE, H)                               \
-+void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
-+                  float_status * stat, uint32_t desc)                      \
-+{                                                                          \
-+    intptr_t i, j, oprsz = simd_oprsz(desc);                               \
-+    intptr_t segment = MIN(16, oprsz) / sizeof(TYPE);                      \
-+    intptr_t idx = simd_data(desc);                                        \
-+    TYPE *d = vd, *n = vn, *m = vm;                                        \
-+    for (i = 0; i < oprsz / sizeof(TYPE); i += segment) {                  \
-+        TYPE mm = m[H(i + idx)];                                           \
-+        for (j = 0; j < segment; j++) {                                    \
-+            d[i + j] = ADD(d[i + j], MUL(n[i + j], mm, stat), stat);       \
-+        }                                                                  \
-+    }                                                                      \
-+    clear_tail(d, oprsz, simd_maxsz(desc));                                \
-+}
-+
- #endif /* TARGET_ARM_VEC_INTERNAL_H */
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index c85983f5313..572733a72fc 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -19,9 +19,6 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
--#ifdef TARGET_AARCH64
--#define HAS_HELPER64
--#endif
- #include "exec/helper-proto.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "fpu/softfloat.h"
-@@ -1458,18 +1455,6 @@ static float32 float32_rsqrts_nf(float32 op1, float32 op2, float_status *stat)
-     return float32_div(op1, float32_two, stat);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index b066da37891..b7a8e94b937 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -10764,7 +10764,7 @@ static void aarch64_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+     if (tb_cflags(dcbase->tb) & CF_PCREL) {
+         pc_arg &= ~TARGET_PAGE_MASK;
+     }
+-    tcg_gen_insn_start(pc_arg, 0, 0);
++    tcg_gen_insn_start2(pc_arg, 0, 0);
+     dc->insn_start_updated = false;
  }
  
--#define DO_3OP(NAME, FUNC, TYPE) \
--void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
--                  float_status *stat, uint32_t desc)                       \
--{                                                                          \
--    intptr_t i, oprsz = simd_oprsz(desc);                                  \
--    TYPE *d = vd, *n = vn, *m = vm;                                        \
--    for (i = 0; i < oprsz / sizeof(TYPE); i++) {                           \
--        d[i] = FUNC(n[i], m[i], stat);                                     \
--    }                                                                      \
--    clear_tail(d, oprsz, simd_maxsz(desc));                                \
--}
--
- DO_3OP(gvec_fadd_b16, bfloat16_add, float16)
- DO_3OP(gvec_fadd_h, float16_add, float16)
- DO_3OP(gvec_fadd_s, float32_add, float32)
-@@ -1541,49 +1526,6 @@ DO_3OP(gvec_recps_nf_s, float32_recps_nf, float32)
- DO_3OP(gvec_rsqrts_nf_h, float16_rsqrts_nf, float16)
- DO_3OP(gvec_rsqrts_nf_s, float32_rsqrts_nf, float32)
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 79b111a228b..5c496f42c55 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -6453,7 +6453,7 @@ static void arm_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+     } else {
+         condexec_bits = (dc->condexec_cond << 4) | (dc->condexec_mask >> 1);
+     }
+-    tcg_gen_insn_start(pc_arg, condexec_bits, 0);
++    tcg_gen_insn_start2(pc_arg, condexec_bits, 0);
+     dc->insn_start_updated = false;
+ }
  
--#ifdef TARGET_AARCH64
--DO_3OP(gvec_fdiv_h, float16_div, float16)
--DO_3OP(gvec_fdiv_s, float32_div, float32)
--DO_3OP(gvec_fdiv_d, float64_div, float64)
--
--DO_3OP(gvec_fmulx_h, helper_advsimd_mulxh, float16)
--DO_3OP(gvec_fmulx_s, helper_vfp_mulxs, float32)
--DO_3OP(gvec_fmulx_d, helper_vfp_mulxd, float64)
--
--DO_3OP(gvec_recps_h, helper_recpsf_f16, float16)
--DO_3OP(gvec_recps_s, helper_recpsf_f32, float32)
--DO_3OP(gvec_recps_d, helper_recpsf_f64, float64)
--
--DO_3OP(gvec_rsqrts_h, helper_rsqrtsf_f16, float16)
--DO_3OP(gvec_rsqrts_s, helper_rsqrtsf_f32, float32)
--DO_3OP(gvec_rsqrts_d, helper_rsqrtsf_f64, float64)
--
--DO_3OP(gvec_ah_recps_h, helper_recpsf_ah_f16, float16)
--DO_3OP(gvec_ah_recps_s, helper_recpsf_ah_f32, float32)
--DO_3OP(gvec_ah_recps_d, helper_recpsf_ah_f64, float64)
--
--DO_3OP(gvec_ah_rsqrts_h, helper_rsqrtsf_ah_f16, float16)
--DO_3OP(gvec_ah_rsqrts_s, helper_rsqrtsf_ah_f32, float32)
--DO_3OP(gvec_ah_rsqrts_d, helper_rsqrtsf_ah_f64, float64)
--
--DO_3OP(gvec_ah_fmax_h, helper_vfp_ah_maxh, float16)
--DO_3OP(gvec_ah_fmax_s, helper_vfp_ah_maxs, float32)
--DO_3OP(gvec_ah_fmax_d, helper_vfp_ah_maxd, float64)
--
--DO_3OP(gvec_ah_fmin_h, helper_vfp_ah_minh, float16)
--DO_3OP(gvec_ah_fmin_s, helper_vfp_ah_mins, float32)
--DO_3OP(gvec_ah_fmin_d, helper_vfp_ah_mind, float64)
--
--DO_3OP(gvec_fmax_b16, bfloat16_max, bfloat16)
--DO_3OP(gvec_fmin_b16, bfloat16_min, bfloat16)
--DO_3OP(gvec_fmaxnum_b16, bfloat16_maxnum, bfloat16)
--DO_3OP(gvec_fminnum_b16, bfloat16_minnum, bfloat16)
--DO_3OP(gvec_ah_fmax_b16, helper_sme2_ah_fmax_b16, bfloat16)
--DO_3OP(gvec_ah_fmin_b16, helper_sme2_ah_fmin_b16, bfloat16)
--
--#endif
--#undef DO_3OP
--
- /* Non-fused multiply-add (unlike float16_muladd etc, which are fused) */
- static float16 float16_muladd_nf(float16 dest, float16 op1, float16 op2,
-                                  float_status *stat)
-@@ -1769,23 +1711,6 @@ DO_MLA_IDX(gvec_mls_idx_d, uint64_t, -, H8)
+diff --git a/target/avr/translate.c b/target/avr/translate.c
+index ef6f655a458..29de249342e 100644
+--- a/target/avr/translate.c
++++ b/target/avr/translate.c
+@@ -2689,7 +2689,7 @@ static void avr_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
  
- #undef DO_MLA_IDX
+-    tcg_gen_insn_start(ctx->npc);
++    tcg_gen_insn_start0(ctx->npc);
+ }
  
--#define DO_FMUL_IDX(NAME, ADD, MUL, TYPE, H)                               \
--void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
--                  float_status *stat, uint32_t desc)                       \
--{                                                                          \
--    intptr_t i, j, oprsz = simd_oprsz(desc);                               \
--    intptr_t segment = MIN(16, oprsz) / sizeof(TYPE);                      \
--    intptr_t idx = simd_data(desc);                                        \
--    TYPE *d = vd, *n = vn, *m = vm;                                        \
--    for (i = 0; i < oprsz / sizeof(TYPE); i += segment) {                  \
--        TYPE mm = m[H(i + idx)];                                           \
--        for (j = 0; j < segment; j++) {                                    \
--            d[i + j] = ADD(d[i + j], MUL(n[i + j], mm, stat), stat);       \
--        }                                                                  \
--    }                                                                      \
--    clear_tail(d, oprsz, simd_maxsz(desc));                                \
--}
--
- #define nop(N, M, S) (M)
+ static void avr_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 3762faec4d8..c61ddc85b6f 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -977,7 +977,7 @@ static void hexagon_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
  
- DO_FMUL_IDX(gvec_fmul_idx_b16, nop, bfloat16_mul, float16, H2)
-@@ -1793,14 +1718,6 @@ DO_FMUL_IDX(gvec_fmul_idx_h, nop, float16_mul, float16, H2)
- DO_FMUL_IDX(gvec_fmul_idx_s, nop, float32_mul, float32, H4)
- DO_FMUL_IDX(gvec_fmul_idx_d, nop, float64_mul, float64, H8)
+-    tcg_gen_insn_start(ctx->base.pc_next);
++    tcg_gen_insn_start0(ctx->base.pc_next);
+ }
  
--#ifdef TARGET_AARCH64
--
--DO_FMUL_IDX(gvec_fmulx_idx_h, nop, helper_advsimd_mulxh, float16, H2)
--DO_FMUL_IDX(gvec_fmulx_idx_s, nop, helper_vfp_mulxs, float32, H4)
--DO_FMUL_IDX(gvec_fmulx_idx_d, nop, helper_vfp_mulxd, float64, H8)
--
--#endif
--
- #undef nop
+ static bool pkt_crosses_page(CPUHexagonState *env, DisasContext *ctx)
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 853cba2ba4f..2a9eafacda7 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -4716,7 +4716,7 @@ static void hppa_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+         tcg_debug_assert(diff != INT32_MIN);
+     }
+ 
+-    tcg_gen_insn_start(iaoq_f & ~TARGET_PAGE_MASK, diff, 0);
++    tcg_gen_insn_start2(iaoq_f & ~TARGET_PAGE_MASK, diff, 0);
+     ctx->insn_start_updated = false;
+ }
+ 
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 7c444d5006d..207cd541152 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -3527,7 +3527,7 @@ static void i386_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+     if (tb_cflags(dcbase->tb) & CF_PCREL) {
+         pc_arg &= ~TARGET_PAGE_MASK;
+     }
+-    tcg_gen_insn_start(pc_arg, dc->cc_op);
++    tcg_gen_insn_start1(pc_arg, dc->cc_op);
+ }
+ 
+ static void i386_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 055f6fb6046..120411eda1e 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -159,7 +159,7 @@ static void loongarch_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->base.pc_next);
++    tcg_gen_insn_start0(ctx->base.pc_next);
+ }
  
  /*
-@@ -1812,8 +1729,6 @@ DO_FMUL_IDX(gvec_fmla_nf_idx_s, float32_add, float32_mul, float32, H4)
- DO_FMUL_IDX(gvec_fmls_nf_idx_h, float16_sub, float16_mul, float16, H2)
- DO_FMUL_IDX(gvec_fmls_nf_idx_s, float32_sub, float32_mul, float32, H4)
- 
--#undef DO_FMUL_IDX
--
- #define DO_FMLA_IDX(NAME, TYPE, H, NEGX, NEGF)                             \
- void HELPER(NAME)(void *vd, void *vn, void *vm, void *va,                  \
-                   float_status *stat, uint32_t desc)                       \
-@@ -2530,31 +2445,6 @@ void HELPER(neon_pmull_h)(void *vd, void *vn, void *vm, uint32_t desc)
-     clear_tail(d, 16, simd_maxsz(desc));
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index eb1ba150745..2abcbae879b 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -6028,7 +6028,7 @@ static void m68k_tr_tb_start(DisasContextBase *dcbase, CPUState *cpu)
+ static void m68k_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    tcg_gen_insn_start(dc->base.pc_next, dc->cc_op);
++    tcg_gen_insn_start1(dc->base.pc_next, dc->cc_op);
  }
  
--#ifdef TARGET_AARCH64
--void HELPER(sve2_pmull_h)(void *vd, void *vn, void *vm, uint32_t desc)
--{
--    int shift = simd_data(desc) * 8;
--    intptr_t i, opr_sz = simd_oprsz(desc);
--    uint64_t *d = vd, *n = vn, *m = vm;
--
--    for (i = 0; i < opr_sz / 8; ++i) {
--        d[i] = clmul_8x4_even(n[i] >> shift, m[i] >> shift);
--    }
--}
--
--void HELPER(sve2_pmull_d)(void *vd, void *vn, void *vm, uint32_t desc)
--{
--    intptr_t sel = H4(simd_data(desc));
--    intptr_t i, opr_sz = simd_oprsz(desc);
--    uint32_t *n = vn, *m = vm;
--    uint64_t *d = vd;
--
--    for (i = 0; i < opr_sz / 8; ++i) {
--        d[i] = clmul_32(n[2 * i + sel], m[2 * i + sel]);
--    }
--}
--#endif
--
- #define DO_CMP0(NAME, TYPE, OP)                         \
- void HELPER(NAME)(void *vd, void *vn, uint32_t desc)    \
- {                                                       \
-@@ -2628,26 +2518,6 @@ DO_ABA(gvec_uaba_d, uint64_t)
+ static void m68k_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index fefe5cb552a..3407cfbdb1d 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -1630,7 +1630,7 @@ static void mb_tr_insn_start(DisasContextBase *dcb, CPUState *cs)
+ {
+     DisasContext *dc = container_of(dcb, DisasContext, base);
  
- #undef DO_ABA
- 
--#define DO_3OP_PAIR(NAME, FUNC, TYPE, H) \
--void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
--                  float_status *stat, uint32_t desc)                       \
--{                                                                          \
--    ARMVectorReg scratch;                                                  \
--    intptr_t oprsz = simd_oprsz(desc);                                     \
--    intptr_t half = oprsz / sizeof(TYPE) / 2;                              \
--    TYPE *d = vd, *n = vn, *m = vm;                                        \
--    if (unlikely(d == m)) {                                                \
--        m = memcpy(&scratch, m, oprsz);                                    \
--    }                                                                      \
--    for (intptr_t i = 0; i < half; ++i) {                                  \
--        d[H(i)] = FUNC(n[H(i * 2)], n[H(i * 2 + 1)], stat);                \
--    }                                                                      \
--    for (intptr_t i = 0; i < half; ++i) {                                  \
--        d[H(i + half)] = FUNC(m[H(i * 2)], m[H(i * 2 + 1)], stat);         \
--    }                                                                      \
--    clear_tail(d, oprsz, simd_maxsz(desc));                                \
--}
--
- DO_3OP_PAIR(gvec_faddp_h, float16_add, float16, H2)
- DO_3OP_PAIR(gvec_faddp_s, float32_add, float32, H4)
- DO_3OP_PAIR(gvec_faddp_d, float64_add, float64, )
-@@ -2668,19 +2538,7 @@ DO_3OP_PAIR(gvec_fminnump_h, float16_minnum, float16, H2)
- DO_3OP_PAIR(gvec_fminnump_s, float32_minnum, float32, H4)
- DO_3OP_PAIR(gvec_fminnump_d, float64_minnum, float64, )
- 
--#ifdef TARGET_AARCH64
--DO_3OP_PAIR(gvec_ah_fmaxp_h, helper_vfp_ah_maxh, float16, H2)
--DO_3OP_PAIR(gvec_ah_fmaxp_s, helper_vfp_ah_maxs, float32, H4)
--DO_3OP_PAIR(gvec_ah_fmaxp_d, helper_vfp_ah_maxd, float64, )
--
--DO_3OP_PAIR(gvec_ah_fminp_h, helper_vfp_ah_minh, float16, H2)
--DO_3OP_PAIR(gvec_ah_fminp_s, helper_vfp_ah_mins, float32, H4)
--DO_3OP_PAIR(gvec_ah_fminp_d, helper_vfp_ah_mind, float64, )
--#endif
--
--#undef DO_3OP_PAIR
--
--#define DO_3OP_PAIR(NAME, FUNC, TYPE, H) \
-+#define DO_3OP_PAIR_NO_STATUS(NAME, FUNC, TYPE, H) \
- void HELPER(NAME)(void *vd, void *vn, void *vm, uint32_t desc)  \
- {                                                               \
-     ARMVectorReg scratch;                                       \
-@@ -2700,29 +2558,29 @@ void HELPER(NAME)(void *vd, void *vn, void *vm, uint32_t desc)  \
+-    tcg_gen_insn_start(dc->base.pc_next, dc->tb_flags & ~MSR_TB_MASK);
++    tcg_gen_insn_start1(dc->base.pc_next, dc->tb_flags & ~MSR_TB_MASK);
  }
  
- #define ADD(A, B) (A + B)
--DO_3OP_PAIR(gvec_addp_b, ADD, uint8_t, H1)
--DO_3OP_PAIR(gvec_addp_h, ADD, uint16_t, H2)
--DO_3OP_PAIR(gvec_addp_s, ADD, uint32_t, H4)
--DO_3OP_PAIR(gvec_addp_d, ADD, uint64_t, )
-+DO_3OP_PAIR_NO_STATUS(gvec_addp_b, ADD, uint8_t, H1)
-+DO_3OP_PAIR_NO_STATUS(gvec_addp_h, ADD, uint16_t, H2)
-+DO_3OP_PAIR_NO_STATUS(gvec_addp_s, ADD, uint32_t, H4)
-+DO_3OP_PAIR_NO_STATUS(gvec_addp_d, ADD, uint64_t, /**/)
- #undef  ADD
+ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 54849e9ff1a..3000e09e241 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -15133,8 +15133,8 @@ static void mips_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
  
--DO_3OP_PAIR(gvec_smaxp_b, MAX, int8_t, H1)
--DO_3OP_PAIR(gvec_smaxp_h, MAX, int16_t, H2)
--DO_3OP_PAIR(gvec_smaxp_s, MAX, int32_t, H4)
-+DO_3OP_PAIR_NO_STATUS(gvec_smaxp_b, MAX, int8_t, H1)
-+DO_3OP_PAIR_NO_STATUS(gvec_smaxp_h, MAX, int16_t, H2)
-+DO_3OP_PAIR_NO_STATUS(gvec_smaxp_s, MAX, int32_t, H4)
+-    tcg_gen_insn_start(ctx->base.pc_next, ctx->hflags & MIPS_HFLAG_BMASK,
+-                       ctx->btarget);
++    tcg_gen_insn_start2(ctx->base.pc_next, ctx->hflags & MIPS_HFLAG_BMASK,
++                        ctx->btarget);
+ }
  
--DO_3OP_PAIR(gvec_umaxp_b, MAX, uint8_t, H1)
--DO_3OP_PAIR(gvec_umaxp_h, MAX, uint16_t, H2)
--DO_3OP_PAIR(gvec_umaxp_s, MAX, uint32_t, H4)
-+DO_3OP_PAIR_NO_STATUS(gvec_umaxp_b, MAX, uint8_t, H1)
-+DO_3OP_PAIR_NO_STATUS(gvec_umaxp_h, MAX, uint16_t, H2)
-+DO_3OP_PAIR_NO_STATUS(gvec_umaxp_s, MAX, uint32_t, H4)
+ static void mips_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
+index 6fa4d6cfa70..7c2d6979bc6 100644
+--- a/target/openrisc/translate.c
++++ b/target/openrisc/translate.c
+@@ -1551,8 +1551,8 @@ static void openrisc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
  
--DO_3OP_PAIR(gvec_sminp_b, MIN, int8_t, H1)
--DO_3OP_PAIR(gvec_sminp_h, MIN, int16_t, H2)
--DO_3OP_PAIR(gvec_sminp_s, MIN, int32_t, H4)
-+DO_3OP_PAIR_NO_STATUS(gvec_sminp_b, MIN, int8_t, H1)
-+DO_3OP_PAIR_NO_STATUS(gvec_sminp_h, MIN, int16_t, H2)
-+DO_3OP_PAIR_NO_STATUS(gvec_sminp_s, MIN, int32_t, H4)
+-    tcg_gen_insn_start(dc->base.pc_next, (dc->delayed_branch ? 1 : 0)
+-                       | (dc->base.num_insns > 1 ? 2 : 0));
++    tcg_gen_insn_start1(dc->base.pc_next, (dc->delayed_branch ? 1 : 0)
++                        | (dc->base.num_insns > 1 ? 2 : 0));
+ }
  
--DO_3OP_PAIR(gvec_uminp_b, MIN, uint8_t, H1)
--DO_3OP_PAIR(gvec_uminp_h, MIN, uint16_t, H2)
--DO_3OP_PAIR(gvec_uminp_s, MIN, uint32_t, H4)
-+DO_3OP_PAIR_NO_STATUS(gvec_uminp_b, MIN, uint8_t, H1)
-+DO_3OP_PAIR_NO_STATUS(gvec_uminp_h, MIN, uint16_t, H2)
-+DO_3OP_PAIR_NO_STATUS(gvec_uminp_s, MIN, uint32_t, H4)
+ static void openrisc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 17e6d07c8c2..9eca4043daa 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -6574,7 +6574,7 @@ static void ppc_tr_tb_start(DisasContextBase *db, CPUState *cs)
  
--#undef DO_3OP_PAIR
-+#undef DO_3OP_PAIR_NO_STATUS
+ static void ppc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+-    tcg_gen_insn_start(dcbase->pc_next);
++    tcg_gen_insn_start0(dcbase->pc_next);
+ }
  
- #define DO_VCVT_FIXED(NAME, FUNC, TYPE)                                 \
-     void HELPER(NAME)(void *vd, void *vn, float_status *stat, uint32_t desc) \
-@@ -2797,53 +2655,6 @@ DO_VRINT_RMODE(gvec_vrint_rm_s, helper_rints, uint32_t)
+ static bool is_prefix_insn(DisasContext *ctx, uint32_t insn)
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index e1f4dc5ffd0..da3e6606871 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1351,7 +1351,7 @@ static void riscv_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+         pc_next &= ~TARGET_PAGE_MASK;
+     }
  
- #undef DO_VRINT_RMODE
+-    tcg_gen_insn_start(pc_next, 0, 0);
++    tcg_gen_insn_start2(pc_next, 0, 0);
+     ctx->insn_start_updated = false;
+ }
  
--#ifdef TARGET_AARCH64
--void HELPER(simd_tblx)(void *vd, void *vm, CPUARMState *env, uint32_t desc)
--{
--    const uint8_t *indices = vm;
--    size_t oprsz = simd_oprsz(desc);
--    uint32_t rn = extract32(desc, SIMD_DATA_SHIFT, 5);
--    bool is_tbx = extract32(desc, SIMD_DATA_SHIFT + 5, 1);
--    uint32_t table_len = desc >> (SIMD_DATA_SHIFT + 6);
--    union {
--        uint8_t b[16];
--        uint64_t d[2];
--    } result;
--
--    /*
--     * We must construct the final result in a temp, lest the output
--     * overlaps the input table.  For TBL, begin with zero; for TBX,
--     * begin with the original register contents.  Note that we always
--     * copy 16 bytes here to avoid an extra branch; clearing the high
--     * bits of the register for oprsz == 8 is handled below.
--     */
--    if (is_tbx) {
--        memcpy(&result, vd, 16);
--    } else {
--        memset(&result, 0, 16);
--    }
--
--    for (size_t i = 0; i < oprsz; ++i) {
--        uint32_t index = indices[H1(i)];
--
--        if (index < table_len) {
--            /*
--             * Convert index (a byte offset into the virtual table
--             * which is a series of 128-bit vectors concatenated)
--             * into the correct register element, bearing in mind
--             * that the table can wrap around from V31 to V0.
--             */
--            const uint8_t *table = (const uint8_t *)
--                aa64_vfp_qreg(env, (rn + (index >> 4)) % 32);
--            result.b[H1(i)] = table[H1(index % 16)];
--        }
--    }
--
--    memcpy(vd, &result, 16);
--    clear_tail(vd, oprsz, simd_maxsz(desc));
--}
--#endif
--
- /*
-  * NxN -> N highpart multiply
-  *
-diff --git a/target/arm/tcg/vec_helper64.c b/target/arm/tcg/vec_helper64.c
-new file mode 100644
-index 00000000000..9de2f0f413e
---- /dev/null
-+++ b/target/arm/tcg/vec_helper64.c
-@@ -0,0 +1,140 @@
-+/*
-+ * ARM AdvSIMD / SVE Vector Operations
-+ *
-+ * Copyright (c) 2026 Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#define HAS_HELPER64
-+#include "exec/helper-proto.h"
-+#include "tcg/tcg-gvec-desc.h"
-+#include "fpu/softfloat.h"
-+#include "qemu/int128.h"
-+#include "crypto/clmul.h"
-+#include "vec_internal.h"
-+
-+DO_3OP(gvec_fdiv_h, float16_div, float16)
-+DO_3OP(gvec_fdiv_s, float32_div, float32)
-+DO_3OP(gvec_fdiv_d, float64_div, float64)
-+
-+DO_3OP(gvec_fmulx_h, helper_advsimd_mulxh, float16)
-+DO_3OP(gvec_fmulx_s, helper_vfp_mulxs, float32)
-+DO_3OP(gvec_fmulx_d, helper_vfp_mulxd, float64)
-+
-+DO_3OP(gvec_recps_h, helper_recpsf_f16, float16)
-+DO_3OP(gvec_recps_s, helper_recpsf_f32, float32)
-+DO_3OP(gvec_recps_d, helper_recpsf_f64, float64)
-+
-+DO_3OP(gvec_rsqrts_h, helper_rsqrtsf_f16, float16)
-+DO_3OP(gvec_rsqrts_s, helper_rsqrtsf_f32, float32)
-+DO_3OP(gvec_rsqrts_d, helper_rsqrtsf_f64, float64)
-+
-+DO_3OP(gvec_ah_recps_h, helper_recpsf_ah_f16, float16)
-+DO_3OP(gvec_ah_recps_s, helper_recpsf_ah_f32, float32)
-+DO_3OP(gvec_ah_recps_d, helper_recpsf_ah_f64, float64)
-+
-+DO_3OP(gvec_ah_rsqrts_h, helper_rsqrtsf_ah_f16, float16)
-+DO_3OP(gvec_ah_rsqrts_s, helper_rsqrtsf_ah_f32, float32)
-+DO_3OP(gvec_ah_rsqrts_d, helper_rsqrtsf_ah_f64, float64)
-+
-+DO_3OP(gvec_ah_fmax_h, helper_vfp_ah_maxh, float16)
-+DO_3OP(gvec_ah_fmax_s, helper_vfp_ah_maxs, float32)
-+DO_3OP(gvec_ah_fmax_d, helper_vfp_ah_maxd, float64)
-+
-+DO_3OP(gvec_ah_fmin_h, helper_vfp_ah_minh, float16)
-+DO_3OP(gvec_ah_fmin_s, helper_vfp_ah_mins, float32)
-+DO_3OP(gvec_ah_fmin_d, helper_vfp_ah_mind, float64)
-+
-+DO_3OP(gvec_fmax_b16, bfloat16_max, bfloat16)
-+DO_3OP(gvec_fmin_b16, bfloat16_min, bfloat16)
-+DO_3OP(gvec_fmaxnum_b16, bfloat16_maxnum, bfloat16)
-+DO_3OP(gvec_fminnum_b16, bfloat16_minnum, bfloat16)
-+DO_3OP(gvec_ah_fmax_b16, helper_sme2_ah_fmax_b16, bfloat16)
-+DO_3OP(gvec_ah_fmin_b16, helper_sme2_ah_fmin_b16, bfloat16)
-+
-+#define nop(N, M, S) (M)
-+
-+DO_FMUL_IDX(gvec_fmulx_idx_h, nop, helper_advsimd_mulxh, float16, H2)
-+DO_FMUL_IDX(gvec_fmulx_idx_s, nop, helper_vfp_mulxs, float32, H4)
-+DO_FMUL_IDX(gvec_fmulx_idx_d, nop, helper_vfp_mulxd, float64, H8)
-+
-+#undef nop
-+
-+void HELPER(sve2_pmull_h)(void *vd, void *vn, void *vm, uint32_t desc)
-+{
-+    int shift = simd_data(desc) * 8;
-+    intptr_t i, opr_sz = simd_oprsz(desc);
-+    uint64_t *d = vd, *n = vn, *m = vm;
-+
-+    for (i = 0; i < opr_sz / 8; ++i) {
-+        d[i] = clmul_8x4_even(n[i] >> shift, m[i] >> shift);
-+    }
-+}
-+
-+void HELPER(sve2_pmull_d)(void *vd, void *vn, void *vm, uint32_t desc)
-+{
-+    intptr_t sel = H4(simd_data(desc));
-+    intptr_t i, opr_sz = simd_oprsz(desc);
-+    uint32_t *n = vn, *m = vm;
-+    uint64_t *d = vd;
-+
-+    for (i = 0; i < opr_sz / 8; ++i) {
-+        d[i] = clmul_32(n[2 * i + sel], m[2 * i + sel]);
-+    }
-+}
-+
-+DO_3OP_PAIR(gvec_ah_fmaxp_h, helper_vfp_ah_maxh, float16, H2)
-+DO_3OP_PAIR(gvec_ah_fmaxp_s, helper_vfp_ah_maxs, float32, H4)
-+DO_3OP_PAIR(gvec_ah_fmaxp_d, helper_vfp_ah_maxd, float64, /**/)
-+
-+DO_3OP_PAIR(gvec_ah_fminp_h, helper_vfp_ah_minh, float16, H2)
-+DO_3OP_PAIR(gvec_ah_fminp_s, helper_vfp_ah_mins, float32, H4)
-+DO_3OP_PAIR(gvec_ah_fminp_d, helper_vfp_ah_mind, float64, /**/)
-+
-+void HELPER(simd_tblx)(void *vd, void *vm, CPUARMState *env, uint32_t desc)
-+{
-+    const uint8_t *indices = vm;
-+    size_t oprsz = simd_oprsz(desc);
-+    uint32_t rn = extract32(desc, SIMD_DATA_SHIFT, 5);
-+    bool is_tbx = extract32(desc, SIMD_DATA_SHIFT + 5, 1);
-+    uint32_t table_len = desc >> (SIMD_DATA_SHIFT + 6);
-+    union {
-+        uint8_t b[16];
-+        uint64_t d[2];
-+    } result;
-+
-+    /*
-+     * We must construct the final result in a temp, lest the output
-+     * overlaps the input table.  For TBL, begin with zero; for TBX,
-+     * begin with the original register contents.  Note that we always
-+     * copy 16 bytes here to avoid an extra branch; clearing the high
-+     * bits of the register for oprsz == 8 is handled below.
-+     */
-+    if (is_tbx) {
-+        memcpy(&result, vd, 16);
-+    } else {
-+        memset(&result, 0, 16);
-+    }
-+
-+    for (size_t i = 0; i < oprsz; ++i) {
-+        uint32_t index = indices[H1(i)];
-+
-+        if (index < table_len) {
-+            /*
-+             * Convert index (a byte offset into the virtual table
-+             * which is a series of 128-bit vectors concatenated)
-+             * into the correct register element, bearing in mind
-+             * that the table can wrap around from V31 to V0.
-+             */
-+            const uint8_t *table = (const uint8_t *)
-+                aa64_vfp_qreg(env, (rn + (index >> 4)) % 32);
-+            result.b[H1(i)] = table[H1(index % 16)];
-+        }
-+    }
-+
-+    memcpy(vd, &result, 16);
-+    clear_tail(vd, oprsz, simd_maxsz(desc));
-+}
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 08ac5ec9906..3b501df7425 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -33,7 +33,6 @@ arm_ss.add(files(
-   'm_helper.c',
-   'mve_helper.c',
-   'op_helper.c',
--  'vec_helper.c',
- ))
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index ef865f14bf5..1a4ed4de31b 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -2215,7 +2215,7 @@ static void rx_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
  
- arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
-@@ -47,6 +46,7 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
-   'pauth_helper.c',
-   'sme_helper.c',
-   'sve_helper.c',
-+  'vec_helper64.c',
- ))
+-    tcg_gen_insn_start(ctx->base.pc_next);
++    tcg_gen_insn_start0(ctx->base.pc_next);
+ }
  
- arm_common_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
-@@ -66,11 +66,13 @@ arm_common_system_ss.add(files(
-   'psci.c',
-   'tlb_helper.c',
-   'tlb-insns.c',
-+  'vec_helper.c',
-   'vfp_helper.c',
- ))
- arm_user_ss.add(files(
-   'hflags.c',
-   'neon_helper.c',
-   'tlb_helper.c',
-+  'vec_helper.c',
-   'vfp_helper.c',
- ))
+ static void rx_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index e38607ee18c..111a5e2cb54 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -6402,7 +6402,7 @@ static void s390x_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+ 
+     /* Delay the set of ilen until we've read the insn. */
+-    tcg_gen_insn_start(dc->base.pc_next, dc->cc_op, 0);
++    tcg_gen_insn_start2(dc->base.pc_next, dc->cc_op, 0);
+ }
+ 
+ static target_ulong get_next_pc(CPUS390XState *env, DisasContext *s,
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index b3ae0a3814c..78f606f4a4f 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -2181,7 +2181,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
+      * tb->icount * insn_start.
+      */
+     for (i = 1; i < max_insns; ++i) {
+-        tcg_gen_insn_start(pc + i * 2, ctx->envflags);
++        tcg_gen_insn_start1(pc + i * 2, ctx->envflags);
+         ctx->base.insn_start = tcg_last_op();
+     }
+ }
+@@ -2241,7 +2241,7 @@ static void sh4_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->base.pc_next, ctx->envflags);
++    tcg_gen_insn_start1(ctx->base.pc_next, ctx->envflags);
+ }
+ 
+ static void sh4_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index d6b599b71fe..bca9c7a0c1e 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -5735,7 +5735,7 @@ static void sparc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+             g_assert_not_reached();
+         }
+     }
+-    tcg_gen_insn_start(dc->pc, npc);
++    tcg_gen_insn_start1(dc->pc, npc);
+ }
+ 
+ static void sparc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/tricore/translate.c b/target/tricore/translate.c
+index fbe05a93a8a..cee7fedc9db 100644
+--- a/target/tricore/translate.c
++++ b/target/tricore/translate.c
+@@ -8410,7 +8410,7 @@ static void tricore_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    tcg_gen_insn_start(ctx->base.pc_next);
++    tcg_gen_insn_start0(ctx->base.pc_next);
+ }
+ 
+ static bool insn_crosses_page(DisasContext *ctx, CPUTriCoreState *env)
+diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
+index bb8d2ed86cf..7851a5f0371 100644
+--- a/target/xtensa/translate.c
++++ b/target/xtensa/translate.c
+@@ -1159,7 +1159,7 @@ static void xtensa_tr_tb_start(DisasContextBase *dcbase, CPUState *cpu)
+ 
+ static void xtensa_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ {
+-    tcg_gen_insn_start(dcbase->pc_next);
++    tcg_gen_insn_start0(dcbase->pc_next);
+ }
+ 
+ static void xtensa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
 -- 
 2.47.3
 
