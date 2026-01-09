@@ -4,78 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23E6D1681A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DBED1681B
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veAx2-0006Qf-5K; Fri, 09 Jan 2026 06:46:44 -0500
+	id 1veAzi-0007md-JY; Fri, 09 Jan 2026 06:49:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1veAwy-0006NZ-H9
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:46:42 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1veAzf-0007m2-0B
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:49:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1veAws-0005O5-9k
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:46:38 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1veAzd-0005ku-K6
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:49:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767959192;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1767959365;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sWPj3vU2t3wTODadJPf5AGD901cq/tufjmG+KdpOeVU=;
- b=ghIKzqUmmuesVe3tkMAZOw8+/j/ZRYZ3+X5U70IpDCUMi/waWFnqPOuo/hMZGYRvY27a2Z
- cw9yv2E1GdX6RqnFEFgsrH6EGPMDHCCV+BuipKC06BaazsJ/1FUVkIsb71MERaBojJQb5H
- 025irhwnxzQnkphnLdvOhYkJTuKL62Q=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-iXWbRJSwPmqcpYCpby4cbQ-1; Fri,
- 09 Jan 2026 06:46:28 -0500
-X-MC-Unique: iXWbRJSwPmqcpYCpby4cbQ-1
-X-Mimecast-MFC-AGG-ID: iXWbRJSwPmqcpYCpby4cbQ_1767959187
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F4A918005B2; Fri,  9 Jan 2026 11:46:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.39])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2156230002D2; Fri,  9 Jan 2026 11:46:20 +0000 (UTC)
-Date: Fri, 9 Jan 2026 11:46:17 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Zhz5CZ/t3Kx0K81Q/q8axY4crGyYZLKFaPYwyEYpmLY=;
+ b=Tbwrd3k7RpL5NV5ecev/DIfQTXaWkre7v9nfWepNtfDkZMLJcr+WLnN8Xfywp/37xfQbM7
+ Il5b1NG/mCBeTfCKD1y2+V93AcNrsEJruHsD+zFsKHIh/E6MjkMtBkymWg6UlHBkBWfjX6
+ QE8aiyu8AUBQSIHgfMunGLkNy7AYomU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-582-xZPORgBJN5KjkgGqRUrgFA-1; Fri, 09 Jan 2026 06:49:23 -0500
+X-MC-Unique: xZPORgBJN5KjkgGqRUrgFA-1
+X-Mimecast-MFC-AGG-ID: xZPORgBJN5KjkgGqRUrgFA_1767959363
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47d3ffa98fcso29082555e9.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 03:49:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767959362; x=1768564162; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=Zhz5CZ/t3Kx0K81Q/q8axY4crGyYZLKFaPYwyEYpmLY=;
+ b=OGJYyMGIDICw1bi2f2uH4uZW4hkgpEHEFb4BT34bTEDA16KmiAqLVNAXLj2HaCHln+
+ E2Syi+7kVxzA1oIo40xF3jMOAnmieE5heYySX5IN4LbXP5/WJIeAEo1Lqm26ueYoXn90
+ N8TaqcNU48sYJexRPeoaUpEWxgL2ge7Qp6MTUWlV1I0JKrWnI4XG5v6jroWAS0s6JqrX
+ zr2CeElwM7XIGzeiPfR1y02vEBx0an+4lipNdY/xB1ct/bWhg202+n1nYwYopaaDvmfJ
+ rfz1zDGqIFL5y2urGwpfHWfI3m7qZHq8bSRedSsmFxkIIvU2oEezYKs+5Yomecbx9sn0
+ u7xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767959362; x=1768564162;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Zhz5CZ/t3Kx0K81Q/q8axY4crGyYZLKFaPYwyEYpmLY=;
+ b=bUL/9epmH1EMKZ3jS/tKhhV4UY6Q+pALDI3J9DLVqBMETilJMGS983mw+WQW8Dyp9U
+ OFXjXWXLAFvFuLpVKPTw94fGw6ovGYcINRyPfU7d5bKGQM1BdRiJBErW5Y2Axru6V3SN
+ 0oxUqWQ70e3hhIc9zwV/pNT6eXyVGF/MEQ0+sFZ/fz/U3ZAQMclUHK//k21ZkFeSVgCm
+ XgXiufgyVCcgllZppALQypcwa5cHCUf2GehM2oG/IU8t2bv++44gI6dcRiHPEFKQ7B5W
+ VF6coq6b7MPcBCX1WnNM8ePZhvS9cyumnQ/gQwtsjqhWCVGlmRY2FnTdwZvRCIIWe95g
+ cBew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/48WIAXdYF5c5EtAvbTagZSat8rVQ5ecieqA8SOe18RRj4PW3rZSmKrPAbnC8CQs4pBVp6RLIyhDe@nongnu.org
+X-Gm-Message-State: AOJu0YznbtB2nxG3gMz4GKoKNoobYu/v/N0hQG7s4TsYNYGGExFKHN2S
+ huHznZMLG9lumSM5WmDa3mqJm9ipPG+gSPs2dgNxAcvSTkvzAXffOwV0zPdJv7vUlmdc32Xp6vT
+ 9iE6esJyBW8CmA/F1xOSYVto8xnFw704hYKjcMP91V3G5gz+c9NmmV8ji
+X-Gm-Gg: AY/fxX7ubPD35rhVVSDUkxdB5sFdmWJW2hENsAc/NOcyTnlGedDRRxDLh1R6g1iE9e8
+ wfIFFE7/NxwOADiOiO6xc1tznebRKu3m17vhytDpuTTsWrrXKI3T0ufd/IdJnhGc1McLH4cBugg
+ 45kWYoy3I6y/mk/BoDpNZhdU9l6e5Il1oZtlXtX5KG8zV7u07ROx/VF2bS+dO08wbiM/pg8V+xa
+ HjYa7lYtCDlNr9PCFeP3ayD4asj9p67DuRktqaOOlIF0o9rDdY8aUKYaR5gVfn+s+W46yr3tJTP
+ KViC+13cpHcEQhthJgLXxzHZWWBqDDAz79yw/sd0OnH/Wjx7SPl/u3WcQK4PSE1u0wcD7ghqOm/
+ r52HjzIMIUHMNAnjpbEYLZOEdKE0XjuF3w1/Cm0ZA3VGri/0hdMIlXgiy9FnWps/rJlG5PYxBT6
+ flEgCkkBQXwpSuAw==
+X-Received: by 2002:a05:600c:1385:b0:47a:94fc:d057 with SMTP id
+ 5b1f17b1804b1-47d84b0b0e7mr96048625e9.2.1767959362516; 
+ Fri, 09 Jan 2026 03:49:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEC7TKzBBhJdg/tVaSZWnxMh0VOJxGDBn10kd04vjVF5ezlG6f8rSbseVYuOzCeeYHorlo4pw==
+X-Received: by 2002:a05:600c:1385:b0:47a:94fc:d057 with SMTP id
+ 5b1f17b1804b1-47d84b0b0e7mr96048385e9.2.1767959362140; 
+ Fri, 09 Jan 2026 03:49:22 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-47d86c6ff40sm133057385e9.2.2026.01.09.03.49.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Jan 2026 03:49:21 -0800 (PST)
+Message-ID: <8867bff0-227f-46b9-b0c6-938fc0d6f625@redhat.com>
+Date: Fri, 9 Jan 2026 12:49:20 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 08/24] util: add API to fetch the current thread name
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, qemu-block@nongnu.org,
- qemu-rust@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org, qemu-block@nongnu.org, qemu-rust@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Kevin Wolf <kwolf@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 02/24] include: define constant for early constructor
- priority
-Message-ID: <aWDqie0eYZ8GeQHF@redhat.com>
 References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-3-berrange@redhat.com>
- <d3ca3fb5-e972-4446-b32c-f20fd8825cca@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ <20260108170338.2693853-9-berrange@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260108170338.2693853-9-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d3ca3fb5-e972-4446-b32c-f20fd8825cca@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -97,84 +169,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 09, 2026 at 12:39:59PM +0100, Paolo Bonzini wrote:
-> On 1/8/26 18:03, Daniel P. Berrangé wrote:
-> > Functions marked with __attribute__((__constructor__)) will be
-> > invoked in linker order. In theory this is well defined, but
-> > in practice, it is hard to determine what this order will be
-> > with the layers of indirection through meson, ninja and the
-> > static libraries QEMU builds.
-> > 
-> > Notably, the order currently appears different between Linux
-> > and Windows (as tested with Wine on Linux). This can cause
-> > problems when certain QEMU constructors have a dependancy on
-> > other QEMU constructors.
-> 
-> What dependency are you seeing, or introducing?
-> 
-> In theory QEMU constructors should not have any dependency, as we only use
-> them to initialize static data structures (such as the various *_init
-> macros).
-> 
-> Not an objection, but I'd like to understand this better.
+On 1/8/26 18:03, Daniel P. Berrangé wrote:
+> +static __thread char namebuf[PTHREAD_MAX_NAMELEN_NP];
 
-See the commit message in patch 2.   Essentially the RCU thread
-gets spawned from a constructor, and if anything it does results
-in an error_report() call, it will trigger use of monitor APIs
-before the monitor constructor has had a chance to run.
+... you can instead of the previous patch, add a constructor here that 
+just sets namebuf to "main" with strcpy.
 
-IMHO the root problem is that it is pretty dubious for us to be
-spawning the RCU thread from a constructor. Constructors should
-be limited to minimal initialization of state. Spawning threads
-is outside the boundary of what I'd consider reasonable for
-a constructor todo. I didn't want try to tackle refactoring the
-RCU thread creation though, hence this gross workaround.
+For Windows on the other hand it should be okay to call 
+SetThreadDescription if available.
 
-> 
-> Paolo
-> 
-> > To address this define a QEMU_CONSTRUCTOR_EARLY constant which
-> > provides a priority value that will run before other default
-> > constructors. This is to be used for QEMU constructors that
-> > are themselves self-contained, but may be relied upon by other
-> > constructors.
-> > 
-> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   include/qemu/compiler.h | 8 ++++++++
-> >   1 file changed, 8 insertions(+)
-> > 
-> > diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-> > index 1c2b673c05..4c49f52eb0 100644
-> > --- a/include/qemu/compiler.h
-> > +++ b/include/qemu/compiler.h
-> > @@ -194,6 +194,14 @@
-> >   # define QEMU_USED
-> >   #endif
-> > +/*
-> > + * A priority for __attribute__((constructor(...))) that
-> > + * will run earlier than the default constructors. Must
-> > + * only be used for functions that have no dependency
-> > + * on global initialization of other QEMU subsystems.
-> > + */
-> > +#define QEMU_CONSTRUCTOR_EARLY 101
-> > +
-> >   /*
-> >    * Disable -ftrivial-auto-var-init on a local variable.
-> >    *
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Paolo
 
 
