@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF27D1D48A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC5BD26D9B
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 21:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veKOk-0003uF-Tn; Fri, 09 Jan 2026 16:51:58 -0500
+	id 1veKRw-0004s9-7D; Fri, 09 Jan 2026 16:55:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veKOh-0003tV-Q5
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:51:56 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1veKRc-0004l2-0P
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:55:00 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veKOg-0000zt-5K
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:51:55 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7bb710d1d1dso4841538b3a.1
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 13:51:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1veKRY-0001ej-NF
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 16:54:54 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7fc0c1d45a4so2651049b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 13:54:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767995512; x=1768600312; darn=nongnu.org;
+ d=linaro.org; s=google; t=1767995690; x=1768600490; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VJUwt/ZasMbcgESAihKpWrAM06/EMJWaUzEEIYq2bo4=;
- b=XDb5ZP5WxHPWB+YIJwiLBnuaKIC7im77saVMqZUFhllCqLsBzM9aEuSwgojJBDKuNx
- AI2bWaXlxzg1lr9Hif5acIu3/bl2aqJrA6UZNQzBkLzJfGfmyW5mRPuFfCLi/eHBGgAw
- Eys/a1wBwBzoi/z5/2TK+pMmqJ7LImtxrONr3h+Y5jrXmUuNqPU24H2JHyiWB7qfOyux
- CtIk3tJnB0Dvtdh+Zv1dtC5PXypp1asMJAc1EB9GF1gkXagcDLsBBGKrqzN3R3VOkRyj
- UWEDqq92GFrHVp2vxYvoIDZcsVydiGTZi7nEKoGe/mKwZD71pnTfPU5CnuzhMShBSOdm
- VILA==
+ bh=DgW3rdvm3evjcmTiQ4UBh9cSm2+TVh0AojTms1MHKYc=;
+ b=v/xk7xaD779Pzy9uclXAxOIiU+eKzNgdhmZwJjyXJbhB3n645/gzd/3VBLRP2ponSq
+ 3b3RyTpJwOgtzlivXamETzEoLxCAKOwvDglI7DfrShG5OTeMq6gzp2gNVxxmp/ONQ0uk
+ 5uZ3ufs2n09330f6ku25XrS2gFfp3GX5F8971YjFlvyrvEXwaLn5KM1Wo0YkIMdbz0I0
+ asgU4DCdjucWdj38hECKbwc7okVXYDuwSYibuywokXSlvkrCnJCnuLBTguHOUjkiVM+C
+ gfXkgXgT2HEAFnIknsfYFoz/0+i8KASyKL/EQP+gcUZUiDe1XEgJXeKGeMSuYgEvUzHa
+ msRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767995512; x=1768600312;
+ d=1e100.net; s=20230601; t=1767995690; x=1768600490;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VJUwt/ZasMbcgESAihKpWrAM06/EMJWaUzEEIYq2bo4=;
- b=kosgXragLLEI5cAr1lO2NgSRKB0de6tlEtvuudT4lBkd5uEzjdtgcOZheoHs/8dQ+s
- wen0GCsd7in18zZK1dLtN5XJfl7E6WmkZSbT2hto7yEOfSzoQIRM7Z0HIIkEJp83z1Ou
- NKGkuXdSIEE+H7jq7PPVR6R15pJDCaPAsEsixLVlXhUGErTuzbO1uKVxdQEwPZiVyeSE
- 5saf73+RlhDoebdy6SCdztsKeXW7ONFj/TXrxwxdFDdqG/sZfzgBhIjDOF3q5r8JBFl5
- KBQsVLWBVRrrpju/SUB/4edygyrBmEbwcemsf92l5QFwJDHNs7eBjiJ9NHh6OKA+wsjd
- GXBw==
+ bh=DgW3rdvm3evjcmTiQ4UBh9cSm2+TVh0AojTms1MHKYc=;
+ b=kvApb+CS2PLPgwLEUx4wZlGSp5HmnqMUh7/aHY82yvv86a7tl8jUzErK1f0NxXq6iS
+ 9p/RFnVow8lq6YpYaHbwSgipFNCo7T5Hno7q/B7fk7IeTQQRW2T4PZ85vDglBVe3Wp8x
+ AqEdjKzhce5Tqymxnu9PJ7EPM2SfAjblMHwQBIhI4nu/jtJGrpD6pXyHErecfyrXElwI
+ muT7be8mWwgIjF2aujUYsmgfQc2wTTMdnfea9fb+kPxIjXdrMr8NY3M6knTRuetale3f
+ R9BPlCfwukskZLizRkrOrGfw6aTHM0K7TqLg2xn2NDYjmWG5Bv9QF+HkOuHZnOVFo/qw
+ P8tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgsuFuHLxowUo077WFzCvgdQTzJYJt+cinJ3+AJFcoLqPRbEYgx3i4Njv9l6MJOZilF1BUommpCc7B@nongnu.org
-X-Gm-Message-State: AOJu0YzFNl86D84Lgf7QBIzj3hTM0IRaVoa42NOs13yyAArCIiVQR+SO
- 9J1mzyqO4dDgyhgd3O/eRdqIbklAc/kXHqvhDtbXbK5hAxOuUOQ0bWIrfLBsLP9UZF8=
-X-Gm-Gg: AY/fxX7R9btfqVRDRtqI+htiv2OEQcWBOIXxYlTJA79wX0A0fL9RHLL+mPgP2INz+tD
- oI0EoseYAvlqhh+YiYKIyC2UScYWAfwZIlbYFlLvPJGvy1U8X+Wc0r8TCd+JHiUNAqs/2zdxQA0
- D2Sd761Xr/sAmoIm3oQB9STNkU7B3nYugIt7Ih/wxZShqCuZ1U1iBA4V0roywtpU9jQzK2O15xG
- MGw72m8g4YyswFbQ1sfJrMQcyoFYNiTef0EmASfeXp8iH8FsJrrwhMa178JdGG9q/BfYWrQfUtG
- qO4+YueQjv+3GBJTsprjEUHuJweHwaGLGauxAcUL4lg6q3W41r2dKJN0IpvGIHew57gF2rue2gq
- LPHFuUOgMPPKuyZmQfgnbFBpHdvh208yWKPMZronF7ZAvkky9WvfCX5XxFhzR8G1hsUHsMHIWdT
- EeO0+rNT/34pEA9j6ERS5G7nBucg==
-X-Google-Smtp-Source: AGHT+IGXYV6snTzyAAFh0CHnF+/UEch3HAPHQpdF+KWEXbGjpjpgSLmemAdlPiYNEGeue6nTpaFfvQ==
-X-Received: by 2002:a05:6a20:3d93:b0:34e:7bef:e820 with SMTP id
- adf61e73a8af0-3898f997696mr10868106637.41.1767995511804; 
- Fri, 09 Jan 2026 13:51:51 -0800 (PST)
-Received: from [172.23.81.179] ([202.86.209.61])
+ AJvYcCWAIzaPjV5IGmLYP2/3PyA9Uikl1sP0wtlAJeGMVKEtkWpToQ7P1ikha82UT30dcBxKE9VLDULAhCFF@nongnu.org
+X-Gm-Message-State: AOJu0YxUcAsodBJxI7/NV6wup9qL2FtHIpaF+CFQC2zwg8A38vPev1PR
+ B9ACRwG02WpYXUqTdtewVlBAM7v7o/rX8k1G0FS5ZQqn6/eLPWDUyP2r0dfcvNKEhhUOS2mEO76
+ SVdsX
+X-Gm-Gg: AY/fxX4aS92NqxqNnDoMKYFIry6k7fXpOVdpkDGFltBxZ+q6yv3Np1pkHLQzTynb35P
+ hEakH2K4pRiUHzl2TgcpGzFvA5P7Qscu7SEFg5IrQXERaMQWjGBw0AZJ0pGfJVxKDV6BEUDeBKR
+ XPJTJ7J+BdUnCl63ieJEKhhfeHvC8/6Dlm8PiyZZVdUTyVE7ow++j8rHpXuxA6LB8M2WKMscLk7
+ TEvH73vNoLsKMOfgmwy+xA+MIpGewlKd92wryUM7/J8YevfxWuiWUqkIKANxTNog8od1dlR5vqX
+ 2vcl4Cw0ZvOfJOYJ+k8kKAVJZyzOx3f+e0j+h0GiOQ23j/t2z6xJulQyjPnTZQ02JME15dXxQuz
+ okFtWAl4W92meBCXg5rXMv5az5ZLOD+8+0bLHdV6Sdqmd8rMcLolm5TldQV7eqqxJXyEFK7l3DM
+ F5pkdieUEFUGThOGj631Z9dNw/jLo0AtaxoDpnJVXT/b2pHWqVwS4SbAAX
+X-Google-Smtp-Source: AGHT+IFlBik0QWbRb4nrJznrTU+jbj9a5mU26eXhyHZJDzx7EOZ/tM3UQCDn94R+w8HIHiq6XAv3eg==
+X-Received: by 2002:a05:6a20:1592:b0:351:2c6e:6246 with SMTP id
+ adf61e73a8af0-3898fa226f2mr10115470637.56.1767995689770; 
+ Fri, 09 Jan 2026 13:54:49 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc8d29516sm11414689a12.19.2026.01.09.13.51.47
+ d9443c01a7336-2a3e3cb2c5bsm114812265ad.58.2026.01.09.13.54.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 13:51:50 -0800 (PST)
-Message-ID: <70ef91e3-1022-4ff6-a671-5f08f3268aa0@linaro.org>
-Date: Sat, 10 Jan 2026 08:51:43 +1100
+ Fri, 09 Jan 2026 13:54:49 -0800 (PST)
+Message-ID: <25fb8a5c-42ee-44be-a6c5-b3a1630b1009@linaro.org>
+Date: Fri, 9 Jan 2026 13:54:48 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/29] include/tcg/tcg-op.h: eradicate
- TARGET_INSN_START_EXTRA_WORDS
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 09/29] target/arm/tcg/vec_helper.c: make compilation unit
+ common
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>, anjo@rev.ng
 References: <20260109053158.2800705-1-pierrick.bouvier@linaro.org>
- <20260109053158.2800705-14-pierrick.bouvier@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+ <20260109053158.2800705-10-pierrick.bouvier@linaro.org>
+ <6ceec36f-2059-429a-b59b-1da03b59a49a@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260109053158.2800705-14-pierrick.bouvier@linaro.org>
+In-Reply-To: <6ceec36f-2059-429a-b59b-1da03b59a49a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,115 +113,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 16:31, Pierrick Bouvier wrote:
-> We simply define the 3 variants and call the correct one per arch.
-> Since all arch have a single call site (in translate.c), this is as
-> good documentation as having a single define.
+On 1/9/26 1:44 PM, Richard Henderson wrote:
+> On 1/9/26 16:31, Pierrick Bouvier wrote:
+>> We need to extract 64 bits helper in a new file (vec_helper64.c), and
+>> extract some macro definition also, since they will be used in both
+>> files.
+>> As well, DO_3OP_PAIR was defined twice, so rename the second variant
+>> to DO_3OP_PAIR_NO_STATUS to reflect what it does.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    target/arm/tcg/vec_internal.h |  49 ++++++++
+>>    target/arm/tcg/vec_helper.c   | 225 +++-------------------------------
+>>    target/arm/tcg/vec_helper64.c | 140 +++++++++++++++++++++
+>>    target/arm/tcg/meson.build    |   4 +-
+>>    4 files changed, 210 insertions(+), 208 deletions(-)
+>>    create mode 100644 target/arm/tcg/vec_helper64.c
 > 
-> The notable exception is target/arm, which has two different translate
-> files for 32/64 bits. Since it's the only one, we accept to have two
-> call sites for this.
+> The whole 32-bit helper vs 64-bit helper thing is a bit of a mess.
 > 
-> This is much simpler and safer than trying to define a common functions
-> with variadic or unused parameters. The only risk is calling two
-> different variants for a single arch, but as mentioned in first
-> paragraph, there is no real reason for this to happen.
-> 
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> ---
->   include/tcg/tcg-op.h             | 16 ++++++----------
->   target/alpha/cpu-param.h         |  2 --
->   target/arm/cpu-param.h           |  7 -------
->   target/avr/cpu-param.h           |  2 --
->   target/hexagon/cpu-param.h       |  2 --
->   target/hppa/cpu-param.h          |  2 --
->   target/i386/cpu-param.h          |  2 --
->   target/loongarch/cpu-param.h     |  2 --
->   target/m68k/cpu-param.h          |  2 --
->   target/microblaze/cpu-param.h    |  2 --
->   target/mips/cpu-param.h          |  2 --
->   target/openrisc/cpu-param.h      |  2 --
->   target/ppc/cpu-param.h           |  2 --
->   target/riscv/cpu-param.h         |  7 -------
->   target/rx/cpu-param.h            |  2 --
->   target/s390x/cpu-param.h         |  2 --
->   target/sh4/cpu-param.h           |  2 --
->   target/sparc/cpu-param.h         |  2 --
->   target/tricore/cpu-param.h       |  2 --
->   target/xtensa/cpu-param.h        |  2 --
->   target/alpha/translate.c         |  4 ++--
->   target/arm/tcg/translate-a64.c   |  2 +-
->   target/arm/tcg/translate.c       |  2 +-
->   target/avr/translate.c           |  2 +-
->   target/hexagon/translate.c       |  2 +-
->   target/hppa/translate.c          |  2 +-
->   target/i386/tcg/translate.c      |  2 +-
->   target/loongarch/tcg/translate.c |  2 +-
->   target/m68k/translate.c          |  2 +-
->   target/microblaze/translate.c    |  2 +-
->   target/mips/tcg/translate.c      |  4 ++--
->   target/openrisc/translate.c      |  4 ++--
->   target/ppc/translate.c           |  2 +-
->   target/riscv/translate.c         |  2 +-
->   target/rx/translate.c            |  2 +-
->   target/s390x/tcg/translate.c     |  2 +-
->   target/sh4/translate.c           |  4 ++--
->   target/sparc/translate.c         |  2 +-
->   target/tricore/translate.c       |  2 +-
->   target/xtensa/translate.c        |  2 +-
->   40 files changed, 30 insertions(+), 82 deletions(-)
-> 
-> diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-> index f3fe2d9386a..bf76749d1c5 100644
-> --- a/include/tcg/tcg-op.h
-> +++ b/include/tcg/tcg-op.h
-> @@ -28,8 +28,7 @@
->   # error Mismatch with insn-start-words.h
->   #endif
->   
-> -#if TARGET_INSN_START_EXTRA_WORDS == 0
-> -static inline void tcg_gen_insn_start(uint64_t pc)
-> +static inline void tcg_gen_insn_start0(uint64_t pc)
->   {
->       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->                               INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-> @@ -37,8 +36,8 @@ static inline void tcg_gen_insn_start(uint64_t pc)
->       tcg_set_insn_start_param(op, 1, 0);
->       tcg_set_insn_start_param(op, 2, 0);
->   }
-> -#elif TARGET_INSN_START_EXTRA_WORDS == 1
-> -static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
-> +
-> +static inline void tcg_gen_insn_start1(uint64_t pc, uint64_t a1)
->   {
->       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->                               INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-> @@ -46,9 +45,9 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
->       tcg_set_insn_start_param(op, 1, a1);
->       tcg_set_insn_start_param(op, 2, 0);
->   }
-> -#elif TARGET_INSN_START_EXTRA_WORDS == 2
-> -static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
-> -                                      uint64_t a2)
-> +
-> +static inline void tcg_gen_insn_start2(uint64_t pc, uint64_t a1,
-> +                                       uint64_t a2)
->   {
->       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->                               INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-> @@ -56,9 +55,6 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1,
->       tcg_set_insn_start_param(op, 1, a1);
->       tcg_set_insn_start_param(op, 2, a2);
->   }
-> -#else
-> -#error Unhandled TARGET_INSN_START_EXTRA_WORDS value
-> -#endif
->   
+> I think we need to ask if it's worthwhile to separate them, or just always include them
+> all.  I know some of the vec_helper.c ifdeffery is because of the helper-a64.c separation.
+>
 
-Eh.  If you're going to change anything here, we might as well force the targets to supply 
-zeros for the unused parameters and move the last 3-argument tcg_gen_insn_start to 
-tcg-op-common.h.
+This one is the worst for sure, mostly due to macro used to define them 
+that has to be visible in both compilation units.
 
+I don't mind defining them all the time even though they are used only 
+on 64 bits target (same for all helpers by the way), but thought you 
+would have been opposed to it for code size reasons.
 
-r~
+> On the other hand, since you've now done the work,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> 
+> r~
+> 
+
 
