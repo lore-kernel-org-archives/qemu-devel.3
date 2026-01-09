@@ -4,97 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005C3D232E7
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 06:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8279BD232E8
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6SC-00081Q-PG; Fri, 09 Jan 2026 01:58:36 -0500
+	id 1ve6RP-0006Vo-Ji; Fri, 09 Jan 2026 01:57:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve6SA-0007xf-Sp
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:58:34 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1ve6Qn-0005Tx-Uh
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:57:13 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ve6S8-00032d-Gr
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:58:34 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a12ed4d205so26400025ad.0
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:58:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1ve6Ql-0002yo-Vx
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 01:57:09 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-bc274b8b15bso2586964a12.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 22:57:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767941911; x=1768546711; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rnM45ym2snr95Vd5EAjz6BtkZlbaHfTSvcwgB3bfGlk=;
- b=pRtNoVi1QfIWoWwkXFXODY08cRaEyJPZINVomPq9gJ3vVrjOWD4jqALE4XpXrOJyp0
- /8NqdnQmgZ1Ci7719pRBNQOXANA35ew/zdnPyFxt5jRB5YfnRHs0y21OthBoocO2e6jp
- 5e8S0psvUsLsmyTp+RvK7LKd7bpfy7E/QWRrmwLISbRfsukTToEvVCIJm35IKAQw/Tua
- YfIvQHZ+RNeFBfZZlkkJPYwbs19svHPKQ8igRepWN91w42G3SBdJ5YBk+v44X+KrRdut
- Fz7lk5doeO76UIHFy5zTskv3U5SzNNfEzjvxvky3/OBnMAQIA5h/j07Z43jL1PW4iKv5
- 4JEA==
+ d=gmail.com; s=20230601; t=1767941826; x=1768546626; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+j/qPjdKZed+xiVY9WDXNNYe7vPb+h/Yx+dAPCmE0lo=;
+ b=H8NvGagwQvRNVL0OF2F5mZEgq+6NkX/BQZWJZfF7wN7uqzgHL0fN1F+xnNKnAq2ORS
+ DtmCGRYvFcm643RPfQhC5OQXsZLxiIKzAusU7fUA4RMANeSNbl7Bf0FBzQhqKWJ+VWgP
+ dvwJrG9eAplQ2FXPNMPcGqWk7DIy7jbc/1uc6z7c+DErcJrR6zdcWmHvyoMJ30DiFWNA
+ R7XEpMPthsM0cq7efB5OaI1uQiZ6XUxQYgfvG9P8aDXrGXxkSJ5iC4GSOxmM4Gc8EUGn
+ huN49DIlOll1mjWeqSbXhhTaG2Oml3JkZhxs2gXKkxKXhJ3IDlg2Jjkq6gvP9TyPH6Um
+ EMCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767941911; x=1768546711;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rnM45ym2snr95Vd5EAjz6BtkZlbaHfTSvcwgB3bfGlk=;
- b=itsPVJ/s4MmoV6M2xWhZRmZDgJ95UfZEoZiSIF04k0yNaaJK7DuJ8RIdKgbNFLGaYk
- cQVHGKOHR0Rbk6hqiqIQwNzZgZTqBbXDw3ke/yAF7dV0/UMS+9Us7/cJsJeM9VziKdy2
- 4VOLbEmmQG0POWpIzZdLF5jtybj7WXgx8e9n9YG7vLIK0T6hZ4Y8KqRXl0DsG9NBV1oX
- LL6uT1HgkclOwCad0g/70Ab6yyjJ48RMGDE+FuAkrtrMgT7tTcBANBvuWTl+Q8wmoEol
- gFxPa75K/NNGVjip7OV7Xk+onsSRwtxMPKEGJW6dJ3w/jl5f9kpUd+WczSRegVCOuGQG
- 80eQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjXdLBku0ZQi61jCfbfx/imwi1HbY2VCyEVe7t7x3K/Gdg0L/jxSjWE/UypWTZDuxX5hUgdlEDX/3N@nongnu.org
-X-Gm-Message-State: AOJu0Yw8tWvr1zF3JF6A1NKO6qAh49Yei4g4aWuBbO8UqniqwRQ4uodx
- YrbEfuGeT8MliqEYSlAe34PWXuEf9LDeQjt4yHKj/71e54xPxLpGro6OIKiExdL2/WU=
-X-Gm-Gg: AY/fxX7BTrKKyrtqDYKj1a5Z3Q6gfpR0nQgneWPh4DqPEpR5OypIXpH29RqZec3I4E4
- DEkhm5nP69psMHsdo3VDa5Teki7/t5oSDKF1GHMhcQ2ZzELwaXV6Zx2IjjFNEdVzcocmCjEJqO+
- fBznz+2TH1nbfmxOgHJc7TJIepgVK4VAlvMFrF9+qlb3ee2uz1R/CrGsbQt0PKq48YaKuGc8+tR
- 7r0nW+93Aie4KAMB8UvmMIQFgwn4vsUNIdVBMWDxmB4NRDSScicwW60kzFeYWD2sJGiaLhTYbHD
- s4TH4w1lm4gsqyYDDsuozxVeRFz+WZpU7mqisIfUqMtgKjGnRPsTwRTh//0KwIhkIH5M8Tn1QFk
- gInRyJd1djmP0DsEd4dKj90OlLQVWudCDDP2BUAnoWs5BsYL+OJTqFB8upRRUiPTfUKLORAB6FB
- 6SU16lbFCUZmm5TgpNrSomRjZra3Gruf2KDHQhEYU7VufvliZEocM4X8bB
-X-Google-Smtp-Source: AGHT+IEe6VWrhQXjY+CD2/waIceEq4TvP4WCZaSGO6txkXL/8FT8RtRYwNCsE364QT6+ztNH2Es+kA==
-X-Received: by 2002:a17:903:2344:b0:2a0:b467:a7ce with SMTP id
- d9443c01a7336-2a3ee4901d0mr80816835ad.36.1767941910865; 
- Thu, 08 Jan 2026 22:58:30 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ d=1e100.net; s=20230601; t=1767941826; x=1768546626;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+j/qPjdKZed+xiVY9WDXNNYe7vPb+h/Yx+dAPCmE0lo=;
+ b=Q4VW9gCu0Y614LKGBwnKIh1K4XQztt4atxDGjP+JAcuw0sbQxUwl3fVm3+SeF3ff0a
+ 5T2PwCuJwrYJc3ArIIQjdKfljjoVSLHT7svVNJffb7/3SyQWQcFNMF8gFRh7sA6YjDJP
+ qEXfw1AU8U3QvBKnpGpDuHXsGy6nBFIa+KTYFDOHTkZSyG28K4s0duDq/cw0rkCy8Y3l
+ E4nKk827gxCLKfuPyQiZGFgjaiQJVUa1REPM8iNvYWrP8qVEpj2QtGIqusUqR32ds8Tz
+ NlYR6B3vNoFN9SnSinFcOghpXVbcHpMD5O9qxKfxcZS2UH/9SOByprKvLjFJAbZ7b6GT
+ 1tsg==
+X-Gm-Message-State: AOJu0YyJKJyX79WTsvEXA4antwABiTMsJKRzz4L8g5RQJ3dAkQ0YNxgr
+ UI6RrMha6EIX6QFPujvZ7r33hlhB7TqWx0HPcj39ajZmSSnKha+1eGPUwGPOpw==
+X-Gm-Gg: AY/fxX5eP6vxcXTN5AJkZOW0fS7RRGBzZgyc/YRt5lD+XWadiiruhrw7VvpXBKf+DPw
+ qqeTQSbUB4TCKY4isCX+vBguU0qx4xuySfddFJXKCBN4WLcc85arvXU61ORciEeB54yPQ7faTUf
+ Cw8A1w9EkBsFCWcPZDpkEiDc+dDtzbjBIMmwvYjNRgTRZbUoDoCW1nHkWEyOiGGJmbvAnzcIdCL
+ /Tu4k5g/3MVYkGi8sl/Xr20Zlm347vVqoVL5uqCuQmTk5f5Q4NUrKEC9GkftXoAA6F+q9o/cDFF
+ Yvztpp/hIoEhzfJ/NDNAt9mQmmsuxPC2cWRb8Uc4LxxDxQFefgxvL24/pnVV11gNejfof0aK+6q
+ xgEOaKW8NLmTta3tR9g+YL9Q9OYxtwEBAV9IEAtNETJguiHWwkgZidCrueRieiTHVrUS6/l5wEC
+ RczjbElgyt/avMjAZ/lGV/1WfWLcSKOIKfTeeyeqvPDETzTLGI4KpKha4WAiFYFR6aLXMtRZDNs
+ IDSFP3M93f2GRK4qLfLHkaHPVzcWg==
+X-Google-Smtp-Source: AGHT+IFmz69m1xpFuVcslGBi9cEhdOxpljiZJRs7GB/9b71I4UBpMcIIHWe29kQfJPgAOJXkH48ihg==
+X-Received: by 2002:a05:6a20:12cf:b0:366:2476:db4a with SMTP id
+ adf61e73a8af0-3898f9c73b1mr8497374637.59.1767941826276; 
+ Thu, 08 Jan 2026 22:57:06 -0800 (PST)
+Received: from toolbx.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cb2b72sm96671855ad.51.2026.01.08.22.58.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Jan 2026 22:58:30 -0800 (PST)
-Message-ID: <0e4437cd-0e4d-4e5b-9aac-c882ef1e9214@linaro.org>
-Date: Thu, 8 Jan 2026 22:58:30 -0800
+ 41be03b00d2f7-c4cc02ecfaasm9953644a12.14.2026.01.08.22.57.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Jan 2026 22:57:05 -0800 (PST)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Chao-ying Fu <cfu@mips.com>,
+ Djordje Todorovic <djordje.todorovic@htecgroup.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 34/34] test/functional: Add test for boston-aia board
+Date: Fri,  9 Jan 2026 16:54:59 +1000
+Message-ID: <20260109065459.19987-35-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20260109065459.19987-1-alistair.francis@wdc.com>
+References: <20260109065459.19987-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] system: Convert qemu_arch_available() to TargetInfo API
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-References: <20260108163601.18676-1-philmd@linaro.org>
- <f089c7c9-c00f-4c19-b4b5-175873fd8c1e@linaro.org>
- <341da906-68c9-44e9-929b-30760883178e@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-In-Reply-To: <341da906-68c9-44e9-929b-30760883178e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,198 +108,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 9:53 PM, Philippe Mathieu-Daudé wrote:
-> On 8/1/26 19:57, Pierrick Bouvier wrote:
->> On 1/8/26 8:36 AM, Philippe Mathieu-Daudé wrote:
->>> Get the base arch_mask from the current SysEmuTarget,
->>> making qemu_arch_available() target-agnostic.
->>>
->>> We don't need the per-target QEMU_ARCH definition anymore,
->>> remove it.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>> v3: Return directly within switch
->>> v2: Prefer switch over array (pbo)
->>> ---
->>>    meson.build        |  2 --
->>>    system/arch_init.c | 30 -----------------------
->>>    target-info.c      | 60 ++++++++++++++++++++++++++++++++++++++++++++++
->>>    system/meson.build |  1 -
->>>    4 files changed, 60 insertions(+), 33 deletions(-)
->>>    delete mode 100644 system/arch_init.c
->>>
->>> diff --git a/meson.build b/meson.build
->>> index 734c801cc77..435dc6e3c8e 100644
->>> --- a/meson.build
->>> +++ b/meson.build
->>> @@ -3419,8 +3419,6 @@ foreach target : target_dirs
->>>          config_target_data.set(k, v)
->>>        endif
->>>      endforeach
->>> -  config_target_data.set('QEMU_ARCH',
->>> -                         'QEMU_ARCH_' +
->>> config_target['TARGET_BASE_ARCH'].to_upper())
->>>      config_target_h += {target: configure_file(output: target + '-
->>> config-target.h',
->>>                                                   configuration:
->>> config_target_data)}
->>> diff --git a/system/arch_init.c b/system/arch_init.c
->>> deleted file mode 100644
->>> index e85736884c9..00000000000
->>> --- a/system/arch_init.c
->>> +++ /dev/null
->>> @@ -1,30 +0,0 @@
->>> -/*
->>> - * QEMU System Emulator
->>> - *
->>> - * Copyright (c) 2003-2008 Fabrice Bellard
->>> - *
->>> - * Permission is hereby granted, free of charge, to any person
->>> obtaining a copy
->>> - * of this software and associated documentation files (the
->>> "Software"), to deal
->>> - * in the Software without restriction, including without limitation
->>> the rights
->>> - * to use, copy, modify, merge, publish, distribute, sublicense, and/
->>> or sell
->>> - * copies of the Software, and to permit persons to whom the Software is
->>> - * furnished to do so, subject to the following conditions:
->>> - *
->>> - * The above copyright notice and this permission notice shall be
->>> included in
->>> - * all copies or substantial portions of the Software.
->>> - *
->>> - * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
->>> EXPRESS OR
->>> - * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
->>> MERCHANTABILITY,
->>> - * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
->>> SHALL
->>> - * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
->>> OR OTHER
->>> - * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
->>> ARISING FROM,
->>> - * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
->>> DEALINGS IN
->>> - * THE SOFTWARE.
->>> - */
->>> -#include "qemu/osdep.h"
->>> -#include "system/arch_init.h"
->>> -
->>> -bool qemu_arch_available(unsigned qemu_arch_mask)
->>> -{
->>> -    return qemu_arch_mask & QEMU_ARCH;
->>> -}
->>> diff --git a/target-info.c b/target-info.c
->>> index 24696ff4111..774fdcd2c46 100644
->>> --- a/target-info.c
->>> +++ b/target-info.c
->>> @@ -11,6 +11,7 @@
->>>    #include "qemu/target-info-qapi.h"
->>>    #include "qemu/target-info-impl.h"
->>>    #include "qapi/error.h"
->>> +#include "system/arch_init.h"
->>>    const char *target_name(void)
->>>    {
->>> @@ -33,6 +34,65 @@ SysEmuTarget target_arch(void)
->>>        return arch;
->>>    }
->>> +bool qemu_arch_available(unsigned qemu_arch_mask)
->>> +{
->>> +    switch (target_arch()) {
->>> +    case SYS_EMU_TARGET_ALPHA:
->>> +        return qemu_arch_mask & QEMU_ARCH_ALPHA;
->>> +    case SYS_EMU_TARGET_ARM:
->>> +    case SYS_EMU_TARGET_AARCH64:
->>> +        return qemu_arch_mask & QEMU_ARCH_ARM;
->>> +    case SYS_EMU_TARGET_I386:
->>> +    case SYS_EMU_TARGET_X86_64:
->>> +        return qemu_arch_mask & QEMU_ARCH_I386;
->>> +    case SYS_EMU_TARGET_M68K:
->>> +        return qemu_arch_mask & QEMU_ARCH_M68K;
->>> +    case SYS_EMU_TARGET_MICROBLAZE:
->>> +    case SYS_EMU_TARGET_MICROBLAZEEL:
->>> +        return qemu_arch_mask & QEMU_ARCH_MICROBLAZE;
->>> +    case SYS_EMU_TARGET_MIPS:
->>> +    case SYS_EMU_TARGET_MIPSEL:
->>> +    case SYS_EMU_TARGET_MIPS64:
->>> +    case SYS_EMU_TARGET_MIPS64EL:
->>> +        return qemu_arch_mask & QEMU_ARCH_MIPS;
->>> +    case SYS_EMU_TARGET_PPC:
->>> +    case SYS_EMU_TARGET_PPC64:
->>> +        return qemu_arch_mask & QEMU_ARCH_PPC;
->>> +    case SYS_EMU_TARGET_S390X:
->>> +        return qemu_arch_mask & QEMU_ARCH_S390X;
->>> +    case SYS_EMU_TARGET_SH4:
->>> +    case SYS_EMU_TARGET_SH4EB:
->>> +        return qemu_arch_mask & QEMU_ARCH_SH4;
->>> +    case SYS_EMU_TARGET_SPARC:
->>> +    case SYS_EMU_TARGET_SPARC64:
->>> +        return qemu_arch_mask & QEMU_ARCH_SPARC;
->>> +    case SYS_EMU_TARGET_XTENSA:
->>> +    case SYS_EMU_TARGET_XTENSAEB:
->>> +        return qemu_arch_mask & QEMU_ARCH_XTENSA;
->>> +    case SYS_EMU_TARGET_OR1K:
->>> +        return qemu_arch_mask & QEMU_ARCH_OPENRISC;
->>> +    case SYS_EMU_TARGET_TRICORE:
->>> +        return qemu_arch_mask & QEMU_ARCH_TRICORE;
->>> +    case SYS_EMU_TARGET_HPPA:
->>> +        return qemu_arch_mask & QEMU_ARCH_HPPA;
->>> +    case SYS_EMU_TARGET_RISCV32:
->>> +    case SYS_EMU_TARGET_RISCV64:
->>> +        return qemu_arch_mask & QEMU_ARCH_RISCV;
->>> +    case SYS_EMU_TARGET_RX:
->>> +        return qemu_arch_mask & QEMU_ARCH_RX;
->>> +    case SYS_EMU_TARGET_AVR:
->>> +        return qemu_arch_mask & QEMU_ARCH_AVR;
->>> +    /*
->>> +    case SYS_EMU_TARGET_HEXAGON:
->>> +        return qemu_arch_mask & QEMU_ARCH_HEXAGON;
->>> +    */
->>> +    case SYS_EMU_TARGET_LOONGARCH64:
->>> +        return qemu_arch_mask & QEMU_ARCH_LOONGARCH;
->>> +    default:
->>> +        g_assert_not_reached();
->>
->> Per explaination on previous version, would be more interesting to have
->> SYS_EMU_TARGET__MAX instead of default here, so compilation will be
->> blocked when enum is extended.
-> 
-> How compilation can be blocked without using -Wswitch?
->
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 
-See my previous answer on v1, -Wswitch is used:
+Add functional test for Boston AIA board. The P8700 RISC-V based
+CPU by MIPS supports it at the moment.
 
-Reading the thread above, the only mention I find is the 3rd commit that
-precisely change definition because -Wswitch is enabled with clang.
-And it's not only a clang thing, gcc has it in Wall also [1].
+Signed-off-by: Chao-ying Fu <cfu@mips.com>
+Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260108134128.2218102-13-djordje.todorovic@htecgroup.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ tests/functional/riscv64/meson.build    |   2 +
+ tests/functional/riscv64/test_boston.py | 123 ++++++++++++++++++++++++
+ 2 files changed, 125 insertions(+)
+ create mode 100755 tests/functional/riscv64/test_boston.py
 
-I don't mind the array approach, but maybe just add a *static* assert
-making sure (SYS_EMU_TARGET__MAX-1 == SYS_EMU_TARGET_XTENSAEB) so this
-file will break as soon as there is a new target added. It's simple and
-the next developer who won't have to debug this will thank you.
-
-[1] https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Warning-Options.html
-
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->>> +    };
->>> +}
->>> +
->>>    const char *target_cpu_type(void)
->>>    {
->>>        return target_info()->cpu_type;
->>> diff --git a/system/meson.build b/system/meson.build
->>> index 4b69ef0f5fb..66e16db55ce 100644
->>> --- a/system/meson.build
->>> +++ b/system/meson.build
->>> @@ -1,5 +1,4 @@
->>>    specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
->>> -  'arch_init.c',
->>>      'globals-target.c',
->>>    )])
->>
-> 
+diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+index c1704d9275..b996c89d7d 100644
+--- a/tests/functional/riscv64/meson.build
++++ b/tests/functional/riscv64/meson.build
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ test_riscv64_timeouts = {
++  'boston' : 120,
+   'tuxrun' : 120,
+ }
+ 
+@@ -10,6 +11,7 @@ tests_riscv64_system_quick = [
+ ]
+ 
+ tests_riscv64_system_thorough = [
++  'boston',
+   'sifive_u',
+   'tuxrun',
+ ]
+diff --git a/tests/functional/riscv64/test_boston.py b/tests/functional/riscv64/test_boston.py
+new file mode 100755
+index 0000000000..385de6a61d
+--- /dev/null
++++ b/tests/functional/riscv64/test_boston.py
+@@ -0,0 +1,123 @@
++#!/usr/bin/env python3
++#
++# Boston board test for RISC-V P8700 processor by MIPS
++#
++# Copyright (c) 2025 MIPS
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++
++
++class RiscvBostonTest(QemuSystemTest):
++    """
++    Test the boston-aia board with P8700 processor
++    """
++
++    ASSET_FW_PAYLOAD = Asset(
++        'https://github.com/MIPS/linux-test-downloads/raw/main/p8700/fw_payload.bin',
++        'd6f4ae14d0c178c1d0bb38ddf64557536ca8602a588b220729a8aa17caa383aa')
++
++    ASSET_ROOTFS = Asset(
++        'https://github.com/MIPS/linux-test-downloads/raw/main/p8700/rootfs.ext2',
++        'f937e21b588f0d1d17d10a063053979686897bbbbc5e9617a5582f7c1f48e565')
++
++    def _boot_linux_test(self, smp_count):
++        """Common setup and boot test for Linux on Boston board
++
++        Args:
++            smp_count: Number of CPUs to use for SMP
++        """
++        self.set_machine('boston-aia')
++        fw_payload_path = self.ASSET_FW_PAYLOAD.fetch()
++        rootfs_path = self.ASSET_ROOTFS.fetch()
++
++        self.vm.add_args('-cpu', 'mips-p8700')
++        self.vm.add_args('-m', '2G')
++        self.vm.add_args('-smp', str(smp_count))
++        self.vm.add_args('-kernel', fw_payload_path)
++        self.vm.add_args('-drive', f'file={rootfs_path},format=raw,snapshot=on')
++
++        self.vm.set_console()
++        self.vm.launch()
++
++        # Wait for OpenSBI
++        wait_for_console_pattern(self, 'OpenSBI')
++
++        # Wait for Linux kernel boot
++        wait_for_console_pattern(self, 'Linux version')
++        wait_for_console_pattern(self, 'Machine model: MIPS P8700')
++
++        # Test e1000e network card functionality
++        wait_for_console_pattern(self, 'e1000e')
++        wait_for_console_pattern(self, 'Network Connection')
++
++        # Wait for boot to complete - system reaches login prompt
++        wait_for_console_pattern(self, 'Run /sbin/init as init process')
++
++    def test_boston_boot_linux_min_cpus(self):
++        """
++        Test Linux kernel boot with minimum CPU count (2)
++        """
++        self._boot_linux_test(smp_count=2)
++
++    def test_boston_boot_linux_7_cpus(self):
++        """
++        Test Linux kernel boot with 7 CPUs
++
++        7 CPUs is a special configuration that tests odd CPU count
++        handling and ensures proper core distribution across clusters.
++        """
++        self._boot_linux_test(smp_count=7)
++
++    def test_boston_boot_linux_35_cpus(self):
++        """
++        Test Linux kernel boot with 35 CPUs
++
++        35 CPUs is a special configuration that tests a non-power-of-2
++        CPU count above 32, validating proper handling of larger
++        asymmetric SMP configurations.
++        """
++        self._boot_linux_test(smp_count=35)
++
++    def test_boston_boot_linux_max_cpus(self):
++        """
++        Test Linux kernel boot with maximum supported CPU count (64)
++        """
++        self._boot_linux_test(smp_count=64)
++
++    def test_boston_invalid_cpu_count(self):
++        """
++        Test that 65 CPUs is rejected as invalid (negative test case)
++        """
++        from subprocess import run, PIPE
++
++        fw_payload_path = self.ASSET_FW_PAYLOAD.fetch()
++        rootfs_path = self.ASSET_ROOTFS.fetch()
++
++        cmd = [
++            self.qemu_bin,
++            '-M', 'boston-aia',
++            '-cpu', 'mips-p8700',
++            '-m', '2G',
++            '-smp', '65',
++            '-kernel', fw_payload_path,
++            '-drive', f'file={rootfs_path},format=raw,snapshot=on',
++            '-nographic'
++        ]
++
++        # Run QEMU and expect it to fail immediately.
++        result = run(cmd, capture_output=True, text=True, timeout=5)
++
++        # Check that QEMU exited with error code 1
++        self.assertEqual(result.returncode, 1,
++                         "QEMU should exit with code 1 for invalid SMP count")
++
++        # Check error message
++        self.assertIn('Invalid SMP CPUs 65', result.stderr,
++                      "Error message should indicate invalid SMP CPU count")
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.52.0
 
 
