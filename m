@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1042AD1A63D
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46EFFD1A63C
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veDZd-0004tP-2h; Fri, 09 Jan 2026 09:34:45 -0500
+	id 1veDZh-0004uH-BT; Fri, 09 Jan 2026 09:34:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1veDZa-0004sp-DV
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:34:42 -0500
+ id 1veDZf-0004tv-M2
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:34:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1veDZZ-0005Qb-2r
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:34:42 -0500
+ id 1veDZe-0005Qq-9D
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:34:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767969280;
+ s=mimecast20190719; t=1767969285;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RbvZl+vxzfLE3Kc7Wvw7PIUMKqNVOyqJtrnlb2bMgEM=;
- b=fdwT1W3QNUoeLUi6mR6De6e8ELHqR6OYaoisJsaEp1usoCsMlWDiSStftipnblpO2ILyCS
- fMek7f7PngHJj1WFZIyXHC3+dfQxSjTo8i4vqDrps5Ugxu55HD9YLghNT2IGyzDQZZttg3
- v4fwdS/HUpjyw/i44hTi9NiH6EW4RAs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=NRabUwKCcnSa4tcxD8eunuOpk4bc+IJarAuAxh7ITUE=;
+ b=DmZEcLfRIMJ6B3dX/+2HReYueAx3YYL0e7jcyti4fJSNlHRtxxhF2xy6vRl8+moNICjZdb
+ PRTMwrzvQyqV9d3kbRcvGjHiKueHSc5sMsO6X+HSDYu+miBPamLpFkEbKQ/9ooZp1FeNfY
+ jA5Lw4Bai6Ui8jY4i2BXNhrzQpsanb4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-5OsW6jX8Nzi4s9LpspY1GQ-1; Fri,
- 09 Jan 2026 09:34:36 -0500
-X-MC-Unique: 5OsW6jX8Nzi4s9LpspY1GQ-1
-X-Mimecast-MFC-AGG-ID: 5OsW6jX8Nzi4s9LpspY1GQ_1767969275
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-6G9LkJXhOVGlCvQ16DNN4g-1; Fri,
+ 09 Jan 2026 09:34:42 -0500
+X-MC-Unique: 6G9LkJXhOVGlCvQ16DNN4g-1
+X-Mimecast-MFC-AGG-ID: 6G9LkJXhOVGlCvQ16DNN4g_1767969280
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8E8E19560A5; Fri,  9 Jan 2026 14:34:34 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9171B18005AE; Fri,  9 Jan 2026 14:34:40 +0000 (UTC)
 Received: from osteffen-laptop.redhat.com (unknown [10.45.225.84])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 77B7F1801A46; Fri,  9 Jan 2026 14:34:28 +0000 (UTC)
+ id 69C0318001D5; Fri,  9 Jan 2026 14:34:35 +0000 (UTC)
 From: Oliver Steffen <osteffen@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -59,9 +59,9 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Oliver Steffen <osteffen@redhat.com>
-Subject: [PATCH v3 2/6] hw/acpi: Add standalone function to build MADT
-Date: Fri,  9 Jan 2026 15:34:09 +0100
-Message-ID: <20260109143413.293593-3-osteffen@redhat.com>
+Subject: [PATCH v3 3/6] igvm: Add missing NULL check
+Date: Fri,  9 Jan 2026 15:34:10 +0100
+Message-ID: <20260109143413.293593-4-osteffen@redhat.com>
 In-Reply-To: <20260109143413.293593-1-osteffen@redhat.com>
 References: <20260109143413.293593-1-osteffen@redhat.com>
 MIME-Version: 1.0
@@ -92,42 +92,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a fuction called `acpi_build_madt_standalone()` that builds a MADT
-without the rest of the ACPI table structure.
+Check for NULL pointer returned from igvm_get_buffer().
+Documentation for that function calls for that unconditionally.
 
 Signed-off-by: Oliver Steffen <osteffen@redhat.com>
 ---
- hw/i386/acpi-build.c | 8 ++++++++
- hw/i386/acpi-build.h | 2 ++
- 2 files changed, 10 insertions(+)
+ backends/igvm.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 9446a9f862..e472876567 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -2249,3 +2249,11 @@ void acpi_setup(void)
-      */
-     acpi_build_tables_cleanup(&tables, false);
- }
-+
-+GArray *acpi_build_madt_standalone(MachineState *machine) {
-+  X86MachineState *x86ms = X86_MACHINE(machine);
-+  GArray *table = g_array_new(false, true, 1);
-+  acpi_build_madt(table, NULL, x86ms, x86ms->oem_id,
-+                  x86ms->oem_table_id);
-+  return table;
-+}
-diff --git a/hw/i386/acpi-build.h b/hw/i386/acpi-build.h
-index 8ba3c33e48..00e19bbe5e 100644
---- a/hw/i386/acpi-build.h
-+++ b/hw/i386/acpi-build.h
-@@ -8,4 +8,6 @@ extern const struct AcpiGenericAddress x86_nvdimm_acpi_dsmio;
- void acpi_setup(void);
- Object *acpi_get_i386_pci_host(void);
- 
-+GArray *acpi_build_madt_standalone(MachineState *machine);
-+
- #endif
+diff --git a/backends/igvm.c b/backends/igvm.c
+index a350c890cc..dc1fd026cb 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -170,9 +170,16 @@ static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+                 (int)header_handle);
+             return -1;
+         }
+-        header_data = igvm_get_buffer(ctx->file, header_handle) +
+-                      sizeof(IGVM_VHS_VARIABLE_HEADER);
+-        result = handlers[handler].handler(ctx, header_data, errp);
++        header_data = igvm_get_buffer(ctx->file, header_handle);
++        if (header_data == NULL) {
++            error_setg(
++                errp,
++                "IGVM: Failed to get directive header data (code: %d)",
++                (int)header_handle);
++            result = -1;
++        } else {
++            result = handlers[handler].handler(ctx, header_data + sizeof(IGVM_VHS_VARIABLE_HEADER), errp);
++        }
+         igvm_free_buffer(ctx->file, header_handle);
+         return result;
+     }
 -- 
 2.52.0
 
