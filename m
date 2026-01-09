@@ -4,104 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48730D1680B
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7879BD16816
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:33:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veAbj-0006m2-5R; Fri, 09 Jan 2026 06:24:43 -0500
+	id 1veAji-00009u-ED; Fri, 09 Jan 2026 06:32:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veAbh-0006lS-Ec
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:24:41 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veAjQ-00007K-JQ
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:32:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veAbf-0000MW-OI
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:24:41 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1veAjN-00026E-FG
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:32:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767957878;
+ s=mimecast20190719; t=1767958355;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qzGO5XJFlW5e5bFUiIr+2jsEq4v5hMFLP4do/aaNYTk=;
- b=fI1670u+ByKaAzwtMruRT5VIJWZY/egxZQeHZdrQfPcfgEutz3EuEDaLrG/46Hvb+1N4cF
- xFCcHlIISKjcrwuZLG1FX7i0A0xOkWYhLCPE+kAkeo74GBEnJEUBxlHWrYioPe217VJTbW
- KcyjvsaeKUiA9XV5xGRwDGmy2w63x3k=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qV9D9tpDFlsoFsFy+s2hc5y3qukMaAHKjzlJEmQcbYI=;
+ b=JSUJN0tD8eGr2NVl/c/WWLn8GCKA2fRb457GkLbCBpnEVi/KJQTH5gcciJ/y4uyCl5dKCw
+ nxmXjLzBRX6Uu5nImQJhr+xZbw2Gr81nUdN+NcoSjnR2Moi0xUtcchhPOogEaeXMwmKWzI
+ HnIZOuTjirU7PEg+ka8MF+QbMU8LvPk=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-444-L0QFaVc5PSWke74OLbb5sg-1; Fri, 09 Jan 2026 06:24:36 -0500
-X-MC-Unique: L0QFaVc5PSWke74OLbb5sg-1
-X-Mimecast-MFC-AGG-ID: L0QFaVc5PSWke74OLbb5sg_1767957875
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-b763b24f223so609799766b.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 03:24:36 -0800 (PST)
+ us-mta-490-krZVG_k-NxqFpvrrDwJNlw-1; Fri, 09 Jan 2026 06:32:33 -0500
+X-MC-Unique: krZVG_k-NxqFpvrrDwJNlw-1
+X-Mimecast-MFC-AGG-ID: krZVG_k-NxqFpvrrDwJNlw_1767958352
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b79fcc35ab2so339506766b.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 03:32:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1767957875; x=1768562675; darn=nongnu.org;
+ d=redhat.com; s=google; t=1767958352; x=1768563152; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=qzGO5XJFlW5e5bFUiIr+2jsEq4v5hMFLP4do/aaNYTk=;
- b=RbeUSEQsJo2WRLjcBYkuYyxxdBvKpfW8EDQ7dq+5YGkL67eBxIWUdhV8xE4bqgHzwL
- AmgVojpt8r0fBytb/AhAIVtsoV4IhGmOTPA2r/A73ghTfORKq/j4rQFRqMXMDY52B7uO
- STgS/k7byz+0m1QtuVLsQtwUwoB7Hq7hN8A+aOqlxLK/EC790RetpmL8euoI+EOgAdgv
- nt+qqUIWnE2Tt5hx2ke6bmBlFwTd3FxNKH3p8+xhCuj6HAh8LU2X37ltAVTecOMR7dgG
- X6NsADkFJtkpw3WARqP8+Xv796IsyL1Jv0pYNeNq2+6jO30GNql8H+w3coLeYg3BAuXT
- Tong==
+ bh=qV9D9tpDFlsoFsFy+s2hc5y3qukMaAHKjzlJEmQcbYI=;
+ b=klVE6fEN5ZuRi51j0vN/G8lNcRfC2z7tWgfKQsZgI3Xd6L4fekG4olS/7icOc0LgnV
+ ITFzkg6nR/vn1h8orq8LQnXVF6Hf1TvjkYMzEVgzoeQiQJ+0QbtJJDSbfW5mT1nQbIsH
+ 8O36WkQH2ko+ZJcp4zE4oxiLBSI+UTGzE+4nynoAC+caT8UlY4HB74lVDksrQ1lHWm32
+ usOmCBq+wG7UNB2p7kx889wmvPZZLWSvp24/jZ1MWcgQRXaxRq8hduDACo1R5OnKwbCi
+ ns2/6kUbx7qddTvprGm9NrJ/G5Yn88WXxOpgAd9wnoL3HKMWxwMTYqBPKT8pR1vTE9K1
+ yZsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767957875; x=1768562675;
+ d=1e100.net; s=20230601; t=1767958352; x=1768563152;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qzGO5XJFlW5e5bFUiIr+2jsEq4v5hMFLP4do/aaNYTk=;
- b=M9A0uQDe3M5yyFZyMXT5whBbv2r941JgTlodDw/8eUx9Y/eKqZ8mcESXQ8MYKu19TZ
- ZLF+zN8rEvVmNuYL950z+u8FESQRuPfSxPoAHHgbLyYGe7W245RgssL4RJxnRa7lr3uA
- tNeCfkWjEmrcRORbsMIAOq+ASZPZi6+kU63hsdtlc74bP7fTUUuwJ9pJQJUX9o0lJlIB
- LDyI5ghr+YTub9B6Pq5u1tg5W0XwO2DyicTxj61msi3Go6yN24AIFfceVGoXb6gfaDUH
- 9XUCZKitRdmmc813X53Lo4uPLFXmxL32S+svl5ZjX2cIygs3olMxWNVHoyCb4nNlxT7Z
- u41A==
+ bh=qV9D9tpDFlsoFsFy+s2hc5y3qukMaAHKjzlJEmQcbYI=;
+ b=OV9I11K842rw0q+rzaStCpg5/sL70eyF3AjvFEJJctOksi0gV14QFUFIeupoNmF8ab
+ wmnK2q5GC2HmaXXiioZnWYDdUVQngys7XdGd5bcyCSVheXigoKxYY8Mf737UMUpQWclp
+ Ro3amTOBIzKgF2evuK4sRfkiAib45898bQlu67apmKZmyIZ4uPi/ALVwHl5ad83dqNT2
+ i6U1hUrhTUAa0kKuIXEwsNOWbF1LUlHdVfpn46EcocuaRnK2CI7iZ5FVgxViJEB6TxJN
+ ebxkXikIzBVMrStE/KHNlW3YWMmZVZP4Rgys0MakwEagpAc7lAWLJcqtn3vZ6yUFDqBe
+ bwRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUF5B3uy3dY1NNCEL1WyTo6w/ZnAL8NPq/YjaydS5JX8bFJoFYMAMxVv/gIkRFmCg+FCicqTJ3z7L3k@nongnu.org
-X-Gm-Message-State: AOJu0YyBRqm+97EYlXP8SHkhPPT+dpAKx2Dn5n2QOxr9LGNPxcN1HJB6
- U7mKPhKRY9jnDVUgsX2K/h3GTEczNMiefamdB9rQ/ZtocJ5fG9xRtT/Rg8oY8Yeq7iE+cfskXq5
- qvzJrQUAot8cpmoGvcy29o64oP/qoVlez3nHvK82Md+0Q2/pHhJd8UiZr
-X-Gm-Gg: AY/fxX5phSIoiHzvO9M3PGa54OC4l4FWX3ujhpnHhDfhXQbuKMSMxmeskmeT6lmz8ig
- fHeBiyScwrD6edOfJ6ZUKBDiGeVHxlfJdMUTmoDr7qd8+PnNNNzT9YNs6+pR0Qwq+4v2jzkK8zv
- Gsy58IUzsQ4qbjHtxGMAnW6GBtcqgzHleSojQyW5G4qU4qeVitpq/dyrnjIMhrXhUxsSHwUdf0d
- lTx5Lp9TTmTa0Aw8Ag/wdgQ7DfL3aVntXKaP03hDSOF5vR8xxI5Zh3jupwJOGr2+RQqXhOXgRCl
- aE2zQ38mgEzmOLdVbmTrRp0oNVPCfRxgleFqescU+4zi3V1kUyPYoQRD8gIi7uXL1xIHyhdmsgL
- 1UPew9Ew=
-X-Received: by 2002:a17:906:478d:b0:b83:3770:a0e4 with SMTP id
- a640c23a62f3a-b8445337924mr911652566b.34.1767957875324; 
- Fri, 09 Jan 2026 03:24:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH1MCoAwhYguF+cdVL3BUKsQOCK1ivtse090LhF2DRBbFBrRto0cJR7GhrtBB9MOZOoAGZGZw==
-X-Received: by 2002:a17:906:478d:b0:b83:3770:a0e4 with SMTP id
- a640c23a62f3a-b8445337924mr911649766b.34.1767957874920; 
- Fri, 09 Jan 2026 03:24:34 -0800 (PST)
+ AJvYcCV9kNXpfD3rld1wRso/z5UQQpawnf8GnSnOCh9Qr4CD4xQ3nOPRJJMgdHArcG/3sOFsEtKlWInbpC3w@nongnu.org
+X-Gm-Message-State: AOJu0Yz4shyoKUSZzDmju/MKm59ak0/5XM8TqN3YFhpcLvdYjEIxYS5V
+ pfpOh72FmvvNt13KxnpqhU9ohEvsLXUR/ftlQBNyN2+QPUbNQ4FiEFkLHNcE9g7N0ieq8xbOzrg
+ 0ygdkUcf7aJQUBFTnlnM+KR0QvAotXY8jZOvZ80fFyG6Zz6GTFkHZEsSa
+X-Gm-Gg: AY/fxX4HbeNgJ3NnUOIyFr5HM+V5kf1qRyikRh97eLaZCe7uE0Mpb9enpzhBGHHOFRg
+ 7WAo9S2lKruAn4AE3YB9+49j2mUOqohBTy8s5tK8+W8r5BkW5jmAz9QF/cTKtiRviYOAfVUPPyW
+ a9sZT2kB9ZTk+h6mxVBjvTznezjIkBR5CCWrXHtsGZVdY2InQQRRjAuKxCQHOipVwK7o9LouQyp
+ bU7B2CyzoOorYztfUXV93aOYep8MD/yWy/sJpda3yTTqG/LxUi3dRHDb/FKL3vjssmDMjm1n67z
+ ysCfe/AuEgFoUQpmFpi3eK+RWV3yL+EQxNBz1Xjdjw47lIE878wAXfTSfCUcofHPhmVNn1ZBvX0
+ CKrXmFB4=
+X-Received: by 2002:a17:907:70c:b0:b80:4108:f826 with SMTP id
+ a640c23a62f3a-b8445179ecemr988860866b.36.1767958352180; 
+ Fri, 09 Jan 2026 03:32:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFb/3KES9EBGEaduNnKrBYwX6+kZQXkejuNFfpOToqJ1d/+S5nVH8toYBzkhZojxou6LA+5fg==
+X-Received: by 2002:a17:907:70c:b0:b80:4108:f826 with SMTP id
+ a640c23a62f3a-b8445179ecemr988858466b.36.1767958351724; 
+ Fri, 09 Jan 2026 03:32:31 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b842a2bcd30sm1109340366b.28.2026.01.09.03.24.33
+ a640c23a62f3a-b842a4d31e7sm1118178566b.42.2026.01.09.03.32.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 03:24:34 -0800 (PST)
-Message-ID: <53a6f846-2a65-49d4-aabb-021e9c2f590f@redhat.com>
-Date: Fri, 9 Jan 2026 12:24:32 +0100
+ Fri, 09 Jan 2026 03:32:31 -0800 (PST)
+Message-ID: <27476b00-d248-40a0-8432-39dec070e290@redhat.com>
+Date: Fri, 9 Jan 2026 12:32:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/29] crypto/x509-utils: Add helper functions for DIAG
- 320 subcode 2
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
- david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, brueckner@linux.ibm.com, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-9-zycai@linux.ibm.com>
- <9f622221-5012-4f12-8fc2-3a721a0ce111@redhat.com>
- <aWDi7gh4uiwA7JOA@redhat.com>
+Subject: Re: [PATCH 07/10] pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20251210205449.2783111-1-jrossi@linux.ibm.com>
+ <20251210205449.2783111-8-jrossi@linux.ibm.com>
+ <386824c5-d0f9-4384-a4de-d2ff5a3445d7@redhat.com>
+ <2f2bb112-34d7-4a5f-aad0-c5d0630bb064@linux.ibm.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -146,7 +142,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <aWDi7gh4uiwA7JOA@redhat.com>
+In-Reply-To: <2f2bb112-34d7-4a5f-aad0-c5d0630bb064@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -158,7 +154,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,60 +170,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/01/2026 12.13, Daniel P. Berrangé wrote:
-> On Fri, Jan 09, 2026 at 12:06:25PM +0100, Thomas Huth wrote:
->> On 08/12/2025 22.32, Zhuoying Cai wrote:
->>> Introduce new helper functions to extract certificate metadata:
->>>
->>> qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
->>> qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
->>> qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
->>> qcrypto_x509_is_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
->>>
->>> These functions provide support for metadata extraction and validity checking
->>> for X.509 certificates.
->>>
->>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->>> ---
->>>    crypto/x509-utils.c         | 248 ++++++++++++++++++++++++++++++++++++
->>>    include/crypto/x509-utils.h |  73 +++++++++++
->>>    2 files changed, 321 insertions(+)
->>>
->>> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
->>> index 2696d48155..f91fa56563 100644
->>> --- a/crypto/x509-utils.c
->>> +++ b/crypto/x509-utils.c
->>> @@ -27,6 +27,25 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
->>>        [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
->>>    };
->>> +static const int gnutls_to_qcrypto_pk_alg_map[] = {
->>
->> Could you do me a favour and add a line like this at the beginning of this
->> array:
->>
->>   [GNUTLS_PK_UNKNOWN] = QCRYPTO_PK_ALGO_UNKNOWN,
->>
->> and then also set QCRYPTO_PK_ALGO_UNKNOWN = 0 in the enum in the header?
->> That way we can be sure that zero values are not accidentally mapped to a
->> valid algorithm.
+On 07/01/2026 19.32, Jared Rossi wrote:
 > 
-> That would be special casing just one enum type in the crypto subsystem
-> to have this special unknown value. We've got 1000's of enums across
-> QEMU and don't generally add such a special zeroth constant, so I don't
-> find this suggested change to be desirable.
+> 
+> On 1/7/26 9:44 AM, Thomas Huth wrote:
+>> On 10/12/2025 21.54, jrossi@linux.ibm.com wrote:
+>>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>>
+>>> Enable virt-queue PCI configuration and add routines for virtio-blk-pci 
+>>> devices.
+>>>
+>>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>>> ---
+>>>   include/hw/s390x/ipl/qipl.h      |  10 +
+>>>   pc-bios/s390-ccw/virtio-pci.h    |  79 +++++++
+>>>   pc-bios/s390-ccw/virtio.h        |   1 +
+>>>   pc-bios/s390-ccw/main.c          |  60 +++++-
+>>>   pc-bios/s390-ccw/virtio-blkdev.c |   3 +
+>>>   pc-bios/s390-ccw/virtio-pci.c    | 360 +++++++++++++++++++++++++++++++
+>>>   pc-bios/s390-ccw/virtio.c        |   5 +
+>>>   pc-bios/s390-ccw/Makefile        |   2 +-
+>>>   8 files changed, 517 insertions(+), 3 deletions(-)
+>>>   create mode 100644 pc-bios/s390-ccw/virtio-pci.h
+>>>   create mode 100644 pc-bios/s390-ccw/virtio-pci.c
+>>>
+>>> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+>>> index 8199b839f0..5c7779a1c3 100644
+>>> --- a/include/hw/s390x/ipl/qipl.h
+>>> +++ b/include/hw/s390x/ipl/qipl.h
+>>> @@ -22,6 +22,7 @@
+>>>     #define S390_IPL_TYPE_FCP 0x00
+>>>   #define S390_IPL_TYPE_CCW 0x02
+>>> +#define S390_IPL_TYPE_PCI 0x04
+>>>   #define S390_IPL_TYPE_PV 0x05
+>>>   #define S390_IPL_TYPE_QEMU_SCSI 0xff
+>>>   @@ -105,6 +106,14 @@ struct IplBlockQemuScsi {
+>>>   } QEMU_PACKED;
+>>>   typedef struct IplBlockQemuScsi IplBlockQemuScsi;
+>>>   +struct IplBlockPci {
+>>> +    uint32_t reserved0[80];
+>>> +    uint8_t  opt;
+>>> +    uint8_t  reserved1[3];
+>>> +    uint32_t fid;
+>>> +} QEMU_PACKED;
+>>> +typedef struct IplBlockPci IplBlockPci;
+>>
+>> Is this supposed to have the same positions for "fid" and "opt" as in the 
+>> ipl_pb0_nvme structure in the kernel (arch/s390/include/uapi/asm/ipl.h)?
+> 
+> Yes, I think.  That was my intention anyway. Are you suggesting it shouldn't?
 
-I came up with this idea when reviewing the qcrypto_x509_get_pk_algorithm() 
-function in this patch which is basically doing:
+Having the same positions sound like a good idea. But if I'm counting right, 
+it currently does not match:
 
-    ret = gnutls_to_qcrypto_pk_alg_map[rc];
+In the code above, there are 80 * 4 = 320 bytes between the end of the 
+loadparm[] array and the "opt" field.
 
-My concern is that if someone ever extends the QCryptoPkAlgo in the header, 
-but forgets to fill in as much entries to gnutls_to_qcrypto_pk_alg_map as 
-there are entries in the enum, we're in trouble, since the wholes in the 
-array will be padded with zeros that then get mapped to QCRYPTO_PK_ALGO_RSA. 
-Having a clearly invalid meaning of 0 would help in such cases.
-But if you consider this as too unlikely to happen, then never mind my 
-suggestion.
+In the kernel, there is the reserved2 field with 304 bytes between the end 
+of the loadparm[] array and the "opt" field.
+
+So either I'm counting wrong, or your reserved0 field should be decreased in 
+size?
 
   Thomas
 
