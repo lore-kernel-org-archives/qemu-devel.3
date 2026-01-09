@@ -4,76 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B81D16816
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DDFCD16818
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 11:40:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veApX-0002PH-Hr; Fri, 09 Jan 2026 06:38:59 -0500
+	id 1veAqe-0003IW-ON; Fri, 09 Jan 2026 06:40:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1veApW-0002Or-Df
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:38:58 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1veAqd-0003I9-I2
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:40:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1veApU-0003ap-D0
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:38:58 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1veAqb-0003vu-72
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 06:40:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767958734;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1767958803;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=A/wuhbvOiXZpbPwFbF+zLdXpLOC7wJNe8+f48ayub0E=;
- b=VXn79xItV+q91ZoHqkkl+QBkrf68wCZSKnL2jqQSLsV71h+cM/ppYErq9J9eNc1L3TQPc6
- +fZkh+fW1artLMmkGD4s3//7pidk0SztUZQ/s6DeMC8KlpEwIgLpXYHj3FlDW7wh+nVXw2
- ZzA8atbBJ42JW5IryNPMDH4vvPFu1ts=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-567-2rK1jj5bPnaV22jvaF0m_w-1; Fri,
- 09 Jan 2026 06:38:51 -0500
-X-MC-Unique: 2rK1jj5bPnaV22jvaF0m_w-1
-X-Mimecast-MFC-AGG-ID: 2rK1jj5bPnaV22jvaF0m_w_1767958729
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F94318005AD; Fri,  9 Jan 2026 11:38:49 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.39])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B107A18004D8; Fri,  9 Jan 2026 11:38:42 +0000 (UTC)
-Date: Fri, 9 Jan 2026 11:38:38 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
- david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, brueckner@linux.ibm.com,
- walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com
-Subject: Re: [PATCH v7 08/29] crypto/x509-utils: Add helper functions for
- DIAG 320 subcode 2
-Message-ID: <aWDovtQX2IEwg-NA@redhat.com>
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-9-zycai@linux.ibm.com>
- <9f622221-5012-4f12-8fc2-3a721a0ce111@redhat.com>
- <aWDi7gh4uiwA7JOA@redhat.com>
- <53a6f846-2a65-49d4-aabb-021e9c2f590f@redhat.com>
+ bh=MVGzx2QwNIMve+nN0nYDMlWqzdRvwaE+NQwfUH9Ze/o=;
+ b=FLD7Av65AP2cWsRRKt+mZUn1uTq7EQDmNVWGiLzmCgyE/7q025Lk5sOErLrWd8t1z3UXrJ
+ TvcDo9IDXeCHAAvVLPRmDbC4qIFvW3d+++GtWQijKuhr8Zh9xNBeDDrN049qJ/jml6wac8
+ uZSIXjaavV5JxiGgoGhieBB82F98mUg=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-283-k-IOoX3LPwC2g47vK8XtsQ-1; Fri, 09 Jan 2026 06:40:02 -0500
+X-MC-Unique: k-IOoX3LPwC2g47vK8XtsQ-1
+X-Mimecast-MFC-AGG-ID: k-IOoX3LPwC2g47vK8XtsQ_1767958801
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b831e10ba03so633061466b.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 03:40:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767958801; x=1768563601; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=MVGzx2QwNIMve+nN0nYDMlWqzdRvwaE+NQwfUH9Ze/o=;
+ b=dEL9Cm6sRTrpADaouj+D/CbHkSYZvMZ0P4izNgAwxEqLXE0/wB+AD5d9gMZmbFREDV
+ EOyOWpYCz0DsByvrEYFnmX/Ehf+sHxzMAsS6uaCULY6fS/5ybUf/tawo3W5xmjYUG2Rn
+ Mif0mpsYzDKqKjV5m6ge8mNXM8mrzYMfGI/OrSU7FPVGRomm9cjEkJYrZ8E3y+VCTuLC
+ yVHLMIS1p2/rk0ya3R3vPOBC2SK1mX/ZeCcRDk8U+tBgoHkwHdhdsRmSu/yFVP9NVF7k
+ YunYXs3pIT+k8Difh5Bdf5Z3ZTYYxh+t/EkCzVwUmSMEcEFAMESGfqImh6gl5+nYMNCr
+ lr3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767958801; x=1768563601;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MVGzx2QwNIMve+nN0nYDMlWqzdRvwaE+NQwfUH9Ze/o=;
+ b=naDwlGKKlgpAhCu1V0SxItujjBoNEPMSZmG/dsOipXFpEowQclbGRuDmr2I3GUa91w
+ +/LpoZQf2e2APmXxPPRtAKlMBemOgCj0tACUa6qYSgUU95aS7ynQZH8/aXy46IgwqRUa
+ /34l5CSAx6JWpfTyxqNMX1vk7U4c/NUmy1Q1FnLm0ZKMZ9namcWBLRs2cbIdneMWJp1V
+ 1v/IvVZ11tQ7wvoNJnpAxFkMNuOvOWg5Hq7vugHALrZ18/ahDG5pFxDl7uXPfFwMNFKt
+ mbcr4zGykrvbJCtc0psZVf9SxLzBqAVXyjpdqShClq2sCXiqXThyZIA+7oDG/2dsdCAY
+ FVOg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVuZFawVT1w/xR+KutDBWcaWHvrNJyh3cM1iwlWsMzx3iNRXWc0PVr/jQZX6Fy2sFIkgKUp+kwtQ8LT@nongnu.org
+X-Gm-Message-State: AOJu0YwBwWGxj8UFUmlcMjTYFbgMMtJpMU7I4HEJIeoLC+iw4JUGZsWQ
+ rPj6KnDTzZhIrmun1r8Kdbo7k0X49xrpEQOtqdNG2jwvZHdLnAOSznPgNpkjDUHld6Oq5vqP+LX
+ uqb2CHp1eSGjoZDDu4u7Zm3hW8mCet3Gh4Fk9ilX71tbkmMh91u0wTck7
+X-Gm-Gg: AY/fxX4bFpsFxUgTX6gmTJ5PhJt8RLnsJothampfXsppFZcseIg87ehlnS4Xicj2SFE
+ Cgr32bjDb7TPc0a2pQK/mlPwYeXzADdbunuWzszI/ieCgtqdl+Ndyin6Pv4QDu3TEE1xQnEoXHQ
+ ZgIoyTe9KwDbo7GbM075FVofFqd0WIeVJh1PjCF8ChoV4yhgs3BVTFFDn5zds4jxkrACzvXpi7E
+ ak+c0IxzVVvWg52j126wEpa+rkFCqjMfRBfeVJmrerUSODnWr77CDlVa+wpdWpizYQJ/kkoGr/B
+ DOCA9cZRztKxlQ4TIS1oqGiaC/KdC1j0xLWVttqXhE9sjgY4S80RWhk1pQGOJ9fDCdcPT9K3GPv
+ 7dOvOBDn5aPVz3ZS0
+X-Received: by 2002:a17:906:4fd1:b0:b76:63b8:7394 with SMTP id
+ a640c23a62f3a-b8444fd4e55mr839481166b.51.1767958800785; 
+ Fri, 09 Jan 2026 03:40:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjGbC16CoBMGxCG+CHK4mOMtYHxAl/hPvhg/TbU9BDf/EMPguVaz8d8tsm6eUXXw4VUKGo+g==
+X-Received: by 2002:a17:906:4fd1:b0:b76:63b8:7394 with SMTP id
+ a640c23a62f3a-b8444fd4e55mr839477766b.51.1767958799936; 
+ Fri, 09 Jan 2026 03:39:59 -0800 (PST)
+Received: from sgarzare-redhat ([193.207.180.225])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b842a51543fsm1062235566b.55.2026.01.09.03.39.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Jan 2026 03:39:59 -0800 (PST)
+Date: Fri, 9 Jan 2026 12:39:47 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
+ Ani Sinha <anisinha@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Oliver Steffen <osteffen@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v2 1/5] igvm: reorganize headers
+Message-ID: <ioefbpwaopzgja4fslynfrwrsl4ybfyoqwzssw2da4ykw74zgt@zn64tdojictt>
+References: <20251211105419.3573449-1-kraxel@redhat.com>
+ <20251211105419.3573449-2-kraxel@redhat.com>
+ <iaysdncdycow33aagzhxugt6cl5dbdx67o4m67to6qiklolew5@fqx5aivqrxkg>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <53a6f846-2a65-49d4-aabb-021e9c2f590f@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <iaysdncdycow33aagzhxugt6cl5dbdx67o4m67to6qiklolew5@fqx5aivqrxkg>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,7 +111,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,109 +124,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 09, 2026 at 12:24:32PM +0100, Thomas Huth wrote:
-> On 09/01/2026 12.13, Daniel P. Berrangé wrote:
-> > On Fri, Jan 09, 2026 at 12:06:25PM +0100, Thomas Huth wrote:
-> > > On 08/12/2025 22.32, Zhuoying Cai wrote:
-> > > > Introduce new helper functions to extract certificate metadata:
-> > > > 
-> > > > qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
-> > > > qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
-> > > > qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
-> > > > qcrypto_x509_is_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
-> > > > 
-> > > > These functions provide support for metadata extraction and validity checking
-> > > > for X.509 certificates.
-> > > > 
-> > > > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> > > > ---
-> > > >    crypto/x509-utils.c         | 248 ++++++++++++++++++++++++++++++++++++
-> > > >    include/crypto/x509-utils.h |  73 +++++++++++
-> > > >    2 files changed, 321 insertions(+)
-> > > > 
-> > > > diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-> > > > index 2696d48155..f91fa56563 100644
-> > > > --- a/crypto/x509-utils.c
-> > > > +++ b/crypto/x509-utils.c
-> > > > @@ -27,6 +27,25 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
-> > > >        [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
-> > > >    };
-> > > > +static const int gnutls_to_qcrypto_pk_alg_map[] = {
-> > > 
-> > > Could you do me a favour and add a line like this at the beginning of this
-> > > array:
-> > > 
-> > >   [GNUTLS_PK_UNKNOWN] = QCRYPTO_PK_ALGO_UNKNOWN,
-> > > 
-> > > and then also set QCRYPTO_PK_ALGO_UNKNOWN = 0 in the enum in the header?
-> > > That way we can be sure that zero values are not accidentally mapped to a
-> > > valid algorithm.
-> > 
-> > That would be special casing just one enum type in the crypto subsystem
-> > to have this special unknown value. We've got 1000's of enums across
-> > QEMU and don't generally add such a special zeroth constant, so I don't
-> > find this suggested change to be desirable.
-> 
-> I came up with this idea when reviewing the qcrypto_x509_get_pk_algorithm()
-> function in this patch which is basically doing:
-> 
->    ret = gnutls_to_qcrypto_pk_alg_map[rc];
-> 
-> My concern is that if someone ever extends the QCryptoPkAlgo in the header,
-> but forgets to fill in as much entries to gnutls_to_qcrypto_pk_alg_map as
-> there are entries in the enum, we're in trouble, since the wholes in the
-> array will be padded with zeros that then get mapped to QCRYPTO_PK_ALGO_RSA.
-> Having a clearly invalid meaning of 0 would help in such cases.
+On Thu, Dec 11, 2025 at 12:13:32PM +0100, Luigi Leonardi wrote:
+>Hi Gerd,
+>
+>On Thu, Dec 11, 2025 at 11:54:15AM +0100, Gerd Hoffmann wrote:
+>>Add a new igvm-internal.h header file.  Structs and declarations which
+>>depend on the igvm library header go into that file.
+>>
+>>Also declare IgvmCfg in typedefs.h, so the type can be used without
+>>including igvm header files.
+>>
+>>Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+>>---
+>>include/qemu/typedefs.h        |  1 +
+>>include/system/igvm-cfg.h      | 12 +-----------
+>>include/system/igvm-internal.h | 26 ++++++++++++++++++++++++++
+>>include/system/igvm.h          |  2 +-
+>>backends/igvm-cfg.c            |  4 +++-
+>>backends/igvm.c                |  2 ++
+>>6 files changed, 34 insertions(+), 13 deletions(-)
+>>create mode 100644 include/system/igvm-internal.h
+>>
 
-Hmm, looking at the usage of qcrypto_x509_get_pk_algorithm(), I think
-the method and the QCryptoPkAlgo enums should be deleted entirely.
+[...]
 
-In the next patch, the caller does
+>
+>Should we add `igvm-internal.h` to the MAINTAINERS file?
 
+There is this entry in the MAINTAINERS file:
 
-    /* public key algorithm */
-    algo = qcrypto_x509_get_pk_algorithm(cert.raw, cert.size, &err);
-    if (algo < 0) {
-        error_report_err(err);
-        return -1;
-    }
+F: include/system/igvm*.h
 
-    if (algo == QCRYPTO_PK_ALGO_ECDSA) {
-        rc = qcrypto_x509_check_ecc_curve_p521(cert.raw, cert.size, &err);
-        if (rc == -1) {
-            error_report_err(err);
-            return -1;
-        }
+It should already cover also the new `igvm-internal.h`, no?
 
-        return (rc == 1) ? DIAG_320_VCE_KEYTYPE_ECDSA_P521 :
-                           DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
-    }
-
-    return DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
-
-
-so the caller doesn't actually care about anything other than
-PK_ALGO_ECDSA, so IMHO going to the trouble of defining an enum
-and mapping gnutls enums is pointless.
-
-This caller should unconditionally call
-
- qcrypto_x509_check_ecc_curve_p521()
-
-and then then qcrypto_x509_check_ecc_curve_p521() method should
-check whether the pk algorithm is GNUTLS_PK_ECDSA internally
-and just return 0 if not.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks,
+Stefano
 
 
