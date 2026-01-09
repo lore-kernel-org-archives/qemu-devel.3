@@ -4,117 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC9ED1A610
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 12:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE6CD1A616
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 12:39:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veBiI-0000ZJ-8N; Fri, 09 Jan 2026 07:35:34 -0500
+	id 1veBlN-00027U-Ko; Fri, 09 Jan 2026 07:38:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBiG-0000Y4-A8
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:35:32 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBlM-000271-3h
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:38:44 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBiE-0006e4-KS
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:35:32 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1veBlJ-0006pY-VZ
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 07:38:43 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 01DCF337BA;
- Fri,  9 Jan 2026 12:35:29 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8177D337BA;
+ Fri,  9 Jan 2026 12:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767962129; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ t=1767962320; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uZVl9WNQTaz7j4Ik4p1P+W+O6QDoygdZ4fKqyCXZb8A=;
- b=Zs/cD8ZAeM/qTvpuBUyp47NoruWDy6+gJ7HtP3Y0fJJUS+GH49Ae8I7coSbzFiRBLi9Wln
- CrjO20W6fk/Yc1RlQ1gs7PrjsnYc0diUtCow0Ka6+YmLRqIa4tBsAXwQe3DYBc2pJx3O9L
- xeivxCWF2Wa8f+4XVakgrdBUKpMzJek=
+ bh=+mysH6HvftEJoFfFgYMleKwU36l1y++qqxaDEjXzqCo=;
+ b=ExmNQv82CKqtrLNyXdLqd10D3AcxwY54vvH1gsPTD9/4XOTxyB2+sMUGrOBmmUuZOXZgMB
+ dQ96ssurEMqDKrIq6hN4PIdxymM7CrEqkNocm8GQ+YjE2DP84DXuaTelUyAa9VQ0TSW7PM
+ l9p1ICs3pFFHQJB1eLTbnRyaQUc55Cc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767962129;
+ s=susede2_ed25519; t=1767962320;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uZVl9WNQTaz7j4Ik4p1P+W+O6QDoygdZ4fKqyCXZb8A=;
- b=Idsj5/nwqPkeCLVMkDI0VOMt5C/RHK4jwqSTZ0P74qztRtapkCH9mJE1oqq37sTy6sUjvE
- q6ud8pCk+Ga9EUAg==
+ bh=+mysH6HvftEJoFfFgYMleKwU36l1y++qqxaDEjXzqCo=;
+ b=ijNNWfYbcZdLGyuwLkpoWdqfUzliL2USdP6WTU5Y5THW8j3Mjb86UH/7X2TVQZJkt5uJ9e
+ HmZjuYZwVOYCI1DA==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="Zs/cD8ZA";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="Idsj5/nw"
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ExmNQv82;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ijNNWfYb
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767962129; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ t=1767962320; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uZVl9WNQTaz7j4Ik4p1P+W+O6QDoygdZ4fKqyCXZb8A=;
- b=Zs/cD8ZAeM/qTvpuBUyp47NoruWDy6+gJ7HtP3Y0fJJUS+GH49Ae8I7coSbzFiRBLi9Wln
- CrjO20W6fk/Yc1RlQ1gs7PrjsnYc0diUtCow0Ka6+YmLRqIa4tBsAXwQe3DYBc2pJx3O9L
- xeivxCWF2Wa8f+4XVakgrdBUKpMzJek=
+ bh=+mysH6HvftEJoFfFgYMleKwU36l1y++qqxaDEjXzqCo=;
+ b=ExmNQv82CKqtrLNyXdLqd10D3AcxwY54vvH1gsPTD9/4XOTxyB2+sMUGrOBmmUuZOXZgMB
+ dQ96ssurEMqDKrIq6hN4PIdxymM7CrEqkNocm8GQ+YjE2DP84DXuaTelUyAa9VQ0TSW7PM
+ l9p1ICs3pFFHQJB1eLTbnRyaQUc55Cc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767962129;
+ s=susede2_ed25519; t=1767962320;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uZVl9WNQTaz7j4Ik4p1P+W+O6QDoygdZ4fKqyCXZb8A=;
- b=Idsj5/nwqPkeCLVMkDI0VOMt5C/RHK4jwqSTZ0P74qztRtapkCH9mJE1oqq37sTy6sUjvE
- q6ud8pCk+Ga9EUAg==
+ bh=+mysH6HvftEJoFfFgYMleKwU36l1y++qqxaDEjXzqCo=;
+ b=ijNNWfYbcZdLGyuwLkpoWdqfUzliL2USdP6WTU5Y5THW8j3Mjb86UH/7X2TVQZJkt5uJ9e
+ HmZjuYZwVOYCI1DA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 36E5C3EA65;
- Fri,  9 Jan 2026 12:35:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F417A3EA63;
+ Fri,  9 Jan 2026 12:38:39 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gH46Og72YGlqPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 09 Jan 2026 12:35:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id PJEhLM/2YGl9PwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 09 Jan 2026 12:38:39 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com, peterx@redhat.com, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v3 2/2] tests/functional: Add a OS level migration test for
- pseries
-Date: Fri,  9 Jan 2026 09:35:19 -0300
-Message-ID: <20260109123519.28703-3-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260109123519.28703-1-farosas@suse.de>
-References: <20260109123519.28703-1-farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, devel@lists.libvirt.org, eblake@redhat.com
+Subject: Re: [PATCH 0/2] migration: Drop deprecated QMP stuff
+In-Reply-To: <20260108125512.2234147-1-armbru@redhat.com>
+References: <20260108125512.2234147-1-armbru@redhat.com>
+Date: Fri, 09 Jan 2026 09:38:36 -0300
+Message-ID: <87v7hbc65v.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_COUNT_TWO(0.00)[2];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,linux.ibm.com];
- FROM_EQ_ENVFROM(0.00)[];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- DKIM_TRACE(0.00)[suse.de:+]
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 01DCF337BA
+X-Rspamd-Queue-Id: 8177D337BA
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,103 +119,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's currently no OS level test for ppc64le. Add one such test by
-reusing the boot level tests that are already present.
+Markus Armbruster <armbru@redhat.com> writes:
 
-The test boots the source machine, waits for it to reach a mid-boot
-message, migrates and checks that the destination has reached the
-final boot message (VFS error due to no disk).
+> Markus Armbruster (2):
+>   migration: Drop deprecated QMP command query-migrationthreads
+>   migration: Drop deprecated QMP migrate argument @detach
+>
+>  docs/about/deprecated.rst       | 13 -------
+>  docs/about/removed-features.rst | 14 ++++++++
+>  qapi/migration.json             | 38 --------------------
+>  migration/threadinfo.h          | 25 -------------
+>  migration/migration-hmp-cmds.c  |  2 +-
+>  migration/migration.c           |  8 +----
+>  migration/multifd.c             |  5 ---
+>  migration/threadinfo.c          | 64 ---------------------------------
+>  migration/meson.build           |  1 -
+>  9 files changed, 16 insertions(+), 154 deletions(-)
+>  delete mode 100644 migration/threadinfo.h
+>  delete mode 100644 migration/threadinfo.c
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/functional/ppc64/test_migration.py | 12 ++++++++
- tests/functional/ppc64/test_pseries.py   | 35 ++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
-diff --git a/tests/functional/ppc64/test_migration.py b/tests/functional/ppc64/test_migration.py
-index 5dfdaaf709..a3b819680b 100755
---- a/tests/functional/ppc64/test_migration.py
-+++ b/tests/functional/ppc64/test_migration.py
-@@ -4,6 +4,7 @@
- #
- # ppc migration test
- 
-+from qemu_test.ports import Ports
- from migration import MigrationTest
- 
- 
-@@ -21,6 +22,17 @@ def test_migration_with_exec(self):
-         self.set_machine('mac99')
-         self.migration_with_exec()
- 
-+    def do_migrate_ppc64_linux(self, source_vm, dest_vm):
-+        with Ports() as ports:
-+            port = ports.find_free_port()
-+            if port is None:
-+                self.skipTest('Failed to find a free port')
-+            uri = 'tcp:localhost:%u' % port
-+
-+            dest_vm.qmp('migrate-incoming', uri=uri)
-+            source_vm.qmp('migrate', uri=uri)
-+            self.assert_migration(source_vm, dest_vm)
-+
- 
- if __name__ == '__main__':
-     MigrationTest.main()
-diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ppc64/test_pseries.py
-index 7840c4e3ff..b45763c305 100755
---- a/tests/functional/ppc64/test_pseries.py
-+++ b/tests/functional/ppc64/test_pseries.py
-@@ -9,6 +9,7 @@
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
-+from test_migration import PpcMigrationTest
- 
- class PseriesMachine(QemuSystemTest):
- 
-@@ -87,5 +88,39 @@ def test_ppc64_linux_big_boot(self):
-         wait_for_console_pattern(self, console_pattern, self.panic_message)
-         wait_for_console_pattern(self, self.good_message, self.panic_message)
- 
-+    def test_ppc64_linux_migration(self):
-+        self.set_machine('pseries')
-+
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
-+
-+        dest_vm = self.get_vm(name="dest-qemu")
-+        dest_vm.add_args('-incoming', 'defer')
-+        dest_vm.add_args('-smp', '4')
-+        dest_vm.add_args('-nodefaults')
-+        dest_vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_command_line)
-+        dest_vm.set_console()
-+        dest_vm.launch()
-+
-+        source_vm = self.get_vm(name="source-qemu")
-+        source_vm.add_args('-smp', '4')
-+        source_vm.add_args('-nodefaults')
-+        source_vm.add_args('-kernel', kernel_path,
-+                           '-append', kernel_command_line)
-+        source_vm.set_console()
-+        source_vm.launch()
-+
-+        # ensure the boot has reached Linux
-+        console_pattern = 'smp: Brought up 1 node, 4 CPUs'
-+        wait_for_console_pattern(self, console_pattern, self.panic_message,
-+                                 vm=source_vm)
-+
-+        PpcMigrationTest().do_migrate_ppc64_linux(source_vm, dest_vm);
-+
-+        # ensure the boot proceeds after migration
-+        wait_for_console_pattern(self, self.good_message, self.panic_message,
-+                                 vm=dest_vm)
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
--- 
-2.51.0
-
+Queued, thanks!
 
