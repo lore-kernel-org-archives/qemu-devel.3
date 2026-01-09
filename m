@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCD8D26D71
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 16:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68973D26D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 16:49:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veFeu-00088x-QA; Fri, 09 Jan 2026 11:48:21 -0500
+	id 1veFgB-00017z-6j; Fri, 09 Jan 2026 11:49:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFec-000831-K1
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:48:06 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFfu-00011w-R8
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:49:25 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFeZ-0006hy-03
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:48:01 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4775ae5684fso21436865e9.1
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 08:47:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1veFfs-0006r9-Ta
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 11:49:22 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-477770019e4so35192255e9.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 08:49:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1767977277; x=1768582077; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RTAOH/xq/3mecKgOFQc299O+6eUqLk/ATHdhAOXEHr4=;
- b=CkQAQIu0gJMwxpr+RivN9KvUt3PtinGIu+7qbDdxB55O7/NUuS6q46UGZ0Xd/Q34gL
- PZnob4J3m70yreQ+PrMZt8pmqMG3rDM2SMGoP913Q9Lu/XOUmtq9dr3/RoyfL5JMCE8O
- kHMrtonBTeWF1ZiEQMYVvr2TmFGPEsJkwx2zz2HBsXjTC79BqMQuzxmsPZ8GrQ095DY5
- r4prrqWNNGLn670vCvi/mkq2jeae3F4/v5y8Mu8acCg7fQdq66qO6sRyr4T0tMvSR+YV
- sPUBEv6je206f3Iz9/+RSUcqCVniYK1x5deAY3mVpBh8Hh776k4oP/854voc/XkiYatU
- okkg==
+ d=linaro.org; s=google; t=1767977358; x=1768582158; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2MerhSNz7Vn8RRCjmFwVg6a9IkrqyERaiCl6lwgb0h0=;
+ b=Mra3MF59nwWFEvFRkrwPD4/iqKhfIyJ664nWOjt1adTCYsnjb+680s1tUuEDX69KAa
+ x3N3cQDNClksqmC6r+nTEAaa7K/3gdqlV5XJZW20IQuNXDKnhNpi4aC9PqR6cvm4rPFG
+ aJAkoS4gBFKpdlMI8gPUFt1uU6HsMsB2Ve1AOp7Wk4ARR6NCs3Pf/2O9uiPEoaV0Py6j
+ Geagw9b9LDbKee5lfibVwmgyKDKLR7f2mxOtsZbF6bcWvLrcD4spjwANoS+WN9aILSK/
+ 17SeAnQ9bmzhJOOKspqcVBo+8UXpfaeW0wd7khaiAJFhinSdKYwHT6E69Xcp3hUEpuCf
+ MJ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767977277; x=1768582077;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RTAOH/xq/3mecKgOFQc299O+6eUqLk/ATHdhAOXEHr4=;
- b=Snnkx1rN0bjYlL/sBqrZK1Ohavjv3swfZHGcLO/fa/iMxYjNC9VmySAZhkuuZrlIX1
- zylaiJZMjlMJsWYdaA87j+2ds862OrS9P29lf6wBNZK35IcufXluj+SELGdY2mt3w/4O
- SLRSu6+PA1fLVJ4X7t/YSgYVqRqyFjmfbej4bmHiwzeIxoK0MZitGanb51LecSi6YN6F
- rVKgBhG1eL+IdnnIcHVccPTzt8TxllhBRSyQ/mgGQTQvRP+KmPbXsy5GUN5p6dGmB2ea
- 5sI+YK7kdDpsBBjChbvRGGWjxJsQyPkX1T/ty5BbG34mHXioxZo7NxTG4SDE9EuIyYHl
- bK3Q==
-X-Gm-Message-State: AOJu0YwieLh+fVyJoN89M2Fds5D1OvtTH92M4j/PE0eRo20HPtI0+B9u
- hQ+3Op8N6vFDvAnkhI0hmG2CwH6hGZ31t5gJSGGia0j7GDuK9L9L5UaE8Uhof9n5PmYNioozt/B
- uFwUDCqA=
-X-Gm-Gg: AY/fxX6AZAt9IpzpQz+U6u7Bm7lxIVAdXZYIVaccXKbNMZrGsb0/QcpDqj95C46xfXC
- yCTYG0pLt8ZQ+0TXTPFuLShiGYnlw41kEYG0Pxhk5gNmoqVVGNPV2LeSCF428j7zuohyjaoHmt7
- P4yUHeB6ddZjGSOF0+8V5EwBigoOsAEYTAsNSd0m49SDZnhYK/xSrSugJTxFtCGAnFqNN4OfBNi
- YEMcX+KtZV1DMjVy7qz1m6ytWhzdA+u2QXkCYPnya502fKBHcnXAeQ6Zyzl++d60leBZpfRDtNf
- DetrwLg8HakXKB882BIaOuG7D9cH97JSAMrazM/7TmbcM97Gee92u+tDqwhzDTEeLWIYjdorEHe
- KYw5OeNx3RXHcfYLypM9YCpdBIab9mHl7gnoZFAIroteXd0MMOyYF4fsWDUkm4PrsfA4X5EFc/0
- lM9mWg75tfJB0u8pbbGPt6OAnkmugV4Rwx2bLf1Xqlirhi1UrEfPxg/iJ7gwiN
-X-Google-Smtp-Source: AGHT+IHIpCZzd0tKnWh0EcDxsMW9Q08s6epKdJyRuraP5/6yc16tLpIWI+2dUba2R38HCbUmXF28bQ==
-X-Received: by 2002:a05:6000:1448:b0:431:a0:7dea with SMTP id
- ffacd0b85a97d-432c374ff61mr13406525f8f.40.1767977277121; 
- Fri, 09 Jan 2026 08:47:57 -0800 (PST)
+ d=1e100.net; s=20230601; t=1767977358; x=1768582158;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2MerhSNz7Vn8RRCjmFwVg6a9IkrqyERaiCl6lwgb0h0=;
+ b=uLXXfxz/rI3vn1mBX/AgKFBcpPz1w8UR0vFXW5a40SGFOfJ0vbjt7ExfC7UMTz76DO
+ M64kokDT41tDQXwfL04TGS0mW3N/p0TjCurf2Cc8/7QmyQcWkEMh9oGviTnQWifXZbo1
+ Ok7SWO2SJFXAVbei05B2R1YXedN3iKiDkQoAuwnPRhFp0cFolwU9wRNbznrtksJKpe12
+ QOgjV7Pusy3ZosOqDZw15wJrABZZzDiYC67Wt9Oipg96cG9QhFFDcHt6WEzek7KJ3svz
+ it14jzqlW/3FnPonhEV81hhx+PYQ2smTAq7zBS4d/DyvWe3gi/5Hdismr5gEjoMPMU4x
+ NPOQ==
+X-Gm-Message-State: AOJu0YyNxvfcnaF8Yu53DsxTrZ1WtWOlC2OhAHg/RL7et1d6B5KcQ6J0
+ o46J55nGX1HZ/TSZbsplKWDQGpCRsuo7FKx56IXBqt8ND8ejEjCIwX2rbVor4RTUnzuywhetd3N
+ hxaNaclw=
+X-Gm-Gg: AY/fxX6WkDgw0mPE9iWudcEXlO6O4hHlLu3GH2souKUYgF+zRuWlt+H7CMVW8f2Gy3b
+ 0SWDoYNONTaJuoIb80dVdirdDPOT/rWu1zpTypxuvlolo72sSb+wK6EU32q09wAkq4xY1hJoyR6
+ 2JEZlX5ThibedqR6TfZir58RuWC02pnRf9UHBdaDryGliPUoITEM9bwGat3oaxeWG9UJgewsr7J
+ sNKegRR6k3B3BtmEM4aLypryiFnYReUQds1XVKb1UZAyWC9m3AaqRrMg659r1HMOMhmCERaMWAj
+ SILrYL3dbeOu91/UExR/to02K9C1oFIyHJw++6E3F16ZxH+q4DtxIOk6dg/h0540RC58QihfHVF
+ bvlfvDm/3oIan2G3rpWfhXcY1ESjHf9y51tYF+RXzSz8n2Sr1cZJXARrTwdjb2gPbkqOJPPpDeY
+ xPAYXfJ6yFfmtXoac8ALR7RlgNLkkVlE6N8GpPcR1oEY+tlMgqEt3jJ4fpZYmobJCj5I6a77U=
+X-Google-Smtp-Source: AGHT+IG/a+FC6douDBV45Uzzi5i4lLHvFS3XKKroM+JcRvKzH8ZBfqMC1Jkjj0pQiCHctACk/0MNFQ==
+X-Received: by 2002:a05:600c:3143:b0:47d:4fbe:e6cc with SMTP id
+ 5b1f17b1804b1-47d84b179f7mr127677535e9.13.1767977358266; 
+ Fri, 09 Jan 2026 08:49:18 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5ff0b2sm23298148f8f.42.2026.01.09.08.47.56
+ 5b1f17b1804b1-47d7f410c6csm229043115e9.1.2026.01.09.08.49.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 Jan 2026 08:47:56 -0800 (PST)
+ Fri, 09 Jan 2026 08:49:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 2/4] bswap: Use 'qemu/bswap.h' instead of
- 'qemu/host-utils.h'
-Date: Fri,  9 Jan 2026 17:47:40 +0100
-Message-ID: <20260109164742.58041-3-philmd@linaro.org>
+Subject: [PATCH v4 00/23] system/memory: Clean ups around address_space_ldst()
+ endian variants
+Date: Fri,  9 Jan 2026 17:48:53 +0100
+Message-ID: <20260109164916.58713-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260109164742.58041-1-philmd@linaro.org>
-References: <20260109164742.58041-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,83 +102,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These files only require "qemu/bswap.h", not "qemu/host-utils.h".
+Missing review: 2, 12, 20
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/qtest/ahci-test.c              | 2 +-
- tests/qtest/libqos/ahci.c            | 2 +-
- tests/qtest/libqos/generic-pcihost.c | 2 +-
- tests/qtest/libqos/pci-spapr.c       | 2 +-
- util/hbitmap.c                       | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+Since v3:
+- Assign device_endian enums (Richard)
+- Add/use ldm_p() and stm_p() helpers (Paolo)
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index e8aabfc13f5..5c32ff20029 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -31,7 +31,7 @@
- #include "libqos/pci-pc.h"
- 
- #include "qobject/qdict.h"
--#include "qemu/host-utils.h"
-+#include "qemu/bswap.h"
- 
- #include "hw/pci/pci_ids.h"
- #include "hw/pci/pci_regs.h"
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 34a75b7f43b..0621a6c4775 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -28,7 +28,7 @@
- #include "ahci.h"
- #include "pci-pc.h"
- 
--#include "qemu/host-utils.h"
-+#include "qemu/bswap.h"
- 
- #include "hw/pci/pci_ids.h"
- #include "hw/pci/pci_regs.h"
-diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
-index 4bbeb5ff508..b77617524ca 100644
---- a/tests/qtest/libqos/generic-pcihost.c
-+++ b/tests/qtest/libqos/generic-pcihost.c
-@@ -15,7 +15,7 @@
- #include "generic-pcihost.h"
- #include "qobject/qdict.h"
- #include "hw/pci/pci_regs.h"
--#include "qemu/host-utils.h"
-+#include "qemu/bswap.h"
- 
- #include "qemu/module.h"
- 
-diff --git a/tests/qtest/libqos/pci-spapr.c b/tests/qtest/libqos/pci-spapr.c
-index 0f1023e4a73..3723cbb38db 100644
---- a/tests/qtest/libqos/pci-spapr.c
-+++ b/tests/qtest/libqos/pci-spapr.c
-@@ -13,7 +13,7 @@
- 
- #include "hw/pci/pci_regs.h"
- 
--#include "qemu/host-utils.h"
-+#include "qemu/bswap.h"
- #include "qemu/module.h"
- 
- /*
-diff --git a/util/hbitmap.c b/util/hbitmap.c
-index d9a1dabc630..3525bf7751a 100644
---- a/util/hbitmap.c
-+++ b/util/hbitmap.c
-@@ -10,8 +10,8 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/bswap.h"
- #include "qemu/hbitmap.h"
--#include "qemu/host-utils.h"
- #include "trace.h"
- #include "crypto/hash.h"
- 
+Since v2:
+- Changed opt-out to opt-in approach (Pierrick)
+- Split big patches in smaller ones
+- Mark ioport little-endian
+
+Philippe Mathieu-Daudé (23):
+  MAINTAINERS: Cover 'system/memory_ldst*.h.inc' files
+  util: Introduce ldm_p() and stm_p() load/store helpers
+  system/physmem: Inline and remove leul_to_cpu()
+  system/physmem: Convert DEBUG_SUBPAGE printf() to trace events
+  system/memory: Split MemoryRegionCache API to 'memory_cached.h'
+  system/memory: Inline address_space_stq_internal()
+  system/memory: Define address_space_ldst[W] endian variants via
+    template
+  system/memory: Define address_space_ldst[L] endian variants via
+    template
+  system/memory: Define address_space_ldst[Q] endian variants via
+    template
+  system/memory: Factor address_space_ldst[M]_internal() helper out
+  system/memory: Pass device_endian argument as MemOp bit
+  system/memory: Use ldm_p() and stm_p() helpers
+  system/memory: Directly call address_space_ldst[M]_internal() helper
+  system: Allow restricting the legacy ld/st_phys() 'native-endian' API
+  system: Allow restricting legacy address_space_ldst() native-endian
+    API
+  system: Allow restricting the legacy cpu_ld/st() 'native-endian' API
+  system: Allow restricting the legacy translator_ld() 'native-endian'
+    API
+  system: Allow restricting the legacy tswap() 'native-endian' API
+  system: Allow restricting the legacy MO_TE* 'native-endian'
+    definitions
+  system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition
+  tests/qtest: Remove unnecessary 'qemu/bswap.h' include
+  system/ioport: Declare x86-specific I/O port in little-endian order
+  system/ioport: Do not open-code address_space_ld/st_le() methods
+
+ MAINTAINERS                                  |   4 +
+ include/accel/tcg/cpu-ldst.h                 |   2 +
+ include/exec/memop.h                         |   4 +
+ include/exec/translator.h                    |   5 +-
+ include/exec/tswap.h                         |   3 +
+ include/hw/virtio/virtio-access.h            |   1 +
+ include/qemu/bswap.h                         |  11 -
+ include/qemu/ldst_unaligned.h                |  25 ++
+ include/system/memory.h                      | 193 +-------
+ include/system/memory_cached.h               | 212 +++++++++
+ system/memory-internal.h                     |   2 +
+ include/system/memory_ldst.h.inc             |  52 +--
+ include/system/memory_ldst_endian.h.inc      |  33 ++
+ include/system/memory_ldst_phys.h.inc        | 113 +----
+ include/system/memory_ldst_phys_endian.h.inc |  57 +++
+ system/ioport.c                              |  34 +-
+ system/physmem.c                             |  35 +-
+ tests/qtest/endianness-test.c                |  10 +-
+ tests/qtest/libqtest.c                       |  13 +-
+ tests/qtest/vmcoreinfo-test.c                |   1 -
+ util/ldst.c                                  |  69 +++
+ system/memory_ldst.c.inc                     | 449 ++-----------------
+ system/memory_ldst_endian.c.inc              |  70 +++
+ scripts/make-config-poison.sh                |   1 +
+ system/trace-events                          |   6 +
+ util/meson.build                             |   1 +
+ 26 files changed, 599 insertions(+), 807 deletions(-)
+ create mode 100644 include/system/memory_cached.h
+ create mode 100644 include/system/memory_ldst_endian.h.inc
+ create mode 100644 include/system/memory_ldst_phys_endian.h.inc
+ create mode 100644 util/ldst.c
+ create mode 100644 system/memory_ldst_endian.c.inc
+
 -- 
 2.52.0
 
