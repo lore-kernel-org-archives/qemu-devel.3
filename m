@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE575D1A63C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB73D1A632
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:35:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veDZu-0004wF-I8; Fri, 09 Jan 2026 09:35:03 -0500
+	id 1veDaD-0005IQ-06; Fri, 09 Jan 2026 09:35:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1veDZl-0004vB-Qf
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:34:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1veDa6-0005E2-Tu
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:35:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1veDZk-0005R4-8s
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:34:53 -0500
+ id 1veDa3-0005hb-SU
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:35:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1767969291;
+ s=mimecast20190719; t=1767969311;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kh5b5sfCH40GicWYc2tsY/crNp+W5lW6bAFRhHZ+qr0=;
- b=XhQEYmdV36AlGpvzsQLCqWkvtmbLQp6Gj8fByDwhsIo5OKU30rI4PbI2E1+X5EC/z2vgNv
- 3Xo0RD3HWmzsxaRwzuSzqTkRi6ptrpcXJV/W1HWnFZPIpJW+hy0OLklHTvUONd575Fmgk3
- IYvgj610ijJyIN3VOx0Bfx+Iz3324kE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=kk/8eotG0F0P+tesvNKVdbvvCdd2DwmMuhkjQ8i8LyE=;
+ b=YjkG6js8Su2rlM+AD7fpfOqUu2pLs2DFYH6IpOaXJRjB0mWthku6upjPdaQ3WKHRq7MM6I
+ RKrZuoJkjYUIv7+sgwyNHdhlMM3n1uwLHfyUxwJCuh53RlxvysVae3fh9i25nRoMSNxYVP
+ C3yxT84B6jX6NtGPRdwB4atZU+Pk5Ck=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-7-Pjbg_medOXeK_QnUXxk9kg-1; Fri,
- 09 Jan 2026 09:34:48 -0500
-X-MC-Unique: Pjbg_medOXeK_QnUXxk9kg-1
-X-Mimecast-MFC-AGG-ID: Pjbg_medOXeK_QnUXxk9kg_1767969286
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-qH2LqthvP6G-KazQNLRC2g-1; Fri,
+ 09 Jan 2026 09:34:59 -0500
+X-MC-Unique: qH2LqthvP6G-KazQNLRC2g-1
+X-Mimecast-MFC-AGG-ID: qH2LqthvP6G-KazQNLRC2g_1767969298
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 847721956054; Fri,  9 Jan 2026 14:34:46 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39A7718005B7; Fri,  9 Jan 2026 14:34:58 +0000 (UTC)
 Received: from osteffen-laptop.redhat.com (unknown [10.45.225.84])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4D145180066A; Fri,  9 Jan 2026 14:34:40 +0000 (UTC)
+ id E1C4E180066A; Fri,  9 Jan 2026 14:34:52 +0000 (UTC)
 From: Oliver Steffen <osteffen@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -59,22 +59,22 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Oliver Steffen <osteffen@redhat.com>
-Subject: [PATCH v3 4/6] igvm: Add common function for finding parameter entries
-Date: Fri,  9 Jan 2026 15:34:11 +0100
-Message-ID: <20260109143413.293593-5-osteffen@redhat.com>
+Subject: [PATCH v3 6/6] igvm: Fill MADT IGVM parameter field
+Date: Fri,  9 Jan 2026 15:34:13 +0100
+Message-ID: <20260109143413.293593-7-osteffen@redhat.com>
 In-Reply-To: <20260109143413.293593-1-osteffen@redhat.com>
 References: <20260109143413.293593-1-osteffen@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=osteffen@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=osteffen@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,157 +92,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move repeating code for finding the parameter entries in the IGVM
-backend out of the parameter handlers into a common function.
+Use the new acpi_build_madt_standalone() function to fill the MADT
+parameter field.
+
+The IGVM parameter can be consumed by Coconut SVSM [1], instead of
+relying on the fw_cfg interface, which has caused problems before due to
+unexpected access [2,3]. Using IGVM parameters is the default way for
+Coconut SVSM; switching over would allow removing specialized code paths
+for QEMU in Coconut.
+
+In any case OVMF, which runs after SVSM has already been initialized,
+will continue reading all ACPI tables via fw_cfg and provide fixed up
+ACPI data to the OS as before.
+
+Generating the MADT twice (during ACPI table building and IGVM processing)
+seems acceptable, since there is no infrastructure to obtain the MADT
+out of the ACPI table memory area.
+
+[1] https://github.com/coconut-svsm/svsm/pull/858
+[2] https://gitlab.com/qemu-project/qemu/-/issues/2882
+[3] https://github.com/coconut-svsm/svsm/issues/646
+
+Signed-off-by: Oliver Steffen <osteffen@redhat.com>
+
+SQUASH: Rename madt parameter handler
 ---
- backends/igvm.c | 115 +++++++++++++++++++++++++-----------------------
- 1 file changed, 61 insertions(+), 54 deletions(-)
+ backends/igvm.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
 diff --git a/backends/igvm.c b/backends/igvm.c
-index dc1fd026cb..a797bd741c 100644
+index 7390dee734..90ea2c22fd 100644
 --- a/backends/igvm.c
 +++ b/backends/igvm.c
-@@ -95,6 +95,18 @@ typedef struct QIgvm {
-     unsigned region_page_count;
- } QIgvm;
+@@ -15,9 +15,11 @@
+ #include "qapi/error.h"
+ #include "qemu/target-info-qapi.h"
+ #include "system/igvm.h"
++#include "glib.h"
+ #include "system/memory.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/cpu.h"
++#include "hw/i386/acpi-build.h"
  
-+static QIgvmParameterData *qigvm_find_param_entry(QIgvm *igvm, const IGVM_VHS_PARAMETER *param) {
-+
+ #include "trace.h"
+ 
+@@ -134,6 +136,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
+ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+                                        const uint8_t *header_data,
+                                        Error **errp);
++static int qigvm_directive_madt(QIgvm *ctx,
++                                     const uint8_t *header_data, Error **errp);
+ 
+ struct QIGVMHandler {
+     uint32_t type;
+@@ -162,6 +166,8 @@ static struct QIGVMHandler handlers[] = {
+       qigvm_directive_snp_id_block },
+     { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALIZATION,
+       qigvm_initialization_guest_policy },
++    { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_madt },
+ };
+ 
+ static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+@@ -780,6 +786,35 @@ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+     return 0;
+ }
+ 
++static int qigvm_directive_madt(QIgvm *ctx,
++                                     const uint8_t *header_data, Error **errp)
++{
++    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
 +    QIgvmParameterData *param_entry;
-+    QTAILQ_FOREACH(param_entry, &igvm->parameter_data, next)
-+    {
-+        if (param_entry->index == param->parameter_area_index) {
-+            return param_entry;
-+        }
++
++    if (ctx->machine_state == NULL) {
++        return 0;
 +    }
-+    return NULL;
++
++    /* Find the parameter area that should hold the MADT data */
++    param_entry = qigvm_find_param_entry(ctx, param);
++    if (param_entry != NULL) {
++
++        GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
++
++        if (madt->len > param_entry->size) {
++            error_setg(
++                errp,
++                "IGVM: MADT size exceeds parameter area defined in IGVM file");
++            return -1;
++        }
++        memcpy(param_entry->data, madt->data, madt->len);
++
++        g_array_free(madt, true);
++    }
++    return 0;
 +}
 +
- static int qigvm_directive_page_data(QIgvm *ctx, const uint8_t *header_data,
-                                      Error **errp);
- static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
-@@ -576,57 +588,54 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-     }
- 
-     /* Find the parameter area that should hold the memory map */
--    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
-+    param_entry = qigvm_find_param_entry(ctx, param);
-+    if (param_entry != NULL)
-     {
--        if (param_entry->index == param->parameter_area_index) {
--            max_entry_count =
--                param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
--            mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
--
--            retval = get_mem_map_entry(entry, &cgmm_entry, errp);
--            while (retval == 0) {
--                if (entry >= max_entry_count) {
--                    error_setg(
--                        errp,
--                        "IGVM: guest memory map size exceeds parameter area defined in IGVM file");
--                    return -1;
--                }
--                mm_entry[entry].starting_gpa_page_number = cgmm_entry.gpa >> 12;
--                mm_entry[entry].number_of_pages = cgmm_entry.size >> 12;
--
--                switch (cgmm_entry.type) {
--                case CGS_MEM_RAM:
--                    mm_entry[entry].entry_type =
--                        IGVM_MEMORY_MAP_ENTRY_TYPE_MEMORY;
--                    break;
--                case CGS_MEM_RESERVED:
--                    mm_entry[entry].entry_type =
--                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
--                    break;
--                case CGS_MEM_ACPI:
--                    mm_entry[entry].entry_type =
--                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
--                    break;
--                case CGS_MEM_NVS:
--                    mm_entry[entry].entry_type =
--                        IGVM_MEMORY_MAP_ENTRY_TYPE_PERSISTENT;
--                    break;
--                case CGS_MEM_UNUSABLE:
--                    mm_entry[entry].entry_type =
--                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
--                    break;
--                }
--                retval = get_mem_map_entry(++entry, &cgmm_entry, errp);
-+        max_entry_count =
-+            param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
-+        mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
-+
-+        retval = get_mem_map_entry(entry, &cgmm_entry, errp);
-+        while (retval == 0) {
-+            if (entry >= max_entry_count) {
-+                error_setg(
-+                    errp,
-+                    "IGVM: guest memory map size exceeds parameter area defined in IGVM file");
-+                return -1;
-             }
--            if (retval < 0) {
--                return retval;
-+            mm_entry[entry].starting_gpa_page_number = cgmm_entry.gpa >> 12;
-+            mm_entry[entry].number_of_pages = cgmm_entry.size >> 12;
-+
-+            switch (cgmm_entry.type) {
-+            case CGS_MEM_RAM:
-+                mm_entry[entry].entry_type =
-+                    IGVM_MEMORY_MAP_ENTRY_TYPE_MEMORY;
-+                break;
-+            case CGS_MEM_RESERVED:
-+                mm_entry[entry].entry_type =
-+                    IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
-+                break;
-+            case CGS_MEM_ACPI:
-+                mm_entry[entry].entry_type =
-+                    IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
-+                break;
-+            case CGS_MEM_NVS:
-+                mm_entry[entry].entry_type =
-+                    IGVM_MEMORY_MAP_ENTRY_TYPE_PERSISTENT;
-+                break;
-+            case CGS_MEM_UNUSABLE:
-+                mm_entry[entry].entry_type =
-+                    IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
-+                break;
-             }
--            /* The entries need to be sorted */
--            qsort(mm_entry, entry, sizeof(IGVM_VHS_MEMORY_MAP_ENTRY),
--                  qigvm_cmp_mm_entry);
--
--            break;
-+            retval = get_mem_map_entry(++entry, &cgmm_entry, errp);
-         }
-+        if (retval < 0) {
-+            return retval;
-+        }
-+        /* The entries need to be sorted */
-+        qsort(mm_entry, entry, sizeof(IGVM_VHS_MEMORY_MAP_ENTRY),
-+                qigvm_cmp_mm_entry);
-     }
-     return 0;
- }
-@@ -662,14 +671,12 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
-     QIgvmParameterData *param_entry;
-     IgvmEnvironmentInfo *environmental_state;
- 
--    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
-+    param_entry = qigvm_find_param_entry(ctx, param);
-+    if (param_entry != NULL)
-     {
--        if (param_entry->index == param->parameter_area_index) {
--            environmental_state =
--                (IgvmEnvironmentInfo *)(param_entry->data + param->byte_offset);
--            environmental_state->memory_is_shared = 1;
--            break;
--        }
-+        environmental_state =
-+            (IgvmEnvironmentInfo *)(param_entry->data + param->byte_offset);
-+        environmental_state->memory_is_shared = 1;
-     }
-     return 0;
- }
+ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
+ {
+     int32_t header_count;
 -- 
 2.52.0
 
