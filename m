@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22200D232E9
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6D2D232E9
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 07:32:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ve6wt-0007f2-LR; Fri, 09 Jan 2026 02:30:22 -0500
+	id 1ve6yl-0002b9-Iq; Fri, 09 Jan 2026 02:32:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1ve6wV-0007VS-FV
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:29:58 -0500
-Received: from mail-lj1-x244.google.com ([2a00:1450:4864:20::244])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1ve6yj-0002Ti-8A
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:32:13 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1ve6wR-0007eU-4b
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:29:53 -0500
-Received: by mail-lj1-x244.google.com with SMTP id
- 38308e7fff4ca-383010b77b8so20040771fa.1
- for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 23:29:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1ve6yg-0008ID-JC
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 02:32:12 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-29f0f875bc5so35181875ad.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Jan 2026 23:32:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1767943789; x=1768548589; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tw7He0vAIQtDRAho29c+8srwuRGz0f4QO1t4OL/3Yuk=;
- b=Pxbk3YwWECIlvIiHWqPbLWxXu1CALn9wbWtxQDF6GZmyjYhRumHjhJjn8vuQWFqsML
- 5OS9NUx3jn/JlLkuDHiC5Pimi3qfuSIw+bXd5qYeJtYCrGApICvuKphKkLgSxDKEdbdm
- Fa+o9/PD7fv1HwlVMuMtnmxw3nOY2XRp2UJWaWIZj64wjiIHG8p0GM/7G9ohNSPGacJ2
- qLQeKNX9wxS8MJp6UIYLab4frAz5WnAbEV59q5eqfhtuC4ip5vaZFflKBVTlMSd1wc0O
- LbTp5lgH7V5GX6CA5uKVRWY1pGtHZ/OSKtFAgCdY/MZZqstT39CDFJyljtyFNvxEx9w5
- eXpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767943789; x=1768548589;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=sifive.com; s=google; t=1767943929; x=1768548729; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tw7He0vAIQtDRAho29c+8srwuRGz0f4QO1t4OL/3Yuk=;
- b=wUWOlaODxZqMw7O14+WuZ0HO8D6UbZbPbSI6iqoabD2EbwsAgvK289uvZ0GqNk24RK
- 5WZxVCWfmOdKuOruUoe6nhTYcfDWEE83ufjce4ntfIAjP/Yk042oH9rh9WnhaAjeWuf5
- 4NIMy9lK74i8KXONAR3z6JZAr26aujyOU97NIyRdYb8eGs1Cxz/Mv/8+5XidAPD8Bs7v
- AI/uukH5MHlm6aAvgF2q5mUuNJxw8EZ+30sEvs4b8JbQebGdUCui7FUEPLg1YlyVZ24w
- 8Ss+pKz3CzFst7zZ1UtDVXz5QkgIT+1F6sGxijYB/RQIwOL7RUVPvUgrUn9d29HTEicL
- p5Kw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6pW5wAcEPPHr+0dA9b3wJLO2Yg3p1Pqip276Iv9uZncOKOp37rD3M14ccSvd946Z3jt9GK0iSZ/I1@nongnu.org
-X-Gm-Message-State: AOJu0Yw7Qywye4n6ruWPm9eVfL5jPDzgLHAWAKlHgchizn/CQ9VbMaDZ
- L2GRBDMRThewF0zwx3XUHvbiCAMqqsxVLmvuXFvA94GivCmDOJ7jspOL2PxX6TdItNFmSRHBMj0
- 1PuRaAgVSAgMVD7M8eQXzyIcJYV1QuDM=
-X-Gm-Gg: AY/fxX6QrPlvFVvj2M8oCn7VMXZT/R2EfHVltoEjBbdX9F0IHxvwdU/++g17ZEqkME5
- WoF18aTapoyjP0b4nvSxGZGG330mVYVFTqBTcsh6nSyIaxVXuX+lztjj74SdEhQ6NJOPaoMJTFO
- 5hPyrIeIZV8HbaAcTk6SGtw+5RymXYc0dFu8AbcFUrET6PPRdrFGqLalu8e4hD7+aXtHNEwqV4u
- 0xnpQqkbQZAI/7fQP3e6trujqyc015Idb4kAEp9dS8Jr7jZMtrGwUPI6od2NlI+PZ34iUPFyykg
- jPR8AzPaEzV+C39+8zEAVk0TRWI=
-X-Google-Smtp-Source: AGHT+IHREcClpgOZYWkldUmEW1VeuIHBwN7FcqTiXW5RBfeNgqfuxGV8vxHYXejoW0ZSQb6RmXG6M8MWj2zaaQuUiPM=
-X-Received: by 2002:a05:651c:1986:b0:383:789:3c3 with SMTP id
- 38308e7fff4ca-3830789111amr25762661fa.2.1767943788890; Thu, 08 Jan 2026
- 23:29:48 -0800 (PST)
-MIME-Version: 1.0
-References: <20260108151650.16329-1-max.chou@sifive.com>
- <20260108151650.16329-3-max.chou@sifive.com>
-In-Reply-To: <20260108151650.16329-3-max.chou@sifive.com>
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-Date: Fri, 9 Jan 2026 15:29:37 +0800
-X-Gm-Features: AQt7F2qREcIsxFADbn6hZy-AYEJqLKV0LsWe3_6ToBbvB-uP0hlc_irAxphb98I
-Message-ID: <CAGL8uCX46bm9DsT2Tk=roW8VucY--G5fc10PuqJ=aQgo7y5+8g@mail.gmail.com>
-Subject: Re: [PATCH 02/18] fpu/softfloat: Add OCP(Open Compute Project) OFP8
- data type
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
+ bh=/7pYM6lBVFGLLggdXK1nu+u+2Wn2Ym5oWD++g63pIYs=;
+ b=PwPmHXLczQE08Y1k+fG2wvyi7AZRegUuuxc+NchAGuSjSiNtGHYAybuJsSEaw09Q0d
+ KsEq6VsdfQvmm5rlkL3TyFqEl8xUkUkZ0A7Cn2IUM9odnZfnjWTNKY7GA+vwnjDpS5kC
+ TRKGlVhYJV2KZY6p4q3oKF+3Gm9upqFUkXnf2M5sza0xP6CIA5UhdO+F+vkeblUty7AA
+ xtrUwwMzga6kiHUCUlU4A4DaORtujN/nZ1lnIUrTWpvUffbWFzoMvZBfrY8RfmBBb7SD
+ QxKc2kQ+X08SzylTsVFJIm1vFyexwknowWpEUtD7jhN2bbL0xr28ZwZJpOZXslBMH/Lm
+ V1Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767943929; x=1768548729;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/7pYM6lBVFGLLggdXK1nu+u+2Wn2Ym5oWD++g63pIYs=;
+ b=d9Bnq3dSmntNsEXlhSGCP5RqSpde+POd5HqjIGITS9D7C9g19fw64C0wynrkw/iZGg
+ c6XYb+0ZxMUi8V2rEZqJkXv65Q2GbE8Hl8mCQpG0z3ekqylYNqcor5DVhI4AW7LxdbuG
+ GdmR1dME5IYS1Y+8jzw+/jVDK5COUcsxPrkBlLswtAzM1loUkBDFoXgSCtPC9ohz9mXd
+ SMM9sQ/DRlEFftFFjn9XR2ngwtqgJ249ZIgE3xF67dJ1aaxaO6YeI0RnLCg0kxKkytpW
+ enwtU0C0KBjvENg+xiijIx8scPCxvYEAYHUsIW0to8FqcmT55lGls+G3cwDXzOnwRmYf
+ e1hA==
+X-Gm-Message-State: AOJu0Yzio16mzLs/1SPswH7TcgayoNifIp6b6q7Cz3U/RN72t2xOz4UF
+ hejwqspegZCG7hFKortN1qXOxwm6SuIPt1Lm5PtSdyZQx2fOjqJOphnCZs4BjCINx3a+1CW2ugB
+ oDjtZ9qKB6Xw2EbxPmoQsbq+q9lTPB+IkmREvuO0ya+ZPa2LJvej8hYAwfml64QS+pRtgXMT/me
+ U1bxQ2CeIvRkBVBdiyAazSxFaav6mV8ZHpABNZwSU=
+X-Gm-Gg: AY/fxX6+zwqZ4VFbZ8Bo8NOHTrAqYzpk7mXBO1PEaHFoYXxnWdIpwxkCzEQcDC5cCkT
+ /OVEAcAVSczorgdmOicQXzPy+a1FGCgMbOfkmPwQ72ufQ/L9Om3xKaIeQS05f+6qJpB5B04K7HX
+ o/3whX1pRviXT6d2+6/j1d2YWf3CQ1W3pLUVORcTFGR7mJuWNBpRQiWyuJR0S9NXhZxe2fmatR7
+ Sln/w+OuaXHgvH7ad8gi+nJR5/ZgRg8I+kTsZl50h5TgHVwg9xymhVng6HJs0oqpiMJ8I++yRsW
+ jgtemPhZ/5t+ZLvYW89w/6s6RdN+zWlI5DhkfqYqg06p99zP2bdsKtZsuukFu20O+P2/5vz8SBs
+ q0QO+KzKwJPsaSjNl5QK2yBEi92PS9b0U7nNMjV243roMniJWX2Oi3aFGjOdz3haQii/I1R5yT0
+ HvYtx5iO9vOf3+PGsi9E+rn9bqfm4NM6aABWpJSGzcJxrZTi/iMRqut+tPTSPYd+jirg==
+X-Google-Smtp-Source: AGHT+IHSF68e7Pvhvf9STHeps+ErgF0M7PSY59oLwZS22Fd6Q5AvmcfDtj0L2ph+k6sEpjb4eXdrEQ==
+X-Received: by 2002:a17:902:d550:b0:29d:9b39:c05f with SMTP id
+ d9443c01a7336-2a3ee465362mr84205955ad.10.1767943928623; 
+ Thu, 08 Jan 2026 23:32:08 -0800 (PST)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-819c52fd904sm9490421b3a.33.2026.01.08.23.32.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Jan 2026 23:32:08 -0800 (PST)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alistair Francis <Alistair.Francis@wdc.com>,
  Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::244;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-lj1-x244.google.com
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v5 2/4] target/riscv: rvv: Add Zvqdotq support
+Date: Fri,  9 Jan 2026 15:31:52 +0800
+Message-ID: <20260109073154.46251-3-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260109073154.46251-1-max.chou@sifive.com>
+References: <20260109073154.46251-1-max.chou@sifive.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,232 +109,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Max:
+Support instructions for vector dot-product extension (Zvqdotq)
+- vqdot.[vv,vx]
+- vqdotu.[vv,vx]
+- vqdotsu.[vv,vx]
+- vqdotus.vx
 
-On 1/8/2026 11:16 PM, Max Chou wrote:
-> This commit provides the implementation defined behavior flags and the basic
-> operation support for the OCP float8 data types(E4M3 & E5M2).
->
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> ---
->  fpu/softfloat-specialize.c.inc  | 57 ++++++++++++++++++++++++++-
->  include/fpu/softfloat-helpers.h | 20 ++++++++++
->  include/fpu/softfloat-types.h   | 23 +++++++++++
->  include/fpu/softfloat.h         | 70 +++++++++++++++++++++++++++++++++
->  4 files changed, 169 insertions(+), 1 deletion(-)
->
-> diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-> index ba4fa08b7b..3a3bcd22ae 100644
-> --- a/fpu/softfloat-specialize.c.inc
-> +++ b/fpu/softfloat-specialize.c.inc
-> @@ -226,6 +226,30 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
->      return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
->  }
->
-> +/*----------------------------------------------------------------------------
-> +| Returns 1 if the OCP(Open Compute Platform) FP8 value `a' is a quiet NaN;
-Open Compute Platform -> Open Compute Project
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+---
+ target/riscv/helper.h                         | 10 +++
+ target/riscv/insn32.decode                    |  9 +++
+ target/riscv/insn_trans/trans_rvzvqdotq.c.inc | 61 +++++++++++++++++++
+ target/riscv/translate.c                      |  1 +
+ target/riscv/vector_helper.c                  | 57 +++++++++++++++++
+ 5 files changed, 138 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvzvqdotq.c.inc
 
-> +| otherwise returns 0.
-> +*----------------------------------------------------------------------------*/
-> +
-> +bool float8_e4m3_is_quiet_nan(float8_e4m3 a_, float_status *status)
-> +{
-> +    return float8_e4m3_is_any_nan(a_);
-> +}
-> +
-...
-> +/*----------------------------------------------------------------------------
-> +| Returns 1 if the OCP(Open Compute Platform) FP8 value `a' is a signaling NaN;
-Open Compute Platform -> Open Compute Project
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index b785456ee0..701fa938dc 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1285,6 +1285,16 @@ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
+ DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
+ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+ 
++/* Vector dot-product functions */
++DEF_HELPER_6(vqdot_vv, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(vqdotu_vv, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(vqdotsu_vv, void, ptr, ptr, ptr, ptr, env, i32)
++
++DEF_HELPER_6(vqdot_vx, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(vqdotu_vx, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(vqdotsu_vx, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(vqdotus_vx, void, ptr, ptr, tl, ptr, env, i32)
++
+ /* CFI (zicfiss) helpers */
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(ssamoswap_disabled, void, env)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 6e35c4b1e6..bae59678cd 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -1084,3 +1084,12 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
+ sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
+ sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
+ sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
++
++# *** Zvqdotq Vector Dot-Product Extension ***
++vqdot_vv    101100 . ..... ..... 010 ..... 1010111 @r_vm
++vqdot_vx    101100 . ..... ..... 110 ..... 1010111 @r_vm
++vqdotu_vv   101000 . ..... ..... 010 ..... 1010111 @r_vm
++vqdotu_vx   101000 . ..... ..... 110 ..... 1010111 @r_vm
++vqdotsu_vv  101010 . ..... ..... 010 ..... 1010111 @r_vm
++vqdotsu_vx  101010 . ..... ..... 110 ..... 1010111 @r_vm
++vqdotus_vx  101110 . ..... ..... 110 ..... 1010111 @r_vm
+diff --git a/target/riscv/insn_trans/trans_rvzvqdotq.c.inc b/target/riscv/insn_trans/trans_rvzvqdotq.c.inc
+new file mode 100644
+index 0000000000..80134874e9
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvzvqdotq.c.inc
+@@ -0,0 +1,61 @@
++/*
++ * RISC-V translation routines for the Zvqdotq vector dot-product extension
++ *
++ * Copyright (C) 2025 SiFive, Inc.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++static bool vext_zvqdotq_base_check(DisasContext *s)
++{
++    return s->cfg_ptr->ext_zvqdotq && s->sew == MO_32;
++}
++
++static bool vext_vqdotq_opivv_check(DisasContext *s, arg_rmrr *a)
++{
++    return vext_zvqdotq_base_check(s) && opivv_check(s, a);
++}
++
++#define GEN_VQDOTQ_OPIVV_TRANS(NAME, CHECK)              \
++static bool trans_##NAME(DisasContext *s, arg_rmrr *a)   \
++{                                                        \
++    if (CHECK(s, a)) {                                   \
++        return opivv_trans(a->rd, a->rs1, a->rs2, a->vm, \
++                           gen_helper_##NAME, s);        \
++    }                                                    \
++    return false;                                        \
++}
++
++GEN_VQDOTQ_OPIVV_TRANS(vqdot_vv, vext_vqdotq_opivv_check)
++GEN_VQDOTQ_OPIVV_TRANS(vqdotu_vv, vext_vqdotq_opivv_check)
++GEN_VQDOTQ_OPIVV_TRANS(vqdotsu_vv, vext_vqdotq_opivv_check)
++
++static bool vext_vqdotq_opivx_check(DisasContext *s, arg_rmrr *a)
++{
++    return vext_zvqdotq_base_check(s) && opivx_check(s, a);
++}
++
++#define GEN_VQDOTQ_OPIVX_TRANS(NAME, CHECK)              \
++static bool trans_##NAME(DisasContext *s, arg_rmrr *a)   \
++{                                                        \
++    if (CHECK(s, a)) {                                   \
++        return opivx_trans(a->rd, a->rs1, a->rs2, a->vm, \
++                           gen_helper_##NAME, s);        \
++    }                                                    \
++    return false;                                        \
++}
++
++GEN_VQDOTQ_OPIVX_TRANS(vqdot_vx, vext_vqdotq_opivx_check)
++GEN_VQDOTQ_OPIVX_TRANS(vqdotu_vx, vext_vqdotq_opivx_check)
++GEN_VQDOTQ_OPIVX_TRANS(vqdotsu_vx, vext_vqdotq_opivx_check)
++GEN_VQDOTQ_OPIVX_TRANS(vqdotus_vx, vext_vqdotq_opivx_check)
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index f687c75fe4..3d8eaeecb7 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1207,6 +1207,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_rvzfh.c.inc"
+ #include "insn_trans/trans_rvk.c.inc"
+ #include "insn_trans/trans_rvvk.c.inc"
++#include "insn_trans/trans_rvzvqdotq.c.inc"
+ #include "insn_trans/trans_privileged.c.inc"
+ #include "insn_trans/trans_svinval.c.inc"
+ #include "insn_trans/trans_rvbf16.c.inc"
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 2de3358ee8..0666ab8855 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -921,6 +921,10 @@ GEN_VEXT_ST_WHOLE(vs8r_v, int8_t, ste_b_tlb, ste_b_host)
+ #define WOP_SSU_B int16_t, int8_t, uint8_t, int16_t, uint16_t
+ #define WOP_SSU_H int32_t, int16_t, uint16_t, int32_t, uint32_t
+ #define WOP_SSU_W int64_t, int32_t, uint32_t, int64_t, uint64_t
++#define QOP_SSS_B int32_t, int8_t, int8_t, int32_t, int32_t
++#define QOP_SUS_B int32_t, uint8_t, int8_t, uint32_t, int32_t
++#define QOP_SSU_B int32_t, int8_t, uint8_t, int32_t, uint32_t
++#define QOP_UUU_B uint32_t, uint8_t, uint8_t, uint32_t, uint32_t
+ #define NOP_SSS_B int8_t, int8_t, int16_t, int8_t, int16_t
+ #define NOP_SSS_H int16_t, int16_t, int32_t, int16_t, int32_t
+ #define NOP_SSS_W int32_t, int32_t, int64_t, int32_t, int64_t
+@@ -5473,3 +5477,56 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
+ GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
+ GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
+ GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
++
++
++/* Vector dot-product instructions. */
++
++#define OPMVV_VQDOTQ(NAME, TD, T1, T2, TX1, TX2, HD, HS1, HS2)          \
++static void do_##NAME(void *vd, void *vs1, void *vs2, int i)            \
++{                                                                       \
++    int idx;                                                            \
++    TX1 *r1_buf = (TX1 *)vs1 + HD(i);                                   \
++    TX2 *r2_buf = (TX2 *)vs2 + HD(i);                                   \
++    TD acc = ((TD *)vd)[HD(i)];                                         \
++                                                                        \
++    for (idx = 0; idx < 4; ++idx) {                                     \
++        T1 r1 = ((T1 *)r1_buf)[HS1(idx)];                               \
++        T2 r2 = ((T2 *)r2_buf)[HS2(idx)];                               \
++        acc += (TD)r1 * (TD)r2;                                         \
++    }                                                                   \
++    ((TD *)vd)[HD(i)] = acc;                                            \
++}
++
++RVVCALL(OPMVV_VQDOTQ, vqdot_vv, QOP_SSS_B, H4, H1, H1)
++RVVCALL(OPMVV_VQDOTQ, vqdotu_vv, QOP_UUU_B, H4, H1, H1)
++RVVCALL(OPMVV_VQDOTQ, vqdotsu_vv, QOP_SUS_B, H4, H1, H1)
++
++GEN_VEXT_VV(vqdot_vv, 4)
++GEN_VEXT_VV(vqdotu_vv, 4)
++GEN_VEXT_VV(vqdotsu_vv, 4)
++
++#define OPMVX_VQDOTQ(NAME, TD, T1, T2, TX1, TX2, HD, HS1, HS2)          \
++static void do_##NAME(void *vd, target_long s1, void *vs2, int i)       \
++{                                                                       \
++    int idx;                                                            \
++    TX1 *r1_buf = (TX1 *)&s1;                                           \
++    TX2 *r2_buf = (TX2 *)vs2 + HD(i);                                   \
++    TD acc = ((TD *)vd)[HD(i)];                                         \
++                                                                        \
++    for (idx = 0; idx < 4; ++idx) {                                     \
++        T1 r1 = ((T1 *)r1_buf)[HS1(idx)];                               \
++        T2 r2 = ((T2 *)r2_buf)[HS2(idx)];                               \
++        acc += (TD)r1 * (TD)r2;                                         \
++    }                                                                   \
++    ((TD *)vd)[HD(i)] = acc;                                            \
++}
++
++RVVCALL(OPMVX_VQDOTQ, vqdot_vx, QOP_SSS_B, H4, H1, H1)
++RVVCALL(OPMVX_VQDOTQ, vqdotu_vx, QOP_UUU_B, H4, H1, H1)
++RVVCALL(OPMVX_VQDOTQ, vqdotsu_vx, QOP_SUS_B, H4, H1, H1)
++RVVCALL(OPMVX_VQDOTQ, vqdotus_vx, QOP_SSU_B, H4, H1, H1)
++
++GEN_VEXT_VX(vqdot_vx, 4)
++GEN_VEXT_VX(vqdotu_vx, 4)
++GEN_VEXT_VX(vqdotsu_vx, 4)
++GEN_VEXT_VX(vqdotus_vx, 4)
+-- 
+2.43.7
 
-Thanks,
-Chao
-
-> +| otherwise returns 0.
-> +*----------------------------------------------------------------------------*/
-> +
-> +bool float8_e4m3_is_signaling_nan(float8_e4m3 a_, float_status *status)
-> +{
-> +    if (no_signaling_nans(status)) {
-> +        return false;
-> +    } else {
-> +        if (snan_bit_is_one(status)) {
-> +            return float8_e4m3_is_any_nan(a_);
-> +        } else {
-> +            return false;
-> +        }
-> +    }
-> +}
-> +
-> +bool float8_e5m2_is_signaling_nan(float8_e5m2 a_, float_status *status)
-> +{
-> +    if (no_signaling_nans(status)) {
-> +        return false;
-> +    } else {
-> +        uint8_t a = float8_e5m2_val(a_);
-> +        if (snan_bit_is_one(status)) {
-> +            return ((a >> 1) & 0x3F) == 0x3F;
-> +        } else {
-> +            return (((a >> 1) & 0x3F) == 0x3E && (a & 0x1));
-> +        }
-> +    }
-> +}
-> +
->  /*----------------------------------------------------------------------------
->  | Returns 1 if the half-precision floating-point value `a' is a signaling
->  | NaN; otherwise returns 0.
-> diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
-> index 90862f5cd2..4e278a3ee3 100644
-> --- a/include/fpu/softfloat-helpers.h
-> +++ b/include/fpu/softfloat-helpers.h
-> @@ -136,6 +136,26 @@ static inline void set_no_signaling_nans(bool val, float_status *status)
->      status->no_signaling_nans = val;
->  }
->
-> +static inline void set_ocp_fp8e5m2_no_signal_nan(bool val, float_status *status)
-> +{
-> +    status->ocp_fp8e5m2_no_signal_nan = val;
-> +}
-> +
-> +static inline bool get_ocp_fp8e5m2_no_signal_nan(const float_status *status)
-> +{
-> +    return status->ocp_fp8e5m2_no_signal_nan;
-> +}
-> +
-> +static inline void set_ocp_fp8_same_canonical_nan(bool val, float_status *status)
-> +{
-> +    status->ocp_fp8_same_canonical_nan = val;
-> +}
-> +
-> +static inline bool get_ocp_fp8_same_canonical_nan(const float_status *status)
-> +{
-> +    return status->ocp_fp8_same_canonical_nan;
-> +}
-> +
->  static inline bool get_float_detect_tininess(const float_status *status)
->  {
->      return status->tininess_before_rounding;
-> diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-> index 8f82fdfc97..835dd33bf1 100644
-> --- a/include/fpu/softfloat-types.h
-> +++ b/include/fpu/softfloat-types.h
-> @@ -119,6 +119,18 @@ typedef struct {
->   */
->  typedef uint16_t bfloat16;
->
-> +/*
-> + * Software OCP(Open Compute Project) 8-bit floating point types
-> + */
-> +typedef uint8_t float8_e4m3;
-> +typedef uint8_t float8_e5m2;
-> +#define float8_e4m3_val(x) (x)
-> +#define float8_e5m2_val(x) (x)
-> +#define make_float8_e4m3(x) (x)
-> +#define make_float8_e5m2(x) (x)
-> +#define const_float8_e4m3(x) (x)
-> +#define const_float8_e5m2(x) (x)
-> +
->  /*
->   * Software IEC/IEEE floating-point underflow tininess-detection mode.
->   */
-> @@ -410,6 +422,17 @@ typedef struct float_status {
->       */
->      bool snan_bit_is_one;
->      bool no_signaling_nans;
-> +    /*
-> +     * When true, OCP FP8 E5M2 format does not generate signaling NaNs.
-> +     * RISC-V uses only quiet NaNs in its OCP FP8 implementation.
-> +     */
-> +    bool ocp_fp8e5m2_no_signal_nan;
-> +    /*
-> +     * When true, OCP FP8 formats use the same canonical NaN representation
-> +     * (0x7F) for all NaN outputs. RISC-V specifies a single canonical NaN
-> +     * for both E4M3 and E5M2.
-> +     */
-> +    bool ocp_fp8_same_canonical_nan;
->      /* should overflowed results subtract re_bias to its exponent? */
->      bool rebias_overflow;
->      /* should underflowed results add re_bias to its exponent? */
-> diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-> index c18ab2cb60..6f7259f9dd 100644
-> --- a/include/fpu/softfloat.h
-> +++ b/include/fpu/softfloat.h
-> @@ -189,6 +189,76 @@ float128 int128_to_float128(Int128, float_status *status);
->  float128 uint64_to_float128(uint64_t, float_status *status);
->  float128 uint128_to_float128(Int128, float_status *status);
->
-> +/*----------------------------------------------------------------------------
-> +| Software OCP FP8 operations.
-> +*----------------------------------------------------------------------------*/
-> +
-> +bool float8_e4m3_is_quiet_nan(float8_e4m3, float_status *status);
-> +bool float8_e4m3_is_signaling_nan(float8_e4m3, float_status *status);
-> +bool float8_e5m2_is_quiet_nan(float8_e5m2, float_status *status);
-> +bool float8_e5m2_is_signaling_nan(float8_e5m2, float_status *status);
-> +
-> +static inline bool float8_e4m3_is_any_nan(float8_e4m3 a)
-> +{
-> +    return ((float8_e4m3_val(a) & ~0x80) == 0x7f);
-> +}
-> +
-> +static inline bool float8_e5m2_is_any_nan(float8_e5m2 a)
-> +{
-> +    return ((float8_e5m2_val(a) & ~0x80) > 0x7c);
-> +}
-> +
-> +static inline bool float8_e4m3_is_neg(float8_e4m3 a)
-> +{
-> +    return float8_e4m3_val(a) >> 7;
-> +}
-> +
-> +static inline bool float8_e5m2_is_neg(float8_e5m2 a)
-> +{
-> +    return float8_e5m2_val(a) >> 7;
-> +}
-> +
-> +static inline bool float8_e4m3_is_infinity(float8_e4m3 a)
-> +{
-> +    return false;
-> +}
-> +
-> +static inline bool float8_e5m2_is_infinity(float8_e5m2 a)
-> +{
-> +    return (float8_e5m2_val(a) & 0x7f) == 0x7c;
-> +}
-> +
-> +static inline bool float8_e4m3_is_zero(float8_e4m3 a)
-> +{
-> +    return (float8_e4m3_val(a) & 0x7f) == 0;
-> +}
-> +
-> +static inline bool float8_e5m2_is_zero(float8_e5m2 a)
-> +{
-> +    return (float8_e5m2_val(a) & 0x7f) == 0;
-> +}
-> +
-> +static inline bool float8_e4m3_is_zero_or_denormal(float8_e4m3 a)
-> +{
-> +    return (float8_e4m3_val(a) & 0x78) == 0;
-> +}
-> +
-> +static inline bool float8_e5m2_is_zero_or_denormal(float8_e5m2 a)
-> +{
-> +    return (float8_e5m2_val(a) & 0x7c) == 0;
-> +}
-> +
-> +static inline bool float8_e4m3_is_normal(float8_e4m3 a)
-> +{
-> +    uint8_t em = float8_e4m3_val(a) & 0x7f;
-> +    return em >= 0x8 && em <= 0x7e;
-> +}
-> +
-> +static inline bool float8_e5m2_is_normal(float8_e5m2 a)
-> +{
-> +    return (((float8_e5m2_val(a) >> 2) + 1) & 0x1f) >= 2;
-> +}
-> +
->  /*----------------------------------------------------------------------------
->  | Software half-precision conversion routines.
->  *----------------------------------------------------------------------------*/
 
