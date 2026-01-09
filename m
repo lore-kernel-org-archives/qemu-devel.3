@@ -4,58 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A42D1A63E
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB17D1A63D
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Jan 2026 14:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veDms-0007H0-53; Fri, 09 Jan 2026 09:48:28 -0500
+	id 1veDn7-0007Rv-Hp; Fri, 09 Jan 2026 09:48:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1veDmp-0007EG-Jz
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:48:24 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veDmu-0007HO-Io
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:48:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1veDmm-0001F2-Uk
- for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:48:23 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dnl4n0CZDzHnH6L;
- Fri,  9 Jan 2026 22:48:09 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 47D6C40572;
- Fri,  9 Jan 2026 22:48:19 +0800 (CST)
-Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
- dubpeml100005.china.huawei.com (7.214.146.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.36; Fri, 9 Jan 2026 14:48:18 +0000
-To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>, Davidlohr Bueso
- <dave@stgolabs.net>
-CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, Ravi Shankar
- <venkataravis@micron.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH qemu v5 6/7] hw/cxl: Support type3 HDM-DB
-Date: Fri, 9 Jan 2026 14:45:10 +0000
-Message-ID: <20260109144511.557781-7-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260109144511.557781-1-Jonathan.Cameron@huawei.com>
-References: <20260109144511.557781-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1veDms-0001FS-2g
+ for qemu-devel@nongnu.org; Fri, 09 Jan 2026 09:48:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1767970103;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=FsAI5wCpDu0bodzzeSWErlN48XJI1pElJOgNqYaBuho=;
+ b=aSHQWLqfzEJEdjoZS0rseHnRpnKvYqa8dive44LxsPkCKSkLOesZYdmKARpKkttcosCB8O
+ J8royHKcp500EMWLXzX4/9r1lyWgt9tPy9O1w0G37W/ui+w7eu6GP2quvCNTRY33L6meKR
+ PWwyew2r5NnUSiBMFUs9Ll4xJyfHJi0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-20-YQRyiLrAP8iigHAOPATdLA-1; Fri, 09 Jan 2026 09:48:22 -0500
+X-MC-Unique: YQRyiLrAP8iigHAOPATdLA-1
+X-Mimecast-MFC-AGG-ID: YQRyiLrAP8iigHAOPATdLA_1767970101
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-432c05971c6so2074299f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 06:48:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1767970101; x=1768574901; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=FsAI5wCpDu0bodzzeSWErlN48XJI1pElJOgNqYaBuho=;
+ b=Jt5wBKtmIUCOk56xbfuXt/+f2WBPBiZ9jq+TjxJfUHG9dlLKcEmRyAAMNfUp3Fp1fQ
+ uq1DTA3/0qbOV1ROAu3CF80vmr1FEf9DtL9e6MaywgdzuYchDaE1DCDjg4Sehd/xypad
+ UPr5PEizX/bAmaMHbfxKRlLasZ3uPYdh3z69zigR9KRsDjl0NLzGnFcrsICeh9hs2L4S
+ THUZwnkH/7qpmHqe3/RfGksccKKm5ydr2sPaJ+SbICY8v4YCrEXO3H6CpYvagsTPQKa3
+ po8dSFJcw7lsnAskkzuckGYgPDLGDBIaawG3t7QgO8tkvTGiDdOVgU9L5vDwZJlz5zza
+ CwQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767970101; x=1768574901;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FsAI5wCpDu0bodzzeSWErlN48XJI1pElJOgNqYaBuho=;
+ b=TWC4D+enboquk/4NrFvfNaNML715Xj5FFpGllmrXtoJWYAm+1pePyUIzMCf4wEGcip
+ +W9JwztABSy6IQ8lMvADxJM8p2tqEH5gGbmfwgfsREe7whjdAykGaKDUx5TLff1QhECC
+ vry1xCTELJEl12MqvdLLjvRGNl8L2CWtK8ia0hJMmRW5C46lkROpFtd9fZ/ZhfZEI/HE
+ rs5kDadsMXoKuL7/DJ79k2i+Jodyg4nw1ZiGNy9kQJZhR0EtLjBDWdZoToa1BE0xia9U
+ ShE5NuAt9clJ88YJXbuHf7qXUCllkg1+vjpylC9PEeFkdqNSdlvW+BpQiuX+BReP+eoc
+ XDjg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcWlMPQcFNABNyf3X55apuo9vVrxKyxxNHfy3pFk7dC8Ltpzs7KC9QBl4v+GaxZGQTCfbjuRYjOLA7@nongnu.org
+X-Gm-Message-State: AOJu0YzsLTNBOoYK1kbumwxhyuR5J4QuyWHUYo/m3tvdyeLtcH4Gd4nk
+ KRZytlS236HdTmq3MDs2d3t1NsbwW4yQmwLcfjGlRjcKlDmGaHkDkQp/It0qTnAnSLi8CDCEqeX
+ sHfWCbB5rbP3CJU33gfqT8fUgZum5s2BoDKo26ZBIIDAnrsCWJlYvMbXi
+X-Gm-Gg: AY/fxX55ojfsIluTDK4/+QGX/2loeCu81IdC1OlSjz43zVs9AA6dMpjRCexDwKmWEgO
+ GfGYKzGiGVe48UW3RjSvoBkTo6ncZwHlobWGB4jxewOInKM5fpO3rwXqzT6BtXI23cka7wYYTnY
+ gMurtaQPznFWYDjbx22+r+Oh9eGVlbf3HPxLiTmPHvATHYcATe2Xh2DeNUcTQDDLbsw67Gk+553
+ 9T7uxTmD0Tk5lx4fvZKeqmA7jDE1ohz9CTcpr/CKzuzPcj8633cppBKhjLG18AvRYxQDnhkVpS7
+ hZCKO8rA9sOzP+crrlxU9E8F2Rq0Bq4lpc8QGmy9Q6zqvxjIsK1m9drxftVp+w03A9QgRCaIsea
+ 3fF+EEwxiBLZWafo/DtGRgIfoIP9J8yT5hbeUcUe367ud58M3
+X-Received: by 2002:a05:6000:a88:b0:432:c0b8:ee42 with SMTP id
+ ffacd0b85a97d-432c0b8ef25mr12242143f8f.11.1767970101173; 
+ Fri, 09 Jan 2026 06:48:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFjInm2AX+yFjCn0CGoGmzlhr8s2iXQRpTdueGZO9iq88DczpIwLU+jBxjlgxtaiTI2NEC5gw==
+X-Received: by 2002:a05:6000:a88:b0:432:c0b8:ee42 with SMTP id
+ ffacd0b85a97d-432c0b8ef25mr12242110f8f.11.1767970100691; 
+ Fri, 09 Jan 2026 06:48:20 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd0daa84sm22653363f8f.2.2026.01.09.06.48.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Jan 2026 06:48:19 -0800 (PST)
+Message-ID: <361f986e-c053-424d-b0f5-091f3872650c@redhat.com>
+Date: Fri, 9 Jan 2026 15:48:19 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 0/4] Implement ERRATA_772415 quirk for VTD
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20260106062808.316574-1-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260106062808.316574-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,466 +168,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+On 1/6/26 07:28, Zhenzhong Duan wrote:
+> Hi,
+> 
+> Based on Cédric's suggestions[1], The nesting series v8 is split to
+> "base nesting series" + "ERRATA_772415_SPR17 quirk series", this is the
+> ERRATA_772415_SPR17 quirk series.
+> 
+> On a system influenced by ERRATA_772415, IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
+> is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the readonly
+> range mapped on second stage page table could still be written.
+> 
+> Reference from 4th Gen Intel Xeon Processor Scalable Family Specification
+> Update, Errata Details, SPR17.
+> Link https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/eagle-stream/sapphire-rapids-specification-update/
+> Backup link https://cdrdv2.intel.com/v1/dl/getContent/772415
+> 
+> Also copied the SPR17 details from above link:
+> "Problem: When remapping hardware is configured by system software in
+> scalable mode as Nested (PGTT=011b) and with PWSNP field Set in the
+> PASID-table-entry, it may Set Accessed bit and Dirty bit (and Extended
+> Access bit if enabled) in first-stage page-table entries even when
+> second-stage mappings indicate that corresponding first-stage page-table
+> is Read-Only.
+> 
+> Implication: Due to this erratum, pages mapped as Read-only in second-stage
+> page-tables may be modified by remapping hardware Access/Dirty bit updates.
+> 
+> Workaround: None identified. System software enabling nested translations
+> for a VM should ensure that there are no read-only pages in the
+> corresponding second-stage mappings."
+> 
+> QEMU code can be found at [2], it's based after below two series:
+> 
+> [PATCH v10 00/19] intel_iommu: Enable first stage translation for passthrough device
+> [PATCH v6 0/9] vfio: relax the vIOMMU check
+> 
+> Thanks
+> Zhenzhong
+> 
+> Changelog:
+> v10:
+> - All headers under include/hw/ have been moved to include/hw/core/, do
+>    the same for iommu.h (Cédric)
+> 
+> v9:
+> This is a new split from nesting series, see the link[3] for history changelog.
+> 
+> [1] https://lore.kernel.org/qemu-devel/bbc8412b-25c3-4c95-9fde-a1c9c29b54ce@redhat.com/
+> [2] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_ERRATA_772415.v10
+> [3] https://lore.kernel.org/qemu-devel/20251117093729.1121324-1-zhenzhong.duan@intel.com/
+> 
+> 
+> Zhenzhong Duan (4):
+>    hw/pci: Introduce pci_device_get_host_iommu_quirks()
+>    intel_iommu_accel: Implement get_host_iommu_quirks() callback
+>    vfio/listener: Bypass readonly region for dirty tracking
+>    Workaround for ERRATA_772415_SPR17
+> 
+>   docs/devel/vfio-iommufd.rst      |  9 ++++++
+>   hw/i386/intel_iommu_accel.h      |  5 ++++
+>   include/hw/core/iommu.h          |  5 ++++
+>   include/hw/pci/pci.h             | 31 ++++++++++++++++++++
+>   include/hw/vfio/vfio-container.h |  1 +
+>   include/hw/vfio/vfio-device.h    |  3 ++
+>   hw/i386/intel_iommu.c            |  2 ++
+>   hw/i386/intel_iommu_accel.c      | 21 ++++++++++++++
+>   hw/pci/pci.c                     | 12 ++++++++
+>   hw/vfio/device.c                 | 14 +++++++++
+>   hw/vfio/iommufd.c                |  9 +++++-
+>   hw/vfio/listener.c               | 50 +++++++++++++++++++++++++-------
+>   hw/vfio/trace-events             |  1 +
+>   13 files changed, 151 insertions(+), 12 deletions(-)
 
-Add basic plumbing for memory expander devices that support Back
-Invalidation. This introduces a 'hdm-db=on|off' parameter and
-exposes the relevant BI RT/Decoder component cachemem registers.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Some noteworthy properties:
- - Devices require enabling Flit mode across the CXL topology.
- - Explicit BI-ID commit is required.
- - HDM decoder support both host and dev coherency models.
+Thanks,
 
-Tested-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- docs/system/devices/cxl.rst         |  23 +++++
- include/hw/cxl/cxl_component.h      |  54 ++++++++++-
- include/hw/cxl/cxl_device.h         |   3 +
- hw/cxl/cxl-component-utils.c        | 142 ++++++++++++++++++++++++++--
- hw/mem/cxl_type3.c                  |   9 +-
- hw/pci-bridge/cxl_downstream.c      |   2 +-
- hw/pci-bridge/cxl_root_port.c       |   3 +-
- hw/pci-bridge/cxl_upstream.c        |   2 +-
- hw/pci-bridge/pci_expander_bridge.c |   2 +-
- 9 files changed, 225 insertions(+), 15 deletions(-)
-
-diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
-index ca15a0da1c1d..9d0771cdfd73 100644
---- a/docs/system/devices/cxl.rst
-+++ b/docs/system/devices/cxl.rst
-@@ -384,6 +384,29 @@ An example of 4 devices below a switch suitable for 1, 2 or 4 way interleave::
-   -device cxl-type3,bus=swport3,persistent-memdev=cxl-mem3,lsa=cxl-lsa3,id=cxl-pmem3,sn=0x4 \
-   -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
- 
-+An example of 4 type3 devices with volatile memory below a switch. Two of the devices
-+use HDM-DB for coherence, which requires operating in Flit mode::
-+
-+  qemu-system-x86_64 -M q35,cxl=on -m 4G,maxmem=8G,slots=8 -smp 4 \
-+  ...
-+  -object memory-backend-ram,id=cxl-mem0,share=on,size=256M \
-+  -object memory-backend-ram,id=cxl-mem1,share=on,size=256M \
-+  -object memory-backend-ram,id=cxl-mem2,share=on,size=256M \
-+  -object memory-backend-ram,id=cxl-mem3,share=on,size=256M \
-+  -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-+  -device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0 \
-+  -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1 \
-+  -device cxl-upstream,bus=root_port0,id=us0,x-256b-flit=on \
-+  -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
-+  -device cxl-type3,bus=swport0,volatile-memdev=cxl-mem0,id=cxl-mem0,sn=0x1,x-256b-flit=on,hdm-db=on \
-+  -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
-+  -device cxl-type3,bus=swport1,volatile-memdev=cxl-mem1,id=cxl-mem1,sn=0x2,x-256b-flit=on,hdm-db=on \
-+  -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6 \
-+  -device cxl-type3,bus=swport2,volatile-memdev=cxl-mem2,id=cxl-mem2,sn=0x3 \
-+  -device cxl-downstream,port=3,bus=us0,id=swport3,chassis=0,slot=7 \
-+  -device cxl-type3,bus=swport3,volatile-memdev=cxl-mem3,id=cxl-mem3,sn=0x4 \
-+  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
-+
- A simple arm/virt example featuring a single direct connected CXL Type 3
- Volatile Memory device::
- 
-diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-index 1f167d3ef79b..ffc82202206c 100644
---- a/include/hw/cxl/cxl_component.h
-+++ b/include/hw/cxl/cxl_component.h
-@@ -67,6 +67,8 @@ CXLx_CAPABILITY_HEADER(LINK, 2)
- CXLx_CAPABILITY_HEADER(HDM, 3)
- CXLx_CAPABILITY_HEADER(EXTSEC, 4)
- CXLx_CAPABILITY_HEADER(SNOOP, 5)
-+CXLx_CAPABILITY_HEADER(BI_RT, 6)
-+CXLx_CAPABILITY_HEADER(BI_DECODER, 7)
- 
- /*
-  * Capability structures contain the actual registers that the CXL component
-@@ -211,10 +213,55 @@ HDM_DECODER_INIT(3);
-     (CXL_IDE_REGISTERS_OFFSET + CXL_IDE_REGISTERS_SIZE)
- #define CXL_SNOOP_REGISTERS_SIZE   0x8
- 
--QEMU_BUILD_BUG_MSG((CXL_SNOOP_REGISTERS_OFFSET +
--                    CXL_SNOOP_REGISTERS_SIZE) >= 0x1000,
-+#define CXL_BI_RT_CAP_VERSION 1
-+#define CXL_BI_RT_REGISTERS_OFFSET \
-+    (CXL_SNOOP_REGISTERS_OFFSET + CXL_SNOOP_REGISTERS_SIZE)
-+#define CXL_BI_RT_REGISTERS_SIZE   0xC
-+
-+REG32(CXL_BI_RT_CAPABILITY, CXL_BI_RT_REGISTERS_OFFSET)
-+    FIELD(CXL_BI_RT_CAPABILITY, EXPLICIT_COMMIT, 0, 1)
-+REG32(CXL_BI_RT_CTRL, CXL_BI_RT_REGISTERS_OFFSET + 0x4)
-+    FIELD(CXL_BI_RT_CTRL, COMMIT, 0, 1)
-+REG32(CXL_BI_RT_STATUS, CXL_BI_RT_REGISTERS_OFFSET + 0x8)
-+    FIELD(CXL_BI_RT_STATUS, COMMITTED, 0, 1)
-+    FIELD(CXL_BI_RT_STATUS, ERR_NOT_COMMITTED, 1, 1)
-+    FIELD(CXL_BI_RT_STATUS, COMMIT_TMO_SCALE, 8, 4)
-+    FIELD(CXL_BI_RT_STATUS, COMMIT_TMO_BASE, 12, 4)
-+
-+/* CXL r3.2 8.2.4.27 - CXL BI Decoder Capability Structure */
-+#define CXL_BI_DECODER_CAP_VERSION 1
-+#define CXL_BI_DECODER_REGISTERS_OFFSET \
-+    (CXL_BI_RT_REGISTERS_OFFSET + CXL_BI_RT_REGISTERS_SIZE)
-+#define CXL_BI_DECODER_REGISTERS_SIZE   0xC
-+
-+REG32(CXL_BI_DECODER_CAPABILITY, CXL_BI_DECODER_REGISTERS_OFFSET)
-+    FIELD(CXL_BI_DECODER_CAPABILITY, HDM_D, 0, 1)
-+    FIELD(CXL_BI_DECODER_CAPABILITY, EXPLICIT_COMMIT, 1, 1)
-+REG32(CXL_BI_DECODER_CTRL, CXL_BI_DECODER_REGISTERS_OFFSET + 0x4)
-+    FIELD(CXL_BI_DECODER_CTRL, BI_FW, 0, 1)
-+    FIELD(CXL_BI_DECODER_CTRL, BI_ENABLE, 1, 1)
-+    FIELD(CXL_BI_DECODER_CTRL, COMMIT, 2, 1)
-+REG32(CXL_BI_DECODER_STATUS, CXL_BI_DECODER_REGISTERS_OFFSET + 0x8)
-+    FIELD(CXL_BI_DECODER_STATUS, COMMITTED, 0, 1)
-+    FIELD(CXL_BI_DECODER_STATUS, ERR_NOT_COMMITTED, 1, 1)
-+    FIELD(CXL_BI_DECODER_STATUS, COMMIT_TMO_SCALE, 8, 4)
-+    FIELD(CXL_BI_DECODER_STATUS, COMMIT_TMO_BASE, 12, 4)
-+
-+QEMU_BUILD_BUG_MSG((CXL_BI_DECODER_REGISTERS_OFFSET +
-+                    CXL_BI_DECODER_REGISTERS_SIZE) >= 0x1000,
-                    "No space for registers");
- 
-+/* track BI explicit commit handling for route table and decoder */
-+enum {
-+    CXL_BISTATE_RT = 0,
-+    CXL_BISTATE_DECODER,
-+    CXL_BISTATE_MAX
-+};
-+
-+typedef struct bi_state {
-+    uint64_t last_commit;  /* last 0->1 transition */
-+} BIState;
-+
- typedef struct component_registers {
-     /*
-      * Main memory region to be registered with QEMU core.
-@@ -259,6 +306,7 @@ typedef struct cxl_component {
-     };
- 
-     CDATObject cdat;
-+    BIState bi_state[CXL_BISTATE_MAX];
- } CXLComponentState;
- 
- void cxl_component_register_block_init(Object *obj,
-@@ -266,7 +314,7 @@ void cxl_component_register_block_init(Object *obj,
-                                        const char *type);
- void cxl_component_register_init_common(uint32_t *reg_state,
-                                         uint32_t *write_msk,
--                                        enum reg_type type);
-+                                        enum reg_type type, bool bi);
- 
- void cxl_component_create_dvsec(CXLComponentState *cxl_cstate,
-                                 enum reg_type cxl_dev_type, uint16_t length,
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index d2440b0f0f6b..0cd6a81d67e1 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -625,6 +625,9 @@ struct CXLType3Dev {
-     CXLMemECSReadAttrs ecs_attrs;
-     CXLMemECSWriteAttrs ecs_wr_attrs;
- 
-+    /* BI flows */
-+    bool hdmdb;
-+
-     struct dynamic_capacity {
-         HostMemoryBackend *host_dc;
-         AddressSpace host_dc_as;
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 91770f103a85..213099402262 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -71,10 +71,40 @@ static uint64_t cxl_cache_mem_read_reg(void *opaque, hwaddr offset,
-     case 4:
-         if (cregs->special_ops && cregs->special_ops->read) {
-             return cregs->special_ops->read(cxl_cstate, offset, 4);
--        } else {
--            QEMU_BUILD_BUG_ON(sizeof(*cregs->cache_mem_registers) != 4);
--            return cregs->cache_mem_registers[offset / 4];
-         }
-+
-+        QEMU_BUILD_BUG_ON(sizeof(*cregs->cache_mem_registers) != 4);
-+
-+        if (offset == A_CXL_BI_RT_STATUS ||
-+            offset == A_CXL_BI_DECODER_STATUS) {
-+            int type;
-+            uint64_t started;
-+
-+            type = (offset == A_CXL_BI_RT_STATUS) ?
-+                    CXL_BISTATE_RT : CXL_BISTATE_DECODER;
-+            started = cxl_cstate->bi_state[type].last_commit;
-+
-+            if (started) {
-+                uint32_t *cache_mem = cregs->cache_mem_registers;
-+                uint32_t val = cache_mem[offset / 4];
-+                uint64_t now;
-+                int set;
-+
-+                now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
-+                /* arbitrary 100 ms to do the commit */
-+                set = !!(now >= started + 100);
-+
-+                if (offset == A_CXL_BI_RT_STATUS) {
-+                    val = FIELD_DP32(val, CXL_BI_RT_STATUS, COMMITTED, set);
-+                } else {
-+                    val = FIELD_DP32(val, CXL_BI_DECODER_STATUS, COMMITTED,
-+                                     set);
-+                }
-+                stl_le_p((uint8_t *)cache_mem + offset, val);
-+            }
-+        }
-+
-+        return cregs->cache_mem_registers[offset / 4];
-     case 8:
-         qemu_log_mask(LOG_UNIMP,
-                       "CXL 8 byte cache mem registers not implemented\n");
-@@ -118,6 +148,47 @@ static void dumb_hdm_handler(CXLComponentState *cxl_cstate, hwaddr offset,
-     stl_le_p((uint8_t *)cache_mem + offset, value);
- }
- 
-+static void bi_handler(CXLComponentState *cxl_cstate, hwaddr offset,
-+                            uint32_t value)
-+{
-+    ComponentRegisters *cregs = &cxl_cstate->crb;
-+    uint32_t sts, *cache_mem = cregs->cache_mem_registers;
-+    bool to_commit = false;
-+    int type;
-+
-+    switch (offset) {
-+    case A_CXL_BI_RT_CTRL:
-+        to_commit = FIELD_EX32(value, CXL_BI_RT_CTRL, COMMIT);
-+        if (to_commit) {
-+            sts = cxl_cache_mem_read_reg(cxl_cstate,
-+                                         R_CXL_BI_RT_STATUS, 4);
-+            sts = FIELD_DP32(sts, CXL_BI_RT_STATUS, COMMITTED, 0);
-+            stl_le_p((uint8_t *)cache_mem + R_CXL_BI_RT_STATUS, sts);
-+            type = CXL_BISTATE_RT;
-+        }
-+        break;
-+    case A_CXL_BI_DECODER_CTRL:
-+        to_commit = FIELD_EX32(value, CXL_BI_DECODER_CTRL, COMMIT);
-+        if (to_commit) {
-+            sts = cxl_cache_mem_read_reg(cxl_cstate,
-+                                         R_CXL_BI_DECODER_STATUS, 4);
-+            sts = FIELD_DP32(sts, CXL_BI_DECODER_STATUS, COMMITTED, 0);
-+            stl_le_p((uint8_t *)cache_mem + R_CXL_BI_DECODER_STATUS, sts);
-+            type = CXL_BISTATE_DECODER;
-+        }
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    if (to_commit) {
-+        cxl_cstate->bi_state[type].last_commit =
-+                qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
-+    }
-+
-+    stl_le_p((uint8_t *)cache_mem + offset, value);
-+}
-+
- static void cxl_cache_mem_write_reg(void *opaque, hwaddr offset, uint64_t value,
-                                     unsigned size)
- {
-@@ -141,6 +212,9 @@ static void cxl_cache_mem_write_reg(void *opaque, hwaddr offset, uint64_t value,
-         if (offset >= A_CXL_HDM_DECODER_CAPABILITY &&
-             offset <= A_CXL_HDM_DECODER3_TARGET_LIST_HI) {
-             dumb_hdm_handler(cxl_cstate, offset, value);
-+        } else if (offset == A_CXL_BI_RT_CTRL ||
-+                   offset == A_CXL_BI_DECODER_CTRL) {
-+            bi_handler(cxl_cstate, offset, value);
-         } else {
-             cregs->cache_mem_registers[offset / 4] = value;
-         }
-@@ -230,7 +304,7 @@ static void ras_init_common(uint32_t *reg_state, uint32_t *write_msk)
- }
- 
- static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
--                            enum reg_type type)
-+                            enum reg_type type, bool bi)
- {
-     int decoder_count = CXL_HDM_DECODER_COUNT;
-     int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
-@@ -255,7 +329,9 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
-                      UIO_DECODER_COUNT, 0);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, MEMDATA_NXM_CAP, 0);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
--                     SUPPORTED_COHERENCY_MODEL, 0); /* Unknown */
-+                     SUPPORTED_COHERENCY_MODEL,
-+                     /* host+dev or Unknown */
-+                     type == CXL2_TYPE3_DEVICE && bi ? 3 : 0);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_GLOBAL_CONTROL,
-                      HDM_DECODER_ENABLE, 0);
-     write_msk[R_CXL_HDM_DECODER_GLOBAL_CONTROL] = 0x3;
-@@ -278,9 +354,43 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
-     }
- }
- 
-+static void bi_rt_init_common(uint32_t *reg_state, uint32_t *write_msk)
-+{
-+    /* switch usp must commit the new BI-ID, timeout of 2secs */
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_CAPABILITY, EXPLICIT_COMMIT, 1);
-+
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_CTRL, COMMIT, 0);
-+    write_msk[R_CXL_BI_RT_CTRL] = 0x1;
-+
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_STATUS, COMMITTED, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_STATUS, ERR_NOT_COMMITTED, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_STATUS, COMMIT_TMO_SCALE, 0x6);
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_STATUS, COMMIT_TMO_BASE, 0x2);
-+}
-+
-+static void bi_decoder_init_common(uint32_t *reg_state, uint32_t *write_msk,
-+                                   enum reg_type type)
-+{
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CAPABILITY, HDM_D, 0);
-+    /* switch dsp must commit the new BI-ID, timeout of 2secs */
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CAPABILITY, EXPLICIT_COMMIT,
-+                     (type != CXL2_ROOT_PORT && type != CXL2_TYPE3_DEVICE));
-+
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CTRL, BI_FW, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CTRL, BI_ENABLE, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CTRL, COMMIT, 0);
-+    write_msk[R_CXL_BI_DECODER_CTRL] = 0x7;
-+
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, COMMITTED, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, ERR_NOT_COMMITTED, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, COMMIT_TMO_SCALE, 0x6);
-+    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, COMMIT_TMO_BASE, 0x2);
-+}
-+
- void cxl_component_register_init_common(uint32_t *reg_state,
-                                         uint32_t *write_msk,
--                                        enum reg_type type)
-+                                        enum reg_type type,
-+                                        bool bi)
- {
-     int caps = 0;
- 
-@@ -320,7 +430,7 @@ void cxl_component_register_init_common(uint32_t *reg_state,
-     case CXL2_LOGICAL_DEVICE:
-         /* + HDM */
-         init_cap_reg(HDM, 5, 1);
--        hdm_init_common(reg_state, write_msk, type);
-+        hdm_init_common(reg_state, write_msk, type, bi);
-         /* fallthrough */
-     case CXL2_DOWNSTREAM_PORT:
-     case CXL2_DEVICE:
-@@ -335,6 +445,24 @@ void cxl_component_register_init_common(uint32_t *reg_state,
-         abort();
-     }
- 
-+    /* back invalidate */
-+    if (bi) {
-+        switch (type) {
-+        case CXL2_UPSTREAM_PORT:
-+            init_cap_reg(BI_RT, 11, CXL_BI_RT_CAP_VERSION);
-+            bi_rt_init_common(reg_state, write_msk);
-+            break;
-+        case CXL2_ROOT_PORT:
-+        case CXL2_DOWNSTREAM_PORT:
-+        case CXL2_TYPE3_DEVICE:
-+            init_cap_reg(BI_DECODER, 12, CXL_BI_DECODER_CAP_VERSION);
-+            bi_decoder_init_common(reg_state, write_msk, type);
-+            break;
-+        default:
-+            break;
-+        }
-+    }
-+
-     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
- #undef init_cap_reg
- }
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index f6907fb0c3aa..35394fabb89f 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -748,6 +748,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         return false;
-     }
- 
-+    if (!ct3d->flitmode && ct3d->hdmdb) {
-+        error_setg(errp, "hdm-db requires operating in 256b flit");
-+        return false;
-+    }
-+
-     if (ct3d->hostvmem) {
-         MemoryRegion *vmr;
-         char *v_name;
-@@ -1247,7 +1252,8 @@ static void ct3d_reset(DeviceState *dev)
- 
-     pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
-                               ct3d->flitmode);
--    cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
-+    cxl_component_register_init_common(reg_state, write_msk,
-+                                       CXL2_TYPE3_DEVICE, ct3d->hdmdb);
-     cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
- 
-     /*
-@@ -1286,6 +1292,7 @@ static const Property ct3_props[] = {
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLType3Dev,
-                                 width, PCIE_LINK_WIDTH_16),
-     DEFINE_PROP_BOOL("x-256b-flit", CXLType3Dev, flitmode, false),
-+    DEFINE_PROP_BOOL("hdm-db", CXLType3Dev, hdmdb, false),
- };
- 
- static uint64_t get_lsa_size(CXLType3Dev *ct3d)
-diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-index 64086d8ec2f2..320818a8f1ce 100644
---- a/hw/pci-bridge/cxl_downstream.c
-+++ b/hw/pci-bridge/cxl_downstream.c
-@@ -39,7 +39,7 @@ static void latch_registers(CXLDownstreamPort *dsp)
-     uint32_t *write_msk = dsp->cxl_cstate.crb.cache_mem_regs_write_mask;
- 
-     cxl_component_register_init_common(reg_state, write_msk,
--                                       CXL2_DOWNSTREAM_PORT);
-+                                       CXL2_DOWNSTREAM_PORT, true);
- }
- 
- /* TODO: Look at sharing this code across all CXL port types */
-diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
-index 5641048084a4..e2093ac39ee6 100644
---- a/hw/pci-bridge/cxl_root_port.c
-+++ b/hw/pci-bridge/cxl_root_port.c
-@@ -101,7 +101,8 @@ static void latch_registers(CXLRootPort *crp)
-     uint32_t *reg_state = crp->cxl_cstate.crb.cache_mem_registers;
-     uint32_t *write_msk = crp->cxl_cstate.crb.cache_mem_regs_write_mask;
- 
--    cxl_component_register_init_common(reg_state, write_msk, CXL2_ROOT_PORT);
-+    cxl_component_register_init_common(reg_state, write_msk, CXL2_ROOT_PORT,
-+                                       true);
- }
- 
- static void build_dvsecs(PCIDevice *d, CXLComponentState *cxl)
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index c352d11dc7b7..fb8d19539c9f 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -90,7 +90,7 @@ static void latch_registers(CXLUpstreamPort *usp)
-     uint32_t *write_msk = usp->cxl_cstate.crb.cache_mem_regs_write_mask;
- 
-     cxl_component_register_init_common(reg_state, write_msk,
--                                       CXL2_UPSTREAM_PORT);
-+                                       CXL2_UPSTREAM_PORT, usp->flitmode);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, TARGET_COUNT, 8);
- }
- 
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index 08d40aa2eae9..25dfee6a9b2d 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -301,7 +301,7 @@ static void pxb_cxl_dev_reset(DeviceState *dev)
-     uint32_t *write_msk = cxl_cstate->crb.cache_mem_regs_write_mask;
-     int dsp_count = 0;
- 
--    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC);
-+    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC, false);
-     /*
-      * The CXL specification allows for host bridges with no HDM decoders
-      * if they only have a single root port.
--- 
-2.48.1
+C.
 
 
