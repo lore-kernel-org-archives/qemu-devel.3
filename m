@@ -4,154 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E927FD277D0
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Jan 2026 05:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C807CD277CA
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Jan 2026 05:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veRZt-0005Bv-GD; Sat, 10 Jan 2026 00:31:57 -0500
+	id 1veRbP-0005g9-NV; Sat, 10 Jan 2026 00:33:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veRZq-0005Bi-Sh
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 00:31:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1veRZo-0005zn-Ja
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 00:31:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768023109;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dR1R9GbbOZ/SeWe4Yd2Q8wci3gHC3q6hKeAGQJQFG0c=;
- b=M7jKbIEoZiUGdTRYFwgURO6tQTnQ7h7r7rh/AIs6TzgFnGndjuMqeMWTjdbt1sN1TsxoO3
- /qHfeuHY7HNiy6MG0SvvM4PvESC/ARl4MwdDMLS+dA4+/gfjI+jn9HwC0Fq0lTkGMuLNac
- wWM5GLYb9vqu/VriEu7g51uraB53OJE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-cCMu9UAZP_mBlIJMvNd9Ig-1; Sat, 10 Jan 2026 00:31:48 -0500
-X-MC-Unique: cCMu9UAZP_mBlIJMvNd9Ig-1
-X-Mimecast-MFC-AGG-ID: cCMu9UAZP_mBlIJMvNd9Ig_1768023107
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43102ac1da8so3667516f8f.2
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 21:31:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768023107; x=1768627907; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=dR1R9GbbOZ/SeWe4Yd2Q8wci3gHC3q6hKeAGQJQFG0c=;
- b=HPxTBDV3j35prOE+ylivSvI9hQ0a00H7salS97Z/5VJmv1E3UmpgETo331RDtopMyh
- ygeKTbsMPGzwjjxxYYSzByOkKmwDuW+vJgRl6NkzAk25GmXQRc/+XL2s50Huum9d4MG5
- h+psxlM7ku/HrQW3fbPl0vMBasWJ9SMQo0k8OFis1DyjXsECojQ0+4JjGyoW5QAYIEAa
- k+fqDEg7LuMzZNgmujQvQ9Y1aZralsbapbtB/RdtjArduOf0ei9KBUqGviPAhVBWg5B+
- y4JV0+dJY+3ofHFi1w8LjtFPh3FAEigsnmz6M3/P5j9M15NeLqavJRLV250QHjI8ypEn
- y0MA==
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1veRbL-0005fW-PY
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 00:33:27 -0500
+Received: from mail-ed1-f53.google.com ([209.85.208.53])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1veRbH-0007Z5-Ef
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 00:33:26 -0500
+Received: by mail-ed1-f53.google.com with SMTP id
+ 4fb4d7f45d1cf-64b4b35c812so7841393a12.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 21:33:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768023107; x=1768627907;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dR1R9GbbOZ/SeWe4Yd2Q8wci3gHC3q6hKeAGQJQFG0c=;
- b=j+txJFQmvjRIc+CvB6lcJHQGL/q10j25h1vF1zh584DOlGtAf+PFUGP1eap4oJBVyP
- RPVd3svOOdn8a5FuKLslyU5bQ+8gcgNtHkATOMCqy45uE+naYZRfwuIoXuV1/+sASKtL
- MLVs/Tvi1VGHNMVNKxbogqF6xRSgPQrILV7/rVQXIFcGJ9F6nh/j+rhJTrfC237DS8QD
- CAk5vjYUlyDlqMn6bvuTCyMoIjlyTWNcQuSrqp+CgA/nf2c7UkdTfc6i1U6m82wRK8qK
- rX0KfRGg5Y5kYbQSPMIt17pkINJyA/6O+wRJCD1GLWKma4uDkGgRVG/8jzCIUuyR72P0
- 6sHQ==
-X-Gm-Message-State: AOJu0Yx3HJO96j8Nh4FUm81d4zvCHCy+qYiGLPkeBKdI+9R+dCxzw3cV
- fBsGT2uNTGzmAuXSk+E7wtsbfN6+F7FHOGiLYdhIglYrV/sq9bEvz0sQcmUhS4yuRkSQVBq/lEb
- 7eQo3gS/ZfnPUiAgvQrrWD7M9fVuLu/vFgrOYC+ZXlhVO3b9TE2FJ5W1S
-X-Gm-Gg: AY/fxX72pMuFtKmN6hZ5mMHF9Q6z46JptvmMVR9fPWr00vz30kNpnl1IHoGk0IOwRsT
- cPrZfEP1bM6sL/RiB6sPpc/tGaLed3h2xYFOR0af1W1Y6ftd/tS8PKS9G9fkccXZXSYZCM2DNJA
- 8K1vtwG5ZD+iuXaikOlzY5Nxv2REYGZEZIZb8j54+pkqISSLwnOBdOTKr5Gt9APPTgBZ8LoGTXB
- q/h3ZucwGTNuKYFvrBZsEqN82I7t7PN4EK4snmQPaE9DEnvqpZmrMPoLm1A6wYwVTtjPMesk3iS
- JoW2plVU6+A5VeyjjGyt4UgHBDSHdO3YhVFhleKRAMpNad6EgvFDtjD4fXPy5RCTqD/CLWDzpUa
- LRv8RogDHUOg5ictaBso1r+t//Aq717wwfKgkM0GaOiRbpmzzW4ecPgSK23HMbsBYx7sgQW/Fhv
- sibjmLUi7yJ5Vh1w==
-X-Received: by 2002:a05:6000:2584:b0:432:5bf9:cf22 with SMTP id
- ffacd0b85a97d-432c3760f0amr13446603f8f.3.1768023106703; 
- Fri, 09 Jan 2026 21:31:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFNZfATG1EYnjJJbTi4asf3jRUCE6holUguMeTQoMb/OeDnwCDu2g6Fz8EVNBtNz39OssOevQ==
-X-Received: by 2002:a05:6000:2584:b0:432:5bf9:cf22 with SMTP id
- ffacd0b85a97d-432c3760f0amr13446592f8f.3.1768023106335; 
- Fri, 09 Jan 2026 21:31:46 -0800 (PST)
-Received: from [192.168.10.48] ([151.61.26.160])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-432bd0860f5sm25933221f8f.0.2026.01.09.21.31.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Jan 2026 21:31:45 -0800 (PST)
-Message-ID: <44a5b8b5-ec44-41bf-9cda-164a1280362a@redhat.com>
-Date: Sat, 10 Jan 2026 06:31:43 +0100
+ d=1e100.net; s=20230601; t=1768023201; x=1768628001;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6ZJM9+Qb5R3H/JqYUjp/RvWtsDXW5WPQG7eijFBqulg=;
+ b=Ox8Z2fCDtqkKy0ccow6gvft/0vBYW6FudclJmVzHNIhQx9urFeubBju+Ee7mVcCStD
+ 0IjQW5d25F6F1Nk88ya7Po66QeelKcCn7cfj3zcOc28HGSjBTHAgDcgwhV21BIXFqdC3
+ zdq34l39kxakdO/c93tlrDkdYgWQ4vCi93socnu3KJY6t+zHJ+532Zxs1D7hevtOL61E
+ u/MMqmYYEgDmxFCBxsfzPwDGrgC+eKqvMAczifLNUwQTatsn0vieDue8uDenINcWCu2X
+ z1qg6nNH8TcDpqUVR9uKAuPnqck44DoguTFpD6GruHr+WuNRlM8RPEOxvrYIpFQ0Kvvn
+ aLAA==
+X-Gm-Message-State: AOJu0Ywiqjv5LT+odbcEuHGXzanlRuC6bAdLldmEutSWVPqLV/nIjBdk
+ pPTvzgrXT2xLRn91s999J7SxEY3fu3I9yKoKYcixj4bb607fUi/0Ohly
+X-Gm-Gg: AY/fxX6pXkudsxb0jbVC4IsgK2qN+ihRsRsJQQitH0v5hGwncjw4koj/2AU45Itu/Eq
+ HRj9q1Ye2IM6ryJMJ39+Za89YhREowXe70bIFKXS7gsxK0NRQKHXW4xLgeHu+xpIUBFAYbSmcjf
+ RmiEnYXhaC6sCN2rAXz8ZGsFRYy2FGBUWisjXlXKLd+re7fBdeXwTyIPhMpLBJESGXQoAOPYp9K
+ RgQrbgwHJEOnsMRW8fxlTLG5wE/9u0gGJ6mRe/Q+buZll98cRPJYcXdhNYfFf1wuq5ycUM9nt6B
+ DR55jQZrRgo+/AXFwbA+FrgvPhBD3ZbU7/7wrk01UQ+2DD06aIgjaZe98Z1BT+E7ZEPnmS9trZX
+ gcsJqLpAaj//ffbGixIwjhuNj9tfaTp2SVx8ZqkM0jVkU008zckCmzb+bbhwzBgUQd2kRYpc2dd
+ 4=
+X-Google-Smtp-Source: AGHT+IExWRr5JVdYHAcJM2mVArTFlt0PJWqFpyIFMwyhmdizG/7Pg9VpAVShnvab0J7VJmLTx3TlAQ==
+X-Received: by 2002:a17:907:60d4:b0:b80:413:16d6 with SMTP id
+ a640c23a62f3a-b844537804fmr1121005866b.44.1768023201181; 
+ Fri, 09 Jan 2026 21:33:21 -0800 (PST)
+Received: from tpx1 ([47.64.114.194]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b86fee09163sm5120966b.26.2026.01.09.21.33.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Jan 2026 21:33:20 -0800 (PST)
+Date: Sat, 10 Jan 2026 06:33:17 +0100
+From: Thomas Huth <huth@tuxfamily.org>
+To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>, Jiaxun
+ Yang <jiaxun.yang@flygoat.com>, Bastian Koppelmann
+ <kbastian@rumtueddeln.de>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
+ =?UTF-8?B?w6k=?= <philmd@linaro.org>, qemu-arm@nongnu.org, Yoshinori Sato
+ <yoshinori.sato@nifty.com>, Yanan Wang <wangyanan55@huawei.com>, Aleksandar
+ Rikalo <arikalo@gmail.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [RFC PATCH 02/12] target/m68k: introduce env->reset_pc
+Message-ID: <20260110063317.38311d23@tpx1>
+In-Reply-To: <20260108143423.1378674-3-alex.bennee@linaro.org>
+References: <20260108143423.1378674-1-alex.bennee@linaro.org>
+ <20260108143423.1378674-3-alex.bennee@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/22] util: Introduce ldm_p() and stm_p() load/store
- helpers
-To: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
- <peterx@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20260109165058.59144-1-philmd@linaro.org>
- <20260109165058.59144-3-philmd@linaro.org>
- <CABgObfYYx4-BcN7gbpNNiZi8nQhqYh-fgJ4j=6udogBnpz_7UQ@mail.gmail.com>
- <60994c46-d04f-461b-819b-31597a8405ab@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <60994c46-d04f-461b-819b-31597a8405ab@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=209.85.208.53; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f53.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,37 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/26 00:26, Richard Henderson wrote:
-> On 1/10/26 04:23, Paolo Bonzini wrote:
->>
->>
->> Il ven 9 gen 2026, 17:51 Philippe Mathieu-Daudé <philmd@linaro.org 
->> <mailto:philmd@linaro.org>> ha scritto:
->>
->>     Introduce load/store helpers which take a MemOp argument.
->>
->>     Inspired-by: Paolo Bonzini <pbonzini@redhat.com 
->> <mailto:pbonzini@redhat.com>>
->>
->>
->> That's a new one. :)
->>
->> I think they should be inline and so should be address_space_{ld,st} 
->> m_internal (maybe even always_inline). The amount of optimization 
->> enabled by constant MemOp is huge.
-> 
-> When are we going to have constant MemOp?
+Am Thu,  8 Jan 2026 14:34:13 +0000
+schrieb Alex Benn=C3=A9e <alex.bennee@linaro.org>:
 
-Every time address_space_{ld,st}m_internal is called, it's done with 
-constant MemOp.  For example:
+> To transition CPUs to use the multi-phase resettable logic we need to
+> stash some information for the reset handlers. Arm does this with
+> arm_boot_info but for m68k all we really need is the PC we should
+> reset to.
+>=20
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  target/m68k/cpu.h | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+> index d9db6a486a8..fda015c4b7b 100644
+> --- a/target/m68k/cpu.h
+> +++ b/target/m68k/cpu.h
+> @@ -155,6 +155,7 @@ typedef struct CPUArchState {
+> =20
+>      /* Fields from here on are preserved across CPU reset. */
+>      uint64_t features;
+> +    uint32_t reset_pc;
+>  } CPUM68KState;
 
-uint16_t ADDRESS_SPACE_LD(uw)(ARG1_DECL, hwaddr addr,
-                               MemTxAttrs attrs, MemTxResult *result)
-{
-     return ADDRESS_SPACE_LD_INTERNAL(m)(ARG1, MO_ENDIAN | MO_16,
-                                         addr, attrs, result);
-}
-
-Paolo
-
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 
