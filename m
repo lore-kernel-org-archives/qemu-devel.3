@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20F5D2502C
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Jan 2026 23:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D19D25028
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Jan 2026 23:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veiHC-0006RG-4w; Sat, 10 Jan 2026 18:21:46 -0500
+	id 1veiIV-00077a-CF; Sat, 10 Jan 2026 18:23:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veiHA-0006QZ-Eo
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 18:21:44 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1veiIT-00077C-DZ
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 18:23:05 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veiH9-00015j-3j
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 18:21:44 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-81345800791so2735369b3a.0
- for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 15:21:42 -0800 (PST)
+ id 1veiIQ-0001G3-79
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 18:23:05 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-29f2676bb21so47579475ad.0
+ for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 15:23:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768087301; x=1768692101; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c76ovT6RQ0RrtgNNvv2rNGa4Kxl6DvpsZgf13p3BF1w=;
- b=iamAPWP3JcqBTSOW6kMpgb7cpmjghhV3Xc0uythuRl90kyn8UOU/kUfgS6waNXMGCn
- uOxQFa/zzkBfaZ5WQaIR4t9qoaR4lsE2ZAUY0LG2bR2t6A/VsUofEzawoNdC53kHvOdt
- HtcIqHQQke8eKhYteslE8yVnaMK+tMjP2DUi2H3JzjIK0xYLAwHlSMozO/jk1jHqG3ij
- TcC8a2U+7NpgNj1I5w8ONjksxeajY9M3EtGSvqrk94lQd5kxksKivydgXHkT5moqlSQ3
- 773kbwCBOxIZv4TZUk3fDB+PTWsDDwR2vX2Kvb/xF25B/NaK96Y1rIA35z5KnOvqLroq
- iyuA==
+ d=linaro.org; s=google; t=1768087381; x=1768692181; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=eeCP3Pm4K/D8S7yE12PF53EZ+3C71na7s3BLg2EEPkw=;
+ b=xv3LvCwDEi73ykR+raE0kzZ0so2ZKV4n3NqylTZ0NMvS3+WB/hw7H8T1doMyD6nsRE
+ hrDAqxEu/9GRzPQMjn4ueoeIRFWiKE+aUiInTKiCboOWp6aGxBFnVmNOp2K+2m6+dlfh
+ jLX0F1cMMkjX3GioULMTa21dE3qDANIuNScVWlqRcJZAaP6sZAeZMOJGh23dxEbQvWMl
+ QlBDiD8YU8xqkpzXH5kZ470MAwvXcykDM85qxKhAFC5IUvH5Q3EPGi3BN4tawsLscOW/
+ sVVqT7kPMzgEtT3GmE6nJe2R+TNzA3jYwCla2U8UC2pbcgOhqwCppuujgRSpAgOiT2qb
+ drXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768087301; x=1768692101;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c76ovT6RQ0RrtgNNvv2rNGa4Kxl6DvpsZgf13p3BF1w=;
- b=bZrTfeafvtAdhdupOQ60LvzzX+u1EsLm6KLsia8uwtFA8dxO374WiBBnqAfyF3WlXZ
- EOlY7vxscoDGXYtrH/c1f+gJSOzhJ3nsp5yl2mxrcS7NcVeHwYoRmKRrUjf4pzDo7Y0o
- 6Ml3EUDociuI77r8LlxVf4qtTBNaAtrjcYre33A9C9S0t3PUytmWltl7hHKfCX6J73El
- +RlSX9fZv1jswkFBAjNIb1KfZqPPSR3AEFWEVDz6cDAGy4a2VkEmgONgbqxUpklGbVuh
- Xfow8WSnVltP0lg8xgtB7TZQ+XPawHe+zMSVRW1U9gSibR1urrkx3Ero0E7THvs8CpHk
- DZNw==
+ d=1e100.net; s=20230601; t=1768087381; x=1768692181;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eeCP3Pm4K/D8S7yE12PF53EZ+3C71na7s3BLg2EEPkw=;
+ b=BkLmyCjXpJ9y5wzqx4EIo7Nlg/lWV91NNS2JTjaR6s5sgFnE2zOTVZ27WuLQfcGqWP
+ 5GqTLGlZTJLZ+hvbWa9mrhn05RHLViw1ZWUXkGLm+6I8U9r8Ws9qJUGAklD+YqCTxMsx
+ dWhfQvo86KDECjGRlr7d6zW/OxzsAaO3OTR6UydvTwdD6RfxsnMY5XVKcogAvL2uYwAt
+ lyMdFacn/NQ3nZ5arOAJi9AjFJVJR09kEfIxq36cC+dPeyjcu/eKss2SKF0jSg5Ewdg6
+ BZN/NMndSINlPIzhSSqCarh1vKhbFzopYL01sO6p0dsXxCSsbUT3ODVqVNeYpbo15t0K
+ +Okw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWNmu+6dpBJpQ49SGOtSohZGm7qYwCwhy56P1cbf7RMFXsKgOEqVijzeopD4aWdMOKmFPvInWAEx7A@nongnu.org
-X-Gm-Message-State: AOJu0YxKJlnQ11c/x5Rts2geKyFFXs9o4EBt2pZXJ9Wnsmn2Vkydspkq
- PjmJGyItKipGJFWkAWl6UCrwW4N5qj2Qs1uuwXkPaVzjFIfI7IyVvfm1AysagGmH2sgPzGNCdRp
- 6T7WpVhQ=
-X-Gm-Gg: AY/fxX5NkTogy69ps7JjHVG/PS0HD7YY6Xmi3WyDMh/ABU+iQK6e1i2N7dopANZ/YEm
- qD3sUTCVXyAxMwwFFHCKji/8dizXWjTw62q04CLNIEtNge0c3ThRbAxgN/Qgq3lrl+bLrviktao
- 469TG2i4K8ePxfGvPTjdgHIBVqReQJZAxyQrBOqB/6bF6TohWdDVEUDGbtVOPyvorWQmeMrlBTU
- +61g8QK4JBNvGTtNbuagBTPGf7thBJlASeu52u48uiNO6DLqdG9BLUcgMABhX2ywtaIm+9irBhd
- equTYvRy3FFNQQdmzzMJlzhv3/AA0BH9AVTmBrX7srME7ipI6PNUGzQJrkIsLKNKp8tgjtvbhMD
- NgJs5cCVwvRb0Yjxi97Efl5z9xJs2hra5uCbsUovZVJxBAeIcIpMRlJzLfvsYbCw2azZFcBdD1P
- 6m4R/j6jnNxMdcTX6MCtwUkPgWfw==
-X-Google-Smtp-Source: AGHT+IHTAVf4YyK9l0eLbjWxodbD40W1U8LANlWHGOtfzzHBL2Ri9VDdG5NtLFYvpJlAwwk7DxW6og==
-X-Received: by 2002:a05:6a20:2584:b0:361:3bda:7155 with SMTP id
- adf61e73a8af0-3898f8481dbmr12342773637.7.1768087301487; 
- Sat, 10 Jan 2026 15:21:41 -0800 (PST)
+ AJvYcCWNvAuR1M7fAZZ9tUkgRa8aE1aA1KAgiHEKkFfa6JyIVJpDV44ngao46rxhHOKio29Vgp9GBaMFJI7q@nongnu.org
+X-Gm-Message-State: AOJu0YwqNWtxtHPubcUWmx9ue3JvleRvHmg7wuNr93Hu+RVqtZD8PzTe
+ Pn9m9EfjX/RxLzPsh6UW+FxA+xBbQmrPM51cBvkcgwlxfevNGRcNbWdoT/2ARBli/tBAgIF+NSP
+ a+9BaJj0=
+X-Gm-Gg: AY/fxX6F2TAfJBTk9lmixkJaaK5UI6L5IT/fU0Tgw9V2nMKMe5udSXsaHL1Slx/47MA
+ Vkq63CT41Ern+LVjrQFqI7EHsgs5+r873fZQk0Jy5VBhbjFx8syBzhHmKvVlAIXSW5zA3ShQos3
+ eKJUETw9vNQjxIIsQu5CkHY8k8hOUB27tdQ3P1vh4cNdDaHu6swLoE/696iNi9XJoPkgHuNgKrN
+ S9uKXA0163Iyvn2g43ER91zeNk9yrdWPQ1+RBag/BlzIca/UfX2I74HBonYADjH2ApW996wzbN9
+ RofYFmDwjhyMp7oZeodg7JvmDOVr2fk/Wd1NYZuIP08LthZqk8iLfomzwyCIeR+8PocxHnxK6hC
+ F4To2gZj1UYh7pIJer0Va6IdXHQN9r0hw/RB8EjgkAo0Qi6cHwp0SagdjJdR0YgqtKaLjDklbGO
+ tWFixB5Sy6KdsTn4pej0Ec4ljltw==
+X-Google-Smtp-Source: AGHT+IHqS5I2ox0jEJ3yD9cVzeC8EqM4N9zrnMEEgTBjvLnt/G5N4vrg2TsIxr05R6Qvh59j32c6fQ==
+X-Received: by 2002:a17:903:9ce:b0:2a2:f1d4:3b64 with SMTP id
+ d9443c01a7336-2a3ee4447e1mr142280255ad.21.1768087380598; 
+ Sat, 10 Jan 2026 15:23:00 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cbf28f678sm13791589a12.3.2026.01.10.15.21.39
+ d9443c01a7336-2a3e3c5cefbsm133721315ad.43.2026.01.10.15.22.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Jan 2026 15:21:41 -0800 (PST)
-Message-ID: <13e2ff15-12c6-48d2-afb7-fd2542cfdddc@linaro.org>
-Date: Sun, 11 Jan 2026 10:21:36 +1100
+ Sat, 10 Jan 2026 15:23:00 -0800 (PST)
+Message-ID: <a73e7011-d8ae-47ce-84b9-7539e7e18a76@linaro.org>
+Date: Sun, 11 Jan 2026 10:22:55 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] linux-user: implement epoll_pwait2 syscall
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 0/2] linux-user: epoll_pwait2 syscall
 To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
 References: <20260109090937.599881-1-mjt@tls.msk.ru>
- <20260109090937.599881-3-mjt@tls.msk.ru>
- <44e74d67-b32d-45d9-98e2-ba452bdf69ae@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <44e74d67-b32d-45d9-98e2-ba452bdf69ae@linaro.org>
+In-Reply-To: <20260109090937.599881-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,31 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/11/26 10:20, Richard Henderson wrote:
->> @@ -13644,6 +13655,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, 
->> abi_long arg1,
->>           switch (num) {
->>           case TARGET_NR_epoll_pwait:
->> +        case TARGET_NR_epoll_pwait2:
->>           {
->>               sigset_t *set = NULL;
->> @@ -13654,8 +13666,13 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, 
->> abi_long arg1,
->>                   }
->>               }
->> -            ret = get_errno(safe_epoll_pwait(epfd, ep, maxevents, timeout,
->> -                                             set, SIGSET_T_SIZE));
->> +            if (num == TARGET_NR_epoll_pwait) {
->> +                ret = get_errno(safe_epoll_pwait(epfd, ep, maxevents, arg4,
->> +                                                 set, SIGSET_T_SIZE));
->> +            } else {
->> +                ret = get_errno(safe_epoll_pwait2(epfd, ep, maxevents, timeout_ts,
->> +                                                  set, SIGSET_T_SIZE));
->> +            }
+On 1/9/26 20:09, Michael Tokarev wrote:
+> These two changes implements epoll_pwait2 system call.
+> First is a clean-up so the actual implementation is simpler.
 > 
-> This second test needs to be vs pwait2, lest you break epoll_wait.
+> v2: add the get_errno() wrapper missing in v1.  That was a
+> brown-paper bag bug again.
+> 
+> I also checked the CI/build failure of the very first attempt
+> to implement this syscall by Zixing Liu, see
+> https://lists.gnu.org/archive/html/qemu-trivial/2025-05/msg00054.html -
+> the issue was due to incomplete in-qemu copy of linux-headers,
+> which is now fixed (by dropping the old copy entirely).
+> 
+> Michael Tokarev (2):
+>    linux-user: cleanup epoll_pwait ifdeff'ery
+>    linux-user: implement epoll_pwait2 syscall
 
-Bah, seconds later I noticed the switch in the context.
+Queued, thanks.
 
 r~
 
