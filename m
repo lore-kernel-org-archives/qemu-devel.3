@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D18D277EB
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Jan 2026 13:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33181D25028
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Jan 2026 23:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veZ9z-0001Oi-PL; Sat, 10 Jan 2026 08:37:43 -0500
+	id 1veiFs-0005pX-1J; Sat, 10 Jan 2026 18:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veZ9x-0001NL-S1
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 08:37:42 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1veiFq-0005os-7V
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 18:20:22 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veZ9u-00037f-Su
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 08:37:41 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-29f30233d8aso35190775ad.0
- for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 05:37:38 -0800 (PST)
+ id 1veiFo-0000s4-H1
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 18:20:21 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2a09a3bd9c5so36841985ad.3
+ for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 15:20:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768052257; x=1768657057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768087218; x=1768692018; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xZlnEJmjECHYAVrs/831vxM1i8mukhM+QTiLU4QoeOM=;
- b=wFWiC2ZGYSwnrO1aw8A98JAOsSQ9Yfvn82KA8CQHcrDzKFklPmlo6X9DuWbneqNCT/
- ZCmS0RimI+SjxTDHuVmJbFVc74qap2T1Rkwb9vWul3XKD+1yj1PDDgw7zlsi3T3PQysQ
- /PQRBbh/Fv0jxR2hW3NcbE4EwE82gVTpDMBwUuNP7XB/VYr1Anlz1Mm28rq+e1iYhAUv
- 9bLcgMT7x6d24aewtSWuBxjh46dm+ShZf0YZFNTFpYNfO473cXp90MD08KdwTWfGQsdL
- JM7hV6zF4GbZtTa+yGyk4LYRUIjR16+XCUgyrC51ZV9A8uNOFtuo53B5a5MErC1d4hSC
- T6vw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6HURgAcqgFmAnO3WqF5p1DIsRzFEdhjZY5Wvc+14O/M=;
+ b=XRL8zdXEBIgAXxSxQrwKjnRGfbo2quJvUSB78JC92sQcACHDf+C7t+zlHTkE5R4Hw8
+ TXEgdMT2sY3gBGcd4N+w+cYg0OC2AIOnYjIcwJTJBv180JpQG9ZVdB8LseAEHGj4a57n
+ nF2LKQFPvZKQhjFdOegPobSBBqCVV1/N5BF594xnXh9KRkrnxdE67URcIFLvI0NIc8VQ
+ Wj4pUmsAenpBqlH5NrBLmPfAwu9+yP78CIGG2rAR5gf+VF7tG647ju0U23dPE4YKSzo0
+ 4mg3A7h8uW9881+gnxICCcB472OPjlJosc0aK8w1upzZmfNkAadfy2+jflg+1RCvbQ/+
+ HobQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768052257; x=1768657057;
+ d=1e100.net; s=20230601; t=1768087218; x=1768692018;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xZlnEJmjECHYAVrs/831vxM1i8mukhM+QTiLU4QoeOM=;
- b=qDYabtQdNh04wTgWG4WBS27kH1WMekDP5H17Jw9gafXfXsu8ridSEWeklQsEXnPm1F
- bER08M3Nc0UShe6Xr+EHc+3rFO0BiP3uPx3PY57SMy7bLiyadYZYkYuXJTJqZ6GP0Hsh
- fuuyb4KmPY1pkUtIzJeJT3kHBco0lS6FVPOkacHIv7DZYwDVZCBGs7S8W6OOC9VMyOud
- 3mqX6SbE0E/lfXulS9r3oQXTwsVQBUSMtEcvsUnukUnjAApPawzLhHMNys66xidR4bNh
- xLaUHMnHQnRX4GpOuDC+EacKsp99e7QARk2e9SSCayC65wZtugQiA62BX0f04x+BOTGx
- 1K2Q==
+ bh=6HURgAcqgFmAnO3WqF5p1DIsRzFEdhjZY5Wvc+14O/M=;
+ b=Mjm4H4zycaqIFlTusccVAZ4i/75/W2qCxw2FxvacYBROW4MlI/JTnAb1n6RRAuaMIe
+ 9q17Hcvzu272D0zaLAJLUATGmsMaw9RCoKPO8mIHi2DpN4+gOhGwjp+2xchrVh6GEcvJ
+ XvMUV3rdTjZmoVa5joxSRSFDAaup5Ds8DEIJaRNjz/apgoYNClNjMNh1LfHJ1uRxWvYc
+ oF1x1s3oveUq3ZbZDYPMQqsaerqb6Seh+Et4qsCz5FkICMk8ySCTIgqb2AQ2cW3i4yoT
+ IQAm+1gSz1i7QRBWmobnq6MbgYSvKCxCTmV//1cYDBDOVb+XgIHmwMILIIUlKZUzsvPY
+ 48sg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXC+CFGTB+zqKMKhKIsqz9gM9DScBWX95DUc8xGhqxSvtSB1nqnGZWXUcMQb2imzjhIHYAhGOtY/eZm@nongnu.org
-X-Gm-Message-State: AOJu0Yy7EgdREYbBaJYXl4F87lIoEg8bUdYkQXLaAtJ+3El+sNaQ5JAW
- z/z7xlHgy6upc+luEZBjWNe0tKGJ1QnYwcuU85I0Bml8YBd2pM7s8kDmu5qVqXUZ4Wg=
-X-Gm-Gg: AY/fxX4KjrVovR2bjojV4j83ygpWCO30JxhAMrxdSIpXqEwUn+2MFyts9Mure+EBOIP
- dSJj1P2HdnuJGt87s/rX9lZOUut580d8VrUX2nAm6+5LTywsCw9CW5B+j3yd9JtpaD9PyF0zAcN
- ajfmWZiboG/MMguO7JOuwET3o0dF8swyflzp+DxjXTTLfHxwAs5W89hPiCB5C4v0WYoK6s1x716
- K/baw3i6wrwMuLeH7uSvQKPxxExn6FUcVoioUP/OSj4S6DP+e51sUcay9IxJnOcrdbN7Ylpv8xz
- dNJfPc+6IpsTzxqZLekw33Apft7GHcUtPeQP+af21Srto/4Vk1TWOikb8/TWGnwUI7zT3fM9Vte
- lJW0mtKwEkBrc0ubIo3r3pHBC0CiG9d102ySTHuXHPw+1QsLwDIaBjlVRFdZ+yUGS1JlVsalaLG
- tTRNBbMxzfptceYteQSCh6YoR5Aw==
-X-Google-Smtp-Source: AGHT+IGoAiI+tiIO9bxbsVxUCn0jgttakHxUlNbtWr4PGIQqmGNZymgmLnqCaMvux5tfFg+0JTwLgw==
-X-Received: by 2002:a17:902:da8d:b0:2a2:f2a5:4136 with SMTP id
- d9443c01a7336-2a3ee45b2f6mr129840955ad.22.1768052257198; 
- Sat, 10 Jan 2026 05:37:37 -0800 (PST)
+ AJvYcCVJiVVnD/M5QEKd3JAUho30YzaiIMYmL2Grbup3TgQncYrd4LodPEJhipgukE93dmRcL4C08M51T7HR@nongnu.org
+X-Gm-Message-State: AOJu0YxLiyNLhwy7qubCoPHIeX5ebAuzztu5mI5rR/Wmi9kOjOsHDlBe
+ m4A2/IRwgJsQKODD5NX3xMxECIvcH6jZF0H1FbfHjy0+bDZyWdMTAyMDRhttspnmhy+dn1ueYCn
+ PlO9vKPw=
+X-Gm-Gg: AY/fxX5ZD+vu6btjGTLmRaa88ym9bLiTsEnW+FWhpw4xSCtbsXVlOxSc7dP/9E+0xXy
+ ZMCuEpKG2lDCkf6zGcYFvr4OHdEXuHoHSUc0Oj5HJqS8Z7CzXrLOyHi9DpLH9/rRTBT0HzxyyTQ
+ Q96zybJS0YrmOE3gcipKV2fvmOuDkDigj82KC9eQwlUgpTksVMS4RSVkqF4i4YCdzm6FyTNaB8F
+ H8xIPfVABbm4ZnrL4AJKHYt2/2Uufkp9YmFKIbWFBan2eoAjLM0yDJMfSLytGlM/jlVKEI5AJ95
+ 0y3tJxOODbIxTI+V6cxCYohQ+5jIKpB0UFFR6dOTCdHGTvAZ8bd5AIUEwgtbzmuTqvn0wyrGvXF
+ M1XEvehP8XD2gPEbBykkswVm6sTLhkCjlE0AAmUpA2TtV7TTSZrIK4i8xiwtDr+nEE+TwJv4901
+ FH7AUjY/iZjuqncVlpVs88e884Ug==
+X-Google-Smtp-Source: AGHT+IFLCxLQt1N0HloX4o7jjXiBaifJkzELOrHhOaFllAexiZLDMNXaoFUxV3LjiSy9ZKK84rRWAQ==
+X-Received: by 2002:a17:902:cf01:b0:2a0:acf6:3de9 with SMTP id
+ d9443c01a7336-2a3ee4c293emr131186715ad.58.1768087217699; 
+ Sat, 10 Jan 2026 15:20:17 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cb2b4dsm132431385ad.54.2026.01.10.05.37.35
+ d9443c01a7336-2a3e3cc8888sm135952135ad.76.2026.01.10.15.20.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Jan 2026 05:37:36 -0800 (PST)
-Message-ID: <ecb580e3-83ec-4057-8861-1ee446e29697@linaro.org>
-Date: Sun, 11 Jan 2026 00:37:31 +1100
+ Sat, 10 Jan 2026 15:20:17 -0800 (PST)
+Message-ID: <44e74d67-b32d-45d9-98e2-ba452bdf69ae@linaro.org>
+Date: Sun, 11 Jan 2026 10:20:13 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/34] riscv-to-apply queue
-To: alistair23@gmail.com, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
-References: <20260109065459.19987-1-alistair.francis@wdc.com>
+Subject: Re: [PATCH v2 2/2] linux-user: implement epoll_pwait2 syscall
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+References: <20260109090937.599881-1-mjt@tls.msk.ru>
+ <20260109090937.599881-3-mjt@tls.msk.ru>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260109065459.19987-1-alistair.francis@wdc.com>
+In-Reply-To: <20260109090937.599881-3-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,7 +95,7 @@ X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
-List-Id: <qemu-devel.nongnu.org>
+List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
 List-Archive: <https://lists.nongnu.org/archive/html/qemu-devel>
@@ -105,38 +106,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 17:54, alistair23@gmail.com wrote:
-> From: Alistair Francis<alistair.francis@wdc.com>
+On 1/9/26 20:09, Michael Tokarev wrote:
+> epoll_pwait2 is the same as epoll_pwait but with timeout being
+> (a pointer to) struct timespec instead of an integer.
 > 
-> The following changes since commit 3b5fe75e2c30e249acabe29924385782014c7632:
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3210
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>   linux-user/syscall.c | 29 +++++++++++++++++++++++------
+>   1 file changed, 23 insertions(+), 6 deletions(-)
 > 
->    Merge tag 'pull-monitor-2026-01-07' ofhttps://repo.or.cz/qemu/armbru into staging (2026-01-08 17:45:15 +1100)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20260109
-> 
-> for you to fetch changes up to e71111e26bdf5e98243d6a896c9e595e205dd9bb:
-> 
->    test/functional: Add test for boston-aia board (2026-01-09 15:14:58 +1000)
-> 
-> ----------------------------------------------------------------
-> First RISC-V PR for 11.
-> 
-> * Remove unused import statement from sifive_u test
-> * Free allocated memory in core/loader
-> * Add all available CSRs to 'info registers'
-> * Add 'riscv-aia' accel prop info to documentation
-> * Fix IOMMU MemoryRegion owner
-> * Make riscv cpu.h target partially independent
-> * Expand AIA target[i] source handling and refactor related code
-> * Don't look up DDT cache in Off and Bare modes
-> * Add Zilsd and Zclsd extension support
-> * Add RISCV ZALASR extension
-> * Add support for MIPS P8700 CPU
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index d89c36382e..8f41cdb94b 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -708,8 +708,11 @@ safe_syscall5(int, ppoll, struct pollfd *, ufds, unsigned int, nfds,
+>                 size_t, sigsetsize)
+>   #endif
+>   safe_syscall6(int, epoll_pwait, int, epfd, struct epoll_event *, events,
+> -              int, maxevents, int, timeout, const sigset_t *, sigmask,
+> -              size_t, sigsetsize)
+> +              int, maxevents, int, timeout,
+> +              const sigset_t *, sigmask, size_t, sigsetsize)
+> +safe_syscall6(int, epoll_pwait2, int, epfd, struct epoll_event *, events,
+> +              int, maxevents, struct timespec *, timeout_ts,
+> +              const sigset_t *, sigmask, size_t, sigsetsize)
+>   #if defined(__NR_futex)
+>   safe_syscall6(int,futex,int *,uaddr,int,op,int,val, \
+>                 const struct timespec *,timeout,int *,uaddr2,int,val3)
+> @@ -13619,12 +13622,20 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>       case TARGET_NR_epoll_wait:
+>   #endif
+>       case TARGET_NR_epoll_pwait:
+> +    case TARGET_NR_epoll_pwait2:
+>       {
+>           struct target_epoll_event *target_ep;
+>           struct epoll_event *ep;
+>           int epfd = arg1;
+>           int maxevents = arg3;
+> -        int timeout = arg4;
+> +        struct timespec ts, *timeout_ts = NULL;
+> +
+> +        if (num == TARGET_NR_epoll_pwait2 && arg4 != 0) {
+> +            if (target_to_host_timespec(&ts, arg4)) {
+> +                return -TARGET_EFAULT;
+> +            }
+> +            timeout_ts = &ts;
+> +        }
+>   
+>           if (maxevents <= 0 || maxevents > TARGET_EP_MAX_EVENTS) {
+>               return -TARGET_EINVAL;
+> @@ -13644,6 +13655,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>   
+>           switch (num) {
+>           case TARGET_NR_epoll_pwait:
+> +        case TARGET_NR_epoll_pwait2:
+>           {
+>               sigset_t *set = NULL;
+>   
+> @@ -13654,8 +13666,13 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>                   }
+>               }
+>   
+> -            ret = get_errno(safe_epoll_pwait(epfd, ep, maxevents, timeout,
+> -                                             set, SIGSET_T_SIZE));
+> +            if (num == TARGET_NR_epoll_pwait) {
+> +                ret = get_errno(safe_epoll_pwait(epfd, ep, maxevents, arg4,
+> +                                                 set, SIGSET_T_SIZE));
+> +            } else {
+> +                ret = get_errno(safe_epoll_pwait2(epfd, ep, maxevents, timeout_ts,
+> +                                                  set, SIGSET_T_SIZE));
+> +            }
 
+This second test needs to be vs pwait2, lest you break epoll_wait.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
 r~
 
