@@ -4,83 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C807CD277CA
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Jan 2026 05:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C30D277CA
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Jan 2026 05:38:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veRbP-0005g9-NV; Sat, 10 Jan 2026 00:33:31 -0500
+	id 1veRg2-0006YY-94; Sat, 10 Jan 2026 00:38:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1veRbL-0005fW-PY
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 00:33:27 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1veRbH-0007Z5-Ef
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 00:33:26 -0500
-Received: by mail-ed1-f53.google.com with SMTP id
- 4fb4d7f45d1cf-64b4b35c812so7841393a12.0
- for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 21:33:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768023201; x=1768628001;
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1veRfw-0006YC-PE
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 00:38:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1veRfv-00007m-9r
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 00:38:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768023490;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=AFqeyPrt+fH91cYUnoLXwx9/CiI22GcssAGYuu2rDgFkBd3VXTESHkkjrc6As6L+P2Ddyj
+ Sco+kJwO8fR7nKGmI0vHuzsXXfTQNlWu+hRuZeyUXrR055xApO4IyF/J/7sgcyZ305ERun
+ BTJR47dM9MCFdbmEhPFoC4Jo/HbHAVo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-594-zK8DmYi2NnWvLvHaN6PsKg-1; Sat, 10 Jan 2026 00:38:08 -0500
+X-MC-Unique: zK8DmYi2NnWvLvHaN6PsKg-1
+X-Mimecast-MFC-AGG-ID: zK8DmYi2NnWvLvHaN6PsKg_1768023465
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-430fcf10287so3821015f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Jan 2026 21:38:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768023465; x=1768628265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=tcFLQ08pn7tQ0AAKGCqnOK4D3+45va7YAXhwqsSg1z34sPl/7gZuwe9Wl7COmGd82d
+ rLzAPl0wQd87QdsTH685eMG//Z9WQ17KID+cXX39yDP/Lrt3j7Ozs2bV2+nRNSEe5MqC
+ RQBtktYm8poTkLLnhmIIFcwpYbs7X4fvHf7fQjXlC9+G8OvbDtSlGGYJRJvibtNTjGNF
+ mYbiBIssPAI+CDdpn52wD2Z3q/QGpywdxj4B4bFV9fFMDvqoUcrxKlQxMYI5upkMC9IO
+ ZPply29U3gKP3+GAlRoQjRV4lfJGPZSGGGXq6vq+x67wik4P6dnmbFx8C/8bcxLuF0b8
+ /bSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768023465; x=1768628265;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6ZJM9+Qb5R3H/JqYUjp/RvWtsDXW5WPQG7eijFBqulg=;
- b=Ox8Z2fCDtqkKy0ccow6gvft/0vBYW6FudclJmVzHNIhQx9urFeubBju+Ee7mVcCStD
- 0IjQW5d25F6F1Nk88ya7Po66QeelKcCn7cfj3zcOc28HGSjBTHAgDcgwhV21BIXFqdC3
- zdq34l39kxakdO/c93tlrDkdYgWQ4vCi93socnu3KJY6t+zHJ+532Zxs1D7hevtOL61E
- u/MMqmYYEgDmxFCBxsfzPwDGrgC+eKqvMAczifLNUwQTatsn0vieDue8uDenINcWCu2X
- z1qg6nNH8TcDpqUVR9uKAuPnqck44DoguTFpD6GruHr+WuNRlM8RPEOxvrYIpFQ0Kvvn
- aLAA==
-X-Gm-Message-State: AOJu0Ywiqjv5LT+odbcEuHGXzanlRuC6bAdLldmEutSWVPqLV/nIjBdk
- pPTvzgrXT2xLRn91s999J7SxEY3fu3I9yKoKYcixj4bb607fUi/0Ohly
-X-Gm-Gg: AY/fxX6pXkudsxb0jbVC4IsgK2qN+ihRsRsJQQitH0v5hGwncjw4koj/2AU45Itu/Eq
- HRj9q1Ye2IM6ryJMJ39+Za89YhREowXe70bIFKXS7gsxK0NRQKHXW4xLgeHu+xpIUBFAYbSmcjf
- RmiEnYXhaC6sCN2rAXz8ZGsFRYy2FGBUWisjXlXKLd+re7fBdeXwTyIPhMpLBJESGXQoAOPYp9K
- RgQrbgwHJEOnsMRW8fxlTLG5wE/9u0gGJ6mRe/Q+buZll98cRPJYcXdhNYfFf1wuq5ycUM9nt6B
- DR55jQZrRgo+/AXFwbA+FrgvPhBD3ZbU7/7wrk01UQ+2DD06aIgjaZe98Z1BT+E7ZEPnmS9trZX
- gcsJqLpAaj//ffbGixIwjhuNj9tfaTp2SVx8ZqkM0jVkU008zckCmzb+bbhwzBgUQd2kRYpc2dd
- 4=
-X-Google-Smtp-Source: AGHT+IExWRr5JVdYHAcJM2mVArTFlt0PJWqFpyIFMwyhmdizG/7Pg9VpAVShnvab0J7VJmLTx3TlAQ==
-X-Received: by 2002:a17:907:60d4:b0:b80:413:16d6 with SMTP id
- a640c23a62f3a-b844537804fmr1121005866b.44.1768023201181; 
- Fri, 09 Jan 2026 21:33:21 -0800 (PST)
-Received: from tpx1 ([47.64.114.194]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b86fee09163sm5120966b.26.2026.01.09.21.33.18
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=AWO4gm2AQP2SfIt9hGmWL4JSzfsLAurYuxtmEoV46BQDdt+TSicgvW7P07bnVKIGS1
+ KUKkh7NrLJEPWegYZlmlewMzWAevh/rqgeJY6c68IlXKNvbHfPHPekTNLlVlRRwukUQz
+ iSgt/OWW4hjx2e1BdYiuZAptuqVJbj7RbB7CxoDPpE7xtG+uoydLBelyStWACfalgbhs
+ w+5svZFd+Fd0oBzOjeCpPJ79lZjskLUqINysB80E/J/uz5tr+BNKAEUQfP9Iroej+xDu
+ 9ZDsEk1cqHBq7Stx1G9bb7CGlPmdGqwUvttsg7q1HGr4m7PafTN4/+TFu6NHLtI2Hzn1
+ RaqQ==
+X-Gm-Message-State: AOJu0YxRx5hxZjSIBTs42/g/Wh2poJ3VLJ95+42K6RdMqxsI5oArGolx
+ qKMTSqIMl1O+pgASN11nIkx0uvipb/hwk2Z0df2spDu0tsNZUUOOOCccKv0DZSiFLl3Qz9G9NWf
+ ZGJcahH3p2yH7MmT7KF7WShTEdnlutXVWaeD8qjRZilyy+ugcrnuow3/D
+X-Gm-Gg: AY/fxX5VFkaomBUTzI/Q8KMbIqOZ09jAGz9NQqzAR7lJT6IjIDrGSGPloUReGbljBVu
+ X1T2ytNbkjIzrVdQV127920eQ4EsoM6gK2id/Gvd9mxqV1WhsQsDHGBWULZprmlAqcL0+Xe5OQn
+ YTNsu2oq+rIyqQDdfFGJ6nFz8T5telwnXwWwmUvoqJMENGJyKVRbm1WkeCx7PoVNSyAIiaelZWa
+ Fe+hzGXWhER7vv/H73BeX17hAoFrSGS1g31kDOg/UZJZMS2tAi6gTXoOuVyB2LwWTuVxEkt6cqr
+ i1tEv4Jk44dXZEb/1E5l2wqTvmEw16I9giq0DzKO6NE2UYfBF70JdvLUAihtil1cP7uFQEIrZ3V
+ hR7thw/FqyIdwZCNGmOpe9m1J+kmGqLw6KrK/9t3xeVuFkO6HUJRlJpkCSbWGO4JoLg7tOSEATL
+ XiN5VbwQct1OEPZQ==
+X-Received: by 2002:a05:6000:2906:b0:431:1ae:a3ca with SMTP id
+ ffacd0b85a97d-432c378a162mr15341777f8f.11.1768023465046; 
+ Fri, 09 Jan 2026 21:37:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF2Co+OsaMd2EB9HMJCiSl2zn8Qdo+kluro6BOK/Y3I+U2WqlLChGPmdbK8SHUr3fIiTHi5wg==
+X-Received: by 2002:a05:6000:2906:b0:431:1ae:a3ca with SMTP id
+ ffacd0b85a97d-432c378a162mr15341763f8f.11.1768023464663; 
+ Fri, 09 Jan 2026 21:37:44 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd0e180csm25463177f8f.10.2026.01.09.21.37.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Jan 2026 21:33:20 -0800 (PST)
-Date: Sat, 10 Jan 2026 06:33:17 +0100
-From: Thomas Huth <huth@tuxfamily.org>
-To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>, Jiaxun
- Yang <jiaxun.yang@flygoat.com>, Bastian Koppelmann
- <kbastian@rumtueddeln.de>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
- =?UTF-8?B?w6k=?= <philmd@linaro.org>, qemu-arm@nongnu.org, Yoshinori Sato
- <yoshinori.sato@nifty.com>, Yanan Wang <wangyanan55@huawei.com>, Aleksandar
- Rikalo <arikalo@gmail.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [RFC PATCH 02/12] target/m68k: introduce env->reset_pc
-Message-ID: <20260110063317.38311d23@tpx1>
-In-Reply-To: <20260108143423.1378674-3-alex.bennee@linaro.org>
-References: <20260108143423.1378674-1-alex.bennee@linaro.org>
- <20260108143423.1378674-3-alex.bennee@linaro.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ Fri, 09 Jan 2026 21:37:44 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Vulnerability Report <vr@darknavy.com>
+Cc: qemu-devel@nongnu.org,
+	David Woodhouse <dwmw@amazon.co.uk>
+Subject: Re: [PATCH] hw/i386/kvm: fix PIRQ bounds check in
+ xen_physdev_map_pirq()
+Date: Sat, 10 Jan 2026 06:37:42 +0100
+Message-ID: <20260110053742.853854-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <13FE03BE60EA78D6+20260109023548.4047-1-vr@darknavy.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=209.85.208.53; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f53.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,29 +123,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Thu,  8 Jan 2026 14:34:13 +0000
-schrieb Alex Benn=C3=A9e <alex.bennee@linaro.org>:
+Queued, thanks.
 
-> To transition CPUs to use the multi-phase resettable logic we need to
-> stash some information for the reset handlers. Arm does this with
-> arm_boot_info but for m68k all we really need is the PC we should
-> reset to.
->=20
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
->  target/m68k/cpu.h | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-> index d9db6a486a8..fda015c4b7b 100644
-> --- a/target/m68k/cpu.h
-> +++ b/target/m68k/cpu.h
-> @@ -155,6 +155,7 @@ typedef struct CPUArchState {
-> =20
->      /* Fields from here on are preserved across CPU reset. */
->      uint64_t features;
-> +    uint32_t reset_pc;
->  } CPUM68KState;
+Paolo
 
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 
