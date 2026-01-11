@@ -4,90 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CDDD2502E
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 08:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90B0CD2502E
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 10:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1verCc-0004MY-LI; Sun, 11 Jan 2026 03:53:38 -0500
+	id 1vet2F-00032i-8s; Sun, 11 Jan 2026 05:51:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1verCN-0004IN-Kh
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 03:53:23 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <me@ziyao.cc>) id 1vet2D-0002wp-SM
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 05:51:01 -0500
+Received: from sender4-op-o15.zoho.com ([136.143.188.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1verCL-0008My-4o
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 03:53:23 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6A40E17CAB2;
- Sun, 11 Jan 2026 11:53:08 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6383134AA0B;
- Sun, 11 Jan 2026 11:53:09 +0300 (MSK)
-Message-ID: <33f052fc-8fd2-48b0-aee6-919036114ca8@tls.msk.ru>
-Date: Sun, 11 Jan 2026 11:53:09 +0300
+ (Exim 4.90_1) (envelope-from <me@ziyao.cc>) id 1vet2B-0002ts-Bn
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 05:51:01 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1768128641; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=ZKgrMNFaWi81atPfAh+BjATktKUowe21cfwF5iPINETOnaOSIdv3Df1WEQ0LCctBOArFKFi3NzrognFWKCCU0T9vP78Lm5ocIE/gC3iZcCgKpBDozEk8LOhxqY6EVUNHDaTt5fzNy+0LkbTUHzAFrhq6Q1gUxINc02hFHOnvarA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1768128641;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=aObT+GlU9PzbtiH8eT7iskVSb+OD8jG0O4h7gHvB30c=; 
+ b=issT+lSIIAPtwYRrtGXD9fIOiXfIJYpEii3u1cBwi2bT0Oz+1mpCdKcRqBtxNk9MZIk9V+9EmxiO6o6bmWUt8tQxBey/7ePh8YTNSpENJ0zLVALP2SrDWRuLdJWFCuzKic1p2t12YYluZ6wHX7qnBPpwnlWFyO4WIL//oShS4Io=
+ARC-Authentication-Results: i=1; mx.zohomail.com; dkim=pass  header.i=ziyao.cc;
+ spf=pass  smtp.mailfrom=me@ziyao.cc;
+ dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768128641; 
+ s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=aObT+GlU9PzbtiH8eT7iskVSb+OD8jG0O4h7gHvB30c=;
+ b=iAttflFXupER1iF0Eitwmkex2O3ktmNvIWynU2BfNhu50Xq2J0npXPmu69VCt8X8
+ ad5/TW6oFIo9FTjWpP7QpzP4qq0Hj0ZPAPOvr+AH2Hg0H3PlBN5r9UesNFhfO+kCNuj
+ FQ/8z3nsOPQLWgZNoMPS5ctsrQEvwjz0f+9Epujs=
+Received: by mx.zohomail.com with SMTPS id 1768128639205339.27514811479784;
+ Sun, 11 Jan 2026 02:50:39 -0800 (PST)
+From: Yao Zi <me@ziyao.cc>
+To: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: qemu-devel@nongnu.org, Yao Zi <me@ziyao.cc>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] hw/loongarch/virt: Don't abort on access to unimplemented
+ IOCSR
+Date: Sun, 11 Jan 2026 10:50:27 +0000
+Message-ID: <20260111105027.8817-1-me@ziyao.cc>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 3/3] linux-user/syscall.c: consolidate statfs calls
- further
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260109214158.726916-1-mjt@tls.msk.ru>
- <20260109214158.726916-4-mjt@tls.msk.ru>
- <97057c87-4e3f-4ac0-9cca-71d85e368eca@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <97057c87-4e3f-4ac0-9cca-71d85e368eca@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@ziyao.cc;
+ helo=sender4-op-o15.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,39 +77,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/11/26 03:03, Richard Henderson wrote:
-> On 1/10/26 08:41, Michael Tokarev wrote:
->> Since statfs & statfs64 implementations are exactly the same,
->> differs only in "64" suffix, merge them into one using a common
->> macro.
->>
->> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> 
-> Most of the common code should be split to a host_to_target_statfs() 
-> and(?) host_to_target_statfs64().  Once that's done, there's not much 
-> use in a macro.
+Since commit f2e61edb2946 ("hw/loongarch/virt: Use MemTxAttrs interface
+for misc ops") which adds a call to g_assert_not_reached() in the path
+of handling unimplemented IOCSRs, QEMU would abort when the guest
+accesses unimplemented IOCSRs.
 
-It will be exactly the same, - be it in its own function(s) or directly
-in syscall1(): there will be 2 copies of exactly the same text, dealing
-with 2 different types of target_statfs structs.  This is where a macro
-like in this patch/rfc comes into play.  An alternative is C++ template
-mechanism (which doesn't work in C, obviously), or a repeat of the same
-code - just like we have now.
+This is too serious since there's nothing fatal happening in QEMU
+itself, and the guest could probably continue running if we give zero as
+result for these reads, which also matches the behavior observed on
+3A5000M real machine.
 
-The same situation is with struct stat, but it is much worse, because
-there are more possible permutations - there's eabi_stat64 on ARM and
-struct target_stat vs target_stat64, and several combinations of
-TARGET_STAT64_HAS_BROKEN_ST_INO and HAVE_STRUCT_STAT_ST_ATIM.  It's
-kind of insane in this context.  While it's trivial to use a macro
-approach for statfs, it's not as easy for struct stat.
+Replace the assertion with qemu_log_mask(LOG_UNIMP, ...), it's still
+possible to examine unimplemented IOCSR access through "-d unimp"
+command line arguments.
 
-Personally, I see no big advantage of splitting some syscalls into
-separate functions out of huge syscall1().  Yes, this function is large,
-but it wont be much better if some parts of it are split out, but there
-will be slightly more code (function definitions).  Maybe a bit more..
-style, so to say, but splitting it wont give us much..
+Fixes: f2e61edb2946 ("hw/loongarch/virt: Use MemTxAttrs interface for misc ops")
+Signed-off-by: Yao Zi <me@ziyao.cc>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
 
-Thanks,
+Changed from v1
+- Reword the commit message to avoid implying reading/writing
+  unimplemented IOCSRs is guaranteed to result in zero on LoongArch.
+- Don't log writes to read-only {VERSION,FEATURE,VENDOR,CPUNAME}_REG as
+  unimplemented.
+- Link to v1: https://lore.kernel.org/qemu-devel/20251221122511.56544-2-me@ziyao.cc/
 
-/mjt
+ hw/loongarch/virt.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 6efa15da4737..97ea1fb46d00 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -46,6 +46,7 @@
+ #include "hw/block/flash.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "qemu/error-report.h"
++#include "qemu/log.h"
+ #include "kvm/kvm_loongarch.h"
+ 
+ static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
+@@ -621,8 +622,15 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
+                           EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
+                           features, attrs, NULL);
+         break;
++    case VERSION_REG:
++    case FEATURE_REG:
++    case VENDOR_REG:
++    case CPUNAME_REG:
++        break;
+     default:
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        break;
+     }
+ 
+     return MEMTX_OK;
+@@ -680,7 +688,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         }
+         break;
+     default:
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_UNIMP, "%s: Unimplemented IOCSR 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        break;
+     }
+ 
+     *data = ret;
+-- 
+2.52.0
+
 
