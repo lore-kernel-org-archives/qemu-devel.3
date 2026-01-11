@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DEAED25031
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 22:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39300D2502E
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 22:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vf3vi-00078U-59; Sun, 11 Jan 2026 17:29:02 -0500
+	id 1vf3y8-00081y-8Y; Sun, 11 Jan 2026 17:31:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vf3vg-00077t-Bi
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:29:00 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1vf3y6-00081G-C5
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:31:30 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vf3vd-0001xa-3a
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:29:00 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-81f416c0473so852815b3a.3
- for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 14:28:56 -0800 (PST)
+ id 1vf3y4-0002RL-0r
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:31:30 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-34c3259da34so3488896a91.2
+ for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 14:31:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768170535; x=1768775335; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768170686; x=1768775486; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3/awSejzI+mKY/90Tj1dnvn/vwm8cgXU81nOyZ2hyM8=;
- b=NKHZSSMIuGtZuu6KsuBlb3g54Xw+pW/2WQwB/eDzuhCCIApYjG2/OmRrLvpQ0dFzwq
- VrauJHeli0ihqg/kXMahFzVLPFFl8+Mmlj2lH8NjC4qrjC7fTlkQHSyarNfSf3R9tZfs
- NedCieGNWr+EeUUvLF3bzRAyQFIkmOWEAQqyf2hMeybQtThe0b09g4zQfUjtU9C2k6O1
- rLhxy0e/d5YLlpEyHtSnU4mJLvEE5MIhfOCy7N6nYEWdcWRqO4xsnNKDJRU85IJgr1D4
- owjbH5yzuliHBiI4nCKriRXwnBfDtiFtuX8wAl9fceZqa199I/6UOdrw3MmRqDwJp6cP
- fW1Q==
+ bh=GBFaaJ7vjzL+7j+QVMompySRTEXLuyvVSbef+v4rvLM=;
+ b=Ap2q+Yt0CqhQeuBxze1isU/L81NjvVgG7PHfr4MgiUjqnowSEA+wTyr8NGDnhwvtId
+ QyIkFa/XfKMrxd4EAKJ1re71LinLxfHkSq847RsHIm/lHej7+C/c6TxlUe629uyo6n+p
+ wdkpS36lPfB4/BZVBNYhBmTsCmX9bXHIhyruRMKcadi2wYN/FOjLE6xNN0BzXlS3XPc3
+ /UTw34Vu3fmWQtxO4YWBaOsZyInZKH7yxPF3+XkIksvayrsopqIbIrgXGF6V2VQFOrNo
+ TaNmjKfMWCq6N3xpjKncBKvTHt8FUqWm4NZtqXoEDlgc/et+702IN+c6kj22NPuIRzOO
+ Tr0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768170535; x=1768775335;
+ d=1e100.net; s=20230601; t=1768170686; x=1768775486;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3/awSejzI+mKY/90Tj1dnvn/vwm8cgXU81nOyZ2hyM8=;
- b=Mv1CiBoKBJ7gS+EBdAHtUrsRLE1lBspA5XkrIgMewHUxhJKLF3gpHH85WpOz6tkpep
- +phC9ZtC7LzV6J9gp+gixygvKrTMTFHUErDZ80JxSGX7CS3bpSVcPgPC2D22Yb9nGLbr
- pgLrYb7FrnOErZPDnUnMWfofDjINiILynBNw97ztdp3P4Z22l7ccXJ0hCqbVsaWMq9Et
- o71Z6/5nBnrjIILJIKeJPE/IZSyU0S2OR0AdqCdGNUXuV/9JWa8qFcPibNiK3YymnpxH
- JttlGcg/fFn7R16O+7DlCL9MpGufYpwU4ZAplVQzaGsX6gQHzdtgYYFPVvNd01UaeWtY
- ru9Q==
+ bh=GBFaaJ7vjzL+7j+QVMompySRTEXLuyvVSbef+v4rvLM=;
+ b=BlDjs3D/O8d6P1n9oLCSponW6atofGvcpGT/nnLS7cX9psTrz0x48ec+wqNTlhPEOZ
+ wO3EPKAtPZADmFc7V0DEOwOhhbl6Zo1Vbx1b+acAQwnLtL2TpWBHqWuLYspLORoNMYEb
+ HoFG7x/AtB/Twk2WqfcOpiETux0PBlQUCpsJ/2KQWqejNCxSbSFK9JiDakLjRFmraETi
+ 8pI9tWsTdyy54Lk5Gm3q+TfVoLLvYkI9DLRTagafB3uzQ/ne7/X9dpIv1vxgx9mmHv1v
+ KULfKIHy7LrJQ9mqon41PsS32kNe+BumgjstZZBdtB3tlSUYGWONsRIDlvlSwBPI9ekq
+ OD0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmZrFaWlo2K3ajCU3IUyOVYsjnmoSmCFMjgD8pVuse9SoytWZgo7aYnimwoUadfsvIciQRSA5SVJ98@nongnu.org
-X-Gm-Message-State: AOJu0YwTDMZmU7LSfbHiMp3i8/jq55FNOuc2rcq6cj0fpyqIzuf5en8V
- rvRTm5V+Ne4+euWF+bIfWcUVPP6LYRVJ0w9aOQ5MSxar0Ghd0X5HmS2l12dCHhukcNw=
-X-Gm-Gg: AY/fxX6BHQMrInqNO/vDo6SO6Q3dEJwdGJo88iZ214OF6D5TSnwYYzs/4Q48YiF/MDN
- NKYjycYvMvuoHz2k0WH71Kp3cwBpVTca5Jd2aSWo2NrdMDBrceNDB56iTOdRieEW0m6UoP0mytg
- rd22lmJRfvMtQSSyq0gNVyzHj2jey/dIBPO+UdrMnAOqszLi2gkLBs0nZ9VAbLQprQeyUwmxXv4
- jx6FM5GTof0g8XO0DZNBpQLJB+CMNpR6zeH3RcRqZEsb+yDxpTW7KfHo1WFvwxCXBUWRCvpzYXe
- OgKOlqgI2J9N/vf8VugDDfDG03eJjH+/gxV/yR2vwnHistn6hxQlD/+teR/siKIVwR/Tx2BKMEC
- hxYUtpErmp7yTadxVC86Yh6zNCCQSfUwpjTFaAP4tvDeYg69XMsQ7XHsBLu8FCjqpGhc9e0huQY
- LgCHTLXl4R1VEBVYkkRPYAN4bCKw==
-X-Google-Smtp-Source: AGHT+IEKOhWqA6dGvST45GjJJreyFdr0Tn4Q7y0OMe4PjejCbE3aXuy0Xg01Eal4IUAAMeYj39FSOg==
-X-Received: by 2002:a05:6a21:7a48:b0:34e:a801:8166 with SMTP id
- adf61e73a8af0-3898f923739mr12407256637.32.1768170535489; 
- Sun, 11 Jan 2026 14:28:55 -0800 (PST)
+ AJvYcCVZB69ECWfroZsMN7Wn0tbQzXcDAa+4kVckrNCOc8UkSS6nwHfFG4bAlPfOXxogTWDknvKuGkwCHcGp@nongnu.org
+X-Gm-Message-State: AOJu0Yx8i1MYWTV+tsCUwvtox4i2uk9xnQLO4V7L/PZNHGrcwz47xTvP
+ eWIUOIG7TwUxS4tzB+fvyiBrHSTU4OV/uW1QtvCg/9yX2Ca57fqPsA0lOOKbNnnZkr0=
+X-Gm-Gg: AY/fxX52s5TFZiigfm2HV6cNAXA2Zup+BL4yTzk2cTXuq37KgSA5YgpPghAiECWqdpn
+ 7rkqUlwKYLBNIanVn4PJ6oFwvEa+ABInHm0IFrbm6UmDPWAxiaC1wcH0jQqmdjMSlZvffFqSn+o
+ R3nUFee0GBzRp06REJHvBJ3aSylCMQeY/EqMa/UFUV7fhePd7ZNSOaCUnl+6ekzpIamlqyX6Mjp
+ 9Aes1ruuPX4OKZPRshb5pKB1i/WBuGpEWPDS/7VYJF5gttKePMP2daxS/U3HYHxr4ZOeI0nDalP
+ mcbV/CAUPk6KlC+Z0mVnfC6Zgq//e4XWtwQTfYmLgtwotPeigMiRF142X/d/AvS2qGsGSmxZ8Ke
+ ijxXnDtwPw9SGXbg2mFsCPrlUQVUTtxtpkp3wD9bqZ+tFGiJ7PZ14twr9EcxU8TNEW9ONX0mMq3
+ Id0OSz/RTQW1sUo3SDnKc3BQoLrg==
+X-Google-Smtp-Source: AGHT+IEEoAwSkhHdCfV2K9htdbG+NhznRya8MgqisflSKGo6FMswPcOnC7LJPl85TAklt6ul2HLM8Q==
+X-Received: by 2002:a17:90a:d890:b0:32e:a10b:ce33 with SMTP id
+ 98e67ed59e1d1-34f68c9138emr14578846a91.21.1768170686244; 
+ Sun, 11 Jan 2026 14:31:26 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cbf28ebe4sm15782329a12.4.2026.01.11.14.28.49
+ 41be03b00d2f7-c4cbf28f678sm15782533a12.3.2026.01.11.14.31.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 Jan 2026 14:28:55 -0800 (PST)
-Message-ID: <d88ec1b0-e429-4f91-a831-94292b67386c@linaro.org>
-Date: Mon, 12 Jan 2026 09:28:45 +1100
+ Sun, 11 Jan 2026 14:31:25 -0800 (PST)
+Message-ID: <66500211-1716-445d-96c9-2964da8ad657@linaro.org>
+Date: Mon, 12 Jan 2026 09:31:16 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 17/24] util: fix interleaving of error & trace output
+Subject: Re: [PATCH v5 22/24] util: add support for formatting a program name
+ in messages
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -86,21 +87,21 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
  Kevin Wolf <kwolf@redhat.com>
 References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-18-berrange@redhat.com>
+ <20260108170338.2693853-23-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260108170338.2693853-18-berrange@redhat.com>
+In-Reply-To: <20260108170338.2693853-23-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,83 +118,49 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/9/26 04:03, Daniel P. Berrangé wrote:
-> The monitor_cur_hmp() function will acquire/release mutex locks, which
-> will trigger trace probes, which can in turn trigger qemu_log() calls.
-> vreport() calls monitor_cur() multiple times through its execution
-> both directly and indirectly via error_vprintf().
+> The error_report function can include the program name in any
+> messages it prints. The qemu_log function has no equivalent
+> behaviour.
 > 
-> The result is that the prefix information printed by vreport() gets
-> interleaved with qemu_log() output, when run outside the context of
-> an HMP command dispatcher. This can be seen with:
+> This introduces support for a "program name" in the new
+> messages API, which will be included by default for all
+> binaries.
 > 
->   $ qemu-system-x86_64 \
->       -msg timestamp=on,guest-name=on \
->       -display none \
->       -object tls-creds-x509,id=f,dir=fish \
->       -name fish \
->       -dtrace:qemu_mutex*
->     2025-09-10T16:30:42.514374Z qemu_mutex_unlock released mutex 0x560b0339b4c0 (/var/home/berrange/src/virt/qemu/include/qemu/lockable.h:56)
->     2025-09-10T16:30:42.514400Z qemu_mutex_lock waiting on mutex 0x560b033983e0 (/var/home/berrange/src/virt/qemu/include/qemu/lockable.h:56)
->     2025-09-10T16:30:42.514402Z qemu_mutex_locked taken mutex 0x560b033983e0 (/var/home/berrange/src/virt/qemu/include/qemu/lockable.h:56)
->     2025-09-10T16:30:42.514404Z qemu_mutex_unlock released mutex 0x560b033983e0 (/var/home/berrange/src/virt/qemu/include/qemu/lockable.h:56)
->     2025-09-10T16:30:42.516716Z qemu_mutex_lock waiting on mutex 0x560b03398560 (../monitor/monitor.c:91)
->     2025-09-10T16:30:42.516723Z qemu_mutex_locked taken mutex 0x560b03398560 (../monitor/monitor.c:91)
->     2025-09-10T16:30:42.516726Z qemu_mutex_unlock released mutex 0x560b03398560 (../monitor/monitor.c:96)
->     2025-09-10T16:30:42.516728Z qemu_mutex_lock waiting on mutex 0x560b03398560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842057Z qemu_mutex_locked taken mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842058Z qemu_mutex_unlock released mutex 0x564f5e401560 (../monitor/monitor.c:96)
->     2025-09-10T16:31:04.842055Z 2025-09-10T16:31:04.842060Z qemu_mutex_lock waiting on mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842061Z qemu_mutex_locked taken mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842062Z qemu_mutex_unlock released mutex 0x564f5e401560 (../monitor/monitor.c:96)
->     2025-09-10T16:31:04.842064Z qemu_mutex_lock waiting on mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842065Z qemu_mutex_locked taken mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842066Z qemu_mutex_unlock released mutex 0x564f5e401560 (../monitor/monitor.c:96)
->     fish 2025-09-10T16:31:04.842068Z qemu_mutex_lock waiting on mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842069Z qemu_mutex_locked taken mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842070Z qemu_mutex_unlock released mutex 0x564f5e401560 (../monitor/monitor.c:96)
->     2025-09-10T16:31:04.842072Z qemu_mutex_lock waiting on mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842097Z qemu_mutex_locked taken mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842099Z qemu_mutex_unlock released mutex 0x564f5e401560 (../monitor/monitor.c:96)
->     qemu-system-x86_64:2025-09-10T16:31:04.842100Z qemu_mutex_lock waiting on mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842102Z qemu_mutex_locked taken mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842103Z qemu_mutex_unlock released mutex 0x564f5e401560 (../monitor/monitor.c:96)
->      2025-09-10T16:31:04.842105Z qemu_mutex_lock waiting on mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842106Z qemu_mutex_locked taken mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842107Z qemu_mutex_unlock released mutex 0x564f5e401560 (../monitor/monitor.c:96)
->     Unable to access credentials fish/ca-cert.pem: No such file ordirectory2025-09-10T16:31:04.842109Z qemu_mutex_lock waiting on mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842110Z qemu_mutex_locked taken mutex 0x564f5e401560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:04.842111Z qemu_mutex_unlock released mutex 0x564f5e401560 (../monitor/monitor.c:96)
+> This change tweaks the output of the error_report function,
+> adding a space between the program name and the location
+> info. The qemu_log function will gain the program name. This
+> can be easily seen with the 'log' trace backend, and how it
+> is now more closely matching error_report output.
 > 
-> To avoid this interleaving (as well as reduce the huge number of
-> mutex lock/unlock calls) we need to ensure that monitor_cur_is_hmp()
-> is only called once at the start of vreport(), and if no HMP is
-> present, no further monitor APIs can be called.
+> Before:
 > 
-> This implies error_[v]printf() cannot be called from vreport().
-> Instead we must introduce error_[v]printf_mon() which accept a
-> pre-acquired Monitor object. In some cases, however, fprintf
-> can be called directly as output will never be directed to the
-> monitor.
+>    # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+>    qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5584e13937f0 dir=fish
+>    qcrypto_tls_creds_get_path TLS creds path creds=0x5584e13937f0 filename=ca-cert.pem path=<none>
+>    qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
 > 
->   $ qemu-system-x86_64 \
->       -msg timestamp=on,guest-name=on \
->       -display none \
->       -object tls-creds-x509,id=f,dir=fish \
->       -name fish \
->       -dtrace:qemu_mutex*
->     2025-09-10T16:31:22.701691Z qemu_mutex_unlock released mutex 0x5626fd3b84c0 (/var/home/berrange/src/virt/qemu/include/qemu/lockable.h:56)
->     2025-09-10T16:31:22.701728Z qemu_mutex_lock waiting on mutex 0x5626fd3b53e0 (/var/home/berrange/src/virt/qemu/include/qemu/lockable.h:56)
->     2025-09-10T16:31:22.701730Z qemu_mutex_locked taken mutex 0x5626fd3b53e0 (/var/home/berrange/src/virt/qemu/include/qemu/lockable.h:56)
->     2025-09-10T16:31:22.701732Z qemu_mutex_unlock released mutex 0x5626fd3b53e0 (/var/home/berrange/src/virt/qemu/include/qemu/lockable.h:56)
->     2025-09-10T16:31:22.703989Z qemu_mutex_lock waiting on mutex 0x5626fd3b5560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:22.703996Z qemu_mutex_locked taken mutex 0x5626fd3b5560 (../monitor/monitor.c:91)
->     2025-09-10T16:31:22.703999Z qemu_mutex_unlock released mutex 0x5626fd3b5560 (../monitor/monitor.c:96)
->     2025-09-10T16:31:22.704000Z fish qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+> After:
+> 
+>    # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+>    qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5584e13937f0 dir=fish
+>    qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=0x5584e13937f0 filename=ca-cert.pem path=<none>
+>    qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+> 
+> When adding this the '-msg program-name=on|off' option is
+> introduced, so that the program name (which is enabled by
+> default) can be supressed if desired. This could be useful
+> if '-msg guest-name=on' is being used as a more informative
+> identifier.
 > 
 > Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
->   util/error-report.c | 67 +++++++++++++++++++++++++++++++--------------
->   1 file changed, 46 insertions(+), 21 deletions(-)
+>   include/qemu/message.h         |  1 +
+>   qemu-options.hx                |  9 +++++++--
+>   system/vl.c                    | 11 ++++++++++-
+>   tests/unit/test-error-report.c |  5 +++--
+>   util/error-report.c            |  4 ----
+>   util/message.c                 | 10 +++++++++-
+>   6 files changed, 30 insertions(+), 10 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
