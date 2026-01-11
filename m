@@ -4,102 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CB0D25031
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 22:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5F81D25031
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 22:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vf3zB-00007c-Au; Sun, 11 Jan 2026 17:32:37 -0500
+	id 1vf4GY-0006io-4O; Sun, 11 Jan 2026 17:50:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vf3z9-00006c-A2
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:32:35 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vf4GV-0006i8-KI
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:50:32 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vf3z6-0002lM-Ae
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:32:35 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-34ab8e0df53so4846588a91.3
- for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 14:32:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vf4GS-0006eU-Di
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:50:29 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-64d30dc4ed7so11324998a12.0
+ for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 14:50:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768170751; x=1768775551; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=968TPBV7ZHk1pT1hJPYejxTybirnqoIcqqfUXHVKDU8=;
- b=Bnu97BU/MpxxYl/9Dxpi5wn0s7/d95IwZeZMjev+hl36xCYjWKGD4rViVflxI1RWBk
- JJAycopH1JORy/oUIXqdEBrOOwba7GAP9KZIXxOvftPDv3M32n0ZrVeqNklKyT/85MFc
- Z/L3VoDmfYzPftCSYFotm+Lx+inTGcpSh457xuEF+fq08RQi1ropFHgKBFj+21hu8Xkj
- qHfHCxIPIKDH2aZy9Vr8ZPHQAmTxtyapymT0VRrWyqYv6S8m3fbDq6igYT3+A8G1Gvtx
- mJe7ah8kRpM7GhlHm1zrM3qrMIkHNSv+sxx918zZDf0kPMvrq7LXj+ihj20L1Z+hDRJS
- UqRQ==
+ d=gmail.com; s=20230601; t=1768171826; x=1768776626; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Iwc5CEZAIs6a6mkAV8FZ/NCuxcwSUhoTQWC4ljnbAkQ=;
+ b=QXYrsYRZI5OChLxLe/EWMiTPujmALfFsnvoqZu/Ht8hWp/VdWbA4NbdkrTYucaUxtL
+ sr+vQjMRYAmhpOY7aP/c0AP3RvEZzoYFc9zwruv5AYsmrhEanSflkFHG6HJufPCEHXYY
+ 6ixGivMEtYcG1TrQF3unBTXsM108giXbUIHnx886MvXj0yJTKGAjRFIjpRuRav9eqShc
+ uyY86QCHqXwyLH5OE6OoQQgWxkOEYjNSdcI1HkzZFd0hAXAZahl1ebbDId6Ts0TA3dQg
+ lAj/3t+wtDomts6Zjb6taWB7uOzz0rGhyiBLX/+9xb8lbDonn6RsAmpfZqc7Me78CgR2
+ 3sDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768170751; x=1768775551;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=968TPBV7ZHk1pT1hJPYejxTybirnqoIcqqfUXHVKDU8=;
- b=CLnVdBZcPWXMu1EiizJYVaYANjmuQCJ+HODvP3gtFhF4AndjAeKmMHQYn1w+cB774C
- qEcsKAIor/sU48egmru1sJB4Z4D1FgPfDiWu7j93slW+qDDS4i/QyRVNdn8yS7V9w0iZ
- ZVov/mFPvlSR5tsdNWKncli4WFZE0jSgskO5U5hr52RRycI3k7sWk+359zvQEfF7kPvT
- 1RDIM4EVw04memnZXCFYKjJjiJtBKEkjGV81sRPS0UxjWq3BT7uQgoTGZvnN6Z+GbsWa
- ehtU7GJGN9FWDI8oDSsTa0UDYikr4Xxt+iWMJIS9NMxql9ZBMb1TC9A9YopYqHT6dtHZ
- ntiw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAQk+BXLh8sVolCL64lFz2uA4HodmEqfGfliSpGuXgZCo9Qb5+fwTWUquQQHnrlukXHfVM2o8Lcw2l@nongnu.org
-X-Gm-Message-State: AOJu0YxmNWRSuhSLift76buRvCTOU0bj2FcufJXxc9dLiJHfq8LiWQBE
- 1l5NtguNoUUYewWFOqczjnchNhHJnJzZ3k0Auv8uPTmIoUozh7hTseRq5Cj5QL58tPQ=
-X-Gm-Gg: AY/fxX5RBgnVqXSSIYRcDskcSH5F24E0wT2ZsXp1oNq18wE0rq3OOvBLzJpCdBD3/1a
- mMl86MD7sOrvBkALTPjPGb6QFn/fH4sWkm8hQqVQKlDN5ED9YAl/7LTb/d2gi7gZpUDHW64fMas
- cxXph2JXJ7EgFBgZTbt7k8lW1aVu8nfjxsoO8urVA9oHGgTkyAY4Dx3MiJuLYQT1hkjhEPN/b1o
- 99OSm5jTsaSPYRGilIZ8CzxB5tZqt+Wx1lUqQHTs/TkdFqiwPgAgnoStUyKMVK0M1iNQjPjyJ5Z
- 45X6UVMOpOWkxhw/jWG7a9Pb8LzzfBmAlvr4ph9DesoaSjfFWEZzFG7rsAkH29gzQ1So7SSmrL0
- YItywvhe8YOB4HBg2ArrhWlgKtKvt0TGSlHmfWbMbshUVgts68PXj//vizihKA6OlbcP6tNX6l0
- xrl1KIdQkpE54T0lcVf2dgRkIMTw==
-X-Google-Smtp-Source: AGHT+IFksuJSlQm2rVy4+P3EmyV8Grx1rpOCAEXimX+GByB9wUWv31eXhVPq70Qr8I3o1nA7/v/yNw==
-X-Received: by 2002:a17:90a:da85:b0:343:60ab:ca8e with SMTP id
- 98e67ed59e1d1-34f68c4d6e2mr16642060a91.17.1768170750729; 
- Sun, 11 Jan 2026 14:32:30 -0800 (PST)
-Received: from [172.23.81.179] ([202.86.209.61])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc8d292fcsm15496211a12.20.2026.01.11.14.32.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 Jan 2026 14:32:30 -0800 (PST)
-Message-ID: <1220fd98-8d11-4217-989d-b71bead76da2@linaro.org>
-Date: Mon, 12 Jan 2026 09:32:21 +1100
+ d=1e100.net; s=20230601; t=1768171826; x=1768776626;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Iwc5CEZAIs6a6mkAV8FZ/NCuxcwSUhoTQWC4ljnbAkQ=;
+ b=DnZwDxNSl/mGhZzfc2ZCyn9VtU5dDbEq2/WaPDPAJjeAZCbC0yiJSfN14ORvtPjj1v
+ Gk7AC0LQICIiNccuVhH4ve97KMW6Lzuj8pAQATgYmaE+LCCSmcJT4918MG4wytkY84kr
+ C/BuqjUbKQOKK3+RxsayFMFHGizfZhaUlCFJwkN7ZCukWS+YypOPTK5RyuOXDRlshVq4
+ 5bJPtSCZhSx7xTCKHIGhGsr+/pBUjL4W+NP9UwE9LxoRnGQCp48AAskpNHnJj/TKg9/e
+ SXJtX9ZLN9uHXFwPvPwBJE/kXhfBqSvMUSO1qUZXDuYVpm5sy2hHSBoaG2w360MWdq2a
+ liFg==
+X-Gm-Message-State: AOJu0YxFHQKpTp7++3OaF+jbeIg+W2Z+9qgIO2M5y6h5jgvapN41+D/K
+ zIf2UnWPWa3Zi+ed4MVH56ItHlo6nwdGKpZcRB4g3Y7kVW/DT8mlHVslfJ/BR2S4R99E3nsp2nc
+ 65HcEZpyEqzdqW6ro2GgRp7Q7YkEU/Pg=
+X-Gm-Gg: AY/fxX5017nZIbhtWPJClY96jI91nGhTvOWWE4i0BM+xFQBMMXbGF5GIib7o0o4vCwY
+ qsa0OJ0OZYw97zH8W2Rs/IuaZZK6wq7pMzEo6pockGCg1KyV8oTJheUJcod+SCGT5CMkggj5FSi
+ OXPrVWRYnsGNgtXhV2KvptjBLYvqW6Fpmtm4riRqIb/VIclrtPzw4U9VPZMR6qpFkQxpS5IQPXj
+ t+529x1senWX6RuAV8YxYUcTdXdzGIAaH6hrvr6JQ1zBK5Ibg/FrzKmemwcCdLMv36dA72+gzP7
+ NWHY5N/FpCUeD14mdHtvTik4pQ==
+X-Google-Smtp-Source: AGHT+IG+FFB7AC6xMxVrnleJZRuLExdM5iOS5iYafSXz36fPuBhu7+g/Cmhv4QhGvdU4Aqe11HbsYpEjPPyMTKkSJO8=
+X-Received: by 2002:a17:907:3f21:b0:b87:191f:4f99 with SMTP id
+ a640c23a62f3a-b87191f521bmr186874466b.48.1768171825702; Sun, 11 Jan 2026
+ 14:50:25 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 23/24] util: add support for formatting thread info in
- messages
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, qemu-block@nongnu.org, qemu-rust@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Kevin Wolf <kwolf@redhat.com>
-References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-24-berrange@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260108170338.2693853-24-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260108134128.2218102-1-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260108134128.2218102-1-djordje.todorovic@htecgroup.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 12 Jan 2026 08:49:59 +1000
+X-Gm-Features: AZwV_Qg93t3WyuXbI6dLAzv1vmwSYhE2sQjA6z8746yEMaqnGj5msmtAoeeaEZk
+Message-ID: <CAKmqyKMHdzmFVj7dW9ku0pe3+niysL7KHe4Zbk_G8D1sUMN2Kw@mail.gmail.com>
+Subject: Re: [PATCH v16 00/12] riscv: Add support for MIPS P8700 CPU
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>, 
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, 
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, 
+ "thuth@redhat.com" <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -117,49 +102,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 04:03, Daniel P. Berrangé wrote:
-> The message context is now extended to be able to include the
-> thread ID and thread name, after the program name. On Linux
-> the thread ID will match the process TID visible in /proc,
-> while on other platforms it will merely be an integer repr
-> of the system thread object address/ID.
-> 
-> This changes the output for both error_report and qemu_log,
-> when running under the system emulators or the QEMU storage
-> daemon. Other programs omit the thread information since
-> they are largely single threaded, though potentially it
-> would be useful to enable in all of them, given that the RCU
-> thread will always get spawned by a constructor function.
-> 
-> Before:
-> 
->    # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
->    qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x560db818e080 dir=fish
->    qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=0x560db818e080 filename=ca-cert.pem path=<none>
->    qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
-> 
-> After:
-> 
->    # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
->    qemu-system-x86_64: (772366:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x560db818e080 dir=fish
->    qemu-system-x86_64: (772366:main): qcrypto_tls_creds_get_path TLS creds path creds=0x560db818e080 filename=ca-cert.pem path=<none>
->    qemu-system-x86_64: (772366:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
-> 
-> The '-msg thread-info=on|off' argument is introduced to allow this
-> new default output to be supressed if desired.
-> 
-> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
-> ---
->   include/qemu/message.h               |  1 +
->   qemu-options.hx                      | 10 +++++++---
->   storage-daemon/qemu-storage-daemon.c |  6 ++++++
->   system/vl.c                          | 17 +++++++++++++++--
->   tests/qemu-iotests/041               |  2 +-
->   tests/qemu-iotests/common.filter     |  2 +-
->   util/message.c                       |  7 +++++++
->   7 files changed, 38 insertions(+), 7 deletions(-)
+On Thu, Jan 8, 2026 at 11:41=E2=80=AFPM Djordje Todorovic
+<Djordje.Todorovic@htecgroup.com> wrote:
+>
+> Rebased again on top of very latest master branch by resolving
+> build issues occured due to the changes in the code organization.
+>
+> Djordje Todorovic (12):
+>   target/riscv: Add cpu_set_exception_base
+>   target/riscv: Add MIPS P8700 CPU
+>   target/riscv: Add MIPS P8700 CSRs
+>   target/riscv: Add mips.ccmov instruction
+>   target/riscv: Add mips.pref instruction
+>   target/riscv: Add Xmipslsp instructions
+>   hw/misc: Add RISC-V CMGCR device implementation
+>   hw/misc: Add RISC-V CPC device implementation
+>   hw/riscv: Add support for RISCV CPS
+>   hw/riscv: Add support for MIPS Boston-aia board mode
+>   riscv/boston-aia: Add an e1000e NIC in slot 0 func 1
+>   test/functional: Add test for boston-aia board
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks!
 
-r~
+Applied to riscv-to-apply.next
+
+Alistair
+
+>
+>  configs/devices/riscv64-softmmu/default.mak |   1 +
+>  docs/system/riscv/mips.rst                  |  20 +
+>  docs/system/target-riscv.rst                |   1 +
+>  hw/misc/Kconfig                             |  17 +
+>  hw/misc/meson.build                         |   3 +
+>  hw/misc/riscv_cmgcr.c                       | 243 ++++++++++
+>  hw/misc/riscv_cpc.c                         | 265 +++++++++++
+>  hw/riscv/Kconfig                            |   6 +
+>  hw/riscv/boston-aia.c                       | 476 ++++++++++++++++++++
+>  hw/riscv/cps.c                              | 196 ++++++++
+>  hw/riscv/meson.build                        |   3 +
+>  include/hw/misc/riscv_cmgcr.h               |  48 ++
+>  include/hw/misc/riscv_cpc.h                 |  64 +++
+>  include/hw/riscv/cps.h                      |  66 +++
+>  target/riscv/cpu-qom.h                      |   1 +
+>  target/riscv/cpu.c                          |  44 ++
+>  target/riscv/cpu.h                          |   7 +
+>  target/riscv/cpu_cfg.h                      |   5 +
+>  target/riscv/cpu_cfg_fields.h.inc           |   3 +
+>  target/riscv/cpu_vendorid.h                 |   1 +
+>  target/riscv/insn_trans/trans_xmips.c.inc   | 136 ++++++
+>  target/riscv/meson.build                    |   2 +
+>  target/riscv/mips_csr.c                     | 217 +++++++++
+>  target/riscv/translate.c                    |   3 +
+>  target/riscv/xmips.decode                   |  35 ++
+>  tests/functional/riscv64/meson.build        |   2 +
+>  tests/functional/riscv64/test_boston.py     | 123 +++++
+>  27 files changed, 1988 insertions(+)
+>  create mode 100644 docs/system/riscv/mips.rst
+>  create mode 100644 hw/misc/riscv_cmgcr.c
+>  create mode 100644 hw/misc/riscv_cpc.c
+>  create mode 100644 hw/riscv/boston-aia.c
+>  create mode 100644 hw/riscv/cps.c
+>  create mode 100644 include/hw/misc/riscv_cmgcr.h
+>  create mode 100644 include/hw/misc/riscv_cpc.h
+>  create mode 100644 include/hw/riscv/cps.h
+>  create mode 100644 target/riscv/insn_trans/trans_xmips.c.inc
+>  create mode 100644 target/riscv/mips_csr.c
+>  create mode 100644 target/riscv/xmips.decode
+>  create mode 100755 tests/functional/riscv64/test_boston.py
+>
+> --
+> 2.34.1
 
