@@ -4,82 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE53D2502E
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 22:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB9D3D25031
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 22:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vf3SX-0005Ny-7o; Sun, 11 Jan 2026 16:58:53 -0500
+	id 1vf3s9-0002E7-Gz; Sun, 11 Jan 2026 17:25:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vf3SR-0005Ls-GF
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 16:58:49 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vf3s6-00027c-RV
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:25:18 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vf3SN-0003sP-Nk
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 16:58:45 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-29f0f875bc5so47662075ad.3
- for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 13:58:43 -0800 (PST)
+ id 1vf3s3-0001cF-Sk
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 17:25:17 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-34c1d98ba11so4594971a91.3
+ for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 14:25:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768168722; x=1768773522; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OHti3C71LUbVm5pSNWQt/BFwUr/ys/K/zILSxw8aQnk=;
- b=AjfXhlkC9+8j0WWgo8KrFTPiidxb5xi9EB5CWUUtLizzztkC/X4cY6IPyU4ljoZ41A
- sFryu9hUDoV1uKPw6RbWT8DpNqqGL7hHvom2zDKXcL9/nGDcInffIRFbifB7ocoCuqd0
- hwY0VZGGpduOBuxBq/AZhAmj1tDbMcTTSwtsWEdEZdrb8otOg12KnRFJf22g7cBLtdZY
- N3rsGWP5fk9QE0jaLSpnDeXfT25jE8ZGTXqBjAn5Q/uNPV9IZ4/THwpm6IFamPUZLtdo
- VlQmghZaTQe2qUAzsoTzVzpaEwYNJLGLL1jllKvcCpdWJB8osC3PIJb/w2b7Inq5NfDN
- SilA==
+ d=linaro.org; s=google; t=1768170313; x=1768775113; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+CCFLvfHluJFdfCNdY2F37e7Xb8TpmPuEJpC0XV0SKE=;
+ b=tJ9WEbbdSRzod7E76sXBg9bT21LjDwUgN5rVpegr508ZuGac7ZBuP5QNSVB2L7Tnkq
+ rVklVGzC4BD18/s9Haj37nHesTPYFry5rO4CVuwFN7RP2PVFiaQFjJ5mqMohWV6OeoJF
+ bWsG6SuJLf/LpG0PD3IoMu58qPN8dfqKTeKKmU83NNFyH8u3eeZseMGXE2XlRL1xIPSH
+ iBs7R4U/fS53YygCVda3Jfwlig1EkW3iLz1Zf2a0NfqAV/qNnVtFzmIgdslAlRz9oAXS
+ gYRlBKQn43Azz4i4ukzNe9n+X2ZmSbACQqnFw3crfAlvmRtTpBrpP2q+GpqDVKHsqI/t
+ w8HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768168722; x=1768773522;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OHti3C71LUbVm5pSNWQt/BFwUr/ys/K/zILSxw8aQnk=;
- b=l/JD8RokbJT9cEoxY7amgK9LU/N0Z81iGkCJZAvC5TgoGivF3H7S42kMdudwIWDa9t
- S3ty47flt0ofT6VRbFK0Jq5D7Dja9uM7f4SYiO+N2f5IzjAldk714dz/OjLcWHzkeiA7
- PqUTmLg2adFXjbmmLCHRVabfxN7VJpLDxC4U6FB5zINSX7R1ZVAmwik4fqlrFBcTjqgj
- q9xYQOE7uaqoWa37HRg9f22C6E4knTFMLpMwlKRkr6B/DxereAT6I0SAQ539xbs4wxfo
- oiNmj7jle4UP3p3LaZW0mmLyhcVvyKE4eaNEuNPViTHF8GYpaWA7gxeSu0Gj8eqBZBVD
- VJUA==
-X-Gm-Message-State: AOJu0YzW3CIuXeaQWUL2vUfIpkBVaiJVe0WHpe3PtGFnDDQTDTsxIlfB
- Xvr71tbNk43WKAiw3P+iEyNrvAtUJ5oA6WsPd1f9guWBYXkgao7Z0zHFMsXCD0BdlvuG2tjWRhs
- 3oBejnJk=
-X-Gm-Gg: AY/fxX4Jg66HK1xUDsZgrfkwULbl2uMigV0cyo/Zfe2fMWQKfEJc9evHfMs70HeSJkA
- bKja1W7ZRexCZzXIX7vzwQYOuDfm7rN7VWyLaYHkS781qYaaZkt2TJ/jTdvhos+UZ6vKCWEmR0e
- GNc/ljFGeUSmu4vdB2h0Jpw4ST8fmYOWnfF7X/gOe0aLteP14GOdR6cftbM7e1C+DTQjdYNJnro
- OrmifztQWkOiLDrgg/BaQqPf6E4GhBupKaShXyFzGhqAZCvSVj/Vnu1eW9b/n/T4v+8/rwGOygo
- 4oTnsVYM4DATvr977K8CRfNnGrqf6gS/eQulNQPyB0d19YJHCvL6qTs3fUu28NTst6SFHoaix5z
- 9/u+7bPRfSmLV/UlzsZK8XO1wAbj5drCjnuueB8yvbyTZZY3D5DxrE0v22okPQnlqru5JtdPmYL
- w125uNLNtxpj6z7aA=
-X-Google-Smtp-Source: AGHT+IFSUvgI7sLZEb/tSS4Wn1T4u3iZRHjJOYvGgkXyUIHd1IXLydx2vidLq9ev3NHxHJcZ6h0W2w==
-X-Received: by 2002:a17:902:d491:b0:2a0:b02b:210b with SMTP id
- d9443c01a7336-2a3ee4fe86bmr154410095ad.41.1768168722214; 
- Sun, 11 Jan 2026 13:58:42 -0800 (PST)
-Received: from stoup.. ([202.86.209.61]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c3a31dsm155272365ad.9.2026.01.11.13.58.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 Jan 2026 13:58:41 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jim MacArthur <jim.macarthur@linaro.org>, qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 06/13] linux-user/elfload.c: Correction to HWCAP2 accessor
-Date: Mon, 12 Jan 2026 08:58:11 +1100
-Message-ID: <20260111215819.569209-7-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260111215819.569209-1-richard.henderson@linaro.org>
-References: <20260111215819.569209-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1768170313; x=1768775113;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+CCFLvfHluJFdfCNdY2F37e7Xb8TpmPuEJpC0XV0SKE=;
+ b=r3m9sxdSWUvyYqwJe3zS+mcPqKEKdN+pOj0S7ZnoTcRrlHZURMx2egmrbIZLrJU6WD
+ ShFU9jolbVtjszcjJuNSUWjsdt3OMJFMHB46mPN131YL4DP8f8UL8avPGFjmUlcILoYZ
+ tj47XOT8y+lS8b6nNlAz8u7go+qyO+9MIKZSiyXWMJmM3kJ6Op3tAxB0hcouyEg5bek6
+ Yoj1bPpfZzErkiOor4MY4lnXcVkEPqTdlR1eQwCJ/HiegUhWYi5tr9ubW+7uA1UArvTH
+ GgDrTMSr8wkfSOyNzLD0KmlE4n+L0MHGF3dzJzpryMGAInYCfsdovWgnZcP/5INM8pXE
+ PCqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5B6Y8ZNSDoH8AMz3uVh0zogX8eNhhvZtH4lSp4NIKOBJ9nXc1/0BzCljaG7wTkwvoo3MT/u0d7wWx@nongnu.org
+X-Gm-Message-State: AOJu0YzDk0bVmbmdI1rWgq4rGWLfEvoQYrCFJyfNMZPvGM4SFtW8QDVV
+ UMscwVya3aq8m9NPU6gpEajPm2KetpdH6k5i4Y+p9eeoFBvam47F0DmU2B5iI62V1cc=
+X-Gm-Gg: AY/fxX4iDYyxx00wDTsg4OTfppOd2vj37CSW2lrif+0vFXhaGBvBtea5VovZ5pz3fDR
+ D1TP/BTRzj+ubMq7RUyYqS3xwC6L4GvRWY0OrLhIyB/thurI5YRYzq57ZMaaZqvuO7I40R9JBB2
+ K6oyKHP0ndGkJpnaVV6fwuM4HTIjkbG04j0zHNENbwadBQyBzA+SoNhohZbxQdt0XSrVTpwElHu
+ tWd4lKDwK6Iq2HpmLVbJTAzd0rY0EO8qMxlmxl6H4jcEPum+WvNsnHOxD8F2oX3hc8sJapZKcWG
+ zUXxONCKn8UdMmJZ21YLM/303CPck33Qj6oGFSDWXPsPivIILvvZPlRqWVV1CKzdF56rN7Cp2or
+ FopIB31MaQNWhLRd9DAIXLYHa6p3eguChJe7RngEWIGo94hNkCmc1FZqZp7ryJYVGroluQyxmmM
+ 3apmJXd/I6fEn1tRcH42WcLusHLJj1BYjIdtsQ
+X-Google-Smtp-Source: AGHT+IHyQaB2TR8KUea3SwwlIMzHSwtllB9aJOT/IlmVcHuuN2dZk3FyzfHO6W+DjewnRiM05QQM9g==
+X-Received: by 2002:a17:903:1a6b:b0:24b:24dc:91a7 with SMTP id
+ d9443c01a7336-2a3ee4b22d5mr142288635ad.45.1768170313100; 
+ Sun, 11 Jan 2026 14:25:13 -0800 (PST)
+Received: from [172.23.81.179] ([202.86.209.61])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a3e3c5ce06sm153925935ad.44.2026.01.11.14.25.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 11 Jan 2026 14:25:12 -0800 (PST)
+Message-ID: <6b6eca04-376b-4601-8049-0f4f4282215e@linaro.org>
+Date: Mon, 12 Jan 2026 09:25:04 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 16/24] util: don't skip error prefixes when QMP is
+ active
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org, qemu-block@nongnu.org, qemu-rust@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Kevin Wolf <kwolf@redhat.com>
+References: <20260108170338.2693853-1-berrange@redhat.com>
+ <20260108170338.2693853-17-berrange@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260108170338.2693853-17-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,36 +117,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim MacArthur <jim.macarthur@linaro.org>
+On 1/9/26 04:03, Daniel P. Berrangé wrote:
+> The vreport() function will print to HMP if available, otherwise
+> to stderr. In the event that vreport() is called during execution
+> of a QMP command, it will print to stderr, but mistakenly omit the
+> message prefixes (timestamp, guest name, program name).
+> 
+> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
+> ---
+>   util/error-report.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-get_elf_hwcap was used when get_elf_hwcap2 should have been.
-
-Cc: qemu-stable@nongnu.org
-Fixes: fcac98d0ba8b ("linux-user: Remove ELF_HWCAP2")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3259
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260106-fix-hwcap2-sve2-v1-1-1d70dff63370@linaro.org>
----
- linux-user/elfload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0002d5be2f..35471c0c9a 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -708,7 +708,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
-     NEW_AUX_ENT(AT_EXECFN, info->file_string);
- 
-     if (HAVE_ELF_HWCAP2) {
--        NEW_AUX_ENT(AT_HWCAP2, get_elf_hwcap(thread_cpu));
-+        NEW_AUX_ENT(AT_HWCAP2, get_elf_hwcap2(thread_cpu));
-     }
-     if (u_base_platform) {
-         NEW_AUX_ENT(AT_BASE_PLATFORM, u_base_platform);
--- 
-2.43.0
-
+r~
 
