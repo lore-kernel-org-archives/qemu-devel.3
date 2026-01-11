@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C441FD2502D
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 00:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35585D2502D
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 00:10:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vej23-0002u1-6E; Sat, 10 Jan 2026 19:10:11 -0500
+	id 1vej2b-0003Fs-Kw; Sat, 10 Jan 2026 19:10:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vej20-0002nO-44
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 19:10:08 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1vej2P-00038z-IU
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 19:10:37 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vej1x-00082l-FT
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 19:10:07 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-34c24f4dfb7so2901829a91.0
- for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 16:10:05 -0800 (PST)
+ id 1vej2L-000858-I4
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 19:10:31 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-81ef4b87291so525069b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 16:10:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768090204; x=1768695004; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768090226; x=1768695026; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PVqSnrbLkVB6Fdf0k5K/Lr7w7wrD97RqumNzrRijUVM=;
- b=AjfGjZ9Erm7aqmATanLO3WeWj9nH7cF2MOm2vpTfoe0gEwmU+nCT/zmOLn99Yrb0H2
- BZCPEdWlpc/dDgCVOtIE5SzK07KYfzJiETkHNfaSNrPSnaaFW3g3d8EFPhPZuPN2bKfA
- U4qapOnwQ7Z7eU0Oi/EbXECgDID1OK2OMRoTgFSVsQODXsyev6EKkmeJS3Fa+lcDIK7w
- ETlX0IL40jA8vQ9RaYRLffhM9zx3WNdottTBiLdimQ0858NjiZS8hExnG5yw6RXvrwb+
- II0KD7nPOPzE/BUZurjriraLPJfi4E3dYFP24aIOxhoYQ4v+9kA7KD++ZmyNVeJWswNy
- bdYA==
+ bh=okYbRr/A+n4TD1UgFnCrWf3pqEju1Mq3RiJfxa8mfT0=;
+ b=ilF2Ja3Q51m+v7ibZt/OmpGOMaIPc/3WdI5V0HaI2wF+j/sXuUswH9gnrpq/iKER45
+ Pjsw8sJ84LYLw7RlrKK6/KwoWKwOlibZXVbMjYJ1foW1jEhGjwNHBbl5P2I8SrhOru9I
+ u6a7JBGM54+YS/qVOC5zd0O2mYoA99bKPEZzf67HBviuHzmwLZ6+GNjOnNPoZ8YT7j9y
+ hFDCXt5xIADh2uDEStPoN0dHCUVH9qpJ+G5ElX+1jnQBMZ32mBqGWZXSEBivX6MkA3qu
+ E6S92YMMfcOorPBYyRHxQNJNovtjYs+tN+YelplxPTYRMYI6YVDqM+sXvwfDYKRDeR0L
+ Kz9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768090204; x=1768695004;
+ d=1e100.net; s=20230601; t=1768090226; x=1768695026;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PVqSnrbLkVB6Fdf0k5K/Lr7w7wrD97RqumNzrRijUVM=;
- b=cecTKkEvN9gAmTwsZCeiYosxMEssRry1j8OMz35NMs1viCYh8n33sUJTg4VG3s0voJ
- a66L0S/g0Id3f/H7Gukjxz+n7+SZv+2WknwHV4wSW/SuNMkdu+3+dJCjqxqNCRJHYNYZ
- sdNtTqGlv80OVJeD9K6G34OkKOeiDpQhZfwzos8H1C6spI2TosyMi1W0HTgWb+Kr9Tqz
- Ta9c7fIvQN2pBcoUc0SIW1ERU6PjD97o6DvQc/BAX7MX0dQg87Qk4Kv3+oH7jW74L1bb
- LQiUqpt5tTwJSj4L9PqIkVymM4bXJwYXzw9oxEobdzTDOpF3eeOPkvHYSBYNmKSf6K8f
- 92aQ==
+ bh=okYbRr/A+n4TD1UgFnCrWf3pqEju1Mq3RiJfxa8mfT0=;
+ b=WtXt6WAr9/d5EXaLBKw+G6hSXjHAXmVQ0HGVHMJ0r0R7EQ2sxDi+TYNP2xHdWg5Ddm
+ 24PHX7u6ftH20iFZrdW4G0ZCBKAmV/7rr2lgHEV7VZKnOxS+rzNp/CLO5fyklIkaiEBx
+ IszseqFFJ61sHNxQHVAJt8wZzvziuYJ/k6w/B2cMwYCHiniOftHLBKP45keHCI7OcrV+
+ zc+Sq8aVuJf/IUOMIeW8eAef+wN08m08HEYSepC3ZF3+7ZdD3voS28bDcHCz+aE+JAoA
+ TcpaOnsp56p4+VTBBQESAniuujjDy17PHgICWBXDrn+hSf3cwT3eyHkHf+wNkY6FXGo4
+ lX1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdISh83j71o0uDyiHa0ldgE84bIsd1IGThZvyooUHEsJwf20zmK2a1VVIuQTilW2UcmsTxiRZb7DhI@nongnu.org
-X-Gm-Message-State: AOJu0Yx3blr7l27IQu2g4U+zmvacJ+mVSG0xhPIRUP3/xGKJBkQTdTvx
- T1Zb7XycUDmY+JGSnldOaD7WNBmm+6FX8NJJQuc5yaK0n7va4Uww40OqEjOI0XP0Pq0=
-X-Gm-Gg: AY/fxX5gOswPsh4fRi6emF26tVERw9q0LaWbKx2OcxvVoPaQdp/DIrIri2QOfORt7e+
- lirS6StDN6W7YgaGVLbLkoOshU5ro3s0iUmnoPLenWDCSWkL1EJYFZ3Zvz8SthLcEu8m1uJJsyv
- IcwIi16QW2qYf4KeiER3tjwe6UCNBMCycqonpOntUSccGDPOT5Rkpm/vdfBrpgCLPLJhlP2Fhlx
- UcfnzO286JjBM2uRHn+on5UK7i77rw+MYaDo2C8hguCdNCAOC+YO6fNLYdf4Irv9vZONZkFi5a6
- xO49JDSyqaCmae8F7HatUS+DqoObyPdoIEiJ83FEO4CwB9GhKDxsYBAGTauyRuTghgIHyoFVmN+
- 1cM7ucdZLEG5oyb43ZX6Gmd3K0Z4nguI+aFQj4x4cy/MIXo8VzrkgC1gBqlCrCDHFZ0smt5EoKb
- k8MvGWbwJFo3eWndWypgK65XAOaw==
-X-Google-Smtp-Source: AGHT+IEQRN+9yz5CPxIYfTEgLu/g9Ib21kP8tZKRD5qzgLjBBw2xKLA0cMN+OO4AzrVzgINHIs6mSw==
-X-Received: by 2002:a17:90b:1c87:b0:34c:635f:f855 with SMTP id
- 98e67ed59e1d1-34f68c33ab8mr14643785a91.7.1768090203865; 
- Sat, 10 Jan 2026 16:10:03 -0800 (PST)
+ AJvYcCUwNCVHFs8piA4SqcHAx+5DvU0TiCd2gskdh+UJ2HSlMkT1DnseBWmoC7xRjUFmDqA07YYrDIV7CHiJ@nongnu.org
+X-Gm-Message-State: AOJu0Yy95Y0KTW+XG7X+eg4XaPqVDPAZwGekQZmB3yLSds2UAF4Tq7pG
+ /bK5SFZdJeia0syfc7Ed7QzG4SeIXamA8AGT6n2jbXpej85Uk6HE4W1UBbb6CYRvCe4=
+X-Gm-Gg: AY/fxX7T9V82Gsv1kp3SCmLkXy9KjeQAuCuQ1RisCBZs6luLYT0MZlsxXGhzeda8iAA
+ E/285oeAUK4CND6ZwoXLmh4lemxLP84vCVbWBAeGcGizNm/LpxFtwy6X/+DSj7AHAPcGC6LllfW
+ Ja+L3zOrx6PNlI5xTWaE7k+S4eONqo1OmSJPOfckn/Fyt5zKqwBNMROrzFikvzOQKEmOAuuTP05
+ gl+pPIsZgUQJ45uE9xBVDWj8w01GkJdj+7D/lisyzLqdRO2KImBxh5ukq/nO6Zr44s72hhVuujk
+ 5gy5YEb+b6moK3Sn7ipuMUxZLmBEJu2233TgPivuvh8KGpVoQ8g3KkdesHNinWJaFJOV9yutrwa
+ ILUZr7kKUzLocPrlPj5iVJjaRELkQNhNuScRwmjM0gFd1HbSDtu9uyYSDYB3gASpziGrqxRjgc9
+ 95bkvOZQ4yQVaBI0slblm398xizw==
+X-Google-Smtp-Source: AGHT+IEZL551nDiXhj7N1f8lEjEXDw0PiuHv8jH4xilWNaTEgM5AQunYJU5RZrC9lrOqX9WRi+72qQ==
+X-Received: by 2002:a05:6a00:4398:b0:81f:4abd:f15c with SMTP id
+ d2e1a72fcca58-81f4abdf5bbmr1052075b3a.70.1768090225598; 
+ Sat, 10 Jan 2026 16:10:25 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81f2347e3edsm3189222b3a.49.2026.01.10.16.10.00
+ d2e1a72fcca58-81e6772688asm5112867b3a.45.2026.01.10.16.10.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Jan 2026 16:10:03 -0800 (PST)
-Message-ID: <bd0a1f29-df4a-40e2-85b4-4498c00737d6@linaro.org>
-Date: Sun, 11 Jan 2026 11:09:56 +1100
+ Sat, 10 Jan 2026 16:10:25 -0800 (PST)
+Message-ID: <e7db64eb-9d74-4034-9e22-9d4d49ee5094@linaro.org>
+Date: Sun, 11 Jan 2026 11:10:18 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] target/openrisc: Remove unused 'gdbstub/helpers.h'
- header in helper.c
+Subject: Re: [PATCH 5/9] target/openrisc: Avoid target-specific migration
+ headers in machine.c
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>, 
@@ -81,14 +81,14 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>,
  Stafford Horne <shorne@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Helge Deller <deller@gmx.de>
 References: <20260107200702.54582-1-philmd@linaro.org>
- <20260107200702.54582-5-philmd@linaro.org>
+ <20260107200702.54582-6-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260107200702.54582-5-philmd@linaro.org>
+In-Reply-To: <20260107200702.54582-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,14 +112,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/8/26 07:06, Philippe Mathieu-Daudé wrote:
-> "gdbstub/helpers.h" uses target-specific symbols, but we don't
-> need it, so remove it.
+> machine.c doesn't use any target-specific macro defined by
+> the "migration/cpu.h" header. Use the minimum header requiered:
+> "migration/qemu-file-types.h" and "migration/vmstate.h", which
+> are not target-specific.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/openrisc/interrupt.c | 1 -
->   target/openrisc/mmu.c       | 1 -
->   2 files changed, 2 deletions(-)
+>   target/openrisc/machine.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
