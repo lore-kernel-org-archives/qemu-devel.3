@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27078D25031
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 22:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3972CD2502E
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 22:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vf3SW-0005Nu-QG; Sun, 11 Jan 2026 16:58:52 -0500
+	id 1vf3SW-0005Nh-HX; Sun, 11 Jan 2026 16:58:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vf3SR-0005Lu-IC
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 16:58:49 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1vf3SM-0005LL-Ak
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 16:58:43 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vf3SQ-0003sc-6R
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 16:58:47 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2a0834769f0so40546005ad.2
- for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 13:58:45 -0800 (PST)
+ id 1vf3SK-0003rj-KU
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 16:58:42 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2a0d5c365ceso40055155ad.3
+ for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 13:58:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768168725; x=1768773525; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768168719; x=1768773519; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f5ww/TrGKj3Nrn5+V3rWPu1QkcqhU9+Qwg+gP5Flqv4=;
- b=NChOnuMm84uTsNgDgIw5W77IXsSHCYmFyWK+N8XFkNQLNIn/ZBXtmz+A0aNmHYpfsN
- Qb3RGgVUvD/iAxh+va4DOsmT+GWubPtjFC6zaPGnvHBqa/QUG6Baw3QQMqnzgyomfy89
- F1yV38haP1YY8zaiGo9nA2b1t39OSHYBC85B8OqTY7KO3IEr+jpOluSNyFWwNycnZZCC
- X6CxtXtffkLFOo6etjKUfIisLPr+mVoBctjdxuFinSSnsw8onoaDeA1AY9zKoo9ycVMv
- iq2tAEgsfgcbyhbsec0yOgDUkKxqicv6zdF25lDtOQvxNwb5no0mOTk8Kzp2YNJB/+0W
- CT8g==
+ bh=7WU9noscw5cu2FvkNQz+IaG1JpungMpnx4UvU4kIi8U=;
+ b=ng0dZFuq61lkzoWTj103/jRNHh/QHIn1KFQ4aVUJgnEwq3UJpntxMnH6qcSuv8oTNI
+ JcZbTsNOhwNnBXKADFs50n7e9ERu/UvRI57IPas6eyT3t+5kAjq1reFMrL8AmuldSgYk
+ dOcKVOSo/DD4R5tHa/qTBYIThp7gqXp57izfVCREfaZyI1IZeNX1JReTaEZ0Vl40NTDc
+ mczqu4/C8GDxXTKOneemaBi4b49ATI3y9RDfbdTvE0ASRgY8WDnQWX5XtRBYa99lZxdU
+ MY34W78a7DPcJnXQKuqd3fWpq8JTdxEIUPd7cFfe6u1kwArdhpr1b9niCcjFDjJvZ7NX
+ 4buw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768168725; x=1768773525;
+ d=1e100.net; s=20230601; t=1768168719; x=1768773519;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=f5ww/TrGKj3Nrn5+V3rWPu1QkcqhU9+Qwg+gP5Flqv4=;
- b=Zy7IwUwcws5z0hFoOd1KqmKzIIOKuB6scShmJoRgmrK6IvK3jt2SzpG2VfM30gTT3Y
- ixnahvvmOPluJ/6YW9dAl+B5/dBaCsQS4bmaGrHU039YfNHqYcu2e0rLlpT6IVHF9PrC
- 3ymBJsd2BtfpZIyv5IkRvu5QdkTE6iyLGOecdqAnFa5ysfCCl4H/V0EbhcSQU34/51g4
- dAKk60ydnrvP+nlpvrsg9hRGHGn/Vj9ht9ndTTxAs76XGMRvnvnQvtTTSt4TSOyBmq02
- d8bx1YkOCV7Xt8MI3zvkK+p7OUdADLHJoX6hGwS0bRi/kAKwn00GvRF3FMgOyosupT86
- bTCQ==
-X-Gm-Message-State: AOJu0YwKFEdgPf0/sf43xWKT2MApLWXuwCaQ9CwdX2MbhQ9uE0BSVF+L
- tMIcf6wD73iuqVMfobFeLDhMtRwv/dhN3Jv51U627gvi7jGtCjdRPe+Zz8HUwyu65NAWsg/na0f
- m/ozUutQ=
-X-Gm-Gg: AY/fxX7MP+knxJ9YQCvaHZ7djpb3W7BrdJAI/jkRwzpedhhW7PZSXVbCHp8rEhZsc24
- yQfZQnI9JlK/z8Y3c59DM39a18G1PXddtMTLuF9mnmWdtzjuiyR4h4h8pcOHwEeo2wyXADXIEAL
- 52bQXtHr8sNS5pTby779OYUtKAqwt4A6d5AEo3UxcgxSH/MUyqYJFa6FVIidkTIMZxYO6CWUkeJ
- LGneZI6zffsmD5ChJg+K7v5h4R5GuKKIrp0knt6tygUIFse/r36ou2nNmel0ylkxdadgdH62/pj
- mkwhlT7z5afpAZ6s3S999ar4XAxnat23Iq82ECNY+/pHIOuM42j403dFEg/O/1GAQd3UvMJjuK6
- Bp3UjAnOGpSrToLcGlY0atNUDpTF+ny+lZ+vyRK/I5bkrCBOFDNMcQyURaDiea2bZMaf7RU+Rd9
- DttptqyYmoubBrdow=
-X-Google-Smtp-Source: AGHT+IFJDPQNtbJXHa3ghWtmzGLh1buc5SvxAxWWtGyR1JX7wgcUvfm/zqPKNtPWTW79B9TJJCc4aQ==
-X-Received: by 2002:a17:903:2ac4:b0:2a1:3ee7:cc7a with SMTP id
- d9443c01a7336-2a3ee43434cmr179988155ad.17.1768168724668; 
- Sun, 11 Jan 2026 13:58:44 -0800 (PST)
+ bh=7WU9noscw5cu2FvkNQz+IaG1JpungMpnx4UvU4kIi8U=;
+ b=Y7ZZYTHOTOgaAR/aCtUGYNutMqa0dYuBWPARE1KqfhtPhO7cYdYCJZRAxAoCOGTQ9c
+ 3p/XiBWhesFfzjqpCMfcQTvSS6fmQkg1fwj/ZyXGCq8CTKZKDi1v7MarrZS+sc876P2k
+ UWDolGLRQly/NkvCloTfV6nhGFP5fghGqH1v76AAia1qMNSl/d9nvUZ3PqX3X0JHauDr
+ 9Fs3yXLTXeYNWXuWXo3lTwXKOEslOG5cjk+h0NdFv7HTSTu7JGbUX06WwXQtZNNZG5Cz
+ LbDiRnxCUy6AcDx7i8qaBc2beSU7v1oj14Y0j6V/oAWuUctwk4ax4w7Pqr5otS5RrS5P
+ gTfA==
+X-Gm-Message-State: AOJu0YwbvW5VLxDM/nB388C7ZUTnoqTeMwH9l5t9lYR4wep2WoOthkUk
+ /2OwdCV1E5HN6hMazZRSWpOc7FaMsVV9IY1j28Et5nqs63CeEiVJACU9rrHXcbhcwJM0FddtO2t
+ +NxKGsS8=
+X-Gm-Gg: AY/fxX4TSwT/6YhTE/eMb/FLBOIR4EM/xGntlkOM8IvxbgJ34bLiajjBs2420tK3MlF
+ mKpwS1KskLP1z66vwBCyrgUr0tSPd1XDZsYekD27iV7OJG4YR/1zqU+oInd0zhLekgbobinfQBp
+ t329OiMg6xj/EDH5Tm0HD1vT1fzyx5F1VYkLgve0BxnolCSCojkApl/BTy/bfcl8ejnHC4dXNB5
+ IQkrCkv5CR1Y20s+Pg718MCQl9Z0eKN4TOf95rK47ukasH+0YVAryy9VMQogWmtUg9/y/p0Swiz
+ YJ/mXYac8mBHeI/yiWSm5NC6+ztvBK0bVaECJfaZpWeJ5HNU+V+AfI48lQPO5bijMj0epiucCe7
+ okqIFwOr2smepjXDjLcJA9EfHAxt0sQ+fuDPDwyxvckaHQMz4mrAD12waaLND/YASoJflc7GRDC
+ kfEywIG21g61RurRdwZOZT9x8O4g==
+X-Google-Smtp-Source: AGHT+IEerdqgdN8GnGZUht5YTwUffw3px/4VXHMiSaHJN/5tJmkGwDfnAhsAnBmbsLV9CwkaEcK3RQ==
+X-Received: by 2002:a17:902:ecc5:b0:2a0:a0cc:9994 with SMTP id
+ d9443c01a7336-2a3ee4d9312mr164280545ad.47.1768168719108; 
+ Sun, 11 Jan 2026 13:58:39 -0800 (PST)
 Received: from stoup.. ([202.86.209.61]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c3a31dsm155272365ad.9.2026.01.11.13.58.42
+ d9443c01a7336-2a3e3c3a31dsm155272365ad.9.2026.01.11.13.58.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 Jan 2026 13:58:44 -0800 (PST)
+ Sun, 11 Jan 2026 13:58:38 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Matthew Lugg <mlugg@mlugg.co.uk>
-Subject: [PULL 07/13] linux-user: fix mremap unmapping adjacent region
-Date: Mon, 12 Jan 2026 08:58:12 +1100
-Message-ID: <20260111215819.569209-8-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?=
+ <jean.christian.cirstea@gmail.com>, qemu-stable@nongnu.org
+Subject: [PULL 05/13] linux-user: allow null `pathname` for statx()/fstatat()
+Date: Mon, 12 Jan 2026 08:58:10 +1100
+Message-ID: <20260111215819.569209-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260111215819.569209-1-richard.henderson@linaro.org>
 References: <20260111215819.569209-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,35 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Lugg <mlugg@mlugg.co.uk>
+From: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
 
-This typo meant that calls to `mremap` which shrink a mapping by some N
-bytes would, when the virtual address space was pre-reserved (e.g.
-32-bit guest on 64-bit host), unmap the N bytes following the *original*
-mapping.
+Since Linux 6.11, the path argument may be NULL.
 
-Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
+Before this patch, qemu-*-linux-user failed with EFAULT when `pathname` was
+specified as NULL, even for Linux kernel hosts > 6.10. This patch fixes this
+issue by checking whether `arg2` is 0. If so, don't return EFAULT, but instead
+perform the appropiate syscall and let the host's kernel handle null `pathname`.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251117170954.31451-2-mlugg@mlugg.co.uk>
+Message-ID: <20251229121416.2209295-1-jean.christian.cirstea@gmail.com>
 ---
- linux-user/mmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ linux-user/syscall.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 423c77856a..ef3833a2bb 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1171,7 +1171,8 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
-                     errno = ENOMEM;
-                     host_addr = MAP_FAILED;
-                 } else if (reserved_va && old_size > new_size) {
--                    mmap_reserve_or_unmap(old_addr + old_size,
-+                    /* Re-reserve pages we just shrunk out of the mapping */
-+                    mmap_reserve_or_unmap(old_addr + new_size,
-                                           old_size - new_size);
-                 }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 2060e561a2..ee7c34027e 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -12141,9 +12141,13 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+             int dirfd = arg1;
+             int flags = arg3;
+ 
+-            p = lock_user_string(arg2);
+-            if (p == NULL) {
+-                return -TARGET_EFAULT;
++            p = NULL;
++            /* Since Linux 6.11, the path argument may be NULL */
++            if (arg2 != 0) {
++                p = lock_user_string(arg2);
++                if (p == NULL) {
++                    return -TARGET_EFAULT;
++                }
              }
+ #if defined(__NR_statx)
+             {
 -- 
 2.43.0
 
