@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDB8D2502A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 00:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D670D2502D
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 00:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vej3e-0004rU-LJ; Sat, 10 Jan 2026 19:11:50 -0500
+	id 1vej4Q-0005Pc-Bh; Sat, 10 Jan 2026 19:12:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vej3d-0004rA-5H
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 19:11:49 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1vej4N-0005P8-TF
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 19:12:35 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vej3b-0008OQ-Ht
- for qemu-devel@nongnu.org; Sat, 10 Jan 2026 19:11:48 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-81f4e36512aso205657b3a.3
- for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 16:11:47 -0800 (PST)
+ id 1vej4M-0008VZ-EG
+ for qemu-devel@nongnu.org; Sat, 10 Jan 2026 19:12:35 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-81f478e5283so322704b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 16:12:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768090306; x=1768695106; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768090353; x=1768695153; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=V+hYBM/HaYBYnRpuN7XKwwLe1hF3RDpFg6Hvln5Sfkg=;
- b=sRZhIwmvbqYhtwhIKf3SmkmnrgFNDw/2lor6oyoK314Ywbm6O2UbSKeSkj7ERMej0u
- 7tQHXThgJxMRdR+HhAnhAzzGtoIld/nnNLQ5LFVL0Xs+czRPryjuvShWp5cDmWqL5sNs
- o/jq0Dm/fL5bKAiooer0RSknA5A4FWVvXFmuSocjO2g9F3v9wItJLwLXk3t0LZe4DEhS
- 6kn+63jGV0VdM3Zr9jPh26QIVFjTIcZJsZWb+GlM7FmNBXo9Oc1iOvMHGhLUhhWhFyj/
- qX6ciCN8uXe+7oNw3ebZcZGc+S3odW7JBfI9+BTjtT5RqNvFVcdTCv9xRbw3rd9ndoCv
- jZvw==
+ bh=GSHQM/Z4om6R0eAMeVr/yPv7W5X3BK61NW1rotRfBSA=;
+ b=pSFD7vWcjQ+IVKItSpZehAHXESHz+7Cr6/3H2byHYiQgkqKdo3+pwqkBR+rKUO4dCu
+ udb1dOWKW+N/gGC/5e+ps+nK/kzuNnyTzS8j5AlKdnM/uXNbpCsKu5KKhpRBrISkO1Vx
+ U068pAfmKnog5kAAflCNO9NYnCycXTnQN0R5iXd8nOyPAx7Jx/UkBiJ3Wt84rwttHxm8
+ 5xKkY6sI3WFylZS1xJb5jHjw6s2NvBKhHrFQ9f9dPHR/HR/HtbW3589fvD1tSsN3Wzay
+ 7Be9KaXLO+2ImiN05xJEMtSy0ULI7agnt/6V9ZDOc/YwsxZIFBO7CTRhOoSKTD45jm05
+ afgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768090306; x=1768695106;
+ d=1e100.net; s=20230601; t=1768090353; x=1768695153;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=V+hYBM/HaYBYnRpuN7XKwwLe1hF3RDpFg6Hvln5Sfkg=;
- b=TyldGIej2c414LOvZMQn6bP6o3HyD4pCKxTfv/pQW1rPNG0SfILMLu6jS/0m+OoBxn
- QsztvyKBZS1dGY7nttjuJquMmww+2jDdC0RcPmD36caAOZXTakbbap+Sx3657X48nVeB
- g50pKVcfvGzuMhcSIVQJS4FS1cc0/ghwSk9UZ1wLpWphufT/PJl4XXUNyvYLEYb2YD7R
- oLikn0DN/Nm09RGTowC+0jRNuM1ziAHVA4M6JBNrdl1Bcv/zwCLpr0M1LlPajUtphtB4
- U+d/BAMZt31ZAa748LXVbkg89lj4OBxdWJ9JljU8qA6bHOELwOQ0bOof0qARco9P78/p
- ocoA==
+ bh=GSHQM/Z4om6R0eAMeVr/yPv7W5X3BK61NW1rotRfBSA=;
+ b=DigG9F23NqlO9jkwyUR7B2glaVQVJMuDLz/6JnYfgonM/1+vdmEXrZP0BxrQZ6rsEm
+ uKEs+dSccytSmQKYySSEJmxNSAyyfB4MoELAOOcH/gjpmbv4O909Pe5Avo58FQ9CWLQC
+ G+pKBuPH3BAejp8tjCAyTFTazkOTlUxA1LpynITXjQ4uhFfiFApfCJqYUIBD5huVSk3C
+ EsP7qXAo4Nfk27bpo3oT63/1cXW39ywNCmDh9EfyOe0Y1dj+lHP7AtGT/Ma1D+EMHWG3
+ 65c1nyPkqaSrZy7tzGiAxais6cCmWYe6V53YQNfc3iBSdMTVDEZFUJR/gzuBz7+9avwG
+ ndHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXs2pvFV+JgUq/3meV3Nela8jnN249FCHW/J/Gm1Z4iu7zeYEyrySa0lqT8vcHKqKonhrcKIF2oKcFY@nongnu.org
-X-Gm-Message-State: AOJu0YzhJzkVrYCJkMopF6WxjefDf6mypmrwTGcIIqvSmd8aYG9w30RL
- 669ynmmY/Yqh/6HUPJ6RqT9iP33ZZ0JUNAT4FRtoyJcsyIQq5/Y88R4nTHaTUdN9lu8=
-X-Gm-Gg: AY/fxX4g1Wls1dK+CQwDAPdZ5DmpVUbBB1qj2dmh3HQBP6UHnMVGsBPpdbgEdeZUkgP
- aTufUv/Nc6FMRvbPPZjv+oHkC3XWJ5PekloVPY7FLoUX7vPgNXtcXJQ8gw/rzDnKBbVJTB6lkev
- fp+yo7Lf5Y3y/mg3tRZkHBw6xYUhNPbw6sM6fkA7pALy8JDkXABltZNY7jruPj7yYagb1vSnNhi
- zGUb+CgyahO6dARoP+uMlg9Z4GX2yjTp65vw1qcIeIDyfBRT5pE0YXnWwsNz8fUU3yvPUdy+B/1
- CWVc/k0JQNiE0EsEFD7dQapaHljZv6RMBG9kppwWcvJ0Wf/XY2kehUJytVLHK6mjVHHRVK+w8RP
- FlzHlVOT+S7hJaweA0heclGT2NdcCgO2jWyU9LLWhHle4GODUE2KbQQyui+N3R7fJgqPlqbfeFB
- MihNTjSDzuYHBmTYvnyDDwpOIoew==
-X-Google-Smtp-Source: AGHT+IFFhnEuig53EGTFhHmmAhRpUOlUQPJTkN0unyeJwM56Qzq2Lb+747VleTPCvd64YFVpqq6VaA==
-X-Received: by 2002:a05:6a00:1caa:b0:81e:a228:f0cb with SMTP id
- d2e1a72fcca58-81ea228f3ebmr4402715b3a.36.1768090305923; 
- Sat, 10 Jan 2026 16:11:45 -0800 (PST)
+ AJvYcCXYfJUdF5LnquRi9ZH2KI2YtUesG1Gwqwvf5lQ3jxYoOSqtNajOgM6vRHIxa/7Dn/5MHJgFeF87Cn5O@nongnu.org
+X-Gm-Message-State: AOJu0Yx+6bQPxCD3h49DO9s1HBRUkmvwF1NInrabWdYpHK8IB7RVGVhu
+ YdkGQtCIdXA4rejHgkLFGHQBlx90U6zpEEXqA55EN5/Kio/wc4aPLPgCUEv35ZKFHyzmQS/85pt
+ 0ox9GgWA=
+X-Gm-Gg: AY/fxX5E6uUykc16So6er6UkxTROFYGGmhL+mYW/sQ4nLqqrSXd3wDeetYrRXA/+81k
+ YJDrJyFKY7XUhr8BfyeOtRrlGZ0Yd34CHkeonLWIunlObgHgo7TTbkwK97K0QiObxNO9J5DlQcm
+ C8AL26ZxretqYXkO9NvHQpns8QzBxPMjt4nUcnUsiMA8qBdEHSaMIyOjj+R0eNPd3EQ9ibm2xxA
+ +8t8GLHOUZYrwXZUUIzXFWO+qpEAK4qn7nv6H6m4MiyAqaKnenOQiBnFOAHS7tNQP5ZbvFHBAip
+ wdgF+SEFbUo1D+MpkYVx7WS9sJzViUWWTH8MYjw8w5HhvYodfojHLqPdHnpZ3AhPon1LglB64sc
+ BAJU4+8Q0IgifPmwzHkCn7WJ9Pf6Syi/YWx0gsVIPKpueKNLdQXqbfBE5Pga2Q+S0E/5RTY7lRe
+ uHnQ0JohX1KrpIk4izKT8GpzDMrw==
+X-Google-Smtp-Source: AGHT+IEhRuT7W6qG/8dGSQArf+TzhAAhMTEKhIPjFdheFpAoAfPcJMSTFSpUlgCBjIbgr/26oOzyMg==
+X-Received: by 2002:a05:6a00:1f17:b0:81d:f1a7:98f with SMTP id
+ d2e1a72fcca58-81df1a70b4bmr5448441b3a.57.1768090353083; 
+ Sat, 10 Jan 2026 16:12:33 -0800 (PST)
 Received: from [172.23.81.179] ([202.86.209.61])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81f42658f03sm2194655b3a.20.2026.01.10.16.11.41
+ d2e1a72fcca58-81f3cae7e7esm2634177b3a.44.2026.01.10.16.12.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Jan 2026 16:11:45 -0800 (PST)
-Message-ID: <0d93136f-0cf0-4e13-82fe-35ad4b3716b4@linaro.org>
-Date: Sun, 11 Jan 2026 11:11:38 +1100
+ Sat, 10 Jan 2026 16:12:32 -0800 (PST)
+Message-ID: <38d49edd-fa9d-4e2c-a1ec-47d5cee133f7@linaro.org>
+Date: Sun, 11 Jan 2026 11:12:25 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] target/hppa: Remove target_ulong use in disas_log()
- handler
+Subject: Re: [PATCH 9/9] target/m68k: Replace MD_TLONG -> MD_I32 in monitor.c
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>, 
@@ -81,14 +81,14 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>,
  Stafford Horne <shorne@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, Helge Deller <deller@gmx.de>
 References: <20260107200702.54582-1-philmd@linaro.org>
- <20260107200702.54582-9-philmd@linaro.org>
+ <20260107200702.54582-10-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260107200702.54582-9-philmd@linaro.org>
+In-Reply-To: <20260107200702.54582-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,28 +112,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/8/26 07:07, Philippe Mathieu-Daudé wrote:
-> Since commit 85c19af63e7 ("include/exec: Use vaddr in DisasContextBase
-> virtual addresses") the DisasContextBase::pc_first field is a vaddr
-> type.
+> m68k's monitor_defs[] array implicitly uses type=MD_TLONG for
+> all its entries. Since we only build this target as 32-bit,
+> use the explicit MD_I32 type to avoid an indirect target_long
+> use.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/hppa/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 0b7074649b7..0f8a66f7732 100644
-> --- a/target/hppa/translate.c
-> +++ b/target/hppa/translate.c
-> @@ -4864,7 +4864,7 @@ static void hppa_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
->   static bool hppa_tr_disas_log(const DisasContextBase *dcbase,
->                                 CPUState *cs, FILE *logfile)
->   {
-> -    target_ulong pc = dcbase->pc_first;
-> +    vaddr pc = dcbase->pc_first;
->   
->       switch (pc) {
->       case 0x00:
+>   target/m68k/monitor.c | 60 +++++++++++++++++++++----------------------
+>   1 file changed, 30 insertions(+), 30 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
