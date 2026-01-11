@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED6CD2502E
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 07:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CDDD2502E
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Jan 2026 08:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1veqIL-0003cU-SU; Sun, 11 Jan 2026 02:55:29 -0500
+	id 1verCc-0004MY-LI; Sun, 11 Jan 2026 03:53:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veqIE-0003UY-8A
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 02:55:22 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1veqIC-00049Q-Pw
- for qemu-devel@nongnu.org; Sun, 11 Jan 2026 02:55:21 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-81e8a9d521dso878848b3a.2
- for <qemu-devel@nongnu.org>; Sat, 10 Jan 2026 23:55:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768118119; x=1768722919; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xekyq0V/RxuIv0JdZwJ/jdXRO4YRJVI6B0V3IRqiQpU=;
- b=Ex2tfmVMUyWGRMpjg8+mIAAbNJcKurJfF16ErDsJW9GkVibnIHSR8jtTnuMgxWkoAi
- 5ZaSGhpHSiYXEW6yVdc2l+8kiDTn6ExmwS30W73xg9YRl6R6JtWl6VPdozWMOodB5s7R
- irPUQPrNHlnTMrYGIPmrPrPwhlOexYQcI5f4kM0XjlnLixsoVjkARMI6efJpJs8eVeRq
- ZfXUXaqGPOp7CmN1+74W2M2wCik9I8KOJQW4BMAIOahap8Azfc6+pRmAGcv+zwEu0Y3/
- 9MdqdRx19/Fdo7IhxGeqNSiWQymn3oHRpkfh/JlPb/bQ/0LPhXOIJ00CTf4ObpG9CsU4
- xZeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768118119; x=1768722919;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xekyq0V/RxuIv0JdZwJ/jdXRO4YRJVI6B0V3IRqiQpU=;
- b=toMno8A9NqaGfGrVUt4+0Wp7eRy9Cxoxslov4fe+gw1cNakvZQ0zHFMUyU1C5jaYIo
- QIjeoYV1C6aCA60EhnIOS2bWwByV/FRuedCRdaBdJSWLkNcbb7JHhYQ9qEvjwY6WkYw6
- gH3VWsNoeO7yaJ0XkGguviNqVGOQbX97HEMYx8QHQx2ZEJp6gR4Fz8KMxKlBugW9JE1m
- +RI137wTMVE21Z2V0mbLlIkIPztELmEuJmDQylZA4gyDvze83ckxw6+YQxGYiJ6wQil8
- 0nmFKDLZA6e+ytZD1IJm+Rgcf2rL2oIYUi2COrQDIw3pE0VvBYJ4Q5EBXYWxtMYN52sA
- 8rZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcvv5OzB23AZM5CrR7l4KpLZpol9luzznXCipI8mAy63KweaI/6uKoHhxslaTH3nY5oxJppQZADdql@nongnu.org
-X-Gm-Message-State: AOJu0Ywt4TCg5Qr8Ohf0NBqlvvMQy20U9QUMFnL9LWckOUNSnWgsa23Y
- dqowx83bDVZsBz/Hz4BkI93qZUU4QBTRN3cd5a1IP6jGfM8yAOJYdfbMNlMx7vZ4llc=
-X-Gm-Gg: AY/fxX44tfLZ3s/Cvw22KNxzICEOUdWL5DM5xWd5RHMixjegFq2Fejk02E8gLI8VdF3
- k0BkVooZOBUu3XSX7jq9k0sP114FeGorF+nO0x2TIEGwhg3TWU5gDXLM2h6ILCbv8LsgU24NrK6
- ZJ8YIEZlD6SXuHBZUajrHgkyuZEsc7bK0314iWzVb0jqov1eWeVEys6Vg6DzbNkmmuubS2nbMe8
- 9jYrJZoG3kOLSyUViq79jEf0Y3oE98kp83ZwTp618/1joblI96uHIhvgCI0VqVk1CZ0XZxt62Tb
- d8APjdFicdMxmPY1yVm1nLowbR6iGC+dcMiSeMR/jfXY+EajbwvCN65b8xxBGtvnuujgzNvNCS6
- QKVJVMd+u7VYA7luLaZZdis7kiG4l91gA9lXun/lQk0qsoIyYa3UvE4mCE1bHN5CX0lzArXWEyO
- IBEb05HRGC2O9lO81Yl2mCVPfvtqTECMnLmxV9
-X-Google-Smtp-Source: AGHT+IEPBTPwQvuA8KlWnwa6m/062v7f+ete2XGydmKIKw7WpOZA95KX1XhnVlOHGB7j9HBsSKsNiQ==
-X-Received: by 2002:a05:6a00:4143:b0:81f:4dff:336 with SMTP id
- d2e1a72fcca58-81f4dff08acmr1200552b3a.52.1768118119258; 
- Sat, 10 Jan 2026 23:55:19 -0800 (PST)
-Received: from [172.23.81.179] ([202.86.209.61])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81efe4a95c7sm4290857b3a.37.2026.01.10.23.55.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Jan 2026 23:55:18 -0800 (PST)
-Message-ID: <27914378-6d4d-41c9-98be-3a860f4964a5@linaro.org>
-Date: Sun, 11 Jan 2026 18:55:10 +1100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1verCN-0004IN-Kh
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 03:53:23 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1verCL-0008My-4o
+ for qemu-devel@nongnu.org; Sun, 11 Jan 2026 03:53:23 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A40E17CAB2;
+ Sun, 11 Jan 2026 11:53:08 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6383134AA0B;
+ Sun, 11 Jan 2026 11:53:09 +0300 (MSK)
+Message-ID: <33f052fc-8fd2-48b0-aee6-919036114ca8@tls.msk.ru>
+Date: Sun, 11 Jan 2026 11:53:09 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 07/12] target/m68k: drop cpu_reset on realizefn
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Bastian Koppelmann <kbastian@rumtueddeln.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
- <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>,
- Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>,
- Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>
-References: <20260108143423.1378674-1-alex.bennee@linaro.org>
- <20260108143423.1378674-8-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260108143423.1378674-8-alex.bennee@linaro.org>
+Subject: Re: [PATCH RFC 3/3] linux-user/syscall.c: consolidate statfs calls
+ further
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260109214158.726916-1-mjt@tls.msk.ru>
+ <20260109214158.726916-4-mjt@tls.msk.ru>
+ <97057c87-4e3f-4ac0-9cca-71d85e368eca@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <97057c87-4e3f-4ac0-9cca-71d85e368eca@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,29 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 01:34, Alex Bennée wrote:
-> Now all the m68k machines have cpu reset handlers we can drop this
-> extra case here.
+On 1/11/26 03:03, Richard Henderson wrote:
+> On 1/10/26 08:41, Michael Tokarev wrote:
+>> Since statfs & statfs64 implementations are exactly the same,
+>> differs only in "64" suffix, merge them into one using a common
+>> macro.
+>>
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   target/m68k/cpu.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-> index f1b673119d6..a540a754969 100644
-> --- a/target/m68k/cpu.c
-> +++ b/target/m68k/cpu.c
-> @@ -392,7 +392,6 @@ static void m68k_cpu_realizefn(DeviceState *dev, Error **errp)
->   
->       m68k_cpu_init_gdb(cpu);
->   
-> -    cpu_reset(cs);
->       qemu_init_vcpu(cs);
->   
->       mcc->parent_realize(dev, errp);
+> Most of the common code should be split to a host_to_target_statfs() 
+> and(?) host_to_target_statfs64().  Once that's done, there's not much 
+> use in a macro.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+It will be exactly the same, - be it in its own function(s) or directly
+in syscall1(): there will be 2 copies of exactly the same text, dealing
+with 2 different types of target_statfs structs.  This is where a macro
+like in this patch/rfc comes into play.  An alternative is C++ template
+mechanism (which doesn't work in C, obviously), or a repeat of the same
+code - just like we have now.
 
-r~
+The same situation is with struct stat, but it is much worse, because
+there are more possible permutations - there's eabi_stat64 on ARM and
+struct target_stat vs target_stat64, and several combinations of
+TARGET_STAT64_HAS_BROKEN_ST_INO and HAVE_STRUCT_STAT_ST_ATIM.  It's
+kind of insane in this context.  While it's trivial to use a macro
+approach for statfs, it's not as easy for struct stat.
+
+Personally, I see no big advantage of splitting some syscalls into
+separate functions out of huge syscall1().  Yes, this function is large,
+but it wont be much better if some parts of it are split out, but there
+will be slightly more code (function definitions).  Maybe a bit more..
+style, so to say, but splitting it wont give us much..
+
+Thanks,
+
+/mjt
 
