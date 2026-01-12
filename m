@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BED4C9EC8E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68517C9EC8B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfHui-0004aZ-TO; Mon, 12 Jan 2026 08:24:57 -0500
+	id 1vfHuK-0003e1-6Y; Mon, 12 Jan 2026 08:24:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfHtz-00039p-6k
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:16 -0500
+ id 1vfHu2-0003As-UW
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfHtt-0003mo-NI
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:07 -0500
+ id 1vfHu0-0003nQ-R4
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768224245;
+ s=mimecast20190719; t=1768224250;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=re0muZmMrtqo8EWO5a5L2LHVK2cH9w5XVHhtUQzVCdc=;
- b=VvYyC24BdqmIrXz7Drcs7jT5i4u2nk0zQFCMvAx0ycanW0lzfaOfiI6j8dQ/agxNHjlRzo
- 5nF+nlsmKL3UNQBwLFWVMq4ZQ/LrjwlDwxG36CYVYbDZawqCR7ES9ft+xjD8TbsxBOzxlV
- SZRfRgLMSqj6ErtGeHka1NiM33am/S4=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qYAaN0FILWaSu0nPli0Usb4itaQvJcTN3FzK6m+/4vg=;
+ b=hzjUI3uG2OHVhMNqaApDlNOZ2bwgzxPXH7ijxlWIQMXdv6UKZG/eOq3Tr60TV0eHBnhEBY
+ aYiBKza2kO8egaqAO5YTG2Myq4m9h8fgdcqr7+n1lencNBEI/wQWtIeSGqr0YQE26k8Jv7
+ 1ds82ety1oAboGz3nBUI2LUTCnYh730=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-01dExezYNliTDv5FfB0VdQ-1; Mon, 12 Jan 2026 08:24:04 -0500
-X-MC-Unique: 01dExezYNliTDv5FfB0VdQ-1
-X-Mimecast-MFC-AGG-ID: 01dExezYNliTDv5FfB0VdQ_1768224243
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-c5539b9adc3so1865634a12.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:24:03 -0800 (PST)
+ us-mta-570-SQXCPEVJMy-QeSErzojfKQ-1; Mon, 12 Jan 2026 08:24:08 -0500
+X-MC-Unique: SQXCPEVJMy-QeSErzojfKQ-1
+X-Mimecast-MFC-AGG-ID: SQXCPEVJMy-QeSErzojfKQ_1768224248
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-b5edecdf94eso1467487a12.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:24:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768224243; x=1768829043; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768224248; x=1768829048; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=re0muZmMrtqo8EWO5a5L2LHVK2cH9w5XVHhtUQzVCdc=;
- b=j/oDPFOX+wBnykqgnCNgZ8jbQzwxFeLIGXussIT7sxT3SyYH02ZdP5Rpf562ge3dZl
- 3ArIPh/ISAYN7CXaCMsUph7f5OFtlSLWIatbhE+x9r62jy8FwqwCeQEAK99WHKFQtb96
- ymP8CeN4BDlalqbcYn2WYOjctz0QndLpwYRSy8i9nlfZuFdn7iffKOqzf7VP3zh3vvi2
- aEZVDYoLegEOp/gvjctLzwSDQ7jhg4w5ME+YRBKvtH86ziDlYr3fWJrcK1tY9CLbOSvu
- 3JdmXma2PIobWqKNH2mQLAiOTeHCwGX3qgzXbVbAH+71HlR1Cc2n1Ke3fdXK02tAAyAL
- nZ/Q==
+ bh=qYAaN0FILWaSu0nPli0Usb4itaQvJcTN3FzK6m+/4vg=;
+ b=hNpz5cqQ7OHVFWMvl3/dZDAtr2TUnaxAI7GYmIE9IadJ7F+6pRjhuQQ2UQYhv8yyjC
+ rwDy9uyQEt5KmHiB3JlV8S8sXsJd9wtDqVb9VqwszwBPIQs5sIoo0S+uUQ+sFNDUP8QA
+ 2PAyp+cIkLvrGHE5JwEbTakk+iTJtUgIbSjaGTtSI5oEcyXvZ5+U7MgmNQYCmr8MeSvK
+ itkpZR1kTLQrns0irRF0+wa44Ruy2COd55eAHNk4Yw1rtMeAtH844JDYGDMQM3ZNbvVs
+ wBW2sKHqJPPjCZL8xv9mIbMFNT7k9wswZ+ASaUliKN7syokaBchIwCQB4UwahxDwG2MI
+ VRRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768224243; x=1768829043;
+ d=1e100.net; s=20230601; t=1768224248; x=1768829048;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=re0muZmMrtqo8EWO5a5L2LHVK2cH9w5XVHhtUQzVCdc=;
- b=WS1FbCcnDi+74uKHZhLFzq6+FPJe0AyWQv2QCbY8khZTP/FzOOn1itJplyuT1pkZS4
- pCZ94BtJ+VT8QcPFqSf7sO/baHAjfF89v4Np/b/F/vbRiQN/1GaRgQA6Se6MqCQxWaF7
- QIhKkVqqQ0+FzpFZlajlr3mXrtClBCisqG6mu6tpKJ4vsdvJMgnVZgdVivEcsA9eoMHf
- tXIUGS6f3D5hBVCfx0+90iti/8++041pZz9SPyBbHaY2Ol+0o5nBDCPfNinnzztV8lZq
- pBrJXX9fUh7VLi8aeZ3UV0E4Rj8UT+qjGbgOU2IL+xFmTw3y2LZ3AOrzbjyQIwLd55p9
- WZaQ==
+ bh=qYAaN0FILWaSu0nPli0Usb4itaQvJcTN3FzK6m+/4vg=;
+ b=Xgw3+BotCbnxk/WkWaLLeCkMe/XGBR3Q0QjP20OO2yv06cIqulWS4HZVU3AImpe8Uu
+ PLUkd2I/9V9i02EkBLYPm7KoVwLj0H5pBJoE51B52nSwDjAzYvXtGBCfcn377IJcNcyR
+ x/A5M3hGR99rE37Jyzm2UOVISBcYqkMnAconrVErlrCEpFzO2RsqAAX4X0pcT9ixFFXj
+ N9M1CdrPDPGNtbiw5JKcp5TeIEl9Mvy+gWdXuSmVFeUYJBzvY2/UZekB+xILvavm6DxW
+ V4QRLHYy0VTE4ht3niJsVCEV8KZAFREN1sEAWYo9lcpbwvAoopeZugfmIzLNvviSwuyd
+ OpKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0YgQq6Rhd80KNBufkow0B0xptiWB1No0cmMacZGzAf7PhJCfIsuC3DpQ6JeQAzeNC9yeBaIIZmtPG@nongnu.org
-X-Gm-Message-State: AOJu0Yz1jmLoH9xTXtFrZ+Wx5C1YB5eIP/kq93cWm91ZQhUhcoiW4fWR
- XggYMUYNb1f/g94NY6VgSjHUnEUHIdq3RpsmFBPjwh16s0G6Bd1SOkzE/QtzKlfSdGZbKL5IdnE
- SRlWs1lbtPHTULgx3Zeyq8Njufk7FZ2gnTGe6AOGOhTowaISvNzBy9QLZ
-X-Gm-Gg: AY/fxX7ANjntdNv6Ur+GztSgGIQtjBCKRH4flb87nBMwbKUnbA4kcAHa1reE2yY8slD
- 7qsi1IFcDHPwlR1TTDD/w9q4QT6ZqOMJQj0aZ8soOdwDqBnHtEHgS/1M4ySI+oxE0NDSeiYIbxB
- NNRY6fMdIiwqiGaG0R+1q8MfD+ALt+O87cTiLcLYxgDDtGodAgiPDnavlm+9Xw0njdZroVY+OmG
- 4sHgzPQEEJosziiBy6lFEv9b6/OgAMpaDcI4m7eWyFivqTIJySRAfiMRZEzJNNoDf43WcbVSwW/
- cgbjRJ9dvccKSzhi7uuw/o/iLr+lyZgQ7wdNEncZ9+dR4Xvu2B7Xz6a9jbHLXY9vQffapvUuyK8
- bczLu/WXfgWpJnIKjCp2vLfYk1qo0NXlJmyVjlZIusKE=
-X-Received: by 2002:a05:6a20:5493:b0:366:14ac:8c6d with SMTP id
- adf61e73a8af0-3898f9cf622mr16237020637.67.1768224242888; 
- Mon, 12 Jan 2026 05:24:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjz1PJMGZym0PSu5C9k8ojaJS95nPXlOCAztYTfHj1g2CJ3fKTkb5Z0vZjd85rOHWGK+xRjg==
-X-Received: by 2002:a05:6a20:5493:b0:366:14ac:8c6d with SMTP id
- adf61e73a8af0-3898f9cf622mr16237004637.67.1768224242460; 
- Mon, 12 Jan 2026 05:24:02 -0800 (PST)
+ AJvYcCUe/3NbzXUdnaqa4yNW42Yxgv/rnGEC3O0tdummrgi6mLTgrvyMgTa7sp7SC57iCTZ5V7mNQtiYOr5P@nongnu.org
+X-Gm-Message-State: AOJu0Yy/COnuWuR9APPD2d5JA2Y69WbZEtyjnGglfTfMNYBKua5tWLat
+ 2syQ3re2dfajP7ZEiNtYYVhLPRSUHLuCW48ZG6LEaNPze7KKUijmd16Et7BntsEOI2CHy0XbBeV
+ +pX1Z7yMvaWwC0sk08ULjKXMryMvTlWRrsa7Ayu84eDriLtBzuCqsAsAL
+X-Gm-Gg: AY/fxX4zDqpTtDridVelrgqiLnTdBLBarcVt777TPn/m4pf+AfLHD5zduOZP+F+HsIT
+ hS1EPVoEWn74XwJE9TU2JR9aBrWBLj2NkDMXZoHmFabzU5vNHTpynJgTeMgqONH1xmlYcqNFwem
+ JhGpYRJ24R6Y6Q9BPUX9sx3A/lcgsW6kgHiY04xWOD3xDTpFCztRWRhKTcwI7CwKVG4eXjP+lcK
+ i0+KQ8AZcIAgSZduUr0Wk2JH32MONWDeGvg74q6ZPUp/9GL2gxiM3yhqO8AvxX5FD7oZd/ubJ0k
+ h45IAC2WQ+rukUMy0UwBtYdogG3jtsdwK80w7ZSNi/cbtvyvlsZiOdHqgB3k9mMZ7IEk8KPhH5Y
+ I1h0GXvWAv7lMkyJWVIuH521nGJH4XvAbTUVMGeWiLxo=
+X-Received: by 2002:a05:6a21:6da1:b0:350:3436:68de with SMTP id
+ adf61e73a8af0-3898f9ba491mr15321620637.53.1768224247831; 
+ Mon, 12 Jan 2026 05:24:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGOtkQ45tyb3QTZGZrDgFq0z0H3Qt+mAbmV6EBRPgB7nC3YcwaVegyFHgedWmQohGcEWT7WNg==
+X-Received: by 2002:a05:6a21:6da1:b0:350:3436:68de with SMTP id
+ adf61e73a8af0-3898f9ba491mr15321596637.53.1768224247424; 
+ Mon, 12 Jan 2026 05:24:07 -0800 (PST)
 Received: from rhel9-box.lan ([110.227.88.119])
  by smtp.googlemail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd87asm17544771a12.15.2026.01.12.05.24.00
+ 41be03b00d2f7-c4cc05cd87asm17544771a12.15.2026.01.12.05.24.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Jan 2026 05:24:02 -0800 (PST)
+ Mon, 12 Jan 2026 05:24:07 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
 Cc: Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 14/32] i386/tdx: finalize TDX guest state upon reset
-Date: Mon, 12 Jan 2026 18:52:27 +0530
-Message-ID: <20260112132259.76855-15-anisinha@redhat.com>
+Subject: [PATCH v2 16/32] i386/sev: add migration blockers only once
+Date: Mon, 12 Jan 2026 18:52:29 +0530
+Message-ID: <20260112132259.76855-17-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260112132259.76855-1-anisinha@redhat.com>
 References: <20260112132259.76855-1-anisinha@redhat.com>
@@ -122,142 +123,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the confidential virtual machine KVM file descriptor changes due to the
-guest reset, some TDX specific setup steps needs to be done again. This
-includes finalizing the inital guest launch state again. This change
-re-executes some parts of the TDX setup during the device reset phaze using a
-resettable interface. This finalizes the guest launch state again and locks
-it in. Machine done notifier which was previously used is no longer needed as
-the same code is now executed as a part of VM reset.
+sev_launch_finish() and sev_snp_launch_finish() could be called multiple times
+if the confidential guest is capable of being reset/rebooted. The migration
+blockers should not be added multiple times, once per invocation. This change
+makes sure that the migration blockers are added only one time by adding the
+migration blockers from sev instance init code which is called only once.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/tdx.c        | 38 +++++++++++++++++++++++++++++++-----
- target/i386/kvm/tdx.h        |  1 +
- target/i386/kvm/trace-events |  3 +++
- 3 files changed, 37 insertions(+), 5 deletions(-)
+ target/i386/sev.c | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index b595eabb6a..cba07785f7 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -19,6 +19,7 @@
- #include "crypto/hash.h"
- #include "system/kvm_int.h"
- #include "system/runstate.h"
-+#include "system/reset.h"
- #include "system/system.h"
- #include "system/ramblock.h"
- #include "system/address-spaces.h"
-@@ -38,6 +39,7 @@
- #include "kvm_i386.h"
- #include "tdx.h"
- #include "tdx-quote-generator.h"
-+#include "trace.h"
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index fb5a3b5d77..c260c162b1 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1421,11 +1421,6 @@ sev_launch_finish(SevCommonState *sev_common)
+     }
  
- #include "standard-headers/asm-x86/kvm_para.h"
- 
-@@ -389,9 +391,19 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
-     CONFIDENTIAL_GUEST_SUPPORT(tdx_guest)->ready = true;
- }
- 
--static Notifier tdx_machine_done_notify = {
--    .notify = tdx_finalize_vm,
--};
-+static void tdx_handle_reset(Object *obj, ResetType type)
-+{
-+    if (!runstate_is_running() && !phase_check(PHASE_MACHINE_READY)) {
-+        return;
-+    }
-+
-+    if (!kvm_enable_hypercall(BIT_ULL(KVM_HC_MAP_GPA_RANGE))) {
-+        error_setg(&error_fatal, "KVM_HC_MAP_GPA_RANGE not enabled for guest");
-+    }
-+
-+    tdx_finalize_vm(NULL, NULL);
-+    trace_tdx_handle_reset();
-+}
- 
- /*
-  * Some CPUID bits change from fixed1 to configurable bits when TDX module
-@@ -738,8 +750,6 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-      */
-     kvm_readonly_mem_allowed = false;
- 
--    qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
+     sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
 -
-     tdx_guest = tdx;
-     return 0;
- }
-@@ -1505,6 +1515,7 @@ OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
-                                    TDX_GUEST,
-                                    X86_CONFIDENTIAL_GUEST,
-                                    { TYPE_USER_CREATABLE },
-+                                   { TYPE_RESETTABLE_INTERFACE },
-                                    { NULL })
- 
- static void tdx_guest_init(Object *obj)
-@@ -1538,20 +1549,37 @@ static void tdx_guest_init(Object *obj)
- 
-     tdx->event_notify_vector = -1;
-     tdx->event_notify_apicid = -1;
-+    qemu_register_resettable(obj);
+-    /* add migration blocker */
+-    error_setg(&sev_mig_blocker,
+-               "SEV: Migration is not implemented");
+-    migrate_add_blocker(&sev_mig_blocker, &error_fatal);
  }
  
- static void tdx_guest_finalize(Object *obj)
+ static int snp_launch_update_data(uint64_t gpa, void *hva, size_t len,
+@@ -1608,7 +1603,6 @@ static void
+ sev_snp_launch_finish(SevCommonState *sev_common)
  {
+     int ret, error;
+-    Error *local_err = NULL;
+     OvmfSevMetadata *metadata;
+     SevLaunchUpdateData *data;
+     SevSnpGuestState *sev_snp = SEV_SNP_GUEST(sev_common);
+@@ -1655,15 +1649,6 @@ sev_snp_launch_finish(SevCommonState *sev_common)
+ 
+     kvm_mark_guest_state_protected();
+     sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
+-
+-    /* add migration blocker */
+-    error_setg(&sev_mig_blocker,
+-               "SEV-SNP: Migration is not implemented");
+-    ret = migrate_add_blocker(&sev_mig_blocker, &local_err);
+-    if (local_err) {
+-        error_report_err(local_err);
+-        exit(1);
+-    }
  }
  
-+static ResettableState *tdx_reset_state(Object *obj)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+    return &tdx->reset_state;
-+}
-+
- static void tdx_guest_class_init(ObjectClass *oc, const void *data)
- {
-     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-     X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
-+    ResettableClass *rc = RESETTABLE_CLASS(oc);
  
-     klass->kvm_init = tdx_kvm_init;
-     x86_klass->kvm_type = tdx_kvm_type;
-     x86_klass->cpu_instance_init = tdx_cpu_instance_init;
-     x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
-     x86_klass->check_features = tdx_check_features;
+@@ -2764,6 +2749,11 @@ sev_common_instance_init(Object *obj)
+     cgs->set_guest_policy = cgs_set_guest_policy;
+ 
+     QTAILQ_INIT(&sev_common->launch_vmsa);
 +
-+    /*
-+     * the exit phase makes sure sev handles reset after all legacy resets
-+     * have taken place (in the hold phase) and IGVM has also properly
-+     * set up the boot state.
-+     */
-+    rc->phases.exit = tdx_handle_reset;
-+    rc->get_state = tdx_reset_state;
-+
++    /* add migration blocker */
++    error_setg(&sev_mig_blocker,
++               "SEV: Migration is not implemented");
++    migrate_add_blocker(&sev_mig_blocker, &error_fatal);
  }
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index 1c38faf983..264fbe530c 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -70,6 +70,7 @@ typedef struct TdxGuest {
  
-     uint32_t event_notify_vector;
-     uint32_t event_notify_apicid;
-+    ResettableState reset_state;
- } TdxGuest;
- 
- #ifdef CONFIG_TDX
-diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
-index 1f4786f687..47473001d8 100644
---- a/target/i386/kvm/trace-events
-+++ b/target/i386/kvm/trace-events
-@@ -14,3 +14,6 @@ kvm_xen_soft_reset(void) ""
- kvm_xen_set_shared_info(uint64_t gfn) "shared info at gfn 0x%" PRIx64
- kvm_xen_set_vcpu_attr(int cpu, int type, uint64_t gpa) "vcpu attr cpu %d type %d gpa 0x%" PRIx64
- kvm_xen_set_vcpu_callback(int cpu, int vector) "callback vcpu %d vector %d"
-+
-+# tdx.c
-+tdx_handle_reset(void) ""
+ /* sev guest info common to sev/sev-es/sev-snp */
 -- 
 2.42.0
 
