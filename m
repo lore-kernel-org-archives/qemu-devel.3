@@ -4,118 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A91CF45D2
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 21:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDCEECF45D2
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 21:45:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfPhG-0007Qu-Ix; Mon, 12 Jan 2026 16:43:35 -0500
+	id 1vfPjA-0005Lr-OZ; Mon, 12 Jan 2026 16:45:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vfPh5-0007D9-71; Mon, 12 Jan 2026 16:43:23 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vfPh3-0001Aa-HX; Mon, 12 Jan 2026 16:43:22 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60CKGMqW026893;
- Mon, 12 Jan 2026 21:43:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=mGG5ZE
- DKXQPc4NM/fXs5wOfgNlCqhKkS0nnyvYb4DF4=; b=VFBYzOiH9bnJ5ERn3hB/qc
- HZ1BN63/VtSwXbbYcA6bwhBBApAsW3hX/7P/9iPoWU7clvV7ghkDMXP/almjPm27
- OGiUUdNikpfO9U3rRTh7VSJlSBSBa8D1X2O8kmqcr06szmd8bu2wMkqbwDVCo7ci
- ZbKz2jwnkobFL12crsmuej+iggUtvQKyuhexKyrdWZP6CFOL7CnTnkik5ARS5IVf
- 8t7e1epVQWvVjLGlqlhkxmkxm10FkDVx20bQ8nqHco2PgXoASxDFzIy9Ua/+ZAIE
- 7WwzPpdu/22OH8S8IEzktCZuDlZoysb94DMxKjaEAuuH8GlFd1rkHu1+cww6Rx8g
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkc6h17wf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 12 Jan 2026 21:43:17 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60CJ9cOp002505;
- Mon, 12 Jan 2026 21:43:17 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bm13sgks4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 12 Jan 2026 21:43:17 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60CLhFfe34668804
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Jan 2026 21:43:15 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8147258050;
- Mon, 12 Jan 2026 21:43:15 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D869F58045;
- Mon, 12 Jan 2026 21:43:13 +0000 (GMT)
-Received: from [9.61.120.128] (unknown [9.61.120.128])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 12 Jan 2026 21:43:13 +0000 (GMT)
-Message-ID: <cdca39d1-3f81-4cac-bc6e-b9486d98fe94@linux.ibm.com>
-Date: Mon, 12 Jan 2026 16:43:13 -0500
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vfPj7-0005E3-Rm
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 16:45:30 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vfPj4-0001Sp-Rt
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 16:45:28 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-81ef4b87291so1228767b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 13:45:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768254325; x=1768859125; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sYBrkuKZYmCKQU4pm6dft1YQ4sHik3YX3Q9EAqEJ560=;
+ b=O6uubM6BT4z9m2u2aON0GYSSXC4ltSSxe04fC3gNnJxlBIzNKC+ubD/9Hj0lpo3t6K
+ bRRx6zxmM5lYc0uZMEa59Pbzxx3xBZCukcQ+icTwxUfgaFoeXMitQXFLI416yhh5NOEu
+ IGz+zOKbkaA1TcpLtWz0MJ7x1S+8bp3ilEOMWNyhBbrmtJVQV2H215g++3Tpn04mdPoY
+ xwJWW98Vw+EdrrJy91UhR1DGbWlaIT/zrja8C52faWRYqx6o46yVqI+5t/a6ZbAS2gMR
+ ngyVzfCTBEL3DT3ffNsRfdaEyO2boKIgn1VmSsEDhPYk23kzeqKEtNPT/2c+4p2B9f37
+ c/6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768254325; x=1768859125;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sYBrkuKZYmCKQU4pm6dft1YQ4sHik3YX3Q9EAqEJ560=;
+ b=VbxzJxCeWkkoJ9+skkG1YW13Wl3rfy+prRgBSCtocGrX44s6XuZc8IEIXeieNGH3ct
+ aF40AiafTAn99fY8HtnIvxFnD5++dOFHTVNn25GEBXBW7mvVh63KCvwaIdYx2X+csYvS
+ VBEDAG6KQo2ZUV48t5F/cwUPti6oB139e3224og1UxctJWsqDA5e3PIeWdwAxku+aRGM
+ 543M336COrnb1okl1XCRNJI8UIZv0DfhYJQMeXdd9bKf3+5qHhBS/DxGu5lBkNaZfB0E
+ ViKCmnjAtIsMauIDGZwGNY/d4/DSKXaFXBgJkc5IiDF30b0swP8jMVq14bthwfoybGOc
+ im4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXvztYAp1R6ZhJtDyISONriq1C2iyT4pMsNCLp1XHD6gwb69AkmhPoS6h7pPTJbZU9P5m68TyhSMgmA@nongnu.org
+X-Gm-Message-State: AOJu0YzctWtVJ7le87ZNh6hfP1FfaISVTzFhdVnbwUK9iAm1p9x3mWeB
+ blSF8wgrcluWhkfFYYM15lXxEhpNW+yj/8V4crAKVc9/kd2ElCN+cUuURJqoj3Tb3gob3BP3qTi
+ 6RnlrQNw=
+X-Gm-Gg: AY/fxX5pzuTxH5TXFBXoA9ExYZd6IsFVJFSi0PBDAo0QN+ybHD7ugpDlhfMp2FaNYia
+ rN1nAWLMZjdfD5NIQs/Ssu63e0HkpzC2XF4kz8bYrX7VxlAAk2t4/t5KB/YKSsie/QqxS8CdL9G
+ 6fzOhI/9QgOGL1DIhjuHEFk4CE6NTtmWz9DowU9pwSxD7aXPs6rl6Bz+fjfKiHeEHHafEObiiLr
+ DwUFytVI6ZDgSJJqTm8ch3N700nyaPJmphro5nEhVoxC9hqo09cV551jDX7uBbRSP7jDj4/Oxud
+ n47BAdZUryUL3EpGgr3EjO6PYuVSGS2QS0/rfOJYB0zYsopAS0tl1/VOHzvoTbRh8lQOHKUw6kd
+ 2WrceBvKn5XilmE1Gic9vCeYqpnDSLMtIFw3sy8iJ+NZxgqwNQPvzesE/NuueFaechs7GRRXe3M
+ r5SP1dGdNXx/Jh7xiXzTzlcmPSXlkmUtO4WkhDcg==
+X-Google-Smtp-Source: AGHT+IG3kdBZIZUf+aP8bhdO+vH9uaQnpHKGpJLKI+1vxTwL19kT2tHx1HNRWS/IRl8wNqj4qNQboA==
+X-Received: by 2002:a05:6a21:6d93:b0:34f:4459:a68 with SMTP id
+ adf61e73a8af0-3898f9166bbmr16898259637.27.1768254325008; 
+ Mon, 12 Jan 2026 13:45:25 -0800 (PST)
+Received: from [192.168.15.8] ([101.187.175.172])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c50347bc321sm15891795a12.18.2026.01.12.13.45.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Jan 2026 13:45:24 -0800 (PST)
+Message-ID: <55ef7d7a-ddef-4171-a5bb-b73d1a1632ff@linaro.org>
+Date: Tue, 13 Jan 2026 08:45:15 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Zhuoying Cai <zycai@linux.ibm.com>
-Subject: Re: [PATCH v7 08/29] crypto/x509-utils: Add helper functions for DIAG
- 320 subcode 2
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com,
- walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-9-zycai@linux.ibm.com>
- <9f622221-5012-4f12-8fc2-3a721a0ce111@redhat.com>
- <aWDi7gh4uiwA7JOA@redhat.com>
- <53a6f846-2a65-49d4-aabb-021e9c2f590f@redhat.com>
- <aWDovtQX2IEwg-NA@redhat.com>
+Subject: Re: [PATCH v3 3/4] target/loongarch: Add host CPU model in kvm mode
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20260112080721.3319572-1-maobibo@loongson.cn>
+ <20260112080721.3319572-4-maobibo@loongson.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <aWDovtQX2IEwg-NA@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: pmv0ptsqme7POHxbvHOQ4IgS4VAN1iuE
-X-Proofpoint-ORIG-GUID: pmv0ptsqme7POHxbvHOQ4IgS4VAN1iuE
-X-Authority-Analysis: v=2.4 cv=TaibdBQh c=1 sm=1 tr=0 ts=69656af6 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=SuukmJpiibHSEBbCo-wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDE3NyBTYWx0ZWRfX6MpqVfCAeOrg
- H51+SEVmGNNhnoNx49WjxK3bSfPu9M1jnZCNq4GrO43A98GYrBJ1w+Uw/Tnko0dkWQBuSQPbKLw
- m0Daa7fW8NboXpYpsg8GSmcUSEbwTVa539Jn4GJ5l8eA/VXol7PdSPahkemGPzHMrSueifeo6c4
- Hb40iAndfRlPldqkL07mfPyVugOp7pdslbmlT0M5GvIonG7IeDS6yxv/OL9JeTdcni7nZa2DZvF
- 2ld0WVY3cN7z0VkvqxcuyXAGHYH/dXuMKwLEoe4QBX9+guLmuEz8r9SOFgKKpwkru8ysAC5uAR4
- XIOhdlUuVd72Q86iifSx2cGdmrao6wAEg/ll1Dk1lNPA65p8DYihWG9nmIh5NYzhLrRIKGqVCe8
- nWBpxRmgafkLUMo9BeNNMTt9jSNtrfb3hoI1tgtKL049UnijjqxEYSN23zQRffH46+MZB1LsXpD
- VmT+pGnwDvUcia30ziQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-12_06,2026-01-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 impostorscore=0 bulkscore=0 clxscore=1015
- suspectscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
- definitions=main-2601120177
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <20260112080721.3319572-4-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,116 +108,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/26 6:38 AM, Daniel P. Berrangé wrote:
-> On Fri, Jan 09, 2026 at 12:24:32PM +0100, Thomas Huth wrote:
->> On 09/01/2026 12.13, Daniel P. Berrangé wrote:
->>> On Fri, Jan 09, 2026 at 12:06:25PM +0100, Thomas Huth wrote:
->>>> On 08/12/2025 22.32, Zhuoying Cai wrote:
->>>>> Introduce new helper functions to extract certificate metadata:
->>>>>
->>>>> qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
->>>>> qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
->>>>> qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
->>>>> qcrypto_x509_is_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
->>>>>
->>>>> These functions provide support for metadata extraction and validity checking
->>>>> for X.509 certificates.
->>>>>
->>>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->>>>> ---
->>>>>    crypto/x509-utils.c         | 248 ++++++++++++++++++++++++++++++++++++
->>>>>    include/crypto/x509-utils.h |  73 +++++++++++
->>>>>    2 files changed, 321 insertions(+)
->>>>>
->>>>> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
->>>>> index 2696d48155..f91fa56563 100644
->>>>> --- a/crypto/x509-utils.c
->>>>> +++ b/crypto/x509-utils.c
->>>>> @@ -27,6 +27,25 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
->>>>>        [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
->>>>>    };
->>>>> +static const int gnutls_to_qcrypto_pk_alg_map[] = {
->>>>
->>>> Could you do me a favour and add a line like this at the beginning of this
->>>> array:
->>>>
->>>>   [GNUTLS_PK_UNKNOWN] = QCRYPTO_PK_ALGO_UNKNOWN,
->>>>
->>>> and then also set QCRYPTO_PK_ALGO_UNKNOWN = 0 in the enum in the header?
->>>> That way we can be sure that zero values are not accidentally mapped to a
->>>> valid algorithm.
->>>
->>> That would be special casing just one enum type in the crypto subsystem
->>> to have this special unknown value. We've got 1000's of enums across
->>> QEMU and don't generally add such a special zeroth constant, so I don't
->>> find this suggested change to be desirable.
->>
->> I came up with this idea when reviewing the qcrypto_x509_get_pk_algorithm()
->> function in this patch which is basically doing:
->>
->>    ret = gnutls_to_qcrypto_pk_alg_map[rc];
->>
->> My concern is that if someone ever extends the QCryptoPkAlgo in the header,
->> but forgets to fill in as much entries to gnutls_to_qcrypto_pk_alg_map as
->> there are entries in the enum, we're in trouble, since the wholes in the
->> array will be padded with zeros that then get mapped to QCRYPTO_PK_ALGO_RSA.
->> Having a clearly invalid meaning of 0 would help in such cases.
-> 
-> Hmm, looking at the usage of qcrypto_x509_get_pk_algorithm(), I think
-> the method and the QCryptoPkAlgo enums should be deleted entirely.
-> 
-> In the next patch, the caller does
-> 
-> 
->     /* public key algorithm */
->     algo = qcrypto_x509_get_pk_algorithm(cert.raw, cert.size, &err);
->     if (algo < 0) {
->         error_report_err(err);
->         return -1;
->     }
-> 
->     if (algo == QCRYPTO_PK_ALGO_ECDSA) {
->         rc = qcrypto_x509_check_ecc_curve_p521(cert.raw, cert.size, &err);
->         if (rc == -1) {
->             error_report_err(err);
->             return -1;
->         }
-> 
->         return (rc == 1) ? DIAG_320_VCE_KEYTYPE_ECDSA_P521 :
->                            DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
->     }
-> 
->     return DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
-> 
-> 
-> so the caller doesn't actually care about anything other than
-> PK_ALGO_ECDSA, so IMHO going to the trouble of defining an enum
-> and mapping gnutls enums is pointless.
-> 
-> This caller should unconditionally call
-> 
->  qcrypto_x509_check_ecc_curve_p521()
-> 
-> and then then qcrypto_x509_check_ecc_curve_p521() method should
-> check whether the pk algorithm is GNUTLS_PK_ECDSA internally
-> and just return 0 if not.
-> 
-> 
-> With regards,
-> Daniel
+On 1/12/26 19:07, Bibo Mao wrote:
+> +#if defined(CONFIG_KVM)
+> +static int read_cpuinfo(const char *field, char *value, int len)
+> +{
+> +    FILE *f;
+> +    int ret = -1;
+> +    int field_len = strlen(field);
+> +    char line[512];
+> +
+> +    f = fopen("/proc/cpuinfo", "r");
+> +    if (!f) {
+> +        return -1;
+> +    }
+> +
+> +    do {
+> +        if (!fgets(line, sizeof(line), f)) {
+> +            break;
+> +        }
+> +        if (!strncmp(line, field, field_len)) {
+> +            strncpy(value, line, len);
+> +            ret = 0;
+> +            break;
+> +        }
+> +    } while (*line);
+> +
+> +    fclose(f);
+> +
+> +    return ret;
+> +}
+> +
+> +static uint64_t get_host_cpu_model(void)
+> +{
+> +    char line[512];
+> +    char *ns;
+> +    static uint64_t cpuid;
+> +
+> +    if (cpuid) {
+> +        return cpuid;
+> +    }
+> +
+> +    if (read_cpuinfo("Model Name", line, sizeof(line))) {
+> +        return 0;
+> +    }
+> +
+> +    ns = strchr(line, ':');
+> +    if (!ns) {
+> +        return 0;
+> +    }
+> +
+> +    ns = strstr(ns, "Loongson-");
+> +    if (!ns) {
+> +        return 0;
+> +    }
+> +
+> +    ns += strlen("Loongson-");
+> +    memccpy((void *)&cpuid, ns, 0, 8);
+> +    return cpuid;
+> +}
+> +
+> +static uint32_t get_host_cpucfg(int number)
+> +{
+> +    unsigned int data = 0;
+> +
+> +#ifdef __loongarch__
+> +    asm volatile("cpucfg %[val], %[reg]"
+> +                 : [val] "=r" (data)
+> +                 : [reg] "r" (number)
+> +                 : "memory");
+> +#endif
+> +
+> +    return data;
+> +}
+Are you sure you should be bypassing KVM for this?  Other targets start a scratch vcpu and 
+then read the values via KVM_GET_ONE_REG.
 
-Thanks for the comments. I agree with your suggestion. Given the
-current usage, the caller only needs to know whether the key is ECDSA
-P-521 or not.
-
-I had a similar concern to Thomas about the QCryptoPkAlgo enum and its
-mapping, since the gnutls_pk_algorithm_t enum includes many values.
-Moving the algorithm check into qcrypto_x509_check_ecc_curve_p521()
-addresses this. I'll rework the patch accordingly.
-
-Thanks again for all the helpful feedback!
+I'm not sure how much trap-and-emulate support LoongArch has for such ID registers.
 
 
-
-
+r~
 
