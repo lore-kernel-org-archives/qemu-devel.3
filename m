@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB59CF45D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84B3DCF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQpC-0006wa-E7; Mon, 12 Jan 2026 17:55:50 -0500
+	id 1vfQoc-00043l-KV; Mon, 12 Jan 2026 17:55:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQp3-0006UQ-1s
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:41 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoW-0003rK-2o
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:08 -0500
 Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQp1-0004Jr-93
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:40 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoU-00046k-GR
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:07 -0500
 Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-477a2ab455fso63301405e9.3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:38 -0800 (PST)
+ 5b1f17b1804b1-47775fb6c56so66083695e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258537; x=1768863337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258505; x=1768863305; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=e0VpS/erUaB8uXlATMToZM9LtCgo93xRrVfjCp8AQZk=;
- b=E1O/r6EXXmMzlR9LtXBHEqMVD9OeDh6EVBTWB+2n5GxjGGDBtkeTZM8z/kedSCrBzM
- ce61JETzcOmYukfbhOqAR9v0fkOvE3PxC5Xg/kwgsKJyuQXmF0LtHKX6ipLjiPxJIEgX
- plJDUStGyz8MffMAFioR0K/WumsplqQEo+Tb1z7FbXA+EvHaLK66ie+kYr6BFXwOoUNn
- 6GPycasN+A0rFih2/lomSeYWCYkSIvWtNWwj0EnjTSzSfqU1XvXd8dyDcJxxztPa4f5Z
- ChZY3PBr1Xi1DB+iMhC/nnOsZ42ig3Ig8ehm77l4HlSnddIuoeBeTA1fY1BQXzDnG5le
- bfhg==
+ :reply-to; bh=qcTGsVHDaBTx/cy/A49xf1mB6DXl6RRXDBGl281jJNc=;
+ b=ZHtFPX5C+EeppywWO5Y5cS98kMkIiXzOaftN7hvCWSmUSv5FYsk07+nIQq2kFTzLk5
+ 32ksb++tf19MSByEHyKCoEEXqeABhEY2POAcKt9xJuonlfIHHxQnuPo7ih9Nm5nBNzZX
+ EyCPxy0wNfTqSRJBYUrN3G5oBFC1F/XtIWBvFFKRWrygg+Kp14k4qOTuDyDuXlnHSNuk
+ lRrSwkikkI4wG3ymu+ObvTKIZ1KzV3P1gLcxXPu+1zHYf/JQJEwcGPjKhKrFW1DLV57W
+ C8ta4sV1iWu87JJDrP0KLg7G8BRH2pOlBiUM5l01q3BU/zri9S9gj++x0PINw7OWo9e3
+ bpHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258537; x=1768863337;
+ d=1e100.net; s=20230601; t=1768258505; x=1768863305;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=e0VpS/erUaB8uXlATMToZM9LtCgo93xRrVfjCp8AQZk=;
- b=PvczWobhPp0QUnDExVv3qNOsrwsZoBXZmOaxjIdD3y0k5kuPFdN3ikh1jsMfCuN71E
- TOKUHIce3R9aA+PoCugyFHGMXMli53pD12SPlIwdzuPBQ6l9eL7DPGtBarRAwc8Bnv0x
- xJsFgO6kljLXJzLRaFbVQszynj9sG9RLXk49IkgGRXDExxYAUn//ysziXQS2TEAtnSpg
- D+E4kCzGAk6Z4TUPY9Ls1bDT2byGTUEPVsckqqhgX9WnKi14+jPVzR87gH/iIQs8ssJZ
- 2NgQDa6O0G9r1ovcnC+ZWZiJEC7+K/MbBWNjI9DI8fTk26WXZ2wLpHT8u/ME7zAcnCQd
- ne+A==
-X-Gm-Message-State: AOJu0YwBgwNuwcQ8XXmx4ZrSjhe04IHM97vxZB6VXyaZzWHPUqwTOYmo
- k1ZSAmAJd908LXN/l4BW14fgiZVYshfLFBL7e/c2TzkYWrGq9fzFKNHCMGvC/f65Tb2cronIuqZ
- g0hJh4XQ=
-X-Gm-Gg: AY/fxX4tYpP3pnASIYHvsiR18o400Dfo5NqBeGli3xNY6B7YZD2K2vnbe2eDKMAFzzQ
- 80/gsy82na6GcruAiStIe3K/FPL7hLpmajDYpgAeKK5dXHpR5Kq/kmA8i3YDW3umcAZ106yIfj/
- nlynO4mcq95DomjpJMzOtQ/DgCNhpz+qkhqVle3pLqtYHBsoTW8PXjgeRIq/yt9+An/xyGufXVQ
- qW7AuLm0r7EpJrlmzNveCoaQqR9FPbfjKheXspRivD6vh0eSh1Ual0he4/6XLfIDJdoDIWzPPCN
- /bMnzb2DJK/x41qz6/ybCxe+j+vWf7I+y3cpIy2F43KuyKe+nOmuLEVrh6x5iKsdPzo4SqWG0yp
- R0khGtZclT+pwpttuBWZGWyKjmS5GcRMldrILPkcSGtK04WTzaCjR4eHedDcdvfshxrp366w2CK
- 1E+yf5IuElj/5pHQAbhqgvrjzlruAMG0eI+mQgahMdS8pC7yzhBQZ9PQDKqWHO
-X-Google-Smtp-Source: AGHT+IHC1YK1PxXt7VvcP9j6+DndVWDh/H0pnL7zWdiZnl+7ewt3+aGS1ZzzUpdJT7pY4RRFtMZ7Fg==
-X-Received: by 2002:a05:600c:46c4:b0:47d:403e:4eaf with SMTP id
- 5b1f17b1804b1-47d84b18ef7mr256320355e9.10.1768258537251; 
- Mon, 12 Jan 2026 14:55:37 -0800 (PST)
+ bh=qcTGsVHDaBTx/cy/A49xf1mB6DXl6RRXDBGl281jJNc=;
+ b=eFwPQTR7vo4Gv9TS428SgfUZivE067AehYenZZr7JWHfR0AKmSIlghUqQ/Q0VJRXw0
+ 7r1lqp/mhI23TEhatT0WG9chRMJh/7L9cwke+hnFfvTSCKLtKAYYUqT4OKDNlPaQI4vb
+ HkaDlkjM/PJ7hWeG5XZTSCq+ATokV/nMAaB99Bz6ogkHhSdI3u+Wkm98cjDez4DKrGQJ
+ scR54XZw2A7m2OaxeNzaw7QsuB/TiW4Dznj4Q5zFUB565zaus+5a5JCoNoF8tRswSN6o
+ C2dKTi1x3XFXC2Crj/ZY+jTIjQCRS4o1Zzt/jaU93mHRceBElWLzBozHgJNOh0wMuMCV
+ +nYg==
+X-Gm-Message-State: AOJu0Yzjj2YgPtxVfgbnnQG/UeHidmYdUaFlGPUciZTcwS1xcxz25cPj
+ A8QMtBxjmVS1DPmvKlgK2iqSpz/29GEiQQCaF3J5hVubEybOKFWiYn6tPzHaXib0dDNZugvHi3E
+ dTX3DbsA=
+X-Gm-Gg: AY/fxX5NXlb1s7t0eyGxzmwKCn7E61CnPFFIYKmQeT97UE23HhLxTdhBpdsWHz9uBYp
+ nxrJD+omeJDRcvfBE6mcjyLiC0BRrYCtkbIlx9ZHZ/7kHP4UXgsk+hGejHy7jV4wTXAzbyTL5/8
+ Ddtk/+pK/VjTTeR3Z5QXDuMB1F899TY6sSHgZhkMpeeMW3y3AaU+ZKHb+9cjNE8YkhXxMNXbguR
+ rc+zE3eV/azYZQ5dy0mJSaMLdmyHZhYZZTO6iAf7y6ZTUeI0CnQ6ifsVrBSE7QTk63481FdEvRN
+ HH/UEf6ujcri2oypjs4bomvFTsUpmrVlpYgOwK9gUqz1Ev4DLVU+pHj1KbZHfF38g2IFG8L1m7P
+ rIcTQfFmls6Avh6a4B+d8TH3Up2XhZ4TNB/xeUtym1UHef21M9dfJwpC1dlI+YFrcpcuqHKnzLO
+ JuDuPxh8kauvBICZjXtmsF2mU4TXqJHn+zBZPht5eI+dCrHJtcWQl9C1ZdO+7L
+X-Google-Smtp-Source: AGHT+IEDaR2/3/JXXAsSHaDflpV1qrpYY2UfdOUCVVFW3vZ5GQNRDAtvLeZkjM3yMDYlaq4MXA+tmg==
+X-Received: by 2002:a05:600c:4fc3:b0:477:569c:34e9 with SMTP id
+ 5b1f17b1804b1-47d84b3b9e6mr249600845e9.23.1768258504566; 
+ Mon, 12 Jan 2026 14:55:04 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47ed9e76470sm1806885e9.2.2026.01.12.14.55.36
+ 5b1f17b1804b1-47d7f653cd6sm394107705e9.9.2026.01.12.14.55.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:55:36 -0800 (PST)
+ Mon, 12 Jan 2026 14:55:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 58/61] accel/tcg: Un-inline WatchPoint API user-emulation stubs
-Date: Mon, 12 Jan 2026 23:48:53 +0100
-Message-ID: <20260112224857.42068-59-philmd@linaro.org>
+Subject: [PULL 53/61] target/sparc: Inline translator_ldl()
+Date: Mon, 12 Jan 2026 23:48:48 +0100
+Message-ID: <20260112224857.42068-54-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
@@ -99,143 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we can not build files including "exec/watchpoint.h"
-as meson common objects because the CONFIG_USER_ONLY definition
-is poisoned. We can easily fix that by un-inlining the
-user-emulation stubs.
+translator_ldl() is defined in "exec/translator.h" as:
+
+  198 static inline uint32_t
+  199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
+  200 {
+  201     return translator_ldl_end(env, db, pc, MO_TE);
+  202 }
+
+Directly use the inlined form, expanding MO_TE -> MO_BE
+since we only build the SPARC targets as big-endian.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20260106231908.16756-5-philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251224162642.90857-7-philmd@linaro.org>
 ---
- include/accel/tcg/cpu-ops.h | 17 -----------------
- include/exec/watchpoint.h   | 23 -----------------------
- accel/tcg/user-exec-stub.c  | 33 +++++++++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+), 40 deletions(-)
+ target/sparc/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
-index dd8ea300168..5950cdcaab1 100644
---- a/include/accel/tcg/cpu-ops.h
-+++ b/include/accel/tcg/cpu-ops.h
-@@ -281,21 +281,6 @@ struct TCGCPUOps {
- #endif /* !CONFIG_USER_ONLY */
- };
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index d6b599b71fe..1a7e5cc3d73 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -5743,7 +5743,7 @@ static void sparc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+     unsigned int insn;
  
--#if defined(CONFIG_USER_ONLY)
--
--static inline void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
--                                        MemTxAttrs atr, int fl, uintptr_t ra)
--{
--}
--
--static inline int cpu_watchpoint_address_matches(CPUState *cpu,
--                                                 vaddr addr, vaddr len)
--{
--    return 0;
--}
--
--#else
--
- /**
-  * cpu_check_watchpoint:
-  * @cpu: cpu context
-@@ -328,6 +313,4 @@ int cpu_watchpoint_address_matches(CPUState *cpu, vaddr addr, vaddr len);
- vaddr cpu_pointer_wrap_notreached(CPUState *, int, vaddr, vaddr);
- vaddr cpu_pointer_wrap_uint32(CPUState *, int, vaddr, vaddr);
+-    insn = translator_ldl(cpu_env(cs), &dc->base, dc->pc);
++    insn = translator_ldl_end(cpu_env(cs), &dc->base, dc->pc, MO_BE);
+     dc->base.pc_next += 4;
  
--#endif
--
- #endif /* TCG_CPU_OPS_H */
-diff --git a/include/exec/watchpoint.h b/include/exec/watchpoint.h
-index 4b6668826c7..c4d069425ba 100644
---- a/include/exec/watchpoint.h
-+++ b/include/exec/watchpoint.h
-@@ -8,34 +8,11 @@
- #ifndef EXEC_WATCHPOINT_H
- #define EXEC_WATCHPOINT_H
- 
--#if defined(CONFIG_USER_ONLY)
--static inline int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
--                                        int flags, CPUWatchpoint **watchpoint)
--{
--    return -ENOSYS;
--}
--
--static inline int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
--                                        vaddr len, int flags)
--{
--    return -ENOSYS;
--}
--
--static inline void cpu_watchpoint_remove_by_ref(CPUState *cpu,
--                                                CPUWatchpoint *wp)
--{
--}
--
--static inline void cpu_watchpoint_remove_all(CPUState *cpu, int mask)
--{
--}
--#else
- int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
-                           int flags, CPUWatchpoint **watchpoint);
- int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
-                           vaddr len, int flags);
- void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint);
- void cpu_watchpoint_remove_all(CPUState *cpu, int mask);
--#endif
- 
- #endif /* EXEC_WATCHPOINT_H */
-diff --git a/accel/tcg/user-exec-stub.c b/accel/tcg/user-exec-stub.c
-index 1d52f48226a..28286e11a60 100644
---- a/accel/tcg/user-exec-stub.c
-+++ b/accel/tcg/user-exec-stub.c
-@@ -1,6 +1,8 @@
- #include "qemu/osdep.h"
- #include "hw/core/cpu.h"
-+#include "accel/tcg/cpu-ops.h"
- #include "exec/replay-core.h"
-+#include "exec/watchpoint.h"
- #include "internal-common.h"
- 
- void cpu_resume(CPUState *cpu)
-@@ -19,6 +21,37 @@ void cpu_exec_reset_hold(CPUState *cpu)
- {
- }
- 
-+int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
-+                          int flags, CPUWatchpoint **watchpoint)
-+{
-+    return -ENOSYS;
-+}
-+
-+int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
-+                          vaddr len, int flags)
-+{
-+    return -ENOSYS;
-+}
-+
-+void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *wp)
-+{
-+}
-+
-+void cpu_watchpoint_remove_all(CPUState *cpu, int mask)
-+{
-+}
-+
-+int cpu_watchpoint_address_matches(CPUState *cpu, vaddr addr, vaddr len)
-+{
-+    return 0;
-+}
-+
-+void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
-+                          MemTxAttrs atr, int fl, uintptr_t ra)
-+{
-+}
-+
-+
- /* User mode emulation does not support softmmu yet.  */
- 
- void tlb_init(CPUState *cpu)
+     if (!decode(dc, insn)) {
 -- 
 2.52.0
 
