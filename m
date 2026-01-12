@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F1C5CF45D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDA0CF45D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQkC-0004h2-Kg; Mon, 12 Jan 2026 17:50:40 -0500
+	id 1vfQky-0001dq-JD; Mon, 12 Jan 2026 17:51:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQk9-0004Rs-CJ
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:50:39 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQkw-0001V6-PL
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:51:26 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQk7-0002uA-WC
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:50:37 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-47bdbc90dcaso49368025e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:50:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQkv-00034I-BG
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:51:26 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6c56so66067235e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:51:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258234; x=1768863034; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258283; x=1768863083; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nKnmAuhg2j5g1FJP9++SXoe3W19bdqyFpA0yNrVoyGQ=;
- b=lHjZXxzwQsxoTimwjS93R2R9jHsKR3BI9gg9SKOjVxnYl02UzGuLX/9AHR4Q3E34f8
- fiQtmYVyndz8MezTx0SJenLXiExxbQBmYibz2Yv+mFtJLUkL4WolOFIWWZLo90r4imrm
- jZQE/XWULcGAtEHbDbWCacQfhKqgZ/gV2m7FZE2x8nsykzvvfWHLGxwhlpaO+3Jemqa3
- Laj2nGVcl8mvfsXpQNRXO9PRWEpfGqGW2kXycXxxr6DlALfsJ6ng/a+xio4EZzE7pTRn
- quwP4My6sCUNqqVFKUmVtCJbnfQMgsADJ4f0qmjGBuiLJgxvs52JsF78efS4jVifbN85
- +JEw==
+ :reply-to; bh=Vkt9/c6XbTeBWxuduBukZ1sJO+ql0bGB7j+kc3pAXXI=;
+ b=V9alf94LyQlhmVLgJt4SyRurl/7OxR++PqXIch/eGVNo77Lv3rGrsuQP9S0ZET1KsW
+ iQMPKcrpEOZP65QlmjiyHmd5QEkWErn4naqFYlo50zjiadTOX8p4Mw7O/xSUKiIGYUXS
+ ijNL7/sdjT6rmrRDBPgnXoGfzI7lP5jXoEnaJYBJ15LiQT4ooP2zZq0utw0FYYHbVsSK
+ XYPTamV0N8OeqtOJ6JLrzRPITkDsW1Z7UfTweO1yCVXVL/r5gPl/SUzDO0UFQdNpUhFK
+ 7F6FaOWdJ7X7rRPTVVOi3jkYigs7JzY87v9M/glbwNpiO9krnd+w6cL4wpR5I5a4s8K5
+ Uk1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258234; x=1768863034;
+ d=1e100.net; s=20230601; t=1768258283; x=1768863083;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nKnmAuhg2j5g1FJP9++SXoe3W19bdqyFpA0yNrVoyGQ=;
- b=NBxx4/KMAVCoDxgRibUWoXdqFlvdlb+bV8MIy1J0tVrzUGmBLOxYzOi7eeNmYEvz57
- dxSN1+mXRq+tUDNWTXeWnC7jx6hQvazJFNHFst1Gzsfi2RLP4SKQYX6FJ5WNk8pP8luj
- pGWooztgakLaJ6UeJXTFECF012bdp4v7bZwBgUEsEScZM05IRCWV/wUU0kdfTPBG69Vz
- FwM02/eqdO5GgVcWSB7D069SVGRjaAegeLHRkuLlMSboo3//Vh1nOebAUStHuQ0jogkV
- Fb+jxbzASDA8joVhvqBSSQHqJmZN73i11YGs8J+BwZkJqvNMYwuizvvPCGyRHvuM2wLG
- NQfg==
-X-Gm-Message-State: AOJu0Yyz+QfpXYLzMENljwMyv4KwNpO/MVfdEMV8ps/gASFPx1Dow9Zk
- hWFl49JfYCucJ2MCj3bdR4zDyOOOG7hY3HLtT1ZSTV4pEcNIy2EpD0V8UHwJ3h41Am49uummp75
- YkMlOxas=
-X-Gm-Gg: AY/fxX7YMVeHLfxElTYYfVMwLtOT2TxejzyFxJrTwmW1qAz2Q3wtCPmDaYAVXnbeq3v
- n6a02u+soBK5B4yZbk0F7q9PUm7kbzC72GVTDKVfGQ1kCZg2XIK51YI9Hnwebw5ZeMr1HCPdPKe
- HwmBnN1Dpzp62Ts+K3pBHM8VrQ4/5DbqQtuG+0PPkyfpM5AMldhvn56LI2kIq/QIL8ZXRpJO9W+
- 3514xYrdHoNSZf2rvivFC54i5Cpy6FPA89Vxqyh9i184h9/aMOkUJ803BuoHHd01V/KbKRrep+h
- Jrz+dtYbqU7l8fGP5+D65q+QsVwH6IySF5fTAjcIGl9QEQY/T05jkv+0SG44IwbRDsSSLd0PqmJ
- tsGSbqKddjtNEFQdd64lZM6rxkCwQtvj9oEc4htjlXj4+zxK4t2c5dxeMOub1e4mXqooO3oLWdl
- P7SIGgyE5Y/VyHEc+KUkhwJQ7T0JEf7qTHsuBa1Fg5CXJ4L34BJXYGFOWUUUnE
-X-Google-Smtp-Source: AGHT+IEqNJwJoi2JeKtGTo9lvMtcw8mdnoLhKiK66N8gRAYIQQWNMD5cHrARfC/P2pO2dbhsfqhuew==
-X-Received: by 2002:a05:600c:4e8a:b0:479:2a09:9262 with SMTP id
- 5b1f17b1804b1-47d84b18037mr258125295e9.9.1768258234202; 
- Mon, 12 Jan 2026 14:50:34 -0800 (PST)
+ bh=Vkt9/c6XbTeBWxuduBukZ1sJO+ql0bGB7j+kc3pAXXI=;
+ b=Dd1CSJ8lXBhozl5+N9swAtDHQyXYbqQ9BrZOGcxLUf4Eec/hb1EO59TVhp7fyICyFU
+ 9RR9E1TbwH+cb18w5t1LJUzrymFD2FUpIbWmw+1FI8v4EqhdIFmDKKENCLMG7mZKti5d
+ IyrClULdnpbcnCrJkjubCZsQDF/Vkgmifp4S629ahBx4MtHHOznLlSdY34n7dulRuvyO
+ 5P9hDjk9OxMBmSGpa6XHIpxXX49W5PGWTrQKm31g0GUjankoxT2xoHXH8UsJZ8bMo226
+ xqrtknV9HTRt7HOqTZMhBIp3DbjFZ/kovE/3gelE2ioZzPc61z1MpMoiyTc2/BjLS3M9
+ 0jYA==
+X-Gm-Message-State: AOJu0YzT/iu0hf7GKnqx2ErhDWeBgIVgRQZ0lxBvfeD7XLbgs3WGo30E
+ w2rw1ol/Q1WLBqS2xSmRAx8th3G+dBzRmOiRzgsO50ng4gK0wEMbYEb6xgfwOBNoFFEbi7R0u9x
+ R+O8+vaU=
+X-Gm-Gg: AY/fxX6mdExLibjV5k5LejQQ4SI81cW/AFbKtk0nVU1Y+uAJvcdDkJ/UGWHtyJLRsKe
+ R4h4otYX5oRuXP42bknOKrztmqEak+gZJZDlRhS0n2Huru92PJcomISKxAxtTF2G7JBVhJ9ASMB
+ 128ga3GUKP1uXqTpvL8BXDc4s/sV8X6hvk6YXO2jrGnd9SP2IKEh4xxGh7BNvjer+qYUnVCGPJt
+ ynTVFc/W9hKBlJo1LPHmzmw1Zk0iybzzF+JdyyHfgyQjr1moM8J+KaI2LnjGiBNNtZUTVYWLZ4l
+ Xyp2+BhA+gg8KfMHNa709Qh0BA7bynuyDcHoOc2pFyGPf8cLWCah93h5HIQaz624vwaPaUmcjLz
+ HjWuoPI425IOjWFBvqjfSlSUieeY1+Xv06MxlumeQzBXCjyF2lTA5vWEVbcTbA+lHaXH5SB2TZd
+ ja07WbkM7KLPYlXy0XiGeSh0moEmvbXF/avTPtCM8AAXtFPV5Rv6Izb+eDFxwT
+X-Google-Smtp-Source: AGHT+IF44kr902r4ZZXLhIWXWssoUcUYhAMTTP6lr/PxEnu8pQhCbLLPIvxZ3VFsVkE+tk6ebhqeyA==
+X-Received: by 2002:a05:600c:8b0c:b0:477:5b0a:e616 with SMTP id
+ 5b1f17b1804b1-47d84b18a9fmr212070675e9.5.1768258283439; 
+ Mon, 12 Jan 2026 14:51:23 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47ed9b2a92bsm2208955e9.0.2026.01.12.14.50.33
+ ffacd0b85a97d-432bd5dfa07sm40684120f8f.25.2026.01.12.14.51.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:50:33 -0800 (PST)
+ Mon, 12 Jan 2026 14:51:22 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/61] target/alpha: Inline translator_ldl()
-Date: Mon, 12 Jan 2026 23:48:09 +0100
-Message-ID: <20260112224857.42068-15-philmd@linaro.org>
+Subject: [PULL 21/61] target/hppa: Use explicit big-endian LD/ST API
+Date: Mon, 12 Jan 2026 23:48:16 +0100
+Message-ID: <20260112224857.42068-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-translator_ldl() is defined in "exec/translator.h" as:
+The HPPA architecture uses big endianness. Directly use
+the big-endian LD/ST API.
 
-  198 static inline uint32_t
-  199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
-  200 {
-  201     return translator_ldl_end(env, db, pc, MO_TE);
-  202 }
+Mechanical change using:
 
-Directly use the inlined form.
+  $ end=be; \
+    for acc in uw w l q tul; do \
+      sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
+             -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
+        $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/hppa/); \
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260106155755.53646-5-philmd@linaro.org>
+Message-ID: <20251229225517.45078-4-philmd@linaro.org>
 ---
- target/alpha/translate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/hppa/gdbstub.c    | 2 +-
+ target/hppa/int_helper.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index b1d8a4eb80a..3be97057465 100644
---- a/target/alpha/translate.c
-+++ b/target/alpha/translate.c
-@@ -2904,8 +2904,8 @@ static void alpha_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
- static void alpha_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
--    uint32_t insn = translator_ldl(cpu_env(cpu), &ctx->base,
--                                   ctx->base.pc_next);
-+    uint32_t insn = translator_ldl_end(cpu_env(cpu), &ctx->base,
-+                                       ctx->base.pc_next, MO_TE);
+diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
+index 0c5e41410a0..4f016a0e61d 100644
+--- a/target/hppa/gdbstub.c
++++ b/target/hppa/gdbstub.c
+@@ -168,7 +168,7 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         return 0;
+     }
  
-     ctx->base.pc_next += 4;
-     ctx->base.is_jmp = translate_one(ctx, insn);
+-    val = ldn_p(mem_buf, hppa_reg_size(env));
++    val = ldn_be_p(mem_buf, hppa_reg_size(env));
+ 
+     switch (n) {
+     case 0:
+diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+index 4e4869285b5..d5a20cd549d 100644
+--- a/target/hppa/int_helper.c
++++ b/target/hppa/int_helper.c
+@@ -178,7 +178,7 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+                         break;
+                     }
+                 }
+-                env->cr[CR_IIR] = ldl_phys(cs->as, paddr);
++                env->cr[CR_IIR] = ldl_be_phys(cs->as, paddr);
+                 if (i == EXCP_ASSIST) {
+                     /* stuff insn code into bits of FP exception register #1 */
+                     env->fr[0] |= (env->cr[CR_IIR] & 0x03ffffff);
 -- 
 2.52.0
 
