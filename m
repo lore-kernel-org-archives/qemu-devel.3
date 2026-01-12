@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A24CF45D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B74CF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:54:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQnJ-0000Tk-P2; Mon, 12 Jan 2026 17:53:53 -0500
+	id 1vfQnl-0003UT-WA; Mon, 12 Jan 2026 17:54:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQn9-0007Ei-PP
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:53:43 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQnU-0001qi-UM
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:06 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQn8-0003aU-6t
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:53:43 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4775ae5684fso31720605e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:53:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQnT-0003fN-Do
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:04 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47d6a1f08bbso28468215e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:54:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258420; x=1768863220; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258441; x=1768863241; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kSPqFYpQ+X0CJ9T+5owpTaaxm87SQoNIrwW8UuRZ+88=;
- b=LB5aHyrkL4TU4pu6QhSKVMTotoAcAlVH2E6cKqnjCePeOpfGLQNklx1lVee11fMuxS
- 6PeVf9+IsNFZijqjiL1IIDkHzXg74x8U/RAKmaN8XaVuGoUX+Xy0BpgTsCcghF3EjWpr
- QTTxEE4AyCGm5pZ3EXbO97cCSlZbGx+EqGxDoO1luvNKWfl00V4OsDVcXI917MU2BliB
- TboGKbLX6JEKE2iMAFFiYR1+M065EQDeRzT2Zncy/47+aEuqXkFQpzjMGM/JQoZAzOI+
- zgE7ukFbGvvtoNrQG359cDEO3uVKdmxfl4WQ//V6SMkZBJQwhTwltLqS3JKW6FmrosOM
- Dnxw==
+ :reply-to; bh=/pnimPG9R8XWMr4Jh5OyK9ONvCYCh5KRvpbaYIrsAcY=;
+ b=kVKfjrSYBlPnrry+mEXtJUfhNpUMxxb13E1tynBsMXXokCgX/yBjLK49wHrI5lwIfK
+ +Jczqpme4vW9xd3DYkO1p2hETOo9xTmSeXt53hRW14hcUgDybWtYPawczHSnje0CK2Wf
+ x0gEIQws3XKygS0Dgh7c9vCVdtwKblXE+06mJfvzdhioPzHqYz2MS00jQQq8xsWOAEsX
+ GwkvRM7Gyu5C1G5SsIuRcSyf1bxRi/9H0JYFLgKwI54MNfJfbsRL5Frz5D3eHPIlbnKR
+ /ko4+R7qTczTvTD+59Ge0aRqKbimaOIAhFuEez6LlJDRDJbMZfwI5/Wgsc4bB2VXuKSs
+ q1XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258420; x=1768863220;
+ d=1e100.net; s=20230601; t=1768258441; x=1768863241;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=kSPqFYpQ+X0CJ9T+5owpTaaxm87SQoNIrwW8UuRZ+88=;
- b=PKe7U4uXf9IPLJTaeK+nVn0nQxLORNBQD/MnlcemRMCo/AYots9YALI7M4T/nfh/Cq
- JR54ZLnlysEWe/2xBnae9ZJeToIlwCr9/+rF5khlvifp3MJW/5D1DH2rPdz7N0fHWUOW
- VEk6EYaiVX3Nd6e5RyzQICOnA1vIqakX4fXJW8v55FqnckO+EeSib1l4f8EUhiT21ikY
- p8wdMmHUJxHeUTsKtkHGfo6lEV/gXKyjkaA6IebnXXFGE0d4jvGj0KM7ysgf3UomssQ6
- M3W7LTeJ6DdPgvsizbl6GU9r7RWJIiqoKUHJqPu/z1TDO4Tyzq/aL8Y/gNuHBMQBgXcq
- TbpQ==
-X-Gm-Message-State: AOJu0YytYlFGfia2vUZphzX2dL5PSIaukaXKHt5E29LdLzOrJ0TBuR0C
- EycWaS33Vyk5ffii0G7W/fQX0IQJOJVw26RjpH1w1olOa6Yo1YtvnThu4wXqXLar/eYif7DEgSj
- dChWACQY=
-X-Gm-Gg: AY/fxX761tzljnrbuKV7MHeIO+M2JOb8lfSXRVE2C7zalKKY727pXsiOaEomm1LYE5O
- TGNTU+tyy5jXce0qalI9e4z/gDALq1n1OA3DhR9Fcpg0cV1zZ8AxyjTp95PXKsSB+lQTHLcja8Y
- rjxKBcCC0H6oZcw1FJcnK1jSYc3PcbvSCY9yXs5WxtTtVMnWPgSj2yDkE/dqFJZa2Gih2kUEtKi
- Dm+HQlEDGtpA8BNyH7Fnz9m4/ueCOTL1s3f6VLRhDDW0K+nyIx2f+6S2qFaIkLd0iK6O7rikpFF
- GvmDutc0P4SrvddVC6HTUbkNysVWrCrqidIQE5fGHR/JrL2O6+VQ4uuE5cp1k0sbN7T1WKBsQX7
- yZb5JEEwAu6pZerLqeSSDj5s5q9ueQx4FpwNt4zA6CBQYgKlHlrCvllWJPGoV5ed/4ePhg+CYah
- voqFFi6P/Lasm91ZsOVjZWxfIez1eKswfEo8ZUd5P9wLA4r4hahk8dBdv/J73P
-X-Google-Smtp-Source: AGHT+IEGX6rJ9v9GLIck2Cc0s0RutBaF82lIQSF1nmu1isxw1cTguIL3ErfYHRJ8kLWxroD+4E84Qg==
-X-Received: by 2002:a05:600c:3152:b0:47a:814c:ee95 with SMTP id
- 5b1f17b1804b1-47d84b17eb9mr227253085e9.12.1768258420335; 
- Mon, 12 Jan 2026 14:53:40 -0800 (PST)
+ bh=/pnimPG9R8XWMr4Jh5OyK9ONvCYCh5KRvpbaYIrsAcY=;
+ b=MGUFeNgIW6MGwIC71/pMtCMzFa2F9NH3WoyWYc8LtmOjYEzcfoyApjCB6ak8Y6ECGf
+ PKkILcxkvaOsRVD9cR/Jt5Xt/V6HbM35f8y+oi989NdjlhYZHzs77mJykJOdCpHt6M+t
+ Y0i/q3u2+2kx3exZypPohWW8Wtf4969cJAlx3u5Q2akS/oF+9azwcv1T3QCk1OajIR6m
+ uMrllobkyZXQhh7uwvoBAvcwvSrpgJ00en+j176g+rrF1GOMF71PukHhJfk95I755L0d
+ 5hlgN3o1rrZ1CDpd0c6VxvFFfCsgpMEdtcX/QWUGmRSgu85wYNWP/fTGIs7LsBv7l4Q8
+ asIQ==
+X-Gm-Message-State: AOJu0YxEVjkkpBb6gWdd9UCAbixn0w7HVB6hGOWM9JW1qJLi0oonjZPH
+ yck2JBYFIWf7qrJFSQAow3wpviBdAwP088fvPJt5e1PDrF1CrE019L+u8EFtdW3wPMmALmtu6pj
+ 5gfXP8ao=
+X-Gm-Gg: AY/fxX4hLBswViFJsCkWmNhl7jj3Y6cM2RcmCBg21HYRFhuEsFFl8ndiTWGXceDRa8t
+ Th5DEJUcPxNvXdptEjzbweDg1Bk6f0RLIWEpnE+xF4HZcTIjSKvRzaYvonCZMBZq5mkDj+7uJZj
+ r6Q8t3PQhsBF5lXy4YFhwOOtgwASW2vMQEVTlsdfbQvZTm9J42rXzvDn/+GlxcndP1QqiXtJTmK
+ QSb2Dv+qfA5hHwqknZN1oY8wYislRIBLYb8PXmnxwxtSP6NPB4GTloMvzZ97TuxCKDXuJSqffPU
+ 7pVN8HVOh8Vapmw8R6wau5RlgiMRdBZtjDNxwKgJWLuWgEHiU2H6Nl0GpbLbYnV0QWbC2V4xh4j
+ Vk521N55NW3RYarI0lPM2yiIFpc54bc6MvC0/dMhaE3Dlx+9yA0rWHZ/XUMSI641Els7Djt+6gW
+ yPyUY5cGlgXirYjaTx/m/Gem3XzM2d7uOS/QA36M9wDbkUkt7trRU6WwQiFFhF
+X-Google-Smtp-Source: AGHT+IGvNF9bA9iSMht78O00lwrlRz6ZQ9tPoU2ylLhe8KevPva4Ib7lwL5Y93u6jscsXxvpkwagMg==
+X-Received: by 2002:a05:600c:8b43:b0:47d:264e:b37d with SMTP id
+ 5b1f17b1804b1-47d84b36a01mr221683935e9.22.1768258441461; 
+ Mon, 12 Jan 2026 14:54:01 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f4184cbsm392489595e9.6.2026.01.12.14.53.39
+ 5b1f17b1804b1-47ecf6a5466sm91705475e9.11.2026.01.12.14.54.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:53:39 -0800 (PST)
+ Mon, 12 Jan 2026 14:54:01 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 41/61] target/openrisc: Remove unused 'gdbstub/helpers.h'
- header in helper.c
-Date: Mon, 12 Jan 2026 23:48:36 +0100
-Message-ID: <20260112224857.42068-42-philmd@linaro.org>
+Subject: [PULL 44/61] target/rx: Use little-endian variant of cpu_ld/st_data*()
+Date: Mon, 12 Jan 2026 23:48:39 +0100
+Message-ID: <20260112224857.42068-45-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,41 +99,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"gdbstub/helpers.h" uses target-specific symbols, but we don't
-need it, so remove it.
+We only build the RX target using little endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the little
+endian declarations. Use the explicit little-endian variants.
+
+Mechanical change running:
+
+  $ tgt=rx; \
+    end=le; \
+    for op in data mmuidx_ra; do \
+      for ac in uw sw l q; do \
+        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+      for ac in w l q; do \
+        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260107200702.54582-5-philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-ID: <20251126202200.23100-5-philmd@linaro.org>
 ---
- target/openrisc/interrupt.c | 1 -
- target/openrisc/mmu.c       | 1 -
- 2 files changed, 2 deletions(-)
+ target/rx/helper.c    | 14 +++++++-------
+ target/rx/op_helper.c |  6 +++---
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/target/openrisc/interrupt.c b/target/openrisc/interrupt.c
-index 5528b80e7b8..6e89157639a 100644
---- a/target/openrisc/interrupt.c
-+++ b/target/openrisc/interrupt.c
-@@ -20,7 +20,6 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "cpu.h"
--#include "gdbstub/helpers.h"
- #include "qemu/host-utils.h"
- #ifndef CONFIG_USER_ONLY
- #include "hw/core/loader.h"
-diff --git a/target/openrisc/mmu.c b/target/openrisc/mmu.c
-index b2b2b3c4a98..315debaf3e5 100644
---- a/target/openrisc/mmu.c
-+++ b/target/openrisc/mmu.c
-@@ -24,7 +24,6 @@
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
--#include "gdbstub/helpers.h"
- #include "qemu/host-utils.h"
- #include "hw/core/loader.h"
+diff --git a/target/rx/helper.c b/target/rx/helper.c
+index 9a78f1457f5..daaeeec1b5c 100644
+--- a/target/rx/helper.c
++++ b/target/rx/helper.c
+@@ -68,10 +68,10 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         qemu_log_mask(CPU_LOG_INT, "fast interrupt raised\n");
+     } else if (cpu_test_interrupt(cs, CPU_INTERRUPT_HARD)) {
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, save_psw);
++        cpu_stl_le_data(env, env->isp, save_psw);
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, env->pc);
+-        env->pc = cpu_ldl_data(env, env->intb + env->ack_irq * 4);
++        cpu_stl_le_data(env, env->isp, env->pc);
++        env->pc = cpu_ldl_le_data(env, env->intb + env->ack_irq * 4);
+         env->psw_ipl = env->ack_ipl;
+         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+         qemu_set_irq(env->ack, env->ack_irq);
+@@ -82,14 +82,14 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         const char *expname = "unknown exception";
  
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, save_psw);
++        cpu_stl_le_data(env, env->isp, save_psw);
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, env->pc);
++        cpu_stl_le_data(env, env->isp, env->pc);
+ 
+         if (vec < 0x100) {
+-            env->pc = cpu_ldl_data(env, 0xffffff80 + vec * 4);
++            env->pc = cpu_ldl_le_data(env, 0xffffff80 + vec * 4);
+         } else {
+-            env->pc = cpu_ldl_data(env, env->intb + (vec & 0xff) * 4);
++            env->pc = cpu_ldl_le_data(env, env->intb + (vec & 0xff) * 4);
+         }
+ 
+         if (vec == 30) {
+diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
+index 2b190a4b2cf..ca3e9e85fc7 100644
+--- a/target/rx/op_helper.c
++++ b/target/rx/op_helper.c
+@@ -217,20 +217,20 @@ void helper_scmpu(CPURXState *env)
+ static uint32_t (* const cpu_ldufn[])(CPUArchState *env,
+                                      abi_ptr ptr,
+                                      uintptr_t retaddr) = {
+-    cpu_ldub_data_ra, cpu_lduw_data_ra, cpu_ldl_data_ra,
++    cpu_ldub_data_ra, cpu_lduw_le_data_ra, cpu_ldl_le_data_ra,
+ };
+ 
+ static uint32_t (* const cpu_ldfn[])(CPUArchState *env,
+                                      abi_ptr ptr,
+                                      uintptr_t retaddr) = {
+-    cpu_ldub_data_ra, cpu_lduw_data_ra, cpu_ldl_data_ra,
++    cpu_ldub_data_ra, cpu_lduw_le_data_ra, cpu_ldl_le_data_ra,
+ };
+ 
+ static void (* const cpu_stfn[])(CPUArchState *env,
+                                  abi_ptr ptr,
+                                  uint32_t val,
+                                  uintptr_t retaddr) = {
+-    cpu_stb_data_ra, cpu_stw_data_ra, cpu_stl_data_ra,
++    cpu_stb_data_ra, cpu_stw_le_data_ra, cpu_stl_le_data_ra,
+ };
+ 
+ void helper_sstr(CPURXState *env, uint32_t sz)
 -- 
 2.52.0
 
