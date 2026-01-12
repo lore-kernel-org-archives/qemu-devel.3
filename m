@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D98CC9EC69
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE347C9EC63
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:33:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfFDy-0006Jc-9L; Mon, 12 Jan 2026 05:32:38 -0500
+	id 1vfFDe-0004Kc-Ai; Mon, 12 Jan 2026 05:32:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFDw-0006Ea-Q3
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:32:36 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFDc-00048E-1v
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:32:16 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFDv-0001vC-AB
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:32:36 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47796a837c7so42905935e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 02:32:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFDa-0001rV-IH
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:32:15 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-477563e28a3so33800895e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 02:32:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768213953; x=1768818753; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768213933; x=1768818733; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z/H3tcHxNV5Gv+ubcRhcnU/eZQeg+lU3aNVd2Ihjkzg=;
- b=jYHZG/qqK/CpEdjFP53CRqNv4IK3KAru6dAdiVUSiLKRcWZUiFsuMss42mx9MJNrkY
- 9CTL2hiIABM7G+FdTEiSCRXknYXLGaHXK9jCI9hlAZp4UHNbtgkYwganYHSuIAYBgswy
- fFmlOaC76VRF+HGgXkBr6uAyV5vzGCDc6NMYGsTa/IT/mX+GKmhkJJFOpHxF+3WOBbaO
- yWs/ymzjd2YslrJ0QMEnv1GH+S0rTaD0qLxYiExiCIST4CUOZ+HiZ9HHP2tvyqfi7qKI
- Q0udx2jRoi4x4id4HMBvYbh7pXUvw3o4xfZ5p0VwsmpwVbKu+ipOpSHGHy3hICxIdqHy
- riQQ==
+ bh=rjaoEA0EYqF5t3dZz3vxcYiQNespCzrnVtF3goBx/A8=;
+ b=uN+ERW6f8oFkM9ypruC6ESi3uqTWZ1Dhi2dUOKOShg8SD8Rw009PSVGjEDCfeL6v11
+ U1WsxK8Uf18EeSkOzaapLfWRUkeZjTiV9FzfH32bBb5es3kByLtZsYNpwiHAtzYWOOXQ
+ Q02x7x/dYbXeuAPLEeC83X8pPSlOy9Vsil9e3OYpNWTDUM/6jAFJAzmEBWLgh86lwouD
+ mDTV+hUSXtim34oeTVgVz/tmC+4ixtZ8opeNDIrja5A4hjUlrXms5fbB67MTffYiLmGB
+ D2Xr9Vx6ZEPBPHA/qqYkoCjaxzy1mYAjFOZj0ZLWwa2IeVdTPGpkvdYjxjkUfp697IMO
+ 8O/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768213953; x=1768818753;
+ d=1e100.net; s=20230601; t=1768213933; x=1768818733;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Z/H3tcHxNV5Gv+ubcRhcnU/eZQeg+lU3aNVd2Ihjkzg=;
- b=GU8QzEV1WQ9J9PPfD2kt5AZTOi28z+zRIgqWv1TwTFM9b4p9bWARXv13OAT8JJiSrC
- PSVNUxKk7nV4K+GAIjmNYLYhIrRJsB7XZWm/SX7L4bxp/JhsTtL6IYby6168VdejCwtg
- wD1UH2Zrm7RZZNJsPm7QOlcRA+RUnKDyc10dFhUpUFNLzPZ8sXVcVNdXt5QxRGzVgjUY
- 1GzgpoCwmSXWmoL44UfEOonDpElQnjpy4eFj3b2mnz2wkHmrsrLp1t39QXgOqhFwgpzs
- VXOuD6TkJbkBUvkpxTWCzaZ7LwRXdZNBzsVw/v+gIqjFpRXri/AhMw2JMU+5xndhgkYD
- 9hhQ==
-X-Gm-Message-State: AOJu0YwNCETsDOV4UkMaJ+J0bEnUnXwuA4YnnupD7VFwqpnHm23PSJwy
- T0sp9cKNlipGgVlAoLfyf571rLAfppcl9bZmmApXwclDmQasAhGi8WPVtDYvsb3B7qy7zLGQk1r
- MV2X6ftM=
-X-Gm-Gg: AY/fxX69iirKhGEdrOuZ1yWxUu+aibUEvXXoxCgk4pDNmvFCKGj14AsA2ji87km2Qyk
- IB3TnZqQHm6h4T9HRfsiStJnJ7SZrrs46fg3iPQhisATWoOY7hz2LRS0cjUNxab/V37M0i5zF0P
- zLpKD4tI3qk/kNCioJsT2OJI4rrGrx2GyvVG7LoIkeWYhc295Zea48MSGYyhvSQoVcdSM78+V6N
- VIQ1ThQv1wCair05Udfroz/soL5QUi7PKMjYHkyEdsOm0eK3+6ESSePsYzZwCGMIZXxKfzSJ7X7
- SmlzwjMgs/CFhFoddSDiakgCLDc/TJDhRDDbYtCndoQathCxFIMzc7ZrEX3zwF9oO9PMTWsQx29
- B52Im1HOiBw8z71MhMS5aiHyiqY7Auc4zdvlQbUvpdockeaXL92Stq2Xq3WIT9cFaj6NNLvMqba
- lGEVsNo+PO3zrXlodwR1atsmEl6jzqV2oj7vIuAY+gk6ze7FbAW58iSODnDoZr
-X-Google-Smtp-Source: AGHT+IG6yLqjnscPJXeLpTyo/wSaOXniJA2BzbGl8RcqHrdI8Wgzk4BeJql8k1Iyk3EihGerbBf8Qg==
-X-Received: by 2002:a05:600c:c491:b0:471:1774:3003 with SMTP id
- 5b1f17b1804b1-47d84b5b5d4mr168633285e9.29.1768213953442; 
- Mon, 12 Jan 2026 02:32:33 -0800 (PST)
+ bh=rjaoEA0EYqF5t3dZz3vxcYiQNespCzrnVtF3goBx/A8=;
+ b=paDLqMAIh1qE5TVMy/atSg0Yjr4xm9oUHruwFWIz+9DfJyjwJVw+Cuv3x5t4oXNhbb
+ xDzxkmPrhTn1z+qdoPsoz6CZLiEyoJo42xNqmQtBTm4Z9PurELBtkR5eWxr3OF3ipX/z
+ F6f6Osr6HdOwbmN+jNYoD4hwGN8wdOzjK2G3T0Amntmcs9YQ79UEpxUjEitNwV/dNznc
+ JbkLIUy9lM18yKc5yddjl8i93/64Cn44nO8P0A1f8h3rV6dR/uFLRLIBJJh2Y+N7pvsu
+ ZbNBAlzhhHSGqkHl+v2p1eJFUBRtCuyJmKsSN984COg7r+cC1gkxr8fSfvFFtEfI52HL
+ Mn/A==
+X-Gm-Message-State: AOJu0YxngY20/kWQ2lUcMBYvzmP1iTmdKN1YL3Pa+tCWtfZEfkPuOKWl
+ W/aYEDNNaSLg9sAGEtCZOG89MSx4DmH/DMVWWs3S2EZNEpJUfjwcJ7cua8hzBGwwZqMboIQmOlp
+ FqNuQ5aI=
+X-Gm-Gg: AY/fxX4bDWTc9YJamm7MZf94WV9vpLtsHkf7p/3FCac2/noqQ/tf3A6KIzq1jXJzZpQ
+ dCdcRLAh6y0cDp32wQ/xezCbcm+UBlH5WmJ5TiTRGxUQ14LEST21UaZjYGYKTUZQqcTdUyYJYKW
+ YSwPS+jQ2VF0JWl542WCJUod+GFqIxwJhcjn/UFd6OMAu2cto9UWf/KcVjzXq/sNc7mq++sNIIc
+ VgIWXcuBptRsLUTXFudVUnBbwNrqZAs36Hq/+CIRq0SkVKsRXnPM9rejbZW1085oHckepkljPYB
+ rnelRSphoQn2WvpTe8U5SRmULThXfAdUUGl7TMwVST3mCYYK94nd6iA90EwjKAYJMiwH5IVYm1D
+ 63zPS3c9JkMM4OJrgxxbrRnnGLJBehb8yY3o52pr1QFaaqPWBPeQXlOs7e0cFLggoLl+Ng+XX4y
+ qJdBZZODLaSePNhCcChMVmXm3MtjoED0CrDQNTAyqRHQ59H0Op/KWS35Ij38fm
+X-Google-Smtp-Source: AGHT+IEMjMzNaieUA9OkBkUtVScBvDnU91mR5fqPmcrycAex2vTHoPUSaj+ydDzqxO7u19mBmRf6fg==
+X-Received: by 2002:a05:600c:3b05:b0:475:ddad:c3a9 with SMTP id
+ 5b1f17b1804b1-47d84877e51mr211876665e9.13.1768213932812; 
+ Mon, 12 Jan 2026 02:32:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f418538sm347941935e9.5.2026.01.12.02.32.32
+ 5b1f17b1804b1-47d7f6f0e15sm345226605e9.10.2026.01.12.02.32.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 02:32:32 -0800 (PST)
+ Mon, 12 Jan 2026 02:32:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -76,18 +76,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 17/19] target/arm: Create GTimers *after* features
- finalized / accel realized
-Date: Mon, 12 Jan 2026 11:30:31 +0100
-Message-ID: <20260112103034.65310-18-philmd@linaro.org>
+Subject: [PATCH v6 14/19] accel/hvf: Have PSCI CPU_SUSPEND halt the vCPU
+Date: Mon, 12 Jan 2026 11:30:28 +0100
+Message-ID: <20260112103034.65310-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112103034.65310-1-philmd@linaro.org>
 References: <20260112103034.65310-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,108 +109,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Call generic (including accelerator) cpu_realize() handlers
-*before* setting @gt_cntfrq_hz default
+Return EXCP_HLT to the main loop.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- target/arm/cpu.c | 65 ++++++++++++++++++++++++------------------------
- 1 file changed, 33 insertions(+), 32 deletions(-)
+ target/arm/hvf/hvf.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index caf7980b1fc..c1087bf5b92 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1636,26 +1636,6 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         return;
-     }
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index b936098d257..718414cc53c 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -301,8 +301,6 @@ void hvf_arm_init_debug(void)
+ #define TMR_CTL_IMASK   (1 << 1)
+ #define TMR_CTL_ISTATUS (1 << 2)
  
--    if (!cpu->gt_cntfrq_hz) {
--        /*
--         * 0 means "the board didn't set a value, use the default". (We also
--         * get here for the CONFIG_USER_ONLY case.)
--         * ARMv8.6 and later CPUs architecturally must use a 1GHz timer; before
--         * that it was an IMPDEF choice, and QEMU initially picked 62.5MHz,
--         * which gives a 16ns tick period.
--         *
--         * We will use the back-compat value:
--         *  - for QEMU CPU types added before we standardized on 1GHz
--         *  - for versioned machine types with a version of 9.0 or earlier
--         */
--        if (arm_feature(env, ARM_FEATURE_BACKCOMPAT_CNTFRQ) ||
--            cpu->backcompat_cntfrq) {
--            cpu->gt_cntfrq_hz = GTIMER_BACKCOMPAT_HZ;
--        } else {
--            cpu->gt_cntfrq_hz = GTIMER_DEFAULT_HZ;
--        }
--    }
+-static int hvf_wfi(CPUState *cpu);
 -
- #ifndef CONFIG_USER_ONLY
-     /* The NVIC and M-profile CPU are two halves of a single piece of
-      * hardware; trying to use one without the other is a command line
-@@ -1702,7 +1682,40 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-             return;
+ static uint32_t chosen_ipa_bit_size;
+ 
+ typedef struct HVFVTimer {
+@@ -1008,7 +1006,7 @@ static void hvf_psci_cpu_off(ARMCPU *arm_cpu)
+  * Returns 0 on success
+  *         -1 when the PSCI call is unknown,
+  */
+-static bool hvf_handle_psci_call(CPUState *cpu)
++static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
+@@ -1091,9 +1089,8 @@ static bool hvf_handle_psci_call(CPUState *cpu)
+             ret = QEMU_PSCI_RET_INVALID_PARAMS;
+             break;
          }
-     }
-+#endif
+-        /* Powerdown is not supported, we always go into WFI */
+         env->xregs[0] = 0;
+-        hvf_wfi(cpu);
++        *excp_ret = EXCP_HLT;
+         break;
+     case QEMU_PSCI_0_1_FN_MIGRATE:
+     case QEMU_PSCI_0_2_FN_MIGRATE:
+@@ -1910,7 +1907,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+         cpu_synchronize_state(cpu);
+         if (arm_cpu->psci_conduit == QEMU_PSCI_CONDUIT_HVC) {
+             /* Do NOT advance $pc for HVC */
+-            if (!hvf_handle_psci_call(cpu)) {
++            if (!hvf_handle_psci_call(cpu, &ret)) {
+                 trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
+                 /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
+                 env->xregs[0] = -1;
+@@ -1927,7 +1924,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+             /* Secure Monitor Call exception, we need to advance $pc */
+             advance_pc = true;
  
-+    cpu_exec_realizefn(cs, &local_err);
-+    if (local_err != NULL) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
-+
-+    arm_cpu_finalize_features(cpu, &local_err);
-+    if (local_err != NULL) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
-+
-+    if (!cpu->gt_cntfrq_hz) {
-+        /*
-+         * 0 means "the board didn't set a value, use the default". (We also
-+         * get here for the CONFIG_USER_ONLY case.)
-+         * ARMv8.6 and later CPUs architecturally must use a 1GHz timer; before
-+         * that it was an IMPDEF choice, and QEMU initially picked 62.5MHz,
-+         * which gives a 16ns tick period.
-+         *
-+         * We will use the back-compat value:
-+         *  - for QEMU CPU types added before we standardized on 1GHz
-+         *  - for versioned machine types with a version of 9.0 or earlier
-+         */
-+        if (arm_feature(env, ARM_FEATURE_BACKCOMPAT_CNTFRQ) ||
-+            cpu->backcompat_cntfrq) {
-+            cpu->gt_cntfrq_hz = GTIMER_BACKCOMPAT_HZ;
-+        } else {
-+            cpu->gt_cntfrq_hz = GTIMER_DEFAULT_HZ;
-+        }
-+    }
-+#ifndef CONFIG_USER_ONLY
-     {
-         uint64_t scale = gt_cntfrq_period_ns(cpu);
- 
-@@ -1723,18 +1736,6 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-     }
- #endif
- 
--    cpu_exec_realizefn(cs, &local_err);
--    if (local_err != NULL) {
--        error_propagate(errp, local_err);
--        return;
--    }
--
--    arm_cpu_finalize_features(cpu, &local_err);
--    if (local_err != NULL) {
--        error_propagate(errp, local_err);
--        return;
--    }
--
- #ifdef CONFIG_USER_ONLY
-     /*
-      * User mode relies on IC IVAU instructions to catch modification of
+-            if (!hvf_handle_psci_call(cpu)) {
++            if (!hvf_handle_psci_call(cpu, &ret)) {
+                 trace_hvf_unknown_smc(env->xregs[0]);
+                 /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
+                 env->xregs[0] = -1;
 -- 
 2.52.0
 
