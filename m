@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36016CF45D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1056DCF45D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQov-00057s-P1; Mon, 12 Jan 2026 17:55:33 -0500
+	id 1vfQoN-0002Jq-3e; Mon, 12 Jan 2026 17:54:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQom-0004lr-Uo
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:26 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoi-0004Dy-QG
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:24 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-4775895d69cso34414475e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258518; x=1768863318; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fz8rSn323HPhuHU1yR5/LK9VT6fqLxXlZQiQfxRIY7I=;
- b=JxGEpWFTxT0hW1gdZsD+GCEqGKolBzzgLFyDhFyKa6eV+NZvxacoKeH+GfS2oEBLo5
- uDjOIs9ysc+tgBZnFyPBbwQoTBZaeMNKUFoHYNrMGRi3cVcsOgM47jD5zqwSApnkMbqv
- r7IMiptFeYccAN1QlXuQInR6Mpklcg5QVis79PuWo+oTx1KHzkiYObcGextHOFxBRiNg
- x0EETlnMdWa1vpgafN649go46HljB5bQ6c9X13sKjWzFqfeFfDzJ6r3F4VtW75JEQRDr
- N7IIenl4CNftic0NoQgnRc+ATPoiTZG5Us9Vf0dt1zdK/eLaMDKiCPyWzuo+HDZ1JqSB
- MCPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258518; x=1768863318;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=fz8rSn323HPhuHU1yR5/LK9VT6fqLxXlZQiQfxRIY7I=;
- b=CTV0sb/fUPXk3sW//LkeN3ojlN3wxOcXO1JOZS6aUgKwEss5BUG29t1oBZe9TOrbNj
- An94Yw/9km8kIvq7grLXQDZyQzNSukilxfPF369wQKCxmhNnEFBq/lwbLK2pHMa85TQ2
- Kek99ow7DpBHXVOAg9/T97fseyuf+djmWCZaW1mYC7NkVofok6Y5GiBmHCG+2uyuT23N
- PRk5ibpeu8RTbTE7daolR65jcqfXSDjGnNRTBkcNMjQ84ICz7ChzayN6mnMfh23H7Qe1
- e1cTluDhuD7auP0T263HLTGuCv43w3Y356CJkANXUaFCfOykt7yuMxeiIa8QtPkx7Hgp
- /lUg==
-X-Gm-Message-State: AOJu0Yw/zmQmTtV8P52UFPD4+v6w1+41ijwAfxiEMmnVxMMtexIhoDgv
- 20RdQE6Tj3A3Jq5MbBIsCv+E2nMcl7B7OanZ36FOApzm2YoxuoiXlvhDlpdfsY55SoBqckdhtjI
- FaNaGVV4=
-X-Gm-Gg: AY/fxX5mRLw92pP0GYzGFvyoepGmmybtWcoJiMrfzJNqMaOqDCpidwH//d8p/MLoIT0
- tpq2i/4CXWRJPDZgwF3hS5rt4w8m50MWGhOtDj6p1fs7wvAI/q1BhSp/PEVKa/xO7k+6aplixJm
- JVZiBb8PWQQjSWVJBgqjq9JLXtLxw4bg1T4/b1cCRYMAINzG6N6X3yAdxhNVi5Dv54ybMygnwOV
- uj5hgsgLZIMj/rwRC3iGRJUZysdUV9saJJca0SLkOfq4xOdnvsk70gooyIcOFXQTV/yh63AJ9uQ
- aYYANFi8QK0rZ/TW+8tMkRcgXbCkoQC4+XBQtxkBEd+D8Q+4HqTGLET4ysIK29s+bFdyuHQJYEE
- bHgTJrm0emVHlvPTyNlZ6z7st0TZ8poKGLf/oNDiBQAtzCMC47GPcAB4WUo0pTD8fS/aFDYHBvv
- DHMZ58dHnTJHjg2QPLnhpy2wN/eguXcU2iGn3Df/Ez03mb7dFU21NCqKSXsV2OkPEetFdpxkw=
-X-Google-Smtp-Source: AGHT+IGdnVBSusZFZtEFnGhfbkxpQyKLMeVG6j6nHqEvyxwD3wOwksRYAQkhtcnBfh70gTQAZY0CoA==
-X-Received: by 2002:a05:600c:3b19:b0:45d:d97c:236c with SMTP id
- 5b1f17b1804b1-47d84b3b645mr241220995e9.21.1768258517630; 
- Mon, 12 Jan 2026 14:55:17 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f41eb3bsm389038285e9.7.2026.01.12.14.55.16
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:55:17 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 55/61] target/tricore: Use little-endian variant of
- cpu_ld/st_data*()
-Date: Mon, 12 Jan 2026 23:48:50 +0100
-Message-ID: <20260112224857.42068-56-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vfQoK-0001nS-2F
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:56 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vfQoI-0003qR-CL
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:55 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1768258479; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=Fyc3bxxveTanVn20+kGnhyxKCr2fHmkxDVLrzXPBtdhvS5yu9gXTJGaYfps/JQkCimJC1Ia74FIbrdiYBKRFcPmGTgMdudEzl+DVd49ubfW87kggTW21rC9WPISPBk4iu1GZxJLKjkx7Qu6ruZsDyD7AYUv6qJruIIbTYXHCxfM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1768258479;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=O1l2kepzrFLu8Ed525OLoEBgvlYq2v2ycersF8BUxgY=; 
+ b=kc4bzoVPlhv3UIwBmEyPpkb3GJ7hWlfTJ8K9+Q6C7CkPsKoG6EVAixR+we9iXgO9Fz+wSq0qJXnnlyuShsokUzL58uiJDGF8u+HBnamdvg4C4tv9JiaSFsWmHKhYmG+dcYIotWG61ieW+nBd00y2affSTL/pgxoI78NFT894GaU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768258479; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=O1l2kepzrFLu8Ed525OLoEBgvlYq2v2ycersF8BUxgY=;
+ b=JE2l8cS1iUDHUj95CfLud9CZ4FQJ051jyXoxK6+1KXb8ZNRYMzqSXmxRJqxOS88V
+ 2P2iH7XeTgu84TaWAuKCuQED26ldM0erSA3bPyRjlhlaACol7/OwnxUaHFOeV67bZpb
+ 0w4/0aOYIdagoOqo6WtkeAdu5c/75QlI1eE+rG+0=
+Received: by mx.zohomail.com with SMTPS id 1768258478476556.4472182448446;
+ Mon, 12 Jan 2026 14:54:38 -0800 (PST)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Robert Beckett <bob.beckett@collabora.com>
+Subject: [RFC PATCH v9 3/5] virtio-gpu: Replace finish_unmapping with
+ mapping_state
+Date: Tue, 13 Jan 2026 01:52:44 +0300
+Message-ID: <20260112225246.3526313-4-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
-References: <20260112224857.42068-1-philmd@linaro.org>
+In-Reply-To: <20260112225246.3526313-1-dmitry.osipenko@collabora.com>
+References: <20260112225246.3526313-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,269 +97,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the TriCore target using little endianness order,
-therefore the cpu_ld/st_data*() definitions expand to the little
-endian declarations. Use the explicit little-endian variants.
+Allow virtio_gpu_virgl_unmap_resource_blob() to be invoked while async
+unmapping is in progress. Do it in preparation to improvement of virtio-gpu
+resetting that will require this change.
 
-Mechanical change running:
-
-  $ tgt=tricore; \
-    end=le; \
-    for op in data mmuidx_ra; do \
-      for ac in uw sw l q; do \
-        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
-                  $(git grep -l cpu_ target/${tgt}/); \
-      done;
-      for ac in w l q; do \
-        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
-                  $(git grep -l cpu_ target/${tgt}/); \
-      done;
-    done
-
-Then adapting spaces style manually to pass checkpatch.pl.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20251126202200.23100-6-philmd@linaro.org>
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- target/tricore/op_helper.c | 152 ++++++++++++++++++-------------------
- 1 file changed, 76 insertions(+), 76 deletions(-)
+ hw/display/trace-events       |  2 +-
+ hw/display/virtio-gpu-virgl.c | 28 +++++++++++++++++++++++-----
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/target/tricore/op_helper.c b/target/tricore/op_helper.c
-index 2c8281a67e0..3cff5000c73 100644
---- a/target/tricore/op_helper.c
-+++ b/target/tricore/op_helper.c
-@@ -2451,84 +2451,84 @@ static bool cdc_zero(uint32_t *psw)
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index e323a82cff24..4bfc457fbac1 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -39,7 +39,7 @@ virtio_gpu_cmd_res_create_2d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h)
+ virtio_gpu_cmd_res_create_3d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h, uint32_t d) "res 0x%x, fmt 0x%x, w %d, h %d, d %d"
+ virtio_gpu_cmd_res_create_blob(uint32_t res, uint64_t size) "res 0x%x, size %" PRId64
+ virtio_gpu_cmd_res_map_blob(uint32_t res, void *vmr, void *mr) "res 0x%x, vmr %p, mr %p"
+-virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, bool finish_unmapping) "res 0x%x, mr %p, finish_unmapping %d"
++virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, int mapping_state) "res 0x%x, mr %p, mapping_state %d"
+ virtio_gpu_cmd_res_unref(uint32_t res) "res 0x%x"
+ virtio_gpu_cmd_res_back_attach(uint32_t res) "res 0x%x"
+ virtio_gpu_cmd_res_back_detach(uint32_t res) "res 0x%x"
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 6a2aac0b6e5c..342e93728df0 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -68,10 +68,16 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+ #endif
  
- static void save_context_upper(CPUTriCoreState *env, uint32_t ea)
- {
--    cpu_stl_data(env, ea, env->PCXI);
--    cpu_stl_data(env, ea+4, psw_read(env));
--    cpu_stl_data(env, ea+8, env->gpr_a[10]);
--    cpu_stl_data(env, ea+12, env->gpr_a[11]);
--    cpu_stl_data(env, ea+16, env->gpr_d[8]);
--    cpu_stl_data(env, ea+20, env->gpr_d[9]);
--    cpu_stl_data(env, ea+24, env->gpr_d[10]);
--    cpu_stl_data(env, ea+28, env->gpr_d[11]);
--    cpu_stl_data(env, ea+32, env->gpr_a[12]);
--    cpu_stl_data(env, ea+36, env->gpr_a[13]);
--    cpu_stl_data(env, ea+40, env->gpr_a[14]);
--    cpu_stl_data(env, ea+44, env->gpr_a[15]);
--    cpu_stl_data(env, ea+48, env->gpr_d[12]);
--    cpu_stl_data(env, ea+52, env->gpr_d[13]);
--    cpu_stl_data(env, ea+56, env->gpr_d[14]);
--    cpu_stl_data(env, ea+60, env->gpr_d[15]);
-+    cpu_stl_le_data(env, ea, env->PCXI);
-+    cpu_stl_le_data(env, ea + 4, psw_read(env));
-+    cpu_stl_le_data(env, ea + 8, env->gpr_a[10]);
-+    cpu_stl_le_data(env, ea + 12, env->gpr_a[11]);
-+    cpu_stl_le_data(env, ea + 16, env->gpr_d[8]);
-+    cpu_stl_le_data(env, ea + 20, env->gpr_d[9]);
-+    cpu_stl_le_data(env, ea + 24, env->gpr_d[10]);
-+    cpu_stl_le_data(env, ea + 28, env->gpr_d[11]);
-+    cpu_stl_le_data(env, ea + 32, env->gpr_a[12]);
-+    cpu_stl_le_data(env, ea + 36, env->gpr_a[13]);
-+    cpu_stl_le_data(env, ea + 40, env->gpr_a[14]);
-+    cpu_stl_le_data(env, ea + 44, env->gpr_a[15]);
-+    cpu_stl_le_data(env, ea + 48, env->gpr_d[12]);
-+    cpu_stl_le_data(env, ea + 52, env->gpr_d[13]);
-+    cpu_stl_le_data(env, ea + 56, env->gpr_d[14]);
-+    cpu_stl_le_data(env, ea + 60, env->gpr_d[15]);
- }
+ #if VIRGL_VERSION_MAJOR >= 1
++enum virtio_gpu_virgl_hostmem_region_mapping_state {
++    VIRTIO_GPU_MR_MAPPED,
++    VIRTIO_GPU_MR_UNMAP_STARTED,
++    VIRTIO_GPU_MR_UNMAP_COMPLETED,
++};
++
+ struct virtio_gpu_virgl_hostmem_region {
+     MemoryRegion mr;
+     struct VirtIOGPU *g;
+-    bool finish_unmapping;
++    enum virtio_gpu_virgl_hostmem_region_mapping_state mapping_state;
+ };
  
- static void save_context_lower(CPUTriCoreState *env, uint32_t ea)
- {
--    cpu_stl_data(env, ea, env->PCXI);
--    cpu_stl_data(env, ea+4, env->gpr_a[11]);
--    cpu_stl_data(env, ea+8, env->gpr_a[2]);
--    cpu_stl_data(env, ea+12, env->gpr_a[3]);
--    cpu_stl_data(env, ea+16, env->gpr_d[0]);
--    cpu_stl_data(env, ea+20, env->gpr_d[1]);
--    cpu_stl_data(env, ea+24, env->gpr_d[2]);
--    cpu_stl_data(env, ea+28, env->gpr_d[3]);
--    cpu_stl_data(env, ea+32, env->gpr_a[4]);
--    cpu_stl_data(env, ea+36, env->gpr_a[5]);
--    cpu_stl_data(env, ea+40, env->gpr_a[6]);
--    cpu_stl_data(env, ea+44, env->gpr_a[7]);
--    cpu_stl_data(env, ea+48, env->gpr_d[4]);
--    cpu_stl_data(env, ea+52, env->gpr_d[5]);
--    cpu_stl_data(env, ea+56, env->gpr_d[6]);
--    cpu_stl_data(env, ea+60, env->gpr_d[7]);
-+    cpu_stl_le_data(env, ea, env->PCXI);
-+    cpu_stl_le_data(env, ea + 4, env->gpr_a[11]);
-+    cpu_stl_le_data(env, ea + 8, env->gpr_a[2]);
-+    cpu_stl_le_data(env, ea + 12, env->gpr_a[3]);
-+    cpu_stl_le_data(env, ea + 16, env->gpr_d[0]);
-+    cpu_stl_le_data(env, ea + 20, env->gpr_d[1]);
-+    cpu_stl_le_data(env, ea + 24, env->gpr_d[2]);
-+    cpu_stl_le_data(env, ea + 28, env->gpr_d[3]);
-+    cpu_stl_le_data(env, ea + 32, env->gpr_a[4]);
-+    cpu_stl_le_data(env, ea + 36, env->gpr_a[5]);
-+    cpu_stl_le_data(env, ea + 40, env->gpr_a[6]);
-+    cpu_stl_le_data(env, ea + 44, env->gpr_a[7]);
-+    cpu_stl_le_data(env, ea + 48, env->gpr_d[4]);
-+    cpu_stl_le_data(env, ea + 52, env->gpr_d[5]);
-+    cpu_stl_le_data(env, ea + 56, env->gpr_d[6]);
-+    cpu_stl_le_data(env, ea + 60, env->gpr_d[7]);
- }
+ static struct virtio_gpu_virgl_hostmem_region *
+@@ -95,7 +101,7 @@ static void virtio_gpu_virgl_hostmem_region_free(void *obj)
+     VirtIOGPUGL *gl;
  
- static void restore_context_upper(CPUTriCoreState *env, uint32_t ea,
-                                   uint32_t *new_PCXI, uint32_t *new_PSW)
- {
--    *new_PCXI = cpu_ldl_data(env, ea);
--    *new_PSW = cpu_ldl_data(env, ea+4);
--    env->gpr_a[10] = cpu_ldl_data(env, ea+8);
--    env->gpr_a[11] = cpu_ldl_data(env, ea+12);
--    env->gpr_d[8]  = cpu_ldl_data(env, ea+16);
--    env->gpr_d[9]  = cpu_ldl_data(env, ea+20);
--    env->gpr_d[10] = cpu_ldl_data(env, ea+24);
--    env->gpr_d[11] = cpu_ldl_data(env, ea+28);
--    env->gpr_a[12] = cpu_ldl_data(env, ea+32);
--    env->gpr_a[13] = cpu_ldl_data(env, ea+36);
--    env->gpr_a[14] = cpu_ldl_data(env, ea+40);
--    env->gpr_a[15] = cpu_ldl_data(env, ea+44);
--    env->gpr_d[12] = cpu_ldl_data(env, ea+48);
--    env->gpr_d[13] = cpu_ldl_data(env, ea+52);
--    env->gpr_d[14] = cpu_ldl_data(env, ea+56);
--    env->gpr_d[15] = cpu_ldl_data(env, ea+60);
-+    *new_PCXI = cpu_ldl_le_data(env, ea);
-+    *new_PSW = cpu_ldl_le_data(env, ea + 4);
-+    env->gpr_a[10] = cpu_ldl_le_data(env, ea + 8);
-+    env->gpr_a[11] = cpu_ldl_le_data(env, ea + 12);
-+    env->gpr_d[8]  = cpu_ldl_le_data(env, ea + 16);
-+    env->gpr_d[9]  = cpu_ldl_le_data(env, ea + 20);
-+    env->gpr_d[10] = cpu_ldl_le_data(env, ea + 24);
-+    env->gpr_d[11] = cpu_ldl_le_data(env, ea + 28);
-+    env->gpr_a[12] = cpu_ldl_le_data(env, ea + 32);
-+    env->gpr_a[13] = cpu_ldl_le_data(env, ea + 36);
-+    env->gpr_a[14] = cpu_ldl_le_data(env, ea + 40);
-+    env->gpr_a[15] = cpu_ldl_le_data(env, ea + 44);
-+    env->gpr_d[12] = cpu_ldl_le_data(env, ea + 48);
-+    env->gpr_d[13] = cpu_ldl_le_data(env, ea + 52);
-+    env->gpr_d[14] = cpu_ldl_le_data(env, ea + 56);
-+    env->gpr_d[15] = cpu_ldl_le_data(env, ea + 60);
- }
+     vmr = to_hostmem_region(mr);
+-    vmr->finish_unmapping = true;
++    vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_COMPLETED;
  
- static void restore_context_lower(CPUTriCoreState *env, uint32_t ea,
-                                   uint32_t *ra, uint32_t *pcxi)
- {
--    *pcxi = cpu_ldl_data(env, ea);
--    *ra = cpu_ldl_data(env, ea+4);
--    env->gpr_a[2] = cpu_ldl_data(env, ea+8);
--    env->gpr_a[3] = cpu_ldl_data(env, ea+12);
--    env->gpr_d[0] = cpu_ldl_data(env, ea+16);
--    env->gpr_d[1] = cpu_ldl_data(env, ea+20);
--    env->gpr_d[2] = cpu_ldl_data(env, ea+24);
--    env->gpr_d[3] = cpu_ldl_data(env, ea+28);
--    env->gpr_a[4] = cpu_ldl_data(env, ea+32);
--    env->gpr_a[5] = cpu_ldl_data(env, ea+36);
--    env->gpr_a[6] = cpu_ldl_data(env, ea+40);
--    env->gpr_a[7] = cpu_ldl_data(env, ea+44);
--    env->gpr_d[4] = cpu_ldl_data(env, ea+48);
--    env->gpr_d[5] = cpu_ldl_data(env, ea+52);
--    env->gpr_d[6] = cpu_ldl_data(env, ea+56);
--    env->gpr_d[7] = cpu_ldl_data(env, ea+60);
-+    *pcxi = cpu_ldl_le_data(env, ea);
-+    *ra = cpu_ldl_le_data(env, ea + 4);
-+    env->gpr_a[2] = cpu_ldl_le_data(env, ea + 8);
-+    env->gpr_a[3] = cpu_ldl_le_data(env, ea + 12);
-+    env->gpr_d[0] = cpu_ldl_le_data(env, ea + 16);
-+    env->gpr_d[1] = cpu_ldl_le_data(env, ea + 20);
-+    env->gpr_d[2] = cpu_ldl_le_data(env, ea + 24);
-+    env->gpr_d[3] = cpu_ldl_le_data(env, ea + 28);
-+    env->gpr_a[4] = cpu_ldl_le_data(env, ea + 32);
-+    env->gpr_a[5] = cpu_ldl_le_data(env, ea + 36);
-+    env->gpr_a[6] = cpu_ldl_le_data(env, ea + 40);
-+    env->gpr_a[7] = cpu_ldl_le_data(env, ea + 44);
-+    env->gpr_d[4] = cpu_ldl_le_data(env, ea + 48);
-+    env->gpr_d[5] = cpu_ldl_le_data(env, ea + 52);
-+    env->gpr_d[6] = cpu_ldl_le_data(env, ea + 56);
-+    env->gpr_d[7] = cpu_ldl_le_data(env, ea + 60);
- }
+     b = VIRTIO_GPU_BASE(vmr->g);
+     b->renderer_blocked--;
+@@ -135,6 +141,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
  
- void helper_call(CPUTriCoreState *env, uint32_t next_pc)
-@@ -2566,7 +2566,7 @@ void helper_call(CPUTriCoreState *env, uint32_t next_pc)
-     ea = ((env->FCX & MASK_FCX_FCXS) << 12) +
-          ((env->FCX & MASK_FCX_FCXO) << 6);
-     /* new_FCX = M(EA, word); */
--    new_FCX = cpu_ldl_data(env, ea);
-+    new_FCX = cpu_ldl_le_data(env, ea);
-     /* M(EA, 16 * word) = {PCXI, PSW, A[10], A[11], D[8], D[9], D[10], D[11],
-                            A[12], A[13], A[14], A[15], D[12], D[13], D[14],
-                            D[15]}; */
-@@ -2632,7 +2632,7 @@ void helper_ret(CPUTriCoreState *env)
-         A[13], A[14], A[15], D[12], D[13], D[14], D[15]} = M(EA, 16 * word); */
-     restore_context_upper(env, ea, &new_PCXI, &new_PSW);
-     /* M(EA, word) = FCX; */
--    cpu_stl_data(env, ea, env->FCX);
-+    cpu_stl_le_data(env, ea, env->FCX);
-     /* FCX[19: 0] = PCXI[19: 0]; */
-     env->FCX = (env->FCX & 0xfff00000) + (env->PCXI & 0x000fffff);
-     /* PCXI = new_PCXI; */
-@@ -2662,7 +2662,7 @@ void helper_bisr(CPUTriCoreState *env, uint32_t const9)
-     ea = ((env->FCX & 0xf0000) << 12) + ((env->FCX & 0xffff) << 6);
+     vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+     vmr->g = g;
++    vmr->mapping_state = VIRTIO_GPU_MR_MAPPED;
  
-     /* new_FCX = M(EA, word); */
--    new_FCX = cpu_ldl_data(env, ea);
-+    new_FCX = cpu_ldl_le_data(env, ea);
-     /* M(EA, 16 * word) = {PCXI, A[11], A[2], A[3], D[0], D[1], D[2], D[3], A[4]
-                            , A[5], A[6], A[7], D[4], D[5], D[6], D[7]}; */
-     save_context_lower(env, ea);
-@@ -2726,7 +2726,7 @@ void helper_rfe(CPUTriCoreState *env)
-       A[13], A[14], A[15], D[12], D[13], D[14], D[15]} = M(EA, 16 * word); */
-     restore_context_upper(env, ea, &new_PCXI, &new_PSW);
-     /* M(EA, word) = FCX;*/
--    cpu_stl_data(env, ea, env->FCX);
-+    cpu_stl_le_data(env, ea, env->FCX);
-     /* FCX[19: 0] = PCXI[19: 0]; */
-     env->FCX = (env->FCX & 0xfff00000) + (env->PCXI & 0x000fffff);
-     /* PCXI = new_PCXI; */
-@@ -2744,10 +2744,10 @@ void helper_rfm(CPUTriCoreState *env)
-     icr_set_ccpn(env, pcxi_get_pcpn(env));
+     mr = &vmr->mr;
+     memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+@@ -171,7 +178,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
  
-     /* {PCXI, PSW, A[10], A[11]} = M(DCX, 4 * word); */
--    env->PCXI = cpu_ldl_data(env, env->DCX);
--    psw_write(env, cpu_ldl_data(env, env->DCX+4));
--    env->gpr_a[10] = cpu_ldl_data(env, env->DCX+8);
--    env->gpr_a[11] = cpu_ldl_data(env, env->DCX+12);
-+    env->PCXI = cpu_ldl_le_data(env, env->DCX);
-+    psw_write(env, cpu_ldl_le_data(env, env->DCX + 4));
-+    env->gpr_a[10] = cpu_ldl_le_data(env, env->DCX + 8);
-+    env->gpr_a[11] = cpu_ldl_le_data(env, env->DCX + 12);
+     vmr = to_hostmem_region(res->mr);
  
-     if (tricore_has_feature(env, TRICORE_FEATURE_131)) {
-         env->DBGTCR = 0;
-@@ -2794,7 +2794,7 @@ void helper_svlcx(CPUTriCoreState *env)
-     ea = ((env->FCX & MASK_FCX_FCXS) << 12) +
-          ((env->FCX & MASK_FCX_FCXO) << 6);
-     /* new_FCX = M(EA, word); */
--    new_FCX = cpu_ldl_data(env, ea);
-+    new_FCX = cpu_ldl_le_data(env, ea);
-     /* M(EA, 16 * word) = {PCXI, PSW, A[10], A[11], D[8], D[9], D[10], D[11],
-                            A[12], A[13], A[14], A[15], D[12], D[13], D[14],
-                            D[15]}; */
-@@ -2837,7 +2837,7 @@ void helper_svucx(CPUTriCoreState *env)
-     ea = ((env->FCX & MASK_FCX_FCXS) << 12) +
-          ((env->FCX & MASK_FCX_FCXO) << 6);
-     /* new_FCX = M(EA, word); */
--    new_FCX = cpu_ldl_data(env, ea);
-+    new_FCX = cpu_ldl_le_data(env, ea);
-     /* M(EA, 16 * word) = {PCXI, PSW, A[10], A[11], D[8], D[9], D[10], D[11],
-                            A[12], A[13], A[14], A[15], D[12], D[13], D[14],
-                            D[15]}; */
-@@ -2887,9 +2887,9 @@ void helper_rslcx(CPUTriCoreState *env)
-         A[13], A[14], A[15], D[12], D[13], D[14], D[15]} = M(EA, 16 * word); */
-     restore_context_lower(env, ea, &env->gpr_a[11], &new_PCXI);
-     /* M(EA, word) = FCX; */
--    cpu_stl_data(env, ea, env->FCX);
-+    cpu_stl_le_data(env, ea, env->FCX);
-     /* M(EA, word) = FCX; */
--    cpu_stl_data(env, ea, env->FCX);
-+    cpu_stl_le_data(env, ea, env->FCX);
-     /* FCX[19: 0] = PCXI[19: 0]; */
-     env->FCX = (env->FCX & 0xfff00000) + (env->PCXI & 0x000fffff);
-     /* PCXI = new_PCXI; */
+-    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr, vmr->finish_unmapping);
++    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr,
++                                        vmr->mapping_state);
+ 
+     /*
+      * Perform async unmapping in 3 steps:
+@@ -182,7 +190,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+      *    asynchronously by virtio_gpu_virgl_hostmem_region_free().
+      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
+      */
+-    if (vmr->finish_unmapping) {
++    switch (vmr->mapping_state) {
++    case VIRTIO_GPU_MR_UNMAP_COMPLETED:
+         res->mr = NULL;
+         g_free(vmr);
+ 
+@@ -193,15 +202,24 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+                           __func__, strerror(-ret));
+             return ret;
+         }
+-    } else {
++        break;
++
++    case VIRTIO_GPU_MR_MAPPED:
+         *cmd_suspended = true;
+ 
+         /* render will be unblocked once MR is freed */
+         b->renderer_blocked++;
+ 
++        vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_STARTED;
++
+         /* memory region owns self res->mr object and frees it by itself */
+         memory_region_del_subregion(&b->hostmem, mr);
+         object_unparent(OBJECT(mr));
++        break;
++
++    case VIRTIO_GPU_MR_UNMAP_STARTED:
++        *cmd_suspended = true;
++        break;
+     }
+ 
+     return 0;
 -- 
 2.52.0
 
