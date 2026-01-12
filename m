@@ -4,105 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C95C9EC67
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1101AC9EC63
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:35:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfFGN-0003V1-Cg; Mon, 12 Jan 2026 05:35:07 -0500
+	id 1vfFGI-0003QK-MG; Mon, 12 Jan 2026 05:35:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vfFGL-0003Tp-Vf
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:35:05 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vfFGH-0003Ob-90
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:35:01 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vfFGK-00029O-2k
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:35:05 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60BJt48Q024760
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:35:02 GMT
+ id 1vfFGF-00028o-KC
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:35:01 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60C63hTr008622
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=EDzdgTKh7aa219oXt
- OEnFhvxxRFlKhfJLUkDL3MnwJ0=; b=RlPagPHHiX+1dRW3VVn2nGqKSpxtxFZai
- j3ZprK+o3yOlTwxgc6yz+KqHZB665ZKMqSDCa+w3FgjDvU0eTgnETEtxiL1+GR2p
- 4mbvvBwPbYR/NYDrj/E92LY6n1OGWK0ty64eUmXZk3VU9vAUJ7QWFEX2/0C5d5Ci
- 8iTlU9oJO0inekuQK0ZM8Tpn3wSXb7EkKme2f7aG1S3O3LGpxj9rCztm+NyWdQs2
- VTEpgyxKRoftSlQGcIU/riZSyKFIoMcBIW1BmoXezzxcJ9CPK9UY4DZxVpFpe9XP
- fKxHcqGnDgAemm40b1cXE8fA2WLJZPzXJrsofbvvAmZsxW23A6IKQ==
+ :mime-version:references:subject:to; s=pp1; bh=4Jo+cg9obOe3ll1mp
+ JR9IhJka21gKtO3asHBHq7Euu0=; b=JYrLRsQKl5hycEQi3orx+3ETrYWikCdmk
+ JSEnMsR4LoWjOM3KCEzqRLmt14WDmFZcaNLVGDVFki3sLlETtx7Qoetx+OFnqpz5
+ IZQBen4Izipu5JVMJCUh6m/GeGaSsPg/47D4viL18Vos9efNj6oONI+RFqsa14hZ
+ NOirum/fbrSmf22LvmUDXzsiQHBpSbwp/2x7yyr0jB+PRK1M/PGGdP6wye88UZ9p
+ xFI5zMQ2c98nUAi9JA/cIKA0iR04c3nSN+Vh8GGSXK3Q9gcFLikGmGaE04zoXUeJ
+ gcAefmQC90k+7hEsmSDDu8S1+x6SA3VDPvFY7p/jYypAFVGPUN7+A==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bke92pk3p-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkd6dxd1m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:35:01 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:58 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60CA6vnV025534
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:35:00 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bm23mwc36-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60C9vNjC025566
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:57 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bm23mwc33-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:35:00 +0000
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:57 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60CAYucS50987288
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60CAYrDA9896266
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Jan 2026 10:34:56 GMT
+ Mon, 12 Jan 2026 10:34:53 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CFB8A20043;
- Mon, 12 Jan 2026 10:34:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8D9062004B;
+ Mon, 12 Jan 2026 10:34:53 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9921F20040;
- Mon, 12 Jan 2026 10:34:55 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 859D420040;
+ Mon, 12 Jan 2026 10:34:52 +0000 (GMT)
 Received: from Mac.com (unknown [9.43.47.93])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 12 Jan 2026 10:34:55 +0000 (GMT)
+ Mon, 12 Jan 2026 10:34:52 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Caleb Schlossin <calebs@linux.ibm.com>,
- Michael Kowal <kowal@linux.ibm.com>, Aditya Gupta <adityag@linux.ibm.com>,
- Chalapathi V <chalapathi.v@linux.ibm.com>
-Subject: [PULL 03/10] hw/ppc: Add pnv_spi vmstate support
-Date: Mon, 12 Jan 2026 16:04:26 +0530
-Message-ID: <20260112103433.8451-4-harshpb@linux.ibm.com>
+Cc: Gautam Menghani <gautam@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PULL 01/10] target/ppc/kvm : Use macro names instead of hardcoded
+ constants as return values
+Date: Mon, 12 Jan 2026 16:04:24 +0530
+Message-ID: <20260112103433.8451-2-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112103433.8451-1-harshpb@linux.ibm.com>
 References: <20260112103433.8451-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 2dKDQsT6H5JINK5I1_EVaMmJTb6gJORU
-X-Authority-Analysis: v=2.4 cv=dYyNHHXe c=1 sm=1 tr=0 ts=6964ce55 cx=c_pps
+X-Proofpoint-GUID: r24kjGPammwf8233RxopprvM7RZVZUe3
+X-Authority-Analysis: v=2.4 cv=LLxrgZW9 c=1 sm=1 tr=0 ts=6964ce52 cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=vUbySO9Y5rIA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=zPJzuvo3V7OF8ZkWVCkA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA4MSBTYWx0ZWRfXwA78Fv+QpZ8x
- yY9CKnY8kmraNfRyrT+zCxXie9fYbDhho4MWPPPqQBekfv7+jlcz6N5T43Em2CvUfMozdKzYzYg
- mDbT4yg+si4WjqHPQNKTRocl2Z618fYksUZ7OKr2WHcW0/ds4SZ+5cngkOJALuptDi0Oab1IIZY
- PWeH5lFC9hQ5DfoKwIaycXOiScQGgRicxsmyY8V6BQW4Y5unzH97skybIO/B+l+uwzeccmzqT9t
- 5ftrGb+A79Uk7b+aEf03nb39P+2+ZZI+j5UOPnAkkcbm8dZpIhWB+Y2TrzqMKOEc6yoSoJL/ooT
- ggLyrdAfLoKIHBYlxyiJnmYTCAAuSpO7105w65rxTdygHHlZhOkSI3Ii4yRgyITM/vEgVpL0d4Y
- vF3pXYe3HxwcQUti3RPJ152KegAeyUjvadKBeRDYEkxkUQQX0lW7slKyopswqe5shRzsMV3yJl+
- xc4+UhWV8ZFv7CrN22g==
-X-Proofpoint-GUID: 2dKDQsT6H5JINK5I1_EVaMmJTb6gJORU
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=TXOZxh5LdWKoDwPKVd0A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA4MSBTYWx0ZWRfX8s0CiektWbcj
+ aewTZCvRHWNRKXyHZmhUVTWlnK+sZ72lE2s83aRpIL6aLuEGAlm3kDPdpZoT0RKp0Ni+g20Kxsq
+ cj4VsphDoE/0pQvRwO7uT//gxvLOLgsrXoNqlQK4z3uynzQnaE0NxJfxYzJOhj/t6ef6nAbxjG0
+ qxa8kP5MhNPH8TyTBuu3ucKDvCkOu56UWQ02tEShjD9MQX988HhljFgonRN6W8oPxaQZ91+o77n
+ L7gH2/X0onti1rqtyVw1VbsYmF85kkvSaE8BGM8RJjHJxq27cZLfgs/POPb0XOH9O7+A6AQ3j7n
+ aiTIRlqoK+3g4rRjgAhyOfUKVdyYbrhnmGTgFtmU6LzH0oHsslP1F4YqzPknHrwZB+D+Zw5juu3
+ wJhJzgbkJu42qcqKJZ6GbyBPMhiemaVnZL0a6uXjRjMyzS/Whk6I9/DTla8NTAbGhY/SVu3W2ti
+ 1TKSJhawvzPb/QQSkvA==
+X-Proofpoint-ORIG-GUID: r24kjGPammwf8233RxopprvM7RZVZUe3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-12_03,2026-01-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0 impostorscore=0
+ malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601120081
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,72 +118,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Caleb Schlossin <calebs@linux.ibm.com>
+From: Gautam Menghani <gautam@linux.ibm.com>
 
-- Add support for needed PnvSpi structure variables
+In the parse_* functions used to parse the return values of
+KVM_PPC_GET_CPU_CHAR ioctl, the return values are hardcoded as numbers.
+Use the macro names for better readability. No functional change
+intended.
 
-Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com>
-Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260105160138.3242709-3-calebs@linux.ibm.com
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20251202124654.11481-1-gautam@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- hw/ssi/pnv_spi.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ target/ppc/kvm.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index 1cf3a4416d..76304d26fc 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -13,6 +13,7 @@
- #include "hw/ssi/pnv_spi.h"
- #include "hw/ssi/pnv_spi_regs.h"
- #include "hw/ssi/ssi.h"
-+#include "migration/vmstate.h"
- #include <libfdt.h>
- #include "hw/core/irq.h"
- #include "trace.h"
-@@ -1199,6 +1200,31 @@ static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
-     return 0;
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index 1521787b3f..41bd03ec2a 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2450,26 +2450,26 @@ static int parse_cap_ppc_safe_cache(struct kvm_ppc_cpu_char c)
+     bool l1d_thread_priv_req = !kvmppc_power8_host();
+ 
+     if (~c.behaviour & c.behaviour_mask & H_CPU_BEHAV_L1D_FLUSH_PR) {
+-        return 2;
++        return SPAPR_CAP_FIXED;
+     } else if ((!l1d_thread_priv_req ||
+                 c.character & c.character_mask & H_CPU_CHAR_L1D_THREAD_PRIV) &&
+                (c.character & c.character_mask
+                 & (H_CPU_CHAR_L1D_FLUSH_ORI30 | H_CPU_CHAR_L1D_FLUSH_TRIG2))) {
+-        return 1;
++        return SPAPR_CAP_WORKAROUND;
+     }
+ 
+-    return 0;
++    return SPAPR_CAP_BROKEN;
  }
  
-+static const VMStateDescription pnv_spi_vmstate = {
-+    .name = TYPE_PNV_SPI,
-+    .version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(fail_count, PnvSpi),
-+        VMSTATE_UINT8(transfer_len, PnvSpi),
-+        VMSTATE_UINT8(responder_select, PnvSpi),
-+        VMSTATE_BOOL(shift_n1_done, PnvSpi),
-+        VMSTATE_UINT8(loop_counter_1, PnvSpi),
-+        VMSTATE_UINT8(loop_counter_2, PnvSpi),
-+        VMSTATE_UINT8(N1_bits, PnvSpi),
-+        VMSTATE_UINT8(N2_bits, PnvSpi),
-+        VMSTATE_UINT8(N1_bytes, PnvSpi),
-+        VMSTATE_UINT8(N2_bytes, PnvSpi),
-+        VMSTATE_UINT8(N1_tx, PnvSpi),
-+        VMSTATE_UINT8(N2_tx, PnvSpi),
-+        VMSTATE_UINT8(N1_rx, PnvSpi),
-+        VMSTATE_UINT8(N2_rx, PnvSpi),
-+        VMSTATE_UINT64_ARRAY(regs, PnvSpi, PNV_SPI_REGS),
-+        VMSTATE_UINT8_ARRAY(seq_op, PnvSpi, PNV_SPI_REG_SIZE),
-+        VMSTATE_UINT64(status, PnvSpi),
-+        VMSTATE_END_OF_LIST(),
-+    },
-+};
-+
- static void pnv_spi_class_init(ObjectClass *klass, const void *data)
+ static int parse_cap_ppc_safe_bounds_check(struct kvm_ppc_cpu_char c)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -1209,6 +1235,7 @@ static void pnv_spi_class_init(ObjectClass *klass, const void *data)
-     dc->desc = "PowerNV SPI";
-     dc->realize = pnv_spi_realize;
-     device_class_set_legacy_reset(dc, do_reset);
-+    dc->vmsd = &pnv_spi_vmstate;
-     device_class_set_props(dc, pnv_spi_properties);
+     if (~c.behaviour & c.behaviour_mask & H_CPU_BEHAV_BNDS_CHK_SPEC_BAR) {
+-        return 2;
++        return SPAPR_CAP_FIXED;
+     } else if (c.character & c.character_mask & H_CPU_CHAR_SPEC_BAR_ORI31) {
+-        return 1;
++        return SPAPR_CAP_WORKAROUND;
+     }
+ 
+-    return 0;
++    return SPAPR_CAP_BROKEN;
  }
  
+ static int parse_cap_ppc_safe_indirect_branch(struct kvm_ppc_cpu_char c)
+@@ -2486,15 +2486,15 @@ static int parse_cap_ppc_safe_indirect_branch(struct kvm_ppc_cpu_char c)
+         return SPAPR_CAP_FIXED_IBS;
+     }
+ 
+-    return 0;
++    return SPAPR_CAP_BROKEN;
+ }
+ 
+ static int parse_cap_ppc_count_cache_flush_assist(struct kvm_ppc_cpu_char c)
+ {
+     if (c.character & c.character_mask & H_CPU_CHAR_BCCTR_FLUSH_ASSIST) {
+-        return 1;
++        return SPAPR_CAP_WORKAROUND;
+     }
+-    return 0;
++    return SPAPR_CAP_BROKEN;
+ }
+ 
+ bool kvmppc_has_cap_xive(void)
 -- 
 2.52.0
 
