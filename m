@@ -4,75 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83DD3D25032
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 07:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC0DD25045
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 08:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfCku-0007Gx-Ta; Mon, 12 Jan 2026 02:54:30 -0500
+	id 1vfCz5-0003eK-Q2; Mon, 12 Jan 2026 03:09:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vfCjv-0007AC-MB
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:53:36 -0500
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vfCjs-0002be-BN
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:53:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768204404; x=1799740404;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=gwH/H9GnHnHhyQfXq+OE2IrBZuwVvfh0BK9XNq0ZUms=;
- b=E6t8GmntNVSX1ZCu+Z/ISc8RNjkOKkv41MX40tFEF2l/C3g5fFjdfzCy
- iOrE64tEBYOSBZ5A87dErtnp8K4bZjhOYZvU0Vb9cOHgT0WjFtg9r/9Ja
- hwtieo+4YqD5FWVd0c34TG9RDnREBjIuVwUZg2TrABtNsodf3gkQz72wD
- uLBiVZLksAg6AY1bj8fm/NWaJqpc4t5FxPix9QXzaLsJ47cS/fpQW3TzM
- pIbn+9cBzJZ5ZmNpawpUfaGLX1Q9aCoTWfz9t0NfljatGxVnyAmBK22B5
- 2pcm07brjlZDXo/31F9YCxWUnDn2QhIugTWXGNiIkZfrIv5N3D6aIB1ly w==;
-X-CSE-ConnectionGUID: hy2UssujSy+C5IZ3H799vA==
-X-CSE-MsgGUID: wfeNG4XQSnORtpVAbDNWbA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11668"; a="79768346"
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="79768346"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jan 2026 23:53:21 -0800
-X-CSE-ConnectionGUID: b2knEYZmR/Gqn5ALWwiW0w==
-X-CSE-MsgGUID: YfDbXU++Q4K+ecDiV8QPpw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="204719495"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 11 Jan 2026 23:53:19 -0800
-Date: Mon, 12 Jan 2026 16:18:46 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>,
- Anton Johansson <anjo@rev.ng>,
- Alex Williamson <alex.williamson@redhat.com>,
- "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2] hw/vfio/migration: Check base architecture at runtime
-Message-ID: <aWSuZpjvdhv/cjAN@intel.com>
-References: <20251021161707.8324-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vfCxc-0003Jh-MV
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 03:07:37 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vfCxZ-000528-3d
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 03:07:34 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Bx28LAq2Rp3soHAA--.24901S3;
+ Mon, 12 Jan 2026 16:07:28 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJDxB8G6q2Rptr8aAA--.41555S4;
+ Mon, 12 Jan 2026 16:07:28 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v3 2/4] target/loongarch: Add generic CPU model information
+Date: Mon, 12 Jan 2026 16:07:19 +0800
+Message-Id: <20260112080721.3319572-3-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20260112080721.3319572-1-maobibo@loongson.cn>
+References: <20260112080721.3319572-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251021161707.8324-1-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJDxB8G6q2Rptr8aAA--.41555S4
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,31 +66,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 21, 2025 at 06:17:07PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Tue, 21 Oct 2025 18:17:07 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v2] hw/vfio/migration: Check base architecture at runtime
-> X-Mailer: git-send-email 2.51.0
-> 
-> Inline vfio_arch_wants_loading_config_after_iter() and
-> replace the compile time check of the TARGET_ARM definition
-> by a runtime call to target_base_arm().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Supersedes: <20251020222315.68963-1-philmd@linaro.org>
-> Based-on: <20251020220941.65269-1-philmd@linaro.org>
-> https://lore.kernel.org/qemu-devel/20251020221508.67413-5-philmd@linaro.org/
-> ---
->  hw/vfio/vfio-helpers.h      |  2 --
->  hw/vfio/helpers.c           | 17 -----------------
->  hw/vfio/migration-multifd.c | 12 +++++++++++-
->  3 files changed, 11 insertions(+), 20 deletions(-)
+On LoongArch system, CPU model name comes from IOCSR register
+LOONGARCH_IOCSR_VENDOR and LOONGARCH_IOCSR_CPUNAME. Its value
+can be initialized when CPU is created.
 
-(Checked with 20251020221508.67413-5-philmd@linaro.org)
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/loongarch/virt.c    | 6 ++++--
+ target/loongarch/cpu.c | 4 ++++
+ target/loongarch/cpu.h | 6 ++++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-LGTM, so,
-
-Zhao Liu <zhao1.liu@intel.com>
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 6efa15da47..4db0e8a981 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -635,7 +635,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
+     uint64_t ret = 0;
+     int features;
++    CPULoongArchState *env;
+ 
++    env = &LOONGARCH_CPU(first_cpu)->env;
+     switch (addr) {
+     case VERSION_REG:
+         ret = 0x11ULL;
+@@ -650,10 +652,10 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         }
+         break;
+     case VENDOR_REG:
+-        ret = 0x6e6f73676e6f6f4cULL; /* "Loongson" */
++        ret = env->vendor_id;
+         break;
+     case CPUNAME_REG:
+-        ret = 0x303030354133ULL;     /* "3A5000" */
++        ret = env->cpu_id;
+         break;
+     case MISC_FUNC_REG:
+         if (kvm_irqchip_in_kernel()) {
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index ead1dccd0b..dffe6f652f 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -282,6 +282,8 @@ static void loongarch_la464_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA464);
+     data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
+     env->cpucfg[0] = data;
++    memccpy((void *)&env->vendor_id, CPU_VENDOR_LOONGSON, 0, 8);
++    memccpy((void *)&env->cpu_id, CPU_MODEL_3A5000, 0, 8);
+ 
+     data = 0;
+     data = FIELD_DP32(data, CPUCFG1, ARCH, 2);
+@@ -393,6 +395,8 @@ static void loongarch_la132_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA132);
+     data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
+     env->cpucfg[0] = data;
++    memccpy((void *)&env->vendor_id, CPU_VENDOR_LOONGSON, 0, 8);
++    memccpy((void *)&env->cpu_id, CPU_MODEL_1C101, 0, 8);
+ 
+     data = 0;
+     data = FIELD_DP32(data, CPUCFG1, ARCH, 1); /* LA32 */
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index a258b22141..a2613cecb7 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -301,6 +301,10 @@ typedef struct  LoongArchBT {
+     uint32_t ftop;
+ } lbt_t;
+ 
++#define CPU_VENDOR_LOONGSON   "Loongson"
++#define CPU_MODEL_3A5000      "3A5000"
++#define CPU_MODEL_1C101       "1C101"
++
+ typedef struct CPUArchState {
+     uint64_t gpr[32];
+     uint64_t pc;
+@@ -312,6 +316,8 @@ typedef struct CPUArchState {
+ 
+     uint32_t cpucfg[21];
+     uint32_t pv_features;
++    uint64_t vendor_id;
++    uint64_t cpu_id;
+ 
+     /* LoongArch CSRs */
+     uint64_t CSR_CRMD;
+-- 
+2.39.3
 
 
