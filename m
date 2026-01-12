@@ -4,117 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B9BCF45C1
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 18:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ECDBCF45C2
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 18:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfMy0-0004oO-QL; Mon, 12 Jan 2026 13:48:44 -0500
+	id 1vfN2A-000739-Sa; Mon, 12 Jan 2026 13:52:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vfMxK-0004lq-Bg; Mon, 12 Jan 2026 13:48:01 -0500
-Received: from 1.mo548.mail-out.ovh.net ([178.32.121.110])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vfMxH-00062y-D3; Mon, 12 Jan 2026 13:47:58 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.249.170])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dqhFw1w64z5vqF;
- Mon, 12 Jan 2026 18:47:48 +0000 (UTC)
-Received: from kaod.org (37.59.142.100) by DAG3EX1.mxp5.local (172.16.2.21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Mon, 12 Jan
- 2026 19:47:47 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-100R003648a8dad-ba66-4aa1-a790-9ffbd59cf054,
- 1B0C08D700A15D24616A380A8005CBD17F9BC8B9) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <bd3fb4b8-61b2-4605-8b5a-17b6485f165b@kaod.org>
-Date: Mon, 12 Jan 2026 19:47:46 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfN15-0006Xv-NE
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 13:51:52 -0500
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfN13-0006eQ-S4
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 13:51:51 -0500
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-78fc3572431so75668997b3.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:51:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768243908; x=1768848708; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SKuU3V4X7OA5M8UR12NyvIvcENnk+bbJma6esGV5gsQ=;
+ b=rbBt/id6yvNRO8j98yzxFzNvI9MYp57pGFD/pDPNLoYlbNahoDI/9gDkzwgEcN6AP1
+ mt0Op+M7VchkT4HjYNVW35BFy7gY5ce6X+3JqD7AOAAMww1Ms/o4rSfTnNHUhY0wsAgs
+ gaKKYrF+Xb9AXHkXdb0Ovdya9LoMuIB8WkoET9iHR+cPjvmzCCEDT7o6LfJ5ZXf2SOjr
+ PXEHp8ukuRknG3PfhyuNiM0YHNSZ2YcZHXn6qJ/B/7C9JIM+r+OhOyT2dZ3X2v6eLgDR
+ WsTT1cM+7qtLx4mKeWCu9d2JRaY+K0aZks9fh9fpZDK5Inu72j/XfRic0+62x8RkL6eu
+ csig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768243908; x=1768848708;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SKuU3V4X7OA5M8UR12NyvIvcENnk+bbJma6esGV5gsQ=;
+ b=UMiu/UCDBgY4plbQsUMGkpOyIfJk9B+b5lJhlj0axe8bi0Gmh0NjxEW9hwVN4JnS+L
+ nvGYISh8u0y7It1mzpoRY6bfL75eUh2DjcZo3KyLCdi0dzEUqiefZxOcgrxc5DbQfn1r
+ NmefHAkDO2EQBs6Cx4NOLdcZhYgr9XeCA0KlWok8woULap8D4YQo0ms5LkiXTOeFU0cI
+ QmsFj0LdybBJ479j+QHPsP10UHxDRNv/BOCITdaqhJqslrwHQixZfKQH91JfGbhfjov8
+ XcxZ7BB8xGh+yC9Xs8CvFZ+uU0S64uqkWipVkusQa8m7r2X3EeIeSi6jEr0OgqJ7XveB
+ QQJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgfUtK48zumDJ0NtJjaKL2Sd1rhcFLFvxIJSkEipZ3sYBsKu9TVTe5/qBUvf12Lj7HD8IhCzkTaa5Q@nongnu.org
+X-Gm-Message-State: AOJu0YwGpX7/XEWwOKmqH4tsuQHZr1dSMcutfpg/JizjEm3ZjUH4dtkS
+ 9CW3F/A4d0bd+qS12VYN2bk9rMqTvdgEoQg0WgsKLoSwKY8aDpU/cupiZIjiCNDK7Od6LuHkOt1
+ 58vdiyM6239nbWGxtjpvyV3fCGGKiVzWBu9PCp6DYlg==
+X-Gm-Gg: AY/fxX4kcH3HYxS5ysmJfyMNTSMozpMY+h7J9IimFGM9mqYyICMcu3BpKwhHOFR5iBc
+ 43dQH5GJxQd/wck1zYZx7xl0wocrOBCigt0kauUZb6legynIquYYf0LSGBxiOT5nqze6XYWieJV
+ Amw8yGFfBG39NBu59+89P4RncE9PEb8Zdz3qmBXL0dlm/H3YGQnjpNMTjMG/QWErY8g/nvX19LU
+ obyMRaHxh3LUQck6ZxaXAh8n23SSAuxk549Ao8U+moSH5DZj59nLbW/95v5fWI24BDB7LOX7Vby
+ omrq+WzSfcYiN8iroL6P+mQ=
+X-Google-Smtp-Source: AGHT+IH977pp4yBiwKwaMxoU9q2pwnpAf/NiX5qX7H5ObDP2nMyMBsDuja8EckvdlGKHxIL0fW941FunMWfNBPEpIVA=
+X-Received: by 2002:a05:690e:118e:b0:640:d31d:6ed4 with SMTP id
+ 956f58d0204a3-64716c67b91mr16359914d50.51.1768243908185; Mon, 12 Jan 2026
+ 10:51:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/arm/aspeed: Update buildroot images to
- 2025.11
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>
-References: <20260105160358.771511-1-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260105160358.771511-1-clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.100]
-X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG3EX1.mxp5.local
- (172.16.2.21)
-X-Ovh-Tracer-GUID: cd4f44bf-e0ad-47c8-984d-5a58ef13c53e
-X-Ovh-Tracer-Id: 4743416308606864306
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTForqcdwhpvwSUSDUptpGIDrJAZP4pPNir77BtFP8H7vghogPffuIz89sJwx7mlXzAaqIFsKg+ZjxuPlHyd2+UTZSZO7nf/PDizuQD3ZzZxjMNvaXtFb0T+2KL7JJ1pEqebdrwFXqRfCmLK4tKetIdslIsHqbveLGn0LQfKznUBDXpYiPOyTNMwIE3UwHzG77zTNT+YGSdwkaJJN+0BDXGkPOAQs0786i45RKuok8jcQ+3ZXA85YmWbpDlnqdyqbmYkVhN33Uc1CnIwLJGFZCMaVKSbC446g1l4rY8y7mgFo7Fg+e6xyIpBgty05UUFOwMbWm0/3QwOdj0YrsVCiZBWA9fk3uXEiJMsML6myxkysGBHpYnKuj4DwJ9PlJf3KZBYgRlQjPkGCOHYUuAUMDlw1UZsMPUxrus8tjd+Yh/jfCMvQP2JBy1RKVDmGRosVwLGzseKe2Hm2YqWgdsDxptN8z1ivtmGSMsexIOcdBPO5K3NhkPnlEsa693GhcerpyEp5bVCuwyc8h9BCdyOTU1MkF8dVF1bBNWghZB6cJdOsSzFHxoUQKSS1sP7oSdbLWR7SbWcbtd6kHdqHqRwOt6oeIU6cLiEFQSDGc0GFCNRzW55NREY3LFSJEEuVHzI1GcRKMGSOQxDSTzDapQSjmGjh2GxAmHvp32NmX3gCzWjwA
-DKIM-Signature: a=rsa-sha256; bh=iWSrlbkLYGQy++Yqk1jqqA8eu9xBGltZv2NsC2iAki8=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1768243670; v=1;
- b=ZM2pMKRgsXesiWg4b543nY/7ZLRFjx/zNQmPCnyXMkYIxB+jh3gJUBOE/gozPOHqqlds9CXJ
- XVSJLTarjjMIY2kEahHTdod8k8NuJdoRC6BUIJhblDChr3JrwCGshlqmpPHNCVuXrG7mXdxrxCG
- Vo/K9V3trMgx9wTqH96rGJJg28vxsZi4uqfoJVxgaacEvF1jCIUEVHxKxD5BzGu05cyANrMDY74
- c6pGlLvd4ExyP/GqoBTGZiynE1v+h4V6J6j+xMTlZbZDDfoKjoms4SnRzrK3Kp7FSEbto6/xhRG
- kjY9MCK3VFZ8EW7enbggaW3krqq3o7KaTXd1VF3Jsx1Pg==
-Received-SPF: pass client-ip=178.32.121.110; envelope-from=clg@kaod.org;
- helo=1.mo548.mail-out.ovh.net
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20251231170858.254594-1-peter.maydell@linaro.org>
+ <20251231170858.254594-3-peter.maydell@linaro.org>
+ <87zf6ww9fg.fsf@draig.linaro.org>
+In-Reply-To: <87zf6ww9fg.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 12 Jan 2026 18:51:36 +0000
+X-Gm-Features: AZwV_QipNNvh7G5GpChcI3gu2u4ViTuIDTs-KKn0PTXEYwXW7HjsTq4nAVSNK2g
+Message-ID: <CAFEAcA-YDPYQ7mny_zFjgjWc4W8K18kUVuBgFbQ25sNpsM4Vvw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] target/arm: Correctly honour HCR.TID3 for v7A cores
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,79 +99,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin, Kane,
+On Fri, 2 Jan 2026 at 11:17, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > The HCR.TID3 bit defines that we should trap to the hypervisor for
+> > reads to a collection of ID registers. Different architecture versions
+> > have defined this differently:
+> >
+> >  * v7A has a set of ID regs that definitely must trap:
+> >     - ID_PFR{0,1}, ID_DFR0, ID_AFR0, ID_MMFR{0,1,2,3},
+> >       ID_ISAR{0,1,2,3,4,5}, MVFR{0,1}
+> >    and somewhat vaguely says that "there is no requirement"
+> >    to trap for registers that are reserved in the ID reg space
+> >    (i.e. which RAZ and might be used for new ID regs in future)
+> >  * v8A adds to this list:
+> >     - ID_PFR2 and MVFR2 must trap
+> >     - ID_MMFR4, ID_MMFR5, ID_ISAR6, ID_DFR1 and reserved registers
+> >       in the ID reg space must trap if FEAT_FGT is implemented,
+> >       and it is IMPDEF if they trap if FEAT_FGT is not implemented
+> >
+> > In QEMU we seem to have attempted to implement this distinction
+> > (taking the "we do trap" IMPDEF choice if no FEAT_FGT), with
+> > access_aa64_tid3() always trapping on TID3 and access_aa32_tid3()
+> > trapping only if ARM_FEATURE_V8 is set.  However, we didn't apply
+> > these to the right set of registers: we use access_aa32_tid3() on all
+> > the 32-bit ID registers *except* ID_PFR2, ID_DFR1, ID_MMFR5 and the
+> > RES0 space, which means that for a v7 CPU we don't trap on a lot of
+> > registers that we should trap on, and we do trap on various things
+> > that the v7A Arm ARM says there is "no requirement" to trap on.
+> >
+> > Straighten this out by naming the access functions more clearly for
+> > their purpose, and documenting this: access_v7_tid3() is only for the
+> > fixed set of ID registers that v7A traps on HCR.TID3, and
+> > access_tid3() is for any others, including the reserved encoding
+> > spaces and any new registers we add in future.
+>
+> I'm confused by the naming - especially as searching the Arm doc site
+> with the Armv7-A filter didn't show up an HCR register (although it does
+> show up in the PDF).
 
-On 1/5/26 17:03, Cédric Le Goater wrote:
-> The main changes compared to upstream 2025.11 buildroot are
-> 
->    - Linux v6.18
->    - latest OpenBMC U-Boot
->    - extra packages (ssh, etc.)
-> 
-> See
-> 
->    https://github.com/legoater/buildroot/commits/aspeed-2025.11
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   tests/functional/arm/test_aspeed_ast2500.py           | 8 ++++----
->   tests/functional/arm/test_aspeed_ast2600_buildroot.py | 8 ++++----
->   2 files changed, 8 insertions(+), 8 deletions(-)
+Not sure why it wouldn't show up -- this is the main hypervisor
+trap configuration register, and it's always been HCR for AArch32
+and HCR_EL2 for AArch64.
 
-Could you please send an Ack ?
+> I guess what you are saying is these registers trap from v7a onwards?
+> v8/v9 don't change the trapping on this subset of registers.
 
-Thanks,
+I tried to lay this out in the commit message, but basically what
+we have is that this trap bit is trapping a set of the ID registers.
+In v7A it was specified to trap the ID registers that were defined
+at that time, but not the encodings that were reserved in the
+ID register space. (As ID register space, 'reserved' means RAZ,
+not UNDEF as it would elsewhere in the system register space.)
+In v8A some new ID registers were defined in what was previously
+the reserved space, and so v8A says that TID3 must trap those also
+(and that it IMPDEF is allowed to trap the rest of the reserved space).
+Finally, FEAT_FGT fixes up the unhelpful IMPDEF variability by mandating
+trapping on the whole space, reserved or not.
 
-C.
+(Before v7A HCR didn't exist at all and these ID registers never
+trap anywhere: since HCR.TID3 in our implementation will always
+be 0 on CPUs without EL2, we don't need to special case "doesn't
+actually have Hyp mode" in the access functions.)
 
+> > -static CPAccessResult access_aa64_tid3(CPUARMState *env, const ARMCPRe=
+gInfo *ri,
+> > -                                       bool isread)
+> > +static CPAccessResult access_v7_tid3(CPUARMState *env, const ARMCPRegI=
+nfo *ri,
+> > +                                     bool isread)
+> >  {
+> > +    /*
+> > +     * Trap on TID3 always. This should be used only for the fixed set=
+ of
+> > +     * registers which are defined to trap on HCR.TID3 in v7A, which i=
+s:
+> > +     *   ID_PFR{0,1}, ID_DFR0, ID_AFR0, ID_MMFR{0,1,2,3}, ID_ISAR{0,1,=
+2,3,4,5}
+> > +     * (MVFR0 and MVFR1 also trap in v7A, but this is not handled via
+> > +     * this accessfn but in check_hcr_el2_trap.)
+> > +     * Any other registers in the TID3 trap space should use access_ti=
+d3(),
+> > +     * so that they trap on v8 and above, but not on v7.
+> > +     */
+> >      if ((arm_current_el(env) < 2) && (arm_hcr_el2_eff(env) & HCR_TID3)=
+) {
+> >          return CP_ACCESS_TRAP_EL2;
+> >      }
+> > @@ -5845,11 +5854,18 @@ static CPAccessResult access_aa64_tid3(CPUARMSt=
+ate *env, const ARMCPRegInfo *ri,
+> >      return CP_ACCESS_OK;
+> >  }
+> >
+> > -static CPAccessResult access_aa32_tid3(CPUARMState *env, const ARMCPRe=
+gInfo *ri,
+> > -                                       bool isread)
+> > +static CPAccessResult access_tid3(CPUARMState *env, const ARMCPRegInfo=
+ *ri,
+> > +                                  bool isread)
+> >  {
+> > +    /*
+> > +     * Trap on TID3, if we implement at least v8. For v8 and above
+> > +     * the ID register space is at least IMPDEF permitted to trap,
+> > +     * and must trap if FEAT_FGT is implemented. We choose to trap
+> > +     * always. Use this function for any new registers that should
+> > +     * trap on TID3.
+> > +     */
+> >      if (arm_feature(env, ARM_FEATURE_V8)) {
+> > -        return access_aa64_tid3(env, ri, isread);
+> > +        return access_v7_tid3(env, ri, isread);
+>
+> This seems even more incongruous - we test for v8 but use the v7 helper.
 
-> diff --git a/tests/functional/arm/test_aspeed_ast2500.py b/tests/functional/arm/test_aspeed_ast2500.py
-> index 5efd104c2b95..ac33c62a9f85 100755
-> --- a/tests/functional/arm/test_aspeed_ast2500.py
-> +++ b/tests/functional/arm/test_aspeed_ast2500.py
-> @@ -10,15 +10,15 @@
->   
->   class AST2500Machine(AspeedTest):
->   
-> -    ASSET_BR2_202411_AST2500_FLASH = Asset(
-> +    ASSET_BR2_202511_AST2500_FLASH = Asset(
->           ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
-> -         'images/ast2500-evb/buildroot-2024.11/flash.img'),
-> -        '641e6906c18c0f19a2aeb48099d66d4771929c361001d554d0d45c667413e13a')
-> +         'images/ast2500-evb/buildroot-2025.11/flash.img'),
-> +        '31e5a8e280b982fb0e7c07eb71c94851002f99ac604dfe620e71a5d47cc87e78')
->   
->       def test_arm_ast2500_evb_buildroot(self):
->           self.set_machine('ast2500-evb')
->   
-> -        image_path = self.ASSET_BR2_202411_AST2500_FLASH.fetch()
-> +        image_path = self.ASSET_BR2_202511_AST2500_FLASH.fetch()
->   
->           self.vm.add_args('-device',
->                            'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
-> diff --git a/tests/functional/arm/test_aspeed_ast2600_buildroot.py b/tests/functional/arm/test_aspeed_ast2600_buildroot.py
-> index 575a5f64143f..3d130b9fd189 100755
-> --- a/tests/functional/arm/test_aspeed_ast2600_buildroot.py
-> +++ b/tests/functional/arm/test_aspeed_ast2600_buildroot.py
-> @@ -16,15 +16,15 @@
->   
->   class AST2600Machine(AspeedTest):
->   
-> -    ASSET_BR2_202411_AST2600_FLASH = Asset(
-> +    ASSET_BR2_202511_AST2600_FLASH = Asset(
->           ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
-> -         'images/ast2600-evb/buildroot-2024.11/flash.img'),
-> -        '4bb2f3dfdea31199b51d66b42f686dc5374c144a7346fdc650194a5578b73609')
-> +         'images/ast2600-evb/buildroot-2025.11/flash.img'),
-> +        'c64a0755501393d570ca318e326e1e9f8372edc5a6452cdccc3649bc9fd2c138')
->   
->       def test_arm_ast2600_evb_buildroot(self):
->           self.set_machine('ast2600-evb')
->   
-> -        image_path = self.ASSET_BR2_202411_AST2600_FLASH.fetch()
-> +        image_path = self.ASSET_BR2_202511_AST2600_FLASH.fetch()
->   
->           self.vm.add_args('-device',
->                            'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
+We have two different things we want to do:
 
+(1) always trap if TID3 is set
+(2) trap if we are v8 or better and TID3 is set
+
+We want to use function 1 for the set of ID registers that
+existed back in v7A -- these are the ones that trap for any
+implementation.
+We want function 2 for the ID registers that were only defined
+in v8A, and for the reserved-ID-register space. These must not
+trap on v7A, and either must or are IMPDEF-permitted to trap
+on v8A and later.
+
+I have tried to pick function names that make sense for "what
+is this doing", and for "if somebody adds a new register here,
+make the function they want be the one with a name that seems
+most inviting, so they pick the right one, not the wrong one".
+So I have access_v7_tid3 for ID registers defined in
+v7, and access_tid3 for the rest, including any new ones.
+This seemed to me better than picking a function name that
+describes the internal implementation of functions 1 and 2,
+on the basis that people are a lot more likely to need to
+use the functions than look inside them.
+
+If you have suggested names that you think make more sense,
+I'm open to them -- since I started by knowing the behaviour
+to me the names I ended up with seem more "obvious" to me than
+they would to somebody else, and it's the "somebody else" that
+I'm trying to help with the naming...
+
+Separately, the implementation of function (2) in this patch
+is "if ARM_FEATURE_V8 is set, call function (1) to do the test-TID3,
+otherwise return ACCESS_OK to indicate don't-trap". (Inherited
+from the existing implementation choice.)
+
+Given that function (1) is only a simple test of
+"((arm_current_el(env) < 2) && (arm_hcr_el2_eff(env) & HCR_TID3))"
+we could alternatively open-code that check in function (2)
+if you think that would be clearer.
+
+thanks
+-- PMM
 
