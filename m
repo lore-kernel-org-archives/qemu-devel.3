@@ -4,120 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87423CF45C8
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 19:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9462CF45C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 19:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfNEK-00030z-4i; Mon, 12 Jan 2026 14:05:32 -0500
+	id 1vfNhI-0007Mp-03; Mon, 12 Jan 2026 14:35:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vfNDC-0002e2-2A
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 14:04:23 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <bobby.prani@gmail.com>)
+ id 1vfNhG-0007LH-FP
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 14:35:26 -0500
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vfNDA-0000Nl-09
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 14:04:21 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E72BF3368A;
- Mon, 12 Jan 2026 19:04:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768244656; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/2ZXWkvbkAdoupKCgS6TrgpJw6UqPpUvNAEH/WTOPBU=;
- b=niLS45gcrusaV2o0JBeSkCo9UTqEWH/pSVZ/aoj4klXOPIks2mc5rQGDrna9oW6GCSzP0Z
- 422M4FUwOsfgfxnUjaU2LQqnca/wkFqCzRoGLlUEYsto00jqQBxj1gYmTimwTTUcECs/5z
- PNKxiVYj3zvWFTJUIVdn4p5AZB1rfRM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768244656;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/2ZXWkvbkAdoupKCgS6TrgpJw6UqPpUvNAEH/WTOPBU=;
- b=Dh4qx6F0SyTomnkE/bJL+BZjfxxf83Olq7ps1AhLxQfW/kIxF+Zk9hAbAo4uIcmOBFbxKJ
- c+Ea9UKAno5rsGBw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=niLS45gc;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Dh4qx6F0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768244656; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/2ZXWkvbkAdoupKCgS6TrgpJw6UqPpUvNAEH/WTOPBU=;
- b=niLS45gcrusaV2o0JBeSkCo9UTqEWH/pSVZ/aoj4klXOPIks2mc5rQGDrna9oW6GCSzP0Z
- 422M4FUwOsfgfxnUjaU2LQqnca/wkFqCzRoGLlUEYsto00jqQBxj1gYmTimwTTUcECs/5z
- PNKxiVYj3zvWFTJUIVdn4p5AZB1rfRM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768244656;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/2ZXWkvbkAdoupKCgS6TrgpJw6UqPpUvNAEH/WTOPBU=;
- b=Dh4qx6F0SyTomnkE/bJL+BZjfxxf83Olq7ps1AhLxQfW/kIxF+Zk9hAbAo4uIcmOBFbxKJ
- c+Ea9UKAno5rsGBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4F21F3EA63;
- Mon, 12 Jan 2026 19:04:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CotqBK9FZWm6cwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 12 Jan 2026 19:04:15 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>, Hailiang
- Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>, Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, =?utf-8?Q?Daniel_P_=2E?=
- =?utf-8?Q?_Berrang=C3=A9?=
- <berrange@redhat.com>, Zhang Chen <zhangckid@gmail.com>, "Dr . David Alan
- Gilbert" <dave@treblig.org>, Prasad Pandit <ppandit@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Yury Kotov <yury-kotov@yandex-team.ru>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 08/13] migration: Thread-ify precopy vmstate load process
-In-Reply-To: <aWUYVvFVbhXCdVod@x1.local>
-References: <20251022192612.2737648-1-peterx@redhat.com>
- <20251022192612.2737648-9-peterx@redhat.com> <87y0m7df46.fsf@suse.de>
- <aWUYVvFVbhXCdVod@x1.local>
-Date: Mon, 12 Jan 2026 16:04:12 -0300
-Message-ID: <871pju1wlv.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <bobby.prani@gmail.com>)
+ id 1vfNhE-0007Co-Sv
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 14:35:26 -0500
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-382fd45a1feso53500301fa.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 11:35:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768246521; x=1768851321; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=a9se/EaoRQKrKwIxFKRzvfFVYp2sswWLWm93D88ry3M=;
+ b=gN5kT2yJy72h1nliiNc2kMWRRgh/yh+VmQla7F7zWmE9XdqJNFXAK5zv5XcXy6fk40
+ e1rlqpJXyY7oSR4uqPtGlnDnk2gWcp6W7J6HQUbkDYCh1QIxwprWO/RlITqAlznMEirl
+ /kZKyqoaYPqqkcbcRvoqXOBXqJGNoyXevcXg8ak46JuYgutSZev885pYeT+s84jwwl4Y
+ al2qe69+1RugUTSS7oSgsRgw2vg3VF4hd78LUwjJx8kH38R6wdacGBtER+v/QrbhcYSj
+ 4Sfcqv1asAiRKCxWHDwEjwqHKFUCtIJ3Ja/kJlqwVj3qvi9g5+pSAnG+UlxN8Tb23jgd
+ 0++g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768246521; x=1768851321;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=a9se/EaoRQKrKwIxFKRzvfFVYp2sswWLWm93D88ry3M=;
+ b=AfPle98lbXbPkgzegH/xG463XyeIkrp7yPBfHhexjPkW+l5ObN5x7aW65HSW/G3VKS
+ uQcFHnPl4jTTdr3/j/4PALHHiU6D7jeAy9RzaD4avkH0sk8UbYD5Nl3PW+jPZTTXA9Di
+ d5sy5WBpE0yUubcNmOhmoIQYHY6RSs7acAQJSkP/cEWmtCbWvu4sFiYumsAO0h+2l+d8
+ E3z3EC4nZuzEM3xIqdxZNXliMG8x+A1JXIpLbOaFgeF7Lma5Y4aNnUyWqHp5UN05qAt2
+ Ql+tvH+/Gr+tr0N/G3zoSO1k6mexcd27u6pI4ieiuLef1DI0JuCzz3ZzPWth6OHE9wTx
+ +Vmg==
+X-Gm-Message-State: AOJu0Yxzy07kOvka3GR6JQQAVun5b0RV77m3mZ+FpQHEjsF2HIsfOp7t
+ uHKsray2yN0dSbJt7BUQRO4NuNMpa/w2j1DsG1BjCUSlMd3z2ao4GYygKI4z7yiiuoDakQc8mPZ
+ aeH95TSxWYpZUvBudbFNuqdpH36g3j0g/autM
+X-Gm-Gg: AY/fxX6T1D7AuVDYl3HEe6t4EaMT1JqgwCDML60YnVRmIanyM0DgqKLRhBc0sn+EwZc
+ 505MIkf2xB94w4/T7WZas/vhGrXkxsidmt1rbGDBdqVQLd56k1FcZ3LJrPtlc1Tk8y1Cb3xiOBd
+ R5EpGLAmYKfbvDcu2r9Camb75gbDHLrsaycl/CbUkOZgxEzadUk2ApqZUR6AXBs0VcPvJELqHmD
+ KT3ym7rstoTiyCqQAJ4HL5dA4vANfFLIM71fiGDZ13LsohqKUrXTS1h3ABKYX8sQBOt65NO
+X-Received: by 2002:a2e:b8c2:0:b0:383:227:2891 with SMTP id
+ 38308e7fff4ca-38350a08562mr1631331fa.4.1768246521266; Mon, 12 Jan 2026
+ 11:35:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[13]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[nongnu.org,fujitsu.com,xfusion.com,redhat.com,yandex-team.ru,gmail.com,treblig.org];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: E72BF3368A
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Pranith Kumar <bobby.prani@gmail.com>
+Date: Mon, 12 Jan 2026 11:34:54 -0800
+X-Gm-Features: AZwV_QhUJhu7Nne9-jBS1ETa8pi2tQ1QJVuQkTFxoHLpJh7CdXlV_k_YVgsMVLY
+Message-ID: <CAJhHMCDqZE-TwmbPhDeYR0ZZYJRcV3tvcZD8-+rz7WE-oDMgQg@mail.gmail.com>
+Subject: qemu-x86_64 fails with 'Illegal Instruction' error
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=bobby.prani@gmail.com; helo=mail-lj1-x22f.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,170 +88,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Hello,
 
-> On Thu, Jan 08, 2026 at 05:27:37PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > Migration module was there for 10+ years.  Initially, it was in most cases
->> > based on coroutines.  As more features were added into the framework, like
->> > postcopy, multifd, etc.. it became a mixture of threads and coroutines.
->> >
->> > I'm guessing coroutines just can't fix all issues that migration want to
->> > resolve.
->> >
->> > After all these years, migration is now heavily based on a threaded model.
->> >
->> > Now there's still a major part of migration framework that is still not
->> > thread-based, which is precopy load.  We do load in a separate thread in
->> > postcopy since the 1st day postcopy was introduced, however that requires a
->> > separate state transition from precopy loading all devices first, which
->> > still happens in the main thread of a coroutine.
->> >
->> > This patch tries to move the migration incoming side to be run inside a
->> > separate thread (mig/dst/main) just like the src (mig/src/main).  The
->> > entrance to be migration_incoming_thread().
->> >
->> > Quite a few things are needed to make it fly..  One note here is we need to
->> > change all these things in one patch to not break anything.  The other way
->> > to do this is add code to make all paths (that this patch touched) be ready
->> > for either coroutine or thread.  That may cause confusions in another way.
->> > So reviewers, please take my sincere apology on the hardness of reviewing
->> > this patch: it covers a few modules at the same time, and with some risky
->> > changes.
->> >
->> > BQL Analysis
->> > ============
->> >
->> > Firstly, when moving it over to the thread, it means the thread cannot take
->> > BQL during the whole process of loading anymore, because otherwise it can
->> > block main thread from using the BQL for all kinds of other concurrent
->> > tasks (for example, processing QMP / HMP commands).
->> >
->> > Here the first question to ask is: what needs BQL during precopy load, and
->> > what doesn't?
->> >
->> 
->> I just noticed that the BQL held at process_incoming_migration_co is
->> also responsible for stopping qmp_migrate_set_capabilities from being
->> dispatched.
->
-> I don't know if it is by design, or even if it will be guaranteed to work..
->
+I am trying to run spec intrate with qemu-x86_64 and it seems to fail
+with an 'Illegal Instruction' error. I tried compiling with an ancient
+architecture (-march=core2/athlon64) and this error persists.
 
-Regardless, we shouldn't rely on the BQL for this. The BQL should be
-left as last resort for things that interact across subsystems. If
-someone is issuing a migration command during a migration, the migration
-code is exquisitely positioned to handle that itself.
+Is this a known issue? Are there any workarounds?
 
-> Consider the migration incoming rocoutine runs into qemu_get_byte(), and
-> then proactively yield the migration coroutine (qemu_coroutine_yield())
-> when the incoming port is blocked on read..
->
-> AFAIU, a proper fix for that (note, this will currently break tests) is:
->
-> bool migration_is_running(void)
->  {
-> -    MigrationState *s = current_migration;
-> +    MigrationStatus state;
->  
-> -    if (!s) {
-> -        return false;
-> +    if (runstate_check(RUN_STATE_INMIGRATE)) {
-> +        MigrationIncomingState *mis = migration_incoming_get_current();
-> +
-> +        if (!mis) {
-> +            return false;
-> +        }
-> +
-> +        state = mis->state;
-> +    } else {
-> +        MigrationState *s = migrate_get_current();
-> +
-> +        if (!s) {
-> +            return false;
-> +        }
-> +
-> +        state = s->state;
->      }
->  
-> -    switch (s->state) {
-> +    switch (state) {
->      case MIGRATION_STATUS_ACTIVE:
->      case MIGRATION_STATUS_POSTCOPY_DEVICE:
->      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
->
+Trace 0: 0x7fffe806fd40 [00000000/000000000050d8d6/1040c0b3/00000000]
+Perl_sv_upgrade
+----------------
+IN: Perl_sv_upgrade
+0x0050d8dc:  c5 f9 ef c0              vpxor    %xmm0, %xmm0, %xmm0
+0x0050d8e0:  48 83 c2 10              addq     $0x10, %rdx
+0x0050d8e4:  62                       .byte    0x62
+0x0050d8e5:  f1                       int1
 
-LGTM
 
->> 
->> Any point during incoming migration when BQL is unlocked we have a
->> window where a capability could be changed. Same for parameters, for
->> that matter.
->> 
->> To make matters worse, the -incoming cmdline will trigger
->> qmp_migrate_incoming->...->migration_transport_compatible early on, but
->> until the channels finally connect and process_incoming_migration_co
->> starts it's possible to just change a capability in an incompatible way
->> and the transport will never be validated again.
->
-> Right.  Above should fix it, but I believe it also means after "-incoming
-> tcp:xxx" (or anything not "defer") we should forbid changing migration caps
-> or params on destination.
->
 
-Parameters are never forbidden, right? And we cannot forbid them with
-is_running because some parameters are allowed to be changed while
-running.
+                       [0/92921]
 
-I feel we should have a more fine grained way of saying "this option
-cannot be set at this moment", instead of just using the state as a
-proxy. States can change, while the fact that from a certain point on,
-certain options should not be touched anymore doesn't change.
+OUT: [size=128]
+  -- guest addr 0x000000000050d8dc + tb prologue
+0x7fffe806fec0:  8b 5d ec                 movl     -0x14(%rbp), %ebx
+0x7fffe806fec3:  85 db                    testl    %ebx, %ebx
+0x7fffe806fec5:  0f 8c 5d 00 00 00        jl       0x7fffe806ff28
+0x7fffe806fecb:  c6 45 f0 00              movb     $0, -0x10(%rbp)
+0x7fffe806fecf:  c5 f9 ef c0              vpxor    %xmm0, %xmm0, %xmm0
+0x7fffe806fed3:  c5 f9 7f 85 60 03 00 00  vmovdqa  %xmm0, 0x360(%rbp)
+0x7fffe806fedb:  c5 f9 7f 85 70 03 00 00  vmovdqa  %xmm0, 0x370(%rbp)
+  -- guest addr 0x000000000050d8e0
+0x7fffe806fee3:  48 8b 5d 10              movq     0x10(%rbp), %rbx
+0x7fffe806fee7:  48 83 c3 10              addq     $0x10, %rbx
+0x7fffe806feeb:  48 89 5d 10              movq     %rbx, 0x10(%rbp)
+0x7fffe806feef:  48 89 9d 90 00 00 00     movq     %rbx, 0x90(%rbp)
+0x7fffe806fef6:  48 c7 85 98 00 00 00 10  movq     $0x10, 0x98(%rbp)
+0x7fffe806fefe:  00 00 00
+0x7fffe806ff01:  c6 45 f0 01              movb     $1, -0x10(%rbp)
+  -- guest addr 0x000000000050d8e4
+0x7fffe806ff05:  c7 85 a8 00 00 00 0b 00  movl     $0xb, 0xa8(%rbp)
+0x7fffe806ff0d:  00 00
+0x7fffe806ff0f:  48 c7 85 80 00 00 00 e4  movq     $0x50d8e4, 0x80(%rbp)
+0x7fffe806ff17:  d8 50 00
+0x7fffe806ff1a:  be 06 00 00 00           movl     $6, %esi
+0x7fffe806ff1f:  48 8b fd                 movq     %rbp, %rdi
+0x7fffe806ff22:  ff 15 10 00 00 00        callq    *0x10(%rip)
+0x7fffe806ff28:  48 8d 05 d4 fe ff ff     leaq     -0x12c(%rip), %rax
+0x7fffe806ff2f:  e9 e4 00 f9 ff           jmp      0x7fffe8000018
+  -- tb slow paths + alignment
+0x7fffe806ff34:  90                       nop
+0x7fffe806ff35:  90                       nop
+0x7fffe806ff36:  90                       nop
+0x7fffe806ff37:  90                       nop
+  data: [size=8]
+0x7fffe806ff38:  .quad  0x000055555564a472
 
-Maybe a little infra like bdrv_op_is_blocked, i.e, a list of blocked
-operations. It could be set in qmp_migrate and checked in
-qmp_set_parameters/caps.
+Linking TBs 0x7fffe806fd40 index 1 -> 0x7fffe806fec0
+Trace 0: 0x7fffe806fec0 [00000000/000000000050d8dc/1040c0b3/00000000]
+Perl_sv_upgrade
+qemu: uncaught target signal 4 (Illegal instruction) - core dumped
 
-> As discussed above, that'll at least break our qtests.  But frankly
-> speaking I think that's the right thing to do..  I hope libvirt always
-> works with "defer" and never update any caps/params after QMP
-> migrate_incoming.
->
-> So I wonder if I should continue with above patch, and then fix our qtests.
-> Your work from the other "merge caps+params" might also work here,
-> actually, if we make sure everything will be set alone with the QMP
-> migrate_incoming single command.
->
+Thread 1 "qemu-x86_64" received signal SIGILL, Illegal instruction.
+__syscall_cancel_arch () at
+../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
+warning: 56     ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S: No
+such file or directory
+(gdb) layout asm
+(gdb) f 1
+#1  0x00007ffff7249668 in __internal_syscall_cancel (a1=<optimized
+out>, a2=a2@entry=8, a3=a3@entry=0, a4=a4@entry=0, a5=a5@entry=0,
+a6=a6@entry=0, nr=130) at ./nptl/cancellation.c:49
+warning: 49     ./nptl/cancellation.c: No such file or directory
+(gdb) f 0
+#0  __syscall_cancel_arch () at
+../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
+warning: 56     ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S: No
+such file or directory
+(gdb) bt
+#0  __syscall_cancel_arch () at
+../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
+#1  0x00007ffff7249668 in __internal_syscall_cancel (a1=<optimized
+out>, a2=a2@entry=8, a3=a3@entry=0, a4=a4@entry=0, a5=a5@entry=0,
+a6=a6@entry=0, nr=130) at ./nptl/cancellation.c:49
+#2  0x00007ffff72496ad in __syscall_cancel (a1=<optimized out>,
+a2=a2@entry=8, a3=a3@entry=0, a4=a4@entry=0, a5=a5@entry=0,
+a6=a6@entry=0, nr=130) at ./nptl/cancellation.c:75
+#3  0x00007ffff71fa07d in __GI___sigsuspend (set=<optimized out>) at
+../sysdeps/unix/sysv/linux/sigsuspend.c:26
+#4  0x00005555556ccef1 in die_with_signal (host_sig=4) at
+../linux-user/signal.c:807
+#5  0x00005555556cd065 in dump_core_and_abort (env=0x5555559466e0,
+target_sig=4) at ../linux-user/signal.c:847
+#6  0x00005555556ce2c4 in handle_pending_signal
+(cpu_env=0x5555559466e0, sig=4, k=0x55555595e490) at
+../linux-user/signal.c:1306
+#7  0x00005555556ce5ed in process_pending_signals
+(cpu_env=0x5555559466e0) at ../linux-user/signal.c:1386
+#8  0x00005555556352c7 in cpu_loop (env=0x5555559466e0) at
+../linux-user/x86_64/../i386/cpu_loop.c:323
+#9  0x00005555556c72af in main (argc=15, argv=0x7fffffffdaa8,
+envp=0x7fffffffdb28) at ../linux-user/main.c:1035
 
-For incoming, yes. And this is maybe a point in favor of adding the
-'config'.
-
-For outgoing, there's still the point I mentioned above about how to
-restrict _some_ options to be allowed at runtime and others not.
-
-> Let me know your initial thoughts, then I'll see what I can do..
->
-
-We should fix the bug, I think your patch is good for that.
-
-Although this kind of overlaps with some things we've been discussing
-with Prasad. I'd be super happy if the code magically stopped using
-QAPI's MigrationStatus for internal tracking of migration state and
-blocking of commands and so on.
-
-Whatever comes first =)
-
----
-Side note, did we ever discuss something like this?
-
-struct MigrationState {
-   <state>
-   union {
-     <outgoing>
-     <incoming>
-   }
-}
-
-there's so much stuff in these structs...
+-- 
+Pranith
 
