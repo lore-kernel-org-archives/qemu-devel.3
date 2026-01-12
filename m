@@ -4,96 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74BE2C9EC67
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:33:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22EFC9EC67
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfFDr-00062v-O5; Mon, 12 Jan 2026 05:32:31 -0500
+	id 1vfFGC-0003LU-4x; Mon, 12 Jan 2026 05:34:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFDq-0005qn-5T
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:32:30 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFDo-0001uC-Fg
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:32:29 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47775fb6c56so59046845e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 02:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768213947; x=1768818747; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5S99U3XUshmuddLFuBd6ft79OtosHUhtCtEVlD+u7mY=;
- b=L0lI1o+tQ3J2yddKgVJ9drl1h3b03p9tClBdJuAjRBINN8IHgi4pOe3B9+i7h64OAh
- a4kycf35AgHrtmeXvuIAZrekhahUziiM61KO8nFurypWYCiz9eWmK1Zj8/iL6NSqPayD
- RlGVfI9sOkvDjoYr+NAKt7J1/E1BA1h8PC9VjpFuUQxme5NKSz5mtVqlQn5aA+ebmtVH
- PDKtSc8V7/a5na7QtrWrvgo7AUDx7QZ30YXZCGCCLBLW8x8oS4oeyR5nRLSxhQGCLN47
- ZaXSeWqKnr03I0/JA7b6km3UoTDF5XNpie2gAa7iXt5mM7oZpxvHfL1uxan7Nqo5pbqy
- ZggQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768213947; x=1768818747;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5S99U3XUshmuddLFuBd6ft79OtosHUhtCtEVlD+u7mY=;
- b=Rj6xynnXfwC0QWqfoJMjc37p7es2fK8avc0Dw0G0/C5X7Y6Jw3jiXi+1uicmJ/auY+
- BTgLw0dW7/2UDVOLuk/nUSNUqbk3JAoZy31NMUaQYW0qaIzhI4v5PdYk+rNjmXTu/tOZ
- HVhUSX5wQ9rF7CryskOyS3aMvNqbSB9l2Or323oo3jkqzRbBqV7+0wRPbxSi3ktWakUf
- 3Dd0OBWieADj+0ZpVGJMxJyAOt1+BTDfXLtiMC4S4paWOLTbojD9uZHG7ueJ3cpSFhsB
- deJuClF7ZNp6Z7DhI9Xt5+DCIW+XO2QeoDrrhdYMJCnoPfIdQI9Enc/eGxMcAVQbaefN
- K/0A==
-X-Gm-Message-State: AOJu0YyyMlxNGhkWBsXIIJ5WA9KPeWGBMICSqWElHT+0HSrM797IW/Yx
- xkxGPznrABVINrHCQMWxFpXfmyEOpGfbDZC5wnJbC9iH9cPoKEkM+AKVBnJE2RE4TRlai50JbwM
- s5OWOP9g=
-X-Gm-Gg: AY/fxX49geeEOzKkzrGF1af4V+wHUbDqQNCLQakdnw5/GsT/lHIUFaB3IcC4vrTwdTD
- uDMx4GLq2IRARMIg7s/ulFn8k9LMt08rUpUBAwZkdM8KjMzLOh2EuxsPYiAumVk2wGa3knx9HKp
- kS1Ud9HAYybj8cjh9r9sMfvbo70syapV4MWv1d1QSjudTGlmB7d/ViDPlthpZsOw8VLuQSdtoYY
- 6rNC9umhIM8NKUL98nhkdf0YREDMBKwcVWaz+Br9Fl8LkoqOp6uJzLttibJXs8vKYroRvX9cgg3
- XS4Z1VVI1WQYLr/lFn2CsfO9c2IS+6ChhOIB5ModQniIdC18CB0ML9/snChUGIHE6E4j2rGt0rO
- 9HXCdcogynoL/g4LMhn0m0wUbT7RGUHV9qD7Or+Uu3X/AENtwTtWEQzCK9UWN38wIWhbyirbm6x
- UXkt6dTu08F3z73tXRRhTueykI9/llOiItzXsNuQdXO0RAecdtMYXFvUXQYAxp
-X-Google-Smtp-Source: AGHT+IFg6iH9BJeHq4aOiqxHsjm/MD6f+vy1OWo+rbxM1fwDMXT1DjWBv/68mkoS6E7clyHMfcuiow==
-X-Received: by 2002:a05:600c:630d:b0:475:e007:bae0 with SMTP id
- 5b1f17b1804b1-47d84b1fbeamr234567095e9.16.1768213946620; 
- Mon, 12 Jan 2026 02:32:26 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f6ef868sm341578045e9.11.2026.01.12.02.32.25
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 02:32:26 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vfFGA-0003KL-CC
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:34:54 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vfFG8-00028T-O1
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:34:54 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60BLqO0N029996
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=YdK0lJrzvw+G1BxFInbgdPVm8Smaxs1gAf5DVgZpI
+ ik=; b=q1TzJw4vh4qgxeCIIGLF0ipGGKWOlcb91gC6oHgTQRLQuJPZV358EWiWw
+ hjQ9nRQFSCxCJJIu4SsamzO56hnLroyC0urODTkR2LhqVhaGNeygkr6kts99Sunl
+ oCphEMADSM6rW+1ZHOko64x9j0Z7hIJfQzl/T7mK7esBl6/giZbrJdQkfzs1hn2N
+ B4AsysuyYXKuqyuHORun6zByzRcyBOnFw81ZWBTFU2ZWsm+h2JUab9zVO4yLWZRG
+ yFOSnMdMVb0iUEQJ4ZbTRwE7SscsKQT4uZ5el89m6jyPK9Um6krd4WdLxHKUHoOM
+ 3Ovr0uqTjOM0fFefNJ0JXy8lPzC2Q==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkedsp9v4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:51 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60C7GMmI030134
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:50 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bm3ajd730-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:50 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60CAYn7H47907298
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:49 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0AF0420043
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:49 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 95D3920040
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:48 +0000 (GMT)
+Received: from Mac.com (unknown [9.43.47.93])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:34:48 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Joelle van Dyne <j@getutm.app>, Mads Ynddal <mads@ynddal.dk>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Nguyen Dinh Phi <phind.uet@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Collingbourne <pcc@google.com>, qemu-arm@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 16/19] accel/hvf: Add hvf_arch_cpu_realize() stubs
-Date: Mon, 12 Jan 2026 11:30:30 +0100
-Message-ID: <20260112103034.65310-17-philmd@linaro.org>
+Subject: [PULL 00/10] ppc-for-11.0 queue
+Date: Mon, 12 Jan 2026 16:04:23 +0530
+Message-ID: <20260112103433.8451-1-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260112103034.65310-1-philmd@linaro.org>
-References: <20260112103034.65310-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA4MSBTYWx0ZWRfX8w+tid9pDSXf
+ LQc9TSanyNdpry8WolG3Zk1zatq9bHstQ1tPiaK07K2Wj0mxTLUsouQP+Ev05ev3YbiAO+WY4zP
+ hqk71kBJ0Y6wiKbXnlO3Y20FtPAW+gVcdjQ8DOWgrMqPy9AL5r0ft50fn63xRcM/eKMQjWkrj5A
+ THd5kfZpEvm6q+vdBNj8gN+VqpXUsG2EKHl9EDfU4NYlh9de/nY/Ys1s3ZtPuuBS4IC6lwLSEF3
+ My+coajR1DVYwzJRt+NBLXRqYZqiKbYKHU/48DmsLBrjOyx3roFcOQeijQVLg4PVZ3qRDg29v4q
+ iSSv76DsXndo2alI12W/bF7qRRCxRcOCxC4dJlDV3Cg6XBnXhtsGU8tv0KrV3Vw4lE9q2iPA2pf
+ CtcN1Fo/odwIxT+6TK1AGCibN3bDBzKVS5Yp94KAULeqE/h7DHMxSJ1EXrUHeNPLUElKMqd9mEQ
+ 3mrFgxDsmadqU0Zkd0Q==
+X-Proofpoint-GUID: v_fxvm0hgQiE5jHi2bXb92yfvPTiSx6W
+X-Authority-Analysis: v=2.4 cv=WLJyn3sR c=1 sm=1 tr=0 ts=6964ce4b cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=vUbySO9Y5rIA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=y9vodQ7xxGY07D5UZ5oA:9
+X-Proofpoint-ORIG-GUID: v_fxvm0hgQiE5jHi2bXb92yfvPTiSx6W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-12_03,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 malwarescore=0 phishscore=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
+ definitions=main-2601120081
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,77 +115,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement HVF AccelOpsClass::cpu_target_realize() hook as
-empty stubs. Target implementations will come separately.
+The following changes since commit b254e486242466dad881fc2bbfa215f1b67cd30f:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- include/system/hvf_int.h  | 2 ++
- accel/hvf/hvf-accel-ops.c | 2 ++
- target/arm/hvf/hvf.c      | 5 +++++
- target/i386/hvf/hvf.c     | 5 +++++
- 4 files changed, 14 insertions(+)
+  Merge tag 'pull-riscv-to-apply-20260109' of https://github.com/alistair23/qemu into staging (2026-01-10 10:31:57 +1100)
 
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index c8e407a1463..96790b49386 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -106,4 +106,6 @@ int hvf_update_guest_debug(CPUState *cpu);
-  */
- bool hvf_arch_supports_guest_debug(void);
- 
-+bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
-+
- #endif
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index ffcfe9663b5..b74a5779c3d 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -356,6 +356,8 @@ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
- {
-     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
- 
-+    ops->cpu_target_realize = hvf_arch_cpu_realize;
-+
-     ops->create_vcpu_thread = hvf_start_vcpu_thread;
-     ops->kick_vcpu_thread = hvf_kick_vcpu_thread;
-     ops->handle_interrupt = generic_handle_interrupt;
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 718414cc53c..bf8bed1495d 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -972,6 +972,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     return 0;
- }
- 
-+bool hvf_arch_cpu_realize(CPUState *cs, Error **errp)
-+{
-+    return true;
-+}
-+
- void hvf_kick_vcpu_thread(CPUState *cpu)
- {
-     hv_return_t ret;
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index e3e54c10bd5..089dd4da1ff 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -370,6 +370,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     return 0;
- }
- 
-+bool hvf_arch_cpu_realize(CPUState *cs, Error **errp)
-+{
-+    return true;
-+}
-+
- static void hvf_store_events(CPUState *cpu, uint32_t ins_len, uint64_t idtvec_info)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
--- 
-2.52.0
+are available in the Git repository at:
 
+  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.0-20260112
+
+for you to fetch changes up to f4e34d0fd56c25dd0c90722ed80a83a175160a6c:
+
+  tests/functional: Add a OS level migration test for pseries (2026-01-12 15:34:04 +0530)
+
+----------------------------------------------------------------
+First PPC PR for 11.0
+
+- Snapshot support for several ppc devices
+- Migration fix and OS level migration test for pseries
+- Minor code cleanups
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEa4EM1tK+EPOIPSFCRUTplPnWj7sFAmlky2YACgkQRUTplPnW
+j7vXUg/8Dx/nsygeDspmhlmvqEWjyXm3fjIGnyCtSZWSkDkhh1x+uc0khFLuG8in
+1Ep2D4qkGDBrdv079WzDKJDhgH21gTApA92xUsJFof2LLgN+MZOgi2Im6wR+Prtr
+EddB7jJ062fDDyMQWBdg+9jkl0+xuj+JE5JXPbXV0Fqu+t3rVJvn7c1b3uRXRrC9
+hgiss0xgTpXdVGnVjsQYLr3+iJ5Qcd7+6UhtRzTgv7S02IJRjpVoHSayBnKmzG9r
+eLqQMykyqU8drmQUruTk1nM2PRbaGTuRO+Swcld7SgqxOxxYIXD72f89B94kZKqM
+qZKv/C03EP30wS7/zJMwWsIEuXKM/oUwXl4i5C5eRUIa637VjcFEhuj0fCd8qxmz
+mUp6tVTYaGESpWUJA9TLZOkvLO9c4gumbTWa5valYeRWCLdXFQZgDg0wrwu7SL5M
+vdzKdnTMozkkKIY0W2Gk5j6E6aHpcGvNxREGrtI1BEUGKtGVzPjMHZmYDormSLIz
+lvgZj7JEncjkGv6uIYKMv1tT7Cbo2YxoGRWbx59PWpK9Ekl8307BMi2OtPYqZm7N
+CKS0lK+OM8CUP7Ao4nwxzH+T6X+C88Ivjt31sS25ixdUK6+Wy8tCEK2XCwA8gxjH
+QuBMDYMoAWgZ+mQITNy+HrqM1TBI8a4PiF9DjX2xj3sdyBd67F8=
+=2zBL
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Caleb Schlossin (7):
+      hw/ppc: Add VMSTATE information for LPC model
+      hw/ppc: Add pnv_spi vmstate support
+      hw/ppc: Add pnv_i2c vmstate support
+      hw/ppc: pnv_adu.c added vmstate support
+      hw/ppc: pnv_core.c add vmstate support
+      hw/ppc: pnv_chiptod.c add vmstate support
+      hw/ppc: Add VMSTATE information to PnvPsi
+
+Fabiano Rosas (2):
+      target/ppc: Fix env->quiesced migration
+      tests/functional: Add a OS level migration test for pseries
+
+Gautam Menghani (1):
+      target/ppc/kvm : Use macro names instead of hardcoded constants as return values
+
+ include/hw/ppc/pnv_chiptod.h             |  2 ++
+ target/ppc/cpu.h                         |  1 +
+ hw/ppc/pnv_adu.c                         | 12 +++++++
+ hw/ppc/pnv_chiptod.c                     | 38 ++++++++++++++++++++
+ hw/ppc/pnv_core.c                        | 22 ++++++++++++
+ hw/ppc/pnv_i2c.c                         | 11 ++++++
+ hw/ppc/pnv_lpc.c                         | 41 +++++++++++++++++++++
+ hw/ppc/pnv_psi.c                         | 36 +++++++++++++++++--
+ hw/ppc/spapr.c                           |  6 ++++
+ hw/ssi/pnv_spi.c                         | 27 ++++++++++++++
+ target/ppc/cpu_init.c                    |  7 ++++
+ target/ppc/kvm.c                         | 18 +++++-----
+ target/ppc/machine.c                     | 62 ++++++++++++++++++++++++++++++++
+ tests/functional/ppc64/test_migration.py | 12 +++++++
+ tests/functional/ppc64/test_pseries.py   | 35 ++++++++++++++++++
+ 15 files changed, 319 insertions(+), 11 deletions(-)
 
