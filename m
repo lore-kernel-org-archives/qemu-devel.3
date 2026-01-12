@@ -4,189 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AAE2C9EC72
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E270BC9EC79
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 11:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfG9d-0002xv-Sy; Mon, 12 Jan 2026 06:32:13 -0500
+	id 1vfG9e-0002yr-PX; Mon, 12 Jan 2026 06:32:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
- id 1vfG9X-0002vM-2q
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 06:32:08 -0500
+ id 1vfG9V-0002v7-Du
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 06:32:06 -0500
 Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
- id 1vfG9U-0002Jk-Nz
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 06:32:06 -0500
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ id 1vfG9T-0002JO-7V
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 06:32:05 -0500
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
  by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 60C9GeNd1978786; Mon, 12 Jan 2026 03:32:03 -0800
+ 60CBVTRa2963395; Mon, 12 Jan 2026 03:31:57 -0800
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=6CzeoI7NAHssxTUP30IgKtjCm9Xls+b69uBxt8n2s
- Zs=; b=dcq77kNUA6rHVFdvhxePjGfiEdYfnl1ps73FJvALLXO1/3mfOJYfVv3Dc
- tpcC3x44JWBx7NAxD+0UnTJWMQnQy2X8Plc636pace2ZIXHnT+ioe0yyaqS81SOH
- KEbFRIwL8eKT56J9HTsIwhmhfSFScMJNTRKDmFcjuUk3dQYB0W2QoIEKzWGNt9CT
- kBKXtNoQSxY3/nWCVBZyGyPpqXS1FX/ZxKBzGbYml7oyutrFfIiFwPkUoiDUjVcx
- zKrlE5MPH6pdHggYcGbe9BZ22JKRAVSaAa4jl2YkHONjzFGPP16NQgis2VR6dd0U
- rZ1PLgVijIyhcpsQW7mn7hrmJDWxQ==
-Received: from cy3pr05cu001.outbound.protection.outlook.com
- (mail-westcentralusazon11023122.outbound.protection.outlook.com
- [40.93.201.122])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4bkkys39e0-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=1bHWRZ/Zdo7gr
+ nVC3qa+Ofs4YvVuss4G+hD+jCH5q+M=; b=t/SsOn7XZLYGsApy9pFNKM0iEew6N
+ SHhtbUb7OsiMljqDbUU8vX6qmClu3uIo+omsRfihErvvqsR2USTxIKR5YM7z+9Zo
+ z9oYtEukGmcTvi3fBLC721F4iFAN3OTHD8ZYUb/RunkE7ECjIZri5joEzopuIhIv
+ V1zpw6DPx6kwk1UCqBUMKq9oRsGRdfbnuMGXaTMAOkuGjU0z8IcZoJOrwhkaFv6z
+ +Jqamg12kl/cVeuv1e5rkhcYVEvQp1Zvm5FmmayLgvH0gfS5x5PowjAiSJIo36MU
+ RCeRPwBOJMq14nH0VRCGy0CjzcROyu8jQTyJvnzaJYTUH2/t0ph20BaOg==
+Received: from dm5pr21cu001.outbound.protection.outlook.com
+ (mail-centralusazon11021118.outbound.protection.outlook.com [52.101.62.118])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4bkq6yk485-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 12 Jan 2026 03:32:02 -0800 (PST)
+ Mon, 12 Jan 2026 03:31:57 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BlKjkZ7JNm4tEX/kdmIv2IgCPf7jZ7VgWNgyQWNPwJpjStEBtOSjTHsNg+UbuCl1TNkrydMNyEXD0SGWr8QgPIhWcFbLL6uSi2IxGtHFgWCAM4Y05Iwc02V8eJlG+Lyru984NVabfbpIP+ykhkwySiKSJXIY5BPJSFNTSXICRgGlzrT2ZPr1r3I2a/E6zrVJbI26Pbq9HgwcZ64q3yYAU8bnawnzvtup0AkbXg8a4DXCGkIc8idjkdOU1xb54Y4sSOikYWSkQb2XPVyJleIWGJWomRKsSgBjPE8blKfHuTENlJphmh6EADFjjAEHq44u2yf1LA+yjumCE2ojzj/Z9A==
+ b=kUuzEdW3gjuLmQ0NiHqhzHS0/hWsdpnohmfKTVi6dcd+D2fOvxr0o/Aiawr5avge4Wtko0DwG8Gr2HNoyYvRSbPBx4+40crw7njdVeGotBr5JaPDEO+soPCX42PdmpTBqF/DvrxAf5UZtedM2knz94+3/wWY0GKmgZ9RgpzQ+Z22tiN8IBx7t6vKNJlSwucMXyORbyYA8yGXD+L9zAJWJv+hV5ko/6E/3X68llnB2D8jVXzkn7gkqA34rXCFjGK+SymA5+mHrAeHaR4MruSMHFmLa6Qd2552Bl5cbYg0skE/9j+59ohWCbQi9iVaKyvH1lxp7NIIXnRMGwt9vIKusQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6CzeoI7NAHssxTUP30IgKtjCm9Xls+b69uBxt8n2sZs=;
- b=QZz/D2O6Sq4Pj2nKQs/C3JgSDlo2TmsN5VhPmiUs5ldJ+sUIfy2xLGLXLlgtYizHrshD2TQaR/ElYsMSA0JPtNl1/QMD6cASm91w52qWCChSxiQOC22dRQ4B+cQL60vweh8EgRRqjekpCFyxYIuYbrjQkVgf1/xvweUIxFTBvJSAyPKwPDAgxe9jOISgllOftluCb7mLuuit8DII+HfX6SJapUDQNegj/XQdZgP9cfc11fqsK6Kx7ErkaoYhMIBDnFPNncCGJtDUhAUC6oM8w/9KspDYy/3daFxtkIbhQItyc0+sCO/8DKavdtznbd++w4tJrk6jRPJcvXv2sBJ8Ew==
+ bh=1bHWRZ/Zdo7grnVC3qa+Ofs4YvVuss4G+hD+jCH5q+M=;
+ b=r8JM0pKHj3NKSauWgBNdrNduIaJlbWJn3mV6Il2rJQ0A8GwBNdqzjmsAOVQbFMDk72e1m4wfOChjHKViBonP7UyBXW3masn9C/VStYDhT12R2AMXrIIRRCYlSOZ/yYCVKH2/JWPvg5RxDrXo7lnJZR0XJt68QIBZ4Uw/jbiZ/QWJmiMwWA3lO8hSgQZ+u08isNyAMEXZrTDX/cQiXuvVYmPWs06fb1RlzRQ5eJpjfa5jY3M/rEtiY+Jf0wWQWYBqgPBGcjF2u4qGZvGf4Xyt/GcH6ZeTwC9tY+CLww4D1UP58ueAF4OW9N83cUTx2QpTZ1UM6ts5/9D14u2hBahAYA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6CzeoI7NAHssxTUP30IgKtjCm9Xls+b69uBxt8n2sZs=;
- b=fwWvEltRIo6mfVkdgtr/AK9nRcpO/9/VNvdLAqJ+PfSyaC5kb1Mok87t3WEW6zfSD1sCLxxVdAcMRFqJfoTOtpvSnqCJ+zfg/Mt4aq3sPjrcxTm+8+q7DD1uQ6Bs7g+NpsTdFF6fzARNa8pusHoejgHYa7HYwfS4yctWyPwEt72LP5baPQnUuFEhu4+swFhrOOph3WAUSv2qgD0Le1XagD+QpqvgpoOE/Krf693igSAKZnlEtqLrlytR4/RCncYfBIC0wFDPZ5PDuH38Z1Np8dy5Fr3SzZzVi+mYwtZuf+wMWpSRgFvaAqMIEZO2LAsixRb1DfJL/C73sp3moQkH6g==
+ bh=1bHWRZ/Zdo7grnVC3qa+Ofs4YvVuss4G+hD+jCH5q+M=;
+ b=UEb6wFn88e6nfg/rr8dxVQtwzXJ/PfVQ3VzJx7MiI7ZNJiPWo5j8JOz2av4Xv3DeghfgGRTFPWPoRTDTXWIFXSJjjotQORDh4V3Rz0laEI2G26FhpZxVOPmW7xmvOLmWQ4Gqzjj6lX5pMym1FyxJhzWh+rBVlZ6km+D1XyiA6O4wTNUCp11BYlA2u/XU8cwMp/mNj1Ld2ChBXRgumuz+blyxnyaRCBlF74tLLARNqs78chLTnW0nlMQJuASVpLH9RwUpmfPj0bkbYY3+Zi8rwWzWHouYnSQ6pZCs0bBjsKOB8MiCIQP00HOdT2lGoxGGU6+/0p+FzEvDETZOrKi27g==
 Received: from PH7PR02MB9992.namprd02.prod.outlook.com (2603:10b6:510:2f5::16)
  by DM8PR02MB8071.namprd02.prod.outlook.com (2603:10b6:8:18::9) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9499.7; Mon, 12 Jan 2026 11:32:01 +0000
+ 15.20.9499.7; Mon, 12 Jan 2026 11:31:55 +0000
 Received: from PH7PR02MB9992.namprd02.prod.outlook.com
  ([fe80::e2e9:fa4e:10d7:f7c1]) by PH7PR02MB9992.namprd02.prod.outlook.com
  ([fe80::e2e9:fa4e:10d7:f7c1%4]) with mapi id 15.20.9499.005; Mon, 12 Jan 2026
- 11:32:01 +0000
+ 11:31:55 +0000
 From: Florian Schmidt <flosch@nutanix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, Florian Schmidt <flosch@nutanix.com>
-Subject: [RFC PATCH 2/2] Add HvExtCallGetBootZeroedMemory
-Date: Mon, 12 Jan 2026 11:31:38 +0000
-Message-ID: <20260112113139.3762156-3-flosch@nutanix.com>
+Subject: [RFC PATCH 0/2] Support for Hyper-V's HvExtCallGetBootZeroedMemory()
+Date: Mon, 12 Jan 2026 11:31:36 +0000
+Message-ID: <20260112113139.3762156-1-flosch@nutanix.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260112113139.3762156-1-flosch@nutanix.com>
-References: <20260112113139.3762156-1-flosch@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: PH7P223CA0022.NAMP223.PROD.OUTLOOK.COM
  (2603:10b6:510:338::14) To PH7PR02MB9992.namprd02.prod.outlook.com
  (2603:10b6:510:2f5::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PH7PR02MB9992:EE_|DM8PR02MB8071:EE_
-X-MS-Office365-Filtering-Correlation-Id: 41438703-af75-4b01-791f-08de51ce3423
+X-MS-Office365-Filtering-Correlation-Id: 38844c70-d75e-4af8-eee8-08de51ce3081
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|52116014|376014|366016|1800799024|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?UCAqBP2wLmhGyTtB8sUStl0NELFHPvEEXXYopIU4qeBRLUjt6cC8mTuqcJoy?=
- =?us-ascii?Q?J9+rDPMAfiVOdjWqlpOlKkqyf6MbEaSUva9CJUcVeE8RyLiqYT1DVPxOV/Po?=
- =?us-ascii?Q?OVQa/PUN8w2YF5/mDCEeA8ZN/HWZMBB4XcK5nTBH66WrPQXtitaHxSLUX4lb?=
- =?us-ascii?Q?G88FHcQpi9/C6lbZP47WAzDt75OutHy9lqtGbRc23hDDWLxiCVyroeYjb8xc?=
- =?us-ascii?Q?FkRNHhEcE4RuTixwQUzNt5XshPYpwYBph4WTeHuNCRkFNcF/wW8oUh6Fm79b?=
- =?us-ascii?Q?/3wpCM7Nv3zT17mbxZMqfMRqVEXUVjquGyBj1trYeUuTCWpGOfQArAgnDHtT?=
- =?us-ascii?Q?zzxDQ6UPrdv0O+Lje+Uf0JckTP+BxqzC7LOjnJ2GtTLnovUqfmONIkdN9gGW?=
- =?us-ascii?Q?9FXh0CSJFk1lbR+FDYEqgeapdlcGKVHpGr0AbT4ZOVg9+pYAOShGp/Ak61P6?=
- =?us-ascii?Q?f1XuxVQuzuHinFPau+tzUXwN18L40oAtgJ9XlUVTluNN7X585QZirm4GLYM/?=
- =?us-ascii?Q?rrcnyXjPh1EepR5B2STwUyKvHOUIMzcDF3PFBv2+uOVpNuOhhtSrh2VhfJQ9?=
- =?us-ascii?Q?GwcSYmIWleL1Hee3iVv48ZnRJNrt4pNmMXdc9evppaXm5XeWB/O9tS18tsL1?=
- =?us-ascii?Q?4e5TE50vh3FzLbWQn26/uiGGR0UuGU4I7aaFAK9rfRGc9bne4ymFbfsBRmci?=
- =?us-ascii?Q?n+gCTTxhMNWb6UJbDblcmitiRPaIWZ8kjxkAHAvRM7wPGbbMAg6yoYBSMNpN?=
- =?us-ascii?Q?pYh8hPkpKRFh7i5M1EcjQdGwkiQf4FjeqKU8E/FIHw6hzZXdbaoYyfsloTqf?=
- =?us-ascii?Q?W0A5qN2rUKT04sZ2slzgF+fauZr7vddweeZTStBIWHWoGQykToJCYhoGz7J1?=
- =?us-ascii?Q?C1yllMaOxE4QrDxr5HMY5wFc9X6L4aqlgw8y14sKm6DfblFxHKJth9HkGB6J?=
- =?us-ascii?Q?uHSvR2y79634If2LfFWw77e4fQ1DDfzmAddmvV5HHK4+WzfHpbiCrfn8TSFc?=
- =?us-ascii?Q?IAb5vbBPyKXSXwwPtbdkEpQV0nRORaLz0umdytKHveLyixU5DZ8dYD+eWo3h?=
- =?us-ascii?Q?P3CPE/YsKBrKQd8oiOw/fVKPVbAfLW2b1DTN5r6OhmRba+e1nRwJwjMnbgE7?=
- =?us-ascii?Q?AKKpU+PEZISgvmi4Xq1Dak0NWGd3raZMfiTU9anjnsBiOBMguSjVXjpR2zqQ?=
- =?us-ascii?Q?bum1LdX2LT+EEVp1V4JrmxeyJC4b7X32cd70OGm5vop+lAdHgNL4ofNIZA+F?=
- =?us-ascii?Q?j5TnMDkf8b/LMrtbGvidu4a5MJn1rWPubJYUDVq9Om0LLMemVZBw/oJWHr3e?=
- =?us-ascii?Q?fB1mH8BiS0HK5PNrUq99nGyQYmqMJgQUEWbrcWSFXe76l2qX/8ns+8MDp4jR?=
- =?us-ascii?Q?gYchCiDkJRBycIowFUsPAB1UiVBbeQ778UknxGC8zOTbGWC9rHsFXfXT81yo?=
- =?us-ascii?Q?/iqIZh7rqNLBhcJF+QR0ZAjazYV99S+DxGK+/QcS8QTkPfiTrFmcH4ojPDH1?=
- =?us-ascii?Q?BeUNRGOedmHgJFiMlOXNoM7DKBbwKaW7j6uJ?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?cHI4TktGVXhsYnpDbk9tcEJFdHlXbklKaGl0VjZpQjZpS2ptZFZpRmxDVjhy?=
+ =?utf-8?B?a3h3MVpYajdiU3kwZE9WUEhDUy8yRUFoelFzRlIrL0FuWC9qMktUbHZtWitt?=
+ =?utf-8?B?Y2VKa29WS1VjMjU2dFhWbUFNcUdCVldEbTg3QW95N0xScG0ydjFUWXdTalRN?=
+ =?utf-8?B?Z25hWmtrM1hXYzlkZXYrUXFJK0pzMjk2QlE4N3FLeGJLbWlaNjNRRTRGTXpR?=
+ =?utf-8?B?LzNyaXJSaGlBa0tvUzRWUnpZTVhEdXM0RmZVSjNsMkhLRSs1cnhkcFNyOFd3?=
+ =?utf-8?B?MUpJakg3eWF0clkzQzBrSkRlMzdEOEJiWFhzTm0rYjdXYnhyQ0I0TjIzb04x?=
+ =?utf-8?B?aXNiSVdpYVp6Y05RY09WOWFZRHFUNk1wU2Q2WFhwNE5ERm0wOUs3cTBmcHVU?=
+ =?utf-8?B?dlFiZnJwQXRSZXZWM3doTllrc2t3M0d3a21HbDNpVU1hRnR4a2FWQWtNRUVY?=
+ =?utf-8?B?WEE4MHFLK2RZbEZVa2hFclNwaTZGankxNVUxS0tuM3NXeEgyWTJUSm1scmdQ?=
+ =?utf-8?B?eUJod21kSjdod0xrR20weUtOWStuN2Q4YVRDSjV3dnBROXN1VzF0V3dKVFV0?=
+ =?utf-8?B?eW90SU0wNFdDdE4wQzMxcGlYVlhJbDVmYlVrMlhJeDczaWxHSXA5MGdMM1M5?=
+ =?utf-8?B?aEpkWjdobVVUNFRmUFNNQlNQYUhsaE1oR0pKZXhweHppcjRXdmNEU3N6eFBK?=
+ =?utf-8?B?NnNLdzJIK0IvLzFJNHNmMkJtcGtuemFXeW8vdzVuTG5rZlZjZ0UzVlZ4RzBZ?=
+ =?utf-8?B?bXZiNFNBa2JvdkFINzdUano0cTFsNE5EWWxzd3VpSXpoYWxvZ3lDcHhsV3lQ?=
+ =?utf-8?B?YlRPMmozNi9GemM4NHV6V0JvSUJlV1YvaXR3WDFpclBBYk93bGNjdmE3NXBI?=
+ =?utf-8?B?T1FVUzVYZzY3OXB3MTM1TFBUbTErYlZUR1NCODZjemNNY3Y0RmZCNmxpNm5m?=
+ =?utf-8?B?Tkh5NFkzY3JkNjZ5S3BWWm5jR0ZvY2NDckpYaUZYSWttd21FSGJ6dlNWc3BU?=
+ =?utf-8?B?YXUvUUo1QmRObC9wN0tLWlhURXlNT2pMTVVSaVlLTHd0aXlBbXU5TUJNVXhN?=
+ =?utf-8?B?cldFcHdlZVJISHM0a09ISjB1Njc0Y0pvVEYvclNaUGtDa1hRZTV2NlNhRFhS?=
+ =?utf-8?B?Y3hBWGxrd3p3c2pyblZrbzg3Si84YXd0RFp2QWJBVXRsYUFoSkpvU0REekJm?=
+ =?utf-8?B?eUZ0ZDU3eWtyQ2VmVG5rOTJsMTV4T291MXhTVUNwNjhmYlRRb0VCeWZCVEph?=
+ =?utf-8?B?MThqTkRXL0tQUitocFM3NFRMREJpREJ6TG5lSU9nVE5UaXd5UkRoRS9IY25o?=
+ =?utf-8?B?WVVRL2UyTC9jODZXRmlOdzlmSnVMbnp4dXppQlFnM1k4Wk13SGZTZ2pEclRK?=
+ =?utf-8?B?YkxJOFpUcDJJZk1CZjlEQ0R4R3J2TmlVMzk2WjFmbFdPWlRUVmo1ZXF3T2FT?=
+ =?utf-8?B?dUtKMW9YcmZHVUJFSjhaL3F1cWFIVmZvVlB5SVZ2OFZkMEJib1gyaUVhZVcy?=
+ =?utf-8?B?YWlQZ2ZoaFlrNnZ3d3dPd3JKTHhOcWtJZ1ZvZXRZaDFPNTV0Rkl2eWM0RE5K?=
+ =?utf-8?B?RkhFTTJ2bEdzcThDQlpYRGJMUll0clY5azBGcCtVdDN2MVNlOUxNNjRVcGtR?=
+ =?utf-8?B?K0ZJNUw1U1pDTWtIU2xhM1BlaEFQQTBKT0Fwem00WTFJMGNRK1JyOTNtakVV?=
+ =?utf-8?B?SStlOWxyMEF5dzR3dmxGU2NVbEw2cXVHRHF0RnlieGg1RmhVakJab0pGMGl1?=
+ =?utf-8?B?SThRaHJ2Qy93aytmTittcmdJKzhoTWJQY0FKRHVJV0tMOSswNUVmcXVDdzlJ?=
+ =?utf-8?B?c2xFRWlQRG9iYytHZ21ESmMrYjVyU041dGV6YlpPZitsT3hKQy9zRndLangx?=
+ =?utf-8?B?RlpackNyMzdXQzR6eGY1MDJxb25STTlzMnU1blgycTkyM0ROQlFKVHpUeUp2?=
+ =?utf-8?B?N2NKeFFsR0hSZkRUMEhkL0lXemdiQlNlRVFVb05jZzN6dHZxUkhJb0J2Y0pw?=
+ =?utf-8?B?MGN1Z2dVSmFkcm5EK0tVdFd2cVhxUEtIL0N4VVpKR1VtTDJKZ1c3NVF5RmN2?=
+ =?utf-8?Q?e0r96k?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH7PR02MB9992.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(52116014)(376014)(366016)(1800799024)(38350700014); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?IKM9HNQxNaLnI8B1+QUUC+C+g7hwNy2PfMvbQ4DvulHGKcNMBas9FrEcat/i?=
- =?us-ascii?Q?BEfzswFXEkODY0L/N59fe+A11JeIlwLg/+wq136u1imuMc3o5vSYBN1wJU6G?=
- =?us-ascii?Q?Jhhs0e9NY0GaCfIs6uRXIKDDc/C8m1cm0K+lkR7giEX/DAoqbe/d+sZrQqjK?=
- =?us-ascii?Q?mrl1GiX7JzrdvEQtZe8g2h97ajBwW0wJ3BAwGNiiQ9iV/TTo4s59g/ZRI6GD?=
- =?us-ascii?Q?dqTKaVRHNSI3a0aBPkkmIesJxS/ti2Xz8PcUdS53uxnDV0EmSfdhSZ0C6h88?=
- =?us-ascii?Q?sP7tfE0JiO/sVUxS25mMXWyFHPAJXACwzWR5dYgChZN/Y4dFfXpb1b25cbe7?=
- =?us-ascii?Q?Sp7Hk/3l5qvU1dVvG8+YjrzeRqFBK0dsdcV0nVe+fDoAtVoZxdLLfH0+D2Y3?=
- =?us-ascii?Q?gXJvNMwnQUUQsCBIIdzTn0umeZze3uFjXsa78eO/31MYYfp8aj17IWLLPg2X?=
- =?us-ascii?Q?ZbEbRn217U+f1lHgktCrYPRVJYSO3WQ7pmtcRuU2TlrbsLI3sZFgCoWTNo3v?=
- =?us-ascii?Q?ER+vP+DS10QdihliSBCe5GmPVU18watFbdXYDXeN8l1y0XYrC2QsFnVFNB5y?=
- =?us-ascii?Q?B8twIHPgbREjLVLO3CPMmB9jOzYs3QdBAW+SE1LOPFb2GUDoPPoFCwLEYjRU?=
- =?us-ascii?Q?RD9bhQUSkd6zh/GYC6MJqt25p7fQcVJfJ/zFPuKL6eZTIyaxQrgndd6lidom?=
- =?us-ascii?Q?0thCEq9O9mpguK6PqHcgU42aLpoJv3xOx7As8YEWi7uVxlIwht5ctPGACTvR?=
- =?us-ascii?Q?s4QQ7/DNTqOafe6QDUFprJQ0Rj2RT00cqo9i2drgWJ+9s+xvkHrmbKoDlHH3?=
- =?us-ascii?Q?XZBzQcCPGTvXGqyCcPCbg4e9XykaVgYJP7Dzgda6mYwpVnOKe2GckDlibhS6?=
- =?us-ascii?Q?8/X5LVkNpozQub1G13iitrSnuIbUNnkinrsOBeyfxEfjsset5WJIAk3lML6J?=
- =?us-ascii?Q?7P4jFWlPTJR+HWzPU50mTwfBYo7G35CN/ENVrnPXAOuJjDKU9pS5cMn8MXVz?=
- =?us-ascii?Q?5CHvzbqhj7+iey6dXvSpgYeMkH/Adbc6SZOG9CZyGLvHJ4RVUMy1+AdrXdf5?=
- =?us-ascii?Q?y+Fqa+II6Aek1T7qBSy50KDfNonwl71wa5qvTTQB4x5UxFWGB2iQSyqlQUWz?=
- =?us-ascii?Q?8DlRRxZw31/ZUdzrPnvf3QwcAH7EgUE49hs3JLhXru0nxKn2SF08zsFd7R2Z?=
- =?us-ascii?Q?CQDwOCq+3z1U5LeBjg2eitBM6XxiobWmYekpViqJKMzTMe2KcdaY7noQALGO?=
- =?us-ascii?Q?T5nPPzw5iwJVr+lMTV/xj46081SNNSslB5TqP6g7xaG3UoYKKxNlzjxCmx8U?=
- =?us-ascii?Q?FkKEtkthDUJaoDMgk9PaN64SvpVSUHEBPiIZZg7ONjdce2bZgawqbATFZc8+?=
- =?us-ascii?Q?jbMEcIzkb+VpbbOvEsTwK0YQ0zL73hzmGP6s4GB3tOvBimTftmbB/sq+v3gA?=
- =?us-ascii?Q?c84PLziSER3sTIdsA6zd9BKZFGreWKSknurTI2vxAFnDiYpUxfcy11GCczSm?=
- =?us-ascii?Q?dCn6zSkWDnwyfdOTroOlcExV4V3e9ADFWbWK4jQiKnRFNZCiSyWmRkYBeQSn?=
- =?us-ascii?Q?yjzdDhiMkN/hIimrzyYM/PorYwPQB2ET6W6AIRkldv9lgbtx5A/sDimX3YJV?=
- =?us-ascii?Q?HoZnmJ51HDyZnpNNbtATgly8cAjYHcGm9o5twrV89+p65nYuT6tZE53fQQ1U?=
- =?us-ascii?Q?lo/ZcyKa6DetPLhFB+Hszl9eMyBAF22Fz9Jc8Eefuw4alQVJtJGjDE4ytnVC?=
- =?us-ascii?Q?OtOJWkRVc1aX/d+bCSd19fCAhM8u7VM=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eVRad2NNT3BjWHpOR29PTUlHbmNyTGd6Mzk3b3JzbzNxNlliVlRjcEcxV3cr?=
+ =?utf-8?B?Y1lQWjRMQkdwSGZyT0RQcHdza1ZUdUJtai8xRGZKR3lwRkJWSFJSUmFFVGR1?=
+ =?utf-8?B?RHRMTmJEd2QzTEtPMUlyQk52V3dYWUlVTXZZTW5OZ3plSkcwaHk1d1dORUcx?=
+ =?utf-8?B?a2doRGlQY0cvdDZRTzFhTENRdXE2YlJEMm1qMWhwcnRPODRTMHppQS9YK1NO?=
+ =?utf-8?B?YjU3eG1qMTcwRlBWTE5DLzh5azVYZDBnbmZ4MHlSbWI1cENYRzJYV1l0cFdn?=
+ =?utf-8?B?TWI1eEZjZjBPSEhtbjR5WnVMWXN1V3k3c0d2YzBuK0lvYy93a1NXTWRwcE9R?=
+ =?utf-8?B?SktwajlEUnlSc0hMeWhQVHBNdTA5RWlOK0xaelZJbi8zRkRZSk5yYWVvRnJj?=
+ =?utf-8?B?VUFLSFpCek55K0s1c2NodkFvUTZQNWlqRVdjNHVxSDEyd0c1RVBSeDllY0w0?=
+ =?utf-8?B?R25uQnhneHpFczh4MzhpUWdFQW1kZXNaZFZyU1l5WE9EOFhPZDRydXFlT0pH?=
+ =?utf-8?B?Z1pVNzRpYmZHQWJ5Q1NEM21hRjdlV294KzRXTk93Mm9yRzBiTS9IZDl1YXZR?=
+ =?utf-8?B?MnU5MEh3VkdMYVBKWGlUWmxxcGN4aGhVbk1Yc1pMQzVBK0pxQk1YaHcxK2pw?=
+ =?utf-8?B?dkpNV1VJVTN2YnRxcnh6S015MVhkc243dWlxYXNYa2k4ejhOOXkrVzNIT3hJ?=
+ =?utf-8?B?UCtuOHR5NERJUFdMWGcwaFlqUmhmODJ6dm1BUkluTjREZmV5M0JtRkZReVQr?=
+ =?utf-8?B?ZjFiMVVoVkpSaFpmK3kvV0ZFUm8waU5rU0hWWkFUOUp6NUszTFgxbmhDMHVY?=
+ =?utf-8?B?Y2lMeVVOb2c3YnV4eFVOa2wxMmgvS2pOekVNNmhONzliNHF6a0tPbUVjZjJD?=
+ =?utf-8?B?aFZkTG82bS9zU01oaHMzNjhwV0FEQjU2WDVzazN6L0g1VHMwaUVlemFBWDN4?=
+ =?utf-8?B?WU9PaG5NcnZ3MWdiNFVlZjNKTDd1VWx0NmNMMXIvRnZYWkJFTDRiWVZVY0xU?=
+ =?utf-8?B?VzRmbDhTc3ZFVm9RL2hoWm42aUdMelJnd29oaTkrZXRTak9ERmxxRkwwMkJH?=
+ =?utf-8?B?azdaVHFYdEpGTS9ldk9CVzA1cEpjOTBwZjVmRzhRVXVGaGxzQWRvVmgwSFJi?=
+ =?utf-8?B?REdSWGsvQ1duYkF1enFMT1NjeTg5Ulp0M2h1dGhHNmdXREUzanAwY3AvbmNU?=
+ =?utf-8?B?bW5GQmFaY0dZbGlZRmhCRjU4ck5GR3NYc0pYTWNXeCtVbjh4UWt6K3l2ZktI?=
+ =?utf-8?B?eGhZRW1EZmpPMnl2WldKb2JWNGUrYU9id05qZk9MMmltUFlaZ3NiRWc5VHpG?=
+ =?utf-8?B?ZE00NTdZTzNnVUx0MG9JMURrVnRpSHZaK1JRckFhNzZLRGNqcHYyOU9DZlFi?=
+ =?utf-8?B?TzVPcHRpc1NNa250Z0JIdURxbklKS0MvWlRNOWJaaWpYK05HZUlkMkRIMmJD?=
+ =?utf-8?B?emlaMGJ6WFR0OHk3b2NGcGtHWStTMDJTYUhXS2poZkRadWVQT1JxN2FoMVJt?=
+ =?utf-8?B?MzNNZVY2c3dZM0ErOHdYL2JZenAvTlM5RmpIMHFHTnRyc2tDay9URGROQ3dD?=
+ =?utf-8?B?QUE3clNSTG93Q0V1TDlzRFdwbUNJYko0SXBZUXBKV1RiK1paSFBmM1ZHK0xv?=
+ =?utf-8?B?ckp0dUVORlZrTDMrWXdnWlpBQ3ltWHBjb2JtZ29DVEhsTlNQdGxoWk55ZFQ1?=
+ =?utf-8?B?KzI3Yy9uRkYyRy84Wi9RcVZTTkRsSWNBQ1drMVNWN0E3d0hKaWZsYmcxOXdx?=
+ =?utf-8?B?Y01yWEVSYTFJUHFYbUR4a2pBb2xQUzcvaUo3Ymc3UWYvUFRjZ2p2V1p6Tjc4?=
+ =?utf-8?B?aWxEdXBwaDlDSDJrN1dlYjBxbVMzZWExWU84dTV2eTZ6ekVyVGo4OTZWemp1?=
+ =?utf-8?B?K2FCZnIwMklHWVUvTkJNcnJNUzIzcEQzWitScU1PekROT1p6djBoSTkwbzV6?=
+ =?utf-8?B?REw3RnVUUjF0dkRPNDZFUWJCSStrQ2RjdFAyT0VFUGxDRnpGb29tWmVMVVA5?=
+ =?utf-8?B?elNGemdvUlRhMEhCSXRVS1NoL3lxaU9ZRDB0MHRwT09tMlFqdGxWWmsrM2NS?=
+ =?utf-8?B?cVEwMzZySDdJcTBKUENvMGt4RTNhK0I1ak9uSEZoZ0MyeUpoMWNjT0JHSTdV?=
+ =?utf-8?B?Wk9VZU5vRURXR2FwUXJ6NW4ydEdiQkJJK2F6Y1lSOW9mYi9rcW9tVUJYSnoy?=
+ =?utf-8?B?UWptT3UydEZZZ2x0OERqbUVIK1BTbFdiUUJSQ1dGWUNFSENTd2Nkb2d6enI3?=
+ =?utf-8?B?bEdTcTQ5T2lxem80SFhJbGZCNFErMytVVG1MRXdtamVpb1JjMXBFUWZ3cDNh?=
+ =?utf-8?B?aXFybTlLTkREcTVuc1RwVW9uNzdxMFJlSUNlSzVFSW96eEg3QUttS0NqbHB5?=
+ =?utf-8?Q?roHnK0xH3reRLe7s=3D?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41438703-af75-4b01-791f-08de51ce3423
+X-MS-Exchange-CrossTenant-Network-Message-Id: 38844c70-d75e-4af8-eee8-08de51ce3081
 X-MS-Exchange-CrossTenant-AuthSource: PH7PR02MB9992.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2026 11:32:01.3998 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2026 11:31:55.3367 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mVYWWbQhotPfwrWEl3GbDJNocYVC9rFvHdcLY6HOc5/avl5rgUrtX0PejMEVCXLUF+LmTpICETHH/uvmaYWucjqGVE9pOZFl7Bip6mlHltw=
+X-MS-Exchange-CrossTenant-UserPrincipalName: /GciF3NnyJ5J12TOsjvc31AkLuxgnD4CNKupbS87NAO0eiRTagsU9O9+sEn25hEls7IndTnK5+RIKZk/Pz2lNH/ftPNSJ1+GrXxK/99HmTU=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR02MB8071
-X-Proofpoint-ORIG-GUID: XkHZ1an0_-qnaseZE222Nc08UsNzNQFH
-X-Proofpoint-GUID: XkHZ1an0_-qnaseZE222Nc08UsNzNQFH
-X-Authority-Analysis: v=2.4 cv=J8unLQnS c=1 sm=1 tr=0 ts=6964dbb2 cx=c_pps
- a=FNmKuShaFFLZE4HaRSHjWw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-Proofpoint-GUID: 8MMj5mmuNwWFL4lr8hIHkcjqYkGdBwW0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA5MSBTYWx0ZWRfX3CXYz9gFFsmw
+ Ap+B7YsWhAihQ/lNZpRYN2UGkXUGCrMrXu11d6rqMqsZuugu60WkxlK/ebe3Gj/grvgmbtqeteO
+ AXH5hrSbCheuAJt6dVHrmNDFE7CQI90gavYZIuSXPLjl1qRrX/qWvj/XhFLV8Zum4elO4xqv9NB
+ 23fY+9bSIb9wly9KdaG0EVPngjJp3rmrsY+bEIasLn5i8ex0tm+w3r8Ki0nqf68eMy3vDL3L+2m
+ OJ3WWC6ir3vORX9s80qeuEF+219qMuL14Pjcz2p+JirgzwAzEVhraWrbH4sRFw2kvE2bL/0AmpW
+ Wh3wbVPIJ9wKbLWc94FtVACMcAQFMkAEfB3HBC7U4LOusmrB/dpMQkYLzOMrCBJSSF8RNGwkTa/
+ 0xKdPXd7hE7NGouvcssX1I7sKDSy0hhSD7Lz3ezfbaa4ni4QblIv2PHeL59IUPzJIsolkPqi0SH
+ w3rxVFthNkCXhVAabng==
+X-Authority-Analysis: v=2.4 cv=HN7O14tv c=1 sm=1 tr=0 ts=6964dbad cx=c_pps
+ a=faNChB6ooTmYohDsr5IHEw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=vUbySO9Y5rIA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=64Cc0HZtAAAA:8 a=kxB6lYKRGD2xpD5JXEMA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA5MSBTYWx0ZWRfX4HkcP4GA5LkZ
- GAFsGqWlcOgm0OCAtYoVCxslTKsU87vNnWDyhe9HzIR9Xk1DlvOsupGHz0BsiSop2TQl0Sia2Pf
- eig/vtxXfGXF8fMj1dGVNhf3LJfwhiZ4pue9uanwXuWmhrj1O2Lgtg0IUXsDZcBnxfEdPvZPv2q
- oxJ+NQcw274l5oQR1p8fS4dFOgwqw2yrS0WlisQpryBT+7HMBwTRcW+dTFL596OoIWKq3wqtRmf
- 99hwwpvj41mKXdUT+RCuj0uo5v2CHh011DzwKqsZgdbbL4bXsJG2pMpYHjKWs/Y5pJd06xYSZsJ
- KiDMgs+D4pcdTitn/RPTCx07O07y1zH3VZH+4TAOp3c7jFGmqHd9AAqz6oQR5rRUVXWTRr27IHB
- mxm9HppRn6xNF992YO65v65sz+B7xgZvn3+wsANgg6q76XchT8/w8HRQ89iaTnV83yDoRcotkFd
- c4rLn61MXNRrnrALBuw==
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=cWRNjhkoAAAA:8
+ a=Ac01Q28Z7wcfNu5pfZIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=VOMcPh5fO3MA:10 a=sVa6W5Aao32NNC1mekxh:22
+X-Proofpoint-ORIG-GUID: 8MMj5mmuNwWFL4lr8hIHkcjqYkGdBwW0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-12_03,2026-01-09_02,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
 Received-SPF: pass client-ip=148.163.151.68; envelope-from=flosch@nutanix.com;
  helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URI_TRY_3LD=1.997 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -202,202 +219,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This call allows a guest to ask the hypervisor which of its (guest
-physical) memory ranges were already zeroed out by the hypervisor, which
-means there's no need for the guest to zero them out again at boot.
+This patch series implements two new Hyper-V hypercalls. The primary goal is
+to support "zeroed memory" enlightenment via HvExtCallGetBootZeroedMemory().
+To do so, we also need to implement HvExtCallQueryCapabilities(). While
+HvExtCallQueryCapabilities() uses another bit in EBX on CPUID leaf
+0x40000003, it then allows the guest to query for further "extended"
+hypercalls via the return value of that call.
 
-For now, we simply send one entry back that says "all
-64-bit-adddressable memory is zeroed out". This seems to work fine.
+HvExtCallGetBootZeroedMemory() allows a Windows guest to inquire which areas
+of memory that were provided by the hypervisor are already zeroed out,
+meaning that there's no need for the guest to do so again. This has obvious
+performance benefits.
 
-Note that memory devies hotplugged later will still be zeroed out.
+To get a rough idea of the performance benefit, looking at a 4-core, 64GB
+Windows 11 guest, we can see that an otherwise idle guest takes a bit less
+than 90 seconds to finish zeroing and settle down from the time the qemu
+process is started. If we look at CPU usage for each vCPU task 90 seconds
+after starting, we get:
+1559 498
+1294 343
+1451 314
+4015 2729
+Conversely, after enabling HvExtCallGetBootZeroedMemory(), CPU usage is
+reduced:
+1583 458
+1441 361
+1279 312
+1337 264
+These are taken from the respective /proc/<pid>/task/<tid>/stat entries,
+denoting user and system time per "CPU X/KVM" task, in ticks.
+We can clearly see which to which vCPU fell the tasks of zeroing.
 
-Signed-off-by: Florian Schmidt <flosch@nutanix.com>
----
- docs/system/i386/hyperv.rst      |  5 +++++
- hw/hyperv/hyperv.c               | 34 ++++++++++++++++++++++++++++++++
- include/hw/hyperv/hyperv-proto.h | 11 +++++++++++
- include/hw/hyperv/hyperv.h       |  5 +++++
+It also has the side benefit of not touching all pages at boot. This can be
+useful if, for example, the VM is started with a balloon target already set.
+In this case, we don't risk memory usage spikes on the host if the VM touches
+all memory before the balloon can catch up.
+
+
+
+Note that this is still an RFC series. There are a number of open questions,
+most importantly, which memory areas to send back to the guest as
+pre-zeroed. The Microsoft documentation is a bit sparse, but points out:
+
+> Ranges can include memory that don’t exist and can overlap.
+https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/tlfs/hypercalls/hvextcallgetbootzeroedmemory
+
+So for testing purposes, I just set all memory from 0 to the end of the
+64-bit address space as pre-zeroed. Anecdotally, this worked fine in my
+preliminary testing so far, though it feels a bit cheeky. I'd appreciate
+some suggestions here on how to handle this in the most robust way. For
+example, I was worried about mapped memory, legacy craziness in the first MB of
+address space, etc.
+As a side note, I could not get this to work for hotplugging memory via adding
+a memdimm0 at runtime; that memory would be zeroed out by the guest. It may
+indeed just be about _BOOT_ZeroedMemory...
+
+I also wonder whether HvExtCallQueryCapabilities() should have a prop bit,
+like HvExtCallGetBootZeroedMemory(). Right now, HvExtCallQueryCapabilities()
+is always enabled after this patch, and simply returns "no ext capabilities"
+if HvExtCallGetBootZeroedMemory() is not enabled. This does technically
+change guest-visible behaviour. [1] But then we'll have to implement a
+dependency between the props, because you can't have
+HvExtCallGetBootZeroedMemory() without HvExtCallQueryCapabilities(), because
+the guest won't have a way to figure out it's available.
+
+
+[1] There's a little quirk here, in case someone else gets stung by this:
+Windows seems to have a long-standing bug/"feature", where it _always_
+issues a HvExtCallQueryCapabilities() hypercall, even if it's not signalled
+in the CPUID leaf. Except in those cases, it seems to ignore the return
+value. See here for someone else who noticed that years ago:
+https://lists.xenproject.org/archives/html/xen-devel/2017-03/msg02809.html
+And it's still happening to this day.
+
+Florian Schmidt (2):
+  Add HvExtCallQueryCapabilities
+  Add HvExtCallGetBootZeroedMemory
+
+ docs/system/i386/hyperv.rst      |  5 +++
+ hw/hyperv/hyperv.c               | 62 ++++++++++++++++++++++++++++++++
+ include/hw/hyperv/hyperv-proto.h | 12 +++++++
+ include/hw/hyperv/hyperv.h       | 10 ++++++
  target/i386/cpu.c                |  2 ++
  target/i386/cpu.h                |  1 +
- target/i386/kvm/hyperv-proto.h   |  5 +++++
- target/i386/kvm/hyperv.c         | 12 ++++++++++-
- 8 files changed, 74 insertions(+), 1 deletion(-)
+ target/i386/kvm/hyperv-proto.h   |  6 ++++
+ target/i386/kvm/hyperv.c         | 24 +++++++++++++
+ target/i386/kvm/kvm.c            |  3 ++
+ 9 files changed, 125 insertions(+)
 
-diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
-index 1c1de77feb..7d2be2109e 100644
---- a/docs/system/i386/hyperv.rst
-+++ b/docs/system/i386/hyperv.rst
-@@ -256,6 +256,11 @@ Existing enlightenments
- 
-   Recommended: ``hv-evmcs`` (Intel)
- 
-+``hv-boot-zeroed-mem``
-+  Enables the HvExtGetBootZeroedMemory hypercall. This allows a Windows guest to
-+  inquire which memory has already been zeroed out by the host and thus doesn't
-+  need to be zeroed out at boot again.
-+
- Supplementary features
- ----------------------
- 
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index 13a42a68b2..d1b15c089e 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -727,6 +727,40 @@ cleanup:
-     return ret;
- }
- 
-+uint16_t hyperv_ext_hcall_get_boot_zeroed_memory(uint64_t outgpa, bool fast)
-+{
-+    uint16_t ret;
-+    struct hyperv_get_boot_zeroed_memory_output *zero_ranges = NULL;
-+    hwaddr len;
-+
-+    if (fast) {
-+        ret = HV_STATUS_INVALID_HYPERCALL_CODE;
-+        goto cleanup;
-+    }
-+
-+    len = sizeof(*zero_ranges);
-+    zero_ranges = cpu_physical_memory_map(outgpa, &len, 1);
-+    if (!zero_ranges || len < sizeof(*zero_ranges)) {
-+        ret = HV_STATUS_INSUFFICIENT_MEMORY;
-+        goto cleanup;
-+    }
-+
-+    /*
-+     * All memory we pass through will always be zeroed.
-+     * (Check if that's actually true!)
-+     */
-+    zero_ranges->range_count = 1;
-+    zero_ranges->ranges[0].start_pfn = 0x0;
-+    zero_ranges->ranges[0].page_count = 0x10000000000000;
-+    ret = HV_STATUS_SUCCESS;
-+
-+cleanup:
-+    if (zero_ranges) {
-+        cpu_physical_memory_unmap(zero_ranges, sizeof(*zero_ranges), 1, len);
-+    }
-+    return ret;
-+}
-+
- uint16_t hyperv_hcall_signal_event(uint64_t param, bool fast)
- {
-     EventFlagHandler *handler;
-diff --git a/include/hw/hyperv/hyperv-proto.h b/include/hw/hyperv/hyperv-proto.h
-index f1d1d2eb26..5bf5684d11 100644
---- a/include/hw/hyperv/hyperv-proto.h
-+++ b/include/hw/hyperv/hyperv-proto.h
-@@ -36,6 +36,7 @@
- #define HV_RETRIEVE_DEBUG_DATA                0x006a
- #define HV_RESET_DEBUG_SESSION                0x006b
- #define HV_EXT_CALL_QUERY_CAPABILITIES        0x8001
-+#define HV_EXT_CALL_GET_BOOT_ZEROED_MEMORY    0x8002
- #define HV_HYPERCALL_FAST                     (1u << 16)
- 
- /*
-@@ -192,4 +193,14 @@ struct hyperv_retrieve_debug_data_output {
-     uint32_t retrieved_count;
-     uint32_t remaining_count;
- } __attribute__ ((__packed__));
-+
-+struct hyperv_get_boot_zeroed_memory_range {
-+    uint64_t start_pfn;
-+    uint64_t page_count;
-+} __attribute__ ((__packed__));
-+
-+struct hyperv_get_boot_zeroed_memory_output {
-+    uint64_t range_count;
-+    struct hyperv_get_boot_zeroed_memory_range ranges[255];
-+} __attribute__ ((__packed__));
- #endif
-diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
-index 921e1623f7..54cd2fff72 100644
---- a/include/hw/hyperv/hyperv.h
-+++ b/include/hw/hyperv/hyperv.h
-@@ -101,6 +101,11 @@ uint16_t hyperv_hcall_post_dbg_data(uint64_t ingpa, uint64_t outgpa, bool fast);
-  */
- uint16_t hyperv_ext_hcall_query_caps(uint64_t sup, uint64_t outgpa, bool fast);
- 
-+/*
-+ * Process HVCALL_EXT_GET_BOOT_ZEROED_MEMORY hypercall.
-+ */
-+uint16_t hyperv_ext_hcall_get_boot_zeroed_memory(uint64_t outgpa, bool fast);
-+
- uint32_t hyperv_syndbg_send(uint64_t ingpa, uint32_t count);
- uint32_t hyperv_syndbg_recv(uint64_t ingpa, uint32_t count);
- void hyperv_syndbg_set_pending_page(uint64_t ingpa);
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 37803cd724..d4160f3334 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10492,6 +10492,8 @@ static const Property x86_cpu_properties[] = {
-                       HYPERV_FEAT_TLBFLUSH_EXT, 0),
-     DEFINE_PROP_BIT64("hv-tlbflush-direct", X86CPU, hyperv_features,
-                       HYPERV_FEAT_TLBFLUSH_DIRECT, 0),
-+    DEFINE_PROP_BIT64("hv-boot-zeroed-mem", X86CPU, hyperv_features,
-+                      HYPERV_FEAT_BOOT_ZEROED_MEMORY, 0),
-     DEFINE_PROP_ON_OFF_AUTO("hv-no-nonarch-coresharing", X86CPU,
-                             hyperv_no_nonarch_cs, ON_OFF_AUTO_OFF),
- #ifdef CONFIG_SYNDBG
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 2bbc977d90..a42eacd800 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1463,6 +1463,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define HYPERV_FEAT_XMM_INPUT           18
- #define HYPERV_FEAT_TLBFLUSH_EXT        19
- #define HYPERV_FEAT_TLBFLUSH_DIRECT     20
-+#define HYPERV_FEAT_BOOT_ZEROED_MEMORY  21
- 
- #ifndef HYPERV_SPINLOCK_NEVER_NOTIFY
- #define HYPERV_SPINLOCK_NEVER_NOTIFY             0xFFFFFFFF
-diff --git a/target/i386/kvm/hyperv-proto.h b/target/i386/kvm/hyperv-proto.h
-index 4eb2955ac5..ec38b717e4 100644
---- a/target/i386/kvm/hyperv-proto.h
-+++ b/target/i386/kvm/hyperv-proto.h
-@@ -94,6 +94,11 @@
- #define HV_NESTED_DIRECT_FLUSH              (1u << 17)
- #define HV_NESTED_MSR_BITMAP                (1u << 19)
- 
-+/*
-+ * HV_EXT_CALL_QUERY_CAPABILITIES bits
-+ */
-+#define HV_EXT_CAP_GET_BOOT_ZEROED_MEMORY   (1u << 0)
-+
- /*
-  * Basic virtualized MSRs
-  */
-diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
-index 1ac5c26799..f92ea7e0a2 100644
---- a/target/i386/kvm/hyperv.c
-+++ b/target/i386/kvm/hyperv.c
-@@ -55,7 +55,9 @@ static uint64_t calc_supported_ext_hypercalls(X86CPU *cpu)
- {
-     uint64_t ret = 0;
- 
--    /* For now, no extended hypercalls are supported. */
-+    if (hyperv_feat_enabled(cpu, HYPERV_FEAT_BOOT_ZEROED_MEMORY)) {
-+        ret |= HV_EXT_CAP_GET_BOOT_ZEROED_MEMORY;
-+    }
- 
-     return ret;
- }
-@@ -122,6 +124,14 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct kvm_hyperv_exit *exit)
-                 hyperv_ext_hcall_query_caps(calc_supported_ext_hypercalls(cpu),
-                                             out_param, fast);
-             break;
-+        case HV_EXT_CALL_GET_BOOT_ZEROED_MEMORY:
-+            if (!hyperv_feat_enabled(cpu, HYPERV_FEAT_BOOT_ZEROED_MEMORY)) {
-+                exit->u.hcall.result = HV_STATUS_INVALID_HYPERCALL_CODE;
-+            } else {
-+                exit->u.hcall.result =
-+                    hyperv_ext_hcall_get_boot_zeroed_memory(out_param, fast);
-+            }
-+            break;
-         default:
-             exit->u.hcall.result = HV_STATUS_INVALID_HYPERCALL_CODE;
-         }
 -- 
 2.39.5
 
