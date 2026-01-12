@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76FC4C9EC94
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:52:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBECDC9EC8D
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:53:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfJEH-0001h1-E1; Mon, 12 Jan 2026 09:49:13 -0500
+	id 1vfJBX-00019v-8m; Mon, 12 Jan 2026 09:46:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfJEF-0001gL-Oj
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:49:11 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfJBK-0000yw-5w
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:46:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfJEE-0000b3-D0
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:49:11 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfJBI-00006X-KH
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:46:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768229349;
+ s=mimecast20190719; t=1768229168;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Jn6JcsfnrrSV95IrbL+p7RCplR7Y9AxOoYDNZ0ZOOSM=;
- b=ChNE1nmZvruvGplLcnY3P8cwYXH1Cq+o4Ryhrpl3eHe40L7Vvu4xnQI/V581gGsZxIsXLA
- 74XHNQID419BV+9+T3RTGcUekZ8DJcTUeWUUcGUEVh71e6H8qUcRcYRBrZ56BJXFZCcuiQ
- cpg09r8TxIXxVL//A6D0ZCf7MzCOzLI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MA+BgEBmIIGGSnma+OrhFMOnmvIFLgbsTwHwEQKiBps=;
+ b=fYMie7LDd81EtHVw1gjHwg2O8pSIUuuJ5HKlQ9Kh4S38rnS/ILwuW4TgG8uUzODKqKFstM
+ MWCkYbSGYWlw0SaPw/+xVKPEdSo96XQWZb3PZVpE9v7u5GgzSjvzjRnFhe5WRW7rX8GFGQ
+ EtKgfSK3e92kBceNgMHzlxyBKO4LpWQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-BMl6CDb5O3GMMtwbaKsoqQ-1; Mon, 12 Jan 2026 09:49:08 -0500
-X-MC-Unique: BMl6CDb5O3GMMtwbaKsoqQ-1
-X-Mimecast-MFC-AGG-ID: BMl6CDb5O3GMMtwbaKsoqQ_1768229347
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47d4029340aso66737045e9.3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:49:08 -0800 (PST)
+ us-mta-460-mwO_mq8PPS6692cbUQVObQ-1; Mon, 12 Jan 2026 09:46:06 -0500
+X-MC-Unique: mwO_mq8PPS6692cbUQVObQ-1
+X-Mimecast-MFC-AGG-ID: mwO_mq8PPS6692cbUQVObQ_1768229165
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-430fcb6b2ebso4049665f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:46:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768229347; x=1768834147; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768229165; x=1768833965; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Jn6JcsfnrrSV95IrbL+p7RCplR7Y9AxOoYDNZ0ZOOSM=;
- b=LcmAYwdZU0exOh3ZTCug3aYeM776dAP+by4YGPWcl7auzcRmKBkEmlmIi1ZEPPgiTB
- m0v0iaiTSb6gJ2GKgW2A3djMeAl5sqfd+m3e/n4Jdow1Yuz2lCZwRgglx7XC9wkMhzHb
- HCbHdu1indWOwL/G9kpK8RllKgq7/hAlFIH0jq0i50bw+72F8cW/qr7DDc9G4d/bUS6h
- R8CO60G4QtwTOAKBA8cCsYrVPtXk6HG+lPh0ZX37rqueJRFwbAUrDuY+pfZeasCHN9/L
- l3zNAhf77qucIBJqmzTLU9f5qE2P7Dyfasjl9ouepBB6B4A3NvW9/p1s9yhGqaJhaZti
- SuGw==
+ bh=MA+BgEBmIIGGSnma+OrhFMOnmvIFLgbsTwHwEQKiBps=;
+ b=LVgjOonbTAQvL4e/9bAiGn+S7mJ9b2UkeTXqLSMJajp5wiJNdrfTfHfbqVf+2vXLAf
+ QjjgQ5dAw1U2nbnnz3Sv9Jhixo1diMSBebdi292GepJ0mYmfDPPTmJ0nFOUnewo3agu8
+ 7D/t5pcwpmWP8DzW029wCx9JuoUH4uhFzQ1+31/cWLKlxSXMj4EtEgTFoXZUBmbfKPRJ
+ obznNIdz6ANyN8gGCKPgy4UMfBbKFa31XJnDUFUmgLBHfrcAIJUM/n3g22VnZk2+Zpgn
+ yoGlDPAhs/vc6Xy6GPeQOKVdmj4EzhkP9KxiITsSwHnCuDWYD24SD1PJ4beJCj4ElNLi
+ OpEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768229347; x=1768834147;
+ d=1e100.net; s=20230601; t=1768229165; x=1768833965;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Jn6JcsfnrrSV95IrbL+p7RCplR7Y9AxOoYDNZ0ZOOSM=;
- b=MoQmb6ZYHdhKsvzSihMCK+xQyvAsqabSRUe6rs6lNd3Km/ttuoFbCZsckN656/I4su
- +F7VhIYGLHoIkqpjaJlHofRTQyF1HAQ5oWp2vcymVMHejMu7ewPqB7B1I/CwQI4M5eA9
- 6/MUaNGCoExqqmvOJ4ruIsVJ2JEEvNTAsrtuHVhYP46aaC7CL8+mAAHwjxh0DaFh8FxF
- FDMh8AQCQwstpfNJNcojyAMFaHcxq1rhod+3y8RycNHfCYE7seEyC0P/Z6b9sOuzizmH
- +URT/YhgHUXYRfxPkz8ewlHMQneQRb90lBFkDzSDzRuU5j02vFUlatrmprkR7QJOlsba
- FJBg==
+ bh=MA+BgEBmIIGGSnma+OrhFMOnmvIFLgbsTwHwEQKiBps=;
+ b=TA3I6VNdJ+tkdM0C85nC1nS9Lthnyen0FL35U6IBmPb2hyUA5hnJ+HepL3+xELkoKg
+ LvHYXhPYZ+JFR8zgsmJd0y9O+14zhbgz/jyRIvUfw06JQ4dQGP7t08fJbZSLHrlbuWd3
+ pBtmSQunmgsKd/8Ua9MUZddD1E9Fhnib2mRhM0ZTDtMYAnjwm7ZqNtwwSN0K2UFtynFe
+ 2CcCRlGaeXT2sCY46zdrVSLT/mTTeB69IWgFRCSnkZf6Fve2GVvC+BETSjXI8Bc8H1Yi
+ D5mht0ffxlxXYzhq7BA04ZeMd5fqr6TqsCeQsjJWFnPwnjbPhfp/SwZY2nzt5VkmrcNq
+ xBLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGC5aJ9fsNANBHKkVto1txBTWxkGW04r5DlQ/3kHefRxgMukd6+rCploJKBldAvqmWP4zVr5hhsWgD@nongnu.org
-X-Gm-Message-State: AOJu0YwVErG1epaDDQE9BChjmyA13M15Y91YOFPd6TcPdKGUWJxG7BnM
- Yl/pwH2fqVfbyb2LrztIk3eLJNmp+XWle7UHa6eopO37uXYiWFiNs1CklsFsE5gx1uA8DPCg57x
- 2sNPb9bqyKl/H8MVOYY8LdEG5Pw7BmxrdkG4UoC4uflh7PLxNkyNVtY/+
-X-Gm-Gg: AY/fxX76oyb8MJl3AUMI5Le/wGWhYC5KAdaLLyvTCPr0Uzwdhu9ZEeXtFrCbqxGOmEC
- etVQ6n7os1AiRAVByOe7fe9OhDArOqz4nwJaIxn8+IQVMDIwO83egHrw5gKvrrWv7wmtuzRPS1V
- U1aqwEB+axzqzbf8zRC1uumnkCyJwGvObUlsi6NFn8d8XcteHoVm+6XCCuB3h+bdUEn/Oe0ZNz7
- cROJKsxl1RwnvFUi3MCn7biKyzMWtOhR6d2RP7Xp9XEzQP+nz5VQGWBiE8dz/5XW0AaNa66loIE
- qBbOoFR2gcM3bX01DTJXJn6d8bX3mTW0eqPS/UdhGfvUeQv0hvFKoxvBm/QLM3LrI4NwmUyRqdj
- AK5aVRNQ=
-X-Received: by 2002:a05:600c:3556:b0:477:8985:4036 with SMTP id
- 5b1f17b1804b1-47d84b086ccmr220254745e9.1.1768229347320; 
- Mon, 12 Jan 2026 06:49:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHur268RiwnNs4khCvWqTFbUAEMuQkvD4FSeBl0alsywb+4WgDOZ2+M68TGzH8k7mlrna0BDQ==
-X-Received: by 2002:a05:600c:3556:b0:477:8985:4036 with SMTP id
- 5b1f17b1804b1-47d84b086ccmr220254445e9.1.1768229346863; 
- Mon, 12 Jan 2026 06:49:06 -0800 (PST)
+ AJvYcCXdh4FegPnqoOwFWKNL4g8a97PhmdRXrtAGiM+OUY2o2YQDeQlpjCQHev0fPKIRjPEZk8ESBOnVvpWX@nongnu.org
+X-Gm-Message-State: AOJu0YzSZViR2Y6B4Qj4cuAkn8MjuK91p8vgEThUuuBGHza7KnAHBh+i
+ rGz56HnQJW39X3DDDDMI5C+B6YWO0x5JIcJdRjDdJyJshwtQa8+jF3Ges19mPxK+aP54R+d1hx2
+ vxg9/st95By0TqdxhBRGZXaQ9GasCRCOkX9EK3pS7m3/owwprcfWmNao8
+X-Gm-Gg: AY/fxX5kdUMpxtev9CvKmC2g+FiKXosEL4Je6uZZI3zBgBdoOFf3RG0S1tWCB5EeUVh
+ p1SRaVpRHbiW1OxgWvcWOgw1dLxapl5mmkQVEXczjzidRBDMqPsSPoQMFOQHw8M2LGvKFoQYltH
+ beQHZvT00ziNE543t22nnzb1L8XuNDkwtqlkWNYSJk6BNSQ+2zVCHblV7J6IEd76aRzcdCa9YtP
+ rrBk52SHYaBetABWhpX1xR4PtbnlUn1cz5FJZvj07Ez07j1cTuJbgdJLIczYY2XNguY/OzF3Q4A
+ UyD1jEqFadQLd8sEl4tN778jBDY1EbRFq8M9i4fAms0NDvX3wrgczbjW5PaAbgNuWZm1wU9sh1y
+ rS36ZpVQ=
+X-Received: by 2002:adf:cd81:0:b0:432:c37c:d831 with SMTP id
+ ffacd0b85a97d-432c37cd9c7mr17723437f8f.1.1768229165237; 
+ Mon, 12 Jan 2026 06:46:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IETtwWPdB6SYdWkCs91YzHGlOfB1HB0bI4EufEQyKvBVlZKo+0WYrjkOyZqG28PEXe++hesvg==
+X-Received: by 2002:adf:cd81:0:b0:432:c37c:d831 with SMTP id
+ ffacd0b85a97d-432c37cd9c7mr17723406f8f.1.1768229164786; 
+ Mon, 12 Jan 2026 06:46:04 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.114.194])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d865f84besm139720525e9.1.2026.01.12.06.49.05
+ ffacd0b85a97d-432bd5df9afsm41371475f8f.24.2026.01.12.06.46.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 06:49:06 -0800 (PST)
-Message-ID: <63b9adc7-c23f-4f29-83f0-b370f849511c@redhat.com>
-Date: Mon, 12 Jan 2026 15:49:05 +0100
+ Mon, 12 Jan 2026 06:46:04 -0800 (PST)
+Message-ID: <b0e2720f-806e-4f3b-8e35-de33e96eebd6@redhat.com>
+Date: Mon, 12 Jan 2026 15:46:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 23/29] hw/s390x/ipl: Set IPIB flags for secure IPL
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-24-zycai@linux.ibm.com>
+Subject: Re: [PATCH] hw/arm: Re-enable the MAX78000FTHR machine in
+ qemu-system-arm/aarch64
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Jackson Donaldson <jcksn@duck.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20251218214306.63667-1-philmd@linaro.org>
+ <CAFEAcA-vKfpDQJws5m7C1H_N2taPmGXE=gH8hRFxHH7L3u+w=w@mail.gmail.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,9 +142,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251208213247.702569-24-zycai@linux.ibm.com>
+In-Reply-To: <CAFEAcA-vKfpDQJws5m7C1H_N2taPmGXE=gH8hRFxHH7L3u+w=w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -170,23 +170,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/12/2025 22.32, Zhuoying Cai wrote:
-> If `-secure-boot on` is specified on the command line option, indicating
-
-Change the "-secure-boot on" to "-M secure-boot=on" now?
-
-Apart from that, the patch looks fine to me.
-
-> true secure IPL enabled, set Secure-IPL bit and IPL-Information-Report
-> bit on in IPIB Flags field, and trigger true secure IPL in the S390 BIOS.
+On 12/01/2026 15.42, Peter Maydell wrote:
+> On Thu, 18 Dec 2025 at 21:43, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Unfortunately while rebasing the series registering the
+>> ARM/Aarch64 machine interfaces and getting it merged as
+>> commit 38c5ab40031 ("hw/arm: Filter machine types for
+>> qemu-system-arm/aarch64 binaries") we missed the recent
+>> addition of the MAX78000FTHR machine in commit 51eb283dd0e.
+>> Correct that.
+>>
+>> Reported-by: Thomas Huth <thuth@redhat.com>
+>> Tested-by: Thomas Huth <thuth@redhat.com>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3248
+>> Fixes: 38c5ab40031 ("hw/arm: Filter machine types for single binary")
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/arm/max78000fthr.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> Any error that occurs during true secure IPL will cause the IPL to
-> terminate.
+> Applied to target-arm.next, thanks.
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   hw/s390x/ipl.c | 19 ++++++++++++++++++-
->   1 file changed, 18 insertions(+), 1 deletion(-)
+> Should we cc stable? (My feeling is 'yes'.)
+
+The bug went into 10.2, so I'd say "yes".
 
   Thomas
 
