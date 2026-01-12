@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE92C9EC88
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6716C9EC86
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfHpQ-0004Fa-L4; Mon, 12 Jan 2026 08:19:30 -0500
+	id 1vfHp5-0003nj-L4; Mon, 12 Jan 2026 08:19:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlb-0001Ys-5a
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:31 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHll-0001d3-Pz
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:16:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlZ-0002bZ-LS
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlj-0002ce-0S
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768223729;
+ s=mimecast20190719; t=1768223737;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aZUJUXlTONMlWRfr4eM1Jg9J+vE+nPqvdFsuDHwXiuE=;
- b=BFR+fCjORGvvlsPLkpxHye/+nhOWFQY8lNIdOMyYvxLiEccI60j/j84NMngHTF9DlydtTn
- yi1yP/tMKjf1scFvv8vBD+nSTAZC6RpP8zzkvnj4YouevP+PQcLp7f4JjB6JR+wZt+9BIR
- J42NzLjSQID/cbYmIrYhlEdOhSw3Dno=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=oG9Dsze0JU1GCFIaRY/UGoIwmjHYD7VTV+1WbSmKAZo=;
+ b=WJL2aKF1RajyIlZKsRxbOCQZkCnpIa26fDprqsi/3CRgGqtNog2c0m1VwZjHf8/bnxyzPz
+ VP1lvgUu6cA9Qo3zp3D0nKSZifFVQ7HJ0fwW0E9uZgylGvko9W6DUp1LIdgpYB1MxCn3ES
+ ECWU1zMVoQamFYtQeAPxOteMKeLEusQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-D9uOO-xPOsaWzMJ7Em30bQ-1; Mon,
- 12 Jan 2026 08:15:25 -0500
-X-MC-Unique: D9uOO-xPOsaWzMJ7Em30bQ-1
-X-Mimecast-MFC-AGG-ID: D9uOO-xPOsaWzMJ7Em30bQ_1768223724
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-wyUBvxG-MSCeg-jkX7WDgw-1; Mon,
+ 12 Jan 2026 08:15:32 -0500
+X-MC-Unique: wyUBvxG-MSCeg-jkX7WDgw-1
+X-Mimecast-MFC-AGG-ID: wyUBvxG-MSCeg-jkX7WDgw_1768223731
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84EBF195399A; Mon, 12 Jan 2026 13:15:24 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29D4318005AF; Mon, 12 Jan 2026 13:15:31 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.179])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1BCFD30002DA; Mon, 12 Jan 2026 13:15:22 +0000 (UTC)
+ id 5473D30001A2; Mon, 12 Jan 2026 13:15:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/15] target/s390x: Replace target_ulong -> uint64_t in
- gdb_write_register()
-Date: Mon, 12 Jan 2026 14:14:52 +0100
-Message-ID: <20260112131457.67128-11-thuth@redhat.com>
+Subject: [PULL 13/15] target/s390x: Un-inline s390_is_pv()
+Date: Mon, 12 Jan 2026 14:14:55 +0100
+Message-ID: <20260112131457.67128-14-thuth@redhat.com>
 In-Reply-To: <20260112131457.67128-1-thuth@redhat.com>
 References: <20260112131457.67128-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -86,30 +85,99 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On s390x target_ulong expands to uint64_t. Besides,
-ldq_be_p() returns a uint64_t type. Use that instead.
+Inlining a method which use a static variable is really a
+bad idea, as it totally defeats the point of both concepts.
 
+Currently we have 12 + 4 = 16 static 'ccw' variables...:
+
+  $ git grep -wl target/s390x/kvm/pv.h | fgrep .h
+  hw/s390x/ipl.h
+  $ git grep -wl target/s390x/kvm/pv.h | fgrep .c | wc -l
+        12
+  $ git grep -wl hw/s390x/ipl.h | fgrep .c | wc -l
+         4
+
+Fixes: c3347ed0d2e ("s390x: protvirt: Support unpack facility")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260107130807.69870-5-philmd@linaro.org>
+Message-ID: <20260107130807.69870-16-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/gdbstub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/s390x/kvm/pv.h | 24 +-----------------------
+ target/s390x/kvm/pv.c | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 23 deletions(-)
 
-diff --git a/target/s390x/gdbstub.c b/target/s390x/gdbstub.c
-index d1f02ea5ce4..9ae715add4d 100644
---- a/target/s390x/gdbstub.c
-+++ b/target/s390x/gdbstub.c
-@@ -46,7 +46,7 @@ int s390_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- int s390_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
-     CPUS390XState *env = cpu_env(cs);
--    target_ulong tmpl = ldq_be_p(mem_buf);
-+    uint64_t tmpl = ldq_be_p(mem_buf);
+diff --git a/target/s390x/kvm/pv.h b/target/s390x/kvm/pv.h
+index 94e885e9335..e266fc3d545 100644
+--- a/target/s390x/kvm/pv.h
++++ b/target/s390x/kvm/pv.h
+@@ -12,8 +12,6 @@
+ #ifndef HW_S390_PV_H
+ #define HW_S390_PV_H
  
-     switch (n) {
-     case S390_PSWM_REGNUM:
+-#include "qapi/error.h"
+-#include "system/kvm.h"
+ #include "hw/s390x/s390-virtio-ccw.h"
+ 
+ struct S390PVResponse {
+@@ -23,27 +21,7 @@ struct S390PVResponse {
+ };
+ 
+ #ifdef CONFIG_KVM
+-#include "cpu.h"
+-
+-static inline bool s390_is_pv(void)
+-{
+-    static S390CcwMachineState *ccw;
+-    Object *obj;
+-
+-    if (ccw) {
+-        return ccw->pv;
+-    }
+-
+-    /* we have to bail out for the "none" machine */
+-    obj = object_dynamic_cast(qdev_get_machine(),
+-                              TYPE_S390_CCW_MACHINE);
+-    if (!obj) {
+-        return false;
+-    }
+-    ccw = S390_CCW_MACHINE(obj);
+-    return ccw->pv;
+-}
+-
++bool s390_is_pv(void);
+ int s390_pv_query_info(void);
+ int s390_pv_vm_enable(void);
+ void s390_pv_vm_disable(void);
+diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+index 2bc916a5455..3d508165f34 100644
+--- a/target/s390x/kvm/pv.c
++++ b/target/s390x/kvm/pv.c
+@@ -25,6 +25,24 @@
+ #include "target/s390x/kvm/kvm_s390x.h"
+ #include "target/s390x/kvm/pv.h"
+ 
++bool s390_is_pv(void)
++{
++    static S390CcwMachineState *ccw;
++    Object *obj;
++
++    if (ccw) {
++        return ccw->pv;
++    }
++
++    /* we have to bail out for the "none" machine */
++    obj = object_dynamic_cast(qdev_get_machine(), TYPE_S390_CCW_MACHINE);
++    if (!obj) {
++        return false;
++    }
++    ccw = S390_CCW_MACHINE(obj);
++    return ccw->pv;
++}
++
+ static bool info_valid;
+ static struct kvm_s390_pv_info_vm info_vm;
+ static struct kvm_s390_pv_info_dump info_dump;
 -- 
 2.52.0
 
