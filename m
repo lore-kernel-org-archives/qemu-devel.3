@@ -4,68 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41244C9EC85
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 12:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75EABC9EC8B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:07:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfHLl-0005pC-Vr; Mon, 12 Jan 2026 07:48:50 -0500
+	id 1vfHcl-0006mk-Ag; Mon, 12 Jan 2026 08:06:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfHLL-0005X4-4W
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:48:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vfHcJ-0006fp-Vs
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:05:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfHLI-0006Xh-9c
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:48:22 -0500
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vfHcG-00011S-IW
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:05:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768222097;
+ s=mimecast20190719; t=1768223150;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=YzQtYltNX0aUV94lUYivQBNRqZBcsBEztgu7G9tGpT8=;
- b=gUKLVUudl32FRql1xaToD0qYmq0K+2gJTNoLO5z2HtXtpbVo7UJ7RV9OzqBb5HtCYLG1TK
- xG+Hr/CCfPcVbXW/e+Srn3SZApwq1Vmnm2DEnMwt300dHig+KGXjT0prVnBw8cr78Cbw53
- rTVztGv91G8XdH+aO8GcXgj9dt2LE/0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-292-ZG35En1pPbeNGrw_7ofEUw-1; Mon,
- 12 Jan 2026 07:48:16 -0500
-X-MC-Unique: ZG35En1pPbeNGrw_7ofEUw-1
-X-Mimecast-MFC-AGG-ID: ZG35En1pPbeNGrw_7ofEUw_1768222095
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5684819344B7; Mon, 12 Jan 2026 12:47:26 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.79])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4602819560B2; Mon, 12 Jan 2026 12:47:23 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>
-Subject: [PATCH] ppc/vof: Fix build error
-Date: Mon, 12 Jan 2026 13:47:22 +0100
-Message-ID: <20260112124722.1029212-1-clg@redhat.com>
+ in-reply-to:in-reply-to:references:references;
+ bh=O8nC6CiuWwYKC8k7JE7UgDsOARoH5gdYNE869kJ8hOE=;
+ b=TNzHt8GfRpphZqtv67uWKvMyjevxEcyZ9ZtL2hA37kWN6gbcTTjhomAb3/woQ8Jbss3BJy
+ W7QLPkSk4ZFOdK0fEkPpMYqDsr2bx1hnkPxmD+yFT/Sz+VTLZ1WbK+XLiNAbM6KdMAz5cW
+ hxwkQjsqyX4XoC7u/Fj1oUZsA4pMqxg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-389-jMcWYtCsOMua8yHOSs9qZg-1; Mon, 12 Jan 2026 08:05:49 -0500
+X-MC-Unique: jMcWYtCsOMua8yHOSs9qZg-1
+X-Mimecast-MFC-AGG-ID: jMcWYtCsOMua8yHOSs9qZg_1768223148
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4779d8fd4ecso27354745e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:05:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768223148; x=1768827948; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=O8nC6CiuWwYKC8k7JE7UgDsOARoH5gdYNE869kJ8hOE=;
+ b=Vyf2ZhbRO3G0yIJDIjmTaqT1wB7zowh3C3wGdt+H5or1Pr8sF8WwND+eXja1IqOCYJ
+ eZGcq5cbsVcXFwK5sDYAJyh41WaXPTNEqnSPqIc0uCC+6HQfFynP693N3kqU/7Uig5lU
+ cC673LLk/nXNc5f+DcHUP2/F7cGT2NnP7TLugfzhtJp+qUEHM0Tw4/WMLIKWhxJykgUr
+ rkGfFgUySydqtB19dkxFuk77mCXXvF7NEjXfdIZ1nU8fX9wB84CkOlj7eGZ8pzFA7yNp
+ gl5AlL/TcYp6x7dhKJGeXamjlbem1r4cxuUA8uDpdHy+K5A++cMlc33VTphdoHB90lEh
+ CtAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768223148; x=1768827948;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=O8nC6CiuWwYKC8k7JE7UgDsOARoH5gdYNE869kJ8hOE=;
+ b=nL2iJEiaIo/rR8VINftSmDvJoNoEij4kGg+n/QBKS6K9vvDm4H8GUYrg9y2KFMkVUf
+ 6VnqVG64TYWZwsxt1sri19QpzpG9FHRWasj0KyVAGd/MYmf89mQBowAa470ZeYVhDTo/
+ d7zfZnKtIWwfFz/ImCnJwBbhY+JDpDBAqS7vPAT/N1zoxMGV5B85bMo2uQcnvi7hORmk
+ DjHhPhd9w9+QEDgGv847Mx50I3XHx0qNnorWdiydxYJqUofJxO75eucqmxSx7Nsgdiob
+ 7k9JBwQuUe3FJAj3yZfkcvLpcBryoJyYg7ZqytXYOxk0jNm3qFvokt5LfHCiLCuFjnz+
+ dXYQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2/+C/xVb1RAwSDYx6Ylr0Bk6HJm2pNU3sN5nD8CCS0p+ijpRSj24iarr10fQHgAXtf2QWCJsWXISt@nongnu.org
+X-Gm-Message-State: AOJu0YxF/qkwiHqkSPgPTcRQ2KOqieX7IUI2GUUr1gdiYy3mZv2tSIZD
+ UleU8F3BOu//g+2YEaDNSdLPJE20mnJVWnm+4d7LWIWglRMRlwFLIC28IgyJgkyvUrjMVrZLq5V
+ onvgplkw6IJh3a9HYylNJPgtGQoKn9g95lsiS1JF8aiGR6QOo/pUOucLWTpJoKJQHbgmlpmGpRI
+ 4yeH/0jjMlC6Uolv0GEiS0tXLalGe6wTc=
+X-Gm-Gg: AY/fxX4a/90734UQ4+0+wtAOrd8Lab0e6vlZfxVVCTdBZlpOlsQtZkzws6Jmu1CECRw
+ us36Es/xHnh1X0+fAqkcP8hhUeiDZ6fC+m/QAiqrgcq31ztqIRqYNp1Jljcv2FFTWAcI5DEbHGm
+ 8WPKDPWuyqPXntGIy/kSh3jPHAJdwSGrBjoZXftQiSr/ObBbRk5aqNSXEexcglOdKafOA=
+X-Received: by 2002:a05:600c:5646:b0:471:793:e795 with SMTP id
+ 5b1f17b1804b1-47d7f398fffmr175439865e9.0.1768223147855; 
+ Mon, 12 Jan 2026 05:05:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEEehYMrTwj5be9g51ldl+btJ/yyZfIy8upnwgw1ZcHmF+2Ap2SvJ5UKarhivqkOCul6r3LyJg1Ai4YQoR7PQs=
+X-Received: by 2002:a05:600c:5646:b0:471:793:e795 with SMTP id
+ 5b1f17b1804b1-47d7f398fffmr175439575e9.0.1768223147382; Mon, 12 Jan 2026
+ 05:05:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+References: <20251222114822.327623-1-ppandit@redhat.com>
+ <87h5tilhcq.fsf@suse.de> <aUq1oA73W9rAdCgG@x1.local>
+ <CAE8KmOzcOdYhnxpDr8BMV8zjixpEh9r+COe=xyLfXCVWKD0CRw@mail.gmail.com>
+ <87zf6q26q5.fsf@suse.de>
+ <CAE8KmOzxDn7X7rohJGT5AeW3+5oJFgueVtaQCpUc2bmBvrgRXg@mail.gmail.com>
+ <874ioxzhcm.fsf@suse.de>
+In-Reply-To: <874ioxzhcm.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 12 Jan 2026 18:35:30 +0530
+X-Gm-Features: AZwV_QhqPYxmFINkzxyP7VdhvPYm55z3wVfnplQbeBSqNpLOSyOi1pDiu1zYH50
+Message-ID: <CAE8KmOx0ikDueu-znY14RCmp6weX_G+CJMUrQOmOuv-OPwPR+Q@mail.gmail.com>
+Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,51 +119,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
-detects an unused variable error:
+Hello Fabiano,
 
-../hw/ppc/vof.c: In function ‘vof_dt_memory_available’:
-../hw/ppc/vof.c:642:12: error: variable ‘n’ set but not used [-Werror=unused-but-set-variable=]
+On Wed, 7 Jan 2026 at 18:54, Fabiano Rosas <farosas@suse.de> wrote:
+> I like this because it forces us to determine more clearly what is the
+> necessary condition for a state change. This could eventually allow the
+> abstraction of the qapi_event_send_migration() to a higher
+> layer. Something like:
+>
+> void qmp_migrate() {
+>     t:migrate=true
+>
+>     migration_setup() :: do setup, mig_setup_done=true
+>     migration_advance_state() :: checks the triggers, changes state and
+>                                  sends the event
+>
+>     migration_start() :: migrate, mig_done=true
+>                          failure, mig_failed=true
+>                          etc
+>     migration_advance_state()
+>
+>     migrate_vmstate() :: device state migration, mig_device_done=true
+>     migration_advance_state()
+>
+>  etc..
+> }
+>
+> IOW, we could do a better job of separating what is work, what is
+> migration control flow, what is error handling, etc.
 
-Remove 'n'.
+* Yes, indeed. Above skeleton code conveys the plausible
+segregation/stages well.
 
-Cc: Alexey Kardashevskiy <aik@ozlabs.ru>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> What I'm trying to convey is that we have:
+>
+> 1) events API that needs to be kept stable, this list of states that
+>    libvirt sees and at what moments we emit them.
+===
+  qemuProcessHandleMigrationStatus & qemuMigrationUpdateJobType
+    -> https://gitlab.com/libvirt/libvirt/-/blob/master/src/qemu/qemu_process.c#L1766
+    -> https://gitlab.com/libvirt/libvirt/-/blob/master/src/qemu/qemu_migration.c?ref_type=heads#L1931
+===
+* I was trying to see how libvirtd(8) handles QEMU migration states.
+Looking at the above functions there, it seems they don't do much with
+it. Only MIGRATION_STATUS_POSTCOPY_* has some handling, while other
+states are not handled for anything. Interestingly, there's no _FAILED
+state in there, maybe they call it _ERROR.
+
+* While I get the importance of not breaking APIs, still, simplifying
+migration states on the QEMU side should help them too.
+
+> 2) MigrationStatus being used as an internal record of the current
+>    (loosely defined) migration phase. This is "arbitrary", hence we're
+>    discussing adding a new MigrationStatus "just" to make sure we don't
+>    start a new migration at the wrong moment.
+>
+> I'm trying to understand if you want to cover 1, 2 or both.
+>
+> I would suggest we first take all of the internal tracking, i.e. #2, the
+> "if (state==MIGRATION_STATUS)" code and convert them to use some other
+> state tracking, either the triggers as you suggest, or random booleans
+> sprinkled all over, it's not immediately important.
+>
+> Once that is done, then we could freeze the #1, MigrationStatus. It
+> would only change whenever we wanted to change the API and that should
+> be a well documented change.
+
+* Yes, sounds good. We could start with the QEMU internal state/phase
+tracking and then go to #1 above once we see how it all works in
+practice.
+
+> Ok, maybe I'm splittling hairs here, I was trying to understand whether
+> all of these "if (s->state ...)" have the same semantics.
+>
+> a) For cases such as CANCELLING: that could be a simple
+>    s->trigger[MIGRATE_CANCEL]=1.
+>
+>   (we're not removing the CANCELLING state due to the API stability, but
+>   still)
+>
+> b) For error conditions: s->event[FAILED]=1, then (possibly at a later
+>    point in migration_change_state):
+>
+>    if (s->event[FAILED] && !s->trigger[MIGRATE_CANCEL]) {
+>       migrate_set_state(s->state, MIGRATION_STATUS_FAILED);
+>    }
+
+* Do we have to check !MIGRATE_CANCEL like this? It's not clean.
+Ideally if an error/failure event occurs before the user cancels, then
+cancel can be ignored, no? Because migration is anyway going to stop
+or end. OTOH, if we cancel while processing an error/failure, end user
+may not see that error because we report - migration was cancelled.
+
+> b) For postcopy resume/pause, etc, maybe an actual state machine that can
+>    only be in one state would be helpful.
+>
+> c) For "we reached this point, so set this state", most of those could
+>    just be an invocation to migration_change_state() and, as you
+>    suggest, that would look for the evidence elsewhere to know what
+>    state to set:
+>
+>    if (s->trigger[MIGRATE] && s->event[COMPLETED]) {
+>       migrate_set_state(s->state, MIGRATION_STATUS_COMPLETED);
+>    }
+
+* Yes, right. We need to define/differentiate between _what_ is the
+state and _why_ is that state.
+
+* How do we go from here? Next step?
+
+Thank you.
 ---
- hw/ppc/vof.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-index 5ecfc6891047eb63f498fe286d57f52a54c0a0db..fa7b73159a0b476dfc49326139d75cb87ca487c1 100644
---- a/hw/ppc/vof.c
-+++ b/hw/ppc/vof.c
-@@ -639,7 +639,7 @@ static gint of_claimed_compare_func(gconstpointer a, gconstpointer b)
- 
- static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
- {
--    int i, n, offset, proplen = 0, sc, ac;
-+    int i, offset, proplen = 0, sc, ac;
-     target_ulong mem0_end;
-     const uint8_t *mem0_reg;
-     g_autofree uint8_t *avail = NULL;
-@@ -677,7 +677,7 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
-     g_assert(claimed->len && (g_array_index(claimed, OfClaimed, 0).start == 0));
- 
-     avail = g_malloc0(sizeof(uint32_t) * (ac + sc) * claimed->len);
--    for (i = 0, n = 0, availcur = avail; i < claimed->len; ++i) {
-+    for (i = 0, availcur = avail; i < claimed->len; ++i) {
-         OfClaimed c = g_array_index(claimed, OfClaimed, i);
-         uint64_t start, size;
- 
-@@ -705,7 +705,6 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
- 
-         if (size) {
-             trace_vof_avail(c.start + c.size, c.start + c.size + size, size);
--            ++n;
-         }
-     }
-     _FDT((fdt_setprop(fdt, offset, "available", avail, availcur - avail)));
--- 
-2.52.0
+  - Prasad
 
 
