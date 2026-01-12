@@ -4,108 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07B87CF45AE
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 17:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D69CF45AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 17:06:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfLLK-0006x8-WF; Mon, 12 Jan 2026 12:04:39 -0500
+	id 1vfLLK-0006xA-VP; Mon, 12 Jan 2026 12:04:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfLIB-0005tz-JK
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:01:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vfLJK-0006Mp-Kv
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:02:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfLI9-00068X-Mj
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:01:22 -0500
+ id 1vfLJJ-0006Cb-8M
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:02:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768237280;
+ s=mimecast20190719; t=1768237352;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AldCBaYJel6HxB+0CQVjj0wkO30xgddAEo7L/RnCjX4=;
- b=auY2SH8LNXXU1FMRX0tbGPM/HQZZZFU6lINz3wKyHIq2KGgiKb+r1FR0XznYQUgL235dsp
- mMdP/J0Zyiu9eolbUvNddMnIBfSdcpVWNKY1/y/dBma2fR5EX0R4dmtdC4jcNBoQ9VguUF
- SIa4u5BgeLrOqkxeZxR290PUzW4GxXg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7rKFUdQx23abFlJVm0uQPQFiuDu8lmtmxqOTgmBnKZI=;
+ b=EN/mLACyTo+RJ0aTPAg/BTaaoffKHpDROrgzsFWCRx+SC4kzGwHwUTCV2JrHXjYYs9sgEr
+ aI+aGphlzu/dAKt3G2LOiPzJIWqBqJWc+mGonaY66E8pus/BeKXJICXscKVWmkrY2BxQoD
+ WlweRHOvyeDh8DMAige+YldLgvxFcUk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-6MSGW3GvO0GkPR3qicvSUQ-1; Mon, 12 Jan 2026 12:01:18 -0500
-X-MC-Unique: 6MSGW3GvO0GkPR3qicvSUQ-1
-X-Mimecast-MFC-AGG-ID: 6MSGW3GvO0GkPR3qicvSUQ_1768237277
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-430fc153d50so4889468f8f.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 09:01:18 -0800 (PST)
+ us-mta-348-7YLTAihNOLC9akxp06Hojg-1; Mon, 12 Jan 2026 12:02:30 -0500
+X-MC-Unique: 7YLTAihNOLC9akxp06Hojg-1
+X-Mimecast-MFC-AGG-ID: 7YLTAihNOLC9akxp06Hojg_1768237350
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477bf8c1413so44795655e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 09:02:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768237277; x=1768842077; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768237349; x=1768842149; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AldCBaYJel6HxB+0CQVjj0wkO30xgddAEo7L/RnCjX4=;
- b=RQ8gxNDDlI9T66RobOam23Lh0Rp+O0YFioW4T16z0kFaqezK9kzBMuOXu2LR/uTD5Z
- jr14KShDbIdazDFRJi3O5vEUzEZYgrwpKkoR6NNIVEqIWaBg0uU3cOFBCS4VeS2ZtXyi
- corZb4fN25ZwMWPzbjE6CMDX90f/hFL6G7MezKhiv9C94KrjcSYLVRIuhFGfgOY6Ijoh
- 6P7uafi4I8cumxMSyg8Bv0zV1fd90lN/uTIjLniQD672sbCuKr+uu9USYv6JTaORM3ja
- Up82ZbR0CG9R79dabJ4c5VGz0ou+y4tW6xujgos49XOLDtKcn2Qrl7Xpyz2lTZaTLa29
- e2Sw==
+ bh=7rKFUdQx23abFlJVm0uQPQFiuDu8lmtmxqOTgmBnKZI=;
+ b=k6KcYr4U9sGP2kgboHiMPVZ8eHsEb5fHX71RXuSBh4R2cWH1lZmG3xiMa5VsVioWTB
+ U57XVOdPOEawZc3VVmdQI9ciI86/+vgrOJNE5Z+9DcfiK8iWmEEtVENVBqRdRh1sEJga
+ FBiCsJ627b6wwVbDmzg75Tdwp7Ib8X+AEU+bTJMHTCN4C5PIo14CdsbWpcFgiW7ShKqy
+ 7WbXwzcXtxZ+Qz1UmXtXH6fPv3T9wGS8EjO9fRMySel1kvslqs5BMXQjc4Uw3fPgqvc4
+ DjP0P22Byd5WX8XK98+mlw22GhH+3GtxMsCOzy2GjlQDNf+KUibnTbaDfnJu7J/Y7djG
+ CJdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768237277; x=1768842077;
+ d=1e100.net; s=20230601; t=1768237349; x=1768842149;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AldCBaYJel6HxB+0CQVjj0wkO30xgddAEo7L/RnCjX4=;
- b=n+0AtAES6Dvuf2JnPhzs3AYtmzJlqXPtWh6ILyQyEkbI+dVDv+3dVbByJwRek8HW+b
- kslfSRBi+laBSS+z1PRGRJ1nqzMB+8l5lT26PGlz225zBoP2i+zAke1aoSyNIKSo4X0g
- C4OThHsBFw1NE9uLMBqKFAKNCy0INvoYjgMLUAAt+6Hvl1ODT1mEZ0JpC8lofYJCAirv
- RJ4gucSKkk+PGlc8sSr5dADneUQTgQzTmJjEiw2W8XFzMofjsJ1rQ9W3l0owPWJbDf5A
- z7zndcvsX4n42JR+tYv1Lbmz5wY0S7fSS4NNaLHVaMcyOOlhWiFMfBkYsdFuwe9CCfrp
- PPnA==
+ bh=7rKFUdQx23abFlJVm0uQPQFiuDu8lmtmxqOTgmBnKZI=;
+ b=f+f4gM9of3k7M9xw1PCAGBirn/UsFlNrF2Ok/1YXeSTW6iUKrAaRi/2t6ACWbrxvsl
+ QSHVM+5+b4YAj3Bxr7C/WvgIKkwkU8n6+iuWuXULMDBWwDt/+E3bBfeDunHwHkfSr8u2
+ muhkrUISd6fxyZru/z36QavN/bBlhefJLy1JAKrq66p2mArAoqCRfZ4grJlZyVYzQgIG
+ +jifDFxYJXEsfpvaUzAWK4Yw6E6PYYcEzDWonrGRM3QNi0Q1I/WM+F0RZVrt5meVI3mv
+ RvUd5vWYdjxKGxmvH/vuWfSHyLnoSf49DkhZ/1bO/YaM/GtfuaS4kP4mtQV/GXu4gbyl
+ BC1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUUU9sosuxkmZye1LmN7BKUnA/Qx3QQ0p9zhA/5m4xpn0OiIj3g/gDOAvxYwI2qZee2eZH+oG531cNA@nongnu.org
-X-Gm-Message-State: AOJu0YwL1Y4HPBNALzdW8b4n7z6JfYyk980KdwacffVQRkt+6MP1EGnq
- q1bQazLbDPQPz3KpMsGb2uK5HH55wNv08XYw6yR+fMR9PXYsTkNCiyH1PQT62dnLE20++Sjiy4W
- RzNijbcaoOlyidd3FLg26YpVS+3TzOL+mTLuwyc+ww+j7HPARWgpQZwr4Z/UjHZv19jLJNusZkf
- eSPFPDt/EVqzFV8iUiuU17H/Zht5suJ4s=
-X-Gm-Gg: AY/fxX6w+R+0sFWEKbigvPOenqup918whJLLas97effJ+LvpPJA/r6XaqYiKkSUw8er
- 9zpzAOHCXAzzT2i4/5T/3eDtdfy2IE03F4vzBXnHTlVEBwB4Rzui9HJX2NU0gimmCA63oo2SCRy
- Kl948SkeNLwMUGn7M8bthWk4j03lxnhLg/3r/2CNcPzsl5bfgpcvuklSeYkdHuiYcr/k6JNyjLL
- RRawzfYCi2o07GLZBU1TpN3AgyKLHYoPMiwSRd+wFVs4F2Kg65x8Y9CtrMSFRK9XzCvfw==
-X-Received: by 2002:a05:6000:3104:b0:430:f301:3e6c with SMTP id
- ffacd0b85a97d-432c37c870emr17720922f8f.34.1768237276997; 
- Mon, 12 Jan 2026 09:01:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEAiYfjnr+gYdtjsO6mWWQ+a+BH9XfzWG3kpFltGJWfx1JU+oZ6aKStp9mLHs0yv0OictNdRBrZnyrHEsB1/Wg=
-X-Received: by 2002:a05:6000:3104:b0:430:f301:3e6c with SMTP id
- ffacd0b85a97d-432c37c870emr17720877f8f.34.1768237276561; Mon, 12 Jan 2026
- 09:01:16 -0800 (PST)
+ AJvYcCWrHBlfVOBpPhLcmAYScLmfgHYTq4lcq08S/TdgujXZRctKrF0Se8N5G53giYEPcPQEADy9QqAPIUyr@nongnu.org
+X-Gm-Message-State: AOJu0YwSJc5pulyUWiaW8q+fIfq0grJWHly1gEecExrhRRKscAtYswrn
+ XrHy8sCpedVeS7F8BstRvsUWsTvcRHFOdKEoqg/bPm7MNow43b+ToRDqd/uOLWSC9GwCig7lZbi
+ 1o207/KMBe0tDTi1TSkaQh2cKCRzAh6qfNlpSnErZRPi8qQYQSP7yBOY3Cbe74N1d00RxfuUr5P
+ gW5Zofb3AR8TDvfvXXXugJbEopc9nSHrQ=
+X-Gm-Gg: AY/fxX7qg8xt++tF9tyTZCAi3N0x2YJjPh0dnK2+ibuhmjGU6fc0zgtuytFawDXHkCO
+ q5MhNy4gLyQRJ4sT68d+Tzi3cgm0ClSmnbmZwuqAChQMdyyMU0FOhdR0V448ymb8O/zhKL8f8rW
+ fcF+8P8bZyXbYQLN6hr4UQl+OzpF5RGG7elkwoz9aYC7gYzzYck+jJyCnKY4bxEyAfI5gBwn5cY
+ 0GlLMXzxlnuiWdohkSE/fOl2t51yySYLdUtnP940+kkLwWYUBfkdmgCWHa2Nr4MSANVMA==
+X-Received: by 2002:a05:600c:4e8a:b0:479:2a09:9262 with SMTP id
+ 5b1f17b1804b1-47d84b18037mr244900635e9.9.1768237349477; 
+ Mon, 12 Jan 2026 09:02:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHUkrA/EFIxVDM9YasT0A251/Gyn1594BDFpmWhdj7boyiZzv/zO4AO7cbSLgAcvcRPwuDBrYXkZ0Raazwm8y8=
+X-Received: by 2002:a05:600c:4e8a:b0:479:2a09:9262 with SMTP id
+ 5b1f17b1804b1-47d84b18037mr244899935e9.9.1768237349058; Mon, 12 Jan 2026
+ 09:02:29 -0800 (PST)
 MIME-Version: 1.0
 References: <20260112132259.76855-1-anisinha@redhat.com>
- <20260112132259.76855-3-anisinha@redhat.com>
-In-Reply-To: <20260112132259.76855-3-anisinha@redhat.com>
+ <20260112132259.76855-5-anisinha@redhat.com>
+In-Reply-To: <20260112132259.76855-5-anisinha@redhat.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 12 Jan 2026 18:01:04 +0100
-X-Gm-Features: AZwV_QiH3V5FSKAnNtBPpx_JZBXYR6rPYd5poD1efJhVE8ZMgP50Mc7LrPQ905U
-Message-ID: <CABgObfaATsV8ECm+txeVzg4c=5wjKgBR972sLc+Ejw0q=nH+Fg@mail.gmail.com>
-Subject: Re: [PATCH v2 02/32] hw/accel: add a per-accelerator callback to
- change VM accelerator handle
+Date: Mon, 12 Jan 2026 18:02:17 +0100
+X-Gm-Features: AZwV_QiPnwcipYRTdzj7RyQ4o9zK-24ynHKg3jtYwESKklZ6rTj1MR4pRLLSp6w
+Message-ID: <CABgObfbDTAvm6E0imC=HSm2=BAC4rzUDmuHcoUbVjJ-YeXFw-w@mail.gmail.com>
+Subject: Re: [PATCH v2 04/32] accel/kvm: add changes required to support KVM
+ VM file descriptor change
 To: Ani Sinha <anisinha@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>, 
+ Song Gao <gaosong@loongson.cn>, Huacai Chen <chenhuacai@kernel.org>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ David Hildenbrand <david@kernel.org>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
+ qemu-s390x@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,58 +139,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 12, 2026 at 2:23=E2=80=AFPM Ani Sinha <anisinha@redhat.com> wro=
-te:
-> +    if (current_machine->cgs && reason =3D=3D SHUTDOWN_CAUSE_GUEST_RESET=
-) {
+On Mon, Jan 12, 2026 at 2:23=E2=80=AFPM Ani Sinha <anisinha@redhat.com>:
+ > +int kvm_arch_vmfd_change_ops(MachineState *ms, KVMState *s)
 
-This should check (I think) !cpus_are_resettable(), instead of
-current_machine->cgs.
-
-> +        if (ac->reset_vmfd) {
-> +            ret =3D ac->reset_vmfd(current_machine);
-> +            if (ret < 0) {
-> +                error_report("unable to reset vmfd: %d", ret);
-> +                abort();
-
-This should not be an abort, but it should change the runstate to
-RUN_STATE_INTERNAL_ERROR.
-
-Also, I would move the introduction of
-confidential_guest_can_rebuild_state() callback even before this patch
-(see upcoming review of patch 24).
-
-At the end of the series, this should look something like:
-
-    if (reason =3D=3D SHUTDOWN_CAUSE_GUEST_RESET
-        && (current_machine->new_accel_vmfd_on_reset
-            || !cpus_are_resettable()) {
-        if (ac->reset_vmfd) {
-            ret =3D ac->reset_vmfd(current_machine);
-            if (ret < 0) {
-                 error_report(..., strerror(-ret));
-                 vm_stop(RUN_STATE_INTERNAL_ERROR);
-            }
-        } else if (!cpus_are_resettable()) {
-            error_report("accelerator does not support reset");
-        } else {
-            error_report("accelerator does not support
-x-change-vmfd-on-reset=3D...,"
-                        " proceeding with normal reset");
-        }
-    }
+Weird name since there are no "operations". Maybe kvm_arch_on_vmfd_change?
 
 Paolo
-
-> +            }
-> +        }
-> +    }
-> +
->      if (mc && mc->reset) {
->          mc->reset(current_machine, type);
->      } else {
-> --
-> 2.42.0
->
 
 
