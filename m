@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84B3DCF45D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8802DCF45D4
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 23:03:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQoc-00043l-KV; Mon, 12 Jan 2026 17:55:14 -0500
+	id 1vfQvU-0003Lt-4q; Mon, 12 Jan 2026 18:02:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoW-0003rK-2o
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:08 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vfQvR-0003Ks-Q9
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 18:02:17 -0500
+Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoU-00046k-GR
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:07 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-47775fb6c56so66083695e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258505; x=1768863305; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qcTGsVHDaBTx/cy/A49xf1mB6DXl6RRXDBGl281jJNc=;
- b=ZHtFPX5C+EeppywWO5Y5cS98kMkIiXzOaftN7hvCWSmUSv5FYsk07+nIQq2kFTzLk5
- 32ksb++tf19MSByEHyKCoEEXqeABhEY2POAcKt9xJuonlfIHHxQnuPo7ih9Nm5nBNzZX
- EyCPxy0wNfTqSRJBYUrN3G5oBFC1F/XtIWBvFFKRWrygg+Kp14k4qOTuDyDuXlnHSNuk
- lRrSwkikkI4wG3ymu+ObvTKIZ1KzV3P1gLcxXPu+1zHYf/JQJEwcGPjKhKrFW1DLV57W
- C8ta4sV1iWu87JJDrP0KLg7G8BRH2pOlBiUM5l01q3BU/zri9S9gj++x0PINw7OWo9e3
- bpHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258505; x=1768863305;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=qcTGsVHDaBTx/cy/A49xf1mB6DXl6RRXDBGl281jJNc=;
- b=eFwPQTR7vo4Gv9TS428SgfUZivE067AehYenZZr7JWHfR0AKmSIlghUqQ/Q0VJRXw0
- 7r1lqp/mhI23TEhatT0WG9chRMJh/7L9cwke+hnFfvTSCKLtKAYYUqT4OKDNlPaQI4vb
- HkaDlkjM/PJ7hWeG5XZTSCq+ATokV/nMAaB99Bz6ogkHhSdI3u+Wkm98cjDez4DKrGQJ
- scR54XZw2A7m2OaxeNzaw7QsuB/TiW4Dznj4Q5zFUB565zaus+5a5JCoNoF8tRswSN6o
- C2dKTi1x3XFXC2Crj/ZY+jTIjQCRS4o1Zzt/jaU93mHRceBElWLzBozHgJNOh0wMuMCV
- +nYg==
-X-Gm-Message-State: AOJu0Yzjj2YgPtxVfgbnnQG/UeHidmYdUaFlGPUciZTcwS1xcxz25cPj
- A8QMtBxjmVS1DPmvKlgK2iqSpz/29GEiQQCaF3J5hVubEybOKFWiYn6tPzHaXib0dDNZugvHi3E
- dTX3DbsA=
-X-Gm-Gg: AY/fxX5NXlb1s7t0eyGxzmwKCn7E61CnPFFIYKmQeT97UE23HhLxTdhBpdsWHz9uBYp
- nxrJD+omeJDRcvfBE6mcjyLiC0BRrYCtkbIlx9ZHZ/7kHP4UXgsk+hGejHy7jV4wTXAzbyTL5/8
- Ddtk/+pK/VjTTeR3Z5QXDuMB1F899TY6sSHgZhkMpeeMW3y3AaU+ZKHb+9cjNE8YkhXxMNXbguR
- rc+zE3eV/azYZQ5dy0mJSaMLdmyHZhYZZTO6iAf7y6ZTUeI0CnQ6ifsVrBSE7QTk63481FdEvRN
- HH/UEf6ujcri2oypjs4bomvFTsUpmrVlpYgOwK9gUqz1Ev4DLVU+pHj1KbZHfF38g2IFG8L1m7P
- rIcTQfFmls6Avh6a4B+d8TH3Up2XhZ4TNB/xeUtym1UHef21M9dfJwpC1dlI+YFrcpcuqHKnzLO
- JuDuPxh8kauvBICZjXtmsF2mU4TXqJHn+zBZPht5eI+dCrHJtcWQl9C1ZdO+7L
-X-Google-Smtp-Source: AGHT+IEDaR2/3/JXXAsSHaDflpV1qrpYY2UfdOUCVVFW3vZ5GQNRDAtvLeZkjM3yMDYlaq4MXA+tmg==
-X-Received: by 2002:a05:600c:4fc3:b0:477:569c:34e9 with SMTP id
- 5b1f17b1804b1-47d84b3b9e6mr249600845e9.23.1768258504566; 
- Mon, 12 Jan 2026 14:55:04 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f653cd6sm394107705e9.9.2026.01.12.14.55.03
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:55:04 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vfQvO-0006I7-RB
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 18:02:17 -0500
+X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
+Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
+ d1e7d384fc715ab1512602a6ac5d2da06fe6a698fc310d411471673906daec7f with SMTP id
+ 69657d6db5a5d57f8524a7ef; Mon, 12 Jan 2026 23:02:05 GMT
+X-Mailgun-Sending-Ip: 204.220.184.62
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
+ s=rsa2048; t=1768258925;
+ bh=lQzMPmtgICG9oe9L/v+xMIkXf+dXY2DUXTpSDA4PHWQ=;
+ h=X-Mailgun-Dkim:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Transfer-Encoding:From:Reply-to:
+ Subject:Date:Message-id:To:Cc:Mime-version:Content-type:
+ Content-transfer-encoding:In-reply-to:References;
+ b=LmKL6NxPQ1yxeRTdieur8DKGvLVZk/K3M4FQLXBsGHWbEOSZgl0FpyQhQTCo7WdQs
+ 0TBVRvlkfOGKbGgLrdFpP8oiZU0lf4r2pWVeXpfr71WCzXaxO/ZdwSbYVIjlOgykbC
+ 10TTwzwrQB2ouNYmTUn07bfPeHxzIFzYX2EfOFhnAb/CBQnnfdvKtaXN38mi1aPsSI
+ slsd/kbGDiuUUAwCXH30wg2cDDOyMcOfHp8zLDbnTnPnwIZTVmC5xh48Xtxqd20rIo
+ fVsRPDBYAdP1RbA3zakO36mEnjvtTRWgLtUei4/UHGT2y3GES4NmLuzL3KF+zs2jkH
+ XrIg1q7o0KDxw==
+X-Mailgun-Dkim: no
+X-Mailgun-Dkim: no
+From: Yodel Eldar <yodel.eldar@yodel.dev>
 To: qemu-devel@nongnu.org
-Subject: [PULL 53/61] target/sparc: Inline translator_ldl()
-Date: Mon, 12 Jan 2026 23:48:48 +0100
-Message-ID: <20260112224857.42068-54-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
-References: <20260112224857.42068-1-philmd@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Yodel Eldar <yodel.eldar@yodel.dev>
+Subject: [RFC PATCH v2 1/3] tests/vhost-user-bridge: Move to
+ contrib/vhost-user-bridge/
+Date: Mon, 12 Jan 2026 17:01:25 -0600
+Message-ID: <20260112230127.99125-2-yodel.eldar@yodel.dev>
+In-Reply-To: <20260112230127.99125-1-yodel.eldar@yodel.dev>
+References: <20260112230127.99125-1-yodel.eldar@yodel.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=204.220.184.62;
+ envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
+ helo=k62.kb8c70eb.use4.send.mailgun.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,38 +85,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-translator_ldl() is defined in "exec/translator.h" as:
+After the introduction of vhost-user-bridge and libvhost-user, we
+formed the convention of placing vhost-user daemons in eponymous subdirs
+of contrib/. Follow this convention.
 
-  198 static inline uint32_t
-  199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
-  200 {
-  201     return translator_ldl_end(env, db, pc, MO_TE);
-  202 }
+Create a contrib/vhost-user-bridge/ directory and move vhost-user-bridge
+into it. Extract its build target definition from tests/meson.build into
+the new directory, and include its subdir in the root-level meson.build.
 
-Directly use the inlined form, expanding MO_TE -> MO_BE
-since we only build the SPARC targets as big-endian.
+Add a section about it in the "vhost-user daemons in contrib" document.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251224162642.90857-7-philmd@linaro.org>
+Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 ---
- target/sparc/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/vhost-user-bridge/meson.build         |  4 ++
+ .../vhost-user-bridge}/vhost-user-bridge.c    |  0
+ .../devices/virtio/vhost-user-contrib.rst     | 39 +++++++++++++++++++
+ meson.build                                   |  1 +
+ tests/meson.build                             |  6 ---
+ 5 files changed, 44 insertions(+), 6 deletions(-)
+ create mode 100644 contrib/vhost-user-bridge/meson.build
+ rename {tests => contrib/vhost-user-bridge}/vhost-user-bridge.c (100%)
 
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index d6b599b71fe..1a7e5cc3d73 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -5743,7 +5743,7 @@ static void sparc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-     DisasContext *dc = container_of(dcbase, DisasContext, base);
-     unsigned int insn;
+diff --git a/contrib/vhost-user-bridge/meson.build b/contrib/vhost-user-bridge/meson.build
+new file mode 100644
+index 0000000000..aa58c1df20
+--- /dev/null
++++ b/contrib/vhost-user-bridge/meson.build
+@@ -0,0 +1,4 @@
++if have_tools and have_vhost_user and host_os == 'linux'
++  executable('vhost-user-bridge', files('vhost-user-bridge.c'),
++             dependencies: [qemuutil, vhost_user], install: false)
++endif
+diff --git a/tests/vhost-user-bridge.c b/contrib/vhost-user-bridge/vhost-user-bridge.c
+similarity index 100%
+rename from tests/vhost-user-bridge.c
+rename to contrib/vhost-user-bridge/vhost-user-bridge.c
+diff --git a/docs/system/devices/virtio/vhost-user-contrib.rst b/docs/system/devices/virtio/vhost-user-contrib.rst
+index 48d04d2ade..660d29a700 100644
+--- a/docs/system/devices/virtio/vhost-user-contrib.rst
++++ b/docs/system/devices/virtio/vhost-user-contrib.rst
+@@ -85,3 +85,42 @@ vhost-user-scsi - SCSI controller
  
--    insn = translator_ldl(cpu_env(cs), &dc->base, dc->pc);
-+    insn = translator_ldl_end(cpu_env(cs), &dc->base, dc->pc, MO_BE);
-     dc->base.pc_next += 4;
+ The vhost-user-scsi daemon can proxy iSCSI devices onto a virtualized
+ SCSI controller.
++
++.. _vhost_user_bridge:
++
++vhost-user-bridge - Network bridge
++==================================
++
++The vhost-user-bridge daemon serves as a development tool for testing real
++internet traffic by providing a networking backend, i.e. server, for the
++vhost-user protocol.
++
++Example
++-------
++For a single QEMU instance that both runs the user-mode net stack (slirp) and
++serves as a vhost-user protocol frontend, i.e. client, simultaneously:
++
++First, start vhost-user-bridge:
++
++::
++
++  $ vhost-user-bridge -u /tmp/vubr.sock \
++                      -l 127.0.0.1:4444 \
++                      -r 127.0.0.1:5555
++
++Then, invoke QEMU:
++
++::
++
++  $ qemu-system-x86_64 \
++        -m 4G \
++        -object memory-backend-memfd,id=mem0,size=4G,share=on,prealloc=on \
++        -numa node,memdev=mem0 \
++        -chardev socket,id=char0,path=/tmp/vubr.sock \
++        -netdev vhost-user,id=vhost0,chardev=char0,vhostforce=on \
++        -device virtio-net-pci,netdev=vhost0 \
++        -netdev socket,id=udp0,udp=localhost:4444,localaddr=localhost:5555 \
++        -netdev user,id=user0 \
++        -netdev hubport,id=hub0,hubid=0,netdev=udp0 \
++        -netdev hubport,id=hub1,hubid=0,netdev=user0 \
++        ...
+diff --git a/meson.build b/meson.build
+index db87358d62..a4e8a9b7b5 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4546,6 +4546,7 @@ if have_tools
+     subdir('contrib/vhost-user-gpu')
+     subdir('contrib/vhost-user-input')
+     subdir('contrib/vhost-user-scsi')
++    subdir('contrib/vhost-user-bridge')
+   endif
  
-     if (!decode(dc, insn)) {
+   if host_os == 'linux'
+diff --git a/tests/meson.build b/tests/meson.build
+index cbe7916241..87861b2857 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -70,12 +70,6 @@ test_deps = {
+   'test-qht-par': qht_bench,
+ }
+ 
+-if have_tools and have_vhost_user and host_os == 'linux'
+-  executable('vhost-user-bridge',
+-             sources: files('vhost-user-bridge.c'),
+-             dependencies: [qemuutil, vhost_user])
+-endif
+-
+ subdir('decode')
+ 
+ if 'CONFIG_TCG' in config_all_accel
 -- 
 2.52.0
 
