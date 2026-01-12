@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8E1C9EC91
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF8C2C9EC90
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfHuk-0004hx-Rq; Mon, 12 Jan 2026 08:25:00 -0500
+	id 1vfHw0-0006JO-Qf; Mon, 12 Jan 2026 08:26:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfHuN-000477-Gz
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:37 -0500
+ id 1vfHuZ-0004V8-6M
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfHuL-0003s1-72
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:34 -0500
+ id 1vfHuW-0003tE-WF
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768224272;
+ s=mimecast20190719; t=1768224284;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5mNZOVGpLRkq1Bf/PS8HZ5/0yQ0n0eM+fBjQiQ5vegE=;
- b=ZtkLkmiUK/B5qtN+N2KQywZkTTm+/yOKRylOORWzxSPedIXFBV/G+GPMLv4h/mOcsHIwkW
- ZnMhOvviflSvTljNf52F5b5oLt7taXySdtyc8kojeLxeQc2ObkrHbbdf6fW7Ua8jP0yvQe
- wtAgOX8O4KciukMqbgC+KZhshTidf2Y=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=34fJR3EaRP0lXjDv/gJjVEbigtGQPR0fffJidhYwq0M=;
+ b=WekqduqARwYEpbVshm6B6lTmwG3+Hs7WNr06pC1joRLcwDp3phCpYejt6oA7ZZHcUMjO0y
+ zDkKIwdYftIXnF24WiorRFZeWav/fOnpxAwrGg2h3UwepwSLScxa6VEsMzbxINGVjo+RXQ
+ IFbY73E8etXN71fMQ23JScw7/q4PfJ4=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-FAq77rNNNs-cuer31wN--A-1; Mon, 12 Jan 2026 08:24:29 -0500
-X-MC-Unique: FAq77rNNNs-cuer31wN--A-1
-X-Mimecast-MFC-AGG-ID: FAq77rNNNs-cuer31wN--A_1768224268
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-81e6ec1da28so1868054b3a.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:24:29 -0800 (PST)
+ us-mta-127-GWcljjK-OoO0Uf-79-ptnA-1; Mon, 12 Jan 2026 08:24:40 -0500
+X-MC-Unique: GWcljjK-OoO0Uf-79-ptnA-1
+X-Mimecast-MFC-AGG-ID: GWcljjK-OoO0Uf-79-ptnA_1768224279
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-b471737e673so8554209a12.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:24:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768224268; x=1768829068; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768224279; x=1768829079; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5mNZOVGpLRkq1Bf/PS8HZ5/0yQ0n0eM+fBjQiQ5vegE=;
- b=hm+V3aife0tGOQlO5s2W24po7HFF6i4/NzHNJN7HqeSFjsRWDmC4Hn5OWPojDRqI8D
- KRhv5iJ3zbXNxjsp/XwSLaePnalQjrdACJqqx/JmeDTwyDqW0axZvoAkHafKO+1XzivQ
- +N6BVcn9GUIqFn/ggNIYqr2tRFNCMT3ScPiBqHOVMyEHkoclMEoYG1AQ/mB2emYhAn1J
- Cp1fXSp+6FBunsA0okw8a66fjJggfJXJD9sp6SxZNIFAr24oHtsZk73ILw+RByn5BaSS
- 1AsItljMpVqRCfmaWWD32Yn6VX9lkfwP6/yLWh6QrwCcrKzPrF2dJGMj3Rb/LieHoZZ7
- uMtQ==
+ bh=34fJR3EaRP0lXjDv/gJjVEbigtGQPR0fffJidhYwq0M=;
+ b=lIDL0PIbqQHENzABYtWMjyxdAdb8dvoEQQRakimoO8yL/fHFRTcdQnqgtJsfOMdgkX
+ 25KiFrfyLjm1hermrPJvVNgIhlTdyGzE6WUdG9SUl93I+Hz19UhYnBy2e/jZ+WiEb4LE
+ ro9szOkk1rcHe+gkwrzvHvSEWxxC9JWiPhfGSkqQE1svRbmFxqjQWueoQs+CdX2k6pae
+ jYvakHtE2mxTKJD0Y6NOW2OeHYIe0po5u7eO2Q4rGwXfO+IbTcbqAVGBM9/A4A8NGEjv
+ pDzVoMMWkXuEkWxoL8biutBbIs5Gc9bOr6tZoP/00pXxejUP93gbKqppE3Vex9Q5qHtb
+ IFQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768224268; x=1768829068;
+ d=1e100.net; s=20230601; t=1768224279; x=1768829079;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5mNZOVGpLRkq1Bf/PS8HZ5/0yQ0n0eM+fBjQiQ5vegE=;
- b=KHQWjxdOtNC+zmWDxl1hktmZJo0m7+vY4QURhNqSvYTna18Ze5BRT43brZn6yhoNnK
- SWFdyJaXRCjE/6EjxGixiVLh6/gyQSD/bxbxDNRHKbSdVXttY7Ie2okCg506B1t98i8Y
- pq1v7FW1eBRNMtsm84CfuyAfoNv4d1bprn8bxWfYGZXMEQomE7PZOKOKxVc67uZFP/Uu
- XDrCmC4qTBNUgwF/EaJif4vB0q1EPU5/9TyzJ6wtvyQJnYKBqEdJ5xq9uoWB+o+MnmaW
- IL9FAffQrlhX4vb8MKQC/avMSff+s87X4Z/3AivsAZo27BQgv9kJCp80DwgnVKlBCoHn
- VHPw==
+ bh=34fJR3EaRP0lXjDv/gJjVEbigtGQPR0fffJidhYwq0M=;
+ b=u7Tx6ryW6GZ8B8fC/DGblefAqbJvwkoL+4mE/3t5jJemZ+1PtEDikbO6Y3ia5UYDgi
+ 72FkflL0MnFZsXFhkv3H4/OjlNY0/NXJoFr0hhMqDoyq8dlugaqKPaD64/tk4LqOTH+7
+ ZJTgUw4WOX9Vl1waUfJqljqEtVg6wyxEwKLOyBrToP4M5Q0RFjWH7gdaA4j1znkogsWT
+ K62+AWAR9MKv8cg94mN+E+tgIDuM15d/KDAYqM/z/Vay/5AVcNlz6VVwQJYnzAYuUU4u
+ E5PkRyO+iS1Guv/HSwsCDAjZG8JfwKGrHoYYiXGfdBj0Lt1oqoLD8pn6Yp8LR3x3P8If
+ fnUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU7Fmpgwz25wZBf8CvMUXHqBqnYVppehHhcAjHdmpi2HpYP31LHEKPQ0mWSSWHyNewzX3gW5uUpEbNN@nongnu.org
-X-Gm-Message-State: AOJu0YzZtiyKFaghSDd8PnHQdE77g9bXIQEBZREm6i45Zchax799cN2k
- zdUzpxUIVM2hGR5I3c+kEvalnF/PqPqFCKM1/D3tcIblq16KoZmg3cnXW6lainRh5AV7wnx3P0E
- T4ARB9OqQPaj1aMW0/N/sLNx2KP6DPOOTykjmehPKt8VUp99MMuJ8ufYK
-X-Gm-Gg: AY/fxX4ZHMVP0CwFdJaSMSSVsMqlvt0NK6aalmwV7TUvzyGIFpa9jHJpE/IQxvrNMLt
- eIKFrhZUuYL0iBGpkNbZYxWOmZSqY0C6gByiLwk6f3UKXPl3R+9Ct+lD/IxWYyENV+XzOlXV7M0
- z6Zg+zVFilF3KHNEqIpZK+oXum8SxkjoNx7AgrPkfritbxzVR2IkqV5eVYGXz4Mh6zVsBJyx6sJ
- 6m7bUsT5hgEHqMjKkWn6bzP5SptCCI86J4kDT0IzBz8IX6MSZbr3LnndZE2oxfHc63Lvd+c6+in
- DnY+wGd/LouN0jJ2vP9zweeXCtq7ktfnecD4i4K/sFPkdPid9K7EViEsOEFOYwl9+6vQFdaeeTX
- boXXOnsZJ8B962vjI/WCYiV6IuWM+rEpK4tjXjIy5d6w=
-X-Received: by 2002:a05:6a20:6a08:b0:37e:8eea:3e3f with SMTP id
- adf61e73a8af0-3898f9c28a9mr16110805637.80.1768224268306; 
- Mon, 12 Jan 2026 05:24:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGD9RUhQ3GTJxL2ONxoegYo4Rf5YfwQeYOo30AP0UNkHIJItgroqtE20TpG/pfeVSe07ySt6g==
-X-Received: by 2002:a05:6a20:6a08:b0:37e:8eea:3e3f with SMTP id
- adf61e73a8af0-3898f9c28a9mr16110784637.80.1768224267933; 
- Mon, 12 Jan 2026 05:24:27 -0800 (PST)
+ AJvYcCW6rChpNADc8oWNOkUzwXqu8HUQEv7bPvct52GpnQGv6zYa6oHpAXgoDjxoDC/aSpxET6JuUEnMyilx@nongnu.org
+X-Gm-Message-State: AOJu0Yxa4LaC5Y52vqcq9UtUHL2w/7/H24+YGPCUBLwZbSQc3hjHVA6o
+ YA7Nhzni20vHI44HXBQX2xRlYSpy5i5bREW1mn7zvNpWLf5iLDQawLLdkO8AivdKVhGJBeUfUcd
+ qLTi0GW18uTib9nDJbsk2116H7hctIoqXcMZ2ZKoP+zw3z+t3JlM3GLO6
+X-Gm-Gg: AY/fxX7WA2LylIQ4lMR+BNEJjYJckD5nKiXDAI1gHfPgrGkH1PRZt60xGUSJU5Vdtjo
+ 9XIqOhGIYF3HSa+GHoAgXRAh/AJG4O9bUuUtd9lRH7RwbXc/aBPNbQUI1vr+aJfKAELz2rs4Joo
+ e2q2uouaWj9S6ok3+QhmqrncYJlypcVJvAEICUtp8AyzTpkboNGRTfyqsle6dBd9LegrYSkJ2Do
+ URU3vGv8HLJbxim9X8e3CRb3Vh31mPhbXYjL831pHsoEU5SvgmzU2t7UTmh1CQu9dycEA3Tn5cW
+ BBTZzJbFmYZhRix/jFGeZspBe+ZcRIOYFL4s4HBJ8yJ+mw5pDQy1QQ6SHAnh4k4Zbye14wAxsFq
+ Hcaq3erxx/KcV2vIYTVYtQKmGJdehEyWbAz/2WNAiEBA=
+X-Received: by 2002:a05:6a20:7d9f:b0:350:7d78:18d9 with SMTP id
+ adf61e73a8af0-3898f90887dmr15164015637.32.1768224279170; 
+ Mon, 12 Jan 2026 05:24:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIt8GOnuhdYsXeV1HU+lkzI4cU54UMzoMp+l9q2VHcfA0UCoD8L3XqEJJR5fHmm3onZd1kpA==
+X-Received: by 2002:a05:6a20:7d9f:b0:350:7d78:18d9 with SMTP id
+ adf61e73a8af0-3898f90887dmr15164000637.32.1768224278747; 
+ Mon, 12 Jan 2026 05:24:38 -0800 (PST)
 Received: from rhel9-box.lan ([110.227.88.119])
  by smtp.googlemail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd87asm17544771a12.15.2026.01.12.05.24.25
+ 41be03b00d2f7-c4cc05cd87asm17544771a12.15.2026.01.12.05.24.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Jan 2026 05:24:27 -0800 (PST)
+ Mon, 12 Jan 2026 05:24:38 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Cc: Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v2 24/32] accel/kvm: add a per-confidential class callback to
- unlock guest state
-Date: Mon, 12 Jan 2026 18:52:37 +0530
-Message-ID: <20260112132259.76855-25-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [PATCH v2 28/32] kvm/vcpu: add notifiers to inform vcpu file
+ descriptor change
+Date: Mon, 12 Jan 2026 18:52:41 +0530
+Message-ID: <20260112132259.76855-29-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260112132259.76855-1-anisinha@redhat.com>
 References: <20260112132259.76855-1-anisinha@redhat.com>
@@ -124,159 +123,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As a part of the confidential guest reset process, the existing encrypted guest
-state must be made mutable since it would be discarded after reset. A new
-encrypted and locked guest state must be established after the reset. To this
-end, a new callback per confidential guest support class (eg, tdx or sev-snp)
-is added that will indicate whether its possible to rebuild guest state:
-
-bool (*can_rebuild_guest_state)(ConfidentialGuestSupport *cgs)
-
-This api returns true if rebuilding guest state is possible,
-false otherwise. A KVM based confidential guest reset is only possible when
-the existing state is locked but its possible to rebuild guest state.
-Otherwise, the guest is not resettable.
+When new vcpu file descriptors are created and bound to the new kvm file
+descriptor as a part of the confidential guest reset mechanism, various
+subsystems needs to know about it. This change adds notifiers so that various
+subsystems can take appropriate actions when vcpu fds change by registering
+their handlers to this notifier.
+Subsequent changes will register specific handlers to this notifier.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- include/system/confidential-guest-support.h | 27 +++++++++++++++++++++
- system/runstate.c                           | 11 +++++++--
- target/i386/kvm/tdx.c                       |  6 +++++
- target/i386/sev.c                           |  9 +++++++
- 4 files changed, 51 insertions(+), 2 deletions(-)
+ accel/kvm/kvm-all.c    | 27 ++++++++++++++++++++++++++-
+ accel/stubs/kvm-stub.c | 10 ++++++++++
+ include/system/kvm.h   | 17 +++++++++++++++++
+ 3 files changed, 53 insertions(+), 1 deletion(-)
 
-diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
-index 0cc8b26e64..3c37227263 100644
---- a/include/system/confidential-guest-support.h
-+++ b/include/system/confidential-guest-support.h
-@@ -152,6 +152,11 @@ typedef struct ConfidentialGuestSupportClass {
-      */
-     int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
-                              Error **errp);
-+
-+    /*
-+     * is it possible to rebuild the guest state?
-+     */
-+    bool (*can_rebuild_guest_state)(ConfidentialGuestSupport *cgs);
- } ConfidentialGuestSupportClass;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 2bd4dcd43b..efdfdf0ccb 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -130,8 +130,10 @@ static NotifierWithReturnList register_vmfd_changed_notifiers =
+ static NotifierWithReturnList register_vmfd_pre_change_notifiers =
+     NOTIFIER_WITH_RETURN_LIST_INITIALIZER(register_vmfd_pre_change_notifiers);
  
- static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
-@@ -167,6 +172,28 @@ static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
-     return 0;
+-static int kvm_rebind_vcpus(Error **errp);
++static NotifierWithReturnList register_vcpufd_changed_notifiers =
++    NOTIFIER_WITH_RETURN_LIST_INITIALIZER(register_vcpufd_changed_notifiers);
+ 
++static int kvm_rebind_vcpus(Error **errp);
+ static int map_kvm_run(KVMState *s, CPUState *cpu, Error **errp);
+ static int map_kvm_dirty_gfns(KVMState *s, CPUState *cpu, Error **errp);
+ static int vcpu_unmap_regions(KVMState *s, CPUState *cpu);
+@@ -2328,6 +2330,22 @@ void kvm_vmfd_remove_pre_change_notifier(NotifierWithReturn *n)
+     notifier_with_return_remove(n);
  }
  
-+static inline bool
-+confidential_guest_can_rebuild_state(ConfidentialGuestSupport *cgs)
++void kvm_vcpufd_add_change_notifier(NotifierWithReturn *n)
 +{
-+    ConfidentialGuestSupportClass *klass;
-+
-+    if (!cgs) {
-+        /* non-confidential guests */
-+        return true;
-+    }
-+
-+    klass = CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs);
-+    if (klass->can_rebuild_guest_state) {
-+        return klass->can_rebuild_guest_state(cgs);
-+    }
-+
-+    /*
-+     * by default, we should not be able to unprotect the
-+     * confidential guest state
-+     */
-+    return false;
++    notifier_with_return_list_add(&register_vcpufd_changed_notifiers, n);
 +}
 +
- static inline int confidential_guest_kvm_reset(ConfidentialGuestSupport *cgs,
-                                                Error **errp)
++void kvm_vcpufd_remove_change_notifier(NotifierWithReturn *n)
++{
++    notifier_with_return_remove(n);
++}
++
++static int kvm_vcpufd_change_notify(Error **errp)
++{
++    return notifier_with_return_list_notify(&register_vcpufd_changed_notifiers,
++                                            &vmfd_notifier, errp);
++}
++
+ static int kvm_vmfd_pre_change_notify(Error **errp)
  {
-diff --git a/system/runstate.c b/system/runstate.c
-index b0ce0410fa..710f5882d9 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -58,6 +58,7 @@
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "system/runstate-action.h"
-+#include "system/confidential-guest-support.h"
- #include "system/system.h"
- #include "system/tpm.h"
- #include "trace.h"
-@@ -564,7 +565,12 @@ void qemu_system_reset(ShutdownCause reason)
-     if (cpus_are_resettable()) {
-         cpu_synchronize_all_post_reset();
-     } else {
--        assert(runstate_check(RUN_STATE_PRELAUNCH));
-+        /*
-+         * for confidential guests, cpus are not resettable but their
-+         * state can be rebuilt under some conditions.
-+         */
-+        assert(runstate_check(RUN_STATE_PRELAUNCH) ||
-+               (current_machine->cgs && runstate_is_running()));
+     return notifier_with_return_list_notify(&register_vmfd_pre_change_notifiers,
+@@ -2858,6 +2876,13 @@ static int kvm_reset_vmfd(MachineState *ms)
      }
+     assert(!err);
  
-     vm_set_suspended(false);
-@@ -713,7 +719,8 @@ void qemu_system_reset_request(ShutdownCause reason)
-     if (reboot_action == REBOOT_ACTION_SHUTDOWN &&
-         reason != SHUTDOWN_CAUSE_SUBSYSTEM_RESET) {
-         shutdown_requested = reason;
--    } else if (!cpus_are_resettable()) {
-+    } else if (!cpus_are_resettable() &&
-+               !confidential_guest_can_rebuild_state(current_machine->cgs)) {
-         error_report("cpus are not resettable, terminating");
-         shutdown_requested = reason;
-     } else {
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 314d316b7c..a89b14d401 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -1589,6 +1589,11 @@ static ResettableState *tdx_reset_state(Object *obj)
-     return &tdx->reset_state;
- }
- 
-+static bool tdx_can_rebuild_guest_state(ConfidentialGuestSupport *cgs)
-+{
-+    return true;
-+}
-+
- static void tdx_guest_class_init(ObjectClass *oc, const void *data)
- {
-     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-@@ -1596,6 +1601,7 @@ static void tdx_guest_class_init(ObjectClass *oc, const void *data)
-     ResettableClass *rc = RESETTABLE_CLASS(oc);
- 
-     klass->kvm_init = tdx_kvm_init;
-+    klass->can_rebuild_guest_state = tdx_can_rebuild_guest_state;
-     x86_klass->kvm_type = tdx_kvm_type;
-     x86_klass->cpu_instance_init = tdx_cpu_instance_init;
-     x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index d45356843c..c52027c935 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -2632,6 +2632,14 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-     return -1;
- }
- 
-+static bool sev_can_rebuild_guest_state(ConfidentialGuestSupport *cgs)
-+{
-+    if (!sev_snp_enabled() && !sev_es_enabled()) {
-+        return false;
++    /* notify everyone that vcpu fd has changed. */
++    ret = kvm_vcpufd_change_notify(&err);
++    if (ret < 0) {
++        return ret;
 +    }
-+    return true;
++    assert(!err);
++
+     /* these can be only called after ram_block_rebind() */
+     memory_listener_register(&kml->listener, &address_space_memory);
+     memory_listener_register(&kvm_io_listener, &address_space_io);
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index 7f4e3c4050..5b94f3dc3c 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -95,6 +95,16 @@ void kvm_vmfd_remove_change_notifier(NotifierWithReturn *n)
+ {
+ }
+ 
++void kvm_vcpufd_add_change_notifier(NotifierWithReturn *n)
++{
++    return;
 +}
 +
- static int cgs_get_mem_map_entry(int index,
-                                  ConfidentialGuestMemoryMapEntry *entry,
-                                  Error **errp)
-@@ -2806,6 +2814,7 @@ sev_common_instance_init(Object *obj)
-     cgs->set_guest_state = cgs_set_guest_state;
-     cgs->get_mem_map_entry = cgs_get_mem_map_entry;
-     cgs->set_guest_policy = cgs_set_guest_policy;
-+    cgs->can_rebuild_guest_state = sev_can_rebuild_guest_state;
++void kvm_vcpufd_remove_change_notifier(NotifierWithReturn *n)
++{
++    return;
++}
++
+ int kvm_irqchip_add_irqfd_notifier_gsi(KVMState *s, EventNotifier *n,
+                                        EventNotifier *rn, int virq)
+ {
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index edc3fa5004..120b77d039 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -587,6 +587,23 @@ void kvm_vmfd_add_change_notifier(NotifierWithReturn *n);
+  */
+ void kvm_vmfd_remove_change_notifier(NotifierWithReturn *n);
  
-     qemu_register_resettable(OBJECT(sev_common));
- 
++/**
++ * kvm_vcpufd_add_change_notifier - register a notifier to get notified when
++ * a KVM vcpu file descriptors changes as a part of the confidential guest
++ * "reset" process. Various subsystems should use this mechanism to take
++ * actions such as re-issuing vcpu ioctls as a part of setting up vcpu
++ * features.
++ * @n: notifier with return value.
++ */
++void kvm_vcpufd_add_change_notifier(NotifierWithReturn *n);
++
++/**
++ * kvm_vcpufd_remove_change_notifier - de-register a notifer previously
++ * registered with kvm_vcpufd_add_change_notifier call.
++ * @n: notifier that was previously registered.
++ */
++void kvm_vcpufd_remove_change_notifier(NotifierWithReturn *n);
++
+ /**
+  * kvm_vmfd_add_pre_change_notifier - register a notifier to get notified when
+  * kvm vm file descriptor is about to be changed as a part of the confidential
 -- 
 2.42.0
 
