@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F6ECF45D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5689CF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQoS-0003Ih-5J; Mon, 12 Jan 2026 17:55:04 -0500
+	id 1vfQoE-0000Q0-BI; Mon, 12 Jan 2026 17:54:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoQ-0002wE-6Y
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:02 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoC-0008OA-BF
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:48 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoN-0003tY-St
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:01 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47795f6f5c0so42738925e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:54:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQo9-0003nl-Vr
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:48 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4779cb0a33fso74412635e9.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:54:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258498; x=1768863298; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258484; x=1768863284; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IwcMUwlQzOr5cia1gD4bDkeN1fDmc5SnYlwm6J+2ScE=;
- b=sMpd1/uZbOoFQ9IRE9N6wooqbLUZhV7YZAcxaQWem6/9jAIHH81b0w1Dm6E84raIwo
- CmS4JitWx6qIy7tlmSjnk7856Y95oX3xzYvzBr7Mf2odLbt2vX0bDapW0FP02Thw8nmZ
- U7A11xTtHQ3du6Cjvl2Ktw6YCSiTo9XPKPlJxjxK09Z6oKLUo6zGOxHmYsS6+UYJP7KQ
- ckxk7hevZk138EnXoXamANmwx0K+2k5vvHrVx4vx0+V8mXyXRM0Vj7izgnSLAKW2VepE
- CGZx+/0Qy5L90NTj9I04LnslkfJruJjfDl0e5e1SXi84MGJ5YKXjRPhhFmLFPCPVyers
- VlQw==
+ :reply-to; bh=lDveikpmJWnoOd0J2qx9fFPcZSfFPmvU05Qg28oFJLM=;
+ b=uVNfqrSfASI4WOgjDK7xAQX2bun00kCyIBrgoIF/EWqFtGwn4svlbFWdQHBMbh/H5n
+ 7AbQGxww2yg5mOSt8h7NrrFYHte10cUZkO2CsV6+Kg9pAuKPTWflqAJpgye78sfqhImt
+ QsysDDVJuQcBpNtonby1Bmqs42Y4XXS/ivhvRQEYkUOnuH4ZrvDNBWiD15fHCkjXB4oV
+ JK3ODJJZqYYULwA3xiCoKNsbsfZwHP7OPWzVwrmDRBkk2C1mAg9Vl+FBXrQ7EgdMgX2j
+ 1I0j/MGAWyGFsDDfkZhMChA0/2Jhr7vl1wbFd/rx8TUBoAAqNv47DTfXIXXr4ctGyAx6
+ jwZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258498; x=1768863298;
+ d=1e100.net; s=20230601; t=1768258484; x=1768863284;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IwcMUwlQzOr5cia1gD4bDkeN1fDmc5SnYlwm6J+2ScE=;
- b=Qfqa14eAt/60XjivOaZISIK6W4oQnczaAtrEQUl0EqjKpKFHW6Mmn+xNxDcqCn927u
- hhtKDbvV1Lb1vdArVo7rBvSeUDwkgev4ySYZEDZjQsnrJYPNz2fzCyNHx/yJAHRtbAfB
- l11C5K7PnwygrAts7Hd2YtCwDLu7+esUkp8TxqPwpBZrAvqOOMgF4Otx541JrPgHa0Qq
- bUubNXvATHAl5wOF7UOcaOta+Yjq4rjoEkj1XYt7QteP3iF/t/V5wfo95g4msLbi1ZUs
- 9F36HEy+hTurNJ4uVgY+KNlU6umjG1I1ucLjcZzJgl4HxB4AnK5twN9FvOvQNhv0kLBY
- eoFg==
-X-Gm-Message-State: AOJu0YzJynT6BwcwDfxTjoBieekCKbaA5jQSopAO4fNR46ei8d/SbM6N
- YqyCi7QqWOMg6pnNxEJwfefNlfTlz7A223TEIjvyswD8sWCojgC1vsR6s5U5UbKheKsd2tZdT8j
- 8fxUb36o=
-X-Gm-Gg: AY/fxX5Sj/Z4OWOKbr+/GkSjBzXJ1+iY4kl6KLpNugO49cApFHNq9XX8nFpJl3rZ/aJ
- JFse4guGe7LGXJA6ZwlPIpZtlUhacu5aI8ypP7JjkqOQybt+eFJ2uZOKMuWEp4Q6CsdFcInqFWn
- 2g7ps0QqIjnMmznxFBsyeDzlK6sHFwHwzOG3jVDG9W96UVY2ino/xfNONKZY0rwyPvB/N0diFO6
- 5g2R4yfqAKXAwRtvkwfW5mtRxNi9Cv/SPQxMBVdQb6KcLdBOFVAfy3bXHOuwx75sg1Zt6iFYhio
- 50Gn/jTNAc+RJRe/K5ZYVvlKCa1cUVojVT+H58He0hXAxW1Y2pJfgHG9IrEaXCq4ZJkUMbVLzL3
- sAZt2Z+5Y2uxLvuc1Q7AVQ/Dhk8YMm6OWP4LqXD4qoPXcwTjIeqayudLEU79LU/KhG1ipfdiEmB
- bvCTM8cYN/kqIvZFcNXAldzjdNMN1teF4UFkR2y3g+SfW0GTDbSn9iqcFzxGs3R2/xRBSIU/M=
-X-Google-Smtp-Source: AGHT+IFi/oCAOXtVJU3VZFuxv1KJHZMsjn/fJt0yxdlF+jzCo/wdSCESb0CV/sxG5oNNrGAn2W+0yA==
-X-Received: by 2002:a05:6000:2510:b0:430:f9c2:84ec with SMTP id
- ffacd0b85a97d-432c3643608mr25770399f8f.26.1768258497939; 
- Mon, 12 Jan 2026 14:54:57 -0800 (PST)
+ bh=lDveikpmJWnoOd0J2qx9fFPcZSfFPmvU05Qg28oFJLM=;
+ b=PQcEA6b9Lg/jMFzS2v4g+uBT223v2g2tWUs00yS0SK6jYCl5B+iT7j8KiNwIjLbO3K
+ 6KfL16fQ8qTlUKjJVhEefBUSJwYF7dsk0gn7Vvi6yfVDtzzgqTJwBg2clDsHC9++DwNo
+ mMomjt33ohRZN8iy4cLQJu91431hRA5yiMzkBrWlBUEJmNRpWEyCyoZfekhHI7A2LWuz
+ xoQm4JIg8YhKi+a90YVbR9do4E1OKLyvRcgUDq6dIR8EhJHXQpPXz1ushRSWMnjZl3SR
+ XscXgIZ6garv/8WBwY3bofMmwQOR32AnsChskG+KPGYVkpM6Uf0tuV2vYlEoWMuXfuDC
+ EdrA==
+X-Gm-Message-State: AOJu0Yz5bOghIVhMFxmk7du/LW8VauZDWkwNQhL+bW0KVxTZ6FFGXRCW
+ ZOUVJvXP0B2u0SnB+1fEykshdWFHWAhr+b8x3i6+0zX4AkXRhnw4N5RS0jTOhXclPZPIpFvWuiq
+ J1cCSOpg=
+X-Gm-Gg: AY/fxX69XCRjgl2tab0/wx87ZrM/rmV9EdCFThb7jr4ro81SKyIqHJNsEuX2GMBoEzH
+ gm7U5SiSfNLq5gGAuLxrlJ7V3o2qcSgn0hHbROLiHvzMtlLbTuqreiHHVwrNeNcSKh6XwdnsrKc
+ DRRsp11fzLQ3JxWbDCRn80uuFrtMJ1UBZosvaIhYH711ekRzcDWQsQzpxGhG+mAQJ/Yosgiwmaq
+ EockoXbRW3yFKqcr0scXNWg3+mx/s8PaUtHHvKwRiQnhh4UXg91SAoex1l0PGrqNuE2xautlu0c
+ JHM6yVubhRtvje35Wke1bQ/nxEEfJaxFsDXKqcTvlb+IcN4i/nKFTqRWZfxOU4zZUi8SLSWtv0x
+ SsemfM2CKrJMPllxhVO2oLy/6ecREiZbRtNDgbTBSYwY+ccCTDNPZ9EpVntxpwSGojAWawlBrT8
+ QBL6ipeEI4nLki9EBPbf++wevkrNBJJ2GQZJrI6iB7Mme74TA2kMGbSIMefnO4
+X-Google-Smtp-Source: AGHT+IFNZzi3zqvoKkbtzCmjb71L06gs1wiscON5H0oK5hWB/2NNp8cRO+TS4hSquB3QPASq3MY9Uw==
+X-Received: by 2002:a05:600c:3493:b0:477:a54a:acba with SMTP id
+ 5b1f17b1804b1-47d84b33b86mr237748015e9.17.1768258483950; 
+ Mon, 12 Jan 2026 14:54:43 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5ff1e9sm42534571f8f.41.2026.01.12.14.54.56
+ 5b1f17b1804b1-47eda10285fsm1189925e9.9.2026.01.12.14.54.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:54:56 -0800 (PST)
+ Mon, 12 Jan 2026 14:54:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 52/61] target/sparc: Use explicit big-endian LD/ST API
-Date: Mon, 12 Jan 2026 23:48:47 +0100
-Message-ID: <20260112224857.42068-53-philmd@linaro.org>
+Subject: [PULL 50/61] hw/sparc: Mark SPARC-specific peripherals as big-endian
+Date: Mon, 12 Jan 2026 23:48:45 +0100
+Message-ID: <20260112224857.42068-51-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,202 +99,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SPARC architecture uses big endianness. Directly use
-the big-endian LD/ST API.
-
-Mechanical change running:
-
-  $ for a in uw w l q; do \
-      sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
-        $(git grep -wlE '(ld|st)u?[wlq]_p' target/sparc/);
-    done
+These devices are only used by the SPARC target, which is
+only built as big-endian. Therefore the DEVICE_NATIVE_ENDIAN
+definition expand to DEVICE_BIG_ENDIAN (besides, the
+DEVICE_LITTLE_ENDIAN case isn't tested). Simplify directly
+using DEVICE_BIG_ENDIAN.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251224162642.90857-5-philmd@linaro.org>
+Message-ID: <20251224162642.90857-2-philmd@linaro.org>
 ---
- target/sparc/ldst_helper.c | 36 ++++++++++++++++++------------------
- target/sparc/mmu_helper.c  | 32 +++++++++++++++++---------------
- 2 files changed, 35 insertions(+), 33 deletions(-)
+ hw/audio/cs4231.c        |  2 +-
+ hw/char/grlib_apbuart.c  |  2 +-
+ hw/display/cg3.c         |  2 +-
+ hw/display/tcx.c         | 14 +++++++-------
+ hw/dma/sparc32_dma.c     |  2 +-
+ hw/intc/grlib_irqmp.c    |  2 +-
+ hw/intc/slavio_intctl.c  |  4 ++--
+ hw/misc/eccmemctl.c      |  2 +-
+ hw/misc/slavio_misc.c    | 16 ++++++++--------
+ hw/rtc/sun4v-rtc.c       |  2 +-
+ hw/timer/grlib_gptimer.c |  2 +-
+ hw/timer/slavio_timer.c  |  2 +-
+ 12 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-index 2c63eb9e036..881dbc96edd 100644
---- a/target/sparc/ldst_helper.c
-+++ b/target/sparc/ldst_helper.c
-@@ -707,17 +707,17 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
-                                      MEMTXATTRS_UNSPECIFIED, &result);
-             break;
-         case 2:
--            ret = address_space_lduw(cs->as, access_addr,
--                                     MEMTXATTRS_UNSPECIFIED, &result);
-+            ret = address_space_lduw_be(cs->as, access_addr,
-+                                        MEMTXATTRS_UNSPECIFIED, &result);
-             break;
-         default:
-         case 4:
--            ret = address_space_ldl(cs->as, access_addr,
--                                    MEMTXATTRS_UNSPECIFIED, &result);
-+            ret = address_space_ldl_be(cs->as, access_addr,
-+                                       MEMTXATTRS_UNSPECIFIED, &result);
-             break;
-         case 8:
--            ret = address_space_ldq(cs->as, access_addr,
--                                    MEMTXATTRS_UNSPECIFIED, &result);
-+            ret = address_space_ldq_be(cs->as, access_addr,
-+                                       MEMTXATTRS_UNSPECIFIED, &result);
-             break;
-         }
+diff --git a/hw/audio/cs4231.c b/hw/audio/cs4231.c
+index bcf98160ec3..7844b5b6c90 100644
+--- a/hw/audio/cs4231.c
++++ b/hw/audio/cs4231.c
+@@ -135,7 +135,7 @@ static void cs_mem_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps cs_mem_ops = {
+     .read = cs_mem_read,
+     .write = cs_mem_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+ };
  
-@@ -878,10 +878,10 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
-                 MemTxResult result;
-                 hwaddr access_addr = (env->mxccregs[0] & 0xffffffffULL) + 8 * i;
+ static const VMStateDescription vmstate_cs4231 = {
+diff --git a/hw/char/grlib_apbuart.c b/hw/char/grlib_apbuart.c
+index 92f534552ee..d828c3fd3d4 100644
+--- a/hw/char/grlib_apbuart.c
++++ b/hw/char/grlib_apbuart.c
+@@ -242,7 +242,7 @@ static void grlib_apbuart_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps grlib_apbuart_ops = {
+     .write      = grlib_apbuart_write,
+     .read       = grlib_apbuart_read,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+ };
  
--                env->mxccdata[i] = address_space_ldq(cs->as,
--                                                     access_addr,
--                                                     MEMTXATTRS_UNSPECIFIED,
--                                                     &result);
-+                env->mxccdata[i] = address_space_ldq_be(cs->as,
-+                                                        access_addr,
-+                                                        MEMTXATTRS_UNSPECIFIED,
-+                                                        &result);
-                 if (result != MEMTX_OK) {
-                     /* TODO: investigate whether this is the right behaviour */
-                     sparc_raise_mmu_fault(cs, access_addr, false, false,
-@@ -906,8 +906,8 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
-                 MemTxResult result;
-                 hwaddr access_addr = (env->mxccregs[1] & 0xffffffffULL) + 8 * i;
+ static void grlib_apbuart_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/display/cg3.c b/hw/display/cg3.c
+index 59d66d3d4b8..568d6048a63 100644
+--- a/hw/display/cg3.c
++++ b/hw/display/cg3.c
+@@ -265,7 +265,7 @@ static void cg3_reg_write(void *opaque, hwaddr addr, uint64_t val,
+ static const MemoryRegionOps cg3_reg_ops = {
+     .read = cg3_reg_read,
+     .write = cg3_reg_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 4,
+diff --git a/hw/display/tcx.c b/hw/display/tcx.c
+index 7cba3e25a78..36cad82abdf 100644
+--- a/hw/display/tcx.c
++++ b/hw/display/tcx.c
+@@ -452,7 +452,7 @@ static void tcx_dac_writel(void *opaque, hwaddr addr, uint64_t val,
+ static const MemoryRegionOps tcx_dac_ops = {
+     .read = tcx_dac_readl,
+     .write = tcx_dac_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -533,7 +533,7 @@ static void tcx_rstip_writel(void *opaque, hwaddr addr,
+ static const MemoryRegionOps tcx_stip_ops = {
+     .read = tcx_stip_readl,
+     .write = tcx_stip_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -547,7 +547,7 @@ static const MemoryRegionOps tcx_stip_ops = {
+ static const MemoryRegionOps tcx_rstip_ops = {
+     .read = tcx_stip_readl,
+     .write = tcx_rstip_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -633,7 +633,7 @@ static void tcx_rblit_writel(void *opaque, hwaddr addr,
+ static const MemoryRegionOps tcx_blit_ops = {
+     .read = tcx_blit_readl,
+     .write = tcx_blit_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -647,7 +647,7 @@ static const MemoryRegionOps tcx_blit_ops = {
+ static const MemoryRegionOps tcx_rblit_ops = {
+     .read = tcx_blit_readl,
+     .write = tcx_rblit_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -713,7 +713,7 @@ static void tcx_thc_writel(void *opaque, hwaddr addr,
+ static const MemoryRegionOps tcx_thc_ops = {
+     .read = tcx_thc_readl,
+     .write = tcx_thc_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -734,7 +734,7 @@ static void tcx_dummy_writel(void *opaque, hwaddr addr,
+ static const MemoryRegionOps tcx_dummy_ops = {
+     .read = tcx_dummy_readl,
+     .write = tcx_dummy_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+diff --git a/hw/dma/sparc32_dma.c b/hw/dma/sparc32_dma.c
+index 5b770599865..a5dc35e7bbf 100644
+--- a/hw/dma/sparc32_dma.c
++++ b/hw/dma/sparc32_dma.c
+@@ -230,7 +230,7 @@ static void dma_mem_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps dma_mem_ops = {
+     .read = dma_mem_read,
+     .write = dma_mem_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+diff --git a/hw/intc/grlib_irqmp.c b/hw/intc/grlib_irqmp.c
+index d860ec15d88..050be4d462f 100644
+--- a/hw/intc/grlib_irqmp.c
++++ b/hw/intc/grlib_irqmp.c
+@@ -330,7 +330,7 @@ static void grlib_irqmp_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps grlib_irqmp_ops = {
+     .read = grlib_irqmp_read,
+     .write = grlib_irqmp_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+diff --git a/hw/intc/slavio_intctl.c b/hw/intc/slavio_intctl.c
+index 640d8e2baa6..c7bf38acd74 100644
+--- a/hw/intc/slavio_intctl.c
++++ b/hw/intc/slavio_intctl.c
+@@ -135,7 +135,7 @@ static void slavio_intctl_mem_writel(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_intctl_mem_ops = {
+     .read = slavio_intctl_mem_readl,
+     .write = slavio_intctl_mem_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -205,7 +205,7 @@ static void slavio_intctlm_mem_writel(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_intctlm_mem_ops = {
+     .read = slavio_intctlm_mem_readl,
+     .write = slavio_intctlm_mem_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+diff --git a/hw/misc/eccmemctl.c b/hw/misc/eccmemctl.c
+index dd1be7d698e..0243ea52df3 100644
+--- a/hw/misc/eccmemctl.c
++++ b/hw/misc/eccmemctl.c
+@@ -232,7 +232,7 @@ static uint64_t ecc_mem_read(void *opaque, hwaddr addr,
+ static const MemoryRegionOps ecc_mem_ops = {
+     .read = ecc_mem_read,
+     .write = ecc_mem_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+diff --git a/hw/misc/slavio_misc.c b/hw/misc/slavio_misc.c
+index 49be827c458..3df7d82b8c4 100644
+--- a/hw/misc/slavio_misc.c
++++ b/hw/misc/slavio_misc.c
+@@ -147,7 +147,7 @@ static uint64_t slavio_cfg_mem_readb(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_cfg_mem_ops = {
+     .read = slavio_cfg_mem_readb,
+     .write = slavio_cfg_mem_writeb,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 1,
+@@ -177,7 +177,7 @@ static uint64_t slavio_diag_mem_readb(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_diag_mem_ops = {
+     .read = slavio_diag_mem_readb,
+     .write = slavio_diag_mem_writeb,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 1,
+@@ -207,7 +207,7 @@ static uint64_t slavio_mdm_mem_readb(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_mdm_mem_ops = {
+     .read = slavio_mdm_mem_readb,
+     .write = slavio_mdm_mem_writeb,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 1,
+@@ -245,7 +245,7 @@ static uint64_t slavio_aux1_mem_readb(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_aux1_mem_ops = {
+     .read = slavio_aux1_mem_readb,
+     .write = slavio_aux1_mem_writeb,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 1,
+@@ -282,7 +282,7 @@ static uint64_t slavio_aux2_mem_readb(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_aux2_mem_ops = {
+     .read = slavio_aux2_mem_readb,
+     .write = slavio_aux2_mem_writeb,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 1,
+@@ -310,7 +310,7 @@ static uint64_t apc_mem_readb(void *opaque, hwaddr addr,
+ static const MemoryRegionOps apc_mem_ops = {
+     .read = apc_mem_readb,
+     .write = apc_mem_writeb,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 1,
+@@ -355,7 +355,7 @@ static void slavio_sysctrl_mem_writel(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_sysctrl_mem_ops = {
+     .read = slavio_sysctrl_mem_readl,
+     .write = slavio_sysctrl_mem_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -397,7 +397,7 @@ static void slavio_led_mem_writew(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_led_mem_ops = {
+     .read = slavio_led_mem_readw,
+     .write = slavio_led_mem_writew,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 2,
+         .max_access_size = 2,
+diff --git a/hw/rtc/sun4v-rtc.c b/hw/rtc/sun4v-rtc.c
+index 675b6cd5bd6..3a586adf02d 100644
+--- a/hw/rtc/sun4v-rtc.c
++++ b/hw/rtc/sun4v-rtc.c
+@@ -49,7 +49,7 @@ static void sun4v_rtc_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps sun4v_rtc_ops = {
+     .read = sun4v_rtc_read,
+     .write = sun4v_rtc_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+ };
  
--                address_space_stq(cs->as, access_addr, env->mxccdata[i],
--                                  MEMTXATTRS_UNSPECIFIED, &result);
-+                address_space_stq_be(cs->as, access_addr, env->mxccdata[i],
-+                                     MEMTXATTRS_UNSPECIFIED, &result);
- 
-                 if (result != MEMTX_OK) {
-                     /* TODO: investigate whether this is the right behaviour */
-@@ -1072,17 +1072,17 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
-                                   MEMTXATTRS_UNSPECIFIED, &result);
-                 break;
-             case 2:
--                address_space_stw(cs->as, access_addr, val,
--                                  MEMTXATTRS_UNSPECIFIED, &result);
-+                address_space_stw_be(cs->as, access_addr, val,
-+                                     MEMTXATTRS_UNSPECIFIED, &result);
-                 break;
-             case 4:
-             default:
--                address_space_stl(cs->as, access_addr, val,
--                                  MEMTXATTRS_UNSPECIFIED, &result);
-+                address_space_stl_be(cs->as, access_addr, val,
-+                                     MEMTXATTRS_UNSPECIFIED, &result);
-                 break;
-             case 8:
--                address_space_stq(cs->as, access_addr, val,
--                                  MEMTXATTRS_UNSPECIFIED, &result);
-+                address_space_stq_be(cs->as, access_addr, val,
-+                                     MEMTXATTRS_UNSPECIFIED, &result);
-                 break;
-             }
-             if (result != MEMTX_OK) {
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 46bf500ea83..5a58239d65e 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -102,7 +102,8 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
-     /* SPARC reference MMU table walk: Context table->L1->L2->PTE */
-     /* Context base + context number */
-     pde_ptr = (env->mmuregs[1] << 4) + (env->mmuregs[2] << 2);
--    pde = address_space_ldl(cs->as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &result);
-+    pde = address_space_ldl_be(cs->as, pde_ptr,
-+                               MEMTXATTRS_UNSPECIFIED, &result);
-     if (result != MEMTX_OK) {
-         return 4 << 2; /* Translation fault, L = 0 */
-     }
-@@ -117,8 +118,8 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
-         return 4 << 2;
-     case 1: /* L0 PDE */
-         pde_ptr = ((address >> 22) & ~3) + ((pde & ~3) << 4);
--        pde = address_space_ldl(cs->as, pde_ptr,
--                                MEMTXATTRS_UNSPECIFIED, &result);
-+        pde = address_space_ldl_be(cs->as, pde_ptr,
-+                                   MEMTXATTRS_UNSPECIFIED, &result);
-         if (result != MEMTX_OK) {
-             return (1 << 8) | (4 << 2); /* Translation fault, L = 1 */
-         }
-@@ -131,8 +132,8 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
-             return (1 << 8) | (4 << 2);
-         case 1: /* L1 PDE */
-             pde_ptr = ((address & 0xfc0000) >> 16) + ((pde & ~3) << 4);
--            pde = address_space_ldl(cs->as, pde_ptr,
--                                    MEMTXATTRS_UNSPECIFIED, &result);
-+            pde = address_space_ldl_be(cs->as, pde_ptr,
-+                                       MEMTXATTRS_UNSPECIFIED, &result);
-             if (result != MEMTX_OK) {
-                 return (2 << 8) | (4 << 2); /* Translation fault, L = 2 */
-             }
-@@ -145,8 +146,8 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
-                 return (2 << 8) | (4 << 2);
-             case 1: /* L2 PDE */
-                 pde_ptr = ((address & 0x3f000) >> 10) + ((pde & ~3) << 4);
--                pde = address_space_ldl(cs->as, pde_ptr,
--                                        MEMTXATTRS_UNSPECIFIED, &result);
-+                pde = address_space_ldl_be(cs->as, pde_ptr,
-+                                           MEMTXATTRS_UNSPECIFIED, &result);
-                 if (result != MEMTX_OK) {
-                     return (3 << 8) | (4 << 2); /* Translation fault, L = 3 */
-                 }
-@@ -189,7 +190,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
-         if (is_dirty) {
-             pde |= PG_MODIFIED_MASK;
-         }
--        stl_phys(cs->as, pde_ptr, pde);
-+        stl_be_phys(cs->as, pde_ptr, pde);
-     }
- 
-     /* the page can be put in the TLB */
-@@ -276,7 +277,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
-     /* Context base + context number */
-     pde_ptr = (hwaddr)(env->mmuregs[1] << 4) +
-         (env->mmuregs[2] << 2);
--    pde = address_space_ldl(cs->as, pde_ptr, MEMTXATTRS_UNSPECIFIED, &result);
-+    pde = address_space_ldl_be(cs->as, pde_ptr,
-+                               MEMTXATTRS_UNSPECIFIED, &result);
-     if (result != MEMTX_OK) {
-         return 0;
-     }
-@@ -292,8 +294,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
-             return pde;
-         }
-         pde_ptr = ((address >> 22) & ~3) + ((pde & ~3) << 4);
--        pde = address_space_ldl(cs->as, pde_ptr,
--                                MEMTXATTRS_UNSPECIFIED, &result);
-+        pde = address_space_ldl_be(cs->as, pde_ptr,
-+                                   MEMTXATTRS_UNSPECIFIED, &result);
-         if (result != MEMTX_OK) {
-             return 0;
-         }
-@@ -310,8 +312,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
-                 return pde;
-             }
-             pde_ptr = ((address & 0xfc0000) >> 16) + ((pde & ~3) << 4);
--            pde = address_space_ldl(cs->as, pde_ptr,
--                                    MEMTXATTRS_UNSPECIFIED, &result);
-+            pde = address_space_ldl_be(cs->as, pde_ptr,
-+                                       MEMTXATTRS_UNSPECIFIED, &result);
-             if (result != MEMTX_OK) {
-                 return 0;
-             }
-@@ -328,8 +330,8 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
-                     return pde;
-                 }
-                 pde_ptr = ((address & 0x3f000) >> 10) + ((pde & ~3) << 4);
--                pde = address_space_ldl(cs->as, pde_ptr,
--                                        MEMTXATTRS_UNSPECIFIED, &result);
-+                pde = address_space_ldl_be(cs->as, pde_ptr,
-+                                           MEMTXATTRS_UNSPECIFIED, &result);
-                 if (result != MEMTX_OK) {
-                     return 0;
-                 }
+ void sun4v_rtc_init(hwaddr addr)
+diff --git a/hw/timer/grlib_gptimer.c b/hw/timer/grlib_gptimer.c
+index 099ab6c5866..54998981dbd 100644
+--- a/hw/timer/grlib_gptimer.c
++++ b/hw/timer/grlib_gptimer.c
+@@ -332,7 +332,7 @@ static void grlib_gptimer_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps grlib_gptimer_ops = {
+     .read = grlib_gptimer_read,
+     .write = grlib_gptimer_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+diff --git a/hw/timer/slavio_timer.c b/hw/timer/slavio_timer.c
+index 71696a4b615..4a3e227fbab 100644
+--- a/hw/timer/slavio_timer.c
++++ b/hw/timer/slavio_timer.c
+@@ -329,7 +329,7 @@ static void slavio_timer_mem_writel(void *opaque, hwaddr addr,
+ static const MemoryRegionOps slavio_timer_mem_ops = {
+     .read = slavio_timer_mem_readl,
+     .write = slavio_timer_mem_writel,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 8,
 -- 
 2.52.0
 
