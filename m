@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C439C9EC88
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE71C9EC8B
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfHo5-0002pO-89; Mon, 12 Jan 2026 08:18:09 -0500
+	id 1vfHnd-0002a9-0J; Mon, 12 Jan 2026 08:17:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlP-0001S9-JZ
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:20 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlb-0001Yt-6A
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlO-0002Wb-0r
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlZ-0002bb-P3
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768223717;
+ s=mimecast20190719; t=1768223729;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=10XZMlig4LGw9p0kOKwBqLurpUaIpsrfkUplGVNrEW0=;
- b=SQQBqjiZ/89/nQ8C2L8oRfjeQ+n3hf1Epe23Kt3chVSIOUtOgxXL0s3frn1X728KHyeDfI
- NOW0jy3qKxBsESiCG8fw5dWuZZ2a/uYJoBVIr+8cONFPCPOkyjUz2vy3q+i+Lpp96+P0pO
- nxfDy1X/IWwwZo94YX0Ok7XUDSbsFVs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3LFCkKY5XgP12F2ImbVWWwQ1H7RA9GzjXE9aQY0PmWw=;
+ b=W+6TC4/AQwwSXMtPctpThcoolefkwopNlKehly/FhQ7flDu4+hcdb1JZY6r736Rppf2mjF
+ XVniqiq4h2NX9UZoUGDkzTox3JPafdP5hOrSX0KtMiMwHFjGFybmr65lAA8AHrJFldYhLt
+ pOhsvm/CYGhDHybqdgGmBzogkwKit5o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-BkLs4P87PjGmXX1qo96UHA-1; Mon,
- 12 Jan 2026 08:15:15 -0500
-X-MC-Unique: BkLs4P87PjGmXX1qo96UHA-1
-X-Mimecast-MFC-AGG-ID: BkLs4P87PjGmXX1qo96UHA_1768223714
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-259-l_FqIZEAPbyH-BQgL-lf6Q-1; Mon,
+ 12 Jan 2026 08:15:27 -0500
+X-MC-Unique: l_FqIZEAPbyH-BQgL-lf6Q-1
+X-Mimecast-MFC-AGG-ID: l_FqIZEAPbyH-BQgL-lf6Q_1768223726
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8060C1956050; Mon, 12 Jan 2026 13:15:14 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB1931800473; Mon, 12 Jan 2026 13:15:26 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.179])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ED38430001A7; Mon, 12 Jan 2026 13:15:12 +0000 (UTC)
+ id 42B553000218; Mon, 12 Jan 2026 13:15:25 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 06/15] tests/functional: Add a generic test that checks the
- files with pylint
-Date: Mon, 12 Jan 2026 14:14:48 +0100
-Message-ID: <20260112131457.67128-7-thuth@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 11/15] target/s390x: Remove unused 'gdbstub/helpers.h' header
+ in helper.c
+Date: Mon, 12 Jan 2026 14:14:53 +0100
+Message-ID: <20260112131457.67128-12-thuth@redhat.com>
 In-Reply-To: <20260112131457.67128-1-thuth@redhat.com>
 References: <20260112131457.67128-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -82,92 +84,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-To avoid that new pylint-related warnings get committed, let's check
-the files with pylint during each run (similar to what we are doing
-for the iotests already).
+"gdbstub/helpers.h" uses target-specific symbols, but we don't
+need it, so remove it.
 
-Message-Id: <20251119082636.43286-16-thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260107130807.69870-6-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                              |  1 +
- tests/functional/generic/meson.build     |  1 +
- tests/functional/generic/test_linters.py | 41 ++++++++++++++++++++++++
- 3 files changed, 43 insertions(+)
- create mode 100755 tests/functional/generic/test_linters.py
+ target/s390x/helper.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a6168cb46f7..6dfd9b27c20 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4461,6 +4461,7 @@ F: docs/devel/testing/functional.rst
- F: scripts/clean_functional_cache.py
- F: tests/functional/meson.build
- F: tests/functional/generic/meson.build
-+F: tests/functional/generic/test_linters.py
- F: tests/functional/pylintrc
- F: tests/functional/qemu_test/
- 
-diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
-index 013cc96fbf8..09763c5d229 100644
---- a/tests/functional/generic/meson.build
-+++ b/tests/functional/generic/meson.build
-@@ -3,6 +3,7 @@
- tests_generic_system = [
-   'empty_cpu_model',
-   'info_usernet',
-+  'linters',
-   'version',
-   'vnc',
- ]
-diff --git a/tests/functional/generic/test_linters.py b/tests/functional/generic/test_linters.py
-new file mode 100755
-index 00000000000..b5b90fcf7a3
---- /dev/null
-+++ b/tests/functional/generic/test_linters.py
-@@ -0,0 +1,41 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+'''Python linter tests'''
-+
-+import os
-+
-+from pathlib import Path
-+from qemu_test import QemuBaseTest, skipIfMissingImports
-+
-+
-+class LinterTest(QemuBaseTest):
-+    '''
-+    Run python linters on the test *.py files
-+    '''
-+
-+    @skipIfMissingImports("pylint")
-+    def test_pylint(self):
-+        '''Check source files with pylint'''
-+        from pylint.lint import Run as pylint_run
-+        from pylint.reporters.collecting_reporter import CollectingReporter
-+        srcdir = os.path.join(Path(__file__).parent.parent, self.arch)
-+        rcfile = os.path.join(Path(__file__).parent.parent, "pylintrc")
-+        self.log.info('Checking files in %s with pylint', srcdir)
-+        reporter = CollectingReporter()
-+        pylint_run(["--rcfile", rcfile, srcdir], reporter=reporter, exit=False)
-+        if reporter.messages:
-+            fmt = '"{path}:{line}: {msg_id}: {msg} ({symbol})"'
-+            for msg in reporter.messages:
-+                if msg.category == "error":
-+                    self.log.error(msg.format(fmt))
-+                elif msg.category == "warning":
-+                    self.log.warning(msg.format(fmt))
-+                else:
-+                    self.log.info(msg.format(fmt))
-+            self.fail("Pylint failed, see base.log for details.")
-+
-+
-+if __name__ == '__main__':
-+    QemuBaseTest.main()
+diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+index 8d1e03f6768..a6c89ed0af3 100644
+--- a/target/s390x/helper.c
++++ b/target/s390x/helper.c
+@@ -21,7 +21,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "s390x-internal.h"
+-#include "gdbstub/helpers.h"
+ #include "qemu/timer.h"
+ #include "hw/s390x/ioinst.h"
+ #include "system/hw_accel.h"
 -- 
 2.52.0
 
