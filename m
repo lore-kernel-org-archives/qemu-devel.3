@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84236C9EC8D
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C055C9EC8D
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfJKC-0008LH-Bw; Mon, 12 Jan 2026 09:55:20 -0500
+	id 1vfJJl-0007me-IE; Mon, 12 Jan 2026 09:54:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJr-0007qp-79
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:55:01 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJh-0007g0-2A
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:49 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJl-0001dP-Sm
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:58 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-65089cebdb4so8640663a12.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:54:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJd-0001Xa-Rm
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:48 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b87281dbdbcso104322666b.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:54:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768229692; x=1768834492; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768229682; x=1768834482; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vae9tFKipWcRHp6Pwi3fV7Q94asRnHBvfdec3wvV7X0=;
- b=VSLnl5zWu8g0+7bqphvX/i8TFE3e8n0Xh91Hrz1SRYL5m0Z1LIyN7MdLusBTB0sllW
- jnNgKVzGamopC/BXzPvkiKO5YoGzUV3yZDUyeLPjhjl9dUF8vHN8absKh8cmlT2uRV2I
- tfGZjgy0pvMplacU/jNxEzKpPJ9hvT+dVEv8/yMNofHobUEhOCgJ7oJ5l3BRwBtpw1my
- yDZmOpmIZP9jad89EOietJE2HMRLZlMG10ISTn/jQldHJIcX2ycD97G6bfVCFQo29uh9
- TcMxeoC0TXNLcFyUk+UnTDUqRZRy8Bfwx0KEx8TIMPN/sDBQ3Mq4pUP/0+4ueRb+oWR8
- rXHg==
+ bh=wscBRTm7STUtvNgIyID3EdUtTJO2sL4HdK1iLXIRQS0=;
+ b=bHV8lMkWX/RmKvbRUBv5KAvQQp9XTqy6wDaFa2hHlbbNLFzM4bjuzSnk+SWQGWStKi
+ 2rkiDpXA4GtnVteK9EwOujzNbsx15L4iQAemrIc7hqwL8llVUWGySQb/NwSSQ4Eor4B+
+ jIRXKP0wAxgYCHrhpJOhkOL2GZ2Yw8ryeuBiQPdkWHvHb6gSfkQMmX04l3bPWPUgBvSG
+ 1ILkoxLjr9agvKyZ8j9M1g2yw/WBfXT23rAOYvS0rGQNQFszQM2epThXK7m2Hv8Z7Lb3
+ 4GiJ6Itb3/dfIw5yxGRpXbtwPEBaKf6cNMRUDzkf/BTpf4wqzER52uCJ6zFn5Zza61dB
+ 3GZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768229692; x=1768834492;
+ d=1e100.net; s=20230601; t=1768229682; x=1768834482;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vae9tFKipWcRHp6Pwi3fV7Q94asRnHBvfdec3wvV7X0=;
- b=q+oKfdILbydfBSXWasGgL1OeVgNV57ii5YQC8AGsH4Ambdfukcu4RwrhPiW/keKP/r
- hW9we90lkHN/4wDUD1QzitAUQ3IEnofEeIS96a6J+Kk14JolSKUGmnLidxHpbWS+2ytx
- x4RRx2YENKV/lZGEcRAv3gKCHp9FKXbRvxTLFbdUaR/Q1iNg1OBqVYmizMGcSmL9y/Vw
- WmRTmZaUMwswwWyNqCShtC7hKYo7zS4jEIQpdLooxvF+N/Q8pe1q5WGNPodQGHp7CX/E
- 7t8XuATXtoIDt96CdbYfBBgq2IVrGH3wkrvlHW39S2fKngtMW4ePgVMEOkEevZqqrk6o
- cBug==
-X-Gm-Message-State: AOJu0Ywh0v9dzN2umemA+FfnxCXxhcBO/k2r7UAk+qoi9iLCAMXJDld9
- uETcIAldvtThvBxoW7UwDu9LhkmPV4Xq4U7I+LK+jefHLon5wIyxG+OA2RuWEBbi
-X-Gm-Gg: AY/fxX5vUFyNZH6UzRPjywt7X49dNKqactR3Q5jqr9eAWeKieFWVC9ikeOSPM2R6bg3
- HAC6cLGGOcOSgW5oNXSgrrxU7/boTa9Qv0CsGpAggmOOfBD1BfDraFgV0gL98ZJcvCNy8i6dBEm
- SR1/xu6Ea1Hoke8efGcCAWgyH29hcfpksNude8nnMsy7GyF6K3cvRsmAiCRmzYvwIYxxz4BXRpK
- G+CvbU45ERn9osHcq4rv6wVm/A4uf662QQZYve0lg/lvoqVxu7dNA+kJnGqnpZkBXGxxq8dBehP
- mXnOiLQ4xIohigdqfIHVYVl42B9NMw1gJV5NfNQxV2kIwc8VHgvEjAfO6Yn390yGSHQRlH1z7F8
- BIZgZkOEH9pmdui8HKZ2kgYQCBWHWNy15lMhhUO46oJgp7f3uu7RJ8PnGKEVSrl0Dq0JpCrjXpE
- hVnrr8ThmpNkYbLyFVt31UyWsfv2xfWeX0Yb66iiLFd+DU7VMi7+CA6D1Qyp6yDGf+OpkIWqcA
-X-Google-Smtp-Source: AGHT+IGyuG3YbVzCEJjBV8WcMWIzeNjwbNjEW1diFhtb9EUGoLtMrPtxrUUIbIsBg8ur63ED4UY2Lw==
-X-Received: by 2002:a17:907:d1d:b0:b84:2075:b902 with SMTP id
- a640c23a62f3a-b844534526emr1714653566b.36.1768229692047; 
- Mon, 12 Jan 2026 06:54:52 -0800 (PST)
+ bh=wscBRTm7STUtvNgIyID3EdUtTJO2sL4HdK1iLXIRQS0=;
+ b=kHVuS4GmGwYmMp0l1X7dv5kgGNA10ZyHOYLasDvNkWqanTy32MTI6kjnO6WQjRPGXG
+ I38luICf8EAcz5z7QSrJbDKV7+vynJrPrnKQfAToBZdxSnFpSI77lLgO5hSGxk5QKMdI
+ ISRB/eJZWtLk1M/whQZpMaYMDe0jkuWKX5FIdIQdrj/YZtNWQi/oONMRhFr2IEoW+HAG
+ b0KvOuSFLUliGKMpWSACWsGn5jNsrPj62LOtul61QiNXbu9QvbvlvnaUG60uThYvRGZ7
+ rVgm48b15YPC1G2INx4gJ1adZcLDbUkd+/cjyYhOLPMG1iQgIespz+mvqn2Uhw6/Jh3v
+ 76vQ==
+X-Gm-Message-State: AOJu0YxGW4sBudW0ktjc+0p1IUIggNbH+ZvWcMzfceSVA9nYiGjaqWV0
+ CQLpcIUFvY0rNPz9O7LwlSAgP3SL9Fjit9ACXH7rxRGanXkcIXpWHirI2WmMZxBm
+X-Gm-Gg: AY/fxX4fcksS2ug46iZgvONuHY2jhh4sXvGIPNzz9I9Xzv4nwFOQFibz2wHr5K+mm3l
+ Ks7Bj9n157dIkiOrDB+zIwGQE5ApWVbUcT41Ova79hwSN58TkVbyrof/2e1A8lmZql7z+quzYVO
+ Hk7cXpigUMRF8bq0kv3DlT+WA8EZI3WEb2jvPH85XwQEbXNJT1OCfuVOfpz01dV4NpmcvxeNTYB
+ NZaWrcTpKsHVyid5VO40hXBa/mmLoGpzRYFYopx2xwyYXlzWmyho4A2fP+4tNouDr5CFCirzMZT
+ mfX0hqc3DDGF0TvIHVwPJOT9ekkJ2iZ9hlZt51erpNseslXsckaEWoT17l26QopuSv1bnLvciO0
+ mvsC1kU2R/lXEODt8hm2df7Jl7Fl6GZqXJGYuyaEdzAIXq2rFXNxd5qBLrvPUsaaDk2FxeeGK8H
+ hRij1K+yDr65okEYRAIYVUXcWGcb5V1Xz0ZGgAwIbojtm8TDNH+Hah6pe5JxziCb0/1a3mebRk
+X-Google-Smtp-Source: AGHT+IEwu7WuTSHRhbEc9ACkxzfgXWJE7fekxK9tOyd5vaLjmsb2OmmWD9RV/pRI8f0kHh56EQdteQ==
+X-Received: by 2002:a17:906:4fd1:b0:b4f:e12e:aa24 with SMTP id
+ a640c23a62f3a-b8444cce26fmr1917157366b.22.1768229681474; 
+ Mon, 12 Jan 2026 06:54:41 -0800 (PST)
 Received: from archlinux (dynamic-077-188-226-222.77.188.pool.telefonica.de.
  [77.188.226.222]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8731f0718asm37387966b.67.2026.01.12.06.54.51
+ a640c23a62f3a-b8731f0718asm37387966b.67.2026.01.12.06.54.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Jan 2026 06:54:51 -0800 (PST)
+ Mon, 12 Jan 2026 06:54:40 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -71,17 +71,16 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bin Meng <bmeng.cn@gmail.com>, Thomas Huth <thuth@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
  qemu-ppc@nongnu.org
-Subject: [PATCH 14/14] hw/sd/trace-events: Remove redundant "SWITCH " command
- name
-Date: Mon, 12 Jan 2026 15:54:18 +0100
-Message-ID: <20260112145418.220506-15-shentey@gmail.com>
+Subject: [PATCH 04/14] hw/arm/fsl-imx25: Apply missing reset quirk
+Date: Mon, 12 Jan 2026 15:54:08 +0100
+Message-ID: <20260112145418.220506-5-shentey@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112145418.220506-1-shentey@gmail.com>
 References: <20260112145418.220506-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,26 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"switch" is already part of the function name. No need to repeat it.
+Just like the Freescale MPC8569E SoC the i.MX25 features an eSDHC but
+as little-endian variant. According to the datasheet TYPE_FSL_IMX25 requires
+the same reset quirk as the e500 machines. The quirk was introduced in
+d060b2789f71 ("hw/sd/sdhci: Set reset value of interrupt registers") for the
+e500 machines, so reuse it now in TYPE_FSL_IMX25.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/sd/trace-events | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/fsl-imx25.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-index d30daa2143..4ec52d2a81 100644
---- a/hw/sd/trace-events
-+++ b/hw/sd/trace-events
-@@ -58,7 +58,7 @@ sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t
- sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint64_t size, uint32_t blklen) "%s %20s/ CMD%02d ofs %"PRIu32" size %"PRIu64" blklen %" PRIu32
- sdcard_set_voltage(uint16_t millivolts) "%u mV"
- sdcard_ext_csd_update(unsigned index, uint8_t oval, uint8_t nval) "index %u: 0x%02x -> 0x%02x"
--sdcard_switch(unsigned access, unsigned index, unsigned value, unsigned set) "SWITCH acc:%u idx:%u val:%u set:%u"
-+sdcard_switch(unsigned access, unsigned index, unsigned value, unsigned set) "acc:%u idx:%u val:%u set:%u"
- sdcard_rpmb_read_block(uint16_t resp, uint16_t read_addr, uint16_t result) "resp 0x%x read_addr 0x%x result 0x%x"
- sdcard_rpmb_write_block(uint16_t req, uint16_t result) "req 0x%x result 0x%x"
- 
+diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
+index dd670827ff..9e02063533 100644
+--- a/hw/arm/fsl-imx25.c
++++ b/hw/arm/fsl-imx25.c
+@@ -243,6 +243,8 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
+                                  &error_abort);
+         object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
+                                  IMX25_ESDHC_CAPABILITIES, &error_abort);
++        object_property_set_uint(OBJECT(&s->esdhc[i]), "vendor",
++                                 SDHCI_VENDOR_FSL, &error_abort);
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
+             return;
+         }
 -- 
 2.52.0
 
