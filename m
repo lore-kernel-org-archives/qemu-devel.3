@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54CB5C9EC95
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FDF2C9EC95
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:37:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfJ25-0004EF-Ot; Mon, 12 Jan 2026 09:36:38 -0500
+	id 1vfJ2L-0004gg-Ft; Mon, 12 Jan 2026 09:36:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfJ1s-0003yl-D9
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:36:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfJ1p-00077C-6E
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:36:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768228576;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WElEOrPWpec2RJt5gdjThjmgblMIOZxYmZskrj4wDlY=;
- b=Of9NIAb8JUTwyBEsKWIakmZGtYPM7Dsd/Tv4jJLbFzgMGOOCO3CoN2EThHuNidaYblixMX
- yKRCTiOF/6QvKdWJvrDs8sYk26fpsyWZRsaFGOB6OjadbOW31eflQuEmfY9c2qLCLpAJp0
- C3mPnOlT0LSanRut3eAWkVAOR8WNNLI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-cyw4p2F-OHOb315Fr6M2YA-1; Mon,
- 12 Jan 2026 09:36:14 -0500
-X-MC-Unique: cyw4p2F-OHOb315Fr6M2YA-1
-X-Mimecast-MFC-AGG-ID: cyw4p2F-OHOb315Fr6M2YA_1768228573
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BB061956046; Mon, 12 Jan 2026 14:36:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.227])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39E2819560AB; Mon, 12 Jan 2026 14:36:10 +0000 (UTC)
-Date: Mon, 12 Jan 2026 14:36:02 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 32/32] tests/functional/x86_64: add functional test to
- exercise vm fd change on reset
-Message-ID: <aWUDCR5EQmWDWrob@redhat.com>
-References: <20260112132259.76855-1-anisinha@redhat.com>
- <20260112132259.76855-33-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfJ2J-0004eK-QW
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:36:51 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfJ2G-00078z-VW
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:36:50 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-7927416137dso17754637b3.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:36:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768228608; x=1768833408; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ST0Tl6J7PJeFQCwoxZ6aeBSJLERjB7Nd2nkbaSDEbX0=;
+ b=vyN1fjna1Ay0tbvVx39D11x2Wu2zlZMZsMxUULOVpMy+6EcAec4A7k41s33RlDTOZL
+ Jh9kFcNDcQilEeA1v9asgMLpqHPqlXBm0OWoX/dpH7krTL+14EaizB3CaA6fsXpTSnko
+ AGrmFV4HbNJwgFdodp8U8Xz+IGPSLo7qhdHYMzjiQmKDRZ2l0I2SWMlBwjoGcbV28QMk
+ YUUPaBq4PG6jBefm3XnaQV1hd4wnyi33SJJFkGH35tunLQZU0ayjC2FZJwfifDKE+04h
+ iPXw+5YElqtBlKa+1bOvS1rDOdGNgTJLyignHy3Nt6jVOqieEZa4Pl1bZk2zeu4OLPsa
+ 26fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768228608; x=1768833408;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ST0Tl6J7PJeFQCwoxZ6aeBSJLERjB7Nd2nkbaSDEbX0=;
+ b=iMueM/YKtiQYkkbQh2AGOveSvW1QlRgEoikeHypDNdly2Oy4FaL3vwshJLtPVa487e
+ GhraS+62ww6f+AOtUe314WIkrSe1RU0YYrbZkSUFiMSNKqiu201GgtHHC5qWHOvK4ksB
+ NUELlxDyzb80AJ2Vfn688RhEvAFTKFY2CHnqnNCX17M9EEIicfrPxFH57QM2iU8rRzEN
+ XCkmmyUyX+g+wlD3Z3WGA2a1yDzpEn5klvjHKy2Y0D9osqd3iUQG5ky+Tzuc63fuD5A0
+ EpUuyuRNjMw1s9EJnCeEnj03zq76nSL8uyNocatnasqvMOPFWKC4u/tulZ0P0sOdmqPF
+ L+Ww==
+X-Gm-Message-State: AOJu0YyF2pxetgA8gO2eYcK1MDJVHn6vWV0iuUl3dnnJo5s9NAO4+eA2
+ WJ6iu3QyHpwUN0r8wQ5uZl0K/rvndJlof4tKJUnxXvhtnIhtLI2l6i+85IlpUdEgx6UYv+AYbsc
+ uAlaUrGNoyPincmljQ2KdCgSKNEiMp57f51AJ7pUc7g==
+X-Gm-Gg: AY/fxX7er1LFl8Wa620sPQOba4l6M3eTPRHXGJmYWf9wG9jGPG79bW+kYo5O/zadZDC
+ CEHg3MzgmrY2CuN/Hv8COqgWZM28Y4TD/flqNd/UDxgXtpJkql1ZcU9O5fWh6xJLTCtj0ctfajw
+ 14AvvVQi8C30dmTOqXXysSn8ESUsXhvhlIEmkpo+DlCFw7y5Z74vIXsHsodzL0fi+CHYWpuaAsP
+ XLW9yIAQlqPXrwjVbi02U02dubIxbtP5YV7iscr5jfUJJFQ5kz9RI6R/+fLw2cqFwq88gH5aX8j
+ vcFI7LrfXZDtsx4/TBB+T1I=
+X-Google-Smtp-Source: AGHT+IExY5Nljmrhazv3RbZ/0CdtM5AmehHcWY/JR8UFMsmRD4OAsBOKCs4DZg6hhWQtoAnuADVIosj8koAGTSAQKqQ=
+X-Received: by 2002:a05:690e:b4e:b0:646:5127:ad81 with SMTP id
+ 956f58d0204a3-64716cd325fmr12636264d50.95.1768228607626; Mon, 12 Jan 2026
+ 06:36:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260112132259.76855-33-anisinha@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251226064225.791454-1-lihang.lin@gmail.com>
+ <CAFEAcA_ovy2HzhVTKJiRNaZvVQ3qvkw0Pres0HZ+TFJjx1wc3g@mail.gmail.com>
+ <CAPR+-WF6uSsm6nBY7jmmxKEMSHR3t+d4KG5KAtsDNJPxen-r9A@mail.gmail.com>
+In-Reply-To: <CAPR+-WF6uSsm6nBY7jmmxKEMSHR3t+d4KG5KAtsDNJPxen-r9A@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 12 Jan 2026 14:36:35 +0000
+X-Gm-Features: AZwV_QhpRwj6PdbhTIErMqmH4MFTw3X668xzhtsAESXsjfpXgNS7Q_cAqpXY4Tw
+Message-ID: <CAFEAcA-NSqMH_+L+jOCD-QsafFq78L5ogRmGRqVZnXdXja2WTA@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/tcg/vfp_helper: Fix incorrect bit field
+ deposition in rsqrte_f64
+To: Lin Li-Hang <lihang.lin@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,125 +95,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 12, 2026 at 06:52:45PM +0530, Ani Sinha wrote:
-> A new functional test is added that exercises the code changes related to
-> closing of the old KVM VM file descriptor and opening a new one upon VM reset.
-> This normally happens when confidential guests are resetted but for
-> non-confidential guests, we use a special machine specific debug/test parameter
-> 'x-change-vmfd-on-reset' to enable this behavior.
-> Only specific code changes related to re-initialization of SEV-ES, SEV-SNP and
-> TDX platforms are not exercized in this test as they require hardware that
-> supports running confidential guests.
-> 
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
->  MAINTAINERS                                   |  6 ++
->  tests/functional/x86_64/meson.build           |  1 +
->  .../x86_64/test_vmfd_change_reboot.py         | 75 +++++++++++++++++++
->  3 files changed, 82 insertions(+)
->  create mode 100755 tests/functional/x86_64/test_vmfd_change_reboot.py
+On Mon, 29 Dec 2025 at 04:19, Lin Li-Hang <lihang.lin@gmail.com> wrote:
+>
+> Hi Peter,
+>
+> Thank you for your reply.
+>
+> I initially identified this error while reviewing the code and was curiou=
+s why it hadn't caused any bugs.
+> After further testing, it appears the original code behaved correctly by =
+coincidence.
+>
+> The ASL code in the ARM ARM for FRSQRTE states:
+>
+> ```
+> elsif sign =3D=3D '1' then
+>          result =3D FPDefaultNaN(fpcr, N);
+>          if fpexc then FPProcessException(FPExc_InvalidOp, fpcr);
+> ```
+>
+> As it turns out, the sign bit must be zero by the time it reaches the fin=
+al deposition code, which explains why the incorrect bit placement did not =
+surface as a functional bug.
 
+Thanks for looking that up. I think that although this isn't a bug it's
+definitely confusing code, so the best approach will be to make our
+code match how the current Arm ARM FPRSqrtEstimate() treats the output
+sign bit, which is to say we know it's 0. In the pseudocode that
+looks like:
+  result =3D '0' : result_exp<N-54:0> : estimate<7:0>:Zeros(44)=CD=BE
+and for QEMU it should look like updating the comment so that
+instead of
+/* result =3D sign : result_exp<4:0> : estimate<7:0> : Zeros(44) */
 
-> diff --git a/tests/functional/x86_64/test_vmfd_change_reboot.py b/tests/functional/x86_64/test_vmfd_change_reboot.py
-> new file mode 100755
-> index 0000000000..3b33322880
-> --- /dev/null
-> +++ b/tests/functional/x86_64/test_vmfd_change_reboot.py
-> @@ -0,0 +1,75 @@
-> +#!/usr/bin/env python3
-> +#
-> +# KVM VM file descriptor change on reset test
-> +#
-> +# Copyright © 2026 Red Hat, Inc.
-> +#
-> +# Author:
-> +#  Ani Sinha <anisinha@redhat.com>
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +import os
-> +from qemu.machine import machine
-> +
-> +from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
-> +from qemu_test import wait_for_console_pattern
-> +
-> +class KVMGuest(QemuSystemTest):
-> +
-> +    ASSET_UKI = Asset('https://gitlab.com/anisinha/misc-artifacts/'
-> +                      '-/raw/main/uki.x86-64.efi?ref_type=heads',
-> +                      'e0f806bd1fa24111312e1fe849d2ee69808d4343930a5'
-> +                      'dc8c1688da17c65f576')
-> +    ASSET_OVMF = Asset('https://gitlab.com/anisinha/misc-artifacts/'
-> +                       '-/raw/main/OVMF.stateless.fd?ref_type=heads',
-> +                       '58a4275aafa8774bd6b1540adceae4ea434b8db75b476'
-> +                       '11839ff47be88cfcf22')
+it says
+/* result =3D 0 : result_exp<4:0> : estimate<7:0> : Zeros(44) */
+and removing the unnecessary deposit64() call of f64_sign entirely.
 
-What is the source of these two binaries - the repo doesn't show any
-source code or references ?  Is there no way we can use standard distro
-images for this test ?
+We should do this for all of rsqrte_f64, do_rsqrte_f32 and rsqrte_f16.
 
-> +
-> +    def common_vm_setup(self):
-> +        self.require_accelerator("kvm")
-> +
-> +        self.vm.set_console()
-> +
-> +        self.vm.add_args("-accel", "kvm")
-> +        self.vm.add_args("-smp", "2")
-> +        self.vm.add_args("-cpu", "host")
-> +        self.vm.add_args("-m", "2G")
-> +        self.vm.add_args("-nographic", "-nodefaults")
-> +
-> +        self.uki_path = self.ASSET_UKI.fetch()
-> +        self.ovmf_path = self.ASSET_OVMF.fetch()
-> +
-> +    def run_and_check(self):
-> +        self.vm.add_args('-kernel', self.uki_path)
-> +        self.vm.add_args("-bios", self.ovmf_path)
-> +        # enable KVM VMFD change on reset for a non-coco VM
-> +        self.vm.add_args("-machine", "q35,x-change-vmfd-on-reset=on")
-> +        # enable tracing
-> +        self.vm.add_args("-d", "trace:kvm_reset_vmfd")
-> +
-> +        try:
-> +            self.vm.launch()
-> +        except machine.VMLaunchFailure as e:
-> +            raise e
-> +
-> +        self.log.info('VM launched')
-> +        console_pattern = 'bash-5.1#'
-> +        wait_for_console_pattern(self, console_pattern)
-> +        self.log.info('VM ready with a bash prompt')
-> +
-> +        exec_command_and_wait_for_pattern(self, '/usr/sbin/reboot -f',
-> +                                          'reboot: machine restart')
-> +        console_pattern = '# --- Hello world ---'
-> +        wait_for_console_pattern(self, console_pattern)
-> +        self.vm.shutdown()
-> +        self.assertRegex(self.vm.get_log(),
-> +                         r'kvm_reset_vmfd \nINFO: virtual machine accel file '
-> +                         'descriptor has changed')
-> +
-> +    def test_vmfd_change_on_reset(self):
-> +        self.common_vm_setup()
-> +        self.run_and_check()
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
-> -- 
-> 2.42.0
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
