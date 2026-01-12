@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0351CF45D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CDBCF45DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQmA-0003gt-Ab; Mon, 12 Jan 2026 17:52:42 -0500
+	id 1vfQmI-0003vo-5a; Mon, 12 Jan 2026 17:52:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQlq-0002zK-Gm
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:23 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQlx-0003G1-3g
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:29 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQlp-0003GZ-1Y
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:22 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47d3ffb0f44so48135485e9.3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:52:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQlv-0003I7-FO
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:28 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-430fbb6012bso5600586f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:52:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258339; x=1768863139; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258346; x=1768863146; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ogzIslneGYuEoNGuI1Jj5sYV/IxvfdvBB46hdhVM8aA=;
- b=f0m9MfWy3ewvfWUhl3CXlSAEndtQJHogK/ItwgAUpUx3Q9MXGh1aRgT7U3i3qwE3bf
- 5B6K6LOZMiyKvPyM1ub7ru6D9GQewYm8qZhVKtJy7Ms1FvWU5EDGvgZe3mEicb7gdbmt
- SnHQCFzoKPPKHMuBC6sB/AxkA/x0sNih4kVqhOGyFaX50S9PQ5poR1QpITcD53mqHyE/
- ohaS1CvKgDjEdQfvWqw5zNOg0ZZ9GQImZbDD2K9/IwF060Ws9CDXW4lt0h4ZBTXuoYV4
- gZS75Y+le53aoHUIgkRPDzH9ycLHNpiowuw2wQw0TiFKIBKKd4gzhBnTFZscMvv0O3Hc
- AtIw==
+ :reply-to; bh=7Xh3fCZx1unPOmLK/0bVMJA5wt4kUnt3SGcv9+Xa0qI=;
+ b=ebG1PrUc3FAlY1wlDJ5U6Z7YH6v7pfEQn6ARqrCgkkgPFB9EhYpdDmdWVETyJe7jou
+ 8xhcVVB8GOnuZTXnq5zpjP5cpeCvwc1BywZ8zwG6s6PAnrgQrkUEQ62d6d+vhJKiA4Lf
+ Zwt/cx2JpDbgIOUa7FJc9ts3DwQR/Wk5tA2tDeKEuqExMJYMeWSD0iUomAPbHalhLq0e
+ gaNvpk6OP0pPvy/BlvjkTtu9EmByJap5hDcudZDSXVKeZwqlLDva3RW1R5rqibGC9y+O
+ MZu/rF6/glprYHWwC1xlZ9KopGEpGzu93PinuS+ppUTidgIHx1LuEh0Tb5OfRtXX1SUT
+ lHoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258339; x=1768863139;
+ d=1e100.net; s=20230601; t=1768258346; x=1768863146;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ogzIslneGYuEoNGuI1Jj5sYV/IxvfdvBB46hdhVM8aA=;
- b=dlidMc3DKynLlqtOIf4ClsLGC8uVayDvHBbK50rFEW002Hiqv9LmkchDhQog3BEO4F
- yeoc8TtAGILLh9/VFe967j5oqI/FGTtd7LxDpWedSH+/UwtlYWXroyVb61AGQXP8cHuk
- VTXgFe284r224MeRIPT5dvuFSF0qugH/xkLO5X94Ehn8BzN8Jw/2JW2a8j8GdprZRQkL
- AZSyq+KsS9pGFfsp+zjABCnxrSNlWop8iTx1ZyVL4py3FTQ6/+idiPA3CqMT3VF6HC9o
- NilBPVUQdlDlK4JkS4ZpNEKPTbb6QBgyjW31VKBCTBfg+WWuyvDz4WkAiLJXeEHYBwjj
- PFzg==
-X-Gm-Message-State: AOJu0Yx032/j5wkdcLG+Dz5wIPZZCGckgXuCQxmaUdG9CBGU9WtWQIxk
- kMKvTFn/ZP8HxMRS4B3IH+KeXNufAgsCRy/fCiaxbL27p7RZycJvqkbTo9IfhJk9vt/e0695ru1
- HdwM9VG8=
-X-Gm-Gg: AY/fxX7xZju1r9Fpgy/lQLtpSLWicyvOgo0STXxgm2b+790JqPmmhahReGZK+zlcgRq
- Gj4pXs3jLmPfbro49fs4vk/A2ohFhs4PSBkNddnmWJqKfrZkEmkWMo7eks2th5n3O8jfrIQJLjM
- yRCQN8s7khDqm1OWihJr/ig8DeLIm2z1hUPmaNXfVPzBkI9W5+saZTgBqARQbPn4weXDdOShQXZ
- LFI4ZOGzcxc/Hay7kkKe/RTV+RvIgGMI/O5nr4JyZMnsKU2eZgveCuhJGQLY63kyIYdTLBo9Lya
- 2Z5OebkdatSnBIdxgv1zouu/yaz2PR5e5yxWtOhY+3yK3v4D7de1kI+8AiIU8trEfpcwwLTs/md
- N/+e2xNs4NtGfzJ+nzkkG07wh0DcpQFysFCa1erOEJyD+QWNvnwFIdOkF7N3vuzMoHvUnRlkQt7
- uRaPLEsrMhtKfwOOJxjPk1PNKb3ageOu+CR6hkRNTnhEj4L5OTlD45Y0G+h89R
-X-Google-Smtp-Source: AGHT+IEQw60aGNdw0btNmCEiOIw7FTKR4RKr6HGqLBaR4ZNaiyc9WA32nLOvP5r3x6sxcbjvmGaqFw==
-X-Received: by 2002:a05:600c:4ed4:b0:477:9986:5e6b with SMTP id
- 5b1f17b1804b1-47d84b41b53mr235202805e9.28.1768258339051; 
- Mon, 12 Jan 2026 14:52:19 -0800 (PST)
+ bh=7Xh3fCZx1unPOmLK/0bVMJA5wt4kUnt3SGcv9+Xa0qI=;
+ b=kbyEOzp2GFLM7U8+0UpDv1oi2ZnwbhmYlpvOzgj4L0KHBogsC0oNt4hLR9r2LXFe83
+ AIoHwg53vCHcxfIKnTX5G7MbzDEQc59WrcBWz/Qs8ps415UdNuUdy63HOtVVYtP1Z2yb
+ D4QbLvRugXnMBylLmXZYOWYdsxT0M+UGu7kZ9eovDqZEFGTM1Rsf+LD6H4iMsL1EUsqD
+ H0Sh1h6CimLYj0NOyMsMk3fZ1h6OylOV5yTtqpivyBL+7uwTcigDmiBW5DZ54r3Achf6
+ Si8ZBEmKos6odRiBD239AD557lmRfP3d2ZT1IL5kmp9v2JyOLbx6NZJvPkXu+GSUWg7y
+ QcgQ==
+X-Gm-Message-State: AOJu0YzYKBG32HpamVKlHTNmx21Ap3bG8ZlkktlbGIfXKk9ZrLOzUd8a
+ 7eatQYG4qddUWDIE/K5wBz0d46z5AUhua3cBihemJqLNbt4qjuYDBp+eWMBEeh1vULNkZDNQG8T
+ /UhZBlts=
+X-Gm-Gg: AY/fxX5DGOxe3oijxuSdVSKrPFaKMLnJsd/U3Zuj4R6oT0DHuOdlWFkCAhWqsjFEDxo
+ 4sV5XQMlXlSrHBa2GZfZ2A8+vx2BnT+HWpnSnZHN8PemW19pduyXi5o03c1NJmNjYzqvS2hqDFz
+ f4qmrxgwvCUpnjdDp4I31iY/kHKJPbaGSfZ36QEciLq9MIH3yWA5sIgP5eh19B/eLn9iOfuTm0i
+ 7eX6PEV2NCYC4Ha3qRMJFhNHOlUSrsqeBJ9v2VvgjzbRM3nYB7lFqjg3PSJk1GzMwpYQJ8a+b0/
+ M6k7RjaiynxLrccfuEeUtqDPhMAF2X9uGp9xOJudoZG4PuTrAdDewC9ThkeBGe02ssf+nGqlmRU
+ 07LB92RarRQAxKEqESGQDNnqZu7upNusJ/T1Hv5fOeuh4HP5o2cL4EYw44PteJiBbf0Tp+vtXE1
+ IBjxFFcoESYfJRiflEC42+Ce1IMl70VlagKB6oAUzBTvxNNRsqsE4sHe0QCa1TzU6cwhSzlQ/PS
+ 5ZpVFGAxw==
+X-Google-Smtp-Source: AGHT+IGk+lNs1IofsSpeSCyDaZQhm/MynIPJY7dTfvPZgDqbPKQeOBHZiYxRjlS5tKYMaxUckJ578A==
+X-Received: by 2002:a05:6000:25c1:b0:430:f5ed:83f3 with SMTP id
+ ffacd0b85a97d-432c37610c9mr20889802f8f.9.1768258345574; 
+ Mon, 12 Jan 2026 14:52:25 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f7035f2sm358382915e9.12.2026.01.12.14.52.17
+ ffacd0b85a97d-432bd5edd51sm40758858f8f.29.2026.01.12.14.52.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:52:18 -0800 (PST)
+ Mon, 12 Jan 2026 14:52:25 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/61] target/loongarch: Inline cpu_ldl_code() call in
- cpu_do_interrupt()
-Date: Mon, 12 Jan 2026 23:48:24 +0100
-Message-ID: <20260112224857.42068-30-philmd@linaro.org>
+Subject: [PULL 30/61] target/loongarch: Use explicit little-endian LD/ST API
+Date: Mon, 12 Jan 2026 23:48:25 +0100
+Message-ID: <20260112224857.42068-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,33 +100,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the cpu_ldl_code wrapper, inline it.
+The LoongArch architecture uses little endianness. Directly
+use the little-endian LD/ST API.
 
-Since LoongArch instructions are always stored in little-endian
-order, replace MO_TE -> MO_LE.
+Mechanical change using:
+
+  $ end=le; \
+    for acc in uw w l q tul; do \
+      sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
+             -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
+        $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/loongarch/); \
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20251224161456.89707-6-philmd@linaro.org>
+Message-ID: <20251224161456.89707-1-philmd@linaro.org>
 ---
- target/loongarch/tcg/tcg_cpu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/loongarch/cpu_helper.c       |  8 ++++----
+ target/loongarch/tcg/iocsr_helper.c | 24 ++++++++++++------------
+ target/loongarch/tcg/tlb_helper.c   |  4 ++--
+ 3 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-index 9d077c56d9d..cb70692ace4 100644
---- a/target/loongarch/tcg/tcg_cpu.c
-+++ b/target/loongarch/tcg/tcg_cpu.c
-@@ -140,7 +140,9 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 2b27274f64e..51ad9ff2b46 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -172,7 +172,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+         /* get next level page directory */
+         index = (address >> dir_base) & ((1 << dir_width) - 1);
+         phys = base | index << 3;
+-        base = ldq_phys(cs->as, phys);
++        base = ldq_le_phys(cs->as, phys);
+         if (level) {
+             if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+                 /* base is a huge pte */
+@@ -204,8 +204,8 @@ restart:
+     } else if (cpu_has_ptw(env)) {
+         index &= 1;
+         context->pte_buddy[index] = base;
+-        context->pte_buddy[1 - index] = ldq_phys(cs->as,
+-                                            phys + 8 * (1 - 2 * index));
++        context->pte_buddy[1 - index] = ldq_le_phys(cs->as,
++                                                    phys + 8 * (1 - 2 * index));
      }
  
-     if (update_badinstr) {
--        env->CSR_BADI = cpu_ldl_code(env, env->pc);
-+        MemOpIdx oi = make_memop_idx(MO_LEUL, cpu_mmu_index(cs, true));
-+
-+        env->CSR_BADI = cpu_ldl_code_mmu(env, env->pc, oi, 0);
+     context->ps = dir_base;
+@@ -237,7 +237,7 @@ restart:
+         ret1 = loongarch_cmpxchg_phys(cs, phys, pte, base);
+         /* PTE updated by other CPU, reload PTE entry */
+         if (ret1 == MEMTX_DECODE_ERROR) {
+-            base = ldq_phys(cs->as, phys);
++            base = ldq_le_phys(cs->as, phys);
+             goto restart;
+         }
+ 
+diff --git a/target/loongarch/tcg/iocsr_helper.c b/target/loongarch/tcg/iocsr_helper.c
+index c155f48564d..b0f171608bc 100644
+--- a/target/loongarch/tcg/iocsr_helper.c
++++ b/target/loongarch/tcg/iocsr_helper.c
+@@ -22,20 +22,20 @@ uint64_t helper_iocsrrd_b(CPULoongArchState *env, target_ulong r_addr)
+ 
+ uint64_t helper_iocsrrd_h(CPULoongArchState *env, target_ulong r_addr)
+ {
+-    return address_space_lduw(env->address_space_iocsr, r_addr,
+-                              GET_MEMTXATTRS(env), NULL);
++    return address_space_lduw_le(env->address_space_iocsr, r_addr,
++                                 GET_MEMTXATTRS(env), NULL);
+ }
+ 
+ uint64_t helper_iocsrrd_w(CPULoongArchState *env, target_ulong r_addr)
+ {
+-    return address_space_ldl(env->address_space_iocsr, r_addr,
+-                             GET_MEMTXATTRS(env), NULL);
++    return address_space_ldl_le(env->address_space_iocsr, r_addr,
++                                GET_MEMTXATTRS(env), NULL);
+ }
+ 
+ uint64_t helper_iocsrrd_d(CPULoongArchState *env, target_ulong r_addr)
+ {
+-    return address_space_ldq(env->address_space_iocsr, r_addr,
+-                             GET_MEMTXATTRS(env), NULL);
++    return address_space_ldq_le(env->address_space_iocsr, r_addr,
++                                GET_MEMTXATTRS(env), NULL);
+ }
+ 
+ void helper_iocsrwr_b(CPULoongArchState *env, target_ulong w_addr,
+@@ -48,20 +48,20 @@ void helper_iocsrwr_b(CPULoongArchState *env, target_ulong w_addr,
+ void helper_iocsrwr_h(CPULoongArchState *env, target_ulong w_addr,
+                       target_ulong val)
+ {
+-    address_space_stw(env->address_space_iocsr, w_addr,
+-                      val, GET_MEMTXATTRS(env), NULL);
++    address_space_stw_le(env->address_space_iocsr, w_addr,
++                         val, GET_MEMTXATTRS(env), NULL);
+ }
+ 
+ void helper_iocsrwr_w(CPULoongArchState *env, target_ulong w_addr,
+                       target_ulong val)
+ {
+-    address_space_stl(env->address_space_iocsr, w_addr,
+-                      val, GET_MEMTXATTRS(env), NULL);
++    address_space_stl_le(env->address_space_iocsr, w_addr,
++                         val, GET_MEMTXATTRS(env), NULL);
+ }
+ 
+ void helper_iocsrwr_d(CPULoongArchState *env, target_ulong w_addr,
+                       target_ulong val)
+ {
+-    address_space_stq(env->address_space_iocsr, w_addr,
+-                      val, GET_MEMTXATTRS(env), NULL);
++    address_space_stq_le(env->address_space_iocsr, w_addr,
++                         val, GET_MEMTXATTRS(env), NULL);
+ }
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index aab89b9be19..b6e9a3a3c7f 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -719,7 +719,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     get_dir_base_width(env, &dir_base, &dir_width, level);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+     phys = base | index << 3;
+-    return ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
++    return ldq_le_phys(cs->as, phys) & TARGET_PHYS_MASK;
+ }
+ 
+ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+@@ -781,7 +781,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+         ptoffset0 = ptindex << 3;
+         ptoffset1 = (ptindex + 1) << 3;
+         phys = base | (odd ? ptoffset1 : ptoffset0);
+-        tmp0 = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
++        tmp0 = ldq_le_phys(cs->as, phys) & TARGET_PHYS_MASK;
+         ps = ptbase;
      }
  
-     /* Save PLV and IE */
 -- 
 2.52.0
 
