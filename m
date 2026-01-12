@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA97CF45D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AE5CF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQoo-0004mc-V1; Mon, 12 Jan 2026 17:55:27 -0500
+	id 1vfQoK-0001it-KK; Mon, 12 Jan 2026 17:54:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoc-00046U-Av
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:14 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoI-0001K7-8f
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:54 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoa-0004CL-Pr
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:14 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4775e891b5eso31667955e9.2
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoG-0003q3-EU
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:53 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-430fbb6012bso5601482f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:54:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258511; x=1768863311; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258491; x=1768863291; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ixa8kMb1yAqmJeY5NW0mNxmkk+TRFUDy0Njhgryezl8=;
- b=k2NITyr+BK07b+UAZcZcx/91zq+RXKH+sxlQLWWvXDdL262IF+9YOiYLdmryX9kDIl
- yH137CXEXzM2DuQjHKRl1BeGEJpRAz25OqILUcYLioGmJZD1114h1J/4rSpycUd2nqnF
- +9ST4VtXG5EPgE/8rFoX+bJWyFUshcb3yOrW4MdhL2b6Lx5bFkZx2mLJ+PH+Wb2x3OKK
- Z+NOKANKe/9FSC8L1++wdYvp0Xykw4px/lxa0IuXkirCNJ5/4ZnDbg1h+5CE2D7lBt2r
- iGp6OU41cqnnNknA9rUglWqZOHeM7uTaqSjBNRQC+/SPSgB3BRJLKhyqkBdmkzKVN8dP
- EKLw==
+ :reply-to; bh=Ah9BF/VcfsLL8VVVNiMpTcrCPmkwaYSoypo2iXLHxLA=;
+ b=kPlVasWP8jULiANbGyWoD0ZSy5b84WeTsS43U/rEyAhnHQ+g+jwXdmMK/T7pG/0CpG
+ MCF+bsCi7cMkVmx0zINt/IGQH5B/o9Cqi5N/xMoYgTZbcQh5c58scFNFcPUjNiI4MiBm
+ ILEh8jnPGs0ebd0SP5/aeOX1iDkplPU+qwy6aWS5oBNm2m7xoyp7AAYk8wwEn8rg/1hI
+ 7perrz2Fr69wquFzUrI8TnajYTAsoCDj5Gmlv/hjJvomZzFMuukT9LAJLtBan5ICAByh
+ 8rsq8AK+Brao6TG5o5S/nh6AABM2GNjg8t/BnimHq8RlRPDzcdFXMBeb7BjKRTKuRAFS
+ nEZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258511; x=1768863311;
+ d=1e100.net; s=20230601; t=1768258491; x=1768863291;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ixa8kMb1yAqmJeY5NW0mNxmkk+TRFUDy0Njhgryezl8=;
- b=itj4ZlVXBLJv/Rys+KoCvNjwy9usc1B/z2Dtg5IL5rniQqjAoejTYMis1YkcIXePoW
- IDmW0rbS2BYbtOow/A7XVZ2JnczhyhZNBfk7Kcf591NHToZGG+2TUrUhmiySVodNlALd
- f5EjdSDen3/hK7d9NgMd3p8tpbCteQvhZ9jETLKFaQ+r14tuP399fSbzhgrWQbyUMPOY
- wQOjx182x22p7apjT7y1QIXbAZafepK1W+WgLVxNuV/MyQnQXlPebNLJKANODum5PvqX
- XDv0BZHdr7Stks1EFwRe/eVDYBC22jd366uKDehaCCzuuxN87eEOtBI/wV/o9BrSD7qC
- +WQA==
-X-Gm-Message-State: AOJu0YzGZNR+jmAuo1T035iMV0QAEhK5GY+fnqSTQCbcsg/T/gD8dhQ2
- pG7iTjSxl+LUqjtl1qZyqR11r4uShrwu5R3WuwHQo01Ge4Nc6wCkQMEdTQLoay6Qt99ybFGJw8l
- b9f2nQ98=
-X-Gm-Gg: AY/fxX6B/fhV9kzTkfpnXtrQ1lNmr6tKRQv9C/3ZYTR7+lLmENFw7y8t3/I0Ocxh8t7
- e9oZDbq946BCSYfQHL1uR55Tt4K/jRkpDs3FQmUeCJ8ENUpSfjIa673I2aLMQY0O4n71mdOs/t3
- fqfJoSLdu1/drFAOUmPXB4GCDJaHdwFeajjRF+5e8DPcD7Q+enKQBr1wVXQjopI97fJzG79t0xw
- /XI3CU9zKYV0qCpH+WKYU8NVmvK26/4/OM+tyUXVvSoOid0oDt4BbpAfqJd6QIoPPdKPZX9F0yZ
- ga9L/OhSOOwBxkeUS7U0tR9gnBU8cAaM5aacIMsutzwgZP0clV1dlJEo49Ei7pP6eYsYxPbj5Wi
- u3hCkBuM4DAPXMXDoyFKDMMkalGr7lbISGFZ9uIWiz+r2MHm5SCTqxPpHDpgXhLGwJHG08p7ctH
- tPSuUjPaO8f6xyFMkKEUbi8b3nkQHDzgxo6HF8ZK0hUH25n/stbmq3ml1qqx9J
-X-Google-Smtp-Source: AGHT+IE+CJSEODH1g3APyCBaU1V1el1ZLFakGo4E8/IzbMrjK9z6vYXUCTiGCc3hcMulicz2Ve4+yA==
-X-Received: by 2002:a05:600c:b86:b0:479:3a86:dc1e with SMTP id
- 5b1f17b1804b1-47d84b41007mr232428555e9.36.1768258511116; 
- Mon, 12 Jan 2026 14:55:11 -0800 (PST)
+ bh=Ah9BF/VcfsLL8VVVNiMpTcrCPmkwaYSoypo2iXLHxLA=;
+ b=AAOGVJ3wU1FOXBemS/ho/XZXvioa/bx+UNvk3ZLcXE/aD0IK4dq9YBRm/TThFSpEXX
+ dr7Gpl7NieILr0r9vxZqL487m7cEe+swf0xA4MxHizNvyog5mb6FOSKsXduhYqOowom1
+ Rc11UFjkQzcGa9tMPmJjYeqvqxNfPAzDm04NCtIAH5y+yzQh1zqeXf1VnpGo7HExdpZN
+ Zwa1Fhg2rM9KIReRhxqBxxnY9EgJiyfjnQuC3hd6nqK+mBUwgetlF0P2rW4FO5leJjOM
+ YHg82aZuCuGjxq+NhT8/JvYkB7ZJuM+bhNo4x9783LuopWgjhsFZO8FMwHvBYnN219HL
+ WzVg==
+X-Gm-Message-State: AOJu0YwWZb9v3g2zBRmQIBav8kTbfOQQrexLGYezYpCEyOJJ2zbgPk/D
+ ehcNjW54s/F/rh1mSuMzxbWUKtVndsYfEzmagC0PxvWmfXCoS+KQ+c6h4Tp6nURWrJB8aYspWkY
+ W7jrnixc=
+X-Gm-Gg: AY/fxX7H/oC0Tdlm30/teBHhfhBHjOngcXv9BHcaw7bmrVfIVNqLGcQdj6+P0K32wN5
+ Qz/lUM9qHucSUP5zNYkqMlXL5BoEc3gMg3oKEO7U1c69bPmtXJtazr/rAzNqlOHIBMDKoJvPntY
+ zGarg9kDK2D78hoe0G4/jaiQq1ZhN2qdJMHM/T8ZUsZt9USWQ6pEp+n9S9vK4/l5FnG/cTNUsIw
+ xbPuzGCr4SkSXA2avoH2n2IdwBs7l5VoEy05ioYDtJdgAIQrwW23psfNPhmq8UpNjN7ukoDUpnb
+ uejSSg/U9SNzHuUMK8yyIBILSV1J1ITjEThvPfFiyiLXuZoG26oh9vWlRyAmP4MsQpF9MqnWFcw
+ ILQ1/iiBrLwd6+H0tWvbcdp5u7xHGQBd01ChuUmSmhmBNpXX6Xouq5wPi2TbugqUrVvLUcLrqNc
+ DFS6hMRA6gOWVAAZXjredTfYU5BFjnSfHn4PAZKKqcVRTFBzVy9Cqz2orFPLoX
+X-Google-Smtp-Source: AGHT+IFwMLobgUCMmCWmKpuqKGjIPqcsikTS/fNCPS1TbUiuW2qE+fGsnMHYJfEoTvK5BD4bbQECrA==
+X-Received: by 2002:a05:6000:1449:b0:430:feb3:f5ae with SMTP id
+ ffacd0b85a97d-432c37a721dmr19382355f8f.55.1768258490557; 
+ Mon, 12 Jan 2026 14:54:50 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47eda45ad38sm992145e9.14.2026.01.12.14.55.10
+ ffacd0b85a97d-432bd5df90dsm41009150f8f.20.2026.01.12.14.54.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:55:10 -0800 (PST)
+ Mon, 12 Jan 2026 14:54:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 54/61] target/sparc: Inline cpu_ldl_code() call in
- cpu_do_interrupt()
-Date: Mon, 12 Jan 2026 23:48:49 +0100
-Message-ID: <20260112224857.42068-55-philmd@linaro.org>
+Subject: [PULL 51/61] hw/sparc: Use explicit big-endian LD/ST API
+Date: Mon, 12 Jan 2026 23:48:46 +0100
+Message-ID: <20260112224857.42068-52-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,36 +99,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the cpu_ldl_code wrapper, inline it.
+The SPARC architecture uses big endianness. Directly use
+the big-endian LD/ST API.
 
-Since SPARC instructions are always stored in big-endian order,
-replace MO_TE -> MO_BE.
+Mechanical change running:
+
+  $ for a in uw w l q; do \
+      sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
+        $(git grep -wlE '(ld|st)u?[wlq]_p' hw/sparc*/);
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Chigot Clément <chigot@adacore.com>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251224162642.90857-8-philmd@linaro.org>
+Message-ID: <20251218221457.73341-2-philmd@linaro.org>
 ---
- target/sparc/int32_helper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/sparc/leon3.c   | 42 +++++++++++++++++++++---------------------
+ hw/sparc/sun4m.c   |  6 +++---
+ hw/sparc64/sun4u.c |  6 +++---
+ 3 files changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
-index b29f693a6bf..d6bb3fa1e54 100644
---- a/target/sparc/int32_helper.c
-+++ b/target/sparc/int32_helper.c
-@@ -149,9 +149,11 @@ void sparc_cpu_do_interrupt(CPUState *cs)
-          * mimic delayed trap delivery as if by the subsequent insn.
-          */
-         if (!env->fsr_qne) {
-+            MemOpIdx oi = make_memop_idx(MO_BEUL, cpu_mmu_index(cs, true));
-+
-             env->fsr_qne = FSR_QNE;
-             env->fq.s.addr = env->pc;
--            env->fq.s.insn = cpu_ldl_code(env, env->pc);
-+            env->fq.s.insn = cpu_ldl_code_mmu(env, env->pc, oi, 0);
-         }
-         env->pc = env->npc;
-         env->npc = env->npc + 4;
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index d4e25f761a6..9147d56bd4e 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -79,21 +79,21 @@ typedef struct ResetData {
+ 
+ static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
+ {
+-    stl_p(code++, 0x82100000); /* mov %g0, %g1                */
+-    stl_p(code++, 0x84100000); /* mov %g0, %g2                */
+-    stl_p(code++, 0x03000000 +
++    stl_be_p(code++, 0x82100000); /* mov %g0, %g1             */
++    stl_be_p(code++, 0x84100000); /* mov %g0, %g2             */
++    stl_be_p(code++, 0x03000000 +
+       extract32(addr, 10, 22));
+                                /* sethi %hi(addr), %g1        */
+-    stl_p(code++, 0x82106000 +
++    stl_be_p(code++, 0x82106000 +
+       extract32(addr, 0, 10));
+                                /* or %g1, addr, %g1           */
+-    stl_p(code++, 0x05000000 +
++    stl_be_p(code++, 0x05000000 +
+       extract32(val, 10, 22));
+                                /* sethi %hi(val), %g2         */
+-    stl_p(code++, 0x8410a000 +
++    stl_be_p(code++, 0x8410a000 +
+       extract32(val, 0, 10));
+                                /* or %g2, val, %g2            */
+-    stl_p(code++, 0xc4204000); /* st %g2, [ %g1 ]             */
++    stl_be_p(code++, 0xc4204000); /* st %g2, [ %g1 ]          */
+ 
+     return code;
+ }
+@@ -113,13 +113,13 @@ static void write_bootloader(void *ptr, hwaddr kernel_addr)
+ 
+     /* If we are running on a secondary CPU, jump directly to the kernel.  */
+ 
+-    stl_p(p++, 0x85444000); /* rd %asr17, %g2      */
+-    stl_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
+-    stl_p(p++, 0x80908000); /* tst  %g2            */
++    stl_be_p(p++, 0x85444000); /* rd %asr17, %g2      */
++    stl_be_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
++    stl_be_p(p++, 0x80908000); /* tst  %g2            */
+     /* Filled below.  */
+     sec_cpu_branch_p = p;
+-    stl_p(p++, 0x0BADC0DE); /* bne xxx             */
+-    stl_p(p++, 0x01000000); /* nop */
++    stl_be_p(p++, 0x0BADC0DE); /* bne xxx             */
++    stl_be_p(p++, 0x01000000); /* nop */
+ 
+     /* Initialize the UARTs                                        */
+     /* *UART_CONTROL = UART_RECEIVE_ENABLE | UART_TRANSMIT_ENABLE; */
+@@ -134,17 +134,17 @@ static void write_bootloader(void *ptr, hwaddr kernel_addr)
+     p = gen_store_u32(p, 0x80000318, 3);
+ 
+     /* Now, the relative branch above can be computed.  */
+-    stl_p(sec_cpu_branch_p, 0x12800000
+-          + (p - sec_cpu_branch_p));
++    stl_be_p(sec_cpu_branch_p, 0x12800000
++             + (p - sec_cpu_branch_p));
+ 
+     /* JUMP to the entry point                                     */
+-    stl_p(p++, 0x82100000); /* mov %g0, %g1 */
+-    stl_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
+-                            /* sethi %hi(kernel_addr), %g1 */
+-    stl_p(p++, 0x82106000 + extract32(kernel_addr, 0, 10));
+-                            /* or kernel_addr, %g1 */
+-    stl_p(p++, 0x81c04000); /* jmp  %g1 */
+-    stl_p(p++, 0x01000000); /* nop */
++    stl_be_p(p++, 0x82100000); /* mov %g0, %g1 */
++    stl_be_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
++                               /* sethi %hi(kernel_addr), %g1 */
++    stl_be_p(p++, 0x82106000 + extract32(kernel_addr, 0, 10));
++                               /* or kernel_addr, %g1 */
++    stl_be_p(p++, 0x81c04000); /* jmp  %g1 */
++    stl_be_p(p++, 0x01000000); /* nop */
+ }
+ 
+ static void leon3_cpu_reset(void *opaque)
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index 8ad4eb46bbe..0c0d658d301 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -268,9 +268,9 @@ static unsigned long sun4m_load_kernel(const char *kernel_filename,
+         if (*initrd_size > 0) {
+             for (i = 0; i < 64 * TARGET_PAGE_SIZE; i += TARGET_PAGE_SIZE) {
+                 ptr = rom_ptr(KERNEL_LOAD_ADDR + i, 24);
+-                if (ptr && ldl_p(ptr) == 0x48647253) { /* HdrS */
+-                    stl_p(ptr + 16, INITRD_LOAD_ADDR);
+-                    stl_p(ptr + 20, *initrd_size);
++                if (ptr && ldl_be_p(ptr) == 0x48647253) { /* HdrS */
++                    stl_be_p(ptr + 16, INITRD_LOAD_ADDR);
++                    stl_be_p(ptr + 20, *initrd_size);
+                     break;
+                 }
+             }
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index d3ce32b6b09..5d7787fc1a5 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -206,9 +206,9 @@ static uint64_t sun4u_load_kernel(const char *kernel_filename,
+         if (*initrd_size > 0) {
+             for (i = 0; i < 64 * TARGET_PAGE_SIZE; i += TARGET_PAGE_SIZE) {
+                 ptr = rom_ptr(*kernel_addr + i, 32);
+-                if (ptr && ldl_p(ptr + 8) == 0x48647253) { /* HdrS */
+-                    stl_p(ptr + 24, *initrd_addr + *kernel_addr);
+-                    stl_p(ptr + 28, *initrd_size);
++                if (ptr && ldl_be_p(ptr + 8) == 0x48647253) { /* HdrS */
++                    stl_be_p(ptr + 24, *initrd_addr + *kernel_addr);
++                    stl_be_p(ptr + 28, *initrd_size);
+                     break;
+                 }
+             }
 -- 
 2.52.0
 
