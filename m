@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5689CF45D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA97CF45D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQoE-0000Q0-BI; Mon, 12 Jan 2026 17:54:50 -0500
+	id 1vfQoo-0004mc-V1; Mon, 12 Jan 2026 17:55:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoC-0008OA-BF
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:48 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoc-00046U-Av
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:14 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQo9-0003nl-Vr
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:54:48 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso74412635e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:54:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoa-0004CL-Pr
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:14 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4775e891b5eso31667955e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258484; x=1768863284; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258511; x=1768863311; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lDveikpmJWnoOd0J2qx9fFPcZSfFPmvU05Qg28oFJLM=;
- b=uVNfqrSfASI4WOgjDK7xAQX2bun00kCyIBrgoIF/EWqFtGwn4svlbFWdQHBMbh/H5n
- 7AbQGxww2yg5mOSt8h7NrrFYHte10cUZkO2CsV6+Kg9pAuKPTWflqAJpgye78sfqhImt
- QsysDDVJuQcBpNtonby1Bmqs42Y4XXS/ivhvRQEYkUOnuH4ZrvDNBWiD15fHCkjXB4oV
- JK3ODJJZqYYULwA3xiCoKNsbsfZwHP7OPWzVwrmDRBkk2C1mAg9Vl+FBXrQ7EgdMgX2j
- 1I0j/MGAWyGFsDDfkZhMChA0/2Jhr7vl1wbFd/rx8TUBoAAqNv47DTfXIXXr4ctGyAx6
- jwZA==
+ :reply-to; bh=ixa8kMb1yAqmJeY5NW0mNxmkk+TRFUDy0Njhgryezl8=;
+ b=k2NITyr+BK07b+UAZcZcx/91zq+RXKH+sxlQLWWvXDdL262IF+9YOiYLdmryX9kDIl
+ yH137CXEXzM2DuQjHKRl1BeGEJpRAz25OqILUcYLioGmJZD1114h1J/4rSpycUd2nqnF
+ +9ST4VtXG5EPgE/8rFoX+bJWyFUshcb3yOrW4MdhL2b6Lx5bFkZx2mLJ+PH+Wb2x3OKK
+ Z+NOKANKe/9FSC8L1++wdYvp0Xykw4px/lxa0IuXkirCNJ5/4ZnDbg1h+5CE2D7lBt2r
+ iGp6OU41cqnnNknA9rUglWqZOHeM7uTaqSjBNRQC+/SPSgB3BRJLKhyqkBdmkzKVN8dP
+ EKLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258484; x=1768863284;
+ d=1e100.net; s=20230601; t=1768258511; x=1768863311;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lDveikpmJWnoOd0J2qx9fFPcZSfFPmvU05Qg28oFJLM=;
- b=PQcEA6b9Lg/jMFzS2v4g+uBT223v2g2tWUs00yS0SK6jYCl5B+iT7j8KiNwIjLbO3K
- 6KfL16fQ8qTlUKjJVhEefBUSJwYF7dsk0gn7Vvi6yfVDtzzgqTJwBg2clDsHC9++DwNo
- mMomjt33ohRZN8iy4cLQJu91431hRA5yiMzkBrWlBUEJmNRpWEyCyoZfekhHI7A2LWuz
- xoQm4JIg8YhKi+a90YVbR9do4E1OKLyvRcgUDq6dIR8EhJHXQpPXz1ushRSWMnjZl3SR
- XscXgIZ6garv/8WBwY3bofMmwQOR32AnsChskG+KPGYVkpM6Uf0tuV2vYlEoWMuXfuDC
- EdrA==
-X-Gm-Message-State: AOJu0Yz5bOghIVhMFxmk7du/LW8VauZDWkwNQhL+bW0KVxTZ6FFGXRCW
- ZOUVJvXP0B2u0SnB+1fEykshdWFHWAhr+b8x3i6+0zX4AkXRhnw4N5RS0jTOhXclPZPIpFvWuiq
- J1cCSOpg=
-X-Gm-Gg: AY/fxX69XCRjgl2tab0/wx87ZrM/rmV9EdCFThb7jr4ro81SKyIqHJNsEuX2GMBoEzH
- gm7U5SiSfNLq5gGAuLxrlJ7V3o2qcSgn0hHbROLiHvzMtlLbTuqreiHHVwrNeNcSKh6XwdnsrKc
- DRRsp11fzLQ3JxWbDCRn80uuFrtMJ1UBZosvaIhYH711ekRzcDWQsQzpxGhG+mAQJ/Yosgiwmaq
- EockoXbRW3yFKqcr0scXNWg3+mx/s8PaUtHHvKwRiQnhh4UXg91SAoex1l0PGrqNuE2xautlu0c
- JHM6yVubhRtvje35Wke1bQ/nxEEfJaxFsDXKqcTvlb+IcN4i/nKFTqRWZfxOU4zZUi8SLSWtv0x
- SsemfM2CKrJMPllxhVO2oLy/6ecREiZbRtNDgbTBSYwY+ccCTDNPZ9EpVntxpwSGojAWawlBrT8
- QBL6ipeEI4nLki9EBPbf++wevkrNBJJ2GQZJrI6iB7Mme74TA2kMGbSIMefnO4
-X-Google-Smtp-Source: AGHT+IFNZzi3zqvoKkbtzCmjb71L06gs1wiscON5H0oK5hWB/2NNp8cRO+TS4hSquB3QPASq3MY9Uw==
-X-Received: by 2002:a05:600c:3493:b0:477:a54a:acba with SMTP id
- 5b1f17b1804b1-47d84b33b86mr237748015e9.17.1768258483950; 
- Mon, 12 Jan 2026 14:54:43 -0800 (PST)
+ bh=ixa8kMb1yAqmJeY5NW0mNxmkk+TRFUDy0Njhgryezl8=;
+ b=itj4ZlVXBLJv/Rys+KoCvNjwy9usc1B/z2Dtg5IL5rniQqjAoejTYMis1YkcIXePoW
+ IDmW0rbS2BYbtOow/A7XVZ2JnczhyhZNBfk7Kcf591NHToZGG+2TUrUhmiySVodNlALd
+ f5EjdSDen3/hK7d9NgMd3p8tpbCteQvhZ9jETLKFaQ+r14tuP399fSbzhgrWQbyUMPOY
+ wQOjx182x22p7apjT7y1QIXbAZafepK1W+WgLVxNuV/MyQnQXlPebNLJKANODum5PvqX
+ XDv0BZHdr7Stks1EFwRe/eVDYBC22jd366uKDehaCCzuuxN87eEOtBI/wV/o9BrSD7qC
+ +WQA==
+X-Gm-Message-State: AOJu0YzGZNR+jmAuo1T035iMV0QAEhK5GY+fnqSTQCbcsg/T/gD8dhQ2
+ pG7iTjSxl+LUqjtl1qZyqR11r4uShrwu5R3WuwHQo01Ge4Nc6wCkQMEdTQLoay6Qt99ybFGJw8l
+ b9f2nQ98=
+X-Gm-Gg: AY/fxX6B/fhV9kzTkfpnXtrQ1lNmr6tKRQv9C/3ZYTR7+lLmENFw7y8t3/I0Ocxh8t7
+ e9oZDbq946BCSYfQHL1uR55Tt4K/jRkpDs3FQmUeCJ8ENUpSfjIa673I2aLMQY0O4n71mdOs/t3
+ fqfJoSLdu1/drFAOUmPXB4GCDJaHdwFeajjRF+5e8DPcD7Q+enKQBr1wVXQjopI97fJzG79t0xw
+ /XI3CU9zKYV0qCpH+WKYU8NVmvK26/4/OM+tyUXVvSoOid0oDt4BbpAfqJd6QIoPPdKPZX9F0yZ
+ ga9L/OhSOOwBxkeUS7U0tR9gnBU8cAaM5aacIMsutzwgZP0clV1dlJEo49Ei7pP6eYsYxPbj5Wi
+ u3hCkBuM4DAPXMXDoyFKDMMkalGr7lbISGFZ9uIWiz+r2MHm5SCTqxPpHDpgXhLGwJHG08p7ctH
+ tPSuUjPaO8f6xyFMkKEUbi8b3nkQHDzgxo6HF8ZK0hUH25n/stbmq3ml1qqx9J
+X-Google-Smtp-Source: AGHT+IE+CJSEODH1g3APyCBaU1V1el1ZLFakGo4E8/IzbMrjK9z6vYXUCTiGCc3hcMulicz2Ve4+yA==
+X-Received: by 2002:a05:600c:b86:b0:479:3a86:dc1e with SMTP id
+ 5b1f17b1804b1-47d84b41007mr232428555e9.36.1768258511116; 
+ Mon, 12 Jan 2026 14:55:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47eda10285fsm1189925e9.9.2026.01.12.14.54.43
+ 5b1f17b1804b1-47eda45ad38sm992145e9.14.2026.01.12.14.55.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:54:43 -0800 (PST)
+ Mon, 12 Jan 2026 14:55:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 50/61] hw/sparc: Mark SPARC-specific peripherals as big-endian
-Date: Mon, 12 Jan 2026 23:48:45 +0100
-Message-ID: <20260112224857.42068-51-philmd@linaro.org>
+Subject: [PULL 54/61] target/sparc: Inline cpu_ldl_code() call in
+ cpu_do_interrupt()
+Date: Mon, 12 Jan 2026 23:48:49 +0100
+Message-ID: <20260112224857.42068-55-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,313 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These devices are only used by the SPARC target, which is
-only built as big-endian. Therefore the DEVICE_NATIVE_ENDIAN
-definition expand to DEVICE_BIG_ENDIAN (besides, the
-DEVICE_LITTLE_ENDIAN case isn't tested). Simplify directly
-using DEVICE_BIG_ENDIAN.
+In preparation of removing the cpu_ldl_code wrapper, inline it.
+
+Since SPARC instructions are always stored in big-endian order,
+replace MO_TE -> MO_BE.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251224162642.90857-2-philmd@linaro.org>
+Message-ID: <20251224162642.90857-8-philmd@linaro.org>
 ---
- hw/audio/cs4231.c        |  2 +-
- hw/char/grlib_apbuart.c  |  2 +-
- hw/display/cg3.c         |  2 +-
- hw/display/tcx.c         | 14 +++++++-------
- hw/dma/sparc32_dma.c     |  2 +-
- hw/intc/grlib_irqmp.c    |  2 +-
- hw/intc/slavio_intctl.c  |  4 ++--
- hw/misc/eccmemctl.c      |  2 +-
- hw/misc/slavio_misc.c    | 16 ++++++++--------
- hw/rtc/sun4v-rtc.c       |  2 +-
- hw/timer/grlib_gptimer.c |  2 +-
- hw/timer/slavio_timer.c  |  2 +-
- 12 files changed, 26 insertions(+), 26 deletions(-)
+ target/sparc/int32_helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/audio/cs4231.c b/hw/audio/cs4231.c
-index bcf98160ec3..7844b5b6c90 100644
---- a/hw/audio/cs4231.c
-+++ b/hw/audio/cs4231.c
-@@ -135,7 +135,7 @@ static void cs_mem_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps cs_mem_ops = {
-     .read = cs_mem_read,
-     .write = cs_mem_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
- };
- 
- static const VMStateDescription vmstate_cs4231 = {
-diff --git a/hw/char/grlib_apbuart.c b/hw/char/grlib_apbuart.c
-index 92f534552ee..d828c3fd3d4 100644
---- a/hw/char/grlib_apbuart.c
-+++ b/hw/char/grlib_apbuart.c
-@@ -242,7 +242,7 @@ static void grlib_apbuart_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps grlib_apbuart_ops = {
-     .write      = grlib_apbuart_write,
-     .read       = grlib_apbuart_read,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
- };
- 
- static void grlib_apbuart_realize(DeviceState *dev, Error **errp)
-diff --git a/hw/display/cg3.c b/hw/display/cg3.c
-index 59d66d3d4b8..568d6048a63 100644
---- a/hw/display/cg3.c
-+++ b/hw/display/cg3.c
-@@ -265,7 +265,7 @@ static void cg3_reg_write(void *opaque, hwaddr addr, uint64_t val,
- static const MemoryRegionOps cg3_reg_ops = {
-     .read = cg3_reg_read,
-     .write = cg3_reg_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 4,
-diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-index 7cba3e25a78..36cad82abdf 100644
---- a/hw/display/tcx.c
-+++ b/hw/display/tcx.c
-@@ -452,7 +452,7 @@ static void tcx_dac_writel(void *opaque, hwaddr addr, uint64_t val,
- static const MemoryRegionOps tcx_dac_ops = {
-     .read = tcx_dac_readl,
-     .write = tcx_dac_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -533,7 +533,7 @@ static void tcx_rstip_writel(void *opaque, hwaddr addr,
- static const MemoryRegionOps tcx_stip_ops = {
-     .read = tcx_stip_readl,
-     .write = tcx_stip_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .impl = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -547,7 +547,7 @@ static const MemoryRegionOps tcx_stip_ops = {
- static const MemoryRegionOps tcx_rstip_ops = {
-     .read = tcx_stip_readl,
-     .write = tcx_rstip_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .impl = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -633,7 +633,7 @@ static void tcx_rblit_writel(void *opaque, hwaddr addr,
- static const MemoryRegionOps tcx_blit_ops = {
-     .read = tcx_blit_readl,
-     .write = tcx_blit_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .impl = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -647,7 +647,7 @@ static const MemoryRegionOps tcx_blit_ops = {
- static const MemoryRegionOps tcx_rblit_ops = {
-     .read = tcx_blit_readl,
-     .write = tcx_rblit_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .impl = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -713,7 +713,7 @@ static void tcx_thc_writel(void *opaque, hwaddr addr,
- static const MemoryRegionOps tcx_thc_ops = {
-     .read = tcx_thc_readl,
-     .write = tcx_thc_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -734,7 +734,7 @@ static void tcx_dummy_writel(void *opaque, hwaddr addr,
- static const MemoryRegionOps tcx_dummy_ops = {
-     .read = tcx_dummy_readl,
-     .write = tcx_dummy_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-diff --git a/hw/dma/sparc32_dma.c b/hw/dma/sparc32_dma.c
-index 5b770599865..a5dc35e7bbf 100644
---- a/hw/dma/sparc32_dma.c
-+++ b/hw/dma/sparc32_dma.c
-@@ -230,7 +230,7 @@ static void dma_mem_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps dma_mem_ops = {
-     .read = dma_mem_read,
-     .write = dma_mem_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-diff --git a/hw/intc/grlib_irqmp.c b/hw/intc/grlib_irqmp.c
-index d860ec15d88..050be4d462f 100644
---- a/hw/intc/grlib_irqmp.c
-+++ b/hw/intc/grlib_irqmp.c
-@@ -330,7 +330,7 @@ static void grlib_irqmp_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps grlib_irqmp_ops = {
-     .read = grlib_irqmp_read,
-     .write = grlib_irqmp_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-diff --git a/hw/intc/slavio_intctl.c b/hw/intc/slavio_intctl.c
-index 640d8e2baa6..c7bf38acd74 100644
---- a/hw/intc/slavio_intctl.c
-+++ b/hw/intc/slavio_intctl.c
-@@ -135,7 +135,7 @@ static void slavio_intctl_mem_writel(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_intctl_mem_ops = {
-     .read = slavio_intctl_mem_readl,
-     .write = slavio_intctl_mem_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -205,7 +205,7 @@ static void slavio_intctlm_mem_writel(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_intctlm_mem_ops = {
-     .read = slavio_intctlm_mem_readl,
-     .write = slavio_intctlm_mem_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-diff --git a/hw/misc/eccmemctl.c b/hw/misc/eccmemctl.c
-index dd1be7d698e..0243ea52df3 100644
---- a/hw/misc/eccmemctl.c
-+++ b/hw/misc/eccmemctl.c
-@@ -232,7 +232,7 @@ static uint64_t ecc_mem_read(void *opaque, hwaddr addr,
- static const MemoryRegionOps ecc_mem_ops = {
-     .read = ecc_mem_read,
-     .write = ecc_mem_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-diff --git a/hw/misc/slavio_misc.c b/hw/misc/slavio_misc.c
-index 49be827c458..3df7d82b8c4 100644
---- a/hw/misc/slavio_misc.c
-+++ b/hw/misc/slavio_misc.c
-@@ -147,7 +147,7 @@ static uint64_t slavio_cfg_mem_readb(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_cfg_mem_ops = {
-     .read = slavio_cfg_mem_readb,
-     .write = slavio_cfg_mem_writeb,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -177,7 +177,7 @@ static uint64_t slavio_diag_mem_readb(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_diag_mem_ops = {
-     .read = slavio_diag_mem_readb,
-     .write = slavio_diag_mem_writeb,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -207,7 +207,7 @@ static uint64_t slavio_mdm_mem_readb(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_mdm_mem_ops = {
-     .read = slavio_mdm_mem_readb,
-     .write = slavio_mdm_mem_writeb,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -245,7 +245,7 @@ static uint64_t slavio_aux1_mem_readb(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_aux1_mem_ops = {
-     .read = slavio_aux1_mem_readb,
-     .write = slavio_aux1_mem_writeb,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -282,7 +282,7 @@ static uint64_t slavio_aux2_mem_readb(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_aux2_mem_ops = {
-     .read = slavio_aux2_mem_readb,
-     .write = slavio_aux2_mem_writeb,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -310,7 +310,7 @@ static uint64_t apc_mem_readb(void *opaque, hwaddr addr,
- static const MemoryRegionOps apc_mem_ops = {
-     .read = apc_mem_readb,
-     .write = apc_mem_writeb,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -355,7 +355,7 @@ static void slavio_sysctrl_mem_writel(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_sysctrl_mem_ops = {
-     .read = slavio_sysctrl_mem_readl,
-     .write = slavio_sysctrl_mem_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-@@ -397,7 +397,7 @@ static void slavio_led_mem_writew(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_led_mem_ops = {
-     .read = slavio_led_mem_readw,
-     .write = slavio_led_mem_writew,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 2,
-         .max_access_size = 2,
-diff --git a/hw/rtc/sun4v-rtc.c b/hw/rtc/sun4v-rtc.c
-index 675b6cd5bd6..3a586adf02d 100644
---- a/hw/rtc/sun4v-rtc.c
-+++ b/hw/rtc/sun4v-rtc.c
-@@ -49,7 +49,7 @@ static void sun4v_rtc_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps sun4v_rtc_ops = {
-     .read = sun4v_rtc_read,
-     .write = sun4v_rtc_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
- };
- 
- void sun4v_rtc_init(hwaddr addr)
-diff --git a/hw/timer/grlib_gptimer.c b/hw/timer/grlib_gptimer.c
-index 099ab6c5866..54998981dbd 100644
---- a/hw/timer/grlib_gptimer.c
-+++ b/hw/timer/grlib_gptimer.c
-@@ -332,7 +332,7 @@ static void grlib_gptimer_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps grlib_gptimer_ops = {
-     .read = grlib_gptimer_read,
-     .write = grlib_gptimer_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 4,
-diff --git a/hw/timer/slavio_timer.c b/hw/timer/slavio_timer.c
-index 71696a4b615..4a3e227fbab 100644
---- a/hw/timer/slavio_timer.c
-+++ b/hw/timer/slavio_timer.c
-@@ -329,7 +329,7 @@ static void slavio_timer_mem_writel(void *opaque, hwaddr addr,
- static const MemoryRegionOps slavio_timer_mem_ops = {
-     .read = slavio_timer_mem_readl,
-     .write = slavio_timer_mem_writel,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 8,
+diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+index b29f693a6bf..d6bb3fa1e54 100644
+--- a/target/sparc/int32_helper.c
++++ b/target/sparc/int32_helper.c
+@@ -149,9 +149,11 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+          * mimic delayed trap delivery as if by the subsequent insn.
+          */
+         if (!env->fsr_qne) {
++            MemOpIdx oi = make_memop_idx(MO_BEUL, cpu_mmu_index(cs, true));
++
+             env->fsr_qne = FSR_QNE;
+             env->fq.s.addr = env->pc;
+-            env->fq.s.insn = cpu_ldl_code(env, env->pc);
++            env->fq.s.insn = cpu_ldl_code_mmu(env, env->pc, oi, 0);
+         }
+         env->pc = env->npc;
+         env->npc = env->npc + 4;
 -- 
 2.52.0
 
