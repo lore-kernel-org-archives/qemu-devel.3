@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42550C9EC90
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6193EC9EC90
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfHuu-0004qV-Vv; Mon, 12 Jan 2026 08:25:10 -0500
+	id 1vfHtg-0002pD-Fs; Mon, 12 Jan 2026 08:23:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfHu6-0003BH-PA
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:24 -0500
+ id 1vfHtb-0002ia-8Y
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:23:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfHu4-0003ox-Lu
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:17 -0500
+ id 1vfHtY-0003ht-47
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:23:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768224255;
+ s=mimecast20190719; t=1768224223;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WbSNbKmTexfLzSNcOAGGTpME53mT2JoY4BGZ0NYwZQc=;
- b=bwChIUKkrWQyCCfRt3j16+QwZOY4VEvboD5JUNNpeIZ0No8EDpz6in5Z8sGVhqUw1cJcbS
- krDBOxuMRdImbjJcL/Qu/nKT+Q8SLYjvolNPScuqDniEPY9tiIys800WuWbodTjhj1r7GY
- 95u+uby2QLjft3Feca65qHJmXTyJ6Nw=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9FW+RNoWUNg/DJr0t6Axhc3qYqFhjtvAQISw7/ozuW0=;
+ b=N3VvS9EnBkriVjTMrXf7JCK2MdIoBBGv8RGJPKHieaoGdkXh0Dv6sWTpAkD1Iefq+WMasa
+ ymGZ7QkDfCb7z4q1mnrN9Vcmkxwic9hTWNghe/wEKkiOD5hzpHyPQgEo9NRhDHaV7Jrj4d
+ AGui59h2hbAPUSbYii+lAgPCEuKQp7Q=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-Wd_8y5h1OCKo3BuVz-tC3A-1; Mon, 12 Jan 2026 08:24:14 -0500
-X-MC-Unique: Wd_8y5h1OCKo3BuVz-tC3A-1
-X-Mimecast-MFC-AGG-ID: Wd_8y5h1OCKo3BuVz-tC3A_1768224253
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c552d1f9eafso4718921a12.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:24:14 -0800 (PST)
+ us-mta-156-hpoW3tYiNZKbX97n1PsRmg-1; Mon, 12 Jan 2026 08:23:42 -0500
+X-MC-Unique: hpoW3tYiNZKbX97n1PsRmg-1
+X-Mimecast-MFC-AGG-ID: hpoW3tYiNZKbX97n1PsRmg_1768224221
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-81e6ec1da28so1867588b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:23:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768224253; x=1768829053; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768224221; x=1768829021; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WbSNbKmTexfLzSNcOAGGTpME53mT2JoY4BGZ0NYwZQc=;
- b=n+QMuH7QGWI4PufVCdVl6Gkb3v6ENx9th2gGQUvWxOfl3SN+Wfs49JjMB1VzfEQjeB
- VNn6rz5Tcm0msQpVEEokeU7WEXhYfabaVpEqbDAC3AcWhF6w10/Itud1CHPUiCl/YdhT
- /xSFf+rtyCgHTtigb0F664E+0zsXhldKAJiJL/iTMqjr2p/JvZ7n4pBTB2PYFmdW5pof
- 3viSk6s9kM7HArrWHWDGOJbUuGP2u5GVMHTVtCPsQjDC3HKXOIMsq0jPnTmpG9Mcm+X2
- 3ow753tCLruV+bEAWf+CfUM+Ory0iighFbNmMg7UxZjLfKVkpy6OWcQORv2AedX2n+xW
- TOig==
+ bh=9FW+RNoWUNg/DJr0t6Axhc3qYqFhjtvAQISw7/ozuW0=;
+ b=qzxbBtivVmuzKZsltMnCOtjD4mFAB2MhXkSNx7Uoqv03M0rUjsu9IlbK0vHh6sKN4s
+ tAoPYKvns0cDab18pNGvu05X26DT2BJb8JPMqPKl6E51ophulm2sEUCKST+NwasIrw23
+ LSXYZdjIdIgKYiM5PVDk5Rf4toeu/2TBXGRsuZOibgWoOGuT+/ArQ3kykl+N105mQiPC
+ 6AnPq2emavahLNtUwdVv6ArKG6AchCreLzSCNOo6rAN47bFBONli/CsqsASuniQRYlTc
+ mXI5BV+j+TZN+J7r6sAHHt7rg+UgV6qyBwszDSCsrF4End+TQN4kM5daKTz3xT9rg3Hf
+ sUHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768224253; x=1768829053;
+ d=1e100.net; s=20230601; t=1768224221; x=1768829021;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WbSNbKmTexfLzSNcOAGGTpME53mT2JoY4BGZ0NYwZQc=;
- b=aW6sO4bH9An64y/KTXvP4YW070igKambizKZ1TZ8JJnqhyt4Wmjkxo8eL3rvyoU+X+
- gI1dJVuvSQpCh3A9ss0JgPMQ2UEhHBDu+gCmTbXyoM1gsWfHT6/B9EhCK/AE8/vWdvRX
- n5yzXyUMptxDU2Mgh/41ANVjl/l3OdzgUXuweR62eEmjhVBChOb4K4eyqlo11gUd6vJz
- XDuVGnQ3qPHHJJSu8OUa9LNHKQh87METqgEX5Cw+To9u70ct0srIcJY1fGJs8kqQinmk
- RXcdcBU0ABVORsRekSfwFA2jN2SBwRzG2Q1EW4hXL/UkVC0zYsWxzPEzEnWrSUHqo26E
- ltcA==
+ bh=9FW+RNoWUNg/DJr0t6Axhc3qYqFhjtvAQISw7/ozuW0=;
+ b=c6E1/MKHdfrDSw7xDSvraa6m2E8YmG1DhoKJ0/m0LCIM0QS8ntYKLZawh+RdlUiXiG
+ N4DzwqyKIHxKHBBjl9AcAHoUCIJQSFBC6/EfdjQsBKTXd3LTPY5PjXZd87M3BrpJVQJ1
+ smqA/ixN15XAEF4rxTCgev57djXQrXu3FccZUE8hivD02cve9+8xTn2BMXDIOuyDEb2v
+ YEo/AmT0H5RiVs15kwW+QLVCxA/4xxs14xR/UPT16NlBPnoBdWB0UlnUhXWQ9Z3Kwhet
+ Mm0bIRB3gUyTqzwUDVFXdNPk9alhz7yOnr1pAvjU1g67djBSXV35xjeDMLpgaRhrCPoC
+ fBIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWj+S1lA1VCK+EqUIOzT2QYGt+7sqdR2toUbB8RIrxlPcr0BlO7UMmk3oYVuDXfe787Z/ZSjUV9ZNGe@nongnu.org
-X-Gm-Message-State: AOJu0Yw+xhxl1CE3rZwCByXSHAZVhlYmPbpB9hl2pmQwui2K07hpmf2i
- eNHX/5TIB/LdGjJpsxPdThXBZVo/m76ScN1sPDPl2hbbERAIINku7Rh3wKNzATNvIZhcrb0QB3A
- VqtEVtcEejqlrJjEvD7vCoi0FzvlY8LEWqis5PinHEHmkShhDkm59lvKq
-X-Gm-Gg: AY/fxX7RWPZDpq//UW11nibv/V4hrKwTdnmSuFTOcOHrErLLiQeJs10QVskD90tWy2R
- Nxo9KRduBHy/YiMAxiEUe32ByyHmvV3ICHS5OKEHhM+wN10oNc5EzQsbvgd84x5B9RlocmjhxLJ
- b/mBllMNdzuOxQvqcBoDBI6sSTiOBaYE9tyhfBI0eWn1kKGyEK7ntnE0dq27D6ITaZ+hh/rn89w
- KMbvvbKHZYGDBAi/dCHN7lBLGWpHvUypZrMzAZrHwQm9R3KxVfQ5YClZR2O83HulBch45eQzb8r
- DisZOzcA/FohY7LBZnQHbuTDxYvYuCroPRY2RGWedmhWxdkL7xacHvk/0xxN8h5WhlpOp/7Wk9i
- 5uldsHvAyAjtl8TGdtN7RAneZCT895eFiHtQH5kMHmXI=
-X-Received: by 2002:a05:6a21:3381:b0:35e:b995:7098 with SMTP id
- adf61e73a8af0-3898f8d0267mr15548747637.9.1768224253121; 
- Mon, 12 Jan 2026 05:24:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH2OK+gMC6fAaYfSLI0gqpQ6KfWfNIPVV4x1e2pkcK2ja8trgOCdiiDYappareAuAFJ5KU3LQ==
-X-Received: by 2002:a05:6a21:3381:b0:35e:b995:7098 with SMTP id
- adf61e73a8af0-3898f8d0267mr15548727637.9.1768224252679; 
- Mon, 12 Jan 2026 05:24:12 -0800 (PST)
+ AJvYcCVxYW+sF0JZYAisjsHfCHITIbiDGflq4t4/kWONEoJzTBmrNt/vG48/OC4xaSn10u2OE5MmOzwwzYum@nongnu.org
+X-Gm-Message-State: AOJu0YzgWr4s24U8f4uliGo8D/vRTyEAzSF+OrY5JdJFxYEMRwiX/06Q
+ 9wxS6klBsKlbxGJ+mkmFeOt7tKCaKIJnW4OExDegcWy0/K9qqN1Hif7pM6A3+Vqh+9t37ML+fyF
+ PkaBKDCtvgX+ZmBr5xZQ9J3EqrAtO3caI4WijoDqWbFw1jTuI9dp+aLTM
+X-Gm-Gg: AY/fxX6Y20w66ay4m2yEckOOp7p65hLcuevbASldPbZsnqKaZArWtv/tH4IU2+l7keM
+ eR4Cv0hPKmyi/U2Ovcr8qJGbA9rzwBSiwn3CCvBTskWTUpA7dEKjNgNJeuCp+RFhG+U50smRtNJ
+ XiZ2vE+aNiOaPxxQAZ2iB9K4FVMO/somB3Z4/aYbZ2gfzc4Dymih1FYhhcKPUVzDQAs9QvhQDmA
+ WNOftloIvpzTfloOPwdKxUPFNeGKR9tkvT91JEwh2f17Hu+gw0PwX3xWO8xGUtmBhOVz0+yf3Bw
+ 3xKueXYocQ/6ogJI7WShowzMuYSdGba8OtSDysNAb67LalYYQPdkvCmymTE6+Z1tzWhIT4oielF
+ 2aabNA8xraX0ALHjAONdRGrfZxoCkPfPdqD5Emn/lPjo=
+X-Received: by 2002:a05:6a21:3381:b0:366:14b0:4b04 with SMTP id
+ adf61e73a8af0-3898f97be3emr17859378637.64.1768224221157; 
+ Mon, 12 Jan 2026 05:23:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEHzg6r/nlFCBwy29+gmS/Y3kVmX1P+W2vycZ7SAs4A65GkTF6SdC04/yGxH3/dD/Nwap7Ysw==
+X-Received: by 2002:a05:6a21:3381:b0:366:14b0:4b04 with SMTP id
+ adf61e73a8af0-3898f97be3emr17859363637.64.1768224220806; 
+ Mon, 12 Jan 2026 05:23:40 -0800 (PST)
 Received: from rhel9-box.lan ([110.227.88.119])
  by smtp.googlemail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd87asm17544771a12.15.2026.01.12.05.24.10
+ 41be03b00d2f7-c4cc05cd87asm17544771a12.15.2026.01.12.05.23.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Jan 2026 05:24:12 -0800 (PST)
+ Mon, 12 Jan 2026 05:23:40 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 18/32] i386/sev: free existing launch update data and
- kernel hashes data on init
-Date: Mon, 12 Jan 2026 18:52:31 +0530
-Message-ID: <20260112132259.76855-19-anisinha@redhat.com>
+Subject: [PATCH v2 05/32] accel/kvm: mark guest state as unprotected after vm
+ file descriptor change
+Date: Mon, 12 Jan 2026 18:52:18 +0530
+Message-ID: <20260112132259.76855-6-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260112132259.76855-1-anisinha@redhat.com>
 References: <20260112132259.76855-1-anisinha@redhat.com>
@@ -124,59 +123,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If there is existing launch update data and kernel hashes data, they need to be
-freed when initialization code is executed. This is important for resettable
-confidential guests where the initialization happens once every reset.
+When the KVM VM file descriptor has changed and a new one created, the guest
+state is no longer in protected state. Mark it as such.
+The guest state becomes protected again when TDX and SEV-ES and SEV-SNP mark
+it as such.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/sev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ accel/kvm/kvm-all.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index cb2213a32a..d7425dde96 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1768,6 +1768,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-     uint32_t ebx;
-     uint32_t host_cbitpos;
-     struct sev_user_data_status status = {};
-+    SevLaunchUpdateData *data, *next_elm;
-     SevCommonState *sev_common = SEV_COMMON(cgs);
-     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(cgs);
-     X86ConfidentialGuestClass *x86_klass =
-@@ -1775,6 +1776,11 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 762f302551..df49a24466 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2650,6 +2650,9 @@ static int kvm_reset_vmfd(MachineState *ms)
  
-     sev_common->state = SEV_STATE_UNINIT;
+     s->vmfd = ret;
  
-+    /* free existing launch update data if any */
-+    QTAILQ_FOREACH_SAFE(data, &launch_update, next, next_elm) {
-+        g_free(data);
-+    }
++    /* guest state is now unprotected again */
++    kvm_state->guest_state_protected = false;
 +
-     host_cpuid(0x8000001F, 0, NULL, &ebx, NULL, NULL);
-     host_cbitpos = ebx & 0x3f;
+     kvm_setup_dirty_ring(s);
  
-@@ -1961,6 +1967,8 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-     MachineState *ms = MACHINE(qdev_get_machine());
-     X86MachineState *x86ms = X86_MACHINE(ms);
-+    SevCommonState *sev_common = SEV_COMMON(cgs);
-+    SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(sev_common);
- 
-     if (x86ms->smm == ON_OFF_AUTO_AUTO) {
-         x86ms->smm = ON_OFF_AUTO_OFF;
-@@ -1969,6 +1977,10 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         return -1;
-     }
- 
-+    /* free existing kernel hashes data if any */
-+    g_free(sev_snp_guest->kernel_hashes_data);
-+    sev_snp_guest->kernel_hashes_data = NULL;
-+
-     return 0;
- }
- 
+     /* rebind memory to new vm fd */
 -- 
 2.42.0
 
