@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1034C9EC90
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65ED6C9EC8B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:26:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfHuH-0003Th-KB; Mon, 12 Jan 2026 08:24:29 -0500
+	id 1vfHvC-0005TE-1j; Mon, 12 Jan 2026 08:25:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfHtk-0002ua-9R
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:23:56 -0500
+ id 1vfHud-0004Wp-1d
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfHti-0003k8-G1
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:23:56 -0500
+ id 1vfHuZ-0003tl-5T
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:24:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768224232;
+ s=mimecast20190719; t=1768224286;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Zl/mQjtvR/EBMVt9nhPm03gwedh0vVVOzpLgcWm0+Gg=;
- b=Lh87aMuDpr4hIju7M+W+3l7hEn0X2DUpn6kTshrXSrI8FU5r5BNeHrclPcHSJQVUv3mY/g
- bi5y09H6/YLcS8Rt/SEF93fLWPxPLXxHezg9z4y30QZDBd4JhUDewUl/GbUWLTSS2MA7Uh
- i+F05GqS36IV/Rfa45NphU3zwcJprlU=
+ bh=sZTC0TaeHDKR66aLqLlM3/y/CGbtg30ikDOryFdUyg4=;
+ b=MI1buGdCJ8VRQCS/AImg8IYPv4UcC3cjoyZ8EBS5fnVpDO7WYvhQTYBqI60pJ+z22BYoW4
+ OxB+WKVaOFPvkXB7I/Iwg19ybyquP7fRUfWMFSaLQ9nt+KAA4zqWNHCEJd8G2iByQdMys2
+ YhghLU0h3Xx2SxqXdwv/4AMiHtQ4wCk=
 Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
  [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-DInrUm2QPBOHu1jivmbWmQ-1; Mon, 12 Jan 2026 08:23:51 -0500
-X-MC-Unique: DInrUm2QPBOHu1jivmbWmQ-1
-X-Mimecast-MFC-AGG-ID: DInrUm2QPBOHu1jivmbWmQ_1768224231
+ us-mta-148-A1ra-SokNomyYRJ-ABpeBQ-1; Mon, 12 Jan 2026 08:24:43 -0500
+X-MC-Unique: A1ra-SokNomyYRJ-ABpeBQ-1
+X-Mimecast-MFC-AGG-ID: A1ra-SokNomyYRJ-ABpeBQ_1768224282
 Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c5291b89733so2622030a12.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:23:51 -0800 (PST)
+ 41be03b00d2f7-c5269fcecdeso2396518a12.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768224231; x=1768829031; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768224282; x=1768829082; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Zl/mQjtvR/EBMVt9nhPm03gwedh0vVVOzpLgcWm0+Gg=;
- b=uJgi1QlnFSn2ZXMbA83ZAjbtdSztyTWKxD9qUx2QPxFsmyl49wKupCJWKFoyy8/rpx
- IiWnzTho/6x/q2wkB2sWIa1wVuh2qXOh8i5j/y7Ee/Le+rR5ZVnh3Y6lvObKhKon+kd+
- okvAu5mFNKGo7ge5Ddp98tb5ZoF1XcjGeTxcdg/wuvKjpFLuq1OVTIBZ5bsF/XdVSv1w
- 4PmxEMvSYCWNk+SeA4r4Ew0hruPv+ZlFWO84URSTNIVgIDKrXJvtsuWIR/eg40Y/3VYf
- 3gk+968eYqHvp1V3BIcUK0Q9Yy1L0Af1FlIroAeln+iU4OqUzbbXYQmIqEPoZe+GLIf3
- VZEw==
+ bh=sZTC0TaeHDKR66aLqLlM3/y/CGbtg30ikDOryFdUyg4=;
+ b=s3EBp5MmDhUwOvlP4rkIMMY7YjHLgQIKHtbfmWY0XDDoEyFz5i4UuDYJxz3ZBe01mq
+ fwK3Sq+68mYJ+wZ+gQ5ExIWORxcKW6OuMKMZNPUEH4UfJByxwiAec2+iHkIHhH+nX7Ku
+ 4HqFlzK/Src4a9zM18IPS6ksAIGajohQPeFzJVnNectYpdgW9MjbLzSd2kJGK3dg75Iu
+ KiyJI9S/txWh1U0uYI/skdhcEpiVf3n3Cq+C/PAmS0yM/FTpo+9nTNTY97GugzDLI+iV
+ LDwZTEL5BiIpx5HQgyWYWbw7ytTa222mwBkfmv0GAxm40DhwyWLBLut4M54L+oOIoI7K
+ 6clA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768224231; x=1768829031;
+ d=1e100.net; s=20230601; t=1768224282; x=1768829082;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Zl/mQjtvR/EBMVt9nhPm03gwedh0vVVOzpLgcWm0+Gg=;
- b=XQ7CP3aJk1+1uCrzmSMMFq9a63ZuOPgNEp3jkhAveshtxV5Lsn9Cm3GTnlT7YoF4PF
- QhDfv9bgGJsVqUW0DltZWDreqGPouLiCVsIDe/9aOh6ekKAoeixeqRk1oH1ULiZ+BByC
- vK0llJQ/kABTME7RKSkmj/Cg+g8/NcBJlfEesScjeo8vc6F4c1zm2KeUGytg9IrxEkci
- B66XlLPj0pzscrYPexiP0Dnm61W/5kedROop/d7zDuKAnhH2/mndlPLWrlJJr05jbZL4
- I0gj6ZL24NR3rSA22TKcuEM1jrpZJlE0RAs432bX7MZRZ34DzzL0efazR3pB5zyUawFE
- 5Qfg==
+ bh=sZTC0TaeHDKR66aLqLlM3/y/CGbtg30ikDOryFdUyg4=;
+ b=InewjIL6/X53ylNPNjx7ZXK5yRl2mA3EyI2M1RsIEzHrxi6szVuE0wA+45Np8VrLTr
+ vrcfNT9QTEtlDoonVij7QYddnjgT2chJ1OO6cd66ixfFThX73ygNyHFJtIxCN5uCp/ll
+ lejFVdzAVgRraNx9IxLwq8TmbQ6GkFIQ0Xl8HPfzQOnDpGudNAzUsix7lpPBmuc/2GUQ
+ 6IZYhHDCAx3rfBoAuFLOG45rBhE+AmQ5dMwo4oy/0rabFtfmg4DSmVrEw5YtJbYnLPD+
+ gK1GKJkWEni9s0/eOM4yRdnloDEXqD0Pw/dn98BiVoRcgtsvgPlGp2ZS9BFPGyJy3Am5
+ UxOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUcr2/r53NXVgg5DaikDAAt11eOlFy7sY04U7aVU6s4C1hwf0Ht2Is3IOjEmT9Oxdfp4m8XMLEk5NXP@nongnu.org
-X-Gm-Message-State: AOJu0Ywp4Rt/9os6x0yZ2K+clvlPbDECeUKpVN4SJFLEr0wqsKWtEEM9
- r4Z+OhS/EUim59zyHL8mZpYGJFql4RhGokkF2Gc1ycRovoRG4i9yZoySD8w3Q95ztMTmoCiI+AY
- +csNtSKp9CvbQtVbHu7gjIK80iBCL+KI9rbaS5zLf4D7v98nr8PH2a95p
-X-Gm-Gg: AY/fxX47J0xnnnqRjpFYDaK4HFZByqqSKn9BwDZKiYz/PdVImSoTL6SR8FwZgMxXsLc
- eMp3yoebfjFUSCz5wHGZY3WtPBKF9aBxOArFDXJisGGJ7Kjk2Vw2mE3NbvtK2ZfgMsLKH8p/3uu
- 6/dgF1lUTF+DekUoPnW5GqGniPYf/uehbG5N5haAV/jAZ1nWEuyKPDqGRIWAldOuyUfChEdXhJ/
- MI1wWwKFDH1N5c8n31wft5UWTRIgCf2GWsqtiWIIMlIJvM0RxvnG8Yqz9FucyYDwXc0B6xihfut
- IuklOSbIN5UvVySi4l+c2UhiB1FdfP//YGfy0R4GI9ljFK1/TCKMSjTdx2upbwxwxnAyf1Aot8c
- NCwafVduUExVnTiyOEv322xBRQwfddyvTq5ts2zuUhLw=
-X-Received: by 2002:a05:6a20:7291:b0:342:873d:7e62 with SMTP id
- adf61e73a8af0-3898f907d2dmr16152485637.29.1768224230539; 
- Mon, 12 Jan 2026 05:23:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNkZpUCKhcs1ijrkrd4+d1SBMbbxDyfcLyQALQcYQ7NIvDrlosKRvZfpN7YcfBYYgnGd4PjA==
-X-Received: by 2002:a05:6a20:7291:b0:342:873d:7e62 with SMTP id
- adf61e73a8af0-3898f907d2dmr16152464637.29.1768224230110; 
- Mon, 12 Jan 2026 05:23:50 -0800 (PST)
+ AJvYcCUGs7WzXWCHzQvfQuW73hnFjZP3K6yYFyAWN/v2o/56vydqgcpOZR/WbjqHZ0NeTohBrn5kq0T+JTIG@nongnu.org
+X-Gm-Message-State: AOJu0YwAyA2wMVz86GcwaHiypKA00tZsR5mJhO6MMLGVFidAxoWK3Mjn
+ ny8QrgPIt5bls/ounDfZrp+K3JI2zyNBGb0l+MpJsiCDb1ZKzRC5/jD19aXuck7FwctX5hpQEmy
+ BQtnWE9s5qeNUpz6HqGzDa9V2oy9UkvUITFSGFJi+Pw2dpxBtzrz4X2Hx
+X-Gm-Gg: AY/fxX6hEx1U4Dz86kKB90WD0nw3ne21y0YrKpKMQuZyIBA2kLdE4pIMdHjewMlXCXi
+ /sKWrYkPRczh9i0CPEIsTStobr9r7XRv6UL00vvLxhdEKa566Rzoru0nWN5zJFDXxeCNlaaLBbF
+ YlJcbZ+++zG3D6tY5N7r1erXTdmHaIlzVrPdD4rVYluzvdDIs2OmuXXRswIw5d3MFgjvliCvggl
+ Mso+bzsCig9vcTEiW8K5MOdIrnSXAc+l2A1LvYFvx5w77vlSgwGGLWkyruguJg33FiBoM8F6OnB
+ ddwTuwCL0bzu1Qo5TnsX1n2GlTrwDQuVCia5J6YWMaA/UYP3y7dbFjfBrJnvOVBejWB6SYhgCl/
+ rtVHgIjO4C5H/ePUs32iqjXcCfrpWsayhX6LWQg9hjJE=
+X-Received: by 2002:a05:6a20:9389:b0:364:13ca:3702 with SMTP id
+ adf61e73a8af0-3898f987e4dmr15605302637.42.1768224282085; 
+ Mon, 12 Jan 2026 05:24:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHk8QW2RliSHhtFMjkKxZmzmVzNrv6vCTx1ajL7q72+fmrMw65zwoht1sL/r/v90mZHzFABIw==
+X-Received: by 2002:a05:6a20:9389:b0:364:13ca:3702 with SMTP id
+ adf61e73a8af0-3898f987e4dmr15605280637.42.1768224281664; 
+ Mon, 12 Jan 2026 05:24:41 -0800 (PST)
 Received: from rhel9-box.lan ([110.227.88.119])
  by smtp.googlemail.com with ESMTPSA id
- 41be03b00d2f7-c4cc05cd87asm17544771a12.15.2026.01.12.05.23.48
+ 41be03b00d2f7-c4cc05cd87asm17544771a12.15.2026.01.12.05.24.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Jan 2026 05:23:49 -0800 (PST)
+ Mon, 12 Jan 2026 05:24:41 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: [PATCH v2 09/32] kvm/i386: implement architecture support for kvm
- file descriptor change
-Date: Mon, 12 Jan 2026 18:52:22 +0530
-Message-ID: <20260112132259.76855-10-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: Ani Sinha <anisinha@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 29/32] kvm/i386/apic: set local apic after vcpu file
+ descriptors changed
+Date: Mon, 12 Jan 2026 18:52:42 +0530
+Message-ID: <20260112132259.76855-30-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260112132259.76855-1-anisinha@redhat.com>
 References: <20260112132259.76855-1-anisinha@redhat.com>
@@ -123,191 +128,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the kvm file descriptor changes as a part of confidential guest reset,
-some architecture specific setups including SEV/SEV-SNP/TDX specific setups
-needs to be redone. These changes are implemented as a part of the
-kvm_arch_vmfd_change_ops() call which was introduced previously.
+Once the vcpu file descriptors changed after confidential guest reset, the
+local apic needs to be reinitialized. This change adds a callback from the
+vcpu fd change notifiers to reinitialize local apic for kvm x86.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/kvm.c        | 135 +++++++++++++++++++++++++++++++----
- target/i386/kvm/trace-events |   1 +
- 2 files changed, 122 insertions(+), 14 deletions(-)
+ hw/i386/kvm/apic.c              | 13 +++++++++++++
+ include/hw/i386/apic_internal.h |  1 +
+ 2 files changed, 14 insertions(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 89f9e11d3a..4fedc621b8 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3265,14 +3265,132 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
-     return 0;
+diff --git a/hw/i386/kvm/apic.c b/hw/i386/kvm/apic.c
+index 82355f0463..f6f8ac2764 100644
+--- a/hw/i386/kvm/apic.c
++++ b/hw/i386/kvm/apic.c
+@@ -229,6 +229,16 @@ static void kvm_apic_reset(APICCommonState *s)
+     run_on_cpu(CPU(s->cpu), kvm_apic_put, RUN_ON_CPU_HOST_PTR(s));
  }
  
-+static int xen_init_wrapper(MachineState *ms, KVMState *s);
++static int apic_vcpufd_change_handler(NotifierWithReturn *n,
++                                      void *data, Error** errp) {
++    APICCommonState *s = container_of(n, APICCommonState,
++                                      vcpufd_change_notifier);
 +
- int kvm_arch_vmfd_change_ops(MachineState *ms, KVMState *s)
- {
--    abort();
-+    Error *local_err = NULL;
-+    int ret;
++    run_on_cpu(CPU(s->cpu), kvm_apic_put, RUN_ON_CPU_HOST_PTR(s));
 +
-+    /*
-+     * Initialize confidential context, if required
-+     *
-+     * If no memory encryption is requested (ms->cgs == NULL) this is
-+     * a no-op.
-+     *
-+     */
-+    if (ms->cgs) {
-+        ret = confidential_guest_kvm_init(ms->cgs, &local_err);
-+        if (ret < 0) {
-+            error_report_err(local_err);
-+            return ret;
-+        }
-+    }
-+
-+    ret = kvm_vm_enable_exception_payload(s);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = kvm_vm_enable_triple_fault_event(s);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    if (s->xen_version) {
-+        ret = xen_init_wrapper(ms, s);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-+    ret = kvm_vm_set_identity_map_addr(s, KVM_IDENTITY_BASE);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = kvm_vm_set_tss_addr(s, KVM_IDENTITY_BASE + 0x1000);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+    ret = kvm_vm_set_nr_mmu_pages(s);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
-+        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
-+        memory_listener_register(&smram_listener.listener,
-+                                 &smram_address_space);
-+    }
-+
-+    if (enable_cpu_pm) {
-+        ret = kvm_vm_enable_disable_exits(s);
-+        if (ret < 0) {
-+            error_report("kvm: guest stopping CPU not supported: %s",
-+                         strerror(-ret));
-+            return ret;
-+        }
-+    }
-+
-+    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-+        X86MachineState *x86ms = X86_MACHINE(ms);
-+
-+        if (x86ms->bus_lock_ratelimit > 0) {
-+            ret = kvm_vm_enable_bus_lock_exit(s);
-+            if (ret < 0) {
-+                return ret;
-+            }
-+        }
-+        kvm_set_max_apic_id(x86ms->apic_id_limit);
-+    }
-+
-+    if (kvm_check_extension(s, KVM_CAP_X86_NOTIFY_VMEXIT)) {
-+        ret = kvm_vm_enable_notify_vmexit(s);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-+    if (kvm_vm_check_extension(s, KVM_CAP_X86_USER_SPACE_MSR)) {
-+        ret = kvm_vm_enable_userspace_msr(s);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+
-+        if (s->msr_energy.enable == true) {
-+            ret = kvm_vm_enable_energy_msrs(s);
-+            if (ret < 0) {
-+                return ret;
-+            }
-+        }
-+    }
-+
-+    trace_kvm_arch_vmfd_change_ops();
 +    return 0;
 +}
 +
-+static int xen_init_wrapper(MachineState *ms, KVMState *s)
-+{
-+    int ret = 0;
-+#ifdef CONFIG_XEN_EMU
-+    if (!object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE)) {
-+        error_report("kvm: Xen support only available in PC machine");
-+        return -ENOTSUP;
-+    }
-+    /* hyperv_enabled() doesn't work yet. */
-+    uint32_t msr = XEN_HYPERCALL_MSR;
-+    ret = kvm_xen_init(s, msr);
-+#else
-+    error_report("kvm: Xen support not enabled in qemu");
-+    return -ENOTSUP;
-+#endif
-+    return ret;
- }
- 
- bool kvm_arch_supports_vmfd_change(void)
+ static void kvm_apic_realize(DeviceState *dev, Error **errp)
  {
--    return false;
-+    return true;
+     APICCommonState *s = APIC_COMMON(dev);
+@@ -238,6 +248,9 @@ static void kvm_apic_realize(DeviceState *dev, Error **errp)
+ 
+     assert(kvm_has_gsi_routing());
+     msi_nonbroken = true;
++
++    s->vcpufd_change_notifier.notify = apic_vcpufd_change_handler;
++    kvm_vcpufd_add_change_notifier(&s->vcpufd_change_notifier);
  }
  
- int kvm_arch_init(MachineState *ms, KVMState *s)
-@@ -3308,21 +3426,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     }
+ static void kvm_apic_unrealize(DeviceState *dev)
+diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_internal.h
+index 4a62fdceb4..ffe5815e7f 100644
+--- a/include/hw/i386/apic_internal.h
++++ b/include/hw/i386/apic_internal.h
+@@ -189,6 +189,7 @@ struct APICCommonState {
+     hwaddr vapic_paddr; /* note: persistence via kvmvapic */
+     bool legacy_instance_id;
+     uint32_t extended_log_dest;
++    NotifierWithReturn vcpufd_change_notifier;
+ };
  
-     if (s->xen_version) {
--#ifdef CONFIG_XEN_EMU
--        if (!object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE)) {
--            error_report("kvm: Xen support only available in PC machine");
--            return -ENOTSUP;
--        }
--        /* hyperv_enabled() doesn't work yet. */
--        uint32_t msr = XEN_HYPERCALL_MSR;
--        ret = kvm_xen_init(s, msr);
-+        ret = xen_init_wrapper(ms, s);
-         if (ret < 0) {
-             return ret;
-         }
--#else
--        error_report("kvm: Xen support not enabled in qemu");
--        return -ENOTSUP;
--#endif
-     }
- 
-     ret = kvm_get_supported_msrs(s);
-diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
-index 74a6234ff7..1f4786f687 100644
---- a/target/i386/kvm/trace-events
-+++ b/target/i386/kvm/trace-events
-@@ -6,6 +6,7 @@ kvm_x86_add_msi_route(int virq) "Adding route entry for virq %d"
- kvm_x86_remove_msi_route(int virq) "Removing route entry for virq %d"
- kvm_x86_update_msi_routes(int num) "Updated %d MSI routes"
- kvm_hc_map_gpa_range(uint64_t gpa, uint64_t size, uint64_t attributes, uint64_t flags) "gpa 0x%" PRIx64 " size 0x%" PRIx64 " attributes 0x%" PRIx64 " flags 0x%" PRIx64
-+kvm_arch_vmfd_change_ops(void) ""
- 
- # xen-emu.c
- kvm_xen_hypercall(int cpu, uint8_t cpl, uint64_t input, uint64_t a0, uint64_t a1, uint64_t a2, uint64_t ret) "xen_hypercall: cpu %d cpl %d input %" PRIu64 " a0 0x%" PRIx64 " a1 0x%" PRIx64 " a2 0x%" PRIx64" ret 0x%" PRIx64
+ typedef struct VAPICState {
 -- 
 2.42.0
 
