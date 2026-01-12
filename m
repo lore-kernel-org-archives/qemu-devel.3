@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58DBCCF45BC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 17:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93D9CF45BB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 18:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfM9G-0000RG-Hu; Mon, 12 Jan 2026 12:56:14 -0500
+	id 1vfMEc-0002Vz-MT; Mon, 12 Jan 2026 13:01:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfM93-0000Ju-2U
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:56:02 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfMEF-0002IY-PC
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 13:01:35 -0500
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfM8x-0006Xi-1N
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:55:59 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso48134645e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 09:55:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfMEB-0007YB-O7
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 13:01:22 -0500
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-78f89501423so59845787b3.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 10:01:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768240535; x=1768845335; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=axMRkTREiAESIqegvVDIG+0UtrKi+edL7fRRI4/LDro=;
- b=ZdlQ6B9anKETNB1oVKhyLyuLzaTSyaSZDrTua6F2rsnZ1FeT0yHUs9vZPwe1QtPTPm
- SthR7Tqx9sT9vO722haPGvI+21MrmitP/XcNMc+skbnrS1IvN5TYajrap2pZ/0w8hyLK
- o7wghF3MNAHEJaMDIuxWUrB3Gl7HvBCnfeK/ovd/KT5NHH8iwSiO/IGIa8YPSB7b+vsp
- 2h5RkF6X9c/Qtzvuz4oFYSakd1zKyszq3zffqrZq5IVkEl0lc+/j/+XgNiFidJSCXoi6
- HVpwgcfL2S2amGSpNse90M9pEQDnsspsAjNbaJR+X+Us6KQ6HlvSOqMTRVQ5QqpXrlx6
- 0DmA==
+ d=linaro.org; s=google; t=1768240877; x=1768845677; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xbISUAdfS7mo5moSMKSs2utarK9gYflYXVaNuqHzwhQ=;
+ b=G0Qvt3qKp+puPjWWwv2ePg2tPeOagzAqyF2vlY4GQCUtRYwukk3boSEf8dpkBjatAe
+ HzBkofi6EhZ4du6xVjTycl11HcoyvtcXYHsVtsLZlBCWNRewafBi1DYPA3gJSxOVVasA
+ nmW4TwKRUkaiuqc3CrRmQAVglmegfY4EHZmd4C+8dGqiDTsY3RM+92/ofMN3OQG8hxdA
+ IA+n9xaNE7M2RuCU9njZaY1X+aEmzpiMTnNtFgto+txJqkiTOBnHbQZGB3aeS062Zgeb
+ zWgqoRP1dN95RZn6qWI93oN09XpV7rzHJiYpTM+w6PE70a32mUCVvvmEig0QoGim9pev
+ fbvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768240535; x=1768845335;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=axMRkTREiAESIqegvVDIG+0UtrKi+edL7fRRI4/LDro=;
- b=BIM3rvHgUADDnRMS8lhghMiPCxWinBy8Vtecdf3a53VvFafCkEarkYUlVvnz3LZoIS
- a5fV9iD8GCN6w9sXABwfaRrWJRSz0vTqgTWdI+9g4Jpxq4bfy/8z8SwcuBNhliufohy1
- j0QiJpdAifIh11kRybC4N7vp9FkjdYV4xoKYfMn86uW9kYaGGTsKCuut5TnLp+pVaYx+
- xKzQblLlY81oc1227sWEJhsP4I+aVnZBicPFAlFO6rsstHFl3vUDBCJaU+8S1K6jKjie
- bhY/uPXvuA4O2NOlqlHeblRLkgkgoIWJhP03PkT5ujF7TmOUspkfXDFyV1xl0jtZeyvp
- GE7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXggl0O8QtFs0wYQWXpjZLXz3/Zax/EDiqL/VspfWekKL3brFf1BIMqKky/ezCeJ+gl/QTcj0Ab0QFm@nongnu.org
-X-Gm-Message-State: AOJu0YxgfjvV6NoLSHlKvunKnjzS5hqS/dePkoVIp5kbt8hF7o0tmMEG
- McUMxPN9nVtgrk5Oj0aQAYpQ1tuAMIgyNDpb4VeUql4mITHEVp+QphqpfsviaDD+Aeo=
-X-Gm-Gg: AY/fxX5j1QyxbipuLFnFb5ShdmRdc9ftiR/DhjqHck7VH8zV0AwhOX01K4VY2JQN7wQ
- AZ4o2XI3VhdSLrL2s/BjKM3DwNZQwE566qTeIeqMMZxA5septsbuQqclk2z02DG1YDNtefDxEOh
- H2y5Wlni6siUWA+9YzGUE23gjq0urxe8qIWPJzCN3HwAPMNvUr1YllVEiBWjqpkLEUajTqnQ9Mp
- xDiLJFSH0F2eEnnr3ZnPR0vPj2XmV6LuEZkRzrPmJcawlZHwwN2gDExfePSF93rrrllvQkEbDTR
- X8gohAj1xbcYvRF2pTEuXt9H3d+cBUyo+PH1Q6u7JbeJgrVK/K+1h7AXwpb6uSdz53CfKpCWzfZ
- 6oNM558m+2057Ef8NdWmlAMasUgKyXcbZ6o1/vRQ6FbODTwY5i+1epObYkncc9SC3aDTlldYU79
- kVQ2IUS1EM+PSNmlWqWB12VoTUiUk3CqJmwU1TxyJqgj5YQWW0uUXXYqcezL1BfHd0
-X-Google-Smtp-Source: AGHT+IHgiCtDDBGt7ZYevP/JqhMmnoDNZW5Prk8HtTWQtJ8c2t79l70mTVAN9kbnBfcDsddReREnVw==
-X-Received: by 2002:a05:600c:4707:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-47ed7c15d42mr3626305e9.11.1768240535474; 
- Mon, 12 Jan 2026 09:55:35 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f390a69sm361749195e9.0.2026.01.12.09.55.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 09:55:34 -0800 (PST)
-Message-ID: <6a32c2ec-f888-4e00-9405-1db101f5860a@linaro.org>
-Date: Mon, 12 Jan 2026 18:55:34 +0100
+ d=1e100.net; s=20230601; t=1768240877; x=1768845677;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xbISUAdfS7mo5moSMKSs2utarK9gYflYXVaNuqHzwhQ=;
+ b=WdNQICWoYtqLB7sZf7W2qfHo9kRHNHRekW0KUmIwgLGYSdql5U35mE3QbnNh92U3I5
+ fr3Y8Bl91otBgldK5opplBAy8FDq/pCiWB1042mb1VRNSiBxmGCjvGlNgHXBm8ECnkPH
+ UUMGaMNgV+BEh+TMU3nS9f9jCd4q9aCq3oMnTSJrWah2k7HTigwDpJqEOC9HDQGYqoUu
+ rs+mN+NqyK1clVo7rS6w5S0j+QXRUg7BWVFp43uRTqDG4HBhI83pZwm2OitBEawmy563
+ 3fwLtjfOXI55Q/RV5CiMVVj7aHPfhnMxWvxlP4O8fkyWGFgILj5kiPbeWZd2dh+QcO1i
+ 12Jw==
+X-Gm-Message-State: AOJu0YzBU1TP+MxuPsRjrBndaghIg6jxvj/ntNTzeJHBt4T9dhxMZ2u7
+ fFdijuNX2VgWpnxxNZ7QnpH9Ju3OChLGNvV7z/+U3aNya8MefRnOJEnlxPuw5MrRTsFOBTLFVH2
+ SmIBi0vaYhb8mZIFhyM2ih/qvNMx3Djdx6Dr0283org==
+X-Gm-Gg: AY/fxX4SmqLawZcnPH+wE/j31PK0vIHe4J8abotfuucybk/8qVl7WhP4qLVeNlBdSuM
+ k9MzlwJR6uipzXxxwRWKwtonJp6LoWRY61gutH+MLRtiZGvNRnwH6tt3CdTnaQORazsnAfKgifS
+ s+MNDZ1uZFu5673lQIW01ekVBs8132p6tG3SvgMZnxgF+TNs+vXbdsaVN5FA1nVWrJFL/9VyFPl
+ 0ABZLrp3KLgTnRqo8a2N//xnUqOmutbXAewgCOPEtoFMikKNS77i4v/mTtzOvsSrizy5FwG/flD
+ 3DlC/q2niqUC+6hFpn51Nmw=
+X-Google-Smtp-Source: AGHT+IEZwWhr9ukILCIAS3V07tnx1/wr9CETCoEksdVTnr2K8KAu5rADCNep8ZeqHC8NARPQ9yGKocowyH0LiAlz4aQ=
+X-Received: by 2002:a05:690e:bc7:b0:646:9ddf:5f2 with SMTP id
+ 956f58d0204a3-648f62abb2emr198964d50.31.1768240877061; Mon, 12 Jan 2026
+ 10:01:17 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/hexagon: Widen MemLog::width to 32 bits
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com
-References: <20260112154048.27799-1-anjo@rev.ng>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260112154048.27799-1-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20251223223712.17047-1-ruslichenko.r@gmail.com>
+ <CAFEAcA_SSnwo0N8j_zz4jRrzcewAiRaVCENj1_gzdBVCthNVFg@mail.gmail.com>
+ <CAN-aV1E3Od-ZNy=SFK4XSQfcAFBr=953Vwujne=qmKfxNt5bcw@mail.gmail.com>
+In-Reply-To: <CAN-aV1E3Od-ZNy=SFK4XSQfcAFBr=953Vwujne=qmKfxNt5bcw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 12 Jan 2026 18:01:04 +0000
+X-Gm-Features: AZwV_Qgc_zhneCjXmwbCq_weyoB6qUou9o2xvMEgTQvuLfDktcytUMecjI4XTeM
+Message-ID: <CAFEAcA8eTRjviWfw64Frj7NCred5HRapZALMsq3AfLUaHMj7Tw@mail.gmail.com>
+Subject: Re: [RFC PATCH] hw/arm/smmuv3: add support for combined irq
+To: Ruslan <ruslichenko.r@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Eric Auger <eric.auger@redhat.com>,
+ Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,29 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/26 16:40, Anton Johansson wrote:
-> MemLog::width is a uint8_t value mapped to a TCGv (32 bit), the only
-> reason this currently works is because MemLog::width is padded to 32
-> bits.  Widen the field to uint32_t and fix the size of the TCGv
-> operations as well.  Use uint32_t when referencing and passing around
-> the field, as valid values are asserted in commit_store().
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> 
-> --
-> Changes in v2:
-> - Removed truncation to uint8_t, valid values of 1,2,4,8 are checked in
->    commit_store() already.
-> ---
->   target/hexagon/cpu.h       | 2 +-
->   target/hexagon/genptr.h    | 2 +-
->   target/hexagon/op_helper.h | 4 ++--
->   target/hexagon/translate.h | 2 +-
->   target/hexagon/genptr.c    | 6 +++---
->   target/hexagon/op_helper.c | 8 ++++----
->   target/hexagon/translate.c | 4 ++--
->   7 files changed, 14 insertions(+), 14 deletions(-)
+On Mon, 29 Dec 2025 at 21:21, Ruslan <ruslichenko.r@gmail.com> wrote:
+>
+> On Sun, Dec 28, 2025 at 6:08=E2=80=AFPM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+> >
+> > On Tue, 23 Dec 2025 at 22:37, Ruslan Ruslichenko
+> > <ruslichenko.r@gmail.com> wrote:
+> > >
+> > > From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> > >
+> > > Some platforms use combined irq type, in which case
+> > > only single interrupt line is used, instead of 4
+> > > different irq's for each type.
+> > >
+> > > Add emulation support for combined irq mode.
+> > >
+> > > This mode can be selected by platforms by setting
+> > > 'combined_irq' property.
+> >
+> > Which platforms?
+>
+> As I can see in ML Linux there is currently at least one platform
+> using such mode:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/a=
+rch/arm64/boot/dts/xilinx/versal-net.dtsi#n1010
+>
+> In our case we are working to emulate Renesas R-Car X5H SoC, which may
+> also use this configuration.
+>
+> >
+> > The other way to approach this would be to have the
+> > relevant SoC/platform models create a TYPE_OR_IRQ
+> > or gate to wire the interrupts together.
+>
+> Thank you for suggestion! We will try to implement this approach instead.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+It looks to me as if at least for Arm's SMMU implementations
+they only have the multiple-interrupt outputs:
+https://developer.arm.com/documentation/101542/0001/Signal-descriptions/TCU=
+-signals/TCU-interrupt-signals?lang=3Den
 
+and so an SoC which has a "combined" interrupt is presumably
+doing it in the SoC with an OR gate or similar logic.
+
+If the SoC you're modelling uses an SMMU implementation
+where the SMMU itself provides the combined interrupt,
+and you have the documentation for that, we could look at
+whether it makes sense for QEMU's SMMU also to offer that.
+
+Generally I find it works best if in QEMU we follow the
+same pattern the hardware is using for where we put
+functionality, whatever that is.
+
+thanks
+-- PMM
 
