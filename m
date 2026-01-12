@@ -4,158 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B57F5C9EC8D
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04272C9EC90
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfIRm-0001g9-Uk; Mon, 12 Jan 2026 08:59:06 -0500
+	id 1vfIS0-0001l5-Vh; Mon, 12 Jan 2026 08:59:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfIRl-0001ej-9G
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:59:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfIRi-0000n3-RO
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:59:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768226340;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0Hc+LPZXEZH9FCbiKp5+SwLUFMbUJuplxKRp1zbJ7Go=;
- b=ghaWN+k+0s0Wmgk+9aiU6VOeO4LM2Dg3GTd+QDJiKpLq1xv5RGBjm/7lRAZcPgThS6kpwP
- v30bVNuU6+TMTaCR8wgPgYxk+SSR3I7RtMqXbrdbcD/+oXN45YVyWl92H2hvg/jedpfFyh
- YL1rzpHDA9g6LnBlZWl76ymPJU9Exf8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-H7iJGWfGNsiL50O93XV3ew-1; Mon, 12 Jan 2026 08:58:59 -0500
-X-MC-Unique: H7iJGWfGNsiL50O93XV3ew-1
-X-Mimecast-MFC-AGG-ID: H7iJGWfGNsiL50O93XV3ew_1768226338
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-430fdaba167so3234202f8f.3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:58:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
+ id 1vfIRv-0001k8-G4
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:59:16 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
+ id 1vfIRt-0000oE-JW
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:59:15 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b87018f11e3so233372266b.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:59:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768226338; x=1768831138; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=0Hc+LPZXEZH9FCbiKp5+SwLUFMbUJuplxKRp1zbJ7Go=;
- b=gQ5ZO6E1FkZMb0wrZbQtvkBNIJm90jK4TzkVGiYHGnZfhl/nnE+EHx84r5QXnqIU2i
- HjL1D5iozsZLYPdmEy1LUkPl7qgztufoeDs4b9mEKR2UyEepHMrQvPrUe5/8nrsyPzRP
- A1V6N3UITfS9XcES1XQh5M46XMRdpxQhWLl9B+CrEVnCpdK+W5el17zKNUkCpWAy5iF0
- 0uH+PkS7+Ay0rKhzDWhApqn8aM7W1a0/i/SzamBPE+L1uBzTZR+DgdEXoGKUMQjs4wFG
- mxw2+ToPmbXqyjI1qiyBaiqOg/WuprvCYhm/ytYj65WPYjepwpll2w/DjD3WVaVElttf
- Z/ZQ==
+ d=gmail.com; s=20230601; t=1768226351; x=1768831151; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fzb1AGi75spA3Dg09oVPKnny4FzdZJ5jCZYXkLrfdfM=;
+ b=jQFV4OG8fBSUesck3QN7TpkGcGB/yLtCTsRSNFO9Q2KOTIO2TD/gi7T1MkdGnWZcIk
+ xIW8w/G7634B5eTIYp1uQTe4ObucX4JteB17gyXaDgyOn2vaUQWqcrRFKjpxceuUIlLh
+ t2pWLFAtToXD7+sw1j7MNvVN0GZfWLMUcyVUY9hFhB23AA01bGNgnIGWdcgzsUydaIOR
+ 9Bno//C+40Zh9Pul+M4EGZZ7RrMG6ODPVBfoRO1Hwu55hFICCap4KlRTmIg0TJo8Lghd
+ uJZsaOjA6yGI/qNBIoQ0RKcorcaG1rYcdvfNXOOu0kRRXGGNnmnqVMpe3uP9FkVYSc89
+ WBMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768226338; x=1768831138;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1768226351; x=1768831151;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0Hc+LPZXEZH9FCbiKp5+SwLUFMbUJuplxKRp1zbJ7Go=;
- b=Ixq9JVEZg9gCBx/Ln/dBPVQam94i3QmpmEeYVSHBEGBz0xI5SiHgO45cujaAyjjGX2
- YqtAeGOQ9eHE0NWPnwzN3Tq2qV+k7fXRIZt1uoEsHpQx1lKtsHn5ibAlFQBHh7qR4nlz
- S/S9Ah26OMPuh0JM+ElTcnYHtomWlx6CtZXN8yX1E/hjpAP/LzX1R+kUv45tXyoV+fsB
- M63PTJkdVqUTPQP62msvq/WwM8DUEwBKs8X5JYGiM9oULzSCPEfbbJ55rs5dN5YdXWot
- 8K3V9LozKt+vmCfKZtNmSwKRE5EHNVQ0Uutstb01k+PFwBh8j9StONw8x5XihW/kum9F
- xrNw==
+ bh=fzb1AGi75spA3Dg09oVPKnny4FzdZJ5jCZYXkLrfdfM=;
+ b=jqTq/VxgNjby+EBiT9YT0QJp1DlR9DfKVmH7Vpw9LiFIg9zI1r5A/EC/HlQtJqncd2
+ RtYNgWJewK5PcK6vA++Q4PajOaFR8zYSBrJqhGXqvZn0kw8Exzn40AGs+1NYB/OQMI0b
+ VCTOn12iEjs6fHjcXTXQMlrmuG38uFBct8XOQnIhU5DRe/7dFpV/MdyWZY1CMoWXypnF
+ 4EgSvHNbm+uOppkrFihFwGvxg8gEngrDJbswiWXZLYQ8ZVa60uy+H/Vez7efvwMvwZCW
+ pcP/uiEd+qMd2r4d4IYev02temRcfTnREBMtVaN/0GVsOupe2EBrmJUIMzHAzbaKgeWp
+ TxkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUe7QCwwgxoGxXriu2pH0iYRtNmj5wEZFAnCIzoldVVlTwtnzHreEN4UIzN4aAn9fFAviP3x5uqKKTG@nongnu.org
-X-Gm-Message-State: AOJu0Yz5D6uPFdRZIkGyc+qG6XNBSAlNLmcjL2+15eplrUjfG4g7FQ9n
- 8zdv4559cMDJVZenoWhI7A9FuNDo3VZpyhAUsG2Xz0vWVZO7fzAYzSjAzP0bnAqFw3y0wnt5vNZ
- Z5jR60dxDDSB1RTdwC/r4e+iKzDLnNC6NCVgzW/4lTDEmEHuRhraNfQSu
-X-Gm-Gg: AY/fxX7Nx2K0SSLhrPatoxK6LzjlZqbjbz2unE6KA8Lz0fiV+qMep2oZB4qTWtfS9vI
- HyiOjcl/7AHJAtEiwv56yLTChb/7MoghLbzn4Mha1oPyQjnVJiA7LYDz0xhwyiuZPYCp9j7j+Fq
- g6ZSn2E4JS+bx3YwISMYQgSkgqnHsJVYZBDiubDSMq7S8fHe47FfU4VkaadmZoZJf5vc5RrQJi1
- aop9qOAJqQ5haQRwZlsbb0+4PpHIre08LkKv8VbM3mZLrp3tex6ATrXDUOOPYI3q0R4VCAQ4iI8
- 80+Z/JyorrgvHiqmP/8YfvKTux8FgysBowAGPKNPpyRBsM6enhecmDs7k4uDBZ1QrP4QLnkss3m
- Bic9PqZw=
-X-Received: by 2002:a05:6000:2409:b0:432:c07a:ee62 with SMTP id
- ffacd0b85a97d-432c3775b85mr25989312f8f.62.1768226338297; 
- Mon, 12 Jan 2026 05:58:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFnp8Tn3OXLklv6wPIKjq9ml4gyGr24/x6wCsYGXPeo4d8EQwRirB32wGOQ0TCj8xsASt6Y2w==
-X-Received: by 2002:a05:6000:2409:b0:432:c07a:ee62 with SMTP id
- ffacd0b85a97d-432c3775b85mr25989259f8f.62.1768226337834; 
- Mon, 12 Jan 2026 05:58:57 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.114.194])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432d9610671sm21186504f8f.34.2026.01.12.05.58.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 05:58:57 -0800 (PST)
-Message-ID: <36bbfd90-d996-4075-9041-a62c00485e99@redhat.com>
-Date: Mon, 12 Jan 2026 14:58:55 +0100
+ AJvYcCW061f9fTGGlXqxhCV5rBfxSaI7JT9osCgujCbS7We84btvRtSYZum8lo4LUxCXk+Xcz/rTytUlWQXd@nongnu.org
+X-Gm-Message-State: AOJu0YyvQyRsdGEMExAFlo5YuVR/2UXCvVyslLX/4Qe9YiiSezw/m0Cl
+ oyh/Kjk2bB6dKebQ1VNlqAtSNU0i5Tm8WPVFtRS1KMiFMRO2JNz1sGdY4KgfpwxBxk/piQ0qSNt
+ Y0Vf4Bnrfzh9J9DAGyvV29kmmKhhSMVg=
+X-Gm-Gg: AY/fxX69mDUjvxNau/bIdW+xSpRW2FzPvH0/BhnEXAio9P8yyu0ZKxygfkDQzTqc9Hs
+ NjXFLBPGgVOyspYCHifBA6fqOGAcAfVg6hiDblxwt7fCHYys918B4WytD7GHGFBVaKH+QOVCiH7
+ DUkQEjJGxqLVtT77Cx+ensVyNLZI8xh4hdGpj4WqWRfQUud7WOo87f9KObit5RFBGOif08bv4xx
+ W6ijn/P4aamxNZd/QDJwLHzB8FOeGrb4f4KqxeMS1QtWwBIkPbxgcfikN2qEJHU/Wa0rNE0SziP
+ IcIk20oG0dIAUwCzSARb20cv1G2pqw==
+X-Google-Smtp-Source: AGHT+IGpk41a1MPiWJjgyXcuZysnvKnjNwySGbWk9NbwqqkQXFljIXmFAsRnQ4ApO1KBPbPxkcEgnpEIPrMIr985/DU=
+X-Received: by 2002:a17:907:1c9e:b0:b87:2abc:4a32 with SMTP id
+ a640c23a62f3a-b872abc6502mr140207666b.18.1768226351280; Mon, 12 Jan 2026
+ 05:59:11 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 15/29] hw/s390x/ipl: Add IPIB flags to IPL Parameter
- Block
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-16-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251208213247.702569-16-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260105160138.3242709-1-calebs@linux.ibm.com>
+ <1301eb7b-31d8-476f-a12a-06470a349771@linux.ibm.com>
+ <20260112-fuzzy-idealistic-labrador-9b5cff@lemur>
+In-Reply-To: <20260112-fuzzy-idealistic-labrador-9b5cff@lemur>
+From: Harsh Prateek Bora <harsh.prateek.bora@gmail.com>
+Date: Mon, 12 Jan 2026 19:28:59 +0530
+X-Gm-Features: AZwV_QgGr3XSeKQIlFD2prhpEpQVOPW0J0oUo5bmWP1hwtv-QIy8cBWHVoSqJzE
+Message-ID: <CAEuJdmqX3fJqC50i-96PYuz2skn33Y2YL3HqjWxsrYJ16JrdwQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] hw/ppc: Snapshot support for several ppc devices
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org, 
+ qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
+ Aditya Gupta <adityag@linux.ibm.com>, milesg@linux.ibm.com,
+ alistair@alistair23.me, 
+ chalapathi.v@linux.ibm.com, kowal@linux.ibm.com, angeloj@linux.ibm.com
+Content-Type: multipart/alternative; boundary="0000000000008cf58b06483147a7"
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=harsh.prateek.bora@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,23 +102,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/12/2025 22.32, Zhuoying Cai wrote:
-> Add IPIB flags to IPL Parameter Block to determine if IPL needs to
-> perform securely and if IPL Information Report Block (IIRB) exists.
-> 
-> Move DIAG308 flags to a separated header file and add flags for secure IPL.
-> 
-> Secure boot in audit mode will perform if certificate(s) exist in the
-> key store. IIRB will exist and results of verification will be stored in
-> IIRB.
-> 
-> To ensure proper alignment of the IIRB and prevent overlap, set
-> iplb->len to the maximum length of the IPLB, allowing alignment
-> constraints to be determined based on its size.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
+--0000000000008cf58b06483147a7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+On Mon, 12 Jan, 2026, 7:05=E2=80=AFpm Konstantin Ryabitsev, <
+konstantin@linuxfoundation.org> wrote:
 
+> On Mon, Jan 12, 2026 at 03:32:13PM +0530, Harsh Prateek Bora wrote:
+> > > For the series:
+> > > Reviewed-by: Aditya Gupta<adityag@linux.ibm.com>
+> > > Reviewed-by: Chalapathi V<chalapathi.v@linux.ibm.com>
+> >
+> > For some reason b4 is not picking above tags even with -S (to avoid
+>
+> Because there is no space between the name and the address, which is not
+> correct format.
+>
+
+Oh, yes. Thanks!
+
+
+> -K
+>
+>
+>
+
+--0000000000008cf58b06483147a7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 12 Jan, 2026, 7:05=E2=80=
+=AFpm Konstantin Ryabitsev, &lt;<a href=3D"mailto:konstantin@linuxfoundatio=
+n.org">konstantin@linuxfoundation.org</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;=
+padding-left:1ex">On Mon, Jan 12, 2026 at 03:32:13PM +0530, Harsh Prateek B=
+ora wrote:<br>
+&gt; &gt; For the series:<br>
+&gt; &gt; Reviewed-by: Aditya Gupta&lt;<a href=3D"mailto:adityag@linux.ibm.=
+com" target=3D"_blank" rel=3D"noreferrer">adityag@linux.ibm.com</a>&gt;<br>
+&gt; &gt; Reviewed-by: Chalapathi V&lt;<a href=3D"mailto:chalapathi.v@linux=
+.ibm.com" target=3D"_blank" rel=3D"noreferrer">chalapathi.v@linux.ibm.com</=
+a>&gt;<br>
+&gt; <br>
+&gt; For some reason b4 is not picking above tags even with -S (to avoid<br=
+>
+<br>
+Because there is no space between the name and the address, which is not<br=
+>
+correct format.<br></blockquote></div></div><div dir=3D"auto"><br></div><di=
+v dir=3D"auto">Oh, yes. Thanks!</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pad=
+ding-left:1ex">
+<br>
+-K<br>
+<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000008cf58b06483147a7--
 
