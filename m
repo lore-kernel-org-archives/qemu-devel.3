@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2EFBD25042
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 07:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE305D2503D
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 07:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfC3H-0007qQ-6a; Mon, 12 Jan 2026 02:09:23 -0500
+	id 1vfC3I-0007sO-Vf; Mon, 12 Jan 2026 02:09:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vfC3E-0007nP-CQ
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:20 -0500
+ id 1vfC3G-0007qG-OS
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:22 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vfC3B-0004pv-Eu
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:20 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1vfC3E-0004qk-Q2
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:22 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Axz8MZnmRphsYHAA--.25365S3;
- Mon, 12 Jan 2026 15:09:13 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxnsMenmRpi8YHAA--.25274S3;
+ Mon, 12 Jan 2026 15:09:18 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBxacERnmRpEqgaAA--.41358S5;
- Mon, 12 Jan 2026 15:09:13 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCx98AdnmRpJKgaAA--.41401S4;
+ Mon, 12 Jan 2026 15:09:18 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>
-Subject: [PULL 03/10] target/loongarch: Add PMU register dump support in KVM
-Date: Mon, 12 Jan 2026 15:08:57 +0800
-Message-Id: <20260112070904.3230440-4-maobibo@loongson.cn>
+Subject: [PULL 08/10] hw/loongarch/virt: Add property highmem_mmio with virt
+ machine
+Date: Mon, 12 Jan 2026 15:09:02 +0800
+Message-Id: <20260112070904.3230440-9-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260112070904.3230440-1-maobibo@loongson.cn>
 References: <20260112070904.3230440-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxacERnmRpEqgaAA--.41358S5
+X-CM-TRANSID: qMiowJCx98AdnmRpJKgaAA--.41401S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -48,8 +49,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,75 +65,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PMU is supported in KVM mode. With info registers command, PMU CSR
-registers should be dumped also. And it is not necessary in TCG mode.
+On LoongArch Virt Machine, MMIO region with GPEX host bridge is
+0x40000000 -- 0x7FFFFFFF. The total size is 1G bytes and it is enough
+for emulated virtio devices basically.
+
+However on some conditions such as hostmem is added with virtio-gpu
+device, the command line is -device virtio-gpu-gl,hostmem=4G. The
+PCIE MMIO region is not enough, 64-bit high MMIO region is required.
+
+Here add property highmem_mmio with virt machine, however it brings
+out incompatible issue. Here the default value is false.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/cpu.c |  5 +++++
- target/loongarch/csr.c | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+)
+ hw/loongarch/virt.c         | 21 +++++++++++++++++++++
+ include/hw/loongarch/virt.h |  1 +
+ 2 files changed, 22 insertions(+)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 67ad9c3b79..b653948526 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -129,6 +129,11 @@ static void loongarch_la464_init_csr(DeviceState *dev)
-         set_csr_flag(LOONGARCH_CSR_MERRERA, CSRFL_UNUSED);
-         set_csr_flag(LOONGARCH_CSR_MERRSAVE, CSRFL_UNUSED);
-         set_csr_flag(LOONGARCH_CSR_CTAG, CSRFL_UNUSED);
-+
-+        for (i = env->perf_event_num; i < MAX_PERF_EVENTS; i++) {
-+            set_csr_flag(LOONGARCH_CSR_PERFCTRL(i), CSRFL_UNUSED);
-+            set_csr_flag(LOONGARCH_CSR_PERFCNTR(i), CSRFL_UNUSED);
-+        }
-     }
- #endif
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 203a13a963..1e29f93a1f 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -89,6 +89,20 @@ static void virt_set_veiointc(Object *obj, Visitor *v, const char *name,
+     visit_type_OnOffAuto(v, name, &lvms->veiointc, errp);
  }
-diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
-index f973780bba..332a1396cc 100644
---- a/target/loongarch/csr.c
-+++ b/target/loongarch/csr.c
-@@ -94,6 +94,38 @@ static CSRInfo csr_info[] = {
-     CSR_OFF_ARRAY(DMW, 1),
-     CSR_OFF_ARRAY(DMW, 2),
-     CSR_OFF_ARRAY(DMW, 3),
-+    CSR_OFF_ARRAY(PERFCTRL, 0),
-+    CSR_OFF_ARRAY(PERFCNTR, 0),
-+    CSR_OFF_ARRAY(PERFCTRL, 1),
-+    CSR_OFF_ARRAY(PERFCNTR, 1),
-+    CSR_OFF_ARRAY(PERFCTRL, 2),
-+    CSR_OFF_ARRAY(PERFCNTR, 2),
-+    CSR_OFF_ARRAY(PERFCTRL, 3),
-+    CSR_OFF_ARRAY(PERFCNTR, 3),
-+    CSR_OFF_ARRAY(PERFCTRL, 4),
-+    CSR_OFF_ARRAY(PERFCNTR, 4),
-+    CSR_OFF_ARRAY(PERFCTRL, 5),
-+    CSR_OFF_ARRAY(PERFCNTR, 5),
-+    CSR_OFF_ARRAY(PERFCTRL, 6),
-+    CSR_OFF_ARRAY(PERFCNTR, 6),
-+    CSR_OFF_ARRAY(PERFCTRL, 7),
-+    CSR_OFF_ARRAY(PERFCNTR, 7),
-+    CSR_OFF_ARRAY(PERFCTRL, 8),
-+    CSR_OFF_ARRAY(PERFCNTR, 8),
-+    CSR_OFF_ARRAY(PERFCTRL, 9),
-+    CSR_OFF_ARRAY(PERFCNTR, 9),
-+    CSR_OFF_ARRAY(PERFCTRL, 10),
-+    CSR_OFF_ARRAY(PERFCNTR, 10),
-+    CSR_OFF_ARRAY(PERFCTRL, 11),
-+    CSR_OFF_ARRAY(PERFCNTR, 11),
-+    CSR_OFF_ARRAY(PERFCTRL, 12),
-+    CSR_OFF_ARRAY(PERFCNTR, 12),
-+    CSR_OFF_ARRAY(PERFCTRL, 13),
-+    CSR_OFF_ARRAY(PERFCNTR, 13),
-+    CSR_OFF_ARRAY(PERFCTRL, 14),
-+    CSR_OFF_ARRAY(PERFCNTR, 14),
-+    CSR_OFF_ARRAY(PERFCTRL, 15),
-+    CSR_OFF_ARRAY(PERFCNTR, 15),
-     CSR_OFF(DBG),
-     CSR_OFF(DERA),
-     CSR_OFF(DSAVE),
+ 
++static bool virt_get_highmem_mmio(Object *obj, Error **errp)
++{
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
++
++    return lvms->highmem_mmio;
++}
++
++static void virt_set_highmem_mmio(Object *obj, bool value, Error **errp)
++{
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
++
++    lvms->highmem_mmio = value;
++}
++
+ static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
+                                        const char *name,
+                                        const char *alias_prop_name)
+@@ -1380,6 +1394,13 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+                                           "Override the default value of field OEM Table ID "
+                                           "in ACPI table header."
+                                           "The string may be up to 8 bytes in size");
++
++    object_class_property_add_bool(oc, "highmem-mmio",
++                                   virt_get_highmem_mmio,
++                                   virt_set_highmem_mmio);
++    object_class_property_set_description(oc, "highmem-mmio",
++                                          "Set on/off to enable/disable high "
++                                          "memory region for PCI MMIO");
+ }
+ 
+ static const TypeInfo virt_machine_types[] = {
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index cdc03f4c87..d39a9bbf5d 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -127,6 +127,7 @@ struct LoongArchVirtMachineState {
+     DeviceState *dintc;
+     hwaddr ram_end;
+     struct GPEXConfig gpex;
++    bool highmem_mmio;
+ };
+ 
+ #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
 -- 
 2.52.0
 
