@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 243DFD2503C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 07:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26491D2503C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 07:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfC3L-0007uh-MR; Mon, 12 Jan 2026 02:09:27 -0500
+	id 1vfC3J-0007sk-6w; Mon, 12 Jan 2026 02:09:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vfC3I-0007rn-DG
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:24 -0500
+ id 1vfC3F-0007p1-Vo
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:21 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vfC3G-0004rP-I3
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:24 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1vfC3E-0004qY-13
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:21 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxvsMfnmRpjcYHAA--.25366S3;
- Mon, 12 Jan 2026 15:09:19 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxCMIdnmRpicYHAA--.12538S3;
+ Mon, 12 Jan 2026 15:09:17 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJCx98AdnmRpJKgaAA--.41401S6;
- Mon, 12 Jan 2026 15:09:19 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCx98AdnmRpJKgaAA--.41401S2;
+ Mon, 12 Jan 2026 15:09:17 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>
-Subject: [PULL 10/10] hw/loongarch/virt: Add property highmem-mmio-size with
- virt machine
-Date: Mon, 12 Jan 2026 15:09:04 +0800
-Message-Id: <20260112070904.3230440-11-maobibo@loongson.cn>
+Subject: [PULL 06/10] hw/loongarch/virt: Get irq number from gpex config info
+Date: Mon, 12 Jan 2026 15:09:00 +0800
+Message-Id: <20260112070904.3230440-7-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260112070904.3230440-1-maobibo@loongson.cn>
 References: <20260112070904.3230440-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx98AdnmRpJKgaAA--.41401S6
+X-CM-TRANSID: qMiowJCx98AdnmRpJKgaAA--.41401S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,87 +64,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default high mmio size of GPEX PCIE host controller is 64G bytes on
-virt machine. If it does not meet requirements with some pass-throught HW
-devices in future, it can be adjust dynamically, here adds property
-highmem-mmio-size to set high mmio size.
+The base irq number of GPEX PCIE host bridge can comes from gpex::irq.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ hw/loongarch/virt.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 78e9dd66d1..2580ab37b6 100644
+index b00393565f..8a1842c492 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -7,6 +7,7 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "qemu/datadir.h"
-+#include "qemu/cutils.h"
- #include "qapi/error.h"
- #include "exec/target_page.h"
- #include "hw/core/boards.h"
-@@ -106,6 +107,43 @@ static void virt_set_highmem_mmio(Object *obj, bool value, Error **errp)
-     lvms->highmem_mmio = value;
- }
+@@ -292,7 +292,7 @@ static void virt_devices_init(DeviceState *pch_pic,
+     PCIBus *pci_bus;
+     MemoryRegion *ecam_alias, *ecam_reg, *pio_alias, *pio_reg;
+     MemoryRegion *mmio_alias, *mmio_reg;
+-    int i;
++    int i, irq;
  
-+static void virt_get_highmem_mmio_size(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-+    uint64_t size = lvms->gpex.mmio64.size;
-+
-+    visit_type_size(v, name, &size, errp);
-+}
-+
-+static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-+    uint64_t size;
-+
-+    if (!visit_type_size(v, name, &size, errp)) {
-+        return;
-+    }
-+
-+    if (!is_power_of_2(size)) {
-+        error_setg(errp, "highmem-mmio-size is not a power of 2");
-+        return;
-+    }
-+
-+    if (size < DEFAULT_HIGH_PCIE_MMIO_SIZE) {
-+        char *sz = size_to_str(DEFAULT_HIGH_PCIE_MMIO_SIZE);
-+        error_setg(errp, "highmem-mmio-size cannot be set to a lower value "
-+                         "than the default (%s)", sz);
-+        g_free(sz);
-+        return;
-+    }
-+
-+    lvms->gpex.mmio64.size = size;
-+}
-+
- static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
-                                        const char *name,
-                                        const char *alias_prop_name)
-@@ -1473,6 +1511,13 @@ static void virt_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "highmem-mmio",
-                                           "Set on/off to enable/disable high "
-                                           "memory region for PCI MMIO");
-+    object_class_property_add(oc, "highmem-mmio-size", "size",
-+                                   virt_get_highmem_mmio_size,
-+                                   virt_set_highmem_mmio_size,
-+                                   NULL, NULL);
-+    object_class_property_set_description(oc, "highmem-mmio-size",
-+                                          "Set the high memory region size "
-+                                          "for PCI MMIO");
- }
+     gpex_dev = qdev_new(TYPE_GPEX_HOST);
+     d = SYS_BUS_DEVICE(gpex_dev);
+@@ -332,9 +332,9 @@ static void virt_devices_init(DeviceState *pch_pic,
+                                 pio_alias);
  
- static const TypeInfo virt_machine_types[] = {
+     for (i = 0; i < PCI_NUM_PINS; i++) {
+-        sysbus_connect_irq(d, i,
+-                           qdev_get_gpio_in(pch_pic, 16 + i));
+-        gpex_set_irq_num(GPEX_HOST(gpex_dev), i, 16 + i);
++        irq = lvms->gpex.irq + i - VIRT_GSI_BASE;
++        sysbus_connect_irq(d, i, qdev_get_gpio_in(pch_pic, irq));
++        gpex_set_irq_num(GPEX_HOST(gpex_dev), i, irq);
+     }
+ 
+     /*
+@@ -343,7 +343,7 @@ static void virt_devices_init(DeviceState *pch_pic,
+      */
+     for (i = VIRT_UART_COUNT; i-- > 0;) {
+         hwaddr base = VIRT_UART_BASE + i * VIRT_UART_SIZE;
+-        int irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
++        irq = VIRT_UART_IRQ + i - VIRT_GSI_BASE;
+         serial_mm_init(get_system_memory(), base, 0,
+                        qdev_get_gpio_in(pch_pic, irq),
+                        115200, serial_hd(i), DEVICE_LITTLE_ENDIAN);
 -- 
 2.52.0
 
