@@ -4,36 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 809FED2503C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1361D25041
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 07:12:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfC3H-0007pl-82; Mon, 12 Jan 2026 02:09:23 -0500
+	id 1vfC3H-0007p6-1j; Mon, 12 Jan 2026 02:09:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vfC3E-0007nO-C5
+ id 1vfC3E-0007n8-3s
  for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:20 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vfC3B-0004pt-7t
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:20 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1vfC3B-0004pr-EG
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:09:19 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxrsMUnmRpf8YHAA--.25448S3;
- Mon, 12 Jan 2026 15:09:08 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxPMMZnmRphcYHAA--.24842S3;
+ Mon, 12 Jan 2026 15:09:13 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBxacERnmRpEqgaAA--.41358S2;
- Mon, 12 Jan 2026 15:09:06 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBxacERnmRpEqgaAA--.41358S4;
+ Mon, 12 Jan 2026 15:09:12 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/10] loongarch queue
-Date: Mon, 12 Jan 2026 15:08:54 +0800
-Message-Id: <20260112070904.3230440-1-maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>
+Subject: [PULL 02/10] target/loongarch: Call function
+ loongarch_la464_init_csr() after realized
+Date: Mon, 12 Jan 2026 15:08:56 +0800
+Message-Id: <20260112070904.3230440-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20260112070904.3230440-1-maobibo@loongson.cn>
+References: <20260112070904.3230440-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxacERnmRpEqgaAA--.41358S2
+X-CM-TRANSID: qMiowJBxacERnmRpEqgaAA--.41358S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -61,44 +65,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b254e486242466dad881fc2bbfa215f1b67cd30f:
+When CPU is realized, it will check capability of host and set guest
+features, such as PMU CSR register number used by VM etc. Here move
+function call with loongarch_la464_init_csr() after CPU is realized.
 
-  Merge tag 'pull-riscv-to-apply-20260109' of https://github.com/alistair23/qemu into staging (2026-01-10 10:31:57 +1100)
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/cpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/bibo-mao/qemu.git tags/pull-loongarch-20260112
-
-for you to fetch changes up to 1a8d5e95d70ab1bdbc2a39065e9864f4201e519f:
-
-  hw/loongarch/virt: Add property highmem-mmio-size with virt machine (2026-01-12 14:58:01 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20260112 queue
-
-----------------------------------------------------------------
-Bibo Mao (10):
-      target/loongarch: Add PMU migration support in KVM mode
-      target/loongarch: Call function loongarch_la464_init_csr() after realized
-      target/loongarch: Add PMU register dump support in KVM
-      hw/loongarch/virt: Add field ram_end in LoongArchVirtMachineState
-      hw/loongarch/virt: Add field gpex in LoongArchVirtMachineState
-      hw/loongarch/virt: Get irq number from gpex config info
-      hw/loongarch/virt: Get PCI info from gpex config info
-      hw/loongarch/virt: Add property highmem_mmio with virt machine
-      hw/loongarch/virt: Add high MMIO support with GPEX host
-      hw/loongarch/virt: Add property highmem-mmio-size with virt machine
-
- hw/loongarch/virt-acpi-build.c |  17 +---
- hw/loongarch/virt-fdt-build.c  |  43 +++++++---
- hw/loongarch/virt.c            | 175 ++++++++++++++++++++++++++++++++++++++---
- include/hw/loongarch/virt.h    |   5 +-
- target/loongarch/cpu-csr.h     |   4 +
- target/loongarch/cpu.c         |  11 ++-
- target/loongarch/cpu.h         |   4 +
- target/loongarch/csr.c         |  32 ++++++++
- target/loongarch/kvm/kvm.c     |  54 ++++++++++++-
- target/loongarch/machine.c     |  21 +++++
- 10 files changed, 322 insertions(+), 44 deletions(-)
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index e01e044239..67ad9c3b79 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -106,11 +106,11 @@ bool loongarch_cpu_has_work(CPUState *cs)
+ }
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-static void loongarch_la464_init_csr(Object *obj)
++static void loongarch_la464_init_csr(DeviceState *dev)
+ {
+ #ifndef CONFIG_USER_ONLY
+     static bool initialized;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++    LoongArchCPU *cpu = LOONGARCH_CPU(dev);
+     CPULoongArchState *env = &cpu->env;
+     int i, num;
+ 
+@@ -369,7 +369,6 @@ static void loongarch_la464_initfn(Object *obj)
+ 
+     cpu->msgint = ON_OFF_AUTO_OFF;
+     cpu->ptw = ON_OFF_AUTO_OFF;
+-    loongarch_la464_init_csr(obj);
+     loongarch_cpu_post_init(obj);
+ }
+ 
+@@ -524,6 +523,7 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+ 
+     qemu_init_vcpu(cs);
+     cpu_reset(cs);
++    loongarch_la464_init_csr(dev);
+ 
+     lacc->parent_realize(dev, errp);
+ }
+-- 
+2.52.0
 
 
