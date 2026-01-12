@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3833ACF45CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 20:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9112ACF45C8
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 20:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfOiQ-00075g-85; Mon, 12 Jan 2026 15:40:42 -0500
+	id 1vfOj0-0007e1-Ax; Mon, 12 Jan 2026 15:41:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfOiO-00074Z-CG
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 15:40:40 -0500
+ id 1vfOiz-0007dI-1Y
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 15:41:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfOiM-0000jj-NO
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 15:40:40 -0500
+ id 1vfOix-0000rF-Ek
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 15:41:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768250436;
+ s=mimecast20190719; t=1768250474;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=v3iqS3ptfU8vrb7JLTbd+RpdKQrADNKG6zZVs470pg4=;
- b=geVuGz7JrFYXmIAjMQqjCUa2iLNxe8dA8v8S8WWqkD8Tfd/6wxL0+fFt4xQUxRL8yBjYdY
- 9Xq5VFi5IfzJFD4msJBJ+5wIYJV9qolwYCK4GuNs/ESN96t+pJBrmi3ViwIUexvMfBJvjG
- +VzHlxXAzzDxBUmQ+FfE7c9ouC0hrS0=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UMn63bOJQhAOg/v+TewVWoe8dU8MB0WCw937hEIH9qA=;
+ b=S7dg8Mc1+FwlaElgWHGOgcX1M9arkrrzWqdU5DO0WjVojqxF10BNoOBAGzlyUueYPHDz7S
+ vv6RE0ex18M0pCCONPAwFfCge9JPVgr7XdWfjMzMCXLXIq5H7WqX5H+ERZX6HKDR8lCyRR
+ SrhZmOv1baFu5Yq3QuWMSXWGr4kWrtA=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-wyGhetNdMZSCvv3hRtslGg-1; Mon,
- 12 Jan 2026 15:40:32 -0500
-X-MC-Unique: wyGhetNdMZSCvv3hRtslGg-1
-X-Mimecast-MFC-AGG-ID: wyGhetNdMZSCvv3hRtslGg_1768250431
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-204-pKVP9DuqM-CwyXP0O84_Yg-1; Mon,
+ 12 Jan 2026 15:41:13 -0500
+X-MC-Unique: pKVP9DuqM-CwyXP0O84_Yg-1
+X-Mimecast-MFC-AGG-ID: pKVP9DuqM-CwyXP0O84_Yg_1768250472
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 132801956071; Mon, 12 Jan 2026 20:40:31 +0000 (UTC)
+ id 22E081956067; Mon, 12 Jan 2026 20:41:12 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.178])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 17A3C30001A2; Mon, 12 Jan 2026 20:40:27 +0000 (UTC)
+ id 6A83730001A2; Mon, 12 Jan 2026 20:41:09 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -56,11 +57,13 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 00/13] tests: do more testing of block drivers
-Date: Mon, 12 Jan 2026 20:40:13 +0000
-Message-ID: <20260112204026.710659-1-berrange@redhat.com>
+Subject: [PATCH v2 13/13] gitlab: add jobs for thorough block tests
+Date: Mon, 12 Jan 2026 20:40:26 +0000
+Message-ID: <20260112204026.710659-14-berrange@redhat.com>
+In-Reply-To: <20260112204026.710659-1-berrange@redhat.com>
+References: <20260112204026.710659-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -72,7 +75,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,109 +91,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Original (very broken) v1 posting:
+CI is only exercising the qcow2 'auto' tests currently. As a result we
+get no exposure of changes which cause regressions in other block format
+drivers.
 
-  https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg01650.html
+This adds new CI jobs for each block format, that will run the target
+'make check-block-$FORMAT'. The jobs are separate so that we have the
+ability to make each format gating or not, depending on their level
+of reliability.
 
-The recent set of regressions identified in the LUKS block driver
-re-inforced that despite having a hugely useful set of I/O tests,
-our CI coverage is still letting through too many bugs.
+There is currently an undiagnosed failure of job 185 with the qcow2 when
+run in CI that is marked to be skipped, reported at:
 
-The core goals of this series were/are:
+  https://gitlab.com/qemu-project/qemu/-/issues/3270
 
- * Add LUKS and NBD to the tested formats/protocols
-   integrated into "make check-block SPEED=thorough"
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ .gitlab-ci.d/buildtest.yml | 92 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
 
- * Ensure that all qcow2 tests can be run with "SPEED=slow",
-   not staying limited to only the 'auto' group used by the
-   'make check-block' target in its default 'quick' mode
-
- * Add  'make check-block-$FORMAT' to expose a standalone
-   target for running all tests for a given format (or
-   equivalently a protocol)
-
- * Add GitLab CI jobs for exercising tests for all formats
-
-A sample pipeline for this is
-
-  https://gitlab.com/berrange/qemu/-/pipelines/2258731804/
-
-Showing the 'block-FORMAT-centos' jobs which test the 10
-block formats/protocols currently enabled.
-
-This series fixes a couple of bugs
-
- * sendmsg generates a deprecation warning on centos
-
- * Test 128 check for device mapper usage doesn't work
-   sufficiently well to detect gitlab's containe env
-   can't do dynamic devfs
-
- * Test 185 is reliably failing on gitlab
-
-I'm unclear if there are other non-deterministic failures that
-would only appear if we start running the tests regularly, or
-against QEMU's private runners instead of gitlab shared runners.
-
-The ones I've fixed have been consistent across quite a few test
-pipelines so far with the shared runners.
-
-At this point it is a chicken & egg problem though.
-
-If we don't bite the bullet and enable block I/O tests in GitLab
-we'll never find out if they're stable enough to rely on.
-
-As a mitigation against instability a patch in this series adds
-a QEMU_TEST_IO_SKIP env variable that we are able to set as a
-GitLab CI env variable. This lets us skip broken tests without
-waiting for a git commit to disable them.
-
-Changed in v2:
-
-  * TL;DR: this time is actally works as described, rather
-    unlike v1 which was majorly broken in its understanding
-    of how mtest2make.py was working
-  * Expand mtest2make.py to support a concept of an "optional"
-    test suite, to create new standalone make check-xxx targets
-    that don't get run by default
-  * Fix sorting of Makefile.mtest to be stable
-  * Fix or disable  some bugs in iotests exposed by gitlab
-  * Fix the 'make check-block-$FORMAT' targets so they really
-    don't get triggered by 'make chck' by default.
-  * Avoid duplicating the same qcow2 tests in the 'quick'
-    suite and 'slow' suite. The latter must only have the
-    tests not in the 'auto' group
-  * Add RST documentation of the new make targets
-  * Add env variable to let us dynamically skip I/O tests
-    without git commit changes
-
-
-Daniel P. Berrangé (13):
-  Revert "python/aqmp: fix send_fd_scm for python 3.6.x"
-  tests: print reason when I/O test is skipped in TAP mode
-  tests: remove redundant meson suite for iotests
-  tests: ensure all qcow2 I/O tests are able to be run via make
-  scripts/mtest2make: ensure output has stable sorting
-  scripts/mtest2make: support optional tests grouping
-  tests: add a meson suite / make target per block I/O tests format
-  docs/devel/testing: expand documentation for 'make check-block'
-  tests: add nbd and luks to the I/O test suites
-  tests: skip I/O test 128 on GitLab due to broken dmsetup
-  tests: fix check for sudo access in LUKS I/O test
-  tests: add QEMU_TEST_IO_SKIP for skipping I/O tests
-  gitlab: add jobs for thorough block tests
-
- .gitlab-ci.d/buildtest.yml       | 92 ++++++++++++++++++++++++++++++++
- docs/devel/testing/main.rst      | 34 ++++++++++--
- python/qemu/qmp/qmp_client.py    |  9 ++--
- scripts/mtest2make.py            | 30 +++++++----
- tests/Makefile.include           |  3 +-
- tests/qemu-iotests/128           |  2 +
- tests/qemu-iotests/149           | 13 +++--
- tests/qemu-iotests/meson.build   | 55 ++++++++++++++++---
- tests/qemu-iotests/testrunner.py | 18 ++++++-
- 9 files changed, 224 insertions(+), 32 deletions(-)
-
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index dfe954fe3c..91b398bd63 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -176,6 +176,98 @@ build-system-centos:
+       x86_64-softmmu rx-softmmu sh4-softmmu
+     MAKE_CHECK_ARGS: check-build
+ 
++block-luks-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-luks
++
++block-nbd-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-nbd
++
++block-parallels-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-parallels
++
++block-qcow2-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-qcow2
++    # https://gitlab.com/qemu-project/qemu/-/issues/3270
++    QEMU_TEST_IO_SKIP: qcow2:185
++
++block-qed-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-qed
++
++block-raw-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-raw
++
++block-vdi-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vdi
++
++block-vhdx-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vhdx
++
++block-vmdk-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vmdk
++
++block-vpc-centos:
++  extends: .native_test_job_template
++  needs:
++    - job: build-system-centos
++      artifacts: true
++  variables:
++    IMAGE: centos9
++    MAKE_CHECK_ARGS: check-block-vpc
++
+ # Previous QEMU release. Used for cross-version migration tests.
+ build-previous-qemu:
+   extends: .native_build_job_template
 -- 
 2.52.0
 
