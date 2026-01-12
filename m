@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66CC5C9EC98
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 15:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8417C9EC98
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 15:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfJRw-0008MC-2k; Mon, 12 Jan 2026 10:03:20 -0500
+	id 1vfJKA-0008CC-Qy; Mon, 12 Jan 2026 09:55:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vfJRs-0008L3-90
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 10:03:16 -0500
-Received: from mail-dl1-x1229.google.com ([2607:f8b0:4864:20::1229])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJn-0007op-4W
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:55 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vfJRq-0002dG-LQ
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 10:03:15 -0500
-Received: by mail-dl1-x1229.google.com with SMTP id
- a92af1059eb24-11b992954d4so6827631c88.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 07:03:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJi-0001at-7X
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:54 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b8706ce18c0so240525466b.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:54:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768230193; x=1768834993; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Js9FkE6Rpg+Afxr1rVQLBvxMp5sno1UOtMm22+hAn4Y=;
- b=iMJfQTCYqCtU1TZUx1ahX4X7nsTOk44QqhQ57BZHd3y3CCnPQRPhGxc2wF7IRsGGy7
- RAzclySChQNa+T4dCFQxa8AtGezdJMB6Bdy9ccSSEBuVycEDBzet5URU1niOqC6Yh7ph
- cpKIO6KnOb6zmFHuA2nGszT+wUESpPuKRsN48Hen84M4j+b7Bg9TRTb4tloAHa5O426j
- 5RiSZUj7OwwNoXYnOMBuMoi0rtK/oxjHqPwZYri3OgjcjcOQSUlL2Srb7YSVOQ7KGSA4
- jiTL/avhf0mLbu3uoNwN5gHTH24UQxNlC8q1NrdMzpHJgWg5GfZzsHGkreZ2OnKjb9iv
- cKnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768230193; x=1768834993;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1768229688; x=1768834488; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Js9FkE6Rpg+Afxr1rVQLBvxMp5sno1UOtMm22+hAn4Y=;
- b=PCwTKwIX0U51SeNZf0n00PI069xNLZosKpygmFGUMXxSdP5k0C7j/Vj31YAOXexk11
- Dx/1lB1IP9UyrQ6PlJdu//BsypOrSngUv7ItZbVRcFkCZ816wEqQN8fEgg8SfVziqlGi
- bgXsrcBeEkPyEBXdMv5TJQXSaDgsGO+B2h5eFWH7Z8WyeZfAX0lXR/VjnyDZuvVT0h+N
- Numu747Oel7NEOyqfBnBVIq8ZBqVe19nAGDkCKNEfNqsR18DXIX7OfDeW25oXRGiyAwb
- E8aX6b+a9lHm8aZVnHyuTXRbUb0bgXj6abVtLPU8IogFI1onATEXPsz4q5Qk6LrUGq/H
- fL8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXGWKB6y0fgc2QxrvLyUmzw3gusK5VGPxjs7hambg/kBgfORjP390+uRouxAFOlubUOOF/1rJ7Foube@nongnu.org
-X-Gm-Message-State: AOJu0YwdN/NB2kImiAhBf5cH5dYGQfOfekM7p7fLjuJxlbFtTpDjNkPj
- ptMt9/770/0nfILdr1s1zmVnt99Ejegy4TKM60KfeH3rvIRJiRC0NDwZmD80KsDHsBnPY3JJ+T5
- srtAiWWGV6iu6mSkiDk4xEPyEcRpk/BE=
-X-Gm-Gg: AY/fxX6aI1IJ04gJm4qk39d1Yx8/JbAKI+0gX9nSrHd6ueLroUlWPgqvc3Db4f/QmLd
- tg4tpT1UI6/Km0j6iLAtowcYowNlbheLYOi6Di1rHHXwvo/azoBEYbZBSzdZGFXyN1xm6MYQ+Lg
- WOksjhS4UPblsx+j4rcuyfD6/ho1TR22U0HAO377jzWhZY1x8ZZKZpAPzNzHz4vvFUqqKnVyFkA
- aXxCBSjMT2pD/CdwlzL0SWGr9k3DuUkUgYx2Jdny1lqL6rbLOi6aGXPE983m4PcmAt7ntLgEzKi
- D5kLkbMQXxogjI7jC8LiInjiKw==
-X-Google-Smtp-Source: AGHT+IEjXtBkkn3IWuDJbHwqAf+glrN0SNybsVjP/MQ9wdgguRZOlouYt34wIhHiwrP3y8gFqiXcoA2saLZf6enWOrI=
-X-Received: by 2002:a05:7022:387:b0:119:e56c:189d with SMTP id
- a92af1059eb24-121f8afbcdfmr16762334c88.5.1768230192760; Mon, 12 Jan 2026
- 07:03:12 -0800 (PST)
+ bh=u7oIuXS4LVRn8XUCBjKf1n6RhnUu4CtgkIdX5fQX0Q0=;
+ b=DH3WAl9HkejOKFyX4/LEaGBICAskq7ozlLf81fwCIxtJJI2aG5c0Dz2cP3Ch/hOX/5
+ Az56Nk58zaHVzxIwwDXBj4UDqFxWYOYLW8J4YN/A/lbLUaji3vfC0LV/x05K25hXuTNo
+ Vw15FkA3ieLzUn0YHGX/svTSlNIu/1jLlvVQjYOcVPKX1y8go/VzPXZur2NQEA6j5fM0
+ G+epVNRwQHP7wHa3//nENctmi6SzeFr3xYbz3eVPAFsPZdJtarM6v17zuRyzR6iJV/EB
+ VZLMufMNd3oONM8stvePdmMxSIvzLNRjMnI0unuNbu4lTfTvPRMRLlGiC4QvSED/x00v
+ cikA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768229688; x=1768834488;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=u7oIuXS4LVRn8XUCBjKf1n6RhnUu4CtgkIdX5fQX0Q0=;
+ b=ajtALq07gkog5xZgzSIha+1fwYV5CijCYUlV9BhZ0UJer4SIlhNGjefU2nOl5o1AEX
+ t3gLUqykT/RNaPeXSWa7Um2hiTAOEBA4irBmcSeTX/f8oGPUE+4Jt77+i53MlUji/rZg
+ leFiGdtl1iVqRdsX3IODq2BfdUufJKAGQVvCBfZRLUFyJzOkNaPheLqFF4SDbzH4n87V
+ Fw+DWvrS3Aa9IR1t9JNJtM8zuwszeSKlriLz5tafgw38NMwoT1X8jKgT7K7kOCdlcfVj
+ 4pri+UFzepans4XgGCLOJXj+tCv5s/zIg8T4PuuvXq2dPJqd6AEvHPkt8t3T3e2IL6mF
+ 5Czg==
+X-Gm-Message-State: AOJu0Yy437uEeOaB/FwSjXnky73MVuOG3QesbSBhJsVj0EdXX7RkO4o3
+ 9xhjNgTSx/icoLsMMwGXJ1RMSoXyU8DzSy/palI7iu6lxRothflPgUqmpPCKtKIq
+X-Gm-Gg: AY/fxX4DtPQLCiqwxQx2AK0gfP2Wt0v3v8aVdU2zAREn19qIUaCKXBEKioc8Srr+pRM
+ 4qHyzunivTiXMV7ZOydBJvgZKHeQ7oxnvtVsWcEcS1mqlpmDWpN5sbWY/oT2kQV2JzZdBAvDfRS
+ pJxon1OX9CCwpKwI9qLJuV64eLm04tx81hBryx74rDOjP6sMFlq4yyKAhFcKeKNEs0KwfhXLPxK
+ 7NWV2yYaSFl+KAF3+sRIXvDKyXuqQ3ICvGyq9bRQ+ErSI5xfeF+5Qps/OJ1F7TTxAIj7D0DcHCi
+ TeNYpviZh+nK2oSwNg3C+tSyMtt/gM7ynBmoQ22DxTYublbz7Zi0N5SFlCHQha2ATqc2ivGCcja
+ 2Ovcr9yh3CtN9oSNXckJEKdbI8QxIIHX+ivR9ZtFYNP6MQpISL8BjGSlky6oNFeZLtuijw8j6Vf
+ LJcZLY2CjbLT71H5LiMrMMVNQ3GDssQa+ujx3AHhWRU4TmnKdWdGgeRF6OHKmRujvji8r836dB
+X-Google-Smtp-Source: AGHT+IFOIJDr5Eb3sa5kxgWEv8nmZXnfhSC9ttRBIEnYs5YB6D2mH8Ba87XF6LE7ImxjgtgJpfdpWQ==
+X-Received: by 2002:a17:907:26c7:b0:b73:a2ce:540f with SMTP id
+ a640c23a62f3a-b8444c80f04mr1758154366b.17.1768229688025; 
+ Mon, 12 Jan 2026 06:54:48 -0800 (PST)
+Received: from archlinux (dynamic-077-188-226-222.77.188.pool.telefonica.de.
+ [77.188.226.222]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8731f0718asm37387966b.67.2026.01.12.06.54.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Jan 2026 06:54:47 -0800 (PST)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>, Guenter Roeck <linux@roeck-us.net>,
+ Bin Meng <bmeng.cn@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: [PATCH 10/14] hw/arm/fsl-imx25: Extract TYPE_FSL_ESDHC_LE
+Date: Mon, 12 Jan 2026 15:54:14 +0100
+Message-ID: <20260112145418.220506-11-shentey@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260112145418.220506-1-shentey@gmail.com>
+References: <20260112145418.220506-1-shentey@gmail.com>
 MIME-Version: 1.0
-References: <cover.1767886100.git.ktokunaga.mail@gmail.com>
- <bd5596d373b9b801c5ca838d316bea4c5aba4674.1767886100.git.ktokunaga.mail@gmail.com>
- <23d64b20-01ec-4237-8816-7adb1fa3141b@linaro.org>
-In-Reply-To: <23d64b20-01ec-4237-8816-7adb1fa3141b@linaro.org>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Tue, 13 Jan 2026 00:03:00 +0900
-X-Gm-Features: AZwV_Qit0ZmDeGR9aIPnClXzqndkNyQIzutklTp-knwf4k6t9L51jlHbQ0K0bVc
-Message-ID: <CAEDrbUaA1MMoWUdY4NGWNYX46zfLeu0mzcBn3Xt65d_je=MNnQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] dockerfiles: Add support for wasm64 to the wasm
- Dockerfile
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000854d2c0648322cd1"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1229;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-dl1-x1229.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,53 +103,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000854d2c0648322cd1
-Content-Type: text/plain; charset="UTF-8"
+Extract an eSDHC (little endian) device model since the uSDHC device model
+will get an uSDHC-specific MMIO quirk.
 
-Hi Richard,
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ include/hw/sd/sdhci.h |  1 +
+ hw/arm/fsl-imx25.c    |  7 ++-----
+ hw/sd/sdhci.c         | 31 +++++++++++++++++++++++++++++++
+ 3 files changed, 34 insertions(+), 5 deletions(-)
 
-> On 1/9/26 04:11, Kohei Tokunaga wrote:
-> > @@ -46,6 +49,16 @@ pkgconfig = ['pkg-config', '--static']
-> >   EOT
-> >   EOF
-> >
-> > +FROM build-base-common AS build-base-wasm32
-> > +
-> > +FROM build-base-common AS build-base-wasm64
-> > +ARG WASM64_MEMORY64
-> > +ENV CFLAGS="$CFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-> > +ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-> > +ENV LDFLAGS="$LDFLAGS -sMEMORY64=${WASM64_MEMORY64}"
->
-> You've added this control as a configure flag.
-> Why do you also need it as an environment variable?
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index 3eb0684a89..32c52c7d0b 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -129,6 +129,7 @@ DECLARE_INSTANCE_CHECKER(SDHCIState, SYSBUS_SDHCI,
+                          TYPE_SYSBUS_SDHCI)
+ 
+ #define TYPE_FSL_ESDHC_BE "fsl-esdhc-be"
++#define TYPE_FSL_ESDHC_LE "fsl-esdhc-le"
+ 
+ #define TYPE_IMX_USDHC "imx-usdhc"
+ 
+diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
+index 9e02063533..7f65f4ca4b 100644
+--- a/hw/arm/fsl-imx25.c
++++ b/hw/arm/fsl-imx25.c
+@@ -68,7 +68,8 @@ static void fsl_imx25_init(Object *obj)
+     }
+ 
+     for (i = 0; i < FSL_IMX25_NUM_ESDHCS; i++) {
+-        object_initialize_child(obj, "sdhc[*]", &s->esdhc[i], TYPE_IMX_USDHC);
++        object_initialize_child(obj, "sdhc[*]", &s->esdhc[i],
++                                TYPE_FSL_ESDHC_LE);
+     }
+ 
+     for (i = 0; i < FSL_IMX25_NUM_USBS; i++) {
+@@ -239,12 +240,8 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
+             { FSL_IMX25_ESDHC2_ADDR, FSL_IMX25_ESDHC2_IRQ },
+         };
+ 
+-        object_property_set_uint(OBJECT(&s->esdhc[i]), "sd-spec-version", 2,
+-                                 &error_abort);
+         object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
+                                  IMX25_ESDHC_CAPABILITIES, &error_abort);
+-        object_property_set_uint(OBJECT(&s->esdhc[i]), "vendor",
+-                                 SDHCI_VENDOR_FSL, &error_abort);
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
+             return;
+         }
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 6277abe870..6001b71c61 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1897,6 +1897,32 @@ static void fsl_esdhc_be_init(Object *obj)
+     qdev_prop_set_uint8(dev, "vendor", SDHCI_VENDOR_FSL);
+ }
+ 
++static const MemoryRegionOps esdhc_mmio_le_ops = {
++    .read = esdhc_read,
++    .write = esdhc_write,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++        .unaligned = false
++    },
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++static void fsl_esdhc_le_init(Object *obj)
++{
++    SDHCIState *s = SYSBUS_SDHCI(obj);
++    DeviceState *dev = DEVICE(obj);
++
++    s->io_ops = &esdhc_mmio_le_ops;
++    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
++    qdev_prop_set_uint8(dev, "sd-spec-version", 2);
++    qdev_prop_set_uint8(dev, "vendor", SDHCI_VENDOR_FSL);
++}
++
+ static const MemoryRegionOps usdhc_mmio_ops = {
+     .read = esdhc_read,
+     .write = esdhc_write,
+@@ -1996,6 +2022,11 @@ static const TypeInfo sdhci_types[] = {
+         .parent = TYPE_SYSBUS_SDHCI,
+         .instance_init = fsl_esdhc_be_init,
+     },
++    {
++        .name = TYPE_FSL_ESDHC_LE,
++        .parent = TYPE_SYSBUS_SDHCI,
++        .instance_init = fsl_esdhc_le_init,
++    },
+     {
+         .name = TYPE_IMX_USDHC,
+         .parent = TYPE_SYSBUS_SDHCI,
+-- 
+2.52.0
 
-They are used for compiling the dependencies. But they are not needed for
-QEMU itself so I'll add a separated stage for the QEMU compilation without
-those flags.
-
-
-Regards,
-Kohei
-
---000000000000854d2c0648322cd1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Richard,<br><br>&gt; On 1/9/26 04:11, =
-Kohei Tokunaga wrote:<br>&gt; &gt; @@ -46,6 +49,16 @@ pkgconfig =3D [&#39;p=
-kg-config&#39;, &#39;--static&#39;]<br>&gt; &gt; =C2=A0 EOT<br>&gt; &gt; =
-=C2=A0 EOF<br>&gt; &gt; =C2=A0<br>&gt; &gt; +FROM build-base-common AS buil=
-d-base-wasm32<br>&gt; &gt; +<br>&gt; &gt; +FROM build-base-common AS build-=
-base-wasm64<br>&gt; &gt; +ARG WASM64_MEMORY64<br>&gt; &gt; +ENV CFLAGS=3D&q=
-uot;$CFLAGS -sMEMORY64=3D${WASM64_MEMORY64}&quot;<br>&gt; &gt; +ENV CXXFLAG=
-S=3D&quot;$CXXFLAGS -sMEMORY64=3D${WASM64_MEMORY64}&quot;<br>&gt; &gt; +ENV=
- LDFLAGS=3D&quot;$LDFLAGS -sMEMORY64=3D${WASM64_MEMORY64}&quot;<br>&gt;<br>=
-&gt; You&#39;ve added this control as a configure flag.<br>&gt; Why do you =
-also need it as an environment variable?<br><br>They are used for compiling=
- the dependencies. But they are not needed for<br>QEMU itself so I&#39;ll a=
-dd a separated stage for the QEMU compilation without<br>those flags.<br><b=
-r><br>Regards,<br>Kohei<br><br></div></div>
-
---000000000000854d2c0648322cd1--
 
