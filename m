@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39F6CF45D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D9B5CF45D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQcs-0003uK-L5; Mon, 12 Jan 2026 17:43:06 -0500
+	id 1vfQij-0008Dg-3T; Mon, 12 Jan 2026 17:49:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQcr-0003tM-Mm
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:43:05 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQig-00089v-0p
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:49:06 -0500
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQcq-0001XY-0b
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:43:05 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-430f57cd471so3423360f8f.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:43:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQic-0002RY-LN
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:49:05 -0500
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-47d3ffa6720so64779925e9.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:49:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768257782; x=1768862582; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fv85atVjcLmPGtEGVqXBgFWkBkwpFvu4smo66CFa4Xg=;
- b=samSIi2DTSA//+3CabshN8iPXR7ttrZC5HcQaT9e2UN1OlfLFvnDChtyasvy5ISl3O
- 07YkxLnLIFBabBSs5b/2m/LB4gJAlFypYJL8tdhfvbEqpoKIZKjyuVTyQwLIgEhnHmN4
- CyqpdEgIa45hsnR1ZeCQ+nNDjDulRZaNMTN61WmauYHmIckCAct+IVBzyFaZ/8XAsyRP
- GwsJCCzoi8/4WjdHCx1V8eTbbBga1Jm/v6Nf3EcBbVs/DLtwUiN8lfcBwUNM9ab2KjTM
- aNcxvZ3ujdlFRTHSb1sTnnfRvvxzVZNwP1XYRj+G4CMQ/RD2WA+7npT0AnQ8JhgDeCyw
- p3RA==
+ d=linaro.org; s=google; t=1768258139; x=1768862939; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zA2TCc41WZsCmMa/LlDEdPqPXZSkBSOTZHpZgtcfKkc=;
+ b=hbsIgzEdLl6oSsR9auFzKweT9wD0zAn7l7M3vsaAcPlgpDkZxKzDLmdtM6fb+Qkuhm
+ 0m7xiFp5jbC/u/Pr2m11V6tTSCFwDxn8AytUpa6lY9iMoxtTjb8ROp0dNAhwJptnahzb
+ Vf7XbqWd2zdpQXIsrSRBTcYgPboEu7bJ6EI5NKROPwxe/Im9xgpy1KOJ51r56Er5sfrp
+ CD95berSWJKZvm09EDJMw3dtKyNGykXZlaNWXkM335BmElstfR5zyN/+kHeHhWtb6R8E
+ CMfhnDtu0LwDRbvHr6PCw+6g8n8Hxyl1Ylh6TpB6DPIkajVqhr6gLtyr8plpeUTHtpuV
+ Fz6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768257782; x=1768862582;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1768258139; x=1768862939;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fv85atVjcLmPGtEGVqXBgFWkBkwpFvu4smo66CFa4Xg=;
- b=k8dgHHfaUpfVAxGS2DTU0/JwbuWCFZB/GkAhkrXpPHxgR+Bse7ZJiU0uLfC7hDJGK0
- vj03svk8OKNl9Dg6RE3taAN6f505ObPEAP5ioVmgtJodCz19Cwj7rn7/NFCHVJjyVqDJ
- doNauo6fZbLf2YnHxnvaMnyTxsb+Wm+zOed1KxwyB6x0XpxSxLOtpXuvsPpE/zUDnpkr
- iGskMm53Q1PHfUanXTq4vFLYtKL/gOPGk5wbWPjWOM895M3vLbi7SwTKr73qBW6kwZVd
- FNEPoQ+gEfjDSUJQKb3b5fJuP8Ui0pP0kItHQmNNY5L5cQMBeoI9oKRlczDq3Nsnz6uS
- swRA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8OzpLY/Iq3Mf8onIxHPF1pjnbX9dwHF9+KiVjtreT5XXeCtcorjEy5qdkg7gGNPy5NyuYrb8TK+oq@nongnu.org
-X-Gm-Message-State: AOJu0YxpcWFUvtab0nmoQlGiSASwkWzeXTJej2+xQE4XdZ3X2FyWfvZ4
- YxfAo2imaljpbSAR5W1286EAw60XzL+rAM9qZzNYZFAwJmrWetaBEDJI3PltSWkTE5k=
-X-Gm-Gg: AY/fxX6P6tj80rel1GThX9eoApitThwhCklLyF6FLNzYhWpuxo6/CgGFE52+KndJQxN
- RNpC24E2Gb9lnyYgIPGsCaBavqh2P5s/PhNfpHtqM0SK4jyYvPdnNHasHahu0ggny3YN4Sob2xK
- OL8oGYotJ8YyaXRshbf9SEUUdaUPtdWVNDBUUPoiR6UU83z70EaI9pjHM3w5FQmV+vv8P9P4Djb
- TJ2AZScHAQ6SRJQ5UDfqsSLBeZ8M0OPIoY55Y9qpgmOE/Ze1onxUTLw7DDfU9Z1ZIgGFhkHqJzs
- KR0N28umPQdvkso+QPiz3vsVBTaOPh7CFk5yEjGWuYO/fenJe6TRmO8TQa0oxreNL26Ys7Iytzv
- dbPADmGS/5z2HkpridY3fzZp+xt1i3WPPm0aywYzeOVcayMuqvTJ8meD9A29vKbGPDdX4ea95o5
- G52tyAAXF3uUAgJp42FPlVyy8TxMxuXH1hpfJzMyCbVQTogSq0dOZGcQ==
-X-Google-Smtp-Source: AGHT+IGzYnhyRyXvET05JE1mtc+zybcNdP4CQH174Km2AkC3lssB+T7Vg5zSLjPNNPOsVn2iSC9xmQ==
-X-Received: by 2002:a05:6000:188e:b0:430:f2ee:b220 with SMTP id
- ffacd0b85a97d-432c3632beemr26044580f8f.19.1768257782193; 
- Mon, 12 Jan 2026 14:43:02 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ bh=zA2TCc41WZsCmMa/LlDEdPqPXZSkBSOTZHpZgtcfKkc=;
+ b=OVRSp1YoQAo2nZws52wwJ5eWYjrToojXgYeLsReqQtfcTEMTkiAxyB5ghlqgvptEcn
+ iNMMhvP52gzSLnvRln2Bbzf2zUbgOPB8iowJ9Iu9F+6f4FAPEU72hd5NIt47X6Ll1bQI
+ /Sp54jY7kqh95twRMV+MnfVzkUx69v/oA6Xg53ZaC73VWPPd+0FviSmeQXT/s2InyzU+
+ 4f3XrybrO8cBLPHdx1zXBlSmfpzuHRdG6WwtqzLVnnUDqLkOp0UQUH3oOaGWkGWAHjVt
+ Z2kEMck+/ppoNpw/wM+oVudTPzeohp1Naz2v4UntAHLGja17WlMtHJwtvqS+uI7oc66r
+ JGGw==
+X-Gm-Message-State: AOJu0YwovvZwDNvs90oQ32Ev4PqwqO6iOaeb5Q2lz5osBEQ1M6944fiv
+ NnYTvpyyz/BDkBJH65Ak003yslI6PvhwrSm33VoAtVeVWNd5EFtNAzef70QQffopMBJsbW2syod
+ MqI78KFk=
+X-Gm-Gg: AY/fxX71gLVaWE7lpn28XPUDOtA11UImi3NYL/Vd9bQLszmmAGmCyZpAq1IqX1IW5vL
+ OIRbfgpsRvIFW8KcF5yYsJL8z6BA4PDCbg29TK8QjDuG6mabXqDwAwqK8Uzn120Iu7K1HRQDZZ1
+ lQW/DI4OWyHAaMKhtfUtJWh18xN8v92wUe6YHQeFue5HOWuTgalkYDCYWHwH4UNOG4arJzgur3K
+ kVHOPr061/FNPaS43XvQLZ9ZAuol3cQOsc1YXjiNqsy7Pd6WFkG0RCQhWBbyjlWdXZZR2D/x51N
+ A8pmGl5+DK6dosXSo8lBGa3zGkJsfpB/eUoWRlrCiJeHAf164w96aqY4SeTnXKr0il+ItCr8uB1
+ wZSxxApLPvTs0n9eJttOMZ6VOD2UEMZLY7xiFmFyGEZR7Flc/5iucVpduZ42U5f/CjqhEGxh4H7
+ CEpe1EZ+d95gPjyCNI5ZBvL3nVFZATsOcg99wwBdUK6xtcxbZACD0tSRWV3D9D
+X-Google-Smtp-Source: AGHT+IGJjCTILqo8nVx6IiAx+O4mJB+t3cVT5Kx1j9u1t7RCcrX/Q9f/0Q+yr/bNbpgDWZ4Vfg/prg==
+X-Received: by 2002:a05:600c:3110:b0:479:3a86:dc1a with SMTP id
+ 5b1f17b1804b1-47d84b41176mr223837345e9.36.1768258138974; 
+ Mon, 12 Jan 2026 14:48:58 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e16f4sm41762598f8f.11.2026.01.12.14.43.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 14:43:01 -0800 (PST)
-Message-ID: <a96d6954-4242-4358-ad85-cc170749e736@linaro.org>
-Date: Mon, 12 Jan 2026 23:42:59 +0100
+ 5b1f17b1804b1-47d7f6953fasm364428585e9.5.2026.01.12.14.48.58
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 12 Jan 2026 14:48:58 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/61] Misc single binary patches for 2026-01-12
+Date: Mon, 12 Jan 2026 23:47:55 +0100
+Message-ID: <20260112224857.42068-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/7] target/hppa: Define PA[20|1X] physical address
- space size
-Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org,
- Helge Deller <deller@gmx.de>
-Cc: Richard Henderson <richard.henderson@linaro.org>, palmer@dabbelt.com,
- alistair.francis@wdc.com, pbonzini@redhat.com, gaosong@loongson.cn,
- maobibo@loongson.cn
-References: <20260112-phys_addr-v3-0-5f90fdb4015f@rev.ng>
- <20260112-phys_addr-v3-2-5f90fdb4015f@rev.ng>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260112-phys_addr-v3-2-5f90fdb4015f@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,106 +97,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/26 13:22, Anton Johansson wrote:
-> When converting virtual to physical addresses,
-> TARGET_PHYS_ADDR_SPACE_BITS is used under PA-RISC 2.0, and an explicit
-> cast to uint32_t is used under PA-RISC 1.X.  Replace the former with a
-> more specific macro limited to mem_helper.c, and make the latter
-> conversion explicit by defining the size of the physical address space
-> for PA-RISC 1.X.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   target/hppa/mem_helper.c | 23 ++++++++++++++++++-----
->   1 file changed, 18 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-> index cce82e6599..8563bb0e2a 100644
-> --- a/target/hppa/mem_helper.c
-> +++ b/target/hppa/mem_helper.c
-> @@ -29,6 +29,19 @@
->   #include "hw/core/cpu.h"
->   #include "trace.h"
->   
-> +/*
-> + * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
-> + * machines 7300LC.  This gives 44 and 32 bits of physical address space
-> + * respectively.
-> + *
-> + *   CPU model        Physical address space bits
-> + *   PA-7000--7300LC  32
-> + *   PA-8000--8600    40
-> + *   PA-8700--8900    44
-> + */
-> +#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 44
-> +#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
-> +
->   hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
->   {
->       /*
-> @@ -42,8 +55,8 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
->        * Since the supported physical address space is below 54 bits, the
->        * H-8 algorithm is moot and all that is left is to truncate.
->        */
-> -    QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 54);
-> -    return sextract64(addr, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-> +    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
-> +    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
->   }
->   
->   hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-> @@ -67,7 +80,7 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
->            * is what can be seen on physical machines too.
->            */
->           addr = (uint32_t)addr;
-> -        addr |= -1ull << (TARGET_PHYS_ADDR_SPACE_BITS - 4);
-> +        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 4);
->       }
->       return addr;
->   }
-> @@ -217,7 +230,7 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
->               if (hppa_is_pa20(env)) {
->                   phys = hppa_abs_to_phys_pa2_w0(addr);
->               } else {
-> -                phys = (uint32_t)addr;
-> +                phys = extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
->               }
->               break;
->           default:
-> @@ -558,7 +571,7 @@ static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
->       /* Align per the page size. */
->       ent->pa &= TARGET_PAGE_MASK << mask_shift;
->       /* Ignore the bits beyond physical address space. */
-> -    ent->pa = sextract64(ent->pa, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-> +    ent->pa = sextract64(ent->pa, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
->   
->       ent->t = extract64(r2, 61, 1);
->       ent->d = extract64(r2, 60, 1);
-> 
+The following changes since commit 81f1fc471c053c9d3915c3e1f8b37503bd9a9cb7:
 
-Patch LGTM but fails on CI on 2 distinct jobs...
+  Merge tag 'pull-loongarch-20260112' of https://github.com/bibo-mao/qemu into staging (2026-01-13 08:23:10 +1100)
 
-166/793 func-quick+func-hppa - qemu:func-hppa-seabios 
-          TIMEOUT         90.05s   killed by signal 15 SIGTERM
+are available in the Git repository at:
 
-209/276 qemu:func-quick+func-hppa / func-hppa-seabios 
-                      TIMEOUT         180.04s   (exit status 143 or 
-signal 15 SIGTERM)
+  https://github.com/philmd/qemu.git tags/single-binary-20260112
 
-Works with:
+for you to fetch changes up to f445b4a4b6fa5b03503bc8fdfa4c336e13afc48f:
 
--- >8 --
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index 40d28435aa8..e7a26398c5a 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -82,3 +82,3 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-          addr = (uint32_t)addr;
--        addr |= -1ull << (TARGET_PHYS_ADDR_SPACE_BITS - 4);
-+        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 8);
-      }
----
+  target/arm/gdbstub: make compilation unit common (2026-01-12 23:47:57 +0100)
 
-PA-8000--8600 case with 40 bits?
+----------------------------------------------------------------
+Various patches related to single binary effort:
+
+- Endianness cleanups in memory core subsystem and for various targets
+- Few cleanups around target_ulong type
+- Build various compilation units as common
+
+----------------------------------------------------------------
+
+Alex Bennée (1):
+  target/sh4: drop cpu_reset from realizefn
+
+Anton Johansson (1):
+  target/alpha: Introduce alpha_phys_addr_space_bits()
+
+Philippe Mathieu-Daudé (56):
+  MAINTAINERS: Cover 'system/memory_ldst*.h.inc' files
+  docs/devel/loads-stores: Fix ld/stn_*_p() regexp
+  bswap: Consistently use builtin bswap() functions
+  tests/qtest: Remove unnecessary 'qemu/bswap.h' include
+  system/physmem: Inline and remove leul_to_cpu()
+  system/physmem: Convert DEBUG_SUBPAGE printf() to trace events
+  system/memory: Split MemoryRegionCache API to 'memory_cached.h'
+  system/memory: Inline address_space_stq_internal()
+  system/ioport: Declare x86-specific I/O port in little-endian order
+  system/ioport: Do not open-code address_space_ld/st_le() methods
+  meson: Allow system binaries to not have target-specific units
+  hw/alpha: Use explicit little-endian LD/ST API
+  target/alpha: Inline cpu_ldl_code() call in do_unaligned_access()
+  target/alpha: Inline translator_ldl()
+  target/avr: Inline translator_lduw()
+  target/hexagon: Inline translator_ldl()
+  target/hexagon: Use little-endian variant of cpu_ld/st_data*()
+  target/hppa: Use big-endian variant of cpu_ld/st_data*()
+  target/hppa: Remove unnecessary @cpu variable by using cpu_env()
+  target/hppa: Use explicit big-endian LD/ST API
+  target/hppa: Inline translator_ldl()
+  target/hppa: Avoid target-specific migration headers in machine.c
+  target/hppa: Remove target_ulong use in disas_log() handler
+  hw/loongarch: Use explicit little-endian LD/ST API
+  target/loongarch: Replace target_ulong -> uint64_t for DMW and
+    TLBRBADV
+  target/loongarch: Use hwaddr type for physical addresses
+  target/loongarch: Replace MO_TE -> MO_LE
+  target/loongarch: Inline cpu_ldl_code() call in cpu_do_interrupt()
+  target/loongarch: Use explicit little-endian LD/ST API
+  target/loongarch: Inline translator_ldl()
+  target/m68k: Replace MD_TLONG -> MD_I32 in monitor.c
+  target/microblaze: Directly check endianness via CPUConfig::endi flag
+  target/microblaze: Avoid target-specific migration headers in
+    machine.c
+  target/microblaze: Build system files once
+  hw/microblaze: Replace TARGET_BIG_ENDIAN -> target_big_endian()
+  hw/microblaze: Build files once
+  hw/intc: Mark OpenRISC-specific peripheral as big-endian
+  target/openrisc: Use explicit big-endian LD/ST API
+  target/openrisc: Inline translator_ldl()
+  target/openrisc: Remove unused 'gdbstub/helpers.h' header in helper.c
+  target/openrisc: Avoid target-specific migration headers in machine.c
+  target/openrisc: Build system units in common source set
+  target/rx: Use little-endian variant of cpu_ld/st_data*()
+  target/rx: Use explicit little-endian LD/ST API
+  target/rx: Inline translator_lduw() and translator_ldl()
+  target/rx: Build system units in common source set
+  target/sh4: Build system units in common source set
+  hw/sparc: Mark SPARC-specific peripherals as big-endian
+  hw/sparc: Use explicit big-endian LD/ST API
+  target/sparc: Use explicit big-endian LD/ST API
+  target/sparc: Inline translator_ldl()
+  target/sparc: Inline cpu_ldl_code() call in cpu_do_interrupt()
+  target/tricore: Use little-endian variant of cpu_ld/st_data*()
+  target/tricore: Inline translator_lduw()
+  target/tricore: Build system units in common source set
+  accel/tcg: Un-inline WatchPoint API user-emulation stubs
+
+Pierrick Bouvier (3):
+  gdbstub/helpers.h: allow header to be called from common code
+  target/arm/gdbstub: extract aarch64_cpu_register_gdb_regs_for_features
+  target/arm/gdbstub: make compilation unit common
+
+ MAINTAINERS                                   |   2 +
+ docs/devel/loads-stores.rst                   |   8 +-
+ meson.build                                   |   8 +-
+ include/accel/tcg/cpu-ops.h                   |  17 --
+ include/exec/watchpoint.h                     |  23 --
+ include/gdbstub/helpers.h                     |   9 +-
+ include/hw/virtio/virtio-access.h             |   1 +
+ include/qemu/bswap.h                          |  11 -
+ include/qemu/host-utils.h                     |   6 +-
+ include/qemu/int128.h                         |   5 +-
+ include/system/memory.h                       | 185 ---------------
+ include/system/memory_cached.h                | 210 ++++++++++++++++++
+ linux-user/alpha/target_proc.h                |  23 +-
+ target/arm/internals.h                        |   1 +
+ target/hexagon/macros.h                       |   6 +-
+ tests/qtest/pnv-xive2-common.h                |   1 -
+ accel/tcg/user-exec-stub.c                    |  33 +++
+ hw/alpha/dp264.c                              |  11 +-
+ hw/alpha/typhoon.c                            |   4 +-
+ hw/audio/cs4231.c                             |   2 +-
+ hw/char/grlib_apbuart.c                       |   2 +-
+ hw/display/cg3.c                              |   2 +-
+ hw/display/tcx.c                              |  14 +-
+ hw/dma/sparc32_dma.c                          |   2 +-
+ hw/intc/grlib_irqmp.c                         |   2 +-
+ hw/intc/ompic.c                               |   2 +-
+ hw/intc/slavio_intctl.c                       |   4 +-
+ hw/loongarch/virt.c                           |  18 +-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c      |   4 +-
+ hw/misc/eccmemctl.c                           |   2 +-
+ hw/misc/slavio_misc.c                         |  16 +-
+ hw/rtc/sun4v-rtc.c                            |   2 +-
+ hw/sparc/leon3.c                              |  42 ++--
+ hw/sparc/sun4m.c                              |   6 +-
+ hw/sparc64/sun4u.c                            |   6 +-
+ hw/timer/grlib_gptimer.c                      |   2 +-
+ hw/timer/slavio_timer.c                       |   2 +-
+ system/ioport.c                               |  34 ++-
+ system/physmem.c                              |  35 +--
+ target/alpha/mem_helper.c                     |   4 +-
+ target/alpha/translate.c                      |   4 +-
+ target/arm/cpu32-stubs.c                      |  21 ++
+ target/arm/gdbstub.c                          |  61 +----
+ target/arm/gdbstub64.c                        |  57 +++++
+ target/avr/translate.c                        |   2 +-
+ target/hexagon/op_helper.c                    |   6 +-
+ target/hexagon/translate.c                    |  11 +-
+ target/hppa/gdbstub.c                         |   8 +-
+ target/hppa/int_helper.c                      |   2 +-
+ target/hppa/machine.c                         |   3 +-
+ target/hppa/op_helper.c                       |  44 ++--
+ target/hppa/translate.c                       |   5 +-
+ target/loongarch/cpu_helper.c                 |  12 +-
+ target/loongarch/tcg/iocsr_helper.c           |  24 +-
+ target/loongarch/tcg/tcg_cpu.c                |   4 +-
+ target/loongarch/tcg/tlb_helper.c             |  10 +-
+ target/loongarch/tcg/translate.c              |   3 +-
+ target/m68k/monitor.c                         |  60 ++---
+ target/microblaze/machine.c                   |   3 +-
+ target/microblaze/translate.c                 |   8 +-
+ target/openrisc/gdbstub.c                     |   2 +-
+ target/openrisc/interrupt.c                   |   1 -
+ target/openrisc/machine.c                     |   3 +-
+ target/openrisc/mmu.c                         |   1 -
+ target/openrisc/translate.c                   |   3 +-
+ target/rx/cpu.c                               |   2 +-
+ target/rx/gdbstub.c                           |  24 +-
+ target/rx/helper.c                            |  14 +-
+ target/rx/op_helper.c                         |   6 +-
+ target/rx/translate.c                         |  10 +-
+ target/sh4/cpu.c                              |   1 -
+ target/sparc/int32_helper.c                   |   4 +-
+ target/sparc/ldst_helper.c                    |  36 +--
+ target/sparc/mmu_helper.c                     |  32 +--
+ target/sparc/translate.c                      |   2 +-
+ target/tricore/op_helper.c                    | 152 ++++++-------
+ target/tricore/translate.c                    |   9 +-
+ tests/qtest/aspeed_smc-test.c                 |   1 -
+ tests/qtest/ast2700-smc-test.c                |   1 -
+ tests/qtest/endianness-test.c                 |  10 +-
+ tests/qtest/libqos/fw_cfg.c                   |   1 -
+ tests/qtest/libqos/i2c-omap.c                 |   1 -
+ tests/qtest/libqtest.c                        |  13 +-
+ tests/qtest/pnv-spi-seeprom-test.c            |   1 -
+ system/memory_ldst.c.inc                      |   2 +-
+ .../tcg/insn_trans/trans_atomic.c.inc         |  80 +++----
+ .../tcg/insn_trans/trans_fmemory.c.inc        |  32 +--
+ .../tcg/insn_trans/trans_memory.c.inc         |  64 +++---
+ .../loongarch/tcg/insn_trans/trans_vec.c.inc  |  16 +-
+ hw/microblaze/meson.build                     |   2 +-
+ system/trace-events                           |   6 +
+ target/arm/meson.build                        |  12 +-
+ target/microblaze/meson.build                 |   2 +-
+ target/openrisc/meson.build                   |   2 +-
+ target/rx/meson.build                         |   2 +-
+ target/sh4/meson.build                        |   2 +-
+ target/tricore/meson.build                    |   2 +-
+ 97 files changed, 863 insertions(+), 806 deletions(-)
+ create mode 100644 include/system/memory_cached.h
+
+-- 
+2.52.0
+
 
