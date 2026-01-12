@@ -4,98 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E89FEC9EC7A
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 16:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E9BCF45A4
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 16:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfKhB-0003vU-U7; Mon, 12 Jan 2026 11:23:09 -0500
+	id 1vfKrm-0001yn-K9; Mon, 12 Jan 2026 11:34:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vfKfq-0003Yv-7B
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 11:21:48 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vfKfo-00088g-HH
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 11:21:45 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-81e7477828bso1521021b3a.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 08:21:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768234903; x=1768839703; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wlkIiqSZlMDBvce3juhwVe0pZE4IZJdrPBREhvrFg9Y=;
- b=kajoJkZQN4ZbzV9psUDdFqMztujzFS+tSIg6KGJCti+dKhpLW9yH8EzpqDBSba6ENE
- cQbt6/2HOqfbs7ThrOlq5kX/XhipnO5XBbHa8KsUMr+NMqv2Cbz1bAlkA+D4KJg/oAKE
- IGsLYgboiqAH6JOIE2FdLNaKf7CM2rtkuYOcwEj7JNI/tR8GsKf0P/1cNi047YhLwoRo
- UfzdoKgLD8DpncP61ZAwk98oy1FtNmdHwZ5ZxRZpDFItzbOSJC1zbIcmO5VAYNtbjOOB
- FHs3UaJ5Wu1WMOmHyT509aH1/yvWyakWUCrq2dg5dx7fXRuVeu78S2ZmifdPRMU9HqrH
- ym0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768234903; x=1768839703;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wlkIiqSZlMDBvce3juhwVe0pZE4IZJdrPBREhvrFg9Y=;
- b=ptukGZVMMibnn1vslRA3yvLb0YEK+QNisvv/Smf+gH81/DmEzuGoWJNB1WN2YCr5BD
- bk0o0XRrlZojRgfDxMNIB8Yj5rRpbVFBux/FzYH04k2Nnu1GM06fjSfuABCQb0YVH/WF
- 6OWr0xD/ZUZRUqRDFJzIBqfB4H6HqhAPXyDPfaSXGdogHT+LNf2xxhkxO9h7vUDWshV5
- duuamXAoHzgjObO0rYC9aAnMtlQbMeA4GShmm6wxFP0J9DGh+3LcEgfRn6zBoYeTP3Ya
- MUHjWibrLRruiC+fcb2I7EE1KDFTsPZypNzcasd0ANyhBTnKIQPBiXqzoWqce3fU5Nr4
- pkzg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrdWfNElI+36G9i8xHo0xJz99Pn10YNzY6/++Bv6xK67TCcI2TKGCcF7dAxWgfqWTQPEAuNLbfJpzU@nongnu.org
-X-Gm-Message-State: AOJu0YyXZaaXix92WtwrnArs/XQspHQ749Cu3tXXpCT6T3iBK8XvVhrM
- 0PagvhR31BfPnCinLoXKQ41/xXSUGDw/VMq/U9ROWVKD+hx7IFz0QFb/msSg3SjHRaE=
-X-Gm-Gg: AY/fxX4phtxu14TYrz4lDq3WhWOxj/DXkQkTdgVMdE9y5UE5ieZ7FSuZ0pKulLLRe6M
- I9UlH/tlnSQ1OgORep1HMac4LIHedByWOr0PNZ179q2TX1ttRcqjHpLSqI2x/bQpu4FBZHCilaw
- +Zpu3P+jnkvc8apc7w+qhI6/A9X3ZGxMzbgpiGXXl2JgfQKTWOfbJDC6zK1dAxknXv4mZH/vib2
- 2zGvTnD2P/FvffVS/vwavbx3dtPIAdoPC4F/g5gNXlEBz6YAxmALLxa+Bjtrm4TcU1CUI/A3c5a
- fZNhMxrIWQjDTMq3rnBpHVZGMJCMIkLTYbZDaHtLFG7bkV8s2rx7wTlPJBmleBudUm7AeGBxPOI
- NiJMGpF2E3jzrTL3t5k9zajEqyMCOWe4OdwtuUiOqJ4PVdL5Pb1zTah1KNUukkIbo4StJmdIy1w
- sP972aYszwaHqEvaLFobUl07DFFWMtODk50zrXDBqiBBoyTWCBXqjpA+dZ+1/CnXogt/s=
-X-Google-Smtp-Source: AGHT+IHJ8bRZuqmFgbPVPBltyIHJGwivpcTtezTUqOJ1M5Qy5nFpGXH5sxvyr8IxaEuVTjxAAX3zeQ==
-X-Received: by 2002:a05:6a00:8c10:b0:818:1e8c:a513 with SMTP id
- d2e1a72fcca58-81b77eea322mr17038321b3a.17.1768234902818; 
- Mon, 12 Jan 2026 08:21:42 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81f32ccb4aesm7443647b3a.9.2026.01.12.08.21.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 08:21:41 -0800 (PST)
-Message-ID: <82940e3b-f9a7-4172-8ae7-680bc1a5785b@linaro.org>
-Date: Mon, 12 Jan 2026 08:21:42 -0800
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfKrj-0001rM-Rq
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 11:34:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfKrf-0001Ui-Jd
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 11:34:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768235637;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TMqg/haHScU/XHrCQ7VdbJzFoiFlO5dSRVMx6U578VI=;
+ b=BGfARw+y8qH4/AZZ+NSXsBSOTy2TpAy4etgU7R3Rfta5EYj0TK0nMAaR9JfzYEEZDLjbrc
+ i45QsThO3UhSWnRnLt9mHzes1u5gYl6ujwFCTT4RJxayZkwj6rfACarYIU1T83pzK0Vtw0
+ zNvOdLIUJ4gKye5HjjEl55qocnJfFUg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-qvDBxrh3M1uWtbPll29iVw-1; Mon,
+ 12 Jan 2026 11:33:55 -0500
+X-MC-Unique: qvDBxrh3M1uWtbPll29iVw-1
+X-Mimecast-MFC-AGG-ID: qvDBxrh3M1uWtbPll29iVw_1768235635
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0290E19560AF
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 16:33:55 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.79])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DFB6830001A2; Mon, 12 Jan 2026 16:33:52 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH] tests/rcutorture: Fix build error
+Date: Mon, 12 Jan 2026 17:33:50 +0100
+Message-ID: <20260112163350.1251114-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] hw/arm/smmu: add memory regions as property for an
- SMMU instance
-Content-Language: en-US
-To: eric.auger@redhat.com, qemu-devel@nongnu.org
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
- tangtao1634@phytium.com.cn, richard.henderson@linaro.org,
- Radoslaw Biernacki <rad@semihalf.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260108210453.2280733-1-pierrick.bouvier@linaro.org>
- <08c42104-d7c5-4df8-b25f-7138ddc94a94@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <08c42104-d7c5-4df8-b25f-7138ddc94a94@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,31 +81,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/12/26 1:58 AM, Eric Auger wrote:
-> 
-> 
-> On 1/8/26 10:04 PM, Pierrick Bouvier wrote:
->> This will be used to access non-secure and secure memory. Secure support
->> and Granule Protection Check (for RME) for SMMU need to access secure
->> memory.
->>
->> As well, it allows to remove usage of global address_space_memory,
->> allowing different SMMU instances to have a specific view of memory.
->>
->> User creatable SMMU are handled as well for virt machine,
->> by setting the memory properties when device is plugged in.
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> 
-> Thanks
-> 
-> Eric
+Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
+detects an unused variable error:
 
-Would you be ok to pull this patch, or would you prefer someone else to 
-do it?
+  ../tests/unit/rcutorture.c: In function ‘rcu_read_stress_test’:
+  ../tests/unit/rcutorture.c:251:18: error: variable ‘garbage’ set but not used [-Werror=unused-but-set-variable=]
+    251 |     volatile int garbage = 0;
+        |                  ^~~~~~~
 
-Regards,
-Pierrick
+Since the 'garbage' variable is used to generate memory reads from the
+CPU while holding the RCU lock, it can not be removed. Tag it as
+((unused)) instead to silence the compiler warnings/errors.
+
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ tests/unit/rcutorture.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/unit/rcutorture.c b/tests/unit/rcutorture.c
+index 7662081683f5d781da74402113b73884780b1243..2f19d479a3f210cbca19205a0656eda1f4c2e5a7 100644
+--- a/tests/unit/rcutorture.c
++++ b/tests/unit/rcutorture.c
+@@ -248,7 +248,7 @@ static void *rcu_read_stress_test(void *arg)
+     int pc;
+     long long n_reads_local = 0;
+     long long rcu_stress_local[RCU_STRESS_PIPE_LEN + 1] = { 0 };
+-    volatile int garbage = 0;
++    volatile int garbage __attribute__ ((unused)) = 0;
+ 
+     rcu_register_thread();
+ 
+-- 
+2.52.0
+
 
