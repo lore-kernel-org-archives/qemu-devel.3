@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8188ACF45D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390CDCF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQkc-0008AC-GK; Mon, 12 Jan 2026 17:51:06 -0500
+	id 1vfQkk-0000CJ-Ai; Mon, 12 Jan 2026 17:51:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQkb-00084H-Eo
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:51:05 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQki-00005y-HW
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:51:12 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQkZ-0002zu-QJ
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:51:05 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47d5e021a53so51053515e9.3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:51:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQkg-00031b-Ne
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:51:12 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-42fb03c3cf2so3688471f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:51:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258261; x=1768863061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258269; x=1768863069; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KFn/MIL+bUlyBivtVdAugKseDoZ0UZFHpDrGBmS0DoA=;
- b=d2J1ezlhXBEG7ptSopKXzQxFCTYJLa8zFVm7fdg92KYYBQXP/4CYPgiuMkN8nQIloF
- aGKveDYwKfuv4uEyAxRlojIACYtE0bopENWN9RVb82UrvJtbgg1rLV2EvcYaxMTgKJQB
- frxsoGxaokT7rMGuWaKevOVl90oa6flFA9pDEyI/Z+Cq+8DB5NlNZ9eHBV3uAOV85/OP
- gcrsWrkmprkJcGdP5SibSjW4uKN8dHahijxwg6nQwrPL7jVXvixruI5WAMGtThXpTCul
- 7tBhgGIksQYl66/B2SkIjvsPmAzkuoAYz7W7Xo7Qic/3wm31E7xXzYgMIhI4aelSelCs
- AKyA==
+ :reply-to; bh=l42FEzNcWfMTrvcSRpe+FZu2BodQsa7pUwm+Smus8I0=;
+ b=E5a6MDig5xNfxHlxGguA7coquZTWVOUvAcV3WzjB5j6Uin957taE90tXAnRYO6Gd05
+ L7WQTkTrrrNM7fhgZSfYGxiNcUHbgX6bG8kWppiI7t+Q0AjxvVLXSUGvhQ7Ntz4iUvoX
+ uGRjk764aIBEfNpFJP+qrTTeOLXTZYygf3PrMD6PBjavYS1f7sEA1GNCw9AIQC2b5ui1
+ t+DwgEcyWq466ywCxb4ryTF2K7J4WXHElz9xhACjL1SP+gQ5C0XiKIioJfX0wMO9uma0
+ P9L6rrv9JYrhFmuVtlnrGpt3NSOs403sOh4RYRnoFB7yO9WIbkRzGh64+DxPdDoeunat
+ AITQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258261; x=1768863061;
+ d=1e100.net; s=20230601; t=1768258269; x=1768863069;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=KFn/MIL+bUlyBivtVdAugKseDoZ0UZFHpDrGBmS0DoA=;
- b=fiJRLOaiKYNLyJasR6QrxoJyt1/4Oe9ZhCTCaEEwdcu/PwJ6bZZXMOyIfDXA3oK3nH
- cFOHd3Jkh8w2QSNotpGNoiCorc+9jgPVLIDNaoOJOKOkIBEg6Gjqeksibdrkop4e9r3P
- oEDQEPvK3WhJ2FK9Z2Nw1GnOZq3dYD0JGSAWaItnalk6Z3ZmQ32ROepM+Sm6R5i58U6F
- clXVFohi4M694kxxDn+LhW6a6nwUoNFoyHL38yegX+Z+NojkR0gfGDzGaevYvjJKr568
- zAoKWrPPTPUKP1ghKE8hiH0cDlASP1Vjrqb6UvtODTWWYYoQST5Ca0Q+bmmkH6IsTZ5+
- 0Tmw==
-X-Gm-Message-State: AOJu0Yz/GQ1HWWk04p7GJ8vyfTFD7tun8RpBYpsjxjbRPJnFQ5FDBI+/
- kOPCH/85Lxtuog1ZhTP8udv6HIEyJg0G2QOrg1QxMe/lAzn1Bt33MwdvygjXMVF1dkrhA2f8eRB
- kI0cKA1E=
-X-Gm-Gg: AY/fxX5KfBhumEjQ85j9zWrhclO1faln834LOT8TYMA85C9WbGz5bz0qtHq+s9EMQRF
- lbeoK6YufnbIjcYHszD8wXtP7oXg/9ELrw0FN+6fiPbSdr3SVqDK0YbpWj1lhUPCnGHIE8FRKCQ
- ohYspLPnyp5idSi/Y01iZ1MbWkQTMIaQO+VNv67NJQbXL9MXpRBK4Ets/yoxcHrs1pVF4oGTZNp
- hULGDSf95P/M8FRKjIKOcH5ZDF5PeBp/Gz4atzRpqM+g96051hyd3rg+tgQyX/DRcApPF9gWGJR
- K2lEsg+v/wnCIYgwUllmDUycjv4pXWbDAL4gKoycuIye2b80JNdzI/L4+cRIx/95kG9A5rZmXnc
- jmei2gvJHq6d5W9lKLvRW3/9y3Mqn2J8cC78toXyIyKSj9srZkjUZSVcZnQpkPDxVZMQrcx+PYu
- bO3owDBDO3z7Hf3fdKlA/uBKysKVxIoS+zT6p6jZLxGCA9dAj2pOLjig3413af
-X-Google-Smtp-Source: AGHT+IH3Cki+8MIGLrZpOMxi3frvkY5r/OgExnnzDf/GEByPuEY+BWlbYt5aFAGDGSnJZJYFGfXrDA==
-X-Received: by 2002:a05:600c:190e:b0:477:7c7d:d9b7 with SMTP id
- 5b1f17b1804b1-47d84b4099amr222205275e9.33.1768258261508; 
- Mon, 12 Jan 2026 14:51:01 -0800 (PST)
+ bh=l42FEzNcWfMTrvcSRpe+FZu2BodQsa7pUwm+Smus8I0=;
+ b=T/KwKWGTsA1FkSO4+iEDur+IsyYe8zrBf79A6aeeneTpfDii5CyggTAGaVw7gDoRhR
+ +bltZyNQI4hNAPlqp4k64VPYU1+XBNCiDZuWXHLt5zu4LWrzITgoJmuf35BVs2DXiSFu
+ e6StwqQOtlfb+bVW9wSb5RKI4r15Le/jkMTDWGg7ndwZ57glXDB4pzcyDmpDs8nhBJR0
+ NJaZUt7XGfta4g8mret05ibmgWtKzGcAM5zH3GXe3HxhQIEkwcXulKt+4/3iD6DM68ww
+ jfUS+mvMlWHZXsZ3yqAk5EX9v+LcW78g70Zi5SWZttNqT+unob8Cr6b7AMnp2jrFOclB
+ ILvg==
+X-Gm-Message-State: AOJu0YzZneeygGl+aBTv4egSdkfmET5Lz8O6rDhBjpoNYONvExi2tBgU
+ gt2KDGQMM1mEWaj4TDU+yWnSad30zuzROZ9k6BzAOtO6VjNWhGmj7FAg5QUTUhwkaweVRjWjZnz
+ zwhtB38w=
+X-Gm-Gg: AY/fxX48qE3zHpXcTK0geSOJFjzsWS2TIs+XH17/hHFeHZY5EfXRSd+fzYcbMGew6VJ
+ mAvBcx4t29Mt9cLMxLE9BzXf70+STITzeAkObAW9BN+F/KHEABC6bt0WXLw2FDve/dp0U4JdpqL
+ 7CB3ZOS5654dcZmpw5OanUb1h0kHEVNXPNY5tiScqb0a4Bo1otx1ViD31cB99jkWiykvD6y7RYN
+ CFRzAMN9ND+b9ZGEx+xvMPGCDK7+3Gu4wZq99JmzVy+eeU5cU5301zc/VJ1Dl+zCwleAws+4mCL
+ QeUgbSffM55Gr77XGvd0xAbgXTnU/phEeoT+PkKlcGH01QjRSz9kXfkTeoygGXCe1FmIOZOrY2U
+ QB+A47yculZrealhzSP4FEcKhTL9gVitsIklB1XJuuJFoaBKqHzl0dOobOC/G9AkLAGIPbnYZr+
+ 8mURm9k1ZOkNdVOhNWFWYU9K8kYIlQVvysykZOKtsReFFZ30EOaEk1rca/f/r9poCGaI8jO34=
+X-Google-Smtp-Source: AGHT+IH3WHPEvkqCgEa4VSiDblg5WZz4hRnHCr6rj1iX76QahAoqmBr4Pm8uUMD/Wiwr0AZihYyxvA==
+X-Received: by 2002:a05:6000:4023:b0:432:b951:e9fc with SMTP id
+ ffacd0b85a97d-432c37636b0mr21668630f8f.47.1768258268870; 
+ Mon, 12 Jan 2026 14:51:08 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e6784sm41588755f8f.19.2026.01.12.14.50.59
+ ffacd0b85a97d-432bd0dade5sm41062918f8f.9.2026.01.12.14.51.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:51:00 -0800 (PST)
+ Mon, 12 Jan 2026 14:51:08 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/61] target/hexagon: Use little-endian variant of
- cpu_ld/st_data*()
-Date: Mon, 12 Jan 2026 23:48:13 +0100
-Message-ID: <20260112224857.42068-19-philmd@linaro.org>
+Subject: [PULL 19/61] target/hppa: Use big-endian variant of cpu_ld/st_data*()
+Date: Mon, 12 Jan 2026 23:48:14 +0100
+Message-ID: <20260112224857.42068-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,14 +99,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the Hexagon target using little endianness order,
-therefore the cpu_ld/st_data*() definitions expand to the little
-endian declarations. Use the explicit little-endian variants.
+We only build the HPPA target using big endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the big
+endian declarations. Use the explicit big-endian variants.
 
 Mechanical change running:
 
-  $ tgt=hexagon; \
-    end=le; \
+  $ tgt=hppa; \
+    end=be; \
     for op in data mmuidx_ra; do \
       for ac in uw sw l q; do \
         sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
@@ -120,52 +119,164 @@ Mechanical change running:
     done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251219185025.97318-3-philmd@linaro.org>
+Message-ID: <20251229225517.45078-2-philmd@linaro.org>
 ---
- target/hexagon/macros.h    | 6 +++---
- target/hexagon/op_helper.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ target/hppa/op_helper.c | 44 ++++++++++++++++++++---------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
-index 088e5961ab7..6c2862a2320 100644
---- a/target/hexagon/macros.h
-+++ b/target/hexagon/macros.h
-@@ -519,9 +519,9 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
- #define fLOAD(NUM, SIZE, SIGN, EA, DST) MEM_LOAD##SIZE##SIGN(DST, EA)
- #else
- #define MEM_LOAD1 cpu_ldub_data_ra
--#define MEM_LOAD2 cpu_lduw_data_ra
--#define MEM_LOAD4 cpu_ldl_data_ra
--#define MEM_LOAD8 cpu_ldq_data_ra
-+#define MEM_LOAD2 cpu_lduw_le_data_ra
-+#define MEM_LOAD4 cpu_ldl_le_data_ra
-+#define MEM_LOAD8 cpu_ldq_le_data_ra
- 
- #define fLOAD(NUM, SIZE, SIGN, EA, DST) \
-     do { \
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index 554e7dd447d..bfeadd65fcb 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -77,13 +77,13 @@ static void commit_store(CPUHexagonState *env, int slot_num, uintptr_t ra)
-         cpu_stb_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
+diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+index 0458378abb2..65faf03cd0a 100644
+--- a/target/hppa/op_helper.c
++++ b/target/hppa/op_helper.c
+@@ -107,7 +107,7 @@ static void do_stby_b(CPUHPPAState *env, target_ulong addr, target_ulong val,
+         cpu_stb_data_ra(env, addr, val, ra);
          break;
      case 2:
--        cpu_stw_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
-+        cpu_stw_le_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
+-        cpu_stw_data_ra(env, addr, val, ra);
++        cpu_stw_be_data_ra(env, addr, val, ra);
          break;
-     case 4:
--        cpu_stl_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
-+        cpu_stl_le_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
-         break;
-     case 8:
--        cpu_stq_data_ra(env, va, env->mem_log_stores[slot_num].data64, ra);
-+        cpu_stq_le_data_ra(env, va, env->mem_log_stores[slot_num].data64, ra);
+     case 1:
+         /* The 3 byte store must appear atomic.  */
+@@ -115,11 +115,11 @@ static void do_stby_b(CPUHPPAState *env, target_ulong addr, target_ulong val,
+             atomic_store_mask32(env, addr, val, 0x00ffffffu, ra);
+         } else {
+             cpu_stb_data_ra(env, addr, val >> 16, ra);
+-            cpu_stw_data_ra(env, addr + 1, val, ra);
++            cpu_stw_be_data_ra(env, addr + 1, val, ra);
+         }
          break;
      default:
-         g_assert_not_reached();
+-        cpu_stl_data_ra(env, addr, val, ra);
++        cpu_stl_be_data_ra(env, addr, val, ra);
+         break;
+     }
+ }
+@@ -132,7 +132,7 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
+         cpu_stb_data_ra(env, addr, val, ra);
+         break;
+     case 6:
+-        cpu_stw_data_ra(env, addr, val, ra);
++        cpu_stw_be_data_ra(env, addr, val, ra);
+         break;
+     case 5:
+         /* The 3 byte store must appear atomic.  */
+@@ -140,11 +140,11 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
+             atomic_store_mask32(env, addr, val, 0x00ffffffu, ra);
+         } else {
+             cpu_stb_data_ra(env, addr, val >> 16, ra);
+-            cpu_stw_data_ra(env, addr + 1, val, ra);
++            cpu_stw_be_data_ra(env, addr + 1, val, ra);
+         }
+         break;
+     case 4:
+-        cpu_stl_data_ra(env, addr, val, ra);
++        cpu_stl_be_data_ra(env, addr, val, ra);
+         break;
+     case 3:
+         /* The 5 byte store must appear atomic.  */
+@@ -152,7 +152,7 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
+             atomic_store_mask64(env, addr, val, 0x000000ffffffffffull, 5, ra);
+         } else {
+             cpu_stb_data_ra(env, addr, val >> 32, ra);
+-            cpu_stl_data_ra(env, addr + 1, val, ra);
++            cpu_stl_be_data_ra(env, addr + 1, val, ra);
+         }
+         break;
+     case 2:
+@@ -160,8 +160,8 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
+         if (parallel) {
+             atomic_store_mask64(env, addr, val, 0x0000ffffffffffffull, 6, ra);
+         } else {
+-            cpu_stw_data_ra(env, addr, val >> 32, ra);
+-            cpu_stl_data_ra(env, addr + 2, val, ra);
++            cpu_stw_be_data_ra(env, addr, val >> 32, ra);
++            cpu_stl_be_data_ra(env, addr + 2, val, ra);
+         }
+         break;
+     case 1:
+@@ -170,12 +170,12 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
+             atomic_store_mask64(env, addr, val, 0x00ffffffffffffffull, 7, ra);
+         } else {
+             cpu_stb_data_ra(env, addr, val >> 48, ra);
+-            cpu_stw_data_ra(env, addr + 1, val >> 32, ra);
+-            cpu_stl_data_ra(env, addr + 3, val, ra);
++            cpu_stw_be_data_ra(env, addr + 1, val >> 32, ra);
++            cpu_stl_be_data_ra(env, addr + 3, val, ra);
+         }
+         break;
+     default:
+-        cpu_stq_data_ra(env, addr, val, ra);
++        cpu_stq_be_data_ra(env, addr, val, ra);
+         break;
+     }
+ }
+@@ -211,12 +211,12 @@ static void do_stby_e(CPUHPPAState *env, target_ulong addr, target_ulong val,
+         if (parallel) {
+             atomic_store_mask32(env, addr - 3, val, 0xffffff00u, ra);
+         } else {
+-            cpu_stw_data_ra(env, addr - 3, val >> 16, ra);
++            cpu_stw_be_data_ra(env, addr - 3, val >> 16, ra);
+             cpu_stb_data_ra(env, addr - 1, val >> 8, ra);
+         }
+         break;
+     case 2:
+-        cpu_stw_data_ra(env, addr - 2, val >> 16, ra);
++        cpu_stw_be_data_ra(env, addr - 2, val >> 16, ra);
+         break;
+     case 1:
+         cpu_stb_data_ra(env, addr - 1, val >> 24, ra);
+@@ -239,8 +239,8 @@ static void do_stdby_e(CPUHPPAState *env, target_ulong addr, uint64_t val,
+             atomic_store_mask64(env, addr - 7, val,
+                                 0xffffffffffffff00ull, 7, ra);
+         } else {
+-            cpu_stl_data_ra(env, addr - 7, val >> 32, ra);
+-            cpu_stw_data_ra(env, addr - 3, val >> 16, ra);
++            cpu_stl_be_data_ra(env, addr - 7, val >> 32, ra);
++            cpu_stw_be_data_ra(env, addr - 3, val >> 16, ra);
+             cpu_stb_data_ra(env, addr - 1, val >> 8, ra);
+         }
+         break;
+@@ -250,8 +250,8 @@ static void do_stdby_e(CPUHPPAState *env, target_ulong addr, uint64_t val,
+             atomic_store_mask64(env, addr - 6, val,
+                                 0xffffffffffff0000ull, 6, ra);
+         } else {
+-            cpu_stl_data_ra(env, addr - 6, val >> 32, ra);
+-            cpu_stw_data_ra(env, addr - 2, val >> 16, ra);
++            cpu_stl_be_data_ra(env, addr - 6, val >> 32, ra);
++            cpu_stw_be_data_ra(env, addr - 2, val >> 16, ra);
+         }
+         break;
+     case 5:
+@@ -260,24 +260,24 @@ static void do_stdby_e(CPUHPPAState *env, target_ulong addr, uint64_t val,
+             atomic_store_mask64(env, addr - 5, val,
+                                 0xffffffffff000000ull, 5, ra);
+         } else {
+-            cpu_stl_data_ra(env, addr - 5, val >> 32, ra);
++            cpu_stl_be_data_ra(env, addr - 5, val >> 32, ra);
+             cpu_stb_data_ra(env, addr - 1, val >> 24, ra);
+         }
+         break;
+     case 4:
+-        cpu_stl_data_ra(env, addr - 4, val >> 32, ra);
++        cpu_stl_be_data_ra(env, addr - 4, val >> 32, ra);
+         break;
+     case 3:
+         /* The 3 byte store must appear atomic.  */
+         if (parallel) {
+             atomic_store_mask32(env, addr - 3, val >> 32, 0xffffff00u, ra);
+         } else {
+-            cpu_stw_data_ra(env, addr - 3, val >> 48, ra);
++            cpu_stw_be_data_ra(env, addr - 3, val >> 48, ra);
+             cpu_stb_data_ra(env, addr - 1, val >> 40, ra);
+         }
+         break;
+     case 2:
+-        cpu_stw_data_ra(env, addr - 2, val >> 48, ra);
++        cpu_stw_be_data_ra(env, addr - 2, val >> 48, ra);
+         break;
+     case 1:
+         cpu_stb_data_ra(env, addr - 1, val >> 56, ra);
 -- 
 2.52.0
 
