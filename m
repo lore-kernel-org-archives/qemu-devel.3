@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C055C9EC8D
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA81FC9EC8D
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 15:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfJJl-0007me-IE; Mon, 12 Jan 2026 09:54:53 -0500
+	id 1vfJJj-0007ko-Hy; Mon, 12 Jan 2026 09:54:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJh-0007g0-2A
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:49 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJe-0007dD-9c
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:46 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJd-0001Xa-Rm
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:48 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b87281dbdbcso104322666b.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:54:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJb-0001Vf-Ne
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:45 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-64fabaf9133so11764144a12.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:54:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768229682; x=1768834482; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768229680; x=1768834480; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wscBRTm7STUtvNgIyID3EdUtTJO2sL4HdK1iLXIRQS0=;
- b=bHV8lMkWX/RmKvbRUBv5KAvQQp9XTqy6wDaFa2hHlbbNLFzM4bjuzSnk+SWQGWStKi
- 2rkiDpXA4GtnVteK9EwOujzNbsx15L4iQAemrIc7hqwL8llVUWGySQb/NwSSQ4Eor4B+
- jIRXKP0wAxgYCHrhpJOhkOL2GZ2Yw8ryeuBiQPdkWHvHb6gSfkQMmX04l3bPWPUgBvSG
- 1ILkoxLjr9agvKyZ8j9M1g2yw/WBfXT23rAOYvS0rGQNQFszQM2epThXK7m2Hv8Z7Lb3
- 4GiJ6Itb3/dfIw5yxGRpXbtwPEBaKf6cNMRUDzkf/BTpf4wqzER52uCJ6zFn5Zza61dB
- 3GZQ==
+ bh=K/Bc8ruLWvUKFLbKbwJTV3mI2vIezZtb/awn2u9R0Sc=;
+ b=Japl+Vg0wDdi7c/DAp76R/u2Z02OBRMDSSBoAMon+P55D1xxTlv97LfDDaKrVeszI7
+ 8pZTx6n9V29xq/2GP650ZyCT6/sDd2DNccMGsLVwgTviOSlE7K5YcQO0Os9eWIpdPU4x
+ xfDo4Zh9OGwQC6EtrV5Odq2IZQ2/Ye19IJcdlcTTRpI8UZyBEsinsqWA4tML+T8Aq0QT
+ kMRuiZmJJR1EfT9b917wh6Vne02IA/s0jhmEbDF74c4X92SRAeN++/iF74aq86fQkDoD
+ 1BdiG2HBKeFr8jthfSixexDWRjzHN3MiE7d5m7WFJqVNIVssR+VC7MQz57ZsVEzDVNdl
+ MTkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768229682; x=1768834482;
+ d=1e100.net; s=20230601; t=1768229680; x=1768834480;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wscBRTm7STUtvNgIyID3EdUtTJO2sL4HdK1iLXIRQS0=;
- b=kHVuS4GmGwYmMp0l1X7dv5kgGNA10ZyHOYLasDvNkWqanTy32MTI6kjnO6WQjRPGXG
- I38luICf8EAcz5z7QSrJbDKV7+vynJrPrnKQfAToBZdxSnFpSI77lLgO5hSGxk5QKMdI
- ISRB/eJZWtLk1M/whQZpMaYMDe0jkuWKX5FIdIQdrj/YZtNWQi/oONMRhFr2IEoW+HAG
- b0KvOuSFLUliGKMpWSACWsGn5jNsrPj62LOtul61QiNXbu9QvbvlvnaUG60uThYvRGZ7
- rVgm48b15YPC1G2INx4gJ1adZcLDbUkd+/cjyYhOLPMG1iQgIespz+mvqn2Uhw6/Jh3v
- 76vQ==
-X-Gm-Message-State: AOJu0YxGW4sBudW0ktjc+0p1IUIggNbH+ZvWcMzfceSVA9nYiGjaqWV0
- CQLpcIUFvY0rNPz9O7LwlSAgP3SL9Fjit9ACXH7rxRGanXkcIXpWHirI2WmMZxBm
-X-Gm-Gg: AY/fxX4fcksS2ug46iZgvONuHY2jhh4sXvGIPNzz9I9Xzv4nwFOQFibz2wHr5K+mm3l
- Ks7Bj9n157dIkiOrDB+zIwGQE5ApWVbUcT41Ova79hwSN58TkVbyrof/2e1A8lmZql7z+quzYVO
- Hk7cXpigUMRF8bq0kv3DlT+WA8EZI3WEb2jvPH85XwQEbXNJT1OCfuVOfpz01dV4NpmcvxeNTYB
- NZaWrcTpKsHVyid5VO40hXBa/mmLoGpzRYFYopx2xwyYXlzWmyho4A2fP+4tNouDr5CFCirzMZT
- mfX0hqc3DDGF0TvIHVwPJOT9ekkJ2iZ9hlZt51erpNseslXsckaEWoT17l26QopuSv1bnLvciO0
- mvsC1kU2R/lXEODt8hm2df7Jl7Fl6GZqXJGYuyaEdzAIXq2rFXNxd5qBLrvPUsaaDk2FxeeGK8H
- hRij1K+yDr65okEYRAIYVUXcWGcb5V1Xz0ZGgAwIbojtm8TDNH+Hah6pe5JxziCb0/1a3mebRk
-X-Google-Smtp-Source: AGHT+IEwu7WuTSHRhbEc9ACkxzfgXWJE7fekxK9tOyd5vaLjmsb2OmmWD9RV/pRI8f0kHh56EQdteQ==
-X-Received: by 2002:a17:906:4fd1:b0:b4f:e12e:aa24 with SMTP id
- a640c23a62f3a-b8444cce26fmr1917157366b.22.1768229681474; 
- Mon, 12 Jan 2026 06:54:41 -0800 (PST)
+ bh=K/Bc8ruLWvUKFLbKbwJTV3mI2vIezZtb/awn2u9R0Sc=;
+ b=W7Ly2rwPlQagx7Cp1v9scyQ6sOf+zK2cKBU3gOAuls+03wB617W2PkD9fEnFT4FW+k
+ Ooe+duvdxBlR4nhVELWemKAGkhjxtnLLqagFKTz+CBF//WW4PPv5aO3druntGs9t5zAH
+ DexrIilK+nPZKbVBzBCJrzp2t0moMKqHfRWN4IelprtgwyFQRElGvRtteI6vIxOK9q6M
+ JKt7KKk6t+uihNPEuhUOrAMMAlfRpx/rtHgidM2fu8sJvtBy+8xz6+OfadV2RxACadFw
+ tZ1AWwpx1p3DtocOFsWe1mU9GaudPy0ZsKpSuNm3M4ibQwfK0g37RLq/MP3gRrDdpJ77
+ J2aA==
+X-Gm-Message-State: AOJu0YzN1v/L9o3KLjrYBDBAPBaWnx7YiwsJAzt+etByd59E0bNxno1q
+ McLErB+J4IpD41/IpXXOTIebbffCnL5MUtUUfR5cvaiK35Y6793r2kFJvJdiQw==
+X-Gm-Gg: AY/fxX5FVfRp8u9lq08p1ndGv0MhCOOWHB2WWv5Wh+e7uXGgihihM+DzgBENHRLjde8
+ 6w03yuv1/LUTRBZIK60nGAANdG9M6Ke0MSIGcYruxBNYH4finrMvaWEof+mdqUYkJ8UIn+sXGX4
+ +dqY0NAm4dKsNTP1IfIcoisJXSKvZT87Ec1b1k4AEUWrHDZOxTCUTf9pb25N4VNNFggzrTbF+nM
+ U1lcNH/CkGatAt9QTyu+aBKKiolenJxF3kmD0mYr4s9FuI4lrO6PG5mvmpQGja3eWupMyBu2hqn
+ NJCGlXqI4/1QwaufXOtFNJEkRI5iBft5O8Um0Tr7AQQHoC1wfcu27bbOBsMOZnW2NR/+s7u/Sva
+ 8aSSSzZjY0vhzC3pRy69vwpVY5zSZY5+tprd15PLi+5RUqSf2lqe5EDHEi7KDtb7fsHkNjUYqjR
+ TG2lrxPrumVhhFk1Qcgu62NUTb+5sgufX/Rh5OoTD+hrxVtYCXBquEGuzvcZOpSwRoWUu6jABG
+X-Google-Smtp-Source: AGHT+IFiSdFwTXIhd5gYIuSg1GPgu2PpSZsMBZMIssC6s2idbJNbLr9CJghzMhIYm1T/jXyRlH/1IQ==
+X-Received: by 2002:a17:907:689e:b0:b86:ef31:c2c7 with SMTP id
+ a640c23a62f3a-b86ef31ccf3mr507569666b.42.1768229679538; 
+ Mon, 12 Jan 2026 06:54:39 -0800 (PST)
 Received: from archlinux (dynamic-077-188-226-222.77.188.pool.telefonica.de.
  [77.188.226.222]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8731f0718asm37387966b.67.2026.01.12.06.54.40
+ a640c23a62f3a-b8731f0718asm37387966b.67.2026.01.12.06.54.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Jan 2026 06:54:40 -0800 (PST)
+ Mon, 12 Jan 2026 06:54:39 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -71,16 +71,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bin Meng <bmeng.cn@gmail.com>, Thomas Huth <thuth@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
  qemu-ppc@nongnu.org
-Subject: [PATCH 04/14] hw/arm/fsl-imx25: Apply missing reset quirk
-Date: Mon, 12 Jan 2026 15:54:08 +0100
-Message-ID: <20260112145418.220506-5-shentey@gmail.com>
+Subject: [PATCH 02/14] hw/arm/fsl-imx6: Remove now redundant setting of
+ "sd-spec-version" property
+Date: Mon, 12 Jan 2026 15:54:06 +0100
+Message-ID: <20260112145418.220506-3-shentey@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112145418.220506-1-shentey@gmail.com>
 References: <20260112145418.220506-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,30 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just like the Freescale MPC8569E SoC the i.MX25 features an eSDHC but
-as little-endian variant. According to the datasheet TYPE_FSL_IMX25 requires
-the same reset quirk as the e500 machines. The quirk was introduced in
-d060b2789f71 ("hw/sd/sdhci: Set reset value of interrupt registers") for the
-e500 machines, so reuse it now in TYPE_FSL_IMX25.
+Now that TYPE_IMX_USDHC sets this property internally it is not needed
+on the SoC level any longer.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/fsl-imx25.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/arm/fsl-imx6.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
-index dd670827ff..9e02063533 100644
---- a/hw/arm/fsl-imx25.c
-+++ b/hw/arm/fsl-imx25.c
-@@ -243,6 +243,8 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
-                                  &error_abort);
+diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+index f3aa1d8150..46967b7488 100644
+--- a/hw/arm/fsl-imx6.c
++++ b/hw/arm/fsl-imx6.c
+@@ -323,8 +323,6 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+         };
+ 
+         /* UHS-I SDIO3.0 SDR104 1.8V ADMA */
+-        object_property_set_uint(OBJECT(&s->esdhc[i]), "sd-spec-version", 3,
+-                                 &error_abort);
          object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
-                                  IMX25_ESDHC_CAPABILITIES, &error_abort);
-+        object_property_set_uint(OBJECT(&s->esdhc[i]), "vendor",
-+                                 SDHCI_VENDOR_FSL, &error_abort);
+                                  IMX6_ESDHC_CAPABILITIES, &error_abort);
          if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
-             return;
-         }
 -- 
 2.52.0
 
