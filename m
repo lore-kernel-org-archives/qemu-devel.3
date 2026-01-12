@@ -4,107 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0448CF45AF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2816CF45A8
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 17:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfLTs-0004bq-LU; Mon, 12 Jan 2026 12:13:28 -0500
+	id 1vfLTv-0004f6-Lf; Mon, 12 Jan 2026 12:13:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfLSz-0003jH-V4
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:12:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
+ id 1vfLRn-0002vI-KB; Mon, 12 Jan 2026 12:11:38 -0500
+Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfLSy-0007hg-I0
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:12:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768237951;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n4FjcWu0LDKcBLtXzBHQQcI0QgAYGSeNNtKSt3IpPOU=;
- b=dHodj+s3jQE9r61FhBHPJMdiOrOBgrcIQC8pZ/7VpdVmaLNFFNNmNe2egV36ZGEXPOiRKO
- yQXgfkTC6uXrMZkaQIGS12Pl3279e1lgDpKB9IurZnw1JJWF4+EFg8po+D1oyL7OGWBU6E
- lbhTtpn+sJioJd4sehY4I0rQnVTofSQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-0ZE__jkfMtq5ijkMb2FwmQ-1; Mon, 12 Jan 2026 12:12:30 -0500
-X-MC-Unique: 0ZE__jkfMtq5ijkMb2FwmQ-1
-X-Mimecast-MFC-AGG-ID: 0ZE__jkfMtq5ijkMb2FwmQ_1768237949
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47d5bd981c8so45878895e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 09:12:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768237949; x=1768842749; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n4FjcWu0LDKcBLtXzBHQQcI0QgAYGSeNNtKSt3IpPOU=;
- b=ZfDVOEd64eQhYYRvdELM0O5qNFUKGNeOgldGOxB/7F3QhlH+JPECKIoGioJ+8juci2
- /XzpPODM9wZ/m537klngcDxlK23vZplihtDs5hDs3qVxdVcQoo8NCNdqQk3MpijFFIBG
- blPi66mR3ihv4GgzhswZIwRPYZikyxaRiwu/rPoommMgKSBHSidB+25f9eOYFc7aKnhb
- /TfjgCKMj4bKwFK5eDOWN87BhkkUnTm22ASKPlt46ttOdBOFSIs1RyMokZ2zI0UIiOFC
- nfb1ZZqCIkQwqOmGBNP7blnZXCuBqoI9EHtJVy7rT9wf12YYyKYTzyzv77gGydHEE+A3
- hK9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768237949; x=1768842749;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=n4FjcWu0LDKcBLtXzBHQQcI0QgAYGSeNNtKSt3IpPOU=;
- b=K9q8PTHAS42sSvKEwCe9sl3FZ4hqep+Sz4hKyKkwsRT98M7OoEqkDzm7hSeKi+cqEq
- eBttVAfiinymhThgbNalwZCeyp+P1lXUxF8FmkRE1E758wud3K61ni8OVwgFD99P4Uan
- TtuQM7ygEYhyNnVjJOb2A0u4j0XSYl30BnlaQwi0frdYQscfp3fPBOQB6kuasnzCH8rF
- 6trRdvhpFY/8IsBJyVoectaGnx6Y3PDRY6Xe7Sk/5+wJZmNf024pG7Ogww+RTDlF6qKu
- QuiGi8tNrEygNhwp89Gt7yUcz2XIbcq1hrGM29S2heokyXO7SP20+wZOUe+x03mxw3AX
- 0f3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGaU/QzuSS2aOTVbBQopn/yg6ovqIuXuHCpG3+AE4sn3OllulEf58IdcHH99IND/KuywkUgi1jXrWp@nongnu.org
-X-Gm-Message-State: AOJu0YxUtA/xD7cSshuoyRis71J7sjsW+93ynRcYMa+C040OA+lvg4uz
- hEnygmTcCd/fwe1KVMGnvHHLthsjyZ2fdoj8jgvmMcb75ksU/LBNDqq6IUczGICg+8OiXz6hQLW
- Ccpuy+APeKnjRPch/pDiw/RNBxl0DmcJD+QkXYvWQEPjKo/KjbAFaT4BeuHwxNBxRQoexvJ+N1d
- Ucu5Yyp6faXUy7LiT+PkuaoYaajMEfUDU=
-X-Gm-Gg: AY/fxX7kWQoV2Wxz9YCf1vdHCMt0ZlrqfjFl2HH5s3U93Xo2YKfbFx29r7JhviCpGd1
- 1V4s7NTHZg4gESex/SbR6nedZEsjizRyNdqdLs84nHVHuxn7JXulRdylnhbyYUXVUU9fHGQj39c
- WOg/Udp9oYxJYVfnWGt+hEnpXGV7rKnGdBDxEieYHuafqBNb+cacV//a0qjvIyrxSioqVkvwMRh
- nnDymwmzo7T/uMdv9LnJ7XDYaTRzR8TpH32wzGqRnMA87p0YM2dafUSsq04T17Q7YhAWg==
-X-Received: by 2002:a05:600c:3e8f:b0:477:5897:a0c4 with SMTP id
- 5b1f17b1804b1-47d84b0b315mr198969975e9.4.1768237949085; 
- Mon, 12 Jan 2026 09:12:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF+VhlfxTBklsMUvnB2bwD9d0SVSG9i3WldYSftXmzGMnTRQo6eoyUW1AqgCgPVrhVKsoZhsI9d3anZTvrNxc8=
-X-Received: by 2002:a05:600c:3e8f:b0:477:5897:a0c4 with SMTP id
- 5b1f17b1804b1-47d84b0b315mr198969675e9.4.1768237948726; Mon, 12 Jan 2026
- 09:12:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
+ id 1vfLRk-0007dD-Ne; Mon, 12 Jan 2026 12:11:19 -0500
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 6D2D37A00BE;
+ Mon, 12 Jan 2026 12:11:13 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-03.internal (MEProxy); Mon, 12 Jan 2026 12:11:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1768237873;
+ x=1768324273; bh=YYIiKadWRcxnSfN37hYQPJVSJvHsQec4Z1vBC/0Ewlw=; b=
+ i0MpOEeui/DzJBH9nqrTgXLnKhUt6f2E0LLhgdMMxkOIJAJSH3bi8liHxWgGjM7k
+ IzH4PCRdF3KYzFHY/nHLJnukMjexijFMAS/Z/QSiECth2PaLI3WFWgAKRS9uhqwY
+ uPqlpIMiRziLBkn3L6xpVAj0OVCEBks4gBGlmzKCiQaKKYKLVjk39nJ8NDY0e8Ot
+ hOi/GnFaSOGSGRMqh2dUrBsYRgSss+f1U7wI5ZU5Ntx0RYYHX0xducxdOslsgveL
+ 8Uk68bd6qwif5p3t9V8uiUL91duqZuPEmMP5Stm9FicEw4Qi2pCc4WbWFgEho4Dd
+ tzgMvCH6VdwLNoBsVCo4Iw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768237873; x=
+ 1768324273; bh=YYIiKadWRcxnSfN37hYQPJVSJvHsQec4Z1vBC/0Ewlw=; b=T
+ Kh9g7ypkJRDDSWiwh1jnY6q74wBsuiIXug7hqNH4bK6TsAM2JYaabZPD5JHaCc4R
+ dB+TAnMHm7fTPsWYX5PfpDJWFPIeAfhqF0sYrVUg9bBVdrrIS7W6MlNdxYYsSOHN
+ ssIw/UnWbxfTexRVkQv8xSPE4TykL87FheLN8WRsh9AfztRETKY0EXfNySU1hETC
+ aHkUfn0j1pV9OhmkVAoAt875TN9nybG/xxXSKYTGBa7h3tnb0Pr+LCa6VrSlSCmv
+ wdFawjWAGoRWaS5/yKe48/d+KpFYnD5a3btDAlxYS7WIpsC9gYpegl2qrouYov3Y
+ PYjEwXbfo7EKwzY/W6nug==
+X-ME-Sender: <xms:MCtlaeU4O_cSr_iUiJbxugMieisVHrvQaXBlkG2-aXjvJ7IIoHfw2g>
+ <xme:MCtlaat4Ao06t4eaWOON14iLLuggY8BlLXVwzo2KACAL78Jov_AHGM1zNlk_DMc_q
+ ZzlZN-HOELtW3MB7ndsJpjpX2DrSORBSc45pQ46PgEw25ITtptA>
+X-ME-Received: <xmr:MCtlaaUM7jcXP_0IzMKvdhm7qGdS6pKySPOKnaO6nU8YaeuUgtaKxCylaeE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudektddvucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepfffhvfevuffkjghfofggtgfgsehtjeertdertddvnecuhfhrohhmpeetlhgvgicu
+ hghilhhlihgrmhhsohhnuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtffrrg
+ htthgvrhhnpedvkeefjeekvdduhfduhfetkedugfduieettedvueekvdehtedvkefgudeg
+ veeuueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+ mhhtphhouhhtpdhrtghpthhtohepvhhitghtohhrrdiihhgrohesrghmugdrtghomhdprh
+ gtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohep
+ tghlghesrhgvughhrghtrdgtohhmpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnh
+ honhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:MCtladlgAtHgglg8oXApyn4AxK_NQfqAHwG4EOrEn8PE1tfQvU-mow>
+ <xmx:MStlaTZA_ASWspTwbh_kkk9WbmChUNhE2b_SkyWDGVY3uBIQfb2FbQ>
+ <xmx:MStlaQPp_5-nvGGq_kwFpDASVGE_73vCiCrAbDqKdMmixiXXiukQCQ>
+ <xmx:MStlaQYeVCGDhpekkpPeVq9aB1qrx5YJy2D7LJRNmX2-1G3WA6lJtQ>
+ <xmx:MStlaQMygLFrxlGEVwKdi4EYqoo2sq1GsZ9jIz_A8jtwbnwiaxaqphqT>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 Jan 2026 12:11:12 -0500 (EST)
+Date: Mon, 12 Jan 2026 10:11:11 -0700
+From: Alex Williamson <alex@shazbot.org>
+To: Victor Zhao <Victor.Zhao@amd.com>
+Cc: <qemu-devel@nongnu.org>, <clg@redhat.com>, <qemu-stable@nongnu.org>
+Subject: Re: [PATCH] vfio/pci: Do not clear PCI_COMMAND_INTX_DISABLE in
+ pre_reset
+Message-ID: <20260112101111.0857f69b@shazbot.org>
+In-Reply-To: <20251219092634.3176885-1-Victor.Zhao@amd.com>
+References: <20251219092634.3176885-1-Victor.Zhao@amd.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20260112132259.76855-1-anisinha@redhat.com>
- <20260112132259.76855-20-anisinha@redhat.com>
-In-Reply-To: <20260112132259.76855-20-anisinha@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 12 Jan 2026 18:12:16 +0100
-X-Gm-Features: AZwV_QjXKzvoLIMEpw40RsKeIM2DnH2rFQQH12t1B2CQDOBP8aJHQrSn88CGaco
-Message-ID: <CABgObfYgKFuBJRAR-t+gU2cUu3nVjy3++3R-k4_E+dti4E5XLg@mail.gmail.com>
-Subject: Re: [PATCH v2 19/32] i386/sev: add support for confidential guest
- reset
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=202.12.124.157; envelope-from=alex@shazbot.org;
+ helo=fhigh-b6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,16 +109,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 12, 2026 at 2:24=E2=80=AFPM Ani Sinha <anisinha@redhat.com> wro=
-te:
-> @@ -2758,6 +2807,8 @@ sev_common_instance_init(Object *obj)
->      cgs->get_mem_map_entry =3D cgs_get_mem_map_entry;
->      cgs->set_guest_policy =3D cgs_set_guest_policy;
->
-> +    qemu_register_resettable(OBJECT(sev_common));
+On Fri, 19 Dec 2025 17:26:34 +0800
+Victor Zhao <Victor.Zhao@amd.com> wrote:
 
-Same issue as previous patch.
+> When vfio_pci_pre_reset() disables MSI/MSI-X, the device may fall back
+> to INTx mode. The code then clears PCI_COMMAND_INTX_DISABLE, allowing
+> the device to assert INTx. Since interrupt handlers have already been
+> removed, this causes unhandled interrupts and kernel "nobody cared"
+> warnings.
 
-Paolo
+Is there a bug report to go along with this?
 
+> Fix by not clearing PCI_COMMAND_INTX_DISABLE. The device reset will
+> restore it to default state.
+> 
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Victor Zhao <Victor.Zhao@amd.com>
+> ---
+>  hw/vfio/pci.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index b46b1305a7..1681134cf2 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2616,13 +2616,9 @@ void vfio_pci_pre_reset(VFIOPCIDevice *vdev)
+>  
+>      vfio_disable_interrupts(vdev);
+>  
+> -    /*
+> -     * Stop any ongoing DMA by disconnecting I/O, MMIO, and bus master.
+> -     * Also put INTx Disable in known state.
+> -     */
+> +    /* Stop any ongoing DMA by disconnecting I/O, MMIO, and bus master. */
+>      cmd = vfio_pci_read_config(pdev, PCI_COMMAND, 2);
+> -    cmd &= ~(PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER |
+> -             PCI_COMMAND_INTX_DISABLE);
+> +    cmd &= ~(PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER);
+>      vfio_pci_write_config(pdev, PCI_COMMAND, cmd, 2);
+>  
+>      /* Make sure the device is in D0 */
+
+
+I think the key here was the "known state", where the PCI spec defines
+that INTX_DISABLE should be clear after reset.  If we don't touch it,
+the set bit will be saved and restored around reset.  However, the first
+thing we do in post-reset is to configure INTx, and I think this
+results in INTX_DISABLE being cleared such that the post-reset state
+seen by the VM is consistent to the spec.  Do you confirm?  It might be
+worthwhile to expand the comment in that regard.  Thanks,
+
+Alex
 
