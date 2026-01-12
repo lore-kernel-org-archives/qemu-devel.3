@@ -4,106 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EE75D2505B
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 09:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9158D2505C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 09:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfE1y-0004aT-6N; Mon, 12 Jan 2026 04:16:10 -0500
+	id 1vfE9T-00022N-SF; Mon, 12 Jan 2026 04:23:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vfE1q-0004XZ-MI
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:16:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vfE1m-0006WX-Sh
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:16:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768209356;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MWWWqeK64ec0+Sc+BsA42lXcR5YfvvX2aTtBOanWLHs=;
- b=hs/xf94Cr/YRqkX98yAy7BqSgFFw2fZetETf+/u9Epevsd+zW6uSHlfsLB4nVOr8io6RK+
- SBgSE9xE6IeS3vXkF213J4qpPgR9iwm0K7kKgEFBRpiCC7RoFEHLFTmfzppq2a7QPNA7gZ
- AFQVKdD+3lWI9yqqw7fPM1NOs0G077Q=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-YRVvMEw-MP6MPnmVY9F3Dg-1; Mon, 12 Jan 2026 04:15:55 -0500
-X-MC-Unique: YRVvMEw-MP6MPnmVY9F3Dg-1
-X-Mimecast-MFC-AGG-ID: YRVvMEw-MP6MPnmVY9F3Dg_1768209354
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-432a9ef3d86so3204477f8f.2
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 01:15:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768209354; x=1768814154;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfE8u-0001xy-PD
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:23:24 -0500
+Received: from mail-ed1-x541.google.com ([2a00:1450:4864:20::541])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfE8r-0007zB-4i
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:23:20 -0500
+Received: by mail-ed1-x541.google.com with SMTP id
+ 4fb4d7f45d1cf-64b9d01e473so10234571a12.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 01:23:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768209794; x=1768814594; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MWWWqeK64ec0+Sc+BsA42lXcR5YfvvX2aTtBOanWLHs=;
- b=JLnij/lAUfkMg2UkgLQvi/TSf0SatOoF97Alh6J8atqnFRXPyHFLqNBbxnXMYsCPUX
- Q0WBudAxITQDzuftmBmD8p6TnBMvbDam0b7UwtdtN5XG0+kiIQqjLr/CFgfs7cQITIbt
- LMiraL7utBylyHGNoybKhuF6zK7oa01BQ+YSVf96JBnmDOrfQskmOI2kqfXr1eHrkI4v
- +MrbLoVwQgL+RXXfvOYc8DIXlq2eP4DIJD9ylyB39vzCNX58HeU4pLfab5/KqPJMJ7xO
- KeUeTWzAo5pAsJ/J7wHy8N1uXW+ucbsOLLePpgQAt3NUCRSxk/p2tQxAVvY78Ia8Ic8X
- cVLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXBV7rZhODL/0xFlbhFsMbEKTbZYc7ntCUKVuAzUfyKhsuJDk2vDkHrjGZ3V2rARxVUAhKUzVSdUqQ@nongnu.org
-X-Gm-Message-State: AOJu0YwuOPPE0tDdx3LS12b3GCYWEjffDDWegktkZk/qkQoqnVwFwRg2
- sENhlFD6qSbb4jXMZHV0MQp2R7UMZLiQMjt6YnYvEIVUtY3leEN1TVpzhGwmjf/HW91vwnoRY2e
- j7gh2Kt3B6lxaSUDHdS359QZezJm7BO/cSZzYnz43m48BiSTUxesNg1cl
-X-Gm-Gg: AY/fxX4mDJQpXeicci09LzEeoW3MViz/fackYtm0zAv8Go1enxTIi/N00ufK0UB1HN+
- z1Ihgs7TucwZbGtQQfdKdGAK/D3xxr9KkP5Za4QkmQ1nzY5Nx6w3zb7pK0E7eubF2Ju/mEk1my2
- jZPY/oKOnKZLlPexT1J3cMSmB3bApKoipiL2/q71sZkbkdn/720DuJ3SdfO7MNmLqF5XBWAmQve
- 6gtRdq0CC7jasitFgpWHNi5z1I/yZeaMpWxEDTef+8ryXyGJxUq3gZQ6kbGs5oPyTYWEOuR6vGx
- 7jMsuuxCKmBeZbqVhVPuhtKqhQueuDlI222/p9GDXQ+8HG78Zcux7AYERxU1g7BI2fb4vPjkPQp
- Q0B9zVYcVfYFzK0sSDYDp60CMtGE49uGsTlVhIeob9aEd/maYJDY3f2x5/Q==
-X-Received: by 2002:a05:6000:1842:b0:42f:f627:3aa7 with SMTP id
- ffacd0b85a97d-432c3632b03mr18708415f8f.16.1768209353716; 
- Mon, 12 Jan 2026 01:15:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHB0HbCPjl3t9l4wLv7Dbaq3ryXmDzOT9tYzmC/ThaRXt0AgV61JTMXChMYrifEPtyjlUp5iw==
-X-Received: by 2002:a05:6000:1842:b0:42f:f627:3aa7 with SMTP id
- ffacd0b85a97d-432c3632b03mr18708375f8f.16.1768209353254; 
- Mon, 12 Jan 2026 01:15:53 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ bh=UZ/9xFl/2E6M/Jby6wt5Ct9O6BhC5H+Gs0R+iL3qzak=;
+ b=G6OIvpZvQFCXmyXHDcE+JkcxjCOOpAiY+9SlBmqDPfX05fU/zK7O5Ibmc2CDNPndd9
+ u3IDvs5sr3jRLqV+g+XOe7pDSIND17tkUFp//ms6OD/2u+dKKybIag3J7AhRnhuNDrsN
+ HvNZcjp0T5iI6KLc0C5KLOmrDDwIIirppGjBABT7MqG2tBUBotsyJKPAIoZwsi74zYqS
+ ZQgPUV9ydOH2cMTSjwuBozHhOrOv5rE4Wt1zCH9WNV0t1GaekE9K2MwVdfnyd8WpYi+2
+ AnMCy+cKaTWhUBMcfI1q98uicnEwctGMFJAEDOAZYh3e+xeLbKMVm6mpMOsI+9W6qEgH
+ 6ArQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768209795; x=1768814595;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UZ/9xFl/2E6M/Jby6wt5Ct9O6BhC5H+Gs0R+iL3qzak=;
+ b=XqHM4W1Sy5qMAcs/q7lHPJS39N8GM34g+J96N24SjcrSpBKAPqGM9qMsNwOIgaOPUD
+ e7qzkSOAs5b/Nj3v3g4G98vG/UZX+QL+hOEXeRejEeyIwN5F1yEenON3o15bwlS3Gt9A
+ jlrJyDnWytByWBjvf0ngfpPxcB1pNO8T2RXd1SXPoqAQ/RIoRKhLOur5MS1QNjdkUXG9
+ lneUuv+pmG7coTPEf1m9gG5JCz7mTC09e367vQBjZBExJtGbyY3QdrKJYMKtng1jtAfa
+ jGsR27I3NyrpktsjoTQy1+IOWQmpXnogPQLkJ86++XkVMjAC3IIx6/eSXw75aRfDYpaO
+ OWFg==
+X-Gm-Message-State: AOJu0YygefmUNCPpOCGuEjrbxLhwe3EJrgI1jlPFyXLcuFlVKcAiC2yg
+ qfOY72uy5qclmeuN1wVhOerknUfycelUMSoauwxI4+IEqU8zMtcRjU7qom8TXLVn
+X-Gm-Gg: AY/fxX4N4bY+Yf/HtBJVmoSQbnPMy1RRYTvPgMkpTlb/urP7Pm4NEYqsAhjWyOdxYkY
+ Kqx8txsNVP+Axlz5aRHwu7kE8TJjjtQS6ePdlgVP7jZf3x+yEYLxiI7VxpKPU6kitXYmSI20Oj+
+ Z+GkYpS73IsocR5pkbmFaPeRBYldUA6Q1jFv4Zn/MNc6mFDRL+knfbHvQScvMRTbqU50pHEkBdP
+ aPnFfLCBMeqeGOoMjXB5ou8ue8kK2uF9/QC2P4lD5ma3w+UN/ErmVm71onDgsVJCLNUwdlMy3cn
+ ursMX1735g6eydsfrJW5xTgkK5qzL7P8xwTk6c6PgwieEjpDGxpXIuP7lwNNGwwL5OsX5sruhYS
+ rnpU+AoM+0JKNBLXX0lkdib+XgzbTTEtSy4YFs9Kc/O0JoBKBTvBseWmeOsbOl6BOFag/6F79U3
+ lUjwqCsezS+BFNR5TPBIqzD0vClGU4rxR816jAkLKc4fRl0VzBPBDUPfK3apH0YXK+UKt2rrwkb
+ cl9m4GmQOpXaSZje8HhLKmZ7wWjOgPv54g=
+X-Google-Smtp-Source: AGHT+IES/JBZ3b2T+dCERrhtmE0TdWBU0dbmUkLv/3SrtXen+NUcpjmio733C5vEyqfdtTZo5IpweQ==
+X-Received: by 2002:a17:907:98d:b0:b73:7b97:5bfb with SMTP id
+ a640c23a62f3a-b8444f4f7d3mr1805892966b.33.1768209794258; 
+ Mon, 12 Jan 2026 01:23:14 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-299b-b200-f91d-651c-a220-693b.310.pool.telefonica.de.
+ [2a02:3100:299b:b200:f91d:651c:a220:693b])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5ff0b2sm37510157f8f.42.2026.01.12.01.15.52
+ 4fb4d7f45d1cf-6507b8c3f89sm17353725a12.5.2026.01.12.01.23.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 01:15:52 -0800 (PST)
-Message-ID: <af8904cf-cce9-476f-be8a-34a85668cdb3@redhat.com>
-Date: Mon, 12 Jan 2026 10:15:51 +0100
+ Mon, 12 Jan 2026 01:23:13 -0800 (PST)
+Date: Mon, 12 Jan 2026 09:23:11 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>
+CC: pbonzini@redhat.com, peter.maydell@linaro.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv4_02/15=5D_hw/misc/imx8mp=5Fa?=
+ =?US-ASCII?Q?nalog=3A_Add_property_to_analog_device?=
+In-Reply-To: <20251205053819.2021772-3-gaurav.sharma_7@nxp.com>
+References: <20251205053819.2021772-1-gaurav.sharma_7@nxp.com>
+ <20251205053819.2021772-3-gaurav.sharma_7@nxp.com>
+Message-ID: <A89B56FB-A417-427A-8725-37624FF9A088@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/vfio/region: Create dmabuf for PCI BAR per region
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, cohuck@redhat.com, mst@redhat.com,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jgg@nvidia.com,
- kjaju@nvidia.com
-References: <20251222135357.143339-1-skolothumtho@nvidia.com>
- <20251222135357.143339-4-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251222135357.143339-4-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::541;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x541.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,153 +101,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
 
-On 12/22/25 2:53 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
+
+Am 5=2E Dezember 2025 05:38:06 UTC schrieb Gaurav Sharma <gaurav=2Esharma_=
+7@nxp=2Ecom>:
+>Add configurable properties for register reset values that differ
+>between i=2EMX 8M variants (Plus, Mini, etc=2E)=2E This allows the same
+>device implementation to be shared across multiple SoCs=2E
 >
-> Linux now provides a VFIO dmabuf exporter to expose PCI BAR memory for P2P
-> use cases. Create a dmabuf for each mapped BAR region after the mmap is set
-> up, and store the returned fd in the region’s RAMBlock. This allows QEMU to
-> pass the fd to dma_map_file(), enabling iommufd to import the dmabuf and map
-> the BAR correctly in the host IOMMU page table.
-
-I tested the series with upstream kernel and your
-master-smmuv3-accel-v6-veventq-v2-vcmdq-rfcv1-dmabuf-v1 branch
-
-It works fine with Grace Hopper GPU passthrough, without cmdqv. However
-with cmdqv, I get
-
-qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
-qemu-system-aarch64: warning: vfio_container_dma_map(0xaaaea68471b0,
-0xc090000, 0x10000, 0xffffb5c90000) = -14 (Bad address)
-qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
-
-Maybe this is unrelated to this series and rather relates to the cmdqv one.
-
-Wonder if you get the same warning, and in the positive, if the root
-cause is understood and maybe fixed elsewhere.
-
-Thank you in advance
-
-Eric
-
-
-
+>Properties added:
+>- arm-pll-fdiv-ctl0-reset: ARM PLL divider control reset value
 >
-> If the kernel lacks support or dmabuf setup fails, QEMU skips the setup
-> and continues with normal mmap handling.
+>Default value is set to match i=2EMX 8MP reset value (0x000FA031)=2E
+>This can be overridden in the variant like iMX8MM with its own
+>reset value=2E
 >
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/vfio/region.c     | 57 +++++++++++++++++++++++++++++++++++++++++++-
->  hw/vfio/trace-events |  1 +
->  2 files changed, 57 insertions(+), 1 deletion(-)
+>Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>---
+> hw/misc/imx8mp_analog=2Ec         | 12 +++++++++++-
+> include/hw/misc/imx8mp_analog=2Eh |  3 +++
+> 2 files changed, 14 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index b165ab0b93..6949f6779c 100644
-> --- a/hw/vfio/region.c
-> +++ b/hw/vfio/region.c
-> @@ -29,6 +29,7 @@
->  #include "qemu/error-report.h"
->  #include "qemu/units.h"
->  #include "monitor/monitor.h"
-> +#include "system/ramblock.h"
->  #include "vfio-helpers.h"
->  
->  /*
-> @@ -238,13 +239,52 @@ static void vfio_subregion_unmap(VFIORegion *region, int index)
->      region->mmaps[index].mmap = NULL;
->  }
->  
-> +static int vfio_region_create_dma_buf(VFIORegion *region)
-> +{
-> +    g_autofree struct vfio_device_feature *feature = NULL;
-> +    VFIODevice *vbasedev = region->vbasedev;
-> +    struct vfio_device_feature_dma_buf *dma_buf;
-> +    size_t total_size;
-> +    int i, ret;
-> +
-> +    g_assert(region->nr_mmaps);
-> +
-> +    total_size = sizeof(*feature) + sizeof(*dma_buf) +
-> +                 sizeof(struct vfio_region_dma_range) * region->nr_mmaps;
-> +    feature = g_malloc0(total_size);
-> +    *feature = (struct vfio_device_feature) {
-> +        .argsz = total_size,
-> +        .flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_DMA_BUF,
-> +    };
-> +
-> +    dma_buf = (void *)feature->data;
-> +    *dma_buf = (struct vfio_device_feature_dma_buf) {
-> +        .region_index = region->nr,
-> +        .open_flags = O_RDWR,
-> +        .nr_ranges = region->nr_mmaps,
-> +    };
-> +
-> +    for (i = 0; i < region->nr_mmaps; i++) {
-> +        dma_buf->dma_ranges[i].offset = region->mmaps[i].offset;
-> +        dma_buf->dma_ranges[i].length = region->mmaps[i].size;
-> +    }
-> +
-> +    ret = vbasedev->io_ops->device_feature(vbasedev, feature);
-> +    for (i = 0; i < region->nr_mmaps; i++) {
-> +        trace_vfio_region_dmabuf(region->vbasedev->name, ret, region->nr,
-> +                                 region->mem->name, region->mmaps[i].offset,
-> +                                 region->mmaps[i].size);
-> +    }
-> +    return ret;
-> +}
-> +
->  int vfio_region_mmap(VFIORegion *region)
->  {
->      int i, ret, prot = 0;
->      char *name;
->      int fd;
->  
-> -    if (!region->mem) {
-> +    if (!region->mem || !region->nr_mmaps) {
->          return 0;
->      }
->  
-> @@ -305,6 +345,21 @@ int vfio_region_mmap(VFIORegion *region)
->                                 region->mmaps[i].size - 1);
->      }
->  
-> +    ret = vfio_region_create_dma_buf(region);
-> +    if (ret < 0) {
-> +        if (ret == -ENOTTY) {
-> +            warn_report_once("VFIO dmabuf not supported in kernel");
-> +        } else {
-> +            error_report("%s: failed to create dmabuf: %s",
-> +                         memory_region_name(region->mem), strerror(errno));
-> +        }
-> +    } else {
-> +        MemoryRegion *mr = &region->mmaps[0].mem;
-> +        RAMBlock *ram_block = mr->ram_block;
-> +
-> +        ram_block->fd = ret;
-> +    }
-> +
->      return 0;
->  
->  no_mmap:
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index 1e895448cd..592a0349d4 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -117,6 +117,7 @@ vfio_device_put(int fd) "close vdev->fd=%d"
->  vfio_region_write(const char *name, int index, uint64_t addr, uint64_t data, unsigned size) " (%s:region%d+0x%"PRIx64", 0x%"PRIx64 ", %d)"
->  vfio_region_read(char *name, int index, uint64_t addr, unsigned size, uint64_t data) " (%s:region%d+0x%"PRIx64", %d) = 0x%"PRIx64
->  vfio_region_setup(const char *dev, int index, const char *name, unsigned long flags, unsigned long offset, unsigned long size) "Device %s, region %d \"%s\", flags: 0x%lx, offset: 0x%lx, size: 0x%lx"
-> +vfio_region_dmabuf(const char *dev, int fd, int index,  const char *name, unsigned long offset, unsigned long size) "Device %s, dmabuf fd %d region %d \"%s\", offset: 0x%lx, size: 0x%lx"
->  vfio_region_mmap_fault(const char *name, int index, unsigned long offset, unsigned long size, int fault) "Region %s mmaps[%d], [0x%lx - 0x%lx], fault: %d"
->  vfio_region_mmap(const char *name, unsigned long offset, unsigned long end) "Region %s [0x%lx - 0x%lx]"
->  vfio_region_exit(const char *name, int index) "Device %s, region %d"
+>diff --git a/hw/misc/imx8mp_analog=2Ec b/hw/misc/imx8mp_analog=2Ec
+>index 23ffae84f8=2E=2E7c904d77f4 100644
+>--- a/hw/misc/imx8mp_analog=2Ec
+>+++ b/hw/misc/imx8mp_analog=2Ec
+>@@ -12,6 +12,7 @@
+> #include "qemu/log=2Eh"
+>=20
+> #include "hw/misc/imx8mp_analog=2Eh"
+>+#include "hw/qdev-properties=2Eh"
+> #include "migration/vmstate=2Eh"
+>=20
+> #define ANALOG_PLL_LOCK BIT(31)
+>@@ -51,7 +52,10 @@ static void imx8mp_analog_reset(DeviceState *dev)
+>     s->analog[ANALOG_VPU_PLL_LOCKD_CTRL] =3D 0x0010003f;
+>     s->analog[ANALOG_VPU_PLL_MNIT_CTRL] =3D 0x00280081;
+>     s->analog[ANALOG_ARM_PLL_GEN_CTRL] =3D 0x00000810;
+>-    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] =3D 0x000fa031;
+>+
+>+    /* Use property value instead of hardcoded */
+>+    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] =3D s->arm_pll_fdiv_ctl0_reset;
+>+
+>     s->analog[ANALOG_ARM_PLL_LOCKD_CTRL] =3D 0x0010003f;
+>     s->analog[ANALOG_ARM_PLL_MNIT_CTRL] =3D 0x00280081;
+>     s->analog[ANALOG_SYS_PLL1_GEN_CTRL] =3D 0x0aaaa810;
+>@@ -138,11 +142,17 @@ static const VMStateDescription imx8mp_analog_vmsta=
+te =3D {
+>     },
+> };
+>=20
+>+static const Property imx8mp_analog_properties[] =3D {
+>+    DEFINE_PROP_UINT32("arm-pll-fdiv-ctl0-reset", IMX8MPAnalogState,
+>+                       arm_pll_fdiv_ctl0_reset, 0x000fa031), /* imx8mp d=
+efault */
 
+IMO the new comments in the code except this one merily state the obvious,=
+ so I'd drop those=2E
+
+With this fixed:
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+
+>+};
+>+
+> static void imx8mp_analog_class_init(ObjectClass *klass, const void *dat=
+a)
+> {
+>     DeviceClass *dc =3D DEVICE_CLASS(klass);
+>=20
+>     device_class_set_legacy_reset(dc, imx8mp_analog_reset);
+>+    device_class_set_props(dc, imx8mp_analog_properties);
+>     dc->vmsd  =3D &imx8mp_analog_vmstate;
+>     dc->desc  =3D "i=2EMX 8M Plus Analog Module";
+> }
+>diff --git a/include/hw/misc/imx8mp_analog=2Eh b/include/hw/misc/imx8mp_a=
+nalog=2Eh
+>index 955f03215a=2E=2Eb313820392 100644
+>--- a/include/hw/misc/imx8mp_analog=2Eh
+>+++ b/include/hw/misc/imx8mp_analog=2Eh
+>@@ -76,6 +76,9 @@ struct IMX8MPAnalogState {
+>     } mmio;
+>=20
+>     uint32_t analog[ANALOG_MAX];
+>+
+>+    /* Property for variant-specific reset values */
+>+    uint32_t arm_pll_fdiv_ctl0_reset;
+> };
+>=20
+> #endif /* IMX8MP_ANALOG_H */
 
