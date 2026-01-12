@@ -4,91 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D827CD25050
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 09:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EE75D2505B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 09:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfE1P-00047D-Q3; Mon, 12 Jan 2026 04:15:35 -0500
+	id 1vfE1y-0004aT-6N; Mon, 12 Jan 2026 04:16:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfE1M-00043V-FT
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:15:32 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfE1K-0006VG-Kz
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:15:32 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-64b83949fdaso10126582a12.2
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 01:15:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768209328; x=1768814128; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wqD8zWYx6VXAE5aU9umR0x8lAwEafog5aHkZic2HdNg=;
- b=JZYAItQTEpEMG9j2/XqU2F0TPFC4KmY+LUqxfA/O9H7v9WDzu4OSlOuyKVRh+2gMfy
- T/vv+ZS6Ux3VdxWEELxeps55/AP0aCOkl7/q4sGcIFTbDAfeqhnSPUDMSqvNCFlf3MG/
- ZpbqXuKL35idhpdMhXKvwW1QBFuEapBS2Pj2aDGv5wGSsramn6G6xgy3195axj6uGudK
- zhQNvakcq5wKk4xHnNXky0kG/whVWV9fglrtf4eFCH4zIOnNRk1tiOhH6e1Ts5fmsIhP
- 7ChP+t2a4uknrR2dQdXjxOm6ZyB6geyuePQ9vAFzkzeA4/8W0LFRnXP5BpRiCpxejuve
- qWTA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vfE1q-0004XZ-MI
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:16:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vfE1m-0006WX-Sh
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:16:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768209356;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MWWWqeK64ec0+Sc+BsA42lXcR5YfvvX2aTtBOanWLHs=;
+ b=hs/xf94Cr/YRqkX98yAy7BqSgFFw2fZetETf+/u9Epevsd+zW6uSHlfsLB4nVOr8io6RK+
+ SBgSE9xE6IeS3vXkF213J4qpPgR9iwm0K7kKgEFBRpiCC7RoFEHLFTmfzppq2a7QPNA7gZ
+ AFQVKdD+3lWI9yqqw7fPM1NOs0G077Q=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-693-YRVvMEw-MP6MPnmVY9F3Dg-1; Mon, 12 Jan 2026 04:15:55 -0500
+X-MC-Unique: YRVvMEw-MP6MPnmVY9F3Dg-1
+X-Mimecast-MFC-AGG-ID: YRVvMEw-MP6MPnmVY9F3Dg_1768209354
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-432a9ef3d86so3204477f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 01:15:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768209328; x=1768814128;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wqD8zWYx6VXAE5aU9umR0x8lAwEafog5aHkZic2HdNg=;
- b=T656bK+L6VUkDxRRWzV7UdfCeGqHnn7+rnWlOqQJCEh0DNpklQTUbD72wtDIUh5p0R
- rYoOxFW9P8bKU/5Lr1HeoMNoSsoutLlbCTkQ3xzMlF9IOtsMILqQKRzmyxmTeG+6Y3ya
- dGQOcvTOtR8QVEeupMgiSUcWogyouPunzyqnmVz9I3OwBgLu2o60E2MYTVo0CAO6bMn/
- r+dnQPCoIAhyDofTsHt13TJd2QR3yV3iF1umUxF0+zZomHOsBi6gUBW4F0wCD3LoOE0R
- gSHYnsZ0EJCmMEuVlIC4jdSAuHDuA0r+aL2HVHIORu+7jEoZpOnoVqoUqRnjm/C1EH0c
- gRYQ==
-X-Gm-Message-State: AOJu0Yzwj7ff8CRw5VUjSkfJknvWC49m1SEC1p2KTWQpfznGgkmRzBMf
- 4bTEfmtG1WjQcOmnrxawGlIJzRpdMd8DkB9A6WhttuUMUzwb0gggeByiEqDkXQ==
-X-Gm-Gg: AY/fxX7kWUTWQKgLPdW6SJzVzsxFMmafNp8ldlOWHr6NMvgKKnVbmpIV9k3RgM5ekU1
- k2e1AwDMCWcoWktFz5RhcxEo1wJ0nqaBHUOLvLaPYMnsZcx6Vmmg/ykKAQg/M7qzU234I48+ixi
- cqydaHzjAmZsuPsv0H70zsddiZUdYWZdCqJtIg8dmlDU50mq2ahPeronU1jIIIoZptwGg8kRKbO
- 0J54wsmmSWNV/IfwZXcKD81G4o473KFhnIV6BfvXqujPUeW8ynCr2GH38Gy42PGe86P4mHh169Z
- 4grhh6PHJuaS4UcujHwOdJHPayXbADmuYSLZDzGPT99V5xddCqkBQ30/oKaLn3oSzxyOkO4DgaL
- sEX5poYR7q1KwiIIewZq0ACn3LRkfTV2/l2WXA4sEbu+BXYMrytf0tkp3/ttMbjX9tTOyWZ6IzN
- KpTSLsXrmcBTnMbuX+m8Pmm+p330eEa7HHw8jN1MFTKfEeblSeTP0djzXkQ0B+aXyRUWi+Zskwg
- wyi89B/WLKPnZeBAELQ99oHYZiGlglecwQ=
-X-Google-Smtp-Source: AGHT+IF8/ICo/NLges2oBOMGn0sjGlQE8N8Ubc7/epr4Cebj37Qj0bykb4ANVqUxdxUBMkqaCq4uEQ==
-X-Received: by 2002:a17:906:59a7:b0:b86:fca7:3dc5 with SMTP id
- a640c23a62f3a-b86fca73f83mr422562466b.28.1768209327446; 
- Mon, 12 Jan 2026 01:15:27 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-299b-b200-f91d-651c-a220-693b.310.pool.telefonica.de.
- [2a02:3100:299b:b200:f91d:651c:a220:693b])
+ d=1e100.net; s=20230601; t=1768209354; x=1768814154;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MWWWqeK64ec0+Sc+BsA42lXcR5YfvvX2aTtBOanWLHs=;
+ b=JLnij/lAUfkMg2UkgLQvi/TSf0SatOoF97Alh6J8atqnFRXPyHFLqNBbxnXMYsCPUX
+ Q0WBudAxITQDzuftmBmD8p6TnBMvbDam0b7UwtdtN5XG0+kiIQqjLr/CFgfs7cQITIbt
+ LMiraL7utBylyHGNoybKhuF6zK7oa01BQ+YSVf96JBnmDOrfQskmOI2kqfXr1eHrkI4v
+ +MrbLoVwQgL+RXXfvOYc8DIXlq2eP4DIJD9ylyB39vzCNX58HeU4pLfab5/KqPJMJ7xO
+ KeUeTWzAo5pAsJ/J7wHy8N1uXW+ucbsOLLePpgQAt3NUCRSxk/p2tQxAVvY78Ia8Ic8X
+ cVLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXBV7rZhODL/0xFlbhFsMbEKTbZYc7ntCUKVuAzUfyKhsuJDk2vDkHrjGZ3V2rARxVUAhKUzVSdUqQ@nongnu.org
+X-Gm-Message-State: AOJu0YwuOPPE0tDdx3LS12b3GCYWEjffDDWegktkZk/qkQoqnVwFwRg2
+ sENhlFD6qSbb4jXMZHV0MQp2R7UMZLiQMjt6YnYvEIVUtY3leEN1TVpzhGwmjf/HW91vwnoRY2e
+ j7gh2Kt3B6lxaSUDHdS359QZezJm7BO/cSZzYnz43m48BiSTUxesNg1cl
+X-Gm-Gg: AY/fxX4mDJQpXeicci09LzEeoW3MViz/fackYtm0zAv8Go1enxTIi/N00ufK0UB1HN+
+ z1Ihgs7TucwZbGtQQfdKdGAK/D3xxr9KkP5Za4QkmQ1nzY5Nx6w3zb7pK0E7eubF2Ju/mEk1my2
+ jZPY/oKOnKZLlPexT1J3cMSmB3bApKoipiL2/q71sZkbkdn/720DuJ3SdfO7MNmLqF5XBWAmQve
+ 6gtRdq0CC7jasitFgpWHNi5z1I/yZeaMpWxEDTef+8ryXyGJxUq3gZQ6kbGs5oPyTYWEOuR6vGx
+ 7jMsuuxCKmBeZbqVhVPuhtKqhQueuDlI222/p9GDXQ+8HG78Zcux7AYERxU1g7BI2fb4vPjkPQp
+ Q0B9zVYcVfYFzK0sSDYDp60CMtGE49uGsTlVhIeob9aEd/maYJDY3f2x5/Q==
+X-Received: by 2002:a05:6000:1842:b0:42f:f627:3aa7 with SMTP id
+ ffacd0b85a97d-432c3632b03mr18708415f8f.16.1768209353716; 
+ Mon, 12 Jan 2026 01:15:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHB0HbCPjl3t9l4wLv7Dbaq3ryXmDzOT9tYzmC/ThaRXt0AgV61JTMXChMYrifEPtyjlUp5iw==
+X-Received: by 2002:a05:6000:1842:b0:42f:f627:3aa7 with SMTP id
+ ffacd0b85a97d-432c3632b03mr18708375f8f.16.1768209353254; 
+ Mon, 12 Jan 2026 01:15:53 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b842a5180bdsm1825825366b.57.2026.01.12.01.15.26
+ ffacd0b85a97d-432bd5ff0b2sm37510157f8f.42.2026.01.12.01.15.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 01:15:27 -0800 (PST)
-Date: Mon, 12 Jan 2026 09:15:22 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>
-CC: pbonzini@redhat.com, peter.maydell@linaro.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv4_15/15=5D_hw/arm/fsl-imx8mm=3A_Add?=
- =?US-ASCII?Q?ing_functional_testing_of_iMX8MM_emulation?=
-In-Reply-To: <20251205053819.2021772-16-gaurav.sharma_7@nxp.com>
-References: <20251205053819.2021772-1-gaurav.sharma_7@nxp.com>
- <20251205053819.2021772-16-gaurav.sharma_7@nxp.com>
-Message-ID: <58E2AC3A-C08B-4A97-93EE-96276DCD0C1B@gmail.com>
+ Mon, 12 Jan 2026 01:15:52 -0800 (PST)
+Message-ID: <af8904cf-cce9-476f-be8a-34a85668cdb3@redhat.com>
+Date: Mon, 12 Jan 2026 10:15:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x534.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] hw/vfio/region: Create dmabuf for PCI BAR per region
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, cohuck@redhat.com, mst@redhat.com,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jgg@nvidia.com,
+ kjaju@nvidia.com
+References: <20251222135357.143339-1-skolothumtho@nvidia.com>
+ <20251222135357.143339-4-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251222135357.143339-4-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,135 +116,153 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Shameer,
 
-
-Am 5=2E Dezember 2025 05:38:19 UTC schrieb Gaurav Sharma <gaurav=2Esharma_=
-7@nxp=2Ecom>:
->Added script that would validate the iMX8MM emulation by checking the
->linux console log=2E If it succeeds, it will return:-
+On 12/22/25 2:53 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
 >
->ok 1 test_imx8mm_evk=2EImx8mmEvkMachine=2Etest_aarch64_imx8mm_evk_usdhc
+> Linux now provides a VFIO dmabuf exporter to expose PCI BAR memory for P2P
+> use cases. Create a dmabuf for each mapped BAR region after the mmap is set
+> up, and store the returned fd in the region’s RAMBlock. This allows QEMU to
+> pass the fd to dma_map_file(), enabling iommufd to import the dmabuf and map
+> the BAR correctly in the host IOMMU page table.
+
+I tested the series with upstream kernel and your
+master-smmuv3-accel-v6-veventq-v2-vcmdq-rfcv1-dmabuf-v1 branch
+
+It works fine with Grace Hopper GPU passthrough, without cmdqv. However
+with cmdqv, I get
+
+qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
+qemu-system-aarch64: warning: vfio_container_dma_map(0xaaaea68471b0,
+0xc090000, 0x10000, 0xffffb5c90000) = -14 (Bad address)
+qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
+
+Maybe this is unrelated to this series and rather relates to the cmdqv one.
+
+Wonder if you get the same warning, and in the positive, if the root
+cause is understood and maybe fixed elsewhere.
+
+Thank you in advance
+
+Eric
+
+
+
 >
->Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->---
-> tests/functional/aarch64/meson=2Ebuild        |  2 +
-> tests/functional/aarch64/test_imx8mm_evk=2Epy | 67 +++++++++++++++++++++
-> 2 files changed, 69 insertions(+)
-> create mode 100755 tests/functional/aarch64/test_imx8mm_evk=2Epy
+> If the kernel lacks support or dmabuf setup fails, QEMU skips the setup
+> and continues with normal mmap handling.
 >
->diff --git a/tests/functional/aarch64/meson=2Ebuild b/tests/functional/aa=
-rch64/meson=2Ebuild
->index 5ad52f93e1=2E=2Ec0e5be1b58 100644
->--- a/tests/functional/aarch64/meson=2Ebuild
->+++ b/tests/functional/aarch64/meson=2Ebuild
->@@ -4,6 +4,7 @@ test_aarch64_timeouts =3D {
->   'aspeed_ast2700' : 600,
->   'aspeed_ast2700fc' : 600,
->   'device_passthrough' : 720,
->+  'imx8mm_evk' : 240,
->   'imx8mp_evk' : 240,
->   'raspi4' : 480,
->   'reverse_debug' : 180,
->@@ -27,6 +28,7 @@ tests_aarch64_system_thorough =3D [
->   'aspeed_ast2700fc',
->   'device_passthrough',
->   'hotplug_pci',
->+  'imx8mm_evk',
->   'imx8mp_evk',
->   'kvm',
->   'multiprocess',
->diff --git a/tests/functional/aarch64/test_imx8mm_evk=2Epy b/tests/functi=
-onal/aarch64/test_imx8mm_evk=2Epy
->new file mode 100755
->index 0000000000=2E=2E224fe4669e
->--- /dev/null
->+++ b/tests/functional/aarch64/test_imx8mm_evk=2Epy
->@@ -0,0 +1,67 @@
->+#!/usr/bin/env python3
->+#
->+# Functional test that boots a Linux kernel and checks the console
->+#
->+# SPDX-License-Identifier: GPL-2=2E0-or-later
->+
->+from qemu_test import LinuxKernelTest, Asset
->+
->+class Imx8mmEvkMachine(LinuxKernelTest):
->+
->+    ASSET_IMAGE =3D Asset(
->+        ('https://cloud=2Edebian=2Eorg/images/cloud/bookworm/20231210-15=
-90/'
->+         'debian-12-generic-arm64-20231210-1590=2Etar=2Exz'),
->+        '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b35=
-9')
->+
->+    KERNEL_OFFSET =3D 0x51000000
->+    KERNEL_SIZE =3D 32622528
->+    INITRD_OFFSET =3D 0x76000000
->+    INITRD_SIZE =3D 30987766
->+    DTB_OFFSET =3D 0x64DB5000
->+    DTB_SIZE =3D 36812
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/vfio/region.c     | 57 +++++++++++++++++++++++++++++++++++++++++++-
+>  hw/vfio/trace-events |  1 +
+>  2 files changed, 57 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index b165ab0b93..6949f6779c 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -29,6 +29,7 @@
+>  #include "qemu/error-report.h"
+>  #include "qemu/units.h"
+>  #include "monitor/monitor.h"
+> +#include "system/ramblock.h"
+>  #include "vfio-helpers.h"
+>  
+>  /*
+> @@ -238,13 +239,52 @@ static void vfio_subregion_unmap(VFIORegion *region, int index)
+>      region->mmaps[index].mmap = NULL;
+>  }
+>  
+> +static int vfio_region_create_dma_buf(VFIORegion *region)
+> +{
+> +    g_autofree struct vfio_device_feature *feature = NULL;
+> +    VFIODevice *vbasedev = region->vbasedev;
+> +    struct vfio_device_feature_dma_buf *dma_buf;
+> +    size_t total_size;
+> +    int i, ret;
+> +
+> +    g_assert(region->nr_mmaps);
+> +
+> +    total_size = sizeof(*feature) + sizeof(*dma_buf) +
+> +                 sizeof(struct vfio_region_dma_range) * region->nr_mmaps;
+> +    feature = g_malloc0(total_size);
+> +    *feature = (struct vfio_device_feature) {
+> +        .argsz = total_size,
+> +        .flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_DMA_BUF,
+> +    };
+> +
+> +    dma_buf = (void *)feature->data;
+> +    *dma_buf = (struct vfio_device_feature_dma_buf) {
+> +        .region_index = region->nr,
+> +        .open_flags = O_RDWR,
+> +        .nr_ranges = region->nr_mmaps,
+> +    };
+> +
+> +    for (i = 0; i < region->nr_mmaps; i++) {
+> +        dma_buf->dma_ranges[i].offset = region->mmaps[i].offset;
+> +        dma_buf->dma_ranges[i].length = region->mmaps[i].size;
+> +    }
+> +
+> +    ret = vbasedev->io_ops->device_feature(vbasedev, feature);
+> +    for (i = 0; i < region->nr_mmaps; i++) {
+> +        trace_vfio_region_dmabuf(region->vbasedev->name, ret, region->nr,
+> +                                 region->mem->name, region->mmaps[i].offset,
+> +                                 region->mmaps[i].size);
+> +    }
+> +    return ret;
+> +}
+> +
+>  int vfio_region_mmap(VFIORegion *region)
+>  {
+>      int i, ret, prot = 0;
+>      char *name;
+>      int fd;
+>  
+> -    if (!region->mem) {
+> +    if (!region->mem || !region->nr_mmaps) {
+>          return 0;
+>      }
+>  
+> @@ -305,6 +345,21 @@ int vfio_region_mmap(VFIORegion *region)
+>                                 region->mmaps[i].size - 1);
+>      }
+>  
+> +    ret = vfio_region_create_dma_buf(region);
+> +    if (ret < 0) {
+> +        if (ret == -ENOTTY) {
+> +            warn_report_once("VFIO dmabuf not supported in kernel");
+> +        } else {
+> +            error_report("%s: failed to create dmabuf: %s",
+> +                         memory_region_name(region->mem), strerror(errno));
+> +        }
+> +    } else {
+> +        MemoryRegion *mr = &region->mmaps[0].mem;
+> +        RAMBlock *ram_block = mr->ram_block;
+> +
+> +        ram_block->fd = ret;
+> +    }
+> +
+>      return 0;
+>  
+>  no_mmap:
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index 1e895448cd..592a0349d4 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -117,6 +117,7 @@ vfio_device_put(int fd) "close vdev->fd=%d"
+>  vfio_region_write(const char *name, int index, uint64_t addr, uint64_t data, unsigned size) " (%s:region%d+0x%"PRIx64", 0x%"PRIx64 ", %d)"
+>  vfio_region_read(char *name, int index, uint64_t addr, unsigned size, uint64_t data) " (%s:region%d+0x%"PRIx64", %d) = 0x%"PRIx64
+>  vfio_region_setup(const char *dev, int index, const char *name, unsigned long flags, unsigned long offset, unsigned long size) "Device %s, region %d \"%s\", flags: 0x%lx, offset: 0x%lx, size: 0x%lx"
+> +vfio_region_dmabuf(const char *dev, int fd, int index,  const char *name, unsigned long offset, unsigned long size) "Device %s, dmabuf fd %d region %d \"%s\", offset: 0x%lx, size: 0x%lx"
+>  vfio_region_mmap_fault(const char *name, int index, unsigned long offset, unsigned long size, int fault) "Region %s mmaps[%d], [0x%lx - 0x%lx], fault: %d"
+>  vfio_region_mmap(const char *name, unsigned long offset, unsigned long end) "Region %s [0x%lx - 0x%lx]"
+>  vfio_region_exit(const char *name, int index) "Device %s, region %d"
 
-The only difference to test_imx8mp_evk=2Epy is the DTB=2E Can we share the=
- test between both SoCs by extracting both DTBs there? The test function te=
-st_aarch64_imx8mp_evk_usdhc() could get an additional parameter for the DTB=
- and one could drop the "p" (and possibly the "test_" prefix) from the func=
-tion name=2E Then two new functions test_aarch64_imx8m*_evk_usdhc() take th=
-e role as test functions=2E
-
-Does this work?
-
-Best regards,
-Bernhard
-
->+
->+    def extract(self, in_path, out_path, offset, size):
->+        try:
->+            with open(in_path, "rb") as source:
->+                source=2Eseek(offset)
->+                data =3D source=2Eread(size)
->+            with open(out_path, "wb") as target:
->+                target=2Ewrite(data)
->+        except (IOError, ValueError) as e:
->+            self=2Elog=2Eerror(f"Failed to extract {out_path}: {e}")
->+            raise
->+
->+    def setUp(self):
->+        super()=2EsetUp()
->+
->+        self=2Eimage_path =3D self=2Escratch_file("disk=2Eraw")
->+        self=2Ekernel_path =3D self=2Escratch_file("linux")
->+        self=2Einitrd_path =3D self=2Escratch_file("initrd=2Ezstd")
->+        self=2Edtb_path =3D self=2Escratch_file("imx8mm-evk=2Edtb")
->+
->+        self=2Earchive_extract(self=2EASSET_IMAGE)
->+        self=2Eextract(self=2Eimage_path, self=2Ekernel_path,
->+                     self=2EKERNEL_OFFSET, self=2EKERNEL_SIZE)
->+        self=2Eextract(self=2Eimage_path, self=2Einitrd_path,
->+                     self=2EINITRD_OFFSET, self=2EINITRD_SIZE)
->+        self=2Eextract(self=2Eimage_path, self=2Edtb_path,
->+                     self=2EDTB_OFFSET, self=2EDTB_SIZE)
->+
->+    def test_aarch64_imx8mm_evk_usdhc(self):
->+        self=2Erequire_accelerator("tcg")
->+        self=2Eset_machine('imx8mm-evk')
->+        self=2Evm=2Eset_console(console_index=3D1)
->+        self=2Evm=2Eadd_args('-m', '2G',
->+                         '-smp', '4',
->+                         '-kernel', self=2Ekernel_path,
->+                         '-initrd', self=2Einitrd_path,
->+                         '-dtb', self=2Edtb_path,
->+                         '-append', 'root=3D/dev/mmcblk2p1',
->+                         '-drive', f'file=3D{self=2Eimage_path},if=3Dsd,=
-bus=3D2,'
->+                                    'format=3Draw,id=3Dmmcblk2,snapshot=
-=3Don')
->+
->+        self=2Evm=2Elaunch()
->+        self=2Ewait_for_console_pattern('Welcome to ')
->+
->+if __name__ =3D=3D '__main__':
->+    LinuxKernelTest=2Emain()
 
