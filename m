@@ -4,50 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 596A4D25050
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 08:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF0DD25051
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 08:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfDKe-0005DL-IV; Mon, 12 Jan 2026 03:31:24 -0500
+	id 1vfDWx-00039B-SQ; Mon, 12 Jan 2026 03:44:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vfDKL-000556-4Y; Mon, 12 Jan 2026 03:31:12 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vfDWe-00033u-EJ; Mon, 12 Jan 2026 03:43:50 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vfDKH-0008QA-Pz; Mon, 12 Jan 2026 03:31:03 -0500
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 12 Jan
- 2026 16:30:54 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 12 Jan 2026 16:30:54 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 0/1] hw/i2c/aspeed: Introduce 'bus-label' to customize bus
- naming
-Date: Mon, 12 Jan 2026 16:30:52 +0800
-Message-ID: <20260112083054.4151945-1-kane_chen@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vfDWb-0001eZ-9Q; Mon, 12 Jan 2026 03:43:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1768207425; x=1799743425;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=ta6YHQYRgdlu3FrMPwXAQRDcDHrGwmOxazdaftjMxFQ=;
+ b=ilAGOQMK4IJfq/hYrswd+62za3wrLO8UBJSnYXh1ik97zsIiPJqWYLQR
+ /9Cq2ZzUeByjrO0KhDhq1eMOJVMjE+fRwjSl8B6x4AxtrcpcnerusBBQE
+ AVR2zZxK3UHOIGSPnhKquHLiebxQgYkVCu6kXYNE5gSxER7cutVz26uNs
+ zKEzmWy/nqem/HLyH43hCCS6SDkognfoSb3250lq4/YVbFFf8fgrbodqQ
+ WPgXqo00bm5Af6XqRhBj4h3aHhRISgw0+1yHDyu09V/tTNHnfC6NAvAYX
+ pY7IsXA1ARRToVjglMfnCsHhI/0BSpi8SkWiJx/mlCrWgc3czg3nrYpli Q==;
+X-CSE-ConnectionGUID: bbqCJ2EXQgK9QCqk1fi6/g==
+X-CSE-MsgGUID: ekdvbzqKQxCi6BbXRlKrIA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11668"; a="69553598"
+X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="69553598"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jan 2026 00:43:40 -0800
+X-CSE-ConnectionGUID: NTnVGIHVTJOiqmHs+U629A==
+X-CSE-MsgGUID: GnUeMNsrSpCc5/IHLrLp1g==
+X-ExtLoop1: 1
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 12 Jan 2026 00:43:38 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] rust: Update Cargo.lock
+Date: Mon, 12 Jan 2026 17:09:00 +0800
+Message-Id: <20260112090900.880621-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,49 +77,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
-From:  Kane Chen via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+`cargo +nightly build` updates Cargo.lock file.
 
-Currently, the Aspeed I2C controller uses a static naming convention
-for its buses (e.g., "aspeed.i2c.bus.0"). This approach leads to
-object name conflicts in machine models that incorporate multiple I2C
-controllers, such as an Aspeed SoC paired with an external IO expander
-or a co-processor like the AST1700.
+Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org> 
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ rust/Cargo.lock | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-This patch series introduces a 'bus-label' property to the Aspeed I2C
-controller. By setting this property, higher-level platform code
-(e.g., the SoC realize function) can provide a unique prefix for the
-I2C buses.
-
-Changes in v1:
-
-Added bus-label property to AspeedI2CState.
-Added bus-name property to AspeedI2CBus.
-Modified aspeed_i2c_realize to generate bus names based on the label.
-Updated aspeed_i2c_bus_realize to use the customized name for bus
-initialization and memory region naming.
-
-Example usage: If a controller's bus-label is set to "ioexp0", its buses
-will be named "ioexp0.0", "ioexp0.1", etc., instead of the default
-"aspeed.i2c.bus.0".
-
-Any feedback or suggestions are appreciated.
-
-Best Regards,
-Kane
-
-Kane-Chen-AS (1):
-  hw/i2c/aspeed: Introduce 'bus-label' to customize bus naming
-
- include/hw/i2c/aspeed_i2c.h |  2 ++
- hw/i2c/aspeed_i2c.c         | 27 +++++++++++++++++++++------
- 2 files changed, 23 insertions(+), 6 deletions(-)
-
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index 42ae857fe533..78452c3db9b4 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -1,6 +1,6 @@
+ # This file is automatically @generated by Cargo.
+ # It is not intended for manual editing.
+-version = 3
++version = 4
+ 
+ [[package]]
+ name = "anyhow"
+@@ -233,6 +233,8 @@ dependencies = [
+ [[package]]
+ name = "probe"
+ version = "0.5.2"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "136558b6e1ebaecc92755d0ffaf9421f519531bed30cc2ad23b22cb00965cc5e"
+ 
+ [[package]]
+ name = "proc-macro-error"
+@@ -392,7 +394,6 @@ dependencies = [
+  "migration",
+  "qom",
+  "system",
+- "trace",
+  "util",
+ ]
+ 
 -- 
-2.43.0
+2.34.1
 
 
