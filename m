@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 838B1C9EC94
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31101C9EC92
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:52:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfII3-0004hL-SD; Mon, 12 Jan 2026 08:49:03 -0500
+	id 1vfILd-00077F-8z; Mon, 12 Jan 2026 08:52:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfIHy-0004f7-Hh
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:48:59 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfILW-00074K-8z
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:52:39 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfIHx-00084r-4W
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:48:58 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-430f5ecaa08so3032202f8f.3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:48:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfILU-0008W1-O1
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:52:38 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-47d1d8a49f5so41454105e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 05:52:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768225735; x=1768830535; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1768225955; x=1768830755; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=URbsEyv6MSVe0u+ceuXm8YeqZvskrs5XxeVkkNt6Gp4=;
- b=v0gSPxTGVB/ESDgCWgM7198omDX7vtlzmeyBdori+fFJIKw9kGIez+SU0CU4LSP2AE
- tawQsWRFTXBmUIAIv3YewDXKoqmSb/J12ksUpajz6ZG/F6synj+iSMnMGwmfknS2A14t
- ACHfOWLt4DJHPXrXtNN5mA3cSUO/6YFicMDEK3zDT4+VFV9yCto4ODMJKb91HIpMeW3K
- ZFHSbC8gAkeEnIaRbBPAldrye0Ug+UwA5M7GojdoxqJ1p1ZnBa6oeGDGGRXY4zykwzLz
- XQnyFatPUAOL+DfkEXd2mtgbSmFhDyYUYB8razI1ES675Vu0d9ifkUtltcpen9jnFHsi
- 3z/g==
+ bh=K9JWlejBc4rJq/6IJN7dz2Frbj1iREEM8zcq+8sYb9Y=;
+ b=W50TgepElvaH8WTgPQrFlb7bcvaxCB6bclCW9/GXvE0PdqCnPxznuP6rrPq+q6UTsn
+ SQVr0Smzhp1Ea2yA2TBq+nxcVI8Gp+UXIKCpbI9PiT+YagMiNTTzge0j2gmPHfH0qrTm
+ Qn1xXBohEnA2kRBo2SqTEpN6Mfm0Yft2rLxJhmGn4yPngylDLZE67mksk7jNtn6ThsrK
+ t50ZG9lWYn0MFx5uw0NCCKDkybpjlD1zkKGw1aV9J2RKkDF61I5Lf5960xa3+6ya17z7
+ Wry8OKRBz5J6VJyN6rRiloJqLPoI6X6Ypzh+7tx+71FoK2shu4y3zyUAvDCE05mksk4R
+ RBfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768225735; x=1768830535;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1768225955; x=1768830755;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=URbsEyv6MSVe0u+ceuXm8YeqZvskrs5XxeVkkNt6Gp4=;
- b=px7saVJHWGB4VVHB7W9fctg7bwpnVwwMZpKNJ7wekLdNUR9zEzQ9TRZ9y4wuLCapcb
- UHOX+tUW7M6saePiCgPYc1rLtdN57g5zIUxpBaP5Ss1zeYpEABNmRqAShqbauhO4oEt+
- fCG+rs6xptwtrR6chJkEF87Uh8rhmsXfIl4WFRvgAvsFXeCK0MUQZ6jyc4tTP9XxBsMK
- TmIa4NoPKUKXRdg/apr12WkJD5X8jMS61BIKkU8QUtEzpcRKO1VjKYVibSvotLlswfcS
- qkVFW27IsGlXUBaPhceiSWF0/6oeRRu6LWM3sKyT2VIF3tYUVSSu4P6Ql2JbLhDthVgc
- Kkqw==
+ bh=K9JWlejBc4rJq/6IJN7dz2Frbj1iREEM8zcq+8sYb9Y=;
+ b=GPC83qDfFZcVAQ9yu3hZ+gMsADJbC/vGA3V/Xs2mj0sl+3glfuplXl0883blFscv4O
+ eay3nrSB9NMw5K79nzSP054e49OvA4N10MCE8KmnXh7FUtgKXgZLmvy9vPWxu2OV/Og/
+ FUXZ21I8TYyZCt/CN1Ujpy/oFpLnkzsz7kDfsN9idwL53mDhzPz1x/MCT/Pbwr0rVSei
+ QOi13zpgqwOW8To4KutKGlPosdbAPyOJLRMXcEp68v7bREQRXqi0iMaQDlIidr/6nq+o
+ BApMYbFA1Zr723zM4BTr4+Q5N/NBZ7TumBfjOCJDV7k+MBQcwIk6q9zod7qNoHYCTAeb
+ xVaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNB7a8Hk0BSPGkUMsVweTs+BI+28H7uF+9zUp5YBZ8Ut8QEcPurEmAtU3ORqJXsLH8PWlFp5E9x2VG@nongnu.org
-X-Gm-Message-State: AOJu0Yy29svZ6Yf84MddVC7N3/kJ62jDI2ruuzStv4IMM3eINkuW9nEK
- 7QWL4p7TeJzBjOkfjM9MXV4137FGXroQ9n9VxJnZiK1dP0g5TFxEnbmanPT0kKX+r9ZV7UMq7PG
- g8TijqsE=
-X-Gm-Gg: AY/fxX7m/uKyfhAIA10Jo/utLa+v9h/73TroE3OvitMwUF5HXhlYCFEQ+PGDoMm+Kaz
- YetHyYVH5EEKG+Ng9WDbheP8w9JJJirjwBUKMH2Vps+JKjBwKbSnl0Jx5ApyZaftm0+DVsnKfLL
- kN6vn1PZLAgqAH7XWuA8WzSGWZDvJwbFHRQIS0MCCFZfyRyM1J6zageSxx77H65Y0V2P6YsJFUs
- xG99ulLM0nfJlB3xfRh1RN4xJRDqX9ylxxRgHstMIQd1qSRp7xn3NEtW1Vp1//kWIQpnbSzZJuE
- Miu+8fchfL2YJGguTJB6xdDHwQn7hPCmMPSEPDoNfMbTY6qjCZnUkplEw9Ftocl6LYNGeBhqRhT
- LXnd3bcVI95iG5cQ0BdGfVLoHAZHZRamGnGEgyhPIy+GZQK4ZbmYRm/s0Bf71qswTXtx+Y2WNMp
- zDkR6ChKIRxwNab/GmwlWicNm46jA3KPmKE+dlqO6hAk4pAPXBiU346g==
-X-Google-Smtp-Source: AGHT+IElZx/kYZ5puvvTFuQfG3t3Ao3TEES3Mxl6L3GiD29XSE7fjkc0TW1kH1HjgOKwc90aL92oGg==
-X-Received: by 2002:a05:6000:1844:b0:429:b751:7935 with SMTP id
- ffacd0b85a97d-432c37742bamr22957408f8f.56.1768225735462; 
- Mon, 12 Jan 2026 05:48:55 -0800 (PST)
+ AJvYcCUXK5h1RFTgmfv4IagXZJpovSw6DpB95CC6VuDhjrjFrKZrOo9CjOSwtrk7VrMGbixKSr+FAjt3lmQW@nongnu.org
+X-Gm-Message-State: AOJu0YxTT235TPMBX9t59qQENPk8Vp64fE8+tjfoCnvIpXv0f8v2ZFPf
+ afPphF/4mp4fyGJVHDgtXJSMJ7PgaAdVskT2J0EQB8mjYcC0QtbwN/RWlVYO01zn6ElO2aax19B
+ 8TM3wy9vL/w==
+X-Gm-Gg: AY/fxX7hv5ptIAtvcBntXaOjqBQX4dlAskUgFmN8Ea/G/BET2UqFQ4pzHCP+rvenIle
+ URrLHI9AcNAOlY3f7+Ine8SxTT6sFzCqGUpRUsXjVFtEhOEizrMZdaL7urWDp6j102bO00ZiIal
+ K3oQRXrV2pHimibgCgsmMtdUyu5YT4DUBSIvSGd7V2c1zuyX/t8FNUBcm9wAXv8Stkaom1CdFDQ
+ VszpgL0FQ6B6tKlY/F4JZLrY7cgw/QkOYthU7/zeilVsrThwlSqdgA6vYtgprTLKSjBoehmgm1S
+ epmG0QXZuAP9UXla1WwzYmPJIcmZbhnAwVe5jVhJiPPZyJatHhqbTpKNp0v0g/VY4Xt1qE5RA8K
+ 5VfVK/VmszjK05ZuC55MptbG2d7hi2X64vB06+R4tIeoNzLjJlc6DVV6LwuDytSL8pKy9n+l9/J
+ VRIXFEVda5jrYQ04DV15WHTmjztqeeMapEY8XRdpK1L40iH8x+xO4WPw==
+X-Google-Smtp-Source: AGHT+IE6AGfpe/sx0ztn+Ss9Y0awKCBP8O1owWhPZXdzk62SJgVY0vBXVW6Hp7AMIg0U4g3AhdH4Lg==
+X-Received: by 2002:a05:600c:630f:b0:477:7658:572a with SMTP id
+ 5b1f17b1804b1-47d84b3b606mr167346655e9.20.1768225955033; 
+ Mon, 12 Jan 2026 05:52:35 -0800 (PST)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5df8besm36864185f8f.26.2026.01.12.05.48.54
+ ffacd0b85a97d-432bd0e16d2sm40162618f8f.13.2026.01.12.05.52.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 05:48:54 -0800 (PST)
-Message-ID: <54c03507-5c70-49d7-8afc-b59ed9c5ef8f@linaro.org>
-Date: Mon, 12 Jan 2026 14:48:54 +0100
+ Mon, 12 Jan 2026 05:52:34 -0800 (PST)
+Message-ID: <ee7d17b2-13c9-4214-b796-8a2ea79548a5@linaro.org>
+Date: Mon, 12 Jan 2026 14:52:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/vof: Fix build error
+Subject: Re: [PULL 08/15] target/s390x: Restrict WatchPoint API to TCG
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Alexey Kardashevskiy <aik@ozlabs.ru>
-References: <20260112124722.1029212-1-clg@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260112124722.1029212-1-clg@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20260112131457.67128-1-thuth@redhat.com>
+ <20260112131457.67128-9-thuth@redhat.com>
+ <2b4efec4-1c47-408e-9a87-a62c37e5bb01@linaro.org>
+In-Reply-To: <2b4efec4-1c47-408e-9a87-a62c37e5bb01@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,21 +106,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/26 13:47, Cédric Le Goater wrote:
-> Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
-> detects an unused variable error:
+On 12/1/26 14:47, Philippe Mathieu-Daudé wrote:
+> On 12/1/26 14:14, Thomas Huth wrote:
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+>> By inverting the 'tcg_enabled()' check in s390_cpu_set_psw()
+>> we can let the compiler elide the s390_cpu_recompute_watchpoints()
+>> call when TCG is not available. Move this function -- along with
+>> s390x_cpu_debug_excp_handler() which was introduced in the same
+>> commit 311918b979c ("target-s390x: PER storage-alteration event
+>> support") -- to a TCG specific file to avoid compiling dead code
+>> on KVM. This restricts the WatchPoint API calls to TCG.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Message-ID: <20260107130807.69870-2-philmd@linaro.org>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   target/s390x/s390x-internal.h  |  2 -
+>>   target/s390x/tcg/tcg_s390x.h   |  5 ++
+>>   target/s390x/cpu.c             | 30 ++++++------
+>>   target/s390x/helper.c          | 38 ---------------
+>>   target/s390x/tcg/debug.c       | 85 ++++++++++++++++++++++++++++++++++
+>>   target/s390x/tcg/excp_helper.c | 32 -------------
+>>   target/s390x/tcg/meson.build   |  3 ++
+>>   7 files changed, 108 insertions(+), 87 deletions(-)
+>>   create mode 100644 target/s390x/tcg/debug.c
 > 
-> ../hw/ppc/vof.c: In function ‘vof_dt_memory_available’:
-> ../hw/ppc/vof.c:642:12: error: variable ‘n’ set but not used [-Werror=unused-but-set-variable=]
+> Thanks for taking this patch, but Richard said this WatchPoint
+> API shouldn't be TCG-only:
 > 
-> Remove 'n'.
-> 
-> Cc: Alexey Kardashevskiy <aik@ozlabs.ru>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/ppc/vof.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
+> https://lore.kernel.org/qemu-devel/4be5bd97-21a5-40fe-9a9c- 
+> a4e05b11a1ea@linaro.org/
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+As discussed on IRC, this can easily be reverted or adapted in
+the unlikely case s390x gets another accelerator merged in QEMU
+or KVM/s390x gets watchpoint support :)
 
