@@ -4,83 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D39A3CF45AE
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 16:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07B87CF45AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 17:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfLCX-00028B-MP; Mon, 12 Jan 2026 11:55:33 -0500
+	id 1vfLLK-0006x8-WF; Mon, 12 Jan 2026 12:04:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vfLBK-0001mu-5b
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 11:54:21 -0500
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vfLBG-0004nn-U8
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 11:54:16 -0500
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-7927261a3acso21938567b3.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 08:54:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vfLIB-0005tz-JK
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:01:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vfLI9-00068X-Mj
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:01:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768237280;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AldCBaYJel6HxB+0CQVjj0wkO30xgddAEo7L/RnCjX4=;
+ b=auY2SH8LNXXU1FMRX0tbGPM/HQZZZFU6lINz3wKyHIq2KGgiKb+r1FR0XznYQUgL235dsp
+ mMdP/J0Zyiu9eolbUvNddMnIBfSdcpVWNKY1/y/dBma2fR5EX0R4dmtdC4jcNBoQ9VguUF
+ SIa4u5BgeLrOqkxeZxR290PUzW4GxXg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-153-6MSGW3GvO0GkPR3qicvSUQ-1; Mon, 12 Jan 2026 12:01:18 -0500
+X-MC-Unique: 6MSGW3GvO0GkPR3qicvSUQ-1
+X-Mimecast-MFC-AGG-ID: 6MSGW3GvO0GkPR3qicvSUQ_1768237277
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-430fc153d50so4889468f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 09:01:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768236854; x=1768841654; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=A4QqGRGEFz2bTy25mma4Z+BsY0RvKLDT+NOVxKIrXf8=;
- b=rrJrg4hUPvfnRBjRWsagduyi0lN0SgLWjGhGNAxoP+Yl81T0FFbyjil+eimV7YC4fh
- 9rhyDVLxU9wD09qUihiz6XQbCzA+IC9PDxzki8Ci3vdYymMQCUzLfKNc3N2HsWPtiG6y
- 7D9OJ3nEe+2grDnDQHr6z6QXr/J4NHMMf91x1uxpZ1ET0U4rt5cAqYqbD/kWYr6U32ae
- YyrrMPRudQGZMjAEjcc2o2npt2wqxKR7el6KBNz5m/g81zk1CnjsP0nzv/EV39WuU8RE
- svKnt4jPTg1coZ9FTD6nXdkAGm5OB51oFE3aRm8RWYEpp2z3Dh1rNxVdLBRh2FjG5jY1
- m22g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768236854; x=1768841654;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1768237277; x=1768842077; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A4QqGRGEFz2bTy25mma4Z+BsY0RvKLDT+NOVxKIrXf8=;
- b=NdYA6SlVV/dD3Dy5HdLuHuQIgdqF92Hl6hhdILAIYkMyE3uEsl3lh0tbr/1dD4e52S
- zoWuKUcJDl4iNmNWVlJuFJXskvuimOK7pqKzUFZZS9W2oBh/0IqMup3DILHwzQyAbrVl
- E1oscjguKG7rrFa1QbNeg6dAL7ZImKIgvt7v5/YBOhTtNywsYQsrWQahtOG7SRl+fPfi
- 48tkDxlnOPB/NopMMmPAG94ycIG5gJGozVvPA4BMIxtL4kW9AXkBtwdEFZjTclueqts8
- 8Vo4YqDQkBiEgL+sgC3xnpDwtJTv6HbOPdXmW5ip2zLwomBaruV66p9B01zX5PLtHNma
- hoQw==
+ bh=AldCBaYJel6HxB+0CQVjj0wkO30xgddAEo7L/RnCjX4=;
+ b=RQ8gxNDDlI9T66RobOam23Lh0Rp+O0YFioW4T16z0kFaqezK9kzBMuOXu2LR/uTD5Z
+ jr14KShDbIdazDFRJi3O5vEUzEZYgrwpKkoR6NNIVEqIWaBg0uU3cOFBCS4VeS2ZtXyi
+ corZb4fN25ZwMWPzbjE6CMDX90f/hFL6G7MezKhiv9C94KrjcSYLVRIuhFGfgOY6Ijoh
+ 6P7uafi4I8cumxMSyg8Bv0zV1fd90lN/uTIjLniQD672sbCuKr+uu9USYv6JTaORM3ja
+ Up82ZbR0CG9R79dabJ4c5VGz0ou+y4tW6xujgos49XOLDtKcn2Qrl7Xpyz2lTZaTLa29
+ e2Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768237277; x=1768842077;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AldCBaYJel6HxB+0CQVjj0wkO30xgddAEo7L/RnCjX4=;
+ b=n+0AtAES6Dvuf2JnPhzs3AYtmzJlqXPtWh6ILyQyEkbI+dVDv+3dVbByJwRek8HW+b
+ kslfSRBi+laBSS+z1PRGRJ1nqzMB+8l5lT26PGlz225zBoP2i+zAke1aoSyNIKSo4X0g
+ C4OThHsBFw1NE9uLMBqKFAKNCy0INvoYjgMLUAAt+6Hvl1ODT1mEZ0JpC8lofYJCAirv
+ RJ4gucSKkk+PGlc8sSr5dADneUQTgQzTmJjEiw2W8XFzMofjsJ1rQ9W3l0owPWJbDf5A
+ z7zndcvsX4n42JR+tYv1Lbmz5wY0S7fSS4NNaLHVaMcyOOlhWiFMfBkYsdFuwe9CCfrp
+ PPnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVy92HdZh143g6uoE5k/d6lzJGQEYUYutbXo7e9JP2p6qQZm88YZObeuvNutmJ0svRC23fbM6m5KsZu@nongnu.org
-X-Gm-Message-State: AOJu0YzlB2amONLYDpL+hf7tPMqS+FAAj22ZZkKB6M0lQCmAG5kBUrkK
- TU6Q98S9GmrBdHjwJCEBAIQdOcv4u3qrJk/5OKNXhGQnpDiVLMSmbmha3KrJFq41jGX7kiZSTPX
- chyxsX9Unk/IPcHAAvP4ul2qnk6GiGDneCv64DJYPjw==
-X-Gm-Gg: AY/fxX7iQx6O8+ceCtnWGIPBX2odQgyA9ysZl68LWGMn7UF9PMOtOSXR+vVBJx35upE
- FbKHL2CQNJ5r8KH2WLomTh4p0OB4Wed3x0Asi1Gjsga7DU4lcr9hbZTrsMPahOKAfNut3fay+Z/
- j5Nhg1nWLE8wzpjOsuEyUSz3sF1HScnjz0Ze640MbUvoE5fpRABJBPZL13q1rPQOA4llcvjS7Bi
- Iytrs/ho+5G/I30J9PKWVSTgOTGqcz7oL9Xu/vy57lGWB+/nkCq10xgPIP1QffZlT2hbjUSsqwW
- Wj4lG2QG3eZiKxN7MzYLd3hAyx2nKJcetA==
-X-Google-Smtp-Source: AGHT+IFk/e8qSjIjGkCsR/wdJHTg2HSEkYFy1vX4bCFLl7KS6C0/Wt9ZWAyGFnJjJs2aq0MnOn7uTidixusipd51NrI=
-X-Received: by 2002:a05:690e:24c1:b0:641:f5bc:6995 with SMTP id
- 956f58d0204a3-64716c79edamr11500942d50.81.1768236853517; Mon, 12 Jan 2026
- 08:54:13 -0800 (PST)
+ AJvYcCUUU9sosuxkmZye1LmN7BKUnA/Qx3QQ0p9zhA/5m4xpn0OiIj3g/gDOAvxYwI2qZee2eZH+oG531cNA@nongnu.org
+X-Gm-Message-State: AOJu0YwL1Y4HPBNALzdW8b4n7z6JfYyk980KdwacffVQRkt+6MP1EGnq
+ q1bQazLbDPQPz3KpMsGb2uK5HH55wNv08XYw6yR+fMR9PXYsTkNCiyH1PQT62dnLE20++Sjiy4W
+ RzNijbcaoOlyidd3FLg26YpVS+3TzOL+mTLuwyc+ww+j7HPARWgpQZwr4Z/UjHZv19jLJNusZkf
+ eSPFPDt/EVqzFV8iUiuU17H/Zht5suJ4s=
+X-Gm-Gg: AY/fxX6w+R+0sFWEKbigvPOenqup918whJLLas97effJ+LvpPJA/r6XaqYiKkSUw8er
+ 9zpzAOHCXAzzT2i4/5T/3eDtdfy2IE03F4vzBXnHTlVEBwB4Rzui9HJX2NU0gimmCA63oo2SCRy
+ Kl948SkeNLwMUGn7M8bthWk4j03lxnhLg/3r/2CNcPzsl5bfgpcvuklSeYkdHuiYcr/k6JNyjLL
+ RRawzfYCi2o07GLZBU1TpN3AgyKLHYoPMiwSRd+wFVs4F2Kg65x8Y9CtrMSFRK9XzCvfw==
+X-Received: by 2002:a05:6000:3104:b0:430:f301:3e6c with SMTP id
+ ffacd0b85a97d-432c37c870emr17720922f8f.34.1768237276997; 
+ Mon, 12 Jan 2026 09:01:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEAiYfjnr+gYdtjsO6mWWQ+a+BH9XfzWG3kpFltGJWfx1JU+oZ6aKStp9mLHs0yv0OictNdRBrZnyrHEsB1/Wg=
+X-Received: by 2002:a05:6000:3104:b0:430:f301:3e6c with SMTP id
+ ffacd0b85a97d-432c37c870emr17720877f8f.34.1768237276561; Mon, 12 Jan 2026
+ 09:01:16 -0800 (PST)
 MIME-Version: 1.0
-References: <20260107145220.18047-1-pruiz@clavium.io>
-In-Reply-To: <20260107145220.18047-1-pruiz@clavium.io>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Jan 2026 16:54:02 +0000
-X-Gm-Features: AZwV_Qjwh3wrfHjTTriQw3ucyiEyKB8sfTMlbcLCEFls2TN6Vyc-fdibHULQWrA
-Message-ID: <CAFEAcA8bW_8PqAdhCdthG84MTj8ZDtc9e72n5Qv3PSaYX5fY-w@mail.gmail.com>
-Subject: Re: [PATCH] fdc: Don't set FD_SR0_SEEK during automatic track crossing
-To: "Pedro J. Ruiz" <pruiz@clavium.io>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, jsnow@redhat.com, 
- kwolf@redhat.com, hreitz@redhat.com
+References: <20260112132259.76855-1-anisinha@redhat.com>
+ <20260112132259.76855-3-anisinha@redhat.com>
+In-Reply-To: <20260112132259.76855-3-anisinha@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 12 Jan 2026 18:01:04 +0100
+X-Gm-Features: AZwV_QiH3V5FSKAnNtBPpx_JZBXYR6rPYd5poD1efJhVE8ZMgP50Mc7LrPQ905U
+Message-ID: <CABgObfaATsV8ECm+txeVzg4c=5wjKgBR972sLc+Ejw0q=nH+Fg@mail.gmail.com>
+Subject: Re: [PATCH v2 02/32] hw/accel: add a per-accelerator callback to
+ change VM accelerator handle
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,178 +121,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Jan 2026 at 15:31, Pedro J. Ruiz <pruiz@clavium.io> wrote:
+On Mon, Jan 12, 2026 at 2:23=E2=80=AFPM Ani Sinha <anisinha@redhat.com> wro=
+te:
+> +    if (current_machine->cgs && reason =3D=3D SHUTDOWN_CAUSE_GUEST_RESET=
+) {
+
+This should check (I think) !cpus_are_resettable(), instead of
+current_machine->cgs.
+
+> +        if (ac->reset_vmfd) {
+> +            ret =3D ac->reset_vmfd(current_machine);
+> +            if (ret < 0) {
+> +                error_report("unable to reset vmfd: %d", ret);
+> +                abort();
+
+This should not be an abort, but it should change the runstate to
+RUN_STATE_INTERNAL_ERROR.
+
+Also, I would move the introduction of
+confidential_guest_can_rebuild_state() callback even before this patch
+(see upcoming review of patch 24).
+
+At the end of the series, this should look something like:
+
+    if (reason =3D=3D SHUTDOWN_CAUSE_GUEST_RESET
+        && (current_machine->new_accel_vmfd_on_reset
+            || !cpus_are_resettable()) {
+        if (ac->reset_vmfd) {
+            ret =3D ac->reset_vmfd(current_machine);
+            if (ret < 0) {
+                 error_report(..., strerror(-ret));
+                 vm_stop(RUN_STATE_INTERNAL_ERROR);
+            }
+        } else if (!cpus_are_resettable()) {
+            error_report("accelerator does not support reset");
+        } else {
+            error_report("accelerator does not support
+x-change-vmfd-on-reset=3D...,"
+                        " proceeding with normal reset");
+        }
+    }
+
+Paolo
+
+> +            }
+> +        }
+> +    }
+> +
+>      if (mc && mc->reset) {
+>          mc->reset(current_machine, type);
+>      } else {
+> --
+> 2.42.0
 >
-> The floppy disk controller was incorrectly setting the FD_SR0_SEEK
-> (Seek End) status bit during automatic track crossing in multi-track
-> read/write operations. This caused legacy operating systems like Minix 2
-> to interpret successful read operations as errors, resulting in
-> "Unrecoverable disk error" messages for blocks that crossed track
-> boundaries.
->
-> When executing multi-sector READ/WRITE commands with the MT (multi-track)
-> flag set, the FDC would correctly advance to the next track when needed
-> to continue the transfer. However, it was incorrectly setting the SE
-> (Seek End) bit in Status Register 0 (ST0) during this automatic track
-> advancement.
 
-Hi; thanks for this patch. I'm going to prefix my review by saying
-that I'm not an expert on this floppy controller, so I am going
-by what I can make out from the datasheet, which is not super
-clear on this.
-
-> According to the Intel 82078 datasheet and related documentation, the
-> SE bit (bit 5, value 0x20) in ST0 should only be set:
-> 1. After explicit SEEK or RECALIBRATE commands
-> 2. After READ/WRITE commands that perform an "implied seek" (when the
->    command specifies a different cylinder/head/sector than the current
->    position and EIS flag is not set)
->
-> The SE bit should NOT be set during automatic track crossing that occurs
-> as part of an ongoing multi-track data transfer. This automatic track
-> advancement is part of the normal multi-track operation, not a seek.
->
-> This bug prevented Minix 2 and potentially other legacy operating systems
-> from booting. The OS floppy driver would detect the unexpected SE bit and
-> interpret it as a read error, even though the data was transferred
-> successfully. This particularly affected 1024-byte filesystem blocks that
-> spanned track boundaries.
->
-> Modified fdctrl_seek_to_next_sect() to remove the line that set
-> FD_SR0_SEEK when advancing to the next track during multi-track
-> operations. The function now:
-> - In multi-track mode: advances tracks/heads as needed WITHOUT setting
->   the SE bit
-> - In non-multi-track mode: stops at end of track without seeking (also
->   without setting SE bit, as no seek occurs)
->
-> The SE bit is still correctly set by explicit SEEK and RECALIBRATE
-> commands elsewhere in the code.
->
-> Fixes: c5139bd9 (fdc: fix FD_SR0_SEEK for non-DMA transfers and multi
-> sectors transfers)
-> Signed-off-by: Pedro J. Ruiz <pruiz@clavium.io>
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1522
-
-
-> ---
->  hw/block/fdc.c         | 9 ++++++---
->  tests/qtest/fdc-test.c | 2 +-
->  2 files changed, 7 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/block/fdc.c b/hw/block/fdc.c
-> index 4585640af9..21713c9c41 100644
-> --- a/hw/block/fdc.c
-> +++ b/hw/block/fdc.c
-> @@ -1403,14 +1403,17 @@ static int fdctrl_seek_to_next_sect(FDCtrl *fdctrl, FDrive *cur_drv)
->              } else {
->                  new_head = 0;
->                  new_track++;
-> -                fdctrl->status0 |= FD_SR0_SEEK;
-> +                /* Don't set FD_SR0_SEEK for implicit track crossing during
-
-(minor style nit: multiline comments should start with the "/*" on
-a line of its own. This file is very old code so it doesn't follow
-our current style on this point.)
-
-> +                 * multi-track transfers. SEEK bit must only be set for
-> +                 * explicit SEEK commands, not automatic track advancement.
-> +                 */
-
-So this is the "we are multitrack, we are on head 1 and hit
-the end of the disk" case. The datasheet
-https://wiki.qemu.org/images/f/f0/29047403.pdf
-describes the MT bit like this:
-
-# MT: Multi-track selector
-# When set, this flag selects the multi-track operating mode.
-# In this mode, the 82078 treats a complete cylinder, under head 0
-# and 1, as a single track. The 82078 operates as if this expanded
-# track started at the first sector under head 0 and ended at the last
-# sector under head 1. With this flag set, a multitrack read or write
-# operation will automatically continue to the first sector under
-# head 1 when the 82078 finishes operating on the last sector under
-# head 0.
-
-That all describes the behaviour for the "at end of head 0"
-case (which is in the if() block before this), and looking at
-the code we already do that correctly without claiming that
-it is a seek.
-
-What it doesn't say anything about is automatically rolling
-from head 1 back to head 0 when we reach the end on head 1.
-For that we need to look at the info about the read and write
-commands:
-
-Table 6-6 in the datasheet has the information about what the
-track (C), head (H) and sector (R) should be after a transfer.
-Summarizing that and numbering the cases:
-
-(1) regardless of MT, if we didn't hit end-of-track we just
-    increment the sector count
-
-(2) For MT=0, if we did hit end-of-track, reset sector count to 1
-    and increment track count; don't change the head
-
-(3) For MT=1, at end-of-track on head 0, leave the track count alone,
-    flip to head 1, reset sector count to 1
-
-(4) For MT=1 at end-of-track on head 1, flip to head 0, increment the
-    track count, and reset sector count to 1
-
-The current code's handling of new_sect, new_track and
-new_head seems to me to follow all of that. So maybe our
-problem is only that we should not set the SEEK bit in
-the status register...
-
->                  if ((cur_drv->flags & FDISK_DBL_SIDES) == 0) {
->                      ret = 0;
->                  }
-
->              }
->          } else {
-> -            fdctrl->status0 |= FD_SR0_SEEK;
-> -            new_track++;
-> +            /* Not in multi-track mode: stop at end of track and don't seek. */
-> +            FLOPPY_DPRINTF("end of track, stopping transfer\n");
-
-Here we change the MT=0 "reached end of track"
-behaviour from "go to next track, call it a seek" to
-"stay at the end of the track".  I think that if my
-reading of the datasheet above is correct, we do still
-want to increment new_track, but we don't want to set
-the SEEK bit in the status register.
-
-Incidentally I find the 'ret = 0' vs 'ret = 1' handling
-in this function confusing -- we return 0 for the "hit
-end of track in MT=0" case, but in the MT=1 case we
-return 0 only when we hit the end of the track and the disk
-is not double-sided. This seems inconsistent and perhaps
-wrong -- maybe the code should always do 'ret = 0;' without
-the "((cur_drv->flags & FDISK_DBL_SIDES) == 0)" check ?
-
->              ret = 0;
->          }
->          if (ret == 1) {
-> diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
-> index 1b37a8a4d2..9edfbb5a40 100644
-> --- a/tests/qtest/fdc-test.c
-> +++ b/tests/qtest/fdc-test.c
-> @@ -519,7 +519,7 @@ static void test_read_no_dma_19(void)
->
->      outb(FLOPPY_BASE + reg_dor, inb(FLOPPY_BASE + reg_dor) & ~0x08);
->      send_seek(0);
-> -    ret = send_read_no_dma_command(19, 0x20);
-> +    ret = send_read_no_dma_command(19, 0x00);
-
-Why do we need to change the test case? The commit message doesn't say.
-
->      g_assert(ret == 0);
->  }
-
-Could we add some test cases for the multi-track cases ?
-
-thanks
--- PMM
 
