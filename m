@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BEAD277D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4596AD26D97
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:19:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfEtH-0005U1-Gt; Mon, 12 Jan 2026 05:11:15 -0500
+	id 1vfF0P-00015x-Gf; Mon, 12 Jan 2026 05:18:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfEtB-0005O1-Bw
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:11:09 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfEt9-00071L-JD
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:11:09 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47d59da3d81so22483485e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 02:11:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768212665; x=1768817465; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EdrJr5UwoBbLZE3nuYaxiOrE832uhfsv3BleFpjJzuc=;
- b=q6q03JQCrCf9NCzDQfhk/nYU4hhp6W8O7d65EawHnTCy0c+WrjJkUR8CIx+KWVRwkk
- F3Nlw4Ilp6PmeciSYVIJQTCN2ms6JtqrxEISV3JCkJWOd0+D1x30v4GkvSdw9t0LOXxM
- IYbVyiqQsVj2+MPp72YGKaI/qluchhMl0onuJijigrOMQY3w2+7QcOX/wvQvBOCeOlUT
- wL8eBWCsrOQUUClWHi11LvB1AAS6iAudzsyBJzkwW9nV45h1B+Lp93ZCo5zpvMThV0ar
- E9YyqlggEt5JY/y5UO2dJ3itD1Y/bqjdTecahFjkR7dkOqP3TSdUWSdrPxnrGroKwKdC
- zU1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768212665; x=1768817465;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EdrJr5UwoBbLZE3nuYaxiOrE832uhfsv3BleFpjJzuc=;
- b=QHxYq/lgZCu5sfxRKDK6oi8uLyE2oqtVFIAkTbe6zIwIpCrE5IqcFpOKx4nPVtEGMM
- eqAF/QXifSh8b+vrGtsUgaAcOFk8qlnoeotKkaHH1ex576X3LyL+Hmwll3t1vnjsJcwt
- Ez+xwuKeNH+Q9pSwPURZCNdCBIUI+ncoUWn/msoqekVEzMAS7NfFm+Jam9dhv0Qa2tYv
- /DN/RtDB7voXKtt9K5wOOuIGk6GgYGenAs0JN2YzvJpoZErfJy6JRW/oXYBWuPdlmSCA
- GEp+DPHK8xM7t1OaXYtgsu94+II8QboZ6KedVbwNlIj+4nwrqRD1UKaqar6R+V3GwUr8
- HyJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcY3/ZJQSBwliBCD35PVVPbaBDf8YWTNp8L/zxFJXtJ+L6B3zXBWKXwvxjZCtvHYfjaaw09aJAeZ4Y@nongnu.org
-X-Gm-Message-State: AOJu0YyYJS0bCbXLxBw9MZQX3q1/ZVfOVCGPeV/B2jAFdkt/3szmI8KV
- pBCsBsRF+mOB0bYFJXTXrUEqIyC+zYt1KfaBrPyBsmZ4SIXfvf+esC8vGgBmwfw7jSM=
-X-Gm-Gg: AY/fxX71MxHlebiTtYN0isDoZfi/8SifqoYsl+X4Z34oP0wmXx8CxwwseAExFSPebI0
- Eq2nL/IeVG1oWt7tO5TRecCDIou4HKZKQ/yRDbK2TMIai1wZee7XMvdlH5scFa7211ttiR3hX++
- VsD4Mn+3kW6qFaF4OQzSeORskrCaIk3rSr8r2gF08TQHTcZxjP/JC2iDmsJgLKgJ4kMg2CtL1Bk
- 1FiJF2wGRU9iTKyBT+n+GTkcOF1o6MVz85mZIepYXQQ7E83cpeKNmE1vSD2RMihtPxLSVXZsVBv
- ycWiUZUy93iCYj+Gc0ige0dO5xjrIIrkTRcDui5fSvUJXR1+eVgW1XA2rgAEnC5VMoWU0peGjHL
- AbZ9R+Z+xKZ+0K1OoeT5QRYs36wwgvdjR5YLu/J7hoG2qzV5NfmEhWS6Zb4U9uizKjvUCcFYnMf
- t0f6Yg6w8ttAzMHUqd15tLYP3Lrd6JXYVEY1zppSw/DmLyxB0i4S8wmDA5+/WHlGcX
-X-Google-Smtp-Source: AGHT+IEia0bnGQA4ZZeuyI9+2gKn6U9jcpEcTlfuLS7ivWk+aITgZERN1g40+YYjPtnqGLWPvOk/gg==
-X-Received: by 2002:a05:600c:3ba9:b0:477:9d88:2da6 with SMTP id
- 5b1f17b1804b1-47d847d0f30mr226244845e9.0.1768212664888; 
- Mon, 12 Jan 2026 02:11:04 -0800 (PST)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f7035f2sm331730095e9.12.2026.01.12.02.11.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 02:11:04 -0800 (PST)
-Message-ID: <bc27550c-f738-4b37-9ae3-7c42a0e38635@linaro.org>
-Date: Mon, 12 Jan 2026 11:11:03 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/18] target/s390x: Use address_space_ldl_be() in
- read_table_entry()
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>
-References: <20260107130807.69870-1-philmd@linaro.org>
- <20260107130807.69870-3-philmd@linaro.org>
- <0d46c208-0b8c-4984-a26c-7c584c86eb7e@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0d46c208-0b8c-4984-a26c-7c584c86eb7e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vfF0A-0000zo-ML
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:18:25 -0500
+Received: from qs-2001i-snip4-1.eps.apple.com ([57.103.87.84]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vfF05-0007lw-Hp
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:18:22 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-20-percent-2 (Postfix) with ESMTPS id
+ 8119118000AA; Mon, 12 Jan 2026 10:18:08 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=abB225qvJ9BB1OiVaUt+EK2bMAyAMeH3O+UWphfh+R8=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=P6ngTp9yenF6MhaOfMvuTg/mmCNWckAMahcrkN+bf51PY1/LNuGW9TeDtgCXe1XX8BezcZ9pFbMQuKg++PQL1Z0AhWykHQT7cNIcTGyn3kUTMZhcGj/FY+mKrAmRUJH7LQ+NirRF6YpGvlATAgvhu1M0d8J1GWGWGSEFftV/IdPuqZheC03GfPXbevKdWmjs3FqAzdK4wKeHgSFoo8t6Q83nnJPXuX0PqThbm5bzFNURFPBs54Dp8YEP+fqMW4KwyAWF7+f+QRm/ViMCLUc0M0ZEj50vo7srKVXSptR6uoAPD/4tDBGz/xAR+zaydJLEPqYUTfU/8JqX3QxF+mSDdA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-20-percent-2 (Postfix) with ESMTPSA id
+ E10C7180037A; Mon, 12 Jan 2026 10:18:05 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v7 17/36] hw/arm/virt: Set msi-gpa property
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CH3PR12MB7548B4E80C4660147906DC6CAB81A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Date: Mon, 12 Jan 2026 11:17:54 +0100
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8ACCC1BD-8696-4A02-A295-269713AB0614@unpredictable.fr>
+References: <20260111195508.106943-1-skolothumtho@nvidia.com>
+ <20260111195508.106943-18-skolothumtho@nvidia.com>
+ <526B3AB7-B0D4-4104-AF8F-012ED34EC990@unpredictable.fr>
+ <CH3PR12MB7548B4E80C4660147906DC6CAB81A@CH3PR12MB7548.namprd12.prod.outlook.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA4MSBTYWx0ZWRfXxR9qgiX/EBri
+ U8vKXz/1/DLjBphOnvlMT3GI9SXOG0f+Wa78Ph5STc52Mo/mH9vizH1KG4x/ptH6fQeTi0QCBFT
+ LPjcwTc9C3f8B+W/xyZaTo48bBN7spEJMF21TIYLo79kQjHsBVpTetgrIy/0RDUl82LZOjtnrYA
+ lvvmJNsW1iqnPSGiVplRz0QxJDc2vO0TI7IS+kCW8DW4nJ1GvC/hMhiD+MtgAyS4Mpag+FiDs3O
+ kyFlPQGeBvbqf5hr3ps3h+2iSyTrVcEsNJRt1LxpNksgFrROcbTuc216u4vMBYNhhzCSk7ccr2e
+ L+BsqFUw1K9BTUoNgUO
+X-Authority-Info: v=2.4 cv=UaRciaSN c=1 sm=1 tr=0 ts=6964ca61
+ cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Ikd4Dj_1AAAA:8 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8
+ a=KKAkSRfTAAAA:8 a=r1p2_3pzAAAA:8 a=1XWaLZrsAAAA:8 a=BTeA3XvPAAAA:8
+ a=i0EeH86SAAAA:8 a=QyXUC8HyAAAA:8 a=4zc8lD1vxPkO9fQSZE0A:9 a=CjuIK1q_8ugA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22 a=r_pkcD-q9-ctt7trBg_g:22
+ a=tafbbOV3vt1XuEhzTjGK:22
+X-Proofpoint-GUID: ipSFBVxGSKgnWtR0ZdgiWpN2TsqFazMd
+X-Proofpoint-ORIG-GUID: ipSFBVxGSKgnWtR0ZdgiWpN2TsqFazMd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-12_03,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ clxscore=1030 phishscore=0 adultscore=0 bulkscore=0 spamscore=0
+ mlxlogscore=999 suspectscore=0 malwarescore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2601120081
+X-JNJ: AAAAAAABqZi9kLafIcQGLm2ARDfnbADd1TJlokO0g/Ejr50nTx1vAIyTPaKY5yMJcSfkScCjEzF8zlllZb3je/hNAhH1B95gVpEw1Mn2HT7YTn77ukyZXiYO/0PmZ3rQVFgV956xnRID9EZpy4zhX/iijv17GL5U1T10twxyvUByMaLe2YjqWSPlbgGbjDMpUzOwXXIh3lp7/+i3Pzm2ZtOvVOlQhT696kd1iVpWoZToAB9SZL/eYGyqinqtrzCthQi+iTbdGdb/qxy30UwcdD5MPoILmylgby0dcL0d7dUAme8dAt7JFIhcynj2hO5B8TBV42LhiNaZlAf33BTfxb8ijTJyvE4PTsAI10Ic3pxw5tZ1jsQOBUKDXXXWlwW3C7JItHWkG7ZtBoRS6wb9QObpUKHbvuqGaffqavAoX/MlftJoOKepeIIW75OCt4nizWOxiDvBv7JLINJEXcRjNjJ/Z98CA32Le8VuEt3ycirtrw6TCVsrcFVhv7b6oRjBc91812PCFpx9d/vF9Q/HlWGZ31f3Zfmwp4BOKHexzFeVcj1CxOSg5pBzCB74ZU9q4dag/FacfoZa8gIWJ3J7++CbhLcW+dLQBogDkUx3B5PYqLOyWfuuUIIJ3Ph+R3QebpffH0wFhVWqXfnxEa2b5szdw3a3tU6TbDkeDuv/weVwoaASZxY5/YohfyCIEMgNt74iK+EYl3fkER9Vh5pdIMv30ORH778YUmIAxeqJ7OsG8a4RfgC8rdl12LpSn6J6+GFzrtiLofFPimCt1vzzfXTSLesheXGJNLGKeog/fgtcOI6zjO2ngvxjSvdQmWfbXiIbvxBzreyH
+Received-SPF: pass client-ip=57.103.87.84;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,54 +114,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/26 10:32, Thomas Huth wrote:
-> On 07/01/2026 14.07, Philippe Mathieu-Daudé wrote:
->> Keep address_space_read/write() API to access blob of memory.
->> When the access size is known, use the address_space_ld/st()
->> API which can directly swap endianness.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/s390x/mmu_helper.c | 11 ++++-------
->>   1 file changed, 4 insertions(+), 7 deletions(-)
->>
->> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
->> index 026502a3e40..9ee1d778876 100644
->> --- a/target/s390x/mmu_helper.c
->> +++ b/target/s390x/mmu_helper.c
->> @@ -108,6 +108,7 @@ static inline bool read_table_entry(CPUS390XState 
->> *env, hwaddr gaddr,
->>                                       uint64_t *entry)
->>   {
->>       CPUState *cs = env_cpu(env);
->> +    MemTxResult ret;
->>       /*
->>        * According to the PoP, these table addresses are 
->> "unpredictably real
->> @@ -116,13 +117,9 @@ static inline bool read_table_entry(CPUS390XState 
->> *env, hwaddr gaddr,
->>        *
->>        * We treat them as absolute addresses and don't wrap them.
->>        */
->> -    if (unlikely(address_space_read(cs->as, gaddr, 
->> MEMTXATTRS_UNSPECIFIED,
->> -                                    entry, sizeof(*entry)) !=
->> -                 MEMTX_OK)) {
->> -        return false;
->> -    }
->> -    *entry = be64_to_cpu(*entry);
->> -    return true;
->> +    *entry = address_space_ldl_be(cs->as, gaddr, 
->> MEMTXATTRS_UNSPECIFIED, &ret);
->> +
->> +    return ret == MEMTX_OK;
->>   }
-> 
->   Hi Philippe,
-> 
-> this patch seems to break "make check-functional-s390x" ... looks like 
-> there is a bug somewhere, please have a look!
 
-Oops, address_space_ldQ_be.
+
+> On 12. Jan 2026, at 10:45, Shameer Kolothum <skolothumtho@nvidia.com> =
+wrote:
+>=20
+>=20
+>=20
+>> -----Original Message-----
+>> From: Mohamed Mediouni <mohamed@unpredictable.fr>
+>> Sent: 11 January 2026 21:44
+>> To: Shameer Kolothum <skolothumtho@nvidia.com>
+>> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+>> eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
+>> <jgg@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>;
+>> ddutile@redhat.com; berrange@redhat.com; clg@redhat.com;
+>> alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+>> <mochs@nvidia.com>; smostafa@google.com; wangzhou1@hisilicon.com;
+>> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; =
+yi.l.liu@intel.com;
+>> Krishnakant Jaju <kjaju@nvidia.com>
+>> Subject: Re: [PATCH v7 17/36] hw/arm/virt: Set msi-gpa property
+>>=20
+>> External email: Use caution opening links or attachments
+>>=20
+>>=20
+>>> On 11. Jan 2026, at 20:53, Shameer Kolothum =
+<skolothumtho@nvidia.com>
+>> wrote:
+>>>=20
+>>> Set the MSI doorbell GPA property for accelerated SMMUv3 devices for =
+use
+>>> by KVM MSI setup. Also, since any meaningful use of vfio-pci devices =
+with
+>>> an accelerated SMMUv3 requires both KVM and a kernel irqchip, ensure
+>>> those are specified when accel=3Don is selected.
+>>>=20
+>>> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+>>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>>> ---
+>>> hw/arm/virt.c | 20 ++++++++++++++++++++
+>>> 1 file changed, 20 insertions(+)
+>>>=20
+>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>>> index 9d0568a7d5..08feadf0a8 100644
+>>> --- a/hw/arm/virt.c
+>>> +++ b/hw/arm/virt.c
+>>> @@ -3052,6 +3052,26 @@ static void
+>> virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>>>            /* The new SMMUv3 device is specific to the PCI bus */
+>>>            object_property_set_bool(OBJECT(dev), "smmu_per_bus", =
+true,
+>> NULL);
+>>>        }
+>>> +        if (object_property_find(OBJECT(dev), "accel") &&
+>>> +            object_property_get_bool(OBJECT(dev), "accel", =
+&error_abort)) {
+>>> +            hwaddr db_start;
+>>> +
+>>> +            if (!kvm_enabled() || !kvm_irqchip_in_kernel()) {
+>>> +                error_setg(errp, "SMMUv3 accel=3Don requires KVM =
+with "
+>>> +                           "kernel-irqchip=3Don support");
+>>> +                    return;
+>>> +            }
+>>> +
+>>> +            if (vms->msi_controller =3D=3D VIRT_MSI_CTRL_ITS) {
+>>> +                /* GITS_TRANSLATER page + offset */
+>>> +                db_start =3D base_memmap[VIRT_GIC_ITS].base + =
+0x10000 + 0x40;
+>>> +            } else {
+>>> +                /* MSI_SETSPI_NS page + offset */
+>>> +                db_start =3D base_memmap[VIRT_GIC_V2M].base + 0x40;
+>>> +            }
+>> Hello,
+>>=20
+>> Currently (but soon no longer the case for virt-11.0+), its=3Doff =
+means no MSI
+>> controller at all instead of
+>> GICv3 + GICv2m.
+>>=20
+>> Would an else if with an error returned if no MSI controller is =
+enabled be
+>> adequate?
+>=20
+> The MSI doorbell setup here is only required for MSI translation =
+cases.
+> When ITS is off (and no MSI controller is present), passthrough =
+devices
+> cannot use MSI/MSI-X, so no MSI translation is required. Is that =
+right?
+>=20
+> If so,  skipping the doorbell setup is expected and correct, and =
+returning
+> an error would unnecessarily reject a valid configuration.
+Hello,
+
+Could it be better then to have an else if for the GICv2m case and a =
+separate=20
+else with setting db_start to 0 or something instead of an invalid =
+(because not=20
+present device) address to make things clearer?
+
+Thank you,
+-Mohamed=20
+> Thanks,
+> Shameer
+>=20
 
 
