@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BEFC9EC93
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8FBC9EC93
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfIka-000205-3B; Mon, 12 Jan 2026 09:18:32 -0500
+	id 1vfIlC-0002eD-Gx; Mon, 12 Jan 2026 09:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mpe@tenstorrent.com>)
- id 1vfAgl-0002A6-5j
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 00:42:03 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfIjm-0001Rm-5O
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:17:44 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mpe@tenstorrent.com>)
- id 1vfAgi-0000b0-Mf
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 00:42:02 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b8719ac9af7so85767666b.0
- for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 21:41:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfIjk-0004C2-GT
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:17:41 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-78fc174ada4so59889667b3.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:17:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1768196518; x=1768801318; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8qddfOCZOjO3MvQyTGNVXdwU/1+f4GO6nIVEaVrlmsc=;
- b=I9JxwYIg4bcJqAx46QALAsaMZoQLFNxARuQ0JEjIQTkVMg+y17bXWHNYcD3+4R/9f4
- DUlDuXx3uqEtrUNsrC+x/FCX6m4IS0SnCIWjUP2gSaGw6fH3vpnWzj+8JFcE6m7MeUU5
- pRCGCZeVEDxAo2XGppqTnjzWtuRzEPEQLHLCkbNqJ24RNfZkquGD6nHrSYrzaSRr370o
- v71oZq4qD1mwH3vY0Bqry2FqzYM3F82sqN6RrsxtCDr1uSywn6KyrO23OmWBv6ZrvGHr
- 7EnmxzIPeq0/uTBZtOpeiwKZNNxMgClr6tulYTX83Ff+KNDoz9IC7ZO0z6yp/BIwCbb/
- xlQQ==
+ d=linaro.org; s=google; t=1768227459; x=1768832259; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=reLixoQNXSvOf3kpvkUs9YMlVO2PhgqAdnopCWLR6ws=;
+ b=CPnnJb5qd+c4gipykLL4CXsDm/Cbhp+xdAlEDdBaQeKBEg5xQLdLYfUCLk/uKFaaTX
+ 9d2Av8yAwVFAJVdBz5kognnOKV00RAGOG9Mn1AMGNSDTnX/EM8o7g9LVKUnZ3FkzoaWU
+ eldpAbNR4Gnu9QyoC2/9fZ6LgKxmW24punzFMBg7a2ZUsKk74S0gaLeQxd+nPBXr0U4C
+ xyjlJlOXxMTFZZ0mcFjIcXQnSxxT5+rP/KSKjHHEqC6fss8+Wq9+9hr4Ait4miPSkOdK
+ 5moksVD2ubGHgTrtmNT2dKc3dGFdD+mTub0BAKHc+ij5z1TCEpaIb+quX4IelhWEeZFI
+ jFtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768196518; x=1768801318;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8qddfOCZOjO3MvQyTGNVXdwU/1+f4GO6nIVEaVrlmsc=;
- b=NOl0SotE0ShO49LxTK4W99psuwXMkhK0l7a1yNMO63Vy+83qwy8l/eVfAkkQw8DvjP
- 7gpbdDbeoSsn/1BiPWG0BusF2Nx6i9RMCypOgLIgHI5on//9LlofGJoeRsRhKD+6U5ca
- OoPFFz0jTFYSyvRjRKO+5Ik+A9EtgNLGV2uEzSDfZOXHL5dI8cR2wx1Ha0Hsw5K/LJ5D
- Qk7cajFv6nPk9F6GbWkKS+rE3fZHdNZt+w2D8Qj61bOO/m90I/vvJbyC0FsR7vGDklU8
- vk50oYpt1y24iXvpSb/TdNSzvrD8QjsJvTNcvTKsUkdAVPbiA0Zm0tqyxMI8/yCK5SYO
- tXPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPzUqmmwQ7hW1VoYLbQjDOkMAZiQAILNnXzLqr0hZ3mLiXJEMnj5EDUihFHBr7h+2eC43B24APalJp@nongnu.org
-X-Gm-Message-State: AOJu0YzJPxhUSd2CKoUi9d8yG3bkKfAydYc0hn3/1Kfsi8hNjKiLJopl
- 3XBdACF+yWOVjVLLj9BS9Abxo6pgTHoaWxFi99cJU6S0LaTjWyS6LbzNjLtha6UiZRV3z6r4I5b
- rnN94/javZ2zmUQZAXAckSFiSLHqK3K9qFVnPyyGosA==
-X-Gm-Gg: AY/fxX4UWdGRxHAVp1qkJr0Y8r3b+DT3XF9Q0CJP4VbK119rl7DBNdQBrTMQlVl+vx0
- 4RJG9uRdeIWzqjBfxc2FlmBOMCNimepGuck9q4czw8xQE7xRhRZsGaL7AZ9gyDr3r1UD58e6aP5
- F1N1hHUHWZ8ErbyB/KLiQwAc6PYq+YUaL5Hcu6buTKJLJ6WgkH3lifkI+3peIVzu+1IsYme4V01
- 3rw0n8ikx5H1uQK+pj/LkX5NMCdLNwg9WQJyZmXxgRSeqn+OVQ8yLv+lLzDQ+DxsS9PRxws
-X-Google-Smtp-Source: AGHT+IGUS04BhzHDdx3sJ0gdh88EW9V4KhUaEbV3dytBw+u7VmOLfb5Z7Kx9o3WueeJ8Uo3IJB2pMdYc5cslBjZKQFk=
-X-Received: by 2002:a17:906:aa0c:b0:b79:cd80:6fff with SMTP id
- a640c23a62f3a-b84299bcce9mr1683168166b.17.1768196518543; Sun, 11 Jan 2026
- 21:41:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768227459; x=1768832259;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=reLixoQNXSvOf3kpvkUs9YMlVO2PhgqAdnopCWLR6ws=;
+ b=ZOpHJjSe9o425gOqbHlbBDhicoyoyDNMPvpN3tzzAwqa0OUp33hAkLnG/CXiSUp1dA
+ T+zu1tx7DGqFzt+pRrq7c2B1+PxD1zpsNegeHJFSRvF6/g2Gd1jFQeB4rM3LVEd+lHZu
+ uR9GipEWFK0+auhX1h6JQFZD9RlLL1b+FXbmo7Dn+CIZBPs/LZekrSzcU58UtGAdmDkf
+ U2ioOS2BAjbwWMDNubGj/92pYcZV0PwS3RPCChzgMPqpPPzii4zPlklLA2yf11uCyQXT
+ yXOXYgTiiZuNgo60ekQ8KYcQ/Em+/QGML5PKvt8Fs/RFqhpQX+WMhgJl0fGG99NZJ6Pl
+ Cm2Q==
+X-Gm-Message-State: AOJu0YyGtYAOgYU14AOU3cGI9eCaUjsBeL7DTV14qyF7dxXTnjjn4ujA
+ o/pPniZIoriA2IoLedD069Plpp1baZbMlqg/8OKLjbgiC6dO7hJuJCYKNwRxB+2BpEloreinMWH
+ hl9GASsuj0QUyubAkj2QoRJaVFOuNqroMo6Vna4626bh6hHBb0bY9
+X-Gm-Gg: AY/fxX4AzBuoemCjEvMGpdsAXjXAw1uidblkull3/1Gxkwmfx9lncGSUa14caovfhGy
+ yZEaC/9qhFv3UVYHJnlDX9O7EzSEN/1HqdKO32kIhm6ssKL/a8zVmLFp+zcGvH79Y18U1aIaOQn
+ jKpHHrLcxHlZqS4Bws1KY5fg14nXTHJAqYi54FPWs9jQk7AB14jKnL2qUA8KbkUBlCQwp1MoKo7
+ UvoHH40HM4Tm0apfLDOldYTFmus6d6sPwGdN86JVnzqNxBZEfZvsE2Nb47CWOXgC61ds/HNS4RR
+ fAPlaVgIoTR0HmaJG+rKq3I=
+X-Google-Smtp-Source: AGHT+IFXDsh4Jixt7X1mrgNx6BZxIY2voGrEOpAza/cVtfNjYkfnrin8gntvGbL8vHT5rC98blRDYsTo+EZxqklQUgU=
+X-Received: by 2002:a05:690e:1654:b0:646:5127:b539 with SMTP id
+ 956f58d0204a3-64716c6982bmr12143838d50.73.1768227459331; Mon, 12 Jan 2026
+ 06:17:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20260109134145.398565-1-joel@jms.id.au>
-In-Reply-To: <20260109134145.398565-1-joel@jms.id.au>
-From: Michael Ellerman <mpe@oss.tenstorrent.com>
-Date: Mon, 12 Jan 2026 16:41:47 +1100
-X-Gm-Features: AZwV_Qgt7rArxqamu7LacAF4LOaCcKx9lh-w4IKEUyOSn_-QLlJWzF5sttcDYTE
-Message-ID: <CAACLP0V2vuut7Rjy5MheV-2+ObQK9vU-27g-QYiwsxOJ1w1NDw@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: tt-ascalon: Add Tenstorrent mvendorid
-To: Joel Stanley <joel@jms.id.au>
-Cc: Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Sunil V L <sunilvl@ventanamicro.com>, 
- qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Joel Stanley <jms@oss.tenstorrent.com>, 
- Nick Piggin <npiggin@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+References: <20251217-cmsdk-uart-disabled-warning2-v1-1-847de48840bc@trainwit.ch>
+In-Reply-To: <20251217-cmsdk-uart-disabled-warning2-v1-1-847de48840bc@trainwit.ch>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 12 Jan 2026 14:17:26 +0000
+X-Gm-Features: AZwV_Qj1Y_pC9Vb4mWd2EUME0C_0PEHT2bk7a5F82YcpaIcr_Dlf4zzxGtNYgWI
+Message-ID: <CAFEAcA-QdF3n805jDi4aJUbGu-nvqYrra4sz2XiSUEf21NwQEQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/char/cmsdk-apb-uart.c: log guest_errors for r/w to
+ disabled uart
+To: julia <midnight@trainwit.ch>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=mpe@tenstorrent.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 12 Jan 2026 09:17:30 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,61 +96,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 10, 2026 at 12:42=E2=80=AFAM Joel Stanley <joel@jms.id.au> wrot=
-e:
+On Wed, 17 Dec 2025 at 07:10, julia <midnight@trainwit.ch> wrote:
 >
-> JEP106 has two vendor IDs for Tenstorrent. We will use Bank 16, hex 0xa1:
+> I don't want to admit how many hours I spent trying to figure out why
+> nothing was being printed (as the enable-ing code hadn't yet run,
+> even thought it existed).
 >
->  ((16 - 1) << 7) | (0xa1 & ~0x80) =3D 0x7a1
+> Signed-off-by: julia <midnight@trainwit.ch>
 
-The value LGTM, it matches JEP106BM, and matches the Tenstorrent
-documentation I have.
+Applied to target-arm.next, thanks.
 
-I would probably say that it's company 33. Which is 0xa1 with the
-parity bit added, but the parity bit isn't used in the calculation,
-ie:
-
-  ((16 - 1) << 7) | 33 =3D 0x7a1
-
-Mentioning that it's company 33 (0x21) would make it a little easier
-to match it up with other public sources, eg openocd:
-
-  https://github.com/openocd-org/openocd/blob/1ebff3ab33c77e3f8fb4e1ddda262=
-b606b572af1/src/helper/jep106.inc#L1935
-
-> Add it to the Ascalon CPU definition as the mvendorid CSR.
->
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-
-Reviewed-by: Michael Ellerman <mpe@oss.tenstorrent.com>
-
-cheers
-
-> diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
-> index f1ffc66542a0..751a13aace47 100644
-> --- a/target/riscv/cpu_vendorid.h
-> +++ b/target/riscv/cpu_vendorid.h
-> @@ -8,4 +8,6 @@
->  #define VEYRON_V1_MIMPID        0x111
->  #define VEYRON_V1_MVENDORID     0x61f
->
-> +#define TENSTORRENT_VENDOR_ID   0x7a1
-> +
->  #endif /*  TARGET_RISCV_CPU_VENDORID_H */
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index efdec49e49ed..85ce4d83a371 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -3190,6 +3190,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.ext_svnapot =3D true,
->          .cfg.ext_svpbmt =3D true,
->
-> +        .cfg.mvendorid =3D TENSTORRENT_VENDOR_ID,
-> +
->          .cfg.max_satp_mode =3D VM_1_10_SV57,
->      ),
->
-> --
-> 2.47.3
->
+-- PMM
 
