@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52FD8C9EC86
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 347E4C9EC86
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 13:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfHmQ-0001ce-72; Mon, 12 Jan 2026 08:16:28 -0500
+	id 1vfHmZ-0001vA-SG; Mon, 12 Jan 2026 08:16:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlK-0001FI-AJ
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:14 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlZ-0001Xw-03
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlI-0002Vb-4A
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:14 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfHlX-0002bG-Ig
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 08:15:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768223710;
+ s=mimecast20190719; t=1768223727;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oKfegducDODgkba1XJ/HW/MbccnFLGGMVBYQq+f+uTM=;
- b=jEDsdZXWidoqgIy7rg4AI8mWOCeAi7hRtrbF7vmAFkKHzpK5ZTgqf9FpbRFgIU43z/6RKj
- iJI+ZThFdVm5dubKXeOB/deLyMwdXjOg6Q1DZHnUqvrIJx8hsNcbh73imehU7/FoK/vr3q
- Eq3O+m5oe2L6KXwRDvQ+wVFC+lcAXuI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZvsWtIfrf4yznnr06FlcP4VHxBPYYTEfls48cI2EW78=;
+ b=eR3FO5zE7h1xr6Z+S4gjcuXJZsZSBnEFHN/DZO5rCQ/oZu7lW9aqHX292Bc0Fjk6py7HRT
+ W1w7X55g4qugsbjkS3iw6qqmLL1rq6vEvMmcS6g1hkQ5h4ZX/+iEic1E+jyxPNB5DCVDhc
+ n0yeYnF/CgtA6O9rOf1OSZfbCbcsVCE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-XIp_bFlnOd-fK-tadKqcIw-1; Mon,
- 12 Jan 2026 08:15:09 -0500
-X-MC-Unique: XIp_bFlnOd-fK-tadKqcIw-1
-X-Mimecast-MFC-AGG-ID: XIp_bFlnOd-fK-tadKqcIw_1768223708
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-mHiBBlH8NfKoFq0b6go1Dw-1; Mon,
+ 12 Jan 2026 08:15:18 -0500
+X-MC-Unique: mHiBBlH8NfKoFq0b6go1Dw-1
+X-Mimecast-MFC-AGG-ID: mHiBBlH8NfKoFq0b6go1Dw_1768223717
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5EE0F1800451; Mon, 12 Jan 2026 13:15:08 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9531F18002C8; Mon, 12 Jan 2026 13:15:17 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.179])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BE40330001A2; Mon, 12 Jan 2026 13:15:06 +0000 (UTC)
+ id 00AE83000218; Mon, 12 Jan 2026 13:15:14 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 03/15] tests/functional/ppc64/test_hv: Silence warnings
- reported by pylint
-Date: Mon, 12 Jan 2026 14:14:45 +0100
-Message-ID: <20260112131457.67128-4-thuth@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, peter.maydell@linaro.org,
+ qemu-trivial@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 07/15] docs: update copyright year to 2026
+Date: Mon, 12 Jan 2026 14:14:49 +0100
+Message-ID: <20260112131457.67128-8-thuth@redhat.com>
 In-Reply-To: <20260112131457.67128-1-thuth@redhat.com>
 References: <20260112131457.67128-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -82,60 +84,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Ani Sinha <anisinha@redhat.com>
 
-To make pylint happy here, remove unused variables, switch to f-string,
-use "check=True" when calling subprocess.run() and split a line that was
-too long.
+We are already in 2026. Update docs to update copyright info to year 2026.
 
-Message-Id: <20251119082636.43286-7-thuth@redhat.com>
+Cc: peter.maydell@linaro.org
+Cc: qemu-trivial@nongnu.org
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20260107045250.34420-1-anisinha@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/ppc64/test_hv.py | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ docs/conf.py              | 2 +-
+ include/qemu/help-texts.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/ppc64/test_hv.py b/tests/functional/ppc64/test_hv.py
-index d87f440fa79..beec1dbbea3 100755
---- a/tests/functional/ppc64/test_hv.py
-+++ b/tests/functional/ppc64/test_hv.py
-@@ -29,8 +29,6 @@
- @skipBigDataTest()
- class HypervisorTest(QemuSystemTest):
+diff --git a/docs/conf.py b/docs/conf.py
+index bc4e9622dc8..f835904ba1e 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -92,7 +92,7 @@
  
--    timeout = 1000
--    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
-     panic_message = 'Kernel panic - not syncing'
-     good_message = 'VFS: Cannot open root device'
+ # General information about the project.
+ project = u'QEMU'
+-copyright = u'2025, The QEMU Project Developers'
++copyright = u'2026, The QEMU Project Developers'
+ author = u'The QEMU Project Developers'
  
-@@ -49,8 +47,8 @@ def extract_from_iso(self, iso, path):
-         """
-         filename = self.scratch_file(os.path.basename(path))
+ # The version info for the project you're documenting, acts as replacement for
+diff --git a/include/qemu/help-texts.h b/include/qemu/help-texts.h
+index bc8fab91697..a9ccec7b38c 100644
+--- a/include/qemu/help-texts.h
++++ b/include/qemu/help-texts.h
+@@ -2,7 +2,7 @@
+ #define QEMU_HELP_TEXTS_H
  
--        cmd = "xorriso -osirrox on -indev %s -cpx %s %s" % (iso, path, filename)
--        subprocess.run(cmd.split(),
-+        cmd = f"xorriso -osirrox on -indev {iso} -cpx {path} {filename}"
-+        subprocess.run(cmd.split(), check=True,
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+ /* Copyright string for -version arguments, About dialogs, etc */
+-#define QEMU_COPYRIGHT "Copyright (c) 2003-2025 " \
++#define QEMU_COPYRIGHT "Copyright (c) 2003-2026 " \
+     "Fabrice Bellard and the QEMU Project developers"
  
-         os.chmod(filename, 0o600)
-@@ -66,7 +64,6 @@ def setUp(self):
- 
-     def do_start_alpine(self):
-         self.vm.set_console()
--        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
-         self.vm.add_args("-kernel", self.vmlinuz)
-         self.vm.add_args("-initrd", self.initramfs)
-         self.vm.add_args("-smp", "4", "-m", "2g")
-@@ -78,7 +75,8 @@ def do_start_alpine(self):
-         wait_for_console_pattern(self, 'localhost login:')
-         exec_command_and_wait_for_pattern(self, 'root', ps1)
-         # If the time is wrong, SSL certificates can fail.
--        exec_command_and_wait_for_pattern(self, 'date -s "' + datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S' + '"'), ps1)
-+        cmd='date -s "' + datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S' + '"')
-+        exec_command_and_wait_for_pattern(self, cmd, ps1)
-         ps1='alpine:~#'
-         exec_command_and_wait_for_pattern(self, 'setup-alpine -qe', ps1)
-         exec_command_and_wait_for_pattern(self, 'setup-apkrepos -c1', ps1)
+ /* Bug reporting information for --help arguments, About dialogs, etc */
 -- 
 2.52.0
 
