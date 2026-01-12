@@ -4,96 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C461FC9EC7A
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 16:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA26D25041
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 16:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfKnU-0007Eq-Kw; Mon, 12 Jan 2026 11:29:40 -0500
+	id 1vfKiC-0004Nk-7C; Mon, 12 Jan 2026 11:24:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vfKnO-0007Dp-O7
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 11:29:35 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vfKnM-0000gO-JX
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 11:29:34 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-34f63ad6f51so2512058a91.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 08:29:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768235370; x=1768840170; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TVzFKj5L+YvB/BrFdOmu8AqXFlecRiGXkwutuExEh1k=;
- b=T0kkP+yFGHXSOJA71eCS4L+KYFZBe/Uaz6+l2AiTchSv/j0A/+io5qvH6YaQMmh6gt
- XYLSulA60/Yhq3RwOw+VAwgQFsjPjbmp8inQsWCq6J3KPF/OwdMrkGAEdedFzfnRBfez
- yy6vQRpNFgqN5YiOnTA8m8p+FIS1mFNyZQQvZn6vGLniRclGMjX+QYTJkcDjYDXT/4fx
- +neejuDWOK5HzAjJVu2OpEloIdhBKmyghdlKO9iICNh8kt7jlJbv/YRVBOK31V5Sq1fQ
- ZMz7Fhg4GY4sb5tarmrw+FAljTHDHysRJVlP78uB/dgafm9TDfkn+rSrSlhY/7QNxu8n
- 6VkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768235370; x=1768840170;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TVzFKj5L+YvB/BrFdOmu8AqXFlecRiGXkwutuExEh1k=;
- b=sukuBlYtgla0oALOBHpxJvSsTrrb5X4u6W2mkEoo6HQW08V14s14GJMj3xbGLyJJTN
- xoELLX3ZOfguhfPJNAvGAhEbmTof7nc2TUsDkU2FxF8lijjWwCGLavSoJti3eqVbETOL
- cAFhHvq3VJGGNlxWjOwVYGlie9RyfSCyNUJzOPfWhvyaefCVYMUYkciNtMOZD5A52yaO
- QdPMvBEbSMTA67oSXxLOTEnGodEgzvO07Z9cGhKdLmfXyPF/KqIQe/LJ8Nnag2XwW+eN
- vNYUgJJKxpiEQmzZrAxm9+Dca3xepbw074waH+0gpvI/0rD+mwUuIW5U2NeUUUyxt7DW
- j1lA==
-X-Gm-Message-State: AOJu0YxPTAfgJhcZaTi4E0wwqNte9zO/JJmTv8zdHW42Q3a/7edFQOSu
- fpmtna/6xtJk9cjNwk6w7o99FnsFwG11Ao28TWcjthUmabLwjJ6JnMsiDDLObFItWzHyd7kw/qN
- 0tNbA
-X-Gm-Gg: AY/fxX68psFol38ucxdNzg9R0mU4qtjd+/csNPQRgJvl90kFRXTGMDAf8t8zXEXOIcy
- DkVaKs3LiQT3UdLIR19vjTqr2JaUgwVHtlA9ldA5/1gzf8gdwVAqiKw9ylBcwprOqE9Ud7xsCH2
- yTYz2eSYGxT3gobkNx3mHhTUF3Aovjvlm9llL8b8B0MrSMl4ssc3W0OswCaxWWZLuJ++jNFJY/e
- o4Zh+AEC4JyOYrqKZCRBNvp1PgzM05xm9z8HLlIymgLRQWWs5zpf9OdL6rBnKcNJRvNz+k51Dba
- e4lvvHDquntRYVb/2+s+fCthnn8MQuIkvlHDQIpP+7bR3IYUQisKxWADyZ79IG08XC2bZegaPW0
- beUiee3xehJC+yiqYJzcqGXSwmZxmRkJbDKGwVz/MkouJNTwMGXAbzxqtmwAGSnUl9wEK257LNV
- xdzaVyyMUdSW6ibvufXRqJOPEbb7lC/BCDu041oJn9t0noDoI1qQ4JdLI6
-X-Google-Smtp-Source: AGHT+IG/9OqAzC2Ah/WDr+X5+vKKVMXHq6vRdlE2q/mXhMSYxyyxhupuERKRMDju3GUWa45DqkeAgg==
-X-Received: by 2002:a17:90b:57f0:b0:341:134:a962 with SMTP id
- 98e67ed59e1d1-34f68c277b0mr14677098a91.28.1768235369943; 
- Mon, 12 Jan 2026 08:29:29 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f6b29e117sm7237768a91.2.2026.01.12.08.29.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 08:29:28 -0800 (PST)
-Message-ID: <c8e80923-d837-4874-a072-d5ae579576a4@linaro.org>
-Date: Mon, 12 Jan 2026 08:29:27 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] target/arm: make granule_protection_check usable
- from SMMU
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vfKi9-0004KQ-7b; Mon, 12 Jan 2026 11:24:09 -0500
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vfKi7-0008Q4-IH; Mon, 12 Jan 2026 11:24:09 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=m4LzG35YKQD27unUk/05ku/cxHNSei+q6XS/ovcW933o63js9I5ZeCjtw08+cskPp2hf1Nq0Gdltrke3kOoeh2nZWC6tGch5wGgdLWV7rZGDJ6WFd/Un9If8sdZjk+E3nbyLWCgji4op1ovPHjIyoH5nA4DeMQ7JeyE4ljXZAMt/IKMpC/daxtyATTAwj8o6+AjIMFtfo4sY/Olsdni/W40pVyFvCVrCquBKxftS3BwYPXsFTp22wp7JTUkFafTEnrMbS+bNuiJlcYpiKvOPmi8+STSsnAovQThNOrOyjBb34rOa2pusnIl5GNYB5+O4IgeE9rjmnD8bE6bSnt7iDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=W1p2HBNEBHas69YcCxSWku5mOWA7yQpQkpiRuEa6eOE=;
+ b=CU0a9DuxBDh5SAiYe5V7ud2W0AQBSq7rKeTRtwWNqRtBWk9F54SYd+oVE5qyJIwvKHRoxT/2z5h3Xc8TP/N1x/dHrNZHf8gvJekcSUsRKa4LgmlnRLA130jW457wzC4c5un3xINsOowxi2RNWzrGRW93OnjAVK0lIzqWJBOCAoFhZM5nySl4NazdTzSngR8oU8OauW0gDVJR2JIrH3kc1YGALSLMina5QLAlEQO/ugWt7ZHk9Z3XIRnPuABYG6HNnjMlStgPCbvLn6WycaiskBzLzeUh5918cqpw2gdojF0SSGlpDRsQIGxZwFOUP0C+UOF1wQ3IAqPg8oh+WvH7jQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=W1p2HBNEBHas69YcCxSWku5mOWA7yQpQkpiRuEa6eOE=;
+ b=rdGeQR0mxMp9gCstzweauwnp9iHeHNEmxHE9Y0w1CorIh6c1yhpGtvKjuNJAxacsphJC/MYHurryRxiTVVCesrzmGyDBPasT7zQQkuh4Z5S+qT89amgNZzE3U8cVVzsnLsqbjhQFFm1S7jzgx7SxDVBjxxgBZDWqoxQnVa8Be98xINIAjm2QDP2SFZneKybr8tnsgEl4jiF0t4G70cn3oxHhI90FF9udjD5Sg8rV4MN1uCAQAN6kHsL+dwxlSloSxR/oZTN4ZUhNNtbqNz2W0j73cSeTD6BjM80F84L5Ukwnj9OzyDc2h1GUkTiUXpaW7LQjYKH8Khu0xxJNdCpq/g==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by DM6PR12MB4234.namprd12.prod.outlook.com (2603:10b6:5:213::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.7; Mon, 12 Jan
+ 2026 16:24:00 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9499.005; Mon, 12 Jan 2026
+ 16:24:00 +0000
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, "Duan, Zhenzhong"
+ <zhenzhong.duan@intel.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "alex@shazbot.org"
+ <alex@shazbot.org>, "cohuck@redhat.com" <cohuck@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH 3/3] hw/vfio/region: Create dmabuf for PCI BAR per region
+Thread-Topic: [PATCH 3/3] hw/vfio/region: Create dmabuf for PCI BAR per region
+Thread-Index: AQHcc0r/PShlE7i9HkafE8JAYPcnrrVIH1QAgAAPWOCAAYu5AIAARN1QgAPxowCAAGXKAIAAb3qAgAASR8A=
+Date: Mon, 12 Jan 2026 16:24:00 +0000
+Message-ID: <CH3PR12MB75482E793CFF27E0BEFDE767AB81A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20251222135357.143339-1-skolothumtho@nvidia.com>
+ <20251222135357.143339-4-skolothumtho@nvidia.com>
+ <d043f6e1-8fa4-4215-95ed-7570ae002e11@intel.com>
+ <CH3PR12MB75485C401917E76FF22E0122AB85A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <IA3PR11MB9136783B1EC050DB8B655A2A9282A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <CH3PR12MB75487D6B81B1C6556E044B6EAB82A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <IA3PR11MB913696E604E31C678F7083979281A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <CH3PR12MB754866E17D778C5836903444AB81A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <d999a43d-6879-49e4-b93b-f50fdf19f9d6@redhat.com>
+In-Reply-To: <d999a43d-6879-49e4-b93b-f50fdf19f9d6@redhat.com>
+Accept-Language: en-US, en-GB
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Tao Tang <tangtao1634@phytium.com.cn>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Auger <eric.auger@redhat.com>
-References: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DM6PR12MB4234:EE_
+x-ms-office365-filtering-correlation-id: 826e34e7-93f8-4de0-a1d7-08de51f6fe6f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|7053199007|38070700021; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?bvOhKhSmqRytL1JYlzWreMzuSQ8gILTerBJSHYlOMe4a4CPAae7yvhAd2V?=
+ =?iso-8859-1?Q?2TukvCtCuMDz7hkoPD7xWjWHqbzIQxiYOv9D1pT1ovFGg7ttFx8XilcuVF?=
+ =?iso-8859-1?Q?cLeqTgb3ZNMk08xEsc3L9oVmWrhfiHN4kpQMzY2I1xzqSOqOIkbkMLc6jS?=
+ =?iso-8859-1?Q?C0OvlvIHHuy7N9LTTsB1oNleuvtw1EusmaiOQHnqbTAbnldo3Izfft1SMO?=
+ =?iso-8859-1?Q?y9Fvbu1S5W7mqsXrvuasM/e4Mhp7NerwGJC+3XOmy62l/qBlfYhhq2Inz5?=
+ =?iso-8859-1?Q?Npcq/dIGs4Jp4wIsmYotQvFkb3BvsaxPjc08RrGUiLHwIHmt1ctY7iZDix?=
+ =?iso-8859-1?Q?qhofOEVyTxUqzJ3aRHn2HuYnonV3wvxuduCT+OoRBPiQotF54mDS1krq25?=
+ =?iso-8859-1?Q?l0Dr6k85ve3fMOiyRm0EtaZRoF3mzOhQe86zad+1JFTwCm1v0oQLFTyDvu?=
+ =?iso-8859-1?Q?mNdRracRR6X8IsFjd2KrD756Ib4beeef/WxUT5HI0y5Xl3nfcvC9FrlJu4?=
+ =?iso-8859-1?Q?Rjlhh6COWjPL4msL+hS7jWKwFsQmNJN1KM2zQ1bA3iwGcw3sMIWncd/PHM?=
+ =?iso-8859-1?Q?8I2bBxe3yj5YZyC7t63BRh4J2H3CNQLzTGgf+4wNxq68Aqq+FE3kvne/Wk?=
+ =?iso-8859-1?Q?iaqku3W5VkPk6DnK5YF/J67IekDyr9kUuK48w12V4bl7XZf2M7JutxIGmK?=
+ =?iso-8859-1?Q?d+k9VoRLy/x9ZOsq03Gslq85AAqwBWF4hXYLXwaCEHzdAuHuHh6PPkiOqz?=
+ =?iso-8859-1?Q?PzfHSqkAWoK8QFeFB/WOYIz53swrPjWuAssI7tljPFNQnO/8sJeOxwPkzv?=
+ =?iso-8859-1?Q?wpMazyRTr7JTPAQOebDKNZhbBG3Nc6jx5QdzxTyWP63KtEfbz+qPkkUB77?=
+ =?iso-8859-1?Q?N+2JVP5HRYgrV4pQYvxZruQWCMMzZnPx8zOB7PNBg08qXt3O514hYuNuTw?=
+ =?iso-8859-1?Q?3wlpyhyi/CcbtLLYaO1MTM9y0Pbdo5X+/gimChaFOxMHQDW6bofhNhpcBG?=
+ =?iso-8859-1?Q?pG8Gm8aIh4vT1WbMsTD+QwfO1dZVL8dwWprhmXCdj3PLCX6MIdZBVryPN8?=
+ =?iso-8859-1?Q?Pwih3sUvH6Zw0d+CZY1cL5fD3krw2/uKxH8qVXPsPGyOeAQVtWfEN6A/Ao?=
+ =?iso-8859-1?Q?kgHvDPg2L0FMhGt2bh7VKdLXgaaRio0/VHals9QNginsHxpjTHfI8/0jdg?=
+ =?iso-8859-1?Q?q/2xW/MJDff0iZp75CSJsskmNssWl8a5/UYI5nOTa4FftUMKKa6lQ6iQNu?=
+ =?iso-8859-1?Q?x3kDKSX4P530Cxs1jCu/hGu7HH0WNEi/8D4AfBtS7OAu/fQ8cSYgMwirmG?=
+ =?iso-8859-1?Q?QWtDyrEl29KFCSY5c3PbCiCLeSsANegMx3Ivun5ZnQCaV0HuZrNeBYApf/?=
+ =?iso-8859-1?Q?obqwpYfe74H8+SsxSolbskWwhRj8QeoB1uHue7rVYxh1/OKk1tYMsiZL5G?=
+ =?iso-8859-1?Q?lOVfLIniTyVfOhcCZSKaqZbXMB/4CrdUp5nfyYU8Jk7NzCzBkasEtuiuB4?=
+ =?iso-8859-1?Q?MwORXDRpGTVmzGX2Y4BWNK3QNnUzxO9rg9ob3P5p66RHEpxe+I5Pbt2MOi?=
+ =?iso-8859-1?Q?n/zhCJ5A+LNyTPVMFoCDApQDc0AC?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(7053199007)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rZZ2hosPNLX8fDP4M3vuCPFx0hiwSjkFRe6Sx97rBhAMLTBP6eWMvrgETC?=
+ =?iso-8859-1?Q?xOnzTrRAKDQamHSzkV/WksefeUEJHtEjoZ5iW6kvCxcCkZzaQ2tM0c71DQ?=
+ =?iso-8859-1?Q?sjCdgr0ROSz4lPHvtfSOkzEHlFYlh47VnuAFDoI+5PAPwiIIOKUo5U2A+y?=
+ =?iso-8859-1?Q?ojVtEio9OLp2Gaasv9vKvAxWjdtaYhU4m9GwG3vuf8uUpL4YCbdtmI9Gzh?=
+ =?iso-8859-1?Q?XKdww4ieoegWlrVqf/b2h1T3Dox+QEaiXoS7OMahTc85w8fWcgof0dQ9dQ?=
+ =?iso-8859-1?Q?JsJUj/ZM7gBPkaCEpNmckItm2oZvntc3nrPpR1GGcLrjbn++LKLyxy9aVz?=
+ =?iso-8859-1?Q?PRBR6L+0qxgcaZRCfsawBJeApRJ8DC/yBViFDXKOztk8rr6LUa2wevz/tM?=
+ =?iso-8859-1?Q?HdknwFoa4PfPshm7KIiCWfUmQY2bO7xd9Sa1yTZN3OfFyd5/OhDpM1+HP6?=
+ =?iso-8859-1?Q?O0xIWRez3lQX4qJBWw1z86c7nTsl0jQJKwwQhVW+Y4uVYxlflNl48lwisH?=
+ =?iso-8859-1?Q?LJ2nsc3oi1BQR8uNHtgFnywtTLT7PrrYNoJgX3h/yluI11PNltc5CBM85w?=
+ =?iso-8859-1?Q?G9Kqzqq1T0P4NmnNpTxGcEYZC21fToISECttiQcsDjpspSV7+7e59mW9z0?=
+ =?iso-8859-1?Q?mgxma1Q1RACq6PXR1MxF+IGZLQ9N2tQYdFYt90q/L4ArFzAowqFRZwokvr?=
+ =?iso-8859-1?Q?JCsAgLgBiSbRGkRGAR5tAAaQ3fl7/bhLDosxlBQPXyEWOogQa2QJA+o9f7?=
+ =?iso-8859-1?Q?nhR0soHWp27jnNNZPy9tUIPIzhknzNFSKHCwe+JuTndaA4nfHvTb2Fkjn0?=
+ =?iso-8859-1?Q?9Cxw+f6ctwow86duU19BfueDz2xVCrJEW9zmHGlgIt8x0dF85C0zbbXfuN?=
+ =?iso-8859-1?Q?OiQ+S/kMJs+47/S5hsj9dvQbaqCmPO/+sKMp4bXZ+eLQf80kKnUG3Vnaw2?=
+ =?iso-8859-1?Q?7glSksV+/9P+ZtJVMnb8c5sbpUgDkVSmAzb28N+ptPEDxxS1SYhaj7WoE1?=
+ =?iso-8859-1?Q?TMP7q7gl9z39yHRj10QztkL/cuggU7Ne0ZMlUZapNZ2Vr0ANl1IwLBM+Mk?=
+ =?iso-8859-1?Q?uix1aH4mHJz+bM4c0QMlh2Ikjc8Gw1GRRpkK+4yLAx5J8WKqYAbJ6eA1uJ?=
+ =?iso-8859-1?Q?+aEEnC2BncfMmq4MPMIOiLl+ishH1sX4YOyxy+bN12SCnJdvNbGi0dEFId?=
+ =?iso-8859-1?Q?BB1bxSoDKHlNtYHNlhcFm0QCeNB7oPP1Q0D9TqFT5kDEB8veI7b3j9aAFh?=
+ =?iso-8859-1?Q?MeFWWtlgOiyCMTKDkvA0cK6eRaieNhhiKT+11VTKYXRzLTEUf/qVJrnz07?=
+ =?iso-8859-1?Q?aHyol/WsVRPUSuTH4dnC+OCOOMKwbiYa/fpDxsI+zpswmAXPfNvBCMPiyZ?=
+ =?iso-8859-1?Q?aRUi8fnyWn+kyHDpPjVjZ/YZJsTRbPe0w9i8eVieaTW6qyJkyPkaby3kYd?=
+ =?iso-8859-1?Q?TQaYFWfWgHRlxR1HuW7ZlyeA6tRZpiFVF63As9I8atSZPbnMMtGPuNYj1h?=
+ =?iso-8859-1?Q?mR+ZZ/jqYzbD+4+7VJwGfElx7uKhO39B+T4l6aQ4KM2Wipm/i1mqgsNzec?=
+ =?iso-8859-1?Q?K99cmSenmQdavStPcFVnQlxaS5mLRsuq9gyyIiOwl/SXC2a9fDpgua306+?=
+ =?iso-8859-1?Q?nU3y0m2KivauB3vMmZGS88vJTXnGSyBsqNwQ2KkklPNP3RvcHeU8XTvDz2?=
+ =?iso-8859-1?Q?+StVtgFweFMyrzMjPoeUwJ/UVPogmbyPfoB31w0ycbsKj2OVjpeiHwz4tM?=
+ =?iso-8859-1?Q?RJtzXz/6i56QUFLtq4M8meb7yuwaJdtSVT26tKFdiEzPyAEENHJWUCIiRp?=
+ =?iso-8859-1?Q?6+kFlaKIeQ=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 826e34e7-93f8-4de0-a1d7-08de51f6fe6f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jan 2026 16:24:00.4892 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: KdgIvTkL3dWDKe6xH0ooanW0tglXZ1l495eFPKbGmgm7p+luU3AdeCkeYkWkHqAwMqOIHHg4tfC5Nnmvd/v6pA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4234
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,83 +181,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/15/25 4:01 PM, Pierrick Bouvier wrote:
-> This series prepare granule_protection_check to be usable from SMMU, for
-> implementing RME feature.
-> It's based on Tao's commit [1] extracting ARMSecuritySpace from cpu.h header for
-> convenience.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20251012150701.4127034-5-tangtao1634@phytium.com.cn/
-> 
-> To demonstrate the purpose, this is the (wip) change to use that from SMMU:
-> 
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 80f48df3dda..1acff3bbd66 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1055,12 +1056,36 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
->       }
-> 
->       cached_entry = smmu_translate(bs, cfg, addr, flag, &ptw_info);
->       if (desc_s2_translation) {
->           cfg->asid = asid;
->           cfg->stage = stage;
->       }
-> 
-> +    if (cached_entry) {
-> +        /* The fields in SMMU_ROOT_GPT_BASE_CFG are the same as for GPCCR_EL3,
-> +         * except there is no copy of GPCCR_EL3.GPC. See SMMU_ROOT_CR0.GPCEN. */
-> +        const bool gpc_enabled = FIELD_EX32(s->root.cr0, ROOT_CR0, GPCEN);
-> +        if (gpc_enabled) {
-> +            hwaddr paddress = CACHED_ENTRY_TO_ADDR(cached_entry, addr);
-> +            ARMSecuritySpace pspace = sec_sid_to_security_space(cfg->sec_sid);
-> +            ARMSecuritySpace ss = ARMSS_Root;
-> +            ARMMMUFaultInfo fi;
-> +
-> +            ARMGranuleProtectionConfig config = {
-> +                .gpccr = s->root.gpt_base_cfg,
-> +                .gptbr = s->root.gpt_base >> 12,
-> +                .parange = 6, /* 52 bits */
-> +                .support_sel2 = false,
-> +                .gpt_as = &s->smmu_state.as_secure_memory
-> +            };
-> +            if (!arm_granule_protection_check(config, paddress,
-> +                                              pspace, ss, &fi)) {
-> +                printf("ERROR: fi.type=%d fi.gpcf=%d\n", fi.type, fi.gpcf);
-> +                g_assert_not_reached();
-> +            }
-> +        }
-> +    }
-> +
->       if (!cached_entry) {
->           /* All faults from PTW has S2 field. */
->           event->u.f_walk_eabt.s2 = (ptw_info.stage == SMMU_STAGE_2);
-> 
-> v2
-> --
-> 
-> - remove extra boilerplate/include/line from arm-security.h
-> - use local var gpccr instead of config.gpccr
-> - extract GPC enable check out of arm_granule_protection_check
-> - rename as_secure in gpt_as
-> - use arm_addresspace to retrieve gpt address space
-> 
-> Pierrick Bouvier (1):
->    target/arm/ptw: make granule_protection_check usable without a cpu
-> 
-> Tao Tang (1):
->    target/arm: Move ARMSecuritySpace to a common header
-> 
->   include/hw/arm/arm-security.h | 37 ++++++++++++++++++++++
->   target/arm/cpu.h              | 59 +++++++++++++++++++++--------------
->   target/arm/ptw.c              | 59 ++++++++++++++++++++++-------------
->   3 files changed, 110 insertions(+), 45 deletions(-)
->   create mode 100644 include/hw/arm/arm-security.h
-> 
 
-Another gentle ping.
-This series has been reviewed and should be ready to be pulled.
 
-Regards,
-Pierrick
+> -----Original Message-----
+> From: C=E9dric Le Goater <clg@redhat.com>
+> Sent: 12 January 2026 15:16
+> To: Shameer Kolothum <skolothumtho@nvidia.com>; Duan, Zhenzhong
+> <zhenzhong.duan@intel.com>; qemu-arm@nongnu.org; qemu-
+> devel@nongnu.org
+> Cc: eric.auger@redhat.com; alex@shazbot.org; cohuck@redhat.com;
+> mst@redhat.com; Nicolin Chen <nicolinc@nvidia.com>; Nathan Chen
+> <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jason Gunthorpe
+> <jgg@nvidia.com>; Krishnakant Jaju <kjaju@nvidia.com>
+> Subject: Re: [PATCH 3/3] hw/vfio/region: Create dmabuf for PCI BAR per
+> region
+>=20
+> External email: Use caution opening links or attachments
+>=20
+>=20
+> On 1/12/26 09:45, Shameer Kolothum wrote:
+> >
+> >
+> >> -----Original Message-----
+> >> From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+> >> Sent: 12 January 2026 02:33
+> >> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
+> arm@nongnu.org;
+> >> qemu-devel@nongnu.org
+> >> Cc: eric.auger@redhat.com; alex@shazbot.org; clg@redhat.com;
+> >> cohuck@redhat.com; mst@redhat.com; Nicolin Chen
+> >> <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> >> <mochs@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>; Krishnakant
+> >> Jaju <kjaju@nvidia.com>
+> >> Subject: RE: [PATCH 3/3] hw/vfio/region: Create dmabuf for PCI BAR
+> >> per region
+> >>
+> >> External email: Use caution opening links or attachments
+> >>
+> >>
+> >>>>>>> @@ -305,6 +345,21 @@ int vfio_region_mmap(VFIORegion *region)
+> >>>>>>>                                   region->mmaps[i].size - 1);
+> >>>>>>>        }
+> >>>>>>>
+> >>>>>>> +    ret =3D vfio_region_create_dma_buf(region);
+> >>>>>>> +    if (ret < 0) {
+> >>>>>>> +        if (ret =3D=3D -ENOTTY) {
+> >>>>>>> +            warn_report_once("VFIO dmabuf not supported in
+> >>>>> kernel");
+> >>>>>>> +        } else {
+> >>>>>>> +            error_report("%s: failed to create dmabuf: %s",
+> >>>>>>> +                         memory_region_name(region->mem),
+> >>>>> strerror(errno));
+> >>>>>>> +        }
+> >>>>>>> +    } else {
+> >>>>>>> +        MemoryRegion *mr =3D &region->mmaps[0].mem;
+> >>>>>>
+> >>>>>> Do we need to support region->mmaps[1]?
+> >>>>>
+> >>>>> My understanding is all region->mmaps[] entries for a VFIO region
+> >>>>> share the same RAMBlock. And the kernel returns a single dmabuf fd
+> >>>>> per region, not per subrange.
+> >>>>
+> >>>> Not get, can RAMBlock have holes?
+> >>>
+> >>> Yes, a RAMBlock can effectively have holes, but in this context that
+> >>> is not what is happening.
+> >>>
+> >>> IIUC, for a VFIO PCI BAR region, all region->mmaps[] entries
+> >>> correspond to subranges of the same BAR and are backed by the same
+> >>> MemoryRegion and therefore the same RAMBlock. The sparse mmap
+> layout
+> >>> (nr_mmaps > 1) exists to describe which parts of the BAR are
+> >>> mappable, not to represent distinct backing memory objects.
+> >>>
+> >>> So while sparse regions may look like "holes" at the mmap level,
+> >>> there are no holes in the RAMBlock abstraction itself. All
+> >>> region->mmaps[] entries share the same RAMBlock, which is why
+> >>> attaching the returned dmabuf fd to region->mmaps[0].mem.ram_block is
+> sufficient, I think.
+> >>>
+> >>> However, possible I may be missing the case you are concerned about
+> here.
+> >>> Please let me know.
+> >>
+> >> I see memory_region_init_ram_device_ptr() is called for each region-
+> >>> mmaps[x].mem,
+> >> and RAMBlock is allocated in each call.
+> >
+> > Ah.. I see.  It does allocate RAMBlock per  mmaps[i].
+> >
+> >> IIUC, we should set fd and fd_offset in each RAMBlock.
+> >
+> > Ok. Will update in v2.
+> I'd like to send a vfio PR soon and this v2 looks a like good candidate f=
+or it.
+
+Sure. Will send out the v2 soon and thanks for sending those update-linux-h=
+eaders
+and the hyperv patches.
+
+Thanks,
+Shameer
+=20
+
+
 
