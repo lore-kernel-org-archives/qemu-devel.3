@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C0BCF45D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37B86CF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQpJ-0008Nk-W5; Mon, 12 Jan 2026 17:55:58 -0500
+	id 1vfQpU-0000u4-Ht; Mon, 12 Jan 2026 17:56:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQpH-0007z2-DJ
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:55 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQpR-0000hg-Rz
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:56:05 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQpF-0004QP-JR
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:55 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42fbc305882so3727178f8f.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQpO-0004RH-ND
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:56:05 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-432dc56951eso2153198f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258552; x=1768863352; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258558; x=1768863358; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0v+2OnVOsTI/bCFGO0OtJvlwuMqs+IwSJ72vCxsdZTc=;
- b=N7sx0jj0p5z4ZCwHXYQy/BW9nfOfxw80sdDQulO9HWh4r95oCqC80SL0Vk8aHGdyuF
- 5e6pUMfMq8eYIhtAXtg30G+qrnRIOcFj8OY16jgIqHvOLPljSdZLmzTPQwPcvYuJQOYm
- j9MwFSeywAb14eGFTeeESai7eo6NfapsukT1SkhLdiR4JaiGvtGqOwHB/mnUiHUQcMHq
- REMPeCyHbo5a+Gs/oF9pqtutRBCdkwKyu7owf5bGt74Bw1nzvKPVlavmKJ33GVywtOb4
- ZW1IYRyNyeqgi50Y6qpOPNAq0dTIfk7J/lCxp03JmrR4gO1zWSWIlfeA0wDQPL7jmQdO
- O6Wg==
+ :reply-to; bh=CcYUWFRetdP2hpvvwiCaCND6NKm0LxnGywFq2yDIOV0=;
+ b=Psi5i7hSdBjEXAFA2kZ8tGJNZrLT14Zz3Hv+a/su4rlRzlxTgAQiiIaalizFBIrpjT
+ Zfv4zs20xezvKBkcLELIPuqhqEzB4lyjcjxURjnHT9bMy4htw3KnR80xPc9OyMl6Qyqx
+ mUzZXeU5UTC0+2qgDGx1p0Gd1POV6K63VVm6rcX8DzUFJG7qjasO9jYMeCvVH4pfAQHg
+ VHhJXpjQmw6kWNiypRx570WIrgQ76uY8ExZrQYzJPi0iFxJgIQp0ik86OV2C0yq53Dl0
+ VSzxqY/kbqWroVS2jx9PDD4F9MJfl9eKQhdO9dNkcBoe7KqcFpEtdLs4k/Eagxp9ABOd
+ CmBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258552; x=1768863352;
+ d=1e100.net; s=20230601; t=1768258558; x=1768863358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=0v+2OnVOsTI/bCFGO0OtJvlwuMqs+IwSJ72vCxsdZTc=;
- b=Vdp5EiFXUjT2SQe7vYS5xg5G4DVGqdHIQ/EvK+ugkdIaRkngIEiLDJ1Fa9UXYquYcU
- t3eDodB0MP5g44dBvM0thbUPGqpgA8xwf45Ey6ajlxxcDqXuKBmArW26QmwRqsJzZ0j0
- 8i+bR7kYp9fChTJjEDovYg6aWELy/xmi1XE+7DeJieYsYNHfA4Di3aUH5NTakKn+koO9
- EZdLS4kQfXe+k5aW7E9ayi/aC86ZtkC0mkJjf++V9ef2t3LESLiyLONujIFzWitF+PBN
- 6V56WJn83HyCA4QQ8cBA+NE7W450giVq7Ewyt3eU1XB6Yl62NAMd0EVMEPqL67aDDLXu
- 32Wg==
-X-Gm-Message-State: AOJu0YwRhb9RU1hb7nsJhU5L3EnO3XWQkEMeqZKW/9+lwfk8ZJ7/QcK4
- ihUYX4IlEpv4l5b01J3/MdkmrcNT8FAAYhhHl52yG9SewmtqM2aIY0b3MgjYG8TwyyPfshioNTr
- lO44zuOU=
-X-Gm-Gg: AY/fxX5SbouCyZSXzBOEEsgscQLdWYoyfypbhiVCWlhPO1Dtz/kV7/2dVvHm3v+dVw5
- zj6hmeigMqWOxiDfAFgdag6Rd5XEzIUQ7By4LRDnmJDo5f1agLaKeYoaLHTHqGKrbuSNi2rqTor
- cTDt+IuYC/W8cziRgYXsXGENMmAFFzwFSSAyJWgVA+7oodTV5HJOymilSwrWANN904FDQdHGfai
- uCnoU1qEQ8QgUDEQxPnuwiV134ywldwKRmbLkLEB8mJNkKV3YGWPhiYGA14rlA57zYPjsLU4Rre
- lfMm/TCnPXDswS95PWUpebDpU+nSvqCbcleMg6Tizmz6PItHkbnP2mdi2JYdEFjC+YGAleIX7yN
- 0sgkSYa0CeQHw4rpf6HBZ+wUmlmSayP8XK2RNu8k/uOYFnE2S44fQ26yH052e0Twqqb3sb9eMKD
- VGs/smZrhkwQPQUbcm1rC1MYSscCWSM505CJ2ifqd8WZUqelVTCABqNPs3YX5w
-X-Google-Smtp-Source: AGHT+IHJb9LEBrkY0TIE8w6z5iLodVhdAfetqmJoA7o7Jg1pzUH9L/ii1gAHXMCfkNK+0UqMSgKEDg==
-X-Received: by 2002:a05:6000:40da:b0:430:f23f:4bc5 with SMTP id
- ffacd0b85a97d-432c3760d02mr21573654f8f.45.1768258551665; 
- Mon, 12 Jan 2026 14:55:51 -0800 (PST)
+ bh=CcYUWFRetdP2hpvvwiCaCND6NKm0LxnGywFq2yDIOV0=;
+ b=mfOUkUvpLSsONtAJ++2oDgLM+ATIjdK/iVj43ZzDOBQ/mrMApPkviRKPovJbTDt+24
+ XZAA23KjmkHool9pITbdzO2xkLAjJvxg56bWurE91oiyKBl8a/IFumWFFpxHV5oPdF0o
+ kY9uluj2mLVSF5LZxKqBvo2tCsgB5De2km/52u+NJ3OkEaNlFhm+DuC0tDaEmlExp9Q6
+ twNMHOa392Ritv4nq3rvKCoC1dZEqa8H2ju6j7S2UqqHTjwd4cKzwE3WrIrx7bRLVmxY
+ Ytqc22fbs88JGHOhPgdzuztxu+bQaBbeYf7qTMsD/C1r45lH7/bULI1SQlv4zRyvzimk
+ vUaw==
+X-Gm-Message-State: AOJu0YySfPnXn1vELgMrmaP6Ia2XrFKo0sACjQ7zQ9TUenzpsJa/ILHV
+ 6JXapVqtEMnennkD+hYBCYfTKWFpjWlcdjVyrTT9fCxYwPRgrW2UW4ox9v6juPqwwMTs87Y5Jk4
+ Lui8PJjw=
+X-Gm-Gg: AY/fxX5ELd8ChpbehFOtCZEu4I/6soHQ3iuGS3njFJXvzOSxjpfoR2mmec+5R3mAWby
+ yqXJZEuZfT5DjA7Bn1e9L1wQXNBAGfv2UJWfq68Udiy+/PAJqfZMtWCdJySh/buCjl583XnhxFW
+ gxsbgl/KcWDo+1As/Zq5r9LWWwCmoblIMpdbzdb5OL6/rrYlXwYkd2kz05+/yp45X3XdCjyq+Su
+ 5WTd+Zv25FlKTk2MEXiqNdoeBNg48tHfZehG0KyKWjU8jdjrXI+Vk7D/aK7Nb3Tmhjm+EjgyOPx
+ UkgGssSDuh3weGJNrTvVhdfhazA5Utx40p7WpFYoOWhfl3l9wplgUBY8prKi9MDryQOc3L0uOKj
+ GFFVwtZayHMKSv+gasdwxHZnYySYUGfo8+A7ZFg41+BU6mH1xMe03Ef44wyKvQytcrKa4paue44
+ +7/CFowrrczr5jqZoZPS6AGEBw3S0f/WCsxrT+iF7dvvB4CPvJKWAbBQlz+I5Pv05mK5SVhIB2Y
+ FMgWJnyQg==
+X-Google-Smtp-Source: AGHT+IHaIqoEWLRlx4xZRh3mNnbB3H8oviPYltkkwoc97CYTbRJfk5iwP9HTqK6gv7AabC0zH7OvIQ==
+X-Received: by 2002:a05:6000:4287:b0:430:f494:6abb with SMTP id
+ ffacd0b85a97d-432c378a793mr19654896f8f.8.1768258558172; 
+ Mon, 12 Jan 2026 14:55:58 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0dad8bsm41238875f8f.8.2026.01.12.14.55.50
+ ffacd0b85a97d-432bd5ee243sm40956009f8f.31.2026.01.12.14.55.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:55:51 -0800 (PST)
+ Mon, 12 Jan 2026 14:55:57 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 60/61] target/arm/gdbstub: extract
- aarch64_cpu_register_gdb_regs_for_features
-Date: Mon, 12 Jan 2026 23:48:55 +0100
-Message-ID: <20260112224857.42068-61-philmd@linaro.org>
+Subject: [PULL 61/61] target/arm/gdbstub: make compilation unit common
+Date: Mon, 12 Jan 2026 23:48:56 +0100
+Message-ID: <20260112224857.42068-62-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,158 +102,132 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+Expose and stubs aarch64 functions. All call sites are under a
+"is_aarch64" check.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260109053158.2800705-3-pierrick.bouvier@linaro.org>
+Message-ID: <20260109053158.2800705-4-pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/internals.h |  1 +
- target/arm/gdbstub.c   | 53 +--------------------------------------
- target/arm/gdbstub64.c | 57 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 59 insertions(+), 52 deletions(-)
+ target/arm/cpu32-stubs.c | 21 +++++++++++++++++++++
+ target/arm/gdbstub.c     |  8 --------
+ target/arm/meson.build   | 12 ++++++------
+ 3 files changed, 27 insertions(+), 14 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 9cd4bf74efb..440072d8206 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -387,6 +387,7 @@ void arm_translate_code(CPUState *cs, TranslationBlock *tb,
- void arm_cpu_register_gdb_commands(ARMCPU *cpu);
- void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *,
-                                        GPtrArray *, GPtrArray *);
-+void aarch64_cpu_register_gdb_regs_for_features(ARMCPU *cpu);
- 
- void arm_restore_state_to_opc(CPUState *cs,
-                               const TranslationBlock *tb,
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index 8865f27089d..4e8e341cc04 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -537,58 +537,7 @@ void arm_cpu_register_gdb_regs_for_features(ARMCPU *cpu)
-          * registers so we don't need to include both.
-          */
- #ifdef TARGET_AARCH64
--        if (isar_feature_aa64_sve(&cpu->isar) ||
--            isar_feature_aa64_sme(&cpu->isar)) {
--            GDBFeature *feature = arm_gen_dynamic_svereg_feature(cs, cs->gdb_num_regs);
--            gdb_register_coprocessor(cs, aarch64_gdb_get_sve_reg,
--                                     aarch64_gdb_set_sve_reg, feature, 0);
--        } else {
--            gdb_register_coprocessor(cs, aarch64_gdb_get_fpu_reg,
--                                     aarch64_gdb_set_fpu_reg,
--                                     gdb_find_static_feature("aarch64-fpu.xml"),
--                                     0);
--        }
--
--        if (isar_feature_aa64_sme(&cpu->isar)) {
--            GDBFeature *sme_feature =
--                arm_gen_dynamic_smereg_feature(cs, cs->gdb_num_regs);
--            gdb_register_coprocessor(cs, aarch64_gdb_get_sme_reg,
--                                     aarch64_gdb_set_sme_reg, sme_feature, 0);
--            if (isar_feature_aa64_sme2(&cpu->isar)) {
--                gdb_register_coprocessor(cs, aarch64_gdb_get_sme2_reg,
--                                         aarch64_gdb_set_sme2_reg,
--                                         gdb_find_static_feature("aarch64-sme2.xml"),
--                                         0);
--            }
--        }
--        /*
--         * Note that we report pauth information via the feature name
--         * org.gnu.gdb.aarch64.pauth_v2, not org.gnu.gdb.aarch64.pauth.
--         * GDB versions 9 through 12 have a bug where they will crash
--         * if they see the latter XML from QEMU.
--         */
--        if (isar_feature_aa64_pauth(&cpu->isar)) {
--            gdb_register_coprocessor(cs, aarch64_gdb_get_pauth_reg,
--                                     aarch64_gdb_set_pauth_reg,
--                                     gdb_find_static_feature("aarch64-pauth.xml"),
--                                     0);
--        }
--
--#ifdef CONFIG_USER_ONLY
--        /* Memory Tagging Extension (MTE) 'tag_ctl' pseudo-register. */
--        if (cpu_isar_feature(aa64_mte, cpu)) {
--            gdb_register_coprocessor(cs, aarch64_gdb_get_tag_ctl_reg,
--                                     aarch64_gdb_set_tag_ctl_reg,
--                                     gdb_find_static_feature("aarch64-mte.xml"),
--                                     0);
--        }
--#endif
--
--        /* All AArch64 CPUs have at least TPIDR */
--        gdb_register_coprocessor(cs, aarch64_gdb_get_tls_reg,
--                                 aarch64_gdb_set_tls_reg,
--                                 arm_gen_dynamic_tls_feature(cs, cs->gdb_num_regs),
--                                 0);
-+        aarch64_cpu_register_gdb_regs_for_features(cpu);
- #endif
-     } else {
-         if (arm_feature(env, ARM_FEATURE_NEON)) {
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index 3bc7ff45d57..c584e5b4e69 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -879,3 +879,60 @@ void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
-     }
- #endif
+diff --git a/target/arm/cpu32-stubs.c b/target/arm/cpu32-stubs.c
+index 81be44d8462..f0ce1595725 100644
+--- a/target/arm/cpu32-stubs.c
++++ b/target/arm/cpu32-stubs.c
+@@ -24,3 +24,24 @@ void arm_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
+ {
+     g_assert_not_reached();
  }
++
++int aarch64_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
++{
++    g_assert_not_reached();
++}
++
++int aarch64_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg)
++{
++    g_assert_not_reached();
++}
++
++void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
++                                       GPtrArray *qtable, GPtrArray *stable)
++{
++    g_assert_not_reached();
++}
 +
 +void aarch64_cpu_register_gdb_regs_for_features(ARMCPU *cpu)
 +{
-+    CPUState *cs = CPU(cpu);
-+    if (isar_feature_aa64_sve(&cpu->isar) ||
-+        isar_feature_aa64_sme(&cpu->isar)) {
-+        GDBFeature *feature = arm_gen_dynamic_svereg_feature(cs, cs->gdb_num_regs);
-+        gdb_register_coprocessor(cs, aarch64_gdb_get_sve_reg,
-+                                 aarch64_gdb_set_sve_reg, feature, 0);
-+    } else {
-+        gdb_register_coprocessor(cs, aarch64_gdb_get_fpu_reg,
-+                                 aarch64_gdb_set_fpu_reg,
-+                                 gdb_find_static_feature("aarch64-fpu.xml"),
-+                                 0);
-+    }
-+
-+    if (isar_feature_aa64_sme(&cpu->isar)) {
-+        GDBFeature *sme_feature =
-+            arm_gen_dynamic_smereg_feature(cs, cs->gdb_num_regs);
-+        gdb_register_coprocessor(cs, aarch64_gdb_get_sme_reg,
-+                                 aarch64_gdb_set_sme_reg, sme_feature, 0);
-+        if (isar_feature_aa64_sme2(&cpu->isar)) {
-+            gdb_register_coprocessor(cs, aarch64_gdb_get_sme2_reg,
-+                                     aarch64_gdb_set_sme2_reg,
-+                                     gdb_find_static_feature("aarch64-sme2.xml"),
-+                                     0);
-+        }
-+    }
-+    /*
-+     * Note that we report pauth information via the feature name
-+     * org.gnu.gdb.aarch64.pauth_v2, not org.gnu.gdb.aarch64.pauth.
-+     * GDB versions 9 through 12 have a bug where they will crash
-+     * if they see the latter XML from QEMU.
-+     */
-+    if (isar_feature_aa64_pauth(&cpu->isar)) {
-+        gdb_register_coprocessor(cs, aarch64_gdb_get_pauth_reg,
-+                                 aarch64_gdb_set_pauth_reg,
-+                                 gdb_find_static_feature("aarch64-pauth.xml"),
-+                                 0);
-+    }
-+
-+#ifdef CONFIG_USER_ONLY
-+    /* Memory Tagging Extension (MTE) 'tag_ctl' pseudo-register. */
-+    if (cpu_isar_feature(aa64_mte, cpu)) {
-+        gdb_register_coprocessor(cs, aarch64_gdb_get_tag_ctl_reg,
-+                                 aarch64_gdb_set_tag_ctl_reg,
-+                                 gdb_find_static_feature("aarch64-mte.xml"),
-+                                 0);
-+    }
-+#endif
-+
-+    /* All AArch64 CPUs have at least TPIDR */
-+    gdb_register_coprocessor(cs, aarch64_gdb_get_tls_reg,
-+                             aarch64_gdb_set_tls_reg,
-+                             arm_gen_dynamic_tls_feature(cs, cs->gdb_num_regs),
-+                             0);
++    g_assert_not_reached();
 +}
+diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
+index 4e8e341cc04..c7d59fd3726 100644
+--- a/target/arm/gdbstub.c
++++ b/target/arm/gdbstub.c
+@@ -44,11 +44,9 @@ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+ 
+-#ifdef TARGET_AARCH64
+     if (arm_gdbstub_is_aarch64(cpu)) {
+         return aarch64_cpu_gdb_read_register(cs, mem_buf, n);
+     }
+-#endif
+ 
+     if (n < 16) {
+         /* Core integer register.  */
+@@ -72,11 +70,9 @@ int arm_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+     CPUARMState *env = &cpu->env;
+     uint32_t tmp;
+ 
+-#ifdef TARGET_AARCH64
+     if (arm_gdbstub_is_aarch64(cpu)) {
+         return aarch64_cpu_gdb_write_register(cs, mem_buf, n);
+     }
+-#endif
+ 
+     tmp = ldl_p(mem_buf);
+ 
+@@ -504,10 +500,8 @@ void arm_cpu_register_gdb_commands(ARMCPU *cpu)
+     g_autoptr(GString) qsupported_features = g_string_new(NULL);
+ 
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+-    #ifdef TARGET_AARCH64
+         aarch64_cpu_register_gdb_commands(cpu, qsupported_features, query_table,
+                                           set_table);
+-    #endif
+     }
+ 
+     /* Set arch-specific handlers for 'q' commands. */
+@@ -536,9 +530,7 @@ void arm_cpu_register_gdb_regs_for_features(ARMCPU *cpu)
+          * The lower part of each SVE register aliases to the FPU
+          * registers so we don't need to include both.
+          */
+-#ifdef TARGET_AARCH64
+         aarch64_cpu_register_gdb_regs_for_features(cpu);
+-#endif
+     } else {
+         if (arm_feature(env, ARM_FEATURE_NEON)) {
+             gdb_register_coprocessor(cs, vfp_gdb_get_reg, vfp_gdb_set_reg,
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 3df7e03654e..462c71148d2 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -1,8 +1,11 @@
+ arm_ss = ss.source_set()
+ arm_common_ss = ss.source_set()
+-arm_ss.add(files(
+-  'gdbstub.c',
+-))
++arm_common_system_ss = ss.source_set()
++arm_system_ss = ss.source_set()
++arm_user_ss = ss.source_set()
++
++arm_common_system_ss.add(files('gdbstub.c'))
++arm_user_ss.add(files('gdbstub.c'))
+ 
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+   'cpu64.c',
+@@ -13,15 +16,12 @@ arm_common_ss.add(files(
+   'mmuidx.c',
+ ))
+ 
+-arm_system_ss = ss.source_set()
+-arm_common_system_ss = ss.source_set()
+ arm_system_ss.add(files(
+   'arm-qmp-cmds.c',
+ ))
+ arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
+ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+ 
+-arm_user_ss = ss.source_set()
+ arm_user_ss.add(files('cpu.c'))
+ arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files(
+   'cpu32-stubs.c',
 -- 
 2.52.0
 
