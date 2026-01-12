@@ -4,90 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC07C9EC97
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 15:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FAA4C9EC9A
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 15:06:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfJKE-0008Tt-2D; Mon, 12 Jan 2026 09:55:22 -0500
+	id 1vfJMY-0003Vu-Ih; Mon, 12 Jan 2026 09:57:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJq-0007qD-6U
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:55:00 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfJJl-0001ct-Dv
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:54:57 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b7cf4a975d2so1070155366b.2
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:54:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768229691; x=1768834491; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8gA+Ri6T2SgxvAr0I5jL2NjeYKgeXs1ivfULeQGhHhE=;
- b=TDt+2T9NCw7x0I44XfJz+JKR/kSiOAhnphEj3R7DTbAN1J2FaHVsddPtMC0lElY6dy
- 6Oi0994laFKz+ZT3Jwy1H6S/5J2V9Bk3qA3KAVi2dxntqojdMqUnuebVIZXDB0KM45gk
- qZ86wV6H6RcUguxJmLsSOlea8ZmIkraIHwgTojY1wQe21i3/OhvHpVt5BivCAHjHrT0q
- p/C+bwDYB3VCaGzsvowjr6nEQoy6OSgdXY6c/eGmopzQGcYWy4BvW55JGfeeecuc/9ko
- vypl9z95jqU3KF/idIdjKghZmIYjJ3LvfJGrjwwltehjX52m8vQZKBQZzwHSkzbCvS6o
- FeyQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vfJMM-0003K2-AE
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:57:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vfJMJ-00021T-5R
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:57:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768229849;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+MJ7u+G8s9lVs8w5hv+FIzeJcnkYeYWliICTSz7UkUo=;
+ b=iAvTVsCRIEJNAYvU3JpeV6cBnCdDZjXTXDlhTKJQQ8cE6jE2Kl71IcPH/DQeqXqzwzv35t
+ o80QNy95fCzrioeES7hcAZC6ae5MRXkqi0tEcprocygZXTaBHCo930COHwTcJGuvHfD1S0
+ iA9X5dftx7IFYeYwkD0qxPepSgjQ8i0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-213-ImOOP8uWMcGZa4GikbcW7g-1; Mon, 12 Jan 2026 09:57:28 -0500
+X-MC-Unique: ImOOP8uWMcGZa4GikbcW7g-1
+X-Mimecast-MFC-AGG-ID: ImOOP8uWMcGZa4GikbcW7g_1768229847
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-477563a0c75so40153775e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:57:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768229691; x=1768834491;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8gA+Ri6T2SgxvAr0I5jL2NjeYKgeXs1ivfULeQGhHhE=;
- b=fyIHIW3Jwosp8Bt7/PYKgrI/p2AoVd8EF98dLX0MZzSWVX7cl9dKYAnJ/R1WS9Bbmo
- Ls6k1eY9wOyhJO86ymd6qVb+owtOBHN1OzHoHcdIVnGIoyyuaKnR6NPngpxSHZqD3MLA
- 39bKwUrAEV7G20Le7RJCbD+bV9hYRv1j9Ymkl1ReJFG6tVmlRbj3nWzjq1U43RwQXMil
- 5NNIWGtpWhEA3dpuRjqLzlLFME6KEyxNfcLseGi03VM6UBssDYcJdVNVg6TytcKgECO3
- s/8rNtQlRxnZzdE3stVM1iIENzsipjeQvTA+f+SK2j4gf3QNNSFYtlb1gYj6dqIggWrl
- opdg==
-X-Gm-Message-State: AOJu0YyTvqiJGPjxWN1d4vr80L1OB3VGA4gXfUucg3ekuvDuqG7bGJNG
- JAnf+0Q5hUpX6y514j5oPf+Xwv2vbYdQswCf1+wNa94KGoQysocG3yk21bGlobtd
-X-Gm-Gg: AY/fxX6PuBrLlaVw8G6loOgmAeiDe1GmW0l13IRS/HYed/5DQGUYPk5mA1I5+3pSHxT
- Kc8lpM6PqsM21X1zonRCmeZ42XPNg6d4bOYcwWkuNWpOCYcFKoNHOEkfhA/0an0SeufukjdfGI3
- zSPEOR2x7lnFRf/21va+xXFQGs03zmaNzEYHPj1hZ/gpcdoG4wRbrZszraF9y+MGgzt29HHsqNW
- AgL91GFTxc0Egt8YpTbSc30Q0dGa3kDZ2xjRk0Us4GagD2wUDCeMccHvoNut54RIrvaU2OAbGQO
- uUsg8Y+bf7DyQ6AOvZeeh7/vtYXOsOJbMiiTytyNTjD2qAtsbXgy/HRtL/1rMAYyqGmbiRo9XmE
- lhWlJ5Lrc4VKn5u7O6NNg1qNgDiRa/UM7i7SwztjWxTt98dYqZ7NJXzfM7oYsCGhIknYAfKbBn7
- Q5+tKdQVpl3mDQw0Gh50Cs1bPwPwKZwpea0hBaaSDfrHX95/XGDBQUd27lnjTdOetBrPnAgmsa
-X-Google-Smtp-Source: AGHT+IFWywqkm7qft/zv4Zb5OGV+Kmwvx4nKdLfZGkdQFZZdeennuy3wXrtENGgF0mcISnafMb4Mwg==
-X-Received: by 2002:a17:907:6090:b0:b87:2d79:61c with SMTP id
- a640c23a62f3a-b872d7908a9mr129565666b.8.1768229691093; 
- Mon, 12 Jan 2026 06:54:51 -0800 (PST)
-Received: from archlinux (dynamic-077-188-226-222.77.188.pool.telefonica.de.
- [77.188.226.222]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8731f0718asm37387966b.67.2026.01.12.06.54.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Jan 2026 06:54:50 -0800 (PST)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>, Guenter Roeck <linux@roeck-us.net>,
- Bin Meng <bmeng.cn@gmail.com>, Thomas Huth <thuth@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: [PATCH 13/14] hw/sd/sdhci: Remove vendor property
-Date: Mon, 12 Jan 2026 15:54:17 +0100
-Message-ID: <20260112145418.220506-14-shentey@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260112145418.220506-1-shentey@gmail.com>
-References: <20260112145418.220506-1-shentey@gmail.com>
+ d=1e100.net; s=20230601; t=1768229847; x=1768834647;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+MJ7u+G8s9lVs8w5hv+FIzeJcnkYeYWliICTSz7UkUo=;
+ b=lSRVB+S97xp2UKFhYs+5lr0tiWlSIET2fJlg0Q4Hyzh9JHmRoG6+fkkZCIjK0Kvvlc
+ 28K+JX1yguxsnD50toPVpM3ctazavdKlefLZx20/JKit9o5MVJEik5R6pFPJ4pY4RFDH
+ P4BKwBOyjJ8XrzSFDDMe5E9B+K+DWLPlXIrG1c44+VlYIdogmVF6FOmNWsWZ7hidzp+7
+ d9JQ6JrY728YB39Ulvxx6zdaIAQ1rnG4nOdNT2akSSwXfIF0WPZb8Ab0hfuZkhJOMMho
+ LHi5hybF8EWjFcj0zawH9L9wNxufPz1mdogGsKwtaSHAE0fw/OEFoQEvOYsKPEaJ3yl/
+ mHHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEZ5kcnPqGLFcGwmKFHepZX5PTiWaabh0+xB8Pk2SOsRyF+I6Pt+keyIPy2DUgts24tOV9U5TCw5oi@nongnu.org
+X-Gm-Message-State: AOJu0YyeckxvAAz0Lo9kvLR3Yf4hO/LZfLsHjur4jOZJqukxrUimBUBk
+ 1Aai2opgAW48fsJBajV/RKz9POV8l0WIGWcSyx/88KrIQVXP97Rrp34Tnq8Xg03xlv4IIHnLX1+
+ MdNsX1hGhL6B2gS7TQjICE62+QpmauwjtNHELf+zGwqMlVQPHNayd3M4d
+X-Gm-Gg: AY/fxX4Jw3/raTw1y0BL55KF0QxPlbOLmDewHixxn9WL7xMHKbW2UjAJgeWWwlh4K4F
+ yw6IvhA1OS/lQAaso91rJxg1B5ca43Xf4CB3r4X3th3uSG2wntE8zyOVxVmX2tn46r4ooTA+CIl
+ fjlxj7IpqNnMS0foq15z2SgUJUewAB/oyY/ocqkljfnSdt2BJjjPdj+ftegMV3KnDAtjSCnbQIH
+ wtTpPAB46uWUZju+h/AoGFShCDwu6QVL0NbtUoN0cBtRU0Mrx6WxFLm+Oezu7o850KKEG3c9yJe
+ KYkZs/VFZ94bG1bev45x9sU7nj3Zz4BWbRGz5mjelX2XHjffuIuQIkUV8eAfFpHV10QKYwBoQTP
+ Gh+Y7Bm9xYJOWRsX45kr/iLgZ5u0tkfcYdgI/LaAvpYIXtgp6pj84IWCL0g==
+X-Received: by 2002:a05:600c:1991:b0:477:b48d:ba7a with SMTP id
+ 5b1f17b1804b1-47d84b4119amr189914125e9.32.1768229846792; 
+ Mon, 12 Jan 2026 06:57:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGlIIYNEMoom08idoZMhyOKCG4KhEPaG55aAntO7VvYDMN89d3ry1WvIBnxCNicNTe92cTpcQ==
+X-Received: by 2002:a05:600c:1991:b0:477:b48d:ba7a with SMTP id
+ 5b1f17b1804b1-47d84b4119amr189913805e9.32.1768229846347; 
+ Mon, 12 Jan 2026 06:57:26 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47d8719e695sm130679535e9.17.2026.01.12.06.57.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Jan 2026 06:57:25 -0800 (PST)
+Message-ID: <87cc30d4-53e6-4fff-8784-7fd847cc3ba8@redhat.com>
+Date: Mon, 12 Jan 2026 15:57:24 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 04/16] backends/iommufd: Introduce
+ iommufd_backend_viommu_mmap
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
+ mochs@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20251210133737.78257-1-skolothumtho@nvidia.com>
+ <20251210133737.78257-5-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251210133737.78257-5-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,86 +117,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that there are dedicated eSDHC device models it is possible to replace
-the "vendor" property (which is really a device-specific property) with a
-dynamic cast, "fishing" out only the device models which shall have the
-quirk applied.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/sd/sdhci-internal.h | 1 -
- include/hw/sd/sdhci.h  | 4 ----
- hw/sd/sdhci.c          | 5 ++---
- 3 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-index 50fb746a17..4aeed120bf 100644
---- a/hw/sd/sdhci-internal.h
-+++ b/hw/sd/sdhci-internal.h
-@@ -309,7 +309,6 @@ extern const VMStateDescription sdhci_vmstate;
- #define DEFINE_SDHCI_COMMON_PROPERTIES(_state) \
-     DEFINE_PROP_UINT8("sd-spec-version", _state, sd_spec_version, 2), \
-     DEFINE_PROP_UINT8("uhs", _state, uhs_mode, UHS_NOT_SUPPORTED), \
--    DEFINE_PROP_UINT8("vendor", _state, vendor, SDHCI_VENDOR_NONE), \
-     \
-     /* Capabilities registers provide information on supported
-      * features of this specific host controller implementation */ \
-diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index 51551348cf..a9da6203fc 100644
---- a/include/hw/sd/sdhci.h
-+++ b/include/hw/sd/sdhci.h
-@@ -98,7 +98,6 @@ struct SDHCIState {
-     uint32_t quirks;
-     uint8_t sd_spec_version;
-     uint8_t uhs_mode;
--    uint8_t vendor;        /* For vendor specific functionality */
-     /*
-      * Write Protect pin default active low for detecting SD card
-      * to be protected. Set wp_inverted to invert the signal.
-@@ -107,9 +106,6 @@ struct SDHCIState {
- };
- typedef struct SDHCIState SDHCIState;
- 
--#define SDHCI_VENDOR_NONE       0
--#define SDHCI_VENDOR_FSL        2
--
- /*
-  * Controller does not provide transfer-complete interrupt when not
-  * busy.
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 3b0a26ef53..d7640b3789 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -307,7 +307,8 @@ static void sdhci_reset(SDHCIState *s)
-     s->data_count = 0;
-     s->stopped_state = sdhc_not_stopped;
-     s->pending_insert_state = false;
--    if (s->vendor == SDHCI_VENDOR_FSL) {
-+    if (object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_BE) ||
-+            object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_LE)) {
-         s->norintstsen = 0x013f;
-         s->errintstsen = 0x117f;
-     }
-@@ -1863,7 +1864,6 @@ static void fsl_esdhc_be_init(Object *obj)
-     s->io_ops = &esdhc_mmio_be_ops;
-     s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
--    qdev_prop_set_uint8(dev, "vendor", SDHCI_VENDOR_FSL);
- }
- 
- static const MemoryRegionOps esdhc_mmio_le_ops = {
-@@ -1889,7 +1889,6 @@ static void fsl_esdhc_le_init(Object *obj)
-     s->io_ops = &esdhc_mmio_le_ops;
-     s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
--    qdev_prop_set_uint8(dev, "vendor", SDHCI_VENDOR_FSL);
- }
- 
- static uint64_t usdhc_read(void *opaque, hwaddr offset, unsigned size)
--- 
-2.52.0
+On 12/10/25 2:37 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> Add a backend helper to mmap hardware MMIO regions exposed via iommufd for
+> a vIOMMU instance. This allows user space to access HW-accelerated MMIO
+> pages provided by the vIOMMU.
+>
+> The caller is responsible for unmapping the returned region.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
+> ---
+>  backends/iommufd.c       | 24 ++++++++++++++++++++++++
+>  backends/trace-events    |  1 +
+>  include/system/iommufd.h |  4 ++++
+>  3 files changed, 29 insertions(+)
+>
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index a644763239..015e5249d6 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -575,6 +575,30 @@ bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
+>      return true;
+>  }
+>  
+> +/*
+> + * Helper to mmap HW MMIO regions exposed via iommufd for a vIOMMU instance.
+> + * The caller is responsible for unmapping the mapped region.
+> + */
+> +bool iommufd_backend_viommu_mmap(IOMMUFDBackend *be, uint32_t viommu_id,
+> +                                 uint64_t size, off_t offset, void **out_ptr,
+> +                                 Error **errp)
+> +{
+> +    g_assert(viommu_id);
+> +    g_assert(out_ptr);
+> +
+> +    *out_ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, be->fd,
+> +                   offset);
+> +    if (*out_ptr == MAP_FAILED) {
+> +        error_setg_errno(errp, errno, "failed to mmap (size=0x%" PRIx64
+> +                         " offset=0x%" PRIx64 ") for viommu (id=%d)",
+> +                         size, offset, viommu_id);
+> +        return false;
+> +    }
+> +
+> +    trace_iommufd_backend_viommu_mmap(be->fd, viommu_id, size, offset);
+> +    return true;
+> +}
+> +
+>  bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+>                                             uint32_t hwpt_id, Error **errp)
+>  {
+> diff --git a/backends/trace-events b/backends/trace-events
+> index a22ad30e55..046f453caa 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -25,3 +25,4 @@ iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32
+>  iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+>  iommufd_viommu_alloc_eventq(int iommufd, uint32_t viommu_id, uint32_t type, uint32_t veventq_id, uint32_t veventq_fd, int ret) " iommufd=%d viommu_id=%u type=%u veventq_id=%u veventq_fd=%u (%d)"
+>  iommufd_backend_alloc_hw_queue(int iommufd, uint32_t viommu_id, uint32_t vqueue_type, uint32_t index, uint64_t addr, uint64_t size, uint32_t vqueue_id, int ret) " iommufd=%d viommu_id=%u vqueue_type=%u index=%u addr=0x%"PRIx64" size=0x%"PRIx64" vqueue_id=%u (%d)"
+> +iommufd_backend_viommu_mmap(int iommufd, uint32_t viommu_id, uint64_t size, uint64_t offset) " iommufd=%d viommu_id=%u size=0x%"PRIx64" offset=0x%"PRIx64
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index 9b8602a558..e3905c9a40 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -110,6 +110,10 @@ bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
+>                                      uint64_t addr, uint64_t length,
+>                                      uint32_t *out_hw_queue_id, Error **errp);
+>  
+> +bool iommufd_backend_viommu_mmap(IOMMUFDBackend *be, uint32_t viommu_id,
+> +                                 uint64_t size, off_t offset, void **out_ptr,
+> +                                 Error **errp);
+> +
+>  bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
+>                                          bool start, Error **errp);
+>  bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
 
 
