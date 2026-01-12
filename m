@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 018E9D25032
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 07:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83DD3D25032
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 07:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfCTL-00014c-6W; Mon, 12 Jan 2026 02:36:19 -0500
+	id 1vfCku-0007Gx-Ta; Mon, 12 Jan 2026 02:54:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vfCT4-0000sq-1c
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:36:04 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1vfCjv-0007AC-MB
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:53:36 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vfCT2-00008Y-8t
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:36:01 -0500
+ id 1vfCjs-0002be-BN
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 02:53:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768203360; x=1799739360;
+ t=1768204404; x=1799740404;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=V2y9jR5BLpe3D/6SpLQolujjrx0LqpdtXifG3y9ZbwQ=;
- b=J7ehcyr/SNn4CIB09ifOEiyKmS4xm1I3MpUHOTyvqw7x+ELiyiLT0zCZ
- y5XWfvMyh+9SpbplqMRT9pr1iO28AnN2cMvZTuIHxlz3atZiZ3vZUI0nJ
- 504mEZYZI6CiRp+RJhIsvAwkDFNWcKRwnEMIS3vMRlgROMID84m/pEElu
- 7J/N0hrw6dleMVTL59L929rY3e+ONDb1UA5lH1NvzYbrTZ/kTd9YHPdKu
- vq2mrJ033mUfOPl41UIEcnIkFwkdWOaeC2oudcY4JGjPsjEYW7qofgIDE
- s7LtVYNjUC0ZUWdGHb6SWkACJrAPBqD+zjnb1xlRRTfrhaPPwaomFisKY A==;
-X-CSE-ConnectionGUID: KYd3LZA5QPCRPXgHVnFPeA==
-X-CSE-MsgGUID: CTQeqv7MS5+MmLBddM5YFA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11668"; a="72051205"
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="72051205"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jan 2026 23:35:57 -0800
-X-CSE-ConnectionGUID: KvJwy6cTRvShJ62gP2sunA==
-X-CSE-MsgGUID: eNjkj5SZREq7cebp4o5s4Q==
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=gwH/H9GnHnHhyQfXq+OE2IrBZuwVvfh0BK9XNq0ZUms=;
+ b=E6t8GmntNVSX1ZCu+Z/ISc8RNjkOKkv41MX40tFEF2l/C3g5fFjdfzCy
+ iOrE64tEBYOSBZ5A87dErtnp8K4bZjhOYZvU0Vb9cOHgT0WjFtg9r/9Ja
+ hwtieo+4YqD5FWVd0c34TG9RDnREBjIuVwUZg2TrABtNsodf3gkQz72wD
+ uLBiVZLksAg6AY1bj8fm/NWaJqpc4t5FxPix9QXzaLsJ47cS/fpQW3TzM
+ pIbn+9cBzJZ5ZmNpawpUfaGLX1Q9aCoTWfz9t0NfljatGxVnyAmBK22B5
+ 2pcm07brjlZDXo/31F9YCxWUnDn2QhIugTWXGNiIkZfrIv5N3D6aIB1ly w==;
+X-CSE-ConnectionGUID: hy2UssujSy+C5IZ3H799vA==
+X-CSE-MsgGUID: wfeNG4XQSnORtpVAbDNWbA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11668"; a="79768346"
+X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="79768346"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Jan 2026 23:53:21 -0800
+X-CSE-ConnectionGUID: b2knEYZmR/Gqn5ALWwiW0w==
+X-CSE-MsgGUID: YfDbXU++Q4K+ecDiV8QPpw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="204304266"
+X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="204719495"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 11 Jan 2026 23:35:55 -0800
-Date: Mon, 12 Jan 2026 16:01:23 +0800
+ by fmviesa010.fm.intel.com with ESMTP; 11 Jan 2026 23:53:19 -0800
+Date: Mon, 12 Jan 2026 16:18:46 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Shivansh Dhiman <shivansh.dhiman@amd.com>
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, seanjc@google.com, santosh.shukla@amd.com,
- nikunj.dadhania@amd.com, ravi.bangoria@amd.com, babu.moger@amd.com,
- K Prateek Nayak <kprateek.nayak@amd.com>
-Subject: Re: [PATCH 1/5] i386: Implement CPUID 0x80000026
-Message-ID: <aWSqUylwHmhIeBjq@intel.com>
-References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
- <20251121083452.429261-2-shivansh.dhiman@amd.com>
- <aV4KVjjZXZSB5YGw@intel.com>
- <eb712000-bc67-468a-b691-097688233659@amd.com>
- <aWDEYEfB4va41+Tv@intel.com>
- <df23391a-599a-495b-a1b2-ed548215e2c5@amd.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>,
+ Anton Johansson <anjo@rev.ng>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2] hw/vfio/migration: Check base architecture at runtime
+Message-ID: <aWSuZpjvdhv/cjAN@intel.com>
+References: <20251021161707.8324-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <df23391a-599a-495b-a1b2-ed548215e2c5@amd.com>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251021161707.8324-1-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -90,37 +88,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> >> The current kernel doesn't have sensitivity to a level between L3 boundary and
-> >> socket. Also, most production systems in current AMD CPU landscape have CCD=CCX.
-> >> Only a handful of models feature CCD=2CCX, so this isn't an immediate pressing need.
-> >>
-> >> In QEMU's terminology, socket represents an actual socket and die represents the
-> >> L3 cache boundary. There is no intermediate level between them. Looking ahead,
-> >> when more granular topology information (like CCD) becomes necessary for VMs,
-> >> introducing a "diegroup" level would be the logical approach. This level would
-> >> fit naturally between die and socket, as its role cannot be fulfilled by
-> >> existing topology levels.
-> > 
-> > With your nice clarification, I think this problem has become a bit easier.
-> > 
-> > In fact, we can consider that CCD=CCX=die is currently the default
-> > assumption in QEMU. When future implementations require distinguishing between
-> > these CCD/CCX concepts, we can simply introduce an additional "smp.tiles" and
-> > map CCX to it. This may need a documentation or a compatibility option, but I
-> > believe these extra efforts are worthwhile.
-> > 
-> > And "smp.tiles" means "how many tiles in a die", so I feel it's perfect
-> > to describe CCX.
+On Tue, Oct 21, 2025 at 06:17:07PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Tue, 21 Oct 2025 18:17:07 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH v2] hw/vfio/migration: Check base architecture at runtime
+> X-Mailer: git-send-email 2.51.0
 > 
-> That indeed looks like a cleaner solution. However, I'm concerned about
-> retaining compatibility with existing "dies". But yeah, that's a task for a
-> later time.
+> Inline vfio_arch_wants_loading_config_after_iter() and
+> replace the compile time check of the TARGET_ARM definition
+> by a runtime call to target_base_arm().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Supersedes: <20251020222315.68963-1-philmd@linaro.org>
+> Based-on: <20251020220941.65269-1-philmd@linaro.org>
+> https://lore.kernel.org/qemu-devel/20251020221508.67413-5-philmd@linaro.org/
+> ---
+>  hw/vfio/vfio-helpers.h      |  2 --
+>  hw/vfio/helpers.c           | 17 -----------------
+>  hw/vfio/migration-multifd.c | 12 +++++++++++-
+>  3 files changed, 11 insertions(+), 20 deletions(-)
 
-Yes, it may be necessary to address some compatibility issues. But I think
-this way could align with the topology mapping of the Linux kernel as much
-as possible.
+(Checked with 20251020221508.67413-5-philmd@linaro.org)
 
-Thanks,
-Zhao
+LGTM, so,
+
+Zhao Liu <zhao1.liu@intel.com>
 
 
