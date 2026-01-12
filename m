@@ -4,95 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56455C9EC63
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1351C9EC66
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:46:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfFMb-0001TF-Fl; Mon, 12 Jan 2026 05:41:33 -0500
+	id 1vfFQa-0003A1-0c; Mon, 12 Jan 2026 05:45:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFMZ-0001SG-Jx
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:41:31 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFMY-0003EE-79
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:41:31 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-477a219dbcaso49608205e9.3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 02:41:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768214489; x=1768819289; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SKw6ziNXPHJrlxuqIsJKhOni8JqfJhUXRsndNwL8Pw0=;
- b=DhBHUWvaz0hy5BqborAbcM9g/8dq+N5AJ+quUx0430+0k8FcibxNXrevRJtTK/vO6N
- 5/n+Z/At1KlS3Pwk5QGqPJfX9o+ZccnzDf+hTGCwwuaUnaViXo/ljuIQsBIuC3hTCwcm
- NLvo9Y37Qxc+qcFdAyzIdGzCrdLcPU/m/EI+dRnuMx+9Kv/VKrEmRhnFuCoPmUMyf88p
- OwBjNDawNsaiSrgLmXWKCn9KMkWmVancaQ31Tks4y8+34ch4K3FNHljWbfGdSawV8Irl
- b3ZIERnEGli4m3qn+yTbtfrRzJO1mfidlZYm+Jya0RCIoJpC/Fn1K5JVD7lAWbI8ehhI
- HlxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768214489; x=1768819289;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SKw6ziNXPHJrlxuqIsJKhOni8JqfJhUXRsndNwL8Pw0=;
- b=tcST10OWgaWJ6HP8oINuUTUwpZyhS7WBrlPyPljvhDqGZGgiwuUqIRT82jYNCDwS/f
- 09NdRUdXE995rBBJ/BtFcTj1+JpcIxssXeXz8O1Ap2iyjGq1BuVY8dI+Vi5n4UI1KtH8
- sIs5zEahMbsvpuXnlNLGbpf60wPodFA6yOEnAXCxwotv/CWLozGmaWWCMQYJW+rPfg88
- o1inuztsVjUsCGBa8vSioo/IztexAHoOiHBBmXT9fS39t4BC9njhmzk4fc9x8cvIteqK
- MnkywT7cic+oYuQAO/68+hg3eMzuFsyn6Nd5umQXaqW2LFBb85mHiSF5Cd6Rn/Vd1Uig
- kWJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZ0a90pSxobb48oeUZx83EYxdfuLE8q35uNdg130wInPij82hvJdn2fwwly68H6REfXAXMOAlJY/5M@nongnu.org
-X-Gm-Message-State: AOJu0YzRkWc9yJPZQWsgIUr0BnWh/kQxEBPvpocHgKwG5/mkp+gjy3Lh
- L47do2Jcr5HAj8Evsx+RVzLmsdPlm7Haw2HOtdbbgGGQMn8/LpZSymeeS9IFjHpmfmA=
-X-Gm-Gg: AY/fxX7D8ah4p87AXdTQHgG80PLQ3iPXOtLcAPkHoqIl33zTUMsqNeDkyr7v6yJOLNv
- isTCxF8+aqcF0MpCfxwxbb0ihQdRKaa91Bf5XT73U7Lt2OoIU7e1nSjc6NfCPjRWQl0kfDVJNlv
- 9v6VXPRSSQmTZj0wuFck9GBs7G44jxTqFHmrNqLRtlJ6kJ/d0JfuWGfzgtmco3oODy5Uau9tVY5
- yfhwjn4n5ONgdyggjc9V7oujSAFH9O20SHieswHxiMaBSzKssYnpGFaa3yksHEulZY3d0eelcMO
- WBX/x+wubkVForY4hoABOTlffuviMMflpXZ0qLXyKDmHh915/8twhxX/FWB+GaDTNzaanB8GDza
- PG0WH+JweittDn/h1gcV2cojhWG2wX02y/8W1CCkcXGrUAeAcX/GQsJWZQLzTGskTZK16zZzftN
- V5FkuGRZE+rqN4NWK1Fgeai7wv/S0bkjjwka89q37HQ0yYZl4NWTdLVA==
-X-Google-Smtp-Source: AGHT+IENHqNtumL4F2d5ux4DA0FUbwV1xjj8N5MxrZmBRna+oR/Q1fx91H53t/NDu/WP1YbzBFGo6A==
-X-Received: by 2002:a05:600c:630f:b0:477:7a87:48d1 with SMTP id
- 5b1f17b1804b1-47d84b3b4d7mr190809705e9.30.1768214488756; 
- Mon, 12 Jan 2026 02:41:28 -0800 (PST)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5ee870sm38207355f8f.36.2026.01.12.02.41.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 02:41:28 -0800 (PST)
-Message-ID: <777843d2-f840-4093-8928-c1f700631bde@linaro.org>
-Date: Mon, 12 Jan 2026 11:41:27 +0100
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vfFQW-00038l-0j; Mon, 12 Jan 2026 05:45:36 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vfFQU-0003jt-3j; Mon, 12 Jan 2026 05:45:35 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id EAFD745F1E;
+ Mon, 12 Jan 2026 11:45:23 +0100 (CET)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
+ marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de
+Subject: [PATCH] ui/vdagent: add migration blocker when machine version < 10.1
+Date: Mon, 12 Jan 2026 11:39:20 +0100
+Message-ID: <20260112104454.54225-1-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v6 2/2] virtio-gpu: use consistent error checking for
- virtio_gpu_create_mapping_iov
-Content-Language: en-US
-To: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
- dmitry.osipenko@collabora.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
- armbru@redhat.com
-Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, Ray.Huang@amd.com
-References: <20251126020208.2449414-1-honghuan@amd.com>
- <20251126020208.2449414-3-honghuan@amd.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251126020208.2449414-3-honghuan@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1768214679844
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,37 +57,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/11/25 03:02, Honglei Huang wrote:
-> Unify error checking style for virtio_gpu_create_mapping_iov() across the
-> codebase to improve consistency and readability.
-> 
-> virtio_gpu_create_mapping_iov() returns 0 on success and negative values
-> on error. The original code used inconsistent patterns for checking errors:
-> - Some used 'if (ret != 0)' in virtio-gpu-virgl.c and virtio-gpu.c
-> - Some used 'CHECK(!ret, cmd)' in virtio-gpu-rutabaga.c
-> 
-> For if-statement checks, change to 'if (ret < 0)' which is the preferred
-> QEMU coding convention for functions that return 0 on success and negative
-> on error. This makes the return value convention immediately clear to code
-> readers.
-> 
-> For CHECK macro usage in virtio-gpu-rutabaga.c, keep the original
-> 'CHECK(!ret, cmd)' pattern as it is more concise and consistent with other
-> error checks in the same file.
-> 
-> Updated locations:
-> - hw/display/virtio-gpu-virgl.c: virgl_resource_attach_backing()
-> - hw/display/virtio-gpu-virgl.c: virgl_cmd_resource_create_blob()
-> - hw/display/virtio-gpu.c: virtio_gpu_resource_create_blob()
-> - hw/display/virtio-gpu.c: virtio_gpu_resource_attach_backing()
-> 
-> Signed-off-by: Honglei Huang <honghuan@amd.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   hw/display/virtio-gpu-virgl.c | 4 ++--
->   hw/display/virtio-gpu.c       | 4 ++--
->   2 files changed, 4 insertions(+), 4 deletions(-)
+In QEMU 10.1, commit 5d56bff11e ("ui/vdagent: add migration support")
+added migration support for the vdagent chardev and commit 42000e0013
+("ui/vdagent: remove migration blocker") removed the migration
+blocker. No compat for older machine versions was added, so migration
+with pre-10.1 machine version, from a 10.1 binary to a pre-10.1 binary
+will result in a failure when loading the VM state in the target
+instance:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Unknown savevm section or instance 'vdagent' 0. Make sure that your
+> current VM setup matches your saved VM setup, including any
+> hotplugged devices
+
+Add a compat flag to block migration when the machine version is less
+than 10.1 to avoid this.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 42000e0013 ("ui/vdagent: remove migration blocker")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+---
+ hw/core/machine.c |  1 +
+ ui/vdagent.c      | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
+
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 6411e68856..9a5241ce17 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -55,6 +55,7 @@ GlobalProperty hw_compat_10_0[] = {
+     { "vfio-pci", "x-migration-load-config-after-iter", "off" },
+     { "ramfb", "use-legacy-x86-rom", "true"},
+     { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
++    { "chardev-qemu-vdagent", "x-migration-blocked", "true" },
+ };
+ const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
+ 
+diff --git a/ui/vdagent.c b/ui/vdagent.c
+index 142a3691ac..15ecabb402 100644
+--- a/ui/vdagent.c
++++ b/ui/vdagent.c
+@@ -6,6 +6,8 @@
+ #include "qemu/option.h"
+ #include "qemu/units.h"
+ #include "hw/core/qdev.h"
++#include "hw/core/qdev-properties.h"
++#include "migration/blocker.h"
+ #include "ui/clipboard.h"
+ #include "ui/console.h"
+ #include "ui/input.h"
+@@ -32,6 +34,10 @@
+ struct VDAgentChardev {
+     Chardev parent;
+ 
++    /* needed for machine versions < 10.1 when migration was not supported */
++    Error *migration_blocker;
++    bool migration_blocked;
++
+     /* config */
+     bool mouse;
+     bool clipboard;
+@@ -677,6 +683,12 @@ static void vdagent_chr_open(Chardev *chr,
+     return;
+ #endif
+ 
++    if (vd->migration_blocked) {
++        if (migrate_add_blocker(&vd->migration_blocker, errp) != 0) {
++            return;
++        }
++    }
++
+     vd->mouse = VDAGENT_MOUSE_DEFAULT;
+     if (cfg->has_mouse) {
+         vd->mouse = cfg->mouse;
+@@ -920,6 +932,19 @@ static void vdagent_chr_parse(QemuOpts *opts, ChardevBackend *backend,
+ 
+ /* ------------------------------------------------------------------ */
+ 
++static bool get_migration_blocked(Object *o, Error **errp)
++{
++    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(o);
++    return vd->migration_blocked;
++}
++
++static void set_migration_blocked(Object *o, bool migration_blocked,
++                                   Error **errp)
++{
++    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(o);
++    vd->migration_blocked = migration_blocked;
++}
++
+ static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -929,6 +954,10 @@ static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
+     cc->chr_write        = vdagent_chr_write;
+     cc->chr_set_fe_open  = vdagent_chr_set_fe_open;
+     cc->chr_accept_input = vdagent_chr_accept_input;
++
++    object_class_property_add_bool(oc, "x-migration-blocked",
++                                   get_migration_blocked,
++                                   set_migration_blocked);
+ }
+ 
+ static int post_load(void *opaque, int version_id)
+@@ -1083,10 +1112,26 @@ static void vdagent_chr_init(Object *obj)
+     vmstate_register_any(NULL, &vmstate_vdagent, vd);
+ }
+ 
++static void vdagent_post_init(Object *obj)
++{
++    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
++
++    object_apply_compat_props(obj);
++
++    if (vd->migration_blocked) {
++        error_setg(&vd->migration_blocker,
++                   "The vdagent chardev doesn't support migration with machine"
++                   " version less than 10.1");
++    }
++}
++
+ static void vdagent_chr_fini(Object *obj)
+ {
+     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
+ 
++    if (vd->migration_blocked) {
++        migrate_del_blocker(&vd->migration_blocker);
++    }
+     vdagent_disconnect(vd);
+     if (vd->mouse_hs) {
+         qemu_input_handler_unregister(vd->mouse_hs);
+@@ -1099,6 +1144,7 @@ static const TypeInfo vdagent_chr_type_info = {
+     .parent = TYPE_CHARDEV,
+     .instance_size = sizeof(VDAgentChardev),
+     .instance_init = vdagent_chr_init,
++    .instance_post_init = vdagent_post_init,
+     .instance_finalize = vdagent_chr_fini,
+     .class_init = vdagent_chr_class_init,
+ };
+-- 
+2.47.3
+
 
 
