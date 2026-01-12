@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDCEECF45D2
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 21:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F09DCF45CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 21:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfPjA-0005Lr-OZ; Mon, 12 Jan 2026 16:45:32 -0500
+	id 1vfPvS-0005Md-W6; Mon, 12 Jan 2026 16:58:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vfPj7-0005E3-Rm
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 16:45:30 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vfPvP-0005KC-Dp
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 16:58:11 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vfPj4-0001Sp-Rt
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 16:45:28 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-81ef4b87291so1228767b3a.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 13:45:26 -0800 (PST)
+ id 1vfPvN-0003SD-S2
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 16:58:11 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2a0d06ffa2aso49845335ad.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 13:58:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768254325; x=1768859125; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768255088; x=1768859888; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sYBrkuKZYmCKQU4pm6dft1YQ4sHik3YX3Q9EAqEJ560=;
- b=O6uubM6BT4z9m2u2aON0GYSSXC4ltSSxe04fC3gNnJxlBIzNKC+ubD/9Hj0lpo3t6K
- bRRx6zxmM5lYc0uZMEa59Pbzxx3xBZCukcQ+icTwxUfgaFoeXMitQXFLI416yhh5NOEu
- IGz+zOKbkaA1TcpLtWz0MJ7x1S+8bp3ilEOMWNyhBbrmtJVQV2H215g++3Tpn04mdPoY
- xwJWW98Vw+EdrrJy91UhR1DGbWlaIT/zrja8C52faWRYqx6o46yVqI+5t/a6ZbAS2gMR
- ngyVzfCTBEL3DT3ffNsRfdaEyO2boKIgn1VmSsEDhPYk23kzeqKEtNPT/2c+4p2B9f37
- c/6A==
+ bh=Qa7vWkA4IhFJkjX1kQYbliB9vhMrMUpkXMGgbuXNRc8=;
+ b=UEX447Z1HL/qjmNSx8FBHH9R2VK5QGXfXYJVPYqZKKPoHiYZ5zI63cpZKy7uVfaljv
+ sg4eW4NYGzuwj3atT0btWaoGIWId11CP7HA2lxwTQfY9xu+wslFRWJEFyR50daL5EOcb
+ 7cmOprSJ3OaPR/t68RxHZaP1tvyQMjFI3i4GxxVyYet8ETQQDjqltqaVLq48frYyDcbd
+ GeS5LZPZZrxHKo5RRcDcwdiWPfbNwoc9LAPaL0uPE3nKMwkffh3QbKij0OheYqBS+MId
+ sny9SuKONxHemIMRkco4NA0aWOQBEmKGFbxWqGCfeWZYBOB4Ve5JXa10o9yPpD5/TbO3
+ 0GAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768254325; x=1768859125;
+ d=1e100.net; s=20230601; t=1768255088; x=1768859888;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sYBrkuKZYmCKQU4pm6dft1YQ4sHik3YX3Q9EAqEJ560=;
- b=VbxzJxCeWkkoJ9+skkG1YW13Wl3rfy+prRgBSCtocGrX44s6XuZc8IEIXeieNGH3ct
- aF40AiafTAn99fY8HtnIvxFnD5++dOFHTVNn25GEBXBW7mvVh63KCvwaIdYx2X+csYvS
- VBEDAG6KQo2ZUV48t5F/cwUPti6oB139e3224og1UxctJWsqDA5e3PIeWdwAxku+aRGM
- 543M336COrnb1okl1XCRNJI8UIZv0DfhYJQMeXdd9bKf3+5qHhBS/DxGu5lBkNaZfB0E
- ViKCmnjAtIsMauIDGZwGNY/d4/DSKXaFXBgJkc5IiDF30b0swP8jMVq14bthwfoybGOc
- im4g==
+ bh=Qa7vWkA4IhFJkjX1kQYbliB9vhMrMUpkXMGgbuXNRc8=;
+ b=KCZS2tg5358dIkePvNRur0hfaNMquTCSanHVjoRyfWIeb6VTTrGhuUSLxyh0TcS07o
+ aUSTtRcFh6hfsua/NSlvF273zfmwQQFKJ7tO+hh/e+SH3abfyzVvwP19QGZLPUMnskeG
+ 6uyBl7D3pYkGYnDF/PBN3UHUXe629FOg+m8BYTUCb23gL9rZqr0K0WAyNs/c+IIFu3C6
+ /D3i2og40wasTIu8P4+i8b7VfLVEtuVRfR3TXLORGR6tfpP8r6m9SAq3KDK8eRtwGFrJ
+ T1U17vCG2t1NWqdQsj+oXbqJZD3JVM2KD4OK9Epti/WHRC4iot/DAMn3kyA01E9l6MdW
+ 7p5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXvztYAp1R6ZhJtDyISONriq1C2iyT4pMsNCLp1XHD6gwb69AkmhPoS6h7pPTJbZU9P5m68TyhSMgmA@nongnu.org
-X-Gm-Message-State: AOJu0YzctWtVJ7le87ZNh6hfP1FfaISVTzFhdVnbwUK9iAm1p9x3mWeB
- blSF8wgrcluWhkfFYYM15lXxEhpNW+yj/8V4crAKVc9/kd2ElCN+cUuURJqoj3Tb3gob3BP3qTi
- 6RnlrQNw=
-X-Gm-Gg: AY/fxX5pzuTxH5TXFBXoA9ExYZd6IsFVJFSi0PBDAo0QN+ybHD7ugpDlhfMp2FaNYia
- rN1nAWLMZjdfD5NIQs/Ssu63e0HkpzC2XF4kz8bYrX7VxlAAk2t4/t5KB/YKSsie/QqxS8CdL9G
- 6fzOhI/9QgOGL1DIhjuHEFk4CE6NTtmWz9DowU9pwSxD7aXPs6rl6Bz+fjfKiHeEHHafEObiiLr
- DwUFytVI6ZDgSJJqTm8ch3N700nyaPJmphro5nEhVoxC9hqo09cV551jDX7uBbRSP7jDj4/Oxud
- n47BAdZUryUL3EpGgr3EjO6PYuVSGS2QS0/rfOJYB0zYsopAS0tl1/VOHzvoTbRh8lQOHKUw6kd
- 2WrceBvKn5XilmE1Gic9vCeYqpnDSLMtIFw3sy8iJ+NZxgqwNQPvzesE/NuueFaechs7GRRXe3M
- r5SP1dGdNXx/Jh7xiXzTzlcmPSXlkmUtO4WkhDcg==
-X-Google-Smtp-Source: AGHT+IG3kdBZIZUf+aP8bhdO+vH9uaQnpHKGpJLKI+1vxTwL19kT2tHx1HNRWS/IRl8wNqj4qNQboA==
-X-Received: by 2002:a05:6a21:6d93:b0:34f:4459:a68 with SMTP id
- adf61e73a8af0-3898f9166bbmr16898259637.27.1768254325008; 
- Mon, 12 Jan 2026 13:45:25 -0800 (PST)
+ AJvYcCWlnQCwSZtPj8j2mEOvgxAxbqlutNaaWat1v3sr+FCgLrArczjzPRvrZSRL/nWn+xKjtCzsPrr3+jGn@nongnu.org
+X-Gm-Message-State: AOJu0YwavqfiwPIHP19zVor4sDJ37thztzSkMSfMSP3vlLQYEVlDvVDM
+ 5QSI8baNWZvSK5fZJQIvnEH0JaGp21q/VMjxbLYX+nLysgbr34zR+BCN/Cr9phYJCks=
+X-Gm-Gg: AY/fxX5c51RhrrpZV9+vjbNM513mNT/N+cK2+SuMN5hnWZcWjPGS+DNcQWmV1z+8zhF
+ laj8+XDDTfNf7Nx1nEZtGhmQ5waDJZ5Gv18umvQq8G3To0nzQtXxZZJRlS/rDAjhi1OktxqJ6w6
+ A+ZlcXWF8jOGRdYpofGYsXVyxeJ2CQXBSH0JXEZ0UhtnswSzdEIzwpK7g8c0+f6FyPVw1z/QW99
+ TrC6qepsmvmkuZQdiWrMOXvzhy2RMsNzcsFy0ylC3wp0Duy5i7SgBsP2nMsgUaa0CFBp2r2xab1
+ 3wxpmbcjkWZEmOniGPkxABjzkxL3O4KcFwsBGQsLrdN+s0W0kKFH6jHdqrpOnZdZdT05QKE458k
+ eiX2DyQgpIkhNcFObPIsui/Y7riMvk1vURMlibQIc6wZwfDl8uTpKmHb9UblamMCo7hQAjQLgIB
+ U1ZDOAkgjYJzG/L7qOX6D8jDowE4w=
+X-Google-Smtp-Source: AGHT+IE8et5FL8/SnTvo4ONvh+gYYchslvAsPzrJO+/fsoz+Wap5TTjzknfmtBiW+e7ec+ELK2RZJQ==
+X-Received: by 2002:a17:902:c94b:b0:2a0:d05d:e4f with SMTP id
+ d9443c01a7336-2a3ee49a2e6mr185949905ad.45.1768255088095; 
+ Mon, 12 Jan 2026 13:58:08 -0800 (PST)
 Received: from [192.168.15.8] ([101.187.175.172])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c50347bc321sm15891795a12.18.2026.01.12.13.45.19
+ d9443c01a7336-2a3e3cc78c0sm184189355ad.69.2026.01.12.13.58.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 13:45:24 -0800 (PST)
-Message-ID: <55ef7d7a-ddef-4171-a5bb-b73d1a1632ff@linaro.org>
-Date: Tue, 13 Jan 2026 08:45:15 +1100
+ Mon, 12 Jan 2026 13:58:07 -0800 (PST)
+Message-ID: <9bf69b0e-17b6-4016-965b-7cb3582b3b3e@linaro.org>
+Date: Tue, 13 Jan 2026 08:58:02 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] target/loongarch: Add host CPU model in kvm mode
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20260112080721.3319572-1-maobibo@loongson.cn>
- <20260112080721.3319572-4-maobibo@loongson.cn>
+Subject: Re: [PATCH] tests/rcutorture: Fix build error
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20260112163350.1251114-1-clg@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260112080721.3319572-4-maobibo@loongson.cn>
+In-Reply-To: <20260112163350.1251114-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,83 +105,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/12/26 19:07, Bibo Mao wrote:
-> +#if defined(CONFIG_KVM)
-> +static int read_cpuinfo(const char *field, char *value, int len)
-> +{
-> +    FILE *f;
-> +    int ret = -1;
-> +    int field_len = strlen(field);
-> +    char line[512];
-> +
-> +    f = fopen("/proc/cpuinfo", "r");
-> +    if (!f) {
-> +        return -1;
-> +    }
-> +
-> +    do {
-> +        if (!fgets(line, sizeof(line), f)) {
-> +            break;
-> +        }
-> +        if (!strncmp(line, field, field_len)) {
-> +            strncpy(value, line, len);
-> +            ret = 0;
-> +            break;
-> +        }
-> +    } while (*line);
-> +
-> +    fclose(f);
-> +
-> +    return ret;
-> +}
-> +
-> +static uint64_t get_host_cpu_model(void)
-> +{
-> +    char line[512];
-> +    char *ns;
-> +    static uint64_t cpuid;
-> +
-> +    if (cpuid) {
-> +        return cpuid;
-> +    }
-> +
-> +    if (read_cpuinfo("Model Name", line, sizeof(line))) {
-> +        return 0;
-> +    }
-> +
-> +    ns = strchr(line, ':');
-> +    if (!ns) {
-> +        return 0;
-> +    }
-> +
-> +    ns = strstr(ns, "Loongson-");
-> +    if (!ns) {
-> +        return 0;
-> +    }
-> +
-> +    ns += strlen("Loongson-");
-> +    memccpy((void *)&cpuid, ns, 0, 8);
-> +    return cpuid;
-> +}
-> +
-> +static uint32_t get_host_cpucfg(int number)
-> +{
-> +    unsigned int data = 0;
-> +
-> +#ifdef __loongarch__
-> +    asm volatile("cpucfg %[val], %[reg]"
-> +                 : [val] "=r" (data)
-> +                 : [reg] "r" (number)
-> +                 : "memory");
-> +#endif
-> +
-> +    return data;
-> +}
-Are you sure you should be bypassing KVM for this?  Other targets start a scratch vcpu and 
-then read the values via KVM_GET_ONE_REG.
+On 1/13/26 03:33, Cédric Le Goater wrote:
+> Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
+> detects an unused variable error:
+> 
+>    ../tests/unit/rcutorture.c: In function ‘rcu_read_stress_test’:
+>    ../tests/unit/rcutorture.c:251:18: error: variable ‘garbage’ set but not used [-Werror=unused-but-set-variable=]
+>      251 |     volatile int garbage = 0;
+>          |                  ^~~~~~~
+> 
+> Since the 'garbage' variable is used to generate memory reads from the
+> CPU while holding the RCU lock, it can not be removed. Tag it as
+> ((unused)) instead to silence the compiler warnings/errors.
 
-I'm not sure how much trap-and-emulate support LoongArch has for such ID registers.
+That shouldn't happen for a volatile variable: please report this as a compiler bug.
+
+That said, gcc-16 has been released, so
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
+
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   tests/unit/rcutorture.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/unit/rcutorture.c b/tests/unit/rcutorture.c
+> index 7662081683f5d781da74402113b73884780b1243..2f19d479a3f210cbca19205a0656eda1f4c2e5a7 100644
+> --- a/tests/unit/rcutorture.c
+> +++ b/tests/unit/rcutorture.c
+> @@ -248,7 +248,7 @@ static void *rcu_read_stress_test(void *arg)
+>       int pc;
+>       long long n_reads_local = 0;
+>       long long rcu_stress_local[RCU_STRESS_PIPE_LEN + 1] = { 0 };
+> -    volatile int garbage = 0;
+> +    volatile int garbage __attribute__ ((unused)) = 0;
+>   
+>       rcu_register_thread();
+>   
+
 
