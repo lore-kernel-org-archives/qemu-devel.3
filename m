@@ -4,54 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7A8C9EC77
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 12:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19E2C9EC77
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 12:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfGun-0000AA-A5; Mon, 12 Jan 2026 07:20:57 -0500
+	id 1vfGy4-0004Vo-W6; Mon, 12 Jan 2026 07:24:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vfGuR-0008Gm-9H
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:20:39 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfGxQ-0004TX-Fp
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:23:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vfGuO-0002eQ-Hm
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:20:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=oer5PbYMq+a2BZX11DYCCJry+S77D/LwpPlN/WAAaQw=; b=Qw+hZO45IARpJ7y
- d0nL0tyh8OZGFRq6MojAdSA87VxNQlkQ4LNkUn04X6Y+C/s+9qct4XBGV/eDIggo3v0iotRfI0npy
- t9ff0huPaD2FfsJGAv4vHHTLEIN8v329HFrDM2deRVYgj/jQD1QQuaQoVdj9vcj7rl8q3ghId1G+1
- nI=;
-Subject: [PATCH v3 0/7] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
-Date: Mon, 12 Jan 2026 13:22:41 +0100
-Message-Id: <20260112-phys_addr-v3-0-5f90fdb4015f@rev.ng>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfGxO-0003GC-75
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:23:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768220616;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bBcbqJ+HaHOXY1qhhR27ENO31OIiH/4ni506XBX8/OI=;
+ b=ClGig6MkUgAW0VMpaxv3b98u45z7K9cNth7DKnrVkYGc+BCHevL5t6IzKTjgk8YM/P/1tj
+ h4nVdRIPux4pNJcz6NKVajI/bnq6IiL+eEVZk6oT2C8ApQTSlwmxtFkgR+6rjJTjZDtkVt
+ PgThzAyv6d45HVTeGVV3sB1a+yrpyN8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-410-h7EH7fDmMaetLCthkVBawQ-1; Mon,
+ 12 Jan 2026 07:23:31 -0500
+X-MC-Unique: h7EH7fDmMaetLCthkVBawQ-1
+X-Mimecast-MFC-AGG-ID: h7EH7fDmMaetLCthkVBawQ_1768220610
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3630B19560B2; Mon, 12 Jan 2026 12:23:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2E9A18004D8; Mon, 12 Jan 2026 12:23:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3F89821E6742; Mon, 12 Jan 2026 13:23:27 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Michael Tsirkin <mst@redhat.com>,  <qemu-devel@nongnu.org>,
+ <shiju.jose@huawei.com>,  <linuxarm@huawei.com>,
+ <linux-cxl@vger.kernel.org>,  Ravi Shankar <venkataravis@micron.com>
+Subject: Re: [PATCH qemu v2 5/5] hw/cxl/events: Updates for rev3.2 memory
+ module event record
+In-Reply-To: <20260102151512.460766-6-Jonathan.Cameron@huawei.com> (Jonathan
+ Cameron's message of "Fri, 2 Jan 2026 15:15:12 +0000")
+References: <20260102151512.460766-1-Jonathan.Cameron@huawei.com>
+ <20260102151512.460766-6-Jonathan.Cameron@huawei.com>
+Date: Mon, 12 Jan 2026 13:23:27 +0100
+Message-ID: <87344bf29s.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJHnZGkC/02OQQqDMBBFryKzbkpmEpvqqvcopaRm1GxUkhIq4
- t0bLRSX7zPvMQtEDp4j1MUCgZOPfhwyqFMBTW+HjoV3mYEklYhSi6mf49M6F8RLttqwVRK1hXw
- /BW79Z2/dH5l7H99jmPd0wm39VUhWh0pCIUWjrqZVbMgZc8tvnIcOtkSig4blUaOsXZSyFl1F1
- Li/tq7rFwgMTaDWAAAA
-X-Change-ID: 20251104-phys_addr-b0f47ea3014a
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Anton Johansson <anjo@rev.ng>, palmer@dabbelt.com, alistair.francis@wdc.com, 
- pbonzini@redhat.com, gaosong@loongson.cn, maobibo@loongson.cn, 
- Brian Cain <brian.cain@oss.qualcomm.com>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -66,79 +85,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The target macro TARGET_PHYS_ADDR_SPACE_BITS is unused since commit
+Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
 
-  2e8fe327eb6 ("accel/tcg: Simplify L1_MAP_ADDR_SPACE_BITS"),
+> From: Shiju Jose <shiju.jose@huawei.com>
+>
+> CXL spec rev3.2 section 8.2.10.2.1.3 Table 8-50, memory module
+> event record has updated with following new fields.
+> 1. Validity Flags
+> 2. Component Identifier
+> 3. Device Event Sub-Type
+>
+> Add updates for the above spec changes in the CXL memory module
+> event reporting and QMP command to inject memory module event.
+>
+> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+>  qapi/cxl.json               | 12 +++++++++++-
+>  include/hw/cxl/cxl_events.h |  7 +++++--
+>  hw/mem/cxl_type3.c          | 20 ++++++++++++++++++++
+>  hw/mem/cxl_type3_stubs.c    |  4 ++++
+>  4 files changed, 40 insertions(+), 3 deletions(-)
+>
+> diff --git a/qapi/cxl.json b/qapi/cxl.json
+> index 3e4bad4ad0..752d46cda2 100644
+> --- a/qapi/cxl.json
+> +++ b/qapi/cxl.json
+> @@ -242,6 +242,14 @@
+>  # @corrected-persistent-error-count: Total number of correctable
+>  #     errors in persistent memory
+>  #
+> +# @component-id: Device specific component identifier for the event.
+> +#     May describe a field replaceable sub-component of the device.
+> +#
+> +# @is-comp-id-pldm: This flag specifies whether the device-specific
+> +#     component identifier format follows PLDM.
+> +#
+> +# @sub-type: Device event sub-type.
+> +#
 
-replace the handful of remaining uses with runtime functions or
-constants.
+These three seem to be the same in CXLGeneralMediaEvent, CXLDRAMEvent,
+and CXLMemModuleEvent.  Should they live in their common base type
+CXLCommonEventBase?
 
-For discussion see:
+>  # Since: 8.1
+>  ##
+>  { 'struct': 'CXLMemModuleEvent',
+> @@ -251,7 +259,9 @@
+>              'life-used': 'uint8', 'temperature' : 'int16',
+>              'dirty-shutdown-count': 'uint32',
+>              'corrected-volatile-error-count': 'uint32',
+> -            'corrected-persistent-error-count': 'uint32'
+> +            'corrected-persistent-error-count': 'uint32',
+> +            '*component-id': 'str', '*is-comp-id-pldm':'bool',
+> +            'sub-type':'uint8'
+>              }}
+>  
+>  ##
 
-  https://lore.kernel.org/qemu-devel/8f0db5c1-f20b-4b7a-8d6c-76ce7ec7b4e0@linaro.org/
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
-Changes in v3:
-- Added reviewed-by;
-- Widened CC;
-- Link to v2: https://lore.kernel.org/qemu-devel/20251215-phys_addr-v2-0-633aa1d922cd@rev.ng
-
-Changes in v2:
-- Move alpha_phys_addr_space_bits() to linux-user/alpha/target_proc.h
-  (Richard);
-- Link to v1: https://lore.kernel.org/qemu-devel/20251209-phys_addr-v1-0-c387f3e72d77@rev.ng
-
----
-Anton Johansson (7):
-      target/alpha: Introduce alpha_phys_addr_space_bits()
-      target/hppa: Define PA[20|1X] physical address space size
-      target/i386: Drop physical address range checks
-      target/loongarch: Introduce loongarch_palen_mask()
-      hw/loongarch: Use loongarch_palen_mask()
-      hw/riscv: Fix IOMMU PAS capability to 56 bits
-      Drop TARGET_PHYS_ADDR_SPACE_BITS
-
- include/exec/cpu-defs.h           |  3 ---
- include/exec/poison.h             |  2 --
- include/hw/loongarch/boot.h       |  3 ++-
- linux-user/alpha/target_proc.h    | 23 ++++++++++++++++++++++-
- target/alpha/cpu-param.h          |  3 ---
- target/arm/cpu-param.h            |  2 --
- target/avr/cpu-param.h            |  1 -
- target/hexagon/cpu-param.h        |  1 -
- target/hppa/cpu-param.h           |  2 --
- target/i386/cpu-param.h           |  2 --
- target/i386/tcg/helper-tcg.h      |  2 --
- target/loongarch/cpu-mmu.h        |  1 +
- target/loongarch/cpu-param.h      |  1 -
- target/loongarch/internals.h      |  1 -
- target/m68k/cpu-param.h           |  1 -
- target/microblaze/cpu-param.h     |  2 --
- target/mips/cpu-param.h           |  2 --
- target/openrisc/cpu-param.h       |  1 -
- target/ppc/cpu-param.h            |  7 -------
- target/riscv/cpu-param.h          |  2 --
- target/rx/cpu-param.h             |  1 -
- target/s390x/cpu-param.h          |  1 -
- target/sh4/cpu-param.h            |  1 -
- target/sparc/cpu-param.h          |  2 --
- target/tricore/cpu-param.h        |  1 -
- target/xtensa/cpu-param.h         |  1 -
- hw/loongarch/boot.c               | 28 ++++++++++++++++------------
- hw/loongarch/virt.c               |  5 ++++-
- hw/riscv/riscv-iommu.c            | 12 +++++++++---
- target/hppa/mem_helper.c          | 23 ++++++++++++++++++-----
- target/i386/cpu.c                 |  9 +++------
- target/i386/kvm/kvm.c             |  3 +--
- target/loongarch/cpu_helper.c     | 14 +++++++++++---
- target/loongarch/tcg/tlb_helper.c | 12 ++++++++----
- 34 files changed, 95 insertions(+), 80 deletions(-)
+[...]
 
 
