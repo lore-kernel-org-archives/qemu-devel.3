@@ -4,118 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC97D26D97
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 09:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53408D2505F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 09:46:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfETi-0000Qq-MO; Mon, 12 Jan 2026 04:44:50 -0500
+	id 1vfEUv-0001c6-Tl; Mon, 12 Jan 2026 04:46:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1vfETK-0000Fm-Af
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:44:28 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vfEUs-0001b9-W3; Mon, 12 Jan 2026 04:46:03 -0500
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1vfET4-00023Q-LA
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 04:44:12 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60BLROTG027978;
- Mon, 12 Jan 2026 09:44:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lo74E7
- +MyyFy8eb/8t+gLb+mLrbut3hJ5kSBuxY4dhI=; b=LRrlDHsEeBL14YetggrMLP
- uDYvPbmhKLB5Jhkt15Lq5NxIv4+fqCkeTJ19/VQ7YR04zzrlqS083KNmGxdibt5t
- onAWiY1F8q+3D9Xj9DeyunIoX2tGrZekRo4OCT0iyz0ExY91N6/m3jilb60o+j25
- HHCLgj3dX96laEcwHNvu10REiBrPFlMws5BbttaoW9d0fnL/LKCTe93drzAfKTGV
- C0r4liC+aZJL6r+ffRTSpSoWfR6Oy6cZeIBzG2GV6uOeYp0XhgAbSJ6aetnlOJDi
- uqF/1wqXqSfGrjax2vewuaK1um9ubK/MA+TalYYlPDnn0zxxGawJD4FPGPIihbNg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkc6gxcmc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 12 Jan 2026 09:44:07 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60C9JeDW011478;
- Mon, 12 Jan 2026 09:44:07 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkc6gxcma-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 12 Jan 2026 09:44:07 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60C9M9ic002505;
- Mon, 12 Jan 2026 09:44:06 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bm13sdc75-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 12 Jan 2026 09:44:06 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60C9i5XW30868040
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Jan 2026 09:44:06 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB0485805F;
- Mon, 12 Jan 2026 09:44:05 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 17F5258059;
- Mon, 12 Jan 2026 09:44:03 +0000 (GMT)
-Received: from [9.124.220.243] (unknown [9.124.220.243])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 12 Jan 2026 09:44:02 +0000 (GMT)
-Message-ID: <24ba9d4e-f91f-4353-b00d-1198d0be559d@linux.ibm.com>
-Date: Mon, 12 Jan 2026 15:13:59 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] target/ppc: Fix env->quiesced migration
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, peterx@redhat.com, Fabian Vogt <fvogt@suse.de>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20260109123519.28703-1-farosas@suse.de>
- <20260109123519.28703-2-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vfEUq-0002hI-Iy; Mon, 12 Jan 2026 04:46:02 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cj+mYHyVJFru/wsKcOz6OZF55/K6jkgtpotnXjIm/xKUU5Xl97lVEHqq6YUL58OYX7gQ/rBV4i1Gf1Pydb4ioqwsT6N5Gg3InhX9sZhuGVj43DeNOjlgaLjdbZtZzpINCRjIPRvHChl1jCF4SNJm3QNI5jgc0U92Fb8Y0nraMoh7tC+5pyfZRMJB8GmOUYloUoxtvuopmW4KP/YZGeyC9Q6ybA5j9VQlA+/lxfsEyoNgy4lt/lRUnD6Krj/qndXqzKXt0IvL4kxm5s8q4V4UTBM7OumIbRF25C9n6aCXL8jtldnyVHWqBCsAOIfquw3o/IH/Gid4vpaXuHD49lSVOQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HKvpTGKHzBi1hhZh6R8LnqLb2fASPazqJApHAYTSKTo=;
+ b=U0Ygw87OcVhqnocw2SE5EW/0/SkcLqDfDlESf8apjxVsiKsMECNy7bz3Z6KGHeWKiD1S/JGEhGljA8Ka/FC0xFplwyA4iRznb8LHyu6LmqxSrl3zA5sfWtl0JDH8zK77tiHgAz3GFdgK3L4s2YajUcvGhdQPZjMdma/XKrxZLrLGKpnwnTOSoUmsEG0/P6WsnZz8H9piabxvHdJAMNkCiZobbv1iP4inxRn7t5nnRvTnxhE7O2GpR6cavVyBJ18m7mnOKPjlTZiAmcjWuECqOvbuZ+Nh+pFIpCAiik/9+cDOd09XzmYiexMQnKmqooqY0fP9IraFN/r87X7HtYlqjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HKvpTGKHzBi1hhZh6R8LnqLb2fASPazqJApHAYTSKTo=;
+ b=EfHbCM5thTSbgk7RYFuGfN99sDrS1M8jpB3Sa3Xqh3EwI8xyDe+bm/j3aliai8ukVtGJOHiT/vsxcPdw3o+X/P7XuQ98pvrkUWtDoS1XEpbz0Dt57Wi1r+eJU4njlfAxf6xOHOjwuySMFHuCPLvPvFn249fi8P9x+/EHgLH9CCQWDyqJRLPRIZnhFwRxVbZMX1iVdDrrSxB5FA4F3vh1IUV2ivHYSOwyj2C0IdieFnXefpj/MBnmSYPrWqV9WlG7SthP5aA8lZxBIrTQKVDPnUn4Uu5tNWlgcvPGjkOtoOpitYKDHwtZxIKQCDygIFhI59fmadIJPU6tgxZNL1yVEg==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by PH7PR12MB8122.namprd12.prod.outlook.com (2603:10b6:510:2b7::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.7; Mon, 12 Jan
+ 2026 09:45:54 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9499.005; Mon, 12 Jan 2026
+ 09:45:54 +0000
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>, "ddutile@redhat.com"
+ <ddutile@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, "wangzhou1@hisilicon.com"
+ <wangzhou1@hisilicon.com>, "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>, 
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v7 17/36] hw/arm/virt: Set msi-gpa property
+Thread-Topic: [PATCH v7 17/36] hw/arm/virt: Set msi-gpa property
+Thread-Index: AQHcg0NmIofDyvvrj0mrc0xS48ivF7VOLyAw
+Date: Mon, 12 Jan 2026 09:45:53 +0000
+Message-ID: <CH3PR12MB7548B4E80C4660147906DC6CAB81A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260111195508.106943-1-skolothumtho@nvidia.com>
+ <20260111195508.106943-18-skolothumtho@nvidia.com>
+ <526B3AB7-B0D4-4104-AF8F-012ED34EC990@unpredictable.fr>
+In-Reply-To: <526B3AB7-B0D4-4104-AF8F-012ED34EC990@unpredictable.fr>
+Accept-Language: en-US, en-GB
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20260109123519.28703-2-farosas@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 1RtiUzEQh_1kmrf8GewSb0t8pdFDPI4a
-X-Proofpoint-ORIG-GUID: xmbVws3260XE9s3AYk4kKJ0nTuJ6lRxq
-X-Authority-Analysis: v=2.4 cv=TaibdBQh c=1 sm=1 tr=0 ts=6964c267 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=p0WdMEafAAAA:8 a=VnNF1IyMAAAA:8 a=23kfawwW_HBnvp2I3_8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA3MiBTYWx0ZWRfX34kr88uLo6bh
- H3HLerp3dq1svyylKvkIO6C0enIiT7Ivu+PR0Ce/OItL0r6/8bLNPJ/9AuYgULMYaUxQF+GFh8l
- qwROOeLbFHc9KYNOkej4du7b+zYKTc9ac38kcAmE9v0Z2nP6Vr7fzFv1Zm8eEKBVxMUjYUjt1EY
- 6v1N+/HdUiDuTapEgsu0zXWDU4GHKlGvcNCMCPz65AOltVfUqGD9VIy47AVSiBPqXOvdfzE5Yz9
- SfepI+ZQHfeeiUHwLknJRFuovDOg57Z/K+R7+PwSaXnZRCG/okdQ0A9xIuILdOOK2x3NEDFiLKR
- Hgo3W2CCvCCY6XsvTEeEpwspu7YtJ2wsOAvIddXUyhoBkieNiba1CWkQWrXBYqdzQSNQEnsyc5p
- eM4gDU8b2l0BsnLPEhYDxvoZ65IAco1Qkt7IbChf1puCcvLyd5VGS/RVpjMmWZd3YAE7Cif+VDC
- qVqUo6Zt5FeTe2Q/IAA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-12_02,2026-01-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 impostorscore=0 bulkscore=0 clxscore=1011
- suspectscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
- definitions=main-2601120072
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|PH7PR12MB8122:EE_
+x-ms-office365-filtering-correlation-id: 00a1cb43-24ea-40ed-c1e1-08de51bf60db
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|38070700021; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?fYEZbv5JN4qQSQhdiOEZnReRQxJ3J2C1IkWLs2ah9wumdj1WuTVOOpowawEr?=
+ =?us-ascii?Q?ZFVFuXtZP/bvt4WK8LvdRDG1KLd3BAyTTEz4pXBhrvY6a0S3KjE3yvSVUP9N?=
+ =?us-ascii?Q?AdFxxL2CBsYdhtPskpbZ9ANVWvhZvWGJB1WH9hSkN7Ii9WtJLfyO6sQY+JFc?=
+ =?us-ascii?Q?xAGd2lGytMG3G8epBtz3V44W2XJW+8xqzsIO7mkNDSHWGJ52DBk2F03dvJsK?=
+ =?us-ascii?Q?pqeIeOUuwC8laSTqzIz5pmapnA/X2AQs8u/u/BYBRcG6pQuSZGYGk2LZDI4i?=
+ =?us-ascii?Q?DeThaXvyoEDExRlw+hPEDeBiEARmDymH3jSUcNRel+Fdocq+qMgxz9awcS3S?=
+ =?us-ascii?Q?Wj7LHPM1aJ91YjkVedVPslLaH8pq1mp8wxf9gfgNOqUu71LQcgpX4iAjRMtw?=
+ =?us-ascii?Q?U2/0AA/gk8YPQo1WLbuA97UMVWyDncVjnBJa9EaidSvw7r0xKcigk1mNmO7X?=
+ =?us-ascii?Q?lxxczVz/mfBXVJG9KYpKV9umYMj3J5Zk9U+dmlOqQhsM0h2qJyUXbiBJ/7VK?=
+ =?us-ascii?Q?hUCsRkPDB9HLXlE6qfKiKPKXsLf3N7JHSHx/h94hHa2KUqHCfI31mZO8arZF?=
+ =?us-ascii?Q?zf+8BuE5w85hLqklMcC2yrIbmZeHaJvqYSD2lr/a0woqEcPT0+6iK+EK+B9Y?=
+ =?us-ascii?Q?KSnyVSJYetfae5fARPAuICuGHwDrwQRtYwdMwAFBk9oQuGsDaFKxq09hFhwV?=
+ =?us-ascii?Q?szXyenCj0cVzbsomaBmyl7ZOX2sn8MhDqT86VfZ2nN4IGkjkqMLNDdcOqoK0?=
+ =?us-ascii?Q?uYARpjhyWlk0F7LChxMzAsNi82qvnkHDun92hmCI9tVDlCRVc80F3Atk85OD?=
+ =?us-ascii?Q?El/l6QOxE77skZhZTN7tigRwXgjtXuO1rED5jNY2SCnuccLcieBFenqmfSs8?=
+ =?us-ascii?Q?6Pozht+7xxNdn5qkn5vPOn1iQ6JG7r3OyJe6PPBBYN1DECMPzF+j0Rqlxnfl?=
+ =?us-ascii?Q?pvy6WExda5ggTOTSXSp0asrIXdVWYmXohkaH9fhzm3QYheBNzWJxC8LyUVoy?=
+ =?us-ascii?Q?E2MzE3BXnv+zULg6KevQegzmYBfXH/Y48QMyRh3grZKVIOKvould9fDlOkV+?=
+ =?us-ascii?Q?TmYsRI8mSp4vgohdtXz5n+bLYAg7kMzRN2MYxEx4DKRjGZjNgQCkqtV3kZjE?=
+ =?us-ascii?Q?rm9IrVLxVdzScQPucxwvKnyFrHK2X4aQh+jNcI6cRyYl6paUXyRR8bvxlKQs?=
+ =?us-ascii?Q?bgSqd37HhzdyfFCMphTbt5CPedtsiSbSwjwLctNutAj/ESnKoLR/xnYpmUmo?=
+ =?us-ascii?Q?gkfWewjPpC1pZBpsNN7K/XwvEgo4+B1wRroKVgLLFGAXGNqWD1upXBIkxNCa?=
+ =?us-ascii?Q?7FtdhKTECOWWKmCUdv3DmyVe6PG9Bh3l02I9e1Ss948x/dd4tYu9dYfzl+yV?=
+ =?us-ascii?Q?CrYgE9LCL5NEsEvAyToBDlns9WvONBdg3PjnRfNSta7Jw/LAyKKbgJ9Gu4lx?=
+ =?us-ascii?Q?BBFCt/WNJp7/laW3kKngasQxauVyYFIa+6VhqiQWqIEpUhzAet102eZWCm+0?=
+ =?us-ascii?Q?qRoTN6eKcI70je1w91S50yGWO1cFa/6n/NeT?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?62Izyao/Vvems+JHXK5wB/2JYlYOAmc4dPVCPii6wcL5pf1dEnVIgcioVgAO?=
+ =?us-ascii?Q?xPJP5XX6+ixpr/UeUTf4A402AdOdanMj7bTE58Nr8Ldsf2Px9lG6kL4JMiCj?=
+ =?us-ascii?Q?7m9/9tBIn9Z56h6rC6swGlajUWshYYyVvzzVvbto4zZpaSs3s9RyCGs/sQzX?=
+ =?us-ascii?Q?zxJ4nfMTP8uHjjduoMWwI2hAje8xtk11mp0hOBe9TVXlEpnnE5gvyUQ+eJUg?=
+ =?us-ascii?Q?efYEcSyPLl2wLJSElCqe6Ut6lABSEl5b0RGLOWz6khwilTdZ5PA+DItxBmxz?=
+ =?us-ascii?Q?HkcY5ZWckBk1rRoxpgR5dUMIrCLKgjdYI8ThjqdvI5A1q6Xjw+hmXi+Ue7T/?=
+ =?us-ascii?Q?DQfOsH5l+omqz4oKtl8QBAbJ2zUKT9w/Wkf2Y9acbpCI4QNuQwbpCSskkIGl?=
+ =?us-ascii?Q?yu95A/Lpxu3DYBFZT9a2sprrGOznNyhcwuz7Qbw/q8BOcrjXdX4dRl14vPW5?=
+ =?us-ascii?Q?EJnxGrjvi/fbJU+tM0MJdI0ZjiN6J3VyChSU5HN+l5OMwKVdsAmXFyRuqhPO?=
+ =?us-ascii?Q?ff5qwvsEEwz6T29+b/3yO5R31VrDEZGk3hcydnbBzmLb50Qc7ee/ZIiv+O3X?=
+ =?us-ascii?Q?6KUQdhUn1aFHrDzjGRUSmrxo6Bo8Jc9OocM4dVBmBzhPb5q/ubHEhgqL2K1+?=
+ =?us-ascii?Q?QcPv/sF6j7JHWfxRCmYtWrO+8iAYVjavkrKTmd55G7DZ8G2Aa1XvFsQaGN86?=
+ =?us-ascii?Q?WtxjP3lGs4T5l1ERXQhbNE8YoJLIQOEbIi+ayOZ7TKj/fBi8iFlBhqm+/ky/?=
+ =?us-ascii?Q?etdXys2WrwG9J6dgG9O7nOhixOp32fk4QvH8QIFFgxZpjbdDdBR6ti3xd8P9?=
+ =?us-ascii?Q?3Clam9C75yBJ7nafvET5dbz3c6uS+AkGlUSufUVe9jFMZum7iwTeuh04fTz9?=
+ =?us-ascii?Q?jtYK0PBeOeBo5PVtvuVlF3/EcAKiiyPtgpkXfLrTi1OtY/k965iLeiGxyLvj?=
+ =?us-ascii?Q?BDnp+qonx9UcpmCtvBy8LkNjVDYh/IFQ3UQQ6qHvwdJme/aHc1fvbhOllp6E?=
+ =?us-ascii?Q?/3sM4keJUd19nQeseLoXMKb3514fPy5dk8PolMBmRflOzO8cRCbk1HX11iEV?=
+ =?us-ascii?Q?8lkz5uvBl08+TK3s6QErzI72aSXy3fw1OM/08jPLc037TS/flk71XpElL5FA?=
+ =?us-ascii?Q?C1Up+sqv9aD63emWHT//avLyM0R+ScYgPGVwvBkd9epZbNdmzfI75Xs3N/jh?=
+ =?us-ascii?Q?LkTQ+8TambjGWUKFOv9LbRGiDx/KBZoDEOHesC2mN/48mYUCAL+MLNMjFaZp?=
+ =?us-ascii?Q?PSMXGUvcQC5jMDVmzXOy3gx7YCVvT9YIcFM0crqeu5A1moPt5ncNAl3I4+Wg?=
+ =?us-ascii?Q?P+GzKgg3MmWx3yMY0pI6o/qRij4CeXSc7cpKCHuzzeKqkOCRrZxpWkrlz5BJ?=
+ =?us-ascii?Q?BfkexLzr0kr2MewLT+QwmZdj/KEDNQc/954FL4dM/cO93Z1CLTOFunuAl+92?=
+ =?us-ascii?Q?WNQBJFSwsLIo6gnBzRKjhfPLLfVDFeyQ7rvCq5NwryrswdPQ0QrB9q8TN4HW?=
+ =?us-ascii?Q?1EWPRu1IVHrlgRhvp3yotCSBIkkyVBS5pP8WYh8/ahXmmMNQsYOp3zwqj+zF?=
+ =?us-ascii?Q?tBYBFPMFtIZOeAHr+awRcZzaAm/JoXnAv65ozpV5kfIILMzgFLI1zk7VDDlx?=
+ =?us-ascii?Q?tH1GuafkC3U1d4AW/59BHXfgzcjt+kJ4zclvNYLNNxJMMPu6sl3Icqq0RWRb?=
+ =?us-ascii?Q?URU8oInPgVQ52pPD/VVCOA0JSE989wjyJABF2UGGl6ONxziXlr+/mphHk6JK?=
+ =?us-ascii?Q?y/6x5eQcUw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00a1cb43-24ea-40ed-c1e1-08de51bf60db
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jan 2026 09:45:53.8203 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: pmK2GGeGqkD4JvoNJQch5zVi5b5yZiXK/lRNUtq4Kp+kqR/lALusWXWHiPnFBt5qcTCQucl9HkPp90iKrj7vhw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8122
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=0.001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,192 +180,89 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 1/9/26 18:05, Fabiano Rosas wrote:
-> The commit referenced (from QEMU 10.0) has changed the way the pseries
-> machine marks a cpu as quiesced. Previously, the cpu->halted value
-> from QEMU common cpu code was (incorrectly) used. With the fix, the
-> env->quiesced variable starts being used, which improves on the
-> original situation, but also causes a side effect after migration:
->
-> The env->quiesced is set at reset and never migrated, which causes the
-> destination QEMU to stop delivering interrupts and hang the machine.
->
-> To fix the issue from this point on, start migrating the env->quiesced
-> value.
->
-> For QEMU versions < 10.0, sending the new element on the stream would
-> cause migration to be aborted, so add the appropriate compatibility
-> property to omit the new subsection.
->
-> Independently of this patch, all migrations from QEMU versions < 10.0
-> would result in a hang since the older QEMU never migrates
-> env->quiesced. This is bad because it leaves machines already running
-> on the old QEMU without a migration path into newer versions.
->
-> As a workaround, use a few heuristics to infer the new value of
-> env->quiesced based on cpu->halted, LPCR and PSSCR bits that are
-> usually set/cleared along with quiesced.
->
-> Note that this was tested with -cpu power9 and -machine ic-mode=xive
-> due to another bug affecting migration of XICS guests. Tested both
-> forward and backward migration and savevm/loadvm from 9.2 and 10.0.
->
-> Also tested loadvm of a savevm image that contains a mix of cpus both
-> halted and not halted.
->
-> Reported-by: Fabian Vogt <fvogt@suse.de>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3079
-> Fixes: fb802acdc8b ("ppc/spapr: Fix RTAS stopped state")
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Acked-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   hw/ppc/spapr.c        |  6 +++++
->   target/ppc/cpu.h      |  1 +
->   target/ppc/cpu_init.c |  7 +++++
->   target/ppc/machine.c  | 62 +++++++++++++++++++++++++++++++++++++++++++
->   4 files changed, 76 insertions(+)
->
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 3d87450be5..5e8b7ab1aa 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -4788,8 +4788,14 @@ DEFINE_SPAPR_MACHINE(10, 1);
->    */
->   static void spapr_machine_10_0_class_options(MachineClass *mc)
->   {
-> +    static GlobalProperty spapr_compat_10_0[] = {
-> +        { TYPE_POWERPC_CPU, "rtas-stopped-state", "false" },
-> +    };
-> +
->       spapr_machine_10_1_class_options(mc);
->       compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
-> +    compat_props_add(mc->compat_props, spapr_compat_10_0,
-> +                     G_N_ELEMENTS(spapr_compat_10_0));
->   }
->   
->   DEFINE_SPAPR_MACHINE(10, 0);
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index dbebae89dc..49445eb4ca 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1529,6 +1529,7 @@ struct ArchCPU {
->       void *machine_data;
->       int32_t node_id; /* NUMA node this CPU belongs to */
->       PPCHash64Options *hash64_opts;
-> +    bool rtas_stopped_state;
->   
->       /* Those resources are used only during code translation */
->       /* opcode handlers */
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 929254827d..58816c51a7 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -55,6 +55,11 @@
->   /* #define PPC_DEBUG_SPR */
->   /* #define USE_APPLE_GDB */
->   
-> +static const Property powerpc_cpu_properties[] = {
-> +    DEFINE_PROP_BOOL("rtas-stopped-state", PowerPCCPU,
-> +                      rtas_stopped_state, true),
-> +};
-> +
->   static inline void vscr_init(CPUPPCState *env, uint32_t val)
->   {
->       /* Altivec always uses round-to-nearest */
-> @@ -7529,6 +7534,8 @@ static void ppc_cpu_class_init(ObjectClass *oc, const void *data)
->                                         &pcc->parent_unrealize);
->       pcc->pvr_match = ppc_pvr_match_default;
->   
-> +    device_class_set_props(dc, powerpc_cpu_properties);
-> +
->       resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
->                                          &pcc->parent_phases);
->   
-> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-> index d72e5ecb94..49cfdc6d67 100644
-> --- a/target/ppc/machine.c
-> +++ b/target/ppc/machine.c
-> @@ -257,6 +257,45 @@ static int cpu_post_load(void *opaque, int version_id)
->           ppc_store_sdr1(env, env->spr[SPR_SDR1]);
->       }
->   
-> +    if (!cpu->rtas_stopped_state) {
-> +        /*
-> +         * The source QEMU doesn't have fb802acdc8 and still uses halt +
-> +         * PM bits in LPCR to implement RTAS stopped state. The new (this)
-> +         * QEMU will have put the secondary vcpus in stopped state,
-> +         * waiting for the start-cpu RTAS call. That call will never come
-> +         * if the source cpus were already running. Try to infer the cpus
-> +         * state and set env->quiesced accordingly.
-> +         *
-> +         * env->quiesced = true  ==> the cpu is waiting to start
-> +         * env->quiesced = false ==> the cpu is running (unless halted)
-> +         */
-> +
-> +        /*
-> +         * Halted _could_ mean quiesced, but it could also be cede,
-> +         * confer_self, power management, etc.
-> +         */
-> +        if (CPU(cpu)->halted) {
-> +            PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
-> +            /*
-> +             * Both the PSSCR_EC bit and LPCR PM bits set at cpu reset
-> +             * and rtas_stop and cleared at rtas_start, it's a good
-> +             * heuristic.
-> +             */
-> +            if ((env->spr[SPR_PSSCR] & PSSCR_EC) &&
-> +                (env->spr[SPR_LPCR] & pcc->lpcr_pm)) {
-> +                env->quiesced = true;
-> +            } else {
-> +                env->quiesced = false;
-> +            }
-> +        } else {
-> +            /*
-> +             * Old QEMU sets halted during rtas_stop_self. Not halted,
-> +             * therefore definitely not quiesced.
-> +             */
-> +            env->quiesced = false;
-> +        }
-> +    }
-> +
->       post_load_update_msr(env);
->   
->       if (tcg_enabled()) {
-> @@ -649,6 +688,28 @@ static const VMStateDescription vmstate_reservation = {
->       }
->   };
->   
-> +static bool rtas_stopped_needed(void *opaque)
-> +{
-> +    PowerPCCPU *cpu = opaque;
-> +
-> +    return cpu->rtas_stopped_state;
-> +}
-> +
-> +static const VMStateDescription vmstate_rtas_stopped = {
-> +    .name = "cpu/rtas_stopped",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = rtas_stopped_needed,
-> +    .fields = (const VMStateField[]) {
-> +        /*
-> +         * "RTAS stopped" state, independent of halted state. For QEMU
-> +         * < 10.0, this is taken from cpu->halted at cpu_post_load()
-> +         */
-> +        VMSTATE_BOOL(env.quiesced, PowerPCCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->   #ifdef TARGET_PPC64
->   static bool bhrb_needed(void *opaque)
->   {
-> @@ -715,6 +776,7 @@ const VMStateDescription vmstate_ppc_cpu = {
->           &vmstate_tlbmas,
->           &vmstate_compat,
->           &vmstate_reservation,
-> +        &vmstate_rtas_stopped,
->           NULL
->       }
->   };
+
+> -----Original Message-----
+> From: Mohamed Mediouni <mohamed@unpredictable.fr>
+> Sent: 11 January 2026 21:44
+> To: Shameer Kolothum <skolothumtho@nvidia.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
+> <jgg@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>;
+> ddutile@redhat.com; berrange@redhat.com; clg@redhat.com;
+> alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> <mochs@nvidia.com>; smostafa@google.com; wangzhou1@hisilicon.com;
+> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+> Krishnakant Jaju <kjaju@nvidia.com>
+> Subject: Re: [PATCH v7 17/36] hw/arm/virt: Set msi-gpa property
+>=20
+> External email: Use caution opening links or attachments
+>=20
+>=20
+> > On 11. Jan 2026, at 20:53, Shameer Kolothum <skolothumtho@nvidia.com>
+> wrote:
+> >
+> > Set the MSI doorbell GPA property for accelerated SMMUv3 devices for us=
+e
+> > by KVM MSI setup. Also, since any meaningful use of vfio-pci devices wi=
+th
+> > an accelerated SMMUv3 requires both KVM and a kernel irqchip, ensure
+> > those are specified when accel=3Don is selected.
+> >
+> > Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> > ---
+> > hw/arm/virt.c | 20 ++++++++++++++++++++
+> > 1 file changed, 20 insertions(+)
+> >
+> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > index 9d0568a7d5..08feadf0a8 100644
+> > --- a/hw/arm/virt.c
+> > +++ b/hw/arm/virt.c
+> > @@ -3052,6 +3052,26 @@ static void
+> virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+> >             /* The new SMMUv3 device is specific to the PCI bus */
+> >             object_property_set_bool(OBJECT(dev), "smmu_per_bus", true,
+> NULL);
+> >         }
+> > +        if (object_property_find(OBJECT(dev), "accel") &&
+> > +            object_property_get_bool(OBJECT(dev), "accel", &error_abor=
+t)) {
+> > +            hwaddr db_start;
+> > +
+> > +            if (!kvm_enabled() || !kvm_irqchip_in_kernel()) {
+> > +                error_setg(errp, "SMMUv3 accel=3Don requires KVM with =
+"
+> > +                           "kernel-irqchip=3Don support");
+> > +                    return;
+> > +            }
+> > +
+> > +            if (vms->msi_controller =3D=3D VIRT_MSI_CTRL_ITS) {
+> > +                /* GITS_TRANSLATER page + offset */
+> > +                db_start =3D base_memmap[VIRT_GIC_ITS].base + 0x10000 =
++ 0x40;
+> > +            } else {
+> > +                /* MSI_SETSPI_NS page + offset */
+> > +                db_start =3D base_memmap[VIRT_GIC_V2M].base + 0x40;
+> > +            }
+> Hello,
+>=20
+> Currently (but soon no longer the case for virt-11.0+), its=3Doff means n=
+o MSI
+> controller at all instead of
+> GICv3 + GICv2m.
+>=20
+> Would an else if with an error returned if no MSI controller is enabled b=
+e
+> adequate?
+
+The MSI doorbell setup here is only required for MSI translation cases.
+When ITS is off (and no MSI controller is present), passthrough devices
+cannot use MSI/MSI-X, so no MSI translation is required. Is that right?
+
+If so,  skipping the doorbell setup is expected and correct, and returning
+an error would unnecessarily reject a valid configuration.
+
+Thanks,
+Shameer
 
