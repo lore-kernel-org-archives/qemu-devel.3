@@ -4,126 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D69CF45AE
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 17:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52CA7CF45AE
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 17:08:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfLLK-0006xA-VP; Mon, 12 Jan 2026 12:04:39 -0500
+	id 1vfLLO-00075k-GQ; Mon, 12 Jan 2026 12:04:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfLJK-0006Mp-Kv
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:02:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfLJJ-0006Cb-8M
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:02:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768237352;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7rKFUdQx23abFlJVm0uQPQFiuDu8lmtmxqOTgmBnKZI=;
- b=EN/mLACyTo+RJ0aTPAg/BTaaoffKHpDROrgzsFWCRx+SC4kzGwHwUTCV2JrHXjYYs9sgEr
- aI+aGphlzu/dAKt3G2LOiPzJIWqBqJWc+mGonaY66E8pus/BeKXJICXscKVWmkrY2BxQoD
- WlweRHOvyeDh8DMAige+YldLgvxFcUk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-7YLTAihNOLC9akxp06Hojg-1; Mon, 12 Jan 2026 12:02:30 -0500
-X-MC-Unique: 7YLTAihNOLC9akxp06Hojg-1
-X-Mimecast-MFC-AGG-ID: 7YLTAihNOLC9akxp06Hojg_1768237350
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477bf8c1413so44795655e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 09:02:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfLIs-0006Cz-89
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:02:13 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfLIq-0006Ap-Px
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 12:02:06 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-78f89501423so59069007b3.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 09:02:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768237349; x=1768842149; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7rKFUdQx23abFlJVm0uQPQFiuDu8lmtmxqOTgmBnKZI=;
- b=k6KcYr4U9sGP2kgboHiMPVZ8eHsEb5fHX71RXuSBh4R2cWH1lZmG3xiMa5VsVioWTB
- U57XVOdPOEawZc3VVmdQI9ciI86/+vgrOJNE5Z+9DcfiK8iWmEEtVENVBqRdRh1sEJga
- FBiCsJ627b6wwVbDmzg75Tdwp7Ib8X+AEU+bTJMHTCN4C5PIo14CdsbWpcFgiW7ShKqy
- 7WbXwzcXtxZ+Qz1UmXtXH6fPv3T9wGS8EjO9fRMySel1kvslqs5BMXQjc4Uw3fPgqvc4
- DjP0P22Byd5WX8XK98+mlw22GhH+3GtxMsCOzy2GjlQDNf+KUibnTbaDfnJu7J/Y7djG
- CJdA==
+ d=linaro.org; s=google; t=1768237323; x=1768842123; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5U+EmH1NHUyJCyVLYQH3bGY+ISVEX/Nc+x144y3zxMM=;
+ b=n2DtXxa143RhJJ2icEwBA1j7R2VasobonGkE3sVFndQlXXnx0CMMnEAk+loRSVBNuP
+ UGpR+8kEzm7Celrw1Kf5GKRFo4370bxqLeR4AmzX5gwnzDYWI2HD75oRXsiYzYGQ8MNj
+ 9k/rvGJbQymQuecgnBxxGYgor+fb9LgpUppLDEHJMTzRDvZ1s9y7HZqggcY0fKxq0AEl
+ G3TV/G7KMWXUovfS5pk2JHcMKGN/sV0PEUCTcpUkrabq8BIvbGYi88V/lAHgqwrfDvsN
+ y+0DerSpy8+yfoq/aHPd3gbzwr2R32h92ODFBuPmlzec3G1pwehdDQcDmUOxZ/WuuRZR
+ EgoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768237349; x=1768842149;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7rKFUdQx23abFlJVm0uQPQFiuDu8lmtmxqOTgmBnKZI=;
- b=f+f4gM9of3k7M9xw1PCAGBirn/UsFlNrF2Ok/1YXeSTW6iUKrAaRi/2t6ACWbrxvsl
- QSHVM+5+b4YAj3Bxr7C/WvgIKkwkU8n6+iuWuXULMDBWwDt/+E3bBfeDunHwHkfSr8u2
- muhkrUISd6fxyZru/z36QavN/bBlhefJLy1JAKrq66p2mArAoqCRfZ4grJlZyVYzQgIG
- +jifDFxYJXEsfpvaUzAWK4Yw6E6PYYcEzDWonrGRM3QNi0Q1I/WM+F0RZVrt5meVI3mv
- RvUd5vWYdjxKGxmvH/vuWfSHyLnoSf49DkhZ/1bO/YaM/GtfuaS4kP4mtQV/GXu4gbyl
- BC1A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWrHBlfVOBpPhLcmAYScLmfgHYTq4lcq08S/TdgujXZRctKrF0Se8N5G53giYEPcPQEADy9QqAPIUyr@nongnu.org
-X-Gm-Message-State: AOJu0YwSJc5pulyUWiaW8q+fIfq0grJWHly1gEecExrhRRKscAtYswrn
- XrHy8sCpedVeS7F8BstRvsUWsTvcRHFOdKEoqg/bPm7MNow43b+ToRDqd/uOLWSC9GwCig7lZbi
- 1o207/KMBe0tDTi1TSkaQh2cKCRzAh6qfNlpSnErZRPi8qQYQSP7yBOY3Cbe74N1d00RxfuUr5P
- gW5Zofb3AR8TDvfvXXXugJbEopc9nSHrQ=
-X-Gm-Gg: AY/fxX7qg8xt++tF9tyTZCAi3N0x2YJjPh0dnK2+ibuhmjGU6fc0zgtuytFawDXHkCO
- q5MhNy4gLyQRJ4sT68d+Tzi3cgm0ClSmnbmZwuqAChQMdyyMU0FOhdR0V448ymb8O/zhKL8f8rW
- fcF+8P8bZyXbYQLN6hr4UQl+OzpF5RGG7elkwoz9aYC7gYzzYck+jJyCnKY4bxEyAfI5gBwn5cY
- 0GlLMXzxlnuiWdohkSE/fOl2t51yySYLdUtnP940+kkLwWYUBfkdmgCWHa2Nr4MSANVMA==
-X-Received: by 2002:a05:600c:4e8a:b0:479:2a09:9262 with SMTP id
- 5b1f17b1804b1-47d84b18037mr244900635e9.9.1768237349477; 
- Mon, 12 Jan 2026 09:02:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHUkrA/EFIxVDM9YasT0A251/Gyn1594BDFpmWhdj7boyiZzv/zO4AO7cbSLgAcvcRPwuDBrYXkZ0Raazwm8y8=
-X-Received: by 2002:a05:600c:4e8a:b0:479:2a09:9262 with SMTP id
- 5b1f17b1804b1-47d84b18037mr244899935e9.9.1768237349058; Mon, 12 Jan 2026
- 09:02:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768237323; x=1768842123;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5U+EmH1NHUyJCyVLYQH3bGY+ISVEX/Nc+x144y3zxMM=;
+ b=cO/5G4F3mbTPj4DD6Filt2WBkpfpL2TWvGZt1x3R3kMCTElsXA125YMdID94Wg9lNR
+ fL6S1duYRDKxOPf3YN/Gvf5rqU31LTkvN30kIRVMx06+fPaZllOanVSsYd301ZMsiT1G
+ 3fGfc6isc1HRog0Xx2NbauWs7otvVgFbyeC76TH9CJ7BS0Quib5mTwSUlXz8iDdyd2eD
+ bBWz54qX4Lut10zOjxh1lM7zgTfxSGTRywdasfrTGkh8Da1n9GhTjflnRQ1TBKtV2poq
+ lssQZ2VYCVuef911U5M1SwAQPcZPIO2E5I258QdWvzscYtqUmtT+jezH7dxrvwN74w23
+ Jrsg==
+X-Gm-Message-State: AOJu0Yy8dgwDaXvnI4xL4mZGOhX0khaJpylAS1+cFrjkc/R0TRK8o/HC
+ xQTpLGe55FsJ+FXz7Na3WlLAVBBHEWWw5Hxr1FYLXdMZkbEqTiQLYvFe+NHNLF9nV44CfrZpsfS
+ 2c2/PdehD6AsFwiBnyCGrne2j4lpsJR1yJv8Dh3AclcVcjNHFxOvidxA=
+X-Gm-Gg: AY/fxX4KyKxu8NTmNtbQq2ypfJfE2KsGQp84flA/PnlMCfcpszEOBA7b0bzIzh+lrZE
+ rtHMvABsyiBeMngaS4vgpYjoDEVt70/1SO7Ld4OcQjffgsfpy07MhdhaZ2br4QwkFUiwoTAqFDl
+ VbHcDqsdO5VVmK78CWeGT05pG5iH90xSktKM/l32caPodP/VjU/j4DoUfe4uW0I7Yg90L6rpo7b
+ otEm5Ny8RKTtuhxKEVk7Ch3URNOzF52khrjhlVSUUnmnvr27MWVHQ+9QjY5zyBpOI7PhC18ENvT
+ Zrg3bfW3tzyeQavgSXdPGZg=
+X-Google-Smtp-Source: AGHT+IHo95rgvdbUh+BH4AS6xEmnr3edzqzOvJ1ZbWYebkXySFPY7L7qX0DhE0d1WA38j9vGTL9voEUd27P1/0IMxb8=
+X-Received: by 2002:a05:690e:4004:b0:648:187d:83e with SMTP id
+ 956f58d0204a3-648f62e04b8mr42313d50.37.1768237322905; Mon, 12 Jan 2026
+ 09:02:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20260112132259.76855-1-anisinha@redhat.com>
- <20260112132259.76855-5-anisinha@redhat.com>
-In-Reply-To: <20260112132259.76855-5-anisinha@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 12 Jan 2026 18:02:17 +0100
-X-Gm-Features: AZwV_QiPnwcipYRTdzj7RyQ4o9zK-24ynHKg3jtYwESKklZ6rTj1MR4pRLLSp6w
-Message-ID: <CABgObfbDTAvm6E0imC=HSm2=BAC4rzUDmuHcoUbVjJ-YeXFw-w@mail.gmail.com>
-Subject: Re: [PATCH v2 04/32] accel/kvm: add changes required to support KVM
- VM file descriptor change
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, 
- Song Gao <gaosong@loongson.cn>, Huacai Chen <chenhuacai@kernel.org>, 
+References: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
+ <c8e80923-d837-4874-a072-d5ae579576a4@linaro.org>
+In-Reply-To: <c8e80923-d837-4874-a072-d5ae579576a4@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 12 Jan 2026 17:01:51 +0000
+X-Gm-Features: AZwV_QhRDv73PJ_orOaeMCzp7vAQRNiAOrxIUWNa-XrXwGx7bFmVuILttmqIoGY
+Message-ID: <CAFEAcA_iXHEFTJ0mS+kRC=rNxxhyCHyw5R=nQNMXYE03qkBTZA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] target/arm: make granule_protection_check usable
+ from SMMU
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Tao Tang <tangtao1634@phytium.com.cn>,
+ qemu-arm@nongnu.org, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
  Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, 
- David Hildenbrand <david@kernel.org>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
- qemu-s390x@nongnu.org
+ Eric Auger <eric.auger@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,11 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 12, 2026 at 2:23=E2=80=AFPM Ani Sinha <anisinha@redhat.com>:
- > +int kvm_arch_vmfd_change_ops(MachineState *ms, KVMState *s)
+On Mon, 12 Jan 2026 at 16:29, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 12/15/25 4:01 PM, Pierrick Bouvier wrote:
+> > This series prepare granule_protection_check to be usable from SMMU, for
+> > implementing RME feature.
+> > It's based on Tao's commit [1] extracting ARMSecuritySpace from cpu.h header for
+> > convenience.
 
-Weird name since there are no "operations". Maybe kvm_arch_on_vmfd_change?
 
-Paolo
+> Another gentle ping.
+> This series has been reviewed and should be ready to be pulled.
 
+Applied to target-arm.next, thanks. I folded in this minor change
+which avoids the "local variables not declared at beginning of block"
+style issue:
+
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3785,9 +3785,7 @@ static bool get_phys_addr_gpc(CPUARMState *env,
+S1Translate *ptw,
+         return true;
+     }
+
+-    const uint64_t gpccr = env->cp15.gpccr_el3;
+-    const bool gpc_enabled = FIELD_EX64(gpccr, GPCCR, GPC);
+-    if (gpc_enabled) {
++    if (FIELD_EX64(env->cp15.gpccr_el3, GPCCR, GPC)) {
+         ARMCPU *cpu = env_archcpu(env);
+         MemTxAttrs attrs = {
+             .secure = true,
+
+-- PMM
 
