@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C9CC9EC96
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BEFC9EC93
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfIgj-0006zH-EC; Mon, 12 Jan 2026 09:14:33 -0500
+	id 1vfIka-000205-3B; Mon, 12 Jan 2026 09:18:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vfIgX-0006mz-Vp
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:14:23 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <mpe@tenstorrent.com>)
+ id 1vfAgl-0002A6-5j
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 00:42:03 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vfIgW-0003T6-21
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:14:21 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-79018a412edso65499077b3.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 06:14:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mpe@tenstorrent.com>)
+ id 1vfAgi-0000b0-Mf
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 00:42:02 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b8719ac9af7so85767666b.0
+ for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 21:41:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768227257; x=1768832057; darn=nongnu.org;
+ d=tenstorrent.com; s=google; t=1768196518; x=1768801318; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dSUYf1te18meE+WVrMTYCEid2uXFez4uGwlc1vMR9tk=;
- b=b+jRA8zMr/UkvG75VvyBW0TOGunkaEWt3KU2ndQJuonx0nGovkcbSvq5Vms5hNZaKj
- 3CyaTBvIdCHEY/H4KUt+WzOu/DZrcmO56jjvacPeF0UNzUjtRGgZ7vdFfWFr1f/z2WUV
- 1wJUt/U+E4xBmSeODwCwSaKw21ZwUdZYGYXP3s4HsLL9QAoD7W87xAw2tgBeWv9pewKz
- afWNoU7bZvy1J/UHLszWSAG4zckmbEcCBo4sqY9S7iau3r/G2yfmTyxTUPhB4brKU6vO
- zZ0n9+iB75hEC1H2e+xfUSPTHTWgVcAFyxBq4J0hiqZpC6VZAXp7QQRsk4E0ZCpZpN+J
- zOiw==
+ bh=8qddfOCZOjO3MvQyTGNVXdwU/1+f4GO6nIVEaVrlmsc=;
+ b=I9JxwYIg4bcJqAx46QALAsaMZoQLFNxARuQ0JEjIQTkVMg+y17bXWHNYcD3+4R/9f4
+ DUlDuXx3uqEtrUNsrC+x/FCX6m4IS0SnCIWjUP2gSaGw6fH3vpnWzj+8JFcE6m7MeUU5
+ pRCGCZeVEDxAo2XGppqTnjzWtuRzEPEQLHLCkbNqJ24RNfZkquGD6nHrSYrzaSRr370o
+ v71oZq4qD1mwH3vY0Bqry2FqzYM3F82sqN6RrsxtCDr1uSywn6KyrO23OmWBv6ZrvGHr
+ 7EnmxzIPeq0/uTBZtOpeiwKZNNxMgClr6tulYTX83Ff+KNDoz9IC7ZO0z6yp/BIwCbb/
+ xlQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768227257; x=1768832057;
+ d=1e100.net; s=20230601; t=1768196518; x=1768801318;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dSUYf1te18meE+WVrMTYCEid2uXFez4uGwlc1vMR9tk=;
- b=TW59c8L0tiMiTBl5WMHQ5NJblJ5zD4X796/ZSM2yvsptjUeu2DILHJJgk9JcivLYZQ
- 8fMO12OT2g2kJW24ADfQMPUF9ldkLlBOla9ZDTXIFNVDUCGDXSiBPbImF4IEPWjKGAMq
- V879i90TQHSYBdBYxKJ81gGFC23kaDRM9KyPf0ikJ2aTmY6G53oIZZohbNGPX8wEYUKf
- IUliGJ92tFwmboRQNnEgKOhpTgLbah9xdBwyixJ3zaCMjyqaGOz/ZOEphfqmzGWmWC/a
- Ub6WfolkE7GfutVYuQB4buXqvIx+s5vwo4K7wsgTEuFqwLLrfp/EI8Hld01zDha3nvnq
- Yzvw==
-X-Gm-Message-State: AOJu0YwdSoN1rdHOo6SdZodHBF8DLANVxGlZ0dzWksuF2ExBTS6Ip81/
- RRu1Ytb4d3yBP6zZh+jlig0WLe4zq0MjzA2HXEfGfRabCHNvsIB0IolBGB7WzNeO4HZD9EBRUJM
- /jCA8Q3FfGVn3uvGEvHOYPDn9Mc2Tm4vJA2ZP8wOPHQ==
-X-Gm-Gg: AY/fxX4LeGanbqoTivErA/eQZFKbKb5Kx+uemXnUVlSKglF0MPmRwA4mypM0CoRiAFH
- LN9TPL4w6+4DSR+m5VDKFOV4gqOFfDAOhdUWwK9qWmoTCF71qykijsA/PYEqr2XRCY8XwUOfetV
- UOwjxrCZ+6a9nTXL8N+uR/jQLvJLeWSuVYeGUqDP0FKNyKVkMYqKLBxPg1ko2shMV6GSDlXVt4/
- sA9tDFCsfOPafvkaY/40W3j4CM9GigbuahKG9Yoyk9FrGvIlHl9eIc4QTM+eFjoesFe0FEasC8h
- O7Aqo9uMNv/YimQefVw+Mqo=
-X-Google-Smtp-Source: AGHT+IEU0IOJmBiWSb6kztPyVoipnjuYbS7GPYOWfbAe9O8+r68IYnAhgra3O5879zAQCSj+TB2za9m2v/Zy3mdKFhU=
-X-Received: by 2002:a05:690e:11cb:b0:63f:b444:da92 with SMTP id
- 956f58d0204a3-64716b1f9e3mr15604023d50.31.1768227257494; Mon, 12 Jan 2026
- 06:14:17 -0800 (PST)
+ bh=8qddfOCZOjO3MvQyTGNVXdwU/1+f4GO6nIVEaVrlmsc=;
+ b=NOl0SotE0ShO49LxTK4W99psuwXMkhK0l7a1yNMO63Vy+83qwy8l/eVfAkkQw8DvjP
+ 7gpbdDbeoSsn/1BiPWG0BusF2Nx6i9RMCypOgLIgHI5on//9LlofGJoeRsRhKD+6U5ca
+ OoPFFz0jTFYSyvRjRKO+5Ik+A9EtgNLGV2uEzSDfZOXHL5dI8cR2wx1Ha0Hsw5K/LJ5D
+ Qk7cajFv6nPk9F6GbWkKS+rE3fZHdNZt+w2D8Qj61bOO/m90I/vvJbyC0FsR7vGDklU8
+ vk50oYpt1y24iXvpSb/TdNSzvrD8QjsJvTNcvTKsUkdAVPbiA0Zm0tqyxMI8/yCK5SYO
+ tXPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPzUqmmwQ7hW1VoYLbQjDOkMAZiQAILNnXzLqr0hZ3mLiXJEMnj5EDUihFHBr7h+2eC43B24APalJp@nongnu.org
+X-Gm-Message-State: AOJu0YzJPxhUSd2CKoUi9d8yG3bkKfAydYc0hn3/1Kfsi8hNjKiLJopl
+ 3XBdACF+yWOVjVLLj9BS9Abxo6pgTHoaWxFi99cJU6S0LaTjWyS6LbzNjLtha6UiZRV3z6r4I5b
+ rnN94/javZ2zmUQZAXAckSFiSLHqK3K9qFVnPyyGosA==
+X-Gm-Gg: AY/fxX4UWdGRxHAVp1qkJr0Y8r3b+DT3XF9Q0CJP4VbK119rl7DBNdQBrTMQlVl+vx0
+ 4RJG9uRdeIWzqjBfxc2FlmBOMCNimepGuck9q4czw8xQE7xRhRZsGaL7AZ9gyDr3r1UD58e6aP5
+ F1N1hHUHWZ8ErbyB/KLiQwAc6PYq+YUaL5Hcu6buTKJLJ6WgkH3lifkI+3peIVzu+1IsYme4V01
+ 3rw0n8ikx5H1uQK+pj/LkX5NMCdLNwg9WQJyZmXxgRSeqn+OVQ8yLv+lLzDQ+DxsS9PRxws
+X-Google-Smtp-Source: AGHT+IGUS04BhzHDdx3sJ0gdh88EW9V4KhUaEbV3dytBw+u7VmOLfb5Z7Kx9o3WueeJ8Uo3IJB2pMdYc5cslBjZKQFk=
+X-Received: by 2002:a17:906:aa0c:b0:b79:cd80:6fff with SMTP id
+ a640c23a62f3a-b84299bcce9mr1683168166b.17.1768196518543; Sun, 11 Jan 2026
+ 21:41:58 -0800 (PST)
 MIME-Version: 1.0
-References: <20251210-jmac-asid2-v6-0-d3b3acab98c7@linaro.org>
- <20251210-jmac-asid2-v6-1-d3b3acab98c7@linaro.org>
-In-Reply-To: <20251210-jmac-asid2-v6-1-d3b3acab98c7@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Jan 2026 14:14:05 +0000
-X-Gm-Features: AZwV_Qi7ycSyKsF-53J25DICmIVwibV01QQKOXjFVYs-Lbe2S9nfBy-5hwiV1Ik
-Message-ID: <CAFEAcA9Eseojv9gRRjp9euGAzxjtA+Mt=-1G2YnnB0DAmL9+zA@mail.gmail.com>
-Subject: Re: [PATCH v6 1/4] target/arm: Enable ID_AA64MMFR4_EL1 register
-To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>
+References: <20260109134145.398565-1-joel@jms.id.au>
+In-Reply-To: <20260109134145.398565-1-joel@jms.id.au>
+From: Michael Ellerman <mpe@oss.tenstorrent.com>
+Date: Mon, 12 Jan 2026 16:41:47 +1100
+X-Gm-Features: AZwV_Qgt7rArxqamu7LacAF4LOaCcKx9lh-w4IKEUyOSn_-QLlJWzF5sttcDYTE
+Message-ID: <CAACLP0V2vuut7Rjy5MheV-2+ObQK9vU-27g-QYiwsxOJ1w1NDw@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: tt-ascalon: Add Tenstorrent mvendorid
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, 
+ qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>, 
+ Nick Piggin <npiggin@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=mpe@tenstorrent.com; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 12 Jan 2026 09:17:30 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,82 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Dec 2025 at 14:51, Jim MacArthur <jim.macarthur@linaro.org> wrot=
+On Sat, Jan 10, 2026 at 12:42=E2=80=AFAM Joel Stanley <joel@jms.id.au> wrot=
 e:
 >
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
->  target/arm/cpu-sysregs.h.inc | 1 +
->  target/arm/helper.c          | 4 ++--
->  2 files changed, 3 insertions(+), 2 deletions(-)
+> JEP106 has two vendor IDs for Tenstorrent. We will use Bank 16, hex 0xa1:
 >
-> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-> index 2bb2861c62..2ba49d8478 100644
-> --- a/target/arm/cpu-sysregs.h.inc
-> +++ b/target/arm/cpu-sysregs.h.inc
-> @@ -14,6 +14,7 @@ DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
->  DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
->  DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
->  DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
-> +DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
->  DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
->  DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
->  DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 27ebc6f29b..c20334fa65 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -6566,11 +6566,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->                .access =3D PL1_R, .type =3D ARM_CP_CONST,
->                .accessfn =3D access_aa64_tid3,
->                .resetvalue =3D GET_IDREG(isar, ID_AA64MMFR3) },
-> -            { .name =3D "ID_AA64MMFR4_EL1_RESERVED", .state =3D ARM_CP_S=
-TATE_AA64,
-> +            { .name =3D "ID_AA64MMFR4_EL1", .state =3D ARM_CP_STATE_AA64=
-,
->                .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0, .crm =3D 7, .opc2 =
-=3D 4,
->                .access =3D PL1_R, .type =3D ARM_CP_CONST,
->                .accessfn =3D access_aa64_tid3,
-> -              .resetvalue =3D 0 },
-> +              .resetvalue =3D GET_IDREG(isar, ID_AA64MMFR4) },
->              { .name =3D "ID_AA64MMFR5_EL1_RESERVED", .state =3D ARM_CP_S=
-TATE_AA64,
->                .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0, .crm =3D 7, .opc2 =
-=3D 5,
->                .access =3D PL1_R, .type =3D ARM_CP_CONST,
+>  ((16 - 1) << 7) | (0xa1 & ~0x80) =3D 0x7a1
 
-This needs a small extra bit:
+The value LGTM, it matches JEP106BM, and matches the Tenstorrent
+documentation I have.
 
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6706,6 +6706,8 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .exported_bits =3D R_ID_AA64MMFR2_AT_MASK },
-             { .name =3D "ID_AA64MMFR3_EL1",
-               .exported_bits =3D 0 },
-+            { .name =3D "ID_AA64MMFR4_EL1",
-+              .exported_bits =3D 0 },
-             { .name =3D "ID_AA64MMFR*_EL1_RESERVED",
-               .is_glob =3D true },
-             { .name =3D "ID_AA64DFR0_EL1",
+I would probably say that it's company 33. Which is 0xa1 with the
+parity bit added, but the parity bit isn't used in the calculation,
+ie:
 
-This is where we tell the user-mode emulator what parts of the ID
-register it should expose to the guest process. For ID_AA64MMFR4_EL1
-that is nothing (i.e. read-as-zero) because no relevant fields
-are listed here:
-https://docs.kernel.org/arch/arm64/cpu-feature-registers.html
+  ((16 - 1) << 7) | 33 =3D 0x7a1
 
-But we need an entry for it here, because changing the name from
-"ID_AA64MMFR4_EL1_RESERVED" means it no longer matches the glob
-pattern in the "ID_AA64MMFR*_EL1_RESERVED" catch-all entry
-(which also says "make it read-as-zero").
+Mentioning that it's company 33 (0x21) would make it a little easier
+to match it up with other public sources, eg openocd:
 
-This is a trivial fix so I'll just apply it when I take this
-into target-arm.next rather than requiring you to do a respin.
+  https://github.com/openocd-org/openocd/blob/1ebff3ab33c77e3f8fb4e1ddda262=
+b606b572af1/src/helper/jep106.inc#L1935
 
-thanks
--- PMM
+> Add it to the Ascalon CPU definition as the mvendorid CSR.
+>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+
+Reviewed-by: Michael Ellerman <mpe@oss.tenstorrent.com>
+
+cheers
+
+> diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
+> index f1ffc66542a0..751a13aace47 100644
+> --- a/target/riscv/cpu_vendorid.h
+> +++ b/target/riscv/cpu_vendorid.h
+> @@ -8,4 +8,6 @@
+>  #define VEYRON_V1_MIMPID        0x111
+>  #define VEYRON_V1_MVENDORID     0x61f
+>
+> +#define TENSTORRENT_VENDOR_ID   0x7a1
+> +
+>  #endif /*  TARGET_RISCV_CPU_VENDORID_H */
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index efdec49e49ed..85ce4d83a371 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3190,6 +3190,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>          .cfg.ext_svnapot =3D true,
+>          .cfg.ext_svpbmt =3D true,
+>
+> +        .cfg.mvendorid =3D TENSTORRENT_VENDOR_ID,
+> +
+>          .cfg.max_satp_mode =3D VM_1_10_SV57,
+>      ),
+>
+> --
+> 2.47.3
+>
 
