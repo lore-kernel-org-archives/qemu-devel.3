@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F71CF45D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53BF0CF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQoy-0005eT-UW; Mon, 12 Jan 2026 17:55:36 -0500
+	id 1vfQoy-0005fe-VZ; Mon, 12 Jan 2026 17:55:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQow-0005Db-9Z
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:34 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQos-000509-UY
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:32 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQou-0004II-JX
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:34 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-477563e28a3so38371255e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQoo-0004GV-Ly
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:27 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-477770019e4so52085565e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258531; x=1768863331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258524; x=1768863324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=seqD4GII2z3t3svY5KvkPxVlc0r08rOflGB+0QkgCUg=;
- b=RGd5qslH44bjpiCOLPcpjyoNMD0g+r16ZYZABz72jvxysfm0ln2fSAfLdGeGlHOyx8
- m0tEGaFd+vIaBkqbbd3jLPdigcnB/6DK8cPtNsatFXs+kXByjEkiKRVCIU1HgujgUq4b
- Hx+m5W/tWTghtyLyjI0CwDxXAerr/GpI7DRJl/5hRs+d/9IaryCd76FUASGO/D4rSyIK
- i0uBjxmL0WQ9Wa+VBRd5LYr00JvMJDmTKu2Y7Jyc8HKkc8aaIDtdlQbfMGM/RVvsUl+S
- 2aTP/aNOUACaFdML2xZ8rWL0nozzJEjtL6MOXzmuHwJEC9MHAk3eTmTs+B6qYiY+//ag
- LBAA==
+ :reply-to; bh=xOYLnzNYXMcyCP81sJAzFROsT9kL+p4pKjejlMAxqHg=;
+ b=cobm9znVkGJb9W/rZn+Jo38B2kmKwEhvHyrb7pm/42fat637pX/DZ1GaevNTsL4ynj
+ 5P4Ebgt8Byarv24/ooSk5Us4e95SuunUfF5w+GWqIIeRrogondubCTa/OEjZ1Yz4frvd
+ C9t+jZa7rD9YeqW2H23n+DknhPQFlOADHy/xKFp5suI9gIZPGNe6xTwugSmawLyon0po
+ dH3nJRsa5i4dcGfYspf5yp19xkaCbW70baTM9yCspxGFVG82+JfDlM6WPEN3cNWz7VQ0
+ RjbPTdSsdp23V9thX7SFtVG8RVrU0KF9cEkxz1cEVmc/wfHiW5zSnp7C1qaDzAOjpQML
+ KsZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258531; x=1768863331;
+ d=1e100.net; s=20230601; t=1768258524; x=1768863324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=seqD4GII2z3t3svY5KvkPxVlc0r08rOflGB+0QkgCUg=;
- b=Okn2M0yGIU4qMyxhsjjv3cX2Hxg1K2vMLA16X8gZr6E4YIHhOjrl4Xa7mNsKsrlxEk
- +HlyQl8ROBTxco/cTNKZOy7TgI4hwCScUlBvHtMisk3wTRZo+UUA3hDApjKNfwMvp0cf
- I1w5Xl7OtZHQ9I2Y6nBosIDZL2sMombh9eO8a5wXDf5PALp5Yr+yaXc0r08HU6VKj+fM
- N+j1MUKIR56FgRmcXaX+wu8qCZdAOb8K8tviK8sKql0TqaUA6NJ5tVKjqYUpJN9Wcihj
- t9p612uw9C/lhUiMPzBkmf9J12F90KPMWE8wxyZsb3qKbaaqmensGxQhkQGx6Agx+XUw
- 4aPw==
-X-Gm-Message-State: AOJu0Yz11M7dgL7tog0GgnBar0FTftOr/ZlNFQbNVvnB8EiZ+mZC6/R4
- GNsX8jMt76NSgzbWu1LjUE0Ek5WWX+bVBagcgQKGHyK6JooCi3vgGuDL/cEfRIEUgvcZeZrG/MA
- D9SPzuik=
-X-Gm-Gg: AY/fxX7QfpK+I5qmy5A0wEpN8UATi02oY3zawmM9x5hV73ut+FVZFhwjn9M+437vLJw
- mt+WQwOkey5pQYQ/T6XnR/UwK1S4Z/lhPV9kj+XTOGa9fZvOn+SknPZytLfWZMevzM6zFqz3rbH
- kTR6pAzMinZ2zRQmWa98Q9nAFdfNVSpHKKXfztWz8V9jlJOk06GUXw3wkSr9RPubLS8kWOUWf+h
- 7PZ9/8NGq2WPoa0gn4beoPLtPTx2YjX6g2bSO4h9opGxrOR9y8wuBXQwSZTMNiKaJcGT4vn96zn
- 5qHhH6eLmxpNHCIf8+h0uZ3nmSywqMuh4sDS8fy9BkSMHLDtvcwB7iQfSINduMlOPiTCLE8GmjT
- EMGp+LIT7GFKbfn8dI7FRSRv19ejiSluRVrFby2y0EsH1VI8nqpIzEzvmcnxZLJiuxUVZ1zVAwn
- hl1Iwn3Al4Vu9Qi/B6AgvgFQHluxINk381TD53zy5PeBlZYrTNMcoFICX4nb4s
-X-Google-Smtp-Source: AGHT+IGjJXBNx1nM5NsTI8uhawhVzHTEK3+Oebvs3EhgvYR8Zbhv7iZJU57B2vi99mwxzJy10ae0KQ==
-X-Received: by 2002:a05:600c:4e88:b0:46e:2815:8568 with SMTP id
- 5b1f17b1804b1-47ed7c15ec3mr13153565e9.10.1768258530706; 
- Mon, 12 Jan 2026 14:55:30 -0800 (PST)
+ bh=xOYLnzNYXMcyCP81sJAzFROsT9kL+p4pKjejlMAxqHg=;
+ b=f4GZ8GYUvYwr3sHu8IZ8wxbZChUW/kjlLsETN6BX2bJuOaaN3hZGu0c/Pg6epV8jWw
+ +9j2PJg5CqjoooC79AbSkH6V3D9a4btiRPgCxsMWEm/3GdX3yGVXsMaGAQJQ30Jlrtg9
+ PbpnI/Kg1NK/PX1tqsUPnpRoJDBtWLU6Cv0cKbDCLl4HubjyGW4wOyxyEhQzwDRVxZqN
+ xt/hZH3g3eMGDb68ZaIVwjdIHzZLwuFEzHqI+wcw/Io8dRWXGz7fVmbVPL5ZILxz+HAq
+ GGcVWFKgPAknXlUHn61K79wpbNfIai+ZcPWAprRkZrxXQlWDsA3NrCiEwq2qshmn0pEb
+ LYqQ==
+X-Gm-Message-State: AOJu0Yz7CSMZO1XkNnSd6oHV93q9Xy6ukTlOipamy3U3DNqha1RtTfmN
+ Lfvo8iTLn6VtGkMXUSM48YgLLlOeNvf4Wsg0VX3D2uWJRr1al9GOnz1pPsJcNNjXpdjuSnztf1G
+ J+clcrC4=
+X-Gm-Gg: AY/fxX5ZKbQUd9Dc75VKe49Wkxm2IowvVASb0z/QBopgyTdFKD3FSTJxEFCID0/lOMN
+ dafrFtdmWghLEiwULtkhSxzwAEf3eTqn90NXf5GdgyodStJK4HTxqqvm3/auR/1BPgyNBf4Qela
+ 3nJxClI8G7t8Abt+plklICYEH1gCXchd+egUkRo+36+pl6KDGHjnJmrWmGrMZk0+c3sqjvobIyL
+ ISOARnfc55ayQDvNI/qyN3IsQhBjP2sd4Pu864MOCagRH9zCUlgSHbXmCgHPmzM9jkOp3HUrWEe
+ NMsu7155DmlzdbN3JFPlfZLqqxX0qVPgTz8MPtjMeiT8m4Bb5gO5/6FctCYByKTXxJ1jkDccG8h
+ 6IFQXuTeYs6nC9qIKmVy800DgwiICeyolpFpIgeWi31yPTl21kK2ESLKn2Be3d1MRWD+aMdpFrs
+ Mkrb+WZ1zqiLwHIptX+Pctb+mBL1dTR80PTQ9YUUoP6DGsf3aDf30LW5gIfaf1MFNfWIuuqj0=
+X-Google-Smtp-Source: AGHT+IFkY+bSZO8MzlFkyB2pavyC1+O7oxO1MtMiBCaeVdAVknxmvI+eGPB5vQ/d3efaSYg1No2O9Q==
+X-Received: by 2002:a05:600c:c4a8:b0:477:54cd:2030 with SMTP id
+ 5b1f17b1804b1-47d84b32788mr221574165e9.21.1768258524171; 
+ Mon, 12 Jan 2026 14:55:24 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f668e03sm388250595e9.14.2026.01.12.14.55.29
+ 5b1f17b1804b1-47d7f68f4ddsm383791015e9.2.2026.01.12.14.55.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:55:30 -0800 (PST)
+ Mon, 12 Jan 2026 14:55:23 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 57/61] target/tricore: Build system units in common source set
-Date: Mon, 12 Jan 2026 23:48:52 +0100
-Message-ID: <20260112224857.42068-58-philmd@linaro.org>
+Subject: [PULL 56/61] target/tricore: Inline translator_lduw()
+Date: Mon, 12 Jan 2026 23:48:51 +0100
+Message-ID: <20260112224857.42068-57-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,28 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit range 809b460f305..cd08bcaa36b we remove all
-uses of the target_ulong type in target/rx/. Use the meson
-target_common_system_arch[] source set to prevent further
-uses of target-specific types.
+translator_lduw() is defined in "exec/translator.h" as:
+
+ 192 static inline uint16_t
+ 193 translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
+ 194 {
+ 195     return translator_lduw_end(env, db, pc, MO_TE);
+ 196 }
+
+Directly use the inlined form, expanding MO_TE -> MO_LE
+since we only build the TriCore target as little-endian.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260107200702.54582-4-philmd@linaro.org>
+Message-ID: <20251224163005.91137-3-philmd@linaro.org>
 ---
- target/tricore/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/tricore/translate.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/target/tricore/meson.build b/target/tricore/meson.build
-index 45f49f01288..f40daee61ed 100644
---- a/target/tricore/meson.build
-+++ b/target/tricore/meson.build
-@@ -12,4 +12,4 @@ tricore_ss.add(zlib)
- tricore_system_ss = ss.source_set()
+diff --git a/target/tricore/translate.c b/target/tricore/translate.c
+index fbe05a93a8a..18d8726af6d 100644
+--- a/target/tricore/translate.c
++++ b/target/tricore/translate.c
+@@ -8422,7 +8422,8 @@ static bool insn_crosses_page(DisasContext *ctx, CPUTriCoreState *env)
+      * 4 bytes from the page boundary, so we cross the page if the first
+      * 16 bits indicate that this is a 32 bit insn.
+      */
+-    uint16_t insn = translator_lduw(env, &ctx->base, ctx->base.pc_next);
++    uint16_t insn = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
++                                        MO_LE);
  
- target_arch += {'tricore': tricore_ss}
--target_system_arch += {'tricore': tricore_system_ss}
-+target_common_system_arch += {'tricore': tricore_system_ss}
+     return !tricore_insn_is_16bit(insn);
+ }
+@@ -8435,15 +8436,15 @@ static void tricore_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+     uint16_t insn_lo;
+     bool is_16bit;
+ 
+-    insn_lo = translator_lduw(env, &ctx->base, ctx->base.pc_next);
++    insn_lo = translator_lduw_end(env, &ctx->base, ctx->base.pc_next, MO_LE);
+     is_16bit = tricore_insn_is_16bit(insn_lo);
+     if (is_16bit) {
+         ctx->opcode = insn_lo;
+         ctx->pc_succ_insn = ctx->base.pc_next + 2;
+         decode_16Bit_opc(ctx);
+     } else {
+-        uint32_t insn_hi = translator_lduw(env, &ctx->base,
+-                                           ctx->base.pc_next + 2);
++        uint32_t insn_hi = translator_lduw_end(env, &ctx->base,
++                                               ctx->base.pc_next + 2, MO_LE);
+         ctx->opcode = insn_hi << 16 | insn_lo;
+         ctx->pc_succ_insn = ctx->base.pc_next + 4;
+         decode_32Bit_opc(ctx);
 -- 
 2.52.0
 
