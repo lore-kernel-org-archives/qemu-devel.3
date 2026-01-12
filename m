@@ -4,98 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 276B6C9EC94
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42FCC9EC95
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 14:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfIrW-0007Zj-E1; Mon, 12 Jan 2026 09:25:42 -0500
+	id 1vfIzb-0002f5-Im; Mon, 12 Jan 2026 09:34:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vfIrU-0007Yr-Tu
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:25:40 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1vfIzJ-0002cq-U3
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:33:47 -0500
+Received: from mx.swemel.ru ([95.143.211.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vfIrS-00063p-Bz
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:25:40 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 680B1401A3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:25:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1768227936;
- bh=VIZ8qqHUP8l3IgWiHtdxhNv3CJQWbadCh/C/UW+IttM=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=ir0lsGhtjMEg6JwyTmWRu60eQ6wJRcDbKfWwCPLvIIzliIYDlnXgc0MhXQ478AcRS
- FjcGqfMv2o3yGYdnFS/ndM17Tkgqi6hLnApTbzHdy6sJ6btRXN2RIKoKLiB96KVg/b
- 6KS/0v6ANtxiEkMRKY62ICVn/GRYdxH5TnJrcJNLeBXz0ShNa9PGWDt7b9fZAMfpxH
- 9iogfg8JgDFnC9RBGYi0XPs8gqmFq0s3zH26Tdf1ot//YBrOsOlzCILIHNmwuUP7WC
- f5DZih5+/cl96c4gqOWYMZBCoDPcvXYuQ04Eujv/jboit5dOg6rtS49AVmn7HCZVCy
- zbzb6b1kpfInA==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 5A1957E365
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:25:36 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1vfIzG-0006n3-Tq
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 09:33:45 -0500
+From: Dmitry Frolov <frolov@swemel.ru>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
+ t=1768228416;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+4Vc8OMcWWcX37Tmnsv38hD9MEh3PyeqecHoWN8Fz1k=;
+ b=ZFlzUTnkKr1+rmoJ9plLevLH8+jAYdw9gH2hKZb4SdYVASX3t+BtdiZrEZnXBvRb62czY9
+ GibwREXs8hjk4y1WF4hyTPJWAsAXRhsROnabAhCcycV18dipyL8qN1OXc3VW5/I+mLmKl2
+ hr7Ove5ajsTGRSxKtR4XyuIlESFUlUo=
+To: alex.bennee@linaro.org
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org,
+ Dmitry Frolov <frolov@swemel.ru>
+Subject: [PATCH] fix NULL-dereference after g_strsplit()
+Date: Mon, 12 Jan 2026 17:32:09 +0300
+Message-Id: <20260112143208.1047235-1-frolov@swemel.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 12 Jan 2026 14:19:18 -0000
-From: Wesley Hershberger <2126951@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Confirmed; importance=Medium; assignee=wesley.hershberger@canonical.com;
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug-Tags: sts
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: athos whershberger
-X-Launchpad-Bug-Reporter: Wesley Hershberger (whershberger)
-X-Launchpad-Bug-Modifier: Wesley Hershberger (whershberger)
-References: <175977079933.1446079.11908449148472830395.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <176822755900.2103020.10975250915760940984.malone@juju-98d295-prod-launchpad-3>
-Subject: [Bug 2126951] Re: `block-stream` segfault with concurrent
- `query-named-block-nodes`
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="99c00f518760bdd50fc6e353e7736d2fff8fba4a";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: c88edd7a1223221dc758290c1f6b8eab0bd529e5
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=95.143.211.150; envelope-from=frolov@swemel.ru;
+ helo=mx.swemel.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -104,197 +57,306 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2126951 <2126951@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the ping Athos; I won't be able to get to this before the
-Plucky EOL.
+If there is no delimiter in the parsed sting, then the
+second element (eg.: token[1]) in the returned from the
+g_strsplit() array will be NULL.
 
-The fix for this landed as 9dbfd4e28dd11a83f54c371fade8d49a63d6dc1e
-upstream, present in v10.2.0-rc1 and released in v10.2.0.
+When tokens[1] is passed only to qemu_plugin_bool_parse(),
+no additional check is needed - there is an internal check.
+Also, there is no need to check tokens and tokens[0] in all
+mentionaed cases, because argv[i] is guaranteed to be
+not NULL and delimiter is a string constant (also not NULL).
+So, g_strsplit() will never return NULL, and the first
+array element (tokens[0]) will never be NULL.
+But tokens[1] has to be checked for NULL before usage.
 
-** Changed in: qemu (Ubuntu Plucky)
-       Status: Confirmed =3D> Won't Fix
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2126951
+Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+---
+ contrib/plugins/bbv.c         |  2 +-
+ contrib/plugins/cache.c       | 24 ++++++++++++------------
+ contrib/plugins/cflow.c       |  2 +-
+ contrib/plugins/drcov.c       |  2 +-
+ contrib/plugins/execlog.c     |  6 +++---
+ contrib/plugins/hotpages.c    |  6 +++---
+ contrib/plugins/hwprofile.c   |  8 ++++----
+ contrib/plugins/ips.c         |  4 ++--
+ contrib/plugins/stoptrigger.c |  4 ++--
+ tests/tcg/plugins/insn.c      |  2 +-
+ tests/tcg/plugins/mem.c       |  2 +-
+ tests/tcg/plugins/patch.c     |  4 ++--
+ 12 files changed, 33 insertions(+), 33 deletions(-)
 
-Title:
-  `block-stream` segfault with concurrent `query-named-block-nodes`
-
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Confirmed
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  Confirmed
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Confirmed
-Status in qemu source package in Resolute:
-  Confirmed
-
-Bug description:
-  [ Impact ]
-
-  When running `block-stream` and `query-named-block-nodes`
-  concurrently, a null-pointer dereference causes QEMU to segfault.
-
-  This occurs in every version of QEMU shipped with Ubuntu, 22.04 thru
-  25.10. I have not yet reproduced the bug using an upstream build.
-
-  I will link the upstream bug report here as soon as I've written it.
-
-  [ Reproducer ]
-
-  In `query-named-block-nodes.sh`:
-  ```sh
-  #!/bin/bash
-
-  while true; do
-      virsh qemu-monitor-command "$1" query-named-block-nodes > /dev/null
-  done
-  ```
-
-  In `blockrebase-crash.sh`:
-  ```sh
-  #!/bin/bash
-
-  set -ex
-
-  domain=3D"$1"
-
-  if [ -z "${domain}" ]; then
-      echo "Missing domain name"
-      exit 1
-  fi
-
-  ./query_named_block_nodes.sh "${domain}" &
-  query_pid=3D$!
-
-  while [ -n "$(virsh list --uuid)" ]; do
-      snap=3D"snap0-$(uuidgen)"
-
-      virsh snapshot-create-as "${domain}" \
-          --name "${snap}" \
-          --disk-only file=3D \
-          --diskspec vda,snapshot=3Dno \
-          --diskspec "vdb,stype=3Dfile,file=3D/var/lib/libvirt/images/n0-bl=
-k0_${snap}.qcow2" \
-          --atomic \
-          --no-metadata
-
-      virsh blockpull "${domain}" vdb
-
-      while bjr=3D$(virsh blockjob "$domain" vdb); do
-          if [[ "$bjr" =3D=3D *"No current block job for"* ]] ; then
-              break;
-          fi;
-      done;
-  done
-
-  kill "${query_pid}"
-  ```
-
-  Provision (`Ctrl + ]` after boot):
-  ```sh
-  wget https://cloud-images.ubuntu.com/daily/server/noble/current/noble-ser=
-ver-cloudimg-amd64.img
-
-  sudo cp noble-server-cloudimg-amd64.img /var/lib/libvirt/images/n0-root.q=
-cow2
-  sudo qemu-img create -f qcow2 /var/lib/libvirt/images/n0-blk0.qcow2 10G
-
-  touch network-config
-  touch meta-data
-  touch user-data
-
-  virt-install \
-    -n n0 \
-    --description "Test noble minimal" \
-    --os-variant=3Dubuntu24.04 \
-    --ram=3D1024 --vcpus=3D2 \
-    --import \
-    --disk path=3D/var/lib/libvirt/images/n0-root.qcow2,bus=3Dvirtio,cache=
-=3Dwritethrough,size=3D10 \
-    --disk path=3D/var/lib/libvirt/images/n0-blk0.qcow2,bus=3Dvirtio,cache=
-=3Dwritethrough,size=3D10 \
-    --graphics none \
-    --network network=3Ddefault \
-    --cloud-init user-data=3D"user-data,meta-data=3Dmeta-data,network-confi=
-g=3Dnetwork-config"
-  ```
-
-  And run the script to cause the crash (you may need to manually kill
-  query-named-block-jobs.sh):
-  ```sh
-  ./blockrebase-crash n0
-  ```
-
-  [ Details ]
-
-  Backtrace from the coredump (source at [1]):
-  ```
-  #0  bdrv_refresh_filename (bs=3D0x5efed72f8350) at /usr/src/qemu-1:10.1.0=
-+ds-5ubuntu2/b/qemu/block.c:8082
-  #1  0x00005efea73cf9dc in bdrv_block_device_info (blk=3D0x0, bs=3D0x5efed=
-72f8350, flat=3Dtrue, errp=3D0x7ffeb829ebd8)
-      at block/qapi.c:62
-  #2  0x00005efea7391ed3 in bdrv_named_nodes_list (flat=3D<optimized out>, =
-errp=3D0x7ffeb829ebd8)
-      at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/block.c:6275
-  #3  0x00005efea7471993 in qmp_query_named_block_nodes (has_flat=3D<optimi=
-zed out>, flat=3D<optimized out>,
-      errp=3D0x7ffeb829ebd8) at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/b=
-lockdev.c:2834
-  #4  qmp_marshal_query_named_block_nodes (args=3D<optimized out>, ret=3D0x=
-7f2b753beec0, errp=3D0x7f2b753beec8)
-      at qapi/qapi-commands-block-core.c:553
-  #5  0x00005efea74f03a5 in do_qmp_dispatch_bh (opaque=3D0x7f2b753beed0) at=
- qapi/qmp-dispatch.c:128
-  #6  0x00005efea75108e6 in aio_bh_poll (ctx=3D0x5efed6f3f430) at util/asyn=
-c.c:219
-  #7  0x00005efea74ffdb2 in aio_dispatch (ctx=3D0x5efed6f3f430) at util/aio=
--posix.c:436
-  #8  0x00005efea7512846 in aio_ctx_dispatch (source=3D<optimized out>, cal=
-lback=3D<optimized out>,
-      user_data=3D<optimized out>) at util/async.c:361
-  #9  0x00007f2b77809bfb in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so=
-.0
-  #10 0x00007f2b77809e70 in g_main_context_dispatch () from /lib/x86_64-lin=
-ux-gnu/libglib-2.0.so.0
-  #11 0x00005efea7517228 in glib_pollfds_poll () at util/main-loop.c:287
-  #12 os_host_main_loop_wait (timeout=3D0) at util/main-loop.c:310
-  #13 main_loop_wait (nonblocking=3D<optimized out>) at util/main-loop.c:589
-  #14 0x00005efea7140482 in qemu_main_loop () at system/runstate.c:905
-  #15 0x00005efea744e4e8 in qemu_default_main (opaque=3Dopaque@entry=3D0x0)=
- at system/main.c:50
-  #16 0x00005efea6e76319 in main (argc=3D<optimized out>, argv=3D<optimized=
- out>) at system/main.c:93
-  ```
-
-  The libvirt logs suggest that the crash occurs right at the end of the bl=
-ockjob, since it reaches "concluded" state before crashing. I assume that t=
-his is one of:
-  - `stream_clean` is freeing/modifying the `cor_filter_bs` without holding=
- a lock that it needs to [2][3]
-  - `bdrv_refresh_filename` needs to handle the possibility that the QLIST =
-of children for a filter bs could be NULL [1]
-
-  [1] https://git.launchpad.net/ubuntu/+source/qemu/tree/block.c?h=3Dubuntu=
-/questing-devel#n8071
-  [2] https://git.launchpad.net/ubuntu/+source/qemu/tree/block/stream.c?h=
-=3Dubuntu/questing-devel#n131
-  [3] https://git.launchpad.net/ubuntu/+source/qemu/tree/block/stream.c?h=
-=3Dubuntu/questing-devel#n340
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2126951/+subscriptions
+diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+index b9da6f815e..b186daf797 100644
+--- a/contrib/plugins/bbv.c
++++ b/contrib/plugins/bbv.c
+@@ -132,7 +132,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+     for (int i = 0; i < argc; i++) {
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+-        if (g_strcmp0(tokens[0], "interval") == 0) {
++        if (g_strcmp0(tokens[0], "interval") == 0 && tokens[1]) {
+             interval = g_ascii_strtoull(tokens[1], NULL, 10);
+         } else if (g_strcmp0(tokens[0], "outfile") == 0) {
+             filename = tokens[1];
+diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+index 56508587d3..c9f818f9d9 100644
+--- a/contrib/plugins/cache.c
++++ b/contrib/plugins/cache.c
+@@ -767,29 +767,29 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+ 
+-        if (g_strcmp0(tokens[0], "iblksize") == 0) {
++        if (g_strcmp0(tokens[0], "iblksize") == 0 && tokens[1]) {
+             l1_iblksize = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "iassoc") == 0) {
++        } else if (g_strcmp0(tokens[0], "iassoc") == 0 && tokens[1]) {
+             l1_iassoc = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "icachesize") == 0) {
++        } else if (g_strcmp0(tokens[0], "icachesize") == 0 && tokens[1]) {
+             l1_icachesize = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "dblksize") == 0) {
++        } else if (g_strcmp0(tokens[0], "dblksize") == 0 && tokens[1]) {
+             l1_dblksize = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "dassoc") == 0) {
++        } else if (g_strcmp0(tokens[0], "dassoc") == 0 && tokens[1]) {
+             l1_dassoc = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "dcachesize") == 0) {
++        } else if (g_strcmp0(tokens[0], "dcachesize") == 0 && tokens[1]) {
+             l1_dcachesize = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "limit") == 0) {
++        } else if (g_strcmp0(tokens[0], "limit") == 0 && tokens[1]) {
+             limit = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "cores") == 0) {
++        } else if (g_strcmp0(tokens[0], "cores") == 0 && tokens[1]) {
+             cores = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "l2cachesize") == 0) {
++        } else if (g_strcmp0(tokens[0], "l2cachesize") == 0 && tokens[1]) {
+             use_l2 = true;
+             l2_cachesize = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "l2blksize") == 0) {
++        } else if (g_strcmp0(tokens[0], "l2blksize") == 0 && tokens[1]) {
+             use_l2 = true;
+             l2_blksize = STRTOLL(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "l2assoc") == 0) {
++        } else if (g_strcmp0(tokens[0], "l2assoc") == 0 && tokens[1]) {
+             use_l2 = true;
+             l2_assoc = STRTOLL(tokens[1]);
+         } else if (g_strcmp0(tokens[0], "l2") == 0) {
+@@ -797,7 +797,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "evict") == 0) {
++        } else if (g_strcmp0(tokens[0], "evict") == 0 && tokens[1]) {
+             if (g_strcmp0(tokens[1], "rand") == 0) {
+                 policy = RAND;
+             } else if (g_strcmp0(tokens[1], "lru") == 0) {
+diff --git a/contrib/plugins/cflow.c b/contrib/plugins/cflow.c
+index b5e33f25f9..9db078024a 100644
+--- a/contrib/plugins/cflow.c
++++ b/contrib/plugins/cflow.c
+@@ -368,7 +368,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+     for (int i = 0; i < argc; i++) {
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+-        if (g_strcmp0(tokens[0], "sort") == 0) {
++        if (g_strcmp0(tokens[0], "sort") == 0 && tokens[1]) {
+             if (g_strcmp0(tokens[1], "hottest") == 0) {
+                 report = SORT_HOTTEST;
+             } else if (g_strcmp0(tokens[1], "early") == 0) {
+diff --git a/contrib/plugins/drcov.c b/contrib/plugins/drcov.c
+index 5edc94dcaf..d803231bb6 100644
+--- a/contrib/plugins/drcov.c
++++ b/contrib/plugins/drcov.c
+@@ -149,7 +149,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+ {
+     for (int i = 0; i < argc; i++) {
+         g_auto(GStrv) tokens = g_strsplit(argv[i], "=", 2);
+-        if (g_strcmp0(tokens[0], "filename") == 0) {
++        if (g_strcmp0(tokens[0], "filename") == 0 && tokens[1]) {
+             file_name = g_strdup(tokens[1]);
+         }
+     }
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index 811f320319..7d615b9f3b 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -460,11 +460,11 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+     for (int i = 0; i < argc; i++) {
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+-        if (g_strcmp0(tokens[0], "ifilter") == 0) {
++        if (g_strcmp0(tokens[0], "ifilter") == 0 && tokens[1]) {
+             parse_insn_match(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "afilter") == 0) {
++        } else if (g_strcmp0(tokens[0], "afilter") == 0 && tokens[1]) {
+             parse_vaddr_match(tokens[1]);
+-        } else if (g_strcmp0(tokens[0], "reg") == 0) {
++        } else if (g_strcmp0(tokens[0], "reg") == 0 && tokens[1]) {
+             add_regpat(tokens[1]);
+         } else if (g_strcmp0(tokens[0], "rdisas") == 0) {
+             if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &disas_assist)) {
+diff --git a/contrib/plugins/hotpages.c b/contrib/plugins/hotpages.c
+index 9d48ac969e..d6ba8020de 100644
+--- a/contrib/plugins/hotpages.c
++++ b/contrib/plugins/hotpages.c
+@@ -171,7 +171,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", -1);
+ 
+-        if (g_strcmp0(tokens[0], "sortby") == 0) {
++        if (g_strcmp0(tokens[0], "sortby") == 0 && tokens[1]) {
+             if (g_strcmp0(tokens[1], "reads") == 0) {
+                 sort_by = SORT_R;
+             } else if (g_strcmp0(tokens[1], "writes") == 0) {
+@@ -182,12 +182,12 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+                 fprintf(stderr, "invalid value to sortby: %s\n", tokens[1]);
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "io") == 0) {
++        } else if (g_strcmp0(tokens[0], "io") == 0 && tokens[1]) {
+             if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &track_io)) {
+                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "pagesize") == 0) {
++        } else if (g_strcmp0(tokens[0], "pagesize") == 0 && tokens[1]) {
+             page_size = g_ascii_strtoull(tokens[1], NULL, 10);
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", opt);
+diff --git a/contrib/plugins/hwprofile.c b/contrib/plugins/hwprofile.c
+index a9838ccc87..cfb031b132 100644
+--- a/contrib/plugins/hwprofile.c
++++ b/contrib/plugins/hwprofile.c
+@@ -271,7 +271,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+ 
+-        if (g_strcmp0(tokens[0], "track") == 0) {
++        if (g_strcmp0(tokens[0], "track") == 0 && tokens[1]) {
+             if (g_strcmp0(tokens[1], "read") == 0) {
+                 rw = QEMU_PLUGIN_MEM_R;
+             } else if (g_strcmp0(tokens[1], "write") == 0) {
+@@ -280,17 +280,17 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+                 fprintf(stderr, "invalid value for track: %s\n", tokens[1]);
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "pattern") == 0) {
++        } else if (g_strcmp0(tokens[0], "pattern") == 0 && tokens[1]) {
+             if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &pattern)) {
+                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "source") == 0) {
++        } else if (g_strcmp0(tokens[0], "source") == 0 && tokens[1]) {
+             if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &source)) {
+                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "match") == 0) {
++        } else if (g_strcmp0(tokens[0], "match") == 0 && tokens[1]) {
+             check_match = true;
+             g_string_append_printf(matches_raw, "%s,", tokens[1]);
+         } else {
+diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+index f110c565bc..20de6a8473 100644
+--- a/contrib/plugins/ips.c
++++ b/contrib/plugins/ips.c
+@@ -150,7 +150,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+     for (int i = 0; i < argc; i++) {
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+-        if (g_strcmp0(tokens[0], "ips") == 0) {
++        if (g_strcmp0(tokens[0], "ips") == 0 && tokens[1]) {
+             char *endptr = NULL;
+             max_insn_per_second = g_ascii_strtoull(tokens[1], &endptr, 10);
+             if (!max_insn_per_second && errno) {
+@@ -177,7 +177,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                     return -1;
+                 }
+             }
+-        } else if (g_strcmp0(tokens[0], "ipq") == 0) {
++        } else if (g_strcmp0(tokens[0], "ipq") == 0 && tokens[1]) {
+             max_insn_per_quantum = g_ascii_strtoull(tokens[1], NULL, 10);
+ 
+             if (!max_insn_per_quantum) {
+diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
+index b3a6ed66a7..733c1f3569 100644
+--- a/contrib/plugins/stoptrigger.c
++++ b/contrib/plugins/stoptrigger.c
+@@ -114,7 +114,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+     for (int i = 0; i < argc; i++) {
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+-        if (g_strcmp0(tokens[0], "icount") == 0) {
++        if (g_strcmp0(tokens[0], "icount") == 0 && tokens[1]) {
+             g_auto(GStrv) icount_tokens = g_strsplit(tokens[1], ":", 2);
+             icount = g_ascii_strtoull(icount_tokens[0], NULL, 0);
+             if (icount < 1 || g_strrstr(icount_tokens[0], "-") != NULL) {
+@@ -128,7 +128,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                 icount_exit_code = g_ascii_strtoull(icount_tokens[1], NULL, 0);
+             }
+             exit_on_icount = true;
+-        } else if (g_strcmp0(tokens[0], "addr") == 0) {
++        } else if (g_strcmp0(tokens[0], "addr") == 0 && tokens[1]) {
+             g_auto(GStrv) addr_tokens = g_strsplit(tokens[1], ":", 2);
+             ExitInfo *ei = g_malloc(sizeof(ExitInfo));
+             ei->exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
+diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
+index 0c723cb9ed..190cdae942 100644
+--- a/tests/tcg/plugins/insn.c
++++ b/tests/tcg/plugins/insn.c
+@@ -279,7 +279,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "match") == 0) {
++        } else if (g_strcmp0(tokens[0], "match") == 0 && tokens[1]) {
+             parse_match(tokens[1]);
+         } else if (g_strcmp0(tokens[0], "trace") == 0) {
+             if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &do_trace)) {
+diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+index 9649bce99c..d10ff01e75 100644
+--- a/tests/tcg/plugins/mem.c
++++ b/tests/tcg/plugins/mem.c
+@@ -338,7 +338,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "track") == 0) {
++        } else if (g_strcmp0(tokens[0], "track") == 0 && tokens[1]) {
+             if (g_strcmp0(tokens[1], "r") == 0) {
+                 rw = QEMU_PLUGIN_MEM_R;
+             } else if (g_strcmp0(tokens[1], "w") == 0) {
+diff --git a/tests/tcg/plugins/patch.c b/tests/tcg/plugins/patch.c
+index 111c5c1f16..5407f69d12 100644
+--- a/tests/tcg/plugins/patch.c
++++ b/tests/tcg/plugins/patch.c
+@@ -208,14 +208,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                         "Failed to parse boolean argument use_hwaddr\n");
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "target") == 0) {
++        } else if (g_strcmp0(tokens[0], "target") == 0 && tokens[1]) {
+             target_data = str_to_bytes(tokens[1]);
+             if (!target_data) {
+                 fprintf(stderr,
+                          "Failed to parse target bytes.\n");
+                 return -1;
+             }
+-        } else if (g_strcmp0(tokens[0], "patch") == 0) {
++        } else if (g_strcmp0(tokens[0], "patch") == 0 && tokens[1]) {
+             patch_data = str_to_bytes(tokens[1]);
+             if (!patch_data) {
+                 fprintf(stderr, "Failed to parse patch bytes.\n");
+-- 
+2.34.1
 
 
