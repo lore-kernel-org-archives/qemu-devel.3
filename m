@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6EF1CF45D8
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0351CF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:53:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQmW-0004Rm-S8; Mon, 12 Jan 2026 17:53:06 -0500
+	id 1vfQmA-0003gt-Ab; Mon, 12 Jan 2026 17:52:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQmI-00040s-49
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:50 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQlq-0002zK-Gm
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:23 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQmG-0003Pr-Gi
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:49 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47d493a9b96so39930935e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:52:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQlp-0003GZ-1Y
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:22 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-47d3ffb0f44so48135485e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:52:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258367; x=1768863167; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258339; x=1768863139; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nJJAGz/yRL6TpHQsdBJlz6vXjupAFSq6Gnhdr8Lxbtg=;
- b=Am4+dEE0Xa+0FdpcJWuFBTLvcfT9WuVZcuQ7Uy6X3jrChFsE+ikjbHfL1/tPbMQ3k8
- 88I7xzAMc9h3D2p3PI1gBJYYPSPejmf+vkT2nVj2lHusPRcFVrcgyV5zNhpzSKI0QlAu
- lQOjrNz5BDI9yRNQUo4/kzCJulMOSlWnVAQzWj79VwPFtXDgl6fhKuGsZK5f4Mmswxgb
- STz+tMnWBBMBKDLq2x21bGsrwC22k4kxIjStwxvQUxQSheQdGKXuVlaoXpviAoNbRgMU
- vYbZ2Z+Atsu/Oa1mAJ1G813JNYln6+hqWNTiGttHdembGnOwXEYU5mKytkhB2JJV3vFH
- oucQ==
+ :reply-to; bh=ogzIslneGYuEoNGuI1Jj5sYV/IxvfdvBB46hdhVM8aA=;
+ b=f0m9MfWy3ewvfWUhl3CXlSAEndtQJHogK/ItwgAUpUx3Q9MXGh1aRgT7U3i3qwE3bf
+ 5B6K6LOZMiyKvPyM1ub7ru6D9GQewYm8qZhVKtJy7Ms1FvWU5EDGvgZe3mEicb7gdbmt
+ SnHQCFzoKPPKHMuBC6sB/AxkA/x0sNih4kVqhOGyFaX50S9PQ5poR1QpITcD53mqHyE/
+ ohaS1CvKgDjEdQfvWqw5zNOg0ZZ9GQImZbDD2K9/IwF060Ws9CDXW4lt0h4ZBTXuoYV4
+ gZS75Y+le53aoHUIgkRPDzH9ycLHNpiowuw2wQw0TiFKIBKKd4gzhBnTFZscMvv0O3Hc
+ AtIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258367; x=1768863167;
+ d=1e100.net; s=20230601; t=1768258339; x=1768863139;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nJJAGz/yRL6TpHQsdBJlz6vXjupAFSq6Gnhdr8Lxbtg=;
- b=aR9ZKLFBCh1rwlMZOuEoaGwqoWzYGLLu57Guftgz958zzkVWgInbXg60wum4AkHqGV
- iW/j4A7GptoqHpMXcXCAcfP+mbY595VTxSuSarHdU28zgQbChjCDdfR+iOy9LZkE2jdP
- 51wkMyRw/YN3PgbriDrnANyz771Gb667BbJGE5u0tyc6zPzj0O9ZSJTJmuQHXp8sHUCd
- ma7dWAsJRdBC2alT0wpva+mfidD727NAAv3ekL6CSXB2D5XpEzy7YcNQ2bh/e/O6TYaz
- 4YAq+/aWZt0Jj4Q5vru4hvQsUke5Veb5XxvGTe0aOMLJbrxX11uXWRlk/RKNC+E6usrS
- L8HA==
-X-Gm-Message-State: AOJu0YxT8tXZATGrbvsbuuGhFRH1k9nSswU1wnDSeSTzXLiH4kyNeBsA
- E3L2T8Sja3CxEOLhbjoiifFZo7v2V1Ud+5JfiEsyZXYFP/DoHZmJZquczMPXwUnocrb9ck2995/
- PjtbUbkM=
-X-Gm-Gg: AY/fxX6GAb9Ovc9gWOf61rmbsUx4l0GDkgwZ0KXsKyundHXt87Sj4aQy/ZdYMCHc7LM
- 7KZrRX4DQ7FibX7HclYlwplFnkSzQ2L7vYII1E1YWy9C1fhWOAvC9rUqyHEKDPTh6Ty5wZ+pYTT
- U6UyJzxKALAVakI2yUHgMsgLrml+gFkEuW0LklvfwkhjZHBRRDasYTDK+ydJj4lWFS29BXV7qRT
- 0otnC7BiBcysDhRgA7LDxXIr0HuikF4oUYLEfG6VcBdEtxlZTt+x+RQzIgS7F11pfQC25I023dw
- oBMinO9TEoGqOSGJ361/Di0ko0y/lmWunOkNVTgnBgcT7ffcl4JMWY9icTrR656DIkvFWYAGl8B
- icIjC9DleKuR0FYnRXWDjWjlUfxqzq6ojTV2LAes3NO3t3d8lX3q/cl5h9efwI6p71kDPOL+vhU
- uvaE+hOSGccjnXQN1dJdSQxELkyFEQDkpUtP7GXC34U0kK/4nEKbb5nQO3DHiKHiwhdIUIviY=
-X-Google-Smtp-Source: AGHT+IHxFtLzqLO1GX5Az2Kxzxzu7CirVZbXVWGqTadHjJ2gnqaJH4IHqcAN8tlJqUACbhSuLtWw0g==
-X-Received: by 2002:a05:600c:a08:b0:477:b0b8:4dd0 with SMTP id
- 5b1f17b1804b1-47d84b36b7emr250782665e9.17.1768258366621; 
- Mon, 12 Jan 2026 14:52:46 -0800 (PST)
+ bh=ogzIslneGYuEoNGuI1Jj5sYV/IxvfdvBB46hdhVM8aA=;
+ b=dlidMc3DKynLlqtOIf4ClsLGC8uVayDvHBbK50rFEW002Hiqv9LmkchDhQog3BEO4F
+ yeoc8TtAGILLh9/VFe967j5oqI/FGTtd7LxDpWedSH+/UwtlYWXroyVb61AGQXP8cHuk
+ VTXgFe284r224MeRIPT5dvuFSF0qugH/xkLO5X94Ehn8BzN8Jw/2JW2a8j8GdprZRQkL
+ AZSyq+KsS9pGFfsp+zjABCnxrSNlWop8iTx1ZyVL4py3FTQ6/+idiPA3CqMT3VF6HC9o
+ NilBPVUQdlDlK4JkS4ZpNEKPTbb6QBgyjW31VKBCTBfg+WWuyvDz4WkAiLJXeEHYBwjj
+ PFzg==
+X-Gm-Message-State: AOJu0Yx032/j5wkdcLG+Dz5wIPZZCGckgXuCQxmaUdG9CBGU9WtWQIxk
+ kMKvTFn/ZP8HxMRS4B3IH+KeXNufAgsCRy/fCiaxbL27p7RZycJvqkbTo9IfhJk9vt/e0695ru1
+ HdwM9VG8=
+X-Gm-Gg: AY/fxX7xZju1r9Fpgy/lQLtpSLWicyvOgo0STXxgm2b+790JqPmmhahReGZK+zlcgRq
+ Gj4pXs3jLmPfbro49fs4vk/A2ohFhs4PSBkNddnmWJqKfrZkEmkWMo7eks2th5n3O8jfrIQJLjM
+ yRCQN8s7khDqm1OWihJr/ig8DeLIm2z1hUPmaNXfVPzBkI9W5+saZTgBqARQbPn4weXDdOShQXZ
+ LFI4ZOGzcxc/Hay7kkKe/RTV+RvIgGMI/O5nr4JyZMnsKU2eZgveCuhJGQLY63kyIYdTLBo9Lya
+ 2Z5OebkdatSnBIdxgv1zouu/yaz2PR5e5yxWtOhY+3yK3v4D7de1kI+8AiIU8trEfpcwwLTs/md
+ N/+e2xNs4NtGfzJ+nzkkG07wh0DcpQFysFCa1erOEJyD+QWNvnwFIdOkF7N3vuzMoHvUnRlkQt7
+ uRaPLEsrMhtKfwOOJxjPk1PNKb3ageOu+CR6hkRNTnhEj4L5OTlD45Y0G+h89R
+X-Google-Smtp-Source: AGHT+IEQw60aGNdw0btNmCEiOIw7FTKR4RKr6HGqLBaR4ZNaiyc9WA32nLOvP5r3x6sxcbjvmGaqFw==
+X-Received: by 2002:a05:600c:4ed4:b0:477:9986:5e6b with SMTP id
+ 5b1f17b1804b1-47d84b41b53mr235202805e9.28.1768258339051; 
+ Mon, 12 Jan 2026 14:52:19 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f410c6csm388151345e9.1.2026.01.12.14.52.45
+ 5b1f17b1804b1-47d7f7035f2sm358382915e9.12.2026.01.12.14.52.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:52:46 -0800 (PST)
+ Mon, 12 Jan 2026 14:52:18 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/61] target/microblaze: Directly check endianness via
- CPUConfig::endi flag
-Date: Mon, 12 Jan 2026 23:48:28 +0100
-Message-ID: <20260112224857.42068-34-philmd@linaro.org>
+Subject: [PULL 29/61] target/loongarch: Inline cpu_ldl_code() call in
+ cpu_do_interrupt()
+Date: Mon, 12 Jan 2026 23:48:24 +0100
+Message-ID: <20260112224857.42068-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,57 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MicroBlazeCPUConfig::endi flag reports whether the CPU is
-configure in little endianness. Directly use this knowledge
-instead of evaluating MemOp from mo_endian().
+In preparation of removing the cpu_ldl_code wrapper, inline it.
+
+Since LoongArch instructions are always stored in little-endian
+order, replace MO_TE -> MO_LE.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20260106235333.22752-3-philmd@linaro.org>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-Id: <20251224161456.89707-6-philmd@linaro.org>
 ---
- target/microblaze/translate.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/loongarch/tcg/tcg_cpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index fefe5cb552a..0be3c98dc17 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -794,7 +794,7 @@ static bool trans_lhuea(DisasContext *dc, arg_typea *arg)
- #else
-     TCGv_i64 addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
-     gen_alignment_check_ea(dc, addr, arg->rb, arg->rd, MO_16, false);
--    (mo_endian(dc) == MO_BE ? gen_helper_lhuea_be : gen_helper_lhuea_le)
-+    (dc->cfg->endi ? gen_helper_lhuea_le : gen_helper_lhuea_be)
-         (reg_for_write(dc, arg->rd), tcg_env, addr);
-     return true;
- #endif
-@@ -828,7 +828,7 @@ static bool trans_lwea(DisasContext *dc, arg_typea *arg)
- #else
-     TCGv_i64 addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
-     gen_alignment_check_ea(dc, addr, arg->rb, arg->rd, MO_32, false);
--    (mo_endian(dc) == MO_BE ? gen_helper_lwea_be : gen_helper_lwea_le)
-+    (dc->cfg->endi ? gen_helper_lwea_le : gen_helper_lwea_be)
-         (reg_for_write(dc, arg->rd), tcg_env, addr);
-     return true;
- #endif
-@@ -954,7 +954,7 @@ static bool trans_shea(DisasContext *dc, arg_typea *arg)
- #else
-     TCGv_i64 addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
-     gen_alignment_check_ea(dc, addr, arg->rb, arg->rd, MO_16, true);
--    (mo_endian(dc) == MO_BE ? gen_helper_shea_be : gen_helper_shea_le)
-+    (dc->cfg->endi ? gen_helper_shea_le : gen_helper_shea_be)
-         (tcg_env, reg_for_read(dc, arg->rd), addr);
-     return true;
- #endif
-@@ -988,7 +988,7 @@ static bool trans_swea(DisasContext *dc, arg_typea *arg)
- #else
-     TCGv_i64 addr = compute_ldst_addr_ea(dc, arg->ra, arg->rb);
-     gen_alignment_check_ea(dc, addr, arg->rb, arg->rd, MO_32, true);
--    (mo_endian(dc) == MO_BE ? gen_helper_swea_be : gen_helper_swea_le)
-+    (dc->cfg->endi ? gen_helper_swea_le : gen_helper_swea_be)
-         (tcg_env, reg_for_read(dc, arg->rd), addr);
-     return true;
- #endif
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 9d077c56d9d..cb70692ace4 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -140,7 +140,9 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     }
+ 
+     if (update_badinstr) {
+-        env->CSR_BADI = cpu_ldl_code(env, env->pc);
++        MemOpIdx oi = make_memop_idx(MO_LEUL, cpu_mmu_index(cs, true));
++
++        env->CSR_BADI = cpu_ldl_code_mmu(env, env->pc, oi, 0);
+     }
+ 
+     /* Save PLV and IE */
 -- 
 2.52.0
 
