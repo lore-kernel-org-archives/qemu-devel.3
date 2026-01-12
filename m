@@ -4,73 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1452CC9EC7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 12:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66DFDC9EC7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 12:21:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfGtP-0007VF-9d; Mon, 12 Jan 2026 07:19:31 -0500
+	id 1vfGup-0000Is-FX; Mon, 12 Jan 2026 07:20:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfGtL-0007Qb-A2
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:19:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vfGuh-0008Qa-Ca
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:20:51 -0500
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfGtE-00021t-Ka
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:19:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768220359;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WSzXhdlhQU08FAnxB9Em4ZWdMNWLxCuKZ7hGG6SV6Vw=;
- b=IO93ztEGLSv4YpY9N97HU465dvoKs/EkMx4UGz2igNXPBWhF0CioLBBxzBczghBXmZKr0J
- ykj5nio1ix5Eozjmz3k/y1eAOOrYvwgQMKU3lEjrtoxHzLkif5AwtgP4ZVED2RkcWXhaYh
- pW5EKyDs5YbgSeGxXMg8bw7F8o8a0pg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-lzoXL7nSO7eIS4SkwHSHjw-1; Mon,
- 12 Jan 2026 07:19:16 -0500
-X-MC-Unique: lzoXL7nSO7eIS4SkwHSHjw-1
-X-Mimecast-MFC-AGG-ID: lzoXL7nSO7eIS4SkwHSHjw_1768220355
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C98941956054; Mon, 12 Jan 2026 12:19:14 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5482319560BA; Mon, 12 Jan 2026 12:19:14 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B34BB21E6683; Mon, 12 Jan 2026 13:19:11 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Michael Tsirkin <mst@redhat.com>,  <qemu-devel@nongnu.org>,
- <shiju.jose@huawei.com>,  <armbru@redhat.com>,  <linuxarm@huawei.com>,
- <linux-cxl@vger.kernel.org>,  Ravi Shankar <venkataravis@micron.com>
-Subject: Re: [PATCH qemu v2 4/5] hw/cxl/events: Updates for rev3.2 DRAM
- event record
-In-Reply-To: <20260102151512.460766-5-Jonathan.Cameron@huawei.com> (Jonathan
- Cameron's message of "Fri, 2 Jan 2026 15:15:11 +0000")
-References: <20260102151512.460766-1-Jonathan.Cameron@huawei.com>
- <20260102151512.460766-5-Jonathan.Cameron@huawei.com>
-Date: Mon, 12 Jan 2026 13:19:11 +0100
-Message-ID: <87cy3ff2gw.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vfGuO-0002ps-Ho
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 07:20:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=MVeo5ZXSLRd5oJWFL/Rq5/72Vj/DBlMdBhx//nbCZIY=; b=tBY9LnkqZ67SnLc
+ phqD3S9pdt/uDbooIKzsPc6KXwr7zpjxPraavouxcJ62INWeCEQF0xWdPf5meH3EduqAZJ8ztzaQj
+ f5mFLRwGr+pMqdRweHgxIcQzoUjqsmYOr6P0AXVzSz6hbooTsIVMzWB5hxbE/IPyTN4WcKpzlcufW
+ 1A=;
+Date: Mon, 12 Jan 2026 13:22:48 +0100
+Subject: [PATCH v3 7/7] Drop TARGET_PHYS_ADDR_SPACE_BITS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260112-phys_addr-v3-7-5f90fdb4015f@rev.ng>
+References: <20260112-phys_addr-v3-0-5f90fdb4015f@rev.ng>
+In-Reply-To: <20260112-phys_addr-v3-0-5f90fdb4015f@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Anton Johansson <anjo@rev.ng>, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ pbonzini@redhat.com, gaosong@loongson.cn, maobibo@loongson.cn, 
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,87 +63,344 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
+The macro is no longer in use and can safely be dropped.
 
-> From: Shiju Jose <shiju.jose@huawei.com>
->
-> CXL spec rev3.2 section 8.2.10.2.1.2 Table 8-58, DRAM event record
-> has updated with following new fields.
-> 1. Component Identifier
-> 2. Sub-channel of the memory event location
-> 3. Advanced Programmable Corrected Memory Error Threshold Event Flags
-> 4. Corrected Volatile Memory Error Count at Event
-> 5. Memory Event Sub-Type
->
-> Add updates for the above spec changes in the CXL DRAM event
-> reporting and QMP command to inject DRAM event.
->
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
->  qapi/cxl.json               | 21 ++++++++++++++++++-
->  include/hw/cxl/cxl_events.h |  9 ++++++--
->  hw/mem/cxl_type3.c          | 42 +++++++++++++++++++++++++++++++++++++
->  hw/mem/cxl_type3_stubs.c    |  7 +++++++
->  4 files changed, 76 insertions(+), 3 deletions(-)
->
-> diff --git a/qapi/cxl.json b/qapi/cxl.json
-> index c5ecbe9646..3e4bad4ad0 100644
-> --- a/qapi/cxl.json
-> +++ b/qapi/cxl.json
-> @@ -168,6 +168,21 @@
-   ##
-   # @CXLDRAMEvent:
-   #
-   # Event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
-   #
-   # @dpa: Device Physical Address (relative to @path device).  Note
-   #     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
-   #     Event Record, Physical Address.
-   #
-   [...]
->  # @correction-mask: Bits within each nibble.  Used in order of bits
->  #     set in the nibble-mask.  Up to 4 nibbles may be covered.
->  #
-> +# @component-id: Device specific component identifier for the event.
-> +#     May describe a field replaceable sub-component of the device.
-> +#
-> +# @is-comp-id-pldm: This flag specifies whether the device-specific
-> +#     component identifier format follows PLDM.
-> +#
-> +# @sub-channel: The sub-channel of the memory event location.
-> +#
-> +# @cme-ev-flags: Advanced programmable corrected memory error
-> +#     threshold event flags.
-> +#
-> +# @cvme-count: Corrected volatile memory error count at event.
-> +#
-> +# @sub-type: Memory event sub-type.
-> +#
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ include/exec/cpu-defs.h       | 3 ---
+ include/exec/poison.h         | 2 --
+ target/alpha/cpu-param.h      | 3 ---
+ target/arm/cpu-param.h        | 2 --
+ target/avr/cpu-param.h        | 1 -
+ target/hexagon/cpu-param.h    | 1 -
+ target/hppa/cpu-param.h       | 2 --
+ target/i386/cpu-param.h       | 2 --
+ target/loongarch/cpu-param.h  | 1 -
+ target/m68k/cpu-param.h       | 1 -
+ target/microblaze/cpu-param.h | 2 --
+ target/mips/cpu-param.h       | 2 --
+ target/openrisc/cpu-param.h   | 1 -
+ target/ppc/cpu-param.h        | 7 -------
+ target/riscv/cpu-param.h      | 2 --
+ target/rx/cpu-param.h         | 1 -
+ target/s390x/cpu-param.h      | 1 -
+ target/sh4/cpu-param.h        | 1 -
+ target/sparc/cpu-param.h      | 2 --
+ target/tricore/cpu-param.h    | 1 -
+ target/xtensa/cpu-param.h     | 1 -
+ 21 files changed, 39 deletions(-)
 
-You're not updating the reference to the CXL spec from 3.0 to 3.2.
-Intentional?
+diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
+index e01acb7c90..141b5a9929 100644
+--- a/include/exec/cpu-defs.h
++++ b/include/exec/cpu-defs.h
+@@ -28,9 +28,6 @@
+ #ifndef TARGET_LONG_BITS
+ # error TARGET_LONG_BITS must be defined in cpu-param.h
+ #endif
+-#ifndef TARGET_PHYS_ADDR_SPACE_BITS
+-# error TARGET_PHYS_ADDR_SPACE_BITS must be defined in cpu-param.h
+-#endif
+ #ifndef TARGET_VIRT_ADDR_SPACE_BITS
+ # error TARGET_VIRT_ADDR_SPACE_BITS must be defined in cpu-param.h
+ #endif
+diff --git a/include/exec/poison.h b/include/exec/poison.h
+index a779adbb7a..2caf2d92f1 100644
+--- a/include/exec/poison.h
++++ b/include/exec/poison.h
+@@ -43,8 +43,6 @@
+ #pragma GCC poison TARGET_FMT_ld
+ #pragma GCC poison TARGET_FMT_lu
+ 
+-#pragma GCC poison TARGET_PHYS_ADDR_SPACE_BITS
+-
+ #pragma GCC poison CONFIG_ALPHA_DIS
+ #pragma GCC poison CONFIG_HPPA_DIS
+ #pragma GCC poison CONFIG_I386_DIS
+diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
+index a799f42db3..e04bfeee12 100644
+--- a/target/alpha/cpu-param.h
++++ b/target/alpha/cpu-param.h
+@@ -8,9 +8,6 @@
+ #ifndef ALPHA_CPU_PARAM_H
+ #define ALPHA_CPU_PARAM_H
+ 
+-/* ??? EV4 has 34 phys addr bits, EV5 has 40, EV6 has 44.  */
+-#define TARGET_PHYS_ADDR_SPACE_BITS  44
+-
+ #ifdef CONFIG_USER_ONLY
+ /*
+  * Allow user-only to vary page size.  Real hardware allows only 8k and 64k,
+diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
+index 8b46c7c570..08785125ad 100644
+--- a/target/arm/cpu-param.h
++++ b/target/arm/cpu-param.h
+@@ -9,10 +9,8 @@
+ #define ARM_CPU_PARAM_H
+ 
+ #ifdef TARGET_AARCH64
+-# define TARGET_PHYS_ADDR_SPACE_BITS  52
+ # define TARGET_VIRT_ADDR_SPACE_BITS  52
+ #else
+-# define TARGET_PHYS_ADDR_SPACE_BITS  40
+ # define TARGET_VIRT_ADDR_SPACE_BITS  32
+ #endif
+ 
+diff --git a/target/avr/cpu-param.h b/target/avr/cpu-param.h
+index f74bfc2580..066ada1e9c 100644
+--- a/target/avr/cpu-param.h
++++ b/target/avr/cpu-param.h
+@@ -22,7 +22,6 @@
+ #define AVR_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 10
+-#define TARGET_PHYS_ADDR_SPACE_BITS 24
+ #define TARGET_VIRT_ADDR_SPACE_BITS 24
+ 
+ #define TARGET_INSN_START_EXTRA_WORDS 0
+diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
+index 635d509e74..31da1a239f 100644
+--- a/target/hexagon/cpu-param.h
++++ b/target/hexagon/cpu-param.h
+@@ -20,7 +20,6 @@
+ 
+ #define TARGET_PAGE_BITS 16     /* 64K pages */
+ 
+-#define TARGET_PHYS_ADDR_SPACE_BITS 36
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+ #define TARGET_INSN_START_EXTRA_WORDS 0
+diff --git a/target/hppa/cpu-param.h b/target/hppa/cpu-param.h
+index 9bf7ac76d0..8e33d1ac36 100644
+--- a/target/hppa/cpu-param.h
++++ b/target/hppa/cpu-param.h
+@@ -9,11 +9,9 @@
+ #define HPPA_CPU_PARAM_H
+ 
+ #if defined(CONFIG_USER_ONLY) && defined(TARGET_ABI32)
+-# define TARGET_PHYS_ADDR_SPACE_BITS  32
+ # define TARGET_VIRT_ADDR_SPACE_BITS  32
+ #else
+ /* ??? PA-8000 through 8600 have 40 bits; PA-8700 and 8900 have 44 bits. */
+-# define TARGET_PHYS_ADDR_SPACE_BITS  40
+ # define TARGET_VIRT_ADDR_SPACE_BITS  64
+ #endif
+ 
+diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
+index ebb844bcc8..9e4cb74e04 100644
+--- a/target/i386/cpu-param.h
++++ b/target/i386/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define I386_CPU_PARAM_H
+ 
+ #ifdef TARGET_X86_64
+-# define TARGET_PHYS_ADDR_SPACE_BITS  52
+ /*
+  * ??? This is really 48 bits, sign-extended, but the only thing
+  * accessible to userland with bit 48 set is the VSYSCALL, and that
+@@ -17,7 +16,6 @@
+  */
+ # define TARGET_VIRT_ADDR_SPACE_BITS  47
+ #else
+-# define TARGET_PHYS_ADDR_SPACE_BITS  36
+ # define TARGET_VIRT_ADDR_SPACE_BITS  32
+ #endif
+ #define TARGET_PAGE_BITS 12
+diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
+index 58cc45a377..7779461054 100644
+--- a/target/loongarch/cpu-param.h
++++ b/target/loongarch/cpu-param.h
+@@ -8,7 +8,6 @@
+ #ifndef LOONGARCH_CPU_PARAM_H
+ #define LOONGARCH_CPU_PARAM_H
+ 
+-#define TARGET_PHYS_ADDR_SPACE_BITS 48
+ #define TARGET_VIRT_ADDR_SPACE_BITS 48
+ 
+ #define TARGET_PAGE_BITS 12
+diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
+index 256a2b5f8b..802d8fc674 100644
+--- a/target/m68k/cpu-param.h
++++ b/target/m68k/cpu-param.h
+@@ -14,7 +14,6 @@
+  * use the smallest one
+  */
+ #define TARGET_PAGE_BITS 12
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+ #define TARGET_INSN_START_EXTRA_WORDS 1
+diff --git a/target/microblaze/cpu-param.h b/target/microblaze/cpu-param.h
+index e0a3794513..90a0cf2435 100644
+--- a/target/microblaze/cpu-param.h
++++ b/target/microblaze/cpu-param.h
+@@ -17,10 +17,8 @@
+  * of address space.
+  */
+ #ifdef CONFIG_USER_ONLY
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #else
+-#define TARGET_PHYS_ADDR_SPACE_BITS 64
+ #define TARGET_VIRT_ADDR_SPACE_BITS 64
+ #endif
+ 
+diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
+index 58f450827f..d62110e732 100644
+--- a/target/mips/cpu-param.h
++++ b/target/mips/cpu-param.h
+@@ -8,10 +8,8 @@
+ #define MIPS_CPU_PARAM_H
+ 
+ #ifdef TARGET_ABI_MIPSN64
+-#define TARGET_PHYS_ADDR_SPACE_BITS 48
+ #define TARGET_VIRT_ADDR_SPACE_BITS 48
+ #else
+-#define TARGET_PHYS_ADDR_SPACE_BITS 40
+ # ifdef CONFIG_USER_ONLY
+ #  define TARGET_VIRT_ADDR_SPACE_BITS 31
+ # else
+diff --git a/target/openrisc/cpu-param.h b/target/openrisc/cpu-param.h
+index b4f57bbe69..740cf76ddd 100644
+--- a/target/openrisc/cpu-param.h
++++ b/target/openrisc/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define OPENRISC_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 13
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+ #define TARGET_INSN_START_EXTRA_WORDS 1
+diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
+index e4ed9080ee..2065915dc5 100644
+--- a/target/ppc/cpu-param.h
++++ b/target/ppc/cpu-param.h
+@@ -9,12 +9,6 @@
+ #define PPC_CPU_PARAM_H
+ 
+ #ifdef TARGET_PPC64
+-/*
+- * Note that the official physical address space bits is 62-M where M
+- * is implementation dependent.  I've not looked up M for the set of
+- * cpus we emulate at the system level.
+- */
+-#define TARGET_PHYS_ADDR_SPACE_BITS 62
+ /*
+  * Note that the PPC environment architecture talks about 80 bit virtual
+  * addresses, with segmentation.  Obviously that's not all visible to a
+@@ -26,7 +20,6 @@
+ #  define TARGET_VIRT_ADDR_SPACE_BITS 64
+ # endif
+ #else
+-# define TARGET_PHYS_ADDR_SPACE_BITS 36
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
+index cfdc67c258..b96e1ce12e 100644
+--- a/target/riscv/cpu-param.h
++++ b/target/riscv/cpu-param.h
+@@ -9,10 +9,8 @@
+ #define RISCV_CPU_PARAM_H
+ 
+ #if defined(TARGET_RISCV64)
+-# define TARGET_PHYS_ADDR_SPACE_BITS 56 /* 44-bit PPN */
+ # define TARGET_VIRT_ADDR_SPACE_BITS 48 /* sv48 */
+ #elif defined(TARGET_RISCV32)
+-# define TARGET_PHYS_ADDR_SPACE_BITS 34 /* 22-bit PPN */
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32 /* sv32 */
+ #endif
+ #define TARGET_PAGE_BITS 12 /* 4 KiB Pages */
+diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
+index 84934f3bca..4cf6183aa0 100644
+--- a/target/rx/cpu-param.h
++++ b/target/rx/cpu-param.h
+@@ -21,7 +21,6 @@
+ 
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+ #define TARGET_INSN_START_EXTRA_WORDS 0
+diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
+index abfae3bedf..e46e0757c6 100644
+--- a/target/s390x/cpu-param.h
++++ b/target/s390x/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define S390_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 12
+-#define TARGET_PHYS_ADDR_SPACE_BITS 64
+ #define TARGET_VIRT_ADDR_SPACE_BITS 64
+ 
+ #define TARGET_INSN_START_EXTRA_WORDS 2
+diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
+index f328715ee8..e2632bb20f 100644
+--- a/target/sh4/cpu-param.h
++++ b/target/sh4/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define SH4_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 12  /* 4k */
+-#define TARGET_PHYS_ADDR_SPACE_BITS  32
+ #ifdef CONFIG_USER_ONLY
+ # define TARGET_VIRT_ADDR_SPACE_BITS 31
+ #else
+diff --git a/target/sparc/cpu-param.h b/target/sparc/cpu-param.h
+index 45eea9d6ba..4c92862ea3 100644
+--- a/target/sparc/cpu-param.h
++++ b/target/sparc/cpu-param.h
+@@ -9,7 +9,6 @@
+ 
+ #ifdef TARGET_SPARC64
+ # define TARGET_PAGE_BITS 13 /* 8k */
+-# define TARGET_PHYS_ADDR_SPACE_BITS  41
+ # ifdef TARGET_ABI32
+ #  define TARGET_VIRT_ADDR_SPACE_BITS 32
+ # else
+@@ -17,7 +16,6 @@
+ # endif
+ #else
+ # define TARGET_PAGE_BITS 12 /* 4k */
+-# define TARGET_PHYS_ADDR_SPACE_BITS 36
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
+index eb33a67c41..f260a888c2 100644
+--- a/target/tricore/cpu-param.h
++++ b/target/tricore/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define TRICORE_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 14
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+ #define TARGET_INSN_START_EXTRA_WORDS 0
+diff --git a/target/xtensa/cpu-param.h b/target/xtensa/cpu-param.h
+index 7a0c22c900..328176281e 100644
+--- a/target/xtensa/cpu-param.h
++++ b/target/xtensa/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define XTENSA_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 12
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #ifdef CONFIG_USER_ONLY
+ #define TARGET_VIRT_ADDR_SPACE_BITS 30
+ #else
 
->  # Since: 8.1
->  ##
->  { 'struct': 'CXLDRAMEvent',
-> @@ -176,7 +191,11 @@
->              'type': 'uint8', 'transaction-type': 'uint8',
->              '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint32',
->              '*bank-group': 'uint8', '*bank': 'uint8', '*row': 'uint32',
-> -            '*column': 'uint16', '*correction-mask': [ 'uint64' ]
-> +            '*column': 'uint16', '*correction-mask': [ 'uint64' ],
-> +            '*component-id': 'str', '*is-comp-id-pldm':'bool',
-> +            '*sub-channel':'uint8',
-> +            '*cme-ev-flags':'uint8', '*cvme-count':'uint32',
-> +            'sub-type':'uint8'
->             }}
->  
->  ##
-
-[...]
+-- 
+2.51.0
 
 
