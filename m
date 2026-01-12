@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A61DCC9EC63
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF958C9EC67
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 10:32:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfFDM-00025Q-Go; Mon, 12 Jan 2026 05:32:00 -0500
+	id 1vfFDP-0002RU-EP; Mon, 12 Jan 2026 05:32:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFDK-0001kn-At
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfFDK-0001jK-6n
  for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:31:58 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfFDH-0001mw-TM
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:31:58 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47a8195e515so44256595e9.0
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfFDH-0001mt-Sj
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 05:31:57 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-64b8b5410a1so9132227a12.2
  for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 02:31:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768213912; x=1768818712; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1768213912; x=1768818712; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y91fAvc6xKZuK9le0d8AtWKsv85XevnNosJ5k8ViqPs=;
- b=LIaRnWbrnWBEY4SZEucLHKlMk57rAjAnh28e0hctfoAsIxLWwDHmTLC1dk0pEgxFM+
- z2Kb3JdVWqbv+YtDIzJHal5Jo0EITelgzDsRyrB82l2Bg2DLx2O0YT8m5ndIwlIh14TA
- QHXNG9CNAeYvRBWKIS4E+6/BDPkgT1NI+l4Kqx5sVraCX2NtrfhQfsr8VJ67DCySst9F
- R23mSxVTCVRwpvVGgPLXyg58Y2igAS2dwbopSzDeN7fCbHyVSrLf4OTIOKS24Rzi534R
- bSLvmAs8lydTm7UFYwq4SU/LgTg03lNC7lM7a+o8jSKjjB6vfUyGqhzUzVbZKikWp+de
- d1vQ==
+ bh=IWGJxX6YeT+HvZFllgCLvBWI3AHV8+kEcqSyksG6mQk=;
+ b=eThw3EJncvvq2VqqlVPXVxE6qhj907ERteH1FIc6S4OGGBoEbKLdkXPeU7JgA+brpJ
+ /bb2UI7KU9JrFUzG71e/CUdGhUtzTUGXBJPlsfC9ePMqdXheP3AiGA22SxNqeojVL9An
+ e4Ue1LzIC/IGyYsPXcyJVaHi83MbIJbjpe+LEj9auByo2gipGmQ1mD85UgAziErrljM/
+ /KCt3JCyM8WfsxFVnyAtbVAqX3Kw+ia8y1d/565QuSPax4Mh1gyHm4QXBuC0WqrtgMzI
+ 3tsOBKCG4pR2F0psDFBuYkjeT2xkNjwuMDCCj5G0lR4fP/SwORBGMP54/LZ9B9/4eBbo
+ UPOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1768213912; x=1768818712;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Y91fAvc6xKZuK9le0d8AtWKsv85XevnNosJ5k8ViqPs=;
- b=I7T7VXRzvfm5HbrbmOa5MIWYPvNvHIi1Acl7xBUQfSHYf/yVqgxLjkMd5B4Y0uuGO1
- i1yVvegXPLg3m8EZ5EjxiNk6mshYN2dUSYfEY0oc2H9M1AIdF/GkaAFTIoF31v2naRw0
- OiqI8rOOt6xqKFVePrDpvbaJP4NEEabRjCxKvY+F4SFK4QA29NYLd0kO2FAdfxQFz+in
- 4drqXxtV2pP4JZgd5ZwubaYpTrf1iZ/NbWnyyjAng4H4XxMFkE5DqOSY990C5d/bp3RL
- RYDFNY7uzx1JmcTmP1dTv85tkmYbysa9yt4envXhrGNVtz+v1SpyO98H9gge+DGsPWe3
- TQxw==
-X-Gm-Message-State: AOJu0YwfPX9DCvETUD2ME2Ko35PY3FhVcMUZexIQOACtJsrd2AIQ17Of
- qh0zLqOOuAl5loyJ0Z8GowATU46OurnoM7tsKGpdWmMwblzmbRsoW4J5Ou7GtAybTuHEs0Nj9x+
- j41q+gy4=
-X-Gm-Gg: AY/fxX7RBJX6giiqnxaZaG2nnKpKLFmf3NSidI16ih6WyrRbf0y/Z2Rt9fARSYafTa8
- VZWJgf56Pbruh5wueEN50UHmfC1294G/iSuiGXTN3Os7gMLpJrdY7YMj2O6hfcOesGphQrYKsVC
- K3kQ9f+3+5k2A9m7iQnxPrUTZHbQeXIp+8tskwhbkJDxQQa8UhhlHoEt3Db0hyXEmlFY2DzxR65
- 6T7BcKAG0sHphslEvnGaB6FbP8q9yauKhaGBpaKNLLjlicXGLyp4IEgiC+bwcD1n5Vl4Nmt8Cug
- zAVgbd+xGF6X7o0En97IG65xUk/iIPUcrF9qoCtgsutDUOVt0JvzgwBPNGxAQaYQccEtgrDGQdZ
- 7xX7gki7kTRAa6JqEwEXHH6dDm90sn+P+b8Bl/dJH0ZrK0B8x8hGBySwc3qKgGpc2dDeq2kpOKh
- XZgQwMFEdU1V4k6hRnQyrnEsoFBv3lwR6fjbuLTD2AigsYjn0tnAoGQy0wjwPU
-X-Google-Smtp-Source: AGHT+IF4tNvGEfgGyLJ0gHv50pXMI++ff4bnPOIRsPkDgJIApYNMzrEw0GLsE39MPAuclIxWVnFdUg==
-X-Received: by 2002:a05:600c:4e13:b0:47d:25ac:3a94 with SMTP id
- 5b1f17b1804b1-47d84b32f30mr219949655e9.17.1768213912562; 
+ bh=IWGJxX6YeT+HvZFllgCLvBWI3AHV8+kEcqSyksG6mQk=;
+ b=OKjtpeZVmLCWKn1s2C5WiXY9RJPAauC/ioACjRaQIUYlzkhHUsnQeR8DcTy2hJf7zI
+ dBlBqVsnX18I4W80uKEi1EvG5uIyOmv1loN90LZkoEMdVRbn7Rd3UywyNIYmG2mV8V1O
+ zxAlh4luSkRP48f7k/+LmdE2A5xVnjrkeeua3wPNrwZ6Q+Ad+1p9nojrNHvWZ+07tmpA
+ Sy/rdnt4LHUUZAPtSDSF3obdG+Ps5UQcVp02DdLDkfr6t0Ls0S+xq3PtD8OxLmYzKVTx
+ UZxwEu27Rkzn2S/37CS2DjZu/0ZTW43sQm68Dy5CwhTmHsf2XgcZABCFa4iW8W0yMWtj
+ XsCA==
+X-Gm-Message-State: AOJu0Yxnlfv2iiZ82Uul9wbPvC8Z573Q5aMmA/wanpv+7GpikezvZUoJ
+ nEv6uy4s4S16F4R+okdskCn20a5gp7pPHVdFcfk8gF1myLYrHNTT2nogXQ7EAg==
+X-Gm-Gg: AY/fxX7DW9A6NUjdyrVOdcRdhRTv4fGfV/AhQOnSv43SwBAWWtC3rpg6gaFbokEu7tc
+ bNJ/wSxqnVcMuBk9dBGpdNs7m2SjOHMb4p2yBCEckbsbe0BD1CN6eZkKuoR1YkCEOASEtDYltfZ
+ j4mbqGGum2bzhH2HHF681lNLAeBqvO/GKAcFCHzZiGnXtRkZxDGxiVzl2j9XUhVqcPraS/vltJN
+ ceSxfCFzZyt6mp007ghNreWtZVNmkX1m6qDldMBDwCns96NI2vcNnynAhgEKpJSFZjyhc0FAYqG
+ krT60yYEeIpXjAGxg41s2FP55oFc/UOuBxYgZo3UUbPrSoCICz4dUCfn2MM1+Zlgaiq+2s421v1
+ jjgWBUKH1YDIZejtkXhgZwhO6pMlbOVghSNaemEHrKdm2UXE4K4v5qh/69e9Ufe5ZdlHcP+fAYl
+ f/FUsvQvfjGv2gdKrWs6oF6YhHLUCHjE0FU29LN/ilvQTsIe6fGQQ0hkqSkV8aYVWearPkJm4e0
+ 7SAtz1rJx8bE3k45rCzu207oQ2aNP130Fa4yKKhpKaJRg==
+X-Google-Smtp-Source: AGHT+IGBCZ+GrwEYc1fY+E5Jlq/jqqPFW525mUSLx3O/jBXldBNzlcGtiCDRVpgC4bmZCyhiyIKi9w==
+X-Received: by 2002:a05:6402:27c8:b0:649:a63f:bea9 with SMTP id
+ 4fb4d7f45d1cf-65097e4ccabmr14713566a12.16.1768213912161; 
  Mon, 12 Jan 2026 02:31:52 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d8660be14sm133154575e9.1.2026.01.12.02.31.50
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-299b-b200-f91d-651c-a220-693b.310.pool.telefonica.de.
+ [2a02:3100:299b:b200:f91d:651c:a220:693b])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6507b8c4479sm17520799a12.1.2026.01.12.02.31.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
  Mon, 12 Jan 2026 02:31:51 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Joelle van Dyne <j@getutm.app>, Mads Ynddal <mads@ynddal.dk>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Nguyen Dinh Phi <phind.uet@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Collingbourne <pcc@google.com>, qemu-arm@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 11/19] target/arm/hvf: Implement dirty page tracking
-Date: Mon, 12 Jan 2026 11:30:25 +0100
-Message-ID: <20260112103034.65310-12-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260112103034.65310-1-philmd@linaro.org>
-References: <20260112103034.65310-1-philmd@linaro.org>
+Date: Mon, 12 Jan 2026 10:31:48 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Gaurav Sharma <gaurav.sharma_7@nxp.com>
+CC: pbonzini@redhat.com, peter.maydell@linaro.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCHv4_04/15=5D_hw/arm/fsl-imx8mm=3A?=
+ =?US-ASCII?Q?_Add_Clock_Control_Module_IP_to_iMX8MM?=
+In-Reply-To: <20251205053819.2021772-5-gaurav.sharma_7@nxp.com>
+References: <20251205053819.2021772-1-gaurav.sharma_7@nxp.com>
+ <20251205053819.2021772-5-gaurav.sharma_7@nxp.com>
+Message-ID: <BA1E2D72-6AE7-42C3-967B-CED2DEE09901@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,104 +104,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
 
-Notice writes to pages which are being monitored.  Mark the page dirty,
-re-enable writes, and retry the instruction without emulation.
 
-Assert the fault is not from a stage1 page table walk.
+Am 5=2E Dezember 2025 05:38:08 UTC schrieb Gaurav Sharma <gaurav=2Esharma_=
+7@nxp=2Ecom>:
+>Add the Clock Control Module (CCM) device to i=2EMX8MM SoC=2E
+>The CCM implementation is shared with i=2EMX8MP as the register
+>layout is identical between the two variants=2EHence iMX8MM will
+>be using the source of iMX8MP CCM=2E
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- target/arm/hvf/hvf.c | 52 ++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 43 insertions(+), 9 deletions(-)
+The last sentence seems a bit redundant to me=2E Regardless:
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index fa26f63a61a..af28b8e8825 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1869,9 +1869,10 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-         uint32_t srt = (syndrome >> 16) & 0x1f;
-         uint32_t cm = (syndrome >> 8) & 0x1;
-         uint64_t val = 0;
-+        uint64_t ipa = excp->physical_address;
-+        AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
- 
--        trace_hvf_data_abort(excp->virtual_address,
--                             excp->physical_address, isv,
-+        trace_hvf_data_abort(excp->virtual_address, ipa, isv,
-                              iswrite, s1ptw, len, srt);
- 
-         if (cm) {
-@@ -1880,23 +1881,56 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-             break;
-         }
- 
-+        /* Handle dirty page logging for ram. */
-+        if (iswrite) {
-+            hwaddr xlat;
-+            MemoryRegion *mr = address_space_translate(as, ipa, &xlat,
-+                                                       NULL, true,
-+                                                       MEMTXATTRS_UNSPECIFIED);
-+            if (memory_region_is_ram(mr)) {
-+                uintptr_t page_size = qemu_real_host_page_size();
-+                intptr_t page_mask = -(intptr_t)page_size;
-+                uint64_t ipa_page = ipa & page_mask;
-+
-+                /* TODO: Inject exception to the guest. */
-+                assert(!mr->readonly);
-+
-+                if (memory_region_get_dirty_log_mask(mr)) {
-+                    memory_region_set_dirty(mr, ipa_page + xlat, page_size);
-+                    hvf_unprotect_dirty_range(ipa_page, page_size);
-+                }
-+
-+                /* Retry with page writes enabled. */
-+                break;
-+            }
-+        }
-+
-+        /*
-+         * TODO: If s1ptw, this is an error in the guest os page tables.
-+         * Inject the exception into the guest.
-+         */
-+        assert(!s1ptw);
-+
-+        /*
-+         * TODO: ISV will be 0 for SIMD or SVE accesses.
-+         * Inject the exception into the guest.
-+         */
-         assert(isv);
- 
-+        /*
-+         * Emulate MMIO.
-+         * TODO: Inject faults for errors.
-+         */
-         if (iswrite) {
-             val = hvf_get_reg(cpu, srt);
--            address_space_write(&address_space_memory,
--                                excp->physical_address,
--                                MEMTXATTRS_UNSPECIFIED, &val, len);
-+            address_space_write(as, ipa, MEMTXATTRS_UNSPECIFIED, &val, len);
-         } else {
--            address_space_read(&address_space_memory,
--                               excp->physical_address,
--                               MEMTXATTRS_UNSPECIFIED, &val, len);
-+            address_space_read(as, ipa, MEMTXATTRS_UNSPECIFIED, &val, len);
-             if (sse) {
-                 val = sextract64(val, 0, len * 8);
-             }
-             hvf_set_reg(cpu, srt, val);
-         }
--
-         advance_pc = true;
-         break;
-     }
--- 
-2.52.0
-
+>
+>Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>---
+> docs/system/arm/imx8mm-evk=2Erst |  1 +
+> hw/arm/Kconfig                 |  1 +
+> hw/arm/fsl-imx8mm=2Ec            | 10 ++++++++++
+> include/hw/arm/fsl-imx8mm=2Eh    |  2 ++
+> 4 files changed, 14 insertions(+)
+>
+>diff --git a/docs/system/arm/imx8mm-evk=2Erst b/docs/system/arm/imx8mm-ev=
+k=2Erst
+>index 408253193c=2E=2E09aa63240a 100644
+>--- a/docs/system/arm/imx8mm-evk=2Erst
+>+++ b/docs/system/arm/imx8mm-evk=2Erst
+>@@ -12,6 +12,7 @@ The ``imx8mm-evk`` machine implements the following dev=
+ices:
+>  * Up to 4 Cortex-A53 cores
+>  * Generic Interrupt Controller (GICv3)
+>  * 4 UARTs
+>+ * Clock Tree
+>=20
+> Boot options
+> ------------
+>diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+>index 3737335841=2E=2E758addea22 100644
+>--- a/hw/arm/Kconfig
+>+++ b/hw/arm/Kconfig
+>@@ -630,6 +630,7 @@ config FSL_IMX8MM
+>     bool
+>     select ARM_GIC
+>     select FSL_IMX8MP_ANALOG
+>+    select FSL_IMX8MP_CCM
+>     select IMX
+>=20
+> config FSL_IMX8MM_EVK
+>diff --git a/hw/arm/fsl-imx8mm=2Ec b/hw/arm/fsl-imx8mm=2Ec
+>index 2c84e70c01=2E=2Ea3eddfe3f6 100644
+>--- a/hw/arm/fsl-imx8mm=2Ec
+>+++ b/hw/arm/fsl-imx8mm=2Ec
+>@@ -169,6 +169,8 @@ static void fsl_imx8mm_init(Object *obj)
+>=20
+>     object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
+>=20
+>+    object_initialize_child(obj, "ccm", &s->ccm, TYPE_IMX8MP_CCM);
+>+
+>     object_initialize_child(obj, "analog", &s->analog, TYPE_IMX8MP_ANALO=
+G);
+>=20
+>     for (i =3D 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
+>@@ -305,6 +307,13 @@ static void fsl_imx8mm_realize(DeviceState *dev, Err=
+or **errp)
+>         }
+>     }
+>=20
+>+    /* CCM */
+>+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ccm), errp)) {
+>+        return;
+>+    }
+>+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ccm), 0,
+>+                    fsl_imx8mm_memmap[FSL_IMX8MM_CCM]=2Eaddr);
+>+
+>     /* Analog */
+>     object_property_set_uint(OBJECT(&s->analog), "arm-pll-fdiv-ctl0-rese=
+t",
+>                             0x000fa030, &error_abort);
+>@@ -340,6 +349,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Erro=
+r **errp)
+>     for (i =3D 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
+>         switch (i) {
+>         case FSL_IMX8MM_ANA_PLL:
+>+        case FSL_IMX8MM_CCM:
+>         case FSL_IMX8MM_GIC_DIST:
+>         case FSL_IMX8MM_GIC_REDIST:
+>         case FSL_IMX8MM_RAM:
+>diff --git a/include/hw/arm/fsl-imx8mm=2Eh b/include/hw/arm/fsl-imx8mm=2E=
+h
+>index 4601f57f2b=2E=2E03ab45d94e 100644
+>--- a/include/hw/arm/fsl-imx8mm=2Eh
+>+++ b/include/hw/arm/fsl-imx8mm=2Eh
+>@@ -14,6 +14,7 @@
+> #include "hw/char/imx_serial=2Eh"
+> #include "hw/intc/arm_gicv3_common=2Eh"
+> #include "hw/misc/imx8mp_analog=2Eh"
+>+#include "hw/misc/imx8mp_ccm=2Eh"
+> #include "qom/object=2Eh"
+> #include "qemu/units=2Eh"
+>=20
+>@@ -34,6 +35,7 @@ struct FslImx8mmState {
+>=20
+>     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
+>     GICv3State         gic;
+>+    IMX8MPCCMState     ccm;
+>     IMX8MPAnalogState  analog;
+>     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+> };
 
