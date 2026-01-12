@@ -4,198 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199D6D2502E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 02:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA02D25030
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 05:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vf7pP-0001Em-I7; Sun, 11 Jan 2026 21:38:47 -0500
+	id 1vfAhx-0002cC-4m; Mon, 12 Jan 2026 00:43:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vf7pN-0001EY-Ds; Sun, 11 Jan 2026 21:38:45 -0500
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vf7pJ-0002hX-Bq; Sun, 11 Jan 2026 21:38:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768185521; x=1799721521;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=O0xgvauTGSyC5Qb/FmXYdeGwn3omkrMA1OUlsRhH5/0=;
- b=fHRvYyty/x/h+UCCluJ+/FCqBOM0SAZiwZgqARgYglMN/ySDaaAetV8r
- sj24ZFkEUT/4qW3OvDFfRcO+cdkvfXcXAXGDM7w0C5qBETll6ym+g6OWm
- VEousiJ8umG+rcqIfWzmDyJm4k30JgVLW6fowJEzzuSammExPaZnPljqA
- /k7krwKJT49v/NSWKoiwjCSpmfl0tu1rg0dxbyBZuJPh+SFpJ0IKJ15Ej
- 4woyVrNXh7TV71SBdYpn92cideQjsC4pFZK5cm1+IOb/PZldII7YAumn4
- G4IHtZ7tqyLL9NxpV+KZUj3y490RJsSb1k1cZdpYYH9n8q+FeLcGtc+jp Q==;
-X-CSE-ConnectionGUID: Hcp/w3rqRwi9J7wi+eqNjQ==
-X-CSE-MsgGUID: vE8mkQKUT3CdGtK1sePTqQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11668"; a="57010151"
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="57010151"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jan 2026 18:38:37 -0800
-X-CSE-ConnectionGUID: NCNzVQfoRqq3rHvbZY4KTg==
-X-CSE-MsgGUID: 5On4JmwURZCTI/t2W+CI+w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; d="scan'208";a="208812769"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jan 2026 18:38:22 -0800
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Sun, 11 Jan 2026 18:38:22 -0800
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29 via Frontend Transport; Sun, 11 Jan 2026 18:38:22 -0800
-Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.59) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Sun, 11 Jan 2026 18:38:21 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EqfUF8iJnkRPOve30mJO1P6II9ZZlK/KMgfvw1Q36Gr4eJ1r3YhCZpRZOeFkame2snedObSU/Pu6RuPb6SM4Ss70X20OdYADjPg0/ZuZGdmSKhKpDMelMbOeG7tAykLXVTFUXk3RvVJ0BWTxRnWL9MZC5Rtuim1dJo+qFVn/ooR+1QtVsEpp2dx3Ubc76f34frr1sxeU1uo+2asjHr5WnDMGFYunCll6sO299fjU442lSSAVC2ZvYi3Utk1qADJTcHJIroLKjsTOkFNt2kped6VdsuFrBDVuhEnNhlQwWAEx7DN3vJyFupPK6Zwqg0LcoS0sV1nRtO9SufSYmO8e1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QEK7FoaF7lBWudM/991GcuF8TalRnH804m5Q2/pbgg0=;
- b=fz0rylp5OWjeJmbyMKlZCd8mf1y+Dg5BdNyEkqPLI0drxsgxPM4gFD+lz2mkAk+QwE3HbuxQ2X+FFWVP2ShY9wniSMMNMsdmG6vxh9b0cefjGY8XluOYpVvAbWTcumdIy6iYqGtobZl4F6hBR2dt7pNSwEY+ldH67SgmmuJCY6Zn5kLWrJn9Bh0fEq6RBMLNr32gl2SRievHrVjlbCd+4cgvPaZvo59QRFy1nneDdpyqWsXl0oCDMqK/3h5k90PMfxQN5q6kwt4pCzjTyDIGgXdyJs+ILPA2IG7a9Ed4Uq8FYyeOgJ7c/D6PJewr61Gfs6xvr+JSgoosyl6G03/8Zg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by SN7PR11MB6897.namprd11.prod.outlook.com (2603:10b6:806:2a5::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.7; Mon, 12 Jan
- 2026 02:38:19 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9499.005; Mon, 12 Jan 2026
- 02:38:19 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org"
- <alex@shazbot.org>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
- "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, "Liu, Yi L"
- <yi.l.liu@intel.com>, "kjaju@nvidia.com" <kjaju@nvidia.com>
-Subject: RE: [PATCH v7 35/36] hw/vfio/pci: Synthesize PASID capability for
- vfio-pci devices
-Thread-Topic: [PATCH v7 35/36] hw/vfio/pci: Synthesize PASID capability for
- vfio-pci devices
-Thread-Index: AQHcgzTG3jo8a+wKEUiJWDVa5+dzprVN0g8Q
-Date: Mon, 12 Jan 2026 02:38:19 +0000
-Message-ID: <IA3PR11MB9136783F330F8F38E9EB986F9281A@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20260111195508.106943-1-skolothumtho@nvidia.com>
- <20260111195508.106943-36-skolothumtho@nvidia.com>
-In-Reply-To: <20260111195508.106943-36-skolothumtho@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|SN7PR11MB6897:EE_
-x-ms-office365-filtering-correlation-id: dd29d312-7d9d-40a0-d6f3-08de5183a587
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|7416014|1800799024|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?gktVAer1gJ1Aiqq39cn9w9VRLTmbqT9J9i9Apzjqj4n4O+mVIIqEQnVj2Fav?=
- =?us-ascii?Q?YKdEwjo3ZD0rk5ZqOE9UMUUC8lpCBMkXnrEk3FRjSRdNbtlsbRJ9Q0Mc5sru?=
- =?us-ascii?Q?ZuaV2zA6rESougZHnK0lnIUeC7hXhkca6hbKyH923D+hwAKHr8pyP0CxdIyg?=
- =?us-ascii?Q?b/G8HRedVJehHYsuFsdleFx95Na1xUO8JBTwCz9lN0qO9ZjPiX50/8kVBvK6?=
- =?us-ascii?Q?tx89VCwnYshVI1I/+5H3+Qe6VPmdnN9G/+bseD6SwAdRoyfJDP9sBqeTz4jN?=
- =?us-ascii?Q?OMVzpgyy3TrtSLV5IgJMEaMBuTlZjeFMQJmMkKoQPESs0oEEHnaEdBm89iEp?=
- =?us-ascii?Q?o6/diOv9LNGcXTguXkwLc/N9rRW//QKsAbSAHh9huEf+he5nTNTVZRJ7es+L?=
- =?us-ascii?Q?w5nt//WEd5B8AIyHC6xhwlMTOezdllefYYcSliMh2FwTjcqGDQLDnEmtvcyL?=
- =?us-ascii?Q?M4k5Jt1ONy+fNh5EFqwzfENhTmiQ4z6cFTT+TWguxCUAEkB6nyJ3yEIPXzBo?=
- =?us-ascii?Q?AomehFBUGeu6w8JbntjUmTziRf6U+qv6JjFTy3xRrFHxKEzBV9c69EdpQBmt?=
- =?us-ascii?Q?EeLxd2aRVNx8LlrVrjExTAvcBTfOSST47tnitc8peF7NTXsXpewK9DSDEhj2?=
- =?us-ascii?Q?aDohqQLlcFj6tQwjJ7pV/GXtdX/8Gn5yXh7WPG21+sRAlVYT8nW12T3IP1Ht?=
- =?us-ascii?Q?sBh8bxCxqj9bJZKmq1NiquPVeqh/sR4SjnvD1hVoE+KSHrxMrnjjYTsWuaRV?=
- =?us-ascii?Q?thbZK2Vp+OhHtBBXXndYRVeBcWhgrIMMcnDbtqs0QL4H2zkLd0J1yY4vDD/5?=
- =?us-ascii?Q?46NeaT0JKpjB6eC3Q8D4vwlvhhs8Udl0bV7Cp30jvZg94fjhgF3UQUXURprL?=
- =?us-ascii?Q?VPAAUc9VjT8934Jt8RgJYLOXlUhW4Zx0cNhCmrhC7lDnJjTw34nhlpdyN8em?=
- =?us-ascii?Q?+kIWTZi0dtTwTz+34BILDhtKFULgNBOrTX190WUoTwV1c4zpBfYaWq8yNhWi?=
- =?us-ascii?Q?YOHJI4nVB71K2R9zyuQEZcLiPWh/ay19TielYN8PkjxXCdVs7z2oxZeR28v9?=
- =?us-ascii?Q?fF6ipM3gek+GUiekwfnX+qzqIw4zhzXZAHCdp03BtI99WmDYx/30NPZzs6G8?=
- =?us-ascii?Q?26d9jbkCdKCzWzOWZz3sBRb5QOXurWsy5zEagDrJ3rPt9fDJQm5+755ds/JT?=
- =?us-ascii?Q?o57FGsn9zM5QdndXB7df4YFO8gVCzNKNPN/iNwqWxVs3+ecQHFhO0rPg2MRK?=
- =?us-ascii?Q?7udTlGSGeuSpVVNJqQ27ITYzYXBqPJELDUYIE8IZAYq0wruSoFGRnIMMKZn8?=
- =?us-ascii?Q?rbR1NSNdx4hnB3+TycxA9Q75s0XiEmNWp52+vixwHcw/NC7pSbq4cbmGODua?=
- =?us-ascii?Q?Od70jJOq/p55shJjOH2NdKDydfDDTS6j6Uu93axtCXU4m6hCpcaF3kBs+kZw?=
- =?us-ascii?Q?MlsdQBmfbA5zBneG1FeG90z4lRK/OZSOMIff5kEP6NJzN/pqAo0nJiDXK7oH?=
- =?us-ascii?Q?2Ognk+KjqusaO+rEe7xcVlMMW5QnQIMMY94U?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700021); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?EvFF6WmZZSUSdaichMWBfZgcKBXEXGUbxAyhU3hxpRhMfmIiGhzN9Eb5lf2s?=
- =?us-ascii?Q?gzb2jCu6LryT/TSxTdKk/gCvmg1cRsy8ckERNiG7ft5nMgEXzx+Yegq3eUD0?=
- =?us-ascii?Q?NNa811+jejSKtiro5weGToi2RTRxcge2PrMlCRDwWHy/9dMq+O7DhS55CvTa?=
- =?us-ascii?Q?r2tsXvJ4AnulaZk7bftPlE9vUVPxrusAPquMAchLkbwstQ4ovNHF4LwqIPpz?=
- =?us-ascii?Q?FC31g92F104e7JWRXUwxZGuhMMMD+Mk3ZbFXW214r5fD9WY13R5cKzucS4he?=
- =?us-ascii?Q?Hl8NOQs7UE4FHyRqjc+bDY4TKjtvt8/JIhTlWJofB5JUEfnzL6lYmE705kr2?=
- =?us-ascii?Q?waRbL4JVVBSZhiwjIuBx7bBO2CHUByySJjzEdsOCxv2FLRwFEtCpFLH3ZNrc?=
- =?us-ascii?Q?SGkatm/tvFACgmL7ZBvT4a/i57vaVqNJsuO7Ll3gmHsQQyIsL5iMmC1N21j9?=
- =?us-ascii?Q?yc1Qb3UZwGHZVhJ/3VXviyEYshHmyKL8nS7O7fdqJeDswnVdlykzf/rZjqIV?=
- =?us-ascii?Q?Ctr4GbiUUx7HRmFIfaH4c4u3KKOY/WVEv3G/Z3UZpNx8pL7SnaHPBJW9snBl?=
- =?us-ascii?Q?TbZ1a1hlDixLbI/abMxS6WGTDUtDHpO3WJWgdhQHv0VMxiuOi98fq/5cYcPz?=
- =?us-ascii?Q?38GXk2QHXExN9RYirfiLKQ/WHGrt5VVFWxjdt6MM2vo0n5ffEi1AUOVkzDgE?=
- =?us-ascii?Q?7LrGnCDRtHuDpqlXLRQz6s9rZbahzGFXNmu5FZmdtUK7AwAlNaq4FMFWxnqJ?=
- =?us-ascii?Q?JgBAxIhrUXPvunuLFCIRGC7wbIskpuoar7FrQ/9Tszv7GsVwrXcDjjOeHzys?=
- =?us-ascii?Q?lS74+o5hgCqPYcqMEGj47kd3fA4iyWtMZgnhtP+ake469RL/3Pgvp2XYSRbj?=
- =?us-ascii?Q?dArIscuJZamPubcQSGkUL2+V7tPnSJwIAQkwigWK6IBfV9GeZjcfXnntH5Sk?=
- =?us-ascii?Q?pkfHG4qW/1uKMRF5Q9UqGoeQ2ldupUcv03tNomHA/sVn4Qkc2X0VU7T4W6zt?=
- =?us-ascii?Q?Kjmv8unww9VYXL+01SpBsSC/EDcl3vJpChvObWDKGScDMRweKqD5Y6Cqfe1b?=
- =?us-ascii?Q?F1n79SLoVq74yWxzWgOOgF/yzFwAQXQlEgK+6y3Fv57v2+fdpYPagGrFg25T?=
- =?us-ascii?Q?BmIzZvVUrE4KDZtG0DVvYFT3dmFqJiUyRF+ydqn8WhIA5iIEPWnRppsk2OsV?=
- =?us-ascii?Q?hlidBd1/p5C4HbrIJ9swtWEZVCW2D+hVsYJ7rCHl9QqSLHdwEAG7cY96FHJP?=
- =?us-ascii?Q?P0s77EPQE3TklsmNhIsLAMJH0JMu31URF7QhZKsSV2fdAm/S4m68qzOBdVnr?=
- =?us-ascii?Q?Eh51j/BUNOGRhKgf7XMHAFvlXkFD9Re8pjKNDn+wnfN2RIJAUKFUefwaQ+EO?=
- =?us-ascii?Q?nUTURvLIdnSLwkZ0tebHoC1ls/inxZJEHxAhmt91IDM9AYXxqZSP6zHiG0ag?=
- =?us-ascii?Q?mbNWxb9O65S5nPoNby56Ry0nEbzmfJpvhUhQxAqRbe310jOV+GibwuJXZUC2?=
- =?us-ascii?Q?67DtoJMrSaGaBGyst895bnRPQspKwZbYfjeyc5lrOTuJ9sSd7R/P1NaH64dS?=
- =?us-ascii?Q?thho3yv4rYfobLIMguiwetp/SmibpXtd4HCcZUmPr1NF9piA2l3+XAE0pF1a?=
- =?us-ascii?Q?phF3R/OFTbfNF89rvUgFAvQaiBq+IST9a+ZTJCdGn68p9YmMnqfr0/G0A7Rt?=
- =?us-ascii?Q?JoPx7eTllbcdJE+KUOOXFVWCuAvAMw4+P4vQvurJQSQrQN6hotYtHpN43BCy?=
- =?us-ascii?Q?3anKiMMJ8Q=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vfAhg-0002Zb-FA
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 00:43:02 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vfAhe-0000di-2R
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 00:43:00 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b8722834679so40087866b.0
+ for <qemu-devel@nongnu.org>; Sun, 11 Jan 2026 21:42:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768196577; x=1768801377; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w9ZZ+6Sy8VYZI5IfQ1nUH2M3Q2IUqNRv6GYDPjarFX8=;
+ b=R0D4DGyXfZA+rJ6zOKtzYuXYbrt2l3kXFZS81jm54GpkQP4hs64VBq+ys4MN1USuYA
+ 5kXL0JFjqsrt3qRihWRvWTwTuaMrwrVRzYsDNKrS9+NOBL0YWmjCnnpuaxZ6ViiOm5T8
+ pQrDVt/ZBO4JDzYdBCF2Bnl/xbJ6IhRb/ODhwwPuxOuZ2MV75Wdya02M2WgxlFqRLGiA
+ /UKIhc7XKnlT5At+ddFAr9sQcrZWZja4IsvyfoWu3ysC7sFCOO/3dbvDKfWqXL+9JMYR
+ 0KdsF54H1ZkyvppA5jKdugvrKzdjTjM+PkJ8WqtjEOGrVpDSrjnhxWhUymacHLWaIDH7
+ KBjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768196577; x=1768801377;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=w9ZZ+6Sy8VYZI5IfQ1nUH2M3Q2IUqNRv6GYDPjarFX8=;
+ b=TjxF9DTnJ8BWHbRbmB2g11Cf2afyymNV+/qrpb6y/5FerOIwbbkl9uXY182cBQHw8/
+ FitP4arTe/LmlxV7hZPUkhMUZrK8GALfomGC813yAJ5B+z2N2qZF4Ff7LI6Ol7XnEbzM
+ X0HwKpBV2jvQA8a/XsGQGkwWkhQiaItTkyR0UC8GNP+SXtFA4vKQgYPMHL7X0PpGXUij
+ uboGI4ev1BPF7uApbAUWv3o8e0vru+wJFSX8Uaaf1Zc/8TeGz87A88h6in6X79NK0UDT
+ ra+9GyiaSpya/bPxEgQ55qOLdk1C5TCKMlgoXKDuFRyJxV0ZrM9utuzT9791PL2DfTjB
+ hvCQ==
+X-Gm-Message-State: AOJu0YwUrwbJiLiJrbHqCZJSA63pO93PyreoBOx+//FkXAc231HBTYhf
+ iMBNh3QVH+KovyxvcFxUAGt+KL/JY1ConeOK8YtXfoGHqarHlMG2JL4DSauHBCxQy3XD4uxhuuE
+ 5xc43mRd4RUvVXGNI7f9UTM7FgVQpN0M=
+X-Gm-Gg: AY/fxX6/YQ/KKzY7AQC7Z4pSTNou8hszOGtuHY8WXSbbB1nBHYcuB1Z9i4qeXC5QXLH
+ r15uw5jfY0xVxjT68pTxrwIcmBhofSyouWzU76KNCkfJXtQjtpTtERV178XvZGtBp8EKCrstvQ8
+ vmi32zLF35EoAJomKOaN+0uq3++TKcj7rXseBL8OIrP2lDlXdzvSYqoSm0LKdSWKugfsvTpc3Hj
+ Pd6xCGUaBr2mPQlvNNbmitKN6TGFpkQgiAHEau3/nu8SDZaxb9a8nqkoUOfKFV8I3ZEKQr1fFYm
+ IAScC4ibI8y5m64NQTfnSKp+qtNCMbTHP43f
+X-Google-Smtp-Source: AGHT+IG0uudHtg96pwSGlq14OHNwQ5fPkIu7U3O9q9Hbj3GHJoDvqHnkyCJn9Kh0naMlsmVbl+x+af+OZukJaF+p028=
+X-Received: by 2002:a17:907:728f:b0:b87:2410:594d with SMTP id
+ a640c23a62f3a-b8724105abfmr95576766b.49.1768196576327; Sun, 11 Jan 2026
+ 21:42:56 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dd29d312-7d9d-40a0-d6f3-08de5183a587
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jan 2026 02:38:19.2362 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: M0DL44K70rlX5pWM8tXpiUzVUVBQ+RrZou2U/xxfwwnavskU6XArCTF5t+1quWLri+b9kdMOpWyuKu6WxHekm3RphQOFkLMMDECaq+IHD4g=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6897
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.16;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260108134128.2218102-1-djordje.todorovic@htecgroup.com>
+ <20260108134128.2218102-10-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260108134128.2218102-10-djordje.todorovic@htecgroup.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 12 Jan 2026 15:42:30 +1000
+X-Gm-Features: AZwV_QhDLHX8XaHIgHENghiKFzgg-BjKQfmBsw524N9xfkUH157gajWmNTHTkKk
+Message-ID: <CAKmqyKNeJXsN1Vkww4PYOFQxbvCwgYWQN+OAm+=OrrQ2rKJvGg@mail.gmail.com>
+Subject: Re: [PATCH v16 09/12] hw/riscv: Add support for RISCV CPS
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>, 
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, 
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, 
+ "thuth@redhat.com" <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -211,226 +103,375 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jan 8, 2026 at 11:41=E2=80=AFPM Djordje Todorovic
+<Djordje.Todorovic@htecgroup.com> wrote:
+>
+> Add support for the Coherent Processing System for RISC-V.
+> This enables SMP support for RISC-V boards that require
+> cache-coherent multiprocessor systems.
+>
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Acked-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  hw/misc/Kconfig        |   4 +
+>  hw/riscv/cps.c         | 196 +++++++++++++++++++++++++++++++++++++++++
+>  hw/riscv/meson.build   |   2 +
+>  include/hw/riscv/cps.h |  66 ++++++++++++++
+>  4 files changed, 268 insertions(+)
+>  create mode 100644 hw/riscv/cps.c
+>  create mode 100644 include/hw/riscv/cps.h
+>
+> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> index 38be72b141..4a22d68233 100644
+> --- a/hw/misc/Kconfig
+> +++ b/hw/misc/Kconfig
+> @@ -127,12 +127,16 @@ config RISCV_MIPS_CMGCR
+>  config RISCV_MIPS_CPC
+>      bool
+>
+> +config RISCV_MIPS_CPS
+> +    bool
+> +
+>  config MIPS_BOSTON_AIA
+>      bool
+>      default y
+>      depends on RISCV64
+>      select RISCV_MIPS_CMGCR
+>      select RISCV_MIPS_CPC
+> +    select RISCV_MIPS_CPS
+>
+>  config MPS2_FPGAIO
+>      bool
+> diff --git a/hw/riscv/cps.c b/hw/riscv/cps.c
+> new file mode 100644
+> index 0000000000..86172be5b3
+> --- /dev/null
+> +++ b/hw/riscv/cps.c
+> @@ -0,0 +1,196 @@
+> +/*
+> + * Coherent Processing System emulation.
+> + *
+> + * Copyright (c) 2016 Imagination Technologies
+> + *
+> + * Copyright (c) 2025 MIPS
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qemu/module.h"
+> +#include "hw/riscv/cps.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "system/reset.h"
+> +#include "hw/intc/riscv_aclint.h"
+> +#include "hw/intc/riscv_aplic.h"
+> +#include "hw/intc/riscv_imsic.h"
+> +#include "hw/pci/msi.h"
+> +
+> +static void riscv_cps_init(Object *obj)
+> +{
+> +    SysBusDevice *sbd =3D SYS_BUS_DEVICE(obj);
+> +    RISCVCPSState *s =3D RISCV_CPS(obj);
+> +
+> +    /*
+> +     * Cover entire address space as there do not seem to be any
+> +     * constraints for the base address of CPC .
+> +     */
+> +    memory_region_init(&s->container, obj, "mips-cps-container", UINT64_=
+MAX);
+> +    sysbus_init_mmio(sbd, &s->container);
+> +}
+> +
+> +static void main_cpu_reset(void *opaque)
+> +{
+> +    CPUState *cs =3D opaque;
+> +
+> +    cpu_reset(cs);
+> +}
+> +
+> +static void riscv_cps_realize(DeviceState *dev, Error **errp)
+> +{
+> +    RISCVCPSState *s =3D RISCV_CPS(dev);
+> +    RISCVCPU *cpu;
+> +    int i;
+> +
+> +    /* Validate num_vp */
+> +    if (s->num_vp =3D=3D 0) {
+> +        error_setg(errp, "num-vp must be at least 1");
+> +        return;
+> +    }
+> +    if (s->num_vp > MAX_HARTS) {
+> +        error_setg(errp, "num-vp cannot exceed %d", MAX_HARTS);
+> +        return;
+> +    }
+> +
+> +    /* Allocate CPU array */
+> +    s->cpus =3D g_new0(CPUState *, s->num_vp);
+> +
+> +    /* Set up cpu_index and mhartid for avaiable CPUs. */
+> +    int harts_in_cluster =3D s->num_hart * s->num_core;
+> +    int num_of_clusters =3D s->num_vp / harts_in_cluster;
+> +    for (i =3D 0; i < s->num_vp; i++) {
+> +        cpu =3D RISCV_CPU(object_new(s->cpu_type));
+> +
+> +        /* All VPs are halted on reset. Leave powering up to CPC. */
+> +        object_property_set_bool(OBJECT(cpu), "start-powered-off", true,
+> +                                 &error_abort);
+> +
+> +        if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
+> +            return;
+> +        }
+> +
+> +        /* Store CPU in array */
+> +        s->cpus[i] =3D CPU(cpu);
+> +
+> +        /* Set up mhartid */
+> +        int cluster_id =3D i / harts_in_cluster;
+> +        int hart_id =3D (i % harts_in_cluster) % s->num_hart;
+> +        int core_id =3D (i % harts_in_cluster) / s->num_hart;
+> +        int mhartid =3D (cluster_id << MHARTID_CLUSTER_SHIFT) +
+> +                      (core_id << MHARTID_CORE_SHIFT) +
+> +                      (hart_id << MHARTID_HART_SHIFT);
+> +        cpu->env.mhartid =3D mhartid;
+> +        qemu_register_reset(main_cpu_reset, s->cpus[i]);
+> +    }
+> +
+> +    /* Cluster Power Controller */
+> +    object_initialize_child(OBJECT(dev), "cpc", &s->cpc, TYPE_RISCV_CPC)=
+;
+> +    object_property_set_uint(OBJECT(&s->cpc), "cluster-id", 0,
+> +                            &error_abort);
+> +    object_property_set_uint(OBJECT(&s->cpc), "num-vp", s->num_vp,
+> +                            &error_abort);
+> +    object_property_set_uint(OBJECT(&s->cpc), "num-hart", s->num_hart,
+> +                            &error_abort);
+> +    object_property_set_uint(OBJECT(&s->cpc), "num-core", s->num_core,
+> +                            &error_abort);
+> +
+> +    /* Pass CPUs to CPC using link properties */
+> +    for (i =3D 0; i < s->num_vp; i++) {
+> +        char *propname =3D g_strdup_printf("cpu[%d]", i);
+> +        object_property_set_link(OBJECT(&s->cpc), propname,
+> +                                OBJECT(s->cpus[i]), &error_abort);
+> +        g_free(propname);
+> +    }
+> +
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->cpc), errp)) {
+> +        return;
+> +    }
+> +
+> +    memory_region_add_subregion(&s->container, 0,
+> +                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->cp=
+c), 0));
+> +
+> +    /* Global Configuration Registers */
+> +    object_initialize_child(OBJECT(dev), "gcr", &s->gcr, TYPE_RISCV_GCR)=
+;
+> +    object_property_set_uint(OBJECT(&s->gcr), "cluster-id", 0,
+> +                            &error_abort);
+> +    object_property_set_uint(OBJECT(&s->gcr), "num-vp", s->num_vp,
+> +                            &error_abort);
+> +    object_property_set_int(OBJECT(&s->gcr), "gcr-rev", 0xa00,
+> +                            &error_abort);
+> +    object_property_set_int(OBJECT(&s->gcr), "gcr-base", s->gcr_base,
+> +                            &error_abort);
+> +    object_property_set_link(OBJECT(&s->gcr), "cpc", OBJECT(&s->cpc.mr),
+> +                             &error_abort);
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gcr), errp)) {
+> +        return;
+> +    }
+> +
+> +    memory_region_add_subregion(&s->container, s->gcr_base,
+> +                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gc=
+r), 0));
+> +
+> +    for (i =3D 0; i < num_of_clusters; i++) {
+> +        uint64_t cm_base =3D GLOBAL_CM_BASE + (CM_SIZE * i);
+
+This causes a Coverity issue
+
+*** CID 1644076:         Integer handling issues  (OVERFLOW_BEFORE_WIDEN)
+/builds/qemu-project/qemu/hw/riscv/cps.c: 136             in riscv_cps_real=
+ize()
+130         }
+131
+132         memory_region_add_subregion(&s->container, s->gcr_base,
+133
+sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gcr), 0));
+134
+135         for (i =3D 0; i < num_of_clusters; i++) {
+>>>     CID 1644076:         Integer handling issues  (OVERFLOW_BEFORE_WIDE=
+N)
+>>>     Potentially overflowing expression "524288 * i" with type "int" (32=
+ bits, signed) is evaluated using 32-bit arithmetic, and then used in a con=
+text that expects an expression of type "uint64_t" (64 bits, unsigned).
+136             uint64_t cm_base =3D GLOBAL_CM_BASE + (CM_SIZE * i);
+137             uint32_t hartid_base =3D i << MHARTID_CLUSTER_SHIFT;
+138             s->aplic =3D riscv_aplic_create(cm_base + AIA_PLIC_M_OFFSET=
+,
+139                                           AIA_PLIC_M_SIZE,
+140                                           hartid_base, /* hartid_base *=
+/
+141                                           MAX_HARTS, /* num_harts */
 
 
->-----Original Message-----
->From: Shameer Kolothum <skolothumtho@nvidia.com>
->Subject: [PATCH v7 35/36] hw/vfio/pci: Synthesize PASID capability for
->vfio-pci devices
->
->Add support for synthesizing a PCIe PASID extended capability for
->vfio-pci devices when PASID is enabled via a vIOMMU and supported by
->the host IOMMU backend.
->
->PASID capability parameters are retrieved via IOMMUFD APIs and the
->capability is inserted into the PCIe extended capability list using
->the insertion helper. A new x-vpasid-cap-offset property allows
->explicit control over the placement; by default the capability is
->placed at the end of the PCIe extended configuration space.
->
->If the kernel does not expose PASID information or insertion fails,
->the device continues without PASID support.
->
->Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
->---
-> hw/vfio/pci.c           | 84
->+++++++++++++++++++++++++++++++++++++++++
-> hw/vfio/pci.h           |  1 +
-> include/hw/core/iommu.h |  1 +
-> 3 files changed, 86 insertions(+)
->
->diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->index c734472721..96990576ac 100644
->--- a/hw/vfio/pci.c
->+++ b/hw/vfio/pci.c
->@@ -24,6 +24,7 @@
-> #include <sys/ioctl.h>
->
-> #include "hw/core/hw-error.h"
->+#include "hw/core/iommu.h"
-> #include "hw/pci/msi.h"
-> #include "hw/pci/msix.h"
-> #include "hw/pci/pci_bridge.h"
->@@ -2498,9 +2499,71 @@ static int vfio_setup_rebar_ecap(VFIOPCIDevice
->*vdev, uint16_t pos)
->     return 0;
-> }
->
->+/*
->+ * Try to retrieve PASID capability information via IOMMUFD APIs and,
->+ * if supported, synthesize a PASID PCIe extended capability for the
->+ * VFIO device.
->+ *
->+ * Use user-specified PASID capability offset if provided, otherwise
->+ * place it at the end of the PCIe extended configuration space.
->+ */
->+static void vfio_pci_synthesize_pasid_cap(VFIOPCIDevice *vdev)
->+{
->+    HostIOMMUDevice *hiod =3D vdev->vbasedev.hiod;
->+    HostIOMMUDeviceClass *hiodc;
->+    PasidInfo pasid_info;
->+    PCIDevice *pdev =3D PCI_DEVICE(vdev);
->+    uint16_t pasid_offset;
->+
->+    if (vdev->vbasedev.mdev) {
->+        return;
->+    }
+Can you send a patch to fix this issue and link to CID 1644076?
 
-I'm not sure if checking hiod directly is more accurate, vdev->vbasedev.mde=
-v can be false
-for mdev device if fd passing is used.
+Alistair
 
-Thanks
-Zhenzhong
 
->+
->+    hiodc =3D HOST_IOMMU_DEVICE_GET_CLASS(hiod);
->+    if (!hiodc || !hiodc->get_pasid_info ||
->+        !hiodc->get_pasid_info(hiod, &pasid_info) ||
->+        !(pci_device_get_viommu_flags(pdev) &
->VIOMMU_FLAG_PASID_SUPPORTED)) {
->+        return;
->+    }
->+
->+    /*
->+     * Check if user has specified an offset to place PASID CAP,
->+     * else select the last offset as default
->+     */
->+    if (vdev->vpasid_cap_offset) {
->+        if (!QEMU_IS_ALIGNED(vdev->vpasid_cap_offset,
->PCI_EXT_CAP_ALIGN) ||
->+            vdev->vpasid_cap_offset < PCI_CONFIG_SPACE_SIZE ||
->+            vdev->vpasid_cap_offset + PCI_EXT_CAP_PASID_SIZEOF >
->+                PCIE_CONFIG_SPACE_SIZE) {
->+            error_report("vfio: invalid x-vpasid-cap-offset 0x%x, skippin=
-g
->PASID",
->+                        vdev->vpasid_cap_offset);
->+            return;
->+        }
->+        pasid_offset =3D vdev->vpasid_cap_offset;
->+    } else {
->+        pasid_offset =3D PCIE_CONFIG_SPACE_SIZE -
->PCI_EXT_CAP_PASID_SIZEOF;
->+        warn_report("vfio: PASID capability offset(x-vpasid-cap-offset) n=
-ot
->specified, "
->+                    "placing at the default offset 0x%x",
->+                    pasid_offset);
->+    }
->+
->+    if (!pcie_insert_capability(pdev, PCI_EXT_CAP_ID_PASID,
->PCI_PASID_VER,
->+                                pasid_offset,
->PCI_EXT_CAP_PASID_SIZEOF)) {
->+        error_report("vfio: Placing PASID capability at offset 0x%x faile=
-d",
->+                     pasid_offset);
->+    }
->+    pcie_pasid_common_init(pdev, pasid_offset,
->pasid_info.max_pasid_log2,
->+                           pasid_info.exec_perm,
->pasid_info.priv_mod);
->+
->+    /* PASID capability is fully emulated by QEMU */
->+    memset(vdev->emulated_config_bits + pdev->exp.pasid_cap, 0xff,
->+           PCI_EXT_CAP_PASID_SIZEOF);
->+}
->+
-> static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
-> {
->     PCIDevice *pdev =3D PCI_DEVICE(vdev);
->+    bool pasid_cap_added =3D false;
->     uint32_t header;
->     uint16_t cap_id, next, size;
->     uint8_t cap_ver;
->@@ -2578,12 +2641,24 @@ static void vfio_add_ext_cap(VFIOPCIDevice
->*vdev)
->                 pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->             }
->             break;
->+        /*
->+         * VFIO kernel does not expose the PASID CAP today. We may
->synthesize
->+         * one later through IOMMUFD APIs. If VFIO ever starts exposing
->it,
->+         * record its presence here so we do not create a duplicate CAP.
->+         */
->+        case PCI_EXT_CAP_ID_PASID:
->+            pasid_cap_added =3D true;
->+            /* fallthrough */
->         default:
->             pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->         }
+> +        uint32_t hartid_base =3D i << MHARTID_CLUSTER_SHIFT;
+> +        s->aplic =3D riscv_aplic_create(cm_base + AIA_PLIC_M_OFFSET,
+> +                                      AIA_PLIC_M_SIZE,
+> +                                      hartid_base, /* hartid_base */
+> +                                      MAX_HARTS, /* num_harts */
+> +                                      APLIC_NUM_SOURCES,
+> +                                      APLIC_NUM_PRIO_BITS,
+> +                                      false, true, NULL);
+> +        riscv_aplic_create(cm_base + AIA_PLIC_S_OFFSET,
+> +                           AIA_PLIC_S_SIZE,
+> +                           hartid_base, /* hartid_base */
+> +                           MAX_HARTS, /* num_harts */
+> +                           APLIC_NUM_SOURCES,
+> +                           APLIC_NUM_PRIO_BITS,
+> +                           false, false, s->aplic);
+> +        /* PLIC changes msi_nonbroken to ture. We revert the change. */
+> +        msi_nonbroken =3D false;
+> +        riscv_aclint_swi_create(cm_base + AIA_CLINT_OFFSET,
+> +                                hartid_base, MAX_HARTS, false);
+> +        riscv_aclint_mtimer_create(cm_base + AIA_CLINT_OFFSET +
+> +                                   RISCV_ACLINT_SWI_SIZE,
+> +                                   RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+> +                                   hartid_base,
+> +                                   MAX_HARTS,
+> +                                   RISCV_ACLINT_DEFAULT_MTIMECMP,
+> +                                   RISCV_ACLINT_DEFAULT_MTIME,
+> +                                   RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, f=
+alse);
+> +    }
+> +}
+> +
+> +static const Property riscv_cps_properties[] =3D {
+> +    DEFINE_PROP_UINT32("num-vp", RISCVCPSState, num_vp, 1),
+> +    DEFINE_PROP_UINT32("num-hart", RISCVCPSState, num_hart, 1),
+> +    DEFINE_PROP_UINT32("num-core", RISCVCPSState, num_core, 1),
+> +    DEFINE_PROP_UINT64("gcr-base", RISCVCPSState, gcr_base, GCR_BASE_ADD=
+R),
+> +    DEFINE_PROP_STRING("cpu-type", RISCVCPSState, cpu_type),
+> +};
+> +
+> +static void riscv_cps_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +
+> +    dc->realize =3D riscv_cps_realize;
+> +    device_class_set_props(dc, riscv_cps_properties);
+> +}
+> +
+> +static const TypeInfo riscv_cps_info =3D {
+> +    .name =3D TYPE_RISCV_CPS,
+> +    .parent =3D TYPE_SYS_BUS_DEVICE,
+> +    .instance_size =3D sizeof(RISCVCPSState),
+> +    .instance_init =3D riscv_cps_init,
+> +    .class_init =3D riscv_cps_class_init,
+> +};
+> +
+> +static void riscv_cps_register_types(void)
+> +{
+> +    type_register_static(&riscv_cps_info);
+> +}
+> +
+> +type_init(riscv_cps_register_types)
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index 2a8d5b136c..9023b80087 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -15,4 +15,6 @@ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files=
+(
+>  riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-g=
+eneric.c'))
+>  riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangsh=
+an_kmh.c'))
 >
->     }
->
->+    if (!pasid_cap_added) {
->+        vfio_pci_synthesize_pasid_cap(vdev);
->+    }
->+
->     /* Cleanup chain head ID if necessary */
->     if (pci_get_word(pdev->config + PCI_CONFIG_SPACE_SIZE) =3D=3D 0xFFFF)=
- {
->         pci_set_word(pdev->config + PCI_CONFIG_SPACE_SIZE, 0);
->@@ -3756,6 +3831,8 @@ static const Property vfio_pci_properties[] =3D {
->                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend
->*),
-> #endif
->     DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, skip_vsc_check,
->true),
->+    DEFINE_PROP_UINT16("x-vpasid-cap-offset", VFIOPCIDevice,
->+                       vpasid_cap_offset, 0),
-> };
->
-> #ifdef CONFIG_IOMMUFD
->@@ -3913,6 +3990,13 @@ static void vfio_pci_class_init(ObjectClass *klass,
->const void *data)
->                                           "destination when doing
->live "
->                                           "migration of device
->state via "
->                                           "multifd channels");
->+   object_class_property_set_description(klass, /* 11.0 */
->+                                          "x-vpasid-cap-offset",
->+                                          "PCIe extended
->configuration space offset at which to place a "
->+                                          "synthetic PASID
->extended capability when PASID is enabled via "
->+                                          "a vIOMMU. A value of 0
->(default) places the capability at the "
->+                                          "end of the extended
->configuration space. The offset must be "
->+                                          "4-byte aligned and
->within the PCIe extended configuration space");
-> }
->
-> static const TypeInfo vfio_pci_info =3D {
->diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->index 0f78cf9cdb..d6495d7f29 100644
->--- a/hw/vfio/pci.h
->+++ b/hw/vfio/pci.h
->@@ -187,6 +187,7 @@ struct VFIOPCIDevice {
->     bool defer_kvm_irq_routing;
->     bool clear_parent_atomics_on_exit;
->     bool skip_vsc_check;
->+    uint16_t vpasid_cap_offset;
->     VFIODisplay *dpy;
->     Notifier irqchip_change_notifier;
->     VFIOPCICPR cpr;
->diff --git a/include/hw/core/iommu.h b/include/hw/core/iommu.h
->index 9b8bb94fc2..9635770bee 100644
->--- a/include/hw/core/iommu.h
->+++ b/include/hw/core/iommu.h
->@@ -20,6 +20,7 @@
-> enum viommu_flags {
->     /* vIOMMU needs nesting parent HWPT to create nested HWPT */
->     VIOMMU_FLAG_WANT_NESTING_PARENT =3D BIT_ULL(0),
->+    VIOMMU_FLAG_PASID_SUPPORTED =3D BIT_ULL(1),
-> };
->
-> #endif /* HW_IOMMU_H */
->--
->2.43.0
-
+> +riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
+> +
+>  hw_arch +=3D {'riscv': riscv_ss}
+> diff --git a/include/hw/riscv/cps.h b/include/hw/riscv/cps.h
+> new file mode 100644
+> index 0000000000..f33fd7ac86
+> --- /dev/null
+> +++ b/include/hw/riscv/cps.h
+> @@ -0,0 +1,66 @@
+> +/*
+> + * Coherent Processing System emulation.
+> + *
+> + * Copyright (c) 2016 Imagination Technologies
+> + *
+> + * Copyright (c) 2025 MIPS
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + */
+> +
+> +#ifndef RISCV_CPS_H
+> +#define RISCV_CPS_H
+> +
+> +#include "hw/core/sysbus.h"
+> +#include "hw/misc/riscv_cmgcr.h"
+> +#include "hw/misc/riscv_cpc.h"
+> +#include "target/riscv/cpu.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_RISCV_CPS "riscv-cps"
+> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVCPSState, RISCV_CPS)
+> +
+> +/* The model supports up to 64 harts. */
+> +#define MAX_HARTS 64
+> +
+> +/* The global CM base for the boston-aia model. */
+> +#define GLOBAL_CM_BASE 0x16100000
+> +/* The CM block is 512 KiB. */
+> +#define CM_SIZE (1 << 19)
+> +
+> +/*
+> + * The mhartid bits has cluster at bit 16, core at bit 4, and hart at
+> + * bit 0.
+> + */
+> +
+> +#define MHARTID_CLUSTER_SHIFT 16
+> +#define MHARTID_CORE_SHIFT 4
+> +#define MHARTID_HART_SHIFT 0
+> +
+> +#define APLIC_NUM_SOURCES 0x35 /* Arbitray maximum number of interrupts.=
+ */
+> +#define APLIC_NUM_PRIO_BITS 3
+> +#define AIA_PLIC_M_OFFSET 0x40000
+> +#define AIA_PLIC_M_SIZE 0x8000
+> +#define AIA_PLIC_S_OFFSET 0x60000
+> +#define AIA_PLIC_S_SIZE 0x8000
+> +#define AIA_CLINT_OFFSET 0x50000
+> +
+> +typedef struct RISCVCPSState {
+> +    SysBusDevice parent_obj;
+> +
+> +    uint32_t num_vp;
+> +    uint32_t num_hart;
+> +    uint32_t num_core;
+> +    uint64_t gcr_base;
+> +    char *cpu_type;
+> +
+> +    MemoryRegion container;
+> +    RISCVGCRState gcr;
+> +    RISCVCPCState cpc;
+> +
+> +    DeviceState *aplic;
+> +    CPUState **cpus;
+> +} RISCVCPSState;
+> +
+> +#endif
+> --
+> 2.34.1
 
