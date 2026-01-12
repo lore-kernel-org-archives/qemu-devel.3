@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B67CCF45D7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C0BCF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQoe-0004GM-RN; Mon, 12 Jan 2026 17:55:16 -0500
+	id 1vfQpJ-0008Nk-W5; Mon, 12 Jan 2026 17:55:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vfQoX-0003sO-0w
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:10 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vfQoU-00047N-Up
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:08 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1768258493; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=hNrrKiYrzuX2M/dwnJ413SUaKe4K6xwllew5cZ7kO+qTViJjNnogS/HM67VaZvXTGww9wpRz/dFJ4jvEoMEEu+UFwbqXPbD9xKjJ+ZXXHkpxWuLqATU+DluR2NATvGPjItsGYmgu/SoqzD1AK61HXfljvooUm488MLG5gGfjdrs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1768258493;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=DFX1dJw0yaWhhJ/7Cf/9JW6rveftWcxUPucoIxUflE0=; 
- b=hMpf0uMtPb0QxTITtfvYxJZX05ZqC6ffyWaO21xOTSSmk/9CvJhtBGRcXhybFuj3GvXTef++DJNHEg1e7B6Ed7CeTU/2mrGf/TMvDhxECYe25bJH+cPj4+PvPwlzfPtgvCZ9P/3nOB1DN2Tk+Z1W7aNFGcIPTusljwDrSyC2uSw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768258493; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=DFX1dJw0yaWhhJ/7Cf/9JW6rveftWcxUPucoIxUflE0=;
- b=IyhMho/HsHYDDV4wpWe/Cqc2cyK5FNuHigCHVHr45QI7wN/jUV7LAlaj96jY2KSZ
- jCKbBSxC3A5cjPpTpC0hg3z9wDKtST2OAn5xL3N5K1INBKm5mIty9YQEFXovd8eV1sH
- iTut8mGEfES/VaE9GT2anpmBNA0SgJ1g0D9jaXtk=
-Received: by mx.zohomail.com with SMTPS id 1768258490765501.69852247485073;
- Mon, 12 Jan 2026 14:54:50 -0800 (PST)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-Subject: [RFC PATCH v9 5/5] virtio-gpu: Support mapping hostmem blobs with
- map_fixed
-Date: Tue, 13 Jan 2026 01:52:46 +0300
-Message-ID: <20260112225246.3526313-6-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQpH-0007z2-DJ
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:55 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQpF-0004QP-JR
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:55:55 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42fbc305882so3727178f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:55:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768258552; x=1768863352; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=0v+2OnVOsTI/bCFGO0OtJvlwuMqs+IwSJ72vCxsdZTc=;
+ b=N7sx0jj0p5z4ZCwHXYQy/BW9nfOfxw80sdDQulO9HWh4r95oCqC80SL0Vk8aHGdyuF
+ 5e6pUMfMq8eYIhtAXtg30G+qrnRIOcFj8OY16jgIqHvOLPljSdZLmzTPQwPcvYuJQOYm
+ j9MwFSeywAb14eGFTeeESai7eo6NfapsukT1SkhLdiR4JaiGvtGqOwHB/mnUiHUQcMHq
+ REMPeCyHbo5a+Gs/oF9pqtutRBCdkwKyu7owf5bGt74Bw1nzvKPVlavmKJ33GVywtOb4
+ ZW1IYRyNyeqgi50Y6qpOPNAq0dTIfk7J/lCxp03JmrR4gO1zWSWIlfeA0wDQPL7jmQdO
+ O6Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768258552; x=1768863352;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=0v+2OnVOsTI/bCFGO0OtJvlwuMqs+IwSJ72vCxsdZTc=;
+ b=Vdp5EiFXUjT2SQe7vYS5xg5G4DVGqdHIQ/EvK+ugkdIaRkngIEiLDJ1Fa9UXYquYcU
+ t3eDodB0MP5g44dBvM0thbUPGqpgA8xwf45Ey6ajlxxcDqXuKBmArW26QmwRqsJzZ0j0
+ 8i+bR7kYp9fChTJjEDovYg6aWELy/xmi1XE+7DeJieYsYNHfA4Di3aUH5NTakKn+koO9
+ EZdLS4kQfXe+k5aW7E9ayi/aC86ZtkC0mkJjf++V9ef2t3LESLiyLONujIFzWitF+PBN
+ 6V56WJn83HyCA4QQ8cBA+NE7W450giVq7Ewyt3eU1XB6Yl62NAMd0EVMEPqL67aDDLXu
+ 32Wg==
+X-Gm-Message-State: AOJu0YwRhb9RU1hb7nsJhU5L3EnO3XWQkEMeqZKW/9+lwfk8ZJ7/QcK4
+ ihUYX4IlEpv4l5b01J3/MdkmrcNT8FAAYhhHl52yG9SewmtqM2aIY0b3MgjYG8TwyyPfshioNTr
+ lO44zuOU=
+X-Gm-Gg: AY/fxX5SbouCyZSXzBOEEsgscQLdWYoyfypbhiVCWlhPO1Dtz/kV7/2dVvHm3v+dVw5
+ zj6hmeigMqWOxiDfAFgdag6Rd5XEzIUQ7By4LRDnmJDo5f1agLaKeYoaLHTHqGKrbuSNi2rqTor
+ cTDt+IuYC/W8cziRgYXsXGENMmAFFzwFSSAyJWgVA+7oodTV5HJOymilSwrWANN904FDQdHGfai
+ uCnoU1qEQ8QgUDEQxPnuwiV134ywldwKRmbLkLEB8mJNkKV3YGWPhiYGA14rlA57zYPjsLU4Rre
+ lfMm/TCnPXDswS95PWUpebDpU+nSvqCbcleMg6Tizmz6PItHkbnP2mdi2JYdEFjC+YGAleIX7yN
+ 0sgkSYa0CeQHw4rpf6HBZ+wUmlmSayP8XK2RNu8k/uOYFnE2S44fQ26yH052e0Twqqb3sb9eMKD
+ VGs/smZrhkwQPQUbcm1rC1MYSscCWSM505CJ2ifqd8WZUqelVTCABqNPs3YX5w
+X-Google-Smtp-Source: AGHT+IHJb9LEBrkY0TIE8w6z5iLodVhdAfetqmJoA7o7Jg1pzUH9L/ii1gAHXMCfkNK+0UqMSgKEDg==
+X-Received: by 2002:a05:6000:40da:b0:430:f23f:4bc5 with SMTP id
+ ffacd0b85a97d-432c3760d02mr21573654f8f.45.1768258551665; 
+ Mon, 12 Jan 2026 14:55:51 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd0dad8bsm41238875f8f.8.2026.01.12.14.55.50
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 12 Jan 2026 14:55:51 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 60/61] target/arm/gdbstub: extract
+ aarch64_cpu_register_gdb_regs_for_features
+Date: Mon, 12 Jan 2026 23:48:55 +0100
+Message-ID: <20260112224857.42068-61-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260112225246.3526313-1-dmitry.osipenko@collabora.com>
-References: <20260112225246.3526313-1-dmitry.osipenko@collabora.com>
+In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
+References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,226 +100,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support mapping virgl blobs to a fixed location of a hostmem memory
-region using new virglrenderer MAP_FIXED API.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-This new feature closes multiple problems for virtio-gpu on QEMU:
-
-- Having dedicated memory region for each mapped blob works notoriously
-slow due to QEMU's memory region software design built around RCU that
-isn't optimized for frequent removal of the regions
-
-- KVM isn't optimized for a frequent slot changes too
-
-- QEMU/KVM has a limit for a total number of created memory regions,
-crashing QEMU when limit is reached
-
-This patch makes virtio-gpu-gl to pre-create a single anonymous memory
-region covering whole hostmem area to which blobs will be mapped using
-the MAP_FIXED API.
-
-Not all virgl resources will support mapping at a fixed memory address. For
-them, we will continue to create individual nested memory sub-regions. In
-particular, vrend resources may not have MAP_FIXED capability.
-
-Venus and DRM native contexts will largely benefit from the MAP_FIXED
-feature in terms of performance and stability improvement.
-
-Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260109053158.2800705-3-pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/virtio-gpu-gl.c     | 40 ++++++++++++++++++++++-
- hw/display/virtio-gpu-virgl.c  | 59 +++++++++++++++++++++++++++++++++-
- include/hw/virtio/virtio-gpu.h |  3 ++
- 3 files changed, 100 insertions(+), 2 deletions(-)
+ target/arm/internals.h |  1 +
+ target/arm/gdbstub.c   | 53 +--------------------------------------
+ target/arm/gdbstub64.c | 57 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 52 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 8b71dd6fc26f..add6af73e980 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -13,6 +13,7 @@
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 9cd4bf74efb..440072d8206 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -387,6 +387,7 @@ void arm_translate_code(CPUState *cs, TranslationBlock *tb,
+ void arm_cpu_register_gdb_commands(ARMCPU *cpu);
+ void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *,
+                                        GPtrArray *, GPtrArray *);
++void aarch64_cpu_register_gdb_regs_for_features(ARMCPU *cpu);
  
- #include "qemu/osdep.h"
- #include "qemu/iov.h"
-+#include "qemu/mmap-alloc.h"
- #include "qemu/module.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-@@ -106,7 +107,12 @@ static void virtio_gpu_gl_reset(VirtIODevice *vdev)
- static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
- {
-     ERRP_GUARD();
--    VirtIOGPU *g = VIRTIO_GPU(qdev);
-+    VirtIOGPUBase *b = VIRTIO_GPU_BASE(qdev);
-+    VirtIOGPU *g = VIRTIO_GPU(b);
-+#if !defined(CONFIG_WIN32)
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
-+    void *map;
-+#endif
- 
- #if HOST_BIG_ENDIAN
-     error_setg(errp, "virgl is not supported on bigendian platforms");
-@@ -137,6 +143,27 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+ void arm_restore_state_to_opc(CPUState *cs,
+                               const TranslationBlock *tb,
+diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
+index 8865f27089d..4e8e341cc04 100644
+--- a/target/arm/gdbstub.c
++++ b/target/arm/gdbstub.c
+@@ -537,58 +537,7 @@ void arm_cpu_register_gdb_regs_for_features(ARMCPU *cpu)
+          * registers so we don't need to include both.
+          */
+ #ifdef TARGET_AARCH64
+-        if (isar_feature_aa64_sve(&cpu->isar) ||
+-            isar_feature_aa64_sme(&cpu->isar)) {
+-            GDBFeature *feature = arm_gen_dynamic_svereg_feature(cs, cs->gdb_num_regs);
+-            gdb_register_coprocessor(cs, aarch64_gdb_get_sve_reg,
+-                                     aarch64_gdb_set_sve_reg, feature, 0);
+-        } else {
+-            gdb_register_coprocessor(cs, aarch64_gdb_get_fpu_reg,
+-                                     aarch64_gdb_set_fpu_reg,
+-                                     gdb_find_static_feature("aarch64-fpu.xml"),
+-                                     0);
+-        }
+-
+-        if (isar_feature_aa64_sme(&cpu->isar)) {
+-            GDBFeature *sme_feature =
+-                arm_gen_dynamic_smereg_feature(cs, cs->gdb_num_regs);
+-            gdb_register_coprocessor(cs, aarch64_gdb_get_sme_reg,
+-                                     aarch64_gdb_set_sme_reg, sme_feature, 0);
+-            if (isar_feature_aa64_sme2(&cpu->isar)) {
+-                gdb_register_coprocessor(cs, aarch64_gdb_get_sme2_reg,
+-                                         aarch64_gdb_set_sme2_reg,
+-                                         gdb_find_static_feature("aarch64-sme2.xml"),
+-                                         0);
+-            }
+-        }
+-        /*
+-         * Note that we report pauth information via the feature name
+-         * org.gnu.gdb.aarch64.pauth_v2, not org.gnu.gdb.aarch64.pauth.
+-         * GDB versions 9 through 12 have a bug where they will crash
+-         * if they see the latter XML from QEMU.
+-         */
+-        if (isar_feature_aa64_pauth(&cpu->isar)) {
+-            gdb_register_coprocessor(cs, aarch64_gdb_get_pauth_reg,
+-                                     aarch64_gdb_set_pauth_reg,
+-                                     gdb_find_static_feature("aarch64-pauth.xml"),
+-                                     0);
+-        }
+-
+-#ifdef CONFIG_USER_ONLY
+-        /* Memory Tagging Extension (MTE) 'tag_ctl' pseudo-register. */
+-        if (cpu_isar_feature(aa64_mte, cpu)) {
+-            gdb_register_coprocessor(cs, aarch64_gdb_get_tag_ctl_reg,
+-                                     aarch64_gdb_set_tag_ctl_reg,
+-                                     gdb_find_static_feature("aarch64-mte.xml"),
+-                                     0);
+-        }
+-#endif
+-
+-        /* All AArch64 CPUs have at least TPIDR */
+-        gdb_register_coprocessor(cs, aarch64_gdb_get_tls_reg,
+-                                 aarch64_gdb_set_tls_reg,
+-                                 arm_gen_dynamic_tls_feature(cs, cs->gdb_num_regs),
+-                                 0);
++        aarch64_cpu_register_gdb_regs_for_features(cpu);
  #endif
- 
-     virtio_gpu_device_realize(qdev, errp);
-+    if (*errp) {
-+        return;
-+    }
-+
-+#if !defined(CONFIG_WIN32)
-+    if (virtio_gpu_hostmem_enabled(b->conf)) {
-+        map = qemu_ram_mmap(-1, b->conf.hostmem, qemu_real_host_page_size(),
-+                            0, 0);
-+        if (map == MAP_FAILED) {
-+            error_setg_errno(errp, errno,
-+                             "virgl hostmem region could not be initialized");
-+            return;
-+        }
-+
-+        gl->hostmem_mmap = map;
-+        memory_region_init_ram_ptr(&gl->hostmem_background, NULL,
-+                                   "hostmem-background", b->conf.hostmem,
-+                                   gl->hostmem_mmap);
-+        memory_region_add_subregion(&b->hostmem, 0, &gl->hostmem_background);
-+    }
-+#endif
- }
- 
- static const Property virtio_gpu_gl_properties[] = {
-@@ -172,6 +199,17 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
-     gl->renderer_state = RS_START;
- 
-     g_array_unref(g->capset_ids);
-+
-+    /*
-+     * It is not guaranteed that the memory region will be finalized
-+     * immediately with memory_region_del_subregion(), there can be
-+     * a remaining reference to gl->hostmem_mmap. VirtIO-GPU is not
-+     * hotpluggable, hence no need to worry about the leaked mapping.
-+     *
-+     * The memory_region_del_subregion(gl->hostmem_background) is unnecessary
-+     * because b->hostmem  and gl->hostmem_background belong to the same
-+     * device and will be gone at the same time.
-+     */
- }
- 
- static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 15a98336969b..4d0def7c1dca 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -41,9 +41,13 @@
-      VIRGL_VERSION_MICRO >= (micro))
+     } else {
+         if (arm_feature(env, ARM_FEATURE_NEON)) {
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 3bc7ff45d57..c584e5b4e69 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -879,3 +879,60 @@ void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
+     }
  #endif
- 
-+#define VIRGL_HAS_MAP_FIXED \
-+    (VIRGL_CHECK_VERSION(1, 2, 1) && !IS_ENABLED(CONFIG_WIN32))
+ }
 +
- struct virtio_gpu_virgl_resource {
-     struct virtio_gpu_simple_resource base;
-     MemoryRegion *mr;
-+    void *map_fixed;
- };
- 
- static struct virtio_gpu_virgl_resource *
-@@ -126,6 +130,9 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
- {
-     struct virtio_gpu_virgl_hostmem_region *vmr;
-     VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-+#if VIRGL_HAS_MAP_FIXED
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
-+#endif
-     MemoryRegion *mr;
-     uint64_t size;
-     void *data;
-@@ -136,6 +143,41 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-         return -EOPNOTSUPP;
-     }
- 
-+#if VIRGL_HAS_MAP_FIXED
-+    /*
-+     * virgl_renderer_resource_map_fixed() allows to create multiple
-+     * mappings of the same resource, while virgl_renderer_resource_map()
-+     * not. Don't allow mapping same resource twice.
-+     */
-+    if (res->map_fixed || res->mr) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: failed to map(fixed) virgl resource: already mapped\n",
-+                      __func__);
-+        return -EBUSY;
++void aarch64_cpu_register_gdb_regs_for_features(ARMCPU *cpu)
++{
++    CPUState *cs = CPU(cpu);
++    if (isar_feature_aa64_sve(&cpu->isar) ||
++        isar_feature_aa64_sme(&cpu->isar)) {
++        GDBFeature *feature = arm_gen_dynamic_svereg_feature(cs, cs->gdb_num_regs);
++        gdb_register_coprocessor(cs, aarch64_gdb_get_sve_reg,
++                                 aarch64_gdb_set_sve_reg, feature, 0);
++    } else {
++        gdb_register_coprocessor(cs, aarch64_gdb_get_fpu_reg,
++                                 aarch64_gdb_set_fpu_reg,
++                                 gdb_find_static_feature("aarch64-fpu.xml"),
++                                 0);
 +    }
 +
-+    ret = virgl_renderer_resource_map_fixed(res->base.resource_id,
-+                                            gl->hostmem_mmap + offset);
-+    switch (ret) {
-+    case 0:
-+        res->map_fixed = gl->hostmem_mmap + offset;
-+        return 0;
-+
-+    case -EOPNOTSUPP:
-+        /*
-+         * MAP_FIXED is unsupported by this resource.
-+         * Mapping falls back to a blob subregion method in that case.
-+         */
-+        break;
-+
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: failed to map(fixed) virgl resource: %s\n",
-+                      __func__, strerror(-ret));
-+        return ret;
-+    }
-+#endif
-+
-     ret = virgl_renderer_resource_map(res->base.resource_id, &data, &size);
-     if (ret) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map virgl resource: %s\n",
-@@ -149,7 +191,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
- 
-     mr = &vmr->mr;
-     memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
--    memory_region_add_subregion(&b->hostmem, offset, mr);
-+    memory_region_add_subregion_overlap(&b->hostmem, offset, mr, 1);
- 
-     /*
-      * MR could outlive the resource if MR's reference is held outside of
-@@ -176,6 +218,21 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-     MemoryRegion *mr = res->mr;
-     int ret;
- 
-+#if VIRGL_HAS_MAP_FIXED
-+    if (res->map_fixed) {
-+        if (mmap(res->map_fixed, res->base.blob_size, PROT_READ | PROT_WRITE,
-+                 MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED,
-+                 -1, 0) == MAP_FAILED) {
-+            ret = -errno;
-+            error_report("%s: failed to unmap(fixed) virgl resource: %s",
-+                          __func__, strerror(-ret));
-+            return ret;
++    if (isar_feature_aa64_sme(&cpu->isar)) {
++        GDBFeature *sme_feature =
++            arm_gen_dynamic_smereg_feature(cs, cs->gdb_num_regs);
++        gdb_register_coprocessor(cs, aarch64_gdb_get_sme_reg,
++                                 aarch64_gdb_set_sme_reg, sme_feature, 0);
++        if (isar_feature_aa64_sme2(&cpu->isar)) {
++            gdb_register_coprocessor(cs, aarch64_gdb_get_sme2_reg,
++                                     aarch64_gdb_set_sme2_reg,
++                                     gdb_find_static_feature("aarch64-sme2.xml"),
++                                     0);
 +        }
++    }
++    /*
++     * Note that we report pauth information via the feature name
++     * org.gnu.gdb.aarch64.pauth_v2, not org.gnu.gdb.aarch64.pauth.
++     * GDB versions 9 through 12 have a bug where they will crash
++     * if they see the latter XML from QEMU.
++     */
++    if (isar_feature_aa64_pauth(&cpu->isar)) {
++        gdb_register_coprocessor(cs, aarch64_gdb_get_pauth_reg,
++                                 aarch64_gdb_set_pauth_reg,
++                                 gdb_find_static_feature("aarch64-pauth.xml"),
++                                 0);
++    }
 +
-+        res->map_fixed = NULL;
++#ifdef CONFIG_USER_ONLY
++    /* Memory Tagging Extension (MTE) 'tag_ctl' pseudo-register. */
++    if (cpu_isar_feature(aa64_mte, cpu)) {
++        gdb_register_coprocessor(cs, aarch64_gdb_get_tag_ctl_reg,
++                                 aarch64_gdb_set_tag_ctl_reg,
++                                 gdb_find_static_feature("aarch64-mte.xml"),
++                                 0);
 +    }
 +#endif
 +
-     if (!mr) {
-         return 0;
-     }
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 1f509d0d5beb..a48b50d4c825 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -263,6 +263,9 @@ struct VirtIOGPUGL {
- 
-     QEMUBH *async_fence_bh;
-     QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
-+
-+    MemoryRegion hostmem_background;
-+    void *hostmem_mmap;
- };
- 
- struct VhostUserGPU {
++    /* All AArch64 CPUs have at least TPIDR */
++    gdb_register_coprocessor(cs, aarch64_gdb_get_tls_reg,
++                             aarch64_gdb_set_tls_reg,
++                             arm_gen_dynamic_tls_feature(cs, cs->gdb_num_regs),
++                             0);
++}
 -- 
 2.52.0
 
