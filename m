@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B93BBCF45D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29379CF45D7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Jan 2026 22:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfQmV-0004R8-MQ; Mon, 12 Jan 2026 17:53:05 -0500
+	id 1vfQmo-0004g4-8r; Mon, 12 Jan 2026 17:53:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQm4-0003X9-15
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:36 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQmB-0003o0-K7
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:44 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQm2-0003Ko-JU
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:35 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-42fb03c3cf2so3688880f8f.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:52:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfQm9-0003OP-Uz
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 17:52:43 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47d493a9b96so39930615e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 14:52:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768258353; x=1768863153; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768258360; x=1768863160; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rAXOytHhr00CERHS/TQPRTwfQMcs3RCYTklLAIVGfM4=;
- b=IS0rMBK4Li3dIUbY3GuZom2p6LYBK7kKxD/jnija+2XvQ9eEnDiXCCxVr9L1aFH+3K
- vjQGNbRIb7PF5E7hNyrSPyMULJWioqVD249vV3ftugw9RCAdm6S/LvfhlTQJTtFfVWkT
- xERh2peWuWy+UjeTFyytM39lN9+FE49+uvRxtWvPM9Vb1qzQ8IAOdXaKie5xcczojUSB
- +JIijSGR/DL+FAp17oF4/l8EAvNveu+E9UJ7ZqatQows9Rzd+/9BdabLW815G3qjC3MB
- kP88fx6sXnn4yFgc8eJkhS1pKVx6aI7e2dNV68nDUBGBaVPavH04Dulo2hJWtneKkob8
- aCFQ==
+ :reply-to; bh=WfqI5+0qzUAJ631ibyFSkpT2ooyvzfZGYy2XWdRSwMU=;
+ b=dKFh3+2awAPdTHl4fdhsJ8svexsvxRKx1IHjispqVC5hCEnbrlD3DgNR9LDS/TuF82
+ rEsYOse293f6qzMh6qarFVl7jC6o+ZNTC6TsJXZvu8V1+wX7iPShevfdGuAq99MkQk2F
+ 8SuQBESZlYbgMkVJA70g7l0VDNP3YDqLoti4cDy96opS0fNwFQ8ks/793fn8Jai+neBn
+ zvhb7Q3D8/Ey6xopDahyg/olFt0xgslGZuLzoFcs2DR6+aa5mbLUOGCTXVD54yJ1WL0A
+ bpoUvPhRg/oNk6agES4GuAkn96NKYlz5pMJvMdAS72kTfa/PH7Vnlj7cej662kitsuBB
+ WLpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768258353; x=1768863153;
+ d=1e100.net; s=20230601; t=1768258360; x=1768863160;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rAXOytHhr00CERHS/TQPRTwfQMcs3RCYTklLAIVGfM4=;
- b=wRjZLzQjNv78OGOK4fvU593Ht/xE0YCuRbXaICH0GZj3R4TUWPllwfR5RAzYARLhed
- 1c6j5CbWnDohCxcTWniFbKPiWgCSjFemAO6ITEAHd3zs8PbDDT5j4kn159bJkuq1O5xR
- BzwLi7JKPF8WqaiFnt6uHktgqlVDhM0BEsK6UOAWKbI1BH7F+NWZ2WCQ1YWcRAAZUH+u
- pDt5e/Lj8j4zyZlfU/4cSIv3+eQ2y6Yuqd1E5a57Ywffjh3AGUuPcF1h6aDQvaLtQ84Y
- CnnaWZ8xxStfiXm+PbhfU+Dd/MjiGnPXTHBMTTt9B7L8nN9iOzZ35gInXX9Lnp0+d9V+
- 2CRQ==
-X-Gm-Message-State: AOJu0Yzm13OpyML0qwE99qGxjejHoAzQI5ur6ysbGUViCBc1cixKCHmz
- NRZv2Xr7sU12Hv1UKnn8D7ZLFiqNIkjL8e8+lSTgo9YuvdqmcCs9lxiK5ry20Hd0rbat7GprJrn
- X9nBQnuY=
-X-Gm-Gg: AY/fxX7fiE/J6I55AOSA1z3D3fqW45oG9N0FGuhnoG4cqskbFYpOxuvXotxtzrgNDvM
- kXR224qEs0NkTqapbxuky72m0dXv7XL/pf/4RHlXEFkEkOzJFrilxfRaPw/hl3MXjMi/bofI+9l
- TOwj0xg8qkm7YCkR9Bwj5QiRXz7tCMjLOJ9avMP6CRKjNXgJSoxPXM7VJqpNEZTvjAVeiZlyTlO
- 2THYe/UOgHkIPK1VPenrrBXOVBNHgsNINZkqnyJWb5n/TdkDvYz1Ss68BzAxXsMAHaoqLMPbOhv
- NI1APW+xhSyMuKRPe3XicKaRFIN/rlkXp1aRfkDS/MAl7sLmb5PmPp8tkSBnYoBKEN6bOgZdOCR
- 2QVA+cUDVEEv4/2OJmZCIZ1SaSFZx1MGfGHWmGymhaLRkDAe41x0KsOHLugxf+KEB6WEj6Hqghe
- MKEqIVrQ0onqceVjoIpDCcolkxY7szrjuzgg/RmA+jh3NX7+//6L5mbh93N2Z9
-X-Google-Smtp-Source: AGHT+IFpUhNxgPiBjiQ6aZtQLJiKtk1CnZ09rLH2uqoe8YAYk8Ok5vh5cbDE5VQFWRroSEz90yteUQ==
-X-Received: by 2002:a05:6000:420c:b0:430:f7c9:94c3 with SMTP id
- ffacd0b85a97d-432c3634253mr23744956f8f.25.1768258352946; 
- Mon, 12 Jan 2026 14:52:32 -0800 (PST)
+ bh=WfqI5+0qzUAJ631ibyFSkpT2ooyvzfZGYy2XWdRSwMU=;
+ b=EnAeXTbS745C4UgSaQmts8iLJTrkil+rZHwFX0we4AY/g5D2z3mgX7c5GggsON/edE
+ LjfPrlh4H30jgfcl8LSzj72yIKMMlqb8tmedUzQeoo+ZKA5771RjQbhXlnkAG00MDCzC
+ v/HH26YwcS7ToEiwm5NTW3jQXN1UIfmYknoA5Bn5rBzSJxgScUuoGsldJOPfYyLsQWaw
+ eLLFwkzlqNkP9TzkSoFEEw1KMPRhGFqSnCy6ytG/NOhqeQvMFDyiei76fWYhbPGu1Z4h
+ HLVoI2uXEnpqmmJXVis0GAnuDYtxXS+MWeSSt6t6wXQLcBKHnjBjRBACor9vZOO0jYIm
+ xIWA==
+X-Gm-Message-State: AOJu0Yyi7EK6xkJ6W2l512R6sAJl8Dpk2HdlSUZLiJeiYsqNiO7WBW9d
+ htVBtalu/Qo7eBdmSr+ojfgS7FKTC7Z89KhjHyaaklYxnSQHSMZLnko2yLa8s1KRo75zRTnJjo6
+ G7/xKZYM=
+X-Gm-Gg: AY/fxX7cUTJS/jRai2XjNGRhCsoERpOFk37l3cHRuqLKDU1F/2vHs0pX56O53mSO3Un
+ xBXLVyaQqTFI85N+4eR7gBoAsb52CFYlZxyT4kS/GO+vmMfX9k0JFLbLcKMPxW+t4+/vCiJgWjc
+ 7u6KBUaRGrS9AKwONXXRIaDA51FlbRkE3PGdt55Up5JqmWe9bOkkpqgNbvtc9JJsg3qcGDdI29L
+ 1EgeFFrs/Ap4LMRo0Eqkvd9b3OKS3bxjgiBoNFpGcBp/phiN1XxTIrBvUBdYqKmhg8v+RUB3h1b
+ 9k3YDsmO14FNuKrYRtrJ6dtQNLHySWpOwlwyero3ZzSvf81/RHxhwT6I1XvF2gZbnnOS/TyXjvs
+ Qb1koNR5cBAUSUz8CP8AS/PO+HsiXbwHGAVr0vpC/8iIySmJdgShPksXWcDW2etNbDYl5LPSWex
+ c31oYwGwh3TXDuHK67H+kg1itXyP6wsZPmgiarq0xEeFuPAg++M8b9kDaBRbCf
+X-Google-Smtp-Source: AGHT+IHgrpnNYTwsAj/0DqyZbRQNK6viiFHb5YPnfeLxYe19b8Dqkx5vtO3XR2vzxfEGFdQ068J7+g==
+X-Received: by 2002:a05:600c:a48:b0:47a:829a:ebb with SMTP id
+ 5b1f17b1804b1-47d84b36a2amr208176595e9.19.1768258360074; 
+ Mon, 12 Jan 2026 14:52:40 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5ee870sm41083814f8f.36.2026.01.12.14.52.31
+ 5b1f17b1804b1-47d7f7035f2sm358394075e9.12.2026.01.12.14.52.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Jan 2026 14:52:31 -0800 (PST)
+ Mon, 12 Jan 2026 14:52:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/61] target/loongarch: Inline translator_ldl()
-Date: Mon, 12 Jan 2026 23:48:26 +0100
-Message-ID: <20260112224857.42068-32-philmd@linaro.org>
+Subject: [PULL 32/61] target/m68k: Replace MD_TLONG -> MD_I32 in monitor.c
+Date: Mon, 12 Jan 2026 23:48:27 +0100
+Message-ID: <20260112224857.42068-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
 References: <20260112224857.42068-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +99,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-translator_ldl() is defined in "exec/translator.h" as:
-
-  198 static inline uint32_t
-  199 translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
-  200 {
-  201     return translator_ldl_end(env, db, pc, MO_TE);
-  202 }
-
-Directly use the inlined form, expanding MO_TE -> MO_LE
-since LoongArch use little-endian order.
+m68k's monitor_defs[] array implicitly uses type=MD_TLONG for
+all its entries. Since we only build this target as 32-bit,
+use the explicit MD_I32 type to avoid an indirect target_long
+use.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <20251224161456.89707-8-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260107200702.54582-10-philmd@linaro.org>
 ---
- target/loongarch/tcg/translate.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/m68k/monitor.c | 60 +++++++++++++++++++++----------------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
 
-diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-index 055f6fb6046..c23d2a614ae 100644
---- a/target/loongarch/tcg/translate.c
-+++ b/target/loongarch/tcg/translate.c
-@@ -286,7 +286,8 @@ static void loongarch_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+index 2bdf6acae0a..161f41853ec 100644
+--- a/target/m68k/monitor.c
++++ b/target/m68k/monitor.c
+@@ -23,36 +23,36 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ }
  
--    ctx->opcode = translator_ldl(cpu_env(cs), &ctx->base, ctx->base.pc_next);
-+    ctx->opcode = translator_ldl_end(cpu_env(cs), &ctx->base,
-+                                     ctx->base.pc_next, MO_LE);
+ static const MonitorDef monitor_defs[] = {
+-    { "d0", offsetof(CPUM68KState, dregs[0]) },
+-    { "d1", offsetof(CPUM68KState, dregs[1]) },
+-    { "d2", offsetof(CPUM68KState, dregs[2]) },
+-    { "d3", offsetof(CPUM68KState, dregs[3]) },
+-    { "d4", offsetof(CPUM68KState, dregs[4]) },
+-    { "d5", offsetof(CPUM68KState, dregs[5]) },
+-    { "d6", offsetof(CPUM68KState, dregs[6]) },
+-    { "d7", offsetof(CPUM68KState, dregs[7]) },
+-    { "a0", offsetof(CPUM68KState, aregs[0]) },
+-    { "a1", offsetof(CPUM68KState, aregs[1]) },
+-    { "a2", offsetof(CPUM68KState, aregs[2]) },
+-    { "a3", offsetof(CPUM68KState, aregs[3]) },
+-    { "a4", offsetof(CPUM68KState, aregs[4]) },
+-    { "a5", offsetof(CPUM68KState, aregs[5]) },
+-    { "a6", offsetof(CPUM68KState, aregs[6]) },
+-    { "a7", offsetof(CPUM68KState, aregs[7]) },
+-    { "pc", offsetof(CPUM68KState, pc) },
+-    { "sr", offsetof(CPUM68KState, sr) },
+-    { "ssp", offsetof(CPUM68KState, sp[0]) },
+-    { "usp", offsetof(CPUM68KState, sp[1]) },
+-    { "isp", offsetof(CPUM68KState, sp[2]) },
+-    { "sfc", offsetof(CPUM68KState, sfc) },
+-    { "dfc", offsetof(CPUM68KState, dfc) },
+-    { "urp", offsetof(CPUM68KState, mmu.urp) },
+-    { "srp", offsetof(CPUM68KState, mmu.srp) },
+-    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]) },
+-    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]) },
+-    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]) },
+-    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]) },
+-    { "mmusr", offsetof(CPUM68KState, mmu.mmusr) },
++    { "d0", offsetof(CPUM68KState, dregs[0]), NULL, MD_I32 },
++    { "d1", offsetof(CPUM68KState, dregs[1]), NULL, MD_I32 },
++    { "d2", offsetof(CPUM68KState, dregs[2]), NULL, MD_I32 },
++    { "d3", offsetof(CPUM68KState, dregs[3]), NULL, MD_I32 },
++    { "d4", offsetof(CPUM68KState, dregs[4]), NULL, MD_I32 },
++    { "d5", offsetof(CPUM68KState, dregs[5]), NULL, MD_I32 },
++    { "d6", offsetof(CPUM68KState, dregs[6]), NULL, MD_I32 },
++    { "d7", offsetof(CPUM68KState, dregs[7]), NULL, MD_I32 },
++    { "a0", offsetof(CPUM68KState, aregs[0]), NULL, MD_I32 },
++    { "a1", offsetof(CPUM68KState, aregs[1]), NULL, MD_I32 },
++    { "a2", offsetof(CPUM68KState, aregs[2]), NULL, MD_I32 },
++    { "a3", offsetof(CPUM68KState, aregs[3]), NULL, MD_I32 },
++    { "a4", offsetof(CPUM68KState, aregs[4]), NULL, MD_I32 },
++    { "a5", offsetof(CPUM68KState, aregs[5]), NULL, MD_I32 },
++    { "a6", offsetof(CPUM68KState, aregs[6]), NULL, MD_I32 },
++    { "a7", offsetof(CPUM68KState, aregs[7]), NULL, MD_I32 },
++    { "pc", offsetof(CPUM68KState, pc), NULL, MD_I32 },
++    { "sr", offsetof(CPUM68KState, sr), NULL, MD_I32 },
++    { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_I32 },
++    { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_I32 },
++    { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_I32 },
++    { "sfc", offsetof(CPUM68KState, sfc), NULL, MD_I32 },
++    { "dfc", offsetof(CPUM68KState, dfc), NULL, MD_I32 },
++    { "urp", offsetof(CPUM68KState, mmu.urp), NULL, MD_I32 },
++    { "srp", offsetof(CPUM68KState, mmu.srp), NULL, MD_I32 },
++    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]), NULL, MD_I32 },
++    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]), NULL, MD_I32 },
++    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]), NULL, MD_I32 },
++    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]), NULL, MD_I32 },
++    { "mmusr", offsetof(CPUM68KState, mmu.mmusr), NULL, MD_I32 },
+     { NULL },
+ };
  
-     if (!decode(ctx, ctx->opcode)) {
-         qemu_log_mask(LOG_UNIMP, "Error: unknown opcode. "
 -- 
 2.52.0
 
