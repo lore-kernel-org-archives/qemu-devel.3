@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC757D29DD4
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 06:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC5ED29DD4
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 06:33:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfXqJ-0006Iv-8G; Tue, 13 Jan 2026 01:25:27 -0500
+	id 1vfXux-0001u9-89; Tue, 13 Jan 2026 01:30:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vfXqH-0006Gw-AZ; Tue, 13 Jan 2026 01:25:25 -0500
+ id 1vfXuv-0001tL-EX; Tue, 13 Jan 2026 01:30:13 -0500
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vfXqE-0007g2-Kd; Tue, 13 Jan 2026 01:25:25 -0500
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 7C307807CC;
- Tue, 13 Jan 2026 09:25:15 +0300 (MSK)
+ id 1vfXut-0008BK-5O; Tue, 13 Jan 2026 01:30:13 -0500
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 93C61807B3;
+ Tue, 13 Jan 2026 09:30:09 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:803e:400:93c4:8e38:1f90:3c73] (unknown
  [2a02:6bf:803e:400:93c4:8e38:1f90:3c73])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id CPMBkt4Al0U0-G4QxwWki; Tue, 13 Jan 2026 09:25:14 +0300
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 7UMZ4e5Ap0U0-Bw4lnULO; Tue, 13 Jan 2026 09:30:09 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768285515;
- bh=Upzzry1rt7I+TS7Hy4kcH8X9oTRHpsXtBI+ig/+HnKs=;
+ s=default; t=1768285809;
+ bh=Z9RGfIZsZWn1wm4SoksS9iVwNskMczF3C++lBNvF/J0=;
  h=In-Reply-To:Cc:Date:References:To:Subject:Message-ID:From;
- b=KyN81QvtJ6g+hwwO5aK086ggf6TXqBlt3Co/wVsgcc3ToB6eLodYt5QF21lG8cxqd
- yH+8WhsEP2r7Diypq6SfD3y18RKS/GVAF0h9yS8KDUrD3ZBoNTVyu5wcMYS4VuY/Gr
- ZohVFEICM5no5RZCepp0rZwMSB+jOpioUNWHeCNA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ b=XVFr2Mkl3+bwCrrBQDjDxlQCMDPx2TTUC9oXbeo7rnRJHnmbDR4pRWTdwG+Qz+XLX
+ 0X8+lnOeVDCXnktKGw0GYiF//lKdEBe4QKTA8szXjRv9D21fY+MObiFGtWrd/hKfeM
+ bASP1xaWidBuodD1AiH209jjL6j6NIo0G7f0A42o=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 Content-Type: multipart/alternative;
- boundary="------------deVnu0pTy8JPHIY90UQrVWvo"
-Message-ID: <3a84a77a-2f8b-4542-96e1-53211edb72db@yandex-team.ru>
-Date: Tue, 13 Jan 2026 11:25:12 +0500
+ boundary="------------QKZK2WCdD6atbKh7dPQzH0p7"
+Message-ID: <8667a0ca-b2f8-48c0-a3fe-85dd96ad5c96@yandex-team.ru>
+Date: Tue, 13 Jan 2026 11:30:07 +0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/5] vhost: add vmstate for inflight region with inner
- buffer
+Subject: Re: [PATCH v5 2/5] vhost-user: introduce protocol feature for skip
+ drain on GET_VRING_BASE
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel@nongnu.org, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
  Zhenwei Pi <pizhenwei@bytedance.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -59,11 +59,11 @@ Cc: qemu-devel@nongnu.org, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
  "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <20260112114503.1174330-1-dtalexundeer@yandex-team.ru>
- <20260112114503.1174330-5-dtalexundeer@yandex-team.ru>
- <20260112182259.GF462084@fedora>
+ <20260112114503.1174330-3-dtalexundeer@yandex-team.ru>
+ <20260112180807.GD462084@fedora>
 Content-Language: en-US
 From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-In-Reply-To: <20260112182259.GF462084@fedora>
+In-Reply-To: <20260112180807.GD462084@fedora>
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
@@ -88,88 +88,119 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This is a multi-part message in MIME format.
---------------deVnu0pTy8JPHIY90UQrVWvo
+--------------QKZK2WCdD6atbKh7dPQzH0p7
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
-On 1/12/26 23:22, Stefan Hajnoczi wrote:
-> On Mon, Jan 12, 2026 at 04:45:02PM +0500, Alexandr Moshkov wrote:
->> Prepare for future inflight region migration for vhost-user-blk.
->> We need to migrate size, queue_size, and inner buffer.
+On 1/12/26 23:08, Stefan Hajnoczi wrote:
+> On Mon, Jan 12, 2026 at 04:45:00PM +0500, Alexandr Moshkov wrote:
+>> Add vhost-user protocol feature
+>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT
 >>
->> So firstly it migrate size and queue_size fields, then allocate memory for buffer with
->> migrated size, then migrate inner buffer itself.
+>> Now on GET_VRING_BASE this feature can control whether to wait for
+>> in-flight requests to complete or not.
+>>
+>> It will be helpfull in future for in-flight requests migration in
+>> vhost-user devices.
 >>
 >> Signed-off-by: Alexandr Moshkov<dtalexundeer@yandex-team.ru>
 >> ---
->>   hw/virtio/vhost.c         | 42 +++++++++++++++++++++++++++++++++++++++
->>   include/hw/virtio/vhost.h |  6 ++++++
->>   2 files changed, 48 insertions(+)
+>>   docs/interop/vhost-user.rst    | 52 ++++++++++++++++++----------------
+>>   include/hw/virtio/vhost-user.h |  1 +
+>>   2 files changed, 29 insertions(+), 24 deletions(-)
 >>
->> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->> index c46203eb9c..9a746c9861 100644
->> --- a/hw/virtio/vhost.c
->> +++ b/hw/virtio/vhost.c
->> @@ -2028,6 +2028,48 @@ const VMStateDescription vmstate_backend_transfer_vhost_inflight = {
->>       }
->>   };
+>> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>> index 02908b48fa..80c80aada5 100644
+>> --- a/docs/interop/vhost-user.rst
+>> +++ b/docs/interop/vhost-user.rst
+>> @@ -1033,26 +1033,27 @@ Protocol features
 >>   
->> +static int vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
->> +{
->> +    info_report("vhost_inflight_region_buffer_pre_load");
->> +    struct vhost_inflight *inflight = opaque;
+>>   .. code:: c
+>>   
+>> -  #define VHOST_USER_PROTOCOL_F_MQ                    0
+>> -  #define VHOST_USER_PROTOCOL_F_LOG_SHMFD             1
+>> -  #define VHOST_USER_PROTOCOL_F_RARP                  2
+>> -  #define VHOST_USER_PROTOCOL_F_REPLY_ACK             3
+>> -  #define VHOST_USER_PROTOCOL_F_MTU                   4
+>> -  #define VHOST_USER_PROTOCOL_F_BACKEND_REQ           5
+>> -  #define VHOST_USER_PROTOCOL_F_CROSS_ENDIAN          6
+>> -  #define VHOST_USER_PROTOCOL_F_CRYPTO_SESSION        7
+>> -  #define VHOST_USER_PROTOCOL_F_PAGEFAULT             8
+>> -  #define VHOST_USER_PROTOCOL_F_CONFIG                9
+>> -  #define VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD      10
+>> -  #define VHOST_USER_PROTOCOL_F_HOST_NOTIFIER        11
+>> -  #define VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD       12
+>> -  #define VHOST_USER_PROTOCOL_F_RESET_DEVICE         13
+>> -  #define VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS 14
+>> -  #define VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS  15
+>> -  #define VHOST_USER_PROTOCOL_F_STATUS               16
+>> -  #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
+>> -  #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
+>> -  #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
+>> +  #define VHOST_USER_PROTOCOL_F_MQ                       0
+>> +  #define VHOST_USER_PROTOCOL_F_LOG_SHMFD                1
+>> +  #define VHOST_USER_PROTOCOL_F_RARP                     2
+>> +  #define VHOST_USER_PROTOCOL_F_REPLY_ACK                3
+>> +  #define VHOST_USER_PROTOCOL_F_MTU                      4
+>> +  #define VHOST_USER_PROTOCOL_F_BACKEND_REQ              5
+>> +  #define VHOST_USER_PROTOCOL_F_CROSS_ENDIAN             6
+>> +  #define VHOST_USER_PROTOCOL_F_CRYPTO_SESSION           7
+>> +  #define VHOST_USER_PROTOCOL_F_PAGEFAULT                8
+>> +  #define VHOST_USER_PROTOCOL_F_CONFIG                   9
+>> +  #define VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD         10
+>> +  #define VHOST_USER_PROTOCOL_F_HOST_NOTIFIER           11
+>> +  #define VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD          12
+>> +  #define VHOST_USER_PROTOCOL_F_RESET_DEVICE            13
+>> +  #define VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS    14
+>> +  #define VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS     15
+>> +  #define VHOST_USER_PROTOCOL_F_STATUS                  16
+>> +  #define VHOST_USER_PROTOCOL_F_XEN_MMAP                17
+>> +  #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT           18
+>> +  #define VHOST_USER_PROTOCOL_F_DEVICE_STATE            19
+>> +  #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT 20
+>>   
+>>   Front-end message types
+>>   -----------------------
+>> @@ -1243,11 +1244,14 @@ Front-end message types
+>>   
+>>     When and as long as all of a device's vrings are stopped, it is
+>>     *suspended*, see :ref:`Suspended device state
+>> -  <suspended_device_state>`. The back-end must complete all inflight I/O
+>> -  requests for the specified vring before stopping it.
+>> +  <suspended_device_state>`.
+>>   
+>> -  The request payload's *num* field is currently reserved and must be
+>> -  set to 0.
+>> +  By default, the back-end must complete all inflight I/O requests for the
+>> +  specified vring before stopping it.
 >> +
->> +    int fd = -1;
->> +    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
->> +                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
->> +                                  &fd, errp);
->> +    if (*errp) {
->> +        return -ENOMEM;
->> +    }
->> +
->> +    inflight->offset = 0;
->> +    inflight->addr = addr;
->> +    inflight->fd = fd;
->> +
->> +    return 0;
->> +}
->> +
->> +const VMStateDescription vmstate_vhost_inflight_region_buffer = {
->> +    .name = "vhost-inflight-region/buffer",
->> +    .pre_load_errp = vhost_inflight_buffer_pre_load,
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
->> +        VMSTATE_END_OF_LIST()
->> +    }
->> +};
->> +
->> +const VMStateDescription vmstate_vhost_inflight_region = {
->> +    .name = "vhost-inflight-region",
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_UINT64(size, struct vhost_inflight),
->> +        VMSTATE_UINT16(queue_size, struct vhost_inflight),
->> +        VMSTATE_END_OF_LIST()
->> +    },
->> +    .subsections = (const VMStateDescription * const []) {
->> +        &vmstate_vhost_inflight_region_buffer,
->> +        NULL
->> +    }
->> +};
-> The subsection trick is neat - it allows the size to be loaded first and
-> then the memfd is allocated. However, it introduces a weird case: if the
-> source QEMU does not send the subsection, then the destination QEMU
-> loads successfully but with inflight partially uninitialized.
+>> +  If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol feature
+>> +  has been negotiated, the back-end may stop the vring immediately without
+>> +  waiting for inflight I/O requests to complete.
+> This paragraph is not specific enough. It gives the impression that I/O
+> requests can be left running, but that's not the case. They need to be
+> quiesced and recorded in the Inflight I/O Tracking
+> (VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD) shared memory data structure.
 >
-> It's not obvious to me that the destination QEMU will fail in a safe way
-> when this happens. The source QEMU must not be able to trigger undefined
-> behavior. Can you add an explicit check somewhere to fail when this
-> required subsection is missing?
+> I suggest rewording it as follows:
 >
-Thanks for reply! For this check, I can add post_load on 
-`vmstate_vhost_inflight_region` vmstate and check that `inflight->addr` 
-has been initialized (not NULL)
---------------deVnu0pTy8JPHIY90UQrVWvo
+>    If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
+>    feature has been negotiated, the back-end may suspend in-flight I/O
+>    requests and record them as described in :ref:`inflight-io-tracking`
+>    instead of completing them before stopping the vring. How to suspend
+>    an in-flight request depends on the implementation of the back-end but
+>    it typically can be done by aborting or cancelling the underlying I/O
+>    request. The ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT``
+>    protocol feature must only be neogotiated if
+>    ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD`` is also negotiated.
+>
+> (A _inflight-io-tracking label needs to be added in order to reference
+> the "Inflight I/O tracking" section.)
+
+I'll fix that, thanks!
+
+--------------QKZK2WCdD6atbKh7dPQzH0p7
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -181,96 +212,123 @@ Content-Transfer-Encoding: 7bit
   <body>
     <p><br>
     </p>
-    <div class="moz-cite-prefix">On 1/12/26 23:22, Stefan Hajnoczi
+    <div class="moz-cite-prefix">On 1/12/26 23:08, Stefan Hajnoczi
       wrote:<br>
     </div>
-    <blockquote type="cite" cite="mid:20260112182259.GF462084@fedora">
-      <pre wrap="" class="moz-quote-pre">On Mon, Jan 12, 2026 at 04:45:02PM +0500, Alexandr Moshkov wrote:
+    <blockquote type="cite" cite="mid:20260112180807.GD462084@fedora">
+      <pre wrap="" class="moz-quote-pre">On Mon, Jan 12, 2026 at 04:45:00PM +0500, Alexandr Moshkov wrote:
 </pre>
       <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">Prepare for future inflight region migration for vhost-user-blk.
-We need to migrate size, queue_size, and inner buffer.
+        <pre wrap="" class="moz-quote-pre">Add vhost-user protocol feature
+VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT
 
-So firstly it migrate size and queue_size fields, then allocate memory for buffer with
-migrated size, then migrate inner buffer itself.
+Now on GET_VRING_BASE this feature can control whether to wait for
+in-flight requests to complete or not.
+
+It will be helpfull in future for in-flight requests migration in
+vhost-user devices.
 
 Signed-off-by: Alexandr Moshkov <a class="moz-txt-link-rfc2396E" href="mailto:dtalexundeer@yandex-team.ru">&lt;dtalexundeer@yandex-team.ru&gt;</a>
 ---
- hw/virtio/vhost.c         | 42 +++++++++++++++++++++++++++++++++++++++
- include/hw/virtio/vhost.h |  6 ++++++
- 2 files changed, 48 insertions(+)
+ docs/interop/vhost-user.rst    | 52 ++++++++++++++++++----------------
+ include/hw/virtio/vhost-user.h |  1 +
+ 2 files changed, 29 insertions(+), 24 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index c46203eb9c..9a746c9861 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2028,6 +2028,48 @@ const VMStateDescription vmstate_backend_transfer_vhost_inflight = {
-     }
- };
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index 02908b48fa..80c80aada5 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -1033,26 +1033,27 @@ Protocol features
  
-+static int vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
-+{
-+    info_report("vhost_inflight_region_buffer_pre_load");
-+    struct vhost_inflight *inflight = opaque;
+ .. code:: c
+ 
+-  #define VHOST_USER_PROTOCOL_F_MQ                    0
+-  #define VHOST_USER_PROTOCOL_F_LOG_SHMFD             1
+-  #define VHOST_USER_PROTOCOL_F_RARP                  2
+-  #define VHOST_USER_PROTOCOL_F_REPLY_ACK             3
+-  #define VHOST_USER_PROTOCOL_F_MTU                   4
+-  #define VHOST_USER_PROTOCOL_F_BACKEND_REQ           5
+-  #define VHOST_USER_PROTOCOL_F_CROSS_ENDIAN          6
+-  #define VHOST_USER_PROTOCOL_F_CRYPTO_SESSION        7
+-  #define VHOST_USER_PROTOCOL_F_PAGEFAULT             8
+-  #define VHOST_USER_PROTOCOL_F_CONFIG                9
+-  #define VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD      10
+-  #define VHOST_USER_PROTOCOL_F_HOST_NOTIFIER        11
+-  #define VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD       12
+-  #define VHOST_USER_PROTOCOL_F_RESET_DEVICE         13
+-  #define VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS 14
+-  #define VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS  15
+-  #define VHOST_USER_PROTOCOL_F_STATUS               16
+-  #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
+-  #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
+-  #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
++  #define VHOST_USER_PROTOCOL_F_MQ                       0
++  #define VHOST_USER_PROTOCOL_F_LOG_SHMFD                1
++  #define VHOST_USER_PROTOCOL_F_RARP                     2
++  #define VHOST_USER_PROTOCOL_F_REPLY_ACK                3
++  #define VHOST_USER_PROTOCOL_F_MTU                      4
++  #define VHOST_USER_PROTOCOL_F_BACKEND_REQ              5
++  #define VHOST_USER_PROTOCOL_F_CROSS_ENDIAN             6
++  #define VHOST_USER_PROTOCOL_F_CRYPTO_SESSION           7
++  #define VHOST_USER_PROTOCOL_F_PAGEFAULT                8
++  #define VHOST_USER_PROTOCOL_F_CONFIG                   9
++  #define VHOST_USER_PROTOCOL_F_BACKEND_SEND_FD         10
++  #define VHOST_USER_PROTOCOL_F_HOST_NOTIFIER           11
++  #define VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD          12
++  #define VHOST_USER_PROTOCOL_F_RESET_DEVICE            13
++  #define VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS    14
++  #define VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS     15
++  #define VHOST_USER_PROTOCOL_F_STATUS                  16
++  #define VHOST_USER_PROTOCOL_F_XEN_MMAP                17
++  #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT           18
++  #define VHOST_USER_PROTOCOL_F_DEVICE_STATE            19
++  #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT 20
+ 
+ Front-end message types
+ -----------------------
+@@ -1243,11 +1244,14 @@ Front-end message types
+ 
+   When and as long as all of a device's vrings are stopped, it is
+   *suspended*, see :ref:`Suspended device state
+-  &lt;suspended_device_state&gt;`. The back-end must complete all inflight I/O
+-  requests for the specified vring before stopping it.
++  &lt;suspended_device_state&gt;`.
+ 
+-  The request payload's *num* field is currently reserved and must be
+-  set to 0.
++  By default, the back-end must complete all inflight I/O requests for the
++  specified vring before stopping it.
 +
-+    int fd = -1;
-+    void *addr = qemu_memfd_alloc("vhost-inflight", inflight-&gt;size,
-+                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-+                                  &amp;fd, errp);
-+    if (*errp) {
-+        return -ENOMEM;
-+    }
-+
-+    inflight-&gt;offset = 0;
-+    inflight-&gt;addr = addr;
-+    inflight-&gt;fd = fd;
-+
-+    return 0;
-+}
-+
-+const VMStateDescription vmstate_vhost_inflight_region_buffer = {
-+    .name = "vhost-inflight-region/buffer",
-+    .pre_load_errp = vhost_inflight_buffer_pre_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+const VMStateDescription vmstate_vhost_inflight_region = {
-+    .name = "vhost-inflight-region",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(size, struct vhost_inflight),
-+        VMSTATE_UINT16(queue_size, struct vhost_inflight),
-+        VMSTATE_END_OF_LIST()
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &amp;vmstate_vhost_inflight_region_buffer,
-+        NULL
-+    }
-+};
++  If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol feature
++  has been negotiated, the back-end may stop the vring immediately without
++  waiting for inflight I/O requests to complete.
 </pre>
       </blockquote>
       <pre wrap="" class="moz-quote-pre">
-The subsection trick is neat - it allows the size to be loaded first and
-then the memfd is allocated. However, it introduces a weird case: if the
-source QEMU does not send the subsection, then the destination QEMU
-loads successfully but with inflight partially uninitialized.
+This paragraph is not specific enough. It gives the impression that I/O
+requests can be left running, but that's not the case. They need to be
+quiesced and recorded in the Inflight I/O Tracking
+(VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD) shared memory data structure.
 
-It's not obvious to me that the destination QEMU will fail in a safe way
-when this happens. The source QEMU must not be able to trigger undefined
-behavior. Can you add an explicit check somewhere to fail when this
-required subsection is missing?
+I suggest rewording it as follows:
 
-</pre>
+  If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
+  feature has been negotiated, the back-end may suspend in-flight I/O
+  requests and record them as described in :ref:`inflight-io-tracking`
+  instead of completing them before stopping the vring. How to suspend
+  an in-flight request depends on the implementation of the back-end but
+  it typically can be done by aborting or cancelling the underlying I/O
+  request. The ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT``
+  protocol feature must only be neogotiated if
+  ``VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD`` is also negotiated.
+
+(A _inflight-io-tracking label needs to be added in order to reference
+the "Inflight I/O tracking" section.)</pre>
     </blockquote>
-    Thanks for reply! For this check, I can add post_load on
-    `vmstate_vhost_inflight_region` vmstate and check that
-    `inflight-&gt;addr` has been initialized (not NULL)<span
-    style="white-space: pre-wrap">
-</span>
+    <p>I'll fix that, thanks!<span style="white-space: pre-wrap">
+</span></p>
   </body>
 </html>
 
---------------deVnu0pTy8JPHIY90UQrVWvo--
+--------------QKZK2WCdD6atbKh7dPQzH0p7--
 
