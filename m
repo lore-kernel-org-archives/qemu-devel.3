@@ -4,149 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A482D2F34B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 17:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C003D2F347
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 17:51:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfi7u-0000fE-G3; Tue, 13 Jan 2026 12:24:18 -0500
+	id 1vfiWe-0005sP-8S; Tue, 13 Jan 2026 12:49:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfi7m-0000XL-2R
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 12:24:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vfiUm-0005QY-CQ
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 12:47:59 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfi7k-0000Gu-BD
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 12:24:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768325046;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vU5T2lph0Yn2HPeiVquBdQ09HdZWt0B/c6yMKdHSyvg=;
- b=FkvupiZQFx8gAVV+l5AgFFjXh/X8P5VsDk00S91HvuJcrBM1e5GanFpzlmz9IcB5EOfoS7
- +sFiGndnICn0N/TFIpmVNTKv4RLHuJRBbam9ZzTDarPgo8qkgSRb9U/3Vl2Nz65r2D4Hrh
- 5yrkayoHvQvLKNhykgfW1z6JIktdnnI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-LHvco2FRM_ebYNpAOhCvzQ-1; Tue, 13 Jan 2026 12:24:05 -0500
-X-MC-Unique: LHvco2FRM_ebYNpAOhCvzQ-1
-X-Mimecast-MFC-AGG-ID: LHvco2FRM_ebYNpAOhCvzQ_1768325044
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-430fcb6b2ebso4801228f8f.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 09:24:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768325044; x=1768929844; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=vU5T2lph0Yn2HPeiVquBdQ09HdZWt0B/c6yMKdHSyvg=;
- b=D8yDmLwaP+cmsouDtrUU/S141RcQKfXrSc1WVcLDwrKTx6yIyB2RsCd01p/lIP634O
- mPTY7Rt3QQ703YUfEUpYmWAXscwtFrmW7/LfRRNhVyUEOf/J+HjphQxE264QVjgIShHH
- ahz3KHlkt4h94gaXK7NMdM7cJSGTWZ2uGsBYXHr5S2XMO6BcOpqbtYIIbDM7GTNhKHqR
- RdF9UAjZtrZk595ateodPT/fCWT9E+MFdJhj+cLymvvuVjzhHulDOZDQMq7zghhL20+e
- IcXPnfiY7ydxjsCBnsmyqy7nlk52gb1ZjfvICsPxwYXHt4RbBAm9d6rXVS0xeETfN7k9
- X+nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768325044; x=1768929844;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vU5T2lph0Yn2HPeiVquBdQ09HdZWt0B/c6yMKdHSyvg=;
- b=YDXmTzOKkgcjTk53m06LEgcp1rvexXkSCv3mVvrDkllLsMy0P7DuF8B1UajkgaIkz0
- z4zZDGWzRzYXqoRbIZQipJIYknxZZDzJ3rECzREOjFrKkccIh4cZB8J+mmo67FQthW5j
- tn3xD8hHfcIfnBmJRGiD4BFgxCQNiuExO/TsHU8/qX2XjiP2UPmOf+NUd3Bg650Pk8V6
- Qdgo6Gn27/D7XAd/joM95AYAcbctbTJ/pGsojNXJCgDhVY/nt1TTGUHEQyb3blH1xiWg
- NLyGp4sev9e4sS/6Vk1zKPZRZzhrjvxateeT48E69j5HbAET62dQfX3V5AaE1ltFeoBB
- vSSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUc0UkuZ4SNYoG194HtIl0CTv6cq2BpJgAGbhP49ZlNCSRaZ2jCbjQSVOfSTVrGr25mjstd9MSqqMQY@nongnu.org
-X-Gm-Message-State: AOJu0Yzv4dtRbAkqYKvST3yKpMDU+zesQSYMqqRHPUfT4BARQfTYakMQ
- B8pT+sn1zCa4UnEE9NC5f6cBCmchipg4hlRUfsq9gHrPIsCy28I4ftQw6t6l0DRzE42Y/WAIoEn
- Dv9UjWaeJ7I56YD808TZ00ltAATuh6YfbxO1x5BT3zNjSxsiuiJCdcK7B
-X-Gm-Gg: AY/fxX6GZSgKW2wAxiKrUbbKE/GFyINKu/LiJ6xZhxSrZTByjgeqHO131tZFz3v0gDR
- 9p5lfSypmsE6kQCbuVSQC/8OJGii+e632uVXvXCRGHiqbK43qsAfZlH5qCFwkS9lmk2InzVXWgW
- JZQARedWXwfH8ikBS70IxLORt37Cv1kHiQl3PTI8jkS8nhV19enOwaaMo+xcoQZyyerz27+DnEJ
- kGlVzH6Mg6l1CLfKUNHDni8t88jbJtbmkF5BzKm3vzGIvCkyJ7O/fEC0qhhSccpuPQTeOzovHCR
- MVYt83TQALJng+QURHQBj1tBz5BSfURE5vJfY16hefuAE5aoY20fvM1uSwx4tT8N88i8uxS+KPi
- +CsBgMKQ8JJBQjYNUMkLZOhXXxkTBg2GtziZYA+ZbqqEXIHNv5SH3wwbMxNFJStGFb5w4s3jxr1
- lrjQ3Hgx5vEWoS8w==
-X-Received: by 2002:a05:6000:26c6:b0:434:24e2:bed7 with SMTP id
- ffacd0b85a97d-43424e2bf85mr4001404f8f.13.1768325043766; 
- Tue, 13 Jan 2026 09:24:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHX9IXsYd2sLD2dCevKWzzxIjwLO5L1PiO/aC/ToqylRmqgmVeYMkYhqFusqCy3RhJgwEjgjg==
-X-Received: by 2002:a05:6000:26c6:b0:434:24e2:bed7 with SMTP id
- ffacd0b85a97d-43424e2bf85mr4001381f8f.13.1768325043376; 
- Tue, 13 Jan 2026 09:24:03 -0800 (PST)
-Received: from [192.168.10.48] ([151.61.26.160])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-432bd5ee24esm45005700f8f.33.2026.01.13.09.24.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jan 2026 09:24:02 -0800 (PST)
-Message-ID: <b302b2d9-16aa-4f79-83b3-ea749696af0c@redhat.com>
-Date: Tue, 13 Jan 2026 18:24:01 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vfiUi-0004QX-Hf
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 12:47:56 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4drGsf4tW6zHnGh7;
+ Wed, 14 Jan 2026 01:47:18 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id 12E9B40086;
+ Wed, 14 Jan 2026 01:47:37 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 13 Jan
+ 2026 17:47:36 +0000
+Date: Tue, 13 Jan 2026 17:47:35 +0000
+To: Markus Armbruster <armbru@redhat.com>
+CC: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>,
+ <shiju.jose@huawei.com>, <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
+ Ravi Shankar <venkataravis@micron.com>
+Subject: Re: [PATCH qemu v2 2/5] hw/cxl/events: Update for rev3.2 common
+ event record format
+Message-ID: <20260113174735.00002934@huawei.com>
+In-Reply-To: <87ldi3f2m2.fsf@pond.sub.org>
+References: <20260102151512.460766-1-Jonathan.Cameron@huawei.com>
+ <20260102151512.460766-3-Jonathan.Cameron@huawei.com>
+ <87ldi3f2m2.fsf@pond.sub.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/mshv: Remove remap overlapping mappings code
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>
-References: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,34 +70,187 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/13/26 16:37, Magnus Kulke wrote:
-> This change removes userland code that worked around a restriction
-> in the mshv driver in the 6.18 kernel: regions from userland
-> couldn't be mapped to multiple regions in the kernel. We maintained a
-> shadow mapping table in qemu and used a heuristic to swap in a requested
-> region in case of UNMAPPED_GPA exits.
-> 
-> However, this heuristic wasn't reliable in all cases, since HyperV
-> behaviour is not 100% reliable across versions. HyperV itself doesn't
-> prohibit to map regions at multiple places into the guest, so the
-> restriction has been removed in the mshv driver.
-> 
-> Hence we can remove the remapping code. Effectively this will mandate a
-> 6.19 kernel, if the workload attempt to map e.g. BIOS to multiple
-> reagions. I still think it's the right call to remove this logic:
-> 
-> - The workaround only seems to work reliably with a certain revision
->    of HyperV as a nested hypervisor.
-> - We expect Direct Virtualization (L1VH) to be the main platform for
->    the mshv accelerator, which also requires a 6.19 kernel
+On Mon, 12 Jan 2026 13:16:05 +0100
+Markus Armbruster <armbru@redhat.com> wrote:
 
-What other changes are needed?
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
+>=20
+> > From: Shiju Jose <shiju.jose@huawei.com>
+> >
+> > CXL spec 3.2 section 8.2.9.2.1 Table 8-55, Common Event Record
+> > format has updated with optional Maintenance Operation Subclass,
+> > LD ID and ID of the device head information.
+> >
+> > Add updates for the above optional parameters in the related
+> > CXL events reporting and in the QMP commands to inject CXL events.
+> >
+> > Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-I'll leave the code in for a while until 6.19 is released.
+Hi Markus,
+Thanks for taking a look!
 
-Paolo
+> > ---
+> >  qapi/cxl.json               | 20 ++++++++---
+> >  include/hw/cxl/cxl_device.h |  7 +++-
+> >  include/hw/cxl/cxl_events.h | 15 ++++++--
+> >  hw/cxl/cxl-events.c         |  3 +-
+> >  hw/cxl/cxl-mailbox-utils.c  |  3 +-
+> >  hw/mem/cxl_type3.c          | 70 ++++++++++++++++++++++++++++++++-----
+> >  hw/mem/cxl_type3_stubs.c    | 24 +++++++++++--
+> >  7 files changed, 121 insertions(+), 21 deletions(-)
+> >
+> > diff --git a/qapi/cxl.json b/qapi/cxl.json
+> > index d5b86159f1..b3c2ac9575 100644
+> > --- a/qapi/cxl.json
+> > +++ b/qapi/cxl.json
+> > @@ -33,20 +33,32 @@
+> >  ##
+> >  # @CXLCommonEventBase:
+> >  #
+> > -# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
+> > -# Table 8-42 Common Event Record Format).
+> > +# Common event base for a CXL Event (CXL r3.2 8.2.10.2.1
+> > +# Table 8-55 Common Event Record Format).
+> >  #
+> >  # @path: CXL type 3 device canonical QOM path
+> >  #
+> >  # @log: event log to add the event to
+> >  #
+> > -# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+> > +# @flags: Event Record Flags.  See CXL r3.2 Table 8-55 Common Event
+> >  #     Record Format, Event Record Flags for subfield definitions.
+> >  #
+> > +# @maint-op-class: Maintenance operation class the device requests to
+> > +#     initiate.
+> > +#
+> > +# @maint-op-subclass: Maintenance operation subclass the device
+> > +#     requests to initiate.
+> > +#
+> > +# @ld-id: LD ID of LD from where the event originated. =20
+
+Logical Device.  I'll spell it out the first time. From the glossary:
+"LD: Logical Device. Entity that represents a CXL Endpoint that is bound to
+a VCS.  An SLD contains one LD. An MLD contains multiple LDs."
+
+So what does that actually mean?  It's a number that identifies the
+bit of a device that is presented to a given host at a particular
+point in the PCI topology that we are faking from the underlying CXL
+one.=20
+
+I think best I can do is just spell out the acronyms. If people
+want more they need to look at the spec :(
+
+Time for a deeper explanation that probably no one ever wanted :)
+
+=46rom a physical topology point of view think of something like:
+
+vPPDs are virtual downstream ports that assign an LD ID.
+
+	HOST 0           HOST 1               Host 3
+	  |                 |                   |
+         RP                RP                  RP
+          |                 |                   |
+          |                 |                   |
+        __|_________________|______             |
+       |  |   SWITCH        |      |            |
+       | _|_____       _____|_     |            |
+       ||       |     |       |    |            |
+       ||       |     |       |    |            |
+       |vPPD0  vPPD1 VPPD2   VPPD3 |            |
+       ||       |     |          | |            |
+       ||_____________|          | |            |
+       |           |             | |            |
+       |___________DSP0________DSP1|            |
+                     |           |              |
+                     |       Some other dev     |
+              Traffic tagged                    |=20
+              with an LD_ID associated with     |
+              a given vPPD (so 2 tags here)     |
+                     |                          |
+     ________________|__________________________|______
+    | (CXL Device) HEAD0                     HEAD1     |
+    |           Now splits up based         Only one LD|
+    |           on LD_ID                               |
+    |__________________________________________________|
+
+
+Hosts see:
+Used letters for down stream port numbers to avoid
+any explicit mapping to the physical ports above.
+
+
+          HOST 0                  Host 1             Host3  =20
+            |                       |                  |
+           RP                       RP                RP
+            |                       |                  |
+    ________|_________     _________|_________         |
+   |        |         |   |         |         |        |
+   |    ____|____     |   |   ______|______   |        |
+   |   |         |    |   |  |             |  |        |
+   |__DSPA______DSPB__|   |__DSPA________DSPB_|        |
+       |          |           |            |           |
+    ___|______  Nothing  _____|_____      Other dev ___|______
+   |CXL Type3 |          |CXL Type3 |              |CXL Type3 |
+   | (H0, LD0)|          | (H0, LD1)|              | (H1, LD0)|
+   |__________|          |__________|              |__________|
+
+These IDs should only be reported for events that are isolated=20
+(as appropriate) to a head and/or LD and as you can see the hosts
+don't actually know these IDs even exist hence there is no need to
+report them via in band path.  If they don't take the values
+that reflect the LD we are actually talking to, then we are
+reporting someone else's error! Via out of band / switch CCI we
+see the top diagram where we definitely need LD_ID and HEAD_ID
+to make any sense of errors, particularly as the memory addresses
+in the records are specific to Head/LD pair.
+=20
+The recommendation of the spec is don't set them for simple reporting
+over inband mailboxes. Now you might think we don't have out of band
+support upstream yet (my staging CXL tree does have both MCTP over
+I2C and USB) but we do have the switch CCI and that can tunnel to
+out of band interfaces (technically it's over PCI Vendor defined
+messages but in practice it ends up the same from a 'what can I talk
+to' point of view as something truely out of band like an I2C bus.
+We don't actually have event queues on those yet though... When
+we do we'll want this command to queue events there as well as on
+for inband path.
+
+So we are adding them now for 2 reasons.
+1) The spec allows it even for boring inband event reporting
+   (recommendation only to not do so) so we need to check the kernel stack
+   reports correctly.
+2) We will want to add event queues on the out of band interfaces and
+   for those we'll need these IDs.
+
+>=20
+> What's an LD?
+>=20
+> > +#
+> > +# @head-id: ID of the device head from where the event originated. =20
+>=20
+> Are these identifiers taken from the CXL spec?
+Yes. Though feels odd to reference the glossary for the definitions.
+>=20
+> > +#
+> >  # Since: 8.1
+> >  ##
+> >  { 'struct': 'CXLCommonEventBase',
+> > -  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
+> > +  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint32',
+> > +            '*maint-op-class':'uint8', '*maint-op-subclass':'uint8',
+> > +            '*ld-id':'uint16', '*head-id':'uint8' } }
+> > =20
+> >  ##
+> >  # @CXLGeneralMediaEvent: =20
+>=20
+> [...]
+>=20
+>=20
 
 
