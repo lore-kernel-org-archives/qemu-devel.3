@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A2DD2D10E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 14:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45ADFD2D10F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 14:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vffI1-00072K-0N; Tue, 13 Jan 2026 09:22:33 -0500
+	id 1vffTo-0004Xc-Sv; Tue, 13 Jan 2026 09:34:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vffHy-000718-Ko
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:22:30 -0500
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vffHx-000549-23
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:22:30 -0500
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-6467c5acb7dso7242787d50.1
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 06:22:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768314145; x=1768918945; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jX/g6IK0D7xz2jiAxhGaAuWhBdvtQpzR0olmMjI60I0=;
- b=r4+k4Dsd11JLGipRGt36DG25fNw1wJMlY7nb/eQ8J4XBzVTmDJEIxOrzF4agSoFRMO
- 5fTfl9leV2kNJvth2b+7EnGcOYloawdGu6VSG+/MI9eaSC3rzjh6nlTdByHip5GE8/KP
- 49R1OUDssNIvNkZVSPJJ6SnjL6hVOi5LKjeY9ZaDGJN4WoLorpUNMVGTnuf7/6BzFhWO
- y5/DYBEPHc19CbcT6C6F70Boc+EY/jLj1JnLpLzfz6LnRy9lOJTEv4YHpPkukgYkGWcV
- xKOY3rBwrGIOqHsSYgx9kTa+BxAa4ethU0rJlSgNYvSXA7Ru8U+qGMxpDurWfp/lYRo2
- jpTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768314145; x=1768918945;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jX/g6IK0D7xz2jiAxhGaAuWhBdvtQpzR0olmMjI60I0=;
- b=CK+wcpTgIvmnjN4+3V/Ru+luvdiESM3ykVIrnGPWEfNtVO+Nr28MLIOzroJu6eCSdC
- D3FaO01A87UreZ3J6+5DOqHMOsgAZEms1tm2SjPe+ofnxjD+WLne7Y1+ztWpxhccK5n8
- JpoHq0dIdwRbc1SB6tQfKT5MZvm19X3CcN/yEQFFezMteZEn1nDTdD0WTB8rRjDRy+xq
- 1jF21U9lelnm3WfQ3WYaDTzQgDAxrHzi47gfM/HcGU8/q3eoM9l/JFAoZ0QlJ5Xxc72e
- Dm0zHkv2o6Emcm8ycr9CVpuqVcQlf1TGSr6+KC7Nnnz0vBfaN6v9+pc19sgWVjnW/Lp5
- GfWw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSPb2dlU01ZJ43X1VBGwOsVrdB4InXNBU28Y9NK077oOU2ifLl7ITsWE7kIC+sxNjQ6W+gxK5hyW5b@nongnu.org
-X-Gm-Message-State: AOJu0YxAHytmJ8ySUvMwfMeZtPbcjtUUK5NTXr1ekqUtVhwv1Q4dsfdC
- awg00S92+gOz6uRx4SwtXH55a1UwWpqMMORIoTDyWxzsHrrIGzEPyKU3qGQTjSTB9lRrOkuyAeW
- v0NwwNeWlzfA1wikedMCtGje/V8SvBQo79AP4ZxTJiQ==
-X-Gm-Gg: AY/fxX4NlnEV8xA1nS1jQ7rmlFRtj7pII51RbmuY62qd81d/n+VMwK7y6vSEhAOMsvD
- ldpH4v3i49hCo8uUqwdKiUZa8ZrB6w6tzVQrEsmx3ZWIuaGZv11Y+/Rx2MU37DlVZmqDPm8o5zn
- 6vZwy7vinv94OOevn4zBZ8jf91x/opNYes8g4/QMh30kgm7k+kuhw1k7w1EU5xOzbQ0ftYM5av1
- 1BvWNVyVY7dHLCbdUxQ7g5tCjlh1+MdmA2lkw4dF8mv0FMcmf2g8wA2ogJu7lPSRgqCqJDTd/Fu
- quzb0GYMSi/e9WqjLyQftJw=
-X-Google-Smtp-Source: AGHT+IEhYLOyIAm5ZjH4d3M1fspheHXuPTHyJakRJuGrzyCEJ7q0h1PsAN3X8jQxlboCJ1Zt1MgXK1e31juuNDAJM+Q=
-X-Received: by 2002:a05:690e:1305:b0:645:5bfc:8be4 with SMTP id
- 956f58d0204a3-64716c75018mr17820044d50.66.1768314145343; Tue, 13 Jan 2026
- 06:22:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vffTJ-0004QD-FB
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:34:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vffTH-0006ZA-Lx
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:34:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768314851;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z0z6OpOegSWo+lRcDyawfWXccycFCage2yh+erT0Rh4=;
+ b=jJeh7R+ZJxESjcSxuch8l7qX1Gmc8qO9JJX8VWYRpCjc4CSvhds0BaEM+zKbZK+iY7nZuG
+ tutVyMCvYdboZ2PBbkcrRdU39JYQh4+RjTyq+Elk+LHIsvNW8SzUCqDblM+i/n6WvLwNmj
+ RzYIaS5XyimC20oIF3VD9OX2m/FWQMY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-HJJfKSQuNdi6K_oAp4qk_g-1; Tue,
+ 13 Jan 2026 09:34:07 -0500
+X-MC-Unique: HJJfKSQuNdi6K_oAp4qk_g-1
+X-Mimecast-MFC-AGG-ID: HJJfKSQuNdi6K_oAp4qk_g_1768314846
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C1FBB1955D8E; Tue, 13 Jan 2026 14:34:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.87])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA2031800240; Tue, 13 Jan 2026 14:34:04 +0000 (UTC)
+Date: Tue, 13 Jan 2026 14:34:01 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH] tests/qemu-iotests: Use "gsed" for expressions that
+ require GNU sed
+Message-ID: <aWZX2c2q7BUgIFz3@redhat.com>
+References: <20260113141415.97281-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20260106062145.151760-1-ruanjinjie@huawei.com>
-In-Reply-To: <20260106062145.151760-1-ruanjinjie@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 13 Jan 2026 14:22:13 +0000
-X-Gm-Features: AZwV_Qgx5oFioZ9G0d1vSQtUGiY8_4AN72nVJvzI7loBopmDgQnzICkqTWhZmSw
-Message-ID: <CAFEAcA-gztPHR=Pe743n-tCYuBK4KuXx5JsEdR4vqL33Kb50kg@mail.gmail.com>
-Subject: Re: [PATCH] hw/rtc/mc146818rtc: Fix get_guest_rtc_ns() overflow bug
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: mst@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260113141415.97281-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,52 +87,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Jan 2026 at 06:22, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
->
-> In get_guest_rtc_ns(), "s->base_rtc" is uint64_t, which multiplied by
-> "NANOSECONDS_PER_SECOND" may overflow the uint64_t type.
->
-> Fix it by avoiding adding s->base_rtc in get_guest_rtc_ns_offset(),
-> because get_guest_rtc_ns() is used either take the remainder of
-> NANOSECONDS_PER_SECOND or take the quotient of NANOSECONDS_PER_SECOND.
->
-> Fixes: 56038ef6234e ("RTC: Update the RTC clock only when reading it")
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+On Tue, Jan 13, 2026 at 03:14:15PM +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> A bunch of tests are currently failing e.g. on FreeBSD like this:
+> 
+>  082   fail       [13:38:58] [13:38:59]   0.5s                 output
+>   mismatch (see .../build/tests/qemu-iotests/scratch/qcow2-file-082/082.out.bad)
+>  --- .../src/tests/qemu-iotests/082.out
+>  +++ .../build/tests/qemu-iotests/scratch/qcow2-file-082/082.out.bad
+>  @@ -17,7 +17,7 @@
+>   cluster_size: 4096
+>   Format specific information:
+>       compat: 1.1
+>  -    compression type: COMPRESSION_TYPE
+>  +    compression type: zlib
+>       lazy refcounts: true
+>       refcount bits: 16
+>       corrupt: false
+> 
+> This happens because the sed statements require GNU sed. Let's use
+> gsed in these spots to get it fixed.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/rtc/mc146818rtc.c | 11 +++--------
->  1 file changed, 3 insertions(+), 8 deletions(-)
->
-> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-> index 8631386b9f..78bdfab8bd 100644
-> --- a/hw/rtc/mc146818rtc.c
-> +++ b/hw/rtc/mc146818rtc.c
-> @@ -79,10 +79,7 @@ static inline bool rtc_running(MC146818RtcState *s)
->
->  static uint64_t get_guest_rtc_ns(MC146818RtcState *s)
->  {
-> -    uint64_t guest_clock = qemu_clock_get_ns(rtc_clock);
-> -
-> -    return s->base_rtc * NANOSECONDS_PER_SECOND +
-> -        guest_clock - s->last_update + s->offset;
-> +    return qemu_clock_get_ns(rtc_clock) - s->last_update + s->offset;
->  }
+>  tests/qemu-iotests/286       | 2 +-
+>  tests/qemu-iotests/common.rc | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-This is all logically correct and avoids the overflow, but I
-do wonder if this is setting us up for future bugs, because
-now the function get_guest_rtc_ns() doesn't actually return
-you the guest RTC value in nanoseconds...
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-I think at minimum it would be useful to have a comment noting
-that this doesn't include the base_rtc seconds value and the
-caller needs to handle that themselves.
 
-(Maybe there's a neater function/set of functions that would
-abstract things more obviously, but I can't think of one
-right now.)
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-thanks
--- PMM
 
