@@ -4,129 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A278AD29DC7
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 04:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711A0D29DC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 04:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfVfp-0005eh-M0; Mon, 12 Jan 2026 23:06:29 -0500
+	id 1vfWL4-0005s3-0l; Mon, 12 Jan 2026 23:49:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1vfVfn-0005ae-JH
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 23:06:27 -0500
-Received: from esa14.hc2706-39.iphmx.com ([216.71.140.199])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vfWL2-0005qx-2D
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 23:49:04 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alxndr@bu.edu>) id 1vfVfj-0005QK-Nf
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 23:06:27 -0500
-X-CSE-ConnectionGUID: 1NIEUOS8RhuEoiGPZKn/zA==
-X-CSE-MsgGUID: TzHvwICZRcSU3Qj8B5lqkg==
-Authentication-Results: ob1.hc2706-39.iphmx.com;
- dkim=pass (signature verified) header.i=@bu.edu;
- spf=SoftFail smtp.mailfrom=alxndr@bu.edu;
- dmarc=pass (p=quarantine dis=none) d=bu.edu
-X-IronPort-RemoteIP: 209.85.222.70
-X-IronPort-MID: 119627427
-X-IronPort-Reputation: None
-X-IronPort-Listener: OutgoingMail
-X-IronPort-SenderGroup: RELAY_GSUITE
-X-IronPort-MailFlowPolicy: $RELAYED
-IronPort-Data: A9a23:WE5VhK1wDPKDW7kWdPbD5YRwkn2cJEfYwER7XKvMYLTBsI5bpzVRm
- DAaWDqHP/jcZjTwfN4jOdy/8B8DuMTUy99iTwJqqSg9HnlHl5H5CIXCJC8cHc8zwu4v7q5Dx
- 59DAjUVBJlsFhcwnj/0bP656yI6jf3ULlbFILasEjhrQgN5QzsWhxtmmuoo6qZlmtH8CA6W0
- T/Ii5S31GSNhXguawr414rZ8Ekx5K2r4mtD1rADTasjUGH2xiF94K03ePnZw0vQGuF8AuO8T
- uDf+7C1lkux1wstEN6sjoHgeUQMRLPIVSDW4paBc/H/6vTqjnVaPpcTbZLwW28O49m6t4kZJ
- OF2iHCFYVxB0psgOggqe0Iw/ylWZcWq8VJcSJS1mZX7I0buKhMAzxjyZa2f0EJxFutfWAlzG
- fIkxD8lNzaiqt+R++KBSvRBgcUMFPvIOsQNkyQ1pd3ZJa5OrZHrRqzL4ZpF1W51iJ8WW/nZY
- MUdZHxkaxGojx9nYA9GTsJj2r3y3D+gK1W0q3rMzUYzy2HX3Ap9ypDnLZzYdsHiqcB9xx/J+
- DiZoz6mav0cHOCN6SSa01mevOT0oHjCWtI4Sbmh9fE/1TV/wURWUnX6T2CTuPS8lwuyVsxSL
- 2QS/Swhq7V081akJuQRRDW9qX+A+wMVAp9eTLV85waKxa7ZpQ2eAwDoUwJ8VTDvj+dvLRQC3
- ELPkt/0bQGDepXMIZ5B3t94dQ+PBBU=
-IronPort-HdrOrdr: A9a23:sezLfqnqCODn3+1iaY2PMD7b5avpDfK33DAbv31ZSRFFG/FwWf
- re48jzsiWE+Qr5OUtQ5+xoXZPrfZqyz+8M3WB8B8bHYOCighrQEGgA1/qF/9SDIVyFygc178
- 4JGNkdebjN5BpB/KHHCWKDYqsdKbe8gdyVrNab4HF3UwlwZq1sqyt/AB2KC1B7SWB9aaYRJd
- 6z4o5pqzK8ZW8adK2AdwI4dtmGidmOupyOW3A77t0chzVmTwnE1Fc3KXil9yZbdQ9z6pEf1k
- WAuzDFx8yYwoGGI9bnth6x06hr
-X-Talos-CUID: 9a23:AqIDqW6fgOjqrD1JMNssrWg1N/0CSS3nzGr9JE6XMVRKTvqHYArF
-X-Talos-MUID: 9a23:qAcjpQafbd5MDeBTiy3Mmi5DH/VS6J+TU3kPwb9bv9CHOnkl
-Received: from mail-ua1-f70.google.com ([209.85.222.70])
- by ob1.hc2706-39.iphmx.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 12 Jan 2026 23:06:16 -0500
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-945e4fb842dso10083883241.2
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 20:06:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bu.edu; s=s1gsbu; t=1768277177; x=1768881977; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
- :mime-version:references:from:from:to:cc:subject:date:message-id
- :reply-to; bh=F7QCiIAiszhgIfPA8ReNQJuD6eZluhYRaXxwVrkvTrk=;
- b=CwfTe7IyEcvOqyLm67Wk52tBSVr29rXx9AxQ1DbvVHaJfJjAxoMt1ZU7v0OW8jrI7j
- 386UHascxY5ZMwLyg+l1vGYu0wjrWQxEO7WtcPJn0Le3Ow5nETsrJxa+Bu1bIc9noPIL
- HNT2G02SAONIAq0wB+GyFmvSRpEU9PJq/mgDsOZAskeSaEfwdhePluXWrr4cZ/VXLa3s
- hEnhiuloOYTU30NzOaqKNVNeltPo7gY+Vchw+By6z4js0h12c9HQYAoGLFluWBWEf99B
- w6bacBP0CMMuVAuVgOxVp2Mh5f+gvmuozyhD6M3aAkuw153QxILIFtiFzEPHIibeyvXk
- Tayw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768277177; x=1768881977;
- h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
- :mime-version:references:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=F7QCiIAiszhgIfPA8ReNQJuD6eZluhYRaXxwVrkvTrk=;
- b=YUst8UfyTk+nxVGZCXslqTbqbBrGh3UUlscxa6Qp5vJ324A9Gbe6fGJJHNt9LwhE3r
- MrKF5tnfaoIIwmGq0WTVaZCQuEBTgVDW4nnXhcMEmk9Ih4+REY32ZRBLldfR7p7uyHhW
- j2Ilmu6EUQY/7atv35DYA2+bOfSKIE2pyVeKkqEFhiZPE++5pdBznd39uBJC8+QI13Bo
- BR/BGlJ0sAasm7Ewj2ESHnCY+8f+ZoFh0PJhWkkBfgP+HlRe1Mt7t04OHDIHXqA1Lg/K
- y18YKVjW0iCszOhYRgtVuQL6i50oZaKi+rktUc7mO0iu1uT/Mvi7TMKeayfbDqeK5Mj3
- u+vQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRn4e+1iTH5kHCgmDWlVfDZuUK7jPz204RZDsih2j7F45Y/eEryMn8xOrMDHczfnB1sd1uOcZlmhD4@nongnu.org
-X-Gm-Message-State: AOJu0YwYpyq6MKd1C96Y7CEnhk5xOBZ046dw6d+y7q8RC1AcjjNF3Ik+
- akVbNrLsKkeDtO/ianUy6ok6OrxoXgqwkw1LzE+qPm7SPICReUnRjmhnYmztZoGOHTF6JvYFiDt
- V5IeyqDs66EnUxMN2CYzrSF9dOx1qSFhz3CGpnfNsUUYe6vKY3p74nritGbAX9Atf4te8XocRPQ
- 0XCq38tZI9bKu3CZ13rsCfqR0JRwrjv0NBJ1xBg5np1j5g
-X-Gm-Gg: AY/fxX7BDuEG8//ltIe2OnYencrh/mLLTcOx8DQ/dBU3VJqwaryJ5wP6lGs86Kcb3Jj
- VqAc/iasQHEZQoV7goVBzNBe8IpCliO8K8ghFPniXNmf/NIKFlPz5U1fqLCkD/5HaoG9r/sqAiu
- PjOyZYxlvfCaVcwfeFLuT72gi28xMOATh5ZA6SsP5GhMgQ472KntnzhLyYvAGgVPWOQA==
-X-Received: by 2002:a05:6102:548d:b0:5ef:7221:aa9b with SMTP id
- ada2fe7eead31-5ef7230f1aemr5004590137.18.1768277177461; 
- Mon, 12 Jan 2026 20:06:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEwbqw1gERFoObMVOXOkU5UdoMgwhKXDiK0ZUHLFyGwW4Fhtz7CTMMKRVKjA61u3dNd1HvrS8O2+K5bPcaFR+I=
-X-Received: by 2002:a05:6102:548d:b0:5ef:7221:aa9b with SMTP id
- ada2fe7eead31-5ef7230f1aemr5004573137.18.1768277176838; Mon, 12 Jan 2026
- 20:06:16 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 Jan 2026 20:06:16 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 Jan 2026 20:06:16 -0800
-From: Alexander Bulekov <alxndr@bu.edu>
-References: <CAHUE=o9+kYVzWmHbHkJ5FKDpJhekhBCW8j+vwFm0yQCJrQGveA@mail.gmail.com>
- <20251112003637.1984547-1-navidem@google.com>
- <20251112003637.1984547-2-navidem@google.com>
- <CAHUE=o8u1snmMBGHExoZix3vFY6Y8J_jWdYKNDiuMd6jvw0qzQ@mail.gmail.com>
- <aV0EtXyfCmpSUvg8@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vfWKy-0002zg-2h
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 23:49:03 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60D4lKwJ027453
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 13 Jan 2026 13:48:25 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=MXJCs2Zk0cgikQs629nC2Ei1PtsZwt7jrYYfI0UoiiE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1768279705; v=1;
+ b=UNmrCBzjTDGhBIWaE4Pi2uF7qsgv66CTjfgnlJVCq6bw0lAcmPreyIOvGbgitzob
+ gu32g2S4EFzx1vTABU9mm6eMUoyV5FTOX7aylWF+zqsYpiGi4Xem6be8QQ92wUQt
+ UvAViUfFjGUAewOj+/LvH5lfbEyKq3pVkBMvnu3gbQIvz1Kiubezg29kZ45g8rLU
+ rnOBOiu6KxUpUKiHlV6Sfb1RqjdEK9Llh/Up00Rir6qqnD3mC7uujD773RTOeDDE
+ XcIGmgOeYiWJLr3mRWvmToWu5BAW75AtM1K1kS03sglczXryGAbRzBIu286y+HYG
+ 8ClwzCcr301XxUnDKDdY2Q==
+Message-ID: <98a2cbaa-582d-43bf-b59a-7a0e75c486d5@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 13 Jan 2026 13:47:29 +0900
 MIME-Version: 1.0
-In-Reply-To: <aV0EtXyfCmpSUvg8@redhat.com>
-Date: Mon, 12 Jan 2026 20:06:16 -0800
-X-Gm-Features: AZwV_QjYNle8vUh4vivPrxMNUHGUceeFixiUKUDemrBIfdiAh9unotlpirAgddU
-Message-ID: <CAHUE=o_F=b3PHZQjZ_tA5gVDPXF_FixZ5na5ymxZWkBy_oEZtg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/1] tests/qtest/fuzz: Add generic fuzzer for VNC
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Navid Emamdoost <navidem@google.com>, qemu-devel@nongnu.org,
- pbonzini@redhat.com, 
- stefanha@redhat.com, farosas@suse.de, darren.kenny@oracle.com, 
- Qiuhao.Li@outlook.com, lvivier@redhat.com, zsm@google.com, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=216.71.140.199; envelope-from=alxndr@bu.edu;
- helo=esa14.hc2706-39.iphmx.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v9 4/5] virtio-gpu: Destroy virgl resources on
+ virtio-gpu reset
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20260112225246.3526313-1-dmitry.osipenko@collabora.com>
+ <20260112225246.3526313-5-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260112225246.3526313-5-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,156 +93,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 260106 1249, Daniel P. Berrang=C3=A9 wrote:
-> Hi Alexander,
->
-> I don't see this old fuzzing patch merged yet. Who is normally collecting
-> and merging fuzz patches ?
+On 2026/01/13 7:52, Dmitry Osipenko wrote:
+> Properly destroy virgl resources on virtio-gpu reset to not leak resources
+> on a hot reboot of a VM.
+> 
+> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-gl.c     |  18 +----
+>   hw/display/virtio-gpu-virgl.c  | 117 ++++++++++++++++++++++++++-------
+>   include/hw/virtio/virtio-gpu.h |   6 +-
+>   3 files changed, 101 insertions(+), 40 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index b941e9a4b789..8b71dd6fc26f 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -63,29 +63,14 @@ static void virtio_gpu_gl_flushed(VirtIOGPUBase *b)
+>   static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+>   {
+>       VirtIOGPU *g = VIRTIO_GPU(vdev);
+> -    VirtIOGPUGL *gl = VIRTIO_GPU_GL(vdev);
+>       struct virtio_gpu_ctrl_command *cmd;
+>   
+>       if (!virtio_queue_ready(vq)) {
+>           return;
+>       }
+>   
+> -    switch (gl->renderer_state) {
+> -    case RS_RESET:
+> -        virtio_gpu_virgl_reset(g);
+> -        /* fallthrough */
+> -    case RS_START:
+> -        if (virtio_gpu_virgl_init(g)) {
+> -            gl->renderer_state = RS_INIT_FAILED;
+> -            return;
+> -        }
+> -
+> -        gl->renderer_state = RS_INITED;
+> -        break;
+> -    case RS_INIT_FAILED:
+> +    if (!virtio_gpu_virgl_update_render_state(g)) {
+>           return;
+> -    case RS_INITED:
+> -        break;
+>       }
+>   
+>       cmd = virtqueue_pop(vq, sizeof(struct virtio_gpu_ctrl_command));
+> @@ -201,6 +186,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+>       vgc->process_cmd = virtio_gpu_virgl_process_cmd;
+>       vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+>   
+> +    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
+>       vdc->realize = virtio_gpu_gl_device_realize;
+>       vdc->unrealize = virtio_gpu_gl_device_unrealize;
+>       vdc->reset = virtio_gpu_gl_reset;
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 342e93728df0..15a98336969b 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -90,6 +90,10 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+>   {
+>       VirtIOGPU *g = opaque;
+>   
+> +    if (!virtio_gpu_virgl_update_render_state(g)) {
+> +        return;
+> +    }
+> +
+>       virtio_gpu_process_cmdq(g);
+>   }
+>   
+> @@ -322,14 +326,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+>       virgl_renderer_resource_create(&args, NULL, 0);
+>   }
+>   
+> +static int
+> +virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
+> +                                struct virtio_gpu_virgl_resource *res,
+> +                                bool *suspended)
+> +{
+> +    struct iovec *res_iovs = NULL;
+> +    int num_iovs = 0;
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +    int ret;
+> +
+> +    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, suspended);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +    if (*suspended) {
+> +        return 0;
+> +    }
+> +#endif
+> +
+> +    virgl_renderer_resource_detach_iov(res->base.resource_id,
+> +                                       &res_iovs,
+> +                                       &num_iovs);
+> +    if (res_iovs != NULL && num_iovs != 0) {
+> +        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+> +    }
+> +    virgl_renderer_resource_unref(res->base.resource_id);
+> +
+> +    QTAILQ_REMOVE(&g->reslist, &res->base, next);
+> +
+> +    g_free(res);
+> +
+> +    return 0;
+> +}
+> +
+>   static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>                                        struct virtio_gpu_ctrl_command *cmd,
+>                                        bool *cmd_suspended)
+>   {
+>       struct virtio_gpu_resource_unref unref;
+>       struct virtio_gpu_virgl_resource *res;
+> -    struct iovec *res_iovs = NULL;
+> -    int num_iovs = 0;
+>   
+>       VIRTIO_GPU_FILL_CMD(unref);
+>       trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+> @@ -342,27 +378,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>           return;
+>       }
+>   
+> -#if VIRGL_VERSION_MAJOR >= 1
+> -    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
+> -        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+> -        return;
+> -    }
+> -    if (*cmd_suspended) {
+> -        return;
+> -    }
+> -#endif
+> +    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
+> +}
+>   
+> -    virgl_renderer_resource_detach_iov(unref.resource_id,
+> -                                       &res_iovs,
+> -                                       &num_iovs);
+> -    if (res_iovs != NULL && num_iovs != 0) {
+> -        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+> -    }
+> -    virgl_renderer_resource_unref(unref.resource_id);
+> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> +                                       struct virtio_gpu_simple_resource *base,
+> +                                       Error **errp)
 
-Hi Daniel,
-In the past, as far as I remember it has been either me or Thomas. I can
-put together the pull-req. Apologies for the delay
+An error reporting rule described in include/qapi/error.h requires 
+functions that use Error to return a value indicating success or failure.
 
->
-> On Fri, Nov 14, 2025 at 09:02:06AM -0600, Alexander Bulekov wrote:
-> > On 251112 0036, Navid Emamdoost wrote:
-> > > Add a new generic fuzz target for the QEMU VNC server. This target
-> > > exercises both the standard VNC protocol and the VNC-over-WebSocket
-> > > transport layer, increasing coverage of a primary remote attack surfa=
-ce.
-> > >
-> > > To support parallel fuzzing (e.g., with oss-fuzz), the VNC unix
-> > > socket paths are generated dynamically. The fuzzer harness inspects t=
-he
-> > > command line for placeholders and replaces them with unique paths
-> > > created by mkstemp() before execution.
-> > >
-> > > ---
-> > >
-> > > This new target increases code coverage in the VNC subsystem
-> > > and related networking and I/O code.
-> > > The baseline coverage below was generated by running all existing fuz=
-z
-> > > targets with the oss-fuzz corpus. The new target shows significant ga=
-ins:
-> > >
-> > > ---------------------------------------------------------------------=
--------
-> > > File                       New Target                Baseline        =
-Change
-> > > ---------------------------------------------------------------------=
--------
-> > > vnc.c                      339/3212 (10.6%)     3/3212 (0.1%)        =
-+336
-> > > keymaps.c                  91/184 (49.5%)       0/184 (0.0%)         =
-+91
-> > > net-listener.c             76/198 (38.4%)       3/198 (1.5%)         =
-+73
-> > > channel-socket.c           73/575 (12.7%)       19/575 (3.3%)        =
-+54
-> > > qemu-sockets.c             44/1019 (4.3%)       0/1019 (0.0%)        =
-+44
-> > > vnc-jobs.c                 41/219 (18.7%)       0/219 (0.0%)         =
-+41
-> > > dns-resolver.c             28/145 (19.3%)       3/145 (2.1%)         =
-+25
-> > >
-> > > Signed-off-by: Navid Emamdoost <navidem@google.com>
-> >
-> > Reviewed-by: Alexander Bulekov <alxndr@bu.edu>
-> >
-> > > ---
-> > >  tests/qtest/fuzz/generic_fuzz_configs.h | 50 +++++++++++++++++++++++=
-++
-> > >  1 file changed, 50 insertions(+)
-> > >
-> > > diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fu=
-zz/generic_fuzz_configs.h
-> > > index ef0ad95712..9c46e106a4 100644
-> > > --- a/tests/qtest/fuzz/generic_fuzz_configs.h
-> > > +++ b/tests/qtest/fuzz/generic_fuzz_configs.h
-> > > @@ -29,6 +29,52 @@ static inline gchar *generic_fuzzer_virtio_9p_args=
-(void){
-> > >      "writeout=3Dimmediate,fmode=3D0600,dmode=3D0700", tmpdir);
-> > >  }
-> > >
-> > > +/*
-> > > + * Global variables and cleanup handler for VNC fuzzer sockets.
-> > > + * These are needed because the socket paths must be available at ex=
-it.
-> > > + */
-> > > +static char g_vnc_socket_path[sizeof("/tmp/qemu-vnc.XXXXXX")];
-> > > +static char g_vnc_ws_socket_path[sizeof("/tmp/qemu-vnc-ws.XXXXXX")];
-> > > +
-> > > +static void cleanup_vnc_sockets(void)
-> > > +{
-> > > +    if (g_vnc_socket_path[0] !=3D '\0') {
-> > > +        unlink(g_vnc_socket_path);
-> > > +    }
-> > > +    if (g_vnc_ws_socket_path[0] !=3D '\0') {
-> > > +        unlink(g_vnc_ws_socket_path);
-> > > +    }
-> > > +}
-> > > +
-> > > +/*
-> > > + * Dynamically generate VNC arguments with unique unix socket paths.
-> > > + * This allows multiple fuzzing jobs to run in parallel without conf=
-lict.
-> > > + */
-> > > +static inline gchar *generic_fuzzer_vnc_args(void)
-> > > +{
-> > > +    static bool cleanup_registered =3D false;
-> > > +    int fd;
-> > > +
-> > > +    strcpy(g_vnc_socket_path, "/tmp/qemu-vnc.XXXXXX");
-> > > +    fd =3D g_mkstemp(g_vnc_socket_path);
-> > > +    g_assert_cmpint(fd, !=3D, -1);
-> > > +    close(fd);
-> > > +
-> > > +    strcpy(g_vnc_ws_socket_path, "/tmp/qemu-vnc-ws.XXXXXX");
-> > > +    fd =3D g_mkstemp(g_vnc_ws_socket_path);
-> > > +    g_assert_cmpint(fd, !=3D, -1);
-> > > +    close(fd);
-> > > +
-> > > +    if (!cleanup_registered) {
-> > > +        atexit(cleanup_vnc_sockets);
-> > > +        cleanup_registered =3D true;
-> > > +    }
-> > > +
-> > > +    return g_strdup_printf("-machine q35 -nodefaults "
-> > > +                           "-vnc vnc=3Dunix:%s,websocket=3Dunix:%s",
-> > > +                           g_vnc_socket_path, g_vnc_ws_socket_path);
-> > > +}
-> > > +
-> > >  const generic_fuzz_config predefined_configs[] =3D {
-> > >      {
-> > >          .name =3D "virtio-net-pci-slirp",
-> > > @@ -247,6 +293,10 @@ const generic_fuzz_config predefined_configs[] =
-=3D {
-> > >          .args =3D "-machine q35 -nodefaults "
-> > >          "-parallel file:/dev/null",
-> > >          .objects =3D "parallel*",
-> > > +    },{
-> > > +        .name =3D "vnc",
-> > > +        .argfunc =3D generic_fuzzer_vnc_args,
-> > > +        .objects =3D "*",
-> > >      }
-> > >  };
-> > >
-> > > --
-> > > 2.51.2.1041.gc1ab5b90ca-goog
-> > >
-> > >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
+For this particular case, I think it can simply return what 
+virtio_gpu_virgl_resource_unref() returns, without having errp.
+
+> +{
+> +    struct virtio_gpu_virgl_resource *res;
+> +    bool suspended = false;
+>   
+> -    QTAILQ_REMOVE(&g->reslist, &res->base, next);
+> +    res = container_of(base, struct virtio_gpu_virgl_resource, base);
+>   
+> -    g_free(res);
+> +    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
+> +        error_setg(errp, "failed to destroy virgl resource");
+> +    }
+>   }
+>   
+>   static void virgl_cmd_context_create(VirtIOGPU *g,
+> @@ -1291,14 +1321,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>       }
+>   }
+>   
+> -void virtio_gpu_virgl_reset(VirtIOGPU *g)
+> +static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
+>   {
+> +    struct virtio_gpu_simple_resource *res, *tmp;
+> +
+> +    /*
+> +     * Virgl blob resource unmapping can be suspended and
+> +     * deferred on unref, ensure that destruction is completed.
+> +     */
+> +    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
+> +        virtio_gpu_virgl_resource_destroy(g, res, NULL);
+> +    }
+> +
+> +    if (!QTAILQ_EMPTY(&g->reslist)) {
+> +        return false;
+> +    }
+> +
+>       virgl_renderer_reset();
+>   
+>       virtio_gpu_virgl_reset_async_fences(g);
+> +
+> +    return true;
+>   }
+>   
+> -int virtio_gpu_virgl_init(VirtIOGPU *g)
+> +static int virtio_gpu_virgl_init(VirtIOGPU *g)
+>   {
+>       int ret;
+>       uint32_t flags = 0;
+> @@ -1376,6 +1422,33 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>       return 0;
+>   }
+>   
+> +bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g)
+> +{
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +
+> +    switch (gl->renderer_state) {
+> +    case RS_RESET:
+> +        if (!virtio_gpu_virgl_reset(g)) {
+> +            return false;
+> +        }
+> +        /* fallthrough */
+> +    case RS_START:
+> +        if (virtio_gpu_virgl_init(g)) {
+> +            gl->renderer_state = RS_INIT_FAILED;
+> +            return false;
+> +        }
+> +
+> +        gl->renderer_state = RS_INITED;
+> +        break;
+> +    case RS_INIT_FAILED:
+> +        return false;
+> +    case RS_INITED:
+> +        break;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
+>   {
+>       g_array_append_val(capset_ids, capset_id);
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 718332284305..1f509d0d5beb 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -389,9 +389,11 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                     struct virtio_gpu_ctrl_command *cmd);
+>   void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+> -void virtio_gpu_virgl_reset(VirtIOGPU *g);
+> -int virtio_gpu_virgl_init(VirtIOGPU *g);
+>   GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> +                                       struct virtio_gpu_simple_resource *res,
+> +                                       Error **errp);
+> +bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g);
+>   
+>   #endif
+
 
