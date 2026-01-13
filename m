@@ -4,67 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D05D2502E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 19:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDF4D2F35C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 19:42:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfkBX-0008WK-LB; Tue, 13 Jan 2026 14:36:11 -0500
+	id 1vfkHV-0004cy-5W; Tue, 13 Jan 2026 14:42:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfkBW-0008TL-GR
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:36:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfkBU-0003MB-N7
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:36:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768332967;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=aF9eZm0YZigSB2ewutY+Zw4xA8icNXrxoxREmXk0MUo=;
- b=BhH1+WgIazShGVSOvD7yuReK4gTCo/K4Kedm8fegzfK6pPJKl3XIfR209ee1CqLdeC1m4O
- Fsa7uXUkeeTBWqCFq54/sG/h0SUPcURhNcsKx3pNQDBUWYkhSV2ZvxR8YAPWSrZi6H0Dsg
- zXLjsVnwQMge6IEFQ9TdMJQpGUMFXfo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-392-FdGo42OSOrqsheWvbuMduQ-1; Tue,
- 13 Jan 2026 14:36:02 -0500
-X-MC-Unique: FdGo42OSOrqsheWvbuMduQ-1
-X-Mimecast-MFC-AGG-ID: FdGo42OSOrqsheWvbuMduQ_1768332960
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C0FB19560A2; Tue, 13 Jan 2026 19:36:00 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.226.23])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7E49119560A7; Tue, 13 Jan 2026 19:35:56 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Ryo ONODERA <ryoon@netbsd.org>, Reinoud Zandijk <reinoud@netbsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH] tests/vm: Update netbsd VM to version 10.1
-Date: Tue, 13 Jan 2026 20:35:54 +0100
-Message-ID: <20260113193554.123082-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vfkHK-0004CP-CK
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:42:12 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vfkHI-0003y5-QA
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:42:10 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-81f46b5e2ccso1559737b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 11:42:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768333327; x=1768938127; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ly+4wIDnh1wyizKTgIQbwIDSlIs2Mul4wuPn+jtfmow=;
+ b=SeYaLNRCn7Q4GvugCKkzyYpBOdRlqEXBtzyQE8Upfkt/yAqahWE17MvvHaoW9BoR1P
+ +nd/wFMC9n9XHEqyXbkdt9tnofRH1RDdaf+SLDnSBAchn9dNHL/4zkd+/mUyAJB4gZ5x
+ XT3jXeYLza7b29qGCQPSbb/vyW2qdgnoX0NpR5UZMehiTfRcEhzeYVDq2hJeAiPzYhcx
+ G0EbEkMDA12Ybpk2Hp/5LZ4gSo/V9HSpT37hkUV6V2BPOblWaM2xWgJotaw8SVBauyIq
+ w1V25qoEUpPzLLhxuwRwAh0GvCljcG90m5P+6bZ8jvoEboc5QbeQyo151rggdni/TtlE
+ V4kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768333327; x=1768938127;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ly+4wIDnh1wyizKTgIQbwIDSlIs2Mul4wuPn+jtfmow=;
+ b=fZTCiDrSSLgcewfdy5GgNOkAKPEwne6LuMzioq67h65SFwURrlthwdMXAdEVovqdpm
+ d8P01WqZL1onfPJSJtvVlr5Fuclvyi8HsoDINALkshUvZnEUtZhcSkJiBe/tuwDCvGje
+ 3GI4Adb2ASTjQ0GpWYL8k16rKKWpFqXB/bu75vPFo6KT/cmwldo3WAZ57zEZK4kqre3Q
+ OKEc/gpUf5as4dyXWeaFf7ZD0BXY0eaLwjHLS/LkClc72yd60rRrczrTO55tE9wxTmpn
+ cLDzSAxdMwJmsY7uplKVOSIIl/ko4fN1Np0W0TtVCq6YXK89iIuKdhDg+0H/Lk1u+k5/
+ 4QVg==
+X-Gm-Message-State: AOJu0YxA8cpHtq8EDpahdMLUF6+sbmKrD7w07VaIOB6beVi6H2IlfLeM
+ 4rc1k8xHtIJGmQ7EU1qdDLvljks6OEoHDHRiqhaE1aENJ8FFYrsUONRbgw2mzwvha/NouRh8/z3
+ uGyeHURA=
+X-Gm-Gg: AY/fxX7qzFxRPRmgERFYxBSauJWqDcDTS9jHenZDVhBnGaW5GABUqUNo9XqjZNY7j1K
+ f+1TEWvyl0qfRPwJJYQg53xgLyLcQZt0YWzHTmrMlt0BnWRttdQ2McoHzyt5Nl0pRJFiBhnBzo+
+ AKsCiGd+1+6veebWFiM961Cb+DZ5GH3EEVDxGjms1Z1HfX62bkkwnjitoTDdRdN9fJ9hqBlURX6
+ HUzzqacO2OusIhrK6igFolmbeeDNXKsnlVXfEjQUL0lrqDcUQH5R4JyaFvJ+2XOqVdbzgawDadO
+ tXayuCb4ySpMNvx/UaQzMypFXGtG2yl2vZxhl5z/EFwdLdHY8ojGgomQaVRSlP9DwsErCT1J3c1
+ KmrU5csOJjHCBaOTedkA61LymVCjd5Tg6SZzu30CYC4H+kij1nqqYIwQraxays2oZaIiFeBeMqK
+ LpAjDy1U2EJnoXxpDFqREF4rCEVD1OQpj2GZpYpZ49LiR9gkXLAOKWLBUaJsFfThm3cbY=
+X-Received: by 2002:a05:6a00:4149:b0:81f:4e8d:794b with SMTP id
+ d2e1a72fcca58-81f81d404dcmr29259b3a.23.1768333327213; 
+ Tue, 13 Jan 2026 11:42:07 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-819c59e8010sm21664245b3a.52.2026.01.13.11.42.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Jan 2026 11:42:06 -0800 (PST)
+Message-ID: <39a32c0e-e498-4d27-8614-86869a4f8f01@linaro.org>
+Date: Tue, 13 Jan 2026 11:42:06 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user/aarch64/target_fcntl.h: add missing
+ TARGET_O_LARGEFILE definition
+Content-Language: en-US
+To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, alex.bennee@linaro.org,
+ Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260113194029.1691393-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20260113194029.1691393-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,106 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On 1/13/26 11:40 AM, Pierrick Bouvier wrote:
+> This caused a failure with program using openat2, where O_LARGEFILE was
+> replaced by O_NOFOLLOW.
+> This issue is only visible when QEMU is compiled with musl libc, where
+> O_LARGEFILE is different from 0 (vs glibc).
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3262
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   linux-user/aarch64/target_fcntl.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/linux-user/aarch64/target_fcntl.h b/linux-user/aarch64/target_fcntl.h
+> index efdf6e5f058..55ab788a7ce 100644
+> --- a/linux-user/aarch64/target_fcntl.h
+> +++ b/linux-user/aarch64/target_fcntl.h
+> @@ -11,6 +11,7 @@
+>   #define TARGET_O_DIRECTORY      040000 /* must be a directory */
+>   #define TARGET_O_NOFOLLOW      0100000 /* don't follow links */
+>   #define TARGET_O_DIRECT        0200000 /* direct disk access hint */
+> +#define TARGET_O_LARGEFILE     0400000
+>   
+>   #include "../generic/fcntl.h"
+>   #endif
 
-NetBSD 10.1 has been released since more than a year, so it's time to
-update our VM to that version.
-Apart from the usual changes in the installation process, we also have
-to disable the installation of the "jpeg" package now, otherwise the
-package installation fails with an error message like this:
+This is a good candidate for all stable branches as well.
 
- pkg_add: jpeg-9fnb1: conflicts with `libjpeg-turbo-[0-9]*', and
- `libjpeg-turbo-3.1.3' is installed.
-
-We also have to drop the executable bits from scripts/qemu-plugin-symbols.py
-to force meson to use the detected Python interpreter instead of executing
-the file directly (which tries to use the Python interpreter from the file's
-shebang line).
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- scripts/qemu-plugin-symbols.py |  0
- tests/vm/netbsd                | 16 ++++++++--------
- 2 files changed, 8 insertions(+), 8 deletions(-)
- mode change 100755 => 100644 scripts/qemu-plugin-symbols.py
-
-diff --git a/scripts/qemu-plugin-symbols.py b/scripts/qemu-plugin-symbols.py
-old mode 100755
-new mode 100644
-diff --git a/tests/vm/netbsd b/tests/vm/netbsd
-index a3f6dd6b3c8..77d17a0dedf 100755
---- a/tests/vm/netbsd
-+++ b/tests/vm/netbsd
-@@ -22,15 +22,15 @@ class NetBSDVM(basevm.BaseVM):
-     name = "netbsd"
-     arch = "x86_64"
- 
--    link = "https://cdn.netbsd.org/pub/NetBSD/NetBSD-9.3/images/NetBSD-9.3-amd64.iso"
--    csum = "2bfce544f762a579f61478e7106c436fc48731ff25cf6f79b392ba5752e6f5ec130364286f7471716290a5f033637cf56aacee7fedb91095face59adf36300c3"
-+    link = "https://cdn.netbsd.org/pub/NetBSD/images/10.1/NetBSD-10.1-amd64.iso"
-+    csum = "7a5e5071307e1795885ffc6e1b8aac465082c21c8b79f4c9b4103ef44e4f2da45477299d213ae0093f6534dc99dc2bbf78f41e9dd556c72a02516068bf43fe49"
-     size = "20G"
-     pkgs = [
-         # tools
-         "git-base",
-         "pkgconf",
-         "xz",
--        "python311",
-+        "python313",
-         "ninja-build",
- 
-         # gnu tools
-@@ -46,7 +46,6 @@ class NetBSDVM(basevm.BaseVM):
-         "gnutls",
- 
-         # libs: images
--        "jpeg",
-         "png",
- 
-         # libs: ui
-@@ -126,8 +125,6 @@ class NetBSDVM(basevm.BaseVM):
-         self.print_step("Installation started now, this will take a while")
-         self.console_wait_send("Hit enter to continue",    "\n")
- 
--        self.console_wait_send("d: Change root password",  "d\n")
--        self.console_wait_send("a: Yes",                   "a\n")
-         self.console_wait("New password:")
-         self.console_send("%s\n" % self._config["root_pass"])
-         self.console_wait("New password:")
-@@ -153,6 +150,7 @@ class NetBSDVM(basevm.BaseVM):
-         self.console_wait_send("Network media type",       "\n")
-         self.console_wait("autoconfiguration")
-         self.console_wait_send("a: Yes",                   "a\n")
-+        self.console_wait_send("Finished",                 "netbsd-guest\n")
-         self.console_wait_send("DNS domain",               "localnet\n")
-         self.console_wait("Are they OK?")
-         self.console_wait_send("a: Yes",                   "a\n")
-@@ -160,6 +158,8 @@ class NetBSDVM(basevm.BaseVM):
-         self.console_wait_send("a: Yes",                   "a\n")
- 
-         self.console_wait_send("e: Enable install",        "e\n")
-+        self.console_wait("installed in /etc")
-+        self.console_wait_send("a: Yes",                   "a\n")
-         proxy = os.environ.get("http_proxy")
-         if not proxy is None:
-             self.console_wait_send("f: Proxy",             "f\n")
-@@ -178,13 +178,13 @@ class NetBSDVM(basevm.BaseVM):
-         self.console_wait_send("d: Reboot the computer",   "d\n")
- 
-         # setup qemu user
--        prompt = "localhost$"
-+        prompt = "netbsd-guest$"
-         self.console_ssh_init(prompt, self._config["guest_user"],
-                                       self._config["guest_pass"])
-         self.console_wait_send(prompt, "exit\n")
- 
-         # setup root user
--        prompt = "localhost#"
-+        prompt = "netbsd-guest#"
-         self.console_ssh_init(prompt, "root", self._config["root_pass"])
-         self.console_sshd_config(prompt)
- 
--- 
-2.52.0
-
+Regards,
+Pierrick
 
