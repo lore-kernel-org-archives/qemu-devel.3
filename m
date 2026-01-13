@@ -4,159 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA15D29DDE
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 07:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6A8D29DE4
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 07:42:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfYw6-00031m-4N; Tue, 13 Jan 2026 02:35:30 -0500
+	id 1vfZ1P-0006G1-Nw; Tue, 13 Jan 2026 02:40:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYvz-000301-9F
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:35:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1vfZ11-0006Ag-NX
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:40:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYvw-0007OV-PC
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:35:22 -0500
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1vfZ0y-0008Gw-KG
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:40:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768289720;
+ s=mimecast20190719; t=1768290031;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xqUJTMuzyZl4pLdelWfnHNDcOFznLyfhrEx3UpHvoF0=;
- b=OaUERy+REWlIycv8jSKlrNHtR5vAFYOKNx0PzZug8ZK+/e0OC4vId3ZAGyBEvXUBaoUrDi
- hxF85l1jufDNPgGgkWl/tJSk+v40o0C4BhcYWX3hkgpIJVmYnQMOdz4lFd4IGH5pCnvVjE
- sGWdxGTMAvSJOOd9aKI2o0nO3dr3VMM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=9UJU4/bcTwN64G8ORVb7u+twJq9t3lRceY05/tFm9F4=;
+ b=MzJzBAyGaPy/ujFeDYu5ScNSgVNz91w9Fq6LtF/VL2YmeDoVhdOqH4TAhadEMw3zAo30Q8
+ ubakHfoCYFUQCRjVoa9BZL22Zej6IEhPEEn8uYg8KU4dg6COc/FENa7/xGuIDnBEK/R64Y
+ jJv5jXNBpHbWe/WwcqvUlUDIlS1lC+8=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534-P91k2nGNPWGnEORmNcstqw-1; Tue, 13 Jan 2026 02:35:18 -0500
-X-MC-Unique: P91k2nGNPWGnEORmNcstqw-1
-X-Mimecast-MFC-AGG-ID: P91k2nGNPWGnEORmNcstqw_1768289717
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43284edbbc8so4858469f8f.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 23:35:18 -0800 (PST)
+ us-mta-65-KUzDBjbvO1qIMuTpqFZsTg-1; Tue, 13 Jan 2026 02:40:29 -0500
+X-MC-Unique: KUzDBjbvO1qIMuTpqFZsTg-1
+X-Mimecast-MFC-AGG-ID: KUzDBjbvO1qIMuTpqFZsTg_1768290028
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-34c93f0849dso5687072a91.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 23:40:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768289717; x=1768894517; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=xqUJTMuzyZl4pLdelWfnHNDcOFznLyfhrEx3UpHvoF0=;
- b=rV2zT22zq8JfO74Zh+vJ/7fEvuGc0kgRsx3nn/QadUaBcEcZKDwgpNfDBKtNo5Lz0X
- giza7/fBjPHx4pGRGC+UDaPLkqzdmIWlGTYpSLEYDf9gEO6J2PXCIJGQNakkU9lNGnFP
- dsRd2X9TmXLvnebb5vF1gJkMJow8ph7/wvArXIexd/OVGQo2zXOTAPcP84ZXRGGrlgJn
- GlKr3gfRvmtJBgpmSh/MlskF6KZLhlrnAkVtn7DefEJMXgmRn73xP2KM+rg5pHRaDHJl
- ETs7asjr9hul3p+jjGc7BWYp1D5SwQsl7uT5Il8NFH0Jp1ESbL/QtjEB1rgC1lCjh1/a
- P5HA==
+ d=redhat.com; s=google; t=1768290028; x=1768894828; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9UJU4/bcTwN64G8ORVb7u+twJq9t3lRceY05/tFm9F4=;
+ b=He7gpou6fyucn3N7fI6o4pnZv+xd/tjuNnzwn7+rrkTOrLhHfM7wwWQMJ6+8zFwKJS
+ C3ukVr9Mje+7yq0hWzioZSaoIl0xsBkA96xzGRjO8r6OCL0qKpRlzftWz7hF3cadBkSv
+ iac9eZ8FxZ3mewHQIpQdWNo3+L9VjHaCQ9G5hzBF+oZSi5nINvJvGwjRS2MKaltsU2d7
+ gbvE+3JEIl9BYWSzerXKbUGnCTns3qlLMmRbY2DGwRrW1QIU8gHU3b99IawcoPUZ4HGz
+ txOqzSmZQtnrPibYOqACgj0caG+vJIAAR9aX/b6O//9vYwvpjdzt957VA+h8AMN+Ky20
+ ifTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768289717; x=1768894517;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1768290028; x=1768894828;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xqUJTMuzyZl4pLdelWfnHNDcOFznLyfhrEx3UpHvoF0=;
- b=Y1b6I/vVNCQQJzniHZlUKvRzd6uQr9FC8qrfxW69yXqApTDEG7eLgV8OH1YWEt28FX
- VatH1vV1p8RnDbDdCRpxsf0JlcEsp3tcNhcfroj706+dacKWMZOMo4C16FcC79RE3774
- SgtnIe9WsgORgGIJ0LZZsPxOTfhuMVDnS9MLOMGoxYboA9QHPJutlcuKZvQZEmF/O/yO
- IccRLjSSza1LaJd2lE22aRvEnfZ2a3KvqehWfWIg37IQrqU/vbY0D3L1lazYqhlq7kM6
- J4r9PrHg6sr5B51hVdH8hDINCtWYPE4E9gkKthyri+IhI6PTEqjKFOaAWgFEBqpjvCru
- uQ/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWe8MQmkR8KV4GWNVgus8iYscOx4YYqfggsyXPvpCJ/KYLCty2EiBEKqKVcm+D4FAyNJkDF7zmZglvG@nongnu.org
-X-Gm-Message-State: AOJu0Yxw8lGtSTWrGf0pZygfFNNHKfXMkMTBRWnfczsbxtdD3EAYm3Lc
- a095sqw+n4zN72x0vH8qVnBjhnk8glZrqtyM4dSLwzVWzIzEnAYI4a2hwKbM4E60lktjDjvzSZf
- D0poR0l86mzYyx++IcLnWX9WulFzVglTpU/GDXm1bnI/uu0qfrOWFMvFX
-X-Gm-Gg: AY/fxX4MRY51Yr5aRmrsiqXRsxv7KFKQ5K0AKtY7JUgGdGYwBwXu78TKYzKUWtxhfj2
- 63R0kc7pvDUK8U6LTfA0N4HGkX/jcEXHwpPIMVaje6lufi+pU221Nj5klXApHGhnk4+MXJwYB1o
- Hobc6XnS4J7qK0qEB48jwNekOlwLWz8H9FXRjQol3ALfFqsw+annKKiYNKAmGKVqx3iq8YOIC/U
- W4yqXdXBoA0OiQEuNfxxuGBeVbV9PViXOnm+q5MJ8a0Q7PrjxAIF3lE2dtrN/3upTYrss8/avqC
- jIcprme9JkeHBCFJnlgwrWw/cidVqA2v48bbEBPV39lk+fk6HQwp34UQzmZ6n8z0EQ8/QgFva1Z
- r2aU6koxzWlVsUYdh3VBZ02q3fwlVvoD9KsC+lr7vyS6bPCUL
-X-Received: by 2002:a05:6000:26ce:b0:430:f5dc:d34a with SMTP id
- ffacd0b85a97d-432c37c8719mr22953522f8f.29.1768289717412; 
- Mon, 12 Jan 2026 23:35:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IExlgNZr7E+722gH4ZCvT5ONgU4K+i+73qRxUTLWr+DfQ3WR3Z20lPSvFXhzGnXayH4Ybv8LQ==
-X-Received: by 2002:a05:6000:26ce:b0:430:f5dc:d34a with SMTP id
- ffacd0b85a97d-432c37c8719mr22953490f8f.29.1768289716980; 
- Mon, 12 Jan 2026 23:35:16 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e17aasm43143885f8f.15.2026.01.12.23.35.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 23:35:16 -0800 (PST)
-Message-ID: <f244815d-a6b9-4e04-970c-9f755df4eeae@redhat.com>
-Date: Tue, 13 Jan 2026 08:35:15 +0100
+ bh=9UJU4/bcTwN64G8ORVb7u+twJq9t3lRceY05/tFm9F4=;
+ b=kKiovoMaJ69z04DWmtcJdR6b/28KO2beA2aaxA5pnwthn7+90lZ6RhrhLl2Ehpec/F
+ YUrXi0h0v+edES0NwSUI9PCE1Y3x233mjtlozdfzQWdszD03OwCyxRjulGvQ55rYLT3O
+ jNBeCvbjkeij5Y8/Pw029THkNNWJZqfuqbwp3h3LJB2I8WWFDPvI05pNbkCOc9bB8oi2
+ zWhoSsCkLRqBFUaWG/fBgElDH10ti/pDeoAB4cM63xVvfRPCVNznPuzAECeiWqrr3Tnp
+ xwnTDswtgwH4OBQKPh0UrxuTvYw9YXGdUnUJ19kw+XHKSHqHMoEwU0wMOe0ezNmYEzbx
+ t+Rg==
+X-Gm-Message-State: AOJu0YwM9+f7k2bAv+czruNXcO6qnq8ViXtSqgaIe3SKv/alqXtJuWiJ
+ ejom3C6sO6mtpUhIQazFU5F1SQllrmtoZ72QOfWadE89QIAXG3mszOm5h1Rlcb/1LoHV2dPp8f0
+ KabPB21L2oCFnklyv6/X4y7fGRXO2rkcGyElJqxdJ9hBE6hRTuwvL4xn6SQVLvrBTb6g5J3lJeI
+ fkX6FAYyd8gDw99SBwbLAkz8nD9MTO5BE=
+X-Gm-Gg: AY/fxX5SSkHQ3C+Wwat4bAZgBMGIz7PQ50hma4d9/QtV0pPM4cjky1ibOiIRseBOLNF
+ psTjAmXqcmxtZbeJMNx+ltF78o4YSIU/7WbIFijbzNQ4dNqawo6gtBMIfyfOJt6TgjycfeDqiRm
+ p4HPmp492verPz3Dee14DlXiCKnoQBm+SctOwlemu6NZJytsbLkh/Vs43C3wKhzjy7vewlzQbq1
+ GM5Ht5G+8QNHu5b69xtdidQIg==
+X-Received: by 2002:a17:90b:314a:b0:343:3898:e7c9 with SMTP id
+ 98e67ed59e1d1-350fd0ff4b2mr1897296a91.2.1768290028160; 
+ Mon, 12 Jan 2026 23:40:28 -0800 (PST)
+X-Received: by 2002:a17:90b:314a:b0:343:3898:e7c9 with SMTP id
+ 98e67ed59e1d1-350fd0ff4b2mr1897287a91.2.1768290027805; Mon, 12 Jan 2026
+ 23:40:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 00/19] intel_iommu: Enable first stage translation for
- passthrough device
-To: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- qemu-devel@nongnu.org
-Cc: alex@shazbot.org, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, chao.p.peng@intel.com
-References: <20260106061304.314546-1-zhenzhong.duan@intel.com>
- <a080e728-6754-4897-9531-61b875720b33@redhat.com>
- <4c098753-8db6-4052-a5e5-21d076001776@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <4c098753-8db6-4052-a5e5-21d076001776@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+References: <20260112104454.54225-1-f.ebner@proxmox.com>
+In-Reply-To: <20260112104454.54225-1-f.ebner@proxmox.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 13 Jan 2026 11:40:16 +0400
+X-Gm-Features: AZwV_QgT_-1UHCL2Til6jpNFdlC3ArA7bHgaZHsTPicXuTpdcQozlbLuO6zGBCM
+Message-ID: <CAMxuvaz0AKCcO=nWUc_U39wcdHn0w_3N8WDncT0Fbc7aWM=nAQ@mail.gmail.com>
+Subject: Re: [PATCH] ui/vdagent: add migration blocker when machine version <
+ 10.1
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, eduardo@habkost.net, 
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com, 
+ zhao1.liu@intel.com, peterx@redhat.com, farosas@suse.de
+Content-Type: multipart/alternative; boundary="000000000000f7ad990648401a67"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -174,28 +114,374 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/13/26 04:12, Yi Liu wrote:
-> On 2026/1/9 22:34, Cédric Le Goater wrote:
->> Michael,
->>
->> Since there are a couple of VFIO series depending on this one, do you mind
->> if it goes through the VFIO queue ?
->>
->> Thanks,
->>
->> C.
->>
-> 
-> Hi Cédric,
-> 
-> I have two nits on the series.
-> 1) a commit message typo to patch 09, already sent email
-> 2) I noticed there are several new files added, while the copyright starts from 2025. will be nice to be 2026. :)
+--000000000000f7ad990648401a67
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I amended the commits.
+Hi Fiona
 
-Thanks,
+On Mon, Jan 12, 2026 at 2:51=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
+rote:
 
-C.
+> In QEMU 10.1, commit 5d56bff11e ("ui/vdagent: add migration support")
+> added migration support for the vdagent chardev and commit 42000e0013
+> ("ui/vdagent: remove migration blocker") removed the migration
+> blocker. No compat for older machine versions was added, so migration
+> with pre-10.1 machine version, from a 10.1 binary to a pre-10.1 binary
+> will result in a failure when loading the VM state in the target
+> instance:
+>
+>
+But you can migrate a pre-10.1 machine with the new binary.
+
+
+> > Unknown savevm section or instance 'vdagent' 0. Make sure that your
+> > current VM setup matches your saved VM setup, including any
+> > hotplugged devices
+>
+> Add a compat flag to block migration when the machine version is less
+> than 10.1 to avoid this.
+>
+>
+I am not sure this is the right way to handle this. There is already this
+error when migrating to an older qemu, I am not sure we have to block
+earlier and prevent the above case.
+
+
+
+> Cc: qemu-stable@nongnu.org
+> Fixes: 42000e0013 ("ui/vdagent: remove migration blocker")
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> ---
+>  hw/core/machine.c |  1 +
+>  ui/vdagent.c      | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 47 insertions(+)
+>
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 6411e68856..9a5241ce17 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -55,6 +55,7 @@ GlobalProperty hw_compat_10_0[] =3D {
+>      { "vfio-pci", "x-migration-load-config-after-iter", "off" },
+>      { "ramfb", "use-legacy-x86-rom", "true"},
+>      { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
+> +    { "chardev-qemu-vdagent", "x-migration-blocked", "true" },
+>
+
+Is there a precedent where such compat property was added to block
+migration?
+
+
+>  };
+>  const size_t hw_compat_10_0_len =3D G_N_ELEMENTS(hw_compat_10_0);
+>
+> diff --git a/ui/vdagent.c b/ui/vdagent.c
+> index 142a3691ac..15ecabb402 100644
+> --- a/ui/vdagent.c
+> +++ b/ui/vdagent.c
+> @@ -6,6 +6,8 @@
+>  #include "qemu/option.h"
+>  #include "qemu/units.h"
+>  #include "hw/core/qdev.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "migration/blocker.h"
+>  #include "ui/clipboard.h"
+>  #include "ui/console.h"
+>  #include "ui/input.h"
+> @@ -32,6 +34,10 @@
+>  struct VDAgentChardev {
+>      Chardev parent;
+>
+> +    /* needed for machine versions < 10.1 when migration was not
+> supported */
+> +    Error *migration_blocker;
+> +    bool migration_blocked;
+> +
+>      /* config */
+>      bool mouse;
+>      bool clipboard;
+> @@ -677,6 +683,12 @@ static void vdagent_chr_open(Chardev *chr,
+>      return;
+>  #endif
+>
+> +    if (vd->migration_blocked) {
+> +        if (migrate_add_blocker(&vd->migration_blocker, errp) !=3D 0) {
+> +            return;
+> +        }
+> +    }
+> +
+>      vd->mouse =3D VDAGENT_MOUSE_DEFAULT;
+>      if (cfg->has_mouse) {
+>          vd->mouse =3D cfg->mouse;
+> @@ -920,6 +932,19 @@ static void vdagent_chr_parse(QemuOpts *opts,
+> ChardevBackend *backend,
+>
+>  /* ------------------------------------------------------------------ */
+>
+> +static bool get_migration_blocked(Object *o, Error **errp)
+> +{
+> +    VDAgentChardev *vd =3D QEMU_VDAGENT_CHARDEV(o);
+> +    return vd->migration_blocked;
+> +}
+> +
+> +static void set_migration_blocked(Object *o, bool migration_blocked,
+> +                                   Error **errp)
+> +{
+> +    VDAgentChardev *vd =3D QEMU_VDAGENT_CHARDEV(o);
+> +    vd->migration_blocked =3D migration_blocked;
+> +}
+> +
+>  static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
+>  {
+>      ChardevClass *cc =3D CHARDEV_CLASS(oc);
+> @@ -929,6 +954,10 @@ static void vdagent_chr_class_init(ObjectClass *oc,
+> const void *data)
+>      cc->chr_write        =3D vdagent_chr_write;
+>      cc->chr_set_fe_open  =3D vdagent_chr_set_fe_open;
+>      cc->chr_accept_input =3D vdagent_chr_accept_input;
+> +
+> +    object_class_property_add_bool(oc, "x-migration-blocked",
+> +                                   get_migration_blocked,
+> +                                   set_migration_blocked);
+>  }
+>
+>  static int post_load(void *opaque, int version_id)
+> @@ -1083,10 +1112,26 @@ static void vdagent_chr_init(Object *obj)
+>      vmstate_register_any(NULL, &vmstate_vdagent, vd);
+>  }
+>
+> +static void vdagent_post_init(Object *obj)
+> +{
+> +    VDAgentChardev *vd =3D QEMU_VDAGENT_CHARDEV(obj);
+> +
+> +    object_apply_compat_props(obj);
+> +
+> +    if (vd->migration_blocked) {
+> +        error_setg(&vd->migration_blocker,
+> +                   "The vdagent chardev doesn't support migration with
+> machine"
+> +                   " version less than 10.1");
+> +    }
+> +}
+> +
+>  static void vdagent_chr_fini(Object *obj)
+>  {
+>      VDAgentChardev *vd =3D QEMU_VDAGENT_CHARDEV(obj);
+>
+> +    if (vd->migration_blocked) {
+> +        migrate_del_blocker(&vd->migration_blocker);
+> +    }
+>      vdagent_disconnect(vd);
+>      if (vd->mouse_hs) {
+>          qemu_input_handler_unregister(vd->mouse_hs);
+> @@ -1099,6 +1144,7 @@ static const TypeInfo vdagent_chr_type_info =3D {
+>      .parent =3D TYPE_CHARDEV,
+>      .instance_size =3D sizeof(VDAgentChardev),
+>      .instance_init =3D vdagent_chr_init,
+> +    .instance_post_init =3D vdagent_post_init,
+>      .instance_finalize =3D vdagent_chr_fini,
+>      .class_init =3D vdagent_chr_class_init,
+>  };
+> --
+> 2.47.3
+>
+>
+>
+
+--000000000000f7ad990648401a67
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Fiona</div><br><div class=3D"gmail_quo=
+te gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jan=
+ 12, 2026 at 2:51=E2=80=AFPM Fiona Ebner &lt;<a href=3D"mailto:f.ebner@prox=
+mox.com">f.ebner@proxmox.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">In QEMU 10.1, commit 5d56bff11e (&quot;ui/vdage=
+nt: add migration support&quot;)<br>
+added migration support for the vdagent chardev and commit 42000e0013<br>
+(&quot;ui/vdagent: remove migration blocker&quot;) removed the migration<br=
+>
+blocker. No compat for older machine versions was added, so migration<br>
+with pre-10.1 machine version, from a 10.1 binary to a pre-10.1 binary<br>
+will result in a failure when loading the VM state in the target<br>
+instance:<br>
+<br></blockquote><div><br></div><div>But you can migrate a pre-10.1 machine=
+ with the new binary.</div><div>=C2=A0</div><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">
+&gt; Unknown savevm section or instance &#39;vdagent&#39; 0. Make sure that=
+ your<br>
+&gt; current VM setup matches your saved VM setup, including any<br>
+&gt; hotplugged devices<br>
+<br>
+Add a compat flag to block migration when the machine version is less<br>
+than 10.1 to avoid this.<br>
+<br></blockquote><div><br></div><div>I am not sure this is the right way to=
+ handle this. There is already this error when migrating to an older qemu, =
+I am not sure we have to block earlier and prevent the above case.</div><di=
+v><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">
+Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
+@nongnu.org</a><br>
+Fixes: 42000e0013 (&quot;ui/vdagent: remove migration blocker&quot;)<br>
+Signed-off-by: Fiona Ebner &lt;<a href=3D"mailto:f.ebner@proxmox.com" targe=
+t=3D"_blank">f.ebner@proxmox.com</a>&gt;<br>
+---<br>
+=C2=A0hw/core/machine.c |=C2=A0 1 +<br>
+=C2=A0ui/vdagent.c=C2=A0 =C2=A0 =C2=A0 | 46 +++++++++++++++++++++++++++++++=
++++++++++++++++<br>
+=C2=A02 files changed, 47 insertions(+)<br>
+<br>
+diff --git a/hw/core/machine.c b/hw/core/machine.c<br>
+index 6411e68856..9a5241ce17 100644<br>
+--- a/hw/core/machine.c<br>
++++ b/hw/core/machine.c<br>
+@@ -55,6 +55,7 @@ GlobalProperty hw_compat_10_0[] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0{ &quot;vfio-pci&quot;, &quot;x-migration-load-config-a=
+fter-iter&quot;, &quot;off&quot; },<br>
+=C2=A0 =C2=A0 =C2=A0{ &quot;ramfb&quot;, &quot;use-legacy-x86-rom&quot;, &q=
+uot;true&quot;},<br>
+=C2=A0 =C2=A0 =C2=A0{ &quot;vfio-pci-nohotplug&quot;, &quot;use-legacy-x86-=
+rom&quot;, &quot;true&quot; },<br>
++=C2=A0 =C2=A0 { &quot;chardev-qemu-vdagent&quot;, &quot;x-migration-blocke=
+d&quot;, &quot;true&quot; },<br></blockquote><div><br></div><div>Is there a=
+ precedent where such compat property was added to block migration?</div><d=
+iv>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0};<br>
+=C2=A0const size_t hw_compat_10_0_len =3D G_N_ELEMENTS(hw_compat_10_0);<br>
+<br>
+diff --git a/ui/vdagent.c b/ui/vdagent.c<br>
+index 142a3691ac..15ecabb402 100644<br>
+--- a/ui/vdagent.c<br>
++++ b/ui/vdagent.c<br>
+@@ -6,6 +6,8 @@<br>
+=C2=A0#include &quot;qemu/option.h&quot;<br>
+=C2=A0#include &quot;qemu/units.h&quot;<br>
+=C2=A0#include &quot;hw/core/qdev.h&quot;<br>
++#include &quot;hw/core/qdev-properties.h&quot;<br>
++#include &quot;migration/blocker.h&quot;<br>
+=C2=A0#include &quot;ui/clipboard.h&quot;<br>
+=C2=A0#include &quot;ui/console.h&quot;<br>
+=C2=A0#include &quot;ui/input.h&quot;<br>
+@@ -32,6 +34,10 @@<br>
+=C2=A0struct VDAgentChardev {<br>
+=C2=A0 =C2=A0 =C2=A0Chardev parent;<br>
+<br>
++=C2=A0 =C2=A0 /* needed for machine versions &lt; 10.1 when migration was =
+not supported */<br>
++=C2=A0 =C2=A0 Error *migration_blocker;<br>
++=C2=A0 =C2=A0 bool migration_blocked;<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0/* config */<br>
+=C2=A0 =C2=A0 =C2=A0bool mouse;<br>
+=C2=A0 =C2=A0 =C2=A0bool clipboard;<br>
+@@ -677,6 +683,12 @@ static void vdagent_chr_open(Chardev *chr,<br>
+=C2=A0 =C2=A0 =C2=A0return;<br>
+=C2=A0#endif<br>
+<br>
++=C2=A0 =C2=A0 if (vd-&gt;migration_blocked) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (migrate_add_blocker(&amp;vd-&gt;migration_=
+blocker, errp) !=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0vd-&gt;mouse =3D VDAGENT_MOUSE_DEFAULT;<br>
+=C2=A0 =C2=A0 =C2=A0if (cfg-&gt;has_mouse) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0vd-&gt;mouse =3D cfg-&gt;mouse;<br>
+@@ -920,6 +932,19 @@ static void vdagent_chr_parse(QemuOpts *opts, ChardevB=
+ackend *backend,<br>
+<br>
+=C2=A0/* ------------------------------------------------------------------=
+ */<br>
+<br>
++static bool get_migration_blocked(Object *o, Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 VDAgentChardev *vd =3D QEMU_VDAGENT_CHARDEV(o);<br>
++=C2=A0 =C2=A0 return vd-&gt;migration_blocked;<br>
++}<br>
++<br>
++static void set_migration_blocked(Object *o, bool migration_blocked,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 VDAgentChardev *vd =3D QEMU_VDAGENT_CHARDEV(o);<br>
++=C2=A0 =C2=A0 vd-&gt;migration_blocked =3D migration_blocked;<br>
++}<br>
++<br>
+=C2=A0static void vdagent_chr_class_init(ObjectClass *oc, const void *data)=
+<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0ChardevClass *cc =3D CHARDEV_CLASS(oc);<br>
+@@ -929,6 +954,10 @@ static void vdagent_chr_class_init(ObjectClass *oc, co=
+nst void *data)<br>
+=C2=A0 =C2=A0 =C2=A0cc-&gt;chr_write=C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D vdagent=
+_chr_write;<br>
+=C2=A0 =C2=A0 =C2=A0cc-&gt;chr_set_fe_open=C2=A0 =3D vdagent_chr_set_fe_ope=
+n;<br>
+=C2=A0 =C2=A0 =C2=A0cc-&gt;chr_accept_input =3D vdagent_chr_accept_input;<b=
+r>
++<br>
++=C2=A0 =C2=A0 object_class_property_add_bool(oc, &quot;x-migration-blocked=
+&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0get_migration_blocked,<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set_migration_blocked);=
+<br>
+=C2=A0}<br>
+<br>
+=C2=A0static int post_load(void *opaque, int version_id)<br>
+@@ -1083,10 +1112,26 @@ static void vdagent_chr_init(Object *obj)<br>
+=C2=A0 =C2=A0 =C2=A0vmstate_register_any(NULL, &amp;vmstate_vdagent, vd);<b=
+r>
+=C2=A0}<br>
+<br>
++static void vdagent_post_init(Object *obj)<br>
++{<br>
++=C2=A0 =C2=A0 VDAgentChardev *vd =3D QEMU_VDAGENT_CHARDEV(obj);<br>
++<br>
++=C2=A0 =C2=A0 object_apply_compat_props(obj);<br>
++<br>
++=C2=A0 =C2=A0 if (vd-&gt;migration_blocked) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(&amp;vd-&gt;migration_blocker,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot=
+;The vdagent chardev doesn&#39;t support migration with machine&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot=
+; version less than 10.1&quot;);<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
+=C2=A0static void vdagent_chr_fini(Object *obj)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0VDAgentChardev *vd =3D QEMU_VDAGENT_CHARDEV(obj);<br>
+<br>
++=C2=A0 =C2=A0 if (vd-&gt;migration_blocked) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 migrate_del_blocker(&amp;vd-&gt;migration_bloc=
+ker);<br>
++=C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0vdagent_disconnect(vd);<br>
+=C2=A0 =C2=A0 =C2=A0if (vd-&gt;mouse_hs) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_input_handler_unregister(vd-&gt;mous=
+e_hs);<br>
+@@ -1099,6 +1144,7 @@ static const TypeInfo vdagent_chr_type_info =3D {<br>
+=C2=A0 =C2=A0 =C2=A0.parent =3D TYPE_CHARDEV,<br>
+=C2=A0 =C2=A0 =C2=A0.instance_size =3D sizeof(VDAgentChardev),<br>
+=C2=A0 =C2=A0 =C2=A0.instance_init =3D vdagent_chr_init,<br>
++=C2=A0 =C2=A0 .instance_post_init =3D vdagent_post_init,<br>
+=C2=A0 =C2=A0 =C2=A0.instance_finalize =3D vdagent_chr_fini,<br>
+=C2=A0 =C2=A0 =C2=A0.class_init =3D vdagent_chr_class_init,<br>
+=C2=A0};<br>
+-- <br>
+2.47.3<br>
+<br>
+<br>
+</blockquote></div></div>
+
+--000000000000f7ad990648401a67--
 
 
