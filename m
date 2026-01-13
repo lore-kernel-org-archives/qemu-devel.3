@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC4CD2F34E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 17:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E472D2F34F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 17:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfiWj-0005xJ-PT; Tue, 13 Jan 2026 12:49:57 -0500
+	id 1vfiWj-0005wp-0p; Tue, 13 Jan 2026 12:49:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1vfiVT-0005UN-Lw; Tue, 13 Jan 2026 12:48:45 -0500
+ id 1vfiVT-0005UM-L8; Tue, 13 Jan 2026 12:48:45 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1vfiVQ-0004Ts-6l; Tue, 13 Jan 2026 12:48:38 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60DF4MkM023973;
- Tue, 13 Jan 2026 17:48:32 GMT
+ id 1vfiVP-0004Tm-Cb; Tue, 13 Jan 2026 12:48:38 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60DEEhvp025420;
+ Tue, 13 Jan 2026 17:48:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=1i5iH5p1Qm6eNxAOT
- FrUzoB4dCfBLLbv/tlSNeLToiA=; b=OH6mj87eqlmsmxozTflk/gRE5y2WXALXR
- X9Gg/3NQ8sXnpOBdQpHtsEQ4rMBUqhStUxTYgLSeZSkyoOEbP4HBURT6RZH7L0+X
- pGpjlORQMdhL5xcJ8/F1YMCR3dNpHGuXb7IGgxFb5gOUSJqzcVGSBv4a6kbLVgZW
- xbWQ783m4sX1GEWPwH/mRwMdDX2gGekVwUVAb5iiG5oXr2N3LWmHVaNysVgqYGYH
- aJSgbMFHJ/vrAjkP5YpbB2MtPbkm+ddhOKsbLH6YsPMJdtWucK8ayeZQ15bu010G
- sHfebdJ0xok4jExi1+WjUxds8DEd6pbOIk/mxBMCoAYA4/AaLrbUA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkd6e5j3b-1
+ :mime-version:references:subject:to; s=pp1; bh=MeoklWTSX48o5BL9O
+ yZiCwpEP02ax2+GunxooUxhevc=; b=GpNnA1JfzZtYuoomTsoVYKqCBIuHGnc3D
+ o/V4EY9OX1oW3tfJOaMoPiTSyJ3IElgVd5wfMoaWFF44cGWL1UvX+c5DO5/krGtd
+ L7FvyBdUEffKho+YFHgywjtQId04met18b7qmTEs/0p8DF1++Zq418sANhdP2slp
+ fEJlGSNOC6ayj5+FNnmLmH2f1D/9+r77fEzMrVSFJOAA4UFT8fFw+P0pMytIo67Y
+ 1DxCY9stCqQty6ERgGVhZFz8MqPwyv/T1zhrASYvSF3mt0SjVHXtgDUHXNGpiLKw
+ 8QSWf9L2FcEOwn+QXBNW0smm3qMiIi+VlEccm9MlPsaaQxu56EG5A==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkedswem5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 13 Jan 2026 17:48:32 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60DHO9YO031294;
- Tue, 13 Jan 2026 17:48:31 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bm3t1nch0-1
+ Tue, 13 Jan 2026 17:48:31 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60DGMuYU025838;
+ Tue, 13 Jan 2026 17:48:30 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bm2kkdp4k-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 13 Jan 2026 17:48:31 +0000
+ Tue, 13 Jan 2026 17:48:30 +0000
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60DHmVeu61407518
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60DHmT1W33358430
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Jan 2026 17:48:31 GMT
+ Tue, 13 Jan 2026 17:48:29 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF10058059;
- Tue, 13 Jan 2026 17:48:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 71FD558053;
+ Tue, 13 Jan 2026 17:48:29 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 467D258053;
- Tue, 13 Jan 2026 17:48:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CA2FA58059;
+ Tue, 13 Jan 2026 17:48:28 +0000 (GMT)
 Received: from IBM-GLTZVH3.ibm.com (unknown [9.61.252.253])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 13 Jan 2026 17:48:30 +0000 (GMT)
+ Tue, 13 Jan 2026 17:48:28 +0000 (GMT)
 From: Jaehoon Kim <jhkim@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 Cc: pbonzini@redhat.com, stefanha@redhat.com, fam@euphon.net,
  armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
  eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de,
  Jaehoon Kim <jhkim@linux.ibm.com>
-Subject: [PATCH RFC v1 3/3] qapi/iothread: introduce poll-weight parameter for
- aio-poll
-Date: Tue, 13 Jan 2026 11:48:24 -0600
-Message-ID: <20260113174824.464720-4-jhkim@linux.ibm.com>
+Subject: [PATCH RFC v1 2/3] aio-poll: refine iothread polling using weighted
+ handler intervals
+Date: Tue, 13 Jan 2026 11:48:23 -0600
+Message-ID: <20260113174824.464720-3-jhkim@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260113174824.464720-1-jhkim@linux.ibm.com>
 References: <20260113174824.464720-1-jhkim@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: vF3hIEfoDGD0QmnXrI2e7GNDooibAjAE
-X-Authority-Analysis: v=2.4 cv=LLxrgZW9 c=1 sm=1 tr=0 ts=69668570 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=A1X0JdhQAAAA:8
- a=8dkL5VNdttJqmu350ZsA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDE0OCBTYWx0ZWRfXxiH60Cs+0+na
- o19YT/Bj031Cx1W27pi4h4tose4O30p2W7mzw0Y3zf1cePCMkbNJWBehMZAPBARrD6I+TCsH9y3
- tFTJgq1BaSWP7pOKEnUrUgxOP7O8Fh/bQxnnwbVlrE7GkXXTkZ8+I7gEUvk421iYgiM3ppVNqoY
- fPYsYrdTqMNRDpcmo8Qr8eOKnEUWEcJ3RtXRItc6+i57lNLYUg5fEAmhWKtGf20jK9SF97Y2RsH
- QYVRVPemWJOcrYrI7GSf1ImeeKdaPjq0pzfllQ+hS9nPimubWikCjdbMwRsSABpx8jOJ1kbylTA
- dMeARsesbUO/OYkKOqhm9h/Es7ofaj+9Mz9qU/XQ8mCJgmcFLDVG/mAHbNNjeCl6sGY3zuzieOr
- Rn4Hdw+wZFWOzCfxR87NmRU4nFBlXNq567by7yESlXuSCFe4y7G9LPJ8km7yzNXmNmtomNrfy+e
- +OfUrySxWl5oogPfyhw==
-X-Proofpoint-ORIG-GUID: vF3hIEfoDGD0QmnXrI2e7GNDooibAjAE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDE0OCBTYWx0ZWRfXw8cBpqfXENfq
+ gMDazUAeV1s2Cb0QHrP6Uluqg5coGP0e5g4qzI5ZA+uDGlhzI5lwGwcRlNLtIECqdB+pz59Q8RQ
+ LQHaFFuIeiUzCG6QaMHGhucjJ4Vi9pOJFiEpQ1FInJaBz5mSYF8lD8V82yGgZPlsbGEeaUEC2bU
+ RgflE2a0HSf3bYxfT0sDkk8iKNkT8EG5GlBbzPLCnChduA0E5Rn0oFH1UJ3r69900um9yFmJqs+
+ OZsEFfw32unfH3hwUV8JVK+yB6fsbElA2041OM1KbQxv7WkpYdyWRE5GVeWtd8oExftZ0ufm3qA
+ JNvQ8djsAOFbz3san6dkXGgjkosAzqvuFWYlHAtudGTKQP/9cxId7Ip/zTQDwg9nGpaAJ1yjk2q
+ m/Cx0N1ktT7rNY6wtpeWYFUxvhBGpZEGISYZOKbfkZUq9X7bJ993kF8GHREAVckVrBaqoTAE379
+ D36zHFba0ulJQKONpgQ==
+X-Proofpoint-GUID: g019utTVZIGextgC8Ax4QBvFl5JDjoDi
+X-Authority-Analysis: v=2.4 cv=WLJyn3sR c=1 sm=1 tr=0 ts=6966856f cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=xxBNnxn5Vv9M6JHFot4A:9
+X-Proofpoint-ORIG-GUID: g019utTVZIGextgC8Ax4QBvFl5JDjoDi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-13_04,2026-01-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0 impostorscore=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601130148
+ spamscore=0 adultscore=0 malwarescore=0 phishscore=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
+ definitions=main-2601130148
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -120,282 +121,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a new poll-weight parameter for aio-poll. This parameter
-controls how much the most recent event interval affects the next
-polling duration. When set to 0, a default value of 2 is used, meaning
-the current interval contributes roughly 25% to the calculation. Larger
-values decrease the weight of the current interval, enabling more
-gradual adjustments to polling duration.
+Refine adaptive polling in aio_poll by updating iothread polling
+duration based on weighted AioHandler event intervals.
+
+Each AioHandler's poll.ns is updated using a weighted factor when an
+event occurs. Idle handlers accumulate block_ns until poll_max_ns and
+then reset to 0, preventing sporadically active handlers from
+unnecessarily prolonging iothread polling.
+
+The iothread polling duration is set based on the largest poll.ns among
+active handlers. The shrink divider defaults to 2, matching the grow
+rate, to reduce frequent poll_ns resets for slow devices.
+
+The default weight factor (POLL_WEIGHT_SHIFT=2) was selected based on
+various FIO tests to balance mean poll_ns, reset frequency, and high
+poll_ns occurrences. Correlation between current block_ns and weighted
+value (adj_block_ns) slightly decreases as weight increases. Lower
+weights cause more fluctuation; higher weights maintain poll_ns once it
+rises.
+
+The table below shows results for a representative randread case (bs=4k,
+iodepth=8, 2 IOThread), illustrating the average poll_ns, the ratio of
+poll_ns resets to 0, and the time spent near the maximum poll_ns for
+different weight values.
+
+Weight| Mean poll_ns |  poll_ns reset rate | Time near max(%)
+------| ------------ | ------------------- | -----------------
+  1   |     4523     |       89.9%         |     7.41%
+  2   |     8442     |       78.6%         |     15.84%
+  3   |    11147     |       70.4%         |     21.38%
+  4   |    11624     |       70.1%         |     23.35%
+
+Weight=1 reacts quickly, Weight=3-4 holds poll_ns higher once it rises,
+and Weight=2 provides a good balance between responsiveness and CPU
+usage.
 
 Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
 ---
- include/qemu/aio.h                |  4 +++-
- include/system/iothread.h         |  1 +
- iothread.c                        | 10 ++++++++++
- monitor/hmp-cmds.c                |  1 +
- qapi/misc.json                    |  6 ++++++
- qapi/qom.json                     |  8 +++++++-
- qemu-options.hx                   |  7 ++++++-
- tests/unit/test-nested-aio-poll.c |  2 +-
- util/aio-posix.c                  |  9 ++++++---
- util/aio-win32.c                  |  3 ++-
- util/async.c                      |  1 +
- 11 files changed, 44 insertions(+), 8 deletions(-)
+ include/qemu/aio.h |   4 +-
+ util/aio-posix.c   | 135 +++++++++++++++++++++++++++++++--------------
+ util/async.c       |   1 +
+ 3 files changed, 99 insertions(+), 41 deletions(-)
 
 diff --git a/include/qemu/aio.h b/include/qemu/aio.h
-index 6c77a190e9..50b8db2712 100644
+index 8cca2360d1..6c77a190e9 100644
 --- a/include/qemu/aio.h
 +++ b/include/qemu/aio.h
-@@ -311,6 +311,7 @@ struct AioContext {
+@@ -195,7 +195,8 @@ struct BHListSlice {
+ typedef QSLIST_HEAD(, AioHandler) AioHandlerSList;
+ 
+ typedef struct AioPolledEvent {
+-    int64_t ns;        /* current polling time in nanoseconds */
++    bool has_event; /* Flag to indicate if an event has occurred */
++    int64_t ns;     /* estimated block time in nanoseconds */
+ } AioPolledEvent;
+ 
+ struct AioContext {
+@@ -306,6 +307,7 @@ struct AioContext {
+     int poll_disable_cnt;
+ 
+     /* Polling mode parameters */
++    int64_t poll_ns;        /* current polling time in nanoseconds */
      int64_t poll_max_ns;    /* maximum polling time in nanoseconds */
      int64_t poll_grow;      /* polling time growth factor */
      int64_t poll_shrink;    /* polling time shrink factor */
-+    int64_t poll_weight;    /* weight of current interval in calculation */
- 
-     /* AIO engine parameters */
-     int64_t aio_max_batch;  /* maximum number of requests in a batch */
-@@ -792,12 +793,13 @@ void aio_context_destroy(AioContext *ctx);
-  * @max_ns: how long to busy poll for, in nanoseconds
-  * @grow: polling time growth factor
-  * @shrink: polling time shrink factor
-+ * @weight: weight factor applied to the current polling interval
-  *
-  * Poll mode can be disabled by setting poll_max_ns to 0.
-  */
- void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
-                                  int64_t grow, int64_t shrink,
--                                 Error **errp);
-+                                 int64_t weight, Error **errp);
- 
- /**
-  * aio_context_set_aio_params:
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index e26d13c6c7..6ea57ed126 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -38,6 +38,7 @@ struct IOThread {
-     int64_t poll_max_ns;
-     int64_t poll_grow;
-     int64_t poll_shrink;
-+    int64_t poll_weight;
- };
- typedef struct IOThread IOThread;
- 
-diff --git a/iothread.c b/iothread.c
-index caf68e0764..68a944e57c 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -164,6 +164,7 @@ static void iothread_set_aio_context_params(EventLoopBase *base, Error **errp)
-                                 iothread->poll_max_ns,
-                                 iothread->poll_grow,
-                                 iothread->poll_shrink,
-+                                iothread->poll_weight,
-                                 errp);
-     if (*errp) {
-         return;
-@@ -233,6 +234,9 @@ static IOThreadParamInfo poll_grow_info = {
- static IOThreadParamInfo poll_shrink_info = {
-     "poll-shrink", offsetof(IOThread, poll_shrink),
- };
-+static IOThreadParamInfo poll_weight_info = {
-+    "poll-weight", offsetof(IOThread, poll_weight),
-+};
- 
- static void iothread_get_param(Object *obj, Visitor *v,
-         const char *name, IOThreadParamInfo *info, Error **errp)
-@@ -288,6 +292,7 @@ static void iothread_set_poll_param(Object *obj, Visitor *v,
-                                     iothread->poll_max_ns,
-                                     iothread->poll_grow,
-                                     iothread->poll_shrink,
-+                                    iothread->poll_weight,
-                                     errp);
-     }
- }
-@@ -311,6 +316,10 @@ static void iothread_class_init(ObjectClass *klass, const void *class_data)
-                               iothread_get_poll_param,
-                               iothread_set_poll_param,
-                               NULL, &poll_shrink_info);
-+    object_class_property_add(klass, "poll-weight", "int",
-+                              iothread_get_poll_param,
-+                              iothread_set_poll_param,
-+                              NULL, &poll_weight_info);
- }
- 
- static const TypeInfo iothread_info = {
-@@ -356,6 +365,7 @@ static int query_one_iothread(Object *object, void *opaque)
-     info->poll_max_ns = iothread->poll_max_ns;
-     info->poll_grow = iothread->poll_grow;
-     info->poll_shrink = iothread->poll_shrink;
-+    info->poll_weight = iothread->poll_weight;
-     info->aio_max_batch = iothread->parent_obj.aio_max_batch;
- 
-     QAPI_LIST_APPEND(*tail, info);
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 5a673cddb2..40e3b1da50 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -205,6 +205,7 @@ void hmp_info_iothreads(Monitor *mon, const QDict *qdict)
-         monitor_printf(mon, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
-         monitor_printf(mon, "  poll-grow=%" PRId64 "\n", value->poll_grow);
-         monitor_printf(mon, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
-+        monitor_printf(mon, "  poll-weight=%" PRId64 "\n", value->poll_weight);
-         monitor_printf(mon, "  aio-max-batch=%" PRId64 "\n",
-                        value->aio_max_batch);
-     }
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 28c641fe2f..b21cc48a03 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -85,6 +85,11 @@
- # @poll-shrink: how many ns will be removed from polling time, 0 means
- #     that it's not configured (since 2.9)
- #
-+# @poll-weight: the weight factor for adaptive polling.
-+#     Determines how much the current event interval contributes to
-+#     the next polling time calculation.  0 means that the default
-+#     value is used.  (since 10.1)
-+#
- # @aio-max-batch: maximum number of requests in a batch for the AIO
- #     engine, 0 means that the engine will use its default (since 6.1)
- #
-@@ -96,6 +101,7 @@
-            'poll-max-ns': 'int',
-            'poll-grow': 'int',
-            'poll-shrink': 'int',
-+           'poll-weight': 'int',
-            'aio-max-batch': 'int' } }
- 
- ##
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 6f5c9de0f0..d90823478d 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -606,6 +606,11 @@
- #     algorithm detects it is spending too long polling without
- #     encountering events.  0 selects a default behaviour (default: 0)
- #
-+# @poll-weight: the weight factor for adaptive polling.
-+#     Determines how much the current event interval contributes to
-+#     the next polling time calculation.  0 selects a default
-+#     behaviour (default: 0) since 10.1.
-+#
- # The @aio-max-batch option is available since 6.1.
- #
- # Since: 2.0
-@@ -614,7 +619,8 @@
-   'base': 'EventLoopBaseProperties',
-   'data': { '*poll-max-ns': 'int',
-             '*poll-grow': 'int',
--            '*poll-shrink': 'int' } }
-+            '*poll-shrink': 'int',
-+            '*poll-weight': 'int' } }
- 
- ##
- # @MainLoopProperties:
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ec92723f10..74adaf55fc 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -6352,7 +6352,7 @@ SRST
- 
-             CN=laptop.example.com,O=Example Home,L=London,ST=London,C=GB
- 
--    ``-object iothread,id=id,poll-max-ns=poll-max-ns,poll-grow=poll-grow,poll-shrink=poll-shrink,aio-max-batch=aio-max-batch``
-+    ``-object iothread,id=id,poll-max-ns=poll-max-ns,poll-grow=poll-grow,poll-shrink=poll-shrink,poll-weight=poll-weight,aio-max-batch=aio-max-batch``
-         Creates a dedicated event loop thread that devices can be
-         assigned to. This is known as an IOThread. By default device
-         emulation happens in vCPU threads or the main event loop thread.
-@@ -6388,6 +6388,11 @@ SRST
-         the polling time when the algorithm detects it is spending too
-         long polling without encountering events.
- 
-+        The ``poll-weight`` parameter is the weight factor used in the
-+        adaptive polling algorithm. It determines how much the most
-+        recent event interval affects the calculation of the next
-+        polling duration.
-+
-         The ``aio-max-batch`` parameter is the maximum number of requests
-         in a batch for the AIO engine, 0 means that the engine will use
-         its default.
-diff --git a/tests/unit/test-nested-aio-poll.c b/tests/unit/test-nested-aio-poll.c
-index 9ab1ad08a7..ed791fa23b 100644
---- a/tests/unit/test-nested-aio-poll.c
-+++ b/tests/unit/test-nested-aio-poll.c
-@@ -81,7 +81,7 @@ static void test(void)
-     qemu_set_current_aio_context(td.ctx);
- 
-     /* Enable polling */
--    aio_context_set_poll_params(td.ctx, 1000000, 2, 2, &error_abort);
-+    aio_context_set_poll_params(td.ctx, 1000000, 2, 2, 0, &error_abort);
- 
-     /* Make the event notifier active (set) right away */
-     event_notifier_init(&td.poll_notifier, 1);
 diff --git a/util/aio-posix.c b/util/aio-posix.c
-index dd6008898b..d4f3d8ca8f 100644
+index 7ddf92a25f..dd6008898b 100644
 --- a/util/aio-posix.c
 +++ b/util/aio-posix.c
-@@ -630,6 +630,7 @@ static void adjust_block_ns(AioContext *ctx, int64_t block_ns)
+@@ -28,9 +28,11 @@
+ 
+ /* Stop userspace polling on a handler if it isn't active for some time */
+ #define POLL_IDLE_INTERVAL_NS (7 * NANOSECONDS_PER_SECOND)
++#define POLL_WEIGHT_SHIFT   (2)
+ 
+-static void adjust_polling_time(AioContext *ctx, AioPolledEvent *poll,
+-                                int64_t block_ns);
++static void adjust_block_ns(AioContext *ctx, int64_t block_ns);
++static void grow_polling_time(AioContext *ctx, int64_t block_ns);
++static void shrink_polling_time(AioContext *ctx, int64_t block_ns);
+ 
+ bool aio_poll_disabled(AioContext *ctx)
  {
-     AioHandler *node;
-     int64_t adj_block_ns = -1;
-+    int64_t poll_weight = ctx->poll_weight ? : POLL_WEIGHT_SHIFT;
+@@ -372,7 +374,7 @@ static bool aio_dispatch_ready_handlers(AioContext *ctx,
+          * add the handler to ctx->poll_aio_handlers.
+          */
+         if (ctx->poll_max_ns && QLIST_IS_INSERTED(node, node_poll)) {
+-            adjust_polling_time(ctx, &node->poll, block_ns);
++            node->poll.has_event = true;
+         }
+     }
  
-     QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
-         if (node->poll.has_event) {
-@@ -639,8 +640,8 @@ static void adjust_block_ns(AioContext *ctx, int64_t block_ns)
-              * poll.ns to smooth out polling time adjustments.
-              */
-             node->poll.ns = node->poll.ns
--                ? (node->poll.ns - (node->poll.ns >> POLL_WEIGHT_SHIFT))
--                + (block_ns >> POLL_WEIGHT_SHIFT) : block_ns;
-+                ? (node->poll.ns - (node->poll.ns >> poll_weight))
-+                + (block_ns >> poll_weight) : block_ns;
+@@ -559,18 +561,13 @@ static bool run_poll_handlers(AioContext *ctx, AioHandlerList *ready_list,
+ static bool try_poll_mode(AioContext *ctx, AioHandlerList *ready_list,
+                           int64_t *timeout)
+ {
+-    AioHandler *node;
+     int64_t max_ns;
  
-             if (node->poll.ns >= ctx->poll_max_ns) {
-                 node->poll.ns = 0;
-@@ -830,7 +831,8 @@ void aio_context_destroy(AioContext *ctx)
+     if (QLIST_EMPTY_RCU(&ctx->poll_aio_handlers)) {
+         return false;
+     }
+ 
+-    max_ns = 0;
+-    QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
+-        max_ns = MAX(max_ns, node->poll.ns);
+-    }
+-    max_ns = qemu_soonest_timeout(*timeout, max_ns);
++    max_ns = qemu_soonest_timeout(*timeout, ctx->poll_ns);
+ 
+     if (max_ns && !ctx->fdmon_ops->need_wait(ctx)) {
+         /*
+@@ -586,46 +583,98 @@ static bool try_poll_mode(AioContext *ctx, AioHandlerList *ready_list,
+     return false;
  }
  
- void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
--                                 int64_t grow, int64_t shrink, Error **errp)
-+                                 int64_t grow, int64_t shrink,
-+                                 int64_t weight, Error **errp)
+-static void adjust_polling_time(AioContext *ctx, AioPolledEvent *poll,
+-                                int64_t block_ns)
++static void shrink_polling_time(AioContext *ctx, int64_t block_ns)
  {
-     AioHandler *node;
+-    if (block_ns <= poll->ns) {
+-        /* This is the sweet spot, no adjustment needed */
+-    } else if (block_ns > ctx->poll_max_ns) {
+-        /* We'd have to poll for too long, poll less */
+-        int64_t old = poll->ns;
+-
+-        if (ctx->poll_shrink) {
+-            poll->ns /= ctx->poll_shrink;
+-        } else {
+-            poll->ns = 0;
+-        }
++    /*
++     * Reduce polling time if the block_ns is zero or
++     * less than the current poll_ns.
++     */
++    int64_t old = ctx->poll_ns;
++    int64_t shrink = ctx->poll_shrink;
  
-@@ -847,6 +849,7 @@ void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
+-        trace_poll_shrink(ctx, old, poll->ns);
+-    } else if (poll->ns < ctx->poll_max_ns &&
+-               block_ns < ctx->poll_max_ns) {
+-        /* There is room to grow, poll longer */
+-        int64_t old = poll->ns;
+-        int64_t grow = ctx->poll_grow;
++    if (shrink == 0) {
++        shrink = 2;
++    }
+ 
+-        if (grow == 0) {
+-            grow = 2;
+-        }
++    if (block_ns < (ctx->poll_ns / shrink)) {
++        ctx->poll_ns /= shrink;
++    }
+ 
+-        if (poll->ns) {
+-            poll->ns *= grow;
+-        } else {
+-            poll->ns = 4000; /* start polling at 4 microseconds */
+-        }
++    trace_poll_shrink(ctx, old, ctx->poll_ns);
++}
+ 
+-        if (poll->ns > ctx->poll_max_ns) {
+-            poll->ns = ctx->poll_max_ns;
+-        }
++static void grow_polling_time(AioContext *ctx, int64_t block_ns)
++{
++    /* There is room to grow, poll longer */
++    int64_t old = ctx->poll_ns;
++    int64_t grow = ctx->poll_grow;
+ 
+-        trace_poll_grow(ctx, old, poll->ns);
++    if (grow == 0) {
++        grow = 2;
+     }
++
++    if (block_ns > ctx->poll_ns * grow) {
++        ctx->poll_ns = block_ns;
++    } else {
++        ctx->poll_ns *= grow;
++    }
++
++    if (ctx->poll_ns > ctx->poll_max_ns) {
++        ctx->poll_ns = ctx->poll_max_ns;
++    }
++
++    trace_poll_grow(ctx, old, ctx->poll_ns);
+ }
+ 
++static void adjust_block_ns(AioContext *ctx, int64_t block_ns)
++{
++    AioHandler *node;
++    int64_t adj_block_ns = -1;
++
++    QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
++        if (node->poll.has_event) {
++            /*
++             * Update poll.ns for the node with an event.
++             * Uses a weighted average of the current block_ns and the previous
++             * poll.ns to smooth out polling time adjustments.
++             */
++            node->poll.ns = node->poll.ns
++                ? (node->poll.ns - (node->poll.ns >> POLL_WEIGHT_SHIFT))
++                + (block_ns >> POLL_WEIGHT_SHIFT) : block_ns;
++
++            if (node->poll.ns >= ctx->poll_max_ns) {
++                node->poll.ns = 0;
++            }
++            /*
++             * To avoid excessive polling time increase, update adj_block_ns
++             * for nodes with the event flag set to true
++             */
++            adj_block_ns = MAX(adj_block_ns, node->poll.ns);
++            node->poll.has_event = false;
++         } else {
++            /*
++             * No event now, but was active before.
++             * If it waits longer than poll_max_ns, poll.ns will stay 0
++             * until the next event arrives.
++             */
++            if (node->poll.ns != 0) {
++                node->poll.ns += block_ns;
++                if (node->poll.ns >= ctx->poll_max_ns) {
++                    node->poll.ns = 0;
++                }
++            }
++        }
++    }
++
++    if (adj_block_ns >= 0) {
++        if (adj_block_ns > ctx->poll_ns) {
++            grow_polling_time(ctx, adj_block_ns);
++        } else {
++            shrink_polling_time(ctx, adj_block_ns);
++         }
++     }
++ }
++
+ bool aio_poll(AioContext *ctx, bool blocking)
+ {
+     AioHandlerList ready_list = QLIST_HEAD_INITIALIZER(ready_list);
+@@ -722,6 +771,10 @@ bool aio_poll(AioContext *ctx, bool blocking)
+ 
+     aio_free_deleted_handlers(ctx);
+ 
++    if (ctx->poll_max_ns) {
++        adjust_block_ns(ctx, block_ns);
++    }
++
+     qemu_lockcnt_dec(&ctx->list_lock);
+ 
+     progress |= timerlistgroup_run_timers(&ctx->tlg);
+@@ -783,6 +836,7 @@ void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
+ 
+     qemu_lockcnt_inc(&ctx->list_lock);
+     QLIST_FOREACH(node, &ctx->aio_handlers, node) {
++        node->poll.has_event = false;
+         node->poll.ns = 0;
+     }
+     qemu_lockcnt_dec(&ctx->list_lock);
+@@ -793,6 +847,7 @@ void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
      ctx->poll_max_ns = max_ns;
      ctx->poll_grow = grow;
      ctx->poll_shrink = shrink;
-+    ctx->poll_weight = weight;
-     ctx->poll_ns = 0;
++    ctx->poll_ns = 0;
  
      aio_notify(ctx);
-diff --git a/util/aio-win32.c b/util/aio-win32.c
-index 6e6f699e4b..1985843233 100644
---- a/util/aio-win32.c
-+++ b/util/aio-win32.c
-@@ -429,7 +429,8 @@ void aio_context_destroy(AioContext *ctx)
  }
- 
- void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
--                                 int64_t grow, int64_t shrink, Error **errp)
-+                                 int64_t grow, int64_t shrink,
-+                                 int64_t weight, Error **errp)
- {
-     if (max_ns) {
-         error_setg(errp, "AioContext polling is not implemented on Windows");
 diff --git a/util/async.c b/util/async.c
-index 9d3627566f..741fcfd6a7 100644
+index 80d6b01a8a..9d3627566f 100644
 --- a/util/async.c
 +++ b/util/async.c
-@@ -609,6 +609,7 @@ AioContext *aio_context_new(Error **errp)
-     ctx->poll_ns = 0;
+@@ -606,6 +606,7 @@ AioContext *aio_context_new(Error **errp)
+     timerlistgroup_init(&ctx->tlg, aio_timerlist_notify, ctx);
+ 
+     ctx->poll_max_ns = 0;
++    ctx->poll_ns = 0;
      ctx->poll_grow = 0;
      ctx->poll_shrink = 0;
-+    ctx->poll_weight = 0;
- 
-     ctx->aio_max_batch = 0;
  
 -- 
 2.50.1
