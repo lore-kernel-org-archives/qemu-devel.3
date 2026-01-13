@@ -4,144 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF5BD29DE4
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 07:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4504D29DDE
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 07:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfYtk-00088n-0D; Tue, 13 Jan 2026 02:33:06 -0500
+	id 1vfYuC-0000Hp-1J; Tue, 13 Jan 2026 02:33:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYtR-0007x4-GO
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:32:48 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfYtw-0008Ln-Hy
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:33:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYtQ-000753-1i
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:32:45 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfYts-000767-Lj
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:33:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768289563;
+ s=mimecast20190719; t=1768289592;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=R3Ed+U/fiFRB/U3BqH1BZm6DUUK7kuwxjLUTVr12wzs=;
- b=gLS4MCPdxE/rmSTvcZsw+6oCEPT12N0+Y3boIt85rETGxqWnp6Ooy6Dkwys5Ozke4evxMm
- xIJXU0EeTjrIuMw5UoWq7F3u/aOPb3TSbcmQKkr2Bn2kyg8gEkjOM/jZn1kzDfLD0YRmaT
- Q5JOLBvVwkDZi+vTsHgtbb7FodhUvME=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+cvhzN6ZgF5buGwzYRSEhRLAPHNkQ2/eGV+UlHtYL64=;
+ b=Z9fxIoaF0FodEQt09KQrWyp6tZxVH7IPd8mRfLVzZQ2mPXeK8BKWU49R5bMD8xL+URoYN7
+ XQyI56HLcHjwTDMQYvQSNTuAOiMTsbB/CZTS7o3eAePe6FgPIk3jpS2y8vXSnXZY5m7LYs
+ KdXRBWdO4ELisZivHpu5qyl7HdlBY+g=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-333-nrORIC_uOq-zpg32noEuZw-1; Tue, 13 Jan 2026 02:32:40 -0500
-X-MC-Unique: nrORIC_uOq-zpg32noEuZw-1
-X-Mimecast-MFC-AGG-ID: nrORIC_uOq-zpg32noEuZw_1768289559
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-432a9ef3d86so3770892f8f.2
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 23:32:39 -0800 (PST)
+ us-mta-205-JiTwaI7VMh-sTChBdcCvtg-1; Tue, 13 Jan 2026 02:33:10 -0500
+X-MC-Unique: JiTwaI7VMh-sTChBdcCvtg-1
+X-Mimecast-MFC-AGG-ID: JiTwaI7VMh-sTChBdcCvtg_1768289589
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b8715782415so20524166b.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 23:33:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768289558; x=1768894358; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768289589; x=1768894389; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=R3Ed+U/fiFRB/U3BqH1BZm6DUUK7kuwxjLUTVr12wzs=;
- b=cru9Gu2D7ymkreuGcL6CkOC2y9+USW2NSzvLWJ1Ag2V2Pida9rCyjzeiAB3XEmW3Vt
- RQLqHg65JYaEd6T0HueE3abMdqr3qZYxFPFvbnIBO305VsgE65UckSo0jWkRRdDbh9TS
- gXMLaIFW9m2ccOR3SJDC/igbImPv8T5vSnX4nzJrPRLLt0nMQ5gSpBrkJclxWd/2dcZ8
- TuWnYwz56XphuTau2QEtulkKdri1vsHQu+/YOhQlsBNMTXu54MySPj1XynohWmQgrVhU
- rnnyHl5aH8qlTkHIkNb1EL2CE/w7lgvMiEgRDfV77BuI2PBJTuU3rkXjQg/E3S0Je3t+
- a3EQ==
+ bh=+cvhzN6ZgF5buGwzYRSEhRLAPHNkQ2/eGV+UlHtYL64=;
+ b=Gf/OODCKiubMaL3ELoUpV/w2GhF8q/5DVHvszxbAVELncD2/K5Y/cXZ+TBAAJRkxqC
+ RbEZdSF0Cel0R2IkVa/myNHS/2HsxxUXXhM158kGpFPg2nKinw1QdAxWp7mKUeh0FqrC
+ 5rRFzwtzapkhhIFF178WbfpTA1D64s2lTtCloHgK37+cRLKhU5A/clgLxgipN4XwEiVZ
+ oVKBJppcO3rGGqrQyRLV+Sz5Uo5AdATaOW8eGAowXY3yc4Vq+fse54rBlx1IbrXo6kBq
+ jnLC8tFGAa3CMWEXH7uJw5QcI8e6MTdBsAVkEZ6tsZhnfIUCiQKfkKMs1eVfGWWAdTMn
+ 0aPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768289558; x=1768894358;
+ d=1e100.net; s=20230601; t=1768289589; x=1768894389;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R3Ed+U/fiFRB/U3BqH1BZm6DUUK7kuwxjLUTVr12wzs=;
- b=wEf7E809UsIZ6Onc01jjThTSfq7bBZnxedCX2dJnH2vxhYxGdkiqRSqt4Q6+8wvZin
- 1JKiwKL2/z7AgfKPIq4FvTWGWdw2OU3gMkEXB0+JgdG+gPsLAX80q5d30jdGRxq8+1oY
- HKLQ9gAqXBDDvQrVaVYmMaYO8lpynlCeGl9JqG0qn01j1BhYyxIE38QLFU3EPK0yVDQE
- bxImA5zum4JL7D0gDvdkUD41cd/HJvPr7MAtqSpoKls8mQUSjCjNYMwxvyk1uPhZEVFd
- 23suTg/7kqxo/n9sx5IPGEdi4/eo/mMyErZMvPz0kO/KudCmlcF6Pt8ORUnp6PFc6RKX
- h7Ug==
-X-Gm-Message-State: AOJu0Yzca8ljaUhaVESVeWAszK1/HquOZzWVqZ8n7ECa3TXd1KSQ7PDZ
- aEpOnFPLrvV/FjVjGqtJTHa+E75BmG3+3Uk6vmlgUqYkUO7Kdnslmz3ZPWdEuNTmrd6ZCq+jzWA
- HP7S0ZltXf8zXlVs3wMr9joaJQkMVCwx3RBOAkGz2yVEgJj/K+0OnSC8Mgx85CTW9tx00AM5f7l
- //Lsx+SAV2G/IYHBLSv1u/wQLqCW8VTdwEbA==
-X-Gm-Gg: AY/fxX5sZg8GcDz9KR9DGVMFmK7I4hRWoO0gYQAF5i8CFVJnlTDirIUqEpfWy8bpSp9
- ZDxvfllUewolFUEbT2ZN3R5TlYZmZtEb7/p2JmFSAXG3f0ncJvtygHgCRYKnHQECWM7UEItobtW
- 7MXYvAhwGsX41YP3OLHIs0gPo+Aye0NS+Ijpg1Hm6KbwSgvR8GquDbBNphKYEvdGndI7MiNMIHy
- IwRq1nWDIJsqcF9EWgSjNnymSz98lkPUWIxZ8wYS+Chs7my3OtPeXUDfpO4UgFxw2O9qWL72NKo
- 7p0jWkE/T4Vbd7kDCmxxmcbESxMeqhUNa5yVn+cK0BqdL3xt5ETOS6Of/G/jp3/BE9tHBxbd+SP
- +7fl0XGGqkNn2vKrGZFsOkklyfCkkdqnQf3dbt3/K0n99kCJa
-X-Received: by 2002:a05:600c:1392:b0:46e:4586:57e4 with SMTP id
- 5b1f17b1804b1-47d84b32ef1mr242493015e9.24.1768289558123; 
- Mon, 12 Jan 2026 23:32:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFBFblkaFqk3ZGIktPEbSFL9d+KBTH6aM6Z7lMcohn1HbwPDMoF7SW7DoQUyvfnmYyj8BYBwg==
-X-Received: by 2002:a05:600c:1392:b0:46e:4586:57e4 with SMTP id
- 5b1f17b1804b1-47d84b32ef1mr242492715e9.24.1768289557568; 
- Mon, 12 Jan 2026 23:32:37 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ bh=+cvhzN6ZgF5buGwzYRSEhRLAPHNkQ2/eGV+UlHtYL64=;
+ b=H3xPgh8MX6Uohnbbjaf4qDyWAi+EVkWMyPp4+QFGi3DYr6k0FcPDAQ5eAiws6s4leT
+ 73jQbNTH68xKzkYUnA6Aznvl98lSwfB5ZyVsWwhKkINGzxLoEIWT79w8LW1CcWNQaRh8
+ nyQX3Dc7nO2FC73e3Rsez5N3o8HzL0wr9vfTmUct3H6PAWXqQZG3NbEP0ZExU+LbofrV
+ CTjCXaKi5hKSCTP7x/lLj69CWvnyQBZjqdThhUdHqiSGoHgVlUZyFqbLaG2urJcx0HGv
+ Y1upyY3ADhZgwwOmwPDyIj+lycBDtAadMVhJZx+R3jR+lJ14Kho7hTY8lwc8Npgd5Qv6
+ 0/tw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1H9IVYRq/ICw7xf4ViLe0qVlsj7r+Wk0bwswJ0e7aLy9K/D7Xul6qkoJeLbKmEfda0suRJt6UYUGE@nongnu.org
+X-Gm-Message-State: AOJu0Yx0gHBY+EOYUDe6sb6K6wKdJtjOXe1ePSS+6j/K+5+lUa61oYkw
+ 6T10w3M3EicrCIZUYgZn0yinfuiREAj6wJjSbdtZYYwP1tQ0StzrpZEENnB5z99Qj/V5O5DrUXV
+ xYZDbt9iB9pKIGb2N1dOQ6xkgNp4GdseKB8Okb65RwA4kJrQk1wFLaP/F
+X-Gm-Gg: AY/fxX55dP3HKfZxyTT6fSmHGY89MgjDWVQWzXIasC9wYq17Vd1wwBBZDgMt530MUDe
+ 3sZl3i1GueGLeqctUtpG02CEaUXUUeJXowAC89b+0bZ+ywep2L04rTYQ/HlHirPw6LpR1+PUTBL
+ Rlipc3T9ZUPmdafYEcZKxk3aI7bcdGzoqWF7EiyqYOBhoHhhDYYOdN1LJPU58IXdL20czOpMAbZ
+ ccWa2DJgrncD2X7ua7Wt0YJuG8KbMPacJ/Elda6Z63QVXutSYWLFnRwrDp4Ynx/qY8wc8xS3ZgK
+ +dodQfaE+KN97cLymylvcrMFZWH4obssA5GvMS3n4Yo5+OGyDVaT/AWZDspJF98uwry8KXEmq4P
+ sy7ydDp8=
+X-Received: by 2002:a17:907:961e:b0:b87:2471:def3 with SMTP id
+ a640c23a62f3a-b872471ec38mr477628666b.55.1768289589207; 
+ Mon, 12 Jan 2026 23:33:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG9ePugTiN2AWi9ksYOYya9p9MRyi83T/avyPHxQsSme33F+3zRQdxHGOs3l4W2NXUDLjbSZw==
+X-Received: by 2002:a17:907:961e:b0:b87:2471:def3 with SMTP id
+ a640c23a62f3a-b872471ec38mr477626566b.55.1768289588787; 
+ Mon, 12 Jan 2026 23:33:08 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f653c61sm398591445e9.10.2026.01.12.23.32.36
+ a640c23a62f3a-b842a563f0esm2199055966b.60.2026.01.12.23.33.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 23:32:37 -0800 (PST)
-Message-ID: <85b04a6f-9fda-45b5-ba69-ca5cc7b6abc1@redhat.com>
-Date: Tue, 13 Jan 2026 08:32:36 +0100
+ Mon, 12 Jan 2026 23:33:08 -0800 (PST)
+Message-ID: <051d1efb-dc31-461c-b17a-fb4c24ccc273@redhat.com>
+Date: Tue, 13 Jan 2026 08:33:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/rcutorture: Fix build error
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20260112163350.1251114-1-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260112163350.1251114-1-clg@redhat.com>
+Subject: Re: [PATCH v3 1/1] tests/qtest/fuzz: Add generic fuzzer for VNC
+To: Alexander Bulekov <alxndr@bu.edu>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Navid Emamdoost <navidem@google.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, stefanha@redhat.com, farosas@suse.de,
+ darren.kenny@oracle.com, Qiuhao.Li@outlook.com, lvivier@redhat.com,
+ zsm@google.com, Fabiano Rosas <farosas@suse.de>
+References: <CAHUE=o9+kYVzWmHbHkJ5FKDpJhekhBCW8j+vwFm0yQCJrQGveA@mail.gmail.com>
+ <20251112003637.1984547-1-navidem@google.com>
+ <20251112003637.1984547-2-navidem@google.com>
+ <CAHUE=o8u1snmMBGHExoZix3vFY6Y8J_jWdYKNDiuMd6jvw0qzQ@mail.gmail.com>
+ <aV0EtXyfCmpSUvg8@redhat.com>
+ <CAHUE=o_F=b3PHZQjZ_tA5gVDPXF_FixZ5na5ymxZWkBy_oEZtg@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAHUE=o_F=b3PHZQjZ_tA5gVDPXF_FixZ5na5ymxZWkBy_oEZtg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -166,42 +174,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/12/26 17:33, Cédric Le Goater wrote:
-> Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
-> detects an unused variable error:
+On 13/01/2026 05.06, Alexander Bulekov wrote:
+> On 260106 1249, Daniel P. Berrangé wrote:
+>> Hi Alexander,
+>>
+>> I don't see this old fuzzing patch merged yet. Who is normally collecting
+>> and merging fuzz patches ?
 > 
->    ../tests/unit/rcutorture.c: In function ‘rcu_read_stress_test’:
->    ../tests/unit/rcutorture.c:251:18: error: variable ‘garbage’ set but not used [-Werror=unused-but-set-variable=]
->      251 |     volatile int garbage = 0;
->          |                  ^~~~~~~
-> 
-> Since the 'garbage' variable is used to generate memory reads from the
-> CPU while holding the RCU lock, it can not be removed. Tag it as
-> ((unused)) instead to silence the compiler warnings/errors.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   tests/unit/rcutorture.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/unit/rcutorture.c b/tests/unit/rcutorture.c
-> index 7662081683f5d781da74402113b73884780b1243..2f19d479a3f210cbca19205a0656eda1f4c2e5a7 100644
-> --- a/tests/unit/rcutorture.c
-> +++ b/tests/unit/rcutorture.c
-> @@ -248,7 +248,7 @@ static void *rcu_read_stress_test(void *arg)
->       int pc;
->       long long n_reads_local = 0;
->       long long rcu_stress_local[RCU_STRESS_PIPE_LEN + 1] = { 0 };
-> -    volatile int garbage = 0;
-> +    volatile int garbage __attribute__ ((unused)) = 0;
->   
->       rcu_register_thread();
->   
+> Hi Daniel,
+> In the past, as far as I remember it has been either me or Thomas. I can
+> put together the pull-req. Apologies for the delay
 
-Applied to vfio-next.
+  Hi,
 
-Thanks,
+FYI, I handed over the maintainership of the qtests to Fabiano Rosas, so I'm 
+not looking for qtest-related patches anymore. Please CC: Fabiano if you 
+want to get something merged by him. Thanks!
 
-C.
+  Regards,
+   Thomas
+
+
+>>
+>> On Fri, Nov 14, 2025 at 09:02:06AM -0600, Alexander Bulekov wrote:
+>>> On 251112 0036, Navid Emamdoost wrote:
+>>>> Add a new generic fuzz target for the QEMU VNC server. This target
+>>>> exercises both the standard VNC protocol and the VNC-over-WebSocket
+>>>> transport layer, increasing coverage of a primary remote attack surface.
+>>>>
+>>>> To support parallel fuzzing (e.g., with oss-fuzz), the VNC unix
+>>>> socket paths are generated dynamically. The fuzzer harness inspects the
+>>>> command line for placeholders and replaces them with unique paths
+>>>> created by mkstemp() before execution.
+>>>>
+>>>> ---
+>>>>
+>>>> This new target increases code coverage in the VNC subsystem
+>>>> and related networking and I/O code.
+>>>> The baseline coverage below was generated by running all existing fuzz
+>>>> targets with the oss-fuzz corpus. The new target shows significant gains:
+>>>>
+>>>> ----------------------------------------------------------------------------
+>>>> File                       New Target                Baseline        Change
+>>>> ----------------------------------------------------------------------------
+>>>> vnc.c                      339/3212 (10.6%)     3/3212 (0.1%)        +336
+>>>> keymaps.c                  91/184 (49.5%)       0/184 (0.0%)         +91
+>>>> net-listener.c             76/198 (38.4%)       3/198 (1.5%)         +73
+>>>> channel-socket.c           73/575 (12.7%)       19/575 (3.3%)        +54
+>>>> qemu-sockets.c             44/1019 (4.3%)       0/1019 (0.0%)        +44
+>>>> vnc-jobs.c                 41/219 (18.7%)       0/219 (0.0%)         +41
+>>>> dns-resolver.c             28/145 (19.3%)       3/145 (2.1%)         +25
+>>>>
+>>>> Signed-off-by: Navid Emamdoost <navidem@google.com>
+>>>
+>>> Reviewed-by: Alexander Bulekov <alxndr@bu.edu>
+>>>
+>>>> ---
+>>>>   tests/qtest/fuzz/generic_fuzz_configs.h | 50 +++++++++++++++++++++++++
+>>>>   1 file changed, 50 insertions(+)
+>>>>
+>>>> diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fuzz/generic_fuzz_configs.h
+>>>> index ef0ad95712..9c46e106a4 100644
+>>>> --- a/tests/qtest/fuzz/generic_fuzz_configs.h
+>>>> +++ b/tests/qtest/fuzz/generic_fuzz_configs.h
+>>>> @@ -29,6 +29,52 @@ static inline gchar *generic_fuzzer_virtio_9p_args(void){
+>>>>       "writeout=immediate,fmode=0600,dmode=0700", tmpdir);
+>>>>   }
+>>>>
+>>>> +/*
+>>>> + * Global variables and cleanup handler for VNC fuzzer sockets.
+>>>> + * These are needed because the socket paths must be available at exit.
+>>>> + */
+>>>> +static char g_vnc_socket_path[sizeof("/tmp/qemu-vnc.XXXXXX")];
+>>>> +static char g_vnc_ws_socket_path[sizeof("/tmp/qemu-vnc-ws.XXXXXX")];
+>>>> +
+>>>> +static void cleanup_vnc_sockets(void)
+>>>> +{
+>>>> +    if (g_vnc_socket_path[0] != '\0') {
+>>>> +        unlink(g_vnc_socket_path);
+>>>> +    }
+>>>> +    if (g_vnc_ws_socket_path[0] != '\0') {
+>>>> +        unlink(g_vnc_ws_socket_path);
+>>>> +    }
+>>>> +}
+>>>> +
+>>>> +/*
+>>>> + * Dynamically generate VNC arguments with unique unix socket paths.
+>>>> + * This allows multiple fuzzing jobs to run in parallel without conflict.
+>>>> + */
+>>>> +static inline gchar *generic_fuzzer_vnc_args(void)
+>>>> +{
+>>>> +    static bool cleanup_registered = false;
+>>>> +    int fd;
+>>>> +
+>>>> +    strcpy(g_vnc_socket_path, "/tmp/qemu-vnc.XXXXXX");
+>>>> +    fd = g_mkstemp(g_vnc_socket_path);
+>>>> +    g_assert_cmpint(fd, !=, -1);
+>>>> +    close(fd);
+>>>> +
+>>>> +    strcpy(g_vnc_ws_socket_path, "/tmp/qemu-vnc-ws.XXXXXX");
+>>>> +    fd = g_mkstemp(g_vnc_ws_socket_path);
+>>>> +    g_assert_cmpint(fd, !=, -1);
+>>>> +    close(fd);
+>>>> +
+>>>> +    if (!cleanup_registered) {
+>>>> +        atexit(cleanup_vnc_sockets);
+>>>> +        cleanup_registered = true;
+>>>> +    }
+>>>> +
+>>>> +    return g_strdup_printf("-machine q35 -nodefaults "
+>>>> +                           "-vnc vnc=unix:%s,websocket=unix:%s",
+>>>> +                           g_vnc_socket_path, g_vnc_ws_socket_path);
+>>>> +}
+>>>> +
+>>>>   const generic_fuzz_config predefined_configs[] = {
+>>>>       {
+>>>>           .name = "virtio-net-pci-slirp",
+>>>> @@ -247,6 +293,10 @@ const generic_fuzz_config predefined_configs[] = {
+>>>>           .args = "-machine q35 -nodefaults "
+>>>>           "-parallel file:/dev/null",
+>>>>           .objects = "parallel*",
+>>>> +    },{
+>>>> +        .name = "vnc",
+>>>> +        .argfunc = generic_fuzzer_vnc_args,
+>>>> +        .objects = "*",
+>>>>       }
+>>>>   };
+>>>>
+>>>> --
+>>>> 2.51.2.1041.gc1ab5b90ca-goog
+>>>>
+>>>>
+>>>
+>>
+>> With regards,
+>> Daniel
+>> --
+>> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+>> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+>> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>>
+> 
 
 
