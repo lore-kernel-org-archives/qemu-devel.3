@@ -4,118 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD29D2F35E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 18:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4279D2F35E
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 19:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfjaY-0002tq-Fo; Tue, 13 Jan 2026 13:57:58 -0500
+	id 1vfjnk-0001fr-Ky; Tue, 13 Jan 2026 14:11:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vfjZ8-0002me-GP
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 13:56:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vfjnf-0001fX-SH
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:11:31 -0500
+Received: from p-east3-cluster3-host12-snip4-10.eps.apple.com ([57.103.86.123]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vfjZ5-0005pq-4G
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 13:56:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768330585;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=reko9w298o6jWNDWosmuAMSax8bMqyxzRVAiUIt2M1A=;
- b=MPYJnCN+GJz35mKgrZupWb2SxVXQm/OghCx6Z+K9CFYaCn74BUIOZlzz+diTXXvF1wBN7W
- igikNjci6d49JSomKl8tiTmzczjAEYigpXrSnmjAtQ5Kpj8Vlf6uHbKzbDUm3tSRnWOf8b
- N6L4j+OkjR4F2AegwuXCqYo7PELPolM=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-xLst_ChxMFS4x8EpMtvAqQ-1; Tue, 13 Jan 2026 13:56:23 -0500
-X-MC-Unique: xLst_ChxMFS4x8EpMtvAqQ-1
-X-Mimecast-MFC-AGG-ID: xLst_ChxMFS4x8EpMtvAqQ_1768330583
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4f4a92bf359so223219181cf.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 10:56:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768330583; x=1768935383; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=reko9w298o6jWNDWosmuAMSax8bMqyxzRVAiUIt2M1A=;
- b=jrKzDJsl9WZsyI1EV83xDE8N+qpUuBLqb2VUDskCnQhmbzIE9K14iu7q1fjCheMM75
- dKO1/kLYKRhzPE7gM/tUDiJuVbrHzo8YLksbTAsaefH2w3+4TbTY0WSz6ntrx7YCaRdu
- 3VXNT/3T2w5cM4p4SMdZLjR/XtVjOb069Bqi1m3STkm/FDNRfrLVQpyna5WpJ19BqjNk
- HTnPIah9vsa0cuC2qutGE+zlgJj/hxa+5UhsifvAkwQtNCJWB+RpP6ztcbM87FppLzmI
- Aht/+5asqsyQdFBYyv/fBwGvPL3mrDCJnGMXxaxYaOPeEYAhtwsVQyAoE6j8A9WWAZQF
- mYbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768330583; x=1768935383;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=reko9w298o6jWNDWosmuAMSax8bMqyxzRVAiUIt2M1A=;
- b=PEqwtBQGSNJXeyx3le5xbniBOwTOlSK2OcP3LEmRE1a54Bbe2w0MZX4ol3kItx8bZv
- Rn0ExqUN6DL92wj67birmCtEz1uceNpUcuzttJrQxT0CQZZiiJFw6qYnVmibPoJ23twy
- 8kSeqg3B6sic7QmqjNLhCWqeK4U3cRggvPI+Tr/NkwnTEKJQv/Ipv7TquQ+qXbOd/VXU
- s6ueOIz3u3gvixUhcPRuWTNSNXdV67rrKfmVs1rRL4ioBB0PfhIYxGgahs9Ri1cq5B3n
- 0Ie1OPlAsRgERGEZzNa4+YKS9a5WZHIgusve3ZGaUcOoNoqm31qNV6faOgyd3uVodCnP
- hdfg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHEoE7icXY8ZBdOupP8Z/a6RNPmTyWBG/KatXKf13oMoqYtFFvBt4ptAiULkPii37wTRrZIp/oQu1s@nongnu.org
-X-Gm-Message-State: AOJu0YwqrNJTz4+HfxOYr/YyYf+A30L51yMrs93NNMunxKRkQfEYg4pH
- LqNh5lzUNlKi0oiDaLGh+qAFzsLS/VRVy5P5B1a8S/KB18ElRMoJVlom0TpL71qYissVtjswULy
- zagKXTMSv7H35fb5LjwNzRzShXLHMTZin174QB22zZCh8E4RJxoPo8jen
-X-Gm-Gg: AY/fxX7X5STCV6zpxRzq21tz8rX7HBP4UR0Kb8Y5O3YxgJ0jbCdPbP6+2oyIHKk1TkJ
- WW8uaSSrVud7TBOh+LDUlVvu6tfrmTHCKTeymNOqZn+rO6zmVWTv5mc3ceoAw08+gJaoltjwuMy
- KVW4boeecJHw51ieaQYd7YbH2clbRBZiBNsbnehBFp8bP+bX6dfuFaOv+BKtZVIWKaDqWQICCvW
- xrotG/uB6/8YAwwYTwNp9Pux1QOTFaNt1i8PNCEDJw6dtcZKgWprKAirtXXRwoXwzBDEd+iXLz4
- D3veSVQ+sIoEVjHjXTvKZzZUdn652MkROonIQMADz7ADLstgU23ZQJvT7F4xECqUx/j3s5yDx4s
- Ycwc=
-X-Received: by 2002:ac8:6f1a:0:b0:4ee:61f8:68d6 with SMTP id
- d75a77b69052e-501481e3cddmr2501541cf.6.1768330583063; 
- Tue, 13 Jan 2026 10:56:23 -0800 (PST)
-X-Received: by 2002:ac8:6f1a:0:b0:4ee:61f8:68d6 with SMTP id
- d75a77b69052e-501481e3cddmr2501221cf.6.1768330582672; 
- Tue, 13 Jan 2026 10:56:22 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4ffa8d3d34fsm145674301cf.4.2026.01.13.10.56.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 10:56:22 -0800 (PST)
-Date: Tue, 13 Jan 2026 13:56:20 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- mzamazal@redhat.com, Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v6 0/5] support inflight migration
-Message-ID: <aWaVVJh13ctiW9Ku@x1.local>
-References: <20260113095813.134810-1-dtalexundeer@yandex-team.ru>
- <20260113181242.GB528940@fedora>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260113181242.GB528940@fedora>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vfjnS-00084L-Ub
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:11:20 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPS id
+ 5A7AD180016B; Tue, 13 Jan 2026 19:11:11 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=QZjqv2R9z7DyONz4NYBFpZPJ7liUJwN67PQWtNdRY20=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=XCypDJLpSZnQoxGpn9iG5Oj+VSpMHeg96SuqAICdfn9g95RkU1p2lVt5HVk8784N3Kv4ObrsWNYndmkaT0OMwoV+jKVnd+/EaroyByX+4x+hPXYZQ0vDRwTkhD3F3cNXTPKpg1KHm8dvG0eTo7e+21j4IIS1R7b4527ok+bkrvDZQOsE+EpAYDZj/pxT73YNuoMeFAoHaJeXdBwzC2Lz7A8mP7bMyfS/3jBhd+sbylMlXWXJxYn9gruRgNbws0IBHp0qA/o7Xjo/axAIRJnZLDTx7x2yX3HvGE+xu414Z4yAdQXhpxUgAkqXzEWx7VxcNqJNVThKUFsYY77OsI3gng==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPSA id
+ E8BD51800120; Tue, 13 Jan 2026 19:11:09 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH] accel/mshv: Remove remap overlapping mappings code
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
+Date: Tue, 13 Jan 2026 20:10:58 +0100
+Cc: qemu-devel@nongnu.org, Wei Liu <liuwe@microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F0BAABD8-DC26-431E-A1A0-C9C8BD07EFA8@unpredictable.fr>
+References: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-ORIG-GUID: ITF8D1gL6DxTEkvjrtyzojgySNUr6i2w
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDE2MCBTYWx0ZWRfX2BTXie8Tau7S
+ XvFE752wlZGlv5030bDeU6GU5sFLt/iu1LPduXCLLO18B/PyuFbJkuYN79BHs7wlrZV7IHMBCna
+ k24Vk3QaxGGN/1ZIulKiEa183xypsakYgdErDtN65yVaY8MbM46YRu03FE8tLvFZ9tjcpuKdW9D
+ hLAqlECLdbhQjYZg2eo9bQA+I6yuWVPqZz57cfBf/onCLhTVExzeZCdIcglHCABlrPVAI9WXp45
+ EOCXXfg5W69feE5MyeFK2DClVH0TCbDmwEzMOVk0haV1O1S/QWeeooez9a59cQPiQm6MTyFXKUP
+ 8t0FjUC9yKEsJoRlCU4
+X-Authority-Info: v=2.4 cv=Qs1THFyd c=1 sm=1 tr=0 ts=696698d0
+ cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=57JGEKEj1fhd59RVf4IA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: ITF8D1gL6DxTEkvjrtyzojgySNUr6i2w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-13_04,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ clxscore=1030 spamscore=0 malwarescore=0 phishscore=0 mlxlogscore=995
+ suspectscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601130160
+X-JNJ: AAAAAAAB0EnnGHElkbnTH4rcDeO/z9OE16IoLfd2QT+2oRLUS63Cjlx9tI8YlPYqoA2j3MU25cZFRFKxas95C4rNfLUJ2E6Wvi//joqwhfnjK6j5h1Wb+QniaIr/TLiBGIEg5I9EJQxy5dOOy8QP9VzunEbRgEOrvkzzSotYAHnc+nUboDIHWj7V9VN1C5/l1jTlhQZMVrvJ4y1VLGmtXvicx7GB1QK9DEq40sncD5JRAY+MSrh7XCB1AJotW2dxb5QRmjKf8Ov84ivDjVCpp/rxLn/0GURw7xgZ3Mic9RqSsxAlvE2R2MYXRRjhnA3qo/6v4TQQy2fa7W6eU0M2x9CDg9Lw/hC1c/cFXkZd/b72bI2l3k1n6tGU8V9VTBOKmZuVdFb1HYSNYropDn0KD8OJR02wxnjOR4Sbv7urqpoWT2ebaJNZBnUiaRqtPSkUB8xIo51gsL+A9Rm/Yp3prHAj1cl1D1+gVRMC9z2ER2QLoYWFVbC3X1YGaRsmtuRehLwYIYy6HRfNn5SP1xBVnvdofI2JNdq0PqMQsklzWGuEZMa2K2Wl0mPIRqWgshgnpUZ0i3ouQCqvCAu+FfhvKbnmZqs/bG9RyuiAnSAQtaUFTv5HVO5VIs4GWaWoacaoyw1GuqzkFrUb1enMpRevioRolVqwLpLKu+Y=
+Received-SPF: pass client-ip=57.103.86.123;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,40 +92,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 13, 2026 at 01:12:42PM -0500, Stefan Hajnoczi wrote:
-> On Tue, Jan 13, 2026 at 02:58:09PM +0500, Alexandr Moshkov wrote:
-> 
-> Peter: Please review the migration aspects (especially the vmstates).
-> Thank you!
 
-Looks good from my side as long as it's based on VMSD, I appreciate that
-change from the old versions where it used to use qemufile APIs.
 
-The major question here is if this series depends on Vladimir's other
-series, while there's still one patch that is not-for-merge:
+> On 13. Jan 2026, at 16:37, Magnus Kulke =
+<magnuskulke@linux.microsoft.com> wrote:
+>=20
+> This change removes userland code that worked around a restriction
+> in the mshv driver in the 6.18 kernel: regions from userland
+> couldn't be mapped to multiple regions in the kernel. We maintained a
+> shadow mapping table in qemu and used a heuristic to swap in a =
+requested
+> region in case of UNMAPPED_GPA exits.
+>=20
+> However, this heuristic wasn't reliable in all cases, since HyperV
+> behaviour is not 100% reliable across versions. HyperV itself doesn't
+> prohibit to map regions at multiple places into the guest, so the
+> restriction has been removed in the mshv driver.
+>=20
+> Hence we can remove the remapping code. Effectively this will mandate =
+a
+> 6.19 kernel, if the workload attempt to map e.g. BIOS to multiple
+> reagions. I still think it's the right call to remove this logic:
+>=20
+> - The workaround only seems to work reliably with a certain revision
+>  of HyperV as a nested hypervisor.
+> - We expect Direct Virtualization (L1VH) to be the main platform for
+>  the mshv accelerator, which also requires a 6.19 kernel
+>=20
+> This reverts commit efc4093358511a58846a409b965213aa1bb9f31a.
+>=20
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-https://lore.kernel.org/all/20251016114104.1384675-24-vsementsov@yandex-team.ru/#t
-
-Does it automatically mark this series RFC as well?
-
-Personally speaking, a new migration cap would work all fine, we should
-have discussed it somewhere previously.  Said that, "local-vhost-user-blk"
-capability is likely not the right one.  IMHO it should be either "local"
-or "fd-passing" / "fd-passthrough" (or something generic) as the name.  If
-we are not sure if we will leverage more than "passing the FDs around", we
-can make it as simple as "local" as a new migration capability.
-
-Then migration's misc.h should export a function migrate_is_local() then
-device code can probe that in its own vmstate handling paths on save/load.
-
-A note to Vladimir: please remember to add a check to enforce UNIX socket
-when a formal patch 23 will be proposed some day, no matter what is the
-name of the capability.  It should fail qmp "migrate" or qmp
-"migrate_incoming" command if the main URI is not a unix socket.
-
-Thanks,
-
--- 
-Peter Xu
+Tested-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
 
