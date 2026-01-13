@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE819D0C856
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 11:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B7F0D0C854
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 11:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfcLW-00039s-E9; Tue, 13 Jan 2026 06:13:58 -0500
+	id 1vfcLS-00035n-O0; Tue, 13 Jan 2026 06:13:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfcLP-00034a-5J
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:13:51 -0500
+ id 1vfcLM-00032e-3L
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:13:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfcLN-0008Qo-EY
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:13:50 -0500
+ id 1vfcLI-0008Pn-DF
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:13:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768302828;
+ s=mimecast20190719; t=1768302823;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZAGJdZeq72e7lqjI+nG9SVEULVr7dvOgvkxQoZpywUo=;
- b=RVEjzhFI5Mi58nBzilWXzMrwl/wX0IiZVekDhKiP7oGj16fvIH2FvKK1Zfb46inU+TQrNe
- 9EAMlu6QU1Y7FGfIL/vI9EKqTFxeFOqkGc3FvjAy9kvwZm5j72eTbGBt0/rAChn5WpmcXC
- ock9+06nSfx/mM1FGYGvcgfFmZGPwqY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5yk+7lehNHXmaDyA6TRaDnfLrvG1v0qyhVBj2t/x3e0=;
+ b=FnM1mc4/Z3DG1FrIGBOGLWpNywT+Ke1bfXu6fu6Cm1P4GGqcZ9GGH5d4WRy0TbVGeuPGQW
+ gwsR1lOmTUQbCU6iTEcj8D1afZv0o9ZGGvi5BZIUzs8kSnksbW47Cyk1Hy/yRienc4PnKW
+ +zww93HW96TJJl+DRVr1hIPcXujWnL0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-73-hEvwZ2fGPduJ-aeVb14YPw-1; Tue, 13 Jan 2026 06:13:47 -0500
-X-MC-Unique: hEvwZ2fGPduJ-aeVb14YPw-1
-X-Mimecast-MFC-AGG-ID: hEvwZ2fGPduJ-aeVb14YPw_1768302826
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4775e00b16fso58011305e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 03:13:46 -0800 (PST)
+ us-mta-413-9kbbLA5xMt6LfuUR5NGc_w-1; Tue, 13 Jan 2026 06:13:42 -0500
+X-MC-Unique: 9kbbLA5xMt6LfuUR5NGc_w-1
+X-Mimecast-MFC-AGG-ID: 9kbbLA5xMt6LfuUR5NGc_w_1768302821
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4792bd2c290so86164365e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 03:13:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768302825; x=1768907625; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768302820; x=1768907620; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZAGJdZeq72e7lqjI+nG9SVEULVr7dvOgvkxQoZpywUo=;
- b=kLGXRvZ759VYqGHOLPXZLYDGcZLqH0We4zl6kvFEB/2r6zqRB+gSkzduzqaZblfcPh
- SWqk5T3xZB4IbhoFHVhnjFHWeJ+lMmLJRzKxBqD9uMANvg6JwBk8nVMMkcviPZRx5QWg
- hpUhx75CbrplJN2eeXj5T/UXSu2Va2xS5XxptOP+OdJPynLX2D5sZ/yvLwn7L0LPKSW8
- CO1RW9e/y8Xi5bFrbTI2S6zfh12iDBvTxhmGTQwWKfOR4kEX/aeowlz+2Ld3MpaqBrwO
- g0kBKt72DzVcy+lqD2l/Na7bRBVgsx4qqTBObHNnY7Qd2dByT5vfL2P/jczkHfiBRE2A
- Aesg==
+ bh=5yk+7lehNHXmaDyA6TRaDnfLrvG1v0qyhVBj2t/x3e0=;
+ b=kaMCr/OrftyUrypUsPIa3FOsLrqrdTCexA//FDffm0XPm+ZGt1EKP+DpacJOE2NyG4
+ KIOshh5xI1mu1v9Brx2PUMJWovDzEX5HG5feLosYXDgep5F29rBYiknC4KZJtCX3zGYl
+ 8ASCTr7nsm7+inhASTdHX7FtqLOrDJ5OsaiDCBhjYHNBLr2GMPYVAktmL0dzFjl7FCRr
+ IjgIoPS3/YVlmVshCUuicUvc0s+IYA90VyXsK65VK+8T1ZEGM18cst/Jb4PoL34GDYwj
+ LVU6ENAA7EKYsMQKWKrc7ncttzvQmI72OjSNJFkTz0D+XoMc+1NUJyGuLUuOZV5k92iL
+ ZgcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768302825; x=1768907625;
+ d=1e100.net; s=20230601; t=1768302820; x=1768907620;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZAGJdZeq72e7lqjI+nG9SVEULVr7dvOgvkxQoZpywUo=;
- b=sUhgdOClRlxcl6UvICLc81rNuaG7LGyyzOJWbLb0SL9yApxMRl1llReguTlVTd7IRP
- nvuNhl92oHOc1f1Ke2GCI9LgZuHuVn0SppdEDaZM51qoCtOV2eH+OAwbKmfBr+JAkgyb
- W0n4kXoTlY5NFgCrDVLfs4t2DPmoPvh7oC4Hx7X0xl86OCDpvUBg9hmrZmJWdq6xEmjN
- ZX0yUlgsaNP9EXAGgxppKIJs96c4i8pecQKjVUusVv0xVZwN1CsjxpMW0VLDHKJ8JdxP
- 92bWiTux6KS2njwvK0LBz+/j2R2JwzcV0H4wNtRPpIAL9tFhAOcGh7OIRDt+MvukQCP4
- jGWA==
-X-Gm-Message-State: AOJu0YzKmT9W2KFcDcZPkkx+wNaKZNGWB84czzQpFJDKesVrng90z7Co
- Lf3PgAcdzQthZA/0+wAhKY7ZXI6pxsLxGRCsqz9c3+8yAfX5CrbDBODt4L8ux0/X74VN9EUyXB+
- vaOUPJvaZWxijw/RkelPCwb3uajSBYoZcIFceZdkeJqQYCr7HLqcKDhrdRdSuohVO+e/1Ronj4t
- ws1htnTyWOcJUE27dscviL9dVKWDM4JBxFkSdamwrQ
-X-Gm-Gg: AY/fxX5eif8rNtZG/3gEbeM6LLxsnOYn6QMsJjUeNN1YzbCSLO9TmAyo00P+No5bQA7
- 8dqNL4mL4jdETv+5t3RXmCLgooqNysFf5HRCOPxmH2NByZD7kCkEE13+nEvJoYuYlovFWRDBZJv
- sPtTQif05tC/CRa0byW2+mEybBk98PuhnUvwLKmJhkVBj0MwNWGPDsrWrdGjNgfF/9kJeFrju8p
- FOWVa+lfJ/WjjljvVg4vyD5TFVEbSrX7Dpq2m/gOYFKdRNRG1m46Y+iYp4DPsjDuZUr6KTA792u
- u1ACFX4yM5stJ5SggKCTiOr5bpD2fNleSWrYbwVT0nTzxWC1rOm+zayGnxY6+YTVIXF1wYwTe3G
- B0fPSaFFlpwrJzrjVGCRWniD0lw3KlvWYlx0BOVa6KrS6bkptRBoBKfdVd+IOLENZzHPblXlKtV
- rNi5KF8CgWkqRAHg==
-X-Received: by 2002:a05:600c:630d:b0:477:73cc:82c2 with SMTP id
- 5b1f17b1804b1-47d84b1fea3mr282725615e9.9.1768302824862; 
- Tue, 13 Jan 2026 03:13:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH0vu7l+29lBBF5GQXB2a7VgpynFCRmINiKpzuZKLbgoF77PKUp47VonpZ7ssytXaEORzSZGA==
-X-Received: by 2002:a05:600c:630d:b0:477:73cc:82c2 with SMTP id
- 5b1f17b1804b1-47d84b1fea3mr282725135e9.9.1768302824392; 
- Tue, 13 Jan 2026 03:13:44 -0800 (PST)
+ bh=5yk+7lehNHXmaDyA6TRaDnfLrvG1v0qyhVBj2t/x3e0=;
+ b=dGJwDsOGkkctFRCPsk2d4OHaAJqhl1hS51Y4mBkyi5wZ1w96CBUXsUi8c2jO65LR/e
+ kgRVhdADbQPF7ULYd1FiiGGijbrelNO8Uc8Cj6SsmetbGo3lbX0/dptKmKxw74TMclkA
+ dqWa5VZLIM+KpRzwbUpZRxOqun/Xvf9PMdPmHc5BHk23f9Bx6A6hNcMwGv+tjRf0kQuW
+ QOOOhFfo8UX2RDgTitzOib/F0f/wNXu5Se+O86M1DUIzU7IlBiy26RXt0nvGuofzWrkq
+ tTOKGZOcyd/VyVJVGw5Tt/kvhoFRnRJFRCLRMltlCwvMShC8DLlqwuBsWfBqMKhLIxqW
+ IZcg==
+X-Gm-Message-State: AOJu0Yw58JkSuZ3++/6Z0w08alopbw53mdPI63QKHq3a5GandTDj+mUL
+ yAM5+HFIQikHe2BYyhsnwOiVl942TmjmnHJTGxQEVNEUWFl1jHzclGGlb6AZRWYKa1zUqNCr6Ht
+ KzPjVNEiAiXdN7mimJuBuBIH6oejzqSyMu00eHsH8LgQ5odD3rLj2X08yg+5tsqn7V/x0XD92WS
+ Jpq5VoyyBIi2icV+Kca16Suf1caaKjypXE2ryf7Cu/
+X-Gm-Gg: AY/fxX4EHztVZuqWURk50WsEsHJXGmWJc0PlHOxs3xKIUR2ttl71cjSCxQiRZYRf2qK
+ zG06DJLlpVPpHq5xW4PirwKSpUnl3l4l3+KZ9Plrnm/J8LEjkuxzD69vt9MvGfqsujFPWiqqe/H
+ JVQJ8XeG7j7uiJTQHtC9M8pwEED2uVsrR4+g4V787NqBixhZQWukAO/lRsLK31zEsjdcJ0aQRPO
+ f+SrpuEi+Z9tioC3B5Gg8Tc9nINk032kPbui3goMXduxvdQC6LCComLE0CWl7B2zJaY1ddz9hd1
+ tPgAxpfIvyINBTYyZBrHI2IasQmpT0XjyEXgBgMPDvBViJN7L4IvXEbMhuXSIOJ938Xw9JgNTlY
+ wCaQoI/SzWh5BFtCi/mGfvv0D1p06OGo5lQh8YL5G2qUIHmG+vuiD79/0L+aYSuFV/RSnTLk/x+
+ WX20MbRiwSJtf59A==
+X-Received: by 2002:a05:600c:8506:b0:477:9ce2:a0d8 with SMTP id
+ 5b1f17b1804b1-47d849bd201mr204796705e9.0.1768302820542; 
+ Tue, 13 Jan 2026 03:13:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLCkwWY3sJY8VOKcBhBFJ7w8ldtb+BhmulQsxRbsWWK2uK+lOMFUMLH2fUudDP8qBSA7HJjA==
+X-Received: by 2002:a05:600c:8506:b0:477:9ce2:a0d8 with SMTP id
+ 5b1f17b1804b1-47d849bd201mr204796385e9.0.1768302820156; 
+ Tue, 13 Jan 2026 03:13:40 -0800 (PST)
 Received: from [192.168.10.48] ([151.61.26.160])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432dfa6dc4esm21790413f8f.23.2026.01.13.03.13.43
+ 5b1f17b1804b1-47d7f4184cbsm419522695e9.6.2026.01.13.03.13.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 03:13:43 -0800 (PST)
+ Tue, 13 Jan 2026 03:13:37 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 4/7] target/i386/tcg: mask addresses for VSIB
-Date: Tue, 13 Jan 2026 12:13:30 +0100
-Message-ID: <20260113111333.1138160-5-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 2/7] target/i386/tcg: remove dead code
+Date: Tue, 13 Jan 2026 12:13:28 +0100
+Message-ID: <20260113111333.1138160-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260113111333.1138160-1-pbonzini@redhat.com>
 References: <20260113111333.1138160-1-pbonzini@redhat.com>
@@ -107,7 +106,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,148 +122,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VSIB can have either 32-bit or 64-bit addresses, pass a constant mask to
-the helper and apply it before the load.
+Remove dead code; it arose when I noticed that, because 0x3? opcodes do
+have a pop, case 0x32 works just fine as fcomp (even though 0x?2 is fcom):
+there is no need to hack the op to 0x03.
 
-Cc: qemu-stable@nongnu.org
+Reported by Coverity as CID 1643922.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/ops_sse.h                | 16 ++++++++--------
- target/i386/tcg/ops_sse_header.h.inc |  8 ++++----
- target/i386/tcg/emit.c.inc           | 17 +++++++++--------
- 3 files changed, 21 insertions(+), 20 deletions(-)
+ target/i386/tcg/translate.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/target/i386/ops_sse.h b/target/i386/ops_sse.h
-index a2e4d480399..853196b2bbd 100644
---- a/target/i386/ops_sse.h
-+++ b/target/i386/ops_sse.h
-@@ -2362,42 +2362,42 @@ void glue(helper_vpmaskmovq, SUFFIX)(CPUX86State *env, Reg *d, Reg *v, Reg *s)
- }
- 
- void glue(helper_vpgatherdd, SUFFIX)(CPUX86State *env,
--        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale)
-+        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale, target_ulong amask)
- {
-     int i;
-     for (i = 0; i < (2 << SHIFT); i++) {
-         if (v->L(i) >> 31) {
-             target_ulong addr = a0
-                 + ((target_ulong)(int32_t)s->L(i) << scale);
--            d->L(i) = cpu_ldl_data_ra(env, addr, GETPC());
-+            d->L(i) = cpu_ldl_data_ra(env, addr & amask, GETPC());
-         }
-         v->L(i) = 0;
-     }
- }
- 
- void glue(helper_vpgatherdq, SUFFIX)(CPUX86State *env,
--        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale)
-+        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale, target_ulong amask)
- {
-     int i;
-     for (i = 0; i < (1 << SHIFT); i++) {
-         if (v->Q(i) >> 63) {
-             target_ulong addr = a0
-                 + ((target_ulong)(int32_t)s->L(i) << scale);
--            d->Q(i) = cpu_ldq_data_ra(env, addr, GETPC());
-+            d->Q(i) = cpu_ldq_data_ra(env, addr & amask, GETPC());
-         }
-         v->Q(i) = 0;
-     }
- }
- 
- void glue(helper_vpgatherqd, SUFFIX)(CPUX86State *env,
--        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale)
-+        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale, target_ulong amask)
- {
-     int i;
-     for (i = 0; i < (1 << SHIFT); i++) {
-         if (v->L(i) >> 31) {
-             target_ulong addr = a0
-                 + ((target_ulong)(int64_t)s->Q(i) << scale);
--            d->L(i) = cpu_ldl_data_ra(env, addr, GETPC());
-+            d->L(i) = cpu_ldl_data_ra(env, addr & amask, GETPC());
-         }
-         v->L(i) = 0;
-     }
-@@ -2408,14 +2408,14 @@ void glue(helper_vpgatherqd, SUFFIX)(CPUX86State *env,
- }
- 
- void glue(helper_vpgatherqq, SUFFIX)(CPUX86State *env,
--        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale)
-+        Reg *d, Reg *v, Reg *s, target_ulong a0, unsigned scale, target_ulong amask)
- {
-     int i;
-     for (i = 0; i < (1 << SHIFT); i++) {
-         if (v->Q(i) >> 63) {
-             target_ulong addr = a0
-                 + ((target_ulong)(int64_t)s->Q(i) << scale);
--            d->Q(i) = cpu_ldq_data_ra(env, addr, GETPC());
-+            d->Q(i) = cpu_ldq_data_ra(env, addr & amask, GETPC());
-         }
-         v->Q(i) = 0;
-     }
-diff --git a/target/i386/tcg/ops_sse_header.h.inc b/target/i386/tcg/ops_sse_header.h.inc
-index d92c6faf6d6..bbeb7301c33 100644
---- a/target/i386/tcg/ops_sse_header.h.inc
-+++ b/target/i386/tcg/ops_sse_header.h.inc
-@@ -388,10 +388,10 @@ DEF_HELPER_4(glue(vpmaskmovd_st, SUFFIX), void, env, Reg, Reg, tl)
- DEF_HELPER_4(glue(vpmaskmovq_st, SUFFIX), void, env, Reg, Reg, tl)
- DEF_HELPER_4(glue(vpmaskmovd, SUFFIX), void, env, Reg, Reg, Reg)
- DEF_HELPER_4(glue(vpmaskmovq, SUFFIX), void, env, Reg, Reg, Reg)
--DEF_HELPER_6(glue(vpgatherdd, SUFFIX), void, env, Reg, Reg, Reg, tl, i32)
--DEF_HELPER_6(glue(vpgatherdq, SUFFIX), void, env, Reg, Reg, Reg, tl, i32)
--DEF_HELPER_6(glue(vpgatherqd, SUFFIX), void, env, Reg, Reg, Reg, tl, i32)
--DEF_HELPER_6(glue(vpgatherqq, SUFFIX), void, env, Reg, Reg, Reg, tl, i32)
-+DEF_HELPER_7(glue(vpgatherdd, SUFFIX), void, env, Reg, Reg, Reg, tl, i32, tl)
-+DEF_HELPER_7(glue(vpgatherdq, SUFFIX), void, env, Reg, Reg, Reg, tl, i32, tl)
-+DEF_HELPER_7(glue(vpgatherqd, SUFFIX), void, env, Reg, Reg, Reg, tl, i32, tl)
-+DEF_HELPER_7(glue(vpgatherqq, SUFFIX), void, env, Reg, Reg, Reg, tl, i32, tl)
- #if SHIFT == 2
- DEF_HELPER_3(vpermd_ymm, void, Reg, Reg, Reg)
- DEF_HELPER_4(vpermdq_ymm, void, Reg, Reg, Reg, i32)
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index e55b65176fc..bc3a07f972c 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -43,8 +43,8 @@ typedef void (*SSEFunc_0_pppi)(TCGv_ptr reg_a, TCGv_ptr reg_b, TCGv_ptr reg_c,
-                                TCGv_i32 val);
- typedef void (*SSEFunc_0_eppt)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
-                                TCGv val);
--typedef void (*SSEFunc_0_epppti)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
--                                 TCGv_ptr reg_c, TCGv a0, TCGv_i32 scale);
-+typedef void (*SSEFunc_0_eppptit)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
-+                                 TCGv_ptr reg_c, TCGv a0, TCGv_i32 scale, TCGv amask);
- typedef void (*SSEFunc_0_eppppi)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
-                                   TCGv_ptr reg_c, TCGv_ptr reg_d, TCGv_i32 flags);
- typedef void (*SSEFunc_0_eppppii)(TCGv_ptr env, TCGv_ptr reg_a, TCGv_ptr reg_b,
-@@ -1100,18 +1100,19 @@ VEXW_AVX(VPMASKMOV, vpmaskmov)
- 
- /* Same as above, but with extra arguments to the helper.  */
- static inline void gen_vsib_avx(DisasContext *s, X86DecodedInsn *decode,
--                                SSEFunc_0_epppti d_xmm, SSEFunc_0_epppti q_xmm,
--                                SSEFunc_0_epppti d_ymm, SSEFunc_0_epppti q_ymm)
-+                                SSEFunc_0_eppptit d_xmm, SSEFunc_0_eppptit q_xmm,
-+                                SSEFunc_0_eppptit d_ymm, SSEFunc_0_eppptit q_ymm)
- {
--    SSEFunc_0_epppti d = s->vex_l ? d_ymm : d_xmm;
--    SSEFunc_0_epppti q = s->vex_l ? q_ymm : q_xmm;
--    SSEFunc_0_epppti fn = s->vex_w ? q : d;
-+    SSEFunc_0_eppptit d = s->vex_l ? d_ymm : d_xmm;
-+    SSEFunc_0_eppptit q = s->vex_l ? q_ymm : q_xmm;
-+    SSEFunc_0_eppptit fn = s->vex_w ? q : d;
-     TCGv_i32 scale = tcg_constant_i32(decode->mem.scale);
-     TCGv_ptr index = tcg_temp_new_ptr();
-+    TCGv mask = tcg_constant_tl(MAKE_64BIT_MASK(0, 8 << s->aflag));
- 
-     /* Pass third input as (index, base, scale) */
-     tcg_gen_addi_ptr(index, tcg_env, ZMM_OFFSET(decode->mem.index));
--    fn(tcg_env, OP_PTR0, OP_PTR1, index, s->A0, scale);
-+    fn(tcg_env, OP_PTR0, OP_PTR1, index, s->A0, scale, mask);
- 
-     /*
-      * There are two output operands, so zero OP1's high 128 bits
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 7c444d5006d..460848e4223 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2543,9 +2543,6 @@ static void gen_x87(DisasContext *s, X86DecodedInsn *decode)
+                 break;
+             }
+             break;
+-            /* map to fcomp; op & 7 == 2 would not pop  */
+-            op = 0x03;
+-            /* fallthrough */
+         case 0x00 ... 0x07: /* fxxx st, sti */
+         case 0x22 ... 0x23: /* fcom2 and fcomp3, undocumented ops */
+         case 0x32: /* fcomp5, undocumented op */
 -- 
 2.52.0
 
