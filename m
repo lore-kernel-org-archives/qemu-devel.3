@@ -4,57 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C003D2F347
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 17:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2729D2F349
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 17:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfiWe-0005sP-8S; Tue, 13 Jan 2026 12:49:52 -0500
+	id 1vfiWj-0005xD-OE; Tue, 13 Jan 2026 12:49:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vfiUm-0005QY-CQ
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 12:47:59 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1vfiVR-0005U5-5q; Tue, 13 Jan 2026 12:48:45 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vfiUi-0004QX-Hf
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 12:47:56 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4drGsf4tW6zHnGh7;
- Wed, 14 Jan 2026 01:47:18 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id 12E9B40086;
- Wed, 14 Jan 2026 01:47:37 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Tue, 13 Jan
- 2026 17:47:36 +0000
-Date: Tue, 13 Jan 2026 17:47:35 +0000
-To: Markus Armbruster <armbru@redhat.com>
-CC: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>,
- <shiju.jose@huawei.com>, <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
- Ravi Shankar <venkataravis@micron.com>
-Subject: Re: [PATCH qemu v2 2/5] hw/cxl/events: Update for rev3.2 common
- event record format
-Message-ID: <20260113174735.00002934@huawei.com>
-In-Reply-To: <87ldi3f2m2.fsf@pond.sub.org>
-References: <20260102151512.460766-1-Jonathan.Cameron@huawei.com>
- <20260102151512.460766-3-Jonathan.Cameron@huawei.com>
- <87ldi3f2m2.fsf@pond.sub.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1vfiVP-0004Tc-8N; Tue, 13 Jan 2026 12:48:36 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60DAwTDJ024688;
+ Tue, 13 Jan 2026 17:48:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=928uTXPGM3sgRnIQ8Qz0o55KyRX9f/7mIXX7OyRYs
+ BU=; b=JVBLt87gf8ZE7nGx1oBrYaq+PAAhPjeXCxXBmSo7pX5M1PBPPbjyX5UIB
+ ANRZHILfIZ9EVwl8YFWQu421bhYU3lAs9yXX0/XjSARCGFhUijHzyRRmvI5PvsC1
+ 2FYgoKp+CXNz89UNx1gMbC96YhlcbTYuORLiOQobzyetllGFUZHrNPlta3OIFvdM
+ 76n1Qrxuz6yBMtisYM1jrXFtMuUOhunfOBdjMs41Eg6rga4CXW54AyJZHiNc1J7I
+ P7aVqkeIeHnxk+6K3WrlZra8YkLVaw/FNETYitXjc4hp1vbKDCP2W+9v8h+qNyPn
+ WrKdXnZzLHgQ9dQwokec3OYt1Mt9Q==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkeepwsw2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Jan 2026 17:48:28 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60DFPuXF002565;
+ Tue, 13 Jan 2026 17:48:27 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bm13snv6x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Jan 2026 17:48:27 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60DHmQGe45285702
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 Jan 2026 17:48:26 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5F7915805F;
+ Tue, 13 Jan 2026 17:48:26 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C657958059;
+ Tue, 13 Jan 2026 17:48:25 +0000 (GMT)
+Received: from IBM-GLTZVH3.ibm.com (unknown [9.61.252.253])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 13 Jan 2026 17:48:25 +0000 (GMT)
+From: Jaehoon Kim <jhkim@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: pbonzini@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ armbru@redhat.com, eblake@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de,
+ Jaehoon Kim <jhkim@linux.ibm.com>
+Subject: [PATCH RFC v1 0/3] aio-poll: improve aio-polling efficiency
+Date: Tue, 13 Jan 2026 11:48:21 -0600
+Message-ID: <20260113174824.464720-1-jhkim@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=DI6CIiNb c=1 sm=1 tr=0 ts=6966856c cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=t3WgsMIyXrlp8r_LuEUA:9
+X-Proofpoint-GUID: 7DuvsQv7YWuHWeRnyu5K6flXX4muI_Zk
+X-Proofpoint-ORIG-GUID: 7DuvsQv7YWuHWeRnyu5K6flXX4muI_Zk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDE0OCBTYWx0ZWRfX/Z2/s1gQOPiO
+ 4B9b5hQHIRPcfKA+JR0QRONIHZkhF8u/nsw2vifkhUNeTy+48Fwl7OTYFeFVVG42pemmhuzIVR5
+ 8iZPY5JVrqFhMphHuugLufen8GFueAptpo47uXvsI5OHz6tHMRY1BTroh+m2nVCWmHbAHM2+vB+
+ zJHtTNdAGh5BWlt61EnOhFlwGR/uetay/whpvS454/jJ1Z/+IAT+F6xeFLUhlfGqwIomTvwTaMu
+ ncnUahJ16VMGJLu3DjcIdxLeVD0yONIVyLlc2VVmy82vpW2WA9Zmt+nyVOrd04L9e4pmVSsE9o+
+ b00PrrMbjody+FQJ/Trdaf5f6k7PIqgEi9pXMQ2hy+ysfiCGuJ9sPNV8Z9wcbqchjneM24fgMZn
+ gcj9zr1DDrmQhSr5FFH6sFrusbyAWLjTdi6oSbV/n9O+SbNiWbuMrVsJ5QWpqpYEYF2cjiUcQcB
+ it1s16GfovWFBI8qzCg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-13_04,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
+ definitions=main-2601130148
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -70,187 +114,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 12 Jan 2026 13:16:05 +0100
-Markus Armbruster <armbru@redhat.com> wrote:
+Dear all,
 
-> Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
->=20
-> > From: Shiju Jose <shiju.jose@huawei.com>
-> >
-> > CXL spec 3.2 section 8.2.9.2.1 Table 8-55, Common Event Record
-> > format has updated with optional Maintenance Operation Subclass,
-> > LD ID and ID of the device head information.
-> >
-> > Add updates for the above optional parameters in the related
-> > CXL events reporting and in the QMP commands to inject CXL events.
-> >
-> > Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+I'm submitting this patch series for review under the RFC tag.
 
-Hi Markus,
-Thanks for taking a look!
+This patch series refines the aio_poll adaptive polling logic to reduce
+unnecessary busy-waiting and improve CPU efficiency.
 
-> > ---
-> >  qapi/cxl.json               | 20 ++++++++---
-> >  include/hw/cxl/cxl_device.h |  7 +++-
-> >  include/hw/cxl/cxl_events.h | 15 ++++++--
-> >  hw/cxl/cxl-events.c         |  3 +-
-> >  hw/cxl/cxl-mailbox-utils.c  |  3 +-
-> >  hw/mem/cxl_type3.c          | 70 ++++++++++++++++++++++++++++++++-----
-> >  hw/mem/cxl_type3_stubs.c    | 24 +++++++++++--
-> >  7 files changed, 121 insertions(+), 21 deletions(-)
-> >
-> > diff --git a/qapi/cxl.json b/qapi/cxl.json
-> > index d5b86159f1..b3c2ac9575 100644
-> > --- a/qapi/cxl.json
-> > +++ b/qapi/cxl.json
-> > @@ -33,20 +33,32 @@
-> >  ##
-> >  # @CXLCommonEventBase:
-> >  #
-> > -# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
-> > -# Table 8-42 Common Event Record Format).
-> > +# Common event base for a CXL Event (CXL r3.2 8.2.10.2.1
-> > +# Table 8-55 Common Event Record Format).
-> >  #
-> >  # @path: CXL type 3 device canonical QOM path
-> >  #
-> >  # @log: event log to add the event to
-> >  #
-> > -# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
-> > +# @flags: Event Record Flags.  See CXL r3.2 Table 8-55 Common Event
-> >  #     Record Format, Event Record Flags for subfield definitions.
-> >  #
-> > +# @maint-op-class: Maintenance operation class the device requests to
-> > +#     initiate.
-> > +#
-> > +# @maint-op-subclass: Maintenance operation subclass the device
-> > +#     requests to initiate.
-> > +#
-> > +# @ld-id: LD ID of LD from where the event originated. =20
+The first patch prevents redundant polling time calculation when polling
+is disabled. The second patch enhances the adaptive polling mechanism by
+dynamically adjusting the iothread's polling duration based on event
+intervals measured by individual AioHandlers. The third patch introduces
+a new 'poll-weight' parameter to adjust how much the current interval
+influences the next polling duration.
 
-Logical Device.  I'll spell it out the first time. From the glossary:
-"LD: Logical Device. Entity that represents a CXL Endpoint that is bound to
-a VCS.  An SLD contains one LD. An MLD contains multiple LDs."
+We evaluated the patches on an s390x host with a single guest using 16
+virtio block devices backed by FCP multipath devices in a separate-disk
+setup, with the I/O scheduler set to 'none' in both host and guest.
 
-So what does that actually mean?  It's a number that identifies the
-bit of a device that is presented to a given host at a particular
-point in the PCI topology that we are faking from the underlying CXL
-one.=20
+The fio workload included sequential and random read/write with varying
+numbers of jobs (1,4,8,16) and io_depth of 8. The tests were conducted
+with single and dual iothreads, using the newly introduced poll-weight
+parameter to measure their impact on CPU cost and throughput.
 
-I think best I can do is just spell out the acronyms. If people
-want more they need to look at the spec :(
+Compared to the baseline, across four FIO workload patterns (sequential
+R/W, random R/W), and averaged over FIO job counts of 1, 4, 8, and 16,
+throughput decreased slightly (-3% to -8% for one iothread, -2% to -5%
+for two iothreads), while CPU usage on the s390x host dropped
+significantly (-10% to -25% and -7% to -12%, respectively).
 
-Time for a deeper explanation that probably no one ever wanted :)
+Best regards,
+Jaehoon Kim
 
-=46rom a physical topology point of view think of something like:
+Jaehoon Kim (3):
+  aio-poll: avoid unnecessary polling time computation
+  aio-poll: refine iothread polling using weighted handler intervals
+  qapi/iothread: introduce poll-weight parameter for aio-poll
 
-vPPDs are virtual downstream ports that assign an LD ID.
+ include/qemu/aio.h                |   8 +-
+ include/system/iothread.h         |   1 +
+ iothread.c                        |  10 ++
+ monitor/hmp-cmds.c                |   1 +
+ qapi/misc.json                    |   6 ++
+ qapi/qom.json                     |   8 +-
+ qemu-options.hx                   |   7 +-
+ tests/unit/test-nested-aio-poll.c |   2 +-
+ util/aio-posix.c                  | 151 +++++++++++++++++++++---------
+ util/aio-win32.c                  |   3 +-
+ util/async.c                      |   2 +
+ 11 files changed, 147 insertions(+), 52 deletions(-)
 
-	HOST 0           HOST 1               Host 3
-	  |                 |                   |
-         RP                RP                  RP
-          |                 |                   |
-          |                 |                   |
-        __|_________________|______             |
-       |  |   SWITCH        |      |            |
-       | _|_____       _____|_     |            |
-       ||       |     |       |    |            |
-       ||       |     |       |    |            |
-       |vPPD0  vPPD1 VPPD2   VPPD3 |            |
-       ||       |     |          | |            |
-       ||_____________|          | |            |
-       |           |             | |            |
-       |___________DSP0________DSP1|            |
-                     |           |              |
-                     |       Some other dev     |
-              Traffic tagged                    |=20
-              with an LD_ID associated with     |
-              a given vPPD (so 2 tags here)     |
-                     |                          |
-     ________________|__________________________|______
-    | (CXL Device) HEAD0                     HEAD1     |
-    |           Now splits up based         Only one LD|
-    |           on LD_ID                               |
-    |__________________________________________________|
-
-
-Hosts see:
-Used letters for down stream port numbers to avoid
-any explicit mapping to the physical ports above.
-
-
-          HOST 0                  Host 1             Host3  =20
-            |                       |                  |
-           RP                       RP                RP
-            |                       |                  |
-    ________|_________     _________|_________         |
-   |        |         |   |         |         |        |
-   |    ____|____     |   |   ______|______   |        |
-   |   |         |    |   |  |             |  |        |
-   |__DSPA______DSPB__|   |__DSPA________DSPB_|        |
-       |          |           |            |           |
-    ___|______  Nothing  _____|_____      Other dev ___|______
-   |CXL Type3 |          |CXL Type3 |              |CXL Type3 |
-   | (H0, LD0)|          | (H0, LD1)|              | (H1, LD0)|
-   |__________|          |__________|              |__________|
-
-These IDs should only be reported for events that are isolated=20
-(as appropriate) to a head and/or LD and as you can see the hosts
-don't actually know these IDs even exist hence there is no need to
-report them via in band path.  If they don't take the values
-that reflect the LD we are actually talking to, then we are
-reporting someone else's error! Via out of band / switch CCI we
-see the top diagram where we definitely need LD_ID and HEAD_ID
-to make any sense of errors, particularly as the memory addresses
-in the records are specific to Head/LD pair.
-=20
-The recommendation of the spec is don't set them for simple reporting
-over inband mailboxes. Now you might think we don't have out of band
-support upstream yet (my staging CXL tree does have both MCTP over
-I2C and USB) but we do have the switch CCI and that can tunnel to
-out of band interfaces (technically it's over PCI Vendor defined
-messages but in practice it ends up the same from a 'what can I talk
-to' point of view as something truely out of band like an I2C bus.
-We don't actually have event queues on those yet though... When
-we do we'll want this command to queue events there as well as on
-for inband path.
-
-So we are adding them now for 2 reasons.
-1) The spec allows it even for boring inband event reporting
-   (recommendation only to not do so) so we need to check the kernel stack
-   reports correctly.
-2) We will want to add event queues on the out of band interfaces and
-   for those we'll need these IDs.
-
->=20
-> What's an LD?
->=20
-> > +#
-> > +# @head-id: ID of the device head from where the event originated. =20
->=20
-> Are these identifiers taken from the CXL spec?
-Yes. Though feels odd to reference the glossary for the definitions.
->=20
-> > +#
-> >  # Since: 8.1
-> >  ##
-> >  { 'struct': 'CXLCommonEventBase',
-> > -  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
-> > +  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint32',
-> > +            '*maint-op-class':'uint8', '*maint-op-subclass':'uint8',
-> > +            '*ld-id':'uint16', '*head-id':'uint8' } }
-> > =20
-> >  ##
-> >  # @CXLGeneralMediaEvent: =20
->=20
-> [...]
->=20
->=20
+-- 
+2.50.1
 
 
