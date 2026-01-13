@@ -4,109 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9DDAD2D0E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 12:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA62D2D0E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 12:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfd4Z-0007Fb-QO; Tue, 13 Jan 2026 07:00:32 -0500
+	id 1vfcpn-0002K9-No; Tue, 13 Jan 2026 06:45:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vfd4D-00078J-HG
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 07:00:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vfd4B-0007Ap-6O
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 07:00:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768305605;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GQu7qskk39rh8RLT+iwEMz7/L2wtsyjUnWY0S/woLdE=;
- b=RaEvD+Lch1IlBNs1fRj+J3q+mfKLoVYG7IaZNUMybkWp+HR2VoceHk5MML7NHxxL6Ix8CO
- SgPwFzpnlVD9KtXvtSvNTzwLPdUAMHupcvLKZ5Ehd2LNPrbY45DNAlO1L7mwRjANT5ziuE
- mvvfrlrJHIiBJW/btHjai2YCE+kKqeg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-146-QEmr27MkMe2C4X2_v5msKA-1; Tue, 13 Jan 2026 07:00:04 -0500
-X-MC-Unique: QEmr27MkMe2C4X2_v5msKA-1
-X-Mimecast-MFC-AGG-ID: QEmr27MkMe2C4X2_v5msKA_1768305603
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477a11d9e67so49851025e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 04:00:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfcpg-0002B7-Kz
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:45:10 -0500
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfcpe-0004Xj-GX
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:45:08 -0500
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-6481bd1763bso1718573d50.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 03:45:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768305603; x=1768910403; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768304704; x=1768909504; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GQu7qskk39rh8RLT+iwEMz7/L2wtsyjUnWY0S/woLdE=;
- b=tMMW2vK7t+jboQ4WXVt246c9xOLMxkv240afC7ioZAQFAx9EWAH2vQ6xZB0wqi31BS
- vmzoMPS/eA0GoMBXqRcxmAkHLdNK7AS7Krf0ShPFtRgDmAR5+Mc5M75G1CYQrtKI/xdi
- 9XqYuG7Op8+AXg5ziuZMkt7XTnSuZkpJRbkTAN6qmU1mncFBjyl0yPkjTtoPv9IOgc0B
- l/bhH8FIC9jPZrQwt4eeFHbq9cA3cl6UO0qTa3fe2zuhAt9VA1tNPROm1jRE7Yzawc7L
- 3zgGKt605LUlDJu2OW6u+6Vd+kQTy0xWq6JMJ8T4b5faun799ZkTg0DzdAi+Ue0/QB0h
- hm4Q==
+ bh=x5kDEZsBFQj58k4xDgqxo80bH9wUMwtSGK2v0IwCw+Q=;
+ b=BZDuXtxGZ94GkOBQyBDmE27zZbXnEjB9YkbsdVTyWKcr2tjgDdKlXSsepgAekC1vmc
+ rzfX6Qj5MlwbzXJqLxhca5B9gkFRBB2BubCcSQ6HC7/Z9ohWKsZUES42UvEJSG5oPZT6
+ ypyTDcUwtPWSUZ8M/23YUqXRffIjfRIn1fpTSWbvp6pqbsd+3B+ZvJiKZU/E4wcdBBKY
+ EmS/V7c6cigglGwOHFkX5KTXQeuozS6LEKQVaAgTAIRdtQu+TZiZteIjYHA23dQiQezP
+ yw9UFVdoWMPXQydc7hr6Tj0PdzuDY/9RRndv/7QrnVbZ+bZqfkEDBqkib8UCD7OQHkTe
+ 0RIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768305603; x=1768910403;
+ d=1e100.net; s=20230601; t=1768304704; x=1768909504;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GQu7qskk39rh8RLT+iwEMz7/L2wtsyjUnWY0S/woLdE=;
- b=sEtPEoPBImXG2qlfP069O/dZ1ozpogFCbeREaceYWzlTZXZBttp9yJhMKUuVRGXUlP
- tslYChgUOH9p9xELVfOZitpoL6ouxMx+vIvSbqQsKFBSBuuZKEmoJeeED09ImCxvIP6N
- ut27thI5VfV0+fFTiZVSPqDinAWb6kSQr2ec11UR1Ca8X42TsyNoYvdE3HTiYtZS9pPi
- iYQjsA6JPxbgz+a9+hbD4Onfq55R5HHZNlWWJKZMyGRC/DWzSfFO2Aav0N8RENnKPOTF
- /0dMKn2D1jGP/ZDjEQTct4bwZqJVUUs8/BPqz4C9psnBGUrmLJNrMSx9SnG5ikSJUEcl
- dbYw==
+ bh=x5kDEZsBFQj58k4xDgqxo80bH9wUMwtSGK2v0IwCw+Q=;
+ b=tdlfdGABW92A5FGMFdWFiUioi0kcAQwt5qVhVvKqT/bL9mOs/xNuSK/n8oO07M6sET
+ 5bVGUxEcrjLMmgB4MGDXtFBXEOzHDh3rUqQ37z0Tzrd9JzXmPYmCCcUwt6yviEuE+Cz2
+ uXV4bM/srzpR1MXgttuAvQmdyzR7r3Gr6cSntw7KiHGgFawmUDYVzOAifheLyXklgmwn
+ QkSdJ7FOfCBySq/P0xkbE77f3nlNKdfpLNJ/EsMy9fgnnZYswU2GWH4tTmpsuT4mMqDF
+ tRBkdbSNEbWoTg9h+HDWyEe/6+mxu28cd2iID77B1Wuzp9cv/znnoMlvVANU0Hm9+ibV
+ 6RIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURACwTxYt3jiinvtCrlZwFoEFvUf60r46zQV3QsjcKIeEZ33BYFCZh454wghLok7T83US3941oV+8S@nongnu.org
-X-Gm-Message-State: AOJu0Ywt6CdZ8cmX7wge0bhX1lIarSZURaxHuiFgqSnM5TUGaLH104Bi
- 5EWedai3NDDkKICOacnID4B9F4qrNfnfBcTCRmDon7+gxaK/Ejntl+Auxu47zt+PbfLK5IIPL6L
- HmXPxpGWEFzQh5MKwi+3cWQT9kPj8+TgIGbhQsqDpFbbv8r2acYXaYXs80GeG3Q8x3cl3d2hS5w
- PCDCFSu7pelMsc2HCcMRwrINP2ZX13xe4=
-X-Gm-Gg: AY/fxX6Ev50/ILrFLanrhtcTE4fBqPwQ/FkY+R5LrnvgkXhaxz20WRDRzNqUAQF5gQj
- C0+XQJVPt2mlT/yWzATr7INDe7ZErqfjRoTOzU5CXkDO/Rt2rdAnJMuAUY1gAOmlHFp5qqeTLwa
- eWZru5luFJ66ZAWF5N0FRY1oq7S8wEgei+dF07ELdmxlMeg/4tbs2oRkU+35bu+oZn3LQOBTQZm
- qNUzXWnXBGN94YtAdeAKQ/NomqHoSDPiWg2XwC7M6DGGEgrX1VXSxGo
-X-Received: by 2002:a05:600c:8484:b0:47a:8cce:2940 with SMTP id
- 5b1f17b1804b1-47d84b1a095mr222803375e9.14.1768305602715; 
- Tue, 13 Jan 2026 04:00:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEeZLpT93tLvr734wc7TV9IYZKAAC0m3MkFwnNkOr3WxmTVilVTism3z6s/DGjyv/01m5+dd9V7qyQ42VTyoKg=
-X-Received: by 2002:a05:600c:8484:b0:47a:8cce:2940 with SMTP id
- 5b1f17b1804b1-47d84b1a095mr222803135e9.14.1768305602270; Tue, 13 Jan 2026
- 04:00:02 -0800 (PST)
+ AJvYcCV3Fx1BcQlu51MKSy6qWGwb6iPTdwEPMRwmev9dB80Ar1Mdx+SukgZH5u8glnwM+1PIQ2eFDRF5ZP/Q@nongnu.org
+X-Gm-Message-State: AOJu0YxqoNtMwauv58MOqHc2TZLa0ayJG24LsOdo3w1Nl2D6MvSdxvXk
+ nCkBjUd+/l+xlkjx8FCZceG+/kUBX9cnPxO5ApsxA+Ft72X13hSMYxq2SWQTTyJ5qm1FVZ6+vUA
+ UMXf9Xn6YbpiwdrfZQlAtfYpda3kdL/RrPocn2Id3jA==
+X-Gm-Gg: AY/fxX440OaxRX92lzNLyXK5d2hezGqiQXD3PS0c/Q3BhWe+as2e0HlVx2GTxrLUcuA
+ BOIpbaQI5wbYi1A1xEae/yTeOMMLd4o6l0GD12ZO0vWUm6RgdjkK65yv3ftWUApIHqP6yVF9CHx
+ 82nSP3Z1HfPSDFDIjet/NbXMs4Si6JDkNB7eVVO9kZ3zreAet2u5gr26eMvtZKORqzTC8PeXyPX
+ EDDE3uakrhB/ML1OUuF13wxBmL5AwDmnXer7mAGdlCXVNGjeIJy2Segr1XuDBZ/XNpxH70a3hld
+ HLCzvpEOVMg0RY4VZH9KglimXjhgUFWtsw==
+X-Google-Smtp-Source: AGHT+IFLRixFDSddg7EmQ2fBtNlahjHJyXttItSrP/bg2svxQdAfgVWbRGhDFcktB+Nu4OFTD+v2f8sS8l7slPHfB5I=
+X-Received: by 2002:a05:690e:1202:b0:645:54a9:11b6 with SMTP id
+ 956f58d0204a3-64716c67c2bmr18278694d50.52.1768304703557; Tue, 13 Jan 2026
+ 03:45:03 -0800 (PST)
 MIME-Version: 1.0
-References: <20251222114822.327623-1-ppandit@redhat.com>
- <87h5tilhcq.fsf@suse.de> <aUq1oA73W9rAdCgG@x1.local>
- <CAE8KmOzcOdYhnxpDr8BMV8zjixpEh9r+COe=xyLfXCVWKD0CRw@mail.gmail.com>
- <87zf6q26q5.fsf@suse.de>
- <CAE8KmOzxDn7X7rohJGT5AeW3+5oJFgueVtaQCpUc2bmBvrgRXg@mail.gmail.com>
- <874ioxzhcm.fsf@suse.de>
- <CAE8KmOx0ikDueu-znY14RCmp6weX_G+CJMUrQOmOuv-OPwPR+Q@mail.gmail.com>
- <87y0m2zkc3.fsf@suse.de>
-In-Reply-To: <87y0m2zkc3.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 13 Jan 2026 17:29:44 +0530
-X-Gm-Features: AZwV_Qgt4RKhSEqvfkVTWXHgMy_gTx4WXB_G8DlfvPMvqaeJ2bFhQ3sWmavEOBE
-Message-ID: <CAE8KmOw+g3gZYJfay=9gwkhtkviA_K9BapfmJBhD+BzTCcxLxg@mail.gmail.com>
-Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
- Prasad Pandit <pjp@fedoraproject.org>
+References: <cover.1767716928.git.mchehab+huawei@kernel.org>
+In-Reply-To: <cover.1767716928.git.mchehab+huawei@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 13 Jan 2026 11:44:51 +0000
+X-Gm-Features: AZwV_Qjn_uomAbjDzC7FqJqaUHy-GWOaZMHxNy3xOaFVTEcDja82UYRRJbNjGQE
+Message-ID: <CAFEAcA_TMuZG8VJMs2JZ49Xq+wVxcq_7UGOMF+2FUe0k7AUgwA@mail.gmail.com>
+Subject: Re: [PATCH 0/1] Sync kernel-doc.py with Linux upstream
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ John Snow <jsnow@redhat.com>, 
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,58 +99,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 Jan 2026 at 01:15, Fabiano Rosas <farosas@suse.de> wrote:
-> There are failures that happen _because_ we cancelled. As I've mentioned
-> somewhere else before, the cancellation is not "informed" to all threads
-> running migration code, there are some code paths that will simply fail
-> as a result of migration_cancel(). We need to allow cancelling to work
-> in a possibly stuck thread (such as a blocked recv in the return path),
-> but this means we end up calling qemu_file_shutdown indiscriminately.
-> In these cases, parts of the code would set FAILED, but that failure is
-> a result of cancelling. We've determined that migrate-cancel should
-> always lead to CANCELLED and a new migration should always be possible.
-
-* I see.
-
-> This is ok, call it an error and done.
+On Tue, 6 Jan 2026 at 16:38, Mauro Carvalho Chehab
+<mchehab+huawei@kernel.org> wrote:
 >
-> > OTOH, if we cancel while processing an error/failure, end user
-> > may not see that error because we report - migration was cancelled.
-> >
+> Hi Peter/John,
 >
-> This is interesting, I _think_ it wouldn't be possible to cancel while
-> handling an error due to BQL locked, the migrate-cancel wouldn't be
-> issued while migration_cleanup is ongoing. However, I don't think we ever
-> tested this scenario in particular. Maybe you could try to catch
-> something by modifying the /migration/cancel tests, if you're willing.
-
-* I have made a note of looking at it at a later time.
-
-> Aside from the QAPI states, there are some internal states we already
-> track with separate flags, e.g.:
+> There were several updates at kernel-doc upstream fixing bugs,
+> doing cleanups and a couple of improvements.
 >
-> rp_thread_created, start_postcopy, migration_thread_running,
-> switchover_acked, postcopy_package_loaded, fault_thread_quit,
-> preempt_thread_status, load_threads_abort.
+> Better to keep QEMU in sync with such changes.
 >
-> A bit array could maybe cover all of these and more.
+> Worth mentioning that we did some changes on Linux at the
+> kernel-doc.py script itself, to avoid Kernel build to crash
+> with too old Python versions, as there docs build is a
+> separate target, and python >= 3.6 is a new requirement
+> there.
 >
+> On kernel, if python < 3.6, it will simply ignore docs
+> build (emitting a warning).
+>
+> I opted to not backport such changes, but if you prefer
+> doing that, I can do that on a v2.
 > ---
 >
-> You could send a PoC patch with your idea fixing this FAILING bug? We'd
-> need a trigger for migrate, set_caps, etc and the failed event.
+> For now, I opted to keep kernel-doc libraries at the same
+> directory as before - e.g. at scripts/lib/kdoc. On Linux,
+> we ended moving it to tools/lib/python/kdoc. It could make
+> sense to move it on QEMU too, as it makes a little bit
+> easier to keep things in sync.
 >
-> If that new patch doesn't get consensus then we merge this one and work
-> on a new design as time permits.
+> What do you think?
 
-* Considering the above wider coverage area, I think it is best to
-first fix the issue at hand and then move to this new change. For now
-I'll try to rebase my current patch on your v3: cleanup early
-connection code series. Once that is through, I'll take the states
-change patch. Hope that's okay.
+Hi; thanks for doing this backport. I checked that the output
+with this patch applied is still the same as with the old
+kernel-doc, and eyeballed the diffs between our kernel-doc
+and the Linux version, to confirm that we have kept our two
+minor QEMU-specific modifications and haven't missed anything
+from Linux's version that we ought to have. So:
 
-Thank you.
----
-  - Prasad
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+On your two questions:
+
+(1) As Dan says, QEMU already enforces a new enough
+Python version, so we don't need to handle 3.6. I think
+the main thing driving a choice to backport or not those
+changes would be simply keeping in sync with Linux's
+version of the script so we don't diverge. We want to
+make future re-syncing of the script as easy as possible.
+
+(2) Regarding the location of the kernel-doc libraries:
+we seem to have two things here, possibly in tension:
+ - we don't want to gratuitously diverge from Linux
+ - QEMU's directory hierarchy is not the kernel's
+
+In particular, I'm not sure tools/ is where we would
+naturally put python libraries used during the build
+process. Maybe that would be python/ for us, but I defer
+to John or another Python expert on that.
+
+Hopefully this would not be a major divergence because it
+would just be "our python path happens to be different
+from the one the kernel uses, but the actual python code
+just imports the modules by name and doesn't need to know
+their specific path" ?
+
+Personally I am OK with our taking this patch as-is
+and dealing with the above questions (or not) as a
+followon thing, if nobody has any objections to that
+approach.
+
+thanks
+-- PMM
 
