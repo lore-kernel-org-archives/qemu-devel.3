@@ -4,91 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 669E4D2D108
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 14:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 752EED2D0FD
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 14:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfex9-0006t7-JT; Tue, 13 Jan 2026 09:01:02 -0500
+	id 1vfexd-0007Hl-Ix; Tue, 13 Jan 2026 09:01:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vfewd-0006Nt-QS
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vfewg-0006QE-9O
  for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:00:35 -0500
-Received: from mail-dl1-x122f.google.com ([2607:f8b0:4864:20::122f])
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vfewW-0001Bb-87
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:00:22 -0500
-Received: by mail-dl1-x122f.google.com with SMTP id
- a92af1059eb24-11f3e3f0cacso9522120c88.0
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 06:00:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vfewe-0001Cg-JQ
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:00:30 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4779aa4f928so76481885e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 06:00:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768312816; x=1768917616; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=sC0GuvIyUiMA3XEgnR/i+Ers5xl12AhABZt3OAoOZSE=;
- b=hTsuKTpQUskjnpfljhd/nSO0vz9UyUmMmNs3WQCvOzVjzqQv4CicWBMTNs1KOCXyND
- sVJkHkJ0yH/Amw/LNlbQPNZoV0IDXalabrECq7U0sOAT0GK6VXwBmTbGhLrc+BRL3QE0
- 8/E6FfZvJOtoTcCEqNNywRDZL2bVeIbF6Hok6DgducRwdbIgKH8oalm0lvi6DEMLpccq
- 4PjGkXNbHP/5RekNZ+1G7wa/5jTATG9C4A6kHMiTkh9Ppc63I5VUvQlqjJYX1vWFO5Bu
- t8cdBbsD/uwWSVhavX/dE9Izb8Ff4AXI4Qp9ZTp6dwFvFb8/HPb1o4YuUjIq77JQL+y/
- 099w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768312816; x=1768917616;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1768312827; x=1768917627; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sC0GuvIyUiMA3XEgnR/i+Ers5xl12AhABZt3OAoOZSE=;
- b=ipI/DN4T5dBWKROB90zl5gT2teMrphgOx7V+lxqw2uA14ZgPW8TTqX5GJsHeJnNp7J
- 4mfneqxzhf+BQsy8e10PUEf/v1gPiCs7DtIVkAwP9oXeNFkrToQa2R2N0w+gs5wV6rbu
- Esixxm3KidqRpmr035MFuUZLqnB1CV3qdIXmiMJQaCOJ54nMFKxcV+oUXa+dpjdsO8u3
- P968YWQSS0pkATkpKDiy4cq+KDZqa6OSFF287oLA3KF852h//rHhjEfm1moxXsfJvpLq
- HxgxAu7TThKYx4/wuTR4hTRXVFmxndLsSMmrRvwdX2GRqdtgrZy6Y9ccYQv6vCuQxFKY
- GXpg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCULGzKV9h5kiOgG0z9dIHJIEJS1UP/MrWw+spaED/aXDmQKDzkShXNRE53nqtfsGk1l7MACdSx+Jzdm@nongnu.org
-X-Gm-Message-State: AOJu0YzHH+WAxMYW79PJk4hm6gi4wQjYiXmT3qbJSy0wEkdUJlokcKPW
- EaXFp4Hw4dyUqK06T3aKtNiia9vfbQqTMVlzr+3jo78337eZUT2Tp2eBnojowSIdA5JQSN/QH9e
- 4JLfKnps5IvvdHbLK3432jDvU3k3u2Wc=
-X-Gm-Gg: AY/fxX7J56u93hqp09Hg1Gpl0d3qZa4PJIGLL6sVHobtyAhzWzcuHyijV7zFJMp/ah0
- G+OS3ARG+5UyQmiJjGE2ulzOV850FnXatQvW35hREzmWM7CnIuiEZZ6r3pUzOhbmN1Y5OEu8sOt
- nPHcWMfoxtTMSeFqbNzc+xKAo9EXAOgxa7tSGwgmOWGNJ9HQYWiqsOUIw/la8rt2Lk2a1uV+AvV
- hxK/jhtEF/KFbnNRBKnpkR2jaDy0bqUD6DH1nIuydOjhfFz0hBBE0d7aI/6XPP6KlDJ+e9ajX9x
- nkHOyGLgLy7C7I7qBkaZeogITw==
-X-Google-Smtp-Source: AGHT+IFpRYiRGGixwNInuyT56/42w1kKJ8OMivQFdDvmVHoshlwHNvt8G6uXVA/kMnl35fuDtR72s771qF9QgV9270E=
-X-Received: by 2002:a05:701a:ca8c:b0:123:2d4f:ef1c with SMTP id
- a92af1059eb24-1232d4ff0ccmr2102944c88.26.1768312814610; Tue, 13 Jan 2026
- 06:00:14 -0800 (PST)
+ bh=5Zac00euugjIftyT7AIVVB1b7PyfaqNBS3tcrkWDujE=;
+ b=y/krsT8JRt+kgXHMepb5mVcmn74uV4K2wi3wBhX0rjO9/BygDNVmzWjXpkgeIrFkUm
+ qkPzvzd4xwL71o7ZHbEoUwJJCAG0J1okR1K/UwSgxHhsBHpL6TsB8g9vh5VBiCZRhRa+
+ /YN2JBiQU3AMZlk6a1Dy/ItLeSfNZDW+vrOT1aauGywisbTDBfI8FB8+7hQM/Ha4rjeM
+ clz01KFde8WGPkkT1z6cccbOxNVuIZuJoGLfthX23/ObqofwthZoFXFnPujIVjzc/vYQ
+ jvB9gI2SYNPpthMW2/Vepi8x0EWXPH4SShNZPTB+MjC5tLyQ2Du39nX+U/fYVZqetgDt
+ dxow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768312827; x=1768917627;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5Zac00euugjIftyT7AIVVB1b7PyfaqNBS3tcrkWDujE=;
+ b=HFg0goCRCGVQw6gKvnGe3hOD416tngOViHCfGnfcJAhSBafiq1zOI3GT1cfakd85zc
+ PIcTaFBThvi3uCx+XEsZRf12y7tRnutbbbDxe4QC5dZkVods2I+1wZKK2k4u4IwzcTGk
+ fCYX2Q7k5/P/UUvzrixjyNUSfm4QntNyvSZhqIGv595fV6yNfX8X6T7uaCLNjRyDSejY
+ THf147/6MXCNaLWGNTho7mHZurKz8lgzz7XKeOrD123YCiQeJ2nFm32v+6w8I6xzIYy8
+ YkKs55dcQg+G4CXBVHuhFpqDMrnuOv7i6vYcc4TorI41uRutIc0roqFtZTeppOWCGji7
+ gGaA==
+X-Gm-Message-State: AOJu0YxOhKBmMWtrUUoclA7HZu5fF45SzLjz42aPrFFlAxinwMGv5u/4
+ WechxNF5viRCVEs+NtsBvDnngd9r7VAoF1KArTdVJPjugxjH8YSp4fKViD3Qf1EWVvQ=
+X-Gm-Gg: AY/fxX66bAqqugeFIxxZjx/fy9AXF7s3gCcKC3q//bUI0nKyCI2qxQCcLUqsogFDdse
+ GPJzTVyfcjMCKEwCM6BLbFGvwB3orLbd15cCP3guTLmbv4lEEjBkPiFaBan33+q5+M6z1jr2LYD
+ yb1cWmQjMXv0HtegoxdQuOLlL/oR0Hx4fOOMbuXJz0Bz1LF29u+2zAvwY3SAkVKysum680ct177
+ iPRGadlyidHoGZEM/t0MgaS7qAxIY4gXL0drWHLsj8rHhoZDo65jChp4lOcP4kiRhFre3/a0r/i
+ RsipVHaN8jN+3jHwwPmLAYbpbHMrHXJzSBTAZ2Ll+bpL5wuXEXuxILaxF4e817T9DFTlj6aCoSm
+ zQXzYBOVOcdRbbupxEH4lj66hJPrW/sJx/FVrZEADsQwVLYvYBspkKqNaFoeY+ZGhxk0nTjA72b
+ KwTvxDbw01WgHMHAR8dV4GqQ==
+X-Google-Smtp-Source: AGHT+IFjYYBwq43MslnARq043/5r3kfg4K3nsGx1cQwDKi40tlDkO9QL60vpnkPn+oV1n+kQAQQDzA==
+X-Received: by 2002:a05:6000:420c:b0:42f:bad7:af76 with SMTP id
+ ffacd0b85a97d-432c3775a39mr28025812f8f.15.1768312827019; 
+ Tue, 13 Jan 2026 06:00:27 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd5df96asm43589627f8f.28.2026.01.13.06.00.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Jan 2026 06:00:26 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AB40A5F805;
+ Tue, 13 Jan 2026 14:00:25 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: <qemu-devel@nongnu.org>,  Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,  Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,  Andrew Jeffery
+ <andrew@codeconstruct.com.au>,  Joel Stanley <joel@jms.id.au>,  "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Subject: Re: [PATCH] tests/functional: migrate aspeed_rainier image
+In-Reply-To: <1c0e0499-97a7-4b3a-a116-a7c781d23a5b@kaod.org>
+ (=?utf-8?Q?=22C=C3=A9dric?= Le
+ Goater"'s message of "Tue, 13 Jan 2026 14:15:45 +0100")
+References: <20260113115138.3171479-1-alex.bennee@linaro.org>
+ <1c0e0499-97a7-4b3a-a116-a7c781d23a5b@kaod.org>
+User-Agent: mu4e 1.12.15-pre1; emacs 30.1
+Date: Tue, 13 Jan 2026 14:00:25 +0000
+Message-ID: <87jyxlk3ye.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <cover.1767886100.git.ktokunaga.mail@gmail.com>
- <79ec37f7fa0352d0463ed6ec5496f6a88f47d111.1767886100.git.ktokunaga.mail@gmail.com>
- <a17f477f-bcac-4eac-8fd5-09a6e99c8f30@linaro.org>
- <CAEDrbUbr=ZAZp3sPJOrqimSXcNYS6n=24fDU427fLQDgr2e=og@mail.gmail.com>
-In-Reply-To: <CAEDrbUbr=ZAZp3sPJOrqimSXcNYS6n=24fDU427fLQDgr2e=og@mail.gmail.com>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Tue, 13 Jan 2026 23:00:02 +0900
-X-Gm-Features: AZwV_QgjnHWmaP6YOa1lGdbs-1RNT2BGPjjsgyN1YCIBITYamj8TwaPtyziWzrc
-Message-ID: <CAEDrbUbSO1bQK2FVrfB-SNeA1pimrK6ikw=cL=2FvVS_9Wko_A@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] .gitlab-ci.d: Add build tests for wasm64
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000002aab3a0648456954"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122f;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-dl1-x122f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,71 +110,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002aab3a0648456954
-Content-Type: text/plain; charset="UTF-8"
+C=C3=A9dric Le Goater <clg@kaod.org> writes:
 
-Hi Richard,
-
-> > On 1/9/26 04:11, Kohei Tokunaga wrote:
-> > > +wasm64-64bit-emsdk-cross-container:
-> > > +  extends: .container_job_template
-> > > +  variables:
-> > > +    NAME: emsdk-wasm64-64bit-cross
-> > > +    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg
-WASM64_MEMORY64=1
-> > > +    DOCKERFILE: emsdk-wasm-cross
-> > > +
-> > > +wasm64-32bit-emsdk-cross-container:
-> > > +  extends: .container_job_template
-> > > +  variables:
-> > > +    NAME: emsdk-wasm64-32bit-cross
-> > > +    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg
-WASM64_MEMORY64=2
-> > > +    DOCKERFILE: emsdk-wasm-cross
-> >
-> > To expand on my question about WASM64_MEMORY64 vs
---wasm64-32bit-address-limit, I would
-> > expect the two wasm64 build jobs to share the same container.
+> On 1/13/26 12:51, Alex Benn=C3=A9e wrote:
+>> fileserver.linaro.org is going away, migrate to the new share server.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   tests/functional/arm/test_aspeed_rainier.py | 6 ++----
+>>   1 file changed, 2 insertions(+), 4 deletions(-)
+>> diff --git a/tests/functional/arm/test_aspeed_rainier.py
+>> b/tests/functional/arm/test_aspeed_rainier.py
+>> index 602d6194ac8..025e5751dc7 100755
+>> --- a/tests/functional/arm/test_aspeed_rainier.py
+>> +++ b/tests/functional/arm/test_aspeed_rainier.py
+>> @@ -9,10 +9,8 @@
+>>     class RainierMachine(AspeedTest):
+>>   -    ASSET_RAINIER_EMMC =3D Asset(
+>> -        ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
+>> -         'mmc-p10bmc-20240617.qcow2'),
+>> -        'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd9=
+0b')
+>> +    ASSET_RAINIER_EMMC =3D Asset('https://share.linaro.org/downloadFile=
+?id=3DPaCHfyerwpSr0CV',
+>> +                               'd523fb478d2b84d5adc5658d08502bc64b14869=
+55683814f89c6137518acd90b')
+>>         def test_arm_aspeed_emmc_boot(self):
+>>           self.set_machine('rainier-bmc')
 >
-> Thanks for the feedback, I'll fix this in the next version of the series.
+> An alternate location is :
+>
+>   https://kaod.org/qemu/aspeed/rainier/mmc-p10bmc-20240617.qcow2
 
-I've fixed the test to share the same container. Dependencies are now
-compiled with -sMEMORY64=1 to produce wasm64 object files. The
-build-wasm64-32bit test compiles QEMU with --wasm64-32bit-address-limit so
-that the final linked output is lowered by Emscripten's -sMEMORY64=2.
+As that keeps the filename as Peter asked for I have sent v2:
 
-https://patchew.org/QEMU/cover.1768308374.git.ktokunaga.mail@gmail.com/
+  20260113135941.3361163-1-alex.bennee@linaro.org
 
-Regards,
-Kohei
+>
+> It is backed by OVH in Europe.
+>
+> Thanks,
+>
+> C.
 
---0000000000002aab3a0648456954
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div>Hi Richard,<br><br>&gt; &gt; On=
- 1/9/26 04:11, Kohei Tokunaga wrote:<br>&gt; &gt; &gt; +wasm64-64bit-emsdk-=
-cross-container:<br>&gt; &gt; &gt; + =C2=A0extends: .container_job_template=
-<br>&gt; &gt; &gt; + =C2=A0variables:<br>&gt; &gt; &gt; + =C2=A0 =C2=A0NAME=
-: emsdk-wasm64-64bit-cross<br>&gt; &gt; &gt; + =C2=A0 =C2=A0BUILD_ARGS: --b=
-uild-arg TARGET_CPU=3Dwasm64 --build-arg WASM64_MEMORY64=3D1<br>&gt; &gt; &=
-gt; + =C2=A0 =C2=A0DOCKERFILE: emsdk-wasm-cross<br>&gt; &gt; &gt; +<br>&gt;=
- &gt; &gt; +wasm64-32bit-emsdk-cross-container:<br>&gt; &gt; &gt; + =C2=A0e=
-xtends: .container_job_template<br>&gt; &gt; &gt; + =C2=A0variables:<br>&gt=
-; &gt; &gt; + =C2=A0 =C2=A0NAME: emsdk-wasm64-32bit-cross<br>&gt; &gt; &gt;=
- + =C2=A0 =C2=A0BUILD_ARGS: --build-arg TARGET_CPU=3Dwasm64 --build-arg WAS=
-M64_MEMORY64=3D2<br>&gt; &gt; &gt; + =C2=A0 =C2=A0DOCKERFILE: emsdk-wasm-cr=
-oss<br>&gt; &gt; <br>&gt; &gt; To expand on my question about WASM64_MEMORY=
-64 vs --wasm64-32bit-address-limit, I would<br>&gt; &gt; expect the two was=
-m64 build jobs to share the same container.<br>&gt; <br>&gt; Thanks for the=
- feedback, I&#39;ll fix this in the next version of the series.<br><br>I&#3=
-9;ve fixed the test to share the same container. Dependencies are now<br>co=
-mpiled with -sMEMORY64=3D1 to produce wasm64 object files. The<br>build-was=
-m64-32bit test compiles QEMU with --wasm64-32bit-address-limit so<br>that t=
-he final linked output is lowered by Emscripten&#39;s -sMEMORY64=3D2.<br><b=
-r><a href=3D"https://patchew.org/QEMU/cover.1768308374.git.ktokunaga.mail@g=
-mail.com/">https://patchew.org/QEMU/cover.1768308374.git.ktokunaga.mail@gma=
-il.com/</a><br><br>Regards,<br>Kohei<br><br></div>
-
---0000000000002aab3a0648456954--
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
