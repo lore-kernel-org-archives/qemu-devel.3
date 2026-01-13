@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53D3DD29DFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 10:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551ADD29DFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 10:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfbJS-0003NP-9D; Tue, 13 Jan 2026 05:07:46 -0500
+	id 1vfbNu-0004mL-9h; Tue, 13 Jan 2026 05:12:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vfbJP-0003N0-MX
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:07:43 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vfbNt-0004lp-1I
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:12:21 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vfbJN-0007Tp-So
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:07:43 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vfbNr-0008Ii-JN
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:12:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=5jED2mTnKHZ6VukIeKRG3lHkkQrP2lh0r8nROQNAcDM=; b=AXqUw+yHyIkEiSy
- oXdWTw2m2YUMAUCw9HwMdQXB8FpdejNkLiu0SO9+iiULan83sZz4b/8FKw/9Wr53Ul7UezJKXRpqa
- kVU1/WGT+vX1bHGuwMBAKrMdQV3udCyftOpvOjDqrbKNiJn/mR2HJ3VJx/SbnOKYnqb56lGhNCVNo
- Uc=;
-Date: Tue, 13 Jan 2026 11:11:10 +0100
+ List-Help; bh=cW4Jpa7P58idfvRllxXShWKJjqY3peYavFk+J7WNFZE=; b=xfXT2KVJbVehPDY
+ mDj8E5DCLlVfwYZ0KkOomqwF6dgDiWr+fVz3TVhfxoPS0Dwl1wejwBeIvHPn96eXKfbjMd1sP6Hdn
+ ZBtm02tMtuxMrVwRuXjUYuMTdnoB/qjnjFMLalXdPoKrnwQRe23767kMaQH2hyh/fIhmVU5f9wnQp
+ CU=;
+Date: Tue, 13 Jan 2026 11:15:52 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Laurent Vivier <laurent@vivier.eu>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: Re: [PATCH 7/7] hw/xtensa: Build hw models in common source set
-Message-ID: <y2vgrpqwlpzifkaz6jyxveqg2qqolj2k2pnvzratpzobaqaaaz@wraxvajclm2h>
+Subject: Re: [PATCH 4/7] target/xtensa: Build system units in common source set
+Message-ID: <jgziopu6sjnnyj6hrrrkoookx7t7ekdjvvrlx7rz46zv5tkfsg@sfdeent7vwnr>
 References: <20260107202556.55787-1-philmd@linaro.org>
- <20260107202556.55787-8-philmd@linaro.org>
+ <20260107202556.55787-5-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260107202556.55787-8-philmd@linaro.org>
+In-Reply-To: <20260107202556.55787-5-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -74,42 +74,28 @@ On 07/01/26, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/xtensa/meson.build | 2 +-
+>  target/xtensa/meson.build | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/xtensa/meson.build b/hw/xtensa/meson.build
-> index 1d5835df4bf..fec22ef7d2f 100644
-> --- a/hw/xtensa/meson.build
-> +++ b/hw/xtensa/meson.build
-> @@ -8,4 +8,4 @@ xtensa_ss.add(when: 'CONFIG_XTENSA_SIM', if_true: files('sim.c'))
->  xtensa_ss.add(when: 'CONFIG_XTENSA_VIRT', if_true: files('virt.c'))
->  xtensa_ss.add(when: 'CONFIG_XTENSA_XTFPGA', if_true: files('xtfpga.c'))
+> diff --git a/target/xtensa/meson.build b/target/xtensa/meson.build
+> index f8d60101e3d..69c6946420a 100644
+> --- a/target/xtensa/meson.build
+> +++ b/target/xtensa/meson.build
+> @@ -24,4 +24,4 @@ xtensa_system_ss.add(files(
+>  ))
 >  
-> -hw_arch += {'xtensa': xtensa_ss}
-> +hw_common_arch += {'xtensa': xtensa_ss}
+>  target_arch += {'xtensa': xtensa_ss}
+> -target_system_arch += {'xtensa': xtensa_system_ss}
+> +target_common_system_arch += {'xtensa': xtensa_system_ss}
 > -- 
 > 2.52.0
 > 
+> 
 
-nit about includes, in pic_cpu.c, xtensa_memory.h and xtfpga.c change
+all of dbg_helper.c, mmu_helper.c, monitor.c, and xtensa-semi.c include
+cpu.h, change to target/xtensa/cpu.h.
 
-  #include "cpu.h" -> "target/xtensa/cpu.h"
-
-and in cpu.h change
-
-  #include "cpu-qom.h" -> "target/xtensa/cpu-qom.h"
-  #include "qemu/cpu-float.h"
-  #include "exec/cpu-common.h"
-  #include "exec/cpu-defs.h"
-  #include "exec/cpu-interrupt.h"
-  #include "hw/core/clock.h"
-  #include "xtensa-isa.h" -> "target/xtensa/xtensa-isa.h" or "hw/.."
-
-About xtensa-isa.h, is there any reason for keeping it in hw/? Why
-not move it to target/ and get rid of the single line xtensa-isa.h
-file?
-
-Anyway,
+Otherwise,
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
