@@ -4,99 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 850ABD30CC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 21:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A070D30CC2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 21:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfm4h-0008Gu-VN; Tue, 13 Jan 2026 16:37:15 -0500
+	id 1vfmKb-0004Z3-3J; Tue, 13 Jan 2026 16:53:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vfm4g-0008GP-GN
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 16:37:14 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vfm4e-0007pK-Vn
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 16:37:14 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-34c2f335681so4672662a91.1
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 13:37:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768340231; x=1768945031; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D3u9NhNhYm3nkmNWnWJvr9xhkT+Tpwb7c7kvOZNM8wg=;
- b=XASC82SEY+gJdfK74mgFLinEIGz3gmpmgpXepJJZKagq1cx6oPcy9uCy6PgFgMrNVZ
- oYnLZ5og/0HKjDpKoC/EcAyvjmuJzFoTuCru6oawc759w8zWjufrKI3FRNRh0aONhtP5
- nbgqC0G9RMuXXyJTtBBVRjxmcrkjvZKPmACVK6H6LZp/+DSZC3DwgIasVOdH1K7ebxIO
- Gl5yd5Y5jgCVuF8uW9JpfRVPQiqeJVhLuIy96qdq1Tbkivl1EnDYzu+Mmhktk0dAC9MC
- PV3eJlFEM2ZSJi2NhXH8Bs7bdzOphv2zm8Ou0ptsC8Sq9gndCUvggXmkZEfzi5p20Tjh
- PJFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768340231; x=1768945031;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D3u9NhNhYm3nkmNWnWJvr9xhkT+Tpwb7c7kvOZNM8wg=;
- b=E40653G4RoPvqkXhQj3X+wplCghK+eYihOrJc/uZ33aL15+HLXJkQYavnKFMJieF+Z
- 6v9JpZraqyF2d78dLh99WoeOaqRyoZb4PZJRSinkM6kN9H8S1lmDfVCeywRikgzPwX4y
- F6i2jc1Ab7ADnmD6RaTHVCqCliJ+KaeK9oNIC2IDsXQgPrcTyhXpy1ZKLHgmjBa0ubPv
- nXdck/YGF27WFl/Bi87rP0DoJPjrde8Vnn0yJ+C+wy5QpAmOXb/FCl3yjkz4jJPLeX9L
- APMbjrtBFbjClGLUN+TbIrHzbU/tZCBuUPzerw4aT4qqGXIsjlAM84fDnuk6vDOkkuJh
- 2L2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUJnm/QcNX/nCEgaggjCmBUGsBPboIX1dhwvHcMVTIUvhr1P6tMx/Zf7qlueGtYaBc3Kv7BoXSO4cWY@nongnu.org
-X-Gm-Message-State: AOJu0Yy0DUFT+9rne0l3alS3dpbLzI71wYDodYq8cvHYIV2rVSvqeTVI
- baPjnSHC/9gpqZX2rpRSfPOkSUaNpd/QvPvmIZryXbhKJpBzpRB3o55xOes0fPsZYELKEV0ub+W
- 8hQWhQbA=
-X-Gm-Gg: AY/fxX7lDd73UfD4P4mL8ng1jfiGMCRhwqsHtv/AyQJrj65XzJj661BGnKWBWG1BPRT
- XsYKZwDLlpAlXW2BuVeGm7UCvHtWeFP5RCcqOtrCGlIblhRXoQasMcW/ts/nn5alipbfYAmyovs
- PFEIwFJK9JHj3ZxxW6IvTaOyhUawSSp9oRzf95cz9mXp6kmddGoxXWmQ55h6+iAiCKg+EyxxhXf
- kxXVQWfmrREBxeJSM5Dyim2eSQj6Gw51y9FAQXd1ZAmmaTz29ccOqusKMTVI8wjCQi+4YYS040E
- l9+0v9fTvG1nIidr/xyieqrzOPVEvJNz9ZfUtcVml1Ou4P59By2PgVaj5aGvn2LZ6zK6pKEvlJo
- 38zXzkTFulCNGhva+/jb6jtNIdJHL+kWB/0UAzp2J2vXsCh+gjAeQw4Hk474tJ5KU1ztdyNkdB7
- KbtOppXqOsoMA1az930ZKOLsLm/M3/xC27MVKmFrFDfFhYir9ajoyjBGa5
-X-Received: by 2002:a17:90b:5206:b0:343:a631:28a8 with SMTP id
- 98e67ed59e1d1-351091a9fcemr474566a91.37.1768340231304; 
- Tue, 13 Jan 2026 13:37:11 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cc8d29516sm20854366a12.19.2026.01.13.13.37.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jan 2026 13:37:10 -0800 (PST)
-Message-ID: <1f5016ba-bae2-47f9-9a58-713416196aa6@linaro.org>
-Date: Tue, 13 Jan 2026 13:37:09 -0800
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vfmKZ-0004YV-AZ
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 16:53:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vfmKX-0001xX-Gf
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 16:53:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768341216;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tlGI82dwJ0RGmFSTomne2vOSq0GSClzlfVJXz6DWa0c=;
+ b=T2dapTwse7yoD97vr3OsU45eKYprT0FztvO86OdXnXWkFNtTyy9jyny71cIfecnCxhbxGD
+ YEvAXNKzmY/EoQPMnEiKAKywbTxpGhUuhI9eGilCxOGROEnh55ma+0Sb2rxO/13qjK7Gek
+ Mb5nXp4d/bFgb3MBTdNgIzS0kfnGGG0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-9gMVX5RzNVSsbvPtLOLB1Q-1; Tue,
+ 13 Jan 2026 16:53:33 -0500
+X-MC-Unique: 9gMVX5RzNVSsbvPtLOLB1Q-1
+X-Mimecast-MFC-AGG-ID: 9gMVX5RzNVSsbvPtLOLB1Q_1768341212
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE24F1956067; Tue, 13 Jan 2026 21:53:31 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.89])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E36181800285; Tue, 13 Jan 2026 21:53:30 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fam Zheng <fam@euphon.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ pkrempa@redhat.com, Hannes Reinecke <hare@suse.de>,
+ Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alberto Faria <afaria@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [RFC 4/4] scsi: save/load SCSI reservation state
+Date: Tue, 13 Jan 2026 16:53:19 -0500
+Message-ID: <20260113215320.566595-5-stefanha@redhat.com>
+In-Reply-To: <20260113215320.566595-1-stefanha@redhat.com>
+References: <20260113215320.566595-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/4] .gitlab-ci.d: Add build tests for wasm64
-Content-Language: en-US
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <cover.1768308374.git.ktokunaga.mail@gmail.com>
- <ee30d4956a485fd46b4735028486d3fb7b22fe60.1768308374.git.ktokunaga.mail@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <ee30d4956a485fd46b4735028486d3fb7b22fe60.1768308374.git.ktokunaga.mail@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,25 +90,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/13/26 5:54 AM, Kohei Tokunaga wrote:
-> The wasm builds are tested for 3 targets: wasm32, wasm64(-sMEMORY64=1) and
-> wasm64(-sMEMORY64=2). The CI builds the containers using the same Dockerfile
-> (emsdk-wasm-cross.docker) with different build args.
-> 
-> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> ---
->   .gitlab-ci.d/buildtest.yml          | 24 +++++++++++++++++++++---
->   .gitlab-ci.d/container-cross.yml    | 11 ++++++++++-
->   .gitlab-ci.d/container-template.yml |  4 +++-
->   .gitlab-ci.d/containers.yml         |  3 ++-
->   4 files changed, 36 insertions(+), 6 deletions(-)
-> 
-> V5:
-> - Fixed wasm64 tests (build-wasm64-64bit and build-wasm64-32bit) to share
->    the same wasm64 container. The build-wasm64-32bit test passes
->    --wasm64-32bit-address-limit to the configure script so that the output is
->    lowered to wasm32 by Emscripten's -sMEMORY64=2.
-> 
+Add a vmstate subsection to SCSIDiskState so that scsi-block devices can
+transfer their reservation state during live migration. Upon loading the
+subsection, the destination QEMU invokes the PERSISTENT RESERVE OUT
+command's PREEMPT service action to atomically move the reservation from
+the source I_T nexus to the destination I_T nexus. This results in
+transparent live migration of SCSI reservations.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This approach is incomplete since SCSI reservations are cooperative and
+other hosts could interfere. Neither the source QEMU nor the destination
+QEMU are aware of changes made by other hosts. The assumption is that
+reservation is not taken over by a third host without cooperation from
+the source host.
+
+I considered adding the vmstate subsection to SCSIDevice instead of
+SCSIDiskState, since reservations are part of the SCSI Primary Commands
+that other devices apart from disks could support. However, due to
+fragility of migrating reservations, we will probably limit support to
+scsi-block and maybe scsi-disk in the future. In the end, I think it
+makes sense to place this within scsi-disk.c.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ include/hw/scsi/scsi.h |  1 +
+ hw/core/machine.c      |  4 +-
+ hw/scsi/scsi-disk.c    | 49 ++++++++++++++++++++++++-
+ hw/scsi/scsi-generic.c | 83 ++++++++++++++++++++++++++++++++++++++++++
+ hw/scsi/trace-events   |  1 +
+ 5 files changed, 136 insertions(+), 2 deletions(-)
+
+diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+index c5ec58089b..d104557bac 100644
+--- a/include/hw/scsi/scsi.h
++++ b/include/hw/scsi/scsi.h
+@@ -253,6 +253,7 @@ SCSIDevice *scsi_device_get(SCSIBus *bus, int channel, int target, int lun);
+ 
+ /* scsi-generic.c. */
+ extern const SCSIReqOps scsi_generic_req_ops;
++bool scsi_generic_pr_state_post_load_errp(SCSIDevice *s, Error **errp);
+ 
+ /* scsi-disk.c */
+ #define SCSI_DISK_QUIRK_MODE_PAGE_APPLE_VENDOR             0
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 6411e68856..16134f8ce5 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -38,7 +38,9 @@
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
+ 
+-GlobalProperty hw_compat_10_2[] = {};
++GlobalProperty hw_compat_10_2[] = {
++    { "scsi-block", "migrate-pr", "off" },
++};
+ const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
+ 
+ GlobalProperty hw_compat_10_1[] = {
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 76fe5f085b..82e5b59534 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -3209,6 +3209,46 @@ static const Property scsi_hd_properties[] = {
+     DEFINE_BLOCK_CHS_PROPERTIES(SCSIDiskState, qdev.conf),
+ };
+ 
++#ifdef __linux__
++static bool scsi_disk_pr_state_post_load_errp(void *opaque, int version_id, Error **errp)
++{
++    SCSIDiskState *s = opaque;
++    SCSIDevice *dev = &s->qdev;
++
++    return scsi_generic_pr_state_post_load_errp(dev, errp);
++}
++
++static bool scsi_disk_pr_state_needed(void *opaque)
++{
++    SCSIDiskState *s = opaque;
++    SCSIPRState *pr_state = &s->qdev.pr_state;
++    bool ret;
++
++    if (!s->qdev.migrate_pr) {
++        return false;
++    }
++
++    /* A reservation requires a key, so checking this field is enough */
++    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
++        ret = pr_state->key;
++    }
++    return ret;
++}
++
++static const VMStateDescription vmstate_scsi_disk_pr_state = {
++    .name = "scsi-disk/pr",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load_errp = scsi_disk_pr_state_post_load_errp,
++    .needed = scsi_disk_pr_state_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(qdev.pr_state.key, SCSIDiskState),
++        VMSTATE_UINT8(qdev.pr_state.resv_type, SCSIDiskState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++#endif /* __linux__ */
++
+ static const VMStateDescription vmstate_scsi_disk_state = {
+     .name = "scsi-disk",
+     .version_id = 1,
+@@ -3221,7 +3261,13 @@ static const VMStateDescription vmstate_scsi_disk_state = {
+         VMSTATE_BOOL(tray_open, SCSIDiskState),
+         VMSTATE_BOOL(tray_locked, SCSIDiskState),
+         VMSTATE_END_OF_LIST()
+-    }
++    },
++    .subsections = (const VMStateDescription * const []) {
++#ifdef __linux__
++        &vmstate_scsi_disk_pr_state,
++#endif
++        NULL
++    },
+ };
+ 
+ static void scsi_hd_class_initfn(ObjectClass *klass, const void *data)
+@@ -3301,6 +3347,7 @@ static const Property scsi_block_properties[] = {
+                       -1),
+     DEFINE_PROP_UINT32("io_timeout", SCSIDiskState, qdev.io_timeout,
+                        DEFAULT_IO_TIMEOUT),
++    DEFINE_PROP_BOOL("migrate-pr", SCSIDiskState, qdev.migrate_pr, true),
+ };
+ 
+ static void scsi_block_class_initfn(ObjectClass *klass, const void *data)
+diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
+index f22a38f725..2acfd21232 100644
+--- a/hw/scsi/scsi-generic.c
++++ b/hw/scsi/scsi-generic.c
+@@ -418,6 +418,89 @@ static void scsi_handle_persistent_reserve_out_reply(
+     }
+ }
+ 
++static bool scsi_generic_pr_register(SCSIDevice *s, uint64_t key, Error **errp)
++{
++    uint8_t cmd[10] = {};
++    uint8_t buf[24] = {};
++    uint64_t key_be = cpu_to_be64(key);
++    int ret;
++
++    cmd[0] = PERSISTENT_RESERVE_OUT;
++    cmd[1] = PRO_REGISTER;
++    cmd[8] = sizeof(buf);
++    memcpy(&buf[8], &key_be, sizeof(key_be));
++
++    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_TO_DEV, cmd, sizeof(cmd),
++                     buf, sizeof(buf), s->io_timeout, errp);
++    if (ret < 0) {
++        error_prepend(errp, "PERSISTENT RESERVE OUT with REGISTER");
++        return false;
++    }
++    return true;
++}
++
++static bool scsi_generic_pr_preempt(SCSIDevice *s, uint64_t key, uint8_t resv_type, Error **errp)
++{
++    uint8_t cmd[10] = {};
++    uint8_t buf[24] = {};
++    uint64_t key_be = cpu_to_be64(key);
++    int ret;
++
++    cmd[0] = PERSISTENT_RESERVE_OUT;
++    cmd[1] = PRO_PREEMPT;
++    cmd[2] = resv_type & 0xf;
++    cmd[8] = sizeof(buf);
++    memcpy(&buf[0], &key_be, sizeof(key_be));
++    memcpy(&buf[8], &key_be, sizeof(key_be));
++
++    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_TO_DEV, cmd, sizeof(cmd),
++                     buf, sizeof(buf), s->io_timeout, errp);
++    if (ret < 0) {
++        error_prepend(errp, "PERSISTENT RESERVE OUT with PREEMPT");
++        return false;
++    }
++    return true;
++}
++
++/* Register keys and preempt reservations after live migration */
++bool scsi_generic_pr_state_post_load_errp(SCSIDevice *s, Error **errp)
++{
++    SCSIPRState *pr_state = &s->pr_state;
++    uint64_t key;
++    uint8_t resv_type;
++
++    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
++        key = pr_state->key;
++        resv_type = pr_state->resv_type;
++    }
++
++    trace_scsi_generic_pr_state_post_load_errp(key, resv_type);
++
++    if (key) {
++        if (!scsi_generic_pr_register(s, key, errp)) {
++            return false;
++        }
++
++        /*
++         * Two cases:
++         *
++         * 1. There is no reservation (resv_type is 0) and the other I_T nexus
++         *    will be unregistered. This is important so the source host does
++         *    not leak registered keys across live migration.
++         *
++         * 2. There is a reservation (resv_type is not 0) and the other I_T
++         *    nexus will be unregistered and its reservation is atomically
++         *    taken over by us. This is the scenario where a reservation is
++         *    migrated along with the guest.
++         */
++        if (!scsi_generic_pr_preempt(s, key, resv_type, errp)) {
++            return false;
++        }
++    }
++    /* TODO is rollback needed on the source host if migration fails after this point? */
++    return true;
++}
++
+ static void scsi_read_complete(void * opaque, int ret)
+ {
+     SCSIGenericReq *r = (SCSIGenericReq *)opaque;
+diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
+index ff92fff7c5..cff8235e9a 100644
+--- a/hw/scsi/trace-events
++++ b/hw/scsi/trace-events
+@@ -391,3 +391,4 @@ scsi_generic_aio_sgio_command(uint32_t tag, uint8_t cmd, uint32_t timeout) "gene
+ scsi_generic_ioctl_sgio_command(uint8_t cmd, uint32_t timeout) "generic ioctl sgio: cmd=0x%x timeout=%u"
+ scsi_generic_ioctl_sgio_done(uint8_t cmd, int ret, uint8_t status, uint8_t host_status) "generic ioctl sgio: cmd=0x%x ret=%d status=0x%x host_status=0x%x"
+ scsi_generic_persistent_reserve_out_reply(uint8_t service_action, uint8_t resv_type, uint64_t old_key, uint64_t new_key) "persistent reserve out reply service_action=%u resv_type=%u old_key=0x%" PRIx64 " new_key=0x%" PRIx64
++scsi_generic_pr_state_post_load_errp(uint64_t key, uint8_t resv_type) "key=0x%" PRIx64 " resv_type=%u"
+-- 
+2.52.0
+
 
