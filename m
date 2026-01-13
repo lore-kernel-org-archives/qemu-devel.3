@@ -4,149 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8242D29DF3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD2AD29DEC
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 09:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfaSn-0002Gx-TW; Tue, 13 Jan 2026 04:13:21 -0500
+	id 1vfaVj-0003Fn-0C; Tue, 13 Jan 2026 04:16:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfaSm-0002Fn-JE
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:13:20 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfaVe-0003EK-Ci
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:16:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfaSl-0007MI-5b
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:13:20 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfaVc-0007qL-Pt
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:16:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768295597;
+ s=mimecast20190719; t=1768295775;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Q7YBuQ6r5CAtsR1AvTqI6U8ZDPomC1nXwMLhIwwvnVA=;
- b=ImobCCO0xRi/w7bEeakS6AdRTfK3kD1n70o6mBEsLPU7rKA80xyppyb1sSWy6hwbpd1l6K
- q9o/5zCMAsB4mLP5Zu8uNu34amZSKAamUw4XcSpGuY+64Qhg911S3W6pIvuEHJF5/pfOPr
- GHfh7iMGMN4JhyNlWzjbGS7z2KTnNAM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-reVYs0RkOOa7rSqpUlIQ9w-1; Tue, 13 Jan 2026 04:13:13 -0500
-X-MC-Unique: reVYs0RkOOa7rSqpUlIQ9w-1
-X-Mimecast-MFC-AGG-ID: reVYs0RkOOa7rSqpUlIQ9w_1768295592
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-430f4609e80so3926404f8f.3
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 01:13:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768295592; x=1768900392; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Q7YBuQ6r5CAtsR1AvTqI6U8ZDPomC1nXwMLhIwwvnVA=;
- b=rlBNZox+B5AxZqFPa13H+Wu8nxLg6Jpc+khaJOVUbjl8d19uxpSEWIICQPvApz++G4
- J9Po7ra3byr5qKBg+zUcv+dns6cHpzN+7guGdaC+tmmeh0T3AJB51ldq6bS3oOJ6ls+4
- s0c6UXoQRys8rRQptphD2gl8JWBVkTPnyNXumIvyIBtwlG8UGUruDCIttmdECTDarOkD
- QU9iZL4Tf5PFM2wp516mJF1HfGAlcdjmUHHQd88L3LA1BfRYV8ZIU/ux4aFfl0t/n76s
- MPrL+Z49+911bIe3BCIMLTkcCkLozZC9V1kAAkr74GEgh9Nx2I41PdpzFIlCNLQryBeS
- RSZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768295592; x=1768900392;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q7YBuQ6r5CAtsR1AvTqI6U8ZDPomC1nXwMLhIwwvnVA=;
- b=U4R0vG3hiV/hqS+IZN3yEIvg9JdYJNs61tHqD4szuFllHY4yM9C/vGBuS8vZD8MPiW
- xt+c6k36jY7UmfFOhjx5vf0d7BwO97vhRD1Vx1jmlcpfs8Q/9oWDk3bKowEaqPcqcxV+
- R5xyamAWCEIeqZ6I/7AcG31LSSE51k17krafbJXXGhp9Q1Kp8fj+M67Mt/hHM/8by4yk
- ylfnrk5XZVqztdwKU2S5dIS6kavrm9TW7uKSrALCVOrrkZhRJ9rqzqJEqsyLdcbeeqqT
- fMuGcghgOZma+eR7lU+jQoynkq2bxnKveIPoy8Fq5fuOyfcuur28QmlaaNp4kc2wUZLe
- ITLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmgWxxNR3fRGiEZ7GuI3SYGIKaSB3SiqrMyYoEZdNAZOQvXZfyZch7ISGOiIqQWbFA9O1mLuFxUjwF@nongnu.org
-X-Gm-Message-State: AOJu0Yw6hIlzylvKf0jopbqVyJGTZ7u15/1FSwx9cJ5l1QI3DAj9PwcI
- 5kyG3IuMlvp+F4U5SxgI1RaJ3KHKAzYR4CiF1Ukf+a14oet5dUgdhrcWPmMZk5jfPG/8RM38ANz
- AJPqRAA2z8itpe2zFcz/ZYvNKJfonC9X4zlBfb99YUYrtWsMN7i1sSM7z
-X-Gm-Gg: AY/fxX6GQKtlik0LrsYus7DuwxsZ5wrLUqnhBLhUjQEUUWf+qs93dGlMkdyMCPtAi5i
- DaZSDLkjTKiHHe4SclX0k8PWpXmYsBNQiZe1YyzAdTE3AMekTHtXpMa7Tpo2lQb2iqDgfPAY/oE
- 9keh1JCD0NQxc46g+B+UpjxV19m35fj9ArDkXqRjDkUt8xQyA7Vsd0e4pxM1V0RS9QYYpFPHDrv
- AXBQPK8T83au1Ac2IXTgyV+Frq3vtJebWeOX9/7hwTGS3AE3cgjqJm3LlJ/Co4l0dSuj1TWTf5p
- bngejWrDPB6azulM4WcrERIatoaXkhgzJG+2xNbvNHtk141flp/JAeP4f/VYzElObwiaeIdeKnC
- dxN/NYYM=
-X-Received: by 2002:a05:6000:24c8:b0:431:2cb:d335 with SMTP id
- ffacd0b85a97d-432c375b114mr21828161f8f.34.1768295592350; 
- Tue, 13 Jan 2026 01:13:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFPwt9v5rtE6bH2ekixXQxrZbne0nuFDrGiZgBHh3ckBZpEMpEcBj2DGeo/PPWRiisUW9x2kA==
-X-Received: by 2002:a05:6000:24c8:b0:431:2cb:d335 with SMTP id
- ffacd0b85a97d-432c375b114mr21828123f8f.34.1768295591940; 
- Tue, 13 Jan 2026 01:13:11 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.113.220])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e16f4sm44051509f8f.11.2026.01.13.01.13.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jan 2026 01:13:11 -0800 (PST)
-Message-ID: <cb532d62-b7c3-431d-9f4b-a7281a043262@redhat.com>
-Date: Tue, 13 Jan 2026 10:13:09 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=jXNzfc334bOvD2nytUVU8KqMVbWDxOpofDodxjadK2U=;
+ b=JbeWBhyLZdcomNlNVnAldSTOFeffZps6H0o6jy2kXwr1U2JMQXosihnNg3fJM6FdEJDY3u
+ xQvAoimGyZpUn0/NBbpF6FVs74yZzdiokKOWREHY2BeAWOY8Qmei3CjSozwuFeVN8RE9Ib
+ 66Q1/NeAXwzAFAMX9hGCVPdMWkAGT/I=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-7-w_rji4N-GvZXAXzuhKMg-1; Tue,
+ 13 Jan 2026 04:16:12 -0500
+X-MC-Unique: 7-w_rji4N-GvZXAXzuhKMg-1
+X-Mimecast-MFC-AGG-ID: 7-w_rji4N-GvZXAXzuhKMg_1768295771
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A74018005AD; Tue, 13 Jan 2026 09:16:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 43301180066A; Tue, 13 Jan 2026 09:16:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BBA2C21E676C; Tue, 13 Jan 2026 10:16:06 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Hanna Reitz
+ <hreitz@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  devel@lists.libvirt.org,
+ qemu-block@nongnu.org,  qemu-rust@nongnu.org,  Stefan Weil
+ <sw@weilnetz.de>,  Kevin Wolf <kwolf@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 05/24] util: expose qemu_thread_set_name
+In-Reply-To: <20260108170338.2693853-6-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 8 Jan 2026 17:03:19
+ +0000")
+References: <20260108170338.2693853-1-berrange@redhat.com>
+ <20260108170338.2693853-6-berrange@redhat.com>
+Date: Tue, 13 Jan 2026 10:16:06 +0100
+Message-ID: <87cy3dc1pl.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 26/29] hw/s390x/ipl: Handle secure boot without
- specifying a boot device
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-27-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251208213247.702569-27-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -155,7 +81,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,37 +97,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/12/2025 22.32, Zhuoying Cai wrote:
-> If secure boot in audit mode or True Secure IPL mode is enabled without
-> specifying a boot device, the boot process will terminate with an error.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   hw/s390x/ipl.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index bfac156afe..2809fb718d 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -771,6 +771,16 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
->           }
->           if (!ipl->iplb_valid) {
->               ipl->iplb_valid = s390_init_all_iplbs(ipl);
-> +
-> +            /*
-> +             * Secure IPL without specifying a boot device.
-> +             * IPLB is not generated if no boot device is defined.
-> +             */
-> +            if ((s390_has_certificate() || s390_secure_boot_enabled()) &&
-> +                !ipl->iplb_valid) {
-> +                error_report("No boot device defined for Secure IPL");
-> +                exit(1);
-> +            }
->           } else {
->               ipl->qipl.chain_len = 0;
->           }
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> The ability to set the thread name needs to be used in a number
+> of places, so expose the current impls as public methods.
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  include/qemu/thread.h    |  1 +
+>  util/qemu-thread-posix.c | 26 ++++++++++++++++----------
+>  util/qemu-thread-win32.c | 13 ++++++++-----
+>  3 files changed, 25 insertions(+), 15 deletions(-)
+>
+> diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+> index 3a286bb3ef..27b888ab0a 100644
+> --- a/include/qemu/thread.h
+> +++ b/include/qemu/thread.h
+> @@ -215,6 +215,7 @@ void *qemu_thread_join(QemuThread *thread);
+>  void qemu_thread_get_self(QemuThread *thread);
+>  bool qemu_thread_is_self(QemuThread *thread);
+>  G_NORETURN void qemu_thread_exit(void *retval);
+> +void qemu_thread_set_name(const char *name);
+>=20=20
+>  struct Notifier;
+>  /**
+> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+> index 7c985b5d38..b1c127dbe3 100644
+> --- a/util/qemu-thread-posix.c
+> +++ b/util/qemu-thread-posix.c
+> @@ -329,6 +329,21 @@ static void qemu_thread_atexit_notify(void *arg)
+>      notifier_list_notify(&thread_exit, NULL);
+>  }
+>=20=20
+> +void qemu_thread_set_name(const char *name)
+> +{
+> +    /*
+> +     * Attempt to set the threads name; note that this is for debug, so
+> +     * we're not going to fail if we can't set it.
+> +     */
+> +# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+> +    pthread_setname_np(pthread_self(), name);
+> +# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
+> +    pthread_setname_np(name);
+> +# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
+> +    pthread_set_name_np(pthread_self(), name);
+> +# endif
+> +}
+> +
+>  typedef struct {
+>      void *(*start_routine)(void *);
+>      void *arg;
+> @@ -342,17 +357,8 @@ static void *qemu_thread_start(void *args)
+>      void *arg =3D qemu_thread_args->arg;
+>      void *r;
+>=20=20
+> -    /* Attempt to set the threads name; note that this is for debug, so
+> -     * we're not going to fail if we can't set it.
+> -     */
+>      if (qemu_thread_args->name) {
+> -# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+> -        pthread_setname_np(pthread_self(), qemu_thread_args->name);
+> -# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
+> -        pthread_setname_np(qemu_thread_args->name);
+> -# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
+> -        pthread_set_name_np(pthread_self(), qemu_thread_args->name);
+> -# endif
+> +        qemu_thread_set_name(qemu_thread_args->name);
+>      }
+>      QEMU_TSAN_ANNOTATE_THREAD_NAME(qemu_thread_args->name);
+>      g_free(qemu_thread_args->name);
+
+qemu_thread_set_name() is factored out.  No change in behavior.
+
+> diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+> index 9595a5b090..4d2d663a9a 100644
+> --- a/util/qemu-thread-win32.c
+> +++ b/util/qemu-thread-win32.c
+> @@ -225,6 +225,7 @@ struct QemuThreadData {
+>      void             *arg;
+>      short             mode;
+>      NotifierList      exit;
+> +    char             *name;
+>=20=20
+>      /* Only used for joinable threads. */
+>      bool              exited;
+> @@ -266,6 +267,10 @@ static unsigned __stdcall win32_start_routine(void *=
+arg)
+>      void *(*start_routine)(void *) =3D data->start_routine;
+>      void *thread_arg =3D data->arg;
+>=20=20
+> +    if (data->name) {
+> +        qemu_thread_set_name(data->name);
+> +        g_clear_pointer(&data->name, g_free);
+> +    }
+>      qemu_thread_data =3D data;
+>      qemu_thread_exit(start_routine(thread_arg));
+>      abort();
+> @@ -316,7 +321,7 @@ void *qemu_thread_join(QemuThread *thread)
+>      return ret;
+>  }
+>=20=20
+> -static void set_thread_description(HANDLE h, const char *name)
+> +void qemu_thread_set_name(const char *name)
+>  {
+>      g_autofree wchar_t *namew =3D NULL;
+>=20=20
+> @@ -329,7 +334,7 @@ static void set_thread_description(HANDLE h, const ch=
+ar *name)
+>          return;
+>      }
+>=20=20
+> -    SetThreadDescriptionFunc(h, namew);
+> +    SetThreadDescriptionFunc(GetCurrentThread(), namew);
+>  }
+>=20=20
+>  void qemu_thread_create(QemuThread *thread, const char *name,
+> @@ -344,6 +349,7 @@ void qemu_thread_create(QemuThread *thread, const cha=
+r *name,
+>      data->arg =3D arg;
+>      data->mode =3D mode;
+>      data->exited =3D false;
+> +    data->name =3D g_strdup(name);
+>      notifier_list_init(&data->exit);
+>=20=20
+>      if (data->mode !=3D QEMU_THREAD_DETACHED) {
+> @@ -355,9 +361,6 @@ void qemu_thread_create(QemuThread *thread, const cha=
+r *name,
+>      if (!hThread) {
+>          error_exit(GetLastError(), __func__);
+>      }
+> -    if (name) {
+> -        set_thread_description(hThread, name);
+> -    }
+>      CloseHandle(hThread);
+>=20=20
+>      thread->data =3D data;
+
+This delays setting the thread name until the thread runs.  Fine, I
+guess, but I'd mention it in the commit message.
+
+The new QemuThreadData member @name is non-null only between thread
+creation and thread name setting, unlike the other members under
+/* Passed to win32_start_routine.  */  Worth a comment?  Keep it alive
+until the thread dies?  Entirely up to you.
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
