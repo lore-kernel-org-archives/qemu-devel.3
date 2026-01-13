@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE59D2D105
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E4F6D2D107
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vferP-0003AC-Dx; Tue, 13 Jan 2026 08:55:03 -0500
+	id 1vfev9-0005p3-CL; Tue, 13 Jan 2026 08:58:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vferN-00039e-QI
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:55:01 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfev7-0005oa-6z
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:58:53 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vferM-0000MP-3F
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:55:01 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2a081c163b0so48903395ad.0
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 05:54:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vfev5-0000tA-MY
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:58:52 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-432d2c7a8b9so3948706f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 05:58:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768312499; x=1768917299; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1768312726; x=1768917526; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UV+nDC+Oo5TrLoCwsmUkKSCdy3gjvk4o+sIDLbsc5vg=;
- b=h12rjZEVUYKvQQIOvRazeMhPsRwIA2hTuj3HxnJ2GTT7q6TdQZ2s3R3ZDgxKWcclfL
- ogj50msIGnLfpPLoM7H27f7u5DDyZQN82LXMh0qJylb4W/z6X1ixDmNaE33hYpwf63nw
- wRO3yhLdbaS4lU3pdMxOqUCPa7k5IwSb7VE5zOO8tT3IjaPvsNSe4xWR8HCSSlHEfljB
- TWMHp1Hyzgpl6pV6lkHWLYRuSBx4qHSYlUcJUI/ogGwNkdN4BLVOdT+DwMa+vqLk9TlY
- MHD/Q4s7MXMhWv8NBhn23W2UpksC7fOHwKMP+oT8jF0PoD2m63Rc2xUxXYaFM1gPgqnV
- LdfQ==
+ bh=6WhGDknja7CQejJLDSeyhPCpGEnEpfpz6CPziZT1+0s=;
+ b=G3oEKHsMXQ7EAon4j9KcSD5VFxyhAacv0O32Zp2khKT3DAMbzugQ+dnYugML31t0X3
+ uF5eORrj16xXQPvgCWHDQCsjqPmrJk5evhnnF5WQA6VGvfoRexmLAgi/sH22F+tFkHS7
+ ypKtHqi6OhjWYgkDivzNhKNRqLIp25kH+sr+G3Id6IgDbpdv7ZHHYMwH56HvsU4W4utG
+ GYajoYN/dyloQ1EivwGxF/oe44UsaTUW1Q7yKCShzflnFwgnS5FnBS1akVy8+Evvm4t/
+ 0SGh4tBayxV/nSfqd+qlmuFjvNDARty16pyvsiyq0f19E9W1tHTNG/iy+ML0v1a9YOue
+ zIig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768312499; x=1768917299;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1768312726; x=1768917526;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UV+nDC+Oo5TrLoCwsmUkKSCdy3gjvk4o+sIDLbsc5vg=;
- b=SYaebn0FDQy4Q3d/JgkIbD4eBOWLQJ2/4AHL+Ygh2+GpnCReVREM4vj+0Kvn8Y1n42
- HWaLCS4coSnzU3Mwjsd9UrRWyQlUYcBxK7SUatpdlLzc0Tapca0lvDg7Bc5yvS7tqLhb
- HFRabBS+xjx8xkmBtN5xNojBGIxcuRDlZ64cjyefga+GbEG3Il1nUoDu7Pe4R8dSOECR
- m/2EgEJ1+fyAKrJdFi3+8Gsy/w0EzuUKaUmgpVEaABWnLV4Bv9Z7o/UOx6w9/KFVi6yJ
- 8QbpjtDuDE0CXlMkAli+bDTKEU+YurFCQ2nUAq1A6anDxYgH+gwmpJ3tbRI00sB6659/
- /uXg==
-X-Gm-Message-State: AOJu0YykKmLR3kWXcF26tZHBVpcyM13nueZ8JxTFJOKCEIlQJrrIj8yu
- sEYLAdc7dqE4xGfXUeUGO1H6/msSvdteV6dXA8qCGwbuFwQXGTfN0zIuMEBbupSU
-X-Gm-Gg: AY/fxX5EDexiK0+iXMrl2kKpx3u+FndztgUbR0Z+/p+PLaIuRc6kfNiZsbK8PYLteN3
- XlTGx4QrcOagSMjU5PI5UrMXp8XmWO0RUIFBUSjWF9ED5XWS1TlyjbXj2mTvGHBKJxNpQRaZuPa
- puYWEYTZpiJP+OQXaLjxoBUPfiiS6Kvl2vinWuUQhO1A13I1uXm0rZSmt6JBwZIEFSrlGvavpDN
- xho08dMXzP7Ir5FLRQL2xV71UuHUXIHgJwOv9jjtj/awQfbgAh/6yKiNP+X2ebc+RT1BXVCOW95
- CdhPt86rdowIdbTBPWaCiKFLSdO/LcJj0ysIbFUtPRHmeGPed6z4pk4sEYNHc39zal7BbzwV1Bw
- G178G4IRBpgFKCxbsDFzATC5un+SfBKDFCIkfQ3cdQgn8rtK5VL0EkdoJsZrero+Uxc5gJjC/0i
- TZ0OXJLTBR0A==
-X-Google-Smtp-Source: AGHT+IFX8ZYUN7T6V//J5KlGZIda5ht1KbDs1O0wITEkOzZUNqMwhFlnKFg7/yS8+h3lQ7qkWfD3ZA==
-X-Received: by 2002:a17:903:b90:b0:2a0:b461:c883 with SMTP id
- d9443c01a7336-2a3ee4900e1mr199312895ad.45.1768312498596; 
- Tue, 13 Jan 2026 05:54:58 -0800 (PST)
-Received: from ktock.. ([240d:1a:3b6:8b00:eb29:7536:a39f:7476])
+ bh=6WhGDknja7CQejJLDSeyhPCpGEnEpfpz6CPziZT1+0s=;
+ b=jzFpsHFsTrUafb5yEfdQQXNn9wFr5pghGJoE0jLAx+Q/S3JwvvxH7UVP2zleUCnV9w
+ Arlw/NvsNSXdseWeWPqHXtj8/9vub71TjuRrlIiablL7s5YsFejdZfW+mzA3cKKOBrzj
+ sJ+Bv4uwCnz5ic68X1pKYesEnpRdL4YCbJwVuCFcy73G/4kQyvjO9h/iHcoONro7nBBv
+ 73DZxVvCXMpgv+a8IIi3ZHB3cnxqBKA0/0yjMdiciDDUG/6Z4qNz4HgU+FIKWZ0J/uHs
+ Z0/VNpj29FHIdGDTepoGyJKnW0jxxZcEBHmFZOtPSJzjxQKxedKbfvC+cL6F0NUiCcYL
+ 3plQ==
+X-Gm-Message-State: AOJu0YzmFOH92s0xSzugO7BZBjYwuRXjYmvNIM3aVJhhbNE2MeX9b8cx
+ snN12FknQLyNC8i9GMafsL3qDoBoA486qYQbMLtIJiN13b6ZlqJgeqPsLrPbWw==
+X-Gm-Gg: AY/fxX6YLSm4/aa0q7psadAOLyVF5b/I+pjsIpgJd3mfuWhI+f/v5Irqk/Dz1n83K5T
+ SVMTv0zYgmN95qsVqapjRzswI0tzm9DVGiGjCbFBAhUc1zUAvK/RWgMhnDO1iqPijPmhTEoL1Yw
+ UbcT++qEsaYNHnL6YSHRiJsnbJVpmbxfVEVgeRXp/Dl9dyU8TaQYLKw6/mE4K505gt9N55xEVP0
+ 8eG9XRmrHUeSVx21K9Z1E7j+OvddyYrcXp7gqBl/mKD9NhJctVDDmBCACSsE1t8X0s2lvk1476b
+ C3pKiv6xa2UFvshCRrVvBf6aYdkCcwrnMXOtTiRBIU4FFksM4hzx8e1eJjGhGi6I89iBjJKKt1k
+ pOv5phmBIge72DJQh9MVB91uMbFI2DDMPI/xR7+QkvusJAFzmsMgtSrFbBMzm+raglxgv7wLXTd
+ UXPf/CIlgBBc4+M/yUzaiKSgfyc9Lok136KRZdbhI4+VAfeG1Z2QQaBflslSykUR/dYMlb8ajB
+X-Google-Smtp-Source: AGHT+IHz3/MZq5IE1wUR5QXf+2IHt/MHhR2WlMb82Jjaiy4vcro767CKSZ9wAVL85Hpc2XOy6zo8xg==
+X-Received: by 2002:a5d:5d13:0:b0:430:f58d:40d7 with SMTP id
+ ffacd0b85a97d-432c374f477mr29322767f8f.13.1768312725842; 
+ Tue, 13 Jan 2026 05:58:45 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-002-242-220-137.2.242.pool.telefonica.de. [2.242.220.137])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c3a2eesm38240465ad.6.2026.01.13.05.54.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 05:54:58 -0800 (PST)
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 1/4] meson: Add wasm64 support to the --cpu flag
-Date: Tue, 13 Jan 2026 22:54:28 +0900
-Message-ID: <91f16f0e9ae6b36fbf0c2caac510dcf855120400.1768308374.git.ktokunaga.mail@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1768308374.git.ktokunaga.mail@gmail.com>
-References: <cover.1768308374.git.ktokunaga.mail@gmail.com>
+ ffacd0b85a97d-432bd0dadcfsm43551328f8f.3.2026.01.13.05.58.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Jan 2026 05:58:45 -0800 (PST)
+Date: Tue, 13 Jan 2026 13:58:44 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+CC: kvm@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_11/32=5D_kvm/i386=3A_reload?=
+ =?US-ASCII?Q?_firmware_for_confidential_guest_reset?=
+In-Reply-To: <20260112132259.76855-12-anisinha@redhat.com>
+References: <20260112132259.76855-1-anisinha@redhat.com>
+ <20260112132259.76855-12-anisinha@redhat.com>
+Message-ID: <1840E5EB-CFD2-478E-B6CB-242B46FD5166@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x635.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,77 +103,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-wasm64 target enables 64bit pointers using Emscripten's -sMEMORY64=1
-flag[1]. This enables QEMU to run 64bit guests.
 
-Although the configure script uses "uname -m" as the fallback value when
-"cpu" is empty, this can't be used for Emscripten which targets to Wasm.
-So, in wasm build, this commit fixes configure to require --cpu flag to be
-explicitly specified by the user.
 
-[1] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
+Am 12=2E Januar 2026 13:22:24 UTC schrieb Ani Sinha <anisinha@redhat=2Ecom=
+>:
+>When IGVM is not being used by the confidential guest, the guest firmware=
+ has
+>to be reloaded explictly again into memory=2E This is because, the memory=
+ into
+>which the firmware was loaded before reset was encrypted and is thus lost
+>upon reset=2E When IGVM is used, it is expected that the IGVM will contai=
+n the
+>guest firmware and the execution of the IGVM directives will set up the g=
+uest
+>firmware memory=2E
+>
+>Signed-off-by: Ani Sinha <anisinha@redhat=2Ecom>
+>---
+> target/i386/kvm/kvm=2Ec | 28 ++++++++++++++++++++++++++++
+> 1 file changed, 28 insertions(+)
+>
+>diff --git a/target/i386/kvm/kvm=2Ec b/target/i386/kvm/kvm=2Ec
+>index 4fedc621b8=2E=2E46c4f9487b 100644
+>--- a/target/i386/kvm/kvm=2Ec
+>+++ b/target/i386/kvm/kvm=2Ec
+>@@ -51,6 +51,8 @@
+> #include "qemu/config-file=2Eh"
+> #include "qemu/error-report=2Eh"
+> #include "qemu/memalign=2Eh"
+>+#include "qemu/datadir=2Eh"
+>+#include "hw/core/loader=2Eh"
+> #include "hw/i386/x86=2Eh"
+> #include "hw/i386/kvm/xen_evtchn=2Eh"
+> #include "hw/i386/pc=2Eh"
+>@@ -3267,6 +3269,22 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
+>=20
+> static int xen_init_wrapper(MachineState *ms, KVMState *s);
+>=20
+>+static void reload_bios_rom(X86MachineState *x86ms)
+>+{
+>+    int bios_size;
+>+    const char *bios_name;
+>+    char *filename;
+>+
+>+    bios_name =3D MACHINE(x86ms)->firmware ?: "bios=2Ebin";
+>+    filename =3D qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+>+
+>+    bios_size =3D get_bios_size(x86ms, bios_name, filename);
+>+
+>+    void *ptr =3D memory_region_get_ram_ptr(&x86ms->bios);
+>+    load_image_size(filename, ptr, bios_size);
+>+    x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
+>+}
 
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- configure   | 6 +++++-
- meson.build | 4 ++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+All code in this function is already present in x86-common=2Ec=2E Can we m=
+ove this function there (possibly renaming it to x86_bios_rom_reload()) and=
+ export it? This way, we could avoid code duplication and we didn't need to=
+ export additional functions like in the previous patch=2E
 
-diff --git a/configure b/configure
-index 55e0bd3425..92bfc5f976 100755
---- a/configure
-+++ b/configure
-@@ -365,7 +365,6 @@ elif check_define __APPLE__; then
-   host_os=darwin
- elif check_define EMSCRIPTEN ; then
-   host_os=emscripten
--  cpu=wasm32
-   cross_compile="yes"
- else
-   # This is a fatal error, but don't report it yet, because we
-@@ -419,6 +418,8 @@ elif check_define __aarch64__ ; then
-   cpu="aarch64"
- elif check_define __loongarch64 ; then
-   cpu="loongarch64"
-+elif check_define EMSCRIPTEN ; then
-+  error_exit "wasm32 or wasm64 must be specified to the cpu flag"
- else
-   # Using uname is really broken, but it is just a fallback for architectures
-   # that are going to use TCI anyway
-@@ -519,6 +520,9 @@ case "$cpu" in
-   wasm32)
-     CPU_CFLAGS="-m32"
-     ;;
-+  wasm64)
-+    CPU_CFLAGS="-m64 -sMEMORY64=1"
-+    ;;
- esac
- 
- if test -n "$host_arch" && {
-diff --git a/meson.build b/meson.build
-index db87358d62..d072473243 100644
---- a/meson.build
-+++ b/meson.build
-@@ -51,7 +51,7 @@ qapi_trace_events = []
- bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
- supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
- supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
--  'arm', 'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm32']
-+  'arm', 'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm32', 'wasm64']
- 
- cpu = host_machine.cpu_family()
- 
-@@ -914,7 +914,7 @@ if have_tcg
-     if not get_option('tcg_interpreter')
-       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
-     endif
--  elif host_arch == 'wasm32'
-+  elif host_arch == 'wasm32' or host_arch == 'wasm64'
-     if not get_option('tcg_interpreter')
-       error('WebAssembly host requires --enable-tcg-interpreter')
-     endif
--- 
-2.43.0
+Best regards,
+Bernhard
 
+>+
+> int kvm_arch_vmfd_change_ops(MachineState *ms, KVMState *s)
+> {
+>     Error *local_err =3D NULL;
+>@@ -3285,6 +3303,16 @@ int kvm_arch_vmfd_change_ops(MachineState *ms, KVM=
+State *s)
+>             error_report_err(local_err);
+>             return ret;
+>         }
+>+        if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
+>+            X86MachineState *x86ms =3D X86_MACHINE(ms);
+>+            /*
+>+             * If an IGVM file is specified then the firmware must be pr=
+ovided
+>+             * in the IGVM file=2E
+>+             */
+>+            if (!x86ms->igvm) {
+>+                reload_bios_rom(x86ms);
+>+            }
+>+        }
+>     }
+>=20
+>     ret =3D kvm_vm_enable_exception_payload(s);
 
