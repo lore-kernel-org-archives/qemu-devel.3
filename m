@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B66FCD29DF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 840CDD29DF3
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 09:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfape-0006BZ-Of; Tue, 13 Jan 2026 04:36:58 -0500
+	id 1vfapc-000679-8R; Tue, 13 Jan 2026 04:36:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfapa-00065W-Cv
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:36:55 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfapZ-00060f-DN
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:36:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfapX-0003Fs-QY
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfapX-0003Fq-Aw
  for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:36:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1768297010;
@@ -24,37 +24,36 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=70XX6/lwyq36rjgmSKCR1ZXI8qD3s28GlFWvTUH7Uf0=;
- b=dqRVgcKdTeTaOdI0sU2kZtQN95nfA681MBQ9Sv867ZkJFw2o09GyK+jN7ZSVAIGRItku7c
- ZEiyeqN7ZWCdGLqmf4WzvMfpzhGKixFIi2CS8KUcWnMpoD/X52Xpl0vAegfu4DlN61vuVm
- 891Gjv7+S7WkbJtaF65RGZV4IAd0oZM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=HGdILztNMy0HHXpr+S6Sh0/Ub6zEA2jd2NIP03tM6/w=;
+ b=ZpGCRBphuLVL8/EwwtnI0rr9xJ22lZq5ctBpXQdRbwgIS7dLEwpWdUAPXIqwLst+wxKieK
+ ugk/nOsuei9GX9cx8J5GN49n2YSVOfwJtFwj0WteQf6ESmOb0tDpjLXkLZMk7cJV8fr441
+ r0n3kCEXLBfRtgBrKaJVhTw35gvYpF0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-mBYB2fT8MzWM0wnnHMVKsw-1; Tue,
- 13 Jan 2026 04:36:47 -0500
-X-MC-Unique: mBYB2fT8MzWM0wnnHMVKsw-1
-X-Mimecast-MFC-AGG-ID: mBYB2fT8MzWM0wnnHMVKsw_1768297006
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-lxVvW5Z-Pee1VNWsN1Wisg-1; Tue,
+ 13 Jan 2026 04:36:45 -0500
+X-MC-Unique: lxVvW5Z-Pee1VNWsN1Wisg-1
+X-Mimecast-MFC-AGG-ID: lxVvW5Z-Pee1VNWsN1Wisg_1768297004
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C3581955D93; Tue, 13 Jan 2026 09:36:46 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0EDCE1800447; Tue, 13 Jan 2026 09:36:44 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.79])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 99B6F30001A2; Tue, 13 Jan 2026 09:36:44 +0000 (UTC)
+ id 18BE530001A2; Tue, 13 Jan 2026 09:36:41 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 02/41] docs/devel: Remove stale comments related to iommufd
- dirty tracking
-Date: Tue, 13 Jan 2026 10:35:58 +0100
-Message-ID: <20260113093637.1549214-3-clg@redhat.com>
+Subject: [PULL 01/41] hw/vfio/migration: Check base architecture at runtime
+Date: Tue, 13 Jan 2026 10:35:57 +0100
+Message-ID: <20260113093637.1549214-2-clg@redhat.com>
 In-Reply-To: <20260113093637.1549214-1-clg@redhat.com>
 References: <20260113093637.1549214-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,42 +85,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-IOMMUFD dirty tracking support had be merged in merge commit dd4bc5f1cfe9,
-the stale comments could be dropped.
+Inline vfio_arch_wants_loading_config_after_iter() and
+replace the compile time check of the TARGET_ARM definition
+by a runtime call to target_base_arm().
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20251226073007.1139478-1-zhenzhong.duan@intel.com
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Link: https://lore.kernel.org/qemu-devel/20251021161707.8324-1-philmd@linaro.org
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/devel/vfio-iommufd.rst | 12 ------------
- 1 file changed, 12 deletions(-)
+ hw/vfio/vfio-helpers.h      |  2 --
+ hw/vfio/helpers.c           | 17 -----------------
+ hw/vfio/migration-multifd.c | 12 +++++++++++-
+ 3 files changed, 11 insertions(+), 20 deletions(-)
 
-diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
-index 3d1c11f175e5968e9f1519da70c9a0a6ced03995..b37098e1b625d9be0368e53b7492db64828c88c3 100644
---- a/docs/devel/vfio-iommufd.rst
-+++ b/docs/devel/vfio-iommufd.rst
-@@ -127,18 +127,6 @@ Supports x86, ARM and s390x currently.
- Caveats
- =======
+diff --git a/hw/vfio/vfio-helpers.h b/hw/vfio/vfio-helpers.h
+index ce317580800ac0c96696e8d3769a98c21d2716d0..54a327ffbc04a2df364fdd78bd97fe7e2065b38c 100644
+--- a/hw/vfio/vfio-helpers.h
++++ b/hw/vfio/vfio-helpers.h
+@@ -32,6 +32,4 @@ struct vfio_device_info *vfio_get_device_info(int fd);
+ int vfio_kvm_device_add_fd(int fd, Error **errp);
+ int vfio_kvm_device_del_fd(int fd, Error **errp);
  
--Dirty page sync
-----------------
+-bool vfio_arch_wants_loading_config_after_iter(void);
 -
--Dirty page sync with iommufd backend is unsupported yet, live migration is
--disabled by default. But it can be force enabled like below, low efficient
--though.
--
--.. code-block:: bash
--
--    -object iommufd,id=iommufd0
--    -device vfio-pci,host=0000:02:00.0,iommufd=iommufd0,enable-migration=on
--
- P2P DMA
- -------
+ #endif /* HW_VFIO_VFIO_HELPERS_H */
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index c595f860cea91398bffce515e8d25bd462c1a20b..f68f8165d091abd7faac778d8c90da27a8f5f5f8 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -210,20 +210,3 @@ retry:
  
+     return info;
+ }
+-
+-bool vfio_arch_wants_loading_config_after_iter(void)
+-{
+-    /*
+-     * Starting the config load only after all iterables were loaded (during
+-     * non-iterables loading phase) is required for ARM64 due to this platform
+-     * VFIO dependency on interrupt controller being loaded first.
+-     *
+-     * See commit d329f5032e17 ("vfio: Move the saving of the config space to
+-     * the right place in VFIO migration").
+-     */
+-#if defined(TARGET_ARM)
+-    return true;
+-#else
+-    return false;
+-#endif
+-}
+diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+index 4a855f4e1257fd0094d720a1dd0fd2aa25acb25f..a06cbf3c646896d7f87698b0d654b160be995237 100644
+--- a/hw/vfio/migration-multifd.c
++++ b/hw/vfio/migration-multifd.c
+@@ -16,6 +16,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/lockable.h"
+ #include "qemu/main-loop.h"
++#include "qemu/target-info.h"
+ #include "qemu/thread.h"
+ #include "io/channel-buffer.h"
+ #include "migration/qemu-file.h"
+@@ -44,7 +45,16 @@ bool vfio_load_config_after_iter(VFIODevice *vbasedev)
+     }
+ 
+     assert(vbasedev->migration_load_config_after_iter == ON_OFF_AUTO_AUTO);
+-    return vfio_arch_wants_loading_config_after_iter();
++
++    /*
++     * Starting the config load only after all iterables were loaded (during
++     * non-iterables loading phase) is required for ARM64 due to this platform
++     * VFIO dependency on interrupt controller being loaded first.
++     *
++     * See commit d329f5032e17 ("vfio: Move the saving of the config space to
++     * the right place in VFIO migration").
++     */
++    return target_base_arm();
+ }
+ 
+ /* type safety */
 -- 
 2.52.0
 
