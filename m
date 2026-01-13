@@ -4,97 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7383BD30CC2
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 20:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCB6D30CC0
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 20:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfl8G-0002cM-F4; Tue, 13 Jan 2026 15:36:53 -0500
+	id 1vflAq-0003u7-6r; Tue, 13 Jan 2026 15:39:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfl8E-0002b6-72
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 15:36:50 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vflAo-0003tk-Qn
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 15:39:30 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfl8B-0006XR-FQ
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 15:36:49 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47ee3a63300so573605e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 12:36:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vflAn-0007Hm-Cd
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 15:39:30 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4779adb38d3so54373875e9.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 12:39:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768336606; x=1768941406; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=18nq5YW1Zn7IotmsLm+PZ7wRYFPyzzUH/6sFJ+jraZ0=;
- b=hs5zG3k6gCWIbvwhqLRJotsfCmh0a46rqWpnkoMfJL+t7ModuBGbKqtmB3vKRye6oR
- UgKi3a3Oeq0HsTDPAQXSrEkXpPaoIKE4b5tQ1OzorRZOnsYYcTsHMEL2YkGNPZzqEzrM
- Tfo1i75J9Zzz0g3Acs20owUa+2TnEfC7hU1rLRQkcZzmumJtBhzH1enJvOrNJUUHeEA0
- VEQR+UUKZl2+HT+Y5MyRiY36IZLnegS9S+0mtyZKCppUjtvzLoxUyBITNITPTSI137oW
- gR1EVZHBlc7RkMX/DlR+UwCT4DOCMHCZaC5fd35eeNPyGxTmoO3nqBPqDa8WlgglV1Xs
- 21Wg==
+ d=linaro.org; s=google; t=1768336767; x=1768941567; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=oyXbQp4YAGMwt7g2na/cCqjuxeSDQoHhhgBmKBdDdWg=;
+ b=G7Oclne6uwAWh/1DRpViHUBbM5dERQwcxf3UTI7/G6bz4SqAVVQdOU3x3wFysWStY6
+ kuw1WrTRxZOX5l5L3di8k5eSbZ1xOXx2FKfYErxUMdeWg1AAkKeWCZRJ6HA1HkFzEtfL
+ vXIjreTq2PpuiVG5lY/mahTbtSj/kaALn3CSypy8eaptvtwEW96P3/fmw1R7V0WBbAg7
+ K9j3h10YF4Y5vHdLxNq/3Ob7qKbL4rs7UGE8NjiDpoG7i9rJbyFHPn6bU9ZzyeofrnSK
+ cB3UcwwW9unRfDfsISH0nZo7IXeCwAI0Z3bEUOIzu53V2DCj3GecI7/9zm37/MTbEBE2
+ CsLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768336606; x=1768941406;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=18nq5YW1Zn7IotmsLm+PZ7wRYFPyzzUH/6sFJ+jraZ0=;
- b=b0WqziSUqSV5+LqIG2PoohMZcxZzPfb0AnqSnjkt5dFB+AlUDHg2qWYjpNyHfwFeWG
- ACw/KigG2r0iPhCG6ERFcKAaUJpTKeQwA6oxL4Kej2VjfvfS5OFp0Mv/oSjmgjOW1qXu
- ICPO3w7YtlGh8lW527PMxyPjzJROXcM8sLjaSSAl11CvzLsJbrQq660RrJVVyKUjmZKh
- W8OtN3AGcwHo/M+8U5yOi7WcZ4uqQG6yFTioZ8sOqMpBaLUaALWhorrtuaCWS5BBXrr5
- NhrJu6tA2+i78scegUQ82lnwI2+ZdJuNBb6azdcI9x2IGWwmx7Dw+onwd8RgRDEaAua+
- /PTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX22AYu1VNNbKEI2OTWiGpwRin6W51yXMxi0oou1WuuOpbpC9vxaGSw5uHlJTTYXTj0g+5AzEfxGSZG@nongnu.org
-X-Gm-Message-State: AOJu0Yysxa0r6+vkbEb2yXp84xnwqTldle1vXhdbQtDfBOQvyCX1n0gJ
- 2x3DQvnJW0ZGP2MuGJsKzjtsAl+7uVCq8ihEIwSJtmac+LdQjiSlCT8v8gUMguqXtzA=
-X-Gm-Gg: AY/fxX7tuzig1YcaXXWAQU8tr4IzK/p5iyCL24EQoUgXKePF366gDEw7n4WzFe5pYwr
- DpMaB9u/cbB/EStu+ZBVxI7QUXLJZgZr0AVe5ZdGHy7b8r6Bp5KvaFGVVRrCReV9dx1pQUhZNkj
- iocpEfOKryt54UzsyN+YWyDEwcf/TpC3zt5BDQOlOisz5Lf1D3ZhlIh1bLKQnJf5T2EiVW7iUiB
- yT+B1H7Rfjj0Jhj6HyIO4orP6C2SY9FRfzFcQwHquSuWUr1pEHJobrfMvmmszCfwUEPYZ9DbS+n
- 8dbWnLYL3iLbXICgrq8kP2LMdBAWXZxZLILYGT5ucZRnI7vHvkyZn7D1gKcI6+G4dx3yc+Zz8mz
- wLagXOejkjBvLxone7g7P1qGVAHMoCEsvWmHpLpya0cwlcd/Hgw1UIrzDLmDy0YN4xm84GkT/sb
- 6JcAaiATI4y5FnRgYH0zrUrle73WCKjS5DBwHjW3AoXidnDTUNhULO6A==
-X-Received: by 2002:a05:600c:35c6:b0:47e:e076:c7a2 with SMTP id
- 5b1f17b1804b1-47ee3320904mr5946155e9.15.1768336605726; 
- Tue, 13 Jan 2026 12:36:45 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1768336767; x=1768941567;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oyXbQp4YAGMwt7g2na/cCqjuxeSDQoHhhgBmKBdDdWg=;
+ b=Fd/wW4dapxPGu+Ny0lEoK1frdiinUyRsuvXX6HkenLLB9CuMhN1e0kGHrKbwQamPph
+ zuCHMMRVW3jDEaVqEHBkXP5XyujetsUu2gYHFByFjdQ+eRmxNEA/XgXQOzZDsPV+2zAK
+ BbgtRqeYjvOka449lTxD7gMvfUlMfRAiaHBepuFVjuyhFyVumrygaeaMF+IqrgzBsQ6d
+ wTJkXcea2F5ol8mjSHeXqbhUCgTFEV2fMlY/6lPKhLT0Vj22Zc0fDHY7XgKXttkiENhK
+ R/SA6FDvzAc/oM9D1vx7ZegV/z3+BcTzl0oOORTKNvb0Yxem9w+bFwvjXLkcgDlg2+T+
+ bNKw==
+X-Gm-Message-State: AOJu0YwN0cvpnc282+BCwIyPMGMiwidSZhb8TfsG3tPjdxoY+8CeEnUa
+ MxJgsiVOSsv6D7M0ji3VHgsHCz/NlEIxi8mRWitYeWQu8Nm4cEbfRjGqMkggtWBVU0ffjmG/7sq
+ QxEy4B/E=
+X-Gm-Gg: AY/fxX72QdbIPW6dBE+BMCsIgj401P51C8bmBvjyNRYCjU1kmj1Y9rHrhw0He1a6iii
+ ZsqHpQBRnvK7BRQBpgXKul9atYMXspElzlD2u8LYsmGBZQa/rvChmnNKkd4WzcMdUmHo3Z75Yqx
+ xKA/BYHfw2dloQr8pFp2tfBGdGO6jfISslCtLvFrKrTl9B77LfFVOgToYLzIF7/3ZGQ/3gAkALX
+ 042ZDFB2GB8L8WDDOA/3r71GjKRjjr7uAHoWpO/Zl5GK4KAH4LpLroAR/8CBprEZhSkaVUewTps
+ HlS0buk9SPQrREk1qKPAlqz0UCrHWZNvLKN83e+shtGugtAjZzLzs6eYPAb3aP3SSq/BubFkVaw
+ 3paMnzH4F6PIJOg3OlDN1SNV5LqjnQWU3IvALzyK9xIMvkNpwx0qGonBh+VWuoHWhCzLtzeQC8Y
+ 1KlE2wnBaq3qmexL9FjQiEPz25XlmbnRLz8f/sH5CotOxXYRpG7LtgHN04qmeU
+X-Received: by 2002:a05:600c:1383:b0:477:a9e:859a with SMTP id
+ 5b1f17b1804b1-47ee3353f47mr5240485e9.22.1768336767135; 
+ Tue, 13 Jan 2026 12:39:27 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f6953fasm413006105e9.5.2026.01.13.12.36.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jan 2026 12:36:44 -0800 (PST)
-Message-ID: <a007e74f-9df6-45ce-a372-3721d6f45201@linaro.org>
-Date: Tue, 13 Jan 2026 21:36:43 +0100
+ ffacd0b85a97d-432bd0dacdcsm45600920f8f.1.2026.01.13.12.39.25
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 13 Jan 2026 12:39:26 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Reinoud Zandijk <reinoud@netbsd.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
+Date: Tue, 13 Jan 2026 21:39:24 +0100
+Message-ID: <20260113203924.81560-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 13/31] accel/nvmm: Replace @dirty field by generic
- CPUState::vcpu_dirty field
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20250704101433.8813-1-philmd@linaro.org>
- <20250704101433.8813-14-philmd@linaro.org>
- <44ccfba7-21a3-4c24-aa6a-4b2bdb989792@redhat.com>
- <dd7fbe03-1458-4c44-b8db-a9d5e9ae33f1@linaro.org>
-In-Reply-To: <dd7fbe03-1458-4c44-b8db-a9d5e9ae33f1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,79 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/1/26 21:30, Philippe Mathieu-Daudé wrote:
-> On 13/1/26 20:32, Thomas Huth wrote:
->> On 04/07/2025 12.14, Philippe Mathieu-Daudé wrote:
->>> No need for accel-specific @dirty field when we have
->>> a generic one in CPUState.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->>> Message-Id: <20250703173248.44995-20-philmd@linaro.org>
->>> ---
->>>   target/i386/nvmm/nvmm-all.c | 21 ++++++++++-----------
->>>   1 file changed, 10 insertions(+), 11 deletions(-)
->>>
->>> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
->>> index f1c6120ccf1..aea61a6fd2a 100644
->>> --- a/target/i386/nvmm/nvmm-all.c
->>> +++ b/target/i386/nvmm/nvmm-all.c
->> ...
->>> @@ -982,7 +981,7 @@ nvmm_init_vcpu(CPUState *cpu)
->>>           }
->>>       }
->>> -    qcpu->dirty = true;
->>> +    qcpu->vcpu_dirty = true;
->>>       cpu->accel = qcpu;
->>>       return 0;
->>
->> FYI, this does not seem to compile:
->>
->> ../src/target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
->> ../src/target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has 
->> no member named 'vcpu_dirty'
->>    988 |     qcpu->vcpu_dirty = true;
->>        |         ^~
-> 
-> s/qcpu/cpu/
-> 
->>
->> Is anybody checking the netbsd builds at all?
-> 
-> 3 reviewers and 6 months later.
+Fix typo to avoid the following build failure:
 
-and 7 commits on top of this PR :)
+  target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
+  target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has no member named 'vcpu_dirty'
+    988 |     qcpu->vcpu_dirty = true;
+        |         ^~
 
-$ git log --oneline 2098164a6be..master -- target/i386/nvmm/nvmm-all.c
-d5e1d2dea11 target/i386: clear CPU_INTERRUPT_SIPI for all accelerators
-5699f6a4409 target/i386/nvmm: Inline cpu_physical_memory_rw() in 
-nvmm_mem_callback
-9a191d3782d cpus: clear exit_request in qemu_process_cpu_events
-f084ff128b6 accel: use atomic accesses for exit_request
-ac6c8a390b4 accel: use store_release/load_acquire for cross-thread 
-exit_request
-602d5ebba26 treewide: clear bits of cs->interrupt_request with 
-cpu_reset_interrupt()
-87511341c30 add cpu_test_interrupt()/cpu_set_interrupt() helpers and use 
-them tree wide
-f96b157ebb9 Merge tag 'accel-20250715' of https://github.com/philmd/qemu 
-into staging
-f7a7e7dd217 accel: Extract AccelClass definition to 'accel/accel-ops.h'
-d93972d88b0 target/i386: nvmm, whpx: add accel/CPU class that sets host 
-vendor
-51e18961999 accel: Propagate AccelState to AccelClass::init_machine()
-b6637bd5561 accel/nvmm: Expose nvmm_enabled() to common code
+Cc: qemu-stable@nongnu.org
+Reported-by: Thomas Huth <thuth@redhat.com>
+Fixes: 2098164a6be ("accel/nvmm: Replace @dirty field by generic CPUState::vcpu_dirty field")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Untested.
+---
+ target/i386/nvmm/nvmm-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> Should we add a policy for bitrotting untested code?
-> 
->> (I'm currently trying to update test/vm/netbsd to version 10.1, that's 
->> how I noticed it)
->>
->>   Thomas
->>
-> 
+diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+index b9bd9ed985a..f808828d492 100644
+--- a/target/i386/nvmm/nvmm-all.c
++++ b/target/i386/nvmm/nvmm-all.c
+@@ -985,7 +985,7 @@ nvmm_init_vcpu(CPUState *cpu)
+         }
+     }
+ 
+-    qcpu->vcpu_dirty = true;
++    cpu->vcpu_dirty = true;
+     cpu->accel = qcpu;
+ 
+     return 0;
+-- 
+2.52.0
 
 
