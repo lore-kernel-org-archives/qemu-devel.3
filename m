@@ -4,111 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B3FD2D0EB
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6179D2D0EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:04:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfe4F-0007kL-Fs; Tue, 13 Jan 2026 08:04:15 -0500
+	id 1vfe4l-0007uY-IS; Tue, 13 Jan 2026 08:04:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vfe4C-0007k5-LO
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:04:12 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vfe4A-0001XT-9A
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:04:12 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7EF625BD42;
- Tue, 13 Jan 2026 13:04:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768309445; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KgJ7A/1JbHkGnoTETXh8HwgGwzIaYDU3yworzJDc/FE=;
- b=MltvM1zPA+/5jWP/3lweVadJA8sbZgj9eMYR6wNRSm7zZhhEwXqoNaB0sD7vL9l1ZLbXwg
- Szs8c6bIx7GZO88nnQtXFHiSTKNHJJgq1MpanwoY8bL1DMNbZDS8CKq4mmfL+NOcQC/XQ1
- bumJXzqmv1Xk0aXyDkYZO+I2TOzRZn4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768309445;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KgJ7A/1JbHkGnoTETXh8HwgGwzIaYDU3yworzJDc/FE=;
- b=qULmAovKFqmVAPFvo7x1lwzLbZ9RqK2Ou46MtXnAF0qPhLpp/+I35T3X6gVDij213CkHQj
- OIl9QbaKKivxZ4Bg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768309445; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KgJ7A/1JbHkGnoTETXh8HwgGwzIaYDU3yworzJDc/FE=;
- b=MltvM1zPA+/5jWP/3lweVadJA8sbZgj9eMYR6wNRSm7zZhhEwXqoNaB0sD7vL9l1ZLbXwg
- Szs8c6bIx7GZO88nnQtXFHiSTKNHJJgq1MpanwoY8bL1DMNbZDS8CKq4mmfL+NOcQC/XQ1
- bumJXzqmv1Xk0aXyDkYZO+I2TOzRZn4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768309445;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KgJ7A/1JbHkGnoTETXh8HwgGwzIaYDU3yworzJDc/FE=;
- b=qULmAovKFqmVAPFvo7x1lwzLbZ9RqK2Ou46MtXnAF0qPhLpp/+I35T3X6gVDij213CkHQj
- OIl9QbaKKivxZ4Bg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CC74B3EA63;
- Tue, 13 Jan 2026 13:04:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id AUrrIsRCZmk7eAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 13 Jan 2026 13:04:04 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>, Hailiang
- Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>, Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, =?utf-8?Q?Daniel_P_=2E?=
- =?utf-8?Q?_Berrang=C3=A9?=
- <berrange@redhat.com>, Zhang Chen <zhangckid@gmail.com>, "Dr . David Alan
- Gilbert" <dave@treblig.org>, Prasad Pandit <ppandit@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Yury Kotov <yury-kotov@yandex-team.ru>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 08/13] migration: Thread-ify precopy vmstate load process
-In-Reply-To: <aWVim4LDYb4gMQLk@x1.local>
-References: <20251022192612.2737648-1-peterx@redhat.com>
- <20251022192612.2737648-9-peterx@redhat.com> <87y0m7df46.fsf@suse.de>
- <aWUYVvFVbhXCdVod@x1.local> <871pju1wlv.fsf@suse.de>
- <aWVim4LDYb4gMQLk@x1.local>
-Date: Tue, 13 Jan 2026 10:04:02 -0300
-Message-ID: <87fr89psu5.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vfe4f-0007sX-E1; Tue, 13 Jan 2026 08:04:42 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vfe4a-0001an-HN; Tue, 13 Jan 2026 08:04:39 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id DAEB317D9FF;
+ Tue, 13 Jan 2026 16:04:29 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CFDED34C41F;
+ Tue, 13 Jan 2026 16:04:34 +0300 (MSK)
+Message-ID: <426bc18e-71a4-4605-a069-614033d30bbc@tls.msk.ru>
+Date: Tue, 13 Jan 2026 16:04:34 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCPT_COUNT_TWELVE(0.00)[13]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[nongnu.org,fujitsu.com,xfusion.com,redhat.com,yandex-team.ru,gmail.com,treblig.org];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] linux-user/syscall.c: statfs: f_flags is always
+ present
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20260113130008.910240-1-mjt@tls.msk.ru>
+ <20260113130008.910240-3-mjt@tls.msk.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260113130008.910240-3-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,281 +105,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 1/13/26 16:00, Michael Tokarev wrote:
+> statfs.f_flags is present since linux 2.6.
+> There's no need to check for its existance anymore.
 
-> On Mon, Jan 12, 2026 at 04:04:12PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Thu, Jan 08, 2026 at 05:27:37PM -0300, Fabiano Rosas wrote:
->> >> Peter Xu <peterx@redhat.com> writes:
->> >> 
->> >> > Migration module was there for 10+ years.  Initially, it was in most cases
->> >> > based on coroutines.  As more features were added into the framework, like
->> >> > postcopy, multifd, etc.. it became a mixture of threads and coroutines.
->> >> >
->> >> > I'm guessing coroutines just can't fix all issues that migration want to
->> >> > resolve.
->> >> >
->> >> > After all these years, migration is now heavily based on a threaded model.
->> >> >
->> >> > Now there's still a major part of migration framework that is still not
->> >> > thread-based, which is precopy load.  We do load in a separate thread in
->> >> > postcopy since the 1st day postcopy was introduced, however that requires a
->> >> > separate state transition from precopy loading all devices first, which
->> >> > still happens in the main thread of a coroutine.
->> >> >
->> >> > This patch tries to move the migration incoming side to be run inside a
->> >> > separate thread (mig/dst/main) just like the src (mig/src/main).  The
->> >> > entrance to be migration_incoming_thread().
->> >> >
->> >> > Quite a few things are needed to make it fly..  One note here is we need to
->> >> > change all these things in one patch to not break anything.  The other way
->> >> > to do this is add code to make all paths (that this patch touched) be ready
->> >> > for either coroutine or thread.  That may cause confusions in another way.
->> >> > So reviewers, please take my sincere apology on the hardness of reviewing
->> >> > this patch: it covers a few modules at the same time, and with some risky
->> >> > changes.
->> >> >
->> >> > BQL Analysis
->> >> > ============
->> >> >
->> >> > Firstly, when moving it over to the thread, it means the thread cannot take
->> >> > BQL during the whole process of loading anymore, because otherwise it can
->> >> > block main thread from using the BQL for all kinds of other concurrent
->> >> > tasks (for example, processing QMP / HMP commands).
->> >> >
->> >> > Here the first question to ask is: what needs BQL during precopy load, and
->> >> > what doesn't?
->> >> >
->> >> 
->> >> I just noticed that the BQL held at process_incoming_migration_co is
->> >> also responsible for stopping qmp_migrate_set_capabilities from being
->> >> dispatched.
->> >
->> > I don't know if it is by design, or even if it will be guaranteed to work..
->> >
->> 
->> Regardless, we shouldn't rely on the BQL for this. The BQL should be
->> left as last resort for things that interact across subsystems. If
->> someone is issuing a migration command during a migration, the migration
->> code is exquisitely positioned to handle that itself.
->
-> Yes I agree.
->
->> 
->> > Consider the migration incoming rocoutine runs into qemu_get_byte(), and
->> > then proactively yield the migration coroutine (qemu_coroutine_yield())
->> > when the incoming port is blocked on read..
->> >
->> > AFAIU, a proper fix for that (note, this will currently break tests) is:
->> >
->> > bool migration_is_running(void)
->> >  {
->> > -    MigrationState *s = current_migration;
->> > +    MigrationStatus state;
->> >  
->> > -    if (!s) {
->> > -        return false;
->> > +    if (runstate_check(RUN_STATE_INMIGRATE)) {
->> > +        MigrationIncomingState *mis = migration_incoming_get_current();
->> > +
->> > +        if (!mis) {
->> > +            return false;
->> > +        }
->> > +
->> > +        state = mis->state;
->> > +    } else {
->> > +        MigrationState *s = migrate_get_current();
->> > +
->> > +        if (!s) {
->> > +            return false;
->> > +        }
->> > +
->> > +        state = s->state;
->> >      }
->> >  
->> > -    switch (s->state) {
->> > +    switch (state) {
->> >      case MIGRATION_STATUS_ACTIVE:
->> >      case MIGRATION_STATUS_POSTCOPY_DEVICE:
->> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
->> >
->> 
->> LGTM
->> 
->> >> 
->> >> Any point during incoming migration when BQL is unlocked we have a
->> >> window where a capability could be changed. Same for parameters, for
->> >> that matter.
->> >> 
->> >> To make matters worse, the -incoming cmdline will trigger
->> >> qmp_migrate_incoming->...->migration_transport_compatible early on, but
->> >> until the channels finally connect and process_incoming_migration_co
->> >> starts it's possible to just change a capability in an incompatible way
->> >> and the transport will never be validated again.
->> >
->> > Right.  Above should fix it, but I believe it also means after "-incoming
->> > tcp:xxx" (or anything not "defer") we should forbid changing migration caps
->> > or params on destination.
->> >
->> 
->> Parameters are never forbidden, right? And we cannot forbid them with
->> is_running because some parameters are allowed to be changed while
->> running.
->
-> Right, my above statement was definitely inaccurate.
->
-> After merging caps and params we only have params.  We should only allow
-> some params to be changed anytime.  Most of the params (including caps)
-> should not allow changing during migration live on either src/dst.
->
->> 
->> I feel we should have a more fine grained way of saying "this option
->> cannot be set at this moment", instead of just using the state as a
->> proxy. States can change, while the fact that from a certain point on,
->> certain options should not be touched anymore doesn't change.
->
-> IIUC that's what migration_is_running() about?
->
+This is a re-send of previous 3-patch series.  Please
+ignore the N/3 patches, only N/7 is relevant :)
 
-At a high level, yes, but I think that's actually a downside of
-migration_is_running. It's not explicit.
+I'm sorry for this.
 
-E.g.: qmp_migrate -> migration_transport_compatible is the first time
-capabilities are checked in the code. Guess what migration_is_running
-returns at that point? (it's false)
-
-If there's ever a change in BQL behavior, there'll be a bug and we'll
-see another patch extending the scope of migration_is_running, either
-adding existing states to it, or as Prasad proposed, adding a new state
-that is set a little later/earlier.
-
-What we technically want is to stop accepting new capabilities as soon
-as we're about to use them for the first time. Not as soon as (state ==
-ACTIVE || SETUP || ...) which is a more high level definition.
-
-> It's a matter of if such finer granularity is necessary for us. Let's
-> assume the simple scheme is:
->
->   (a) Some params are allowed to be modified anytime, examples,
->       downtime-limit, max-bandwidth, max-postcopy-bandwidth, etc.
->
-
-What about during migration_cleanup() or migrate-cancel? Won't there
-ever be something in the path of setting these params that would require
-a "healthy" migration?
-
->   (b) All the rest params and all capabilities are not allowed to be modified
->       when migration_is_running() returns true (my fixed version above)
->
-> The whitelisted (a) should really be the smallest set of params, and
-> justified one by one or it should fall into (b).
->
-> My hope is the simple scheme should work for us already.  After merging
-> caps, it's only about some params that can be set anytime, rest params can
-> only be set when migration is not running.
->
-
-Sure, I'd just like to avoid adding another set of "if
-(s->parameters->has_foobar)" if possible.
-
->> 
->> Maybe a little infra like bdrv_op_is_blocked, i.e, a list of blocked
->> operations. It could be set in qmp_migrate and checked in
->> qmp_set_parameters/caps.
->
-> Any example you can think of, that above simple scheme won't work for us?
->
-
-It works. I think it's fragile due to:
-
-- the reliance on BQL to avoid concurrent invocations;
-
-- the possible addition of new states for unrelated reasons
-  risks regressions and it's just extra work to make sure everything is
-  still blocked at the time it needs to be blocked.
-
-- any bugs need to be fixed by moving states around, which is dubious
-  since the migration flow itself (which the states should represent)
-  has not changed in a while.
-
-  We're still seeing patches such as dc487044d5 ("migration: Make
-  migration_has_failed() work even for CANCELLING") and the recent patch
-  from Prasad. So there is something changing elsewhere and exposing
-  these bugs and it's not immediately clear what that something is (or
-  else we would have avoided the bug).
-
-To be clear, I'm not asking we solve these issues at this moment, it's
-fine if we go forward with the simple scheme. I'm just trying to clarify
-what I think the problems are.
-
->> 
->> > As discussed above, that'll at least break our qtests.  But frankly
->> > speaking I think that's the right thing to do..  I hope libvirt always
->> > works with "defer" and never update any caps/params after QMP
->> > migrate_incoming.
->> >
->> > So I wonder if I should continue with above patch, and then fix our qtests.
->> > Your work from the other "merge caps+params" might also work here,
->> > actually, if we make sure everything will be set alone with the QMP
->> > migrate_incoming single command.
->> >
->> 
->> For incoming, yes. And this is maybe a point in favor of adding the
->> 'config'.
->> 
->> For outgoing, there's still the point I mentioned above about how to
->> restrict _some_ options to be allowed at runtime and others not.
->> 
->> > Let me know your initial thoughts, then I'll see what I can do..
->> >
->> 
->> We should fix the bug, I think your patch is good for that.
->> 
->> Although this kind of overlaps with some things we've been discussing
->> with Prasad. I'd be super happy if the code magically stopped using
->> QAPI's MigrationStatus for internal tracking of migration state and
->> blocking of commands and so on.
->> 
->> Whatever comes first =)
->
-> I didn't follow as closely on the discussion there.  I don't know if
-> changing MigrationStatus is a good idea..  we should have some really good
-> reason to make libvirt and all mgmt need a change.. but maybe I misread the
-> discussion.  I can wait until I read something solid if Prasad is going to
-> propose something.
->
-
-We're moving towards decoupling MigrationStatus from these ordinary code
-checks. MigrationStatus should be used for informing management about a
-relevant change in the migration stage of progression.
-
-As it stands, we're either "exposing implementation details" or
-"inadvertently changing the API". Both are undesirable.
-
-Of course, we might introduce the "internal state is off-sync with
-externally visible states" issue, but hopefully we'll catch that during
-review. =)
-
->> 
->> ---
->> Side note, did we ever discuss something like this?
->> 
->> struct MigrationState {
->>    <state>
->>    union {
->>      <outgoing>
->>      <incoming>
->>    }
->> }
->> 
->> there's so much stuff in these structs...
->
-> Yeah..  When merging state, we'll also need to be careful on overlapped
-> fields, e.g. expecting a COMPLETED state (from a completed incoming
-> migration) when starting a new outgoing migration.
->
-> We can likely leave this for later.
-
-No worries, I'm just collecting your opinions on it.
+/mjt
 
