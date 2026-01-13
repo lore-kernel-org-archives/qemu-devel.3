@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDF4D2F35C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 19:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CB4D2F35C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 19:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfkHV-0004cy-5W; Tue, 13 Jan 2026 14:42:21 -0500
+	id 1vfkKu-0005yj-SD; Tue, 13 Jan 2026 14:45:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vfkHK-0004CP-CK
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:42:12 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1vfkKt-0005vq-HY
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:45:51 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vfkHI-0003y5-QA
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:42:10 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-81f46b5e2ccso1559737b3a.0
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 11:42:08 -0800 (PST)
+ id 1vfkKr-0004d4-Ri
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 14:45:51 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2a0ac29fca1so51016235ad.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 11:45:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768333327; x=1768938127; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1768333548; x=1768938348; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ly+4wIDnh1wyizKTgIQbwIDSlIs2Mul4wuPn+jtfmow=;
- b=SeYaLNRCn7Q4GvugCKkzyYpBOdRlqEXBtzyQE8Upfkt/yAqahWE17MvvHaoW9BoR1P
- +nd/wFMC9n9XHEqyXbkdt9tnofRH1RDdaf+SLDnSBAchn9dNHL/4zkd+/mUyAJB4gZ5x
- XT3jXeYLza7b29qGCQPSbb/vyW2qdgnoX0NpR5UZMehiTfRcEhzeYVDq2hJeAiPzYhcx
- G0EbEkMDA12Ybpk2Hp/5LZ4gSo/V9HSpT37hkUV6V2BPOblWaM2xWgJotaw8SVBauyIq
- w1V25qoEUpPzLLhxuwRwAh0GvCljcG90m5P+6bZ8jvoEboc5QbeQyo151rggdni/TtlE
- V4kg==
+ bh=kJT5lHXqxqbcqHaVwXxBN7zSdsJOMgeRkZBGWkjLSJM=;
+ b=JRO9QTr808FvjdY2aCuZdobq+UK6lfNDgq6ZdtJY07Pk/1HZ7vLMe9c2OCy16mQakF
+ DIxLImy4wrtszZJ9aRp11bleah5hvBAALIHl6si0Wa5xVwk7KRJk+S8PWp0nVw0xXauV
+ btatQhm/+2S4aIfuo4k1u0xjjzudoK7SDo30nwyIy3CAAjdE3tsWdikFK+atOJaO5LgX
+ oU6hw+9qibd3Yr/py9LfMnA9qVckOqi7LgRDcSIC9fl6s/cdBRO7yrJVOZ5jCvgHrj4a
+ eYXgJTmY//IdSIQMDhNFG9Lyy+cBN0BNOLZTZif1AyQLUPYnD53c1P3tPseQXHubmn28
+ 0c5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768333327; x=1768938127;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1768333548; x=1768938348;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ly+4wIDnh1wyizKTgIQbwIDSlIs2Mul4wuPn+jtfmow=;
- b=fZTCiDrSSLgcewfdy5GgNOkAKPEwne6LuMzioq67h65SFwURrlthwdMXAdEVovqdpm
- d8P01WqZL1onfPJSJtvVlr5Fuclvyi8HsoDINALkshUvZnEUtZhcSkJiBe/tuwDCvGje
- 3GI4Adb2ASTjQ0GpWYL8k16rKKWpFqXB/bu75vPFo6KT/cmwldo3WAZ57zEZK4kqre3Q
- OKEc/gpUf5as4dyXWeaFf7ZD0BXY0eaLwjHLS/LkClc72yd60rRrczrTO55tE9wxTmpn
- cLDzSAxdMwJmsY7uplKVOSIIl/ko4fN1Np0W0TtVCq6YXK89iIuKdhDg+0H/Lk1u+k5/
- 4QVg==
-X-Gm-Message-State: AOJu0YxA8cpHtq8EDpahdMLUF6+sbmKrD7w07VaIOB6beVi6H2IlfLeM
- 4rc1k8xHtIJGmQ7EU1qdDLvljks6OEoHDHRiqhaE1aENJ8FFYrsUONRbgw2mzwvha/NouRh8/z3
- uGyeHURA=
-X-Gm-Gg: AY/fxX7qzFxRPRmgERFYxBSauJWqDcDTS9jHenZDVhBnGaW5GABUqUNo9XqjZNY7j1K
- f+1TEWvyl0qfRPwJJYQg53xgLyLcQZt0YWzHTmrMlt0BnWRttdQ2McoHzyt5Nl0pRJFiBhnBzo+
- AKsCiGd+1+6veebWFiM961Cb+DZ5GH3EEVDxGjms1Z1HfX62bkkwnjitoTDdRdN9fJ9hqBlURX6
- HUzzqacO2OusIhrK6igFolmbeeDNXKsnlVXfEjQUL0lrqDcUQH5R4JyaFvJ+2XOqVdbzgawDadO
- tXayuCb4ySpMNvx/UaQzMypFXGtG2yl2vZxhl5z/EFwdLdHY8ojGgomQaVRSlP9DwsErCT1J3c1
- KmrU5csOJjHCBaOTedkA61LymVCjd5Tg6SZzu30CYC4H+kij1nqqYIwQraxays2oZaIiFeBeMqK
- LpAjDy1U2EJnoXxpDFqREF4rCEVD1OQpj2GZpYpZ49LiR9gkXLAOKWLBUaJsFfThm3cbY=
-X-Received: by 2002:a05:6a00:4149:b0:81f:4e8d:794b with SMTP id
- d2e1a72fcca58-81f81d404dcmr29259b3a.23.1768333327213; 
- Tue, 13 Jan 2026 11:42:07 -0800 (PST)
+ bh=kJT5lHXqxqbcqHaVwXxBN7zSdsJOMgeRkZBGWkjLSJM=;
+ b=B1sAYBup5PVkGE6SQwSZQtHzrgOSbMPgWJZD/lD5VIQIq1jU2qUI0TAI2P5M727UB3
+ 5GHYClndXr0NL+pgHcFmtt9eMv5Btmer1b9535chxbuwttJyJPEGqzRGy4CWf4Zop2JP
+ 86oZ6xCIAsiiMnW8kYTfyiKqEVklTu7xJqTQ9CoF1pjiFp8FU43hn2BPj/qGNDoPAvl5
+ 561If8ski9eQX/hgHOpBysEOov3hN/tgtPlTpfVdlnBdXK3X6RspvZj7I5Rk+WalB5GB
+ DxRfz14DkS9mZj5YfzHkSWCrid25wL7VSqqf/NUB+2XhklQzo8STC9+qf3kByE2zIZ9v
+ +YvA==
+X-Gm-Message-State: AOJu0YyqdywjTyzJBZ671wWkuEsyRcoQEe5P4s1lWrteQIM0JuWlQOUa
+ QycvaKpB31P0zSQtv8TdQLVSUzMowSKj7Ow5bXW+1/9zeCGxOrjtP+qj35/QTALIPytLEC/HhfX
+ gYwnkN0k=
+X-Gm-Gg: AY/fxX7Jv/HFqP/pZTkyqbCbwZwRZ5l7vFKyZwKPRJfgpOqjkmPGHOZkhjF5ylE22Cs
+ vIMKt/T+QGkZQnW0F4Db79KHOaG8WJjUYxNQ/Mrrv6mTY+mFYo03NlzfMdM1iIJ9ohZABhUDliJ
+ 0O3RnS3G4JStSU28MDmaPSDTlRsCvnMnNkZ6UaV0x3ZGj43yFnrX224TelcBFL7bdLi8a79SV3m
+ DdKaEjRIR0UB8P7zTtBbPcwiRsCGQ4OhbSHU0HLB2u6JwJD8d4sLkk6iyZNEDQ/DW14fAav+htk
+ 0QsDmG2NVQFLswnJJdpE1fPZmBMnqc8nlH9OgqO/VCE2Ha6CQS2R7Q1YZdtoN475wCnk+yQTnk/
+ hjmuloG25yvxHKLS1FqKel8NfpbiIZ7NGx0Br9idTr9y09+HI1uDdZlLfGXIYOWDgjjIbUdl+MD
+ 6ufF0rjEdKX8iLas8uKAWlF+1dzVgtnWMjqasK6J92sNkHLm8F3J1uw2Tn
+X-Received: by 2002:a17:902:e783:b0:2a0:906b:ac35 with SMTP id
+ d9443c01a7336-2a599e8f96bmr1102105ad.42.1768333548025; 
+ Tue, 13 Jan 2026 11:45:48 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-819c59e8010sm21664245b3a.52.2026.01.13.11.42.06
+ d9443c01a7336-2a3e3cb2ea0sm213089325ad.62.2026.01.13.11.45.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jan 2026 11:42:06 -0800 (PST)
-Message-ID: <39a32c0e-e498-4d27-8614-86869a4f8f01@linaro.org>
-Date: Tue, 13 Jan 2026 11:42:06 -0800
+ Tue, 13 Jan 2026 11:45:47 -0800 (PST)
+Message-ID: <d5902447-9ea3-4d4f-8769-70386620ff92@linaro.org>
+Date: Tue, 13 Jan 2026 11:45:46 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] linux-user/aarch64/target_fcntl.h: add missing
  TARGET_O_LARGEFILE definition
-Content-Language: en-US
-To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+To: qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>, alex.bennee@linaro.org,
  Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20260113194029.1691393-1-pierrick.bouvier@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
 In-Reply-To: <20260113194029.1691393-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,8 +132,6 @@ On 1/13/26 11:40 AM, Pierrick Bouvier wrote:
 >   #include "../generic/fcntl.h"
 >   #endif
 
-This is a good candidate for all stable branches as well.
-
-Regards,
-Pierrick
+As well, I double checked all the flags for all arch compared to 
+upstream Linux headers, and it was the only mismatch.
 
