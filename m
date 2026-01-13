@@ -4,84 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EE8D2D115
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 14:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63546D2D11E
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 14:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vffdF-0004bX-7q; Tue, 13 Jan 2026 09:44:29 -0500
+	id 1vffoN-0007ZI-HK; Tue, 13 Jan 2026 09:55:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vffd8-0004YI-3s
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:44:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vffd2-0008Qe-MB
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:44:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768315455;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QGRvfGvJYFJWMewtXKMSHVh60jwS1MoLGDpEtvLt2lM=;
- b=b64YXjQFSmqhvhs5CWdrJKCnjOlNPriimwO3FlaFNcw2baQyKg6R2r+4IBNycign18BS0i
- LOPvzNyhOdAeZwlX3SQhiOu/O861Zvl+l6JUHHeaYxnvJ1gnfS2rQVkBKjIlZusNS+iCgq
- b/wGmMWj2RJxGi0GD7p725Gli403mQ8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-j3gIKTYAO2WYkqyzxtCpqQ-1; Tue,
- 13 Jan 2026 09:44:12 -0500
-X-MC-Unique: j3gIKTYAO2WYkqyzxtCpqQ-1
-X-Mimecast-MFC-AGG-ID: j3gIKTYAO2WYkqyzxtCpqQ_1768315451
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D59DF19560A2; Tue, 13 Jan 2026 14:44:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 603C9180009E; Tue, 13 Jan 2026 14:44:10 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ED29A21E6683; Tue, 13 Jan 2026 15:44:07 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Hanna Reitz
- <hreitz@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Christian Schoenebeck <qemu_oss@crudebyte.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  devel@lists.libvirt.org,
- qemu-block@nongnu.org,  qemu-rust@nongnu.org,  Stefan Weil
- <sw@weilnetz.de>,  Kevin Wolf <kwolf@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 11/24] ui/vnc: remove use of error_printf_unless_qmp()
-In-Reply-To: <20260108170338.2693853-12-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 8 Jan 2026 17:03:25
- +0000")
-References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-12-berrange@redhat.com>
-Date: Tue, 13 Jan 2026 15:44:07 +0100
-Message-ID: <875x958te0.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vffoM-0007ZA-6U
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:55:58 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vffoJ-0001k8-Pa
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 09:55:57 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-477a2ab455fso70219095e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 06:55:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768316152; x=1768920952; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=39DpSnZqTL54ysXG1uN3EJeV07ssQp+A9pSKb1S+UPA=;
+ b=jqtmewKKLYtM8l/9lLJKyvo1xpd4aaTycNyQPFdoM2HjvSm2k2vh3iPf1mQPmCRc8L
+ XUJV0fWGpN6Rg92zAkE9U6Xen5aBJSJrEJFqiUlvlY1GXe6/smXDfQc2i85dVw9873UK
+ IKFpRd0prH6W2GCKZXZ9vHLyxvEOQGqLqeDYjgF1Qnwk6YgB76uBZkl52cY/tsdCJDLv
+ BVhqbBnhinTMSvPcInyURqIgUk7OW9M/RJ3qiTF737UMgrAs0F81qy+6p1OO1Hzrx8AC
+ tpwXRbm+12h7Ivlm7jjdMdZVQt332yPU4nuAKN4/6QV5KjdRbLcDsFuyigPxsWepEPgM
+ vqGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768316152; x=1768920952;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=39DpSnZqTL54ysXG1uN3EJeV07ssQp+A9pSKb1S+UPA=;
+ b=CxnyT031mlmREPkqdTevi4p8R4hD+HHtUNQ5B48qol89UkWylHDIAtfnHCzWAA3lIZ
+ uAf9RAQdLNySBySITM/mH8SKbyg07K1zMb8ipbEP2gN3wk60CfDvt9HLBFhOnu/dnDbh
+ ZHss06xbva4+GyD3qNXA76Ofbe9ONyaJctGRsTP+YuyG1PGruDXTA5uAQLSXkDJgG8Ee
+ 21LB4QnGXIh7FW/bNeu6QBtGI18/9K1yOA2qSGyA97faTIjWb8SpsRPEiCOVoma6zpEk
+ Tb1p3+/yBGer7iblFJJmNZguwihZVEJu8WMSYFE6AC/xfzCC1mGGiYqFA2vr04L2EKk7
+ Gvwg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzwGrQmke9A0H5EacvOwVQzTpSjqOyP2LjSI/x0umsaF6rJP828K4iXDaHW7jDfk1CAKLHUgq1Qo2X@nongnu.org
+X-Gm-Message-State: AOJu0YyguCqWbNXTL09HUrYNL2Jz0iVptwvuVUu4vPzb2L/Ar6Gscgrn
+ GDF+UT3KX0AFEaFj4cVb5YcCnmOTvFO1f94yBop44CE4abGD0Y2DidmHx8pw/gKYPT4=
+X-Gm-Gg: AY/fxX5dcuMLU8MuIO0Wx9PdmvczajY9T5aB65SX5zXab2pMpSub4N2RyRFp8sPXt35
+ Nnzwkg984LbF2lylDKEGpvChSOfSIC1mEiyZzGHXjbNfNWqWJcrsORux1CiSbKAPtj7/X0MN/Gc
+ 5XaNeZw9Ca4DY+k4hsZyH3AQxqcZPHL17++Ya6ZGt3uuUwzVmEI8G2mp4ZjMmvuoIQY6LA2/jaS
+ WgyXWFTnW9xnrkzvmjSR9Eu2jCKT1/XMTyrA4GBnlSgdW1ZS8Tpvl5OmJU+NLlp/Psxxa3/+bl0
+ MpET/YAj44T+nj2QtIWkHUhr9c3vupLiEVL0duOGXRobksFabTB+jGs3Y7zU+wdwLuEjFqN34rR
+ OOO728I4EkKd6JMkgAzlVUH2fHHYC+Qa598Y2suChw+aWx1WqkR9dVrx0qlv8h1nWSNYYslfpKT
+ xVEFkG7b5nvGqKOOKvYjmzrleLDdCTEd8tZYBKLrHpiE+WnhpZwjK8uA==
+X-Google-Smtp-Source: AGHT+IFZRnRT8rKeeJAaMm8XuiAMD31/j57aECuSQTIYAapr+/mCvNuX0brpkTqEYmW28mpbfbN2Ig==
+X-Received: by 2002:a05:600c:4447:b0:477:7c45:87b2 with SMTP id
+ 5b1f17b1804b1-47d84b1a0a0mr273165815e9.16.1768316151630; 
+ Tue, 13 Jan 2026 06:55:51 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-432bd5df96asm43850318f8f.28.2026.01.13.06.55.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Jan 2026 06:55:50 -0800 (PST)
+Message-ID: <201775df-0d26-4849-95df-6d82a84ea312@linaro.org>
+Date: Tue, 13 Jan 2026 15:55:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/4] meson: Add wasm64 support to the --cpu flag
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <cover.1768308374.git.ktokunaga.mail@gmail.com>
+ <91f16f0e9ae6b36fbf0c2caac510dcf855120400.1768308374.git.ktokunaga.mail@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <91f16f0e9ae6b36fbf0c2caac510dcf855120400.1768308374.git.ktokunaga.mail@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,110 +110,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> The error_printf_unless_qmp() will print to the monitor if the current
-> one is HMP, if it is QMP nothing will be printed, otherwise stderr
-> will be used.
->
-> This scenario is easily handled by checking !monitor_cur_is_qmp() and
-> then calling the error_printf() function.
->
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+On 13/1/26 14:54, Kohei Tokunaga wrote:
+> wasm64 target enables 64bit pointers using Emscripten's -sMEMORY64=1
+> flag[1]. This enables QEMU to run 64bit guests.
+> 
+> Although the configure script uses "uname -m" as the fallback value when
+> "cpu" is empty, this can't be used for Emscripten which targets to Wasm.
+> So, in wasm build, this commit fixes configure to require --cpu flag to be
+> explicitly specified by the user.
+> 
+> [1] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
+> 
+> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->  ui/vnc.c | 14 +++++++++-----
->  1 file changed, 9 insertions(+), 5 deletions(-)
->
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index a61a4f937d..a209c32f6d 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -3534,8 +3534,10 @@ int vnc_display_password(const char *id, const cha=
-r *password)
->          return -EINVAL;
->      }
->      if (vd->auth =3D=3D VNC_AUTH_NONE) {
-> -        error_printf_unless_qmp("If you want use passwords please enable=
- "
-> -                                "password auth using '-vnc ${dpy},passwo=
-rd'.\n");
-> +        if (!monitor_cur_is_qmp()) {
-> +            error_printf("If you want to use passwords, please enable "
-> +                         "password auth using '-vnc ${dpy},password'.\n"=
-);
-> +        }
->          return -EINVAL;
->      }
->=20=20
-> @@ -3574,9 +3576,11 @@ static void vnc_display_print_local_addr(VncDispla=
-y *vd)
->          qapi_free_SocketAddress(addr);
->          return;
->      }
-> -    error_printf_unless_qmp("VNC server running on %s:%s\n",
-> -                            addr->u.inet.host,
-> -                            addr->u.inet.port);
-> +    if (!monitor_cur_is_qmp()) {
-> +        error_printf("VNC server running on %s:%s\n",
-> +                     addr->u.inet.host,
-> +                     addr->u.inet.port);
-> +    }
->      qapi_free_SocketAddress(addr);
->  }
+>   configure   | 6 +++++-
+>   meson.build | 4 ++--
+>   2 files changed, 7 insertions(+), 3 deletions(-)
 
-These are the only remaining uses of monitor_cur_is_qmp() at the end of
-this series.  Hmm.
-
-
-The first hunk is arguably sub-par error reporting.
-vnc_display_password() is called by qmp_set_password() and
-qmp_change_vnc_password().
-
-Here's HMP:
-
-    (qemu) set_password vnc 1234
-    If you want to use passwords, please enable password auth using '-vnc $=
-{dpy},password'.
-    Error: Could not set password
-
-
-QMP is even worse:
-
-    {"execute": "set_password", "arguments": {"protocol": "vnc", "password"=
-: "1"}}
-    {"error": {"class": "GenericError", "desc": "Could not set password"}}
-
-Better would be something like
-
-    error_setg(errp, "VNC password authentication is disabled");
-    error_append_hint(errp, "To enable it, use ...");
-
-where ... is the preferred way to enable it (not sure it's -vnc).
-
-HMP should then report
-
-    Error: VNC password authentication is disabled
-    To enable it, use ...
-
-and QMP
-
-    {"error": {"class": "GenericError", "desc": "VNC password authenticatio=
-n is disabled"}}
-
-No need for monitor_cur_is_qmp() then.
-
-
-The second hunk applies in vnc_display_print_local_addr(), called by
-qemu_init() via qemu_init_displays(), vnc_init_func(), and
-vnc_display_open().  Can't be QMP; the monitor_cur_is_qmp() check could
-be dropped.
-
-Better: move the call up the call chain until "can't be QMP" is
-perfectly obvious.
-
-By the way, vnc_display_open() could be static.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
