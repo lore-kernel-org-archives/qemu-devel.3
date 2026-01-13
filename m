@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CE6D29DFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 10:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C80D29DFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 10:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfbFS-0000qf-T3; Tue, 13 Jan 2026 05:03:38 -0500
+	id 1vfbFS-0000qR-Nw; Tue, 13 Jan 2026 05:03:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vfbFJ-0000os-2A
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vfbFJ-0000ot-2A
  for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:03:32 -0500
-Received: from mout.kundenserver.de ([212.227.126.187])
+Received: from mout.kundenserver.de ([212.227.126.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vfbFG-0006qV-0B
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vfbFG-0006qT-0D
  for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:03:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
  s=s1-ionos; t=1768298601; x=1768903401; i=laurent@vivier.eu;
- bh=U2ZUQMrbQNfSyQjK/+McwlZk747na2cO7PCOXdssNBw=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Transfer-Encoding:cc:
+ bh=F7YKD4nVzDFDHOYb/F9EWD45jaftk2ahK6dVwnyKzn8=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
+ Content-Type:MIME-Version:Content-Transfer-Encoding:cc:
  content-transfer-encoding:content-type:date:from:message-id:
  mime-version:reply-to:subject:to;
- b=vKLz35QpWXhcBvvT6NYqjjzH/wzSdUygeFWV3Y8uwINXGhhlsA28RQag2ZcpKm3i
- f0KHPKoXsiVVwSqPhRWpggoyYC64u+e+VyPHZcZDCVX/gO0C5zg9MAHQEuOHbRiRx
- YuKVxklcViQLTXY37w+8HUDs6fZpwtnC1yi0CsTqbJ663aIqwe3kmGYVUZZ06hirC
- 07lyIOim4TrvVp86oe4Ws8jYkGuxUkVBCjkbWI7//ao4XrZ0n0CVMS3ImvlN8Rrre
- IaB4D4st0hejqv1tK6J+6NmkI6/gh8JTWpnFfI2SVr7BmgB6ucyA3GAr0NjLvAhcB
- Zqhoj9kBrRzpGZTJpg==
+ b=jBiBMPbCKcJbbZNk+SKluc7VbqZHaDNt4WsaKHhmxeiwXcEUgWYpoZeIN1MCHmPT
+ ctuP4CUojtGaCkZ7/N3vgitfyOd+08IiwUltPtXdRiU04l3zjrNo03JZPaKdARFs3
+ 3+/PNH6xpkRc8FflCACjlCEdrh9o6CxMURgvPoS0mR4JB/P/wzm74fm4v4RiD1RIN
+ hbDUTBzFMhn/IWXFS4wfadt1PwYP/e7TOnZh/dkmwFL1+ueE8vvM0rUZFnavaVOJV
+ QlVTbROhes1nGncuj2l2qHy8b2zKBKXOkjF1rpr5/taTX3CAweOyGJ0vVcKtAYFv9
+ +aK+iPFQTHpCs30SYw==
 X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
 Received: from quad ([82.64.211.94]) by mrelayeu.kundenserver.de (mreue010
- [212.227.15.167]) with ESMTPSA (Nemesis) id 1MEmMt-1vd8Ww1K3v-00AWJk; Tue, 13
- Jan 2026 11:03:21 +0100
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 1MQuwR-1vR5It3gFb-00KOii; Tue, 13
+ Jan 2026 11:03:20 +0100
 From: Laurent Vivier <laurent@vivier.eu>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- William Hooper <wsh@wshooper.org>
-Subject: [PULL 2/3] m68k: link.l is only available with 68020+
-Date: Tue, 13 Jan 2026 11:03:19 +0100
-Message-ID: <20260113100320.1009608-3-laurent@vivier.eu>
+Cc: Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 0/3] M68k for 11.0 patches
+Date: Tue, 13 Jan 2026 11:03:17 +0100
+Message-ID: <20260113100320.1009608-1-laurent@vivier.eu>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260113100320.1009608-1-laurent@vivier.eu>
-References: <20260113100320.1009608-1-laurent@vivier.eu>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:avMvrqW+E0aMR2npoP7pUqMIK2R3jvBp6+XXfwyoEDLEsE+zBO8
- BgUvLvQ3UXiSn1NMRLLAh6Zf8g/wFqh/vjbvyUedXtZernxwdqHdE0llFn8ZuY6Z6aClSN0
- P/ccOrtfNMfwxepbyONtlHaBpCeXjfWWSretalezbNtvXy99tXRWsSkecg5JnDJtKZFKrQ3
- 7XjgRherX7qKxRuXoOPPA==
-UI-OutboundReport: notjunk:1;M01:P0:N0FFXPXRdOI=;1aBPGFI/kSczUf+Lsa7SDQcy8nP
- CiWrevx7811CTNqkooXyx06ulQzV6Y7pGU+KDi/zjUTXhmsPxxWPQC9yBbz1z/eYULAKJjuYj
- 2+5FshMJJfATSeqXUMDYVl1NqtiRMhWmF7jAib2ejdHRp+0uRg7qMjmRNeyyDtC9YZgOb6V/T
- j6l5bIr3u7SLbwymxTeVyeUwVfqdWPNaqK6xo/hoATWmbKQuvhkDr/O8nTIWB9QrKUdruFVsS
- Y+naBp9AjKv1I8YB9QvicOoEQW64pRQm2mHSquqZahaH6MiCoCwg+CQHcsr5G2EPEGNW/nCOm
- 4BhTM2u5RCnJjn7NY5iwEN6L3EuUPb6USc+2Fqt7jV4wwtaJ5jrqNtgmI1ObsBgzNghxaNa5z
- jvyPi4aoYi1o+1rP9+mzAGjormlKUFqq7OGuBLDys621lY95YzXoeK4F2mjFWD3jawSLCZdnX
- wDGTmBpugiKj5PKI3V7Ndf+zpVCpQSE3EuHPBjijoJS6i0FyOsqe3J/lmvD2W9xIbSteNIOX/
- KIwrtZwNSmUEhgAh6n9EEJkKvi66cKYw01AxfeUuZn0DwapvwakdP1gku7Fd2a3vXjlk4UR7F
- hH/IT3EW7zJJaJXhKehn0LxBI7hoqisMdgWdJL6tk3junxaibe3WsVCMXjZ25WlMAdu4Q8ZJe
- 2DZ0zXJDEIqn/BANzgPLtUROxgu4nAVPTl/ALa+IEyliWMJ8nzHX9wpfywaKdaZBf3Jn3Gomk
- SDwGM2AFLW7ULGw23ZIPvDlNmv2yzh5pCsi3HDqxTO5j9zdR1JNQmZL0ykoI0Kt+CvnAD2gdi
- tO1P7wjmKmxuTEHzkwnz6BetaMyzT3svjX/Ir9rI3w5pQaBm6aFxiff205bm0GDwO1H7zgqyu
- MgrfTwGEqL/SzmmERyVt6jNFbyDp1PwgHCD0pPf9X7DgrtzfGsmZvGFwZBvmUYBvTkOI1biYm
- 7MRm3mJ70hML5yuVqlhu55r8ewPOnonMbOYpyRgVjgDUMmGxe1f5aIppZl+IHmYvNbfP7P+9H
- +0XlWdT9ateGgc7W4jQhNKz05bY8Ul4RnbSZ9rGwUcZoOaSCWQ8m3rlntMoJc+VG3bjDgmyDF
- n70kATMAAtGvYfIV/dCgxDe9JWZJJ9Mesx+aoKTIhHmyotCtqwRdV+NlzeLsuppbBONJ9Xmfo
- gys8Wr9XLqESPe1DwoaeY05CSjdHqjRq6X+BDMxzTcWQDavRDHIQA9CS9lyzkgaDsbtnCPpSw
- UUdIn0XdMBdlOx/mCH9MYsNwbQ/C3qsjANyWa6sVi2i6FA6Vyt7vaI59Qb6jnsgG9mZ1pQz76
- LHuMPBF0MOuScDGsIlDz7b6OWM7GOb1A98nwG9aYi1EtZ05R44vKJWT3fuNIK5MPlfnv9KcTU
- ERAHhyWraw3/8LW811nnRYaEn43vJC3nUCEfaS2K+4D/EUFjayBvSEobe9uNKrBY7ivcGgbQ4
- Q/4bQ26Bh33n2KnNKmMFxNAV0vbi6hhNzzGSVIR30AxNHD2DY0WKUQI+8HtdVMdEoiQ7FaFWC
- cZW3773FLAvjCPlcBzL7/jxyCEw6LCaKb2baMdu3vkFzq1hrsZRwwyDq6xhw+HGTNIHCnfQmc
- bn7rzF/mpjQCHhVvxB8vMJA2IDYWoMnjq3IRWjftvDxO7WC1GtLBuyxE1rnXEIH/4MTWBH4VT
- axFdxdRvhLxRrRZD4WpKZZCHPxftDLeP8wla8a5OYzouJE4aAgM7ZV2HztCzn2KlkyxcPOwvn
- 4TB1C6uUW3X2DRT3LzmPhDUPJwHAjD8F5LNXxY5cEFy37qFgVdvpwM/E=
-Received-SPF: pass client-ip=212.227.126.187; envelope-from=laurent@vivier.eu;
+X-Provags-ID: V03:K1:gxh2/2iI4QYOzuZTvHAC0gQusJ+zujMOJDo7hnN6T6Q5Vl3pzBf
+ yI+PlBD3X8iku8zSVuW/sDfpvXkSdxyHXpzJLu1UB0T+7D+XgrkpfHk21ik7EdooxNtlfou
+ iFXxwUQhbWW/+GUHAKaIgjlpGck7XPKl4Qcfn+PntUKYafMiYlEIBI2U4kPa/bIKzT6sf4V
+ 7bN53XOsmnoTQGhOJth2Q==
+UI-OutboundReport: notjunk:1;M01:P0:hsOoaS4HmmI=;VvjBlacxTg5O2DXBKHtrmMkwgn8
+ X+n7p53j3sQgWHnZYZs8mVgt6CQTqpCdpxMlw/OCycHS6rEximPpCcPaymVotzBytsU85sHR8
+ B4aslu+6dP9yE8ofZ2U+BInUa7suoys9xFy0Tf8aEazZHlGjmCmzDzmO9KCchgwmyg0dReXVK
+ Xw6/B5bunuNsA0DKqjJRRf7qREht5jzvaIGfsczy8jXp53WZF+DjtU9ydWE+cEZPvp9z4Ueiy
+ 0qeam94C0LvQaMQaA/3NUk02Qt00RAJdrAyC30Px7aDZoeGyrDqIl712ErgyQactBvcgro6Ns
+ 1A5My8dyPzjMGOwkiJ+oUbJe2vJI/wpqo3y8Tm7m9dmELVAXgGGZJonqIdQGNaagJL66lS9NP
+ OEk+tPcVCPaIzoySNw4yDaTKJTOE4h3ojN+v79ADs2GUljQS+foE2h1xem8jMRg/lC7xQF3Os
+ X4VI7YJTiLxklr0A+k3b3Gl+x7U5xKo4RnTRyW6yjnOFRRyJ8sWVxuS+WPQjEdsM3kwsjBUUX
+ HgunsqnZPeFDRTVfM+te2MFiaQT9D//GTjVF7tsnMlq3lFuWGb75mt0wHcmoWVIFX1m6pu9/C
+ /NlSSnQw1PzvYiNRw+WnIj1X5cw31U8sgGAUXf//EZMTdXHgNzY5tbxZcfnoTyMttjvTDX+Yh
+ qOQ3nnXX3DVrBOhamu0d3Xl1ruNAgpfaZ8vWIziwdyakIlGZ5PhE3LRPEIbQQo8ZxLKxfs9gD
+ jQwoIqcyRZfuMiwmW1YR6v8WdPLOnM2NRwNSb1bvn3fxzjmTNRKkqOw17E4tYSxL/4sb0O1va
+ Gs/5OLbgKgbgmo53qefWvlL9Fxxpr831vJ7klLenA0kBeKGbUB/eOmcdIKJv4IWP4YOJJbQky
+ 37TJqTaFHTiRsUrnDGEmKeetCCyLDO5rhp5ezrsti4R6iZcF4thgbLq7zGIW6EjyTL3CrStas
+ EuOwdXbMKG/Jaeu14KSlfvO40wHxrauVfltZD7AMczQPg9oP648Fy+edCN3DYv5a1tNnYNyVw
+ rva7PwyxxG+oP8w6Ql9t4sfziv5HHTFjgX9G0wI/DP6ONHSPcTlQQWAiDz2AipnytaqAb48e/
+ BVDl01zwJhkG7rgXRSqtt2yXJlIpvh+NgWCIVWrWtXvOVuTFaig2jhGc7SonWlrzcI/JAhilr
+ 4PNRQUphu6MOuI5/Xa+wHrMB1uYchApeXXBauEme5g01WEpRgVDH3uxouelEqBSb0uXmxoNGa
+ pXFfVg9oJPrP5wCGNfK0wjyA12GHVIUvdM0vtkXYnB5Jr7+D2gxlaoh/WsrCSwxS0wwqvt+zx
+ 20ZdXHes4/1eSq24VAmtiiV0tSfqrgKt0auvygDyLokq3Y58XVzFe2kEZEx4vI/EdDfHFF+WL
+ AvsWQ8ne9eoyBAQlCWU5auE1NibTvEFI49AMIQZmAnSclrblIKA2RRlfXtlS6g6U5lPT5hO8Q
+ jJ/k2Whz6B+5M9n+bJaPgyH2SBh7B9+W1rH3hoQ5o16uXc5O9DysnQnwPuoz0kzc6+km+Anbp
+ vbeohUK9DuKGG9fkZSjT6V8SpBkk1uA1KXDpzpNYRWKSc7GJTgjTxsTNJkHk48iE2nxUYOmD3
+ P+aysMhwkjyQfXA9+PSV4WEsn2hl/lHUZHlExI4NB9zoFCxWERFnV/MLqq78yLP/dnbpbRRS4
+ FqSdBEdtZTLuwd3E+h9oteY3tkPw1Hyf14Cj1OwiA72+a1/P2PJ2LX46vj6rxYurciUMuyYmn
+ PWVAnkTXtavtwuCOUWU0OfM4r8UR6fJ0Hw4gIbjChd7D4GGE/6j+DYOc=
+Received-SPF: pass client-ip=212.227.126.133; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,66 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Base 68000 only supports word size.
+The following changes since commit b254e486242466dad881fc2bbfa215f1b67cd30=
+f:
 
-Signed-off-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: William Hooper <wsh@wshooper.org>
-Message-ID: <20251227210250.411882-1-laurent@vivier.eu>
-=2D--
- target/m68k/cpu.h       | 2 ++
- target/m68k/cpu.c       | 3 ++-
- target/m68k/translate.c | 2 +-
- 3 files changed, 5 insertions(+), 2 deletions(-)
+  Merge tag 'pull-riscv-to-apply-20260109' of https://github.com/alistair2=
+3/qemu into staging (2026-01-10 10:31:57 +1100)
 
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index d9db6a486a80..7911ab9de30a 100644
-=2D-- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -555,6 +555,8 @@ enum m68k_features {
-     M68K_FEATURE_MOVEFROMSR_PRIV,
-     /* Exception frame with format+vector (from 68010) */
-     M68K_FEATURE_EXCEPTION_FORMAT_VEC,
-+    /* LINK.L (680[2346]0, and CPU32) */
-+    M68K_FEATURE_LINKL,
- };
-=20
- static inline bool m68k_feature(CPUM68KState *env, int feature)
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index f1b673119d6b..b55e604b11d1 100644
-=2D-- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -235,7 +235,7 @@ static void m68010_cpu_initfn(Object *obj)
-=20
- /*
-  * Adds BFCHG, BFCLR, BFEXTS, BFEXTU, BFFFO, BFINS, BFSET, BFTST, CAS, CA=
-S2,
-- *      CHK2, CMP2, DIVSL, DIVUL, EXTB, PACK, TRAPcc, UNPK.
-+ *      CHK2, CMP2, DIVSL, DIVUL, EXTB, LINKL, PACK, TRAPcc, UNPK.
-  *
-  * 68020/30 only:
-  *      CALLM, cpBcc, cpDBcc, cpGEN, cpRESTORE, cpSAVE, cpScc, cpTRAPcc
-@@ -260,6 +260,7 @@ static void m68020_cpu_initfn(Object *obj)
-     m68k_set_feature(env, M68K_FEATURE_MSP);
-     m68k_set_feature(env, M68K_FEATURE_UNALIGNED_DATA);
-     m68k_set_feature(env, M68K_FEATURE_TRAPCC);
-+    m68k_set_feature(env, M68K_FEATURE_LINKL);
- }
-=20
- /*
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index eb1ba150745e..78efa3e597c4 100644
-=2D-- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -5829,7 +5829,7 @@ void register_m68k_insns (CPUM68KState *env)
-     BASE(move_to_sr, 46c0, ffc0);
- #endif
-     INSN(nbcd,      4800, ffc0, M68K);
--    INSN(linkl,     4808, fff8, M68K);
-+    INSN(linkl,     4808, fff8, LINKL);
-     BASE(pea,       4840, ffc0);
-     BASE(swap,      4840, fff8);
-     INSN(bkpt,      4848, fff8, BKPT);
+are available in the Git repository at:
+
+  https://github.com/vivier/qemu-m68k.git tags/m68k-for-11.0-pull-request
+
+for you to fetch changes up to cad529260a8503b79d76589f1427ee592e31a801:
+
+  target/m68k: Improve CHK and CHK2; implement CMP2 (2026-01-12 16:26:48 +=
+0100)
+
+=2D---------------------------------------------------------------
+Pull request for M68K emulation (20250113)
+
+=2D---------------------------------------------------------------
+
+Laurent Vivier (2):
+  m68k: fix CAS2 writeback when Dc1=3D=3DDc2
+  m68k: link.l is only available with 68020+
+
+William Hooper (1):
+  target/m68k: Improve CHK and CHK2; implement CMP2
+
+ target/m68k/cpu.h       |   2 +
+ target/m68k/helper.h    |   5 +-
+ target/m68k/cpu.c       |   3 +-
+ target/m68k/op_helper.c |  20 +++++---
+ target/m68k/translate.c |  33 +++++++++----
+ tests/tcg/m68k/trap.c   | 105 ++++++++++++++++++++++++++++++++++++++--
+ 6 files changed, 144 insertions(+), 24 deletions(-)
+
 =2D-=20
 2.52.0
 
