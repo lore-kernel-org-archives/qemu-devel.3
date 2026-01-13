@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB49ED29DDE
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 07:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF5BD29DE4
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 07:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfYtM-0007nB-7V; Tue, 13 Jan 2026 02:32:40 -0500
+	id 1vfYtk-00088n-0D; Tue, 13 Jan 2026 02:33:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYtI-0007io-Vo
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:32:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYtR-0007x4-GO
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:32:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYtH-00074Q-GR
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:32:36 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYtQ-000753-1i
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:32:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768289554;
+ s=mimecast20190719; t=1768289563;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=x8sI4RccgbDx+v3JUe/LmmQyK/avsuTx7Mhh7ZsWRUQ=;
- b=YzMHGbM1WJOW/t7DcyKlKb5IpU/uPtPi3O+gR0/i7s/1qkPhzfwidEhEMXQv1xg3wQH0Ag
- yvBrxz1QSA0tMcms5s7t7yopIUVUjM5xGEqzHzxSCnvOXjqXRL2qrAHOJmb6gezsIK3FrZ
- +U6QGcbsJPINeqWFEz0vAXYrHuwtJkc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R3Ed+U/fiFRB/U3BqH1BZm6DUUK7kuwxjLUTVr12wzs=;
+ b=gLS4MCPdxE/rmSTvcZsw+6oCEPT12N0+Y3boIt85rETGxqWnp6Ooy6Dkwys5Ozke4evxMm
+ xIJXU0EeTjrIuMw5UoWq7F3u/aOPb3TSbcmQKkr2Bn2kyg8gEkjOM/jZn1kzDfLD0YRmaT
+ Q5JOLBvVwkDZi+vTsHgtbb7FodhUvME=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-XSTba89XNmyiBHZFVZrDGw-1; Tue, 13 Jan 2026 02:32:32 -0500
-X-MC-Unique: XSTba89XNmyiBHZFVZrDGw-1
-X-Mimecast-MFC-AGG-ID: XSTba89XNmyiBHZFVZrDGw_1768289551
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-430f527f5easo3234327f8f.1
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 23:32:32 -0800 (PST)
+ us-mta-333-nrORIC_uOq-zpg32noEuZw-1; Tue, 13 Jan 2026 02:32:40 -0500
+X-MC-Unique: nrORIC_uOq-zpg32noEuZw-1
+X-Mimecast-MFC-AGG-ID: nrORIC_uOq-zpg32noEuZw_1768289559
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-432a9ef3d86so3770892f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 23:32:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768289550; x=1768894350; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768289558; x=1768894358; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=x8sI4RccgbDx+v3JUe/LmmQyK/avsuTx7Mhh7ZsWRUQ=;
- b=ULwb5ac7EYSZ0Ntbj+87nipfvfO0P/01kUd1dXxD5iJqIBhorQb1I6taOXE8qT/zKp
- DZDk2LQb9B/yNXL9lLM0maOh+MG+MxfyHEmKSoq0kJMUzPltY84a6vsgRr5JmKry1r+H
- ms6pT9+s3uX5u6QpeSb3qEu1nuEa03QJ9XApLvxumQgyvnZjp3JhmYAy2skYfmrhFfqX
- q69qWfj1x1iZfxDrGyGglIZ7hKKYNRkQKYLAvXJitDa7CJsGOG23YmL8lEQXR6bYVoqO
- qzpAF+sT2KnsPPjEkThoJU2hy7m5Ww6IuPp56+vdo0XTJTdflI9NNCCeFZMuQIhuXkyQ
- P9PA==
+ bh=R3Ed+U/fiFRB/U3BqH1BZm6DUUK7kuwxjLUTVr12wzs=;
+ b=cru9Gu2D7ymkreuGcL6CkOC2y9+USW2NSzvLWJ1Ag2V2Pida9rCyjzeiAB3XEmW3Vt
+ RQLqHg65JYaEd6T0HueE3abMdqr3qZYxFPFvbnIBO305VsgE65UckSo0jWkRRdDbh9TS
+ gXMLaIFW9m2ccOR3SJDC/igbImPv8T5vSnX4nzJrPRLLt0nMQ5gSpBrkJclxWd/2dcZ8
+ TuWnYwz56XphuTau2QEtulkKdri1vsHQu+/YOhQlsBNMTXu54MySPj1XynohWmQgrVhU
+ rnnyHl5aH8qlTkHIkNb1EL2CE/w7lgvMiEgRDfV77BuI2PBJTuU3rkXjQg/E3S0Je3t+
+ a3EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768289550; x=1768894350;
+ d=1e100.net; s=20230601; t=1768289558; x=1768894358;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x8sI4RccgbDx+v3JUe/LmmQyK/avsuTx7Mhh7ZsWRUQ=;
- b=pIG7lL6DEmCI102e9gEeNrGQDNnTPJr42aD6twsiNpzLCE0wRsWttr/q2hv2MnPlXi
- GMV+fTW9W99FKAegRQKi0s0dfAFowMOzsoHY0OZmrBCl3/ioLHjOefNCVTY0lNFYYDJc
- CWStBsPGrs7YMapMGQ+nxjoFNq4p9xwo+MktyDmlRtLvY1qZdTajRzIR68LGxD2F+uIN
- FWQY1truv9Z4G4RUnPvNZfz6Z5t2wBv7nvDW1bHebPCuLnr3t9SEgz+my5YUGah5vu+5
- UfYVOIrWNWXznmMd2NGVnweXpK/GmIfgxE5eUFj6cV9Md8XUJx7OMLR7exJkL2yO0VfO
- BQ7g==
-X-Gm-Message-State: AOJu0YyXDQVtI24bvLQfh531EQCdiO0KWVXiFw2sScX4Eudtt0kj4rFg
- ic8aFGzAZChcfAdbE43u3fJdDBG7QK9h3UgKVrGBBbZZ+G1lDAKF3nIdAcORfz43gXQpR8rPL9f
- NQiinMgKsFomwa5JKAVglZpGRfvlU++5G+R2m5+iVTlWIugs6uc2x19F0McDWhEWkuiPQtmuTod
- 9g8VzACfSeJf5eNCuo9hiThIqFUaRMSUe73A==
-X-Gm-Gg: AY/fxX7YXGLXjel5nsNto7gY2bcq+gDr9pu91dm1GDAFSwfRSq+s5qpAHFlwtzb0qyQ
- lvGSvEsecXy1SJLbfFKB9v+/7ahfz7DuqJVCy+gxFHpd0/c6lnEZ5J7N4hKWVxTDaSrI+Zs1jew
- S5+NtoBqOO+zqoJkG08cUz8wS+Yr08EDNyt92lSVdchLScd88qSv6v0kpgLL3WKTlpIkM7WvI1G
- vvH529UtXgcyMprm8GwHWtpdr1YfgeGrcEmmnqWqcLlNQOYDnCyqY9IX6zTFyNEO+3iFpu4+8xU
- qWmxm2Nbn1tgYoVXvMCPo4cp+WSp3e9yBsqaqeTj7WVRYGOEAfHN7vxp490BDzrwdewwPSFdDOZ
- gDegwZY1P1Kvu8Jwb1nv4TcL5ztfuZAilN70p3nJgJxETWk8N
-X-Received: by 2002:a05:600c:4e88:b0:46e:2815:8568 with SMTP id
- 5b1f17b1804b1-47ed7c15ec3mr23253875e9.10.1768289550341; 
- Mon, 12 Jan 2026 23:32:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEcfssbU2o+wJbdcA5cpCokD5skKUcPKIrLTb7XuNQ/5GH/pTz91WD5omLeznIw28htmtLbOA==
-X-Received: by 2002:a05:600c:4e88:b0:46e:2815:8568 with SMTP id
- 5b1f17b1804b1-47ed7c15ec3mr23253505e9.10.1768289549934; 
- Mon, 12 Jan 2026 23:32:29 -0800 (PST)
+ bh=R3Ed+U/fiFRB/U3BqH1BZm6DUUK7kuwxjLUTVr12wzs=;
+ b=wEf7E809UsIZ6Onc01jjThTSfq7bBZnxedCX2dJnH2vxhYxGdkiqRSqt4Q6+8wvZin
+ 1JKiwKL2/z7AgfKPIq4FvTWGWdw2OU3gMkEXB0+JgdG+gPsLAX80q5d30jdGRxq8+1oY
+ HKLQ9gAqXBDDvQrVaVYmMaYO8lpynlCeGl9JqG0qn01j1BhYyxIE38QLFU3EPK0yVDQE
+ bxImA5zum4JL7D0gDvdkUD41cd/HJvPr7MAtqSpoKls8mQUSjCjNYMwxvyk1uPhZEVFd
+ 23suTg/7kqxo/n9sx5IPGEdi4/eo/mMyErZMvPz0kO/KudCmlcF6Pt8ORUnp6PFc6RKX
+ h7Ug==
+X-Gm-Message-State: AOJu0Yzca8ljaUhaVESVeWAszK1/HquOZzWVqZ8n7ECa3TXd1KSQ7PDZ
+ aEpOnFPLrvV/FjVjGqtJTHa+E75BmG3+3Uk6vmlgUqYkUO7Kdnslmz3ZPWdEuNTmrd6ZCq+jzWA
+ HP7S0ZltXf8zXlVs3wMr9joaJQkMVCwx3RBOAkGz2yVEgJj/K+0OnSC8Mgx85CTW9tx00AM5f7l
+ //Lsx+SAV2G/IYHBLSv1u/wQLqCW8VTdwEbA==
+X-Gm-Gg: AY/fxX5sZg8GcDz9KR9DGVMFmK7I4hRWoO0gYQAF5i8CFVJnlTDirIUqEpfWy8bpSp9
+ ZDxvfllUewolFUEbT2ZN3R5TlYZmZtEb7/p2JmFSAXG3f0ncJvtygHgCRYKnHQECWM7UEItobtW
+ 7MXYvAhwGsX41YP3OLHIs0gPo+Aye0NS+Ijpg1Hm6KbwSgvR8GquDbBNphKYEvdGndI7MiNMIHy
+ IwRq1nWDIJsqcF9EWgSjNnymSz98lkPUWIxZ8wYS+Chs7my3OtPeXUDfpO4UgFxw2O9qWL72NKo
+ 7p0jWkE/T4Vbd7kDCmxxmcbESxMeqhUNa5yVn+cK0BqdL3xt5ETOS6Of/G/jp3/BE9tHBxbd+SP
+ +7fl0XGGqkNn2vKrGZFsOkklyfCkkdqnQf3dbt3/K0n99kCJa
+X-Received: by 2002:a05:600c:1392:b0:46e:4586:57e4 with SMTP id
+ 5b1f17b1804b1-47d84b32ef1mr242493015e9.24.1768289558123; 
+ Mon, 12 Jan 2026 23:32:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFBFblkaFqk3ZGIktPEbSFL9d+KBTH6aM6Z7lMcohn1HbwPDMoF7SW7DoQUyvfnmYyj8BYBwg==
+X-Received: by 2002:a05:600c:1392:b0:46e:4586:57e4 with SMTP id
+ 5b1f17b1804b1-47d84b32ef1mr242492715e9.24.1768289557568; 
+ Mon, 12 Jan 2026 23:32:37 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f668e03sm405380985e9.14.2026.01.12.23.32.29
+ 5b1f17b1804b1-47d7f653c61sm398591445e9.10.2026.01.12.23.32.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Jan 2026 23:32:29 -0800 (PST)
-Message-ID: <fbe54081-cfc3-47b3-9b6a-eb7a0c533723@redhat.com>
-Date: Tue, 13 Jan 2026 08:32:28 +0100
+ Mon, 12 Jan 2026 23:32:37 -0800 (PST)
+Message-ID: <85b04a6f-9fda-45b5-ba69-ca5cc7b6abc1@redhat.com>
+Date: Tue, 13 Jan 2026 08:32:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix build errors
+Subject: Re: [PATCH] tests/rcutorture: Fix build error
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20260112161626.1232639-1-clg@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20260112163350.1251114-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -141,19 +138,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260112161626.1232639-1-clg@redhat.com>
+In-Reply-To: <20260112163350.1251114-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,45 +166,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/12/26 17:16, Cédric Le Goater wrote:
+On 1/12/26 17:33, Cédric Le Goater wrote:
 > Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
-> detects a truncation error:
+> detects an unused variable error:
 > 
->    ../target/riscv/cpu.c: In function ‘riscv_isa_write_fdt’:
->    ../target/riscv/cpu.c:2916:35: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 5 [-Werror=format-truncation=]
->     2916 |     snprintf(isa_base, maxlen, "rv%di", xlen);
->          |                                   ^~
->    ../target/riscv/cpu.c:2916:32: note: directive argument in the range [-2147483648, 2147483632]
->     2916 |     snprintf(isa_base, maxlen, "rv%di", xlen);
->          |                                ^~~~~~~
+>    ../tests/unit/rcutorture.c: In function ‘rcu_read_stress_test’:
+>    ../tests/unit/rcutorture.c:251:18: error: variable ‘garbage’ set but not used [-Werror=unused-but-set-variable=]
+>      251 |     volatile int garbage = 0;
+>          |                  ^~~~~~~
 > 
-> Since the xlen variable represents the register width (32, 64, 128) in
-> the RISC-V base ISA name, mask its value with a 8-bit bitmask to
-> satisfy the size constraints on the snprintf output.
+> Since the 'garbage' variable is used to generate memory reads from the
+> CPU while holding the RCU lock, it can not be removed. Tag it as
+> ((unused)) instead to silence the compiler warnings/errors.
 > 
-> Cc: Palmer Dabbelt <palmer@dabbelt.com>
-> Cc: Alistair Francis <alistair.francis@wdc.com>
-> Cc: Weiwei Li <liwei1518@gmail.com>
-> Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   target/riscv/cpu.c | 2 +-
+>   tests/unit/rcutorture.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index ffd98e8eed468645b8ceb8a7adb45718bdc4444d..e95eea024939d2cbb5747781c291fed0e1b07bb9 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2913,7 +2913,7 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
->       riscv_isa = riscv_isa_string(cpu);
->       qemu_fdt_setprop_string(fdt, nodename, "riscv,isa", riscv_isa);
+> diff --git a/tests/unit/rcutorture.c b/tests/unit/rcutorture.c
+> index 7662081683f5d781da74402113b73884780b1243..2f19d479a3f210cbca19205a0656eda1f4c2e5a7 100644
+> --- a/tests/unit/rcutorture.c
+> +++ b/tests/unit/rcutorture.c
+> @@ -248,7 +248,7 @@ static void *rcu_read_stress_test(void *arg)
+>       int pc;
+>       long long n_reads_local = 0;
+>       long long rcu_stress_local[RCU_STRESS_PIPE_LEN + 1] = { 0 };
+> -    volatile int garbage = 0;
+> +    volatile int garbage __attribute__ ((unused)) = 0;
 >   
-> -    snprintf(isa_base, maxlen, "rv%di", xlen);
-> +    snprintf(isa_base, maxlen, "rv%di", xlen & 0xFF);
->       qemu_fdt_setprop_string(fdt, nodename, "riscv,isa-base", isa_base);
+>       rcu_register_thread();
 >   
->       isa_extensions = riscv_isa_extensions_list(cpu, &count);
 
 Applied to vfio-next.
 
