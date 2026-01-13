@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568D4D29DE2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 590E5D29DEC
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 08:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfZgz-0003i2-7w; Tue, 13 Jan 2026 03:23:58 -0500
+	id 1vfZh0-0003i8-1h; Tue, 13 Jan 2026 03:23:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vfZgq-0003hU-QG
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 03:23:49 -0500
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ id 1vfZgp-0003hL-Cr
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 03:23:48 -0500
+Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vfZgm-0006Qf-JK
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 03:23:48 -0500
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-4ffc5fa443dso39325601cf.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 00:23:40 -0800 (PST)
+ id 1vfZgk-0006Nj-Vr
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 03:23:45 -0500
+Received: by mail-qt1-x831.google.com with SMTP id
+ d75a77b69052e-4ffc0ddefc4so83594541cf.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 00:23:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768292619; x=1768897419; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768292601; x=1768897401; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z2+iOThE2nnNIq/6uanHOCwaWTvCKLRowNUz3BaKNZE=;
- b=irqKf8b4Zm8rp+4HFOsNGvCdV0dkDDRDw3YUm3oQpF9tUKypy/btobgoE3hesx7z4q
- /fe2TS+Tu4iPz0hNsqyzCHu6tQzmYJBKIf/wF8rUmzvGC6cBlngwY00MYsBe9wVy8opd
- N9bRB2oq6bnJ7UsC9iEgYl1usgW5kqgmMJLp5LHHsX6ACJzmmSXYh7e/KmZwawlvF+Fx
- XZizJBol1ZatWQyPtUV+Hm04GjDVG7g4nc+TsVqAu3Nnj1ZYzz3Oq2nkGkIjV4OmQceZ
- QIjzodQC9QBxPSvc7ykYsH32Fm3a8xMmeioV+Admp573kY56NCPkZabyZ6eevrU6+DLJ
- qeag==
+ bh=cC0XgdfhUh7UbRoLmiavYRm1qQhzMqioeoKIJX22arY=;
+ b=YSQusT+0xoI9GZ1nv+GBOm0qafCtme+QYy8VX6XSkuVVnB6b9JGJ0UDY9xAX+3vaO1
+ s/gos0RaxGsaPNgZz9rT+P95/9QbMMSlxjah5lamxMNc0cLPkm20ieE63AH/4PXReBqr
+ QMKrXfRojG9vVKrWiyfgxhMuvbQwpMUwpCAyWAkAe0gtR6q0/HGcjwtcRQfIPokFtO4N
+ tYdAyHTg8heezwrj2YCvQU6C/s0iq4HAk6Wq8IgtjYNEBY7JVGlHajZr5NQsDzHEUtyN
+ 6aoRTbRNnrgY2xljqsYT1c2f3g3Fj/hTXkT/xGtdjCxndUkmFL+OafeAvSsuhGM6CjQC
+ g0rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768292619; x=1768897419;
+ d=1e100.net; s=20230601; t=1768292601; x=1768897401;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Z2+iOThE2nnNIq/6uanHOCwaWTvCKLRowNUz3BaKNZE=;
- b=kkjfz0xJYeUmJ5FkRxG8/g7x3RW8YQp8+u6Qo8ictGXywbaybalswt4BUGlO5K/wRv
- OcY2jvZ7fbxNw79q7jVKvXK6+PiDWQ2+UHjpl77uaXr19h4PVpCLQphXEY2NXPnB4PLG
- II5PlJHYTRB+TxyfSWC+Zmz3EHyy/coXzO3DeNbM30gJj3qVEZB8fRRsL4hxxrw2EDwi
- KN2Drkah01Zs0e7+P3RPwC8xFQJiw0lBc4CXMMCRixX8AUPUVG84dWz8eX8EbQk/ms4l
- VA/wES98ZHCTGdqqwcqVFbYJaTFrp+874WsPRrcYL0sHzvo3FoHyy/L0yLu3DS1p6lBs
- LWpw==
-X-Gm-Message-State: AOJu0Yxa3y7dSMI5sOWv3Ph05yYjgqp3IRdGyT8VFalYvrIdO+6Q2ekn
- wdFRaGlTve6XHw4Dwa0lLC8j8ltWN6+39m1G0cgM4ibgP2rzg9YA33kurlGZC/YgQP/wo6uj5kN
- s7pSDzT4C8fj1DpOa64ITmp29/wFbofE=
-X-Gm-Gg: AY/fxX6lc2wJaPbk+0iEtddC/uOoRRes7/06DvfaN+IaQhhYZv1N25Rgh7WW2YiT69c
- bu0GvcMcfIT2otdLBxO1u903PStf2kcxowYzDJG7t8quwJ8rNjm/Gb9/pUnL+357OYD1dZtfu+2
- nZ04yG97R1ey4UllyHv1Y89fu00GIWn8VZeO158mQDVb9BiOy1+g2zN83lo88Dg0X/TnAOzBIrh
- rq+lYge7JsKT4elzK+AIR+qyytNup8BYZYIzwirZtieRhy0FEAe+eqv8WioE7y5L7tMdLz9ctqN
- jWFDPxTa8Dqd5wrTlcLTCzPv91w=
-X-Google-Smtp-Source: AGHT+IGCTef4q4Ah4jNadY6WPWYlN3dYOFOBksbdLSZ/jfchJ1rb6uSUfPidYr5Y1Xpg608rNK8XN2AZU2GNV74xZw4=
-X-Received: by 2002:a05:622a:1811:b0:4ee:213b:3391 with SMTP id
- d75a77b69052e-4ffb482f716mr297131191cf.20.1768292619487; Tue, 13 Jan 2026
- 00:23:39 -0800 (PST)
+ bh=cC0XgdfhUh7UbRoLmiavYRm1qQhzMqioeoKIJX22arY=;
+ b=XqE9Kpz3gw+EPVoM82EVa+amnc2qLo4SK70k/GcnVlNAel6hu2KxJd0nC45HQN3mUH
+ rFWmXO/l1+OR+seEW+Vypv3jEbXA6pAoUBMySHch1hMiNg3XBhv5598pmlxhLZPGZwly
+ K45I0lXu6r60/FmhiQkYI8vgt41pE/eBH5P/y+5bC4PENNUZSqle89wA2iEWStyH8Wa0
+ d9qsQb5r5gNGbfP2RhaAVMjdJ1jmN5YNMd2lQkXsAeMjYvtAK9kY+gdsdvE2qZS7Yp6a
+ jiSbOjFalG/di8N3Zg5B29xvCR4qLdinvvcBO9eNE10QDQigs49g4klxJolSrGbVsYYI
+ YpHw==
+X-Gm-Message-State: AOJu0YzMh33Zr1nhmH0AtGKQlajAjZfD8OO4U5QGrosQliLCJbGUUlfU
+ EVJ7hI/At5qJFIlOkSgjsxNulZmKYC1MicBT8ptoHOWIa003ZFLj1xIFsXU/shQmjIwZNOSm3TU
+ vVhrsbeHqshxbommBEgUWeGsToUrCU8Q=
+X-Gm-Gg: AY/fxX5ydBfets6KPe24Tli55cj152Z86eYiTv82QGt/vxwwZhrq6BJ0xs48He0CCYN
+ V2ptq6UigtjCTtAGbzomE8lqeJpKNqG2RMjuZkjTTcMEZmDhng5aySbz6xe/W7Jtlu11QeN/BSi
+ 2bINOZ/4cWP9Lp3EuBABm5HsGv/zp70ai8iPFh4qfuC6f75U+P/z4ncOrkTBu7ijqjVPGA29YBM
+ a4/vOvTrw9aLW+zk7cTpuCtmjIpx01ozzYHrX8OXpr6srcEDky73iwtnmbLhPp8AYdbYTPjXVZZ
+ uvu/P4WFw/IF+YsLJaNmguJeWw7uXbPxa6MgXA==
+X-Google-Smtp-Source: AGHT+IFKljBkrfKxFu/m6nh5wKC7/e8DTDnUvmWgJCJi6iP0dYiIJNjeUyKVjimhdo5YJdps6ZXY5mCqV7m4y3Dgrd8=
+X-Received: by 2002:ac8:6f0b:0:b0:4ed:d76f:a350 with SMTP id
+ d75a77b69052e-4ffb4a1d824mr285649201cf.75.1768292600986; Tue, 13 Jan 2026
+ 00:23:20 -0800 (PST)
 MIME-Version: 1.0
 References: <20260112230127.99125-1-yodel.eldar@yodel.dev>
- <20260112230127.99125-2-yodel.eldar@yodel.dev>
-In-Reply-To: <20260112230127.99125-2-yodel.eldar@yodel.dev>
+ <20260112230127.99125-4-yodel.eldar@yodel.dev>
+In-Reply-To: <20260112230127.99125-4-yodel.eldar@yodel.dev>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 13 Jan 2026 12:23:27 +0400
-X-Gm-Features: AZwV_QhamLfij3JdOa_NqNWKWFLOEq5ssRr-oPApLoHTMD6OlNfb-aKKqa7McCE
-Message-ID: <CAJ+F1C+T06nv=_tZoA0LqOVsSSd7gRHDD9Ffpy7c-Y29To0xiA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 1/3] tests/vhost-user-bridge: Move to
- contrib/vhost-user-bridge/
+Date: Tue, 13 Jan 2026 12:23:09 +0400
+X-Gm-Features: AZwV_Qhv8tS5cXjiQeFOS2O_av9alVcS2aoY2HD_L8iMbuCJ8GVX1jzjYBfqr0Y
+Message-ID: <CAJ+F1C+OZfmAh2eJrH9__8yFNr-p1njg6DGseN1VWKu344+ReQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/3] contrib/vhost-user-bridge: Add UDP receive
+ hexdump
 To: Yodel Eldar <yodel.eldar@yodel.dev>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
@@ -76,8 +76,8 @@ Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x835.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x831.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,128 +103,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Jan 13, 2026 at 3:03=E2=80=AFAM Yodel Eldar <yodel.eldar@yodel.dev>=
  wrote:
 >
-> After the introduction of vhost-user-bridge and libvhost-user, we
-> formed the convention of placing vhost-user daemons in eponymous subdirs
-> of contrib/. Follow this convention.
+> vhost-user-bridge debug prints UDP TX hexdumps in its transmit handler,
+> but does not for receives, even though they are beneficial for testing.
+> Add an RX hexdump in the receive callback.
 >
-> Create a contrib/vhost-user-bridge/ directory and move vhost-user-bridge
-> into it. Extract its build target definition from tests/meson.build into
-> the new directory, and include its subdir in the root-level meson.build.
->
-> Add a section about it in the "vhost-user daemons in contrib" document.
+> To delineate between transmits and receives, also add a debug print
+> indicating that the program is in the transmit handler.
 >
 > Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 
 Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 > ---
->  contrib/vhost-user-bridge/meson.build         |  4 ++
->  .../vhost-user-bridge}/vhost-user-bridge.c    |  0
->  .../devices/virtio/vhost-user-contrib.rst     | 39 +++++++++++++++++++
->  meson.build                                   |  1 +
->  tests/meson.build                             |  6 ---
->  5 files changed, 44 insertions(+), 6 deletions(-)
->  create mode 100644 contrib/vhost-user-bridge/meson.build
->  rename {tests =3D> contrib/vhost-user-bridge}/vhost-user-bridge.c (100%)
+>  contrib/vhost-user-bridge/vhost-user-bridge.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 >
-> diff --git a/contrib/vhost-user-bridge/meson.build b/contrib/vhost-user-b=
-ridge/meson.build
-> new file mode 100644
-> index 0000000000..aa58c1df20
-> --- /dev/null
-> +++ b/contrib/vhost-user-bridge/meson.build
-> @@ -0,0 +1,4 @@
-> +if have_tools and have_vhost_user and host_os =3D=3D 'linux'
-> +  executable('vhost-user-bridge', files('vhost-user-bridge.c'),
-> +             dependencies: [qemuutil, vhost_user], install: false)
-> +endif
-> diff --git a/tests/vhost-user-bridge.c b/contrib/vhost-user-bridge/vhost-=
-user-bridge.c
-> similarity index 100%
-> rename from tests/vhost-user-bridge.c
-> rename to contrib/vhost-user-bridge/vhost-user-bridge.c
-> diff --git a/docs/system/devices/virtio/vhost-user-contrib.rst b/docs/sys=
-tem/devices/virtio/vhost-user-contrib.rst
-> index 48d04d2ade..660d29a700 100644
-> --- a/docs/system/devices/virtio/vhost-user-contrib.rst
-> +++ b/docs/system/devices/virtio/vhost-user-contrib.rst
-> @@ -85,3 +85,42 @@ vhost-user-scsi - SCSI controller
+> diff --git a/contrib/vhost-user-bridge/vhost-user-bridge.c b/contrib/vhos=
+t-user-bridge/vhost-user-bridge.c
+> index ce4c3426d3..3f0fd0fa49 100644
+> --- a/contrib/vhost-user-bridge/vhost-user-bridge.c
+> +++ b/contrib/vhost-user-bridge/vhost-user-bridge.c
+> @@ -179,6 +179,9 @@ vubr_handle_tx(VuDev *dev, int qidx)
 >
->  The vhost-user-scsi daemon can proxy iSCSI devices onto a virtualized
->  SCSI controller.
-> +
-> +.. _vhost_user_bridge:
-> +
-> +vhost-user-bridge - Network bridge
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +The vhost-user-bridge daemon serves as a development tool for testing re=
-al
-> +internet traffic by providing a networking backend, i.e. server, for the
-> +vhost-user protocol.
-> +
-> +Example
-> +-------
-> +For a single QEMU instance that both runs the user-mode net stack (slirp=
-) and
-> +serves as a vhost-user protocol frontend, i.e. client, simultaneously:
-> +
-> +First, start vhost-user-bridge:
-> +
-> +::
-> +
-> +  $ vhost-user-bridge -u /tmp/vubr.sock \
-> +                      -l 127.0.0.1:4444 \
-> +                      -r 127.0.0.1:5555
-> +
-> +Then, invoke QEMU:
-> +
-> +::
-> +
-> +  $ qemu-system-x86_64 \
-> +        -m 4G \
-> +        -object memory-backend-memfd,id=3Dmem0,size=3D4G,share=3Don,prea=
-lloc=3Don \
-> +        -numa node,memdev=3Dmem0 \
-> +        -chardev socket,id=3Dchar0,path=3D/tmp/vubr.sock \
-> +        -netdev vhost-user,id=3Dvhost0,chardev=3Dchar0,vhostforce=3Don \
-> +        -device virtio-net-pci,netdev=3Dvhost0 \
-> +        -netdev socket,id=3Dudp0,udp=3Dlocalhost:4444,localaddr=3Dlocalh=
-ost:5555 \
-> +        -netdev user,id=3Duser0 \
-> +        -netdev hubport,id=3Dhub0,hubid=3D0,netdev=3Dudp0 \
-> +        -netdev hubport,id=3Dhub1,hubid=3D0,netdev=3Duser0 \
-> +        ...
-> diff --git a/meson.build b/meson.build
-> index db87358d62..a4e8a9b7b5 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4546,6 +4546,7 @@ if have_tools
->      subdir('contrib/vhost-user-gpu')
->      subdir('contrib/vhost-user-input')
->      subdir('contrib/vhost-user-scsi')
-> +    subdir('contrib/vhost-user-bridge')
->    endif
+>      assert(qidx % 2);
 >
->    if host_os =3D=3D 'linux'
-> diff --git a/tests/meson.build b/tests/meson.build
-> index cbe7916241..87861b2857 100644
-> --- a/tests/meson.build
-> +++ b/tests/meson.build
-> @@ -70,12 +70,6 @@ test_deps =3D {
->    'test-qht-par': qht_bench,
->  }
+> +    DPRINT("\n\n   ***   IN UDP TRANSMIT HANDLER    ***\n\n");
+> +    DPRINT("    hdrlen =3D %d\n", hdrlen);
+> +
+>      for (;;) {
+>          ssize_t ret;
+>          unsigned int out_num;
+> @@ -333,6 +336,10 @@ vubr_backend_recv_cb(int sock, void *ctx)
+>          };
+>          ret =3D RETRY_ON_EINTR(recvmsg(vubr->backend_udp_sock, &msg, 0))=
+;
 >
-> -if have_tools and have_vhost_user and host_os =3D=3D 'linux'
-> -  executable('vhost-user-bridge',
-> -             sources: files('vhost-user-bridge.c'),
-> -             dependencies: [qemuutil, vhost_user])
-> -endif
-> -
->  subdir('decode')
->
->  if 'CONFIG_TCG' in config_all_accel
+> +        if (ret > 0 && VHOST_USER_BRIDGE_DEBUG) {
+> +            iov_hexdump(sg, num, stderr, "RX:", ret);
+> +        }
+> +
+>          if (i =3D=3D 0) {
+>              iov_restore_front(elem->in_sg, sg, hdrlen);
+>          }
 > --
 > 2.52.0
 >
