@@ -4,74 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D3FD2D0ED
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 12:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23766D2D0EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 12:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfdxm-0004rf-6D; Tue, 13 Jan 2026 07:57:34 -0500
+	id 1vfdzY-0001Jk-KX; Tue, 13 Jan 2026 07:59:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vfdxk-0004py-Bb
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 07:57:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vfdzS-0000uO-Si; Tue, 13 Jan 2026 07:59:19 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vfdxi-0000YX-TW
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 07:57:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768309050;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LDo6APYsqEcvy2DtL9viPiFuCFfAe9OQtgUONrwg/7A=;
- b=D3lRs8mYkx2GAKfxVPAAQZCSYzlC/IA7c3nVLtfSdNCOVUCWbczGqra9hjPybjniC4Tyq3
- Bddimas9PZdB693u4TbwLUwY6WOA+b8hwWouUCUgtkdJjZUgxUseX7Miol/9b23ZhMB28b
- QdVfZP0jNFPpos49JpIAOifsqJWo5wk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-m4sxiyrTO1GvkqUsVnKpFQ-1; Tue,
- 13 Jan 2026 07:57:27 -0500
-X-MC-Unique: m4sxiyrTO1GvkqUsVnKpFQ-1
-X-Mimecast-MFC-AGG-ID: m4sxiyrTO1GvkqUsVnKpFQ_1768309046
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3995A1955DC3; Tue, 13 Jan 2026 12:57:26 +0000 (UTC)
-Received: from angien.pipo.sk (unknown [10.45.242.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0E10F1800665; Tue, 13 Jan 2026 12:57:23 +0000 (UTC)
-Date: Tue, 13 Jan 2026 13:57:20 +0100
-From: Peter Krempa <pkrempa@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] block: Wire up 'flat' mode also for 'query-block'
-Message-ID: <aWZBMNaiolcB3k0f@angien.pipo.sk>
-References: <38fa3ec064ed20282fb61f70ffed8e0abb3abbfa.1765445716.git.pkrempa@redhat.com>
- <874iorgm4b.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vfdzQ-0000gM-S6; Tue, 13 Jan 2026 07:59:18 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id CA96717D9A8;
+ Tue, 13 Jan 2026 15:58:46 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C0CA834C3FC;
+ Tue, 13 Jan 2026 15:58:51 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-user@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH RFC 3/3] linux-user/syscall.c: consolidate statfs calls further
+Date: Tue, 13 Jan 2026 15:58:44 +0300
+Message-ID: <20260113125849.910112-7-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260113125849.910112-1-mjt@tls.msk.ru>
+References: <20260113125849.910112-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <874iorgm4b.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pkrempa@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,100 +60,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 12, 2026 at 11:29:24 +0100, Markus Armbruster wrote:
-> Peter Krempa <pkrempa@redhat.com> writes:
-> 
-> > From: Peter Krempa <pkrempa@redhat.com>
-> >
-> > Some time ago (commit facda5443f5a8) I've added 'flat' mode (which
-> > omits 'backing-image' key in reply) to 'query-named-block-nodes' to
-> > minimize the size of the returned JSON for deeper backing chains.
-> 
-> Almost six years.  Time flies :)
+Since statfs & statfs64 implementations are exactly the same,
+differs only in "64" suffix, merge them into one using a common
+macro.
 
-Indeed! Actually last year (already) I've deleted the corresponding
-capability since libvirt now only supports QEMUs which do support this
-:D
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ linux-user/syscall.c | 110 ++++++++++++++++---------------------------
+ 1 file changed, 40 insertions(+), 70 deletions(-)
 
-> 
-> > While 'query-block' behaved slightly better it turns out that in libvirt
-> > we do call 'query-block' to figure out some information about the
-> > block device (e.g. throttling info) but we don't look at the backing
-> > chain itself.
-> >
-> > Wire up 'flat' for 'query-block' so that libvirt can ask for an
-> > abbreviated output. The implementation is much simpler as the internals
-> > are shared with 'query-named-block-nodes'.
-> >
-> > Signed-off-by: Peter Krempa <pkrempa@redhat.com>
-> > ---
-> >  block/monitor/block-hmp-cmds.c | 4 ++--
-> >  block/qapi.c                   | 9 +++++----
-> >  qapi/block-core.json           | 4 ++++
-> >  ui/cocoa.m                     | 2 +-
-> >  4 files changed, 12 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-> > index 3640d1f3dc..d301f56a39 100644
-> > --- a/block/monitor/block-hmp-cmds.c
-> > +++ b/block/monitor/block-hmp-cmds.c
-> > @@ -422,7 +422,7 @@ void hmp_nbd_server_start(Monitor *mon, const QDict *qdict)
-> >      /* Then try adding all block devices.  If one fails, close all and
-> >       * exit.
-> >       */
-> > -    block_list = qmp_query_block(NULL);
-> > +    block_list = qmp_query_block(false, false, NULL);
-> 
-> Is info->value->inserted->image->backing_image used here?
-> 
-> If not, we can pass true and save allocations.  Thought, not a demand.
-
-It's not used in hmp_nbd_server_start. I'll do a separate patch for it
-as it's simple enough, but IMO not related to this patch which should
-keep behaviour of unrelated code.
-
-> Same for the other calls.
-> 
-> >
-> >      for (info = block_list; info; info = info->next) {
-> >          if (!info->value->inserted) {
-> > @@ -741,7 +741,7 @@ void hmp_info_block(Monitor *mon, const QDict *qdict)
-
-... but this one does use it (although for questionably useful
-information: first backing image name and the depth of the backing chain).
-
-
-[...]
-
-
-> > diff --git a/qapi/block-core.json b/qapi/block-core.json
-> > index b82af74256..e89d878544 100644
-> > --- a/qapi/block-core.json
-> > +++ b/qapi/block-core.json
-> > @@ -855,6 +855,9 @@
-> >  #
-> >  # Get a list of `BlockInfo` for all virtual block devices.
-> >  #
-> > +# @flat: Omit the nested data about backing image ("backing-image"
-> > +#     key) if true.  Default is false (Since 11.0)
-> > +#
-> 
-> The "backing-image" key is actually BlockInfo member inserted member
-> image member backing-image.  This is even more deeply nested than for
-> query-named-block-nodes.  Doc text good enough?
-
-Hmm, how about:
-
-+# @flat: Omit the nested data about backing image (Omitted are contents of
-+#        'backing-image' key of the 'ImageInfo' struct which is returned
-+#        as 'image' key of 'BlockDeviceInfo' struct returned as 'inserted' key
-+#        in  'BlockInfo' struct returned by this command).
-
-or 
-
-+# @flat: Omit the nested data about backing image (Omitted are contents
-+#        of 'BlockInfo'->inserted->image->backing-image).
-
-?
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 1f84c296d5..1b888bccfc 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -10972,80 +10972,50 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return ret;
+     case TARGET_NR_setpriority:
+         return get_errno(setpriority(arg1, arg2, arg3));
+-#ifdef TARGET_NR_statfs
+-    case TARGET_NR_statfs:
+-    case TARGET_NR_fstatfs:
+-        {
+-            struct statf stfs;
+-            struct target_statfs *target_stfs;
+-            if (num == TARGET_NR_statfs) {
+-                if (!(p = lock_user_string(arg1))) {
+-                    return -TARGET_EFAULT;
+-                }
+-                ret = get_errno(statfs(path(p), &stfs));
+-                unlock_user(p, arg1, 0);
+-            } else /* if (num == TARGET_NR_fstatfs) */ {
+-                ret = get_errno(fstatfs(arg1, &stfs));
+-            }
+-            if (is_error(ret)) {
+-                return ret;
+-            }
+-            if (!lock_user_struct(VERIFY_WRITE, target_stfs, arg2, 0))
+-                return -TARGET_EFAULT;
+-            __put_user(stfs.f_type, &target_stfs->f_type);
+-            __put_user(stfs.f_bsize, &target_stfs->f_bsize);
+-            __put_user(stfs.f_blocks, &target_stfs->f_blocks);
+-            __put_user(stfs.f_bfree, &target_stfs->f_bfree);
+-            __put_user(stfs.f_bavail, &target_stfs->f_bavail);
+-            __put_user(stfs.f_files, &target_stfs->f_files);
+-            __put_user(stfs.f_ffree, &target_stfs->f_ffree);
+-            __put_user(stfs.f_fsid.__val[0], &target_stfs->f_fsid.val[0]);
+-            __put_user(stfs.f_fsid.__val[1], &target_stfs->f_fsid.val[1]);
+-            __put_user(stfs.f_namelen, &target_stfs->f_namelen);
+-            __put_user(stfs.f_frsize, &target_stfs->f_frsize);
+-            __put_user(stfs.f_flags, &target_stfs->f_flags);
+-            memset(target_stfs->f_spare, 0, sizeof(target_stfs->f_spare));
+-            unlock_user_struct(target_stfs, arg2, 1);
+-            return ret;
++
++#define statfs_fstatfs_impl(variant) /* variant is statfs or statfs64 */ \
++    case TARGET_NR_##variant: \
++    case TARGET_NR_f##variant: \
++        { \
++            struct statfs stfs; \
++            struct target_##variant *target_stfs; \
++            if (num == TARGET_NR_##variant) { \
++                if (!(p = lock_user_string(arg1))) { \
++                    return -TARGET_EFAULT; \
++                } \
++                ret = get_errno(statfs(path(p), &stfs)); \
++                unlock_user(p, arg1, 0); \
++            } else /* if (num == TARGET_NR_f##variant) */ { \
++                ret = get_errno(fstatfs(arg1, &stfs)); \
++            } \
++            if (is_error(ret)) { \
++                return ret; \
++            } \
++            if (!lock_user_struct(VERIFY_WRITE, target_stfs, arg2, 0)) \
++                return -TARGET_EFAULT; \
++            __put_user(stfs.f_type, &target_stfs->f_type); \
++            __put_user(stfs.f_bsize, &target_stfs->f_bsize); \
++            __put_user(stfs.f_blocks, &target_stfs->f_blocks); \
++            __put_user(stfs.f_bfree, &target_stfs->f_bfree); \
++            __put_user(stfs.f_bavail, &target_stfs->f_bavail); \
++            __put_user(stfs.f_files, &target_stfs->f_files); \
++            __put_user(stfs.f_ffree, &target_stfs->f_ffree); \
++            __put_user(stfs.f_fsid.__val[0], &target_stfs->f_fsid.val[0]); \
++            __put_user(stfs.f_fsid.__val[1], &target_stfs->f_fsid.val[1]); \
++            __put_user(stfs.f_namelen, &target_stfs->f_namelen); \
++            __put_user(stfs.f_frsize, &target_stfs->f_frsize); \
++            __put_user(stfs.f_flags, &target_stfs->f_flags); \
++            memset(target_stfs->f_spare, 0, sizeof(target_stfs->f_spare)); \
++            unlock_user_struct(target_stfs, arg2, 1); \
++            return ret; \
+         }
++#ifdef TARGET_NR_statfs
++    statfs_fstatfs_impl(statfs);
+ #endif
+ #ifdef TARGET_NR_statfs64
+-    case TARGET_NR_statfs64:
+-    case TARGET_NR_fstatfs64:
+-        {
+-            struct statfs stfs;
+-            struct target_statfs64 *target_stfs;
+-            if (num == TARGET_NR_statfs64) {
+-                if (!(p = lock_user_string(arg1))) {
+-                    return -TARGET_EFAULT;
+-                }
+-                ret = get_errno(statfs(path(p), &stfs));
+-                unlock_user(p, arg1, 0);
+-                } else /* if (num == TARGET_NR_fstatfs64) */ {
+-                ret = get_errno(fstatfs(arg1, &stfs));
+-            }
+-            if (is_error(ret)) {
+-                return ret;
+-            }
+-            if (!lock_user_struct(VERIFY_WRITE, target_stfs, arg3, 0))
+-                return -TARGET_EFAULT;
+-            __put_user(stfs.f_type, &target_stfs->f_type);
+-            __put_user(stfs.f_bsize, &target_stfs->f_bsize);
+-            __put_user(stfs.f_blocks, &target_stfs->f_blocks);
+-            __put_user(stfs.f_bfree, &target_stfs->f_bfree);
+-            __put_user(stfs.f_bavail, &target_stfs->f_bavail);
+-            __put_user(stfs.f_files, &target_stfs->f_files);
+-            __put_user(stfs.f_ffree, &target_stfs->f_ffree);
+-            __put_user(stfs.f_fsid.__val[0], &target_stfs->f_fsid.val[0]);
+-            __put_user(stfs.f_fsid.__val[1], &target_stfs->f_fsid.val[1]);
+-            __put_user(stfs.f_namelen, &target_stfs->f_namelen);
+-            __put_user(stfs.f_frsize, &target_stfs->f_frsize);
+-            __put_user(stfs.f_flags, &target_stfs->f_flags);
+-            memset(target_stfs->f_spare, 0, sizeof(target_stfs->f_spare));
+-            unlock_user_struct(target_stfs, arg3, 1);
+-            return ret;
+-        }
++    statfs_fstatfs_impl(statfs64);
+ #endif
++
+ #ifdef TARGET_NR_socketcall
+     case TARGET_NR_socketcall:
+         return do_socketcall(arg1, arg2);
+-- 
+2.47.3
 
 
