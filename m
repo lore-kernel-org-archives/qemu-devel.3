@@ -4,57 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54563D29DF7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E038FD29DF8
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 09:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfapy-0006xp-4S; Tue, 13 Jan 2026 04:37:18 -0500
+	id 1vfaqm-0002lO-Tf; Tue, 13 Jan 2026 04:38:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfapx-0006uU-11
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:37:17 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfaqj-0002W1-Tj
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:38:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfapv-0003JN-9N
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:37:16 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfaqh-0003RL-OZ
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:38:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768297034;
+ s=mimecast20190719; t=1768297083;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PVM8lXs/owQm/kANCC9AAoKIj8k8M6e8/O7my/HO0e8=;
- b=U4AtGWFGjGwLxEVLrndekCJVMR8k8i8Vk0uIbb57FDb40a/STSJ/Sn5Unsi971Wlu8Yxnf
- bJT3u3O3HEI8+urfzEbvGvdef9QZ8ne0NvWoZKfFcVxj50D+8j2glABtwrTzhEsm9jWXnL
- TP07j7/I/8SRv0ql6THrW0hIBOkZ7Do=
+ bh=Zt4qz9zkLm4guZEvlZSD9b2rLiteAgTtol3j0jSCt7k=;
+ b=GlgcNszWCtlZZpnzVk7aYiDSId/yExVRu0J+a3LN52MiAY8+rwZQRIl20G0FBI7Qwn9A9g
+ cukGzX6D/7KM5z18XN3ch5TpceYXrdRWt8ioJGHIoY6fUUhTA3UI1em4XUG/u8EGwTReN8
+ ZL5593jI66YlDUumuNSuJ3xoCnGodXc=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-601-2BbLbXAaMRWSwwMJ32AVBQ-1; Tue,
- 13 Jan 2026 04:37:10 -0500
-X-MC-Unique: 2BbLbXAaMRWSwwMJ32AVBQ-1
-X-Mimecast-MFC-AGG-ID: 2BbLbXAaMRWSwwMJ32AVBQ_1768297029
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-vTF202MlOPSf76pRdC3_Ng-1; Tue,
+ 13 Jan 2026 04:37:57 -0500
+X-MC-Unique: vTF202MlOPSf76pRdC3_Ng-1
+X-Mimecast-MFC-AGG-ID: vTF202MlOPSf76pRdC3_Ng_1768297076
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB77319541B9; Tue, 13 Jan 2026 09:37:08 +0000 (UTC)
+ id 1F7EF1954B24; Tue, 13 Jan 2026 09:37:56 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.79])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0E18F30001A2; Tue, 13 Jan 2026 09:37:05 +0000 (UTC)
+ id 771BA30001A2; Tue, 13 Jan 2026 09:37:53 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
+ Joao Martins <joao.m.martins@oracle.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>, Nicolin Chen <nicolinc@nvidia.com>,
- Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 09/41] intel_iommu: Introduce a new structure VTDHostIOMMUDevice
-Date: Tue, 13 Jan 2026 10:36:05 +0100
-Message-ID: <20260113093637.1549214-10-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>,
+ Giovannio Cabiddu <giovanni.cabiddu@intel.com>,
+ Rohith S R <rohith.s.r@intel.com>
+Subject: [PULL 25/41] vfio: Add a backend_flag parameter to
+ vfio_container_query_dirty_bitmap()
+Date: Tue, 13 Jan 2026 10:36:21 +0100
+Message-ID: <20260113093637.1549214-26-clg@redhat.com>
 In-Reply-To: <20260113093637.1549214-1-clg@redhat.com>
 References: <20260113093637.1549214-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,112 +89,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Joao Martins <joao.m.martins@oracle.com>
 
-Introduce a new structure VTDHostIOMMUDevice which replaces
-HostIOMMUDevice to be stored in hash table.
+This new parameter will be used in following patch, currently 0 is passed.
 
-It includes a reference to HostIOMMUDevice and IntelIOMMUState,
-also includes BDF information which will be used in future
-patches.
-
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260106061304.314546-8-zhenzhong.duan@intel.com
+Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
+Tested-by: Rohith S R <rohith.s.r@intel.com>
+Link: https://lore.kernel.org/qemu-devel/20251218062643.624796-5-zhenzhong.duan@intel.com
+[ clg: Fixed subject typo ]
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/i386/intel_iommu_internal.h |  7 +++++++
- include/hw/i386/intel_iommu.h  |  2 +-
- hw/i386/intel_iommu.c          | 15 +++++++++++++--
- 3 files changed, 21 insertions(+), 3 deletions(-)
+ include/hw/vfio/vfio-container.h |  8 ++++++--
+ hw/vfio-user/container.c         |  5 +++--
+ hw/vfio/container-legacy.c       |  5 +++--
+ hw/vfio/container.c              | 15 +++++++++------
+ hw/vfio/iommufd.c                |  7 ++++---
+ hw/vfio/listener.c               |  6 +++---
+ hw/vfio/trace-events             |  2 +-
+ 7 files changed, 29 insertions(+), 19 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 3330298884d598a0fcba80231d235cd4c1053c6d..02522f64e0796dfcb40945e62961d60be24a98ae 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -28,6 +28,7 @@
- #ifndef HW_I386_INTEL_IOMMU_INTERNAL_H
- #define HW_I386_INTEL_IOMMU_INTERNAL_H
- #include "hw/i386/intel_iommu.h"
-+#include "system/host_iommu_device.h"
+diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
+index c4b58d664b7e705d29be0e7116d609c6df0d42a9..9f6e8cedfc9541e84558d74bdb156e4963a68639 100644
+--- a/include/hw/vfio/vfio-container.h
++++ b/include/hw/vfio/vfio-container.h
+@@ -99,7 +99,9 @@ bool vfio_container_devices_dirty_tracking_is_supported(
+     const VFIOContainer *bcontainer);
+ int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
+                                       uint64_t iova, uint64_t size,
+-                                      hwaddr translated_addr, Error **errp);
++                                      uint64_t backend_flag,
++                                      hwaddr translated_addr,
++                                      Error **errp);
  
- /*
-  * Intel IOMMU register specification
-@@ -678,4 +679,10 @@ typedef struct VTDPASIDCacheInfo {
- /* Bits to decide the offset for each level */
- #define VTD_LEVEL_BITS           9
+ GList *vfio_container_get_iova_ranges(const VFIOContainer *bcontainer);
  
-+typedef struct VTDHostIOMMUDevice {
-+    IntelIOMMUState *iommu_state;
-+    PCIBus *bus;
-+    uint8_t devfn;
-+    HostIOMMUDevice *hiod;
-+} VTDHostIOMMUDevice;
- #endif
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 0b7832d25db39eb47078453a64881ba96a3e5c38..401322665ac8e1a25330825b9e506d3942249c92 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -302,7 +302,7 @@ struct IntelIOMMUState {
-     /* list of registered notifiers */
-     QLIST_HEAD(, VTDAddressSpace) vtd_as_with_notifiers;
+@@ -253,12 +255,14 @@ struct VFIOIOMMUClass {
+      * @vbmap: #VFIOBitmap internal bitmap structure
+      * @iova: iova base address
+      * @size: size of iova range
++     * @backend_flag: flags for backend, opaque to upper layer container
+      * @errp: pointer to Error*, to store an error if it happens.
+      *
+      * Returns zero to indicate success and negative for error.
+      */
+     int (*query_dirty_bitmap)(const VFIOContainer *bcontainer,
+-                VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
++                              VFIOBitmap *vbmap, hwaddr iova, hwaddr size,
++                              uint64_t backend_flag, Error **errp);
+     /* PCI specific */
+     int (*pci_hot_reset)(VFIODevice *vbasedev, bool single);
  
--    GHashTable *vtd_host_iommu_dev;             /* HostIOMMUDevice */
-+    GHashTable *vtd_host_iommu_dev;             /* VTDHostIOMMUDevice */
- 
-     /* interrupt remapping */
-     bool intr_enabled;              /* Whether guest enabled IR */
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 9ce1bab93c56cd3d303e24be43c6ae1e2c4716a0..3a3725e489595121b1fdb0f38a1e85fa7f64c1f6 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -288,7 +288,10 @@ static gboolean vtd_hiod_equal(gconstpointer v1, gconstpointer v2)
- 
- static void vtd_hiod_destroy(gpointer v)
- {
--    object_unref(v);
-+    VTDHostIOMMUDevice *vtd_hiod = v;
-+
-+    object_unref(vtd_hiod->hiod);
-+    g_free(vtd_hiod);
+diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
+index d5275a463b8d99eae967114e4e0ade70b2076570..796289a469033ef47fa7199dbe30d02f0ba83ada 100644
+--- a/hw/vfio-user/container.c
++++ b/hw/vfio-user/container.c
+@@ -163,8 +163,9 @@ vfio_user_set_dirty_page_tracking(const VFIOContainer *bcontainer,
  }
  
- static gboolean vtd_hash_remove_by_domain(gpointer key, gpointer value,
-@@ -4601,6 +4604,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-                                      HostIOMMUDevice *hiod, Error **errp)
+ static int vfio_user_query_dirty_bitmap(const VFIOContainer *bcontainer,
+-                                         VFIOBitmap *vbmap, hwaddr iova,
+-                                         hwaddr size, Error **errp)
++                                        VFIOBitmap *vbmap, hwaddr iova,
++                                        hwaddr size, uint64_t backend_flag,
++                                        Error **errp)
  {
-     IntelIOMMUState *s = opaque;
-+    VTDHostIOMMUDevice *vtd_hiod;
-     struct vtd_as_key key = {
-         .bus = bus,
-         .devfn = devfn,
-@@ -4623,7 +4627,14 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-         return false;
+     error_setg_errno(errp, ENOTSUP, "Not supported");
+     return -ENOTSUP;
+diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+index 48bcbc0264effc100642ff59f510533bf0ad2180..625f151364c060135076cd19537810bbe61ab998 100644
+--- a/hw/vfio/container-legacy.c
++++ b/hw/vfio/container-legacy.c
+@@ -154,7 +154,7 @@ static int vfio_legacy_dma_unmap_one(const VFIOLegacyContainer *container,
      }
  
-+    vtd_hiod = g_malloc0(sizeof(VTDHostIOMMUDevice));
-+    vtd_hiod->bus = bus;
-+    vtd_hiod->devfn = (uint8_t)devfn;
-+    vtd_hiod->iommu_state = s;
-+    vtd_hiod->hiod = hiod;
-+
-     if (!vtd_check_hiod(s, hiod, errp)) {
-+        g_free(vtd_hiod);
-         vtd_iommu_unlock(s);
-         return false;
+     if (need_dirty_sync) {
+-        ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
++        ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size, 0,
+                                     iotlb->translated_addr, &local_err);
+         if (ret) {
+             error_report_err(local_err);
+@@ -255,7 +255,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainer *bcontainer,
+ }
+ 
+ static int vfio_legacy_query_dirty_bitmap(const VFIOContainer *bcontainer,
+-                      VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
++                                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size,
++                                   uint64_t backend_flag, Error **errp)
+ {
+     const VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
+     struct vfio_iommu_type1_dirty_bitmap *dbitmap;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 5993d9054579077683720959cfc8e0d76eef519d..9881f5df2cc34262ae6aa88aa937659e7b197cd2 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -213,13 +213,13 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
+ 
+ static int vfio_container_iommu_query_dirty_bitmap(
+     const VFIOContainer *bcontainer, VFIOBitmap *vbmap, hwaddr iova,
+-    hwaddr size, Error **errp)
++    hwaddr size, uint64_t backend_flag, Error **errp)
+ {
+     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+ 
+     g_assert(vioc->query_dirty_bitmap);
+     return vioc->query_dirty_bitmap(bcontainer, vbmap, iova, size,
+-                                               errp);
++                                    backend_flag, errp);
+ }
+ 
+ static int vfio_container_devices_query_dirty_bitmap(
+@@ -247,7 +247,9 @@ static int vfio_container_devices_query_dirty_bitmap(
+ 
+ int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
+                                       uint64_t iova, uint64_t size,
+-                                      hwaddr translated_addr, Error **errp)
++                                      uint64_t backend_flag,
++                                      hwaddr translated_addr,
++                                      Error **errp)
+ {
+     bool all_device_dirty_tracking =
+         vfio_container_devices_dirty_tracking_is_supported(bcontainer);
+@@ -274,7 +276,7 @@ int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
+                                                         errp);
+     } else {
+         ret = vfio_container_iommu_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
+-                                                     errp);
++                                                      backend_flag, errp);
      }
-@@ -4633,7 +4644,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-     new_key->devfn = devfn;
  
-     object_ref(hiod);
--    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, hiod);
-+    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, vtd_hiod);
+     if (ret) {
+@@ -285,8 +287,9 @@ int vfio_container_query_dirty_bitmap(const VFIOContainer *bcontainer,
+                                                          translated_addr,
+                                                          vbmap.pages);
  
-     vtd_iommu_unlock(s);
+-    trace_vfio_container_query_dirty_bitmap(iova, size, vbmap.size,
+-                                            translated_addr, dirty_pages);
++    trace_vfio_container_query_dirty_bitmap(iova, size, backend_flag,
++                                            vbmap.size, translated_addr,
++                                            dirty_pages);
+ out:
+     g_free(vbmap.bitmap);
  
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 6d6244d7b9723def647f3dd4eec7ef1558415bb2..a3fb674f50eea549d0aaaaa7138e8981d343697d 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -74,7 +74,7 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+         if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+-            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
++            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size, 0,
+                                                     iotlb->translated_addr,
+                                                     &local_err);
+             if (ret) {
+@@ -100,7 +100,7 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+     }
+ 
+     if (need_dirty_sync) {
+-        ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
++        ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size, 0,
+                                                 iotlb->translated_addr,
+                                                 &local_err);
+         if (ret) {
+@@ -216,7 +216,8 @@ err:
+ 
+ static int iommufd_query_dirty_bitmap(const VFIOContainer *bcontainer,
+                                       VFIOBitmap *vbmap, hwaddr iova,
+-                                      hwaddr size, Error **errp)
++                                      hwaddr size, uint64_t backend_flag,
++                                      Error **errp)
+ {
+     VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
+     unsigned long page_size = qemu_real_host_page_size();
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 7af010753597ee99eee12d32f38e945322cbbbbf..62699cb772d786c1510318dff73973ef4d297177 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -1083,7 +1083,7 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     translated_addr = memory_region_get_ram_addr(mr) + xlat;
+ 
+     ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+-                                translated_addr, &local_err);
++                                0, translated_addr, &local_err);
+     if (ret) {
+         error_prepend(&local_err,
+                       "vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+@@ -1119,7 +1119,7 @@ static int vfio_ram_discard_query_dirty_bitmap(MemoryRegionSection *section,
+      * Sync the whole mapped region (spanning multiple individual mappings)
+      * in one go.
+      */
+-    ret = vfio_container_query_dirty_bitmap(vrdl->bcontainer, iova, size,
++    ret = vfio_container_query_dirty_bitmap(vrdl->bcontainer, iova, size, 0,
+                                             translated_addr, &local_err);
+     if (ret) {
+         error_report_err(local_err);
+@@ -1204,7 +1204,7 @@ static int vfio_sync_dirty_bitmap(VFIOContainer *bcontainer,
+ 
+     return vfio_container_query_dirty_bitmap(bcontainer,
+                    REAL_HOST_PAGE_ALIGN(section->offset_within_address_space),
+-                   int128_get64(section->size), translated_addr, errp);
++                   int128_get64(section->size), 0, translated_addr, errp);
+ }
+ 
+ static void vfio_listener_log_sync(MemoryListener *listener,
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 1e895448cd9b4f6b0dd5bb445de4acef6090ec62..3c62bab7647a7d027038444fa4b164182d3feb2b 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -105,7 +105,7 @@ vfio_device_dirty_tracking_start(int nr_ranges, uint64_t min32, uint64_t max32,
+ vfio_iommu_map_dirty_notify(uint64_t iova_start, uint64_t iova_end) "iommu dirty @ 0x%"PRIx64" - 0x%"PRIx64
+ 
+ # container.c
+-vfio_container_query_dirty_bitmap(uint64_t iova, uint64_t size, uint64_t bitmap_size, uint64_t translated_addr, uint64_t dirty_pages) "iova=0x%"PRIx64" size= 0x%"PRIx64" bitmap_size=0x%"PRIx64" gpa=0x%"PRIx64" dirty_pages=%"PRIu64
++vfio_container_query_dirty_bitmap(uint64_t iova, uint64_t size, uint64_t backend_flag, uint64_t bitmap_size, uint64_t translated_addr, uint64_t dirty_pages) "iova=0x%"PRIx64" size=0x%"PRIx64" backend_flag=0x%"PRIx64" bitmap_size=0x%"PRIx64" gpa=0x%"PRIx64" dirty_pages=%"PRIu64
+ 
+ # container-legacy.c
+ vfio_container_disconnect(int fd) "close container->fd=%d"
 -- 
 2.52.0
 
