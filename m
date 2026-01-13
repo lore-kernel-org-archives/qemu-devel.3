@@ -4,117 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBD8D2F338
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 15:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4404CD2F326
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 16:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfgfN-0000w5-SL; Tue, 13 Jan 2026 10:50:47 -0500
+	id 1vfh1j-0003Jy-J8; Tue, 13 Jan 2026 11:13:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfgew-0000jH-KF
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 10:50:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1vfh1T-0002zB-Tt
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:13:39 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfget-0001WM-S9
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 10:50:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768319408;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ndEmw4g/ZuE1/CdlLZLbhydeH5EmsyvdNFcwRbzgOws=;
- b=N+Jb5gLMvbhCqbvvr2Gx9LRaLsTwiF9wBQ6AxMXl2NuByJNELc86gMQzYMVe39AG+IbCdE
- hY/VDhwGYuD+BXXOsVUXaRhaYb8Nvl5pIX0r7cSlyWP5ZmQ/+4+KvR6fGqsEwXQRLgmFkw
- YRPBJN1rJdl0btI2UxnCcmWj33g1MkA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-380-ypppYZu9Oha2q0cmOjzZiA-1; Tue, 13 Jan 2026 10:50:07 -0500
-X-MC-Unique: ypppYZu9Oha2q0cmOjzZiA-1
-X-Mimecast-MFC-AGG-ID: ypppYZu9Oha2q0cmOjzZiA_1768319406
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-430fcfe4494so6089803f8f.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 07:50:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768319406; x=1768924206; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ndEmw4g/ZuE1/CdlLZLbhydeH5EmsyvdNFcwRbzgOws=;
- b=jtt3tk5DWMPrmDdtsG53tx1tw9CT+sXRuP54JqpWSzSUENLbl3yqNdwoZOCHLa/+uJ
- YNWb2k5kEzoy6TcP6FRLhx5FRAtPYOdNRRHyPS/36NYZMFVQFDGC/xbSjJw2cC4dlkG7
- TeWiahg2Yg6mWp7yxnOoQOUz6pFCskpUliaXId6eI0bzsDc/hvSwqneV+/vopuwTJvbQ
- ZhhzCCKhKfcnqRv6Axs4eNMFHSLNmCRz53HbFRzw711Ii5fuVQFymEGZAUcsDwm0dSt3
- j8m2Zq/jX5BjI8kZyYDBBc633Cj4ldghIpiNCLmwaaYWErHoJxCJ9O1BwT2Q2DhdeNlo
- 8wCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768319406; x=1768924206;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ndEmw4g/ZuE1/CdlLZLbhydeH5EmsyvdNFcwRbzgOws=;
- b=P4U7nsKcywtBUkRJPK9YtryUMypoorBrMXgJDVsB4qJbsfKsETI2DD5kat6QrynG4K
- qyqgJ4rkjdJnMGZjzT0fuE7nlr48ItHD11FJZP7m2Q7F6VEfp16phC3WHoZ342+IZfTk
- INTNX/2B4rxrre9B4Xi44+OS1NNu2gjm1CCCugtNlh0Bi+aoEtunrNCF9fAoSJw8lvJ4
- pGakfp6hYdcgXUzcZgNYD/NNAD7r6QkyLqZPoCVOnaORiX/0mhMxQoCEGfhfaR9rYi53
- qQYCOkmbfjFRZHhlxQuOWFKL5tV+59T8N0IKA639lUuWtJ7Y0iykPfVsQfa6/Qi2CM8U
- Z2Qw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLSjDLQBfg5JRmGP5uG46vGvRJcnziciLDGGo1CuHm+fGDGywQdY7JrD9vpBcI2fa/LU2jmn4akPc5@nongnu.org
-X-Gm-Message-State: AOJu0YwpFkfCFpjA8TnTyeIfPMmv7HF+Bvj+/GWLJabhAwLrFsLrc4Jx
- x8UV5hJQ1X7w0X/AbDrrPPliyvCrq8ClkVv2aivK6BsngeZryxOE28EDJ4EVyYHhU4FeqC88jUb
- mGtzqeifW0M+lEq6zwLo6R4aFd79XyXeA4+ueKrsSNfPVTebUAWLo/K77xtuRi5TjhTr/o8kPfD
- ujr3Kr11IA+Iac7QhGD5snKW29iiMKl5Y=
-X-Gm-Gg: AY/fxX5wUW3mPG9bypaD31GTxFuBjgRC0e3C8Wd7AnHoHPcCHIsWpjwmY6aZ4AShdJC
- 9CYIuo6iWB9BNds11OM/llOCRepdGKmo14SwLekSb+w/QkFYoQnGo6yC4eD7+waMRw3gEduT27s
- J2tJWFI41OFL5vYZut8GX3FHIlnq/1jzO9uFNJKHIbFDUQlA6bhqNeqPHP494uQ/W1YJUXTP6Vq
- OK3lqAEXYcJZ4D5BDx2/6LpbTEUvu2bil6dM3zxv1Una6M/LfDgu9TJFCdO9jUkDzRjBg==
-X-Received: by 2002:a05:6000:238a:b0:430:fced:90a with SMTP id
- ffacd0b85a97d-432c3760d4cmr26123899f8f.16.1768319406300; 
- Tue, 13 Jan 2026 07:50:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFVB2rWEQQWR/Jq1azGMwwjAdqBLb5M0oTyq0PCUIQykyaD2RXZlIO29GCXJpBJlJp5pmxf9dw7AMKx70CS+ik=
-X-Received: by 2002:a05:6000:238a:b0:430:fced:90a with SMTP id
- ffacd0b85a97d-432c3760d4cmr26123877f8f.16.1768319405938; Tue, 13 Jan 2026
- 07:50:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1vfh1R-0005hd-PK
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:13:35 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id D10D860018;
+ Tue, 13 Jan 2026 16:13:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7E6C116C6;
+ Tue, 13 Jan 2026 16:13:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1768320800;
+ bh=w9MDFSRJjVrv2k2HfbOFSTurzehQgK1rH8je49ZFpMc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=FLubW/Tv2zWdIMPfT8cqAag29P+l6FARSnswOfLf2Jh8VWBWf2eH4jShAvszCwGgx
+ hgZYbIzNWNhrjsABlSI26UzXFMIcfacNH6XrlxvuZgaf6yQm7sxOe3aSXvFuwUpNsL
+ shGak5GcbfUHcP1IDCgsSTFzA3Z762Aj375EX4sB8DAywtzDm0/rtAleEHRwuVjeao
+ M2aWy//ru0bI0/PfEKVbkSXeVIL1nx9ehDWMKY6p6MEFQkjywIUvMKvv7vreywAb1L
+ E+ERnRd4Sh0v57gbYYj4Xn4QHlqkp29RRBSt17GQ9wwpUULJpuwtv/yrb9m5z+E/yL
+ Qwxi7S7W/wCMQ==
+Date: Tue, 13 Jan 2026 16:13:19 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <liuwe@microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH] accel/mshv: Remove remap overlapping mappings code
+Message-ID: <20260113161319.GA3192261@liuwe-devbox-debian-v2.local>
+References: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-9-berrange@redhat.com>
- <878qe1c17b.fsf@pond.sub.org> <aWYXt9YckvZmFCia@redhat.com>
- <874iopacr0.fsf@pond.sub.org>
-In-Reply-To: <874iopacr0.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 13 Jan 2026 16:49:53 +0100
-X-Gm-Features: AZwV_QiXchD8DiYzifTQEGMr3oFq1UaSTq4omJHE0OLd82qR1w-O_XiXPZeB8sQ
-Message-ID: <CABgObfYdw9y3621wHkBT+htB8cQ=OsUMdBFJYEoJiuaDELLzUw@mail.gmail.com>
-Subject: Re: [PATCH v5 08/24] util: add API to fetch the current thread name
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- devel@lists.libvirt.org, qemu-block@nongnu.org, qemu-rust@nongnu.org, 
- Stefan Weil <sw@weilnetz.de>, Kevin Wolf <kwolf@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=wei.liu@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,23 +70,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 13, 2026 at 2:00=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
-> > > Tempted to store the thread name in TLS and call it a day.
-> >
-> > Using the official APIs in this way ensures that the thread name is
-> > visible outside QEMU. For example when debugging in GDB, which IMHO
-> > is an important benefit.
->
-> I didn't mean to suggest not to set the "official" thread name.
->
-> This patch retrieves the "official" thread name back.  Takes a bit of
-> system-specific code, including Meson magic.  We could instead hold on
-> to our own copy, and just use that.
+On Tue, Jan 13, 2026 at 04:37:08PM +0100, Magnus Kulke wrote:
+> This change removes userland code that worked around a restriction
+> in the mshv driver in the 6.18 kernel: regions from userland
+> couldn't be mapped to multiple regions in the kernel. We maintained a
+> shadow mapping table in qemu and used a heuristic to swap in a requested
+> region in case of UNMAPPED_GPA exits.
+> 
+> However, this heuristic wasn't reliable in all cases, since HyperV
+> behaviour is not 100% reliable across versions. HyperV itself doesn't
+> prohibit to map regions at multiple places into the guest, so the
+> restriction has been removed in the mshv driver.
+> 
+> Hence we can remove the remapping code. Effectively this will mandate a
+> 6.19 kernel, if the workload attempt to map e.g. BIOS to multiple
+> reagions. I still think it's the right call to remove this logic:
+> 
+> - The workaround only seems to work reliably with a certain revision
+>   of HyperV as a nested hypervisor.
+> - We expect Direct Virtualization (L1VH) to be the main platform for
+>   the mshv accelerator, which also requires a 6.19 kernel
+> 
+> This reverts commit efc4093358511a58846a409b965213aa1bb9f31a.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-Yes, I think that's what we're going to do anyway due to my remark on
-patch 7/24.
-
-Paolo
-
+Acked-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
 
