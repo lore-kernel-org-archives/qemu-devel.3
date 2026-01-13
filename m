@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F87D29DF3
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 09:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E08AD29DF3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 09:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfaqF-0007sZ-KO; Tue, 13 Jan 2026 04:37:35 -0500
+	id 1vfaqa-0001Lk-HU; Tue, 13 Jan 2026 04:37:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfaqD-0007jf-UY
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:37:33 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfaqY-000161-Iz
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:37:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfaqC-0003LX-2d
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:37:33 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfaqW-0003PV-UI
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:37:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768297051;
+ s=mimecast20190719; t=1768297072;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=16go3Zbvd/Ek1pzySnrk2h8UNixWr9Z1NFH46NMmfv4=;
- b=Q31gWePe1aiy4SUNL6x5xXqH636PzQxyayoxjnt22bY6Y255RH4IKkxv8x+IFlV77N3COI
- fPrCiig1B1LET938kjHVYkB2V1kSU5jAVCo2kkAJ7k7PH4ALbm/+aupa8LOdcXUq3B/tM3
- ShFMTg/8j6f1Kyo9l+3WmqW/royrxCY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=o5tqwJ/c3cR/g2ZIcrgCqfs0Sk0VmFjx1wb4iWXHXaA=;
+ b=B18ARniiQhB/n7dvcli0pPXRMg4zr18vB9wZosZohaP7TQQyHRV0gzQzqMv4AaAQ75u5eA
+ YgzIrZJaxWfmd7w5EVAe+uEgPA5V7AzhkjsbluZwc89a9LtRxVSqwsWw9Lkw1U29MjbfBn
+ BKDjW7eC9iezEBD05CWBJ0NYghhVz70=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-D55bB6I2OqW56sw30bozIA-1; Tue,
- 13 Jan 2026 04:37:16 -0500
-X-MC-Unique: D55bB6I2OqW56sw30bozIA-1
-X-Mimecast-MFC-AGG-ID: D55bB6I2OqW56sw30bozIA_1768297035
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-42-bliF4gsBMcS-hU4VNxnbtw-1; Tue,
+ 13 Jan 2026 04:37:48 -0500
+X-MC-Unique: bliF4gsBMcS-hU4VNxnbtw-1
+X-Mimecast-MFC-AGG-ID: bliF4gsBMcS-hU4VNxnbtw_1768297067
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0589E1956088; Tue, 13 Jan 2026 09:37:15 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88548195605B; Tue, 13 Jan 2026 09:37:47 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.79])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7CF0630001A2; Tue, 13 Jan 2026 09:37:12 +0000 (UTC)
+ id 046FE30001A2; Tue, 13 Jan 2026 09:37:44 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 11/41] intel_iommu_accel: Check for compatibility with IOMMUFD
- backed device when x-flts=on
-Date: Tue, 13 Jan 2026 10:36:07 +0100
-Message-ID: <20260113093637.1549214-12-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Xudong Hao <xudong.hao@intel.com>,
+ Giovannio Cabiddu <giovanni.cabiddu@intel.com>,
+ Rohith S R <rohith.s.r@intel.com>
+Subject: [PULL 22/41] vfio/iommufd: Add framework code to support getting
+ dirty bitmap before unmap
+Date: Tue, 13 Jan 2026 10:36:18 +0100
+Message-ID: <20260113093637.1549214-23-clg@redhat.com>
 In-Reply-To: <20260113093637.1549214-1-clg@redhat.com>
 References: <20260113093637.1549214-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -89,191 +90,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-When vIOMMU is configured x-flts=on in scalable mode, first stage page table
-is passed to host to construct nested page table for passthrough devices.
+Currently we support device and iommu dirty tracking, device dirty tracking
+is preferred.
 
-We need to check compatibility of some critical IOMMU capabilities between
-vIOMMU and host IOMMU to ensure guest first stage page table could be used by
-host.
-
-For instance, vIOMMU supports first stage 1GB large page mapping, but host does
-not, then this IOMMUFD backed device should fail.
-
-Even of the checks pass, for now we willingly reject the association because
-all the bits are not there yet, it will be relaxed in the end of this series.
-
-Note vIOMMU has exposed VIOMMU_FLAG_WANT_NESTING_PARENT flag to force
-VFIO core to create nesting parent HWPT, if host doesn't support nested
-translation, the creation will fail. So no need to check nested
-capability here.
+Add the framework code in iommufd_cdev_unmap() to choose either device or
+iommu dirty tracking, just like vfio_legacy_dma_unmap_one().
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260106061304.314546-10-zhenzhong.duan@intel.com
-[ clg: - hw/i386/intel_iommu_accel.[hc]: Changed Copyright date 2025 -> 2026
-       - in commit log :
-       	 IOMMU_HWPT_ALLOC_NEST_PARENT -> VIOMMU_FLAG_WANT_NESTING_PARENT  ]
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
+Tested-by: Rohith S R <rohith.s.r@intel.com>
+Link: https://lore.kernel.org/qemu-devel/20251218062643.624796-2-zhenzhong.duan@intel.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- MAINTAINERS                 |  1 +
- hw/i386/intel_iommu_accel.h | 28 +++++++++++++++++++++++++
- hw/i386/intel_iommu.c       |  5 ++---
- hw/i386/intel_iommu_accel.c | 42 +++++++++++++++++++++++++++++++++++++
- hw/i386/Kconfig             |  5 +++++
- hw/i386/meson.build         |  1 +
- 6 files changed, 79 insertions(+), 3 deletions(-)
- create mode 100644 hw/i386/intel_iommu_accel.h
- create mode 100644 hw/i386/intel_iommu_accel.c
+ hw/vfio/iommufd.c | 34 +++++++++++++++++++++++++++++++---
+ 1 file changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 620b184aa5f91f8f86879cf22eabe720a9fa33a3..4ddbfba9f0118190b7dd3a3d6400e34774d5e17a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3961,6 +3961,7 @@ R: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
- S: Supported
- F: hw/i386/intel_iommu.c
- F: hw/i386/intel_iommu_internal.h
-+F: hw/i386/intel_iommu_accel.*
- F: include/hw/i386/intel_iommu.h
- F: tests/functional/x86_64/test_intel_iommu.py
- F: tests/qtest/intel-iommu-test.c
-diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..79117b25a030a3d22d75b635725a6f78a21ec407
---- /dev/null
-+++ b/hw/i386/intel_iommu_accel.h
-@@ -0,0 +1,28 @@
-+/*
-+ * Intel IOMMU acceleration with nested translation
-+ *
-+ * Copyright (C) 2026 Intel Corporation.
-+ *
-+ * Authors: Zhenzhong Duan <zhenzhong.duan@intel.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_I386_INTEL_IOMMU_ACCEL_H
-+#define HW_I386_INTEL_IOMMU_ACCEL_H
-+#include CONFIG_DEVICES
-+
-+#ifdef CONFIG_VTD_ACCEL
-+bool vtd_check_hiod_accel(IntelIOMMUState *s, HostIOMMUDevice *hiod,
-+                          Error **errp);
-+#else
-+static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
-+                                        HostIOMMUDevice *hiod,
-+                                        Error **errp)
-+{
-+    error_setg(errp, "host IOMMU cannot be checked!");
-+    error_append_hint(errp, "CONFIG_VTD_ACCEL is not enabled");
-+    return false;
-+}
-+#endif
-+#endif
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 3a3725e489595121b1fdb0f38a1e85fa7f64c1f6..b11798d4b75b7fb6961a1b2bde8851667b0d07db 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -26,6 +26,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/core/iommu.h"
- #include "intel_iommu_internal.h"
-+#include "intel_iommu_accel.h"
- #include "hw/pci/pci.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/core/qdev-properties.h"
-@@ -4595,9 +4596,7 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
-         return true;
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index e5328c63a366076199015b25f55d273b91a4327a..f56349faf5669cfeed10d7fc5e8d3bf8397bb04d 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -61,14 +61,42 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+                               IOMMUTLBEntry *iotlb, bool unmap_all)
+ {
+     const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
++    IOMMUFDBackend *be = container->be;
++    uint32_t ioas_id = container->ioas_id;
++    bool need_dirty_sync = false;
++    Error *local_err = NULL;
++    int ret;
+ 
+     if (unmap_all) {
+         size = UINT64_MAX;
      }
  
--    error_setg(errp,
--               "host device is uncompatible with first stage translation");
--    return false;
-+    return vtd_check_hiod_accel(s, hiod, errp);
+-    /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
+-    return iommufd_backend_unmap_dma(container->be,
+-                                     container->ioas_id, iova, size);
++    if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
++        if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
++            bcontainer->dirty_pages_supported) {
++            /* TODO: query dirty bitmap before DMA unmap */
++            return iommufd_backend_unmap_dma(be, ioas_id, iova, size);
++        }
++
++        need_dirty_sync = true;
++    }
++
++    ret = iommufd_backend_unmap_dma(be, ioas_id, iova, size);
++    if (ret) {
++        return ret;
++    }
++
++    if (need_dirty_sync) {
++        ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
++                                                iotlb->translated_addr,
++                                                &local_err);
++        if (ret) {
++            error_report_err(local_err);
++            return ret;
++        }
++    }
++
++    return 0;
  }
  
- static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..2942eff100b9e7871326d27b58b71517ff705271
---- /dev/null
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -0,0 +1,42 @@
-+/*
-+ * Intel IOMMU acceleration with nested translation
-+ *
-+ * Copyright (C) 2026 Intel Corporation.
-+ *
-+ * Authors: Zhenzhong Duan <zhenzhong.duan@intel.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "system/iommufd.h"
-+#include "intel_iommu_internal.h"
-+#include "intel_iommu_accel.h"
-+
-+bool vtd_check_hiod_accel(IntelIOMMUState *s, HostIOMMUDevice *hiod,
-+                          Error **errp)
-+{
-+    struct HostIOMMUDeviceCaps *caps = &hiod->caps;
-+    struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
-+
-+    if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
-+        error_setg(errp, "Need IOMMUFD backend when x-flts=on");
-+        return false;
-+    }
-+
-+    if (caps->type != IOMMU_HW_INFO_TYPE_INTEL_VTD) {
-+        error_setg(errp, "Incompatible host platform IOMMU type %d",
-+                   caps->type);
-+        return false;
-+    }
-+
-+    if (s->fs1gp && !(vtd->cap_reg & VTD_CAP_FS1GP)) {
-+        error_setg(errp,
-+                   "First stage 1GB large page is unsupported by host IOMMU");
-+        return false;
-+    }
-+
-+    error_setg(errp,
-+               "host IOMMU is incompatible with guest first stage translation");
-+    return false;
-+}
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 6a0ab54bea4ab8599965a7b4dec60194f85877cb..12473acaa7344c36f6bf20eadd058d414dc6f945 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -150,8 +150,13 @@ config X86_IOMMU
- 
- config VTD
-     bool
-+    imply VTD_ACCEL
-     select X86_IOMMU
- 
-+config VTD_ACCEL
-+    bool
-+    depends on VTD && IOMMUFD
-+
- config AMD_IOMMU
-     bool
-     select X86_IOMMU
-diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-index 436b3ce52d6480457a84c796ee5ed79e3a0bec36..63ae57baa511e6e29b0e6a276352cd61df6602a6 100644
---- a/hw/i386/meson.build
-+++ b/hw/i386/meson.build
-@@ -21,6 +21,7 @@ i386_ss.add(when: 'CONFIG_Q35', if_true: files('pc_q35.c'))
- i386_ss.add(when: 'CONFIG_VMMOUSE', if_true: files('vmmouse.c'))
- i386_ss.add(when: 'CONFIG_VMPORT', if_true: files('vmport.c'))
- i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
-+i386_ss.add(when: 'CONFIG_VTD_ACCEL', if_true: files('intel_iommu_accel.c'))
- i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
-                                 if_false: files('sgx-stub.c'))
- 
+ static bool iommufd_cdev_kvm_device_add(VFIODevice *vbasedev, Error **errp)
 -- 
 2.52.0
 
