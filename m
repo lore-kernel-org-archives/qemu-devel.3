@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234D7D2D0FF
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEC52D2D0EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:20:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfeHy-00048l-Ev; Tue, 13 Jan 2026 08:18:26 -0500
+	id 1vfeBw-0003KT-FC; Tue, 13 Jan 2026 08:12:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfeHg-000415-1m
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:18:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfeHd-0003QB-Ir
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:18:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768310284;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=d6UGpMuBwjG5G9cQX1XqJmnLQeQvlArXA3afLFhkjr0=;
- b=NDz5MdR7jrLjlqpKXGCJhLsxsMmL9PLYL+/hkfTLTl0wOOaJmHhwoeUv1jV7C0+4MFOxKV
- 9RtFZbEecySftM0RazgfGJrhoxS9d/VovIvxwyS7fWMp5bW2EYVQHNNONtYFc8JalIboq/
- 5QGmDBKIB+FbRc+s45Zqu5VWeb1ftH8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-BHMf785xOdia25yWju3mrA-1; Tue,
- 13 Jan 2026 08:18:01 -0500
-X-MC-Unique: BHMf785xOdia25yWju3mrA-1
-X-Mimecast-MFC-AGG-ID: BHMf785xOdia25yWju3mrA_1768310279
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3CE2219560A2; Tue, 13 Jan 2026 13:17:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C92821800577; Tue, 13 Jan 2026 13:17:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7B33021E676C; Tue, 13 Jan 2026 14:17:56 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Hanna Reitz
- <hreitz@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Christian Schoenebeck <qemu_oss@crudebyte.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  devel@lists.libvirt.org,
- qemu-block@nongnu.org,  qemu-rust@nongnu.org,  Stefan Weil
- <sw@weilnetz.de>,  Kevin Wolf <kwolf@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 13/24] monitor: refactor error_vprintf()
-In-Reply-To: <20260108170338.2693853-14-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 8 Jan 2026 17:03:27
- +0000")
-References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-14-berrange@redhat.com>
-Date: Tue, 13 Jan 2026 14:17:56 +0100
-Message-ID: <87pl7d8xdn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfeBu-0003Jg-Kc
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:12:10 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfeBt-0002wO-7N
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:12:10 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-64669a2ecb5so7089873d50.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 05:12:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768309928; x=1768914728; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sllnZarZq26uZAc+wtPOmNJKeYrKmmlVWQJwR/aLv18=;
+ b=fXKUYGEU8tQDfbJhyKxJ5IGvNdLd0J28hwGHcg7LSfBXXH9hnixWNA5VCu0BKKyGnZ
+ p1DTxToroN+2xpsfLWUkrR96oKNSGZoQy0DlqJ9ZvDclqDsyawDUdm/mgFldZGEFllNT
+ 77mCEGlXhXqEmq5H1VIehPsOkpG5pr/MeYYOugETXg89lQ0DrMPHJOyKJ4Zdjl6nsTea
+ lCDtqlxNM7VjKQ4KtbcY7IZxjgQTTioip/rBbp7S3aCLpI2pAIB79jEd0ArRTtgktylh
+ GShc6K4WayLDrwbm/sqp8QSKmE2WLUP8EQ6JkUNkk5eCZJs8fixJunqPVC2xlcVwG+KH
+ 5++g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768309928; x=1768914728;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sllnZarZq26uZAc+wtPOmNJKeYrKmmlVWQJwR/aLv18=;
+ b=vwF85CPk53n0urueaUb85h0OKB1jjd9mjs0vEjG7YR7tKU+Wdt4bydzTmje30Ks8DA
+ INVDlH38nYID3zDV+LTOZsHYuubUHaF4Wj3l94dGVkjBLC/CRAc+euQi16BbTCYD+248
+ 55hybIY/ubPmclbCO6rT7SJsxmuXhjLyhq81uH8y/s0Fcp9tKzzq9BXNRRcbI5iAM3Du
+ 2pUWl7M9RuU1BmitcFT+UyiK24fb0BRoleWKwyTHjOPj4S0hsMAifMBZ2KmGfwc2ao51
+ jLiXaH41WjJ6HgiPCeX3PKpN54vHfzkuToG799qpjCfMMIQLjcFLsXlb1USSMWfvFbln
+ qKAw==
+X-Gm-Message-State: AOJu0YyUIL7SUgPEHaN2J1uYIxm76/sjeZaEyOvaF+LVtRMNRutl/Ee+
+ jql1rMmM/ciitFe8352Fx1X6a/xmb6j9ZRNEPbLH/RedJ/qrbrPlPsDKNlMJeQFBuVImuUxfyAZ
+ lAwhZCLDWsoemLQaHvRwWLrSiAeO1jZogva6kajnsU95NRq5dovDC
+X-Gm-Gg: AY/fxX7DuU97ru5wZVCa4zktW6f3KOxkkQCJI9+b8Z0ASOafiyjwxiYN4h7ifBp7eMr
+ L9q7CuRTmZ7fNo4q3seH34mqe5O5pC9o2RqBf8hchZ8xAz8fP6C1azEBxTTq+FQlL1k36A36Hlj
+ 1c613cwsjD7eYkUA+nKMegaCZmdUsHzW9JQGDFMaB22YuFA7Vdmlo529SLA4ZC9ZoyX4GLiHMf0
+ bVbT5s3Hk+4uqeFr2iKpxz1tV+dIvBaz6ozfwSd48GCZ5KuGOcPRYCOdLlmLiY/kcxXpFIeFwYk
+ DRBynpFgpo5snw7mz/R8IfQ=
+X-Google-Smtp-Source: AGHT+IHoQHVJdYGyr7t2bz9w6shpFAaiY7t6KX/eFKbOTtm88mRQYAdDDLCT59g7FRNXcZNgwGsrRrUbNlvZMRxohSA=
+X-Received: by 2002:a05:690e:118a:b0:63f:b605:b7f2 with SMTP id
+ 956f58d0204a3-648f61ff3b3mr2681309d50.10.1768309927937; Tue, 13 Jan 2026
+ 05:12:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260113130008.910240-1-mjt@tls.msk.ru>
+ <20260113130008.910240-2-mjt@tls.msk.ru>
+In-Reply-To: <20260113130008.910240-2-mjt@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 13 Jan 2026 13:11:56 +0000
+X-Gm-Features: AZwV_Qhz86aVIko0N3iAKT9lXL6IaQnCAY2HKOp0_3adyOt_qFfHXH15lu3N7pU
+Message-ID: <CAFEAcA9Fe2mVx+tY7D7XaYxkJ8sg3akLBVar_ONHEePrjEZGsg@mail.gmail.com>
+Subject: Re: [PATCH trivial 1/7] linux-user/syscall.c: assume splice is always
+ present
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,16 +95,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> The monitor_vprintf() code will return -1 if either the monitor
-> is NULL, or the monitor is QMP. The error_vprintf() code can
-> take advantage of this to avoid having to duplicate the same
-> checks, and instead simply look at the return value.
+On Tue, 13 Jan 2026 at 13:00, Michael Tokarev <mjt@tls.msk.ru> wrote:
 >
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> splice() &Co are defined since linux 2.6.17.
+> Assume it is always present.
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Since we're calling the C functions here, the
+relevant version is glibc 2.5, but either way these
+have been around way longer than our minimum supported
+version.
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
