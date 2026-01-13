@@ -4,119 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4096D2F33E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 16:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D44D2F344
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 16:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfhIf-0008LG-87; Tue, 13 Jan 2026 11:31:24 -0500
+	id 1vfhP8-0002PV-6U; Tue, 13 Jan 2026 11:38:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vfhIK-00085W-BN
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:31:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
+ id 1vfhMp-0001lM-0v
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:35:39 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vfhII-0000RQ-8E
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:30:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768321856;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=boQE4q0KM6aYzkUDuqPLA1uwKPn46HvgGbqZIDctbEE=;
- b=VUvmtaQ5ybPMc7rF3S/EJrYdZo2P+NdiC4RkG9PRX1VA6b7Jkip7ia8IZO3skn8oDesxYi
- O1MrBFYZ4JXHsiIM3qQIuJ6y2bJVHr22CaobdglCajU3RDqmt1ZS3z6AMi7NyoSzP7c5R3
- VtWppBVt3lEVgm9t1t6mt/iXI8Ugl/g=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-yKClN5DnO9WB4OjpsaMvuA-1; Tue, 13 Jan 2026 11:30:55 -0500
-X-MC-Unique: yKClN5DnO9WB4OjpsaMvuA-1
-X-Mimecast-MFC-AGG-ID: yKClN5DnO9WB4OjpsaMvuA_1768321854
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8bbe16e0a34so1917033185a.1
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 08:30:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
+ id 1vfhMn-0001J4-Bx
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:35:38 -0500
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 60DEjGG44080357
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 16:35:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :sender:subject:to; s=qcppdkim1; bh=9I+s3RFaLpGY78PprFx8m6igGbVv
+ VrkZ6bOrmBQ1jMY=; b=LD9vY1zinV1SLeiQGx7BQgL0LWq0GpD/ebwF2jBPSdzx
+ ak/oHmnom4ZZhyV5RJJPDu8nFAaSripHar2BmvBk7FIhShV0NCFCOt8CPZmsIHbQ
+ nf8AnorUJ/m78rNSakCVViFMMAq/eTl2Bq38giVp7FrnvkMWiUPN4sYT4OrmA1VG
+ iBB9p1K7xsyaLdVs5YRbWUmaCm+pHDoRv+ZuMU118qgDy3GAI85mwPUcvDpB8RWK
+ BsyztpgobcLbmikW0nKNdu5qhrAQj3FeUPN5/+6DT1eVZNCmedB2kIWnsQ7vnAUY
+ +HHhA68RGDGl0E6i0fMOuwemuXKlcYkGroz5oG3VjQ==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bnr3e8dpd-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 16:35:32 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c52d37d346fso2965608a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 08:35:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768321854; x=1768926654; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=boQE4q0KM6aYzkUDuqPLA1uwKPn46HvgGbqZIDctbEE=;
- b=NhWZcaf+PQVQHKOlJZlGS4fTRcGPHOu1cI6bnOcrYfAjpDDq+8WDChTm3f0ri4BhjK
- 1ygYYUlqIsyMmQ3sXwJWKF/KtMiY5AqDT0WXoWJzTxmTx2b8LXvjZeljt3ekEsrE/Rps
- kX+5sSpA0ZJ4pQu2x8MNbkEmy2saHWf49t5R+Y5EFxQqp5qW2Y7Zi1Al3TnzyIr+wWTc
- ydfs+qXbEHOCTeQdcqb7qArm6jFDKXaKtMYdatbxRWQPyztuJp3Uxq6w0aLGAzhauy//
- 2gj6S2cfHypdClZl7E4873uNZFol8Epjt5LwmwwVVdZtRy2Y+ZWvEHnRqD+yqdnO/uys
- XEHg==
+ d=oss.qualcomm.com; s=google; t=1768322131; x=1768926931; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=9I+s3RFaLpGY78PprFx8m6igGbVvVrkZ6bOrmBQ1jMY=;
+ b=EW+Xl8EJAq4zrYS9OyaEHsP8p4jcxzl5PfTHWAAEiquWUOkO93j2ZKj/fFWOaZtcfW
+ 8zUpVyICcfeopTa95dmaudMOWXmzrBnlerdUBi02d2dsE0s9GD/9F6LsMGIAwN4kgmax
+ qRUuk1UJi2xWnJ+Lrc14aGq//dbs4zIxhs+Qg1HRFw0G0X7+YseXwjLnSsR/NRo51FPI
+ N53fLJcNdPRBXkuaKcfjMK7XPmtjxU5V+4++s6sblU0PRoQaTP9FX5Zpci9gylPxXle3
+ Ocu86vnzzJNJ0HCOcSu1cS7nmvhdmoJj+1tk/mfg+oLVREeSs8qg4FfCS+BFIgCVhNEB
+ n0ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768321854; x=1768926654;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=boQE4q0KM6aYzkUDuqPLA1uwKPn46HvgGbqZIDctbEE=;
- b=GvUeGQizs+sWgZEmjWvA7putSQqzClqNGgewu/0cf9PLQnt6zhV5Y5biFw3jH/KcRW
- VaYa2+wkEyPRe3EOqrNDTzW5pw10+0kzbaOSjwYrOIW69bBKcaT76//0IHQET+vuvx/H
- 27H8lrekS5hDmYHlulHqs02z3a7M/OCMK0vcOQaVB2i96hljNsp3Qf3uQ3sIzRl6oRdv
- Yb56ND9RHZ5DmWEwinbyZAGpSvjSzrQHeW3GEAVO1g3GwoXUWksf+Pev6dXtq0MUbPEU
- ixhGn+xRkHvpbFLJ8IaxxH+6yfenTOOnj03IyjFU0EyYjceZmtY7ef3cfEra7UugsE6n
- MY0Q==
-X-Gm-Message-State: AOJu0YzQQDNjDgMvjeYTporqYaDlu7ofTjUGmEty+Dq4sExiJI/mjigX
- XkGXZ9KtzwDSlWbZplAh51RXtKIh+wgArS88cL6NRGw7z4gsBs6lIGlDEAdC7v13ck38ypnO36o
- e7Cgu1e5DBV7Tlfg3SVbsk2tq5Z179OHfueHypS6mbWYB+hL6vpLvc9xo
-X-Gm-Gg: AY/fxX6nLB4/sUziBrmdMcX4nDpMQW/ZSOZs8WpB3N8H8XMqr/gR2SlquUOrYdi6N7h
- rpQuXiig91q7ymgZiH/SXw8SKKZU//WGHbE23lpvNFfiAI8Y1ekWGBZ1Z6OrOxparW68QbLTz5+
- X6RBMkmryhwQ+cl4G6RLrbwmxxh+3Fm3h0AaRr/K70q43kSQvELNxBU+xeXsfZ4idsEossqY2Iv
- uKw47Su/HHx+OQBuK0HOc9TaN26n/TvfxYTz019kmGlXn75i5WAiPT4skLjfzAARiC5nfw52kPs
- QB6wpmNqTmb+ZHizZGO0++FzMe+PPxr333irVe5EZOjecyWHeXhLWJsBpcx7GRBD31ua17d21py
- Tvis=
-X-Received: by 2002:a05:620a:1a13:b0:8b2:ea3f:2fa4 with SMTP id
- af79cd13be357-8c52082ba2cmr467695385a.6.1768321854372; 
- Tue, 13 Jan 2026 08:30:54 -0800 (PST)
-X-Received: by 2002:a05:620a:1a13:b0:8b2:ea3f:2fa4 with SMTP id
- af79cd13be357-8c52082ba2cmr467686585a.6.1768321853745; 
- Tue, 13 Jan 2026 08:30:53 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89077267e14sm160158686d6.49.2026.01.13.08.30.52
+ d=1e100.net; s=20230601; t=1768322131; x=1768926931;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9I+s3RFaLpGY78PprFx8m6igGbVvVrkZ6bOrmBQ1jMY=;
+ b=CJAfGrYHRTOcXsiAOvTcDgjRxv5bctE7rrFQG1j81XZu4YtJsA9tm8nGpsb5ErGcDM
+ yMOaWjXm7XAb1zuiuZdtyAL1METgR4mB+PbWaJWkE6o//m6Tp9vGb5f1UQ/DDFnCRQsV
+ HeEqaLI3R10cTO59FqW+TZjIUEqUO37AfPvt77Z3nE/2rN0H3zwIhK0wRmisAa8h7ewc
+ LonV6ho5we4ufMbH25ZNHh64nut5IfInnOoZhlCMewi/s2W8ApLgys7JYaChp4ZvimiN
+ nk4ZW7RL/Z7sfK8C8vndUm4bFmDQTOIqY+K7PYKlmPtsAmOOgeZO0EkvzFrCATlf+ZsB
+ bdNA==
+X-Gm-Message-State: AOJu0Yxh/XkRUFUJ983a11LXZQMesCc/drvGnF2jFRSiw5Om+pFPV5wF
+ ntqec3oHTkmHVDVwudIBpaNLNXy0Hi2/8kE6LYnwMYsK2TR0J/VWuqNG8ziQ/UKmhHtBnso7o5M
+ p5XpJdHrQWLPMPtCIUxJnDnESVq7Ss6sVJUzFJDCw5wgDY0Pq4+xkQvCwNhEOiIMH9g==
+X-Gm-Gg: AY/fxX6u9bBT3tMRcdDNduPcgDHON+PtImaOC7MlkXKm1+5VP8gtJGwY/rSvFbzozXb
+ 1bp6Amr8y514m1+GW4qfhQOv3rmX2TEIux0626LIesYSTirMaFAJ0b5iz3wQExqXJDxvscJQ45e
+ 1UnizNbeFITjTrjCXGX2iFd1XRsOmRVnYPJNLQ9+Eo/5+85DczAbqnavhgWFKUXZ9xr1kGTG2O6
+ RMxXSgSHALmJDrL+1/4BeUbBYIdJ8guYBog5j3jSPmjisr8kPll/bFiLZYOkGCMUqsvWeHqde6r
+ BB7jFVi/NpA73gD2bTTNzipDqd6/4WLnp9ew2TWNPr4URJnEWVVWqAYIHbXeJ6JcaawXX4uWozo
+ D3fVv7eGMs9a2e0E/bbWaC1ACvaMLZuUgep9gr/OQVKRiRGlYo+SWNiGt7lDfSQxi7A==
+X-Received: by 2002:a05:6a20:1586:b0:35d:8881:e6a3 with SMTP id
+ adf61e73a8af0-38bd99c20afmr3401283637.10.1768322131483; 
+ Tue, 13 Jan 2026 08:35:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEx46vAmQRKPD2gIysc3AbVlOfIGCj0X8YwSqqhaHfM43NJK6xDA6gXk8+j4EPJ0eEYBvd0lg==
+X-Received: by 2002:a05:6a20:1586:b0:35d:8881:e6a3 with SMTP id
+ adf61e73a8af0-38bd99c20afmr3401255637.10.1768322130985; 
+ Tue, 13 Jan 2026 08:35:30 -0800 (PST)
+Received: from hu-sunilvl-blr.qualcomm.com
+ (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c4cc9e7e8afsm20315644a12.29.2026.01.13.08.35.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 08:30:53 -0800 (PST)
-Date: Tue, 13 Jan 2026 11:30:51 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
- Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, danpb@redhat.com,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alex Bennee <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Marco Cavenati <Marco.Cavenati@eurecom.fr>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: Call for GSoC internship project ideas
-Message-ID: <aWZzOz9hlvdRDj13@x1.local>
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <aWZk7udMufaXPw-E@x1.local>
- <CAJSP0QVm41jSCma73sef7uzgEnqESRfqrxRstNTY_pd4Dk-JXA@mail.gmail.com>
+ Tue, 13 Jan 2026 08:35:30 -0800 (PST)
+X-Google-Original-From: Sunil V L <sunilvl@oss.qualcomm.com
+To: qemu-devel@nongnu.org
+Cc: Anup Patel <anup.patel@oss.qualcomm.com>,
+ Sunil V L <sunilvl@oss.qualcomm.com>
+Subject: [PATCH] MAINTAINERS: Update Sunil's email address
+Date: Tue, 13 Jan 2026 22:05:21 +0530
+Message-ID: <20260113163521.2857839-1-sunilvl@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJSP0QVm41jSCma73sef7uzgEnqESRfqrxRstNTY_pd4Dk-JXA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=TPFIilla c=1 sm=1 tr=0 ts=69667454 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=MJxHuVPQAAAA:8 a=bDdBU3oEAAAA:8 a=69wJf7TsAAAA:8
+ a=fFt6l-wJOQKDRENaSxAA:9 a=3WC7DwWrALyhR5TkjVHa:22 a=f8rhrtTnV5ySubrffgDN:22
+ a=DN7SgORnOiO7RqxRx1GC:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDEzOCBTYWx0ZWRfX3M2JVRQYLwt8
+ FoUurey2iRQvolVcAuQYlvaln5kRYtP3a5w9Njf4zK/PvN7yaNTAEB9tH9wKR8EHLlvVi2nrP5z
+ yOe6LPAqn8YMXirhqgYK3CRPYZOo2fiYeV/FyfQyvfA7MzX68fPD/4XkaXSLqgjyzfiGumJ9jRz
+ lJa8gtmUFGFS74Qawbpl51l6Vnk/9+3TVsaF1cKO+zEPHepkOLed+nLecCYiiNa6ilnmUKdBbWc
+ pnSj4/OIxZ5SeK/npZ1akWpV/NxR+vaPIclTfMW2s457Vl6k7wHiU1mq5VOgPz5JsMUIHDYByHC
+ 0N94j0Ofj5C6E84Ced4IzJFk1myml8ItdoZiPStKkKYpZz36qkXDTYlyzbf+AGAZ6Jek8uVnmi3
+ ONX4xvN7kmL/A34m8eJ4CNhfFiTPLJwjQvEa9smnyCCqQ7CbMm8g448TJ4D0t0t5MXo0DReBO8B
+ 8cMUzKf9OQrHdfFB1Vg==
+X-Proofpoint-GUID: thnm8yAV0aljEIq-Wricd-lym0LYwdUd
+X-Proofpoint-ORIG-GUID: thnm8yAV0aljEIq-Wricd-lym0LYwdUd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-13_04,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1011 spamscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601130138
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=sunil.laxminarasimha@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 13 Jan 2026 11:37:59 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -128,38 +144,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Sunil V L <sunilvl@oss.qualcomm.com>
+From:  Sunil V L via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 13, 2026 at 11:16:27AM -0500, Stefan Hajnoczi wrote:
-> On Tue, Jan 13, 2026 at 10:30 AM Peter Xu <peterx@redhat.com> wrote:
-> >
-> > On Mon, Jan 05, 2026 at 04:47:22PM -0500, Stefan Hajnoczi wrote:
-> > > Dear QEMU and KVM communities,
-> > > QEMU will apply for the Google Summer of Code internship
-> > > program again this year. Regular contributors can submit project
-> > > ideas that they'd like to mentor by replying to this email by
-> > > January 30th.
-> >
-> > There's one idea from migration side that should be self-contained, please
-> > evaluate if this suites for the application.
-> >
-> > I copied Marco who might be interested on such project too at least from an
-> > user perspective on fuzzing [1].
-> >
-> > [1] https://lore.kernel.org/all/193e5a-681dfa80-3af-701c0f80@227192887/
-> >
-> > Thanks,
-> 
-> I have edited the project description to make it easier for newcomers
-> to understand and added a link to mapped-ram.rst:
-> https://wiki.qemu.org/Google_Summer_of_Code_2026#Fast_Snapshot_Load
-> 
-> Feel free to edit the project idea on the wiki.
+From: Sunil V L <sunilvl@oss.qualcomm.com>
 
-Looks good, thanks Stefan.
+Replace my ventana.com email address with oss.qualcomm.com address in
+the MAINTAINERS file for RISC-V ACPI.
 
+Signed-off-by: Sunil V L <sunilvl@oss.qualcomm.com>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d16e620e01..2248cfeb60 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2190,7 +2190,7 @@ S: Maintained
+ F: hw/arm/virt-acpi-build.c
+ 
+ RISC-V ACPI Subsystem
+-M: Sunil V L <sunilvl@ventanamicro.com>
++M: Sunil V L <sunilvl@oss.qualcomm.com>
+ L: qemu-riscv@nongnu.org
+ S: Maintained
+ F: hw/riscv/virt-acpi-build.c
 -- 
-Peter Xu
+2.43.0
 
 
