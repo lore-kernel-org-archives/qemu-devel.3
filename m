@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B176C9EC9D
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 10:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DECAD0C84A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 10:42:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfbUp-0000SE-30; Tue, 13 Jan 2026 05:19:31 -0500
+	id 1vfbqV-0006LE-Vw; Tue, 13 Jan 2026 05:41:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfbUi-0000Mi-M0
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:19:24 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vfbqT-0006Kl-8u
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:41:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfbUg-0000zx-9U
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:19:24 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vfbqR-0004FB-6D
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:41:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768299560;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1768300910;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D7xhkILgIoQhxPiu+UT3981CPmnY2WGzO8z4JIZhcik=;
- b=OPWOeXlQkcLWyvTNCvslMxfmTrT0SXG8fZX3dh4zgE5488Ifiigj5Cx0M8mkwIR2Hl3yhz
- DkheO39TKQgnkoWBfhqHkrr2xPd54BQdtv2TueTcjaJPy5DL87rtG9sbOC9bPqvVLpiZhW
- l2GZ/1DNdvORaAlhHaOqKeB9g1Amt6E=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ypVwbn+5ODH+qHpboGY8/sLTBhGQ8D1kvL2o97sCsa8=;
+ b=SLQ0NbViouvJ4njdCBxpik3WQsu8QQz0tuMaaHxZqnarJJfld5g6aFH10X/pTxgNKWgKL9
+ JNrP45BdUCAYwoFqdj+3hsTpWgnsBThgrJuihoqOi+aho1k5ml5tzSoM6sPTEcg3ASN5AA
+ ugGaqf437+z31p8noA3qMIRwe6iUE7I=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-mq8SLJJxNqiz_zmfzMzKKQ-1; Tue,
- 13 Jan 2026 05:19:18 -0500
-X-MC-Unique: mq8SLJJxNqiz_zmfzMzKKQ-1
-X-Mimecast-MFC-AGG-ID: mq8SLJJxNqiz_zmfzMzKKQ_1768299557
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-Fa9gEokYMgu3aEmL3ZHdiw-1; Tue,
+ 13 Jan 2026 05:41:48 -0500
+X-MC-Unique: Fa9gEokYMgu3aEmL3ZHdiw-1
+X-Mimecast-MFC-AGG-ID: Fa9gEokYMgu3aEmL3ZHdiw_1768300904
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5BE419560AA; Tue, 13 Jan 2026 10:19:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B02C719560B2; Tue, 13 Jan 2026 10:19:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4941221E676C; Tue, 13 Jan 2026 11:19:13 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Hanna Reitz
- <hreitz@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Christian Schoenebeck <qemu_oss@crudebyte.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  devel@lists.libvirt.org,
- qemu-block@nongnu.org,  qemu-rust@nongnu.org,  Stefan Weil
- <sw@weilnetz.de>,  Kevin Wolf <kwolf@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 10/24] util: avoid repeated prefix on incremental
- qemu_log calls
-In-Reply-To: <20260108170338.2693853-11-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 8 Jan 2026 17:03:24
- +0000")
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44ABE1955D42; Tue, 13 Jan 2026 10:41:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.87])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CEF4419560AB; Tue, 13 Jan 2026 10:41:38 +0000 (UTC)
+Date: Tue, 13 Jan 2026 10:41:35 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org, qemu-block@nongnu.org,
+ qemu-rust@nongnu.org, Stefan Weil <sw@weilnetz.de>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 05/24] util: expose qemu_thread_set_name
+Message-ID: <aWYhX_B2Lvqeaf-H@redhat.com>
 References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-11-berrange@redhat.com>
-Date: Tue, 13 Jan 2026 11:19:13 +0100
-Message-ID: <87h5spak7y.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20260108170338.2693853-6-berrange@redhat.com>
+ <87cy3dc1pl.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87cy3dc1pl.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -95,228 +97,167 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Tue, Jan 13, 2026 at 10:16:06AM +0100, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > The ability to set the thread name needs to be used in a number
+> > of places, so expose the current impls as public methods.
+> >
+> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  include/qemu/thread.h    |  1 +
+> >  util/qemu-thread-posix.c | 26 ++++++++++++++++----------
+> >  util/qemu-thread-win32.c | 13 ++++++++-----
+> >  3 files changed, 25 insertions(+), 15 deletions(-)
+> >
+> > diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+> > index 3a286bb3ef..27b888ab0a 100644
+> > --- a/include/qemu/thread.h
+> > +++ b/include/qemu/thread.h
+> > @@ -215,6 +215,7 @@ void *qemu_thread_join(QemuThread *thread);
+> >  void qemu_thread_get_self(QemuThread *thread);
+> >  bool qemu_thread_is_self(QemuThread *thread);
+> >  G_NORETURN void qemu_thread_exit(void *retval);
+> > +void qemu_thread_set_name(const char *name);
+> >  
+> >  struct Notifier;
+> >  /**
+> > diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+> > index 7c985b5d38..b1c127dbe3 100644
+> > --- a/util/qemu-thread-posix.c
+> > +++ b/util/qemu-thread-posix.c
+> > @@ -329,6 +329,21 @@ static void qemu_thread_atexit_notify(void *arg)
+> >      notifier_list_notify(&thread_exit, NULL);
+> >  }
+> >  
+> > +void qemu_thread_set_name(const char *name)
+> > +{
+> > +    /*
+> > +     * Attempt to set the threads name; note that this is for debug, so
+> > +     * we're not going to fail if we can't set it.
+> > +     */
+> > +# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+> > +    pthread_setname_np(pthread_self(), name);
+> > +# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
+> > +    pthread_setname_np(name);
+> > +# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
+> > +    pthread_set_name_np(pthread_self(), name);
+> > +# endif
+> > +}
+> > +
+> >  typedef struct {
+> >      void *(*start_routine)(void *);
+> >      void *arg;
+> > @@ -342,17 +357,8 @@ static void *qemu_thread_start(void *args)
+> >      void *arg = qemu_thread_args->arg;
+> >      void *r;
+> >  
+> > -    /* Attempt to set the threads name; note that this is for debug, so
+> > -     * we're not going to fail if we can't set it.
+> > -     */
+> >      if (qemu_thread_args->name) {
+> > -# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+> > -        pthread_setname_np(pthread_self(), qemu_thread_args->name);
+> > -# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
+> > -        pthread_setname_np(qemu_thread_args->name);
+> > -# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
+> > -        pthread_set_name_np(pthread_self(), qemu_thread_args->name);
+> > -# endif
+> > +        qemu_thread_set_name(qemu_thread_args->name);
+> >      }
+> >      QEMU_TSAN_ANNOTATE_THREAD_NAME(qemu_thread_args->name);
+> >      g_free(qemu_thread_args->name);
+> 
+> qemu_thread_set_name() is factored out.  No change in behavior.
+> 
+> > diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+> > index 9595a5b090..4d2d663a9a 100644
+> > --- a/util/qemu-thread-win32.c
+> > +++ b/util/qemu-thread-win32.c
+> > @@ -225,6 +225,7 @@ struct QemuThreadData {
+> >      void             *arg;
+> >      short             mode;
+> >      NotifierList      exit;
+> > +    char             *name;
+> >  
+> >      /* Only used for joinable threads. */
+> >      bool              exited;
+> > @@ -266,6 +267,10 @@ static unsigned __stdcall win32_start_routine(void *arg)
+> >      void *(*start_routine)(void *) = data->start_routine;
+> >      void *thread_arg = data->arg;
+> >  
+> > +    if (data->name) {
+> > +        qemu_thread_set_name(data->name);
+> > +        g_clear_pointer(&data->name, g_free);
+> > +    }
+> >      qemu_thread_data = data;
+> >      qemu_thread_exit(start_routine(thread_arg));
+> >      abort();
+> > @@ -316,7 +321,7 @@ void *qemu_thread_join(QemuThread *thread)
+> >      return ret;
+> >  }
+> >  
+> > -static void set_thread_description(HANDLE h, const char *name)
+> > +void qemu_thread_set_name(const char *name)
+> >  {
+> >      g_autofree wchar_t *namew = NULL;
+> >  
+> > @@ -329,7 +334,7 @@ static void set_thread_description(HANDLE h, const char *name)
+> >          return;
+> >      }
+> >  
+> > -    SetThreadDescriptionFunc(h, namew);
+> > +    SetThreadDescriptionFunc(GetCurrentThread(), namew);
+> >  }
+> >  
+> >  void qemu_thread_create(QemuThread *thread, const char *name,
+> > @@ -344,6 +349,7 @@ void qemu_thread_create(QemuThread *thread, const char *name,
+> >      data->arg = arg;
+> >      data->mode = mode;
+> >      data->exited = false;
+> > +    data->name = g_strdup(name);
+> >      notifier_list_init(&data->exit);
+> >  
+> >      if (data->mode != QEMU_THREAD_DETACHED) {
+> > @@ -355,9 +361,6 @@ void qemu_thread_create(QemuThread *thread, const char *name,
+> >      if (!hThread) {
+> >          error_exit(GetLastError(), __func__);
+> >      }
+> > -    if (name) {
+> > -        set_thread_description(hThread, name);
+> > -    }
+> >      CloseHandle(hThread);
+> >  
+> >      thread->data = data;
+> 
+> This delays setting the thread name until the thread runs.  Fine, I
+> guess, but I'd mention it in the commit message.
+> 
+> The new QemuThreadData member @name is non-null only between thread
+> creation and thread name setting, unlike the other members under
+> /* Passed to win32_start_routine.  */  Worth a comment?  Keep it alive
+> until the thread dies?  Entirely up to you.
 
-> There are three general patterns to QEMU log output
->
->  1. Single complete message calls
->
->       qemu_log("Some message\n");
->
->  2. Direct use of fprintf
->
->       FILE *f =3D qemu_log_trylock()
->       fprintf(f, "...");
->       fprintf(f, "...");
->       fprintf(f, "...\n");
->       qemu_log_unlock(f)
->
->  3. Mixed use of qemu_log_trylock/qemu_log()
->
->       FILE *f =3D qemu_log_trylock()
->       qemu_log("....");
->       qemu_log("....");
->       qemu_log("....\n");
->       qemu_log_unlock(f)
->
-> When message prefixes are enabled, the timestamp will be
-> unconditionally emitted for all qemu_log() calls. This
-> works fine in the 1st case, and has no effect in the 2nd
-> case. In the 3rd case, however, we get the timestamp
-> printed over & over in each fragment.
->
-> One can suggest that pattern (3) is pointless as it is
-> functionally identical to (2) but with extra indirection
-> and overhead. None the less we have a fair bit of code
-> that does this.
->
-> The qemu_log() call itself is nothing more than a wrapper
-> which does pattern (2) with a single fprintf() call.
->
-> One might question whether (2) should include the message
-> prefix in the same way that (1), but there are scenarios
-> where this could be inappropriate / unhelpful such as the
-> CPU register dumps or linux-user strace output.
->
-> This patch fixes the problem in pattern (3) by keeping
-> track of the call depth of qemu_log_trylock() and then
-> only emitting the the prefix when the starting depth
-> was zero. In doing this qemu_log_trylock_context() is
-> also introduced as a variant of qemu_log_trylock()
-> that emits the prefix. Callers doing to batch output
-> can thus choose whether a prefix is appropriate or
-> not.
+win32_start_routine never returns as it calls into qemu_thread_exit
+so it is simpler to just free immediately after use. I'll comment
+the struct.
 
-I dislike pattern (3), but not nearly enough to chase it out of the tree
-myself.  Hard to disagree with this patch then :)
+> 
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> 
 
-> Fixes: 012842c07552 (log: make '-msg timestamp=3Don' apply to all qemu_lo=
-g usage)
-> Reported-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  include/qemu/log.h |  7 +++++++
->  util/log.c         | 49 ++++++++++++++++++++++++++--------------------
->  2 files changed, 35 insertions(+), 21 deletions(-)
->
-> diff --git a/include/qemu/log.h b/include/qemu/log.h
-> index e9d3c6806b..95f417c2b7 100644
-> --- a/include/qemu/log.h
-> +++ b/include/qemu/log.h
-> @@ -69,6 +69,13 @@ bool qemu_log_separate(void);
->   */
->  FILE *qemu_log_trylock(void) G_GNUC_WARN_UNUSED_RESULT;
->=20=20
-> +/**
-> + * As qemu_log_trylock(), but will also print the message
-> + * context, if any is configured and this caused the
-> + * acquisition of the FILE lock
-> + */
-> +FILE *qemu_log_trylock_context(void) G_GNUC_WARN_UNUSED_RESULT;
-
-This is used just once, in qemu_log().  Could be inlined into
-qemu_log().
-
-If you prefer to keep it as a function, you could make it static.
-
-I wouldn't guess that this prints from the function name.  Dunno,
-qemu_log_start_line()?  Might want to pair it with a qemu_log_end_line()
-then.
-
-Telling function name is less important if it's static.
-
-> +
->  /**
->   * Releases the lock on the log output, previously
->   * acquired by qemu_log_trylock().
-> diff --git a/util/log.c b/util/log.c
-> index c44d66b5ce..2ce7286f31 100644
-> --- a/util/log.c
-> +++ b/util/log.c
-> @@ -127,13 +127,39 @@ static FILE *qemu_log_trylock_with_err(Error **errp)
-
-Not this patch's fault, but here goes anyway:
-
-   static FILE *qemu_log_trylock_with_err(Error **errp)
-   {
-       FILE *logfile;
-
-       logfile =3D thread_file;
-       if (!logfile) {
-           if (log_per_thread) {
-               g_autofree char *filename
-                   =3D g_strdup_printf(global_filename, log_thread_id());
-               logfile =3D fopen(filename, "w");
-               if (!logfile) {
-                   error_setg_errno(errp, errno,
-                                    "Error opening logfile %s for thread %d=
-",
-                                    filename, log_thread_id());
-                   return NULL;
-               }
-               thread_file =3D logfile;
-               qemu_log_thread_cleanup_notifier.notify =3D qemu_log_thread_=
-cleanup;
-               qemu_thread_atexit_add(&qemu_log_thread_cleanup_notifier);
-           } else {
-               rcu_read_lock();
-               /*
-                * FIXME: typeof_strip_qual, as used by qatomic_rcu_read,
-                * does not work with pointers to undefined structures,
-                * such as we have with struct _IO_FILE and musl libc.
-                * Since all we want is a read of a pointer, cast to void**,
-                * which does work with typeof_strip_qual.
-                */
-               logfile =3D qatomic_rcu_read((void **)&global_file);
-               if (!logfile) {
-                   rcu_read_unlock();
-                   return NULL;
-
-Fails without setting @errp.
-
-               }
-           }
-       }
-
-       qemu_flockfile(logfile);
->      return logfile;
->  }
->=20=20
-> +/*
-> + * Zero if there's been no opening qemu_log_trylock call,
-> + * indicating the need for message context to be emitted
-> + *
-> + * Non-zero if we're in the middle of printing a message,
-> + * possibly over multiple lines and must skip further
-> + * message context
-> + */
-> +static __thread uint log_depth;
-> +
->  FILE *qemu_log_trylock(void)
->  {
-> -    return qemu_log_trylock_with_err(NULL);
-> +    FILE *f =3D qemu_log_trylock_with_err(NULL);
-> +    log_depth++;
-> +    return f;
-> +}
-> +
-> +FILE *qemu_log_trylock_context(void)
-> +{
-> +    FILE *f =3D qemu_log_trylock();
-
-This can fail, and if it does...
-
-> +    if (log_depth =3D=3D 1 && message_with_timestamp) {
-> +        g_autofree const char *timestr =3D NULL;
-> +        g_autoptr(GDateTime) dt =3D g_date_time_new_now_utc();
-> +        timestr =3D g_date_time_format_iso8601(dt);
-> +        fprintf(f, "%s ", timestr);
-
-... we crash here.
-
-> +    }
-> +    return f;
->  }
->=20=20
->  void qemu_log_unlock(FILE *logfile)
->  {
-> +    assert(log_depth);
-> +    log_depth--;
->      if (logfile) {
->          fflush(logfile);
->          qemu_funlockfile(logfile);
-> @@ -145,28 +171,9 @@ void qemu_log_unlock(FILE *logfile)
->=20=20
->  void qemu_log(const char *fmt, ...)
->  {
-> -    FILE *f;
-> -    g_autofree const char *timestr =3D NULL;
-> -
-> -    /*
-> -     * Prepare the timestamp *outside* the logging
-> -     * lock so it better reflects when the message
-> -     * was emitted if we are delayed acquiring the
-> -     * mutex
-> -     */
-> -    if (message_with_timestamp) {
-> -        g_autoptr(GDateTime) dt =3D g_date_time_new_now_utc();
-> -        timestr =3D g_date_time_format_iso8601(dt);
-> -    }
-> -
-> -    f =3D qemu_log_trylock();
-> +    FILE *f =3D qemu_log_trylock_context();
->      if (f) {
->          va_list ap;
-> -
-> -        if (timestr) {
-> -            fprintf(f, "%s ", timestr);
-> -        }
-> -
->          va_start(ap, fmt);
->          vfprintf(f, fmt, ap);
->          va_end(ap);
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
