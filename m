@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24780D29DEC
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 09:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41CD7D29DEC
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 09:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfabC-0006RL-Fb; Tue, 13 Jan 2026 04:22:02 -0500
+	id 1vfagI-0008WV-9C; Tue, 13 Jan 2026 04:27:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vfabA-0006QT-7l
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:22:00 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vfab6-0000P0-Ef
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:21:59 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-64b8123c333so11634757a12.3
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 01:21:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768296114; x=1768900914; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WEY5EqjzbiXCkJ2L9TDplMOaGKehcEgYOjDv2F9dCos=;
- b=hHag6o/6+OoxxN5f+jgfCG+zW5SV2zMxb9M6NrkBfI/EZ/wXHWj8qorq+NWyfwhZYf
- IGU2sFDRNELg5sMTZ1FJBUXqCdAKuA0q+ugzwU1E+h7EJkY3V2Yn+WsKvYPCTz9NU8lp
- vXDDksuRyhUCaMmSB/MwdebGxu0NDGRIOpJpso6I/d15XwnMFWssARRb1AkS19rk0cml
- RdMbwbBX1FCJluGBD2dcdzd2augJtnc7L7zF7ep928+XqYaOuU+ypG+38eGn+nZY1uwI
- D2ExUFAtUnPDWimiZMRmgZzcHzXkUEUAVTjDwnIIz0+6/5tRe7Twh86HP0+qoCDa8SPj
- cXKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768296114; x=1768900914;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WEY5EqjzbiXCkJ2L9TDplMOaGKehcEgYOjDv2F9dCos=;
- b=lDJlWMapSirvnv41qXgCYbSYsjKoUlG+V4JmQzbjyoZFGGj5oCaZM+hRagV0+m7Eqo
- lsis+TKBDgFqmJS1eYvnhKoe/1ISnWxlcQ2WZH2iiwMeLKe87sUkuNZRXv4qxOHft/6e
- lNnb8zAFtE/TF2IvYZGxJOnMdSOmXx9tTjbKhlrLhD6DnRymAEbcCdLA971oUBcNgxha
- DC+k8nqQDXoHtPA0R49B+0KX0twS9Euls0JT3oLLhxFR92uK79LtcIpdxseLqvRiqdTp
- ewBvrMEZPJ4ut+49fZnKn/1EN8d9RBojqWaAVxeSfpqTC9w6CqL/8osR6grb8JBtoOtz
- HuYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpG1CdmdGAMTYWKYlPjNlCq2A9JaKNzhLSHtvSSqUX1L/XElVLLTUJTVDG2BZSAvQJ7s8qzj8nIRVE@nongnu.org
-X-Gm-Message-State: AOJu0Yz9qruMwRHQi+NhTIIIqpc2SkleJ4FpHiV7QUqnMsjZ9/XStg42
- dqMlAlXmykkNLO6E1HO1UySD0B3WZMDVW3pwCrRMskYmQHv7HjUvrGq1P2gUljClMHtk3Wri8t3
- zWVtqI7juwn0RqlqPFIVlLXFSGvtVHBw=
-X-Gm-Gg: AY/fxX45yKTMezZJNnvmFKecLkOmbYy7478F5RGtMNbFMt+LmqUK92va4JhhuCVir/2
- SBcjyc/5vzoVTUR2HNZRnpNmCdJH4jGNC0LWS56eVjNY6+KxSvK2at/Dsscep19pyJCZX/n2Bgy
- QKTtacYROVWZ7Fg7zYg09wd4Mkk4QLG1AmaayssbzBv0ODNLE3n2mbXIw2UEnkTh2erWsAb0tdB
- goKj4d082rKAiq4Iich2LDPEyA6EcioUFlUzU47e+Lr9FaOhTa4fkwd+CXDb+Tn/B+D3CJxaDk4
- gdPfvA==
-X-Google-Smtp-Source: AGHT+IEhl1YGCNDolpudFeyh/zCSZJTyW5pLw0WceFOfArkcIg1hD9fnRXIW4P/IePG9MKbyBwGmua49OQumZFku2EE=
-X-Received: by 2002:a17:907:2d06:b0:b87:324b:9acb with SMTP id
- a640c23a62f3a-b87324ba3aemr299398966b.33.1768296114016; Tue, 13 Jan 2026
- 01:21:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfagF-0008SD-9r
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:27:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfagD-0001QK-KX
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 04:27:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768296433;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BUUjNGAdXIsW3u+Cs7rkzYgDYmwtwnKXlXlx5Estgqg=;
+ b=ACwedFZCFISlWTr5Vz/xSD1oT1cI7uKTgQMhye28JFeLGuUJFWfa02nARy/FUYobK9u1AZ
+ AjYJtvL0i/7M6djJgeWu+v5GsE1lo834Wy7PcTd2Gm8D7XZUSfGhR+zG78J2Ef7whP4Wua
+ ZupZdSdDPWV5OGRpSOeGFKNdb7L4+3I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-345-5ununNtcODCIonhmXqns6g-1; Tue,
+ 13 Jan 2026 04:27:09 -0500
+X-MC-Unique: 5ununNtcODCIonhmXqns6g-1
+X-Mimecast-MFC-AGG-ID: 5ununNtcODCIonhmXqns6g_1768296428
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A22D219560B9; Tue, 13 Jan 2026 09:27:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4094F1956048; Tue, 13 Jan 2026 09:27:07 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C860721E66C9; Tue, 13 Jan 2026 10:27:04 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Hanna Reitz
+ <hreitz@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  devel@lists.libvirt.org,
+ qemu-block@nongnu.org,  qemu-rust@nongnu.org,  Stefan Weil
+ <sw@weilnetz.de>,  Kevin Wolf <kwolf@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 08/24] util: add API to fetch the current thread name
+In-Reply-To: <20260108170338.2693853-9-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 8 Jan 2026 17:03:22
+ +0000")
+References: <20260108170338.2693853-1-berrange@redhat.com>
+ <20260108170338.2693853-9-berrange@redhat.com>
+Date: Tue, 13 Jan 2026 10:27:04 +0100
+Message-ID: <878qe1c17b.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260104075412.1262-1-jasowang@redhat.com>
- <20260104075412.1262-2-jasowang@redhat.com>
- <CAK3tnv+97kgSAt-do3BwhzFewy+A3rcMrJj8K5r7hvSJag_tgA@mail.gmail.com>
- <CACGkMEsA4hoTWqetffmfJEZ7Jq5=6gQ1ik+UznXgSGiyhE_Hqw@mail.gmail.com>
- <CACGkMEs08wX5yBWcs05wiUmReb7boxTNy4+Br0dDUi=npfo1Cg@mail.gmail.com>
-In-Reply-To: <CACGkMEs08wX5yBWcs05wiUmReb7boxTNy4+Br0dDUi=npfo1Cg@mail.gmail.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 13 Jan 2026 17:21:17 +0800
-X-Gm-Features: AZwV_Qg__I8QOoI0H6jVoDztqtB_XKzlm6H-KgiPee_PRLCDI9j2pOct_X5wyPk
-Message-ID: <CAK3tnv+j_7s5JhPb32C9FK565B6M2V9gRsGkg6x_J0YesEmgFQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] net/filter-redirector: add support for dynamic status
- on/off switching
-To: Jason Wang <jasowang@redhat.com>
-Cc: lizhijian@fujitsu.com, qemu-devel@nongnu.org, lulu@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x531.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,139 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 13, 2026 at 2:43=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
-ote:
->
-> On Tue, Jan 6, 2026 at 4:09=E2=80=AFPM Jason Wang <jasowang@redhat.com> w=
-rote:
-> >
-> > On Mon, Jan 5, 2026 at 9:19=E2=80=AFPM Zhang Chen <zhangckid@gmail.com>=
- wrote:
-> > >
-> > > On Sun, Jan 4, 2026 at 3:54=E2=80=AFPM Jason Wang <jasowang@redhat.co=
-m> wrote:
-> > > >
-> > > > Currently, filter-redirector does not implement the status_changed
-> > > > callback, which means the 'status' property cannot be used to
-> > > > dynamically enable/disable the filter at runtime. When status is
-> > > > set to 'off' via QMP/HMP, the filter still receives data from the
-> > > > indev chardev because the chardev handlers remain registered.
-> > > >
-> > > > This patch adds proper support for the 'status' property:
-> > > >
-> > > > 1. Implement filter_redirector_status_changed() callback:
-> > > >    - When status changes to 'off': remove chardev read handlers
-> > > >    - When status changes to 'on': re-register chardev handlers
-> > > >      (only if chardev is already open)
-> > > >
-> > > > 2. Update filter_redirector_setup() to respect initial status:
-> > > >    - If filter is created with status=3Doff, do not register handle=
-rs
-> > > >    - This allows creating disabled filters via command line or QMP
-> > > >
-> > > > 3. Handle chardev OPENED/CLOSED events to re-arm handlers on reconn=
-ect:
-> > > >    - Keep the chr_event callback installed on CLOSE so a later OPEN=
-ED
-> > > >      can re-register the read handlers when nf->on
-> > > >    - Use qemu_chr_fe_set_handlers_full(..., set_open=3Dfalse, sync_=
-state=3Dfalse)
-> > > >      instead of qemu_chr_fe_set_handlers() because the latter force=
-s
-> > > >      sync_state=3Dtrue and may emit CHR_EVENT_OPENED for an already=
--open
-> > > >      backend. Doing that from inside the chr_event callback would c=
-ause
-> > > >      recursive/re-entrant OPENED handling.
-> > > >
-> > > > Signed-off-by: Jason Wang <jasowang@redhat.com>
-> > > > ---
-> > > >  net/filter-mirror.c | 38 +++++++++++++++++++++++++++++++++-----
-> > > >  1 file changed, 33 insertions(+), 5 deletions(-)
-> > > >
-> > > > diff --git a/net/filter-mirror.c b/net/filter-mirror.c
-> > > > index 8e01e98f40..aa2ab452fd 100644
-> > > > --- a/net/filter-mirror.c
-> > > > +++ b/net/filter-mirror.c
-> > > > @@ -179,9 +179,16 @@ static void redirector_chr_event(void *opaque,=
- QEMUChrEvent event)
-> > > >      MirrorState *s =3D FILTER_REDIRECTOR(nf);
-> > > >
-> > > >      switch (event) {
-> > > > +    case CHR_EVENT_OPENED:
-> > > > +        if (nf->on) {
-> > > > +            qemu_chr_fe_set_handlers_full(&s->chr_in, redirector_c=
-hr_can_read,
-> > > > +                                          redirector_chr_read, red=
-irector_chr_event,
-> > > > +                                          NULL, nf, NULL, false, f=
-alse);
-> > > > +        }
-> > > > +        break;
-> > > >      case CHR_EVENT_CLOSED:
-> > > > -        qemu_chr_fe_set_handlers(&s->chr_in, NULL, NULL, NULL,
-> > > > -                                 NULL, NULL, NULL, true);
-> > > > +        qemu_chr_fe_set_handlers_full(&s->chr_in, NULL, NULL, redi=
-rector_chr_event,
-> > > > +                                      NULL, nf, NULL, false, false=
-);
-> > > >          break;
-> > > >      default:
-> > > >          break;
-> > > > @@ -306,9 +313,11 @@ static void filter_redirector_setup(NetFilterS=
-tate *nf, Error **errp)
-> > > >              return;
-> > > >          }
-> > > >
-> > > > -        qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_re=
-ad,
-> > > > -                                 redirector_chr_read, redirector_c=
-hr_event,
-> > > > -                                 NULL, nf, NULL, true);
-> > > > +        if (nf->on) {
-> > > > +            qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_ca=
-n_read,
-> > > > +                                     redirector_chr_read, redirect=
-or_chr_event,
-> > > > +                                     NULL, nf, NULL, true);
-> > > > +        }
-> > > >      }
-> > > >
-> > > >      if (s->outdev) {
-> > > > @@ -324,6 +333,24 @@ static void filter_redirector_setup(NetFilterS=
-tate *nf, Error **errp)
-> > > >      }
-> > > >  }
-> > > >
-> > > > +static void filter_redirector_status_changed(NetFilterState *nf, E=
-rror **errp)
-> > > > +{
-> > > > +    MirrorState *s =3D FILTER_REDIRECTOR(nf);
-> > > > +
-> > > > +    if (!s->indev) {
-> > >
-> > > It's better to add a error here, for example:
-> > >
-> > >         error_setg(errp,  "filter_redirector_status_changed failed fo=
-r
-> > > the s->indev cleared" );
-> >
-> > Will do.
-> >
->
-> I think it's probably wrong to return an error here as we may only use
-> outdev but not indev, in this case status_changed doesn't need to do
-> anything.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-This confuses me. The filter_redirector_status_changed code focus on
-how to read the the indev, it looks not affect the outdev.
-If we just return without any error, the user is unsure whether the attempt
-was successful.
-
-Thanks
-Chen
-
+> This will be used to include the thread name in error reports
+> in a later patch. It returns a const string stored in a thread
+> local to avoid memory allocation when it is called repeatedly
+> in a single thread. The thread name should be set at the very
+> start of the thread execution, which is the case when using
+> qemu_thread_create.
 >
-> Thanks
->
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  include/qemu/thread.h    |  1 +
+>  meson.build              | 21 +++++++++++++++++
+>  util/qemu-thread-posix.c | 33 ++++++++++++++++++++++++++-
+>  util/qemu-thread-win32.c | 49 ++++++++++++++++++++++++++++++++++++----
+>  4 files changed, 99 insertions(+), 5 deletions(-)
+
+Tempted to store the thread name in TLS and call it a day.
+
 
