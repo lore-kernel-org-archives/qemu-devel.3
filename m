@@ -4,110 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8DCD0C854
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 11:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 486CBD0C856
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 11:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfcLg-0003HB-KJ; Tue, 13 Jan 2026 06:14:08 -0500
+	id 1vfcRr-00009X-0Q; Tue, 13 Jan 2026 06:20:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfcLe-0003GF-6V
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:14:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vfcRn-00008f-JH; Tue, 13 Jan 2026 06:20:27 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfcLc-0008Sz-Kr
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:14:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768302843;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WoHmlff5qVInNJa0c5xb24mKFyNRNi6bvJSwoHs/ngM=;
- b=bF9CDDNE50POj7ptI62RC8E4pBcLq9ZJ+mIfUtgnhI1z79xCMQjvDRINOUU5M4zLn3H6lV
- FYaHWFg63gAElvPUBta2+TOgW4stG66+gdIQOT34aj0SdklMpsbV+6F1yPO3TqwPeFGL9V
- 4Nq/a4XyLjkRczlir68Myv599MPvJqs=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-571-wV9oZq2HOaSTer5JWVmslw-1; Tue, 13 Jan 2026 06:13:52 -0500
-X-MC-Unique: wV9oZq2HOaSTer5JWVmslw-1
-X-Mimecast-MFC-AGG-ID: wV9oZq2HOaSTer5JWVmslw_1768302831
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4776079ada3so74286945e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 03:13:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768302830; x=1768907630; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WoHmlff5qVInNJa0c5xb24mKFyNRNi6bvJSwoHs/ngM=;
- b=kpFhmyTKSe/TedFYsRVW/YYf/jIDXJWRzLSXdSviDhUe554QdbpBaNLp1keTFt2iQO
- WB9ViAXC1pdvedw10ZCNUz49dTSN/FYj3KjVZZ2gkGc9UvSin2KMD36eBl/KievJDtI0
- 8S27ZEo5Z1yYjxQjU8zeN8/6oZ8LGOpta5Q9x68vWUWgz2YafVN7a2umspQt5rbWf0a0
- 7rD1HqNn90Ww3AUSeTybVok6vT4yAH3Ypdr6Ywj5yMrJlCq0eFBjfhsSeDDHt7W60Vew
- QyWvR0Kz/hCr1kgimpIkigCw0auW9CrfCn86nGxbMYttVU9gI1JFIOf/GtPiTCIhElXL
- h6aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768302830; x=1768907630;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WoHmlff5qVInNJa0c5xb24mKFyNRNi6bvJSwoHs/ngM=;
- b=JlFmzmqWuJc8iNw5FraH0/A7cCogwHpog3IMBp2+ntETYAKui3Fk0juknj2Jabiyrj
- P/swOJfyu4SlFTHoPTYavrYvUTcHhWDj+/GPVubpX6K5moXexzI2FKL7KCUQWRcEzlEA
- mE9EsR8VNFYjaYn3rqkmMwaWbbpUad272STAfiKbp1Yqu6TFy7l1TkvxBiwK4pKatyJR
- BLqX3agrLiErgNkKRlmpjVjj/LloLm9fxYAnCdcTEwZJh2hp26deqfIbQr1mIYJZ+zSx
- 6irYgXIRtKeAdKVU8LfeWFX4f3DwF23nHGJic/CrCV2Jt8Wk974e/JddJSyPe8WfOzGz
- hvsA==
-X-Gm-Message-State: AOJu0Yz+91wOmGaoGC1Co3iepyhk3ojr/b6oAXQqA6sgKmeO+24jq+gZ
- aLBBEnBY5cOYtF9oEHniDrEbLWEpMN6HuEPRvIf9XNIBLJXwLuWt3gYvMc9R/max4ywREacHxWB
- CFupNuguBjs2riB7YcRxwwo+Q8M9PgQx63GBN9G+zv3W2H9LGb2ZlZJTK4K8ydMrCMGcRoTp5MJ
- V8LZghMKotGt2Am8g6CCApS0ZnJ9n97OEpjjbqBH1T
-X-Gm-Gg: AY/fxX5oBzkfhCsf4mOARlowuMsT2aJhODgYqMZP3ynR3/HWD3YjWQ89ou7h2VWqtj7
- zpDsiefuKvtCc4CNR6yOELwh5KBNxFfafb/hPvTBKplxggN0yjAfIaxUJ+V3WZs3CWrfFK7+mRO
- qR6HCNObVfrWCq3+KG7zbKAYxeas7Ak4O6i4gRjBqXZLBvwEuErarE3f9mQ3Cotd3FXU6MLUtlR
- 95h0BvrKtrNNpsMx897F5lur1njU1fXFoPGYDBWVD4rrdQj2/g/iHIfB98eDypY+KremIBj8jE6
- VfaWQ7AG8cQvAL2/dyFEkwsIMBWLcmyOqEQtJkjIZrxXV+zwaP45U7gsl0BEYRCdGy89NIbDg54
- xXii2WCQcX2/9z6XUvy1b719em8J1OiXRMf8BPf2BNmJ3TjYrn+JJTEuzJIPQSbko9Bjf/xqYBE
- 3kESsaG2efu2A8VQ==
-X-Received: by 2002:a05:600c:1393:b0:477:55ce:f3bc with SMTP id
- 5b1f17b1804b1-47d84b3bad4mr235285325e9.19.1768302830322; 
- Tue, 13 Jan 2026 03:13:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGdULqhZlXJ5a1TLOpcM++a0MpEZu6Cb9nKZW9GtBzFwE298R1Iky4D+vNkH5XdKludUKnvpw==
-X-Received: by 2002:a05:600c:1393:b0:477:55ce:f3bc with SMTP id
- 5b1f17b1804b1-47d84b3bad4mr235285025e9.19.1768302829546; 
- Tue, 13 Jan 2026 03:13:49 -0800 (PST)
-Received: from [192.168.10.48] ([151.61.26.160])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47d7f695956sm410025415e9.6.2026.01.13.03.13.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 03:13:48 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Vulnerability Report <vr@darknavy.com>, David Woodhouse <dwmw@amazon.co.uk>
-Subject: [PULL 6/7] hw/i386/kvm: fix PIRQ bounds check in
- xen_physdev_map_pirq()
-Date: Tue, 13 Jan 2026 12:13:32 +0100
-Message-ID: <20260113111333.1138160-7-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260113111333.1138160-1-pbonzini@redhat.com>
-References: <20260113111333.1138160-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vfcRk-0001Xr-Sj; Tue, 13 Jan 2026 06:20:27 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 5DF8048402;
+ Tue, 13 Jan 2026 12:20:13 +0100 (CET)
+Message-ID: <bf18287e-0f32-4138-95cd-5a7517ec7854@proxmox.com>
+Date: Tue, 13 Jan 2026 12:20:12 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ui/vdagent: add migration blocker when machine version <
+ 10.1
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ zhao1.liu@intel.com, peterx@redhat.com, farosas@suse.de
+References: <20260112104454.54225-1-f.ebner@proxmox.com>
+ <CAMxuvaz0AKCcO=nWUc_U39wcdHn0w_3N8WDncT0Fbc7aWM=nAQ@mail.gmail.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <CAMxuvaz0AKCcO=nWUc_U39wcdHn0w_3N8WDncT0Fbc7aWM=nAQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1768303167910
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,35 +63,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vulnerability Report <vr@darknavy.com>
+Hi Marc-André,
 
-Reject pirq == s->nr_pirqs in xen_physdev_map_pirq().
+Am 13.01.26 um 8:39 AM schrieb Marc-André Lureau:
+> Hi Fiona
+> 
+> On Mon, Jan 12, 2026 at 2:51 PM Fiona Ebner <f.ebner@proxmox.com
+> <mailto:f.ebner@proxmox.com>> wrote:
+> 
+>     In QEMU 10.1, commit 5d56bff11e ("ui/vdagent: add migration support")
+>     added migration support for the vdagent chardev and commit 42000e0013
+>     ("ui/vdagent: remove migration blocker") removed the migration
+>     blocker. No compat for older machine versions was added, so migration
+>     with pre-10.1 machine version, from a 10.1 binary to a pre-10.1 binary
+>     will result in a failure when loading the VM state in the target
+>     instance:
+> 
+> 
+> But you can migrate a pre-10.1 machine with the new binary.
 
-Fixes: aa98ee38a5 ("hw/xen: Implement emulated PIRQ hypercall support")
-Fixes: CVE-2026-0665
-Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Signed-off-by: Vulnerability Report <vr@darknavy.com>
-Link: https://lore.kernel.org/r/13FE03BE60EA78D6+20260109023548.4047-1-vr@darknavy.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/i386/kvm/xen_evtchn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+True, but I think it violates what a machine version is supposed to
+encapsulate. If a QEMU binary supports a given machine version, it
+should be able to load migration streams originating from other, newer
+QEMU binaries when the same machine version and commandline is used, or?
 
-diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
-index b65871f3542..8b243984e41 100644
---- a/hw/i386/kvm/xen_evtchn.c
-+++ b/hw/i386/kvm/xen_evtchn.c
-@@ -1877,7 +1877,7 @@ int xen_physdev_map_pirq(struct physdev_map_pirq *map)
-             return pirq;
-         }
-         map->pirq = pirq;
--    } else if (pirq > s->nr_pirqs) {
-+    } else if (pirq >= s->nr_pirqs) {
-         return -EINVAL;
-     } else {
-         /*
--- 
-2.52.0
+>  
+> 
+>     > Unknown savevm section or instance 'vdagent' 0. Make sure that your
+>     > current VM setup matches your saved VM setup, including any
+>     > hotplugged devices
+> 
+>     Add a compat flag to block migration when the machine version is less
+>     than 10.1 to avoid this.
+> 
+> 
+> I am not sure this is the right way to handle this. There is already
+> this error when migrating to an older qemu, I am not sure we have to
+> block earlier and prevent the above case.
+
+I would consider this an internal/unexpected error. I feel like it
+should not occur if the VM was started with the exact same commandline
+on source and target, but currently, it can. It happens at the very end
+of migration when the source is already in post-migrate state, which is
+not nice for users/management layer.
+
+> 
+>  
+> 
+>     Cc: qemu-stable@nongnu.org <mailto:qemu-stable@nongnu.org>
+>     Fixes: 42000e0013 ("ui/vdagent: remove migration blocker")
+>     Signed-off-by: Fiona Ebner <f.ebner@proxmox.com
+>     <mailto:f.ebner@proxmox.com>>
+>     ---
+>      hw/core/machine.c |  1 +
+>      ui/vdagent.c      | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+>      2 files changed, 47 insertions(+)
+> 
+>     diff --git a/hw/core/machine.c b/hw/core/machine.c
+>     index 6411e68856..9a5241ce17 100644
+>     --- a/hw/core/machine.c
+>     +++ b/hw/core/machine.c
+>     @@ -55,6 +55,7 @@ GlobalProperty hw_compat_10_0[] = {
+>          { "vfio-pci", "x-migration-load-config-after-iter", "off" },
+>          { "ramfb", "use-legacy-x86-rom", "true"},
+>          { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
+>     +    { "chardev-qemu-vdagent", "x-migration-blocked", "true" },
+> 
+> 
+> Is there a precedent where such compat property was added to block
+> migration?
+
+There are several ones where migration is turned off for a device or
+certain properties, e.g.
+{ "ramfb", "x-migrate", "off" } for 8.1
+{ "pl011", "migrate-clk", "off" } for 5.1
+which is not quite the same, but I'd still argue:
+
+I guess those properties were not migrated, so compatibility means still
+not migrating those for older machine version. For the vdagent chardev,
+the previous behavior was blocking migration, so compatibility means
+still blocking migration for older machine versions. Or does that not
+make sense?
+
+Best Regards,
+Fiona
 
 
