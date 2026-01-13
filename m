@@ -4,33 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9FB6D2D0ED
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC4FD2D0ED
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfe1w-0000nJ-Fw; Tue, 13 Jan 2026 08:01:52 -0500
+	id 1vfe1z-0001Lk-Da; Tue, 13 Jan 2026 08:01:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vfe0q-00071c-Dc; Tue, 13 Jan 2026 08:00:51 -0500
+ id 1vfe0w-00073D-Eo; Tue, 13 Jan 2026 08:00:56 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vfe0o-00014E-Uz; Tue, 13 Jan 2026 08:00:44 -0500
+ id 1vfe0s-00017E-O5; Tue, 13 Jan 2026 08:00:48 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AD52E17D9E2;
+ by isrv.corpit.ru (Postfix) with ESMTP id D02B117D9E4;
  Tue, 13 Jan 2026 16:00:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9D6DF34C419;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BFE6634C41B;
  Tue, 13 Jan 2026 16:00:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org,
 	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH trivial 4/7] meson.build: stop checking for inotify_init()
-Date: Tue, 13 Jan 2026 16:00:05 +0300
-Message-ID: <20260113130008.910240-8-mjt@tls.msk.ru>
+Subject: [PATCH trivial 6/7] meson.build: do not check for epoll.h
+ (CONFIG_EPOLL)
+Date: Tue, 13 Jan 2026 16:00:07 +0300
+Message-ID: <20260113130008.910240-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260113130008.910240-1-mjt@tls.msk.ru>
 References: <20260113130008.910240-1-mjt@tls.msk.ru>
@@ -59,9 +60,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-the only place in qemu which used the check for inotify_init()
-was linux-user, which now assumes inotify_init() is always
-present.  There's no need to check for this function anymore.
+The only place where we used CONFIG_EPOLL was linux-user,
+which now enables it unconditionally.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
@@ -69,17 +69,17 @@ Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
  1 file changed, 1 deletion(-)
 
 diff --git a/meson.build b/meson.build
-index 9b5f1540ff..6ea49c6fc0 100644
+index 6ea49c6fc0..f8b4f06049 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2709,7 +2709,6 @@ if (have_inotify_init or have_inotify_init1) and host_os == 'freebsd'
-     have_inotify_init1 = inotify.found()
-   endif
- endif
--config_host_data.set('CONFIG_INOTIFY', have_inotify_init)
- config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
+@@ -2617,7 +2617,6 @@ config_host_data.set('CONFIG_FSFREEZE', qga_fsfreeze)
+ config_host_data.set('CONFIG_FSTRIM', qga_fstrim)
  
- # has_header_symbol
+ # has_header
+-config_host_data.set('CONFIG_EPOLL', cc.has_header('sys/epoll.h'))
+ config_host_data.set('CONFIG_LINUX_MAGIC_H', cc.has_header('linux/magic.h'))
+ valgrind = false
+ if get_option('valgrind').allowed()
 -- 
 2.47.3
 
