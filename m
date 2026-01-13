@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0DAD0C854
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 11:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8DCD0C854
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 11:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfcLW-0003AD-NB; Tue, 13 Jan 2026 06:13:58 -0500
+	id 1vfcLg-0003HB-KJ; Tue, 13 Jan 2026 06:14:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfcLQ-000351-D7
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:13:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vfcLe-0003GF-6V
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:14:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfcLP-0008RE-0E
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:13:52 -0500
+ id 1vfcLc-0008Sz-Kr
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 06:14:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768302830;
+ s=mimecast20190719; t=1768302843;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vmMNXghpYjqYvVVn4RIngVHI8PwCV+JhYK/3vY9LTWA=;
- b=WuZZgZhW3qLeHITJYZyBCjAPZXU6z+XViEqeiFPXMDqq2BRmX0eafvzylPQzK9bGEgmUrL
- aszS/4v7qMTbW148ZgLAvXo54t2uNfdZ9LdaoZLtyW+KBSJzThWbvOj2kDr6Jn2F+OHLLU
- 7FlnI/KfXgShEatvhDNyRfiZqDUNvUU=
+ bh=WoHmlff5qVInNJa0c5xb24mKFyNRNi6bvJSwoHs/ngM=;
+ b=bF9CDDNE50POj7ptI62RC8E4pBcLq9ZJ+mIfUtgnhI1z79xCMQjvDRINOUU5M4zLn3H6lV
+ FYaHWFg63gAElvPUBta2+TOgW4stG66+gdIQOT34aj0SdklMpsbV+6F1yPO3TqwPeFGL9V
+ 4Nq/a4XyLjkRczlir68Myv599MPvJqs=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-N2GuKGwsOJ2-AW0mNoDpdQ-1; Tue, 13 Jan 2026 06:13:49 -0500
-X-MC-Unique: N2GuKGwsOJ2-AW0mNoDpdQ-1
-X-Mimecast-MFC-AGG-ID: N2GuKGwsOJ2-AW0mNoDpdQ_1768302828
+ us-mta-571-wV9oZq2HOaSTer5JWVmslw-1; Tue, 13 Jan 2026 06:13:52 -0500
+X-MC-Unique: wV9oZq2HOaSTer5JWVmslw-1
+X-Mimecast-MFC-AGG-ID: wV9oZq2HOaSTer5JWVmslw_1768302831
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4779edba8f3so58389375e9.3
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 03:13:49 -0800 (PST)
+ 5b1f17b1804b1-4776079ada3so74286945e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 03:13:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768302827; x=1768907627; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768302830; x=1768907630; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vmMNXghpYjqYvVVn4RIngVHI8PwCV+JhYK/3vY9LTWA=;
- b=JaDY5g4XCNr7ct3dZVrmZu9l5H3WMxy782XpU8cKVl8h/ITR95z28NQoaYt7Ekj4Br
- CppFTgrZheXl83T65KAE0eut8u3+tMFzbxZBYRamEuaL9RkIjS3jp/FTFftzuv3dvlDQ
- VNoxW7VMcbtkDYX8W0wNJfZvz+yMCk+FQrZRuj3hwKHTxGw7meZx4oYI6JK2TwUURzhg
- 6qVXLcPN4h777R5LRKY08rFhRp1CrP8PleYOrTMQCE3ca+X1lv0vRSOUANFWd7v3LWZa
- Dn5PUV9zzZdaaeH7PlOMKqPTvU1JXfj0Uyf5rs1pw4MZsMjV4+vgUcigVmznt+7VmZpv
- 8/vA==
+ bh=WoHmlff5qVInNJa0c5xb24mKFyNRNi6bvJSwoHs/ngM=;
+ b=kpFhmyTKSe/TedFYsRVW/YYf/jIDXJWRzLSXdSviDhUe554QdbpBaNLp1keTFt2iQO
+ WB9ViAXC1pdvedw10ZCNUz49dTSN/FYj3KjVZZ2gkGc9UvSin2KMD36eBl/KievJDtI0
+ 8S27ZEo5Z1yYjxQjU8zeN8/6oZ8LGOpta5Q9x68vWUWgz2YafVN7a2umspQt5rbWf0a0
+ 7rD1HqNn90Ww3AUSeTybVok6vT4yAH3Ypdr6Ywj5yMrJlCq0eFBjfhsSeDDHt7W60Vew
+ QyWvR0Kz/hCr1kgimpIkigCw0auW9CrfCn86nGxbMYttVU9gI1JFIOf/GtPiTCIhElXL
+ h6aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768302827; x=1768907627;
+ d=1e100.net; s=20230601; t=1768302830; x=1768907630;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vmMNXghpYjqYvVVn4RIngVHI8PwCV+JhYK/3vY9LTWA=;
- b=MWuOqpex1We5/Y0NZuMq9gAvX/W8TYsk+nJCFD5SF8c8TQO3MZxoi+PHS6WSuHy0q7
- m3D8rzz1IRmvNOLQZtRx+04AmQMWjXpKE/FgHLuuZovynW1Fy8u0Knduq5WIC7rC8idD
- 22yvMdkB5aM7DbP3hFyVkqS64CuryXwyckUM7wgzN59AszG5npd8hpbM8i73ZMHUIHFV
- 1nqKxT9KYMlmPWPxxCdFdRcuWaUoTXAavrmU+WN64IH4ZqGlfVO25T1W1zCH1hxtKrYd
- cVlv6uW+l52kbB3MzRZ7+ChmKexatC/xkYwcfZ6qF9j+JqhBCHZH1jOObCgGSFKtzWvU
- Gvpw==
-X-Gm-Message-State: AOJu0Yy3gCCUi6VUqmMB44zI2KZVJ9WqWdUQ5cUYY9k02ZFAD/Pnpxby
- IFS4Iqa1TnpVIzpWhc39IpLVibNhf/uaB830TT7GKXhsHDa3La9WhFCxXvAJqjHCHQfYaATbtjW
- 51qot8FAP4CckNZoTm2oWc/E/OVWFs1bxqAoYuP1eHuQaa4sUzAv0YkkC4Voq+9fqXhhK2XqM6m
- ON5T8soQAAshpiiSEf+WLuyIu4ehSO/isGeXf1T37y
-X-Gm-Gg: AY/fxX5gY0xNuozxDF3VVPuHUJooks7i/QYfDqrhg4JRRhXIGJ7ne2QDW3ShxzEbdqm
- T7F4sybgMDsR8QnmhoF0rg2YWsIXCqkbE6dfGVPVrpOGnSq+7t1ISMkE/vtUFY4qx6gcaj7AWgX
- wOH+IcewpUf5ejyyGKb/iFLbsz8aoVEx00/fPdPS9aeQ9AZEosOPQnclXjzfbh3ykreZgKkOVzb
- DdnPxhRzRaBQcSEZsgbAK6TNWWfqcO/ZxiY6ur0EwdqDrQbGvxqnamwqVZQpdXPy/8JY9ybsojg
- C9cU6LZCrGhtxp5mETq2zR3HD0lirXH+XM9KXaXZ4ynZkjNiNPebRBvfMjO2VI9esdmlnD7EV8o
- y64w9WJep+gZAZRAs//JmcWqfwygYOevhO5z0DiIc3VM8EK6A4r3+w9Orw0TK9KqJvdvA86HP/I
- i1XEEz/4emtNwl1g==
-X-Received: by 2002:a05:600c:4ed3:b0:477:afc5:fb02 with SMTP id
- 5b1f17b1804b1-47d84b34785mr268164855e9.21.1768302827596; 
- Tue, 13 Jan 2026 03:13:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE98/Vf9L73LmoijCXaRYMp8bvFyGDCDWE+ZddB4q6YYSA+8+ym98si70TLUzt49V+93fMjHg==
-X-Received: by 2002:a05:600c:4ed3:b0:477:afc5:fb02 with SMTP id
- 5b1f17b1804b1-47d84b34785mr268164525e9.21.1768302827188; 
- Tue, 13 Jan 2026 03:13:47 -0800 (PST)
+ bh=WoHmlff5qVInNJa0c5xb24mKFyNRNi6bvJSwoHs/ngM=;
+ b=JlFmzmqWuJc8iNw5FraH0/A7cCogwHpog3IMBp2+ntETYAKui3Fk0juknj2Jabiyrj
+ P/swOJfyu4SlFTHoPTYavrYvUTcHhWDj+/GPVubpX6K5moXexzI2FKL7KCUQWRcEzlEA
+ mE9EsR8VNFYjaYn3rqkmMwaWbbpUad272STAfiKbp1Yqu6TFy7l1TkvxBiwK4pKatyJR
+ BLqX3agrLiErgNkKRlmpjVjj/LloLm9fxYAnCdcTEwZJh2hp26deqfIbQr1mIYJZ+zSx
+ 6irYgXIRtKeAdKVU8LfeWFX4f3DwF23nHGJic/CrCV2Jt8Wk974e/JddJSyPe8WfOzGz
+ hvsA==
+X-Gm-Message-State: AOJu0Yz+91wOmGaoGC1Co3iepyhk3ojr/b6oAXQqA6sgKmeO+24jq+gZ
+ aLBBEnBY5cOYtF9oEHniDrEbLWEpMN6HuEPRvIf9XNIBLJXwLuWt3gYvMc9R/max4ywREacHxWB
+ CFupNuguBjs2riB7YcRxwwo+Q8M9PgQx63GBN9G+zv3W2H9LGb2ZlZJTK4K8ydMrCMGcRoTp5MJ
+ V8LZghMKotGt2Am8g6CCApS0ZnJ9n97OEpjjbqBH1T
+X-Gm-Gg: AY/fxX5oBzkfhCsf4mOARlowuMsT2aJhODgYqMZP3ynR3/HWD3YjWQ89ou7h2VWqtj7
+ zpDsiefuKvtCc4CNR6yOELwh5KBNxFfafb/hPvTBKplxggN0yjAfIaxUJ+V3WZs3CWrfFK7+mRO
+ qR6HCNObVfrWCq3+KG7zbKAYxeas7Ak4O6i4gRjBqXZLBvwEuErarE3f9mQ3Cotd3FXU6MLUtlR
+ 95h0BvrKtrNNpsMx897F5lur1njU1fXFoPGYDBWVD4rrdQj2/g/iHIfB98eDypY+KremIBj8jE6
+ VfaWQ7AG8cQvAL2/dyFEkwsIMBWLcmyOqEQtJkjIZrxXV+zwaP45U7gsl0BEYRCdGy89NIbDg54
+ xXii2WCQcX2/9z6XUvy1b719em8J1OiXRMf8BPf2BNmJ3TjYrn+JJTEuzJIPQSbko9Bjf/xqYBE
+ 3kESsaG2efu2A8VQ==
+X-Received: by 2002:a05:600c:1393:b0:477:55ce:f3bc with SMTP id
+ 5b1f17b1804b1-47d84b3bad4mr235285325e9.19.1768302830322; 
+ Tue, 13 Jan 2026 03:13:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGdULqhZlXJ5a1TLOpcM++a0MpEZu6Cb9nKZW9GtBzFwE298R1Iky4D+vNkH5XdKludUKnvpw==
+X-Received: by 2002:a05:600c:1393:b0:477:55ce:f3bc with SMTP id
+ 5b1f17b1804b1-47d84b3bad4mr235285025e9.19.1768302829546; 
+ Tue, 13 Jan 2026 03:13:49 -0800 (PST)
 Received: from [192.168.10.48] ([151.61.26.160])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e6784sm44653855f8f.19.2026.01.13.03.13.45
+ 5b1f17b1804b1-47d7f695956sm410025415e9.6.2026.01.13.03.13.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 03:13:45 -0800 (PST)
+ Tue, 13 Jan 2026 03:13:48 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 5/7] target/i386/tcg: allow VEX in 16-bit protected mode
-Date: Tue, 13 Jan 2026 12:13:31 +0100
-Message-ID: <20260113111333.1138160-6-pbonzini@redhat.com>
+Cc: Vulnerability Report <vr@darknavy.com>, David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PULL 6/7] hw/i386/kvm: fix PIRQ bounds check in
+ xen_physdev_map_pirq()
+Date: Tue, 13 Jan 2026 12:13:32 +0100
+Message-ID: <20260113111333.1138160-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260113111333.1138160-1-pbonzini@redhat.com>
 References: <20260113111333.1138160-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,44 +123,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VEX is only forbidden in real and vm86 mode; 16-bit protected mode supports
-it for some unfathomable reason.
+From: Vulnerability Report <vr@darknavy.com>
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reject pirq == s->nr_pirqs in xen_physdev_map_pirq().
+
+Fixes: aa98ee38a5 ("hw/xen: Implement emulated PIRQ hypercall support")
+Fixes: CVE-2026-0665
+Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
+Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Vulnerability Report <vr@darknavy.com>
+Link: https://lore.kernel.org/r/13FE03BE60EA78D6+20260109023548.4047-1-vr@darknavy.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ hw/i386/kvm/xen_evtchn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index f662364c600..09e3d8884cf 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2872,20 +2872,16 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     case 0xc5: /* 2-byte VEX */
-     case 0xc4: /* 3-byte VEX */
+diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
+index b65871f3542..8b243984e41 100644
+--- a/hw/i386/kvm/xen_evtchn.c
++++ b/hw/i386/kvm/xen_evtchn.c
+@@ -1877,7 +1877,7 @@ int xen_physdev_map_pirq(struct physdev_map_pirq *map)
+             return pirq;
+         }
+         map->pirq = pirq;
+-    } else if (pirq > s->nr_pirqs) {
++    } else if (pirq >= s->nr_pirqs) {
+         return -EINVAL;
+     } else {
          /*
--         * VEX prefixes cannot be used except in 32-bit mode.
--         * Otherwise the instruction is LES or LDS.
-+         * Bits 6-7 of the first byte must be set except in 64-bit mode.
-+         * Otherwise the instruction is LES or LDS.  Not allowed in real mode.
-          */
--        if (CODE32(s) && !VM86(s)) {
-+        if (PE(s) && !VM86(s)) {
-             static const int pp_prefix[4] = {
-                 0, PREFIX_DATA, PREFIX_REPZ, PREFIX_REPNZ
-             };
-             int vex3, vex2 = x86_ldub_code(env, s);
- 
-             if (!CODE64(s) && (vex2 & 0xc0) != 0xc0) {
--                /*
--                 * 4.1.4.6: In 32-bit mode, bits [7:6] must be 11b,
--                 * otherwise the instruction is LES or LDS.
--                 */
-                 s->pc--; /* rewind the advance_pc() x86_ldub_code() did */
-                 break;
-             }
 -- 
 2.52.0
 
