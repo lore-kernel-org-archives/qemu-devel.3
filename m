@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04BB7D30CC0
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 20:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C384D30CC2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 20:34:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfl4s-0008Ry-GM; Tue, 13 Jan 2026 15:33:22 -0500
+	id 1vfl53-0000Fa-BI; Tue, 13 Jan 2026 15:33:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfl2E-0004Z6-9j
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 15:30:41 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfl40-0005yq-TX
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 15:32:37 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfl2C-0004UP-L8
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 15:30:38 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47775fb6c56so76525545e9.1
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 12:30:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vfl3y-0004tx-Ug
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 15:32:28 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47d1d8a49f5so50946955e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 12:32:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768336235; x=1768941035; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768336345; x=1768941145; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=REhjPoaz8XrOXTAx83gvUErAk7Tt3iaBrZLQ9xbklzw=;
- b=BT4B1q5d41iUS+x6Y3e9vUhhdYHsdIchztopIyVo6tJ1Ag4UfZqgS1Zq6e6914k7Q6
- BqSsPRFdgrvE30r1kRQ+/Sz1JT9wjzi0PGaShf4Gxaj1+iNmGSrwJJiSXpLNCeWJ5mKp
- fal6t/YmQa3WDK9KRFK2hQjWeO+aUrfalfUXlnJV7ffMsXWIBn+jIFq4Jxni7rCL0rlN
- ePJsNGnLoxBR5C0jRG57RUpilRnLubD1VTLJDGW3XrDoCF0hpYB5LdM5Qd6ZvW7Lkqku
- VHmcr3VvnOT4GnJB6LWNjZZj4yB4/spQoJN09+4SaaYQvqGR2L1nWCWNNlltkzTxHCao
- zT7Q==
+ bh=LhRJDoFmRDZVPE8OD9IIhsoEFAYAa3qABh/VF9RI9T4=;
+ b=UUMSbdW2rc2s3r/3NBNLNyDlVT3stij77I2ol3Urfup1lQjQ2Hy/zyFH/DC5Q8h8DX
+ MTPZuC1elxqVm/a9qrLS77uO+xyWi9jM3mI66BIE3GIB7K5Ay0UZEIoi7K/EQSNWHWEb
+ WOK7GoWpoEGGYV+QZDWOHgaXyPzi57EUPd5HAhOot3tbTl3kogX1npleh19X3X3BI64g
+ Sas+p3BOfImhM/kONPZ1X1Bw4pQ7ZmvY2aRfej8uViL14JJGqdoqpwgBDchMq5nI97Q4
+ W499kpUzcpClFf5VjigUHTMBXFLpL+6oFNUJfIrt+GpvKPQpjmtYbzwUR9i7KNm1VjGB
+ xD9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768336235; x=1768941035;
+ d=1e100.net; s=20230601; t=1768336345; x=1768941145;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=REhjPoaz8XrOXTAx83gvUErAk7Tt3iaBrZLQ9xbklzw=;
- b=eZJgLlPobCmn7BrIE4e2fzxEn0bvO93Afu3JWk7Iazk6ydaPX37SIDDPWNNZ3DgoT3
- LKnRJ02sRfLP4xQzgsfmadh0d+fFmCLnG0ToOrAEdBPS0fEzf1/nglkZ2uO5GYoQrWh5
- QczohZWQIkxlfwIfS2FSKnmMblHmIIDSOTUwxx6ukPRsX5Z2Szx252cT9qktISPUs6sp
- ppY+xWP96NGPTsSjXzYsmkp+DrB6QXdRw1wf2UrAv7S6VljroscqB0N/nwLrzDkeoIG0
- czDf56g8igK4Zr8FjxXxcZV2mpgBeQCz0/tl1p6M96MSII0okKX6RKSzPjx8d2YyTX9+
- WIng==
+ bh=LhRJDoFmRDZVPE8OD9IIhsoEFAYAa3qABh/VF9RI9T4=;
+ b=DudEbtP72E6S5lriSl3z+kP1nD7IH1ewI+RawwVvTRRwH5oHDwnK1xm1l4J+6j5uig
+ ZJ2MvUU+Q7RNLHmv4xIUUWmDhjNwQs4ebdGjzoK1q3AcmNLHb1W5CaLgtIFJ3uI2pmV5
+ l2Jp6dmCj3tfwayG394dfzQfUzsi+I0QEUW9py+p79u1Z0OkFYCkkU2G1hGi11/5pGJ4
+ k/vmNBcK3emMu1VXk7K4h0szG3NA/4CxHSFlWAFy4RAudP0NNOJPyRcOYxjBIEETs+pQ
+ 9b4UdXRGFrBbRm2zan6V8RVAdVObA3AWSHs5CDz2uqjm3B4rCul0JU/Qc/ipXuYoUUkB
+ mPXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVA6cxZRN3eH7VfMyKhZ0jtyYDPYdO1cVwVYPppuE6nDmvsxv/GU8H3yQ7blLHUearTkikGM3y6NSqG@nongnu.org
-X-Gm-Message-State: AOJu0YwuHAu7x4AvrLw3VI4M/wQFVqSbKkKgYTKcQSuT9zUDHCVKYyai
- xD4HHm8nxm49H81taLFTuSrhxbSSHoLdLRMFnkQmQkjyFvyGaCvlugmfck4gEn2kRpw=
-X-Gm-Gg: AY/fxX6umvXeCgSVil7Zgds9/JOZSsZuc93jMZ60aMxAvcY7dU5kWjFsrD03ZDKlVpg
- 1mdqnmR8DkWUU/bJfcJH5iXXw7dUWLuNyGTCQ5U9Gx1tygG5Fhlhwv/5yPj1A5xRPdAJ5cf4pRa
- 2TAMFs9GAGPs/qiFzc8sbmsn+N12QfiAseVa94yXwAdFkToj/v7flusapmaBcYBaCXSgLZeCdGt
- RSWsTONyplqyJUwjc51qZu22Saj1eNzoiJll5aeRFd3wpAXcVLexDpkvPvUYBONdz5sTh0xnmYN
- 13XAyExrkIOmk5wCi6+CmZyzzSAsKj1UmKxxJYtWt4j6S67Y+d/i0IQIff/Itxzmf1STTPkrFnJ
- MYyVU/wm3zpgNlNM9rmC+Xfj9KDtXaIn4NlAZnk+PqubLdOoP/pNwrewzvw1NnjbEz0LUETboFV
- SFRIEX6iybHN6gWE/8YI5ZKSrz6+EcHTO+nTpe7+rfihh6e6xeKgHtVg==
-X-Received: by 2002:a05:6000:2506:b0:434:24ae:f694 with SMTP id
- ffacd0b85a97d-4342c4ee918mr158160f8f.6.1768336235011; 
- Tue, 13 Jan 2026 12:30:35 -0800 (PST)
+ AJvYcCVMt0qHyDGRVFOgLSYLWFQPQQgrBqamlNtEVfbLZat/EM0BSvYzZ5ppcesO/qQDJAi/PA0PJvbgzBAl@nongnu.org
+X-Gm-Message-State: AOJu0Yz6zZ3EH0o+HrmgOF/SAgiFVUztX2+OLmvTU2t26Y0q1N2sCRaC
+ bq1x+CPJ9O27RKXhpnNckahrPHWHCmsNVF3kmMfskSR0FUf79+zv495fcjvbWk5EgM8=
+X-Gm-Gg: AY/fxX7wAt4XvE0ptYKO6oOK+7mzyaV5sEXhWfX6bSWl3f89vZhoolErIn8eGdVo18V
+ leUJuJ2nTq8cVCAPybnf4XPRz+Nz+bJZKmDRJ3eVxaOeMXPVjBntTwkQg+1xsR8tVuHzA90YUAg
+ 6bwxnW4ZGdiyABxrWRkhx3mAL3nORTHQrF+A2Rv3ZKEnJb5tGdUg2JwjetfWXPEC4M3Hl7YBBya
+ IOgkM98dsb5hotceUMpOZJfe9r2qBrFPBCF1YsWY2iHx3nzIivAqoWnfIb/uC/9893bQzJWqgFZ
+ OvVISJoT8yuJr2JUQ7K2pjIfIVGUtcwO+CTXCX9OzIehX47TsuCPwcw+joFcEFVtRghh0rEB23x
+ fo8TpTkZ9nRyc0YNL31zEh9hgYaqooCmlytS/6L/7/qlYdlrl39n1yQgAfAontY6P5hXgfvV6+Y
+ BUWH1+IgTfY+CNgHn6EjR5SB09R8j6kJrf4TEl9bQJoQQQ87V1vPu/KQ==
+X-Received: by 2002:a05:600c:4e0f:b0:477:73cc:82c2 with SMTP id
+ 5b1f17b1804b1-47ee32fcef4mr5469145e9.9.1768336344798; 
+ Tue, 13 Jan 2026 12:32:24 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5df8besm44383848f8f.26.2026.01.13.12.30.32
+ 5b1f17b1804b1-47eda93feb3sm54760725e9.13.2026.01.13.12.32.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jan 2026 12:30:33 -0800 (PST)
-Message-ID: <dd7fbe03-1458-4c44-b8db-a9d5e9ae33f1@linaro.org>
-Date: Tue, 13 Jan 2026 21:30:32 +0100
+ Tue, 13 Jan 2026 12:32:24 -0800 (PST)
+Message-ID: <f313dcf0-fa18-47c6-89af-1f9f8a101ae4@linaro.org>
+Date: Tue, 13 Jan 2026 21:32:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 13/31] accel/nvmm: Replace @dirty field by generic
- CPUState::vcpu_dirty field
+Subject: Re: [PATCH] linux-user/aarch64/target_fcntl.h: add missing
+ TARGET_O_LARGEFILE definition
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>, alex.bennee@linaro.org,
+ Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>
-Cc: Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20250704101433.8813-1-philmd@linaro.org>
- <20250704101433.8813-14-philmd@linaro.org>
- <44ccfba7-21a3-4c24-aa6a-4b2bdb989792@redhat.com>
+References: <20260113194029.1691393-1-pierrick.bouvier@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <44ccfba7-21a3-4c24-aa6a-4b2bdb989792@redhat.com>
+In-Reply-To: <20260113194029.1691393-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,54 +105,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/1/26 20:32, Thomas Huth wrote:
-> On 04/07/2025 12.14, Philippe Mathieu-Daudé wrote:
->> No need for accel-specific @dirty field when we have
->> a generic one in CPUState.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->> Message-Id: <20250703173248.44995-20-philmd@linaro.org>
->> ---
->>   target/i386/nvmm/nvmm-all.c | 21 ++++++++++-----------
->>   1 file changed, 10 insertions(+), 11 deletions(-)
->>
->> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
->> index f1c6120ccf1..aea61a6fd2a 100644
->> --- a/target/i386/nvmm/nvmm-all.c
->> +++ b/target/i386/nvmm/nvmm-all.c
-> ...
->> @@ -982,7 +981,7 @@ nvmm_init_vcpu(CPUState *cpu)
->>           }
->>       }
->> -    qcpu->dirty = true;
->> +    qcpu->vcpu_dirty = true;
->>       cpu->accel = qcpu;
->>       return 0;
+On 13/1/26 20:40, Pierrick Bouvier wrote:
+> This caused a failure with program using openat2, where O_LARGEFILE was
+> replaced by O_NOFOLLOW.
+> This issue is only visible when QEMU is compiled with musl libc, where
+> O_LARGEFILE is different from 0 (vs glibc).
 > 
-> FYI, this does not seem to compile:
-> 
-> ../src/target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
-> ../src/target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has no 
-> member named 'vcpu_dirty'
->    988 |     qcpu->vcpu_dirty = true;
->        |         ^~
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3262
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   linux-user/aarch64/target_fcntl.h | 1 +
+>   1 file changed, 1 insertion(+)
 
-s/qcpu/cpu/
-
-> 
-> Is anybody checking the netbsd builds at all?
-
-3 reviewers and 6 months later.
-
-Should we add a policy for bitrotting untested code?
-
-> (I'm currently trying to update test/vm/netbsd to version 10.1, that's 
-> how I noticed it)
-> 
->   Thomas
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
