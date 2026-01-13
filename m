@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E914D2D0E8
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C42E5D2D0E8
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfe1j-0008J3-Sn; Tue, 13 Jan 2026 08:01:43 -0500
+	id 1vfe0U-0006Nw-8M; Tue, 13 Jan 2026 08:00:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vfe0u-00072T-K7; Tue, 13 Jan 2026 08:00:51 -0500
+ id 1vfe0S-0006Iv-1E; Tue, 13 Jan 2026 08:00:20 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vfe0r-00014j-4z; Tue, 13 Jan 2026 08:00:47 -0500
+ id 1vfe0Q-00012X-8E; Tue, 13 Jan 2026 08:00:19 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B980017D9E3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D4C517D9DF;
  Tue, 13 Jan 2026 16:00:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B378334C41A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6C5E234C416;
  Tue, 13 Jan 2026 16:00:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org,
 	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH trivial 5/7] linux-user: assume epoll is always present
-Date: Tue, 13 Jan 2026 16:00:06 +0300
-Message-ID: <20260113130008.910240-9-mjt@tls.msk.ru>
+Subject: [PATCH trivial 2/7] meson.build: stop checking for splice()
+Date: Tue, 13 Jan 2026 16:00:02 +0300
+Message-ID: <20260113130008.910240-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260113130008.910240-1-mjt@tls.msk.ru>
 References: <20260113130008.910240-1-mjt@tls.msk.ru>
@@ -59,89 +59,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-epoll is in linux since 2.6. epoll_init1 has been
-added in 2.6.27.  There's no need to check for its
-presence, including all other epoll-related syscalls.
-
-Modern architectures don't have epoll_create(), only
-epoll_create1(), so keep conditional around the former.
+CONFIG_SPLICE was only needed for linux-user/, where it is not
+used anymore (assuming splice &Co is always present)
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- linux-user/syscall.c      | 10 ++--------
- linux-user/syscall_defs.h |  3 ---
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ meson.build | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index fad2bf3632..207c54db02 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -72,9 +72,7 @@
- #ifdef CONFIG_EVENTFD
- #include <sys/eventfd.h>
- #endif
--#ifdef CONFIG_EPOLL
- #include <sys/epoll.h>
--#endif
- #ifdef CONFIG_ATTR
- #include "qemu/xattr.h"
- #endif
-@@ -13558,16 +13556,13 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     case TARGET_NR_signalfd:
-         return do_signalfd4(arg1, arg2, 0);
- #endif
--#if defined(CONFIG_EPOLL)
-+
- #if defined(TARGET_NR_epoll_create)
-     case TARGET_NR_epoll_create:
-         return get_errno(epoll_create(arg1));
- #endif
--#if defined(TARGET_NR_epoll_create1) && defined(CONFIG_EPOLL_CREATE1)
-     case TARGET_NR_epoll_create1:
-         return get_errno(epoll_create1(target_to_host_bitmask(arg1, fcntl_flags_tbl)));
--#endif
--#if defined(TARGET_NR_epoll_ctl)
-     case TARGET_NR_epoll_ctl:
-     {
-         struct epoll_event ep;
-@@ -13596,7 +13591,6 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         }
-         return get_errno(epoll_ctl(arg1, arg2, arg3, epp));
-     }
--#endif
+diff --git a/meson.build b/meson.build
+index c58007291a..9b5f1540ff 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2913,14 +2913,6 @@ config_host_data.set('CONFIG_PTHREAD_AFFINITY_NP', cc.links(osdep_prefix + '''
+ config_host_data.set('CONFIG_SIGNALFD', cc.links(osdep_prefix + '''
+   #include <sys/signalfd.h>
+   int main(void) { return signalfd(-1, NULL, SFD_CLOEXEC); }'''))
+-config_host_data.set('CONFIG_SPLICE', cc.links(osdep_prefix + '''
+-  int main(void)
+-  {
+-    int len, fd = 0;
+-    len = tee(STDIN_FILENO, STDOUT_FILENO, INT_MAX, SPLICE_F_NONBLOCK);
+-    splice(STDIN_FILENO, NULL, fd, NULL, len, SPLICE_F_MOVE);
+-    return 0;
+-  }'''))
  
- #if defined(TARGET_NR_epoll_wait)
-     case TARGET_NR_epoll_wait:
-@@ -13682,7 +13676,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         g_free(ep);
-         return ret;
-     }
--#endif /* CONFIG_EPOLL */
-+
- #ifdef TARGET_NR_prlimit64
-     case TARGET_NR_prlimit64:
-     {
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index cd9ff709b8..20e2e7deac 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2595,7 +2595,6 @@ struct target_drm_i915_getparam {
- #define FUTEX_CLOCK_REALTIME    256
- #define FUTEX_CMD_MASK          ~(FUTEX_PRIVATE_FLAG | FUTEX_CLOCK_REALTIME)
- 
--#ifdef CONFIG_EPOLL
- #if defined(TARGET_X86_64)
- #define TARGET_EPOLL_PACKED QEMU_PACKED
- #else
-@@ -2616,8 +2615,6 @@ struct target_epoll_event {
- 
- #define TARGET_EP_MAX_EVENTS (INT_MAX / sizeof(struct target_epoll_event))
- 
--#endif
--
- struct target_ucred {
-     abi_uint pid;
-     abi_uint uid;
+ config_host_data.set('HAVE_MLOCKALL', cc.links(osdep_prefix + '''
+   #include <sys/mman.h>
 -- 
 2.47.3
 
