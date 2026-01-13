@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 928BDD29DC7
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 03:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C014CD29DC8
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 03:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfVB8-0000Se-79; Mon, 12 Jan 2026 22:34:46 -0500
+	id 1vfVNY-0007hB-Gf; Mon, 12 Jan 2026 22:47:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lihang.lin@gmail.com>)
- id 1vfVB5-0000Rr-Eu
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 22:34:44 -0500
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vfVNV-0007fS-Sd
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 22:47:33 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lihang.lin@gmail.com>)
- id 1vfVB3-0001g2-SG
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 22:34:43 -0500
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-93f5b804d4aso2930318241.3
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 19:34:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vfVNU-00032Y-G9
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 22:47:33 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b871cfb49e6so270118766b.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 19:47:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768275280; x=1768880080; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=aCT28Ad8KpwYd/ciU3Izfab19h6Y/2SsWQpZH+J9T7U=;
- b=Ie8hd+U9xzLZCa/v3e8S/gspf383rosXzPsWa2BfSqIHBt+edAXbnzfpP7t94Wa/Bo
- wjY/8qWGNeYk9NCIEivpfQ0Lncd/OauBFsP0a5B3oTekrzhuLXTMhBi35qHz3ex7xRBp
- pJUNvk2LOwnpZFG9YOEbOKfPHZWXf706KNrRm3ipQs7kos32qmxlHXcXHJTZPiWh5knm
- rAtWaRZBgoeX3eR+Ag8HGYObpOaApLX42/0kbKZh0FjHH/8DsXDT498hzIkUlBYDoquc
- n4vdyx4a/UZxk7PZWBt3Knr7wXCy4FB8xUSt1wdeNYMdnEvOi+wawgaZ+amRkRvGfLq8
- PcZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768275280; x=1768880080;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1768276049; x=1768880849; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aCT28Ad8KpwYd/ciU3Izfab19h6Y/2SsWQpZH+J9T7U=;
- b=PejS5WjGpf32OSI2tg+PKAPqc6qQA5DTUC7KO8coszurnIYpLQgvx772h0u578NDHn
- mhdoLkH1Icw89B831B0jIE5QXwuEbarbwsBlSY6XyXopNxhrGLgKBnTVTKjIP09qpwH6
- Xkzoa1nosiQ5mKaV/zGxeafs38hmwzFvfN7PgYBkXhkGw7q1WlXJSQ/qZQ0Me/K3Th9q
- g5T0Oa0fUElI0niPBWRSXtccwEBoUlBiyhgAw+FzKy3kyOGatUDWSAY4gRVIbjZIfRAt
- xUKKMbLTafGENzevce5SlmEI34TKSIH8lEvpMZ/IwKgC4h6sUjZ2v9hXrKvq1rciH26T
- PJzA==
-X-Gm-Message-State: AOJu0YxXz9RZmOSppDpXhGaYnntTESe/CH+u8u+kzG3nr/kF2PpXDiT6
- 8L5YbFXFn7o7MFiwN3hzpaYllmnYZBQHe1agMu8xXwbr7lKmV1QkfY6woJw2AK0L2leXO1VGpri
- q7mzDAqdj0QH7ygid835Y6XFoL+t+XDLpGA==
-X-Gm-Gg: AY/fxX4zOVSEbHGgTqFkUbYuXuW6E3T68Oo/Qw75fD0kyPhnmpdrn76EbyOy/uS+yO7
- rOmnqz9hqVN5R36cStWpW8iMSCpDQSEgAWf/A3poxOxevE8X40aQAab1NWAgplBSLofbBPycLVm
- vbeqBgrJa6j4m4biOwCgwNtscMdtE0bmZPUvtsKfrTpotg+cySsliWoz8dtXBpAepicKDcCw0Gj
- HYztAI82TRtaJKdI0iaNSkb3XJS0a7lFTKlMdQY0aOogjGZdbMYFr6wtFkruMQPe+JGgtIQ
-X-Google-Smtp-Source: AGHT+IGF6lujn3MXlocJIcYnWNuTut6rrKf+2Kq/Wz3a2foGaigMpuF11LeUYETmQ0AlOiwLe1yExmuYXMoPIOdCamE=
-X-Received: by 2002:a05:6102:3908:b0:5ee:a6f8:f925 with SMTP id
- ada2fe7eead31-5eea6f90e16mr5501043137.8.1768275280282; Mon, 12 Jan 2026
- 19:34:40 -0800 (PST)
+ bh=QiLb5ZEx8M9NR5t8LDyWjmILwme25uQ9O1jZrSX9v2Q=;
+ b=Sx2Gl3pozXt2C8NIMxRI3Q5UAnL7Z7/G0YcwxTwo65Ppd97AuFzRiDV9fbPEIKI5r4
+ qgoJfYF4m7Ui9XJgF+3RMMquFwgqIw/6fTwbCxn9VgpwreHZwe0OLBSnk6tOg78cuvIL
+ mFdqT0DxatCe08Ivk1hgfubFAPo3z/b59rh3rEDvvp0t37B0TbnFdzluqaPGG8DQlj75
+ 7cPHLDpN1WFJNLKyu5VoogfSyGSqYPAJPfRpFtyInMOX23EzoStHccb2cipLOC7cDsYH
+ ieQcsFSUpIapmJ7CQKDT4PjDVMXC28OhlN04q6mX3a7bpM9rtHRGOcvfE/OJ/XiR4fZ9
+ 8VaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768276049; x=1768880849;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QiLb5ZEx8M9NR5t8LDyWjmILwme25uQ9O1jZrSX9v2Q=;
+ b=K9pnNbOyFXOb1ykEMwxwYw/cCERnfbs1S1Qiq/u744NS10+ikjJDiNwVkjMP0EzAje
+ zB71KDutV9JIeH/X+3ecBD7ZD33THDTG24QJr7ZW2dOUR+L9F2SVFA+gJKPVKqqDku3N
+ ilYg7W9Ngz7ilR0hUP6fyiFKRiMfZ+68iFd/43bPE7gtd2G+SUV0kFMhlzEt57+E35fm
+ YCs5HBh+1Ud0WtWTOprzz0JNO0DIzEOzkJt7c9K6k/a40Qmbl0TKB3tfIqIKMjMCq8iV
+ veXDKgetVUd+o+ASho77ja9Rl+qV/TBxZquxkHLBieGlmDSNrsQ564S656wN9eH4Z+ks
+ M6tQ==
+X-Gm-Message-State: AOJu0YwUgCZiduldCzhq4FkzJoA9+0BYCsL2cB89QA54XVPsjz7TmUSR
+ YQpUrKyHjLC395Xsl5ByzyRLWtRiqhF4pAFV6hGlZhC7La9lR6JDjvJOsstvp/YW/xo1szv0y1h
+ 9C1VZwrk27Wm9FgumOG+y4NCeFqeETFs=
+X-Gm-Gg: AY/fxX5Vpj5VXgmd9PaRS2xXu0rl/9itAGzi/8qAC50Fxjwk3XsM9JkTT6M+vDzXb8f
+ 0LwP7WWEIltkQcr/7XFe48WiVqf1M7yIs5a5hOMJeI4MBlrd0JIptzqXbuuwV3G/vqFjxoMGfh/
+ I0DLkZfae3YyZOCdXD3J+ENjx4HxVttQsjo8r+4JhVz+brOzyLb7TyVgnfJkp6BmAD5My95Pjh+
+ Vzlh/hGb40A3Ev15vzrnlQBYbnV/5mliaK3M3AHYxoUAa+dDEy//KSsWGTx731gxJh8SCSg9fLg
+ HzifC1wI/6pME2IrEzB0f1qqqw==
+X-Google-Smtp-Source: AGHT+IETIC3AMrl2esXUfhMh+MjgQfCSAViTx8CDWhwlSu4EaJ0Ed3XHnrL4JeBzmMiNsUQk3m9KjGiIS2QnKpyEffw=
+X-Received: by 2002:a17:907:25c8:b0:b77:2269:8df0 with SMTP id
+ a640c23a62f3a-b8445222007mr2195060866b.28.1768276048655; Mon, 12 Jan 2026
+ 19:47:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20251226064225.791454-1-lihang.lin@gmail.com>
- <CAFEAcA_ovy2HzhVTKJiRNaZvVQ3qvkw0Pres0HZ+TFJjx1wc3g@mail.gmail.com>
- <CAPR+-WF6uSsm6nBY7jmmxKEMSHR3t+d4KG5KAtsDNJPxen-r9A@mail.gmail.com>
- <CAFEAcA-NSqMH_+L+jOCD-QsafFq78L5ogRmGRqVZnXdXja2WTA@mail.gmail.com>
-In-Reply-To: <CAFEAcA-NSqMH_+L+jOCD-QsafFq78L5ogRmGRqVZnXdXja2WTA@mail.gmail.com>
-From: Lin Li-Hang <lihang.lin@gmail.com>
-Date: Tue, 13 Jan 2026 11:34:29 +0800
-X-Gm-Features: AZwV_QjXNMh_XU6-5_JjSdwxIyJ3vEMbAuRkmIveodlcOzvD5ef46PvA3moDSBE
-Message-ID: <CAPR+-WF2SRjfOT_enPwXHOKQa=D_qWLCkB5-7uO1mp8verv7CA@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/tcg/vfp_helper: Fix incorrect bit field
- deposition in rsqrte_f64
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000f2488206483cabbc"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=lihang.lin@gmail.com; helo=mail-ua1-x936.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20260112090458.2345280-1-djordje.todorovic@htecgroup.com>
+ <20260112090458.2345280-2-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260112090458.2345280-2-djordje.todorovic@htecgroup.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 13 Jan 2026 13:47:02 +1000
+X-Gm-Features: AZwV_Qh3CfKpDHfjr8ksh0Jxs12634Dr_mNI0UjKlwvQnbwLdLPx4rgOrDmZM1w
+Message-ID: <CAKmqyKNMt=NH4r8o6k4jLmKJ9Su_y+o++6tZF1okmgVJ11MwYA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] hw/riscv: Fix integer overflow in cm_base
+ calculation
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
+ "cfu@mips.com" <cfu@mips.com>, "philmd@linaro.org" <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,128 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f2488206483cabbc
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Peter,
-
-Thanks for your explanation.
-Your statement and suggestion is better.
-
-Cheers
-
-
-On Mon, Jan 12, 2026 at 10:36=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org>
-wrote:
-
-> On Mon, 29 Dec 2025 at 04:19, Lin Li-Hang <lihang.lin@gmail.com> wrote:
-> >
-> > Hi Peter,
-> >
-> > Thank you for your reply.
-> >
-> > I initially identified this error while reviewing the code and was
-> curious why it hadn't caused any bugs.
-> > After further testing, it appears the original code behaved correctly b=
-y
-> coincidence.
-> >
-> > The ASL code in the ARM ARM for FRSQRTE states:
-> >
-> > ```
-> > elsif sign =3D=3D '1' then
-> >          result =3D FPDefaultNaN(fpcr, N);
-> >          if fpexc then FPProcessException(FPExc_InvalidOp, fpcr);
-> > ```
-> >
-> > As it turns out, the sign bit must be zero by the time it reaches the
-> final deposition code, which explains why the incorrect bit placement did
-> not surface as a functional bug.
+On Mon, Jan 12, 2026 at 7:05=E2=80=AFPM Djordje Todorovic
+<Djordje.Todorovic@htecgroup.com> wrote:
 >
-> Thanks for looking that up. I think that although this isn't a bug it's
-> definitely confusing code, so the best approach will be to make our
-> code match how the current Arm ARM FPRSqrtEstimate() treats the output
-> sign bit, which is to say we know it's 0. In the pseudocode that
-> looks like:
->   result =3D '0' : result_exp<N-54:0> : estimate<7:0>:Zeros(44)=CD=BE
-> and for QEMU it should look like updating the comment so that
-> instead of
-> /* result =3D sign : result_exp<4:0> : estimate<7:0> : Zeros(44) */
+> Cast CM_SIZE to uint64_t before multiplying by the loop counter
+> to avoid potential integer overflow.
 >
-> it says
-> /* result =3D 0 : result_exp<4:0> : estimate<7:0> : Zeros(44) */
-> and removing the unnecessary deposit64() call of f64_sign entirely.
+> Resolves: Coverity CID 1644076
 >
-> We should do this for all of rsqrte_f64, do_rsqrte_f32 and rsqrte_f16.
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> ---
+>  hw/riscv/cps.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> thanks
-> -- PMM
+> diff --git a/hw/riscv/cps.c b/hw/riscv/cps.c
+> index 86172be5b3..620f54e48a 100644
+> --- a/hw/riscv/cps.c
+> +++ b/hw/riscv/cps.c
+> @@ -133,7 +133,7 @@ static void riscv_cps_realize(DeviceState *dev, Error=
+ **errp)
+>                              sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gc=
+r), 0));
 >
+>      for (i =3D 0; i < num_of_clusters; i++) {
+> -        uint64_t cm_base =3D GLOBAL_CM_BASE + (CM_SIZE * i);
+> +        uint64_t cm_base =3D GLOBAL_CM_BASE + ((uint64_t)CM_SIZE * i);
 
---000000000000f2488206483cabbc
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+You shouldn't need to cast this, instead this should work
 
-<div dir=3D"ltr"><div>Hi Peter,</div><div><br></div><div>Thanks for your ex=
-planation.=C2=A0</div><div>Your statement and suggestion is better.</div><d=
-iv><br></div><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=
-=3D"gmail_signature"><div dir=3D"ltr">Cheers<br></div></div></div><br></div=
-><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" clas=
-s=3D"gmail_attr">On Mon, Jan 12, 2026 at 10:36=E2=80=AFPM Peter Maydell &lt=
-;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&g=
-t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon=
-, 29 Dec 2025 at 04:19, Lin Li-Hang &lt;<a href=3D"mailto:lihang.lin@gmail.=
-com" target=3D"_blank">lihang.lin@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Hi Peter,<br>
-&gt;<br>
-&gt; Thank you for your reply.<br>
-&gt;<br>
-&gt; I initially identified this error while reviewing the code and was cur=
-ious why it hadn&#39;t caused any bugs.<br>
-&gt; After further testing, it appears the original code behaved correctly =
-by coincidence.<br>
-&gt;<br>
-&gt; The ASL code in the ARM ARM for FRSQRTE states:<br>
-&gt;<br>
-&gt; ```<br>
-&gt; elsif sign =3D=3D &#39;1&#39; then<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result =3D FPDefaultNaN(fpcr, N);<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if fpexc then FPProcessException(FPE=
-xc_InvalidOp, fpcr);<br>
-&gt; ```<br>
-&gt;<br>
-&gt; As it turns out, the sign bit must be zero by the time it reaches the =
-final deposition code, which explains why the incorrect bit placement did n=
-ot surface as a functional bug.<br>
-<br>
-Thanks for looking that up. I think that although this isn&#39;t a bug it&#=
-39;s<br>
-definitely confusing code, so the best approach will be to make our<br>
-code match how the current Arm ARM FPRSqrtEstimate() treats the output<br>
-sign bit, which is to say we know it&#39;s 0. In the pseudocode that<br>
-looks like:<br>
-=C2=A0 result =3D &#39;0&#39; : result_exp&lt;N-54:0&gt; : estimate&lt;7:0&=
-gt;:Zeros(44)=CD=BE<br>
-and for QEMU it should look like updating the comment so that<br>
-instead of<br>
-/* result =3D sign : result_exp&lt;4:0&gt; : estimate&lt;7:0&gt; : Zeros(44=
-) */<br>
-<br>
-it says<br>
-/* result =3D 0 : result_exp&lt;4:0&gt; : estimate&lt;7:0&gt; : Zeros(44) *=
-/<br>
-and removing the unnecessary deposit64() call of f64_sign entirely.<br>
-<br>
-We should do this for all of rsqrte_f64, do_rsqrte_f32 and rsqrte_f16.<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
+diff --git a/include/hw/riscv/cps.h b/include/hw/riscv/cps.h
+index f33fd7ac86..39029bca8f 100644
+--- a/include/hw/riscv/cps.h
++++ b/include/hw/riscv/cps.h
+@@ -27,7 +27,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(RISCVCPSState, RISCV_CPS)
+/* The global CM base for the boston-aia model. */
+#define GLOBAL_CM_BASE 0x16100000
+/* The CM block is 512 KiB. */
+-#define CM_SIZE (1 << 19)
++#define CM_SIZE (1ULL << 19)
 
---000000000000f2488206483cabbc--
+/*
+ * The mhartid bits has cluster at bit 16, core at bit 4, and hart at
+
+Alistair
+
+>          uint32_t hartid_base =3D i << MHARTID_CLUSTER_SHIFT;
+>          s->aplic =3D riscv_aplic_create(cm_base + AIA_PLIC_M_OFFSET,
+>                                        AIA_PLIC_M_SIZE,
+> --
+> 2.34.1
 
