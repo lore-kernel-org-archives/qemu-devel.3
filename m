@@ -4,101 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D655BD29DE8
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 08:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E072D29DE2
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 08:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfZsq-0008G0-Ac; Tue, 13 Jan 2026 03:36:12 -0500
+	id 1vfa2k-0006CF-0H; Tue, 13 Jan 2026 03:46:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfZso-0008Bl-KD
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 03:36:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfa2Y-000689-LJ
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 03:46:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfZsm-0000pq-FC
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 03:36:10 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfa2W-0002lz-LC
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 03:46:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768293367;
+ s=mimecast20190719; t=1768293959;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lun3fTJhTxxrjMIhDVtfnUDHVn1uEc8YvS/Pya/c6g8=;
- b=S/XNyA4rTOpRkjv0IOTO8jVMr6jk1jbL+TXYuEr2dvOMBhkGoXyUyQ6j8PHVVtxbunax0D
- 5fD0kdzeUJOwUa90bb4Erg2Pf8l9gRdtXnXVlGzbH5TCdqLUtD2HiK5agr5GiPI2PeESXA
- tR6BIF+Z0TJvaShX/rA/diHQqg5V36k=
+ bh=l2m81l2wvop+Pc8AYybdKF7AtJbgYndI10eUMeb13aw=;
+ b=bYgbX2Csuuwpl3M3F7FoOwYh+gIAn9GUTvloc3QdhJD0oO8EYGOIdSuNkNmlPqZW2cbTUF
+ /BSvevwLeJYSP2mYxdCd7Tg0Br7eAd10Cmq1WDf1587/NrNBR1S+iyCubrybwTqIiqTIw1
+ FQ6brg38TonUeLLyKCqRQ2rVKw/Md2o=
 Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
  [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-KNtYeGQuMluDn1tXJWSzaw-1; Tue, 13 Jan 2026 03:36:05 -0500
-X-MC-Unique: KNtYeGQuMluDn1tXJWSzaw-1
-X-Mimecast-MFC-AGG-ID: KNtYeGQuMluDn1tXJWSzaw_1768293365
+ us-mta-130-YXdnkaLaO4C9TDgmVs7UNA-1; Tue, 13 Jan 2026 03:45:58 -0500
+X-MC-Unique: YXdnkaLaO4C9TDgmVs7UNA-1
+X-Mimecast-MFC-AGG-ID: YXdnkaLaO4C9TDgmVs7UNA_1768293957
 Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b871403f69eso242304566b.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 00:36:05 -0800 (PST)
+ a640c23a62f3a-b8749dd495dso13128466b.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 00:45:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768293364; x=1768898164; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768293957; x=1768898757; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=lun3fTJhTxxrjMIhDVtfnUDHVn1uEc8YvS/Pya/c6g8=;
- b=fYApO5NZ3/ZVnthuq5Ex5IqQudGvRYuvYGijxsqGHk2/BH2SaaRoRK37TssZmNd56c
- eNU0ovnNBjNyT6/KtKi5tq1+QcocIw/CS++2HBiyiNiCJFh8He7e/pj2yLX5ZaLCIeug
- Dy53/l0A0n1emcaprrwEaBwgqqJAjlYS4PQ7PsGsM/7pXcmKX9LnXcO5nYjDYvgZLbpx
- nPZVaoGsf2GpdU7B38mmoDlAwa1TY6T3wiiPTUwrh/uPSoDab19UlGLFm+iKgI5eUBFZ
- X/YgN6ODZqajTI1lRE9eVAA0jW73mH4APpnlO9mB67Hf/UkWdnKPm1Lh1QKySxaHJ80y
- /20A==
+ bh=l2m81l2wvop+Pc8AYybdKF7AtJbgYndI10eUMeb13aw=;
+ b=QwASyGkIiZ/CMcqNyvx1A5EkU23Bl6bcwId8Q4cZ5iCIPoK2SfX0DMlFFrytj0JJZr
+ OJP22sGUBKddcO7IJ4fduHmHVxhOjSq8pOTDXSvjGUQx6v02a4+xBDAum/RNedlA+zOS
+ AEkL1zi/Il+oGigU5Su9MzGmSaBs/GUqJ8tnAtGtW0EagyPgQhjpGgYjTY1Kee754hKZ
+ SrcEZdJEyUYm08Q57Vs+p/KfxRLRPdhFloNnaLFVzVDQEQn0y8pW5O7wp6X2RCzu5Tc/
+ hQCto0pgA7UwZMAiUw8cSFXimEw2arem9TC+ifdOXI0n2fdXuZoIFzOs1JwV28ynv+PX
+ Dz7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768293364; x=1768898164;
+ d=1e100.net; s=20230601; t=1768293957; x=1768898757;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lun3fTJhTxxrjMIhDVtfnUDHVn1uEc8YvS/Pya/c6g8=;
- b=dLVeB176pkaMF4uFIbNGYEN8FCZz+4/vuhgg6kgCqcXmW3YyYKd6jOokyIfVULFlzq
- O9FHFjWuxzYtekew+dsVGfecpCBtndPrzpnoO3vqqyotNZ8uc2rySAbktvGBCjuOifZ5
- H90uE/m3gmxQfWiXh+HhHzUF7gz+zwqeFiWUQ+m8Ow6AxFeU+JQowoYTApPZ5hllapmq
- rYKLHZPorfcd+B/d9XvZ0axYTmU9Zya6shPTEgIt0R1XfCB2aC5S9sbACUn/WcNU61oM
- Ym2kcssNiJywrX5KpESDUE+eMWjf5e4A5G41YRd7QrdDSJsRklsfpEWFw+4jQ1RYVEV7
- /Q0g==
+ bh=l2m81l2wvop+Pc8AYybdKF7AtJbgYndI10eUMeb13aw=;
+ b=UzfilW986xAHpStWepF+bm/pk9Oy0Vuq4PfkCSVcqvru044pRgS8HcSdB1KT1eZUTA
+ o98NpOM02O0tekdGaGxgDNVgbRzeSecrNVh/ICS2G+ir+8dBu/Ket7rkKJnAFNb936SC
+ D7LK2tzNpEp6UXjlWJQnhIb+tDPfppYyvcZ3tw0Y4tmW7s9Bgbr7FNcYX7DJqfAJaB5W
+ WPmnX5pEJyGZQypSNovD6qIoS4nLoDijYtxN0Zi8KDXWhXqevtSCKq4Vpt9ZZEHL3s36
+ Bnt2KXFKBF6NmV9IqtHcZ1ud25hqFdkL2+3xRwCJ/t1JfT7rxvE+43G9LNl0dMdvzm6h
+ /Dfg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0N91y1UXyBH0B11JFiY2QtTH6B3h7YUrKkvlMYRKobauxTQX4rYKypwJSA9x4cHgkt+geB537jU+f@nongnu.org
-X-Gm-Message-State: AOJu0YzzEkrLc7xZYN3P+Joun9XipxViRQh9D6prP1w2iVqma3WSTk7A
- eWzaCOzid5fGukikCMpNufQ5iWDpOe2mFNRKw24vdXDBON9Fb07Z1iSYxzlQsCmDAfgkOA84Uey
- 5mx1EHbe+X1Nip7Wt1KF0i98EbLaymz/B0V964BF5V8QbcwkvV4SKXKYp
-X-Gm-Gg: AY/fxX7YGlEqKLMaDaWfaJLyoEVN0jt/vrBQCbpxHF93mbWafFa+OaDbXPpZ3m4BmMe
- 6opwq/nMS86q+KG73Sxc1xxfmQ2bhKGPKbm8c1oVmb2kPuVdZBRzLjaukNOVOtY3VerVc9nBdlk
- lw1wuPQy+b4+NEM0K/kUH82cWc0Ul9N0hWq2diahwiePrG2aLJZJ353vUpjuTQUNyp40zp2k1W4
- IZF/+qwjhX2cV2MzRKC+wJluPJnUEXLpNV75RhsILCAwaEdzbeJkuvE3MGZtEWDGld/FcXLyX/U
- fEey0gk/q4xfF0RIMckaFYh5cAE8Lno9febAiFDg6OeLn7Oqt1luVrOm8BA7Gb8Fk72jGQKyFqb
- nfwxsmoQ=
-X-Received: by 2002:a17:907:1b0f:b0:b76:3bfd:8afe with SMTP id
- a640c23a62f3a-b8445179e0bmr2024416066b.5.1768293364412; 
- Tue, 13 Jan 2026 00:36:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG41GUwsghzlBtoaRCRIXLA5/7GNUZwlsSeTozobtnq4SfZSofa3UmN5gZbVdUJSCD4qafyPQ==
-X-Received: by 2002:a17:907:1b0f:b0:b76:3bfd:8afe with SMTP id
- a640c23a62f3a-b8445179e0bmr2024412766b.5.1768293363739; 
- Tue, 13 Jan 2026 00:36:03 -0800 (PST)
+ AJvYcCVxmEJdOL9QBtIA++beoCl9SylLZE2bA+HRgOERCWsEo0e3o2Y3rU5COZ7TbCcHntBUmtnoESRrTRCD@nongnu.org
+X-Gm-Message-State: AOJu0YzFheNOePjEXP2OzCUuALrSv6z05ne3jE2Q4nHQ815RpGgtkbqS
+ 34x2m4gTqahCWv2ffH8QEUkPmpdzzQleWZSzvVTY+f9h1KMnELK2m83X+acRdE6Bs0KZOKX8sfn
+ UqaWcHNaFpxFELT6tLssyWKrId/VhKhH7WSNung/TqyYH23VaIgKf5Yzc
+X-Gm-Gg: AY/fxX4U+M1XFwCHI1VhpmrZ1SO+uohTn+YWQmekiIHE+XsP6cRkb6BPc6mXvscgVXl
+ UcTsyfwH7VzWrBzvKd0JMqsR2df5op3wQc/8zches6XxyYJFVnQgM05qFnqE7ViWVv/24iyU1hu
+ 7Mg1PXcwjjL/CxtsBg/Stc3wXwbMI5AH7Aw8bILVr4BeTIZnJyxmkjXUrgGNFkKHQOvvLuMkrns
+ jgPB/iVDiI1yHJpwrBbApA6tqXhXLqDXu9eyEXZvdIWzLYDXCe+E34mpiyj/DvO2ThIOEt4o2Od
+ laUIj9sCuoNUxkqUBNsaGts3Uz7E76IOB+LjNpwZxq23xCDte7P0cjk4dBnaETIJVNNFt+ATrU6
+ BLevDeMI=
+X-Received: by 2002:a17:907:f815:b0:b73:544d:ba2e with SMTP id
+ a640c23a62f3a-b84451cecd4mr1897713566b.25.1768293957087; 
+ Tue, 13 Jan 2026 00:45:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHiMsb/AM6B8Afwr63kaXpDzRApLuNOeVdmSfRAAgHCJJmIYCqXf2MTTrNneEII4PYneYs9ng==
+X-Received: by 2002:a17:907:f815:b0:b73:544d:ba2e with SMTP id
+ a640c23a62f3a-b84451cecd4mr1897711566b.25.1768293956596; 
+ Tue, 13 Jan 2026 00:45:56 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6507bf66214sm19342355a12.27.2026.01.13.00.36.02
+ a640c23a62f3a-b8706c2604bsm727574066b.16.2026.01.13.00.45.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jan 2026 00:36:03 -0800 (PST)
-Message-ID: <2b0560ce-cbc4-41e1-84f5-aeb9b10c3a91@redhat.com>
-Date: Tue, 13 Jan 2026 09:36:01 +0100
+ Tue, 13 Jan 2026 00:45:56 -0800 (PST)
+Message-ID: <b5d72aff-2847-420c-9c1f-23fc23e1b75d@redhat.com>
+Date: Tue, 13 Jan 2026 09:45:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 25/29] pc-bios/s390-ccw: Handle secure boot with
- multiple boot devices
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
- iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-26-zycai@linux.ibm.com>
+Subject: Re: [RFC PATCH v2 2/3] tests/functional/x86_64: Add vhost-user-bridge
+ test
+To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@gmail.com>
+References: <20260112230127.99125-1-yodel.eldar@yodel.dev>
+ <20260112230127.99125-3-yodel.eldar@yodel.dev>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -143,17 +144,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251208213247.702569-26-zycai@linux.ibm.com>
+In-Reply-To: <20260112230127.99125-3-yodel.eldar@yodel.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -171,235 +172,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/12/2025 22.32, Zhuoying Cai wrote:
-> The current approach to enable secure boot relies on providing
-> secure-boot and boot-certs parameters of s390-ccw-virtio machine
-> type option, which apply to all boot devices.
+On 13/01/2026 00.01, Yodel Eldar wrote:
+> Introduce a functional test of vhost-user-bridge and enter it into
+> MAINTAINERS under the vhost section.
 > 
-> With the possibility of multiple boot devices, secure boot expects all
-> provided devices to be supported and eligible (e.g.,
-> virtio-blk/virtio-scsi using the SCSI scheme).
-
-Just double-checking: Wouldn't it be easier to do this on the QEMU side 
-already? Or is there something in a spec somewhere saying that this has to 
-be done by the guest?
-
-> If multiple boot devices are provided and include an unsupported (e.g.,
-> ECKD, VFIO) or a non-eligible (e.g., Net) device, the boot process will
-> terminate with an error logged to the console.
+> The test runs vhost-user-bridge as a subprocess, then launches a guest
+> with four backends: a unix domain socket for vhost-user, a UDP socket, a
+> user-mode net, and a hubport to hub the UDP and user backends; only the
+> vhost-user backend is exposed, the rest are deviceless. This
+> configuration mimics the testing setup described in the initial commit
+> of vhost-user-bridge in 3595e2eb0a23.
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> A file containing a hardcoded UUID is created by the test in a scratch
+> file and exposed to the guest via the tftp parameter of the user netdev.
+> The guest requests the file by invoking tftp, and the test verifies its
+> sha256 hashsum.
+> 
+> Similarly, a file containing another hardcoded UUID is created in the
+> guest. A call to check_http_download() serves the file via http to the
+> host and verifies integrity with its hashsum.
+> 
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Suggested-by: Marc-André Lureau <marcandre.lureau@gmail.com>
+> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 > ---
->   pc-bios/s390-ccw/bootmap.c  | 31 +++++++++-------
->   pc-bios/s390-ccw/main.c     | 73 ++++++++++++++++++++++++++++++++++---
->   pc-bios/s390-ccw/s390-ccw.h |  1 +
->   3 files changed, 86 insertions(+), 19 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index cc9a8cec6a..e3c12697e0 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -1139,25 +1139,35 @@ ZiplBootMode zipl_mode(uint8_t hdr_flags)
->       return ZIPL_BOOT_MODE_NORMAL;
->   }
->   
-> +int zipl_check_scsi_mbr_magic(void)
-> +{
-> +    ScsiMbr *mbr = (void *)sec;
+...
+> +    def test_vhost_user_bridge(self):
+> +        prompt = "~ # "
+> +        host_uuid_filename = "vubr-test-uuid.txt"
+> +        guest_uuid_path = "/tmp/uuid.txt"
+> +        kernel_path = self.ASSET_KERNEL_INITRAMFS.fetch()
 > +
-> +    /* Grab the MBR */
-> +    memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+> +        vubr_path = self.build_file("contrib", "vhost-user-bridge",
+> +                                    "vhost-user-bridge")
+> +        if is_readable_executable_file(vubr_path) is None:
+> +            self.skipTest("Could not find a readable and executable "
+> +                          "vhost-user-bridge")
+> +
+> +        vubr_log_path = self.log_file("vhost-user-bridge.log")
+> +        self.log.info("For the vhost-user-bridge application log,"
+> +                     f" see: {vubr_log_path}")
+> +
+> +        sock_dir = self.socket_dir()
+> +        ud_socket_path = os.path.join(sock_dir.name, "vubr-test.sock")
+> +
+> +        tftpdir = self.scratch_file("tftp")
+> +        shutil.rmtree(tftpdir, ignore_errors=True)
+> +        os.mkdir(tftpdir)
+> +        host_uuid_path = self.scratch_file("tftp", host_uuid_filename)
+> +        with open(host_uuid_path, "w") as host_uuid_file:
 
-Mixing different pointer types that point to the same buffer always make me 
-nervous - with regards to GCC's strict aliasing optimizations.
-(see e.g. 
-https://stackoverflow.com/questions/98650/what-is-the-strict-aliasing-rule 
-if you don't know that yet).
+FYI, I just got another test merged that checks the files with pylint now - 
+you might need to add an encoding="ascii" or encoding="utf-8" to that open() 
+call now to avoid that pylint complains.
 
-Since you're only interested in the MBR magic here, I suggest to replace the 
-above memset with:
+> +            host_uuid_file.write(self.HOST_UUID)
+> +
+> +        with Ports() as ports:
+> +            lport, rport, hostfwd_port = ports.find_free_ports(3)
+> +
+> +            self.configure_vm(ud_socket_path, lport, rport, hostfwd_port,
+> +                              tftpdir)
+> +
+> +            vubr_args = self.assemble_vubr_args(vubr_path, ud_socket_path,
+> +                                                lport, rport)
+> +
+> +            with open(vubr_log_path, "w+") as vubr_log, \
 
-     memset(mbr->magic, FREE_SPACE_FILLER, sizeof(mbr->magic));
+dito.
 
-That's certainly less risky and also faster.
+> +                 subprocess.Popen(vubr_args, stdin=subprocess.DEVNULL,
+> +                                  stdout=vubr_log,
+> +                                  stderr=subprocess.STDOUT) as vubr_proc:
+> +                self.launch_kernel(kernel_path, wait_for=prompt)
+> +
+> +                exec_command_and_wait_for_pattern(self,
+> +                    f"tftp -g -r {host_uuid_filename} 10.0.2.2 ; "
+> +                    f"sha256sum {host_uuid_filename}", self.HOST_UUID_HSUM)
+> +                wait_for_console_pattern(self, prompt)
+> +
+> +                exec_command_and_wait_for_pattern(self,
+> +                    f"echo -n '{self.GUEST_UUID}' > {guest_uuid_path}", prompt)
+> +                self.check_http_download(guest_uuid_path, self.GUEST_UUID_HSUM)
+> +                wait_for_console_pattern(self, prompt)
+> +
+> +                self.vm.shutdown()
+> +                vubr_proc.terminate()
+> +                vubr_proc.wait()
+> +
+> +if __name__ == '__main__':
+> +    LinuxKernelTest.main()
 
-> +    if (virtio_read(0, mbr)) {
-> +        puts("Cannot read block 0");
-> +        return -EIO;
-> +    }
-> +
-> +    if (!magic_match(mbr->magic, ZIPL_MAGIC)) {
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->   void zipl_load(void)
->   {
->       VDev *vdev = virtio_get_device();
->   
->       if (vdev->is_cdrom) {
-> -        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
-> -            boot_mode == ZIPL_BOOT_MODE_SECURE) {
-> -            panic("Secure boot from ISO image is not supported!");
-> -        }
->           ipl_iso_el_torito();
->           puts("Failed to IPL this ISO image!");
->           return;
->       }
->   
->       if (virtio_get_device_type() == VIRTIO_ID_NET) {
-> -        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
-> -            boot_mode == ZIPL_BOOT_MODE_SECURE) {
-> -            panic("Virtio net boot device does not support secure boot!");
-> -        }
->           netmain();
->           puts("Failed to IPL from this network!");
->           return;
-> @@ -1168,11 +1178,6 @@ void zipl_load(void)
->           return;
->       }
->   
-> -    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
-> -        boot_mode == ZIPL_BOOT_MODE_SECURE) {
-> -        panic("ECKD boot device does not support secure boot!");
-> -    }
-> -
->       switch (virtio_get_device_type()) {
->       case VIRTIO_ID_BLOCK:
->           zipl_load_vblk();
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index 5cea9d3ac7..7ce4761d34 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -271,8 +271,43 @@ static int virtio_setup(void)
->       return ret;
->   }
->   
-> -static void ipl_boot_device(void)
-> +static void validate_secure_boot_device(void)
-> +{
-> +    switch (cutype) {
-> +    case CU_TYPE_DASD_3990:
-> +    case CU_TYPE_DASD_2107:
-> +        panic("Passthrough (vfio) CCW device does not support secure boot!");
-> +        break;
-> +    case CU_TYPE_VIRTIO:
-> +        if (virtio_setup() == 0) {
-> +            VDev *vdev = virtio_get_device();
-> +
-> +            if (vdev->is_cdrom) {
-> +                panic("Secure boot from ISO image is not supported!");
-> +            }
-> +
-> +            if (virtio_get_device_type() == VIRTIO_ID_NET) {
-> +                panic("Virtio net boot device does not support secure boot!");
-> +            }
-> +
-> +            if (zipl_check_scsi_mbr_magic()) {
-> +                panic("ECKD boot device does not support secure boot!");
-> +            }
-> +        }
-> +        break;
-> +    default:
-> +        panic("Secure boot from unexpected device type is not supported!");
-> +    }
-> +
-> +    printf("SCSI boot device supports secure boot.\n");
-> +}
-> +
-> +static void check_secure_boot_support(void)
->   {
-> +    bool have_iplb_copy;
-> +    IplParameterBlock *iplb_copy;
-> +    QemuIplParameters qipl_copy;
-> +
->       if (boot_mode == ZIPL_BOOT_MODE_UNSPECIFIED) {
->           boot_mode = zipl_mode(iplb->hdr_flags);
->       }
-> @@ -281,14 +316,38 @@ static void ipl_boot_device(void)
->           panic("Need at least one certificate for secure boot!");
->       }
->   
-> +    if (boot_mode == ZIPL_BOOT_MODE_NORMAL) {
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * Store copies of have_iplb, iplb and qipl.
-> +     * They will be updated in load_next_iplb().
-> +     */
-> +    have_iplb_copy = have_iplb;
-> +    iplb_copy = malloc(sizeof(IplParameterBlock));
-
-Please add:
-
-     IPL_assert(iplb_copy != NULL, "out of memory");
-
-or so.
-
-> +    memcpy(&qipl_copy, &qipl, sizeof(QemuIplParameters));
-> +    memcpy(iplb_copy, iplb, sizeof(IplParameterBlock));
-> +
-> +    while (have_iplb_copy) {
-> +        if (have_iplb_copy && find_boot_device()) {
-> +            validate_secure_boot_device();
-> +        }
-> +        have_iplb_copy = load_next_iplb();
-> +    }
-> +
-> +    memcpy(&qipl, &qipl_copy, sizeof(QemuIplParameters));
-> +    memcpy(iplb, iplb_copy, sizeof(IplParameterBlock));
-> +
-> +    free(iplb_copy);
-> +}
-
-Do we really have to check all devices in advance here? I don't quite get 
-the logic here yet, if we check the MBR of each and every disk in advance, 
-that means that each of the devices has to be bootable in secure mode. But 
-what sense does it make to specify multiple devices if all of them are 
-bootable, i.e. we will always boot from the first given device?
-
-Should we maybe rather simply disallow multiple boot devices from the QEMU 
-side already and only allow one bootable device when running in secure mode?
-
-  Thomas
-
-
-> +static void ipl_boot_device(void)
-> +{
->       switch (cutype) {
->       case CU_TYPE_DASD_3990:
->       case CU_TYPE_DASD_2107:
-> -        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
-> -            boot_mode == ZIPL_BOOT_MODE_SECURE) {
-> -            panic("Passthrough (vfio) CCW device does not support secure boot!");
-> -        }
-> -
->           dasd_ipl(blk_schid, cutype);
->           break;
->       case CU_TYPE_VIRTIO:
-> @@ -338,6 +397,8 @@ void main(void)
->           probe_boot_device();
->       }
->   
-> +    check_secure_boot_support();
-> +
->       while (have_iplb) {
->           boot_setup();
->           if (have_iplb && find_boot_device()) {
-> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-> index 389cc8ea7c..3009104686 100644
-> --- a/pc-bios/s390-ccw/s390-ccw.h
-> +++ b/pc-bios/s390-ccw/s390-ccw.h
-> @@ -93,6 +93,7 @@ typedef enum ZiplBootMode {
->   extern ZiplBootMode boot_mode;
->   
->   ZiplBootMode zipl_mode(uint8_t hdr_flags);
-> +int zipl_check_scsi_mbr_magic(void);
->   
->   /* jump2ipl.c */
->   void write_reset_psw(uint64_t psw);
+With the encoding=... added:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
