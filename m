@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DECAD0C84A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 10:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7AF3D0C850
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 10:50:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfbqV-0006LE-Vw; Tue, 13 Jan 2026 05:41:56 -0500
+	id 1vfbxw-0008Hd-OA; Tue, 13 Jan 2026 05:49:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfbqT-0006Kl-8u
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:41:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vfbxo-0008GL-2x
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:49:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfbqR-0004FB-6D
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:41:53 -0500
+ id 1vfbxm-0004wG-0Y
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 05:49:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768300910;
+ s=mimecast20190719; t=1768301364;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ypVwbn+5ODH+qHpboGY8/sLTBhGQ8D1kvL2o97sCsa8=;
- b=SLQ0NbViouvJ4njdCBxpik3WQsu8QQz0tuMaaHxZqnarJJfld5g6aFH10X/pTxgNKWgKL9
- JNrP45BdUCAYwoFqdj+3hsTpWgnsBThgrJuihoqOi+aho1k5ml5tzSoM6sPTEcg3ASN5AA
- ugGaqf437+z31p8noA3qMIRwe6iUE7I=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Fun+VlAGuTbg8mclMhkVXEMkwi0/yRlPk1nArL251uk=;
+ b=Q1r/HEIqvyiQmMLT5g9YxLKAjSCXZIf6B0cS3sIl6EuTQUfz6MBgHFmi5xDC/voiPuBdo1
+ xmYNjSlPZt/97FZpcdlvZvPUdVBhTOUqkieHrnsEkMDei4bmxRkvWBC9xCZu8B+SAVJGw4
+ +N6FVMS07p3FYxf3kjK33BWRjbrHLUo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-Fa9gEokYMgu3aEmL3ZHdiw-1; Tue,
- 13 Jan 2026 05:41:48 -0500
-X-MC-Unique: Fa9gEokYMgu3aEmL3ZHdiw-1
-X-Mimecast-MFC-AGG-ID: Fa9gEokYMgu3aEmL3ZHdiw_1768300904
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-131-52zlFBwbNcan1pWjRbTeRg-1; Tue,
+ 13 Jan 2026 05:49:21 -0500
+X-MC-Unique: 52zlFBwbNcan1pWjRbTeRg-1
+X-Mimecast-MFC-AGG-ID: 52zlFBwbNcan1pWjRbTeRg_1768301359
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44ABE1955D42; Tue, 13 Jan 2026 10:41:44 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 842B71956089; Tue, 13 Jan 2026 10:49:19 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.87])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CEF4419560AB; Tue, 13 Jan 2026 10:41:38 +0000 (UTC)
-Date: Tue, 13 Jan 2026 10:41:35 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 683331800665; Tue, 13 Jan 2026 10:49:06 +0000 (UTC)
+Date: Tue, 13 Jan 2026 10:49:01 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org,
@@ -63,28 +63,28 @@ Cc: qemu-devel@nongnu.org,
  qemu-rust@nongnu.org, Stefan Weil <sw@weilnetz.de>,
  Kevin Wolf <kwolf@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 05/24] util: expose qemu_thread_set_name
-Message-ID: <aWYhX_B2Lvqeaf-H@redhat.com>
+Subject: Re: [PATCH v5 09/24] util: introduce some API docs for logging APIs
+Message-ID: <aWYjHQYYeEqpnnQh@redhat.com>
 References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-6-berrange@redhat.com>
- <87cy3dc1pl.fsf@pond.sub.org>
+ <20260108170338.2693853-10-berrange@redhat.com>
+ <87ms2hal4a.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87cy3dc1pl.fsf@pond.sub.org>
+In-Reply-To: <87ms2hal4a.fsf@pond.sub.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,157 +101,140 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 13, 2026 at 10:16:06AM +0100, Markus Armbruster wrote:
+On Tue, Jan 13, 2026 at 10:59:49AM +0100, Markus Armbruster wrote:
 > Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> > The ability to set the thread name needs to be used in a number
-> > of places, so expose the current impls as public methods.
+> > There is a gotcha with qemu_log() usage in a threaded process.
+> > If fragments of a log message are output via qemu_log() it is
+> > possible for messages from two threads to get mixed up. To
+> > prevent this qemu_log_trylock() should be used, along with
+> > fprintf(f) calls.
 > >
-> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > This is a subtle problem that needs to be explained in the
+> > API docs to ensure correct usage.
+> >
+> > Reported-by: Markus Armbruster <armbru@redhat.com>
 > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > > ---
-> >  include/qemu/thread.h    |  1 +
-> >  util/qemu-thread-posix.c | 26 ++++++++++++++++----------
-> >  util/qemu-thread-win32.c | 13 ++++++++-----
-> >  3 files changed, 25 insertions(+), 15 deletions(-)
+> >  include/qemu/log-for-trace.h | 17 ++++++++++++++++-
+> >  include/qemu/log.h           | 31 +++++++++++++++++++++++++++++++
+> >  rust/util/src/log.rs         |  6 ++++++
+> >  3 files changed, 53 insertions(+), 1 deletion(-)
 > >
-> > diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-> > index 3a286bb3ef..27b888ab0a 100644
-> > --- a/include/qemu/thread.h
-> > +++ b/include/qemu/thread.h
-> > @@ -215,6 +215,7 @@ void *qemu_thread_join(QemuThread *thread);
-> >  void qemu_thread_get_self(QemuThread *thread);
-> >  bool qemu_thread_is_self(QemuThread *thread);
-> >  G_NORETURN void qemu_thread_exit(void *retval);
-> > +void qemu_thread_set_name(const char *name);
-> >  
-> >  struct Notifier;
-> >  /**
-> > diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-> > index 7c985b5d38..b1c127dbe3 100644
-> > --- a/util/qemu-thread-posix.c
-> > +++ b/util/qemu-thread-posix.c
-> > @@ -329,6 +329,21 @@ static void qemu_thread_atexit_notify(void *arg)
-> >      notifier_list_notify(&thread_exit, NULL);
+> > diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
+> > index f3a8791f1d..6861a1a4b7 100644
+> > --- a/include/qemu/log-for-trace.h
+> > +++ b/include/qemu/log-for-trace.h
+> > @@ -29,7 +29,22 @@ static inline bool qemu_loglevel_mask(int mask)
+> >      return (qemu_loglevel & mask) != 0;
 > >  }
 > >  
-> > +void qemu_thread_set_name(const char *name)
-> > +{
-> > +    /*
-> > +     * Attempt to set the threads name; note that this is for debug, so
-> > +     * we're not going to fail if we can't set it.
-> > +     */
-> > +# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-> > +    pthread_setname_np(pthread_self(), name);
-> > +# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
-> > +    pthread_setname_np(name);
-> > +# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
-> > +    pthread_set_name_np(pthread_self(), name);
-> > +# endif
-> > +}
+> > -/* main logging function */
+> > +/**
+> > + * qemu_log: report a log message
+> > + * @fmt: the format string for the message
+> > + * @...: the format string arguments
+> > + *
+> > + * This will emit a log message to the current output stream.
+> > + *
+> > + * The @fmt string should normally represent a complete line
+> > + * of text, and thus end with a newline character.
+> 
+> Note for later: "should normally".
+> 
+> > + *
+> > + * While it is possible to incrementally output fragments of
+> > + * a complete line using qemu_log, this is inefficient and
+> > + * races with other threads. For outputting fragments it is
+> > + * strongly preferred to use the qemu_log_trylock() method
+> > + * combined with fprintf().
+> > + */
+> >  void G_GNUC_PRINTF(1, 2) qemu_log(const char *fmt, ...);
+> >  
+> >  #endif
+> > diff --git a/include/qemu/log.h b/include/qemu/log.h
+> > index 7effba4da4..e9d3c6806b 100644
+> > --- a/include/qemu/log.h
+> > +++ b/include/qemu/log.h
+> > @@ -41,7 +41,38 @@ bool qemu_log_separate(void);
+> >  
+> >  /* Lock/unlock output. */
+> >  
+> > +/**
+> > + * Acquires a lock on the current log output stream.
+> > + * The returned FILE object should be used with the
+> > + * fprintf() function to output the log message, and
+> > + * then qemu_log_unlock() called to release the lock.
+> > + *
+> > + * The primary use case is to be able to incrementally
+> > + * output fragments of a complete log message in an
+> > + * efficient and race free manner.
+> > + *
+> > + * The simpler qemu_log() method must only be used
+> > + * to output complete log messages.
+> 
+> "must".
+> 
+> > + *
+> > + * A typical usage pattern would be
+> > + *
+> > + *    FILE *f = qemu_log_trylock()
+> > + *
+> > + *    fprintf(f, "Something ");
+> > + *    fprintf(f, "Something ");
+> > + *    fprintf(f, "Something ");
+> > + *    fprintf(f, "The end\n");
+> > + *
+> > + *    qemu_log_unlock(f);
+> > + *
+> > + * Returns: the current FILE if available, NULL on error
+> > + */
+> >  FILE *qemu_log_trylock(void) G_GNUC_WARN_UNUSED_RESULT;
 > > +
-> >  typedef struct {
-> >      void *(*start_routine)(void *);
-> >      void *arg;
-> > @@ -342,17 +357,8 @@ static void *qemu_thread_start(void *args)
-> >      void *arg = qemu_thread_args->arg;
-> >      void *r;
+> > +/**
+> > + * Releases the lock on the log output, previously
+> > + * acquired by qemu_log_trylock().
+> > + */
+> >  void qemu_log_unlock(FILE *fd);
 > >  
-> > -    /* Attempt to set the threads name; note that this is for debug, so
-> > -     * we're not going to fail if we can't set it.
-> > -     */
-> >      if (qemu_thread_args->name) {
-> > -# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-> > -        pthread_setname_np(pthread_self(), qemu_thread_args->name);
-> > -# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
-> > -        pthread_setname_np(qemu_thread_args->name);
-> > -# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
-> > -        pthread_set_name_np(pthread_self(), qemu_thread_args->name);
-> > -# endif
-> > +        qemu_thread_set_name(qemu_thread_args->name);
-> >      }
-> >      QEMU_TSAN_ANNOTATE_THREAD_NAME(qemu_thread_args->name);
-> >      g_free(qemu_thread_args->name);
+> >  /* Logging functions: */
+> > diff --git a/rust/util/src/log.rs b/rust/util/src/log.rs
+> > index 0a4bc4249a..6a3a30d8d8 100644
+> > --- a/rust/util/src/log.rs
+> > +++ b/rust/util/src/log.rs
+> > @@ -134,6 +134,12 @@ fn drop(&mut self) {
+> >  ///     "Address 0x{:x} out of range",
+> >  ///     error_address,
+> >  /// );
+> > +///
+> > +/// The `log_mask_ln` macro should only be used for emitting complete
 > 
-> qemu_thread_set_name() is factored out.  No change in behavior.
+> "should only".
 > 
-> > diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-> > index 9595a5b090..4d2d663a9a 100644
-> > --- a/util/qemu-thread-win32.c
-> > +++ b/util/qemu-thread-win32.c
-> > @@ -225,6 +225,7 @@ struct QemuThreadData {
-> >      void             *arg;
-> >      short             mode;
-> >      NotifierList      exit;
-> > +    char             *name;
-> >  
-> >      /* Only used for joinable threads. */
-> >      bool              exited;
-> > @@ -266,6 +267,10 @@ static unsigned __stdcall win32_start_routine(void *arg)
-> >      void *(*start_routine)(void *) = data->start_routine;
-> >      void *thread_arg = data->arg;
-> >  
-> > +    if (data->name) {
-> > +        qemu_thread_set_name(data->name);
-> > +        g_clear_pointer(&data->name, g_free);
-> > +    }
-> >      qemu_thread_data = data;
-> >      qemu_thread_exit(start_routine(thread_arg));
-> >      abort();
-> > @@ -316,7 +321,7 @@ void *qemu_thread_join(QemuThread *thread)
-> >      return ret;
-> >  }
-> >  
-> > -static void set_thread_description(HANDLE h, const char *name)
-> > +void qemu_thread_set_name(const char *name)
-> >  {
-> >      g_autofree wchar_t *namew = NULL;
-> >  
-> > @@ -329,7 +334,7 @@ static void set_thread_description(HANDLE h, const char *name)
-> >          return;
-> >      }
-> >  
-> > -    SetThreadDescriptionFunc(h, namew);
-> > +    SetThreadDescriptionFunc(GetCurrentThread(), namew);
-> >  }
-> >  
-> >  void qemu_thread_create(QemuThread *thread, const char *name,
-> > @@ -344,6 +349,7 @@ void qemu_thread_create(QemuThread *thread, const char *name,
-> >      data->arg = arg;
-> >      data->mode = mode;
-> >      data->exited = false;
-> > +    data->name = g_strdup(name);
-> >      notifier_list_init(&data->exit);
-> >  
-> >      if (data->mode != QEMU_THREAD_DETACHED) {
-> > @@ -355,9 +361,6 @@ void qemu_thread_create(QemuThread *thread, const char *name,
-> >      if (!hThread) {
-> >          error_exit(GetLastError(), __func__);
-> >      }
-> > -    if (name) {
-> > -        set_thread_description(hThread, name);
-> > -    }
-> >      CloseHandle(hThread);
-> >  
-> >      thread->data = data;
+> > +/// log messages. Where it is required to incrementally output string
+> > +/// fragments to construct a complete message, `LogGuard::new()` should
+> > +/// be directly used in combination with `writeln()` to avoid output
+> > +/// races with other QEMU threads.
+> >  /// ```
+> >  #[macro_export]
+> >  macro_rules! log_mask_ln {
 > 
-> This delays setting the thread name until the thread runs.  Fine, I
-> guess, but I'd mention it in the commit message.
+> "Should normally" suggests there are exceptions.
 > 
-> The new QemuThreadData member @name is non-null only between thread
-> creation and thread name setting, unlike the other members under
-> /* Passed to win32_start_routine.  */  Worth a comment?  Keep it alive
-> until the thread dies?  Entirely up to you.
+> "Should only" does not.
+> 
+> "Must" is a bit stronger still.
+> 
+> Which of the three do we want?
 
-win32_start_routine never returns as it calls into qemu_thread_exit
-so it is simpler to just free immediately after use. I'll comment
-the struct.
+The "Should" usage was reflecting the reality that we have quite alot
+of code using qemu_log_trylock + qemu_log, instead of qemu_log_trylock
++ fprintf.
 
-> 
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> 
+I didn't feel it appropriate to use 'must' unless we explicitly make
+qemu_log() fail when used inside the scope of a qemu_log_trylock().
+
+So "Should normally" is the best fit
 
 With regards,
 Daniel
