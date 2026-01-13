@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B9CD2D0EB
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 12:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41C7D2D0EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 12:56:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfdvL-0002n9-9m; Tue, 13 Jan 2026 07:55:03 -0500
+	id 1vfdwg-0003vv-Oe; Tue, 13 Jan 2026 07:56:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfdvC-0002kg-MI
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 07:54:54 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfdwf-0003vF-OP
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 07:56:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfdvB-0000A7-8q
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 07:54:54 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfdwe-0000Tc-Ay
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 07:56:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768308892;
+ s=mimecast20190719; t=1768308983;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mZSW3/ZUk2ok+6+IBKVQ6VdtgLfxbWcsPvZz8Xf6Dgw=;
- b=N3f5TzA3nfTBSahX57AA5EXCt/Yp/m/ZrGwN7q13nhhoTIAPBEkedIpF0FIl2sMSGMFjpB
- P/DAypXz/aA1/YlR2ew19BnnT7JMmwqj1MTyhM2oNvemvwewxiaJM5uWHwbEJG/KD18Zms
- lCpWYhlk2uJwD5gaksThxNyR9zSwWpY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UhMV4Venb4RXxcbdBi4TzIdX8fbZjrGMx0bX+UGeFhU=;
+ b=VQHqkkd3fyGw+zg0TVgscPVb81E0Uzc/FJoJaxDJEwsoosdtGCpSJYGYKOBPFftnuG1R6m
+ 5dmsMJqiK+kfcJo3T7ayh+FRpK3IJNfZuQuAhx3znk1hRM07qREUSXEbpMxJfsUL1Tt+wy
+ 0jwQ/trNk1vxEUfUxtg9XVxzC78n8Gk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-EM1PL6WCMzKmPEbdR5mttA-1; Tue, 13 Jan 2026 07:54:51 -0500
-X-MC-Unique: EM1PL6WCMzKmPEbdR5mttA-1
-X-Mimecast-MFC-AGG-ID: EM1PL6WCMzKmPEbdR5mttA_1768308890
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47d17fff653so33499195e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 04:54:51 -0800 (PST)
+ us-mta-437-g5A7IMUSOqynrpUWtNUsZQ-1; Tue, 13 Jan 2026 07:56:22 -0500
+X-MC-Unique: g5A7IMUSOqynrpUWtNUsZQ-1
+X-Mimecast-MFC-AGG-ID: g5A7IMUSOqynrpUWtNUsZQ_1768308981
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-430fcf10280so5663840f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 04:56:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768308890; x=1768913690; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768308981; x=1768913781; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mZSW3/ZUk2ok+6+IBKVQ6VdtgLfxbWcsPvZz8Xf6Dgw=;
- b=CLYOVR5A8hjO67Boro8e5ZtB6R+YKWMa5HUz8G2OetYHqhW+CmUC422xVAFaSivSQW
- J5+vU7Z6b+q1DfT01/9X2TE/YvyKl5TG6Pl5xdJjBFyjKXx5pzt/9K1xzBB8M+qMLL0m
- X0T53KiHqRVaAxsOM00EAI/GLrt4PB1HiTX1tnn9xzRjhj9QAThSG3WqXf0K3Kv4w8ci
- 8xUZJGCruB2gl3KMfDsSYNjSq2R3pMzKXqbx09FWa9zNKin5ic74YT0qvliGqrhLIN2E
- MLUbbunvMbv79GkP49ePjUlLk/sH4pUpGshdb70iFbCyT70cJ7c20RFkle0RAzP3ZgRc
- dLJA==
+ bh=UhMV4Venb4RXxcbdBi4TzIdX8fbZjrGMx0bX+UGeFhU=;
+ b=cC3HaAFQnXUNHVb2KmPfhnRib1a1Mw01PvnrBFUMpqCyMu0BVbTLk/moo3FQa36z9X
+ Rj0XyFY7QoASDxNlMMdc3R6nQho6fIeaLYuI3Y0dSZ3BOUFAzMNuNTSdd/AuBBTT9V9G
+ 1JcG2HB6Ivs43+ksCA35ANquvmuMxVKqDhnJytED9OFd1Y9GTPln6BTfP2GM1prRGFcN
+ WoQCxWPbGewUTqxUT4JNoc4EPzTZiiiqyKlIWfUBNB9GzJ9NLp9bMqJpHsWUjabqMdzx
+ BQDx2EwhVhISYqI9NHNDt+i4LwhiiImZD1r+S3Oh+GSh6Y9GEp+NZ5G1fz52bJ5LA54Y
+ 5hHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768308890; x=1768913690;
+ d=1e100.net; s=20230601; t=1768308981; x=1768913781;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mZSW3/ZUk2ok+6+IBKVQ6VdtgLfxbWcsPvZz8Xf6Dgw=;
- b=X+BEWVsEIc+/MMb5B6c7Ma/QS6Vf0uA3k9tjTv7e+c64QO9A8lxPjL1kIrH0yi+MHg
- a3+aZWGC9pgx+Wf02PwE54jpDbQ/lVvYOcOQJjz7or+KcHdx/I62/HDCw23GJSU2H1O5
- 2WkmFp2xU+hYezap3MS92y5b+N/k/i72WjJ+mCNnwKU46irKGM1vJbDKC5KzcPEuR3jU
- /z5wbDrF7X8+uxdMF/XECSTHW+LNY4iOR6aBx5YoKAjRUuz7g1EnX/oOep7xSBuu9zBl
- xNL4aE3h2KjtBiOfjHxwFUv93vGg3LjmK54wCtSc7ycA2vV9kkcvn1G+5TZ/neYfOyRj
- adww==
+ bh=UhMV4Venb4RXxcbdBi4TzIdX8fbZjrGMx0bX+UGeFhU=;
+ b=F3syPciRleqNMYUoBTjGkgKtNC6IO4r8jW6g6ogT1lvl0+/CZ1mi0E6uEYfSJ7X08/
+ WX3tyh0e/8szheuNS0yB3Q8rIte8oYolYKaFn5a0ZCmeLXHO+dQV2FA9yuk+QyR5revU
+ tIkBUFc6+Ie79kIX1TQDfYhIJbHm6BbfkkyqqDdNxykE3EJVvNXfMXPd/olcz5iUZDs/
+ eXF+62eX2Nqblmu8WEm0X2TjJulMVy7LzHl4zeLz2d5HUZQqfiWruy9Yh6b/AEjhlDUj
+ HvE3++BqPVzwvqCJovbF4lKEMD945j4zr3MypgEDvfvKqsReuLgX51SoluU/uroOd5tX
+ SSsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXz2jHo6nJ4FzAaZKNjbqJ1Jxi5N0mhjH3UQ02nUGygSan1HKhfnxqR8+10Or9PqyvSdQ30FsnXW4QP@nongnu.org
-X-Gm-Message-State: AOJu0YydoaLKqsluCHjffgS6Ysc1raN+zJaBJaF3fKzUzBe5zGL/5ahv
- SXYoau8JuHhHSX1de9KQ1mkKt7aPgLTgmeba9Jt9DgGpVu6uL4pw77u4U6M8Xw9LK8v56Ur89gs
- CCh3uy1o9dF8Js94YngC9hovtpfUS1qcj0dqcnJaubSDsTGsTIZF3KfT+
-X-Gm-Gg: AY/fxX7SBmflLwCuC85CoXHUz8FPEj2gB3481G49f5XQgYWYMprDFf+IWRC4WZg0X/J
- GVORRIeAlvycSrYA9FRnPHHpMsLAq56CpJW6zVaCCk/IoeQ3YWxQFubuFeUHCZqxM2vdhG+/6el
- E5wRZ3bVikxtfPBIcbu73XtBl3ooC9qtY0j8P+gCVssAmheU8X3TEpJZ4lQKNiQtFex5Lvg14Tf
- 11nR0xivTp8UAKk7Cwp4WL05IQ0HFUpMwfp9kBztM54turMisalMkq79IIdi76MJSDx/Fcz6q4O
- luRIMlYm82NETF54fNRki/jpDSvaHTaFXrJwM6JLSgUQ6+DCevpKMXo4dzL+yFyiyTl9ZxXn6Nc
- cGYASMYI=
-X-Received: by 2002:a05:600c:190e:b0:479:3a88:de60 with SMTP id
- 5b1f17b1804b1-47d84b3fa79mr221013475e9.37.1768308890081; 
- Tue, 13 Jan 2026 04:54:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFpNAusdBmG6cjjk8OPK+qFIeyHFvbuQfHH1L2vOFqOjgzTl9qy6YZ2/7LptLEHKXwWpKjeig==
-X-Received: by 2002:a05:600c:190e:b0:479:3a88:de60 with SMTP id
- 5b1f17b1804b1-47d84b3fa79mr221013225e9.37.1768308889699; 
- Tue, 13 Jan 2026 04:54:49 -0800 (PST)
+ AJvYcCUahuVqo3D1hRGYYkARC/1GxfkHWTx9yMVAGo8RgeD7MiGphXao0ZKNJ3zod8432/DnNKOXtIsnvz+3@nongnu.org
+X-Gm-Message-State: AOJu0YylvJJsH+bWTAUihozhNJbmF8sn97JAmGu2VdknOE18/ksFpKvB
+ HFi6h9OXsfNU/wlG81g/B2hzxXNn+jchZ5rU0xohMUcaSNlTXQ1SQUcKJcA598wSP25vIfCp6UF
+ 9TAxBcz7dNv1GXkXXvhyd0TKvGGoXa+FHAVmt/CKn5oMsKUhPgDl4dk/T
+X-Gm-Gg: AY/fxX6Dl929QGNGlst/9jrlS93SZEwOcVDWLDBkh2Yet5hyu+R2TqOIsxAO2U9jA2/
+ 2z3gJgNtG0WW/YO1s6pgvPFMguggOTMqu4HaBVrNCUMxCNBV10ZK5i7xatTy6kWX+/5s3IRRP9i
+ i5Yp5jX6SXoKGlxhVhOoQ0aP9MeIO75zEwrUh5EyhxYs64TUAVwfZuhZbFdAxwM/tZ8di6OucUZ
+ gJcZpoEiCgjojIygOC0HDwiPuWEtp3Fl74EGaArirUjmVhYjSYqdTG060yIGyW8/rfHjvn/nu6W
+ kUyaafqcZzxyH5kUEZV996xvf0KsBhQsgfvC3dc++Y8lfWTlt4tGhfDzFsxyGkIV5r8uXvz+8rP
+ /Iy2LxNU=
+X-Received: by 2002:a05:6000:290c:b0:431:327:5dcc with SMTP id
+ ffacd0b85a97d-432c379f291mr27190541f8f.43.1768308980948; 
+ Tue, 13 Jan 2026 04:56:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFcJbXby6ODNgm6y6QehHxDWrQTM8K8ib/+scnqH9JvgY2XdFqwIxLTTPgg40LiGdlSl1vFg==
+X-Received: by 2002:a05:6000:290c:b0:431:327:5dcc with SMTP id
+ ffacd0b85a97d-432c379f291mr27190513f8f.43.1768308980541; 
+ Tue, 13 Jan 2026 04:56:20 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd0e16f4sm45046971f8f.11.2026.01.13.04.54.48
+ ffacd0b85a97d-432bd0daa78sm44879056f8f.6.2026.01.13.04.56.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jan 2026 04:54:49 -0800 (PST)
-Message-ID: <8ae21890-6048-4a16-ad92-fb60f05685f4@redhat.com>
-Date: Tue, 13 Jan 2026 13:54:47 +0100
+ Tue, 13 Jan 2026 04:56:20 -0800 (PST)
+Message-ID: <b7ab5bae-7090-4cbe-8b00-afb812d0964f@redhat.com>
+Date: Tue, 13 Jan 2026 13:56:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/13] tests: skip I/O test 128 on GitLab due to broken
- dmsetup
+Subject: Re: [PATCH v2 11/13] tests: fix check for sudo access in LUKS I/O test
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -100,7 +99,7 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  <alex.bennee@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
  Cleber Rosa <crosa@redhat.com>
 References: <20260112204026.710659-1-berrange@redhat.com>
- <20260112204026.710659-11-berrange@redhat.com>
+ <20260112204026.710659-12-berrange@redhat.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -145,7 +144,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260112204026.710659-11-berrange@redhat.com>
+In-Reply-To: <20260112204026.710659-12-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -174,55 +173,40 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/01/2026 21.40, Daniel P. Berrangé wrote:
-> The I/O test 128 uses 'dmsetup create' to create a device, optionally
-> using sudo to elevate privileges.
-> 
-> This works in GitLab CI, however, the resulting device never appears
-> in /dev leading the test to fail:
-> 
->    1..1
->    # running raw 128
->    not ok raw 128
->    ----------------------------------- stderr -----------------------------------
->    --- /builds/berrange/qemu/tests/qemu-iotests/128.out
->    +++ /builds/berrange/qemu/build/scratch/raw-file-128/128.out.bad
->    @@ -1,5 +1,5 @@
->     QA output created by 128
-> 
->     == reading from error device ==
->    -read failed: Input/output error
->    +qemu-io: can't open device /dev/mapper/eiodev16546: Could not open '/dev/mapper/eiodev16546': No such file or directory
->     *** done
-> 
->    (test program exited with status code 1)
-> 
-> Most likely the container environment the tests are being run under
-> has a hand-populated /dev such that newly created devices from device
-> mapper won't automatically appear.
+> The test did not cope with the possibility that 'sudo' was not installed
+> at all, merely that it was not configured. This broke tests in any CI
+> env which lacks 'sudo'.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/qemu-iotests/128 | 2 ++
->   1 file changed, 2 insertions(+)
+>   tests/qemu-iotests/149 | 13 ++++++++-----
+>   1 file changed, 8 insertions(+), 5 deletions(-)
 > 
-> diff --git a/tests/qemu-iotests/128 b/tests/qemu-iotests/128
-> index d0e00d24b1..b32e03beee 100755
-> --- a/tests/qemu-iotests/128
-> +++ b/tests/qemu-iotests/128
-> @@ -73,6 +73,8 @@ _supported_fmt raw
->   _supported_proto file
->   _supported_os Linux
+> diff --git a/tests/qemu-iotests/149 b/tests/qemu-iotests/149
+> index c13343d7ef..6dff39a28a 100755
+> --- a/tests/qemu-iotests/149
+> +++ b/tests/qemu-iotests/149
+> @@ -95,11 +95,14 @@ def verify_passwordless_sudo():
 >   
-> +test -n "$GITLAB_CI" && _notrun "dmsetup not functional on GitLab CI runners"
-> +
->   _setup_eiodev
+>       args = ["sudo", "-n", "/bin/true"]
 >   
->   TEST_IMG="/dev/mapper/$devname"
+> -    proc = subprocess.Popen(args,
+> -                            stdin=subprocess.PIPE,
+> -                            stdout=subprocess.PIPE,
+> -                            stderr=subprocess.STDOUT,
+> -                            universal_newlines=True)
+> +    try:
+> +        proc = subprocess.Popen(args,
+> +                                stdin=subprocess.PIPE,
+> +                                stdout=subprocess.PIPE,
+> +                                stderr=subprocess.STDOUT,
+> +                                universal_newlines=True)
+> +    except FileNotFoundError as e:
+> +        iotests.notrun('requires sudo binary: %s' % e)
+>   
+>       msg = proc.communicate()[0]
+>   
 
-Could we maybe better check for the existance of $TEST_IMG for deciding 
-whether to skip the test? ... so that this is also properly skipped in other 
-container environments where /dev might not be populated right?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
