@@ -4,82 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1749D2D0FB
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFCAFD2D0FE
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 13:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfeKm-0000VQ-JU; Tue, 13 Jan 2026 08:21:20 -0500
+	id 1vfeOn-0003ei-No; Tue, 13 Jan 2026 08:25:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfeKd-0000Ds-Td
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:21:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfeKc-0004Eq-Dm
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:21:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768310469;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uLjNaKKA7+K0lppk/tV8SVLakODiZ0fGj1Nb+azvbYw=;
- b=iHkh5Gn47xF/e2ZCmj/euE/YGlzIJWW9IzrB/A02GVlgg8Maa1cDimxp2jabR6h6AnNhHQ
- GSkZbE3sw67eO2FzUOtGFVfqTRjyOH2OjJKAcTFuzuZGFrlp2lzwtI+8KCeU+yFDFJSYZh
- 40bCen/Of7M/hj1r1btBq10Vvq/ben8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-110-uXEN8fTOM_ypXZAN__XDLQ-1; Tue,
- 13 Jan 2026 08:21:06 -0500
-X-MC-Unique: uXEN8fTOM_ypXZAN__XDLQ-1
-X-Mimecast-MFC-AGG-ID: uXEN8fTOM_ypXZAN__XDLQ_1768310464
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vfeOj-0003dJ-9o
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:25:25 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vfeOg-0004y0-GJ
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 08:25:24 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 56C671800371; Tue, 13 Jan 2026 13:21:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.87])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01ED519560AB; Tue, 13 Jan 2026 13:20:58 +0000 (UTC)
-Date: Tue, 13 Jan 2026 13:20:43 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/1] Sync kernel-doc.py with Linux upstream
-Message-ID: <aWZGq8gmFiHT5mBW@redhat.com>
-References: <cover.1767716928.git.mchehab+huawei@kernel.org>
- <CAFEAcA_TMuZG8VJMs2JZ49Xq+wVxcq_7UGOMF+2FUe0k7AUgwA@mail.gmail.com>
- <aWY10BYoJjck3xX8@redhat.com>
- <CAFEAcA9wnmZOLnA3zb6FPfjrEs-3PRBmyBs=FfiQW2OY5GJfTw@mail.gmail.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 74C805BCC1;
+ Tue, 13 Jan 2026 13:25:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1768310718; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZQEqe7qNNpBTyf8hVvGzhHFUC6nXZ6tKbH9CFDzFp1U=;
+ b=n4MZ52qus9c4cz4Q/eIO/m4JS22qDuGtvdVYLU8PMRJRor9HFByOkhsF9jCNRZP86MXQsU
+ J4eWdGc1VLYLyVlgkDf+H+PWGAFF+mJENvZB4rAfs1rvm0HDD+mbH8ehZKmN8QmtVTXM/c
+ uXmvWwDnC6qQfcogW98agkMQzWwlSW4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1768310718;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZQEqe7qNNpBTyf8hVvGzhHFUC6nXZ6tKbH9CFDzFp1U=;
+ b=xWpkTCpga89+dsWupGj5POv88T4bq6k/oxTK+Ldao3J09zMdhU2CRBpsxzTGlNDnY9gTgD
+ iKMwW1kmyJ9qGdCg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=n4MZ52qu;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xWpkTCpg
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1768310718; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZQEqe7qNNpBTyf8hVvGzhHFUC6nXZ6tKbH9CFDzFp1U=;
+ b=n4MZ52qus9c4cz4Q/eIO/m4JS22qDuGtvdVYLU8PMRJRor9HFByOkhsF9jCNRZP86MXQsU
+ J4eWdGc1VLYLyVlgkDf+H+PWGAFF+mJENvZB4rAfs1rvm0HDD+mbH8ehZKmN8QmtVTXM/c
+ uXmvWwDnC6qQfcogW98agkMQzWwlSW4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1768310718;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZQEqe7qNNpBTyf8hVvGzhHFUC6nXZ6tKbH9CFDzFp1U=;
+ b=xWpkTCpga89+dsWupGj5POv88T4bq6k/oxTK+Ldao3J09zMdhU2CRBpsxzTGlNDnY9gTgD
+ iKMwW1kmyJ9qGdCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E771A3EA63;
+ Tue, 13 Jan 2026 13:25:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9K91Kb1HZmmTDgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 13 Jan 2026 13:25:17 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com
+Subject: Re: [PATCH v3 01/25] migration: Remove redundant state change
+In-Reply-To: <CAE8KmOwVC=ncz3mriwrwXT_AAxxCBbkR2gYLskBNCKN12x71Xw@mail.gmail.com>
+References: <20260109124043.25019-1-farosas@suse.de>
+ <20260109124043.25019-2-farosas@suse.de>
+ <CAE8KmOwVC=ncz3mriwrwXT_AAxxCBbkR2gYLskBNCKN12x71Xw@mail.gmail.com>
+Date: Tue, 13 Jan 2026 10:25:15 -0300
+Message-ID: <87cy3dprus.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA9wnmZOLnA3zb6FPfjrEs-3PRBmyBs=FfiQW2OY5GJfTw@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_THREE(0.00)[4]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 74C805BCC1
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,44 +126,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 13, 2026 at 01:04:48PM +0000, Peter Maydell wrote:
-> On Tue, 13 Jan 2026 at 12:09, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > TL;DR: I would not want to see a new top level tools/ directory
-> > created, and don't think it fits in python/ either; scripts/ is
-> > a fine home.
-> 
-> We do already have a tools/ directory, as it happens.
-> It has two things in it...
-> 
-> Personally I think tools/ ought to be for the set of
-> things that we build if you --enable-tools in configure
-> and which we document in docs/tools.
-> tools/i386/qemu-vmsr-helper.c fits in that idea of
-> what the directory is for. tools/ebpf/ does not, but
-> I don't know enough about what it's for to suggest
-> a better home for it.
+Prasad Pandit <ppandit@redhat.com> writes:
 
-It is the source for the pre-generated ebpf/rss.bpf.skeleton.h file.
-It should probably just live in epbf/.
+> On Fri, 9 Jan 2026 at 18:11, Fabiano Rosas <farosas@suse.de> wrote:
+>> If local_err is set, migration_connect_error_propagate() will be
+>> called and that function already has a state transtion from SETUP to
+>> FAILED.
+>
+> * transtion -> transition.
+>
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index 9d1bf5d276..c45393f40e 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -2326,8 +2326,6 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
+>>          file_start_outgoing_migration(s, &addr->u.file, &local_err);
+>>      } else {
+>>          error_setg(&local_err, "uri is not a valid migration protocol");
+>> -        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+>> -                          MIGRATION_STATUS_FAILED);
+>>      }
+>
+> * Maybe we could remove this last '} else {' block altogether? The
+> 'addr->transport == ' check could be moved to the
+> migrate_transport_compatible() function (OR near there), which is
+> called after addr = channel->addr.
+>
 
-Ideally we wwould build it by default, but GCC lacked a eBPF backend
-and we didn't want a hard dep on clang for this.
+This needs to be here (i.e. in two parts) because of the CPR transfer
+flow.
 
-> We might at some point want to tidy up the qemu-io.c,
-> qemu-bridge-helper.c, etc that currently live in the
-> top level directory so they go in tools/ instead.
+> * Saying that - "uri is invalid" - in qmp_migrate_finish() raises a
+> question - how did we reach till _migrate_finish() if uri was invalid?
 
-Yes, that would be desirable.
+The split in qmp_migrate/qmp_migrate_finish is so that the connection
+and migration-start steps can be separated by the CPR transfer hangup
+signal. For regular migration it's still as if this were a single
+routine.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> Is qmp_migrate_finish() called by libvirtd(8) OR external users via
+> QMP? If not, if it is an internal only function to just start
+> migration, it could be renamed appropriately without qmp_ prefix -
+> migrate_start() OR begin_migration() something to the effect that says
+> it starts migration, rather than finish it. migrate_finish() function
+> calling  *_start_outgoing_migration() reads contradictory/opposite.
+>
 
+Yes, patch 24 at the end of the series takes care of this. I first need
+to put some things in place so that we can reuse the connection code for
+both the regular migration and cpr-transfer.
+
+> (I'm going through the rest of the patches in this series.)
+>
+> Thank you.
+> ---
+>   - Prasad
 
