@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966B2CF45DB
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 02:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6941ECF45DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 02:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfUCT-0005gR-9b; Mon, 12 Jan 2026 21:32:05 -0500
+	id 1vfUKi-0008Fj-CX; Mon, 12 Jan 2026 21:40:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vfUCL-0005fG-L8
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 21:31:59 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vfUCG-0002Qs-TW
- for qemu-devel@nongnu.org; Mon, 12 Jan 2026 21:31:57 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxWcKNrmVp2S0IAA--.26162S3;
- Tue, 13 Jan 2026 10:31:41 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCx+8GIrmVp+HIcAA--.56728S3;
- Tue, 13 Jan 2026 10:31:39 +0800 (CST)
-Subject: Re: [PATCH v3 3/4] target/loongarch: Add host CPU model in kvm mode
-To: Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20260112080721.3319572-1-maobibo@loongson.cn>
- <20260112080721.3319572-4-maobibo@loongson.cn>
- <55ef7d7a-ddef-4171-a5bb-b73d1a1632ff@linaro.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <555717ef-4ec0-0a28-d7f4-3f2cdf4c5f81@loongson.cn>
-Date: Tue, 13 Jan 2026 10:29:04 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vfUKg-0008CT-SZ
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 21:40:34 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vfUKf-0003PA-5B
+ for qemu-devel@nongnu.org; Mon, 12 Jan 2026 21:40:34 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-34c84dc332cso3967761a91.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 18:40:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768272031; x=1768876831; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AMI8lCSI2fMvLpzDFEhPaTzQFVHNd6Yp5HxlIfX0uaE=;
+ b=mfEru5+EPV+WwjRYAHde+pOjJkO2bQzBZ9M7ICyg59aSRX6KvmEvHfj7AP8rui04fx
+ TeHuWbsjho7rGvzNCDrRN4F1kcrsLMHB5BoDoxbvYpD0X6umHouZYXlN6k8RKLd9kyXX
+ Q3Fk0Zo/36vj2Jm8ExIRf6yHkbmUriqxxU/OrVYPBUvejvHwfj8saU6wg5X+a85ksnB6
+ EgQHYuoy8Ci+y0+mzTjtkmHA+AV3AbR2kCg3FhIDGTZP2zgk44fv824GmfQ6RSakAw+B
+ qftSKNugzdrgGCJ7w/ZSV8xonJuyk6udFIsM1v3RSn74K8eOJTXbPQy6kdEGABXLT59o
+ bsWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768272031; x=1768876831;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AMI8lCSI2fMvLpzDFEhPaTzQFVHNd6Yp5HxlIfX0uaE=;
+ b=X+Yf0g8g21D1hqtNGaukJuuRM+CYw2B5Aq7Iyb56DfyQVzATw/llAxm+6E6NQ7LJm6
+ l6nLmHO69nnNLcTLZVSTdBmqgEH7urlLAaR/T9cALTOBSEBS93CzqAjiTHKmzvYXfEx/
+ MJtuznW8hCR/fHpX+28fEElVJzzHmbg72ZusoACtwOd/nValuo/gO0kDZza9smgqMDc/
+ 3Fqc43cGM/G4z/FL3ui5WCHPbmNkAwsD0UjQra3mHk1C12L8GpWAWdfcTr/dsZremPJ2
+ Yo4Z6MXhDEBmAqT8rGBAS2/fLWCZq7Gw+Pfzo9VVETFvTPyKu/itXM8oHjufa232Kofc
+ HgEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDek7PfrTcoFxm1avcmH9NuF679Bst7VE4lVHfWNnr3bNKDDmznzo743+IrGBmDrhzRtQVISdL1Jbl@nongnu.org
+X-Gm-Message-State: AOJu0Yxh8DbQqQZjXV/Geh9zvAuWGbnXobadTe9NGkiWBb+afkeHy5hX
+ BNZnq54SdbJZIkYwhr/MBRn6n3InXPEN7IHhAxiVnKzUnC3aZ+5EgQiLSlbkbhCAFY5da34EsC9
+ ZnCngc0M=
+X-Gm-Gg: AY/fxX6lbhElGhBw2d5FCClPBl6hzoD5D4i7/C6iCYQoxwD8B64j9LldQWRtdVZIz1D
+ YT2Uwf1s5TSQJqOoL6pSo04cr8/tRhsPEw6rlkyBwms+lhP3DwUWe2yXUBk4wm/LsnGp/hno9mZ
+ NP79Noxe7u5NgzS4w4NZE1jJhOJjxUQOknmtw1ePo8kB9fw0X1hz23DpM7TNKC+4+LFGfWNRt+R
+ kiw4Tcnb1eiptMD/MkxtbiutzR6e6ZFji7FNpl+Zawh4VeyLnr2MFrtKqhpxcNBxfHpUyhDjoyd
+ j0JHErBuhIjc7LT98c0Ln6eNOOsPKSw4H3Vbt1pWW+FFy72odCTYfLX9nYZazfqC0juFnfUxR8Q
+ IUNBxub6qNikA84OTESj31Om4M2MFPSEQ88ToyBwa1I/PKWXrxwk5vh4sl7DrdCfOY1vI8xD2AA
+ QMdlEnbBusa8H3DVpUo+ryXrv7GZI=
+X-Google-Smtp-Source: AGHT+IEKP2Uk9CUrKDkddfqS7ec05R4rKQaRl1mDeEPofo6crsJtRux/LFHp/P1nFesoBsmk869FCg==
+X-Received: by 2002:a17:90b:4d87:b0:340:99fd:9676 with SMTP id
+ 98e67ed59e1d1-34f68c281d9mr17435532a91.10.1768272030871; 
+ Mon, 12 Jan 2026 18:40:30 -0800 (PST)
+Received: from [192.168.15.8] ([101.187.175.172])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34f5f8b1526sm18534955a91.14.2026.01.12.18.40.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Jan 2026 18:40:30 -0800 (PST)
+Message-ID: <a17bd66f-155b-489a-9edf-7a3355880046@linaro.org>
+Date: Tue, 13 Jan 2026 13:40:25 +1100
 MIME-Version: 1.0
-In-Reply-To: <55ef7d7a-ddef-4171-a5bb-b73d1a1632ff@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/61] Misc single binary patches for 2026-01-12
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20260112224857.42068-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
+In-Reply-To: <20260112224857.42068-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx+8GIrmVp+HIcAA--.56728S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxGF4fur1DGr4rKryDGw1xWFX_yoW5XFWkpr
- 1kJrWUJryUJrn5Jr1UtryUXFy5Zr1UJ3Wqqr48XF15AFsrAr1jgF4UWrsFgr1UJr48Jr1U
- Ar1UXrsxZrsrJrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.348,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,108 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026/1/13 上午5:45, Richard Henderson wrote:
-> On 1/12/26 19:07, Bibo Mao wrote:
->> +#if defined(CONFIG_KVM)
->> +static int read_cpuinfo(const char *field, char *value, int len)
->> +{
->> +    FILE *f;
->> +    int ret = -1;
->> +    int field_len = strlen(field);
->> +    char line[512];
->> +
->> +    f = fopen("/proc/cpuinfo", "r");
->> +    if (!f) {
->> +        return -1;
->> +    }
->> +
->> +    do {
->> +        if (!fgets(line, sizeof(line), f)) {
->> +            break;
->> +        }
->> +        if (!strncmp(line, field, field_len)) {
->> +            strncpy(value, line, len);
->> +            ret = 0;
->> +            break;
->> +        }
->> +    } while (*line);
->> +
->> +    fclose(f);
->> +
->> +    return ret;
->> +}
->> +
->> +static uint64_t get_host_cpu_model(void)
->> +{
->> +    char line[512];
->> +    char *ns;
->> +    static uint64_t cpuid;
->> +
->> +    if (cpuid) {
->> +        return cpuid;
->> +    }
->> +
->> +    if (read_cpuinfo("Model Name", line, sizeof(line))) {
->> +        return 0;
->> +    }
->> +
->> +    ns = strchr(line, ':');
->> +    if (!ns) {
->> +        return 0;
->> +    }
->> +
->> +    ns = strstr(ns, "Loongson-");
->> +    if (!ns) {
->> +        return 0;
->> +    }
->> +
->> +    ns += strlen("Loongson-");
->> +    memccpy((void *)&cpuid, ns, 0, 8);
->> +    return cpuid;
->> +}
->> +
->> +static uint32_t get_host_cpucfg(int number)
->> +{
->> +    unsigned int data = 0;
->> +
->> +#ifdef __loongarch__
->> +    asm volatile("cpucfg %[val], %[reg]"
->> +                 : [val] "=r" (data)
->> +                 : [reg] "r" (number)
->> +                 : "memory");
->> +#endif
->> +
->> +    return data;
->> +}
-> Are you sure you should be bypassing KVM for this?  Other targets start 
-> a scratch vcpu and then read the values via KVM_GET_ONE_REG.
-Feature detection instruction CPUCFG can be executed in user mode, 
-similar with CPUID on X86, on ARM platform instruction MRS can only used 
-in privileged mode.
-
-On LoongArch platform, it is both OK to detect host CPU features by 
-CPUCFG instruction or KVM_GET_DEVICE_ATTR ioctl command method.
-     struct kvm_device_attr attr = {
-         .group = KVM_LOONGARCH_VCPU_CPUCFG,
-         .attr = 2,
-         .addr = (uint64_t)&val,
-     };
-
-     CPULoongArchState *env = cpu_env(cs);
-     ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-     if (!ret) {
-         kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-     }
-
-Regards
-Bibo Mao
+On 1/13/26 09:47, Philippe Mathieu-Daudé wrote:
+> The following changes since commit 81f1fc471c053c9d3915c3e1f8b37503bd9a9cb7:
 > 
-> I'm not sure how much trap-and-emulate support LoongArch has for such ID 
-> registers.
+>    Merge tag 'pull-loongarch-20260112' ofhttps://github.com/bibo-mao/qemu into staging (2026-01-13 08:23:10 +1100)
 > 
+> are available in the Git repository at:
 > 
-> r~
+>    https://github.com/philmd/qemu.git tags/single-binary-20260112
+> 
+> for you to fetch changes up to f445b4a4b6fa5b03503bc8fdfa4c336e13afc48f:
+> 
+>    target/arm/gdbstub: make compilation unit common (2026-01-12 23:47:57 +0100)
+> 
+> ----------------------------------------------------------------
+> Various patches related to single binary effort:
+> 
+> - Endianness cleanups in memory core subsystem and for various targets
+> - Few cleanups around target_ulong type
+> - Build various compilation units as common
 
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
+
+r~
 
