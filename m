@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA69D2F32E
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 15:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5124DD2F332
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 15:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfgBU-00035B-Jb; Tue, 13 Jan 2026 10:19:53 -0500
+	id 1vfgDn-0003yY-1z; Tue, 13 Jan 2026 10:22:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfgBR-00034S-1H
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 10:19:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfgBN-0005rT-RM
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 10:19:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768317584;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9nkcV6FCGONYWYHWFylIb533z3EjXiLKV0X1yTLeHic=;
- b=dLMA9oI1JPdw1uXazgG8Jp/XuGKBNWJntVwORCzziTvoW9s7EGGIoR5hc9T3Sic00fxsus
- uVKdNgg1bF3hWLVP+SmDX0q5FbqNQMslvdCsDTbhuCmLgVoVqyUfdjldn5bUsnJKoQrNrq
- W0LXF+UY6IpxptMyX9V0D2lDyDrT8cs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-68sUftkzMTiclXs8IC8i3A-1; Tue,
- 13 Jan 2026 10:19:40 -0500
-X-MC-Unique: 68sUftkzMTiclXs8IC8i3A-1
-X-Mimecast-MFC-AGG-ID: 68sUftkzMTiclXs8IC8i3A_1768317579
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05CA11800378; Tue, 13 Jan 2026 15:19:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81F7B30001A8; Tue, 13 Jan 2026 15:19:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1C5C021E66C9; Tue, 13 Jan 2026 16:19:36 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Hanna Reitz
- <hreitz@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Christian Schoenebeck <qemu_oss@crudebyte.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  devel@lists.libvirt.org,
- qemu-block@nongnu.org,  qemu-rust@nongnu.org,  Stefan Weil
- <sw@weilnetz.de>,  Kevin Wolf <kwolf@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 16/24] util: don't skip error prefixes when QMP is
- active
-In-Reply-To: <20260108170338.2693853-17-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 8 Jan 2026 17:03:30
- +0000")
-References: <20260108170338.2693853-1-berrange@redhat.com>
- <20260108170338.2693853-17-berrange@redhat.com>
-Date: Tue, 13 Jan 2026 16:19:36 +0100
-Message-ID: <87ecnt7d6f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfgDl-0003yH-Rd
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 10:22:13 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfgDk-0006KV-EF
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 10:22:13 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-6455a60c11fso6331155d50.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 07:22:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768317731; x=1768922531; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=RNMoDdiDO4GxdrQZdKvmcC4J/0QHLU5TZ1wElCZDyuQ=;
+ b=PX3x4Pbm5PxEmKwUUi1eThl+Qf89dxAzcLgOnw1aHI9nhghx/8RpF5TrFDL8qUeosB
+ EjGUdYoei970U1/gUS4sPTf+zAsrEdQ9OWnzPsiFAJiDYx2gWARqPhluC/pUxPXylT89
+ mk3NffzGA9nOMMuuGb5lIPyoAfF3lZBKTJPQLSb71Mkbbbh2NrWIM1dVEOCwIkp0aP2p
+ Gk+gMpomdeu4op4QmXRSIPWw7W5JAKJ98DM6Ol++pMkIV+zG8+81dHVQMsx++DKuAKUW
+ Zg8UPU5Raoa6niTb5PJ+9VuD7QuTX0IZKGyXDoRyldHbCkJhnQK3k6kTPOl3b8z5RQpC
+ wznQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768317731; x=1768922531;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RNMoDdiDO4GxdrQZdKvmcC4J/0QHLU5TZ1wElCZDyuQ=;
+ b=qyGRr2Si0xyZxZPY/rfF4BLCz84fVOLOdK+Lt/NOjhOEKm+q2dshxedOzkLP/v6Qdk
+ iGXj4NBQC/6vt5d++va0S68qKGruyD0uNNZjkIILiny4GXGRIwO7/M2bI76oTa04ZZPf
+ 3O9YYoJVVe8oftFnANb3/IBRlA3WS/t1hcCLzuGmFe46m1ASRFoFuJJNd4kaO1O/4/rG
+ ehSJYgOrVELq7pvb8G77cNyhZTZCPV8d0sAx4/333mVHR3EUA9k9B/x3idgjTy6vC4bp
+ pZZoZtQMw9TWs2EmB8K+cxeEBKIRTea4HjHNyAVypGAOAXhcEzQPVaLIPSzLTqrc24xT
+ nIhA==
+X-Gm-Message-State: AOJu0YyNDsxabg+weH7AR8F1LpY5Qaa5lLWRu+tWoiNiEzuJg22RnRcD
+ nQHOm8WHnEGE/8oy3FiHN7jxK8KVveQZacVG5JUkaAz8hsRxXKMSzDt5tbSgyE46m9VLiPTgeP7
+ 0UuOqhQhFz/56UpfhpustZUE0TAMYPVYLCXC1pWTlRw==
+X-Gm-Gg: AY/fxX5d1ZLfShSNvpmBYjDSRBuDCn1sxgT7si47y8aAFXBdKq6a16AiiFUMt8uW3X7
+ VQsPgLLHuYHGhHYyk1OYG8VwbNoazI+VGKIyExtE4qfHKESRh2c1MDjuA3wqjYF5h67prEtXXO9
+ y3bc/gJpiOoWD6MbNDUfw6mlB/69KCnb43IFurpwZInLQcrLiM9ODqB0iZPXO4eiV5un1n7ld3p
+ ebbzVSMahytNNqgrryGkw0Xzx978ItfgmQZIOHs3XlIOQ/exvk6A+FYI8qK7tw7fo0/NVSN+3fD
+ libzOQVdlwcr7cZwGAvayNg=
+X-Google-Smtp-Source: AGHT+IG6dMQVsmcwNZFSNFfnNsrjQvZnjuCna1f5mDGefoA5KRaSFClJaR33Rb7u+J8ZVEe6FMnQ8uNvvff7e2Q0+l0=
+X-Received: by 2002:a05:690e:210:b0:644:60d9:7534 with SMTP id
+ 956f58d0204a3-64716cc07cemr12617975d50.90.1768317730661; Tue, 13 Jan 2026
+ 07:22:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <CGME20251223120242epcas5p44b454df5afd0d517a4562a545ad11218@epcas5p4.samsung.com>
+ <20251223120012.541777-1-ashish.a6@samsung.com>
+In-Reply-To: <20251223120012.541777-1-ashish.a6@samsung.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 13 Jan 2026 15:21:59 +0000
+X-Gm-Features: AZwV_QgAybvmPV55AtxQ9UECtRXzM1imxG4nPzgtPatAR3ZbvnH9TFtvQIqsmWg
+Message-ID: <CAFEAcA9Ok=yT_t1kTLSnw8fiG1i5fZXZfKB-Bb=Lw5MeAjA7hQ@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Implement WFE, SEV and SEVONPEND for Cortex-M
+To: Ashish Anand <ashish.a6@samsung.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, y.kaushal@samsung.com, 
+ vishwa.mg@samsung.com, ashish.anand202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,51 +95,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> The vreport() function will print to HMP if available, otherwise
-> to stderr. In the event that vreport() is called during execution
-> of a QMP command, it will print to stderr, but mistakenly omit the
-> message prefixes (timestamp, guest name, program name).
+On Tue, 23 Dec 2025 at 12:02, Ashish Anand <ashish.a6@samsung.com> wrote:
 >
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  util/error-report.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> From: "ashish.a6" <ashish.a6@samsung.com>
 >
-> diff --git a/util/error-report.c b/util/error-report.c
-> index b262ad01cb..872158ad90 100644
-> --- a/util/error-report.c
-> +++ b/util/error-report.c
-> @@ -159,7 +159,7 @@ static void print_loc(void)
->      int i;
->      const char *const *argp;
->=20=20
-> -    if (!monitor_cur() && g_get_prgname()) {
-> +    if (!monitor_cur_is_hmp() && g_get_prgname()) {
->          error_printf("%s:", g_get_prgname());
->          sep =3D " ";
->      }
-> @@ -203,14 +203,14 @@ static void vreport(report_type type, const char *f=
-mt, va_list ap)
->  {
->      gchar *timestr;
->=20=20
-> -    if (message_with_timestamp && !monitor_cur()) {
-> +    if (message_with_timestamp && !monitor_cur_is_hmp()) {
->          timestr =3D real_time_iso8601();
->          error_printf("%s ", timestr);
->          g_free(timestr);
->      }
->=20=20
->      /* Only prepend guest name if -msg guest-name and -name guest=3D... =
-are set */
-> -    if (error_with_guestname && error_guest_name && !monitor_cur()) {
-> +    if (error_with_guestname && error_guest_name && !monitor_cur_is_hmp(=
-)) {
->          error_printf("%s ", error_guest_name);
->      }
+>     Currently, QEMU implements the 'Wait For Event' (WFE) instruction as a
+>     a simple yield. This causes high host CPU usage because Guest
+>     RTOS idle loops effectively become busy-wait loops.
+>
+>     To improve efficiency, this patch transitions WFE to use the architectural
+>     'Halt' state (EXCP_HLT) for M-profile CPUs. This allows the host thread
+>     to sleep when the guest is idle.
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 39f2b2e54d..44433a444c 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -639,6 +639,7 @@ typedef struct CPUArchState {
+>          uint32_t nsacr;
+>          uint32_t ltpsize;
+>          uint32_t vpr;
+> +        uint32_t event_register;
+>      } v7m;
+
+One more small thing that I thought of -- although we're only
+implementing WFE support for M-profile here, the concept of the
+event register is the same for A-profile. So we should put the
+field in the top level of the CPU state struct, not inside the v7m
+sub-struct. That way it's available for us to use and share
+if and when we ever do it for A-profile.
+
+> +static bool m_event_needed(void *opaque)
+> +{
+> +    ARMCPU *cpu = opaque;
+> +    /* Only save the state if the event register is set (non-zero) */
+> +    return cpu->env.v7m.event_register != 0;
+> +}
+> +
+> +static const VMStateDescription vmstate_m_event = {
+> +    .name = "cpu/m/event",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .needed = m_event_needed,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT32(env.v7m.event_register, ARMCPU),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+
+...and so similarly the migration handling should not have
+anything M-profile specific to it.
+
+thanks
+-- PMM
 
