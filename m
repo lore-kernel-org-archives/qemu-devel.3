@@ -4,79 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B719D2F359
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 689C9D2F352
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 18:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfjAC-0004T7-AQ; Tue, 13 Jan 2026 13:30:44 -0500
+	id 1vfjAC-0004T4-At; Tue, 13 Jan 2026 13:30:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bobby.prani@gmail.com>)
- id 1vfj9z-0004Qe-GE
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 13:30:34 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfj9y-0004Q0-Am
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 13:30:30 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bobby.prani@gmail.com>)
- id 1vfj9w-00028Q-Ow
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 13:30:31 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-59b834e3d64so5269369e87.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 10:30:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vfj9w-00028G-Li
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 13:30:30 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-79276cef7beso30536147b3.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 10:30:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768329027; x=1768933827; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768329026; x=1768933826; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sw5auUm266OABz46f1ivfCDc4BRcn4VP99wRuJhAt6A=;
- b=P9aP71Xl7JjGBjBTMBjKDqx3VUUK/uI8X9c2fwOiQhMDhg/0WzTd6ONYl4YTLFZicF
- 6rciEff8vE+luFPA7nJtEUlH9rvWZVXHgQD9vjjdBX8ABLLIhjidtfAVpIkX43gesQvr
- hJYyS/iZS+8YGEzPhCGpXPQZuQ2GVnnSPZVNNRyQIUicgjnPwG7Wyr/6+eiYxk45wj9+
- DZsA6SVatxiup2aFYD6P7vDgJ0BUtgGAlmiM4SxJRmtLLvmS/al5CUN96c6Dad9Hr4f5
- 6QOog8o1CERu64avY64Pnojqdo1YiBbMyE61uGgXYG2Nhba1r6wew331uYbvRp6phU5r
- 2iAw==
+ bh=taZ7BUP7QZtM0k5fqd+s0oR+IkuwSLbucA5+I6GacLs=;
+ b=tMzKanUQP/W381S5jgDaCGqKoOXMukL+/++TSt4qAMCDLN76kVN2gusRHU87bknfwJ
+ 3OJY76kTivP7v/1/zPdHKVznFqATRSbIinxWrY+LkF88IUAS6nAEXXKODUOQGm4mV79t
+ heoacnuupRCGSHXJKY8NAAWnb+VK8XsrQtUMZY7SL4kiYOKy1bWsVbfndDQSXzERvUPe
+ ZKs73o9YYrNTJETvmPasKTiFkRjoGENhbUMgad2yR/UEUsN1qxsk/9kD5m2Qa3lZDHy6
+ QQYMZVYnbUhDL1xl56QfPfU4m9f/5DGEBnjTHt4OAgFv/dtiK8IQvnyI61Bxpjl1DF1A
+ lQiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768329027; x=1768933827;
+ d=1e100.net; s=20230601; t=1768329026; x=1768933826;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sw5auUm266OABz46f1ivfCDc4BRcn4VP99wRuJhAt6A=;
- b=aMaZY708lb7Q6fufx9hkl5mAWWM20Ck22gHpq5VaVUAfOy2D9Uum1HIqXDg46b0hA9
- 1NSR5KFKQZfMjyFLJFyeflm9mC6Ky1ZlCSqfe/qmJBMRMAEh+tpR8ZUdKXfj01e03fu8
- WdA29nRH0JWnK4HiBgLdYsrsSpuYw/IDGb7AyXnT+ahQN3SOT2U/TNzoCRr9ghJHO06W
- Jk4r6QmsFTJfESDw45hlWAHnJJAbOY7P8D8wPRG1a0ir0lIZWTGKRciObA7pCb39PnSs
- zU9a2JKQeN+6A3EeBITPOM2qfbEf31ZVZIwUbEF4bzOUvUH1UgOWvbVg+qVqFU59Op9b
- MF6A==
-X-Gm-Message-State: AOJu0Yyv9cOkuRlkZaI6mIlrKomI5uD5Bo9wvvdMX+aCy40H1a+cJHev
- Yh25ujmypNxC1YUBtKSE6Kd96WGghKhfHo5c8qJEbEaaLeN6pW6ClGD3Y0fyL2TntPAbv/gtgTL
- SgXAXGgV47Fbcvp6D0HRpwcZU73GkR4G8UqK5
-X-Gm-Gg: AY/fxX6dzr0et+QUCjfGB5OmQIjFacawLpqZN3cSYl51ec6z+e+Z2F4fz0yK1sIK4Du
- w5XZYueJScKsd5ZpVmYHppLas2LvmGjRRfpUzy12bTVxZKg9g+IXMomIW2QuaX9pC86XEgUQqG8
- bsEIYitnONpEXjRXUbK/ObK1UYebmcwu7bhpFCqn01Rt0Fu7cK5s2gRe2MMhGOkUrIybsu80bEM
- ZxWSh3nKIsvXn6bAtKn77xI8gCLyWIXKXSL+3YomoD/vRKxCrwJ1mCC+bq/6TXFJYba4k/c
-X-Google-Smtp-Source: AGHT+IHlpTmFSru+whDsMKJ658jywaNsILIXVC+bv8l+jE3pY17BaG1MF74+ZA7uhROAKH8y6Q8pbM3pdDgFOfsOWho=
-X-Received: by 2002:a05:6512:39c6:b0:59b:78ad:fb9e with SMTP id
- 2adb3069b0e04-59b78adfc61mr6314335e87.10.1768329026364; Tue, 13 Jan 2026
+ bh=taZ7BUP7QZtM0k5fqd+s0oR+IkuwSLbucA5+I6GacLs=;
+ b=fHl8gmGC0XAm9Bcl9HNuPLzWsmfyH68fTgTFpD2ZZcbI9YOz2M6rS/TUek+azEHBHH
+ ZQLOPYqWmR13yr6W/3PIZmCmnMRe9e1tkdEQRX1CYHKLshhe40o9RXOMl92eGFIDftEp
+ y7en7wUZ4lRhgF6r/q/N+abKyQO98dOruhAvLilhuM8QeD1o3OFqbAhTNeyDJK04P9DQ
+ wbmlSGvxPLuMRN5Zb4bctY4B0Hmi/tKfDO6dI/EzrYP3y7hadJLj9Qs+3aG4ztNLrfPI
+ 5ALCPQ/jBic6cL/euPw5Oe0M/tjTrmBDBLLtFDXr9gx52tvyMxHg7hMW8pj0KeqHdk9D
+ YmuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5nd6shfidmgfzdM4muiKncUW7x4LFxL8zRfDk9VCHh1zrXDwXyQ1XmU/xMKOXGKEylZGH/bOBN7oM@nongnu.org
+X-Gm-Message-State: AOJu0YyF0BHlY8N5UX9R6E3AfWeqcawf4JBom6sZ+RBuSZLXRDrJ58sz
+ EOzKrJazxrl2RjP5WMW85H5LRNvRuWVXV65TEGO3OI398puhisenwQ4x5JkJmYcg8u2/bcn91RR
+ GwVfqrb5QDhHrIgNv/LWa3jKMyhWexzO1e6qohBgc2A==
+X-Gm-Gg: AY/fxX4ifeiT9dhWl/q+6R5wqXwDbGM8FLpmq73F04cjupA/nbUjHWJlwZPhqGusJoF
+ oqxL8Xx9n4K9WWgNXJSEsPZFWur2cpgCN+tC0D1mA4ZywOSN7+gEt7xdjwyfXiOfAboFJyVMSDv
+ XOhxnwGntLv1klmVDtVQdbdwK4HVTiQN8MhhmU3ykX3cV0GWYYaSkAiKt5brw5Qk91XzJVgHZjH
+ LfK0z7uePZucJ6hQwdioWswKLTAF47CfUzLlCGo2PUl0g4Xzlv0wZulH2h4Tm30OrcIHaWBVUA/
+ YH5qmEMoBhS9MosxxyZdMdY=
+X-Received: by 2002:a05:690e:d5a:b0:646:7c08:62d1 with SMTP id
+ 956f58d0204a3-64901b2f5a3mr128852d50.84.1768329026227; Tue, 13 Jan 2026
  10:30:26 -0800 (PST)
 MIME-Version: 1.0
-References: <CAJhHMCDqZE-TwmbPhDeYR0ZZYJRcV3tvcZD8-+rz7WE-oDMgQg@mail.gmail.com>
-In-Reply-To: <CAJhHMCDqZE-TwmbPhDeYR0ZZYJRcV3tvcZD8-+rz7WE-oDMgQg@mail.gmail.com>
-From: Pranith Kumar <bobby.prani@gmail.com>
-Date: Tue, 13 Jan 2026 10:29:59 -0800
-X-Gm-Features: AZwV_QiC6eUZZNeWit90AEy7lySXPDRUqL-S6MqmNhTOODCQ4Kj9hiyvj_Wn4Ko
-Message-ID: <CAJhHMCCSq7BqwruoptN5YY6O5tSNivcm_yuAG5Sas2gAYbfW7Q@mail.gmail.com>
-Subject: Re: qemu-x86_64 fails with 'Illegal Instruction' error
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20260108143423.1378674-1-alex.bennee@linaro.org>
+ <20260108143423.1378674-5-alex.bennee@linaro.org>
+ <CAFEAcA_Y_fTBo_0qg4Lm+7WrMdEown=-RrHHjcsKKE6WRX3eRw@mail.gmail.com>
+ <b2c72aef-4a60-76af-4cd8-dd3142e46d2a@eik.bme.hu>
+In-Reply-To: <b2c72aef-4a60-76af-4cd8-dd3142e46d2a@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 13 Jan 2026 18:30:13 +0000
+X-Gm-Features: AZwV_QhDP20C_RHTCmRI9xlV6sFdSUUfd50VwRAsPMP_nyKxHVL_dY4Y-9SwM4c
+Message-ID: <CAFEAcA9b8hnZ24+XMyXxVVV5ZEVZUFbMmR678hJ0eWqdi1r0Fg@mail.gmail.com>
+Subject: Re: [RFC PATCH 04/12] hw/m68k: register a mcf5208evb_cpu_reset handler
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=bobby.prani@gmail.com; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,41 +108,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 12, 2026 at 11:34=E2=80=AFAM Pranith Kumar <bobby.prani@gmail.c=
-om> wrote:
+On Tue, 13 Jan 2026 at 18:08, BALATON Zoltan <balaton@eik.bme.hu> wrote:
 >
-> Hello,
+> On Tue, 13 Jan 2026, Peter Maydell wrote:
+> > On Thu, 8 Jan 2026 at 14:34, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
+wrote:
+> >>
+> >> It looks like allowing a -kernel to override any firmware setting is
+> >> intentional.
+> >>
+> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> >> ---
+> >>  hw/m68k/mcf5208.c | 25 +++++++++++++++++++------
+> >>  1 file changed, 19 insertions(+), 6 deletions(-)
+> >>
+> >> diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
+> >> index c6d1c5fae9f..5680d516a23 100644
+> >> --- a/hw/m68k/mcf5208.c
+> >> +++ b/hw/m68k/mcf5208.c
+> >> @@ -27,6 +27,7 @@
+> >>  #include "qemu/timer.h"
+> >>  #include "hw/core/ptimer.h"
+> >>  #include "system/system.h"
+> >> +#include "system/reset.h"
+> >>  #include "system/qtest.h"
+> >>  #include "net/net.h"
+> >>  #include "hw/core/boards.h"
+> >> @@ -274,6 +275,20 @@ static void mcf_fec_init(MemoryRegion *sysmem, hw=
+addr base, qemu_irq *irqs)
+> >>      memory_region_add_subregion(sysmem, base, sysbus_mmio_get_region(=
+s, 0));
+> >>  }
+> >>
+> >> +static void mcf5208evb_cpu_reset(void *opaque)
+> >> +{
+> >> +    M68kCPU *cpu =3D opaque;
+> >> +    CPUM68KState *env =3D &cpu->env;
+> >> +    CPUState *cs =3D CPU(cpu);
+> >> +
+> >> +    cpu_reset(cs);
+> >> +    /* Initialize CPU registers.  */
+> >> +    env->vbr =3D 0;
+> >> +    /* TODO: Configure BARs.  */
+> >> +    env->aregs[7] =3D ldl_phys(cs->as, 0);
+> >> +    env->pc =3D env->reset_pc;
+> >> +}
+> >
+> > It looks from my quick skim of the m68k manual like
+> > "on reset, initial PC is read from offset 4, initial
+> > SP is read from offset 0" is part of the architected
+> > CPU reset, not board-specific. Maybe we should model
+> > that inside the CPU reset method? Compare M-profile
+> > Arm, which does basically the same thing in
+> > arm_cpu_reset_hold().
+> >
+> > (I really need to look again at whether we can move
+> > that to the reset_exit phase now and drop the awkward
+> > "maybe we need to look at a rom blob" special casing.)
 >
-> I am trying to run spec intrate with qemu-x86_64 and it seems to fail
-> with an 'Illegal Instruction' error. I tried compiling with an ancient
-> architecture (-march=3Dcore2/athlon64) and this error persists.
->
-> Is this a known issue? Are there any workarounds?
->
-> Trace 0: 0x7fffe806fd40 [00000000/000000000050d8d6/1040c0b3/00000000]
-> Perl_sv_upgrade
-> ----------------
-> IN: Perl_sv_upgrade
-> 0x0050d8dc:  c5 f9 ef c0              vpxor    %xmm0, %xmm0, %xmm0
-> 0x0050d8e0:  48 83 c2 10              addq     $0x10, %rdx
-> 0x0050d8e4:  62                       .byte    0x62
-> 0x0050d8e5:  f1                       int1
->
+> Real machines usually have a way to remap ROM to address 0 on reset
+> shadowing RAM and then the firmware flips the bits needed to set up the
+> memory map with RAM at 0 and ROM at somewhere higher up but the way to do
+> it is different for each board. Maybe in QEMU we don't bother to model
+> this and have this special case instead to simplify things and be able to
+> start from the final ROM address without needing to model this ROM remap
+> thing. So modeling real CPU behaviour might make board models more
+> complex.
 
+To me it looks like we are already modelling "load SP
+and PC from memory", we're just doing it in each
+board model rather than in the CPU model for some reason...
 
-This is being caused by the instruction 'vmovdqu8'. Disassembly of the
-binary shows:
-
-11e69c:       c5 f9 ef c0             vpxor  %xmm0,%xmm0,%xmm0
-11e6a0:       48 83 c2 10             add    $0x10,%rdx
-11e6a4:       62 f1 7f 08 7f 42 ff    vmovdqu8 %xmm0,-0x10(%rdx)
-
-However, tcg is unable to decode this last instruction and traps.
-
-I wonder why the 'march=3Dcore2' flag is not forcing gcc to disable this
-instruction sequence.
-
-
---
-Pranith
+-- PMM
 
