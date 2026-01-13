@@ -4,93 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94AAD30CE6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D202AD30CDB
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 21:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfmKO-0004Ur-Nf; Tue, 13 Jan 2026 16:53:28 -0500
+	id 1vfmKX-0004XE-MG; Tue, 13 Jan 2026 16:53:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vfmKN-0004Ui-JI
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 16:53:27 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vfmKX-0004Wu-2a
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 16:53:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vfmKL-0001jK-SR
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 16:53:27 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 952E517DD69;
- Wed, 14 Jan 2026 00:53:15 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 28CF334C7EA;
- Wed, 14 Jan 2026 00:53:21 +0300 (MSK)
-Message-ID: <5a1cd565-3a18-4a49-8f5e-e06c19cd12e6@tls.msk.ru>
-Date: Wed, 14 Jan 2026 00:53:21 +0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vfmKV-0001vG-GC
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 16:53:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768341214;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9NqomSuT6/W740TEO6RcpdcYiO7U/ORLpsRNggJkj7E=;
+ b=C2axVctbS1tSGxoCyPoDksJzt4DPsnP+p6kJH5qkTncfuPSHaEt2eqr/rf0bR50rU5L0er
+ 1fX6XcmpGYJmP0+ISMcROcGFpVYHE5ZBC6P8FLXC5zo9OC6VOHP3Vz8rEFqfYfrLT08gpT
+ d7lE6z/n/J448bpmVMjnrnWjR1h6mK4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-Ss9Ulg9iMjaEEKQWhZFCTw-1; Tue,
+ 13 Jan 2026 16:53:31 -0500
+X-MC-Unique: Ss9Ulg9iMjaEEKQWhZFCTw-1
+X-Mimecast-MFC-AGG-ID: Ss9Ulg9iMjaEEKQWhZFCTw_1768341209
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78E331956080; Tue, 13 Jan 2026 21:53:29 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.89])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DA85B30001A2; Tue, 13 Jan 2026 21:53:28 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fam Zheng <fam@euphon.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ pkrempa@redhat.com, Hannes Reinecke <hare@suse.de>,
+ Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alberto Faria <afaria@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [RFC 3/4] scsi: add error reporting to scsi_SG_IO()
+Date: Tue, 13 Jan 2026 16:53:18 -0500
+Message-ID: <20260113215320.566595-4-stefanha@redhat.com>
+In-Reply-To: <20260113215320.566595-1-stefanha@redhat.com>
+References: <20260113215320.566595-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/aarch64/target_fcntl.h: add missing
- TARGET_O_LARGEFILE definition
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- alex.bennee@linaro.org, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260113194029.1691393-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260113194029.1691393-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,36 +90,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/13/26 22:40, Pierrick Bouvier wrote:
-> This caused a failure with program using openat2, where O_LARGEFILE was
-> replaced by O_NOFOLLOW.
-> This issue is only visible when QEMU is compiled with musl libc, where
-> O_LARGEFILE is different from 0 (vs glibc).
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3262
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   linux-user/aarch64/target_fcntl.h | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/linux-user/aarch64/target_fcntl.h b/linux-user/aarch64/target_fcntl.h
-> index efdf6e5f058..55ab788a7ce 100644
-> --- a/linux-user/aarch64/target_fcntl.h
-> +++ b/linux-user/aarch64/target_fcntl.h
-> @@ -11,6 +11,7 @@
->   #define TARGET_O_DIRECTORY      040000 /* must be a directory */
->   #define TARGET_O_NOFOLLOW      0100000 /* don't follow links */
->   #define TARGET_O_DIRECT        0200000 /* direct disk access hint */
-> +#define TARGET_O_LARGEFILE     0400000
->   
->   #include "../generic/fcntl.h"
->   #endif
+Report the details of the SG_IO ioctl failure if an Error pointer is
+provided. This information aids troubleshooting and will be used by the
+SCSI Persistent Reservations migration code.
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ include/hw/scsi/scsi.h |  2 +-
+ hw/scsi/scsi-disk.c    |  2 +-
+ hw/scsi/scsi-generic.c | 33 ++++++++++++++++++++++++++++-----
+ 3 files changed, 30 insertions(+), 7 deletions(-)
 
-Heck.  I was this >< close to discovering this :))
+diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+index 1a01842c28..c5ec58089b 100644
+--- a/include/hw/scsi/scsi.h
++++ b/include/hw/scsi/scsi.h
+@@ -247,7 +247,7 @@ void scsi_device_unit_attention_reported(SCSIDevice *dev);
+ void scsi_generic_read_device_inquiry(SCSIDevice *dev);
+ int scsi_device_get_sense(SCSIDevice *dev, uint8_t *buf, int len, bool fixed);
+ int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd, uint8_t cmd_size,
+-               uint8_t *buf, uint8_t buf_size, uint32_t timeout);
++               uint8_t *buf, uint8_t buf_size, uint32_t timeout, Error **errp);
+ SCSIDevice *scsi_device_find(SCSIBus *bus, int channel, int target, int lun);
+ SCSIDevice *scsi_device_get(SCSIBus *bus, int channel, int target, int lun);
+ 
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 97ae535a27..76fe5f085b 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -2749,7 +2749,7 @@ static int get_device_type(SCSIDiskState *s)
+     cmd[4] = sizeof(buf);
+ 
+     ret = scsi_SG_IO(s->qdev.conf.blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
+-                     buf, sizeof(buf), s->qdev.io_timeout);
++                     buf, sizeof(buf), s->qdev.io_timeout, NULL);
+     if (ret < 0) {
+         return -1;
+     }
+diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
+index 6ef673aa4b..f22a38f725 100644
+--- a/hw/scsi/scsi-generic.c
++++ b/hw/scsi/scsi-generic.c
+@@ -686,10 +686,10 @@ static int read_naa_id(const uint8_t *p, uint64_t *p_wwn)
+ 
+ int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd,
+                uint8_t cmd_size, uint8_t *buf, uint8_t buf_size,
+-               uint32_t timeout)
++               uint32_t timeout, Error **errp)
+ {
+     sg_io_hdr_t io_header;
+-    uint8_t sensebuf[8];
++    uint8_t sensebuf[8] = {};
+     int ret;
+ 
+     memset(&io_header, 0, sizeof(io_header));
+@@ -709,6 +709,29 @@ int scsi_SG_IO(BlockBackend *blk, int direction, uint8_t *cmd,
+         io_header.driver_status || io_header.host_status) {
+         trace_scsi_generic_ioctl_sgio_done(cmd[0], ret, io_header.status,
+                                            io_header.host_status);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret, "SG_IO ioctl failed");
++        } else {
++            g_autofree char *sensebuf_hex =
++                g_strdup_printf("%02x%02x%02x%02x%02x%02x%02x%02x",
++                                sensebuf[0],
++                                sensebuf[1],
++                                sensebuf[2],
++                                sensebuf[3],
++                                sensebuf[4],
++                                sensebuf[5],
++                                sensebuf[6],
++                                sensebuf[7]);
++
++            error_setg(errp, "SG_IO SCSI command failed with status=0x%x "
++                    "driver_status=0x%x host_status=0x%x sensebuf=%s "
++                    "sb_len_wr=%u",
++                    io_header.status,
++                    io_header.driver_status,
++                    io_header.host_status,
++                    sensebuf_hex,
++                    io_header.sb_len_wr);
++        }
+         return -1;
+     }
+     return 0;
+@@ -735,7 +758,7 @@ static void scsi_generic_set_vpd_bl_emulation(SCSIDevice *s)
+     cmd[4] = sizeof(buf);
+ 
+     ret = scsi_SG_IO(s->conf.blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
+-                     buf, sizeof(buf), s->io_timeout);
++                     buf, sizeof(buf), s->io_timeout, NULL);
+     if (ret < 0) {
+         /*
+          * Do not assume anything if we can't retrieve the
+@@ -771,7 +794,7 @@ static void scsi_generic_read_device_identification(SCSIDevice *s)
+     cmd[4] = sizeof(buf);
+ 
+     ret = scsi_SG_IO(s->conf.blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
+-                     buf, sizeof(buf), s->io_timeout);
++                     buf, sizeof(buf), s->io_timeout, NULL);
+     if (ret < 0) {
+         return;
+     }
+@@ -823,7 +846,7 @@ static int get_stream_blocksize(BlockBackend *blk)
+     cmd[4] = sizeof(buf);
+ 
+     ret = scsi_SG_IO(blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
+-                     buf, sizeof(buf), 6);
++                     buf, sizeof(buf), 6, NULL);
+     if (ret < 0) {
+         return -1;
+     }
+-- 
+2.52.0
 
-Thanks,
-
-/mjt
 
