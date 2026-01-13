@@ -4,110 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB9A5D29DE0
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 07:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2985D29DDE
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 07:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfYiz-0002cG-6t; Tue, 13 Jan 2026 02:21:57 -0500
+	id 1vfYsY-0006yh-Ig; Tue, 13 Jan 2026 02:31:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfYip-0002NV-F9
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:21:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYsW-0006yJ-L5
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:31:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vfYim-0005nI-SN
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:21:45 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfYsT-000724-U3
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 02:31:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768288904;
+ s=mimecast20190719; t=1768289504;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DIyBP1UlbfdGj0aq90i6iUmp48Wa3gdQSlmSZC+cYDk=;
- b=g3A7PjKOAiCNK+FRP+NimMwldzmjBu4Wmsr8Axf2Dq1D5OKGOmSe69N41fI8jjkKXrhrLM
- hT2FGBipxGsfmWVjDA5LnPCIW3S7/cR9d0nU7FQpTX3kG2gw2ZjCJnxr3VIgLspS5sPhTr
- nnw9WbiZHb9KKYbgaoxSri7+MCaPDek=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=2JdJmRBqWlb6HULvKQJ5AeUhkpTdTUke8XSYUH+vFA0=;
+ b=hSY1IlGa0dl5hm+FlOry34rjFFCERhBBwM7s+pFhLaA+/C0RSKFWyS5+E0y2/kzkoQwp/p
+ pITZHezr8fxFU1VsdlYOl6UfBknCBergRDFEB8WxRtflMSZ+YDNGkB8OQh1JcTW9Zdnr1/
+ U/sn1sK3seZPNJ3pdxRi6LQ2TKVTZvI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-W-VDnY5rNK2rpXjAM4mhvw-1; Tue, 13 Jan 2026 02:21:40 -0500
-X-MC-Unique: W-VDnY5rNK2rpXjAM4mhvw-1
-X-Mimecast-MFC-AGG-ID: W-VDnY5rNK2rpXjAM4mhvw_1768288900
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-c552bbd1b03so1916150a12.0
- for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 23:21:40 -0800 (PST)
+ us-mta-397-Pv4uB_CjMiOA1OF0lP8cKA-1; Tue, 13 Jan 2026 02:31:43 -0500
+X-MC-Unique: Pv4uB_CjMiOA1OF0lP8cKA-1
+X-Mimecast-MFC-AGG-ID: Pv4uB_CjMiOA1OF0lP8cKA_1768289502
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-477a1e2b372so66708105e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Jan 2026 23:31:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768288900; x=1768893700; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DIyBP1UlbfdGj0aq90i6iUmp48Wa3gdQSlmSZC+cYDk=;
- b=oyjBkgfpEUxV9xp7cGPvNY1Au0XYorkrM51vP6Lcde+ZYHVOsZHt99ccso5tSR/dt7
- dRRLQZusUy4Og57m+bxp/r+7do0z+x3cPIQ7GZ+oMa8tHtYY+m6YEzKUhBNVJ0qwO019
- JLG5nYn7d7eY9KcEyiK6nogdUfn2De1lpYAjFf5BGj0Z+Ts/PbfQxbdLfDat4U2MPqfb
- aqSPiC+bTmYdOAKbuirGkvhy/QD2epT9DbIBu6mk7h8+d4hqO+lhVx3kA8jko6qSJTn2
- fRIVGmllXGKrsnSBkJlXf1QFcygthPFQF3xYIT1z26A3nBUh9T4khcYIbQHGOGnulQ9q
- rGDw==
+ d=redhat.com; s=google; t=1768289501; x=1768894301; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=2JdJmRBqWlb6HULvKQJ5AeUhkpTdTUke8XSYUH+vFA0=;
+ b=E+hqj124Ct4jB5OF0qRmA+wiu2wodHaXyOEor/2+WDTmqzoXRJECxVoxHlY4tVUSju
+ U5swgFf4XvkSQApCy+l7Pg4SOH6cmNd16lbeO1TlWijNd9MTRrJnYDei7n9PfOHKB8Bt
+ VTFqywEjE+MVruuA2GuaYyEIpdu5pM7Q50zfLY4L/27fp18kCaKJSml1hINzFt88uYTb
+ nbfKgqXMyUNaAYiXAvR0zibEber4/MdQDqDbHR2TmNrTM8ipLjPah4NZo/j1bWKfxKPz
+ T36lLtssswtdn1Unb6lDH9leW+hL0idlz+Fxl/HD7RJvCumqgf7Yx+mbr3xHqXvRqPtZ
+ zUNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768288900; x=1768893700;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DIyBP1UlbfdGj0aq90i6iUmp48Wa3gdQSlmSZC+cYDk=;
- b=FKmEhIhIuwpf3NFzFtEed3Uq5pMZDk/Ia0KUR9mjuYowSSZHvyyXk373IB0+3Zz4QJ
- 5w0NVE907ydeosuMzv97jIbeUuy83vg+sX4NFsLUTXwFznWnOQQ0fosgdFFx4U/g7W/R
- nXKlx8gJIIA7eNr26onjhC+y59U4rsBX8fUZlQCVI/IrzKoyiBBx57U25f2GuHjEm1xa
- +WhreTRY/oiPuKI9vshmvwrS1vKuyhZLjhi8FOoPRlR74HdULwMxC6D6rXm+uDN5r/he
- IIOYSXUaOI8AGZuOuIrwdVGA/C6AJuGzhBneV+h+EiTTrC1KWCkgqX2NzmbVJIkFYdF6
- PFKQ==
-X-Gm-Message-State: AOJu0YwqHJySlpwtmSU4lWWIHu5cQqVHDtgWhvqu3ucJRPUXKuvXJqr9
- ic3NqMiV/MdQUl12ydDAnDpBDeEjtmvD+u0Ef+comogZx6JirqHOnfZsVZ3cv3uY1zF9QihDm/J
- Y9ByuCRKRc+adjIOw4SouaDXulHvX3DbIaW2H0s3Nb2eHl2itTsmwZIuO
-X-Gm-Gg: AY/fxX6GmP/3d088lKHKZFp21oypVgBXqyOgGXVMJJA6XtNhmSsIy50oMfX92rbIIlP
- rGb5wd/syxCYrl5Nxh3XXH7UPaD04CGw+waYInsOXU76hCu+l9KP/wZYpBR8K0w6lQJZ5IBaB4Z
- F7jrg6tlHiE26QRWV3ePuByieZj9GdlY4i2odC0/pEhh4P7/bQkzR1Ivev+ZEJapUM6cS1hb7uY
- dnnx8kmqW2Cv09mEsNOdNWlE+cIqCzbGto2tl/RcTtWjtDxb1VFCTos2GaSUc/21zuOQiq0QF9Z
- wh0+ADzWRstlwvjNzI4R80LBBRZN80/6lNxSLswzw4AJ2SR5Aao8H+XpS9+dVPkCyeZp4RSZH5a
- JXbAALoi6wWcKCr+BwHkfR6HjZ32DKGpLPJbbXyjN/c24HVmvJTKa76ch+g==
-X-Received: by 2002:a05:6300:218a:b0:363:e391:38a2 with SMTP id
- adf61e73a8af0-3898f992b67mr20813680637.46.1768288899865; 
- Mon, 12 Jan 2026 23:21:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEnXXHOaNZdnaiFJjLFVPw/Sw4deHVWC+/H1ql2dN49b4/t9y4V96E08v4qiFAQ/eHCtN/hlQ==
-X-Received: by 2002:a05:6300:218a:b0:363:e391:38a2 with SMTP id
- adf61e73a8af0-3898f992b67mr20813646637.46.1768288899479; 
- Mon, 12 Jan 2026 23:21:39 -0800 (PST)
-Received: from smtpclient.apple ([110.227.88.119])
+ d=1e100.net; s=20230601; t=1768289501; x=1768894301;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2JdJmRBqWlb6HULvKQJ5AeUhkpTdTUke8XSYUH+vFA0=;
+ b=BwP9Ju4R+nI38nmsttQZNf+NwuaTAXTtafZJ9S2tNHOMseM5Jg3Z09qF5oDcZm1EyB
+ afZRZg/aqSmg5HAqOInOEQ24a2AkskmxP2HwTq6EnsGT18eZ3IDqlmABsAgYKo5c2WOt
+ s2Kcns9YODbcDcnp/OGVPZQyFHUFz9VX4Xd/s8efEtsy9mW6heenz0wthX/57yofXsp+
+ XtP1UNZNAmgn26zVtymwsPAqo5yT1c0vgG0AWNJaWjVr67tJIDP/YuZ6tTkYBSwnmIDy
+ tlggorY2Sew0AaJVcZV8ewOlWTVo7vtALL9lupXQhqhaIQkGtHw/9lY/VFmNGYonEqMb
+ 5Omg==
+X-Gm-Message-State: AOJu0YwjaL38DgjZsqr+1koGQAd6ZE4FI5Tp+7PWEs/2qOM2ZhL3U5KF
+ t1norra9qwZ+MMqdUd5bckaG247qdHAIZlybJYOAJpnd+/9bIv1xx3VESxn3TWArmZ1IchwTAhn
+ P2reXDag3ocLPwiTwW5+97amzVNjf+nfcZQ9W9QCvb3YEt1NW86MLnQjuYglqBd/sqs6u+a4/UG
+ wCs0acyt216LLDKqTR3JSXIKHnUcpbgrtZfg==
+X-Gm-Gg: AY/fxX6N4H12qrvxMqpTJKeP0ZpaDdO8W1CcYQ6MOIHDwUyfDtoAMblnU5ild6KLEir
+ NYCNcmuGArA6Cwz9Ib4TjZNgPplcr7jsMWOjlzUBuHU24pQW9WLdw2KXeSzYrGZSNsuFxMGV+OL
+ qL2HnTHjDCGcGL13cnS6XLzfbDQv8iCDyNdK+8sgvDBBjZOv8pQdcBK3Ulpplnn1lfF313lP55M
+ HxYmTiwCVhfv5aZEvr5+wFSkUxYDxyN9+6gWzislnFG2bJT8JuNE4/f8BMKnUsLJZkwEfpv5Jcc
+ j5bAy+JbdZR7oITzgxOm6PKcZ4Gxy99s86dQ18JzvV/cDnPIDGZ+laSbJ1LltQx0jrJlaUydmB+
+ L8RwxzqqfLL3IEsDEYJMx3Zr6fB3kUn9I9G3jfOCjaksVEbyL
+X-Received: by 2002:a05:600c:1994:b0:47a:80f8:82ac with SMTP id
+ 5b1f17b1804b1-47d84b39efcmr223351835e9.26.1768289501463; 
+ Mon, 12 Jan 2026 23:31:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGXWDSr6m6b7MLDreZ5eUrTBEFAWjdGJfozvrLnwI81nR2IsC8vLPgMmwN/KHXFs61hvKf/ZQ==
+X-Received: by 2002:a05:600c:1994:b0:47a:80f8:82ac with SMTP id
+ 5b1f17b1804b1-47d84b39efcmr223351395e9.26.1768289500995; 
+ Mon, 12 Jan 2026 23:31:40 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34f5f8c45b6sm19101810a91.17.2026.01.12.23.21.35
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 12 Jan 2026 23:21:39 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v3 3/6] igvm: Add missing NULL check
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20260109143413.293593-4-osteffen@redhat.com>
-Date: Tue, 13 Jan 2026 12:51:23 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Joerg Roedel <joerg.roedel@amd.com>, Gerd Hoffmann <kraxel@redhat.com>,
- kvm@vger.kernel.org, Eduardo Habkost <eduardo@habkost.net>,
- Michael Tsirkin <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F2E4DEF4-3E69-47E4-946F-8795FD6CF77B@redhat.com>
-References: <20260109143413.293593-1-osteffen@redhat.com>
- <20260109143413.293593-4-osteffen@redhat.com>
-To: Oliver Steffen <osteffen@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ ffacd0b85a97d-432bd0dacd1sm41875536f8f.4.2026.01.12.23.31.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Jan 2026 23:31:40 -0800 (PST)
+Message-ID: <1b0159f9-4a1a-47aa-9737-d3d64dbb74bb@redhat.com>
+Date: Tue, 13 Jan 2026 08:31:39 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/qtest: Fix build error
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+References: <20260112123146.1010621-1-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260112123146.1010621-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -132,52 +167,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 9 Jan 2026, at 8:04=E2=80=AFPM, Oliver Steffen =
-<osteffen@redhat.com> wrote:
->=20
-> Check for NULL pointer returned from igvm_get_buffer().
-> Documentation for that function calls for that unconditionally.
->=20
-> Signed-off-by: Oliver Steffen <osteffen@redhat.com>
+On 1/12/26 13:31, Cédric Le Goater wrote:
+> Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
+> detects an unused variable error:
+> 
+>    ../tests/qtest/libqtest.c: In function ‘qtest_qom_has_concrete_type’:
+>    ../tests/qtest/libqtest.c:1044:9: error: variable ‘idx’ set but not used [-Werror=unused-but-set-variable=]
+> 
+> Remove idx.
+> 
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Laurent Vivier <lvivier@redhat.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
-> backends/igvm.c | 13 ++++++++++---
-> 1 file changed, 10 insertions(+), 3 deletions(-)
->=20
-> diff --git a/backends/igvm.c b/backends/igvm.c
-> index a350c890cc..dc1fd026cb 100644
-> --- a/backends/igvm.c
-> +++ b/backends/igvm.c
-> @@ -170,9 +170,16 @@ static int qigvm_handler(QIgvm *ctx, uint32_t =
-type, Error **errp)
->                 (int)header_handle);
->             return -1;
->         }
-> -        header_data =3D igvm_get_buffer(ctx->file, header_handle) +
-> -                      sizeof(IGVM_VHS_VARIABLE_HEADER);
-> -        result =3D handlers[handler].handler(ctx, header_data, errp);
-> +        header_data =3D igvm_get_buffer(ctx->file, header_handle);
-> +        if (header_data =3D=3D NULL) {
-> +            error_setg(
-> +                errp,
-> +                "IGVM: Failed to get directive header data (code: =
-%d)",
-> +                (int)header_handle);
-> +            result =3D -1;
+>   tests/qtest/libqtest.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 622464e3656e2c0138c4cf1cbf98733f84dce876..61f05be5caeaff1c466395234078a37a5d1c4398 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -1041,7 +1041,6 @@ static bool qtest_qom_has_concrete_type(const char *parent_typename,
+>       QObject *qobj;
+>       QString *qstr;
+>       QDict *devinfo;
+> -    int idx;
+>   
+>       if (!list) {
+>           QDict *resp;
+> @@ -1066,7 +1065,7 @@ static bool qtest_qom_has_concrete_type(const char *parent_typename,
+>           }
+>       }
+>   
+> -    for (p = qlist_first(list), idx = 0; p; p = qlist_next(p), idx++) {
+> +    for (p = qlist_first(list); p; p = qlist_next(p)) {
+>           devinfo = qobject_to(QDict, qlist_entry_obj(p));
+>           g_assert(devinfo);
+>   
 
-I would just return -1 here and remove the else {} clause below. It =
-makes it slightly easier to follow the code.
+Applied to vfio-next.
 
-> +        } else {
-> +            result =3D handlers[handler].handler(ctx, header_data + =
-sizeof(IGVM_VHS_VARIABLE_HEADER), errp);
-> +        }
->         igvm_free_buffer(ctx->file, header_handle);
->         return result;
->     }
-> --=20
-> 2.52.0
->=20
+Thanks,
+
+C.
 
 
