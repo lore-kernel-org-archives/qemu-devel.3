@@ -4,57 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4404CD2F326
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 16:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5050D2F339
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 16:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfh1j-0003Jy-J8; Tue, 13 Jan 2026 11:13:51 -0500
+	id 1vfh4u-0007dv-AP; Tue, 13 Jan 2026 11:17:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1vfh1T-0002zB-Tt
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:13:39 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1vfh1R-0005hd-PK
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:13:35 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id D10D860018;
- Tue, 13 Jan 2026 16:13:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7E6C116C6;
- Tue, 13 Jan 2026 16:13:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1768320800;
- bh=w9MDFSRJjVrv2k2HfbOFSTurzehQgK1rH8je49ZFpMc=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=FLubW/Tv2zWdIMPfT8cqAag29P+l6FARSnswOfLf2Jh8VWBWf2eH4jShAvszCwGgx
- hgZYbIzNWNhrjsABlSI26UzXFMIcfacNH6XrlxvuZgaf6yQm7sxOe3aSXvFuwUpNsL
- shGak5GcbfUHcP1IDCgsSTFzA3Z762Aj375EX4sB8DAywtzDm0/rtAleEHRwuVjeao
- M2aWy//ru0bI0/PfEKVbkSXeVIL1nx9ehDWMKY6p6MEFQkjywIUvMKvv7vreywAb1L
- E+ERnRd4Sh0v57gbYYj4Xn4QHlqkp29RRBSt17GQ9wwpUULJpuwtv/yrb9m5z+E/yL
- Qwxi7S7W/wCMQ==
-Date: Tue, 13 Jan 2026 16:13:19 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <liuwe@microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH] accel/mshv: Remove remap overlapping mappings code
-Message-ID: <20260113161319.GA3192261@liuwe-devbox-debian-v2.local>
-References: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vfh4X-0007Vx-Uh
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:16:52 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vfh4V-000678-Tg
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 11:16:45 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6505d3b84bcso12101262a12.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 08:16:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768320999; x=1768925799; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=shrcPEzb4aNV5JwEnXnE47Uz3LqyRg3MH/PLatgNdbc=;
+ b=i1yd7L8b2W3E7rVQ4peqtVODTKKsFhsII0grNC6zEzmjKs6v0TH6wuRcdJ78HFwjp3
+ G3x8BHhp2s+qmH7YEvpya7Ox6zjcdGQM7DBY8dmUlp11X6IBBxKa0T1Mim/UMEy/6V7C
+ qF6K+aJz9YizoVQy0xOuzQeONlBMKWgSoUW+K304KxmpJwNVOD6+WlBRS6zoVadaMVfy
+ hHNn4LNxpjF0VPEiLUFoefXNq3f1NcLYOAAvbNMGBaIKXPN6vg3uXBRKHcawg4D3Jn+J
+ 9+BWF9U85jnwpB0QlkRrRKmEcEFLV1W6Q0SxBB68ER/mHsMCnmMP4Qh7WsJGtWVA+NzC
+ GUOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768320999; x=1768925799;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=shrcPEzb4aNV5JwEnXnE47Uz3LqyRg3MH/PLatgNdbc=;
+ b=IaMmsuPicDfXUCt3f0MapBvWFxd7wefrviDakrjq34Xafgdp7WW/OIg8aDQuurdjnT
+ SabjvjzGG2b9F5mIvFhY/9cz9Lg6/kJsNO9+7vjzSYuRdjvwDF6ghSKbxzCMYn4mOkzp
+ FOceNAxEzquaof+iitkOnFFaD4ty8Uzr+YX8pQRiGNCWIds1nKuSCwqmtFIOheUIUHnk
+ CE6lC38KLAxjCq8NRER9J9TtdjIFG/PdrrqCOs6lyDn4fgZQlF35sUIdbws6EufnbJ1s
+ eeEZsR2/KLvxSTZIecw4JqF9DKl5Uv3Xvs1oPfQf1BLXiAxjE8/tILQcxufywZBWHxBo
+ 8ZnQ==
+X-Gm-Message-State: AOJu0YzVKWx9cxrwXLB4bqpXuAQkfF/A9AECZo4/eYeY+PfVRTjb+3id
+ GXNGQ/MUyoIawTVueGaRWokS43u+GUIVn1AKWyw7N37R3PVDmfF15Zf69iIVQf+gaIJfVZL64I2
+ hLWRaJ+khYQPb+S9A1yIvrCko6x/XSnA=
+X-Gm-Gg: AY/fxX4doKDq5kPT7i2jAgINFk5NJVNB/V9CMRQZucDhGpdE9dbJT7XrrObA8tHzbbr
+ 4k8GH61E6N0d+9eq+CQQpKtP5w1ObhFlnfaQNG2hL4UGE5cCyTVwlVxSsGdhoxJaNG+DEOiUifK
+ sr763DUI4NUoJKt0Rdc7Bd3xM3OLApJJ1cBJ43NyMxYtVoNcfLgpOQjPHh2MUnNjdT5do/UBAtB
+ oju3/LiEOB505j+EbAACspJu9pc8QCvSsyyjDMsHGlonbJr8804i3OI0/AbQJjuWptHdQ==
+X-Google-Smtp-Source: AGHT+IHeiXZQnvw1K14LiD9+GLZGNYRdbytBLKoxdu0+Xta2Qk1o+/1j7ZzV9FMnMVXfT7V6vhkF3XPB6LaigPsCOM4=
+X-Received: by 2002:a05:6402:3546:b0:64b:4720:1c23 with SMTP id
+ 4fb4d7f45d1cf-65097df5b56mr19145568a12.13.1768320999063; Tue, 13 Jan 2026
+ 08:16:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260113153708.448968-1-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=wei.liu@kernel.org; helo=tor.source.kernel.org
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <aWZk7udMufaXPw-E@x1.local>
+In-Reply-To: <aWZk7udMufaXPw-E@x1.local>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 13 Jan 2026 11:16:27 -0500
+X-Gm-Features: AZwV_Qi7DHm95fI2JQgQGGuriK_wavPbXFOd_YVGKOoEvhXOSPvwsJvXr_ZtxEQ
+Message-ID: <CAJSP0QVm41jSCma73sef7uzgEnqESRfqrxRstNTY_pd4Dk-JXA@mail.gmail.com>
+Subject: Re: Call for GSoC internship project ideas
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, danpb@redhat.com, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Marco Cavenati <Marco.Cavenati@eurecom.fr>, 
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,30 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 13, 2026 at 04:37:08PM +0100, Magnus Kulke wrote:
-> This change removes userland code that worked around a restriction
-> in the mshv driver in the 6.18 kernel: regions from userland
-> couldn't be mapped to multiple regions in the kernel. We maintained a
-> shadow mapping table in qemu and used a heuristic to swap in a requested
-> region in case of UNMAPPED_GPA exits.
-> 
-> However, this heuristic wasn't reliable in all cases, since HyperV
-> behaviour is not 100% reliable across versions. HyperV itself doesn't
-> prohibit to map regions at multiple places into the guest, so the
-> restriction has been removed in the mshv driver.
-> 
-> Hence we can remove the remapping code. Effectively this will mandate a
-> 6.19 kernel, if the workload attempt to map e.g. BIOS to multiple
-> reagions. I still think it's the right call to remove this logic:
-> 
-> - The workaround only seems to work reliably with a certain revision
->   of HyperV as a nested hypervisor.
-> - We expect Direct Virtualization (L1VH) to be the main platform for
->   the mshv accelerator, which also requires a 6.19 kernel
-> 
-> This reverts commit efc4093358511a58846a409b965213aa1bb9f31a.
-> 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+On Tue, Jan 13, 2026 at 10:30=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote=
+:
+>
+> On Mon, Jan 05, 2026 at 04:47:22PM -0500, Stefan Hajnoczi wrote:
+> > Dear QEMU and KVM communities,
+> > QEMU will apply for the Google Summer of Code internship
+> > program again this year. Regular contributors can submit project
+> > ideas that they'd like to mentor by replying to this email by
+> > January 30th.
+>
+> There's one idea from migration side that should be self-contained, pleas=
+e
+> evaluate if this suites for the application.
+>
+> I copied Marco who might be interested on such project too at least from =
+an
+> user perspective on fuzzing [1].
+>
+> [1] https://lore.kernel.org/all/193e5a-681dfa80-3af-701c0f80@227192887/
+>
+> Thanks,
 
-Acked-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
+I have edited the project description to make it easier for newcomers
+to understand and added a link to mapped-ram.rst:
+https://wiki.qemu.org/Google_Summer_of_Code_2026#Fast_Snapshot_Load
+
+Feel free to edit the project idea on the wiki.
+
+Thanks,
+Stefan
 
