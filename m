@@ -4,116 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDBC7D37E32
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BF4D37E34
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg0qk-0006uq-1j; Wed, 14 Jan 2026 08:23:51 -0500
+	id 1vg0qr-0007TU-Cr; Wed, 14 Jan 2026 08:23:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vg0qP-0006YF-Cc
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:23:30 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vg0qN-0006if-D8
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:23:29 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 24D825C66B;
- Wed, 14 Jan 2026 13:23:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768396999; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vg0qo-0007Hu-OW
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:23:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vg0qm-0006m2-W6
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:23:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768397032;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
- b=DCtYpSwDdkVeOVgfNtnZBPRjQ3u7e8QVjSFCzN2s27SkzPUoWANLn6MJMney4mZgm42dwD
- e2RGpgxOeod7EszGbNHkafCbmrG1kNIEeUH2GUC1DmGcXExkzEOfLNqab5GNZUT/C5OXJT
- xtEPWfv/csNv9wj8TiVZycKr47scMbw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768396999;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
- b=5wJDjlQPTocGH5Qhw+NwZrkE/lvB3Qj161oLCdkuqqikhbu/D/V5RPYXFKcmrZc7cWuVHm
- /Zv9p8+5aZgJqmBA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DCtYpSwD;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5wJDjlQP
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768396999; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
- b=DCtYpSwDdkVeOVgfNtnZBPRjQ3u7e8QVjSFCzN2s27SkzPUoWANLn6MJMney4mZgm42dwD
- e2RGpgxOeod7EszGbNHkafCbmrG1kNIEeUH2GUC1DmGcXExkzEOfLNqab5GNZUT/C5OXJT
- xtEPWfv/csNv9wj8TiVZycKr47scMbw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768396999;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eNQTdQp3G977GJsacAmbdN8CKP9bd2OWQw4XQhW6u44=;
- b=5wJDjlQPTocGH5Qhw+NwZrkE/lvB3Qj161oLCdkuqqikhbu/D/V5RPYXFKcmrZc7cWuVHm
- /Zv9p8+5aZgJqmBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9A3FE3EA63;
- Wed, 14 Jan 2026 13:23:17 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2N7IFsWYZ2nxBwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 14 Jan 2026 13:23:17 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, armbru@redhat.com, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH 3/5] qapi: Implement qapi_dealloc_present_visitor
-Date: Wed, 14 Jan 2026 10:23:07 -0300
-Message-ID: <20260114132309.5832-4-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260114132309.5832-1-farosas@suse.de>
-References: <20260114132309.5832-1-farosas@suse.de>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=+30kf3+Bh57iG8rB/pt9BBUuV+RTMvxsnLo8D9GYINs=;
+ b=ARxReCmQOLuGGO/c8t8LpFAb51GbgxNrjTUab7wtXf+z66+C6Ggv4Uwpv4WWjEhObbZrE/
+ E4n4m2NbIOaRmQ2E28mvAQsux/T6eA0pELNNT8Q8RTjW1c0LoB0FeT+Z+v7dFfE1eYl3+c
+ qWu2Y6SZudJvBR+4Er7CIzgEaS1fgvY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-279-MZwCPT31M4-fJUFdOLuhNA-1; Wed, 14 Jan 2026 08:23:50 -0500
+X-MC-Unique: MZwCPT31M4-fJUFdOLuhNA-1
+X-Mimecast-MFC-AGG-ID: MZwCPT31M4-fJUFdOLuhNA_1768397029
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47ee432070aso3987035e9.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 05:23:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768397029; x=1769001829; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=+30kf3+Bh57iG8rB/pt9BBUuV+RTMvxsnLo8D9GYINs=;
+ b=dWQEXoJiuXDAyrv6lFxzYOWDNd7Ridc6NbKQGSQQyvxMAG8rxb5F22r+KHI+zVQxRf
+ hv6VF9nLbLQSs2MeaiCjdBllSCaZ8xSSuCviQPp8cQTpSHdXL7NgPdVozRjnKe3Imaw/
+ MzMVCQQhS/5Kl5VQVT0dttq+hGVEmgjwOg88/eDOYHdjn18Bq/SQ5S4MkOnbKh5FP8R3
+ RC4psgoANWZjYiaJIXweUJgHLlyyfa4yWVonNjP/2PSZMo0/iSm/ueuqgJKpzYOU3ytv
+ f0q7IV7arGtEq0aIgUtLBMcMxojoc0waAYFgKWG9tlfIlWkaCq9KRpRc5RIq1P9/4Yl2
+ COnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768397029; x=1769001829;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+30kf3+Bh57iG8rB/pt9BBUuV+RTMvxsnLo8D9GYINs=;
+ b=bnITe4gfW9OfpmfCuojjQu6lkXMMd5kYPTCpLUaqOk2SGqvC1Q/SKckcn5LOL36d1X
+ anAiI54wFQrIAIpQyRSrYnUulq0iQ3CbluP2ddhRTAKnmLRyTUpouHNgsYw6Or2Nsbjb
+ 7tU1e0wR+bmoOfH2V32P47mrVxhGEm+5IsZHhoaR8RvSY6yVfVnBXn6iB4cevBjnfFY/
+ EBKLHpT424ffYDdPnBoKEpsDNHvGYnZrP+IBeYiHbHcUHWIkOVL9FcZ+xa7W5XnhasBo
+ yEXUYjIzHmkBUFSJLBCaac9OvcZ/DrLgbGo/wOxd3KC03QacS3Y+GysTDdNEbg8L9y37
+ X5Pg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWwI0xkpF8iF/Npm12PnSZBlfGQBRcMC5HAA/Cyi06rH+MNglN+4rLWo0riC+BpOLHbJIR71TPKPJyr@nongnu.org
+X-Gm-Message-State: AOJu0YyM/iTVfIZM+Sp7kAbEAdVShDJGaqj33cMXzyA2N7weiQ2TG9eE
+ tsd2OD6VTo7NF2dhzFBBswZZM3hSpMEjWXr7ap9ynY0eAC+dGlsYBl9OtyD+gHIWxCqWIecPFi3
+ l553H/F/INiVam9L970+vRRZSQPidTkGs6KS4vn40PCgj61IQbKrJzPFB
+X-Gm-Gg: AY/fxX6e4dQ5A9Ty53YZRn60yFV5kqNT1o/GzZE5vU8LHaylE8fD+GutUnrvttCFESk
+ TYvWssa1RWO9VfbQVG4Q4QujNozmMZJnC3P5vLVNz6wLiosE/Bq+DDe3RunXdhOmPzHbTaM49Nl
+ 69Dd/uN6QVFDX6aT6EalIRPoQMot0+i+qF0B+BwukJFvv6BBvI0dw5qZt83Qjd79qlLdvfTRuUu
+ wXaTDDkN7SNPI4HaR4vCq8TxOkCW1OTyu3Daa9s/C4PHQDYMJwMNAkebrRK1bSX4aaPtAPByMcI
+ SJ02+yS3oj3GUVdlFv4SPihio/XIn3PgKHPWbLjQV0lDhpx2B2u1sPia8AafsSeB6AficJN+Gxw
+ 7i1X0LLZyJSEavrqE59HbazYQR685volILv3wBLaPRAwP8NxC
+X-Received: by 2002:a05:600c:3581:b0:45d:f81d:eae7 with SMTP id
+ 5b1f17b1804b1-47ee3371d96mr30210755e9.28.1768397029265; 
+ Wed, 14 Jan 2026 05:23:49 -0800 (PST)
+X-Received: by 2002:a05:600c:3581:b0:45d:f81d:eae7 with SMTP id
+ 5b1f17b1804b1-47ee3371d96mr30210375e9.28.1768397028851; 
+ Wed, 14 Jan 2026 05:23:48 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47ee54b8c9bsm27731645e9.3.2026.01.14.05.23.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Jan 2026 05:23:48 -0800 (PST)
+Message-ID: <9cbf062a-f19e-4fa7-970d-e463dd5eba58@redhat.com>
+Date: Wed, 14 Jan 2026 14:23:47 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] hw/riscv: Add the Tenstorrent Atlantis machine
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-devel@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Michael Ellerman <mpe@oss.tenstorrent.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+References: <20260114043433.1056021-1-joel@jms.id.au>
+ <437f995f-6ae0-469a-b2d3-6ce59b3f49e0@redhat.com>
+ <CACPK8XdURBGUWxaiT+4uEP6nKxMP=C7_iw4A=9s4cNj0DmC+uw@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <CACPK8XdURBGUWxaiT+4uEP6nKxMP=C7_iw4A=9s4cNj0DmC+uw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_EQ_ENVFROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 24D825C66B
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,258 +175,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement a visitor that frees the pointer members of the visited QAPI
-object in the same way that qapi_dealloc_visitor does, but similarly
-to qobject_input_visitor, takes an input QObject that will dictate
-which members get freed and which don't. Members not present in the
-input QObject will be left unchanged in the visited QAPI object.
+On 1/14/26 12:14, Joel Stanley wrote:
+> On Wed, 14 Jan 2026 at 19:36, Cédric Le Goater <clg@redhat.com> wrote:
+>>
+>> Hello Joel,
+>>
+>> On 1/14/26 05:34, Joel Stanley wrote:
+>>> v2 separates out prep patches so the machine can be reviewed
+>>> independently. It depends on the following two series:
+>>>
+>>>    AIA: https://lore.kernel.org/qemu-devel/20260109133125.397364-1-joel@jms.id.au
+>>>    Boot: https://lore.kernel.org/qemu-devel/20260109131657.396794-1-joel@jms.id.au
+>>>
+>>> Original cover letter:
+>>>
+>>> Introducing Tenstorrent Atlantis!
+>>>
+>>>    The Tenstorrent Atlantis platform is a collaboration between Tenstorrent
+>>
+>>
+>> What kind of board is the "Tenstorrent Atlantis platform" ? Is it an evb ?
+> 
+> An upcoming dev board with the SoC on it.
+> 
+>>>    and CoreLab Technology. It is based on the Atlantis SoC, which includes
+>>
+>> Why isn't the SoC modeled independently ?
+> 
+> What I've modelled is the soc, with the exception of the test i2c
+> sensors. Everything listed (aside from the i2c sensors) is inside the
+> SoC.
+> 
+> Lets say we add atlantis-evb that has atlantis-soc on it, with memory,
+> i2c devices, etc. What does that look like? 
 
-This is useful to free memory just before perfoming a visit with
-qobject_input_visitor on a pre-existing, non-null QAPI object. If the
-same QObject is passed to both visitors, the pointers overwritten by
-the input visitor match the ones that are freed by the dealloc
-visitor.
+Looks good to me.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- include/qapi/dealloc-visitor.h |   6 ++
- qapi/qapi-dealloc-visitor.c    | 173 ++++++++++++++++++++++++++++++++-
- 2 files changed, 178 insertions(+), 1 deletion(-)
+> The aspeed machines are a bit complex to follow these days!
 
-diff --git a/include/qapi/dealloc-visitor.h b/include/qapi/dealloc-visitor.h
-index c36715fdf3..96c7bf35c3 100644
---- a/include/qapi/dealloc-visitor.h
-+++ b/include/qapi/dealloc-visitor.h
-@@ -25,4 +25,10 @@ typedef struct QapiDeallocVisitor QapiDeallocVisitor;
-  */
- Visitor *qapi_dealloc_visitor_new(void);
- 
-+/*
-+ * Like qapi_dealloc_visitor_new but visits a QObject and only frees
-+ * present members.
-+ */
-+Visitor *qapi_dealloc_present_visitor_new(QObject *);
-+
- #endif
-diff --git a/qapi/qapi-dealloc-visitor.c b/qapi/qapi-dealloc-visitor.c
-index 57a2c904bb..90b017cc93 100644
---- a/qapi/qapi-dealloc-visitor.c
-+++ b/qapi/qapi-dealloc-visitor.c
-@@ -14,14 +14,146 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/dealloc-visitor.h"
-+#include "qemu/queue.h"
-+#include "qobject/qdict.h"
-+#include "qobject/qlist.h"
- #include "qobject/qnull.h"
- #include "qapi/visitor-impl.h"
- 
-+typedef struct QStackEntry {
-+    QObject *obj;               /* QDict or QList being visited */
-+    void *qapi;
-+    const QListEntry *entry;    /* If @obj is QList: unvisited tail */
-+    QSLIST_ENTRY(QStackEntry) node;
-+} QStackEntry;
-+
- struct QapiDeallocVisitor
- {
-     Visitor visitor;
-+    QObject *root;
-+    QSLIST_HEAD(, QStackEntry) stack;
- };
- 
-+static void qapi_dealloc_pop(Visitor *v, void **obj)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+
-+    assert(se && se->qapi == obj);
-+    QSLIST_REMOVE_HEAD(&qdv->stack, node);
-+    g_free(se);
-+}
-+
-+static void qapi_dealloc_push(Visitor *v, QObject *obj, void *qapi)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QStackEntry *se = g_new0(QStackEntry, 1);
-+
-+    assert(obj);
-+    se->obj = obj;
-+    se->qapi = qapi;
-+
-+    if (qobject_type(obj) == QTYPE_QLIST) {
-+        se->entry = qlist_first(qobject_to(QList, obj));
-+    }
-+
-+    QSLIST_INSERT_HEAD(&qdv->stack, se, node);
-+}
-+
-+static QObject *qapi_dealloc_try_get_object(QapiDeallocVisitor *qdv, const char *name)
-+{
-+    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+    QObject *qobj;
-+    QObject *ret = NULL;
-+
-+    if (!se) {
-+        assert(qdv->root);
-+        return qdv->root;
-+    }
-+
-+    qobj = se->obj;
-+    assert(qobj);
-+
-+    if (qobject_type(qobj) == QTYPE_QDICT) {
-+        assert(name);
-+        ret = qdict_get(qobject_to(QDict, qobj), name);
-+    } else {
-+        assert(qobject_type(qobj) == QTYPE_QLIST);
-+        assert(!name);
-+        if (se->entry) {
-+            ret = qlist_entry_obj(se->entry);
-+        }
-+    }
-+
-+    return ret;
-+}
-+
-+static bool qapi_dealloc_present_start_struct(Visitor *v, const char *name,
-+                                              void **obj, size_t size,
-+                                              Error **errp)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
-+
-+    if (!qobj) {
-+        return false;
-+    }
-+    assert(qobject_type(qobj) == QTYPE_QDICT);
-+    qapi_dealloc_push(v, qobj, obj);
-+    return true;
-+}
-+
-+static void qapi_dealloc_present_end_struct(Visitor *v, void **obj)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+
-+    assert(qobject_type(se->obj) == QTYPE_QDICT);
-+    qapi_dealloc_pop(v, obj);
-+
-+    if (obj) {
-+        g_free(*obj);
-+    }
-+}
-+
-+static bool qapi_dealloc_present_start_list(Visitor *v, const char *name,
-+                                            GenericList **list, size_t size,
-+                                            Error **errp)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
-+
-+    if (!qobj) {
-+        return false;
-+    }
-+    assert(qobject_type(qobj) == QTYPE_QLIST);
-+    qapi_dealloc_push(v, qobj, list);
-+    return true;
-+}
-+
-+static void qapi_dealloc_present_end_list(Visitor *v, void **obj)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+
-+    assert(qobject_type(se->obj) == QTYPE_QLIST);
-+    qapi_dealloc_pop(v, obj);
-+}
-+
-+static void qapi_dealloc_present_free(Visitor *v)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+
-+    while (!QSLIST_EMPTY(&qdv->stack)) {
-+        QStackEntry *se = QSLIST_FIRST(&qdv->stack);
-+
-+        QSLIST_REMOVE_HEAD(&qdv->stack, node);
-+        g_free(se);
-+    }
-+    qobject_unref(qdv->root);
-+    g_free(qdv);
-+}
-+
- static bool qapi_dealloc_start_struct(Visitor *v, const char *name, void **obj,
-                                       size_t unused, Error **errp)
- {
-@@ -35,6 +167,21 @@ static void qapi_dealloc_end_struct(Visitor *v, void **obj)
-     }
- }
- 
-+static bool qapi_dealloc_start_alternate(Visitor *v, const char *name,
-+                                         GenericAlternate **obj, size_t size,
-+                                         Error **errp)
-+{
-+    QapiDeallocVisitor *qdv = container_of(v, QapiDeallocVisitor, visitor);
-+    QObject *qobj = qapi_dealloc_try_get_object(qdv, name);
-+
-+    if (!qobj) {
-+        return false;
-+    }
-+    assert(*obj);
-+    (*obj)->type = qobject_type(qobj);
-+    return true;
-+}
-+
- static void qapi_dealloc_end_alternate(Visitor *v, void **obj)
- {
-     if (obj) {
-@@ -117,13 +264,14 @@ static void qapi_dealloc_free(Visitor *v)
-     g_free(container_of(v, QapiDeallocVisitor, visitor));
- }
- 
--Visitor *qapi_dealloc_visitor_new(void)
-+static QapiDeallocVisitor *qapi_dealloc_visitor_new_base(void)
- {
-     QapiDeallocVisitor *v;
- 
-     v = g_malloc0(sizeof(*v));
- 
-     v->visitor.type = VISITOR_DEALLOC;
-+
-     v->visitor.start_struct = qapi_dealloc_start_struct;
-     v->visitor.end_struct = qapi_dealloc_end_struct;
-     v->visitor.end_alternate = qapi_dealloc_end_alternate;
-@@ -139,5 +287,28 @@ Visitor *qapi_dealloc_visitor_new(void)
-     v->visitor.type_null = qapi_dealloc_type_null;
-     v->visitor.free = qapi_dealloc_free;
- 
-+    return v;
-+}
-+
-+Visitor *qapi_dealloc_visitor_new(void)
-+{
-+    QapiDeallocVisitor *v = qapi_dealloc_visitor_new_base();
-+
-+    return &v->visitor;
-+}
-+
-+Visitor *qapi_dealloc_present_visitor_new(QObject *obj)
-+{
-+    QapiDeallocVisitor *v = qapi_dealloc_visitor_new_base();
-+
-+    v->visitor.start_alternate = qapi_dealloc_start_alternate;
-+    v->visitor.start_list = qapi_dealloc_present_start_list;
-+    v->visitor.end_list = qapi_dealloc_present_end_list;
-+    v->visitor.start_struct = qapi_dealloc_present_start_struct;
-+    v->visitor.end_struct = qapi_dealloc_present_end_struct;
-+    v->visitor.free = qapi_dealloc_present_free;
-+
-+    v->root = qobject_ref(obj);
-+
-     return &v->visitor;
- }
--- 
-2.51.0
+Aspeed machines have been around for a decade. Ten years already !
+
+Tenstorrent machines should be similar in 2036. Hopefully sooner.
+
+Thanks,
+
+C.
 
 
