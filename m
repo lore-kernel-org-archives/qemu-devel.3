@@ -4,66 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FC2D31A13
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 06:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF181D31A15
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 07:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfufL-0001vy-Dp; Wed, 14 Jan 2026 01:47:39 -0500
+	id 1vfvIH-0004pq-JH; Wed, 14 Jan 2026 02:27:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vfuf3-0001ps-6r
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 01:47:21 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfvIF-0004pf-GJ
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 02:27:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vfuf1-0004AO-2s
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 01:47:20 -0500
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 8E46C807BC;
- Wed, 14 Jan 2026 09:47:16 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:c88::1:7])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ClNQD90AqW20-Awhmfl3Y; Wed, 14 Jan 2026 09:47:16 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768373236;
- bh=MN2tkwk+2wULskhErRy+Xg3Kjfi5sWUTJLiHbLKQQjE=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=xHKj5APoodrDy58rHi4uuVndh+Rx1Tu06IJrq6I+Oq5fVpM4dYudg5vgYOXGU9bsA
- l8tydnX6ISsvX+FVLLy4uDvzb3JR+YSaLhncXk1XW//7TrtfMW9hKRR2poBhgjw+5i
- B53KXx6PkrIFYw+rkh19Ag2MAjNCKkC9Ss0WLdRQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: peterx@redhat.com
-Cc: farosas@suse.de, qemu-devel@nongnu.org, dtalexundeer@yandex-team.ru,
- vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru
-Subject: [PATCH 5/5] qemu-file: qemu_file_get_fd(): improve interface
-Date: Wed, 14 Jan 2026 09:47:10 +0300
-Message-ID: <20260114064710.176268-6-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260114064710.176268-1-vsementsov@yandex-team.ru>
-References: <20260114064710.176268-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfvID-0008OG-OL
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 02:27:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768375668;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NqRYHbIQYK5ASZulp7INzG8WNrUlmsrOT4EgaMAoRrY=;
+ b=EDIARl6SrWs7vZdcVuYNje4G9T29u8hr0x/WWu588OEmoMLVk9gTCf/PpshM7V2UGqoyrf
+ JezPVq5aN0mnb+YY2w8sHKVSUGQmqZ5lsZRL9AQzVz+o61dbgHNvykmrXLBG1wZSMwKsYF
+ GJ0kVQueqCeXOg65EPYOg0Aghz8cQdc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-548-CNSrHqA3O-Cul7-dBXQk2g-1; Wed,
+ 14 Jan 2026 02:27:44 -0500
+X-MC-Unique: CNSrHqA3O-Cul7-dBXQk2g-1
+X-Mimecast-MFC-AGG-ID: CNSrHqA3O-Cul7-dBXQk2g_1768375663
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E10418005BA; Wed, 14 Jan 2026 07:27:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82EA91800285; Wed, 14 Jan 2026 07:27:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0B77421E66C9; Wed, 14 Jan 2026 08:27:40 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Michael Tsirkin <mst@redhat.com>,  <qemu-devel@nongnu.org>,
+ <shiju.jose@huawei.com>,  <linuxarm@huawei.com>,
+ <linux-cxl@vger.kernel.org>,  Ravi Shankar <venkataravis@micron.com>
+Subject: Re: [PATCH qemu v2 2/5] hw/cxl/events: Update for rev3.2 common
+ event record format
+In-Reply-To: <20260113174735.00002934@huawei.com> (Jonathan Cameron's message
+ of "Tue, 13 Jan 2026 17:47:35 +0000")
+References: <20260102151512.460766-1-Jonathan.Cameron@huawei.com>
+ <20260102151512.460766-3-Jonathan.Cameron@huawei.com>
+ <87ldi3f2m2.fsf@pond.sub.org> <20260113174735.00002934@huawei.com>
+Date: Wed, 14 Jan 2026 08:27:39 +0100
+Message-ID: <874ioo64d0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -75,87 +89,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make it symmetrical with qemu_file_put_fd() and simplify callers.
+Jonathan Cameron <jonathan.cameron@huawei.com> writes:
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- migration/qemu-file.c     |  9 ++++-----
- migration/qemu-file.h     |  2 +-
- migration/vmstate-types.c | 10 +---------
- 3 files changed, 6 insertions(+), 15 deletions(-)
+> On Mon, 12 Jan 2026 13:16:05 +0100
+> Markus Armbruster <armbru@redhat.com> wrote:
+>
+>> Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
+>> 
+>> > From: Shiju Jose <shiju.jose@huawei.com>
+>> >
+>> > CXL spec 3.2 section 8.2.9.2.1 Table 8-55, Common Event Record
+>> > format has updated with optional Maintenance Operation Subclass,
+>> > LD ID and ID of the device head information.
+>> >
+>> > Add updates for the above optional parameters in the related
+>> > CXL events reporting and in the QMP commands to inject CXL events.
+>> >
+>> > Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+>> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>
+> Hi Markus,
+> Thanks for taking a look!
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index da701d40e4..f8394cbbb5 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -385,9 +385,8 @@ int qemu_file_put_fd(QEMUFile *f, int fd)
-     return ret;
- }
- 
--int qemu_file_get_fd(QEMUFile *f)
-+int qemu_file_get_fd(QEMUFile *f, int *fd)
- {
--    int fd = -1;
-     FdEntry *fde;
-     Error *err = NULL;
-     int service_byte;
-@@ -410,12 +409,12 @@ int qemu_file_get_fd(QEMUFile *f)
-         goto fail;
-     }
- 
--    fd = fde->fd;
-+    *fd = fde->fd;
-     QTAILQ_REMOVE(&f->fds, fde, entry);
-     g_free(fde);
- 
--    trace_qemu_file_get_fd(f->ioc->name, fd);
--    return fd;
-+    trace_qemu_file_get_fd(f->ioc->name, *fd);
-+    return 0;
- 
- fail:
-     error_report_err(error_copy(err));
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index c13c967167..a8e9bb2ccb 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -82,6 +82,6 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
- 
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
- int qemu_file_put_fd(QEMUFile *f, int fd);
--int qemu_file_get_fd(QEMUFile *f);
-+int qemu_file_get_fd(QEMUFile *f, int *fd);
- 
- #endif
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index e34bf4486e..89cb211472 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -321,7 +321,6 @@ const VMStateInfo vmstate_info_uint64 = {
- static int get_fd(QEMUFile *f, void *pv, size_t size,
-                   const VMStateField *field)
- {
--    int fd;
-     int32_t *v = pv;
- 
-     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
-@@ -329,14 +328,7 @@ static int get_fd(QEMUFile *f, void *pv, size_t size,
-         return 0;
-     }
- 
--    fd = qemu_file_get_fd(f);
--    if (fd < 0) {
--        return -1;
--    }
--
--    *v = fd;
--
--    return 0;
-+    return qemu_file_get_fd(f, v);
- }
- 
- static int put_fd(QEMUFile *f, void *pv, size_t size,
--- 
-2.48.1
+You're welcome!
+
+>> > ---
+>> >  qapi/cxl.json               | 20 ++++++++---
+>> >  include/hw/cxl/cxl_device.h |  7 +++-
+>> >  include/hw/cxl/cxl_events.h | 15 ++++++--
+>> >  hw/cxl/cxl-events.c         |  3 +-
+>> >  hw/cxl/cxl-mailbox-utils.c  |  3 +-
+>> >  hw/mem/cxl_type3.c          | 70 ++++++++++++++++++++++++++++++++-----
+>> >  hw/mem/cxl_type3_stubs.c    | 24 +++++++++++--
+>> >  7 files changed, 121 insertions(+), 21 deletions(-)
+>> >
+>> > diff --git a/qapi/cxl.json b/qapi/cxl.json
+>> > index d5b86159f1..b3c2ac9575 100644
+>> > --- a/qapi/cxl.json
+>> > +++ b/qapi/cxl.json
+>> > @@ -33,20 +33,32 @@
+>> >  ##
+>> >  # @CXLCommonEventBase:
+>> >  #
+>> > -# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
+>> > -# Table 8-42 Common Event Record Format).
+>> > +# Common event base for a CXL Event (CXL r3.2 8.2.10.2.1
+>> > +# Table 8-55 Common Event Record Format).
+>> >  #
+>> >  # @path: CXL type 3 device canonical QOM path
+>> >  #
+>> >  # @log: event log to add the event to
+>> >  #
+>> > -# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+>> > +# @flags: Event Record Flags.  See CXL r3.2 Table 8-55 Common Event
+>> >  #     Record Format, Event Record Flags for subfield definitions.
+>> >  #
+>> > +# @maint-op-class: Maintenance operation class the device requests to
+>> > +#     initiate.
+>> > +#
+>> > +# @maint-op-subclass: Maintenance operation subclass the device
+>> > +#     requests to initiate.
+>> > +#
+>> > +# @ld-id: LD ID of LD from where the event originated.  
+>> 
+>> What's an LD?
+>
+> Logical Device.  I'll spell it out the first time.
+
+Yes, please.
+
+>                                                    From the glossary:
+> "LD: Logical Device. Entity that represents a CXL Endpoint that is bound to
+> a VCS.  An SLD contains one LD. An MLD contains multiple LDs."
+
+A line of acronyms marching ponderously across the page... made me laugh
+:)
+
+> So what does that actually mean?  It's a number that identifies the
+> bit of a device that is presented to a given host at a particular
+> point in the PCI topology that we are faking from the underlying CXL
+> one. 
+>
+> I think best I can do is just spell out the acronyms. If people
+> want more they need to look at the spec :(
+
+Fair!
+
+> Time for a deeper explanation that probably no one ever wanted :)
+>
+> From a physical topology point of view think of something like:
+>
+> vPPDs are virtual downstream ports that assign an LD ID.
+>
+> 	HOST 0           HOST 1               Host 3
+> 	  |                 |                   |
+>          RP                RP                  RP
+>           |                 |                   |
+>           |                 |                   |
+>         __|_________________|______             |
+>        |  |   SWITCH        |      |            |
+>        | _|_____       _____|_     |            |
+>        ||       |     |       |    |            |
+>        ||       |     |       |    |            |
+>        |vPPD0  vPPD1 VPPD2   VPPD3 |            |
+>        ||       |     |          | |            |
+>        ||_____________|          | |            |
+>        |           |             | |            |
+>        |___________DSP0________DSP1|            |
+>                      |           |              |
+>                      |       Some other dev     |
+>               Traffic tagged                    | 
+>               with an LD_ID associated with     |
+>               a given vPPD (so 2 tags here)     |
+>                      |                          |
+>      ________________|__________________________|______
+>     | (CXL Device) HEAD0                     HEAD1     |
+>     |           Now splits up based         Only one LD|
+>     |           on LD_ID                               |
+>     |__________________________________________________|
+>
+>
+> Hosts see:
+> Used letters for down stream port numbers to avoid
+> any explicit mapping to the physical ports above.
+>
+>
+>           HOST 0                  Host 1             Host3   
+>             |                       |                  |
+>            RP                       RP                RP
+>             |                       |                  |
+>     ________|_________     _________|_________         |
+>    |        |         |   |         |         |        |
+>    |    ____|____     |   |   ______|______   |        |
+>    |   |         |    |   |  |             |  |        |
+>    |__DSPA______DSPB__|   |__DSPA________DSPB_|        |
+>        |          |           |            |           |
+>     ___|______  Nothing  _____|_____      Other dev ___|______
+>    |CXL Type3 |          |CXL Type3 |              |CXL Type3 |
+>    | (H0, LD0)|          | (H0, LD1)|              | (H1, LD0)|
+>    |__________|          |__________|              |__________|
+>
+> These IDs should only be reported for events that are isolated 
+> (as appropriate) to a head and/or LD and as you can see the hosts
+> don't actually know these IDs even exist hence there is no need to
+> report them via in band path.  If they don't take the values
+> that reflect the LD we are actually talking to, then we are
+> reporting someone else's error! Via out of band / switch CCI we
+> see the top diagram where we definitely need LD_ID and HEAD_ID
+> to make any sense of errors, particularly as the memory addresses
+> in the records are specific to Head/LD pair.
+>  
+> The recommendation of the spec is don't set them for simple reporting
+> over inband mailboxes. Now you might think we don't have out of band
+> support upstream yet (my staging CXL tree does have both MCTP over
+> I2C and USB) but we do have the switch CCI and that can tunnel to
+> out of band interfaces (technically it's over PCI Vendor defined
+> messages but in practice it ends up the same from a 'what can I talk
+> to' point of view as something truely out of band like an I2C bus.
+> We don't actually have event queues on those yet though... When
+> we do we'll want this command to queue events there as well as on
+> for inband path.
+
+Truly more than I ever wanted ;)
+
+> So we are adding them now for 2 reasons.
+> 1) The spec allows it even for boring inband event reporting
+>    (recommendation only to not do so) so we need to check the kernel stack
+>    reports correctly.
+> 2) We will want to add event queues on the out of band interfaces and
+>    for those we'll need these IDs.
+
+Makes sense.  Thanks!
+
+>> > +#
+>> > +# @head-id: ID of the device head from where the event originated.  
+>> 
+>> Are these identifiers taken from the CXL spec?
+> Yes. Though feels odd to reference the glossary for the definitions.
+
+Since they are from the CXL spec, I don't need to think about names that
+are more in line with established QAPI naming conventions.  That's why I
+asked.  We're good there.
+
+>> > +#
+>> >  # Since: 8.1
+>> >  ##
+>> >  { 'struct': 'CXLCommonEventBase',
+>> > -  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
+>> > +  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint32',
+>> > +            '*maint-op-class':'uint8', '*maint-op-subclass':'uint8',
+>> > +            '*ld-id':'uint16', '*head-id':'uint8' } }
+>> >  
+>> >  ##
+>> >  # @CXLGeneralMediaEvent:  
+>> 
+>> [...]
 
 
