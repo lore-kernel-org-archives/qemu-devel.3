@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05359D31A09
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B05D31A02
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfsbK-00067m-PF; Tue, 13 Jan 2026 23:35:24 -0500
+	id 1vfsbX-0006AJ-Qk; Tue, 13 Jan 2026 23:35:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1vfsbH-00066O-13
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:35:19 -0500
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1vfsbR-00068R-7K
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:35:29 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1vfsbE-0008IN-PG
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:35:18 -0500
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c0bccb8037eso3517146a12.1
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:35:16 -0800 (PST)
+ id 1vfsbP-0008Jk-Iu
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:35:28 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-c2af7d09533so5312082a12.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:35:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768365315; x=1768970115; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768365325; x=1768970125; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X7LCN5Qe2JotjiOwA+ZboawUVAymv8m/6llLMWGjgdA=;
- b=ZINprxPLvTM0jDHrviKZpxGGLgCzB+dKV7ttPLTYlWcCHhI9+l7KTfx8uZnvI8srmT
- yqJrhTY8JonfT9fY9o82T8omAFAzYvQp9OrAYNBjt8OiuCHWNytpS412bnXQG3vg6dTP
- ZpkoB4OlCkhWa0cIpWwUl3/K+KgaAHSz9iRUTaoQi+gm1BDXeFHBlwQ9bhjtWOC2CYWx
- yhzHrG51DQYLkBlt7mRiG7sUqTRzPOj3fuFiCbaS6udHZIf9Yrp9VGlSOkieSj6EjC7m
- U5qbvXeQ34eOFtVoGD52cT1++PlgoNysjPabvwtUAOa7xRwQXDg3EsKlrAZXX0rU2Aoi
- +lgA==
+ bh=fIkoYjt0o7Lp4Hxob2wzHwzR6Bskpm4c9VC5zDlLM88=;
+ b=ArnTPNT4UdvviZtvsEdhYlItbQ/PcLTlPR3lWG0wFGuJnG79CagQSlYwXV16H/xxSA
+ 6Bdnv4rynQnB0m8FB4xnKoGhVf1sxfBpQTGnojQTog2nJAWTwAjH/408mH4Y34s4LDUD
+ Ev1M7ueYl7xBn3mx4A1PugQsAHhbJZx6VjCBO95NbeLLkjk7L9c6qzKLI+wTIyydKi2/
+ xYbKwZe0/9f10PQip23j0jX1cEV2LFgwRXNUkl3IYhzGA1wv4VDXFByKZV1dR9OdY4oT
+ Mqx8tnJIcHRw6seDClOTNwmXP1hXy2Rw42HBpVgFEqC5O2Ogm4btT15lNgvaWSg2aiHK
+ VJuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768365315; x=1768970115;
+ d=1e100.net; s=20230601; t=1768365325; x=1768970125;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X7LCN5Qe2JotjiOwA+ZboawUVAymv8m/6llLMWGjgdA=;
- b=TqFycCEj8la/LW/OlyaDpY7NXJvT8B4Xhf7PRuAGB88hAwpQ5QXaIt2MgKxIxyGlLr
- JaE53S8njdSRs0j9AzuBt11SYDFw9u/Sgt1ccuolJW16zk6FJu4bGQv9eeTCRDJa/6zJ
- oXW5AILHHGYM+KjCegc7jf46Odf1ldbS5tPTSpQMo7Zpr6JbYCx2VAygXq91XvtHksMq
- ZjxhJ7/2y9Cz0tI4OxolWSotB7RLKUQHEPMEJn8gjp9E4NdGx66baGSZqpCzeUS+8NnL
- tNsQdd3EwXOdq+tmw1Dh8J3nuflWFiqo1C7hS8zycOMN/h3eRT03FJQcJ3zZT/MtS6KM
- 1uJA==
+ bh=fIkoYjt0o7Lp4Hxob2wzHwzR6Bskpm4c9VC5zDlLM88=;
+ b=PYPzi/jHALokGZpyfJTL4v62/ch6H7aS9M7u/puEL4VzZXK8m92NZk4HLDxhgPWNg2
+ wE42n6NgG1f9i6rpdHm5gSimzzcSVS8Lr9bFv0+Wj+1NFnSQRxOV7SihRaJ7n8vNPS7H
+ OWcfeM38RsveHH5DzH/3q56uRcYgQdI2v67g4HGrmvYiDkUByw/p/T9Iqb0y9GC4s4YA
+ rjrMb46fzj8gI6SIzi2AgALdXqfA0LaZLLHeitkiwjfWQsLpyJvlwngRmmcfZb4tWn2l
+ NpeV1VpKrGLln8Lah4a0dFmnxo3F6196MDhfQ8EzrFTSECPgbyx+BEBWWQ+QlQZUZq9v
+ FW5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxw8moi+nIBsHuVTJtm5oYeHi5JvU680IADqZxoYoPhEWUXc8xZt6vhMJKaz7nkailIQDW2kK/3K4r@nongnu.org
-X-Gm-Message-State: AOJu0YxvfFpWRy5dGkFFo/eUzrQwyplV88kQlWCpPeQ+aMVuzgh6x1zN
- z9rdrvmW1DtGbREnYZjfqKVy2dBmYYPMToap0uaNQLRtKnequ5kRXJII
-X-Gm-Gg: AY/fxX7+2/DzvBrfwgYQ38CZur0T7SJn0VM14Pi22KhFlk1z/QVav/7dNlZf0zmsabl
- UPI1fQlDkJUQSqv7LlISckTiu0E8DzAXwiH02n0tcDfPrgTcL9Z5PiwkN5voz2ZKhkCETdClflu
- 5IpDH2Z4t5iNUm2ZIpzlE9Vn+B1BY4pxQSDrmaZ/grE7Rsosbfv5+HmYTCY4pOdQ3KEM7LzIERZ
- fA0UG4cQmwHdXWT7izSgY4IaQ590HIfwHdjoN3GxSIA9z+JA0h5okKYkrzuvnmCH4vFI0GUe/Yq
- X9naclwJttAXaWisDR0zLGM4Tx7QCeB3/6xBzrXr2BbrggRxwTQnGg1RhYQ1Bcd0s7qBuS5ggfW
- pkjYOIq0VcWn3vyaZxM4Fi9h888op3Lqrl2b0Nyow09+1bBCqSX+vtxII3P9S5RX+U4tzy1m8fQ
- dMAJTL39lv2U5s6VVX57sg
-X-Received: by 2002:a05:6a20:7fa1:b0:35e:3cac:858c with SMTP id
- adf61e73a8af0-38bed119155mr1508047637.33.1768365315358; 
- Tue, 13 Jan 2026 20:35:15 -0800 (PST)
+ AJvYcCVsalyuniIeY+fI1xg/GyND1/BN3A+IMcRYJwUqRonjYBkea4i7bFHG7pdAuMmkf8KZPEMLpweCfOoK@nongnu.org
+X-Gm-Message-State: AOJu0YyjceHcGiKXVOEUjNkqnGOf+fwu/gNG5ry/sJNjXAa9juIlN8DZ
+ 2uamcOJCmINsaYRyMCURDc7NnHC/H9u68zCZQFExW4RGBF9RQJ4P4xgK
+X-Gm-Gg: AY/fxX5D/6He/Tkn+7i3Fgca4Qv6m96nRKuCCn1/fBDlj6xLMOuclzcZEHCYAZe0qqh
+ qjEWCjudf8bbpuK7dCyVtCeE7sQVlY1VkUrqeNz3x4liUxeOlaCXConNyFGcgfoSFITkKvcCusU
+ XtJqWHI7AYI4WI3UA5oLnPczOxsllGQqbtuMAMWpUNQpsSo9ga7rhXVkTIikgNmD48WjmyMF6AG
+ mrOoLgEX/fa8eesHB3HFwp888wXZRhwbs/jCGw9AYwVSDlQaiB/PENSfGRPDJzVHqTFMZXqrO2r
+ 3PkvPFDPYYYasp8DvPkJEO/M1jl0FL1L6qjcNQ1mzjWGnN72UAP0sI/5kHqDRytDSNAbNpaaM6I
+ +z5MTfBYyqTzi8jqttoqPSTSN/Jz1PYXSTInEA/oxE1RZ++Jx4ob3tOQkpNphZWpuvovLFODWdT
+ 4GvSpIaK3hO18OFJq4RiGr8YWFWQz0rc0=
+X-Received: by 2002:a05:6a20:914e:b0:366:14ac:e1ef with SMTP id
+ adf61e73a8af0-38befc04248mr875905637.65.1768365325170; 
+ Tue, 13 Jan 2026 20:35:25 -0800 (PST)
 Received: from donnager-debian.. ([45.124.203.15])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c4cb5352268sm20702659a12.0.2026.01.13.20.35.10
+ 41be03b00d2f7-c4cb5352268sm20702659a12.0.2026.01.13.20.35.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 20:35:14 -0800 (PST)
+ Tue, 13 Jan 2026 20:35:24 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Sunil V L <sunilvl@ventanamicro.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Michael Ellerman <mpe@oss.tenstorrent.com>,
  Joel Stanley <jms@oss.tenstorrent.com>,
  Nick Piggin <npiggin@oss.tenstorrent.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v2 2/6] hw/riscv/atlantis: Add PCIe controller
-Date: Wed, 14 Jan 2026 15:04:24 +1030
-Message-ID: <20260114043433.1056021-3-joel@jms.id.au>
+Subject: [PATCH v2 4/6] hw/riscv/atlantis: Integrate i2c buses
+Date: Wed, 14 Jan 2026 15:04:26 +1030
+Message-ID: <20260114043433.1056021-5-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260114043433.1056021-1-joel@jms.id.au>
 References: <20260114043433.1056021-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=joel.stan@gmail.com; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=joel.stan@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -110,337 +109,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+Now that we have the DesignWare model we can add buses to the
+tt-atlantis machine.
 
-tt-atlantis is likely to use a generic ECAM compatible PCIe memory map,
-so gpex is not far off the OS programming model
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- include/hw/riscv/tt_atlantis.h |   2 +
- hw/riscv/tt_atlantis.c         | 218 +++++++++++++++++++++++++++++++++
- hw/riscv/Kconfig               |   2 +
- 3 files changed, 222 insertions(+)
+v2:
+ - Correct count from 4 to 5
+ - Fix headers location
+---
+ include/hw/riscv/tt_atlantis.h | 13 ++++++++++++
+ hw/riscv/tt_atlantis.c         | 39 ++++++++++++++++++++++++++++++++++
+ hw/riscv/Kconfig               |  1 +
+ 3 files changed, 53 insertions(+)
 
 diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index 6b0777b42c32..10b06894aeca 100644
+index 10b06894aeca..1b4f61c95184 100644
 --- a/include/hw/riscv/tt_atlantis.h
 +++ b/include/hw/riscv/tt_atlantis.h
-@@ -29,6 +29,7 @@ struct TTAtlantisState {
+@@ -11,12 +11,15 @@
  
+ #include "hw/core/boards.h"
+ #include "hw/core/sysbus.h"
++#include "hw/i2c/designware_i2c.h"
+ #include "hw/intc/riscv_imsic.h"
+ #include "hw/riscv/riscv_hart.h"
+ 
+ #define TYPE_TT_ATLANTIS_MACHINE MACHINE_TYPE_NAME("tt-atlantis")
+ OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisState, TT_ATLANTIS_MACHINE)
+ 
++#define TT_ATL_NUM_I2C 5
++
+ struct TTAtlantisState {
+     /*< private >*/
+     MachineState parent;
+@@ -30,6 +33,7 @@ struct TTAtlantisState {
      RISCVHartArrayState soc;
      DeviceState *irqchip;
-+    GPEXHost gpex_host;
+     GPEXHost gpex_host;
++    DesignWareI2CState i2c[TT_ATL_NUM_I2C];
  
      int fdt_size;
      int aia_guests; /* TODO: This should be hard coded once known */
-@@ -41,6 +42,7 @@ enum {
-     TT_ATL_UART2_IRQ = 40,
-     TT_ATL_UART3_IRQ = 41,
-     TT_ATL_UART4_IRQ = 42,
-+    TT_ATL_PCIE0_INTA_IRQ = 96,
- };
+@@ -37,6 +41,11 @@ struct TTAtlantisState {
  
  enum {
+     TT_ATL_SYSCON_IRQ = 10,
++    TT_ATL_I2C0_IRQ = 33,
++    TT_ATL_I2C1_IRQ = 34,
++    TT_ATL_I2C2_IRQ = 35,
++    TT_ATL_I2C3_IRQ = 36,
++    TT_ATL_I2C4_IRQ = 37,
+     TT_ATL_UART0_IRQ = 38,
+     TT_ATL_UART1_IRQ = 39,
+     TT_ATL_UART2_IRQ = 40,
+@@ -52,6 +61,10 @@ enum {
+     TT_ATL_DDR_HI,
+     TT_ATL_FW_CFG,
+     TT_ATL_I2C0,
++    TT_ATL_I2C1,
++    TT_ATL_I2C2,
++    TT_ATL_I2C3,
++    TT_ATL_I2C4,
+     TT_ATL_MAPLIC,
+     TT_ATL_MIMSIC,
+     TT_ATL_PCIE_ECAM0,
 diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 6bde78839a9f..fa6e4f42a12d 100644
+index fa6e4f42a12d..2d0add278c20 100644
 --- a/hw/riscv/tt_atlantis.c
 +++ b/hw/riscv/tt_atlantis.c
-@@ -27,6 +27,7 @@
- #include "hw/intc/riscv_aclint.h"
- #include "hw/intc/riscv_aplic.h"
- #include "hw/misc/pvpanic.h"
-+#include "hw/pci-host/gpex.h"
- 
- #include "system/system.h"
- #include "system/device_tree.h"
-@@ -73,6 +74,9 @@ static const MemMapEntry tt_atlantis_memmap[] = {
-     [TT_ATL_PCIE_ECAM1] =    { 0x01120000000,    0x10000000 },
-     [TT_ATL_PCIE_ECAM2] =    { 0x01130000000,    0x10000000 },
-     [TT_ATL_PCIE_MMIO0] =    { 0x10000000000, 0x10000000000 },
-+    [TT_ATL_PCIE_PIO0]  =    { 0x10000000000,       0x10000 }, /* qemu only */
-+    [TT_ATL_PCIE_MMIO0_32] = { 0x10004000000,     0x4000000 }, /* qemu only */
-+    [TT_ATL_PCIE_MMIO0_64] = { 0x10010000000, 0x0fff0000000 }, /* qemu only */
-     [TT_ATL_PCIE_MMIO1] =    { 0x20000000000, 0x10000000000 },
-     [TT_ATL_PCIE_MMIO2] =    { 0x30000000000, 0x10000000000 },
- };
-@@ -83,6 +87,59 @@ static uint32_t next_phandle(void)
-     return phandle++;
+@@ -67,6 +67,11 @@ static const MemMapEntry tt_atlantis_memmap[] = {
+     [TT_ATL_TIMER] =            { 0xa8020000,       0x10000 },
+     [TT_ATL_WDT0] =             { 0xa8030000,       0x10000 },
+     [TT_ATL_UART0] =            { 0xb0100000,       0x10000 },
++    [TT_ATL_I2C0] =             { 0xb0400000,       0x10000 },
++    [TT_ATL_I2C1] =             { 0xb0500000,       0x10000 },
++    [TT_ATL_I2C2] =             { 0xb0600000,       0x10000 },
++    [TT_ATL_I2C3] =             { 0xb0700000,       0x10000 },
++    [TT_ATL_I2C4] =             { 0xb0800000,       0x10000 },
+     [TT_ATL_MAPLIC] =           { 0xcc000000,     0x4000000 },
+     [TT_ATL_SAPLIC] =           { 0xe8000000,     0x4000000 },
+     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
+@@ -478,6 +483,20 @@ static void create_fdt_fw_cfg(void *fdt, const MemMapEntry *mem)
+     qemu_fdt_setprop(fdt, name, "dma-coherent", NULL, 0);
  }
  
-+static void create_pcie_irq_map(void *fdt, char *nodename, int legacy_irq,
-+                                uint32_t irqchip_phandle)
++static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
++                           int irqchip_phandle)
 +{
-+    int pin, dev;
-+    uint32_t irq_map_stride = 0;
-+    uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS *
-+                          FDT_MAX_INT_MAP_WIDTH] = {};
-+    uint32_t *irq_map = full_irq_map;
++    g_autofree char *name = g_strdup_printf("/soc/i2c@%" PRIx64, mem->base);
 +
-+    /*
-+     * This code creates a standard swizzle of interrupts such that
-+     * each device's first interrupt is based on it's PCI_SLOT number.
-+     * (See pci_swizzle_map_irq_fn())
-+     *
-+     * We only need one entry per interrupt in the table (not one per
-+     * possible slot) seeing the interrupt-map-mask will allow the table
-+     * to wrap to any number of devices.
-+     */
-+    for (dev = 0; dev < PCI_NUM_PINS; dev++) {
-+        int devfn = dev * 0x8;
-+
-+        for (pin = 0; pin < PCI_NUM_PINS; pin++) {
-+            int irq_nr = legacy_irq + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
-+            int i = 0;
-+
-+            /* Fill PCI address cells */
-+            irq_map[i] = cpu_to_be32(devfn << 8);
-+            i += FDT_PCI_ADDR_CELLS;
-+
-+            /* Fill PCI Interrupt cells */
-+            irq_map[i] = cpu_to_be32(pin + 1);
-+            i += FDT_PCI_INT_CELLS;
-+
-+            /* Fill interrupt controller phandle and cells */
-+            irq_map[i++] = cpu_to_be32(irqchip_phandle);
-+            irq_map[i++] = cpu_to_be32(irq_nr);
-+            irq_map[i++] = cpu_to_be32(0x4);
-+
-+            if (!irq_map_stride) {
-+                irq_map_stride = i;
-+            }
-+            irq_map += irq_map_stride;
-+        }
-+    }
-+
-+    qemu_fdt_setprop(fdt, nodename, "interrupt-map", full_irq_map,
-+                     PCI_NUM_PINS * PCI_NUM_PINS *
-+                     irq_map_stride * sizeof(uint32_t));
-+
-+    qemu_fdt_setprop_cells(fdt, nodename, "interrupt-map-mask",
-+                           0x1800, 0, 0, 0x7);
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", "snps,designware-i2c");
++    qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, mem->size);
++    qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phandle);
++    qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
++    qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
++    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
 +}
 +
- static void create_fdt_cpus(TTAtlantisState *s, uint32_t *intc_phandles)
+ static void finalize_fdt(TTAtlantisState *s)
  {
-     uint32_t cpu_phandle;
-@@ -323,6 +380,54 @@ static void create_fdt_cpu(TTAtlantisState *s, const MemMapEntry *memmap,
-                          IRQ_S_EXT, s->soc.num_harts);
- }
- 
-+static void create_fdt_pcie(void *fdt,
-+                            const MemMapEntry *mem_ecam,
-+                            const MemMapEntry *mem_pio,
-+                            const MemMapEntry *mem_mmio32,
-+                            const MemMapEntry *mem_mmio64,
-+                            int legacy_irq,
-+                            uint32_t aplic_s_phandle,
-+                            uint32_t imsic_s_phandle)
-+{
-+    g_autofree char *name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
-+                                            mem_ecam->base);
-+
-+    qemu_fdt_setprop_cell(fdt, name, "#address-cells", FDT_PCI_ADDR_CELLS);
-+    qemu_fdt_setprop_cell(fdt, name, "#interrupt-cells", FDT_PCI_INT_CELLS);
-+    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0x2);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", "pci-host-ecam-generic");
-+    qemu_fdt_setprop_string(fdt, name, "device_type", "pci");
-+    qemu_fdt_setprop_cells(fdt, name, "bus-range", 0,
-+                           mem_ecam->size / PCIE_MMCFG_SIZE_MIN - 1);
-+    qemu_fdt_setprop(fdt, name, "dma-coherent", NULL, 0);
-+    qemu_fdt_setprop_cell(fdt, name, "msi-parent", imsic_s_phandle);
-+
-+    qemu_fdt_setprop_sized_cells(fdt, name, "reg",
-+                                 2, mem_ecam->base,
-+                                 2, mem_ecam->size);
-+    if (!(mem_mmio32->base & 0xffffffffUL)) {
-+        /* XXX: this is a silly hack because it would collide with PIO */
-+        error_report("mmio32 base must not be 0 mod 2^32");
-+        exit(1);
-+    }
-+    uint32_t flags = FDT_PCI_RANGE_MMIO_64BIT | FDT_PCI_RANGE_PREFETCHABLE;
-+    qemu_fdt_setprop_sized_cells(fdt, name, "ranges",
-+                                 1, FDT_PCI_RANGE_IOPORT,
-+                                 2, 0x0,
-+                                 2, mem_pio->base,
-+                                 2, mem_pio->size,
-+                                 1, FDT_PCI_RANGE_MMIO,
-+                                 2, (mem_mmio32->base & 0xffffffffUL),
-+                                 2, mem_mmio32->base,
-+                                 2, mem_mmio32->size,
-+                                 1, flags,
-+                                 2, mem_mmio64->base,
-+                                 2, mem_mmio64->base,
-+                                 2, mem_mmio64->size);
-+
-+    create_pcie_irq_map(fdt, name, legacy_irq, aplic_s_phandle);
-+}
-+
- static void create_fdt_reset(void *fdt, const MemMapEntry *mem)
- {
-     uint32_t syscon_phandle = next_phandle();
-@@ -388,6 +493,14 @@ static void finalize_fdt(TTAtlantisState *s)
-      *                       aplic_s_phandle);
-      */
- 
-+    create_fdt_pcie(fdt,
-+                    &s->memmap[TT_ATL_PCIE_ECAM0],
-+                    &s->memmap[TT_ATL_PCIE_PIO0],
-+                    &s->memmap[TT_ATL_PCIE_MMIO0_32],
-+                    &s->memmap[TT_ATL_PCIE_MMIO0_64],
-+                    TT_ATL_PCIE0_INTA_IRQ,
-+                    aplic_s_phandle, imsic_s_phandle);
-+
-     create_fdt_reset(fdt, &s->memmap[TT_ATL_SYSCON]);
+     uint32_t aplic_s_phandle = next_phandle();
+@@ -505,6 +524,13 @@ static void finalize_fdt(TTAtlantisState *s)
  
      create_fdt_uart(fdt, &s->memmap[TT_ATL_UART0], TT_ATL_UART0_IRQ,
-@@ -420,6 +533,20 @@ static void create_fdt(TTAtlantisState *s)
-     qemu_fdt_setprop_cell(fdt, "/soc", "#size-cells", 0x2);
-     qemu_fdt_setprop_cell(fdt, "/soc", "#address-cells", 0x2);
- 
-+    /*
-+     * The "/soc/pci@..." node is needed for PCIE hotplugs
-+     * that might happen before finalize_fdt().
-+     */
-+    name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
-+                           s->memmap[TT_ATL_PCIE_ECAM0].base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
-+                           s->memmap[TT_ATL_PCIE_ECAM1].base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    name = g_strdup_printf("/soc/pci@%"HWADDR_PRIX,
-+                           s->memmap[TT_ATL_PCIE_ECAM2].base);
-+    qemu_fdt_add_subnode(fdt, name);
+                     aplic_s_phandle);
 +
-     qemu_fdt_add_subnode(fdt, "/chosen");
- 
-     /* Pass seed to RNG */
-@@ -432,6 +559,93 @@ static void create_fdt(TTAtlantisState *s)
-     create_fdt_pmu(s);
++    for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
++        create_fdt_i2c(fdt,
++                       &s->memmap[TT_ATL_I2C0 + i],
++                       TT_ATL_I2C0_IRQ + i,
++                       aplic_s_phandle);
++    }
  }
  
-+static void gpex_pcie_init_one(TTAtlantisState *s, GPEXHost *gpex_host,
-+                               MemoryRegion *mr,
-+                               const MemMapEntry *mem_ecam,
-+                               const MemMapEntry *mem_pio,
-+                               const MemMapEntry *mem_mmio32,
-+                               const MemMapEntry *mem_mmio64,
-+                               int legacy_irq)
-+{
-+    DeviceState *dev;
-+    Object *obj;
-+    MemoryRegion *ecam_alias, *ecam_reg;
-+    MemoryRegion *mmio32_alias, *mmio64_alias, *mmio_reg;
-+    hwaddr ecam_base = mem_ecam->base;
-+    hwaddr ecam_size = mem_ecam->size;
-+    hwaddr pio_base = mem_pio->base;
-+    hwaddr pio_size = mem_pio->size;
-+    hwaddr mmio32_base = mem_mmio32->base;
-+    hwaddr mmio32_size = mem_mmio32->size;
-+    hwaddr mmio64_base = mem_mmio64->base;
-+    hwaddr mmio64_size = mem_mmio64->size;
-+    qemu_irq irq;
-+    char name[16];
-+    int i;
-+
-+    snprintf(name, sizeof(name), "pcie");
-+    object_initialize_child(OBJECT(s), name, gpex_host, TYPE_GPEX_HOST);
-+    dev = DEVICE(gpex_host);
-+    obj = OBJECT(dev);
-+
-+    object_property_set_uint(obj, PCI_HOST_ECAM_BASE, ecam_base, &error_abort);
-+    object_property_set_int(obj, PCI_HOST_ECAM_SIZE, ecam_size, &error_abort);
-+    object_property_set_uint(obj, PCI_HOST_BELOW_4G_MMIO_BASE, mmio32_base,
-+                             &error_abort);
-+    object_property_set_int(obj, PCI_HOST_BELOW_4G_MMIO_SIZE, mmio32_size,
-+                            &error_abort);
-+    object_property_set_uint(obj, PCI_HOST_ABOVE_4G_MMIO_BASE, mmio64_base,
-+                             &error_abort);
-+    object_property_set_int(obj, PCI_HOST_ABOVE_4G_MMIO_SIZE, mmio64_size,
-+                            &error_abort);
-+    object_property_set_uint(obj, PCI_HOST_PIO_BASE, pio_base, &error_abort);
-+    object_property_set_int(obj, PCI_HOST_PIO_SIZE, pio_size, &error_abort);
-+
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+
-+    ecam_alias = g_new0(MemoryRegion, 1);
-+    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-+    snprintf(name, sizeof(name), "pcie.ecam");
-+    memory_region_init_alias(ecam_alias, obj, name,
-+                             ecam_reg, 0, ecam_size);
-+    memory_region_add_subregion(mr, ecam_base, ecam_alias);
-+
-+    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
-+
-+    mmio32_alias = g_new0(MemoryRegion, 1);
-+    snprintf(name, sizeof(name), "pcie.mmio32");
-+    memory_region_init_alias(mmio32_alias, obj, name,
-+                             mmio_reg, mmio32_base & 0xffffffffUL, mmio32_size);
-+    memory_region_add_subregion(mr, mmio32_base, mmio32_alias);
-+
-+    mmio64_alias = g_new0(MemoryRegion, 1);
-+    snprintf(name, sizeof(name), "pcie.mmio64");
-+    memory_region_init_alias(mmio64_alias, obj, name,
-+                             mmio_reg, mmio64_base, mmio64_size);
-+    memory_region_add_subregion(mr, mmio64_base, mmio64_alias);
-+
-+    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 2, pio_base);
-+
-+    for (i = 0; i < PCI_NUM_PINS; i++) {
-+        irq = qdev_get_gpio_in(s->irqchip, legacy_irq + i);
-+
-+        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, irq);
-+        gpex_set_irq_num(GPEX_HOST(dev), i, legacy_irq + i);
+ static void create_fdt(TTAtlantisState *s)
+@@ -813,6 +839,19 @@ static void tt_atlantis_machine_init(MachineState *machine)
+                    qdev_get_gpio_in(s->irqchip, TT_ATL_UART0_IRQ),
+                    115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
+ 
++    /* I2C */
++    for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
++        object_initialize_child(OBJECT(s), "i2c[*]", &s->i2c[i],
++                                TYPE_DESIGNWARE_I2C);
++        sysbus_realize(SYS_BUS_DEVICE(&s->i2c[i]), &error_fatal);
++        SysBusDevice *sbd = SYS_BUS_DEVICE(&s->i2c[i]);
++        memory_region_add_subregion(system_memory,
++                                    s->memmap[TT_ATL_I2C0 + i].base,
++                                    sysbus_mmio_get_region(sbd, 0));
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
++                           qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ + i));
 +    }
 +
-+    gpex_host->gpex_cfg.bus = PCI_HOST_BRIDGE(dev)->bus;
-+}
-+
-+static void gpex_pcie_init(TTAtlantisState *s, MemoryRegion *mr)
-+{
-+    gpex_pcie_init_one(s, &s->gpex_host, mr,
-+                       &s->memmap[TT_ATL_PCIE_ECAM0],
-+                       &s->memmap[TT_ATL_PCIE_PIO0],
-+                       &s->memmap[TT_ATL_PCIE_MMIO0_32],
-+                       &s->memmap[TT_ATL_PCIE_MMIO0_64],
-+                       TT_ATL_PCIE0_INTA_IRQ);
-+}
-+
- static DeviceState *create_reboot_device(const MemMapEntry *mem)
- {
-     DeviceState *dev = qdev_new(TYPE_PVPANIC_MMIO_DEVICE);
-@@ -588,6 +802,9 @@ static void tt_atlantis_machine_init(MachineState *machine)
-     s->fw_cfg = create_fw_cfg(&s->memmap[TT_ATL_FW_CFG], machine->smp.cpus);
-     rom_set_fw(s->fw_cfg);
- 
-+    /* PCIe */
-+    gpex_pcie_init(s, system_memory);
-+
-     /* Reboot and exit */
-     create_reboot_device(&s->memmap[TT_ATL_SYSCON]);
- 
-@@ -623,6 +840,7 @@ static void tt_atlantis_machine_class_init(ObjectClass *oc, const void *data)
-     mc->default_cpu_type = TYPE_RISCV_CPU_TT_ASCALON;
-     mc->block_default_type = IF_VIRTIO;
-     mc->no_cdrom = 1;
-+    mc->pci_allow_0_address = true;
-     mc->default_ram_id = "tt_atlantis.ram";
- }
- 
+     /* Load or create device tree */
+     if (machine->dtb) {
+         machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
 diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 89e3661726a1..5317eccd06e7 100644
+index 5317eccd06e7..ee876557ef15 100644
 --- a/hw/riscv/Kconfig
 +++ b/hw/riscv/Kconfig
-@@ -129,6 +129,8 @@ config TENSTORRENT
-     select DEVICE_TREE
-     select RISCV_NUMA
-     select PVPANIC_MMIO
-+    select PCI
-+    select PCI_EXPRESS_GENERIC_BRIDGE
-     select SERIAL_MM
-     select RISCV_ACLINT
-     select RISCV_APLIC
+@@ -137,6 +137,7 @@ config TENSTORRENT
+     select RISCV_IMSIC
+     select FW_CFG_DMA
+     select PLATFORM_BUS
++    select DESIGNWARE_I2C
+ 
+ config XIANGSHAN_KUNMINGHU
+     bool
 -- 
 2.47.3
 
