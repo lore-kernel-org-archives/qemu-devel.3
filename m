@@ -4,61 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F8DD31A3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 10:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E4ED29DC6
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 10:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfxwV-0002H0-7m; Wed, 14 Jan 2026 05:17:37 -0500
+	id 1vfxxb-0003IC-UJ; Wed, 14 Jan 2026 05:18:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
- id 1vfxvu-0002EE-PP
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:16:58 -0500
-Received: from smtp.eurecom.fr ([193.55.113.210])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vfxxY-0003HY-Bk
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:18:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
- id 1vfxvs-0001qD-6O
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:16:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
- t=1768385817; x=1799921817;
- h=from:in-reply-to:references:date:cc:to:mime-version:
- message-id:subject:content-transfer-encoding;
- bh=B2F12y4WnovnyaTZS2zX8dli3hLrVex7sUvNaxqpsuY=;
- b=C2142/UcY8cpJXxSABW0U/izcNajFWLnLKmvuDZC4+9oH8RYbeHWypvi
- 1JwVuPYg5d8F/0cqhomb3dl2giKw8ozJlyxs7MnM3JN8/+LMLhEcwGpRb
- dxQ230HTrFUw42fYFv+5OR0uQtgJv3HNlT1sEe1lKkcpdqy1LtjHdl2CF U=;
-X-CSE-ConnectionGUID: Jh81eu2qThyAYzl88/I72A==
-X-CSE-MsgGUID: Msk7Keo7QrKB/9nxvEROdA==
-X-IronPort-AV: E=Sophos;i="6.21,225,1763420400"; 
-   d="scan'208";a="4215494"
-Received: from quovadis.eurecom.fr ([10.3.2.233])
- by drago1i.eurecom.fr with ESMTP; 14 Jan 2026 11:16:52 +0100
-From: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
-In-Reply-To: <aWZk7udMufaXPw-E@x1.local>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 193.55.114.5
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <aWZk7udMufaXPw-E@x1.local>
-Date: Wed, 14 Jan 2026 11:16:52 +0100
-Cc: "qemu-devel" <qemu-devel@nongnu.org>
-To: "Peter Xu" <peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vfxxW-000278-Em
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:18:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768385916;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9MiLvmT1G+aCIETVtRo6e8IRKYs3Vavl8ZIPRHIWti4=;
+ b=aITUcDgA18cwuDoNIRjkcRoME/QwLSKdIyspo3nx2/fltdoa9oW04Zz/HxkSGp1jAWUs+H
+ /Eg7yldmk6NJyAWM9ToGsFo6DylrS0Vj8rfIgdh9S4On7dOVwqumaCtgIpPnmdNY4L/xMG
+ Vrm+6dwBisBb1QgMkVtJaJk91v5fhtM=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-313-xMyhkl_wP1WVdrSOxCE8nw-1; Wed, 14 Jan 2026 05:18:35 -0500
+X-MC-Unique: xMyhkl_wP1WVdrSOxCE8nw-1
+X-Mimecast-MFC-AGG-ID: xMyhkl_wP1WVdrSOxCE8nw_1768385914
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b871403f69eso382352166b.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 02:18:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768385914; x=1768990714; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=9MiLvmT1G+aCIETVtRo6e8IRKYs3Vavl8ZIPRHIWti4=;
+ b=B7wQEmiTE0SWTwpRCZI40gPwbdzWUmgRKaPjK1vpwrG+1HKKH+9pGdVSdYcYdZR3Dc
+ POBSJChqi3KRuo7rOfItyjiGG3CkwBxWQpvvC1+sX8F8iJhyQzzlF0jMQCeJ1gn4ryFZ
+ svjiYxLvc5MTOcq61frpLLNaNIVmyaihSSUSVG9VG//butA0Q8K1zslzpYIkQ0CaHPET
+ zVqBXPQTDBQfk48Arjua2rpBbr56l4LYtKa1F3UYiyFmt4lEB/n+8HFhGss1hKpFe4sL
+ gADBRIYNXLSbhEjsKErvDrfq9kfMlwmz8VsBI6R42OPlsveCvbitInCYwa5CMFbiFFhx
+ 0RYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768385914; x=1768990714;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9MiLvmT1G+aCIETVtRo6e8IRKYs3Vavl8ZIPRHIWti4=;
+ b=VqA/zRDmNZ2oWb8U5gF5MDwBnIZw1jjjROWpwoTsvplamjrbL/ow/8QcChBIJ3KJib
+ oPCG/MHlzl/WCnk2t9o1WsMtlQXYvCj2UOlfJ3FC7yOpXCjggNWULTab5Ah9HE7I0HMw
+ 3Nnz8AK2jchvH23/LAs8nhtQ6sB7fxGmVr6V7jGkiykxP7ZHEZVFGnk7zVvcLtosfQGu
+ wmJQRnQgN/x4QKdKJMiFhjAPPq3LGf/1mn167QCuoeXahsrhrjFr54LLwlX1aXmDhdxH
+ D8havi7f+/gJr0cBhUuZpFMEih7MH6K4fHC2VQY6Ay3i1wC4hNLa2qzkWh7TNed2LgP5
+ 16tA==
+X-Gm-Message-State: AOJu0Yxw0FE4We7SRDtJTPFYMAPdapPokYLdtVMy2M1ggqQMKm/SZyId
+ +0InF89cX9hHDRIHPhvIny0AoqrA0yjkdBf2nllEWC2FoZUnmCn/QG/k/FGQOZTpropamXPb7G+
+ w3bAKpx6odlC1mdt06wn/egTcxjrLt+KCyIy3b7kA630fMTHqwmr2y75y
+X-Gm-Gg: AY/fxX4nQ5IEaQeWibQqoHwCQTiLGyRmfB7B/tphqWO2NA7nXpzZw5MK1jsiZkKoR/v
+ bz8iMXYuAXuyhl/1P8AWGFtYfXVgPXWBjPZ2eMP7oP/UwBNTczYB6g2PUSt4ySh3J4fUtUXPkuo
+ NhFIorkH8Dew9K2UA90B1raj8ljI7Q7a5H0yFmlI6IMnja5xCsNcGl1ZXvEzkU1V0SBUstgScNc
+ LGRBShHaNcR19n+mwVK2gh6M+677qWcK8IdPP7xu2euH4PL7JViCH74r0IR9u9M1AWAn4Vbiy+j
+ LXwpsC5mN3zevGqAErekrI3AStelCV3kPixmTTbGhlYTn9a/mOwUtS3wSrW0MxEPpji6V9FuNu2
+ YtRTsBIg8TvJkd30rLqUIejloC5UdwNjPOfUVYgOQ6xXm83OVBzWbIr6EhXrFrQ==
+X-Received: by 2002:a17:906:ef0c:b0:b87:22b2:6533 with SMTP id
+ a640c23a62f3a-b87612c92e2mr222437666b.54.1768385913671; 
+ Wed, 14 Jan 2026 02:18:33 -0800 (PST)
+X-Received: by 2002:a17:906:ef0c:b0:b87:22b2:6533 with SMTP id
+ a640c23a62f3a-b87612c92e2mr222434866b.54.1768385913181; 
+ Wed, 14 Jan 2026 02:18:33 -0800 (PST)
+Received: from sgarzare-redhat (host-87-12-25-233.business.telecomitalia.it.
+ [87.12.25.233]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b842a4d1c61sm2392940266b.35.2026.01.14.02.18.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 02:18:32 -0800 (PST)
+Date: Wed, 14 Jan 2026 11:18:21 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Jim MacArthur <jim.macarthur@linaro.org>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH] docs/system/igvm.rst: Update external link
+Message-ID: <aWds0ujDVhaeteAX@sgarzare-redhat>
+References: <20251230-igvm-documentation-fix-v1-1-865750a66cc8@linaro.org>
 MIME-Version: 1.0
-Message-ID: <3e46b0-69676d00-4d-1a5e27c0@252361837>
-Subject: =?utf-8?q?Re=3A?= Call for GSoC internship project ideas
-User-Agent: SOGoMail 5.12.1
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=193.55.113.210;
- envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20251230-igvm-documentation-fix-v1-1-865750a66cc8@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,125 +118,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
-
-This is great to hear! I=E2=80=99m happy you=E2=80=99re taking the time=
- to propose and
-mentor this. I=E2=80=99m definitely interested in seeing what comes out=
- of it,
-thanks for putting me in the loop.
-
-Regarding your proposed Fast Snapshot Load, it=E2=80=99s certainly more=
- widely
-applicable and doesn=E2=80=99t require new QMP commands or extensive co=
-nfigurations
-(beyond mapped-ram), compared to what I had in mind. I think it will be
-beneficial for our use case regardless.
-
-I=E2=80=99d still be interested in trying to improve it further using d=
-irty
-tracking at some point, to ignore pages that haven=E2=80=99t been writt=
-en between
-two loadvm of the same snapshot. This would probably apply only to lega=
-cy
-snapshot though, as file migration expects a clean QEMU process.
-
-I=E2=80=99m not sure if I=E2=80=99m still eligible for GSoC; otherwise,=
- I would have
-applied myself :)
-
-Best,
-Marco
-
-(removing people from CC to reduce noise)
-
-On Tuesday, January 13, 2026 16:29 CET, Peter Xu <peterx@redhat.com> wr=
-ote:
-
-> On Mon, Jan 05, 2026 at 04:47:22PM -0500, Stefan Hajnoczi wrote:
-> > Dear QEMU and KVM communities,
-> > QEMU will apply for the Google Summer of Code internship
-> > program again this year. Regular contributors can submit project
-> > ideas that they'd like to mentor by replying to this email by
-> > January 30th.
->=20
-> There's one idea from migration side that should be self-contained, p=
-lease
-> evaluate if this suites for the application.
->=20
-> I copied Marco who might be interested on such project too at least f=
-rom an
-> user perspective on fuzzing [1].
->=20
-> [1] https://lore.kernel.org/all/193e5a-681dfa80-3af-701c0f80@22719288=
-7/
->=20
-> Thanks,
->=20
-> =3D=3D=3D Fast Snapshot Load =3D=3D=3D
->=20
-> '''Summary:''' Fast loadvm process based on postcopy approach
->=20
-> We have two common ways to load snapshots: (1) QMP "snapshot-load", o=
-r QMP
-> "migrate=5Fincoming" with a "file:" URI. The idea to be discussed her=
-e should
-> apply to either form of loadvm, however here we will focus on "file:"
-> migration only, because it should be the modern and suggested way of =
-using
-> snapshots nowadays.
->=20
-> Load snapshot currently requires all VM data (RAM states and the rest
-> device states) to be loaded into the QEMU instance before VM starts.
->=20
-> It is not required, though, to load guest memory to start the VM. For
-> example, in a postcopy live migration process, QEMU uses userfaultfd =
-to
-> allow VM run without all of the guest memory migrated. A similar tech=
-nique
-> can also be used in a loadvm process to make loadvm very fast, starti=
-ng the
-> VM almost immediately right after the loadvm command.
->=20
-> The idea is simple: we can start the VM right after loading device st=
-ates
-> (but without loading the guest memory), then QEMU can start the VM. I=
-n the
-> background, the loadvm process should keep loading all the VM data in=
- an
-> atomically way. Meanwhile, the vCPUs may from time to time access a m=
-issing
-> guest page. QEMU needs to trap these accesses with userfaultfd, and r=
-esolve
-> the page faults.
->=20
-> After loading all the RAM state, the whole loadvm procedure is comple=
-ted.
->=20
-> This feature needs to depend on mapped-ram feature, which allows offs=
-etting
-> into the snapshots to find whatever page being asked by the guest vCP=
-Us at
-> any point in time.
->=20
-> This feature may not be very help in VM suspend / resume use cases, b=
-ecause
-> in those cases the VM was down previously, normally it's fine waiting=
- for
-> the VM to be fully loaded. However, it might be useful in some other =
-cases
-> (like, frequently loading snapshots).
->=20
-> '''Links:'''
-> * https://wiki.qemu.org/ToDo/LiveMigration#Fast=5Fload=5Fsnapshot
->=20
-> '''Details:'''
-> * Skill level: advanced
-> * Language: C
-> * Mentor: Peter Xu <peterx@redhat.com>, peterx (on #qemu IRC)
->=20
-> --=20
-> Peter Xu
+On Tue, Dec 30, 2025 at 07:23:33PM +0000, Jim MacArthur wrote:
+>Also updated revision to 3.43.
 >
+>Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3247
+>Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+>---
+>Just fixes a broken link for the AMD64 Architecture Programmer's
+>Manual.
+>---
+> docs/system/igvm.rst | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
+
+I'm not sure the new link will be stable, maybe in the future we can 
+just mention the manual name and version without any link.
+
+>
+>diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
+>index 79508d9588..f45eb1707e 100644
+>--- a/docs/system/igvm.rst
+>+++ b/docs/system/igvm.rst
+>@@ -166,8 +166,8 @@ References
+> ----------
+>
+> [1] AMD64 Architecture Programmer's Manual, Volume 2: System Programming
+>-  Rev 3.41
+>-  https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/24593.pdf
+>+  Rev 3.43
+>+  https://docs.amd.com/v/u/en-US/24593_3.43
+>
+> [2] ``buildigvm`` - A tool to build example IGVM files containing OVMF firmware
+>   https://github.com/roy-hopkins/buildigvm
+
+Oh, I just noticed this. We recently moved this in 
+https://gitlab.com/qemu-project/buildigvm
+
+Do you want to fix also that one?
+
+
+In any case, this change LGTM:
+
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
 
