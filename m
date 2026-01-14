@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F0B1D29FEC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 11:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A54ED29FEF
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 11:20:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfypt-0006Xq-5A; Wed, 14 Jan 2026 06:14:51 -0500
+	id 1vfyvh-0002vF-Hf; Wed, 14 Jan 2026 06:20:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1vfypl-0006SX-4J
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:14:42 -0500
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1vfyph-0003mx-Dv
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:14:39 -0500
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-78fdb90b670so79267517b3.2
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 03:14:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1768389276; x=1768994076; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QMiwVDwXj2dFs8KEeqQ55bZILtO3/3fPWfNS6/YxFIE=;
- b=lrqJqwA09l7wbei/pmOggjtEZRGfwa8H1jBUNy3EkAkD1sxlGNk7mDpCgyQpjKk4Ae
- gbG2FKBrAeiwlLxHTbryqRZYTlM9L0izbOV7o9R3h36R/KHFoyPwUBe0y2+dab41Thxw
- ANuP3eBzFXjBnBJHLK6BR7+/DqMVfUXIMSt3U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768389276; x=1768994076;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QMiwVDwXj2dFs8KEeqQ55bZILtO3/3fPWfNS6/YxFIE=;
- b=v0uQR+iRhLx8tf0H3Ct68/TglUkYGUfC/y5gRCrUi+1zDtorSvBP3ZVccv5AzQZ8Qe
- tY5trSrzWnuzEqACm6NpT3P1rpD/uTNKkSCe+UkTbNlzLlo1TsKhjPfUW0fNWbhPxh8U
- QctwR+kxZcCFwBE/r3TAr++GsMtZmGHL945QpxkxI/g0JYzuuYtk77VMxVBICIBxKhBt
- iMOJDhkFfKwjZTEvQxkvj+6yzi0IrCtYnPxRhp5nLOsZLl60RY0o7ywtRAT9eT1oYdf+
- /KcKj3HM3T1H78RTnntbMEfoAFl1N80ZHvTXQpRN0RplN3pip37KYoqOiH9JV55kbg4Y
- Gnzw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV1+P6/Sh+n/TurDYFbzToSnyB4+GSsshJNrDvj6slTXp1Pg1rTYhkJFjCQ0/YydMhskIkvBIFxmv7H@nongnu.org
-X-Gm-Message-State: AOJu0YwS+ZpSO+vKL0Hp1wLKeJRkkJc98mErus1oRY/701tUkH+SDDyV
- U/m3yP+7aKK1M0rrDVtrx8g2BAdeur+pZmqpPXX4eQFq3Kz+TrENoWeAYWYd8mPxmyfbERxZoQ7
- MzTFKyUAGz6g6XZcDBn4hBLqEQpngjkw=
-X-Gm-Gg: AY/fxX6qLTCeUI038MJxBi0VjdVpberTvpdzLwtCspNjiRq7M6BSOOHVu/NpcpERNgx
- Og6zSphniG+FXY64Ty5NND4Mok6Z4E/K3YSvYCoUVyk6j41WU8K5wMYCklg3YsvBlyYlZNBr86b
- GEPqUrahxS1im4LfQ5+rqtLi2FnNJPDOTSdoetacua/RVOvGi6T0mu5MwYeIxThIRYOjYu2J/rT
- 7wLmijCba/HKx5bhQXEDXyWBCfKWU3bGDJwLC1zVu2TTGBrPUrN+5ZE7ScRQn+v86xkQkM=
-X-Received: by 2002:a05:690e:13c8:b0:641:f5bc:6961 with SMTP id
- 956f58d0204a3-64903b594camr1226062d50.77.1768389276030; Wed, 14 Jan 2026
- 03:14:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vfyvI-0002gQ-Av
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:20:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vfyvG-00058p-7U
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:20:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768389621;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/ZxN4qlSuAsgdFGGeaTTomtCoLJk88bqi5H3ND7X1xU=;
+ b=gZ1echt4C2BWoVYBjiIh+85qSsMtJghXhF/2Y77kTX36B3hj9XxXQKgrKwuHxee55dMuaT
+ qSJDsaOEL345nC0fhOgcy/pDWdCt/J0v+H1WWn/xej3bx5/c/ZIlR96zoklbPixWFgK45b
+ o0lrEFwl7utVldffzMZXll7HBsujPaw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-T5R0upUeNRaHZXKDklGjeg-1; Wed,
+ 14 Jan 2026 06:20:17 -0500
+X-MC-Unique: T5R0upUeNRaHZXKDklGjeg-1
+X-Mimecast-MFC-AGG-ID: T5R0upUeNRaHZXKDklGjeg_1768389616
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E556618005B5; Wed, 14 Jan 2026 11:20:15 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.41])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 690E130001A2; Wed, 14 Jan 2026 11:20:06 +0000 (UTC)
+Date: Wed, 14 Jan 2026 11:20:00 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org,
+ "open list:Block layer core" <qemu-block@nongnu.org>,
+ "open list:Rust-related patc..." <qemu-rust@nongnu.org>,
+ Stefan Weil <sw@weilnetz.de>, Kevin Wolf <kwolf@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 02/24] include: define constant for early constructor
+ priority
+Message-ID: <aWd74K3eQTf1y91E@redhat.com>
+References: <20260108170338.2693853-1-berrange@redhat.com>
+ <20260108170338.2693853-3-berrange@redhat.com>
+ <d3ca3fb5-e972-4446-b32c-f20fd8825cca@redhat.com>
+ <aWDqie0eYZ8GeQHF@redhat.com>
+ <6e60a89f-6798-4ea5-bbd0-553130786cec@redhat.com>
+ <87h5spc29h.fsf@pond.sub.org>
+ <CABgObfZn753g5Ve4AHi4gX0DtKdDBWV8aCuRSha5ySv9Y_4OGg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260114043433.1056021-1-joel@jms.id.au>
- <437f995f-6ae0-469a-b2d3-6ce59b3f49e0@redhat.com>
-In-Reply-To: <437f995f-6ae0-469a-b2d3-6ce59b3f49e0@redhat.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 14 Jan 2026 21:44:24 +1030
-X-Gm-Features: AZwV_Qgmjayv6SrLMxBU2qNAJRnXbCCB-d6_dIkSJoHWekaBJoItJpC9KnoJYio
-Message-ID: <CACPK8XdURBGUWxaiT+4uEP6nKxMP=C7_iw4A=9s4cNj0DmC+uw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] hw/riscv: Add the Tenstorrent Atlantis machine
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Sunil V L <sunilvl@ventanamicro.com>, 
- qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Michael Ellerman <mpe@oss.tenstorrent.com>, 
- Joel Stanley <jms@oss.tenstorrent.com>,
- Nick Piggin <npiggin@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=joel.stan@gmail.com; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfZn753g5Ve4AHi4gX0DtKdDBWV8aCuRSha5ySv9Y_4OGg@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,49 +102,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Jan 2026 at 19:36, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> Hello Joel,
->
-> On 1/14/26 05:34, Joel Stanley wrote:
-> > v2 separates out prep patches so the machine can be reviewed
-> > independently. It depends on the following two series:
+On Tue, Jan 13, 2026 at 10:32:48AM +0100, Paolo Bonzini wrote:
+> Il mar 13 gen 2026, 10:04 Markus Armbruster <armbru@redhat.com> ha scritto:
+> 
+> > Paolo Bonzini <pbonzini@redhat.com> writes:
 > >
-> >   AIA: https://lore.kernel.org/qemu-devel/20260109133125.397364-1-joel@=
-jms.id.au
-> >   Boot: https://lore.kernel.org/qemu-devel/20260109131657.396794-1-joel=
-@jms.id.au
+> > > On 1/9/26 12:46, Daniel P. Berrangé wrote:
+> > >> IMHO the root problem is that it is pretty dubious for us to be
+> > >> spawning the RCU thread from a constructor. Constructors should
+> > >> be limited to minimal initialization of state.
 > >
-> > Original cover letter:
+> > Yes!  Discussed in review of v3:
 > >
-> > Introducing Tenstorrent Atlantis!
+> >     https://lore.kernel.org/qemu-devel/87frck1dds.fsf@pond.sub.org/
+> >     Message-ID: <87frck1dds.fsf@pond.sub.org>
 > >
-> >   The Tenstorrent Atlantis platform is a collaboration between Tenstorr=
-ent
->
->
-> What kind of board is the "Tenstorrent Atlantis platform" ? Is it an evb =
-?
+> > >>                                                Spawning threads
+> > >> is outside the boundary of what I'd consider reasonable for
+> > >> a constructor todo. I didn't want try to tackle refactoring the
+> > >> RCU thread creation though, hence this gross workaround.
+> > >
+> > > I see.  Maybe we could (just as gross but smaller) do the RCU
+> > constructor late.  Not something that you need to do now, of course.
+> >
+> > Could we use an old-fashioned initialization function instead of a
+> > constructor for RCU?
+> >
+> 
+> You have to do it in all main()s, which make it unwieldy for tests etc.
+> 
+> Another possibility is to do it lazily on first call_rcu, and just clear
+> the flag in the atfork callbacks.
 
-An upcoming dev board with the SoC on it.
+I'd be concerned that we would not be able to rationalize what thread is
+starting the RCU thread. It will probably be the main thread, but proving
+that will be difficult. A thread which is not the main thread may have
+undesirable CPU affinity set which we don't have the RCU thread to inherit.
 
-> >   and CoreLab Technology. It is based on the Atlantis SoC, which includ=
-es
->
-> Why isn't the SoC modeled independently ?
+IMHO if we remove the constructor, then we need to have a strong guarantee
+that it is spawned from the main() method and not from any other background
+thread.
 
-What I've modelled is the soc, with the exception of the test i2c
-sensors. Everything listed (aside from the i2c sensors) is inside the
-SoC.
+I wouldn't rule our doing it manually from every main() method. We could
+probably come up with something to make it less of a burden for test
+programs.
 
-Lets say we add atlantis-evb that has atlantis-soc on it, with memory,
-i2c devices, etc. What does that look like? The aspeed machines are a
-bit complex to follow these days!
+eg replace g_test_init() with q_test_init() which combines g_test_init
+with RCU thread creation.
 
-Cheers,
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-Joel
 
